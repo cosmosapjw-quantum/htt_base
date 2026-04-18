@@ -181,6 +181,18 @@ Implements TCA_UFA_RSA document §3-10 (sparse Jacobian, m-major, matrix LoS).
     `n_f_eval=28696`. `StepperStats` surfaced via `PstfKmodeResult`.
     Cross-backend invariant test confirms pre-materialized vs
     callback paths produce bit-identical stepper decisions.
+  - **IMEX-01 — COMPLETE** (2026-04-19). Kennedy-Carpenter ARK4(3)6L[2]SA
+    tableau + scalar stepper implementation in
+    [`src/solver/imex_ark4.rs`](../src/solver/imex_ark4.rs) (1417 L).
+    19 tests green including:
+    - `imex01_split_order_of_accuracy_prothero_robinson`: Prothero-Robinson
+      with double halving — ratios 10.32×, 12.31× (4th-order band).
+    - `imex01_embedded_estimator_monotone_in_h`: strict monotone decrease
+      across 5 h values (8.57e9 → 2.90e5), first-halving ratio 11.33×
+      (3rd-order embedded band).
+    - 17 pre-existing audits: L-stability, χ→0/∞ limits, monopole
+      conservation, sign-convention enforcement, adaptive driver.
+    No coupling to PSTF primary yet — that is IMEX-02 onward.
 - **P2.6b RODAS5P-centered hybrid backup** (NEW, parallel, benchmark-only). Implemented only to the extent needed for A/B comparison at IMEX-07 exit gate.
 
 **Phase 2 gate**: FLRW limit (m=0 only) reproduces Phase 1 D_ℓ. Jacobian

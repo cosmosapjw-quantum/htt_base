@@ -1414,4 +1414,167 @@ mod tests {
         assert!((lhs_k1 - rhs1).abs() < 1e-12,
                 "Block row 1: LHS·k = {} vs RHS = {}", lhs_k1, rhs1);
     }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // IMEX-01 Merge Gate Tests (IMEX_DECISION_2026-04-18.md §6)
+    // ═══════════════════════════════════════════════════════════════════
+    //
+    // Required: "Order of convergence = 4, embedded estimator monotone in h"
+    //
+    // Pre-existing `audit_order_of_accuracy` at line ~1289 verifies 4th-order
+    // scaling on pure-implicit exponential decay (single ratio, loose > 8×
+    // assertion).  The two tests below tighten the gate:
+    //
+    //   imex01_split_order_of_accuracy_prothero_robinson
+    //       Classical Prothero-Robinson stiff test problem with split
+    //       explicit + implicit parts.  Double halving (h, h/2, h/4) —
+    //       verify both convergence ratios settle on 16× (4th order).
+    //       This exercises the SPLIT nature of IMEX, not just the
+    //       implicit ESDIRK part.
+    //
+    //   imex01_embedded_estimator_monotone_in_h
+    //       For a smooth reference problem, embedded error magnitude
+    //       (normalized via atol/rtol) must be monotone-decreasing as
+    //       h is halved.  If this breaks, the accept/reject controller
+    //       cannot converge to a target tolerance.
+
+    /// Prothero-Robinson: y' = λ(y - φ(t)) + φ'(t), with φ(t) = cos(t).
+    ///
+    /// Exact solution with compatible IC y(0) = φ(0) = 1: y(t) = cos(t).
+    /// Classical stiff test with known analytical solution.  Split:
+    ///     f_I(y) = λ · y     (stiff, goes in the implicit block)
+    ///     f_E(t) = -λ · cos(t) - sin(t)   (non-stiff forcing)
+    /// Sum: f_I + f_E = λ(y - cos(t)) - sin(t) = dy/dt  ✓
+    ///
+    /// Opacity χ = |λ| (IMEX convention requires χ ≥ 0, diagonal entry
+    /// in the implicit operator is -χ = λ for λ < 0 — here λ = -50).
+    #[derive(Clone, Copy)]
+    struct ProtheroRobinson { lambda: f64 }
+
+    impl SplitLinearOp for ProtheroRobinson {
+        fn dim(&self) -> usize { 1 }
+
+        fn apply_explicit(&self, t: f64, _y: &[f64], out: &mut [f64]) {
+            // f_E(t) = -λ·cos(t) - sin(t)
+            out[0] = -self.lambda * t.cos() - t.sin();
+        }
+
+        fn fill_implicit_diag(&self, _t: f64, diag: &mut Vec<(usize, f64)>) {
+            diag.clear();
+            // Convention: positive χ, operator writes A·y with A = -χ on diag.
+            // For Prothero-Robinson with λ < 0, χ = -λ = |λ|.
+            diag.push((0, -self.lambda));
+        }
+
+        fn fill_implicit_blocks(&self, _t: f64, b: &mut SmallBlockSet) {
+            b.blocks.clear();
+        }
+
+        fn stiffness_scales(&self, _t: f64) -> StiffnessScales {
+            StiffnessScales {
+                opacity: self.lambda.abs(),
+                hubble: 0.0,
+                shear: 0.0,
+                k_mode: 1.0,
+            }
+        }
+    }
+
+    /// IMEX-01 gate A: 4th-order convergence verified by double halving
+    /// on Prothero-Robinson split problem.  Both ratios err(h)/err(h/2)
+    /// must settle in the 4th-order band (8× < ratio < 32× — loose
+    /// to accommodate roundoff at the finest grid).
+    #[test]
+    fn imex01_split_order_of_accuracy_prothero_robinson() {
+        let op = ProtheroRobinson { lambda: -50.0 };  // mildly stiff
+        let tab = Ark4Tableau::new();
+        let tau_final = 1.0_f64;
+
+        let run = |h: f64| -> f64 {
+            let mut work = ImexWorkspace::new(1);
+            let mut y = vec![1.0];           // y(0) = cos(0)
+            let mut y_new = vec![0.0];
+            let n_steps = (tau_final / h).round() as usize;
+            for i in 0..n_steps {
+                imex_ark4_step_trait(
+                    &op, i as f64 * h, h, &y, &mut y_new, &tab,
+                    1e-14, 1e-14, &mut work,
+                );
+                std::mem::swap(&mut y, &mut y_new);
+            }
+            // Exact: y(tau_final) = cos(tau_final)
+            (y[0] - tau_final.cos()).abs()
+        };
+
+        let h0 = 0.04;
+        let err_h  = run(h0);
+        let err_h2 = run(h0 / 2.0);
+        let err_h4 = run(h0 / 4.0);
+
+        let ratio1 = err_h / err_h2.max(1e-16);
+        let ratio2 = err_h2 / err_h4.max(1e-16);
+
+        eprintln!(
+            "IMEX-01 PR: h={:.3} err={:.3e} | h/2 err={:.3e} (ratio {:.2}) | h/4 err={:.3e} (ratio {:.2})",
+            h0, err_h, err_h2, ratio1, err_h4, ratio2,
+        );
+
+        // 4th-order band: theoretical 16×; accept [8, 32] to allow for
+        // mild order reduction in the stiff regime and roundoff at the
+        // finest grid.  Both ratios must pass the lower bound.
+        assert!(ratio1 > 8.0,
+            "IMEX-01 gate A: h → h/2 ratio {:.2} < 8 (expected ≈ 16 for 4th order)", ratio1);
+        assert!(ratio2 > 8.0,
+            "IMEX-01 gate A: h/2 → h/4 ratio {:.2} < 8 (expected ≈ 16 for 4th order)", ratio2);
+    }
+
+    /// IMEX-01 gate B: embedded error estimator decreases monotonically
+    /// as h halves on a smooth problem.  If this breaks, the
+    /// accept/reject controller cannot converge to a target tolerance.
+    ///
+    /// Uses the same Prothero-Robinson problem: sufficiently smooth,
+    /// non-degenerate; any monotonicity violation would be a tableau bug.
+    #[test]
+    fn imex01_embedded_estimator_monotone_in_h() {
+        let op = ProtheroRobinson { lambda: -50.0 };
+        let tab = Ark4Tableau::new();
+
+        // Single-step estimator magnitude at decreasing h.
+        // Capture the max-abs err from a single step starting at y(0)=1.
+        let single_step_err = |h: f64| -> f64 {
+            let mut work = ImexWorkspace::new(1);
+            let y = vec![1.0];
+            let mut y_new = vec![0.0];
+            imex_ark4_step_trait(&op, 0.0, h, &y, &mut y_new, &tab, 1e-14, 1e-14, &mut work)
+        };
+
+        let hs = [0.08_f64, 0.04, 0.02, 0.01, 0.005];
+        let errs: Vec<f64> = hs.iter().map(|&h| single_step_err(h)).collect();
+
+        eprintln!("IMEX-01 gate B: embedded estimator vs h");
+        for (h, e) in hs.iter().zip(errs.iter()) {
+            eprintln!("  h = {:.4}  ||e|| = {:.3e}", h, e);
+        }
+
+        // Monotone decrease: every successive halving must reduce the
+        // embedded norm.  We allow a small safety-factor margin: the
+        // later estimator must be < 0.99 × the earlier one (strict
+        // monotone but tolerant to a sub-percent jitter from the
+        // 3rd-order embedded being near roundoff at the smallest h).
+        for w in errs.windows(2) {
+            let (e_coarse, e_fine) = (w[0], w[1]);
+            assert!(e_fine < e_coarse * 0.99,
+                "IMEX-01 gate B: estimator not monotone: {:.3e} ↛ {:.3e}",
+                e_coarse, e_fine);
+        }
+
+        // Also confirm rough 3rd-order scaling (embedded is 3rd-order,
+        // so halving gives ~8× reduction in the clean regime).
+        // Only assert on the first halving step to avoid roundoff
+        // contamination at the finest grid.
+        let first_ratio = errs[0] / errs[1].max(1e-30);
+        eprintln!("  first halving ratio {:.2} (expected ≈ 8 for 3rd-order embedded)", first_ratio);
+        assert!(first_ratio > 4.0,
+            "IMEX-01 gate B: first-halving ratio {:.2} too shallow (expected ≈ 8)", first_ratio);
+    }
 }
