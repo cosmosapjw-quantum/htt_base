@@ -144,7 +144,22 @@ Detailed investigation deferred to Phase 1 when PSTF primary's source constructi
 
 ## §5. Immediate next steps (Phase 1 readiness)
 
-1. **Verify PSTF primary does not share Bug B**. Run `pstf_solve_kmode` at k ∈ {0.01, 0.03, 0.1, 0.25} single-mode and inspect `source_jl` magnitude over time. If PSTF primary diverges similarly, the stepper tolerance is the root cause and must be fixed first. If PSTF primary stays bounded, the bug is specific to MB-95's RHS construction or initial conditions.
+1. ~~**Verify PSTF primary does not share Bug B**~~ → **DONE (2026-04-18, this session)**. See `phase0_d0_3_cross_check_pstf_high_k` in [src/solver/pstf_primary/integrate.rs](../src/solver/pstf_primary/integrate.rs). Result: PSTF primary stays bounded at all tested k ∈ {1e-4, 1e-3, 1e-2, 3e-2, 5e-2, 1e-1, 2.5e-1}, with `|source_total|_max` decreasing from 2.54 to 0.035. **Bug B is specific to MB-95's RHS construction or IC**, not inherited by PSTF primary. The Rodas5P stepper itself is healthy. Phase 1 authorized to proceed with PSTF primary as the truth-engine basis.
+
+### Addendum — D0.3 detailed result (2026-04-18)
+
+```
+        k     n_eta  |src_tot|_max  |src_sw|_max  |src_dop|_max   |phi|_max  finite?
+  1.000e-4       583       2.541e0      4.008e-1       2.244e0     1.464e1  true
+  1.000e-3       583       2.534e0      3.986e-1       2.239e0     1.391e1  true
+  1.000e-2       583       1.952e0      2.037e-1       1.783e0     8.455e0  true
+  3.000e-2       583      2.573e-1      2.218e-1      6.165e-2     4.288e0  true
+  5.000e-2       583      1.789e-1      8.341e-2      7.595e-2     2.805e0  true
+  1.000e-1       583      6.518e-2      2.768e-2      3.744e-2     1.447e0  true
+  2.500e-1       583      3.485e-2      2.990e-2      4.864e-3    5.599e-1  true
+```
+
+Layout: `ell_max_gamma = 8`, `ell_max_nu = 6`, pol=off (reduced for test runtime). Sources trend downward with k — physically expected, not divergent. PSTF primary differs from MB-95 in magnitude even at low k (2.54 vs 0.02) because `source_total` is the PSTF-layout source assembly, not `raw_theta0_source = g(Θ₀+ψ)`. The comparison is a numerical-stability test, not a physics-match test. Physics match is Phase 1.4's job.
 
 2. **Do not attempt fixes in `compute_flrw_cl_track_a`**. It is the reference/prototype path. Fixes go into the new `compute_pstf_cl_track_a` built in Phase 1.3.
 

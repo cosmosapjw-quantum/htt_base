@@ -52,13 +52,21 @@
 use super::layout::PstfFlrwLayout;
 use super::rhs_free::{RhsInputs, pstf_free_streaming_rhs};
 use super::collision::{CollisionInputs, FrameConvention, pstf_thomson_collision};
+use super::metric::BackgroundQuantities;
 
 // ═══════════════════════════════════════════════════════════════════════
 //   §1.  Jacobian inputs
 // ═══════════════════════════════════════════════════════════════════════
 
-/// Unified inputs for the Jacobian computation.  Combines PR-022a +
-/// PR-022b parameters.
+/// Unified inputs for the Jacobian computation.
+///
+/// PR-022c-era scope: free-streaming (k, tau, metric_monopole_source) +
+/// Thomson collision (kappa_dot, r_b, use_pol_feedback, frame).
+///
+/// PR-024c-PERF extension: metric + fluid Jacobian blocks need the
+/// background energy densities and baryon sound speed.  These are
+/// optional; if `extended = false`, metric/fluid contributions are
+/// skipped (legacy PR-022c behaviour).
 #[derive(Clone, Copy, Debug)]
 pub(crate) struct JacobianInputs {
     pub(crate) k: f64,
@@ -68,6 +76,15 @@ pub(crate) struct JacobianInputs {
     pub(crate) r_b: f64,
     pub(crate) use_pol_feedback: bool,
     pub(crate) frame: FrameConvention,
+    /// PR-024c-PERF: background for metric + fluid blocks.  Zero by
+    /// default; call `with_metric_fluid_bg()` to populate.
+    pub(crate) bg: BackgroundQuantities,
+    /// PR-024c-PERF: baryon sound speed² for fluid block.
+    pub(crate) cs2b: f64,
+    /// PR-024c-PERF: when true, `pstf_analytical_jacobian` emits
+    /// metric + fluid + metric-monopole-source triplets in addition
+    /// to the PR-022c free-streaming + collision entries.
+    pub(crate) use_metric_fluid_blocks: bool,
 }
 
 impl JacobianInputs {
@@ -83,7 +100,28 @@ impl JacobianInputs {
             r_b: collision.r_b,
             use_pol_feedback: collision.use_pol_feedback,
             frame: collision.frame,
+            bg: BackgroundQuantities::zero(),
+            cs2b: 0.0,
+            use_metric_fluid_blocks: false,
         }
+    }
+
+    /// PR-024c-PERF: enable metric + fluid Jacobian blocks.
+    ///
+    /// After calling this, `pstf_analytical_jacobian` produces a full-RHS
+    /// Jacobian (free + collision + metric + fluid + monopole source).
+    /// The resulting dense matrix is interchangeable with the unit-vector
+    /// result from `build_pstf_matrix_into`, up to FP roundoff (not
+    /// bit-identical; see §5 FD check).
+    pub(crate) fn with_metric_fluid_bg(
+        mut self,
+        bg: BackgroundQuantities,
+        cs2b: f64,
+    ) -> Self {
+        self.bg = bg;
+        self.cs2b = cs2b;
+        self.use_metric_fluid_blocks = true;
+        self
     }
 
     /// Extract RhsInputs for forwarding to `pstf_free_streaming_rhs`.
@@ -197,7 +235,145 @@ pub(crate) fn pstf_analytical_jacobian(
         }
     }
 
+    // ──── PR-024c-PERF: metric + fluid + monopole-source blocks ────
+    if inputs.use_metric_fluid_blocks {
+        metric_fluid_block(&mut jac, inputs, layout);
+    }
+
     jac
+}
+
+/// PR-024c-PERF: metric + fluid Jacobian block.
+///
+/// Writes analytical partial derivatives for the PR-023a metric sector,
+/// PR-023b fluid sector, and the metric-monopole-source feedback into
+/// photon/ν ℓ=0 (added to entries already created by free-streaming).
+///
+/// ## Derivation
+///
+/// With background densities ρ_γ, ρ_ν, ρ_b, conformal Hubble ℋ, and
+/// baryon sound-speed² c_s²_b, the helper quantities are
+///   dgq  = (16/3)(ρ_γ Θ₁ + ρ_ν N₁) + ρ_b v_b
+///   dgs  = 4(ρ_γ Θ₂ + ρ_ν N₂)
+///   hdot = 2·k·σ − 3·dgq/k
+///
+/// and the derivatives are (written as ∂(rhs)/∂(var)):
+///
+/// **Metric block** (PR-023a `pstf_metric_rhs`):
+///   ∂(etakdot)/∂Θ₁ = (8/3)ρ_γ
+///   ∂(etakdot)/∂N₁ = (8/3)ρ_ν
+///   ∂(etakdot)/∂v_b = ρ_b / 2
+///   ∂(sigmadot)/∂σ     = −2·ℋ
+///   ∂(sigmadot)/∂Θ₂    = −4·ρ_γ / k
+///   ∂(sigmadot)/∂N₂    = −4·ρ_ν / k
+///   ∂(sigmadot)/∂etak  = 1
+///
+/// **Fluid block** (PR-023b `pstf_fluid_rhs`, Thomson drag in free+collision block):
+///   ∂(clxcdot)/∂σ     = −k                ( from −hdot/2 = −kσ + 3·dgq/(2k) )
+///   ∂(clxcdot)/∂Θ₁    =  8·ρ_γ/k
+///   ∂(clxcdot)/∂N₁    =  8·ρ_ν/k
+///   ∂(clxcdot)/∂v_b   =  3·ρ_b/(2k)
+///   ∂(clxbdot)/∂σ     = −k
+///   ∂(clxbdot)/∂Θ₁    =  8·ρ_γ/k
+///   ∂(clxbdot)/∂N₁    =  8·ρ_ν/k
+///   ∂(clxbdot)/∂v_b   =  3·ρ_b/(2k) − k   ( includes −k·v_b continuity term )
+///   ∂(vbdot)/∂v_b     = −ℋ                ( non-drag fluid part only )
+///   ∂(vbdot)/∂clxb    =  c_s²_b · k
+///
+/// **Metric monopole source** (−hdot/6 fed into photon/ν ℓ=0):
+///   ∂(Θ₀_dot)/∂σ   += −k/3
+///   ∂(Θ₀_dot)/∂Θ₁  +=  (8/3)ρ_γ/k
+///   ∂(Θ₀_dot)/∂N₁  +=  (8/3)ρ_ν/k
+///   ∂(Θ₀_dot)/∂v_b +=  ρ_b/(2k)
+///   (identical pattern for N₀_dot)
+///
+/// All 25 entries are state-independent linear constants of the background.
+/// Triplet list allows duplicate (row, col) keys; the dense aggregator
+/// sums them via `out[i*n+j] += v`.
+fn metric_fluid_block(
+    jac: &mut SparseJacobian,
+    inputs: &JacobianInputs,
+    layout: &PstfFlrwLayout,
+) {
+    let k = inputs.k;
+    let rg = inputs.bg.grho_gamma;
+    let rn = inputs.bg.grho_nu;
+    let rb = inputs.bg.grho_b;
+    let h_conf = inputs.bg.h_conformal;
+    let cs2b = inputs.cs2b;
+
+    // Cache indices
+    let i_etak  = layout.i_metric_etak();
+    let i_sigma = layout.i_metric_sigma();
+    let i_delta_c = layout.i_cdm_delta();
+    let i_delta_b = layout.i_baryon_delta();
+    let i_v_b   = layout.i_baryon_v_m0();
+    let i_theta1 = layout.i_photon_i_m0(1);
+    let i_theta0 = layout.i_photon_i_m0(0);
+    let i_nu1    = layout.i_neutrino_m0(1);
+    let i_nu0    = layout.i_neutrino_m0(0);
+
+    // ──── Metric sector ────────────────────────────────────────────
+    // etakdot = dgq/2
+    jac.push(i_etak, i_theta1, (8.0 / 3.0) * rg);
+    jac.push(i_etak, i_nu1,    (8.0 / 3.0) * rn);
+    jac.push(i_etak, i_v_b,    0.5 * rb);
+
+    // sigmadot = −2ℋσ − dgs/k + etak
+    jac.push(i_sigma, i_sigma, -2.0 * h_conf);
+    if layout.ell_max_gamma >= 2 {
+        let i_theta2 = layout.i_photon_i_m0(2);
+        jac.push(i_sigma, i_theta2, -4.0 * rg / k);
+    }
+    if layout.ell_max_nu >= 2 {
+        let i_nu2 = layout.i_neutrino_m0(2);
+        jac.push(i_sigma, i_nu2, -4.0 * rn / k);
+    }
+    jac.push(i_sigma, i_etak, 1.0);
+
+    // ──── Fluid sector ─────────────────────────────────────────────
+    // Shared hdot derivatives (reusable): ∂hdot/∂(var)/(-2) pattern
+    let d_by_sig = -k;                // = -hdot/2 contribution from ∂σ: -(2k)/2
+    let d_by_t1  = 8.0 * rg / k;      // = -hdot/2 ∂Θ₁: -(-16ρ_γ/k)/2
+    let d_by_n1  = 8.0 * rn / k;
+    let d_by_vb_from_hdot = 3.0 * rb / (2.0 * k);  // = -hdot/2 ∂v_b
+
+    // clxcdot = -hdot/2
+    jac.push(i_delta_c, i_sigma,  d_by_sig);
+    jac.push(i_delta_c, i_theta1, d_by_t1);
+    jac.push(i_delta_c, i_nu1,    d_by_n1);
+    jac.push(i_delta_c, i_v_b,    d_by_vb_from_hdot);
+
+    // clxbdot = -k·v_b - hdot/2
+    jac.push(i_delta_b, i_sigma,  d_by_sig);
+    jac.push(i_delta_b, i_theta1, d_by_t1);
+    jac.push(i_delta_b, i_nu1,    d_by_n1);
+    jac.push(i_delta_b, i_v_b,    d_by_vb_from_hdot - k);
+
+    // vbdot (non-drag part): -ℋ·v_b + c_s²_b·k·clxb
+    // Drag part (∂Θ₁ and ∂v_b from +κ̇/r_b) already in collision block.
+    jac.push(i_v_b, i_v_b,     -h_conf);
+    jac.push(i_v_b, i_delta_b, cs2b * k);
+
+    // ──── Metric monopole source into photon/ν ℓ=0 ─────────────────
+    // dy[Θ₀] += -hdot/6; half the magnitudes of the clxc/clxb block
+    // (factor 1/3 instead of 1/2 · 2 from the -hdot/6 vs -hdot/2 ratio).
+    let m_sig = -k / 3.0;                  // = -(2k)/6
+    let m_t1  = (8.0 / 3.0) * rg / k;      // = -(-16ρ_γ/k)/6
+    let m_n1  = (8.0 / 3.0) * rn / k;
+    let m_vb  = rb / (2.0 * k);            // = -(-3ρ_b/k)/6
+
+    // Photon monopole
+    jac.push(i_theta0, i_sigma,  m_sig);
+    jac.push(i_theta0, i_theta1, m_t1);
+    jac.push(i_theta0, i_nu1,    m_n1);
+    jac.push(i_theta0, i_v_b,    m_vb);
+
+    // Neutrino monopole (identical source coupling)
+    jac.push(i_nu0, i_sigma,  m_sig);
+    jac.push(i_nu0, i_theta1, m_t1);
+    jac.push(i_nu0, i_nu1,    m_n1);
+    jac.push(i_nu0, i_v_b,    m_vb);
 }
 
 /// Helper: fill the free-streaming tridiagonal + truncation rows.
@@ -309,6 +485,98 @@ fn fd_column_5pt(
     col
 }
 
+/// PR-024c-PERF: FD column for the FULL RHS (free + collision + metric
+/// + fluid + monopole source), using `pstf_full_rhs`.
+///
+/// Use this for checking the extended analytical Jacobian.
+fn fd_column_5pt_full(
+    state: &[f64],
+    full_inputs: &super::full_rhs::FullRhsInputs,
+    layout: &PstfFlrwLayout,
+    j: usize,
+    h: f64,
+) -> Vec<f64> {
+    use super::full_rhs::pstf_full_rhs;
+    let n = layout.n_state;
+    let mut f_p1 = vec![0.0_f64; n];
+    let mut f_p2 = vec![0.0_f64; n];
+    let mut f_m1 = vec![0.0_f64; n];
+    let mut f_m2 = vec![0.0_f64; n];
+
+    let mut perturbed = state.to_vec();
+    let x0 = state[j];
+
+    perturbed[j] = x0 + 2.0 * h;
+    pstf_full_rhs(&perturbed, &mut f_p2, full_inputs, layout);
+    perturbed[j] = x0 + h;
+    pstf_full_rhs(&perturbed, &mut f_p1, full_inputs, layout);
+    perturbed[j] = x0 - h;
+    pstf_full_rhs(&perturbed, &mut f_m1, full_inputs, layout);
+    perturbed[j] = x0 - 2.0 * h;
+    pstf_full_rhs(&perturbed, &mut f_m2, full_inputs, layout);
+    perturbed[j] = x0;
+
+    let mut col = vec![0.0_f64; n];
+    for i in 0..n {
+        col[i] = (-f_p2[i] + 8.0 * f_p1[i] - 8.0 * f_m1[i] + f_m2[i])
+               / (12.0 * h);
+    }
+    col
+}
+
+/// PR-024c-PERF: FD check against `pstf_full_rhs`.
+///
+/// This is the extended analogue of `jacobian_fd_check`: uses the full
+/// dispatcher as the reference RHS, and is appropriate when
+/// `inputs.use_metric_fluid_blocks == true`.
+///
+/// Returns `(max_rel_err, i_max, j_max)` over stored triplets.
+pub(crate) fn jacobian_fd_check_full(
+    state: &[f64],
+    inputs: &JacobianInputs,
+    full_inputs: &super::full_rhs::FullRhsInputs,
+    layout: &PstfFlrwLayout,
+    h: f64,
+) -> (f64, usize, usize) {
+    let sparse = pstf_analytical_jacobian(state, inputs, layout);
+    let _n = layout.n_state;
+
+    let used_cols: std::collections::BTreeSet<usize> =
+        sparse.entries.iter().map(|&(_, j, _)| j).collect();
+
+    let mut fd_cols: std::collections::BTreeMap<usize, Vec<f64>> =
+        std::collections::BTreeMap::new();
+    for &j in &used_cols {
+        fd_cols.insert(j, fd_column_5pt_full(state, full_inputs, layout, j, h));
+    }
+
+    let mut analytical: std::collections::BTreeMap<(usize, usize), f64> =
+        std::collections::BTreeMap::new();
+    for &(i, j, v) in &sparse.entries {
+        *analytical.entry((i, j)).or_insert(0.0) += v;
+    }
+
+    let mut max_rel_err = 0.0_f64;
+    let mut i_max = 0;
+    let mut j_max = 0;
+    for ((i, j), &j_ana) in &analytical {
+        let j_num = fd_cols.get(j).unwrap()[*i];
+        let abs_err = (j_ana - j_num).abs();
+        let scale = j_ana.abs().max(1e-10);
+        let rel_err = if j_ana.abs() > 1e-10 {
+            abs_err / scale
+        } else {
+            abs_err
+        };
+        if rel_err > max_rel_err {
+            max_rel_err = rel_err;
+            i_max = *i;
+            j_max = *j;
+        }
+    }
+    (max_rel_err, i_max, j_max)
+}
+
 /// Check analytical Jacobian against 5-point finite-difference.
 ///
 /// Returns `(max_rel_err, i_max, j_max)`:
@@ -390,6 +658,234 @@ mod tests {
         let coll_in = CollisionInputs::pol_off(0.5, 0.6);
         let jac_in = JacobianInputs::from_rhs_and_collision(&rhs_in, &coll_in);
         (layout, state, jac_in)
+    }
+
+    // ─── PR-024c-PERF Step 1: extended inputs API ───────────────────
+
+    /// `from_rhs_and_collision` produces legacy (no-extension) config.
+    #[test]
+    fn perf_step1_legacy_inputs_have_extension_off() {
+        let (_, _, inputs) = test_fixture();
+        assert!(!inputs.use_metric_fluid_blocks,
+            "legacy constructor must not enable metric/fluid extension");
+        assert_eq!(inputs.cs2b, 0.0);
+        assert_eq!(inputs.bg.h_conformal, 0.0);
+        assert_eq!(inputs.bg.grho_gamma, 0.0);
+        assert_eq!(inputs.bg.grho_nu, 0.0);
+        assert_eq!(inputs.bg.grho_b, 0.0);
+    }
+
+    /// `with_metric_fluid_bg` builder turns on extension + sets bg/cs2b.
+    #[test]
+    fn perf_step1_with_metric_fluid_bg_populates_fields() {
+        use super::super::metric::BackgroundQuantities;
+        let (_, _, inputs) = test_fixture();
+        let bg = BackgroundQuantities::representative();
+        let cs2b = 3.3e-10;
+        let ext = inputs.with_metric_fluid_bg(bg, cs2b);
+        assert!(ext.use_metric_fluid_blocks);
+        assert_eq!(ext.bg.h_conformal, bg.h_conformal);
+        assert_eq!(ext.bg.grho_gamma, bg.grho_gamma);
+        assert_eq!(ext.bg.grho_nu, bg.grho_nu);
+        assert_eq!(ext.bg.grho_b, bg.grho_b);
+        assert_eq!(ext.cs2b, cs2b);
+        // Legacy fields preserved
+        assert_eq!(ext.k, inputs.k);
+        assert_eq!(ext.tau, inputs.tau);
+        assert_eq!(ext.kappa_dot, inputs.kappa_dot);
+    }
+
+    // ─── PR-024c-PERF Step 2: metric_fluid_block internal checks ────
+
+    /// Direct call to `metric_fluid_block`: verify the 25 triplets match
+    /// hand-derived formulas for a non-trivial configuration.
+    ///
+    /// This tests the function in isolation — `pstf_analytical_jacobian`
+    /// wiring is Step 3.
+    #[test]
+    fn perf_step2_metric_fluid_triplets_hand_derived() {
+        use super::super::metric::BackgroundQuantities;
+        let (layout, _state, legacy_inputs) = test_fixture();
+        let bg = BackgroundQuantities::representative();
+        let cs2b = 3.3e-10_f64;
+        let inputs = legacy_inputs.with_metric_fluid_bg(bg, cs2b);
+
+        // Call metric_fluid_block directly into a fresh sparse container
+        let mut jac = SparseJacobian { entries: Vec::new(), n: layout.n_state };
+        super::metric_fluid_block(&mut jac, &inputs, &layout);
+
+        // Aggregate by (row, col)
+        use std::collections::BTreeMap;
+        let mut agg: BTreeMap<(usize, usize), f64> = BTreeMap::new();
+        for &(i, j, v) in &jac.entries {
+            *agg.entry((i, j)).or_insert(0.0) += v;
+        }
+
+        let k = inputs.k;
+        let rg = bg.grho_gamma;
+        let rn = bg.grho_nu;
+        let rb = bg.grho_b;
+        let h_conf = bg.h_conformal;
+        let eps = 1e-18_f64;
+
+        // Expected set of (row, col, value) tuples
+        let i_etak = layout.i_metric_etak();
+        let i_sigma = layout.i_metric_sigma();
+        let i_deltac = layout.i_cdm_delta();
+        let i_deltab = layout.i_baryon_delta();
+        let i_vb = layout.i_baryon_v_m0();
+        let i_t0 = layout.i_photon_i_m0(0);
+        let i_t1 = layout.i_photon_i_m0(1);
+        let i_t2 = layout.i_photon_i_m0(2);
+        let i_n0 = layout.i_neutrino_m0(0);
+        let i_n1 = layout.i_neutrino_m0(1);
+        let i_n2 = layout.i_neutrino_m0(2);
+
+        let expected: Vec<((usize, usize), f64)> = vec![
+            // etakdot
+            ((i_etak, i_t1), (8.0/3.0)*rg),
+            ((i_etak, i_n1), (8.0/3.0)*rn),
+            ((i_etak, i_vb), 0.5*rb),
+            // sigmadot
+            ((i_sigma, i_sigma), -2.0*h_conf),
+            ((i_sigma, i_t2), -4.0*rg/k),
+            ((i_sigma, i_n2), -4.0*rn/k),
+            ((i_sigma, i_etak), 1.0),
+            // clxcdot = -hdot/2
+            ((i_deltac, i_sigma), -k),
+            ((i_deltac, i_t1), 8.0*rg/k),
+            ((i_deltac, i_n1), 8.0*rn/k),
+            ((i_deltac, i_vb), 3.0*rb/(2.0*k)),
+            // clxbdot = -k·v_b - hdot/2
+            ((i_deltab, i_sigma), -k),
+            ((i_deltab, i_t1), 8.0*rg/k),
+            ((i_deltab, i_n1), 8.0*rn/k),
+            ((i_deltab, i_vb), 3.0*rb/(2.0*k) - k),
+            // vbdot non-drag
+            ((i_vb, i_vb), -h_conf),
+            ((i_vb, i_deltab), cs2b*k),
+            // Θ₀ monopole source
+            ((i_t0, i_sigma), -k/3.0),
+            ((i_t0, i_t1), (8.0/3.0)*rg/k),
+            ((i_t0, i_n1), (8.0/3.0)*rn/k),
+            ((i_t0, i_vb), rb/(2.0*k)),
+            // N₀ monopole source
+            ((i_n0, i_sigma), -k/3.0),
+            ((i_n0, i_t1), (8.0/3.0)*rg/k),
+            ((i_n0, i_n1), (8.0/3.0)*rn/k),
+            ((i_n0, i_vb), rb/(2.0*k)),
+        ];
+
+        assert_eq!(expected.len(), 25, "expected 25 metric-fluid entries");
+
+        for ((i, j), v_exp) in &expected {
+            let v_got = *agg.get(&(*i, *j))
+                .unwrap_or_else(|| panic!("missing entry ({},{})", i, j));
+            assert!((v_got - v_exp).abs() < eps,
+                "({},{}): got {:.6e}, expected {:.6e}", i, j, v_got, v_exp);
+        }
+
+        // Nothing else should be written
+        assert_eq!(agg.len(), 25,
+            "metric_fluid_block wrote {} distinct entries, expected 25", agg.len());
+    }
+
+    /// With extension OFF, analytical Jacobian nnz unchanged (regression
+    /// guard on PR-022c behaviour).
+    #[test]
+    fn perf_step1_extension_off_preserves_nnz() {
+        let (layout, state, inputs) = test_fixture();
+        assert!(!inputs.use_metric_fluid_blocks);
+        let sparse = pstf_analytical_jacobian(&state, &inputs, &layout);
+        // Matches caveat_sparsity_count expectation
+        let lg = layout.ell_max_gamma;
+        let ln = layout.ell_max_nu;
+        let fs_photon = 1 + 2 + 2 * (lg - 2) + 2;
+        let fs_neutrino = 1 + 2 + 2 * (ln - 2) + 2;
+        let coll_photon = 2 + 1 + (lg - 2);
+        let baryon = 2;
+        assert_eq!(sparse.nnz(), fs_photon + fs_neutrino + coll_photon + baryon);
+    }
+
+    // ─── PR-024c-PERF Step 3: extended Jacobian FD regression ──────
+
+    fn full_inputs_fixture(inputs: &JacobianInputs) -> super::super::full_rhs::FullRhsInputs {
+        use super::super::collision::FrameConvention;
+        super::super::full_rhs::FullRhsInputs {
+            k: inputs.k,
+            tau: inputs.tau,
+            bg: inputs.bg,
+            kappa_dot: inputs.kappa_dot,
+            r_b: inputs.r_b,
+            use_pol_feedback: inputs.use_pol_feedback,
+            frame: FrameConvention::ElectronRestFrame,
+            cs2b: inputs.cs2b,
+        }
+    }
+
+    /// Extended sparsity: 25 metric+fluid entries added on top of PR-022c.
+    #[test]
+    fn perf_step3_extended_sparsity_count() {
+        use super::super::metric::BackgroundQuantities;
+        let (layout, state, legacy) = test_fixture();
+        let ext = legacy.with_metric_fluid_bg(BackgroundQuantities::representative(), 3.3e-10);
+        let sparse = pstf_analytical_jacobian(&state, &ext, &layout);
+
+        let lg = layout.ell_max_gamma;
+        let ln = layout.ell_max_nu;
+        let legacy_nnz = (1 + 2 + 2*(lg-2) + 2) + (1 + 2 + 2*(ln-2) + 2)
+                       + (2 + 1 + (lg-2)) + 2;
+        let expected = legacy_nnz + 25;
+        assert_eq!(sparse.nnz(), expected,
+            "extended nnz: expected {}, got {}", expected, sparse.nnz());
+    }
+
+    /// FD regression: extended analytical Jacobian matches
+    /// `pstf_full_rhs` finite-difference to < 1e-6.
+    #[test]
+    fn perf_step3_fd_regression_full_rhs() {
+        use super::super::metric::BackgroundQuantities;
+        let (layout, state, legacy) = test_fixture();
+        let ext = legacy.with_metric_fluid_bg(BackgroundQuantities::representative(), 3.3e-10);
+        let full_in = full_inputs_fixture(&ext);
+
+        let norm = state.iter().fold(0.0_f64, |a, &b| a.max(b.abs())).max(1.0);
+        let h = 1e-6 * norm;
+        let (max_err, i, j) = jacobian_fd_check_full(&state, &ext, &full_in, &layout, h);
+        assert!(max_err < 1e-6,
+            "extended FD regression max rel err {} at ({},{})", max_err, i, j);
+    }
+
+    /// FD regression at multiple k values — ensures no k-dependent bug.
+    #[test]
+    fn perf_step3_fd_regression_multiple_k() {
+        use super::super::metric::BackgroundQuantities;
+        use super::super::ic::{PstfIcInputs, pstf_adiabatic_ic};
+        use super::super::collision::CollisionInputs;
+        use super::super::rhs_free::RhsInputs;
+
+        let layout = PstfFlrwLayout::new(16, 16, 16);
+        layout.validate();
+
+        for &k in &[1e-3_f64, 1e-2, 5e-2, 1e-1] {
+            let ic = PstfIcInputs::default_adiabatic(k, 500.0);
+            let mut state = pstf_adiabatic_ic(&ic, &layout);
+            state[layout.inner.baryon_start + 2] = 0.001;
+            state[layout.i_metric_etak()] = -k * 1e-3;
+            state[layout.i_metric_sigma()] = 1e-5;
+
+            let rhs_in = RhsInputs::free_streaming(k, 100.0);
+            let coll_in = CollisionInputs::pol_off(0.5, 0.6);
+            let legacy = JacobianInputs::from_rhs_and_collision(&rhs_in, &coll_in);
+            let ext = legacy.with_metric_fluid_bg(BackgroundQuantities::representative(), 3.3e-10);
+            let full_in = full_inputs_fixture(&ext);
+
+            let norm = state.iter().fold(0.0_f64, |a, &b| a.max(b.abs())).max(1.0);
+            let h = 1e-6 * norm;
+            let (max_err, i, j) = jacobian_fd_check_full(&state, &ext, &full_in, &layout, h);
+            assert!(max_err < 1e-6,
+                "k={}: extended FD max rel err {} at ({},{})", k, max_err, i, j);
+        }
     }
 
     // ─── Identity tests (3) ─────────────────────────────────────────

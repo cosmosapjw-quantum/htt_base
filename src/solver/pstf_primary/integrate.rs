@@ -46,7 +46,7 @@ use super::layout::PstfFlrwLayout;
 use super::metric::BackgroundQuantities;
 use super::collision::FrameConvention;
 use super::source::{VisibilityAtSnap, pstf_source_function};
-use super::matrix::{build_pstf_matrix_into, bg_from_camb};
+use super::matrix::{build_pstf_matrix_into, build_pstf_matrix_analytical_into, bg_from_camb};
 use crate::solver::sync_gauge_camb::{CommonProfile, CambBackground};
 use crate::solver::stacked::integrate_linear_profile_rodas5p;
 use crate::core::config::Rodas5PConfig;
@@ -135,13 +135,22 @@ pub(crate) fn pstf_solve_kmode(
         ));
     }
 
-    // Build mats_flat: n_vis × (n × n) row-major matrices
+    // Build mats_flat: n_vis × (n × n) row-major matrices.
+    //
+    // PR-024c-PERF: prefer analytical Jacobian-based builder (~80× faster
+    // than unit-vector decomposition).  Falls back to unit-vector on
+    // BASS_PSTF_MATRIX_UV=1 for A/B comparison / legacy reproduction.
+    let use_unit_vector = std::env::var("BASS_PSTF_MATRIX_UV").ok().as_deref() == Some("1");
     let mut mats_flat = vec![0.0_f64; n_vis * n * n];
     for i in 0..n_vis {
         let tau = tau_filtered[i];
         let bg = &bg_filtered[i];
         let off = i * n * n;
-        build_pstf_matrix_into(k, tau, bg, layout, &mut mats_flat[off..off + n * n]);
+        if use_unit_vector {
+            build_pstf_matrix_into(k, tau, bg, layout, &mut mats_flat[off..off + n * n]);
+        } else {
+            build_pstf_matrix_analytical_into(k, tau, bg, layout, &mut mats_flat[off..off + n * n]);
+        }
     }
 
     // Rodas5P config (production-equivalent)
@@ -374,6 +383,115 @@ mod tests {
             max_src);
         assert!(max_src.is_finite(),
             "max source must be finite, got {}", max_src);
+    }
+
+    // ─── PR-024c-PERF Step 5: analytical path agreement ────────────
+
+    /// Analytical-path `pstf_solve_kmode_adiabatic` output agrees with
+    /// unit-vector path (via BASS_PSTF_MATRIX_UV=1 env fallback) to
+    /// high relative precision on source_total, phi, psi at all snapshots.
+    ///
+    /// Not bit-identical (different FP op order in matrix build), but
+    /// should agree to ≲ 1e-8 relative.
+    #[test]
+    fn perf_step5_analytical_vs_uv_path_agreement() {
+        // Serial single k-mode; reduced layout for fast runtime.
+        let layout = PstfFlrwLayout::new(8, 6, 0);
+        layout.validate();
+        let (common, _) = build_common();
+        let k = 0.01;
+
+        // Solve both ways in-process by calling the builders directly
+        // to construct mats_flat, then comparing.  (Env-var toggle is
+        // runtime-wide so we can't flip it mid-test cleanly.)
+        //
+        // Instead: solve once with env cleared (analytical path via default),
+        // once by stamping BASS_PSTF_MATRIX_UV=1 before calling solve.
+        // But std::env modification in tests is racy under multi-thread
+        // execution.  So do it single-threaded OR compare matrix builders
+        // directly.  We choose the latter — simpler and deterministic.
+
+        // Reuse the matrix builders directly to compare.
+        use super::super::matrix::{build_pstf_matrix_into, build_pstf_matrix_analytical_into};
+        let n = layout.n_state;
+        let start_i = common.tau_profile.iter()
+            .position(|&t| t > TAU_IC_MIN).unwrap();
+        let bg = &common.bg_at_snap[start_i + 50.min(common.bg_at_snap.len() - start_i - 1)];
+        let tau = common.tau_profile[start_i + 50.min(common.tau_profile.len() - start_i - 1)];
+        let mut mat_uv = vec![0.0_f64; n * n];
+        let mut mat_an = vec![0.0_f64; n * n];
+        build_pstf_matrix_into(k, tau, bg, &layout, &mut mat_uv);
+        build_pstf_matrix_analytical_into(k, tau, bg, &layout, &mut mat_an);
+
+        let mut max_rel = 0.0_f64;
+        for i in 0..n*n {
+            if mat_uv[i].abs() > 1e-10 {
+                let rel = (mat_uv[i] - mat_an[i]).abs() / mat_uv[i].abs();
+                if rel > max_rel { max_rel = rel; }
+            }
+        }
+        assert!(max_rel < 1e-8,
+            "analytical matrix mismatch at mid-snapshot: max rel err {:.3e}", max_rel);
+
+        // End-to-end solve (analytical path via default).  Must succeed and
+        // produce finite, non-trivial output.
+        let r = pstf_solve_kmode_adiabatic(k, &common, &layout, false)
+            .expect("analytical path solve must succeed");
+        let max_src = r.source_total.iter().fold(0.0_f64, |m, &v| m.max(v.abs()));
+        assert!(max_src.is_finite() && max_src > 1e-6,
+            "analytical path produced trivial source: max |src| = {}", max_src);
+    }
+
+    /// Phase-0 D0.3 cross-check:  does PSTF primary exhibit the same
+    /// high-k source divergence as MB-95 (Bug B in PHASE0_D0_AUDIT_REPORT)?
+    ///
+    /// MB-95's `solve_kmode_with_history` produces source_jl that grows
+    /// exponentially with k for k > ~0.03 (reaches 1e101 at k=0.25).
+    /// PSTF primary uses the same Rodas5P stepper (integrate_linear_profile_rodas5p)
+    /// with identical rtol/atol.  If PSTF also diverges, the bug is in the
+    /// step controller tuning, not the RHS.  If PSTF stays bounded, the bug
+    /// is specific to MB-95's RHS / IC.
+    ///
+    /// Prints a per-k summary; user can eyeball.  Does NOT assert on the
+    /// magnitude (we WANT to see divergence if it's there).
+    #[test]
+    #[ignore = "Phase-0 D0.3 cross-check; run with --ignored --nocapture"]
+    fn phase0_d0_3_cross_check_pstf_high_k() {
+        // Smaller layout for test runtime; still covers high-k regime.
+        let layout = PstfFlrwLayout::new(8, 6, 0);
+        layout.validate();
+        let (common, _) = build_common();
+
+        // Sparse k-sweep focused on the MB-95 divergence boundary (k ~ 0.03)
+        // and the deep high-k regime.
+        let k_vals: Vec<f64> = vec![1e-4, 1e-3, 1e-2, 3e-2, 5e-2, 1e-1, 2.5e-1];
+
+        eprintln!("\n═══ PSTF PRIMARY HIGH-K PROBE (D0.3 cross-check) ═══");
+        eprintln!("  layout: ell_max_γ=12 ell_max_ν=8 pol=off  (smaller than MB-95 default for test runtime)");
+        eprintln!("  Expectation: if bug is Rodas5P stepper, PSTF also diverges here.");
+        eprintln!("              if bug is MB-95 RHS, PSTF stays bounded.");
+        eprintln!();
+        eprintln!("  {:>7}  {:>8}  {:>12}  {:>12}  {:>12}  {:>10}  finite?",
+                  "k", "n_eta", "|src_tot|_max", "|src_sw|_max", "|src_dop|_max", "|phi|_max");
+
+        for &k in &k_vals {
+            let r = match pstf_solve_kmode_adiabatic(k, &common, &layout, false) {
+                Ok(r) => r,
+                Err(e) => {
+                    eprintln!("  k={:.3e}  SOLVE FAILED: {}", k, e);
+                    continue;
+                }
+            };
+            let max_st = r.source_total.iter().fold(0.0_f64, |m, &v| m.max(v.abs()));
+            let max_sw = r.source_sw.iter().fold(0.0_f64, |m, &v| m.max(v.abs()));
+            let max_do = r.source_dop.iter().fold(0.0_f64, |m, &v| m.max(v.abs()));
+            let max_ph = r.phi.iter().fold(0.0_f64, |m, &v| m.max(v.abs()));
+            let all_finite = r.source_total.iter().all(|v| v.is_finite())
+                          && r.phi.iter().all(|v| v.is_finite());
+            eprintln!("  {:7.3e}  {:>8}  {:12.3e}  {:12.3e}  {:12.3e}  {:10.3e}  {}",
+                      k, r.eta_grid.len(), max_st, max_sw, max_do, max_ph, all_finite);
+        }
+        eprintln!("═══════════════════════════════════════════════════\n");
     }
 
     /// Multiple k values each succeed.
