@@ -11,12 +11,51 @@ documented P0 defect.
 This module is intentionally minimal. Other PR13AM responsibilities (TE-sign
 selection and D1/D3 bridge numerics) remain TBD and will be added under a
 separate track.
+
+MIO ownership (PR13AM-MIO-TAG, INDEPENDENT_TRACKS_PLAN v1.2 §19.5):
+-------------------------------------------------------------------
+The TE-sign D1/D3 bridge is a model-independent diagnostic per BASS_PY_HTT_
+TSC_MIO_RESEARCH_PLAN v3 §1.4.1. Physical location is retained under htt/
+for import stability; semantic ownership is MIO. The ``__mio_owned__``
+flag is the first-line G19 defence (v3 §12.2bis). Any artifact produced by
+this module must flow through ``_mio_artifact_name`` to enforce the
+``mio_`` filename prefix.
 """
 from __future__ import annotations
 
 from typing import Any, Mapping
 
 import numpy as np
+
+
+__mio_owned__ = True
+__mio_rationale__ = (
+    "TE-sign D1/D3 pattern is a model-independent diagnostic bridge. "
+    "Per BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN v3 §1.4.1, semantic ownership "
+    "is MIO; physical location in htt/ is retained for import stability."
+)
+
+
+def _mio_artifact_name(stem: str, version: int = 1) -> str:
+    """Enforce v3 §12.2bis naming: 'mio_' prefix + subpackage identifier.
+
+    Parameters
+    ----------
+    stem : str
+        Raw artifact basename (without extension, without prefix).
+    version : int, default 1
+        Integer version tag suffixed as ``_v{N}``.
+
+    Returns
+    -------
+    str
+        Artifact filename of the form ``mio_pr13am_<stem>_v<N>.json``. If
+        ``stem`` already starts with ``mio_`` the existing prefix is kept
+        and only the version tag is appended.
+    """
+    if not stem.startswith("mio_"):
+        stem = f"mio_pr13am_{stem}"
+    return f"{stem}_v{version}.json"
 
 
 _FALLBACK_DIAGNOSTIC = "uniform_fallback_diagnostic_only"
