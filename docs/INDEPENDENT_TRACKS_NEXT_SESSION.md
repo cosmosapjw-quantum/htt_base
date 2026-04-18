@@ -1,13 +1,14 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W5` phase.
+**As of**: 2026-04-19, post-`IND_TRACKS_W6` phase.
 **Last audited**: 2026-04-19
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W5_2026-04-19.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W4_2026-04-19.md`,
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W6_2026-04-19.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W5_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W4_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W3_2026-04-19.md`).
 **Governing plan**: `INDEPENDENT_TRACKS_PLAN.md` **v1.2** (PART II MIO
 integration patch + PART III Week-5+ realignment landed 2026-04-19;
-Week 1–5 routine shipped; Week 6 routine detailed in plan §21).
+Week 1–6 routine shipped; Week 7 routine detailed in plan §21).
 **Parent plan**: **`BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN.md` v3** (MIO
 added as 4th pillar; supersedes `BASS_PY_HTT_TSC_RESEARCH_PLAN.md` v2
 which remains referenced from historical carry-forwards).
@@ -109,6 +110,30 @@ bass_py/tsc/diagnostics/ bass_py/tsc/charts/ bass_py/workspace/`):
 RED-01 cleared, 15 skips migrated to different classes with 17
 plot_style skips fully resolved).
 
+## §1c-3. What shipped in Week 6
+
+Commits `6d66058` (W6D1) → `0e534c8` (W6D7). Five daily landings, one
+phase-boundary audit. `bass_py/mio/` package booted and populated with
+directional coherence (HJ-02a), MioCertificate generator (HJ-06a),
+masked-sky caveats (HJ-05a-lite), and PR13AM re-export bridge.
+
+| Track | Artefact | Status |
+|---|---|---|
+| MIO-BOOT-01 (Day 1) | `bass_py/mio/{__init__.py, coherence/__init__.py, extraction/__init__.py, tension/__init__.py, decomposition/__init__.py, diagnostics/__init__.py, interface/{__init__.py, mio_certificate.py}, bridges/__init__.py, tests/{__init__.py, test_boot.py}}` + `pyproject.toml` `[tool.setuptools.packages.find]` / `testpaths` include `mio*` + `workspace*` | landed |
+| FIG-MIO-SKIP-GATE (Day 1) | `bass_py/workspace/contracts/tests/test_fig_mio_skip_gate.py` — `test_figures_mio_skip_should_activate_after_mio_boot` + `test_mio_boot_subpackages_do_not_raise_on_import` | landed |
+| MIO-HJ-06a (Day 2) | `bass_py/mio/interface/mio_certificate.py::build_mio_certificate(...)` — auto-populates git_commit + config_hash; raises ValueError on any `posterior`-keyword; 10 tests covering all plan §12.4 gates | landed |
+| MIO-HJ-02a (Days 3-5) | `bass_py/mio/coherence/directional.py` (~310 L) — `DirectionalProbe`, `STANDARD_PROBES` (5-probe SSOT), `resultant_vector`, `pairwise_separations`, `coherence_chi2`, `isotropy_pvalue`, `to_mio_certificate`, `emit_directional_coherence_artefact`; 12 tests; artefact `bass_py/workspace/results/mio_directional_coherence_v1.json` persisted (R=0.9990, p_iso≈3e-4, χ²/dof=9.45 with seed 20260419) | landed |
+| MIO-BRIDGES-01 (Day 6) | `bass_py/mio/bridges/__init__.py` re-exports `htt.PR13AM_te_sign_d1d3_bridge` via option A (semantic identity via Python `is`); existing PR13AM tests unchanged; 5 integration tests | landed |
+| MIO-HJ-05a-lite (Day 7) | `bass_py/mio/diagnostics/masked_sky_caveats.py` — `SkyCoverageReport` + `build_report` + `as_caveats_list`; reuses `common.healpix_selection.build_zoa_mask`; 7 tests | landed |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W6_2026-04-19.md` | landed |
+
+Final test tally over the touched surface
+(`bass_py/htt/tests/ bass_py/src/ bass_py/tsc/admissibility/
+bass_py/tsc/diagnostics/ bass_py/tsc/charts/ bass_py/workspace/
+bass_py/mio/`): **878 passed, 0 failed, 8 skipped** (+39 tests vs
+W5's 839; skip count unchanged, composition shifted — see carry-
+forward W6 SKIP-02b-v3-LEGACY below).
+
 ## §1d. What was designed in the 2026-04-19 planning session
 
 No code landed in this planning pass — only plan documents. Two new
@@ -120,125 +145,104 @@ planning artefacts and two new plan-revision sections.
 | Governing plan PART II | `INDEPENDENT_TRACKS_PLAN.md` §10–§17 | MIO integration patch: PATCH-01~05 identification + new tracks CONTRACTS-01, G19-ENFORCE-01, CONTRACTS-02, MIO-BOOT-01, MIO-HJ-02a, MIO-HJ-06a, MIO-BRIDGES-01, MIO-HJ-05a-lite, MANU-CH11-REDESIGN, MANU-CH12-NEW, DOS-A30-MIO, REG-02. |
 | Governing plan PART III | `INDEPENDENT_TRACKS_PLAN.md` §18–§22 | Code-inspection realignment (based on commit `115f505` LB-5 + IND_TRACKS_W4). Identifies RED-01 (F3), SKIP-17/02a/02b/02c, PLACEHOLDER-01, SEMANTIC-01, AMBIG-01. Adds 7 new tracks (WS-BOOT-01, HTT-FIG-SHIM, HTT-OBS-FIXTURE, PR13AH-v2-WIRE, PR13AM-MIO-TAG, LEGACY-README, FIG-MIO-SKIP-GATE). Replaces Week 5–9 day-by-day schedule. |
 
-**Reading order for the next session**: governing plan §21 Week 6
-day schedule → §12.2 MIO-BOOT-01 → §12.3 MIO-HJ-02a → §12.4 MIO-HJ-06a
-→ §12.5 MIO-BRIDGES-01 → §12.6 MIO-HJ-05a-lite → §19.7 FIG-MIO-SKIP-GATE.
-The day schedule below (§2) is a distilled view of Week 6 from §21.
+**Reading order for the next session**: governing plan §21 Week 7
+day schedule → §3.3 TSC-03 → §4.2 TSC-05 → §4.3 TSC-06 →
+v1.1 §14.3 G19 cross-check guard → v1.1 §11.3 CONTRACTS-02 →
+v1.1 §13.3 DOS-A30-MIO A35/A38/A40.
+The day schedule below (§2) is a distilled view of Week 7 from §21.
 
-## §2. Active priorities for the next session (Week 6)
+## §2. Active priorities for the next session (Week 7)
 
-**"MIO 패키지 부팅 + HJ-02 선행"** — distilled from
-`INDEPENDENT_TRACKS_PLAN.md` §21 Week 6.
+**"tsc 잔여 + 선행 가능 appendix"** — distilled from
+`INDEPENDENT_TRACKS_PLAN.md` §21 Week 7.
 
-### Day 1 (Mon) — MIO package bootstrap + figure skip cascade
+### Days 1–2 (Mon–Tue) — TSC three-bound hierarchy
 
-**MIO-BOOT-01** (plan §12.2). Create `bass_py/mio/` skeleton:
-`{__init__.py, coherence/__init__.py, extraction/__init__.py,
-tension/__init__.py, decomposition/__init__.py, diagnostics/__init__.py,
-interface/{__init__.py, mio_certificate.py}, bridges/__init__.py,
-tests/{__init__.py, test_boot.py}}`. Register in `bass_py/pyproject.toml`
-`[tool.setuptools.packages.find]` include list.
+**TSC-03** (plan §3.3). Ship
+`bass_py/tsc/admissibility/three_bound_hierarchy.py` together with a
+cross-check test against `htt.bounds`. Exposes the Planck / WMAP / CF4
+three-bound comparator ordering used elsewhere in the manuscript and
+derives the identical ceilings from the `htt` side for the
+cross-validation anchor.
 
-**FIG-MIO-SKIP-GATE** (plan §19.7). Verify that the 2 `No module named
-'mio'` skips in `test_figures_smoke.py` auto-clear once MIO package is
-importable. Add regression `test_figures_mio_skip_should_activate_after_mio_boot`.
+- Commit tag: `W7D2: tsc three-bound hierarchy`
+- Gate: `three_bound_hierarchy` + `test_three_bound_hierarchy_matches_htt_bounds`
+  green (values agree to rtol 1e-10).
 
-- Commit tag: `W6D1_BOOT: mio package skeleton`
-- Gate: `import bass_py.mio` succeeds; `test_figures_smoke.py` mio-skip
-  count drops 2 → 0.
+### Day 3 (Wed) — TSC MES Michaelis-Menten export
 
-### Day 2 (Tue) — MioCertificate generator API
+**TSC-05** (plan §4.2). `bass_py/tsc/charts/michaelis_menten_export.py`
+exposes the Route B SSOT mirror of the MES
+Michaelis-Menten coefficients so downstream chart scripts consume a
+single source rather than scattering constants.
 
-**MIO-HJ-06a** (plan §12.4). `bass_py/mio/interface/mio_certificate.py`
-with `build_mio_certificate(report_type, probe_name, channel,
-departure_variables, adequacy_indicators, consistency_metrics, *,
-domain_caveats, reduction_status, generated_by, input_data_hashes,
-htt_cross_check_suggested=None)` that auto-populates git_commit +
-config_hash + returns a `workspace.contracts.MioCertificate`. Reject
-`posterior`-keyword fields.
+- Commit tag: `W7D3: tsc michaelis_menten export`
+- Gate: 3 tests — SSOT match, zero drift from `bass.observational.planck_mes_bounds`,
+  JSON schema freeze.
 
-- Commit tag: `W6D2: MioCertificate generator API`
-- Gate: 3 tests — `test_build_certificate_frozen`,
-  `test_build_rejects_posterior_keyword`,
-  `test_provenance_auto_populated`.
+### Days 4–5 (Thu–Fri) — TSC ↔ HTT integration bridge
 
-### Days 3–5 (Wed–Fri) — Directional coherence (HJ-02a)
+**TSC-06** (plan §4.3 + v1.1 §14.3). `bass_py/tsc/integration/htt_bridge.py`
+computes F_Bayes on the tsc side and automates the cross-check against
+the htt Gaussian-posterior regression. Must set `is_cross_check=True`
+on every output (v1.1 §14.3 G19 guard) so the result is never mistaken
+for a primary posterior.
 
-**MIO-HJ-02a** (plan §12.3). `bass_py/mio/coherence/directional.py` (~350 L):
-- `DirectionalProbe` frozen dataclass
-- `resultant_vector(probes)` weighted unit-sum
-- `isotropy_pvalue(probes, n_mock, rng)` Fisher-distribution or permutation
-- `pairwise_separations(probes)` 5×5 separation matrix
-- `coherence_chi2(probes)` χ² for common-axis hypothesis
-- `to_mio_certificate(probes, p_iso, resultant, config_hash)` integration
-- `STANDARD_PROBES` hardcoded 5-probe SSOT (CMB / CatWISE / Radio / CF4pp / BiPoSH)
+- Commit tag: `W7D5: tsc htt_bridge with G19 guard`
+- Gate: 5 tests — F_Bayes match within published band [0.068, 0.118];
+  `is_cross_check=True` asserted; mismatch test fails loudly.
 
-- Commit tag: `W6D5: mio directional coherence`
-- Gate: 5 tests —
-  `test_isotropic_null_pvalue_gt_0p05` (10k isotropic mocks, no false detection),
-  `test_aligned_probes_pvalue_lt_0p01` (5 probes within 20° detected),
-  `test_resultant_vector_antipodal_probes_R_zero`,
-  `test_pairwise_separations_cmb_catwise_literature_ge_28deg` (Secrest+2020),
-  `test_to_mio_certificate_has_no_posterior_field`.
-  Generates artefact `mio_directional_coherence_v1.json`.
+### Day 6 (Sat) — G19 cross-check protocol doc
 
-### Day 6 (Sat) — PR13AM re-export through MIO bridges
+**CONTRACTS-02** (plan v1.1 §11.3). `docs/dossier/A34_g19_cross_check_protocol.md`
+writing up the G19 cross-check channel (HTT ↔ TSC via TSC-06) and
+enumerating the failure modes that a non-`is_cross_check=True` path
+would introduce.
 
-**MIO-BRIDGES-01** (plan §12.5). `bass_py/mio/bridges/__init__.py` does
-`from htt.PR13AM_te_sign_d1d3_bridge import *  # noqa` (option A —
-semantic re-export, no file move, preserves existing import paths).
-`test_pr13am_mio_ownership_tag` already exists (W5D5); add integration
-test confirming both import paths coexist.
+- Commit tag: `W7D6: G19 cross-check protocol doc`
+- Gate: A34 draft + appendix hash check.
 
-- Commit tag: `W6D6: mio bridges PR13AM re-export`
-- Gate: existing PR13AM tests unchanged; new integration test for dual
-  import path.
+### Day 7 (Sun) — MIO appendix A35 / A38 / A40 drafts
 
-### Day 7 (Sun) — Masked-sky caveats
+**DOS-A30-MIO** (plan v1.1 §13.3 remainder). A35 directional coherence
+appendix (cross-reference for MIO-HJ-02a), A38 masked-sky caveats
+appendix (cross-reference for MIO-HJ-05a-lite), A40 G19 architectural
+stance.
 
-**MIO-HJ-05a-lite** (plan §12.6). `bass_py/mio/diagnostics/masked_sky_caveats.py`
-(~250 L) with `SkyCoverageReport` frozen dataclass + `build_report(mask_pix,
-nside, zoa_cfg, provenance)` + `as_caveats_list(report)` for
-`MioCertificate.domain_caveats` consumption.
+- Commit tag: `W7D7: MIO appendix A35/A38/A40 drafts`
+- Gate: 3 markdown files, each with the DOS-A30 template header.
 
-- Commit tag: `W6D7: mio masked_sky_caveats`
-- Gate: 2 tests — `test_f_sky_consistency`, `test_zoa_applied_then_f_sky_less_than_one`.
+### Week 7 final gate (plan §21)
 
-### Week 6 final gate (plan §21)
-
-- [ ] `import bass_py.mio` succeeds.
-- [ ] HJ-02a 5 tests green + `mio_directional_coherence_v1.json` artefact
-      produced.
-- [ ] `test_figures_smoke.py` MIO-skip count 2 → 0 (`bounds`-related 2
-      skips remain, deferred to Week 8).
-- [ ] `MioCertificate.as_posterior_bundle()` raises `NotImplementedError`
-      end-to-end through the new generator.
+- [ ] `bass_py/tsc/` 테스트 ≥ 700 (현재 615 + TSC-03 / 05 / 06 ≈ +~85).
+- [ ] tsc ↔ htt F_Bayes cross-check 자동화 + 불일치 시 fail.
+- [ ] TSC-06 출력에 `is_cross_check=True` 명시 + G19 guard 테스트 green.
+- [ ] CONTRACTS-02 문서 + A35 / A38 / A40 초안 착륙.
 - [ ] Phase-boundary audit written to
-      `docs/audits/AUDIT_PHASE_IND_TRACKS_W6_YYYY-MM-DD.md`.
+      `docs/audits/AUDIT_PHASE_IND_TRACKS_W7_YYYY-MM-DD.md`.
 
-### Deferred to Week 7+ (not Week-6 targets but part of this lane)
+### Deferred to Week 8+ (not Week-7 targets but part of this lane)
 
-- **TSC-03 / TSC-05 / TSC-06** — Week 7 (plan §21). Plan sections §3.3 /
-  §4.2 / §4.3.
-- **CONTRACTS-02** G19 cross-check protocol docs — Week 7.
-- **W4 F4** Θ⁴ bridge htt audit tightening — Week 7 (combine with
-  TSC-03/05/06).
-- **W4 F1** mock coverage sandwich — opportunistic in Week 7–8 when
-  `C_pix` non-uniform support is needed.
-- **MANU-CH11-REDESIGN + MANU-CH12-NEW §12.0/12.2/12.6/12.7 drafts** —
-  Week 8.
-- **HTT-STAB final** — Week 8 (2 `bounds`-related + 5
-  `/mnt/user-data`-pipeline-data figure skips — the latter is the
-  SKIP-05-LATENT carry-forward from the W5 audit).
+- **MANU-CH11-REDESIGN + MANU-CH12-NEW §12.0 / §12.2 / §12.6 / §12.7
+  drafts** — Week 8 (plan §21).
+- **HTT-STAB final** — Week 8. Resolves the `/mnt/user-data` pipeline-data
+  5 skips (W5 SKIP-05-LATENT) and the W6 SKIP-02b-v3-LEGACY 2 skips via
+  per-figure v3 rewrites (FM1 root-cause patch).
+- **`venv/bin/pip install dynesty`** — Week 7–8 convenient window
+  (closes W5 DYNESTY-DEP).
+- **W4 F4** Θ⁴ bridge htt audit tightening — bundle with TSC-03/05/06
+  natural continuation.
+- **W4 F1** mock coverage sandwich — opportunistic during TSC-06 work
+  when `C_pix` non-uniform support is needed.
 - **DOS-A13 remaining 12 models** — Week 9.
 - **APPLY-BIAS-AMP refinement** (W5 audit carry-forward) — opportunistic
   when `ChannelSummary` gains a velocity-amplitude field.
 
-## §3. Carry-forward items from W1–W5 audits + 2026-04-19 inspection
+## §3. Carry-forward items from W1–W6 audits + 2026-04-19 inspection
 
 Recorded here per audit R2 so the next session doesn't rediscover them.
-Severity legend: **P0** = Day-1 blocker, **P1** = Week-6 target, **P2** = later
-week, **P3** = out-of-lane. W5 additions at the bottom.
+Severity legend: **P0** = Day-1 blocker, **P1** = Week-7 target, **P2** = later
+week, **P3** = out-of-lane. W6 additions at the bottom.
 
 | Tag | Severity | Description | Where to act |
 |---|---|---|---|
@@ -254,7 +258,7 @@ week, **P3** = out-of-lane. W5 additions at the bottom.
 | INSPECT-19 RED-01 | — | **RESOLVED W5D1** — WS-BOOT-01 landed. Same fix as W1-W2 F3. | No further action. |
 | INSPECT-19 SKIP-17 | — | **RESOLVED W5D4** — HTT-FIG-SHIM via `htt/figures/__init__.py` sys.path prepend (conftest approach won't fire for tests outside figures/; moved to package `__init__`). plot_style 17 → 0. | No further action. |
 | INSPECT-19 SKIP-02a | — | **RESOLVED W5D4** — same HTT-FIG-SHIM fix. bounds 2 → 0. | No further action. |
-| INSPECT-19 SKIP-02b | P1 | 2 figure skips with `No module named 'mio'`. | **Week 6 Day 1 target** — auto-resolves when MIO-BOOT-01 lands. FIG-MIO-SKIP-GATE verifies the cascade. |
+| INSPECT-19 SKIP-02b | — | **PARTIALLY RESOLVED W6D1** — `import bass_py.mio` now succeeds (plan §19.7 gate + `test_figures_mio_skip_should_activate_after_mio_boot` green). The literal skip count is unchanged because the two figures (`fig_certification_matrix.py`, `fig_identified_reporting_split.py`) reference v2 legacy submodules `mio.core.ceiling_families` / `mio.reporting.identified_vs_reporting` that are NOT in the v3 skeleton. See `W6 SKIP-02b-v3-LEGACY` below. | See W6 SKIP-02b-v3-LEGACY. |
 | INSPECT-19 SKIP-02c | — | **RESOLVED W5D5** — HTT-OBS-FIXTURE landed `bass_py/workspace/data/obs_defaults.json` with v3 §9.2 SSOT constants + `dipole_observations` block. | No further action. |
 | INSPECT-19 PLACEHOLDER-01 | — | **RESOLVED W5D6** — PR13AH-v2-WIRE added `mock_bias_correction` kwarg + `_apply_bias_to_direction`. When bias supplied, `calibration_pending=False`. | No further action. |
 | INSPECT-19 SEMANTIC-01 | — | **RESOLVED W5D5** — PR13AM-MIO-TAG added `__mio_owned__`, `__mio_rationale__`, `_mio_artifact_name`. | No further action. |
@@ -263,6 +267,11 @@ week, **P3** = out-of-lane. W5 additions at the bottom.
 | W5 SKIP-05-LATENT | P2 | 5 `test_figures_smoke.py` skips on `/mnt/user-data/outputs/<fname>.json/npz` (`FLRW_tilt_results.json`, `IS06_3D_posterior.npz` ×2, `robustness_sweeps_integrated.json` ×2, `fig_colin_beta.png`). Latent issue surfaced by HTT-FIG-SHIM. | Week 8 HTT-STAB — ship synthetic fixture stubs at `bass_py/workspace/pipeline_outputs/` + honour `HTT_PIPELINE_OUTDIR` env var. |
 | W5 DYNESTY-DEP | P2 | 1 skip in `fig_MES_three_bounds.py` on `No module named 'dynesty'`. | `venv/bin/pip install dynesty` at the next convenient window. |
 | W5 APPLY-BIAS-AMP | P2 | `_apply_bias_to_direction` scales by `\|V_true\|` not measurement amplitude because `ChannelSummary` has no velocity amplitude field yet. | Opportunistic during Week 7–8 when the amplitude field is introduced; update helper to use `amp_meas * u_hat`. |
+| W6 SKIP-02b-v3-LEGACY | P2 | 2 `test_figures_smoke.py` skips migrated from `No module named 'mio'` → `No module named 'mio.core'` / `No module named 'mio.reporting'`. The two figures (`fig_certification_matrix.py`, `fig_identified_reporting_split.py`) still reference v2 "certification engine" vocabulary. | Week 8+ MANU-CH12-NEW phase. Either rewrite the figures in v3 "observatory" terms, OR retire them in favour of new HJ-02 / HJ-05 figures. Do NOT port v2 legacy modules into the v3 skeleton — it would contaminate the semantic scope (see W6 audit FM1 and legacy/README.md banner). |
+| W6 FM2 PROBE-SIGMA | P2 | `STANDARD_PROBES` σ_cone values for Radio (10°) / CF4pp (15°) / BiPoSH (20°) are plan-suggested placeholders, not paper-cited. Dominated by CMB (σ=0.5°) so changes are in-the-weeds for R and p_iso. | Opportunistic during Week 8 MANU-CH12-NEW §12.2 draft — cite NVSS+RACS / Tully+2023 / Planck BiPoSH values with refs. |
+| W6 FM4 MC-VECTORISE | P3 | `_sample_isotropic_unit_vectors` loops per-mock inside `isotropy_pvalue`. Fine at `n_mock=10k` (~50 ms), slow at `1e6`. | Revisit only if HJ-02a moves to a 1e6-mock regime. Rewrite as a single `rng.uniform((m, n, 3))` vectorised draw. |
+| W6 FM5 PROBE-NAME-SCHEMA | P3 | Generated MioCertificate stores `probe_name = "CMB+CatWISE+Radio+CF4pp+BiPoSH"` string join. Functional but ad hoc. | Deferred — a structured `probe_names: list[str]` field would trip `test_miocertificate_schema_frozen` and needs CONTRACTS-01 freeze-policy coordination. |
+| W6 FM6 GIT-SHA-DRIFT | P3 | `build_mio_certificate` resolves `git_commit` at instantiation time; a long-lived session that commits between builds tags different certs with different SHAs. | Expected behaviour for diagnostic provenance (documented in docstring). No action unless a client demands atomic-build-session SHA pinning. |
 
 ## §4. Environment and quickstart
 
@@ -270,12 +279,12 @@ week, **P3** = out-of-lane. W5 additions at the bottom.
 # Repo root
 cd /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 
-# Sanity: touched-surface test run.  As of 2026-04-19 post-W5:
-# 839 passed, 0 failed, 8 skipped (RED-01 cleared by WS-BOOT-01).
+# Sanity: touched-surface test run.  As of 2026-04-19 post-W6:
+# 878 passed, 0 failed, 8 skipped (+39 new tests vs W5).
 venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
                 bass_py/tsc/admissibility/ \
                 bass_py/tsc/diagnostics/ bass_py/tsc/charts/ \
-                bass_py/workspace/
+                bass_py/workspace/ bass_py/mio/
 
 # Full monorepo suite (slower; tsc alone is ~18 s).
 venv/bin/pytest bass_py/
@@ -321,9 +330,11 @@ per the v1.2 plan — bass_py session must not touch):
 * `bass_py/src/common/*` — ZoA / bulk-flow common modules (Week 1–4 landed).
 * `bass_py/workspace/` + `bass_py/workspace/contracts/*` — interface
   contracts (Week 5 Day 1–2).
-* `bass_py/mio/*` — new MIO package (Week 6). Distinct from `legacy/mio/`
-  which is the v2 "certification engine" era snapshot (read-only, banner
-  added in Week 5 Day 7).
+* `bass_py/mio/*` — new MIO package. Week 6 shipped the skeleton +
+  MIO-HJ-02a directional coherence + MIO-HJ-06a MioCertificate generator +
+  MIO-BRIDGES-01 PR13AM re-export + MIO-HJ-05a-lite masked-sky caveats.
+  Distinct from `legacy/mio/` which is the v2 "certification engine"
+  era snapshot (read-only, banner added in Week 5 Day 7).
 * `docs/dossier/A13_*`, `A14_*`, `A32_*`, `A33_*`, `A35_*`, `A38_*`,
   `A39_*`, `A40_*` — manuscript dossier (`A13_02_*` through `A13_14_*`
   land in Week 9).
