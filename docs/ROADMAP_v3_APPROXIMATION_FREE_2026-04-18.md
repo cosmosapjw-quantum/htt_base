@@ -155,11 +155,19 @@ Ports v4.0 ENTRY track to PSTF primary as the new production target.
 
 Implements TCA_UFA_RSA document §3-10 (sparse Jacobian, m-major, matrix LoS).
 
+> **2026-04-18 update** — Phase 2 refined by [`docs/IMEX_DECISION_2026-04-18.md`](IMEX_DECISION_2026-04-18.md):
+> - New **Phase 2.0**: callback-based stage assembly backend (solver-neutral prerequisite that replaces `mats_flat`).
+> - New **Phase 2.6**: pure IMEX-ARK4 mainline implementation (see IMEX_DECISION §6 for PR ladder IMEX-00..IMEX-09).
+> - New **Phase 2.6b**: RODAS5P-centered hybrid as frozen backup branch (see [`docs/RODAS5P_HYBRID_BACKUP_PLAN.md`](RODAS5P_HYBRID_BACKUP_PLAN.md)). Benchmark-only.
+
+- **P2.0 Callback-based stage assembly backend** (NEW). Replace `integrate_linear_profile_rodas5p` / `LinearProfileDyn` / `mats_flat` with user-supplied RHS + Jacobian callbacks. Solver-neutral; prerequisite for both Rodas5P-on-large-n and IMEX-ARK4. Memory drops from O(N_snap · n²) to O(n² or nnz).
 - **P2.1 (ℓ,m) m-major layout formalization**. `src/solver/pstf_primary/layout.rs`: `PstfFlrwLayout` → full `LmLayout` with m ∈ {−m_max..+m_max}. m=0 remains special case.
-- **P2.2 Analytical Jacobian full-sector extension**. `src/solver/pstf_primary/jacobian.rs`: current scope = free-stream + collision only. Extend to metric + fluid + Clebsch-Gordan κ-factor for m ≠ 0. σ = 0 → m ≠ 0 entries zero (preserves FLRW).
+- **P2.2 Analytical Jacobian full-sector extension**. ~~`src/solver/pstf_primary/jacobian.rs`: current scope = free-stream + collision only. Extend to metric + fluid + Clebsch-Gordan κ-factor for m ≠ 0.~~ **DONE** in PR `c5ae4f9` for FLRW m=0 (metric + fluid + monopole source). Remaining: m ≠ 0 Clebsch-Gordan extension.
 - **P2.3 Sparse Jacobian backend**. Choose `faer-sparse` (preferred; active maintenance, AVX2 microkernels) or `sprs`. Exact sparsity pattern pre-computed. LU factorization reuse policy.
 - **P2.4 Adaptive ℓ_max + sponge boundary**. `R_ℓmax = tail-energy / total` monitor. Top-ℓ shell damping layer (gentle profile to avoid low-ℓ backreaction).
 - **P2.5 Matrix LoS projector**. Current `src/los/` is scalar. Introduce `G_{Aa}(η, k)` matrix kernel; FLRW LoS becomes the A=a=0 case.
+- **P2.6 Pure IMEX-ARK4 mainline** (NEW). Kennedy–Carpenter ARK4(3)6L[2]SA tableau. Implicit stiff block = Thomson collision (diagonal ℓ≥3 + small dense at ℓ≤2). Explicit = transport + metric + fluid + neutrinos. Full PR ladder in IMEX_DECISION §6.
+- **P2.6b RODAS5P-centered hybrid backup** (NEW, parallel, benchmark-only). Implemented only to the extent needed for A/B comparison at IMEX-07 exit gate.
 
 **Phase 2 gate**: FLRW limit (m=0 only) reproduces Phase 1 D_ℓ. Jacobian
 sparsity pattern matches expected band structure. Small-shear Σ² ≪ 1
