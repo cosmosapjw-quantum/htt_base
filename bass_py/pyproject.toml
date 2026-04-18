@@ -12,7 +12,7 @@ dependencies = [
 dev = ["pytest>=7.4"]
 
 [tool.pytest.ini_options]
-testpaths = ["bass", "tsc", "src", "."]
+testpaths = ["bass", "tsc", "src", "mio", "workspace", "."]
 python_files = ["test_*.py"]
 markers = [
     "slow: marks tests as slow / end-to-end integration (LB-6; deselect with '-m \"not slow\"')",
@@ -24,4 +24,4 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = [".", "src"]
-include = ["bass*", "tsc*", "common*"]
+include = ["bass*", "tsc*", "common*", "mio*", "workspace*"]
