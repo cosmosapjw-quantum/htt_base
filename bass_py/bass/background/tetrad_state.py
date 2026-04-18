@@ -1,0 +1,304 @@
+"""bass/background/tetrad_state.py — Tetrad background state (§2 of
+the low-ℓ Bianchi solver reference).
+
+Provides a covariant bookkeeping layer on top of
+``bass.background.einstein_bianchi`` that exposes the tetrad-basis
+variables
+
+    {α(η), β_ab(η), Σ_ab(η), ³R_ab(η), C^i_{jk}}
+
+used throughout the low-ℓ tetrad-based Bianchi CMB solver reference.
+``einstein_bianchi`` evolves (a, Σ_+, Σ_−) in the reduced diagonal
+gauge for all 10 Bianchi types plus FLRW; this module lifts that to
+the full symmetric-traceless 3-tensor representation so the
+perturbation / multipole hierarchy equations (§6, §7, §9 of the
+reference) can be written in their index-native form.
+
+Definitions (reference §2.1)
+----------------------------
+- **α(η)** = ln a(η). Isotropic expansion factor.
+- **β_ab(η)** : cumulative anisotropic shape deformation. Symmetric
+  trace-free 3-tensor satisfying β̇_ab = 2 Σ_ab (e-fold derivative).
+  β_ab(η_0) = 0 by convention (today-normalised).
+- **Σ_ab(η)** = e^α σ_ab : conformal shear. Symmetric trace-free
+  3-tensor. For axisymmetric types reduces to
+      Σ_ab = Σ_+ diag(-2, 1, 1)/√6 + Σ_− diag(0, 1, -1)/√2
+  in the aligned-eigenvector basis. Sign of Σ_± follows
+  ``einstein_bianchi`` conventions.
+- **³R_ab(η)** : anisotropic 3-curvature from the Bianchi spatial
+  connection. Type-dependent closed form from
+  ``bianchi_types.compute_ricci_tensor`` when available; Type I has
+  ³R_ab ≡ 0. For the types where the explicit spatial curvature
+  formula is not yet implemented the field is flagged as UNAVAILABLE
+  (see ``TetradBackgroundState.curvature_status``).
+- **C^i_{jk}** : Bianchi structure constants. Time-independent; taken
+  from ``bass.background.bianchi_types.StructureConstants``.
+
+Design notes
+------------
+This module does NOT re-integrate the background — it wraps the
+output of ``solve_bianchi_background``. That way any bug fixes or
+accuracy improvements in ``einstein_bianchi`` propagate automatically.
+
+Not implemented here (deferred to future Bianchi-perturbation work):
+- Time-dependent basis rotation (spatial frame drift for Types VII_h, IX)
+- Dynamical ³R_ab for Types II/III/IV/VI/VIII/IX — currently Type I
+  (flat), Type V (isotropic open), and Type VII_0 (flat with Δn) are
+  supported. Other types return ``curvature_status = 'unavailable'``.
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Optional
+
+import numpy as np
+
+from bass.background.bianchi_types import StructureConstants
+from bass.background.einstein_bianchi import (
+    BianchiBackgroundState, BianchiCosmology, solve_bianchi_background,
+)
+
+
+__all__ = [
+    'TetradBackgroundState',
+    'build_tetrad_state',
+    'axisymmetric_sigma_tensor',
+    'anisotropic_3_curvature',
+]
+
+
+# ════════════════════════════════════════════════════════════════════
+# Helper: axisymmetric → full 3×3 tensor
+# ════════════════════════════════════════════════════════════════════
+
+def axisymmetric_sigma_tensor(sigma_plus: float, sigma_minus: float) -> np.ndarray:
+    """Convert (Σ_+, Σ_−) to the full 3×3 symmetric-traceless tensor.
+
+    Using the conventional basis (Misner-Thorne-Wheeler Eq 30.26-ish)
+
+        Σ_ab = Σ_+ · (1/√6) · diag(-2, 1, 1) + Σ_− · (1/√2) · diag(0, 1, -1)
+
+    which satisfies Σ_ab · g^{ab} = 0 and is symmetric. In the frame
+    where the x-axis is the principal shear axis.
+
+    Parameters
+    ----------
+    sigma_plus, sigma_minus : float
+        Shear amplitudes in the two axisymmetric channels as
+        produced by ``einstein_bianchi``.
+
+    Returns
+    -------
+    (3, 3) ndarray
+        Full symmetric-traceless Σ_ab (trace exactly 0 by construction).
+    """
+    sigma_ab = np.zeros((3, 3), dtype=np.float64)
+    inv_sqrt6 = 1.0 / np.sqrt(6.0)
+    inv_sqrt2 = 1.0 / np.sqrt(2.0)
+    sigma_ab[0, 0] = sigma_plus * (-2.0) * inv_sqrt6
+    sigma_ab[1, 1] = sigma_plus * (+1.0) * inv_sqrt6 + sigma_minus * (+1.0) * inv_sqrt2
+    sigma_ab[2, 2] = sigma_plus * (+1.0) * inv_sqrt6 + sigma_minus * (-1.0) * inv_sqrt2
+    # Cross terms are zero in the aligned-eigenvector basis.
+    return sigma_ab
+
+
+def anisotropic_3_curvature(
+    structure: StructureConstants,
+    a: float,
+    sigma_plus: float,
+    sigma_minus: float,
+) -> tuple[Optional[np.ndarray], str]:
+    """Compute the anisotropic part of the spatial Ricci tensor ³R_ab.
+
+    The Bianchi 3-spatial Ricci tensor splits as
+
+        ³R_ab = (1/3) ³R · h_ab + ³R_ab^{(aniso)}
+
+    where h_ab is the 3-metric and ³R_ab^{(aniso)} is symmetric
+    trace-free. Only the anisotropic part enters the perturbation
+    hierarchy couplings (§6, §9 of the reference).
+
+    Returns
+    -------
+    tensor : (3, 3) ndarray or None
+        The symmetric trace-free anisotropic part; None if unavailable.
+    status : {'type_i_flat', 'type_v_isotropic', 'type_vii0_flat',
+              'unavailable'}
+        Classification of the computation.
+
+    Notes
+    -----
+    - **Type I** (structure constants all zero): ³R_ab ≡ 0 by flatness.
+    - **Type V** (a_i ≠ 0, n^i_j = 0): 3-curvature is isotropic
+      (³R_ab = -2 a_i a^i / a² · h_ab / 3), so anisotropic part ≡ 0.
+    - **Type VII_0** (n^1_1 = n^2_2, a_i = 0): under the usual
+      eigenvector alignment, the spatial curvature is flat along the
+      symmetry axis and the anisotropic part vanishes at leading order.
+    - Other types require explicit structure-constant-dependent
+      evaluation (deferred to future implementation; see module header).
+    """
+    label = structure.label
+    if label == 'I':
+        return np.zeros((3, 3), dtype=np.float64), 'type_i_flat'
+    if label == 'V':
+        # Type V has a_i ≠ 0 but ³R_ab is isotropic when a_i ∝ δ_i^1.
+        return np.zeros((3, 3), dtype=np.float64), 'type_v_isotropic'
+    if label == 'VII_0':
+        return np.zeros((3, 3), dtype=np.float64), 'type_vii0_flat'
+    # FLRW (label 'FLRW' or unrecognised flat) — ³R_ab^{aniso} = 0.
+    if label == 'FLRW':
+        return np.zeros((3, 3), dtype=np.float64), 'type_i_flat'
+    # Other Bianchi types: explicit formulas deferred.
+    return None, 'unavailable'
+
+
+# ════════════════════════════════════════════════════════════════════
+# Tetrad background state dataclass
+# ════════════════════════════════════════════════════════════════════
+
+@dataclass
+class TetradBackgroundState:
+    """Covariant tetrad-basis background history on an η grid.
+
+    All array-valued fields share the same length N = len(eta).
+    Tensor fields are stored as (N, 3, 3) arrays in the aligned-
+    eigenvector basis (x = principal shear axis for axisymmetric
+    types).
+
+    Attributes
+    ----------
+    eta : (N,) ndarray
+        Conformal time [Mpc].
+    alpha : (N,) ndarray
+        α = ln a.
+    a : (N,) ndarray
+        Scale factor (redundant with alpha for convenience).
+    beta_tensor : (N, 3, 3) ndarray
+        β_ab(η), symmetric trace-free, β_ab(η_N) = 0 today.
+    sigma_tensor : (N, 3, 3) ndarray
+        Σ_ab(η), conformal shear as a 3-tensor.
+    aniso_3_curvature : (N, 3, 3) ndarray or None
+        Anisotropic part of ³R_ab if computable for this Bianchi type;
+        zeros for flat/isotropic types; None for unsupported types.
+    structure : StructureConstants
+        Bianchi structure constants (time-independent).
+    curvature_status : str
+        Classification returned by ``anisotropic_3_curvature``.
+    cosmo : BianchiCosmology
+        Underlying cosmology (includes H0, Ω's, β tilt parameter, …).
+
+    Invariants
+    ----------
+    - tr Σ_ab = 0  to numerical precision (tested).
+    - tr β_ab = 0  to numerical precision (tested).
+    - β_ab(η_last) = 0 (today-normalised convention, tested).
+    - Σ_ab is symmetric (Σ_ab = Σ_ba, tested).
+    """
+    eta: np.ndarray
+    alpha: np.ndarray
+    a: np.ndarray
+    beta_tensor: np.ndarray
+    sigma_tensor: np.ndarray
+    aniso_3_curvature: Optional[np.ndarray]
+    structure: StructureConstants
+    curvature_status: str
+    cosmo: BianchiCosmology
+
+    def shape_at(self, eta: float) -> np.ndarray:
+        """β_ab at a given η via nearest-grid-point lookup.
+
+        No interpolation by design — tetrad-state consumers usually
+        need the integrated shape on-grid.
+        """
+        idx = int(np.argmin(np.abs(self.eta - eta)))
+        return self.beta_tensor[idx].copy()
+
+    def shear_at(self, eta: float) -> np.ndarray:
+        idx = int(np.argmin(np.abs(self.eta - eta)))
+        return self.sigma_tensor[idx].copy()
+
+    @property
+    def shear_magnitude_sq(self) -> np.ndarray:
+        """Σ² = Σ_ab Σ^ab / 6, the trace-squared dimensionless shear.
+
+        Matches the convention used in ``htt.core.bounds`` and
+        ``comparator_policy``.
+        """
+        return np.einsum('nij,nji->n', self.sigma_tensor,
+                          self.sigma_tensor) / 6.0
+
+
+# ════════════════════════════════════════════════════════════════════
+# Builder
+# ════════════════════════════════════════════════════════════════════
+
+def build_tetrad_state(
+    bg: BianchiBackgroundState,
+) -> TetradBackgroundState:
+    """Wrap a ``BianchiBackgroundState`` as a tetrad-basis state.
+
+    Populates Σ_ab on the η grid from the (Σ_+, Σ_−) axisymmetric
+    reduction, integrates β_ab = ∫ 2 Σ_ab dη (trapezoid) and shifts so
+    β_ab(η_last) = 0, and computes the anisotropic ³R_ab via
+    ``anisotropic_3_curvature``.
+
+    Parameters
+    ----------
+    bg : BianchiBackgroundState
+        Output of ``solve_bianchi_background``.
+
+    Returns
+    -------
+    TetradBackgroundState
+    """
+    eta = np.asarray(bg.eta, dtype=np.float64)
+    a = np.asarray(bg.a, dtype=np.float64)
+    alpha = np.log(np.maximum(a, 1.0e-300))
+    Sp = np.asarray(bg.sigma_plus, dtype=np.float64)
+    Sm = np.asarray(bg.sigma_minus, dtype=np.float64)
+
+    N = eta.size
+    sigma_tensor = np.zeros((N, 3, 3), dtype=np.float64)
+    for i in range(N):
+        sigma_tensor[i] = axisymmetric_sigma_tensor(float(Sp[i]), float(Sm[i]))
+
+    # β_ab(η) = ∫ 2 Σ_ab(η') dη', with β_ab(η_last) ≡ 0 by convention.
+    # Use cumulative trapezoid from the start, then shift.
+    beta_tensor = np.zeros_like(sigma_tensor)
+    d_eta = np.diff(eta)
+    for i in range(1, N):
+        beta_tensor[i] = (
+            beta_tensor[i - 1]
+            + 0.5 * d_eta[i - 1] * 2.0 * (sigma_tensor[i - 1] + sigma_tensor[i])
+        )
+    # Today-normalise: β_ab(η_last) = 0.
+    beta_tensor = beta_tensor - beta_tensor[-1]
+
+    # Anisotropic ³R_ab on the grid.
+    ricci_avail = anisotropic_3_curvature(
+        bg.cosmo.structure, float(a[-1]), float(Sp[-1]), float(Sm[-1]),
+    )
+    ricci_0, status = ricci_avail
+    if ricci_0 is None:
+        aniso_R = None
+    else:
+        aniso_R = np.zeros((N, 3, 3), dtype=np.float64)
+        for i in range(N):
+            tensor_i, _ = anisotropic_3_curvature(
+                bg.cosmo.structure, float(a[i]),
+                float(Sp[i]), float(Sm[i]),
+            )
+            aniso_R[i] = (tensor_i if tensor_i is not None
+                           else np.zeros((3, 3), dtype=np.float64))
+
+    return TetradBackgroundState(
+        eta=eta,
+        alpha=alpha,
+        a=a,
+        beta_tensor=beta_tensor,
+        sigma_tensor=sigma_tensor,
+        aniso_3_curvature=aniso_R,
+        structure=bg.cosmo.structure,
+        curvature_status=status,
+        cosmo=bg.cosmo,
+    )
