@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "git_sha": "b654be0b057a5cd31374c6df42449c35ece49541",
+  "git_tag": "baseline-2026-04-16",
+  "measurement_date": "2026-04-16",
+  "measurement_iso": "2026-04-16T08:37:01Z",
+  "host_info": "x86_64, rust unknown",
+  "cosmology": {
+    "label": "VisibilityParams::planck2018",
+    "H0": 67.36,
+    "ombh2": 0.02237,
+    "omch2": 0.12,
+    "tau_reion": 0.0544,
+    "T_CMB": 2.7255,
+    "n_s": 0.9649,
+    "A_s": 2.1e-09,
+    "k_pivot": 0.05,
+    "m_nu_eV": 0.06,
+    "Neff": 3.044
+  },
+  "configs": {
+    "config_24dof_no_pol_no_mnu": {
+      "test_name": "solver::sync_gauge_camb::test_dl_200k",
+      "status": "VALIDATED",
+      "DOF": 24,
+      "params": {
+        "lmax_g": 16,
+        "lmax_n": 16,
+        "lmax_pol": 0,
+        "nq_massive": 0,
+        "lmax_m": 0,
+        "k_min": 5e-05,
+        "k_max": 0.3,
+        "n_k": 200,
+        "ell_max": 300
+      },
+      "wall_seconds": 72.6,
+      "k_modes_solved": 200,
+      "k_modes_total": 200,
+      "D_ell": {
+        "2": {
+          "bass": 978.8,
+          "camb": 1022.0,
+          "ratio": 0.958
+        },
+        "10": {
+          "bass": 927.4,
+          "camb": 1130.0,
+          "ratio": 0.821
+        },
+        "30": {
+          "bass": 1219.6,
+          "camb": 1070.0,
+          "ratio": 1.14
+        },
+        "100": {
+          "bass": 2917.3,
+          "camb": 2611.0,
+          "ratio": 1.117
+        },
+        "200": {
+          "bass": 4616.2,
+          "camb": 5733.0,
+          "ratio": 0.805
+        },
+        "300": {
+          "bass": 4963.5,
+          "camb": 6136.0,
+          "ratio": 0.809
+        }
+      },
+      "post_perf02_wall_seconds": 36.3,
+      "post_perf02_D_ell": {
+        "2": {
+          "bass": 978.6,
+          "diff_from_perf01_percent": 0.02
+        },
+        "10": {
+          "bass": 927.4,
+          "diff_from_perf01_percent": 0.0
+        },
+        "30": {
+          "bass": 1220.6,
+          "diff_from_perf01_percent": 0.08
+        }
+      }
+    },
+    "config_38dof_with_pol_no_mnu": {
+      "test_name": "solver::sync_gauge_camb::test_dl_200k_epol",
+      "status": "BLOCKED",
+      "blocked_reason": "Theta2-E2 polarization instability \u2014 eigenvalue +3kappa'/5 causes ODE divergence during tight coupling. Documented in BASS_STATUS_2026-04-12.md section 3.4. Requires TCA implementation (post-PR-08 work).",
+      "DOF": 38,
+      "params": {
+        "lmax_g": 16,
+        "lmax_n": 16,
+        "lmax_pol": 12,
+        "nq_massive": 0,
+        "lmax_m": 0,
+        "k_min": 5e-05,
+        "k_max": 0.3,
+        "n_k": 200,
+        "ell_max": 300
+      },
+      "wall_seconds": 233.5,
+      "k_modes_solved": 57,
+      "k_modes_total": 200,
+      "k_modes_failed_pattern": "h_min reached at eta ~ 2.63 (all k-modes near recombination zone)",
+      "D_ell_inf_or_garbage": true
+    },
+    "config_128dof_full_physics_n_k_50": {
+      "test_name": "solver::sync_gauge_camb::test_dl_50k_full",
+      "status": "BLOCKED",
+      "blocked_reason": "Full physics (lmax_pol=12, nq_massive=10, lmax_m=12) inherits the same Theta2-E2 instability. All 50 k-modes failed with h_min reached. This config is not measurable in current sandbox even with reduced n_k. Requires TCA + massive-nu background fix.",
+      "DOF": 128,
+      "params": {
+        "lmax_g": 16,
+        "lmax_n": 16,
+        "lmax_pol": 12,
+        "nq_massive": 10,
+        "lmax_m": 12,
+        "k_min": 5e-05,
+        "k_max": 0.3,
+        "n_k": 50,
+        "ell_max": 300
+      },
+      "wall_seconds_until_timeout": "> 300",
+      "k_modes_solved": 0,
+      "k_modes_total": 50
+    },
+    "config_24dof_mini_50k": {
+      "test_name": "solver::sync_gauge_camb::test_dl_50k_mini",
+      "status": "VALIDATED",
+      "purpose": "Fast iteration baseline for PR-physics work. ~5x faster than primary 200k baseline; D_2 within +/-2% of primary. NOT a substitute for primary baseline at PR closure.",
+      "DOF": 24,
+      "params": {
+        "lmax_g": 16,
+        "lmax_n": 16,
+        "lmax_pol": 0,
+        "nq_massive": 0,
+        "lmax_m": 0,
+        "k_min": 5e-05,
+        "k_max": 0.3,
+        "n_k": 50,
+        "ell_max": 200
+      },
+      "wall_seconds": 6.2,
+      "k_modes_solved": 50,
+      "k_modes_total": 50,
+      "D_ell": {
+        "2": {
+          "bass": 967.4,
+          "camb": 1022.0,
+          "ratio": 0.947
+        },
+        "10": {
+          "bass": 958.2,
+          "camb": 1130.0,
+          "ratio": 0.848
+        },
+        "30": {
+          "bass": 543.8,
+          "camb": 1070.0,
+          "ratio": 0.508
+        },
+        "100": {
+          "bass": 1561.9,
+          "camb": 2611.0,
+          "ratio": 0.598
+        },
+        "200": {
+          "bass": 9209.2,
+          "camb": 5733.0,
+          "ratio": 1.606
+        }
+      },
+      "vs_primary_200k_d2_diff_percent": 1.13,
+      "notes": "Updated post-PR-PERF-02. D_2 = 967.4 vs primary 978.6 (1.13% diff \u2014 same as PR-PERF-01 baseline, sparse 50-k-grid intrinsic offset). D_10/D_100 of 1-2% from baseline PR-PERF-01 mini values reflects max-ell adaptive subdivision criterion in compute_dl_spectrum_adaptive_ladder being slightly less optimal at mid-ell with sparse k-grid. Primary 200k D_ell unaffected (all \u00b10.1%)."
+    }
+  },
+  "camb_reference": {
+    "source": "computed via test_dl_200k inline reference values (which match CAMB 1.6.6 cls_compare.npz from prior session)",
+    "D_ell": {
+      "2": 1022.0,
+      "10": 1130.0,
+      "30": 1070.0,
+      "100": 2611.0,
+      "200": 5733.0,
+      "300": 6136.0
+    }
+  },
+  "interpretation": {
+    "primary_baseline": "config_24dof_no_pol_no_mnu",
+    "primary_metric_for_PR_progress": "D_2 ratio (currently 0.958)",
+    "PR_targets": {
+      "after_PR04_late_metric": "D_2 ratio in [0.95, 1.05], all 6 ell ratios in [0.85, 1.15]",
+      "after_PR06_mnu_background": "config_128dof becomes VALIDATED (currently BLOCKED)",
+      "after_PR08_kwindow": "all ell from 30..1500 within +/-5% of CAMB"
+    },
+    "configs_blocked_baseline": "Two of three configs are BLOCKED at baseline. This is an honest record \u2014 these configs are not measurable until TCA is implemented (post-PR-08 work). Their 'baseline' value is 'divergent', and the PR success criterion is 'becomes measurable and within tolerance'."
+  }
+}

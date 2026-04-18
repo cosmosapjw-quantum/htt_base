@@ -1,0 +1,162 @@
+# ─────────────────────────────────────────────────────────────────────
+#  Rust / Cargo
+# ─────────────────────────────────────────────────────────────────────
+/target/
+**/target/
+**/*.rs.bk
+*.pdb
+
+# Cargo.lock IS committed (library produces a cdylib binary artifact).
+# Do not ignore it.
+
+# Rust incremental / coverage
+**/*.profraw
+**/*.gcda
+**/*.gcno
+/coverage/
+/lcov.info
+/tarpaulin-report.html
+
+# ─────────────────────────────────────────────────────────────────────
+#  Python (future integration — bass_rs cdylib + Python wrappers)
+# ─────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+.python-version
+
+# Packaging / build artefacts
+build/
+dist/
+*.egg-info/
+*.egg
+wheels/
+pip-wheel-metadata/
+.eggs/
+
+# maturin / PyO3 (bass_rs is a pyo3 cdylib)
+# Built .so / .pyd land in target/ already, but maturin develop may also
+# drop them into the source tree:
+*.so
+*.pyd
+*.dylib
+*.dll
+# Exception: committed reference artifacts (rare — uncomment if needed)
+# !reference/*.so
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# pytest / mypy / ruff / coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/
+
+# ─────────────────────────────────────────────────────────────────────
+#  Profiling / benchmarking artefacts
+# ─────────────────────────────────────────────────────────────────────
+# perf
+perf.data
+perf.data.old
+perf.data.*
+
+# flamegraph / samply
+flamegraph.svg
+flamegraph.html
+*.perf-folded
+profile.json
+profile.json.gz
+
+# valgrind / callgrind / cachegrind / massif / heaptrack / dhat
+callgrind.out.*
+cachegrind.out.*
+massif.out.*
+heaptrack.*.gz
+heaptrack.*.zst
+dhat-heap.json
+dhat-*.json
+
+# pprof (Rust pprof crate)
+*.pb
+*.pb.gz
+pprof.*.pb
+
+# criterion / iai-callgrind output
+/criterion/
+/target/criterion/
+iai-callgrind.*.out
+
+# hyperfine exports
+hyperfine-*.json
+hyperfine-*.csv
+hyperfine-*.md
+
+# cargo-pgo / LLVM PGO
+/pgo-data/
+*.profdata
+
+# ─────────────────────────────────────────────────────────────────────
+#  Scientific run outputs (keep repo lean — outputs regenerable)
+# ─────────────────────────────────────────────────────────────────────
+# Large generated spectra / chains / MCMC — adjust if specific files
+# must be kept under version control.
+/logs/*.log
+/logs/*.csv.gz
+/logs/run-*/
+/tests_log/*.tmp
+/plots/*.tmp.png
+*.npy.tmp
+*.h5.tmp
+*.fits.tmp
+
+# Intermediate cache files (CAMB / CLASS style)
+*.cachegrind
+*.cl_cache
+*.bg_cache
+
+# ─────────────────────────────────────────────────────────────────────
+#  IDE / editor
+# ─────────────────────────────────────────────────────────────────────
+.vscode/
+!.vscode/settings.json.example
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.\#*
+\#*\#
+
+# rust-analyzer
+rust-project.json
+
+# ─────────────────────────────────────────────────────────────────────
+#  OS
+# ─────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ─────────────────────────────────────────────────────────────────────
+#  Secrets / local overrides
+# ─────────────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+.claude/local.*

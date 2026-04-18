@@ -1,0 +1,46 @@
+===============================================================================
+BASS Phase 1 PSTF Primary — Test Summary (Snapshot 2026-04-18)
+===============================================================================
+
+## Test counts by module (all PASS unless noted)
+
+solver::pstf_primary::
+├── layout         12 passed
+├── ic             10 passed
+├── rhs_free       12 passed  (retrospective G2 test 포함)
+├── collision      11 passed
+├── jacobian        9 passed
+├── metric         11 passed
+├── fluid          10 passed
+├── full_rhs        6 passed
+├── source         10 passed  (2nd attempt — E-mode layout fix)
+├── matrix          3 passed  (NEW, PR-024b, first-try)
+└── integrate       1 passed (identity_solve_kmode_runs, 42.79s)
+                    [7 tests pending individual run — step-back fix applied,
+                     build OK, but execution timed out in CI; requires
+                     parallel execution or sub-cluster running]
+
+solver::pstf_primary total: 94/94 + 7 pending = 101 tests
+
+## Other test suites (non-regressive)
+
+pstf::                 130 passed
+source::registry        12 passed
+core::ssot              35 passed
+(all other suites)   1200+ passed
+
+## D_ℓ baseline (MB-95 oracle regression guard)
+
+D_2 = 1002.086744 μK²
+Status: 14th consecutive bit-identical commit (across PR-020 through PR-024a)
+Plot: /plots/phase1_midcheck_dl_tt.png
+CSV: dl_spectrum_mb95_oracle.csv (ℓ=2..300)
+
+## Known pending items
+
+1. PR-024b integrate tests (7 tests) — step-back fix for tau_min=0.5 filter
+   applied; requires execution re-run.
+2. PR-024b performance optimization — unit-vector matrix build via
+   pstf_full_rhs is correctness-first but n_state × n_snaps cost is high.
+   (User's explicit request for performance optimization work.)
+3. PR-024c (LoS + spectrum) — Phase 1 technical capstone, pending.

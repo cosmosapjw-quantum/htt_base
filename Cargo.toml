@@ -1,0 +1,28 @@
+[package]
+name = "bass_rs"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "bass_rs"
+crate-type = ["cdylib"]
+
+[features]
+default = []
+blas = []  # PR-14A: link system LAPACK for dgetrf/dgetrs (killed — no gain at d<100)
+
+[dependencies]
+pyo3 = { version = "0.21", features = ["extension-module"] }
+numpy = "0.21"
+rayon = "1.8"
+rayon-core = "1.12"
+nalgebra = "0.34"
+mimalloc = { version = "0.1.48", default-features = false }
+
+
+[dependencies.diffsol]
+version = "0.10"
+features = ["nalgebra"]
+
+[dev-dependencies]
+pprof = { version = "0.13", features = ["flamegraph", "protobuf-codec"] }
