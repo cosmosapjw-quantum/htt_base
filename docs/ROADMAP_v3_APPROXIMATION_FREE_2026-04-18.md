@@ -175,6 +175,12 @@ Implements TCA_UFA_RSA document §3-10 (sparse Jacobian, m-major, matrix LoS).
 - **P2.4 Adaptive ℓ_max + sponge boundary**. `R_ℓmax = tail-energy / total` monitor. Top-ℓ shell damping layer (gentle profile to avoid low-ℓ backreaction).
 - **P2.5 Matrix LoS projector**. Current `src/los/` is scalar. Introduce `G_{Aa}(η, k)` matrix kernel; FLRW LoS becomes the A=a=0 case.
 - **P2.6 Pure IMEX-ARK4 mainline** (NEW). Kennedy–Carpenter ARK4(3)6L[2]SA tableau. Implicit stiff block = Thomson collision (diagonal ℓ≥3 + small dense at ℓ≤2). Explicit = transport + metric + fluid + neutrinos. Full PR ladder in IMEX_DECISION §6.
+  - **IMEX-00 — COMPLETE** (2026-04-19). Baseline contract frozen at
+    `PstfFlrwLayout::new(8, 6, 0)` + `k=0.01` + Planck2018. Reference
+    counters: `n_steps=3334`, `n_rejected=253`, `n_jac=3587`,
+    `n_f_eval=28696`. `StepperStats` surfaced via `PstfKmodeResult`.
+    Cross-backend invariant test confirms pre-materialized vs
+    callback paths produce bit-identical stepper decisions.
 - **P2.6b RODAS5P-centered hybrid backup** (NEW, parallel, benchmark-only). Implemented only to the extent needed for A/B comparison at IMEX-07 exit gate.
 
 **Phase 2 gate**: FLRW limit (m=0 only) reproduces Phase 1 D_ℓ. Jacobian
