@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (LB-2b complete → LB-3)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_LB2b_2026-04-19.md`
-**Current target session**: LB-3 closure and truncation (HardCut / FreeStream / PowerLaw / TCA strategies)
+**Last rotated**: 2026-04-19 (LB-3 complete → LB-4)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_LB3_2026-04-19.md`
+**Current target session**: LB-4 Thomson PSTF collision + lowell §11.3 tilted visibility (Layer A)
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,91 +36,92 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# Phase LB 구현 계속 — LB-3 closure & truncation
+# Phase LB 구현 계속 — LB-4 Thomson PSTF collision + lowell §11.3 tilted visibility
 
 ## 프로젝트 컨텍스트
 
 - **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 - **venv**: venv/bin/python
 - **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 2,322 tests passing (직전 2,295 + 27 LB-2b)
-- **완료된 세션**: LB-0 (external-code guard), LB-1 (species γ/ν/b/c/Λ), LB-2a (PSTF storage + T1/T2/T3/T8/T9), **LB-2b** (T4/T5/T6/T7 + hierarchy_rhs driver)
+- **현재 baseline**: 2,369 tests passing (직전 2,322 + 47 LB-3)
+- **완료된 세션**: LB-0 (external-code guard), LB-1 (species γ/ν/b/c/Λ), LB-2a (PSTF storage + T1/T2/T3/T8/T9), LB-2b (T4/T5/T6/T7 + hierarchy_rhs driver), **LB-3** (HardCut + FreeStream + PowerLaw + TCA closure strategies + measure_closure_error)
 
 ## 우선 읽어야 할 문서 (순서대로)
 
-1. `docs/audits/AUDIT_PHASE_LB2b_2026-04-19.md` — LB-2b 감사 로그 (no P0/P1; F1 σ/Σ 변환 이미 처리; F4 collision fixture는 LB-4로 이관)
-2. `docs/lowell_bianchi/03_closure_truncation_spec.md` — 이 세션 스펙 전체
-3. 참조 (LB-2b 완료물): `bass_py/bass/hierarchy/` — `hierarchy_rhs_photon`, `hierarchy_rhs_neutrino`, `proper_shear_at_eta`, `HardCutClosure`, `ClosureStrategy` Protocol
-4. 재사용 대상: `bass/closure/quadrupole_tca.py` (W6-04) — `solve_tca_closure`는 LB-3 `TCAClosure` 가 wrapping만 할 것. 재구현 금지.
-5. 참조: `lowell_bianchi_solver_reference.md §6` (L=4/6/8 권고), Ma-Bertschinger 1995 §6 (hard-cut vs recursion truncation)
+1. `docs/audits/AUDIT_PHASE_LB3_2026-04-19.md` — LB-3 감사 로그 (no P0/P1; F1 per-m FreeStream approximation 은 LB-4 polarisation 에서 다루기; F3 TCA decision 은 LB-5 integrator 에서 재배선)
+2. `docs/lowell_bianchi/04_thomson_collision_spec.md` — 이 세션 스펙 전체. **§8 (tilted visibility Layer A) 은 in-scope 임을 주의**
+3. `lowell_bianchi_solver_reference.md §11.1-§11.3` — scalar x_e 유지 + direction-dep boost 원칙
+4. 참조 (LB-1..LB-3 완료물):
+   - `bass_py/bass/species/baryon.py` — `tau_dot`, `visibility` (LB-1)
+   - `bass_py/bass/hierarchy/*` — PSTF hierarchy driver, storage (LB-2a/b)
+   - `bass_py/bass/hierarchy/closure.py` — 4 전략 + factory (LB-3)
+5. 재사용 대상 (재구현 금지):
+   - `bass/collision/thomson_tensor.py` (W3) — orthogonal Thomson PSTF kernel
+   - `bass/closure/quadrupole_tca.py` (W6-04) — TCA 2×2 matrix (이미 LB-3 `TCAClosure` 가 wrap 중)
+   - Y-Block `bass.tilt.species_tilt` — species-level tilt β
+6. 참조: `lowell §4, §9.2, §11.3`
 
-## LB-2b에서 확정된 사실 (LB-3에 참고)
+## LB-3 에서 확정된 사실 (LB-4 에 참고)
 
-- **Driver signature**: ``hierarchy_rhs_photon(eta, y_flat, *, L_max, bg_table, tetrad_state, closure, collision, collision_aux=None, nabla_operator=None, accel_vector=None, vorticity_vector=None)``. LB-3의 신규 closure 전략은 기존 driver 서명 변경 없이 plug-in.
-- **Closure protocol**: ``ClosureStrategy.get_closure(state, ell_requested) -> PSTFTensor`` (`bass/hierarchy/closure_interface.py`). ``HardCutClosure`` 는 within-tower lookup 시 `state.tensors[ell].copy()` 로 aliasing 방지. LB-3 신규 전략도 같은 contract.
-- **단위 convention**: T7/T8/T9 는 proper-time σ_ab [1/Mpc]. Driver ``proper_shear_at_eta`` 가 ``TetradBackgroundState.sigma_tensor / a(η)`` 로 변환. LB-3 closure 는 PSTFTensor 만 다루므로 단위 변환 없음.
-- **σ interpolation**: 현재 nearest-grid-point (spec §8 명시). LB-5 에서 spline 업그레이드 예정 — LB-3 은 nearest-grid 로 일관성 유지.
-- **PSTF 저장**: `(2ℓ+1,)` packing, `pstf_pack/unpack` round-trip 정밀도 ε × 3^ℓ (ℓ=8 에서 ~7e-11). closure 반환물도 `PSTFTensor` 여야 함.
-- **외부 코드 가드**: `bass/validation/test_external_code_policy.py` 여전히 활성 — LB-3 신규 파일이 `import camb/classy` 하면 fail.
+- **Closure plug-in**: `hierarchy_rhs_photon(..., closure=..., collision=...)` 는 LB-3 4 전략 중 선택 가능. LB-4 는 collision slot 을 채운다 (`ZeroCollisionOperator` → `ThomsonPSTFCollisionOperator`).
+- **TCAClosure API**: `TCAClosure.override_at_ell(ell) == (ell == 2)` + `algebraic_closure(state, 2, eta, *, source_T, source_E, Gamma_T, H_local)` + `tca_scalars(...)`. LB-5 integrator 가 Γ_T/H > threshold 에서 이를 직접 호출 예정.
+- **FreeStreamingClosure per-m**: 현재 per-m slot-by-slot lift 는 axisymmetric (m=0) 한정 정확. LB-4 polarisation (E/B-mode) 는 full angular coupling 필요 — F1 재검토 필수.
+- **`build_default_closure(L_max, strategy_name, ...)` factory**: `name ∈ {'hardcut', 'freestream', 'powerlaw', 'tca'}`. LB-4 collision 테스트 시에도 이 factory 로 closure 주입.
+- **외부 코드 가드**: `bass/validation/test_external_code_policy.py` 여전히 활성 — LB-4 신규 파일이 `import camb/classy/hyrec/aniclass` 하면 fail.
 
-## 이 세션의 작업 (~500 LoC + 300 LoC tests, 1 세션)
+## 이 세션의 작업 (~600 LoC + 450 LoC tests, 1 세션)
 
-`03_closure_truncation_spec.md §12` Implementation checklist 전체:
+`04_thomson_collision_spec.md §11` Implementation checklist 전체:
 
-- **`bass/hierarchy/closure.py`** — 4 전략을 한 파일에 (기존 `closure_interface.py` 는 Protocol 전용 유지):
-  - `HardCutClosure` — LB-2a 에서 이미 `closure_interface.py` 에 구현됨. 재활용 혹은 `closure.py` 로 이관 결정 필요.
-  - `FreeStreamingClosure` — Π_{L+1} = recursion from Π_L, Π_{L-1} via free-streaming recursion (Ma-Bertschinger eq 64-65).
-  - `PowerLawExtrapolationClosure` — Π_{L+1} = Π_L × (L / (L+1))^α, α from Π_{L-1} / Π_L ratio.
-  - `TCAClosure` — ℓ=2 algebraic wrap of existing `bass/closure/quadrupole_tca.py` (W6-04 `solve_tca_closure`). **재구현 금지**.
-- **`bass/hierarchy/closure_diagnostics.py`** — `measure_closure_error(state, driver, L_ref, L_test)` 함수, high-ℓ 기준과 저 ℓ 기준의 RHS 차이를 Frobenius norm 으로 돌려줌.
-- **`build_default_closure(L_max, strategy_name)` factory** — name ∈ {'hardcut', 'freestream', 'powerlaw', 'tca'}; default 는 'freestream' (LB-3 권고 baseline).
-- **테스트 C-01 ~ C-16** (spec §11):
-  - C-01..C-04 각 전략이 `ClosureStrategy` Protocol 만족
-  - C-05..C-08 각 전략의 수치 타깃 (free-streaming recursion 분석해 / power-law 지수 추정 정확도 / TCA W6-04 wrap 일치도)
-  - C-09..C-12 Closure error diagnostic: L=4 와 L=8 RHS 차이 수렴
-  - C-13..C-16 Integration smoke: 각 전략별 free-streaming 그리고 Bianchi I 쇼트 적분에서 sign / order of magnitude 일치
+- **`bass/collision/polarization.py`** — `PolarizationHierarchyState` (E/B-mode towers 저장), E-mode source formula
+- **`bass/collision/thomson_pstf.py`** — `ThomsonPSTFCollisionOperator` (orthogonal PSTF kernel); implements `CollisionOperator` protocol from LB-2a
+- **`bass/collision/tilted_visibility.py`** — **lowell §11.3 Layer A**: `TiltedVisibility` wrapper 에서 Γ̃_T, κ̃, g̃ 를 scalar × 비선형 Lorentz boost factor `B(η, e) = cosh β + sinh β (ê·v̂_e)` 로 제공
+- 테스트 **TC-01 ~ TC-16** (Thomson PSTF) + **TV-01 ~ TV-08** (tilted visibility Layer A). 총 24+개.
+- 통합 smoke: `hierarchy_rhs_photon` + `ThomsonPSTFCollisionOperator` + `TCAClosure` 조합에서 tight-coupling regime 이 분리 가능함을 확인 (algebraic ℓ=2 branch 는 LB-5 까지 dormant)
 
-## LB-3 범위 제약 (고정)
+## LB-4 범위 제약 (고정)
 
-- **TCA closure 재구현 금지** — `bass.closure.quadrupole_tca.solve_tca_closure` 만 wrapping
-- **새 physics 안 함** — 9-term hierarchy 공식은 LB-2 가 고정
-- **Stiffness handling 안 함** — LSODA / implicit scheme 은 LB-5 integrator
-- **Bianchi type 확장 안 함** — 여전히 I / V / VII_0 만 공식 지원
+- **PSTF kernel 자체의 full Lorentz boost 는 LB-4b** 로 분리 유지 (LB-1b tilted species registry 의존)
+- Tilted visibility 는 **Layer A 만** — scalar 보정인자 제공, hierarchy moment projection 은 LB-4b
+- B-mode 는 LB-4c
+- 2nd-order v_e² 보정 금지 (LB-4d)
+- **Non-perturbative β 엄수**: `1 + v_e · e` 선형근사 금지. 반드시 `cosh β + sinh β (ê·v̂_e)` 형태 유지 (TV-04, TV-07 이 lint 로 강제)
+- **scalar x_e(η), T_m(η) 재계산 금지** — `BaryonBackground` LB-1 HyRec fixture 유지 (lowell §11.1)
+- **재구현 금지**: `bass.closure.quadrupole_tca.solve_tca_closure` (이미 LB-3 `TCAClosure` wrap), `bass.collision.thomson_tensor` (W3 kernel)
 
-commit 메시지: `LB-3: closure & truncation (HardCut + FreeStream + PowerLaw + TCA)`
+commit 메시지: `LB-4: Thomson PSTF collision + tilted visibility Layer A`
 
 ## 핵심 원칙 (고정, 위반 시 PR 거부)
 
-1. **외부 코드 금지**: CAMB/CLASS/HyRec/AniCLASS는 `scripts/generate_*_reference.py`와 `test_*.py`에만.
-2. **Citation in every docstring**: Ellis §4.6 / Ma-Bertschinger 1995 §6 / Pitrou 2009 / lowell §6.
-3. **PSTF tensors always symmetric-traceless**: `verify_pstf_invariants` 재활용 — closure 가 반환하는 Π_{L+1}, Π_{L+2} 도 PSTF 여야 함.
-4. **No silent fallbacks**: 미구현 전략 이름 → ValueError.
-5. **Closure must not mutate state**: `get_closure` 는 `state.tensors[...].copy()` 만 사용 (HardCut 선례 따름).
-6. **FLRW limit**: σ = 0 에서 TCA 도 LB-2b 의 zero-shear quadrupole 과 bit-일치해야 함.
+1. **외부 코드 금지**: CAMB/CLASS/HyRec/AniCLASS 는 `scripts/generate_*_reference.py` 와 `test_*.py` 에만.
+2. **Citation in every docstring**: Ma-Bertschinger §4 / Challinor-Lasenby 1999 / Pontzen-Challinor 2007 / lowell §11.
+3. **PSTF tensors always symmetric-traceless**: `verify_pstf_invariants` 재활용.
+4. **No silent fallbacks**: regime 밖 호출 → `ValueError` 또는 `RuntimeError`.
+5. **Collision must not mutate state**: protocol 계약 유지 (LB-2a 의 `CollisionOperator.evaluate` 는 read-only).
+6. **FLRW limit**: σ = 0 에서 기존 W6-04 `solve_tca_closure` 결과와 bit-일치해야 함 (LB-3 C-10 이미 검증).
 
 ## 검증 체크리스트 (최종 commit 전)
 
-- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,322 이상)
-- [ ] 신규 테스트 모두 spec 수치 타깃 일치 (C-01 ~ C-16)
-- [ ] Closure protocol (PSTFTensor 반환, state 불변, rank 일치) 전 전략 준수
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,369 이상)
+- [ ] 신규 테스트 모두 spec 수치 타깃 일치 (TC-01..TC-16, TV-01..TV-08)
+- [ ] CollisionOperator protocol 준수 (PSTFTensor 반환, state 불변, rank 일치)
 - [ ] 신규 LoC ≥ 25% 테스트 커버리지
-- [ ] **phase-boundary audit**: `docs/audits/AUDIT_PROMPT.md` 실행 후 `AUDIT_PHASE_LB3_<date>.md` 생성
-- [ ] **gallery refresh**: `plots/physics_gallery/09_pstf_hierarchy/` 에 closure-error 수렴 / 전략 비교 플롯 최소 1-2 개 추가
-- [ ] **`NEXT_SESSION_PROMPT.md §2` 블록을 LB-4용으로 교체** (§4.3 템플릿)
+- [ ] **phase-boundary audit**: `docs/audits/AUDIT_PROMPT.md` 실행 후 `AUDIT_PHASE_LB4_<date>.md` 생성
+- [ ] **gallery refresh**: `plots/physics_gallery/09_pstf_hierarchy/` 또는 신규 topic (`10_collision_and_visibility/`) 에 Thomson 수렴 / tilted visibility factor 플롯 최소 1-2 개 추가
+- [ ] **`NEXT_SESSION_PROMPT.md §2` 블록을 LB-5용으로 교체** (§4.4 템플릿)
 - [ ] 최종 commit 메시지에 "+ rotate NEXT_SESSION_PROMPT" 라인 포함
 
 ## 진행 순서
 
-1. LB-2b audit + LB-3 spec + `quadrupole_tca.py` 읽기
-2. `HardCutClosure` 재배치 또는 재사용 결정
-3. FreeStream / PowerLaw 구현 → C-05..C-08 수치 타깃
-4. TCAClosure wrapping (`solve_tca_closure` 호출) → C-07 W6-04 기존 테스트와 bit-일치
-5. `closure_diagnostics.measure_closure_error` → C-09..C-12
-6. Integration smoke C-13..C-16
-7. Gallery 확장 (closure 수렴 플롯)
-8. 전 회귀 확인 → phase-boundary audit
-9. `NEXT_SESSION_PROMPT.md §2` → LB-4 bootstrap
-10. commit
+1. LB-3 audit + LB-4 spec + `thomson_tensor.py` (W3) + `species_tilt.py` (Y-Block) 읽기
+2. `PolarizationHierarchyState` 설계 → TC-01..TC-04 (storage / shape / PSTF invariants)
+3. `ThomsonPSTFCollisionOperator` 구현 → TC-05..TC-12 (collision formula / FLRW limit / TCA consistency)
+4. `TiltedVisibility` (Layer A) → TV-01..TV-08 (non-perturbative β factor, FLRW limit, lowell §11.3 formulas)
+5. Integration smoke (driver + collision + closure) → TC-13..TC-16
+6. Gallery 확장
+7. 전 회귀 확인 → phase-boundary audit
+8. `NEXT_SESSION_PROMPT.md §2` → LB-5 bootstrap
+9. commit
 
 시작하세요. 스펙과 다른 방향 제안 시 반드시 spec 문서 먼저 수정.
 ```

@@ -20,6 +20,13 @@ from bass.hierarchy.closure_interface import (
     ClosureStrategy,
     HardCutClosure,
 )
+from bass.hierarchy.closure import (
+    FreeStreamingClosure,
+    PowerLawExtrapolationClosure,
+    TCAClosure,
+    build_default_closure,
+)
+from bass.hierarchy.closure_diagnostics import measure_closure_error
 from bass.hierarchy.collision_interface import (
     CollisionOperator,
     ZeroCollisionOperator,
@@ -96,6 +103,12 @@ __all__ = [
     "HardCutClosure",
     "CollisionOperator",
     "ZeroCollisionOperator",
+    # Closure strategies (LB-3)
+    "FreeStreamingClosure",
+    "PowerLawExtrapolationClosure",
+    "TCAClosure",
+    "build_default_closure",
+    "measure_closure_error",
     # Driver (LB-2b)
     "hierarchy_rhs_photon",
     "hierarchy_rhs_neutrino",

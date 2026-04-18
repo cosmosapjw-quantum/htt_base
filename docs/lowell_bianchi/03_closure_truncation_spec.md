@@ -72,71 +72,85 @@ These four are **mutually compatible** — TCAClosure at ℓ=2 can be combined w
 
 ## 3. The `ClosureStrategy` protocol
 
-```python
-# bass/hierarchy/closure.py
+### 3.1 Baseline protocol shipped at LB-2a (canonical)
 
-from typing import Protocol
-import numpy as np
+LB-2a shipped the minimal protocol actually consumed by the
+``hierarchy_rhs_photon`` driver:
+
+```python
+# bass/hierarchy/closure_interface.py  (LB-2a)
+
+from typing import Protocol, runtime_checkable
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor
 
 
+@runtime_checkable
 class ClosureStrategy(Protocol):
-    """Strategy for supplying Π_{L+1}, Π_{L+2} needed by the ℓ = L RHS.
+    """Pluggable tower-closure interface.
 
-    Instances are stateless (all strategy parameters fixed at
-    construction); they read from the current state to produce the
-    closure values.
+    Called by the LB-2b driver whenever it needs ``Π_ℓ`` at a rank
+    beyond the tower's top multipole. Strategies must return a valid
+    ``PSTFTensor`` of the requested rank; returning a defensive *copy*
+    of any tensor read out of ``state`` (HardCut precedent) is
+    required to keep the call side-effect-free.
     """
 
-    def closure_next(self,
-                     state: PSTFHierarchyState,
-                     ell: int,
-                     eta: float,
-                     a: float,
-                     Theta: float,
-                     Gamma_T: float,
-                     ) -> PSTFTensor:
-        """Supply Π_{ell+1} when the state tower truncates at ell."""
-        ...
-
-    def closure_next_next(self,
-                          state: PSTFHierarchyState,
-                          ell: int,
-                          eta: float,
-                          a: float,
-                          Theta: float,
-                          Gamma_T: float,
-                          ) -> PSTFTensor:
-        """Supply Π_{ell+2} (needed for the shear-to-ℓ+2 term T7)."""
-        ...
-
-    def override_at_ell(self, ell: int) -> bool:
-        """If True, the ℓ-equation is REPLACED by an algebraic relation
-        (e.g. TCA at ℓ=2).  If False, the ODE is integrated normally.
-
-        Default: False for all ell.  TCAClosure returns True at ell=2
-        in the tight-coupling regime.
-        """
-        ...
-
-    def algebraic_closure(self,
-                          state: PSTFHierarchyState,
-                          ell: int,
-                          eta: float,
-                          *,
-                          source_T: float,
-                          source_E: float,
-                          Gamma_T: float,
-                          ) -> PSTFTensor:
-        """Return the algebraic Π_ell when override_at_ell(ell) == True."""
-        ...
+    def get_closure(
+        self, state: PSTFHierarchyState, ell_requested: int
+    ) -> PSTFTensor: ...
 ```
 
-The integrator (LB-5) queries `override_at_ell(ell)` per ℓ at each integration step; if True, the ODE for that ℓ is replaced by the algebraic evaluation.
+**All four LB-3 strategies implement this single method.** The driver
+(LB-2b ``hierarchy_rhs_photon``) calls ``closure.get_closure(state,
+ell+1)`` to resolve ``Π_{L+1}`` for T3/T4 and ``closure.get_closure(
+state, ell+2)`` for T7 at the top of the tower.
+
+### 3.2 Algebraic-override extension (TCA; LB-5 consumer)
+
+The ℓ=2 algebraic TCA path (W6-04 ``solve_tca_closure``) is *not*
+triggered through ``get_closure`` — the ODE-vs-algebraic dispatch is
+an integrator-level decision (LB-5). ``TCAClosure`` therefore exposes
+two additional methods that LB-5's stepper consults:
+
+```python
+class TCAClosure:
+    # Standard protocol (delegates to an inner closure for tower top).
+    def get_closure(self, state, ell_requested): ...
+
+    # Algebraic-override extension — consumed by the LB-5 integrator,
+    # not by the LB-2b RHS driver.
+    def override_at_ell(self, ell: int) -> bool: ...
+    def algebraic_closure(
+        self, state, ell, eta, *,
+        source_T: float, source_E: float, Gamma_T: float,
+    ) -> PSTFTensor: ...
+```
+
+``override_at_ell(2) == True`` only signals *TCA is available*; the
+actual decision to use TCA vs. the ODE at a given η is made by
+checking ``Γ_T / H`` at runtime. LB-5 owns that dispatch logic.
+
+### 3.3 Design-history note
+
+An earlier draft of this spec proposed a multi-method baseline
+protocol (``closure_next`` + ``closure_next_next`` + ``override_at_ell``
++ ``algebraic_closure``). LB-2a consolidated those under a single
+``get_closure(state, ell_requested)`` entry point: driver-side the
+distinction between "ℓ+1" and "ℓ+2" is purely an integer argument,
+and splitting into two methods bought no extra type-safety. The
+algebraic-override hooks survive as a TCA-only extension (§3.2).
 
 ---
 
 ## 4. HardCutClosure (default)
+
+> **Implementation note (supersedes pseudocode below)**. All four
+> strategies expose the single LB-2a method ``get_closure(state,
+> ell_requested)`` (§3.1). The ``closure_next`` / ``closure_next_next``
+> forms shown in §4–§7 are pedagogical — read them as ``get_closure``
+> called with the appropriate rank. The algebraic-override pair
+> ``override_at_ell`` / ``algebraic_closure`` survives on TCAClosure
+> only (§3.2).
 
 ```python
 class HardCutClosure:
@@ -372,25 +386,37 @@ bass_py/bass/hierarchy/
 
 ```python
 from bass.hierarchy.closure import (
-    ClosureStrategy,
     HardCutClosure,
     FreeStreamingClosure,
     PowerLawExtrapolationClosure,
     TCAClosure,
     build_default_closure,
 )
+from bass.hierarchy.closure_interface import ClosureStrategy  # LB-2a
 
 def build_default_closure(
-    L_max: int = 6,
-    use_tca_at_ell_2: bool = True,
+    L_max: int,
+    strategy_name: str = "freestream",
+    *,
+    k_mpc_inv: float = 0.0,
+    alpha: float = 2.0,
     gamma_threshold_over_H: float = 100.0,
-    free_streaming_k_mpc: float = 0.0,
 ) -> ClosureStrategy:
-    """Factory returning the recommended closure stack:
+    """Factory dispatch by name.
 
-    - TCA at ℓ=2 when Γ_T / H > threshold (else free-streaming);
-    - FreeStreamingClosure for ℓ > 2 (neutrinos, post-recomb photons);
-    - Falls back to HardCut if k = 0 (background-only mode).
+    Parameters
+    ----------
+    L_max : int
+        Top multipole of the tower (closure supplies ℓ = L_max+1 and
+        ℓ = L_max+2 slots).
+    strategy_name : {'hardcut', 'freestream', 'powerlaw', 'tca'}
+        Named strategy. Raises ``ValueError`` on unknown names.
+    k_mpc_inv : float
+        Wavenumber used by ``FreeStreamingClosure``; ignored by others.
+    alpha : float
+        Power-law exponent used by ``PowerLawExtrapolationClosure``.
+    gamma_threshold_over_H : float
+        TCA activation threshold (see ``TCAClosure``).
     """
 ```
 
@@ -398,46 +424,41 @@ def build_default_closure(
 
 ## 11. Test criteria
 
-### 11.1 HardCutClosure tests
+### 11.1 HardCutClosure / protocol tests (C-01..C-04)
 
 | # | Test | Target | Tol |
 |---|---|---|---|
-| C-01 | `HardCutClosure().closure_next(state, L=4, ...)` returns zero_pstf(5) | 0 tensor | exact |
-| C-02 | `HardCutClosure().override_at_ell(ℓ)` is False for all ℓ | False | exact |
-| C-03 | `closure_next_next` returns zero_pstf(ℓ+2) | 0 | exact |
+| C-01 | `HardCutClosure().get_closure(state, L+1)` returns ``zero_pstf(L+1)`` and is protocol-conformant | 0 tensor | exact |
+| C-02 | `FreeStreamingClosure`, `PowerLawExtrapolationClosure`, `TCAClosure` all satisfy `isinstance(..., ClosureStrategy)` | True | exact |
+| C-03 | All four strategies: `get_closure(state, L+2)` returns a PSTF tensor of rank L+2 — never mutates the input state | — | 1e-14 |
+| C-04 | `FreeStreamingClosure(k=0)`: `get_closure` reduces to `HardCut` (zero tensor of the requested rank) | 0 | exact |
 
-### 11.2 FreeStreamingClosure tests
-
-| # | Test | Target | Tol |
-|---|---|---|---|
-| C-04 | At k = 0 reduces to HardCut | 0 | exact |
-| C-05 | At k η = 100 matches Ma-Bertschinger eq 53 | analytic | 1e-12 |
-| C-06 | At k η large, Π_{L+1} recursion preserves sign and magnitude | — | qualitative |
-
-### 11.3 PowerLawExtrapolationClosure tests
+### 11.2 FreeStreaming / PowerLaw numeric targets (C-05..C-08)
 
 | # | Test | Target | Tol |
 |---|---|---|---|
-| C-07 | Π_{L+1} / Π_L = ((L+1)/L)⁻α | analytic | 1e-14 |
-| C-08 | α = 2 with Π_L fixed → predicted Π_{L+1} exactly | — | 1e-14 |
+| C-05 | At k·η finite, `FreeStreamingClosure.get_closure(state, ell+1)` matches Ma-Bertschinger eq 53 `((2ℓ+1)/(kη)) Π_ℓ − Π_{ℓ−1}` | analytic | 1e-12 |
+| C-06 | `closure_next_next` (i.e. `get_closure(state, ell+2)`) applies the recursion twice consistently | analytic | 1e-12 |
+| C-07 | `PowerLawExtrapolationClosure.get_closure(state, L+1)`: every component scaled by `(L/(L+1))^α` | analytic | 1e-14 |
+| C-08 | PowerLaw at L+2: component scaled by `(L/(L+2))^α` — exact | analytic | 1e-14 |
 
-### 11.4 TCAClosure tests
-
-| # | Test | Target | Tol |
-|---|---|---|---|
-| C-09 | `override_at_ell(2)` == True, others False | True/False | exact |
-| C-10 | `algebraic_closure` at ℓ=2 matches `solve_tca_closure` (W6-04) | bit-identical | 1e-14 |
-| C-11 | At Γ_T / H < threshold, algebraic_closure raises | RuntimeError | exact |
-| C-12 | Y-Block `test_reference_cross_check` values remain bit-identical when TCAClosure is used | — | 1e-14 |
-
-### 11.5 Convergence tests (closure_diagnostics)
+### 11.3 TCAClosure tests (C-09..C-12)
 
 | # | Test | Target | Tol |
 |---|---|---|---|
-| C-13 | `measure_closure_error(L_ref=8, L_trunc=6)` at Bianchi I Σ²=1e-8: Π_2 error | < 1% | 1% |
-| C-14 | `measure_closure_error(L_ref=6, L_trunc=4)`: Π_2 error | < 15% | 15% |
-| C-15 | `measure_closure_error(L_ref=6, L_trunc=6)`: all errors | exactly 0 | 1e-14 |
-| C-16 | `build_default_closure(L=6)` returns a composite that at ℓ=2 delegates to TCAClosure when Γ_T/H is high | — | structural |
+| C-09 | `TCAClosure.override_at_ell(ℓ)` == True iff ℓ == 2 | True/False | exact |
+| C-10 | `TCAClosure.algebraic_closure(..., source_T, source_E, Gamma_T)` at ℓ=2 is bit-identical to `solve_tca_closure` (W6-04) on (Θ_2, E_2) | bit-identical | 1e-14 |
+| C-11 | At `Γ_T / H < threshold`, `algebraic_closure` raises `RuntimeError` | RuntimeError | exact |
+| C-12 | `TCAClosure.get_closure(state, ell_requested)` (the tower-top closure) delegates identically to `inner_strategy.get_closure(...)` for all ℓ > L_max | — | 1e-14 |
+
+### 11.4 Convergence tests (C-13..C-16)
+
+| # | Test | Target | Tol |
+|---|---|---|---|
+| C-13 | `measure_closure_error(state, driver, L_ref=6, L_trunc=4, closure)`: Π_2 Frobenius norm difference is finite and > 0 on a shear-driven state | finite > 0 | — |
+| C-14 | `measure_closure_error(...)` with identical L_ref == L_trunc: every returned error is exactly 0 | 0 | 1e-14 |
+| C-15 | Integration smoke: each strategy produces finite, PSTF-preserving `dy/dη` at a representative Bianchi I η | finite; PSTF | 1e-10 |
+| C-16 | `build_default_closure(L_max=4, strategy_name='freestream')` returns a `FreeStreamingClosure`; `strategy_name='tca'` returns a `TCAClosure` wrapping a `FreeStreamingClosure` inner; unknown name raises `ValueError` | structural | — |
 
 ---
 

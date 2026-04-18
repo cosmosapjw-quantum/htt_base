@@ -71,9 +71,12 @@ from bass.species.lambda_ import LambdaBackground  # noqa: E402
 from bass.species.neutrino import NeutrinoBackground  # noqa: E402
 from bass.species.photon import PhotonBackground  # noqa: E402
 from bass.hierarchy import (  # noqa: E402
+    FreeStreamingClosure,
     HardCutClosure,
     L_MAX_CACHED,
+    PSTFHierarchyState,
     PSTFTensor,
+    PowerLawExtrapolationClosure,
     T1_expansion,
     T3_divergence,
     T4_accel_divergence,
@@ -82,9 +85,11 @@ from bass.hierarchy import (  # noqa: E402
     T7_shear_up,
     T8_shear_same,
     T9_shear_down,
+    TCAClosure,
     ZeroCollisionOperator,
     hierarchy_rhs_photon,
     hierarchy_total_size,
+    measure_closure_error,
     pack_hierarchy,
     pstf_pack,
     pstf_to_tensor,
@@ -1860,6 +1865,191 @@ def plot_09_11_rhs_driver_shear_injection_trajectory() -> None:
     _save(fig, "11_rhs_driver_shear_injection", TOPIC_09)
 
 
+def plot_09_13_closure_error_vs_L_trunc() -> None:
+    """LB-3 convergence probe: Π_2 RHS closure-error vs ``L_trunc``.
+
+    Builds a reference tower at ``L_ref = 8`` with a geometrically-
+    decaying photon state, then evaluates ``measure_closure_error`` at
+    every ``L_trunc ∈ {2,…,7}`` under a constant proper-time
+    Bianchi-I shear. Plots the per-ℓ Frobenius norm of the
+    ``dy/dη`` difference as a function of ``L_trunc``.
+
+    Matches spec §11.5 (C-13..C-15): at ``L_trunc = L_ref`` all errors
+    are exactly zero; the error grows monotonically as the tower is
+    truncated closer to the quadrupole. The T7 ``Π_{ℓ+2}`` coupling
+    drives the dominant error onto Π_2 / Π_3 (the T9-injected slots).
+    """
+    bg = Shared.bg()
+    L_ref = 6
+    # Reference tower: axisymmetric m=0 geometric decay with small noise.
+    rng = np.random.default_rng(seed=1303)
+    tensors = []
+    for ell in range(L_ref + 1):
+        comp = np.zeros(2 * ell + 1, dtype=np.float64)
+        comp[ell] = 0.5 ** ell
+        comp += 0.02 * rng.normal(size=2 * ell + 1)
+        tensors.append(PSTFTensor(ell=ell, components=comp))
+    state_ref = PSTFHierarchyState(L=L_ref, tensors=tensors)
+
+    # Proper-time shear fixture (σ_+ ≈ 3e-4 / Mpc).
+    sigma_proper = 3e-4 * np.diag([1.0, -0.5, -0.5])
+    a_grid = bg.a
+    Sigma_grid = np.empty((a_grid.size, 3, 3), dtype=np.float64)
+    for i in range(a_grid.size):
+        Sigma_grid[i] = sigma_proper * a_grid[i]
+
+    class _ShearFx:
+        def __init__(self):
+            self.eta = bg.eta.copy()
+            self.sigma_tensor = Sigma_grid
+    fx = _ShearFx()
+
+    eta_eval = float(bg.eta[bg.eta.size // 2])
+    driver_kwargs = dict(
+        eta=eta_eval, bg_table=bg, tetrad_state=fx,
+        collision=ZeroCollisionOperator(),
+    )
+
+    L_truncs = list(range(2, L_ref + 1))
+    ells_plotted = list(range(L_ref))     # ell = 0..L_ref-1
+    err_table = {ell: [] for ell in ells_plotted}
+    for L_trunc in L_truncs:
+        errors = measure_closure_error(
+            state_ref, hierarchy_rhs_photon,
+            L_trunc=L_trunc,
+            closure_ref=HardCutClosure(),
+            closure_trunc=HardCutClosure(),
+            driver_kwargs=driver_kwargs,
+        )
+        for ell in ells_plotted:
+            err_table[ell].append(errors.get(ell, np.nan))
+
+    fig, ax = plt.subplots(figsize=(7.2, 4.2))
+    cmap = plt.get_cmap("viridis")
+    markers = ["o", "s", "^", "D", "v", "P"]
+    for ell in ells_plotted:
+        vals = np.asarray(err_table[ell], dtype=np.float64)
+        vals = np.where(vals > 0, vals, 1e-18)    # log safety
+        ax.semilogy(
+            L_truncs, vals,
+            marker=markers[ell % len(markers)], ms=5,
+            color=cmap(ell / max(L_ref - 1, 1)), lw=1.3,
+            label=rf"$\ell={ell}$",
+        )
+    ax.axvline(L_ref, color="0.4", ls=":", lw=0.8,
+               label=rf"$L_\mathrm{{ref}}={L_ref}$")
+    _prepare_axes(
+        ax, r"truncation depth $L_\mathrm{trunc}$",
+        r"Frobenius norm of $\Delta\,dy/d\eta_\ell$",
+        title=(r"LB-3 closure convergence: HardCut at $L_\mathrm{trunc}$ "
+               r"vs reference $L_\mathrm{ref}=6$ (Bianchi I, $\sigma_+\!\approx\!3\!\times\!10^{-4}$)"),
+    )
+    ax.legend(loc="lower left", fontsize=7, ncol=2)
+    fig.tight_layout()
+    _save(fig, "13_closure_error_vs_L_trunc", TOPIC_09)
+
+
+def plot_09_14_strategy_comparison_dy() -> None:
+    """LB-3 strategy comparison: per-ℓ ``dy/dη`` norm across closures.
+
+    At a single Bianchi-I η, evaluates ``hierarchy_rhs_photon`` with
+    each of the four LB-3 closure strategies (``HardCut``,
+    ``FreeStreaming k=0.03``, ``PowerLaw α=2``, ``TCA inner=HardCut``)
+    on the same low-ℓ state and plots ``||dy_ell||_F`` per rank.
+
+    Expectation (spec §2, §6): at FLRW / zero-shear the four agree;
+    at Bianchi-I with non-zero σ the top-of-tower rank (ℓ = L_max)
+    differs because each closure supplies a different
+    ``Π_{L_max+1}`` / ``Π_{L_max+2}`` into T3 / T7. Lower ranks agree
+    when those couplings do not cascade down within one RHS call.
+    """
+    bg = Shared.bg()
+    L_max = 4
+
+    # Non-trivial axisymmetric tower (geometric decay at m=0)
+    rng = np.random.default_rng(seed=1414)
+    tensors = []
+    for ell in range(L_max + 1):
+        comp = np.zeros(2 * ell + 1, dtype=np.float64)
+        comp[ell] = 0.4 ** ell
+        comp += 0.02 * rng.normal(size=2 * ell + 1)
+        tensors.append(PSTFTensor(ell=ell, components=comp))
+    state = PSTFHierarchyState(L=L_max, tensors=tensors)
+    y0 = pack_hierarchy(state)
+
+    sigma_proper = 5e-4 * np.diag([1.0, -0.5, -0.5])
+    a_grid = bg.a
+    Sigma_grid = np.empty((a_grid.size, 3, 3), dtype=np.float64)
+    for i in range(a_grid.size):
+        Sigma_grid[i] = sigma_proper * a_grid[i]
+
+    class _ShearFx:
+        def __init__(self):
+            self.eta = bg.eta.copy()
+            self.sigma_tensor = Sigma_grid
+    fx = _ShearFx()
+
+    eta_eval = float(bg.eta[bg.eta.size // 2])
+    strategies = {
+        "HardCut":       HardCutClosure(),
+        "FreeStream k=0.03": FreeStreamingClosure(
+            k_mpc_inv=0.03, eta=eta_eval,
+        ),
+        "PowerLaw α=2":  PowerLawExtrapolationClosure(alpha=2.0),
+        "TCA ∘ HardCut":  TCAClosure(inner=HardCutClosure()),
+    }
+
+    results: Dict[str, np.ndarray] = {}
+    for name, closure in strategies.items():
+        dy = hierarchy_rhs_photon(
+            eta_eval, y0,
+            L_max=L_max, bg_table=bg, tetrad_state=fx,
+            closure=closure, collision=ZeroCollisionOperator(),
+        )
+        dy_state = unpack_hierarchy(dy, L_max)
+        results[name] = np.array([
+            float(np.sqrt(np.sum(t.components ** 2)))
+            for t in dy_state.tensors
+        ])
+
+    baseline = results["HardCut"]
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(11.5, 4.2))
+    cmap_name = ["blue", "orange", "purple", "green"]
+    for (name, norms), colname in zip(results.items(), cmap_name):
+        ells = np.arange(L_max + 1)
+        norms_safe = np.where(norms > 0, norms, 1e-30)
+        ax_a.semilogy(
+            ells, norms_safe, "o-", lw=1.3, ms=5,
+            color=COLS[colname], label=name,
+        )
+        # Right panel: residual vs HardCut (HardCut line at identity = 0).
+        residual = np.abs(norms - baseline)
+        residual_safe = np.where(residual > 0, residual, 1e-30)
+        ax_b.semilogy(
+            ells, residual_safe, "o-", lw=1.3, ms=5,
+            color=COLS[colname], label=name,
+        )
+    _prepare_axes(
+        ax_a, r"multipole rank $\ell$",
+        r"$\|(dy/d\eta)_\ell\|_F$",
+        title=(r"Per-$\ell$ RHS norm (all strategies)"),
+    )
+    ax_a.legend(loc="lower left", fontsize=8)
+    _prepare_axes(
+        ax_b, r"multipole rank $\ell$",
+        r"$|\,\|(dy/d\eta)_\ell\|_F - \|\mathrm{HardCut}\|_F\,|$",
+        title=(r"Residual vs HardCut: closure activates at $\ell=L_\mathrm{max}$"),
+    )
+    ax_b.legend(loc="lower left", fontsize=8)
+    fig.suptitle(
+        r"LB-3 closure strategies at fixed Bianchi I state "
+        r"($\sigma_+\!\approx\!5\!\times\!10^{-4}$, $L_\mathrm{max}\!=\!4$)",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "14_closure_strategy_comparison", TOPIC_09)
+
+
 def plot_09_12_sigma_vs_Sigma_conversion() -> None:
     """Visualise the ``σ_ab = Σ_ab / a`` conversion across cosmic history.
 
@@ -2035,6 +2225,12 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("12_sigma_vs_Sigma_conversion",
          plot_09_12_sigma_vs_Sigma_conversion,
          "σ_ab = Σ_ab / a conversion check (LB-2b F1-audit visualisation)."),
+        ("13_closure_error_vs_L_trunc",
+         plot_09_13_closure_error_vs_L_trunc,
+         "LB-3 closure RHS error vs L_trunc under HardCut at Bianchi I."),
+        ("14_closure_strategy_comparison",
+         plot_09_14_strategy_comparison_dy,
+         "LB-3 per-ℓ dy/dη norm under HardCut / FreeStream / PowerLaw / TCA."),
     ],
 }
 
