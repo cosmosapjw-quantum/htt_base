@@ -1,0 +1,1087 @@
+% ============================================================
+% ch10_error_hierarchy.tex
+% Error Measurement Hierarchy
+% Part of: Tetrad-Based Departure Decomposition (Jiwon Park)
+% Session S9 draft — 2026-03-30
+% ============================================================
+
+\chapter{Error Measurement Hierarchy}
+\label{ch:error-hierarchy}
+
+Our goal in this chapter is to define a systematic error
+budget for the species-resolved Bianchi Boltzmann solver of
+Chapter~\ref{ch:results} and the multi-species $\Teff$
+reduction of Chapter~\ref{ch:teff}.  The budget comprises five
+levels, ordered from the microscopic state space to the
+macroscopic observable, with each level measuring a distinct
+source of error that can be diagnosed and controlled
+independently.
+
+The five-level structure addresses a problem that is unique to
+the $\Teff$ programme.  A standard Boltzmann solver (CAMB,
+CLASS) computes the CMB power spectrum from a single code path
+and reports a single numerical convergence criterion
+($\ell_{\rm max}$, integration tolerance).  The $\Teff$
+solver, by contrast, introduces additional approximation
+layers---the effective-temperature ansatz, the species-resolved
+tangency diagnostic, the $\ell$-band routing, and the
+nonlinear source bridge---each with its own error
+characteristic.  Without a layered error budget, it is
+impossible to determine where the dominant error arises and
+where computational resources should be concentrated.
+
+We define the five levels in
+Sections~\ref{sec:err-state}--\ref{sec:err-observable},
+discuss the cost--accuracy trade-off in
+Section~\ref{sec:err-cost}, and summarise the error budget
+for the Phase~1.0 solver in
+Section~\ref{sec:err-phase10-budget}.
+
+
+% ============================================================
+\section{Level~1: State-space error}
+\label{sec:err-state}
+% ============================================================
+
+The first level measures the deviation of the solver's
+internal state---the PSTF multipoles of each species---from
+a reference solution.
+
+
+\paragraph{Definition.}
+
+For species $s$ at conformal time $\eta$, angular multipole
+$\ell$, azimuthal index $m$, and Fourier wavenumber $k$, the
+state-space error is
+\begin{equation}\label{eq:err-state}
+\varepsilon_{\rm state}^{(s)}(\ell, \eta)
+:= \frac{
+  \sum_{m,k}
+  \big|
+    U_{\ell m k}^{(s),\text{Teff}}
+    - U_{\ell m k}^{(s),\text{ref}}
+  \big|^2
+}{
+  \sum_{m,k}
+  \big|
+    U_{\ell m k}^{(s),\text{ref}}
+  \big|^2
+}\,,
+\end{equation}
+where $U_{\ell m k}^{(s)}$ denotes the species multipole
+(temperature, E-mode, B-mode for photons; energy and number
+moments for neutrinos) and the superscripts ``Teff'' and
+``ref'' denote the $\Teff$-backed solver and the reference
+solution, respectively.
+
+
+\paragraph{Reference solutions.}
+
+The choice of reference depends on the background:
+in the FLRW or near-isotropic limit, the reference is
+the standard CAMB or CLASS output; on an anisotropic
+Bianchi background, the reference is the same background
+evolved with a non-$\Teff$ PSTF hierarchy (i.e.\ the full
+multipole hierarchy truncated at $\ell_{\rm max}$ without
+the effective-temperature ansatz).  This two-tier baseline
+is essential: comparing the $\Teff$ solver against CAMB on
+a strongly anisotropic background would conflate the
+anisotropy-induced deviation with the $\Teff$
+approximation error.
+
+
+\paragraph{Band-averaged variants.}
+
+For diagnostic purposes, we define band-averaged
+state-space errors:
+\begin{equation}\label{eq:err-state-band}
+\varepsilon_{\rm low}^{(s)}
+:= \max_{\ell \leq 2}\,
+  \varepsilon_{\rm state}^{(s)}(\ell, \eta_*)\,,
+\qquad
+\varepsilon_{\rm mid}^{(s)}
+:= \max_{3 \leq \ell \leq \ell_{\rm trans}}\,
+  \varepsilon_{\rm state}^{(s)}(\ell, \eta_*)\,,
+\qquad
+\varepsilon_{\rm high}^{(s)}
+:= \max_{\ell > \ell_{\rm trans}}\,
+  \varepsilon_{\rm state}^{(s)}(\ell, \eta_*)\,,
+\end{equation}
+where $\ell_{\rm trans}$ is the Silk damping scale
+(Section~\ref{sec:ell-band}).  The low-$\ell$ error is
+the most relevant for the departure parameter pipeline,
+which depends only on $D_2$ ($\ell = 2$).
+
+
+\paragraph{Phase~1.0 status.}
+
+The Phase~1.0 solver operates at $\ell_{\rm max} = 2$, so
+only $\varepsilon_{\rm low}$ is defined.  In the FLRW
+limit, $\varepsilon_{\rm low} = 0$ by construction (the
+solver recovers $D_2 = 0$ exactly).  On the Bianchi~I
+background, the oracle comparison gives
+$\varepsilon_{\rm state}^{(\nu)}(2, \eta_*) \simeq 0.08$
+(the $-8\%$ deviation of
+Section~\ref{sec:disc-oracle}), dominated by the
+analytic transfer function's missing late ISW and
+neutrino stress feedback.  Phase~2.0 targets
+$\varepsilon_{\rm low} < 0.02$ through self-consistent
+Poisson (Section~\ref{sec:phase20}).
+
+
+% ============================================================
+\section{Level~2: Source-translation error}
+\label{sec:err-source}
+% ============================================================
+
+The second level measures the accuracy of the $\Teff$
+nonlinear source bridge---the map from the angular
+temperature field $\Theta_s(\hat{e})$ to the Thomson
+scattering source that enters the Boltzmann hierarchy.
+
+
+\paragraph{Definition.}
+
+The source-translation error for the photon Thomson source is
+\begin{equation}\label{eq:err-Th}
+\varepsilon_{\rm Th}
+:= \frac{
+  \big|
+    I_{ab}^{\rm ref}
+    - c_\xi\,
+      \langle \Theta_\gamma^4\,
+      \hat{e}_{\langle a}\hat{e}_{b\rangle}
+      \rangle_\Omega
+  \big|
+}{
+  \big| I_{ab}^{\rm ref} \big|
+}\,,
+\end{equation}
+where $I_{ab}^{\rm ref}$ is the photon anisotropic stress
+computed from the full Boltzmann hierarchy (without the
+$\Teff$ ansatz) and the $\Theta^4$ term is the $\Teff$
+moment-map reconstruction
+(Eq.~\ref{eq:exact-bridge}).  A companion diagnostic
+compares against the linearised bridge:
+\begin{equation}\label{eq:err-Th-lin}
+\varepsilon_{\rm Th}^{\rm lin}
+:= \frac{
+  \big|
+    I_{ab}^{\rm ref}
+    - 4\,c_\xi\,\Theta^{(\gamma)}_{ab}
+  \big|
+}{
+  \big| I_{ab}^{\rm ref} \big|
+}\,.
+\end{equation}
+The difference
+$\varepsilon_{\rm Th}^{\rm lin} - \varepsilon_{\rm Th}$
+isolates the contribution of the nonlinear ($\Theta^4$
+vs.\ $4\Theta$) correction.  At moderate dipole amplitudes
+($A \sim 10^{-2}$), the linear bridge can err by up to
+$52\%$, while the nonlinear bridge maintains
+$\varepsilon_{\rm Th} < 1\%$---a demonstration that the
+$\Theta^4$ moment map provides a qualitatively superior
+source translation even when the dipole is not small.
+
+
+\paragraph{Phase~1.0 status.}
+
+In the Phase~1.0 solver, the Thomson source uses the
+linearised form (Eq.~\ref{eq:Thomson-damping}) because the
+shear-driven quadrupole is the dominant source and the
+dipole is small ($A \sim \beta \sim 10^{-3}$).  The
+source-translation error is therefore
+$\varepsilon_{\rm Th}^{\rm lin} \sim 10^{-3}$, consistent
+with the second-order estimate of
+Section~\ref{sec:quadratic-sources}.  The nonlinear bridge
+becomes essential only when the dipole amplitude exceeds
+$\sim\!10^{-2}$, which lies in the nonperturbative regime
+(Section~\ref{sec:nonperturbative}).
+
+
+% ============================================================
+\section{Level~3: Adequacy certificate}
+\label{sec:err-adequacy}
+% ============================================================
+
+The third level is not an error per se but a
+\emph{certificate}: a bound on the observable-level
+representation error, computed from the tangency diagnostic
+and the Jacobian condition number.
+
+
+\paragraph{Definition.}
+
+For species $s$, the adequacy certificate is
+\begin{equation}\label{eq:err-adequacy}
+\Delta_{\rm obs}^{(s),\text{bound}}
+:= \frac{C(\xi_s, L_s)}
+        {\sigma_{\min}(J_s)}\,
+  D_{s,\geq 2}\,,
+\end{equation}
+where $C(\xi_s, L_s)$ is a constant that depends on the
+quantum statistics and truncation level,
+$\sigma_{\min}(J_s)$ is the smallest singular value of the
+species Jacobian $J_s$
+(Eq.~\ref{eq:chain-rule}), and $D_{s,\geq 2}$ is the
+tangency diagnostic
+(Eq.~\ref{eq:D-diagnostic}).  The certificate guarantees
+\begin{equation}\label{eq:adequacy-bound}
+\Delta_{\rm obs}^{(s),\text{actual}}
+\leq \Delta_{\rm obs}^{(s),\text{bound}}
++ O\big(D_{s,\geq 2}^2\big)\,.
+\end{equation}
+
+
+\paragraph{Interpretation.}
+
+The certificate is conservative: the bound overestimates
+the actual error because it uses the worst-case direction
+of the tangency residual.  The tightness ratio
+\begin{equation}\label{eq:tightness}
+\rho_s
+:= \frac{\Delta_{\rm obs}^{(s),\text{actual}}}
+        {\Delta_{\rm obs}^{(s),\text{bound}}}
+\end{equation}
+quantifies the conservatism.  For representative
+configurations [CITATION NEEDED: Teff Paper~IV],
+$\rho_s \sim 0.003$---the bound is never violated but is
+three orders of magnitude loose.  The looseness is
+acceptable for qualitative regime separation (identifying
+when the $\Teff$ closure needs upgrading) but
+insufficient for precision error propagation, which
+requires the actual observable error (Level~5).
+
+
+\paragraph{Scope limitation.}
+
+The adequacy certificate is a \emph{local} bound: it
+certifies the reconstruction quality at a single
+conformal time $\eta$, not over the full line-of-sight
+integration.  Cumulative error over cosmological
+timescales is not bounded by the certificate
+(Section~\ref{sec:limit-recovery}, ``Not established''
+item~4).  The certificate should therefore be evaluated
+at multiple epochs and combined with the observable error
+(Level~5) for end-to-end accuracy assessment.
+
+
+\paragraph{Phase~1.0 status.}
+
+For neutrinos, $D_{\nu,\geq 2} = 0$ exactly
+(free-streaming species have no collision source), so the
+adequacy certificate is identically zero.  For photons
+before recombination, $D_{\gamma,\geq 2}$ is nonzero but
+suppressed by Thomson damping ($D_{\gamma,\geq 2} \sim
+\sigma_{ab}/\dot{\tau} \sim 10^{-8}$), giving a certificate
+$\Delta_{\rm obs}^{(\gamma)} \lesssim 10^{-8}$.  The
+$\Teff$ closure is therefore certified adequate at all
+epochs probed by the Phase~1.0 solver.
+
+
+% ============================================================
+\section{Level~4: Ladder-specific adequacy}
+\label{sec:err-ladder}
+% ============================================================
+
+The fourth level tracks the error introduced by the
+adaptive $\ell$-band routing of
+Section~\ref{sec:ell-band}, which assigns different
+computational strategies to different angular scales.
+
+
+\paragraph{Definition.}
+
+Three diagnostics measure the ladder-specific adequacy.
+The deceleration-parameter adequacy is
+\begin{equation}\label{eq:err-Dq}
+\Delta_q^{(s)}
+:= \left|
+  q^{(s),\text{Teff}}_0
+  - q^{(s),\text{ref}}_0
+\right|\,,
+\end{equation}
+where $q_0$ is the present-epoch deceleration parameter
+contributed by species $s$.  The number-to-energy ratio
+adequacy is
+\begin{equation}\label{eq:err-DNE}
+\Delta_{N/E}^{(s)}
+:= \left|
+  \frac{j_s^a}{q_s^a}\bigg|_{\rm Teff}
+  - \frac{j_s^a}{q_s^a}\bigg|_{\rm ref}
+\right|\,,
+\end{equation}
+measuring the accuracy of the two-field reconstruction of
+the number-to-energy flux ratio
+(Proposition~\ref{prop:flux-independence}).  The moment
+residual is
+\begin{equation}\label{eq:err-Rmom}
+\mathcal{R}_{A_k}^{(s),\text{mom}}
+:= \left|
+  m_s^{(k),\text{Teff}}
+  - m_s^{(k),\text{ref}}
+\right|\,,
+\end{equation}
+measuring the accuracy of the $k$-th observable moment
+(Eq.~\ref{eq:obs-vector}).
+
+
+\paragraph{Role in the adaptive strategy.}
+
+These diagnostics are not post-hoc quality measures but
+runtime decision variables.  In the Phase~4.0 adaptive
+ladder (Section~\ref{sec:solver-programme}), the
+$\ell$-band router evaluates $\Delta_q$ and
+$\Delta_{N/E}$ at each epoch boundary and upgrades the
+species representation (from one-field to two-field, or
+from the $\Teff$ closure to the full PSTF hierarchy) when
+the diagnostics exceed their tolerances.  The upgrade is
+conservative by design: over-upgrading (using a more
+expensive representation when a cheaper one would suffice)
+wastes computational resources but does not introduce
+error, while under-upgrading produces inaccurate results.
+The frozen-rung time-slab strategy---upgrading only at
+epoch boundaries rather than at every time step---avoids
+the numerical instability that can arise from frequent
+representation switching.
+
+
+\paragraph{Phase~1.0 status.}
+
+The Phase~1.0 solver does not implement adaptive $\ell$-band
+routing; it operates at a fixed truncation
+$\ell_{\rm max} = 2$ with a fixed species configuration
+(one-field photons, two-moment neutrinos).  The
+ladder-specific diagnostics are therefore not evaluated at
+runtime.  The P1-3 discrepancy between the polarised and
+unpolarised code paths ($3\%$ in $D_2$;
+Section~\ref{sec:solver-performance}) is a surrogate
+indicator: it measures the error introduced by the choice
+of whether to include E-mode polarisation in the hierarchy,
+which is the simplest form of a representation-switching
+decision.
+
+
+% ============================================================
+\section{Level~5: Observable error}
+\label{sec:err-observable}
+% ============================================================
+
+The fifth and final level measures the deviation of the
+solver's output in the space of observables---the CMB power
+spectra and spherical-harmonic coefficients---from the
+reference solution.
+
+
+\paragraph{Definition.}
+
+The $a_{\ell m}$ error is
+\begin{equation}\label{eq:err-alm}
+\varepsilon_{a_{\ell m}}
+:= \frac{
+  \big|
+    a_{\ell m}^{\rm Teff}
+    - a_{\ell m}^{\rm ref}
+  \big|
+}{
+  \big| a_{\ell m}^{\rm ref} \big|
+}\,.
+\end{equation}
+The angular power spectrum error is
+\begin{equation}\label{eq:err-Cl}
+\varepsilon_{C_\ell}
+:= \frac{
+  \big|
+    C_\ell^{\rm Teff}
+    - C_\ell^{\rm ref}
+  \big|
+}{
+  \big| C_\ell^{\rm ref} \big|
+}\,.
+\end{equation}
+On anisotropic backgrounds, the off-diagonal covariance
+$\langle a_{\ell m}\,a_{\ell' m'}^* \rangle$ is generically
+nonzero (the Bianchi shear couples different $\ell$ and $m$),
+and the covariance error
+\begin{equation}\label{eq:err-cov}
+\varepsilon_{\rm cov}
+:= \frac{
+  \big|
+    \langle a_{\ell m}\,a_{\ell' m'}^* \rangle_{\rm Teff}
+    - \langle a_{\ell m}\,a_{\ell' m'}^* \rangle_{\rm ref}
+  \big|
+}{
+  \big|
+    \langle a_{\ell m}\,a_{\ell' m'}^* \rangle_{\rm ref}
+  \big|
+}
+\end{equation}
+must be tracked for the direction-dependent programme
+(Section~\ref{sec:phase30}).  The covariance error
+captures the $\ell$--$\ell'$ mode mixing induced by
+the background anisotropy, which is invisible to the
+isotropic power spectrum $C_\ell$.
+
+
+\paragraph{Relation to the Bayes factor.}
+
+The Bayes factor $\ln \mathcal{B}$ computed by the
+departure pipeline (Chapter~\ref{ch:results}) is a
+functional of the likelihood, which in turn depends on
+$D_2 \propto C_2$.  The observable error
+$\varepsilon_{C_2}$ therefore propagates directly into the
+evidence:
+\begin{equation}\label{eq:err-lnB}
+\delta(\ln \mathcal{B})
+\sim \frac{\partial \ln \mathcal{B}}
+          {\partial \ln D_2}\,
+     \varepsilon_{C_2}\,.
+\end{equation}
+For the VER06 pipeline, the sensitivity
+$\partial \ln \mathcal{B} / \partial \ln D_2 \sim
+O(10)$, so an observable error of $\varepsilon_{C_2}
+\sim 0.01$ ($1\%$) translates to
+$\delta(\ln \mathcal{B}) \sim 0.1$---comparable to the
+statistical uncertainty $\pm 0.07$ of the production
+evidence.  The Phase~2.0 target
+$\varepsilon_{C_2} < 0.02$ therefore ensures that the
+systematic error from the solver is subdominant to the
+statistical error of the inference.
+
+
+\paragraph{Phase~1.0 status.}
+
+The Phase~1.0 solver computes $D_2$ (proportional to
+$C_2$ at $\ell = 2$) but does not compute the full
+$C_\ell$ spectrum or $a_{\ell m}$.  The observable
+error at $\ell = 2$ is $\varepsilon_{C_2} \simeq 0.08$
+(the oracle deviation), which is the dominant error in
+the current budget.  Phase~3.0 extends the observable
+error to the full $a_{\ell m}$ spectrum, targeting
+$\varepsilon_{a_{\ell m}} < 0.01$ at $\ell \leq 30$.
+
+
+% ============================================================
+\section{Cost--accuracy trade-off}
+\label{sec:err-cost}
+% ============================================================
+
+The $\Teff$ programme's computational advantage lies in
+selective upgrading: applying expensive representations
+only where the diagnostics demand it, rather than
+uniformly across all species and angular scales.  The
+cost--accuracy trade-off quantifies this advantage.
+
+
+\paragraph{Cost metrics.}
+
+Two cost metrics are tracked alongside the error budget:
+the wall-clock time per likelihood evaluation,
+$\mathcal{C}_{\rm wall}$, and the memory footprint per
+evaluation, $\mathcal{C}_{\rm mem}$.  For the Phase~1.0
+solver, $\mathcal{C}_{\rm wall} = 420$~ms and
+$\mathcal{C}_{\rm mem} \sim 50$~MB.  For comparison,
+AniCLASS achieves $\mathcal{C}_{\rm wall} \sim 1$~s per
+evaluation at $\ell_{\rm max} = 30$ in the linearised
+regime.
+
+
+\paragraph{Pareto frontier.}
+
+The Pareto frontier in the
+$(\mathcal{C}_{\rm wall}, \varepsilon_{\rm obs})$ plane
+delineates the set of configurations that cannot be
+improved in one dimension without degrading the other.
+The $\Teff$ programme's adaptive strategy is designed to
+operate near this frontier: the low-$\ell$ band uses
+exact quadrature (high accuracy, moderate cost), the
+mid-$\ell$ band uses the $\Teff$ ladder with selective
+upgrading (controlled accuracy, reduced cost), and the
+high-$\ell$ band uses the standard PSTF hierarchy
+(baseline accuracy, baseline cost).  The selective-upgrading
+result---that targeting upgrades where
+$D_{s,\geq 2} > \varepsilon_{\rm thr}$ outperforms
+uniform high-resolution computation in cost--accuracy
+trade-off---is the operational vindication of the $\Teff$
+approach.
+
+For the scalar-amplitude pipeline, the Pareto frontier is
+trivially achieved: only $\ell = 2$ matters, the
+$\Teff$ closure is exact for the dominant neutrino
+channel, and the evaluation cost ($420$~ms) is set by
+the hierarchy ODE integration rather than by the
+closure strategy.  The frontier becomes non-trivial for
+the direction-dependent programme, where the full
+$a_{\ell m}$ spectrum at $\ell \leq 30$ requires
+$\sim\!10^3$ multipoles and the cost savings from
+selective upgrading can reach an order of magnitude.
+
+
+% ============================================================
+\section{Phase~1.0 error budget summary}
+\label{sec:err-phase10-budget}
+% ============================================================
+
+We summarise the error budget for the Phase~1.0 solver
+and identify the dominant error at each level.
+
+\begin{center}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{llll}
+\hline\hline
+Level & Diagnostic & Phase~1.0 value & Dominant source \\
+\hline
+1. State-space
+  & $\varepsilon_{\rm state}^{(\nu)}(\ell{=}2)$
+  & $0.08$
+  & Analytic $\Psi(k,\eta)$ \\[3pt]
+2. Source-translation
+  & $\varepsilon_{\rm Th}^{\rm lin}$
+  & $\sim 10^{-3}$
+  & Linearised Thomson \\[3pt]
+3. Adequacy certificate
+  & $\Delta_{\rm obs}^{(\gamma)}$
+  & $\lesssim 10^{-8}$
+  & Thomson suppression \\[3pt]
+  & $\Delta_{\rm obs}^{(\nu)}$
+  & $= 0$ (exact)
+  & Free-streaming \\[3pt]
+4. Ladder-specific
+  & not evaluated
+  & ---
+  & Fixed truncation \\[3pt]
+5. Observable
+  & $\varepsilon_{C_2}$
+  & $0.08$
+  & $= \varepsilon_{\rm state}$ \\
+\hline\hline
+\end{tabular}
+\end{center}
+
+The dominant error is at Level~1 (state-space), arising
+from the analytic gravitational potential.  The $\Teff$
+closure itself contributes negligibly: the adequacy
+certificate is $\leq 10^{-8}$ for photons and exactly
+zero for neutrinos.  The source-translation error is
+$\sim 10^{-3}$, three orders of magnitude below the
+state-space error.  The error budget confirms that the
+$\Teff$ approximation is not the bottleneck---the
+gravitational potential is---and that Phase~2.0
+(self-consistent Poisson) is the correct next step.
+
+The error hierarchy also reveals a structural asymmetry
+between species.  The neutrino sector contributes
+$98.4\%$ of $D_2$ but introduces zero $\Teff$ error
+(Levels~2--3), because free-streaming neutrinos reside
+exactly on the $\Teff$ manifold.  The photon sector
+contributes $1.6\%$ of $D_2$ and carries the only
+nonzero $\Teff$ error, but this error is suppressed by
+Thomson damping to a level that is irrelevant at any
+foreseeable precision.  The $\Teff$ closure is therefore
+not merely adequate but structurally optimal for the
+species composition of the standard cosmological model:
+the dominant species is exactly closed, and the
+subdominant species is over-damped.
+
+Before closing this chapter, we note that the five-level
+hierarchy is designed to be extensible.  As the solver
+programme advances through Phases~2.0--5.0
+(Section~\ref{sec:solver-programme-ch9}), each level
+acquires additional diagnostics---self-consistent
+Poisson residuals at Level~1, nonlinear Thomson bridge
+accuracy at Level~2, AniCLASS $a_{\ell m}$ comparison
+at Level~5---without changing the overall structure.
+The hierarchy is a framework for error accounting, not a
+fixed set of numbers.
+
+
+% ============================================================
+\section{\texorpdfstring{\texttt{MioCertificate}}{MioCertificate}
+         semantic rule}
+\label{sec:err-mio-semantic}
+% ============================================================
+
+Sections~\ref{sec:err-state}--\ref{sec:err-phase10-budget}
+treat error measurement as a numerical deviation between two
+code paths.  The last three sections of this chapter shift
+register: they clarify \emph{which kinds of claims the solver
+ecosystem is permitted to make}, and they bind the low-level
+error bounds of the five-level hierarchy to the architectural
+constraints that prevent adequacy-at-one-level from being
+re-labelled as adequacy-at-another.  The first of these
+clarifications, presented here, is the semantic rule governing
+the \texttt{MioCertificate} data object---the central
+interface through which the Model-Independent Observatory
+(MIO) reports departure diagnostics to downstream consumers.
+
+The core claim is simple and load-bearing: a
+\texttt{MioCertificate} is a \emph{diagnostic report}, not a
+truth certificate.  The distinction is not rhetorical; it is
+encoded in the dataclass schema, the constructor guards, and
+the test battery that locks both.
+
+
+\paragraph{Object definition.}
+
+The \texttt{MioCertificate} (frozen dataclass defined in
+\texttt{bass\_py/workspace/contracts/mio\_certificate.py})
+carries the following fields:
+
+\begin{itemize}
+\item \emph{identification}: \texttt{report\_type},
+  \texttt{probe\_name}, \texttt{channel};
+\item \emph{diagnostic quantities}:
+  \texttt{departure\_variables} (e.g.\ the median and
+  $1\sigma$ width of $\Sigma^2_{\rm MIO}$),
+  \texttt{adequacy\_indicators} (e.g.\ the
+  $\ell$-independence $p$-value flag),
+  \texttt{consistency\_metrics}
+  (e.g.\ $\chi^2/\text{d.o.f.}$);
+\item \emph{caveats}: \texttt{domain\_caveats},
+  \texttt{channel\_caveats},
+  \texttt{reduction\_status} $\in$ \{\texttt{theory-direct},
+  \texttt{theory-approximate}, \texttt{diagnostic-only}\};
+\item \emph{provenance}: \texttt{generated\_by},
+  \texttt{git\_commit}, \texttt{config\_hash},
+  \texttt{input\_data\_hashes};
+\item \emph{cross-check hints}:
+  \texttt{htt\_cross\_check\_suggested} (optional; agreement
+  testing only, never evidence combination).
+\end{itemize}
+
+The schema contains \emph{no field} named
+\texttt{posterior}, \texttt{posterior\_samples},
+\texttt{log\_likelihood}, or any synonym.  This absence is
+locked by a schema-hash digest test
+(\texttt{test\_miocertificate\_schema\_frozen}).
+
+
+\paragraph{Three forbidden interpretations.}
+
+The MIO--HTT hard-separation rule of
+Section~\ref{sec:err-g19} is enforced at the type layer by
+three prohibitions on how a \texttt{MioCertificate} may be
+consumed:
+
+\begin{enumerate}
+\item \emph{Not a posterior sample.} The method
+  \texttt{MioCertificate.as\_posterior\_bundle()} is declared
+  but intentionally raises \texttt{NotImplementedError} with
+  a pointer to HTT's \texttt{PosteriorExportBundle}.  No
+  schema field carries posterior semantics.
+\item \emph{Not a truth certificate.} No downstream module is
+  permitted to interpret the successful construction of a
+  \texttt{MioCertificate} as an attestation that any
+  particular cosmological model is correct.  The certificate
+  reports \emph{what is directly visible in the data under
+  model-independent reduction}, not \emph{what is true}.
+\item \emph{Not an additive score.} A
+  \texttt{MioCertificate} may not be combined with an HTT
+  log-evidence, a matched-complexity score, or any other
+  quantitative adequacy indicator via summation, averaging,
+  or any reduction that produces a single merged master
+  score.  Cross-checks (Section~\ref{sec:err-g19}) are
+  explicitly non-additive.
+\end{enumerate}
+
+
+\paragraph{Test-layer anchors.}
+
+Each prohibition is covered by a regression test under
+\texttt{bass\_py/workspace/contracts/tests/}.  The field set
+is locked by the schema-hash digest test so that any PR
+attempting to add a \texttt{posterior} field breaks the hash
+and fails in CI.  The ingestion-site refusal is tested by
+\texttt{test\_htt\_cannot\_ingest\_miocertificate\_as\_likelihood}.
+The additive-score ban is covered by a static-text regex scan
+(\texttt{test\_g19\_enforcement}) that walks the production
+subpackages and fails the build on any unreviewed hit.
+
+
+\paragraph{The \texttt{reduction\_status} field.}
+
+The three-valued \texttt{reduction\_status} makes the
+adequacy claim of a certificate explicit:
+
+\begin{itemize}
+\item \texttt{theory-direct}---the reduction is a direct
+  measurement under a defined model-independent observable.
+  Examples: the directional-coherence Fisher $p$-value
+  (Section~\ref{sec:mio-coherence}), the
+  $\ell$-independence $\chi^2$ test.
+\item \texttt{theory-approximate}---the reduction makes a
+  controlled approximation (e.g.\ small-$\Sigma^2$
+  expansion, flat-sky limit); the approximation and its
+  domain of validity appear in
+  \texttt{domain\_caveats}.
+\item \texttt{diagnostic-only}---the reduction is too
+  model-near to support a model-independent claim on its
+  own but is retained as a diagnostic, typically behind a
+  \texttt{production\_allowed=False} flag elsewhere.  The
+  ZoA-20\textdegree{} default axis is the archetype: an
+  anchor for diagnostic stability, not a production axis.
+\end{itemize}
+
+A \texttt{reduction\_status} of \texttt{diagnostic-only} is
+a first-class signal that the certificate is \emph{not} to
+be promoted into an inferential claim.  No reduction tier is
+a truth certificate.
+
+
+\paragraph{Why the schema is frozen.}
+
+Freezing the schema via hash digest is not a stylistic
+choice; it is the load-bearing defence against an
+architectural drift in which a later PR adds a
+\texttt{posterior} or \texttt{best\_fit\_params} field and
+silently converts MIO output into a model-dependent
+inference object.  The schema hash is tested in CI; any
+drift fails loudly, and the failure message identifies the
+field-name change rather than surfacing later as a silent
+mis-labelling of a truth certificate in downstream code.
+
+
+\paragraph{Historical correction.}
+
+In an earlier draft of the research plan (v2), MIO was
+described as a centralised post-hoc certification module; the
+v2 vocabulary treated the \texttt{MioCertificate} as if it
+issued a truth certificate.  The v3 reformulation, documented
+in appendix A40 (G19 architectural stance), excises the v2
+vocabulary and anchors adequacy reporting in the per-module
+ownership table of Section~\ref{sec:err-epistemic}.  The
+\texttt{legacy/} subtree preserves the v2 snapshot for
+provenance with a prominent banner warning that its contents
+must not be imported into active code paths.
+
+
+% ============================================================
+\section{Hard separation (G19) in practice}
+\label{sec:err-g19}
+% ============================================================
+
+The second architectural rule enforced across the solver
+ecosystem is the \emph{hard separation} between the
+Model-Independent Observatory (MIO), the Bianchi-typed
+Hypothesis Toolkit (HTT), and the Tangency--Stability--Chart
+suite (TSC).  Referred to in the codebase as G19, it states:
+\emph{the three adequacy domains never merge into a single
+scalar score; they may only cross-check.}
+
+This section records why the rule is non-negotiable, how it
+is enforced, and which pipeline failure modes a relaxation
+would introduce.
+
+
+\paragraph{Statement.}
+
+Under G19, the three code paths produce three independent
+artefacts:
+
+\begin{itemize}
+\item HTT produces a posterior draw, a log-evidence, and a
+  matched-complexity report;
+\item TSC produces a realisability report, an admissibility
+  Boolean, and the three-bound / Michaelis-Menten mirror of
+  the bass Route-B solver;
+\item MIO produces a \texttt{MioCertificate} with departure
+  variables, adequacy indicators, caveats, and
+  \texttt{reduction\_status}
+  (Section~\ref{sec:err-mio-semantic}).
+\end{itemize}
+
+The artefacts may be compared pairwise, but a comparison
+qualifies as a \emph{cross-check} only if it satisfies the
+five-property definition of appendix A34: two
+numerically-comparable scalars from two independently
+implemented code paths; no merged field on the report
+dataclass; a frozen \texttt{is\_cross\_check=True} tag; a
+loud-fail guard; and no downstream consumption as a
+likelihood term.  Objects that fail any of these conditions
+are not cross-checks, and any object exposing a merged
+estimator is a direct G19 violation.
+
+
+\paragraph{What is forbidden.}
+
+Three concrete operations are prohibited:
+
+\begin{itemize}
+\item summing or averaging an HTT log-evidence and a MIO
+  departure statistic into a single master score;
+\item relabelling a \texttt{MioCertificate} as an HTT
+  likelihood term, posterior draw, or evidence
+  contribution;
+\item interpreting the successful construction of a
+  \texttt{MioCertificate} as a truth certificate on behalf
+  of any particular cosmological model.
+\end{itemize}
+
+Each prohibition corresponds to an explicit code-level
+defence documented below.
+
+
+\paragraph{Four-layer enforcement.}
+
+G19 is enforced at four independent layers of the codebase,
+so that no single human-review oversight defeats it:
+
+\begin{itemize}
+\item \textbf{Type layer.}  Frozen dataclass schemas forbid
+  the offending field names at construction time.
+  \texttt{MioCertificate} has no \texttt{posterior} field;
+  \texttt{FFCrossCheckReport} carries
+  \texttt{F\_Bayes\_tsc} and \texttt{F\_Bayes\_htt\_mean} as
+  two distinct fields with no merged
+  \texttt{F\_Bayes\_combined} counterpart; its
+  \texttt{\_\_post\_init\_\_} hook raises
+  \texttt{ValueError} if \texttt{is\_cross\_check} is
+  negated.
+\item \textbf{Generator-site layer.}  The
+  \texttt{build\_mio\_certificate(\dots)} factory scans its
+  keyword arguments for the substring \texttt{"posterior"}
+  and raises before any instance is built, catching the case
+  where a schema-allowed field is populated with a
+  semantically forbidden value.
+\item \textbf{Ingestion-site layer.}  HTT likelihood entry
+  points type-check their inputs and refuse to accept a
+  \texttt{MioCertificate}; the refusal is exercised by
+  \texttt{test\_htt\_cannot\_ingest\_miocertificate\_as\_likelihood}.
+\item \textbf{Repo-wide scan layer.}  A regex-based static
+  scan (\texttt{test\_g19\_enforcement}) searches
+  \texttt{bass\_py/\{bass, htt/htt, mio, src/common, tsc,
+  workspace\}} for patterns such as
+  \texttt{mio\_score + htt\_lnB} or
+  \texttt{np.mean([mio\_score, htt\_lnB])}.  Any hit must be
+  whitelisted explicitly or the build fails.
+\end{itemize}
+
+
+\paragraph{Currently wired cross-check channels.}
+
+Five G19-compliant cross-check channels are presently wired
+in the codebase (appendix A34):
+
+\begin{itemize}
+\item TSC-06 filling fraction
+  (\texttt{tsc.integration.htt\_bridge} vs.
+  \texttt{htt.core.analysis\_extended.FillingFraction}),
+  agreeing at ${\rm rtol} < 10^{-6}$ on the S3 scenario;
+  the only channel with a frozen
+  \texttt{is\_cross\_check=True} dataclass
+  (\texttt{FFCrossCheckReport});
+\item TSC-03 three-bound hierarchy
+  (\texttt{tsc.admissibility.three\_bound\_hierarchy}
+  vs.\ \texttt{htt.core.bounds}), bit-identical at
+  ${\rm rtol}=10^{-10}$ on the MES coefficient table;
+\item TSC-05 Michaelis--Menten SSOT mirror
+  (\texttt{tsc.charts.michaelis\_menten\_export} vs.\
+  \texttt{bass.spectrum.cl\_assembly}), bit-identity
+  (${\rm rtol}=0$);
+\item PR13AH spherical-mean vs.
+  \texttt{common.sky\_geometry} (\texttt{ChannelSummary}
+  diff), the W4 R1 regression anchor;
+\item MIO HJ-02a directional coherence vs.\ HTT dipole
+  likelihood---advisory only, with no matched numerical
+  pair, expressed through the certificate's
+  \texttt{domain\_caveats}.
+\end{itemize}
+
+No merge channel exists; none is planned; any addition
+would require a plan revision and is architecturally
+forbidden (appendix A40).
+
+
+\paragraph{Failure modes a relaxation would introduce.}
+
+Relaxing G19 to allow merging produces four structural
+failure modes (appendix A40):
+
+\begin{enumerate}
+\item \emph{Collapse of independent witnesses.}  A bug that
+  corrupts both code paths identically becomes undetectable.
+  TSC-06 exists precisely to produce two numerically
+  comparable scalars from two independently implemented code
+  paths; a merged score destroys that signal.
+\item \emph{Miscounting of shared uncertainty.}  A merged
+  filling-fraction does not reduce variance by $\sqrt 2$,
+  because both paths share the same $(\epsilon_1,
+  \epsilon_2, \epsilon_3)$ posterior draw.  Merged-variance
+  arithmetic is therefore pseudo-statistical.
+\item \emph{Contamination of HTT likelihoods.}  Once MIO and
+  HTT scores are fungible, nothing prevents a later PR from
+  ingesting a \texttt{MioCertificate} as an HTT likelihood
+  input; the model-independence guarantee collapses and the
+  certificate silently migrates into a truth certificate.
+\item \emph{Destruction of the TSC realisability gate.}
+  The realisability report is Boolean; a merged score forces
+  the Boolean into an averaged continuous field and corrupts
+  the admissibility gate.
+\end{enumerate}
+
+Each failure mode is architectural rather than quantitative:
+the numerics might still pass the low-level error budget of
+Sections~\ref{sec:err-state}--\ref{sec:err-observable} while
+the resulting object ceases to be interpretable.  G19 is the
+rule that keeps the error budget interpretable at all.
+
+
+% ============================================================
+\section{Distributed ownership of epistemic control}
+\label{sec:err-epistemic}
+% ============================================================
+
+The third architectural clarification is that
+epistemic-hygiene responsibility is \emph{distributed}: it
+is not concentrated in any single module.  Each module in
+the solver ecosystem owns its own adequacy and exposes that
+ownership through a specific artefact; the ensemble of
+artefacts never collapses to a single master score
+(Section~\ref{sec:err-g19}).
+
+This section records the ownership table and its
+operational consequences for the error budget of this
+chapter.
+
+
+\paragraph{Principle.}
+
+The distributed-ownership principle can be stated in a
+single sentence: the solver tells you whether the numerics
+are trustworthy; the admissibility module tells you whether
+a configuration is physically realisable; the inference
+module tells you whether a model's posterior passes
+matched-complexity / LOOCV / PPC; the observatory tells
+you whether the data is consistent with the model's
+adequacy claims \emph{without referencing any specific
+model}.  Each produces its own artefact and each is
+consumed independently downstream.
+
+
+\paragraph{Ownership table.}
+
+The canonical ownership table (appendix A39) lists the
+primary owner of each adequacy domain in the codebase; the
+summary form is reproduced below.
+
+\begin{center}
+\setlength{\tabcolsep}{4pt}
+\small
+\begin{tabular}{lll}
+\hline\hline
+Domain & Primary owner & Contract artefact \\
+\hline
+Forward-solver fidelity
+  & \texttt{bass.runtime.*}
+  & \texttt{RuntimeGate} \\
+Claim-tier labels
+  & \texttt{bass.runtime.claims}
+  & tier enum \\
+Physical realisability
+  & \texttt{tsc.admissibility.*}
+  & \texttt{RealizabilityReport} \\
+Tangency / entropy
+  & \texttt{tsc.diagnostics.tangency}
+  & invariant dict \\
+Posterior adequacy
+  & \texttt{htt.infer.matched\_complexity}
+  & \texttt{MatchedComplexityReport} \\
+Posterior predictive
+  & \texttt{htt.advanced\_diagnostics.PosteriorPredictive}
+  & \texttt{PPCReport} \\
+Null-competition FPR
+  & \texttt{htt.infer.null\_competition}
+  & \texttt{NullCompetitionReport} \\
+Model-indep. diagnostics
+  & \texttt{mio.diagnostics.adequacy\_certificates}
+  & \texttt{MioCertificate} \\
+Directional coherence
+  & \texttt{mio.coherence.directional}
+  & \texttt{MioCertificate(directional\_coherence)} \\
+Masked-sky caveats
+  & \texttt{mio.diagnostics.masked\_sky\_caveats}
+  & certificate \texttt{domain\_caveats} \\
+Interface semantics
+  & \texttt{bass\_py/workspace/contracts/}
+  & 4 frozen dataclasses \\
+Production-axis gate
+  & \texttt{common.contracts.PreferredAxis}
+  & \texttt{production\_allowed} Boolean \\
+\hline\hline
+\end{tabular}
+\end{center}
+
+Each row is independent; outputs across rows are never
+summed.  No row occupies the role of a truth certificate.
+The \texttt{MioCertificate} row ships a diagnostic report;
+the \texttt{MatchedComplexityReport} row ships a
+posterior-adequacy report under a specific model; the
+\texttt{RealizabilityReport} row ships a Boolean
+admissibility claim.  These three artefacts cross-check;
+they do not merge.
+
+
+\paragraph{Three first-line defences.}
+
+Appendix A39 identifies three semantic first-line defences
+that the ownership table relies on:
+
+\begin{itemize}
+\item \emph{Filename prefix.} MIO artefacts begin with
+  \texttt{mio\_}
+  (e.g.\ \texttt{mio\_directional\_coherence\_v1.json},
+  \texttt{mio\_pr13am\_te\_sign\_v1.json}); enforced by
+  \texttt{test\_reg02\_artifact\_prefix}.
+\item \emph{Module tag.} MIO-owned modules physically
+  located in other packages carry an
+  \texttt{\_\_mio\_owned\_\_ = True} attribute plus a
+  \texttt{\_\_mio\_rationale\_\_} string; the sole current
+  example is
+  \texttt{htt.PR13AM\_te\_sign\_d1d3\_bridge}.
+\item \emph{Schema token ban.} The substring
+  \texttt{"posterior"} is forbidden in any field name on
+  \texttt{MioCertificate}, \texttt{AtlasEntry}, and the
+  upstream \texttt{HttForwardOutput}; enforced by
+  \texttt{test\_g19\_enforcement}.
+\end{itemize}
+
+Each defence is tested; together they prevent a later PR
+from quietly re-concentrating adequacy reporting into a
+single module---the category error that the v2 plan made
+and that v3 corrects.
+
+
+\paragraph{Historical correction.}
+
+The v2 research plan described the Model-Independent
+Observatory as a central module that issued a truth
+certificate on behalf of the pipeline.  The v3 reformulation
+(appendix A40) identifies that description as a category
+error: adequacy is distributed, not centralised, and the MIO
+output is a departure-variable report, not a truth
+certificate.  Downstream code that was written against the
+v2 draft must be migrated; the \texttt{legacy/} subtree
+preserves the v2 snapshot with an explicit banner warning
+against active use.
+
+
+\paragraph{How the five-level hierarchy inherits the rule.}
+
+The five-level error hierarchy of
+Sections~\ref{sec:err-state}--\ref{sec:err-observable} is
+itself an instance of distributed ownership.  Level~1
+(state-space error) belongs to the forward solver; Level~2
+(source translation) belongs to the $\Teff$ closure;
+Level~3 (adequacy certificate) belongs to the tangency
+diagnostic; Level~4 (ladder-specific) belongs to the
+adaptive $\ell$-band router; Level~5 (observable) belongs
+to the inference code.  No level consumes another level's
+error as a truth certificate; each is diagnosed and
+controlled on its own terms, and the Phase~1.0 budget
+(Section~\ref{sec:err-phase10-budget}) is a table of
+independent entries, not an additive sum.  The
+architectural rules of
+Sections~\ref{sec:err-mio-semantic}--\ref{sec:err-epistemic}
+are therefore not auxiliary meta-commentary but the
+logical closure of the error hierarchy itself.
