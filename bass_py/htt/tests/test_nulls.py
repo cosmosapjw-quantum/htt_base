@@ -125,3 +125,61 @@ class TestFalsePositiveRates:
         fpr = FalsePositiveRates()
         d = fpr.to_dict()
         assert isinstance(d, dict)
+
+
+class TestRunnerSmoke:
+    """HTT-NULL smoke test (plan v1.0 §3.5 / v1.2 §21 W8D7).
+
+    Asserts that ``htt.nulls.runner`` imports cleanly, that every null
+    family in ``ALL_FAMILIES`` can be instantiated, and that
+    ``run_null_library`` builds the end-to-end stub pipeline at small
+    ``n_datasets`` without raising and returns the expected
+    output structure.  The runner uses the fast analytical
+    Bayes-factor approximation (not nested sampling), so this
+    test is cheap enough to run in CI on every commit.
+    """
+
+    def test_runner_imports(self):
+        from htt.nulls.runner import run_null_library, ALL_FAMILIES, run_family
+        assert callable(run_null_library)
+        assert callable(run_family)
+        assert len(ALL_FAMILIES) == 5
+
+    def test_all_five_families_instantiate(self):
+        from htt.nulls.runner import ALL_FAMILIES
+        names = [f.name for f in ALL_FAMILIES]
+        assert len(set(names)) == 5, f"duplicate names in {names}"
+
+    def test_runner_builds_stub_pipeline(self):
+        from htt.nulls.runner import run_null_library
+        obs = _load_obs()
+        output = run_null_library(obs, n_datasets=3)
+        assert isinstance(output, dict)
+        for key in ('_meta', 'families', 'union_fp_Pi005', 'target'):
+            assert key in output, f"runner output missing key {key!r}"
+        assert output['_meta']['n_families'] == 5
+        assert output['_meta']['n_datasets_per_family'] == 3
+        assert output['_meta']['total_datasets'] == 15
+        assert len(output['families']) == 5
+
+    def test_runner_family_results_schema(self):
+        from htt.nulls.runner import run_null_library
+        obs = _load_obs()
+        output = run_null_library(obs, n_datasets=2)
+        for fam_name, result in output['families'].items():
+            for key in ('n_datasets', 'fp_rate_Pi005', 'fp_rate_lnB5',
+                        'lnB_median', 'lnB_std', 'beta_median_mean'):
+                assert key in result, \
+                    f"{fam_name} result missing {key!r}"
+            assert result['n_datasets'] == 2
+
+    def test_runner_output_is_json_serialisable(self, tmp_path):
+        from htt.nulls.runner import run_null_library
+        obs = _load_obs()
+        output = run_null_library(obs, n_datasets=2)
+        output_path = tmp_path / "null_library_smoke.json"
+        with open(output_path, 'w') as f:
+            json.dump(output, f)
+        with open(output_path) as f:
+            reloaded = json.load(f)
+        assert reloaded['_meta']['n_families'] == 5
