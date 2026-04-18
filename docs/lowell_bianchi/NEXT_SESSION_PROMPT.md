@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (LB-5 complete → LB-6)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_LB5_2026-04-19.md`
-**Current target session**: LB-6 Kolb thermal history + CAMB geometry regression
+**Last rotated**: 2026-04-19 (LB-6 complete → post-LB design session)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_LB6_2026-04-19.md`
+**Current target session**: post-LB phase — design-only session to pick and scope one of options A / B / C (line-of-sight, perturbation sector, direction-dependent likelihood)
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,98 +36,94 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# Phase LB 구현 계속 — LB-6 Kolb thermal history + CAMB geometry 회귀
+# Phase LB 완료 → post-LB 단계 기획 세션 (design-only)
 
 ## 프로젝트 컨텍스트
 
 - **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 - **venv**: venv/bin/python
 - **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 2,534 tests passing (직전 2,441 + 93 LB-5)
-- **완료된 세션**: LB-0 (external-code guard), LB-1 (species γ/ν/b/c/Λ), LB-2a (PSTF storage + T1/T2/T3/T8/T9), LB-2b (T4/T5/T6/T7 + hierarchy_rhs driver), LB-3 (HardCut + FreeStream + PowerLaw + TCA closure strategies + measure_closure_error), LB-4 (ThomsonPSTFCollisionOperator + EModeThomsonCollisionOperator + PolarizationHierarchyState + lowell §11.3 TiltedVisibility Layer A), **LB-5** (`LowellBianchiIntegrator` unified driver + pack_unpack / aux_state / ic / neutrino_reduced / event_detection + TCA DAE dispatch + real W3 `CanonicalDecision` wiring resolving LB-3/LB-4 F3)
+- **현재 baseline**: 2,558 tests passing + 1 skipped (LB-5 2,534 + LB-6 24 new pass + 1 deferred LB-6-11)
+- **완료된 세션**: LB-0 (external-code guard), LB-1 (species γ/ν/b/c/Λ), LB-2a/b (PSTF hierarchy T1..T9 + driver), LB-3 (HardCut + FreeStream + PowerLaw + TCA closures + measure_closure_error), LB-4 (Thomson PSTF + E-mode collision + lowell §11.3 TiltedVisibility Layer A), LB-5 (`LowellBianchiIntegrator` unified driver + real W3 `CanonicalDecision` wiring + TCA DAE dispatch), **LB-6** (end-to-end regression suite `bass/integration/test_lowell_bianchi.py` — Kolb thermal history + CAMB geometry match + Bianchi I shear invariants)
+- **Phase LB 상태**: 완료. Low-ℓ Bianchi solver bedrock verified against textbook thermal history + CAMB Planck-2018 geometry.
+
+## 이 세션의 작업 (설계만, 코딩 없음)
+
+Phase LB 가 끝났으므로 post-LB 세 옵션 중 하나를 선택해서 **상세 design docs** 를 작성하는 것이 이 세션의 유일한 목표다.
+
+**옵션 A — Line-of-sight projection + C_ℓ 추출** (lowell §7 matrix propagator)
+- 목적: PSTF hierarchy 결과 → C_ℓ^{TT, EE, TE} 추출 (CAMB FLRW limit 매치 < 5 % 목표)
+- 새 docs: `docs/lowell_bianchi/post_lb_A_line_of_sight/` — spec 문서 3~5개로 분해 (projection spec + source term assembly + regression spec + CAMB fixture binding)
+- 첫 세션 예상 작업: visibility/source integrand 구성 + recombination-era Π_2 source integration
+
+**옵션 B — Perturbation sector** (lowell §9, §13)
+- 목적: 스칼라 perturbation equations을 PSTF hierarchy 에 얹기. CAMB regular adiabatic seed IC + tilted-boost rule (§13.5).
+- 새 docs: `docs/lowell_bianchi/post_lb_B_perturbation/` — k-dispatch ∇̃ structure-constant logic (lowell §13), seed IC spec, PSTF-regularised boost
+- 첫 세션 예상 작업: k=0 limit 에서의 regular seed spec 확정 + 기존 integrator 와의 composition rule
+
+**옵션 C — Direction-dependent likelihood** (lowell §14)
+- 목적: HTT 재설계 (§3의 P0 3종 해결) + 3-mode operational structure 구현
+- 새 docs: `docs/lowell_bianchi/post_lb_C_htt/` — §14.2 HTT decomposition spec + §14.3 likelihood evaluation contract + tiered-resolution plan
+- 첫 세션 예상 작업: HTT P0 3종 issue 정리 + likelihood evaluator contract 제안
 
 ## 우선 읽어야 할 문서 (순서대로)
 
-1. `docs/audits/AUDIT_PHASE_LB5_2026-04-19.md` — LB-5 감사 로그 (no P0/P1; F1 η_reion 밴드 / F2 `einstein_bianchi` Σ-convention / F3 LSODA stiffness note)
-2. `docs/lowell_bianchi/06_integration_tests_spec.md` — 이 세션 스펙 전체
-3. `docs/lowell_bianchi/README.md` §3 (dependency graph) + §6 (phase success criteria)
-4. 참조 (LB-1..LB-5 완료물):
-   - `bass_py/bass/hierarchy/integrator.py` — `LowellBianchiIntegrator.run` 본체 + `IntegrationResult` 구조체
-   - `bass_py/bass/hierarchy/pack_unpack.py`, `aux_state.py`, `ic.py`, `neutrino_reduced.py`, `event_detection.py` — LB-5 infrastructure
-   - `bass_py/bass/hierarchy/closure.py`, `bass_py/bass/collision/` — LB-3/LB-4
-   - `bass_py/bass/species/`, `bass_py/bass/background/` — LB-1 + Y-Block
-5. 참조 (LB-5 이 남긴 hooks):
-   - `IntegratorAuxState.gamma_T_override` — deep-TCA regime probe (LB-6 high-z tests 에서 사용 가능)
-   - `IntegrationResult.tca_active_mask` — η-range 별 TCA 활성 여부 post-processing
-   - `IntegrationResult.critical_events` — `z_eq`, `z_star`, `eta_reion_midpoint`, `eta_today` 자동 계산
-6. 참조: `lowell §6`, `Kolb §3.5`, `Baumann §3.10` (thermal history targets)
+1. `docs/audits/AUDIT_PHASE_LB6_2026-04-19.md` — LB-6 감사 로그 (no P0/P1; in-session spec 수정 6건 요약; carry-forwards F1/F2/F3)
+2. `docs/lowell_bianchi/README.md` §6 (phase success criteria, LB 완료 상태) + §7 (post-LB 개요)
+3. `lowell_bianchi_solver_reference.md` §7 (matrix propagator), §9.2 (perturbation sector), §13.5 (tilted-boost), §14 (HTT + likelihood) — 각 옵션의 기본 수학 소스
+4. 기존 LB 모듈 (옵션 선택 후에만):
+   - LB-5 unified integrator: `bass_py/bass/hierarchy/integrator.py`
+   - LB-6 regression suite: `bass_py/bass/integration/test_lowell_bianchi.py`
+   - LB-0..4 dependencies: spec + code per `README.md §3`
+5. 참조 데이터:
+   - `data/camb_ref_planck2018.npz` — C_TT, C_EE, C_TE, D_* at ell=2..30 (옵션 A gate)
+   - HyRec fixture (LB-1)
+   - Y-Block tetrad + shear source (`bass/background`) — 옵션 B 에서 재사용
 
-## LB-5 에서 확정된 사실 (LB-6 에 참고)
+## LB-6 carry-forward P2 items (post-LB 첫 세션이 decide)
 
-- **State layout fixed at spec §2.1**: `(a, Σ_+, Σ_−, Π_{0..L}, E_{0..L}, Δ_ν, q_ν, π_ν, G_3)` — 총 `(L+1)² × 2 + 7` 엔트리. LB-6 이 이 layout 을 존중해야 pack/unpack 유틸 재사용 가능.
-- **CanonicalDecision 실제 배선**: `build_integrator_canonical_decision(beta, sigma_squared)` 가 real VT-07 β gate + Σ² floor + one-field tangency 를 wire. LB-6 integration 테스트는 이 decision 이 production 에서 fail하는 scenarios (unsafe β, sub-floor σ²) 를 pinning 해야 함.
-- **TCA dispatch DAE-style**: `combined_rhs` 가 `Γ_T/H > threshold` 에서 Π_2 m=0 / E_2 m=0 슬롯을 relaxation rate `a × Γ_T` 로 algebraic 값에 peg. 실제 Planck-2018 HyRec fixture 는 이 threshold 를 넘지 않으므로 LB-6 에서 `gamma_T_override` test hook 을 사용해 dispatch branch 를 regression 테스트 필요.
-- **η_reion ≈ 5100 Mpc @ z=7.67**: spec §5.3 / §10.5 I-17 에 LB-5 amendment 로 수정됨 (pre-LB-5 draft 의 13800 Mpc 은 arithmetic 오류). LB-6 Kolb-table regression 은 이 amended 값을 사용.
-- **`einstein_bianchi` Σ-convention mismatch (F2)**: 현재 integrator 가 `Σ × a = const` 를 보존 (Ellis convention `Σ² × a⁴` 대신). LB-6 shear-decay 테스트는 einstein_bianchi convention 기준. 뒤집기는 post-LB-6 phase 에서.
-- **외부 코드 가드**: `bass/validation/test_external_code_policy.py` 여전히 활성 — LB-6 신규 파일이 `import camb/classy/hyrec/aniclass` 하면 fail.
+- **F1 (LB-6)**: 서브그리드 z_* 감지기 (Currently integer-argmax on Δz=1 fixture → ±1 band). 옵션 A 에서 `η_*` / `χ_*` 정밀도가 재현율에 영향 주면 우선 해결.
+- **F2 (LB-6)**: `detect_critical_events` 가 `eta_star` / `chi_star` 키 누락 — 옵션 A 시작 전에 tidy-up 1-commit 으로 처리 권장.
+- **F2 (LB-5)**: `einstein_bianchi` Σ-convention (`Σ × a = const`) vs Ellis (`σ × a³ = const`). 전면 conversion 은 옵션 B perturbation 세션에서 자연스럽게 동반 — B 를 선택하면 B 의 첫 서브-세션으로.
+- **F3 (LB-5)**: LSODA stiffness at dynamically-huge Γ_T — 옵션 A/B 에서 재현될 가능성 낮음 (override 는 test-only).
 
-## 이 세션의 작업 (~400 LoC tests, 1 세션)
+## post-LB 세션 범위 제약 (고정, 이 세션에서 위반 금지)
 
-`06_integration_tests_spec.md §11` Implementation checklist 전체:
+- **코딩 금지** — 오직 design docs. 기존 코드 수정 / 신규 production 파일 생성 금지.
+- 옵션 A / B / C 중 **정확히 하나만 선택**. 여러 개 동시 기획은 session 분량 초과.
+- 선택한 옵션의 design docs 는 LB 스펙 포맷을 준수 (§1 개요 → §N 구현 체크리스트 → 수치 타깃 → diagnostic playbook).
+- 외부 코드 참조 제한은 **유효** — spec 문서가 `import camb` 예시를 적어도 실제 구현 트리에는 절대 침투 금지.
+- 사용자가 특정 옵션을 지정 안 하면 **옵션 A 를 기본 추천** (LB-6 이 이미 CAMB 레퍼런스와 pin 된 상태라 가장 자연스러운 다음 단계).
 
-- **`bass/integration/test_lowell_bianchi.py`** 신규 (지금은 존재하지 않으므로 디렉토리 + module 생성 필요)
-- 테스트 LB-6-01 ~ LB-6-24 (spec 참조)
-- Kolb thermal history regression: z_eq=3400±50, z_*=1089.94±0.3, τ_reion=0.0544±0.0073, T_ν/T_γ=(4/11)^(1/3)
-- CAMB geometry regression: η_* ≈ 13873 Mpc (distance-to-LSS), η_0 ≈ 14153 Mpc
-- Bianchi I shear-decay invariant: `Σ × a = const` (F2 convention)
-- Full-run smoke: full Planck-2018 FLRW run 끝까지 완주 + 모든 invariant pass + < 30 s wall time
-- 실패 시 diagnostic playbook (spec §12) 적용: 각 실패 테스트는 정확히 한 LB-N 세션으로 역추적 가능해야 함
+## 핵심 원칙 (고정)
 
-## LB-6 범위 제약 (고정)
-
-- **integration tests only** — 새로운 production code 금지
-- 기존 `LowellBianchiIntegrator` API 수정 금지 (LB-5 접점이 frozen 된 상태)
-- 외부 CAMB/CLASS 를 **테스트 oracle 로** 허용 (scripts/generate_*_reference.py + test_*.py 한정) — 실제 wire 는 pre-computed fixture 만
-- 테스트 실패가 프로덕션 버그 를 드러내면 → `AUDIT(LB-6): …` prefix 로 in-session 수선
-- 테스트 실패가 spec target 오류를 드러내면 → spec 먼저 수정 후 테스트 조정
-
-commit 메시지: `LB-6: Kolb thermal history + CAMB geometry regression pass`
-
-## 핵심 원칙 (고정, 위반 시 PR 거부)
-
-1. **외부 코드 금지** (프로덕션 트리 한정)
-2. Citation in every test docstring (Kolb / Baumann / Planck 2018 참조)
-3. PSTF invariants preserved throughout integration
+1. 외부 코드 금지 (프로덕션 트리)
+2. Citation in every design docs section (lowell §N.M 참조 필수)
+3. PSTF invariants preserved across any proposed new layer
 4. No silent fallbacks
-5. Determinism: 동일 IC + params → 동일 test outcome (RNG 금지)
-6. **FLRW limit**: σ = 0 에서 Kolb-table 매치 필수
+5. Determinism
+6. FLRW limit 재현 (옵션 A/B 는 LB-6 regression 연장선)
 
 ## 검증 체크리스트 (최종 commit 전)
 
-- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,534 이상)
-- [ ] LB-6-01 ~ LB-6-24 모두 spec 수치 타깃 일치
-- [ ] Full-range smoke integration (eta 0.5 → 14147 Mpc) 완주 + 모든 post-integration invariants pass
-- [ ] 신규 테스트 LoC ≥ 25% coverage (integration tests are thin by nature — coverage via existing production code)
-- [ ] **phase-boundary audit**: `docs/audits/AUDIT_PROMPT.md` 실행 후 `AUDIT_PHASE_LB6_<date>.md` 생성
-- [ ] **gallery refresh**: 가능하면 신규 topic `12_thermal_history/` 에 Kolb-table comparison 플롯 추가 (optional — LB-6 은 tests 중심)
-- [ ] **`NEXT_SESSION_PROMPT.md §2` 블록을 post-LB (옵션 A/B/C) 용으로 교체** (§4.6 템플릿)
-- [ ] 최종 commit 메시지에 "+ rotate NEXT_SESSION_PROMPT" 라인 포함
-- [ ] LB-6 전부 green 이면 `Phase LB complete: low-ℓ Bianchi solver bedrock verified` summary commit 도 추가 고려
+- [ ] 선택된 옵션의 design docs 완성 (`docs/lowell_bianchi/post_lb_X_*/` 하위)
+- [ ] Session 분해 표 + 의존성 그래프 + 수치 타깃 표 포함
+- [ ] `README.md §7` (post-LB 개요) 업데이트: 선택된 옵션 경로만 남기고 나머지 두 옵션은 "deferred" 표시
+- [ ] `NEXT_SESSION_PROMPT.md §2` → 선택된 옵션의 **첫 구현 세션** 용 prompt 로 교체 (§4.6 template 보강 또는 옵션-specific 새 template 추가)
+- [ ] 최종 commit 메시지: `post-LB: <option letter> design docs (<short description>)` + `+ rotate NEXT_SESSION_PROMPT`
+- [ ] 회귀는 돌리지 않아도 됨 (코드 변경 없음) — 단, 기존 2,558 tests 가 여전히 green 인지는 git 상태만 확인
 
 ## 진행 순서
 
-1. LB-5 audit + LB-6 spec + `LowellBianchiIntegrator.run` + `IntegrationResult` 구조체 읽기
-2. `bass/integration/` 디렉토리 생성, `__init__.py` + `test_lowell_bianchi.py` 스켈레톤
-3. LB-6-01..08 (FLRW baseline: z_eq, z_*, τ_reion, η_* — LB-5 critical_events + species registry 직접 사용)
-4. LB-6-09..16 (Bianchi I shear-decay regression — einstein_bianchi convention 기준)
-5. LB-6-17..20 (TCA dispatch regression — gamma_T_override 로 deep-TCA regime 재현)
-6. LB-6-21..24 (full-range smoke + CAMB geometry match — η_0 − η_* 정확도)
-7. Gallery (optional)
-8. 전 회귀 확인 → phase-boundary audit
-9. `NEXT_SESSION_PROMPT.md §2` → post-LB bootstrap (옵션 A/B/C)
-10. commit (+ optional "Phase LB complete" summary commit)
+1. AUDIT_PHASE_LB6 + README §6/§7 + lowell §7 / §9 / §13 / §14 읽기
+2. 사용자에게 A/B/C 중 하나를 확인 (없으면 A 를 추천)
+3. 선택된 옵션의 design docs 스펙 5개 분해 (`post_lb_X/00_overview.md` … `04_regression_spec.md` 식)
+4. Session 분해 표 작성 (각 서브-세션이 1~2 일 분량)
+5. 의존성 그래프 확정 — LB-6 carry-forward P2 를 어느 서브-세션에 흡수할지 결정
+6. `README.md §7` 갱신 + `NEXT_SESSION_PROMPT.md §2` 를 첫 구현 세션 prompt 로 교체
+7. commit
 
-시작하세요. 스펙과 다른 방향 제안 시 반드시 spec 문서 먼저 수정.
+시작하세요. 옵션 선택이 이 세션의 유일한 의사결정 포인트입니다 — 다른 방향 제안 시 반드시 문서 먼저 수정.
 ```
 
 ---

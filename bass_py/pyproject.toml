@@ -14,6 +14,9 @@ dev = ["pytest>=7.4"]
 [tool.pytest.ini_options]
 testpaths = ["bass", "tsc", "src", "."]
 python_files = ["test_*.py"]
+markers = [
+    "slow: marks tests as slow / end-to-end integration (LB-6; deselect with '-m \"not slow\"')",
+]
 
 [build-system]
 requires = ["setuptools>=68"]
