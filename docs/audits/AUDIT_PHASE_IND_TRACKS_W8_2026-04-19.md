@@ -152,31 +152,41 @@ No numerical-layer issues detected this phase.
 No P0 or P1 findings this phase. Carry-forward-only entries
 below.
 
-### FM1 · `/project` is gitignored; manuscript landings require `git add -f` (P2)
+### FM1 · `/project` is gitignored; manuscript files must NOT be staged (RESOLVED post-W8)
 
 **Type**: Workflow / tooling.
-**Severity**: P2 (visible but not blocking).
+**Severity**: P2 in-audit; **RESOLVED** after user clarification.
 **Symptom**: `.gitignore:126` carries a `/project` entry. All
 prior audits' "MANU-CH03 landed" etc. claims touched the
 working tree only; the files were never committed to git.
-This session force-added the W8D3 and W8D5 manuscript files
-(`project/00_manuscript/ch11_error_hierarchy.tex`,
+This session initially force-added the W8D3 and W8D5
+manuscript files (`project/00_manuscript/ch11_error_hierarchy.tex`,
 `project/00_manuscript/ch12_mio_observatory_results.tex`,
-`project/00_manuscript/main.tex`) with `git add -f` to make
-the Week-8 gate committable.
-**Root cause**: The `/project` ignore was added to the
-repo at some past point (no longer traceable from current
-git history); the manuscript-landing convention in
-INDEPENDENT_TRACKS_PLAN's Week-5+ schedule assumed tracked
-files.
-**Cheapest test**: `git ls-files project/` was empty before
-this session; now shows the three force-added files.
-**Action this session**: force-added the three manuscript
-files. Noted in both W8D3 and W8D5 commit messages.
-**Action deferred**: the user should decide whether to
-remove `/project` from `.gitignore` at a lane-wide level, or
-keep the current force-add convention. This is a policy
-question outside the independent-tracks scope.
+`project/00_manuscript/main.tex`) with `git add -f` on the
+mistaken assumption that "landed" meant "committed".
+**Root cause**: The `/project` ignore is **intentional** —
+user clarified 2026-04-19 post-close: *"do not add anything
+inside 'project'. they are local 'inside' things."* The
+manuscript-landing convention across the audit log series
+has always meant "working tree updated", not "files
+committed"; the committed artefact of record is the audit
+log and the dossier appendices under `docs/`.
+**Cheapest test**: `git ls-files project/` → empty (intended
+steady state).
+**Resolution**: the three files were untracked via
+`git rm --cached` (staged deletion only; files preserved on
+disk). The staged removal was absorbed into the parallel
+bass-lane commit `25e2531` (`FB-0.2`) by timing coincidence,
+which is still additive history — no rewrite occurred and
+`git ls-files project/` is now empty. The W8 content is
+preserved locally; the audit log (this file) records the
+qualitative gate verification (line counts, banned-vocab
+scan, "truth certificate" mentions) as the committed
+artefact.
+**Durable rule added**: memory
+`feedback_project_local_only.md` — never stage `project/`
+paths; manuscript gates are verified via the working tree
+plus a committed audit log entry.
 
 ### FM2 · Palette unification deferred (P2)
 
