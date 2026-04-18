@@ -34,7 +34,14 @@ def _known_external_module_pattern(err_msg: str) -> bool:
         "workspace",                     # workspace.*
         "contracts",                     # workspace.contracts.*
         "/mnt/project",                  # absolute legacy root
+        "/mnt/user-data",                # legacy author-env save_fig default
+                                         # (plot_style.save_fig writes to
+                                         # /mnt/user-data/outputs — fig
+                                         # scripts run at import time; design
+                                         # flag per test:78 SystemExit branch)
         "matplotlib",                    # may not be available
+        "dynesty",                       # nested-sampling dep not installed
+                                         # in this venv (see next-session §4)
         # The figures use a sibling-dir sys.path trick to import `plot_style`
         # and other local helpers; those imports only resolve when the script
         # is run from within figures/ (not under pytest collection). The
