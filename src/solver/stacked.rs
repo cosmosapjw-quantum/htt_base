@@ -129,6 +129,81 @@ pub(crate) fn integrate_linear_profile_rodas5p(
     Ok((out, Rodas5PStats { n_steps, n_rejected, n_jac, n_f_eval, h_final: h }, cdiag))
 }
 
+/// Phase 2.0 (2026-04-19): streaming callback variant.
+///
+/// Same numerics as `integrate_linear_profile_rodas5p` but replaces the
+/// pre-materialized `mats_flat` (O(N_snap · n²) memory) with an on-demand
+/// `builder(eta, &mut out)` callback.  Internally wraps a
+/// `LinearProfileCallback` that caches exactly TWO adjacent bracket
+/// matrices (O(2·n²) memory).
+///
+/// The builder must write M(eta) row-major into `out` (length n_state²).
+/// Same step-controller and accept/reject logic as the mats_flat path.
+pub(crate) fn integrate_linear_profile_rodas5p_callback<F>(
+    eta_profile: &[f64],
+    builder: F,
+    n_state: usize,
+    y0: &[f64],
+    eta_eval: &[f64],
+    cfg: &Rodas5PConfig,
+) -> Result<(Vec<Vec<f64>>, Rodas5PStats, ControllerDiagnostics), String>
+where
+    F: FnMut(f64, &mut [f64]),
+{
+    if y0.len() != n_state { return Err(format!("y0 must have length {}", n_state)); }
+    if eta_eval.len() < 2 { return Err("eta_eval must contain at least two samples".to_string()); }
+    for i in 1..eta_eval.len() {
+        if eta_eval[i] <= eta_eval[i - 1] { return Err("eta_eval must be strictly increasing".to_string()); }
+    }
+    let profile = LinearProfileCallback::new(eta_profile.to_vec(), n_state, builder)?;
+    let d = n_state + 1;
+    let mut y = vec![0.0; d];
+    y[..n_state].copy_from_slice(y0);
+    y[d - 1] = eta_eval[0];
+    let eta_start = eta_eval[0];
+    let eta_end = *eta_eval.last().unwrap();
+    let tab = rodas5p_tableau();
+    let mut h = cfg.h_init.unwrap_or_else(|| ((eta_end - eta_start).abs() / 200.0).max(cfg.h_min).min(cfg.h_max));
+    let mut prev_err = 1.0;
+    let mut n_steps = 0usize;
+    let mut n_rejected = 0usize;
+    let mut n_jac = 0usize;
+    let mut n_f_eval = 0usize;
+    let mut history_eta = vec![eta_start];
+    let mut history_y = vec![y.clone()];
+    let mut scratch = LinearStepScratch::new(n_state, profile.stride);
+    let mut cdiag = ControllerDiagnostics::default();
+    let mut reject_streak = 0usize;
+    while y[d - 1] < eta_end - 1e-14 {
+        if n_steps >= cfg.max_steps { return Err(format!("Max steps reached at eta={}", y[d - 1])); }
+        let remaining = eta_end - y[d - 1];
+        let h_try = h.min(remaining).max(cfg.h_min);
+        n_jac += 1;
+        let (err, ok, n_f_stage) = step_linear_profile_rodas5p_into_generic(&profile, &y, h_try, cfg, &tab, &mut scratch);
+        n_f_eval += n_f_stage;
+        if !ok || !err.is_finite() || err > 1.0 {
+            n_rejected += 1;
+            reject_streak += 1;
+            cdiag.record_reject(h_try, reject_streak);
+            h = new_h(h, if err.is_finite() { err.max(2.0) } else { 10.0 }, prev_err, cfg);
+            if h < cfg.h_min * 1.0001 { return Err(format!("h_min reached at eta={}", y[d - 1])); }
+            continue;
+        }
+        y.copy_from_slice(&scratch.y_new);
+        n_steps += 1;
+        reject_streak = 0;
+        history_eta.push(y[d - 1]);
+        history_y.push(y.clone());
+        let (h_new, q_raw, q_clipped) = new_h_with_diag(h, err, prev_err, cfg);
+        cdiag.record_clip(q_raw, q_clipped, cfg.f_min, cfg.f_max);
+        cdiag.record_accept(err, h_try, q_raw, q_clipped);
+        h = h_new;
+        prev_err = err.max(1e-30);
+    }
+    let out = interpolate_linear_history_to_targets(&history_eta, &history_y, eta_eval, n_state);
+    Ok((out, Rodas5PStats { n_steps, n_rejected, n_jac, n_f_eval, h_final: h }, cdiag))
+}
+
 /// PR-14B: Block-diagonal variant — factors two smaller LU systems per step.
 pub(crate) fn integrate_linear_profile_rodas5p_blockdiag(
     eta_profile: &[f64], mats_flat: &[f64], n_state: usize, y0: &[f64], eta_eval: &[f64],

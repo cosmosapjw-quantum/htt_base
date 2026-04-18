@@ -160,7 +160,15 @@ Implements TCA_UFA_RSA document §3-10 (sparse Jacobian, m-major, matrix LoS).
 > - New **Phase 2.6**: pure IMEX-ARK4 mainline implementation (see IMEX_DECISION §6 for PR ladder IMEX-00..IMEX-09).
 > - New **Phase 2.6b**: RODAS5P-centered hybrid as frozen backup branch (see [`docs/RODAS5P_HYBRID_BACKUP_PLAN.md`](RODAS5P_HYBRID_BACKUP_PLAN.md)). Benchmark-only.
 
-- **P2.0 Callback-based stage assembly backend** (NEW). Replace `integrate_linear_profile_rodas5p` / `LinearProfileDyn` / `mats_flat` with user-supplied RHS + Jacobian callbacks. Solver-neutral; prerequisite for both Rodas5P-on-large-n and IMEX-ARK4. Memory drops from O(N_snap · n²) to O(n² or nnz).
+- **P2.0 Callback-based stage assembly backend** — **COMPLETE** (2026-04-19).
+  Added `LinearProfileSampler` trait + `LinearProfileCallback<F>` streaming profile in
+  [`src/solver/rodas5p.rs`](../src/solver/rodas5p.rs), with env-toggle
+  `BASS_PSTF_CALLBACK=1` in PSTF primary. Measured at PSTF FLRW:
+  (8,6,0) n=352: 551 MB → 1.9 MB (**292×**), wall +12%.
+  (12,8,0) n=680: 2057 MB → 7.1 MB (**292×**), wall +3.7%.
+  Memory ratio is independent of layout; wall overhead shrinks as layout
+  grows (matrix-build work dominates). Pre-materialized path preserved
+  as legacy default to allow A/B regression.
 - **P2.1 (ℓ,m) m-major layout formalization**. `src/solver/pstf_primary/layout.rs`: `PstfFlrwLayout` → full `LmLayout` with m ∈ {−m_max..+m_max}. m=0 remains special case.
 - **P2.2 Analytical Jacobian full-sector extension**. ~~`src/solver/pstf_primary/jacobian.rs`: current scope = free-stream + collision only. Extend to metric + fluid + Clebsch-Gordan κ-factor for m ≠ 0.~~ **DONE** in PR `c5ae4f9` for FLRW m=0 (metric + fluid + monopole source). Remaining: m ≠ 0 Clebsch-Gordan extension.
 - **P2.3 Sparse Jacobian backend**. Choose `faer-sparse` (preferred; active maintenance, AVX2 microkernels) or `sprs`. Exact sparsity pattern pre-computed. LU factorization reuse policy.

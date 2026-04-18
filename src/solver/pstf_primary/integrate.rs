@@ -48,7 +48,29 @@ use super::collision::FrameConvention;
 use super::source::{VisibilityAtSnap, pstf_source_function};
 use super::matrix::{build_pstf_matrix_into, build_pstf_matrix_analytical_into, bg_from_camb};
 use crate::solver::sync_gauge_camb::{CommonProfile, CambBackground};
-use crate::solver::stacked::integrate_linear_profile_rodas5p;
+use crate::solver::stacked::{integrate_linear_profile_rodas5p, integrate_linear_profile_rodas5p_callback};
+
+/// Phase 2.0: linear interpolation of CambBackground fields, used by the
+/// callback streaming path when the stepper queries off-snapshot τ values.
+/// At exact-snapshot queries this helper is not called (see integrate loop
+/// for the direct lookup short-circuit).
+fn interp_camb_bg(bg_a: &CambBackground, bg_b: &CambBackground, w: f64) -> CambBackground {
+    let blend = |a: f64, b: f64| a + w * (b - a);
+    CambBackground {
+        adotoa: blend(bg_a.adotoa, bg_b.adotoa),
+        grho_g: blend(bg_a.grho_g, bg_b.grho_g),
+        grho_nu: blend(bg_a.grho_nu, bg_b.grho_nu),
+        grho_b: blend(bg_a.grho_b, bg_b.grho_b),
+        grho_c: blend(bg_a.grho_c, bg_b.grho_c),
+        opac: blend(bg_a.opac, bg_b.opac),
+        cs2b: blend(bg_a.cs2b, bg_b.cs2b),
+        vis: blend(bg_a.vis, bg_b.vis),
+        dvis: blend(bg_a.dvis, bg_b.dvis),
+        ddvis: blend(bg_a.ddvis, bg_b.ddvis),
+        a: blend(bg_a.a, bg_b.a),
+        expmmu: blend(bg_a.expmmu, bg_b.expmmu),
+    }
+}
 use crate::core::config::Rodas5PConfig;
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -135,25 +157,22 @@ pub(crate) fn pstf_solve_kmode(
         ));
     }
 
-    // Build mats_flat: n_vis × (n × n) row-major matrices.
+    // Phase 2.0 (2026-04-19): three backends available via env vars.
     //
-    // PR-024c-PERF: prefer analytical Jacobian-based builder (~80× faster
-    // than unit-vector decomposition).  Falls back to unit-vector on
-    // BASS_PSTF_MATRIX_UV=1 for A/B comparison / legacy reproduction.
+    //   (default) ANALYTICAL path — pre-materialize mats_flat via
+    //             build_pstf_matrix_analytical_into (O(N_snap · n²) memory).
+    //   BASS_PSTF_MATRIX_UV=1 — legacy unit-vector pre-materialization.
+    //   BASS_PSTF_CALLBACK=1  — streaming callback (O(n²) memory; analytical
+    //             builder evaluated on demand by the stepper).
+    //
+    // The callback path eliminates the O(N_snap · n²) heap allocation.
+    // Numerically should agree with the analytical path bit-identically up
+    // to FP op ordering (verified by perf_step5_analytical_vs_uv + the new
+    // Phase 2.0 equivalence tests).
     let use_unit_vector = std::env::var("BASS_PSTF_MATRIX_UV").ok().as_deref() == Some("1");
-    let mut mats_flat = vec![0.0_f64; n_vis * n * n];
-    for i in 0..n_vis {
-        let tau = tau_filtered[i];
-        let bg = &bg_filtered[i];
-        let off = i * n * n;
-        if use_unit_vector {
-            build_pstf_matrix_into(k, tau, bg, layout, &mut mats_flat[off..off + n * n]);
-        } else {
-            build_pstf_matrix_analytical_into(k, tau, bg, layout, &mut mats_flat[off..off + n * n]);
-        }
-    }
+    let use_callback = std::env::var("BASS_PSTF_CALLBACK").ok().as_deref() == Some("1");
 
-    // Rodas5P config (production-equivalent)
+    // Rodas5P config (production-equivalent) — identical across all three paths
     let h_max_k = (4.0 * 3.0_f64.sqrt() / k.max(1e-10)).min(5.0);
     let cfg = Rodas5PConfig {
         rtol: 1e-6, atol: 1e-9, max_steps: 1_000_000,
@@ -168,11 +187,68 @@ pub(crate) fn pstf_solve_kmode(
         use_sparse: false,
     };
 
-    // Integrate
-    let (snapshots, _stats, _cdiag) = integrate_linear_profile_rodas5p(
-        tau_filtered, &mats_flat, n, &ic_state,
-        tau_filtered, &cfg,
-    )?;
+    let (snapshots, _stats, _cdiag) = if use_callback {
+        // Streaming path: the builder captures k + bg_filtered by reference
+        // and assembles M(τ) analytically on demand.  The stepper's
+        // LinearProfileCallback caches exactly 2 adjacent bracket matrices,
+        // so memory footprint is 2 · n² · 8 bytes instead of n_vis · n² · 8.
+        //
+        // Safety: `bg_filtered` lives as long as `tau_filtered` (both
+        // borrowed from `common`), which outlives this call.
+        let k_copy = k;
+        let layout_ref = layout;
+        // Build a flat (tau -> bg) lookup using the already-filtered slices.
+        let tau_slice: Vec<f64> = tau_filtered.to_vec();
+        let bg_slice: Vec<CambBackground> = bg_filtered.to_vec();
+        let builder = move |tau_query: f64, out: &mut [f64]| {
+            // The stepper's callback profile only ever queries at snapshot
+            // points (eta[i], eta[i+1]), so we can use exact lookup.
+            // Guard: if the query is not an exact snapshot, fall back to
+            // nearest-bracket analytical build — still correct (M depends
+            // on tau via bg fields which we interpolate elsewhere).
+            let idx = tau_slice.iter().position(|&t| (t - tau_query).abs() < 1e-12);
+            match idx {
+                Some(i) => build_pstf_matrix_analytical_into(
+                    k_copy, tau_slice[i], &bg_slice[i], layout_ref, out,
+                ),
+                None => {
+                    // Linear-interpolate bg between bracketing snapshots,
+                    // then build analytically at the interpolated bg.
+                    // Preferred in case the stepper ever queries off-grid.
+                    let mut lo = 0usize;
+                    let mut hi = tau_slice.len() - 1;
+                    while hi - lo > 1 {
+                        let mid = (lo + hi) / 2;
+                        if tau_slice[mid] <= tau_query { lo = mid; } else { hi = mid; }
+                    }
+                    let w = ((tau_query - tau_slice[lo])
+                           / (tau_slice[hi] - tau_slice[lo]).max(1e-30)).clamp(0.0, 1.0);
+                    let bg_interp = interp_camb_bg(&bg_slice[lo], &bg_slice[hi], w);
+                    build_pstf_matrix_analytical_into(k_copy, tau_query, &bg_interp, layout_ref, out);
+                }
+            }
+        };
+        integrate_linear_profile_rodas5p_callback(
+            tau_filtered, builder, n, &ic_state, tau_filtered, &cfg,
+        )?
+    } else {
+        // Pre-materialized paths (legacy default): build mats_flat upfront.
+        let mut mats_flat = vec![0.0_f64; n_vis * n * n];
+        for i in 0..n_vis {
+            let tau = tau_filtered[i];
+            let bg = &bg_filtered[i];
+            let off = i * n * n;
+            if use_unit_vector {
+                build_pstf_matrix_into(k, tau, bg, layout, &mut mats_flat[off..off + n * n]);
+            } else {
+                build_pstf_matrix_analytical_into(k, tau, bg, layout, &mut mats_flat[off..off + n * n]);
+            }
+        }
+        integrate_linear_profile_rodas5p(
+            tau_filtered, &mats_flat, n, &ic_state,
+            tau_filtered, &cfg,
+        )?
+    };
 
     // Extract per-snapshot source + phi/psi/polterdot
     let n_snaps = snapshots.len();
@@ -383,6 +459,160 @@ mod tests {
             max_src);
         assert!(max_src.is_finite(),
             "max source must be finite, got {}", max_src);
+    }
+
+    // ─── Phase 2.0 Step 5: callback backend equivalence ────────────
+
+    /// Callback-backed `LinearProfileCallback` samples the same matrices
+    /// as pre-materialized `LinearProfileDyn` when fed the analytical
+    /// builder.  Tests both `sample_matrix_only_into_hint` and
+    /// `sample_into_hint` against the pre-materialized reference at
+    /// multiple τ points.
+    #[test]
+    fn phase2_0_callback_sampler_matches_pre_materialized() {
+        use crate::solver::rodas5p::{LinearProfileCallback, LinearProfileDyn, LinearProfileSampler};
+
+        let layout = PstfFlrwLayout::new(8, 6, 0);
+        layout.validate();
+        let (common, _) = build_common();
+        let start_i = common.tau_profile.iter()
+            .position(|&t| t > TAU_IC_MIN).unwrap();
+        let tau_filtered: Vec<f64> = common.tau_profile[start_i..].to_vec();
+        let bg_filtered: Vec<CambBackground> = common.bg_at_snap[start_i..].to_vec();
+        let n_vis = tau_filtered.len();
+        let n = layout.n_state;
+        let k = 0.01_f64;
+
+        // Build pre-materialized reference
+        let mut mats_flat = vec![0.0_f64; n_vis * n * n];
+        for i in 0..n_vis {
+            let off = i * n * n;
+            build_pstf_matrix_analytical_into(k, tau_filtered[i], &bg_filtered[i], &layout,
+                &mut mats_flat[off..off + n * n]);
+        }
+        let prof_dyn = LinearProfileDyn::new(tau_filtered.clone(), mats_flat, n).unwrap();
+
+        // Build callback variant
+        let k_c = k;
+        let layout_c = &layout;
+        let tau_c = tau_filtered.clone();
+        let bg_c = bg_filtered.clone();
+        let builder = move |tau_query: f64, out: &mut [f64]| {
+            let idx = tau_c.iter().position(|&t| (t - tau_query).abs() < 1e-12).unwrap();
+            build_pstf_matrix_analytical_into(k_c, tau_c[idx], &bg_c[idx], layout_c, out);
+        };
+        let prof_cb = LinearProfileCallback::new(tau_filtered.clone(), n, builder).unwrap();
+
+        // Compare samples at a few interior τ values
+        let mut a_dyn = vec![0.0_f64; n * n];
+        let mut a_cb = vec![0.0_f64; n * n];
+        let mut da_dyn = vec![0.0_f64; n * n];
+        let mut da_cb = vec![0.0_f64; n * n];
+        let mut hint_dyn = 0usize;
+        let mut hint_cb = 0usize;
+
+        // Test at 5 distinct τ values spanning the profile
+        for frac in [0.1_f64, 0.3, 0.5, 0.7, 0.9] {
+            let tau_test = tau_filtered[0] + frac * (tau_filtered[n_vis - 1] - tau_filtered[0]);
+            prof_dyn.sample_matrix_only_into_hint(tau_test, &mut hint_dyn, &mut a_dyn);
+            prof_cb.sample_matrix_only_into_hint(tau_test, &mut hint_cb, &mut a_cb);
+            let max_diff = a_dyn.iter().zip(a_cb.iter())
+                .map(|(x, y)| (x - y).abs())
+                .fold(0.0_f64, f64::max);
+            assert!(max_diff < 1e-14,
+                "sample_matrix_only mismatch at frac={}: max diff {}", frac, max_diff);
+
+            prof_dyn.sample_into_hint(tau_test, &mut hint_dyn, &mut a_dyn, &mut da_dyn);
+            prof_cb.sample_into_hint(tau_test, &mut hint_cb, &mut a_cb, &mut da_cb);
+            let max_a = a_dyn.iter().zip(a_cb.iter())
+                .map(|(x, y)| (x - y).abs())
+                .fold(0.0_f64, f64::max);
+            let max_da = da_dyn.iter().zip(da_cb.iter())
+                .map(|(x, y)| (x - y).abs())
+                .fold(0.0_f64, f64::max);
+            assert!(max_a < 1e-14,
+                "sample_into a mismatch at frac={}: max diff {}", frac, max_a);
+            assert!(max_da < 1e-14,
+                "sample_into da mismatch at frac={}: max diff {}", frac, max_da);
+        }
+    }
+
+    /// Phase 2.0 timing probe: compare wallclock across backends at
+    /// several layout sizes.  Not a regression test — eyeball only.
+    #[test]
+    #[ignore = "timing probe; run with --ignored --nocapture"]
+    fn phase2_0_backend_wallclock_comparison() {
+        eprintln!("\n═══ PHASE 2.0 BACKEND WALLCLOCK ═══");
+        for &(lg, ln, lpol) in &[(8usize, 6usize, 0usize), (12, 8, 0)] {
+            let layout = PstfFlrwLayout::new(lg, ln, lpol);
+            layout.validate();
+            let (common, _) = build_common();
+            let n = layout.n_state;
+            let k = 0.01_f64;
+            let n_snap = common.tau_profile.iter().filter(|&&t| t > TAU_IC_MIN).count();
+            let mats_flat_mb = (n_snap * n * n * 8) as f64 / 1024.0 / 1024.0;
+            let callback_mb = (2 * n * n * 8) as f64 / 1024.0 / 1024.0;
+
+            // Pre-materialized analytical path
+            std::env::remove_var("BASS_PSTF_CALLBACK");
+            std::env::remove_var("BASS_PSTF_MATRIX_UV");
+            let t0 = std::time::Instant::now();
+            let _r = pstf_solve_kmode_adiabatic(k, &common, &layout, false).unwrap();
+            let dt_pre = t0.elapsed().as_secs_f64();
+
+            // Callback streaming path
+            std::env::set_var("BASS_PSTF_CALLBACK", "1");
+            let t1 = std::time::Instant::now();
+            let _r = pstf_solve_kmode_adiabatic(k, &common, &layout, false).unwrap();
+            let dt_cb = t1.elapsed().as_secs_f64();
+            std::env::remove_var("BASS_PSTF_CALLBACK");
+
+            eprintln!(
+                "  layout=(γ={:2} ν={:2} pol={}) n={:<5} n_snap={} | pre-mat={:6.3}s ({:.1} MB)  callback={:6.3}s ({:.1} MB)  mem ratio={:.0}×",
+                lg, ln, lpol, n, n_snap, dt_pre, mats_flat_mb, dt_cb, callback_mb,
+                mats_flat_mb / callback_mb,
+            );
+        }
+        eprintln!("═══════════════════════════════════════\n");
+    }
+
+    /// End-to-end equivalence: pstf_solve_kmode_adiabatic under the three
+    /// matrix backends (analytical / unit-vector / callback) must produce
+    /// agreement on source_total, phi, psi.
+    #[test]
+    fn phase2_0_callback_vs_analytical_end_to_end() {
+        let layout = PstfFlrwLayout::new(8, 6, 0);
+        layout.validate();
+        let (common, _) = build_common();
+        let k = 0.01_f64;
+
+        // Analytical path (default — no env var)
+        std::env::remove_var("BASS_PSTF_CALLBACK");
+        std::env::remove_var("BASS_PSTF_MATRIX_UV");
+        let r_analytical = pstf_solve_kmode_adiabatic(k, &common, &layout, false)
+            .expect("analytical path must succeed");
+
+        // Callback path
+        std::env::set_var("BASS_PSTF_CALLBACK", "1");
+        let r_callback = pstf_solve_kmode_adiabatic(k, &common, &layout, false)
+            .expect("callback path must succeed");
+        std::env::remove_var("BASS_PSTF_CALLBACK");
+
+        // Compare source_total, phi, psi
+        assert_eq!(r_analytical.source_total.len(), r_callback.source_total.len());
+        let n = r_analytical.source_total.len();
+        let max_src = (0..n).map(|i|
+            (r_analytical.source_total[i] - r_callback.source_total[i]).abs()
+        ).fold(0.0_f64, f64::max);
+        let max_phi = (0..n).map(|i|
+            (r_analytical.phi[i] - r_callback.phi[i]).abs()
+        ).fold(0.0_f64, f64::max);
+
+        // Expect ULP-level agreement; allow 1e-12 for FP accumulation
+        assert!(max_src < 1e-12,
+            "callback vs analytical: source_total max abs diff {} at n={}", max_src, n);
+        assert!(max_phi < 1e-12,
+            "callback vs analytical: phi max abs diff {} at n={}", max_phi, n);
     }
 
     // ─── PR-024c-PERF Step 5: analytical path agreement ────────────
