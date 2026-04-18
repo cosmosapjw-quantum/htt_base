@@ -74,18 +74,32 @@ def test_I17_eta_reion_matches_z_7_67(species) -> None:
 #   detect_critical_events aggregate
 # ════════════════════════════════════════════════════════════════════
 
-def test_detect_critical_events_returns_all_four(species) -> None:
+def test_detect_critical_events_returns_all_keys(species) -> None:
     """``detect_critical_events`` returns the full dict with finite
-    values in the expected bands.
+    values in the expected bands. LB-6 F2 post-audit: ``eta_star`` and
+    ``chi_star`` keys added.
     """
     events = detect_critical_events(species, species.bg_table)
     assert set(events) == {
-        "z_eq", "z_star", "eta_reion_midpoint", "eta_today",
+        "z_eq", "z_star",
+        "eta_star", "chi_star",
+        "eta_reion_midpoint", "eta_today",
     }
     for key, val in events.items():
         assert np.isfinite(val), f"{key} = {val} is not finite"
     assert events["eta_today"] == pytest.approx(
         species.bg_table.eta_today, rel=1e-14,
+    )
+    # eta_star + chi_star = eta_today by construction
+    assert events["eta_star"] + events["chi_star"] == pytest.approx(
+        events["eta_today"], rel=1e-12,
+    )
+    # Planck-2018 ballpark
+    assert 270.0 <= events["eta_star"] <= 290.0, (
+        f"eta_star = {events['eta_star']} outside [270, 290] Mpc"
+    )
+    assert 13850.0 <= events["chi_star"] <= 13900.0, (
+        f"chi_star = {events['chi_star']} outside [13850, 13900] Mpc"
     )
 
 

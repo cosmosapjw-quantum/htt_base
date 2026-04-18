@@ -43,8 +43,8 @@ Copy the block below into a fresh Claude Code session:
 - **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 - **venv**: venv/bin/python
 - **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 2,558 passing + 1 skipped (LB-6 직후)
-- **완료된 단계**: LB-0 … LB-6 전체 (low-ℓ Bianchi solver bedrock 검증 완료)
+- **현재 baseline**: 2,565 passing + 1 skipped (LB P2/P3 carry-forward cleanup 직후 — `docs/audits/AUDIT_CLEANUP_LB_P2P3_2026-04-19.md`)
+- **완료된 단계**: LB-0 … LB-6 전체 (low-ℓ Bianchi solver bedrock 검증 완료) + LB audits P2/P3 cleanup (LB-1 F4/F5/F6, LB-2b F2, LB-3 F2, LB-4 F1, LB-6 F1/F2 해결; LB-5 F2 는 FB-0.1 이 담당)
 - **현재 시작하는 phase**: **Full Bianchi Coverage (FB)** — 11 Bianchi types × {orthogonal, tilted} = 22 configurations 까지 솔버 확장. 전체 로드맵은 `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md` (사용자 승인 2026-04-19; §11 체크리스트 5/5 green, §6 D1~D10 추천 기본안 lock-in).
 
 ## 이 세션의 작업 범위 (FB-0.1 only)

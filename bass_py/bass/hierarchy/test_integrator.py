@@ -296,7 +296,9 @@ def test_integrator_publishes_critical_events(species) -> None:
     """
     res = _run_default(species)
     assert set(res.critical_events) == {
-        "z_eq", "z_star", "eta_reion_midpoint", "eta_today",
+        "z_eq", "z_star",
+        "eta_star", "chi_star",
+        "eta_reion_midpoint", "eta_today",
     }
     assert 3300 <= res.critical_events["z_eq"] <= 3500
     assert 1089 <= res.critical_events["z_star"] <= 1091

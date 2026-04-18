@@ -112,7 +112,7 @@ Baryons are the species where bass_py has the *most existing infrastructure* and
 | Rest-frame energy density | ρ_b = Ω_b,0 / a³ (dust) | |
 | Number density | n_b(a) = Ω_b,0 ρ_crit,0 / (m_p × a³), m_p proton mass | |
 | Ionisation fraction | x_e(z) from HyRec table (bass_py fixture) | Kolb §5.4 |
-| Matter temperature | T_m(z) from HyRec table (follows T_γ until Compton decoupling z ~ 150, then T_m ∝ a⁻²) | Kolb §5.4 |
+| Matter temperature | T_m(z) from HyRec table (follows T_γ until Compton decoupling z ~ 800, then T_m ∝ a⁻²; LB-1 F4 post-audit correction — at z=150 the HyRec-2 Planck-2018 fixture shows `T_m / T_γ ≈ 0.76`, i.e. already in the decoupled regime) | Kolb §5.4 |
 | Continuity (orthogonal) | ρ̇_b + Θ ρ_b = 0 (dust) | Ellis §5.3 |
 | Interaction with γ | τ̇(z) = a n_e σ_T from HyRec | Kolb §5.4 |
 | Today's value | Ω_b,0 = 0.0494 (h² = 0.02237 / h² with h = 0.6736) | Planck 2018 |

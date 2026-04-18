@@ -319,22 +319,17 @@ class TestLBThermalHistory:
         z_star = result.critical_events["z_star"]
         assert 1088.94 <= z_star <= 1090.94, f"z_star = {z_star}"
 
-    def test_LB_6_09_eta_star_comoving_distance_to_LSS(
-        self, species, result,
-    ) -> None:
-        """LB-6-09: comoving distance to LSS ``η_today − η(z_*) ≈
-        13873 Mpc ± 20`` (CAMB's ``eta_star`` convention).
+    def test_LB_6_09_eta_star_comoving_distance_to_LSS(self, result) -> None:
+        """LB-6-09: comoving distance to LSS ``chi_star ≡ η_today −
+        η(z_*) ≈ 13873 Mpc ± 20`` (CAMB's ``eta_star`` convention).
+        LB-6 F2 post-audit: consumes ``result.critical_events['chi_star']``
+        directly (previously recomputed by hand).
 
         Citation: Baumann §3.10; CAMB reference `data/camb_ref_planck2018.npz`.
         """
-        bg = species.bg_table
-        z_star = result.critical_events["z_star"]
-        a_star = 1.0 / (1.0 + z_star)
-        eta_star_conf = float(bg.eta_at_a(a_star))
-        eta_today = result.critical_events["eta_today"]
-        comoving_to_LSS = eta_today - eta_star_conf
-        assert 13853.0 <= comoving_to_LSS <= 13893.0, (
-            f"comoving distance to LSS: {comoving_to_LSS}"
+        chi_star = result.critical_events["chi_star"]
+        assert 13853.0 <= chi_star <= 13893.0, (
+            f"comoving distance to LSS (chi_star): {chi_star}"
         )
 
     def test_LB_6_10_eta_today_bg_table_ssot(self, result) -> None:
@@ -381,22 +376,16 @@ class TestLBThermalHistory:
         """LB-6-14: integrated ``τ_reion ∈ [0.0514, 0.0574]`` (Planck
         2018 central 0.0544 ± 0.003 tolerance at LB-6).
 
-        Method: integrate the tanh-extended HyRec τ̇(η) from
-        ``η(z = 30)`` to ``η_today`` using ``numpy.trapezoid`` on a
-        5000-point linear grid — the fixture itself is sampled at
-        Δz ≈ 0.01 in the reion bump, so linear quadrature is fine.
+        Method: delegate to ``BaryonBackground.tau_reion_window(0, 30)``
+        (LB-4 F1 post-audit helper); the helper wraps the same
+        trapezoidal integration that LB-6 prototyped inline.
 
         Citation: Planck 2018 I (Aghanim+ 2018) eq (3); the
         reionization tanh profile ships in
         ``bass.recombination.reionization``.
         """
-        bg = species_with_reion.bg_table
         baryon = species_with_reion[SpeciesLabel.BARYON]
-        eta_lo = float(bg.eta_at_a(1.0 / 31.0))   # z = 30
-        eta_hi = float(bg.eta_today)
-        eta_grid = np.linspace(eta_lo, eta_hi, 5000)
-        tau_dot = np.array([float(baryon.tau_dot(e)) for e in eta_grid])
-        tau_reion = float(np.trapezoid(tau_dot, eta_grid))
+        tau_reion = baryon.tau_reion_window(z_lo=0.0, z_hi=30.0)
         assert 0.0514 <= tau_reion <= 0.0574, (
             f"τ_reion = {tau_reion} outside Planck 2018 ±0.003 band"
         )
@@ -579,18 +568,14 @@ class TestLBCAMBMatch:
             f"(ours {eta_today}, CAMB {eta_0_camb})"
         )
 
-    def test_LB_6_20_eta_star_vs_camb(
-        self, species, result, camb_ref,
-    ) -> None:
-        """LB-6-20: comoving distance to LSS ``η_today − η(z_*)``
-        vs CAMB ``eta_star`` within ±20 Mpc.
+    def test_LB_6_20_eta_star_vs_camb(self, result, camb_ref) -> None:
+        """LB-6-20: comoving distance to LSS ``chi_star`` vs CAMB
+        ``eta_star`` within ±20 Mpc. LB-6 F2 post-audit: consumes
+        ``result.critical_events['chi_star']`` directly.
 
         Citation: Baumann §3.10; CAMB reference.
         """
-        bg = species.bg_table
-        z_star = result.critical_events["z_star"]
-        eta_today = result.critical_events["eta_today"]
-        chi_star = eta_today - float(bg.eta_at_a(1.0 / (1.0 + z_star)))
+        chi_star = result.critical_events["chi_star"]
         eta_star_camb = float(camb_ref["eta_star"])
         diff = abs(chi_star - eta_star_camb)
         assert diff <= 20.0, (

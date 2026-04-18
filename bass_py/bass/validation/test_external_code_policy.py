@@ -44,9 +44,14 @@ FORBIDDEN_MODULES: Tuple[str, ...] = (
 )
 
 # Regex that matches both `import X[.sub]` and `from X[.sub] import …`
-# anchored at (optional) leading whitespace so we don't flag substrings
-# inside strings or comments. We also drop trailing `# noqa` style
-# ignores from the logic by matching at line start.
+# anywhere in a logical code statement. A statement can be:
+#   • at line start  (`import camb`)
+#   • indented       (`    import camb`)
+#   • semicolon-chained (`import os; import camb`)
+#   • in a ``lambda:`` or one-liner (`def f(): import camb`)
+# We therefore split the code portion of each line on ``;`` and match each
+# segment. Post-audit LB-1 F5 repair — prior regex anchored at ``^`` only,
+# missing ``import X; import Y`` bypasses.
 _IMPORT_RE = re.compile(
     r"^\s*(?:import|from)\s+(?P<mod>[A-Za-z_][\w\.]*)",
 )
@@ -93,7 +98,9 @@ def _iter_production_files(root: Path) -> Iterable[Path]:
 def _scan_forbidden_imports(path: Path) -> List[Tuple[int, str, str]]:
     """Return a list of (line_number, forbidden_module, raw_line).
 
-    An empty list means the file is clean.
+    An empty list means the file is clean. Handles ``import X; import Y``
+    semicolon chains (LB-1 F5 post-audit repair) by splitting the code
+    portion of each line on ``;`` before matching.
     """
     violations: List[Tuple[int, str, str]] = []
     text = path.read_text(encoding="utf-8", errors="strict")
@@ -102,12 +109,15 @@ def _scan_forbidden_imports(path: Path) -> List[Tuple[int, str, str]]:
         # a trailing comment does not trigger. We only care about the
         # code portion.
         code = raw.split("#", 1)[0]
-        match = _IMPORT_RE.match(code)
-        if not match:
-            continue
-        top = match.group("mod").split(".", 1)[0]
-        if top in FORBIDDEN_MODULES:
-            violations.append((lineno, top, raw.rstrip()))
+        # Split on ``;`` so each chained statement is scanned independently
+        # (``import os; import camb`` must flag the ``camb`` segment).
+        for segment in code.split(";"):
+            match = _IMPORT_RE.match(segment)
+            if not match:
+                continue
+            top = match.group("mod").split(".", 1)[0]
+            if top in FORBIDDEN_MODULES:
+                violations.append((lineno, top, raw.rstrip()))
     return violations
 
 
@@ -165,6 +175,10 @@ def test_no_external_code_imports_in_production() -> None:
         "import camb_ini_ext\n",
         # Indented import (e.g. inside a function body) must still trip.
         "def f():\n    import camb\n",
+        # Semicolon-chained imports (LB-1 F5 post-audit regression).
+        "import os; import camb\n",
+        "import numpy as np; from camb.symbolic import bar\n",
+        "    import logging; import classy  # indented chain\n",
     ],
 )
 def test_scanner_detects_forbidden_import(

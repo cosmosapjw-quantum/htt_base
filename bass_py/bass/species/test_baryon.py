@@ -225,3 +225,59 @@ def test_out_of_recomb_range_raises(bg, baryon):
         eta_early = bg.eta_at_a(a_early)
         with pytest.raises(ValueError):
             baryon.x_e(eta_early)
+
+
+def test_LB4_F1_tau_reion_window_matches_planck2018(bg, recomb_with_reion):
+    """LB-4 F1 post-audit repair: ``BaryonBackground.tau_reion_window``
+    integrated over ``[z_lo, z_hi] = [0, 30]`` reproduces the Planck
+    2018 τ_reion = 0.0544 ± 0.0073 band on the reionization-extended
+    HyRec fixture.
+
+    Reference: Planck 2018 I (Aghanim+ 2018) eq (3); LB-6-14
+    integration test delegates to this helper.
+    """
+    interp, _, _ = recomb_with_reion
+    c = default_constants()
+    baryon = BaryonBackground(bg, c.Omega_b_0, interp)
+    tau_reion = baryon.tau_reion_window(z_lo=0.0, z_hi=30.0)
+    assert 0.0514 <= tau_reion <= 0.0574, (
+        f"τ_reion = {tau_reion} outside Planck 2018 ±0.003 band"
+    )
+
+
+def test_LB4_F1_tau_reion_window_validates_range(bg, recomb_with_reion):
+    """Window helper rejects inverted or negative redshift bounds."""
+    interp, _, _ = recomb_with_reion
+    c = default_constants()
+    baryon = BaryonBackground(bg, c.Omega_b_0, interp)
+    with pytest.raises(ValueError, match="z_lo < z_hi"):
+        baryon.tau_reion_window(z_lo=10.0, z_hi=5.0)
+    with pytest.raises(ValueError, match="z_lo < z_hi"):
+        baryon.tau_reion_window(z_lo=-1.0, z_hi=5.0)
+
+
+def test_LB1_F6_out_of_range_error_carries_eta_context(bg, baryon):
+    """LB-1 F6 post-audit repair: when η lands outside the recomb table
+    support, ``x_e / T_m / tau_dot / kappa / visibility`` raise
+    ``ValueError`` whose message identifies both the offending η and the
+    mapped z, plus the field name. Prior behaviour raised the raw
+    ``query_x_e`` error that mentioned only z, leaving the η-side caller
+    to reverse the mapping by hand.
+    """
+    a_early = 1.0 / (1.0 + 15000.0)
+    if a_early < bg.a[0]:
+        pytest.skip("FLRW bg_table does not span z=15000")
+    eta_early = bg.eta_at_a(a_early)
+    for field, call in (
+        ("x_e", lambda: baryon.x_e(eta_early)),
+        ("tau_dot", lambda: baryon.tau_dot(eta_early)),
+        ("T_m", lambda: baryon.temperature(eta_early)),
+        ("kappa", lambda: baryon.kappa(eta_early)),
+        ("visibility", lambda: baryon.visibility(eta_early)),
+    ):
+        with pytest.raises(ValueError, match=r"BaryonBackground\." + field) as excinfo:
+            call()
+        msg = str(excinfo.value)
+        assert "η" in msg and "z" in msg, (
+            f"{field}: expected both η and z in the ValueError message, got: {msg}"
+        )

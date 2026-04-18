@@ -20,6 +20,8 @@ References
 """
 from __future__ import annotations
 
+from typing import Optional
+
 import numpy as np
 
 from bass.species.background_table import FLRWBackgroundTable
@@ -30,6 +32,8 @@ __all__ = [
     "find_z_equality",
     "find_z_star_from_visibility",
     "find_eta_reion_midpoint",
+    "find_eta_star",
+    "find_chi_star",
     "detect_critical_events",
 ]
 
@@ -197,24 +201,88 @@ def find_eta_reion_midpoint(
 #   Top-level dispatch
 # ════════════════════════════════════════════════════════════════════
 
+def find_eta_star(
+    species: SpeciesBackgroundRegistry,
+    bg_table: FLRWBackgroundTable,
+    *,
+    z_star: Optional[float] = None,
+) -> float:
+    """Return conformal time ``η(z_*)`` — the conformal time at last
+    scattering. (LB-6 F2 post-audit addition.)
+
+    Parameters
+    ----------
+    z_star : float, optional
+        Use the supplied ``z_*``. If ``None``, call
+        ``find_z_star_from_visibility`` on the shipped baryon fixture.
+
+    Notes
+    -----
+    "η at LSS" ≠ "comoving distance to LSS"; the latter is
+    ``find_chi_star`` below. ``η_*`` is a small number (O(280) Mpc
+    for Planck-2018) because it measures the age of the universe at
+    recombination in conformal units.
+    """
+    if z_star is None:
+        z_star = find_z_star_from_visibility(species, bg_table)
+    a_star = 1.0 / (1.0 + float(z_star))
+    return float(bg_table.eta_at_a(a_star))
+
+
+def find_chi_star(
+    species: SpeciesBackgroundRegistry,
+    bg_table: FLRWBackgroundTable,
+    *,
+    z_star: Optional[float] = None,
+) -> float:
+    """Return **comoving distance to LSS** ``χ_* = η_today − η(z_*)``.
+    (LB-6 F2 post-audit addition.)
+
+    This is the CAMB ``eta_star`` convention — the conformal distance
+    a photon has travelled between last scattering and today, not the
+    conformal time at last scattering itself (see
+    ``find_eta_star``). Planck-2018 value is ~13873 Mpc.
+    """
+    eta_star = find_eta_star(species, bg_table, z_star=z_star)
+    return float(bg_table.eta_today) - eta_star
+
+
+# ════════════════════════════════════════════════════════════════════
+#   Top-level dispatch
+# ════════════════════════════════════════════════════════════════════
+
 def detect_critical_events(
     species: SpeciesBackgroundRegistry,
     bg_table: FLRWBackgroundTable,
     *,
     z_reion_guess: float = 7.67,
 ) -> dict:
-    """Return ``{'z_eq', 'z_star', 'eta_reion_midpoint', 'eta_today'}``.
+    """Return ``{'z_eq', 'z_star', 'eta_star', 'chi_star',
+    'eta_reion_midpoint', 'eta_today'}``.
 
-    Reference: spec §5.3, §10.5.
+    The ``eta_star`` / ``chi_star`` keys were added in LB-6 F2 post-
+    audit repair: the LB-5 release returned only ``eta_today``, and
+    callers (LB-6-09, LB-6-20 CAMB match) had to recompute the
+    comoving distance to LSS by hand. Both keys are now supplied:
+    ``eta_star`` is the conformal time at last scattering
+    (``η(z_*)`` ~ 280 Mpc for Planck-2018) and ``chi_star`` is the
+    comoving distance to LSS (CAMB ``eta_star`` convention, ~13873
+    Mpc for Planck-2018).
+
+    Reference: spec §5.3, §10.5; AUDIT_PHASE_LB6_2026-04-19.md F2.
     """
     z_eq = find_z_equality(species, bg_table)
     z_star = find_z_star_from_visibility(species, bg_table)
+    eta_star = find_eta_star(species, bg_table, z_star=z_star)
+    chi_star = find_chi_star(species, bg_table, z_star=z_star)
     eta_reion = find_eta_reion_midpoint(
         species, bg_table, z_reion_guess=z_reion_guess,
     )
     return {
         "z_eq": z_eq,
         "z_star": z_star,
+        "eta_star": eta_star,
+        "chi_star": chi_star,
         "eta_reion_midpoint": eta_reion,
         "eta_today": float(bg_table.eta_today),
     }

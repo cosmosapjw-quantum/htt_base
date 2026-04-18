@@ -92,9 +92,15 @@ def proper_shear_at_eta(
 
     If ``tetrad_state`` is ``None`` (FLRW diagnostic path), ``σ_ab ≡ 0``.
 
-    Nearest-grid-point lookup is used (no spline) — consistent with
-    ``TetradBackgroundState.shear_at``; LB-5 will upgrade to cubic
-    splines at integrator setup time (spec §8).
+    **Cubic-spline interpolation in η** (component-wise) — LB-2b F2
+    post-audit repair. Prior behaviour used nearest-grid-point lookup
+    with ~2 % quantisation error at mid-grid evaluations. A per-
+    component scipy ``CubicSpline`` is lazily attached to the tetrad
+    state on first call; subsequent calls within the same integrator
+    run reuse the cached splines so the cost is O(log N) per query
+    rather than O(N). Queries outside ``[eta[0], eta[-1]]`` fall back
+    to endpoint clamping (matches the prior nearest-neighbour extremal
+    behaviour).
 
     Parameters
     ----------
@@ -107,15 +113,49 @@ def proper_shear_at_eta(
         conversion (``σ = Σ / a``).
 
     Reference: 02_multipole_hierarchy_spec.md §8;
-    AUDIT_PHASE_LB2a_2026-04-19.md F1.
+    AUDIT_PHASE_LB2a_2026-04-19.md F1;
+    AUDIT_PHASE_LB2b_2026-04-19.md F2 (spline upgrade).
     """
     if tetrad_state is None:
         return np.zeros((3, 3), dtype=np.float64)
-    idx = int(np.argmin(np.abs(tetrad_state.eta - eta)))
-    sigma_conformal = tetrad_state.sigma_tensor[idx]
     if a_at_eta <= 0.0:
         raise ValueError(f"a(η) must be positive, got {a_at_eta}")
+    eta_grid = tetrad_state.eta
+    # Endpoint clamping: outside the grid, spline extrapolation is
+    # unreliable for a driver that should not be asked to evaluate there.
+    # Clamp to grid endpoints (matches prior nearest-neighbour behaviour).
+    eta_query = float(np.clip(eta, float(eta_grid[0]), float(eta_grid[-1])))
+    sigma_spline = _get_or_build_sigma_spline(tetrad_state)
+    sigma_conformal = sigma_spline(eta_query)
     return np.asarray(sigma_conformal, dtype=np.float64) / a_at_eta
+
+
+def _get_or_build_sigma_spline(tetrad_state):
+    """Return a component-wise cubic spline ``η → σ_ab^{conformal}``
+    attached to ``tetrad_state``. Cached in ``_sigma_spline_cache``
+    attribute (bypasses the frozen dataclass via ``object.__setattr__``).
+
+    Rebuilds on first call; reused on subsequent calls for the same
+    ``tetrad_state`` instance (O(log N) per query after build). Uses
+    ``scipy.interpolate.CubicSpline`` with ``natural`` BC — consistent
+    with the bg_table spline convention at the species layer.
+    """
+    cached = getattr(tetrad_state, "_sigma_spline_cache", None)
+    if cached is not None:
+        return cached
+    from scipy.interpolate import CubicSpline
+    eta_grid = np.asarray(tetrad_state.eta, dtype=np.float64)
+    sigma_grid = np.asarray(tetrad_state.sigma_tensor, dtype=np.float64)
+    # sigma_grid has shape (N, 3, 3); CubicSpline treats axis=0 as the
+    # independent variable and vectorises over the remaining axes.
+    spline = CubicSpline(eta_grid, sigma_grid, axis=0, bc_type="natural")
+    try:
+        object.__setattr__(tetrad_state, "_sigma_spline_cache", spline)
+    except Exception:
+        # tetrad_state is not a frozen dataclass — fall back to plain
+        # attribute assignment. Either path exposes the cache.
+        tetrad_state._sigma_spline_cache = spline  # type: ignore[attr-defined]
+    return spline
 
 
 # ════════════════════════════════════════════════════════════════════

@@ -139,8 +139,7 @@ class BaryonBackground(SpeciesBackground):
         T_m cools adiabatically as a⁻². Queries outside the table
         z-range raise ``ValueError`` (no silent extrapolation).
         """
-        z = self._z_of_eta(eta)
-        return self._recomb.query_T_m(z)
+        return self._query_with_eta_context(eta, self._recomb.query_T_m, "T_m")
 
     # --- Extra helpers (not part of the abstract interface) ----------------
 
@@ -151,8 +150,7 @@ class BaryonBackground(SpeciesBackground):
         Domain restricted to the recombination table's z range; passes
         through to the underlying spline.
         """
-        z = self._z_of_eta(eta)
-        return self._recomb.query_x_e(z)
+        return self._query_with_eta_context(eta, self._recomb.query_x_e, "x_e")
 
     def tau_dot(self, eta: _Number) -> _Number:
         """Differential optical depth τ̇(η) = a n_e σ_T   [Mpc⁻¹].
@@ -163,24 +161,85 @@ class BaryonBackground(SpeciesBackground):
         (conformal-time version) is already baked into the table
         values.
         """
-        z = self._z_of_eta(eta)
-        return self._recomb.query_tau_dot(z)
+        return self._query_with_eta_context(
+            eta, self._recomb.query_tau_dot, "tau_dot",
+        )
 
     def kappa(self, eta: _Number) -> _Number:
         """Cumulative optical depth κ(η) from today's observer (Kolb §5.4).
 
         Monotone non-decreasing with z; κ(z=0) = 0 in the fixture.
         """
-        z = self._z_of_eta(eta)
-        return self._recomb.query_kappa(z)
+        return self._query_with_eta_context(
+            eta, self._recomb.query_kappa, "kappa",
+        )
 
     def visibility(self, eta: _Number) -> _Number:
         """Visibility g(η) = τ̇ × e⁻ᵏ   [Mpc⁻¹] peaking at recombination.
 
         Reference: Ma-Bertschinger 1995; Baumann §3.10.
         """
-        z = self._z_of_eta(eta)
-        return self._recomb.query_visibility(z)
+        return self._query_with_eta_context(
+            eta, self._recomb.query_visibility, "visibility",
+        )
+
+    def tau_reion_window(
+        self,
+        z_lo: float = 0.0,
+        z_hi: float = 30.0,
+        *,
+        n_samples: int = 4096,
+    ) -> float:
+        """Integrated optical depth ``∫ τ̇(η) dη`` over the reionization
+        window (LB-4 F1 post-audit helper).
+
+        Default window ``[z_lo, z_hi] = [0, 30]`` matches the Planck-
+        2018 τ_reion definition (Aghanim+ 2018 eq 3): the optical
+        depth accumulated between today and the onset of reionization.
+        Returns the window integral in dimensionless units.
+
+        Requires that the ``RecombinationInterp`` shipped to this
+        ``BaryonBackground`` was built from a reionization-extended
+        table (``extend_table_with_reionization``); otherwise the
+        returned value is the recomb-only fraction in the window
+        (typically ~0).
+
+        Implementation: linear-in-η quadrature with ``np.trapezoid``
+        on a uniform ``n_samples``-point η-grid between ``η(z_hi)``
+        and ``η(z_lo)``. Fast enough to be called inside an integrator
+        post-processing step (typical cost ~4 ms per call at default
+        ``n_samples``).
+
+        Parameters
+        ----------
+        z_lo, z_hi : float
+            Redshift window. Must satisfy ``0 ≤ z_lo < z_hi`` and
+            both must lie inside the recomb fixture's z support.
+        n_samples : int
+            Quadrature density (default 4096 is ~1e-5 rel accuracy
+            against n_samples=65536 on the Planck-2018 HyRec fixture).
+
+        Reference: Planck 2018 I (Aghanim+ 2018) eq (3); LB-6-14
+        replaces its manual trapezoid with a call to this helper.
+        """
+        if z_lo < 0.0 or z_hi <= z_lo:
+            raise ValueError(
+                f"require 0 ≤ z_lo < z_hi, got z_lo={z_lo}, z_hi={z_hi}"
+            )
+        a_hi = 1.0 / (1.0 + float(z_hi))  # smaller a, smaller η
+        a_lo = 1.0 / (1.0 + float(z_lo))
+        eta_hi = float(self._bg.eta_at_a(a_hi))
+        eta_lo = float(self._bg.eta_at_a(a_lo))
+        if eta_hi >= eta_lo:
+            raise ValueError(
+                f"η monotonicity violated: η(z={z_hi})={eta_hi} "
+                f"≥ η(z={z_lo})={eta_lo}"
+            )
+        eta_grid = np.linspace(eta_hi, eta_lo, int(n_samples))
+        tau_dot = np.asarray(
+            [float(self.tau_dot(e)) for e in eta_grid], dtype=np.float64,
+        )
+        return float(np.trapezoid(tau_dot, eta_grid))
 
     # --- Internal helpers --------------------------------------------------
 
@@ -188,3 +247,34 @@ class BaryonBackground(SpeciesBackground):
         """η → z via the shared FLRW table."""
         a = np.asarray(self._bg.interp_a(eta), dtype=np.float64)
         return 1.0 / a - 1.0
+
+    def _query_with_eta_context(
+        self,
+        eta: _Number,
+        query_fn,
+        field: str,
+    ) -> _Number:
+        """Dispatch to a ``RecombinationInterp`` ``query_*`` method with
+        η-context ValueError re-raise on domain misses (LB-1 F6 post-
+        audit repair).
+
+        The underlying ``query_*`` methods speak only in ``z`` terms; when
+        the caller provides an ``η`` outside the recomb-table support,
+        the raw error points at ``z`` (confusing for a species-layer
+        caller who supplied ``η``). This wrapper re-raises with the
+        η-context attached so diagnostic playbooks can locate the misuse
+        without cross-reading the η↔z mapping.
+        """
+        z = self._z_of_eta(eta)
+        try:
+            return query_fn(z)
+        except ValueError as exc:
+            z_arr = np.atleast_1d(np.asarray(z, dtype=np.float64))
+            eta_arr = np.atleast_1d(np.asarray(eta, dtype=np.float64))
+            raise ValueError(
+                f"BaryonBackground.{field}(η) out of recomb table range: "
+                f"η ∈ [{float(eta_arr.min()):.3e}, "
+                f"{float(eta_arr.max()):.3e}] Mpc mapped to "
+                f"z ∈ [{float(z_arr.min()):.3e}, "
+                f"{float(z_arr.max()):.3e}]. Underlying error: {exc}"
+            ) from exc

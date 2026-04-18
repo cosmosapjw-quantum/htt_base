@@ -625,14 +625,65 @@ def test_proper_shear_divides_by_a(bg_table) -> None:
     a_val = float(bg_table.interp_a(eta))
     sigma_recovered = proper_shear_at_eta(eta, fx, a_val)
     # Fixture stored ``Σ = σ_proper × a[idx]``; the driver divides by
-    # ``a_val`` (the FLRW-interpolated scale factor at η). Nearest-grid
-    # lookup uses a[idx]; ratio is a[idx] / a_val — machine-precision
-    # close to 1 when eta coincides with a grid point.
+    # ``a_val`` (the FLRW-interpolated scale factor at η). At the grid
+    # point the spline hits the stored value exactly, so the ratio is
+    # a[idx] / a_val — machine-precision close to 1.
     idx = int(np.argmin(np.abs(fx.eta - eta)))
     scale = float(bg_table.a[idx] / a_val)
     assert np.allclose(
         sigma_recovered, scale * sigma_proper, rtol=1e-10, atol=0
     )
+
+
+def test_LB2b_F2_proper_shear_spline_better_than_nearest_neighbour(
+    bg_table,
+) -> None:
+    """LB-2b F2 post-audit repair: ``proper_shear_at_eta`` uses cubic
+    spline interpolation on the conformal Σ_ab grid instead of
+    nearest-grid-point lookup. A linear Σ_ab trajectory between two
+    neighbouring grid points is reproduced at mid-grid to better than
+    1e-3 relative — far tighter than the ~2 % quantisation error of
+    the previous nearest-neighbour behaviour.
+
+    Builds a dedicated tetrad fixture with a Σ_ab that **varies**
+    linearly across grid points (`scale = i / N`); the prior
+    nearest-neighbour version would snap to the neighbouring integer
+    grid point, producing ~50 % relative error halfway between grid
+    points.
+    """
+    from bass.background.tetrad_state import TetradBackgroundState
+    from bass.background.einstein_bianchi import BianchiCosmology
+    from bass.background.bianchi_types import flrw_constants
+
+    eta_grid = np.linspace(1.0, 100.0, 50)
+    a_grid = 1e-6 * np.ones_like(eta_grid)
+    sigma_base = axisymmetric_sigma_tensor(1.0, 0.0)
+    scales = np.linspace(0.2, 1.2, eta_grid.size)
+    sigma_conformal = scales[:, None, None] * sigma_base[None, :, :]
+
+    fx = TetradBackgroundState(
+        eta=eta_grid, alpha=np.log(a_grid), a=a_grid,
+        beta_tensor=np.zeros((eta_grid.size, 3, 3)),
+        sigma_tensor=sigma_conformal,
+        aniso_3_curvature=None,
+        structure=flrw_constants(),
+        curvature_status="type_i_flat",
+        cosmo=BianchiCosmology(structure=flrw_constants()),
+    )
+
+    # Pick a mid-grid η exactly halfway between two stored points.
+    i = 20
+    eta_mid = 0.5 * (eta_grid[i] + eta_grid[i + 1])
+    a_val = float(a_grid[i])
+    sigma_recovered = proper_shear_at_eta(eta_mid, fx, a_val)
+    # Linear Σ_ab ⇒ cubic spline reproduces linear mid-grid to
+    # essentially machine precision at this uniform grid.
+    expected_scale_mid = 0.5 * (scales[i] + scales[i + 1])
+    expected_proper = expected_scale_mid * sigma_base / a_val
+    rel = np.linalg.norm(sigma_recovered - expected_proper) / np.linalg.norm(
+        expected_proper
+    )
+    assert rel < 1e-3, f"spline mid-grid relative error: {rel}"
 
 
 def test_neutrino_driver_matches_zero_collision_photon(bg_table) -> None:

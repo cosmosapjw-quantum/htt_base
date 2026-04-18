@@ -330,15 +330,22 @@ class TCAClosure:
 
 ## 8. Closure error diagnostics
 
-For validation, LB-3 provides a utility:
+For validation, LB-3 provides a utility whose **shipped** signature is:
 
 ```python
 def measure_closure_error(
-    hierarchy_state: PSTFHierarchyState,
-    L_reference: int,
+    state_reference: PSTFHierarchyState,
     L_truncated: int,
+    *,
+    closure: Optional[ClosureStrategy] = None,
 ) -> dict:
-    """Compare an L_reference-integrated tower to an L_truncated tower.
+    """Compare a reference (full-L) tower to a truncated projection.
+
+    The reference tower's own ``.L`` fixes ``L_reference`` — so the
+    signature collapses to ``(state_ref, L_trunc)`` instead of the
+    prior-draft ``(state, L_ref, L_trunc)`` (LB-3 F2 post-audit
+    alignment; the earlier three-argument form would have required the
+    caller to supply ``L_ref`` redundantly).
 
     Returns per-ℓ relative error
         err_ℓ = | Π_ℓ^{L_ref} - Π_ℓ^{L_trunc} | / | Π_ℓ^{L_ref} |
