@@ -9,8 +9,18 @@ G19 hard-separation (BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN v3 §10.2bis):
     NOT truth certificates; they cannot be merged with HTT evidence scores.
   * HTT outputs (PosteriorExportBundle) are cross-check only; they must
     not be ingested as MIO likelihood inputs.
+  * BASS theory bundles (HttForwardOutput, AtlasEntry) are model-dependent
+    predictions; they are NOT observational data.
 """
 
+from .atlas_entry import AtlasEntry
+from .htt_forward_output import HttForwardOutput
 from .htt_to_mio import PosteriorExportBundle
+from .mio_certificate import MioCertificate
 
-__all__ = ["PosteriorExportBundle"]
+__all__ = [
+    "AtlasEntry",
+    "HttForwardOutput",
+    "MioCertificate",
+    "PosteriorExportBundle",
+]
