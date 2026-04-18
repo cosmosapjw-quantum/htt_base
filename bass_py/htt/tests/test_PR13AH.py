@@ -93,3 +93,83 @@ def test_raw_summary_uses_sphere_correct_mean():
     # Sphere-correct mean sits near 0°/360°, not near 180°.
     dist_to_zero = min(raw.l_deg, 360.0 - raw.l_deg)
     assert dist_to_zero < 1.0, f"expected near 0°, got {raw.l_deg}"
+
+
+# ---------------------------------------------------------------------------
+# PR13AH-v2-WIRE — mock bias correction injection (v1.1 PATCH-02 resolved).
+# ---------------------------------------------------------------------------
+
+def _injected_mock_report(V_true, V_residual_vec, n_mock=40):
+    """Build a tiny InjectedMockReport whose mean recovered vector is
+    ``V_true + V_residual_vec`` (so the residual ``E[V_hat] − V_true``
+    equals ``V_residual_vec`` exactly).
+    """
+    from common.mock_calibration import InjectedMockReport
+
+    V_true_arr = np.asarray(V_true, dtype=float)
+    V_residual = np.asarray(V_residual_vec, dtype=float)
+    recovered = np.tile(V_true_arr + V_residual, (n_mock, 1))
+    return InjectedMockReport(
+        recovered_V_samples=recovered,
+        amp_bias_fraction=0.02,
+        direction_bias_deg=3.5,
+        amp_spread_fractional=0.1,
+        n_mock=n_mock,
+        config={"V_true": tuple(V_true_arr.tolist())},
+    )
+
+
+def test_mock_calibration_wired_when_bias_provided():
+    """When mock_bias_correction is supplied, calibration_pending flips False."""
+    cat = _catalog()
+    report = _injected_mock_report(
+        V_true=(1.0, 0.0, 0.0),
+        V_residual_vec=(0.0, 0.1, 0.0),  # small directional bias
+    )
+    out = reintegrate_observables(
+        cat,
+        {"zoa_half_angle_deg": 20.0},
+        mock_bias_correction=report,
+    )
+    mock = out["mock_calibrated_summary"]
+    assert mock.calibration_pending is False
+    assert mock.meta["bias_amp_corrected_fraction"] == pytest.approx(0.02)
+    assert mock.meta["bias_direction_corrected_deg"] == pytest.approx(3.5)
+    assert mock.meta["n_mock"] == 40
+
+
+def test_mock_calibration_direction_shift_matches_bias():
+    """The mock-calibrated direction must differ from the selection-aware
+    direction when a non-zero bias residual is supplied, and the shift
+    must be in the opposite direction from the mock residual.
+    """
+    from common.sky_geometry import lb_to_unitvec
+
+    cat = _catalog()
+    # Residual nudges the mean recovered direction *towards* +y. The
+    # correction should push the de-biased direction *away* from +y.
+    report = _injected_mock_report(
+        V_true=(1.0, 0.0, 0.0),
+        V_residual_vec=(0.0, 0.2, 0.0),
+    )
+    out = reintegrate_observables(
+        cat,
+        {"zoa_half_angle_deg": 20.0},
+        mock_bias_correction=report,
+    )
+    sel = out["selection_aware_summary"]
+    mock = out["mock_calibrated_summary"]
+    assert (sel.l_deg, sel.b_deg) != (mock.l_deg, mock.b_deg)
+    # Projection onto +y should decrease (or at worst not increase) under
+    # the residual correction, since the residual vector points +y.
+    u_sel = lb_to_unitvec(sel.l_deg, sel.b_deg)
+    u_mock = lb_to_unitvec(mock.l_deg, mock.b_deg)
+    assert float(u_mock[1]) <= float(u_sel[1]) + 1e-9
+
+
+def test_mock_calibration_placeholder_preserved_without_bias():
+    """Backwards compatibility: omitting mock_bias_correction keeps the
+    pending placeholder path (W4 behaviour unchanged).
+    """
+    out = reintegrate_observables(_catalog(), {"zoa_half_angle_deg": 20.0})
+    assert out["mock_calibrated_summary"].calibration_pending is True

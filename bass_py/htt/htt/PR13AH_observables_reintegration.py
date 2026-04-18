@@ -7,23 +7,29 @@ Splits ``reintegrate_observables`` into four disjoint summary channels:
   1. ``raw_summary``                 — diagnostic_only
   2. ``zoa_masked_summary``          — diagnostic_only
   3. ``selection_aware_summary``     — Mode 1 baseline
-  4. ``mock_calibrated_summary``     — Mode 2 fiducial (COMMON-F gated)
+  4. ``mock_calibrated_summary``     — Mode 2 fiducial (COMMON-F wired)
 
 The three geometric channels use the sphere-correct resultant-vector mean
-from ``common.sky_geometry.spherical_mean`` (COMMON-A, which ships in the
-same commit set). The ``mock_calibrated_summary`` slot still carries
-``calibration_pending=True`` until COMMON-F lands the bias-correction backend;
-downstream consumers must read per-channel metadata rather than assuming any
-equivalence between the four channels.
+from ``common.sky_geometry.spherical_mean`` (COMMON-A). The
+``mock_calibrated_summary`` slot is now COMMON-F-wireable: pass an
+``InjectedMockReport`` via the ``mock_bias_correction`` keyword and the
+summary flips ``calibration_pending=False`` with the de-biased direction
+produced by ``_apply_bias_to_direction``. Omitting the keyword preserves
+the prior placeholder behaviour (PR13AH-v2-WIRE, INDEPENDENT_TRACKS_PLAN
+v1.2 §19.4 / v1.1 PATCH-02 resolution).
 """
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Mapping
+from typing import Any, Mapping, Optional
 
 import numpy as np
 
-from common.sky_geometry import spherical_mean as _spherical_mean
+from common.sky_geometry import (
+    lb_to_unitvec as _lb_to_unitvec,
+    spherical_mean as _spherical_mean,
+    unitvec_to_lb as _unitvec_to_lb,
+)
 
 
 @dataclass(frozen=True)
@@ -50,8 +56,43 @@ def _zoa_mask(b_deg: np.ndarray, half_angle_deg: float) -> np.ndarray:
     return np.abs(b_deg) >= float(half_angle_deg)
 
 
-def reintegrate_observables(catalog: Mapping[str, np.ndarray],
-                            sky_config: Mapping[str, Any]) -> dict[str, ChannelSummary]:
+def _apply_bias_to_direction(l_deg: float, b_deg: float,
+                             bias_report: "InjectedMockReport") -> dict[str, float]:
+    """Apply COMMON-F injected-mock bias correction to a direction.
+
+    The injected-mock report carries ``recovered_V_samples`` (n, 3) and,
+    in ``config``, the true injected vector ``V_true``. The residual
+    ``E[V_hat] − V_true`` is the bias vector; subtracting it from a
+    magnitude-scaled measured unit vector and renormalising yields the
+    de-biased direction.
+
+    If ``config['V_true']`` is absent, the helper returns the input
+    direction unchanged — callers that require a bias correction must
+    supply a complete injected report.
+    """
+    V_true_tuple = bias_report.config.get("V_true") if bias_report.config else None
+    if V_true_tuple is None:
+        return {"l_deg": float(l_deg), "b_deg": float(b_deg)}
+    V_true = np.asarray(V_true_tuple, dtype=float)
+    amp_true = float(np.linalg.norm(V_true))
+    if amp_true <= 0.0:
+        return {"l_deg": float(l_deg), "b_deg": float(b_deg)}
+    u_hat = _lb_to_unitvec(l_deg, b_deg)
+    residual = bias_report.recovered_V_samples.mean(axis=0) - V_true
+    V_corr = amp_true * u_hat - residual
+    norm = float(np.linalg.norm(V_corr))
+    if norm <= 0.0:
+        return {"l_deg": float(l_deg), "b_deg": float(b_deg)}
+    l_c, b_c = _unitvec_to_lb(V_corr / norm)
+    return {"l_deg": float(l_c), "b_deg": float(b_c)}
+
+
+def reintegrate_observables(
+    catalog: Mapping[str, np.ndarray],
+    sky_config: Mapping[str, Any],
+    *,
+    mock_bias_correction: Optional["InjectedMockReport"] = None,
+) -> dict[str, ChannelSummary]:
     """Produce the four-summary bundle.
 
     Parameters
@@ -118,20 +159,41 @@ def reintegrate_observables(catalog: Mapping[str, np.ndarray],
                   "completeness_pending": True},
         )
 
-    # Mock-calibrated: COMMON-F will supply the bias-correction backend.
-    # For now we deep-clone the selection-aware result but tag it explicitly
-    # so downstream cannot mistake the placeholder for a calibrated value.
-    mock_summary = ChannelSummary(
-        l_deg=selection_summary.l_deg,
-        b_deg=selection_summary.b_deg,
-        resultant_R=selection_summary.resultant_R,
-        source="mock_calibrated",
-        selection_mode="mock_calibrated",
-        diagnostic_only=False,
-        calibration_pending=True,
-        meta={**dict(selection_summary.meta),
-              "note": "COMMON-F not yet landed; duplicate of selection-aware"},
-    )
+    # Mock-calibrated: COMMON-F injection now wired via ``mock_bias_correction``.
+    if mock_bias_correction is None:
+        # Backward-compat path — placeholder duplicate of selection-aware.
+        mock_summary = ChannelSummary(
+            l_deg=selection_summary.l_deg,
+            b_deg=selection_summary.b_deg,
+            resultant_R=selection_summary.resultant_R,
+            source="mock_calibrated",
+            selection_mode="mock_calibrated",
+            diagnostic_only=False,
+            calibration_pending=True,
+            meta={**dict(selection_summary.meta),
+                  "note": "mock_bias_correction not supplied; "
+                          "duplicate of selection-aware"},
+        )
+    else:
+        corrected = _apply_bias_to_direction(
+            selection_summary.l_deg, selection_summary.b_deg,
+            bias_report=mock_bias_correction,
+        )
+        mock_summary = ChannelSummary(
+            l_deg=corrected["l_deg"],
+            b_deg=corrected["b_deg"],
+            resultant_R=selection_summary.resultant_R,
+            source="mock_calibrated",
+            selection_mode="mock_calibrated",
+            diagnostic_only=False,
+            calibration_pending=False,
+            meta={**dict(selection_summary.meta),
+                  "bias_amp_corrected_fraction":
+                      float(mock_bias_correction.amp_bias_fraction),
+                  "bias_direction_corrected_deg":
+                      float(mock_bias_correction.direction_bias_deg),
+                  "n_mock": int(mock_bias_correction.n_mock)},
+        )
 
     return {
         "raw_summary": raw_summary,
