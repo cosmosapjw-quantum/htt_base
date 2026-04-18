@@ -1,16 +1,39 @@
-# Next Session Bootstrap Prompt
+# Next Session Bootstrap Prompt (self-updating)
 
-Copy the fenced block below into a fresh Claude Code session to pick up
-Phase LB implementation exactly where the design session ended. Update
-this file after each session to point at the next concrete task.
+**How to use this file**:
 
-**Last updated**: 2026-04-18 (design phase closed, implementation pending)
+1. A fresh Claude Code session copies the ````bash` fenced "Current handoff prompt" block (§2) and pastes it as the first message
+2. That agent works through the tasks specified in the prompt
+3. **Before the final commit**, the agent executes §3 "End-of-session self-update procedure" — replacing the §2 block with the next session's bootstrap prompt
+4. The updated file is committed alongside the session's code
 
-**Next task**: LB-0 closing guard test + LB-1 species background.
+This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
+
+**Last rotated**: 2026-04-18 (design phase → LB-0 closing + LB-1)
+**Current target session**: LB-0 closing guard test + LB-1 species background
 
 ---
 
-```
+## 1. Self-updating contract (STABLE — do not modify per session)
+
+Every agent that consumes §2 inherits this contract:
+
+- The **last substantive action before final commit** is to update this file's §2 block so the next agent can bootstrap themselves
+- Update the "Last rotated" timestamp at the top of this file
+- Update the "Current target session" line
+- The update recipe is in §4 (Template library); pick the template corresponding to the NEXT LB-N session
+- Commit message for the final commit MUST include a line mentioning the next-session handoff (e.g. "+ rotate NEXT_SESSION_PROMPT for LB-N+1")
+- If the next session is not obvious (unexpected scope change, blocker discovered), replace §2 with an explicit "BLOCKED" prompt describing what the following agent needs to unblock before coding resumes
+
+This contract is **non-negotiable**. Skipping it breaks the chain.
+
+---
+
+## 2. Current handoff prompt (ROTATE at end of each session)
+
+Copy the block below into a fresh Claude Code session:
+
+```text
 # Phase LB 구현 시작 — LB-0 마무리 + LB-1 species background
 
 ## 프로젝트 컨텍스트
@@ -65,13 +88,15 @@ LB-1 범위 제약:
 5. **No silent fallbacks**: 미구현 Bianchi type은 `NotImplementedError` raise
 6. **FLRW limit test**: 모든 신규 모듈은 σ=0 한계에서 기존 테스트 재현
 
-## 검증 체크리스트 (commit 전)
+## 검증 체크리스트 (최종 commit 전)
 
 - [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green
 - [ ] 신규 테스트 모두 spec 수치 타깃 일치 (T-01 ~ T-25 + 새 guard test)
 - [ ] 스펙 §10 Cite map 준수 — 모든 public method에 citation docstring
 - [ ] 스펙 §11 "What LB-1 does NOT do" 내용은 실제로 안 함 (범위 guard)
 - [ ] 신규 LoC ≥ 25% 테스트 커버리지
+- [ ] **docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2 블록을 LB-2용으로 교체** — §3 절차 따르기
+- [ ] 최종 commit 메시지에 "+ rotate NEXT_SESSION_PROMPT for LB-2" 라인 포함
 
 ## 진행 순서
 
@@ -79,55 +104,325 @@ LB-1 범위 제약:
 2. 기존 Y-Block 모듈 빠른 스캔 (`species_tilt.py`, `tetrad_state.py`, `ssot.py`)
 3. 작업 1 (LB-0 guard test) → commit
 4. 작업 2 (LB-1 species) 구현 — spec checklist 순서대로
-5. 전체 회귀 확인 → commit
+5. 전체 회귀 확인
+6. **`docs/lowell_bianchi/NEXT_SESSION_PROMPT.md` §2 블록을 LB-2로 교체 + §1 "Last rotated" / "Current target session" 갱신**
+7. 최종 commit (코드 + 갱신된 NEXT_SESSION_PROMPT.md 함께)
 
-## 다음 세션 (이 세션 완료 후)
+## 다음 세션 핸드오프 (§2 교체용 템플릿)
 
-LB-2 (PSTF multipole hierarchy) — `docs/lowell_bianchi/02_multipole_hierarchy_spec.md`. 2 세션 소요 예상 (~1200 LoC).
+세션 종료 시 `NEXT_SESSION_PROMPT.md` §4의 "LB-1 → LB-2" 템플릿을 사용해 §2 블록을 교체합니다. 해당 템플릿은 이미 해당 파일에 준비돼 있으니 복사/적용만 하면 됩니다. 최종 commit 전까지 이 단계가 안 끝나면 커밋 보류.
 
 시작하세요. 질문 있으면 중간에 멈추고 명확히 하기 먼저. 스펙과 다른 방향 제안 시에는 반드시 spec 문서를 먼저 수정한 뒤 구현.
 ```
 
 ---
 
-## Maintenance notes for this file
+## 3. End-of-session self-update procedure
 
-**When to update**:
-- After each LB-N session completes, replace the prompt body above with
-  the next LB-(N+1) bootstrap prompt
-- When `docs/lowell_bianchi/0N_*.md` gets significantly revised, update
-  the "Priority reading" section to reflect new line references
+At the end of a session, before the final commit:
 
-**What to keep stable**:
-- The top block (repo path, venv location, test command, regression
-  baseline count)
-- The "Core principles" list — these are phase-wide invariants, not
-  session-specific
-- The verification checklist — always identical in form
+### Step 1 — Determine the next session target
 
-**Template for future sessions** (copy from this structure):
+- If the current session's tasks all completed successfully → next target is the subsequent LB-N per README.md §3 "Session sequence"
+- If a task partially completed → next target is the same LB-N with the remaining items
+- If a blocker was discovered → next target is "unblock: {description}" with an explicit issue list
 
+### Step 2 — Pick the right template from §4
+
+Each LB-N → LB-(N+1) transition has a pre-written template in §4 below. Copy the matching template.
+
+### Step 3 — Customize the template with session-specific numbers
+
+Fill in:
+
+- **baseline test count** (after this session's commits): run `pytest bass/ tsc/ -q` and read the tail line
+- **updated "완료된 작업" list** (what's now green and shouldn't be re-done)
+- **anything surprising from the session** (performance cliffs, physics subtleties, solver quirks) — add as a "Session N notes" block
+
+### Step 4 — Replace §2 with the customized template
+
+Edit this file. Only §2 rotates; §1, §3, §4 stay intact.
+
+### Step 5 — Update the header
+
+Change:
+
+- `Last rotated: {old date}` → `Last rotated: {today ISO}`
+- `Current target session: {old}` → `Current target session: LB-(N+1) {topic}`
+
+### Step 6 — Final commit
+
+Include this file in the final commit of the session. Commit message example:
+
+```text
+LB-N: {session accomplishment}
+
+{body}
+
++ rotate NEXT_SESSION_PROMPT for LB-(N+1)
 ```
-# Phase LB 구현 계속 — LB-N task_name
+
+---
+
+## 4. Template library (§2 replacements for each LB-N → LB-(N+1) transition)
+
+### 4.1 After LB-1 → bootstrap for LB-2 (PSTF multipole hierarchy)
+
+```text
+# Phase LB 구현 계속 — LB-2 PSTF multipole hierarchy
 
 ## 프로젝트 컨텍스트
-(same as above but with updated regression count)
+
+- **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
+- **venv**: venv/bin/python
+- **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+- **현재 baseline**: {FILL IN}
+- **완료된 세션**: LB-0 (external-code guard), LB-1 (species backgrounds γ/ν/b/c/Λ)
 
 ## 우선 읽어야 할 문서
-1. README.md
-2. 0N_<spec>.md
-3. (Y-Block 또는 직전 세션 산출물)
 
-## 이 세션의 작업
-(single task or two tasks, matching the spec's Implementation checklist)
+1. `docs/lowell_bianchi/README.md` §3 (dependency graph)
+2. `docs/lowell_bianchi/00_conventions.md` §5 (PSTF packing), §4 (Σ² normalisation)
+3. `docs/lowell_bianchi/02_multipole_hierarchy_spec.md` — 이 세션 스펙
+4. 참조: `lowell_bianchi_solver_reference.md` §6 (9-term hierarchy 원본)
 
-## 핵심 원칙 (6개, 위와 동일)
+## 이 세션의 작업 (LB-2는 2 세션 분량 ~1200 LoC — 첫 파트)
 
-## 검증 체크리스트 (commit 전)
+`02_multipole_hierarchy_spec.md §12` Implementation checklist 앞 절반:
+
+- `bass/hierarchy/` 서브패키지 생성
+- `PSTFTensor`, `PSTFHierarchyState` + packed-full 변환 (Clebsch-Gordan ℓ≤8 사전계산)
+- `sym_trace_free` utility
+- T1~T9 중 T1, T2, T3, T8, T9 (orthogonal Bianchi에서 활성화되는 subset)
+- 테스트 H-01 ~ H-17
+
+두 번째 파트 (다음 세션)에서:
+- T4, T5, T6, T7 나머지 term (tilted/vorticity/Bianchi-curved 용)
+- `hierarchy_rhs_photon` driver
+- 통합 테스트 H-18 ~ H-26
+
+LB-2 범위 제약:
+- **Orthogonal Bianchi I, V, VII_0만 대상** — 나머지 type은 NotImplementedError
+- **collision은 LB-4 hook으로 남김** — LB-2에서는 K_{A_ℓ} 인터페이스만 정의
+- **closure는 HardCut만 구현** — 나머지 (FreeStream/PowerLaw/TCA) 는 LB-3
+
+## 핵심 원칙 (고정)
+
+1. 외부 코드 금지
+2. Non-perturbative everywhere
+3. Citation in every docstring (Ellis §4.5-4.6, lowell §6 인용 필수)
+4. PSTF tensors always STF
+5. No silent fallbacks
+6. FLRW limit test 필수
+
+## 검증 체크리스트 (최종 commit 전)
+
+- [ ] 전체 회귀 green
+- [ ] 신규 테스트 spec 수치 타깃 일치
+- [ ] Cite map 준수
+- [ ] NEXT_SESSION_PROMPT.md §2 교체 (LB-2 두번째 파트 또는 LB-3용, 완료도에 따라)
+- [ ] 최종 commit 메시지에 "+ rotate NEXT_SESSION_PROMPT" 포함
 
 ## 진행 순서
+
+1. 스펙 3개 읽기 (README, 00_conventions, 02_hierarchy)
+2. Subpackage 레이아웃 생성
+3. PSTFTensor + 변환 행렬 → 테스트 H-01..H-08
+4. Term 함수 T1/T2/T3/T8/T9 → 테스트 H-13..H-16
+5. 부분 회귀 확인
+6. NEXT_SESSION_PROMPT.md §2 교체
+7. commit
+
+이 세션이 LB-2 전체를 끝낼 수 있으면 그대로 진행하고, 끝나면 LB-3용 prompt로 교체.
 ```
 
-Always produce a prompt that is **self-contained**: a fresh agent with
-zero prior context must be able to start from exactly that prompt
-without hunting for information elsewhere.
+### 4.2 After LB-2 → bootstrap for LB-3 (closure & truncation)
+
+```text
+# Phase LB 구현 계속 — LB-3 closure & truncation
+
+## 프로젝트 컨텍스트
+- Repo/venv/테스트 명령 (§4.1과 동일, baseline count만 갱신)
+- **현재 baseline**: {FILL IN}
+- **완료**: LB-0, LB-1, LB-2
+
+## 우선 읽어야 할 문서
+1. `docs/lowell_bianchi/03_closure_truncation_spec.md`
+2. (기 완료) LB-2의 `bass/hierarchy/pstf_tensor.py`, `hierarchy_rhs.py`
+3. (기 구현) `bass/closure/quadrupole_tca.py` (W6-04) — TCAClosure가 재사용
+
+## 이 세션의 작업 (~500 LoC + 300 LoC tests, 1 세션)
+
+03_closure_truncation_spec.md §11 Implementation checklist 전체:
+
+- `bass/hierarchy/closure.py` — ClosureStrategy Protocol + HardCut/FreeStream/PowerLaw/TCA
+- `bass/hierarchy/closure_diagnostics.py` — measure_closure_error
+- `build_default_closure` factory
+- 테스트 C-01 ~ C-16
+
+LB-3 범위 제약:
+- TCA closure는 W6-04 `solve_tca_closure` 재사용 (재구현 금지)
+- 새 physics 안 함 — closure만
+- Stiffness handling 안 함 (LB-5)
+
+## 핵심 원칙 + 검증 체크리스트 (§4.1과 동일)
+
+## 진행 순서
+(§4.1과 동일, NEXT_SESSION_PROMPT는 LB-4용으로 교체)
+```
+
+### 4.3 After LB-3 → bootstrap for LB-4 (Thomson collision)
+
+```text
+# Phase LB 구현 계속 — LB-4 Thomson PSTF collision
+
+## 프로젝트 컨텍스트
+- **현재 baseline**: {FILL IN}
+- **완료**: LB-0..LB-3
+
+## 우선 읽어야 할 문서
+1. `docs/lowell_bianchi/04_thomson_collision_spec.md`
+2. (기 완료) LB-2 `bass/hierarchy/*`, LB-3 `closure.py`
+3. (기 구현) `bass/collision/thomson_tensor.py` (W3), `bass/closure/quadrupole_tca.py` (W6-04)
+4. 참조: `lowell §4, §9.2`
+
+## 이 세션의 작업 (~400 LoC + 300 LoC tests, 1 세션)
+
+04_thomson_collision_spec.md §11 Implementation checklist 전체:
+
+- `bass/collision/polarization.py` — PolarizationHierarchyState, E-mode source
+- `bass/collision/thomson_pstf.py` — ThomsonPSTFCollisionOperator
+- 테스트 TC-01 ~ TC-16 (TCA limit cross-check with W6-04 포함)
+
+LB-4 범위 제약:
+- Orthogonal only — tilted collision은 LB-4b
+- B-mode는 LB-4c
+- 2nd-order v_e² 보정 금지 (LB-4d)
+
+## (나머지 §4.1과 동일, NEXT_SESSION_PROMPT는 LB-5용으로)
+```
+
+### 4.4 After LB-4 → bootstrap for LB-5 (unified integrator)
+
+```text
+# Phase LB 구현 계속 — LB-5 unified background + hierarchy integrator
+
+## 프로젝트 컨텍스트
+- **현재 baseline**: {FILL IN}
+- **완료**: LB-0..LB-4
+
+## 우선 읽어야 할 문서
+1. `docs/lowell_bianchi/05_integrator_spec.md`
+2. LB-1..LB-4 결과물 (species, hierarchy, closure, collision)
+3. `bass/background/einstein_bianchi.py` (기존 FLRW limit)
+
+## 이 세션의 작업 (~500 LoC + 400 LoC tests)
+
+05_integrator_spec.md §11 Implementation checklist 전체:
+
+- `bass/hierarchy/pack_unpack.py` — state vector utilities
+- `bass/hierarchy/aux_state.py` — IntegratorAuxState
+- `bass/hierarchy/ic.py` — IC constructors (zero IC baseline)
+- `bass/hierarchy/neutrino_reduced.py` — 4-scalar ν fluid RHS
+- `bass/hierarchy/event_detection.py` — 임계 η 이벤트
+- `bass/hierarchy/integrator.py` — LowellBianchiIntegrator main driver
+- 테스트 I-01 ~ I-18
+
+LB-5 범위 제약:
+- k = 0 (배경만)
+- L_max = 6 기본
+- 아직 tilted 안 함 (v_species = 0)
+
+## (나머지 §4.1과 동일, NEXT_SESSION_PROMPT는 LB-6용으로)
+```
+
+### 4.5 After LB-5 → bootstrap for LB-6 (integration regression)
+
+```text
+# Phase LB 구현 계속 — LB-6 Kolb thermal history + CAMB geometry 회귀
+
+## 프로젝트 컨텍스트
+- **현재 baseline**: {FILL IN}
+- **완료**: LB-0..LB-5
+
+## 우선 읽어야 할 문서
+1. `docs/lowell_bianchi/06_integration_tests_spec.md`
+2. LB-5 `LowellBianchiIntegrator` 결과
+
+## 이 세션의 작업 (~400 LoC tests, 1 세션)
+
+06_integration_tests_spec.md §11 Implementation checklist 전체:
+
+- `bass/integration/test_lowell_bianchi.py` 신규
+- LB-6-01 ~ LB-6-24 테스트
+- Kolb thermal history 매치 (z_eq=3400, z_*=1089.94)
+- CAMB geometry 매치 (η_* ≈ 13873, η_0 ≈ 14153)
+- Bianchi I shear-decay 불변량
+
+실패 시 diagnostic playbook (§12) 참조. 각 실패 테스트는 정확히 한 LB-N 세션으로 역추적 가능.
+
+## 세션 완료 시 다음 할 일
+
+LB-6 전부 green이면:
+- `NEXT_SESSION_PROMPT.md §2`를 **Phase LB 완료 + post-LB 단계 기획** 용으로 교체
+- Phase LB 전체 요약 commit ("Phase LB complete: low-ℓ Bianchi solver bedrock verified")
+
+LB-6 부분 실패면:
+- 실패한 테스트별로 diagnostic playbook 적용
+- `NEXT_SESSION_PROMPT.md §2`를 "LB-N re-open to fix {specific failure}" 로 교체
+
+## (나머지 §4.1과 동일)
+```
+
+### 4.6 After LB-6 → bootstrap for post-LB phase
+
+```text
+# Phase LB 완료 → post-LB 단계 기획 세션
+
+## 프로젝트 컨텍스트
+- **현재 baseline**: {FILL IN}
+- **완료**: LB-0..LB-6 전체. Low-ℓ Bianchi solver bedrock 검증 완료
+
+## 이 세션의 작업 (설계만, 코딩 없음)
+
+다음 중 하나를 선택해서 상세 design docs 작성:
+
+**옵션 A — Line-of-sight projection + C_ℓ 추출** (lowell §7 matrix propagator)
+- `bass/spectrum/lowell_cl_projection.py` 설계
+- PSTF hierarchy 결과 → C_ℓ^{TT,EE,TE} 추출
+- CAMB FLRW limit 매치 < 5% 목표
+
+**옵션 B — Perturbation sector** (lowell §9, §13)
+- 스칼라 perturbation equations을 PSTF hierarchy에 얹기
+- CAMB regular adiabatic seed IC
+- Tilted boost rule (§13.5)
+
+**옵션 C — Direction-dependent likelihood** (lowell §14)
+- HTT 재설계 (§3의 P0 3종 해결)
+- 3-mode operational structure 구현
+
+각 옵션별 `docs/lowell_bianchi/` 하위 새 spec 디렉토리 생성, 세션 분해, 의존성 그래프 작성.
+
+## (나머지 §4.1과 동일, NEXT_SESSION_PROMPT는 선택된 옵션의 첫 세션용)
+```
+
+---
+
+## 5. Meta-notes for long-term maintenance
+
+**When Phase LB is fully done** (LB-6 green):
+- `NEXT_SESSION_PROMPT.md` rotates into post-LB territory (lowell §7, §9, §13, §14)
+- This file can either continue (§4 grows with post-LB templates) or be renamed / archived
+- Recommendation: keep it as the single rotating handoff for **all** multi-session work; add new template sections as needed
+
+**When handing off between humans**:
+- §2 is the "start here" block — a colleague can read only §2 and bootstrap
+- §1, §3 are the mechanism; read once, ignore afterwards
+- §4 is reference — consult only when rotating
+
+**When something unexpected happens**:
+- Scope change / blocker / external event → write a free-form §2 that explicitly says "BLOCKED — next agent needs to handle X before resuming LB-N"
+- Do not try to hide the anomaly in a normal-looking prompt
+
+**Commit discipline**:
+- Every commit that includes a §2 rotation must have "+ rotate NEXT_SESSION_PROMPT" in its commit message — this makes the handoff auditable via git log
