@@ -58,10 +58,9 @@ def test_T17_z_eq(registry):
 def test_T18_friedmann_residual_zero(registry):
     """Residual H²/H₀² − Σ_s ρ_s = 0 on-grid at representative z.
 
-    Spec §8 tolerance 1e-8. The residual is evaluated with the
-    explicit grid H_mpc (not the spline) so it isolates the
-    Friedmann-closure physics from spline interpolation noise — this
-    is what the invariant actually asserts.
+    Spec §8 tolerance 1e-8. Uses the explicit grid ``H_mpc`` (not the
+    spline) so the residual isolates the Friedmann-closure physics
+    from spline interpolation noise.
     """
     bg = registry.bg_table
     targets = [0.0, 1.0, 100.0, 1000.0, 10000.0]
@@ -73,31 +72,72 @@ def test_T18_friedmann_residual_zero(registry):
         eta_on_grid = bg.eta[idx]
         H_on_grid = bg.H_mpc[idx]
         res = registry.friedmann_residual(eta_on_grid, H_mpc=H_on_grid)
-        # Dominant numeric source is Σρ(a_on_grid) against the H_mpc
-        # computed analytically at that same a: both use the same
-        # constants, so the residual is pure float64 roundoff.
         assert abs(res) < 1e-10, (
             f"z={z} (on-grid): residual={res:.3e} exceeds 1e-10"
         )
 
 
-def test_T18b_friedmann_residual_offgrid(registry):
-    """Off-grid residual is zero by self-consistency (default mode).
+def test_T18b_friedmann_residual_table_probes_bg(registry):
+    """Default mode (source='table') must actually probe the bg_table.
 
-    With the flat-closure Ω_Λ enforced, the default-mode residual is
-    pure float64 roundoff since both sides use the same scale factor
-    a = bg.interp_a(η).
+    Post-audit contract: ``friedmann_residual(η)`` with
+    ``source='table'`` (the default) reads ``H`` from
+    ``bg.interp_calH(η)/interp_a(η)``. Injecting a deliberate 10 %
+    error into the stored ``calH_mpc`` spline must produce a nonzero
+    residual. The pre-audit implementation evaluated H analytically
+    and returned zero regardless of the table — tautological.
+    """
+    bg = registry.bg_table
+    eta = bg.eta_at_a(0.5)
+
+    # Sanity: with the correct table the residual is small.
+    res_ok = registry.friedmann_residual(eta, source="table")
+    rho_scale = max(float(np.asarray(registry.rho_total(eta))), 1.0)
+    assert abs(res_ok) < 1e-6 * rho_scale, (
+        f"table-mode baseline residual too large: {res_ok:.3e}"
+    )
+
+    # Tamper with the interpolator so the table now lies about H,
+    # then confirm the default residual flags the discrepancy.
+    from bass.species.background_table import build_flrw_background_table
+    from bass.species.registry import SpeciesBackgroundRegistry
+    from scipy.interpolate import CubicSpline
+    tampered_bg = build_flrw_background_table(n_eta=1500)
+    perturbed_calH = tampered_bg.calH_mpc * 1.1
+    object.__setattr__(
+        tampered_bg, "_spline_calH",
+        CubicSpline(tampered_bg.eta, perturbed_calH, bc_type="natural"),
+    )
+    tampered_reg = SpeciesBackgroundRegistry.from_planck2018(
+        bg_table=tampered_bg,
+    )
+    res_tampered = tampered_reg.friedmann_residual(eta, source="table")
+    # (1.1)² − 1 ≈ 0.21, so |res|/rho_tot should be ~0.21.
+    assert abs(res_tampered) > 0.1 * rho_scale, (
+        f"residual did not flag injected bg_table error: {res_tampered:.3e}"
+    )
+
+
+def test_T18c_analytic_mode_is_tautological(registry):
+    """``source='analytic'`` is a constants-consistency self-check.
+
+    Documents (post-audit) that analytic mode evaluates both sides
+    with the same constants → residual is pure float64 roundoff,
+    regardless of the bg_table contents. Retained as an explicit
+    mode for debugging Ω-closure arithmetic.
     """
     bg = registry.bg_table
     for a_t in (0.9, 0.5, 0.1, 0.01, 1e-4):
         eta = bg.eta_at_a(a_t)
-        res = registry.friedmann_residual(eta)
-        # Scale the tolerance with the magnitude of ρ_total at this
-        # a (dominates at small a in the radiation era).
+        res = registry.friedmann_residual(eta, source="analytic")
         rho_scale = max(float(np.asarray(registry.rho_total(eta))), 1.0)
-        assert abs(res) < 1e-12 * rho_scale, (
-            f"a={a_t}: residual={res:.3e}, rho_scale={rho_scale:.3e}"
-        )
+        assert abs(res) < 1e-12 * rho_scale
+
+
+def test_T18d_invalid_source_raises(registry):
+    bg = registry.bg_table
+    with pytest.raises(ValueError):
+        registry.friedmann_residual(bg.eta_today, source="bogus")
 
 
 # --- T-19: out-of-range η raises -----------------------------------------

@@ -111,6 +111,8 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
         self,
         eta: _Number,
         H_mpc: Optional[_Number] = None,
+        *,
+        source: str = "table",
     ) -> _Number:
         """Flat-universe Friedmann constraint residual.
 
@@ -118,25 +120,47 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
 
             (H / H_0)²  −  Σ_s ρ_s(a)      = 0  at flat ΛCDM.
 
-        When ``H_mpc`` is not supplied, the test is *self-consistency*
-        of the species classes: the scale factor is read from
-        ``bg_table.interp_a(η)`` and plugged back into both sides —
-        the left via the analytic Friedmann formula, the right via
-        each species' ``rho_rest``. With the flat-closure Ω_Λ enforced
-        in ``constants.py`` the residual is machine-zero up to
-        float64 arithmetic, independent of spline accuracy.
+        The left-hand H is drawn from one of three sources, controlled
+        by ``H_mpc`` and ``source``:
 
-        When ``H_mpc`` is supplied (e.g. the explicit grid value), the
-        residual probes the numerical consistency between the
-        tabulated H and the analytic Friedmann formula.
+        * ``H_mpc`` supplied explicitly → probes that value against
+          Σρ at the η-corresponding scale factor.
+        * ``H_mpc=None`` and ``source="table"`` (default) → uses the
+          spline-interpolated ``bg_table.interp_calH(η)/interp_a(η)``.
+          This is the **genuine** residual: it catches divergence
+          between the stored Hubble history and Σρ built from the
+          species constants. Use this as a regression probe of the
+          background table itself.
+        * ``H_mpc=None`` and ``source="analytic"`` → computes H from
+          the analytic Friedmann formula at ``a = interp_a(η)`` using
+          the same constants as ``rho_total``. This is a pure
+          *constants-consistency* self-check (tautologically zero
+          once flat closure holds) and is useful only for verifying
+          the arithmetic of ``Omega_Lambda_0 = 1 − Omega_m_0 − Omega_r_0``.
+
+        Historical note (audit 2026-04-18): prior to this patch the
+        ``source="analytic"`` path was the default, so the residual
+        was tautologically zero regardless of the bg_table's accuracy.
+        Tests relying on the default mode did not actually probe the
+        Hubble interpolation.
 
         Reference: Baumann §2.3; Kolb §3.1.
         """
-        a_val = np.asarray(self._bg.interp_a(eta), dtype=np.float64)
         rho_tot = self.rho_total(eta)
         H0 = self._bg.H0_mpc
-        if H_mpc is None:
-            # Analytic Friedmann at the spline-interpolated a.
+
+        if H_mpc is not None:
+            H_used = np.asarray(H_mpc, dtype=np.float64)
+            return (H_used / H0) ** 2 - rho_tot
+
+        if source == "table":
+            H_val = np.asarray(self._bg.interp_calH(eta), dtype=np.float64)
+            a_val = np.asarray(self._bg.interp_a(eta), dtype=np.float64)
+            H_used = H_val / a_val
+            return (H_used / H0) ** 2 - rho_tot
+
+        if source == "analytic":
+            a_val = np.asarray(self._bg.interp_a(eta), dtype=np.float64)
             c = self._bg.constants
             H_over_H0_sq = (
                 c.Omega_r_0 / a_val ** 4
@@ -144,8 +168,10 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
                 + c.Omega_Lambda_0
             )
             return H_over_H0_sq - rho_tot
-        H_used = np.asarray(H_mpc, dtype=np.float64)
-        return (H_used / H0) ** 2 - rho_tot
+
+        raise ValueError(
+            f"source must be 'table' or 'analytic', got {source!r}"
+        )
 
     @property
     def constants(self) -> SpeciesConstants:

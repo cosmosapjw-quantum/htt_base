@@ -915,8 +915,18 @@ TOPIC_05 = "05_bianchi_shear"
 
 def _bianchi_solve(structure, sigma_over_H_init: float = 1e-3,
                     sigma_pm_ratio: float = 0.0):
+    """Bianchi solve with SSOT-consistent flat-ΛCDM constants.
+
+    Post-audit: reads Ω values from ``bass.species.default_constants()``
+    so the gallery's Bianchi shear plots use the same cosmology as the
+    species background plots (flat closure Σ Ω = 1 exactly).
+    """
+    c = default_constants()
     cosmo = BianchiCosmology(
-        H0=67.36, Omega_r=9.22e-5, Omega_m=0.3153, Omega_Lambda=0.6847,
+        H0=c.H0_km_s_mpc,
+        Omega_r=c.Omega_r_0,
+        Omega_m=c.Omega_m_0,
+        Omega_Lambda=c.Omega_Lambda_0,
         structure=structure,
         sigma_over_H_init=sigma_over_H_init,
         sigma_pm_ratio=sigma_pm_ratio,

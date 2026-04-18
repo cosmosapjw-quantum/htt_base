@@ -10,7 +10,9 @@
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
 **Last rotated**: 2026-04-18 (LB-0 + LB-1 complete → LB-2)
+**Last audited**: 2026-04-18 — see `docs/audits/AUDIT_PHASE_LB1_2026-04-18.md`
 **Current target session**: LB-2 PSTF multipole hierarchy (first half)
+**Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
 

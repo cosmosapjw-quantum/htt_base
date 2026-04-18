@@ -221,9 +221,31 @@ def solve_bianchi_background(
 # Cosmology factories for all 10 Bianchi types + FLRW
 # ══════════════════════════════════════════════════════════════════
 
-_PLANCK18 = dict(
-    H0=67.36, Omega_r=9.22e-5, Omega_m=0.3138, Omega_Lambda=0.6862,
-)
+
+def _planck18_from_species_ssot() -> dict:
+    """Pull the Planck-2018 Ω values from the species-layer SSOT.
+
+    Post-LB-1, ``bass.species.constants.default_constants()`` is the
+    single source of truth for flat-ΛCDM closure (Ω_Λ = 1 − Ω_m − Ω_r
+    exact to machine precision). This helper keeps
+    ``einstein_bianchi`` in sync with that SSOT so the Bianchi solver
+    and the species background share identical cosmology.
+
+    Historical note: prior to post-LB-1 audit, the dict hardcoded
+    ``Omega_m=0.3138, Omega_Lambda=0.6862`` which summed to 1.000092
+    (spurious Ω_k ≈ -9e-5). See AUDIT fix 2026-04-18.
+    """
+    from bass.species.constants import default_constants
+    c = default_constants()
+    return dict(
+        H0=c.H0_km_s_mpc,
+        Omega_r=c.Omega_r_0,
+        Omega_m=c.Omega_m_0,
+        Omega_Lambda=c.Omega_Lambda_0,
+    )
+
+
+_PLANCK18 = _planck18_from_species_ssot()
 
 
 def flrw_cosmology() -> BianchiCosmology:

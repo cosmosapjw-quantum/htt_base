@@ -571,10 +571,17 @@ The following must be handled explicitly (with tests):
 | T-21 | Registry iteration order matches canonical (γ, ν, b, c, Λ) | — | exact |
 | T-22 | `_a_of_eta(eta_today) == 1.0` | 1.0 | 1e-12 |
 | T-23 | `T_nu(z=0) == 1.9454 K` | (4/11)^(1/3) × 2.7255 | 1e-6 |
-| T-24 | `T_m(z=150) ≈ T_gamma(z=150)` (Compton coupling still efficient) | T_γ within 1% | 1e-2 |
+| T-24 | `T_m(z=800) ≈ T_gamma(z=800)` (Compton coupling still efficient) | T_γ within 1% | 1e-2 |  ¹
 | T-25 | `Omega_gamma_0 × c² / (8πG × ρ_crit,0) × 4 aSB × T⁴` constructed from CODATA matches SSOT | within 1e-4 | 1e-4 |
 
 Target total: ~40 tests across the 7 test files.
+
+¹ **T-24 note (post-audit 2026-04-18)**: originally stated at z=150,
+but the HyRec-2 Planck-2018 fixture shows T_m/T_γ ≈ 0.76 at z=150 —
+Compton decoupling is already well underway there. The invariant the
+test intends to probe (`T_m ≈ T_γ during tight coupling`) is better
+anchored at z=800 where T_m/T_γ = 0.999. `test_baryon.py::test_T24`
+uses z=800 and documents the shift in its docstring.
 
 ---
 
