@@ -8,7 +8,7 @@ tilt-boost kinematics, Friedmann closure, parameter sweeps, and the
 PSTF multipole hierarchy algebra shipped in LB-2a).
 
 **Generator**: [`scripts/make_physics_gallery.py`](../../scripts/make_physics_gallery.py)
-**Total**: 45 plots across 9 topics
+**Total**: 50 plots across 11 topics
 **Regenerate**: `venv/bin/python scripts/make_physics_gallery.py`
 **Cadence**: regenerated at the end of every LB-N phase; see the
 [phase-boundary hook](../../.claude/hooks/check_phase_boundary_audit.py)
@@ -151,6 +151,19 @@ wrapper with non-perturbative Lorentz boost ``B = cosh β + sinh β (ê·v̂)``.
 | [01_thomson_coefficient_spectrum.png](10_collision_and_visibility/01_thomson_coefficient_spectrum.png) | K_ℓ/Γ_T self-coupling (−1, −9/10, −1, …) and polter cross-coupling for temperature + E-mode |
 | [02_tca_equilibrium_convergence.png](10_collision_and_visibility/02_tca_equilibrium_convergence.png) | TCA-limit (Θ_2, E_2) ∝ 1/Γ_T scaling; polter ratio E_2/Θ_2 → −√6/4 at S_E → 0 |
 | [03_gamma_tilde_direction_asymmetry.png](10_collision_and_visibility/03_gamma_tilde_direction_asymmetry.png) | Layer A: forward/back/side Γ̃_T(η, e) at β=0.3 through recombination + direction/scalar ratio levels matching γ(1±β), γ |
+
+## 11 · Unified LB-5 integrator
+
+End-to-end ``LowellBianchiIntegrator`` trajectories combining the
+background evolution, PSTF multipole hierarchy, E-mode tower, and
+reduced neutrino fluid in a single ``scipy.integrate.solve_ivp``
+call, plus a diagnostic of the TCA algebraic-dispatch activation
+window.
+
+| File | Description |
+|---|---|
+| [01_unified_trajectory_bianchi_I.png](11_integrator/01_unified_trajectory_bianchi_I.png) | ``a(η), Σ_±(η), Π_2[m=0](η), E_2[m=0](η)`` along a Type I flat trajectory with seeded Π_2 — shows Thomson damping + polter-driven E_2 transient |
+| [02_tca_activation_window.png](11_integrator/02_tca_activation_window.png) | ``Γ_T / H`` across the Planck-2018 HyRec history (never crosses threshold) vs a synthetic high-``Γ_T`` override that activates the dispatch on 531/600 grid points |
 
 ---
 

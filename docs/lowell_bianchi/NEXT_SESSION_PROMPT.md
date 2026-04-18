@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (LB-4 complete → LB-5)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_LB4_2026-04-19.md`
-**Current target session**: LB-5 unified background + hierarchy integrator
+**Last rotated**: 2026-04-19 (LB-5 complete → LB-6)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_LB5_2026-04-19.md`
+**Current target session**: LB-6 Kolb thermal history + CAMB geometry regression
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,99 +36,96 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# Phase LB 구현 계속 — LB-5 unified background + hierarchy integrator
+# Phase LB 구현 계속 — LB-6 Kolb thermal history + CAMB geometry 회귀
 
 ## 프로젝트 컨텍스트
 
 - **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 - **venv**: venv/bin/python
 - **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 2,441 tests passing (직전 2,369 + 72 LB-4)
-- **완료된 세션**: LB-0 (external-code guard), LB-1 (species γ/ν/b/c/Λ), LB-2a (PSTF storage + T1/T2/T3/T8/T9), LB-2b (T4/T5/T6/T7 + hierarchy_rhs driver), LB-3 (HardCut + FreeStream + PowerLaw + TCA closure strategies + measure_closure_error), **LB-4** (ThomsonPSTFCollisionOperator + EModeThomsonCollisionOperator + PolarizationHierarchyState + lowell §11.3 TiltedVisibility Layer A)
+- **현재 baseline**: 2,534 tests passing (직전 2,441 + 93 LB-5)
+- **완료된 세션**: LB-0 (external-code guard), LB-1 (species γ/ν/b/c/Λ), LB-2a (PSTF storage + T1/T2/T3/T8/T9), LB-2b (T4/T5/T6/T7 + hierarchy_rhs driver), LB-3 (HardCut + FreeStream + PowerLaw + TCA closure strategies + measure_closure_error), LB-4 (ThomsonPSTFCollisionOperator + EModeThomsonCollisionOperator + PolarizationHierarchyState + lowell §11.3 TiltedVisibility Layer A), **LB-5** (`LowellBianchiIntegrator` unified driver + pack_unpack / aux_state / ic / neutrino_reduced / event_detection + TCA DAE dispatch + real W3 `CanonicalDecision` wiring resolving LB-3/LB-4 F3)
 
 ## 우선 읽어야 할 문서 (순서대로)
 
-1. `docs/audits/AUDIT_PHASE_LB4_2026-04-19.md` — LB-4 감사 로그 (no P0/P1; F1 τ_reion 분리는 LoS 단계로 지연; F3 TCA decision 은 이 세션에서 실제 `CanonicalDecision` 으로 배선해야 함)
-2. `docs/lowell_bianchi/05_integrator_spec.md` — 이 세션 스펙 전체
-3. `docs/lowell_bianchi/README.md` §3 (dependency graph)
-4. 참조 (LB-1..LB-4 완료물):
-   - `bass_py/bass/species/` — γ/ν/b/c/Λ backgrounds + `BaryonBackground.tau_dot/visibility`
-   - `bass_py/bass/hierarchy/` — `PSTFHierarchyState`, `hierarchy_rhs_photon` driver, `hierarchy_rhs_neutrino` (LB-2a/b)
-   - `bass_py/bass/hierarchy/closure.py` — 4 전략 + `build_default_closure` factory (LB-3)
-   - `bass_py/bass/collision/` — `ThomsonPSTFCollisionOperator`, `EModeThomsonCollisionOperator`, `ThomsonAux`, `EModeThomsonAux`, `PolarizationHierarchyState`, `TiltedVisibility` (LB-4)
-5. 재사용 대상 (재구현 금지):
-   - `bass/background/einstein_bianchi.py` — FLRW + Bianchi I/V/VII₀ background integrator
-   - `bass/closure/quadrupole_tca.py` — `solve_tca_closure` (W6-04)
-   - `bass/runtime/canonical_decision.py` — W3 gate (실제 배선 필요; LB-3/LB-4 에서는 `_always_allowing_tca_decision` 으로 우회했음)
-6. 참조: `lowell §6, §9.2, §10` (stiffness / algebraic override dispatch)
+1. `docs/audits/AUDIT_PHASE_LB5_2026-04-19.md` — LB-5 감사 로그 (no P0/P1; F1 η_reion 밴드 / F2 `einstein_bianchi` Σ-convention / F3 LSODA stiffness note)
+2. `docs/lowell_bianchi/06_integration_tests_spec.md` — 이 세션 스펙 전체
+3. `docs/lowell_bianchi/README.md` §3 (dependency graph) + §6 (phase success criteria)
+4. 참조 (LB-1..LB-5 완료물):
+   - `bass_py/bass/hierarchy/integrator.py` — `LowellBianchiIntegrator.run` 본체 + `IntegrationResult` 구조체
+   - `bass_py/bass/hierarchy/pack_unpack.py`, `aux_state.py`, `ic.py`, `neutrino_reduced.py`, `event_detection.py` — LB-5 infrastructure
+   - `bass_py/bass/hierarchy/closure.py`, `bass_py/bass/collision/` — LB-3/LB-4
+   - `bass_py/bass/species/`, `bass_py/bass/background/` — LB-1 + Y-Block
+5. 참조 (LB-5 이 남긴 hooks):
+   - `IntegratorAuxState.gamma_T_override` — deep-TCA regime probe (LB-6 high-z tests 에서 사용 가능)
+   - `IntegrationResult.tca_active_mask` — η-range 별 TCA 활성 여부 post-processing
+   - `IntegrationResult.critical_events` — `z_eq`, `z_star`, `eta_reion_midpoint`, `eta_today` 자동 계산
+6. 참조: `lowell §6`, `Kolb §3.5`, `Baumann §3.10` (thermal history targets)
 
-## LB-4 에서 확정된 사실 (LB-5 에 참고)
+## LB-5 에서 확정된 사실 (LB-6 에 참고)
 
-- **CollisionOperator plug-in**: `hierarchy_rhs_photon(..., closure=..., collision=...)` 에 `ThomsonPSTFCollisionOperator` + `ThomsonAux(E_state, v_b, Γ_T)` 를 주입 가능. Aux payload 는 매 RHS 호출마다 재생성.
-- **TCA algebraic branch dormant**: `TCAClosure.override_at_ell(2) == True` 지만 LB-3/LB-4 에서는 실제로 wire 되지 않음. LB-5 integrator 가 η-적응적으로 Γ_T/H 비교 → algebraic or ODE branch 선택 배선 담당.
-- **Polarization tower**: `PolarizationHierarchyState` (L≥2 필수) + `EModeThomsonCollisionOperator` + `EModeThomsonAux(Pi_2_packed, Γ_T)` 로 온도 tower 와 병렬 구동 가능. LB-5 integrator 는 두 tower 를 단일 flat state 벡터로 concat.
-- **Tilted visibility Layer A**: `TiltedVisibility.{Gamma_T, kappa, g}` 는 `(η, e)` 로 호출. LB-5 scope 는 orthogonal 이므로 `v_e ≡ 0` 이면 scalar `baryon.visibility(η)` 로 환원 (TV-01). LoS 단계 (후속) 에서 진짜 방향-분해 호출.
-- **Audit F3 해결**: LB-4 에서 carry-over 된 `_always_allowing_tca_decision` 우회는 **이 세션의 필수 수선 대상**. 실제 `CanonicalDecision` 을 hierarchy 상태 (β, σ, tangency) 에서 도출하여 TCA scalars 호출에 연결.
-- **외부 코드 가드**: `bass/validation/test_external_code_policy.py` 여전히 활성 — LB-5 신규 파일이 `import camb/classy/hyrec/aniclass` 하면 fail.
+- **State layout fixed at spec §2.1**: `(a, Σ_+, Σ_−, Π_{0..L}, E_{0..L}, Δ_ν, q_ν, π_ν, G_3)` — 총 `(L+1)² × 2 + 7` 엔트리. LB-6 이 이 layout 을 존중해야 pack/unpack 유틸 재사용 가능.
+- **CanonicalDecision 실제 배선**: `build_integrator_canonical_decision(beta, sigma_squared)` 가 real VT-07 β gate + Σ² floor + one-field tangency 를 wire. LB-6 integration 테스트는 이 decision 이 production 에서 fail하는 scenarios (unsafe β, sub-floor σ²) 를 pinning 해야 함.
+- **TCA dispatch DAE-style**: `combined_rhs` 가 `Γ_T/H > threshold` 에서 Π_2 m=0 / E_2 m=0 슬롯을 relaxation rate `a × Γ_T` 로 algebraic 값에 peg. 실제 Planck-2018 HyRec fixture 는 이 threshold 를 넘지 않으므로 LB-6 에서 `gamma_T_override` test hook 을 사용해 dispatch branch 를 regression 테스트 필요.
+- **η_reion ≈ 5100 Mpc @ z=7.67**: spec §5.3 / §10.5 I-17 에 LB-5 amendment 로 수정됨 (pre-LB-5 draft 의 13800 Mpc 은 arithmetic 오류). LB-6 Kolb-table regression 은 이 amended 값을 사용.
+- **`einstein_bianchi` Σ-convention mismatch (F2)**: 현재 integrator 가 `Σ × a = const` 를 보존 (Ellis convention `Σ² × a⁴` 대신). LB-6 shear-decay 테스트는 einstein_bianchi convention 기준. 뒤집기는 post-LB-6 phase 에서.
+- **외부 코드 가드**: `bass/validation/test_external_code_policy.py` 여전히 활성 — LB-6 신규 파일이 `import camb/classy/hyrec/aniclass` 하면 fail.
 
-## 이 세션의 작업 (~500 LoC + 400 LoC tests, 1 세션)
+## 이 세션의 작업 (~400 LoC tests, 1 세션)
 
-`05_integrator_spec.md §11` Implementation checklist 전체:
+`06_integration_tests_spec.md §11` Implementation checklist 전체:
 
-- **`bass/hierarchy/pack_unpack.py`** — state vector utilities (temperature + E-mode concat + split)
-- **`bass/hierarchy/aux_state.py`** — `IntegratorAuxState` dataclass (bg, tetrad, baryon, closure, collision binding)
-- **`bass/hierarchy/ic.py`** — 초기조건 constructors (zero IC + adiabatic seed + CAMB-style regular scalar)
-- **`bass/hierarchy/neutrino_reduced.py`** — 4-scalar reduced ν fluid RHS (L≤2 fluid approximation)
-- **`bass/hierarchy/event_detection.py`** — 임계 η 이벤트 (photon decoupling, matter-rad equality, reion-start)
-- **`bass/hierarchy/integrator.py`** — `LowellBianchiIntegrator` main driver (scipy.integrate.solve_ivp)
-- TCA branch dispatcher: `LowellBianchiIntegrator` 가 Γ_T/H > threshold 에서 Π_2 / E_2 ODE 대신 `TCAClosure.algebraic_closure` 호출
-- 테스트 **I-01 ~ I-18** (driver / IC / events / regression / TCA dispatch)
+- **`bass/integration/test_lowell_bianchi.py`** 신규 (지금은 존재하지 않으므로 디렉토리 + module 생성 필요)
+- 테스트 LB-6-01 ~ LB-6-24 (spec 참조)
+- Kolb thermal history regression: z_eq=3400±50, z_*=1089.94±0.3, τ_reion=0.0544±0.0073, T_ν/T_γ=(4/11)^(1/3)
+- CAMB geometry regression: η_* ≈ 13873 Mpc (distance-to-LSS), η_0 ≈ 14153 Mpc
+- Bianchi I shear-decay invariant: `Σ × a = const` (F2 convention)
+- Full-run smoke: full Planck-2018 FLRW run 끝까지 완주 + 모든 invariant pass + < 30 s wall time
+- 실패 시 diagnostic playbook (spec §12) 적용: 각 실패 테스트는 정확히 한 LB-N 세션으로 역추적 가능해야 함
 
-## LB-5 범위 제약 (고정)
+## LB-6 범위 제약 (고정)
 
-- **k = 0 (배경만)** — k-perturbation sector 는 LB-5 이후
-- **L_max = 6 기본** (LB-2a cache limit 8 까지 허용)
-- **아직 tilted 안 함** (v_species = 0 고정) — tilted integration 은 post-LB
-- **하나의 unified driver** — 온도 + E-mode + neutrino 4-scalar 를 한 state 로
-- **스펙 우선**: `05_integrator_spec.md` 에 없는 behaviour 면 먼저 spec 수정 후 구현
-- **재구현 금지**: `scipy.integrate.solve_ivp` (Python 제공), LB-2b `hierarchy_rhs_photon/neutrino` (LB-5 integrator 내부에서 호출), LB-3 closure strategies, LB-4 collision operators
+- **integration tests only** — 새로운 production code 금지
+- 기존 `LowellBianchiIntegrator` API 수정 금지 (LB-5 접점이 frozen 된 상태)
+- 외부 CAMB/CLASS 를 **테스트 oracle 로** 허용 (scripts/generate_*_reference.py + test_*.py 한정) — 실제 wire 는 pre-computed fixture 만
+- 테스트 실패가 프로덕션 버그 를 드러내면 → `AUDIT(LB-6): …` prefix 로 in-session 수선
+- 테스트 실패가 spec target 오류를 드러내면 → spec 먼저 수정 후 테스트 조정
 
-commit 메시지: `LB-5: unified Lowell-Bianchi integrator + TCA dispatch`
+commit 메시지: `LB-6: Kolb thermal history + CAMB geometry regression pass`
 
 ## 핵심 원칙 (고정, 위반 시 PR 거부)
 
-1. **외부 코드 금지**: CAMB/CLASS/HyRec/AniCLASS 는 `scripts/generate_*_reference.py` 와 `test_*.py` 에만
-2. **Citation in every docstring**: Ma-Bertschinger §4, lowell §6, §9.2
-3. **PSTF tensors always symmetric-traceless**
-4. **No silent fallbacks**: regime 밖 호출 → `ValueError`/`RuntimeError`
-5. **Integrator must be deterministic**: 동일 IC + params → 동일 trajectory (RNG 금지)
-6. **FLRW limit**: σ = 0 에서 기존 `solve_bianchi_background` 결과와 3 sigma 일치
+1. **외부 코드 금지** (프로덕션 트리 한정)
+2. Citation in every test docstring (Kolb / Baumann / Planck 2018 참조)
+3. PSTF invariants preserved throughout integration
+4. No silent fallbacks
+5. Determinism: 동일 IC + params → 동일 test outcome (RNG 금지)
+6. **FLRW limit**: σ = 0 에서 Kolb-table 매치 필수
 
 ## 검증 체크리스트 (최종 commit 전)
 
-- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,441 이상)
-- [ ] 신규 테스트 모두 spec 수치 타깃 일치 (I-01 ~ I-18)
-- [ ] TCA branch dispatch 실제로 활성화되는 η-range 에서 Π_2 / E_2 ODE 경로 disable 됨을 검증
-- [ ] 실제 `CanonicalDecision` 배선 (LB-3 F3 / LB-4 F3 해결)
-- [ ] 신규 LoC ≥ 25% 테스트 커버리지
-- [ ] **phase-boundary audit**: `docs/audits/AUDIT_PROMPT.md` 실행 후 `AUDIT_PHASE_LB5_<date>.md` 생성
-- [ ] **gallery refresh**: 신규 topic (`11_integrator/`) 에 tower 전체 trajectory / TCA activation window 플롯 최소 1-2 개 추가
-- [ ] **`NEXT_SESSION_PROMPT.md §2` 블록을 LB-6 용으로 교체** (§4.5 템플릿)
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,534 이상)
+- [ ] LB-6-01 ~ LB-6-24 모두 spec 수치 타깃 일치
+- [ ] Full-range smoke integration (eta 0.5 → 14147 Mpc) 완주 + 모든 post-integration invariants pass
+- [ ] 신규 테스트 LoC ≥ 25% coverage (integration tests are thin by nature — coverage via existing production code)
+- [ ] **phase-boundary audit**: `docs/audits/AUDIT_PROMPT.md` 실행 후 `AUDIT_PHASE_LB6_<date>.md` 생성
+- [ ] **gallery refresh**: 가능하면 신규 topic `12_thermal_history/` 에 Kolb-table comparison 플롯 추가 (optional — LB-6 은 tests 중심)
+- [ ] **`NEXT_SESSION_PROMPT.md §2` 블록을 post-LB (옵션 A/B/C) 용으로 교체** (§4.6 템플릿)
 - [ ] 최종 commit 메시지에 "+ rotate NEXT_SESSION_PROMPT" 라인 포함
+- [ ] LB-6 전부 green 이면 `Phase LB complete: low-ℓ Bianchi solver bedrock verified` summary commit 도 추가 고려
 
 ## 진행 순서
 
-1. LB-4 audit + LB-5 spec + 기존 `solve_bianchi_background` / `hierarchy_rhs_photon` / `TCAClosure` 읽기
-2. `pack_unpack.py` + `aux_state.py` + `ic.py` 설계 → I-01..I-03 (layout / IC)
-3. `neutrino_reduced.py` (4-scalar fluid) → I-04..I-06
-4. `event_detection.py` → I-07..I-08
-5. `integrator.py` 본체 + TCA dispatch → I-09..I-14
-6. 통합 smoke (Bianchi I + L_max=6 + Γ_T 프로파일) → I-15..I-18
-7. Gallery 확장
-8. 실제 `CanonicalDecision` 배선 + F3 해결 검증
-9. 전 회귀 확인 → phase-boundary audit
-10. `NEXT_SESSION_PROMPT.md §2` → LB-6 bootstrap
-11. commit
+1. LB-5 audit + LB-6 spec + `LowellBianchiIntegrator.run` + `IntegrationResult` 구조체 읽기
+2. `bass/integration/` 디렉토리 생성, `__init__.py` + `test_lowell_bianchi.py` 스켈레톤
+3. LB-6-01..08 (FLRW baseline: z_eq, z_*, τ_reion, η_* — LB-5 critical_events + species registry 직접 사용)
+4. LB-6-09..16 (Bianchi I shear-decay regression — einstein_bianchi convention 기준)
+5. LB-6-17..20 (TCA dispatch regression — gamma_T_override 로 deep-TCA regime 재현)
+6. LB-6-21..24 (full-range smoke + CAMB geometry match — η_0 − η_* 정확도)
+7. Gallery (optional)
+8. 전 회귀 확인 → phase-boundary audit
+9. `NEXT_SESSION_PROMPT.md §2` → post-LB bootstrap (옵션 A/B/C)
+10. commit (+ optional "Phase LB complete" summary commit)
 
 시작하세요. 스펙과 다른 방향 제안 시 반드시 spec 문서 먼저 수정.
 ```

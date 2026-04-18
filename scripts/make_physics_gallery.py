@@ -2338,6 +2338,232 @@ def plot_10_03_gamma_tilde_direction_asymmetry() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
+# Topic 11 — Unified LB-5 integrator
+# ════════════════════════════════════════════════════════════════════
+
+
+TOPIC_11 = "11_integrator"
+
+
+def _lb5_imports():
+    from bass.hierarchy.integrator import (
+        IntegratorConfig, LowellBianchiIntegrator,
+    )
+    from bass.hierarchy.closure import build_default_closure
+    from bass.background.einstein_bianchi import (
+        flrw_cosmology, type_i_cosmology,
+    )
+    return (IntegratorConfig, LowellBianchiIntegrator,
+            build_default_closure, flrw_cosmology, type_i_cosmology)
+
+
+def plot_11_01_unified_trajectory_bianchi_I() -> None:
+    """LB-5 unified integrator: ``a(η), Σ_+(η), Π_2[m=0](η), E_2[m=0](η)``
+    along a Type I flat trajectory with an injected Π_2 seed.
+
+    The LB-5 baseline is zero-IC for the hierarchy (spec §6); the
+    shear-injection T9 term requires a non-zero ``Π_0`` to couple
+    ``σ_ab`` into ``Π_2``, and LB-5 carries ``Π_0 = 0`` at init. To
+    visualise the hierarchy's Thomson damping we seed ``Π_2[m=0]`` at
+    an arbitrary 1e-4 amplitude and let the integrator propagate it
+    through ``hierarchy_rhs_photon`` + ``ThomsonPSTFCollisionOperator``.
+    """
+    (IntegratorConfig, LowellBianchiIntegrator,
+     build_default_closure, _, type_i_cosmology) = _lb5_imports()
+    from bass.background.einstein_bianchi import solve_bianchi_background
+    from bass.background.tetrad_state import build_tetrad_state
+    from bass.hierarchy.ic import make_initial_state
+    from bass.hierarchy.pack_unpack import (
+        pack_combined_state, unpack_combined_state,
+    )
+
+    species = Shared.registry()
+    cosmo = type_i_cosmology(sigma_over_H_init=1e-3)
+    bg = solve_bianchi_background(cosmo, a_start=1e-6, a_end=1.0, n_pts=2000)
+    tetrad = build_tetrad_state(bg)
+
+    cfg = IntegratorConfig(
+        L_max=4, n_output=300,
+        eta_initial_mpc=50.0, eta_final_mpc=500.0,
+        bianchi_cosmo=cosmo,
+        Sigma_plus_initial=1e-6,
+        closure_strategy=build_default_closure(
+            L_max=4, strategy_name="hardcut"),
+    )
+    it = LowellBianchiIntegrator(cfg, species, tetrad_state=tetrad)
+    # Seed the Π_2 m=0 slot so the Thomson damping is visible.
+    y0 = make_initial_state(
+        L_max=cfg.L_max,
+        a_initial=float(species.bg_table.interp_a(cfg.eta_initial_mpc)),
+        Sigma_plus_initial=cfg.Sigma_plus_initial,
+        seed_Pi_2_m0=1.0e-4,
+    )
+    # Run solve_ivp directly with the custom y0 (LowellBianchiIntegrator
+    # uses zero_IC by default; here we bypass initial_state to inject
+    # the Π_2 seed).
+    from scipy.integrate import solve_ivp
+    from bass.hierarchy.integrator import combined_rhs
+    eta_out = np.linspace(cfg.eta_initial_mpc, cfg.eta_final_mpc,
+                          cfg.n_output)
+    sol = solve_ivp(
+        lambda eta, y: combined_rhs(
+            eta, y, L_max=cfg.L_max,
+            aux_state=it.aux_state, cosmo=cfg.bianchi_cosmo,
+        ),
+        (cfg.eta_initial_mpc, cfg.eta_final_mpc),
+        y0, t_eval=eta_out, method="LSODA",
+        rtol=cfg.rtol, atol=cfg.atol,
+        max_step=(cfg.eta_final_mpc - cfg.eta_initial_mpc) / 1000.0,
+    )
+    from bass.hierarchy.integrator import IntegrationResult
+    from bass.hierarchy.pack_unpack import (
+        slice_a as _sa, slice_sigma_pm as _sp,
+        slice_photon_T as _spT, slice_photon_E as _spE,
+        slice_neutrino_reduced as _sn,
+    )
+    res = IntegrationResult(
+        eta=sol.t,
+        a=sol.y[_sa(cfg.L_max)][0],
+        Sigma_plus=sol.y[_sp(cfg.L_max)][0],
+        Sigma_minus=sol.y[_sp(cfg.L_max)][1],
+        photon_T_tower=sol.y[_spT(cfg.L_max)].T.copy(),
+        photon_E_tower=sol.y[_spE(cfg.L_max)].T.copy(),
+        neutrino_reduced=sol.y[_sn(cfg.L_max)].T.copy(),
+        critical_events={},
+        config=cfg, solver_info={"nfev": int(sol.nfev)},
+        tca_active_mask=np.zeros(len(sol.t), dtype=bool),
+    )
+
+    Pi_2 = res.pi_ell_m(ell=2, m=0)
+    E_2 = res.e_ell_m(ell=2, m=0)
+
+    fig, axes = plt.subplots(2, 2, figsize=(11.5, 7.0))
+    ax = axes.ravel()
+    ax[0].loglog(res.eta, res.a, color=COLS["blue"], lw=1.5)
+    _prepare_axes(ax[0], r"$\eta$ [Mpc]", r"$a(\eta)$",
+                   title=r"Scale factor (Type I, orthogonal Bianchi I)",
+                   xlog=True, ylog=True)
+
+    ax[1].semilogx(res.eta, res.Sigma_plus, color=COLS["orange"], lw=1.5,
+                    label=r"$\Sigma_+(\eta)$")
+    ax[1].semilogx(res.eta, res.Sigma_minus, color=COLS["purple"], lw=1.0,
+                    ls="--", label=r"$\Sigma_-(\eta)$")
+    _prepare_axes(ax[1], r"$\eta$ [Mpc]", r"$\Sigma_\pm$ [Mpc$^{-1}$]",
+                   title=r"Tetrad shear (einstein_bianchi solver)",
+                   xlog=True)
+    ax[1].legend(loc="upper right", fontsize=8)
+
+    ax[2].semilogx(res.eta, Pi_2, color=COLS["blue"], lw=1.5)
+    _prepare_axes(ax[2], r"$\eta$ [Mpc]",
+                   r"$\Pi_2[m=0](\eta)$  (axisymmetric slot)",
+                   title=r"Photon temperature quadrupole (m=0 slot)",
+                   xlog=True)
+
+    ax[3].semilogx(res.eta, E_2, color=COLS["purple"], lw=1.5)
+    _prepare_axes(ax[3], r"$\eta$ [Mpc]",
+                   r"$E_2[m=0](\eta)$",
+                   title=r"Photon E-mode quadrupole (m=0 slot)",
+                   xlog=True)
+    fig.suptitle(
+        r"LB-5 unified trajectory: background × hierarchy × E-mode × "
+        r"neutrino fluid in one ODE", fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "01_unified_trajectory_bianchi_I", TOPIC_11)
+
+
+def plot_11_02_tca_activation_window() -> None:
+    """``Γ_T(η) / H(η)`` across recombination, with the TCA-activation
+    threshold (default 100) overlaid.
+
+    Left panel: the real Planck-2018 HyRec history. The fixture's
+    ``z_max ≈ 8000`` horizon places ``η_min ≈ 2 Mpc`` and the fixture
+    never probes the deep tight-coupling regime ``z ≫ 10⁵`` where
+    ``Γ_T / H > 100`` naturally. The default dispatch is therefore
+    inactive across the production η range — by design.
+
+    Right panel: with a synthetic high-``Γ_T`` override (the
+    ``IntegratorConfig.gamma_T_override`` test hook), ``Γ_T / H``
+    clears the threshold and the integrator activates the W6-04
+    algebraic closure at ℓ=2. This reproduces the I-18 test's
+    dispatch pattern.
+    """
+    (IntegratorConfig, LowellBianchiIntegrator,
+     build_default_closure, _, _) = _lb5_imports()
+    species = Shared.registry()
+
+    cfg_real = IntegratorConfig(
+        L_max=4, n_output=1200,
+        closure_strategy=build_default_closure(
+            L_max=4, strategy_name="tca",
+            gamma_threshold_over_H=100.0,
+        ),
+        gamma_T_over_H_threshold=100.0,
+    )
+    it_real = LowellBianchiIntegrator(cfg_real, species)
+    eta_grid = np.linspace(cfg_real.eta_initial_mpc,
+                            cfg_real.eta_final_mpc, 2000)
+    ratio_real = np.zeros_like(eta_grid)
+    for i, eta in enumerate(eta_grid):
+        G = it_real.aux_state.Gamma_T_at(float(eta))
+        H = it_real.aux_state.H_local_at(float(eta))
+        ratio_real[i] = (G / H) if H > 0 else 0.0
+
+    # Synthetic high-Γ_T scenario (test hook).
+    def big_gamma(_eta):
+        return 10.0  # Mpc⁻¹ — much larger than H at late η
+    cfg_syn = IntegratorConfig(
+        L_max=4, n_output=500, eta_initial_mpc=100.0, eta_final_mpc=12000.0,
+        closure_strategy=build_default_closure(
+            L_max=4, strategy_name="tca",
+            gamma_threshold_over_H=100.0,
+        ),
+        gamma_T_over_H_threshold=100.0,
+        gamma_T_override=big_gamma,
+    )
+    it_syn = LowellBianchiIntegrator(cfg_syn, species)
+    eta_syn = np.linspace(cfg_syn.eta_initial_mpc,
+                           cfg_syn.eta_final_mpc, 600)
+    ratio_syn = np.zeros_like(eta_syn)
+    for i, eta in enumerate(eta_syn):
+        G = it_syn.aux_state.Gamma_T_at(float(eta))
+        H = it_syn.aux_state.H_local_at(float(eta))
+        ratio_syn[i] = (G / H) if H > 0 else 0.0
+
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(11.5, 4.4))
+
+    ax_a.semilogy(eta_grid, np.maximum(ratio_real, 1e-20),
+                   color=COLS["blue"], lw=1.4,
+                   label=r"$\Gamma_T(\eta) / H(\eta)$  (Planck-2018 HyRec)")
+    ax_a.axhline(100.0, color="0.3", ls=":", lw=1.0,
+                  label=r"TCA threshold (spec §10.6)")
+    _prepare_axes(ax_a, r"$\eta$ [Mpc]", r"$\Gamma_T / H$",
+                   title=r"Real HyRec fixture — TCA never active",
+                   xlog=False, ylog=True)
+    ax_a.legend(loc="upper right", fontsize=8)
+    ax_a.set_ylim(1e-20, 1e3)
+
+    ax_b.semilogy(eta_syn, np.maximum(ratio_syn, 1e-20),
+                   color=COLS["orange"], lw=1.4,
+                   label=r"$\Gamma_T(\eta) / H(\eta)$  (override $\Gamma_T = 10$)")
+    ax_b.axhline(100.0, color="0.3", ls=":", lw=1.0,
+                  label=r"TCA threshold")
+    # Shade the TCA-active region.
+    mask_syn = ratio_syn > 100.0
+    if np.any(mask_syn):
+        ax_b.fill_between(eta_syn, 1e-20, 1e8, where=mask_syn,
+                           alpha=0.15, color=COLS["orange"])
+    _prepare_axes(ax_b, r"$\eta$ [Mpc]", r"$\Gamma_T / H$",
+                   title=fr"Synthetic high-$\Gamma_T$ (test hook): "
+                         fr"{mask_syn.sum()} / {len(mask_syn)} grid points active",
+                   xlog=False, ylog=True)
+    ax_b.legend(loc="lower right", fontsize=8)
+    ax_b.set_ylim(1e-2, 1e8)
+    fig.tight_layout()
+    _save(fig, "02_tca_activation_window", TOPIC_11)
+
+
+# ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
 
@@ -2478,6 +2704,14 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("03_gamma_tilde_direction_asymmetry",
          plot_10_03_gamma_tilde_direction_asymmetry,
          "LB-4 Layer A: Γ̃_T(η, e) forward/back/side asymmetry vs scalar Γ_T."),
+    ],
+    TOPIC_11: [
+        ("01_unified_trajectory_bianchi_I",
+         plot_11_01_unified_trajectory_bianchi_I,
+         "LB-5 LowellBianchiIntegrator Type I trajectory: a, Σ_±, Π_2, E_2."),
+        ("02_tca_activation_window",
+         plot_11_02_tca_activation_window,
+         "LB-5 Γ_T(η)/H(η) vs TCA threshold with active-η shading."),
     ],
 }
 

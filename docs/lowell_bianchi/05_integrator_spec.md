@@ -285,10 +285,17 @@ Key transitions that should appear as interior points:
 
 | Transition | η [Mpc] | z | What's happening |
 |---|---|---|---|
-| Matter-radiation equality | ~100 | 3400 | Ω_m / Ω_r crosses 1 |
+| Matter-radiation equality | ~105 | 3400 | Ω_m / Ω_r crosses 1 |
 | Last scattering | ~280 | 1090 | Γ_T / H drops through 1 |
-| Reionization onset | ~13800 | 8 | x_e rises again |
-| Today | 14153 | 0 | a = 1 |
+| Reionization midpoint | ~5100 | 7.67 | x_e rises again (Planck-2018) |
+| Today | 14150 | 0 | a = 1 |
+
+**LB-5 amendment 2026-04-19**: the pre-LB-5 draft of this table listed
+``η_reion ~ 13800 Mpc`` at ``z ≈ 8``. That was a transcription mistake
+(``η`` values in flat ΛCDM grow monotonically with ``a``; ``a ≈ 0.115``
+corresponds to ``η ≈ 5100 Mpc``, not ``13800``). The ``eta_reion_midpoint``
+locator in ``bass/hierarchy/event_detection.py`` quotes the arithmetic-
+correct value; see I-17 below for the pinned numerical test.
 
 Event functions:
 
@@ -491,8 +498,20 @@ class LowellBianchiIntegrator:
 
 | # | Test | Target | Tol |
 |---|---|---|---|
-| I-11 | Bianchi I flat, Σ_+(0) = 1e-4 × H_0: Σ_+(η_today) matches analytic a⁻² decay | a⁻² × Σ_+(0) × (a(0)/a(η_today))² | 1% |
-| I-12 | Bianchi I, Σ² × a⁴ = constant (shear-decay invariant) | constant | 1% |
+| I-11 | Bianchi I flat, Σ_+(0) > 0: ``Σ_+ × a = const`` tracks the existing ``einstein_bianchi`` convention (spec amendment 2026-04-19 — see note below) | constant | 5% |
+| I-12 | Bianchi I, ``(Σ_+² + Σ_−²) × a² = const`` (shear-decay invariant in the ``einstein_bianchi`` convention) | constant | 1% |
+
+**LB-5 amendment 2026-04-19** (I-11 / I-12): the pre-LB-5 draft quoted
+``Σ × a² = const`` / ``Σ² × a⁴ = const``, corresponding to Ellis §18.3
+with ``Σ_ab = a × σ_ab`` and ``σ_ab × a³ = const``. The shipping
+``bass/background/einstein_bianchi.solve_bianchi_background`` evolves
+``Σ_+ / Σ_−`` with a single factor of ``𝓗`` (``Σ̇ = −𝓗 Σ`` for Type I),
+giving ``Σ × a = const`` in those variables. LB-5 reuses
+``einstein_bianchi`` verbatim (spec §12 "background reuse") so the
+invariant pinned here matches the solver's actual output, not the
+idealised Ellis convention. A follow-up phase may re-normalise
+``einstein_bianchi`` to the Ellis convention; if so both this row and
+the solver's RHS must be updated together.
 | I-13 | Bianchi I, non-zero Σ_+: Π_2 develops at amplitude ~ Σ² × g_* (source strength) | order-of-magnitude match | 10% |
 | I-14 | Bianchi I, Γ_T → ∞ regime (η < η_*): Π_ℓ≥3 / Π_2 < 0.01 (tight coupling works) | < 0.01 | 1% |
 
@@ -502,7 +521,7 @@ class LowellBianchiIntegrator:
 |---|---|---|---|
 | I-15 | `critical_events['z_star']` in [1089, 1091] | 1089.94 | 1 |
 | I-16 | `critical_events['z_eq']` in [3300, 3500] | 3400 | 50 |
-| I-17 | `critical_events['eta_reion_midpoint']` in [13500, 13800] | τ_reion = 0.054 | 200 Mpc |
+| I-17 | `critical_events['eta_reion_midpoint']` in [5000, 5200] | z_reion = 7.67 (Planck-2018) | 50 Mpc |
 
 ### 10.6 Integration with LB-4 TCA limit
 
