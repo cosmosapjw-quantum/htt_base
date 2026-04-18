@@ -1,8 +1,9 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W1W2` phase.
-**Last audited**: 2026-04-19 (`docs/audits/AUDIT_PHASE_IND_TRACKS_W1W2_2026-04-19.md`).
-**Governing plan**: `INDEPENDENT_TRACKS_PLAN.md` (Week 3–4 routine, §6 steps 11–15).
+**As of**: 2026-04-19, post-`IND_TRACKS_W3` phase.
+**Last audited**: 2026-04-19 (`docs/audits/AUDIT_PHASE_IND_TRACKS_W3_2026-04-19.md`;
+previous phase: `AUDIT_PHASE_IND_TRACKS_W1W2_2026-04-19.md`).
+**Governing plan**: `INDEPENDENT_TRACKS_PLAN.md` (Week 4 routine, §6 steps 13–15).
 **Parent plan**: `BASS_PY_HTT_TSC_RESEARCH_PLAN.md` v2.
 
 ---
@@ -39,43 +40,36 @@ First-order rules (copy-pasted from the governing plan):
 | DOS-A13 | `docs/dossier/{A13_template, A13_00_FLRW, A13_01_FLRW_tilt}.md` | landed |
 | Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W1W2_2026-04-19.md` | landed |
 
-Final test tally over the touched surface: **264 passed, 1 pre-existing
-failure, 23 cleanly-skipped** (`bass_py/htt/tests/ bass_py/src/
-bass_py/tsc/admissibility/`).
+## §1b. What shipped in Week 3
 
-## §2. Active priorities for the next session (Week 3–4)
+| Track | Artefact | Status |
+|---|---|---|
+| COMMON-B | `bass_py/src/common/healpix_selection.py` + `test_healpix_selection.py` (24 tests incl. REG-01 `test_zoa_ladder_no_fallback_leak`) | landed |
+| COMMON-C | `bass_py/src/common/bulkflow_estimator.py` + `test_bulkflow_estimator.py` (17 tests incl. REG-01 `test_weights_decomposition_logged`) | landed |
+| MANU-CH03 (code-independent) | `project/00_manuscript/ch03_framework.tex` — new §"Observational framework for direction-resolved inference" (§3.X+5 Clarkson–Maartens, §3.X+6 spherical mean, §3.X+7 selection-aware likelihood); +444 L | landed |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W3_2026-04-19.md` | landed |
+
+Final test tally over the touched surface: **305 passed, 1 pre-existing
+failure (F3 carry-forward), 23 cleanly-skipped**
+(`bass_py/htt/tests/ bass_py/src/ bass_py/tsc/admissibility/`).
+Full `bass_py/tsc/` also green at **443 passed**.
+
+## §2. Active priorities for the next session (Week 4)
 
 Order suggested. Each entry includes the plan reference; read only that
 slice of the plan rather than the whole file.
 
-### Week 3
-
-1. **COMMON-B** — `bass_py/src/common/healpix_selection.py`
-   (INDEPENDENT_TRACKS_PLAN §3.1 / parent §6.4).
-   ~250 L. Depends on COMMON-A (already shipped).
-   Test plan: `src/common/test_healpix_selection.py` incl.
-   `test_zoa_ladder_no_fallback_leak` (REG-01 item).
-
-2. **COMMON-C** — `bass_py/src/common/bulkflow_estimator.py`
-   (§3.1 / parent §6.4). ~200 L.
-   Test: `test_weights_decomposition_logged` (REG-01).
-
-3. **MANU-CH03 (code-independent subset only)** — parent §11.3 ch03 §3.X+5
-   Clarkson-Maartens killing, §3.X+6 sphere-mean definition, §3.X+7
-   selection-aware likelihood theory. §3.X+1 (W_R window) and §3.X+2
-   (Tilt² 6 cross-terms) stay blocked on W12-01 / W13 bass_py deliverables.
-
-### Week 4
-
-4. **COMMON-D → COMMON-E → COMMON-F** sequential (§3.1).
+1. **COMMON-D → COMMON-E → COMMON-F** sequential (§3.1).
    COMMON-F is the largest (~300 L) and blocks the `calibration_pending=True`
    flag currently set on `PR13AH_observables_reintegration.ChannelSummary`'s
    mock_calibrated slot.
 
-5. **TSC-02** — `bass_py/tsc/diagnostics/filling_fraction.py` (§3.2).
+2. **TSC-02** — `bass_py/tsc/diagnostics/filling_fraction.py` (§3.2).
    F_Bayes = E[Q | D] posterior-mean; ~400 L + ~30 tests.
 
-6. **DOS-A14** — 5 null-family derivations (§4.4).
+3. **DOS-A14** — 5 null-family derivations (§4.4).
+
+4. **MANU-CH03 §3.X+3 Θ⁴ bridge** (unblocks once TSC-04 lands — audit W3 F4).
 
 ## §3. Carry-forward items from the W1-W2 audit
 

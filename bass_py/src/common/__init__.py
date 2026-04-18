@@ -1,6 +1,11 @@
 """common: cross-cutting utilities shared by bass, htt, and tsc.
 
-Landing under INDEPENDENT_TRACKS_PLAN.md §2.6 (COMMON-A). Subsequent layers
-(healpix selection, bulk-flow estimator/likelihood, posterior summary, mock
-calibration) will be added as later COMMON-B..F tracks.
+Landing log:
+
+* COMMON-A — ``contracts`` + ``sky_geometry`` (INDEPENDENT_TRACKS_PLAN §2.6).
+* COMMON-B — ``healpix_selection`` (§3.1).
+* COMMON-C — ``bulkflow_estimator`` (§3.1).
+
+Subsequent layers (``bulkflow_likelihood``, ``posterior_summary``,
+``mock_calibration``) will be added as COMMON-D..F tracks.
 """
