@@ -10,8 +10,10 @@ Reads the integrated_pipeline_results.json structure:
   evidence[model]['lnB'] → Bayes factor
   filling_fraction → F summary
 """
-import sys, json
+import json
 from pathlib import Path
+
+from workspace.contracts.htt_to_mio import PosteriorExportBundle
 
 __all__ = ['build_posterior_bundle']
 
@@ -39,9 +41,6 @@ def build_posterior_bundle(results_path: str = None,
     model : str
         Reference model for posteriors (default: FLRW_tilt as best-fit).
     """
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent / 'workspace'))
-    from contracts.htt_to_mio import PosteriorExportBundle
-
     if results_path is None:
         results_path = str(
             Path(__file__).resolve().parent.parent.parent.parent

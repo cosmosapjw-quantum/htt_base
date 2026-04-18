@@ -1,0 +1,41 @@
+{
+  "_comment": "WS-BOOT-01 placeholder fixture (INDEPENDENT_TRACKS_PLAN v1.2 §19.1). Minimal values so `htt.integration.to_mio.build_posterior_bundle` can build a PosteriorExportBundle for the test_to_mio_builds_bundle RED-01 regression gate. Real HTT pipeline runs overwrite this file.",
+  "departure": {
+    "FLRW_tilt": {
+      "layer_1_departure": {
+        "x": {
+          "median": 0.10,
+          "hpd_68": [0.08, 0.12],
+          "hpd_95": [0.05, 0.15]
+        }
+      },
+      "layer_2_occupancy": {
+        "Q": {
+          "median": 0.30,
+          "hpd_68": [0.25, 0.35]
+        }
+      },
+      "layer_3_exceedance": {
+        "Pi": {
+          "0.01": 0.05,
+          "0.05": 0.15,
+          "0.10": 0.22
+        }
+      }
+    },
+    "FLRW": {
+      "layer_1_departure": {"x": {"median": 0.0, "hpd_68": [0.0, 0.0], "hpd_95": [0.0, 0.0]}},
+      "layer_2_occupancy": {"Q": {"median": 0.0, "hpd_68": [0.0, 0.0]}},
+      "layer_3_exceedance": {"Pi": {"0.01": 0.0, "0.05": 0.0, "0.10": 0.0}}
+    }
+  },
+  "evidence": {
+    "FLRW_tilt": {"lnB": 12.3, "neff": 500},
+    "FLRW":      {"lnB": 0.0,  "neff": 500}
+  },
+  "filling_fraction": {
+    "F_S3_mc_median": 0.08,
+    "F_S3_mc_68":     [0.06, 0.11],
+    "F_S3_point":     0.08
+  }
+}
