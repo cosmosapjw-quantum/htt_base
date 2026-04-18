@@ -139,6 +139,19 @@ backgrounds.
 | [07_T1_damping_history.png](09_pstf_hierarchy/07_T1_damping_history.png) | (4/3)Θ(η) expansion damping rate from BBN to today + action on a unit Π_2 |
 | [08_shear_injection_over_time.png](09_pstf_hierarchy/08_shear_injection_over_time.png) | Bianchi I Σ_+(η) history → proper σ_+(η) = Σ_+/a → injected ‖T9‖ at ℓ=2 with Π_0 = 1 |
 
+## 10 · Thomson collision + tilted visibility (LB-4)
+
+Thomson collision coefficients (Ma-Bertschinger 1995 eq 63 /
+Zaldarriaga-Seljak 1997 eq 17), TCA-limit algebraic balance, and the
+lowell §11.3 direction-resolved ``Γ̃_T(η, e) = Γ_T(η) × B(η, e)``
+wrapper with non-perturbative Lorentz boost ``B = cosh β + sinh β (ê·v̂)``.
+
+| File | Description |
+|---|---|
+| [01_thomson_coefficient_spectrum.png](10_collision_and_visibility/01_thomson_coefficient_spectrum.png) | K_ℓ/Γ_T self-coupling (−1, −9/10, −1, …) and polter cross-coupling for temperature + E-mode |
+| [02_tca_equilibrium_convergence.png](10_collision_and_visibility/02_tca_equilibrium_convergence.png) | TCA-limit (Θ_2, E_2) ∝ 1/Γ_T scaling; polter ratio E_2/Θ_2 → −√6/4 at S_E → 0 |
+| [03_gamma_tilde_direction_asymmetry.png](10_collision_and_visibility/03_gamma_tilde_direction_asymmetry.png) | Layer A: forward/back/side Γ̃_T(η, e) at β=0.3 through recombination + direction/scalar ratio levels matching γ(1±β), γ |
+
 ---
 
 ## Regenerating specific topics

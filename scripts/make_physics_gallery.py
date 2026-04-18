@@ -2102,6 +2102,242 @@ def plot_09_12_sigma_vs_Sigma_conversion() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
+# Topic 10 — Collision operator + tilted visibility (LB-4)
+# ════════════════════════════════════════════════════════════════════
+
+
+TOPIC_10 = "10_collision_and_visibility"
+
+
+def _lb4_imports():
+    """Lazy-import LB-4 modules so earlier topics are unaffected if they fail."""
+    from bass.closure.quadrupole_tca import solve_tca_closure
+    from bass.collision.polarization import zero_polarization_hierarchy
+    from bass.collision.thomson_pstf import (
+        EModeThomsonAux, EModeThomsonCollisionOperator,
+        ThomsonAux, ThomsonPSTFCollisionOperator,
+    )
+    from bass.collision.tilted_visibility import TiltedVisibility
+    from bass.runtime.canonical_decision import make_canonical_decision
+    from tsc.diagnostics.tangency import TangentKind, compute_D_diagnostic
+
+    def _allowing_decision():
+        def _G(x): return np.asarray(x, dtype=np.float64)
+        tang = compute_D_diagnostic(
+            G_field=_G, kind=TangentKind.ONE_FIELD, xi=0, eta=0.0,
+        )
+        return make_canonical_decision(
+            beta_result=(True, {
+                "beta": 1.36e-3, "beta_max": 8.62e-3, "slack": 7.26e-3,
+                "eta_u_dot": 0.16, "safety_factor": 0.5, "epsilon_1": 0.02,
+            }),
+            sigma_result=(True, {
+                "sigma_sq": 1e-5, "floor": 1e-6, "log_margin_decades": 1.0,
+            }),
+            tangency_result=tang,
+        )
+    return (solve_tca_closure, zero_polarization_hierarchy, ThomsonAux,
+            ThomsonPSTFCollisionOperator, EModeThomsonAux,
+            EModeThomsonCollisionOperator, TiltedVisibility,
+            _allowing_decision)
+
+
+def plot_10_01_thomson_coefficient_spectrum() -> None:
+    """Thomson collision coefficients ``K_ℓ / Γ_T`` as a function of ℓ.
+
+    Temperature tower (``K^T_ℓ / Γ_T``):
+      - ℓ=0 : 0     (monopole conserved)
+      - ℓ=1 : -1   × Π_1  (+v_b/Γ_T drive, zeroed in this plot)
+      - ℓ=2 : -9/10 Π_2  (self) + (-√6/10) × (E_2/Π_2 ratio)
+      - ℓ≥3 : -1   × Π_ℓ
+
+    E-mode tower (``K^E_ℓ / Γ_T``):
+      - ℓ=0,1: 0
+      - ℓ=2 : -2/5 × E_2 + (-3/(5√6)) × (Π_2/E_2 ratio)
+      - ℓ≥3 : -1 × E_ℓ
+
+    The plot shows the universal Ma-Bertschinger eq (63)–(65) /
+    Zaldarriaga-Seljak eq (7),(17) spectrum.
+    """
+    ells = np.arange(0, 9)
+    # Self-coupling coefficients per ℓ (temperature)
+    T_self = np.zeros_like(ells, dtype=np.float64)
+    T_self[1] = -1.0
+    T_self[2] = -9.0 / 10.0
+    T_self[3:] = -1.0
+    # Cross-coupling magnitude at ℓ=2 only.
+    T_cross = np.zeros_like(ells, dtype=np.float64)
+    T_cross[2] = -np.sqrt(6.0) / 10.0
+
+    E_self = np.zeros_like(ells, dtype=np.float64)
+    E_self[2] = -2.0 / 5.0
+    E_self[3:] = -1.0
+    E_cross = np.zeros_like(ells, dtype=np.float64)
+    E_cross[2] = -3.0 / (5.0 * np.sqrt(6.0))
+
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(11.5, 4.0))
+    width = 0.35
+    ax_a.bar(ells - width / 2, T_self, width, color=COLS["blue"], alpha=0.8,
+             label=r"self-coupling  $K^T_\ell \propto \Pi_\ell$")
+    ax_a.bar(ells + width / 2, T_cross, width, color=COLS["orange"], alpha=0.8,
+             label=r"cross  $K^T_\ell \propto E_\ell$")
+    ax_a.axhline(0.0, color="0.4", lw=0.6)
+    _prepare_axes(ax_a, r"multipole $\ell$",
+                   r"$K^T_\ell / \Gamma_T$  (per unit amplitude)",
+                   title="Temperature Thomson coefficients (Ma-Bertschinger eq 63)")
+    ax_a.set_xticks(ells)
+    ax_a.legend(loc="lower right", fontsize=8)
+
+    ax_b.bar(ells - width / 2, E_self, width, color=COLS["purple"], alpha=0.8,
+             label=r"self  $K^E_\ell \propto E_\ell$")
+    ax_b.bar(ells + width / 2, E_cross, width, color=COLS["green"], alpha=0.8,
+             label=r"cross  $K^E_\ell \propto \Pi_\ell$")
+    ax_b.axhline(0.0, color="0.4", lw=0.6)
+    _prepare_axes(ax_b, r"multipole $\ell$",
+                   r"$K^E_\ell / \Gamma_T$",
+                   title="E-mode Thomson coefficients (Zaldarriaga-Seljak eq 17)")
+    ax_b.set_xticks(ells)
+    ax_b.legend(loc="lower right", fontsize=8)
+    fig.tight_layout()
+    _save(fig, "01_thomson_coefficient_spectrum", TOPIC_10)
+
+
+def plot_10_02_tca_equilibrium_convergence() -> None:
+    """TCA-limit ``(Θ_2, E_2)`` as a function of ``Γ_T`` at fixed ``S_T``.
+
+    Top panel: Θ_2(Γ_T), E_2(Γ_T) scaling as ``1/Γ_T`` (both curves
+    are Γ_T⁻¹ × constant from ``solve_tca_closure``).
+    Bottom panel: polter ratio E_2/Θ_2 converging to −√6/4 ≈ −0.6124
+    as S_E → 0, independent of Γ_T.
+    """
+    (solve_tca_closure, _, _, _, _, _, _, allowing) = _lb4_imports()
+    decision = allowing()
+    Gamma_T_grid = np.geomspace(0.1, 1e4, 50)
+    S_T_fixed = 1.0e-6
+    S_E_values = [0.0, 0.2 * S_T_fixed, -0.5 * S_T_fixed]
+
+    fig, (ax_top, ax_bot) = plt.subplots(2, 1, figsize=(7.0, 7.0), sharex=True)
+    for i, S_E in enumerate(S_E_values):
+        theta_arr = np.zeros_like(Gamma_T_grid)
+        E_arr = np.zeros_like(Gamma_T_grid)
+        for j, gT in enumerate(Gamma_T_grid):
+            t, e = solve_tca_closure(
+                S_T=S_T_fixed, S_E=S_E, gamma_T=float(gT), decision=decision,
+            )
+            theta_arr[j] = t
+            E_arr[j] = e
+        lbl = fr"$S_E / S_T = {S_E / S_T_fixed:.2g}$"
+        colour = [COLS["blue"], COLS["orange"], COLS["purple"]][i]
+        ax_top.loglog(Gamma_T_grid, np.abs(theta_arr), color=colour, ls="-",
+                      lw=1.4, label=r"$|\Theta_2|$  " + lbl)
+        ax_top.loglog(Gamma_T_grid, np.abs(E_arr), color=colour, ls="--",
+                      lw=1.4, label=r"$|E_2|$  " + lbl)
+        ratio = np.where(theta_arr != 0.0, E_arr / theta_arr, np.nan)
+        ax_bot.semilogx(Gamma_T_grid, ratio, color=colour, lw=1.4, label=lbl)
+    ax_bot.axhline(-np.sqrt(6.0) / 4.0, color="0.3", ls=":",
+                    label=r"canonical $-\sqrt{6}/4$")
+
+    _prepare_axes(ax_top, r"$\Gamma_T$ [Mpc$^{-1}$]",
+                   r"$|\Theta_2|, |E_2|$  (TCA prediction)",
+                   title=r"TCA-limit amplitudes $\propto 1/\Gamma_T$",
+                   xlog=True, ylog=True)
+    ax_top.legend(loc="lower left", fontsize=7, ncol=2)
+    _prepare_axes(ax_bot, r"$\Gamma_T$ [Mpc$^{-1}$]",
+                   r"$E_2 / \Theta_2$",
+                   title=r"Polter ratio convergence (canonical at $S_E = 0$)",
+                   xlog=True)
+    ax_bot.legend(loc="lower right", fontsize=8)
+    ax_bot.set_ylim(-1.3, 1.5)
+    fig.tight_layout()
+    _save(fig, "02_tca_equilibrium_convergence", TOPIC_10)
+
+
+def plot_10_03_gamma_tilde_direction_asymmetry() -> None:
+    """Direction-resolved ``Γ̃_T(η, e)`` vs scalar ``Γ_T(η)`` under a
+    constant-β electron tilt along ``ẑ``.
+
+    Forward (+ẑ): Γ̃_T = γ(1+β) Γ_T
+    Back (−ẑ):   Γ̃_T = γ(1−β) Γ_T
+    Side (⊥):    Γ̃_T = γ Γ_T   (not 1; the cosh β factor survives)
+
+    The plot visualises these factors against the scalar HyRec-based
+    Γ_T(η) through recombination.
+    """
+    (_, _, _, _, _, _, TiltedVisibility, _) = _lb4_imports()
+    bg = Shared.bg()
+    # Use reionization-extended baryon for full-history coverage.
+    table, _ = Shared.recomb()
+    cosmo = cosmology_from_metadata(table.metadata)
+    reion = ReionizationParameters()
+    ext, interp, _ = Shared.recomb_reion(reion)
+    c = default_constants()
+    baryon = BaryonBackground(bg, c.Omega_b_0, interp)
+
+    beta = 0.3  # moderate tilt for visibility
+    v_hat = np.array([0.0, 0.0, 1.0])
+    v_e = np.tanh(np.arctanh(beta)) * v_hat
+    tv = TiltedVisibility(baryon, lambda eta: v_e)
+
+    eta_sub = np.linspace(bg.eta_min * 5.0, bg.eta_today * 0.99, 400)
+    # Filter to recomb-valid z-range.
+    z_sub = 1.0 / np.array([float(bg.interp_a(e)) for e in eta_sub]) - 1.0
+    mask = (z_sub >= 0.0) & (z_sub <= 7900.0)
+    eta_sub = eta_sub[mask]
+    z_sub = z_sub[mask]
+
+    Gamma_scalar = np.array([float(baryon.tau_dot(e)) for e in eta_sub])
+    G_forward = np.array([tv.Gamma_T(e, v_hat) for e in eta_sub])
+    G_back = np.array([tv.Gamma_T(e, -v_hat) for e in eta_sub])
+    G_side = np.array([
+        tv.Gamma_T(e, np.array([1.0, 0.0, 0.0])) for e in eta_sub
+    ])
+
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(11.5, 4.2))
+    ax_a.semilogy(1 + z_sub, Gamma_scalar, color="0.4", lw=1.2, ls="-",
+                   label=r"$\Gamma_T(\eta)$  (scalar)")
+    ax_a.semilogy(1 + z_sub, G_forward, color=COLS["orange"], lw=1.4,
+                   label=r"$\tilde\Gamma_T(\eta, +\hat z) = \gamma(1+\beta)\Gamma_T$")
+    ax_a.semilogy(1 + z_sub, G_back, color=COLS["blue"], lw=1.4,
+                   label=r"$\tilde\Gamma_T(\eta, -\hat z) = \gamma(1-\beta)\Gamma_T$")
+    ax_a.semilogy(1 + z_sub, G_side, color=COLS["purple"], lw=1.4, ls="--",
+                   label=r"$\tilde\Gamma_T(\eta, \hat x) = \gamma\,\Gamma_T$")
+    _prepare_axes(ax_a, r"$1 + z$", r"$\tilde\Gamma_T$ [Mpc$^{-1}$]",
+                   title=fr"Thomson rate anisotropy at $\beta = {beta:.2f}$",
+                   xlog=True)
+    ax_a.legend(loc="lower left", fontsize=8)
+
+    # Only plot ratio where Γ_T is well above float precision so the
+    # division is numerically meaningful (post-recombination trough
+    # causes Γ_T → 0 where the ratio would blow up).
+    min_Gamma = 1e-3 * Gamma_scalar.max()
+    valid = Gamma_scalar > min_Gamma
+    ratio_fwd = G_forward[valid] / Gamma_scalar[valid]
+    ratio_bck = G_back[valid] / Gamma_scalar[valid]
+    ratio_sd = G_side[valid] / Gamma_scalar[valid]
+    z_valid = z_sub[valid]
+    ax_b.plot(1 + z_valid, ratio_fwd, color=COLS["orange"], lw=1.4,
+              label=r"forward / scalar")
+    ax_b.plot(1 + z_valid, ratio_bck, color=COLS["blue"], lw=1.4,
+              label=r"back / scalar")
+    ax_b.plot(1 + z_valid, ratio_sd, color=COLS["purple"], lw=1.4, ls="--",
+              label=r"side / scalar")
+    # Expected levels.
+    gamma_exact = 1.0 / np.sqrt(1.0 - beta * beta)
+    ax_b.axhline(gamma_exact * (1 + beta), color=COLS["orange"],
+                  ls=":", lw=0.7)
+    ax_b.axhline(gamma_exact * (1 - beta), color=COLS["blue"],
+                  ls=":", lw=0.7)
+    ax_b.axhline(gamma_exact, color=COLS["purple"], ls=":", lw=0.7)
+    _prepare_axes(ax_b, r"$1 + z$", r"$\tilde\Gamma_T / \Gamma_T$",
+                   title="Direction / scalar ratio (horizontal = exact)",
+                   xlog=True)
+    ax_b.legend(loc="upper right", fontsize=8)
+    ax_b.set_ylim(0.5, 1.7)
+    fig.tight_layout()
+    _save(fig, "03_gamma_tilde_direction_asymmetry", TOPIC_10)
+
+
+# ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
 
@@ -2231,6 +2467,17 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("14_closure_strategy_comparison",
          plot_09_14_strategy_comparison_dy,
          "LB-3 per-ℓ dy/dη norm under HardCut / FreeStream / PowerLaw / TCA."),
+    ],
+    TOPIC_10: [
+        ("01_thomson_coefficient_spectrum",
+         plot_10_01_thomson_coefficient_spectrum,
+         "LB-4 Thomson K_ℓ/Γ_T spectrum for temperature + E-mode towers."),
+        ("02_tca_equilibrium_convergence",
+         plot_10_02_tca_equilibrium_convergence,
+         "LB-4 TCA (Θ_2, E_2) scaling with Γ_T and polter ratio at S_E→0."),
+        ("03_gamma_tilde_direction_asymmetry",
+         plot_10_03_gamma_tilde_direction_asymmetry,
+         "LB-4 Layer A: Γ̃_T(η, e) forward/back/side asymmetry vs scalar Γ_T."),
     ],
 }
 
