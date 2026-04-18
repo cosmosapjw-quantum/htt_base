@@ -165,3 +165,45 @@ When LB-6 passes, we will have:
 - A documentation trail where every equation in code traces back to a textbook citation
 
 This is the **bedrock** on which §7 (matrix propagator), §9 (perturbation equations), §13 (CAMB-seed IC + tilted boost), and §14 (direction-dependent likelihood) of the lowell reference can later be built without buried ambiguities.
+
+---
+
+## 7. Post-LB — Full Bianchi coverage (FB) roadmap
+
+**Status**: planning approved 2026-04-19 (user sign-off on §11 checklist of `FULL_BIANCHI_COVERAGE_PLAN.md`).
+
+With LB-0..LB-6 bedrock green, the project pivots to **full coverage of all 11 Bianchi types × {orthogonal, tilted} = 22 configurations**. The roadmap is `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md`; the prior "post-LB A/B/C" option menu is **superseded** and absorbed as sub-phases inside FB:
+
+| Old post-LB option | New FB home |
+|---|---|
+| A — Line-of-sight projection | FB-7.1 / FB-7.2 |
+| B — Perturbation sector (k ≠ 0) | FB-5 (whole phase) |
+| C — HTT / direction-dependent likelihood | FB-7.3 / FB-7.4 / FB-7.5 |
+
+**FB phase summary** (35 sessions, ~7 weeks; parallelisable FB-3 ∥ FB-5):
+
+| Phase | Sessions | Goal |
+|---|---|---|
+| FB-0 | 3 | Ellis convention flip + BianchiCosmology tilt fields + LB-5/6 carry-forwards |
+| FB-1 | 4 | 11-type background PROVISIONAL → VALIDATED (Wainwright-Ellis match) |
+| FB-2 | 4 | ∇̃ + ³R_{ab} + T4/T5/T6/T7 across all 11 types |
+| FB-3 | 6 | Non-perturbative tilted sector (β, v̂_e, vorticity) |
+| FB-4 | 3 | Thomson Layer B (full Lorentz kernel, E↔B mixing) |
+| FB-5 | 7 | k ≠ 0 perturbation sector (CAMB seeds + tilted boost) |
+| FB-6 | 3 | 22-configuration regression + P-C / CAMB literature match |
+| FB-7 | 5 | C_ℓ extraction + HTT + likelihood |
+
+Milestone gates M1..M6 sit at phase boundaries; see FB plan §8. Design decisions D1..D10 (§6 of the FB plan) have been locked at their recommended defaults:
+
+- Frame: Pontzen-Challinor (a along axis 2, n₂=0 for Class B)
+- Σ-convention: **Ellis** (`Σ² × a⁴ = const`); einstein_bianchi will flip in FB-0.1
+- 11 types (not 9)
+- Rapidity β (non-perturbative), no linearisation
+- IX recollapse via `solve_ivp` event termination
+- `k` as dimensionless eigenvalue; per-type harmonic mode dispatch (plane-wave / hyperbolic / Q-mode)
+- Massive ν deferred (post-FB)
+- External oracle = CAMB NPZ only (class guard preserved)
+- HTT P0 triad resolved in FB-7.3 (not earlier)
+- `tca_active_mask` kept compatible; tilted extension in FB-3
+
+**Next concrete session**: FB-0.1 — Ellis convention flip. See `NEXT_SESSION_PROMPT.md §2`.

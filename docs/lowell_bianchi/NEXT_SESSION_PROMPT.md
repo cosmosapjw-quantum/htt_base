@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (LB-6 complete → post-LB design session)
+**Last rotated**: 2026-04-19 (FB plan approved → FB-0.1 bootstrap)
 **Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_LB6_2026-04-19.md`
-**Current target session**: post-LB phase — design-only session to pick and scope one of options A / B / C (line-of-sight, perturbation sector, direction-dependent likelihood)
+**Current target session**: **FB-0.1** — Ellis Σ-convention flip (`σ × a³ = const`) in `einstein_bianchi`, propagate conversion to all downstream consumers, LB-5 F2 carry-forward resolution
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,94 +36,104 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# Phase LB 완료 → post-LB 단계 기획 세션 (design-only)
+# FB-0.1 — Ellis Σ-convention flip (einstein_bianchi 재정규화)
 
 ## 프로젝트 컨텍스트
 
 - **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 - **venv**: venv/bin/python
 - **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 2,558 tests passing + 1 skipped (LB-5 2,534 + LB-6 24 new pass + 1 deferred LB-6-11)
-- **완료된 세션**: LB-0 (external-code guard), LB-1 (species γ/ν/b/c/Λ), LB-2a/b (PSTF hierarchy T1..T9 + driver), LB-3 (HardCut + FreeStream + PowerLaw + TCA closures + measure_closure_error), LB-4 (Thomson PSTF + E-mode collision + lowell §11.3 TiltedVisibility Layer A), LB-5 (`LowellBianchiIntegrator` unified driver + real W3 `CanonicalDecision` wiring + TCA DAE dispatch), **LB-6** (end-to-end regression suite `bass/integration/test_lowell_bianchi.py` — Kolb thermal history + CAMB geometry match + Bianchi I shear invariants)
-- **Phase LB 상태**: 완료. Low-ℓ Bianchi solver bedrock verified against textbook thermal history + CAMB Planck-2018 geometry.
+- **현재 baseline**: 2,558 passing + 1 skipped (LB-6 직후)
+- **완료된 단계**: LB-0 … LB-6 전체 (low-ℓ Bianchi solver bedrock 검증 완료)
+- **현재 시작하는 phase**: **Full Bianchi Coverage (FB)** — 11 Bianchi types × {orthogonal, tilted} = 22 configurations 까지 솔버 확장. 전체 로드맵은 `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md` (사용자 승인 2026-04-19; §11 체크리스트 5/5 green, §6 D1~D10 추천 기본안 lock-in).
 
-## 이 세션의 작업 (설계만, 코딩 없음)
+## 이 세션의 작업 범위 (FB-0.1 only)
 
-Phase LB 가 끝났으므로 post-LB 세 옵션 중 하나를 선택해서 **상세 design docs** 를 작성하는 것이 이 세션의 유일한 목표다.
+**Goal**: LB-5 F2 carry-forward 해결. `bass/background/einstein_bianchi.py` 의 shear convention 을 Ellis 표준 (`σ_ab × a³ = const`, `Σ_ab = a × σ_ab`) 으로 정규화하고, 이 변경을 downstream consumers 에 propagate 시킨다. Orthogonal-only scope (β=0); tilted sector 은 FB-3 이 담당.
 
-**옵션 A — Line-of-sight projection + C_ℓ 추출** (lowell §7 matrix propagator)
-- 목적: PSTF hierarchy 결과 → C_ℓ^{TT, EE, TE} 추출 (CAMB FLRW limit 매치 < 5 % 목표)
-- 새 docs: `docs/lowell_bianchi/post_lb_A_line_of_sight/` — spec 문서 3~5개로 분해 (projection spec + source term assembly + regression spec + CAMB fixture binding)
-- 첫 세션 예상 작업: visibility/source integrand 구성 + recombination-era Π_2 source integration
+### 현재 convention (LB-5 이후)
 
-**옵션 B — Perturbation sector** (lowell §9, §13)
-- 목적: 스칼라 perturbation equations을 PSTF hierarchy 에 얹기. CAMB regular adiabatic seed IC + tilted-boost rule (§13.5).
-- 새 docs: `docs/lowell_bianchi/post_lb_B_perturbation/` — k-dispatch ∇̃ structure-constant logic (lowell §13), seed IC spec, PSTF-regularised boost
-- 첫 세션 예상 작업: k=0 limit 에서의 regular seed spec 확정 + 기존 integrator 와의 composition rule
+einstein_bianchi 의 `solve_bianchi_background` 는 `Σ_±` 를 `Σ̇ = -𝓗 Σ + source` 로 진행시켜 Type I flat 에서 `Σ × a = const` 보존. 이는 **Ellis 가 아님**. LB-5 F2 audit:
+> The LB-5 integrator reuses einstein_bianchi verbatim so I-11 / I-12 had to pin the einstein_bianchi convention. Flipping to Ellis is a dedicated phase.
 
-**옵션 C — Direction-dependent likelihood** (lowell §14)
-- 목적: HTT 재설계 (§3의 P0 3종 해결) + 3-mode operational structure 구현
-- 새 docs: `docs/lowell_bianchi/post_lb_C_htt/` — §14.2 HTT decomposition spec + §14.3 likelihood evaluation contract + tiered-resolution plan
-- 첫 세션 예상 작업: HTT P0 3종 issue 정리 + likelihood evaluator contract 제안
+### 목표 convention (FB-0.1 이후)
+
+- Ellis: `Σ_ab ≡ a × σ_ab`; Type I flat 에서 `σ_ab × a³ = const` ⇒ `Σ_ab × a² = const`
+- Σ² (dimensionless shear squared) normalisation: `Σ² ≡ Σ^{ab} Σ_ab / (6 𝓗²)` (lowell §00_conventions §4 이미 Ellis)
+- Background ODE: `Σ̇_ab = -𝓗 Σ_ab + shear_source_Ellis(type, ...)` 에서 shear_source 을 Ellis 규격으로 재도출 (Wainwright-Ellis §18)
+
+### 구체적 변경 후보 (감사 후 확정)
+
+1. `bass/background/einstein_bianchi.py::solve_bianchi_background` 의 `(Σ_+, Σ_-)` RHS 를 Ellis convention 으로 rederive
+2. `bass/transport/shear_sources.py` 의 11 type source 함수 (source_I … source_IX) — 각각 Ellis convention 에서 재검증; 문헌 대조 표 (W-E §18, Pontzen-Challinor 2009) 확장
+3. `bass/background/tetrad_state.py::proper_shear_at_eta` — `σ = Σ / a²` (Ellis) 로 변환
+4. LB-5 `bass/hierarchy/integrator.py::_bg_rhs` 의 `compute_shear_source` 호출 인자 조정
+5. LB-6 `bass/integration/test_lowell_bianchi.py::TestLBBianchiI::test_LB_6_15 / 16` 의 invariant 을 Ellis 표준으로 재정식화 (LB-6 session 에서는 einstein_bianchi convention 에 amend 되어 있음 — 이제 flip back)
+
+### 수치 타깃 (FB-0.1 exit)
+
+- 전 회귀 green (2,558 + 1 skipped 유지 또는 개선)
+- LB-5 I-11 `Σ × a = const` → **LB-5 I-11-Ellis `Σ × a² = const`** 로 rename + 재측정; drift < 5 %
+- LB-5 I-12 `Σ² × a² = const` → **LB-5 I-12-Ellis `Σ² × a⁴ = const`** 로 rename + 재측정; drift < 1 %
+- LB-6-15 / 16 의 test-body 에 똑같이 반영
+- `compute_shear_source` 의 Type I/V validated 소스는 `σ_ab × a³ = const` 을 analytically 재현 (Kasner exact solution)
+- FB 플랜 §6 D2 locked default 를 docs/lowell_bianchi/00_conventions.md §4 에 명시 (이미 Ellis 라면 no-op; 아니면 Ellis 로 통일)
 
 ## 우선 읽어야 할 문서 (순서대로)
 
-1. `docs/audits/AUDIT_PHASE_LB6_2026-04-19.md` — LB-6 감사 로그 (no P0/P1; in-session spec 수정 6건 요약; carry-forwards F1/F2/F3)
-2. `docs/lowell_bianchi/README.md` §6 (phase success criteria, LB 완료 상태) + §7 (post-LB 개요)
-3. `lowell_bianchi_solver_reference.md` §7 (matrix propagator), §9.2 (perturbation sector), §13.5 (tilted-boost), §14 (HTT + likelihood) — 각 옵션의 기본 수학 소스
-4. 기존 LB 모듈 (옵션 선택 후에만):
-   - LB-5 unified integrator: `bass_py/bass/hierarchy/integrator.py`
-   - LB-6 regression suite: `bass_py/bass/integration/test_lowell_bianchi.py`
-   - LB-0..4 dependencies: spec + code per `README.md §3`
-5. 참조 데이터:
-   - `data/camb_ref_planck2018.npz` — C_TT, C_EE, C_TE, D_* at ell=2..30 (옵션 A gate)
-   - HyRec fixture (LB-1)
-   - Y-Block tetrad + shear source (`bass/background`) — 옵션 B 에서 재사용
+1. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md` (전체 로드맵, 이 세션의 포지션 §4 FB-0.1 참조)
+2. `docs/audits/AUDIT_PHASE_LB5_2026-04-19.md` F2 섹션 (convention mismatch 진단)
+3. `docs/audits/AUDIT_PHASE_LB6_2026-04-19.md` §6 F2 carry-forward
+4. `docs/lowell_bianchi/00_conventions.md` §4 (Σ² normalisation 현재 spec)
+5. `bass/background/einstein_bianchi.py`, `bass/transport/shear_sources.py`, `bass/background/tetrad_state.py`
+6. Ellis §18.3 (shear propagation); Wainwright-Ellis §18 (type-specific sources)
 
-## LB-6 carry-forward P2 items (post-LB 첫 세션이 decide)
+## FB-0.1 범위 제약 (고정)
 
-- **F1 (LB-6)**: 서브그리드 z_* 감지기 (Currently integer-argmax on Δz=1 fixture → ±1 band). 옵션 A 에서 `η_*` / `χ_*` 정밀도가 재현율에 영향 주면 우선 해결.
-- **F2 (LB-6)**: `detect_critical_events` 가 `eta_star` / `chi_star` 키 누락 — 옵션 A 시작 전에 tidy-up 1-commit 으로 처리 권장.
-- **F2 (LB-5)**: `einstein_bianchi` Σ-convention (`Σ × a = const`) vs Ellis (`σ × a³ = const`). 전면 conversion 은 옵션 B perturbation 세션에서 자연스럽게 동반 — B 를 선택하면 B 의 첫 서브-세션으로.
-- **F3 (LB-5)**: LSODA stiffness at dynamically-huge Γ_T — 옵션 A/B 에서 재현될 가능성 낮음 (override 는 test-only).
-
-## post-LB 세션 범위 제약 (고정, 이 세션에서 위반 금지)
-
-- **코딩 금지** — 오직 design docs. 기존 코드 수정 / 신규 production 파일 생성 금지.
-- 옵션 A / B / C 중 **정확히 하나만 선택**. 여러 개 동시 기획은 session 분량 초과.
-- 선택한 옵션의 design docs 는 LB 스펙 포맷을 준수 (§1 개요 → §N 구현 체크리스트 → 수치 타깃 → diagnostic playbook).
-- 외부 코드 참조 제한은 **유효** — spec 문서가 `import camb` 예시를 적어도 실제 구현 트리에는 절대 침투 금지.
-- 사용자가 특정 옵션을 지정 안 하면 **옵션 A 를 기본 추천** (LB-6 이 이미 CAMB 레퍼런스와 pin 된 상태라 가장 자연스러운 다음 단계).
+- **convention flip only** — 새 type 추가 / 새 physics 추가 금지
+- Tilted sector (β ≠ 0) 건드리지 않음 — FB-3 이 담당
+- Non-perturbative boost 건드리지 않음 — FB-3/4
+- Perturbation (k ≠ 0) 건드리지 않음 — FB-5
+- 외부 코드 금지 조항 유지 (`test_external_code_policy` green 유지)
+- LB-5 `IntegratorConfig` API / `IntegrationResult` layout 은 변경 금지 (state vector semantic stays)
 
 ## 핵심 원칙 (고정)
 
 1. 외부 코드 금지 (프로덕션 트리)
-2. Citation in every design docs section (lowell §N.M 참조 필수)
-3. PSTF invariants preserved across any proposed new layer
-4. No silent fallbacks
+2. Citation in every modified docstring (Ellis §18.3 / W-E §18 / Pontzen-Challinor 참조 필수)
+3. PSTF invariants preserved across the flip
+4. No silent fallbacks — convention 선택은 explicit + tested
 5. Determinism
-6. FLRW limit 재현 (옵션 A/B 는 LB-6 regression 연장선)
+6. FLRW limit 재현: 모든 기존 FLRW regression 은 그대로 통과해야 함 (shear ≡ 0 이므로 convention flip 영향 없음)
 
 ## 검증 체크리스트 (최종 commit 전)
 
-- [ ] 선택된 옵션의 design docs 완성 (`docs/lowell_bianchi/post_lb_X_*/` 하위)
-- [ ] Session 분해 표 + 의존성 그래프 + 수치 타깃 표 포함
-- [ ] `README.md §7` (post-LB 개요) 업데이트: 선택된 옵션 경로만 남기고 나머지 두 옵션은 "deferred" 표시
-- [ ] `NEXT_SESSION_PROMPT.md §2` → 선택된 옵션의 **첫 구현 세션** 용 prompt 로 교체 (§4.6 template 보강 또는 옵션-specific 새 template 추가)
-- [ ] 최종 commit 메시지: `post-LB: <option letter> design docs (<short description>)` + `+ rotate NEXT_SESSION_PROMPT`
-- [ ] 회귀는 돌리지 않아도 됨 (코드 변경 없음) — 단, 기존 2,558 tests 가 여전히 green 인지는 git 상태만 확인
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green
+- [ ] LB-6 / LB-5 / Y-Block 기존 테스트 모두 유지 또는 Ellis convention 으로 명시적 amend (amend 은 session 내 commit body 에 문서화)
+- [ ] `docs/lowell_bianchi/00_conventions.md §4` 가 Ellis convention 을 SSOT 로 명시
+- [ ] `bass/transport/shear_sources.py::SOURCE_STATUS` 의 I / V 는 그대로 "VALIDATED" 유지 (Ellis 하에서 Kasner analytic recovery)
+- [ ] 나머지 9 개 (II, III, IV, VI_0, VI_h, VII_0, VII_h, VIII, IX) 은 "PROVISIONAL" 유지 (FB-1 이 VALIDATED 로 올림)
+- [ ] 새 Ellis-convention shear-decay invariant 2개 테스트 추가 (Σ × a², Σ² × a⁴)
+- [ ] **phase-boundary audit**: `docs/audits/AUDIT_PROMPT.md` 실행 후 `docs/audits/AUDIT_PHASE_FB0_2026-04-XX.md` (phase FB-0 전체의 첫 세션이므로 생성 OK; FB-0.2, FB-0.3 은 append 로 확장)
+- [ ] Gallery: convention flip 은 visual no-op (Σ² 의 수치값만 × a² 만큼 스케일) — LB-5 의 `11_integrator/` 플롯을 Ellis axis labels 로 재라벨 (optional)
+- [ ] `NEXT_SESSION_PROMPT.md §2` 를 **FB-0.2** bootstrap (`BianchiCosmology(β, v̂_e)` field 확장 + IntegratorConfig tilt parameter 노출) 로 rotate
+- [ ] 최종 commit 메시지: `FB-0.1: Ellis σ×a³=const convention flip + shear source rederivation` + `+ rotate NEXT_SESSION_PROMPT for FB-0.2`
 
 ## 진행 순서
 
-1. AUDIT_PHASE_LB6 + README §6/§7 + lowell §7 / §9 / §13 / §14 읽기
-2. 사용자에게 A/B/C 중 하나를 확인 (없으면 A 를 추천)
-3. 선택된 옵션의 design docs 스펙 5개 분해 (`post_lb_X/00_overview.md` … `04_regression_spec.md` 식)
-4. Session 분해 표 작성 (각 서브-세션이 1~2 일 분량)
-5. 의존성 그래프 확정 — LB-6 carry-forward P2 를 어느 서브-세션에 흡수할지 결정
-6. `README.md §7` 갱신 + `NEXT_SESSION_PROMPT.md §2` 를 첫 구현 세션 prompt 로 교체
-7. commit
+1. FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-0.1 + LB-5/6 F2 감사 로그 + 00_conventions §4 + einstein_bianchi / shear_sources / tetrad_state 코드 읽기
+2. Convention flip map 작성 (어떤 quantity 가 어떤 factor 로 스케일되는지 명시적 표)
+3. `solve_bianchi_background` RHS 재도출 (Ellis convention, Type I Kasner analytic 으로 단위 검증)
+4. 11개 shear source 재검증 + `SOURCE_STATUS` 유지 (FB-1 가 PROVISIONAL 을 올림; FB-0.1 에서는 flip 만)
+5. `proper_shear_at_eta` 에서 σ ↔ Σ 변환 flip
+6. LB-5 integrator `_bg_rhs` 재배선 (API 변경 없이 RHS semantic 만 flip)
+7. LB-6 `TestLBBianchiI` 테스트 body 의 invariant 표현 flip (Σ×a → Σ×a²; Σ²×a² → Σ²×a⁴)
+8. 신규 Ellis-invariant 테스트 2개 추가
+9. 전 회귀 녹색 확인 → phase-boundary audit (`AUDIT_PHASE_FB0_2026-04-XX.md` 첫 기입)
+10. `NEXT_SESSION_PROMPT.md §2` → FB-0.2 bootstrap (`BianchiCosmology(β, v̂_e)` 확장) 로 교체
+11. commit
 
-시작하세요. 옵션 선택이 이 세션의 유일한 의사결정 포인트입니다 — 다른 방향 제안 시 반드시 문서 먼저 수정.
+시작하세요. Convention 변경은 광범위 propagation 이 필요하므로 Step 2 의 map 을 반드시 먼저 만들 것. 모호한 변환은 스펙 (`00_conventions.md §4`) 을 먼저 수정하고 코드를 따르게.
 ```
 
 ---
