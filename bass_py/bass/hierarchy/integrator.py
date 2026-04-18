@@ -164,6 +164,41 @@ class IntegratorConfig:
                 f"rtol={self.rtol}, atol={self.atol}"
             )
 
+    # ------------------------------------------------------------------
+    # Tilt-kinematics accessors (FB-0.2)
+    # ------------------------------------------------------------------
+    #
+    # ``bianchi_cosmo`` is the single source of truth for the tilt
+    # parameters (``beta``, ``v_hat_e``); these properties are
+    # **read-only** surfaces that downstream consumers (TCA / closure
+    # guards, tilted-visibility wiring in FB-3, boosted Thomson kernel
+    # in FB-4) use to look up the kinematic state without reaching into
+    # ``IntegratorConfig.bianchi_cosmo.*`` directly. Keeping them as
+    # properties rather than fields avoids duplication and prevents the
+    # two surfaces from drifting out of sync.
+    # Reference: lowell §11.3; ``00_conventions §2`` (frame split rule).
+
+    @property
+    def tilt_rapidity(self) -> float:
+        """Tilt rapidity ``β`` forwarded from ``bianchi_cosmo.beta``.
+
+        The boost factor in the tilted Thomson / visibility pipeline is
+        ``B(η, ê) = cosh β + sinh β (ê·v̂_e)`` (lowell §11.3). ``β = 0``
+        recovers the orthogonal limit bit-for-bit.
+        """
+        return float(self.bianchi_cosmo.beta)
+
+    @property
+    def tilt_direction(self) -> Tuple[float, float, float]:
+        """Tilt direction unit vector ``v̂_e`` forwarded from
+        ``bianchi_cosmo.v_hat_e``.
+
+        Norm ``|v̂_e|² = 1`` is enforced at ``BianchiCosmology``
+        construction; reading through this accessor therefore does not
+        need to re-validate. ``00_conventions §2`` + FB-0.2 audit SSOT.
+        """
+        return self.bianchi_cosmo.v_hat_e
+
 
 @dataclass
 class IntegrationResult:

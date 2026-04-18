@@ -2,15 +2,20 @@
 
 FLRW baseline (I-07..I-10), Bianchi I with shear (I-11..I-14),
 critical-η events (I-15..I-17), and the TCA-dispatch bit-identicality
-smoke (I-18).
+smoke (I-18). Appended (FB-0.2): tilt-field exposure accessors
+(FB02-01..FB02-06).
 """
 from __future__ import annotations
 
 import numpy as np
 import pytest
 
+from bass.background.bianchi_types import (
+    type_i_constants, type_viih_constants,
+)
 from bass.background.einstein_bianchi import (
-    flrw_cosmology, type_i_cosmology,
+    BianchiCosmology, COSMOLOGY_FACTORY, flrw_cosmology, make_cosmology,
+    type_i_cosmology, type_v_cosmology, type_viih_cosmology,
 )
 from bass.closure.quadrupole_tca import solve_tca_closure
 from bass.hierarchy.closure import TCAClosure, build_default_closure
@@ -503,3 +508,173 @@ def test_config_rejects_eta_final_before_initial() -> None:
 _ = TCAClosure
 _ = flrw_cosmology
 _ = zero_IC
+
+
+# ════════════════════════════════════════════════════════════════════
+# FB-0.2 — Tilt-field exposure (v̂_e, β) on BianchiCosmology +
+# IntegratorConfig. FB02-01..FB02-06.
+#
+# This block validates the FB-0.2 surface in isolation: the factory
+# pass-through (FB02-01, FB02-02), the unit-norm invariant (FB02-03),
+# the β=0 bit-identicality guarantee on the LB-5 state vector
+# (FB02-04), and the IntegratorConfig accessors (FB02-05, FB02-06).
+#
+# Reference: docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-0;
+# docs/audits/AUDIT_PHASE_FB0_2026-04-19.md §FB-0.2 supplement;
+# docs/lowell_bianchi/00_conventions.md §2 (frame split rule).
+# ════════════════════════════════════════════════════════════════════
+
+
+def test_FB02_01_factory_defaults_v_hat_e_first_axis() -> None:
+    """Every type factory defaults ``v̂_e`` to the first tetrad axis
+    ``(1, 0, 0)`` and ``β`` to 0 (orthogonal limit).
+
+    ``00_conventions §5.4`` anchors m=0 of the PSTF basis to the shear
+    principal axis; the tilt-direction default aligns with the same
+    axis for numerical reproducibility across the FB-6 regression
+    matrix (22 configurations). Any factory that ships a non-default
+    tilt would create a silent source of polarisation / visibility
+    drift at FB-3/FB-4; pinning the default here flags regressions.
+    """
+    for label in COSMOLOGY_FACTORY:
+        cosmo = make_cosmology(label)
+        assert cosmo.beta == 0.0, f"{label} beta default: {cosmo.beta}"
+        assert cosmo.v_hat_e == (1.0, 0.0, 0.0), (
+            f"{label} v_hat_e default: {cosmo.v_hat_e}"
+        )
+
+
+def test_FB02_02_factory_custom_tilt_pass_through() -> None:
+    """Custom ``β`` / ``v̂_e`` propagate through ``make_cosmology`` to
+    the stored ``BianchiCosmology`` without mutation.
+
+    Verifies both the kw-only signature contract and the storage-tuple
+    normalisation (iterables → tuple of floats).
+    """
+    cosmo = make_cosmology(
+        "VII_h", beta=0.01, v_hat_e=(0.6, 0.8, 0.0),
+    )
+    assert isinstance(cosmo, BianchiCosmology)
+    assert cosmo.structure.label == "VII_h"
+    assert cosmo.beta == pytest.approx(0.01)
+    assert cosmo.v_hat_e == (0.6, 0.8, 0.0)
+    # List input → normalised to tuple under frozen dataclass contract.
+    cosmo_list = type_i_cosmology(v_hat_e=[0.0, 1.0, 0.0])
+    assert isinstance(cosmo_list.v_hat_e, tuple)
+    assert cosmo_list.v_hat_e == (0.0, 1.0, 0.0)
+
+
+def test_FB02_03_v_hat_e_unit_norm_validation() -> None:
+    """Non-unit ``v̂_e`` raises ValueError eagerly (no silent
+    renormalisation).
+
+    Tests both over-unit (|v|² = 2) and under-unit (|v|² = 1/4)
+    inputs, plus the three-component arity contract. FB-0.1 audit §6
+    bans silent fallbacks; a renormalising accessor would hide typos
+    (``(1, 1, 0)`` vs ``(1/√2, 1/√2, 0)``) and break the FB-6
+    cross-type continuity checks.
+    """
+    with pytest.raises(ValueError, match="unit vector"):
+        BianchiCosmology(
+            structure=type_i_constants(), v_hat_e=(1.0, 1.0, 0.0),
+        )
+    with pytest.raises(ValueError, match="unit vector"):
+        BianchiCosmology(
+            structure=type_i_constants(), v_hat_e=(0.5, 0.0, 0.0),
+        )
+    with pytest.raises(ValueError, match="exactly three"):
+        BianchiCosmology(
+            structure=type_i_constants(), v_hat_e=(1.0, 0.0),
+        )
+    with pytest.raises(ValueError, match="exactly three"):
+        BianchiCosmology(
+            structure=type_i_constants(),
+            v_hat_e=(1.0, 0.0, 0.0, 0.0),
+        )
+    # Factory path enforces the same invariant.
+    with pytest.raises(ValueError, match="unit vector"):
+        make_cosmology("VII_h", v_hat_e=(2.0, 0.0, 0.0))
+
+
+def test_FB02_04_beta_zero_bit_identical_lb5_trajectory(species) -> None:
+    """β=0 default preserves the LB-5 Bianchi-I trajectory bit-for-bit
+    against an explicit ``β=0, v̂_e=(1,0,0)`` request.
+
+    This is the FB-0.2 zero-impact guarantee on the downstream state
+    vector: the new tilt-field exposure must not perturb any numerical
+    output at the orthogonal limit. Any divergence here would indicate
+    a spurious coupling introduced by the dataclass surface change.
+    """
+    cosmo_default = type_i_cosmology(sigma_over_H_init=1e-4)
+    cosmo_explicit = type_i_cosmology(
+        sigma_over_H_init=1e-4, beta=0.0, v_hat_e=(1.0, 0.0, 0.0),
+    )
+    res_default = _run_default(
+        species, bianchi_cosmo=cosmo_default,
+        Sigma_plus_initial=1e-8,
+        eta_initial_mpc=1.0, eta_final_mpc=500.0,
+    )
+    res_explicit = _run_default(
+        species, bianchi_cosmo=cosmo_explicit,
+        Sigma_plus_initial=1e-8,
+        eta_initial_mpc=1.0, eta_final_mpc=500.0,
+    )
+    np.testing.assert_array_equal(res_default.a, res_explicit.a)
+    np.testing.assert_array_equal(
+        res_default.Sigma_plus, res_explicit.Sigma_plus,
+    )
+    np.testing.assert_array_equal(
+        res_default.Sigma_minus, res_explicit.Sigma_minus,
+    )
+    np.testing.assert_array_equal(
+        res_default.photon_T_tower, res_explicit.photon_T_tower,
+    )
+    np.testing.assert_array_equal(
+        res_default.photon_E_tower, res_explicit.photon_E_tower,
+    )
+
+
+def test_FB02_05_integrator_config_forwards_tilt_accessors() -> None:
+    """``IntegratorConfig.tilt_rapidity`` / ``.tilt_direction`` forward
+    the underlying ``bianchi_cosmo`` tilt fields as read-only
+    properties (no independent storage).
+
+    This keeps ``bianchi_cosmo`` the single source of truth: setting a
+    new ``bianchi_cosmo`` on the config (within the frozen dataclass
+    contract — rebuilding a new config) propagates through the
+    accessor without a second update site.
+    """
+    cosmo = type_viih_cosmology(beta=0.02, v_hat_e=(0.0, 1.0, 0.0))
+    cfg = IntegratorConfig(bianchi_cosmo=cosmo)
+    assert cfg.tilt_rapidity == pytest.approx(0.02)
+    assert cfg.tilt_direction == (0.0, 1.0, 0.0)
+
+    # Default config → FLRW default tilt.
+    cfg_default = IntegratorConfig()
+    assert cfg_default.tilt_rapidity == 0.0
+    assert cfg_default.tilt_direction == (1.0, 0.0, 0.0)
+
+
+def test_FB02_06_integrator_config_tilt_direction_is_readonly() -> None:
+    """``IntegratorConfig.tilt_direction`` returns the underlying
+    ``bianchi_cosmo.v_hat_e`` tuple without copying.
+
+    A mutable-list return would let callers silently corrupt the
+    frozen-dataclass invariant by writing back through the property.
+    Tuples are immutable by construction, so the accessor is safe; this
+    test pins the return type explicitly so a future refactor can't
+    downgrade the contract unnoticed.
+    """
+    cosmo = type_v_cosmology(
+        sigma_over_H_init=0.0, beta=0.0, v_hat_e=(0.0, 0.0, 1.0),
+    )
+    cfg = IntegratorConfig(bianchi_cosmo=cosmo)
+    got = cfg.tilt_direction
+    assert isinstance(got, tuple), (
+        f"tilt_direction must be a tuple to uphold frozen-dataclass "
+        f"immutability; got {type(got).__name__}"
+    )
+    assert got == (0.0, 0.0, 1.0)
+    # Confirm that the property is the same object identity as the
+    # stored field (no per-call copy cost).
+    assert got is cosmo.v_hat_e

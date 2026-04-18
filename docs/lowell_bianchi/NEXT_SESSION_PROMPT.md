@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (FB-0.1 complete → FB-0.2 bootstrap)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md`
-**Current target session**: **FB-0.2** — `BianchiCosmology(β, v̂_e)` field expansion + `make_cosmology(type_label, beta=..., v_hat_e=...)` factory + `IntegratorConfig` tilt-parameter surface; β=0 must maintain LB-5 / LB-6 regression bit-for-bit
+**Last rotated**: 2026-04-19 (FB-0.2 complete → FB-0.3 bootstrap)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md` (includes FB-0.2 supplement)
+**Current target session**: **FB-0.3** — LB-6 F2 carry-forward closeout: verify `detect_critical_events` already exposes `eta_star` / `chi_star` keys (landed in LB-6 post-audit); close LB-6 F2; finalize Phase FB-0 and bootstrap FB-1.1
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,91 +36,85 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-0.2 — Tilt-field exposure on BianchiCosmology + IntegratorConfig
+# FB-0.3 — LB-6 F2 carry closeout + Phase FB-0 seal + FB-1.1 bootstrap
 
 ## 프로젝트 컨텍스트
 
 - **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 - **venv**: venv/bin/python
 - **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 2,682 passing + 1 skipped (FB-0.1 직후; 감사 로그: `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md`)
-- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **FB-0.1 Ellis σ×a³=const convention flip**
-- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-0 "Convention & dispatch SSOT"** (2/3 완료; FB-0.2 본 세션 + FB-0.3 LB-6 F2 carry)
-- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md` §4 FB-0
+- **현재 baseline**: 2,688 passing + 1 skipped (FB-0.2 직후; 감사 로그: `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md` + FB-0.2 supplement)
+- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **FB-0.1** (Ellis σ×a³=const convention flip) + **FB-0.2** (BianchiCosmology.v_hat_e + IntegratorConfig tilt accessors)
+- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-0 "Convention & dispatch SSOT"** (2/3 delivered; FB-0.3 은 본 세션이 봉인 + FB-1.1 부트스트랩)
+- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md` §4 FB-0 / FB-1
 
-## 이 세션의 작업 범위 (FB-0.2 only)
+## 이 세션의 작업 범위 (FB-0.3)
 
-**Goal**: `BianchiCosmology` 에 tilt 파라미터 (`beta: float = 0.0`, `v_hat_e: tuple = (1.0, 0.0, 0.0)`) 필드를 노출하고, `make_cosmology(type_label, ...)` 팩토리와 `IntegratorConfig` 가 이를 통과시키도록 확장한다. β=0 에서 LB-5 / LB-6 regression 이 bit-for-bit 보존되어야 한다. 실제 tilted physics 는 아직 걸지 않는다 (FB-3); 본 세션은 **파라미터 통로만** 확장.
+**Goal**: LB-6 F2 carry-forward (`detect_critical_events` 이 `eta_star` / `chi_star` 를 first-class key 로 노출) 의 상태를 **명시적으로 확인**하고 Phase FB-0 을 봉인한다. 그런 다음 FB-1.1 (Class A 배경 검증: I / II / VI₀ / VII₀ Wainwright-Ellis match + Kasner analytic limit) 의 bootstrap 을 작성.
 
-### 기존 상태 (FB-0.1 이후)
+### 중요: FB-0.3 은 이미 대부분 landed 상태일 가능성이 높다
 
-`BianchiCosmology` 는 이미 `beta: float = 0.0` 필드를 가지고 있지만 (`bass/background/einstein_bianchi.py`), `v_hat_e` 는 없다. `IntegratorConfig` 는 `bianchi_cosmo` 전체를 받지만 tilt direction 접근자가 없다. `make_cosmology` / 11개 per-type factory 는 `beta` 만 kw-args 로 통과시킨다.
+- `bass/hierarchy/event_detection.py::detect_critical_events` 는 이미 `eta_star` / `chi_star` 키를 리턴 (LB-6 F2 post-audit repair 로 landed)
+- `bass/integration/test_lowell_bianchi.py::test_LB_6_09_eta_star_comoving_distance_to_LSS` 와 `test_LB_6_20_eta_star_vs_camb` 는 이미 `result.critical_events["chi_star"]` 를 직접 읽음 (수동 재계산 제거 완료)
+- `bass/hierarchy/test_integrator.py::test_integrator_publishes_critical_events` 는 keys = {z_eq, z_star, eta_star, chi_star, eta_reion_midpoint, eta_today} 를 이미 assert
 
-### 목표 상태 (FB-0.2 이후)
+따라서 **본 세션은 주로 확인 + 문서 봉인** 성격:
 
-1. `BianchiCosmology.v_hat_e: Tuple[float, float, float] = (1.0, 0.0, 0.0)` 추가
-   - Validation: ``|v_hat_e|² = 1`` at construction (norm-normalised unit vector, Ellis §11.3 convention)
-   - Factory defaults: 모든 11 type factory가 `beta=0.0, v_hat_e=(1,0,0)` 을 통과
-2. `make_cosmology(type_label, beta=..., v_hat_e=...)` 시그니처 확장 (kw-args only)
-3. `IntegratorConfig` 는 별도 `beta` / `v_hat_e` 를 받지 않는다 (`bianchi_cosmo` 를 통해 전달) — 하지만 `IntegratorConfig` 수준에서 read-only accessor `.tilt_rapidity` / `.tilt_direction` property 를 추가해 하위 consumer 가 명시적으로 접근 가능하게
-4. **Zero-impact guarantee (β=0)**: 모든 기존 2,682 테스트 green 유지; 새 factory/field validation 테스트 5–8개 추가
+1. 위 3개 site 를 재확인 (실제로 이미 구현됨)
+2. 추가 test-helper cleanup 이 필요한지 grep (`bg_table.eta_at_a(1/(1+z_star))` 같은 manual 재계산 패턴이 남아있는지)
+3. `docs/audits/AUDIT_PHASE_LB6_2026-04-19.md F2` 를 "resolved (landed post-LB-6)" 로 표시하는 supplement
+4. `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md` 에 "## FB-0.3 supplement" 섹션 추가 — phase FB-0 종료 선언
+5. **Phase boundary gallery rule 준수**: FB-0 은 (세 sub-phase 모두) API / convention 수준 변경이라 visual no-op. `plots/physics_gallery/11_integrator/` 는 FB-1.1 에서 per-type 배경 trace 추가 예정이라고 audit log 에 명시
+6. `NEXT_SESSION_PROMPT.md §2` 를 **FB-1.1** (Class A background validation) bootstrap 으로 rotate
 
-### FB-0.2 non-goals (선 밑에 고정)
+### 만약 FB-0.3 이 아직 미결이면
 
-- Non-perturbative β (FB-3 담당)
-- Tilted Thomson kernel (FB-4)
-- `TiltedSpeciesBackground` 커플링 (FB-3.1)
-- `einstein_bianchi` 의 배경 소스 재도출 (이미 FB-0.1 완료)
-- β-gate CanonicalDecision 재매개화 (FB-3.5)
+Grep 에서 수동 `eta_star` 계산 / `detect_critical_events` 반환에서 키 누락이 발견되면, 그것을 먼저 처리. 다만 현재 코드 읽기 기준으로는 **이미 done** 으로 판단됨.
+
+### FB-0.3 non-goals (선 밑에 고정)
+
+- FB-1.1 (Class A 배경 검증) 은 본 세션이 아니라 다음 세션
+- 새 physics / dynamics 작업 금지 (FB-0 의 마지막 sub-phase 는 순수 정리)
+- Tilted sector 작업 금지 (FB-3)
 
 ## 우선 읽어야 할 문서 (순서대로)
 
-1. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md` §4 FB-0 (sub-phase 정의)
-2. `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md` (FB-0.1 완료 로그, 본 세션이 append)
-3. `docs/lowell_bianchi/00_conventions.md` §2 (Frame split rule — n^a 대 u_e^a)
-4. `bass/background/einstein_bianchi.py` (BianchiCosmology dataclass + 11 factory + make_cosmology)
-5. `bass/hierarchy/integrator.py` (IntegratorConfig; bianchi_cosmo 전달 경로)
-6. `bass/tilt/species_tilt.py` (Y-Block tilted species params — 기존 β/v̂ convention 레퍼런스)
+1. `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md` (FB-0.1 + FB-0.2 로그)
+2. `docs/audits/AUDIT_PHASE_LB6_2026-04-19.md §F2` (해결할 carry 의 원본 진술)
+3. `bass/hierarchy/event_detection.py` (`detect_critical_events` 구현)
+4. `bass/integration/test_lowell_bianchi.py` (LB-6-09, LB-6-20 에서 `chi_star` 소비 확인)
+5. `bass/hierarchy/test_integrator.py::test_integrator_publishes_critical_events` (키 세트 assertion)
+6. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1` (다음 phase preview)
 
 ## 핵심 원칙 (고정)
 
 1. 외부 코드 금지 (프로덕션 트리)
-2. Citation in every modified docstring (Ellis §11.3 / lowell §13 tilted velocity primitives)
+2. Citation in every modified docstring
 3. PSTF invariants preserved
-4. No silent fallbacks — `v_hat_e` norm violation 은 ValueError 로 즉시 raise
+4. No silent fallbacks
 5. Determinism
-6. β=0 default 에서 모든 기존 테스트 green 유지 (bit-for-bit)
+6. FB-0.3 은 확인 + 문서 봉인 — 새 numerical output 건드리지 말 것
 
 ## 검증 체크리스트 (최종 commit 전)
 
-- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (≥ 2,682)
-- [ ] β=0 default 에서 LB-5 I-07..I-18 + LB-6-01..24 모두 bit-identical pass
-- [ ] `make_cosmology("VII_h", beta=0.01, v_hat_e=(0.6, 0.8, 0.0))` 예외 없이 `BianchiCosmology` 반환
-- [ ] `BianchiCosmology(structure=type_i_constants(), v_hat_e=(1.0, 1.0, 0.0))` 는 norm check 로 ValueError
-- [ ] `docs/lowell_bianchi/00_conventions.md §2` 가 `v_hat_e` SSOT 을 명시 (optional — 이미 frame split rule 이 있으면 cross-ref 만)
-- [ ] **Phase boundary audit**: 기존 `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md` 에 "## FB-0.2 supplement" 섹션으로 append (신규 파일 아님)
-- [ ] Gallery: FB-0.2 는 API 확장만 — visual no-op; 명시적 기록만
-- [ ] `NEXT_SESSION_PROMPT.md §2` 를 **FB-0.3** bootstrap (LB-6 F2 carry: `detect_critical_events` → `eta_star` / `chi_star` 키) 로 rotate
-- [ ] 최종 commit 메시지: `FB-0.2: tilt-field (β, v̂_e) exposure on BianchiCosmology + IntegratorConfig` + `+ rotate NEXT_SESSION_PROMPT for FB-0.3`
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (≥ 2,688)
+- [ ] `grep -rn "detect_critical_events\|eta_at_a.*z_star\|eta_today - " bass/` 에서 숨은 manual 재계산 패턴 0건
+- [ ] `AUDIT_PHASE_LB6_2026-04-19.md F2` 상태 "resolved" 명시
+- [ ] `AUDIT_PHASE_FB0_2026-04-19.md` 에 FB-0.3 supplement + Phase FB-0 종료 선언 append
+- [ ] `NEXT_SESSION_PROMPT.md §2` 를 **FB-1.1** (Class A background Kasner + Wainwright-Ellis Table 11.1 match for I/II/VI₀/VII₀) bootstrap 으로 rotate
+- [ ] 최종 commit 메시지: `FB-0.3: close LB-6 F2 carry; seal Phase FB-0` + `+ rotate NEXT_SESSION_PROMPT for FB-1.1`
 
 ## 진행 순서
 
-1. FB plan §4 FB-0.2 + FB-0.1 audit log + 00_conventions §2 + einstein_bianchi / integrator / species_tilt 읽기
-2. `BianchiCosmology` dataclass 확장 — `v_hat_e: tuple = (1.0, 0.0, 0.0)` + `__post_init__` norm 검증
-3. 11 per-type factory 가 `v_hat_e` kw-arg 을 수용하도록 업데이트 (default 통과)
-4. `make_cosmology` 시그니처 + dispatch 업데이트
-5. `IntegratorConfig.tilt_rapidity` / `.tilt_direction` read-only property (단순 forward)
-6. 신규 테스트 5-8개 (bass/background/test_einstein_bianchi.py 또는 bass/hierarchy/test_integrator.py):
-   - factory default v̂_e = (1, 0, 0)
-   - factory custom v̂_e
-   - norm validation
-   - β=0 bit-identicality (Sigma_plus / a trajectory hash)
-   - IntegratorConfig accessor
-7. 전 회귀 녹색 확인 → FB-0 audit append
-8. `NEXT_SESSION_PROMPT.md §2` → FB-0.3 bootstrap
-9. commit
+1. FB plan §4 FB-0 전체 + LB-6 F2 audit + event_detection.py + LB-6 test site 3개 읽기
+2. Grep 으로 manual `eta_at_a(1/(1+z_*))` 재계산 패턴 검사
+3. 만약 잔존하면 integrator-side `detect_critical_events` 소비로 교체
+4. 전체 회귀 green 확인 (no-op 변경이면 2,688 → 2,688)
+5. LB-6 audit F2 → resolved 표시; FB-0 audit 에 FB-0.3 supplement append (Phase FB-0 종료 선언 포함)
+6. `NEXT_SESSION_PROMPT.md §2` → FB-1.1 bootstrap (FB plan §4 FB-1.1 기반)
+7. commit
 
-시작하세요. 본 세션은 API 표면 확장만 — 모든 tilted physics 는 FB-3 이 담당한다는 점을 잊지 말 것.
+시작하세요. 본 세션은 **정리 + 봉인** 성격 — dynamical code 는 건드리지 말고 FB-1 의 다음 세션을 위한 깨끗한 handoff 를 만드는 것이 목표.
 ```
 
 ---

@@ -61,7 +61,7 @@ from __future__ import annotations
 import math
 import warnings
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Optional, Tuple
 
 import numpy as np
 from scipy.integrate import solve_ivp
@@ -83,9 +83,20 @@ from bass.validation.comparator_policy import (
 C_KMS = 299792.458  # km/s
 
 
+_V_HAT_E_DEFAULT: Tuple[float, float, float] = (1.0, 0.0, 0.0)
+"""Default tilt direction (electron rest-frame spatial unit vector) aligned
+with the first tetrad axis. Ellis §11.3 convention."""
+
+_V_HAT_NORM_TOL: float = 1e-10
+"""Absolute tolerance on |v̂_e|² - 1 at construction. Tight because the
+caller is expected to supply a literal unit vector (not a noisy dynamical
+output); any drift past this threshold is a user error, not integrator
+noise."""
+
+
 @dataclass(frozen=True)
 class BianchiCosmology:
-    """Cosmological parameters + Bianchi structure.
+    """Cosmological parameters + Bianchi structure + tilt kinematics.
 
     Parameters
     ----------
@@ -98,11 +109,40 @@ class BianchiCosmology:
     sigma_pm_ratio : float
         σ_-/σ_+ ratio at a_start (0 for pure + mode).
     beta : float
-        Tilt rapidity (matter vs geometry frame). For baryon-only tilt
-        architecture (Week 4), this applies to baryon velocity only.
+        Tilt rapidity between the matter frame ``u_e^a`` and the Bianchi
+        normal ``n^a`` (lowell §11.3 / Ellis §5.3). The boost factor that
+        appears in the tilted visibility (LB-4 Layer A) and the
+        non-perturbative collision kernel (FB-4) is
+        ``B(η, ê) = cosh β + sinh β (ê·v̂_e)``. ``β = 0`` recovers the
+        orthogonal (n-frame = u_e-frame) limit bit-for-bit.
+    v_hat_e : tuple of three floats
+        Tilt direction — the **spatial unit vector** that defines the
+        matter-frame boost axis relative to the n^a tetrad axes. Must
+        satisfy ``|v̂_e|² = 1`` to within ``_V_HAT_NORM_TOL`` at
+        construction. Default is the first tetrad axis ``(1, 0, 0)``
+        (``00_conventions §2`` frame-split rule + §5.4 basis alignment
+        rule). See FB-0.2 audit for the SSOT derivation.
     comparator : ComparatorPolicy, optional
         Comparator policy for the master departure identity. If None, uses
         recommend_comparator(structure.label).
+
+    Notes
+    -----
+    ``beta`` and ``v_hat_e`` together parametrise the tilted-sector kinematics
+    referenced by the FB plan (``FULL_BIANCHI_COVERAGE_PLAN.md §4``):
+
+    - FB-0.2 (this dataclass): **field exposure only** — β=0 / v̂_e=(1,0,0)
+      default preserves LB-5 / LB-6 regression bit-for-bit.
+    - FB-3.1+: non-perturbative Lorentz boost wired into
+      ``TiltedSpeciesBackground`` / PSTF moments.
+    - FB-4: direction-dependent Thomson kernel Layer B.
+
+    References
+    ----------
+    - Ellis, Maartens & MacCallum 2012, §5.3, §11.3 (tilted congruences).
+    - King & Ellis 1973, *CMP* 31, 209 (tilted-fluid algebra).
+    - lowell §11.3 (tilted visibility primitives).
+    - ``docs/lowell_bianchi/00_conventions.md §2`` (frame split rule).
     """
     H0: float = 67.36
     Omega_r: float = 9.22e-5
@@ -112,7 +152,30 @@ class BianchiCosmology:
     sigma_over_H_init: float = 0.0
     sigma_pm_ratio: float = 0.0
     beta: float = 0.0
+    v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT
     comparator: Optional[ComparatorPolicy] = None
+
+    def __post_init__(self) -> None:
+        # Accept any 3-element iterable (tuple, list, ndarray) and
+        # normalise storage to a tuple of floats for hashability under
+        # the ``frozen=True`` contract. Validate the unit-norm invariant
+        # eagerly — a silent renormalisation would hide user errors and
+        # couple the tilted-sector surface to floating-point noise.
+        v_raw = tuple(float(x) for x in self.v_hat_e)
+        if len(v_raw) != 3:
+            raise ValueError(
+                f"v_hat_e must have exactly three components; got "
+                f"{len(v_raw)} from input {self.v_hat_e!r}"
+            )
+        norm_sq = v_raw[0] ** 2 + v_raw[1] ** 2 + v_raw[2] ** 2
+        if abs(norm_sq - 1.0) > _V_HAT_NORM_TOL:
+            raise ValueError(
+                f"v_hat_e must be a unit vector (|v̂_e|² = 1); got "
+                f"|v̂_e|² = {norm_sq!r} from input {self.v_hat_e!r} "
+                f"(tolerance {_V_HAT_NORM_TOL:.1e}). "
+                f"See 00_conventions §2 + FB-0.2 audit for the SSOT."
+            )
+        object.__setattr__(self, "v_hat_e", v_raw)
 
     @property
     def h(self) -> float:
@@ -278,48 +341,65 @@ def _planck18_from_species_ssot() -> dict:
 _PLANCK18 = _planck18_from_species_ssot()
 
 
-def flrw_cosmology() -> BianchiCosmology:
-    """Planck 2018 ΛCDM (FLRW limit: σ = 0)."""
+def flrw_cosmology(
+    beta: float = 0.0,
+    v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+) -> BianchiCosmology:
+    """Planck 2018 ΛCDM (FLRW limit: σ = 0).
+
+    ``beta`` / ``v_hat_e`` are accepted for API symmetry with the Bianchi
+    factories (FB-0.2); they have no dynamical effect in the orthogonal
+    FLRW limit until the tilted sector comes online (FB-3/FB-4).
+    """
     return BianchiCosmology(
         **_PLANCK18,
         structure=flrw_constants(),
         sigma_over_H_init=0.0,
+        beta=beta, v_hat_e=v_hat_e,
     )
 
 
 def type_i_cosmology(sigma_over_H_init: float = 1e-4,
-                     beta: float = 0.0) -> BianchiCosmology:
+                     beta: float = 0.0,
+                     v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                     ) -> BianchiCosmology:
     """Type I (abelian, no curvature)."""
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_i_constants(),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
     )
 
 
 def type_ii_cosmology(sigma_over_H_init: float = 1e-4,
-                      n1: float = 1e-2, beta: float = 0.0) -> BianchiCosmology:
+                      n1: float = 1e-2, beta: float = 0.0,
+                      v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                      ) -> BianchiCosmology:
     """Type II (Heisenberg, marginal: no FLRW limit)."""
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_ii_constants(n1=n1),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
     )
 
 
 def type_iii_cosmology(sigma_over_H_init: float = 1e-4,
-                       n1: float = 1e-2, beta: float = 0.0) -> BianchiCosmology:
+                       n1: float = 1e-2, beta: float = 0.0,
+                       v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                       ) -> BianchiCosmology:
     """Type III = VI_{h=-1} (marginal: no FLRW limit)."""
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_iii_constants(n1=n1),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
     )
 
 
 def type_iv_cosmology(sigma_over_H_init: float = 1e-4,
                       n3: float = 1e-2, a_twist: float = 1e-2,
-                      beta: float = 0.0) -> BianchiCosmology:
+                      beta: float = 0.0,
+                      v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                      ) -> BianchiCosmology:
     """Type IV — cosmologically marginal, NO FLRW limit.
 
     Used as a falsifiability probe: pipeline should decisively exclude under
@@ -328,84 +408,98 @@ def type_iv_cosmology(sigma_over_H_init: float = 1e-4,
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_iv_constants(n3=n3, a_twist=a_twist),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
         comparator=ComparatorPolicy.NULL,  # structured-null
     )
 
 
 def type_v_cosmology(sigma_over_H_init: float = 0.0,
-                     a_twist: float = 1e-2, beta: float = 0.0) -> BianchiCosmology:
+                     a_twist: float = 1e-2, beta: float = 0.0,
+                     v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                     ) -> BianchiCosmology:
     """Type V (open FLRW analogue, k=-1 limit)."""
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_v_constants(a_twist=a_twist),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
     )
 
 
 def type_vi0_cosmology(sigma_over_H_init: float = 1e-4,
                        n1: float = 1e-2, n3: float = -1e-2,
-                       beta: float = 0.0) -> BianchiCosmology:
+                       beta: float = 0.0,
+                       v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                       ) -> BianchiCosmology:
     """Type VI_0 (marginal: no FLRW limit)."""
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_vi0_constants(n1=n1, n3=n3),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
     )
 
 
 def type_vih_cosmology(sigma_over_H_init: float = 1e-4,
                        n1: float = 1e-2, n3: float = -2e-3,
-                       a_twist: float = 5e-3, beta: float = 0.0) -> BianchiCosmology:
+                       a_twist: float = 5e-3, beta: float = 0.0,
+                       v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                       ) -> BianchiCosmology:
     """Type VI_h (marginal: no FLRW limit, h ≠ -1)."""
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_vih_constants(n1=n1, n3=n3, a_twist=a_twist),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
     )
 
 
 def type_vii0_cosmology(sigma_over_H_init: float = 1e-4,
                         n1: float = 1e-2, n3: float = 1e-2,
-                        beta: float = 0.0) -> BianchiCosmology:
+                        beta: float = 0.0,
+                        v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                        ) -> BianchiCosmology:
     """Type VII_0 (flat FLRW limit with k=0)."""
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_vii0_constants(n1=n1, n3=n3),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
     )
 
 
 def type_viih_cosmology(sigma_over_H_init: float = 1e-5,
                         n1: float = 1.8e-2, n3: float = 1.0e-2,
                         a_twist: float = 5.5e-3,
-                        beta: float = 0.0) -> BianchiCosmology:
+                        beta: float = 0.0,
+                        v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                        ) -> BianchiCosmology:
     """Type VII_h (Pontzen-Challinor default, principal CMB Bianchi type)."""
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_viih_constants(n1=n1, n3=n3, a_twist=a_twist),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
     )
 
 
 def type_viii_cosmology(sigma_over_H_init: float = 1e-4,
                         n1: float = -1e-2, n2: float = 1e-2, n3: float = 1e-2,
-                        beta: float = 0.0) -> BianchiCosmology:
+                        beta: float = 0.0,
+                        v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                        ) -> BianchiCosmology:
     """Type VIII (sl(2,ℝ), marginal: no FLRW limit)."""
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_viii_constants(n1=n1, n2=n2, n3=n3),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
     )
 
 
 def type_ix_cosmology(sigma_over_H_init: float = 1e-4,
-                      n: float = 1e-2, beta: float = 0.0) -> BianchiCosmology:
+                      n: float = 1e-2, beta: float = 0.0,
+                      v_hat_e: Tuple[float, float, float] = _V_HAT_E_DEFAULT,
+                      ) -> BianchiCosmology:
     """Type IX (Mixmaster, k=+1 FLRW limit)."""
     return BianchiCosmology(
         **_PLANCK18,
         structure=type_ix_constants(n=n),
-        sigma_over_H_init=sigma_over_H_init, beta=beta,
+        sigma_over_H_init=sigma_over_H_init, beta=beta, v_hat_e=v_hat_e,
     )
 
 
@@ -437,12 +531,23 @@ def make_cosmology(type_label: str, **kwargs) -> BianchiCosmology:
     type_label : str
         One of FLRW, I, II, III, IV, V, VI_0, VI_h, VII_0, VII_h, VIII, IX.
     **kwargs
-        Forwarded to the type-specific factory (e.g., n1, sigma_over_H_init, beta).
+        Forwarded to the type-specific factory. All factories accept
+        ``sigma_over_H_init`` (except ``FLRW`` which fixes it to 0),
+        ``beta`` (tilt rapidity, default 0), and ``v_hat_e`` (tilt
+        direction unit vector, default ``(1, 0, 0)``). Type-specific
+        structure parameters (``n1``, ``n3``, ``a_twist``, ``n``, ...)
+        are also forwarded per the type's signature.
 
     Returns
     -------
     BianchiCosmology
-        Validated cosmology with canonical comparator policy applied.
+        Validated cosmology with canonical comparator policy applied and
+        the FB-0.2 unit-norm ``v̂_e`` invariant enforced.
+
+    Examples
+    --------
+    >>> make_cosmology("VII_h", beta=0.01, v_hat_e=(0.6, 0.8, 0.0))  # doctest: +SKIP
+    BianchiCosmology(..., beta=0.01, v_hat_e=(0.6, 0.8, 0.0), ...)
     """
     if type_label not in COSMOLOGY_FACTORY:
         raise KeyError(

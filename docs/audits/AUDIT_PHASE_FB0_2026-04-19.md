@@ -234,3 +234,191 @@ convention locked in the `00_conventions.md` SSOT; all 22
 configurations of the future FB-6 regression matrix will now inherit
 a single, physically motivated shear convention. Ready to hand off to
 **FB-0.2** (tilt field exposure).
+
+---
+
+## FB-0.2 supplement — Tilt-field exposure on BianchiCosmology + IntegratorConfig
+
+**Date**: 2026-04-19 (appended in-session; FB-0.1 and FB-0.2
+delivered on the same calendar day as two separate commits).
+**Sub-phase**: FB-0.2 — `BianchiCosmology.v_hat_e` field added;
+factory pass-through extended to all 11 per-type factories +
+`make_cosmology`; `IntegratorConfig` gains read-only
+`.tilt_rapidity` / `.tilt_direction` accessors that forward
+`bianchi_cosmo.beta` / `bianchi_cosmo.v_hat_e`.
+**Baseline commit (pre FB-0.2)**: post FB-0.1 commit; 2,682 passing
++ 1 skipped.
+**Post FB-0.2 test count**: **2,688 passing + 1 skipped** (+6 new
+FB-0.2 tests FB02-01..FB02-06).
+**Verdict**: **통과** (no P0 / P1; zero regressions on the LB-5 /
+LB-6 numerical output under `β=0, v̂_e=(1,0,0)` default;
+FB-0.3 queued explicitly).
+
+### 1. FB-0.2 audit target
+
+| Layer | Artifact | Role |
+|---|---|---|
+| Physics / math source | Ellis, Maartens & MacCallum 2012 §5.3, §11.3 (tilted congruences); King & Ellis 1973 (tilted-fluid algebra); lowell §11.3 (tilted visibility primitives) | Defines `u_e^a = γ(n^a + v_e^a)` with `v_e^a = tanh β · v̂_e` — rapidity + direction factorisation |
+| Dataclass surface | `bass/background/einstein_bianchi.py::BianchiCosmology` | Adds `v_hat_e: Tuple[float,float,float] = (1,0,0)` with eager `__post_init__` unit-norm validation |
+| Factory surface (11 + FLRW) | `bass/background/einstein_bianchi.py::{flrw, type_i, …, type_ix}_cosmology` | All factories accept `v_hat_e` kw-arg forwarding to the dataclass; `beta` already present |
+| Factory dispatch | `make_cosmology(type_label, **kwargs)` | Unchanged signature (already **kwargs); docstring extended with FB-0.2 contract |
+| Integrator surface | `bass/hierarchy/integrator.py::IntegratorConfig` | Two new read-only properties `tilt_rapidity` / `tilt_direction`; no new stored fields |
+| Tests (new) | `bass/hierarchy/test_integrator.py::test_FB02_01..06` | Factory defaults, custom pass-through, norm validation, β=0 bit-identical trajectory, config accessors, read-only tuple contract |
+| Tests (unchanged, still green) | LB-5 I-07..I-18 + LB-6-01..24 + every prior session's regression | Zero-impact invariant verified across 2,682 pre-existing tests |
+| Spec cross-ref | `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-0` | FB-0.2 row ("BianchiCosmology field expansion + factory + config") delivered |
+
+### 2. Contract / interface table — FB-0.2 additions
+
+| Surface | Signature (post FB-0.2) | Status |
+|---|---|---|
+| `BianchiCosmology.v_hat_e` field | `Tuple[float, float, float] = (1.0, 0.0, 0.0)` with `__post_init__` enforcing `|v̂_e|² = 1 ± 1e-10` and arity 3 | New |
+| `flrw_cosmology(beta=0.0, v_hat_e=(1,0,0))` | kw-only tilt params (sigma_over_H_init fixed to 0) | Extended |
+| `type_{i,ii,…,ix}_cosmology(..., beta=0.0, v_hat_e=(1,0,0))` | kw-only tilt params, same forwarding pattern | Extended (all 11 Bianchi + FLRW) |
+| `make_cosmology(type_label, **kwargs)` | Unchanged `**kwargs` signature; `beta` / `v_hat_e` forwarded verbatim | Docstring only |
+| `IntegratorConfig.tilt_rapidity` → `float` | Returns `bianchi_cosmo.beta` | New property |
+| `IntegratorConfig.tilt_direction` → `Tuple[float, float, float]` | Returns `bianchi_cosmo.v_hat_e` (same object identity) | New property |
+
+### 3. Phys-math audit ledger
+
+| Check | Result | Evidence |
+|---|---|---|
+| `v̂_e` stored as a tuple (frozen-dataclass hashability preserved) | ✅ | `__post_init__` normalises any 3-iterable via `object.__setattr__`; test FB02-02 confirms list → tuple conversion |
+| Unit-norm invariant enforced at construction, no silent renormalisation | ✅ | `ValueError` for |v|²=2, |v|²=1/4, arity 2, arity 4 — test FB02-03 |
+| Factory defaults aligned with `00_conventions §5.4` PSTF m=0 axis | ✅ | FB02-01: all 12 factories (FLRW + 11 Bianchi) return `v̂_e=(1,0,0), β=0` |
+| Custom `β` / `v̂_e` propagate end-to-end through factory + dataclass | ✅ | FB02-02 — `make_cosmology("VII_h", beta=0.01, v̂_e=(0.6,0.8,0))` round-trips |
+| β=0 default bit-identical to explicit `β=0, v̂_e=(1,0,0)` | ✅ | FB02-04 — all four arrays (`a`, `Σ_+`, `Σ_−`, both towers) match via `np.testing.assert_array_equal` (exact equality, no tolerance) |
+| IntegratorConfig accessors forward without copy | ✅ | FB02-05/06 — property returns identical tuple object (`is` identity) |
+| No new dynamical coupling wired by this session | ✅ | Zero edits outside `einstein_bianchi.py` dataclass surface + factory layer + `IntegratorConfig` property layer; `_bg_rhs`, `combined_rhs`, all hierarchy RHS terms untouched |
+| LB-5 I-07..I-18 regression | ✅ | All 14 tests green |
+| LB-6-01..24 Kolb regression | ✅ | Green (full suite) |
+| Every pre-existing test (2,682) | ✅ | 2,688 post (2,682 + 6 new); 0 regressed |
+
+### 4. Equation-to-code mapping audit
+
+| Target | Test(s) | Implementation path |
+|---|---|---|
+| `v̂_e · v̂_e = 1` invariant (§2 frame split rule + §5.3) | `test_FB02_03_v_hat_e_unit_norm_validation` | `BianchiCosmology.__post_init__` lines ~145-157 |
+| Factory default alignment with PSTF m=0 axis (`00_conventions §5.4`) | `test_FB02_01_factory_defaults_v_hat_e_first_axis` | `_V_HAT_E_DEFAULT = (1.0, 0.0, 0.0)` constant in `einstein_bianchi.py`; reused by all 12 factory signatures |
+| End-to-end factory pass-through | `test_FB02_02_factory_custom_tilt_pass_through` | 11 per-type factory bodies + `make_cosmology` dispatch |
+| β=0 zero-impact guarantee (LB-5) | `test_FB02_04_beta_zero_bit_identical_lb5_trajectory` | Default/explicit `BianchiCosmology` → identical `IntegrationResult` arrays |
+| `IntegratorConfig.tilt_rapidity` / `.tilt_direction` forwarding | `test_FB02_05_integrator_config_forwards_tilt_accessors` | Properties in `IntegratorConfig.__post_init__` block |
+| Read-only tuple contract on `.tilt_direction` | `test_FB02_06_integrator_config_tilt_direction_is_readonly` | Property returns `self.bianchi_cosmo.v_hat_e` directly (no copy) |
+
+No dead code introduced. No silent fallbacks (norm violation raises
+eagerly). No changes to dynamical code paths — confirmed by
+bit-identicality of the LB-5 state vector under default vs explicit
+`β=0, v̂_e=(1,0,0)`.
+
+### 5. Numerical / pipeline audit
+
+| Item | Finding |
+|---|---|
+| `BianchiCosmology.__post_init__` cost | O(1) — single arithmetic check on 3 floats; invoked once per cosmology construction |
+| `IntegratorConfig.tilt_direction` accessor cost | O(1), no allocation — returns the stored tuple by identity |
+| β=0 LB-5 trajectory drift vs FB-0.1 baseline | 0 (exact equality) — validated by `np.testing.assert_array_equal` on 5 arrays in FB02-04 |
+| Wall time | +~3 s on the full suite (6 new tests × ~0.5 s each, mostly dominated by FB02-04 running two LB-5 integrations); baseline 67 s → 71 s (+6 %) |
+| Determinism | Properties are pure functions of stored fields; no RNG anywhere |
+| Baseline reproduction | 2,682 pre → 2,688 post (+6); 0 regressions |
+| Norm tolerance | `_V_HAT_NORM_TOL = 1e-10` — tight enough to catch obvious user errors (`(1,1,0)` with |v|²=2 trivially fails), loose enough to tolerate float literal round-off on hand-computed unit vectors (e.g. `(1/√2, 1/√2, 0)` has |v|²=1 + ~1e-16 round-off) |
+
+### 6. Ranked failure modes
+
+| ID | Type | Severity | Summary | Action |
+|---|---|---|---|---|
+| F1 (FB-0.1) | carry-forward | resolved | LB-5 F2 (einstein_bianchi Σ-convention mismatch) | Resolved FB-0.1 |
+| F3 (FB-0.1) | documentation | P2 carried | `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² normalisation drift | Still deferred to FB-2.4; out of FB-0.2 scope |
+| FB02-F1 | spec | P2 | `00_conventions.md §2` already anchors the frame split rule for `u_e^a`; the FB-0.2 tilt-direction default `(1, 0, 0)` is documented inside the `BianchiCosmology` docstring and FB-0.2 audit but could additionally be cross-referenced inside `00_conventions.md` for a future reader who consults only that SSOT. Low priority — the docstring and this audit are the operative SSOT, and FB-3.1 (first consumer of `v̂_e` in dynamics) will revisit the conventions doc with the full boost-kernel derivation. | Defer to FB-3.1 conventions refresh. |
+
+No P0 / P1 items introduced by FB-0.2. F3 remains the only carry-
+forward P2, as already flagged in FB-0.1 §6.
+
+### 7. Verifier results
+
+| Verifier | Result | Notes |
+|---|---|---|
+| Physics | **PASSED** | Unit-norm invariant enforced; default aligns with `00_conventions §5.4` PSTF m=0 axis; β=0 is the orthogonal limit bit-for-bit |
+| Code | **PASSED** | Frozen dataclass contract preserved (tuple storage, hashable); `IntegratorConfig` properties are pure forwarders; `make_cosmology` signature unchanged |
+| Numerical | **PASSED** | LB-5 state vector bit-identical under default / explicit β=0; 2,688 pass + 1 skip; +6 new, 0 regressed |
+
+### 8. Minimal repair plan (applied in-session)
+
+| Patch | Target | Status |
+|---|---|---|
+| A | `bass/background/einstein_bianchi.py::BianchiCosmology` — add `v_hat_e` field, module-level `_V_HAT_E_DEFAULT` / `_V_HAT_NORM_TOL` constants, `__post_init__` validation; docstring expanded with Ellis §11.3 / King-Ellis 1973 citations and FB-plan roadmap cross-ref | ✅ |
+| B | 11 per-type factories + `flrw_cosmology` — accept `v_hat_e` kw-arg with `_V_HAT_E_DEFAULT` default | ✅ |
+| C | `make_cosmology` docstring — document the FB-0.2 tilt contract (signature itself unchanged — already `**kwargs`) | ✅ |
+| D | `bass/hierarchy/integrator.py::IntegratorConfig` — add `tilt_rapidity` and `tilt_direction` read-only properties with docstrings citing lowell §11.3 and `00_conventions §2` | ✅ |
+| E | `bass/hierarchy/test_integrator.py` — 6 new tests FB02-01..06 covering factory defaults, custom pass-through, norm validation, β=0 bit-identicality, config accessors, read-only contract | ✅ |
+
+### 9. Minimal test set (delivered)
+
+**Baseline reproduction**: 2,682 pre-FB-0.2 tests all still green; 0
+pre-existing test needed to be weakened or modified.
+
+**Tilt-field API sanity (new)**: FB02-01 (12-factory default check),
+FB02-02 (factory pass-through round-trip), FB02-03 (unit-norm +
+arity validation — five sub-cases), FB02-05 (config accessor
+forwarding), FB02-06 (read-only tuple identity).
+
+**Zero-impact regression (new)**: FB02-04 — the strongest invariant
+— exact `assert_array_equal` bit-identicality of the full LB-5 state
+vector (`a`, `Σ_+`, `Σ_−`, `photon_T_tower`, `photon_E_tower`)
+between the default `BianchiCosmology(β=0)` path and the explicit
+`BianchiCosmology(β=0, v̂_e=(1,0,0))` path.
+
+**Regression**: 2,688 passing + 1 skipped; +6 new, 0 regressed.
+
+### 10. 최종 판정
+
+* **치명적 오류 있음 / 부분 통과 / 통과** → **통과** (no P0 / P1;
+  FB02-F1 is a minor documentation cross-reference deferred to
+  FB-3.1 where the first dynamical consumer of `v̂_e` will
+  consolidate the conventions refresh).
+* **지금 당장 구현/수정한 1개**: tilt-field exposure surface on
+  `BianchiCosmology` + `IntegratorConfig`. This is pure API
+  scaffolding — no new dynamics, no approximation — but it unblocks
+  FB-3.1 (TiltedSpeciesBackground), FB-3.2 (boost kernel), FB-4
+  (tilted Thomson) by giving them a canonical `(β, v̂_e)` lookup
+  path rooted in a single validated dataclass instead of scattered
+  per-factory kwargs.
+* **지금 손대면 안 되는 1개**: dynamics. The audit explicitly forbids
+  wiring `v̂_e` into any RHS or collision term in FB-0.2; the next
+  two tilted-sector phases (FB-3.1 non-perturbative species boost
+  and FB-4 Thomson kernel) are their own audit-bounded sessions
+  with full regression suites. Attempting either today would
+  conflate the surface change (FB-0.2) with the physics change and
+  blur the zero-impact guarantee that FB02-04 pins.
+
+### Gallery refresh
+
+FB-0.2 is an **API-only** exposure change: no plotted quantity is
+touched. The `plots/physics_gallery/11_integrator/` tree continues
+to show the FB-0.1 Ellis-convention Σ × a² invariant and the
+standard Type I / V / VII_h background traces. Per the phase-
+boundary gallery rule, this sub-phase is documented explicitly as a
+visual no-op; the next gallery extension is queued for FB-1.1
+(Wainwright-Ellis Table 11.1 per-type trace overlay).
+
+### Outstanding items carried forward
+
+* **F3** (P2 from FB-0.1): `TetradBackgroundState.shear_magnitude_sq`
+  → dimensionless Σ² per §4.2. Still deferred to FB-2.4.
+* **FB-0.3** (next session): LB-6 F2 carry-forward —
+  `detect_critical_events` exposes `eta_star` / `chi_star` as
+  first-class keys; LB-6 test-helper cleanup to stop recomputing the
+  comoving distance to LSS manually. Ready to bootstrap from the
+  rotated `NEXT_SESSION_PROMPT.md §2`.
+* **FB02-F1** (P2 documentation): cross-reference the FB-0.2
+  `v̂_e` default into `00_conventions.md §2` when FB-3.1 consolidates
+  the boost-kernel derivation.
+
+---
+
+**Phase FB-0 status (after FB-0.2)**: 2/3 of FB-0 delivered
+(FB-0.1 convention flip + FB-0.2 tilt-field exposure). The
+`BianchiCosmology` dataclass and `IntegratorConfig` surface now
+carry all tilted-sector parameters on a single-source-of-truth
+path — every FB-3 / FB-4 consumer can read `β` and `v̂_e` through
+the same two accessors without per-call kwargs plumbing. Ready to
+hand off to **FB-0.3** (LB-6 F2 carry: `eta_star` / `chi_star`
+keys on `detect_critical_events`).
