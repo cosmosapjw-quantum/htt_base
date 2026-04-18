@@ -5,7 +5,7 @@ fig_channel_ablation_heatmap.py — Channel ablation matrix heatmap
 Rows: channel combinations. Columns: lnB, β̃, Q̃, Π(0.1), q₀.
 Cell colour encodes normalised value (fraction of full-channel result).
 """
-import sys, json
+import sys, json, os
 import numpy as np
 
 sys.path.insert(0, '/mnt/project')
@@ -20,7 +20,12 @@ from plot_style import apply_style, save_fig, COLS
 apply_style()
 
 # ─── Load data ────────────────────────────────────────────────
-with open('/mnt/user-data/outputs/robustness_sweeps_integrated.json') as f:
+# HTT_PIPELINE_OUTDIR overrides the legacy '/mnt/user-data/outputs'
+# default so smoke tests can inject a synthetic fixture dir
+# (bass_py/htt/tests/fixtures/pipeline_outputs/) without failing on
+# the absolute author-environment path.  Introduced by HTT-STAB W8D6.
+_OUTDIR = os.environ.get('HTT_PIPELINE_OUTDIR', '/mnt/user-data/outputs')
+with open(os.path.join(_OUTDIR, 'robustness_sweeps_integrated.json')) as f:
     data = json.load(f)
 
 pts = data['sweep_D_channels']

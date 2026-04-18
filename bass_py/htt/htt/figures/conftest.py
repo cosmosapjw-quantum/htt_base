@@ -23,6 +23,7 @@ This conftest provides three stability guarantees:
 """
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 import pytest
@@ -31,6 +32,22 @@ import pytest
 _CORE = Path(__file__).resolve().parent.parent / "core"
 if _CORE.is_dir() and str(_CORE) not in sys.path:
     sys.path.insert(0, str(_CORE))
+
+# HTT-STAB W8D6: wire HTT_PIPELINE_OUTDIR to the repo-local synthetic
+# fixture directory so figure scripts that load pipeline JSONs from the
+# legacy '/mnt/user-data/outputs' path can find stubs under pytest.
+# The stubs at bass_py/htt/tests/fixtures/pipeline_outputs/ provide
+# schema-matching payloads for:
+#   FLRW_tilt_results.json (fig_evidence_decomposition),
+#   robustness_sweeps_integrated.json (fig_channel_ablation_heatmap).
+# The env var is only set if not already defined, so production runs
+# with an explicit HTT_PIPELINE_OUTDIR override are untouched.
+_PIPELINE_FIXTURES = (
+    Path(__file__).resolve().parent.parent.parent
+    / "tests" / "fixtures" / "pipeline_outputs"
+)
+if _PIPELINE_FIXTURES.is_dir() and not os.environ.get("HTT_PIPELINE_OUTDIR"):
+    os.environ["HTT_PIPELINE_OUTDIR"] = str(_PIPELINE_FIXTURES)
 
 
 _EXTERNAL_ROOTS = {

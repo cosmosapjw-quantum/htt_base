@@ -23,7 +23,12 @@ from plot_style import apply_style, save_fig, COLS
 
 apply_style()
 
-with open('/mnt/user-data/outputs/FLRW_tilt_results.json') as f:
+# HTT_PIPELINE_OUTDIR overrides the legacy '/mnt/user-data/outputs'
+# default so smoke tests can inject a synthetic fixture dir
+# (bass_py/htt/tests/fixtures/pipeline_outputs/) without failing on
+# the absolute author-environment path.  Introduced by HTT-STAB W8D6.
+_OUTDIR = os.environ.get('HTT_PIPELINE_OUTDIR', '/mnt/user-data/outputs')
+with open(os.path.join(_OUTDIR, 'FLRW_tilt_results.json')) as f:
     ev = json.load(f)
 
 # ═══════════════════════════════════════════════════════════
