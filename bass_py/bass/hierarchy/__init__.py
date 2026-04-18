@@ -43,6 +43,11 @@ from bass.hierarchy.pstf_tensor import (
     zero_hierarchy,
     zero_pstf,
 )
+from bass.hierarchy.hierarchy_rhs import (
+    hierarchy_rhs_neutrino,
+    hierarchy_rhs_photon,
+    proper_shear_at_eta,
+)
 from bass.hierarchy.terms import (
     T1_expansion,
     T2_gradient,
@@ -91,4 +96,8 @@ __all__ = [
     "HardCutClosure",
     "CollisionOperator",
     "ZeroCollisionOperator",
+    # Driver (LB-2b)
+    "hierarchy_rhs_photon",
+    "hierarchy_rhs_neutrino",
+    "proper_shear_at_eta",
 ]

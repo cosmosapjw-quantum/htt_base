@@ -71,18 +71,31 @@ from bass.species.lambda_ import LambdaBackground  # noqa: E402
 from bass.species.neutrino import NeutrinoBackground  # noqa: E402
 from bass.species.photon import PhotonBackground  # noqa: E402
 from bass.hierarchy import (  # noqa: E402
+    HardCutClosure,
     L_MAX_CACHED,
+    PSTFTensor,
     T1_expansion,
     T3_divergence,
-    T7_shear_up,  # stub — prefactor reference only
+    T4_accel_divergence,
+    T5_accel_gradient,
+    T6_vorticity,
+    T7_shear_up,
     T8_shear_same,
     T9_shear_down,
+    ZeroCollisionOperator,
+    hierarchy_rhs_photon,
+    hierarchy_total_size,
+    pack_hierarchy,
+    pstf_pack,
+    pstf_to_tensor,
+    pstf_unpack,
     stf_basis,
     sym_trace_free,
-    pstf_pack,
-    pstf_unpack,
+    unpack_hierarchy,
     verify_pstf_invariants,
+    zero_hierarchy,
     zero_nabla_operator,
+    zero_pstf,
 )
 from bass.background.tetrad_state import axisymmetric_sigma_tensor  # noqa: E402
 from htt.htt.core.plot_style import COLS, apply_style  # noqa: E402
@@ -1650,6 +1663,254 @@ def plot_09_08_shear_injection_over_time() -> None:
     _save(fig, "08_shear_injection_over_time", TOPIC_09)
 
 
+def plot_09_09_T7_shear_up_sweep() -> None:
+    """T7 at ℓ=2 vs (Σ_+, ||Π_4||) — shear-to-hexadecapole-back coupling.
+
+    Builds a rank-4 PSTF tensor Π_4 = STF(σ⊗σ)·s for scale ``s`` and
+    evaluates T7(ℓ=2) norm across an axisymmetric shear sweep. Mirrors
+    the T9 sweep (topic 05) but for the upward coupling direction.
+    """
+    sigma_plus_grid = np.linspace(-0.10, 0.10, 41)
+    scales = np.array([0.25, 0.5, 1.0, 2.0])
+    fig, ax = plt.subplots(figsize=(6.5, 4.0))
+    for k, s in enumerate(scales):
+        norms = []
+        for sp in sigma_plus_grid:
+            sigma = axisymmetric_sigma_tensor(
+                sigma_plus=float(sp), sigma_minus=0.0,
+            )
+            Pi4 = sym_trace_free(
+                s * np.einsum("ab,cd->abcd", sigma, sigma)
+            )
+            T7 = T7_shear_up(ell=2, Pi_ell_plus_2_full=Pi4, sigma_tensor=sigma)
+            norms.append(float(np.sqrt(np.sum(T7 ** 2))))
+        ax.plot(
+            sigma_plus_grid, norms, marker=".",
+            color=plt.get_cmap("plasma")(k / (len(scales) - 1)),
+            lw=1.4, label=rf"$\|\Pi_4\|_F \propto {s}$",
+        )
+    ax.axhline(0.0, color="0.3", lw=0.6)
+    _prepare_axes(
+        ax, r"$\Sigma_+$ (axisymmetric shear)",
+        r"$\|T_7\|_{\rm F}$",
+        title=r"$T_7$ shear-to-$\ell{+}2$ coupling at $\ell=2$ (LB-2b)",
+    )
+    ax.legend(loc="upper center", fontsize=8)
+    _save(fig, "09_T7_shear_up_sweep", TOPIC_09)
+
+
+def plot_09_10_orthogonal_vanishing_T4_T5_T6() -> None:
+    """Orthogonal Bianchi: T4/T5/T6 vanish for A = ω = 0 at every ℓ.
+
+    Scans a small random PSTF Π_ℓ per rank and confirms that T4, T5, T6
+    deliver machine-zero norm. Also plots the norms for a non-zero
+    sample ``A`` / ``ω`` to visualise the relative magnitudes the LB-2c
+    extension will activate.
+    """
+    ells = np.arange(0, 7)
+    rng = np.random.default_rng(91010)
+    T4_norm_zero = np.zeros_like(ells, dtype=np.float64)
+    T5_norm_zero = np.zeros_like(ells, dtype=np.float64)
+    T6_norm_zero = np.zeros_like(ells, dtype=np.float64)
+    T4_norm_act = np.zeros_like(ells, dtype=np.float64)
+    T5_norm_act = np.zeros_like(ells, dtype=np.float64)
+    T6_norm_act = np.zeros_like(ells, dtype=np.float64)
+    A_sample = np.array([0.3, -0.1, 0.2])
+    om_sample = np.array([0.2, 0.4, -0.1])
+    for i, ell in enumerate(ells):
+        Pi = sym_trace_free(rng.normal(size=(3,) * int(ell))) if ell > 0 \
+            else np.array(rng.normal())
+        Pi_plus = sym_trace_free(rng.normal(size=(3,) * (int(ell) + 1)))
+        if ell == 0:
+            Pi_minus = None
+        elif ell == 1:
+            Pi_minus = np.array(rng.normal())
+        else:
+            Pi_minus = sym_trace_free(rng.normal(size=(3,) * (int(ell) - 1)))
+
+        def _norm(v):
+            return float(np.sqrt(np.sum(np.asarray(v) ** 2)))
+
+        # Orthogonal: A = ω = 0.
+        T4_norm_zero[i] = _norm(
+            T4_accel_divergence(int(ell), Pi_plus, np.zeros(3))
+        )
+        if ell > 0:
+            T5_norm_zero[i] = _norm(
+                T5_accel_gradient(int(ell), Pi_minus, np.zeros(3))
+            )
+            T6_norm_zero[i] = _norm(
+                T6_vorticity(int(ell), Pi, np.zeros(3))
+            )
+
+        # Sample A, ω > 0 to visualise the LB-2c activation surface.
+        T4_norm_act[i] = _norm(
+            T4_accel_divergence(int(ell), Pi_plus, A_sample)
+        )
+        if ell > 0:
+            T5_norm_act[i] = _norm(
+                T5_accel_gradient(int(ell), Pi_minus, A_sample)
+            )
+            T6_norm_act[i] = _norm(
+                T6_vorticity(int(ell), Pi, om_sample)
+            )
+
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(11.5, 4.2))
+    # Left: orthogonal case — all zero (machine-precision floor).
+    floor = np.full_like(ells, 1e-17, dtype=np.float64)
+    ax_a.semilogy(ells, np.maximum(T4_norm_zero, floor), marker="o",
+                   color=COLS["blue"], lw=1.2, label=r"$\|T_4\|_F$")
+    ax_a.semilogy(ells, np.maximum(T5_norm_zero, floor), marker="s",
+                   color=COLS["purple"], lw=1.2, label=r"$\|T_5\|_F$")
+    ax_a.semilogy(ells, np.maximum(T6_norm_zero, floor), marker="^",
+                   color=COLS["orange"], lw=1.2, label=r"$\|T_6\|_F$")
+    ax_a.axhline(np.finfo(float).eps, color="0.3", ls=":", lw=0.8,
+                   label=r"$\varepsilon_{\rm mach}$")
+    _prepare_axes(ax_a, r"multipole rank $\ell$",
+                   r"Frobenius norm",
+                   title=r"Orthogonal Bianchi ($A=\omega=0$): T4/T5/T6 vanish")
+    ax_a.legend(loc="upper left", fontsize=8)
+    ax_a.set_xticks(ells)
+    # Right: with non-zero A, ω — activation surface for LB-2c.
+    ax_b.semilogy(ells, np.maximum(T4_norm_act, floor), marker="o",
+                   color=COLS["blue"], lw=1.4, label=r"$\|T_4\|_F$")
+    ax_b.semilogy(ells, np.maximum(T5_norm_act, floor), marker="s",
+                   color=COLS["purple"], lw=1.4, label=r"$\|T_5\|_F$")
+    ax_b.semilogy(ells, np.maximum(T6_norm_act, floor), marker="^",
+                   color=COLS["orange"], lw=1.4, label=r"$\|T_6\|_F$")
+    _prepare_axes(ax_b, r"multipole rank $\ell$",
+                   r"Frobenius norm",
+                   title=r"Non-orthogonal sample ($A,\omega\neq0$) — LB-2c preview")
+    ax_b.legend(loc="lower right", fontsize=8)
+    ax_b.set_xticks(ells)
+    fig.tight_layout()
+    _save(fig, "10_orthogonal_T4_T5_T6_vanishing", TOPIC_09)
+
+
+def plot_09_11_rhs_driver_shear_injection_trajectory() -> None:
+    """Integrate ``hierarchy_rhs_photon`` for Bianchi I shear injection.
+
+    Starts from Π_0 = 1, Π_ℓ>0 = 0 at an early η in the radiation era
+    and integrates to just before z=0 with a fixed proper-time shear
+    amplitude. Plots ||Π_ℓ||_F (packed-vector norm) vs η per rank,
+    illustrating how T9 populates the quadrupole and the tower grows
+    sequentially through T9/T8.
+    """
+    from scipy.integrate import solve_ivp
+
+    bg = Shared.bg()
+    L_max = 4
+
+    # Proper-time shear fixture: constant σ_ab at order 1e-3 / Mpc.
+    sigma_proper = axisymmetric_sigma_tensor(1.0e-3, 0.0)
+    a_grid = bg.a
+    Sigma_grid = np.empty((a_grid.size, 3, 3), dtype=np.float64)
+    for i in range(a_grid.size):
+        Sigma_grid[i] = sigma_proper * a_grid[i]
+
+    class _ShearFx:
+        def __init__(self):
+            self.eta = bg.eta.copy()
+            self.sigma_tensor = Sigma_grid
+    fx = _ShearFx()
+
+    state0 = zero_hierarchy(L_max)
+    state0.tensors[0] = PSTFTensor(ell=0, components=np.array([1.0]))
+    y0 = pack_hierarchy(state0)
+
+    # Short interval around recombination where a ~ 1e-3.
+    i0 = int(np.argmin(np.abs(a_grid - 5e-4)))
+    i1 = int(np.argmin(np.abs(a_grid - 1e-2)))
+    t_eval = bg.eta[i0:i1:max((i1 - i0) // 40, 1)]
+
+    def rhs(eta, y):
+        return hierarchy_rhs_photon(
+            float(eta), y,
+            L_max=L_max,
+            bg_table=bg,
+            tetrad_state=fx,
+            closure=HardCutClosure(),
+            collision=ZeroCollisionOperator(),
+        )
+
+    sol = solve_ivp(
+        rhs, (float(t_eval[0]), float(t_eval[-1])), y0,
+        t_eval=t_eval, rtol=1e-8, atol=1e-12,
+    )
+    fig, ax = plt.subplots(figsize=(7.0, 4.2))
+    cmap = plt.get_cmap("viridis")
+    for ell in range(L_max + 1):
+        offset = sum(2 * l + 1 for l in range(ell))
+        size = 2 * ell + 1
+        norms = np.sqrt(np.sum(sol.y[offset:offset + size, :] ** 2, axis=0))
+        ax.semilogy(
+            sol.t, np.maximum(norms, 1e-18),
+            color=cmap(ell / max(L_max, 1)),
+            lw=1.4, marker="o", ms=2.5, label=rf"$\|\Pi_{ell}\|_F$",
+        )
+    _prepare_axes(
+        ax, r"conformal time $\eta\ [\mathrm{Mpc}]$",
+        r"$\|\Pi_\ell(\eta)\|_F$  (packed norm)",
+        title=(
+            r"Bianchi I shear injection: photon tower driven by $T_9$ "
+            r"($\sigma_{\rm proper}\!\approx\!10^{-3}\,\mathrm{Mpc}^{-1}$)"
+        ),
+    )
+    ax.legend(loc="lower right", fontsize=8)
+    _save(fig, "11_rhs_driver_shear_injection", TOPIC_09)
+
+
+def plot_09_12_sigma_vs_Sigma_conversion() -> None:
+    """Visualise the ``σ_ab = Σ_ab / a`` conversion across cosmic history.
+
+    ``TetradBackgroundState.sigma_tensor`` stores the conformal Σ_ab
+    (Pontzen convention); the LB-2b driver divides by ``a(η)`` before
+    feeding the T7/T8/T9 term functions. This plot shows the ratio of
+    the two as a function of η for a representative Bianchi I history,
+    confirming the conversion reduces to identity only in the
+    asymptotic radiation era (where Σ ≪ 1) and diverges far from it.
+    """
+    sigma_seed = 5e-3
+    cosmo = BianchiCosmology(
+        structure=type_i_constants(),
+        sigma_over_H_init=sigma_seed,
+        sigma_pm_ratio=0.0,
+    )
+    bianchi_bg = solve_bianchi_background(cosmo, n_pts=1500)
+    a = np.asarray(bianchi_bg.a)
+    Sigma_plus = np.asarray(bianchi_bg.sigma_plus)
+    sigma_plus_proper = Sigma_plus / np.maximum(a, 1e-30)
+    z = 1.0 / np.maximum(a, 1e-300) - 1.0
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(11.5, 4.0))
+    ax_a.loglog(
+        1 + z, np.abs(Sigma_plus), color=COLS["orange"], lw=1.4,
+        label=r"$|\Sigma_+|$ (conformal, dimensionless)",
+    )
+    ax_a.loglog(
+        1 + z, np.abs(sigma_plus_proper), color=COLS["blue"], lw=1.4,
+        label=r"$|\sigma_+|=|\Sigma_+|/a$ [Mpc$^{-1}$]",
+    )
+    _prepare_axes(
+        ax_a, r"$1+z$", "shear amplitude",
+        title=r"Conformal $\Sigma_+$ vs proper $\sigma_+=\Sigma_+/a$",
+    )
+    ax_a.legend(loc="upper left", fontsize=8)
+    # Right: ratio Σ_+ / (a σ_+) which should be identically 1 (sanity).
+    ratio = np.abs(Sigma_plus) / np.maximum(
+        a * np.abs(sigma_plus_proper), 1e-30,
+    )
+    ax_b.semilogx(1 + z, ratio, color=COLS["purple"], lw=1.4)
+    ax_b.axhline(1.0, color="0.3", ls=":", lw=0.6)
+    _prepare_axes(
+        ax_b, r"$1+z$",
+        r"$|\Sigma_+| / (a\,|\sigma_+|)$",
+        title=r"Driver $1/a$ conversion self-consistency (LB-2b F1 audit)",
+    )
+    ax_b.set_ylim(0.0, 2.0)
+    fig.tight_layout()
+    _save(fig, "12_sigma_vs_Sigma_conversion", TOPIC_09)
+
+
 # ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
@@ -1763,6 +2024,17 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
          "(4/3)Θ(η) damping rate + its action on a unit Π_2 over history."),
         ("08_shear_injection_over_time", plot_09_08_shear_injection_over_time,
          "Bianchi I Σ_+(η) → proper σ_+(η) → ||T9|| at ℓ=2 with Π_0=1."),
+        ("09_T7_shear_up_sweep", plot_09_09_T7_shear_up_sweep,
+         "T7 shear-to-ℓ+2 coupling sweep at ℓ=2 (LB-2b mirror of plot 05)."),
+        ("10_orthogonal_T4_T5_T6_vanishing",
+         plot_09_10_orthogonal_vanishing_T4_T5_T6,
+         "T4/T5/T6 vanish at A=ω=0 (orthogonal); activation preview for LB-2c."),
+        ("11_rhs_driver_shear_injection",
+         plot_09_11_rhs_driver_shear_injection_trajectory,
+         "hierarchy_rhs_photon integration: Π_ℓ tower driven by T9 in Bianchi I."),
+        ("12_sigma_vs_Sigma_conversion",
+         plot_09_12_sigma_vs_Sigma_conversion,
+         "σ_ab = Σ_ab / a conversion check (LB-2b F1-audit visualisation)."),
     ],
 }
 

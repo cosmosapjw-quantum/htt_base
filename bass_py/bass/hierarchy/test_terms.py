@@ -4,14 +4,14 @@ Covers the PSTF multipole RHS term functions specified in
 ``docs/lowell_bianchi/02_multipole_hierarchy_spec.md §11.3``:
 
 - H-13: T1 at Θ = 1, Π_2 = unit → (4/3) × unit.
-- H-14: T7 with σ = 0 is zero (LB-2b; stub raises).
+- H-14: T7 with σ = 0 is zero at every ℓ (LB-2b replacement).
 - H-15: T9 at ℓ = 1 is zero (no monopole-from-dipole-shear).
 - H-16: T9 at ℓ = 2 with σ = Σ_+ axisymmetric, Π_0 = 1 → −4 σ.
 - H-17: FLRW sum (σ = ω = A = 0) reduces to T1 + T3 + T2 (background).
 
-Additional coverage:
-- LB-2a stub functions T4, T5, T6, T7 raise ``NotImplementedError``.
-- Numerical smoke at ℓ > 2 for T8 and T9.
+LB-2b extended coverage:
+- T4/T5/T6/T7 correctness at explicit low-ℓ values (accel / vorticity).
+- Orthogonal Bianchi: A = ω = 0 renders T4/T5/T6 exactly zero.
 - ``zero_nabla_operator`` shape handling.
 """
 from __future__ import annotations
@@ -69,13 +69,47 @@ def test_h13_T1_shape_mismatch_raises() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
-#   H-14 — T7 stub (LB-2a defers; LB-2b implements)
+#   H-14 — T7 with σ = 0 is exactly zero at every ℓ
 # ════════════════════════════════════════════════════════════════════
 
-def test_h14_T7_raises_not_implemented_for_lb2a() -> None:
-    """H-14 (adapted): LB-2a defers T7 to LB-2b; calling must raise."""
-    with pytest.raises(NotImplementedError):
-        T7_shear_up(4)
+def test_h14_T7_vanishes_for_zero_shear() -> None:
+    """H-14: T7 with σ = 0 is zero for arbitrary Π_{ℓ+2}."""
+    rng = np.random.default_rng(14)
+    sigma_zero = np.zeros((3, 3), dtype=np.float64)
+    for ell in (0, 2, 3, 4):
+        Pi_next_next = sym_trace_free(rng.normal(size=(3,) * (ell + 2)))
+        out = T7_shear_up(ell, Pi_next_next, sigma_zero)
+        assert np.max(np.abs(np.asarray(out))) < 1e-15, (
+            f"T7 non-zero at σ=0 for ell={ell}"
+        )
+
+
+def test_h14_T7_ell_1_is_zero_by_prefactor() -> None:
+    """Prefactor (ℓ-1) at ℓ=1 kills T7 even with σ ≠ 0."""
+    sigma = axisymmetric_sigma_tensor(0.4, -0.2)
+    rng = np.random.default_rng(141)
+    Pi3 = sym_trace_free(rng.normal(size=(3, 3, 3)))
+    out = T7_shear_up(ell=1, Pi_ell_plus_2_full=Pi3, sigma_tensor=sigma)
+    assert np.max(np.abs(out)) < 1e-14
+
+
+def test_h14_T7_ell_2_hand_computed() -> None:
+    """T7 at ℓ=2 with Π_4 = σ_ab σ_cd (fully symmetric-STF) gives closed form.
+
+    Take σ axisymmetric with Σ_+ = 1 (σ = diag(-2,1,1)/√6). Build
+    Π_{abcd} = sym_trace_free(σ ⊗ σ) — a rank-4 PSTF tensor. Then
+    T7_{ab} = −(4/21) σ^{cd} Π_{abcd}.
+    """
+    sigma = axisymmetric_sigma_tensor(1.0, 0.0)
+    Pi4_raw = np.einsum("ab,cd->abcd", sigma, sigma)
+    Pi4 = sym_trace_free(Pi4_raw)
+    out = T7_shear_up(ell=2, Pi_ell_plus_2_full=Pi4, sigma_tensor=sigma)
+    expected_raw = np.einsum("abcd,cd->ab", Pi4, sigma)
+    prefactor = -(1.0 * 3.0 * 4.0) / (7.0 * 9.0)  # -4/21
+    expected = prefactor * sym_trace_free(expected_raw)
+    assert np.allclose(out, expected, rtol=0, atol=1e-13)
+    ok, msg = verify_pstf_invariants(out, tol=1e-12)
+    assert ok, msg
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -189,22 +223,129 @@ def test_h17_flrw_sum_is_T1_only_at_background() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
-#   Deferred-stub guardrails (T4, T5, T6 raise NotImplementedError)
+#   LB-2b T4 / T5 / T6 correctness
 # ════════════════════════════════════════════════════════════════════
 
-def test_T4_raises_not_implemented() -> None:
-    with pytest.raises(NotImplementedError):
-        T4_accel_divergence(2)
+def test_T4_vanishes_at_orthogonal_background() -> None:
+    """Orthogonal Bianchi has A = 0 → T4 must be zero at every ell."""
+    rng = np.random.default_rng(4000)
+    A_zero = np.zeros(3, dtype=np.float64)
+    for ell in range(5):
+        Pi_next = sym_trace_free(rng.normal(size=(3,) * (ell + 1)))
+        out = T4_accel_divergence(ell, Pi_next, A_zero)
+        assert np.max(np.abs(np.asarray(out))) < 1e-15
 
 
-def test_T5_raises_not_implemented() -> None:
-    with pytest.raises(NotImplementedError):
-        T5_accel_gradient(2)
+def test_T4_ell_0_scalar_output() -> None:
+    """At ell=0: T4 = (2/3) A^b Π_1_b — a scalar."""
+    A = np.array([1.0, -2.0, 0.5])
+    Pi1 = np.array([0.1, 0.2, -0.3])
+    out = T4_accel_divergence(0, Pi1, A)
+    expected = (2.0 / 3.0) * float(np.dot(A, Pi1))
+    assert out.ndim == 0
+    assert abs(float(out) - expected) < 1e-15
 
 
-def test_T6_raises_not_implemented() -> None:
-    with pytest.raises(NotImplementedError):
-        T6_vorticity(2)
+def test_T4_ell_2_prefactor_zero() -> None:
+    """At ell=2: prefactor −(3)(0)/7 = 0 → T4 identically vanishes."""
+    rng = np.random.default_rng(42)
+    A = rng.normal(size=3)
+    Pi3 = sym_trace_free(rng.normal(size=(3, 3, 3)))
+    out = T4_accel_divergence(ell=2, Pi_ell_plus_1_full=Pi3, accel_vector=A)
+    assert np.max(np.abs(out)) < 1e-14
+
+
+def test_T4_wrong_shape_raises() -> None:
+    with pytest.raises(ValueError):
+        T4_accel_divergence(1, np.zeros((3, 3)), np.zeros(2))
+
+
+def test_T5_vanishes_at_orthogonal_background() -> None:
+    """Orthogonal Bianchi has A = 0 → T5 must be zero at every ell."""
+    rng = np.random.default_rng(5000)
+    A_zero = np.zeros(3, dtype=np.float64)
+    for ell in range(1, 5):
+        if ell == 1:
+            Pi_prev = np.array(rng.normal())
+        else:
+            Pi_prev = sym_trace_free(rng.normal(size=(3,) * (ell - 1)))
+        out = T5_accel_gradient(ell, Pi_prev, A_zero)
+        assert np.max(np.abs(np.asarray(out))) < 1e-15
+
+
+def test_T5_ell_0_returns_zero() -> None:
+    out = T5_accel_gradient(
+        0, np.array(0.0), np.zeros(3)
+    )
+    assert out.ndim == 0 and float(out) == 0.0
+
+
+def test_T5_ell_1_is_A_times_monopole() -> None:
+    """At ell=1: T5 = (ℓ+3) A_a Π_0 = 4 A_a Π_0."""
+    A = np.array([0.7, -1.1, 0.3])
+    monopole = np.array(2.5)
+    out = T5_accel_gradient(1, monopole, A)
+    expected = 4.0 * A * float(monopole)
+    assert np.allclose(out, expected, rtol=0, atol=1e-15)
+
+
+def test_T5_output_is_pstf() -> None:
+    """T5 output must pass PSTF invariants at ell=3."""
+    rng = np.random.default_rng(53)
+    A = rng.normal(size=3)
+    Pi2 = sym_trace_free(rng.normal(size=(3, 3)))
+    out = T5_accel_gradient(3, Pi2, A)
+    ok, msg = verify_pstf_invariants(out, tol=1e-12)
+    assert ok, msg
+
+
+def test_T5_wrong_shape_raises() -> None:
+    with pytest.raises(ValueError):
+        T5_accel_gradient(2, np.zeros(2), np.zeros(3))
+
+
+def test_T6_vanishes_at_orthogonal_background() -> None:
+    """Orthogonal Bianchi I, V, VII_0 have ω = 0 → T6 must vanish."""
+    rng = np.random.default_rng(6000)
+    omega_zero = np.zeros(3, dtype=np.float64)
+    for ell in range(1, 5):
+        Pi = sym_trace_free(rng.normal(size=(3,) * ell))
+        out = T6_vorticity(ell, Pi, omega_zero)
+        assert np.max(np.abs(np.asarray(out))) < 1e-15
+
+
+def test_T6_ell_0_returns_zero() -> None:
+    out = T6_vorticity(0, np.array(1.0), np.ones(3))
+    assert out.ndim == 0 and float(out) == 0.0
+
+
+def test_T6_ell_1_is_cross_product() -> None:
+    """At ell=1: T6_a = ℓ · ε_{bca} ω^b Π^c = (ω × Π)_a with ℓ=1."""
+    omega = np.array([1.0, -0.5, 0.2])
+    Pi1 = np.array([0.3, 2.0, -0.7])
+    out = T6_vorticity(1, Pi1, omega)
+    # (ω × Π)_a = ε_{abc} ω^b Π^c; but the spec form gives ε_{bca} ω^b Π^c
+    # which equals −(ω × Π)_a (one cyclic swap on ε).
+    # We compute the expected value via the spec formula directly.
+    eps = np.zeros((3, 3, 3))
+    eps[0, 1, 2] = eps[1, 2, 0] = eps[2, 0, 1] = 1.0
+    eps[0, 2, 1] = eps[2, 1, 0] = eps[1, 0, 2] = -1.0
+    expected = np.einsum("bca,b,c->a", eps, omega, Pi1)
+    assert np.allclose(out, expected, rtol=0, atol=1e-14)
+
+
+def test_T6_output_is_pstf_at_ell_3() -> None:
+    rng = np.random.default_rng(63)
+    omega = rng.normal(size=3)
+    Pi3 = sym_trace_free(rng.normal(size=(3, 3, 3)))
+    out = T6_vorticity(3, Pi3, omega)
+    ok, msg = verify_pstf_invariants(out, tol=1e-12)
+    assert ok, msg
+
+
+def test_T6_wrong_shape_raises() -> None:
+    with pytest.raises(ValueError):
+        T6_vorticity(2, np.zeros((3, 3)), np.zeros(4))
 
 
 # ════════════════════════════════════════════════════════════════════

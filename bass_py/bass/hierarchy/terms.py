@@ -1,4 +1,4 @@
-"""bass/hierarchy/terms.py (LB-2a) — PSTF multipole RHS term functions.
+"""bass/hierarchy/terms.py (LB-2a/b) — PSTF multipole RHS term functions.
 
 Implements the PSTF-projected contributions corresponding to the
 nine-term 1+3 covariant hierarchy (``02_multipole_hierarchy_spec.md
@@ -7,28 +7,30 @@ nine-term 1+3 covariant hierarchy (``02_multipole_hierarchy_spec.md
     Π̇_{⟨A_ℓ⟩} + T1 + T2 + T3 + T4 + T5 + T6 + T7 + T8 + T9 = K_{A_ℓ}
 
 Each term is a pure function returning a full-tensor ``(3,)*ell``
-contribution. The driver (``hierarchy_rhs``, LB-2b) sums them.
+contribution. The driver (``hierarchy_rhs``) sums them.
 
-LB-2a implementation scope (this file)
---------------------------------------
-Orthogonal Bianchi I / V / VII₀ at homogeneous background. Under these
-assumptions ``A_a = ω_a = 0`` and the active subset is
-
+LB-2a (storage + orthogonal-same-rank subset)
+---------------------------------------------
 - **T1** — expansion ``(4/3) Θ Π_{A_ℓ}``
-- **T2** — gradient ``∇̃_{⟨a_ℓ} Π_{A_{ℓ−1}⟩}``  (evaluates to zero at
-  homogeneous background; a ``nabla_operator`` callable is accepted
-  for forward-compatibility with perturbation work, and is required
-  by the spec § 4.2 shortcut for structure-constant-driven types).
-- **T3** — divergence ``((ℓ+1)/(2ℓ+3)) ∇̃^b Π_{A_ℓ b}``  (same
-  homogeneous-background remark).
-- **T8** — shear-stays-at-ℓ ``(5ℓ/(2ℓ+3)) σ^b_{⟨a_ℓ} Π_{A_{ℓ−1}⟩ b}``.
-- **T9** — shear-to-ℓ-minus-2 ``−(ℓ+2) σ_{⟨a_ℓ a_{ℓ−1}} Π_{A_{ℓ−2}⟩}``.
+- **T2** — gradient ``∇̃_{⟨a_ℓ} Π_{A_{ℓ−1}⟩}``
+- **T3** — divergence ``((ℓ+1)/(2ℓ+3)) ∇̃^b Π_{A_ℓ b}``
+- **T8** — shear-stays-at-ℓ ``(5ℓ/(2ℓ+3)) σ^b_{⟨a_ℓ} Π_{A_{ℓ−1}⟩ b}``
+- **T9** — shear-to-ℓ-minus-2 ``−(ℓ+2) σ_{⟨a_ℓ a_{ℓ−1}} Π_{A_{ℓ−2}⟩}``
 
-LB-2b will supply **T4** (acceleration × divergence), **T5**
-(acceleration × gradient), **T6** (vorticity × dipole-level) and
-**T7** (shear-to-ℓ-plus-2). They are declared as stubs here that raise
-``NotImplementedError`` so callers that reach them without LB-2b in
-place get a clear failure, not a silent zero.
+LB-2b (this file — added couplings)
+-----------------------------------
+- **T4** — accel × divergence ``−((ℓ+1)(ℓ−2)/(2ℓ+3)) A^b Π_{A_ℓ b}``
+- **T5** — accel × gradient ``(ℓ+3) A_{⟨a_ℓ} Π_{A_{ℓ−1}⟩}``
+- **T6** — vorticity × same-ℓ ``ℓ ω^b η_{bc⟨a_ℓ} Π^c_{A_{ℓ−1}⟩}``
+- **T7** — shear-to-ℓ-plus-2
+  ``−((ℓ−1)(ℓ+1)(ℓ+2)/((2ℓ+3)(2ℓ+5))) σ^{bc} Π_{A_ℓ bc}``
+
+All four LB-2b terms are pure algebraic contractions followed by PSTF
+projection; they are well-defined for arbitrary ``A_a``, ``ω_a`` and
+``σ_ab``. At orthogonal Bianchi (``A = ω = 0``) they trivially vanish
+via zero inputs, but the functions themselves are not hard-wired to
+zero — LB-2c / LB-2d (tilted + vorticity-bearing types) reuse the
+identical contraction code with non-zero ``A``, ``ω``.
 
 References
 ----------
@@ -215,63 +217,192 @@ def T3_divergence(
 
 
 # ════════════════════════════════════════════════════════════════════
-#   T4, T5, T6, T7 — deferred to LB-2b
+#   Spatial 3-Levi-Civita (used by T6)
 # ════════════════════════════════════════════════════════════════════
 
-def T4_accel_divergence(ell: int, *_args: object, **_kwargs: object) -> np.ndarray:
+def _levi_civita_3() -> np.ndarray:
+    """Rank-3 Levi-Civita symbol ε_{ijk} on an orthonormal 3-basis.
+
+    Reference: Arfken Ch 3; Ellis §4.4 (kinematic identities).
+    """
+    eps = np.zeros((3, 3, 3), dtype=np.float64)
+    eps[0, 1, 2] = eps[1, 2, 0] = eps[2, 0, 1] = 1.0
+    eps[0, 2, 1] = eps[2, 1, 0] = eps[1, 0, 2] = -1.0
+    return eps
+
+
+# ════════════════════════════════════════════════════════════════════
+#   T4 — acceleration × divergence
+# ════════════════════════════════════════════════════════════════════
+
+def T4_accel_divergence(
+    ell: int, Pi_ell_plus_1_full: np.ndarray, accel_vector: np.ndarray
+) -> np.ndarray:
     """T4: ``−((ℓ+1)(ℓ−2)/(2ℓ+3)) A^b Π_{A_ℓ b}`` — accel × divergence.
 
-    Non-zero only when ``A_a ≠ 0`` (tilted or curvature-driven backgrounds).
-    LB-2a targets orthogonal Bianchi where ``A_a = 0``; deferred to LB-2b.
+    Contracts the acceleration vector ``A^b`` with the last index of
+    ``Π_{ℓ+1}``, leaving ℓ outer indices (PSTF-projected). Non-zero
+    only when ``A_a ≠ 0`` (tilted or curvature-driven backgrounds); at
+    orthogonal Bianchi ``A = 0`` makes this trivially vanish.
 
-    Reference: Ellis §4.6; lowell §6.
+    At ``ℓ = 2`` the prefactor ``−(ℓ+1)(ℓ−2)/(2ℓ+3)`` vanishes by the
+    explicit ``(ℓ − 2)`` factor, so T4 decouples Π_3 from Π_2 even if
+    acceleration is non-zero.
+
+    Parameters
+    ----------
+    ell : non-negative int
+        Output rank.
+    Pi_ell_plus_1_full : ndarray of shape ``(3,) * (ell + 1)``
+        Full-tensor PSTF brightness at rank ``ell + 1``.
+    accel_vector : ndarray of shape ``(3,)``
+        4-acceleration ``A_a`` in the orthonormal tetrad basis [1/Mpc].
+
+    Reference: Ellis §4.6; lowell §6; Pontzen-Challinor 2007 (C4).
     """
-    raise NotImplementedError(
-        "T4_accel_divergence: scheduled for LB-2b (tilted / accelerated "
-        "backgrounds). LB-2a only covers orthogonal Bianchi where "
-        "A_a = 0."
-    )
+    if Pi_ell_plus_1_full.ndim != ell + 1:
+        raise ValueError(
+            f"T4_accel_divergence: Pi_ell_plus_1_full.ndim="
+            f"{Pi_ell_plus_1_full.ndim} != ell+1 = {ell + 1}"
+        )
+    if accel_vector.shape != (3,):
+        raise ValueError(
+            f"accel_vector must have shape (3,), got {accel_vector.shape}"
+        )
+    prefactor = -(ell + 1.0) * (ell - 2.0) / (2.0 * ell + 3.0)
+    # Contract A^b with the last axis of Π_{ℓ+1}.
+    raw = np.tensordot(Pi_ell_plus_1_full, accel_vector, axes=([-1], [0]))
+    if ell == 0:
+        return np.asarray(prefactor * raw, dtype=np.float64)
+    return prefactor * sym_trace_free(raw)
 
 
-def T5_accel_gradient(ell: int, *_args: object, **_kwargs: object) -> np.ndarray:
+# ════════════════════════════════════════════════════════════════════
+#   T5 — acceleration × gradient
+# ════════════════════════════════════════════════════════════════════
+
+def T5_accel_gradient(
+    ell: int, Pi_ell_minus_1_full: np.ndarray, accel_vector: np.ndarray
+) -> np.ndarray:
     """T5: ``(ℓ+3) A_{⟨a_ℓ} Π_{A_{ℓ−1}⟩}`` — accel × gradient.
 
-    Same deferral as ``T4_accel_divergence``.
+    Outer product of the acceleration vector ``A_{a_ℓ}`` with
+    ``Π_{ℓ−1}``, PSTF-projected on the ℓ output indices. At
+    ``ℓ = 0`` the term is identically zero (no ``A_{ℓ − 1}`` tensor).
+    Active only for ``A_a ≠ 0``.
 
     Reference: Ellis §4.6; lowell §6.
     """
-    raise NotImplementedError(
-        "T5_accel_gradient: scheduled for LB-2b (tilted / accelerated "
-        "backgrounds)."
-    )
+    if ell == 0:
+        return np.array(0.0, dtype=np.float64)
+    if Pi_ell_minus_1_full.ndim != ell - 1:
+        raise ValueError(
+            f"T5_accel_gradient: Pi_ell_minus_1_full.ndim="
+            f"{Pi_ell_minus_1_full.ndim} != ell-1 = {ell - 1}"
+        )
+    if accel_vector.shape != (3,):
+        raise ValueError(
+            f"accel_vector must have shape (3,), got {accel_vector.shape}"
+        )
+    prefactor = ell + 3.0
+    # Outer product A ⊗ Π_{ℓ-1} → rank ell.
+    raw = np.tensordot(accel_vector, Pi_ell_minus_1_full, axes=0)
+    return prefactor * sym_trace_free(raw)
 
 
-def T6_vorticity(ell: int, *_args: object, **_kwargs: object) -> np.ndarray:
-    """T6: ``ℓ ω^b η_{bc⟨a_ℓ} Π_{A_{ℓ−1}⟩}^c`` — vorticity coupling.
+# ════════════════════════════════════════════════════════════════════
+#   T6 — vorticity (stays at ℓ)
+# ════════════════════════════════════════════════════════════════════
 
-    Requires ``ω_a ≠ 0`` (supported only for Bianchi types VII_h / IX,
-    not in the LB-2a target set). Deferred to LB-2b.
+def T6_vorticity(
+    ell: int, Pi_ell_full: np.ndarray, omega_vector: np.ndarray
+) -> np.ndarray:
+    """T6: ``ℓ ω^b ε_{bc⟨a_ℓ} Π^c_{A_{ℓ−1}⟩}`` — vorticity coupling.
 
-    Reference: Ellis §4.6; lowell §6.
+    Builds the antisymmetric rank-2 dual ``(ε · ω)_{ca} = ε_{bca} ω^b``
+    and contracts its ``c`` index with one index of ``Π_ℓ``, producing
+    a rank-ℓ output that is PSTF-projected. The term stays at rank ℓ
+    (input and output both rank ℓ). The prefactor ``ℓ`` makes T6
+    vanish at ``ℓ = 0``. Active only for ``ω_a ≠ 0`` (Bianchi types
+    VII_h, VIII, IX; zero for I, V, VII₀ in the LB-2b target set).
+
+    Parameters
+    ----------
+    ell : non-negative int
+        Output rank (equal to input Π rank).
+    Pi_ell_full : ndarray of shape ``(3,) * ell``
+        Full-tensor PSTF brightness at rank ``ell``.
+    omega_vector : ndarray of shape ``(3,)``
+        Vorticity axial vector ``ω^a = (1/2) ε^{abc} ω_{bc}`` [1/Mpc].
+
+    Reference: Ellis §4.6; lowell §6; Ellis §4.4 (ω-vector definition).
     """
-    raise NotImplementedError(
-        "T6_vorticity: scheduled for LB-2b (Bianchi types with "
-        "non-zero vorticity)."
-    )
+    if ell == 0:
+        return np.array(0.0, dtype=np.float64)
+    if Pi_ell_full.ndim != ell:
+        raise ValueError(
+            f"T6_vorticity: Pi_ell_full.ndim={Pi_ell_full.ndim} != ell={ell}"
+        )
+    if omega_vector.shape != (3,):
+        raise ValueError(
+            f"omega_vector must have shape (3,), got {omega_vector.shape}"
+        )
+    eps = _levi_civita_3()
+    # (ε · ω)_{ca} = ε_{bca} ω^b — antisymmetric rank-2.
+    eps_om = np.einsum("bca,b->ca", eps, omega_vector)
+    # Contract (ε·ω)_{ca} with Π^c_{A_{ℓ−1}} (axis 0 of Π represents c).
+    raw = np.tensordot(eps_om, Pi_ell_full, axes=([0], [0]))
+    return float(ell) * sym_trace_free(raw)
 
 
-def T7_shear_up(ell: int, *_args: object, **_kwargs: object) -> np.ndarray:
+# ════════════════════════════════════════════════════════════════════
+#   T7 — shear-to-ℓ-plus-2
+# ════════════════════════════════════════════════════════════════════
+
+def T7_shear_up(
+    ell: int, Pi_ell_plus_2_full: np.ndarray, sigma_tensor: np.ndarray
+) -> np.ndarray:
     """T7: ``−((ℓ−1)(ℓ+1)(ℓ+2)/((2ℓ+3)(2ℓ+5))) σ^{bc} Π_{A_ℓ bc}``.
 
-    Couples Π_ℓ to Π_{ℓ+2}. Active even at orthogonal Bianchi I, but
-    deferred to LB-2b in this first-half implementation to keep the
-    test surface focused on the storage + orthogonal-same-rank subset.
+    Couples ℓ to Π_{ℓ+2} via a two-index contraction with the shear.
+    The prefactor ``(ℓ − 1)`` makes T7 vanish at ``ℓ = 1`` even when
+    ``σ ≠ 0``; at the top of a truncated tower (``ℓ = L_max``)
+    ``Π_{ℓ+2}`` is supplied by the closure strategy.
 
-    Reference: Ellis §4.6; lowell §6.
+    Parameters
+    ----------
+    ell : non-negative int
+        Output rank.
+    Pi_ell_plus_2_full : ndarray of shape ``(3,) * (ell + 2)``
+        Full-tensor PSTF brightness at rank ``ell + 2``. The contraction
+        consumes the last two indices.
+    sigma_tensor : ndarray of shape ``(3, 3)``
+        **Proper-time** symmetric trace-free shear ``σ_ab`` [1/Mpc] —
+        same convention as ``T8_shear_same`` / ``T9_shear_down``; not
+        the conformal ``Σ_ab`` stored on ``TetradBackgroundState``.
+
+    Reference: Ellis §4.6; lowell §6; 02_multipole_hierarchy_spec.md §1.
     """
-    raise NotImplementedError(
-        "T7_shear_up: scheduled for LB-2b (shear-to-ℓ+2 coupling)."
+    if Pi_ell_plus_2_full.ndim != ell + 2:
+        raise ValueError(
+            f"T7_shear_up: Pi_ell_plus_2_full.ndim="
+            f"{Pi_ell_plus_2_full.ndim} != ell+2 = {ell + 2}"
+        )
+    if sigma_tensor.shape != (3, 3):
+        raise ValueError(
+            f"sigma_tensor must have shape (3, 3), got {sigma_tensor.shape}"
+        )
+    prefactor = -(
+        (ell - 1.0) * (ell + 1.0) * (ell + 2.0)
+        / ((2.0 * ell + 3.0) * (2.0 * ell + 5.0))
     )
+    # Contract σ_{bc} with the last two axes of Π_{ℓ+2}.
+    raw = np.tensordot(
+        Pi_ell_plus_2_full, sigma_tensor, axes=([-2, -1], [0, 1])
+    )
+    if ell == 0:
+        return np.asarray(prefactor * raw, dtype=np.float64)
+    return prefactor * sym_trace_free(raw)
 
 
 # ════════════════════════════════════════════════════════════════════
