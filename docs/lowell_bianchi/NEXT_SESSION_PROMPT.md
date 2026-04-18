@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-18 (LB-0 + LB-1 complete → LB-2)
-**Last audited**: 2026-04-18 — see `docs/audits/AUDIT_PHASE_LB1_2026-04-18.md`
-**Current target session**: LB-2 PSTF multipole hierarchy (first half)
+**Last rotated**: 2026-04-19 (LB-2a complete → LB-2b)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_LB2a_2026-04-19.md`
+**Current target session**: LB-2b PSTF multipole hierarchy (second half)
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,89 +36,98 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# Phase LB 구현 계속 — LB-2 PSTF multipole hierarchy (first half)
+# Phase LB 구현 계속 — LB-2b PSTF multipole hierarchy (second half)
 
 ## 프로젝트 컨텍스트
 
 - **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 - **venv**: venv/bin/python
 - **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 2,136 tests passing (직전 2,027 + 22 LB-0 guard + 87 LB-1 species)
-- **완료된 세션**: LB-0 (external-code policy guard), LB-1 (species backgrounds γ/ν/b/c/Λ)
+- **현재 baseline**: 2,295 tests passing (직전 2,141 + 154 LB-2a hierarchy)
+- **완료된 세션**: LB-0 (external-code policy guard), LB-1 (species γ/ν/b/c/Λ), **LB-2a** (PSTF storage + T1/T2/T3/T8/T9)
 
 ## 우선 읽어야 할 문서 (순서대로)
 
-1. `docs/lowell_bianchi/README.md` §3 (dependency graph), §5 (invariants)
-2. `docs/lowell_bianchi/00_conventions.md` §5 (PSTF packing), §4 (Σ² normalisation)
-3. `docs/lowell_bianchi/02_multipole_hierarchy_spec.md` — 이 세션 스펙
-4. 참조: `lowell_bianchi_solver_reference.md` §6 (9-term hierarchy 원본)
-5. 참조: Y-Block `bass_py/bass/background/tetrad_state.py`, `bass_py/bass/tilt/species_tilt.py`
-6. 참조 (LB-1 완료물): `bass_py/bass/species/` — `FLRWBackgroundTable`, `SpeciesBackground` ABC, 5개 concrete 클래스
+1. `docs/audits/AUDIT_PHASE_LB2a_2026-04-19.md` — LB-2a 감사 로그 (F1 주의: σ_ab 단위 변환 필요)
+2. `docs/lowell_bianchi/02_multipole_hierarchy_spec.md` — 이 세션 스펙 §4-§9 (RHS driver, integration with TetradBackgroundState)
+3. 참조: `lowell_bianchi_solver_reference.md` §6 (9-term 원본)
+4. 참조 (LB-2a 완료물): `bass_py/bass/hierarchy/` — `PSTFTensor`, `PSTFHierarchyState`, `sym_trace_free`, `T1_expansion..T9_shear_down`, `HardCutClosure`, `ZeroCollisionOperator`
+5. 참조: Y-Block `bass_py/bass/background/tetrad_state.py` (Σ_ab → σ_ab 변환 필요 지점)
 
-## LB-1에서 확정된 사실 (LB-2에 참고)
+## LB-2a에서 확정된 사실 (LB-2b에 참고)
 
-- **constants SSOT**: `bass/species/constants.py`에서 SSOT(`htt.htt.core.ssot.C`) bit-exact re-export + Kolb derivation. `default_constants()`로 가져옴. Ω_Λ = 1 − Ω_m − Ω_r 엄격 flat-closure.
-- **η grid**: `build_flrw_background_table()` — analytic quadrature, a[-1] ≡ 1.0 exactly, η_0 ≈ 14147 Mpc. LB-2의 multipole RHS에서 바로 사용 가능.
-- **ABC contract**: `rho_rest(η)` / `p_rest(η)` / `dot_rho(η)` / `_a_of_eta(η)` scalar-in-scalar-out / array-in-array-out. 범위 밖은 `ValueError`.
-- **Baryon dot_rho**: proper-time ρ̇ = −Θ(1+w)ρ convention (dη 변환은 LB-5 integrator가 담당).
-- **LambdaBackground 파일명**: `lambda_.py` (파이썬 예약어 회피; spec §2.1 부연 주석)
-- **외부 코드 가드 테스트**: `bass/validation/test_external_code_policy.py` 활성. LB-2에서 신규 파일이 `import camb/classy/...` 하면 바로 red.
+- **PSTF 저장**: real sph harm 기반 ``(2ℓ+1,)`` packing. ℓ=0..8 STF basis ``Q_ℓ`` import 시 사전계산 (~110 KB total). Flat-orthonormal: ``Q_ℓ^T Q_ℓ = I``.
+- **`sym_trace_free(T)`**: rank-ℓ 텐서 → PSTF projection. ℓ ∈ {0, 1}은 identity; ℓ ≥ 2는 Q @ Q^T @ flat.
+- **`pstf_pack/unpack`**: 라운드트립 정밀도 ε_mach × 3^ℓ (ℓ ≤ 4 machine, ℓ=8 ~7e-11). 테스트 atol scales.
+- **구현된 term**: T1 (expansion), T2 (gradient via nabla_op), T3 (divergence via nabla_op), T8 (shear stays at ℓ), T9 (shear → ℓ-2). 모두 pure function, rank 검증 포함.
+- **지연된 term**: T4 (accel × divergence), T5 (accel × gradient), T6 (vorticity), T7 (shear → ℓ+2) — 현재 ``NotImplementedError`` 스텁.
+- **단위 convention (F1 감사 결과, 중요)**: T1의 ``Theta``는 proper-time Θ = 3H (1/Mpc). T8/T9의 ``sigma_tensor``는 proper-time σ_ab (1/Mpc) — **NOT** ``TetradBackgroundState.sigma_tensor`` (그쪽은 Pontzen-Σ 규약이므로 1/a 변환 필요). LB-2b 드라이버에서 이 변환을 반드시 명시.
+- **Closure/collision hook**: ``HardCutClosure`` (Π_{>L} = 0), ``ZeroCollisionOperator`` (K = 0). LB-3/LB-4에서 확장.
+- **외부 코드 가드**: `bass/validation/test_external_code_policy.py` 활성. LB-2b 신규 파일이 `import camb/classy/...` 하면 fail.
 
-## 이 세션의 작업 (LB-2 first part, ~700 LoC + 500 LoC tests)
+## 이 세션의 작업 (LB-2 second part, ~500 LoC + 400 LoC tests)
 
-`docs/lowell_bianchi/02_multipole_hierarchy_spec.md §12` Implementation checklist 앞 절반:
+`docs/lowell_bianchi/02_multipole_hierarchy_spec.md §12` Implementation checklist 나머지:
 
-- `bass/hierarchy/` 서브패키지 생성
-- `PSTFTensor`, `PSTFHierarchyState` + packed-full 변환 (Clebsch-Gordan ℓ≤8 사전계산)
-- `sym_trace_free` utility
-- 9-term RHS 중 **T1, T2, T3, T8, T9** (orthogonal Bianchi에서 활성화되는 subset)
-- 테스트 H-01 ~ H-17
+- **T4, T5, T6, T7 구현** — orthogonal Bianchi에서는 A=ω=0이라 T4/T5/T6는 실질적으로 zero 경로; T7은 σ ≠ 0일 때 non-trivial. 모두 PSTF-projected.
+  - T7 prefactor: `−((ℓ−1)(ℓ+1)(ℓ+2)/((2ℓ+3)(2ℓ+5))) σ^{bc} Π_{A_ℓ bc}` — Π_{ℓ+2} 참조, closure strategy로 잡음.
+  - T4/T5/T6는 현재 ``NotImplementedError`` 스텁을 유지하고 (LB-2c tilted/vorticity에서 구현) OR 0을 반환하는 orthogonal-only 경로만 추가.
+- **`bass/hierarchy/hierarchy_rhs.py`** — ``hierarchy_rhs_photon(eta, y_flat, L_max, bg_table, tetrad_state, ..., closure, collision) -> dy/deta`` driver
+  - σ_ab 변환: ``TetradBackgroundState.sigma_tensor[i_eta] / a[i_eta]`` (proper σ)
+  - Θ from ``FLRWBackgroundTable.Theta`` (proper, 1/Mpc)
+  - dy/dη = a × (-Σ Tn + K) (오버도트 → η 프라임 변환)
+  - ``solve_ivp``-compatible signature
+- **중립미자 driver** (선택): ``hierarchy_rhs_neutrino`` — 동일 hierarchy로 Γ_T = 0, `ZeroCollisionOperator`
+- **테스트 H-18 ~ H-26** (spec §11.4, §11.5):
+  - H-18: zero state + FLRW → zero dy/dη
+  - H-19: Γ_T=0, Π_1=0, σ=0: free-streaming tower recovers
+  - H-20: Π_1=1, Π_ℓ≥2=0: only T2 couples (gradient operator required OR NotImplementedError/zero)
+  - H-21: Γ_T → ∞, v_b=1: RHS at ℓ=1 = +Γ_T (needs K hook wired; might defer until LB-4)
+  - H-22: σ≠0, Π_0=1: RHS at ℓ=2 picks up T9 = −4 σ
+  - H-23: L_max=4, HardCut closure: T3, T7 at ℓ=L 0
+  - H-24..H-26: solve_ivp integration smoke (minimal setup, Bianchi I constant Σ_+)
 
-두 번째 파트 (다음 세션)에서:
-
-- T4, T5, T6, T7 나머지 term (tilted/vorticity/Bianchi-curved 용)
-- `hierarchy_rhs_photon` driver
-- 통합 테스트 H-18 ~ H-26
-
-LB-2 범위 제약:
+## LB-2 범위 제약 (고정)
 
 - **Orthogonal Bianchi I, V, VII_0만 대상** — 나머지 type은 `NotImplementedError`
-- **collision은 LB-4 hook으로 남김** — LB-2에서는 `K_{A_ℓ}` 인터페이스만 정의 (zero-source)
-- **closure는 HardCut만 구현** — 나머지 (FreeStream/PowerLaw/TCA) 는 LB-3
+- **Tilted species는 LB-2c로 더 분리** — v_(s) = 0 assumption 유지
+- **collision은 LB-4 hook으로 남김** — LB-2b에서는 `ZeroCollisionOperator`만 테스트; `ThomsonCollisionOperator`는 LB-4
+- **closure는 HardCut만 구현** — FreeStream/PowerLaw/TCA는 LB-3
 
-commit 메시지: `LB-2a: PSTF multipole hierarchy (storage + T1/T2/T3/T8/T9)`
+commit 메시지: `LB-2b: PSTF hierarchy driver + T4/T5/T6/T7 (orthogonal)`
 
-## 핵심 원칙 (고정, 모두 위반 시 PR 거부)
+## 핵심 원칙 (고정, 위반 시 PR 거부)
 
-1. **외부 코드 금지**: CAMB/CLASS/HyRec/AniCLASS는 `scripts/generate_*_reference.py`와 `test_*.py`에만. 위반 시 `bass/validation/test_external_code_policy.py` 즉시 fail.
-2. **Non-perturbative everywhere**: β 처리는 sinh(β), cosh(β) 유지 (linearise 금지)
-3. **Citation in every docstring**: 모든 public method/class에 Ellis §X.Y / Kolb §X.Y / Baumann §X.Y / lowell §X 인용
-4. **PSTF tensors always symmetric-traceless**: 생성 + 업데이트 직후 `verify_pstf_invariants()` (또는 동등한 검증) 통과
-5. **No silent fallbacks**: 미구현 Bianchi type은 `NotImplementedError` raise (silent FLRW fallback 금지)
-6. **FLRW limit test**: 모든 신규 모듈은 σ=0 한계에서 기존 테스트 재현
+1. **외부 코드 금지**: CAMB/CLASS/HyRec/AniCLASS는 `scripts/generate_*_reference.py`와 `test_*.py`에만.
+2. **Non-perturbative everywhere**: sinh(β), cosh(β) 유지 (tilted extension 시).
+3. **Citation in every docstring**: Ellis §X.Y / Kolb §X.Y / Baumann §X.Y / lowell §X.
+4. **PSTF tensors always symmetric-traceless**: LB-2a의 `verify_pstf_invariants` 재활용.
+5. **No silent fallbacks**: 미구현 Bianchi type = `NotImplementedError`.
+6. **FLRW limit test**: σ=0 한계에서 tower가 단순 T1 damping으로 환원.
+7. **단위 변환 명시**: σ_ab proper 대 Σ_ab conformal — driver에서 1/a 변환 코드에 docstring으로 명확히.
 
 ## 검증 체크리스트 (최종 commit 전)
 
-- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,136 이상)
-- [ ] 신규 테스트 모두 spec 수치 타깃 일치 (H-01 ~ H-17)
-- [ ] 스펙 cite map 준수 — 모든 public method에 citation docstring
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,295 이상)
+- [ ] 신규 테스트 모두 spec 수치 타깃 일치 (H-18 ~ H-26)
+- [ ] LB-2a 단위 변환 convention (Σ → σ = Σ/a) driver에 명시
 - [ ] 신규 LoC ≥ 25% 테스트 커버리지
-- [ ] **docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2 블록을 LB-2 둘째 파트 또는 LB-3용으로 교체** — §3 절차 따르기
+- [ ] **phase-boundary audit**: `docs/audits/AUDIT_PROMPT.md` 실행 후 `AUDIT_PHASE_LB2b_<date>.md` 생성
+- [ ] **`NEXT_SESSION_PROMPT.md §2` 블록을 LB-3용으로 교체** — §3 절차 따르기
 - [ ] 최종 commit 메시지에 "+ rotate NEXT_SESSION_PROMPT" 라인 포함
 
 ## 진행 순서
 
-1. 스펙 3개 읽기 (README, 00_conventions, 02_hierarchy)
-2. LB-1 산출물 빠른 스캔 (`bass/species/__init__.py` + `base.py`)
-3. Subpackage 레이아웃 생성 → `PSTFTensor` + 변환 행렬 → 테스트 H-01..H-08
-4. 9-term RHS 중 orthogonal subset (T1/T2/T3/T8/T9) → 테스트 H-09..H-17
-5. 부분 회귀 확인
-6. `NEXT_SESSION_PROMPT.md §2` 교체
-7. commit
+1. LB-2a audit 읽기 (F1 unit convention 주의)
+2. LB-2a 코드 빠른 스캔 (`bass/hierarchy/__init__.py`, `terms.py`)
+3. T4/T5/T6/T7 구현 → 단위 테스트
+4. `hierarchy_rhs.py` driver 구현 (Σ→σ 변환 포함) → H-18..H-23
+5. solve_ivp integration smoke → H-24..H-26
+6. 전 회귀 확인 → phase-boundary audit
+7. `NEXT_SESSION_PROMPT.md §2` → LB-3 bootstrap (§4.2 템플릿)
+8. commit
 
-이 세션이 LB-2 전체를 한 번에 끝낼 수 있으면 진행하되, 검증이 충분하지 않다 싶으면 first-half으로 끊고 NEXT_SESSION_PROMPT를 second-half용으로 교체해도 OK.
-
-시작하세요. 질문 있으면 중간에 멈추고 명확히 하기 먼저. 스펙과 다른 방향 제안 시에는 반드시 spec 문서를 먼저 수정한 뒤 구현.
+시작하세요. 질문 있으면 중간에 멈추고 명확히 하기 먼저. 스펙과 다른 방향 제안 시 반드시 spec 문서 먼저 수정.
 ```
 
 ---
