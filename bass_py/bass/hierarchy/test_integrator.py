@@ -334,9 +334,11 @@ def test_I14_high_Gamma_T_pi2_damping(species) -> None:
 # ════════════════════════════════════════════════════════════════════
 
 def test_integrator_publishes_critical_events(species) -> None:
-    """``IntegrationResult.critical_events`` carries the four keys
-    produced by ``detect_critical_events`` (z_eq, z_star,
-    eta_reion_midpoint, eta_today).
+    """``IntegrationResult.critical_events`` carries the six keys
+    produced by ``detect_critical_events`` (z_eq, z_star, eta_star,
+    chi_star, eta_reion_midpoint, eta_today). ``eta_star`` /
+    ``chi_star`` entered the contract in LB-6 F2 post-audit repair and
+    were sealed by FB-0.3.
     """
     res = _run_default(species)
     assert set(res.critical_events) == {

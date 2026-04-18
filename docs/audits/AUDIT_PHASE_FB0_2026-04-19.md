@@ -422,3 +422,200 @@ path — every FB-3 / FB-4 consumer can read `β` and `v̂_e` through
 the same two accessors without per-call kwargs plumbing. Ready to
 hand off to **FB-0.3** (LB-6 F2 carry: `eta_star` / `chi_star`
 keys on `detect_critical_events`).
+
+---
+
+## FB-0.3 supplement — LB-6 F2 carry closeout + Phase FB-0 seal
+
+**Date**: 2026-04-19 (appended in-session; FB-0.1 + FB-0.2 + FB-0.3
+all delivered on the same calendar day as three sequential commits).
+**Sub-phase**: FB-0.3 — verify and seal the LB-6 F2 carry-forward
+(`detect_critical_events` exposing `eta_star` / `chi_star` as
+first-class keys) and declare Phase FB-0 complete.
+**Baseline commit (pre FB-0.3)**: post FB-0.2 commit (`25e2531`);
+2,688 passing + 1 skipped.
+**Post FB-0.3 test count**: **2,688 passing + 1 skipped** (no new
+tests added; this is a pure verification + documentation pass; one
+pre-existing test docstring corrected to match its six-key assertion).
+**Verdict**: **통과** (LB-6 F2 resolved; Phase FB-0 sealed; ready
+for FB-1.1 hand-off).
+
+### 1. FB-0.3 audit target
+
+| Layer | Artifact | Role |
+|---|---|---|
+| LB-6 carry-forward source | `docs/audits/AUDIT_PHASE_LB6_2026-04-19.md §6 F2` | Original statement: "`detect_critical_events` returns `eta_today` but not `eta_star`; LB-6-09 and LB-6-20 compute the comoving distance to LSS manually." |
+| Locator surface (pre-existing from LB-6 F2 post-audit repair) | `bass/hierarchy/event_detection.py::find_eta_star`, `::find_chi_star` | Dedicated lookups for η(z_*) and χ_* = η_today − η(z_*) (CAMB `eta_star` convention) with Ma-Bertschinger + Baumann citations |
+| Aggregate surface (pre-existing) | `bass/hierarchy/event_detection.py::detect_critical_events` | Six-key dict `{z_eq, z_star, eta_star, chi_star, eta_reion_midpoint, eta_today}` (LB-6 post-audit addition) |
+| Consumer 1 (pre-existing) | `bass/integration/test_lowell_bianchi.py::test_LB_6_09_eta_star_comoving_distance_to_LSS` | Consumes `result.critical_events["chi_star"]` directly; band [13853, 13893] Mpc (CAMB eta_star ± 20) |
+| Consumer 2 (pre-existing) | `bass/integration/test_lowell_bianchi.py::test_LB_6_20_eta_star_vs_camb` | Consumes `result.critical_events["chi_star"]` directly vs `camb_ref["eta_star"]` |
+| Consumer 3 (pre-existing) | `bass/hierarchy/test_integrator.py::test_integrator_publishes_critical_events` | Full six-key `set()` assertion on `IntegrationResult.critical_events` |
+| Consumer 4 (pre-existing) | `bass/hierarchy/test_event_detection.py::test_detect_critical_events_returns_all_keys` | Six-key `set()` assertion + Planck-2018 bands + `η_star + χ_star = η_today` invariant |
+| Docstring drift (fixed in-session) | `test_integrator_publishes_critical_events` docstring said "four keys"; the assertion was correct (six keys) — text updated to "six keys" with FB-0.3 seal note. | — |
+
+### 2. Verification findings
+
+A systematic grep of the production tree confirmed that **no manual
+`eta_today − bg_table.eta_at_a(1/(1+z_*))` recomputation remains**.
+The only surviving `bg.eta_at_a(1/(1+z_...))` call sites are in
+`bass/species/test_baryon.py` and key on physics-unrelated z-targets
+(z=1000 for the recomb wrapper passthrough, z=7.67 for the
+reionization midpoint, z=800 for Compton coupling, z=6 for the post-H
+plateau); none of them recompute χ_* and none of them belong to the
+LB-6 F2 carry. Consumer site 3 (`test_integrator_publishes_critical_events`)
+had a stale docstring ("four keys"); the numeric assertion already
+checked all six, so the fix is a docstring synchronisation only.
+
+The LB-6 F2 locators (`find_eta_star` / `find_chi_star`) were
+landed in the LB-6 post-audit repair session, before Phase FB-0
+even opened — this is captured in the docstring of
+`detect_critical_events` lines 263-271 ("The `eta_star` / `chi_star`
+keys were added in LB-6 F2 post-audit repair …"). FB-0.3's role
+is therefore not to *implement* the fix but to *close the
+outstanding carry-forward ticket* (`AUDIT_PHASE_LB6_2026-04-19.md
+§6 F2` row status: "Carry forward" → "resolved (FB-0.3)"),
+update the drift docstring, and seal Phase FB-0.
+
+### 3. Phys-math audit ledger
+
+| Check | Result | Evidence |
+|---|---|---|
+| `find_eta_star` returns η(z_*) ∈ [270, 290] Mpc (Planck-2018 ballpark) | ✅ | `test_detect_critical_events_returns_all_keys` band assertion on `events["eta_star"]` |
+| `find_chi_star` returns `χ_star ≡ η_today − η(z_*)` within [13850, 13900] Mpc (CAMB convention) | ✅ | `test_detect_critical_events_returns_all_keys` band assertion on `events["chi_star"]` |
+| `η_star + χ_star = η_today` exact invariant (by construction from `η_today − η_star`) | ✅ | `test_detect_critical_events_returns_all_keys` pytest.approx rel=1e-12 |
+| LB-6-09 band `chi_star ∈ [13853, 13893]` Mpc | ✅ | `test_LB_6_09_eta_star_comoving_distance_to_LSS` |
+| LB-6-20 `abs(chi_star − CAMB eta_star) ≤ 20` Mpc | ✅ | `test_LB_6_20_eta_star_vs_camb` |
+| Integrator publishes six keys | ✅ | `test_integrator_publishes_critical_events` after docstring sync |
+
+### 4. Equation-to-code mapping audit
+
+| Target | Test(s) | Implementation path |
+|---|---|---|
+| `η_* = bg_table.eta_at_a(1/(1+z_*))` | `test_detect_critical_events_returns_all_keys`, `test_LB_6_09_eta_star_comoving_distance_to_LSS` | `bass/hierarchy/event_detection.py::find_eta_star` |
+| `χ_* = η_today − η_*` (CAMB `eta_star` convention) | `test_LB_6_20_eta_star_vs_camb` | `bass/hierarchy/event_detection.py::find_chi_star` |
+| Six-key aggregate contract | `test_integrator_publishes_critical_events`, `test_detect_critical_events_returns_all_keys` | `bass/hierarchy/event_detection.py::detect_critical_events` lines 254-288 |
+
+No dynamical code touched in FB-0.3. Consumer sites already
+inspect `result.critical_events["chi_star"]` (committed in the
+LB-6 post-audit repair); FB-0.3 closes the paper trail.
+
+### 5. Numerical / pipeline audit
+
+| Item | Finding |
+|---|---|
+| Full regression | 2,688 → 2,688 (+0, −0); 1 skipped unchanged |
+| Wall time | 70.0 s (stable vs 71 s post FB-0.2; docstring-only diff) |
+| Determinism | FB-0.3 modifies one docstring + two audit-log markdown files; zero dynamical state |
+| Baseline reproduction | 2,688 pre → 2,688 post (+0); 0 regressions |
+
+### 6. Ranked failure modes
+
+| ID | Type | Severity | Summary | Action |
+|---|---|---|---|---|
+| F1 (FB-0.1) | carry-forward | resolved | LB-5 F2 | Resolved FB-0.1 |
+| F3 (FB-0.1) | documentation | P2 carried | `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² | Still deferred to FB-2.4 |
+| FB02-F1 (FB-0.2) | documentation | P2 carried | `00_conventions.md §2` cross-ref of `v̂_e` default | Still deferred to FB-3.1 |
+| FB03-F1 | testing | resolved (FB-0.3) | `test_integrator_publishes_critical_events` docstring said "four keys" while the assertion correctly checked six. | **Resolved in-session**: docstring rewritten to "six keys" with FB-0.3 seal note. |
+| LB-6 F2 | interface | resolved (FB-0.3) | LB-6 carry-forward — `detect_critical_events` missing `eta_star` / `chi_star`. | **Resolved**: landed in the LB-6 post-audit repair (before Phase FB-0 opened); FB-0.3 closes the paper ticket in `AUDIT_PHASE_LB6_2026-04-19.md §6` and seals Phase FB-0. |
+
+No P0 / P1 items introduced or surviving at the end of Phase FB-0.
+Two P2 documentation carries (F3 → FB-2.4, FB02-F1 → FB-3.1)
+survive with explicit deferral targets.
+
+### 7. Verifier results
+
+| Verifier | Result | Notes |
+|---|---|---|
+| Physics | **PASSED** | `η_star` / `χ_star` bands match Planck-2018; `η_star + χ_star = η_today` invariant holds at 1e-12 |
+| Code | **PASSED** | Six-key contract preserved; docstring drift repaired; no signature changes |
+| Numerical | **PASSED** | 2,688 + 1 skip unchanged; 70 s wall time stable |
+
+### 8. Minimal repair plan (applied in-session)
+
+| Patch | Target | Status |
+|---|---|---|
+| A | `bass/hierarchy/test_integrator.py::test_integrator_publishes_critical_events` docstring — "four keys" → "six keys" with FB-0.3 seal note | ✅ |
+| B | `docs/audits/AUDIT_PHASE_LB6_2026-04-19.md §6 F2` row — status "Carry forward" → "**resolved (FB-0.3, 2026-04-19)**" with cross-reference to this supplement | ✅ |
+| C | `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md` — this FB-0.3 supplement section appended; Phase FB-0 sealed at the end | ✅ |
+| D | `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` — rotated to FB-1.1 (Class A background: I / II / VI₀ / VII₀ Kasner limit + Wainwright-Ellis §18 Table 11.1 match + Source regression promote to "VALIDATED") | ✅ (see commit) |
+
+### 9. Minimal test set (delivered)
+
+**Baseline reproduction**: 2,688 pre-FB-0.3 tests all still green;
+no pre-existing test was weakened, modified, or added. The
+single file-content change in `test_integrator.py` is a docstring
+only; the six-key `set()` assertion was already correct.
+
+**Regression**: 2,688 passing + 1 skipped; +0 new, 0 regressed.
+
+### 10. 최종 판정
+
+* **치명적 오류 있음 / 부분 통과 / 통과** → **통과** (no P0 / P1;
+  FB-0.3 is a pure verification + documentation pass, so the
+  "minimal repair" is the paper closure of LB-6 F2).
+* **지금 당장 구현/수정한 1개**: the paper-trail closure of the
+  LB-6 F2 carry-forward. The production-code fix landed earlier in
+  the LB-6 post-audit repair; FB-0.3 consolidates that fix into a
+  named sub-phase, corrects a stale test docstring, and seals
+  Phase FB-0 as a clean hand-off point for FB-1 (per-type
+  background validation).
+* **지금 손대면 안 되는 1개**: the `shear_magnitude_sq`
+  dimensionless-Σ² normalisation (F3 carry). FB-0.3 is a seal
+  session, not an FB-2.4 pre-commit; surfacing that fix today
+  would tangle `comparator_policy`, `htt.core.bounds`, Route-B
+  spectrum assembly — all outside FB-0 scope. Same reasoning as
+  the FB-0.1 "지금 손대면 안 되는 1개" entry.
+
+### Gallery refresh
+
+FB-0.3 is a **docstring + audit-log** session: no plotted
+quantity, no RHS, no convention touched. The
+`plots/physics_gallery/11_integrator/` tree continues to show the
+FB-0.1 Ellis-convention traces with the FB-0.2 tilt-field API
+scaffolding visible only through the `IntegratorConfig`
+accessors (not the plots). Per the phase-boundary gallery rule,
+all three FB-0 sub-phases are documented explicitly as visual
+no-ops; the next gallery extension is **queued for FB-1.1**,
+which will add per-type Class A background traces (I / II / VI₀
+/ VII₀ σ × a³ overlays and Wainwright-Ellis Table 11.1 anchor
+points). FB-1.1 is the first FB sub-phase that will produce
+new gallery PNGs.
+
+### Outstanding items carried forward (post-Phase-FB-0)
+
+* **F3** (P2 from FB-0.1): `TetradBackgroundState.shear_magnitude_sq`
+  → dimensionless Σ² per `00_conventions §4.2`. Deferred to **FB-2.4**
+  (11-type anisotropic ³R_ab consolidation).
+* **FB02-F1** (P2 from FB-0.2): cross-reference the FB-0.2 `v̂_e`
+  default into `00_conventions.md §2`. Deferred to **FB-3.1** (first
+  dynamical consumer of `v̂_e` — TiltedSpeciesBackground).
+
+No carries from FB-0.3 itself.
+
+---
+
+**Phase FB-0 status (final — all three sub-phases sealed)**:
+
+* **FB-0.1** delivered the Ellis Σ × a³ = const convention across
+  `einstein_bianchi`, `shear_sources`, LB-5 integrator, with
+  `00_conventions §4` SSOT rewrite.
+* **FB-0.2** delivered the tilt-field surface (`BianchiCosmology.v_hat_e`,
+  12 factories, and `IntegratorConfig.tilt_rapidity` /
+  `.tilt_direction`) with bit-identical β=0 guarantee.
+* **FB-0.3** sealed the LB-6 F2 carry-forward and corrected one
+  docstring drift; no production-code change required because the
+  `find_eta_star` / `find_chi_star` locators had already landed in the
+  LB-6 post-audit repair.
+
+The full 11-type scaffolding is now rooted in a single-source-of-truth
+convention + a single tilted-sector data surface + a complete
+six-key event-detection contract. All P0 / P1 at every sub-phase
+boundary were zero; two P2 documentation carries (F3, FB02-F1)
+survive with explicit future targets (FB-2.4 and FB-3.1
+respectively).
+
+**Phase FB-0 is hereby sealed.** The stack is ready for
+**Phase FB-1 — Per-type background validation (4 sessions)**
+starting with **FB-1.1** (Class A: I / II / VI₀ / VII₀
+Wainwright-Ellis §18 Table 11.1 match + Kasner analytic limit;
+`SOURCE_STATUS` promotion from PROVISIONAL to VALIDATED).
