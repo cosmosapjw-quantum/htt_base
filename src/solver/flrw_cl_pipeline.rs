@@ -246,6 +246,26 @@ pub(crate) fn compute_flrw_cl_track_a(
         n_k_failed += failed;
         sources.push(src);
     }
+    // Phase-0 D0.2: probe source_jl magnitude per k-mode
+    if std::env::var("BASS_SRC_PROBE").ok().as_deref() == Some("1") {
+        eprintln!("SRC_PROBE: n_k={}, summary per k-mode:", n_k);
+        for (ik, src_opt) in sources.iter().enumerate() {
+            if let Some(src) = src_opt {
+                let max_abs = src.source_jl.iter().fold(0.0_f64, |m, &v| m.max(v.abs()));
+                let n_nonfinite = src.source_jl.iter().filter(|v| !v.is_finite()).count();
+                let eta_last = *src.eta_grid.last().unwrap_or(&0.0);
+                let eta_first = *src.eta_grid.first().unwrap_or(&0.0);
+                let s_last = *src.source_jl.last().unwrap_or(&0.0);
+                if max_abs > 1e10 || n_nonfinite > 0 || ik % 20 == 0 {
+                    eprintln!(
+                        "  ik={:3} k={:.3e}  eta=[{:.2e}, {:.2e}]  n={}  |src|_max={:.3e}  src[last]={:+.3e}  nonfinite={}",
+                        ik, k_grid[ik], eta_first, eta_last, src.eta_grid.len(),
+                        max_abs, s_last, n_nonfinite,
+                    );
+                }
+            }
+        }
+    }
 
     let t_ksolve = t_step3.elapsed();
     let t_step4 = std::time::Instant::now();
@@ -333,6 +353,10 @@ pub(crate) fn compute_flrw_cl_track_a(
     }
 
     // ── Limber approximation for ℓ > ℓ_limber ──
+    // Phase-0 D0.2: instrumented variant that tracks max contribution.
+    let limber_probe = std::env::var("BASS_LIMBER_PROBE").ok().as_deref() == Some("1");
+    let mut dbg_max_contrib: f64 = 0.0;
+    let mut dbg_max_ctx = (0usize, 0usize, 0.0_f64, 0.0_f64, 0.0_f64);
     for ell in (ell_limber_eff + 1)..=config.ell_max {
         let nu = ell as f64 + 0.5;
         for ik in 0..n_k {
@@ -345,11 +369,20 @@ pub(crate) fn compute_flrw_cl_track_a(
             let eta_sp = nu / k;
             if eta_sp > eta_0 || eta_sp < 0.0 { continue; }
             let s_at_sp = interpolate_source(&src.eta_grid, &src.source_jl, eta_sp);
-            cl[ell] += PI / (2 * ell + 1) as f64
+            let contrib = PI / (2 * ell + 1) as f64
                 * delta2_grid[ik] * s_at_sp * s_at_sp * dlnk_grid[ik]
                 * (4.0 / 9.0);  // ζ-Φ normalization
+            if limber_probe && contrib.abs() > dbg_max_contrib.abs() {
+                dbg_max_contrib = contrib;
+                dbg_max_ctx = (ell, ik, k, eta_sp, s_at_sp);
+            }
+            cl[ell] += contrib;
         }
         n_limber += 1;
+    }
+    if limber_probe {
+        eprintln!("LIMBER_PROBE: max_contrib={:+.3e} at (ell={}, ik={}, k={:.3e}, eta_sp={:.3e}, s_at_sp={:+.3e})",
+            dbg_max_contrib, dbg_max_ctx.0, dbg_max_ctx.1, dbg_max_ctx.2, dbg_max_ctx.3, dbg_max_ctx.4);
     }
 
     let t_bessel = t_step4.elapsed();
@@ -462,6 +495,135 @@ mod tests {
     use super::*;
 
     fn planck() -> VisibilityParams { VisibilityParams::planck2018() }
+
+    #[test]
+    #[ignore = "production-scale timing probe; run with --ignored"]
+    fn perf_probe_default_track_a() {
+        let cfg = FlrwClConfig::default_track_a();
+        let t0 = std::time::Instant::now();
+        let r = compute_flrw_cl_track_a(&planck(), &cfg).unwrap();
+        let dt = t0.elapsed().as_secs_f64();
+        eprintln!("\n═══ PRODUCTION-SCALE TIMING ═══");
+        eprintln!("  wall        : {:.3} s", dt);
+        eprintln!("  cfg.wall_ms : {:.0} ms", r.wall_ms);
+        eprintln!("  n_k         : {}", cfg.n_k);
+        eprintln!("  ell_max     : {}", cfg.ell_max);
+        eprintln!("  ell_max_γ   : {}", cfg.ell_max_gamma);
+        eprintln!("  n_vis       : {}", cfg.n_vis);
+        eprintln!("  D_2         : {:.17e} μK²  [BITREF {:016x}]", r.dl_muK2[2], r.dl_muK2[2].to_bits());
+        eprintln!("  D_10        : {:.17e} μK²  [BITREF {:016x}]", r.dl_muK2[10.min(cfg.ell_max)], r.dl_muK2[10.min(cfg.ell_max)].to_bits());
+        eprintln!("  D_30        : {:.17e} μK²  [BITREF {:016x}]", r.dl_muK2[30.min(cfg.ell_max)], r.dl_muK2[30.min(cfg.ell_max)].to_bits());
+        eprintln!("  D_100       : {:.17e} μK²  [BITREF {:016x}]", r.dl_muK2[100.min(cfg.ell_max)], r.dl_muK2[100.min(cfg.ell_max)].to_bits());
+        eprintln!("════════════════════════════════\n");
+    }
+
+    #[test]
+    #[ignore = "Phase-0 D0.2b: ℓ_max_γ sweep — does raising it eliminate high-k source blow-up?"]
+    fn phase0_d0_2b_ell_max_gamma_sweep() {
+        // Test with increasing ell_max_gamma to confirm the cutoff reflection hypothesis.
+        // If raising ell_max_gamma from 25 → 50 → 100 → 200 monotonically shrinks the blow-up
+        // factor, that's strong evidence the bug is free-streaming truncation reflection.
+        // n_k reduced to 20 for quick turnaround.
+        let base = FlrwClConfig {
+            n_k: 20,
+            k_min: 1e-3,
+            k_max: 0.25,
+            ell_max: 300,
+            ell_limber: 100,
+            n_vis: 1500,
+            source_mode: SourceMode::SwOnly,
+            ..FlrwClConfig::default_track_a()
+        };
+        eprintln!("\n═══ ELL_MAX_GAMMA SWEEP (n_k=20, k_max=0.25) ═══");
+        for ell_g_cap in [12, 25, 50, 100, 200] {
+            let cfg = FlrwClConfig { ell_max_gamma: ell_g_cap, ..base.clone() };
+            let r = compute_flrw_cl_track_a(&planck(), &cfg).unwrap();
+            eprintln!(
+                "  ell_max_gamma={:<4} | D_2={:+.3e}  D_50={:+.3e}  D_100={:+.3e}  D_150={:+.3e}  D_200={:+.3e}  D_300={:+.3e}",
+                ell_g_cap,
+                r.dl_muK2[2], r.dl_muK2[50], r.dl_muK2[100],
+                r.dl_muK2[150], r.dl_muK2[200], r.dl_muK2[300],
+            );
+        }
+        eprintln!("═══════════════════════════════════════════════\n");
+    }
+
+    #[test]
+    #[ignore = "Phase-0 D0.1a: isolate SourceMode::Full bug — is it scale- or mode-dependent?"]
+    fn phase0_d0_1a_source_mode_matrix() {
+        // Run fast_validation scale with BOTH SourceMode variants and
+        // default_track_a scale with SourceMode::SwOnly.  If Full explodes
+        // at fast-scale too, the bug is mode-specific (extract_source_grid).
+        // If SwOnly at default-scale is clean, confirms the bug is mode-specific.
+        let scenarios = [
+            ("fast_SwOnly", FlrwClConfig {
+                source_mode: SourceMode::SwOnly,
+                ..FlrwClConfig::fast_validation()
+            }),
+            ("fast_Full", FlrwClConfig {
+                source_mode: SourceMode::Full,
+                ..FlrwClConfig::fast_validation()
+            }),
+            ("prod_SwOnly", FlrwClConfig {
+                source_mode: SourceMode::SwOnly,
+                ..FlrwClConfig::default_track_a()
+            }),
+            // prod_Full is already covered by perf_probe_default_track_a
+        ];
+        eprintln!("\n═══ SOURCE-MODE × SCALE MATRIX ═══");
+        for (name, cfg) in &scenarios {
+            let r = compute_flrw_cl_track_a(&planck(), cfg).unwrap();
+            let l_max = cfg.ell_max;
+            eprintln!(
+                "  {:14}  D_2 = {:10.3e}   D_10 = {:10.3e}   D_{:<4} = {:10.3e}   finite? {}",
+                name,
+                r.dl_muK2[2.min(l_max)],
+                r.dl_muK2[10.min(l_max)],
+                l_max.min(200),
+                r.dl_muK2[l_max.min(200)],
+                r.dl_muK2.iter().all(|x| x.is_finite()),
+            );
+        }
+        eprintln!("═══════════════════════════════════\n");
+    }
+
+    #[test]
+    #[ignore = "Phase-0 D0.1c: locate blow-up onset by logging D_ell per ell"]
+    fn phase0_d0_1c_dl_profile_full_mode() {
+        // prod-scale Full mode: log D_ell at many ells to pinpoint where
+        // the blow-up starts (linearly growing, exponential, or single-ell spike).
+        let cfg = FlrwClConfig::default_track_a();
+        let r = compute_flrw_cl_track_a(&planck(), &cfg).unwrap();
+        let probes = [2usize, 5, 10, 20, 30, 50, 100, 150, 200, 300, 500, 1000, 2000];
+        eprintln!("\n═══ D_ell PROFILE (prod Full) ═══");
+        for ell in probes.iter().copied().filter(|&e| e <= cfg.ell_max) {
+            let d = r.dl_muK2[ell];
+            let marker = if !d.is_finite() {
+                "!!NaN/Inf"
+            } else if d.abs() > 1e20 {
+                "<<EXPLODED"
+            } else if d > 1e5 {
+                "<High"
+            } else {
+                ""
+            };
+            eprintln!("  D_{:<5} = {:+.4e}   {}", ell, d, marker);
+        }
+        eprintln!("═══════════════════════════════════\n");
+    }
+
+    #[test]
+    #[ignore = "bit-identical regression anchor; run with --ignored"]
+    fn bitref_fast_val_d2() {
+        let cfg = FlrwClConfig::fast_validation();
+        let r = compute_flrw_cl_track_a(&planck(), &cfg).unwrap();
+        eprintln!("\n═══ BIT-IDENTICAL REFERENCE (fast_val) ═══");
+        for ell in [2, 5, 10, 20, 30] {
+            let d = r.dl_muK2[ell.min(cfg.ell_max)];
+            eprintln!("  D_{:<3} = {:.17e}  [BITREF {:016x}]", ell, d, d.to_bits());
+        }
+        eprintln!("══════════════════════════════════════════\n");
+    }
 
     // ═══════════════════════════════════════════════════════════
     // CL-04A: Pipeline runs and produces physical results

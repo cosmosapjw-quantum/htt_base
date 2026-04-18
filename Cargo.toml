@@ -26,3 +26,21 @@ features = ["nalgebra"]
 
 [dev-dependencies]
 pprof = { version = "0.13", features = ["flamegraph", "protobuf-codec"] }
+
+# ─────────────────────────────────────────────────────────────────────
+#  Release profile — PERF-EXPLORE 2026-04-18
+#  Added after a fresh profiling session (see docs/PERF_FRESH_2026-04-18.md).
+#  Measured impact will be recorded there.
+# ─────────────────────────────────────────────────────────────────────
+[profile.release]
+lto = "thin"           # thin LTO — cross-module inlining with less code bloat
+codegen-units = 16     # keep default CGU — preserves LLVM pass flexibility
+panic = "abort"        # smaller code, no unwind tables in hot loops
+debug = "line-tables-only"  # keep enough symbols for perf/samply
+strip = "none"         # do not strip; let tools find symbols
+
+# Bench inherits release with full debug info for profilers
+[profile.bench]
+inherits = "release"
+debug = true
+strip = "none"
