@@ -1,15 +1,16 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W7` phase.
+**As of**: 2026-04-19, post-`IND_TRACKS_W8` phase.
 **Last audited**: 2026-04-19
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W7_2026-04-19.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W6_2026-04-19.md`,
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W7_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W6_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W5_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W4_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W3_2026-04-19.md`).
 **Governing plan**: `INDEPENDENT_TRACKS_PLAN.md` **v1.2** (PART II MIO
 integration patch + PART III Week-5+ realignment landed 2026-04-19;
-Week 1–7 routine shipped; Week 8 routine detailed in plan §21).
+Week 1–8 routine shipped; Week 9 extension routine referenced below).
 **Parent plan**: **`BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN.md` v3** (MIO
 added as 4th pillar; supersedes `BASS_PY_HTT_TSC_RESEARCH_PLAN.md` v2
 which remains referenced from historical carry-forwards).
@@ -113,93 +114,147 @@ vs W6's 878; skip composition unchanged). The `bass_py/tsc/`
 standalone test count is **598** (up from 482 post-W6 — W7 FM1 in the
 audit documents that the prior "615" estimate in this file was stale).
 
+## §1c-5. What shipped in Week 8
+
+Commits `ab1297b` (W8D3) → `64327b8` (W8D7). Four landings, one
+phase-boundary audit (`AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`).
+
+| Track | Artefact | Status |
+|---|---|---|
+| MANU-CH11-REDESIGN (Days 1-3) | `project/00_manuscript/ch11_error_hierarchy.tex` 596→1087 L — three new v3 §11.14.2 subsections (`sec:err-mio-semantic`, `sec:err-g19`, `sec:err-epistemic`); `truth certificate` mention count = 9 ≥ 4 gate; banned-vocab scan = 0 hits | landed |
+| MANU-CH12-NEW (Days 4-5) | `project/00_manuscript/ch12_mio_observatory_results.tex` (new file, 702 L) — §12.0 Philosophy (150 L), §12.2 Cross-channel directional coherence (170 L, HJ-02a numbers verbatim from A35), §12.6 HTT↔MIO cross-validation (177 L, A34 channel catalogue), §12.7 Scope and limitations (165 L); each ≥ 150 L gate; main.tex inputs it after ch11 | landed |
+| HTT-STAB final (Day 6) | `bass_py/htt/tests/fixtures/pipeline_outputs/{FLRW_tilt_results,robustness_sweeps_integrated}.json` + HTT_PIPELINE_OUTDIR env-var wiring in `htt/figures/__init__.py` + `htt/figures/conftest.py` + patches to `fig_evidence_decomposition.py` and `fig_channel_ablation_heatmap.py`; test_figures_smoke.py skip count 8→6 (−2 gate met); 300 DPI already uniform across all 28 figure scripts | landed |
+| HTT-NULL smoke green (Day 7) | `bass_py/htt/tests/test_nulls.py` +58 L = new `TestRunnerSmoke` class (5 tests: imports, 5-family instantiation, runner builds stub pipeline, family-result schema, JSON round-trip); test_nulls.py 11→16 passed; full green gate met | landed |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md` | landed |
+
+Final test tally over the touched surface at W8 boundary:
+**1001 passed, 0 failed, 6 skipped** (+7 vs W7's 994; −2 skips
+resolved; no regressions). Composition of the remaining 6 skips:
+2 × mio.core/reporting (W6 carry), 1 × dynesty (W5 carry), 3 ×
+remaining /mnt/user-data fixtures (W5 SKIP-05-LATENT partially
+resolved; `fig_rho_sweep`, `fig_departure_summary`, and
+`fig_v_pushforward` still blocked — see W8 FM3 for the
+extension path).
+
+Note on manuscript file tracking: the `/project` directory is
+gitignored at `.gitignore:126`. Prior audits' "landed" claims
+for `project/00_manuscript/ch03_framework.tex` et al. touched
+the working tree only and were never committed. W8D3 / W8D5
+force-added the three manuscript files (ch11, ch12, main.tex)
+to unblock the Week-8 gate. Documented as **W8 FM1** — policy
+question deferred to the user.
+
 ## §1d. What was designed in the 2026-04-19 planning session
 
 (Preserved here for provenance; unchanged from earlier rotations.
 See v3 research plan + PART II + PART III of the governing plan.)
 
-## §2. Active priorities for the next session (Week 8)
+## §2. Active priorities for the next session (Week 9)
 
-**"Manuscript ch11 / ch12 + HTT stabilisation 완결"** — distilled
-from `INDEPENDENT_TRACKS_PLAN.md` §21 Week 8.
+**"DOS-A13 remaining models + full-regression audit + opportunistic
+carry-forwards"** — distilled from `INDEPENDENT_TRACKS_PLAN.md` §21
+Week 9 (recorded as "Week 9 이후" in plan; the session should also
+treat the W8 FM1-FM6 ledger in `AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`
+as first-order input). Week 8 closed all four scheduled landings
+(MANU-CH11-REDESIGN, MANU-CH12-NEW, HTT-STAB final, HTT-NULL smoke);
+no W8 rollovers block Week 9.
 
-### Days 1–3 (Mon–Wed) — MANU-CH11-REDESIGN
+### Days 1–3 (Mon–Wed) — DOS-A13 remaining 12 models
 
-**MANU-CH11-REDESIGN** (plan v1.1 §13.1). `project/00_manuscript/ch11_error_hierarchy.tex`
-— ship the three new v3 §11.14.2 subsections plus a banned-vocab
-sweep that eradicates any residual v2 "certification engine" /
-"truth attestation" / "identified vs reporting" wording from ch11.
-Target: "truth certificate" re-emphasised ≥ 4 times (v3 §15.2
-qualitative indicator).
+**DOS-A13** (plan §21 Week 9). The A13 dossier series currently has
+the template plus two landings: `A13_00_FLRW.md` and
+`A13_01_FLRW_tilt.md`. The v3 §11.14.6 schedule requires the
+remaining 12 Bianchi models (BI, BII, BIII_tilt, BV, BVIIh_tilt,
+BVIIh_tilt_grow, BVIIh_tilt_dec, BVIIh_orth, BVIIh_orth_dec,
+BIX_tilt, and the two "grow/dec" variants not yet enumerated). Each
+dossier entry follows `A13_template.md` and is code-independent
+(no bass_py / HTT / tsc dependency).
 
-- Commit tag: `W8D3: MANU-CH11-REDESIGN`
-- Gate: banned-vocab scan returns 0 hits on `project/00_manuscript/ch11_*`
-  and "truth certificate" count ≥ 4.
+- Commit tag candidates: `W9D1: DOS-A13 BI/BII`, `W9D2: DOS-A13
+  BIII_tilt/BV`, `W9D3: DOS-A13 BVIIh family` (three per day).
+- Gate: 14 A13 files present; each follows the template; each
+  references the corresponding htt evidence model entry (from
+  v3 §0.3 table).
 
-### Days 4–5 (Thu–Fri) — MANU-CH12-NEW §12.0 / §12.2 / §12.6 / §12.7
+### Day 4 (Thu) — W8 FM3 HTT-STAB extension (optional over-delivery)
 
-**MANU-CH12-NEW** (plan v1.1 §13.2). `project/00_manuscript/ch12_mio_observatory_results.tex`
-(new file) — ship the four sections that don't depend on downstream
-bass_py / HTT outputs:
+**HTT-STAB round 2** (plan v1.0 §3.4 + W8 FM3). Apply the W8D6
+`HTT_PIPELINE_OUTDIR` pattern to the three remaining /mnt/user-data
+figures and add the IS06 fixture:
 
-* §12.0 introduction (MIO scope, G19 stance)
-* §12.2 directional coherence (HJ-02a results + σ_cone literature
-  citations; closes W6 FM2 PROBE-SIGMA)
-* §12.6 masked-sky caveats (HJ-05a-lite + f_sky ledger)
-* §12.7 cross-check protocols (A34 reference + TSC-06 hero)
+- `fig_rho_sweep.py` (robustness_sweeps_integrated.json; the
+  existing W8D6 fixture already covers schema — extend with
+  `sweep_A_rho` key);
+- `fig_departure_summary.py` (note: this also requires the dynesty
+  chain — partial unblock only);
+- `fig_v_pushforward.py` (new fixture
+  `IS06_3D_posterior.npz` needed).
 
-- Commit tag: `W8D5: MANU-CH12-NEW four-section draft`
-- Gate: 4 sections draft ≥ 150 L each; references A35 / A38 / A34
-  appendices.
+- Commit tag: `W9D4: HTT-STAB round 2 — /mnt/user-data residual`
+- Gate: `test_figures_smoke.py` skip count drops to ≤ 4 (from 6);
+  if the dynesty-chain figure remains skipped, that is acceptable
+  and documented as a separate carry-forward.
 
-### Day 6 (Sat) — HTT-STAB final
+### Day 5 (Fri) — W7 FM2 TSC-06 RNG stream refactor
 
-**HTT-STAB** (plan v1.0 §3.4). Resolve the remaining `bounds`-related
-2 skips (from W5 carry-forward) and unify the HTT figures at 300 DPI
-with a common palette.
+**FillingFraction.mc_posterior pre-drawn triple** (plan v1.0 §3.4
++ W7 FM2). Refactor `htt.core.analysis_extended.FillingFraction.mc_posterior`
+to accept a pre-drawn (ε₁, ε₂, ε₃) triple via a keyword argument;
+update `tsc.integration.htt_bridge.ff_htt_mc_cross_check` to pass
+the shared triple by construction instead of re-seeding.
 
-- Commit tag: `W8D6: HTT-STAB final — bounds skips + palette`
-- Gate: `bass_py/htt/tests/test_figures_smoke.py` skip count drops
-  by 2 (bounds family → 0).
+- Commit tag: `W9D5: AUDIT(W7-FM2): FillingFraction stream refactor`
+- Gate: TSC-06 rtol < 1e-6 preserved on S3; stream-alignment
+  coupling removed from the test-reader's mental model; W7 FM2
+  closes.
 
-### Day 7 (Sun) — HTT-NULL smoke green
+### Days 6–7 (Sat–Sun) — Full-regression audit + MIO ≥ 25 midpoint
 
-**HTT-NULL** (plan v1.0 §3.5). Finalise the `htt.nulls.runner` smoke
-test per §3.5; all 5 null family imports succeed + runner builds
-the stub pipeline without raising.
+**Full regression** (plan §15.1; parent plan v3 §15.1 target 2,800).
+Inventory the current `bass + tsc + htt + mio + common` combined test
+count; confirm MIO contribution ≥ 25; identify the first gap to
+close (likely HJ-04 evidence anatomy or HJ-01 shear extraction
+skeleton).
 
-- Commit tag: `W8D7: HTT-NULL smoke green`
-- Gate: `pytest bass_py/htt/tests/test_nulls.py` full green.
+- Commit tag: `W9D7: full-regression inventory + MIO gap audit`
+- Gate: combined test count documented in audit; gap list ranked.
 
-### Week 8 final gate (plan §21)
+### Week 9 final gate (plan §21 "Week 9 이후")
 
-- [ ] ch11 contains ≥ 4 mentions of "truth certificate" (v3 §15.2).
-- [ ] ch12 skeleton + 4 sections drafted.
-- [ ] `bass_py/htt/tests/` `bounds` skip count = 0.
-- [ ] `htt.nulls` smoke test full green.
-- [ ] Phase-boundary audit written to
-      `docs/audits/AUDIT_PHASE_IND_TRACKS_W8_YYYY-MM-DD.md`.
+- [ ] DOS-A13 14 models present (template + 14 Bianchi types).
+- [ ] W9D4 skip reduction (or explicit skip-count rationale if
+      dynesty chain blocks).
+- [ ] W7 FM2 TSC-06 RNG stream refactor landed.
+- [ ] Full-regression audit log written to
+      `docs/audits/AUDIT_PHASE_IND_TRACKS_W9_YYYY-MM-DD.md`.
+- [ ] MIO contribution ≥ 25 tests (currently 40 — already over).
 
-### Deferred to Week 9+ (not Week-8 targets)
+### Deferred to Week 10+ (not Week-9 targets)
 
-- **DOS-A13 remaining 12 models** — Week 9 (plan §21).
-- **Full regression ≥ 1,800** — Week 9 (bass + tsc + htt + mio +
-  common integrated count; MIO contribution ≥ 25).
-- **W4 F1 mock coverage sandwich** — opportunistic during Week 8
-  ch12 draft when `C_pix` non-uniform data is written up.
-- **W4 F4 Θ⁴ bridge htt audit tightening** — when htt lands a native
-  `_a2_coefficient_table` (Week 9+).
-- **W5 DYNESTY-DEP** — install dynesty at the next convenient window.
-- **W7 FM2 TSC-06 RNG stream alignment** — refactor
-  `FillingFraction.mc_posterior` to accept a pre-drawn (ε₁, ε₂, ε₃)
-  triple when the bass/htt lane is quiet.
+- **MANU-CH12 remaining sections** (§12.1, §12.3, §12.4, §12.5,
+  §12.8) — blocked on bass_py K_ℓ atlas, HTT posterior draws,
+  BiPoSH coefficients.
+- **Full regression ≥ 1,800** — spill target; Week 9 lands the
+  intermediate checkpoint.
+- **W4 F1 mock coverage sandwich** — opportunistic during
+  MANU-CH12 §12.3 write-up.
+- **W4 F4 Θ⁴ bridge htt audit tightening** — when htt lands
+  `_a2_coefficient_table`.
+- **W5 DYNESTY-DEP** — install when convenient;
+  `venv/bin/pip install dynesty` unblocks ≥ 2 figure smoke skips.
 - **W7 FM3 TSC-05 schema hash freeze** — add digest test on first
   schema extension.
+- **W8 FM1** `/project` .gitignore policy — user decision.
+- **W8 FM2** palette unification — opportunistic on figure
+  regeneration.
+- **W8 FM6** `clustering` vs `clustering_dipole` name mismatch —
+  cross-lane rename; record only.
 
-## §3. Carry-forward items from W1–W7 audits
+## §3. Carry-forward items from W1–W8 audits
 
-Severity legend: **P0** = Day-1 blocker, **P1** = Week-8 target,
-**P2** = later week, **P3** = out-of-lane. W7 additions at the bottom.
+Severity legend: **P0** = Day-1 blocker, **P1** = Week-9 target,
+**P2** = later week, **P3** = out-of-lane. W7 additions above W8
+additions at the bottom.
 
 | Tag | Severity | Description | Where to act |
 |---|---|---|---|
@@ -210,7 +265,7 @@ Severity legend: **P0** = Day-1 blocker, **P1** = Week-8 target,
 | W4 F1 | P2 | `run_zoa_null_mocks` coverage drifts outside [0.60, 0.76] when `C_pix` non-uniform (sandwich cov needed). | Opportunistic during Week 8 ch12 draft. |
 | W4 F2 | **RESOLVED W7** | F_Bayes htt numerical equivalence cross-check. | TSC-06 landed `tsc.integration.htt_bridge.ff_htt_mc_cross_check` with rtol 1e-6 agreement on the S3 scenario. |
 | W4 F4 | P2 | Θ⁴ bridge htt audit uses FD at h = 1e-2. | Swap when htt lands a native `_a2_coefficient_table`. |
-| W5 SKIP-05-LATENT | P2 | 5 `test_figures_smoke.py` skips on `/mnt/user-data` fixtures. | Week 8 HTT-STAB — synthetic fixture stubs + HTT_PIPELINE_OUTDIR env var. |
+| W5 SKIP-05-LATENT | **PARTIALLY RESOLVED W8** | 2 of 5 `/mnt/user-data` fixture skips resolved via HTT_PIPELINE_OUTDIR pattern (fig_evidence_decomposition + fig_channel_ablation_heatmap); 3 still blocked (fig_rho_sweep, fig_departure_summary, fig_v_pushforward). | Extend pattern in Week 9 — see W9 §2 Day 4. |
 | W5 DYNESTY-DEP | P2 | 1 skip on `dynesty`. | `venv/bin/pip install dynesty`. |
 | W5 APPLY-BIAS-AMP | P2 | `_apply_bias_to_direction` scales by `|V_true|` not measurement amplitude. | Opportunistic Week 8+. |
 | W6 SKIP-02b-v3-LEGACY | P2 | 2 `test_figures_smoke.py` skips on `mio.core` / `mio.reporting`. | Week 8+ MANU-CH12-NEW rewrite or retire the two figures. |
@@ -223,6 +278,12 @@ Severity legend: **P0** = Day-1 blocker, **P1** = Week-8 target,
 | **W7 FM3** | **P3** | TSC-05 JSON schema freeze is literal-based (`SCHEMA_VERSION = "TSC-05/v1"` + literal key-set test), not hash-based like `MioCertificate`. | Add hash digest test on first schema extension. |
 | **W7 FM4** (inherited W6 FM2) | **P2** | σ_cone placeholders. | See W6 FM2 row. |
 | **W7 FM5** | **P3** | `bass_py/tsc/integration/` is new surface; not explicitly listed in `pyproject.toml` but covered by default glob. | No action; note only. |
+| **W8 FM1** | **P2** | `/project` is gitignored at `.gitignore:126`; manuscript landings require `git add -f`. Prior "MANU-CH03 landed" claims were working-tree-only, not committed. | Policy question for the user — remove the ignore or keep force-add. |
+| **W8 FM2** | **P2** | 9 of 28 HTT figure scripts skip `apply_style()` (5 use local `set_style()`, 4 rely on explicit `dpi=300` kwarg). DPI uniform; palette not. | Opportunistic when figures are regenerated. |
+| **W8 FM3** | **P2** | `fig_rho_sweep.py`, `fig_departure_summary.py`, `fig_v_pushforward.py` still hard-code `/mnt/user-data/outputs`. Applying W8D6 pattern drops 2-3 more skips. | Week 9 §2 Day 4 extension. |
+| **W8 FM4** | **P3** | `fig_departure_summary` skip message now surfaces `dynesty` rather than the underlying file-not-found, due to import-order. Cleanly skipped; no regression. | No action; documentation only. |
+| **W8 FM5** | **P3** | `TestRunnerSmoke` covers only the fast-path analytical approximation; production nested-sampling ~40 h CI cost is out of scope. | By design; no action. |
+| **W8 FM6** | **P3** | `NULL_REGISTRY` keys `ClusteringDipoleNull` under `'clustering'` while its `.name` attribute is `'clustering_dipole'`. Pre-existing. | Cross-lane rename; record only. |
 
 ## §4. Environment and quickstart
 
@@ -230,15 +291,15 @@ Severity legend: **P0** = Day-1 blocker, **P1** = Week-8 target,
 # Repo root
 cd /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 
-# Sanity: touched-surface test run.  As of 2026-04-19 post-W7:
-# 994 passed, 0 failed, 8 skipped (+116 new tests vs W6).
+# Sanity: touched-surface test run.  As of 2026-04-19 post-W8:
+# 1001 passed, 0 failed, 6 skipped (+7 vs W7; 2 skips resolved).
 venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
                 bass_py/tsc/admissibility/ \
                 bass_py/tsc/diagnostics/ bass_py/tsc/charts/ \
                 bass_py/tsc/integration/ \
                 bass_py/workspace/ bass_py/mio/
 
-# tsc standalone (18 s; 598 passed post-W7).
+# tsc standalone (18 s; 598 passed post-W7; unchanged W8).
 venv/bin/pytest bass_py/tsc/
 
 # Full monorepo suite (slower).
@@ -277,7 +338,7 @@ session's responsibility and must not be touched here:
   Week 6) — the modules that do not depend on bass_py deliverables.
 * `plots/physics_gallery/` — gallery refresh is bass_py's per-phase rule.
 
-### §5a. This lane's new territory (updated post-W7)
+### §5a. This lane's new territory (updated post-W8)
 
 Directories that **this** lane now owns (created or will be created
 per the v1.2 plan — bass_py session must not touch):
@@ -296,10 +357,16 @@ per the v1.2 plan — bass_py session must not touch):
   land in Week 9).
 * `project/00_manuscript/ch03_framework.tex` (MANU-CH03 subsections;
   Week 1–4 landed; ~800 L gap vs v3 §11.3 target remains).
-* `project/00_manuscript/ch11_error_hierarchy.tex` (MANU-CH11-REDESIGN,
-  **Week 8**).
-* `project/00_manuscript/ch12_mio_observatory_results.tex` **(new file)** —
-  MANU-CH12-NEW (**Week 8** draft for §12.0/§12.2/§12.6/§12.7).
+* `project/00_manuscript/ch11_error_hierarchy.tex` — MANU-CH11-REDESIGN
+  three new §11.14.2 subsections landed Week 8; 596→1087 L.
+* `project/00_manuscript/ch12_mio_observatory_results.tex` (new file,
+  702 L) — MANU-CH12-NEW §12.0 / §12.2 / §12.6 / §12.7 landed Week 8;
+  §12.1 / §12.3 / §12.4 / §12.5 / §12.8 deferred to Phase J.
+* `project/00_manuscript/main.tex` — inputs ch12 after ch11 (first
+  tracked landing W8D5; `/project` gitignored, force-added).
+* `bass_py/htt/tests/fixtures/pipeline_outputs/` — NEW Week-8 fixture
+  directory (FLRW_tilt_results.json + robustness_sweeps_integrated.json
+  synthetic stubs with HTT_PIPELINE_OUTDIR wiring in htt/figures/).
 
 If either lane is tempted to touch the other's area, stop and ask the
 user first.
