@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""PreToolUse hook: detect phase-boundary git commits and require the
-integrated phys-math-code audit before letting them through.
+"""PreToolUse hook: detect phase-boundary git commits and require both
+the integrated phys-math-code audit AND the physics-gallery refresh
+before letting them through.
 
 Fires on every Bash tool invocation. Reads the tool_input from stdin
 (Claude Code delivers a JSON payload that includes the shell command).
@@ -8,14 +9,18 @@ When the command is a phase-boundary `git commit` (matches the
 `LB-\\d+:` or `Phase LB complete` or `rotate NEXT_SESSION_PROMPT`
 patterns) AND the most recent commits do NOT contain a matching
 `AUDIT(<tag>):` entry, emit ``additionalContext`` so Claude is
-reminded to execute the audit first.
+reminded to execute the audit + gallery refresh first.
 
 The hook is advisory — it never blocks the commit outright. The
-load-bearing mechanism is the feedback memory `phase_boundary_audit`
-which tells every future Claude session to run the audit
-unprompted; this hook is a belt-and-suspenders reminder.
+load-bearing mechanisms are two feedback memories:
 
-Install via ``.claude/settings.json`` ``hooks.PreToolUse`` entry.
+* ``phase_boundary_audit`` — run the audit, fix P0/P1 inline.
+* ``phase_boundary_gallery`` — extend and regenerate
+  ``plots/physics_gallery/`` every phase boundary.
+
+This hook is a belt-and-suspenders reminder surfaced via
+``additionalContext``. Install via ``.claude/settings.json``
+``hooks.PreToolUse`` entry.
 """
 from __future__ import annotations
 
@@ -72,12 +77,22 @@ def main() -> int:
     reminder = (
         "\n\n"
         "[AUTO-AUDIT REMINDER] Phase-boundary commit detected. Before "
-        "completing this commit, load docs/audits/AUDIT_PROMPT.md and "
-        "execute the integrated phys-math-code audit inline. Fix any "
-        "P0/P1 findings in-session and commit with prefix "
-        "'AUDIT(<phase-tag>): <short>'. This reminder fires because no "
-        "AUDIT(…) commit was found in the recent history. See feedback "
-        "memory phase_boundary_audit for the full procedure."
+        "completing this commit, two tasks must be done in the same "
+        "session:\n"
+        "  (1) Load docs/audits/AUDIT_PROMPT.md and execute the "
+        "integrated phys-math-code audit inline. Fix any P0/P1 findings "
+        "and commit with prefix 'AUDIT(<phase-tag>): <short>'.\n"
+        "  (2) Extend scripts/make_physics_gallery.py with a new topic "
+        "directory (or new plots in an existing topic) covering every "
+        "quantity this phase added, then run "
+        "'venv/bin/python scripts/make_physics_gallery.py' to regenerate "
+        "all PNGs under plots/physics_gallery/. Update "
+        "plots/physics_gallery/README.md with the new entries. Visually "
+        "inspect each new plot and correct any rendering / physics / "
+        "label issues before committing.\n"
+        "This reminder fires because no AUDIT(…) commit was found in "
+        "the recent history. See feedback memories phase_boundary_audit "
+        "and phase_boundary_gallery for the full procedures."
     )
     out = {
         "hookSpecificOutput": {

@@ -1,14 +1,18 @@
 # bass_py physics plot gallery
 
 Structured PNG gallery of every physical quantity the bass_py codebase
-can currently produce at the **post-LB-1 baseline** (species
+can currently produce at the **post-LB-2a baseline** (species
 backgrounds, FLRW geometry, HyRec-based recombination / tanh
 reionization, Y-Block Bianchi shear evolution, lowell §11.3
-tilt-boost kinematics, Friedmann closure, and parameter sweeps).
+tilt-boost kinematics, Friedmann closure, parameter sweeps, and the
+PSTF multipole hierarchy algebra shipped in LB-2a).
 
 **Generator**: [`scripts/make_physics_gallery.py`](../../scripts/make_physics_gallery.py)
-**Total**: 37 plots across 8 topics
+**Total**: 45 plots across 9 topics
 **Regenerate**: `venv/bin/python scripts/make_physics_gallery.py`
+**Cadence**: regenerated at the end of every LB-N phase; see the
+[phase-boundary hook](../../.claude/hooks/check_phase_boundary_audit.py)
+which reminds to refresh before any `LB-N` commit lands.
 
 All plots come from bass_py + the shipped HyRec fixture; no external
 cosmology code is imported (per LB-0 external-code policy).
@@ -114,6 +118,26 @@ Cosmological sensitivities: z_eq, η_0, τ_reion as functions of
 | [01_z_eq_vs_Omega_m.png](08_parameter_sweeps/01_z_eq_vs_Omega_m.png) | z_eq = Ω_m/Ω_r − 1 sweep, fixed Ω_r |
 | [02_eta_today_vs_H0.png](08_parameter_sweeps/02_eta_today_vs_H0.png) | η_0 vs H_0 for Ω_m ∈ {0.28, 0.3153, 0.35} |
 | [03_tau_reion_vs_z_rei.png](08_parameter_sweeps/03_tau_reion_vs_z_rei.png) | τ_reion vs (z_rei_H, Δz) with Planck 2018 band |
+
+## 09 · PSTF multipole hierarchy (LB-2a)
+
+Storage-layer and orthogonal-Bianchi-active subset of the 1+3
+covariant PSTF multipole hierarchy implemented in
+[`bass/hierarchy/`](../../bass_py/bass/hierarchy/). Every panel sources
+its numbers from the shipped code — basis tensors ``Q_ℓ``, the nine-
+term prefactor table, and the ``T1/T8/T9`` action on realistic
+backgrounds.
+
+| File | Description |
+|---|---|
+| [01_stf_dim_vs_symmetric.png](09_pstf_hierarchy/01_stf_dim_vs_symmetric.png) | dim(PSTF_ℓ) = 2ℓ+1 vs dim(Sym_ℓ) = (ℓ+1)(ℓ+2)/2 for ℓ=0..8; shaded region is the kept-trace degrees of freedom |
+| [02_roundtrip_precision.png](09_pstf_hierarchy/02_roundtrip_precision.png) | Packed ↔ full-tensor round-trip ‖c − c_rt‖_∞ vs ℓ with the ε_mach × 3^ℓ reference line |
+| [03_term_prefactors.png](09_pstf_hierarchy/03_term_prefactors.png) | Analytic prefactors for T1, T3, T7, T8, T9 as functions of ℓ |
+| [04_stf_basis_ell2_tensors.png](09_pstf_hierarchy/04_stf_basis_ell2_tensors.png) | Five orthonormal STF basis tensors at ℓ=2 as 3×3 heatmaps (QR-ordered) |
+| [05_T9_shear_quadrupole.png](09_pstf_hierarchy/05_T9_shear_quadrupole.png) | T9 at ℓ=2 — ‖T9‖_F = 4\|Σ_+\|\|Π_0\| sweep + decomposition in the QR basis |
+| [06_T8_shear_spectrum.png](09_pstf_hierarchy/06_T8_shear_spectrum.png) | ‖T8‖_F acting on a unit-norm random PSTF Π_ℓ, for ℓ=1..8 |
+| [07_T1_damping_history.png](09_pstf_hierarchy/07_T1_damping_history.png) | (4/3)Θ(η) expansion damping rate from BBN to today + action on a unit Π_2 |
+| [08_shear_injection_over_time.png](09_pstf_hierarchy/08_shear_injection_over_time.png) | Bianchi I Σ_+(η) history → proper σ_+(η) = Σ_+/a → injected ‖T9‖ at ℓ=2 with Π_0 = 1 |
 
 ---
 

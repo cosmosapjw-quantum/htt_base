@@ -70,6 +70,21 @@ from bass.species.cdm import CDMBackground  # noqa: E402
 from bass.species.lambda_ import LambdaBackground  # noqa: E402
 from bass.species.neutrino import NeutrinoBackground  # noqa: E402
 from bass.species.photon import PhotonBackground  # noqa: E402
+from bass.hierarchy import (  # noqa: E402
+    L_MAX_CACHED,
+    T1_expansion,
+    T3_divergence,
+    T7_shear_up,  # stub — prefactor reference only
+    T8_shear_same,
+    T9_shear_down,
+    stf_basis,
+    sym_trace_free,
+    pstf_pack,
+    pstf_unpack,
+    verify_pstf_invariants,
+    zero_nabla_operator,
+)
+from bass.background.tetrad_state import axisymmetric_sigma_tensor  # noqa: E402
 from htt.htt.core.plot_style import COLS, apply_style  # noqa: E402
 
 
@@ -1317,6 +1332,325 @@ def plot_08_03_tau_reion_vs_z_rei() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
+# Topic 09 — PSTF multipole hierarchy (LB-2a)
+# ════════════════════════════════════════════════════════════════════
+
+
+TOPIC_09 = "09_pstf_hierarchy"
+
+
+def _sym_basis_count(ell: int) -> int:
+    """Number of independent rank-ℓ totally-symmetric tensors on 3-space."""
+    return (ell + 1) * (ell + 2) // 2
+
+
+def plot_09_01_stf_dim_vs_symmetric() -> None:
+    """dim(PSTF)=2ℓ+1 vs dim(sym)=(ℓ+1)(ℓ+2)/2 for ℓ=0..8."""
+    ells = np.arange(L_MAX_CACHED + 1)
+    stf = 2 * ells + 1
+    sym = np.array([_sym_basis_count(int(l)) for l in ells])
+    fig, ax = plt.subplots(figsize=(6.5, 4.0))
+    ax.plot(ells, sym, marker="s", color=COLS["purple"], lw=1.4,
+             label=r"$\dim(\mathrm{Sym}_\ell)=(\ell+1)(\ell+2)/2$")
+    ax.plot(ells, stf, marker="o", color=COLS["orange"], lw=1.4,
+             label=r"$\dim(\mathrm{PSTF}_\ell)=2\ell+1$")
+    ax.fill_between(ells, stf, sym, alpha=0.12, color=COLS["blue"],
+                     label="traces removed by STF projection")
+    for i, l in enumerate(ells):
+        ax.annotate(f"{sym[i]-stf[i]}", (l, 0.5 * (stf[i] + sym[i])),
+                     fontsize=7, ha="center", color=COLS["blue"])
+    _prepare_axes(ax, r"multipole rank $\ell$",
+                   r"number of independent components",
+                   title=r"PSTF basis count (trace removal spectrum)")
+    ax.legend(loc="upper left", fontsize=9)
+    ax.set_xticks(ells)
+    _save(fig, "01_stf_dim_vs_symmetric", TOPIC_09)
+
+
+def plot_09_02_roundtrip_precision() -> None:
+    """Packed → full → packed round-trip error vs ℓ on random inputs."""
+    rng = np.random.default_rng(2026)
+    n_samples = 40
+    ells = np.arange(L_MAX_CACHED + 1)
+    max_err = np.zeros_like(ells, dtype=np.float64)
+    mean_err = np.zeros_like(ells, dtype=np.float64)
+    for i, ell in enumerate(ells):
+        errs = []
+        for _ in range(n_samples):
+            c = rng.normal(size=2 * int(ell) + 1)
+            T = pstf_unpack(c, int(ell))
+            c_rt = pstf_pack(T)
+            errs.append(float(np.max(np.abs(c - c_rt))))
+        max_err[i] = max(np.max(errs), 1e-17)
+        mean_err[i] = max(np.mean(errs), 1e-17)
+    # Machine-precision × 3^ℓ reference line.
+    ref = np.finfo(np.float64).eps * (3.0 ** ells)
+    fig, ax = plt.subplots(figsize=(6.5, 4.0))
+    ax.semilogy(ells, max_err, marker="o", color=COLS["orange"], lw=1.4,
+                 label=r"max $\|c-c_{\rm rt}\|_\infty$")
+    ax.semilogy(ells, mean_err, marker="s", color=COLS["blue"], lw=1.4,
+                 label=r"mean $\|c-c_{\rm rt}\|_\infty$")
+    ax.semilogy(ells, ref, color="0.3", ls=":", lw=1.0,
+                 label=r"$\varepsilon_{\rm mach}\times 3^\ell$ reference")
+    _prepare_axes(ax, r"multipole rank $\ell$",
+                   r"round-trip error  [flat-basis coords]",
+                   title=r"PSTF packed$\leftrightarrow$full round-trip precision")
+    ax.legend(loc="upper left", fontsize=9)
+    ax.set_xticks(ells)
+    _save(fig, "02_roundtrip_precision", TOPIC_09)
+
+
+def plot_09_03_term_prefactors() -> None:
+    """Analytic prefactors of the nine-term hierarchy vs ℓ."""
+    ells = np.arange(2, L_MAX_CACHED + 1)
+    T1_pre = np.full_like(ells, 4.0 / 3.0, dtype=np.float64)
+    T3_pre = (ells + 1.0) / (2.0 * ells + 3.0)
+    T7_pre = -((ells - 1.0) * (ells + 1.0) * (ells + 2.0)) / (
+        (2.0 * ells + 3.0) * (2.0 * ells + 5.0)
+    )
+    T8_pre = 5.0 * ells / (2.0 * ells + 3.0)
+    T9_pre = -(ells + 2.0)
+    fig, ax = plt.subplots(figsize=(6.8, 4.3))
+    ax.plot(ells, T1_pre, marker="o", color=COLS["orange"], lw=1.4,
+             label=r"$T_1:\ (4/3)\Theta$")
+    ax.plot(ells, T8_pre, marker="s", color=COLS["blue"], lw=1.4,
+             label=r"$T_8:\ 5\ell/(2\ell+3)$ (shear stays)")
+    ax.plot(ells, T9_pre, marker="D", color=COLS["purple"], lw=1.4,
+             label=r"$T_9:\ -(\ell+2)$ (shear $\ell\!\to\!\ell-2$)")
+    ax.plot(ells, T3_pre, marker="v", color=COLS["cyan"], lw=1.4,
+             label=r"$T_3:\ (\ell+1)/(2\ell+3)$ (divergence)")
+    ax.plot(ells, T7_pre, marker="^", color=COLS["green"], lw=1.4,
+             label=r"$T_7:\ -(\ell-1)(\ell+1)(\ell+2)/[(2\ell+3)(2\ell+5)]$")
+    ax.axhline(0.0, color="0.3", lw=0.6)
+    _prepare_axes(ax, r"multipole rank $\ell$", "prefactor",
+                   title="Nine-term hierarchy prefactors (LB-2a/b)")
+    ax.legend(loc="lower left", fontsize=8)
+    ax.set_xticks(ells)
+    _save(fig, "03_term_prefactors", TOPIC_09)
+
+
+def plot_09_04_stf_basis_ell2_tensors() -> None:
+    """The five ℓ=2 orthonormal STF basis tensors as 3×3 heatmaps.
+
+    Note: the columns of ``Q_ℓ`` come from the QR orthonormalisation of
+    the null space of the trace operator, so their ordering is a
+    basis-adapted convention — not the spherical-harmonic m ordering.
+    Any rotation within the 5-D STF subspace would produce an
+    equally-valid basis; the invariants (symmetry, trace-free,
+    orthonormality) hold column-wise.
+    """
+    Q = stf_basis(2)  # (9, 5)
+    fig, axes = plt.subplots(1, 5, figsize=(12.0, 2.8), constrained_layout=True)
+    vmax = float(np.max(np.abs(Q)))
+    for m_idx, ax in enumerate(axes):
+        T = Q[:, m_idx].reshape(3, 3)
+        im = ax.imshow(T, cmap="RdBu_r", vmin=-vmax, vmax=vmax)
+        ax.set_title(rf"basis col {m_idx+1}/5", fontsize=10)
+        ax.set_xticks([0, 1, 2]); ax.set_xticklabels(["x", "y", "z"])
+        ax.set_yticks([0, 1, 2]); ax.set_yticklabels(["x", "y", "z"])
+        ok, _ = verify_pstf_invariants(T, tol=1e-10)
+        ax.text(0.5, -0.25, "PSTF ok" if ok else "violating",
+                 ha="center", transform=ax.transAxes, fontsize=8,
+                 color=(COLS["green"] if ok else COLS["orange"]))
+    cbar = fig.colorbar(im, ax=axes.ravel().tolist(), shrink=0.85,
+                         aspect=12, pad=0.02)
+    cbar.set_label("amplitude (orthonormal basis)")
+    fig.suptitle(
+        r"$\ell=2$ PSTF orthonormal basis $Q_{2}$ — 5 independent components "
+        "(QR-ordered)",
+        fontsize=11,
+    )
+    path = GALLERY_ROOT / TOPIC_09
+    path.mkdir(parents=True, exist_ok=True)
+    out = path / "04_stf_basis_ell2_tensors.png"
+    fig.savefig(out, dpi=150, bbox_inches="tight", pad_inches=0.1)
+    plt.close(fig)
+    print(f"  [ok] {TOPIC_09}/04_stf_basis_ell2_tensors.png")
+
+
+def plot_09_05_T9_shear_quadrupole() -> None:
+    """T9 at ℓ=2 as a function of Σ_+ and Π_0 (shear-to-quadrupole injection)."""
+    sigma_plus_grid = np.linspace(-0.10, 0.10, 41)
+    Pi0_grid = np.array([0.25, 0.5, 1.0, 2.0])
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(11.5, 4.2))
+    # Left: T9 trace-norm vs Σ_+ for a few monopole amplitudes.
+    for k, pi0 in enumerate(Pi0_grid):
+        norms = []
+        for sp in sigma_plus_grid:
+            sigma = axisymmetric_sigma_tensor(sigma_plus=float(sp),
+                                                sigma_minus=0.0)
+            T9 = T9_shear_down(ell=2,
+                                Pi_ell_minus_2_full=np.array(float(pi0)),
+                                sigma_tensor=sigma)
+            norms.append(np.sqrt(np.sum(T9 ** 2)))
+        ax_a.plot(sigma_plus_grid, norms, marker=".",
+                   color=plt.get_cmap("viridis")(k / (len(Pi0_grid) - 1)),
+                   lw=1.4, label=rf"$\Pi_0={pi0}$")
+    ax_a.axhline(0.0, color="0.3", lw=0.6)
+    _prepare_axes(ax_a, r"$\Sigma_+$ (axisymmetric shear)",
+                   r"$\|T_9\|_{\rm F}=4|\Sigma_+\Pi_0|$",
+                   title=r"$T_9$ norm vs $\Sigma_+$ at $\ell=2$")
+    ax_a.legend(loc="upper center", fontsize=8)
+    # Right: T9_ab entries at Σ_+=0.05, Π_0=1.0 decomposed over m.
+    sigma = axisymmetric_sigma_tensor(sigma_plus=0.05, sigma_minus=0.0)
+    T9 = T9_shear_down(ell=2, Pi_ell_minus_2_full=np.array(1.0),
+                        sigma_tensor=sigma)
+    Q2 = stf_basis(2)
+    m_coefs = Q2.T @ T9.reshape(-1)
+    idx = np.arange(1, 6)
+    bar_colors = [
+        COLS["purple"] if abs(v) > 0.5 * float(np.max(np.abs(m_coefs)))
+        else COLS["blue"]
+        for v in m_coefs
+    ]
+    ax_b.bar(idx, m_coefs, color=bar_colors)
+    ax_b.axhline(0.0, color="0.3", lw=0.6)
+    _prepare_axes(ax_b, r"PSTF basis column (QR-ordered, ${1..5}$)",
+                   r"$c_i$  (packed amplitude)",
+                   title=r"$T_9$ decomposition at $\Sigma_+=0.05,\ \Pi_0=1$")
+    ax_b.set_xticks(idx)
+    # Annotate the Frobenius-norm consistency check.
+    norm_expected = 4.0 * 0.05 * 1.0
+    norm_from_coefs = float(np.sqrt(np.sum(m_coefs ** 2)))
+    ax_b.text(
+        0.5, 0.94,
+        rf"$\|T_9\|_{{\rm F}}=4|\Sigma_+||\Pi_0|={norm_expected:.3f}$"
+        f"\n"
+        rf"$\sqrt{{\sum c_i^2}}={norm_from_coefs:.3f}$"
+        "  (QR-basis not axisymmetric-aligned)",
+        transform=ax_b.transAxes, ha="center", va="top",
+        fontsize=8, color="0.3",
+        bbox=dict(facecolor="white", alpha=0.8, edgecolor="0.7",
+                   boxstyle="round,pad=0.3"),
+    )
+    fig.tight_layout()
+    _save(fig, "05_T9_shear_quadrupole", TOPIC_09)
+
+
+def plot_09_06_T8_shear_spectrum() -> None:
+    """T8 norm scaled by prefactor vs ℓ with fixed σ and a random PSTF Π."""
+    ells = np.arange(1, L_MAX_CACHED + 1)
+    sigma = axisymmetric_sigma_tensor(sigma_plus=0.1, sigma_minus=0.0)
+    rng = np.random.default_rng(999)
+    # Fixed ||Π_ell||_F for fair comparison across ℓ.
+    norms_raw = np.zeros_like(ells, dtype=np.float64)
+    norms_full = np.zeros_like(ells, dtype=np.float64)
+    prefactors = 5.0 * ells / (2.0 * ells + 3.0)
+    for i, ell in enumerate(ells):
+        c = rng.normal(size=2 * int(ell) + 1)
+        c /= np.linalg.norm(c)  # ||Π||_F = 1 in the packed basis
+        T = pstf_unpack(c, int(ell))
+        T8 = T8_shear_same(ell=int(ell), Pi_ell_full=T, sigma_tensor=sigma)
+        norms_full[i] = float(np.sqrt(np.sum(T8 ** 2)))
+        # Subtract the prefactor so the remaining curve is the operator norm
+        # of the bare sym-trace-free(σ-contraction).
+        norms_raw[i] = norms_full[i] / prefactors[i]
+    fig, ax = plt.subplots(figsize=(6.5, 4.0))
+    ax.plot(ells, norms_full, marker="o", color=COLS["blue"], lw=1.4,
+             label=r"$\|T_8\|_{\rm F}$")
+    ax.plot(ells, norms_raw, marker="s", color=COLS["purple"], lw=1.4,
+             label=r"$\|T_8\|_{\rm F} / (5\ell/(2\ell+3))$ (bare)")
+    ax.axhline(float(np.sqrt(np.sum(sigma ** 2))), color="0.3", ls=":", lw=0.8,
+                label=r"$\|\sigma\|_{\rm F}$")
+    _prepare_axes(ax, r"multipole rank $\ell$",
+                   r"Frobenius norm",
+                   title=r"$T_8$ shear-stays-at-$\ell$ on normalised random $\Pi_\ell$")
+    ax.legend(loc="upper left", fontsize=8)
+    ax.set_xticks(ells)
+    _save(fig, "06_T8_shear_spectrum", TOPIC_09)
+
+
+def plot_09_07_T1_damping_history() -> None:
+    """(4/3)Θ(η) damping rate across cosmological history."""
+    bg = Shared.bg()
+    Theta = bg.Theta
+    # Use z = 1/a - 1 for the x-axis; clip to the CMB-era+inflation viewport.
+    z = 1.0 / np.maximum(bg.a, 1e-300) - 1.0
+    mask = z <= 2.0e4  # back to shortly after BBN
+    z_m = z[mask]
+    damp = (4.0 / 3.0) * Theta[mask]
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(11.5, 4.0))
+    # Left: damping rate vs z on log-log.
+    ax_a.loglog(1 + z_m, damp, color=COLS["orange"], lw=1.6)
+    ax_a.axvline(1 + 1089.94, color="0.3", ls=":", lw=0.7)
+    ax_a.text(1 + 1089.94, damp.max() * 0.2, r" $z_*$",
+                fontsize=9, color="0.3")
+    ax_a.axvline(1 + 3400.0, color="0.3", ls=":", lw=0.7)
+    ax_a.text(1 + 3400.0, damp.max() * 0.05, r" $z_{\rm eq}$",
+                fontsize=9, color="0.3")
+    _prepare_axes(ax_a, r"$1+z$",
+                   r"$(4/3)\Theta\ [\mathrm{Mpc}^{-1}]$",
+                   title=r"$T_1$ expansion damping rate (BBN $\to$ today)")
+    # Right: apply T1 to a unit-norm Π_2 and track resulting norm.
+    Pi2 = axisymmetric_sigma_tensor(1.0, 0.0)
+    Pi2 /= np.sqrt(np.sum(Pi2 ** 2))
+    T1_norm = np.array([
+        float(np.sqrt(np.sum(T1_expansion(2, Pi2, float(th)) ** 2)))
+        for th in Theta[mask]
+    ])
+    ax_b.loglog(1 + z_m, T1_norm, color=COLS["blue"], lw=1.6,
+                 label=r"$\|T_1(\Pi_2)\|_{\rm F}$, unit $\Pi_2$")
+    ax_b.axvline(1 + 1089.94, color="0.3", ls=":", lw=0.7)
+    ax_b.axvline(1 + 3400.0, color="0.3", ls=":", lw=0.7)
+    _prepare_axes(ax_b, r"$1+z$",
+                   r"$\|T_1\|_{\rm F}\ [\mathrm{Mpc}^{-1}]$",
+                   title=r"Damping applied to normalised $\Pi_2$")
+    ax_b.legend(loc="upper left", fontsize=8)
+    fig.tight_layout()
+    _save(fig, "07_T1_damping_history", TOPIC_09)
+
+
+def plot_09_08_shear_injection_over_time() -> None:
+    """T9 at ℓ=2 over Bianchi-I history with a decaying Σ_+.
+
+    Uses the Y-Block ``solve_bianchi_background`` with Bianchi I seed
+    to obtain Σ_+(η); the quadrupole source from a unit monopole is
+    then ``-4 Σ_+(η)/a(η) × diag(-2,1,1)/√6``. This is the structural
+    shear-to-CMB-quadrupole injection in proper-time units.
+    """
+    # Reuse the logic from Topic 05: Bianchi I with a moderate initial seed.
+    sigma_over_H_seed = 5e-3
+    cosmo = BianchiCosmology(
+        structure=type_i_constants(),
+        sigma_over_H_init=sigma_over_H_seed,
+        sigma_pm_ratio=0.0,
+    )
+    bg = solve_bianchi_background(cosmo, n_pts=1500)
+    a = np.asarray(bg.a)
+    Sigma_plus = np.asarray(bg.sigma_plus)
+    # Convert conformal Σ_+ (Pontzen convention) to proper σ_+ via 1/a.
+    sigma_plus_proper = Sigma_plus / np.maximum(a, 1e-30)
+    # Compute ||T9||_F as a function of η with Π_0 = 1 (monopole = 1).
+    T9_norm = np.zeros_like(a)
+    for i, sp in enumerate(sigma_plus_proper):
+        sigma = axisymmetric_sigma_tensor(float(sp), 0.0)
+        T9 = T9_shear_down(ell=2, Pi_ell_minus_2_full=np.array(1.0),
+                            sigma_tensor=sigma)
+        T9_norm[i] = float(np.sqrt(np.sum(T9 ** 2)))
+    z = 1.0 / np.maximum(a, 1e-300) - 1.0
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, figsize=(11.5, 4.0))
+    # Left: proper σ_+(η) and |Σ_+(η)| side-by-side.
+    ax_a.loglog(1 + z, np.abs(Sigma_plus), color=COLS["orange"], lw=1.4,
+                 label=r"$|\Sigma_+|$ (dimensionless)")
+    ax_a.loglog(1 + z, np.abs(sigma_plus_proper), color=COLS["blue"], lw=1.4,
+                 label=r"$|\sigma_+|=|\Sigma_+|/a\ [\mathrm{Mpc}^{-1}]$")
+    _prepare_axes(ax_a, r"$1+z$",
+                   "shear amplitude",
+                   title=r"Bianchi I shear history (seed $\sigma/H=5\times10^{-3}$)")
+    ax_a.legend(loc="lower left", fontsize=8)
+    # Right: ||T9|| at ℓ=2 with unit monopole.
+    ax_b.loglog(1 + z, T9_norm, color=COLS["purple"], lw=1.6)
+    ax_b.axvline(1 + 1089.94, color="0.3", ls=":", lw=0.7)
+    ax_b.text(1 + 1089.94, T9_norm.max() * 0.3, r"$z_*$",
+                fontsize=9, color="0.3")
+    _prepare_axes(ax_b, r"$1+z$",
+                   r"$\|T_9\|_{\rm F}\ [\mathrm{Mpc}^{-1}]$",
+                   title=r"$T_9$ injected quadrupole $(\Pi_0=1)$")
+    fig.tight_layout()
+    _save(fig, "08_shear_injection_over_time", TOPIC_09)
+
+
+# ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
 
@@ -1411,6 +1745,24 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
          "η_0 vs H_0 for multiple Ω_m."),
         ("03_tau_reion_vs_z_rei", plot_08_03_tau_reion_vs_z_rei,
          "τ_reion sensitivity to z_rei and Δz."),
+    ],
+    TOPIC_09: [
+        ("01_stf_dim_vs_symmetric", plot_09_01_stf_dim_vs_symmetric,
+         "PSTF independent-component count (2ℓ+1) vs symmetric (ℓ+1)(ℓ+2)/2."),
+        ("02_roundtrip_precision", plot_09_02_roundtrip_precision,
+         "Packed ↔ full-tensor round-trip error vs ℓ with ε·3^ℓ reference."),
+        ("03_term_prefactors", plot_09_03_term_prefactors,
+         "T1/T3/T7/T8/T9 analytic prefactors as functions of ℓ."),
+        ("04_stf_basis_ell2_tensors", plot_09_04_stf_basis_ell2_tensors,
+         "The five ℓ=2 orthonormal STF basis tensors as 3×3 heatmaps."),
+        ("05_T9_shear_quadrupole", plot_09_05_T9_shear_quadrupole,
+         "T9 shear-to-quadrupole injection sweep in (Σ_+, Π_0) + m-spectrum."),
+        ("06_T8_shear_spectrum", plot_09_06_T8_shear_spectrum,
+         "T8 shear-stays-at-ℓ norm on normalised random Π_ℓ across ℓ."),
+        ("07_T1_damping_history", plot_09_07_T1_damping_history,
+         "(4/3)Θ(η) damping rate + its action on a unit Π_2 over history."),
+        ("08_shear_injection_over_time", plot_09_08_shear_injection_over_time,
+         "Bianchi I Σ_+(η) → proper σ_+(η) → ||T9|| at ℓ=2 with Π_0=1."),
     ],
 }
 
