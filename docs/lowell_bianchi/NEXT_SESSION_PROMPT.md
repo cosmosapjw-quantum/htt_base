@@ -275,33 +275,38 @@ LB-3 범위 제약:
 (§4.1과 동일, NEXT_SESSION_PROMPT는 LB-4용으로 교체)
 ```
 
-### 4.3 After LB-3 → bootstrap for LB-4 (Thomson collision)
+### 4.3 After LB-3 → bootstrap for LB-4 (Thomson collision + tilted visibility)
 
 ```text
-# Phase LB 구현 계속 — LB-4 Thomson PSTF collision
+# Phase LB 구현 계속 — LB-4 Thomson PSTF collision + lowell §11.3 tilted visibility
 
 ## 프로젝트 컨텍스트
 - **현재 baseline**: {FILL IN}
 - **완료**: LB-0..LB-3
 
 ## 우선 읽어야 할 문서
-1. `docs/lowell_bianchi/04_thomson_collision_spec.md`
-2. (기 완료) LB-2 `bass/hierarchy/*`, LB-3 `closure.py`
-3. (기 구현) `bass/collision/thomson_tensor.py` (W3), `bass/closure/quadrupole_tca.py` (W6-04)
-4. 참조: `lowell §4, §9.2`
+1. `docs/lowell_bianchi/04_thomson_collision_spec.md` — §8 (tilted visibility Layer A in-scope) 주의
+2. `lowell_bianchi_solver_reference.md §11.1-§11.3` (scalar x_e 유지 + direction-dep boost 원칙)
+3. (기 완료) LB-1 `bass/species/baryon.py` (`tau_dot`, `visibility`), LB-2 `bass/hierarchy/*`, LB-3 `closure.py`
+4. (기 구현) `bass/collision/thomson_tensor.py` (W3), `bass/closure/quadrupole_tca.py` (W6-04), Y-Block `bass.tilt.species_tilt`
+5. 참조: `lowell §4, §9.2, §11.3`
 
-## 이 세션의 작업 (~400 LoC + 300 LoC tests, 1 세션)
+## 이 세션의 작업 (~600 LoC + 450 LoC tests, 1 세션)
 
 04_thomson_collision_spec.md §11 Implementation checklist 전체:
 
 - `bass/collision/polarization.py` — PolarizationHierarchyState, E-mode source
-- `bass/collision/thomson_pstf.py` — ThomsonPSTFCollisionOperator
-- 테스트 TC-01 ~ TC-16 (TCA limit cross-check with W6-04 포함)
+- `bass/collision/thomson_pstf.py` — ThomsonPSTFCollisionOperator (orthogonal PSTF kernel)
+- `bass/collision/tilted_visibility.py` — **lowell §11.3 Layer A**: TiltedVisibility wrapper에서 Γ̃_T, κ̃, g̃ 를 scalar × 비선형 Lorentz boost factor B(η, e) = cosh β + sinh β (ê·v̂_e) 로 제공
+- 테스트 TC-01 ~ TC-16 + TV-01 ~ TV-08 (총 24+개)
 
 LB-4 범위 제약:
-- Orthogonal only — tilted collision은 LB-4b
+- **PSTF kernel 자체의 full Lorentz boost는 LB-4b**로 분리 유지 (LB-1b tilted species registry 의존)
+- Tilted visibility는 **Layer A만** — scalar 보정인자 제공, hierarchy moment projection은 LB-4b
 - B-mode는 LB-4c
 - 2nd-order v_e² 보정 금지 (LB-4d)
+- **Non-perturbative β 엄수**: `1 + v_e · e` 선형근사 금지. 반드시 `cosh β + sinh β (ê·v̂_e)` 형태 유지 (TV-04, TV-07이 lint로 강제)
+- **scalar x_e(η), T_m(η) 재계산 금지** — `BaryonBackground` LB-1 HyRec fixture 유지 (lowell §11.1)
 
 ## (나머지 §4.1과 동일, NEXT_SESSION_PROMPT는 LB-5용으로)
 ```

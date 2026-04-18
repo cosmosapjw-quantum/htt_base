@@ -1,15 +1,17 @@
 # LB-4 — Thomson Collision Operator Specification
 
-**Session LB-4**. Extends `bass/collision/thomson_tensor.py` and LB-2's `CollisionOperator` interface to provide the full PSTF Thomson collision source for the multipole hierarchy.
+**Session LB-4**. Extends `bass/collision/thomson_tensor.py` and LB-2's `CollisionOperator` interface to provide the full PSTF Thomson collision source for the multipole hierarchy **and** the lowell §11.3 *tilted visibility* wrapper that expresses the direction-dependent visibility `g̃(η, e)` as a scalar × Lorentz-boost factorisation (non-perturbative in β = tanh⁻¹|v_e|).
 
 **Prerequisites**:
+
 - LB-0 (`00_conventions.md`) — frame split rule (§4)
+- LB-1 (`01_species_background_spec.md`) — `BaryonBackground.tau_dot(η)` supplies scalar Γ_T
 - LB-2 (`02_multipole_hierarchy_spec.md`) — `CollisionOperator` Protocol, `PSTFHierarchyState`
-- Y-Block `bass.tilt.species_tilt` — for tilted collision frame handling
+- Y-Block `bass.tilt.species_tilt` — Lorentz-boost machinery for the tilted case (non-perturbative sinh β / cosh β form)
 - `bass.collision.thomson_tensor` (existing W3) — the scalar-level Thomson rate machinery
 - `bass.closure.quadrupole_tca` (W6-04) — the ℓ=2 TCA form (used as cross-check)
 
-**Size estimate**: ~400 LoC implementation + ~300 LoC tests.
+**Size estimate**: ~600 LoC implementation + ~450 LoC tests (baseline LB-4 ~400+300 + tilted visibility ~200+150).
 
 **Reference material**:
 
@@ -33,7 +35,7 @@
 5. Polter coupling (E-mode)
 6. Higher-ℓ damping
 7. Tight-coupling limit check
-8. Tilted extension (deferred to LB-4b)
+8. Tilted visibility (lowell §11.3, **in-scope**) + full-tilt collision boost (LB-4b, deferred)
 9. Data contracts
 10. Test criteria
 11. Implementation checklist
@@ -256,20 +258,50 @@ This is the **critical integration test** between LB-4 and LB-3 / W6-04.
 
 ---
 
-## 8. Tilted extension (LB-4b, deferred)
+## 8. Tilted visibility (lowell §11.3, in-scope) + full collision boost (LB-4b, deferred)
 
-At tilted background, the electron 4-velocity is `u_e^a = γ_e (n^a + v_e^a)` with `v_e^a ≠ 0`. The Thomson tensor evaluated in the u_e^a frame must be Lorentz-boosted to the n^a frame. The leading correction is:
+At tilted background, the electron 4-velocity is `u_e^a = γ_e (n^a + v_e^a)` with `v_e^a ≠ 0`. Conventions (`00_conventions.md §2`) fix the split **transport in the n^a frame, collision + visibility in the u_e^a frame**. Two layers of tilt handling follow, and LB-4 lands **layer A** immediately:
 
-- **Dipole source**: `K_1 = Γ_T (v_b − Π_1)` becomes `K_1 = Γ_T (v_b − Π_1) + O(v_e) corrections from boost`.
-- **Visibility**: becomes direction-dependent `g̃(η, e) = Γ̃_T × exp(−κ̃(e))` (lowell §11.3).
+### 8.1 Layer A — tilted visibility wrapper (lowell §11.3, in LB-4)
 
-LB-4b spec details:
+Strictly following lowell §11.3, the visibility quantities become direction-dependent through a **scalar × Lorentz-boost factorisation** that preserves the existing scalar HyRec-based `x_e(η)`, `T_m(η)` history. Define
 
-- Extension adds `BoostedThomsonCollisionOperator` that takes `v_e^a(η)` from the species registry (tilted extension LB-1b).
-- Boost rule for PSTF moments: `Ĩ_{A_ℓ} = h̃_{⟨A_ℓ⟩}^{B_ℓ} I_{B_ℓ} + O(v_e) corrections` (lowell §13.5 eq).
-- Integration with the collisionless transport (LB-2) requires a boost at each step.
+```
+Γ̃_T(η, e)   = Γ_T(η) × B(η, e)
+B(η, e)      = γ_e(η) × (1 + v_e(η) · e)
+κ̃(η, e)     = ∫_η^{η_0} Γ̃_T(η', e) dη'
+g̃(η, e)     = Γ̃_T(η, e) × exp(−κ̃(η, e))
+```
 
-LB-4b is ~400 LoC + tests, 1 session.
+where
+
+- `Γ_T(η) = a(η) n_e(η) x_e(η) σ_T` is the scalar rate already supplied by `BaryonBackground.tau_dot(η)` (LB-1),
+- `v_e(η)` is the electron bulk velocity in normal-frame tetrad components (coincides with the baryon tilt v_b(η) at Thomson-coupled scales; identically zero for orthogonal Bianchi and FLRW),
+- `γ_e = cosh β_e`, `|v_e| = tanh β_e` — the rapidity β_e is stored and propagated **non-perturbatively** (no linearisation; see `00_conventions.md §4` and the `bass.tilt.species_tilt` Y-Block module).
+
+Key identity (kept exact in code):
+
+```
+(1 + v_e · e) γ_e = cosh β_e (1 + tanh β_e  ê·v̂_e)
+                  = cosh β_e + sinh β_e ê·v̂_e          (exact, no O(v²) truncation)
+```
+
+**Scope**: Layer A is a *scalar* direction-resolved boost wrapper. It does NOT modify the PSTF collision kernel itself — it just provides `Γ̃_T`, `κ̃`, `g̃` callable at `(η, e)` for the LoS / visibility-weighted-source machinery and for downstream tests (C_ℓ extraction in post-LB phases). At `v_e ≡ 0` the wrapper reduces identically to `Γ_T, κ, g` (covered by test TV-01).
+
+### 8.2 Layer B — full collision-kernel boost (LB-4b, deferred)
+
+Layer B is the PSTF-moment-level Lorentz boost of the full Thomson source `K_{A_ℓ}`. This requires
+
+- **Dipole source**: `K_1 = Γ_T (v_b − Π_1)` becomes `K_1 = Γ_T (v_b − Π_1) + O(β) corrections from boost`.
+- **Boost rule for PSTF moments**: `Ĩ_{A_ℓ} = h̃_{⟨A_ℓ⟩}^{B_ℓ} I_{B_ℓ} + O(β) corrections` (lowell §13.5).
+- **Per-step boost** during LB-2 hierarchy integration (integration with the collisionless transport requires a boost at each step).
+
+Layer B stays deferred to **LB-4b** because the PSTF boost machinery depends on LB-1b's tilted species registry (`v_b^a(η)` trajectory container) which is itself deferred. Layer A provides the immediately-usable §11.3 scalar wrapper without that prerequisite.
+
+Size budgets:
+
+- Layer A (this session): ~200 LoC impl + ~150 LoC tests
+- Layer B (LB-4b): ~400 LoC impl + ~250 LoC tests, 1 session
 
 ---
 
@@ -282,9 +314,11 @@ bass_py/bass/collision/
 ├── thomson_tensor.py              — existing W3 (retain)
 ├── thomson_pstf.py                — NEW: PSTF Thomson collision operator
 ├── polarization.py                — NEW: E-mode / polter machinery
+├── tilted_visibility.py           — NEW: lowell §11.3 direction-resolved g̃(η, e)
 ├── test_thomson_tensor.py          — existing
 ├── test_thomson_pstf.py           — NEW
-└── test_polarization.py           — NEW
+├── test_polarization.py           — NEW
+└── test_tilted_visibility.py      — NEW
 ```
 
 ### 9.2 Public API
@@ -335,6 +369,61 @@ class ThomsonPSTFCollisionOperator:
 
 LB-2's `hierarchy_rhs_photon` accepts a `collision: CollisionOperator`. LB-4 provides the concrete `ThomsonPSTFCollisionOperator`. No structural change to LB-2 is needed; LB-4 is purely a plug-in.
 
+### 9.4 Public API — tilted visibility (lowell §11.3)
+
+```python
+from bass.collision.tilted_visibility import (
+    TiltedVisibility,
+    scalar_visibility,   # thin wrapper around BaryonBackground (convenience)
+)
+
+
+class TiltedVisibility:
+    """Direction-resolved optical depth / visibility per lowell §11.3.
+
+    Composes (i) the scalar HyRec-based Γ_T(η) = a n_e x_e σ_T from
+    ``bass.species.baryon.BaryonBackground`` with (ii) a non-perturbative
+    Lorentz-boost factor  B(η, e) = γ_e (1 + v_e · e)  evaluated in the
+    normal-frame tetrad. Reduces identically to the scalar visibility
+    at v_e ≡ 0.
+
+    Reference: lowell §11.3; Ellis §5.5; 00_conventions.md §2, §4.
+    """
+
+    def __init__(
+        self,
+        baryon: "BaryonBackground",
+        v_e: Callable[[float], np.ndarray],   # η -> (3,) normal-frame components
+        *,
+        beta_from_v: bool = True,             # parametrise via β = atanh|v_e| (non-perturbative)
+    ) -> None:
+        ...
+
+    # --- Direction-resolved scalars (lowell §11.3 eqs 11.3.1-11.3.3) -----
+
+    def Gamma_T(self, eta: _Number, e: np.ndarray) -> _Number:
+        """Γ̃_T(η, e) = Γ_T(η) × γ_e(η) × (1 + v_e(η) · e)   [Mpc⁻¹]."""
+
+    def kappa(self, eta: _Number, e: np.ndarray) -> _Number:
+        """κ̃(η, e) = ∫_η^{η_0} Γ̃_T(η', e) dη'  via cumulative trapezoid
+        on the shared FLRW η-grid; scalar e evaluated at fixed sky
+        direction. For time-varying v_e(η) the line integral is done
+        numerically (no closed form)."""
+
+    def g(self, eta: _Number, e: np.ndarray) -> _Number:
+        """g̃(η, e) = Γ̃_T(η, e) × exp(−κ̃(η, e))   [Mpc⁻¹]."""
+
+    # --- Boost-factor primitives (reusable, exact, non-perturbative) ----
+
+    def boost_factor(self, eta: _Number, e: np.ndarray) -> _Number:
+        """B(η, e) = cosh β_e + sinh β_e (ê·v̂_e). Exact, keeps β finite."""
+
+    def gamma_e(self, eta: _Number) -> _Number:
+        """γ_e(η) = cosh β_e(η). Reduces to 1 at v_e = 0."""
+```
+
+**Orthogonal / FLRW invariant**: constructed with `v_e = lambda η: np.zeros(3)` the instance satisfies `Gamma_T(η, e) == baryon.tau_dot(η)` and `g(η, e) == baryon.visibility(η)` for every direction `e`. This is enforced by test TV-01.
+
 ---
 
 ## 10. Test criteria
@@ -380,19 +469,34 @@ LB-2's `hierarchy_rhs_photon` accepts a `collision: CollisionOperator`. LB-4 pro
 |---|---|---|---|
 | TC-16 | Exponential decay rate at ℓ ≥ 3: τ_decay = 1/Γ_T | matches analytical | 1e-10 at ℓ=3, 1e-8 at ℓ=8 |
 
-Total: 16+ tests.
+### 10.6 Tilted visibility (lowell §11.3, Layer A)
+
+| # | Test | Target | Tol |
+|---|---|---|---|
+| TV-01 | `v_e ≡ 0`: `Γ̃_T(η, e) == Γ_T(η)` and `g̃(η, e) == g(η)` for every direction e | identical | 1e-12 rel |
+| TV-02 | Forward/back asymmetry: at `v_e = β ẑ` with β > 0, `Γ̃_T(η, +ẑ) > Γ_T(η) > Γ̃_T(η, −ẑ)` | monotone | exact (sign) |
+| TV-03 | Sky-average of B(η, e) over the unit sphere equals `γ_e(η)` (photon-number symmetry) | `γ_e` | 1e-10 rel with N_Ω = Lebedev-41 |
+| TV-04 | Exact identity `B(η, e) = cosh β + sinh β (ê·v̂_e)` matches linearisation only at O(β); bass_py stores β non-perturbatively | — | FAIL if code uses 1+v·e truncation |
+| TV-05 | `κ̃(η, e)` monotone non-increasing from η_* → η_0 for any fixed e with Γ_T > 0 | monotone | exact |
+| TV-06 | `τ_reion` recovered from sky-average of κ̃(η=0, e) matches Planck 2018 value when `v_e = 0` | 0.0544 | 1% |
+| TV-07 | Non-perturbative preservation: doubling the magnitude `‖v_e‖` gives `γ_e → cosh(2β)` exactly, NOT `1 + 2β²` | `cosh(2 atanh ‖v_e‖)` | 1e-14 |
+| TV-08 | At small β (linear regime), `B ≈ 1 + β ê·v̂_e` to O(β²) as a cross-check sanity | matches | 1e-3 at β=1e-3 |
+
+Total: 16 + 8 = 24+ tests.
 
 ---
 
 ## 11. Implementation checklist
 
-- [ ] Review LB-0 §4 (frame split rule) and LB-2 §7 (CollisionOperator protocol)
+- [ ] Review LB-0 §4 (frame split rule), LB-1 `BaryonBackground.tau_dot` / `visibility`, LB-2 §7 (CollisionOperator protocol), and lowell §11.3
 - [ ] Implement `bass/collision/polarization.py` with `PolarizationHierarchyState` dataclass and `E_mode_collision_source` function; tests TC-06, TC-07
 - [ ] Implement `bass/collision/thomson_pstf.py` with `ThomsonPSTFCollisionOperator` class; tests TC-01 through TC-09
 - [ ] Implement TCA-limit test (TC-10, TC-11) as cross-check with W6-04
 - [ ] Add integration tests (TC-14, TC-15) verifying LB-2 + LB-4 compose correctly
+- [ ] Implement `bass/collision/tilted_visibility.py` (lowell §11.3 Layer A) with `TiltedVisibility` class; tests TV-01 through TV-08
+- [ ] Verify non-perturbative β handling: no `1 + v_e · e` linearisation shortcut anywhere (TV-04, TV-07 enforce)
 - [ ] Full bass_py regression
-- [ ] Commit as `LB-4: Thomson PSTF collision source with E-mode coupling`
+- [ ] Commit as `LB-4: Thomson PSTF collision source + tilted visibility wrapper (lowell §11.3)`
 
 ---
 
@@ -406,20 +510,24 @@ Total: 16+ tests.
 | `K_E_quadrupole` | Zaldarriaga-Seljak 1997 eq (17); Ma-Bertschinger 1995 eq (64) |
 | `K_high_ell` | Kolb §6.4 eq (6.47) |
 | TCA limit consistency with W6-04 | Y-Block `test_reference_cross_check.py`; lowell §10 |
+| `TiltedVisibility` docstring | lowell §11.3; Ellis §5.5; `00_conventions.md §2` (frame split), §4 (non-perturbative β) |
+| `boost_factor`, `gamma_e` | Ellis §4.2-4.3 (1+3 decomposition); Pontzen-Challinor 2007 (tilt parametrisation); Y-Block `bass.tilt.species_tilt` |
+| `kappa(η, e)` line integral | lowell §11.3 eq (11.3.2); Ma-Bertschinger 1995 eq (70) |
 
 ---
 
 ## 13. What LB-4 does NOT do
 
 - **Does not implement B-mode**: B ≡ 0 for scalar-mode sources in LCDM. In Bianchi, scalar B is still zero but *tensor-mode* B is non-zero; deferred to LB-4c.
-- **Does not handle tilted visibility**: visibility becomes direction-dependent `g̃(η, e)` for tilted backgrounds; LB-4b.
+- **Does not boost the PSTF collision kernel itself** (Layer B): the direction-resolved visibility wrapper (`TiltedVisibility`, Layer A) lands in this session per lowell §11.3, but the per-step PSTF-moment boost of `K_{A_ℓ}` into the n^a frame is LB-4b.
 - **Does not solve the combined (Θ_2, E_2) algebraic system**: that's LB-3 TCAClosure + W6-04.
 - **Does not extract C_ℓ from Π_ℓ**: that's the line-of-sight projection in a later phase (after LB-6).
+- **Does not re-derive recombination microphysics**: `Γ_T(η)`, `x_e(η)`, `T_m(η)` stay scalar, isotropic, and HyRec-fixture-based per lowell §11.1. Any direction dependence is injected via the Lorentz-boost factor `B(η, e)` only. Non-goal: HyRec-Cov-RT-style anisotropic radiative-transfer recombination solver (out of Phase LB scope entirely).
 
 ---
 
 ## 14. LB-4 extensions (deferred)
 
-- **LB-4b — Tilted collision** (1 session, ~400 LoC): electron-frame evaluation + boost to n^a frame
+- **LB-4b — Full tilted collision-kernel boost** (1 session, ~400 LoC): PSTF-moment-level Lorentz boost of `K_{A_ℓ}` into the n^a frame. Depends on LB-1b tilted species registry.
 - **LB-4c — B-mode tensor source** (1 session, ~300 LoC): non-trivial for Bianchi VIIh/VIII/IX; zero for Types I/V/VII₀
 - **LB-4d — Higher-order v_e² corrections** (optional, ~200 LoC): Compton-energy-exchange at second order (Challinor-van Leeuwen)
