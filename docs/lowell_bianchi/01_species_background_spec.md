@@ -171,7 +171,10 @@ bass_py/bass/species/
 ├── neutrino.py             — NeutrinoBackground(SpeciesBackground)
 ├── baryon.py               — BaryonBackground(SpeciesBackground)
 ├── cdm.py                  — CDMBackground(SpeciesBackground)
-├── lambda.py               — LambdaBackground(SpeciesBackground)
+├── lambda_.py              — LambdaBackground(SpeciesBackground)
+│                            (filename has trailing underscore: `lambda`
+│                             is a Python reserved keyword and cannot
+│                             appear in an `import` statement)
 ├── registry.py             — SpeciesBackgroundRegistry
 ├── test_constants.py       — bit-exact match with ssot.C
 ├── test_photon.py

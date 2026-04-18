@@ -9,8 +9,8 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-18 (design phase → LB-0 closing + LB-1)
-**Current target session**: LB-0 closing guard test + LB-1 species background
+**Last rotated**: 2026-04-18 (LB-0 + LB-1 complete → LB-2)
+**Current target session**: LB-2 PSTF multipole hierarchy (first half)
 
 ---
 
@@ -34,83 +34,87 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# Phase LB 구현 시작 — LB-0 마무리 + LB-1 species background
+# Phase LB 구현 계속 — LB-2 PSTF multipole hierarchy (first half)
 
 ## 프로젝트 컨텍스트
 
 - **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
-- **venv**: venv/bin/python (pytest, camb, matplotlib, numpy, scipy 설치됨)
+- **venv**: venv/bin/python
 - **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 2,027 tests passing (1,854 초기 + 105 B1 + 68 Y-Block)
-- **설계 단계 완료**: 8개 spec 문서가 `docs/lowell_bianchi/`에 있음
+- **현재 baseline**: 2,136 tests passing (직전 2,027 + 22 LB-0 guard + 87 LB-1 species)
+- **완료된 세션**: LB-0 (external-code policy guard), LB-1 (species backgrounds γ/ν/b/c/Λ)
 
 ## 우선 읽어야 할 문서 (순서대로)
 
-1. `docs/lowell_bianchi/README.md` — 메타 인덱스, 세션 의존성 그래프, 불변량
-2. `docs/lowell_bianchi/00_conventions.md` — signature/단위/PSTF packing/SSOT/Ellis↔bass_py 매핑/외부 코드 정책
-3. `docs/lowell_bianchi/01_species_background_spec.md` — 이 세션의 직접 구현 스펙
-4. (참조용, 필요 시) Y-Block 기존 모듈 — `bass_py/bass/background/tetrad_state.py`, `bass_py/bass/tilt/species_tilt.py`, `bass_py/bass/closure/quadrupole_tca.py`
+1. `docs/lowell_bianchi/README.md` §3 (dependency graph), §5 (invariants)
+2. `docs/lowell_bianchi/00_conventions.md` §5 (PSTF packing), §4 (Σ² normalisation)
+3. `docs/lowell_bianchi/02_multipole_hierarchy_spec.md` — 이 세션 스펙
+4. 참조: `lowell_bianchi_solver_reference.md` §6 (9-term hierarchy 원본)
+5. 참조: Y-Block `bass_py/bass/background/tetrad_state.py`, `bass_py/bass/tilt/species_tilt.py`
+6. 참조 (LB-1 완료물): `bass_py/bass/species/` — `FLRWBackgroundTable`, `SpeciesBackground` ABC, 5개 concrete 클래스
 
-## 이 세션의 두 가지 작업
+## LB-1에서 확정된 사실 (LB-2에 참고)
 
-### 작업 1 — LB-0 closing task (30분, ~50 LoC)
+- **constants SSOT**: `bass/species/constants.py`에서 SSOT(`htt.htt.core.ssot.C`) bit-exact re-export + Kolb derivation. `default_constants()`로 가져옴. Ω_Λ = 1 − Ω_m − Ω_r 엄격 flat-closure.
+- **η grid**: `build_flrw_background_table()` — analytic quadrature, a[-1] ≡ 1.0 exactly, η_0 ≈ 14147 Mpc. LB-2의 multipole RHS에서 바로 사용 가능.
+- **ABC contract**: `rho_rest(η)` / `p_rest(η)` / `dot_rho(η)` / `_a_of_eta(η)` scalar-in-scalar-out / array-in-array-out. 범위 밖은 `ValueError`.
+- **Baryon dot_rho**: proper-time ρ̇ = −Θ(1+w)ρ convention (dη 변환은 LB-5 integrator가 담당).
+- **LambdaBackground 파일명**: `lambda_.py` (파이썬 예약어 회피; spec §2.1 부연 주석)
+- **외부 코드 가드 테스트**: `bass/validation/test_external_code_policy.py` 활성. LB-2에서 신규 파일이 `import camb/classy/...` 하면 바로 red.
 
-설계 문서 `00_conventions.md §11`과 `README.md §5`의 불변량 #3을 강제하기 위한 **외부 코드 의존성 가드 테스트** 1개 추가:
+## 이 세션의 작업 (LB-2 first part, ~700 LoC + 500 LoC tests)
 
-- 새 파일: `bass_py/bass/validation/test_external_code_policy.py`
-- 동작: `bass_py/bass/`와 `bass_py/tsc/` 아래의 모든 `.py`에서 `import camb`, `import classy`, `import aniclass`, `import hyrec` 같은 외부 코드 import가 있으면 실패. `test_*.py`와 `bass_py/bass/recombination/fixtures/`는 예외
-- 테스트가 실제로 guard 기능하는지 검증 (의도적 violation을 삽입해서 테스트가 catch하는 parametrize)
-- commit 메시지: `LB-0: external-code policy guard test`
+`docs/lowell_bianchi/02_multipole_hierarchy_spec.md §12` Implementation checklist 앞 절반:
 
-### 작업 2 — LB-1 species background 구현 (메인 작업, ~800 LoC + 600 LoC tests)
+- `bass/hierarchy/` 서브패키지 생성
+- `PSTFTensor`, `PSTFHierarchyState` + packed-full 변환 (Clebsch-Gordan ℓ≤8 사전계산)
+- `sym_trace_free` utility
+- 9-term RHS 중 **T1, T2, T3, T8, T9** (orthogonal Bianchi에서 활성화되는 subset)
+- 테스트 H-01 ~ H-17
 
-`docs/lowell_bianchi/01_species_background_spec.md`의 Implementation checklist (§9)를 그대로 따라가면 됩니다. 스펙에 있는 모든 것:
+두 번째 파트 (다음 세션)에서:
 
-- Subpackage 레이아웃 (§2.1)
-- `SpeciesBackground` ABC + 5 concrete classes (photon, neutrino, baryon, CDM, lambda)
-- `SpeciesBackgroundRegistry` + `from_planck2018` factory
-- `FLRWBackgroundTable` helper
-- 25개 테스트 (T-01 ~ T-25, §8)
-- Citation map (§10): 모든 public method는 Ellis/Kolb/Baumann 참조 docstring
+- T4, T5, T6, T7 나머지 term (tilted/vorticity/Bianchi-curved 용)
+- `hierarchy_rhs_photon` driver
+- 통합 테스트 H-18 ~ H-26
 
-LB-1 범위 제약:
-- **Orthogonal Bianchi only** (tilted species extension은 LB-1b, 별도 세션)
-- **Massive neutrino는 NotImplementedError** (m_nu_eV=0.0 hard default)
-- **Integration은 없음** — LB-1은 analytic/interpolation 제공만. 실제 solve_ivp는 LB-5에서
-- commit 메시지: `LB-1: species background evolution (γ, ν, b, c, Λ)`
+LB-2 범위 제약:
 
-## 핵심 원칙 (모두 위반 시 PR 거부)
+- **Orthogonal Bianchi I, V, VII_0만 대상** — 나머지 type은 `NotImplementedError`
+- **collision은 LB-4 hook으로 남김** — LB-2에서는 `K_{A_ℓ}` 인터페이스만 정의 (zero-source)
+- **closure는 HardCut만 구현** — 나머지 (FreeStream/PowerLaw/TCA) 는 LB-3
 
-1. **외부 코드 금지**: CAMB/CLASS/HyRec/AniCLASS는 `scripts/generate_*_reference.py`와 `test_*.py`에만. production code (`bass/*.py`)에 절대 import 안됨
+commit 메시지: `LB-2a: PSTF multipole hierarchy (storage + T1/T2/T3/T8/T9)`
+
+## 핵심 원칙 (고정, 모두 위반 시 PR 거부)
+
+1. **외부 코드 금지**: CAMB/CLASS/HyRec/AniCLASS는 `scripts/generate_*_reference.py`와 `test_*.py`에만. 위반 시 `bass/validation/test_external_code_policy.py` 즉시 fail.
 2. **Non-perturbative everywhere**: β 처리는 sinh(β), cosh(β) 유지 (linearise 금지)
-3. **Citation in every docstring**: 모든 public method/class에 Ellis §X.Y / Kolb §X.Y / Baumann §X.Y 인용
-4. **PSTF tensors always symmetric-traceless**: `verify_pstf_invariants()` 통과
-5. **No silent fallbacks**: 미구현 Bianchi type은 `NotImplementedError` raise
+3. **Citation in every docstring**: 모든 public method/class에 Ellis §X.Y / Kolb §X.Y / Baumann §X.Y / lowell §X 인용
+4. **PSTF tensors always symmetric-traceless**: 생성 + 업데이트 직후 `verify_pstf_invariants()` (또는 동등한 검증) 통과
+5. **No silent fallbacks**: 미구현 Bianchi type은 `NotImplementedError` raise (silent FLRW fallback 금지)
 6. **FLRW limit test**: 모든 신규 모듈은 σ=0 한계에서 기존 테스트 재현
 
 ## 검증 체크리스트 (최종 commit 전)
 
-- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green
-- [ ] 신규 테스트 모두 spec 수치 타깃 일치 (T-01 ~ T-25 + 새 guard test)
-- [ ] 스펙 §10 Cite map 준수 — 모든 public method에 citation docstring
-- [ ] 스펙 §11 "What LB-1 does NOT do" 내용은 실제로 안 함 (범위 guard)
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,136 이상)
+- [ ] 신규 테스트 모두 spec 수치 타깃 일치 (H-01 ~ H-17)
+- [ ] 스펙 cite map 준수 — 모든 public method에 citation docstring
 - [ ] 신규 LoC ≥ 25% 테스트 커버리지
-- [ ] **docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2 블록을 LB-2용으로 교체** — §3 절차 따르기
-- [ ] 최종 commit 메시지에 "+ rotate NEXT_SESSION_PROMPT for LB-2" 라인 포함
+- [ ] **docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2 블록을 LB-2 둘째 파트 또는 LB-3용으로 교체** — §3 절차 따르기
+- [ ] 최종 commit 메시지에 "+ rotate NEXT_SESSION_PROMPT" 라인 포함
 
 ## 진행 순서
 
-1. `docs/lowell_bianchi/README.md`, `00_conventions.md`, `01_species_background_spec.md` 읽기
-2. 기존 Y-Block 모듈 빠른 스캔 (`species_tilt.py`, `tetrad_state.py`, `ssot.py`)
-3. 작업 1 (LB-0 guard test) → commit
-4. 작업 2 (LB-1 species) 구현 — spec checklist 순서대로
-5. 전체 회귀 확인
-6. **`docs/lowell_bianchi/NEXT_SESSION_PROMPT.md` §2 블록을 LB-2로 교체 + §1 "Last rotated" / "Current target session" 갱신**
-7. 최종 commit (코드 + 갱신된 NEXT_SESSION_PROMPT.md 함께)
+1. 스펙 3개 읽기 (README, 00_conventions, 02_hierarchy)
+2. LB-1 산출물 빠른 스캔 (`bass/species/__init__.py` + `base.py`)
+3. Subpackage 레이아웃 생성 → `PSTFTensor` + 변환 행렬 → 테스트 H-01..H-08
+4. 9-term RHS 중 orthogonal subset (T1/T2/T3/T8/T9) → 테스트 H-09..H-17
+5. 부분 회귀 확인
+6. `NEXT_SESSION_PROMPT.md §2` 교체
+7. commit
 
-## 다음 세션 핸드오프 (§2 교체용 템플릿)
-
-세션 종료 시 `NEXT_SESSION_PROMPT.md` §4의 "LB-1 → LB-2" 템플릿을 사용해 §2 블록을 교체합니다. 해당 템플릿은 이미 해당 파일에 준비돼 있으니 복사/적용만 하면 됩니다. 최종 commit 전까지 이 단계가 안 끝나면 커밋 보류.
+이 세션이 LB-2 전체를 한 번에 끝낼 수 있으면 진행하되, 검증이 충분하지 않다 싶으면 first-half으로 끊고 NEXT_SESSION_PROMPT를 second-half용으로 교체해도 OK.
 
 시작하세요. 질문 있으면 중간에 멈추고 명확히 하기 먼저. 스펙과 다른 방향 제안 시에는 반드시 spec 문서를 먼저 수정한 뒤 구현.
 ```
