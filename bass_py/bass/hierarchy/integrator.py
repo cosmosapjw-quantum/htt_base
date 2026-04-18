@@ -224,11 +224,16 @@ class IntegrationResult:
 def _bg_rhs(
     a: float, Sp: float, Sm: float, cosmo: BianchiCosmology,
 ) -> Tuple[float, float, float]:
-    """Einstein-Bianchi background RHS (reuse of einstein_bianchi
-    arithmetic; no re-derivation).
+    """Einstein-Bianchi background RHS — Ellis convention (FB-0.1).
 
-    Reference: ``bass/background/einstein_bianchi.py`` lines 163–181;
-    Ellis §18.3; spec §3.
+    Reuses ``einstein_bianchi`` arithmetic (same Friedmann, same ℋ,
+    same dispatched ``compute_shear_source``). The Ellis conformal
+    shear ``Σ_ab = a σ_ab`` obeys
+    ``dΣ/dη = -2 ℋ Σ + ℋ² · S^{WE}(type)``; the helper already
+    returns the full ``ℋ² × S^{WE}`` term.
+
+    Reference: ``bass/background/einstein_bianchi.py``; Ellis §18.3;
+    spec §3; ``docs/audits/AUDIT_PHASE_FB0_2026-04-19.md §2``.
     """
     a_val = max(a, 1e-30)
     H0_sq = cosmo.H0 ** 2
@@ -244,8 +249,9 @@ def _bg_rhs(
     source_Sp, source_Sm = compute_shear_source(
         cosmo.structure, Sp, Sm, calH, a_val,
     )
-    dSp = -calH * Sp + source_Sp
-    dSm = -calH * Sm + source_Sm
+    # Ellis decay: ``Σ × a² = const`` for Type I (Kasner).
+    dSp = -2.0 * calH * Sp + source_Sp
+    dSm = -2.0 * calH * Sm + source_Sm
     return da, dSp, dSm
 
 

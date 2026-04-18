@@ -117,12 +117,12 @@ class TestFLRWLimit:
         assert dSm == 0.0
 
     def test_type_II_vanishes_as_n1_goes_zero(self):
-        """Type II: S_+ ∝ -N_1² × ℋ, so S_+ → 0 as n_1 → 0."""
+        """Type II (Ellis conformal, FB-0.1): S_+ = -(2/3) N_1² × ℋ²,
+        so S_+ → 0 as n_1 → 0."""
         for n1 in [1e-3, 1e-5, 1e-8]:
             sc = type_ii_constants(n1=n1)
             dSp, dSm = compute_shear_source(sc, Sp_test, Sm_test, calH_test, a_test)
-            # dSp should scale as n_1²
-            expected_scale = (2.0/3.0) * n1**2 * calH_test
+            expected_scale = (2.0/3.0) * n1**2 * calH_test**2
             assert abs(dSp + expected_scale) < 1e-20 * max(expected_scale, 1e-20), (
                 f"Type II source scaling broken at n1={n1}: got dSp={dSp}, expected=-{expected_scale}"
             )
@@ -153,27 +153,65 @@ class TestFLRWLimit:
 
 
 # ═══════════════════════════════════════════════════════════════
-# §3 — Dimensional consistency
+# §3 — Dimensional consistency (Ellis conformal: FB-0.1)
 # ═══════════════════════════════════════════════════════════════
 
 class TestDimensionalConsistency:
-    """Source returns [Σ]/[η] = Mpc⁻¹/Mpc = Mpc⁻², given Σ in Mpc⁻¹
-    and ℋ in Mpc⁻¹."""
+    """Ellis conformal source = ℋ² × S^{WE}(dimensionless), giving
+    units [Σ]/[η] = Mpc⁻¹/Mpc = Mpc⁻² given Σ in Mpc⁻¹ and ℋ in
+    Mpc⁻¹. Σ-independent piece scales as ℋ²; Σ-linear (VII_h spiral)
+    piece scales as ℋ."""
 
-    @pytest.mark.parametrize("label", ALL_BIANCHI_TYPES)
+    # Types where the Ellis source is a pure ℋ²-scaled W-E term (no
+    # Σ-linear spiral coupling). VII_h is handled separately because
+    # its W-E piece and spiral piece can near-cancel at a generic
+    # test point.
+    _PURE_QUADRATIC_TYPES = [
+        t for t in ALL_BIANCHI_TYPES if t != "VII_h"
+    ]
+
+    @pytest.mark.parametrize("label", _PURE_QUADRATIC_TYPES)
     def test_source_units(self, label):
-        """Source magnitude must scale linearly with ℋ (since N_i² × ℋ has units Mpc⁻¹ × Mpc⁻¹ = Mpc⁻²)."""
+        """Double ℋ and verify the Ellis source scales as ℋ² (ratio ≈ 4).
+
+        All non-VII_h types source dΣ/dη via ``ℋ² × S^{WE}`` only, so
+        doubling ℋ quadruples the source.
+        """
         sc = get_type(label)
-        # Double calH; source should approximately double (for sources that depend on calH)
-        dSp_1, dSm_1 = compute_shear_source(sc, Sp_test, Sm_test, calH_test, a_test)
-        dSp_2, dSm_2 = compute_shear_source(sc, Sp_test, Sm_test, 2*calH_test, a_test)
-        # For types with nonzero source, ratio should be ~2
+        dSp_1, _ = compute_shear_source(sc, Sp_test, Sm_test, calH_test, a_test)
+        dSp_2, _ = compute_shear_source(sc, Sp_test, Sm_test, 2*calH_test, a_test)
         if abs(dSp_1) > 1e-20:
             ratio = abs(dSp_2 / dSp_1)
-            # Allow 10% for Σ-linear terms (VII_h spiral) which also enter linearly
-            assert 1.5 < ratio < 2.5, (
-                f"{label}: S_+ scaling with calH broken (ratio={ratio})"
+            assert 3.5 < ratio < 4.5, (
+                f"{label}: Ellis S_+ should scale as ℋ² (ratio={ratio})"
             )
+
+    def test_VIIh_mixed_scaling_components(self):
+        """VII_h has a Σ-independent W-E piece (∝ ℋ²) AND a Σ-linear
+        spiral piece (∝ ℋ). Verify each piece scales correctly in
+        isolation.
+
+        The W-E piece is isolated by setting Σ_+ = Σ_- = 0.
+        The spiral piece is isolated as ``dSp(Σ) - dSp(0)`` with the
+        same (n_1, n_3, a_twist) — the Σ-linear difference.
+        """
+        sc = type_viih_constants()
+        # W-E piece only: Σ_+ = Σ_- = 0 ⇒ spiral = 0
+        dSp_we_1, _ = compute_shear_source(sc, 0.0, 0.0, calH_test, a_test)
+        dSp_we_2, _ = compute_shear_source(sc, 0.0, 0.0, 2*calH_test, a_test)
+        ratio_we = abs(dSp_we_2 / dSp_we_1)
+        assert 3.5 < ratio_we < 4.5, (
+            f"VII_h W-E piece should scale as ℋ² (ratio={ratio_we})"
+        )
+        # Spiral piece: dSp(Σ ≠ 0) − dSp(Σ = 0) ≈ Σ-linear spiral term
+        dSp_full_1, _ = compute_shear_source(sc, 0.0, Sm_test, calH_test, a_test)
+        dSp_full_2, _ = compute_shear_source(sc, 0.0, Sm_test, 2*calH_test, a_test)
+        spiral_1 = dSp_full_1 - dSp_we_1
+        spiral_2 = dSp_full_2 - dSp_we_2
+        ratio_spiral = abs(spiral_2 / spiral_1)
+        assert 1.8 < ratio_spiral < 2.2, (
+            f"VII_h spiral piece should scale as ℋ¹ (ratio={ratio_spiral})"
+        )
 
 
 # ═══════════════════════════════════════════════════════════════

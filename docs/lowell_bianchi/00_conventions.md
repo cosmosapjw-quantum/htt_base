@@ -106,22 +106,73 @@ Decomposing the covariant gradient of u^a:
 
 ---
 
-## 4. Shear invariant normalisation — critical
+## 4. Shear convention & normalisation — critical
 
-Two conventions appear in the literature:
+### 4.1 Conformal-shear identification (Ellis SSOT, locked FB-0.1)
 
-- **Ellis (§4.2.4)**: `σ² ≡ (1/2) σ_ab σ^ab`
-- **Maartens-Ellis-Stoeger 1995, Pontzen-Challinor 2007**: `Σ² = σ_ab σ^ab / (6 H²)` — dimensionless, normalised by 6H²
-
-**bass_py uses Pontzen-Challinor Σ²**, which is what `htt.core.bounds`, `comparator_policy`, `spectrum.cl_assembly` (Route B sentinel), and `tetrad_state.shear_magnitude_sq` already assume. Specifically:
+The **stored Bianchi shear tensor `Σ_ab` is the Ellis conformal
+shear**:
 
 ```
-Σ² ≡ σ_ab σ^ab / (6 H²)    [dimensionless]
+Σ_ab  ≡  a × σ_ab
 ```
 
-so for an axisymmetric shear `σ_ab σ^ab = 2 σ_+² + 2 σ_−²` and at late time (H ≈ H_0 ≈ 67.36 km/s/Mpc = 2.25e-4 Mpc⁻¹ in natural units — see §7) the route-B sentinel Σ² = 10⁻⁸ corresponds to σ / H ≈ 2.45 × 10⁻⁴.
+where `σ_ab` is the **proper-time physical shear** (Ellis §4.2.3 /
+§18.3). The proper-time evolution ``σ̇_ab + Θ σ_ab = S_proper``
+translates in conformal time (``prime = d/dη``, ``𝓗 = a'/a = a H``) to
 
-**Do not** use the Ellis `σ² = (1/2) σ_ab σ^ab` convention in new code without converting.
+```
+dΣ_ab/dη  =  -2 𝓗 Σ_ab  +  𝓗² · S^{WE}(type)
+```
+
+which is the form implemented by `bass/background/einstein_bianchi.py`
+and its per-type dispatch in `bass/transport/shear_sources.py`. The
+dimensionless Wainwright-Ellis source ``S^{WE}`` is defined so that in
+Hubble-normalised time ``τ = H t`` and with ``Σ̂ = σ/H``,
+``dΣ̂/dτ = (q - 2) Σ̂ + S^{WE}(N_i, A)``.
+
+Consequences (Type I Kasner limit):
+
+- ``σ × a³ = const`` (Kasner invariant, physical)
+- ``Σ × a² = const`` (conformal; LB-5 I-11 / LB-6-15 post-FB-0.1)
+- ``Σ² × a⁴ = const`` (LB-5 I-12 / LB-6-16 post-FB-0.1)
+
+### 4.2 Dimensionless shear scalar (Pontzen-Challinor)
+
+For observable comparisons we use the dimensionless shear scalar:
+
+```
+Σ²  ≡  σ_ab σ^ab / (6 H²)    [dimensionless]
+```
+
+which is what `htt.core.bounds`, `comparator_policy`,
+`spectrum.cl_assembly` (Route B sentinel), and
+`tetrad_state.shear_magnitude_sq` use. Note this ``Σ²`` is a scalar
+and is distinct from the tensor ``Σ_ab`` defined in §4.1; the symbol
+clash is historical (both appear in the literature) and we resolve it
+contextually — ``Σ_ab`` always means the Ellis conformal shear, ``Σ²``
+(lowercase 2) always means the Pontzen-Challinor dimensionless scalar.
+
+For an axisymmetric shear ``σ_ab σ^ab = 2 σ_+² + 2 σ_−²`` and at late
+time (``H ≈ H_0 ≈ 67.36 km/s/Mpc = 2.25e-4 Mpc⁻¹`` in natural units —
+see §7) the route-B sentinel ``Σ² = 10⁻⁸`` corresponds to
+``σ / H ≈ 2.45 × 10⁻⁴``.
+
+### 4.3 Conventions to avoid
+
+- **Do not** use the alternative "Σ × a = const" convention (shipped
+  pre-FB-0.1). It corresponds to tracking ``Σ_alt = a² σ`` rather
+  than ``Σ = a σ``, breaking consistency with `proper_shear_at_eta`
+  and downstream hierarchy T-terms.
+- **Do not** use the Ellis factor-of-(1/2) ``σ² = (1/2) σ_ab σ^ab``
+  scalar without converting to the Pontzen-Challinor normalisation in
+  §4.2.
+
+### 4.4 FB roadmap impact (D2 locked)
+
+FB plan §6 D2 (Σ-convention) is locked to the Ellis choice documented
+here. Any future perturbation / tilted-sector work (FB-3, FB-5) must
+inherit this convention — no re-derivation required.
 
 ---
 

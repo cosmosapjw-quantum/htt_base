@@ -125,19 +125,17 @@ def test_I10_species_sum_rule_at_eta_today(species) -> None:
 # ════════════════════════════════════════════════════════════════════
 
 def test_I11_bianchi_I_sigma_plus_decay(species) -> None:
-    """Type I flat with Σ_+(0) > 0: Σ × a tracks a conserved invariant.
+    """Type I flat with Σ_+(0) > 0: ``Σ_+ × a² = const`` (Ellis, FB-0.1).
 
-    The ``einstein_bianchi.solve_bianchi_background`` RHS integrated
-    inside ``combined_rhs`` is ``Σ̇ = −𝓗 Σ`` for Type I (no spatial-
-    curvature source), giving ``Σ × a = const`` along the trajectory.
-    The LB-5 spec originally quoted ``Σ² × a⁴ = const`` (Ellis §18.3
-    with Σ_ab = a × σ_ab and σ_ab × a³ = const); the existing
-    ``einstein_bianchi`` convention evolves Σ with a single factor of
-    𝓗 so the invariant in those variables is ``Σ × a = const``. This
-    test anchors the existing convention (no LB-5 re-derivation of
-    the background solver).
+    Post-FB-0.1 ``einstein_bianchi.solve_bianchi_background`` evolves
+    the Ellis conformal shear ``Σ_ab ≡ a σ_ab`` with
+    ``dΣ/dη = -2 𝓗 Σ`` for Type I (no spatial-curvature source), so the
+    conserved combination along the trajectory is ``Σ × a²``. The
+    corresponding physical statement is the Kasner invariant
+    ``σ_ab × a³ = const``.
 
-    Reference: spec §10.4 I-11; ``einstein_bianchi.py`` L163–181.
+    Reference: Ellis §18.3; Wainwright-Ellis §18; spec §10.4 I-11;
+    ``docs/audits/AUDIT_PHASE_FB0_2026-04-19.md §2``.
     """
     cosmo = type_i_cosmology(sigma_over_H_init=1e-4)
     res = _run_default(species, bianchi_cosmo=cosmo,
@@ -150,20 +148,21 @@ def test_I11_bianchi_I_sigma_plus_decay(species) -> None:
     if not np.any(mask):
         pytest.skip("Σ_+ trajectory is zero everywhere — integrator "
                     "did not propagate the initial condition")
-    inv = res.Sigma_plus[mask] * res.a[mask]
+    inv = res.Sigma_plus[mask] * res.a[mask] ** 2
     rel_var = (inv.max() - inv.min()) / np.abs(inv.mean())
-    assert rel_var < 0.05, f"Σ × a drift: {rel_var}"
+    assert rel_var < 0.05, f"Σ × a² drift: {rel_var}"
 
 
-def test_I12_sigma_squared_a_squared_constant(species) -> None:
-    """``(Σ_+² + Σ_−²) × a² = const`` along the full Type I trajectory
-    (≤ 1 % relative variation).
+def test_I12_sigma_squared_a_fourth_constant(species) -> None:
+    """``(Σ_+² + Σ_−²) × a⁴ = const`` along the Type I trajectory
+    (≤ 1 % relative variation) — Ellis convention (FB-0.1).
 
-    This is the einstein_bianchi convention's shear-decay invariant
-    (see I-11 docstring for why the spec's original ``Σ² × a⁴`` reads
-    are not what ``einstein_bianchi`` preserves).
+    Equivalent to the Kasner statement ``σ² × a⁶ = const`` under
+    ``Σ_ab = a σ_ab``. Before FB-0.1 the integrator evolved a
+    non-Ellis Σ for which the shipped invariant was ``Σ² × a²``.
 
-    Reference: spec §10.4 I-12 (amended).
+    Reference: Ellis §18.3; spec §10.4 I-12;
+    ``docs/audits/AUDIT_PHASE_FB0_2026-04-19.md``.
     """
     cosmo = type_i_cosmology(sigma_over_H_init=5e-5)
     res = _run_default(
@@ -177,10 +176,50 @@ def test_I12_sigma_squared_a_squared_constant(species) -> None:
         pytest.skip("Σ_+ trajectory is zero everywhere — cannot probe "
                     "invariant")
     sig_sq = res.Sigma_plus[mask] ** 2 + res.Sigma_minus[mask] ** 2
-    a2 = res.a[mask] ** 2
-    invariant = sig_sq * a2
+    a4 = res.a[mask] ** 4
+    invariant = sig_sq * a4
     rel_var = (invariant.max() - invariant.min()) / invariant.mean()
-    assert rel_var < 0.01, f"Σ² × a² relative variation {rel_var}"
+    assert rel_var < 0.01, f"Σ² × a⁴ relative variation {rel_var}"
+
+
+# ════════════════════════════════════════════════════════════════════
+# I-12b Kasner analytic recovery (FB-0.1 new)
+# ════════════════════════════════════════════════════════════════════
+
+def test_I12b_kasner_analytic_recovery_type_I(species) -> None:
+    """Type I flat: the proper-time shear ``σ = Σ / a`` recovers the
+    Kasner analytic ``σ(a) = σ_0 × (a_0 / a)³`` along the trajectory
+    (≤ 2 % relative variation in ``σ × a³``).
+
+    This is the strongest form of the Ellis-convention check: the
+    Σ × a² invariance (I-11) verifies the integrator's numerical
+    conservation law, while σ × a³ verifies the physical (Kasner)
+    shear decay explicitly.
+
+    New in FB-0.1; added alongside the I-11 / I-12 flip.
+
+    Reference: Ellis §18.3 (Kasner limit); Wainwright-Ellis §18;
+    docs/audits/AUDIT_PHASE_FB0_2026-04-19.md §2.
+    """
+    cosmo = type_i_cosmology(sigma_over_H_init=1e-4)
+    res = _run_default(
+        species, bianchi_cosmo=cosmo,
+        Sigma_plus_initial=1e-8,
+        eta_initial_mpc=1.0, eta_final_mpc=500.0,
+        rtol=1e-9, atol=1e-14,
+    )
+    mask = np.abs(res.Sigma_plus) > 1e-20
+    if not np.any(mask):
+        pytest.skip("Σ_+ trajectory vanished before output grid")
+    sigma_proper_plus = res.Sigma_plus[mask] / res.a[mask]
+    kasner_invariant = sigma_proper_plus * res.a[mask] ** 3
+    rel_var = (
+        (kasner_invariant.max() - kasner_invariant.min())
+        / np.abs(kasner_invariant.mean())
+    )
+    assert rel_var < 0.02, (
+        f"Kasner σ × a³ drift: {rel_var} (expected < 2%)"
+    )
 
 
 # ════════════════════════════════════════════════════════════════════

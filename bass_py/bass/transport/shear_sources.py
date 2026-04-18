@@ -1,60 +1,56 @@
 """
-bass/background/shear_sources.py  (Week 1 Day 2)
-=================================================
+bass/transport/shear_sources.py  (FB-0.1: Ellis convention)
+============================================================
 
-Per-type shear ODE source terms for all 10 Bianchi types.
+Per-type shear ODE source terms for all 10 Bianchi types + FLRW.
 
 Architectural role
 ------------------
-Replaces the previous `if sc.label == "VII_h"` hack in einstein_bianchi.py
-with a clean dispatch-table structure. Each Bianchi type registers a function
-`(n_diag, a_twist, Sp, Sm, calH, a) -> (dSp_source, dSm_source)` that returns
-the **source contribution** to the conformal-shear ODE:
+Dispatch-table for the Bianchi spatial-curvature source contribution to
+the Ellis conformal-shear evolution. Each Bianchi type registers a
+function ``(sc, Sp, Sm, calH, a) -> (dSp_source, dSm_source)`` that
+returns **ℋ² × S^{WE}(type)** in Mpc⁻² units, feeding the Ellis ODE:
 
-    dΣ_+/dη = -ℋ Σ_+ + S_+(structure, state)       [existing decay + new source]
-    dΣ_-/dη = -ℋ Σ_- + S_-(structure, state)
+    dΣ_+/dη = -2 ℋ Σ_+ + S_+(structure, state)      # Ellis: Σ = a σ
+    dΣ_-/dη = -2 ℋ Σ_- + S_-(structure, state)
 
-Background
-----------
-In the Wainwright-Ellis (Hubble-normalized) formalism, the shear evolution is:
+FB-0.1 convention flip
+----------------------
+Pre-FB-0.1 this module returned ``ℋ × S^{WE}`` (only one ℋ factor) to
+feed a non-Ellis ODE where ``Σ × a = const`` in Type I. The Ellis ODE
+requires one additional factor of ℋ (derivation:
+``a² × S_proper = a² × H² × S^{WE} = ℋ² × S^{WE}``). All source
+functions below accordingly multiply ``S^{WE}`` by ``calH**2`` on the
+return path. The Σ-linear spiral coupling in source_VIIh keeps its
+``ω_spiral × Σ_⊥`` rotation structure (rate has units of ℋ on both
+sides of the convention flip); only the Σ-independent W-E piece picks
+up the extra factor of ℋ.
 
-    Σ_+' = (q − 2)Σ_+ + S_+(N_i, A)
-    Σ_-' = (q − 2)Σ_- + S_-(N_i, A)
+Background (Wainwright-Ellis dimensionless form)
+-------------------------------------------------
+In the Hubble-normalized (τ = H t, Σ̂ = σ / H) form,
 
-with prime = d/dτ and dτ = H dt. The source S_±(N_i, A) encodes the spatial
-curvature anisotropy. Different Bianchi types activate different subsets of N_i
-and A, giving qualitatively different sources.
+    dΣ̂/dτ = (q − 2)Σ̂ + S^{WE}(N_i, A)
 
-Our conformal-time convention
------------------------------
-We track Σ_conf = a σ (units: Mpc⁻¹), evolving in conformal time η. The
-transformation from Wainwright-Ellis Σ̂ = σ/H to Σ_conf is:
-
-    Σ_conf = Σ̂ × (a × H × a/c_Mpc) = Σ̂ × ℋ × (1 Mpc scale)
-
-For nearly-FLRW (|Σ̂| ≪ 1), the sources take the form:
-
-    S_± ≈ (spatial curvature anisotropy) × (a²/ℋ) × (kinematic factor)
-
-In practice we compute the Wainwright-Ellis source in dimensionless form and
-convert to conformal units at the return site. For the Day 2 deliverable, we
-implement the **near-FLRW linearized** form with explicit TODO markers for the
-full nonlinear extension (Week 5).
+with S^{WE}(N_i, A) the Bianchi spatial-curvature anisotropy.
+Converting to proper time gives ``σ̇ = -3 H σ + H² S^{WE}``. Converting
+to Ellis conformal shear ``Σ = a σ`` gives
+``dΣ/dη = -2 𝓗 Σ + 𝓗² S^{WE}``.
 
 Status tags
 -----------
 Each type source function carries a status tag:
     VALIDATED  : matches analytical limit or benchmark
     PROVISIONAL: dimensionally correct, FLRW limit verified, but full form
-                 awaits Week 5 benchmark against AniCLASS
+                 awaits FB-1 benchmark (per-type Wainwright-Ellis fixture)
     NOT_IMPLEMENTED: stub that returns zero (with warning)
 
 References
 ----------
-  Wainwright & Ellis, Dynamical Systems in Cosmology (CUP, 1997) §6
-  Ellis, Maartens & MacCallum, Relativistic Cosmology (CUP, 2012) §18
-  bianchi_background_survey_v2.md §B (source terms per type)
-  ch04_bianchi_bounds.tex §sec:BI–§sec:classAB (type-by-type treatment)
+  Wainwright & Ellis, *Dynamical Systems in Cosmology* (CUP, 1997) §6, §18
+  Ellis, Maartens & MacCallum, *Relativistic Cosmology* (CUP, 2012) §18
+  Pontzen & Challinor, *PRD* 79, 103518 (2009) — VII_h spiral convention
+  docs/audits/AUDIT_PHASE_FB0_2026-04-19.md §2 (convention-flip map)
 """
 from __future__ import annotations
 
@@ -110,17 +106,16 @@ def source_I(sc, Sp, Sm, calH, a):
 def source_II(sc, Sp, Sm, calH, a):
     """Type II: Heisenberg, (+, 0, 0).
 
-    Wainwright-Ellis source (Hubble-normalized):
-        S₊ = -(2/3) N₁²
-        S₋ = 0
+    Wainwright-Ellis dimensionless source:
+        S^{WE}_+ = -(2/3) N₁²
+        S^{WE}_- = 0
 
-    PROVISIONAL: converts dimensionless N₁ × calH to conformal Σ units.
-    The source pushes Σ_+ towards zero on timescale ∝ 1/(N₁² calH).
+    Ellis conformal source = ℋ² × S^{WE} (FB-0.1).
+
+    PROVISIONAL: FLRW limit (N₁ → 0) verified; FB-1 will promote.
     """
-    N1 = sc.n1  # already dimensionless (order unity in units where calH ~ 1/a)
-    # Convert Wainwright-Ellis source to conformal-time rate
-    # S_+^{WE} has units of H; times calH gives rate of change of Σ in Mpc⁻²
-    dSp = -(2.0/3.0) * N1**2 * calH
+    N1 = sc.n1
+    dSp = -(2.0/3.0) * N1**2 * calH**2
     dSm = 0.0
     return dSp, dSm
 
@@ -143,8 +138,9 @@ def source_VI0(sc, Sp, Sm, calH, a):
     n1, n3 = sc.n1, sc.n3
     diff = n1 - n3
     summ = n1 + n3
-    dSp = -(2.0/3.0) * diff**2 * calH
-    dSm = -(2.0/math.sqrt(3.0)) * summ * diff * calH
+    calH_sq = calH * calH
+    dSp = -(2.0/3.0) * diff**2 * calH_sq
+    dSm = -(2.0/math.sqrt(3.0)) * summ * diff * calH_sq
     return dSp, dSm
 
 
@@ -163,8 +159,9 @@ def source_VII0(sc, Sp, Sm, calH, a):
     n1, n3 = sc.n1, sc.n3
     diff = n1 - n3
     summ = n1 + n3
-    dSp = -(2.0/3.0) * diff**2 * calH
-    dSm = +(2.0/math.sqrt(3.0)) * summ * diff * calH
+    calH_sq = calH * calH
+    dSp = -(2.0/3.0) * diff**2 * calH_sq
+    dSm = +(2.0/math.sqrt(3.0)) * summ * diff * calH_sq
     return dSp, dSm
 
 
@@ -182,7 +179,8 @@ def source_VIII(sc, Sp, Sm, calH, a):
     # Leading quadratic terms (see Ellis-Maartens-MacCallum eq. 18.26)
     S_plus_WE = -(2.0/3.0) * (2*n1**2 - n2**2 - n3**2 + n2*n3)
     S_minus_WE = (2.0/math.sqrt(3.0)) * (n2**2 - n3**2)
-    return S_plus_WE * calH, S_minus_WE * calH
+    calH_sq = calH * calH
+    return S_plus_WE * calH_sq, S_minus_WE * calH_sq
 
 
 def source_IX(sc, Sp, Sm, calH, a):
@@ -199,7 +197,8 @@ def source_IX(sc, Sp, Sm, calH, a):
     # For generic: anisotropy source
     S_plus_WE = -(2.0/3.0) * (2*n1**2 - n2**2 - n3**2 - n2*n3)
     S_minus_WE = (2.0/math.sqrt(3.0)) * (n2**2 - n3**2)
-    return S_plus_WE * calH, S_minus_WE * calH
+    calH_sq = calH * calH
+    return S_plus_WE * calH_sq, S_minus_WE * calH_sq
 
 
 # ─── Class B ────────────────────────────────────────────────
@@ -233,7 +232,7 @@ def source_IV(sc, Sp, Sm, calH, a):
     """
     n3, a_t = sc.n3, sc.a_twist
     S_plus_WE = -(2.0/3.0) * n3**2 + (2.0/3.0) * a_t**2
-    return S_plus_WE * calH, 0.0
+    return S_plus_WE * calH**2, 0.0
 
 
 def source_III(sc, Sp, Sm, calH, a):
@@ -267,7 +266,8 @@ def source_VIh(sc, Sp, Sm, calH, a):
 
     S_plus_WE = -(2.0/3.0) * diff**2 + (2.0/3.0) * a_t**2 * h_factor
     S_minus_WE = -(2.0/math.sqrt(3.0)) * summ * diff
-    return S_plus_WE * calH, S_minus_WE * calH
+    calH_sq = calH * calH
+    return S_plus_WE * calH_sq, S_minus_WE * calH_sq
 
 
 def source_VIIh(sc, Sp, Sm, calH, a):
@@ -295,20 +295,22 @@ def source_VIIh(sc, Sp, Sm, calH, a):
     summ = n1 + n3
     h = sc.h_parameter
 
-    # Direct W-E source
+    # Direct W-E source (Ellis conformal: ℋ² × S^{WE})
     S_plus_WE = -(2.0/3.0) * diff**2 + (2.0/3.0) * a_t**2 / (1.0 + h)
     S_minus_WE = +(2.0/math.sqrt(3.0)) * summ * diff
 
-    # Spiral coupling (VII_h signature)
+    # Spiral coupling (VII_h signature). The rotation ``ω × Σ_⊥`` is
+    # convention-invariant (rate has units of ℋ in both conventions);
+    # only the Σ-independent W-E piece picks up the extra ℋ under
+    # FB-0.1.
     omega_spiral = math.sqrt(abs(n1 * n3)) * math.sqrt(abs(h)) * calH
-    # Coupling amplitude: tuned to match Pontzen-Challinor at leading order.
-    # Exact value set by AniCLASS benchmark in Week 5.
-    kappa_spiral = 1.0  # O(1) coefficient, to be calibrated
+    kappa_spiral = 1.0  # O(1) coefficient, to be calibrated in FB-1
     S_plus_spiral = +kappa_spiral * omega_spiral * Sm
     S_minus_spiral = -kappa_spiral * omega_spiral * Sp
 
-    dSp = S_plus_WE * calH + S_plus_spiral
-    dSm = S_minus_WE * calH + S_minus_spiral
+    calH_sq = calH * calH
+    dSp = S_plus_WE * calH_sq + S_plus_spiral
+    dSm = S_minus_WE * calH_sq + S_minus_spiral
     return dSp, dSm
 
 

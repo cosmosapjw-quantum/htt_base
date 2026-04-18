@@ -1,33 +1,60 @@
 """
-bass/background/einstein_bianchi.py  (Week 1 Day 3 — 10-type support)
-=====================================================================
+bass/background/einstein_bianchi.py  (FB-0.1: Ellis convention)
+================================================================
 
 Bianchi background ODE integrator with full 10-type support.
 
-Solves the Einstein-Bianchi system for the scale factor a(η) and shear σ_±(η)
-in conformal time, with real cosmological parameters (Planck 2018).
+Solves the Einstein-Bianchi system for the scale factor a(η) and shear
+``Σ_±(η)`` in conformal time, with real cosmological parameters
+(Planck 2018).
 
-Changes from v1 (skeleton):
-  1. Replaced hardcoded VII_h branch with dispatch to shear_sources.py
-  2. Added factory functions for all 10 Bianchi types + FLRW
-  3. Integrated comparator policy via comparator_policy.py
-  4. Bianchi IV support with no_flrw_limit flag propagation
+Convention (Ellis §18.3 / Wainwright-Ellis §18)
+-----------------------------------------------
+The stored shear is the **Ellis conformal shear** ``Σ_ab ≡ a σ_ab``
+where ``σ_ab`` is the proper-time shear satisfying the Raychaudhuri
+companion ``σ̇_ab + Θ σ_ab = S_proper,ab`` with ``Θ = 3 H``.
 
-State variables:
+For Bianchi I flat (no spatial-curvature source) this yields
+``σ_ab × a³ = const`` (Kasner), i.e. ``Σ_ab × a² = const``.
+
+State variables
+---------------
   a(η)     — scale factor
-  Σ_+(η)   — conformal shear (plus mode): Σ = a σ
-  Σ_-(η)   — conformal shear (minus mode)
+  Σ_+(η)   — Ellis conformal shear (plus mode): Σ_+ = a × σ_+
+  Σ_-(η)   — Ellis conformal shear (minus mode)
 
-Equations (unified across types):
+Equations (unified across types; conformal-time derivation in
+``docs/audits/AUDIT_PHASE_FB0_2026-04-19.md §2``):
   a'   = a × ℋ
-  Σ_+' = -ℋ Σ_+ + S_+(type, Σ, ℋ, a)
-  Σ_-' = -ℋ Σ_- + S_-(type, Σ, ℋ, a)
+  Σ_+' = -2 ℋ Σ_+ + ℋ² · S^{WE}_+(type, Σ, ℋ, a)
+  Σ_-' = -2 ℋ Σ_- + ℋ² · S^{WE}_-(type, Σ, ℋ, a)
 
-where S_± come from the Wainwright-Ellis spatial-curvature source
-(compute_shear_source in shear_sources.py).
+The ``-2 ℋ Σ`` decay term is the Ellis signature: the standard
+``-3 H σ`` proper-time decay maps under ``Σ = a σ`` into
+``dΣ/dη = -2 𝓗 Σ + a² S_proper``. The Wainwright-Ellis dimensionless
+source ``S^{WE}`` is related to the proper-time source by
+``S_proper = H² S^{WE}``; hence ``a² S_proper = 𝓗² S^{WE}`` in
+conformal form. The helper ``compute_shear_source`` in
+``shear_sources.py`` returns ``ℋ² × S^{WE}`` directly.
 
 Frame: n^a-frame (Bianchi hypersurface normal).
 Units: η in Mpc, H in km/s/Mpc, Σ in Mpc⁻¹.
+
+History
+-------
+- pre-FB-0.1 (shipped since W1D3): tracked a non-Ellis Σ for which
+  Type I preserved ``Σ × a = const`` (corresponding to ``σ × a² = const``,
+  i.e. not Kasner). ``proper_shear_at_eta`` assumed Ellis ``Σ = a σ``
+  and divided by ``a``, producing a convention mismatch downstream
+  (LB-5 F2 carry-forward).
+- FB-0.1 (2026-04-19): flipped to Ellis; downstream consumers already
+  assumed ``Σ = a σ``, so this closes the mismatch.
+
+References
+----------
+  Ellis, Maartens & MacCallum, *Relativistic Cosmology* (CUP 2012) §18.3
+  Wainwright & Ellis, *Dynamical Systems in Cosmology* (CUP 1997) §6, §18
+  Pontzen & Challinor, *PRD* 79, 103518 (2009) — VII_h spiral convention
 """
 from __future__ import annotations
 
@@ -171,12 +198,15 @@ def solve_bianchi_background(
         # da/dη = a × ℋ
         da = a_val * cH
 
-        # Per-type shear source dispatch (NEW: Day 3 integration)
+        # Per-type shear source dispatch. The helper returns
+        # ``ℋ² × S^{WE}(type)`` in Ellis conformal units (FB-0.1).
         source_Sp, source_Sm = compute_shear_source(sc, Sp, Sm, cH, a_val)
 
-        # Full shear evolution: decay + source
-        dSp = -cH * Sp + source_Sp
-        dSm = -cH * Sm + source_Sm
+        # Ellis shear evolution (FB-0.1):
+        #   dΣ_ab/dη = -2 𝓗 Σ_ab + 𝓗² S^{WE}(type)
+        # Preserves ``Σ × a² = const`` in Type I flat (Kasner).
+        dSp = -2.0 * cH * Sp + source_Sp
+        dSm = -2.0 * cH * Sm + source_Sm
 
         return np.array([da, dSp, dSm])
 

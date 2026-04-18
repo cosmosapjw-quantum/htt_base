@@ -398,9 +398,11 @@ class TestLBThermalHistory:
 class TestLBBianchiI:
     """Bianchi I shear-decay regression (spec §10.3 LB-6-15..18).
 
-    Uses the einstein_bianchi convention ``Σ × a = const`` (LB-5 F2
-    amendment); the Ellis-convention ``σ² × a⁶ = const`` gets probed
-    indirectly via the ``σ = Σ / a`` conversion in LB-6-16.
+    Post-FB-0.1 uses the Ellis convention ``Σ_ab ≡ a σ_ab``, so the
+    Kasner statement ``σ_ab × a³ = const`` translates into
+    ``Σ × a² = const`` and ``Σ² × a⁴ = const``. The pre-FB-0.1 shipped
+    integrator preserved only the lesser ``Σ × a = const`` (LB-5 F2
+    carry-forward resolved in FB-0.1).
     """
 
     @pytest.fixture(scope="class")
@@ -412,29 +414,30 @@ class TestLBBianchiI:
         )
         return LowellBianchiIntegrator(cfg, species).run()
 
-    def test_LB_6_15_Sigma_times_a_conserved(self, result) -> None:
-        """LB-6-15: ``Σ_+ × a = const`` along the Type I flat
-        trajectory, ≤ 5 % relative variation (LB-5 I-11 precedent).
+    def test_LB_6_15_Sigma_times_a_squared_conserved(self, result) -> None:
+        """LB-6-15: ``Σ_+ × a² = const`` along the Type I flat
+        trajectory, ≤ 5 % relative variation (Ellis convention;
+        FB-0.1 flip of the LB-5 I-11 invariant).
 
-        Citation: Ellis §18.3 (``Σ_ab = a σ_ab``; ``σ × a³ = const``
-        in Ellis convention gives ``Σ × a`` conserved in
-        einstein_bianchi's shipped convention, LB-5 F2).
+        Citation: Ellis §18.3 (``Σ_ab = a σ_ab``; Kasner
+        ``σ × a³ = const``); Wainwright-Ellis §18.
         """
         mask = np.abs(result.Sigma_plus) > 1e-20
         if not np.any(mask):
             pytest.skip("Σ_+ trajectory vanished before output grid")
-        invariant = result.Sigma_plus[mask] * result.a[mask]
+        invariant = result.Sigma_plus[mask] * result.a[mask] ** 2
         rel_var = (invariant.max() - invariant.min()) / np.abs(invariant.mean())
-        assert rel_var < 0.05, f"Σ × a drift: {rel_var}"
+        assert rel_var < 0.05, f"Σ × a² drift: {rel_var}"
 
-    def test_LB_6_16_Sigma_squared_times_a_squared_conserved(
+    def test_LB_6_16_Sigma_squared_times_a_fourth_conserved(
         self, result,
     ) -> None:
-        """LB-6-16: ``(Σ_+² + Σ_−²) × a² = const`` along the
-        trajectory, ≤ 1 % relative variation (LB-5 I-12 precedent).
+        """LB-6-16: ``(Σ_+² + Σ_−²) × a⁴ = const`` along the
+        trajectory, ≤ 1 % relative variation — Ellis convention,
+        FB-0.1 flip.
 
-        Citation: Ellis §18.3 (equivalent to ``σ² × a⁶ = const`` after
-        the ``Σ_ab = a σ_ab`` conversion).
+        Citation: Ellis §18.3 (equivalent to Kasner
+        ``σ² × a⁶ = const`` after ``Σ_ab = a σ_ab``).
         """
         mask = np.abs(result.Sigma_plus) > 1e-20
         if not np.any(mask):
@@ -442,9 +445,9 @@ class TestLBBianchiI:
         sig_sq = (
             result.Sigma_plus[mask] ** 2 + result.Sigma_minus[mask] ** 2
         )
-        invariant = sig_sq * result.a[mask] ** 2
+        invariant = sig_sq * result.a[mask] ** 4
         rel_var = (invariant.max() - invariant.min()) / invariant.mean()
-        assert rel_var < 0.01, f"Σ² × a² drift: {rel_var}"
+        assert rel_var < 0.01, f"Σ² × a⁴ drift: {rel_var}"
 
     def test_LB_6_17_bianchi_friedmann_invariant(
         self, species, result,
