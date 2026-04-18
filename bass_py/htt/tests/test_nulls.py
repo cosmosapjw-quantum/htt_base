@@ -9,6 +9,7 @@ C-06 deliverable. Tests:
   5. ABC enforcement
   6. FalsePositiveRates accumulator
 """
+import os
 import pytest
 import json
 import numpy as np
@@ -17,10 +18,17 @@ from pathlib import Path
 
 def _load_obs():
     """Load obs_defaults.json for null generation."""
+    _here = Path(__file__).resolve()
     candidates = [
-        Path(__file__).resolve().parent.parent.parent / 'workspace' / 'data' / 'obs_defaults.json',
-        Path(__file__).resolve().parent.parent / 'data' / 'obs_defaults.json',
+        _here.parent.parent.parent / 'workspace' / 'data' / 'obs_defaults.json',
+        _here.parent.parent / 'data' / 'obs_defaults.json',
+        # Snapshot layout: obs bundle lives under the repo-level dl_pipeline/.
+        # The repo root is four parents up: bass_py/htt/tests/ → bass_py/htt/ → bass_py/ → <repo>/.
+        _here.parent.parent.parent.parent / 'dl_pipeline' / 'obs_bundle' / 'obs' / 'scalars' / 'obs_defaults.json',
     ]
+    env = os.environ.get('HTT_OBS_DEFAULTS')
+    if env:
+        candidates.insert(0, Path(env))
     for p in candidates:
         if p.exists():
             with open(p) as f:
