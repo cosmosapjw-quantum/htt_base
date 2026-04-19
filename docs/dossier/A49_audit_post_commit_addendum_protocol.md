@@ -346,6 +346,101 @@ last loophole the W15D1 scoped-pathspec rule cannot reach
 (authors who manually pathspec a non-ind-tracks file into the
 audit commit by mistake).
 
+### A49.8.1 Candidate pre-commit hook — per-stage skeleton (W22D3 / W21 R2)
+
+Paste-ready skeleton for the §A49.8 candidate hook, kept pre-
+implemented so that a §A49.6 failure-mode observation does not
+force hook authorship under time pressure. The hook is **not
+installed** until §A49.6 fires; the W15D1 scoped-pathspec rule
+remains the load-bearing mitigation until then. The skeleton below
+is prose-level pseudocode — field paths (especially the lane-prefix
+regex) against A46.2 before deployment.
+
+```bash
+#!/usr/bin/env bash
+# .git/hooks/pre-commit — audit-commit lane enforcement (A49.8.1).
+# Purpose: reject an audit-commit whose staged diff spans more than
+# one lane per A46.2.  Only fires when the commit touches a path
+# matching the audit-commit recogniser (step 2); a non-audit commit
+# short-circuits immediately.
+set -euo pipefail
+
+# (1) Snapshot the staged diff once.
+staged="$(git diff --cached --name-only)"
+[ -z "$staged" ] && exit 0
+
+# (2) Audit-commit recogniser: at least one staged path under the
+# ind-tracks audit prefix.  A commit that does NOT touch any audit
+# file is out of scope for this hook and exits 0 immediately.
+if ! printf '%s\n' "$staged" | grep -qE \
+    '^docs/audits/AUDIT_PHASE_IND_TRACKS_W[0-9]+_.*\.md$'; then
+    exit 0
+fi
+
+# (3) Ind-tracks ownership prefix (mirrors A46.2 verbatim).
+ind_tracks_re='^(bass_py/(mio|workspace|src/common|tsc)/|'
+ind_tracks_re+='docs/(dossier/A|INDEPENDENT_TRACKS_|'
+ind_tracks_re+='audits/AUDIT_PHASE_IND_TRACKS_)|'
+ind_tracks_re+='project/00_manuscript/ch(03|11|12)_)'
+
+# (4) Any staged path outside the ind-tracks prefix fails the hook.
+offenders="$(printf '%s\n' "$staged" | grep -vE "$ind_tracks_re" \
+             || true)"
+if [ -n "$offenders" ]; then
+    printf 'A49.8.1: audit-commit blocked — non-ind-tracks paths '
+    printf 'staged alongside AUDIT_PHASE_IND_TRACKS_*.md.\n'
+    printf 'Offending paths:\n%s\n' "$offenders"
+    printf 'Remediation: unstage the offenders (git restore '
+    printf '--staged <path>) and re-issue the audit commit with a '
+    printf 'scoped pathspec per W15D1.\n'
+    exit 1
+fi
+
+exit 0
+```
+
+Per-stage responsibilities of the skeleton:
+
+* **(a) shebang** — `#!/usr/bin/env bash` + `set -euo pipefail` so
+  an unbound variable or failing subcommand aborts the hook
+  rather than silently passing.
+* **(b) staged-diff capture** — `git diff --cached --name-only`
+  emits one staged path per line. Captured once; reused for
+  recogniser + enforcement.
+* **(c) audit-commit recogniser** — short-circuit on any commit
+  not touching `docs/audits/AUDIT_PHASE_IND_TRACKS_W<N>_<DATE>.md`.
+  Without this gate the hook would reject every non-audit commit
+  that touches a bass or gallery path, which is the entire point
+  of the two sibling lanes' daily work.
+* **(d) ownership-prefix filter + exit-1 on offender** —
+  `grep -vE` against the A46.2 prefix regex; any remaining line is
+  an offender; nonempty set → exit 1 with an offender list and a
+  remediation pointer to the W15D1 scoped-pathspec workflow. The
+  regex mirrors A46.2's ind-tracks bullet verbatim (five prefix
+  alternations); update this stanza when A46.2 is revised (A49.9
+  bullet 2 — lane-ownership-prefixes-change re-audit trigger).
+* **(e) installation note** — two delivery paths:
+  * **Manual `.git/hooks/pre-commit`**: per-clone install;
+    `chmod +x .git/hooks/pre-commit`; never tracked by git so
+    each contributor opts in. Recommended for the first post-
+    §A49.6 deployment (lowest-ceremony verification).
+  * **`pre-commit` framework** (`.pre-commit-config.yaml` with a
+    `repo: local` hook block). Tracked in the repo; runs on every
+    contributor's clone once they `pre-commit install`. Preferred
+    for steady-state deployment after the hook has survived ≥ 2
+    audit cycles without false-positives (A49.9 candidate trigger
+    for this promotion). False-positive risk: the recogniser in
+    (2) is prefix-based; a future audit filename schema change
+    (e.g. a W100+ overflow or a date-format rotation) would
+    silently disable the hook until the regex is updated.
+
+The skeleton is stable under A46.2 v1; a lane-ownership-prefix
+change (A49.9 trigger #2) propagates into the `(3)` regex. The
+hook does **not** replace the W15D1 scoped-pathspec rule — it is a
+second line of defence that catches the specific A49.6 failure
+shape (author manually pathspec'd a non-ind-tracks file into the
+audit commit by mistake).
+
 ## A49.9 Re-audit triggers
 
 A49 must be rewritten if any of the following happens:
