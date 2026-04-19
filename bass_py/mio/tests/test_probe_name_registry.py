@@ -104,3 +104,40 @@ def test_standard_probes_agree_with_registry():
         f"STANDARD_PROBES ∪ STANDARD_Z_PROBES {sorted(code_names)!r} != "
         f"registry {sorted(REGISTERED_PROBE_IDS)!r}"
     )
+
+
+def test_standard_probes_have_consistent_sigma_cone_across_producers():
+    """Cross-producer σ_cone / l / b parity (W13 F2 / W14D1).
+
+    W13D2's ``test_standard_probes_agree_with_registry`` only gates the
+    ``name`` set. A paired edit that touches only ``STANDARD_PROBES`` or
+    only ``STANDARD_Z_PROBES`` — e.g. drifting CatWISE's sigma_cone_deg
+    on the HJ-02a side while leaving the HJ-02b side frozen — would pass
+    the registry test silently. This test zips the two SSOTs by ``name``
+    and asserts the three direction-on-sky fields match exactly, forcing
+    any sigma update to be a paired two-file edit (per A36a.4 / A36a.5).
+
+    z_eff is intentionally *not* compared: ``DirectionalProbe`` does not
+    carry a z_eff field (HJ-02a is z-agnostic by design — A36.1), so the
+    parity contract is restricted to the direction-on-sky trio.
+    """
+    by_name_directional = {p.name: p for p in STANDARD_PROBES}
+    by_name_z = {p.name: p for p in STANDARD_Z_PROBES}
+    assert set(by_name_directional) == set(by_name_z), (
+        "STANDARD_PROBES and STANDARD_Z_PROBES name-sets must match"
+    )
+    for name in sorted(by_name_directional):
+        dp = by_name_directional[name]
+        zp = by_name_z[name]
+        assert dp.l_deg == zp.l_deg, (
+            f"{name}: l_deg drift {dp.l_deg!r} (HJ-02a) vs "
+            f"{zp.l_deg!r} (HJ-02b)"
+        )
+        assert dp.b_deg == zp.b_deg, (
+            f"{name}: b_deg drift {dp.b_deg!r} (HJ-02a) vs "
+            f"{zp.b_deg!r} (HJ-02b)"
+        )
+        assert dp.sigma_cone_deg == zp.sigma_cone_deg, (
+            f"{name}: sigma_cone_deg drift {dp.sigma_cone_deg!r} (HJ-02a) "
+            f"vs {zp.sigma_cone_deg!r} (HJ-02b)"
+        )
