@@ -368,6 +368,21 @@ Exit: β-sweep × polarisation regression. BB identically zero at
   production `v_e²` Thomson terms; the planted helper is additive
   rather than an `order=2` kwarg on the shipped operator.
 
+### FB-META-4.CLOSE — Phase FB-4 skeleton cycle closed
+
+- **Scope**: Declared Phase FB-4 closed after the three skeleton-only
+  sub-phases; no physics shipped and no `htt/` paths were staged at
+  any point in the META cycle.
+- **Commit anchor**: see `git log --grep='FB-META-4.CLOSE'`.
+- **Test delta**: `3,403 passed + 4 skipped` →
+  `3,403 passed + 4 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META4_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META4_2026-04-20.md) (Phase close note).
+- **Gallery**: no-op.
+- **Carry-forward**: FB-META-5 requires a fresh phase prompt rather
+  than another inherited FB-4 handoff.
+- **Notes**: `NEXT_SESSION_PROMPT.md §2` now intentionally contains
+  only the generic FB-META-5 placeholder.
+
 ---
 
 ## Phase FB-5 (planned) — Perturbation sector k ≠ 0

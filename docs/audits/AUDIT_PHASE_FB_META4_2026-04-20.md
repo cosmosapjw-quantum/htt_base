@@ -77,3 +77,10 @@ The known-limit sanity pin is therefore strict zero at `β = 0` and strict confi
 **Test path**: `htt/bass/collision/test_fb43_second_order_doppler_skeleton.py::test_tilted_second_order_doppler_correction_skeleton_contract`
 **Guard rails** (yes/no): citations verified? yes; imports exist? yes; ≥ 2 alternatives? yes; β=0 anchor documented? yes
 **Regression after plant**: 3,403 passed + 4 skipped.
+
+## Phase close
+
+FB-META-4 closed on 2026-04-20 with three local-only skeleton plants
+and no staged `htt/` changes. The audited regression anchor remains
+`3403 passed, 4 skipped`, and `NEXT_SESSION_PROMPT.md §2` now points
+to the generic `FB-META-5` placeholder rather than another FB-4 task.
