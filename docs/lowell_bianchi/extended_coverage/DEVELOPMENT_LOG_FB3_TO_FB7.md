@@ -549,3 +549,20 @@ fresh cumulative count.
 - **Notes**: the chosen surface is an explicit validator rather than an
   integrator flag so the `k = 0` recovery check cannot become a hidden
   runtime branch.
+
+### FB-META-5.5 — Class B mode-quantisation skeleton
+
+- **Scope**: Recorded FB-5.5 three-channel verification and planted the
+  local-only `quantise_class_b_mode(...)` skeleton plus one skipped
+  contract test without staging any `htt/` changes. The local SSOT for
+  the contract is the existing Class B twist / `h` structure already
+  recorded in `nabla_dispatch.py` and `bianchi_types.py`.
+- **Commit anchor**: see `git log --grep='FB-META-5.5'`.
+- **Test delta**: `3,403 passed + 8 skipped` →
+  `3,403 passed + 9 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META5_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META5_2026-04-20.md) §FB-5.5.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: Harrison 1967 and Lyth-Stewart 1990 remain
+  citation-needed in the arXiv-only channel.
+- **Notes**: quantisation stays as a separate helper so the audited
+  FB-2 `HarmonicMode` descriptor is not widened prematurely.

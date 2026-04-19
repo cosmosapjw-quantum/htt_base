@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-5.4 → FB-5.5**; k=0 gate skeleton contract recorded, next handoff narrowed to the Class B quantisation skeleton)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.4
-**Current target session**: **FB-5.5** — Class B mode-quantisation skeleton contract
-**Phase status**: FB-5 skeleton cycle is in progress on 2026-04-20; FB-5.4 is sealed locally and FB-5.5 is next
+**Last rotated**: 2026-04-20 (**FB-5.5 → FB-5.6**; Class B quantisation skeleton contract recorded, next handoff narrowed to the tilted-seed skeleton)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.5
+**Current target session**: **FB-5.6** — tilted-boost seed-rule skeleton contract
+**Phase status**: FB-5 skeleton cycle is in progress on 2026-04-20; FB-5.5 is sealed locally and FB-5.6 is next
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,26 +37,27 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-5.5 — Class B mode-quantisation skeleton contract
+# FB-5.6 — tilted-boost seed-rule skeleton contract
 
-FB-5.4 landed as a local-only skeleton: the new placeholder is
-`htt/bass/perturbation/k_zero_limit_gate.py::assert_k_zero_limit_matches_background`,
-and the audited local baseline is now `3,403 passing + 8 skipped`.
+FB-5.5 landed as a local-only skeleton: the new placeholder is
+`htt/bass/perturbation/class_b_mode_quantization.py::quantise_class_b_mode`,
+and the audited local baseline is now `3,403 passing + 9 skipped`.
 
 Next session target:
-- Plant the FB-5.5 skeleton only.
+- Plant the FB-5.6 skeleton only.
 - Keep `htt/` unstaged by contract.
-- Carry forward the explicit validator design choice from FB-5.4.
-- Keep textbook-only Sachs-Wolfe / Kolb citations marked as TODO in the
+- Reuse the existing `boost_kernel.py` and `TiltedSpeciesBackground`
+  SSOTs rather than inventing a new boost primitive.
+- Keep Harrison / Lyth-Stewart citations marked as TODO in the
   arXiv-only channel.
 
 Required carry-forward anchors:
 - Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
 - Latest audit artifact:
-  `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.4
+  `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.5
 - Latest full regression anchor:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3403 passed, 4 skipped` pre-plant, so FB-5.5 should advance only
+  → `3403 passed, 4 skipped` pre-plant, so FB-5.6 should advance only
     the skipped count if it lands cleanly.
 ```
 

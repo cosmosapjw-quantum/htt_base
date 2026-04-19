@@ -93,6 +93,21 @@
 
 ## §FB-5.5
 
+### §FB-5.5 — Class B mode-quantisation skeleton
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-5` names FB-5.5 as the Class B / Type V mode-quantisation rotation; verified `htt/bass/hierarchy/nabla_dispatch.py` already records the Type V Harrison-style hyperbolic branch and the Class B `a_twist²/(1+|h|)` offset; verified `htt/bass/background/bianchi_types.py` is the SSOT for `a_twist`, `h_parameter`, and the per-type Class B labels; verified the preceding FB-5.2 off-axis skeleton kept the mode-resolved operator separate, leaving space for a quantisation helper that only builds metadata.
+**Channel B**: 0 arXiv-only verifications / 2 citations demoted to `# TODO`. Evidence: the prompt anchors for Harrison 1967 and Lyth-Stewart 1990 are pre-arXiv literature. No arXiv-only replacement was accepted in this session, so both remain explicit TODO citations.
+**Channel C** (prose, 6-10 lines): The safest FB-5.5 contract is a pure metadata helper keyed by `StructureConstants`. The quantisation rule depends on the Class B twist and the group parameter `h`, so it should consume the same structure-constant SSOT that already drives `nabla_dispatch` rather than duplicating per-type branching elsewhere. Keeping it as a separate helper also avoids inflating the existing `HarmonicMode` descriptor before the continuous-versus-discrete branch rules are fully sealed. The future mode-state machine can call this helper first, then hand the resulting metadata to whichever harmonic or operator path is appropriate. That is cleaner than pretending quantisation is implicit in the generic mode label. The placeholder therefore raises until the branch taxonomy and scaling rules are literature-sealed.
+**Alternatives**:
+| # | signature | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `quantise_class_b_mode(structure, *, eigenvalue, branch=\"principal\") -> dict[str, object]` | Reuses the existing structure-constant SSOT; keeps quantisation metadata separate from the generic mode descriptor; smallest blast radius. | Future callers must explicitly thread the returned metadata forward. | ✅ |
+| 2 | `HarmonicMode(..., quantisation=\"class_b\")` | Keeps all mode metadata in one container. | Widens an already-shipped FB-2 descriptor before the Class B branch taxonomy is sealed; higher regression risk. | — |
+**Core principles**: structure-constant SSOT; explicit metadata construction; no silent per-type quantisation rules hidden in unrelated factories.
+**Skeleton path**: `htt/bass/perturbation/class_b_mode_quantization.py::quantise_class_b_mode`
+**Test path**: `htt/bass/perturbation/test_fb55_class_b_mode_quantization_skeleton.py::test_fb55_class_b_mode_quantization_skeleton_contract`
+**Guard rails** (yes/no): citations verified? local yes / external TODO; imports exist? yes; ≥ 2 alternatives? yes; hidden branching avoided? yes
+**Regression after plant**: 3,403 passed + 9 skipped (five local-only skipped contract tests over the 2026-04-20 baseline).
+
 ## §FB-5.6
 
 ## §FB-5.7
