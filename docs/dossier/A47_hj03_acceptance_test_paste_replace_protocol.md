@@ -295,6 +295,24 @@ A47 must be rewritten if any of the following happens:
   is relocated under a new package root). §A47.3's location
   presumption then drifts from reality; the HJ-03 PR reviewer
   checklist needs a new location row.
+- **`CacheReplayDriftError` gains a third message prefix beyond
+  `"config drift:"` / `"input-data drift:"`** (W21D3 / W19-carry).
+  §A45.2 currently has three raise sites: step 2 emits
+  `"unsigned certificate; ..."` (a *setup-phase* guard, not a
+  drift prefix); steps 3 + 4 emit the two drift prefixes the
+  §A47.7 reviewer checklist + §A47.5 tests (2)/(3) pin. A future
+  edit that adds a third drift-prefix raise site (e.g.
+  `"schema drift:"` for the A43 digest-upgrade path, or
+  `"git-commit drift:"` for an A44.3 contract extension) silently
+  passes the existing five-test block — no test asserts the
+  *complete* prefix set, only the two known prefixes per row. A47
+  then needs (a) a new §A47.5 row pinning the new prefix, (b) a
+  reviewer-checklist update naming the prefix triple/quadruple,
+  and (c) a paired §A45.2 algorithm step describing when the new
+  raise fires. Cross-references: §A45.2 step 2 / step 4 (raise-
+  site shape), §A47.5 row (2) / row (3) (prefix-text pinning),
+  §A47.7 bullet 2 (reviewer checklist's `"config drift:"` /
+  `"input-data drift:"` pair).
 
 Until one of these triggers fires, A47 is stable and its
 paste-replace protocol remains the authoritative route for
