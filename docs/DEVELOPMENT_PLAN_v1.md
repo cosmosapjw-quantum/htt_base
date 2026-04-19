@@ -16,6 +16,9 @@ and its extension to Bianchi anisotropic backgrounds.
 - Per-PR work breakdown + merge gates live in [`docs/PR_WBS_SDD.md`](PR_WBS_SDD.md).
 - Audit + doc-update procedure (self-triggered at every PR boundary) lives in
   [`docs/AUDIT_AND_UPDATE_PROCEDURE.md`](AUDIT_AND_UPDATE_PROCEDURE.md).
+- **Automated execution prompt** (skeleton scaffolding + per-PR triple-
+  verification + commit automation driver) lives in
+  [`docs/AUTOMATED_EXECUTION_PROMPT.md`](AUTOMATED_EXECUTION_PROMPT.md).
 
 **Reading minimum**: §1 (history) + §3 (next-up PR) + `PR_WBS_SDD.md`
 entry for the next-up PR. That alone is enough to pick up the work cold.
