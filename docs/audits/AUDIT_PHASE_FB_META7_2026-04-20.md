@@ -116,6 +116,70 @@ phase-close gate.
 
 ## §FB-7.2
 
+### §FB-7.2 — diagonal plus off-diagonal spectrum skeleton
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-7`
+names diagonal plus off-diagonal spectrum extraction as the second
+output-stage sub-phase; verified `htt/bass/spectrum/cl_assembly.py`
+already owns diagonal `C_ell` assembly and keeps off-diagonal
+`C_{ℓm,ℓ' m'}` / BiPoSH behind an explicit out-of-scope guard; verified
+the new `htt/bass/spectrum/lowell_los.py` FB-7.1 surface is the natural
+future transfer-bundle input; verified no committed spectrum module yet
+owned both diagonal and off-diagonal outputs together; verified the
+existing Bianchi-I scaffolding is still axisymmetric / `m`-channel aware
+rather than a fully dense `(ℓ,m)` covariance engine; verified the FB-7.2
+contract therefore needs its own additive module rather than widening an
+already-audited W10 diagonal-only surface by stealth.
+**Channel B**: 3 source checks / 2 verified / 1 corrected. Evidence:
+`arXiv:astro-ph/0601594` is Lewis & Challinor's 2006 review
+`"Weak Gravitational Lensing of the CMB"`, which is a valid external
+review anchor for off-diagonal CMB covariance language but is not
+Bianchi-specific. The prompt-supplied `astro-ph/0607373` is *not* the
+Pontzen-Challinor Bianchi paper; the arXiv record resolves it to a
+cosmological-recombination-lines paper. The correct Bianchi anisotropic-
+mixing anchor is `arXiv:0706.2075`, whose abstract explicitly says the
+authors derive the CMB radiative-transfer equation as a multipole
+hierarchy in nearly-FRW but anisotropic Bianchi universes and calculate
+the polarization signal in the Bianchi VII_h case.
+**Channel C** (prose, 6-10 lines): The safest FB-7.2 skeleton is a new
+combined spectrum-and-covariance builder that consumes the LOS bundle
+and names its off-diagonal strategy explicitly. That keeps the current
+`cl_assembly.py` contract honest: it was audited as a diagonal-only
+consumer and already advertises off-diagonal work as future scope. The
+signature chooses `m_decoupled_blocks` as the default because the
+shipped LOS scaffolding is already organized in `m` channels and the
+future all-type implementation can extend that logic without first
+committing to a fully dense or Wigner-d-dispatched basis. A dense
+`(ℓ,m)` covariance matrix would be the most literal representation, but
+it would force the memory and indexing contract too early in a skeleton
+rotation. A sparse Wigner-d dispatch is plausible later, especially for
+non-axis-aligned subsets, but choosing it now would imply a rotational
+basis contract that the current codebase does not yet expose. The new
+module therefore documents the strategy choice in the signature and
+leaves the body unimplemented.
+**Alternatives**:
+| # | off-diagonal strategy | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `m_decoupled_blocks` | Matches the existing `m`-channel LOS scaffolding; smallest blast radius; keeps the future covariance contract close to the current Type-I transfer structure. | Still leaves the exact block layout to the implementation phase. | ✅ |
+| 2 | Fully dense `(ℓ,m) × (ℓ',m')` matrix | Most literal covariance representation; no later projection step required. | Freezes indexing and memory cost too early; larger contract surface for a skeleton-only rotation. | — |
+| 3 | Wigner-d sparse dispatch | Likely relevant for general rotational mixing and future observer-frame work. | Prematurely commits to a rotation-basis API that the current BASS spectrum stack does not yet expose. | — |
+**Core principles**: diagonal and off-diagonal outputs reserved
+together; explicit correction of the bad Pontzen-Challinor arXiv ID; no
+silent widening of the audited diagonal-only spectrum assembler;
+strategy choice made visible in the signature rather than hidden.
+**Skeleton path**:
+`htt/bass/spectrum/off_diagonal_covariance.py::assemble_bianchi_spectrum_covariance`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/spectrum/test_fb72_off_diagonal_covariance_skeleton.py -q`
+**Guard rails** (yes/no): citations verified? yes with corrected
+Pontzen locator; alternatives table explicit? yes; chosen strategy
+documented in signature? yes; diagonal-only W10 surface left untouched?
+yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 49 skipped` → `3403 passed + 50 skipped` pending the
+phase-close gate.
+
 ## §FB-7.3
 
 ## §FB-7.4

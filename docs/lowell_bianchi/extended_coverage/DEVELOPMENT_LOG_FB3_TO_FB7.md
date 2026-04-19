@@ -744,3 +744,22 @@ fresh cumulative count.
 - **Notes**: a new spectrum-side module was chosen over widening the
   audited Type-I LOS scaffold or mixing LOS construction into
   `cl_assembly.py`.
+
+### FB-META-7.2 — diagonal plus off-diagonal spectrum skeleton
+
+- **Scope**: Recorded FB-7.2 three-channel verification and planted the
+  committed `htt/bass/spectrum/off_diagonal_covariance.py` skeleton plus
+  one skipped contract test. The contract reserves diagonal
+  `C_ell^{TT,EE,TE,BB}` and off-diagonal `C_{ℓm,ℓ' m'}` extraction
+  together, with the default strategy pinned as `m_decoupled_blocks`.
+- **Commit anchor**: see `git log --grep='FB-META-7.2'`.
+- **Test delta**: `3,403 passed + 49 skipped` →
+  `3,403 passed + 50 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META7_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META7_2026-04-20.md) §FB-7.2.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: the prompt-supplied Pontzen-Challinor locator
+  `astro-ph/0607373` is explicitly retired here; the corrected external
+  Bianchi anchor is `arXiv:0706.2075`.
+- **Notes**: the new module preserves the audited diagonal-only
+  `cl_assembly.py` surface and makes the off-diagonal strategy visible
+  in the signature instead of hiding it in helper logic.
