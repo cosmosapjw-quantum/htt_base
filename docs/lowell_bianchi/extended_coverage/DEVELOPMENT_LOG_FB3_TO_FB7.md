@@ -618,3 +618,28 @@ fresh cumulative count.
   than an inherited FB-5 task list.
 - **Notes**: final regression count matched the phase-entry baseline in
   passes and increased skips only by the seven intended contract tests.
+
+---
+
+## Phase FB-META-6 — skeleton cycle (2026-04-20)
+
+### FB-META-6.1 — 22-configuration regression-harness skeleton
+
+- **Scope**: Recorded FB-6.1 three-channel verification, normalized the
+  Pontzen paper split (`arXiv:0901.2122` as the 2009 figure-bearing
+  paper; `arXiv:0706.2075` as the earlier 2007 hierarchy paper), and
+  planted the committed
+  `htt/bass/integration/test_full_bianchi_coverage.py` harness with an
+  explicit 22-row `{11 types} × {orthogonal, tilted}` matrix.
+- **Commit anchor**: see `git log --grep='FB-META-6.1'`.
+- **Test delta**: `3,403 passed + 11 skipped` →
+  `3,403 passed + 33 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META6_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META6_2026-04-20.md) §FB-6.1.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: the named continuity-limit tuples are reserved for
+  FB-6.2; the literature/CAMB oracle-fixture paths are reserved for
+  FB-6.3; the Cambridge preview still does not expose the full W-E
+  `§11.1` table text in-session.
+- **Notes**: the flat 22-row list was chosen over a generated cross
+  product so the future coverage declaration is reviewable without
+  helper indirection.

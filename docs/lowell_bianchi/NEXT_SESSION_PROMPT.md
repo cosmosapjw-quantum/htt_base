@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-META-5.CLOSE → FB-META-6**; Phase FB-5 skeleton cycle sealed, handoff reset to the next-phase META placeholder)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` (Phase close note)
-**Current target session**: **FB-META-6** — paste the Phase FB-6 META prompt
-**Phase status**: Phase FB-5 closed on 2026-04-20; awaiting a fresh Phase FB-6 META prompt
+**Last rotated**: 2026-04-20 (**FB-6.1 → FB-6.2**; 22-configuration harness skeleton recorded, continuity-limit tuples next)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` §FB-6.1
+**Current target session**: **FB-6.2** — cross-type continuity-limit skeleton
+**Phase status**: FB-6 skeleton cycle is in progress on 2026-04-20; the 22-configuration harness is sealed and the named limit tuples are next
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,24 +37,37 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-META-6 — paste the Phase FB-6 META prompt
+# FB-6.2 — cross-type continuity-limit skeleton contract
 
-Phase FB-5 closed with seven skeleton-only sub-phases and the audited
-baseline now stands at `3,403 passing + 11 skipped`.
+FB-6.1 landed the committed integration harness at
+`htt/bass/integration/test_full_bianchi_coverage.py`, and the audited
+local baseline is now `3,403 passing + 33 skipped`.
 
-Start the next session by pasting the canonical Phase FB-6 META prompt
-as the first user message. Do not reuse the older FB-META-5 handoff
-text; the next phase should begin from a fresh prompt.
+Next session target:
+- Extend the same module with the FB-6.2 named-limit parametrization
+  only.
+- Keep the FB-6.1 22-row matrix unchanged.
+- Plant the five named limits exactly:
+  - `VII_h -> VII_0` as `h -> 0+`
+  - `VI_h -> III` as `h -> -1`
+  - `VII_0 -> I` as `n -> 0`
+  - `V -> I` as `a_twist -> 0`
+  - `IX -> BKL isotropic` as `n -> 0`
+- Preserve the skeleton contract: skipped tests plus the explicit
+  `NotImplementedError` placeholder.
 
-Relevant carry-forward anchors:
+Carry-forward anchors:
 - Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
-- Source-of-work rule: `htt/` remains unstaged by contract unless a
-  future META prompt explicitly changes that rule.
-- Latest audited Phase FB-5 artifact:
-  `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md`
+- Latest audit artifact:
+  `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` §FB-6.1
+- Verified 2009 Pontzen figure paper:
+  `https://arxiv.org/abs/0901.2122` (submitted 2009-01-15; revised
+  2009-05-11)
+- Older hierarchy anchor to keep distinct:
+  `https://arxiv.org/abs/0706.2075` (submitted 2007-06-14)
 - Latest regression anchor:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3403 passed, 11 skipped`
+  → `3403 passed, 33 skipped`
 ```
 
 ---
