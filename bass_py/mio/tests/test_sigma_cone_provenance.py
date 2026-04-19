@@ -124,6 +124,31 @@ def test_hj02b_certificate_carries_placeholder_tags_for_non_promoted_probes():
     assert f"CatWISE{PLACEHOLDER_CAVEAT_SUFFIX}" not in cert.domain_caveats
 
 
+def test_hj02a_certificate_caveat_count_equals_flagged_set_with_no_caller_caveats():
+    """W14 R2 / W15D5 — over-emission guard.
+
+    The W14D5 issubset assertions (`test_hj02a_certificate_carries_
+    placeholder_tags_for_non_promoted_probes`) catch under-emission but
+    pass silently on over-emission. When no caller caveats are supplied,
+    the certificate's `domain_caveats` must equal the placeholder set
+    exactly: one tag per non-promoted probe, alphabetical, no extras.
+
+    A regression that emitted (e.g.) `"CatWISE_sigma_cone_plan_placeholder"`
+    despite CatWISE being promoted, or duplicated a tag, would slip past
+    the W14D5 issubset check; this test fails it.
+    """
+    resultant = resultant_vector(STANDARD_PROBES)
+    cert = to_cert_hj02a(STANDARD_PROBES, p_iso=0.001, resultant=resultant)
+    expected_flagged = {
+        p.name for p in STANDARD_PROBES if p.name not in PROMOTED_SIGMA_CONE_PROBES
+    }
+    expected_tags = sorted(
+        f"{n}{PLACEHOLDER_CAVEAT_SUFFIX}" for n in expected_flagged
+    )
+    assert sorted(cert.domain_caveats) == expected_tags
+    assert len(cert.domain_caveats) == len(expected_flagged)
+
+
 def test_hj02a_caller_caveats_preserved_alongside_placeholder_tags():
     """A caller-supplied caveat is kept and the placeholder tags appear
     exactly once even if the caller also supplied them."""
