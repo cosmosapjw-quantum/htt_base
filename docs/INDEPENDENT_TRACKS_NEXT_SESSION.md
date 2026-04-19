@@ -35,6 +35,11 @@ First-order rules (copy-pasted from the governing plan):
 
 * **additive commits only** (memory `feedback_git_workflow.md` — no
   branch rewrite; Python + Rust share one repo).
+* **pre-commit `git status --short` gate** — before every `git commit`
+  in this lane, run `git status --short` and visually verify the
+  staged set matches the commit body. Rationale: W12D3 `99465e5`
+  pulled unrelated bass-lane + gallery-lane files into an HJ-02b
+  commit; the one-line gate would have caught it (W12 F1 / W13 R1).
 * **do not touch `bass_py/bass/*`** — that is the bass_py session's
   lane.
 * **do not touch `plots/physics_gallery/`** — bass_py session
