@@ -378,6 +378,137 @@ regeneration resumes at FB-3.3.
 - Delta: +57 tests (all in `bass/hierarchy/test_tilt_kinematics.py`).
 - No regressions.
 
+---
+
+## §FB-3.3 Supplement — Einstein + tilt coupling + boost-kernel seed
+
+- **Sub-phase**: FB-3.3 — `accel_from_tilt` additive Θ/3 and σ pieces
+  + axi-symmetric boost-kernel seed.
+- **Prior baseline** (post-FB-3.2): 3,189 passing + 1 skipped.
+- **This-session baseline**: 3,213 passing + 1 skipped (+24 new tests).
+
+### §FB-3.3.0 Target reconstruction
+
+| Layer | Claim | Implementation | Output |
+|---|---|---|---|
+| Physics | EMM 2012 eq (5.17) tilt 4-acceleration with `v̇^a = 0`: `A^a = γ²[v^a + (Θ/3)v^a + σ^a_b v^b]` (additive on FB-3.2 placeholder) | `bass/hierarchy/tilt_kinematics.py::accel_from_tilt` extended with `bg_table` + `tetrad_state` kwargs | `(3,)` float64 |
+| Physics | Challinor 2000 eq (26) linear PSTF boost on m=0 slice | `bass/hierarchy/boost_kernel.py::boost_project_axisymmetric` | `(L+1,)` float64 |
+| Invariant | `β = 0` → byte-identical zero / identity on every new path | explicit short-circuit + `np.array_equal` pins | M-01/M-02/M-03; M-09 |
+| Invariant | FB-3.2 backward-compat: `accel_from_tilt(tilted, eta)` without kwargs matches FB-3.2 | kwargs default to `None` | M-04 |
+| Scope pin | Off-axis `v̂_e` → `NotImplementedError` (FB-5.2 reserved) | `is_axis_aligned` guard in `boost_project_axisymmetric` | M-11 |
+
+### §FB-3.3.1 Contract additions
+
+| Surface | Signature diff | Invariant |
+|---|---|---|
+| `accel_from_tilt(tilted, eta, *, bg_table=None, tetrad_state=None)` | two optional kwargs | `None / None` path byte-identical to FB-3.2 |
+| `boost_project_axisymmetric(coeffs, beta, v_hat_e=V_HAT_E_DEFAULT, *, tol)` | new | `β=0` returns input copy byte-identically |
+| `is_axis_aligned(v_hat_e, *, tol)` | new | True iff exactly one component has magnitude `1 ± tol` |
+
+### §FB-3.3.2 Phys-math ledger
+
+1. **Definition / notation**. `γ²` / `Θ` / `σ^a_b v^b` named and typed
+   identically to EMM §5.4 / §16. The `σ` consumed by the adapter
+   is the *proper-time* shear returned by `proper_shear_at_eta` — the
+   LB-2a F1 convention. **Pass**.
+2. **Indices / PSTF**. `A^a` is rank-1; `σ^a_b v^b` is a matrix-vector
+   contraction on the spatial 3-basis. No PSTF projection at this
+   surface. **Pass**.
+3. **Sign / normalisation**. Additive formula uses the standard
+   `+(Θ/3) v^a` (comoving expansion *accelerates* the tilt direction).
+   Sign pinned by M-05 closed-form test against the prepared Θ(η).
+   **Pass**.
+4. **Units / dimension**. `Θ` has units [1/Mpc]; `σ` has units
+   [1/Mpc]. Both terms have dimension of an acceleration once
+   multiplied by `v^a` (dimensionless velocity). The FB-3.2 bare
+   `γ² v^a` term remains dimensionally-representative only (a
+   placeholder) — the audit records that physical dimension is
+   restored when the kinematic kwargs are supplied. **Pass with
+   note**.
+5. **Known-limit recovery**. `β=0` byte-zero on every kwargs path;
+   `β>0` without kwargs recovers the FB-3.2 `γ²v^a` placeholder;
+   M-04 pins this. **Pass**.
+6. **Boundary / positivity**. `tetrad_state` without `bg_table`
+   raises `ValueError` because σ → proper conversion needs `a(η)`.
+   M-08 pins this. **Pass**.
+7. **Hidden assumption**. Additive policy (FB-3.2 placeholder + EMM
+   pieces) vs. replacement policy was a design choice documented
+   here and in the module docstring. The alternative "replace with
+   EMM eq (5.17) verbatim when kwargs supplied" was rejected for
+   backward-compat and for the clean β=0 anchor under both paths.
+   **Pass with note**.
+8. **Counter-example**. Off-axis `v̂_e = (1/√2, 0, 1/√2)` on the
+   boost kernel raises `NotImplementedError` with a specific
+   reference to FB-5.2. **Pass**.
+
+### §FB-3.3.3 Equation-to-code mapping
+
+| Equation | Code |
+|---|---|
+| EMM eq (5.17) additive `γ²[v + (Θ/3)v + σ·v]` | `tilt_kinematics.py::accel_from_tilt` extended else-branch |
+| Challinor 2000 eq (26) m=0 PSTF linear boost | `boost_kernel.py::boost_project_axisymmetric` β>0 path |
+| Axis-alignment admissibility | `boost_kernel.py::is_axis_aligned` |
+
+### §FB-3.3.4 Numerical / pipeline
+
+- Cancellation: `γ²(Θ/3)` bounded by `Θ_max ~ 3H_0` × `γ²_max < O(10)`
+  for `β < 0.9`; no condition-number issue on the admissible domain.
+- Shear spline cache reused from `proper_shear_at_eta`; O(log N) per
+  query after first build. Determinism preserved.
+- Off-axis guard is a hard branch — no silent degradation to some
+  fallback kernel.
+
+### §FB-3.3.5 Ranked failure modes
+
+| # | Type | Severity | Symptom | Root cause | Cheap probe |
+|---|---|---|---|---|---|
+| 1 | physics | P0 (averted) | `β=0` extended-kwargs path drifts from the zero vector | short-circuit ordering | M-01/M-02 at the `fresh copy` level |
+| 2 | interface | P0 (averted) | `tetrad_state` passed without `bg_table` silently runs with `a=1` | explicit `ValueError` in the adapter | M-08 |
+| 3 | physics | P1 (averted) | Boost kernel emits non-zero at `β=0` | explicit short-circuit + fresh copy | M-09 |
+| 4 | scope | P1 (averted) | Off-axis `v̂_e` silently reduces to on-axis | `is_axis_aligned` guard | M-11 / M-14 |
+| 5 | physics | P2 (carried) | Additive FB-3.2 placeholder is not literally EMM eq (5.17) | documented design choice; FB-3.5 reparametrisation revisits | — |
+
+### §FB-3.3.6 Verifier filter
+
+All A / B / C verifiers pass or N/A. Coverage-test for off-axis is
+the dedicated `NotImplementedError` branch (no silent degradation).
+
+### §FB-3.3.8 Minimal test set
+
+| Test | Role | Verdict |
+|---|---|---|
+| M-01 .. M-03 | β=0 byte-identity on every new kwarg path | ✅ |
+| M-04 | FB-3.2 backward compatibility | ✅ |
+| M-05 | Θ-piece additive closed form | ✅ |
+| M-06 | σ-piece additive closed form | ✅ |
+| M-07 | β-sweep combined closed form | ✅ (3 cases) |
+| M-08 | `tetrad_state` without `bg_table` → `ValueError` | ✅ |
+| M-09 | boost-kernel β=0 identity | ✅ |
+| M-10 | boost-kernel linear Challinor closed form | ✅ |
+| M-11 | off-axis → `NotImplementedError` | ✅ |
+| M-12 | β out of range → `ValueError` | ✅ |
+| M-13 | non-1D input → `ValueError` | ✅ |
+| M-14 | `is_axis_aligned` branch coverage | ✅ |
+| M-15 | boost-kernel fresh-copy guard | ✅ |
+| M-16 | shape preservation (5 ranks) | ✅ (5 cases) |
+| M-17 | composition — extended = FB-3.2 + Δ | ✅ |
+| M-18 | driver byte-identity with β=0 extended kwargs | ✅ |
+
+**24 passed / 0 failed.**
+
+### §FB-3.3.9 Final verdict
+
+- **Status**: Pass — FB-3.3 sealed.
+- **Carry-forward** (closes): FB-3.2 carry "Θ/3·v + σ·v completion of
+  `accel_from_tilt`" — closed.
+- **Carry-forward** (new): boost-kernel off-axis projection (Wigner-d
+  rotation) → FB-5.2 reserved.
+- **Gallery**: no-op at this rotation (new RHS contributions are
+  additive and the existing β>0 gallery topics are not yet running on
+  extended kwargs; FB-3.6 β-sweep regression is the natural gallery
+  checkpoint).
+- **Baseline**: 3,189 → 3,213 (+24).
+
 ### Carry-forward ledger (outstanding)
 
 - **FB-3.1 P2 overlap** → ✅ resolved in this rotation (K-12 pins the

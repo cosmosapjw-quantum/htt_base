@@ -205,18 +205,26 @@ These entries are planned, not shipped. Each row is superseded by a
 "shipped" row once the corresponding PR lands; the "planned" row is
 struck-through but retained for archaeology.
 
-### FB-3.3 (planned) — Einstein + tilt coupling + boost-kernel seed
+### FB-3.3 — Einstein + tilt coupling + boost-kernel seed
 
-- **Bootstrap prompt**: [NEXT_SESSION_PROMPT.md §2](../NEXT_SESSION_PROMPT.md)
-  (current).
-- **Shipping**: additive `(Θ/3) v^a + σ^a_b v^b` on
-  `accel_from_tilt`; optional `tilted_species=` kwarg on
-  `rhs_bianchi`; axi-symmetric boost-kernel seed in
-  `bass/hierarchy/boost_kernel.py`; off-axis v̂_e raises
-  `NotImplementedError` (deferred to FB-5.2).
-- **Invariants**: β=0 byte-identical against the FB-3.2 anchor
-  (3,189). Extra kwargs default to `None` so existing callers see no
-  change.
+- **Scope**: `accel_from_tilt` extended with optional `bg_table` /
+  `tetrad_state` kwargs that additively append the EMM eq (5.17)
+  kinematic pieces `γ²(Θ/3) v^a + γ² σ^a_b v^b` to the FB-3.2
+  placeholder; new `bass/hierarchy/boost_kernel.py` ships
+  `boost_project_axisymmetric` with the linear Challinor 2000 eq
+  (26) recurrence on the m=0 PSTF slice; off-axis `v̂_e` raises
+  `NotImplementedError` (FB-5.2 reserved). `rhs_bianchi` already
+  consumes tilt via its `family` dispatch (not re-opened here).
+- **Commit anchor**: see `git log --grep='FB-3.3'`.
+- **Test delta**: 3,189 → 3,213 (+24 tests in
+  `bass/hierarchy/test_fb33_einstein_tilt.py`).
+- **Audit**: `AUDIT_PHASE_FB3_2026-04-19.md` §FB-3.3 Supplement.
+- **Gallery**: no-op (additive RHS; FB-3.6 β-sweep is the gallery
+  checkpoint).
+- **Carry-forward closed**: FB-3.2 P2 "(Θ/3)v + σ·v completion of
+  `accel_from_tilt`".
+- **Carry-forward new**: boost-kernel off-axis Wigner-d rotation →
+  FB-5.2 reserved.
 
 ### FB-3.4 (planned) — Vorticity feedback into hierarchy
 
@@ -333,6 +341,7 @@ dataset. At this point the parent plan's stated target is reached
 | FB-2 exit | 3,108 | ~550 |
 | FB-3.1 exit | 3,132 | +24 |
 | FB-3.2 exit | 3,189 | +57 |
+| FB-3.3 exit | 3,213 | +24 |
 
 After each new FB row ships, append a new ledger row here with the
 fresh cumulative count.
