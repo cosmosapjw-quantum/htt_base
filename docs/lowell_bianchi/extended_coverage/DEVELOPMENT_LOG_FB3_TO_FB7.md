@@ -469,3 +469,24 @@ dataset. At this point the parent plan's stated target is reached
 
 After each new FB row ships, append a new ledger row here with the
 fresh cumulative count.
+
+---
+
+## Phase FB-META-5 — skeleton cycle (2026-04-20)
+
+### FB-META-5.1 — harmonic-mode context skeleton
+
+- **Scope**: Recorded FB-5.1 three-channel verification, corrected the
+  prompt's Pontzen-Challinor anchor from the broken `astro-ph/0607373`
+  locator to `arXiv:0706.2075`, and planted the local-only
+  `make_harmonic_mode_rhs_context(...)` skeleton plus one skipped
+  contract test without staging any `htt/` changes.
+- **Commit anchor**: see `git log --grep='FB-META-5.1'`.
+- **Test delta**: `3,403 passed + 4 skipped` →
+  `3,403 passed + 5 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META5_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META5_2026-04-20.md) §FB-5.1.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: historical Lowell solver-reference `§13.1` path
+  remains absent on disk; FB-5.2 still owns the off-axis Wigner-d lift.
+- **Notes**: the chosen surface wraps the existing FB-2 `HarmonicMode`
+  SSOT instead of reopening the shipped real-dtype hierarchy driver.

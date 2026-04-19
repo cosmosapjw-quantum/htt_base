@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-META-4.3 → FB-META-5**; explicit `v_e^2` skeleton contract recorded, Phase FB-4 skeleton cycle closed, handoff reduced to the next-phase META placeholder)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md` §FB-4.3
-**Current target session**: **FB-META-5** — paste the Phase FB-5 META prompt
-**Phase status**: FB-4 closed on 2026-04-20; awaiting a fresh Phase FB-5 META prompt
+**Last rotated**: 2026-04-20 (**FB-5.1 → FB-5.2**; harmonic-mode skeleton contract recorded, next handoff narrowed to the off-axis `∇̃` skeleton)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.1
+**Current target session**: **FB-5.2** — full `∇̃` off-axis Wigner-d skeleton contract
+**Phase status**: FB-5 skeleton cycle is in progress on 2026-04-20; FB-5.1 is sealed locally and FB-5.2 is next
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,24 +37,29 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-META-5 — paste the Phase FB-5 META prompt
+# FB-5.2 — full ∇̃ with off-axis Wigner-d skeleton contract
 
-Phase FB-4 closed with three skeleton-only sub-phases and the audited
-baseline now stands at `3,403 passing + 4 skipped`.
+FB-5.1 landed as a local-only skeleton: the new placeholder is
+`htt/bass/perturbation/harmonic_modes.py::make_harmonic_mode_rhs_context`,
+and the audited local baseline is now `3,403 passing + 5 skipped`.
 
-Start the next session by pasting the canonical Phase FB-5 META prompt
-as the first user message. Do not reuse the older FB-META-4 handoff
-text; the next phase should begin from a fresh prompt.
+Next session target:
+- Plant the FB-5.2 skeleton only.
+- Keep `htt/` unstaged by contract.
+- Use the existing FB-2 `nabla_dispatch` SSOT as the starting point.
+- Treat the historical Lowell solver reference `§13` path as broken on
+  disk unless you can verify a tracked replacement.
 
-Relevant carry-forward anchors:
+Required carry-forward anchors:
 - Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
-- Source-of-work rule: `htt/` remains unstaged by contract unless a
-  future META prompt explicitly changes that rule.
-- Latest audited Phase FB-4 artifact:
-  `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md`
-- Latest regression anchor:
+- Latest audit artifact:
+  `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.1
+- Corrected external FB-5.1 anchor:
+  `https://arxiv.org/abs/0706.2075`
+- Latest full regression anchor:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3403 passed, 4 skipped`
+  → `3403 passed, 4 skipped` pre-plant, so FB-5.2 should advance only
+    the skipped count if it lands cleanly.
 ```
 
 ---
