@@ -99,6 +99,29 @@ For each species we specify: (a) rest-frame thermodynamic state, (b) equation of
 
   `ρ_ν(a) = Ω_ν,0 / a⁴`   (exact in massless limit)
 
+### 1.2a Massive-neutrino placeholder (FB-9 skeleton)
+
+FB-META-9 reserves, but does not yet implement, the future massive-ν
+background surfaces under `htt/bass/species/massive_neutrino/`:
+
+- `phase_space_grid(mass_eV, N_q=15)` — future momentum-grid contract
+  for the phase-space quadrature.
+- `MassiveNeutrinoBackground(bg_table, mass_eV, N_q=15)` — future
+  `SpeciesBackground` subclass for `ρ_ν(a)` / `p_ν(a)` with
+  `w(a) = p/ρ` transitioning from `1/3` to `0`.
+- `SpeciesBackgroundRegistry.from_planck2018(..., Sigma_mnu=0.0)` —
+  future registry-side dispatch point; `SpeciesLabel.NEUTRINO` remains
+  the only neutrino enum label.
+
+The non-negotiable invariant is:
+
+> `Sigma_mnu = 0` must remain byte-identical to the LB-1 massless
+> `NeutrinoBackground` path on the full `bass/ tsc/` suite.
+
+Accordingly, the FB-9 skeleton code only exposes placeholder modules and
+raising contracts. The shipped production runtime for zero neutrino mass
+is still exactly the massless LB-1 implementation above.
+
 ### 1.3 Baryon (b)
 
 Baryons are the species where bass_py has the *most existing infrastructure* and the *most subtle couplings*. LB-1 consumes existing machinery rather than re-derive.

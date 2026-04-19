@@ -310,3 +310,22 @@ cross-reference.
 - **Carry-forward**: FB-9.6 docs + gallery placeholders.
 - **Notes**: `bass/species/tilted.py` is intentionally untouched; this
   sub-phase only reserves the future composition test surface.
+
+### FB-META-9.6 — docs + gallery placeholders
+
+- **Scope**: Added an FB-9 placeholder note to
+  [01_species_background_spec.md](../01_species_background_spec.md),
+  reserved the gallery topic
+  [15_massive_neutrino](../../../figures/physics_gallery/15_massive_neutrino/README.md),
+  updated the root gallery README, and added a skipped docs/gallery
+  harness test. No PNGs were fabricated.
+- **Commit anchor**: see `git log --grep='FB-META-9.6'`.
+- **Test delta**: 3,403 passing + 65 skipped → 3,403 passing + 66
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META9_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META9_2026-04-20.md)
+  §FB-9.6.
+- **Gallery**: no-op (reserved topic directory + README only).
+- **Carry-forward**: phase-close regression + FB-META-11 handoff.
+- **Notes**: both placeholder docs state explicitly that the shipped
+  zero-mass runtime is still the LB-1 massless neutrino path.

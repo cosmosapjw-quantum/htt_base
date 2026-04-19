@@ -280,7 +280,45 @@ phase-close gate.
 
 ## §FB-9.6
 
-| Row | Status | Note |
-|---|---|---|
-| Scope | pending | docs placeholder plus reserved gallery topic `15_massive_neutrino/`. |
-| LB-1 anchor clause | pinned | Placeholder docs may describe future massive-ν work, but they must state plainly that the current shipped zero-mass runtime remains the LB-1 massless implementation. |
+### §FB-9.6 — docs + gallery placeholders
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified the
+species spec now has an explicit FB-9 placeholder note; verified the
+root gallery README reserves topic `15_massive_neutrino`; verified the
+new topic README states the no-PNG/no-op status explicitly; verified
+the new skipped test locks the docs/gallery file presence; verified the
+placeholder prose repeats the zero-mass LB-1 anchor instead of implying
+the massive implementation already shipped.
+**Channel B**: 2 source checks / 2 verified / 0 divergent. Evidence:
+the local FB-9 SDD explicitly names gallery topic `15_massive_neutrino`
+and the species-spec placeholder requirement; `SELF_AUDIT_AUTOMATION.md`
+requires no-op gallery states to be documented explicitly rather than
+left implicit. This sub-phase matches both requirements.
+**Channel C** (prose, 6-10 lines): Docs-only phases are where silent
+scope creep often sneaks in, so the wording here matters. The placeholder
+spec section and the gallery README both say the same thing plainly:
+FB-9 has reserved the surface, but the shipped zero-mass runtime is
+still the LB-1 massless implementation. Reserving the gallery topic now
+also avoids the future phase having to decide ad hoc where those plots
+belong. No dummy PNGs are created, and the root gallery README says so
+directly.
+**Alternatives**:
+| # | FB-9.6 docs strategy | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Explicit placeholder section + reserved gallery topic README | Honest about scope and keeps future docs/gallery paths stable. | Adds documentation for work that is not yet implemented. | ✅ |
+| 2 | Wait until real plots exist | Less placeholder text today. | Violates the explicit no-op gallery rule and leaves the future topic path unstated. | — |
+| 3 | Generate fake placeholder PNGs | Makes the gallery tree look complete. | Misleading and explicitly against the no-fabricated-artifact rule. | — |
+**Core principles**: placeholder text must be explicit; no dummy PNGs;
+future path names pinned now; zero-mass runtime described honestly.
+**Skeleton path**:
+`docs/lowell_bianchi/01_species_background_spec.md`,
+`figures/physics_gallery/15_massive_neutrino/README.md`,
+`figures/physics_gallery/README.md`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_fb96_docs_gallery_skeleton.py -q`
+**LB-1 anchor clause**: placeholder docs may describe future
+massive-ν work, but they must state plainly that the current shipped
+zero-mass runtime remains the LB-1 massless implementation.
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 65 skipped` → `3403 passed + 66 skipped` pending the
+phase-close gate.

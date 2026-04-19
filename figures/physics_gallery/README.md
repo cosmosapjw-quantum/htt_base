@@ -11,8 +11,8 @@ PSTF multipole hierarchy algebra shipped in LB-2a).
 and `figures/preliminary/`; moved here from `plots/physics_gallery/`
 during the 2026-04-19 figure-tree consolidation).
 **Generator**: [`scripts/make_physics_gallery.py`](../../scripts/make_physics_gallery.py)
-**Total**: 50 plots across 11 rendered topics + 1 reserved observer-
-frame placeholder topic
+**Total**: 50 plots across 11 rendered topics + 2 reserved placeholder
+topics
 **Regenerate**: `venv/bin/python scripts/make_physics_gallery.py`
 **Cadence**: regenerated at the end of every LB-N phase; see the
 [phase-boundary hook](../../.claude/hooks/check_phase_boundary_audit.py)
@@ -175,6 +175,14 @@ FB-META-8 is skeleton-only, so no observer-frame PNGs are rendered yet.
 The reserved topic directory
 [14_observer_frame/](14_observer_frame/README.md) documents the future
 target outputs and records this phase as an intentional gallery no-op.
+
+## 15 · Massive neutrino (FB-9 placeholder)
+
+FB-META-9 is skeleton-only, so no massive-neutrino PNGs are rendered
+yet. The reserved topic directory
+[15_massive_neutrino/](15_massive_neutrino/README.md) documents the
+future target outputs and records this phase as an intentional gallery
+no-op.
 
 ---
 
