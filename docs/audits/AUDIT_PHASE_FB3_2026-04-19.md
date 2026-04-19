@@ -184,3 +184,210 @@ wire `TiltedSpeciesBackground.v_vector(η)` (and, later, `q̃^a` /
 `vorticity_vector` kwargs that were structurally pinned in FB-2.4.
 
 No change to any existing integrator, species, or collision surface.
+
+---
+
+## §FB-3.2 Supplement — tilt-projected `A^a` / `ω^a` wire-up into `hierarchy_rhs_photon`
+
+- **Sub-phase**: FB-3.2 — species-level kinematic adapters +
+  hierarchy driver wire-up
+- **Run date**: 2026-04-19
+- **Prior baseline** (post-FB-3.1): 3,132 passing + 1 skipped
+- **This-session baseline**: 3,189 passing + 1 skipped (+57 new tests)
+- **Commit**: appended below once sealed
+- **Author**: Claude Opus 4.7 (1M context), supervised by Jiwon
+
+## §FB-3.2.0 Audit target reconstruction
+
+| Layer | Claim | Implementation | Output |
+|---|---|---|---|
+| Physics (acceleration) | King-Ellis 1973 §3 / EMM 2012 eq (5.17) tilt-induced 4-acceleration; species-specific piece at FB-3.2 is `A^a = γ² v^a` (EMM eq 5.14 flux-direction) | `bass/hierarchy/tilt_kinematics.py::accel_from_tilt` | `(3,)` float64 vector |
+| Physics (vorticity) | Pontzen-Challinor 2009 §2 Class B leading piece `ω^a = (1/2) ε^{abc} a_b v_c`; Class A = 0 | `bass/hierarchy/tilt_kinematics.py::vorticity_from_tilt` | `(3,)` float64 vector |
+| Invariant | β=0 → fresh `np.zeros(3)` byte-identical; full driver with β=0 adapter output equals FB-2.4 no-kwargs anchor (commit `d7d25da`) for every structure-constant label | Explicit short-circuit `if tilted.beta == 0.0: return _ZERO3.copy()` | K-01, K-02 (β=0 zero on 12 labels each); K-09 (driver byte-identity on 12 labels) |
+| Routing | `hierarchy_rhs_photon(..., accel_vector=accel_from_tilt(...), vorticity_vector=vorticity_from_tilt(...))` now produces non-zero T4/T5/T6 at β>0 | unchanged driver signature (FB-2.4 slots consumed) | K-10, K-11 (β>0 finite; Class B ≠ Class A) |
+| Overlap resolution (P2) | Composition rule `TiltedSpeciesParams(v = β·v̂_e) ↔ TiltedSpeciesBackground(β, v̂_e)`; both APIs remain, LB-1-native wrapper is the hierarchy-driver consumer | Y-Block `TiltedSpeciesParams` untouched; new `tilt_kinematics` module only reads `TiltedSpeciesBackground` | K-12 (composition rule pinned) |
+
+**Source of truth**: `bass.hierarchy.tilt_kinematics` is the FB-3.2 SSOT
+for the species-level kinematic 3-vectors consumed by `T4/T5/T6`. The
+driver signature is the FB-2.4 SSOT (unchanged).
+
+## §FB-3.2.1 Contract / interface table
+
+| Surface | Input | Output | Units | Invariant |
+|---|---|---|---|---|
+| `accel_from_tilt(tilted, eta)` | `TiltedSpeciesBackground`, float | ndarray `(3,)` float64 | dimensionless × γ² v | β=0 → `np.zeros(3)` fresh copy |
+| `vorticity_from_tilt(tilted, eta, structure=None)` | `TiltedSpeciesBackground`, float, optional `StructureConstants` | ndarray `(3,)` float64 | [1/length] × v (Class B) or 0 (Class A / None) | β=0 → zeros; Class A → zeros; `structure=None` → zeros |
+| Driver contract | existing FB-2.4 signature unchanged | n/a | n/a | β=0 adapter output → byte-identical RHS vs no-kwargs baseline on 12 labels |
+
+## §FB-3.2.2 Phys-math audit ledger
+
+1. **Definition / notation**. `A^a_FB32 := γ² v^a` is labelled in the
+   docstring as the **species-specific leading piece** of EMM eq
+   (5.17); the full tilt acceleration additionally carries
+   `(Θ/3) v^a + σ^a_b v^b` which is deferred to FB-3.3 per the stated
+   non-goals (the adapters do not touch `Θ` or `σ_ab`). The rank
+   (vector) and index convention (contravariant spatial tetrad basis)
+   match the consumers `T4_accel_divergence` and `T5_accel_gradient`.
+   **Pass**.
+2. **Indices / PSTF**. `A^a` and `ω^a` are rank-1 — no PSTF projection
+   at this surface; the consumers do the projection downstream. **Pass**.
+3. **Sign / normalisation**. `np.cross(a, v)` implements the right-handed
+   ε convention; `test_K15` pins the sign against the closed form
+   `ω_3 = −(1/2) a_twist β`. **Pass**.
+4. **Units / dimension**. `γ² v^a` is dimensionless (v is the
+   dimensionless velocity in `c = 1` natural units). `(1/2) a × v` has
+   the dimensions of `a_twist` (inverse length, from the Ellis-MacCallum
+   structure-constant split), matching the inverse-Mpc ω^a convention
+   consumed by `T6_vorticity`. **Pass**.
+5. **Known-limit recovery**. β=0 short-circuits to `np.zeros(3)` and the
+   full driver becomes byte-identical to FB-2.4. The K-09 test pins
+   this across all 12 labels (`FLRW` + 11 Bianchi types) with
+   `np.array_equal`. **Pass**.
+6. **Boundary / positivity**. Both adapters are finite on the
+   admissible domain `β ∈ [0, 1)`; `test_K14` sweeps β ∈
+   {0, 1e-6, 0.01, 0.1, 0.5, 0.9} × {Class A, Class B}. **Pass**.
+7. **Hidden assumption**. `accel_from_tilt` assumes the species-specific
+   acceleration is separable from the shared background kinematic
+   pieces; this is exact at β=0 and valid as an additive
+   decomposition at β>0 (EMM §5.4 is linear in the three pieces
+   `v̇^a`, `Θ v^a`, `σ×v`). The FB-3.3 rotation will *extend* this
+   additive form — it will not replace anything FB-3.2 ships. **Pass**.
+8. **Counter-example**. Class A VIII / IX with non-trivial n_ab and
+   zero a_twist: `vorticity_from_tilt` short-circuits to zeros (K-04
+   covers 6 Class A types). This is consistent with EMM §5.4: Class A
+   admits **no homogeneous background vorticity from the tilt
+   velocity alone** because `ω^a` in the Pontzen-Challinor leading
+   form is proportional to a_α × v, and a_α = 0 for Class A. The
+   Class A vorticity source that does exist (via ε^{abc} ∇̃_b v_c)
+   enters only when `∇̃_b` is non-trivial (FB-5 perturbation sector)
+   — deferred. **Pass**.
+
+## §FB-3.2.3 Equation-to-code mapping audit
+
+| Equation | Code | Status |
+|---|---|---|
+| EMM eq (5.14) species flux direction `γ² v^a` | `tilt_kinematics.py::accel_from_tilt` else-branch | ✅ direct |
+| Pontzen-Challinor §2 Class B `ω^a = (1/2) ε^{abc} a_b v_c` | `tilt_kinematics.py::vorticity_from_tilt` Class B branch via `np.cross(a_vec, v)` | ✅ direct (right-hand sign, K-15 pinned) |
+| FB-2.4 driver contract `accel_vector`, `vorticity_vector` kwargs | `hierarchy_rhs_photon` unchanged; adapters feed kwargs | ✅ byte-identical at β=0 (K-09) |
+| FB-3.1 P2 composition rule `v = β·v̂_e` | `TiltedSpeciesBackground.v_vector(η)` ↔ `TiltedSpeciesParams.v` | ✅ K-12 pins equality |
+
+**No dead code. No placeholder.** The β=0 short-circuit is the only
+path claiming bit-identity; it is explicitly exercised by 24 K-01/K-02
+parametrisations + 12 K-09 driver parametrisations.
+
+## §FB-3.2.4 Numerical / pipeline audit
+
+- **Solver suitability**: no ODE at the adapter surface; consumers
+  (driver) retain their FB-2.4 solver contract. N/A here.
+- **Cancellation**: `γ² v^a` at small β has `γ² = 1 / (1 − β²)`; the
+  divisor stays comfortably bounded away from zero on the admissible
+  domain. At β=0 the short-circuit skips the division entirely. **Pass**.
+- **Determinism**: no RNG; adapters are pure functions of their inputs
+  (modulo the fresh-copy ``_ZERO3.copy()`` to prevent caller aliasing).
+- **Conditioning**: `np.cross(a_vec, v)` is numerically stable for
+  all realistic `a_twist` × β products. **Pass**.
+- **OOD risk**: zero tabulation / interpolation in the adapters; the
+  eta argument is accepted only to preserve signature stability across
+  FB-3.3 extensions (where σ(η), Θ(η) will enter). **Pass**.
+
+## §FB-3.2.5 Ranked failure modes
+
+| # | Type | Severity | Symptom | Root cause | Cheap probe | Misinterpretation risk |
+|---|---|---|---|---|---|---|
+| 1 | physics | P0 (averted) | β=0 driver drifts from FB-2.4 on Class B due to adapter emitting a non-zero vorticity | Missing short-circuit ordering (β=0 check must precede Class A / B decision) | K-09 × 5 Class B labels with `np.array_equal` | thinking "Class B always has ω" |
+| 2 | code | P0 (averted) | Adapter returns a module-level array; caller mutation propagates | Shared `_ZERO3` reference | `_ZERO3.copy()` on every return + K-07 fresh-copy guard | treating numpy returns as immutable |
+| 3 | physics | P1 (averted) | Sign flip on Class B ω from `np.cross` argument order | `np.cross(a, v)` vs `np.cross(v, a)` yield opposite sign | K-15 closed-form pin `ω_3 = −(1/2) a_twist β` | following matrix-product conventions blindly |
+| 4 | interface | P1 (averted) | `v_vector(eta)` returns shape (N,3) for array eta; adapter chokes downstream | contract says (3,) for scalar eta | explicit `v.shape != (3,)` guard + K-06 shape sweep | passing array eta at scalar-only adapter surface |
+| 5 | physics | P2 (carried) | `accel_from_tilt` lacks the `(Θ/3) v^a + σ^a_b v^b` pieces, so β>0 output under-represents the true A^a | FB-3.2 non-goals pin this to FB-3.3 | FB-3.3 extends the else-branch additively | assuming `γ² v^a` alone is the full A^a |
+| 6 | physics | P2 (carried) | `vorticity_from_tilt` lacks the Class A `ε^{abc} ∇̃_b v_c` piece (harmonic-mode, non-homogeneous) | FB-5 perturbation-sector deferment | FB-5.1 harmonic-mode wire-up | assuming Class A has ω ≡ 0 for all time |
+| 7 | interface | P2 (closed here) | Y-Block `TiltedSpeciesParams` vs LB-1 `TiltedSpeciesBackground` divergence | Two parallel APIs, composition rule documented | K-12 pins the rule | using both without `v = β·v̂_e` composition |
+
+**Repairs** for #1/#2/#3/#4 applied and pinned. **#5/#6** carried per
+FB-3 roadmap. **#7** closed in this rotation by the composition-rule
+test and the module-docstring note.
+
+## §FB-3.2.6 Verifier filter
+
+| Verifier | Verdict | Evidence |
+|---|---|---|
+| A. Physics — known-limit recovery | **Passed** | K-01/K-02 (24 parametrisations); K-09 (12 parametrisations, `np.array_equal`) |
+| A. Physics — dimensional consistency | **Passed** | γ²v dimensionless; a×v carries [1/length] from a_twist |
+| A. Physics — sign / normalisation | **Passed** | K-15 pins right-hand-rule sign on ω |
+| A. Physics — alternative explanation | **Passed** | EMM §5.4 + Pontzen-Challinor §2 leading forms; no small-β expansion |
+| B. Code — contract satisfaction | **Passed** | shape (3,) enforced; fresh copy on every β=0 return |
+| B. Code — actual code-path usage | **Passed** | 57/57 new tests pass; regression 3,132 → 3,189 |
+| B. Code — regression risk | **Passed** | driver signature unchanged; adapters additive; β=0 anchor preserved |
+| B. Code — reproducibility | **Passed** | deterministic arithmetic; no RNG |
+| C. Numerical — tolerance robustness | **Passed** | K-03, K-05, K-09, K-15 all `rtol=0 atol=0` |
+| C. Numerical — convergence / stability | **N/A** | no iterative solve introduced |
+| C. Numerical — baseline reproducibility | **Passed** | K-09 `np.array_equal` anchor on 12 labels |
+
+**All verifiers pass or N/A.**
+
+## §FB-3.2.7 Minimal repair plan
+
+No P0 / P1 failure modes detected. P2 items deferred per roadmap
+(FB-3.3 for acceleration completion; FB-5.1 for Class A vorticity
+harmonic-mode piece).
+
+## §FB-3.2.8 Minimal test set (executed)
+
+| Test | Role | Verdict |
+|---|---|---|
+| `test_K01_accel_beta_zero_returns_zeros[<12 labels>]` | baseline — β=0 zeros on FLRW + 11 Bianchi types | ✅ |
+| `test_K02_vorticity_beta_zero_returns_zeros[<12 labels>]` | baseline — β=0 zeros on every structure | ✅ |
+| `test_K03_accel_closed_form_beta_positive` | physics — γ²v closed form | ✅ |
+| `test_K04_vorticity_class_A_is_zero_at_beta_positive[<6 labels>]` | physics — Class A → 0 at β>0 | ✅ |
+| `test_K05_vorticity_class_B_closed_form[<5 labels>]` | physics — (1/2) a × v closed form | ✅ |
+| `test_K06_shape_guarantee` | interface — shape (3,) on every branch | ✅ |
+| `test_K07_fresh_copy_on_beta_zero` | interface — caller mutation does not leak | ✅ |
+| `test_K08_vorticity_structure_none_is_zero` | interface — structure=None at β>0 | ✅ |
+| `test_K09_driver_beta_zero_bit_identical_to_fb24[<12 labels>]` | regression — driver byte-identity vs FB-2.4 anchor | ✅ |
+| `test_K10_driver_beta_positive_is_finite_and_differs` | regression — β>0 non-trivial finite output | ✅ |
+| `test_K11_class_B_driver_differs_from_class_A` | regression — ω routing into T6 | ✅ |
+| `test_K12_p2_overlap_composition_rule` | P2 overlap — composition rule | ✅ |
+| `test_K13_eta_independent_at_fb32` | contract — η-invariance at FB-3.2 surface | ✅ |
+| `test_K14_admissible_inputs_do_not_raise` | adversarial — β ∈ [0, 0.9] × Class A/B | ✅ |
+| `test_K15_vorticity_levi_civita_sign` | physics — right-hand ε convention pinned | ✅ |
+
+**57 passed / 0 failed / 0 skipped.**
+
+## §FB-3.2.9 Final verdict
+
+- **Status**: **Pass** — FB-3.2 wire-up sealed.
+- **Implement now (this session)**: resolved — tilt kinematic adapters
+  shipped; driver wire-up live end-to-end; P2 overlap resolved.
+- **Do NOT touch**: `(Θ/3) v^a + σ^a_b v^b` additive pieces on
+  `accel_from_tilt` (FB-3.3 Einstein + tilt coupling); Class A
+  harmonic-mode vorticity (FB-5.1); β-gate reparametrisation (FB-3.5);
+  Thomson Layer B (FB-4).
+
+### Gallery (FB-3.2)
+
+FB-3.2 changes the hierarchy driver's β>0 RHS but leaves the β=0 FB-2.4
+gallery trajectories byte-identical (K-09 anchor). No β>0 end-to-end
+integration is performed at this rotation — FB-3.3 is the natural
+checkpoint for a tilted-β trajectory plot (shear feedback + non-trivial
+`A^a` dynamics). **No-op on gallery this rotation**; gallery
+regeneration resumes at FB-3.3.
+
+### Baseline movement (FB-3.2)
+
+- Pre-session: 3,132 passing + 1 skipped.
+- Post-session: 3,189 passing + 1 skipped.
+- Delta: +57 tests (all in `bass/hierarchy/test_tilt_kinematics.py`).
+- No regressions.
+
+### Carry-forward ledger (outstanding)
+
+- **FB-3.1 P2 overlap** → ✅ resolved in this rotation (K-12 pins the
+  composition rule; module docstring documents it; 00_conventions §2
+  cross-reference table updated).
+- **FB-3.2 P2 (new)** → additive `(Θ/3) v^a + σ^a_b v^b` completion of
+  `accel_from_tilt` — **FB-3.3 reserved** (Einstein + tilt coupling).
+- **FB-3.2 P2 (new)** → Class A vorticity piece
+  `ε^{abc} ∇̃_b v_c` (harmonic-mode) — **FB-5.1 reserved** (perturbation
+  sector wire-up, complex-dtype `nabla_dispatch` on driver).
+- All other carry-forwards (F3, FB11-F1, FB12-F1, FB12-F3,
+  FB13-κ-calibration, FB-2.1 P2, FB-2.3 P3, FB-3.1 P2 β-gate, FB-5.2)
+  unchanged from §9 above.

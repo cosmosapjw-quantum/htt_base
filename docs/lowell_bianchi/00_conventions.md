@@ -105,7 +105,8 @@ that the SSOT stays single-sourced:
 | `bass.species.tilted.V_HAT_E_DEFAULT` | module constant `(1, 0, 0)` | FB-3.1 SSOT |
 | `bass.background.einstein_bianchi.BianchiCosmology.v_hat_e` | default = `_V_HAT_E_DEFAULT = (1, 0, 0)` | FB-0.2 |
 | `bass.collision.tilted_visibility.TiltedVisibility` | stores `v_e: Callable[[η], (3,)]`; default caller supplies `(1, 0, 0)` × `v_magnitude(η)` | LB-4 Layer A |
-| FB-3.2 hierarchy driver (`hierarchy_rhs_photon` acceleration / vorticity vectors) | consumes `TiltedSpeciesBackground.v_vector(η)` → inherits `V_HAT_E_DEFAULT` | FB-3.2 (planned) |
+| `bass.hierarchy.tilt_kinematics.accel_from_tilt` | reads `tilted.v_vector(η)` → inherits `V_HAT_E_DEFAULT` | FB-3.2 (shipped) |
+| `bass.hierarchy.tilt_kinematics.vorticity_from_tilt` | reads `tilted.v_vector(η)` → inherits `V_HAT_E_DEFAULT`; Class B uses `StructureConstants.a_twist` | FB-3.2 (shipped) |
 | FB-4 Thomson kernel Layer B | same `v̂_e` SSOT — no separate default | FB-4 (planned) |
 
 The regression test that pins this SSOT is

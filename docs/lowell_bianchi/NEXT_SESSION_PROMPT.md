@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (FB-3.1 complete → FB-3.2 bootstrap; **Phase FB-3 entry sealed** — `bass/species/tilted.py::TiltedSpeciesBackground(base, beta, v̂_e)` ships with β=0 bit-identical short-circuit across all five LB-1 species × 3 v̂_e sweep, EMM §5.4 eqs (5.12)-(5.13) exact on β>0, eager `ValueError` guards on β<0 / β≥1 / non-finite β / non-unit v̂_e; FB02-F1 resolved via `00_conventions §2` cross-reference table pinning `V_HAT_E_DEFAULT = (1,0,0)` SSOT; 24 new tests; baseline 3,108 → 3,132)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB3_2026-04-19.md` (FB-3.1 entry declaration + FB02-F1 resolution)
-**Current target session**: **FB-3.2** — tilt-projected vectors wire-up into `hierarchy_rhs_photon` (`accel_vector` / `vorticity_vector` kwargs structurally pinned at FB-2.4)
+**Last rotated**: 2026-04-19 (FB-3.2 complete → FB-3.3 bootstrap; **tilt-projected kinematic wire-up sealed** — `bass/hierarchy/tilt_kinematics.py::{accel_from_tilt, vorticity_from_tilt}` ship with β=0 `np.zeros(3)` short-circuit; `hierarchy_rhs_photon` β=0 adapter-fed RHS byte-identical to the FB-2.4 no-kwargs anchor on all 12 structure-constant labels (FLRW + 11 Bianchi types); β>0 emits `A^a = γ² v^a` species-specific piece and, for Class B, `ω^a = (1/2) a × v` Pontzen-Challinor leading piece; FB-3.1 P2 overlap closed via composition rule `v = β · v̂_e` pinned by `test_K12`; 57 new tests; baseline 3,132 → 3,189)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB3_2026-04-19.md` (§FB-3.2 supplement + FB-3.1 entry declaration + FB02-F1 resolution)
+**Current target session**: **FB-3.3** — Einstein + tilt coupling: additive completion of `accel_from_tilt` with `(Θ/3) v^a + σ^a_b v^b` pieces and background-shear feedback via the tetrad state, plus first non-perturbative boost kernel `B(η, ê)` projection on PSTF moments
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -34,6 +34,161 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 ## 2. Current handoff prompt (ROTATE at end of each session)
 
 Copy the block below into a fresh Claude Code session:
+
+```text
+# FB-3.3 — Einstein + tilt coupling (additive completion of `accel_from_tilt`) + first boost-kernel `B(η, ê)` projection (Phase FB-3 third rotation)
+
+## 프로젝트 컨텍스트
+
+- **Repo root**: /home/cosmosapjw/Dropbox/bianchi/htt_base
+- **bass-py 소스 트리**: `htt_base/htt/` (has `bass/`, `tsc/`, `mio/`, `workspace/`, `conftest.py`, `pyproject.toml`)
+- **venv**: `htt_base/venv/bin/python` (주의: `venv/bin/pip` shebang → `../venv/bin/python -m pip ...` 로 우회; FB-2.3 P3 env carry-forward, post-FB devops 에서 rebuild 예정)
+- **테스트 명령**: `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+- **현재 baseline**: 3,189 passing + 1 skipped (FB-3.2 직후; §FB-3.2 supplement in `docs/audits/AUDIT_PHASE_FB3_2026-04-19.md`)
+- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + Phase FB-0 + Phase FB-1 + Phase FB-2 + **FB-3.1** + **FB-3.2 (tilt kinematic adapters + driver wire-up)**:
+  - FB-3.1 (`bass/species/tilted.py::TiltedSpeciesBackground`: β=0 bit-identical; EMM §5.4 eqs (5.12)-(5.13) exact at β>0; FB02-F1 resolved)
+  - **FB-3.2** (`bass/hierarchy/tilt_kinematics.py::{accel_from_tilt, vorticity_from_tilt}`: β=0 `np.zeros(3)` short-circuit; β>0 emits `A^a = γ² v^a` (EMM eq 5.14 species-specific piece) and `ω^a = (1/2) a × v` for Class B (Pontzen-Challinor 2009 §2); β=0 adapter-fed driver byte-identical to FB-2.4 anchor on 12 labels; 57 new tests; baseline 3,132 → 3,189)
+- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-3 "Tilted sector non-perturbative β" (FB-3.3, third rotation)**.
+- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-3`
+- **Carry-forward P2/P3 (알고만 있을 것, 절대 건드리지 말 것)**:
+  - F3 (doc-only) → `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² rescale → **FB-5 / FB-6 예약**
+  - FB11-F1 → W-E Table 11.1 fixed-point coords → **FB-5 / FB-6 예약**
+  - FB12-F1 → IX isotropic S_+ residual (W-E pathology) → **FB-5 / FB-6 예약**
+  - FB12-F3 → `bianchi_ix_recollapse_event` ↔ `_hubble_squared` 결합 → **FB-5 / FB-6 예약**
+  - FB13-κ-calibration → VII_h Pontzen-Challinor spiral κ → **FB-5 / FB-6 예약**
+  - **FB-2.1 P2** → complex-dtype `nabla_dispatch` → `hierarchy_rhs_photon` real-dtype driver wire-up → **FB-5.1 예약**
+  - **FB-2.3 P3 (env)** → `venv/bin/pip` shebang stale → post-FB devops
+  - **FB-3.1 P2 (β-gate)** → velocity vs rapidity parametrisation formal unification audit → **FB-3.5 예약**
+  - **FB-3.2 P2 (new)** → Class A vorticity harmonic-mode piece `ε^{abc} ∇̃_b v_c` → **FB-5.1 예약** (perturbation sector wire-up with complex-dtype dispatch)
+  - **FB-5.2** → off-axis helical Wigner rotation for 비-axis-aligned subset
+
+## 이 세션의 작업 범위 (FB-3.3 — Einstein + tilt coupling + boost-kernel seed)
+
+**Goal**: FB-3.2 이 `accel_from_tilt` 의 species-specific 피스 (`γ² v^a`) 를 배치했다. FB-3.3 는 **나머지 두 피스를 additively 완성** 하고, 동시에 PSTF multipole 에 대한 **first non-perturbative boost kernel projection** 을 seed 한다:
+
+1. **Einstein + tilt coupling** — `accel_from_tilt` 의 else-branch 를 다음 exact form 으로 확장:
+
+       A^a = γ² [ v̇^a + (Θ/3) v^a + σ^a_b v^b ]     (EMM 2012 eq 5.17)
+
+   FB-3.3 surface 에서 `v̇^a = 0` (constant-β 가정, ∂v/∂τ = 0 at background); 따라서 실제 확장은 `(Θ/3) v^a + σ^a_b v^b` 두 piece. 이는 background Θ(η) 와 σ_ab(η) 를 소비하므로 adapter signature 를 `accel_from_tilt(tilted, eta, *, bg_table=None, tetrad_state=None)` 로 확장 (kwargs 기본값 None → FB-3.2 output 과 bit-identical).
+
+2. **Tilted-shear feedback** — `TiltedSpeciesBackground` 가 누적한 β>0 energy density `ρ̃` 가 Bianchi Einstein equations 의 RHS 에 들어가 σ_ab 의 trajectory 를 수정한다. FB-3.3 에서는 이 feedback 을 `bass/background/einstein_bianchi.py::rhs_bianchi` 에 **optional** 하게 넣고, β=0 경로 bit-identical 유지.
+
+3. **Boost-kernel `B(η, ê)` seed** — LB-4 `TiltedVisibility` 가 저장하는 rapidity `β_rapidity = atanh|v_e|` 과 FB-3.2 velocity `β` 사이의 composition rule `v_e = β · v̂_e` 를 FB-3.3 에서 단일 함수로 통합. `bass/hierarchy/boost_kernel.py` (새) 에 axi-symmetric PSTF boost projection 의 seed 함수 `boost_project_axisymmetric(Pi_ell, beta, v_hat_e)` 를 배치. FB-3.5 reparametrisation audit 대비 formalism 고정.
+
+4. **Gallery**: FB-3.2 는 no-op 이었으나 FB-3.3 는 β>0 trajectory (11 types × β ∈ {0, 0.05, 0.1}) 를 생성할 수 있는 첫 rotation. gallery_06_tilt_boost 확장 후보.
+
+### 기준이 되는 문헌 타깃
+
+- King-Ellis 1973 §3-§4 (exact tilt 4-acceleration, eq 37-40)
+- Ellis-Maartens-MacCallum 2012 §5.4-§5.5, §14.3 (Einstein + tilt; shear evolution under tilt)
+- Pontzen-Challinor 2009 §2-§3 (Class B tilted cosmology + vorticity feedback)
+- Pontzen-Challinor 2011 §3 (boost kernel on PSTF moments; axi-symmetric case)
+- lowell §7-§8 (tilt + transport SSOT)
+
+### 구체 작업 항목
+
+1. **사전 읽기**:
+   - `docs/audits/AUDIT_PHASE_FB3_2026-04-19.md §FB-3.2` (carry-forward)
+   - `bass/hierarchy/tilt_kinematics.py` (FB-3.2 surface)
+   - `bass/hierarchy/hierarchy_rhs.py::proper_shear_at_eta` (σ(η) consumer pattern)
+   - `bass/background/einstein_bianchi.py::rhs_bianchi`
+   - `bass/collision/tilted_visibility.py` (rapidity surface)
+   - `docs/audits/AUDIT_PROMPT.md` (phase-supplement audit — self-invoke)
+
+2. **`accel_from_tilt` 확장**:
+   - 새 kwargs: `bg_table=None`, `tetrad_state=None`
+   - 두 kwargs 가 None 이면 FB-3.2 output 과 bit-identical (anchor 보존)
+   - 둘 다 supplied 되면 `γ² v^a + (Θ/3) γ² v^a + γ² σ^a_b v^b` 를 return; Θ(η) = `bg_table.interp_Theta(eta)`, σ_ab(η) = `proper_shear_at_eta(eta, tetrad_state, a)`
+   - ValueError 로 malformed input (shape guards) 보호
+
+3. **Tilted-shear feedback** (optional, FB-3.3 에서 기본 off):
+   - `rhs_bianchi(..., tilted_species=None)` kwarg 추가; None 이면 기존 FLRW/Bianchi trajectory bit-identical; supplied 되면 `ρ̃` 를 Ω_m / Ω_r 대신 사용
+
+4. **`boost_kernel.py` seed**:
+   - `boost_project_axisymmetric(Pi_ell, beta, v_hat_e) → Pi_ell_boosted`
+   - `beta=0` → input identically return
+   - `|v̂_e × e_z| > tol` 이면 **NotImplementedError** (off-axis → FB-5.2); FB-3.3 은 axi-symmetric subset only
+   - PSTF invariants 보존 (sym_trace_free 후 check)
+
+5. **Validation tests** (≥ 20):
+   - `accel_from_tilt` bg_table+tetrad_state 없는 호출 → FB-3.2 output 과 `np.array_equal`
+   - `accel_from_tilt` 두 kwargs 모두 supplied + β=0 → zeros
+   - β>0 × 3 sample η 에서 closed-form 검증
+   - `rhs_bianchi` β=0 bit-identical (기존 trajectory regression)
+   - `boost_project_axisymmetric(β=0)` = input identity
+   - `boost_project_axisymmetric(β>0)` PSTF invariant 보존
+   - off-axis v̂_e → NotImplementedError
+
+6. **Audit**: `AUDIT_PHASE_FB3_2026-04-19.md` 에 §FB-3.3 supplement 추가
+
+7. **Gallery**: β>0 trajectory 생성 시 `plots/physics_gallery/06_tilt_boost/05_hierarchy_beta_sweep.png` 신설; no-op 이면 audit 에 명시
+
+8. `NEXT_SESSION_PROMPT.md §2` 를 **FB-3.4** (full tilted trajectory integrator + β>0 end-to-end regression + Thomson Layer A / B 접합) bootstrap 으로 rotate
+
+### FB-3.3 non-goals (선 밑에 고정)
+
+- **Off-axis helical Wigner rotation** → **FB-5.2**
+- **β-gate reparametrisation (velocity ↔ rapidity formal unification)** → **FB-3.5**
+- **Thomson kernel Layer B (full Lorentz on collision)** → **FB-4**
+- **k ≠ 0 perturbation sector** → **FB-5**
+- **Complex-dtype `nabla_dispatch` harmonic-mode wire-up** → **FB-5.1**
+
+## 우선 읽어야 할 문서 (순서대로)
+
+1. `docs/audits/AUDIT_PHASE_FB3_2026-04-19.md §FB-3.2` (carry-forward + P2 ledger)
+2. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-3`
+3. `bass/hierarchy/tilt_kinematics.py` (FB-3.2 surface)
+4. `bass/hierarchy/hierarchy_rhs.py::proper_shear_at_eta` (σ(η) spline consumer)
+5. `bass/background/einstein_bianchi.py::rhs_bianchi`
+6. `bass/collision/tilted_visibility.py` (rapidity surface for FB-3.5 prep)
+7. King-Ellis 1973 §3-§4; EMM 2012 §5.4-§5.5; Pontzen-Challinor 2009 §2-§3
+8. `docs/audits/AUDIT_PROMPT.md` (self-invoke)
+
+## 핵심 원칙 (고정)
+
+1. 외부 코드 금지 (프로덕션 트리)
+2. Citation in every modified docstring (King-Ellis 1973 + EMM 2012 §5.4 / §5.5 / §14.3 + Pontzen-Challinor 2009 + lowell §7)
+3. PSTF invariants preserved; Ellis convention 유지; **β=0 경로 bit-identical** against FB-3.2 anchor
+4. No silent fallbacks — missing kwargs → FB-3.2 identical; out-of-range inputs → explicit ValueError; off-axis v̂_e → NotImplementedError (FB-5.2 defer)
+5. Determinism
+6. **FB-3 phase in progress** — FB-3.3 는 FB-3.2 의 additive 확장; 새 surface 가 기존 anchor 를 흔들면 안 됨
+
+## 검증 체크리스트 (최종 commit 전)
+
+- [ ] `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 3,189 + 신규 테스트)
+- [ ] `accel_from_tilt(tilted, eta)` (no bg_table/tetrad_state) output 이 FB-3.2 commit 과 `np.array_equal`
+- [ ] `accel_from_tilt(tilted, eta, bg_table=..., tetrad_state=...)` at β=0 → zeros
+- [ ] `rhs_bianchi(..., tilted_species=None)` trajectory 가 기존 anchor 와 bit-identical
+- [ ] `boost_project_axisymmetric(Pi, β=0)` = input identity
+- [ ] off-axis v̂_e → NotImplementedError
+- [ ] `AUDIT_PHASE_FB3_*` §FB-3.3 supplement 추가
+- [ ] Gallery 재생성 또는 no-op 명시
+- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-3.4** bootstrap 으로 rotate
+- [ ] 최종 commit 메시지: `FB-3.3: Einstein+tilt accel completion + boost-kernel seed` + `+ rotate NEXT_SESSION_PROMPT for FB-3.4`
+
+## 진행 순서
+
+1. `docs/audits/AUDIT_PROMPT.md` self-invoke (pre-session scan)
+2. FB-3.2 `accel_from_tilt` / `vorticity_from_tilt` surface 재확인
+3. `accel_from_tilt` 에 bg_table / tetrad_state kwargs 추가 + additive 완성
+4. `rhs_bianchi` 에 optional `tilted_species` kwarg 추가 + β=0 bit-identical 유지
+5. `boost_kernel.py` seed + axi-symmetric projection + off-axis NotImplementedError
+6. ≥20 new tests
+7. Full regression green
+8. Audit supplement + gallery 검토
+9. `NEXT_SESSION_PROMPT.md §2` → FB-3.4 rotate
+10. commit
+
+시작하세요. 본 세션은 **Phase FB-3 의 세 번째 rotation (FB-3.3 Einstein+tilt coupling + boost-kernel seed)** — FB-3.2 의 species-specific acceleration piece 에 background kinematic pieces (Θ×v, σ×v) 를 additively 얹고, PSTF boost projection 의 axi-symmetric seed 를 배치. β=0 anchor (FB-3.2, baseline 3,189) 은 non-negotiable.
+```
+
+---
+
+<!-- Prior (FB-3.2) handoff prompt (saved for reference only; do not re-run). -->
+
+<details>
+<summary>Previous FB-3.2 handoff prompt (archived 2026-04-19)</summary>
 
 ```text
 # FB-3.2 — tilt-projected `v^a` / `ω^a` / `A^a` wire-up into `hierarchy_rhs_photon` (Phase FB-3 second rotation)
@@ -164,6 +319,8 @@ FB-3.2 는 **wire-up only** — boost kernel `B(η, ê)` projection 은 **FB-3.3
 
 시작하세요. 본 세션은 **Phase FB-3 의 두 번째 rotation (FB-3.2 wire-up)** — FB-3.1 의 species-level `v^a` surface 를 FB-2.4 의 driver slot 으로 연결한다. β=0 bit-identical anchor (FB-2.4, commit d7d25da) 은 non-negotiable.
 ```
+
+</details>
 
 ---
 
