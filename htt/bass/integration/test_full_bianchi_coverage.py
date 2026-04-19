@@ -13,7 +13,13 @@ and literature-oracle parametrizations.
 """
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
+
+
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+_FB6_FIXTURE_ROOT = _REPO_ROOT / "tests" / "fixtures" / "fb6"
 
 
 FB61_CONFIGURATION_CASES = [
@@ -51,6 +57,70 @@ FB62_CONTINUITY_LIMIT_CASES = [
 ]
 
 
+FB63_ORACLE_FIXTURE_CASES = [
+    pytest.param(
+        "pc2009_fig1_vii_h_vector_temperature_grid",
+        _FB6_FIXTURE_ROOT / "pontzen_challinor_2009_fig1_vii_h_vector_temperature_grid.npz",
+        "literature",
+        id="pc2009-fig1-vii_h-vector",
+    ),
+    pytest.param(
+        "pc2009_fig3_vii_h_regular_mode_temperature_grid",
+        _FB6_FIXTURE_ROOT / "pontzen_challinor_2009_fig3_vii_h_regular_mode_temperature_grid.npz",
+        "literature",
+        id="pc2009-fig3-vii_h-regular-mode",
+    ),
+    pytest.param(
+        "pc2009_sec4_ix_closed_quadrupole_grid",
+        _FB6_FIXTURE_ROOT / "pontzen_challinor_2009_sec4_ix_closed_quadrupole_grid.npz",
+        "literature",
+        id="pc2009-sec4-ix-quadrupole",
+    ),
+    pytest.param(
+        "pc2009_vii_h_off_diagonal_ctt",
+        _FB6_FIXTURE_ROOT / "pontzen_challinor_2009_vii_h_off_diagonal_ctt.npz",
+        "literature",
+        id="pc2009-vii_h-offdiag-ctt",
+    ),
+    pytest.param(
+        "pc2009_ix_off_diagonal_ctt",
+        _FB6_FIXTURE_ROOT / "pontzen_challinor_2009_ix_off_diagonal_ctt.npz",
+        "literature",
+        id="pc2009-ix-offdiag-ctt",
+    ),
+    pytest.param(
+        "camb_planck2018_type_i_flrw_limit",
+        _REPO_ROOT / "data" / "camb_ref_planck2018.npz",
+        "camb",
+        id="camb-type-i-flrw-limit",
+    ),
+    pytest.param(
+        "camb_planck2018_type_v_flrw_limit",
+        _REPO_ROOT / "data" / "camb_ref_planck2018.npz",
+        "camb",
+        id="camb-type-v-flrw-limit",
+    ),
+    pytest.param(
+        "camb_planck2018_type_vii0_flrw_limit",
+        _REPO_ROOT / "data" / "camb_ref_planck2018.npz",
+        "camb",
+        id="camb-type-vii0-flrw-limit",
+    ),
+    pytest.param(
+        "camb_planck2018_type_viih_h0_limit",
+        _REPO_ROOT / "data" / "camb_ref_planck2018.npz",
+        "camb",
+        id="camb-type-viih-h0-limit",
+    ),
+    pytest.param(
+        "camb_planck2018_type_ix_bkl_limit",
+        _REPO_ROOT / "data" / "camb_ref_planck2018.npz",
+        "camb",
+        id="camb-type-ix-bkl-limit",
+    ),
+]
+
+
 @pytest.mark.parametrize(
     ("type_label", "tilt_state", "fixture_key"),
     FB61_CONFIGURATION_CASES,
@@ -78,3 +148,17 @@ def test_fb62_cross_type_continuity_limits(
     _ = (source_type, target_type, limit_parameter, limit_value)
     pytest.skip(reason="pending FB-6.2 implementation — skeleton only")
     raise NotImplementedError("FB-6.2")
+
+
+@pytest.mark.parametrize(
+    ("oracle_name", "fixture_path", "oracle_family"),
+    FB63_ORACLE_FIXTURE_CASES,
+)
+def test_fb63_literature_and_camb_oracle_fixtures(
+    oracle_name: str,
+    fixture_path: Path,
+    oracle_family: str,
+) -> None:
+    _ = (oracle_name, fixture_path, oracle_family)
+    pytest.skip(reason="pending FB-6.3 implementation — skeleton only")
+    raise NotImplementedError("FB-6.3")

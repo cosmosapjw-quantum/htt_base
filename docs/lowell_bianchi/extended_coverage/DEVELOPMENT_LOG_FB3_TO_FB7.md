@@ -663,3 +663,23 @@ fresh cumulative count.
 - **Notes**: explicit named tuples were chosen over a helper builder so
   the one-sided and isotropic-branch semantics remain reviewable in the
   test file itself.
+
+### FB-META-6.3 — literature/CAMB oracle-fixture skeleton
+
+- **Scope**: Recorded FB-6.3 three-channel verification and extended
+  `htt/bass/integration/test_full_bianchi_coverage.py` with reserved
+  literature/CAMB oracle paths only. The 2009 Pontzen locator was
+  corrected in-flight: the verified `arXiv:0901.2122` text has Figures 1
+  and 3 plus a `§IV` closed-model discussion, not the prompt's
+  "Fig. 4 + §IV" pairing.
+- **Commit anchor**: see `git log --grep='FB-META-6.3'`.
+- **Test delta**: `3,403 passed + 38 skipped` →
+  `3,403 passed + 48 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META6_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META6_2026-04-20.md) §FB-6.3.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: the phase-close pass is next; the off-diagonal
+  literature rows remain reserved placeholders until numeric fixtures
+  actually land.
+- **Notes**: CAMB rows intentionally reuse the shipped
+  `data/camb_ref_planck2018.npz` path, while future digitized
+  Pontzen-Challinor baselines are reserved under `tests/fixtures/fb6/`.

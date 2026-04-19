@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-6.2 → FB-6.3**; continuity-limit tuples recorded, literature/CAMB oracle paths next)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` §FB-6.2
-**Current target session**: **FB-6.3** — Pontzen-Challinor / CAMB oracle-fixture skeleton
-**Phase status**: FB-6 skeleton cycle is in progress on 2026-04-20; the matrix and continuity tuples are sealed and the oracle paths are next
+**Last rotated**: 2026-04-20 (**FB-6.3 → FB-META-6.CLOSE**; oracle paths recorded, final regression and phase close next)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` §FB-6.3
+**Current target session**: **FB-META-6.CLOSE** — final regression, phase-close note, rotate to FB-META-7
+**Phase status**: FB-6 skeleton cycle is in progress on 2026-04-20; all three harness tables are planted and the closeout pass is next
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,37 +37,27 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-6.3 — literature/CAMB oracle-fixture skeleton contract
+# FB-META-6.CLOSE — close the Phase FB-6 skeleton cycle
 
-FB-6.2 extended the committed integration harness with the five named
-continuity-limit tuples, and the audited local baseline is now
-`3,403 passing + 38 skipped`.
+All three FB-6 harness layers are now planted in
+`htt/bass/integration/test_full_bianchi_coverage.py`, and the audited
+local expectation is `3,403 passing + 48 skipped`.
 
-Next session target:
-- Extend the same module with the FB-6.3 fixture-path parametrization
-  only.
-- Keep the FB-6.1 and FB-6.2 tables unchanged.
-- Reserve literature oracles for `VII_h` and `IX`, plus CAMB FLRW-limit
-  cases for `I`, `V`, `VII_0`, `VII_h -> 0`, and `IX -> BKL`.
-- Reuse the shipped `data/camb_ref_planck2018.npz` path for CAMB-backed
-  rows.
-- Reserve new `tests/fixtures/fb6/...` paths for digitized
-  Pontzen-Challinor literature oracles.
-- Preserve the skeleton contract: skipped tests plus the explicit
-  `NotImplementedError` placeholder.
-
-Carry-forward anchors:
-- Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
-- Latest audit artifact:
-  `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` §FB-6.2
-- Verified 2009 Pontzen figure paper:
-  `https://arxiv.org/abs/0901.2122` (submitted 2009-01-15; revised
-  2009-05-11)
-- Older hierarchy anchor to keep distinct:
-  `https://arxiv.org/abs/0706.2075` (submitted 2007-06-14)
-- Latest regression anchor:
+Closeout tasks:
+- Run the full regression once:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3403 passed, 38 skipped`
+- Confirm the result is unchanged from the latest baseline except for
+  the 37 new skipped FB-6 harness cases.
+- Add a short phase-close note to:
+  - `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md`
+  - `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
+- Rotate `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` to the
+  generic `FB-META-7` placeholder.
+- Commit as `FB-META-6.CLOSE: Phase FB-6 skeletons planted (3 sub-phases)`.
+
+Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
+Latest audit artifact:
+`docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md`
 ```
 
 ---
