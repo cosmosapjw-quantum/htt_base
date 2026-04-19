@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-6.3 → FB-META-6.CLOSE**; oracle paths recorded, final regression and phase close next)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` §FB-6.3
-**Current target session**: **FB-META-6.CLOSE** — final regression, phase-close note, rotate to FB-META-7
-**Phase status**: FB-6 skeleton cycle is in progress on 2026-04-20; all three harness tables are planted and the closeout pass is next
+**Last rotated**: 2026-04-20 (**FB-META-6.CLOSE → FB-META-7**; Phase FB-6 skeleton cycle sealed, handoff reset to the next-phase META placeholder)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` (Phase close note)
+**Current target session**: **FB-META-7** — paste the Phase FB-7 META prompt
+**Phase status**: Phase FB-6 closed on 2026-04-20; awaiting a fresh Phase FB-7 META prompt
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,27 +37,24 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-META-6.CLOSE — close the Phase FB-6 skeleton cycle
+# FB-META-7 — paste the Phase FB-7 META prompt
 
-All three FB-6 harness layers are now planted in
-`htt/bass/integration/test_full_bianchi_coverage.py`, and the audited
-local expectation is `3,403 passing + 48 skipped`.
+Phase FB-6 closed with three skeleton-only sub-phases and the audited
+baseline now stands at `3,403 passing + 48 skipped`.
 
-Closeout tasks:
-- Run the full regression once:
+Start the next session by pasting the canonical Phase FB-7 META prompt
+as the first user message. Do not reuse the older FB-META-6 handoff
+text; the next phase should begin from a fresh prompt.
+
+Relevant carry-forward anchors:
+- Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
+- Committed FB-6 harness:
+  `htt/bass/integration/test_full_bianchi_coverage.py`
+- Latest audited Phase FB-6 artifact:
+  `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md`
+- Latest regression anchor:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- Confirm the result is unchanged from the latest baseline except for
-  the 37 new skipped FB-6 harness cases.
-- Add a short phase-close note to:
-  - `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md`
-  - `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
-- Rotate `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` to the
-  generic `FB-META-7` placeholder.
-- Commit as `FB-META-6.CLOSE: Phase FB-6 skeletons planted (3 sub-phases)`.
-
-Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
-Latest audit artifact:
-`docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md`
+  → `3403 passed, 48 skipped`
 ```
 
 ---

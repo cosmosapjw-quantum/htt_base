@@ -100,3 +100,22 @@
 **Test path**: `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/integration/test_full_bianchi_coverage.py -q`
 **Guard rails** (yes/no): literature paths reserved under `tests/fixtures/fb6`? yes; CAMB rows reuse the shipped NPZ? yes; prompt's Fig. 4 mismatch corrected? yes; no new fixture data shipped? yes
 **Regression after plant**: `3403 passed + 48 skipped`.
+
+## Phase close
+
+FB-META-6 closed on 2026-04-20 with three committed harness layers in
+`htt/bass/integration/test_full_bianchi_coverage.py` and no production
+module additions.
+
+- Final regression gate:
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `3403 passed, 48 skipped`.
+- Net movement vs the phase-entry baseline: pass count unchanged;
+  skipped count `11 → 48` from the 37 new FB-6 harness rows
+  (`22 + 5 + 10`).
+- Source correction retained at phase exit: the verified 2009 Pontzen
+  paper is `arXiv:0901.2122` with Figures 1 and 3 plus `§IV`; the older
+  `arXiv:0706.2075` remains the 2007 hierarchy paper and is not treated
+  as the 2009 figure source.
+- No new fixture binaries shipped; `data/camb_ref_planck2018.npz`
+  remains the only reused numeric oracle in this META cycle.

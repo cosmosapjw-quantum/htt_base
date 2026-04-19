@@ -683,3 +683,19 @@ fresh cumulative count.
 - **Notes**: CAMB rows intentionally reuse the shipped
   `data/camb_ref_planck2018.npz` path, while future digitized
   Pontzen-Challinor baselines are reserved under `tests/fixtures/fb6/`.
+
+### FB-META-6.CLOSE — Phase FB-6 skeleton cycle closed
+
+- **Scope**: Declared the Phase FB-6 skeleton-only rotation closed after
+  three committed integration-harness plants, a final full regression,
+  and the handoff rotation to the generic FB-META-7 placeholder.
+- **Commit anchor**: see `git log --grep='FB-META-6.CLOSE'`.
+- **Test delta**: `3,403 passed + 48 skipped` →
+  `3,403 passed + 48 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META6_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META6_2026-04-20.md) (Phase close note).
+- **Gallery**: no-op.
+- **Carry-forward**: FB-META-7 requires a fresh phase prompt rather
+  than an inherited FB-6 task list.
+- **Notes**: final regression count matched the FB-6.3 state exactly,
+  so the phase closes with unchanged passes and only the intended 37
+  new skipped harness cases over the phase-entry baseline.
