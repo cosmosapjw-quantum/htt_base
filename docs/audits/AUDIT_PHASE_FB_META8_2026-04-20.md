@@ -439,5 +439,52 @@ phase-close gate.
 
 ## §FB-8.7
 
-**Type-distinct pin**: pending fill; docs and gallery notes will keep
-the cosmological and observer surfaces separated in prose and examples.
+### §FB-8.7 — docs and gallery placeholder
+**Type-distinct pin**: docs and gallery notes keep cosmological and
+observer surfaces separated in prose; the reserved gallery topic is
+observer-frame only and does not rename cosmological outputs.
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/00_conventions.md` now carries an FB-8 placeholder
+section pinning the type distinction, shared rapidity convention, and
+composition order; verified `figures/physics_gallery/14_observer_frame/`
+now exists as a reserved topic directory; verified the new topic README
+records the gallery no-op explicitly; verified the root physics-gallery
+README now lists the reserved observer-frame topic rather than implying
+missing outputs; verified the skipped placeholder test exists so the
+sub-phase still increments the skeleton-test ledger; verified all prose
+continues to route production likelihood composition through
+`bass.likelihood.observer_frame_adapter`.
+**Channel B**: no external literature anchor required for FB-8.7; the
+prompt marks this sub-phase as docs + gallery only, so Channel B is
+closed by explicit non-applicability rather than by a fabricated source.
+**Channel C** (prose, 6-10 lines): The right FB-8.7 closeout for a
+skeleton-only phase is not to fake plots. The gallery has a strong
+provenance contract in this repo, so adding a reserved topic directory
+with a README is better than leaving readers guessing whether files were
+forgotten or deliberately deferred. Updating `00_conventions.md` in the
+same commit matters for the same reason: the observer-frame composition
+order is a documentation-level SSOT before it becomes executable
+physics. Keeping the topic number at 14 also matches the SDD, so later
+rendering work can land without renumbering the gallery tree. This is a
+true no-op on rendered figures, but it is not undocumented.
+**Alternatives**:
+| # | Docs/gallery closeout | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Reserve topic `14_observer_frame` with explicit no-op README and convention pin | Honest about missing renders; preserves future topic numbering; keeps the observer/cosmology split visible in prose. | Ships no PNGs yet. | ✅ |
+| 2 | Skip gallery edits entirely | Lowest file churn. | Leaves the phase looking incomplete or accidental. | — |
+| 3 | Generate placeholder images with dummy data | Makes the gallery tree look full. | Violates the provenance contract and would fake a rendered surface. | — |
+**Core principles**: no fabricated figures; documentation SSOT updated
+now; gallery no-op is explicit and reviewable.
+**Skeleton path**:
+`docs/lowell_bianchi/00_conventions.md`,
+`figures/physics_gallery/README.md`,
+`figures/physics_gallery/14_observer_frame/README.md`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb87_docs_gallery_skeleton.py -q`
+**Guard rails** (yes/no): gallery no-op explicit? yes; composition-order
+pin documented? yes; observer/cosmology split preserved in prose? yes;
+fake PNGs avoided? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 59 skipped` → `3403 passed + 60 skipped` pending the
+phase-close gate.

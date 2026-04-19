@@ -11,7 +11,8 @@ PSTF multipole hierarchy algebra shipped in LB-2a).
 and `figures/preliminary/`; moved here from `plots/physics_gallery/`
 during the 2026-04-19 figure-tree consolidation).
 **Generator**: [`scripts/make_physics_gallery.py`](../../scripts/make_physics_gallery.py)
-**Total**: 50 plots across 11 topics
+**Total**: 50 plots across 11 rendered topics + 1 reserved observer-
+frame placeholder topic
 **Regenerate**: `venv/bin/python scripts/make_physics_gallery.py`
 **Cadence**: regenerated at the end of every LB-N phase; see the
 [phase-boundary hook](../../.claude/hooks/check_phase_boundary_audit.py)
@@ -167,6 +168,13 @@ window.
 |---|---|
 | [01_unified_trajectory_bianchi_I.png](11_integrator/01_unified_trajectory_bianchi_I.png) | ``a(η), Σ_±(η), Π_2[m=0](η), E_2[m=0](η)`` along a Type I flat trajectory with seeded Π_2 — shows Thomson damping + polter-driven E_2 transient |
 | [02_tca_activation_window.png](11_integrator/02_tca_activation_window.png) | ``Γ_T / H`` across the Planck-2018 HyRec history (never crosses threshold) vs a synthetic high-``Γ_T`` override that activates the dispatch on 531/600 grid points |
+
+## 14 · Observer frame (FB-8 placeholder)
+
+FB-META-8 is skeleton-only, so no observer-frame PNGs are rendered yet.
+The reserved topic directory
+[14_observer_frame/](14_observer_frame/README.md) documents the future
+target outputs and records this phase as an intentional gallery no-op.
 
 ---
 

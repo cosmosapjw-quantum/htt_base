@@ -155,3 +155,21 @@ cross-reference.
 - **Carry-forward**: FB-8.7 docs + gallery skeleton.
 - **Notes**: the Lowell `§14` on-disk locator is still absent and is
   kept visible as an audit gap.
+
+### FB-8.7 — docs + gallery placeholder
+
+- **Scope**: Added an FB-8 observer-frame placeholder section to
+  [00_conventions.md](../00_conventions.md), reserved the gallery topic
+  [14_observer_frame](../../../figures/physics_gallery/14_observer_frame/README.md),
+  and updated the root gallery README so the phase's no-op render status
+  is explicit rather than implied.
+- **Commit anchor**: see `git log --grep='FB-META-8.7'`.
+- **Test delta**: 3,403 passing + 59 skipped → 3,403 passing + 60
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META8_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META8_2026-04-20.md)
+  §FB-8.7.
+- **Gallery**: no-op (reserved topic directory + README only).
+- **Carry-forward**: phase-close regression + FB-META-9 handoff.
+- **Notes**: no dummy PNGs were generated; the no-op is documented in
+  both the gallery tree and the audit.

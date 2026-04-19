@@ -20,6 +20,7 @@
 10. Numerical precision targets
 11. External-code policy
 12. Glossary
+13. Observer-frame layering (FB-8 placeholder)
 
 ---
 
@@ -389,6 +390,38 @@ They may NOT appear in:
 ---
 
 ## 12. Glossary
+
+## 13. Observer-frame layering (FB-8 placeholder)
+
+FB-8 introduces an **observer-frame** layer on top of the already
+audited FB-7 cosmological-frame likelihood stack. The following rules
+are SSOT for that layer:
+
+- **Type distinction is load-bearing**:
+  `(beta_cosmo, v_hat_cosmo)` and `(beta_obs, v_hat_obs)` are separate
+  surfaces with separate ownership. They must not inherit from each
+  other and must not be silently coerced into a shared runtime carrier.
+- **Rapidity convention is shared, not the type**:
+  the future `GlobalTilt` and the FB-8 `ObserverBoost` both use
+  non-negative rapidity as the decision-level scalar, with the sign of
+  the motion living in the direction vector. This inherits the FB-3.5
+  rapidity/admissibility SSOT.
+- **Composition order is pinned**:
+  cosmological-frame tilt is applied first, then observer-frame boost:
+
+  ```text
+  cosmological tilt -> observer boost
+  ```
+
+- **Production path**:
+  observer-frame likelihood composition happens in
+  `bass.likelihood.observer_frame_adapter`, which wraps the FB-7
+  cosmological-frame likelihood. The diagnostic helper
+  `bass.observer.compose_tilts` is not a production surface.
+
+This section is a documentation placeholder only during FB-META-8. The
+rendered observer-frame gallery outputs are deferred until the phase
+ships physics rather than skeletons.
 
 | Term | Definition |
 |---|---|
