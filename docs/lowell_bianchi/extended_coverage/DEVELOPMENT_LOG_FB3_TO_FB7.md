@@ -241,13 +241,25 @@ struck-through but retained for archaeology.
 - **Carry-forward new**: shear-driven `ε^{abc} ∇̃_b A_c` vorticity
   piece → FB-5.1 reserved.
 
-### FB-3.5 (planned) — β-gate reparametrisation
+### FB-3.5 — β-gate reparametrisation (rapidity SSOT + shared gate)
 
-- **Shipping**: formal unification audit of the velocity vs rapidity
-  surfaces (`TiltedSpeciesBackground.beta` vs
-  `TiltedVisibility.beta_rapidity`). Single SSOT gate function
-  `assert_tilt_admissible(β, v̂_e)` used by every tilt consumer.
-  Closes the FB-3.1 P2 β-gate carry.
+- **Scope**: Publishes `assert_tilt_admissible(β, v̂_e)` as the
+  single SSOT admissibility gate and routes
+  `TiltedSpeciesBackground.__post_init__` through it. Adds
+  `velocity_to_rapidity` / `rapidity_to_velocity` conversion
+  helpers with exact zero branches; adds `.rapidity` property and
+  `from_rapidity` classmethod so downstream consumers (FB-8
+  `ObserverBoost`, FB-11 priors) can work in the rapidity surface
+  without crossing the conversion boundary themselves. Internal
+  storage stays velocity-parametrised (FB-3.1 byte anchor requires
+  this; storage migration is an intentional post-extended deferral
+  documented in the module docstring).
+- **Test delta**: 3,232 → 3,286 (+54 tests in
+  `bass/species/test_fb35_beta_gate.py`).
+- **Audit**: `AUDIT_PHASE_FB3_2026-04-19.md` §FB-3.5 Supplement.
+- **Gallery**: no-op.
+- **Carry-forward closes**: FB-3.1 P2 β-parametrisation split
+  (decision level; storage migration noted as post-extended).
 
 ### FB-3.6 (planned) — Tilted regression suite
 
@@ -351,6 +363,7 @@ dataset. At this point the parent plan's stated target is reached
 | FB-3.2 exit | 3,189 | +57 |
 | FB-3.3 exit | 3,213 | +24 |
 | FB-3.4 exit | 3,232 | +19 |
+| FB-3.5 exit | 3,286 | +54 |
 
 After each new FB row ships, append a new ledger row here with the
 fresh cumulative count.

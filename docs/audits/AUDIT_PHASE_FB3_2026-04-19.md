@@ -606,6 +606,117 @@ def vorticity_from_tilt(
   piece → FB-5.1 reserved (perturbation-sector).
 - **Baseline**: 3,213 → 3,232 (+19).
 
+---
+
+## §FB-3.5 Supplement — β-gate reparametrisation (rapidity SSOT + shared admissibility gate)
+
+- **Sub-phase**: FB-3.5 — closes the FB-3.1 P2 β-parametrisation
+  carry by (i) publishing ``assert_tilt_admissible(β, v̂_e)`` as the
+  single SSOT guard used by ``TiltedSpeciesBackground.__post_init__``
+  and available for downstream tilt consumers, (ii) exposing the
+  ``.rapidity`` derived property and ``from_rapidity`` classmethod,
+  and (iii) sourcing the velocity ↔ rapidity conversion through
+  ``velocity_to_rapidity`` / ``rapidity_to_velocity``.
+- **Prior baseline** (post-FB-3.4): 3,232 passing + 1 skipped.
+- **This-session baseline**: 3,286 passing + 1 skipped (+54 new tests).
+
+### §FB-3.5.0 Target reconstruction
+
+| Layer | Claim | Implementation | Output |
+|---|---|---|---|
+| Decision | Parent plan D4 = (a) — rapidity is the decision-level SSOT | `.rapidity` property + `from_rapidity` ctor | derived float |
+| Invariant | FB-3.1 byte anchor preserved: internal storage stays velocity (`tanh(atanh(β)) ≠ β` bitwise in float64) | no migration of `self.beta`; round-trip documented | every FB-3.1..FB-3.4 test passes unchanged |
+| Single-sourcing | Guard set published as `assert_tilt_admissible` and re-used by `__post_init__` | gate function + `__post_init__` routes through gate | R-12 / R-13 |
+| Conversion | `velocity_to_rapidity` / `rapidity_to_velocity` single-source the `tanh` / `atanh` formulas with exact zero branches | two helpers + classmethod delegation | R-01, R-02, R-03, R-04 |
+
+### §FB-3.5.1 Contract diff
+
+```python
+# Module-level additions
+def assert_tilt_admissible(beta, v_hat_e, *, tol=V_HAT_NORM_TOL) -> None: ...
+def velocity_to_rapidity(beta: float) -> float: ...
+def rapidity_to_velocity(rapidity: float) -> float: ...
+
+# Class additions
+TiltedSpeciesBackground.from_rapidity(base, rapidity, v_hat_e=...)  # classmethod
+TiltedSpeciesBackground.rapidity                                     # property
+```
+
+`__post_init__` internals refactored to route through
+`assert_tilt_admissible`; external behaviour byte-identical on every
+FB-3.1 / FB-3.2 / FB-3.3 / FB-3.4 test (guard regex patterns
+unchanged).
+
+### §FB-3.5.2 Phys-math ledger
+
+1. **Definition / notation**. β = tanh(η) per Lorentz-boost
+   convention; η ∈ [0, ∞), β ∈ [0, 1). The `arctanh` / `tanh` pair
+   is the analytic inverse on the admissible domain. **Pass**.
+2. **Sign / normalisation**. Both scalars are non-negative by
+   convention — the sign of the boost lives in `v̂_e`. Error
+   messages explicit about this in both guards. **Pass**.
+3. **Known-limit recovery**. `velocity_to_rapidity(0)` and
+   `rapidity_to_velocity(0)` are exactly 0.0 via explicit
+   short-circuit (not `np.arctanh(0.0)` which is also 0 but would
+   carry spurious fastmath precision at NaN boundaries). **Pass**.
+4. **Units / dimension**. Both parameters are dimensionless. **Pass**.
+5. **Boundary / positivity**. β = 1.0 (exactly) raises
+   `superluminal`; η → ∞ is admissible and maps to β → 1⁻;
+   `np.arctanh` at exactly 1.0 is `inf` — caught by the β < 1 guard
+   so `velocity_to_rapidity(1.0)` raises before reaching `arctanh`. **Pass**.
+6. **Hidden assumption**. Internal storage remains velocity-
+   parametrised (FB-3.1 byte anchor). Parent plan D4 = (a) is
+   honoured at the *decision* level (downstream consumers prefer
+   rapidity) but the *storage-level* migration is explicitly deferred
+   because `tanh(atanh(β))` differs from `β` in the last bit of
+   float64 for non-zero β. **Pass with note** (documented in module
+   docstring §FB-3.5 header).
+7. **Counter-example**. Round-trip at high rapidity (η ≥ 5) loses
+   ~10⁻¹³ because tanh saturates near 1 and atanh loses precision;
+   test R-04 accepts `1e-13 × (1 + η)` relative tolerance which
+   matches the float64 precision budget. **Pass**.
+
+### §FB-3.5.5 Ranked failure modes
+
+| # | Type | Severity | Symptom | Cheap probe |
+|---|---|---|---|---|
+| 1 | code | P0 (averted) | gate-refactored `__post_init__` changes error messages | R-12 (each FB-3.1 regex match pattern tested) |
+| 2 | code | P0 (averted) | FB-3.2 byte anchor drifts after gate refactor | R-14 `accel_from_tilt(β=0)` equals zeros |
+| 3 | physics | P1 (averted) | `velocity_to_rapidity(1.0)` returns `inf` silently | explicit `superluminal` guard before `arctanh` (R-05) |
+| 4 | interface | P2 (carried) | storage-level rapidity migration deferred; byte anchor would break | documented; future post-extended session when anchor can be relaxed |
+
+### §FB-3.5.8 Minimal test set
+
+| Test | Role | Verdict |
+|---|---|---|
+| R-01 | `velocity_to_rapidity(0) == 0.0` exact | ✅ |
+| R-02 | `rapidity_to_velocity(0) == 0.0` exact | ✅ |
+| R-03 | velocity → rapidity → velocity round-trip (9 sweep) | ✅ |
+| R-04 | rapidity → velocity → rapidity round-trip (9 sweep) | ✅ |
+| R-05 | `velocity_to_rapidity` guards | ✅ |
+| R-06 | `rapidity_to_velocity` guards | ✅ |
+| R-07 | gate silent on admissible input (β×v̂ sweep) | ✅ |
+| R-08 | gate raises on each guard branch | ✅ |
+| R-09 | `from_rapidity(0)` matches ctor at β=0 | ✅ |
+| R-10 | `from_rapidity` + `.rapidity` round-trip | ✅ |
+| R-11 | `.rapidity` at β = 0 is exactly 0.0 | ✅ |
+| R-12 | FB-3.1 guards still trip via gate-based `__post_init__` | ✅ |
+| R-13 | gate behaviour matches the direct-guard ctor | ✅ |
+| R-14 | FB-3.2 anchor preservation after refactor | ✅ |
+| R-15 | `V_HAT_NORM_TOL` SSOT pin | ✅ |
+
+**54 passed / 0 failed.**
+
+### §FB-3.5.9 Final verdict
+
+- **Status**: Pass — FB-3.5 sealed.
+- **Carry-forward closes**: FB-3.1 P2 "β-parametrisation split
+  (velocity vs rapidity)" — closed via the decision-level rapidity
+  SSOT (property + classmethod + conversion helpers); storage-level
+  migration noted as an intentional post-extended deferral.
+- **Gallery**: no-op; FB-3.6 β-sweep is the gallery checkpoint.
+- **Baseline**: 3,232 → 3,286 (+54).
+
 ### Carry-forward ledger (outstanding)
 
 - **FB-3.1 P2 overlap** → ✅ resolved in this rotation (K-12 pins the
