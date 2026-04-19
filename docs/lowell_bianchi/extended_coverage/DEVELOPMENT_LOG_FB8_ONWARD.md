@@ -450,3 +450,22 @@ cross-reference.
 - **Carry-forward**: FB-11.5 synthetic-injection harness.
 - **Notes**: the planted docstrings preserve the historical distinction
   between the original statistic and the modern acceptance threshold.
+
+### FB-META-11.5 — synthetic-injection coverage harness
+
+- **Scope**: Added the skip-marked
+  [synthetic-injection harness](../../../htt/bass/inference/test_fb115_synthetic_injection_skeleton.py)
+  that pins the future `68 % ± 5 %` coverage target and references the
+  existing `run_posterior` / `bayes_factor` contracts as the intended
+  end-to-end seam. No production code changed in this sub-phase.
+- **Commit anchor**: see `git log --grep='FB-META-11.5'`.
+- **Test delta**: 3,403 passing + 70 skipped → 3,403 passing + 71
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META11_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META11_2026-04-20.md)
+  §FB-11.5.
+- **Gallery**: no-op (test harness only).
+- **Carry-forward**: FB-11.6 summary seam.
+- **Notes**: the audit ties the harness shape back to
+  Cook-Gelman-Rubin's simulation-based validation logic and records the
+  inherited seed-roundtrip requirement explicitly.

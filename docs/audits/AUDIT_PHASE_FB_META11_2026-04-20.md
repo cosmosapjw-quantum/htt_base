@@ -327,8 +327,60 @@ phase-close gate.
 
 ## §FB-11.5
 
-Pending pre-flight scaffold for the synthetic-injection coverage
-harness.
+### §FB-11.5 — synthetic-injection coverage harness skeleton
+**Determinism contract**: the future synthetic-injection harness must
+reuse the same `run_posterior(..., seed=42)` same-machine byte-
+reproducibility promise as FB-11.2, so repeated mock injections at fixed
+seed generate byte-identical posterior artifacts before any coverage
+aggregation is computed.
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB11_INFERENCE_DRIVER_SDD.md §6`
+specifies FB-11.5 as a skip-marked synthetic-injection end-to-end test;
+verified the prompt explicitly asks for a `pytest.skip` harness with a
+`68 %` coverage assertion; verified the new test file lives under the
+inference package rather than creating a fake runtime module; verified
+the harness references both `run_posterior` and `bayes_factor` as the
+future integration seam; verified no production code changes were needed
+for this sub-phase.
+**Channel B**: 2 source checks / 2 verified / 0 broken. Evidence:
+Cook, Gelman, and Rubin 2006 are verified from the Columbia-hosted PDF
+as the canonical software-validation paper and explicitly state that if
+parameters are drawn from the prior, data are drawn from the sampling
+distribution, and Bayesian inference is performed correctly, then
+posterior intervals have correct average coverage (for example, 50% and
+95% intervals contain the truth with probabilities `0.5` and `0.95`).
+That directly supports the local FB-11.5 design of a simulation-based
+coverage harness rather than an ad hoc recovery test.
+**Channel C** (prose, 6-10 lines): The right FB-11.5 skeleton is only a
+test. There is no reason to invent a runtime API for synthetic
+injections when the SDD already defines this work as validation around
+the existing posterior and evidence surfaces. The Cook-Gelman-Rubin
+paper is especially helpful here because it gives a principled reason
+for the harness shape: posterior calibration is checked by simulating
+from the model and then re-fitting the same model. That is exactly what
+the future FB-11.5 actual-work phase will do. The skipped test pins the
+nominal `68 % ± 5 %` target now so the contract is visible in CI without
+pretending the expensive mock loop already exists.
+**Alternatives**:
+| # | Coverage skeleton shape | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Skip-marked pytest harness that references `run_posterior` and `bayes_factor` | Matches the prompt directly and keeps the future validation on an existing CI seam. | No reusable helper code yet. | ✅ |
+| 2 | New runtime `synthetic.py` module | Could centralize mock-generation helpers later. | Unnecessary API surface during the skeleton cycle. | — |
+| 3 | Audit-only prose with no test file | Lowest code churn. | Fails to pin the contract into CI and weakens the validation seam. | — |
+**Core principles**: validation belongs in tests; coverage target is
+explicit; determinism requirement is inherited from the driver; no fake
+mock-generation runtime is added during the skeleton cycle.
+**Skeleton path**:
+`htt/bass/inference/test_fb115_synthetic_injection_skeleton.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/inference/test_fb115_synthetic_injection_skeleton.py -q`
+**Guard rails** (yes/no): skip-marked harness present? yes; `68 %`
+target explicit? yes; seed-roundtrip expectation recorded? yes; no new
+runtime surface invented? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 70 skipped` → `3403 passed + 71 skipped` pending the
+phase-close gate.
 
 ## §FB-11.6
 
