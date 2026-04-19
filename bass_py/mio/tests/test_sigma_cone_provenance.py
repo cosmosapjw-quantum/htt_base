@@ -238,3 +238,50 @@ def test_standard_probes_sigma_code_matches_a36a_yaml():
         assert abs(abs(c - lit) - abs(delta)) < 1e-9, (
             f"{probe_id}: |{c} − {lit}| = {abs(c - lit)} ≠ |{delta}|"
         )
+
+
+def test_a36a_yaml_range_brackets_midpoint():
+    """W17D3 (W16 F3) — `sigma_lit_range_deg` brackets `sigma_lit_deg`.
+
+    Per the YAML header comment and A36a.3 scalar-reduction convention,
+    three probes (Radio / CF4pp / BiPoSH) carry the optional
+    `sigma_lit_range_deg: [min, max]` field preserving the full
+    literature range while the scalar `sigma_lit_deg` is the midpoint
+    used by the parity test. This hedge asserts, for every row that
+    carries the range pair:
+
+        range[0] <= sigma_lit_deg <= range[1]
+
+    All three current range-carrying rows satisfy this by construction
+    (Radio 10-14 midpoint 12; CF4pp 10-12 midpoint 11; BiPoSH 15-25
+    midpoint 20). The assertion is a future-edit hedge — a new
+    ranged-σ addition to a currently-scalar probe, or a range/midpoint
+    typo, that drifts `sigma_lit_deg` outside its own declared range
+    would fail here.
+    """
+    data = yaml.safe_load(A36A_YAML_PATH.read_text(encoding="utf-8"))
+    rows = data["probes"]
+
+    ranged_rows = [r for r in rows if "sigma_lit_range_deg" in r]
+    assert len(ranged_rows) >= 1, (
+        "expected at least one row carrying sigma_lit_range_deg; "
+        "if all range-carrying probes were retired to scalar-only "
+        "literature, remove this test consciously."
+    )
+
+    for row in ranged_rows:
+        probe_id = row["probe_id"]
+        rng = row["sigma_lit_range_deg"]
+        assert isinstance(rng, list) and len(rng) == 2, (
+            f"{probe_id}: sigma_lit_range_deg must be a [min, max] pair; "
+            f"got {rng!r}"
+        )
+        lo, hi = rng
+        assert lo <= hi, (
+            f"{probe_id}: sigma_lit_range_deg min={lo} > max={hi}"
+        )
+        lit = row["sigma_lit_deg"]
+        assert lo <= lit <= hi, (
+            f"{probe_id}: sigma_lit_deg={lit} outside declared "
+            f"range [{lo}, {hi}] — A36a.3 midpoint convention violated"
+        )
