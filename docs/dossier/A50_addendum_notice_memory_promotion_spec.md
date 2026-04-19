@@ -85,11 +85,24 @@ hold at audit-commit time for phase W<N>:
    file landed inside an audit commit's diff).
 4. At least **one** post-audit addendum was actually triggered
    across the three-window span (the notice's hedge fired at
-   least once). As of 2026-04-19, W19 F4 + W20 F4 already count;
-   W21 did not trigger an addendum (see W21 audit §6 check #3 —
-   audit-commit-time re-snapshot found zero cross-lane arrivals
-   during W21 window). So condition (4) is already satisfied;
-   conditions (1)-(3) are the gate going forward.
+   least once). **Sliding-window clarification (W22 R1 / W23D1)**:
+   the "three-window span" is strictly the currently-evaluated
+   W<N-2> / W<N-1> / W<N> audit windows — addendum precedents
+   from prior spans (e.g. W19 F4 / W20 F4 when evaluating a W24+
+   promotion) do **not** carry forward past their window's
+   eviction from the three-audit sliding window. Re-evaluate
+   condition (4) fresh on each promotion-gate firing against the
+   three specific audits being counted by condition (1). As of
+   2026-04-19, W19 F4 + W20 F4 satisfied condition (4) for the
+   W20 / W21 / W22 span (W20 was the terminal audit of that
+   window containing W20 F4); for the W21 / W22 / W23 span
+   evaluated at W23D1, condition (4) requires an addendum inside
+   W21, W22, or W23 — W21 §6 check #3 and W22 §6 check #3 both
+   returned zero cross-lane arrivals, so the condition is
+   currently **unsatisfied** and waits on a W23 trigger or later
+   re-evaluation. The plan's "As of 2026-04-19" phrasing above is
+   a point-in-time snapshot of the W20 / W21 / W22 evaluation,
+   not a permanent free pass.
 
 If (1) fails (notice dropped or drifted on any of the three
 audits), §A49.9 trigger #3 fires instead ("notice dropped from
