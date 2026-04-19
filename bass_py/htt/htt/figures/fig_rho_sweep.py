@@ -5,7 +5,7 @@ fig_rho_sweep.py — ρ (CatWISE-Radio correlation) robustness sweep
 4-panel figure showing how all key quantities degrade with ρ.
 Data from IS-09 robustness_sweeps_integrated.json, sweep A.
 """
-import sys, json
+import sys, os, json
 import numpy as np
 
 sys.path.insert(0, '/mnt/project')
@@ -18,8 +18,12 @@ from plot_style import apply_style, save_fig, COLS
 
 apply_style()
 
-# ─── Load data ────────────────────────────────────────────────
-with open('/mnt/user-data/outputs/robustness_sweeps_integrated.json') as f:
+# HTT_PIPELINE_OUTDIR overrides the legacy '/mnt/user-data/outputs'
+# default so smoke tests can inject a synthetic fixture dir
+# (bass_py/htt/tests/fixtures/pipeline_outputs/) without failing on
+# the absolute author-environment path.  Introduced by HTT-STAB W9D4.
+_OUTDIR = os.environ.get('HTT_PIPELINE_OUTDIR', '/mnt/user-data/outputs')
+with open(os.path.join(_OUTDIR, 'robustness_sweeps_integrated.json')) as f:
     data = json.load(f)
 
 pts = data['sweep_A_rho']

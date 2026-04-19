@@ -12,7 +12,8 @@ Ontology enforcement:
 
 These two must NEVER be conflated (IS-22 hostile review criterion #9).
 """
-import sys
+import sys, os
+from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, '/mnt/project')
@@ -29,9 +30,16 @@ apply_style()
 
 c_kms = 299792.458
 
+# HTT_PIPELINE_OUTDIR overrides the legacy '/mnt/user-data/outputs'
+# default so smoke tests can inject a synthetic fixture
+# (bass_py/htt/tests/fixtures/pipeline_outputs/IS06_3D_posterior.npz)
+# without failing on the absolute author-environment path. Introduced
+# by HTT-STAB W9D4.
+_OUTDIR = os.environ.get('HTT_PIPELINE_OUTDIR', '/mnt/user-data/outputs')
+
 # ─── Load posteriors ──────────────────────────────────────────
 # IS-06 catalog 3D posterior (best seed)
-cat_data = np.load('/mnt/user-data/outputs/IS06_3D_posterior.npz')
+cat_data = np.load(os.path.join(_OUTDIR, 'IS06_3D_posterior.npz'))
 beta_cat = cat_data['beta']
 
 # SS FLRW_tilt posterior
@@ -134,7 +142,7 @@ ax_C.text(1.38, max(kde_b_ss(bg)) * 0.85,
           r'$\beta_{\rm CF4}$', fontsize=8, color=COLS['red'])
 
 # Hellinger annotation
-from catalog_velocity_likelihood import hellinger_distance
+from catalog_likelihood import hellinger_distance
 H = hellinger_distance(beta_ss, beta_cat)
 ax_C.text(0.97, 0.75, f'$H = {H:.2f}$',
           transform=ax_C.transAxes, fontsize=8.5, ha='right',

@@ -31,7 +31,12 @@ from ssot import C
 
 apply_style()
 
-OUT = '/mnt/user-data/outputs'
+# HTT_PIPELINE_OUTDIR overrides the legacy '/mnt/user-data/outputs'
+# default for pipeline-output reads. fig_departure_summary itself
+# runs dynesty at import time (via EvidenceComparison.run_single)
+# so the smoke-test skip survives until `dynesty` is installed —
+# this routing is kept for parity with siblings (HTT-STAB W9D4).
+OUT = os.environ.get('HTT_PIPELINE_OUTDIR', '/mnt/user-data/outputs')
 
 # ═══════════════════════════════════════════════════════════════
 #  STEP 1: Collect posterior samples for top 5 models
