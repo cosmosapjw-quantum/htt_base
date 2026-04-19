@@ -41,6 +41,7 @@ from common.sky_geometry import (
     unitvec_to_lb,
 )
 from mio.interface.mio_certificate import build_mio_certificate
+from mio.interface.sigma_cone_provenance import placeholder_caveats_for
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -255,6 +256,9 @@ def to_mio_certificate(
         "coherence_chi2_per_dof": float(per_dof),
     }
     caveats = list(domain_caveats) if domain_caveats is not None else []
+    for placeholder in placeholder_caveats_for(p.name for p in probes):
+        if placeholder not in caveats:
+            caveats.append(placeholder)
 
     return build_mio_certificate(
         report_type="directional_coherence",

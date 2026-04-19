@@ -81,9 +81,11 @@ literature-consistent-but-not-verbatim, or plan-placeholder.
   5–7° range.
 - **C**: `sigma_cone_deg=6.0`.
 - **Δ**: +0.1° (C essentially matches L).
-- **Status**: **DOI-anchored (Secrest+2021 §3.3).** No placeholder
-  flag warranted; `*_sigma_cone_plan_placeholder` for CatWISE may be
-  retired on the next paired update.
+- **Status**: **DOI-anchored (Secrest+2021 §3.3).** A36a.5-promoted
+  **2026-W14D5** — `CatWISE` is absent from the placeholder tag set
+  emitted by `mio.coherence.directional.to_mio_certificate` /
+  `mio.coherence.redshift_binned.to_mio_certificate` per
+  `mio.interface.sigma_cone_provenance.PROMOTED_SIGMA_CONE_PROBES`.
 - **References**: Secrest et al. (2021), ApJ Letters 908, L51,
   arXiv:2009.14826, DOI 10.3847/2041-8213/abdd40.
 
@@ -209,14 +211,26 @@ ready-to-promote as of 2026-04-19; `CMB`, `Radio`, `CF4pp` remain
 flagged because the delta from literature is non-trivial even when
 conservative.
 
+**Promotion log**:
+
+- **W14D5** — `CatWISE` promoted. Code-side source of truth:
+  `mio.interface.sigma_cone_provenance.PROMOTED_SIGMA_CONE_PROBES`;
+  parity tests: `bass_py/mio/tests/test_sigma_cone_provenance.py`.
+- **W14D6** — `BiPoSH` promoted (planned; same commit shape).
+
 ## A36a.6 Follow-up (W13 / W14 opportunistic)
 
-- [ ] Edit A36 §A36.4 so its "cite published σ values" sentence links
+- [x] Edit A36 §A36.4 so its "cite published σ values" sentence links
       to this dossier (one-line change; not in W13D3 scope to avoid
-      expanding the commit surface area).
-- [ ] Decide whether `_sigma_cone_plan_placeholder` should refine to
+      expanding the commit surface area). **Landed W14D2** (commit
+      `491ecfd`).
+- [x] Decide whether `_sigma_cone_plan_placeholder` should refine to
       per-probe tags (one tag per probe) so that A36a.5 can retire
-      them one at a time.
+      them one at a time. **Landed W14D5** —
+      `mio.interface.sigma_cone_provenance.placeholder_caveats_for`
+      emits one `{PROBE_ID}_sigma_cone_plan_placeholder` per
+      non-promoted probe; `PROMOTED_SIGMA_CONE_PROBES` is the frozen
+      retirement set.
 - [ ] When MANU-CH12 §12.2 moves off working-tree and lands formally,
       cite A36a.2 by DOI in the manuscript prose (the W6 FM2 /
       W11 F3 close condition).

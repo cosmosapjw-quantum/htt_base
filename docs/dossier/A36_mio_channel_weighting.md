@@ -83,13 +83,16 @@ emitted from MIO.
 ## A36.4 Placeholder σ caveat (v3 §16.2 FM2)
 
 Three of the five HJ-02a probes currently carry plan-suggested σ_cone
-placeholders (Radio / CF4++ / BiPoSH). Because inverse-variance
+placeholders (Radio / CF4++ / CMB). Because inverse-variance
 weighting emphasises low-σ probes, the CMB axis (σ = 0.5°)
 dominates the HJ-02a resultant and HJ-02b low-z bin fitted direction.
-Until MANU-CH12-NEW §12.2 cites published σ values, the
-`domain_caveats` list attached to every `MioCertificate` from these
-modules carries `*_sigma_cone_plan_placeholder` entries so the
-downstream reader is explicitly warned.
+The `domain_caveats` list attached to every `MioCertificate` from these
+modules carries one `{PROBE_ID}_sigma_cone_plan_placeholder` entry per
+non-promoted probe so the downstream reader is explicitly warned.
+The promoted set
+(`mio.interface.sigma_cone_provenance.PROMOTED_SIGMA_CONE_PROBES`)
+started as `{CatWISE}` in W14D5 and extends to `{CatWISE, BiPoSH}`
+after W14D6; `CMB / Radio / CF4pp` remain flagged per §A36a.5.
 
 **Provenance anchor (W13D3 / W14D2)**: the per-PROBE_ID literature
 lookup for σ_cone has been moved to
