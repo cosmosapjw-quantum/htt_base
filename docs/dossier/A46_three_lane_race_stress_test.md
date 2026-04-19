@@ -103,7 +103,10 @@ the failure mode as follows:
    order of arrival is non-deterministic.
 
 Paste-ready shell block (W20D3 / W19 R-carry) — the concrete commands
-each terminal issues:
+each terminal issues. **Paths are pedagogical** — substitute real
+lane-owned paths from the reviewer's session before executing;
+`test_foo.py` / `hierarchy/bar.py` / `baz.png` do not exist in the
+repo (W21D1 / W20 R1).
 
 ```bash
 # Terminal A (ind-tracks lane)
