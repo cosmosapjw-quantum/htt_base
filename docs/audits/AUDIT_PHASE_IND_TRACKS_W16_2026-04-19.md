@@ -436,3 +436,52 @@ All three are deferrable; none block W17 execution.
 All five gate items green. Phase `IND_TRACKS_W16` closes with
 zero new P0/P1/P2 findings; three documented P3 residuals
 (F1/F2/F3) deferred to W17+.
+
+---
+
+## Post-write addendum (2026-04-19, 15 min after W16D7 audit landed)
+
+**Context**: this audit was written and committed (`646784b`)
+*before* observing that a cross-lane bass commit `4c50313`
+(`FB-2.2: Class A II / VI_0 / VIII nabla_tilde + T1/T2 spatial-
+Ricci wire-up + FB14-F1 calibration`) had landed on `main`
+between the last W16 MIO landing (`484ffed`) and the audit
+commit itself. The body of this audit (notably the "**Baseline
+head**" paragraph, the W16 F1 P3 row, and §6 check #1 narrative)
+therefore understates the W16 cross-lane footprint.
+
+**Corrected §6 finding**:
+
+- W16 phase commits (landings + audit): `cd952ee`, `5765e0b`,
+  `484ffed`, `646784b`.
+- Intervening cross-lane commits on `main`: `4c50313`
+  (landed between `484ffed` and `646784b`; six bass-lane files,
+  zero ind-tracks files).
+- `git show --stat 646784b` = `docs/INDEPENDENT_TRACKS_NEXT_SESSION.md`
+  + `docs/audits/AUDIT_PHASE_IND_TRACKS_W16_2026-04-19.md` only —
+  **zero bass-lane contamination despite `4c50313` landing in
+  the audit-commit window**.
+- `git show --stat 4c50313` = six bass-lane files under
+  `bass_py/bass/` — zero ind-tracks contamination.
+
+**This is the first genuine adversarial exercise of the W15D1
+scoped-`git commit -- <paths>` rule since its introduction**
+(prior phases observed either zero cross-lane commits or
+cross-lane commits after the audit had already closed the
+phase). Both lanes held their scope; the rule PASSED its first
+real stress test.
+
+**Revised W16 F1 severity**: downgrades from "process rate-of-
+check concern" to "**RESOLVED by observation**" — the W16
+audit-commit window itself was the stress test. The three W16
+landing commits (`cd952ee`, `5765e0b`, `484ffed`) remain a
+zero-cross-lane window; the `4c50313` → `646784b` interval is
+the one-cross-lane exercise.
+
+**Note on additive-commit protocol**: per memory
+`feedback_git_workflow.md`, this addendum is written as a
+follow-up paragraph to the existing audit (not an amend), and
+the W17 NEXT_SESSION (§2 Week 17 Day 7 + the §3 carry-forward
+W16 F1 row) will be updated in a subsequent commit to reflect
+the corrected finding. Not amending `646784b` per the additive-
+commits-only rule.

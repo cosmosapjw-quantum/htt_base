@@ -513,11 +513,12 @@ Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W17_2026-04-19.md`
 (date may shift). Audit MUST include a §6 recurrence check for
 W12 F1 / W14 F1 cross-lane contamination (verify the W15D1
 scoped-commit rule was followed on every W17 sha via
-`git show --stat`). Note: W16 §6 passed under "zero cross-lane
-commits this phase" — W16 F1 flags this as not-a-stress-test; if
-bass_py lane commits during W17, the W17 audit §6 check will be
-the first adversarial exercise of the W15D1 scoped-pathspec rule
-since its introduction.
+`git show --stat`). Note: the W15D1 scoped-pathspec rule already
+passed its first adversarial stress test during W16D7 itself
+(cross-lane `4c50313` landed between W16D5 and the audit commit
+`646784b`; both sides held scope — see W16 audit post-write
+addendum + §3 W16 F1 row). W17 §6 continues the per-phase check
+as routine hygiene.
 
 ### Week 17 final gate
 
@@ -627,7 +628,7 @@ bottom.
 | **W14 F3** | **RESOLVED W16D3** | Inherited W13 F4 — A36a.3 Δ table still unmechanised. | Same resolution — `5765e0b`. |
 | **W15 F1** | **RESOLVED W16D1** | Over-emission-with-caller-caveats coverage gap on `test_hj02a_caller_caveats_preserved_alongside_placeholder_tags`. | Landed in `cd952ee` — union-equality assertion `set(cert.domain_caveats) == set(caller_caveats) \| expected_tags` appended to the existing test (no +1 count; assertion strengthening). |
 | **W15 F2** | **RESOLVED W16D3** | Inherited W13 F4 / W14 F3 — A36a.3 table unmechanised (W15D5 picked R2 instead). | Same resolution as W13 F4 — `5765e0b`. |
-| **W16 F1** | **P3** (process / rate-of-check) | W16 §6 recurrence check passed but no cross-lane commit landed during W16 — W15D1 scoped-pathspec rule not adversarially stress-tested this phase. | Continue the §6 check every phase; flag the first phase where both lanes commit into the same window (first genuine adversarial exercise of the rule since its introduction). |
+| **W16 F1** | **RESOLVED W16D7 (post-audit addendum)** | Initial W16 §6 check observed zero cross-lane commits during W16 landings, flagged as "not adversarially stress-tested". | Revised post-audit: cross-lane `4c50313` (`FB-2.2: Class A II/VI_0/VIII nabla_tilde`) landed between W16D5 `484ffed` and the audit commit `646784b`. Symmetric `git show --stat` verification: audit commit is 2 ind-tracks files only, zero bass contamination; `4c50313` is 6 bass files only, zero ind-tracks contamination. **W15D1 scoped-pathspec rule PASSED its first real adversarial stress test.** Addendum at bottom of `AUDIT_PHASE_IND_TRACKS_W16_2026-04-19.md`. |
 | **W16 F2** | **P3** (docs → runtime) | A44.3 pins `MioCertificate.git_commit` at-instantiation capture time; no runtime assertion guards a future refactor that would move resolution to emission- or read-time. | **Slated for W17D1** — add a microtest in `bass_py/workspace/contracts/tests/` that monkeypatches `HEAD` between `__init__` and a post-construction attribute read, asserting no re-resolution. |
 | **W16 F3** | **P3** (convention hedge) | A36a YAML `sigma_lit_range_deg: [min, max]` optional field is not self-consistency-checked; a future ranged-σ addition to a currently-scalar probe could drift `sigma_lit_deg` outside its own declared range. | **Slated for W17D3** — add bracketing assertion `if "sigma_lit_range_deg" in row: range[0] <= sigma_lit_deg <= range[1]` to the existing W16D3 parity test (or split into a sibling test). |
 
