@@ -237,10 +237,46 @@ phase-close gate.
 
 ## §FB-9.5
 
-| Row | Status | Note |
-|---|---|---|
-| Scope | pending | `TiltedSpeciesBackground(base=MassiveNeutrinoBackground(...))` skip-marked compose harness only. |
-| LB-1 anchor clause | pinned | The FB-3 wrapper remains unchanged; the zero-mass path keeps the existing massless base object and existing β=0 byte anchor. |
+### §FB-9.5 — tilted-compose harness skeleton
+**Channel A**: 4 checked / 4 verified / 0 broken. Details: verified
+`TiltedSpeciesBackground` already accepts any `SpeciesBackground`
+subclass; verified `MassiveNeutrinoBackground` is constructible enough
+for type-level composition; verified the new harness test is
+`@pytest.mark.skip` exactly as requested; verified `tilted.py` remains
+unmodified in this sub-phase.
+**Channel B**: 2 source checks / 2 verified / 0 divergent. Evidence:
+the local FB-9 SDD explicitly states FB-9.5 is a compose-only harness
+with no modification to `bass/species/tilted.py`, and the FB-3.1
+wrapper docstring already promises support for future
+`SpeciesBackground` subclasses without private coupling. That is enough
+for a skip-marked type-check harness in this session.
+**Channel C** (prose, 6-10 lines): There is no reason to touch the
+tilt-wrapper implementation yet. The wrapper was already designed to sit
+on top of any `SpeciesBackground`, so the only honest FB-9.5 move is to
+reserve a test file that proves the intended composition shape and then
+skip it until the base class exposes real thermodynamics. That keeps the
+FB-3 byte anchor intact and avoids inventing any mass-aware tilt logic
+before the mass-aware background exists. The requested harness does
+exactly that: construct base, wrap base, stop.
+**Alternatives**:
+| # | FB-9.5 approach | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Skip-marked compose harness only | Matches the prompt exactly and keeps the FB-3 wrapper untouched. | Provides type-level evidence only. | ✅ |
+| 2 | Modify `TiltedSpeciesBackground` pre-emptively | Could add mass-specific hooks now. | Unnecessary and high-risk for the existing FB-3 anchor. | — |
+| 3 | Omit the test until FB-9 is fully implemented | Less code today. | Loses the explicit contract pin the phase asked for. | — |
+**Core principles**: no change to `tilted.py`; type-level composition
+reserved explicitly; skip rather than fake implementation.
+**Skeleton path**:
+`htt/bass/species/test_tilted_massive_neutrino_compose.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_tilted_massive_neutrino_compose.py -q`
+**LB-1 anchor clause**: the FB-3 wrapper remains unchanged; the
+zero-mass path keeps the existing massless base object and existing β=0
+byte anchor.
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 64 skipped` → `3403 passed + 65 skipped` pending the
+phase-close gate.
 
 ## §FB-9.6
 

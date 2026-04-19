@@ -292,3 +292,21 @@ cross-reference.
 - **Notes**: the wrapper now exposes the future integration seam
   explicitly, but the default massless runtime still takes the exact
   pre-FB-9 forwarding path.
+
+### FB-META-9.5 — tilted-compose harness skeleton
+
+- **Scope**: Added the requested skip-marked compose harness
+  [test_tilted_massive_neutrino_compose.py](../../../htt/bass/species/test_tilted_massive_neutrino_compose.py)
+  showing that `TiltedSpeciesBackground(base=MassiveNeutrinoBackground(...))`
+  is the intended future shape. No production code changed in this
+  sub-phase.
+- **Commit anchor**: see `git log --grep='FB-META-9.5'`.
+- **Test delta**: 3,403 passing + 64 skipped → 3,403 passing + 65
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META9_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META9_2026-04-20.md)
+  §FB-9.5.
+- **Gallery**: no-op (compose harness only).
+- **Carry-forward**: FB-9.6 docs + gallery placeholders.
+- **Notes**: `bass/species/tilted.py` is intentionally untouched; this
+  sub-phase only reserves the future composition test surface.
