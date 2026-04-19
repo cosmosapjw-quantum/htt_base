@@ -28,7 +28,7 @@ independently. Concretely:
    the admissibility / filling-fraction / three-bound diagnostics.
 
 These three domains may **cross-check** each other (TSC-06 ↔ HTT
-filling fraction; HJ-04 evidence anatomy ↔ HTT ln B; HJ-02a directional
+filling fraction; HJ-03 evidence anatomy ↔ HTT ln B; HJ-02a directional
 coherence ↔ HTT dipole likelihood) but they must never be summed,
 averaged, or merged into a single scalar quality score.
 
@@ -114,7 +114,7 @@ merging. Summarised here:
 | Channel | Owner | Report type | Status |
 |---|---|---|---|
 | TSC-06 F_Bayes | `tsc.integration.htt_bridge` | `FFCrossCheckReport` (is_cross_check=True) | landed |
-| HJ-04 evidence anatomy | `mio.decomposition.evidence_anatomy` | planned `MioCertificate(report_type="evidence_anatomy")` | deferred (Week 10+) |
+| HJ-03 evidence anatomy | `mio.decomposition.evidence_anatomy` | planned `MioCertificate(report_type="evidence_anatomy")` | deferred (Week 10+) |
 | HJ-02a dipole alignment | `mio.coherence.directional` | `MioCertificate(report_type="directional_coherence")` | landed — advisory only (no numerical counterpart) |
 | TSC-03 ↔ HTT bounds | `tsc.admissibility.three_bound_hierarchy` | `compare_against_htt_bounds(...)` | landed (sibling channel, rtol 1e-10) |
 | TSC-05 ↔ bass MM SSOT | `tsc.charts.michaelis_menten_export` | `assert_mirror_matches_bass_ssot()` | landed (sibling channel, rtol 0) |
@@ -162,7 +162,7 @@ level, relaxing G19 would also cause:
 ## A40.7 How to extend this dossier
 
 When a new MIO diagnostic lands that exposes a numerical
-cross-check (e.g. HJ-04 evidence anatomy), §A34.7 specifies the
+cross-check (e.g. HJ-03 evidence anatomy), §A34.7 specifies the
 five requirements the new channel must meet (independent code
 paths, frozen `is_cross_check` tag, loud-fail guard, no merge field,
 test anchor). A40.4 must be updated to add the new row once the

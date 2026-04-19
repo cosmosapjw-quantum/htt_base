@@ -21,7 +21,7 @@ The MIO pillar publishes *multi-channel* diagnostics:
 - HJ-01 — per-multipole Σ²_MIO(ℓ) across the ℓ window (channel = ℓ);
 - HJ-02a — per-probe directions (channel = probe identity);
 - HJ-02b — per-z-bin resultants (channel = redshift bin);
-- HJ-04 (planned) — per-channel Δln B decomposition (channel = CMB channel b/c/d/e/f/g/h).
+- HJ-03 (planned) — per-channel Δln B decomposition (channel = CMB channel b/c/d/e/f/g/h).
 
 This dossier fixes the **policy** for when those per-channel numbers
 may be weighted and combined, and when they must be kept disaggregated.
@@ -73,9 +73,9 @@ Across bins no weighting is applied: the total-drift statistic is a
 pure sum of adjacent-bin angular separations. Empty bins contribute
 zero and are flagged with `n_probes=0` + NaN direction.
 
-### HJ-04 Δln B (planned)
+### HJ-03 Δln B (planned)
 
-Once HJ-04 lands, per-channel Δln B numbers are passed through
+Once HJ-03 lands, per-channel Δln B numbers are passed through
 **without re-weighting**. The consumer may choose to plot a cumulative
 stack, but A36.2 row 2 means no single weighted fused scalar is
 emitted from MIO.

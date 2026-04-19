@@ -30,7 +30,7 @@ The protocol is deliberately narrow: the only legitimate cross-check
 currently wired through the repo is TSC-06
 (`tsc.integration.htt_bridge`), which compares the HTT
 filling-fraction posterior mean against the TSC filling-fraction
-diagnostic. Additional cross-checks (e.g. HJ-04 evidence-anatomy
+diagnostic. Additional cross-checks (e.g. HJ-03 evidence-anatomy
 ↔ HTT ln B decomposition) will be added when their parent MIO
 modules land, and must follow the exact protocol documented here.
 
@@ -56,7 +56,7 @@ estimator it is a G19 violation.
 | Channel | Owner | Counterparty | Report type | Status (2026-04-19) |
 |---|---|---|---|---|
 | TSC-06 filling fraction | `tsc.integration.htt_bridge.ff_htt_mc_cross_check` | `htt.core.analysis_extended.FillingFraction.mc_posterior` | `FFCrossCheckReport` | **landed (Week 7 Day 5)** |
-| HJ-04 evidence anatomy | `mio.decomposition.evidence_anatomy` (planned) | `htt.core.analysis_extended.EvidenceComparison.run_all` | `MioCertificate(report_type="evidence_anatomy")` | deferred — dependencies in Week 10+ |
+| HJ-03 evidence anatomy | `mio.decomposition.evidence_anatomy` (planned) | `htt.core.analysis_extended.EvidenceComparison.run_all` | `MioCertificate(report_type="evidence_anatomy")` | deferred — dependencies in Week 10+ |
 | PR13AM ↔ COMMON-A spherical-mean regression | `htt.PR13AH_observables_reintegration` | `common.sky_geometry.spherical_mean` | `ChannelSummary` diff | landed (W4 R1 anchor) |
 | MIO HJ-02a ↔ HTT dipole consistency | `mio.coherence.directional.to_mio_certificate` | (HTT dipole likelihood, advisory only) | `MioCertificate(report_type="directional_coherence")` | landed (Week 6), advisory not a numerical cross-check |
 
@@ -173,7 +173,7 @@ presence of future refactors.
 
 ## A34.7 Extending the protocol (for future MIO channels)
 
-When HJ-04 evidence anatomy lands (parent plan v3 §4.5.3.4, Week 10+),
+When HJ-03 evidence anatomy lands (parent plan v3 §4.5.3.4, Week 10+),
 the MIO module must:
 
 1. Instantiate a dedicated report type that inherits the five

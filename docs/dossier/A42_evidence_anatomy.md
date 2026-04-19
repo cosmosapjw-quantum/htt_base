@@ -68,8 +68,9 @@ it.
 ## A42.3 Computation (planned)
 
 The per-channel stream is passed through *unweighted* (A36 §A36.3
-row "HJ-04 Δln B (planned)" — note: A36 still labels this HJ-04 and
-not HJ-03; the naming drift is catalogued in A42.6). Derived fields:
+row "HJ-03 Δln B (planned)" — the tabular label was renamed from
+HJ-04 to HJ-03 across A34 / A36 / A40 in W14D3; see §A42.6).
+Derived fields:
 
 1. **Anatomy ranking**: argsort(|delta_lnB_per_channel|) giving the
    top-2 and bottom-2 dominant channels; reported in
@@ -123,28 +124,27 @@ schema-hash rotation).
 **Artefact filename**: `mio_evidence_anatomy_v1.json`
 (REG-02 `mio_` prefix per the HJ-01 / HJ-02a / HJ-02b precedent).
 
-## A42.6 Naming-drift carry-forward
+## A42.6 Naming-drift carry-forward (RESOLVED W14D3)
 
 The governing plan (`INDEPENDENT_TRACKS_NEXT_SESSION.md` §2
-Week 13 Days 5-6) binds **HJ-03 ↔ evidence_anatomy**. However,
-older dossier rows label the same diagnostic as **HJ-04**:
+Week 13 Days 5-6) binds **HJ-03 ↔ evidence_anatomy** and
+**HJ-04 ↔ flrw_tension**. This binding is now consistent across
+the dossier tree:
 
-- [A34 §A34.3](A34_g19_cross_check_protocol.md) — "HJ-04 evidence
-  anatomy" row in the channel catalogue.
-- [A36 §A36.3 "HJ-04 Δln B (planned)"](A36_mio_channel_weighting.md)
-  — weighting specification.
-- [A40](A40_g19_architectural_stance.md) — "HJ-04 evidence anatomy"
-  in the module ownership table.
+- [A34 §A34.3](A34_g19_cross_check_protocol.md) — channel catalogue
+  now reads "HJ-03 evidence anatomy".
+- [A36 §A36.1 / §A36.3](A36_mio_channel_weighting.md) — bullet and
+  per-statistic heading now read "HJ-03 Δln B (planned)".
+- [A40 §A40.1 / §A40.4 / §A40.7](A40_g19_architectural_stance.md) —
+  prose and ownership-table row now read "HJ-03 evidence anatomy".
 
-A41 and A32 (the schema-authoritative files) consistently use the
-HJ-03 ↔ evidence_anatomy / HJ-04 ↔ flrw_tension binding. **A42
-adopts the A41/A32 binding** since those files gate the actual code
-contract. The A34 / A36 / A40 labels are purely tabular and do not
-drive any test or code behaviour. A cross-lane rename opportunity is
-logged as **W13 FM1** in the W13 phase audit (see §6 of
-`docs/audits/AUDIT_PHASE_IND_TRACKS_W13_2026-04-19.md`); resolution
-is a one-shot `sed` pass deferred until HJ-03 actually lands (the
-rename is more useful when the module name itself is in-tree).
+**Closure commit**: W14D3 (W13 F1 sweep) — three dossier files
+renamed in a single commit scoped exactly to the three paths above;
+no code change. The commit restores the invariant that A32 / A41
+(schema-authoritative) and A34 / A36 / A40 (tabular) describe the
+same diagnostic under the same label. Gate at commit time: ripgrep
+for the pre-rename phrase ("HJ" then "-04 evidence") across
+`docs/dossier/` returns zero matches.
 
 ## A42.7 G19 posture
 
