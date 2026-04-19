@@ -139,6 +139,21 @@ def test_hash_config_matches_a45_2_pseudocode_shape():
     parameter list (`("parts",)`) and the kind (`VAR_POSITIONAL`) so
     the HJ-03 author paste-copying §A45.6 is flagged at anchor time
     if §A45.2 grows a new kwarg that the pseudocode does not forward.
+
+    **Anchor scope (W19 F3 / W20D1).** The frozen-list assertion
+    intentionally trips on three refactor kinds: (i) the A43
+    schema-hash digest upgrade (§A43.3 trigger; e.g. `*,
+    digest_length=16`) — REQUIRES a paired §A45.2 edit in the same
+    PR; (ii) a cache-replay strict-mode flag (e.g. `*, strict=True`)
+    added independently of A43 — MAY require an §A45.2 edit if the
+    pseudocode forwards the flag, otherwise is a pure signature
+    bump; (iii) any non-`*parts` signature shape change (reorder,
+    rename, or promotion to positional-or-keyword) — caller's
+    judgement on whether §A45.2's pseudocode needs re-derivation
+    per §A47.6's single-PR rule. A hit on kind (ii) or (iii) does
+    not automatically mandate a dossier edit; the assertion message
+    names §A45.2 because that is the most common fix site, not the
+    only one.
     """
     import inspect
     import string
