@@ -510,3 +510,23 @@ fresh cumulative count.
 - **Notes**: scope stays in a separate factory on purpose so the
   already-audited FB-2 axis-aligned dispatch cannot be widened
   implicitly.
+
+### FB-META-5.3 — regular adiabatic seed skeleton
+
+- **Scope**: Recorded FB-5.3 three-channel verification, validated
+  Ma-Bertschinger as the super-horizon adiabatic-seed anchor, rejected
+  the prompt-supplied Lewis-Challinor `astro-ph/9911177` locator as a
+  closed-FRW line-of-sight paper, and planted the local-only
+  `make_camb_regular_adiabatic_seed(...)` skeleton plus one skipped
+  contract test without staging any `htt/` changes.
+- **Commit anchor**: see `git log --grep='FB-META-5.3'`.
+- **Test delta**: `3,403 passed + 6 skipped` →
+  `3,403 passed + 7 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META5_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META5_2026-04-20.md) §FB-5.3.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: exact CAMB seed literature pin remains
+  citation-needed; historical Lowell solver-reference `§13.2` path is
+  still absent on disk.
+- **Notes**: the chosen surface stays separate from the shipped
+  `make_initial_state` zero-IC contract to avoid implying that the
+  analytic k-dependent seed has already been sealed.

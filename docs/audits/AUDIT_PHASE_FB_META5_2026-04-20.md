@@ -59,6 +59,21 @@
 
 ## §FB-5.3
 
+### §FB-5.3 — CAMB regular adiabatic seed skeleton
+**Channel A**: 5 checked / 4 verified / 1 broken. Details: verified `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-5` names FB-5.3 as the CAMB regular adiabatic seed rotation; verified `htt/bass/hierarchy/ic.py` keeps the current perturbation seed zero-by-default and explicitly says the general regular-adiabatic seeder belongs at FB-5.3; verified the current `make_initial_state` surface only exposes narrow axisymmetric `Π_2` / `E_2` seeding and therefore should not be widened by stealth; verified the existing perturbation package has no seed-constructor surface yet. Broken: the prompt-supplied Lowell solver reference `§13.2` path is absent on disk.
+**Channel B**: 2 arXiv checks / 1 verified / 1 broken. Evidence: `arXiv:astro-ph/9506072` explicitly says `"Isentropic initial conditions on super-horizon scales are derived."` That is the valid seed anchor. The prompt-supplied Lewis-Challinor `arXiv:astro-ph/9911177` resolves to a closed-FRW line-of-sight paper, not a regular-adiabatic initial-condition derivation, so it is rejected for FB-5.3 and demoted to `# TODO`.
+**Channel C** (prose, 6-10 lines): The safe skeleton is a separate seed factory rather than a new mode flag on `make_initial_state`. The existing `ic.py` contract is intentionally small and zero-by-default, with only two narrow axisymmetric escape hatches for already-audited shear-driven tests. Folding CAMB-style seeding into that surface now would suggest the analytic formulas are already sealed and that the current caller graph is ready for k-dependent ICs, neither of which is true. A distinct `FB-5.3` constructor can take the mode scale, start time, and truncation explicitly and later decide how to compose with `zero_IC` without rewriting LB-5 semantics retroactively. The known-limit pin is the current baseline itself: until the perturbation seed is derived, the production default remains the zero seed and this placeholder must raise rather than guess formulas.
+**Alternatives**:
+| # | signature | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `make_camb_regular_adiabatic_seed(*, k_comoving, eta_initial, a_initial, L_max) -> np.ndarray` | Keeps the new k-dependent IC logic off the shipped zero-IC surface; explicit mode/time metadata; smallest blast radius. | Future callers must wire the returned state into the existing pack/unpack path explicitly. | ✅ |
+| 2 | `make_initial_state(..., seed_mode=\"camb_regular_adiabatic\") -> np.ndarray` | One IC entry point for both zero and regular-adiabatic seeds. | Widens an already-shipped LB-5 contract before the formulas and k-dependent semantics are fully audited. | — |
+**Core principles**: no silent default change away from zero-IC; explicit k-dependent perturbation metadata; deterministic failure until the full seed derivation is sealed.
+**Skeleton path**: `htt/bass/perturbation/regular_adiabatic_ic.py::make_camb_regular_adiabatic_seed`
+**Test path**: `htt/bass/perturbation/test_fb53_regular_adiabatic_ic_skeleton.py::test_fb53_regular_adiabatic_seed_skeleton_contract`
+**Guard rails** (yes/no): citations verified? yes with TODO demotion; imports exist? yes; ≥ 2 alternatives? yes; broken prompt anchors recorded? yes
+**Regression after plant**: 3,403 passed + 7 skipped (three local-only skipped contract tests over the 2026-04-20 baseline).
+
 ## §FB-5.4
 
 ## §FB-5.5
