@@ -87,6 +87,18 @@ enters the deferred list.
   the HTT posterior bundle). The promotion PR is a single-file edit
   to `hj01_shear.py` + its tests; the caveat tag and
   `reduction_status` transitions land in the same commit.
+  **Bilateral contract (W20 F3 / W22D1)**: the `v_gate_sha` /
+  `atlas_sha` provenance fields require a bass_py producer-side
+  guarantee — the bass_py W10-02 K_ℓ atlas emitter must commit the
+  field in its V-gate JSON schema before this row's HJ-01 promotion
+  PR can land. The producer-side edit rides the HJ-01 PR as a
+  cross-lane atomic landing (bass_py co-commit + ind-tracks
+  consumer edit in the same merge window); until then the
+  `v_gate_sha` / `atlas_sha` strings named above are a forward-
+  looking consumer-side contract only, not observed producer-side
+  artefacts. A bass_py roadmap rename (W20 F2) would drift the
+  "Upstream milestone" tag before this contract fires — audit §8
+  row R-W10-02 catalogues both risks.
 * **HJ-03**: A47 specifies the landing-PR shape (§A47.2 inputs
   include a V-gated K_ℓ atlas and a Phase-F posterior bundle); the
   PR bundles the three-file ind-tracks landing (A46.6) + the
