@@ -38,6 +38,8 @@ from bass.hierarchy.nabla_dispatch import (
     DEFERRED_FB23_TYPES,
     HarmonicMode,
     SUPPORTED_FB21_TYPES,
+    SUPPORTED_FB22_TYPES,
+    SUPPORTED_TYPES,
     make_nabla_tilde,
     scalar_laplacian_eigenvalue,
 )
@@ -315,30 +317,46 @@ class TestTypeIXDiscreteS3:
 # ════════════════════════════════════════════════════════════════════
 
 class TestDeferredTypesFB22:
-    """Class A II / VI_0 / VIII → FB-2.2 NotImplementedError."""
+    """FB-2.2 landed: Class A II / VI_0 / VIII are now supported on
+    their abelian-subalgebra axis-aligned subsets. The pre-FB-2.2
+    ``NotImplementedError('FB-2.2')`` path is extinct; its replacement
+    is the FB-5.2 off-axis guard, exercised by the
+    :class:`TestFB22ClassAOffAxis` suite in
+    ``test_nabla_dispatch_fb22.py``.  These legacy tests now assert
+    the **axis-aligned** happy path to pin the dispatch migration.
+    """
 
-    def test_typeII_deferred_to_FB22(self) -> None:
+    def test_typeII_axis_aligned_supported(self) -> None:
         sc = type_ii_constants()
         mode = HarmonicMode(type_label="II",
                             k_vec=np.array([0.1, 0.0, 0.0]))
-        with pytest.raises(NotImplementedError, match="FB-2.2"):
-            make_nabla_tilde(sc, mode)
-        with pytest.raises(NotImplementedError, match="FB-2.2"):
-            scalar_laplacian_eigenvalue(sc, mode)
+        op = make_nabla_tilde(sc, mode)
+        grad = op(np.array(1.0), kind="gradient")
+        np.testing.assert_allclose(
+            grad, 1j * mode.k_vec, rtol=1e-12, atol=1e-15
+        )
+        lam = scalar_laplacian_eigenvalue(sc, mode)
+        assert lam == pytest.approx(-0.01, rel=1e-12, abs=1e-14)
 
-    def test_typeVI0_deferred_to_FB22(self) -> None:
+    def test_typeVI0_axis_aligned_supported(self) -> None:
         sc = type_vi0_constants()
         mode = HarmonicMode(type_label="VI_0",
                             k_vec=np.array([0.1, 0.0, 0.0]))
-        with pytest.raises(NotImplementedError, match="FB-2.2"):
-            make_nabla_tilde(sc, mode)
+        op = make_nabla_tilde(sc, mode)
+        grad = op(np.array(1.0), kind="gradient")
+        np.testing.assert_allclose(
+            grad, 1j * mode.k_vec, rtol=1e-12, atol=1e-15
+        )
 
-    def test_typeVIII_deferred_to_FB22(self) -> None:
+    def test_typeVIII_axis_aligned_supported(self) -> None:
         sc = type_viii_constants()
         mode = HarmonicMode(type_label="VIII",
                             k_vec=np.array([0.1, 0.0, 0.0]))
-        with pytest.raises(NotImplementedError, match="FB-2.2"):
-            make_nabla_tilde(sc, mode)
+        op = make_nabla_tilde(sc, mode)
+        grad = op(np.array(1.0), kind="gradient")
+        np.testing.assert_allclose(
+            grad, 1j * mode.k_vec, rtol=1e-12, atol=1e-15
+        )
 
 
 class TestDeferredTypesFB23:
@@ -413,20 +431,36 @@ class TestModeStructureLabelContract:
 
 def test_fb21_dispatch_covers_all_11_bianchi_types_plus_flrw() -> None:
     """Every Bianchi type (+ FLRW) appears in exactly one of the three
-    dispatch sets (FB-2.1 supported / FB-2.2 deferred / FB-2.3 deferred).
-    Prevents silent dispatch holes in future refactors.
+    dispatch sets (FB-2.1 supported / FB-2.2 supported / FB-2.3
+    deferred). Prevents silent dispatch holes in future refactors.
+
+    FB-2.2 moved II / VI_0 / VIII from ``DEFERRED_FB22_TYPES`` to
+    ``SUPPORTED_FB22_TYPES``; the former tuple is now the empty
+    tuple and retained only for backward-compat import paths.
     """
-    all_labels = set(SUPPORTED_FB21_TYPES) | set(DEFERRED_FB22_TYPES) \
+    all_labels = (
+        set(SUPPORTED_FB21_TYPES)
+        | set(SUPPORTED_FB22_TYPES)
+        | set(DEFERRED_FB22_TYPES)
         | set(DEFERRED_FB23_TYPES)
+    )
     expected = {
         "FLRW", "I", "II", "III", "IV", "V",
         "VI_0", "VI_h", "VII_0", "VII_h", "VIII", "IX",
     }
     assert all_labels == expected
-    # Partition is disjoint.
-    assert set(SUPPORTED_FB21_TYPES).isdisjoint(set(DEFERRED_FB22_TYPES))
+    # Partition is disjoint — every label in exactly one SUPPORTED
+    # bucket and never shared with DEFERRED_FB23_TYPES.
+    assert set(SUPPORTED_FB21_TYPES).isdisjoint(set(SUPPORTED_FB22_TYPES))
     assert set(SUPPORTED_FB21_TYPES).isdisjoint(set(DEFERRED_FB23_TYPES))
-    assert set(DEFERRED_FB22_TYPES).isdisjoint(set(DEFERRED_FB23_TYPES))
+    assert set(SUPPORTED_FB22_TYPES).isdisjoint(set(DEFERRED_FB23_TYPES))
+    # The SUPPORTED_TYPES union is the FB-2.1 ∪ FB-2.2 aggregate used
+    # by the hierarchy dispatch at runtime.
+    assert set(SUPPORTED_TYPES) == set(SUPPORTED_FB21_TYPES) | set(
+        SUPPORTED_FB22_TYPES
+    )
+    # DEFERRED_FB22_TYPES is drained after FB-2.2 landed.
+    assert len(DEFERRED_FB22_TYPES) == 0
 
 
 # ════════════════════════════════════════════════════════════════════

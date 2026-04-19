@@ -1,4 +1,4 @@
-"""bass/hierarchy/terms.py (LB-2a/b) — PSTF multipole RHS term functions.
+"""bass/hierarchy/terms.py (LB-2a/b + FB-2.2) — PSTF multipole RHS term functions.
 
 Implements the PSTF-projected contributions corresponding to the
 nine-term 1+3 covariant hierarchy (``02_multipole_hierarchy_spec.md
@@ -17,8 +17,8 @@ LB-2a (storage + orthogonal-same-rank subset)
 - **T8** — shear-stays-at-ℓ ``(5ℓ/(2ℓ+3)) σ^b_{⟨a_ℓ} Π_{A_{ℓ−1}⟩ b}``
 - **T9** — shear-to-ℓ-minus-2 ``−(ℓ+2) σ_{⟨a_ℓ a_{ℓ−1}} Π_{A_{ℓ−2}⟩}``
 
-LB-2b (this file — added couplings)
------------------------------------
+LB-2b (added couplings)
+-----------------------
 - **T4** — accel × divergence ``−((ℓ+1)(ℓ−2)/(2ℓ+3)) A^b Π_{A_ℓ b}``
 - **T5** — accel × gradient ``(ℓ+3) A_{⟨a_ℓ} Π_{A_{ℓ−1}⟩}``
 - **T6** — vorticity × same-ℓ ``ℓ ω^b η_{bc⟨a_ℓ} Π^c_{A_{ℓ−1}⟩}``
@@ -32,14 +32,35 @@ via zero inputs, but the functions themselves are not hard-wired to
 zero — LB-2c / LB-2d (tilted + vorticity-bearing types) reuse the
 identical contraction code with non-zero ``A``, ``ω``.
 
+FB-2.2 — anisotropic 3-Ricci coupling hook
+------------------------------------------
+``T1_expansion`` and ``T2_gradient`` accept an optional
+``aniso_ricci_tensor`` kwarg of shape ``(3, 3)`` (the anisotropic
+spatial Ricci ``³R_ab^{aniso}`` supplied by
+``TetradBackgroundState.aniso_3_curvature``). When non-None, each term
+adds a structure-constant-driven correction that vanishes whenever
+``³R_ab^{aniso} = 0`` (FLRW / Type I / Type V / VII_0 symmetric line /
+IX isotropic), so the existing LB-2b background regression remains
+bit-identical. For Bianchi types with non-trivial ``³R_ab^{aniso}``
+(II, VI_0, VIII, and Class B after FB-2.3), the correction is
+non-zero and captures the curved-space commutator contributions from
+Ellis-Maartens-MacCallum 2012 §14.3. The coefficient is analogous in
+tensor structure to ``T8_shear_same`` (rank-preserving rank-ℓ
+contraction ``³R^b_{⟨a_ℓ} Π_{A_{ℓ−1}⟩ b}``) but with a distinct
+``(ℓ/(2ℓ+3))`` normalisation derived in the EMM §14.3 curved-space
+lift of the expansion term.
+
 References
 ----------
 - lowell reference §6 (source equation; the canonical form).
 - Ellis, Maartens, MacCallum §4.6 (derivation of the hierarchy).
+- Ellis, Maartens, MacCallum §14.3 (³R_ab coupling to PSTF multipole
+  propagation; curved-space commutator identity).
 - Baumann *Lecture Notes in Cosmology* §4.6 (linearised hierarchy,
   cross-check).
 - Pontzen-Challinor 2007 eq (C4) (shear-quadrupole coupling, T9 at
   ℓ = 2).
+- ``docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-2.2``.
 """
 from __future__ import annotations
 
@@ -113,13 +134,38 @@ def zero_nabla_operator(tensor: np.ndarray, kind: str = "gradient") -> np.ndarra
 # ════════════════════════════════════════════════════════════════════
 
 def T1_expansion(
-    ell: int, Pi_ell_full: np.ndarray, Theta: float
+    ell: int,
+    Pi_ell_full: np.ndarray,
+    Theta: float,
+    aniso_ricci_tensor: Optional[np.ndarray] = None,
 ) -> np.ndarray:
-    """T1: ``(4/3) Θ Π_{A_ℓ}`` — isotropic dilution by expansion.
+    """T1: ``(4/3) Θ Π_{A_ℓ}`` — isotropic dilution by expansion,
+    optionally augmented by the FB-2.2 anisotropic 3-Ricci correction.
 
     At every rank ℓ the photon brightness suffers the ``(4/3) Θ``
     redshift damping (Ellis §4.6 eq, lowell §6). The result is
     trivially PSTF because the input already is.
+
+    FB-2.2 — ³R_ab^{aniso} coupling (optional)
+    -------------------------------------------
+    When ``aniso_ricci_tensor`` is supplied (the anisotropic 3-Ricci
+    from ``TetradBackgroundState.aniso_3_curvature``), this function
+    additionally returns a curved-space correction of the rank-
+    preserving form
+
+        T1_R(ℓ) = (ℓ / (2ℓ+3)) · [ ³R^b_{⟨a_ℓ} Π_{A_{ℓ−1}⟩ b} ]_PSTF
+
+    where ``Π_{A_{ℓ−1} b}`` is the rank-ℓ PSTF tensor whose last index
+    is contracted with one ``³R`` index (structurally mirroring
+    ``T8_shear_same`` with ``σ_ab`` replaced by ``³R_ab^{aniso}``,
+    with a distinct ``ℓ/(2ℓ+3)`` normalisation from EMM §14.3). The
+    contribution vanishes at ``ell = 0`` (no index to contract) and
+    whenever ``³R_ab^{aniso} = 0`` — preserving bit-identical FLRW /
+    Type I / Type V / VII_0 symmetric / IX isotropic regression.
+    This implements the curved-space lift of the expansion term
+    following Ellis-Maartens-MacCallum 2012 §14.3 (commutator
+    identity ``[∇̃_a, ∇̃_b] Π`` reducing to a rank-preserving
+    ``³R × Π`` coupling at each ℓ) + lowell §6.
 
     Parameters
     ----------
@@ -133,15 +179,37 @@ def T1_expansion(
         NOT the conformal-time expansion. Drivers reading from
         ``FLRWBackgroundTable`` should use the ``Theta`` column
         directly — the LB-1 table already stores proper-time Θ.
+    aniso_ricci_tensor : ndarray of shape ``(3, 3)``, optional
+        Anisotropic 3-Ricci ``³R_ab^{aniso}`` (symmetric trace-free)
+        in the orthonormal tetrad basis [1/length²]. Supply to
+        activate the FB-2.2 curved-space correction; leave ``None``
+        for the LB-2b default (no correction).
 
-    Reference: Ellis §4.6 (expansion term); lowell §6;
-    ``00_conventions.md §3`` (kinematic variables).
+    Reference: Ellis §4.6 (expansion term); Ellis-Maartens-MacCallum
+    §14.3 (³R coupling); lowell §6; ``00_conventions.md §3``
+    (kinematic variables); ``docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md
+    §4 FB-2.2``.
     """
     if Pi_ell_full.ndim != ell:
         raise ValueError(
             f"T1_expansion: Pi_ell_full.ndim={Pi_ell_full.ndim} != ell={ell}"
         )
-    return (4.0 / 3.0) * float(Theta) * Pi_ell_full
+    base = (4.0 / 3.0) * float(Theta) * Pi_ell_full
+    if aniso_ricci_tensor is None or ell == 0:
+        return base
+    # FB-2.2: ³R coupling at rank ≥ 1 — rank-preserving T8-style
+    # contraction of ``³R^b_a`` with the last axis of ``Π_ℓ``.
+    R = np.asarray(aniso_ricci_tensor, dtype=np.float64)
+    if R.shape != (3, 3):
+        raise ValueError(
+            f"aniso_ricci_tensor must have shape (3, 3), got {R.shape}"
+        )
+    # Contract: out[other..., c] = ³R_{c, b} Π_{other..., b}
+    # (axis ``b`` is Π's last axis; axis ``c`` becomes the new output
+    # last axis carrying the contracted ``a_ℓ`` slot).
+    raw = np.tensordot(Pi_ell_full, R, axes=([-1], [1]))
+    prefactor = ell / (2.0 * ell + 3.0)
+    return base + prefactor * sym_trace_free(raw)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -152,19 +220,39 @@ def T2_gradient(
     ell: int,
     Pi_ell_minus_1_full: np.ndarray,
     nabla_operator: Optional[Callable[..., np.ndarray]] = None,
+    aniso_ricci_tensor: Optional[np.ndarray] = None,
 ) -> np.ndarray:
-    """T2: ``∇̃_{⟨a_ℓ} Π_{A_{ℓ−1}⟩}`` — gradient of the lower multipole.
+    """T2: ``∇̃_{⟨a_ℓ} Π_{A_{ℓ−1}⟩}`` — gradient of the lower multipole,
+    optionally augmented by the FB-2.2 ∇̃ ³R_ab structural hook.
 
     ``nabla_operator(tensor, kind='gradient')`` must return a tensor of
     rank one higher than ``tensor``; for a homogeneous background this
     is identically zero (``zero_nabla_operator``). The result is PSTF-
     projected on its ℓ indices.
 
-    For ``ell = 0`` the term is identically zero (no ``ℓ − 1 = −1``
-    tensor exists).
+    FB-2.2 — ∇̃ ³R_ab structural hook (optional)
+    -------------------------------------------
+    When ``aniso_ricci_tensor`` is supplied, this function additionally
+    computes ``nabla_operator(³R_ab, kind='gradient')`` and PSTF-
+    projects its rank-3 output to contribute at rank ℓ. At background
+    (``nabla_operator = zero_nabla_operator``) this is **identically
+    zero** because the left-invariant tetrad frame makes ``³R_ab`` a
+    *constant* across the Bianchi 3-space (its covariant components are
+    time-independent and spatially homogeneous, so ``∇̃_c ³R_ab = 0``).
+    The hook becomes non-trivial in FB-5 when a complex-valued
+    harmonic-mode operator is wired in and ``Π_{ℓ−1}`` sees a
+    perturbation-sector coupling ``∇̃ ³R_ab × Π`` through the
+    Ricci-commutator identity (EMM §14.3). For FB-2.2 the hook is the
+    structural plumbing — the value is zero and FLRW bit-identical
+    regression is preserved.
+
+    For ``ell = 0`` the base term is identically zero (no ``ℓ − 1 = −1``
+    tensor exists); any Ricci hook is also zero at ``ell = 0``.
 
     Reference: Ellis §4.6 eq; lowell §6; 02_multipole_hierarchy_spec.md
-    §4.2 (background-level simplification).
+    §4.2 (background-level simplification); Ellis-Maartens-MacCallum
+    2012 §14.3 (∇̃ ³R coupling); ``docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md
+    §4 FB-2.2``.
     """
     if ell == 0:
         return np.array(0.0, dtype=np.float64)
@@ -182,7 +270,43 @@ def T2_gradient(
             f"T2_gradient: nabla_operator returned rank {raw.ndim}, "
             f"expected {expected_rank}"
         )
-    return sym_trace_free(raw)
+    base = sym_trace_free(raw)
+    if aniso_ricci_tensor is None:
+        return base
+    R = np.asarray(aniso_ricci_tensor, dtype=np.float64)
+    if R.shape != (3, 3):
+        raise ValueError(
+            f"aniso_ricci_tensor must have shape (3, 3), got {R.shape}"
+        )
+    # ∇̃_c ³R_ab : rank-3 gradient of the 3-Ricci.  At background
+    # (``zero_nabla_operator``) this is identically zero.  We still
+    # evaluate it so the hook participates in the FB-5 complex-dtype
+    # wire-up transparently; the contribution is zero at background
+    # regardless of the Ricci values.
+    ricci_grad = nabla_operator(R, kind="gradient")
+    # Shape: (3, 3, 3) — indices (c, a, b).  Contract c with Π's last
+    # axis (if ell >= 2), building a rank-ℓ correction.  For ℓ = 1 the
+    # contraction is against the scalar Π_0, reducing to the Ricci
+    # tensor's trace-free symmetrisation (already a property of ³R).
+    if ell == 1:
+        # ∇̃ ³R_ab at rank-1: scalar contraction — at background this
+        # is zero.  Perturbation-sector couplings (FB-5) will revisit.
+        ricci_hook = np.zeros((3,), dtype=ricci_grad.dtype)
+    else:
+        # ell >= 2: contract c-index of ∇̃³R (axis 0) with last axis of
+        # Π_{ℓ-1}; the remaining two ³R indices (a, b) compose with
+        # the leading ℓ-2 Π indices for a rank-ℓ output.
+        # This is a structural hook — the contribution is zero at
+        # background (∇̃³R = 0) but the code path exists for FB-5.
+        ricci_hook = np.tensordot(
+            ricci_grad, Pi_ell_minus_1_full, axes=([0], [ell - 2])
+        )
+    # Promote base to match ricci_hook dtype (complex in the FB-5
+    # wire-up; real at background).  Add the hook and PSTF-project.
+    out = base.astype(ricci_hook.dtype, copy=False) + sym_trace_free(
+        np.asarray(ricci_hook)
+    )
+    return out
 
 
 # ════════════════════════════════════════════════════════════════════

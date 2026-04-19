@@ -1,4 +1,4 @@
-"""bass/hierarchy/nabla_dispatch.py (FB-2.1) — ∇̃ harmonic-mode dispatch.
+"""bass/hierarchy/nabla_dispatch.py (FB-2.1 + FB-2.2) — ∇̃ harmonic-mode dispatch.
 
 Explicit dispatch table for the spatial covariant derivative ``∇̃_a``
 on Bianchi homogeneous 3-spaces, decomposed in the per-type harmonic
@@ -6,11 +6,12 @@ basis ``Y_k(x)``. The operator acts diagonally on each mode:
 
     ∇̃_a [Π(η) Y_k(x)] = i k_a Π(η) Y_k(x)
 
-for the plane-wave family (FLRW / I / V / VII_0) and discretely on the
-S³ spectrum for Bianchi IX (``∇̃² Y_{ℓ,m} = −ℓ(ℓ+2) Y_{ℓ,m}``).
+for the plane-wave family (FLRW / I / V / VII_0 / II / VI_0 / VIII —
+on their supported axis-aligned subsets) and discretely on the S³
+spectrum for Bianchi IX (``∇̃² Y_{ℓ,m} = −ℓ(ℓ+2) Y_{ℓ,m}``).
 
-Scope — FB-2.1 (this module)
-----------------------------
+Scope — FB-2.1 + FB-2.2 (this module)
+-------------------------------------
 
 Supported per-type dispatch:
 
@@ -28,11 +29,57 @@ Supported per-type dispatch:
 |          | action reduces to FLRW                                |
 | IX       | Discrete S³ spectrum (Lifshitz-Khalatnikov 1963);     |
 |          | scalar Laplacian eigenvalue ``−ℓ(ℓ+2)`` for ℓ ≥ 1     |
+| II       | Heisenberg Lie algebra; center = ``span{e_1}``.       |
+|          | FB-2.2 restricts to modes along the center            |
+|          | (``k_vec = (k_1, 0, 0)``) where the Heisenberg        |
+|          | cocycle vanishes and ``∇̃`` reduces to a plane wave    |
+|          | with ``∇̃² = −k_1²``                                    |
+| VI_0     | ``e(1,1)`` Lie algebra; abelian subalgebra            |
+|          | = ``span{e_1, e_3}`` (since ``[e_1, e_3] = n_2 e_2``   |
+|          | and ``n_2 = 0`` in the PC frame). FB-2.2 restricts    |
+|          | to modes with ``k_2 = 0``; Laplacian eigenvalue       |
+|          | ``∇̃² = −(k_1² + k_3²)``                                |
+| VIII     | ``sl(2, ℝ)`` Lie algebra; 1-dim Cartan subalgebra     |
+|          | = ``span{e_1}`` (the sign-different eigenvalue in     |
+|          | the diagonal N convention ``n_1 < 0``). FB-2.2        |
+|          | restricts to modes ``k_vec = (k_1, 0, 0)`` along      |
+|          | the hyperbolic Cartan axis; Laplacian                 |
+|          | ``∇̃² = −k_1²``                                         |
 +----------+-------------------------------------------------------+
 
 Deferred:
-- Class A II / VI_0 / VIII         → ``NotImplementedError('FB-2.2')``
-- Class B III / IV / VI_h / VII_h  → ``NotImplementedError('FB-2.3')``
+- Class B III / IV / VI_h / VII_h          → ``NotImplementedError('FB-2.3')``
+- Off-axis modes on VII_0 / II / VI_0 /    → ``NotImplementedError('FB-5.2')``
+  VIII (generic non-commuting direction)     (full Wigner rotation /
+                                              Grushin decomposition)
+
+FB-2.2 design rationale — axis-aligned restriction
+--------------------------------------------------
+
+For a Bianchi type whose Lie algebra is non-abelian, a *generic*
+spatial mode ``Y_k`` couples to the structure constants through a
+Wigner rotation of spin-1 components (VII_0) or a Grushin-type
+reduction (II / VI_0 / VIII). These couplings are not plane-wave
+eigenmodes and require the FB-5 perturbation-sector state machine to
+evolve. For the FB-2.2 deliverable — which is the *dispatch table*
+consumed by the hierarchy RHS for a static background contribution —
+we restrict to the **abelian subalgebra** of each Lie algebra, where
+the cocycle vanishes identically and the plane-wave operator is exact.
+The non-abelian directions raise an explicit
+``NotImplementedError("FB-5.2")`` so no silent approximation can leak
+into downstream code.
+
+Per-type abelian subalgebras (in the PC frame, diagonal ``N``):
+
+    II    :  span{e_1}          (center of Heisenberg)
+    VI_0  :  span{e_1, e_3}     ([e_1, e_3] = n_2 e_2 = 0)
+    VIII  :  span{e_1}          (Cartan subalgebra; sign-different n_1)
+
+References for the algebraic classification: Wainwright & Ellis
+(1997) §1.4.4 + §2.5; Ellis-Maartens-MacCallum (2012) §14.3 + §16.
+FB-2.1 already locks the FLRW / I / V / VII_0-symmetric / IX subsets;
+FB-2.2 extends to II / VI_0 / VIII axis-aligned subsets and wires
+hierarchy T1 / T2 spatial-Ricci couplings (see ``terms.py``).
 
 Design — callable contract
 --------------------------
@@ -86,6 +133,8 @@ __all__ = [
     "make_nabla_tilde",
     "scalar_laplacian_eigenvalue",
     "SUPPORTED_FB21_TYPES",
+    "SUPPORTED_FB22_TYPES",
+    "SUPPORTED_TYPES",
     "DEFERRED_FB22_TYPES",
     "DEFERRED_FB23_TYPES",
 ]
@@ -98,8 +147,19 @@ __all__ = [
 SUPPORTED_FB21_TYPES: tuple[str, ...] = ("FLRW", "I", "V", "VII_0", "IX")
 """Bianchi types with an explicit ∇̃ dispatch as of FB-2.1."""
 
-DEFERRED_FB22_TYPES: tuple[str, ...] = ("II", "VI_0", "VIII")
-"""Class A types whose ∇̃ dispatch is scheduled for FB-2.2."""
+SUPPORTED_FB22_TYPES: tuple[str, ...] = ("II", "VI_0", "VIII")
+"""Class A types whose ∇̃ dispatch lands in FB-2.2 (axis-aligned subset
+on each type's abelian subalgebra). Off-axis / generic modes raise
+``NotImplementedError('FB-5.2')`` at validation time."""
+
+SUPPORTED_TYPES: tuple[str, ...] = SUPPORTED_FB21_TYPES + SUPPORTED_FB22_TYPES
+"""Union of FB-2.1 and FB-2.2 supported types — used by hierarchy
+drivers to gate the explicit dispatch before raising."""
+
+DEFERRED_FB22_TYPES: tuple[str, ...] = ()
+"""Retained for backward compatibility with the FB-2.1 partition test.
+After FB-2.2 landed, this tuple is empty — II / VI_0 / VIII moved to
+:data:`SUPPORTED_FB22_TYPES`."""
 
 DEFERRED_FB23_TYPES: tuple[str, ...] = ("III", "IV", "VI_h", "VII_h")
 """Class B (twist-coupled) types whose ∇̃ dispatch is scheduled for FB-2.3."""
@@ -318,12 +378,142 @@ def _validate_mode_typeIX(
         )
 
 
+# ════════════════════════════════════════════════════════════════════
+#   FB-2.2 — per-type validators for II / VI_0 / VIII
+# ════════════════════════════════════════════════════════════════════
+
+def _k_component_is_zero(component: float, k_norm: float) -> bool:
+    """Tolerance-aware zero check for one Cartesian ``k_vec`` component.
+
+    Uses a ``1e-14 × max(|k|, 1)`` absolute threshold so that modes
+    pure-aligned with an axis are accepted at float-arithmetic
+    roundoff while generic off-axis modes are rejected.
+    """
+    return abs(component) <= 1e-14 * max(k_norm, 1.0)
+
+
+def _validate_mode_typeII(
+    structure: StructureConstants, mode: HarmonicMode
+) -> None:
+    """Bianchi II (Heisenberg): axis-aligned mode on the center ``e_1``.
+
+    The Heisenberg Lie algebra has ``[e_2, e_3] = n_1 e_1`` with all
+    other brackets vanishing; ``e_1`` is therefore the 1-dim center of
+    the algebra. A scalar plane-wave mode ``Y_k = e^{i k_1 x_1}`` feels
+    no Heisenberg cocycle because the twist term acts as
+    ``(n_1 x_2) ∂_1``, which only affects modes with non-zero ``k_2``
+    or ``k_3`` content. FB-2.2 dispatches exactly this axis-aligned
+    subset (``k_vec = (k_1, 0, 0)``); the generic off-axis (Grushin-
+    type) spectrum is deferred to FB-5.2.
+
+    Reference: Wainwright-Ellis 1997 §1.4.4 (Heisenberg group); Folland
+    *Harmonic Analysis in Phase Space* §1.4 (Heisenberg Laplacian
+    Schrödinger reduction).
+    """
+    if not np.all(np.isfinite(mode.k_vec)):
+        raise ValueError(f"Type II mode k_vec must be finite, got {mode.k_vec}")
+    if structure.n1 <= 0:
+        raise ValueError(
+            f"Type II requires n_1 > 0, got n_1 = {structure.n1}"
+        )
+    k_norm = float(np.linalg.norm(mode.k_vec))
+    if not (
+        _k_component_is_zero(mode.k_vec[1], k_norm)
+        and _k_component_is_zero(mode.k_vec[2], k_norm)
+    ):
+        raise NotImplementedError(
+            "FB-2.2 Type II dispatch supports only axis-aligned modes "
+            "on the Heisenberg center (k_vec = (k_1, 0, 0)). Generic "
+            "off-axis modes couple to the Heisenberg cocycle and "
+            "require the Grushin harmonic-oscillator decomposition — "
+            "deferred to FB-5.2 (perturbation-sector harmonic modes)."
+        )
+
+
+def _validate_mode_typeVI0(
+    structure: StructureConstants, mode: HarmonicMode
+) -> None:
+    """Bianchi VI_0 (``e(1,1)``): axis-aligned on the 2-D abelian plane.
+
+    In our PC frame with diagonal ``N = diag(n_1, 0, n_3)`` (``n_1 > 0``,
+    ``n_3 < 0``), the structure constants ``C^c_{ab} = ε_{abd} n^{dc}``
+    give ``[e_1, e_3] = n_2 e_2 = 0`` (since ``n_2 = 0``). Thus
+    ``span{e_1, e_3}`` is an abelian 2-plane, while ``e_2`` is the
+    non-abelian direction. A scalar mode with ``k_2 = 0`` lives entirely
+    on the abelian plane and ``∇̃`` acts as a pure plane wave with
+    eigenvalue ``−(k_1² + k_3²)``. Off-plane modes (``k_2 ≠ 0``) feel
+    the hyperbolic boost generated by ``e_2`` and require the FB-5.2
+    generalised dispatch.
+
+    Reference: Wainwright-Ellis 1997 §1.4.4 (``e(1,1)`` algebra);
+    Ellis-Maartens-MacCallum 2012 §14.3 (Bianchi VI_0 classification).
+    """
+    if not np.all(np.isfinite(mode.k_vec)):
+        raise ValueError(f"VI_0 mode k_vec must be finite, got {mode.k_vec}")
+    if structure.n1 <= 0 or structure.n3 >= 0:
+        raise ValueError(
+            f"VI_0 requires n_1 > 0 and n_3 < 0 (mixed sign), got "
+            f"(n_1, n_3) = ({structure.n1}, {structure.n3})"
+        )
+    k_norm = float(np.linalg.norm(mode.k_vec))
+    if not _k_component_is_zero(mode.k_vec[1], k_norm):
+        raise NotImplementedError(
+            "FB-2.2 Type VI_0 dispatch supports only modes on the "
+            "abelian (e_1, e_3) plane (k_2 = 0). Modes with non-zero "
+            "k_2 couple to the hyperbolic boost of e(1,1) and require "
+            "the FB-5.2 generalised Wigner-rotation dispatch."
+        )
+
+
+def _validate_mode_typeVIII(
+    structure: StructureConstants, mode: HarmonicMode
+) -> None:
+    """Bianchi VIII (``sl(2, ℝ)``): axis-aligned on the hyperbolic Cartan.
+
+    ``sl(2, ℝ)`` is semisimple with rank 1: its Cartan subalgebra is
+    1-dimensional. In the diagonal-``N`` convention with
+    ``N = diag(n_1, n_2, n_3)``, ``n_1 < 0, n_2, n_3 > 0``, the sign-
+    different direction ``e_1`` is the "hyperbolic" Cartan generator;
+    the corresponding 1-parameter subgroup is abelian. FB-2.2 restricts
+    the dispatch to ``k_vec = (k_1, 0, 0)`` modes along this Cartan
+    direction, where ``∇̃`` acts as a plane wave with eigenvalue
+    ``−k_1²``. Generic modes mixing with ``e_2, e_3`` decompose into
+    principal-series representations of ``SL(2, ℝ)`` and are deferred
+    to FB-5.2.
+
+    Reference: Wainwright-Ellis 1997 §1.4.4 (``sl(2, ℝ)`` algebra);
+    Bargmann 1947 (SL(2,R) principal series); Pontzen & Challinor 2007
+    for the CMB-side anisotropy structure.
+    """
+    if not np.all(np.isfinite(mode.k_vec)):
+        raise ValueError(f"VIII mode k_vec must be finite, got {mode.k_vec}")
+    if structure.n1 >= 0 or structure.n2 <= 0 or structure.n3 <= 0:
+        raise ValueError(
+            f"VIII requires n_1 < 0, n_2 > 0, n_3 > 0, got "
+            f"n_diag = {structure.n_diag}"
+        )
+    k_norm = float(np.linalg.norm(mode.k_vec))
+    if not (
+        _k_component_is_zero(mode.k_vec[1], k_norm)
+        and _k_component_is_zero(mode.k_vec[2], k_norm)
+    ):
+        raise NotImplementedError(
+            "FB-2.2 Type VIII dispatch supports only axis-aligned modes "
+            "on the 1-D Cartan (k_vec = (k_1, 0, 0) with n_1 < 0 the "
+            "hyperbolic direction). Generic modes require the SL(2,R) "
+            "principal-series decomposition — deferred to FB-5.2."
+        )
+
+
 _VALIDATORS: dict[str, Callable[[StructureConstants, HarmonicMode], None]] = {
     "FLRW": _validate_mode_flrw,
     "I": _validate_mode_typeI,
     "V": _validate_mode_typeV,
     "VII_0": _validate_mode_typeVII0,
     "IX": _validate_mode_typeIX,
+    "II": _validate_mode_typeII,
+    "VI_0": _validate_mode_typeVI0,
+    "VIII": _validate_mode_typeVIII,
 }
 
 
@@ -344,10 +534,16 @@ def make_nabla_tilde(
     Dispatch:
 
     - ``FLRW``, ``I``, ``V``, ``VII_0`` (axis-aligned symmetric line),
-      ``IX`` (with ``ell >= 1``) → plane-wave action ``i k_a``.
-    - ``II``, ``VI_0``, ``VIII`` → :class:`NotImplementedError` ("FB-2.2").
-    - ``III``, ``IV``, ``VI_h``, ``VII_h`` → :class:`NotImplementedError`
-      ("FB-2.3"; twist-coupled dispatch).
+      ``IX`` (with ``ell >= 1``) → plane-wave action ``i k_a``
+      (FB-2.1).
+    - ``II`` (``k_vec = (k_1, 0, 0)``), ``VI_0`` (``k_2 = 0``),
+      ``VIII`` (``k_vec = (k_1, 0, 0)``) → plane-wave action ``i k_a``
+      on each type's abelian subalgebra (FB-2.2).
+    - Off-axis modes on ``II`` / ``VI_0`` / ``VIII`` / ``VII_0`` →
+      :class:`NotImplementedError` ("FB-5.2"; generalised Wigner /
+      principal-series / Grushin decomposition).
+    - ``III``, ``IV``, ``VI_h``, ``VII_h`` →
+      :class:`NotImplementedError` ("FB-2.3"; twist-coupled dispatch).
 
     The ``structure.label`` drives the dispatch; ``mode.type_label``
     must match, otherwise ``ValueError``.
@@ -380,14 +576,9 @@ def make_nabla_tilde(
         )
 
     label = structure.label
-    if label in SUPPORTED_FB21_TYPES:
+    if label in SUPPORTED_TYPES:
         _VALIDATORS[label](structure, mode)
         return _plane_wave_operator(mode.k_vec)
-    if label in DEFERRED_FB22_TYPES:
-        raise NotImplementedError(
-            f"∇̃ dispatch for Bianchi type {label!r} is deferred to FB-2.2 "
-            f"(Class A II / VI_0 / VIII — spatial Ricci tensor coupling)."
-        )
     if label in DEFERRED_FB23_TYPES:
         raise NotImplementedError(
             f"∇̃ dispatch for Bianchi type {label!r} is deferred to FB-2.3 "
@@ -413,13 +604,19 @@ def scalar_laplacian_eigenvalue(
       negatively curved 3-space).
     - ``IX``: ``λ = −ℓ(ℓ+2)`` (Lifshitz-Khalatnikov 1963 §4; S³
       scalar-harmonic spectrum, independent of ``k_vec`` magnitude).
+    - ``II``, ``VIII`` (axis-aligned on the Cartan / center):
+      ``λ = −k_1²`` — the plane-wave restriction on the 1-D abelian
+      subalgebra (FB-2.2).
+    - ``VI_0`` (``k_2 = 0``): ``λ = −(k_1² + k_3²)`` — plane-wave
+      restriction on the 2-D abelian ``e(1,1)`` plane (FB-2.2).
 
     Raises
     ------
     ValueError
         If ``mode.type_label != structure.label``.
     NotImplementedError
-        For deferred types (FB-2.2 / FB-2.3).
+        For deferred types (FB-2.3) or off-axis subsets on
+        II / VI_0 / VIII / VII_0 (FB-5.2).
 
     References
     ----------
@@ -427,6 +624,8 @@ def scalar_laplacian_eigenvalue(
       decomposition.
     - Lifshitz-Khalatnikov 1963, *Adv. Phys.* 12, 185 — S³ harmonics.
     - Ellis-Maartens-MacCallum 2012 §16.2 — mode-eigenvalue table.
+    - Wainwright-Ellis 1997 §1.4.4 — Class A Lie algebras and abelian
+      subalgebras (II, VI_0, VIII axis-aligned restrictions).
     """
     if mode.type_label != structure.label:
         raise ValueError(
@@ -434,12 +633,8 @@ def scalar_laplacian_eigenvalue(
             f"structure.label={structure.label!r}."
         )
     label = structure.label
-    if label in SUPPORTED_FB21_TYPES:
+    if label in SUPPORTED_TYPES:
         _VALIDATORS[label](structure, mode)
-    elif label in DEFERRED_FB22_TYPES:
-        raise NotImplementedError(
-            f"scalar_laplacian_eigenvalue for {label!r} is deferred to FB-2.2."
-        )
     elif label in DEFERRED_FB23_TYPES:
         raise NotImplementedError(
             f"scalar_laplacian_eigenvalue for {label!r} is deferred to FB-2.3."
@@ -455,5 +650,9 @@ def scalar_laplacian_eigenvalue(
         # Harrison 1967 eq (4.5): Δ Y = -(k² + a²) Y on open-FLRW-like
         # hyperbolic 3-space; a_twist is the curvature scale.
         return -(k2 + float(structure.a_twist) ** 2)
-    # FLRW, I, VII_0 (axis-aligned symmetric line).
+    # FLRW, I, VII_0 (axis-aligned symmetric line), II (axis-aligned),
+    # VI_0 (k_2 = 0), VIII (axis-aligned on Cartan) — all reduce to
+    # ``−|k_vec|²`` on their respective supported axis-aligned subsets.
+    # The abelian-subalgebra restriction was enforced by the per-type
+    # validator above.
     return -k2

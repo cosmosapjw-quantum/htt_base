@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (FB-2.1 complete → FB-2.2 bootstrap; `nabla_dispatch.py` lands FLRW / I / V / VII_0 / IX harmonic-mode operators + explicit deferred-type `NotImplementedError` branches; 35 new tests; baseline 2,997 → 3,032)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` (FB-2.1 supplement; FB-2.2 / FB-2.3 / FB-2.4 placeholders)
-**Current target session**: **FB-2.2** — Class A II / VI_0 / VIII ∇̃ implementation + T1/T2 spatial-Ricci hierarchy wire-up + FB14-F1 twist-coupled 3-Ricci correction in-place calibration
+**Last rotated**: 2026-04-19 (FB-2.2 complete → FB-2.3 bootstrap; `nabla_dispatch.py` closes Class A II / VI_0 / VIII axis-aligned dispatch + T1/T2 spatial-Ricci wire-up + FB14-F1 twist h-scaling calibration; 24 new tests; baseline 3,032 → 3,056)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` (FB-2.1 + FB-2.2 supplements; FB-2.3 / FB-2.4 placeholders)
+**Current target session**: **FB-2.3** — Class B III / IV / VI_h / VII_h ∇̃ twist-coupled dispatch + activation of T1/T2 Ricci hooks on Class B
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,20 +36,21 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-2.2 — Class A II / VI_0 / VIII ∇̃ + spatial Ricci T1/T2 wire-up + FB14-F1 twist correction
+# FB-2.3 — Class B III / IV / VI_h / VII_h ∇̃ twist-coupled dispatch + T1/T2 Ricci-hook activation
 
 ## 프로젝트 컨텍스트
 
 - **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 - **venv**: venv/bin/python
 - **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 3,032 passing + 1 skipped (FB-2.1 직후; 감사 로그: `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` — FB-2.1 supplement sealed)
-- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **Phase FB-0 전체 + Phase FB-1 전체 + FB-2.1**:
+- **현재 baseline**: 3,056 passing + 1 skipped (FB-2.2 직후; 감사 로그: `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` — FB-2.1 + FB-2.2 supplements sealed)
+- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **Phase FB-0 전체 + Phase FB-1 전체 + FB-2.1 + FB-2.2**:
   - FB-0.1..0.3 (Ellis convention flip + tilt-field surface + LB-6 F2 seal)
   - FB-1.1..1.4 (`SOURCE_STATUS` all VALIDATED + `anisotropic_3_curvature` non-None for all 11 types; gallery 03..13)
-  - FB-2.1 (`bass/hierarchy/nabla_dispatch.py` — FLRW / I / V / VII_0 / IX harmonic-mode ∇̃; explicit FB-2.2 / FB-2.3 / FB-5.2 `NotImplementedError` branches; 35 new tests)
-- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-2 "Hierarchy RHS curved-space T-terms" (4 sessions)** 의 2/4 번째 (FB-2.2)
-- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-2.2`
+  - FB-2.1 (FLRW / I / V / VII_0 / IX 의 harmonic-mode ∇̃; 35 new tests)
+  - FB-2.2 (Class A II / VI_0 / VIII axis-aligned ∇̃ + T1/T2 optional `aniso_ricci_tensor` hook + FB14-F1 h-scaling calibration; 24 new tests)
+- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-2 "Hierarchy RHS curved-space T-terms" (4 sessions)** 의 3/4 번째 (FB-2.3)
+- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-2.3`
 - **Carry-forward P2/P3 (알고만 있을 것, 절대 건드리지 말 것)**:
   - F3 → `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² normalisation → **FB-2.4 예약**
   - FB02-F1 → `00_conventions.md §2` 에 `v̂_e` default cross-reference → **FB-3.1 예약**
@@ -57,116 +58,137 @@ Copy the block below into a fresh Claude Code session:
   - FB12-F1 → IX isotropic leading-order *shear-source* residual `S_+ = +(2/3) n² ℋ²` (W-E pathology) — **FB-5 / FB-6 예약**
   - FB12-F3 → `bianchi_ix_recollapse_event` 는 `_hubble_squared` 에 coupling → **FB-5 / FB-6 예약**
   - FB13-κ-calibration → VII_h Pontzen-Challinor spiral κ 정량 보정 → **FB-5 / FB-6 예약**
-  - **FB-2.1 P2 (new)** → complex-dtype `nabla_dispatch` 를 `hierarchy_rhs_photon` real-dtype driver 에 wire-up 은 **FB-5.1 예약** (harmonic-mode amplitude state machine 과 함께)
-  - **FB-5.2 (new)** → VII_0 / VII_h 의 generic off-axis helical Wigner rotation (FB-2.1 에서 symmetric-line axis-aligned subset 만 지원)
+  - **FB-2.1 P2** → complex-dtype `nabla_dispatch` 를 `hierarchy_rhs_photon` real-dtype driver 에 wire-up 은 **FB-5.1 예약** (harmonic-mode amplitude state machine 과 함께)
+  - **FB-2.2 P2 (new)** → `hierarchy_rhs_photon` 이 `aniso_ricci_tensor` 를 T1/T2 에 넘기지 않음 (driver wire-up) → **FB-2.4 예약**
+  - **FB-5.2** → II / VI_0 / VIII / VII_0 / VII_h 의 generic off-axis helical Wigner rotation (FB-2.1 + FB-2.2 에서 axis-aligned subset 만 지원)
 
-## 이 세션의 작업 범위 (FB-2.2 — Class A II / VI_0 / VIII ∇̃ + spatial Ricci T1/T2 + FB14-F1)
+## 이 세션의 작업 범위 (FB-2.3 — Class B III / IV / VI_h / VII_h ∇̃ twist-coupled dispatch)
 
-**Goal**: FB-2.1 이 FLRW / I / V / VII_0 / IX 의 plane-wave / S³ ∇̃ dispatch 를 열었다. FB-2.2 는 남은 Class A (II / VI_0 / VIII) 의 ∇̃ 를 추가하고, 이 세 type 의 spatial Ricci tensor 커플링을 T1/T2 hierarchy term 에 wire-up 한다. 더불어 FB-1.4 에서 reserved 된 **FB14-F1** (Class B twist-coupled anisotropic 3-Ricci correction, W-E `A²/(1+|h|)` piece in `S^{WE}_+`) 을 in-place calibrate 한다 — 이는 Class B 에 대한 배경 shear source 의 correction term 이지만, T1/T2 spatial-Ricci wire-up 의 consistency check 를 위해 이 단계에서 정리해야 한다.
+**Goal**: FB-2.1 + FB-2.2 가 Class A 8 configurations (FLRW + I/V/VII_0/IX + II/VI_0/VIII)의 ∇̃ 을 열었다. FB-2.3 는 남은 Class B (III / IV / VI_h / VII_h — 모두 `a_twist > 0` 인 twist-coupled types)의 ∇̃ 을 추가한다. Class B 의 핵심 특징은 structure constants 에 twist 성분 `a_α = (0, a_twist, 0)` 가 붙어 있어, 공간 covariant derivative 가 twist-modified 된다는 것. Harrison (1967) 의 V open-FLRW 유사 hyperbolic harmonic 을 기반으로, III (h=-1) / IV / VI_h (h<0, h≠-1) / VII_h (h>0) 각 type 의 Killing vector 위에서 평행-plane-wave 또는 spiral-mode eigenbasis 를 열고, FB-2.2 T1/T2 Ricci hook 을 Class B 에서 활성화한다.
 
 ### 기준이 되는 문헌 타깃
 
-| 타입 | Harmonic mode (FB-2.2) | Ricci tensor contribution | 테스트 앵커 |
+| 타입 | Harmonic mode (FB-2.3) | 특수성 | 테스트 앵커 |
 |---|---|---|---|
-| II | Heisenberg Lie algebra — nilpotent structure (n₁ > 0 alone); modes are Heisenberg-character twisted plane waves | ³R_{ab}^{aniso} non-trivial diag(−n₁²/2, n₁²/2, n₁²/2) character | `test_typeII_nabla_heisenberg_mode` + `test_typeII_T1_ricci_contribution` |
-| VI_0 | e(1,1) mixed-sign group (n₁ > 0, n₃ < 0); Poincaré-like hyperbolic modes | sign-alternating diag | `test_typeVI0_nabla_mixed_sign_mode` |
-| VIII | sl(2,ℝ) algebra (n₁ < 0, n₂, n₃ > 0) — AdS-like spatial sections; modes are `SL(2,ℝ)` matrix elements | negative-curvature dominated | `test_typeVIII_nabla_sl2R_mode` |
+| III | h = -1 canonical Class B; ``span{e_1}`` invariant direction (axis-aligned) | ≡ VI_{h=-1} 특수 케이스 — ∇̃ dispatch 는 VI_h 와 동일 | `test_typeIII_nabla_axis_aligned` |
+| IV | (0, 0, +) with `a_twist > 0`; Class B marginal | `e_3` 방향 mode 가 twist 를 거의 느끼지 않음 | `test_typeIV_nabla_axis_aligned` |
+| VI_h | h ∈ (−∞,−1) ∪ (−1, 0); Class B open-hyperbolic-like | Hewitt-Wainwright reduction modes | `test_typeVIh_nabla_on_abelian` |
+| VII_h | h > 0; Pontzen-Challinor spiral modes | symmetric line `n_1 = n_3` + e_2 축 axis-aligned 에서 helical phase 소멸 (VII_0 의 일반화) | `test_typeVIIh_nabla_symmetric_axis_aligned` |
 
-**FB14-F1 re-visit**: FB-1.4 §10 carried forward the Wainwright-Ellis `A²/(1+|h|)` piece of `S^{WE}_+` which contributes to Class B shear source when the twist-coupled anisotropic 3-Ricci correction is switched on. In FB-2.2 the T1/T2 wire-up makes this coupling explicit; the in-place calibration pins `S^{WE}_+` against the W-E Table 14.3 ground truth for III / IV / VI_h / VII_h.
+**Class B 공통 twist term**: `a_twist` 는 structure constants 에 `a_α ε^{αβγ} n_{βγ}` 를 통해 영향. PC frame (`n_2 = 0`) 에서 mode eigenvalue 에 `a_twist²` 오프셋이 추가됨 (Harrison 형태): `λ = -(|k|² + a_twist²)` 같은 꼴로 VI_h / VII_h 에 확장.
 
 ### 구체 작업 항목
 
 1. **문헌 재확인 (먼저, 코딩 전)**:
-   - Wainwright-Ellis 1997 §9.1 (Class A Killing vectors: II Heisenberg, VI_0 e(1,1), VIII sl(2,R))
-   - Ellis-Maartens-MacCallum 2012 §14.3 Table 14.3 (³R_ab per-type closed form) + §16.2 (invariant basis mode decomposition)
-   - `bass/hierarchy/nabla_dispatch.py` (FB-2.1 dispatch table; 확장 지점)
-   - `bass/background/tetrad_state.py::anisotropic_3_curvature` (FB-1.4 구현)
-   - `bass/hierarchy/terms.py::T1_expansion, T2_gradient` (spatial-Ricci 커플링 삽입 지점)
+   - Wainwright-Ellis 1997 §9.1 + §18 Table 11.1 Class B rows
+   - Pontzen-Challinor 2007 / 2009 — VII_h spiral harmonic Q-modes
+   - Harrison 1967 — open-FLRW hyperbolic harmonics (Type V 템플릿)
+   - `bass/hierarchy/nabla_dispatch.py` (FB-2.1+2.2 dispatch table — 확장 지점; `DEFERRED_FB23_TYPES` → 대부분 empty)
+   - `bass/background/tetrad_state.py::anisotropic_3_curvature` (Class B 분기)
+   - `bass/hierarchy/terms.py::T1_expansion, T2_gradient` (Ricci hook — Class B 활성)
 
 2. **`nabla_dispatch.py` 확장**:
-   - `SUPPORTED_FB21_TYPES` 에 II, VI_0, VIII 추가 (혹은 `SUPPORTED_FB22_TYPES` 신설 + 통합)
-   - `_validate_mode_typeII / _VI0 / _VIII` 신설 — Heisenberg 트위스트, 혼합부호 e(1,1), sl(2,R) 모드 검증
-   - `scalar_laplacian_eigenvalue` 에 II / VI_0 / VIII 분기 추가 (닫힌 형식: II 는 Heisenberg LL algebra 로 오프셋 ±n₁²/4, VI_0 는 hyperbolic, VIII 는 Casimir element 로 분해)
+   - `SUPPORTED_FB23_TYPES = ("III", "IV", "VI_h", "VII_h")` 신설
+   - `_validate_mode_typeIII / _IV / _VIh / _VIIh` 신설 — twist-aware axis-aligned 서브셋 검증
+   - `scalar_laplacian_eigenvalue` 에 Class B twist offset 분기 (Harrison 형태 `λ = -(|k|² + a_twist² × h-factor)`) 또는 plane-wave `λ = -|k|²` + twist correction
+   - `DEFERRED_FB23_TYPES = ()` 로 비우고 `SUPPORTED_TYPES = FB21 ∪ FB22 ∪ FB23` 업데이트
+   - VII_h 의 off-symmetric-line / off-axis → `NotImplementedError("FB-5.2")` — VII_0 의 FB-2.1 regression 과 동일 패턴
 
-3. **T1/T2 spatial-Ricci wire-up**:
-   - `terms.py::T1_expansion` 에 ³R_ab^{aniso} × Π_{ℓ} correction 추가 (closed-form, ℓ 별 prefactor) — Ellis §14.3 eq + lowell §6 커플링
-   - `T2_gradient` 에 ∇̃_a ³R_ab 의 PSTF 투영 (FB-2.1 `nabla_dispatch` 사용)
+3. **T1/T2 Ricci hook Class B 활성화**:
+   - `anisotropic_3_curvature` 가 Class B 에도 non-zero ³R_aniso 를 return 하므로 (FB-1.4), T1 의 ³R coupling 이 자동 활성
+   - T2 hook 는 여전히 structural (background `zero_nabla_operator` 에서 0) — FB-5 wire-up 대기
+   - `test_T1_typeIII/IV/VIh/VIIh_ricci_contribution_nonzero` 추가
 
-4. **FB14-F1 in-place calibration**:
-   - `bass/transport/shear_sources.py` 의 Class B `S^{WE}_+` 에 `A²/(1+|h|)` piece 정량 calibration (W-E Table 14.3)
-   - `TestClassBFixedPoints` (FB-1.3) re-run with tighter tolerance
+4. **FB-2.2 P2 carry-forward 정리**:
+   - `hierarchy_rhs_photon` driver 가 `aniso_ricci_tensor` 를 T1/T2 에 **아직 넘기지 않음** — 이는 의도적으로 FB-2.4 에 남겨둘 것 (T4-T7 wire-up 과 함께 per-type regression sweep)
+   - FB-2.3 에서는 TODO 표시만 추가
 
 5. **Validation 테스트** (신규 ≥ 15):
-   - 3 type × {gradient on scalar, divergence on vector, Laplacian eigenvalue} = 9 eigenmode pins
-   - 3 type T1 / T2 non-zero contribution pins
-   - FB14-F1 calibration: W-E Table 14.3 Class B fixed-point matches at rel 1e-8
+   - 4 types × axis-aligned eigenmode pins = 4-8 tests
+   - 4 types × off-axis → FB-5.2 = 4 tests
+   - 4 types × T1 ³R coupling non-zero = 4 tests
+   - Class B h-parametrisation sweep (III vs VI_h, VII_h h→0 limit) = 2-3 tests
 
-6. **Audit**: `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` 에 FB-2.2 supplement append; FB14-F1 carry-forward 해제 확인
+6. **Audit**: `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` 에 FB-2.3 supplement append
 
-7. `NEXT_SESSION_PROMPT.md §2` 를 **FB-2.3** (Class B III / IV / VI_h / VII_h ∇̃ twist-coupled dispatch) bootstrap 으로 rotate.
+7. `NEXT_SESSION_PROMPT.md §2` 를 **FB-2.4** (T4-T7 wire-up + aniso_ricci_tensor driver wire-up + per-type hierarchy_rhs regression) bootstrap 으로 rotate.
 
-### FB-2.2 non-goals (선 밑에 고정)
+### FB-2.3 non-goals (선 밑에 고정)
 
-- **Class B (III / IV / VI_h / VII_h)** ∇̃ twist coupling → FB-2.3
 - **T4–T7 (vorticity, 4-acceleration) hierarchy wire-up** → FB-2.4
+- **driver wire-up of `aniso_ricci_tensor`** → FB-2.4
 - **complex-dtype `nabla_dispatch` 의 `hierarchy_rhs_photon` wire-up** → FB-5.1
-- **VII_0 generic off-axis helical Wigner rotation** → FB-5.2
+- **Class B off-axis / generic helical Wigner rotation** → FB-5.2
 - **Tilted sector** → FB-3
 - **k ≠ 0 perturbation sector** → FB-5
 - **F3 / FB02-F1 / FB11-F1 / FB12-F1 / FB12-F3 / FB13-κ carry-forwards**: 건드리지 말 것
 
 ## 우선 읽어야 할 문서 (순서대로)
 
-1. `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` (§1-§10, FB-2.1 supplement + hand-off 섹션)
-2. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-2.2` + §5 dependency graph
-3. `bass/hierarchy/nabla_dispatch.py` (FB-2.1 dispatch table — 확장 지점)
-4. `bass/hierarchy/terms.py` (T1 / T2 — spatial-Ricci wire-up 삽입 지점)
-5. `bass/background/tetrad_state.py::anisotropic_3_curvature` (FB-1.4 구현)
-6. `bass/transport/shear_sources.py` (FB14-F1 calibration 대상)
-7. Wainwright-Ellis §9.1 (Class A Killing vectors); Ellis-Maartens-MacCallum §14.3 + §16
+1. `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` (§1-§10 FB-2.1 + §1-§10 FB-2.2 supplements + hand-off 섹션)
+2. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-2.3`
+3. `bass/hierarchy/nabla_dispatch.py` (FB-2.1 + FB-2.2 dispatch; 확장 지점)
+4. `bass/hierarchy/terms.py` (T1/T2 Ricci hook — Class B 활성)
+5. `bass/background/tetrad_state.py::anisotropic_3_curvature` (Class B ³R_aniso)
+6. `bass/transport/shear_sources.py::source_VIh, source_VIIh` (FB14-F1 calibration 결과)
+7. Wainwright-Ellis §9.1 + §18 Table 11.1 Class B; Pontzen-Challinor 2007/2009 (VII_h spiral)
 8. `docs/audits/AUDIT_PROMPT.md` (phase-boundary audit template — 본 세션 전에 self-invoke)
 
 ## 핵심 원칙 (고정)
 
 1. 외부 코드 금지 (프로덕션 트리)
-2. Citation in every modified docstring (W-E §9.1 / EMM §14.3, §16 + per-type Lie algebra 인용 필수)
+2. Citation in every modified docstring (W-E §18 Class B + Pontzen-Challinor VII_h spiral + per-type Lie algebra 인용 필수)
 3. PSTF invariants preserved; Ellis convention 유지
-4. No silent fallbacks — 미구현 type 은 explicit `NotImplementedError("FB-2.3") / NotImplementedError("FB-5.2")` 로 분기
+4. No silent fallbacks — 미구현 subsets 는 explicit `NotImplementedError("FB-5.2")` 로 분기
 5. Determinism
-6. **FB-2 phase 는 4 sessions** — FB-2.2 는 Class A 나머지 + FB14-F1; Class B 와 T4-T7 은 FB-2.3 / FB-2.4
+6. **FB-2 phase 는 4 sessions** — FB-2.3 는 Class B 4 types; FB-2.4 는 T4-T7 + driver wire-up
 
 ## 검증 체크리스트 (최종 commit 전)
 
-- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 3,032 + 신규 테스트)
-- [ ] `make_nabla_tilde(...)` for II / VI_0 / VIII returns expected eigenmode action (rel 1e-12)
-- [ ] `scalar_laplacian_eigenvalue` 에 II / VI_0 / VIII 분기 통과
-- [ ] T1 / T2 에 ³R_ab^{aniso} × Π coupling 적용 후 FLRW-limit regression (bit-identical) 유지
-- [ ] FB14-F1 `A²/(1+|h|)` piece W-E Table 14.3 매치 (rel 1e-8)
-- [ ] 미구현 Class B 4 type + VII_0 off-axis 에 대해 `NotImplementedError` 분기 정확
-- [ ] `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` 에 FB-2.2 supplement append
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 3,056 + 신규 테스트)
+- [ ] `make_nabla_tilde(...)` for III / IV / VI_h / VII_h returns expected eigenmode action on axis-aligned subsets (rel 1e-12)
+- [ ] `scalar_laplacian_eigenvalue` Class B 분기 통과 (Harrison 형태 twist offset 포함)
+- [ ] T1 Ricci coupling Class B non-zero pins; T2 hook 는 여전히 zero at background
+- [ ] 미구현 Class B off-axis 에 대해 `NotImplementedError("FB-5.2")` 분기 정확
+- [ ] `SUPPORTED_TYPES = FB21 ∪ FB22 ∪ FB23 = 12 labels` partition 검증
+- [ ] `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` 에 FB-2.3 supplement append
 - [ ] `docs/audits/AUDIT_PROMPT.md` self-invoke 로 P0/P1 스캔 완료
 - [ ] (선택) Gallery PNG 생성 + 시각적 inspection; no-op 이면 audit 에 명시
-- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-2.3** bootstrap 으로 rotate
-- [ ] 최종 commit 메시지: `FB-2.2: Class A II / VI_0 / VIII nabla_tilde + T1/T2 spatial-Ricci wire-up + FB14-F1 calibration` + `+ rotate NEXT_SESSION_PROMPT for FB-2.3`
+- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-2.4** bootstrap 으로 rotate
+- [ ] 최종 commit 메시지: `FB-2.3: Class B III / IV / VI_h / VII_h twist-coupled nabla_tilde + T1 Ricci hook activation` + `+ rotate NEXT_SESSION_PROMPT for FB-2.4`
 
 ## 진행 순서
 
 1. `docs/audits/AUDIT_PROMPT.md` self-invoke (pre-phase scan)
-2. Wainwright-Ellis §9.1 + EMM §14.3 / §16 + FB-2.1 `nabla_dispatch.py` + tetrad_state.py + shear_sources.py 읽기
-3. II / VI_0 / VIII 의 harmonic mode 분해 + ³R_ab^{aniso} 커플링 설계
-4. `nabla_dispatch.py` 3-type 확장 + `scalar_laplacian_eigenvalue` 분기 추가
-5. T1 / T2 spatial-Ricci wire-up + FLRW regression 확인
-6. FB14-F1 `S^{WE}_+` calibration + Class B fixed-point 재검증
-7. validation tests 추가 (≥15)
-8. 전체 회귀 green 확인
-9. `AUDIT_PHASE_FB2_2026-04-19.md` 에 FB-2.2 supplement append
-10. `NEXT_SESSION_PROMPT.md §2` rotate to FB-2.3
-11. commit
+2. Wainwright-Ellis §18 Class B + Pontzen-Challinor VII_h + FB-2.1/2.2 `nabla_dispatch.py` 읽기
+3. III / IV / VI_h / VII_h 의 harmonic mode 분해 + twist offset 설계 (Harrison 형태 유도)
+4. `nabla_dispatch.py` 4-type 확장 + `scalar_laplacian_eigenvalue` Class B 분기
+5. T1 Ricci hook Class B regression 확인 (자동 활성; no code change)
+6. validation tests 추가 (≥15)
+7. 전체 회귀 green 확인
+8. `AUDIT_PHASE_FB2_2026-04-19.md` 에 FB-2.3 supplement append
+9. `NEXT_SESSION_PROMPT.md §2` rotate to FB-2.4
+10. commit
 
-시작하세요. 본 세션은 **Phase FB-2 의 2/4 rotation** — FB-2.1 이 Class A unimodular orthogonal 5 types (FLRW / I / V / VII_0 / IX) 의 ∇̃ 을 열었고, FB-2.2 는 Class A 나머지 3 types (II / VI_0 / VIII) 을 닫으면서 hierarchy T1/T2 spatial-Ricci coupling 을 처음으로 production-wire 합니다. FB14-F1 twist correction 은 Class B 의 shear source 에 대한 정밀 calibration 으로 in-place 에서 정리됩니다. FB-2.3 가 Class B 4 types, FB-2.4 가 T4-T7 vorticity + 4-accel 를 닫습니다.
+시작하세요. 본 세션은 **Phase FB-2 의 3/4 rotation** — FB-2.1 이 Class A unimodular orthogonal 5 types, FB-2.2 가 Class A 나머지 3 types + T1/T2 Ricci hook 을 열었고, FB-2.3 는 Class B 4 twist-coupled types (III / IV / VI_h / VII_h) 을 닫습니다. 모든 Class B 는 `a_twist > 0` 로 structure constants 에 twist 성분이 있어 Harrison-유사 `λ = -(|k|² + ...)` offset 을 갖습니다. FB-2.4 에서 T4-T7 kinematic 커플링 + driver-level aniso_ricci wire-up 이 Phase FB-2 를 마무리합니다.
 ```
 
 ---
+
+<!-- Prior (FB-2.2) handoff prompt (saved for reference only; do not re-run). -->
+
+<details>
+<summary>Previous FB-2.2 handoff prompt (archived 2026-04-19)</summary>
+
+```text
+# FB-2.2 — Class A II / VI_0 / VIII ∇̃ + spatial Ricci T1/T2 wire-up + FB14-F1 twist correction
+
+(original prompt text preserved; see
+`docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` FB-2.2 supplement for the
+completion summary)
+```
+
+</details>
 
 <!-- Prior (FB-2.1) handoff prompt (saved for reference only; do not re-run). -->
 

@@ -72,6 +72,8 @@ from bass.hierarchy.nabla_dispatch import (
     DEFERRED_FB23_TYPES,
     HarmonicMode,
     SUPPORTED_FB21_TYPES,
+    SUPPORTED_FB22_TYPES,
+    SUPPORTED_TYPES,
     make_nabla_tilde,
     scalar_laplacian_eigenvalue,
 )
@@ -121,11 +123,13 @@ __all__ = [
     "hierarchy_rhs_photon",
     "hierarchy_rhs_neutrino",
     "proper_shear_at_eta",
-    # ∇̃ dispatch (FB-2.1)
+    # ∇̃ dispatch (FB-2.1 + FB-2.2)
     "HarmonicMode",
     "make_nabla_tilde",
     "scalar_laplacian_eigenvalue",
     "SUPPORTED_FB21_TYPES",
+    "SUPPORTED_FB22_TYPES",
+    "SUPPORTED_TYPES",
     "DEFERRED_FB22_TYPES",
     "DEFERRED_FB23_TYPES",
 ]

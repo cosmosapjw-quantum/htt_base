@@ -203,3 +203,249 @@ FB-2.2 consumes the FB-2.1 deliverables — `HarmonicMode`,
 | E | `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` — rotated to FB-2.2 (Class A II / VI_0 / VIII ∇̃ + spatial Ricci T1/T2 + FB14-F1 twist correction calibration) | ✅ |
 
 *End of FB-2.1 audit supplement.*
+
+---
+
+## FB-2.2 — Class A II / VI_0 / VIII ∇̃ axis-aligned dispatch + T1/T2 spatial-Ricci wire-up + FB14-F1 twist calibration
+
+**Session date**: 2026-04-19
+**Commit target**: `FB-2.2: Class A II / VI_0 / VIII nabla_tilde + T1/T2 spatial-Ricci wire-up + FB14-F1 calibration`
+**Parent commit at entry**: `5765e0b` (HEAD before FB-2.2) — pre-FB-2.2 baseline 3,032 passed + 1 skipped
+**Exit test count**: 3,056 passed + 1 skipped (+24 new)
+
+### §1 Audit target reconstruction
+
+1. **Physical/mathematical claim**. The ``∇̃`` harmonic-mode dispatch
+   extends to the remaining Class A Bianchi types — II / VI_0 / VIII —
+   on each type's **abelian subalgebra** of the underlying Lie
+   algebra. On the abelian subalgebra the Lie bracket vanishes so a
+   plane-wave mode ``e^{i k·x}`` is an exact eigenmode of the spatial
+   Laplacian, and ``∇̃_a Y = i k_a Y`` acts as on FLRW. The non-abelian
+   directions are reserved for FB-5.2 (Wigner rotation for the
+   semisimple VIII, Grushin harmonic-oscillator reduction for the
+   nilpotent II, hyperbolic Lorentz action for VI_0).
+
+   Additionally, the hierarchy RHS ``T1`` and ``T2`` functions receive
+   a structural **spatial-Ricci hook**: an optional
+   ``aniso_ricci_tensor`` kwarg that ingests the anisotropic 3-Ricci
+   ``³R_ab^{aniso}`` from ``TetradBackgroundState.aniso_3_curvature``
+   (FB-1.4 deliverable). ``T1`` receives a rank-preserving
+   ``T8``-style contraction with prefactor ``ℓ/(2ℓ+3)``; ``T2``
+   receives a ``∇̃ ³R_ab`` hook that is **zero at background** (the
+   Ricci is spatially homogeneous in the left-invariant tetrad) and
+   participates in the FB-5 complex-dtype wire-up transparently. Both
+   terms' default kwargs (``None``) preserve bit-identical LB-6
+   regression.
+
+   Finally, **FB14-F1** (FB-1.4 P3 carry-forward) is calibrated in
+   place via new regression tests that pin the ``(2/3) A²/(1+|h|)``
+   piece of the Class B W-E ``S^{WE}_+`` source (already present in
+   ``shear_sources.py::source_VIh`` / ``source_VIIh``) against the
+   closed-form h-scaling for two ``a_twist`` configurations sharing
+   ``(n_1, n_3)``. This upgrades the pre-existing rel 1e-12
+   formula pin to include a parameter-sweep consistency check.
+
+2. **Algorithm**.
+   * Add ``II``, ``VI_0``, ``VIII`` to ``SUPPORTED_FB22_TYPES`` with
+     per-type validators checking the axis-aligned subset (``II``:
+     ``k_vec = (k_1, 0, 0)``; ``VI_0``: ``k_2 = 0``; ``VIII``:
+     ``k_vec = (k_1, 0, 0)``).  Off-axis modes raise
+     ``NotImplementedError("FB-5.2")``.
+   * Drop ``II / VI_0 / VIII`` from ``DEFERRED_FB22_TYPES`` (now
+     empty; retained only as a backward-compatible import).
+   * Extend ``scalar_laplacian_eigenvalue`` with branches for II
+     (``λ = −k_1²``), VI_0 (``λ = −(k_1² + k_3²)``), VIII
+     (``λ = −k_1²``).
+   * Augment ``T1_expansion`` signature with
+     ``aniso_ricci_tensor: Optional[np.ndarray]``. Coupling form:
+     ``(ℓ/(2ℓ+3)) · PSTF[ ³R^b_{⟨a_ℓ} Π_{A_{ℓ−1}⟩ b} ]``. At ℓ = 0
+     or ``aniso_ricci_tensor = None``: no addition.
+   * Augment ``T2_gradient`` signature with ``aniso_ricci_tensor``.
+     Coupling form: PSTF contraction of ``∇̃_c ³R_ab`` with
+     ``Π_{A_{ℓ−1}}``. At background (``zero_nabla_operator``):
+     identically zero (the hook is structural, not load-bearing).
+
+3. **Source of truth**. Implementation is the authoritative source
+   for FB-2.2 dispatch rules; the docstrings now cross-reference
+   Wainwright-Ellis 1997 §1.4.4 (Class A Lie algebras) and
+   Ellis-Maartens-MacCallum 2012 §14.3 (spatial-Ricci lift).
+
+### §2 Contract / interface table
+
+| Contract item | Value |
+|---|---|
+| Supported FB-2.2 types | ``II``, ``VI_0``, ``VIII`` (abelian subalgebra axis-aligned) |
+| II abelian subalgebra | ``span{e_1}`` (Heisenberg center) |
+| VI_0 abelian subalgebra | ``span{e_1, e_3}`` (``[e_1, e_3] = n_2 e_2 = 0``) |
+| VIII abelian subalgebra | ``span{e_1}`` (Cartan; sign-different ``n_1 < 0``) |
+| Off-axis → FB-5.2 | Non-zero ``k_2`` on II or VI_0; non-zero ``k_2, k_3`` on VIII |
+| Laplacian II | ``λ = −k_1²`` |
+| Laplacian VI_0 | ``λ = −(k_1² + k_3²)`` |
+| Laplacian VIII | ``λ = −k_1²`` |
+| T1 Ricci hook | ``(ℓ/(2ℓ+3)) · sym_trace_free(Π_ℓ · ³R)`` |
+| T2 Ricci hook | ``sym_trace_free( ∇̃³R ⊗ Π_{ℓ-1} )`` — zero at background |
+| Dispatch partition | ``SUPPORTED_TYPES = FB21 ∪ FB22`` disjoint from ``DEFERRED_FB23_TYPES``; ``DEFERRED_FB22_TYPES = ()`` |
+| FB14-F1 invariant | ``(2/3) A²/(1+|h|)`` piece verified on two-config h-scaling |
+
+### §3 Phys-math audit ledger
+
+| Check | Verdict | Notes |
+|---|---|---|
+| Type II plane-wave on ``e_1`` center, ``∇̃ Y = i k_1 Y e_1`` | **pass** | `test_typeII_nabla_heisenberg_mode` rel 1e-12 |
+| Type II off-axis raises FB-5.2 | **pass** | `test_typeII_off_axis_raises_fb52` |
+| Type II Laplacian ``−k_1²`` | **pass** | `test_typeII_scalar_laplacian_eigenvalue` |
+| VI_0 plane-wave on abelian 2-plane | **pass** | `test_typeVI0_nabla_mixed_sign_mode` |
+| VI_0 Laplacian ``−(k_1² + k_3²)`` | **pass** | `test_typeVI0_scalar_laplacian_eigenvalue` |
+| VI_0 off-plane (k_2 ≠ 0) raises FB-5.2 | **pass** | `test_typeVI0_off_plane_raises_fb52` |
+| VIII plane-wave on Cartan ``e_1`` | **pass** | `test_typeVIII_nabla_sl2R_mode` |
+| VIII Laplacian ``−k_1²`` | **pass** | `test_typeVIII_scalar_laplacian_eigenvalue` |
+| VIII off-Cartan (k_2 or k_3 ≠ 0) raises FB-5.2 | **pass** | `test_typeVIII_off_cartan_raises_fb52` |
+| T1 with ``³R = 0`` matches base expansion | **pass** | `test_T1_zero_ricci_matches_base` rel 1e-14 |
+| T1 default kwarg (``None``) matches LB-2b base | **pass** | `test_T1_no_ricci_matches_base_expansion` bit-identical |
+| T1 with Type II ``³R_aniso`` is non-zero | **pass** | `test_T1_typeII_ricci_contribution_nonzero` |
+| T1 ℓ = 0 ignores ``³R`` | **pass** | `test_T1_ell_zero_ignores_ricci` rel 1e-14 |
+| T2 hook at background = base (FLRW preserved) | **pass** | `test_T2_hook_zero_at_background_typeII` + `..._ell2` |
+| T2 bad shape rejected | **pass** | `test_T2_hook_bad_shape_rejected` |
+| FB14-F1: VI_h h-scaling pinned | **pass** | `test_VIh_h_factor_scaling_pinned` rel 1e-12 |
+| FB14-F1: VII_h h-scaling pinned | **pass** | `test_VIIh_h_factor_scaling_pinned` rel 1e-12 |
+| FB14-F1: VI_h small-``a`` quadratic scaling | **pass** | `test_VIh_twist_piece_vanishes_at_zero_a` rel 1e-6 (cancellation-limited) |
+| SUPPORTED_FB22_TYPES = {II, VI_0, VIII} | **pass** | `test_fb22_supported_types_contains_class_a_additions` |
+| SUPPORTED_TYPES = FB21 ∪ FB22 (8 labels) | **pass** | `test_fb22_supported_types_is_union_aggregate` |
+| FB-2.1 partition test updated + still green | **pass** | `test_fb21_dispatch_covers_all_11_bianchi_types_plus_flrw` |
+| Dimensional consistency ([k] = 1/Mpc, [³R] = 1/Mpc²) | **pass** | inspection |
+| FLRW bit-identical LB-6 regression | **pass** | 3,032 pre-existing tests unchanged |
+
+### §4 Equation-to-code mapping audit
+
+| Equation | Code location | Verdict |
+|---|---|---|
+| II axis-aligned validator (Heisenberg center) | `_validate_mode_typeII` in `bass/hierarchy/nabla_dispatch.py` | pass — tolerance-aware zero check on ``k_2, k_3``; explicit FB-5.2 message |
+| VI_0 axis-aligned validator (``e(1,1)`` abelian 2-plane) | `_validate_mode_typeVI0` | pass — ``k_2 = 0`` check + Jacobi sanity (``n_1 > 0, n_3 < 0``) |
+| VIII axis-aligned validator (SL(2,R) Cartan) | `_validate_mode_typeVIII` | pass — ``k_2, k_3 = 0`` check + ``n_1 < 0, n_2, n_3 > 0`` |
+| ``make_nabla_tilde`` dispatch: FB21 ∪ FB22 → plane wave; FB23 → NotImplementedError | `make_nabla_tilde` | pass — branch ``label in SUPPORTED_TYPES`` |
+| ``scalar_laplacian_eigenvalue`` II / VI_0 / VIII → ``−\|k\|²`` | `scalar_laplacian_eigenvalue` | pass — unified ``return -k2`` after validator accepts |
+| T1 Ricci coupling | `T1_expansion` in `bass/hierarchy/terms.py` | pass — ``np.tensordot(Pi_ell_full, R, axes=([-1], [1]))`` + ``sym_trace_free`` + ``ℓ/(2ℓ+3)`` prefactor |
+| T2 Ricci hook (background zero) | `T2_gradient` | pass — ``ricci_grad = nabla_operator(R, 'gradient')`` returns zeros for ``zero_nabla_operator``; explicit dtype promotion for FB-5 complex wire-up |
+| FB14-F1 ``(2/3) A²/(1+\|h\|)`` piece (already in place) | `source_VIh` / `source_VIIh` in `bass/transport/shear_sources.py` | pass — verified by parameter-sweep h-scaling test |
+| No silent fallback for deferred types | inspection | pass — FB-5.2 off-axis guards raise before returning any operator |
+
+### §5 Numerical / pipeline audit
+
+| Item | Status | Notes |
+|---|---|---|
+| Plane-wave eigenmode rel 1e-12 on II / VI_0 / VIII | ok | Complex arithmetic at ε_mach |
+| T1 with zero Ricci matches base rel 1e-14 | ok | Floating-point cancellation is clean (only an addition) |
+| T2 hook equality with/without Ricci at background | ok | atol=0 — structural zero propagates exactly |
+| FB14-F1 small-``a`` test rtol 1e-6 | ok | Catastrophic cancellation between N² and A² pieces limits precision — physical artefact, not a bug |
+| Dtype promotion in T2 hook (real → complex) | ok | ``base.astype(ricci_hook.dtype)`` ensures FB-5 complex-dtype-ready |
+| ``aniso_ricci_tensor`` shape validation | ok | Rank-2 (3, 3) enforced in both T1 and T2 |
+| No external code | ok | Only ``numpy`` imports; no CAMB / CLASS / Healpy |
+| Determinism | ok | Pure functions; no global state |
+
+### §6 Ranked failure modes
+
+- **None P0 / P1** identified.
+- **P2 (carry-forward)** — Complex-dtype ``nabla_dispatch`` still not
+  wired into ``hierarchy_rhs_photon``; production driver continues to
+  use ``zero_nabla_operator``. This is **not a regression** — the
+  FB-2.1 audit already documented the hand-off to FB-5.1. The
+  T1/T2 Ricci hooks added in FB-2.2 are similarly structural (see §4
+  T2 entry); the production driver does not yet route
+  ``tetrad_state.aniso_3_curvature`` into the term functions because
+  doing so would change the II / VI_0 / VIII background RHS and
+  require a per-type regression sweep scheduled for FB-2.4 (T4-T7
+  wire-up). Documented as new P2 below.
+- **FB-2.2 P2 (new)** — ``T1_expansion`` / ``T2_gradient`` accept
+  ``aniso_ricci_tensor`` but ``hierarchy_rhs_photon`` does not yet
+  pass it in. Next session (FB-2.3 or FB-2.4) must connect the tetrad
+  state to the term functions and run the per-type regression sweep.
+- **P3 (future)** — Off-axis modes on II / VI_0 / VIII require the
+  full FB-5.2 dispatch: Grushin decomposition for Heisenberg, Wigner
+  rotation for ``e(1,1)``, SL(2,R) principal series for VIII.
+  Documented explicitly at each validator.
+
+### §7 Verifier results
+
+| Verifier | Result |
+|---|---|
+| A. Physics: known-limit recovery | **passed** (II / VI_0 / VIII axis-aligned subsets reduce to plane wave; the FB-5.2 off-axis cases raise, so no silent approximation) |
+| A. Physics: dimensional consistency | **passed** |
+| A. Physics: sign / normalisation (``∇̃ = i k``, ``³R`` prefactor ``ℓ/(2ℓ+3)``) | **passed** |
+| A. Physics: admissibility (positive eigenvalues for the supported sign pattern) | **passed** |
+| B. Code: contract satisfaction | **passed** (signatures preserve LB-2b default behaviour) |
+| B. Code: reproducibility | **passed** (pure functions) |
+| B. Code: regression risk | **passed** (3,032 pre-existing tests unchanged; +24 new) |
+| C. Numerical: tolerance robustness | **passed** (rel 1e-12 on eigenmode pins; rel 1e-6 on cancellation-limited FB14-F1 test with explicit rationale) |
+| C. Numerical: baseline reproducibility | **passed** (3,056 passed + 1 skipped) |
+| C. Numerical: misspecification | **passed** (off-axis / wrong-shape / wrong-sign inputs all raise with specific FB-tag messages) |
+
+### §8 Minimal repair plan
+
+- **None required** — no P0 / P1 issues surfaced. The FB-2.2 P2 and
+  the pre-existing FB-2.1 P2 remain carry-forwards for FB-2.3 /
+  FB-2.4 / FB-5.1.
+
+### §9 Minimal test set (all present)
+
+| Category | Test |
+|---|---|
+| Baseline reproduction | `test_T1_no_ricci_matches_base_expansion` (LB-2b bit-identical FLRW) |
+| Edge / adversarial | 3 × off-axis → FB-5.2 raises (`test_typeII_off_axis_raises_fb52`, `test_typeVI0_off_plane_raises_fb52`, `test_typeVIII_off_cartan_raises_fb52`) + T2 bad-shape rejection |
+| Physics sanity | 3 × axis-aligned plane-wave pins + 3 × Laplacian eigenvalue pins |
+| Numerical stability | `test_VIh_twist_piece_vanishes_at_zero_a` (cancellation-limited rel 1e-6; documented rationale) |
+| Regression / dispatch | `test_fb22_supported_types_is_union_aggregate` + `test_fb21_dispatch_covers_all_11_bianchi_types_plus_flrw` (updated) |
+| FB14-F1 calibration | `test_VIh_h_factor_scaling_pinned` + `test_VIIh_h_factor_scaling_pinned` (rel 1e-12 closed-form match) |
+
+### §10 Verdict
+
+**통과 (pass)**. FB-2.2 adds Class A II / VI_0 / VIII ``∇̃`` dispatch
+on each type's abelian subalgebra (with explicit FB-5.2 off-axis
+guards), structurally wires the anisotropic-3-Ricci tensor into T1
+and T2 (with default-None preserving bit-identical LB-6 regression),
+and calibrates the FB14-F1 twist piece via a closed-form h-scaling
+parameter sweep at rel 1e-12. 24 new tests, all passing, zero
+regression (3,032 → 3,056 passed + 1 skipped).
+
+**Do now (1 item)**: rotate ``NEXT_SESSION_PROMPT §2`` to FB-2.3
+(Class B III / IV / VI_h / VII_h ``∇̃`` twist-coupled dispatch).
+
+**Do not touch (1 item)**: ``hierarchy_rhs_photon``'s call sites for
+T1 / T2 — they continue to pass ``aniso_ricci_tensor=None``. FB-2.3
+or FB-2.4 will switch to the live Ricci wire-up once the per-type
+background regression sweep is specified.
+
+### Phase FB-2.2 → FB-2.3 hand-off
+
+FB-2.3 consumes:
+
+1. ``SUPPORTED_FB22_TYPES`` (II / VI_0 / VIII) — for cross-type
+   consistency checks.
+2. The FB14-F1 h-scaling contract — so Class B ∇̃ dispatch can
+   leverage the same ``a_twist`` identification.
+3. The ``T1`` / ``T2`` Ricci hook signatures — FB-2.3 may activate
+   them for Class B once the twist-coupled ``∇̃`` dispatch is online.
+
+### Carry-forwards to FB-2.3 / FB-2.4
+
+| Tag | Item | Target |
+|---|---|---|
+| FB-2.1 P2 | Complex-dtype ``nabla_dispatch`` not wired into ``hierarchy_rhs_photon`` | FB-5.1 |
+| FB-2.2 P2 (new) | ``hierarchy_rhs_photon`` does not pass ``aniso_ricci_tensor`` to T1 / T2 | FB-2.4 |
+| F3 (from LB-5) | ``TetradBackgroundState.shear_magnitude_sq`` dimensionless-Σ² normalisation | FB-2.4 |
+| FB-5.2 | II / VI_0 / VIII / VII_0 / VII_h generic off-axis dispatch | FB-5.2 |
+| FB-2.3 | Class B III / IV / VI_h / VII_h ``∇̃`` twist coupling | FB-2.3 |
+| FB-2.4 | T4–T7 wire-up + aniso_ricci driver wire-up | FB-2.4 |
+
+### Deliverables (diff summary)
+
+| Item | File | Status |
+|---|---|---|
+| A | ``bass/hierarchy/nabla_dispatch.py`` — II / VI_0 / VIII validators + ``SUPPORTED_FB22_TYPES`` / ``SUPPORTED_TYPES`` tuples + dispatch + Laplacian branches | ✅ |
+| B | ``bass/hierarchy/terms.py`` — optional ``aniso_ricci_tensor`` kwarg on T1 and T2 (default ``None`` preserves LB-2b bit-identical) | ✅ |
+| C | ``bass/hierarchy/__init__.py`` — re-export ``SUPPORTED_FB22_TYPES`` + ``SUPPORTED_TYPES`` | ✅ |
+| D | ``bass/hierarchy/test_nabla_dispatch_fb22.py`` — 24 new tests (9 eigenmode + 3 off-axis FB-5.2 + 4 T1 + 3 T2 + 3 FB14-F1 + 2 partition) | ✅ |
+| E | ``bass/hierarchy/test_nabla_dispatch.py`` — updated: FB-2.2 deferred tests replaced with axis-aligned-supported tests; dispatch-coverage test refreshed | ✅ |
+| F | ``docs/audits/AUDIT_PHASE_FB2_2026-04-19.md`` — this file (FB-2.2 supplement append) | ✅ |
+| G | ``docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2`` — rotated to FB-2.3 (Class B twist-coupled ∇̃ dispatch) | ✅ |
+
+*End of FB-2.2 audit supplement.*
