@@ -544,3 +544,128 @@ W20 F4 post-audit addendum is appended with the revised A46.2
 classification, following the W19 F4 precedent. This note is
 kept explicit here so the addendum pattern is protocol-level,
 not improvised per-phase.
+
+---
+
+## Post-audit addendum (W20 F4 — A46.2 window re-classification)
+
+**Committed 2026-04-19, post `5dfcf2d`.** The audit body above
+was written against the then-current `git log 184b06c..HEAD`
+output and declared the W20 window **single-lane** (W20 §6
+check #1 narrative: "zero cross-lane commits landed during the
+W20 window at audit-write time"; W20 §6 check #2 classification:
+"one lane observed, not three"). That declaration held at the
+time of writing (and was explicitly hedged by the addendum
+protocol notice) but was invalidated by the bass-lane commit
+**`9336280`** (`FB-3.1: TiltedSpeciesBackground abstraction +
+beta->0 limit recovery (Phase FB-3 entry)`, 2026-04-19
+23:14:55 +0900), which landed on `main` between W20D5
+`4d7a3ed` (23:04:xx) and the audit commit `5dfcf2d`
+(23:15:xx) — approximately one minute before my audit commit.
+
+This mirrors the W16 F1 / W16D7 and W19 F4 post-audit addendum
+patterns (third occurrence of the same scenario; the addendum
+protocol notice at the top of this section pre-documented the
+expected recurrence). Mechanical re-verification:
+
+- `git show --stat 9336280` returns: `docs/audits/AUDIT_PHASE_
+  FB3_2026-04-19.md` + `docs/lowell_bianchi/00_conventions.md`
+  + `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md`. Under A46.2's
+  ind-tracks ownership prefix (`bass_py/mio/**`, `bass_py/
+  workspace/**`, `bass_py/src/common/**`, `bass_py/tsc/**`,
+  `docs/dossier/A*`, `docs/INDEPENDENT_TRACKS_*`, `docs/audits/
+  AUDIT_PHASE_IND_TRACKS_*`, `project/00_manuscript/ch{03,11,12}
+  _*.tex`): zero paths match. `docs/audits/AUDIT_PHASE_FB3_*.md`
+  is bass-lane-owned (bass-audit prefix, distinct from
+  `AUDIT_PHASE_IND_TRACKS_*`); `docs/lowell_bianchi/*` is
+  bass-lane-owned per the governing plan. **All three paths are
+  bass-lane per A46.2.** Zero gallery-lane paths.
+- `git show --stat 5dfcf2d` returns: `docs/audits/AUDIT_PHASE_
+  IND_TRACKS_W20_2026-04-19.md` + `docs/INDEPENDENT_TRACKS_
+  NEXT_SESSION.md` — **both ind-tracks-owned per A46.2**. Zero
+  bass or gallery paths. The W15D1 scoped-pathspec rule excluded
+  the same two concurrent drift vectors (68 W19 gallery renames
+  + W18 bass-lane deletions) that had sat in the staging index
+  / working tree throughout the W20 window.
+
+### Revised §6 check #1 — W12 F1 / W14 F1 recurrence check
+
+**PASSED** (unchanged verdict). `git show --stat` on the five
+W20-window shas (`9fb1407`, `5391dc8`, `4d7a3ed`, `9336280`,
+`5dfcf2d`) shows each commit scoped to a single lane:
+
+- ind-tracks: `{9fb1407, 5391dc8, 4d7a3ed, 5dfcf2d}` — four
+  commits, each touching exactly one or two ind-tracks files
+  (`bass_py/mio/tests/test_mio_certificate_generator.py`,
+  `docs/dossier/A46_*.md`, `docs/dossier/A48_*.md`,
+  `docs/audits/AUDIT_PHASE_IND_TRACKS_W20_*.md` +
+  `docs/INDEPENDENT_TRACKS_NEXT_SESSION.md`).
+- bass: `{9336280}` — one commit, touching only
+  `docs/audits/AUDIT_PHASE_FB3_*.md` + `docs/lowell_bianchi/*`
+  paths.
+- gallery: `{}` — zero commits.
+
+Zero file overlap between the ind-tracks and bass commit sets.
+The two concurrent drift vectors (staging-index gallery renames
++ working-tree bass-lane deletions) are still not in any of
+the five commits; they remain in the working-tree index,
+consistent with the W19 addendum observation that these drifts
+are long-running and lane-side. The scoped-pathspec rule held:
+`5dfcf2d` contains exactly the two docs paths I listed in the
+commit command, not the broader drift surface.
+
+### Revised §6 check #2 — A46.2 lane classification
+
+A46.2 applied to the five W20-window shas produces:
+`{ind-tracks: 4, bass: 1, gallery: 0}`. **Two lanes observed,
+not three.** A46.4's first-three-lane-observation template
+remains paste-ready for a future phase; W18 → W19 → W20 three
+consecutive phases now resolve to ≤ two-lane windows. (The
+W20 audit body's "single-lane" classification is corrected
+here to "two-lane post-addendum", matching the W19 precedent
+where the audit body's single-lane declaration was similarly
+corrected.)
+
+### Stress-test ledger update
+
+The W15D1 scoped-pathspec rule has now been exercised under
+the following adversarial windows:
+
+- **W16D7** — concurrent-commit (bass-lane `4c50313` between
+  W16D5 and audit).
+- **W17D3** — working-tree-drift (four unstaged
+  `bass_py/bass/hierarchy/*` files at commit time).
+- **W18D5→W18D7** — second concurrent-commit observation
+  (bass-lane `92cefa2` between W18D5 and audit).
+- **W19D5→W19D7** — third concurrent-commit observation
+  (bass-lane `d7d25da` between W19D5 and audit) + staging-
+  index drift (68 gallery renames).
+- **W20D5→W20D7** — fourth concurrent-commit observation
+  (bass-lane `9336280` between W20D5 and audit) + staging-
+  index drift (68 gallery renames carried from W19) +
+  working-tree drift (W18 bass-lane deletions). First phase
+  where **three** independent drift vectors coincided in the
+  same audit window (lane arrival + staging-index
+  contamination + working-tree-drift carry); all three
+  absorbed by the W15D1 rule with zero manual intervention
+  beyond the required pathspec form.
+
+### Carry-forward W20 F4 → §3 table
+
+W20 F4 (this addendum — stale single-lane declaration in the
+audit body, corrected here) is **RESOLVED by this addendum**;
+no W21 repair is required beyond continuing the addendum-
+protocol discipline pre-documented in the top notice. The
+"status-gate at audit-commit time" optional W20+ follow-up
+raised in W19 F4's carry-forward remains optional: the
+addendum-pattern is now protocol-level (three recurrences
+locked), which is a sufficient workflow guarantee until a
+future phase where the addendum itself fails (i.e. the
+scoped-pathspec rule would fail under some yet-unobserved
+scenario). Memory `feedback_git_workflow.md` could be updated
+with a "status-gate at audit-commit time" entry; this remains
+optional for W21+.
+
+Phase `IND_TRACKS_W20` closure re-affirmed with the corrected
+two-lane window narrative; no gate re-test needed (all five
+items remain green under the corrected classification).
