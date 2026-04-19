@@ -1,9 +1,10 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W22` phase.
-**Last audited**: 2026-04-19
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W22_2026-04-19.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W21_2026-04-19.md`,
+**As of**: 2026-04-20, post-`IND_TRACKS_W23` phase.
+**Last audited**: 2026-04-20
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W23_2026-04-20.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W22_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W21_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W20_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W19_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W18_2026-04-19.md`,
@@ -645,47 +646,98 @@ Week 22 final gate — **all five items green**:
 - [x] No touched-surface regressions (1080 passed; unchanged vs
       W21; 0 failed; 4 skipped unchanged).
 
+## §1c-20. What shipped in Week 23
+
+Session of 2026-04-20 (compressed: one session covered Week-23
+Days 1-7). Three committed in-lane landings + one phase-boundary
+audit (`AUDIT_PHASE_IND_TRACKS_W23_2026-04-20.md`).
+
+| Track | Artefact | Status |
+|---|---|---|
+| W23D1 §A50.2 sliding-window clarification (W22 R1 / W22 F2) + formal §A50.2 evaluation | `docs/dossier/A50_addendum_notice_memory_promotion_spec.md` +18 / −5 L — replaces §A50.2 condition (4) body with an explicit "Sliding-window clarification (W22 R1 / W23D1)" narrative: the "three-window span" is strictly the currently-evaluated W<N-2>/W<N-1>/W<N> audits; historical addendum precedents (W19 F4 / W20 F4) do NOT carry past their window's eviction; "As of 2026-04-19" phrasing scoped as point-in-time snapshot of the W20/W21/W22 evaluation. W23D1 commit body records the formal §A50.2 evaluation for the W21/W22/W23 span: (1) PASSED (notice carry W20/W21/W22); (2) PASSED (A49.3 dogfooded W21 + W22); (3) PASSED (zero A49.6 failures); (4) **FAILED** (zero in-span addendum triggers); promotion defers to W24+. | landed (`4a1f7ed`) |
+| W23D3 §A49.9 trigger #2 A49.8.1 regex co-edit sub-bullet (W22 R2 / W22 F1) | `docs/dossier/A49_audit_post_commit_addendum_protocol.md` +5 L — new nested sub-bullet under §A49.9 trigger #2 labelled "Co-edit target (W22 R2 / W23D3)" naming §A49.8.1 stage-(d) `ind_tracks_re` regex as a must-edit-in-same-PR target whenever A46.2 lane-ownership prefixes change. Closes the silent-disablement risk flagged as W22 F1 (A46.2 revision without propagating into §A49.8.1 regex staling the hook; latent today since hook is paper-only). Touched surface 1080 → 1080 (docs-only). | landed (`c88ef03`) |
+| W23D5 DOS-A51 post-promotion memory-rule stability protocol | NEW `docs/dossier/A51_post_promotion_memory_stability_protocol.md` (283 L, nine sections). §A51.1 Purpose (three-part discipline: positive verification + drift detection + maturation ledger); §A51.2 Per-phase §6 row paste-template with three-question mechanical audit (re-snapshot execution, snapshot-vs-narrative match, precedent-list freshness); §A51.3 Three-way consistency check (memory file ↔ NEXT_SESSION §0 ↔ A49.3/A49.5 citations) with four drift patterns (P0–P3) + per-pattern repair paths; §A51.4 Maturation ledger (1–5 dense, 6–10 every-other, 11+ quarterly); §A51.5 Mandatory floor (three checks never skipped); §A51.6 Cross-reference to A50.5 de-promotion handoff table; §A51.7 No code landing; §A51.8 Four re-audit triggers; §A51.9 Cross-refs. Status: **spec-pending, trigger-gated** on A50.2 first firing; dormant as of 2026-04-20 (W23D1 eval returned condition (4) FAIL under clarified sliding-window reading). Caller's choice (option 3 of three W23D5 A51 candidates) — option 3 picked because it continues the W22D5 (A50) → W23D1 (A50.2 sliding-window) governance thread. Options 1 (W18 F3 anchor-location protocol) + 2 (cross-check channel catalogue extension) remain unpicked for W24+. | landed (`b3032ef`) |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W23_2026-04-20.md` — §6 W12 F1 / W14 F1 cross-lane-contamination recurrence check returns **PASSED** (three W23 commits each scoped exactly to a single ind-tracks-owned dossier path; **zero cross-lane commits** landed during the W23 window at audit-write-time AND audit-commit-time — cleanest window since post-A49 dogfooding began; four concurrent drift vectors (W19 gallery renames + W18 bass-lane deletions + TIER_A figure PDF updates + .claude/hooks + scripts/make_physics_gallery.py) sat in the staging index / working tree throughout W23 and were excluded by the scoped-pathspec rule on every W23 commit). §6 W23 check #2 applies A46.2's lane-classification to the three W23-window shas and resolves to **one lane observed (ind-tracks only), not three** — A46.4 first-three-lane-observation template not triggered this phase (six consecutive phases with ≤ two-lane result: W18 two-lane, W19 two-lane post-addendum, W20 two-lane post-addendum, W21 one-lane, W22 two-lane, W23 one-lane; second single-lane phase). **§6 W23 check #3 is the third consecutive dogfooding of A49.3's audit-commit-time re-snapshot rule** (W21 first, W22 second); re-snapshot returned zero additional cross-lane arrivals post-write — no post-audit addendum needed. §6 W23 check #4 is the first formal §A50.2 evaluation row in a phase audit (complements the W23D1 commit-body record). | landed |
+
+Final test tally over the touched surface at W23 boundary:
+**1080 passed, 0 failed, 4 skipped** (unchanged vs W22's 1080;
+0 skip change; 0 regressions). Skip composition unchanged from
+W10 end-of-phase.
+
+Week 23 final gate — **all five items green**:
+
+- [x] §A50.2 promotion-gate evaluation performed at W23D1
+      (alternative-if-preferred path executed: **W22 R1 §A50.2
+      sliding-window clarification** `4a1f7ed`); formal evaluation
+      result: (1) PASSED, (2) PASSED, (3) PASSED, (4) FAILED
+      under the newly clarified sliding-window reading; promotion
+      defers to W24+.
+- [x] One W22 F-residual / W20-R3 carry / W21-carry alternative
+      landed — **W22 R2 §A49.8.1 regex A46.2-drift sync note
+      picked** (W23D3 `c88ef03`; +5 L docs-only sub-bullet under
+      §A49.9 trigger #2; closes W22 F1).
+- [x] One of A51 dossier / MANU-CH03 extension landed —
+      **A51 picked** (W23D5 `b3032ef`; new dossier, 283 L,
+      nine sections; post-promotion memory-rule stability
+      protocol).
+- [x] Phase-boundary audit log written; §6 W12 F1 / W14 F1
+      recurrence check returns **PASSED** (eighth distinct
+      stress-test of the W15D1 scoped-pathspec rule; fifth phase
+      with active working-tree drift absorbed by construction;
+      second single-lane observation phase). §6 check re-run at
+      audit-commit time per A49.3 (third consecutive dogfooding).
+      Addendum protocol notice carried forward per A49.5 (fourth
+      consecutive in-body notice).
+- [x] No touched-surface regressions (1080 passed; unchanged vs
+      W22; 0 failed; 4 skipped unchanged).
+
 ## §1d. What was designed in the 2026-04-19 planning session
 
 (Preserved here for provenance; unchanged from earlier rotations.
 See v3 research plan + PART II + PART III of the governing plan.)
 
-## §2. Active priorities for the next session (Week 23)
+## §2. Active priorities for the next session (Week 24)
 
-**"A50.2 promotion-gate evaluation (W23D1 earliest fire) + one
-W22 F-residual / W20-R3 carry close + one A5x dossier / §A49-A50
-expansion / MANU-CH03 extension"**. Week 22 landed all five gate
-items (§A48.3 bilateral contract cross-reference + §A49.8.1 hook
-skeleton + DOS-A50 memory-promotion spec + phase audit), MIO
-contribution held at 109, touched-surface held at 1080 (all three
-W22 landings are docs-only — dossier prose extensions or new
-dossier file). The W12 F1 / W14 F1 cross-lane pattern did NOT
-recur (W22 audit §6 check #1 PASSED — three W22 commits scoped
-exactly to own paths; one pre-landing cross-lane bass commit
-`fdb1d86` arrived before W22D1 and was part of the window state
-at both write-time and audit-commit-time; four concurrent drift
-vectors (W19 gallery renames + W18 bass-lane deletions + TIER_A
-figure PDFs + .claude/hooks + scripts/make_physics_gallery.py)
-sat in the staging index / working tree and were excluded by the
-scoped-pathspec rule on every W22 commit — seventh distinct phase
-exercising the W15D1 rule; fourth phase with active working-tree
-drift). A46.4's three-lane template did NOT trigger (W22 audit §6
-check #2 — two lanes observed (ind-tracks + bass), not three; W18
-→ W19 → W20 → W21 → W22 five consecutive ≤ two-lane phases).
-**A49.3's audit-commit-time re-snapshot rule was dogfooded a
-second consecutive time** (W22 §6 check #3); per §A50.2 condition
-(2), the "≥ two of three" sub-gate is now satisfied. W23 is the
-**earliest realistic §A50.2 promotion-gate firing date** (§A50.2
-condition (1) requires three consecutive carry-forwards; W21 =
-#2, W22 = #3 post-this-audit). W23 targets the three P3 residuals
-from W22 audit §8 (R1 A50.2 sliding-window clarification, R2
-A49.8.1 regex A46.2-drift sync note, R3 A50 promotion-gate binary
-check at W23 audit), plus the unpicked W22D5 options (W18 F3
-anchor-location protocol, cross-check channel catalogue extension)
-that remain available as A51 candidates, and the HJ-01-PR-gated
-carries (W20 R3 A48.2 milestone-tag YAML sidecar).
+**"A50.2 re-evaluation against W22/W23/W24 sliding window + one
+W23 F-residual / W20-R3 carry close + one A5x dossier / §A50-A51
+expansion / MANU-CH03 extension"**. Week 23 landed all five gate
+items (§A50.2 sliding-window clarification + §A49.9 trigger #2
+co-edit sub-bullet + DOS-A51 post-promotion stability protocol +
+phase audit), MIO contribution held at 109, touched-surface held
+at 1080 (all three W23 landings are docs-only — dossier prose
+replace-in-place + sub-bullet + new dossier file). The W12 F1 /
+W14 F1 cross-lane pattern did NOT recur (W23 audit §6 check #1
+PASSED — three W23 commits scoped exactly to own paths; **zero
+cross-lane commits** landed during the W23 window at both
+write-time and audit-commit-time — cleanest window since post-A49
+dogfooding began; four concurrent drift vectors (W19 gallery
+renames + W18 bass-lane deletions + TIER_A figure PDFs +
+.claude/hooks + scripts/make_physics_gallery.py) sat in the
+staging index / working tree and were excluded by the scoped-
+pathspec rule on every W23 commit — eighth distinct phase
+exercising the W15D1 rule; fifth phase with active working-tree
+drift). A46.4's three-lane template did NOT trigger (W23 audit §6
+check #2 — one lane observed (ind-tracks only), not three; W18 →
+W19 → W20 → W21 → W22 → W23 six consecutive ≤ two-lane phases;
+second single-lane observation phase after W21). **A49.3's audit-
+commit-time re-snapshot rule was dogfooded a third consecutive
+time** (W23 §6 check #3); dogfooding streak is now W21 + W22 +
+W23. **§A50.2 promotion-gate formally evaluated at W23D1**
+(`4a1f7ed` — alternative-if-preferred path executed via W22 R1
+sliding-window clarification): (1) PASSED, (2) PASSED, (3) PASSED,
+(4) **FAILED** under the W23D1 sliding-window reading (zero
+addendum triggers within the W21/W22/W23 span); **promotion
+defers to W24+**. W24 targets the three P3 residuals from W23
+audit §8 (R1 A51 dormancy-caveat note, R2 A50 per-firing
+evaluation ledger surface — optional, R3 A51.3 placeholder-path
+resolution) plus R4 (A50 promotion-gate binary re-check against
+the new W22/W23/W24 sliding window at W24 audit), plus the still-
+unpicked W22D5/W23D5 options (W18 F3 anchor-location protocol,
+cross-check channel catalogue extension) available as A52
+candidates, and the HJ-01-PR-gated carries (W20 R3 A48.2
+milestone-tag YAML sidecar).
 
-Week 23 remains in the dependency-wait window: HJ-01 production
+Week 24 remains in the dependency-wait window: HJ-01 production
 wiring, HJ-03 evidence anatomy, HJ-04 departure skeleton, and
 MANU-CH12 §§12.1 / 12.4 / 12.5 / 12.8 are still blocked on
 bass_py W10-02 (K_ℓ atlas) and bass_py W11-02 (BiPoSH) —
@@ -696,73 +748,88 @@ deferred-to-trigger per §A43.3. A46.4 first-three-lane-
 observation row stays paste-ready for the first phase that needs
 it. A47.5 per-test translation table and §A46.6 code-surface
 file list are both HJ-03-PR-gated (W19 R1 / W19 R2). A49.3 +
-A49.5 continue to be exercised in every phase audit. **§A50.2
-promotion-gate evaluation lands in W23 if all four conditions
-hold** — if yes, W23D1 executes the §A50.4 paired dossier edits
-+ memory bullet landing in a single scoped commit; if no, W23 R1
-documents which condition failed and continues the carry.
+A49.5 continue to be exercised in every phase audit. A51 remains
+**dormant** (trigger-gated on A50.2 first firing); §A51.2 paste-
+template must NOT be used pre-promotion (W23 F1). **§A50.2
+promotion-gate re-evaluation lands in W24 against the new
+W22/W23/W24 sliding window** — condition (4) fires only if a W23
+or W24 cross-lane arrival triggered an addendum in §6 check #3;
+otherwise promotion defers to W25+.
 
-### Days 1–2 — §A50.2 promotion-gate evaluation (W22 R3 / unblocked)
+### Days 1–2 — §A50.2 re-evaluation (W23 R4 / unblocked)
 
-1. **W23D1 §A50.2 four-condition evaluation.** Before any other
-   work, evaluate all four §A50.2 conditions in order:
+1. **W24D1 §A50.2 four-condition evaluation** against the new
+   W22/W23/W24 sliding window. Before any other work, re-run
+   the W23D1 evaluation protocol:
    - **Condition (1)** — notice carried forward in three
-     consecutive audit bodies without drift. Baseline: W20
-     (first) + W21 (second) + W22 (third, this-just-landed).
-     **Verify** by grepping each audit for the "Addendum
-     protocol notice" section header and confirming the
-     precedent list in each is cumulative against the previous.
-     If any of the three audits lacks the section or drifted
-     the body shape, §A49.9 trigger #3 fires instead (not the
-     memory promotion) and the plan switches to A49 re-audit.
+     consecutive audit bodies without drift. Baseline: W22
+     (first in this window) + W23 (second, just-landed) + W24
+     (this session, pending audit). **Verify** by grepping
+     W22 + W23 audits for the "Addendum protocol notice"
+     section header; confirm W24 audit will inherit the notice
+     cumulatively at W24D7.
    - **Condition (2)** — §A49.3 dogfooded in ≥ two of the three
-     audits. Baseline: W21 (first), W22 (second) — already
-     satisfied per W22 audit §6 check #3.
+     audits. Baseline: W22 (second overall, first in this
+     window) + W23 (third overall, second in this window) —
+     already satisfied. W24 dogfooding at W24D7 will extend
+     the streak to four consecutive.
    - **Condition (3)** — no §A49.6 failure mode observed in any
      of the three audit windows. Baseline: zero observed
-     through W22. Verify by greping each audit for a §A49.6
-     fingerprint paragraph; expect zero matches.
+     through W23.
    - **Condition (4)** — ≥ one addendum triggered within the
-     three-window span. Baseline: W19 F4 + W20 F4 both
-     within W21/W22/W23 span; already satisfied but verify
-     against the sliding-window clarification W23 R1 applies
-     (below).
-2. **If all four hold**: execute §A50.4 paired edits in a single
-   scoped W23D1 commit — (a) append the §A50.3 memory-bullet
-   body to memory `feedback_git_workflow.md`'s "How to apply:"
-   list; (b) rewrite §A49.3's imperative paragraph to cite the
-   memory entry; (c) rewrite §A49.5's introductory paragraph
-   likewise; (d) strike-through §A49.9 trigger #4 with
-   "FIRED W23D1 ..." annotation; (e) add a paired first-order
-   rule bullet to `docs/INDEPENDENT_TRACKS_NEXT_SESSION.md` §0
-   mirroring the memory bullet.
-3. **If any condition fails**: land a W23D1 commit opening a
-   new Fx finding on the failing condition; promotion stays
-   deferred to W24+ and A50.2 is tightened if the failure
-   indicates a spec gap.
+     W22/W23/W24 span under the W23D1 sliding-window reading.
+     W22 §6 #3 clean, W23 §6 #3 clean — current count within
+     the new window is **zero**; condition (4) fires only if
+     W24D7's §6 check #3 detects a post-write cross-lane
+     arrival (requires concurrent bass/gallery commit between
+     audit-write and audit-commit).
+2. **If all four hold at W24D7**: execute §A50.4 paired edits
+   in a single scoped W24D1-or-D7 commit — (a) append the
+   §A50.3 memory-bullet body to memory
+   `feedback_git_workflow.md`'s "How to apply:" list; (b)
+   rewrite §A49.3's imperative paragraph to cite the memory
+   entry; (c) rewrite §A49.5's introductory paragraph likewise;
+   (d) strike-through §A49.9 trigger #4 with "FIRED W24D?
+   ..." annotation; (e) add a paired first-order rule bullet
+   to `docs/INDEPENDENT_TRACKS_NEXT_SESSION.md` §0 mirroring
+   the memory bullet. **Activate A51**: add the A51.1
+   dormancy-caveat note (W23 R1) in the same commit.
+3. **If condition (4) still fails**: land a W24D1 commit closing
+   an unblocked W23 R1 / R3 docs-nit (preferred) or a W21/W22
+   carry alternative; promotion stays deferred and W25
+   re-evaluates against W23/W24/W25.
 
-Alternative-if-preferred D1 target (if W22 audit's §A50.2
-evaluation confirms gate is not ready): **W22 R1 §A50.2
-sliding-window clarification** (~2–3 L) — add one sentence to
-§A50.2 condition (4) spelling out that the addendum-triggered
-precedent must lie within the currently-evaluated three-window
-span, not historical cumulative. Closes W22 F2.
+Alternative-if-preferred D1 target (if gate still defers at
+W24D7): **W23 R1 A51.1 dormancy-caveat note** (~2 L) — add
+"Pre-promotion caveat: §A51.2 per-phase §6 row is paste-ready
+for W<N>D7 audits only *after* A50.2 gate fires; before
+promotion, A51 is reference material" inside §A51.1 Purpose
+section. Closes W23 F1.
 
-- Commit tag: `W23D1: AUDIT(W22 R3): §A50.2 promotion-gate firing
-  + §A50.4 paired edits` (if gate fires) OR `W23D1: AUDIT(W22 R1):
-  §A50.2 sliding-window clarification` (if gate defers).
+- Commit tag: `W24D1: AUDIT(W23 R4): §A50.2 W22/W23/W24 promotion-
+  gate firing + §A50.4 paired edits + A51 activation` (if gate
+  fires) OR `W24D1: AUDIT(W23 R1): A51.1 dormancy-caveat note`
+  (if gate defers).
 - Gate: either full §A50.4 paired landing (~30–50 L across four
-  files + 1 memory entry) or a ~2–3 L docs clarification; cross-
-  reference resolution verified; touched-surface 1080 → 1080; MIO
-  contribution holds at 109.
+  files + 1 memory entry + A51 dormancy note removal) or a ~2 L
+  docs clarification; cross-reference resolution verified;
+  touched-surface 1080 → 1080; MIO contribution holds at 109.
 
-### Days 3–4 — One W22 F-residual or W20/W21-carry alternative
+### Days 3–4 — One W23 F-residual or W20/W22-carry alternative
 
-1. **W22 R2 — §A49.8.1 regex A46.2-drift sync note.** Add a
-   sub-bullet to §A49.9 trigger #2 (A46.2 lane-ownership-
-   prefixes change) explicitly naming §A49.8.1 stage-(d) regex
-   as a co-edit target. Closes W22 F1. ~2–3 L docs.
-2. **Unblocked alternatives (W20/W21/W22 carries)**:
+1. **W23 R3 — A51.3 placeholder-path resolution note.** Amend
+   §A51.3's shell-command block header with "Substitute `<path>`
+   from the current session's `AUDIT_PROMPT.md` context; the
+   memory-store location is user-specific and not repo-tracked"
+   (~1–3 L). Closes W23 F3.
+2. **W23 R2 — A50 per-firing evaluation ledger** (optional).
+   Add a §A50.2.1 "Per-firing evaluation log" subsection to
+   A50 accumulating per-phase PASS/FAIL entries, seeded with
+   the W23D1 entry as the first row (~15–25 L). Closes W23 F2.
+   Tidiness landing — author's judgement on whether to expand
+   §A50.2 this way or keep the current commit-body + audit-§1
+   SSOT pair.
+3. **Unblocked alternatives (W20/W21/W22/W23 carries)**:
    - **W20 R3 — §A48.2 machine-readable SSOT scaffold.** Start
      a `docs/dossier/A48_mio_htt_dependency_wait_contract.yaml`
      sidecar (analogous to A36a.yaml) mirroring §A48.2's eight
@@ -771,23 +838,22 @@ span, not historical cumulative. Closes W22 F2.
      ~30–50 L test.
    - **§A46.4 steady-state phrasing** (still gated on first
      three-lane observation per W18 F2; remains deferred —
-     not Week-23-actionable).
+     not Week-24-actionable).
    - **§A46.6 code-surface file list** (HJ-03-PR-gated per
-     W19 F2; not Week-23-actionable).
+     W19 F2; not Week-24-actionable).
    - **W16 SKIP-02b-v3-LEGACY examination.** The 2 ×
      `test_figures_smoke.py` `mio.core` / `mio.reporting`
      skips are W6-era carries blocked on MANU-CH12-NEW figure
-     retirement (still unaddressed through W22). Dossier-only
+     retirement (still unaddressed through W23). Dossier-only
      or thin `test_nulls.py`-style smoke consolidation —
      caller's judgement on commit scope (~150–200 L dossier or
      ~30–50 L test refactor).
-3. Caller's choice per W23 priorities; default to **W22 R2
-   A49.8.1 regex sync note** if unblocked and W23D1 picked the
-   full A50.4 promotion landing (keeps W23D3 short and focused).
+4. Caller's choice per W24 priorities; default to **W23 R3
+   A51.3 placeholder-path note** (unblocked, shortest).
 
-- Commit tag: `W23D3: <AUDIT(W22 R2) or DOS-A48 SSOT or AUDIT(Wx
-  Ry) or AUDIT(W6 SKIP)> <scope>`.
-- Gate: +2–80 L prose edit (or +30–50 L test refactor); cross-
+- Commit tag: `W24D3: <AUDIT(W23 R3) or AUDIT(W23 R2) or DOS-A48
+  SSOT or AUDIT(Wx Ry) or AUDIT(W6 SKIP)> <scope>`.
+- Gate: +1–80 L prose edit (or +30–50 L test refactor); cross-
   reference resolution; no production-code change in the dossier
   paths.
 
@@ -796,93 +862,102 @@ span, not historical cumulative. Closes W22 F2.
 Pick ONE per caller's judgement — both are in-scope per the
 governing plan's dependency-wait window:
 
-1. **DOS-A51 (new A5x dossier — caller chooses topic).**
-   Candidate topics from the W18+ unpicked-option pool and the
-   W22 audit:
-   - **A51 W18 F3 anchor-location protocol** (carry-forward
-     from Week-18/19/20/21/22 unpicked option). Specifies the
-     procedure for relocating the W18D1/W19D1 `_hash_config`
-     anchor if the MIO package layout is reorganised. Includes
-     a "two-anchor coexistence" paragraph for the HJ-03-landed-
-     but-W18/W19-anchor-still-valid interim. ~100–150 L. Cross-
-     refs A41 / A45 / A47.3 / A47.8 / A48.6.
-   - **A51 cross-check channel catalogue extension** (carry-
-     forward from W20D5/W21D5/W22D5 unpicked option). Extends
-     A34.3's channel catalogue with a third entry for HJ-03
-     (once it lands) or for the W7 FM3 TSC-05 schema-hash
-     freeze (on first schema extension). ~100–150 L. Cross-
-     refs A32 / A34 / A41 / A43 / A48.2.
-   - **A51 post-promotion memory-rule stability protocol.**
-     Pairs with A50 — specifies how the durable memory rule is
-     re-verified each Week-N audit post-promotion (§A50.5
-     de-promotion protocol names false-positive observation as
-     a trigger; A51 would specify the positive-verification
-     discipline). ~80–120 L. Cross-refs A49 / A50 / memory.
+1. **DOS-A52 (new A5x dossier — caller chooses topic).**
+   Candidate topics from the W18+ unpicked-option pool:
+   - **A52 W18 F3 anchor-location protocol** (carry-forward
+     from Week-18/19/20/21/22/23 unpicked option). Specifies
+     the procedure for relocating the W18D1/W19D1
+     `_hash_config` anchor if the MIO package layout is
+     reorganised. Includes a "two-anchor coexistence"
+     paragraph for the HJ-03-landed-but-W18/W19-anchor-still-
+     valid interim. ~100–150 L. Cross-refs A41 / A45 / A47.3 /
+     A47.8 / A48.6.
+   - **A52 cross-check channel catalogue extension** (carry-
+     forward from W20D5/W21D5/W22D5/W23D5 unpicked option).
+     Extends A34.3's channel catalogue with a third entry for
+     HJ-03 (once it lands) or for the W7 FM3 TSC-05 schema-
+     hash freeze (on first schema extension). ~100–150 L.
+     Cross-refs A32 / A34 / A41 / A43 / A48.2.
+   - **A52 A50-A51 governance lifecycle diagram** (new option).
+     Pairs with A50 + A51 — a block-diagram appendix showing
+     the A49 → A50 → A51 → A50.5 → ... lifecycle states
+     (convention → gate-specified → promoted → post-promotion
+     verified → de-promoted → ...) with per-state
+     responsibilities and transition triggers. ~80–120 L.
+     Cross-refs A49 / A50 / A51.
 2. **MANU-CH03 §3.X+8 extension (carry-forward from
-   W16/W17/W18/W19/W20/W21/W22 options).** Extend
+   W16/W17/W18/W19/W20/W21/W22/W23 options).** Extend
    `project/00_manuscript/ch03_framework.tex` with the W4
    Θ⁴-bridge → A43 schema-hash subsection. Remember: `/project`
    gitignored, no force-add (W8 FM1 rule); the gate is "+≥ 150 L
    with banned-vocab scan = 0 hits", verified in audit §7 only.
 
-- Commit tag: `W23D5: DOS-A51 <chosen topic>` OR `W23D5: MANU-
+- Commit tag: `W24D5: DOS-A52 <chosen topic>` OR `W24D5: MANU-
   CH03 §3.X+8 a₂-to-observations (uncommitted)`.
-- Gate (option 1): new A51 file + cross-reference resolution; no
+- Gate (option 1): new A52 file + cross-reference resolution; no
   code change. Gate (option 2): ch03_framework.tex +≥ 150 L;
   banned-vocab scan = 0; NOT committed (W8 FM1).
 
 ### Day 7 — Phase audit + NEXT_SESSION rotation
 
 Standard phase-boundary audit per `feedback_phase_boundary_audit.md`.
-Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W23_2026-04-19.md`
+Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W24_2026-04-20.md`
 (date may shift). Audit MUST include a §6 recurrence check for
 W12 F1 / W14 F1 cross-lane contamination (verify the W15D1
-scoped-commit rule was followed on every W23 sha via
+scoped-commit rule was followed on every W24 sha via
 `git show --stat`), plus the A46.2 lane-classification check
 that determines whether the A46.4 three-lane observation row
 fires. The W15D1 scoped-pathspec rule has now been stress-tested
-under seven distinct phases (W16D7 concurrent-commit, W17D3
+under eight distinct phases (W16D7 concurrent-commit, W17D3
 working-tree-drift, W18D5→W18D7 second concurrent-commit,
 W19D5→W19D7 third concurrent-commit + staging-index drift,
 W20D5→W20D7 fourth concurrent-commit + dual drift vectors,
 W21 single-lane with two inactive drift vectors absorbed,
-W22 pre-landing cross-lane + four active drift vectors); W23
+W22 pre-landing cross-lane + four active drift vectors,
+W23 single-lane with four inactive drift vectors absorbed); W24
 §6 continues the per-phase check as routine hygiene. **If a
-three-lane commit window materialises during W23**, the audit
+three-lane commit window materialises during W24**, the audit
 §6 row uses §A46.4's paste-ready "first three-lane observation"
-phrasing and W23 acquires the R1 follow-up of landing §A46.4's
+phrasing and W24 acquires the R1 follow-up of landing §A46.4's
 steady-state phrasing. **Audit §6 MUST re-run `git log
-T_prev..HEAD` at audit-commit time** per A49.3 (third consecutive
-dogfooding). **Audit body MUST carry the "Addendum protocol
-notice" section forward from W22** per A49.5 — this is the W23
-dogfooding of A49.5 cumulative-across-audits rule (fourth
-consecutive in-body notice; if W23D1 fires the §A50.2 promotion
-gate, the notice is rewritten to cite the just-landed memory
-rule rather than restate the discipline inline).
+T_prev..HEAD` at audit-commit time** per A49.3 (fourth
+consecutive dogfooding). **Audit body MUST carry the "Addendum
+protocol notice" section forward from W23** per A49.5 — this is
+the W24 dogfooding of A49.5 cumulative-across-audits rule (fifth
+consecutive in-body notice; if W24 fires the §A50.2 promotion
+gate at D7, the notice is rewritten to cite the just-landed
+memory rule rather than restate the discipline inline; A51
+activates in the same commit). Audit §6 MUST include the formal
+§A50.2 re-evaluation result row (W24 check #4 analogous to W23
+check #4).
 
-### Week 23 final gate
+### Week 24 final gate
 
-- [ ] §A50.2 promotion-gate evaluation performed at W23D1; if
-      gate fires, §A50.4 paired dossier + memory landing
-      executed; if gate defers, the failing condition is
-      documented as a W23 Fx finding.
-- [ ] One W22 F-residual / W20-R3 carry / W21-carry alternative
-      landed (W23D3; caller picks per unblocked status; default
-      W22 R2 A49.8.1 regex sync note if W23D1 picked promotion).
-- [ ] One of A51 dossier / MANU-CH03 extension landed (caller's
-      choice; W23D5).
+- [ ] §A50.2 promotion-gate re-evaluation performed at W24D1
+      and/or W24D7 against the W22/W23/W24 sliding window; if
+      gate fires at D7, §A50.4 paired dossier + memory landing
+      executed + A51 dormancy-caveat activation; if gate
+      defers, the failing condition is documented as a W24 Fx
+      finding and W23 R1 (A51 dormancy-caveat note) picked as
+      the D1 alternative.
+- [ ] One W23 F-residual / W20-R3 carry / W22-carry alternative
+      landed (W24D3; caller picks per unblocked status; default
+      W23 R3 A51.3 placeholder-path note if short; W23 R2 A50
+      per-firing ledger if tidiness preferred).
+- [ ] One of A52 dossier / MANU-CH03 extension landed (caller's
+      choice; W24D5).
 - [ ] Phase-boundary audit log written; §6 W12 F1 / W14 F1
       recurrence check returns PASSED (plus A46.2 lane
       classification resolving to ≤ two lanes, or the first
       three-lane-observation row firing); §6 check re-run at
-      audit-commit time per A49.3 (third consecutive
+      audit-commit time per A49.3 (fourth consecutive
       dogfooding); Addendum protocol notice carried forward per
       A49.5 (or updated to memory-rule citation if §A50.2 gate
-      fired at W23D1).
+      fired at W24D7).
 - [ ] No touched-surface regressions (≥ 1080 passed, 0 failed;
       4 skipped unchanged unless new skips explicitly documented).
 
-### Deferred to Week 23+ (not Week-23 targets) — see `A48.2` SSOT ledger
+### Deferred to Week 24+ (not Week-24 targets) — see `A48.2` SSOT ledger
 
 - **HJ-01 production wiring** — when bass_py W10-02 K_ℓ atlas lands.
   Replace the diagonal independence χ² with the per-ℓ-covariance
