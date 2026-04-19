@@ -153,13 +153,58 @@ wider than intended, or a `-a` / `--all` shorthand that bypassed
 the pathspec form), and the next-session plan carries an
 `R<n>` repair row if the habit needs reinforcement.
 
+### A46.5.1 Common failure-mode invocations (W19D3 / W18 R2)
+
+Three invocation shapes are known to bypass the W15D1 scoped-
+pathspec rule and should be checked first when the fingerprint
+above is observed:
+
+1. **Missing trailing `--`** — e.g. `git commit -m "..." bass_py/mio/foo.py`
+   without the separator. Git accepts this when no path matches a
+   revision, but a path that collides with a branch/ref name
+   causes silent misinterpretation. The separator `--` is the
+   documented "everything after this is a pathspec" marker and
+   the W15D1 rule depends on it.
+2. **`git add -A` + `git commit -m` (no pathspec)** — the `commit`
+   invocation carries no pathspec at all; the entire staged index
+   goes in, including any files a concurrent lane's `git add`
+   dropped into the index during the gap. This is the exact
+   failure mode W12 F1 / W14 F1 exhibited. The W15D1 rule
+   requires the trailing `-- <path1> <path2> …` list to close the
+   race window, so the `-m`-only form is non-compliant by
+   construction.
+3. **`git commit -am`** — the `-a` flag stages every tracked
+   modification before committing. It looks like a scoped invocation
+   because a `-m "..."` message is still required, but there is no
+   pathspec at all and tracked modifications from other lanes (e.g.
+   a bass-lane edit to `bass_py/bass/hierarchy/*` sitting in the
+   working tree) sweep in silently. The W17D3 working-tree-drift
+   scenario would have failed under `-am` exactly as W14 F1 did
+   under `add -A` + `commit -m`; the scoped pathspec form is the
+   only invocation that excludes such drift by construction.
+
+When any of the three shapes is identified in the audit's
+`git reflog` inspection, the `R<n>` repair row calls for an
+explicit reinforcement entry in memory `feedback_git_workflow.md`
+naming the specific shape, rather than a generic "re-read the
+rule" entry.
+
 ## A46.6 Relation to other appendices
 
 * **A41 report_type extension protocol** — §A41.6's HJ-03 worked
   example is a multi-path ind-tracks landing that could
   incidentally coincide with a bass or gallery window; A46's §6
   template is the audit vehicle for verifying the coincidence did
-  not contaminate the HJ-03 commit's diff.
+  not contaminate the HJ-03 commit's diff. Concretely, the HJ-03
+  PR is a three-file ind-tracks landing — `docs/dossier/
+  A42_evidence_anatomy.md` (the HJ-03 design dossier updates),
+  §A41.6 step 6.5 (the freeze-the-replay-harness-signature row
+  introduced W18D3), and §A45.6's paste-ready five-test block.
+  All three paths fall under the ind-tracks ownership prefix, so
+  their bundle commit remains single-lane even if bass or gallery
+  lanes are committing in the same audit window; A46.2's lane-
+  classification therefore resolves the HJ-03 commit to
+  ind-tracks regardless of concurrent lane activity.
 * **A44 MIO → HTT handshake sequence** — A44's `git_commit`
   capture-time invariant (W6 FM6 / W11 F5 / W17D1) is an
   *at-instantiation* property of the certificate; A46's scoped-
