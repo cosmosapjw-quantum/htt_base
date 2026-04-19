@@ -1,9 +1,11 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W16` phase.
+**As of**: 2026-04-19, post-`IND_TRACKS_W18` phase.
 **Last audited**: 2026-04-19
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W16_2026-04-19.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W15_2026-04-19.md`,
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W18_2026-04-19.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W17_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W16_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W15_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W14_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W13_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md`,
@@ -446,160 +448,208 @@ Week 17 final gate — **all five items green**:
 - [x] No touched-surface regressions (1079 passed; +2 over W16;
       0 failed; 4 skipped unchanged).
 
+## §1c-15. What shipped in Week 18
+
+Session of 2026-04-19 (compressed: one session covered Week-18
+Days 1-7). Three committed in-lane landings + one phase-boundary
+audit (`AUDIT_PHASE_IND_TRACKS_W18_2026-04-19.md`).
+
+| Track | Artefact | Status |
+|---|---|---|
+| W18D1 A45.2 `_hash_config` docs-↔-code anchor (W17 F1) | `bass_py/mio/tests/test_mio_certificate_generator.py` +50 L — new `test_hash_config_matches_a45_2_pseudocode_shape` imports `_hash_config` by exact name used in A45.2's pseudocode, asserts `__name__ == "_hash_config"` (rename-detector on top of the implicit `ImportError`), calls it with the six-field tuple from `_base_payload()` (`report_type`, `probe_name`, `channel`, `departure_variables`, `adequacy_indicators`, `consistency_metrics`), asserts the return is a 16-char lowercase-hex string (length + case + `string.hexdigits.lower()` subset), and cross-checks `cert.config_hash == _hash_config(...)` build-↔-replay parity on the same payload. Touched surface 1079 → 1080; MIO contribution 108 → 109 (`test_mio_certificate_generator.py` 10 → 11). | landed (`0d2fc9f`) |
+| W18D3 A45.6 ↔ A41.6 harness-signature cross-link (W17 F2) | `docs/dossier/A45_mio_cache_replay_drift.md` +14 L — new up-front "Harness-signature note (W17 F2 / W18D3)" paragraph in §A45.6 binding the paste-ready five-test block to the two-argument `verify_cache_replay(mio_cert, htt_input_bundle, *, allow_unsigned_config=False)` signature from §A45.2 and deferring the freeze decision to A41.6 step 6.5. `docs/dossier/A41_mio_report_type_extension_protocol.md` +11 L — new reciprocal step 6.5 "Freeze the replay-harness signature" inserted between step 6 and step 7 of the §A41.6 HJ-03 worked example with a forward pointer to §A45.6 and the "same PR as paste-replace" rule. Bidirectional cross-reference resolution verified (grep: `A41.6 / §A41.6` = 4 hits in A45.md; `A45.6 / §A45.6` = 3 hits in A41.md). | landed (`23fefbb`) |
+| W18D5 DOS-A46 three-lane race stress-test protocol (W17 F3) | NEW `docs/dossier/A46_three_lane_race_stress_test.md` (182 L, eight sections). §A46.1 narrates the two already-observed adversarial scenarios (W16D7 concurrent-commit, W17D3 working-tree-drift) and the missing third (three-lane race). §A46.2 defines the audit window (`T_prev` → `T_curr` phase-boundary audit commits) and the three lane-ownership prefix sets (ind-tracks / bass / gallery). §A46.3 gives the three-terminal adversarial recipe and establishes the non-finding-by-design property of the W15D1 scoped-pathspec rule under three concurrent commits. §A46.4 is the paste-ready §6 audit row template for the first three-lane observation. §A46.5 is the failure-pattern fingerprint for the case where the rule ever fails (pre-commit hook becomes load-bearing). §§A46.6–7 cross-reference A41.6 / A44.3 / memory `feedback_git_workflow.md` and commit to documentation-only until observation. Closes W17 F3 spec; landing trigger deferred to first three-lane window. | landed (`7cc5a42`) |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W18_2026-04-19.md` (521 L) — §6 W12 F1 / W14 F1 cross-lane-contamination recurrence check returns **PASSED** (three W18 commits each scoped exactly to a single lane-owned path; one cross-lane commit `92cefa2` landed between W18D5 and the audit commit but touched only bass-lane-owned paths — zero file overlap with any W18 commit). §6 W18 check #2 applies A46.2's lane-classification to the four W18-window shas and resolves to **two lanes observed (ind-tracks + bass), not three** — A46.4 first-observation template not triggered this phase. Includes working-tree-layout transparency paragraph noting the venv editable-install finder re-point from `bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot/` to `htt_base/htt/htt/` (per bass-lane `92cefa2` body); pytest runs against the `htt/...` working-tree mirror; all tracked `bass_py/...` paths per W15D1 scoped-pathspec rule. | landed |
+
+Final test tally over the touched surface at W18 boundary:
+**1080 passed, 0 failed, 4 skipped** (+1 vs W17's 1079; 0 skip
+change; 0 regressions). Skip composition unchanged from W10
+end-of-phase.
+
+Week 18 final gate — **all five items green**:
+
+- [x] W17 F1 / W17 R1 A45.2 `_hash_config` docs-↔-code anchor
+      landed (W18D1 `0d2fc9f`; +1 test; MIO 108 → 109).
+- [x] W17 F2 / W17 R2 A45.6 ↔ A41.6 cross-link landed (W18D3
+      `23fefbb`; +25 L prose; bidirectional resolution verified).
+- [x] One of A46 dossier / MANU-CH03 extension landed — **A46
+      picked** (W18D5 `7cc5a42`; new dossier, 182 L; closes W17 F3
+      spec with landing trigger deferred to first three-lane
+      observation).
+- [x] Phase-boundary audit log written; §6 W12 F1 / W14 F1
+      recurrence check returns **PASSED** (third distinct
+      adversarial stress-test of the W15D1 scoped-pathspec rule —
+      second observation of the concurrent-commit scenario,
+      following W16D7; A46.4 three-lane template not triggered
+      this phase).
+- [x] No touched-surface regressions (1080 passed; +1 over W17;
+      0 failed; 4 skipped unchanged).
+
 ## §1d. What was designed in the 2026-04-19 planning session
 
 (Preserved here for provenance; unchanged from earlier rotations.
 See v3 research plan + PART II + PART III of the governing plan.)
 
-## §2. Active priorities for the next session (Week 18)
+## §2. Active priorities for the next session (Week 19)
 
-**"A45 docs-↔-code anchor (W17 F1 / W17 R1) + A45.6 ↔ A41.6
-cross-link (W17 F2 / W17 R2) + one A4x dossier"**. Week 17 landed
-all five gate items (W16 F2 `git_commit` runtime gate + W16 F3
-A36a YAML range-bracketing + A45 cache-replay drift dossier +
-phase audit), MIO contribution 107 → 108, touched-surface 1077 →
-1079. The W12 F1 / W14 F1 cross-lane pattern did NOT recur (W17
-audit §6 check #1 PASSED — three W17 commits scoped exactly to
-own paths; zero cross-lane commits on `main` in the W17 window;
-W17D3 uniquely exercised the scoped-pathspec rule against a
-working-tree bass-lane drift — four unstaged files under
-`bass_py/bass/hierarchy/` excluded by construction). W18 targets
-the three P3 residuals from W17 audit §8 (R1 / R2 / R3).
+**"W18D1 anchor kwarg-evolution hedge (W18 F1 / W18 R1) + §A46.4
+second-observation lifecycle (W18 F2 / W18 R2) + one A4x dossier
+OR MANU-CH03 extension"**. Week 18 landed all five gate items
+(W17 F1 `_hash_config` docs-↔-code anchor + W17 F2 A45.6 ↔ A41.6
+cross-link + W17 F3 A46 three-lane race dossier + phase audit),
+MIO contribution 108 → 109, touched-surface 1079 → 1080. The
+W12 F1 / W14 F1 cross-lane pattern did NOT recur (W18 audit §6
+check #1 PASSED — three W18 commits scoped exactly to own paths;
+one cross-lane bass-lane commit `92cefa2` landed during the
+window but touched only bass-owned paths, zero file overlap with
+any W18 commit — third distinct adversarial stress-test of the
+W15D1 rule, second observation of the W16D7 concurrent-commit
+scenario). A46.4's three-lane audit row template did NOT trigger
+this phase (W18 audit §6 check #2 — two lanes observed, not
+three). W19 targets the three P3 residuals from W18 audit §8
+(R1 / R2 / R3).
 
-Week 18 remains in the dependency-wait window: HJ-01 production
+Week 19 remains in the dependency-wait window: HJ-01 production
 wiring, HJ-03 evidence anatomy, HJ-04 departure skeleton, and
 MANU-CH12 §§12.1 / 12.4 / 12.5 / 12.8 are still blocked on bass_py
 W10-02 (K_ℓ atlas) and bass_py W11-02 (BiPoSH). A43 digest test
-itself stays deferred-to-trigger per §A43.3 (also W17 §8 R3 —
-still trigger-gated).
+itself stays deferred-to-trigger per §A43.3 (also W18 §8 R3 —
+still trigger-gated). A46.4 first-three-lane-observation row
+stays paste-ready for the first phase that needs it.
 
-### Days 1–2 — W17 F1 / W17 R1 A45.2 `_hash_config` docs-↔-code anchor
+### Days 1–2 — W18 F1 / W18 R1 `_hash_config` kwarg-evolution hedge
 
-1. **W17 F1 — A45.2 pseudocode names `_hash_config` as the
-   re-hashing helper, but no test anchors the helper's observable
-   shape.** A future MIO-interface refactor that renames
-   `_hash_config`, reorders its positional args, or changes the
-   16-char sha256 prefix length would silently drift A45.2's
-   pseudocode from the code it describes. The HJ-03 author (whose
-   replay harness paste-copies §A45.6) would then either land a
-   broken pseudocode or discover the drift at review time. Add a
-   micro-anchor test in `bass_py/mio/tests/test_mio_certificate_
-   generator.py` (or a sibling test module — check where the
-   existing `build_mio_certificate` tests live) that:
-   - imports `mio.interface.mio_certificate._hash_config` by the
-     exact name used in A45.2;
-   - calls it on a frozen payload tuple matching the A45.2
-     signature (`report_type`, `probe_name`, `channel`,
-     `departure_variables`, `adequacy_indicators`,
-     `consistency_metrics`);
-   - asserts the return value is a 16-character lowercase-hex
-     string (the A45.2-assumed shape);
-   - asserts `len(_hash_config.__name__) > 0` + `_hash_config.__name__
-     == "_hash_config"` (a rename-detector — the import would fail
-     first, but the assertion documents the anchor explicitly).
-2. No production-code change. The test is a docs-↔-code anchor:
-   if the helper is silently renamed or its output shape changes,
-   the test fails loudly and points the author at A45.2 (or vice
-   versa).
+1. **W18 F1 — W18D1's anchor is tight on `_hash_config.__name__`,
+   positional signature, and 16-char lowercase-hex output, but
+   lax on kwarg evolution.** A future refactor that adds a
+   keyword-only argument (e.g. `_hash_config(..., *,
+   digest_length=16)` to introduce the A43 schema-hash digest
+   upgrade) still passes the current anchor unchanged, but A45.2's
+   pseudocode becomes subtly incomplete — the HJ-03 author
+   paste-copying §A45.6 would miss the new kwarg and lose A43's
+   digest protection. Extend the W18D1 anchor with an
+   `inspect.signature(_hash_config).parameters` frozen-list
+   assertion so any new keyword-only arg is flagged at anchor time.
+2. Edit to `bass_py/mio/tests/test_mio_certificate_generator.py`
+   (augments the existing `test_hash_config_matches_a45_2_
+   pseudocode_shape`, no +1 count delta; +1 assertion on the
+   existing test):
+   - import `inspect`;
+   - freeze the expected parameter list as a tuple (currently
+     `("parts",)` for the `*parts` variadic form — confirm by
+     reading `mio/interface/mio_certificate.py:44`);
+   - assert `tuple(inspect.signature(_hash_config).parameters) ==
+     EXPECTED_PARAMS` with a clear `pytest.fail(msg)` on mismatch
+     pointing at A45.2.
+3. No production-code change. The extension is a narrower anchor
+   that catches kwarg-shaped evolutions the current anchor misses.
 
-- Commit tag: `W18D1: A45.2 _hash_config docs-↔-code anchor (W17 F1)`.
-- Gate: touched-surface 1079 → 1080 (+1 test); no regression.
-  MIO contribution: 108 → 109 (+1; if the test lands in
-  `bass_py/mio/tests/`).
+- Commit tag: `W19D1: AUDIT(W18 F1): _hash_config signature-anchor
+  extension`.
+- Gate: touched-surface 1080 → 1080 (0 count delta — the
+  assertion joins the existing W18D1 test); no regression; MIO
+  contribution holds at 109.
 
-### Days 3–4 — W17 F2 / W17 R2 A45.6 ↔ A41.6 cross-link
+### Days 3–4 — W18 F2 / W18 R2 §A46.4 second-observation lifecycle
 
-1. **W17 F2 — §A45.6's five-test paste-ready block assumes the
-   HJ-03 harness signature (`mio_cert` as input, `htt_input_bundle`
-   descriptor shape).** If HJ-03 lands with a different signature,
-   the test block needs per-item translation before landing. A41.6
-   already holds the HJ-03 extension checklist (the mechanical
-   `report_type` addition protocol); linking A45.6's signature
-   assumption into A41.6's checklist ensures the harness signature
-   freeze happens at the same commit as the acceptance-test paste.
-2. Prose-only edit to `docs/dossier/A45_mio_cache_replay_drift.md`
-   §A45.6 and `docs/dossier/A41_mio_report_type_extension_protocol.
-   md` §A41.6:
-   - A45.6 gains an up-front sentence: "This test block presumes
-     the HJ-03 replay harness exposes the signature described in
-     A41.6 step N (see cross-ref); if HJ-03 lands a different
-     signature, the harness signature freeze lands in the same PR
-     as this paste-replace per A41.6."
-   - A41.6 gains a reciprocal line in the HJ-03 worked example:
-     "Step N+½: freeze the replay-harness signature (inputs:
-     `mio_cert`, `htt_input_bundle`) before paste-replacing A45.6's
-     five-test block — see A45.6 for the block itself."
-3. No code change; no test change.
+1. **W18 F2 — §A46.4 specifies the "first three-lane observation"
+   §6 row phrasing but does NOT specify the steady-state (second+)
+   phrasing.** When the second three-lane observation lands, the
+   audit author has to invent wording in the moment and the two
+   audits' §6 rows drift in style. Extend §A46.4 with a two-line
+   "steady-state three-lane phrasing" paragraph once the first
+   observation lands — **blocked until first observation**; this
+   P3 is a lifecycle-completion hedge, not a here-and-now repair.
+2. **Alternative path (unblocked, cheaper)**: if the first three-
+   lane observation does not land by W19, pick a different W18
+   R2-class residual:
+   - **§A46.6 grammar deepening.** A46.6's cross-ref to A41.6
+     mentions "multi-path ind-tracks landing that could
+     incidentally coincide with a bass or gallery window"; make
+     that concrete by naming the `a42_evidence_anatomy.md` +
+     `A41.6 step 6.5` + `A45.6` triplet as an example multi-path
+     ind-tracks landing. ~5-10 L.
+   - **§A46.5 failure-pattern fingerprint expansion.** Current
+     §A46.5 names the "missing trailing `--`" mitigation; add
+     two more common failure-mode fingerprints: `git add -A` +
+     `git commit -m` (no pathspec; all staged files go in) and
+     `git commit -am` (intentional-looking shortcut that bypasses
+     the `--` convention). ~15-20 L.
+3. Caller's choice — default to option 2 (unblocked A46.5 or A46.6
+   expansion) if no three-lane observation occurs in W19.
 
-- Commit tag: `W18D3: AUDIT(W17 F2): A45.6 ↔ A41.6 harness-signature
-  cross-link`.
-- Gate: two dossier prose edits; cross-reference resolution check
-  (grep for both direction anchors). No regression, no count delta.
+- Commit tag: `W19D3: AUDIT(W18 F2): §A46.{5,6} expansion` OR
+  (if three-lane observation lands) `W19D3: AUDIT(W18 F2): §A46.4
+  steady-state phrasing (post-first-observation)`.
+- Gate: +5-20 L prose edit to A46; cross-reference resolution.
 
 ### Days 5–6 — One new A4x dossier or MANU-CH03 extension
 
 Pick ONE per caller's judgement — both are in-scope per the
 governing plan's dependency-wait window:
 
-1. **DOS-A46 (new A4x dossier — caller chooses topic).** Candidate
-   topics from the W17+ deferred list and the Week-17 audit:
-   - **A46 HJ-03 acceptance-test paste-replace protocol.** Expands
-     §A45.6 into a step-by-step paste-replace procedure for the HJ-03
-     landing PR: which tests translate verbatim, which require
-     per-item signature adaption, what the harness-side fixture
-     factory needs to deliver. ~150–200 L. Cross-refs A41 / A44 / A45.
-   - **A46 three-lane race stress-test protocol (W17 F3).** The
-     scoped-pathspec rule has been stress-tested under two scenarios
-     (W16D7 concurrent-commit, W17D3 working-tree-drift). The
-     three-lane case (ind-tracks + bass + gallery all committing into
-     the same audit window) has not occurred in the repo's history.
-     Dossier specifies the adversarial recipe for the first observed
-     three-lane window: what `git show --stat` check the audit must
-     run, how the §6 check row is phrased, what the failure-pattern
-     fingerprint looks like. ~120–180 L. Cross-refs A-governance
-     (memory `feedback_git_workflow.md`) + W12 F1 / W14 F1 / W16 F1
-     / W17 check #1.
-2. **MANU-CH03 §3.X+8 extension (carry-forward from W16/W17 options).**
-   Extend `project/00_manuscript/ch03_framework.tex` with the W4
-   Θ⁴-bridge → A43 schema-hash subsection. Remember: `/project`
-   gitignored, no force-add (W8 FM1 rule); the gate is "+≥ 150 L
-   with banned-vocab scan = 0 hits", verified in audit §7 only.
+1. **DOS-A47 (new A4x dossier — caller chooses topic).** Candidate
+   topics from the W18+ deferred list and the Week-18 audit:
+   - **A47 HJ-03 acceptance-test paste-replace protocol (carry-
+     forward from Week-18 unpicked option).** Expands §A45.6 into a
+     step-by-step paste-replace procedure for the HJ-03 landing PR:
+     which tests translate verbatim, which require per-item
+     signature adaption, what the harness-side fixture factory needs
+     to deliver. ~150–200 L. Cross-refs A41 / A44 / A45 / A46.6.
+   - **A47 W18D1 anchor-location protocol (W18 F3).** Specifies the
+     procedure for relocating the W18D1 `_hash_config` anchor if the
+     MIO package layout is reorganised (e.g. the interface module is
+     split into two; the helper moves into a new `mio.interface.
+     cache_replay` module). Includes a "two-anchor coexistence"
+     paragraph for the HJ-03-landed-but-W18-anchor-still-valid
+     interim. ~100–150 L. Cross-refs A41 / A45.
+2. **MANU-CH03 §3.X+8 extension (carry-forward from W16/W17/W18
+   options).** Extend `project/00_manuscript/ch03_framework.tex`
+   with the W4 Θ⁴-bridge → A43 schema-hash subsection. Remember:
+   `/project` gitignored, no force-add (W8 FM1 rule); the gate is
+   "+≥ 150 L with banned-vocab scan = 0 hits", verified in audit
+   §7 only.
 
-- Commit tag: `W18D5: DOS-A46 <chosen topic>` OR `W18D5: MANU-CH03
+- Commit tag: `W19D5: DOS-A47 <chosen topic>` OR `W19D5: MANU-CH03
   §3.X+8 a₂-to-observations (uncommitted)`.
-- Gate (option 1): new A46 file + cross-reference resolution; no
+- Gate (option 1): new A47 file + cross-reference resolution; no
   code change. Gate (option 2): ch03_framework.tex +≥ 150 L;
   banned-vocab scan = 0; NOT committed (W8 FM1).
 
 ### Day 7 — Phase audit + NEXT_SESSION rotation
 
 Standard phase-boundary audit per `feedback_phase_boundary_audit.md`.
-Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W18_2026-04-19.md`
+Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W19_2026-04-19.md`
 (date may shift). Audit MUST include a §6 recurrence check for
 W12 F1 / W14 F1 cross-lane contamination (verify the W15D1
-scoped-commit rule was followed on every W18 sha via
-`git show --stat`). The W15D1 scoped-pathspec rule has now been
-stress-tested under two distinct adversarial scenarios (W16D7
-concurrent-commit, W17D3 working-tree-drift); W18 §6 continues the
-per-phase check as routine hygiene. If a three-lane commit window
-materialises during W18 (ind-tracks + bass + gallery all landing
-commits), the audit §6 row must explicitly note it as the first
-three-lane observation (W17 F3 closure trigger).
+scoped-commit rule was followed on every W19 sha via
+`git show --stat`), plus the A46.2 lane-classification check that
+determines whether the A46.4 three-lane observation row fires.
+The W15D1 scoped-pathspec rule has now been stress-tested under
+three distinct windows (W16D7 concurrent-commit, W17D3 working-
+tree-drift, W18D5→W18D7 second concurrent-commit observation);
+W19 §6 continues the per-phase check as routine hygiene. **If a
+three-lane commit window materialises during W19**, the audit §6
+row uses §A46.4's paste-ready "first three-lane observation"
+phrasing and W19 acquires the R2 follow-up of landing §A46.4's
+steady-state phrasing.
 
-### Week 18 final gate
+### Week 19 final gate
 
-- [ ] W17 F1 / W17 R1 A45.2 `_hash_config` docs-↔-code anchor
-      landed (W18D1).
-- [ ] W17 F2 / W17 R2 A45.6 ↔ A41.6 cross-link landed (W18D3).
-- [ ] One of A46 dossier / MANU-CH03 extension landed (caller's
-      choice; W18D5).
+- [ ] W18 F1 / W18 R1 `_hash_config` signature-anchor extension
+      landed (W19D1).
+- [ ] W18 F2 / W18 R2 A46 expansion landed (W19D3; caller picks
+      A46.5 / A46.6 if no three-lane observation).
+- [ ] One of A47 dossier / MANU-CH03 extension landed (caller's
+      choice; W19D5).
 - [ ] Phase-boundary audit log written; §6 W12 F1 / W14 F1
-      recurrence check returns PASSED (plus W17 F3 three-lane
-      observation row if triggered).
-- [ ] No touched-surface regressions (≥ 1079 passed, 0 failed;
+      recurrence check returns PASSED (plus A46.2 lane
+      classification resolving to ≤ two lanes, or the first
+      three-lane-observation row firing).
+- [ ] No touched-surface regressions (≥ 1080 passed, 0 failed;
       4 skipped unchanged unless new skips explicitly documented).
 
-### Deferred to Week 18+ (not Week-18 targets)
+### Deferred to Week 19+ (not Week-19 targets)
 
 - **HJ-01 production wiring** — when bass_py W10-02 K_ℓ atlas lands.
   Replace the diagonal independence χ² with the per-ℓ-covariance
@@ -697,36 +747,53 @@ bottom.
 | **W16 F1** | **RESOLVED W16D7 (post-audit addendum)** | Initial W16 §6 check observed zero cross-lane commits during W16 landings, flagged as "not adversarially stress-tested". | Revised post-audit: cross-lane `4c50313` (`FB-2.2: Class A II/VI_0/VIII nabla_tilde`) landed between W16D5 `484ffed` and the audit commit `646784b`. Symmetric `git show --stat` verification: audit commit is 2 ind-tracks files only, zero bass contamination; `4c50313` is 6 bass files only, zero ind-tracks contamination. **W15D1 scoped-pathspec rule PASSED its first real adversarial stress test.** Addendum at bottom of `AUDIT_PHASE_IND_TRACKS_W16_2026-04-19.md`. |
 | **W16 F2** | **RESOLVED W17D1** | A44.3 pins `MioCertificate.git_commit` at-instantiation capture time; no runtime assertion guarded a future refactor to emission- or read-time resolution. | Landed in `151fbc4` — `test_git_commit_is_capture_time_not_lazy` in `bass_py/workspace/contracts/tests/test_mio_certificate.py` (+37 L): constructs `MioCertificate` with a concrete `git_commit`, monkeypatches `subprocess.run` to raise + `_resolve_git_commit` to return a sentinel, asserts attribute access and `dataclasses.asdict` both return the construction-time value, and bans a class-level descriptor on the field. |
 | **W16 F3** | **RESOLVED W17D3** | A36a YAML `sigma_lit_range_deg: [min, max]` optional field was not self-consistency-checked. | Landed in `3137cc0` — `test_a36a_yaml_range_brackets_midpoint` (+47 L) iterates every row with the optional range field and asserts `min <= max` + `min <= sigma_lit_deg <= max`, plus an "at least one row carries the range field" convention guard. MIO 107 → 108. |
-| **W17 F1** | **P3** (docs freshness) | A45.2's `verify_cache_replay` pseudocode names `_hash_config` as the re-hashing helper; no dossier-test catches a silent rename / resize / signature reorder of the helper. | **Slated for W18D1 (W17 R1)** — add a one-line anchor assertion in `bass_py/mio/tests/test_mio_certificate_generator.py` (or sibling) that `mio.interface.mio_certificate._hash_config` returns a 16-char lowercase-hex string on the frozen A45.2 payload tuple. |
-| **W17 F2** | **P3** (coordination) | §A45.6's five-test paste-ready block assumes the HJ-03 harness signature (`mio_cert` input, `htt_input_bundle` descriptor shape). HJ-03 landing with a different signature would require per-item translation of the block. | **Slated for W18D3 (W17 R2)** — prose-only cross-link between A45.6 (up-front harness-signature note + pointer to A41.6) and A41.6 (reciprocal step in the HJ-03 worked example). |
-| **W17 F3** | **P3** (process coverage) | The W15D1 scoped-pathspec rule has been stress-tested under two adversarial scenarios (W16D7 concurrent-commit, W17D3 working-tree-drift); the three-lane race (ind-tracks + bass + gallery all committing into the same audit window) has not yet been observed in the repo's history. | No code repair; continue §6 checks every phase. Flag the first phase where three lanes commit into the same window. W18+ DOS-A46 candidate topic. |
+| **W17 F1** | **RESOLVED W18D1** | A45.2's `verify_cache_replay` pseudocode names `_hash_config` as the re-hashing helper; no dossier-test catches a silent rename / resize / signature reorder of the helper. | Landed in `0d2fc9f` — `test_hash_config_matches_a45_2_pseudocode_shape` in `bass_py/mio/tests/test_mio_certificate_generator.py` (+50 L): imports `_hash_config` by exact name used in A45.2, asserts `__name__`, asserts six-arg positional form returns 16-char lowercase-hex string, cross-checks `cert.config_hash == _hash_config(...)` build-↔-replay parity. MIO 108 → 109. |
+| **W17 F2** | **RESOLVED W18D3** | §A45.6's five-test paste-ready block assumes the HJ-03 harness signature (`mio_cert` input, `htt_input_bundle` descriptor shape). HJ-03 landing with a different signature would require per-item translation of the block. | Landed in `23fefbb` — §A45.6 gains an up-front "Harness-signature note (W17 F2 / W18D3)" paragraph (+14 L) binding the paste-ready block to the two-arg signature and deferring the freeze decision to A41.6 step 6.5; §A41.6 gains a reciprocal step 6.5 (+11 L) with a forward pointer to §A45.6 and the "same PR as paste-replace" rule. |
+| **W17 F3** | **RESOLVED W18D5** (spec; landing trigger deferred to first three-lane observation) | The W15D1 scoped-pathspec rule has been stress-tested under two adversarial scenarios (W16D7 concurrent-commit, W17D3 working-tree-drift); the three-lane race (ind-tracks + bass + gallery all committing into the same audit window) has not yet been observed in the repo's history. | Landed in `7cc5a42` — `docs/dossier/A46_three_lane_race_stress_test.md` (182 L, eight sections): audit-window definition (§A46.2), adversarial recipe (§A46.3), paste-ready §6 row template for the first three-lane observation (§A46.4), failure-pattern fingerprint (§A46.5). Landing trigger for §A46.4's first-observation phrasing = first phase where A46.2 lane-classification resolves to all three lanes. W18 check #2 observed two lanes (ind-tracks + bass), not three. |
+| **W18 F1** | **P3** (docs freshness) | W18D1's `_hash_config` anchor asserts `__name__`, positional signature, and 16-char lowercase-hex output. A future refactor that adds a keyword-only argument (e.g. `*, digest_length=16` for the A43 schema-hash digest upgrade) passes the current anchor unchanged but leaves A45.2's pseudocode subtly incomplete. | **Slated for W19D1 (W18 R1)** — extend the W18D1 anchor with `inspect.signature(_hash_config).parameters` frozen-list assertion; +1 assertion on the existing test (no +1 count). |
+| **W18 F2** | **P3** (docs lifecycle) | §A46.4 specifies the "first three-lane observation" §6 row phrasing but does NOT specify the steady-state (second+) phrasing. When the second three-lane observation lands, the audit author has to invent wording in the moment. **Blocked until first observation.** | **Slated for W19D3 (W18 R2)** — if the first three-lane observation lands in W19, extend §A46.4 with a steady-state phrasing paragraph; otherwise pick an unblocked alternative (§A46.5 failure-mode fingerprint expansion OR §A46.6 grammar deepening). |
+| **W18 F3** | **P3** (coverage location) | W18D1's anchor lives in `test_mio_certificate_generator.py` and presupposes the MIO package's conftest-managed sys.path wiring. A future repo reorganisation (splitting the interface module into two, moving `mio/` under a new package root) would need to re-home the anchor. | No repair; continue periodic re-verification on lane boundaries. Note for future HJ-03 PR: if the replay harness lives in a new `mio.interface.cache_replay` module, consider moving or cloning the W18D1 anchor into that test file so the two guards stay adjacent. W19+ DOS-A47 candidate topic. |
 
 ## §4. Environment and quickstart
 
 ```bash
 # Repo root
-cd /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
+cd /home/cosmosapjw/Dropbox/bianchi/htt_base
 
-# Sanity: touched-surface test run.  As of 2026-04-19 post-W17:
-# 1079 passed, 0 failed, 4 skipped (+2 vs W16; 0 skip change).
-venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
-                bass_py/tsc/admissibility/ \
-                bass_py/tsc/diagnostics/ bass_py/tsc/charts/ \
-                bass_py/tsc/integration/ \
-                bass_py/workspace/ bass_py/mio/
+# Sanity: touched-surface test run.  As of 2026-04-19 post-W18:
+# 1080 passed, 0 failed, 4 skipped (+1 vs W17; 0 skip change).
+#
+# NOTE (W18D7 working-tree transparency): the canonical tracked
+# paths are `bass_py/...` per every commit through W18D5. The
+# bass-lane `92cefa2` (W18 window) re-pointed the venv editable
+# install from `bass_phase1_snapshot_2026-04-18/...` to
+# `htt_base/htt/htt/` and moved the live working tree to
+# `htt/...` (untracked mirror). Run pytest against the `htt/...`
+# tree; tracked commits still carry the `bass_py/...` prefix.
+venv/bin/python -m pytest htt/htt/tests/ htt/src/ \
+                htt/tsc/admissibility/ \
+                htt/tsc/diagnostics/ htt/tsc/charts/ \
+                htt/tsc/integration/ \
+                htt/workspace/ htt/mio/
 
-# tsc standalone (18 s; 602 passed post-W9; unchanged W10-W17).
-venv/bin/pytest bass_py/tsc/
+# tsc standalone (~14 s; 602 passed post-W9; unchanged W10-W18).
+venv/bin/python -m pytest htt/tsc/
 
-# MIO standalone (collection check — 108 tests post-W17D3).
-venv/bin/pytest bass_py/mio/ --collect-only -q | tail -1
+# MIO standalone (collection check — 109 tests post-W18D1).
+venv/bin/python -m pytest htt/mio/ --collect-only -q | tail -1
 
 # Full monorepo suite (slower).
-venv/bin/pytest bass_py/
+venv/bin/python -m pytest htt/
 ```
 
 Path notes:
 
+* Canonical vs live tree: commits through W18D5 use `bass_py/...`
+  paths; the live working-tree layout is `htt/...` (byte-identical
+  mirror; untracked as of W18). New W19+ edits should continue to
+  target `bass_py/...` paths for tracked commits and mirror into
+  `htt/...` for pytest verification, until the bass lane formally
+  commits the rename.
 * `bass_py/src/common/` is importable via `bass_py/conftest.py` (which
   prepends `src/` to sys.path) and via `bass_py/pyproject.toml` (which
   adds `src/` to the setuptools package-find).
@@ -765,7 +832,7 @@ session's responsibility and must not be touched here:
   V-gate signs the K_ℓ atlas** — see W11 audit §3 for the contract.
 * `plots/physics_gallery/` — gallery refresh is bass_py's per-phase rule.
 
-### §5a. This lane's new territory (updated post-W16)
+### §5a. This lane's new territory (updated post-W18)
 
 Directories that **this** lane now owns (created or will be created
 per the v1.3 plan — bass_py session must not touch):
@@ -803,12 +870,19 @@ per the v1.3 plan — bass_py session must not touch):
   on `bass_py/workspace/contracts/tests/test_mio_certificate.py`
   (workspace-layer, not counted under MIO). MIO contribution
   107 → 108; touched surface 1077 → 1079.
+  **Week 18 added**: `test_hash_config_matches_a45_2_pseudocode_
+  shape` (W18D1, +1 test) on `bass_py/mio/tests/test_mio_
+  certificate_generator.py` → `test_mio_certificate_generator.py`
+  now 11 tests. Docs-↔-code anchor for the A45.2 `_hash_config`
+  helper (name + six-arg positional signature + 16-char
+  lowercase-hex output shape + build-↔-replay parity). MIO
+  contribution 108 → 109; touched surface 1079 → 1080.
 * **`bass_py/tsc/integration/*`** — NEW Week-7 subpackage; currently
   holds TSC-06 `htt_bridge` + tests. Distinct from `bass_py/tsc/{admissibility, charts, diagnostics}/`.
 * `docs/dossier/A13_*`, `A14_*`, `A32_*`, `A33_*`, `A34_*`,
   `A35_*`, `A36_*`, `A36a_*` (W13), `A37_*`, `A38_*`,
   `A39_*`, `A40_*`, `A41_*` (W12), `A42_*` (W13), `A43_*` (W15),
-  `A44_*` (W16), `A45_*` (W17) — manuscript dossier. Week 7 added
+  `A44_*` (W16), `A45_*` (W17), `A46_*` (W18) — manuscript dossier. Week 7 added
   A34 + A35 + A38 + A40; `A13_02_*` through `A13_14_*` landed
   Week 9; A36 + A37 landed Week 11; A41 landed Week 12; A36a +
   A42 landed Week 13; Week 14 extended A34 / A36 / A40 / A42
@@ -828,6 +902,16 @@ per the v1.3 plan — bass_py session must not touch):
   clean A43-digest upgrade path, §A45.6 paste-ready five-test
   acceptance block (test 5 mirrors W17D1 at the MIO harness
   surface).
+  **Week 18 added `A46_three_lane_race_stress_test.md`** (182 L,
+  eight sections) — process-hygiene companion to A44 / A45
+  covering the three-lane race scenario (ind-tracks + bass +
+  gallery concurrent commits into the same audit window); §A46.2
+  lane-classification algorithm + §A46.3 adversarial recipe +
+  §A46.4 paste-ready §6 row template + §A46.5 failure-pattern
+  fingerprint; landing trigger deferred to first three-lane
+  observation. §A45.6 + §A41.6 also gained bidirectional cross-
+  link (+14/+11 L) binding the HJ-03 replay-harness signature
+  freeze to the acceptance-test paste-replace.
 * `project/00_manuscript/ch03_framework.tex` (MANU-CH03 subsections;
   Week 1–4 landed; ~800 L gap vs v3 §11.3 target remains).
 * `project/00_manuscript/ch11_error_hierarchy.tex` — MANU-CH11-REDESIGN
