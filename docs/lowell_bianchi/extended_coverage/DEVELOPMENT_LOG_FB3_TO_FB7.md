@@ -1,0 +1,338 @@
+# Development log — FB-3 through FB-7
+
+**Purpose**: canonical ledger of every FB sub-phase from FB-3 onward.
+Entries are append-only: once a row lands it is never rewritten; a
+superseding fact is appended as a new row with a cross-reference.
+
+**Parent**: [INDEX.md](INDEX.md).
+**Parent plan**: [FULL_BIANCHI_COVERAGE_PLAN.md](../FULL_BIANCHI_COVERAGE_PLAN.md).
+
+## Row format
+
+Each entry has the following fields (absent fields are filled with
+`—` rather than omitted):
+
+- **Tag** — sub-phase label (e.g. `FB-3.2`).
+- **Scope sentence** — one line describing what the session *shipped*.
+- **Commit anchor** — short SHA of the merge commit on `main`.
+- **Test delta** — `<before> → <after>` from the `bass/ tsc/` suite.
+- **Audit document** — relative link to the `AUDIT_PHASE_*` entry.
+- **Gallery status** — `regenerated` (new PNGs shipped), `no-op`
+  (explicitly justified in the audit), or `deferred` (with the PR
+  that will close the gap).
+- **Carry-forward** — P2/P3 items that survived the audit.
+- **Notes** — anything short that a reader needs to reconstruct the
+  intent of the session.
+
+---
+
+## Phase FB-0 — Convention & dispatch SSOT
+
+### FB-0.1 — Ellis Σ-convention flip
+
+- **Scope**: Flipped the Σ-convention in
+  [bass/background/einstein_bianchi.py](../../../htt/bass/background/einstein_bianchi.py)
+  to Ellis-canonical `Σ_ab = a σ_ab`, closing the LB-5 F2 carry. LB-6
+  tests re-anchored.
+- **Commit**: see `git log --grep='FB-0.1'`.
+- **Test delta**: pre-session 2,558 → 2,558 (+ re-anchored LB-6 tests).
+- **Audit**: [AUDIT_PHASE_FB0_2026-04-19.md](../../audits/AUDIT_PHASE_FB0_2026-04-19.md).
+- **Gallery**: regenerated (shear timeseries re-rendered under the
+  new convention).
+- **Carry-forward**: **F3** — `TetradBackgroundState.shear_magnitude_sq`
+  still carries dimensional Σ²; dimensionless rescale deferred to
+  FB-5 / FB-6 to avoid a cascading rename.
+
+### FB-0.2 — Tilt-field surface
+
+- **Scope**: Added `beta` and `v_hat_e` fields to
+  [BianchiCosmology](../../../htt/bass/background/einstein_bianchi.py);
+  no consumer wired yet.
+- **Audit**: `AUDIT_PHASE_FB0_2026-04-19.md` §FB-0.2.
+- **Gallery**: no-op.
+
+### FB-0.3 — LB-6 F2 seal
+
+- **Scope**: Added `eta_star` / `chi_star` keys to
+  `detect_critical_events` output; LB-6 helper updated.
+- **Audit**: `AUDIT_PHASE_FB0_2026-04-19.md` §FB-0.3.
+- **Gallery**: no-op.
+
+---
+
+## Phase FB-1 — Per-type background validation
+
+### FB-1.1 — Class A {I, II, VI_0, VII_0}
+
+- **Scope**: `SOURCE_STATUS` for I / II / VI_0 / VII_0 promoted to
+  `VALIDATED` against Wainwright-Ellis §18 Table 11.1 fixed points.
+- **Audit**: [AUDIT_PHASE_FB1_2026-04-19.md](../../audits/AUDIT_PHASE_FB1_2026-04-19.md).
+- **Carry-forward**: **FB11-F1** — W-E Table 11.1 fixed-point
+  *coordinates* are not directly reachable at fixed N; rescheduled
+  to FB-5 / FB-6.
+
+### FB-1.2 — Class A {VIII, IX}
+
+- **Scope**: VIII / IX shear sources validated; IX recollapse added
+  as a `solve_ivp` event (`bianchi_ix_recollapse_event`).
+- **Carry-forward**: **FB12-F1** (IX isotropic leading-order
+  shear-source residual `S_+ = +(2/3) n² ℋ²`, W-E pathology);
+  **FB12-F3** (the recollapse event function couples to `_hubble_squared`;
+  refactor deferred). Both rescheduled to FB-5 / FB-6.
+
+### FB-1.3 — Class B {III, IV, V, VI_h, VII_h}
+
+- **Scope**: Twist-coupled shear sources validated. Type V open-FLRW
+  limit confirmed. VII_h Pontzen-Challinor spiral matched
+  qualitatively.
+- **Carry-forward**: **FB13-κ-calibration** — quantitative κ
+  calibration for the VII_h spiral deferred.
+
+### FB-1.4 — `anisotropic_3_curvature` for all 11 types
+
+- **Scope**: `TetradBackgroundState.aniso_3_curvature` is now
+  non-None for every Bianchi type; FLRW / Type I / Type V remain
+  explicitly zero.
+- **Audit**: `AUDIT_PHASE_FB1_2026-04-19.md` §FB-1.4.
+- **Gallery**: regenerated — topics 03 through 13 added to
+  `figures/physics_gallery/`.
+
+---
+
+## Phase FB-2 — Hierarchy RHS curved-space T-terms
+
+### FB-2.1 — ∇̃ on FLRW / I / V / VII_0 / IX harmonic modes
+
+- **Scope**: 35 new tests; complex-dtype `nabla_dispatch` core.
+- **Carry-forward**: **FB-2.1 P2** — complex-dtype dispatch not yet
+  wired to the real-dtype `hierarchy_rhs_photon` driver. Reserved
+  for FB-5.1 (harmonic-mode amplitude state machine).
+
+### FB-2.2 — Class A {II, VI_0, VIII} ∇̃
+
+- **Scope**: axis-aligned ∇̃ for II / VI_0 / VIII. T1 / T2 carry an
+  optional `aniso_ricci_tensor` hook (FB-2.2). 24 new tests.
+- **Carry-forward**: **FB14-F1** — `anisotropic_3_curvature`
+  h-scaling calibration landed as part of this rotation.
+- **Audit**: [AUDIT_PHASE_FB2_2026-04-19.md](../../audits/AUDIT_PHASE_FB2_2026-04-19.md).
+
+### FB-2.3 — Class B {III, IV, VI_h, VII_h} ∇̃
+
+- **Scope**: twist-coupled ∇̃ on the abelian (e_1, e_3) 2-plane.
+  Harrison-V twist offset `a²/(1+|h|)` pinned. T1 Ricci
+  auto-activation wired. 27 new tests.
+- **Carry-forward**: **FB-2.3 P3 (env)** — `venv/bin/pip` shebang is
+  stale after an interpreter change; rebuild deferred to post-FB
+  devops.
+- **Audit**: `AUDIT_PHASE_FB2_2026-04-19.md` §FB-2.3.
+
+### FB-2.4 — Driver-level aniso-Ricci routing + T4..T7 structural pin
+
+- **Commit anchor**: `d7d25da`.
+- **Scope**: `hierarchy_rhs_photon` forwards
+  `tetrad_state.aniso_3_curvature` through `aniso_ricci_at_eta`
+  into T1 / T2. T4, T5, T6, T7 are structurally forwarded via
+  `accel_vector` / `vorticity_vector` kwargs (no caller supplies
+  them yet). F3 docstring correction applied. 12-label regression
+  sweep added. 25 new tests.
+- **Test delta**: 2,997 → 3,108.
+- **Audit**: `AUDIT_PHASE_FB2_2026-04-19.md` §FB-2.4.
+- **Gallery**: regenerated.
+- **Notes**: Phase FB-2 closed with 111 tests across the four
+  sessions. `d7d25da` is the byte-identical regression anchor used
+  by every β = 0 adapter test from FB-3.2 onward.
+
+---
+
+## Phase FB-3 — Tilted sector (non-perturbative β)
+
+### FB-3.1 — `TiltedSpeciesBackground` abstraction
+
+- **Commit anchor**: `9336280`.
+- **Scope**: Added
+  [bass/species/tilted.py::TiltedSpeciesBackground](../../../htt/bass/species/tilted.py)
+  with β=0 bit-identical short-circuit across all five LB-1 species
+  (photon / neutrino / baryon / CDM / Λ) × 3-direction v̂_e sweep.
+  EMM 2012 §5.4 equations (5.12)-(5.13) exact at β>0. Eager
+  `ValueError` guards on β<0, β≥1, non-finite β, non-unit v̂_e.
+  **FB02-F1** (v̂_e default cross-reference) resolved via the
+  cross-reference table in
+  [00_conventions.md §2](../00_conventions.md). 24 new tests.
+- **Test delta**: 3,108 → 3,132.
+- **Audit**: [AUDIT_PHASE_FB3_2026-04-19.md](../../audits/AUDIT_PHASE_FB3_2026-04-19.md)
+  (Phase FB-3 entry declaration + FB-3.1 sections 0–9).
+- **Gallery**: no-op (abstraction only — no new physical trajectory).
+- **Carry-forward** (new P2):
+  1. β-parametrisation split (velocity `TiltedSpeciesBackground`
+     vs rapidity `TiltedVisibility`) — composition rule
+     `v_e(η) = β × v̂_e` unifies; formal unification audit reserved
+     for FB-3.5.
+  2. Overlap with `bass.tilt.species_tilt.TiltedSpeciesParams`
+     (Y-Block API accepting `v` directly). Addressed in FB-3.2.
+
+### FB-3.2 — tilt-projected `A^a` / `ω^a` wire-up
+
+- **Commit anchor**: `fdb1d86`.
+- **Scope**: Added
+  [bass/hierarchy/tilt_kinematics.py](../../../htt/bass/hierarchy/tilt_kinematics.py)
+  with two adapters:
+  - `accel_from_tilt(tilted, eta) → (3,)`: β=0 → fresh zeros;
+    β>0 → `γ² v^a` (EMM eq 5.14 species-specific piece; King-Ellis
+    1973 §3).
+  - `vorticity_from_tilt(tilted, eta, structure=None) → (3,)`:
+    β=0 → zeros; Class A (a_twist=0) → zeros; Class B →
+    `(1/2) ε^{abc} a_b v_c` (Pontzen-Challinor 2009 §2).
+  `hierarchy_rhs_photon` signature unchanged — adapters feed the
+  FB-2.4 kwargs. β=0 adapter-fed driver RHS byte-identical to the
+  no-kwargs baseline on all 12 structure-constant labels (FLRW + 11
+  Bianchi types), pinned by `np.array_equal`. 57 new tests. FB-3.1
+  P2 overlap closed via composition rule `v = β · v̂_e`.
+- **Test delta**: 3,132 → 3,189.
+- **Audit**: `AUDIT_PHASE_FB3_2026-04-19.md` §FB-3.2 Supplement.
+- **Gallery**: no-op (β>0 trajectory integration deferred to FB-3.3
+  per the non-goals pin).
+- **Carry-forward** (new P2):
+  1. Additive `(Θ/3) v^a + σ^a_b v^b` completion of
+     `accel_from_tilt` — reserved for FB-3.3.
+  2. Class A harmonic-mode vorticity piece
+     `ε^{abc} ∇̃_b v_c` — reserved for FB-5.1.
+
+---
+
+## Phase FB-3 — forward anchors (FB-3.3 through FB-3.6)
+
+These entries are planned, not shipped. Each row is superseded by a
+"shipped" row once the corresponding PR lands; the "planned" row is
+struck-through but retained for archaeology.
+
+### FB-3.3 (planned) — Einstein + tilt coupling + boost-kernel seed
+
+- **Bootstrap prompt**: [NEXT_SESSION_PROMPT.md §2](../NEXT_SESSION_PROMPT.md)
+  (current).
+- **Shipping**: additive `(Θ/3) v^a + σ^a_b v^b` on
+  `accel_from_tilt`; optional `tilted_species=` kwarg on
+  `rhs_bianchi`; axi-symmetric boost-kernel seed in
+  `bass/hierarchy/boost_kernel.py`; off-axis v̂_e raises
+  `NotImplementedError` (deferred to FB-5.2).
+- **Invariants**: β=0 byte-identical against the FB-3.2 anchor
+  (3,189). Extra kwargs default to `None` so existing callers see no
+  change.
+
+### FB-3.4 (planned) — Vorticity feedback into hierarchy
+
+- **Shipping**: `T4_accel_divergence` / `T5_accel_gradient` /
+  `T6_vorticity` receive tilted-sector *dynamic* inputs (not just
+  structural vectors); β>0 × Class B regression demonstrates
+  non-trivial vorticity amplitude growth.
+
+### FB-3.5 (planned) — β-gate reparametrisation
+
+- **Shipping**: formal unification audit of the velocity vs rapidity
+  surfaces (`TiltedSpeciesBackground.beta` vs
+  `TiltedVisibility.beta_rapidity`). Single SSOT gate function
+  `assert_tilt_admissible(β, v̂_e)` used by every tilt consumer.
+  Closes the FB-3.1 P2 β-gate carry.
+
+### FB-3.6 (planned) — Tilted regression suite
+
+- **Shipping**: β-sweep (`β ∈ {0, 0.01, 0.1, 0.5}` × 11 types = 44
+  configs) integrates without exception; β→0 matches FB-1 / FB-2
+  results within declared rtol; non-physical β-jump stress test for
+  stiffness diagnostics.
+
+---
+
+## Phase FB-4 (planned) — Tilted Thomson kernel Layer B
+
+Planned sub-phases per [FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-4](../FULL_BIANCHI_COVERAGE_PLAN.md).
+Bracket summary for bundle-completeness:
+
+- **FB-4.1**: full-Lorentz Thomson PSTF collision operator; β=0
+  recovers the LB-4 kernel.
+- **FB-4.2**: E↔B mixing under tilted LOS; `PolarizationHierarchyState`
+  gains a B slot.
+- **FB-4.3**: explicit `v_e²` Doppler 2nd-order corrections;
+  Pontzen-Challinor cross-check.
+
+Exit: β-sweep × polarisation regression. BB identically zero at
+β=0; at β = 0.1, BB scales as ~10⁻¹ × EE (P-C reference).
+
+---
+
+## Phase FB-5 (planned) — Perturbation sector k ≠ 0
+
+Planned sub-phases per parent §4 Phase FB-5.
+
+- **FB-5.1**: per-type harmonic-mode decomposition; plane-wave /
+  discrete IX `ℓ ≤ n` / VII_h spiral Q-modes. Also closes
+  FB-2.1 P2 (complex-dtype dispatch wire-up) and the phase-0 audit
+  "Full-mode D_2 collapse".
+- **FB-5.2**: full ∇̃ operator (lowell §13) dispatched by mode;
+  closes the FB-5.2 off-axis helical Wigner rotation carry.
+- **FB-5.3**: CAMB regular adiabatic seed IC (lowell §13.2).
+- **FB-5.4**: k=0 limit recovers LB-6 background; large-scale
+  Sachs-Wolfe gate.
+- **FB-5.5**: Class B mode quantisation including Type V Harrison
+  hyperbolic harmonics.
+- **FB-5.6**: tilted-boost seed rule (lowell §13.5) with
+  PSTF-regularisation on the initial-value surface.
+- **FB-5.7**: full k × type regression + audit.
+
+Exit: Type I C_ℓ^{TT} baseline matches CAMB Planck-2018 `Dl_TT` to
+within 5 % at ell ∈ [2, 30]. The phase-0 "ODE divergence for k > 0.03"
+carry is addressed here.
+
+---
+
+## Phase FB-6 (planned) — 22-configuration regression suite
+
+- **FB-6.1**: new `bass/integration/test_full_bianchi_coverage.py`;
+  22 fixtures (11 types × {orthogonal, tilted}).
+- **FB-6.2**: cross-type continuity checks — VII_h → VII_0 as h→0⁺,
+  VI_h → III as h→-1, VII_0 → I as n→0, V → I as a→0, IX → BKL
+  isotropic as n→0.
+- **FB-6.3**: Pontzen-Challinor C_TT / off-diagonal cross-check for
+  VII_h and IX; CAMB FLRW limit match for I / V / VII_0 / VII_h→0 /
+  IX→BKL.
+
+Exit: 22 configs green, 3 literature ground-truth shape matches.
+The F3 dimensionless-Σ² rescale (FB-0.1 carry) closes here.
+
+---
+
+## Phase FB-7 (planned) — Spectrum + HTT + cosmological-frame likelihood
+
+- **FB-7.1**: line-of-sight matrix propagator
+  (`bass/spectrum/lowell_los.py`). Closes the phase-0 Limber `η_sp`
+  sign-convention carry.
+- **FB-7.2**: `C_ℓ^{TT,EE,TE,BB}` plus off-diagonal
+  `C_{ℓm, ℓ'm'}` extraction.
+- **FB-7.3**: HTT decomposition (lowell §14.2) + the P0 triad
+  (prior alignment / tangency / β-gate).
+- **FB-7.4**: direction-dependent likelihood (lowell §14.3) — tiered
+  resolution. **Crucial caveat**: FB-7.4 delivers a
+  *cosmological-frame* likelihood only. The observer-frame boost
+  layer is deferred to FB-8 per [EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md](EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md).
+- **FB-7.5**: Planck-2018 likelihood match at the FLRW limit.
+
+Exit (parent plan M6): likelihood evaluator returns a stable ln B
+for each of the 11 types given a synthetic Planck-2018-quality
+dataset. At this point the parent plan's stated target is reached
+*modulo* the observer-frame gap. The [extended plan](EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md)
+(FB-8 / FB-9 / FB-11) starts here.
+
+---
+
+## Baseline ledger (cumulative)
+
+| Tag | Test count | Cumulative new tests since LB baseline |
+|---|---|---|
+| LB-6 exit | 2,558 | 0 |
+| FB-0 exit | 2,558 | 0 (re-anchored only) |
+| FB-1 exit | ~2,800 (estimate — see per-session audit) | ~240 |
+| FB-2 exit | 3,108 | ~550 |
+| FB-3.1 exit | 3,132 | +24 |
+| FB-3.2 exit | 3,189 | +57 |
+
+After each new FB row ships, append a new ledger row here with the
+fresh cumulative count.

@@ -16,7 +16,7 @@ load-bearing mechanisms are two feedback memories:
 
 * ``phase_boundary_audit`` — run the audit, fix P0/P1 inline.
 * ``phase_boundary_gallery`` — extend and regenerate
-  ``plots/physics_gallery/`` every phase boundary.
+  ``figures/physics_gallery/`` every phase boundary.
 
 This hook is a belt-and-suspenders reminder surfaced via
 ``additionalContext``. Install via ``.claude/settings.json``
@@ -35,6 +35,8 @@ PHASE_COMMIT_PATTERNS = [
     r"git\s+commit.*LB-\d+:",
     r"git\s+commit.*Phase LB complete",
     r"git\s+commit.*rotate NEXT_SESSION_PROMPT",
+    r"git\s+commit.*FB-\d+(\.\d+)?:",
+    r"git\s+commit.*FB-BOOTSTRAP:",
 ]
 # Accept an already-running audit commit — no nagging.
 AUDIT_COMMIT_PATTERN = r"git\s+commit.*AUDIT\("
@@ -86,8 +88,8 @@ def main() -> int:
         "directory (or new plots in an existing topic) covering every "
         "quantity this phase added, then run "
         "'venv/bin/python scripts/make_physics_gallery.py' to regenerate "
-        "all PNGs under plots/physics_gallery/. Update "
-        "plots/physics_gallery/README.md with the new entries. Visually "
+        "all PNGs under figures/physics_gallery/. Update "
+        "figures/physics_gallery/README.md with the new entries. Visually "
         "inspect each new plot and correct any rendering / physics / "
         "label issues before committing.\n"
         "This reminder fires because no AUDIT(…) commit was found in "

@@ -210,20 +210,20 @@ FB-0 ─┬─► FB-1 ──► FB-2 ──► FB-3 ──► FB-4 ──► FB
 
 ---
 
-## 6. Open design decisions (플랜 승인 전 명시적 결정 필요)
+## 6. Open design decisions — **answered 2026-04-20**
 
-| # | 결정 사항 | 옵션 | 추천 기본 |
-|---|---|---|---|
-| D1 | Frame convention | (a) Ellis canonical (a along 1), n₁=0 for Class B; (b) Pontzen-Challinor (a along 2), n₂=0 for Class B | (b) — `bianchi_types.py` 가 이미 그 frame |
-| D2 | Σ-convention | (a) Ellis: Σ_ab = a σ_ab, Σ² × a⁴ = const; (b) einstein_bianchi: Σ × a = const | (a) Ellis — FB-0.1 에서 flip |
-| D3 | "9 vs 11 types" | (a) 11 (전부); (b) 9 (VI₀, VII₀ 를 VI_h→0, VII_h→0 로 흡수) | (a) 11 — 코드에 이미 있음 |
-| D4 | Tilted β parametrization | (a) rapidity β (non-perturbative); (b) boost 속도 v_e (cap |v_e|<1) | (a) rapidity — singularity 없음 |
-| D5 | Bianchi IX recollapse 처리 | (a) event-terminated solve_ivp; (b) pre-compute η_max_IX 을 별도 함수로 | (a) — `solve_ivp event=...` |
-| D6 | k 분해 backend | (a) plane-wave + Harrison hyperbolic + Q-mode dispatch; (b) mode label 만 취급 후 CAMB-style 전개 | (a) — 대칭성 explicit |
-| D7 | Massive ν (FB-범위에 포함?) | (a) 포함; (b) 별도 phase | (b) — m_ν=0 유지 + post-FB 추가 |
-| D8 | External comparison oracle 추가 (CLASS? Healpy?) | (a) CAMB only; (b) CAMB + CLASS | (a) CAMB only — external-code guard 유지 |
-| D9 | HTT P0 triad 의 resolution 순서 | (a) FB-7.3; (b) FB-0 에서 미리 | (a) FB-7.3 — 그전 단계는 HTT 무관 |
-| D10 | LB-6 `tca_active_mask` 의 tilted 확장 | (a) 확장; (b) FB-3 에서 deprecate + 대체 diag | (a) — LB-5 API 호환 유지 |
+| # | 결정 사항 | 옵션 | 결정 | 비고 |
+|---|---|---|---|---|
+| D1 | Frame convention | (a) Ellis canonical (a along 1), n₁=0 for Class B; (b) Pontzen-Challinor (a along 2), n₂=0 for Class B | **(b) — 단, (a) 와의 명시적 변환식을 `00_conventions.md` 에 제공** | `bianchi_types.py` 가 Pontzen-Challinor frame 으로 이미 운용 중이므로 (b) 를 SSOT 로 고정하되, Ellis-canonical literature fixture 를 로드할 때 필요한 inverse tensor-rotation `R: e₁ ↔ e₂` 을 `bass.background.bianchi_types` 에 `ellis_to_pc_rotation()` / `pc_to_ellis_rotation()` 공용 헬퍼로 둔다. 두 frame 의 `(n_ab, a_α)` 매핑은 `(n₁, n₂, n₃, a) → (n₂, n₁, n₃, a)` + σ_ab 의 동일 matrix-conjugation. |
+| D2 | Σ-convention | (a) Ellis: Σ_ab = a σ_ab, Σ² × a⁴ = const; (b) einstein_bianchi: Σ × a = const | **(a) Ellis** | 이미 FB-0.1 에서 flip 되어 shipped. |
+| D3 | "9 vs 11 types" | (a) 11 (전부); (b) 9 (VI₀·VII₀ 흡수) | **(a) 11** | 코드에 이미 있음; 유지. |
+| D4 | Tilted β parametrization | (a) rapidity β (non-perturbative); (b) boost 속도 v_e (cap `\|v_e\|<1`) | **(a) rapidity** | 현재 `TiltedSpeciesBackground.beta` 는 velocity (FB-3.1 ship). FB-3.5 β-gate reparametrisation 에서 rapidity 를 internal SSOT 로 전환하고 velocity 는 derived property 로 유지. |
+| D5 | Bianchi IX recollapse 처리 | (a) event-terminated solve_ivp; (b) pre-compute η_max_IX | **(a)** | FB-1.2 에서 shipped. |
+| D6 | k 분해 backend | (a) plane-wave + Harrison hyperbolic + Q-mode dispatch; (b) CAMB-style | **(a)** | FB-5 에서 per-type dispatch SSOT. |
+| D7 | Massive ν (FB-범위에 포함?) | (a) 포함; (b) 별도 phase | **(a) 포함** | Extended coverage bundle 의 FB-9 로 분리되지만 FB-범위 안으로 포함 (post-FB 항목 아님). 상세: [extended_coverage/FB9_MASSIVE_NEUTRINO_SDD.md](extended_coverage/FB9_MASSIVE_NEUTRINO_SDD.md). |
+| D8 | External comparison oracle 추가 (CLASS? Healpy?) | (a) CAMB only; (b) CAMB + CLASS | **(a) CAMB only** | External-code guard 유지. |
+| D9 | HTT P0 triad 의 resolution 순서 | (a) FB-7.3; (b) FB-0 에서 미리 | **(a) FB-7.3** | |
+| D10 | LB-6 `tca_active_mask` 의 tilted 확장 | (a) 확장; (b) deprecate | **(a) 확장** | LB-5 API 호환 유지. |
 
 ---
 
@@ -276,29 +276,41 @@ FB-0 ─┬─► FB-1 ──► FB-2 ──► FB-3 ──► FB-4 ──► FB
 
 ## 10. Post-FB 범위 (본 플랜 제외)
 
-- Massive neutrino (m_ν > 0)
-- Lensing / ISW 비선형 보정
-- 2nd-order tilt (v_e² × anisotropy cross-terms, beyond FB-4.3 linear)
-- Non-Gaussian primordial initial conditions
-- Bianchi IX Mixmaster BKL oscillation regime (near-singularity)
-- Multi-type bayesian model selection (ML pipeline)
-- GPU 가속 / ark4 IMEX stepper 채택
+### In extended bundle (FB-8 / FB-9 / FB-11 — scope sealed 2026-04-20)
 
-이 항목들은 FB 완료 후 별도 플랜으로 분리한다.
+- **Observer-frame layer + local-boost vs global-tilt discriminator** — **→ [extended_coverage/FB8_DISCRIMINATOR_SDD.md](extended_coverage/FB8_DISCRIMINATOR_SDD.md)** (coordinator: [EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md §5 FB-8](extended_coverage/EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md)).
+- **Massive neutrino (m_ν > 0)** — **→ [extended_coverage/FB9_MASSIVE_NEUTRINO_SDD.md](extended_coverage/FB9_MASSIVE_NEUTRINO_SDD.md)** (coordinator §5 FB-9).
+- **Inference driver + multi-type Bayes factor** — **→ [extended_coverage/FB11_INFERENCE_DRIVER_SDD.md](extended_coverage/FB11_INFERENCE_DRIVER_SDD.md)** (coordinator §5 FB-11).
+
+### Discarded 2026-04-20 — not re-entered without fresh SDD + dated entry
+
+아래 세 항목은 [extended_coverage/SCOPE_DECISIONS.md](extended_coverage/SCOPE_DECISIONS.md) §§2–4
+에서 완전 out-of-scope 폐기로 기록됨. 재진입 시 §5 의 재진입 절차 필수.
+
+- **Survey systematics 통합 (mask / beam / noise)** — 폐기; `htt/` + `mio/` 의 observation-side 인프라가 이 surface 를 계속 담당.
+- **Lensing / ISW 비선형 보정** — 폐기; 저-ℓ target 에서 선행 순위 낮음 + CAMB fixture 로 충당 가능.
+- **2nd-order tilt (v_e² × anisotropy cross-terms)** — 폐기; Planck-2018 precision 범위에서 불필요.
+
+### 여전히 post-extended
+
+- Non-Gaussian primordial initial conditions.
+- Bianchi IX Mixmaster BKL oscillation regime (near-singularity).
+- GPU 가속 / ark4 IMEX stepper 채택.
+
+**Extended bundle 진입점**: [extended_coverage/INDEX.md](extended_coverage/INDEX.md) — FB-8 / FB-9 / FB-11
+의 3-phase SDD + FB-3 이후 역사 로그 + self-audit automation + memory 명시화를 bundle 로 통합.
 
 ---
 
-## 11. 승인 체크리스트
+## 11. 승인 체크리스트 — **sealed 2026-04-20**
 
-이 플랜을 본격적으로 시작하려면 다음이 승인 필요:
+- [x] §0 "9 vs 11" 결정 → 11 사용 (D3 = a).
+- [x] §6 D1~D10 design decisions → 2026-04-20 승인; 각 항목의 결정은 위 §6 표 참조 (D1 은 변형 승인 — "(b) 지원하되 (a) 변환식 제공").
+- [x] post-LB A/B/C 옵션 (README.md §7) 을 FB 가 대체.
+- [x] 첫 세션 (FB-0.1 — Ellis convention flip) 이 NEXT_SESSION_PROMPT §2 로 rotate 되어 shipped.
+- [x] Extended coverage bundle (FB-8 / FB-9 / FB-11) scope 확정; FB-10 / FB-12 / FB-13 slot 은 [extended_coverage/SCOPE_DECISIONS.md](extended_coverage/SCOPE_DECISIONS.md) 에서 완전 out-of-scope 폐기 결정으로 기록됨.
 
-- [ ] §0 "9 vs 11" 결정 → 본 플랜은 11 사용
-- [ ] §6 D1~D10 design decisions → 추천 기본안으로 진행?
-- [ ] 총 session budget 35 → 수용 가능?
-- [ ] post-LB A/B/C 옵션 (README.md §7) 을 FB 로 교체? 혹은 FB 를 A/B/C 가 suite 안에 배치하는 형식?
-- [ ] 첫 세션 (FB-0.1 — Ellis convention flip) 을 NEXT_SESSION_PROMPT §2 로 rotate?
-
-승인되면 `NEXT_SESSION_PROMPT.md §2` 를 FB-0.1 bootstrap prompt 로 교체하고, 각 FB-N sub-phase 에 대한 spec 문서 (`docs/lowell_bianchi/post_lb_FB/<phase>/`) 를 필요에 따라 추가 생성한다.
+승인이 완료되었으므로 본 §11 은 역사 기록으로 유지한다. 본 플랜의 forward motion 은 FB-0.1 부터 시작하여 FB-3.2 까지 shipped, 현재 FB-3.3 rotation 중이며, FB-7 완료 후 [extended_coverage/](extended_coverage/) bundle 로 flow 된다.
 
 ---
 
