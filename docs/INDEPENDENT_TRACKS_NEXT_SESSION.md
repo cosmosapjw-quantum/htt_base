@@ -1,23 +1,22 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W10` phase.
+**As of**: 2026-04-19, post-`IND_TRACKS_W11` phase.
 **Last audited**: 2026-04-19
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md`,
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W7_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W6_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W5_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W4_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W3_2026-04-19.md`).
-**Governing plan**: `INDEPENDENT_TRACKS_PLAN.md` **v1.2** (PART II MIO
-integration patch + PART III Week-5+ realignment landed 2026-04-19;
-Week 1–10 routine shipped; Week 11+ continuation routine referenced
-below). **Note** (W10 F4): the v1.2 §21 Week 10 wording still says
-"force-add contract" for the §12.3 manuscript landing; per memory
-`feedback_project_local_only.md` and W8 FM1 (RESOLVED post-W8) the
-current rule is **never stage `/project/` paths** — the W10D5 landing
-complies, the plan wording is stale.
+**Governing plan**: `INDEPENDENT_TRACKS_PLAN.md` **v1.3** (W10 F4
+closure landed 2026-04-19: §21 now formally covers Week 10 + Week 11
+with post-W8-FM1 `/project` rule explicitly spelled out — no more
+stale "force-add contract" wording anywhere in the tree;
+Week 1–11 routine shipped; Week 12+ continuation routine referenced
+below).
 **Parent plan**: **`BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN.md` v3** (MIO
 added as 4th pillar; supersedes `BASS_PY_HTT_TSC_RESEARCH_PLAN.md` v2
 which remains referenced from historical carry-forwards).
@@ -211,101 +210,120 @@ Week 10 final gate — **all five items green**:
 - [x] Phase-boundary audit log written.
 - [x] No touched-surface regressions (1026 passed; +19 over W9; 0 failed).
 
+## §1c-8. What shipped in Week 11
+
+Session of 2026-04-19 (compressed: one session covered Week-11
+Days 1-7). Three committed landings + one phase-boundary audit
+(`AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md`).
+
+| Track | Artefact | Status |
+|---|---|---|
+| W11D1 W10-F4 + W10-F5 closures | `INDEPENDENT_TRACKS_PLAN.md` committed for the first time with a **v1.3** §21 Week 10 + Week 11 entry that spells out the post-W8-FM1 `/project` rule (never stage project/ paths); `bass_py/mio/tests/test_hj01_shear.py::test_extract_drops_zero_kernel_multipoles` rewritten to compute `expected_window = cfg.ell_max - cfg.ell_min + 1` from `ShearExtractorConfig()` defaults instead of hardcoding `27` | landed (`8aefbb8`) |
+| W11D3 MIO HJ-02b | `bass_py/mio/coherence/redshift_binned.py` (~350 L) + `bass_py/mio/coherence/__init__.py` docstring update + `bass_py/mio/tests/test_redshift_binned_coherence.py` (15 tests). Public surface: `RedshiftBinnedProbe` / `STANDARD_Z_PROBES` (5-probe SSOT with literature `z_eff` tags) / `DEFAULT_Z_BINS` (3-bin low / mid-AGN / CMB) / `assign_probes_to_bins` / `per_bin_resultants` / `total_drift_deg` / `drift_pvalue` (permutation null test) / `to_mio_certificate` (`reduction_status='diagnostic-only'`) / `emit_redshift_coherence_artefact` (REG-02 `mio_` prefix gate). MIO contribution 56 → 71 (gate ≥ 47 met with 24 to spare) | landed (`06de6d3`) |
+| W11D5 DOS-A36 + A37 | `docs/dossier/A36_mio_channel_weighting.md` (~130 L; three weighting categories + per-statistic specs for HJ-01 / HJ-02a / HJ-02b / HJ-04); `docs/dossier/A37_mio_probe_name_schema.md` (~140 L; frozen BNF grammar v1 + PROBE_ID registry + migration path to structured `probe_names: list[str]`) | landed (`5a7bf2a`) |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md` | landed |
+
+Final test tally over the touched surface at W11 boundary:
+**1041 passed, 0 failed, 4 skipped** (+15 vs W10's 1026; 0 skip
+change; 0 regressions). Skip composition unchanged from W10
+end-of-phase (2 × mio.core/reporting W6 carry, 1 ×
+`fig_certification_matrix` family W9 carry, 1 × dynesty
+composition-swap W10D1 carry).
+
+Week 11 final gate — **all five items green**:
+- [x] W10 F4 + W10 F5 closed (W11D1).
+- [x] HJ-02b landed; MIO contribution 56 → 71; 15 new tests.
+- [x] Two new A3x dossier files landed (A36 + A37).
+- [x] Phase-boundary audit log written.
+- [x] No touched-surface regressions (1041 passed / 0 failed / 4 skipped).
+
 ## §1d. What was designed in the 2026-04-19 planning session
 
 (Preserved here for provenance; unchanged from earlier rotations.
 See v3 research plan + PART II + PART III of the governing plan.)
 
-## §2. Active priorities for the next session (Week 11)
+## §2. Active priorities for the next session (Week 12)
 
-**"Wait-on-bass_py + opportunistic carry-forwards + manuscript
-deferred-section continuations"**. Week 10 closed all scheduled
-landings. The five W10 findings (F1–F5 in
-`AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md` §6) are all P3 / by-design
-and are NOT action items for Week 11. The session should treat them
-as background only.
+**"Continued wait-on-bass_py + opportunistic MIO carry-forwards +
+manuscript / dossier continuations"**. Week 11 closed all scheduled
+landings (W10 F4 + W10 F5, HJ-02b, DOS-A36/A37). The five W11
+findings (F1–F5 in
+`AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md` §6) are all P3 /
+by-design / upstream-blocked and are NOT Week-12 action items.
 
-Week 11 sits in a dependency-wait window: HJ-01 production wiring,
-HJ-03 evidence anatomy, HJ-04 departure skeleton, and MANU-CH12
-§§12.1 / 12.4 / 12.5 / 12.8 are all blocked on bass_py W10-02
-(K_ℓ atlas) and bass_py W11-02 (BiPoSH). Until those land, Week 11
-should harvest the cleanest available carry-forwards.
+Week 12 remains in the dependency-wait window: HJ-01 production
+wiring, HJ-03 evidence anatomy, HJ-04 departure skeleton, and
+MANU-CH12 §§12.1 / 12.4 / 12.5 / 12.8 are still blocked on bass_py
+W10-02 (K_ℓ atlas) and bass_py W11-02 (BiPoSH). Until those land,
+Week 12 should harvest the cleanest remaining carry-forwards.
 
-### Days 1–2 — W10 F4 plan-doc cleanup + W10 F5 brittle-test rewrite
+### Days 1–2 — A37 grammar acceptance tests + HJ-05a-lite hardening
 
-Two trivial closures of W10 P3 items, both genuinely in-lane:
+1. **W11 F4 close — A37 grammar acceptance tests.** Land two
+   regex tests per the A37.6 plan: `test_probe_name_is_alphabetical_bundle`
+   (every bundle-form `probe_name` equals `"+".join(sorted(...))`) and
+   `test_probe_name_matches_grammar_v1` (regex check against the BNF
+   in A37.2). Apply to HJ-01, HJ-02a, HJ-02b emitters. Target: ~4–6
+   new tests; MIO contribution 71 → ~77.
+2. **W5 APPLY-BIAS-AMP — HJ-05a-lite hardening.** Extend the
+   masked-sky caveats module landed in W6 with the W5 audit
+   carry-forward (`_apply_bias_to_direction` scaling discrepancy).
+   Less new surface; closes a long-standing P2. Target: ~3–4 new tests.
 
-* **W10 F4** — INDEPENDENT_TRACKS_PLAN v1.2 §21 Week 10 Day 5-6
-  still says "lands in the same `/project` gitignored path as ch11
-  / ch12, with the same force-add contract (W8 FM1)". Replace the
-  "force-add contract" wording with the post-W8-FM1 rule from
-  `feedback_project_local_only.md`. One-line edit.
-* **W10 F5** — `test_extract_drops_zero_kernel_multipoles` asserts
-  `report.ell.size == 27` with a hardcoded number. Expose the
-  default window size as a module-level constant or compute it in
-  the test from `ShearExtractorConfig.ell_min` / `ell_max`.
+- Commit tags: `W12D1: MIO A37 grammar acceptance tests`,
+  `W12D2: AUDIT(W5-APPLY-BIAS-AMP): HJ-05a hardening`.
+- Gate: new tests pass; touched-surface ≥ 1041 + (whatever); no
+  MIO `posterior` field grep hits; no merge-test prohibition
+  violations; probe-name grammar enforced everywhere it applies.
 
-- Commit tag (combined): `W11D1: AUDIT(W10-F4+F5): plan + test cleanup`
-- Gate: plan-doc reads consistently with `feedback_project_local_only.md`;
-  rewritten test still passes; touched-surface ≥ 1026 / 0 / 4.
+### Days 3–4 — MIO HJ-02b drift exact-enumeration (W11 F1) + HJ-02c option
 
-### Days 3–4 — MIO HJ-02b extension OR HJ-05a-lite hardening
+1. **W11 F1 close — `drift_pvalue` exact-enumeration path.** Add an
+   `exact: bool = False` kwarg that switches to `itertools.permutations`
+   when the permutation count is tractable (< 10 000). Useful for
+   bit-reproducibility at small N. Target: ~3 new tests.
+2. **Optional HJ-02c**: third HJ-02 row per parent v3 §4.5.3.2 (time-
+   integrated directional coherence, if the parent plan exposes it).
+   Skip if not yet specified in v3.
 
-Two genuinely-bass_py-independent options:
+- Commit tag: `W12D3: MIO HJ-02b exact-enumeration (W11 F1)`
+- Gate: exact-path p-value matches MC path at 2-3 decimals on a
+  deterministic small-N case; test suite green.
 
-1. **HJ-02b: redshift-binned directional coherence**
-   (parent plan §4.5.3.2 second row: `redshift_binned.py` —
-   z-bin probe direction + drift rate). Builds on HJ-02a
-   (directional_coherence, landed W6). The data inputs are the
-   five standard probes plus z-bin coverage, both data-only.
-   Target: ~12 tests; MIO contribution 56 → ≥ 68.
+### Days 5–6 — DOS-A41+ continuation (extension protocols)
 
-2. **HJ-05a-lite hardening**: extend the masked-sky caveats
-   module landed in W6 with the W5 APPLY-BIAS-AMP carry-forward
-   (`_apply_bias_to_direction` scaling discrepancy noted in W5
-   audit). Less new surface; closes a long-standing P2.
+The A30-MIO dossier sequence now has A32, A33, A34, A35, A36 (new
+W11), A37 (new W11), A38, A39, A40 landed. A41+ slots remain open
+for extension-protocol notes (how to add a new MIO diagnostic to
+the pillar without violating G19; how to extend `MioCertificate`
+schema; how to retire a probe from `STANDARD_PROBES`).
 
-Pick (1) unless the bass_py session has signalled imminent
-W10-02 V-gate (in which case skip W11 HJ work and hold the lane
-quiet for the V-gate review).
+Pick **one** A41 focus that directly unblocks a future HJ-03 or
+HJ-04 landing (likely: extension protocol for adding a new
+`report_type` that co-exists with the v1 schema hash freeze — W7
+FM3 coordination).
 
-- Commit tag: `W11D3: MIO HJ-02b z-binned coherence` *or*
-  `W11D3: AUDIT(W5-APPLY-BIAS-AMP): HJ-05a hardening`
-- Gate: new tests pass; touched-surface ≥ 1026 + (whatever);
-  no MIO `posterior` field grep hits; no merge-test prohibition
-  violations.
-
-### Days 5–6 — DOS-A36 / A37 / A41+ continuation
-
-The A30-MIO dossier sequence (W5–W7 landed A32, A33, A34, A35,
-A38, A39, A40) still has gaps at A36 (channel weighting), A37
-(probe-name schema), A41+ (extension protocol notes). Each is a
-~200 L .md file structured per `A30_template.md` (or template the
-first one if missing). Pick the two that most directly support
-either the §12.3 forward pointer or the planned ch11 §11.14.2
-revision.
-
-- Commit tag: `W11D5: DOS-A36+A37 (or chosen pair)`
-- Gate: each new dossier file uses the §1–§9 template and cross-references
-  the corresponding code anchor.
+- Commit tag: `W12D5: DOS-A41 extension protocol`
+- Gate: new dossier follows A35/A36/A37 section convention;
+  cross-references A32 + A34 + A39.
 
 ### Day 7 — Phase audit + NEXT_SESSION rotation
 
 Standard phase-boundary audit per `feedback_phase_boundary_audit.md`.
-Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md`
+Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md`
 (date may shift).
 
-### Week 11 final gate
+### Week 12 final gate
 
-- [ ] W10 F4 + W10 F5 closed (or explicit deferral rationale).
-- [ ] HJ-02b OR HJ-05a hardening landed; tests pass; MIO grows
-      monotonically in test count (or stays flat with an explicit
-      "lane held for bass_py V-gate" rationale).
-- [ ] At least one new A3x dossier file landed.
+- [ ] W11 F4 (A37 grammar tests) closed; W11 F1 (exact-enumeration)
+      closed; or explicit deferral rationale.
+- [ ] W5 APPLY-BIAS-AMP closed, or at least one new MIO carry-forward
+      landed.
+- [ ] At least one new A4x dossier file landed.
 - [ ] Phase-boundary audit log written.
-- [ ] No touched-surface regressions (≥ 1026 passed, 0 failed).
+- [ ] No touched-surface regressions (≥ 1041 passed, 0 failed).
 
-### Deferred to Week 12+ (not Week-11 targets)
+### Deferred to Week 13+ (not Week-12 targets)
 
 - **HJ-01 production wiring** — when bass_py W10-02 K_ℓ atlas lands.
   Replace the diagonal independence χ² with the per-ℓ-covariance
@@ -335,8 +353,9 @@ Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md`
 ## §3. Carry-forward items from W1–W10 audits
 
 Severity legend: **P0** = Day-1 blocker, **P1** = Week-N target,
-**P2** = later week, **P3** = out-of-lane. New W10 additions at the
-bottom (W10 F4 + F5 are explicit Week-11 Day-1-2 closures).
+**P2** = later week, **P3** = out-of-lane. W10 F4 + F5 are
+RESOLVED (W11D1 `8aefbb8`); new W11 additions (F1–F5) at the
+bottom.
 
 | Tag | Severity | Description | Where to act |
 |---|---|---|---|
@@ -369,8 +388,13 @@ bottom (W10 F4 + F5 are explicit Week-11 Day-1-2 closures).
 | **W10 F1** | **P3** | `mio.extraction.hj01_shear._gammaincc` 200-iter cap is silent on non-convergence. | Add `warnings.warn` in the iteration loop; bundled with HJ-01 production wiring (W12+). |
 | **W10 F2** | **P3** | HJ-01 independence χ² treats per-ℓ residuals as iid; ignores cosmic-variance C_ℓ correlations. | Swap to weighted χ² with bass_py W10-02 covariance; production HJ-01 prerequisite. |
 | **W10 F3** | **P3** | `flrw_consistent_within_band` 2σ default has ~75 % false-flag rate on 29 iid multipoles. | Document or change default to 3σ (Bonferroni-aware) or expose a `bonferroni=True` knob; production HJ-01 prerequisite. |
-| **W10 F4** | **P3 → W11 D1-2** | INDEPENDENT_TRACKS_PLAN v1.2 §21 Week 10 Day 5-6 wording "force-add contract (W8 FM1)" is stale post-W8-FM1 (RESOLVED). | One-line plan-doc cleanup. **Slated for Week 11 Day 1-2.** |
-| **W10 F5** | **P3 → W11 D1-2** | `test_extract_drops_zero_kernel_multipoles` hardcodes `report.ell.size == 27`. | Compute from `ShearExtractorConfig.ell_min` / `ell_max` constants. **Slated for Week 11 Day 1-2.** |
+| **W10 F4** | **RESOLVED W11D1** | INDEPENDENT_TRACKS_PLAN v1.2 §21 Week 10 Day 5-6 wording "force-add contract (W8 FM1)" was stale post-W8-FM1. | Fixed in `8aefbb8` — plan bumped to v1.3 with §21 Week 10 + Week 11 entries that spell out the post-W8-FM1 `/project` rule verbatim. |
+| **W10 F5** | **RESOLVED W11D1** | `test_extract_drops_zero_kernel_multipoles` hardcoded `report.ell.size == 27`. | Fixed in `8aefbb8` — now computes `cfg.ell_max - cfg.ell_min + 1 - len(dropped)` from `ShearExtractorConfig()` defaults. |
+| **W11 F1** | **P3** | `mio.coherence.redshift_binned.drift_pvalue` has no exact-enumeration path for small-N reproducibility. | Add `exact: bool = False` kwarg; itertools.permutations when `N!` < 10 000. **Slated for W12D3.** |
+| **W11 F2** | **P3** | permutation null distribution degenerate for (N ≤ 8, K = 2, antipodal injection) test designs. | Documentation-only; enforced culturally via "≥ 3 bins or N > 12" guidance in W11 audit §6. |
+| **W11 F3** | **P3** | HJ-02b inherits σ_cone placeholders from HJ-02a (v3 §16.2 FM2 / W6 FM2). | Same resolution as W6 FM2 — MANU-CH12-NEW §12.2 literature citations. |
+| **W11 F4** | **P3** | A37 grammar acceptance tests (`test_probe_name_is_alphabetical_bundle`, `test_probe_name_matches_grammar_v1`) deferred pending CONTRACTS-01 v2 hash-digest infrastructure. | **Slated for W12D1**; two regex tests across HJ-01 / HJ-02a / HJ-02b. |
+| **W11 F5** | **P3** | `emit_redshift_coherence_artefact` provenance SHA = `MioCertificate.git_commit` (instantiation-time; inherited from MIO-HJ-06a, already documented as W6 FM6). | No action — by design. |
 
 ## §4. Environment and quickstart
 
@@ -378,19 +402,18 @@ bottom (W10 F4 + F5 are explicit Week-11 Day-1-2 closures).
 # Repo root
 cd /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 
-# Sanity: touched-surface test run.  As of 2026-04-19 post-W10:
-# 1026 passed, 0 failed, 4 skipped (+19 vs W9; net 0 skip change,
-# composition swap on test_bulkflow_likelihood.py:303 — see W10 audit §5).
+# Sanity: touched-surface test run.  As of 2026-04-19 post-W11:
+# 1041 passed, 0 failed, 4 skipped (+15 vs W10; 0 skip change).
 venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
                 bass_py/tsc/admissibility/ \
                 bass_py/tsc/diagnostics/ bass_py/tsc/charts/ \
                 bass_py/tsc/integration/ \
                 bass_py/workspace/ bass_py/mio/
 
-# tsc standalone (18 s; 602 passed post-W9; unchanged W10).
+# tsc standalone (18 s; 602 passed post-W9; unchanged W10-W11).
 venv/bin/pytest bass_py/tsc/
 
-# MIO standalone (collection check — 56 tests post-W10D3).
+# MIO standalone (collection check — 71 tests post-W11D3).
 venv/bin/pytest bass_py/mio/ --collect-only -q | tail -1
 
 # Full monorepo suite (slower).
@@ -429,30 +452,34 @@ session's responsibility and must not be touched here:
 * **MIO HJ-01 production wiring / HJ-03 / HJ-04 / HJ-05-full** require
   bass_py outputs (W10-02 K_ℓ atlas, W11-02 BiPoSH, HTT Phase F
   posteriors). Governing plan §17.3 catalogues the dependency wait
-  list. **This lane's MIO work as of W10 covers HJ-02a directional
+  list. **This lane's MIO work as of W11 covers HJ-02a directional
   coherence + boot infrastructure + HJ-05a-lite masked_sky_caveats
-  (all W6) plus the HJ-01 *skeleton* (W10D3), which is gated to
+  (all W6) plus the HJ-01 *skeleton* (W10D3) plus HJ-02b z-binned
+  directional coherence (W11D3), both gated to
   `reduction_status='diagnostic-only'` until the bass_py W10-02
-  V-gate signs the K_ℓ atlas** — see W10 audit §3 for the contract.
+  V-gate signs the K_ℓ atlas** — see W11 audit §3 for the contract.
 * `plots/physics_gallery/` — gallery refresh is bass_py's per-phase rule.
 
-### §5a. This lane's new territory (updated post-W8)
+### §5a. This lane's new territory (updated post-W11)
 
 Directories that **this** lane now owns (created or will be created
-per the v1.2 plan — bass_py session must not touch):
+per the v1.3 plan — bass_py session must not touch):
 
 * `bass_py/src/common/*` — ZoA / bulk-flow common modules (Week 1–4 landed).
 * `bass_py/workspace/` + `bass_py/workspace/contracts/*` — interface
   contracts (Week 5 Days 1–2 landed).
 * `bass_py/mio/*` — MIO package. Week 6 shipped the skeleton +
   MIO-HJ-02a directional coherence + MIO-HJ-06a certificate generator +
-  MIO-BRIDGES-01 PR13AM re-export + MIO-HJ-05a-lite masked-sky caveats.
+  MIO-BRIDGES-01 PR13AM re-export + MIO-HJ-05a-lite masked-sky caveats;
+  Week 10 added `mio/extraction/hj01_shear.py` (HJ-01 skeleton);
+  **Week 11 added `mio/coherence/redshift_binned.py` (HJ-02b)**.
 * **`bass_py/tsc/integration/*`** — NEW Week-7 subpackage; currently
   holds TSC-06 `htt_bridge` + tests. Distinct from `bass_py/tsc/{admissibility, charts, diagnostics}/`.
-* `docs/dossier/A13_*`, `A14_*`, `A32_*`, `A33_*`, **`A34_*`**,
-  **`A35_*`**, **`A38_*`**, `A39_*`, **`A40_*`** — manuscript dossier
-  (Week 7 added A34 + A35 + A38 + A40; `A13_02_*` through `A13_14_*`
-  land in Week 9).
+* `docs/dossier/A13_*`, `A14_*`, `A32_*`, `A33_*`, `A34_*`,
+  `A35_*`, **`A36_*`** (new W11), **`A37_*`** (new W11), `A38_*`,
+  `A39_*`, `A40_*` — manuscript dossier. Week 7 added A34 + A35 +
+  A38 + A40; `A13_02_*` through `A13_14_*` landed Week 9;
+  **A36 + A37 landed Week 11**.
 * `project/00_manuscript/ch03_framework.tex` (MANU-CH03 subsections;
   Week 1–4 landed; ~800 L gap vs v3 §11.3 target remains).
 * `project/00_manuscript/ch11_error_hierarchy.tex` — MANU-CH11-REDESIGN
