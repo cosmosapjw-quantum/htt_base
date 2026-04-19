@@ -142,10 +142,51 @@ phase-close gate.
 
 ## §FB-9.3
 
-| Row | Status | Note |
-|---|---|---|
-| Scope | pending | `SpeciesBackgroundRegistry.from_planck2018(..., Sigma_mnu=0.0)` dispatch skeleton. |
-| LB-1 anchor clause | pinned | Default kwargs must preserve the exact LB-1 registry composition and full-suite byte identity. |
+### §FB-9.3 — registry `Sigma_mnu` skeleton
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified
+the registry constructor is still the only load-bearing dispatch point;
+verified the new kwarg is keyword-only with default `0.0`; verified the
+default branch preserves the exact previous `NeutrinoBackground`
+construction; verified positive `Sigma_mnu` keeps the enum slot at
+`SpeciesLabel.NEUTRINO`; verified the new skipped test locks the public
+factory contract rather than asserting fake thermodynamics.
+**Channel B**: 3 source checks / 3 verified / 0 divergent. Evidence:
+the local FB-9 SDD explicitly pins the degenerate approximation
+`m_1 = m_2 = m_3 = Sigma_mnu / 3`; Planck 2018 VI (`arXiv:1807.06209`)
+states in its abstract that the neutrino mass is constrained to
+`sum m_nu < 0.12 eV`; together these are sufficient for a registry-side
+placeholder kwarg whose positive path stores `Sigma_mnu / 3` while the
+default `Sigma_mnu = 0` branch remains the exact LB-1 path.
+**Channel C** (prose, 6-10 lines): This is the one FB-9 skeleton that
+touches active runtime routing, so the default branch has to stay as
+boring as possible. I kept the old constructor call byte-for-byte in
+the `Sigma_mnu == 0.0` branch and moved everything new into the
+positive-mass branch. That gives the future API its planned kwarg
+without introducing any floating-point or import drift into the shipped
+massless path. Keeping the massive placeholder under the existing
+`NEUTRINO` label also matches the sealed dispatch decision and prevents
+downstream code from branching on a new enum name. The positive branch
+still only constructs a placeholder, which is exactly right for this
+session.
+**Alternatives**:
+| # | Registry strategy | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Add keyword-only `Sigma_mnu` with default `0.0` and branch internally | Preserves old calls exactly while exposing the future API explicitly. | Touches active runtime code, so the default branch must be audited carefully. | ✅ |
+| 2 | Add a separate `from_planck2018_massive()` factory | Avoids touching the old signature. | Violates the SDD dispatch plan and encourages duplicate call surfaces. | — |
+| 3 | Add a new enum label for massive neutrinos | Easy downstream branching. | Explicitly forbidden by the SDD and would fracture the zero-mass anchor. | — |
+**Core principles**: old default call preserved exactly; no new enum;
+positive branch is explicit opt-in only; degenerate-mass placeholder is
+documented, not hidden.
+**Skeleton path**:
+`htt/bass/species/registry.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_fb93_registry_massive_neutrino_skeleton.py -q`
+**LB-1 anchor clause**: default kwargs must preserve the exact LB-1
+registry composition and full-suite byte identity.
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 62 skipped` → `3403 passed + 63 skipped` pending the
+phase-close gate.
 
 ## §FB-9.4
 

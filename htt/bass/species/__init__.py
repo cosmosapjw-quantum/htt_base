@@ -15,7 +15,8 @@ Abstract base + canonical ordering:
 
 Concrete species classes:
     ``PhotonBackground``, ``NeutrinoBackground``,
-    ``BaryonBackground``, ``CDMBackground``, ``LambdaBackground``
+    ``BaryonBackground``, ``CDMBackground``, ``LambdaBackground``,
+    ``MassiveNeutrinoBackground`` (FB-9 skeleton)
 
 Registry + factory:
     ``SpeciesBackgroundRegistry``, ``SpeciesBackgroundRegistry.from_planck2018``
@@ -39,6 +40,10 @@ from bass.species.base import (
 from bass.species.cdm import CDMBackground
 from bass.species.constants import SpeciesConstants, default_constants
 from bass.species.lambda_ import LambdaBackground
+from bass.species.massive_neutrino import (
+    MassiveNeutrinoBackground,
+    phase_space_grid,
+)
 from bass.species.neutrino import NeutrinoBackground
 from bass.species.photon import PhotonBackground
 from bass.species.registry import SpeciesBackgroundRegistry
@@ -66,8 +71,10 @@ __all__ = [
     "BaryonBackground",
     "CDMBackground",
     "LambdaBackground",
+    "MassiveNeutrinoBackground",
     # registry
     "SpeciesBackgroundRegistry",
+    "phase_space_grid",
     # FB-3.1 tilt wrapper
     "TiltedSpeciesBackground",
     "V_HAT_E_DEFAULT",

@@ -251,3 +251,24 @@ cross-reference.
 - **Notes**: the audit records that the prompt's Ma-Bertschinger
   `eqs. (56), (97)` are not themselves the background `rho/p` formulas,
   so the placeholder stays explicit about what is and is not verified.
+
+### FB-META-9.3 — registry `Sigma_mnu` skeleton
+
+- **Scope**: Extended
+  [SpeciesBackgroundRegistry.from_planck2018](../../../htt/bass/species/registry.py)
+  with a keyword-only `Sigma_mnu` placeholder kwarg, widened the
+  top-level `bass.species` exports to include the FB-9 skeleton
+  surfaces, and added a skipped contract test for the new factory
+  signature. The default branch preserves the exact LB-1 massless
+  neutrino constructor.
+- **Commit anchor**: see `git log --grep='FB-META-9.3'`.
+- **Test delta**: 3,403 passing + 62 skipped → 3,403 passing + 63
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META9_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META9_2026-04-20.md)
+  §FB-9.3.
+- **Gallery**: no-op (registry contract only).
+- **Carry-forward**: FB-9.4 hierarchy wire-up skeleton.
+- **Notes**: the positive-mass branch uses the local SDD's degenerate
+  placeholder `Sigma_mnu / 3` while the default zero-mass branch keeps
+  the exact LB-1 constructor call.

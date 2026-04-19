@@ -27,6 +27,7 @@ from bass.species.baryon import BaryonBackground
 from bass.species.cdm import CDMBackground
 from bass.species.constants import SpeciesConstants, default_constants
 from bass.species.lambda_ import LambdaBackground
+from bass.species.massive_neutrino import MassiveNeutrinoBackground
 from bass.species.neutrino import NeutrinoBackground
 from bass.species.photon import PhotonBackground
 
@@ -57,7 +58,7 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
     def __init__(
         self,
         photon: PhotonBackground,
-        neutrino: NeutrinoBackground,
+        neutrino: SpeciesBackground,
         baryon: BaryonBackground,
         cdm: CDMBackground,
         lambda_: LambdaBackground,
@@ -190,6 +191,8 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
         cls,
         bg_table: Optional[FLRWBackgroundTable] = None,
         recombination: Optional[RecombinationInterp] = None,
+        *,
+        Sigma_mnu: float = 0.0,
     ) -> "SpeciesBackgroundRegistry":
         """Build the canonical Planck-2018 five-species registry.
 
@@ -203,6 +206,12 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
             shipped Planck-2018 fixture (recombination only — no
             reionization; tests that need reionization should build
             their own via ``extend_table_with_reionization``).
+        Sigma_mnu : float, optional
+            Sum of neutrino masses in eV. ``Sigma_mnu = 0.0`` preserves
+            the byte-identical LB-1 massless ``NeutrinoBackground``
+            path; positive values reserve the ``SpeciesLabel.NEUTRINO``
+            slot for the FB-9 massive-neutrino placeholder without
+            introducing a new enum label.
 
         Reference: ``01_species_background_spec.md §2.5``.
         """
@@ -212,15 +221,22 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
             )
             bg_table = build_flrw_background_table()
         c = bg_table.constants
+        if Sigma_mnu < 0.0:
+            raise ValueError(f"Sigma_mnu must be non-negative, got {Sigma_mnu}")
 
         if recombination is None:
             table = load_recombination_table(_default_recombination_path())
             recombination = build_interpolators(table)
 
         photon = PhotonBackground(bg_table, c.Omega_gamma_0)
-        neutrino = NeutrinoBackground(
-            bg_table, c.Omega_nu_0, N_eff=c.N_eff, m_nu_eV=0.0,
-        )
+        if Sigma_mnu == 0.0:
+            neutrino: SpeciesBackground = NeutrinoBackground(
+                bg_table, c.Omega_nu_0, N_eff=c.N_eff, m_nu_eV=0.0,
+            )
+        else:
+            neutrino = MassiveNeutrinoBackground(
+                bg_table, mass_eV=Sigma_mnu / 3.0, N_q=15,
+            )
         baryon = BaryonBackground(bg_table, c.Omega_b_0, recombination)
         cdm = CDMBackground(bg_table, c.Omega_c_0)
         lambda_ = LambdaBackground(bg_table, c.Omega_Lambda_0)
