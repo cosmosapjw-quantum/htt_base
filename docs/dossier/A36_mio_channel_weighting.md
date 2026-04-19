@@ -91,6 +91,16 @@ Until MANU-CH12-NEW §12.2 cites published σ values, the
 modules carries `*_sigma_cone_plan_placeholder` entries so the
 downstream reader is explicitly warned.
 
+**Provenance anchor (W13D3 / W14D2)**: the per-PROBE_ID literature
+lookup for σ_cone has been moved to
+[A36a σ_cone literature](A36a_sigma_cone_literature.md). §A36a.2
+records the DOI/arXiv-anchored value per probe, §A36a.3 records the
+Δ between code-side σ and literature σ per probe, and §A36a.5
+spells out the three-condition retirement criterion for the
+`*_sigma_cone_plan_placeholder` caveat flag (paired with the cross-
+producer σ parity test added in W14D1 —
+`test_standard_probes_have_consistent_sigma_cone_across_producers`).
+
 ## A36.5 G19 posture
 
 - Per-statistic weighting is internal to one module and produces one
