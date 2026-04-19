@@ -71,6 +71,54 @@ u_(s)^a = γ_s (n^a + v_(s)^a)     where v_(s)^a n_a = 0, γ_s = (1 − v_s²)^{
 
 (This is already implemented in `bass.tilt.species_tilt.TiltedSpeciesParams`; see Y-Block.)
 
+**`v̂_e` default — SSOT (FB02-F1 resolved, FB-3.1)**:
+
+The tilt direction `v̂_e` is a spatial unit vector in the `n^a`-frame
+tetrad basis (`e_1, e_2, e_3`). The **canonical default is the first
+tetrad axis**:
+
+```
+v̂_e = (1, 0, 0)   # aligned with e_1 — the Σ_+ eigenvector (§5.4)
+```
+
+This choice is fixed by three mutually-consistent considerations:
+
+1. **Principal-shear alignment** (§5.4): `e_1` is the axis the
+   axisymmetric Bianchi shear `Σ_+` compresses/expands; aligning the
+   tilt with this axis keeps the `(β, v̂_e)` + `(Σ_+, Σ_−)` problem
+   axisymmetric whenever the cosmology is axisymmetric.
+2. **Pontzen-Challinor frame** (bianchi_types.py): the Class-B twist
+   lives in `e_2` (`a_α = (0, a_twist, 0)`), so `e_1` is the
+   twist-free axis — the cleanest choice for an orthogonal `(v̂_e,
+   a_α)` split.
+3. **Literature convention**: King-Ellis 1973 §3 takes the tilt along
+   the `x` axis; EMM 2012 §5.4 eqs (5.12)-(5.14) are written in the
+   same convention.
+
+**Cross-reference surface** — every callable / dataclass that exposes
+`v̂_e` as a field or argument MUST reuse the same default constant so
+that the SSOT stays single-sourced:
+
+| Location | Field / constant | SSOT anchor |
+|---|---|---|
+| `bass.species.tilted.TiltedSpeciesBackground.v_hat_e` | default = `V_HAT_E_DEFAULT` | FB-3.1 wrapper (this doc) |
+| `bass.species.tilted.V_HAT_E_DEFAULT` | module constant `(1, 0, 0)` | FB-3.1 SSOT |
+| `bass.background.einstein_bianchi.BianchiCosmology.v_hat_e` | default = `_V_HAT_E_DEFAULT = (1, 0, 0)` | FB-0.2 |
+| `bass.collision.tilted_visibility.TiltedVisibility` | stores `v_e: Callable[[η], (3,)]`; default caller supplies `(1, 0, 0)` × `v_magnitude(η)` | LB-4 Layer A |
+| FB-3.2 hierarchy driver (`hierarchy_rhs_photon` acceleration / vorticity vectors) | consumes `TiltedSpeciesBackground.v_vector(η)` → inherits `V_HAT_E_DEFAULT` | FB-3.2 (planned) |
+| FB-4 Thomson kernel Layer B | same `v̂_e` SSOT — no separate default | FB-4 (planned) |
+
+The regression test that pins this SSOT is
+`bass/species/test_tilted.py::test_T13_v_hat_default_matches_bianchi_cosmology_fb02_f1` —
+it fails the instant any of the above defaults drifts from
+`(1, 0, 0)`.
+
+Non-unit `v̂_e` is explicitly invalid. `BianchiCosmology` and
+`TiltedSpeciesBackground` both raise `ValueError` when
+`|v̂_e|² − 1` exceeds `1e-10`, so a caller who passes a noisy
+direction sees the error immediately rather than discovering a silent
+renormalisation downstream.
+
 **Frame split rule** — universal for the entire LB phase and beyond:
 
 > **Transport is evaluated in the n^a frame. Collision and visibility are evaluated in the u_e^a frame (electron rest frame).**
