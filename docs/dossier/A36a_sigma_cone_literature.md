@@ -169,6 +169,17 @@ literature-consistent-but-not-verbatim, or plan-placeholder.
 | `CF4pp` | 15.0 | 10-12 (Tully+2023, 150 Mpc/h) | +3 to +5 | literature-consistent / conservative |
 | `BiPoSH` | 20.0 | 15-25 (Planck 2015 XVI) | within range | literature-consistent |
 
+**Machine-readable mirror (W16D3).** [`A36a_sigma_cone_literature.yaml`](A36a_sigma_cone_literature.yaml)
+ships the same five rows in a parser-friendly form. The paired test
+`bass_py/mio/tests/test_sigma_cone_provenance.py::test_standard_probes_sigma_code_matches_a36a_yaml`
+asserts (1) `STANDARD_PROBES[*].sigma_cone_deg == sigma_code_deg` per
+PROBE_ID and (2) internal YAML self-consistency
+`|sigma_code_deg − sigma_lit_deg| == |delta_deg|`. The three probes
+whose literature σ is quoted as a range (Radio / CF4pp / BiPoSH)
+reduce to the midpoint for the parity scalar and preserve the full
+range in an optional `sigma_lit_range_deg: [min, max]` field.
+Closes the W13 F4 / W14 F3 / W15 F2 drift exposure.
+
 Aggregate: no PROBE_ID carries a σ that is *smaller* than the most
 permissive literature 1σ cone after catalogue conservatism is
 applied, so the inverse-variance weighting does not over-weight any

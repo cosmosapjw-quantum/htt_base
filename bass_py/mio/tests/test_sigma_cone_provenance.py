@@ -17,7 +17,10 @@ W14D6 only needs a one-line change in the expected-flagged set.
 """
 from __future__ import annotations
 
+from pathlib import Path
+
 import numpy as np
+import yaml
 
 from mio.coherence.directional import STANDARD_PROBES, resultant_vector
 from mio.coherence.directional import to_mio_certificate as to_cert_hj02a
@@ -32,6 +35,11 @@ from mio.interface.sigma_cone_provenance import (
     PROMOTED_SIGMA_CONE_PROBES,
     is_promoted,
     placeholder_caveats_for,
+)
+
+A36A_YAML_PATH = (
+    Path(__file__).resolve().parent.parent.parent.parent
+    / "docs" / "dossier" / "A36a_sigma_cone_literature.yaml"
 )
 
 
@@ -181,3 +189,52 @@ def test_hj02a_caller_caveats_preserved_alongside_placeholder_tags():
     }
     expected_tags = {f"{n}{PLACEHOLDER_CAVEAT_SUFFIX}" for n in expected_flagged}
     assert set(caveats) == set(caller_caveats) | expected_tags
+
+
+def test_standard_probes_sigma_code_matches_a36a_yaml():
+    """W16D3 (W14 R3 / W13 F4) — A36a.3 literature-Δ YAML sidecar parity.
+
+    The `A36a_sigma_cone_literature.yaml` sidecar mirrors §A36a.3 in a
+    machine-readable form. This test guards the dossier-↔-code invariant
+    on two axes:
+
+    (1) Code parity. The `sigma_code_deg` column must equal the live
+        `STANDARD_PROBES[*].sigma_cone_deg` value per PROBE_ID. A σ edit
+        in `mio.coherence.directional` that forgets to update the YAML
+        (or vice versa) fails here.
+    (2) YAML internal self-consistency. For every row
+        `|sigma_code_deg − sigma_lit_deg| == |delta_deg|`; an arithmetic
+        typo in the human-written YAML trips this immediately.
+
+    Scalar-reduction convention: three probes (Radio, CF4pp, BiPoSH)
+    have literature σ quoted as a range in §A36a.2; the YAML records
+    the midpoint as `sigma_lit_deg` and keeps the full range in the
+    optional `sigma_lit_range_deg: [min, max]` field (not consumed
+    here). See YAML header comment for the full edit protocol.
+    """
+    data = yaml.safe_load(A36A_YAML_PATH.read_text(encoding="utf-8"))
+    rows = data["probes"]
+    assert len(rows) == 5, f"expected 5 A36a.3 rows, got {len(rows)}"
+
+    yaml_by_id = {r["probe_id"]: r for r in rows}
+    code_by_id = {p.name: p.sigma_cone_deg for p in STANDARD_PROBES}
+    assert set(yaml_by_id.keys()) == set(code_by_id.keys()), (
+        f"PROBE_ID set mismatch: yaml={sorted(yaml_by_id)} "
+        f"vs code={sorted(code_by_id)}"
+    )
+
+    for probe_id, row in yaml_by_id.items():
+        # (1) code parity
+        assert row["sigma_code_deg"] == code_by_id[probe_id], (
+            f"{probe_id}: YAML sigma_code_deg={row['sigma_code_deg']} "
+            f"vs STANDARD_PROBES sigma_cone_deg={code_by_id[probe_id]}"
+        )
+        # (2) internal self-consistency
+        c, lit, delta = (
+            row["sigma_code_deg"],
+            row["sigma_lit_deg"],
+            row["delta_deg"],
+        )
+        assert abs(abs(c - lit) - abs(delta)) < 1e-9, (
+            f"{probe_id}: |{c} − {lit}| = {abs(c - lit)} ≠ |{delta}|"
+        )

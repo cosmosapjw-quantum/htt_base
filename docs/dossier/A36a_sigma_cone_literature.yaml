@@ -1,0 +1,60 @@
+# A36a.3 literature-Δ SSOT mirror — edit paired with A36a.3 table.
+#
+# Machine-readable companion to `A36a_sigma_cone_literature.md` §A36a.3.
+# Purpose: guard the literature-Δ table against silent drift. The
+# paired test in bass_py/mio/tests/test_sigma_cone_provenance.py
+# (`test_standard_probes_sigma_code_matches_a36a_yaml`) asserts:
+#   (1) STANDARD_PROBES[.sigma_cone_deg] equals sigma_code_deg per probe;
+#   (2) |sigma_code_deg − sigma_lit_deg| == |delta_deg| (internal
+#       YAML self-consistency).
+#
+# Scalar reduction for ranges: three probes (Radio, CF4pp, BiPoSH)
+# have literature σ quoted as a range in §A36a.2. For programmatic
+# parity we record the *representative* scalar (midpoint of the cited
+# range) as `sigma_lit_deg`; the `sigma_lit_range_deg` field is an
+# optional pair `[min, max]` that preserves the full dossier claim
+# for human readers and is NOT consumed by the parity test.
+#
+# Edit protocol: any change to this file must be paired with an A36a.2
+# / A36a.3 edit and a `STANDARD_PROBES` re-audit. See A36a.4 and A36a.5.
+# Landing plan reference: docs/INDEPENDENT_TRACKS_NEXT_SESSION.md §2
+# Week 16 Days 3-4 (W14 R3 / W13 F4 close).
+
+probes:
+  - probe_id: CMB
+    sigma_code_deg: 0.5
+    sigma_lit_deg: 0.01
+    delta_deg: 0.49
+    source: "arXiv:1807.06205"  # Planck 2018 Results I
+    status: "literature-consistent / catalogue-conservative"
+
+  - probe_id: CatWISE
+    sigma_code_deg: 6.0
+    sigma_lit_deg: 5.9
+    delta_deg: 0.1
+    source: "arXiv:2009.14826"  # Secrest+2021
+    status: "DOI-anchored"
+
+  - probe_id: Radio
+    sigma_code_deg: 10.0
+    sigma_lit_deg: 12.0
+    sigma_lit_range_deg: [10.0, 14.0]
+    delta_deg: -2.0
+    source: "arXiv:1301.5559"  # Rubart & Schwarz 2013
+    status: "literature-consistent"
+
+  - probe_id: CF4pp
+    sigma_code_deg: 15.0
+    sigma_lit_deg: 11.0
+    sigma_lit_range_deg: [10.0, 12.0]
+    delta_deg: 4.0
+    source: "DOI:10.3847/1538-4357/acf1a4"  # Tully+2023 CF4
+    status: "literature-consistent / conservative"
+
+  - probe_id: BiPoSH
+    sigma_code_deg: 20.0
+    sigma_lit_deg: 20.0
+    sigma_lit_range_deg: [15.0, 25.0]
+    delta_deg: 0.0
+    source: "arXiv:1506.07135"  # Planck 2015 XVI
+    status: "literature-consistent"
