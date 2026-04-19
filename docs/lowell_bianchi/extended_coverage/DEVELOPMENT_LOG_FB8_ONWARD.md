@@ -412,3 +412,21 @@ cross-reference.
 - **Carry-forward**: FB-11.3 `bayes_factor` skeleton.
 - **Notes**: the audit includes the required emcee vs dynesty vs zeus
   table and keeps the third-party-driver boundary explicit.
+
+### FB-META-11.3 — `bayes_factor` skeleton
+
+- **Scope**: Added
+  [BayesFactorResult and bayes_factor](../../../htt/bass/inference/bayes.py)
+  under `bass.inference`, exported them from the package root, and
+  pinned thermodynamic integration as the production-default method
+  while keeping nested sampling as a reference-only provenance hook.
+- **Commit anchor**: see `git log --grep='FB-META-11.3'`.
+- **Test delta**: 3,403 passing + 68 skipped → 3,403 passing + 69
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META11_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META11_2026-04-20.md)
+  §FB-11.3.
+- **Gallery**: no-op (evidence contracts only).
+- **Carry-forward**: FB-11.4 convergence diagnostics.
+- **Notes**: nested sampling remains documented as a cross-check only;
+  no production `dynesty` import path is opened here.

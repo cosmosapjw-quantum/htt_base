@@ -6,6 +6,7 @@ and evidence workflow but raise `NotImplementedError` rather than
 opening a fake sampling path.
 """
 
+from bass.inference.bayes import BayesFactorResult, bayes_factor
 from bass.inference.drivers.emcee_driver import PosteriorSample, run_posterior
 from bass.inference.priors import (
     Prior,
@@ -17,8 +18,10 @@ from bass.inference.priors import (
 )
 
 __all__ = [
+    "BayesFactorResult",
     "Prior",
     "PosteriorSample",
+    "bayes_factor",
     "prior_rapidity",
     "prior_direction",
     "prior_Sigma_mnu",

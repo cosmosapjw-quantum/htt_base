@@ -209,7 +209,59 @@ phase-close gate.
 
 ## §FB-11.3
 
-Pending pre-flight scaffold for `bayes_factor`.
+### §FB-11.3 — `bayes_factor` skeleton
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB11_INFERENCE_DRIVER_SDD.md §4`
+names `bayes_factor` and `BayesFactorResult` as the canonical FB-11.3
+surface; verified the new module lives at `bass.inference.bayes` as the
+SDD promises; verified the package root now exports both names; verified
+the result dataclass fields match the SDD contract exactly; verified the
+docstring pins thermodynamic integration as the default and `dynesty` as
+reference-only; verified the new skipped harness test checks the public
+signature without executing any evidence code.
+**Channel B**: 3 source checks / 3 verified / 0 broken. Evidence:
+Lartillot & Philippe 2006 are verified on PubMed as the canonical
+thermodynamic-integration Bayes-factor paper and describe the method as
+an alternative to the unreliable harmonic-mean estimator. Skilling 2006
+is verified through the open-access Bayesian Analysis metadata as the
+canonical nested-sampling evidence paper, where evidence is the prime
+computational target and posterior samples are an optional by-product.
+Those sources line up with the local SDD decision: production sampling
+is `emcee`, so the default evidence method must be thermodynamic
+integration; nested sampling stays a cross-check path only.
+**Channel C** (prose, 6-10 lines): The safest FB-11.3 plant is a tiny
+module with one dataclass and one raising function. Evidence code is
+exactly the kind of thing that becomes misleading if a skeleton tries to
+look half-complete, so the public contract needs to be explicit about
+what method is primary and what method is only a reference. Choosing
+thermodynamic integration as the documented default follows from the
+previous sampler decision, not from any claim that TI is universally
+better than nested sampling. The audit says that directly. `dynesty` is
+still important here because the SDD wants a toy cross-check, but that
+does not require importing it into the production path during the
+skeleton cycle. The result carrier plus docstring is enough to lock that
+logic into the repo.
+**Alternatives**:
+| # | Evidence surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `bayes_factor` with thermodynamic-integration default and nested-sampling provenance hook | Matches the emcee production choice and keeps the reference cross-check explicit. | Actual TI implementation still has to arrive later. | ✅ |
+| 2 | Make nested sampling the production path immediately | Direct evidence estimates. | Reopens the sealed FB-11.2 sampler choice and broadens the default dependency/runtime path. | — |
+| 3 | Leave evidence as an unnamed helper inside the driver | Smaller public API today. | Erases the FB-11.3 audit seam and hides method provenance. | — |
+**Core principles**: separate evidence from posterior sampling; make TI
+the explicit production default; keep nested sampling reference-only;
+raise rather than fake a log-evidence calculation.
+**Skeleton path**:
+`htt/bass/inference/bayes.py`,
+`htt/bass/inference/__init__.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/inference/test_fb113_bayes_factor_skeleton.py -q`
+**Guard rails** (yes/no): TI default explicit? yes; `dynesty`
+reference-only note explicit? yes; result dataclass matches SDD? yes;
+placeholder still raises? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 68 skipped` → `3403 passed + 69 skipped` pending the
+phase-close gate.
 
 ## §FB-11.4
 
