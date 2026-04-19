@@ -40,4 +40,19 @@
 
 ## §FB-4.2
 
+### §FB-4.2 — E↔B mixing skeleton under tilted LOS
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified `htt/bass/collision/polarization.py` (current E-only storage), `htt/bass/collision/thomson_pstf.py` (B-mode tracked separately note), `docs/lowell_bianchi/04_thomson_collision_spec.md` (`B ≡ 0` scope pin and LB-4c defer), `htt/bass/los/bianchi_propagator.py` (Type I `ψ' = 0` B-mode floor), and `htt/docs/packets/WEEK9_02_PACKET.md` (orthogonal Type I block-diagonal propagator with no E↔B mixing).
+**Channel B**: 1 query / 1 verified / 0 unverified. Evidence: `astro-ph/9611125` (`"for scalar metric perturbations one set is identically zero"`) confirms the clean-zero branch used as the β=0 / no-rotation anchor.
+**Channel C** (prose, 6-10 lines): The skeleton contract has to expose both E and B outputs because once the polarization basis rotates, the coupling is intrinsically two-channel. Keeping `b_state=None` as the default is the safest META choice because the current production storage is explicitly E-only and the `β = 0` path must not disturb that surface. At `β = 0` or when no tilted-electron surface is supplied, the future body must collapse to the existing `E_mode_collision_source` contract and an identically zero B tensor. `Gamma_T` remains the only rate scale, so both returned tensors stay in the same collision-source units as LB-4. The sign check is asymmetric in the known limit: E keeps the existing damping and quadrupole-coupling signs, while B must vanish rather than damp from a nonexistent source. The Type I LOS floor in `bianchi_propagator.py` is the practical sanity pin that no rotation means no generated B power.
+**Alternatives**:
+| # | signature | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `evaluate_tilted_polarization_eb_collision(ell, e_state, eta, *, Pi_2_packed, Gamma_T, b_state=None, tilted_electron=None) -> tuple[PSTFTensor, PSTFTensor]` | Keeps the current E-only storage untouched; symmetric future E/B output; preserves a `None` default for the zero-B anchor. | Future callers must explicitly wire both returned tensors. | ✅ |
+| 2 | `build_tilted_polarization_state_eb(E, B, *, tilted_electron=None) -> PolarizationHierarchyStateEB` | Makes the future two-field state explicit in one place. | Forces a new storage container before the literature and sign convention are sealed; larger blast radius across current LB-4 code. | — |
+**Core principles**: external-code policy; PSTF SSOT; β=0 byte-identity against the existing E-mode collision source and the Type I `ψ' = 0` B-mode floor; no silent fallback; deterministic; inline citations per §6.
+**Skeleton path**: `htt/bass/collision/tilted_eb_mixing.py::evaluate_tilted_polarization_eb_collision`
+**Test path**: `htt/bass/collision/test_fb42_eb_mixing_skeleton.py::test_tilted_polarization_eb_collision_skeleton_contract`
+**Guard rails** (yes/no): citations verified? yes; imports exist? yes; ≥ 2 alternatives? yes; β=0 anchor documented? yes
+**Regression after plant**: 3,403 passed + 3 skipped.
+
 ## §FB-4.3

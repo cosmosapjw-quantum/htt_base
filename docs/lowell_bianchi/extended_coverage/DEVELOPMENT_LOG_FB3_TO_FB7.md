@@ -333,6 +333,21 @@ Exit: β-sweep × polarisation regression. BB identically zero at
   in this tree, so the audit records it as a broken internal locator;
   the historical `§11.3` text is recoverable from `HEAD` only.
 
+### FB-META-4.2 — tilted E↔B mixing skeleton
+
+- **Scope**: Recorded FB-4.2 three-channel verification and planted
+  the local-only `evaluate_tilted_polarization_eb_collision(...)`
+  skeleton plus one skipped contract test while keeping the shipped
+  E-only polarization storage unchanged.
+- **Commit anchor**: see `git log --grep='FB-META-4.2'`.
+- **Test delta**: `3,403 passed + 2 skipped` →
+  `3,403 passed + 3 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META4_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META4_2026-04-20.md) §FB-4.2.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: —
+- **Notes**: the orthogonal Type I `ψ' = 0` B-mode floor remains the
+  named known-limit anchor for the future implementation.
+
 ---
 
 ## Phase FB-5 (planned) — Perturbation sector k ≠ 0
@@ -415,6 +430,7 @@ dataset. At this point the parent plan's stated target is reached
 | FB-3.6 / Phase FB-3 exit | 3,403 | +117 |
 | FB-META-4.0 pre-flight | 3,403 | +117 |
 | FB-META-4.1 skeleton | 3,403 | +117 |
+| FB-META-4.2 skeleton | 3,403 | +117 |
 
 After each new FB row ships, append a new ledger row here with the
 fresh cumulative count.
