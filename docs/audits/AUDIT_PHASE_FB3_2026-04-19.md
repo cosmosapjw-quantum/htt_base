@@ -509,6 +509,103 @@ the dedicated `NotImplementedError` branch (no silent degradation).
   checkpoint).
 - **Baseline**: 3,189 → 3,213 (+24).
 
+---
+
+## §FB-3.4 Supplement — Dynamic vorticity feedback (ω · a² = const dilution)
+
+- **Sub-phase**: FB-3.4 — `vorticity_from_tilt` extended with optional
+  `bg_table` kwarg that multiplies the FB-3.2 static piece by the
+  EMM §6.4 dilution factor `(a_today / a(η))²`.
+- **Prior baseline** (post-FB-3.3): 3,213 passing + 1 skipped.
+- **This-session baseline**: 3,232 passing + 1 skipped (+19 new tests).
+
+### §FB-3.4.0 Target reconstruction
+
+| Layer | Claim | Implementation | Output |
+|---|---|---|---|
+| Physics | EMM 2012 §6.4 vorticity propagation at leading order: `ω × a² = const` ⇒ `ω(η) = ω_0 × (a_0 / a(η))²` | `vorticity_from_tilt(..., bg_table=bg)` extension | `(3,)` float64 |
+| Invariant | `bg_table = None` path byte-identical to FB-3.2 static formula | short-circuit without consulting `bg_table` | V-01 |
+| Invariant | β = 0 / Class A / `structure is None` → zeros on every kwargs path | short-circuit before any `bg_table` read | V-02 / V-03 |
+| Scope pin | Dynamic means η-dependent; V-05 pins two different η values produce different outputs | dilution factor reads `bg_table.interp_a(eta)` | V-05 |
+
+### §FB-3.4.1 Contract diff
+
+```python
+def vorticity_from_tilt(
+    tilted, eta,
+    structure=None,
+    *,
+    bg_table=None,    # FB-3.4 new
+) -> np.ndarray
+```
+
+`bg_table=None` → FB-3.2 backward-compat.
+`bg_table` supplied → multiply static piece by `(a_today / a(η))²`.
+
+### §FB-3.4.2 Phys-math ledger
+
+1. **Definition / notation**. `ω × a² = const` is EMM §6.4 leading-
+   order vorticity propagation on an FLRW background (consistent with
+   `ω̇ = −(2/3) Θ ω + …` integrated to leading order). The formula
+   generalises the Pontzen-Challinor §2 static piece by making it
+   evolve with the scale factor. **Pass**.
+2. **Indices**. `ω^a` is the axial vector consumed by
+   `T6_vorticity`; unchanged shape and basis. **Pass**.
+3. **Sign / normalisation**. At η < η_today (a < a_today), dilution
+   factor > 1 so `|ω_dynamic| > |ω_static|` — vorticity was larger in
+   the past. Pinned by V-09. **Pass**.
+4. **Units / dimension**. Dilution factor is dimensionless; ω
+   retains its `1/Mpc` units from the `a_twist` structure
+   constant. **Pass**.
+5. **Known-limit recovery**. `bg_table = None` is byte-identical to
+   FB-3.2 (V-01); at η = η_today, dilution = 1 exactly; β = 0,
+   Class A short-circuit paths unchanged. **Pass**.
+6. **Boundary / positivity**. Non-positive `a(η)` raises
+   `ValueError` (V-06). **Pass**.
+7. **Hidden assumption**. The `(a_today / a(η))²` factor assumes a
+   reference point at η_today (where dilution = 1). An alternative
+   normalisation (reference at η_initial) would only rescale the
+   overall amplitude; the shape of the η-dependence is invariant.
+   Documented in the module docstring. **Pass with note**.
+8. **Counter-example**. On the five Class B types the dilution
+   factor is applied identically (V-04 parametrises all five).
+   **Pass**.
+
+### §FB-3.4.5 Ranked failure modes
+
+| # | Type | Severity | Symptom | Cheap probe |
+|---|---|---|---|---|
+| 1 | physics | P0 (averted) | FB-3.2 anchor drifts when `bg_table=None` | V-01 closed-form equality |
+| 2 | physics | P1 (averted) | dilution applied at β=0 / Class A | V-02 / V-03 short-circuit pins |
+| 3 | interface | P1 (averted) | silent `a(η) = 0` produces inf | V-06 `ValueError` pin |
+| 4 | physics | P2 (carried) | dilution only captures leading-order EMM §6.4; shear-driven piece (from `ε^{abc} ∇̃_b A_c`) enters at perturbation level | FB-5.1 perturbation sector |
+
+### §FB-3.4.8 Minimal test set
+
+| Test | Role | Verdict |
+|---|---|---|
+| V-01 | FB-3.2 backward-compat (no kwargs) | ✅ |
+| V-02 | β = 0 short-circuit on FB-3.4 path | ✅ |
+| V-03 | Class A short-circuit (6 types parametrised) | ✅ |
+| V-04 | closed-form dilution (5 Class B types parametrised) | ✅ |
+| V-05 | dynamic η-dependence | ✅ |
+| V-06 | non-positive `a(η)` → `ValueError` | ✅ |
+| V-07 | driver β = 0 byte-identity under extended kwargs | ✅ |
+| V-08 | static vs dynamic driver output differs | ✅ |
+| V-09 | |ω_dynamic| > |ω_static| at early η | ✅ |
+| V-10 | η-sweep dilution monotonicity | ✅ |
+
+**19 passed / 0 failed.**
+
+### §FB-3.4.9 Final verdict
+
+- **Status**: Pass — FB-3.4 sealed.
+- **Gallery**: no-op at this rotation; FB-3.6 β-sweep is the gallery
+  checkpoint.
+- **Carry-forward** (new): shear-driven `ε^{abc} ∇̃_b A_c` vorticity
+  piece → FB-5.1 reserved (perturbation-sector).
+- **Baseline**: 3,213 → 3,232 (+19).
+
 ### Carry-forward ledger (outstanding)
 
 - **FB-3.1 P2 overlap** → ✅ resolved in this rotation (K-12 pins the

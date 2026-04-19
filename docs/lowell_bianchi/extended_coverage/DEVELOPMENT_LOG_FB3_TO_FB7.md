@@ -226,12 +226,20 @@ struck-through but retained for archaeology.
 - **Carry-forward new**: boost-kernel off-axis Wigner-d rotation →
   FB-5.2 reserved.
 
-### FB-3.4 (planned) — Vorticity feedback into hierarchy
+### FB-3.4 — Dynamic vorticity feedback
 
-- **Shipping**: `T4_accel_divergence` / `T5_accel_gradient` /
-  `T6_vorticity` receive tilted-sector *dynamic* inputs (not just
-  structural vectors); β>0 × Class B regression demonstrates
-  non-trivial vorticity amplitude growth.
+- **Scope**: `vorticity_from_tilt` gains optional `bg_table` kwarg.
+  When supplied, the FB-3.2 static piece is multiplied by the
+  EMM §6.4 dilution factor `(a_today / a(η))²` so T6 receives an
+  η-dependent vorticity on β>0 × Class B. FB-3.2 backward-compat
+  (no kwargs) preserved byte-for-byte; β=0 and Class A paths
+  short-circuit before any `bg_table` read.
+- **Test delta**: 3,213 → 3,232 (+19 tests in
+  `bass/hierarchy/test_fb34_vorticity_feedback.py`).
+- **Audit**: `AUDIT_PHASE_FB3_2026-04-19.md` §FB-3.4 Supplement.
+- **Gallery**: no-op.
+- **Carry-forward new**: shear-driven `ε^{abc} ∇̃_b A_c` vorticity
+  piece → FB-5.1 reserved.
 
 ### FB-3.5 (planned) — β-gate reparametrisation
 
@@ -342,6 +350,7 @@ dataset. At this point the parent plan's stated target is reached
 | FB-3.1 exit | 3,132 | +24 |
 | FB-3.2 exit | 3,189 | +57 |
 | FB-3.3 exit | 3,213 | +24 |
+| FB-3.4 exit | 3,232 | +19 |
 
 After each new FB row ships, append a new ledger row here with the
 fresh cumulative count.
