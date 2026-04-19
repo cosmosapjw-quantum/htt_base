@@ -430,3 +430,23 @@ cross-reference.
 - **Carry-forward**: FB-11.4 convergence diagnostics.
 - **Notes**: nested sampling remains documented as a cross-check only;
   no production `dynesty` import path is opened here.
+
+### FB-META-11.4 — convergence diagnostics skeleton
+
+- **Scope**: Added
+  [r_hat, ess, geweke, and trace_plot_data](../../../htt/bass/inference/diagnostics.py)
+  under `bass.inference`, exported them from the package root, and
+  pinned the local threshold policy in the docstrings. The audit makes
+  the threshold history explicit: Gelman-Rubin 1992 defines the
+  diagnostic, while the stricter `1.01` cutoff is a later workflow
+  convention.
+- **Commit anchor**: see `git log --grep='FB-META-11.4'`.
+- **Test delta**: 3,403 passing + 69 skipped → 3,403 passing + 70
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META11_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META11_2026-04-20.md)
+  §FB-11.4.
+- **Gallery**: no-op (diagnostic contracts only).
+- **Carry-forward**: FB-11.5 synthetic-injection harness.
+- **Notes**: the planted docstrings preserve the historical distinction
+  between the original statistic and the modern acceptance threshold.

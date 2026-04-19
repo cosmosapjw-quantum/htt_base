@@ -265,7 +265,65 @@ phase-close gate.
 
 ## §FB-11.4
 
-Pending pre-flight scaffold for convergence diagnostics.
+### §FB-11.4 — convergence diagnostics skeleton
+**Threshold pin**: the planted docstrings now record the FB-11 policy
+`R-hat < 1.01`, `ESS > 400`, and Geweke `|z| < 2`, with the threshold
+history made explicit rather than silently attributed to the 1992
+papers.
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB11_INFERENCE_DRIVER_SDD.md §5`
+names `r_hat`, `ess`, `geweke`, and `trace_plot_data`; verified the new
+diagnostics module exports exactly those names; verified the package root
+re-exports all four functions; verified the docstrings pin the local
+thresholds without pretending the algorithms are implemented; verified
+the skip-marked harness test checks the signature defaults; verified no
+driver or CLI code tries to consume numeric diagnostics yet.
+**Channel B**: 4 source checks / 4 verified / 0 broken. Evidence:
+Gelman & Rubin 1992 are the primary source for the potential scale
+reduction factor and frame it as a diagnostic that approaches 1 at
+convergence; they do not themselves canonize the modern `1.01` cutoff.
+Geweke's 1991/1992 convergence work is verified through the Federal
+Reserve Bank of Minneapolis abstract, which states that spectral methods
+are used to evaluate numerical accuracy and construct convergence
+diagnostics. Vehtari et al. 2021 explicitly describe flaws in the
+traditional Gelman-Rubin `R-hat` and provide the modern improved
+context. Current Stan guidance then recommends `R-hat < 1.01` for
+trusting final samples and notes that `1.1` can be acceptable only in
+early workflow. That sequence is the threshold history the audit pins:
+the original statistic is from 1992, the stricter operational cutoff is
+later.
+**Channel C** (prose, 6-10 lines): This sub-phase is mostly about
+honesty. Convergence thresholds are the kind of thing teams casually
+quote without distinguishing the original statistic from the modern
+workflow policy built around it. The skeleton docstrings now separate
+those layers on purpose. `R-hat` comes from Gelman-Rubin, the Geweke `z`
+comes from Geweke's spectral-diagnostic work, and the bundle's strict
+`1.01` threshold is a project choice informed by later practice rather
+than a backdated claim about 1992. That distinction matters because the
+future implementation should inherit a correct citation chain, not just
+the right numbers. The code remains tiny because the threshold policy is
+the load-bearing part of the skeleton.
+**Alternatives**:
+| # | Diagnostics surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Dedicated `diagnostics.py` with explicit threshold docstrings | Keeps convergence policy inspectable and independent of sampler internals. | Adds a separate module before any numeric implementation exists. | ✅ |
+| 2 | Hide diagnostics inside `run_posterior` only | Smaller API surface. | Hides the threshold policy and makes audit/CLI reuse harder. | — |
+| 3 | Defer all diagnostics until summary-run work | Less code today. | Loses the threshold contract that the SDD treats as part of the public surface. | — |
+**Core principles**: distinguish original diagnostics from later
+operational cutoffs; keep threshold policy public; expose trace payload
+as a separate helper; raise rather than compute partial diagnostics.
+**Skeleton path**:
+`htt/bass/inference/diagnostics.py`,
+`htt/bass/inference/__init__.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/inference/test_fb114_diagnostics_skeleton.py -q`
+**Guard rails** (yes/no): threshold history explicit? yes; modern `1.01`
+not misattributed to 1992? yes; Geweke defaults pinned? yes; numeric
+implementation still absent? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 69 skipped` → `3403 passed + 70 skipped` pending the
+phase-close gate.
 
 ## §FB-11.5
 
