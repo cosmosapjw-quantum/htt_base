@@ -490,3 +490,23 @@ fresh cumulative count.
   remains absent on disk; FB-5.2 still owns the off-axis Wigner-d lift.
 - **Notes**: the chosen surface wraps the existing FB-2 `HarmonicMode`
   SSOT instead of reopening the shipped real-dtype hierarchy driver.
+
+### FB-META-5.2 — off-axis ``nabla_tilde`` skeleton
+
+- **Scope**: Recorded FB-5.2 three-channel verification and planted the
+  local-only `make_full_mode_nabla_tilde_operator(...)` skeleton plus
+  one skipped contract test without staging any `htt/` changes. The
+  arXiv-only channel verified the broad Bianchi hierarchy context but
+  did not recover a specific Wigner-d locator, so that citation remains
+  explicitly demoted to `# TODO`.
+- **Commit anchor**: see `git log --grep='FB-META-5.2'`.
+- **Test delta**: `3,403 passed + 5 skipped` →
+  `3,403 passed + 6 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META5_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META5_2026-04-20.md) §FB-5.2.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: exact off-axis Wigner-d citation still
+  citation-needed; the missing Lowell solver-reference `§13` path
+  remains unresolved on disk.
+- **Notes**: scope stays in a separate factory on purpose so the
+  already-audited FB-2 axis-aligned dispatch cannot be widened
+  implicitly.
