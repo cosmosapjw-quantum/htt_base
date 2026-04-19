@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-META-4.2 → FB-META-4.3**; tilted E↔B mixing skeleton planted, audit recorded, handoff advances to the second-order `v_e^2` correction skeleton contract)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md` §FB-4.2
-**Current target session**: **FB-META-4.3** — skeleton plant + 3-channel verification for explicit `v_e^2` Doppler corrections; no physics implementation, `NotImplementedError` only
+**Last rotated**: 2026-04-20 (**FB-META-4.3 → FB-META-5**; explicit `v_e^2` skeleton contract recorded, Phase FB-4 skeleton cycle closed, handoff reduced to the next-phase META placeholder)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md` §FB-4.3
+**Current target session**: **FB-META-5** — paste the Phase FB-5 META prompt
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,79 +36,24 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-META-4.3 — skeleton plant + 3-channel verification for Phase FB-4
+# FB-META-5 — paste the Phase FB-5 META prompt
 
-## 프로젝트 컨텍스트
+Phase FB-4 closed with three skeleton-only sub-phases and the audited
+baseline now stands at `3,403 passing + 4 skipped`.
 
-- **Repo root**: /home/cosmosapjw/Dropbox/bianchi/htt_base
-- **bass-py 소스 트리**: `htt_base/htt/` (has `bass/`, `tsc/`, `mio/`, `workspace/`, `conftest.py`, `pyproject.toml`)
-- **venv**: `htt_base/venv/bin/python` (`venv/bin/pip` shebang stale; use `../venv/bin/python -m pip`)
-- **테스트 명령**: `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 3,403 passing + 3 skipped. `FB-META-4.2` planted the local-only E↔B mixing skeleton and committed the audit / log / handoff rotation only.
-- **Byte anchors**: LB-6, FB-2.4 `d7d25da`, FB-3.2 `fdb1d86`, FB-3.3 `ceed416`, FB-3.4 `ab5914e`, FB-3.5 `c1130ad`, FB-3.6 `b155645`.
-- **고정 architecture**: approximation-free; banned TCA pre-phase / FLRW UFA / photon RSA; PSTF SSOT; CAMB/CLASS/HEALPix fixtures only.
+Start the next session by pasting the canonical Phase FB-5 META prompt
+as the first user message. Do not reuse the older FB-META-4 handoff
+text; the next phase should begin from a fresh prompt.
 
-## 이 세션의 작업 범위
-
-이 handoff 는 **FB-META-4.2 commit 이후** 상태를 가정한다. 다음 세션은 FB-4.3 physics 구현이 아니라 아래 META contract 를 수행한다:
-
-1. `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md` 의 `§FB-4.3` 를 채운다.
-2. Channel A/B/C 를 **A → B → C** 순서로 수행한다.
-3. signature alternatives 를 표로 기록하고 하나를 선택한다.
-4. `htt/` 아래에 **local skeleton only** surface 를 심는다:
-   - full signature
-   - docstring with verified citations only
-   - body is `raise NotImplementedError(...)`
-   - exactly one `pytest.mark.skip(reason="pending FB-4.3 implementation — skeleton only")` test
-5. `htt/` changes are never staged.
-6. Staged files are only:
-   - `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md`
-   - `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
-   - `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md`
-7. Commit message:
-   `FB-META-4.3: skeleton plant + 3-channel verification`
-
-## FB-4.3 literature anchors
-
-- Pontzen-Challinor 2009, arXiv:0706.2075 §2 — tilted background kinematics and velocity-sourced corrections.
-- Maartens et al. 2011, arXiv:1104.0420 §3 — second-order tilt bookkeeping.
-- Existing repo surfaces to inspect first:
-  `htt/bass/collision/tilted_visibility.py`,
-  `htt/bass/species/tilted.py`,
-  `htt/bass/hierarchy/tilt_kinematics.py`,
-  `docs/lowell_bianchi/04_thomson_collision_spec.md`.
-
-## 3-channel verification order
-
-1. **Channel A — internal literature**:
-   verify every cited repo doc / code location and record
-   `N checked / M verified / K broken`.
-2. **Channel B — web**:
-   arXiv / DOI only, one query per cited equation, `arxiv.org` fetches only,
-   ≤20-word quote plus arXiv ID in the audit.
-3. **Channel C — self-CoT**:
-   6-10 lines of prose only; restate the contract, derive the `β = 0`
-   invariant, and check dimension + sign + known limit.
-
-## Guard rails
-
-- No physics bodies.
-- No silent fallback.
-- If Channel A/B/C disagree on a load-bearing detail, mark the skeleton
-  **DIVERGENT**, do not plant it, and proceed to the next sub-phase.
-- Every docstring claim must be backed by a repo path, verified arXiv /
-  DOI, prior tracked textbook citation, or one-line Channel C algebra.
-- If the full regression no longer reads `3403 passed + 1 skipped + skeleton skips`, stop and audit before proceeding.
-
-## Rotation target
-
-Before closing FB-META-4.3:
-- audit section complete
-- development log row appended
-- baseline still preserved
-- `NEXT_SESSION_PROMPT.md §2` rotated to **FB-META-5**
-
-시작점은 `§FB-4.3` 이다. FB-META-4.2 는 E↔B mixing skeleton 이었고, 이제 explicit `v_e^2` correction contract 를 같은 META discipline 으로 고정한다.
+Relevant carry-forward anchors:
+- Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
+- Source-of-work rule: `htt/` remains unstaged by contract unless a
+  future META prompt explicitly changes that rule.
+- Latest audited Phase FB-4 artifact:
+  `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md`
+- Latest regression anchor:
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `3403 passed, 4 skipped`
 ```
 
 ---

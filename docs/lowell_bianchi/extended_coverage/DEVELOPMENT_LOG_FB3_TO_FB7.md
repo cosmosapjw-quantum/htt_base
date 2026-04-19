@@ -348,6 +348,26 @@ Exit: β-sweep × polarisation regression. BB identically zero at
 - **Notes**: the orthogonal Type I `ψ' = 0` B-mode floor remains the
   named known-limit anchor for the future implementation.
 
+### FB-META-4.3 — explicit `v_e²` Doppler skeleton
+
+- **Scope**: Recorded FB-4.3 three-channel verification, noted that
+  the prompt's Pontzen-Challinor anchor resolves on arXiv to
+  `arXiv:0706.2075` submitted on 2007-06-14 while the Maartens 2011
+  locator remained unverified, and planted the local-only
+  `evaluate_tilted_second_order_doppler_correction(...)` skeleton
+  plus one skipped contract test without staging any `htt/` changes.
+- **Commit anchor**: see `git log --grep='FB-META-4.3'`.
+- **Test delta**: `3,403 passed + 3 skipped` →
+  `3,403 passed + 4 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META4_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META4_2026-04-20.md) §FB-4.3.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: `arXiv:1104.0420` remains citation-needed if the
+  future second-order path is ever re-opened.
+- **Notes**: scope remains contract-only because
+  `extended_coverage/SCOPE_DECISIONS.md §4` currently discards
+  production `v_e²` Thomson terms; the planted helper is additive
+  rather than an `order=2` kwarg on the shipped operator.
+
 ---
 
 ## Phase FB-5 (planned) — Perturbation sector k ≠ 0

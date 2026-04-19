@@ -56,3 +56,24 @@
 **Regression after plant**: 3,403 passed + 3 skipped.
 
 ## §FB-4.3
+
+### §FB-4.3 — explicit `v_e²` Doppler skeleton
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-4` names FB-4.3 as the explicit `v_e²` sub-phase; `docs/lowell_bianchi/04_thomson_collision_spec.md §1` records `O(v_e²)` Thomson terms as deferred at LB-4 scope; `docs/lowell_bianchi/04_thomson_collision_spec.md §8.2` pins Layer B as additive PSTF-boost territory; `htt/bass/species/tilted.py` exposes exact `gamma_sq`, `v_vector`, and `β²` thermodynamic surfaces; `htt/bass/hierarchy/tilt_kinematics.py` already uses the additive-helper + `β = 0` short-circuit pattern; `docs/lowell_bianchi/extended_coverage/SCOPE_DECISIONS.md §4` discards production `v_e²` Thomson terms, so the planted surface is restricted to a contract-only additive placeholder and does not reopen shipped physics scope.
+**Channel B**: 2 queries / 1 verified / 1 unverified. Evidence: `arXiv:0706.2075` is verifiable on arXiv and, despite the prompt's `2009` label, its arXiv record shows submission on June 14, 2007; quote: `"power in B-mode polarisation is predicted to be similar to the E-mode power"` (`arXiv:0706.2075`). `arXiv:1104.0420` could not be verified on arXiv in this session and is demoted to `# TODO: citation needed`.
+**Channel C** (prose, 6-10 lines): The contract is deliberately additive: it represents only the `O(v_e²)` remainder and never the full FB-4.1 kernel itself.
+If no tilted-electron wrapper is supplied, the only consistent value of the remainder is zero because the orthogonal LB-4 operator already exhausts the collision source.
+At `β = 0`, `TiltedSpeciesBackground.gamma_sq = 1` and `v_vector(η) = 0`, so any quadratic Doppler factor built from `v_e` or `γ² - 1` vanishes identically.
+That establishes the byte-identity invariant: `K^(0) + ΔK_(v²)` must reduce to the existing orthogonal `K^(0)` with no new floating-point work on the zero-tilt path.
+The correction has the same dimensional form as the underlying collision source, namely `Γ_T` times a rank-`ℓ` brightness moment, so the helper returns one `PSTFTensor`.
+The sign cannot be fixed from fully verified literature in this session, so the skeleton stays additive rather than hard-coding damping or sourcing semantics.
+The known-limit sanity pin is therefore strict zero at `β = 0` and strict confinement to the future tilted path when `β > 0`.
+**Alternatives**:
+| # | signature | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `evaluate_tilted_second_order_doppler_correction(ell, temperature_state, eta, *, v_b_real_sph, Gamma_T, tilted_electron=None) -> PSTFTensor` | Small additive blast radius; mirrors the FB-4.1 call surface; keeps the `None` / `β = 0` zero-correction anchor explicit. | Future callers must sum the returned tensor onto the linear FB-4.1 source explicitly. | ✅ |
+| 2 | `evaluate_tilted_thomson_pstf_collision(..., include_second_order=False) -> PSTFTensor` | One public entry point for all Layer-B collision pieces. | Pushes a discarded production-scope question directly into the FB-4.1 operator surface; larger regression and semantics blast radius. | — |
+**Core principles**: external-code policy; PSTF SSOT; β=0 byte-identity against the LB-4 orthogonal Thomson kernel and the FB-4.1 linear anchor; no silent fallback; deterministic; inline citations per §6.
+**Skeleton path**: `htt/bass/collision/tilted_doppler_second_order.py::evaluate_tilted_second_order_doppler_correction`
+**Test path**: `htt/bass/collision/test_fb43_second_order_doppler_skeleton.py::test_tilted_second_order_doppler_correction_skeleton_contract`
+**Guard rails** (yes/no): citations verified? yes; imports exist? yes; ≥ 2 alternatives? yes; β=0 anchor documented? yes
+**Regression after plant**: 3,403 passed + 4 skipped.
