@@ -1,9 +1,10 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W11` phase.
+**As of**: 2026-04-19, post-`IND_TRACKS_W12` phase.
 **Last audited**: 2026-04-19
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md`,
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W7_2026-04-19.md`,
@@ -210,6 +211,37 @@ Week 10 final gate — **all five items green**:
 - [x] Phase-boundary audit log written.
 - [x] No touched-surface regressions (1026 passed; +19 over W9; 0 failed).
 
+## §1c-9. What shipped in Week 12
+
+Session of 2026-04-19 (compressed: one session covered Week-12
+Days 1-7). Four committed landings + one phase-boundary audit
+(`AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md`).
+
+| Track | Artefact | Status |
+|---|---|---|
+| W12D1 W11 F4 close — A37 grammar acceptance tests | `bass_py/mio/tests/test_probe_name_grammar.py` (new, 8 tests) + producer tightening across `mio/coherence/directional.py` (alphabetical bundle), `mio/coherence/redshift_binned.py` (alphabetical bundle), `mio/extraction/hj01_shear.py` (new `_bianchi_type_to_model_id` normaliser + MODEL_ID-only `probe_name`; legacy `atlas_name:bianchi_type` form retired). A37 dossier §A37.1 examples + §A37.6 landed note updated. MIO contribution 71 → 79. | landed (`015246d`) |
+| W12D2 AUDIT(W5-APPLY-BIAS-AMP) — HJ-05a-lite hardening | `bass_py/mio/diagnostics/masked_sky_caveats.py` + `bass_py/mio/tests/test_masked_sky_caveats.py` (4 new tests). Adds `BIAS_AMP_CAVEAT` constant + `apply_bias_amp_caveat()` helper + `build_report(..., mock_bias_applied=False)` kwarg. Upstream `htt/PR13AH._apply_bias_to_direction` intentionally untouched per W5 audit directive (§APPLY-BIAS-AMP: "never patch the helper before ChannelSummary grows a velocity-amplitude field"). MIO contribution 79 → 83. | landed (`cd220a6`) |
+| W12D3 W11 F1 close — HJ-02b exact-enumeration drift_pvalue | `bass_py/mio/coherence/redshift_binned.py` gains `exact: bool = False` kwarg + `EXACT_ENUMERATION_MAX_PERMUTATIONS = 10_000` ceiling; 6 new tests (15 → 21). Refuses N ≥ 8 (40 320 perms > ceiling) with explicit `ValueError`. Exact path is deterministic (ignores `rng`) and returns `count / N!` without Lidstone smoothing. MIO contribution 83 → 89. Cross-lane contamination (**W12 FM1 below**) — commit body describes only HJ-02b changes but the commit also pulled `bass_py/bass/transport/*` + gallery-lane files from the index; cannot be retroactively split per the additive-commits rule. | landed (`99465e5`, mixed) |
+| W12D5 DOS-A41 — report_type extension protocol | `docs/dossier/A41_mio_report_type_extension_protocol.md` (new, ~200 L). Seven-step mechanical checklist for adding a new `MioCertificate.report_type` value (HJ-03 / HJ-04 / beyond) without rotating the v1 schema hash. Covers A32 / A34 / A37 / A39 / A40 cross-references per A35/A36/A37 dossier convention; A41.5 explicitly documents the W7 FM3 literal-freeze interaction; A41.6 walks HJ-03 `"evidence_anatomy"` through the checklist as a worked example. | landed (`27d0fed`) |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md` | landed |
+
+Final test tally over the touched surface at W12 boundary:
+**1059 passed, 0 failed, 4 skipped** (+18 vs W11's 1041; 0 skip
+change; 0 regressions). Skip composition unchanged from W11
+end-of-phase (2 × mio.core/reporting W6 carry, 1 ×
+`fig_certification_matrix` family W9 carry, 1 × dynesty
+composition-swap W10D1 carry).
+
+Week 12 final gate — **all five items green**:
+- [x] W11 F4 (A37 grammar tests) closed (W12D1); W11 F1 (exact-
+      enumeration) closed (W12D3).
+- [x] W5 APPLY-BIAS-AMP closed via caveat-surfacing hardening
+      (W12D2); upstream helper intentionally untouched.
+- [x] At least one new A4x dossier file landed (W12D5 — A41).
+- [x] Phase-boundary audit log written.
+- [x] No touched-surface regressions (+18 over W11; 0 failed;
+      4 skipped unchanged).
+
 ## §1c-8. What shipped in Week 11
 
 Session of 2026-04-19 (compressed: one session covered Week-11
@@ -242,86 +274,102 @@ Week 11 final gate — **all five items green**:
 (Preserved here for provenance; unchanged from earlier rotations.
 See v3 research plan + PART II + PART III of the governing plan.)
 
-## §2. Active priorities for the next session (Week 12)
+## §2. Active priorities for the next session (Week 13)
 
-**"Continued wait-on-bass_py + opportunistic MIO carry-forwards +
-manuscript / dossier continuations"**. Week 11 closed all scheduled
-landings (W10 F4 + W10 F5, HJ-02b, DOS-A36/A37). The five W11
-findings (F1–F5 in
-`AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md` §6) are all P3 /
-by-design / upstream-blocked and are NOT Week-12 action items.
+**"Continued wait-on-bass_py + PROBE_ID registry single-source-of-
+truth + manuscript / dossier continuations"**. Week 12 closed all
+three carry-forwards that were scheduled (W11 F4 grammar, W11 F1
+exact-enumeration, W5 APPLY-BIAS-AMP) and landed one new A4x dossier
+(A41 extension protocol). The five W12 findings (F1–F5 in
+`AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md` §6) are P2 process /
+P3 coverage / by-design and are not all Week-13 blockers.
 
-Week 12 remains in the dependency-wait window: HJ-01 production
+Week 13 remains in the dependency-wait window: HJ-01 production
 wiring, HJ-03 evidence anatomy, HJ-04 departure skeleton, and
 MANU-CH12 §§12.1 / 12.4 / 12.5 / 12.8 are still blocked on bass_py
 W10-02 (K_ℓ atlas) and bass_py W11-02 (BiPoSH). Until those land,
-Week 12 should harvest the cleanest remaining carry-forwards.
+Week 13 should harvest the cleanest remaining carry-forwards — but
+with a **hardened process discipline** after the W12 FM1 cross-lane
+contamination incident.
 
-### Days 1–2 — A37 grammar acceptance tests + HJ-05a-lite hardening
+### Days 1–2 — Process mitigation + PROBE_ID registry (W12 R1 + R2)
 
-1. **W11 F4 close — A37 grammar acceptance tests.** Land two
-   regex tests per the A37.6 plan: `test_probe_name_is_alphabetical_bundle`
-   (every bundle-form `probe_name` equals `"+".join(sorted(...))`) and
-   `test_probe_name_matches_grammar_v1` (regex check against the BNF
-   in A37.2). Apply to HJ-01, HJ-02a, HJ-02b emitters. Target: ~4–6
-   new tests; MIO contribution 71 → ~77.
-2. **W5 APPLY-BIAS-AMP — HJ-05a-lite hardening.** Extend the
-   masked-sky caveats module landed in W6 with the W5 audit
-   carry-forward (`_apply_bias_to_direction` scaling discrepancy).
-   Less new surface; closes a long-standing P2. Target: ~3–4 new tests.
+1. **W12 R1 — process doc.** Add a one-line pre-commit check to
+   this file (and to `feedback_git_workflow.md`): before every
+   `git commit` in this lane, run `git status --short` and visually
+   verify that only the intended files are staged. The W12D3 mixed
+   commit (`99465e5` — exact-enumeration pulled bass-lane + gallery-
+   lane changes into one commit) would have been prevented by this
+   discipline. No code change.
+2. **W12 R2 — PROBE_ID registry SSOT.** Create
+   `bass_py/mio/interface/probe_name_registry.py` with a frozen
+   `REGISTERED_PROBE_IDS: Tuple[str, ...]` mirroring the A37.3
+   catalogue (`CMB`, `CatWISE`, `Radio`, `CF4pp`, `BiPoSH`). Add a
+   test that parses A37.3 markdown and asserts the code registry
+   matches; also add a module-level helper
+   `is_registered_probe_id(name: str) -> bool`. Target: ~3 new
+   tests; MIO contribution 89 → ~92.
 
-- Commit tags: `W12D1: MIO A37 grammar acceptance tests`,
-  `W12D2: AUDIT(W5-APPLY-BIAS-AMP): HJ-05a hardening`.
-- Gate: new tests pass; touched-surface ≥ 1041 + (whatever); no
-  MIO `posterior` field grep hits; no merge-test prohibition
-  violations; probe-name grammar enforced everywhere it applies.
+- Commit tags: `W13D1: process — pre-commit status discipline
+  (W12 F1/R1)`, `W13D2: MIO probe_id registry SSOT (W12 F3/R2)`.
+- Gate: A37.3 dossier + code registry agree verbatim; any new
+  probe must appear in both places in the same commit.
 
-### Days 3–4 — MIO HJ-02b drift exact-enumeration (W11 F1) + HJ-02c option
+### Days 3–4 — HJ-02b σ_cone documentation tightening + W8 FM2 palette
 
-1. **W11 F1 close — `drift_pvalue` exact-enumeration path.** Add an
-   `exact: bool = False` kwarg that switches to `itertools.permutations`
-   when the permutation count is tractable (< 10 000). Useful for
-   bit-reproducibility at small N. Target: ~3 new tests.
-2. **Optional HJ-02c**: third HJ-02 row per parent v3 §4.5.3.2 (time-
-   integrated directional coherence, if the parent plan exposes it).
-   Skip if not yet specified in v3.
+1. **W11 F3 / W6 FM2 — σ_cone literature citations.** The five
+   HJ-02a/b `STANDARD_Z_PROBES` σ_cone values are plan-suggested,
+   not DOI-anchored. Land a `docs/dossier/A36a_sigma_cone_literature.md`
+   (or extend A36.6) that cites the actual literature σ for each
+   probe (Planck 2018 VIII for CMB dipole, Secrest+2020 for CatWISE,
+   etc.) and records the delta vs the hardcoded values. This is the
+   W6 FM2 close.
+2. **W8 FM2 — figure palette unification (opportunistic).** If a
+   figure script is being regenerated for any other reason, apply
+   `apply_style()` in the same commit. Purely opportunistic; skip
+   if no natural co-landing.
 
-- Commit tag: `W12D3: MIO HJ-02b exact-enumeration (W11 F1)`
-- Gate: exact-path p-value matches MC path at 2-3 decimals on a
-  deterministic small-N case; test suite green.
+- Commit tag: `W13D3: DOS-A36a sigma_cone literature (W6 FM2)`.
+- Gate: new dossier cites DOIs; no code change; MIO σ values may
+  or may not be updated (caller of judgement).
 
-### Days 5–6 — DOS-A41+ continuation (extension protocols)
+### Days 5–6 — DOS-A42+ continuation
 
-The A30-MIO dossier sequence now has A32, A33, A34, A35, A36 (new
-W11), A37 (new W11), A38, A39, A40 landed. A41+ slots remain open
-for extension-protocol notes (how to add a new MIO diagnostic to
-the pillar without violating G19; how to extend `MioCertificate`
-schema; how to retire a probe from `STANDARD_PROBES`).
+A41 landed the report_type extension protocol. Next-up A4x targets:
 
-Pick **one** A41 focus that directly unblocks a future HJ-03 or
-HJ-04 landing (likely: extension protocol for adding a new
-`report_type` that co-exists with the v1 schema hash freeze — W7
-FM3 coordination).
+1. **A42 — HJ-03 evidence anatomy dossier stub.** Documentation-only
+   placeholder defining what HJ-03 will compute (ΔlnB channel
+   decomposition) once the bass_py + HTT V-gates pass. Follows the
+   A35 structure; references A41 checklist.
+2. Alternative: **A43 — MioCertificate schema hash + digest test
+   design.** The W7 FM3 literal-freeze coordination note — how to
+   add a per-field SHA256 digest test on the first schema extension.
 
-- Commit tag: `W12D5: DOS-A41 extension protocol`
-- Gate: new dossier follows A35/A36/A37 section convention;
-  cross-references A32 + A34 + A39.
+Pick one; the other rolls to Week 14.
+
+- Commit tag: `W13D5: DOS-A42 evidence_anatomy stub` or
+  `W13D5: DOS-A43 schema hash digest design`.
+- Gate: new dossier follows A35/A36/A37/A41 convention;
+  cross-references A32 + A34 + A41.
 
 ### Day 7 — Phase audit + NEXT_SESSION rotation
 
 Standard phase-boundary audit per `feedback_phase_boundary_audit.md`.
-Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md`
-(date may shift).
+Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W13_2026-04-19.md`
+(date may shift). This audit MUST include a §6 finding that checks
+whether the W12 FM1 cross-lane contamination pattern recurred in
+any W13 commit; if so, add a P1 follow-up.
 
-### Week 12 final gate
+### Week 13 final gate
 
-- [ ] W11 F4 (A37 grammar tests) closed; W11 F1 (exact-enumeration)
-      closed; or explicit deferral rationale.
-- [ ] W5 APPLY-BIAS-AMP closed, or at least one new MIO carry-forward
-      landed.
-- [ ] At least one new A4x dossier file landed.
-- [ ] Phase-boundary audit log written.
-- [ ] No touched-surface regressions (≥ 1041 passed, 0 failed).
+- [ ] W12 R1 process note added (one line in this file + memory).
+- [ ] W12 R2 PROBE_ID registry landed or explicitly deferred with
+      rationale.
+- [ ] At least one new A4x dossier file landed (A36a or A42 or A43).
+- [ ] Phase-boundary audit log written; W12 FM1 recurrence check
+      included.
+- [ ] No touched-surface regressions (≥ 1059 passed, 0 failed;
+      4 skipped unchanged unless new skips explicitly documented).
 
 ### Deferred to Week 13+ (not Week-12 targets)
 
@@ -368,7 +416,7 @@ bottom.
 | W4 F4 | P2 | Θ⁴ bridge htt audit uses FD at h = 1e-2. | Swap when htt lands a native `_a2_coefficient_table`. |
 | W5 SKIP-05-LATENT | **PARTIALLY RESOLVED W8** | 2 of 5 `/mnt/user-data` fixture skips resolved via HTT_PIPELINE_OUTDIR pattern (fig_evidence_decomposition + fig_channel_ablation_heatmap); 3 still blocked (fig_rho_sweep, fig_departure_summary, fig_v_pushforward). | Extend pattern in Week 9 — see W9 §2 Day 4. |
 | W5 DYNESTY-DEP | P2 | 1 skip on `dynesty`. | `venv/bin/pip install dynesty`. |
-| W5 APPLY-BIAS-AMP | P2 | `_apply_bias_to_direction` scales by `|V_true|` not measurement amplitude. | Opportunistic Week 8+. |
+| W5 APPLY-BIAS-AMP | **RESOLVED W12D2** | `_apply_bias_to_direction` scales by `\|V_true\|` not measurement amplitude. | Surfaced via `mio.diagnostics.masked_sky_caveats.BIAS_AMP_CAVEAT` + `build_report(..., mock_bias_applied=True)` kwarg in `cd220a6`; upstream helper intentionally untouched per W5 audit directive. |
 | W6 SKIP-02b-v3-LEGACY | P2 | 2 `test_figures_smoke.py` skips on `mio.core` / `mio.reporting`. | Week 8+ MANU-CH12-NEW rewrite or retire the two figures. |
 | W6 FM2 PROBE-SIGMA | P2 | Radio / CF4++ / BiPoSH σ_cone plan-placeholders. | Opportunistic during Week 8 MANU-CH12-NEW §12.2 (literature citations). |
 | W6 FM4 MC-VECTORISE | P3 | `_sample_isotropic_unit_vectors` per-mock loop. | Only if HJ-02a moves to 1e6-mock regime. |
@@ -390,11 +438,16 @@ bottom.
 | **W10 F3** | **P3** | `flrw_consistent_within_band` 2σ default has ~75 % false-flag rate on 29 iid multipoles. | Document or change default to 3σ (Bonferroni-aware) or expose a `bonferroni=True` knob; production HJ-01 prerequisite. |
 | **W10 F4** | **RESOLVED W11D1** | INDEPENDENT_TRACKS_PLAN v1.2 §21 Week 10 Day 5-6 wording "force-add contract (W8 FM1)" was stale post-W8-FM1. | Fixed in `8aefbb8` — plan bumped to v1.3 with §21 Week 10 + Week 11 entries that spell out the post-W8-FM1 `/project` rule verbatim. |
 | **W10 F5** | **RESOLVED W11D1** | `test_extract_drops_zero_kernel_multipoles` hardcoded `report.ell.size == 27`. | Fixed in `8aefbb8` — now computes `cfg.ell_max - cfg.ell_min + 1 - len(dropped)` from `ShearExtractorConfig()` defaults. |
-| **W11 F1** | **P3** | `mio.coherence.redshift_binned.drift_pvalue` has no exact-enumeration path for small-N reproducibility. | Add `exact: bool = False` kwarg; itertools.permutations when `N!` < 10 000. **Slated for W12D3.** |
+| **W11 F1** | **RESOLVED W12D3** | `mio.coherence.redshift_binned.drift_pvalue` has no exact-enumeration path for small-N reproducibility. | Landed in `99465e5` — `exact: bool = False` kwarg + `EXACT_ENUMERATION_MAX_PERMUTATIONS = 10_000` ceiling + 6 new tests. |
 | **W11 F2** | **P3** | permutation null distribution degenerate for (N ≤ 8, K = 2, antipodal injection) test designs. | Documentation-only; enforced culturally via "≥ 3 bins or N > 12" guidance in W11 audit §6. |
 | **W11 F3** | **P3** | HJ-02b inherits σ_cone placeholders from HJ-02a (v3 §16.2 FM2 / W6 FM2). | Same resolution as W6 FM2 — MANU-CH12-NEW §12.2 literature citations. |
-| **W11 F4** | **P3** | A37 grammar acceptance tests (`test_probe_name_is_alphabetical_bundle`, `test_probe_name_matches_grammar_v1`) deferred pending CONTRACTS-01 v2 hash-digest infrastructure. | **Slated for W12D1**; two regex tests across HJ-01 / HJ-02a / HJ-02b. |
+| **W11 F4** | **RESOLVED W12D1** | A37 grammar acceptance tests (`test_probe_name_is_alphabetical_bundle`, `test_probe_name_matches_grammar_v1`) deferred pending CONTRACTS-01 v2 hash-digest infrastructure. | Landed in `015246d` — 8 new tests in `test_probe_name_grammar.py`; producer tightening across all 3 MIO emitters (alphabetical sort + HJ-01 MODEL_ID singleton). |
 | **W11 F5** | **P3** | `emit_redshift_coherence_artefact` provenance SHA = `MioCertificate.git_commit` (instantiation-time; inherited from MIO-HJ-06a, already documented as W6 FM6). | No action — by design. |
+| **W12 F1** | **P2** (process) | W12D3 commit (`99465e5`) pulled in unrelated bass-lane + gallery-lane files (working-tree drift from a concurrent lane's staging). Cannot retroactively split per additive-commits rule. | W13 mitigation: always `git status --short` before every commit in this lane. See W12 audit §8 R1. |
+| **W12 F2** | **P3** (docs) | A41 checklist is not mechanised — no acceptance test parses existing MIO modules to verify compliance. | Optional follow-up when HJ-03 lands: add `test_mio_report_types_pass_a41_checklist`. |
+| **W12 F3** | **P3** (coverage) | A37.3 registered PROBE_IDs only exist in markdown; code has no frozen registry. A new unregistered 12-char-alnum name would pass the regex. | **Slated for W13D2** — land `mio.interface.probe_name_registry` with `REGISTERED_PROBE_IDS` + dossier-vs-code parity test. |
+| **W12 F4** | **P3** (coverage) | `build_report(mock_bias_applied=True)` is a documentation-only contract — a caller that lies about it mislabels the certificate. | Optional follow-up: require a `mock_bias_report: Optional[InjectedMockReport] = None` when flag is set. |
+| **W12 F5** | **P3** (testing) | `test_drift_pvalue_exact_matches_mc_at_small_N` uses `abs < 0.05` — loose enough to mask a 2σ MC bias. | Tighten to `abs < 3·sqrt(p·(1-p)/n)` only if precision becomes load-bearing; not currently blocking. |
 
 ## §4. Environment and quickstart
 
@@ -402,8 +455,8 @@ bottom.
 # Repo root
 cd /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 
-# Sanity: touched-surface test run.  As of 2026-04-19 post-W11:
-# 1041 passed, 0 failed, 4 skipped (+15 vs W10; 0 skip change).
+# Sanity: touched-surface test run.  As of 2026-04-19 post-W12:
+# 1059 passed, 0 failed, 4 skipped (+18 vs W11; 0 skip change).
 venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
                 bass_py/tsc/admissibility/ \
                 bass_py/tsc/diagnostics/ bass_py/tsc/charts/ \
@@ -413,7 +466,7 @@ venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
 # tsc standalone (18 s; 602 passed post-W9; unchanged W10-W11).
 venv/bin/pytest bass_py/tsc/
 
-# MIO standalone (collection check — 71 tests post-W11D3).
+# MIO standalone (collection check — 89 tests post-W12D3).
 venv/bin/pytest bass_py/mio/ --collect-only -q | tail -1
 
 # Full monorepo suite (slower).
@@ -472,7 +525,11 @@ per the v1.3 plan — bass_py session must not touch):
   MIO-HJ-02a directional coherence + MIO-HJ-06a certificate generator +
   MIO-BRIDGES-01 PR13AM re-export + MIO-HJ-05a-lite masked-sky caveats;
   Week 10 added `mio/extraction/hj01_shear.py` (HJ-01 skeleton);
-  **Week 11 added `mio/coherence/redshift_binned.py` (HJ-02b)**.
+  Week 11 added `mio/coherence/redshift_binned.py` (HJ-02b);
+  **Week 12 added**: A37 grammar tests + producer tightening
+  (alphabetical bundle, HJ-01 MODEL_ID singleton); APPLY-BIAS-AMP
+  caveat surfacing in `mio/diagnostics/masked_sky_caveats.py`;
+  exact-enumeration path on `mio.coherence.redshift_binned.drift_pvalue`.
 * **`bass_py/tsc/integration/*`** — NEW Week-7 subpackage; currently
   holds TSC-06 `htt_bridge` + tests. Distinct from `bass_py/tsc/{admissibility, charts, diagnostics}/`.
 * `docs/dossier/A13_*`, `A14_*`, `A32_*`, `A33_*`, `A34_*`,
