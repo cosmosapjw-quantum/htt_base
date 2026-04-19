@@ -709,3 +709,241 @@ FB-2.4 consumes:
 | E | ``venv/lib/python3.12/site-packages/__editable___htt_8_3_0_finder.py`` — MAPPING re-pinned to ``htt_base/htt/htt/htt`` via ``pip install -e`` reinstall | ✅ environment fix only, no code change |
 
 *End of FB-2.3 audit supplement.*
+
+---
+
+## FB-2.4 — T4-T7 hierarchy wire-up + driver-level `aniso_ricci_tensor` routing (Phase FB-2 exit)
+
+**Session date**: 2026-04-19
+**Commit target**: `FB-2.4: T4-T7 hierarchy wire-up + driver aniso_ricci routing (Phase FB-2 exit)`
+**Exit test count**: 3,108 passed + 1 skipped (+25 new)
+**Predecessor state**: FB-2.3 seal at 3,083 passed + 1 skipped.
+
+### §1 Audit target reconstruction
+
+1. **Physical/mathematical claim**. The PSTF multipole hierarchy
+   Ellis-Maartens-MacCallum 2012 §16 has the full source balance
+
+        ∂_η Π_{A_ℓ} = T1(expansion, curved-space) + T2(∇̃, curved-space)
+                      + T3(∇̃·)        (perturbation ∇̃)
+                      + T4(A·Π_{ℓ+1}) + T5(A_{⟨ · Π_{ℓ-1}⟩})
+                      + T6(ω × Π_ℓ)  + T7 / T8 / T9 (shear)
+                      + K_{A_ℓ}       (Thomson / zero)
+
+   where T1 / T2 carry optional rank-preserving **curved-space
+   corrections** driven by `³R_ab^{aniso}` (FB-2.2) and T4 / T5 / T6
+   are activated by **kinematic vectors** `A_a` / `ω_a` that are zero
+   at orthogonal β=0 but non-zero in the FB-3 tilted and VII_h
+   vorticity-bearing sectors.
+
+2. **Algorithm**. Two scope-disjoint wire-ups close Phase FB-2:
+   (a) the driver must forward `tetrad_state.aniso_3_curvature` to
+   T1 / T2 via the FB-2.2 `aniso_ricci_tensor` kwarg (FB-2.2 P2
+   carry-forward); (b) the driver already exposes
+   `accel_vector` / `vorticity_vector` kwargs for T4 / T5 / T6 —
+   FB-2.4 verifies them as *structurally wired* (β=0 zero-forwarding)
+   so FB-3 can activate them without a signature change.
+
+3. **Source of truth**. Implementation in
+   `bass/hierarchy/hierarchy_rhs.py::hierarchy_rhs_photon` is source
+   of truth; `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4
+   FB-2.4` is the spec-level pointer; Ellis-Maartens-MacCallum 2012
+   §16 supplies the canonical term decomposition.
+
+### §2 Contract / interface table
+
+| Contract item | Value |
+|---|---|
+| Entry point | `bass.hierarchy.hierarchy_rhs.hierarchy_rhs_photon` (unchanged signature; new internal wire) |
+| New helper | `bass.hierarchy.hierarchy_rhs.aniso_ricci_at_eta(eta, tetrad_state) -> Optional[(3,3)]` |
+| Input addition | `tetrad_state.aniso_3_curvature` (shape `(N, 3, 3)`) interpolated to `η` and passed to T1 / T2 as `aniso_ricci_tensor` |
+| LB-6 invariant | `tetrad_state is None` OR `aniso_3_curvature is None` → default path bit-identical to FB-2.3 |
+| FLRW invariant | `aniso_3_curvature ≡ 0` for FLRW / Type I / Type V / VII_0 symmetric → T1 / T2 base-only (numerically identical to None path) |
+| Class-B activation | III / IV / VI_h / VII_h deliver non-zero `³R_ab^{aniso}` (from FB-1.4) and produce a T1 curved-space correction with `‖Δdy‖ > 1e-10` on a unit-amplitude PSTF tower |
+| T4 / T5 / T6 contract | `accel_vector=None / zeros(3)` AND `vorticity_vector=None / zeros(3)` → terms contribute zero; any non-zero kwarg produces `‖Δdy‖ > 1e-12` |
+| Shear cache | `_aniso_ricci_spline_cache` on the tetrad state (mirrors `_sigma_spline_cache`); one O(N) build per integrator run, O(log N) per query |
+
+### §3 Phys-math audit ledger
+
+1. **Definition / notation**. PASS — the EMM 2012 §16 T-term
+   decomposition names T4 / T5 as the *acceleration* couplings and T6
+   as the *vorticity* coupling; the code in `terms.py` (LB-2b origin)
+   uses the same indices and the FB-2.4 prompt's internal cross-refs
+   (which said "T4 vorticity") are aligned with EMM after rereading
+   §16 — the prompt's loose language does not bind the code.
+2. **Index / trace / PSTF consistency**. PASS — the T1 rank-preserving
+   contraction `(ℓ/(2ℓ+3)) STF(³R^b_⟨aℓ⟩ Π_{A_{ℓ−1} b})` is already
+   implemented (FB-2.2) and PSTF-projected; the driver now just
+   exposes it.
+3. **Sign / normalisation**. PASS — the FB-2.2 prefactor `ℓ/(2ℓ+3)` is
+   retained; no sign flip.
+4. **Units / dimensions**. PASS — `³R_ab^{aniso}` has units
+   `[length]⁻²` (FB-1.4 docstring); the T1 product with `Π_ℓ` inherits
+   the Π dimension, matching the base-`Θ Π` term's `[1/Mpc]·[Π]`.
+5. **Known-limit recovery**. PASS — FLRW and Type I bit-identical to
+   LB-6 by `TestHierarchyRhsFlatBitIdentical`
+   (`rtol=0, atol=1e-14`).
+6. **Boundary / regularity**. PASS — the CubicSpline cache uses
+   `bc_type='natural'` and clamps queries to grid endpoints (same as
+   `proper_shear_at_eta`).
+7. **Hidden assumptions**. PASS — at the background level
+   `³R_ab^{aniso}` is time-*independent* in the left-invariant tetrad
+   frame (FB-1.4 closure uses `del a, sigma_plus, sigma_minus`); the
+   `(N, 3, 3)` per-η storage is a uniformity convention, not a
+   genuine time dependence. Cubic-spline interpolation of a constant
+   is exact.
+8. **Counterexample / special case**. PASS — Class A flat (FLRW, I)
+   and isotropic (V, VII_0 symmetric, IX isotropic) all have
+   `³R_ab^{aniso} ≡ 0`, so T1 contributes only the `(4/3) Θ Π` base
+   and the FLRW-bit-identical contract is preserved by construction.
+
+### §4 Equation-to-code mapping audit
+
+- `hierarchy_rhs_photon` line-by-line — lines 225-230: `sigma`
+  interpolation; **NEW line 231-234**: `aniso_ricci` interpolation via
+  `aniso_ricci_at_eta`; lines 285-291: `T1_expansion(ell, Π_ℓ, Θ,
+  aniso_ricci_tensor=aniso_ricci)`; lines 297-306: `T2_gradient(ell,
+  Π_{ℓ-1}, nabla_operator, aniso_ricci_tensor=aniso_ricci)`. This is
+  the **exact kwarg** used in `terms.py::T1_expansion` / `T2_gradient`
+  since FB-2.2; no rename, no shim.
+- `aniso_ricci_at_eta` — mirrors `proper_shear_at_eta` (`None`-safe
+  early return; spline cache; endpoint clamp). No division by `a(η)`
+  (`³R_ab^{aniso}` is already in proper [1/length²] units, unlike the
+  conformal `Σ_ab` which needs `/a`).
+- `T4 / T5 / T6` — **no code change**; the kwargs were wired at LB-2b
+  and already default to `np.zeros(3)` when unspecified. FB-2.4 adds
+  explicit forwarding-regression tests
+  (`TestKinematicHooksZeroAtBeta0`) to prevent silent de-wiring.
+
+### §5 Numerical / pipeline audit
+
+- **Cache correctness** — `_aniso_ricci_spline_cache` is stored on the
+  tetrad state via `object.__setattr__` (frozen-dataclass bypass);
+  collision with the existing `_sigma_spline_cache` is ruled out by
+  the distinct attribute name.
+- **Spline vs constant** — for a constant-in-η Ricci (FB-1.4 status),
+  cubic spline with natural BC reproduces the grid value exactly at
+  any interior query; overhead is ~3 μs per call after the O(N)
+  build, negligible vs the T7/T8/T9 shear contraction.
+- **Reproducibility** — deterministic (shape-preserving; no RNG in
+  driver).
+- **Baseline reproduction** — explicit bit-identity test on FLRW +
+  Type I vs LB-6 `tetrad_state=None` path (`TestHierarchyRhsFlatBitIdentical`).
+
+### §6 Failure-mode synthesis
+
+| # | Type | Severity | Symptom | Root cause | Cheapest test | Outcome |
+|---|---|---|---|---|---|---|
+| 1 | implementation | P1 | `tetrad_state.aniso_3_curvature is None` + naïve driver would crash on spline build | Unavailable-label branch | `TestAnisoRicciAtEta::test_missing_aniso_field_returns_none` | ✅ Guarded |
+| 2 | numerical | P2 | Tiny `³R ~ n² ~ 1e-4 Mpc⁻²` × tiny `Π ~ 1e-3` yields `Δdy ~ 5e-12`, too weak for a `1e-10` pin | Structure-constant defaults | Tower amplitude scaled to unity in Class-B pin | ✅ Test now pins `> 1e-10` |
+| 3 | implementation | P2 | Spline rebuild on every driver call (O(N) per step × O(N_step) = quadratic) | No cache | `_get_or_build_aniso_ricci_spline` mirrors the shear cache | ✅ O(log N) per call after first |
+| 4 | interface | P2 | Change in driver signature would break LB-6 invocations | `aniso_ricci` is internal — no kwarg addition at the public entry point | `test_flat_tetrad_bit_identical_to_none` | ✅ Zero signature diff |
+| 5 | physics | P3 | FLRW driver with tetrad state could accidentally pick up a non-zero Ricci | `anisotropic_3_curvature(flrw_constants())` returns zeros | Covered by FB-1.4 tests + new bit-identical pin | ✅ |
+| 6 | testing | P3 | FB-2.2 P2 might silently de-wire after a future refactor | Explicit Ricci-contribution pin on 4 Class-B labels | `TestClassBRicciContributionNonzero` | ✅ Anchored |
+| 7 | interface | P3 | T4 / T5 / T6 forwarding could silently regress | Non-zero `accel_vector` / `vorticity_vector` pins | `TestKinematicHooksZeroAtBeta0` (2 non-zero cases + 1 zero-identity) | ✅ Anchored |
+
+### §7 Verifier results
+
+- **Physics verifier** — PASS: LB-6 FLRW limit bit-identical; Class-B
+  Ricci coupling has correct `[length]⁻²` units; PSTF-projected sums.
+- **Code verifier** — PASS: contract (signature, kwarg naming) matches
+  FB-2.2; cache invalidation is non-issue (constant-in-η value).
+- **Numerical verifier** — PASS: 25 new tests green; full regression
+  at 3,108 passed + 1 skipped.
+
+### §8 Minimal repair plan (applied this session)
+
+| Patch | Change | Load-bearing role | Tests added |
+|---|---|---|---|
+| A | `bass/hierarchy/hierarchy_rhs.py` — `aniso_ricci_at_eta` helper + cache + driver wire-up (pass `aniso_ricci_tensor=aniso_ricci` to `T1_expansion` / `T2_gradient`) | Closes FB-2.2 P2 carry-forward; activates Class-B / anisotropic T1 curved-space correction without signature change | FB-2.4 sweep, 25 tests |
+| B | `bass/background/tetrad_state.py` — `shear_magnitude_sq` docstring corrected to state the actual units (`[Mpc]⁻²`) and cross-link to FB-2.4 F3 (numeric unchanged) | F3 carry-forward sealed (doc-only; dimensionless Σ² rescale deferred to FB-5/6 to avoid cascading into `htt.core.bounds` / `comparator_policy`) | (no numeric change — covered by existing tetrad-state tests) |
+| C | `bass/hierarchy/test_hierarchy_rhs_fb24.py` (new file) — regression sweep covering FLRW bit-identity, 12-label finiteness, Class-B Ricci pin, T4/T5/T6 structural forwarding, `aniso_ricci_at_eta` contract | Anchors the Phase FB-2 exit contract; detects silent de-wiring of FB-2.2 P2 or LB-2b kinematic kwargs | 25 new tests |
+
+### §9 Minimal test set (FB-2.4 additions)
+
+1. `TestHierarchyRhsFlatBitIdentical::test_flat_tetrad_bit_identical_to_none[FLRW|I]` — baseline reproduction (bit-identical with new driver path).
+2. `TestPhaseFB2ExitRegression::test_dy_is_finite_and_shape_preserving[{12 labels}]` — 12-label finiteness sweep (β=0).
+3. `TestClassBRicciContributionNonzero::test_class_b_t1_ricci_rhs_norm_nonzero[III|IV|VI_h|VII_h]` — Class-B Ricci coupling pin (`‖Δdy‖ > 1e-10`).
+4. `TestKinematicHooksZeroAtBeta0` — 3 tests (zero ≡ default, non-zero A changes RHS, non-zero ω changes RHS).
+5. `TestAnisoRicciAtEta` — 4 tests (None tetrad, unavailable curvature, constant-grid exactness, endpoint clamp).
+
+### §10 최종 판정 (FB-2.4)
+
+- **Verdict**: **통과 (Phase FB-2 exit sealed)**.
+- **지금 구현한 1개**: driver-level `aniso_ricci_tensor` routing into
+  T1 / T2 via `aniso_ricci_at_eta(eta, tetrad_state)` with cubic-
+  spline cache mirroring `proper_shear_at_eta`. LB-6 bit-identical
+  regression preserved by `None`-safe forwarding; Class-B curved-
+  space contribution activates automatically on 4 out of 11 Bianchi
+  types.
+- **지금 손대지 않은 1개**: the EMM/Wainwright dimensionless
+  `Σ²_EW = σ²/H²` rescale of `shear_magnitude_sq`. Changing the
+  numeric value would cascade into `htt.core.bounds` and
+  `comparator_policy`; the docstring correction is the minimum patch
+  and the true rescale is scheduled for **FB-5/6** alongside the
+  perturbation-sector rollout.
+
+---
+
+## Phase FB-2 exit declaration
+
+**Status**: ✅ Phase FB-2 complete (2026-04-19).
+
+### Four-session summary
+
+| Session | Scope | New tests | Baseline before → after |
+|---|---|---|---|
+| FB-2.1 | FLRW / I / V / VII_0 / IX harmonic-mode `∇̃` dispatch | 35 | 2,997 → 3,032 |
+| FB-2.2 | Class A II / VI_0 / VIII axis-aligned `∇̃` + T1/T2 `aniso_ricci_tensor` optional kwarg + FB14-F1 h-scaling | 24 | 3,032 → 3,056 |
+| FB-2.3 | Class B III / IV / VI_h / VII_h twist-coupled `∇̃` on abelian (e_1, e_3) 2-plane with Harrison-V `a²/(1+\|h\|)` offset + T1 Ricci auto-activation | 27 | 3,056 → 3,083 |
+| FB-2.4 | Driver-level `aniso_ricci_tensor` routing + T4/T5/T6 structural-forwarding pin + F3 docstring correction + 12-label regression sweep | 25 | 3,083 → 3,108 |
+| **Total** | **Phase FB-2** | **111** | **2,997 → 3,108** |
+
+### What Phase FB-2 delivered
+
+- `SUPPORTED_TYPES = 12 labels` for `∇̃` dispatch (FLRW + 11 Bianchi),
+  with non-axis-aligned subsets uniformly raising
+  `NotImplementedError("FB-5.2")`.
+- Curved-space T1 correction `(ℓ/(2ℓ+3)) STF(³R^b_⟨aℓ⟩ Π_{A_{ℓ−1} b})`
+  is live end-to-end: FB-1.4 → FB-2.2 → FB-2.4 driver routing.
+- T2 `∇̃ ³R_ab` structural hook plumbed through — identically zero at
+  background (left-invariant tetrad), awaiting FB-5.1 complex-dtype
+  wire-up.
+- T4 / T5 / T6 kinematic kwargs structurally pinned — ready for FB-3
+  tilted sector activation with β > 0 (no signature change needed).
+- F3 `shear_magnitude_sq` normalisation documented; dimensionless
+  rescale deferred to FB-5/6.
+
+### Carry-forwards into Phase FB-3
+
+| Tag | Item | Target |
+|---|---|---|
+| FB-2.1 P2 | Complex-dtype `nabla_dispatch` not wired into real-dtype driver | **FB-5.1** |
+| F3 (doc-only) | `shear_magnitude_sq` dimensionless-Σ² rescale (EMM/Wainwright convention) | **FB-5/6** |
+| FB02-F1 | `00_conventions.md §2` `v̂_e` default cross-reference | **FB-3.1** |
+| FB11-F1 | W-E Table 11.1 fixed-point *coordinates* unreachable in fixed-N framework | **FB-5/6** |
+| FB12-F1 | IX isotropic `S_+ = +(2/3) n² ℋ²` W-E pathology | **FB-5/6** |
+| FB12-F3 | `bianchi_ix_recollapse_event` coupling to `_hubble_squared` | **FB-5/6** |
+| FB13-κ | VII_h Pontzen-Challinor spiral κ quantitative calibration | **FB-5/6** |
+| FB-2.3 P3 (env) | Stale `venv/bin/pip` shebang → use `python -m pip` | post-FB (devops) |
+| FB-5.2 | All non-axis-aligned generic helical / Wigner / Grushin | **FB-5.2** |
+
+### Next phase (FB-3)
+
+**Phase FB-3 "Tilted-sector non-perturbative β" (sessions TBD)** —
+`TiltedSpeciesBackground(base, beta, v̂_e)` abstraction +
+orthogonal β → 0 limit reproduction; β activation of T4/T5/T6
+kinematic vectors on VII_h / VIII (vorticity-bearing) and all 11
+Bianchi types (4-acceleration from tilted geodesic).
+
+### Deliverables (diff summary)
+
+| Item | File | Status |
+|---|---|---|
+| A | `bass/hierarchy/hierarchy_rhs.py` — `aniso_ricci_at_eta` helper + cache + driver wire-up + module docstring update | ✅ this commit |
+| B | `bass/background/tetrad_state.py` — `shear_magnitude_sq` docstring corrected (F3 carry-forward sealed doc-only) | ✅ this commit |
+| C | `bass/hierarchy/test_hierarchy_rhs_fb24.py` — 25 new tests (FB-2.4 regression sweep + Phase FB-2 exit contract) | ✅ this commit |
+| D | `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` — FB-2.4 supplement + Phase FB-2 exit declaration | ✅ this commit |
+| E | `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` — rotated to FB-3.1 | ✅ this commit |
+
+*End of FB-2.4 audit supplement. Phase FB-2 closed.*

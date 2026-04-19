@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (FB-2.3 complete → FB-2.4 bootstrap; `nabla_dispatch.py` closes Class B III / IV / VI_h / VII_h axis-aligned dispatch on the abelian (e_1, e_3) 2-plane with Harrison-V twist offset `a²/(1+|h|)`; T1 Ricci hook auto-activates on Class B via FB-1.4 ³R_aniso; 27 new tests; baseline 3,056 → 3,083)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` (FB-2.1 + FB-2.2 + FB-2.3 supplements sealed; FB-2.4 placeholder remains)
-**Current target session**: **FB-2.4** — T4-T7 (vorticity ω_a, 4-acceleration A_a) hierarchy wire-up for Class B / tilted types + driver-level routing of `aniso_ricci_tensor` into `hierarchy_rhs_photon` → T1/T2 + per-type regression sweep (Phase FB-2 exit)
+**Last rotated**: 2026-04-19 (FB-2.4 complete → FB-3.1 bootstrap; **Phase FB-2 exit sealed** — `hierarchy_rhs_photon` now routes `tetrad_state.aniso_3_curvature` into T1/T2 via `aniso_ricci_at_eta`; FLRW / Type I bit-identical to LB-6; Class-B III/IV/VI_h/VII_h T1 Ricci coupling anchored with `‖Δdy‖ > 1e-10`; T4/T5/T6 kinematic kwargs structurally pinned for FB-3 activation; 25 new tests; baseline 3,083 → 3,108)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` (FB-2.1 + FB-2.2 + FB-2.3 + FB-2.4 supplements sealed; **Phase FB-2 closed**)
+**Current target session**: **FB-3.1** — `TiltedSpeciesBackground(base, beta, v̂_e)` abstraction + orthogonal β → 0 limit recovery (Phase FB-3 entry)
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,148 +36,168 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-2.4 — T4-T7 hierarchy wire-up (vorticity ω_a + 4-acceleration A_a) + driver-level `aniso_ricci_tensor` routing → Phase FB-2 exit
+# FB-3.1 — `TiltedSpeciesBackground(base, beta, v̂_e)` abstraction + orthogonal β → 0 limit recovery (Phase FB-3 entry)
 
 ## 프로젝트 컨텍스트
 
 - **Repo root**: /home/cosmosapjw/Dropbox/bianchi/htt_base
 - **bass-py 소스 트리**: `htt_base/htt/` (has `bass/`, `tsc/`, `mio/`, `workspace/`, `conftest.py`, `pyproject.toml`)
-- **venv**: `htt_base/venv/bin/python` (주의: `venv/bin/pip` 는 shebang 이 deleted snapshot 경로를 가리키고 있으므로 `../venv/bin/python -m pip ...` 로 호출할 것 — FB-2.3 P3 env carry-forward)
+- **venv**: `htt_base/venv/bin/python` (주의: `venv/bin/pip` shebang → `../venv/bin/python -m pip ...` 로 우회; FB-2.3 P3 env carry-forward, post-FB devops 에서 rebuild 예정)
 - **테스트 명령**: `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 3,083 passing + 1 skipped (FB-2.3 직후; 감사 로그: `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` — FB-2.1 + FB-2.2 + FB-2.3 supplements sealed)
-- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **Phase FB-0 전체 + Phase FB-1 전체 + FB-2.1 + FB-2.2 + FB-2.3**:
+- **현재 baseline**: 3,108 passing + 1 skipped (FB-2.4 직후; Phase FB-2 closed. 감사 로그: `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` §FB-2.1..FB-2.4 + Phase FB-2 exit declaration)
+- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **Phase FB-0 전체 + Phase FB-1 전체 + Phase FB-2 전체**:
   - FB-0.1..0.3 (Ellis convention flip + tilt-field surface + LB-6 F2 seal)
   - FB-1.1..1.4 (`SOURCE_STATUS` all VALIDATED + `anisotropic_3_curvature` non-None for all 11 types; gallery 03..13)
   - FB-2.1 (FLRW / I / V / VII_0 / IX 의 harmonic-mode ∇̃; 35 new tests)
   - FB-2.2 (Class A II / VI_0 / VIII axis-aligned ∇̃ + T1/T2 optional `aniso_ricci_tensor` hook + FB14-F1 h-scaling calibration; 24 new tests)
-  - FB-2.3 (Class B III / IV / VI_h / VII_h axis-aligned ∇̃ on abelian (e_1, e_3) 2-plane + Harrison-V twist offset `a²/(1+|h|)` matching FB14-F1 denom + T1 Ricci hook auto-activation on Class B via FB-1.4 ³R_aniso; 27 new tests). `SUPPORTED_TYPES = FB21 ∪ FB22 ∪ FB23 = 12 labels` 완성.
-- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-2 "Hierarchy RHS curved-space T-terms" (4 sessions)** 의 마지막 4/4 번째 (FB-2.4). 본 세션 끝나면 Phase FB-2 가 **완전 종료** 되고 Phase FB-3 (tilted sector non-perturbative β) 로 넘어간다.
-- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-2.4`
+  - FB-2.3 (Class B III / IV / VI_h / VII_h axis-aligned ∇̃ on abelian (e_1, e_3) 2-plane + Harrison-V twist offset `a²/(1+|h|)` + T1 Ricci auto-activation; 27 new tests)
+  - FB-2.4 (driver-level `aniso_ricci_tensor` routing into T1/T2 via `aniso_ricci_at_eta` + T4/T5/T6 structural-forwarding pin + F3 docstring correction + 12-label regression sweep; 25 new tests). **Phase FB-2 complete — 111 tests across 4 sessions; baseline 2,997 → 3,108.**
+- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-3 "Tilted sector non-perturbative β" (session count TBD)**. 본 세션이 Phase FB-3 의 첫 rotation (FB-3.1).
+- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §5 FB-3.1`
 - **Carry-forward P2/P3 (알고만 있을 것, 절대 건드리지 말 것)**:
-  - F3 → `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² normalisation → **본 세션에서 처리 (FB-2.4 예약됨)**
-  - FB02-F1 → `00_conventions.md §2` 에 `v̂_e` default cross-reference → **FB-3.1 예약**
-  - FB11-F1 → W-E Table 11.1 fixed-point *coordinates* 는 fixed-N 프레임워크에서 직접 도달 불가 → **FB-5 / FB-6 예약**
+  - FB02-F1 → `00_conventions.md §2` 에 `v̂_e` default cross-reference → **본 세션에서 처리 (FB-3.1 예약됨)**
+  - F3 (doc-only) → `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² = σ²/H² EMM/Wainwright rescale → **FB-5 / FB-6 예약** (current value consumed by `htt.core.bounds` / `comparator_policy`; rename would cascade)
+  - FB11-F1 → W-E Table 11.1 fixed-point *coordinates* fixed-N 에서 직접 도달 불가 → **FB-5 / FB-6 예약**
   - FB12-F1 → IX isotropic leading-order *shear-source* residual `S_+ = +(2/3) n² ℋ²` (W-E pathology) — **FB-5 / FB-6 예약**
   - FB12-F3 → `bianchi_ix_recollapse_event` 는 `_hubble_squared` 에 coupling → **FB-5 / FB-6 예약**
   - FB13-κ-calibration → VII_h Pontzen-Challinor spiral κ 정량 보정 → **FB-5 / FB-6 예약**
-  - **FB-2.1 P2** → complex-dtype `nabla_dispatch` 를 `hierarchy_rhs_photon` real-dtype driver 에 wire-up 은 **FB-5.1 예약** (harmonic-mode amplitude state machine 과 함께). **본 세션과 무관** — FB-2.4 는 real-dtype aniso_ricci + kinematic ω/A 커플링만 wire-up.
-  - **FB-2.2 P2** → `hierarchy_rhs_photon` 이 `aniso_ricci_tensor` 를 T1/T2 에 넘기지 않음 (driver wire-up) → **본 세션에서 처리**
-  - **FB-2.3 P3 (env)** → `venv/bin/pip` shebang 이 deleted snapshot path 를 가리킴 — `python -m pip` 로 우회 중; full venv 재빌드는 post-FB devops
-  - **FB-5.2** → 모든 비-axis-aligned subset (II / VI_0 / VIII / VII_0 / VII_h / III / IV / VI_h) 의 generic off-axis helical Wigner rotation (FB-2.1/2.2/2.3 에서 axis-aligned subset 만 지원)
+  - **FB-2.1 P2** → complex-dtype `nabla_dispatch` 를 `hierarchy_rhs_photon` real-dtype driver 에 wire-up 은 **FB-5.1 예약** (harmonic-mode amplitude state machine 과 함께)
+  - **FB-2.3 P3 (env)** → `venv/bin/pip` shebang stale → post-FB devops
+  - **FB-5.2** → 모든 비-axis-aligned subset (II / VI_0 / VIII / VII_0 / VII_h / III / IV / VI_h) 의 generic off-axis helical Wigner rotation
 
-## 이 세션의 작업 범위 (FB-2.4 — T4-T7 hierarchy wire-up + driver-level `aniso_ricci_tensor` routing, Phase FB-2 exit)
+## 이 세션의 작업 범위 (FB-3.1 — `TiltedSpeciesBackground(base, beta, v̂_e)` abstraction + orthogonal β → 0 limit recovery)
 
-**Goal**: FB-2.1/2.2/2.3 가 ∇̃ dispatch table 을 12 labels 에 대해 완성했고 T1/T2 에 `aniso_ricci_tensor` optional kwarg 를 열어두었다. 하지만 production driver `hierarchy_rhs_photon` 는 아직 `tetrad_state.aniso_3_curvature` 를 T1/T2 에 넘기지 않고, 또한 T4 (vorticity ω_a) / T5 (4-acceleration A_a) / T6 / T7 커플링은 orthogonal β=0 에서 LB-2b 시점에 생략되었다. FB-2.4 는 **Phase FB-2 exit** 이므로 다음을 wire-up 한다:
+**Goal**: Phase FB-2 가 orthogonal β=0 에 대한 curved-space T-term wire-up 을 완성했다. Phase FB-3 는 tilt parameter `β` 를 non-perturbative 하게 도입한다. FB-3.1 은 이 phase 의 첫 rotation 으로, `TiltedSpeciesBackground(base, beta, v̂_e)` 라는 wrapper-style abstraction 을 도입해서:
 
-1. `hierarchy_rhs_photon` 이 `tetrad_state.aniso_3_curvature` 를 `T1_expansion` / `T2_gradient` 에 전달 (FB-2.2 P2 해소)
-2. T4/T5/T6/T7 kinematic 커플링을 orthogonal β=0 에서도 `hierarchy_rhs` 에 **structurally** 연결 (β=0 이면 zero, β>0 이면 FB-3 에서 활성화 될 hook). ω_a / A_a 는 tetrad state 에서 이미 계산 가능 (LB-5 integrator 가 consume).
-3. 11-type 전체에 걸친 `hierarchy_rhs_photon` regression sweep: 각 type × (β=0) 에서 rhs 가 (i) finite, (ii) FLRW 한계 bit-identical LB-6, (iii) Class B twist 타입에서 T1 Ricci 기여가 non-zero pin.
-4. F3 carry-forward 처리: `TetradBackgroundState.shear_magnitude_sq` 를 Σ² = σ²/H² dimensionless normalisation 으로 정비 (W-E Ellis convention 과 일관성).
-5. Phase FB-2 exit 선언 audit.
+1. **Tilt interface 정비** — `BianchiCosmology` 에는 이미 `beta` / `v_hat_e` 필드가 있다 (FB-0.2). FB-3.1 은 이 필드들을 consume 하는 species-level wrapper 를 만든다: `TiltedSpeciesBackground` 는 기존 `SpeciesBackground` (photon / neutrino 등) 에 tilt-projection 을 overlay 해서 `(ρ̃, ρ̃ + p̃, v^a, v^a v^b)` 를 return 한다.
+2. **β → 0 limit recovery** — `TiltedSpeciesBackground(base, beta=0, v̂_e=any)` 는 `base` 를 **bit-identical** 으로 재현 (orthogonal 경로 preservation).
+3. **`v̂_e` default cross-reference (FB02-F1)** — `00_conventions.md §2` 에 `v̂_e = (0, 0, 1)` default 를 공식화하고, `TiltedSpeciesBackground` 가 이 default 를 consumed 하는지 증거.
+4. **Validation tests (≥ 10)** — β=0 bit-identical pin × multiple species + `v̂_e` normalization guard + 차원 check.
+
+FB-3.1 은 **abstraction only** — Boltzmann hierarchy 에 tilt-coupled T4/T5/T6 커플링을 전달하는 작업은 **FB-3.2 예약**. Phase FB-2 가 driver signature 를 `accel_vector` / `vorticity_vector` 로 이미 열어 놓았으므로 FB-3.2 에서 tilt-projected vectors 를 이 signature 에 넣기만 하면 된다.
 
 ### 기준이 되는 문헌 타깃
 
-Ellis-Maartens-MacCallum 2012 §16:
+- King-Ellis 1973 §2-§3 (tilted cosmology kinematic split)
+- Ellis-Maartens-MacCallum 2012 §5.4 (tilted four-velocity u^a = u_0^a + v^a + ...)
+- lowell_bianchi_solver_reference.md §7 (tilt SSOT)
 
-    ∂_η Π_{A_ℓ} = T1 (expansion) + T2 (∇̃ ³R) + T3 (divergence)
-                  + T4 (vorticity ω × Π)  + T5 (4-accel A · Π)
-                  + T6 (shear σ · Π)     + T7 (higher curl / mixed)
-                  + Thomson collision
+Tilt convention:
 
-orthogonal β=0 에서는 ω_a = A_a = 0 이므로 T4/T5 는 수치적으로 zero 이지만 **signature 는 driver 에 연결되어야** FB-3 tilted sector 에서 β>0 경로가 추가 테스트 없이 활성화됨.
+    u^a(total) = γ (u_0^a + v^a),   v^a = β v̂^a,
+    γ = (1 − β²)^{−1/2}
+
+with `|v̂| = 1` enforced at the boundary. For species we carry the tilt-projected energy density and momentum separately:
+
+    ρ̃ = γ² (ρ + p) − p,
+    q̃^a = γ² (ρ + p) v^a  (heat-flux surrogate at β > 0)
 
 ### 구체 작업 항목
 
 1. **문헌 + 현 코드 재확인 (먼저, 코딩 전)**:
-   - Ellis-Maartens-MacCallum 2012 §16 + lowell §6 T-term index table
-   - `bass/hierarchy/hierarchy_rhs.py` / `hierarchy_rhs_photon` 현 구현
-   - `bass/hierarchy/terms.py::T1_expansion, T2_gradient, T3_divergence, T4_vorticity, T5_accel` 존재 여부 확인 (T4/T5 가 없으면 structural stub 추가)
-   - `bass/background/tetrad_state.py::TetradBackgroundState.{aniso_3_curvature, vorticity_vector, accel_vector}` — driver 가 consume 할 attribute
-   - `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` FB-2.2 §4 + FB-2.3 §4 carry-forward
-   - F3: `TetradBackgroundState.shear_magnitude_sq` 현 normalisation + LB-5 consumer
+   - King-Ellis 1973 §2-§3 / EMM 2012 §5.4 / lowell §7
+   - `bass/background/einstein_bianchi.py::BianchiCosmology` — `beta` / `v_hat_e` 필드의 현 사용 여부 (FB-0.2)
+   - `bass/species/` directory — 기존 `SpeciesBackground` 추상 어디에 있는지, photon / neutrino / baryon / CDM 각 species 의 `(ρ, p, w)` attribute 확인
+   - `docs/lowell_bianchi/00_conventions.md §2` — `v̂_e` default 현 상태 (FB02-F1)
+   - `docs/audits/AUDIT_PROMPT.md` (Phase FB-3 entry self-invoke)
 
-2. **driver wire-up (`hierarchy_rhs_photon`)**:
-   - `aniso_ricci_tensor = tetrad_state.aniso_3_curvature` 를 `T1_expansion(..., aniso_ricci_tensor=...)` / `T2_gradient(..., aniso_ricci_tensor=...)` 에 전달 (default `None` → 기존 LB-6 bit-identical preserve; `build_tetrad_state` 가 11-type 전체에서 non-None return 이면 Class B + anisotropic types 에서 자동 활성)
-   - Per-type regression: FLRW 경로는 `aniso_3_curvature = zeros` 이므로 bit-identical; Class B 는 new non-zero RHS 기여, **golden pin** 으로 rel 1e-10 lock
+2. **`TiltedSpeciesBackground` 도입** (new module e.g. `bass/species/tilted.py`):
+   - dataclass `TiltedSpeciesBackground(base: SpeciesBackground, beta: float, v_hat_e: Tuple[float, float, float])`
+   - `beta` validation (0 ≤ β < 1)
+   - `v_hat_e` 정규화 guard (`|v̂_e| == 1 ± 1e-12`)
+   - Expose `rho_tilde(eta)`, `p_tilde(eta)`, `v_vector(eta)` (at β=0 these reduce to base.rho, base.p, zeros(3))
+   - `γ = (1 − β²)^{−1/2}` property
 
-3. **T4/T5/T6/T7 structural wire-up**:
-   - T4 (vorticity ω × Π) / T5 (4-acceleration A · Π) 가 `terms.py` 에 없으면 structural stub 추가 (β=0 에서 zero 반환; FB-3 가 wire-up 할 hook)
-   - `hierarchy_rhs_photon` 에 T4/T5 호출 경로 추가 (default zero path; FB-3 에서 activate)
-   - T6 (shear) / T7 (higher) 은 기존에 이미 일부 연결되어 있을 수 있음 — 확인 후 missing only 추가
+3. **FB02-F1 해소**:
+   - `00_conventions.md §2` 에 `v̂_e = (0, 0, 1)` default 를 명시하고 cross-reference 추가 (`BianchiCosmology.v_hat_e`, `TiltedSpeciesBackground.v_hat_e`, `hierarchy_rhs_photon`)
+   - 테스트: `TiltedSpeciesBackground(..., v̂_e=(0,0,1))` 가 convention default 와 일치
 
-4. **F3 — `shear_magnitude_sq` dimensionless Σ²**:
-   - 현 attribute 가 σ² 인지 σ²/H² 인지 확인; W-E Ellis convention 은 Σ² = σ/H dimensionless (FB-0.1 Ellis flip 과 일관성)
-   - LB-5 consumer 가 이미 정규화하고 있으면 docstring 에 명시만, 아니면 attribute rename + deprecation window (FB-2 내부 제약)
+4. **Validation tests** (≥ 10):
+   - β=0 bit-identical: `TiltedSpeciesBackground(photon, β=0, v̂_e=any)` ≡ photon
+   - β=0 bit-identical for 각 species (photon/neutrino/baryon/CDM)
+   - β > 0 finite at test points; γ > 1 ok; `ρ̃ > ρ` 증가 check
+   - `|v̂_e| != 1` → ValueError
+   - β ≥ 1 → ValueError
+   - FB02-F1 convention cross-reference test (`v̂_e default == (0, 0, 1)`)
 
-5. **11-type regression sweep**:
-   - 각 type (FLRW + 11) × (β=0) 에서 `hierarchy_rhs_photon(eta=eta_test, tower=tower_test, cosmo=..., ...)` 가 (i) finite, (ii) shape 일관, (iii) FLRW 경로는 LB-6 bit-identical, (iv) Class B 경로는 aniso_ricci 기여가 norm > 1e-10 pin
-   - `bass/hierarchy/test_hierarchy_rhs.py` 에 `TestPhaseFB2ExitRegression` 추가 (≥ 12 tests)
-   - LB-6 `bass/integration/test_lowell_bianchi.py` 는 바꾸지 말 것 (driver 기본 경로 bit-identical 이면 자동 green)
+5. **Audit**: `docs/audits/AUDIT_PHASE_FB3_2026-04-XX.md` 신설 — Phase FB-3 entry declaration + FB-3.1 §1..§10
 
-6. **Phase FB-2 exit audit**:
-   - `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` 에 **FB-2.4 supplement** append (§1..§10 template + Phase FB-2 exit 선언)
-   - 4-session 전체 요약: FB-2.1 (35 tests) + FB-2.2 (24 tests) + FB-2.3 (27 tests) + FB-2.4 (?) 합계 + 최종 baseline 공식화
+6. `NEXT_SESSION_PROMPT.md §2` 를 **FB-3.2** (tilt-projected ω/A vectors → `hierarchy_rhs_photon` 에 forward; VII_h vorticity 활성화) bootstrap 으로 rotate
 
-7. `NEXT_SESSION_PROMPT.md §2` 를 **FB-3.1** (TiltedSpeciesBackground(base, beta, v̂_e) abstraction + orthogonal β→0 limit 재현) bootstrap 으로 rotate.
+### FB-3.1 non-goals (선 밑에 고정)
 
-### FB-2.4 non-goals (선 밑에 고정)
-
-- **complex-dtype `nabla_dispatch` 의 `hierarchy_rhs_photon` wire-up** → FB-5.1 (harmonic mode state machine 이 필요)
-- **Class B / VII_0 / II / VI_0 / VIII off-axis helical Wigner** → FB-5.2
-- **Tilted β ≠ 0 sector** → FB-3 (FB-2.4 는 β=0 driver 경로만 wire)
+- **tilt-projected T4/T5/T6 hierarchy 연결** → **FB-3.2**
+- **β evolution equation integration** → FB-4 (Einstein + tilt 결합)
 - **k ≠ 0 perturbation sector** → FB-5
-- **κ-calibration (VII_h) / W-E Table 11.1 fixed-point coords / IX S_+ residual** → FB-5 / FB-6
-- **FB02-F1 (`v̂_e` default cross-ref)** → FB-3.1
+- **κ-calibration / W-E Table 11.1 / IX S_+ residual** → FB-5 / FB-6
+- **complex-dtype `nabla_dispatch` wire-up** → FB-5.1
 
 ## 우선 읽어야 할 문서 (순서대로)
 
-1. `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` (§1-§10 FB-2.1 + §1-§10 FB-2.2 + §1-§10 FB-2.3 supplements + hand-off 섹션; FB-2.4 placeholder 예약됨)
-2. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-2.4`
-3. `bass/hierarchy/hierarchy_rhs.py` (`hierarchy_rhs_photon` 확장 지점)
-4. `bass/hierarchy/terms.py` (T1/T2/T3 + T4/T5/T6/T7 stubs 확인)
-5. `bass/background/tetrad_state.py` (TetradBackgroundState attributes — aniso_3_curvature, vorticity_vector, accel_vector)
-6. Ellis-Maartens-MacCallum 2012 §16; lowell §6 T-term index
-7. `docs/audits/AUDIT_PROMPT.md` (phase-boundary audit template — 본 세션 전에 self-invoke)
+1. `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` (Phase FB-2 exit declaration 포함; FB-3 handoff section)
+2. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §5 FB-3.1`
+3. `docs/lowell_bianchi/00_conventions.md §2` (v̂_e default; FB02-F1)
+4. `bass/background/einstein_bianchi.py::BianchiCosmology` (beta / v_hat_e 필드)
+5. `bass/species/` (기존 `SpeciesBackground` 추상)
+6. King-Ellis 1973 §2-§3; Ellis-Maartens-MacCallum 2012 §5.4; lowell §7
+7. `docs/audits/AUDIT_PROMPT.md` (phase-entry audit template — self-invoke)
 
 ## 핵심 원칙 (고정)
 
 1. 외부 코드 금지 (프로덕션 트리)
-2. Citation in every modified docstring (EMM 2012 §16 + lowell §6 T-term 인용 필수)
-3. PSTF invariants preserved; Ellis convention 유지; default `aniso_ricci_tensor=None` 경로 bit-identical LB-6
-4. No silent fallbacks — T4/T5 stubs 는 β=0 에서 zero return + explicit FB-3 activation hook
+2. Citation in every modified docstring (King-Ellis 1973 + EMM 2012 §5.4 + lowell §7 인용)
+3. PSTF invariants preserved; Ellis convention 유지; **β=0 경로 bit-identical**
+4. No silent fallbacks — `|v̂_e| != 1` 는 explicit ValueError
 5. Determinism
-6. **FB-2 phase exit** — 본 세션이 Phase FB-2 의 마지막; audit 은 phase-complete 선언 필수
+6. **FB-3 phase entry** — 본 세션이 Phase FB-3 의 첫 rotation; Phase FB-2 exit 을 정본 baseline 으로 고정
 
 ## 검증 체크리스트 (최종 commit 전)
 
-- [ ] `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 3,083 + 신규 테스트)
-- [ ] FLRW 경로 bit-identical LB-6 regression (aniso_3_curvature=None 기본 경로)
-- [ ] Class B 경로에서 T1 aniso_ricci 기여 non-zero norm > 1e-10 pin (III/IV/VI_h/VII_h 각각)
-- [ ] T4/T5 structural hook β=0 에서 zero; shape 일관
-- [ ] 11-type × (β=0) hierarchy_rhs finite + shape OK pin (TestPhaseFB2ExitRegression, ≥12 tests)
-- [ ] F3 — `shear_magnitude_sq` normalisation 확인 + docstring 명시
-- [ ] `docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` 에 FB-2.4 supplement append + Phase FB-2 exit 선언
-- [ ] `docs/audits/AUDIT_PROMPT.md` self-invoke 로 P0/P1 스캔 완료
-- [ ] (선택) Gallery PNG 생성 + 시각적 inspection; no-op 이면 audit 에 명시
-- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-3.1** bootstrap 으로 rotate
-- [ ] 최종 commit 메시지: `FB-2.4: T4-T7 hierarchy wire-up + driver aniso_ricci routing (Phase FB-2 exit)` + `+ rotate NEXT_SESSION_PROMPT for FB-3.1`
+- [ ] `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 3,108 + 신규 테스트)
+- [ ] `TiltedSpeciesBackground(base, β=0, v̂_e=any)` 는 모든 species 에 대해 bit-identical
+- [ ] `|v̂_e| != 1` → ValueError; β ≥ 1 → ValueError
+- [ ] FB02-F1 해소 — `00_conventions.md §2` 에 v̂_e default 명시 + cross-reference
+- [ ] `docs/audits/AUDIT_PHASE_FB3_2026-04-XX.md` 신설 + Phase FB-3 entry declaration
+- [ ] `docs/audits/AUDIT_PROMPT.md` self-invoke 완료
+- [ ] (선택) Gallery PNG 생성; no-op 이면 audit 에 명시
+- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-3.2** bootstrap 으로 rotate
+- [ ] 최종 commit 메시지: `FB-3.1: TiltedSpeciesBackground abstraction + β→0 limit recovery (Phase FB-3 entry)` + `+ rotate NEXT_SESSION_PROMPT for FB-3.2`
 
 ## 진행 순서
 
 1. `docs/audits/AUDIT_PROMPT.md` self-invoke (pre-phase scan)
-2. EMM 2012 §16 + lowell §6 T-term index + 현 `hierarchy_rhs.py` / `terms.py` 읽기
-3. T4/T5 structural stubs (필요시) + driver aniso_ricci wire-up
-4. F3 (`shear_magnitude_sq`) dimensionless Σ² 확인 + docstring
-5. 11-type regression sweep tests 추가 (≥ 12)
-6. 전체 회귀 green 확인 (FLRW bit-identical + Class B T1 Ricci non-zero pins)
-7. `AUDIT_PHASE_FB2_2026-04-19.md` 에 FB-2.4 supplement append + **Phase FB-2 exit** 선언
-8. `NEXT_SESSION_PROMPT.md §2` rotate to FB-3.1
-9. commit
+2. 현 `BianchiCosmology` β / v̂_e 필드 + `bass/species/` 추상 읽기
+3. `TiltedSpeciesBackground` dataclass + validation
+4. β=0 bit-identical pin 테스트 + v̂_e normalisation guard + FB02-F1 cross-reference
+5. 전체 회귀 green 확인
+6. `AUDIT_PHASE_FB3_2026-04-XX.md` 신설 + Phase FB-3 entry declaration
+7. `NEXT_SESSION_PROMPT.md §2` rotate to FB-3.2
+8. commit
 
-시작하세요. 본 세션은 **Phase FB-2 의 4/4 rotation (exit)** — FB-2.1/2.2/2.3 가 ∇̃ dispatch 를 12 labels 에 대해 완성했고 T1/T2 에 `aniso_ricci_tensor` optional kwarg 를 열어두었다. FB-2.4 는 driver (`hierarchy_rhs_photon`) 가 그 kwarg 를 실제로 consume 하도록 wire-up 하고, T4-T7 kinematic 커플링의 structural hook 을 추가하며, F3 carry-forward 를 해소한다. Phase FB-2 exit 이후 FB-3 (tilted sector β ≠ 0) 이 시작된다.
+시작하세요. 본 세션은 **Phase FB-3 의 첫 rotation (FB-3.1 entry)** — Phase FB-2 에서 driver 를 curved-space T-term 으로 완성했고, 이제 β tilt parameter 를 non-perturbative 하게 species-level 에 도입한다. FB-3.1 은 abstraction + β=0 limit recovery 만 — tilt-projected hierarchy 연결은 FB-3.2 에서.
 ```
 
 ---
+
+<!-- Prior (FB-2.4) handoff prompt (saved for reference only; do not re-run). -->
+
+<details>
+<summary>Previous FB-2.4 handoff prompt (archived 2026-04-19)</summary>
+
+```text
+# FB-2.4 — T4-T7 hierarchy wire-up + driver-level `aniso_ricci_tensor` routing (Phase FB-2 exit)
+
+(original prompt text preserved; see
+`docs/audits/AUDIT_PHASE_FB2_2026-04-19.md` FB-2.4 supplement + Phase
+FB-2 exit declaration for the completion summary — 25 new tests,
+baseline 3,083 → 3,108; `hierarchy_rhs_photon` now routes
+`tetrad_state.aniso_3_curvature` into T1/T2 via the new
+`aniso_ricci_at_eta` helper; T4/T5/T6 kinematic kwargs pinned as
+structurally wired; F3 docstring correction applied;
+`shear_magnitude_sq` dimensionless rescale deferred to FB-5/6)
+```
+
+</details>
 
 <!-- Prior (FB-2.3) handoff prompt (saved for reference only; do not re-run). -->
 
