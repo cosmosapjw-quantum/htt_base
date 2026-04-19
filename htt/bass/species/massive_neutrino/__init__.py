@@ -5,9 +5,11 @@ Every public surface in this package must preserve the invariant
 NeutrinoBackground`` by keeping the zero-mass runtime on the existing
 LB-1 path until the full FB-9 implementation lands.
 """
+from bass.species.massive_neutrino.background import MassiveNeutrinoBackground
 from bass.species.massive_neutrino.phase_space import phase_space_grid
 
 
 __all__ = [
+    "MassiveNeutrinoBackground",
     "phase_space_grid",
 ]

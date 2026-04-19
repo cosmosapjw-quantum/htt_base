@@ -90,10 +90,55 @@ phase-close gate.
 
 ## §FB-9.2
 
-| Row | Status | Note |
-|---|---|---|
-| Scope | pending | `MassiveNeutrinoBackground.rho_rest()` / `.p_rest()` contract placeholder in the new package. |
-| LB-1 anchor clause | pinned | `Sigma_mnu = 0` must keep using `NeutrinoBackground`; any massive-ν object is off-path unless the caller opts in explicitly. |
+### §FB-9.2 — `MassiveNeutrinoBackground` skeleton
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified
+the new class lives under the reserved FB-9 package; verified its
+`label` remains `SpeciesLabel.NEUTRINO`; verified construction is
+side-effect free and off-path for default registry use; verified the
+thermodynamic query methods raise rather than faking physics; verified
+the new skipped test locks the class contract without pretending the
+phase-space integrals exist.
+**Channel B**: 4 source checks / 2 verified / 2 corrected. Evidence:
+Ma & Bertschinger 1995 (`astro-ph/9506072`) is the canonical massive-ν
+formalism, but the prompt's `eq. (56)` and `eq. (97)` are not the
+background `rho/p` formulas themselves: `eq. (56)` belongs to the
+massive-neutrino Boltzmann hierarchy and `eq. (97)` is an initial-value
+relation for the moments. The direct background thermodynamic formulas
+used in the SDD are the phase-space integrals over `epsilon(q, a)` in
+the same paper's massive-neutrino setup, so the audit records the
+prompt locator mismatch explicitly rather than fabricating an equation
+match.
+**Channel C** (prose, 6-10 lines): The honest FB-9.2 skeleton is a
+constructible background carrier whose thermodynamic queries still
+raise. That lets the registry and the future tilt-wrapper compose
+against a real `SpeciesBackground` subclass while making it impossible
+to mistake the placeholder for completed physics. Keeping the label at
+`SpeciesLabel.NEUTRINO` is also load-bearing: downstream code should
+continue to branch on physics dispatch, not on a new enum. I did keep
+the shared `T_nu ~ a^-1` temperature helper because it is already part
+of the massless LB-1 contract and does not perturb the zero-mass path.
+Everything else stays explicitly unimplemented until the actual
+phase-space integrals land.
+**Alternatives**:
+| # | FB-9.2 skeleton shape | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Constructible class with raising thermodynamic methods | Supports future registry/tilt composition and keeps the contract concrete without shipping fake physics. | Slightly more surface area than a pure placeholder type. | ✅ |
+| 2 | Constructor raises immediately | Maximally explicit non-implementation. | Prevents even type-level composition and makes FB-9.3 / FB-9.5 skeletons less honest. | — |
+| 3 | Stub methods return zeros | Easy to wire. | Physically misleading and dangerous for accidental production use. | — |
+**Core principles**: keep the enum unchanged; allow type-level
+construction; raise on unimplemented thermodynamics; record the
+Ma-Bertschinger locator mismatch explicitly.
+**Skeleton path**:
+`htt/bass/species/massive_neutrino/background.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_fb92_massive_neutrino_background_skeleton.py -q`
+**LB-1 anchor clause**: `Sigma_mnu = 0` must keep using
+`NeutrinoBackground`; any massive-ν object is off-path unless the
+caller opts in explicitly.
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 61 skipped` → `3403 passed + 62 skipped` pending the
+phase-close gate.
 
 ## §FB-9.3
 

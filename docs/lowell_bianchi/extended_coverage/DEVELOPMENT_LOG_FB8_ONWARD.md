@@ -232,3 +232,22 @@ cross-reference.
 - **Notes**: the audit records the CLASS-source correction explicitly:
   the local `N_q = 15` is a bundle placeholder, while current CLASS
   exposes `ncdm_maximum_q = 15` and `ncdm_N_momentum_bins = 150`.
+
+### FB-META-9.2 — `MassiveNeutrinoBackground` skeleton
+
+- **Scope**: Added the constructible
+  [MassiveNeutrinoBackground](../../../htt/bass/species/massive_neutrino/background.py)
+  placeholder and exported it from the package `__init__`, together
+  with a skipped contract test. The skeleton keeps the neutrino enum
+  unchanged and raises on unimplemented thermodynamic queries.
+- **Commit anchor**: see `git log --grep='FB-META-9.2'`.
+- **Test delta**: 3,403 passing + 61 skipped → 3,403 passing + 62
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META9_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META9_2026-04-20.md)
+  §FB-9.2.
+- **Gallery**: no-op (background contract only).
+- **Carry-forward**: FB-9.3 registry integration skeleton.
+- **Notes**: the audit records that the prompt's Ma-Bertschinger
+  `eqs. (56), (97)` are not themselves the background `rho/p` formulas,
+  so the placeholder stays explicit about what is and is not verified.
