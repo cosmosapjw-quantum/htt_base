@@ -13,7 +13,7 @@ Usage
     venv/bin/python scripts/make_physics_gallery.py --only 03_recombination
     venv/bin/python scripts/make_physics_gallery.py --list
 
-All plots write to ``plots/physics_gallery/{topic}/`` with a top-level
+All plots write to ``figures/physics_gallery/{topic}/`` with a top-level
 ``README.md`` index. No external cosmology code is imported (the LB-0
 external-code policy applies to production code under ``bass_py/``;
 this script uses only matplotlib, numpy, scipy, and bass_py itself).
@@ -33,9 +33,13 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-GALLERY_ROOT = REPO_ROOT / "plots" / "physics_gallery"
+GALLERY_ROOT = REPO_ROOT / "figures" / "physics_gallery"
 
-# Make `bass.*` importable for the LB-1 species machinery.
+# Make `bass.*` / `tsc.*` importable for the LB-1 species machinery.
+# Physics code migrated from `bass_py/` to `htt/` on 2026-04; keep the
+# legacy path as a fallback for partial checkouts.
+sys.path.insert(0, str(REPO_ROOT / "htt"))
+sys.path.insert(0, str(REPO_ROOT / "htt" / "src"))
 sys.path.insert(0, str(REPO_ROOT / "bass_py"))
 
 from bass.background.einstein_bianchi import (  # noqa: E402
@@ -139,7 +143,7 @@ SPECIES_LS = {
 
 
 def _save(fig: plt.Figure, name: str, topic: str) -> Path:
-    """Save figure under plots/physics_gallery/{topic}/{name}.png."""
+    """Save figure under figures/physics_gallery/{topic}/{name}.png."""
     out = GALLERY_ROOT / topic
     out.mkdir(parents=True, exist_ok=True)
     path = out / f"{name}.png"

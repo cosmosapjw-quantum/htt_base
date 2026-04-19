@@ -1,0 +1,48 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cargo check *)",
+      "Read(//home/cosmosapjw/**)",
+      "Bash(venv/bin/python -c \"import camb; import os; print\\('OMP_NUM_THREADS:', os.environ.get\\('OMP_NUM_THREADS', 'unset'\\)\\); print\\('cpu_count:', os.cpu_count\\(\\)\\)\")",
+      "WebSearch",
+      "WebFetch(domain:arxiv.org)",
+      "Bash(git check-ignore *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(cargo test *)",
+      "Bash(kill *)",
+      "Bash(awk '{print $10}')",
+      "Bash(git mv *)",
+      "Bash(/home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot/venv/bin/python)",
+      "Bash(PYTHONPATH=. ../venv/bin/python -m pytest bass/validation/test_external_code_policy.py -q)",
+      "Bash(PYTHONPATH=. ../venv/bin/python -c \"from htt.htt.core import ssot; print\\(ssot.C.T0_K\\)\")",
+      "Bash(../venv/bin/python -c ' *)",
+      "Bash(PYTHONPATH=. ../venv/bin/python -m pytest * -q)",
+      "Bash(PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q)",
+      "Bash(venv/bin/python scripts/make_physics_gallery.py --list)",
+      "Bash(venv/bin/python scripts/make_physics_gallery.py)",
+      "Bash(venv/bin/python scripts/make_physics_gallery.py --only 04_reionization 06_tilt_boost 08_parameter_sweeps)",
+      "Bash(venv/bin/python scripts/make_physics_gallery.py --only 05_bianchi_shear 07_friedmann_closure)",
+      "Bash(venv/bin/python scripts/make_physics_gallery.py --only 02_flrw_geometry)",
+      "Bash(PYTHONPATH=. ../venv/bin/python -c \"import numpy, scipy; print\\(numpy.__version__, scipy.__version__\\)\")",
+      "Bash(PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q --co)"
+    ],
+    "hooks": {
+      "PreToolUse": [
+        {
+          "matcher": "Bash",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/check_phase_boundary_audit.py",
+              "timeout": 5
+            }
+          ]
+        }
+      ]
+    },
+    "additionalDirectories": [
+      "/home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot/bass_py/bass"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+Lebedev spherical-quadrature exactness certificate for the orders
+currently populated by $\mathtt{tsc.diagnostics.spherical\_quadrature}$
+(orders $3$, $5$, $7$ with $6$, $14$, $26$ nodes respectively).
+Left panel: $\log_{10}$ of the absolute residual
+$|\int Y_\ell^0\,d\Omega/(4\pi)|$ for each order (rows) against
+polynomial degree $\ell$ (columns); the white vertical ticks mark
+each rule's exactness frontier $\ell\!=\!\mathrm{order}$ (Lebedev rule
+of order $n$ integrates $Y_{\ell\le n}^m$ exactly, machine-precision
+dark cells at left of the frontier). Right panel: node count per
+order — the cost scaling that sets the angular-integration budget
+for the transport pipeline. Higher orders ($9$--$23$) are declared
+in the docstring and available for drop-in extension when
+$\ell_{\max}\!>\!7$ PSTF multipoles are activated.

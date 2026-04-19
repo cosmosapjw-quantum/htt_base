@@ -1,0 +1,159 @@
+"""mio.interface.mio_certificate — MioCertificate generator API.
+
+INDEPENDENT_TRACKS_PLAN v1.2 §12.4 (MIO-HJ-06a, Week 6 Day 2).
+Parent: BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN.md v3 §4.5.3.5.
+
+Role: convenience builder for the `workspace.contracts.MioCertificate`
+dataclass. Each HJ module passes its own computed fields here and
+receives a fully-populated, immutable certificate. Provenance
+(`git_commit`, `config_hash`) is auto-populated so call sites need
+not wire them by hand.
+
+G19 hard separation (v3 §4.5.4 / §10.2bis):
+  * Any caller-supplied keyword whose name contains 'posterior' raises
+    `ValueError` — MIO does not produce posteriors under any
+    circumstance. See `test_build_rejects_posterior_keyword`.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+from workspace.contracts.mio_certificate import MioCertificate
+
+
+def _resolve_git_commit() -> str:
+    """Resolve the current HEAD sha. Returns 'unknown' outside a git tree."""
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=Path(__file__).resolve().parent,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return "unknown"
+    return result.stdout.strip() or "unknown"
+
+
+def _hash_config(*parts: Any) -> str:
+    """Stable sha256 digest of a series of JSON-serializable payloads.
+
+    Used to derive `config_hash` from the caller's diagnostic payload
+    (departure variables + indicators + metrics) so that two certificates
+    with identical content share a hash even across sessions.
+    """
+    payload = json.dumps(
+        [parts],
+        sort_keys=True,
+        default=str,
+        separators=(",", ":"),
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+
+
+def _reject_posterior_keywords(raw_kwargs: Dict[str, Any]) -> None:
+    """G19 hard separation — any key containing 'posterior' is forbidden."""
+    offenders = [k for k in raw_kwargs if "posterior" in k.lower()]
+    if offenders:
+        raise ValueError(
+            "MIO cannot generate posteriors. Forbidden keyword(s): "
+            f"{offenders}. See v3 §10.2bis G19 hard-separation rule."
+        )
+
+
+def build_mio_certificate(
+    report_type: str,
+    probe_name: str,
+    channel: str,
+    departure_variables: Dict[str, float],
+    adequacy_indicators: Dict[str, bool],
+    consistency_metrics: Dict[str, float],
+    *,
+    domain_caveats: List[str],
+    reduction_status: str,
+    generated_by: str,
+    input_data_hashes: List[str],
+    channel_caveats: Optional[List[str]] = None,
+    htt_cross_check_suggested: Optional[Dict[str, str]] = None,
+    git_commit: Optional[str] = None,
+    config_hash: Optional[str] = None,
+    **extra: Any,
+) -> MioCertificate:
+    """Build an immutable MioCertificate with auto-populated provenance.
+
+    Parameters
+    ----------
+    report_type, probe_name, channel
+        Identification triple (e.g. 'directional_coherence' / 'CMB' / 'dipole').
+    departure_variables, adequacy_indicators, consistency_metrics
+        Diagnostic dictionaries produced by the caller's HJ module.
+    domain_caveats
+        Human-readable caveats that scope the report (e.g. 'masked_sky_partial').
+    reduction_status
+        One of 'theory-direct' | 'theory-approximate' | 'diagnostic-only'.
+    generated_by
+        Module string, e.g. 'mio.coherence.directional v0.1'.
+    input_data_hashes
+        Input dataset digests. Empty list permitted for bootstrap tests.
+    channel_caveats
+        Optional additional channel-scoped caveats (defaults to []).
+    htt_cross_check_suggested
+        Optional HTT cross-check hint dict — NOT a posterior, just a pointer.
+    git_commit, config_hash
+        Optional overrides; otherwise auto-populated via git rev-parse +
+        sha256 of the diagnostic payload.
+
+    Raises
+    ------
+    ValueError
+        If any `extra` keyword contains the substring 'posterior' — MIO
+        does not produce posteriors (v3 §10.2bis G19).
+    """
+    _reject_posterior_keywords(extra)
+    if extra:
+        unknown = sorted(extra.keys())
+        raise TypeError(
+            f"build_mio_certificate() got unexpected keyword arguments: {unknown}"
+        )
+
+    resolved_commit = git_commit if git_commit is not None else _resolve_git_commit()
+    resolved_hash = (
+        config_hash
+        if config_hash is not None
+        else _hash_config(
+            report_type,
+            probe_name,
+            channel,
+            departure_variables,
+            adequacy_indicators,
+            consistency_metrics,
+        )
+    )
+
+    return MioCertificate(
+        report_type=report_type,
+        probe_name=probe_name,
+        channel=channel,
+        departure_variables=dict(departure_variables),
+        adequacy_indicators=dict(adequacy_indicators),
+        consistency_metrics=dict(consistency_metrics),
+        domain_caveats=list(domain_caveats),
+        channel_caveats=list(channel_caveats) if channel_caveats is not None else [],
+        reduction_status=reduction_status,
+        generated_by=generated_by,
+        git_commit=resolved_commit,
+        config_hash=resolved_hash,
+        input_data_hashes=list(input_data_hashes),
+        htt_cross_check_suggested=(
+            dict(htt_cross_check_suggested) if htt_cross_check_suggested is not None else None
+        ),
+    )
+
+
+__all__ = ["build_mio_certificate"]

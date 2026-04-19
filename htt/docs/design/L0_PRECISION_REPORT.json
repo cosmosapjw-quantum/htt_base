@@ -1,0 +1,220 @@
+{
+  "checks": [
+    {
+      "check_id": "I_3[BE, eta=0]",
+      "category": "moment",
+      "statistics": "BE",
+      "oracle_value": 6.493939402266829,
+      "observed_value": 6.493939402266829,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "rel_err=0.00e+00"
+    },
+    {
+      "check_id": "I_4[BE, eta=0]",
+      "category": "moment",
+      "statistics": "BE",
+      "oracle_value": 24.88626612344088,
+      "observed_value": 24.88626612344088,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "rel_err=0.00e+00"
+    },
+    {
+      "check_id": "I_3[MB, eta=0]",
+      "category": "moment",
+      "statistics": "MB",
+      "oracle_value": 6.0,
+      "observed_value": 6.0,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "rel_err=0.00e+00"
+    },
+    {
+      "check_id": "I_4[MB, eta=0]",
+      "category": "moment",
+      "statistics": "MB",
+      "oracle_value": 24.0,
+      "observed_value": 24.0,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "rel_err=0.00e+00"
+    },
+    {
+      "check_id": "I_3[FD, eta=0]",
+      "category": "moment",
+      "statistics": "FD",
+      "oracle_value": 5.682196976983475,
+      "observed_value": 5.682196976983475,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "rel_err=0.00e+00"
+    },
+    {
+      "check_id": "I_4[FD, eta=0]",
+      "category": "moment",
+      "statistics": "FD",
+      "oracle_value": 23.330874490725826,
+      "observed_value": 23.330874490725826,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "rel_err=0.00e+00"
+    },
+    {
+      "check_id": "I_4/I_3[BE]",
+      "category": "ratio",
+      "statistics": "BE",
+      "oracle_value": 3.83222949612894,
+      "observed_value": 3.83222949612894,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "rel_err=0.00e+00"
+    },
+    {
+      "check_id": "I_4/I_3[MB]",
+      "category": "ratio",
+      "statistics": "MB",
+      "oracle_value": 4.0,
+      "observed_value": 4.0,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "rel_err=0.00e+00"
+    },
+    {
+      "check_id": "I_4/I_3[FD]",
+      "category": "ratio",
+      "statistics": "FD",
+      "oracle_value": 4.105960174423865,
+      "observed_value": 4.105960174423865,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "rel_err=0.00e+00"
+    },
+    {
+      "check_id": "Sigma_2[BE]",
+      "category": "ch05_cross_ref",
+      "statistics": "BE",
+      "oracle_value": 2.043855731268768,
+      "observed_value": 2.043855731268768,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "ch05 Eq.; rel_err=0.00e+00"
+    },
+    {
+      "check_id": "Sigma_2[MB]",
+      "category": "ch05_cross_ref",
+      "statistics": "MB",
+      "oracle_value": 2.1333333333333333,
+      "observed_value": 2.1333333333333333,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "ch05 Eq.; rel_err=0.00e+00"
+    },
+    {
+      "check_id": "Sigma_2[FD]",
+      "category": "ch05_cross_ref",
+      "statistics": "FD",
+      "oracle_value": 2.189845426359395,
+      "observed_value": 2.189845426359395,
+      "tolerance": 1e-10,
+      "passed": "True",
+      "notes": "ch05 Eq.; rel_err=0.00e+00"
+    },
+    {
+      "check_id": "MB_gram_diag[n=5, alpha=2]",
+      "category": "gram",
+      "statistics": "MB",
+      "oracle_value": 2.0,
+      "observed_value": 2.0,
+      "tolerance": 1e-13,
+      "passed": true,
+      "notes": "diag_rel_err_max=3.00e-14"
+    },
+    {
+      "check_id": "MB_gram_offdiag[n=5, alpha=2]",
+      "category": "gram",
+      "statistics": "MB",
+      "oracle_value": 0.0,
+      "observed_value": 2.7104149779843e-15,
+      "tolerance": 1e-13,
+      "passed": true,
+      "notes": "off_diag_max=2.71e-15"
+    },
+    {
+      "check_id": "MB_twofield_Gram_kappa",
+      "category": "reproducibility",
+      "statistics": "MB",
+      "oracle_value": 54.3,
+      "observed_value": 54.314922186640196,
+      "tolerance": 0.05,
+      "passed": true,
+      "notes": "W2D5 reference 54.3; rel_err=0.000"
+    },
+    {
+      "check_id": "roundtrip_p95[amp=0.05]",
+      "category": "roundtrip",
+      "statistics": null,
+      "oracle_value": 0.0,
+      "observed_value": 2.206460193768299e-10,
+      "tolerance": 1e-08,
+      "passed": true,
+      "notes": "worst p95 across 9 (xi, n) cells"
+    },
+    {
+      "check_id": "roundtrip_worst[amp=0.05]",
+      "category": "roundtrip",
+      "statistics": null,
+      "oracle_value": 0.0,
+      "observed_value": 1.508564065667598e-09,
+      "tolerance": 1e-07,
+      "passed": true,
+      "notes": "worst max across 9 cells; single-trial outliers documented"
+    },
+    {
+      "check_id": "roundtrip_p95[amp=0.1]",
+      "category": "roundtrip",
+      "statistics": null,
+      "oracle_value": 0.0,
+      "observed_value": 1.628605303283838e-11,
+      "tolerance": 1e-08,
+      "passed": true,
+      "notes": "worst p95 across 9 (xi, n) cells"
+    },
+    {
+      "check_id": "roundtrip_worst[amp=0.1]",
+      "category": "roundtrip",
+      "statistics": null,
+      "oracle_value": 0.0,
+      "observed_value": 1.007988634502159e-09,
+      "tolerance": 1e-07,
+      "passed": true,
+      "notes": "worst max across 9 cells; single-trial outliers documented"
+    },
+    {
+      "check_id": "roundtrip_p95[amp=0.2]",
+      "category": "roundtrip",
+      "statistics": null,
+      "oracle_value": 0.0,
+      "observed_value": 7.589302936128171e-11,
+      "tolerance": 1e-08,
+      "passed": true,
+      "notes": "worst p95 across 9 (xi, n) cells"
+    },
+    {
+      "check_id": "roundtrip_worst[amp=0.2]",
+      "category": "roundtrip",
+      "statistics": null,
+      "oracle_value": 0.0,
+      "observed_value": 4.188997616051355e-08,
+      "tolerance": 1e-07,
+      "passed": true,
+      "notes": "worst max across 9 cells; single-trial outliers documented"
+    }
+  ],
+  "all_passed": true,
+  "n_total": 21,
+  "n_passed": 21,
+  "n_warnings": 7,
+  "spec_version": "v1.0-w3d5a",
+  "generated_at": "2026-04-17T14:38:13.394208+00:00"
+}

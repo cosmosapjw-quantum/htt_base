@@ -1,0 +1,14 @@
+MIO-HJ-05a sky-coverage caveats evaluated on the **real** Planck PR3
+temperature and polarization masks
+($\mathtt{planck.temp\_mask.nside16}$, base $f_{\rm sky}=0.789$;
+$\mathtt{planck.pol\_mask.nside16}$, base $f_{\rm sky}=0.791$).
+Left: effective $f_{\rm sky}$ under progressive Zone-of-Avoidance
+and ecliptic polar-gap cuts, computed by
+$\mathtt{mio.diagnostics.masked\_sky\_caveats.build\_report}$ as a
+pixel-count ratio after the Galactic/ecliptic stencils are
+intersected with the Planck mask. Solid curves: temperature;
+dashed: polarization. Right: Mollweide render of the effective
+temperature-mask pixels for a representative cut
+($|b|_{\rm min}\!=\!15^\circ$, ecliptic gap $10^\circ$). Replaces
+the earlier half-pix demo with a production-grade diagnostic
+suitable for paper inclusion.

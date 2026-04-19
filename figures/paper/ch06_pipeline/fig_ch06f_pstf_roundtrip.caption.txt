@@ -1,0 +1,7 @@
+Round-trip precision of the projector-based packed ↔ full PSTF
+transform for ℓ = 0..8: 60 Gaussian random inputs per rank passed
+through pstf_unpack → pstf_pack. Max and mean infinity-norms are
+compared against the ε_mach × 3^ℓ reference that controls the loss of
+significance from the 3ᵉˡˡ-sized Cartesian-STF coefficient cache.
+Round-trip stays at least 2–3 orders of magnitude below reference,
+confirming LB-0 zero-error invariant.
