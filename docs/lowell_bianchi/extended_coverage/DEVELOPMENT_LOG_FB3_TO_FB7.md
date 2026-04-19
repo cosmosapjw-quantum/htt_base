@@ -724,3 +724,23 @@ fresh cumulative count.
   additive `htt/bass/` skeleton modules. Every FB-7.4 artifact must pin
   the scope as cosmological-frame only, with observer-frame composition
   deferred to FB-8.
+
+### FB-META-7.1 — line-of-sight matrix propagator skeleton
+
+- **Scope**: Recorded FB-7.1 three-channel verification and planted the
+  committed `htt/bass/spectrum/lowell_los.py` skeleton plus one skipped
+  contract test. The all-type LOS builder stays separate from the
+  shipped Bianchi-I-only `bass/los/bianchi_propagator.py`, and the
+  phase-0 Limber `η_sp` sign carry is made explicit in the new
+  signature.
+- **Commit anchor**: see `git log --grep='FB-META-7.1'`.
+- **Test delta**: `3,403 passed + 48 skipped` →
+  `3,403 passed + 49 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META7_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META7_2026-04-20.md) §FB-7.1.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: the exact on-disk Lowell `§7` locator remains
+  absent in this worktree, so the docstring keeps that citation as an
+  explicit `# TODO` rather than inventing a file path.
+- **Notes**: a new spectrum-side module was chosen over widening the
+  audited Type-I LOS scaffold or mixing LOS construction into
+  `cl_assembly.py`.

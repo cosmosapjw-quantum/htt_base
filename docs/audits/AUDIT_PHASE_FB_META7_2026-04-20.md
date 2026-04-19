@@ -58,6 +58,62 @@
 
 ## §FB-7.1
 
+### §FB-7.1 — line-of-sight matrix propagator skeleton
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-7`
+names `bass/spectrum/lowell_los.py` explicitly; verified
+`docs/lowell_bianchi/extended_coverage/PROJECT_MEMORY_EXPLICIT.md §10`
+reserves the Limber `η_sp` sign fix for FB-7; verified
+`htt/bass/los/bianchi_propagator.py` is the current Bianchi-I-only LOS
+scaffold with explicit FLRW delegation and `ψ' = 0` B-mode floor;
+verified `htt/bass/spectrum/cl_assembly.py` is the current diagonal
+spectrum consumer; verified the internal Lowell path named in the prompt
+is absent and therefore cannot be cited as if it were present; verified
+the tracked fallback `htt/docs/lowell_bianchi_solver_reference_PR_WBS.md`
+is only an observer-side output / likelihood anchor and not a substitute
+for silently claiming the missing `§7` text exists on disk.
+**Channel B**: 2 source checks / 2 verified / 0 divergent. Evidence:
+`arXiv:astro-ph/9603033` is the Seljak-Zaldarriaga line-of-sight paper;
+the arXiv record shows submission on 1996-03-08 and states that the
+temperature anisotropy is written as a time integral over a geometrical
+term times a source term. That is the correct external anchor for the
+LOS source-times-geometry split used by this skeleton. No prompt-supplied
+external locator needed correction for FB-7.1.
+**Channel C** (prose, 6-10 lines): The safest FB-7.1 skeleton is a new
+`bass/spectrum/lowell_los.py` module rather than a stealth widening of
+`bass/los/bianchi_propagator.py`. The shipped propagator is explicitly
+honest about its narrow Bianchi-I scope, its `m ∈ {0, ±2}` block
+structure, and its `ψ' = 0` B-mode floor. Reopening that module for the
+all-type FB-7 surface would blur audited and unaudited semantics before
+the line-of-sight matrix algebra is sealed. A dedicated builder can make
+the phase-0 Limber `η_sp` sign choice explicit in its contract instead
+of burying it in internal state. Keeping the return type as a generic
+mapping is also deliberate: the future implementation can carry transfer
+blocks, source provenance, and sign diagnostics without prematurely
+freezing a concrete container. The skipped test and `NotImplementedError`
+keep the placeholder honest while making the intended module path and
+signature reviewable now.
+**Alternatives**:
+| # | LOS surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | New `build_lowell_line_of_sight_propagator(...)` in `bass/spectrum/lowell_los.py` | Matches the parent plan path exactly; keeps the phase-0 Limber-sign carry explicit; avoids widening the shipped Bianchi-I-only LOS module by stealth. | Adds one more spectrum-side entry point. | ✅ |
+| 2 | Widen `bass/los/bianchi_propagator.py` in place | Reuses the existing LOS machinery directly. | Collapses audited Type-I-only semantics and future all-type semantics into one module before the FB-7 contract is sealed. | — |
+| 3 | Hide the builder inside `bass/spectrum/cl_assembly.py` | Fewer files touched. | Mixes transfer generation with spectrum consumption and makes the LOS sign-carry harder to audit in isolation. | — |
+**Core principles**: explicit phase-0 sign carry; no silent widening of
+the Bianchi-I LOS module; additive spectrum-side surface; deterministic
+failure until the all-type propagator lands.
+**Skeleton path**:
+`htt/bass/spectrum/lowell_los.py::build_lowell_line_of_sight_propagator`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/spectrum/test_fb71_lowell_los_skeleton.py -q`
+**Guard rails** (yes/no): citations verified? yes; exact parent-plan
+module path used? yes; Limber-sign choice explicit in signature? yes;
+no observer-frame claim implied? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 48 skipped` → `3403 passed + 49 skipped` pending the
+phase-close gate.
+
 ## §FB-7.2
 
 ## §FB-7.3
