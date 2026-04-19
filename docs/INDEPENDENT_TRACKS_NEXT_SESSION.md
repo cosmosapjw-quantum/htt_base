@@ -1,9 +1,10 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W9` phase.
+**As of**: 2026-04-19, post-`IND_TRACKS_W10` phase.
 **Last audited**: 2026-04-19
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`,
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W7_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W6_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W5_2026-04-19.md`,
@@ -11,7 +12,12 @@ prior phases `AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W3_2026-04-19.md`).
 **Governing plan**: `INDEPENDENT_TRACKS_PLAN.md` **v1.2** (PART II MIO
 integration patch + PART III Week-5+ realignment landed 2026-04-19;
-Week 1–9 routine shipped; Week 10+ extension routine referenced below).
+Week 1–10 routine shipped; Week 11+ continuation routine referenced
+below). **Note** (W10 F4): the v1.2 §21 Week 10 wording still says
+"force-add contract" for the §12.3 manuscript landing; per memory
+`feedback_project_local_only.md` and W8 FM1 (RESOLVED post-W8) the
+current rule is **never stage `/project/` paths** — the W10D5 landing
+complies, the plan wording is stale.
 **Parent plan**: **`BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN.md` v3** (MIO
 added as 4th pillar; supersedes `BASS_PY_HTT_TSC_RESEARCH_PLAN.md` v2
 which remains referenced from historical carry-forwards).
@@ -174,110 +180,163 @@ Week 9 final gate — **all four items green**:
 - [x] Full-regression audit log written to `docs/audits/AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md`.
 - [x] MIO contribution ≥ 25 tests (37 — unchanged vs W8; no MIO code change this week).
 
+## §1c-7. What shipped in Week 10
+
+Session of 2026-04-19 (compressed: one session covered Week-10
+Days 1-7). Two committed landings + one working-tree-only
+manuscript landing + one phase-boundary audit
+(`AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md`).
+
+| Track | Artefact | Status |
+|---|---|---|
+| W5-DYNESTY-DEP close (Days 1-2) | `docs/audits/pip_freeze_2026-04-19_W10D1.txt`; verified `dynesty==3.0.0` already in venv (no install actually needed); `fig_departure_summary.py` smoke went from SKIPPED → PASSED; new composition-swap skip on `test_bulkflow_likelihood.py::test_run_dynesty_raises_clear_runtime_error` (the contract guard self-skips when dynesty IS installed) — net touched-surface skip count holds at 4, within-`test_figures_smoke.py` count drops 4 → 3 | landed (`5ad2e55`) |
+| MIO HJ-01 skeleton (Days 3-4) | `bass_py/mio/extraction/hj01_shear.py` (~430 L) + `bass_py/mio/extraction/__init__.py` re-exports + `bass_py/mio/tests/test_hj01_shear.py` (19 tests). Public surface: `ShearExtractor` / `ShearExtractorConfig` / `ShearExtractorReport`; `extract_from_kl_atlas` (dict path) + `extract_from_atlas_entry` (workspace.contracts.AtlasEntry adapter); `validate_kl_atlas_schema` + `KL_ATLAS_REQUIRED_KEYS`; `to_mio_certificate` (always carries `DIAGNOSTIC_ONLY_CAVEAT` until bass_py W10-02 V-gate signs the K_ℓ atlas, parent plan §17.3 risk row); `emit_shear_extraction_artefact` with REG-02 `mio_` filename gate. χ²-tail SF via NR §6.2 incomplete-gamma — no scipy import dependency. MIO contribution 37 → 56 (gate ≥47 met) | landed (`695baf9`) |
+| MANU-CH12 §12.3 (Days 5-6) | `project/00_manuscript/ch12_mio_observatory_results.tex` 702 → 903 L (+201 L delta in §12.3 alone, gate ≥150 met). Six new subsections covering tension-metric overview, COMMON-F mock-calibration engine, A14 N1–N5 null-family stream (cited verbatim by filename), W4 F1 sandwich-coverage caveat reproduced verbatim in a `quote` env, x_C direct-estimate forward pointer, diagnostic-only status until V-gate. Banned-vocab scan = 0 hits. **NOT COMMITTED** — `/project` is gitignored per memory `feedback_project_local_only.md` (W8 FM1 RESOLVED). | landed (working tree only) |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md` | landed |
+
+Final test tally over the touched surface at W10 boundary:
+**1026 passed, 0 failed, 4 skipped** (+19 vs W9's 1007; net 0 skip
+change, composition swap on `test_bulkflow_likelihood.py:303` — see
+W10 audit §5). Composition of the 4 remaining skips: 2 ×
+mio.core/reporting (W6 carry — blocked on MANU-CH12-NEW figure
+retirement), 1 × `test_figures_smoke.py::fig_certification_matrix`
+family (`fig_direction_posterior` + `fig_identified_reporting_split`
+under one parametrise — different legacy root, W9 carry), 1 × the
+new dynesty-installed compositional swap (W10D1, by-design).
+
+Week 10 final gate — **all five items green**:
+- [x] DYNESTY install verified; `fig_departure_summary.py` smoke skip retired (figures_smoke skip 4 → 3).
+- [x] MIO HJ-01 skeleton landed; 19 new tests; MIO contribution 37 → 56 (gate ≥ 47 met with 9 to spare).
+- [x] MANU-CH12 §12.3 drafted at 201 L (gate ≥ 150 met); A14 N1–N5 cited verbatim; W4 F1 reproduced verbatim; banned-vocab scan = 0 hits.
+- [x] Phase-boundary audit log written.
+- [x] No touched-surface regressions (1026 passed; +19 over W9; 0 failed).
+
 ## §1d. What was designed in the 2026-04-19 planning session
 
 (Preserved here for provenance; unchanged from earlier rotations.
 See v3 research plan + PART II + PART III of the governing plan.)
 
-## §2. Active priorities for the next session (Week 10)
+## §2. Active priorities for the next session (Week 11)
 
-**"MIO gap-closure + MANU-CH12 continuations + opportunistic
-carry-forwards"** — distilled from `INDEPENDENT_TRACKS_PLAN.md` §21
-post-Week 9. Week 9 closed all scheduled landings; no W9 rollovers.
-The session should treat the W9 FM1–FM6 ledger in
-`AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md` (all P3, by-design) as
-background only — none are action items for Week 10.
+**"Wait-on-bass_py + opportunistic carry-forwards + manuscript
+deferred-section continuations"**. Week 10 closed all scheduled
+landings. The five W10 findings (F1–F5 in
+`AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md` §6) are all P3 / by-design
+and are NOT action items for Week 11. The session should treat them
+as background only.
 
-Week 10 is the first week where the MIO gap list becomes actionable.
-Read `§3 Carry-forward items` and the parent plan v3 §17.3 before
-picking up.
+Week 11 sits in a dependency-wait window: HJ-01 production wiring,
+HJ-03 evidence anatomy, HJ-04 departure skeleton, and MANU-CH12
+§§12.1 / 12.4 / 12.5 / 12.8 are all blocked on bass_py W10-02
+(K_ℓ atlas) and bass_py W11-02 (BiPoSH). Until those land, Week 11
+should harvest the cleanest available carry-forwards.
 
-### Days 1–2 — DYNESTY-DEP install + dynesty-blocked figure unlock
+### Days 1–2 — W10 F4 plan-doc cleanup + W10 F5 brittle-test rewrite
 
-Deferred since W5; Week 10 is a convenient window before MIO
-HJ-01 work. `venv/bin/pip install dynesty` unblocks
-`fig_departure_summary.py` (skip count 4 → 3) and enables the
-`TestHttMcCrossCheck` family to exercise the nested-sampling path
-end-to-end (not just the analytical approximation).
+Two trivial closures of W10 P3 items, both genuinely in-lane:
 
-- Commit tag: `W10D1: AUDIT(W5-DYNESTY-DEP): install + smoke`
-- Gate: `test_figures_smoke.py` skip count drops to ≤ 3; pip-freeze
-  committed alongside; no new test regressions on touched surface.
+* **W10 F4** — INDEPENDENT_TRACKS_PLAN v1.2 §21 Week 10 Day 5-6
+  still says "lands in the same `/project` gitignored path as ch11
+  / ch12, with the same force-add contract (W8 FM1)". Replace the
+  "force-add contract" wording with the post-W8-FM1 rule from
+  `feedback_project_local_only.md`. One-line edit.
+* **W10 F5** — `test_extract_drops_zero_kernel_multipoles` asserts
+  `report.ell.size == 27` with a hardcoded number. Expose the
+  default window size as a module-level constant or compute it in
+  the test from `ShearExtractorConfig.ell_min` / `ell_max`.
 
-### Days 3–4 — MIO HJ-01 skeleton (shear extraction)
+- Commit tag (combined): `W11D1: AUDIT(W10-F4+F5): plan + test cleanup`
+- Gate: plan-doc reads consistently with `feedback_project_local_only.md`;
+  rewritten test still passes; touched-surface ≥ 1026 / 0 / 4.
 
-Governing plan §17.3 + v3 §9.1. HJ-01 is the MIO shear-extraction
-primitive: given a bass_py K_ℓ atlas output, produce a shear
-estimator with a documented MES cap. Since bass_py K_ℓ atlas is
-not yet landed (bass_py session is still on the hierarchy
-integrator / LB lane), Week 10 lands the **skeleton only**:
+### Days 3–4 — MIO HJ-02b extension OR HJ-05a-lite hardening
 
-- module `bass_py/mio/extraction/hj01_shear.py` with `ShearExtractor`
-  dataclass + `extract_from_kl_atlas(kl: dict) -> ShearExtractorReport`;
-- stub consumer that documents the bass_py K_ℓ atlas schema the
-  module expects (keyed to the `"truth certificate"` language
-  from ch11);
-- unit tests using a synthetic K_ℓ dict (no bass_py dependency);
-- target 10–15 new tests, bringing MIO contribution from 37 to
-  ≥ 47.
+Two genuinely-bass_py-independent options:
 
-- Commit tag: `W10D3: MIO HJ-01 shear extraction skeleton`
-- Gate: new `bass_py/mio/extraction/` surface imports cleanly;
-  tests pass; no bass_py import required.
+1. **HJ-02b: redshift-binned directional coherence**
+   (parent plan §4.5.3.2 second row: `redshift_binned.py` —
+   z-bin probe direction + drift rate). Builds on HJ-02a
+   (directional_coherence, landed W6). The data inputs are the
+   five standard probes plus z-bin coverage, both data-only.
+   Target: ~12 tests; MIO contribution 56 → ≥ 68.
 
-### Days 5–6 — MANU-CH12 §12.1 or §12.3 (pick whichever is less
-blocked on bass_py outputs)
+2. **HJ-05a-lite hardening**: extend the masked-sky caveats
+   module landed in W6 with the W5 APPLY-BIAS-AMP carry-forward
+   (`_apply_bias_to_direction` scaling discrepancy noted in W5
+   audit). Less new surface; closes a long-standing P2.
 
-§12.1 depends on the HJ-01 skeleton above; §12.3 depends on COMMON-F
-mock-calibration (landed W4). §12.3 is therefore the cleanest
-Week-10 target. Text-only — lands in the same `/project` gitignored
-path as ch11 / ch12, with the same force-add contract (W8 FM1).
+Pick (1) unless the bass_py session has signalled imminent
+W10-02 V-gate (in which case skip W11 HJ work and hold the lane
+quiet for the V-gate review).
 
-- Commit tag: `W10D5: MANU-CH12 §12.3 mock calibration`
-- Gate: §12.3 ≥ 150 L; cites A14 null-family derivations verbatim;
-  incorporates W4 F1 sandwich-coverage caveat; no banned vocab.
+- Commit tag: `W11D3: MIO HJ-02b z-binned coherence` *or*
+  `W11D3: AUDIT(W5-APPLY-BIAS-AMP): HJ-05a hardening`
+- Gate: new tests pass; touched-surface ≥ 1026 + (whatever);
+  no MIO `posterior` field grep hits; no merge-test prohibition
+  violations.
+
+### Days 5–6 — DOS-A36 / A37 / A41+ continuation
+
+The A30-MIO dossier sequence (W5–W7 landed A32, A33, A34, A35,
+A38, A39, A40) still has gaps at A36 (channel weighting), A37
+(probe-name schema), A41+ (extension protocol notes). Each is a
+~200 L .md file structured per `A30_template.md` (or template the
+first one if missing). Pick the two that most directly support
+either the §12.3 forward pointer or the planned ch11 §11.14.2
+revision.
+
+- Commit tag: `W11D5: DOS-A36+A37 (or chosen pair)`
+- Gate: each new dossier file uses the §1–§9 template and cross-references
+  the corresponding code anchor.
 
 ### Day 7 — Phase audit + NEXT_SESSION rotation
 
 Standard phase-boundary audit per `feedback_phase_boundary_audit.md`.
-Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md`
+Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md`
 (date may shift).
 
-### Week 10 final gate
+### Week 11 final gate
 
-- [ ] DYNESTY installed; `fig_departure_summary.py` smoke skip
-      retired.
-- [ ] MIO HJ-01 skeleton landed; ≥ 10 new tests; MIO contribution ≥ 47.
-- [ ] MANU-CH12 §12.3 drafted OR explicit deferral rationale.
+- [ ] W10 F4 + W10 F5 closed (or explicit deferral rationale).
+- [ ] HJ-02b OR HJ-05a hardening landed; tests pass; MIO grows
+      monotonically in test count (or stays flat with an explicit
+      "lane held for bass_py V-gate" rationale).
+- [ ] At least one new A3x dossier file landed.
 - [ ] Phase-boundary audit log written.
-- [ ] No touched-surface regressions (≥ 1007 passed, 0 failed).
+- [ ] No touched-surface regressions (≥ 1026 passed, 0 failed).
 
-### Deferred to Week 11+ (not Week-10 targets)
+### Deferred to Week 12+ (not Week-11 targets)
 
-- **MANU-CH12 remaining sections** (§12.1, §12.3, §12.4, §12.5,
-  §12.8) — blocked on bass_py K_ℓ atlas, HTT posterior draws,
-  BiPoSH coefficients.
-- **Full regression ≥ 1,800** — spill target; Week 9 lands the
-  intermediate checkpoint.
-- **W4 F1 mock coverage sandwich** — opportunistic during
-  MANU-CH12 §12.3 write-up.
+- **HJ-01 production wiring** — when bass_py W10-02 K_ℓ atlas lands.
+  Replace the diagonal independence χ² with the per-ℓ-covariance
+  weighted χ² (W10 F2); promote `reduction_status` from
+  `'diagnostic-only'` to `'theory-direct'`; remove
+  `DIAGNOSTIC_ONLY_CAVEAT` from the certificate's first slot;
+  enable `MANU-CH12 §12.1` writeup (depends on the production
+  HJ-01 numbers).
+- **HJ-03 / HJ-04 / HJ-05-full** — same gating; see governing
+  plan §17.3 dependency wait list.
+- **MANU-CH12 §12.4 / §12.5 / §12.8** — blocked on HTT Phase F
+  posteriors and the production HJ-01 / HJ-03 numbers.
+- **W10 F1 / F2 / F3** — production-HJ-01 hardening list (warn on
+  `_gammaincc` non-convergence; folded covariance χ²; Bonferroni
+  knob on `flrw_consistent_within_band`).
+- **W4 F1 mock coverage sandwich** — opportunistic; the manuscript
+  layer now scopes the caveat (W10D5 §12.3.4).
 - **W4 F4 Θ⁴ bridge htt audit tightening** — when htt lands
   `_a2_coefficient_table`.
-- **W5 DYNESTY-DEP** — install when convenient;
-  `venv/bin/pip install dynesty` unblocks ≥ 2 figure smoke skips.
 - **W7 FM3 TSC-05 schema hash freeze** — add digest test on first
   schema extension.
-- **W8 FM1** `/project` .gitignore policy — user decision.
 - **W8 FM2** palette unification — opportunistic on figure
   regeneration.
 - **W8 FM6** `clustering` vs `clustering_dipole` name mismatch —
   cross-lane rename; record only.
 
-## §3. Carry-forward items from W1–W8 audits
+## §3. Carry-forward items from W1–W10 audits
 
-Severity legend: **P0** = Day-1 blocker, **P1** = Week-9 target,
-**P2** = later week, **P3** = out-of-lane. W7 additions above W8
-additions at the bottom.
+Severity legend: **P0** = Day-1 blocker, **P1** = Week-N target,
+**P2** = later week, **P3** = out-of-lane. New W10 additions at the
+bottom (W10 F4 + F5 are explicit Week-11 Day-1-2 closures).
 
 | Tag | Severity | Description | Where to act |
 |---|---|---|---|
@@ -307,6 +366,11 @@ additions at the bottom.
 | **W8 FM4** | **P3** | `fig_departure_summary` skip message now surfaces `dynesty` rather than the underlying file-not-found, due to import-order. Cleanly skipped; no regression. | No action; documentation only. |
 | **W8 FM5** | **P3** | `TestRunnerSmoke` covers only the fast-path analytical approximation; production nested-sampling ~40 h CI cost is out of scope. | By design; no action. |
 | **W8 FM6** | **P3** | `NULL_REGISTRY` keys `ClusteringDipoleNull` under `'clustering'` while its `.name` attribute is `'clustering_dipole'`. Pre-existing. | Cross-lane rename; record only. |
+| **W10 F1** | **P3** | `mio.extraction.hj01_shear._gammaincc` 200-iter cap is silent on non-convergence. | Add `warnings.warn` in the iteration loop; bundled with HJ-01 production wiring (W12+). |
+| **W10 F2** | **P3** | HJ-01 independence χ² treats per-ℓ residuals as iid; ignores cosmic-variance C_ℓ correlations. | Swap to weighted χ² with bass_py W10-02 covariance; production HJ-01 prerequisite. |
+| **W10 F3** | **P3** | `flrw_consistent_within_band` 2σ default has ~75 % false-flag rate on 29 iid multipoles. | Document or change default to 3σ (Bonferroni-aware) or expose a `bonferroni=True` knob; production HJ-01 prerequisite. |
+| **W10 F4** | **P3 → W11 D1-2** | INDEPENDENT_TRACKS_PLAN v1.2 §21 Week 10 Day 5-6 wording "force-add contract (W8 FM1)" is stale post-W8-FM1 (RESOLVED). | One-line plan-doc cleanup. **Slated for Week 11 Day 1-2.** |
+| **W10 F5** | **P3 → W11 D1-2** | `test_extract_drops_zero_kernel_multipoles` hardcodes `report.ell.size == 27`. | Compute from `ShearExtractorConfig.ell_min` / `ell_max` constants. **Slated for Week 11 Day 1-2.** |
 
 ## §4. Environment and quickstart
 
@@ -314,16 +378,20 @@ additions at the bottom.
 # Repo root
 cd /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 
-# Sanity: touched-surface test run.  As of 2026-04-19 post-W8:
-# 1001 passed, 0 failed, 6 skipped (+7 vs W7; 2 skips resolved).
+# Sanity: touched-surface test run.  As of 2026-04-19 post-W10:
+# 1026 passed, 0 failed, 4 skipped (+19 vs W9; net 0 skip change,
+# composition swap on test_bulkflow_likelihood.py:303 — see W10 audit §5).
 venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
                 bass_py/tsc/admissibility/ \
                 bass_py/tsc/diagnostics/ bass_py/tsc/charts/ \
                 bass_py/tsc/integration/ \
                 bass_py/workspace/ bass_py/mio/
 
-# tsc standalone (18 s; 598 passed post-W7; unchanged W8).
+# tsc standalone (18 s; 602 passed post-W9; unchanged W10).
 venv/bin/pytest bass_py/tsc/
+
+# MIO standalone (collection check — 56 tests post-W10D3).
+venv/bin/pytest bass_py/mio/ --collect-only -q | tail -1
 
 # Full monorepo suite (slower).
 venv/bin/pytest bass_py/
@@ -337,9 +405,14 @@ Path notes:
 * `htt` is its own editable install (`bass_py/htt/setup.py`).  If the
   next session fails to import `htt.core.ssot`, verify
   `venv/bin/pip install -e bass_py/htt/` has run in this venv.
-* `dynesty` is **not** installed.  `common.bulkflow_likelihood.run_dynesty`
-  lazy-imports it and raises a clear `RuntimeError` otherwise; tests
-  inject a stub via `dynesty_module=SimpleNamespace(NestedSampler=...)`.
+* `dynesty` **is now installed** at version 3.0.0 (post-W10D1).
+  `common.bulkflow_likelihood.run_dynesty` consumes it directly;
+  the contract-guard test
+  `test_bulkflow_likelihood.py::test_run_dynesty_raises_clear_runtime_error`
+  self-skips ("dynesty installed — RuntimeError path not exercised").
+  Tests that need the stub-injection still pass `dynesty_module=
+  SimpleNamespace(NestedSampler=...)` to bypass the real sampler for
+  speed.
 
 ## §5. Non-scope for this lane
 
@@ -353,12 +426,14 @@ session's responsibility and must not be touched here:
   work — do not stage or commit them from this lane.
 * W10-02 CAMB V-gate, W11-01/02/03, W12-01/02, W13-01/02, W14-01,
   W15-01/02/03 (post-LB-6 roadmap) — parent plan v3 §7.
-* **MIO HJ-01 / HJ-03 / HJ-04 / HJ-05-full** require bass_py outputs
-  (W10-02 K_ℓ atlas, W11-02 BiPoSH, HTT Phase F posteriors). Governing
-  plan §17.3 catalogues the dependency wait list. **This lane's MIO
-  work remains limited to HJ-02a directional coherence + boot
-  infrastructure + HJ-05a-lite masked_sky_caveats** (all landed in
-  Week 6) — the modules that do not depend on bass_py deliverables.
+* **MIO HJ-01 production wiring / HJ-03 / HJ-04 / HJ-05-full** require
+  bass_py outputs (W10-02 K_ℓ atlas, W11-02 BiPoSH, HTT Phase F
+  posteriors). Governing plan §17.3 catalogues the dependency wait
+  list. **This lane's MIO work as of W10 covers HJ-02a directional
+  coherence + boot infrastructure + HJ-05a-lite masked_sky_caveats
+  (all W6) plus the HJ-01 *skeleton* (W10D3), which is gated to
+  `reduction_status='diagnostic-only'` until the bass_py W10-02
+  V-gate signs the K_ℓ atlas** — see W10 audit §3 for the contract.
 * `plots/physics_gallery/` — gallery refresh is bass_py's per-phase rule.
 
 ### §5a. This lane's new territory (updated post-W8)
