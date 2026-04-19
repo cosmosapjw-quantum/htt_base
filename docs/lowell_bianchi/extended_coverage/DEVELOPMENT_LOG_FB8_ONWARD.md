@@ -347,3 +347,26 @@ cross-reference.
 - **Notes**: the shipped runtime still preserves the `Sigma_mnu = 0`
   LB-1 anchor and keeps `SpeciesLabel.NEUTRINO` as the only neutrino
   enum label.
+
+## Phase FB-11 — Inference driver + multi-type Bayes factor (extended bundle)
+
+### FB-META-11.0 — pre-flight scan + audit scaffolding
+
+- **Scope**: Read the required FB-11 phase documents plus the FB-7 / 8 /
+  9 prerequisite skeleton surfaces, confirmed that every required
+  upstream symbol exists on disk, reran the full `bass/ tsc/`
+  regression, and created
+  [AUDIT_PHASE_FB_META11_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META11_2026-04-20.md)
+  with the seven staged `§FB-11.k` sections and the explicit
+  determinism / driver-boundary banner.
+- **Commit anchor**: see `git log --grep='FB-META-11.0'`.
+- **Test delta**: 3,403 passing + 66 skipped → 3,403 passing + 66
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META11_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META11_2026-04-20.md).
+- **Gallery**: no-op (audit/doc scaffolding only).
+- **Carry-forward**: FB-11.1 through FB-11.7 skeleton plants.
+- **Notes**: the pre-flight audit already records that the
+  prompt-supplied `0706.2075` anchor is a `VII_h` paper rather than a
+  Bianchi-IX evidence-sign source, so FB-11.6 must keep that mismatch
+  explicit.
