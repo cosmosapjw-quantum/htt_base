@@ -113,3 +113,53 @@ def test_htt_cross_check_hint_is_not_a_posterior():
     )
     assert cert.htt_cross_check_suggested == {"module": "htt.infer.directional_lowell"}
     assert "posterior" not in str(cert.htt_cross_check_suggested).lower()
+
+
+def test_hash_config_matches_a45_2_pseudocode_shape():
+    """W18D1 (W17 F1 / W17 R1) — docs-↔-code anchor for `_hash_config`.
+
+    `docs/dossier/A45_mio_cache_replay_drift.md` §A45.2 names
+    `_hash_config` as the re-hashing helper its `verify_cache_replay`
+    pseudocode calls with the six-field payload tuple
+    (`report_type`, `probe_name`, `channel`, `departure_variables`,
+    `adequacy_indicators`, `consistency_metrics`). This test anchors
+    that signature + output-shape pair in code: a silent rename of the
+    helper (import fails), a signature reorder, or a change to the
+    16-char lowercase-hex output shape all fail loudly and point the
+    HJ-03 author at §A45.2 (which paste-copies §A45.6's five-test
+    block).
+    """
+    import string
+
+    from mio.interface.mio_certificate import _hash_config
+
+    assert _hash_config.__name__ == "_hash_config", (
+        "A45.2 pseudocode names the helper `_hash_config`; a rename "
+        "requires updating §A45.2 in the same PR."
+    )
+
+    payload = _base_payload()
+    digest = _hash_config(
+        payload["report_type"],
+        payload["probe_name"],
+        payload["channel"],
+        payload["departure_variables"],
+        payload["adequacy_indicators"],
+        payload["consistency_metrics"],
+    )
+
+    assert isinstance(digest, str), "digest must be a str"
+    assert len(digest) == 16, (
+        f"A45.2 assumes a 16-char sha256 prefix; got len={len(digest)}"
+    )
+    assert digest == digest.lower(), "digest must be lowercase-hex"
+    assert set(digest).issubset(set(string.hexdigits.lower())), (
+        "digest must be hexadecimal"
+    )
+
+    cert = build_mio_certificate(**payload)
+    assert cert.config_hash == digest, (
+        "config_hash computed inside build_mio_certificate must match "
+        "the direct _hash_config call on the same six-field tuple; "
+        "otherwise A45.2's recomputed_config_hash step would drift."
+    )
