@@ -370,3 +370,24 @@ cross-reference.
   prompt-supplied `0706.2075` anchor is a `VII_h` paper rather than a
   Bianchi-IX evidence-sign source, so FB-11.6 must keep that mismatch
   explicit.
+
+### FB-META-11.1 — `bass.inference.priors` skeleton
+
+- **Scope**: Created the new
+  [bass/inference](../../../htt/bass/inference/__init__.py) package and
+  added the
+  [priors](../../../htt/bass/inference/priors.py) contract module with a
+  frozen `Prior` dataclass plus the named prior-builder placeholders
+  promised by the FB-11 SDD. The audit records explicitly that Planck
+  2018 VI is a parameter-range anchor here, while the SDD's
+  half-Gaussian `Sigma_mnu` shape remains a local future-work contract.
+- **Commit anchor**: see `git log --grep='FB-META-11.1'`.
+- **Test delta**: 3,403 passing + 66 skipped → 3,403 passing + 67
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META11_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META11_2026-04-20.md)
+  §FB-11.1.
+- **Gallery**: no-op (package boundary + prior contracts only).
+- **Carry-forward**: FB-11.2 sampler driver + reproducibility contract.
+- **Notes**: the package exports only the priors surface for now, so no
+  driver import path is opened prematurely.
