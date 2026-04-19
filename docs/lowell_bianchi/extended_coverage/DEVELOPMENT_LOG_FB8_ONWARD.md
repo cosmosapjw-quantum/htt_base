@@ -190,3 +190,25 @@ cross-reference.
   recorded in the audit.
 - **Notes**: observer-versus-cosmological type distinction is now pinned
   across the code skeletons, the docs, and the handoff contract.
+
+## Phase FB-9 — Massive neutrino species (extended bundle)
+
+### FB-META-9.0 — pre-flight scan + audit scaffolding
+
+- **Scope**: Read the required FB-9 phase documents plus the current
+  neutrino, registry, tilt-wrapper, and hierarchy surfaces; confirmed
+  the exact `Sigma_mnu = 0` baseline anchor; and created
+  [AUDIT_PHASE_FB_META9_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META9_2026-04-20.md)
+  with the six staged `§FB-9.k` sections and the explicit no-new-enum
+  dispatch pin.
+- **Commit anchor**: see `git log --grep='FB-META-9.0'`.
+- **Test delta**: 3,403 passing + 60 skipped → 3,403 passing + 60
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META9_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META9_2026-04-20.md).
+- **Gallery**: no-op (audit/doc scaffolding only).
+- **Carry-forward**: FB-9.1 through FB-9.6 skeleton plants.
+- **Notes**: the pre-flight audit records that current CLASS references
+  expose `ncdm_maximum_q = 15` and `ncdm_N_momentum_bins = 150`, so the
+  local FB-9 skeleton default `N_q = 15` is treated as a bundle
+  contract rather than a directly verified CLASS default.
