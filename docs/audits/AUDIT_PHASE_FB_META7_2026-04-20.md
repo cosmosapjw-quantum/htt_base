@@ -182,6 +182,64 @@ phase-close gate.
 
 ## §FB-7.3
 
+### §FB-7.3 — HTT decomposition and P0-triad skeleton
+**Channel A**: 6 checked / 5 verified / 1 broken. Details: verified
+`docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-7`
+names HTT decomposition plus the P0 triad as the third sub-phase;
+verified `docs/lowell_bianchi/extended_coverage/EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md`
+states via `D9` that FB-8 consumes the FB-7.3 HTT output and must not
+duplicate the triad resolution; verified `htt/bass/runtime/canonical_decision.py`
+is the current β-gate / tangency gate SSOT; verified
+`htt/tsc/diagnostics/tangency.py` is the current `TangencyResult` SSOT;
+verified no committed `bass/likelihood/` package existed before this
+plant. Broken: the prompt-supplied on-disk Lowell `§14.2` locator is
+absent in this worktree, so no tracked internal text currently exposes
+the exact HTT P0-triad derivation verbatim.
+**Channel B**: 2 source checks / 1 verified / 1 broken. Evidence: the
+external Bianchi hierarchy / polarization paper is `arXiv:0706.2075`,
+submitted on 2007-06-14, and its abstract explicitly says the authors
+derive the CMB radiative-transfer equation as a multipole hierarchy in
+anisotropic Bianchi universes. That is the corrected external anchor for
+the HTT-facing stage. Broken: because the tracked Lowell `§14.2` file is
+absent, the requested internal triad derivation cannot be quoted or
+cross-checked verbatim in-session; the skeleton therefore keeps the
+Lowell locator as an explicit `# TODO` rather than inventing prose.
+**Channel C** (prose, 6-10 lines): The safest FB-7.3 skeleton is a
+single decomposition entry point that takes the three P0 inputs
+explicitly. That mirrors the current codebase's ownership boundaries:
+prior alignment is still a likelihood-side concern, `TangencyResult` is
+owned by `tsc`, and the β-gate verdict is owned by
+`CanonicalDecision`. Pulling them together in one `build_htt_decomposition`
+signature makes the future audit surface reviewable without pretending
+those domains have already been unified in production. Creating a new
+`bass.likelihood` package is also deliberate, because FB-7.4 and FB-8.6
+already imply a likelihood stack distinct from the older `htt/htt/`
+inference code. Hiding the triad inside a later likelihood builder would
+make the FB-7.3 exit criterion impossible to audit on its own. The
+skeleton therefore exposes the triad openly and leaves the body
+unimplemented.
+**Alternatives**:
+| # | HTT surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `build_htt_decomposition(..., prior_alignment, tangency_result, beta_gate)` | Makes the P0 triad explicit at the FB-7.3 boundary; reuses existing SSOT types; clean hand-off to FB-7.4 and FB-8. | Requires callers to assemble the triad inputs explicitly. | ✅ |
+| 2 | Hide the triad inside the future FB-7.4 likelihood builder | Fewer public surfaces. | Erases the separate FB-7.3 audit boundary and makes D9 impossible to enforce cleanly. | — |
+| 3 | Route HTT decomposition through `htt/htt/` bridge code directly | Reuses an existing HTT namespace. | Violates the BASS/HTT ownership split and would mix solver-side decomposition with observation-side inference code too early. | — |
+**Core principles**: explicit P0-triad ownership; new BASS-side
+likelihood package rather than reusing HTT inference code; no invented
+Lowell `§14.2` prose; deterministic failure until the decomposition is
+literature-sealed.
+**Skeleton path**:
+`htt/bass/likelihood/htt_decomposition.py::build_htt_decomposition`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/likelihood/test_fb73_htt_decomposition_skeleton.py -q`
+**Guard rails** (yes/no): corrected external Bianchi anchor recorded?
+yes; internal Lowell gap recorded explicitly? yes; P0 triad explicit in
+signature? yes; FB-8 D9 hand-off preserved? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 50 skipped` → `3403 passed + 51 skipped` pending the
+phase-close gate.
+
 ## §FB-7.4
 
 ## §FB-7.5

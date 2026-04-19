@@ -763,3 +763,23 @@ fresh cumulative count.
 - **Notes**: the new module preserves the audited diagonal-only
   `cl_assembly.py` surface and makes the off-diagonal strategy visible
   in the signature instead of hiding it in helper logic.
+
+### FB-META-7.3 — HTT decomposition and P0-triad skeleton
+
+- **Scope**: Recorded FB-7.3 three-channel verification and introduced
+  the committed `htt/bass/likelihood/` package with
+  `htt_decomposition.py` plus one skipped contract test. The new
+  decomposition surface takes `prior_alignment`, `TangencyResult`, and
+  `CanonicalDecision` explicitly so the P0 triad remains auditable at
+  FB-7.3 rather than being hidden inside the later likelihood builder.
+- **Commit anchor**: see `git log --grep='FB-META-7.3'`.
+- **Test delta**: `3,403 passed + 50 skipped` →
+  `3,403 passed + 51 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META7_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META7_2026-04-20.md) §FB-7.3.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: the exact on-disk Lowell `§14.2` locator remains
+  absent in this worktree, so the skeleton docstring keeps that citation
+  as an explicit TODO.
+- **Notes**: the BASS-side likelihood package is introduced here so
+  FB-7.4 and the later FB-8 observer-frame adapter have a solver-owned
+  home distinct from the legacy `htt/htt/` inference stack.
