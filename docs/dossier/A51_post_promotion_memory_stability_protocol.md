@@ -66,6 +66,22 @@ A51 is **strictly procedural**: it adds no code, no test, and no
 new dossier prose beyond the per-phase §6 rows. It graduates the
 §A50.3 memory bullet from "freshly promoted" to "battle-tested".
 
+**Pre-promotion caveat (W23 F1 / W24D3)**: §A51.2's per-phase §6
+row template is paste-ready for W<N>D7 audits **only after** the
+§A50.2 strict gate *or* the §A50.2a patient gate fires and the
+§A50.4 paired dossier + memory landing executes in the same
+commit. Before either promotion path fires, A51 remains
+**reference material** — the §A51.2 paste-template MUST NOT be
+copied into a pre-promotion audit's §6 section, because (a)
+there is no durable memory bullet for the "rationale-clause
+match" sub-check to resolve against, and (b) citing "A50.3
+memory rule compliance" pre-promotion would falsely imply the
+gate had already fired. The pre-promotion audit body continues
+to carry the §A49.5 inline Addendum-protocol-notice section
+verbatim (as W23 / W24 do); the notice is rewritten to cite the
+just-landed memory rule only in the same commit that executes
+§A50.4.
+
 ## A51.2 Positive verification — the per-phase §6 check
 
 On every post-promotion Week-N audit, the author performs this
