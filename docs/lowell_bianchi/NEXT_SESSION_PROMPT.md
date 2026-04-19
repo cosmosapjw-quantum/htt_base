@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-4.1 physics bootstrap → FB-META-4.1 skeleton protocol**; Phase FB-4 is temporarily constrained to META pre-flight, local skeleton plants, and 3-channel verification before any physics ships)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB3_2026-04-19.md` (§FB-3.3 through §FB-3.6 supplements + Phase FB-3 closing declaration)
-**Current target session**: **FB-META-4.1** — skeleton plant + 3-channel verification for the full-Lorentz PSTF Thomson collision surface; no physics implementation, `NotImplementedError` only
+**Last rotated**: 2026-04-20 (**FB-META-4.1 → FB-META-4.2**; full-Lorentz Thomson collision skeleton planted, audit recorded, handoff advances to the E↔B mixing skeleton contract)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md` §FB-4.1
+**Current target session**: **FB-META-4.2** — skeleton plant + 3-channel verification for E↔B mixing under tilted LOS; no physics implementation, `NotImplementedError` only
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,7 +36,7 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-META-4.1 — skeleton plant + 3-channel verification for Phase FB-4
+# FB-META-4.2 — skeleton plant + 3-channel verification for Phase FB-4
 
 ## 프로젝트 컨텍스트
 
@@ -44,29 +44,39 @@ Copy the block below into a fresh Claude Code session:
 - **bass-py 소스 트리**: `htt_base/htt/` (has `bass/`, `tsc/`, `mio/`, `workspace/`, `conftest.py`, `pyproject.toml`)
 - **venv**: `htt_base/venv/bin/python` (`venv/bin/pip` shebang stale; use `../venv/bin/python -m pip`)
 - **테스트 명령**: `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 3,403 passing + 1 skipped. `FB-META-4.0` pre-flight already confirmed this exact count and created `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md`.
+- **현재 baseline**: 3,403 passing + 2 skipped. `FB-META-4.1` planted the local-only full-Lorentz collision skeleton and committed the audit / log / handoff rotation only.
 - **Byte anchors**: LB-6, FB-2.4 `d7d25da`, FB-3.2 `fdb1d86`, FB-3.3 `ceed416`, FB-3.4 `ab5914e`, FB-3.5 `c1130ad`, FB-3.6 `b155645`.
 - **고정 architecture**: approximation-free; banned TCA pre-phase / FLRW UFA / photon RSA; PSTF SSOT; CAMB/CLASS/HEALPix fixtures only.
 
 ## 이 세션의 작업 범위
 
-이 handoff 는 **FB-META-4.0 pre-flight commit 이후** 상태를 가정한다. 다음 세션은 FB-4.1 physics 구현이 아니라 아래 META contract 를 수행한다:
+이 handoff 는 **FB-META-4.1 commit 이후** 상태를 가정한다. 다음 세션은 FB-4.2 physics 구현이 아니라 아래 META contract 를 수행한다:
 
-1. `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md` 의 `§FB-4.1` 를 채운다.
+1. `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md` 의 `§FB-4.2` 를 채운다.
 2. Channel A/B/C 를 **A → B → C** 순서로 수행한다.
 3. signature alternatives 를 표로 기록하고 하나를 선택한다.
 4. `htt/` 아래에 **local skeleton only** surface 를 심는다:
    - full signature
    - docstring with verified citations only
    - body is `raise NotImplementedError(...)`
-   - exactly one `pytest.mark.skip(reason="pending FB-4.1 implementation — skeleton only")` test
+   - exactly one `pytest.mark.skip(reason="pending FB-4.2 implementation — skeleton only")` test
 5. `htt/` changes are never staged.
 6. Staged files are only:
    - `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md`
    - `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
    - `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md`
 7. Commit message:
-   `FB-META-4.1: skeleton plant + 3-channel verification`
+   `FB-META-4.2: skeleton plant + 3-channel verification`
+
+## FB-4.2 literature anchors
+
+- Ma-Bertschinger 1995 — E/B hierarchy background reference.
+- Kamionkowski-Kosowsky-Stebbins 1997, arXiv:astro-ph/9611125 §III — E/B basis and mixing convention.
+- Existing repo surfaces to inspect first:
+  `htt/bass/collision/polarization.py`,
+  `htt/bass/collision/thomson_pstf.py`,
+  `htt/bass/los/bianchi_propagator.py`,
+  `docs/lowell_bianchi/04_thomson_collision_spec.md`.
 
 ## 3-channel verification order
 
@@ -92,13 +102,13 @@ Copy the block below into a fresh Claude Code session:
 
 ## Rotation target
 
-Before closing FB-META-4.1:
+Before closing FB-META-4.2:
 - audit section complete
 - development log row appended
 - baseline still preserved
-- `NEXT_SESSION_PROMPT.md §2` rotated to **FB-META-4.2**
+- `NEXT_SESSION_PROMPT.md §2` rotated to **FB-META-4.3**
 
-시작점은 `§FB-4.1` 이다. FB-META-4.0 pre-flight 는 이미 끝났고, 이제 skeleton 과 검증만 남아 있다.
+시작점은 `§FB-4.2` 이다. FB-META-4.1 은 collision-side skeleton 이었고, 이제 polarization E↔B mixing contract 를 같은 META discipline 으로 고정한다.
 ```
 
 ---

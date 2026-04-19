@@ -316,6 +316,23 @@ Exit: β-sweep × polarisation regression. BB identically zero at
   FB-META-4.k commits advance one sub-phase at a time with docs-only
   staging and local skeleton-only code plants.
 
+### FB-META-4.1 — full-Lorentz PSTF collision skeleton
+
+- **Scope**: Recorded FB-4.1 three-channel verification, corrected the
+  broken prompt-supplied Challinor arXiv ID to `astro-ph/9911481`,
+  and planted the local-only
+  `evaluate_tilted_thomson_pstf_collision(...)` skeleton plus one
+  skipped contract test without staging any `htt/` changes.
+- **Commit anchor**: see `git log --grep='FB-META-4.1'`.
+- **Test delta**: `3,403 passed + 1 skipped` →
+  `3,403 passed + 2 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META4_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META4_2026-04-20.md) §FB-4.1.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: —
+- **Notes**: the named on-disk Lowell solver-reference path is absent
+  in this tree, so the audit records it as a broken internal locator;
+  the historical `§11.3` text is recoverable from `HEAD` only.
+
 ---
 
 ## Phase FB-5 (planned) — Perturbation sector k ≠ 0
@@ -397,6 +414,7 @@ dataset. At this point the parent plan's stated target is reached
 | FB-3.5 exit | 3,286 | +54 |
 | FB-3.6 / Phase FB-3 exit | 3,403 | +117 |
 | FB-META-4.0 pre-flight | 3,403 | +117 |
+| FB-META-4.1 skeleton | 3,403 | +117 |
 
 After each new FB row ships, append a new ledger row here with the
 fresh cumulative count.
