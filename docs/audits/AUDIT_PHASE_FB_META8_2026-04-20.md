@@ -66,9 +66,62 @@ with observer boost.
 
 ## §FB-8.1
 
-**Type-distinct pin**: pending fill; `ObserverBoost` will remain an
-observer-only rapidity carrier and will not inherit from or alias the
-cosmological tilt surface.
+### §FB-8.1 — `ObserverBoost` dataclass skeleton
+**Type-distinct pin**: `ObserverBoost` is an observer-only rapidity
+carrier in `bass.observer`; it must not inherit from, alias, or accept
+the cosmological tilt surface.
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB8_DISCRIMINATOR_SDD.md §2`
+names `ObserverBoost(rapidity, v_hat)` as the canonical FB-8.1 surface;
+verified `docs/lowell_bianchi/extended_coverage/EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md`
+pins rapidity SSOT reuse and downstream type distinction via `D4` /
+`D9`; verified `docs/lowell_bianchi/extended_coverage/SCOPE_DECISIONS.md`
+seals the observer-versus-cosmological split on 2026-04-20; verified
+`docs/audits/AUDIT_PHASE_FB3_2026-04-19.md §FB-3.5` records rapidity as
+the decision-level SSOT plus the shared admissibility gate; verified
+commit `c1130ad` exists locally as the shipped FB-3.5 anchor; verified
+`bass.species.tilted.assert_tilt_admissible` is present and imported by
+the new skeleton module instead of being reimplemented.
+**Channel B**: 2 source checks / 2 verified / 0 divergent. Evidence:
+the local FB-3.5 audit states that rapidity is the decision-level SSOT
+and that `assert_tilt_admissible` is the published shared guard; the
+matching shipped commit `c1130ad` is present on this branch with the
+subject `FB-3.5: beta-gate reparametrisation (rapidity SSOT + shared
+gate)`. No external locator is required for FB-8.1 because the prompt's
+literature anchor is the internal FB-3.5 audit itself.
+**Channel C** (prose, 6-10 lines): The safest FB-8.1 skeleton is a new
+observer-only dataclass in `bass.observer`, not an extension of
+`TiltedSpeciesBackground`. The whole point of the extended bundle is to
+make the type checker and the audit surface reject any silent collapse
+of `(beta_cosmo, v_hat_cosmo)` into `(beta_obs, v_hat_obs)`. Reusing the
+FB-3.5 admissibility gate is still correct, because direction and
+sub-luminal-domain validation are shared conventions rather than shared
+physics. That is why the skeleton imports the gate but still raises:
+the contract can pin the SSOT now without pretending the observer-frame
+transport exists. Creating `bass.observer.__init__` in the same commit
+also makes the package boundary explicit before any aberration or
+discriminator code lands.
+**Alternatives**:
+| # | `ObserverBoost` surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | New `bass/observer/observer_boost.py::ObserverBoost` dataclass | Makes the observer-only ownership boundary explicit; cleanly reuses the FB-3.5 guard SSOT without reusing the cosmological type. | Adds a new package boundary before any functional implementation exists. | ✅ |
+| 2 | Subclass `TiltedSpeciesBackground` | Reuses an existing dataclass and helpers. | Violates the type-distinct requirement and invites silent cosmology/observer conflation. | — |
+| 3 | Leave observer boosts as raw tuples / mappings in later APIs | Minimal code surface today. | Hides the FB-8.1 contract, weakens type checking, and delays the key distinction the whole phase is meant to enforce. | — |
+**Core principles**: separate ownership boundary first; rapidity and
+admissibility remain single-sourced through FB-3.5; no inheritance from
+the cosmological tilt carrier; deterministic failure until FB-8
+implementation exists.
+**Skeleton path**: `htt/bass/observer/observer_boost.py::ObserverBoost`
+and `htt/bass/observer/__init__.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb81_observer_boost_skeleton.py -q`
+**Guard rails** (yes/no): type-distinct package boundary explicit? yes;
+shared admissibility import verified? yes; no inheritance path opened?
+yes; rapidity SSOT anchor cited? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 53 skipped` → `3403 passed + 54 skipped` pending the
+phase-close gate.
 
 ## §FB-8.2
 
