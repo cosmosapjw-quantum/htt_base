@@ -125,9 +125,69 @@ phase-close gate.
 
 ## §FB-8.2
 
-**Type-distinct pin**: pending fill; the aberration kernel surface will
-act on `ObserverBoost` only and will not reuse cosmological-tilt
+### §FB-8.2 — aberration-kernel skeleton
+**Type-distinct pin**: the aberration kernel acts on `ObserverBoost`
+only; it is an observer-frame transform layered on top of
+cosmological-frame multipoles and must not reuse cosmological-tilt
 containers as observer-state proxies.
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB8_DISCRIMINATOR_SDD.md §3`
+names `aberration_kernel(L_max, boost)` as the canonical FB-8.2
+surface; verified `htt/bass/hierarchy/boost_kernel.py` is the existing
+axi-symmetric seed and explicitly points to the observer-side FB-8
+layer; verified `bass.observer.ObserverBoost` now exists and keeps the
+observer-only type boundary explicit; verified the new kernel skeleton
+is placed in `bass.observer.aberration` rather than widening the
+hierarchy-side seed by stealth; verified the package export in
+`bass.observer.__init__` now includes `aberration_kernel`; verified the
+new skipped test pins the corrected external locators in the docstring.
+**Channel B**: 3 source checks / 3 verified / 0 silent divergences.
+Evidence: the correct preprint for Challinor & van Leeuwen's 2002 paper
+is `arXiv:astro-ph/0112457`, submitted on 2001-12-19, not the
+prompt-supplied `astro-ph/0205005`; the ar5iv-rendered text states that
+when the relative velocity is aligned with the tetrad axis, the
+transformation becomes block-diagonal in `m`, which is the external
+anchor for the observer-side aligned-kernel contract. The same source's
+accessible Eq. (26) is the polarization-basis transport law rather than
+the kernel equation, so the requested "Eq. (26) m=0 PSTF form" is
+recorded as a locator mismatch instead of being invented. Planck 2013
+XXVII, `arXiv:1303.5087`, is verified as the correct observer-velocity
+paper and fixes the Sun-dipole scale at `v/c = 1.23e-3`; its accessible
+Table 1 is a significance table, not a `K_{22}` / `K_{23}` coefficient
+table, so that mismatch is also recorded explicitly.
+**Channel C** (prose, 6-10 lines): The safest FB-8.2 skeleton is a new
+observer-side kernel function rather than a retrofit of the existing
+hierarchy boost seed. The hierarchy seed is about transport-side
+projection and already declares its off-axis limits; the observer-side
+kernel belongs in the package that owns `ObserverBoost` and the later
+adapters. The aligned-boost `(L_max + 1) x (L_max + 1)` contract is an
+inference from the corrected Challinor–van Leeuwen source plus the
+existing on-axis seed, not a direct quotation of a single equation
+number, so the audit says that plainly. Recording the two literature
+locator mismatches is also important here: they are exactly the sort of
+quiet drift that would make a future implementation look better grounded
+than it really is. The skeleton therefore exposes the signature, cites
+the corrected anchors, and stops.
+**Alternatives**:
+| # | Aberration surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | New `bass/observer/aberration.py::aberration_kernel` contract | Keeps observer ownership local to the new package; clean hand-off to FB-8.3 adapters. | Adds another package export before implementation exists. | ✅ |
+| 2 | Reuse `bass/hierarchy/boost_kernel.py` directly | Reuses an existing on-axis seed. | Blurs hierarchy transport with observer-frame post-processing and weakens the type boundary. | — |
+| 3 | Hide the kernel inside `apply_observer_boost` later | Smaller public API. | Erases the separate FB-8.2 audit boundary and makes literature checks harder to pin. | — |
+**Core principles**: corrected external locators must be explicit;
+observer-frame ownership remains inside `bass.observer`; aligned-kernel
+storage is documented as an inference rather than a fabricated equation
+quote; deterministic failure until the physics is implemented.
+**Skeleton path**: `htt/bass/observer/aberration.py::aberration_kernel`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb82_aberration_kernel_skeleton.py -q`
+**Guard rails** (yes/no): corrected Challinor locator recorded? yes;
+prompt/SDD Table 1 mismatch recorded? yes; observer-only type boundary
+preserved? yes; hierarchy seed left untouched? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 54 skipped` → `3403 passed + 55 skipped` pending the
+phase-close gate.
 
 ## §FB-8.3
 

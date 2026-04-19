@@ -52,3 +52,25 @@ cross-reference.
 - **Carry-forward**: FB-8.2 aberration-kernel skeleton.
 - **Notes**: `ObserverBoost` is type-distinct from cosmological tilt;
   the shared FB-3.5 guard is reused only as an admissibility SSOT.
+
+### FB-8.2 — aberration kernel `K_{ell ell'}(beta_obs)`
+
+- **Scope**: Added the skeleton
+  [aberration_kernel](../../../htt/bass/observer/aberration.py) surface
+  under `bass.observer` and exported it from the new observer package.
+  The contract keeps the observer-frame kernel separate from the
+  hierarchy-side `boost_kernel.py` seed and records the corrected
+  Challinor locator (`astro-ph/0112457`) plus the Planck-2013 Table 1
+  mismatch explicitly in the audit instead of silently accepting the
+  prompt wording.
+- **Commit anchor**: see `git log --grep='FB-META-8.2'`.
+- **Test delta**: 3,403 passing + 54 skipped → 3,403 passing + 55
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META8_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META8_2026-04-20.md)
+  §FB-8.2.
+- **Gallery**: no-op (kernel contract only).
+- **Carry-forward**: FB-8.3 observer-frame adapter skeletons.
+- **Notes**: aligned-kernel storage is an explicit inference from the
+  corrected literature plus the existing on-axis seed; the audit calls
+  that out directly.
