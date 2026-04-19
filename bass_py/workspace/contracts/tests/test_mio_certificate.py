@@ -70,3 +70,40 @@ def test_miocertificate_no_posterior_field_in_schema():
             f"MioCertificate must not expose a 'posterior' field "
             f"(found '{f.name}') — violates v3 §10.2bis G19."
         )
+
+
+def test_git_commit_is_capture_time_not_lazy(monkeypatch):
+    """W17D1 (W16 F2) — A44.3 runtime gate on at-instantiation capture.
+
+    A44.3 pins provenance-SHA resolution to MioCertificate.__init__ time
+    (per W6 FM6 / W11 F5). If a future refactor moves git_commit onto a
+    lazy property / descriptor that re-resolves HEAD at read time, this
+    test fails loudly. Mechanism: patch the helper that COULD re-resolve
+    HEAD (subprocess.run here, since `workspace.contracts.mio_certificate`
+    imports nothing git-related today — so the plain-string contract is
+    the invariant being locked).
+    """
+    import subprocess as _subprocess
+    import workspace.contracts.mio_certificate as mod
+
+    captured_sha = "a1b2c3d4e5f60718293a4b5c6d7e8f9011223344"
+    cert = _certificate(git_commit=captured_sha)
+
+    def _raise_if_called(*_args, **_kwargs):
+        raise AssertionError(
+            "git_commit read path must not invoke subprocess — A44.3 "
+            "requires at-instantiation capture."
+        )
+
+    monkeypatch.setattr(_subprocess, "run", _raise_if_called)
+    if hasattr(mod, "_resolve_git_commit"):
+        monkeypatch.setattr(
+            mod, "_resolve_git_commit", lambda: "FFFFFFFFFFFFFFFF"
+        )
+
+    assert cert.git_commit == captured_sha
+    assert dataclasses.asdict(cert)["git_commit"] == captured_sha
+    assert isinstance(type(cert).__dict__.get("git_commit", None), type(None)), (
+        "git_commit must be a plain dataclass field on the instance, "
+        "not a class-level descriptor / property that could re-resolve."
+    )
