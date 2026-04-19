@@ -39,10 +39,54 @@
 
 ## §FB-9.1
 
-| Row | Status | Note |
-|---|---|---|
-| Scope | pending | `phase_space_grid(mass_eV, N_q=15)` deterministic skeleton plus quadrature-family alternatives table. |
-| LB-1 anchor clause | pinned | `Sigma_mnu = 0` must not route through any new phase-space helper; the LB-1 massless class remains the only active zero-mass path. |
+### §FB-9.1 — `phase_space_grid` skeleton
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified
+the new `bass.species.massive_neutrino` package is the correct isolated
+write surface for FB-9; verified the local SDD pins the placeholder
+signature `phase_space_grid(mass_eV, N_q=15)`; verified the package
+docstrings state the LB-1 zero-mass invariant explicitly; verified the
+new skipped contract test only inspects signature/doc surface; verified
+no existing production import path now routes through the new module.
+**Channel B**: 3 source checks / 2 verified / 1 corrected. Evidence:
+Lesgourgues & Tram 2011 (`arXiv:1104.2935`) is the primary CLASS
+non-cold-relic source and describes adaptive quadrature comparison for
+ncdm rather than a fixed 15-point rule; the current CLASS
+`explanatory.ini` exposes `ncdm_maximum_q = 15` and
+`ncdm_N_momentum_bins = 150`; therefore the FB-9 skeleton keeps the
+bundle-local `N_q = 15` contract but records it as a local placeholder,
+not as a directly verified CLASS default.
+**Channel C** (prose, 6-10 lines): The right FB-9.1 skeleton is a new
+package boundary plus one raising function. That is enough to pin the
+future import path, the future name, and the future default placeholder
+without introducing any accidental zero-mass detour. The audit also has
+to stay honest about the literature: CLASS IV supports Gauss-Laguerre
+as one strategy, but its actual ncdm machinery is adaptive and the
+current reference input does not equate `15` with the number of
+momentum bins. Keeping `N_q = 15` in the skeleton is still acceptable
+because it is a local SDD contract, not production physics. The skip
+test exists only to lock that contract into CI while the implementation
+remains intentionally absent.
+**Alternatives**:
+| # | Quadrature-family placeholder | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Gauss-Laguerre placeholder API | Matches the local FB-9 SDD naming and one supported CLASS quadrature family; simple future hand-off. | The paper's actual strategy is adaptive, so the fixed `N_q=15` contract must be documented as local, not canonical CLASS. | ✅ |
+| 2 | Gauss-Legendre on a log-momentum grid | Familiar for bounded transformed integrals. | Not the local SDD pick and adds a second convention before any implementation exists. | — |
+| 3 | Plain trapezoidal placeholder | Easiest to explain. | Weakest convergence story and least aligned with the local SDD wording. | — |
+**Core principles**: package boundary first; zero-mass runtime untouched;
+literature correction recorded explicitly; deterministic failure until
+the true quadrature lands.
+**Skeleton path**:
+`htt/bass/species/massive_neutrino/__init__.py`,
+`htt/bass/species/massive_neutrino/phase_space.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_fb91_phase_space_grid_skeleton.py -q`
+**LB-1 anchor clause**: `Sigma_mnu = 0` must not route through any new
+phase-space helper; the LB-1 massless class remains the only active
+zero-mass path.
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 60 skipped` → `3403 passed + 61 skipped` pending the
+phase-close gate.
 
 ## §FB-9.2
 

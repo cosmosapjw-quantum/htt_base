@@ -212,3 +212,23 @@ cross-reference.
   expose `ncdm_maximum_q = 15` and `ncdm_N_momentum_bins = 150`, so the
   local FB-9 skeleton default `N_q = 15` is treated as a bundle
   contract rather than a directly verified CLASS default.
+
+### FB-META-9.1 — `phase_space_grid` skeleton
+
+- **Scope**: Created the new
+  [bass/species/massive_neutrino](../../../htt/bass/species/massive_neutrino/__init__.py)
+  package and added the raising
+  [phase_space_grid](../../../htt/bass/species/massive_neutrino/phase_space.py)
+  contract placeholder plus its skipped harness test. The package is
+  intentionally off-path for `Sigma_mnu = 0`.
+- **Commit anchor**: see `git log --grep='FB-META-9.1'`.
+- **Test delta**: 3,403 passing + 60 skipped → 3,403 passing + 61
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META9_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META9_2026-04-20.md)
+  §FB-9.1.
+- **Gallery**: no-op (package boundary + contract only).
+- **Carry-forward**: FB-9.2 background skeleton.
+- **Notes**: the audit records the CLASS-source correction explicitly:
+  the local `N_q = 15` is a bundle placeholder, while current CLASS
+  exposes `ncdm_maximum_q = 15` and `ncdm_N_momentum_bins = 150`.
