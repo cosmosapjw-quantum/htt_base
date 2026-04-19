@@ -10,9 +10,9 @@
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
 **Last rotated**: 2026-04-20 (**FB-META-7.CLOSE → FB-META-8**; Phase FB-7 skeleton cycle sealed, handoff reset to the next-phase META placeholder)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META7_2026-04-20.md` (Phase close note)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META8_2026-04-20.md` (pre-flight scaffold)
 **Current target session**: **FB-META-8** — paste the Phase FB-8 META prompt
-**Phase status**: Phase FB-7 closed on 2026-04-20; FB-0..FB-7 skeleton tree complete and the extended bundle now hands off to a fresh FB-META-8 prompt
+**Phase status**: FB-META-8 entered on 2026-04-20; pre-flight baseline confirmed at `3403 passed + 53 skipped`, the observer-vs-cosmological type distinction is pinned, and the Phase FB-8 audit scaffold is now in progress
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -53,6 +53,8 @@ Important carry-forward scope pin:
 
 Relevant carry-forward anchors:
 - Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
+- Latest audited pre-flight artifact:
+  `docs/audits/AUDIT_PHASE_FB_META8_2026-04-20.md`
 - New BASS likelihood package:
   `htt/bass/likelihood/`
 - Latest audited Phase FB-7 artifact:
