@@ -191,9 +191,66 @@ phase-close gate.
 
 ## §FB-8.3
 
-**Type-distinct pin**: pending fill; observer-frame `C_ell` /
-`a_{ell m}` adapters will wrap cosmological outputs without collapsing
-the cosmo-versus-observer split.
+### §FB-8.3 — observer-frame adapter skeletons
+**Type-distinct pin**: observer-frame `C_ell` / `a_{ell m}` adapters
+wrap cosmological-frame outputs using `ObserverBoost`; they do not
+collapse cosmological tilt and observer boost into one parameter.
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB8_DISCRIMINATOR_SDD.md §4`
+names both `apply_observer_boost` and `observed_alm_mixing`; verified
+the new `bass.observer.aberration_kernel` skeleton exists as the shared
+FB-8.2 dependency; verified `bass.observer.__init__` now exports both
+adapter names from the observer-only package; verified the adapters are
+kept in a dedicated observer-side module rather than widening the
+cosmological-frame FB-7 likelihood classes; verified the new skipped
+test pins the `boost.rapidity == 0` identity promise in the public
+docstring; verified no cosmological-tilt container is accepted anywhere
+in the new signatures.
+**Channel B**: 3 source checks / 3 verified / 0 silent divergences.
+Evidence: the corrected Challinor & van Leeuwen source
+`astro-ph/0112457` explicitly splits total-intensity transformations in
+§II from linear-polarization transformations in §III, and the
+ar5iv-rendered text states that the polarization tensor is expanded in
+symmetric trace-free tensor harmonics with electric and magnetic
+multipoles before giving the observer-frame mixing kernels. That is the
+external anchor for separating the diagonal-spectrum adapter from the
+harmonic-mixing adapter while still sourcing both from one observer-side
+kernel. Planck 2013 XXVII, `arXiv:1303.5087`, again fixes the relevant
+observer speed at `v/c = 1.23e-3` and describes de-boosting as the next
+logical step once the signal is confirmed, which is the right external
+context for these adapter placeholders.
+**Channel C** (prose, 6-10 lines): The safest FB-8.3 skeleton keeps the
+two observer adapters together in one module. They share the same type
+boundary, the same zero-rapidity identity requirement, and the same
+kernel dependency, but they still deserve separate public names because
+one acts on diagonal spectra while the other acts on harmonic
+coefficients. Folding both into the future likelihood adapter would hide
+an important audit seam and make the FB-8.5 discriminator look more
+monolithic than it should. Keeping them in `bass.observer` also enforces
+the scope pin from FB-7: cosmological-frame likelihood code remains
+cosmological-frame code. The skeleton therefore exposes the pair
+directly and leaves the bodies unimplemented.
+**Alternatives**:
+| # | Adapter surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Shared `bass/observer/adapters.py` with two explicit functions | Keeps both observer adapters on one write surface with a shared kernel dependency and a clean package boundary. | Slightly larger module than one-function-per-file. | ✅ |
+| 2 | Split `C_ell` and `a_{ell m}` adapters into separate modules immediately | Very fine-grained file ownership. | Adds overhead without gaining any type-safety or audit clarity at skeleton stage. | — |
+| 3 | Hide both adapters inside the future likelihood adapter | Smaller public API. | Obscures the FB-8.3 audit boundary and blurs transform code with likelihood composition. | — |
+**Core principles**: zero-rapidity identity is public and explicit;
+observer adapters stay separate from cosmological-frame likelihood code;
+temperature/polarization and harmonic/spectrum roles remain distinct;
+deterministic failure until the transport is implemented.
+**Skeleton path**:
+`htt/bass/observer/adapters.py::{apply_observer_boost, observed_alm_mixing}`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb83_observer_adapters_skeleton.py -q`
+**Guard rails** (yes/no): observer-only package boundary preserved? yes;
+shared kernel dependency explicit? yes; zero-rapidity identity pinned?
+yes; cosmological tilt not accepted in signatures? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 55 skipped` → `3403 passed + 56 skipped` pending the
+phase-close gate.
 
 ## §FB-8.4
 

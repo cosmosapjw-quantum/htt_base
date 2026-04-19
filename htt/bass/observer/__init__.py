@@ -7,7 +7,13 @@ separate modules, with no inheritance and no silent coercion between
 them.
 """
 
+from bass.observer.adapters import apply_observer_boost, observed_alm_mixing
 from bass.observer.aberration import aberration_kernel
 from bass.observer.observer_boost import ObserverBoost
 
-__all__ = ["ObserverBoost", "aberration_kernel"]
+__all__ = [
+    "ObserverBoost",
+    "aberration_kernel",
+    "apply_observer_boost",
+    "observed_alm_mixing",
+]

@@ -74,3 +74,23 @@ cross-reference.
 - **Notes**: aligned-kernel storage is an explicit inference from the
   corrected literature plus the existing on-axis seed; the audit calls
   that out directly.
+
+### FB-8.3 — observer-frame `C_ell` / `a_{ell m}` adapters
+
+- **Scope**: Added
+  [apply_observer_boost and observed_alm_mixing](../../../htt/bass/observer/adapters.py)
+  as explicit observer-side adapter skeletons over the FB-8.2 kernel and
+  exported both from `bass.observer`. The contracts pin the
+  zero-rapidity byte-identity requirement while keeping all
+  observer-frame post-processing outside the FB-7 cosmological-frame
+  likelihood package.
+- **Commit anchor**: see `git log --grep='FB-META-8.3'`.
+- **Test delta**: 3,403 passing + 55 skipped → 3,403 passing + 56
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META8_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META8_2026-04-20.md)
+  §FB-8.3.
+- **Gallery**: no-op (adapter contracts only).
+- **Carry-forward**: FB-8.4 non-commutation / composition-order pin.
+- **Notes**: both adapters stay in the observer package so the
+  cosmological-frame FB-7 scope pin remains intact.
