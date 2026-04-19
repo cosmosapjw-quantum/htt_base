@@ -254,9 +254,64 @@ phase-close gate.
 
 ## §FB-8.4
 
-**Type-distinct pin**: pending fill; non-commutation notes will pin the
-composition order explicitly so cosmological tilt and observer boost
-stay distinct transforms.
+### §FB-8.4 — non-commutation and composition-order skeleton
+**Type-distinct pin**: `compose_tilts` is diagnostic-only and keeps
+cosmological tilt and observer boost as distinct transforms with a
+pinned order `(cosmo-tilt -> observer-boost)`.
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB8_DISCRIMINATOR_SDD.md §5`
+declares `compose_tilts(global_tilt, observer_boost)` diagnostic-only;
+verified `docs/lowell_bianchi/extended_coverage/EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md`
+pins separate rapidity-owning dataclasses and the load-bearing
+distinction between global tilt and observer boost; verified the new
+module keeps the helper in `bass.observer` rather than leaking it into a
+production likelihood surface; verified the new `GlobalTilt` protocol is
+typing-only and explicitly not an implementation carrier; verified the
+public docstring says the helper must never be routed into production;
+verified the skipped test locks those two diagnostic-only phrases in
+place.
+**Channel B**: 2 source checks / 1 verified / 1 broken. Evidence: the
+Cambridge/CUP metadata for Ellis, Maartens & MacCallum's
+*Relativistic Cosmology* verifies the 2012 publication, DOI
+`10.1017/CBO9781139014403`, and the print ISBN family including the
+prompt-supplied observer-side anchor. Broken: the accessible preview
+does not expose the exact `§5.2` text needed to quote or line-pin the
+non-commutation discussion, so that locator remains a documented source
+gap rather than invented support. The local SDD and coordinator plan are
+therefore the operative contract anchors for the composition-order pin.
+**Channel C** (prose, 6-10 lines): FB-8.4 is the point where the code
+has to resist a very tempting shortcut: turning two physically distinct
+transforms into one combined parameter. The safest way to do that in a
+skeleton-only pass is not to implement composition at all, but to expose
+a diagnostic-only helper whose docstring forbids production use. Using a
+typing-only `GlobalTilt` protocol is deliberate for the same reason. The
+future extended-bundle dataclass is acknowledged, but this commit does
+not pretend it already exists on disk. That keeps the signature
+reviewable without creating a fake concrete type or opening an accidental
+runtime dependency. The audit also keeps the book-section preview gap
+explicit so later work knows exactly which part still needs a stronger
+primary-source read.
+**Alternatives**:
+| # | Non-commutation surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Diagnostic-only `compose_tilts(...)` in `bass.observer.composition` | Makes the production ban explicit and gives the audit a concrete surface to guard. | Adds a helper that intentionally does not compute anything yet. | ✅ |
+| 2 | Hide the non-commutation note in docs only | Lowest code footprint. | No mechanical guard against accidental production routing. | — |
+| 3 | Implement a real composed transform now | Could support later adapters directly. | Violates the skeleton-only contract and risks collapsing the two-parameter distinction before the audit is sealed. | — |
+**Core principles**: diagnostic-only surface, not production; concrete
+composition order pinned in the public docstring; future `GlobalTilt`
+acknowledged without inventing an implementation; source gap recorded
+openly.
+**Skeleton path**:
+`htt/bass/observer/composition.py::compose_tilts`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb84_composition_skeleton.py -q`
+**Guard rails** (yes/no): diagnostic-only production ban explicit? yes;
+composition order pinned? yes; type distinction preserved? yes; exact
+book-section preview gap recorded? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 56 skipped` → `3403 passed + 57 skipped` pending the
+phase-close gate.
 
 ## §FB-8.5
 

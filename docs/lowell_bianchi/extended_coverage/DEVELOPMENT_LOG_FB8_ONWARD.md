@@ -94,3 +94,23 @@ cross-reference.
 - **Carry-forward**: FB-8.4 non-commutation / composition-order pin.
 - **Notes**: both adapters stay in the observer package so the
   cosmological-frame FB-7 scope pin remains intact.
+
+### FB-8.4 — non-commutation + SSOT composition-order pin
+
+- **Scope**: Added the diagnostic-only
+  [compose_tilts](../../../htt/bass/observer/composition.py) skeleton and
+  exported it from `bass.observer`. The helper is explicitly banned from
+  the production path and uses a typing-only `GlobalTilt` protocol so
+  the future cosmological tilt carrier is acknowledged without being
+  silently fabricated.
+- **Commit anchor**: see `git log --grep='FB-META-8.4'`.
+- **Test delta**: 3,403 passing + 56 skipped → 3,403 passing + 57
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META8_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META8_2026-04-20.md)
+  §FB-8.4.
+- **Gallery**: no-op (diagnostic contract only).
+- **Carry-forward**: FB-8.5 discriminator skeleton.
+- **Notes**: the accessible Ellis/Maartens/MacCallum preview confirms
+  the book metadata but not the exact `§5.2` text, so the audit records
+  that source gap explicitly.
