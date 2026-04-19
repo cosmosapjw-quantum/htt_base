@@ -42,6 +42,16 @@ First-order rules (copy-pasted from the governing plan):
   staged set matches the commit body. Rationale: W12D3 `99465e5`
   pulled unrelated bass-lane + gallery-lane files into an HJ-02b
   commit; the one-line gate would have caught it (W12 F1 / W13 R1).
+* **scoped `git commit -- <paths>` rule** — every `git commit`
+  invocation in this lane MUST pass the explicit pathspec list as
+  trailing `-- <path1> <path2> ...` arguments. The pathspec form
+  makes git commit only those paths from the index; any files
+  staged by a concurrent lane in the brief gap between our
+  `git status` check and our `git commit` are excluded by
+  construction. Rationale: W14D3 `4eb044b` recurred W12 F1 even
+  with the W13D1 status-gate in place because the gate cannot
+  detect a concurrent lane's commit that lands in the gap. The
+  pathspec form closes that race window (W14 F1 / W15D1).
 * **do not touch `bass_py/bass/*`** — that is the bass_py session's
   lane.
 * **do not touch `plots/physics_gallery/`** — bass_py session
