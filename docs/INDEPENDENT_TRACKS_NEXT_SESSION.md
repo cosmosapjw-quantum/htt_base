@@ -1,9 +1,10 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W14` phase.
+**As of**: 2026-04-19, post-`IND_TRACKS_W15` phase.
 **Last audited**: 2026-04-19
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W14_2026-04-19.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W13_2026-04-19.md`,
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W15_2026-04-19.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W14_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W13_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md`,
@@ -350,106 +351,164 @@ Week 14 final gate — **all five items green**:
       check (documented as FAILED with mitigation R1 in §8).
 - [x] No touched-surface regressions.
 
+## §1c-12. What shipped in Week 15
+
+Session of 2026-04-19 (compressed: one session covered Week-15
+Days 1-7). Three committed in-lane landings + one phase-boundary
+audit (`AUDIT_PHASE_IND_TRACKS_W15_2026-04-19.md`).
+
+| Track | Artefact | Status |
+|---|---|---|
+| W15D1 scoped-commit rule (W14 F1) | `docs/INDEPENDENT_TRACKS_NEXT_SESSION.md` §0 +10 L — new fourth first-order rule prescribing `git commit -- <paths>` per commit; paired durable entry in memory `feedback_git_workflow.md`. Closes the race window that the W13D1 `git status --short` gate could not catch (concurrent lane's commit between our status check and our commit). | landed (`d48b920`) |
+| W15D3 DOS-A43 schema-hash digest design (W7 FM3 mech-resolved) | `docs/dossier/A43_schema_hash_digest.md` (~306 L). Specifies the hash-digest mechanism (field name + normalised type + default kind + field order) that catches structural drift without rotating on value-level edits (`report_type` / `channel` value additions, payload-dict key additions, default-value retunes). Test spec in §A43.6 ready for paste-on-extension; trigger per §A43.3 is first actual schema extension (HJ-03 / HJ-04 / TSC-05 v2). Cross-refs resolve into A32.5 / A41.2 / A41.5 / A42.5. No code change. | landed (`8fae1ba`) |
+| W15D5 MIO tighten placeholder-tag count (W14 R2) | `bass_py/mio/tests/test_sigma_cone_provenance.py` +25 L = new `test_hj02a_certificate_caveat_count_equals_flagged_set_with_no_caller_caveats`. Asserts set-equality + length-equality on the no-caller-caveats path, closing the over-emission gap the W14D5 `issubset` test missed. MIO 105 → 106. | landed (`293652a`) |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W15_2026-04-19.md` — §6 W12 F1 / W14 F1 recurrence check returns **PASSED** (three W15 commits scoped exactly to their own paths; symmetric verification on the cross-lane `3dcc505` commit shows only bass-lane files). | landed |
+
+Final test tally over the touched surface at W15 boundary:
+**1076 passed, 0 failed, 4 skipped** (+1 vs W14's 1075; 0 skip
+change; 0 regressions). Skip composition unchanged from W10
+end-of-phase.
+
+Week 15 final gate — **all five items green**:
+
+- [x] W14 F1 scoped-commit rule landed (durable memory + §0 note;
+      W15D1 `d48b920`).
+- [x] A43 schema-hash digest dossier landed (W15D3 `8fae1ba`).
+- [x] One of W14 R2 / R3 landed — **R2 picked** (W15D5 `293652a`;
+      +1 test; MIO 105 → 106).
+- [x] Phase-boundary audit log written; §6 W12 F1 / W14 F1
+      recurrence check returns **PASSED**.
+- [x] No touched-surface regressions (1076 passed; +1 over W14;
+      0 failed; 4 skipped unchanged).
+
 ## §1d. What was designed in the 2026-04-19 planning session
 
 (Preserved here for provenance; unchanged from earlier rotations.
 See v3 research plan + PART II + PART III of the governing plan.)
 
-## §2. Active priorities for the next session (Week 15)
+## §2. Active priorities for the next session (Week 16)
 
-**"W14 F1 process remediation + A43 schema-hash dossier + opportunistic
-test-coverage tightening"**. Week 14 landed all five gate items
-(W13 F2 parity test + W13 F1 HJ-04/HJ-03 sweep + two A36a.5
-placeholder retirements + phase audit), MIO contribution 95 → 105,
-touched-surface 1065 → 1075. The W12 F1 cross-lane-contamination
-pattern recurred on W14D3 (the dossier sweep landed inside
-`4eb044b` labelled `FB-1.4`); the rename content itself is
-bit-identical but the commit label is wrong. W15 must land the
-mitigation per `AUDIT_PHASE_IND_TRACKS_W14_2026-04-19.md` §8 R1.
+**"W14 F2 residual closure (caller-caveats over-emission) + A36a.3
+YAML sidecar (W14 R3 / W13 F4) + one A4x dossier"**. Week 15 landed
+all five gate items (W14 F1 scoped-commit rule + A43 digest dossier
++ W14 R2 over-emission guard + phase audit), MIO contribution
+105 → 106, touched-surface 1075 → 1076. The W12 F1 / W14 F1
+cross-lane pattern did NOT recur (W15 audit §6 check #1 PASSED —
+three W15 commits scoped exactly to own paths; symmetric verification
+on concurrent `3dcc505` shows only bass-lane files). W16 targets
+the three P3 residuals from W15 audit §8.
 
-Week 15 remains in the dependency-wait window: HJ-01 production
+Week 16 remains in the dependency-wait window: HJ-01 production
 wiring, HJ-03 evidence anatomy, HJ-04 departure skeleton, and
 MANU-CH12 §§12.1 / 12.4 / 12.5 / 12.8 are still blocked on bass_py
-W10-02 (K_ℓ atlas) and bass_py W11-02 (BiPoSH).
+W10-02 (K_ℓ atlas) and bass_py W11-02 (BiPoSH). A43 digest test
+itself stays deferred-to-trigger per §A43.3.
 
-### Days 1–2 — W14 F1 cross-lane commit mitigation
+### Days 1–2 — W15 F1 caller-caveats over-emission closure
 
-1. **W14 F1 — scoped-commit rule.** Add a durable memory entry
-   (`feedback_git_workflow.md`) and a §0 first-order-rules bullet
-   in this file prescribing **`git commit -- <paths>` per commit**
-   (path arg makes git refuse to pull files outside the listed
-   set). This closes the race window that hit W14D3. Paired
-   one-line edit to §0 first-order rules.
-2. No code change.
+1. **W15 F1 — union-equality assertion on caller-caveats path.**
+   In `bass_py/mio/tests/test_sigma_cone_provenance.py`, extend
+   `test_hj02a_caller_caveats_preserved_alongside_placeholder_tags`
+   with a union-equality clause: after the existing dedup-count
+   check, assert
+   `set(cert.domain_caveats) == set(caller_caveats) ∪ expected_tags`
+   where `expected_tags` is the W15D5 no-caller-caveats reference
+   set. Closes the "over-emission coexists with caller caveats"
+   gap documented in W15 audit §8 R1.
+2. No production-code change.
 
-- Commit tags: `W15D1: AUDIT(W14 F1): scoped git commit -- <paths>
-  rule`.
-- Gate: §0 bullet reads verbatim the new rule; memory entry
-  updated; no functional change.
+- Commit tag: `W16D1: MIO caller-caveats union-equality (W15 F1)`.
+- Gate: touched-surface 1076 → 1076 (+0 new test — assertion
+  strengthening on existing test) or 1076 → 1077 (+1 test if
+  split into a separate function); no regression.
 
-### Days 3–4 — A43 schema-hash + digest test design (deferred from W14)
+### Days 3–4 — A36a.3 literature-Δ YAML sidecar (W14 R3 / W13 F4)
 
-Write `docs/dossier/A43_schema_hash_digest.md` per the W14
-`INDEPENDENT_TRACKS_NEXT_SESSION.md` §2 alternative branch (not
-picked in W14 because W13 F1 had higher priority). Follows the
-A41/A42 structure. Content:
+Close the W13 F4 / W14 F3 literature-Δ drift exposure. Write
+`docs/dossier/A36a_sigma_cone_literature.yaml` mirroring §A36a.3's
+five rows:
 
-1. §A43.1 Purpose (close W7 FM3 at first schema extension).
-2. §A43.2 Scope (which fields are digested; which are metadata).
-3. §A43.3 CI trigger point (on first HJ-03 or HJ-04 landing).
-4. §A43.4 Cross-refs: A32.5 hash-freeze rule; A41.2 report_type
-   extension rule; A42.5 HJ-03 contract table.
-5. §A43.5 Worked example (how a new `consistency_metrics` field
-   would modify the digest set).
+```yaml
+# A36a.3 literature-Δ SSOT mirror — edit paired with A36a.3 table.
+probes:
+  - probe_id: CMB
+    sigma_code_deg: 0.5
+    sigma_lit_deg: 0.5      # Planck 2018 LVI (conservative)
+    delta_deg: 0.0
+    source: "arXiv:1807.06208"
+  - probe_id: CatWISE
+    sigma_code_deg: 6.0
+    sigma_lit_deg: 5.9
+    delta_deg: 0.1
+    source: "arXiv:2009.14826"
+  # ... Radio, CF4pp, BiPoSH follow the same shape
+```
 
-- Commit tag: `W15D3: DOS-A43 schema hash digest design`.
-- Gate: dossier cross-references A32 + A34 + A41 + A42 resolve;
-  field list enumerated; no code change this phase.
+Paired parser-backed test in
+`bass_py/mio/tests/test_sigma_cone_provenance.py`:
+`test_standard_probes_sigma_code_matches_a36a_yaml` — parses the
+YAML, asserts `STANDARD_PROBES[.sigma_cone_deg]` equals
+`sigma_code_deg` per probe; also asserts
+`|sigma_code_deg − sigma_lit_deg| == |delta_deg|` (internal YAML
+self-consistency).
 
-### Days 5–6 — Opportunistic W14 R2 / R3 coverage tightening
+- Commit tag: `W16D3: DOS-A36a YAML sidecar + parity test (W14 R3)`.
+- Gate: new YAML file + +1 test; MIO contribution 106 → 107; no
+  regression. If `yaml` is not already a venv dependency, use
+  `tomllib` with a restructured sidecar OR parse the existing
+  markdown table directly (A37.3 parser has the precedent).
 
-Pick ONE (both documented in W14 audit §8):
+### Days 5–6 — One new A4x dossier or MANU-CH03 extension
 
-1. **R2 — tighten placeholder-tag count.** In
-   `bass_py/mio/tests/test_sigma_cone_provenance.py`, extend
-   `test_hj02a_certificate_carries_placeholder_tags_for_non_promoted_probes`
-   to assert the total caveat count equals `|flagged_set|` when no
-   caller caveats are supplied (catches over-emission). +1 test.
-2. **R3 — A36a.3 literature-Δ sidecar.** Write
-   `docs/dossier/A36a_sigma_cone_literature.yaml` mirroring
-   §A36a.3's five rows; add a parser-backed test in
-   `bass_py/mio/tests/test_sigma_cone_provenance.py` asserting
-   that `STANDARD_PROBES[.sigma_cone_deg]` matches the YAML "C"
-   column per probe. Higher value (closes W13 F4 / W14 F3) but
-   larger surface.
+Pick ONE per caller's judgement — both are in-scope per the
+governing plan's dependency-wait window:
 
-- Commit tags: `W15D5: MIO tighten placeholder-tag count (W14 R2)`
-  or `W15D5: DOS-A36a YAML sidecar + parity test (W14 R3)`.
-- Gate: new test green; MIO contribution 105 → 106 (R2) or
-  105 → 106 + YAML file added (R3); no regression.
+1. **DOS-A44 MIO-HTT handshake sequence.** Write
+   `docs/dossier/A44_mio_htt_handshake_sequence.md` (~200 L)
+   specifying the execution-order contract for
+   `MIO → HTT cross-check` invocations: what MIO writes first
+   (certificate emission; provenance sha resolves at instantiation
+   time — W6 FM6 / W11 F5); what HTT reads second
+   (`is_cross_check=True` consumer, per A34 protocol); how the
+   G19 posture maintained across the handshake (no scalar fusion,
+   no posterior leak). Cross-references A32 / A34 / A41 / A42.
+2. **MANU-CH03 §3.X+8 extension.** Extend `project/00_manuscript/
+   ch03_framework.tex` with a new subsection building on the W4
+   Θ⁴ bridge identity — "From exact a₂ coefficients to the
+   observational pipeline" — that anchors the W15D3 A43 schema-
+   hash discussion in the manuscript's error-hierarchy narrative.
+   Remember: `/project` gitignored, no force-add (W8 FM1 rule);
+   the gate is "+≥ 150 L with banned-vocab scan = 0 hits",
+   verified in audit §7 only.
+
+- Commit tag: `W16D5: DOS-A44 MIO-HTT handshake sequence` OR
+  `W16D5: MANU-CH03 §3.X+8 a₂-to-observations (uncommitted)`.
+- Gate (option 1): new A44 file + cross-reference resolution;
+  no code change. Gate (option 2): ch03_framework.tex +≥ 150 L;
+  banned-vocab scan = 0; NOT committed (W8 FM1).
 
 ### Day 7 — Phase audit + NEXT_SESSION rotation
 
 Standard phase-boundary audit per `feedback_phase_boundary_audit.md`.
-Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W15_2026-04-19.md`
+Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W16_2026-04-19.md`
 (date may shift). Audit MUST include a §6 recurrence check for
 W12 F1 / W14 F1 cross-lane contamination (verify the W15D1
-scoped-commit rule was followed on every W15 sha via
+scoped-commit rule was followed on every W16 sha via
 `git show --stat`).
 
-### Week 15 final gate
+### Week 16 final gate
 
-- [ ] W14 F1 scoped-commit rule landed (durable memory + §0 note;
-      W15D1).
-- [ ] A43 schema-hash digest dossier landed (W15D3).
-- [ ] One of W14 R2 / R3 landed (caller's choice; W15D5).
+- [ ] W15 F1 caller-caveats union-equality landed (W16D1).
+- [ ] A36a YAML sidecar + parity test landed (W16D3; closes
+      W13 F4 / W14 F3; MIO 106 → 107).
+- [ ] One of A44 dossier / MANU-CH03 extension landed (caller's
+      choice; W16D5).
 - [ ] Phase-boundary audit log written; §6 W12 F1 / W14 F1
-      recurrence check returns PASSED (evidence: `git show --stat`
-      per W15 commit shows only this lane's owned paths).
-- [ ] No touched-surface regressions (≥ 1075 passed, 0 failed;
+      recurrence check returns PASSED.
+- [ ] No touched-surface regressions (≥ 1076 passed, 0 failed;
       4 skipped unchanged unless new skips explicitly documented).
 
-### Deferred to Week 14+ (not Week-13 targets)
+### Deferred to Week 16+ (not Week-16 targets)
 
 - **HJ-01 production wiring** — when bass_py W10-02 K_ℓ atlas lands.
   Replace the diagonal independence χ² with the per-ℓ-covariance
@@ -502,7 +561,7 @@ bottom.
 | W6 FM6 GIT-SHA-DRIFT | P3 | git_commit resolves at instantiation time. | Expected behaviour; no action. |
 | **W7 FM1** | **P2** | **`bass_py/tsc/` test count is 598, not 615/700 as earlier §2 Week-7 gate assumed.** **The +116-test Week-7 delta over-delivers the ~+85 planned.** The ≥ 700 absolute-count gate was a stale figure. | **Use 598 as the Week-8 baseline; the new modules landed all tests planned.** |
 | **W7 FM2** | **P2** | TSC-06 re-seeds `numpy.random.default_rng(seed)` and redraws eps1/eps2/eps3 in the same order as `FillingFraction.mc_posterior`; a future htt PR that reorders the draws (or inserts an extra rng.normal call) would silently break stream alignment. | Refactor `FillingFraction.mc_posterior` to accept a pre-drawn triple when the bass/htt lane is quiet. |
-| **W7 FM3** | **P3** | TSC-05 JSON schema freeze is literal-based (`SCHEMA_VERSION = "TSC-05/v1"` + literal key-set test), not hash-based like `MioCertificate`. | Add hash digest test on first schema extension. |
+| **W7 FM3** | **MECH-RESOLVED W15D3** | TSC-05 JSON schema freeze is literal-based (`SCHEMA_VERSION = "TSC-05/v1"` + literal key-set test), not hash-based like `MioCertificate`. | `docs/dossier/A43_schema_hash_digest.md` (`8fae1ba`) specifies the digest mechanism (field name + normalised type + default kind + field order); §A43.6 contains paste-ready test spec. Test landing deferred to first schema extension per §A43.3 (HJ-03 / HJ-04 / TSC-05 v2 trigger). Landing pre-trigger would freeze the wrong digest. |
 | **W7 FM4** (inherited W6 FM2) | **P2** | σ_cone placeholders. | See W6 FM2 row. |
 | **W7 FM5** | **P3** | `bass_py/tsc/integration/` is new surface; not explicitly listed in `pyproject.toml` but covered by default glob. | No action; note only. |
 | **W8 FM1** | **RESOLVED post-W8** | `/project` is intentionally gitignored; "landed" in the audit log means "working-tree updated", not "committed". The three force-added files (ch11, ch12, main.tex) were untracked via `git rm --cached` after user clarification; files preserved on disk. Durable rule added to memory `feedback_project_local_only.md`. | No action — never stage project/ paths. |
@@ -533,10 +592,13 @@ bottom.
 | **W13 F2** | **RESOLVED W14D1** | W13D2 `test_standard_probes_agree_with_registry` compared only `name` set-equality. | Landed in `593a7b6` — `test_standard_probes_have_consistent_sigma_cone_across_producers` asserts `sigma_cone_deg / l_deg / b_deg` exact-equality per PROBE_ID across HJ-02a ↔ HJ-02b. |
 | **W13 F1** | **RESOLVED W14D3** | A34 / A36 / A40 tabular rows labelled evidence-anatomy as HJ-04 while A32 / A41 / A42 bind it to HJ-03. | Landed inside `4eb044b` (FB-1.4-labelled cross-lane commit; rename content exact, commit label wrong — see W14 F1). `grep -rn "HJ-04 evidence" docs/dossier/` now returns zero. |
 | **W13 R3** | **RESOLVED W14D2** | A36 §A36.4 had no pointer to A36a's DOI-anchored σ record. | Landed in `491ecfd` — A36.4 gains a "Provenance anchor (W13D3 / W14D2)" paragraph linking A36a.2 / A36a.3 / A36a.5. |
-| **W14 F1** | **P2** (process) | W12 F1 recurrence on W14D3 — the dossier rename landed inside `4eb044b` labelled `FB-1.4: anisotropic_3_curvature 11-type consolidation`; another lane's concurrent commit ate our staged index. The W13D1 pre-commit gate catches contamination *into* this lane's commits but not commits from other lanes firing in the brief reset→commit window. | W15D1 — durable `feedback_git_workflow.md` update + §0 first-order-rules bullet prescribing `git commit -- <paths>` per commit. |
-| **W14 F2** | **P3** (coverage) | `test_hj02a_certificate_carries_placeholder_tags_for_non_promoted_probes` uses `issubset` rather than set-equality; an over-emission path would pass silently. | W15 R2 candidate — tighten to equality when no caller caveats supplied. |
-| **W14 F3** | **P3** (docs / testing) | Inherited W13 F4 — A36a.3 Δ table still unmechanised. | W15 R3 candidate (YAML sidecar + parity test). |
+| **W14 F1** | **RESOLVED W15D1** | W12 F1 recurrence on W14D3 — the dossier rename landed inside `4eb044b` labelled `FB-1.4`; another lane's concurrent commit ate our staged index. The W13D1 pre-commit gate catches contamination *into* this lane's commits but not commits from other lanes firing in the brief reset→commit window. | Landed in `d48b920` + memory `feedback_git_workflow.md` durable entry — scoped `git commit -- <paths>` rule. Verified effective on all three W15 commits (W15 audit §6 check #1 = PASSED; symmetric verification on cross-lane `3dcc505` shows only bass-lane files). |
+| **W14 F2** | **RESOLVED W15D5** | `test_hj02a_certificate_carries_placeholder_tags_for_non_promoted_probes` uses `issubset` rather than set-equality; an over-emission path would pass silently. | Landed in `293652a` — new `test_hj02a_certificate_caveat_count_equals_flagged_set_with_no_caller_caveats` asserts set-equality + length-equality on the no-caller-caveats path. Caller-caveats residual tracked as W15 F1. |
+| **W14 F3** | **P3** (docs / testing) | Inherited W13 F4 — A36a.3 Δ table still unmechanised. | W16 R2 candidate (W15 deferred in favour of R2 per plan "Pick ONE"; YAML sidecar + parity test). |
 | **W14 F4** | **P3** (docs) | A36a.2 CatWISE row pre-W14D5 text ("No placeholder flag warranted") was overwritten by the promotion log; readers following an old link see different content. | Optional preservation note; zero code impact. |
+| **W15 F1** | **P3** (coverage) | W15D5 over-emission guard exercises only the no-caller-caveats path. An over-emission coexisting with caller-supplied caveats would pass `test_hj02a_caller_caveats_preserved_alongside_placeholder_tags` (dedup-count focused). | W16D1 — extend the caller-caveats test with `set(cert.domain_caveats) == set(caller_caveats) ∪ expected_tags` (union-equality). |
+| **W15 F2** | **P3** (docs) | Residual W14 F3 — A36a.3 literature-Δ table still unmechanised (W15D5 picked R2). | W16D3 — land the YAML sidecar + parity test. |
+| **W15 F3** | **P3** (timing) | A43 digest test is spec-only until first schema extension lands. If neither HJ-03 / HJ-04 / TSC-05 v2 lands within W16–W25, W7 FM3 code-side closure stays pending. | §A43.3 — lands in same PR as the first extension; no standalone action. |
 
 ## §4. Environment and quickstart
 
@@ -544,8 +606,8 @@ bottom.
 # Repo root
 cd /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 
-# Sanity: touched-surface test run.  As of 2026-04-19 post-W14:
-# 1075 passed, 0 failed, 4 skipped (+10 vs W13; 0 skip change).
+# Sanity: touched-surface test run.  As of 2026-04-19 post-W15:
+# 1076 passed, 0 failed, 4 skipped (+1 vs W14; 0 skip change).
 venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
                 bass_py/tsc/admissibility/ \
                 bass_py/tsc/diagnostics/ bass_py/tsc/charts/ \
@@ -555,7 +617,7 @@ venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
 # tsc standalone (18 s; 602 passed post-W9; unchanged W10-W11).
 venv/bin/pytest bass_py/tsc/
 
-# MIO standalone (collection check — 105 tests post-W14D6).
+# MIO standalone (collection check — 106 tests post-W15D5).
 venv/bin/pytest bass_py/mio/ --collect-only -q | tail -1
 
 # Full monorepo suite (slower).
@@ -602,7 +664,7 @@ session's responsibility and must not be touched here:
   V-gate signs the K_ℓ atlas** — see W11 audit §3 for the contract.
 * `plots/physics_gallery/` — gallery refresh is bass_py's per-phase rule.
 
-### §5a. This lane's new territory (updated post-W13)
+### §5a. This lane's new territory (updated post-W15)
 
 Directories that **this** lane now owns (created or will be created
 per the v1.3 plan — bass_py session must not touch):
@@ -621,21 +683,27 @@ per the v1.3 plan — bass_py session must not touch):
   exact-enumeration path on `mio.coherence.redshift_binned.drift_pvalue`;
   Week 13 added `mio/interface/probe_name_registry.py` (frozen
   `REGISTERED_PROBE_IDS` tuple + A37.3 markdown-vs-code parity test);
-  **Week 14 added**: `mio/interface/sigma_cone_provenance.py`
+  Week 14 added `mio/interface/sigma_cone_provenance.py`
   (`PROMOTED_SIGMA_CONE_PROBES` frozenset + per-probe placeholder
   caveat emission; wired into both HJ-02a and HJ-02b producers) +
-  `mio/tests/test_sigma_cone_provenance.py` (9 tests).
+  `mio/tests/test_sigma_cone_provenance.py` (9 tests);
+  **Week 15 added**: +1 over-emission guard test
+  (`test_hj02a_certificate_caveat_count_equals_flagged_set_with_
+  no_caller_caveats`) extending the W14 file to 10 tests. MIO
+  contribution 105 → 106.
 * **`bass_py/tsc/integration/*`** — NEW Week-7 subpackage; currently
   holds TSC-06 `htt_bridge` + tests. Distinct from `bass_py/tsc/{admissibility, charts, diagnostics}/`.
 * `docs/dossier/A13_*`, `A14_*`, `A32_*`, `A33_*`, `A34_*`,
   `A35_*`, `A36_*`, `A36a_*` (W13), `A37_*`, `A38_*`,
-  `A39_*`, `A40_*`, `A41_*` (W12), `A42_*` (W13)
+  `A39_*`, `A40_*`, `A41_*` (W12), `A42_*` (W13), `A43_*` (W15)
   — manuscript dossier. Week 7 added A34 + A35 +
   A38 + A40; `A13_02_*` through `A13_14_*` landed Week 9;
   A36 + A37 landed Week 11; A41 landed Week 12; A36a + A42 landed
-  Week 13; **Week 14 extended A34 / A36 / A40 / A42 (HJ-04 → HJ-03
+  Week 13; Week 14 extended A34 / A36 / A40 / A42 (HJ-04 → HJ-03
   naming sweep) and grew A36.4 + A36a.2 + A36a.5 + A36a.6 with the
-  CatWISE + BiPoSH placeholder retirement narrative**.
+  CatWISE + BiPoSH placeholder retirement narrative;
+  **Week 15 added `A43_schema_hash_digest.md`** (~306 L) —
+  W7 FM3 mechanism dossier, test spec ready for paste-on-extension.
 * `project/00_manuscript/ch03_framework.tex` (MANU-CH03 subsections;
   Week 1–4 landed; ~800 L gap vs v3 §11.3 target remains).
 * `project/00_manuscript/ch11_error_hierarchy.tex` — MANU-CH11-REDESIGN
