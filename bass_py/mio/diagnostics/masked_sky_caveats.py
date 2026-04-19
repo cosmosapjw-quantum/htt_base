@@ -24,6 +24,44 @@ import numpy as np
 from common.healpix_selection import nside_to_npix
 
 
+# ---------------------------------------------------------------------------
+# W12D2 / W5 APPLY-BIAS-AMP carry-forward.
+#
+# ``htt/htt/PR13AH_observables_reintegration.py::_apply_bias_to_direction``
+# scales the measured unit vector by the *injected-truth* amplitude
+# ``|V_true|`` rather than a measured velocity amplitude — because
+# ``ChannelSummary`` does not yet carry a velocity-amplitude field. This
+# is the correct *direction* de-bias but is a P2 limitation for any
+# pipeline that expects the full bias-vector correction.
+#
+# The W5 audit (`AUDIT_PHASE_IND_TRACKS_W5_2026-04-19.md` §APPLY-BIAS-AMP)
+# explicitly warns against patching `_apply_bias_to_direction` itself
+# before the upstream amplitude field lands. Instead, this module exposes
+# the canonical caveat string so any MIO consumer that runs on a masked-
+# sky catalogue with mock-bias correction applied downstream can
+# propagate the limitation into ``MioCertificate.domain_caveats``
+# (v3 §4.5.2.1).
+# ---------------------------------------------------------------------------
+
+BIAS_AMP_CAVEAT = (
+    "apply_bias_to_direction_scales_by_amp_true_not_amp_meas "
+    "(W5 APPLY-BIAS-AMP carry-forward; valid until ChannelSummary grows "
+    "a velocity-amplitude field — see htt/PR13AH "
+    "_apply_bias_to_direction + W5 audit §APPLY-BIAS-AMP)"
+)
+
+
+def apply_bias_amp_caveat() -> str:
+    """Return the canonical APPLY-BIAS-AMP caveat string.
+
+    Callers that construct a `MioCertificate` alongside a mock-bias
+    correction applied by `htt.PR13AH._apply_bias_to_direction` should
+    append this string to the certificate's ``domain_caveats`` so the
+    P2 amplitude-scaling limitation is visible to downstream readers.
+    """
+    return BIAS_AMP_CAVEAT
+
+
 @dataclass(frozen=True)
 class SkyCoverageReport:
     """Masked-sky coverage summary for MIO certificate caveats."""
@@ -57,6 +95,7 @@ def build_report(
     ecliptic_pole_gap_deg: Optional[float] = None,
     mask_provenance: str = "unknown",
     extra_caveats: Optional[Sequence[str]] = None,
+    mock_bias_applied: bool = False,
 ) -> SkyCoverageReport:
     """Build a `SkyCoverageReport` from a per-pixel mask.
 
@@ -75,6 +114,14 @@ def build_report(
     extra_caveats
         Optional caller-supplied caveat strings appended to the auto-
         generated list.
+    mock_bias_applied
+        Set ``True`` when the masked catalogue is being processed
+        alongside a mock-bias correction from
+        ``htt.PR13AH._apply_bias_to_direction``. When set, the report
+        appends :data:`BIAS_AMP_CAVEAT` to ``caveats`` so the APPLY-BIAS-
+        AMP P2 limitation (W5 audit carry-forward) is surfaced to
+        downstream `MioCertificate.domain_caveats`. Default ``False``
+        preserves the pre-W12 call surface exactly.
     """
     mask = _ensure_pixel_mask(mask_pix, nside)
     n_pix_total = int(mask.size)
@@ -92,6 +139,8 @@ def build_report(
         )
     auto_caveats.append(f"f_sky_effective={f_sky:.6f}")
     auto_caveats.append(f"mask_provenance={mask_provenance}")
+    if mock_bias_applied:
+        auto_caveats.append(BIAS_AMP_CAVEAT)
     if extra_caveats:
         auto_caveats.extend(str(c) for c in extra_caveats)
 
@@ -112,4 +161,10 @@ def as_caveats_list(report: SkyCoverageReport) -> List[str]:
     return list(report.caveats)
 
 
-__all__ = ["SkyCoverageReport", "build_report", "as_caveats_list"]
+__all__ = [
+    "BIAS_AMP_CAVEAT",
+    "SkyCoverageReport",
+    "apply_bias_amp_caveat",
+    "as_caveats_list",
+    "build_report",
+]

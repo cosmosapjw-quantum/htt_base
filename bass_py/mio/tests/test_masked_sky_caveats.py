@@ -11,7 +11,9 @@ import pytest
 
 from common.healpix_selection import build_zoa_mask, nside_to_npix
 from mio.diagnostics.masked_sky_caveats import (
+    BIAS_AMP_CAVEAT,
     SkyCoverageReport,
+    apply_bias_amp_caveat,
     as_caveats_list,
     build_report,
 )
@@ -131,3 +133,48 @@ def test_zoa_half_angle_zero_covers_full_sky():
         mask_provenance="trivial",
     )
     assert report.f_sky_effective == pytest.approx(1.0)
+
+
+# ---------------------------------------------------------------------------
+# W12D2 — W5 APPLY-BIAS-AMP carry-forward hardening.
+# ---------------------------------------------------------------------------
+
+
+def test_bias_amp_caveat_constant_mentions_w5_tag():
+    """The canonical caveat must cite the W5 audit tag so grep-based
+    audits can trace the carry-forward across future refactors."""
+    assert isinstance(BIAS_AMP_CAVEAT, str)
+    assert BIAS_AMP_CAVEAT  # non-empty
+    assert "APPLY-BIAS-AMP" in BIAS_AMP_CAVEAT
+    assert "amp_true" in BIAS_AMP_CAVEAT
+    assert "amp_meas" in BIAS_AMP_CAVEAT
+
+
+def test_apply_bias_amp_caveat_returns_constant():
+    """Helper mirrors the module constant (spoiler: so users can import
+    either entry point)."""
+    assert apply_bias_amp_caveat() == BIAS_AMP_CAVEAT
+
+
+def test_build_report_excludes_bias_amp_caveat_by_default():
+    """Default behaviour preserves the pre-W12 call surface verbatim."""
+    mask = np.ones(nside_to_npix(4), dtype=bool)
+    report = build_report(mask, 4, mask_provenance="all_sky")
+    assert BIAS_AMP_CAVEAT not in report.caveats
+    # And the legacy-shape assertions still hold.
+    assert any("f_sky_effective" in c for c in report.caveats)
+    assert any("mask_provenance=all_sky" in c for c in report.caveats)
+
+
+def test_build_report_includes_bias_amp_caveat_when_flag_set():
+    """Flipping ``mock_bias_applied=True`` appends the canonical caveat."""
+    mask = np.ones(nside_to_npix(4), dtype=bool)
+    report = build_report(
+        mask, 4, mask_provenance="all_sky", mock_bias_applied=True,
+    )
+    assert BIAS_AMP_CAVEAT in report.caveats
+    # Ensure the caveat propagates through as_caveats_list (MIO cert path).
+    caveats = as_caveats_list(report)
+    assert BIAS_AMP_CAVEAT in caveats
+    # And the auto-caveats are still present — the flag is additive.
+    assert any("f_sky_effective" in c for c in caveats)
