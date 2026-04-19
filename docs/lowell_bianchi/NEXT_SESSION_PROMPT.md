@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-META-7.CLOSE → FB-META-8**; Phase FB-7 skeleton cycle sealed, handoff reset to the next-phase META placeholder)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META8_2026-04-20.md` (pre-flight scaffold)
-**Current target session**: **FB-META-8** — paste the Phase FB-8 META prompt
-**Phase status**: FB-META-8 in progress on 2026-04-20; FB-8.1 through FB-8.7 are planted, the observer contracts plus the likelihood wrapper are in place, and the working baseline stands at `3403 passed + 60 skipped`
+**Last rotated**: 2026-04-20 (**FB-META-8.CLOSE → FB-META-9**; Phase FB-8 skeleton cycle sealed and the handoff now targets the next META prompt)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META8_2026-04-20.md` (phase close note)
+**Current target session**: **FB-META-9** — paste the Phase FB-9 META prompt
+**Phase status**: Phase FB-8 closed on 2026-04-20 with seven committed skeleton plants; the audited baseline now stands at `3403 passed + 60 skipped`
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,35 +37,41 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-META-8 — paste the Phase FB-8 META prompt
+# FB-META-9 — paste the Phase FB-9 META prompt
 
-Phase FB-7 closed with five committed skeleton plants and the audited
-baseline now stands at `3,403 passing + 53 skipped`.
+Phase FB-8 closed with seven committed skeleton plants and the audited
+baseline now stands at `3,403 passing + 60 skipped`.
 
-Start the next session by pasting the canonical Phase FB-8 META prompt
-as the first user message. Do not reuse the older FB-META-7 handoff
+Start the next session by pasting the canonical Phase FB-9 META prompt
+as the first user message. Do not reuse the older FB-META-8 handoff
 text; the next phase should begin from a fresh prompt.
 
 Important carry-forward scope pin:
-- FB-7.4 ended at the **cosmological frame only**.
-- FB-8 begins the observer-frame layer via
-  `bass.likelihood.observer_frame_adapter`.
+- The observer-frame layer is now skeleton-planted across
+  `bass.observer` and `bass.likelihood.observer_frame_adapter`.
+- The load-bearing distinction `(beta_cosmo, v_hat_cosmo) != (beta_obs,
+  v_hat_obs)` is pinned in code, docs, and the FB-8 audit.
 
 Relevant carry-forward anchors:
 - Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
-- Latest audited pre-flight artifact:
+- Latest audited Phase FB-8 artifact:
   `docs/audits/AUDIT_PHASE_FB_META8_2026-04-20.md`
-- New observer-frame package:
+- Observer-frame package:
   `htt/bass/observer/`
-- New BASS likelihood package:
-  `htt/bass/likelihood/`
-- Latest audited Phase FB-7 artifact:
-  `docs/audits/AUDIT_PHASE_FB_META7_2026-04-20.md`
+- Observer-frame likelihood wrapper:
+  `htt/bass/likelihood/observer_frame_adapter.py`
 - Successor development log:
   `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB8_ONWARD.md`
+- Explicit source gaps preserved in the FB-8 audit:
+  EMM 2012 `§5.2` preview, the prompt's `Wald 1984` locator, and the
+  missing on-disk Lowell `§14` reference.
+- Latest audited Phase FB-7 close note:
+  `docs/audits/AUDIT_PHASE_FB_META7_2026-04-20.md`
+- BASS likelihood package:
+  `htt/bass/likelihood/`
 - Latest regression anchor:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3403 passed, 53 skipped`
+  → `3403 passed, 60 skipped`
 ```
 
 ---

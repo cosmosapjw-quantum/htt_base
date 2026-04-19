@@ -173,3 +173,20 @@ cross-reference.
 - **Carry-forward**: phase-close regression + FB-META-9 handoff.
 - **Notes**: no dummy PNGs were generated; the no-op is documented in
   both the gallery tree and the audit.
+
+### FB-META-8.CLOSE — Phase FB-8 skeletons planted (7 sub-phases)
+
+- **Scope**: Closed the FB-8 skeleton cycle after planting
+  `FB-8.1` through `FB-8.7`, reran the full `bass/ tsc/` regression, and
+  rotated the bootstrap handoff to FB-META-9.
+- **Commit anchor**: see `git log --grep='FB-META-8.CLOSE'`.
+- **Test delta**: 3,403 passing + 53 skipped → 3,403 passing + 60
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META8_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META8_2026-04-20.md)
+  (phase-close note).
+- **Gallery**: no-op (topic reserved; no fabricated PNGs).
+- **Carry-forward**: FB-META-9 bootstrap plus the explicit source gaps
+  recorded in the audit.
+- **Notes**: observer-versus-cosmological type distinction is now pinned
+  across the code skeletons, the docs, and the handoff contract.

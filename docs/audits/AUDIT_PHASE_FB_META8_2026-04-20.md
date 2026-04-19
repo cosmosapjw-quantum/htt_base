@@ -488,3 +488,24 @@ fake PNGs avoided? yes
 **Regression after plant**: expected full-suite movement
 `3403 passed + 59 skipped` → `3403 passed + 60 skipped` pending the
 phase-close gate.
+
+## Phase close
+
+- **Status**: Pass — Phase FB-8 skeleton cycle sealed.
+- **Sub-phases complete**: `§FB-8.1` through `§FB-8.7` all carry an
+  explicit type-distinct pin.
+- **Final regression gate**:
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `3403 passed, 60 skipped, 26 warnings`.
+- **Gallery status**: no-op by design; the reserved topic directory
+  `figures/physics_gallery/14_observer_frame/` and the updated gallery
+  README record the absence of rendered FB-8 PNGs explicitly.
+- **Open source gaps kept explicit**:
+  1. Ellis / Maartens / MacCallum 2012 `§5.2` preview not accessible in
+     session, so the exact non-commutation prose remains unquoted.
+  2. Prompt-supplied `Wald 1984` likelihood-ratio locator not verified
+     cleanly in-session; asymptotic-calibration citation stays a TODO.
+  3. Prompt-supplied on-disk Lowell `§14` reference remains absent in
+     this worktree; FB-8.6 keeps that gap visible.
+- **Handoff**: `NEXT_SESSION_PROMPT.md §2` rotated to
+  `FB-META-9 — paste the Phase FB-9 META prompt`.
