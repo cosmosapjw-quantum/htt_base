@@ -96,22 +96,50 @@ class FillingFraction:
         xm = self.x_max(eps1_ref)
         return self.x_V(eps1) / xm if xm > 0 else np.inf
     
-    def mc_posterior(self, scenario='S3', N=100000, seed=42):
+    def mc_posterior(self, scenario='S3', N=100000, seed=42,
+                     *, pre_drawn_eps=None):
         """Monte Carlo posterior for ℱ.
-        
+
         Propagates uncertainties in ε₁, ε₂, ε₃ through the ℱ formula.
         Returns (samples, median, q16, q84, q025, q975).
+
+        Parameters
+        ----------
+        scenario, N, seed
+            As before — back-compat with the pre-W9 signature.
+        pre_drawn_eps
+            Optional triple ``(eps1_samp, eps2_samp, eps3_samp)`` of
+            equal-length 1-D arrays. When supplied, the internal
+            ``np.random.default_rng(seed)`` draws are skipped and the
+            caller-supplied stream is used directly. This closes
+            W7 FM2 (tsc/htt stream-alignment coupling): the bridge can
+            draw the triple once and pass it to both the htt path and
+            its tsc re-derivation, removing the implicit assumption
+            that htt's internal rng call order never changes.
         """
-        rng = np.random.default_rng(seed)
-        sc = SCENARIOS[scenario]
-        
-        # Sample ε₁ (split-normal around scenario value)
-        e1_samp = sc['eps1'] + rng.normal(0, 0.30e-3, N)
-        e1_samp = np.clip(e1_samp, 0, None)
-        
-        # Sample ε₂, ε₃ (Gaussian)
-        e2_samp = rng.normal(C.eps2, 1.5e-6, N)
-        e3_samp = rng.normal(C.eps3, 2.0e-6, N)
+        if pre_drawn_eps is not None:
+            e1_samp, e2_samp, e3_samp = pre_drawn_eps
+            e1_samp = np.asarray(e1_samp)
+            e2_samp = np.asarray(e2_samp)
+            e3_samp = np.asarray(e3_samp)
+            if not (e1_samp.shape == e2_samp.shape == e3_samp.shape):
+                raise ValueError(
+                    "pre_drawn_eps arrays must share the same shape; "
+                    f"got {e1_samp.shape}, {e2_samp.shape}, {e3_samp.shape}"
+                )
+            N = int(e1_samp.shape[0])
+            e1_samp = np.clip(e1_samp, 0, None)
+        else:
+            rng = np.random.default_rng(seed)
+            sc = SCENARIOS[scenario]
+
+            # Sample ε₁ (split-normal around scenario value)
+            e1_samp = sc['eps1'] + rng.normal(0, 0.30e-3, N)
+            e1_samp = np.clip(e1_samp, 0, None)
+
+            # Sample ε₂, ε₃ (Gaussian)
+            e2_samp = rng.normal(C.eps2, 1.5e-6, N)
+            e3_samp = rng.normal(C.eps3, 2.0e-6, N)
         
         # Reference ε₁ for x_max (kinematic dipole = 1.233e-3 from SSOT)
         e1_ref = C.eps1_kin

@@ -316,3 +316,89 @@ class TestTscHttFfCrossCheckNotMerged:
         doc = module.__doc__ or ""
         assert "G19" in doc
         assert "cross-check" in doc.lower()
+
+
+# ---------------------------------------------------------------------------
+# §7 - W7 FM2 stream-alignment refactor regression
+# ---------------------------------------------------------------------------
+
+
+class TestW7FM2StreamAlignment:
+    """Regression for W7 FM2 close-out (W9D5): the bridge must pass a
+    pre-drawn (eps1, eps2, eps3) triple to htt's mc_posterior via the
+    ``pre_drawn_eps`` kwarg, so a future reordering of htt's internal
+    rng call order cannot silently desynchronise the tsc / htt paths.
+    """
+
+    def test_mc_posterior_accepts_pre_drawn_triple(self):
+        """FillingFraction.mc_posterior honours the W9D5 kwarg."""
+        from htt.core.analysis_extended import FillingFraction
+
+        rng = np.random.default_rng(20260419)
+        N = 2_000
+        eps1 = np.abs(1.476e-3 + rng.normal(0, 0.30e-3, N))
+        eps2 = rng.normal(9.2e-6, 1.5e-6, N)
+        eps3 = rng.normal(4.0e-6, 2.0e-6, N)
+
+        ff = FillingFraction(w=0.0)
+        F_samp, med, q16, q84, q025, q975 = ff.mc_posterior(
+            scenario="S3", N=N, seed=0,
+            pre_drawn_eps=(eps1, eps2, eps3),
+        )
+        assert F_samp.size > 0
+        assert q16 < med < q84
+
+    def test_pre_drawn_shape_mismatch_raises(self):
+        from htt.core.analysis_extended import FillingFraction
+
+        ff = FillingFraction()
+        with pytest.raises(ValueError, match="same shape"):
+            ff.mc_posterior(
+                pre_drawn_eps=(
+                    np.ones(10), np.ones(11), np.ones(10),
+                ),
+            )
+
+    def test_cross_check_stable_under_htt_rng_reordering(self):
+        """If htt inserted a phony rng draw at the top of mc_posterior
+        (future refactor, out-of-lane), the pre_drawn_eps pathway makes
+        the bridge cross-check immune. We simulate that here by wrapping
+        htt's mc_posterior and drawing an extra rng.normal inside before
+        delegating to the real implementation with the same
+        pre_drawn_eps.
+        """
+        from tsc.integration import htt_bridge
+        from htt.core import analysis_extended as htt_ae
+
+        real = htt_ae.FillingFraction.mc_posterior
+
+        def reordered(self, scenario='S3', N=100000, seed=42,
+                      *, pre_drawn_eps=None):
+            # Pretend htt inserts a phony rng draw — with pre_drawn_eps
+            # supplied by the bridge, the result must be unaffected.
+            np.random.default_rng(seed).normal(size=7)
+            return real(
+                self, scenario=scenario, N=N, seed=seed,
+                pre_drawn_eps=pre_drawn_eps,
+            )
+
+        r_orig = ff_htt_mc_cross_check(scenario="S3", N=10_000, seed=20260419)
+        try:
+            htt_ae.FillingFraction.mc_posterior = reordered
+            r_reordered = ff_htt_mc_cross_check(
+                scenario="S3", N=10_000, seed=20260419,
+            )
+        finally:
+            htt_ae.FillingFraction.mc_posterior = real
+
+        # Bit-identical tsc / htt values across the reordering.
+        assert r_orig.F_Bayes_tsc == r_reordered.F_Bayes_tsc
+        assert r_orig.F_Bayes_htt_mean == r_reordered.F_Bayes_htt_mean
+        assert r_orig.F_Bayes_htt_median == r_reordered.F_Bayes_htt_median
+
+    def test_cross_check_rtol_preserved_post_refactor(self):
+        """Agreement at the TSC-06 published rtol must survive the
+        pre_drawn_eps refactor (W9D5 close of W7 FM2).
+        """
+        r = ff_htt_mc_cross_check(scenario="S3", N=20_000, seed=20260419)
+        assert_cross_check_consistent(r, rtol=1e-4)

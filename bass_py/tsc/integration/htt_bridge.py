@@ -275,20 +275,27 @@ def ff_htt_mc_cross_check(
             f"scenario {scenario!r} not in htt SCENARIOS {list(SCENARIOS)}"
         )
 
-    # Path HTT — identical to htt.FillingFraction.mc_posterior body.
-    ff = FillingFraction(w=w)
-    F_samp, med, q16, q84, q025, q975 = ff.mc_posterior(
-        scenario=scenario, N=N, seed=seed,
-    )
-    htt_val = float(np.mean(F_samp))
-
-    # Path TSC — reseed the same RNG and re-derive.
+    # Draw the shared (eps1, eps2, eps3) triple ONCE on the bridge side.
+    # Both paths consume the same stream via pre_drawn_eps / explicit
+    # arguments — no hidden coupling to htt's internal rng call order.
+    # (W9D5 close of W7 FM2.)
     rng = np.random.default_rng(seed)
     sc = SCENARIOS[scenario]
     e1_samp = sc["eps1"] + rng.normal(0, 0.30e-3, N)
     e1_samp = np.clip(e1_samp, 0, None)
     e2_samp = rng.normal(HttC.eps2, 1.5e-6, N)
     e3_samp = rng.normal(HttC.eps3, 2.0e-6, N)
+    shared_triple = (e1_samp, e2_samp, e3_samp)
+
+    # Path HTT — htt recomputes F_Bayes from the shared draws.
+    ff = FillingFraction(w=w)
+    F_samp, med, q16, q84, q025, q975 = ff.mc_posterior(
+        scenario=scenario, N=N, seed=seed,
+        pre_drawn_eps=shared_triple,
+    )
+    htt_val = float(np.mean(F_samp))
+
+    # Path TSC — re-derive from the same shared triple.
     tsc_val = _tsc_filling_fraction_from_stream(
         e1_samp, e2_samp, e3_samp,
         w=w,
