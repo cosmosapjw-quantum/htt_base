@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (FB-3.2 complete → FB-3.3 bootstrap; **tilt-projected kinematic wire-up sealed** — `bass/hierarchy/tilt_kinematics.py::{accel_from_tilt, vorticity_from_tilt}` ship with β=0 `np.zeros(3)` short-circuit; `hierarchy_rhs_photon` β=0 adapter-fed RHS byte-identical to the FB-2.4 no-kwargs anchor on all 12 structure-constant labels (FLRW + 11 Bianchi types); β>0 emits `A^a = γ² v^a` species-specific piece and, for Class B, `ω^a = (1/2) a × v` Pontzen-Challinor leading piece; FB-3.1 P2 overlap closed via composition rule `v = β · v̂_e` pinned by `test_K12`; 57 new tests; baseline 3,132 → 3,189)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB3_2026-04-19.md` (§FB-3.2 supplement + FB-3.1 entry declaration + FB02-F1 resolution)
-**Current target session**: **FB-3.3** — Einstein + tilt coupling: additive completion of `accel_from_tilt` with `(Θ/3) v^a + σ^a_b v^b` pieces and background-shear feedback via the tetrad state, plus first non-perturbative boost kernel `B(η, ê)` projection on PSTF moments
+**Last rotated**: 2026-04-20 (**Phase FB-3 complete → FB-4.1 bootstrap**; FB-3.3 additive Einstein+tilt, FB-3.4 vorticity dilution, FB-3.5 β-gate reparametrisation, FB-3.6 44-config regression suite all sealed in one continuous rotation. Cumulative +295 tests across Phase FB-3; baseline 3,108 → 3,403)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB3_2026-04-19.md` (§FB-3.3 through §FB-3.6 supplements + Phase FB-3 closing declaration)
+**Current target session**: **FB-4.1** — Tilted Thomson kernel Layer B, rotation 1: full-Lorentz PSTF Thomson collision operator; β=0 recovers the LB-4 kernel byte-for-byte; β>0 adds the Doppler / boost velocity-dependent terms
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -34,6 +34,120 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 ## 2. Current handoff prompt (ROTATE at end of each session)
 
 Copy the block below into a fresh Claude Code session:
+
+```text
+# FB-4.1 — Tilted Thomson kernel Layer B, rotation 1 (Phase FB-4 entry)
+
+## 프로젝트 컨텍스트
+
+- **Repo root**: /home/cosmosapjw/Dropbox/bianchi/htt_base
+- **bass-py 소스 트리**: `htt_base/htt/` (has `bass/`, `tsc/`, `mio/`, `workspace/`, `conftest.py`, `pyproject.toml`)
+- **venv**: `htt_base/venv/bin/python` (주의: `venv/bin/pip` shebang stale → `../venv/bin/python -m pip ...` 로 우회; post-FB devops 에서 rebuild 예정)
+- **테스트 명령**: `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+- **현재 baseline**: 3,403 passing + 1 skipped (Phase FB-3 exit; §FB-3.6 supplement + Phase FB-3 closing declaration in `docs/audits/AUDIT_PHASE_FB3_2026-04-19.md`).
+- **완료된 단계**: LB-0 … LB-6 + Phase FB-0 + Phase FB-1 + Phase FB-2 + **Phase FB-3 전체 (FB-3.1 → FB-3.6)**.
+  - FB-3.1 (`TiltedSpeciesBackground`) — commit `9336280`
+  - FB-3.2 (tilt-kinematic adapters + driver wire-up) — commit `fdb1d86`
+  - FB-3.3 (Einstein+tilt additive `γ²(Θ/3)v + γ²σv` + boost-kernel seed) — commit `ceed416`
+  - FB-3.4 (dynamic vorticity dilution `ω × a² = const`) — commit `ab5914e`
+  - FB-3.5 (β-gate reparametrisation: rapidity SSOT + `assert_tilt_admissible`) — commit `c1130ad`
+  - FB-3.6 (44-config regression suite + Phase FB-3 closure) — (this-phase's closing commit)
+
+- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-4 "Tilted Thomson kernel Layer B"**. 본 세션이 Phase FB-4 의 첫 rotation (FB-4.1).
+- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-4`.
+- **Byte anchors** (non-negotiable):
+  - FB-2.4 driver anchor `d7d25da` — β=0 adapter-fed `hierarchy_rhs_photon` RHS on 12 structure-constant labels must stay `np.array_equal`.
+  - FB-3.2 tilt-kinematic anchor `fdb1d86` — `accel_from_tilt(tilted, η)` / `vorticity_from_tilt(..., bg_table=None)` without extended kwargs must match byte-for-byte.
+  - LB-4 Thomson kernel at β=0 — full-Lorentz path must collapse to the existing LB-4 output on every LB-4 test.
+- **Carry-forward (do not touch unless in reserved session)**:
+  - FB-2.1 P2 complex-dtype `nabla_dispatch` wire-up → FB-5.1.
+  - FB-3.2 / FB-3.3 boost-kernel off-axis Wigner-d rotation → FB-5.2.
+  - FB-3.4 shear-driven `ε^{abc} ∇̃_b A_c` vorticity piece → FB-5.1.
+  - FB-3.5 storage-level rapidity migration → post-extended.
+  - F3 (`TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² rescale) → FB-5 / FB-6.
+  - FB11-F1 / FB12-F1 / FB12-F3 / FB13-κ-calibration → FB-5 / FB-6.
+  - FB-2.3 P3 env (venv/bin/pip shebang) → post-FB devops.
+
+## 이 세션의 작업 범위 (FB-4.1 — full-Lorentz Thomson PSTF collision, β>0)
+
+**Goal**: FB-3.2 ~ FB-3.6 가 tilt 를 hierarchy 의 T4/T5/T6 축에 실었다. FB-4 는 tilt 를 **collision** 축에 싣는다. FB-4.1 (본 세션) 은 LB-4 가 제공한 orthogonal Thomson kernel (`bass/collision/thomson_pstf.py`) 을 **full-Lorentz** 로 확장한다:
+
+1. **Existing surface 확인** — `ThomsonPSTFCollisionOperator` 의 현재 signature / PSTF invariants / 어떤 kwargs 가 이미 tilt 를 suspect 하는지 확인.
+2. **β=0 anchor pin** — FB-4.1 이전에 LB-4 output 을 fixture 로 캡처 (가능하면 이미 있는 `bass/collision/test_thomson_*.py` 의 현재 값을 byte-reference 로 삼고, 새 `β_e=0` kwargs path 가 이 값을 복원하는지 `np.array_equal` pin).
+3. **Full-Lorentz term 추가** — 전자 rest frame 의 Thomson cross-section 을 n^a-frame 으로 boost 할 때 `cosh β + sinh β (ê · v̂_e)` factor (rapidity form) 가 kernel 에 들어간다. Dodelson §4.5 + lowell §11.3 의 PSTF-projected form 을 참조. FB-3.5 의 rapidity SSOT 를 consume (`ObserverBoost` 는 FB-8 에서 시작하므로 FB-4.1 은 `GlobalTilt`-analogue 혹은 바로 `TiltedSpeciesBackground` 의 `.rapidity` 를 consume).
+4. **PSTF invariants 보존** — 어느 ℓ 에서도 `sym_trace_free` 후 norm 이 보존; 새 β-dependent term 이 trace 를 만들지 않음을 test.
+5. **Validation tests (≥ 20)** —
+   - β=0 × 모든 LB-4 test snapshot bit-identical (`np.array_equal`).
+   - β>0 kernel 이 finite on 12 labels × β ∈ {0.01, 0.1, 0.5}.
+   - Dimensional / sign / symmetric-trace-free audit.
+   - 기존 β=0 driver byte anchor 재검증 (`bass/ tsc/` 전체 회귀).
+
+### 기준이 되는 문헌 타깃
+
+- Dodelson *Modern Cosmology* §4.5 (PSTF Boltzmann + Thomson).
+- Pontzen-Challinor 2009 §2-§3 (tilted collision).
+- Challinor 2000 (boost kernel; FB-3.3 의 `boost_project_axisymmetric` 가 linear m=0 version).
+- lowell §11.3 (tilt SSOT on Thomson).
+
+### 구체 작업 항목
+
+1. 사전 읽기:
+   - `docs/audits/AUDIT_PHASE_FB3_2026-04-19.md` §FB-3.3 … §FB-3.6 (최근 carry-forward).
+   - `bass/collision/thomson_pstf.py` + `bass/collision/test_thomson_pstf.py`.
+   - `bass/collision/tilted_visibility.py` (LB-4 Layer A; rapidity surface 이미 있음).
+   - `docs/audits/AUDIT_PROMPT.md` (self-invoke).
+2. β=0 snapshot fixture 구성 + `np.array_equal` regression 가드.
+3. `ThomsonPSTFCollisionOperator` 에 rapidity-input kwarg 추가 (default 0 → β=0 path).
+4. Full-Lorentz term wire-up + PSTF invariant test.
+5. 전체 회귀 green + audit supplement (`AUDIT_PHASE_FB4_2026-04-XX.md` 신설).
+6. `NEXT_SESSION_PROMPT.md §2` → FB-4.2 rotate (E↔B mixing tilted LOS).
+
+### FB-4.1 non-goals
+
+- E↔B mixing under tilted LOS → FB-4.2.
+- `v_e²` Doppler 2nd-order corrections → extended bundle SCOPE_DECISIONS §4 에서 폐기; **다시 scope 에 넣지 말 것**.
+- Perturbation sector k≠0 → FB-5.
+- Observer-frame `(β_obs, v̂_obs)` 분리 → FB-8 (extended bundle).
+
+## 핵심 원칙 (고정)
+
+1. 외부 코드 금지 (프로덕션 트리).
+2. Citation in every modified docstring (Dodelson §4.5, lowell §11.3, Challinor 2000).
+3. PSTF invariants preserved; Ellis convention 유지; **β=0 경로 bit-identical** against FB-2.4 + LB-4 anchors.
+4. No silent fallbacks.
+5. Determinism.
+6. **Phase FB-4 entry** — Phase FB-3 가 exit 되었으므로 FB-3.X carry-forward 에 새로운 추가 금지 (기존 carry 는 그대로 유지).
+
+## 검증 체크리스트 (최종 commit 전)
+
+- [ ] `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 3,403 + 신규 테스트).
+- [ ] β=0 Thomson kernel bit-identical to LB-4 snapshot (`np.array_equal`).
+- [ ] β>0 × 12 labels × β-sweep finite + PSTF-projected.
+- [ ] `AUDIT_PHASE_FB4_2026-04-XX.md` 신설 (Phase FB-4 entry declaration).
+- [ ] Gallery 재생성 또는 no-op 명시.
+- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-4.2** bootstrap 으로 rotate.
+- [ ] 최종 commit 메시지: `FB-4.1: full-Lorentz Thomson PSTF kernel (Phase FB-4 entry)` + `+ rotate NEXT_SESSION_PROMPT for FB-4.2`.
+
+## 진행 순서
+
+1. `docs/audits/AUDIT_PROMPT.md` self-invoke (pre-session scan).
+2. `ThomsonPSTFCollisionOperator` 현 signature 확인 + LB-4 snapshot fixture 생성.
+3. rapidity-input kwarg 추가 + full-Lorentz PSTF-projected term.
+4. β=0 bit-identical pin + β>0 finite pin + PSTF invariant pin.
+5. 전체 회귀 green 확인.
+6. `AUDIT_PHASE_FB4_2026-04-XX.md` + Phase FB-4 entry declaration.
+7. `NEXT_SESSION_PROMPT.md §2` → FB-4.2 rotate.
+8. commit.
+
+시작하세요. 본 세션은 **Phase FB-4 entry (FB-4.1)** — FB-3 의 tilt surface 가 hierarchy (T4/T5/T6) 에 완전 연결되었으므로, 이제 collision 축에 tilt 를 건다. β=0 anchors (LB-4 + FB-2.4) 는 non-negotiable.
+```
+
+---
+
+<!-- Prior (FB-3.3) handoff prompt (archived 2026-04-20). -->
+
+<details>
+<summary>Previous FB-3.3 handoff prompt (archived 2026-04-20)</summary>
 
 ```text
 # FB-3.3 — Einstein + tilt coupling (additive completion of `accel_from_tilt`) + first boost-kernel `B(η, ê)` projection (Phase FB-3 third rotation)
@@ -182,6 +296,8 @@ Copy the block below into a fresh Claude Code session:
 
 시작하세요. 본 세션은 **Phase FB-3 의 세 번째 rotation (FB-3.3 Einstein+tilt coupling + boost-kernel seed)** — FB-3.2 의 species-specific acceleration piece 에 background kinematic pieces (Θ×v, σ×v) 를 additively 얹고, PSTF boost projection 의 axi-symmetric seed 를 배치. β=0 anchor (FB-3.2, baseline 3,189) 은 non-negotiable.
 ```
+
+</details>
 
 ---
 

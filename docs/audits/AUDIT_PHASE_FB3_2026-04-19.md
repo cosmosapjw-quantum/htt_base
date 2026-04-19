@@ -717,6 +717,90 @@ unchanged).
 - **Gallery**: no-op; FB-3.6 β-sweep is the gallery checkpoint.
 - **Baseline**: 3,232 → 3,286 (+54).
 
+---
+
+## §FB-3.6 Supplement — 44-configuration tilted regression suite
+
+- **Sub-phase**: FB-3.6 — full β-sweep × structure-constant regression
+  across the FB-3 stack; Phase FB-3 closure.
+- **Prior baseline** (post-FB-3.5): 3,286 passing + 1 skipped.
+- **This-session baseline**: 3,403 passing + 1 skipped (+117 new tests).
+
+### §FB-3.6.0 Target reconstruction
+
+| Layer | Claim | Implementation | Output |
+|---|---|---|---|
+| Regression | The FB-3.1 → FB-3.5 tilt stack produces finite `hierarchy_rhs_photon` output on 48 configurations (β ∈ {0, 0.01, 0.1, 0.5} × 12 labels) | S-01 parametrised sweep | boolean `np.isfinite(dy).all()` |
+| Invariant | β = 0 adapter-fed RHS byte-identical to the no-kwargs FB-2.4 anchor on 12 labels | S-02 with `np.array_equal` | pass/fail per label |
+| Invariant | FB-3.3 extended kwargs at β = 0 remain byte-identical (anchor survives the stack) | S-05 on 12 labels | pass/fail per label |
+| Invariant | FB-3.4 dynamic vorticity at β = 0 is zero across every (Class A, Class B) cross | S-06 30-pair matrix | `np.array_equal` |
+| Stress | β-jump between two RHS calls — no cached-state leak | S-03 | two distinct finite outputs |
+| FB-3.5 parity | rapidity-path ctor matches velocity-path ctor in RHS | S-04 at `rtol=1e-12` | — |
+| Hygiene | no silent FPE on the full sweep | S-08 with `np.errstate(invalid='raise', over='raise')` | — |
+
+### §FB-3.6.8 Minimal test set
+
+| Test | Parametrisation | Verdict |
+|---|---|---|
+| S-01 β × 12-label RHS finiteness | 4 × 12 = 48 | ✅ |
+| S-02 β = 0 byte-identical vs anchor | 12 | ✅ |
+| S-03 β-jump stress | 1 | ✅ |
+| S-04 rapidity-path parity | 1 | ✅ |
+| S-05 FB-3.3 extended-kwargs anchor | 12 | ✅ |
+| S-06 β = 0 vorticity Class A × Class B | 30 | ✅ |
+| S-07 shape stability | 12 | ✅ |
+| S-08 no silent FPE | 1 | ✅ |
+
+**117 passed / 0 failed.**
+
+### §FB-3.6.9 Final verdict
+
+- **Status**: Pass — FB-3.6 sealed.
+- **Gallery**: no-op at this RHS-level rotation (integrator-level
+  trajectory gallery for β > 0 belongs to FB-4 / FB-5 which wire the
+  full solver). Documented as the phase-FB-3 closing no-op per the
+  phase-boundary gallery rule.
+- **Baseline**: 3,286 → 3,403 (+117).
+
+---
+
+## Phase FB-3 closing declaration
+
+With FB-3.1 through FB-3.6 all sealed, **Phase FB-3 is complete.**
+Cumulative phase delivery:
+
+| Sub-phase | Commit anchor (short) | Tests added | Byte anchor preserved |
+|---|---|---|---|
+| FB-3.1 — `TiltedSpeciesBackground` abstraction | `9336280` | +24 | LB-6 / FB-2.4 |
+| FB-3.2 — `accel_from_tilt` / `vorticity_from_tilt` + driver wire-up | `fdb1d86` | +57 | FB-2.4 `d7d25da` 12-label |
+| FB-3.3 — Einstein + tilt additive pieces + boost-kernel seed | `ceed416` | +24 | FB-3.2 |
+| FB-3.4 — dynamic vorticity dilution | `ab5914e` | +19 | FB-3.3 |
+| FB-3.5 — β-gate reparametrisation (rapidity SSOT + shared gate) | `c1130ad` | +54 | FB-3.1 message patterns |
+| FB-3.6 — 44-config tilted regression suite | (this commit) | +117 | FB-2.4 anchor across full stack |
+
+**Cumulative test delta**: 3,108 (FB-2 exit) → 3,403 (FB-3 exit) =
+**+295 tests across Phase FB-3**.
+
+### Carry-forward ledger at Phase FB-3 exit
+
+- **Closed this phase**:
+  - FB02-F1 (v̂_e default cross-reference) — FB-3.1.
+  - FB-3.1 P2 (Θ/3·v + σ·v completion of `accel_from_tilt`) — FB-3.3.
+  - FB-3.1 P2 (β-parametrisation velocity vs rapidity split) — FB-3.5.
+- **Rescheduled forward**:
+  - FB-2.1 P2 (complex-dtype `nabla_dispatch` wire-up) → FB-5.1.
+  - FB-3.2 / FB-3.3 P2 (boost-kernel off-axis Wigner-d rotation) →
+    FB-5.2.
+  - FB-3.4 P2 (shear-driven `ε^{abc} ∇̃_b A_c` vorticity piece) →
+    FB-5.1.
+  - FB-3.5 P2 (storage-level rapidity migration) → post-extended.
+  - F3 (dimensionless-Σ² rescale) → FB-5 / FB-6.
+  - FB11-F1 / FB12-F1 / FB12-F3 / FB13-κ-calibration → FB-5 / FB-6.
+  - FB-2.3 P3 (venv/bin/pip shebang) → post-FB devops.
+
+Phase FB-4 (tilted Thomson kernel Layer B) is the next target per
+[FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-4](../lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md).
+
 ### Carry-forward ledger (outstanding)
 
 - **FB-3.1 P2 overlap** → ✅ resolved in this rotation (K-12 pins the

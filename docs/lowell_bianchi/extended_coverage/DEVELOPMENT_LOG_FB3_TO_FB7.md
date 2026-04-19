@@ -261,12 +261,23 @@ struck-through but retained for archaeology.
 - **Carry-forward closes**: FB-3.1 P2 β-parametrisation split
   (decision level; storage migration noted as post-extended).
 
-### FB-3.6 (planned) — Tilted regression suite
+### FB-3.6 — Tilted regression suite (Phase FB-3 closure)
 
-- **Shipping**: β-sweep (`β ∈ {0, 0.01, 0.1, 0.5}` × 11 types = 44
-  configs) integrates without exception; β→0 matches FB-1 / FB-2
-  results within declared rtol; non-physical β-jump stress test for
-  stiffness diagnostics.
+- **Scope**: β × 12-label hierarchy RHS sweep (4 β × 12 labels = 48
+  configs on S-01, plus focused anchor/regression checks) covering
+  FB-3.1..FB-3.5 end-to-end. β=0 byte-identity preserved against
+  the FB-2.4 anchor (`d7d25da`) on all 12 labels via S-02 and S-05.
+  β-jump stress, rapidity-path parity, Class A × Class B
+  vorticity cross, no silent FPE on the full sweep.
+- **Test delta**: 3,286 → 3,403 (+117 tests in
+  `bass/hierarchy/test_fb36_tilted_regression.py`).
+- **Audit**: `AUDIT_PHASE_FB3_2026-04-19.md` §FB-3.6 Supplement +
+  Phase FB-3 closing declaration.
+- **Gallery**: no-op at this RHS-level rotation; integrator-level
+  trajectory gallery belongs to FB-4 / FB-5 when the full solver
+  wires through.
+- **Phase FB-3 outcome**: sealed. Cumulative +295 tests across
+  Phase FB-3 (3,108 → 3,403).
 
 ---
 
@@ -364,6 +375,7 @@ dataset. At this point the parent plan's stated target is reached
 | FB-3.3 exit | 3,213 | +24 |
 | FB-3.4 exit | 3,232 | +19 |
 | FB-3.5 exit | 3,286 | +54 |
+| FB-3.6 / Phase FB-3 exit | 3,403 | +117 |
 
 After each new FB row ships, append a new ledger row here with the
 fresh cumulative count.
