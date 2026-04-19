@@ -602,3 +602,19 @@ fresh cumulative count.
   citation-needed if the future regression needs a direct table quote.
 - **Notes**: the chosen surface makes the future coverage grid explicit
   rather than hiding it only inside a parametrized test decorator.
+
+### FB-META-5.CLOSE — Phase FB-5 skeleton cycle closed
+
+- **Scope**: Declared Phase FB-5 skeleton-only rotation closed after
+  seven local perturbation skeleton plants, a final full regression, and
+  the handoff rotation to the generic FB-META-6 placeholder. No `htt/`
+  paths were staged at any point in the cycle.
+- **Commit anchor**: see `git log --grep='FB-META-5.CLOSE'`.
+- **Test delta**: `3,403 passed + 11 skipped` →
+  `3,403 passed + 11 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META5_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META5_2026-04-20.md) (Phase close note).
+- **Gallery**: no-op.
+- **Carry-forward**: FB-META-6 requires a fresh phase prompt rather
+  than an inherited FB-5 task list.
+- **Notes**: final regression count matched the phase-entry baseline in
+  passes and increased skips only by the seven intended contract tests.

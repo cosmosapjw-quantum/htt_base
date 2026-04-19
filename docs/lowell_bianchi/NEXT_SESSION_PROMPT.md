@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-5.7 → FB-META-5.CLOSE**; k×type regression skeleton contract recorded, phase-close regression and handoff rotation next)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.7
-**Current target session**: **FB-META-5.CLOSE** — final regression, phase-close note, rotate to FB-META-6
-**Phase status**: FB-5 skeleton cycle is in progress on 2026-04-20; all seven local skeleton contracts are planted and the closeout pass is next
+**Last rotated**: 2026-04-20 (**FB-META-5.CLOSE → FB-META-6**; Phase FB-5 skeleton cycle sealed, handoff reset to the next-phase META placeholder)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` (Phase close note)
+**Current target session**: **FB-META-6** — paste the Phase FB-6 META prompt
+**Phase status**: Phase FB-5 closed on 2026-04-20; awaiting a fresh Phase FB-6 META prompt
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,27 +37,24 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-META-5.CLOSE — close the Phase FB-5 skeleton cycle
+# FB-META-6 — paste the Phase FB-6 META prompt
 
-All seven FB-5 local-only skeleton contracts are now planted under
-`htt/bass/perturbation/`, and the audited local expectation is
-`3,403 passing + 11 skipped`.
+Phase FB-5 closed with seven skeleton-only sub-phases and the audited
+baseline now stands at `3,403 passing + 11 skipped`.
 
-Closeout tasks:
-- Run the full regression once:
+Start the next session by pasting the canonical Phase FB-6 META prompt
+as the first user message. Do not reuse the older FB-META-5 handoff
+text; the next phase should begin from a fresh prompt.
+
+Relevant carry-forward anchors:
+- Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
+- Source-of-work rule: `htt/` remains unstaged by contract unless a
+  future META prompt explicitly changes that rule.
+- Latest audited Phase FB-5 artifact:
+  `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md`
+- Latest regression anchor:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- Confirm the result is unchanged from the baseline except for the
-  seven new skipped skeleton tests.
-- Add a short phase-close note to:
-  - `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md`
-  - `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
-- Rotate `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` to the
-  generic `FB-META-6` placeholder.
-- Commit as `FB-META-5.CLOSE: Phase FB-5 skeletons planted (7 sub-phases)`.
-
-Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
-Latest audit artifact:
-`docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md`
+  → `3403 passed, 11 skipped`
 ```
 
 ---

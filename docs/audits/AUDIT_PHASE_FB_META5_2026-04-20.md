@@ -141,3 +141,19 @@
 **Test path**: `htt/bass/perturbation/test_fb57_k_type_regression_skeleton.py::test_fb57_k_type_regression_skeleton_contract`
 **Guard rails** (yes/no): citations verified? partial with TODO demotion; imports exist? yes; ≥ 2 alternatives? yes; oracle anchor explicit? yes
 **Regression after plant**: 3,403 passed + 11 skipped (seven local-only skipped contract tests over the 2026-04-20 baseline).
+
+## Phase close
+
+FB-META-5 closed on 2026-04-20 with all seven `§FB-5.k` sections
+completed, seven local-only perturbation skeleton plants under
+`htt/bass/perturbation/`, and no staged `htt/` changes at any point in
+the cycle.
+
+- Final regression gate:
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `3403 passed, 11 skipped`.
+- Net movement vs the phase-entry baseline: pass count unchanged;
+  skipped count `4 → 11` from the seven new skeleton contract tests.
+- Remaining citation caveats are all explicit `# TODO` demotions or
+  broken on-disk Lowell solver-reference paths; no divergent source was
+  promoted into a planted contract.
