@@ -190,10 +190,50 @@ phase-close gate.
 
 ## §FB-9.4
 
-| Row | Status | Note |
-|---|---|---|
-| Scope | pending | `hierarchy_rhs_neutrino` massive-ν wire-up skeleton with a default-off extension point. |
-| LB-1 anchor clause | pinned | With no new kwarg passed, or with `Sigma_mnu = 0`, the neutrino hierarchy wrapper must remain byte-identical to the LB-1 / FB-2.4 path. |
+### §FB-9.4 — hierarchy wire-up skeleton
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified
+`hierarchy_rhs_neutrino()` remains a thin zero-collision wrapper; the
+new kwarg defaults to `None`; the default code path still forwards
+directly into `hierarchy_rhs_photon()` unchanged; explicit use of the
+placeholder `MassiveNeutrinoBackground` now raises immediately; and the
+new skipped contract test only locks the extension-point surface.
+**Channel B**: 3 source checks / 3 verified / 0 divergent. Evidence:
+Ma & Bertschinger 1995 provide the massive-neutrino perturbation
+hierarchy formalism; Hu, Eisenstein & Tegmark 1998
+(`astro-ph/9712057`) describe suppression below the neutrino
+free-streaming scale; and the local SDD pins those as future regression
+anchors for the real FB-9.4 implementation. That is enough for a
+default-off kwarg today, but not enough to justify fabricating a mass
+term in this skeleton session.
+**Channel C** (prose, 6-10 lines): The safest FB-9.4 skeleton is a new
+optional kwarg and nothing more. The existing wrapper is load-bearing
+across the massless suite, so any real algebra change here would be
+high-risk and low-value before the background integrals even exist. By
+raising on `MassiveNeutrinoBackground` explicitly, the code now makes
+the future integration seam visible without pretending the seam is
+implemented. Leaving the default as `None` keeps every current caller
+byte-identical. That is the right shape for this session: public
+contract present, production math unchanged.
+**Alternatives**:
+| # | FB-9.4 skeleton shape | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Add default-off `neutrino_background` kwarg and raise on massive placeholder | Makes the future seam explicit while preserving the old path exactly. | Does not test any real mass-coupling algebra yet. | ✅ |
+| 2 | Branch on `SpeciesLabel.NEUTRINO` only | Minimal surface change. | Cannot distinguish massless from massive dispatch because the enum is intentionally unchanged. | — |
+| 3 | Silently ignore a massive background | Zero immediate disruption. | Dangerous because it would hide unsupported physics behind a successful call. | — |
+**Core principles**: default path untouched; unsupported positive path
+fails loudly; enum remains unchanged; future free-streaming work gets a
+named seam.
+**Skeleton path**:
+`htt/bass/hierarchy/hierarchy_rhs.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/hierarchy/test_hierarchy_rhs.py bass/hierarchy/test_fb94_massive_neutrino_hierarchy_skeleton.py -q`
+**LB-1 anchor clause**: with no new kwarg passed, or with
+`Sigma_mnu = 0`, the neutrino hierarchy wrapper must remain
+byte-identical to the LB-1 / FB-2.4 path.
+**Targeted result**: existing hierarchy regression green + `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 63 skipped` → `3403 passed + 64 skipped` pending the
+phase-close gate.
 
 ## §FB-9.5
 

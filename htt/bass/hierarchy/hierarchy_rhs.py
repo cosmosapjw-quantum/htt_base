@@ -89,6 +89,7 @@ from bass.hierarchy.terms import (
     T9_shear_down,
     zero_nabla_operator,
 )
+from bass.species.massive_neutrino import MassiveNeutrinoBackground
 
 
 __all__ = [
@@ -470,6 +471,7 @@ def hierarchy_rhs_neutrino(
     bg_table: "object",
     tetrad_state: Optional["object"],
     closure: ClosureStrategy,
+    neutrino_background: Optional[MassiveNeutrinoBackground] = None,
     nabla_operator: Optional[Callable[..., np.ndarray]] = None,
     accel_vector: Optional[np.ndarray] = None,
     vorticity_vector: Optional[np.ndarray] = None,
@@ -479,11 +481,18 @@ def hierarchy_rhs_neutrino(
     Thin convenience wrapper that fixes
     ``collision = ZeroCollisionOperator()`` and forwards to
     ``hierarchy_rhs_photon``. See that function for the full parameter
-    list and unit conventions.
+    list and unit conventions. The FB-9 skeleton adds an optional
+    ``neutrino_background`` kwarg while preserving the byte-identical
+    LB-1 / FB-2.4 path when that kwarg is left at ``None``.
 
     Reference: 02_multipole_hierarchy_spec.md §1.2 (K_{A_ℓ} = 0 for
     collisionless neutrinos); Ma-Bertschinger 1995 §4.
     """
+    if isinstance(neutrino_background, MassiveNeutrinoBackground):
+        raise NotImplementedError(
+            "FB-9.4 skeleton only: hierarchy_rhs_neutrino does not yet "
+            "implement the massive-neutrino free-streaming correction."
+        )
     return hierarchy_rhs_photon(
         eta,
         y_flat,

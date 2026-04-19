@@ -272,3 +272,23 @@ cross-reference.
 - **Notes**: the positive-mass branch uses the local SDD's degenerate
   placeholder `Sigma_mnu / 3` while the default zero-mass branch keeps
   the exact LB-1 constructor call.
+
+### FB-META-9.4 — hierarchy wire-up skeleton
+
+- **Scope**: Extended
+  [hierarchy_rhs_neutrino](../../../htt/bass/hierarchy/hierarchy_rhs.py)
+  with a default-off `neutrino_background` seam, added an explicit
+  `NotImplementedError` for the placeholder massive background, and
+  added a skipped contract test. Existing default callers still forward
+  straight into the zero-collision photon driver.
+- **Commit anchor**: see `git log --grep='FB-META-9.4'`.
+- **Test delta**: 3,403 passing + 63 skipped → 3,403 passing + 64
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META9_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META9_2026-04-20.md)
+  §FB-9.4.
+- **Gallery**: no-op (hierarchy seam only).
+- **Carry-forward**: FB-9.5 tilted-compose harness.
+- **Notes**: the wrapper now exposes the future integration seam
+  explicitly, but the default massless runtime still takes the exact
+  pre-FB-9 forwarding path.
