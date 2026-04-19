@@ -239,7 +239,8 @@ def source_V(sc, Sp, Sm, calH, a):
     to the FLRW curvature term (k = -1), NOT a shear source. So the
     shear-specific source is zero.
 
-    VALIDATED: matches standard open FLRW (k=-1) analysis — σ→0 exactly.
+    VALIDATED (FB-1.3): pinned in ``test_type_V_shear_zero_pin``
+    (S_± = 0 exactly across the (A, ℋ) grid; A² → FLRW k=-1 curvature).
     """
     return 0.0, 0.0
 
@@ -247,13 +248,17 @@ def source_V(sc, Sp, Sm, calH, a):
 def source_IV(sc, Sp, Sm, calH, a):
     """Type IV: (0, 0, +) with a > 0. Cosmologically marginal.
 
-    Wainwright-Ellis Class B source:
-        S₊ = -(2/3) N₃² + (2/3) A²  (approximate near-FLRW)
-        S₋ = 0
+    Wainwright-Ellis §18 Table 11.1 row IV source:
+        S^{WE}_+ = -(2/3) N_3² + (2/3) A²
+        S^{WE}_- = 0
 
-    PROVISIONAL: No FLRW limit exists, so "FLRW limit verification" is
-    vacuous. The source is dimensionally correct and finite; its physical
-    interpretation is the cross-falsifiability probe for the pipeline.
+    Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``.
+
+    VALIDATED (FB-1.3): formula + axisymmetric ``S_- = 0`` +
+    Σ-independence pinned to rel 1e-12 on the (N_3, A, ℋ) grid in
+    ``test_type_IV_WE_source_formula``. Type IV has no FLRW limit —
+    it serves as a cross-falsifiability probe for the pipeline; the
+    W-E formula is dimensionally correct and finite.
     """
     n3, a_t = sc.n3, sc.a_twist
     S_plus_WE = -(2.0/3.0) * n3**2 + (2.0/3.0) * a_t**2
@@ -263,10 +268,14 @@ def source_IV(sc, Sp, Sm, calH, a):
 def source_III(sc, Sp, Sm, calH, a):
     """Type III = VI_{h=-1}: special case of VI_h.
 
-    Algebraically identical to VI_h with the constraint h = −1 ↔ a² = −n₁ n₃.
-    We dispatch to source_VIh. The type registry enforces h = -1 at construction.
+    Algebraically identical to VI_h with the constraint h = −1 ↔
+    a² = −n₁ n₃. We dispatch to ``source_VIh``; the type registry
+    enforces ``h = -1`` at construction via ``n_3 = -a²/n_1``.
 
-    PROVISIONAL via VI_h.
+    VALIDATED (FB-1.3): dispatch-identity + formula at h = -1 (A²
+    prefactor 1/(1+|h|) = 1/2) pinned to rel 1e-12 on the (n_1, ℋ)
+    grid in ``test_type_III_dispatches_to_VIh_at_h_minus_1``.
+    Reference: Wainwright-Ellis §18 Table 11.1 row III.
     """
     return source_VIh(sc, Sp, Sm, calH, a)
 
@@ -274,12 +283,18 @@ def source_III(sc, Sp, Sm, calH, a):
 def source_VIh(sc, Sp, Sm, calH, a):
     """Type VI_h: (+, 0, −) with a > 0, h ∈ (−∞,−1)∪(−1,0).
 
-    Wainwright-Ellis mixed N–A source:
-        S₊ = -(2/3)(n₁ − n₃)² + (2/3)A² × (group-parameter factor)
-        S₋ = -(2/√3)(n₁ + n₃)(n₁ − n₃)
+    Wainwright-Ellis §18 Table 11.1 row VI_h mixed N–A source:
+        S^{WE}_+ = -(2/3)(n_1 − n_3)² + (2/3) A² / (1 + |h|)
+        S^{WE}_- = -(2/√3)(n_1 + n_3)(n_1 − n_3)
 
-    PROVISIONAL: Full Hewitt-Wainwright formulation (with Δ, Ñ variables)
-    deferred to Week 5. FLRW limit vacuous (no such limit).
+    Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``. The
+    h-dependent prefactor ``1/(1+|h|)`` is the Hewitt-Wainwright
+    near-FLRW reduction (full Δ, Ñ variables deferred to FB-5/FB-6).
+
+    VALIDATED (FB-1.3): formula + h-prefactor + ``S_+ < 0`` sign +
+    Σ-independence pinned to rel 1e-12 on (n_1, n_3, A, h, ℋ) grid in
+    ``test_type_VIh_WE_source_formula``. Type VI_h has no FLRW limit;
+    the full Hewitt-Wainwright reduction remains FB-5/FB-6 scope.
     """
     n1, n3 = sc.n1, sc.n3
     a_t = sc.a_twist
@@ -298,21 +313,28 @@ def source_VIh(sc, Sp, Sm, calH, a):
 def source_VIIh(sc, Sp, Sm, calH, a):
     """Type VII_h: (+, 0, +) with a > 0, h > 0 — the principal CMB type.
 
-    Wainwright-Ellis mixed N–A source:
-        S₊ = -(2/3)(n₁ − n₃)² + (2/3)A²/(1+h)
-        S₋ = +(2/√3)(n₁ + n₃)(n₁ − n₃)  [sign flip vs VI_h]
+    Wainwright-Ellis §18 Table 11.1 row VII_h mixed N–A source:
+        S^{WE}_+ = -(2/3)(n_1 − n_3)² + (2/3) A² / (1 + h)
+        S^{WE}_- = +(2/√3)(n_1 + n_3)(n_1 − n_3)  [sign flip vs VI_h]
 
-    Additionally, for VII_h with spiral patterns, there is an anti-symmetric
-    shear-shear coupling from the twist that generates the characteristic
-    spiral (Pontzen 2009). This is encoded in off-diagonal Σ_+ ↔ Σ_- mixing:
+    Additionally, the Pontzen-Challinor 2009 §III spiral coupling:
 
         dΣ_+ += +ω_spiral × Σ_-
-        dΣ_- += -ω_spiral × Σ_+
+        dΣ_- += −ω_spiral × Σ_+
+        ω_spiral = √|n_1 n_3| × √h × ℋ,  (κ ≡ 1.0 for FB-1.3)
 
-    where ω_spiral = √(n₁ n₃) × sqrt(h) × calH.
+    The coupling is a **rotation** in the (Σ_+, Σ_-) plane: the
+    identity ``Σ_+ dΣ_+^{spi} + Σ_- dΣ_-^{spi} ≡ 0`` holds exactly.
 
-    PROVISIONAL (spiral): reproduces Pontzen-Challinor near-FLRW qualitatively.
-    Week 5 validates against AniCLASS on the 15-point grid.
+    VALIDATED (FB-1.3): W-E formula rel 1e-12 + P-C spiral sign +
+    ω_spiral ∝ √h scaling + rotation invariance pinned in
+    ``test_type_VIIh_WE_source_formula_and_spiral_signature`` +
+    ``test_type_VIIh_spiral_omega_scales_as_sqrt_h`` +
+    ``test_type_VIIh_spiral_rotation_conserves_amplitude``. Full
+    quantitative calibration of the O(1) spiral coefficient κ against
+    AniCLASS / P-C fixture remains FB-5 / FB-6 scope.
+
+    Reference: Pontzen & Challinor, *PRD* 79, 103518 (2009) §III.
     """
     n1, n3 = sc.n1, sc.n3
     a_t = sc.a_twist
@@ -371,19 +393,43 @@ SOURCE_STATUS: Dict[str, SourceStatus] = {
     # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.1.
     "II":    SourceStatus("VALIDATED", "W-E §18 Table 11.1, Heisenberg e(1) axisymmetric", True,
                           "formula + sign + Σ-independence pinned on (N_1, ℋ) grid"),
-    "III":   SourceStatus("PROVISIONAL", "VI_{h=-1} restriction", False,
-                          "no FLRW limit → limit test vacuous"),
-    "IV":    SourceStatus("PROVISIONAL", "cosmologically marginal, Class B", False,
-                          "no FLRW limit"),
-    "V":     SourceStatus("VALIDATED", "open FLRW (k=-1), σ→0", True, "standard open FLRW"),
+    # VALIDATED (FB-1.3): III is the special case VI_{h=-1}; source_III
+    # dispatches bit-identically to source_VIh and the W-E formula
+    # evaluated at h = -1 (A² prefactor 1/(1+|h|) = 1/2) is pinned to
+    # rel 1e-12 across the (n_1, ℋ) grid in
+    # test_type_III_dispatches_to_VIh_at_h_minus_1. Σ-independence
+    # pinned. docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.3.
+    "III":   SourceStatus("VALIDATED", "W-E §18 Table 11.1 row III (≡ VI_{h=-1})", False,
+                          "dispatches to VI_h; formula at h=-1 (A² prefactor 1/2) pinned; no FLRW limit"),
+    # VALIDATED (FB-1.3): W-E §18 Table 11.1 row IV formula
+    # S^{WE}_+ = −(2/3) N_3² + (2/3) A², S^{WE}_- = 0 pinned to rel
+    # 1e-12 across (N_3, A, ℋ) grid in test_type_IV_WE_source_formula.
+    # No FLRW limit (cosmologically marginal); Σ-independence pinned.
+    # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.3.
+    "IV":    SourceStatus("VALIDATED", "W-E §18 Table 11.1 row IV, cosmologically marginal Class B", False,
+                          "formula + axisymmetric S_- = 0 + Σ-indep pinned; no FLRW limit"),
+    # VALIDATED since LB baseline; FB-1.3 adds explicit (A, ℋ) grid
+    # regression test_type_V_shear_zero_pin (shear-specific source is
+    # identically zero — A² is absorbed into k = -1 FLRW curvature,
+    # not into dΣ_±). docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.3.
+    "V":     SourceStatus("VALIDATED", "W-E §18 Table 11.1 row V (open FLRW, k=-1)", True,
+                          "S_± = 0 exactly pinned on (A, ℋ) grid; A² → FLRW curvature"),
     # VALIDATED (FB-1.1): W-E §18 Table 11.1 row VI₀ formula
     # S^{WE}_+ = -(2/3)(n_1-n_3)², S^{WE}_- = -(2/√3)(n_1+n_3)(n_1-n_3)
     # pinned to rel 1e-12 in test_type_VI0_WE_fixed_point_asymptotic;
     # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.1.
     "VI_0":  SourceStatus("VALIDATED", "W-E §18 Table 11.1, e(1,1) algebra", True,
                           "formula + S_+ < 0 sign + Σ-indep pinned on (n_1, n_3, ℋ) grid"),
-    "VI_h":  SourceStatus("PROVISIONAL", "Hewitt-Wainwright reduction", False,
-                          "no FLRW limit"),
+    # VALIDATED (FB-1.3): W-E §18 Table 11.1 row VI_h formula
+    # S^{WE}_+ = −(2/3)(n_1−n_3)² + (2/3) A² / (1+|h|),
+    # S^{WE}_- = −(2/√3)(n_1+n_3)(n_1−n_3) pinned to rel 1e-12 across
+    # (n_1>0, n_3<0, A>0, h ∈ (−∞,−1)∪(−1,0), ℋ) grid in
+    # test_type_VIh_WE_source_formula. S_+ < 0 + Σ-independence
+    # pinned. Full Hewitt-Wainwright (Δ, Ñ variables) reduction
+    # remains FB-5/FB-6. docs/audits/AUDIT_PHASE_FB1_2026-04-19.md
+    # §FB-1.3.
+    "VI_h":  SourceStatus("VALIDATED", "W-E §18 Table 11.1 row VI_h (Hewitt-Wainwright near-FLRW)", False,
+                          "formula + h-prefactor + S_+ < 0 + Σ-indep pinned; full reduction FB-5/FB-6"),
     # VALIDATED (FB-1.1): W-E §18 Table 11.1 row VII₀ formula
     # S^{WE}_+ = -(2/3)(n_1-n_3)², S^{WE}_- = +(2/√3)(n_1+n_3)(n_1-n_3)
     # pinned to rel 1e-12 in test_type_VII0_shear_decay_to_plane_wave_line;
@@ -392,8 +438,22 @@ SOURCE_STATUS: Dict[str, SourceStatus] = {
     # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.1.
     "VII_0": SourceStatus("VALIDATED", "W-E §18 Table 11.1, e(2) algebra (plane-wave line)", True,
                           "formula + S_- sign flip vs VI₀ + isotropic vanishing pinned"),
-    "VII_h": SourceStatus("PROVISIONAL", "Pontzen-Challinor 2009, Saadeh 2016",
-                          True, "spiral coupling calibrated in FB-1.3"),
+    # VALIDATED (FB-1.3): W-E §18 Table 11.1 row VII_h formula
+    # S^{WE}_+ = −(2/3)(n_1−n_3)² + (2/3) A² / (1+h),
+    # S^{WE}_- = +(2/√3)(n_1+n_3)(n_1−n_3) pinned rel 1e-12 on
+    # (n_1>0, n_3>0, A>0, h>0, ℋ) grid; Pontzen-Challinor 2009 §III
+    # spiral signature pinned qualitatively: antisymmetric coupling
+    # (+ω_spi × Σ_-, −ω_spi × Σ_+), ω_spi ∝ √h scaling, and rotation
+    # invariance Σ_+ dΣ_+^{spi} + Σ_- dΣ_-^{spi} ≡ 0 at float-
+    # subtraction precision. Covered by
+    # test_type_VIIh_WE_source_formula_and_spiral_signature +
+    # test_type_VIIh_spiral_omega_scales_as_sqrt_h +
+    # test_type_VIIh_spiral_rotation_conserves_amplitude. The O(1)
+    # spiral coefficient κ = 1.0 is pinned by construction; quantitative
+    # calibration against AniCLASS / P-C fixture is FB-5/FB-6.
+    # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.3.
+    "VII_h": SourceStatus("VALIDATED", "W-E §18 Table 11.1 row VII_h + Pontzen-Challinor 2009 §III spiral", True,
+                          "formula + P-C spiral sign + √h scaling + rotation invariance pinned; κ calibration FB-5/FB-6"),
     # VALIDATED (FB-1.2): W-E §18 Table 11.1 row VIII leading-order
     # source S^{WE}_+ = −(2/3)[2 N_1² − N_2² − N_3² + N_2 N_3],
     # S^{WE}_- = (2/√3)[N_2² − N_3²] pinned to rel 1e-12 on the

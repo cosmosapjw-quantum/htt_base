@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (FB-1.2 complete → FB-1.3 bootstrap; Class A fully VALIDATED — 4+2 = 6 of 9 PROVISIONAL sources promoted; only Class B III/IV/VI_h/VII_h remain)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` (FB-1.1 + FB-1.2 supplement; FB-1.3 / 1.4 placeholders reserved at the bottom)
-**Current target session**: **FB-1.3** — Class B background validation: III / IV / V / VI_h / VII_h — twist-coupled shear source; Pontzen-Challinor 2009 VII_h spiral calibration; promote `shear_sources.SOURCE_STATUS` Class B types (V already VALIDATED) to VALIDATED; gallery extension for Class B
+**Last rotated**: 2026-04-19 (FB-1.3 complete → FB-1.4 bootstrap; **all 9 PROVISIONAL Class A + Class B sources now VALIDATED** — `SOURCE_STATUS` reports VALIDATED for every registry entry; FB-1.4 is the Phase FB-1 exit rotation)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` (FB-1.1 + FB-1.2 + FB-1.3 supplement; FB-1.4 placeholder reserved at the bottom)
+**Current target session**: **FB-1.4** — `anisotropic_3_curvature` 11-type consolidation in `bass/background/tetrad_state.py` — per-type ³R_{ab}^{aniso} explicit (II / III / IV / VI₀ / VI_h / VII_h / VIII / IX); Phase FB-1 exit → hand-off to Phase FB-2 (hierarchy RHS T4–T7 wire-up)
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -34,6 +34,138 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 ## 2. Current handoff prompt (ROTATE at end of each session)
 
 Copy the block below into a fresh Claude Code session:
+
+```text
+# FB-1.4 — `anisotropic_3_curvature` 11-type consolidation (Phase FB-1 exit)
+
+## 프로젝트 컨텍스트
+
+- **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
+- **venv**: venv/bin/python
+- **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+- **현재 baseline**: 2,904 passing + 1 skipped (FB-1.3 직후; 감사 로그: `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` — FB-1.1 + FB-1.2 + FB-1.3 섹션, FB-1.4 placeholder 예약됨)
+- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **Phase FB-0 전체** + **FB-1.1 + FB-1.2 + FB-1.3**:
+  - FB-0.1..0.3 (Ellis convention flip + tilt-field surface + LB-6 F2 seal)
+  - FB-1.1 (Class A I/II/VI₀/VII₀ SOURCE_STATUS → VALIDATED; 4 gallery PNGs 03..06; `TestClassAFixedPoints` 61 runs)
+  - FB-1.2 (Class A VIII/IX SOURCE_STATUS → VALIDATED + `solve_bianchi_background(events=...)` + `bianchi_ix_recollapse_event(cosmo, floor)`; 2 gallery PNGs 07..08; `TestClassAFixedPoints` +47 = 108 total)
+  - FB-1.3 (Class B III/IV/VI_h/VII_h SOURCE_STATUS → VALIDATED + V reference refresh + P-C spiral signature pins; 4 gallery PNGs 09..12; `TestClassBFixedPoints` 104 runs). **모든 9개 PROVISIONAL 소스 이제 VALIDATED**.
+- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-1 "Per-type background validation" (4 sessions)** 의 마지막 4/4 번째. 본 세션 끝나면 Phase FB-1 가 **완전 종료** 되고 Phase FB-2 (hierarchy RHS T-term wire-up) 로 넘어간다.
+- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1.4`
+- **Carry-forward P2 (알고만 있을 것, 절대 건드리지 말 것)**:
+  - F3 → `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² normalisation → **FB-2.4 예약**
+  - FB02-F1 → `00_conventions.md §2` 에 `v̂_e` default cross-reference → **FB-3.1 예약**
+  - FB11-F1 → W-E Table 11.1 fixed-point *coordinates* 는 fixed-N 프레임워크에서 직접 도달 불가 → **FB-5 / FB-6 cross-type continuity 예약**
+  - FB12-F1 → IX isotropic leading-order residual `S_+ = +(2/3) n² ℋ²` — W-E pathology → **FB-5 / FB-6 예약**
+  - FB12-F3 → `bianchi_ix_recollapse_event` 는 `_hubble_squared` 에 coupling → **FB-5 / FB-6 예약**
+  - **FB13-κ-calibration (new, FB-1.3)** → VII_h Pontzen-Challinor spiral κ 정량 보정 → **FB-5 / FB-6 예약** (본 세션은 무관)
+
+## 이 세션의 작업 범위 (FB-1.4 — anisotropic_3_curvature 11-type consolidation)
+
+**Goal**: `bass/background/tetrad_state.py::anisotropic_3_curvature` 함수가 현재 I / V / VII_0 / FLRW 4타입만 zeros 반환 + 나머지 8타입에 대해 `None, 'unavailable'` 을 반환하는 부분을 II / III / IV / VI_0 / VI_h / VII_h / VIII / IX 에 대해 **explicit per-type** ³R_{ab}^{aniso} 공식으로 대체. 이 함수는 `build_tetrad_state` 가 호출해서 `TetradBackgroundState.aniso_3_curvature` 필드를 채우는 경로이며, FB-2 의 hierarchy T1/T2 spatial-Ricci 커플링이 이 필드를 consumer 로 쓴다 (FB-2.2 에서).
+
+### 기준이 되는 문헌 타깃
+
+Ellis-Maartens-MacCallum 2012 §14.3 + Wainwright-Ellis §3.2:
+
+    ³R_{ab} = 2 N_a^c N_{bc} − N_c^c N_{ab} + (2/(1−h)) a^c a_{(a} δ_{b)c}  [simplified]
+             − (1/2) N_cd N^{cd} δ_{ab} − N_{ab}^2 contributions (Class A)
+
+Tetrad-aligned PSTF projection에서 trace-free 부분만 취하면 각 type 별로 closed form.
+
+### 구체 작업 항목
+
+1. **문헌 재확인 (먼저, 코딩 전)**:
+   - Ellis-Maartens-MacCallum 2012 §14.3 Table 14.3 ³R_{ab} expressions (per Class A / Class B)
+   - Wainwright-Ellis §3.2 per-type 3-Ricci 분해
+   - `bass/background/tetrad_state.py::anisotropic_3_curvature` 현 구현 + `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` §FB-1.3 §6 carry-forward 목록
+   - FB-2 가 이 함수를 consumer 로 쓰므로 **return signature** (tensor, status) 유지 필수
+
+2. **`anisotropic_3_curvature` 확장**: 8 개 PROVISIONAL 타입에 대해 tetrad-aligned PSTF 투영의 trace-free symmetric ³R_{ab}^{aniso} 구체 공식 구현. 타입별 핵심 공식:
+   - **II (e(1,1)의 Heisenberg)**: `N_ab = diag(n_1, 0, 0)`; ³R_{ab}^{aniso} ∝ N_1²
+   - **III (= VI_{h=-1})**: VI_h 에 dispatch
+   - **IV ((0, 0, +), a ≠ 0)**: twist A + N_3
+   - **VI_0 ((+, 0, −), a = 0)**: diff N_1 − N_3 dependence
+   - **VI_h ((+, 0, −), a ≠ 0)**: h-dependent twist + N_i mixing
+   - **VII_h ((+, 0, +), a ≠ 0, h > 0)**: identical structure to VI_h with n_3 > 0
+   - **VIII (sl(2,ℝ))**: (N_1 < 0, N_2 > 0, N_3 > 0) contributions
+   - **IX (so(3), Mixmaster)**: all-positive N_i
+
+3. **Validation 테스트 (`test_tetrad_state.py::TestAnisotropic3Curvature`)**:
+   - 각 타입 × (structure parameter) × (a grid) 에서 ³R_{ab}^{aniso} 가 (i) finite, (ii) symmetric, (iii) trace-free, (iv) FLRW 한계에서 → 0 을 확인
+   - IX isotropic (n_1 = n_2 = n_3) 에서 ³R_{ab}^{aniso} = 0 exactly (FB12-F1 과 독립적으로 — 공간 곡률은 isotropic)
+   - II axisymmetric limit 에서 예상 tensor 구조 매치
+   - `status` 문자열이 모든 11 type 에 대해 `'unavailable'` 이 아님을 확인
+
+4. **Gallery 확장 (선택, no-op 허용)**:
+   - 만약 visualisation 이 meaningful 하면 `plots/physics_gallery/11_integrator/13_fb14_anisotropic_3curvature_per_type.png` 추가
+   - ³R_{ab}^{aniso} 의 determinant 또는 eigenvalue scaling 을 11 type 에 대해 비교
+   - FB-1.4 가 no-op visual 이면 audit log 에 명시
+
+5. **Audit append**: `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` 에 **FB-1.4 supplement** 섹션 append (§1..§10 template). **FB-1.4 는 Phase FB-1 exit** 이므로 audit 이 phase-complete 선언 포함 필수.
+
+6. `NEXT_SESSION_PROMPT.md §2` 를 **FB-2.1** (`∇̃` operator dispatch table — FLRW / I / V / VII_0 / IX harmonic-mode decomposition; `bass/hierarchy/contractions.py::NotImplementedError` 해소) bootstrap 으로 rotate.
+
+### FB-1.4 non-goals (선 밑에 고정)
+
+- **Hierarchy RHS T4–T7 wire-up** 은 FB-2.4 (본 세션은 `anisotropic_3_curvature` return 만, hierarchy consumer 호출은 건드리지 않음)
+- **∇̃ operator dispatch** 는 FB-2.1 (본 세션과 무관)
+- **Tilted sector (β ≠ 0)** 은 FB-3 (β=0 유지)
+- **k ≠ 0 perturbation sector** 는 FB-5
+- **F3 / FB02-F1 / FB11-F1 / FB12-F1 / FB12-F3 / FB13-κ carry-forwards**: 건드리지 말 것
+
+## 우선 읽어야 할 문서 (순서대로)
+
+1. `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` §FB-1.3 + §10 + FB-1.4 placeholder (본 세션이 append 할 곳; Phase FB-1 exit 선언 포함)
+2. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1.4` + §3 Target state (Phase FB-1 exit criteria)
+3. `bass/background/tetrad_state.py::anisotropic_3_curvature` 현 구현 + 주변 `build_tetrad_state` consumer
+4. `bass/background/test_tetrad_state.py` 기존 테스트 (본 세션은 `TestAnisotropic3Curvature` 새 클래스)
+5. Ellis-Maartens-MacCallum 2012 §14.3 Table 14.3 (per-type ³R_{ab} expressions); Wainwright-Ellis §3.2
+6. `docs/audits/AUDIT_PROMPT.md` (phase-boundary audit template — 본 세션 전에 self-invoke)
+
+## 핵심 원칙 (고정)
+
+1. 외부 코드 금지 (프로덕션 트리)
+2. Citation in every modified docstring (Ellis-Maartens-MacCallum §14.3 + Wainwright-Ellis §3.2 인용 필수)
+3. PSTF invariants preserved; Ellis convention (FB-0.1) 유지
+4. No silent fallbacks — `status` 는 각 type 에 대해 구체 문자열 반환 (e.g., `'type_ii_heisenberg'`, `'type_ix_so3'`)
+5. Determinism
+6. **Phase FB-1 exit contract**: 본 세션 성공 후 `anisotropic_3_curvature` 가 모든 11 type 에 대해 non-None tensor 반환. 이게 Phase FB-2 의 선결 조건.
+7. **Gallery PNG (선택)**: 추가하면 눈으로 확인 후 commit; no-op 이면 audit 에 명시.
+
+## 검증 체크리스트 (최종 commit 전)
+
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,904 + 신규 테스트)
+- [ ] `TestAnisotropic3Curvature::*` green — 모든 11 type 에 대해 symmetric / trace-free / finite pinned
+- [ ] `anisotropic_3_curvature(sc)` for every type in `ALL_BIANCHI_TYPES` returns non-None tensor + status string ≠ `'unavailable'`
+- [ ] `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` 에 FB-1.4 supplement append (§1..§10) + **Phase FB-1 exit** 선언
+- [ ] `docs/audits/AUDIT_PROMPT.md` self-invoke 로 P0/P1 스캔 완료 (결과 audit log FB-1.4 §6 에 기록)
+- [ ] (선택) `plots/physics_gallery/11_integrator/13_fb14_*.png` 생성 + 시각적 inspection; no-op 이면 audit 에 명시
+- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-2.1** (`∇̃` operator dispatch table) bootstrap 으로 rotate
+- [ ] 최종 commit 메시지: `FB-1.4: anisotropic_3_curvature 11-type consolidation (Phase FB-1 exit)` + `+ rotate NEXT_SESSION_PROMPT for FB-2.1`
+
+## 진행 순서
+
+1. `docs/audits/AUDIT_PROMPT.md` self-invoke (pre-phase scan)
+2. FB plan §4 FB-1.4 + Ellis-Maartens-MacCallum §14.3 + 현 `tetrad_state.py` 섹션 읽기
+3. 각 Bianchi type 에 대해 ³R_{ab}^{aniso} 공식을 종이로 확인 (sanity)
+4. `anisotropic_3_curvature` 에 8 type × explicit formula 구현
+5. `TestAnisotropic3Curvature` 에 per-type + symmetric/trace-free/finite 테스트 추가
+6. (선택) Gallery 1 PNG 추가
+7. 각 PNG Read tool 로 inspect → physics 검증 (있으면)
+8. `AUDIT_PHASE_FB1_2026-04-19.md` 에 FB-1.4 supplement append + Phase FB-1 exit 선언
+9. 전체 회귀 green 확인
+10. `NEXT_SESSION_PROMPT.md §2` rotate to FB-2.1
+11. commit
+
+시작하세요. 본 세션은 **Phase FB-1 의 마지막 rotation** — 9개 소스가 이미 VALIDATED 이므로 남은 것은 tetrad-layer 의 ³R_{ab}^{aniso} 11-type consolidation. FB-2 hierarchy T-term wire-up 이 이 함수를 consumer 로 쓰므로 FB-1.4 가 **Phase FB-2 의 선결 조건**. 세션 완료 시 Phase FB-1 전체 (4 sub-phases) 가 닫히고 Phase FB-2 로 전환된다.
+```
+
+---
+
+<!-- Prior (FB-1.3) handoff prompt (saved for reference only; do not re-run). -->
+
+<details>
+<summary>Previous FB-1.3 handoff prompt (archived 2026-04-19)</summary>
 
 ```text
 # FB-1.3 — Class B background validation (III / IV / V / VI_h / VII_h) + Pontzen-Challinor VII_h spiral match
@@ -159,6 +291,8 @@ Copy the block below into a fresh Claude Code session:
 
 시작하세요. 본 세션은 **Class B 완주** — FB-1.2 의 formula-level pinning 방식을 Class B (twist-coupled) 에 확장하고, VII_h 의 Pontzen-Challinor spiral 시그니처를 qualitative 하게 (sign + scaling + rotation 보존) 고정합니다. FB-1.4 가 Phase FB-1 의 마지막 rotation 이며 `anisotropic_3_curvature` 로 닫힙니다.
 ```
+
+</details>
 
 ---
 

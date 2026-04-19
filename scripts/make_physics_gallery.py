@@ -47,6 +47,10 @@ from bass.background.bianchi_types import (  # noqa: E402
     type_i_constants,
     type_v_constants,
     type_vii0_constants,
+    type_iii_constants,
+    type_iv_constants,
+    type_vih_constants,
+    type_viih_constants,
 )
 from bass.recombination.recombination_ingest import (  # noqa: E402
     build_interpolators,
@@ -3065,6 +3069,362 @@ def plot_11_08_fb12_classA_typeIX_recollapse_trace() -> None:
     _save(fig, "08_fb12_classA_typeIX_recollapse_trace", TOPIC_11)
 
 
+# ─── FB-1.3 Class B gallery (III / IV / V / VI_h / VII_h) ──────────
+
+
+def plot_11_09_fb13_classB_typeIV_WE_source() -> None:
+    """FB-1.3 Type IV: W-E §18 Table 11.1 row IV (Class B,
+    cosmologically marginal — no FLRW limit):
+
+        S^{WE}_+ = −(2/3) N_3² + (2/3) A²
+        S^{WE}_- = 0  (axisymmetric)
+
+    Three panels:
+      1. Σ_+(a), Σ_-(a) along the background integrator for the
+         default fixture (n_3 = 1e-2, a_twist = 1e-2); Σ_- ≡ 0 pin.
+      2. Sign-crossover sweep: S^{WE}_+ as a function of the ratio
+         A² / N_3², holding N_3 fixed and varying A. The W-E formula
+         crosses zero at A = N_3 and is positive for A > N_3.
+      3. Shear energy decay Σ_+² × a⁴ vs. a (shear-energy-times-a⁴
+         conservation holds for any Class B source with S_- = 0 in
+         the limit of rapid source decay).
+
+    Reference: Wainwright-Ellis §18 Table 11.1 row IV;
+    docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.3.
+    """
+    from bass.background.einstein_bianchi import (
+        type_iv_cosmology,
+    )
+    cosmo = type_iv_cosmology(
+        sigma_over_H_init=1e-4, n3=1e-2, a_twist=1e-2,
+    )
+    bg = solve_bianchi_background(
+        cosmo, a_start=1e-6, a_end=1.0, n_pts=2000,
+    )
+
+    # Panel 2 sign-crossover sweep
+    N3_fixed = 1e-2
+    A_grid = np.logspace(-3, -1.3, 60)  # ratio A/N_3 from 0.1 to ~5
+    calH_ref = 1e-4
+    S_plus_WE = (-(2.0 / 3.0) * N3_fixed ** 2 + (2.0 / 3.0) * A_grid ** 2) * calH_ref ** 2
+    ratio = A_grid / N3_fixed
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.0))
+
+    axes[0].semilogx(bg.a, bg.sigma_plus,
+                     color=COLS["orange"], lw=1.4,
+                     label=r"$\Sigma_+$  (source-driven)")
+    axes[0].semilogx(bg.a, bg.sigma_minus,
+                     color=COLS["purple"], lw=1.4, ls="--",
+                     label=r"$\Sigma_-$  $\equiv 0$  (axisymmetric)")
+    axes[0].axhline(0.0, color="0.3", lw=0.5)
+    _prepare_axes(
+        axes[0], r"$a$", r"$\Sigma_\pm$  [Mpc$^{-1}$]",
+        title=r"IV default  $(n_3=10^{-2},\ a=10^{-2})$",
+        xlog=True,
+    )
+    axes[0].legend(loc="best", fontsize=8)
+
+    axes[1].plot(ratio, S_plus_WE,
+                 color=COLS["blue"], lw=1.4,
+                 label=r"$S^{WE}_+ = -\frac{2}{3} N_3^2 + \frac{2}{3} A^2$")
+    axes[1].axhline(0.0, color="0.3", lw=0.5)
+    axes[1].axvline(1.0, color="0.3", ls=":", lw=0.8,
+                     label=r"$A = N_3$  (zero crossing)")
+    _prepare_axes(
+        axes[1], r"$A / N_3$", r"$S^{WE}_+ \times \mathcal{H}^2$  [Mpc$^{-2}$]",
+        title=r"IV: W-E $S^{WE}_+$ sign crossover vs $A/N_3$",
+        xlog=True,
+    )
+    axes[1].legend(loc="best", fontsize=8)
+
+    mask = bg.a > 1e-6
+    shear_energy = bg.sigma_plus[mask] ** 2 * bg.a[mask] ** 4
+    axes[2].loglog(bg.a[mask], np.maximum(shear_energy, 1e-300),
+                   color=COLS["green"], lw=1.4, label=r"$\Sigma_+^2 \times a^4$")
+    _prepare_axes(
+        axes[2], r"$a$", r"$\Sigma_+^2 \times a^4$  [Mpc$^{-2}$]",
+        title=r"IV shear-energy invariant",
+        xlog=True, ylog=True,
+    )
+    axes[2].legend(loc="best", fontsize=8)
+
+    fig.suptitle(
+        r"FB-1.3 Type IV — Wainwright-Ellis Table 11.1 row IV "
+        r"(Class B, $(0, 0, +)$ with $a>0$, axisymmetric, no FLRW limit)",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "09_fb13_classB_typeIV_WE_source", TOPIC_11)
+
+
+def plot_11_10_fb13_classB_typeVIh_WE_attractor() -> None:
+    """FB-1.3 Type VI_h: W-E §18 Table 11.1 row VI_h (Class B,
+    twist-coupled mixed-sign, no FLRW limit):
+
+        S^{WE}_+ = −(2/3)(n_1 − n_3)² + (2/3) A² / (1 + |h|)
+        S^{WE}_- = −(2/√3)(n_1 + n_3)(n_1 − n_3)
+        h = A² / (n_1 n_3),  h ∈ (−∞, −1) ∪ (−1, 0)
+
+    Three panels:
+      1. Σ_+(a), Σ_-(a) for a h < -1 fixture (default
+         (n_1, n_3, a) = (1e-2, -2e-3, 5e-3), h = -1.25).
+      2. The h-dependent prefactor ``1/(1+|h|)`` plotted across the
+         full h domain (−∞, −1) ∪ (−1, 0), showing the vertical
+         asymptote at h = -1 (the III boundary).
+      3. Phase plane (Σ_+, Σ_-) for the h < -1 fixture, coloured by
+         log_10 a.
+
+    Reference: Wainwright-Ellis §18 Table 11.1 row VI_h; Hewitt-
+    Wainwright 1990; docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.3.
+    """
+    from bass.background.einstein_bianchi import (
+        type_vih_cosmology,
+    )
+    cosmo = type_vih_cosmology(
+        sigma_over_H_init=1e-4, n1=1e-2, n3=-2e-3, a_twist=5e-3,
+    )
+    bg = solve_bianchi_background(
+        cosmo, a_start=1e-6, a_end=1.0, n_pts=2000,
+    )
+
+    # h-prefactor curve avoiding h = -1
+    h_neg = np.linspace(-4.0, -1.05, 120)
+    h_mid = np.linspace(-0.95, -0.05, 120)
+    prefactor_neg = 1.0 / (1.0 + np.abs(h_neg))
+    prefactor_mid = 1.0 / (1.0 + np.abs(h_mid))
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.0))
+
+    axes[0].semilogx(bg.a, bg.sigma_plus,
+                     color=COLS["orange"], lw=1.4,
+                     label=r"$\Sigma_+$")
+    axes[0].semilogx(bg.a, bg.sigma_minus,
+                     color=COLS["purple"], lw=1.4, ls="--",
+                     label=r"$\Sigma_-$")
+    axes[0].axhline(0.0, color="0.3", lw=0.5)
+    _prepare_axes(
+        axes[0], r"$a$", r"$\Sigma_\pm$  [Mpc$^{-1}$]",
+        title=r"VI$_h$ fixture  $h = -1.25$",
+        xlog=True,
+    )
+    axes[0].legend(loc="best", fontsize=8)
+
+    axes[1].plot(h_neg, prefactor_neg,
+                 color=COLS["blue"], lw=1.4,
+                 label=r"$h < -1$")
+    axes[1].plot(h_mid, prefactor_mid,
+                 color=COLS["red"], lw=1.4,
+                 label=r"$-1 < h < 0$")
+    axes[1].axvline(-1.0, color="0.3", ls=":", lw=0.8,
+                     label=r"$h = -1$  (III boundary)")
+    _prepare_axes(
+        axes[1], r"$h$", r"$1 / (1 + |h|)$  (W-E $A^2$ prefactor)",
+        title=r"VI$_h$ h-dependent $A^2$ prefactor",
+    )
+    axes[1].legend(loc="best", fontsize=8)
+    axes[1].set_ylim(0.0, 1.05)
+
+    a_plot = np.maximum(bg.a, 1e-30)
+    sc = axes[2].scatter(
+        bg.sigma_plus, bg.sigma_minus,
+        c=np.log10(a_plot), cmap="viridis", s=3,
+    )
+    axes[2].axhline(0.0, color="0.3", lw=0.5)
+    axes[2].axvline(0.0, color="0.3", lw=0.5)
+    cbar = fig.colorbar(sc, ax=axes[2])
+    cbar.set_label(r"$\log_{10} a$", fontsize=8)
+    _prepare_axes(
+        axes[2], r"$\Sigma_+$  [Mpc$^{-1}$]", r"$\Sigma_-$  [Mpc$^{-1}$]",
+        title=r"VI$_h$ phase plane  ($h = -1.25$)",
+    )
+
+    fig.suptitle(
+        r"FB-1.3 Type VI$_h$ — Wainwright-Ellis Table 11.1 row VI$_h$ "
+        r"(twist-coupled $(+,0,-)$; Hewitt-Wainwright near-FLRW)",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "10_fb13_classB_typeVIh_WE_attractor", TOPIC_11)
+
+
+def plot_11_11_fb13_classB_typeVIIh_spiral() -> None:
+    """FB-1.3 Type VII_h (principal CMB type): Pontzen-Challinor 2009
+    §III spiral signature.
+
+    Ellis-conformal source =
+        W-E piece: S^{WE}_+ = -(2/3)(n_1 − n_3)² + (2/3) A² / (1 + h),
+                   S^{WE}_- = +(2/√3)(n_1 + n_3)(n_1 − n_3)
+        + Pontzen-Challinor spiral:
+            dΣ_+^{spi} = +ω Σ_-,  dΣ_-^{spi} = −ω Σ_+,
+            ω = √|n_1 n_3| × √h × ℋ,
+
+    which is a rotation in the (Σ_+, Σ_-) plane preserving
+    Σ_+² + Σ_-² (up to W-E decay of the Σ-independent piece).
+
+    Three panels:
+      1. Σ_+(a), Σ_-(a) along the Pontzen-Challinor 2007 default
+         (n_1 = 1.8e-2, n_3 = 1.0e-2, a = 5.5e-3, h ≈ 0.168)
+         showing the W-E driven + P-C spiral behaviour.
+      2. Phase plane (Σ_+, Σ_-) coloured by log_10 a — the P-C
+         spiral signature (trajectory rotates in the plane as ℋ
+         evolves).
+      3. Spiral-frequency scaling: ω_spi / ℋ vs. h, with the
+         closed-form ``ω/ℋ = √|n_1 n_3| √h`` overlaid — the FB-1.3
+         qualitative √h scaling pin.
+
+    Reference: Wainwright-Ellis §18 Table 11.1 row VII_h; Pontzen &
+    Challinor, PRD 79, 103518 (2009) §III;
+    docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.3.
+    """
+    import math as _math
+    from bass.background.einstein_bianchi import (
+        type_viih_cosmology,
+    )
+    cosmo = type_viih_cosmology(
+        sigma_over_H_init=1e-5, n1=1.8e-2, n3=1.0e-2, a_twist=5.5e-3,
+    )
+    bg = solve_bianchi_background(
+        cosmo, a_start=1e-6, a_end=1.0, n_pts=4000,
+    )
+
+    # ω_spi / ℋ scaling sweep: fix n_1, n_3; vary a_twist → h = a²/(n_1 n_3).
+    n1_fix, n3_fix = 1.8e-2, 1.0e-2
+    a_twist_grid = np.linspace(1e-3, 1.2e-2, 60)
+    h_grid = a_twist_grid ** 2 / (n1_fix * n3_fix)
+    omega_over_calH = np.sqrt(n1_fix * n3_fix) * np.sqrt(h_grid)
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.0))
+
+    axes[0].semilogx(bg.a, bg.sigma_plus,
+                     color=COLS["orange"], lw=1.4,
+                     label=r"$\Sigma_+$")
+    axes[0].semilogx(bg.a, bg.sigma_minus,
+                     color=COLS["purple"], lw=1.4, ls="--",
+                     label=r"$\Sigma_-$")
+    axes[0].axhline(0.0, color="0.3", lw=0.5)
+    _prepare_axes(
+        axes[0], r"$a$", r"$\Sigma_\pm$  [Mpc$^{-1}$]",
+        title=r"VII$_h$ (P-C 2007 default, $h \approx 0.168$)",
+        xlog=True,
+    )
+    axes[0].legend(loc="best", fontsize=8)
+
+    a_plot = np.maximum(bg.a, 1e-30)
+    sc = axes[1].scatter(
+        bg.sigma_plus, bg.sigma_minus,
+        c=np.log10(a_plot), cmap="viridis", s=3,
+    )
+    axes[1].axhline(0.0, color="0.3", lw=0.5)
+    axes[1].axvline(0.0, color="0.3", lw=0.5)
+    cbar = fig.colorbar(sc, ax=axes[1])
+    cbar.set_label(r"$\log_{10} a$", fontsize=8)
+    _prepare_axes(
+        axes[1], r"$\Sigma_+$  [Mpc$^{-1}$]", r"$\Sigma_-$  [Mpc$^{-1}$]",
+        title=r"P-C spiral signature in $(\Sigma_+, \Sigma_-)$",
+    )
+
+    axes[2].plot(h_grid, omega_over_calH,
+                 color=COLS["blue"], lw=1.4,
+                 label=r"$\omega_{\rm spi} / \mathcal{H} = \sqrt{|n_1 n_3|}\,\sqrt{h}$")
+    axes[2].axvline(cosmo.structure.h_parameter,
+                     color="0.3", ls=":", lw=0.8,
+                     label=fr"P-C default $h \approx {cosmo.structure.h_parameter:.3f}$")
+    _prepare_axes(
+        axes[2], r"$h$", r"$\omega_{\rm spi} / \mathcal{H}$",
+        title=r"VII$_h$ spiral: $\omega_{\rm spi} \propto \sqrt{h}$",
+    )
+    axes[2].legend(loc="best", fontsize=8)
+
+    fig.suptitle(
+        r"FB-1.3 Type VII$_h$ — Wainwright-Ellis Table 11.1 row VII$_h$ "
+        r"+ Pontzen-Challinor 2009 spiral coupling (rotation preserves $\Sigma_+^2 + \Sigma_-^2$)",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "11_fb13_classB_typeVIIh_spiral", TOPIC_11)
+
+
+def plot_11_12_fb13_classB_typeV_shear_zero() -> None:
+    """FB-1.3 Type V: open FLRW analogue (k = −1), (0, 0, 0) with a > 0.
+
+    The shear-specific source ``S_±`` is identically zero — the A²
+    contribution is absorbed into the isotropic FLRW curvature term,
+    not into dΣ_±. Shear therefore decays freely as Σ × a² = const
+    (Ellis conformal invariant), identical to Type I in spirit but
+    with the k = −1 open-FLRW background.
+
+    Three panels:
+      1. Σ_+(a) comparison between Type V and Type I along the same
+         Planck-2018 background (both decay identically when S_± ≡ 0).
+      2. Σ_+ × a² invariance check (the FB-0.1 Ellis conformal shear
+         invariant) across a wide a-window.
+      3. Σ_+²/a⁴ shear-energy-density-times-a⁴ decay vs reference
+         ``∝ a⁻⁸`` slope (Ellis-convention shear energy scales as 1/a⁶).
+
+    Reference: Wainwright-Ellis §18 Table 11.1 row V (open FLRW, k=-1);
+    docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.3.
+    """
+    from bass.background.einstein_bianchi import (
+        type_v_cosmology, type_i_cosmology,
+    )
+    cosmo_V = type_v_cosmology(sigma_over_H_init=1e-4, a_twist=1e-2)
+    cosmo_I = type_i_cosmology(sigma_over_H_init=1e-4)
+    bg_V = solve_bianchi_background(cosmo_V, a_start=1e-6, a_end=1.0, n_pts=2000)
+    bg_I = solve_bianchi_background(cosmo_I, a_start=1e-6, a_end=1.0, n_pts=2000)
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.0))
+
+    axes[0].loglog(bg_V.a, np.abs(bg_V.sigma_plus),
+                   color=COLS["orange"], lw=1.4,
+                   label=r"$|\Sigma_+|$  Type V (k=-1)")
+    axes[0].loglog(bg_I.a, np.abs(bg_I.sigma_plus),
+                   color=COLS["blue"], lw=1.4, ls="--",
+                   label=r"$|\Sigma_+|$  Type I (k=0, ref)")
+    _prepare_axes(
+        axes[0], r"$a$", r"$|\Sigma_+|$  [Mpc$^{-1}$]",
+        title=r"V vs I shear decay (same $\mathcal{H}(a)$ up to $\Omega_k$)",
+        xlog=True, ylog=True,
+    )
+    axes[0].legend(loc="best", fontsize=8)
+
+    mask = bg_V.a > 1e-6
+    conf_inv = bg_V.sigma_plus[mask] * bg_V.a[mask] ** 2
+    axes[1].semilogx(bg_V.a[mask], conf_inv,
+                     color=COLS["green"], lw=1.4,
+                     label=r"$\Sigma_+ \times a^2$")
+    _prepare_axes(
+        axes[1], r"$a$", r"$\Sigma_+ \times a^2$  [Mpc$^{-1}$]",
+        title=r"V Ellis conformal invariant",
+        xlog=True,
+    )
+    axes[1].legend(loc="best", fontsize=8)
+
+    # Shear energy decay: σ²/a⁴ ∝ a⁻⁸ on conformal normalisation.
+    shear_energy = bg_V.sigma_plus[mask] ** 2 / bg_V.a[mask] ** 4
+    ref_slope = shear_energy[0] * (bg_V.a[mask][0] / bg_V.a[mask]) ** 8
+    axes[2].loglog(bg_V.a[mask], np.maximum(shear_energy, 1e-300),
+                   color=COLS["purple"], lw=1.4,
+                   label=r"$\Sigma_+^2 / a^4$")
+    axes[2].loglog(bg_V.a[mask], ref_slope,
+                   color="0.3", ls=":", lw=0.8,
+                   label=r"$\propto a^{-8}$ reference")
+    _prepare_axes(
+        axes[2], r"$a$", r"$\Sigma_+^2 / a^4$  [Mpc$^{-2}$]",
+        title=r"V shear-energy decay",
+        xlog=True, ylog=True,
+    )
+    axes[2].legend(loc="best", fontsize=8)
+
+    fig.suptitle(
+        r"FB-1.3 Type V — Wainwright-Ellis Table 11.1 row V "
+        r"(open FLRW analogue, k=-1; shear-specific $S_\pm \equiv 0$)",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "12_fb13_classB_typeV_shear_zero", TOPIC_11)
+
+
 # ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
@@ -3232,6 +3592,18 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("08_fb12_classA_typeIX_recollapse_trace",
          plot_11_08_fb12_classA_typeIX_recollapse_trace,
          "FB-1.2 Type IX W-E Table 11.1 so(3) source + solve_ivp event recollapse smoke."),
+        ("09_fb13_classB_typeIV_WE_source",
+         plot_11_09_fb13_classB_typeIV_WE_source,
+         "FB-1.3 Type IV W-E Table 11.1 Class B source; axisymmetric S_- = 0; A/N_3 crossover."),
+        ("10_fb13_classB_typeVIh_WE_attractor",
+         plot_11_10_fb13_classB_typeVIh_WE_attractor,
+         "FB-1.3 Type VI_h W-E Table 11.1 Class B; h-dependent A² prefactor 1/(1+|h|); phase plane."),
+        ("11_fb13_classB_typeVIIh_spiral",
+         plot_11_11_fb13_classB_typeVIIh_spiral,
+         "FB-1.3 Type VII_h W-E + Pontzen-Challinor spiral; (Σ_+, Σ_-) rotation; ω ∝ √h scaling."),
+        ("12_fb13_classB_typeV_shear_zero",
+         plot_11_12_fb13_classB_typeV_shear_zero,
+         "FB-1.3 Type V (k=-1) shear-specific source identically zero; Ellis Σ × a² invariant."),
     ],
 }
 

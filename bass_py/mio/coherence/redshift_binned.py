@@ -25,7 +25,9 @@ signal should be rare under permutation.
 """
 from __future__ import annotations
 
+import itertools
 import json
+import math
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import List, Optional, Sequence, Tuple
@@ -233,11 +235,23 @@ def pairwise_bin_separations(bin_results: Sequence[ZBinResult]) -> np.ndarray:
     return angular_separation_matrix(l, b)
 
 
+EXACT_ENUMERATION_MAX_PERMUTATIONS = 10_000
+"""Hard ceiling on ``N!`` for the exact-enumeration path.
+
+At :data:`EXACT_ENUMERATION_MAX_PERMUTATIONS` = 10 000 the exact path
+is tractable up to ``N = 7`` (``7! = 5040``); ``N = 8`` (``40320``)
+is refused so callers don't accidentally stall a test on a 40k-way
+drift recomputation.
+"""
+
+
 def drift_pvalue(
     probes: Sequence[RedshiftBinnedProbe],
     bins: Sequence[Tuple[float, float]] = DEFAULT_Z_BINS,
     n_mock: int = 5_000,
     rng: Optional[np.random.Generator] = None,
+    *,
+    exact: bool = False,
 ) -> float:
     """Permutation p-value for the 'no z-drift' null hypothesis.
 
@@ -249,21 +263,58 @@ def drift_pvalue(
     Rationale: under the null "axis direction is independent of the
     probe's z_eff", any label permutation is equally plausible; a
     genuine z-drift signal should be rare in the permutation distribution.
+
+    Parameters
+    ----------
+    exact
+        If ``True``, enumerate every label permutation via
+        :func:`itertools.permutations` instead of Monte-Carlo sampling.
+        Requires ``N! < EXACT_ENUMERATION_MAX_PERMUTATIONS``; otherwise
+        raises ``ValueError``. The exact path is deterministic (ignores
+        ``n_mock`` / ``rng``) and gives bit-reproducible p-values at
+        small ``N`` — closing W11 F1 for the low-N reproducibility
+        regime flagged in `AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md` §6.
     """
     if n_mock < 1:
         raise ValueError("n_mock must be >= 1")
-    if rng is None:
-        rng = np.random.default_rng()
     if len(probes) < 2:
         # A single probe cannot drift; call it fully consistent with the null.
         return 1.0
 
     observed = total_drift_deg(per_bin_resultants(probes, bins))
+    z_labels = [float(p.z_eff) for p in probes]
 
-    z_labels = np.array([p.z_eff for p in probes], dtype=float)
+    if exact:
+        n_perm = math.factorial(len(probes))
+        if n_perm > EXACT_ENUMERATION_MAX_PERMUTATIONS:
+            raise ValueError(
+                f"drift_pvalue(exact=True) refuses to enumerate {n_perm} "
+                f"permutations (N={len(probes)}); ceiling is "
+                f"{EXACT_ENUMERATION_MAX_PERMUTATIONS}. Drop to MC by "
+                f"calling with exact=False."
+            )
+        count = 0
+        for perm in itertools.permutations(z_labels):
+            shuffled = [
+                RedshiftBinnedProbe(
+                    name=p.name, l_deg=p.l_deg, b_deg=p.b_deg,
+                    sigma_cone_deg=p.sigma_cone_deg, z_eff=float(z),
+                    weight=p.weight,
+                )
+                for p, z in zip(probes, perm)
+            ]
+            mock_drift = total_drift_deg(per_bin_resultants(shuffled, bins))
+            if mock_drift >= observed:
+                count += 1
+        # Exact fraction; matches the MC estimator in the n_mock → ∞ limit.
+        return count / n_perm
+
+    if rng is None:
+        rng = np.random.default_rng()
+    z_arr = np.array(z_labels, dtype=float)
     count = 0
     for _ in range(n_mock):
-        perm = rng.permutation(z_labels)
+        perm = rng.permutation(z_arr)
         shuffled = [
             RedshiftBinnedProbe(
                 name=p.name, l_deg=p.l_deg, b_deg=p.b_deg,
@@ -419,16 +470,17 @@ def emit_redshift_coherence_artefact(
 
 
 __all__ = [
+    "ARTEFACT_FILENAME",
+    "DEFAULT_Z_BINS",
+    "EXACT_ENUMERATION_MAX_PERMUTATIONS",
     "RedshiftBinnedProbe",
     "STANDARD_Z_PROBES",
-    "DEFAULT_Z_BINS",
     "ZBinResult",
-    "ARTEFACT_FILENAME",
     "assign_probes_to_bins",
-    "per_bin_resultants",
-    "total_drift_deg",
-    "pairwise_bin_separations",
     "drift_pvalue",
-    "to_mio_certificate",
     "emit_redshift_coherence_artefact",
+    "pairwise_bin_separations",
+    "per_bin_resultants",
+    "to_mio_certificate",
+    "total_drift_deg",
 ]

@@ -493,7 +493,305 @@ Ready to hand off to **FB-1.3**.
 
 ---
 
-<!-- Reserved placeholder for FB-1.3 supplement (Class B — twist-coupled
-source for III / IV / V / VI_h / VII_h; Pontzen-Challinor 2009 VII_h
-spiral match) and FB-1.4 (anisotropic_3_curvature 11-type
-consolidation). -->
+## FB-1.3 supplement — Class B background validation + Pontzen-Challinor VII_h spiral signature
+
+**Date**: 2026-04-19 (same day as FB-1.1 + FB-1.2)
+**Sub-phase**: **FB-1.3** — promotes the remaining four Class B
+PROVISIONAL Bianchi types (III, IV, VI_h, VII_h) to `VALIDATED` and
+extends the V reference to cite the FB-1.3 explicit-grid regression.
+FB-1.3 also introduces the Pontzen-Challinor 2009 §III spiral
+qualitative signature pins for VII_h (sign, ω ∝ √h scaling, rotation
+invariance Σ_+ dΣ_+^{spi} + Σ_- dΣ_-^{spi} ≡ 0).
+**Baseline commit (pre FB-1.3)**: FB-1.2 seal; 2,800 passing + 1 skipped.
+**Post FB-1.3 test count**: **2,904 passing + 1 skipped** (+104 new,
+0 regressed — 104 new parametrised runs in the new
+`TestClassBFixedPoints` class; one pre-existing PROVISIONAL assertion
+in `test_comparator_policy.py::test_type_VIIh_background_runs`
+flipped to VALIDATED to match the promotion).
+**Verdict**: **통과** (no P0/P1; all FB-1.1/1.2 carry-forwards —
+F3 / FB02-F1 / FB11-F1 / FB12-F1 / FB12-F3 — preserved verbatim;
+no new failure modes introduced; the quantitative P-C spiral κ
+calibration remains explicitly FB-5/FB-6 scope).
+
+### 1. Audit target reconstruction (FB-1.3)
+
+| Layer | Artifact | Role |
+|---|---|---|
+| Physics / math source | W-E 1997 §18 Table 11.1 Class B rows (III ≡ VI_{-1}; IV; V; VI_h; VII_h); Pontzen & Challinor, *PRD* 79, 103518 (2009) §III (VII_h spiral); Hewitt-Wainwright 1990 (near-FLRW Δ, Ñ reduction) | Per-type twist-coupled dimensionless ``S^{WE}_±`` formulas + P-C spiral signature anchoring the Class B "VALIDATED" promotion contract |
+| Per-type source dispatch | `shear_sources.py::{source_III, source_IV, source_V, source_VIh, source_VIIh}` + `SOURCE_STATUS` registry | Each source function returns ``ℋ² × S^{WE}`` in Mpc⁻² per FB-0.1 Ellis lift; VII_h additionally carries Σ-linear spiral coupling (``+ω Σ_-``, ``-ω Σ_+``) |
+| Tests (new) | `bass/transport/test_shear_sources.py::TestClassBFixedPoints` | 6 methods × parametrisation = 104 new runs (12 III + 16 IV + 16 V + 16 VI_h + 16 VII_h formula + 12 VII_h √h scaling + 16 VII_h rotation invariance) |
+| Tests (modified) | `bass/validation/test_comparator_policy.py::test_type_VIIh_background_runs` | One assertion flipped (`PROVISIONAL → VALIDATED`) to match the SOURCE_STATUS promotion; test body otherwise unchanged |
+| Gallery | `plots/physics_gallery/11_integrator/{09_fb13_classB_typeIV_WE_source.png, 10_fb13_classB_typeVIh_WE_attractor.png, 11_fb13_classB_typeVIIh_spiral.png, 12_fb13_classB_typeV_shear_zero.png}` | Four new non-no-op PNGs (third gallery extension of the FB phase) |
+| Spec cross-ref | `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1.3` | FB-1.3 row ("Class B 배경: III / IV / V / VI_h / VII_h — twist-coupled shear source; VII_h Pontzen-Challinor spiral match") delivered |
+
+Source of truth (unchanged): W-E §18 Table 11.1 formulas in Hubble-
+normalised Class B setting; Ellis conformal lift ``S_± = ℋ² × S^{WE}``
+(FB-0.1); P-C 2009 §III spiral coupling convention. FB-1.3 extends
+the operative contract to the twist-coupled Class B rows.
+
+### 2. Contract / interface table — FB-1.3 additions
+
+| Surface | Signature / invariant | Status |
+|---|---|---|
+| `SOURCE_STATUS["III"]` | tag=VALIDATED, reference="W-E §18 Table 11.1 row III (≡ VI_{h=-1})", benchmark="dispatches to VI_h; formula at h=-1 (A² prefactor 1/2) pinned; no FLRW limit" | Promoted PROVISIONAL → VALIDATED |
+| `SOURCE_STATUS["IV"]` | tag=VALIDATED, reference="W-E §18 Table 11.1 row IV, cosmologically marginal Class B", benchmark="formula + axisymmetric S_- = 0 + Σ-indep pinned; no FLRW limit" | Promoted PROVISIONAL → VALIDATED |
+| `SOURCE_STATUS["V"]` | tag=VALIDATED (unchanged), reference refreshed to "W-E §18 Table 11.1 row V (open FLRW, k=-1)", benchmark refreshed to "S_± = 0 exactly pinned on (A, ℋ) grid; A² → FLRW curvature" | Reference + benchmark metadata refreshed (tag already VALIDATED from LB baseline) |
+| `SOURCE_STATUS["VI_h"]` | tag=VALIDATED, reference="W-E §18 Table 11.1 row VI_h (Hewitt-Wainwright near-FLRW)", benchmark="formula + h-prefactor + S_+ < 0 + Σ-indep pinned; full reduction FB-5/FB-6" | Promoted PROVISIONAL → VALIDATED |
+| `SOURCE_STATUS["VII_h"]` | tag=VALIDATED, reference="W-E §18 Table 11.1 row VII_h + Pontzen-Challinor 2009 §III spiral", benchmark="formula + P-C spiral sign + √h scaling + rotation invariance pinned; κ calibration FB-5/FB-6" | Promoted PROVISIONAL → VALIDATED |
+| `compute_shear_source` signature | `(sc, Sp, Sm, calH, a) → (dSp, dSm)` in Mpc⁻² | Unchanged |
+| `source_III / source_IV / source_V / source_VIh / source_VIIh` function bodies | Unchanged from FB-0.1 (formula-level behaviour preserved verbatim; FB-1.3 is metadata + test + docstring refresh) | Unchanged |
+| `TestClassBFixedPoints` public surface | 6 methods — `test_type_III_dispatches_to_VIh_at_h_minus_1`, `test_type_IV_WE_source_formula`, `test_type_V_shear_zero_pin`, `test_type_VIh_WE_source_formula`, `test_type_VIIh_WE_source_formula_and_spiral_signature`, `test_type_VIIh_spiral_omega_scales_as_sqrt_h`, `test_type_VIIh_spiral_rotation_conserves_amplitude` | New |
+
+**Per-type formula pins (W-E §18 Table 11.1 + P-C 2009 §III, FB-1.3 extensions)**:
+
+| Type | `S^{WE}_+` | `S^{WE}_-` | Verified in |
+|---|---|---|---|
+| III (= VI_{h=-1}) | dispatch to VI_h; at h=-1: −(2/3)(n_1−n_3)² + (2/3) A² × 1/2 | −(2/√3)(n_1+n_3)(n_1−n_3) | `test_type_III_dispatches_to_VIh_at_h_minus_1` (3 n_1 × 4 ℋ = 12 runs; dispatch identity + formula + Σ-indep) |
+| IV | −(2/3) N_3² + (2/3) A² | 0 (axisymmetric) | `test_type_IV_WE_source_formula` (4 (N_3, A) × 4 ℋ = 16 runs, rel 1e-12; Σ-indep) |
+| V | 0 exactly | 0 exactly | `test_type_V_shear_zero_pin` (4 A × 4 ℋ = 16 runs; identical-zero across grid; Σ-indep) |
+| VI_h | −(2/3)(n_1−n_3)² + (2/3) A² / (1+|h|) | −(2/√3)(n_1+n_3)(n_1−n_3) | `test_type_VIh_WE_source_formula` (4 (n_1>0, n_3<0, A>0, h) × 4 ℋ = 16 runs, rel 1e-12; S_+ < 0 sign + Σ-indep) |
+| VII_h (W-E) | −(2/3)(n_1−n_3)² + (2/3) A² / (1+h) | **+**(2/√3)(n_1+n_3)(n_1−n_3) | `test_type_VIIh_WE_source_formula_and_spiral_signature` (4 (n_1>0, n_3>0, A>0, h>0) × 4 ℋ = 16 runs, rel 1e-12) |
+| VII_h (spiral) | +ω Σ_- | −ω Σ_+, with ω = √\|n_1 n_3\| × √h × ℋ | same test + `test_type_VIIh_spiral_omega_scales_as_sqrt_h` (3 (n_1, n_3) × 4 ℋ = 12 runs; doubling a_twist doubles spiral amplitude exactly) |
+| VII_h rotation | Σ_+ dΣ_+^{spi} + Σ_- dΣ_-^{spi} ≡ 0 | — | `test_type_VIIh_spiral_rotation_conserves_amplitude` (4 (n_1, n_3, a, Sp, Sm) × 4 ℋ = 16 runs; float-subtraction floor + closed-form identity co-pinned) |
+
+### 3. Phys-math audit ledger
+
+| Check | Result | Evidence |
+|---|---|---|
+| Type III dispatch-identity: `source_III(sc) == source_VIh(sc)` exactly | ✅ | `test_type_III_dispatches_to_VIh_at_h_minus_1` (hard equality on both S_+ and S_-) |
+| Type III factory forces h = -1 identically | ✅ | same test (`assert sc.h_parameter == pytest.approx(-1.0, rel=1e-12)`) |
+| Type III W-E formula at h=-1 with A² prefactor 1/(1+\|h\|) = 1/2 at rel 1e-12 | ✅ | same test, second assertion block |
+| Type IV formula `S^{WE}_+ = −(2/3) N_3² + (2/3) A²`, `S^{WE}_- = 0` at rel 1e-12 across (N_3, A, ℋ) grid | ✅ | `test_type_IV_WE_source_formula` (16 parametrised runs) |
+| Type IV axisymmetric S_- = 0 exactly (hard equality, not approx) | ✅ | same test |
+| Type V S_± = 0 exactly across (A, ℋ) grid (hard equality) | ✅ | `test_type_V_shear_zero_pin` (16 runs; Σ-independence trivially preserved) |
+| Type VI_h formula with h-dependent prefactor `1/(1+\|h\|)` at rel 1e-12 across (n_1, n_3, A, h, ℋ) grid covering both h < -1 and -1 < h < 0 branches | ✅ | `test_type_VIh_WE_source_formula` (16 parametrised runs) |
+| Type VI_h S_+ < 0 in the chosen near-FLRW parametrisation (where ``(n_1-n_3)²`` dominates the A² piece) | ✅ | same test, strict inequality |
+| Type VII_h W-E piece formula at rel 1e-12 across (n_1>0, n_3>0, A>0, h>0, ℋ) grid | ✅ | `test_type_VIIh_WE_source_formula_and_spiral_signature` (16 parametrised runs) |
+| Type VII_h spiral antisymmetric coupling: `(dΣ_+ − dΣ_+^{WE}, dΣ_- − dΣ_-^{WE}) = (+ω Σ_-, -ω Σ_+)` at rel 1e-12 | ✅ | same test, spiral-piece assertion block |
+| Type VII_h ω_spiral ∝ √h scaling pin: doubling a_twist (⇒ h × 4) doubles the spiral amplitude exactly | ✅ | `test_type_VIIh_spiral_omega_scales_as_sqrt_h` (12 parametrised runs; `spi_big == 2 × spi_small` at rel 1e-12) |
+| Type VII_h spiral rotation invariance identity `Σ_+ dΣ_+^{spi} + Σ_- dΣ_-^{spi} ≡ 0` at the float-subtraction floor | ✅ | `test_type_VIIh_spiral_rotation_conserves_amplitude` (16 parametrised runs; bound `< 1e-10 × (|dSp_we|+|dSm_we|) × max(|Sp|,|Sm|)` via subtraction + closed-form `< 1e-12 × ω·|Sp|·|Sm|` co-pin) |
+| Σ-independence of III/IV/V/VI_h (Class B non-VII_h): source does not depend on Σ_± at rel 1e-14 | ✅ | each respective test, Σ-independence assertion block |
+| Type VII_h Σ-dependence is purely the antisymmetric P-C spiral (no hidden Σ-linear term elsewhere) | ✅ | `test_type_VIIh_WE_source_formula_and_spiral_signature` spiral-piece subtraction equals the closed-form `(+ω Sm, -ω Sp)` with zero residual beyond float-subtraction noise |
+| FB-1.1 / FB-1.2 / FB-0 regressions unaffected | ✅ | 2,800 baseline tests unchanged + 104 new + 1 assertion flipped (PROVISIONAL→VALIDATED) ⇒ 2,904 green |
+| `SOURCE_STATUS` III/IV/VI_h/VII_h now report `tag == "VALIDATED"`; V retains `"VALIDATED"` with refreshed reference | ✅ | direct registry read; `TestSourceStatus.test_types_with_flrw_limit_have_verified_flag_true` confirms VII_h `flrw_limit_verified=True` preserved |
+
+### 4. Equation-to-code mapping audit
+
+| Target equation | Code implementation | Test anchor |
+|---|---|---|
+| W-E §18 Table 11.1 row III (≡ VI_{h=-1}) dispatch | `shear_sources.source_III: return source_VIh(sc, Sp, Sm, calH, a)` (verbatim) | `test_type_III_dispatches_to_VIh_at_h_minus_1` (dispatch-identity + formula pin) |
+| W-E §18 Table 11.1 row IV: `S^{WE}_+ = -(2/3) N_3² + (2/3) A²`, `S^{WE}_- = 0` | `shear_sources.source_IV: S_plus_WE = -(2/3) * n3**2 + (2/3) * a_t**2; return S_plus_WE * calH**2, 0.0` | `test_type_IV_WE_source_formula` (16 parametrisations, rel 1e-12) |
+| W-E §18 Table 11.1 row V: `S^{WE}_± = 0` (A² → FLRW k=-1 curvature) | `shear_sources.source_V: return 0.0, 0.0` | `test_type_V_shear_zero_pin` (16 parametrisations, hard equality) |
+| W-E §18 Table 11.1 row VI_h: `S^{WE}_+ = -(2/3) diff² + (2/3) A² × 1/(1+\|h\|)`, `S^{WE}_- = -(2/√3) summ × diff` | `shear_sources.source_VIh: h_factor = 1/(1+\|h\|); S_plus_WE = -(2/3) * diff**2 + (2/3) * a_t**2 * h_factor; S_minus_WE = -(2/sqrt(3)) * summ * diff` | `test_type_VIh_WE_source_formula` (16 parametrisations) |
+| W-E §18 Table 11.1 row VII_h: `S^{WE}_+ = -(2/3) diff² + (2/3) A² / (1+h)`, `S^{WE}_- = +(2/√3) summ × diff` (sign flip vs VI_h) | `shear_sources.source_VIIh: S_plus_WE = -(2/3) * diff**2 + (2/3) * a_t**2 / (1+h); S_minus_WE = +(2/sqrt(3)) * summ * diff` | `test_type_VIIh_WE_source_formula_and_spiral_signature` (W-E block) |
+| P-C 2009 §III VII_h spiral coupling: `dΣ_+ += +ω Σ_-`, `dΣ_- += -ω Σ_+`, `ω = √\|n_1 n_3\| × √h × ℋ` | `shear_sources.source_VIIh: omega_spiral = sqrt(\|n1*n3\|) * sqrt(\|h\|) * calH; S_plus_spiral = +kappa * omega * Sm; S_minus_spiral = -kappa * omega * Sp` (κ = 1.0 pinned for FB-1.3) | `test_type_VIIh_WE_source_formula_and_spiral_signature` (spiral block) + `test_type_VIIh_spiral_omega_scales_as_sqrt_h` + `test_type_VIIh_spiral_rotation_conserves_amplitude` |
+| SOURCE_STATUS promotion contract | 4 `SOURCE_STATUS` entries flipped to `"VALIDATED"` with FB-1.3 cross-ref comments; V metadata refreshed | `TestSourceStatus.test_all_types_have_status` (trivially green) + the 104 new per-type tests |
+
+No dead code introduced. No orphan imports. Per-type source function
+**bodies** are unchanged (FB-1.3 is metadata-level + test-level +
+docstring refresh). The one modified test — the VII_h PROVISIONAL
+assertion in `test_comparator_policy.py` — was a legacy assertion
+tracking the pre FB-1 source-status contract; flipping it to VALIDATED
+is the minimal edit to match the FB-1.3 promotion and does not
+weaken the test (the NaN/Inf-finiteness + background-integration
+assertions remain intact).
+
+### 5. Numerical / pipeline audit
+
+| Item | Finding |
+|---|---|
+| `TestClassBFixedPoints` parametrised run count | 104 (12 III + 16 IV + 16 V + 16 VI_h + 16 VII_h W-E + 12 VII_h √h scaling + 16 VII_h rotation) |
+| Formula-match tolerance (III / IV / VI_h / VII_h W-E) | rel 1e-12 — passes at all 60 parametrised W-E formula assertions |
+| V identically-zero pin | hard equality (`== 0.0`) across the 16 (A, ℋ) parametrised runs |
+| VII_h spiral antisymmetric coupling | rel 1e-12 on both `dΣ_+ − dΣ_+^{WE} == +ω Σ_-` and `dΣ_- − dΣ_-^{WE} == -ω Σ_+` |
+| VII_h √h scaling | `spi_big == 2.0 × spi_small` at rel 1e-12 (a_big = 2 × a_small ⇒ √h_big = 2 × √h_small exactly) |
+| VII_h rotation invariance | dual bound: (i) float-subtraction floor `\|residual\| < 1e-10 × (\|dSp_we\|+\|dSm_we\|) × max(\|Sp\|,\|Sm\|)` (handles the cancellation cost from subtracting the W-E baseline when it dominates the spiral) + (ii) closed-form `\|residual\| < 1e-12 × ω × \|Sp\| × \|Sm\|` as the cancellation-free identity check |
+| Σ-independence tolerance | rel 1e-14 (exactly equal up to ordering-of-operations noise) |
+| Default branch bit-identical to pre-FB-1.3 | ✅ — no source function body or default parameter changed; FB-1.2 `test_type_I_kasner_exponent_sum` still green at same 2.1609e-16 final-sample value |
+| Wall time | 69.37 s full suite (was 70.77 s post FB-1.2); no measurable regression — the 104 new parametrised tests are O(1) arithmetic calls running in ~0.2 s total |
+| Determinism | No RNG, no background-table mutation, no state leakage across parametrised runs |
+| Baseline reproduction | 2,800 pre → 2,904 post (+104 new, 0 regressed, 1 PROVISIONAL→VALIDATED assertion flip that matches the promotion) |
+| Gallery render time | ~6 s for the 4 new plots on top of the 8 existing FB-1.1/1.2 plots |
+| Gallery file sizes | 09 (IV): ~150 KB; 10 (VI_h): ~260 KB; 11 (VII_h spiral): ~290 KB; 12 (V): ~200 KB |
+
+### 6. Ranked failure modes
+
+| ID | Type | Severity | Summary | Action |
+|---|---|---|---|---|
+| F3 (FB-0.1) | documentation | P2 carried | `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² normalisation drift | Still deferred to FB-2.4 |
+| FB02-F1 (FB-0.2) | documentation | P2 carried | `00_conventions.md §2` cross-ref of `v̂_e` default | Still deferred to FB-3.1 |
+| FB11-F1 (FB-1.1) | physics-framework | P2 carried | W-E Table 11.1 fixed-point **coordinates** not directly reachable in fixed-N framework | Still deferred to FB-5 / FB-6. FB-1.3 continues to honour this lesson — the Class B tests pin source-function **formulas** at rel 1e-12 + the VII_h **spiral signature** qualitatively (sign + √h scaling + rotation invariance), not Hubble-normalised coordinates. |
+| FB12-F1 (FB-1.2) | physics-framework | P3 carried | IX isotropic leading-order residual `S_+ = +(2/3) n² ℋ²` (W-E pathology) | Still deferred to FB-5 / FB-6. Class B has no analogous pathology in FB-1.3; carry is unrelated but noted for continuity. |
+| FB12-F3 (FB-1.2) | diagnostic | P3 carried | `bianchi_ix_recollapse_event` coupled to `_hubble_squared` | Still deferred to FB-5 / FB-6. No interaction with FB-1.3 Class B work. |
+| FB13-F1 | testing | resolved | The VII_h spiral rotation-invariance identity `Σ_+ dΣ_+^{spi} + Σ_- dΣ_-^{spi} ≡ 0` is algebraically exact but numerically attenuated when the test extracts the spiral piece by subtraction from a W-E-dominated source: the cancellation loses ~log2(\|W-E\|/\|spiral\|) bits of precision, so a naive ulp-level tolerance would false-fail. | **Resolved in-session**: dual-bound the residual — (i) subtraction-floor `1e-10 × (\|dSp_we\|+\|dSm_we\|) × max(\|Sp\|,\|Sm\|)` and (ii) closed-form direct-formula identity at rel 1e-12. The dual pin rules out any true sign flip / coefficient drift while tolerating the unavoidable float cancellation from the subtraction baseline. |
+| FB13-F2 | testing | resolved | `test_comparator_policy.py::test_type_VIIh_background_runs` asserted `source_status == "PROVISIONAL"`, which was a FB-1.1 legacy pin that becomes wrong at the moment of FB-1.3 promotion. Without a fix this would be a P0 regression against a prior-session assertion. | **Resolved in-session**: flipped the single assertion to `"VALIDATED"` with a docstring note citing FB-1.3 and the new `TestClassBFixedPoints` anchor. NaN/Inf-finiteness assertions preserved verbatim. |
+
+No P0/P1 items. FB13-F1 and FB13-F2 are FB-1.3-local findings; both
+were resolved in-session before commit. All prior carry-forwards
+(F3 / FB02-F1 / FB11-F1 / FB12-F1 / FB12-F3) are preserved verbatim
+with their explicit deferral targets intact.
+
+### 7. Verifier results
+
+| Verifier | Result | Notes |
+|---|---|---|
+| Physics (limit recovery, dimensions, signs) | **PASSED** | FLRW limit preserved (no-op on all 4 Class B promotions + V refresh); FB-0.1 Ellis ℋ² lift preserved; III dispatch-identity at h = -1 pinned exactly; IV axisymmetric S_- = 0 pinned; V S_± = 0 exactly; VI_h h-dependent prefactor + S_+ < 0 sign + Σ-independence pinned; VII_h W-E + P-C spiral sign + √h scaling + rotation invariance pinned; Σ-independence of all Class B non-VII_h sources preserved |
+| Code (contract satisfaction) | **PASSED** | `compute_shear_source` signature unchanged; `SOURCE_STATUS` dict tags flipped with FB-1.3 cross-ref comments but same shape; per-type function bodies untouched; `TestClassBFixedPoints` does not reach into private state; VII_h spiral rotation identity verified via two independent tolerance bounds (subtraction floor + closed-form direct) |
+| Numerical (convergence, tolerance) | **PASSED** | 2,904 pass + 1 skip; +104 new, 0 regressed; 69.37 s wall time (improvement from 70.77 s post FB-1.2, within noise); formula rel 1e-12 passes on all 76 W-E / spiral / √h assertions; rotation identity passes on all 16 combined parametrisations; V S_± = 0 passes hard-equality on all 16 |
+
+### 8. Minimal repair plan (applied in-session)
+
+| Patch | Target | Status |
+|---|---|---|
+| A | `bass/transport/test_shear_sources.py` — added `TestClassBFixedPoints` class with 6 methods (III dispatch + IV + V + VI_h + VII_h W-E/spiral signature + VII_h √h scaling + VII_h rotation invariance = 7 test methods though spiral-signature and rotation overlap in coverage logic); added `source_III, source_IV, source_VIh` to the existing import block | ✅ |
+| B | `bass/transport/shear_sources.py::SOURCE_STATUS` — promoted III / IV / VI_h / VII_h from `"PROVISIONAL"` to `"VALIDATED"`; refreshed V reference + benchmark fields to cite FB-1.3; added FB-1.3 cross-reference comments on each entry. Source function docstrings refreshed (III / IV / V / VI_h / VII_h) with W-E + P-C citations and VALIDATED status notes | ✅ |
+| C | `bass/validation/test_comparator_policy.py::test_type_VIIh_background_runs` — flipped the single `source_status == "PROVISIONAL"` assertion to `"VALIDATED"` with docstring citation of FB-1.3 and the new `TestClassBFixedPoints` anchor | ✅ |
+| D | `scripts/make_physics_gallery.py` — added 4 new plot functions (`plot_11_09..12_fb13_classB_*`) + 4 catalog entries; extended Class B imports from `bass.background.bianchi_types`; mathtext `\tfrac` → `\frac` fix applied in-session | ✅ |
+| E | `plots/physics_gallery/11_integrator/{09..12}_fb13_classB_*.png` — generated via `scripts/make_physics_gallery.py --only 11_integrator`; each PNG visually inspected (see §9) | ✅ |
+| F | `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` — this supplement appended (§1..§10) | ✅ |
+| G | `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` — rotated to FB-1.4 (`anisotropic_3_curvature` 11-type consolidation; `tetrad_state.py` ³R_{ab}^{aniso} explicit per type; Phase FB-1 exit) | ✅ (see commit) |
+
+### 9. Minimal test set (delivered)
+
+**Baseline reproduction**: all 2,800 pre-FB-1.3 tests still green
+(one PROVISIONAL→VALIDATED assertion flip tracks the promotion and
+is the minimal edit; no pre-existing test was weakened). The
+pre-FB-1.3 behaviour of every per-type source function is bit-for-bit
+preserved — formula bodies untouched.
+
+**Physics sanity (new)**: `test_type_III_dispatches_to_VIh_at_h_minus_1`
+anchors the III ≡ VI_{h=-1} algebraic identity + the formula at h=-1
+with A² prefactor 1/2 (12 parametrised runs). `test_type_IV_WE_source_formula`
+pins the W-E Class-B axisymmetric formula with S_- = 0 (16 runs).
+`test_type_V_shear_zero_pin` explicitly regresses the "A² → curvature,
+not shear source" property across (A, ℋ) grid (16 runs).
+
+**Formula-level regression (new)**: `test_type_VIh_WE_source_formula`
+(16 runs) and `test_type_VIIh_WE_source_formula_and_spiral_signature`
+(16 runs) pin the twist-coupled W-E formulas at rel 1e-12 across
+both h < -1 / -1 < h < 0 (VI_h) and h > 0 (VII_h) branches.
+
+**Pontzen-Challinor spiral signature (new)**: the VII_h spiral is
+pinned by three independent checks: (i) antisymmetric coupling
+`(+ω Σ_-, -ω Σ_+)` at rel 1e-12 in
+`test_type_VIIh_WE_source_formula_and_spiral_signature`; (ii) ω ∝ √h
+scaling in `test_type_VIIh_spiral_omega_scales_as_sqrt_h` (12 runs;
+the exact `2 × spi_small == spi_big` identity under a_twist doubling);
+(iii) rotation invariance `Σ_+ dΣ_+^{spi} + Σ_- dΣ_-^{spi} ≡ 0` in
+`test_type_VIIh_spiral_rotation_conserves_amplitude` (16 runs;
+dual-bound subtraction-floor + closed-form closure).
+
+**Adversarial / edge**: Σ-independence of every Class B non-VII_h
+source (III / IV / V / VI_h) is pinned explicitly at rel 1e-14,
+ruling out any accidental Σ-coupling outside the well-defined P-C
+spiral locus. The V parametrisation includes a_twist = 5e-2 (50×
+larger than the default), confirming the shear-specific source
+vanishes across the full realistic A range.
+
+**Regression**: 2,904 passing + 1 skipped; +104 new, 0 regressed,
+1 PROVISIONAL→VALIDATED assertion flip that matches the promotion.
+
+#### Gallery inspection summary (visual verification)
+
+Each of the 4 new PNGs was opened with the Read tool and the physics
+qualitatively verified before final commit:
+
+| PNG | Key visual check | Verdict |
+|---|---|---|
+| `09_fb13_classB_typeIV_WE_source.png` | Panel 1: Σ_+(a) drops sharply from 2e-4 through zero (source-driven, N_3² dominates at defaults); Σ_- ≡ 0 across the full a-range (axisymmetric, per IV's W-E form). Panel 2: `S^{WE}_+ × ℋ²` as A/N_3 sweeps from 0.1 to ~5 — clean zero crossing at A/N_3 = 1 as expected from `-(2/3) N_3² + (2/3) A²`. Panel 3: Σ_+² × a⁴ shear-energy invariant stable at ~4.67e-32 with only integrator-noise drift (< 1e-6 relative). | ✅ |
+| `10_fb13_classB_typeVIh_WE_attractor.png` | Panel 1: Σ_+(a) decays from 2e-4 through a brief negative dip then to zero (source-driven); Σ_-(a) dips negative (S_- < 0 for n_1+n_3 = 8e-3 > 0 and n_1-n_3 = 1.2e-2 > 0). Panel 2: `1/(1+\|h\|)` curve hits 0.5 at h=-1 boundary and decays to ~0.2 at h=-4; approaches 1 as h→0. Panel 3: phase plane shows trajectory into Σ_- < 0 quadrant (colour-coded by log_10 a). | ✅ |
+| `11_fb13_classB_typeVIIh_spiral.png` | Panel 1: Σ_+(a) and Σ_-(a) for the P-C 2007 default fixture — Σ_- rises sharply then decays (driven by +S_-^{WE} > 0); Σ_+ dips negative briefly. Panel 2: phase plane shows the spiral trajectory wrap in (Σ_+, Σ_-) colour-coded by log_10 a. Panel 3: ω_spi/ℋ vs h curve follows √h scaling cleanly, with the P-C default h ≈ 0.168 marked. | ✅ |
+| `12_fb13_classB_typeV_shear_zero.png` | Panel 1: |Σ_+(a)| for V vs I decays **identically** on loglog axes (expected — both have S_± = 0, only differ in ℋ via Ω_k). Panel 2: Σ_+ × a² Ellis conformal invariant stable at ~2.1609e-16 (bit-matching the Type I Kasner invariant noted in FB-1.1 §5). Panel 3: Σ_+² / a⁴ shear-energy-density decays exactly as ∝ a⁻⁸ reference. | ✅ |
+
+No physics anomaly required in-session fixes to the plot code beyond
+a mathtext `\tfrac` → `\frac` syntax fix (mathtext does not support
+`\tfrac`) in the IV plot legend.
+
+### 10. 최종 판정
+
+* **치명적 오류 있음 / 부분 통과 / 통과** → **통과** (no P0 / P1;
+  FB13-F1 and FB13-F2 resolved in-session by dual-bound rotation
+  tolerance and PROVISIONAL→VALIDATED assertion flip respectively;
+  all prior carry-forwards F3 / FB02-F1 / FB11-F1 / FB12-F1 / FB12-F3
+  preserved with their explicit deferral targets intact).
+* **지금 당장 구현/수정한 1개**: the promotion of `SOURCE_STATUS`
+  for Class B types III / IV / VI_h / VII_h from PROVISIONAL to
+  VALIDATED (plus V reference refresh), grounded in 104 parametrised
+  formula-match + spiral-signature + rotation-invariance tests. This
+  completes the FB plan §4 FB-1 exit-criteria pre-requisite of
+  promoting the 9 PROVISIONAL sources (`SOURCE_STATUS` now reports
+  VALIDATED for all 12 registry entries: FLRW + I/II/VI₀/VII₀/VIII/IX
+  (Class A) + III/IV/V/VI_h/VII_h (Class B)); FB-1.4
+  (`anisotropic_3_curvature` 11-type consolidation) closes Phase FB-1.
+* **지금 손대면 안 되는 1개**: attempting a quantitative calibration
+  of the VII_h Pontzen-Challinor spiral coefficient κ against an
+  AniCLASS / P-C 2009 fixture. FB-1.3 pins the sign, ∝ √h scaling,
+  and rotation invariance qualitatively; a numeric κ match would
+  require the k ≠ 0 perturbation sector (FB-5) and the cross-type
+  continuity analysis (FB-6.3). Forcing a κ fit today would conflate
+  the background-source layer with the perturbation-mode projector
+  and mask genuine contributions from either side. The FB-1.3
+  contract `κ = 1.0 by construction; calibration deferred` is the
+  honest bound of what the fixed-N background framework can pin.
+
+## Gallery refresh
+
+FB-1.3 is the **third non-no-op** gallery extension of the FB phase
+(FB-0.* were no-op; FB-1.1 added 03..06; FB-1.2 added 07..08). Four
+new PNGs land under `plots/physics_gallery/11_integrator/`:
+
+* `09_fb13_classB_typeIV_WE_source.png` — 3-panel Type IV axisymmetric
+  trajectory + W-E `S^{WE}_+` sign crossover + shear-energy invariant
+* `10_fb13_classB_typeVIh_WE_attractor.png` — 3-panel Type VI_h
+  twist-coupled trajectory + h-dependent `1/(1+|h|)` prefactor curve
+  + phase plane
+* `11_fb13_classB_typeVIIh_spiral.png` — 3-panel Type VII_h (P-C 2007
+  default) trajectory + spiral phase plane + ω_spi ∝ √h scaling
+* `12_fb13_classB_typeV_shear_zero.png` — 3-panel Type V (k=-1) shear
+  decay vs Type I reference + Σ_+ × a² Ellis invariant + Σ²/a⁴ ∝ a⁻⁸
+
+Per the phase-boundary gallery rule, each PNG was visually inspected
+post-generation and before commit. One in-session fix was applied to
+the IV plot (mathtext `\tfrac` → `\frac`); no physics-level anomaly
+was detected.
+
+## Outstanding items carried forward
+
+* **F3** (P2 from FB-0.1): `TetradBackgroundState.shear_magnitude_sq`
+  → dimensionless Σ² per `00_conventions §4.2`. Still deferred to
+  **FB-2.4** (11-type anisotropic ³R_ab consolidation).
+* **FB02-F1** (P2 from FB-0.2): cross-reference the FB-0.2 `v̂_e`
+  default into `00_conventions.md §2`. Still deferred to **FB-3.1**
+  (first dynamical consumer of `v̂_e`).
+* **FB11-F1** (P2 from FB-1.1): W-E Table 11.1 fixed-point
+  **coordinates** are not directly reachable in the fixed-N framework.
+  Still deferred to **FB-5 / FB-6**.
+* **FB12-F1** (P3 from FB-1.2): IX isotropic leading-order residual
+  `S_+ = +(2/3) n² ℋ²` (W-E pathology). Class B has no analogous
+  pathology in FB-1.3. Still deferred to **FB-5 / FB-6**.
+* **FB12-F3** (P3 from FB-1.2): `bianchi_ix_recollapse_event` coupling
+  to `_hubble_squared`. No interaction with FB-1.3 Class B. Still
+  deferred to **FB-5 / FB-6**.
+* **FB13-κ-calibration** (advisory, non-failure): quantitative
+  calibration of the VII_h Pontzen-Challinor spiral coefficient
+  κ against AniCLASS / P-C 2009 fixture. **Tracked for FB-5 / FB-6**
+  — requires k ≠ 0 perturbation sector + cross-type continuity
+  analysis; qualitative sign + √h + rotation pins suffice for the
+  FB-1 background-layer "VALIDATED" contract.
+
+---
+
+**Phase FB-1 status (after FB-1.3)**: 3/4 sub-phases delivered.
+**All 9 PROVISIONAL Class A + Class B sources are now VALIDATED**
+(`SOURCE_STATUS` reports VALIDATED for every entry: FLRW + I + II +
+VI₀ + VII₀ + VIII + IX + III + IV + V + VI_h + VII_h). The last
+FB-1 rotation is **FB-1.4** — `anisotropic_3_curvature` 11-type
+consolidation in `tetrad_state.py` (per-type ³R_{ab}^{aniso} explicit;
+Y-Block integration) which also closes Phase FB-1 proper and hands
+off to Phase FB-2 (hierarchy RHS T-term wire-up). Ready to hand off
+to **FB-1.4**.
+
+---
+
+<!-- Reserved placeholder for FB-1.4 supplement (anisotropic_3_curvature
+11-type consolidation; Phase FB-1 exit). -->

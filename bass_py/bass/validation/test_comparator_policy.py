@@ -337,8 +337,11 @@ class TestBackgroundIntegration:
     def test_type_VIIh_background_runs(self):
         cosmo = type_viih_cosmology(sigma_over_H_init=1e-5)
         state = _run_short_background(cosmo)
-        # VII_h uses the spiral source; should be PROVISIONAL
-        assert state.source_status == "PROVISIONAL"
+        # VII_h W-E + Pontzen-Challinor spiral source (VALIDATED in
+        # FB-1.3: W-E formula rel 1e-12 + P-C spiral sign + √h scaling
+        # + rotation invariance pinned in
+        # bass/transport/test_shear_sources.py::TestClassBFixedPoints).
+        assert state.source_status == "VALIDATED"
         # Integration should complete without NaN/Inf
         assert np.all(np.isfinite(state.sigma_plus))
         assert np.all(np.isfinite(state.sigma_minus))

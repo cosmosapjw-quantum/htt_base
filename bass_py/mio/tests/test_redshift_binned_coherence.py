@@ -26,6 +26,7 @@ import pytest
 from mio.coherence.redshift_binned import (
     ARTEFACT_FILENAME,
     DEFAULT_Z_BINS,
+    EXACT_ENUMERATION_MAX_PERMUTATIONS,
     RedshiftBinnedProbe,
     STANDARD_Z_PROBES,
     ZBinResult,
@@ -280,3 +281,100 @@ def test_pairwise_bin_separations_is_symmetric_with_zero_diagonal():
     assert sep.shape == (3, 3)
     assert np.allclose(np.diag(sep), 0.0, atol=1e-10)
     assert np.allclose(sep, sep.T, atol=1e-10)
+
+
+# ---------------------------------------------------------------------------
+# 8. W12D3 — exact-enumeration path for drift_pvalue (W11 F1 close).
+# ---------------------------------------------------------------------------
+
+
+def _orthogonal_three_bin_probes():
+    """Build a 6-probe / 3-bin fixture with injected z-drift (6! = 720)."""
+    return (
+        RedshiftBinnedProbe("lo0", 0.0,   0.0, 5.0, z_eff=0.01),
+        RedshiftBinnedProbe("lo1", 0.0,   0.0, 5.0, z_eff=0.02),
+        RedshiftBinnedProbe("md0", 90.0,  0.0, 5.0, z_eff=0.5),
+        RedshiftBinnedProbe("md1", 90.0,  0.0, 5.0, z_eff=0.6),
+        RedshiftBinnedProbe("hi0", 0.0,  90.0, 5.0, z_eff=1000.0),
+        RedshiftBinnedProbe("hi1", 0.0,  90.0, 5.0, z_eff=1100.0),
+    )
+
+
+def test_exact_enumeration_max_permutations_is_tractable():
+    """The ceiling must be ≥ 7! so typical N ≤ 7 fixtures enumerate.
+
+    Also: the ceiling must exclude 8! = 40 320 so test authors don't
+    accidentally stall a smoke run on an 8-probe exact call.
+    """
+    import math as _math
+    assert EXACT_ENUMERATION_MAX_PERMUTATIONS >= _math.factorial(7)
+    assert EXACT_ENUMERATION_MAX_PERMUTATIONS < _math.factorial(8)
+
+
+def test_drift_pvalue_exact_is_deterministic():
+    """Two exact calls must give bit-identical p-values (no RNG dependence)."""
+    probes = _orthogonal_three_bin_probes()
+    bins = ((0.0, 0.1), (0.1, 10.0), (100.0, 2000.0))
+    p1 = drift_pvalue(probes, bins=bins, exact=True)
+    p2 = drift_pvalue(probes, bins=bins, exact=True,
+                      rng=np.random.default_rng(seed=42))
+    assert p1 == p2
+    # And repeat calls with an unused kwarg must not drift.
+    p3 = drift_pvalue(probes, bins=bins, n_mock=12345, exact=True)
+    assert p1 == p3
+
+
+def test_drift_pvalue_exact_matches_mc_at_small_N():
+    """Exact p-value should agree with MC (n=2000) to within ~2-3 decimals."""
+    probes = _orthogonal_three_bin_probes()
+    bins = ((0.0, 0.1), (0.1, 10.0), (100.0, 2000.0))
+    p_exact = drift_pvalue(probes, bins=bins, exact=True)
+    p_mc = drift_pvalue(
+        probes, bins=bins, n_mock=2000,
+        rng=np.random.default_rng(seed=20260419),
+    )
+    # MC uses Lidstone smoothing (+1/+1) so allow a generous tol; 6!=720
+    # permutations give deterministic exact while MC is stochastic.
+    assert abs(p_exact - p_mc) < 0.05, (
+        f"exact={p_exact:.4f} vs mc={p_mc:.4f}; delta too large"
+    )
+
+
+def test_drift_pvalue_exact_returns_count_over_n_factorial():
+    """Exact p-value is a rational of form k/N!, not the MC (k+1)/(N+1)
+    smoothed form. Verifies by asserting ``p * N!`` is an integer within
+    floating-point tolerance."""
+    import math as _math
+    probes = _orthogonal_three_bin_probes()
+    bins = ((0.0, 0.1), (0.1, 10.0), (100.0, 2000.0))
+    p = drift_pvalue(probes, bins=bins, exact=True)
+    n_fact = _math.factorial(len(probes))  # 6! = 720
+    k = p * n_fact
+    assert abs(k - round(k)) < 1e-9, (
+        f"p={p} is not of the form k/{n_fact}; k={k}"
+    )
+    # And k must lie in [1, N!] (tie-inclusive count guarantees ≥ 1).
+    assert 1 <= round(k) <= n_fact
+
+
+def test_drift_pvalue_exact_raises_on_oversize_N():
+    """N=8 triggers 40 320 permutations > ceiling → clear ValueError."""
+    # 8 distinct z_eff labels + mutually orthogonal axes.
+    probes = tuple(
+        RedshiftBinnedProbe(
+            f"p{i}",
+            l_deg=90.0 * (i % 4),
+            b_deg=30.0 * ((i // 4) - 0.5),
+            sigma_cone_deg=5.0,
+            z_eff=float(i + 1),
+        )
+        for i in range(8)
+    )
+    with pytest.raises(ValueError, match="40320"):
+        drift_pvalue(probes, exact=True)
+
+
+def test_drift_pvalue_exact_single_probe_returns_one():
+    """Single-probe short-circuit is independent of ``exact``."""
+    probes = (RedshiftBinnedProbe("solo", 0.0, 0.0, 5.0, z_eff=0.5),)
+    assert drift_pvalue(probes, exact=True) == 1.0

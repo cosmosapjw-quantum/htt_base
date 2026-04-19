@@ -39,7 +39,7 @@ from bass.transport.shear_sources import (
     SHEAR_SOURCE_REGISTRY, SOURCE_STATUS,
     compute_shear_source, get_source_status,
     source_I, source_II, source_V, source_VI0, source_VII0, source_VIIh,
-    source_VIII, source_IX,
+    source_VIII, source_IX, source_III, source_IV, source_VIh,
 )
 
 
@@ -849,3 +849,389 @@ class TestClassAFixedPoints:
         # ℋ at the final sample is close to the floor (event fired
         # because ℋ crossed 1e-3 going down)
         assert abs(bg.calH[-1] - 1e-3) < 1e-4
+
+
+# ═══════════════════════════════════════════════════════════════
+# §10 — FB-1.3 per-type Class B validation
+#        (W-E §18 Table 11.1 + Pontzen-Challinor 2009 §III)
+# ═══════════════════════════════════════════════════════════════
+
+
+class TestClassBFixedPoints:
+    """FB-1.3 per-type validation of the Class B source dispatch against
+    Wainwright-Ellis §18 Table 11.1 Class B rows (twist-coupled
+    ``a_twist ≠ 0`` with Jacobi constraint ``n_2 = 0``) and the
+    Pontzen-Challinor 2009 VII_h spiral signature.
+
+    Framework note (inherited from FB-1.1 / FB-1.2, FB11-F1 + FB12-F1)
+    ------------------------------------------------------------------
+    The W-E fixed-point *coordinates* are not reachable in the fixed-N
+    framework; FB-1.3 pins the *source-function formulas* at rel 1e-12
+    for III / IV / VI_h / VII_h, pins ``S_± = 0`` exactly for V, and
+    pins the VII_h spiral qualitative signature (antisymmetric coupling
+    ``+ω Σ_- / −ω Σ_+``, ω ∝ √h, rotation conservation
+    ``Σ_+ dΣ_+^{spi} + Σ_- dΣ_-^{spi} = 0``) — the operative Class B
+    contract for SOURCE_STATUS promotion. Quantitative calibration of
+    the Pontzen-Challinor spiral ``κ`` coefficient remains FB-5 / FB-6
+    scope (non-goal for this session).
+
+    References
+    ----------
+    Wainwright & Ellis 1997 §18 + Table 11.1 Class B rows (III / IV /
+    V / VI_h / VII_h); Ellis-Maartens-MacCallum 2012 §18.3 (Ellis
+    conformal shear convention locked in FB-0.1); Pontzen & Challinor,
+    *PRD* 79, 103518 (2009) §III (VII_h spiral signature);
+    `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.3`.
+    """
+
+    # Re-use the FB-1.1/FB-1.2 ℋ grid so the 4-decade coverage is
+    # consistent across the Class A and Class B promotion tests.
+    _CALH_GRID = (1.0, 1e-2, 1e-3, 1e-4)
+
+    # ─── III: algebraic identity with VI_{h=-1} ────────────────
+
+    @pytest.mark.parametrize("n1", [5e-3, 1e-2, 2e-2])
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_III_dispatches_to_VIh_at_h_minus_1(self, n1, calH):
+        """Type III is the special case VI_{h=-1} (``a² = -n_1 n_3``;
+        the factory enforces ``n_3 = -a_twist²/n_1`` at construction).
+        We pin: (a) the factory always produces ``h_parameter = -1``;
+        (b) ``source_III`` dispatches to ``source_VIh`` and produces
+        bit-identical output; (c) the W-E VI_h formula evaluated at
+        ``h = -1`` (so the A² prefactor becomes ``1/(1+|h|) = 1/2``)
+        matches the output at rel 1e-12.
+
+        Reference: Wainwright-Ellis §18 Table 11.1 row III (≡ VI_{-1}).
+        """
+        sc = type_iii_constants(n1=n1)
+        assert sc.h_parameter == pytest.approx(-1.0, rel=1e-12)
+        dSp_III, dSm_III = source_III(sc, 0.0, 0.0, calH, 1e-3)
+        dSp_VIh, dSm_VIh = source_VIh(sc, 0.0, 0.0, calH, 1e-3)
+        # III dispatches to VI_h verbatim (no numerical reformulation).
+        assert dSp_III == dSp_VIh
+        assert dSm_III == dSm_VIh
+        # Formula pin at h = -1 ⇒ 1/(1+|h|) = 1/2.
+        diff = sc.n1 - sc.n3
+        summ = sc.n1 + sc.n3
+        expected_Sp = (
+            -(2.0 / 3.0) * diff ** 2
+            + (2.0 / 3.0) * sc.a_twist ** 2 * 0.5
+        ) * calH ** 2
+        expected_Sm = -(2.0 / math.sqrt(3.0)) * summ * diff * calH ** 2
+        assert dSp_III == pytest.approx(expected_Sp, rel=1e-12)
+        assert dSm_III == pytest.approx(expected_Sm, rel=1e-12)
+        # Σ-independence (III inherits the Class B W-E piece; there is
+        # no spiral coupling for III — only VII_h carries that).
+        dSp_Sigma, dSm_Sigma = source_III(sc, 1e-5, -3e-6, calH, 1e-3)
+        assert dSp_Sigma == pytest.approx(dSp_III, rel=1e-14)
+        assert dSm_Sigma == pytest.approx(dSm_III, rel=1e-14)
+
+    # ─── IV: axisymmetric twist-coupled source ─────────────────
+
+    @pytest.mark.parametrize(
+        "n3, a_twist",
+        [
+            (1e-2, 5e-3),
+            (2e-2, 1e-2),
+            (5e-3, 1e-2),
+            (1e-3, 5e-3),
+        ],
+    )
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_IV_WE_source_formula(self, n3, a_twist, calH):
+        """Type IV source per W-E §18 Table 11.1 (``(n_1, n_2, n_3) =
+        (0, 0, +)`` with ``a > 0``, Jacobi-constrained n_2 = 0):
+
+            S^{WE}_+ = -(2/3) N_3² + (2/3) A²
+            S^{WE}_- = 0
+
+        Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``. Type IV
+        is cosmologically marginal (no FLRW limit) — the W-E formula is
+        dimensionally correct and finite but its physical role is as a
+        cross-falsifiability probe rather than a standard cosmological
+        background. We pin: (a) formula match to 10⁻¹² relative across
+        the (N_3, A, ℋ) grid; (b) S_- = 0 exactly (axisymmetric);
+        (c) Σ-independence.
+
+        Reference: Wainwright-Ellis §18 Table 11.1 row IV; Ellis §18.3.
+        """
+        sc = type_iv_constants(n3=n3, a_twist=a_twist)
+        dSp, dSm = source_IV(sc, 0.0, 0.0, calH, 1e-3)
+        expected_Sp = (
+            -(2.0 / 3.0) * n3 ** 2 + (2.0 / 3.0) * a_twist ** 2
+        ) * calH ** 2
+        assert dSp == pytest.approx(expected_Sp, rel=1e-12)
+        assert dSm == 0.0, f"Type IV axisymmetric S_- != 0 at n3={n3}, a={a_twist}"
+        # Σ-independence (Class B IV has no spiral coupling).
+        dSp_Sigma, dSm_Sigma = source_IV(sc, 1e-5, -3e-6, calH, 1e-3)
+        assert dSp_Sigma == pytest.approx(dSp, rel=1e-14)
+        assert dSm_Sigma == 0.0
+
+    # ─── V: shear-specific source vanishes (A² → curvature) ────
+
+    @pytest.mark.parametrize("a_twist", [1e-3, 5e-3, 1e-2, 5e-2])
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_V_shear_zero_pin(self, a_twist, calH):
+        """Type V (open FLRW analogue, ``(0, 0, 0)`` with ``a > 0``):
+        the A² contribution is absorbed into the FLRW k = -1 curvature
+        term, **not** into the shear source. The shear-specific
+        ``S_±`` is therefore identically zero — this is the FB-1.1
+        baseline behaviour for V (already VALIDATED), and FB-1.3
+        promotes the regression to explicit formula-level form on the
+        (A, ℋ) grid to match the Class B test pattern.
+
+        We pin: (a) ``source_V`` returns (0, 0) exactly; (b) this is
+        independent of Σ_± (no spiral — Type V has no ``n_i`` to
+        source any directional anisotropy); (c) the vanishing holds
+        across the full (a_twist, ℋ) grid.
+
+        Reference: Wainwright-Ellis §18 Table 11.1 row V (k = -1
+        open-FLRW analogue); Ellis §18.3.
+        """
+        sc = type_v_constants(a_twist=a_twist)
+        dSp, dSm = source_V(sc, 0.0, 0.0, calH, 1e-3)
+        assert dSp == 0.0
+        assert dSm == 0.0
+        # Σ-independence (trivial: source is identically zero).
+        dSp_Sigma, dSm_Sigma = source_V(sc, Sp_test, Sm_test, calH, 1e-3)
+        assert dSp_Sigma == 0.0
+        assert dSm_Sigma == 0.0
+
+    # ─── VI_h: twist-coupled mixed-sign Class B ────────────────
+
+    # Parametrisation: all rows avoid h = -1 (that is Type III).
+    # Chosen so h_parameter spans both h < -1 and -1 < h < 0 ranges
+    # (i.e., a²/|n_1 n_3| either > 1 or < 1).
+    @pytest.mark.parametrize(
+        "n1, n3, a_twist",
+        [
+            (1e-2, -2e-3, 5e-3),   # h = -1.25 (h < -1)
+            (1e-2, -5e-3, 2e-3),   # h = -0.08 (-1 < h < 0)
+            (2e-2, -1e-2, 4e-3),   # h = -0.08 (-1 < h < 0)
+            (5e-3, -2e-3, 7e-3),   # h = -4.9  (h < -1)
+        ],
+    )
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_VIh_WE_source_formula(self, n1, n3, a_twist, calH):
+        """Type VI_h source per W-E §18 Table 11.1 (``(+, 0, −)`` with
+        ``a > 0`` and ``h ∈ (−∞, −1) ∪ (−1, 0)``):
+
+            S^{WE}_+ = -(2/3)(n_1 − n_3)² + (2/3) A² / (1 + |h|)
+            S^{WE}_- = -(2/√3)(n_1 + n_3)(n_1 − n_3)
+
+        Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``. The
+        h-dependent A² prefactor ``1/(1+|h|)`` is the Hewitt-Wainwright
+        near-FLRW reduction (full Δ, Ñ variables deferred to FB-5/FB-6;
+        FB11-F1 carry). We pin: (a) formula match to 10⁻¹² relative
+        across the (n_1, n_3, A, h, ℋ) grid; (b) S_+ < 0 always on
+        this parametrisation (``(n_1 − n_3)²`` dominates the A² piece
+        when h and A are matched to this near-FLRW regime); (c) S_-
+        sign — negative when ``(n_1 + n_3)(n_1 − n_3) > 0``;
+        (d) Σ-independence (no spiral coupling for VI_h — that is
+        VII_h's signature).
+
+        Reference: Wainwright-Ellis §18 Table 11.1 row VI_h; Ellis
+        §18.3; Hewitt-Wainwright 1990.
+        """
+        sc = type_vih_constants(n1=n1, n3=n3, a_twist=a_twist)
+        dSp, dSm = source_VIh(sc, 0.0, 0.0, calH, 1e-3)
+        diff = n1 - n3
+        summ = n1 + n3
+        h = sc.h_parameter
+        h_factor = 1.0 / (1.0 + abs(h))
+        expected_Sp = (
+            -(2.0 / 3.0) * diff ** 2
+            + (2.0 / 3.0) * a_twist ** 2 * h_factor
+        ) * calH ** 2
+        expected_Sm = -(2.0 / math.sqrt(3.0)) * summ * diff * calH ** 2
+        assert dSp == pytest.approx(expected_Sp, rel=1e-12)
+        assert dSm == pytest.approx(expected_Sm, rel=1e-12)
+        # Sign pin on S_+: in this parametrisation (n_1 > 0, n_3 < 0)
+        # we have ``diff = n_1 − n_3 > 2 |n_3|`` so ``diff² × (2/3)``
+        # always exceeds ``A² × (2/3) × h_factor`` (A and h_factor both
+        # O(1) × a_twist² / |n_1 n_3|). Strict negativity is pinned.
+        assert dSp < 0.0, (
+            f"VI_h S_+ should be negative for (n_1 > 0, n_3 < 0, "
+            f"near-FLRW regime), got dSp = {dSp} at n1={n1}, n3={n3}, "
+            f"a={a_twist}, ℋ={calH}"
+        )
+        # Σ-independence
+        dSp_Sigma, dSm_Sigma = source_VIh(sc, 1e-5, -3e-6, calH, 1e-3)
+        assert dSp_Sigma == pytest.approx(dSp, rel=1e-14)
+        assert dSm_Sigma == pytest.approx(dSm, rel=1e-14)
+
+    # ─── VII_h: W-E formula + Pontzen-Challinor spiral ─────────
+
+    @pytest.mark.parametrize(
+        "n1, n3, a_twist",
+        [
+            (1.8e-2, 1.0e-2, 5.5e-3),   # Pontzen-Challinor 2007 fixture, h ≈ 0.168
+            (1.0e-2, 1.0e-2, 5.0e-3),   # n_1 = n_3 (kills W-E diff-piece)
+            (2.0e-2, 5.0e-3, 3.0e-3),   # asymmetric; h ≈ 0.09
+            (5.0e-3, 1.0e-2, 2.0e-3),   # reversed ordering, h ≈ 0.08
+        ],
+    )
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_VIIh_WE_source_formula_and_spiral_signature(
+        self, n1, n3, a_twist, calH,
+    ):
+        """Type VII_h (principal CMB type) source: W-E §18 Table 11.1
+        ``(+, 0, +)`` with ``a > 0``, ``h > 0``:
+
+            S^{WE}_+ = -(2/3)(n_1 − n_3)² + (2/3) A² / (1 + h)
+            S^{WE}_- = +(2/√3)(n_1 + n_3)(n_1 − n_3)   [sign flip vs VI_h]
+
+        Plus the Pontzen-Challinor 2009 §III spiral coupling:
+
+            dΣ_+^{spi} = +ω_{spi} × Σ_-
+            dΣ_-^{spi} = -ω_{spi} × Σ_+,
+            ω_{spi} = √|n_1 n_3| × √h × ℋ,
+
+        where ``κ`` is the O(1) spiral coefficient (set to 1.0 in the
+        current implementation; quantitative calibration against
+        AniCLASS / P-C fixture is FB-5 / FB-6 scope — FB-1.3 pins only
+        sign + ω ∝ √h + rotation invariance). We verify:
+
+        (a) W-E piece (Σ_± = 0) formula match rel 1e-12 across the
+            (n_1, n_3, A, h, ℋ) grid;
+        (b) Spiral piece (subtract Σ_± = 0 baseline) equals
+            ``(+ω Σ_-, -ω Σ_+)`` at rel 1e-12 — the antisymmetric
+            coupling that is the P-C spiral signature;
+        (c) ω_{spi} scales as √h when (n_1, n_3) are held fixed and
+            a_twist varies — doubling a_twist (⇒ h ×4 ⇒ √h ×2) must
+            double the spiral amplitude.
+
+        Reference: Wainwright-Ellis §18 Table 11.1 row VII_h; Pontzen
+        & Challinor PRD 79, 103518 (2009) §III; Ellis §18.3.
+        """
+        sc = type_viih_constants(n1=n1, n3=n3, a_twist=a_twist)
+        h = sc.h_parameter
+        assert h > 0.0
+        # (a) W-E piece — isolate with Σ_± = 0.
+        dSp_we, dSm_we = source_VIIh(sc, 0.0, 0.0, calH, 1e-3)
+        diff = n1 - n3
+        summ = n1 + n3
+        expected_Sp_we = (
+            -(2.0 / 3.0) * diff ** 2
+            + (2.0 / 3.0) * a_twist ** 2 / (1.0 + h)
+        ) * calH ** 2
+        expected_Sm_we = +(2.0 / math.sqrt(3.0)) * summ * diff * calH ** 2
+        assert dSp_we == pytest.approx(expected_Sp_we, rel=1e-12)
+        if expected_Sm_we == 0.0:
+            assert dSm_we == 0.0
+        else:
+            assert dSm_we == pytest.approx(expected_Sm_we, rel=1e-12)
+        # (b) Spiral piece — subtract the Σ = 0 baseline.
+        Sp_probe, Sm_probe = 1e-6, 5e-7
+        dSp_full, dSm_full = source_VIIh(
+            sc, Sp_probe, Sm_probe, calH, 1e-3,
+        )
+        dSp_spi = dSp_full - dSp_we
+        dSm_spi = dSm_full - dSm_we
+        omega_spi = math.sqrt(abs(n1 * n3)) * math.sqrt(h) * calH
+        expected_dSp_spi = +omega_spi * Sm_probe
+        expected_dSm_spi = -omega_spi * Sp_probe
+        assert dSp_spi == pytest.approx(expected_dSp_spi, rel=1e-12)
+        assert dSm_spi == pytest.approx(expected_dSm_spi, rel=1e-12)
+
+    @pytest.mark.parametrize(
+        "n1, n3",
+        [
+            (1.0e-2, 1.0e-2),
+            (2.0e-2, 1.0e-2),
+            (1.0e-2, 5.0e-3),
+        ],
+    )
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_VIIh_spiral_omega_scales_as_sqrt_h(self, n1, n3, calH):
+        """Spiral frequency scaling pin: with (n_1, n_3) held fixed,
+        doubling a_twist multiplies ``h = a² / (n_1 n_3)`` by 4 and
+        therefore multiplies ``ω_{spi} = √|n_1 n_3| √h ℋ`` by 2.
+        Equivalently, the spiral amplitude ``|dΣ_+ − dΣ_+^{W-E}|`` at
+        fixed Σ_- must double under this rescaling.
+
+        This is the FB-1.3 qualitative pin of the Pontzen-Challinor
+        2009 §III spiral ``ω ∝ √h`` scaling; quantitative ``κ``
+        calibration remains FB-5 / FB-6.
+        """
+        a_small = 2.0e-3
+        a_big = 4.0e-3  # a_big = 2 × a_small ⇒ h_big = 4 × h_small
+        sc_small = type_viih_constants(n1=n1, n3=n3, a_twist=a_small)
+        sc_big = type_viih_constants(n1=n1, n3=n3, a_twist=a_big)
+        Sm_probe = 1e-6
+        dSp_small_we, _ = source_VIIh(sc_small, 0.0, 0.0, calH, 1e-3)
+        dSp_small, _ = source_VIIh(sc_small, 0.0, Sm_probe, calH, 1e-3)
+        dSp_big_we, _ = source_VIIh(sc_big, 0.0, 0.0, calH, 1e-3)
+        dSp_big, _ = source_VIIh(sc_big, 0.0, Sm_probe, calH, 1e-3)
+        spi_small = dSp_small - dSp_small_we
+        spi_big = dSp_big - dSp_big_we
+        # √h ratio = 2 exactly (since a_big / a_small = 2 and
+        # h ∝ a², so √h ∝ a).
+        assert spi_big == pytest.approx(2.0 * spi_small, rel=1e-12)
+
+    @pytest.mark.parametrize(
+        "n1, n3, a_twist, Sp, Sm",
+        [
+            (1.0e-2, 1.0e-2, 5.0e-3, 1e-6, 5e-7),
+            (1.8e-2, 1.0e-2, 5.5e-3, 3e-7, -2e-6),
+            (2.0e-2, 5.0e-3, 3.0e-3, -1e-6, 1e-6),
+            (5.0e-3, 1.0e-2, 2.0e-3, 1e-6, 1e-6),
+        ],
+    )
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_VIIh_spiral_rotation_conserves_amplitude(
+        self, n1, n3, a_twist, Sp, Sm, calH,
+    ):
+        """Pontzen-Challinor 2009 §III spiral signature: the spiral
+        coupling is a **rotation** in the ``(Σ_+, Σ_-)`` plane — it
+        preserves the amplitude ``Σ_+² + Σ_-²`` instantaneously. The
+        spiral contribution to ``d(Σ_+² + Σ_-²)/dη`` is
+
+            2 Σ_+ dΣ_+^{spi} + 2 Σ_- dΣ_-^{spi}
+              = 2 Σ_+ (+ω Σ_-) + 2 Σ_- (−ω Σ_+)
+              = 0  (identically, to float64 precision).
+
+        This pin rules out any accidental sign flip or magnitude drift
+        in the spiral coupling — either would break the P-C rotation
+        signature that VII_h is celebrated for. We isolate the
+        spiral-only contribution by subtracting the Σ_± = 0 baseline
+        (the W-E piece, which is Σ-independent) and verify the
+        rotation-invariance identity at rel 1e-12.
+
+        Quantitative calibration of the κ coefficient is FB-5 / FB-6.
+        """
+        sc = type_viih_constants(n1=n1, n3=n3, a_twist=a_twist)
+        dSp_we, dSm_we = source_VIIh(sc, 0.0, 0.0, calH, 1e-3)
+        dSp_full, dSm_full = source_VIIh(sc, Sp, Sm, calH, 1e-3)
+        dSp_spi = dSp_full - dSp_we
+        dSm_spi = dSm_full - dSm_we
+        # Rotation-invariance identity: Σ_+ dSp_spi + Σ_- dSm_spi ≡ 0.
+        rotation_residual = Sp * dSp_spi + Sm * dSm_spi
+        # Tolerance: the subtraction ``dSp_full - dSp_we`` loses
+        # precision proportional to ``|W-E piece| / |spiral piece|`` ulps,
+        # so the residual floor scales as
+        # ``(|dSp_we| + |dSm_we|) × max(|Sp|, |Sm|) × ε_float``.
+        # Use 1e-10 × that natural floor as a generous ceiling —
+        # a true sign-flip or coefficient drift would blow this up by
+        # many orders of magnitude.
+        magnitude_bound = (
+            (abs(dSp_we) + abs(dSm_we)) * max(abs(Sp), abs(Sm))
+        )
+        assert abs(rotation_residual) < 1e-10 * magnitude_bound + 1e-30, (
+            f"VII_h spiral rotation residual {rotation_residual} "
+            f"exceeds float-subtraction floor "
+            f"(magnitude_bound={magnitude_bound}) at n1={n1}, n3={n3}, "
+            f"a={a_twist}, Sp={Sp}, Sm={Sm}, ℋ={calH}"
+        )
+        # Additionally verify the *directly-computed* spiral (without
+        # subtraction) satisfies the identity exactly — this is the
+        # closed-form pin free of cancellation error.
+        omega_spi = math.sqrt(abs(n1 * n3)) * math.sqrt(
+            abs(sc.h_parameter)
+        ) * calH
+        direct_residual = Sp * (+omega_spi * Sm) + Sm * (-omega_spi * Sp)
+        # The closed-form sum is exactly zero only up to reordering-of-
+        # operations ulps on ``omega_spi × Sp × Sm`` — a handful of
+        # float ulps of ``omega_spi × |Sp| × |Sm|``.
+        direct_scale = abs(omega_spi) * abs(Sp) * abs(Sm) + 1e-300
+        assert abs(direct_residual) < 1e-12 * direct_scale
