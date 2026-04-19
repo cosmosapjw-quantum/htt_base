@@ -128,7 +128,19 @@ def test_hash_config_matches_a45_2_pseudocode_shape():
     16-char lowercase-hex output shape all fail loudly and point the
     HJ-03 author at §A45.2 (which paste-copies §A45.6's five-test
     block).
+
+    W19D1 (W18 F1 / W18 R1) — kwarg-evolution hedge: extends the
+    anchor with an `inspect.signature(_hash_config).parameters`
+    frozen-list assertion. The W18D1 anchor passed a positional call
+    with six arguments against a `*parts` variadic form and would
+    silently keep passing if a future refactor added a keyword-only
+    argument (e.g. `*, digest_length=16` to introduce A43's
+    schema-hash digest upgrade). The added assertion freezes both the
+    parameter list (`("parts",)`) and the kind (`VAR_POSITIONAL`) so
+    the HJ-03 author paste-copying §A45.6 is flagged at anchor time
+    if §A45.2 grows a new kwarg that the pseudocode does not forward.
     """
+    import inspect
     import string
 
     from mio.interface.mio_certificate import _hash_config
@@ -136,6 +148,26 @@ def test_hash_config_matches_a45_2_pseudocode_shape():
     assert _hash_config.__name__ == "_hash_config", (
         "A45.2 pseudocode names the helper `_hash_config`; a rename "
         "requires updating §A45.2 in the same PR."
+    )
+
+    EXPECTED_PARAM_NAMES = ("parts",)
+    EXPECTED_PARAM_KINDS = (inspect.Parameter.VAR_POSITIONAL,)
+    sig_params = inspect.signature(_hash_config).parameters
+    actual_names = tuple(sig_params)
+    actual_kinds = tuple(p.kind for p in sig_params.values())
+    assert actual_names == EXPECTED_PARAM_NAMES, (
+        f"_hash_config parameter list drifted from A45.2 pseudocode: "
+        f"expected {EXPECTED_PARAM_NAMES}, got {actual_names}. A new "
+        "keyword-only argument (e.g. `*, digest_length=16` for the "
+        "A43 schema-hash digest upgrade) must be reflected in "
+        "§A45.2's `verify_cache_replay` pseudocode in the same PR."
+    )
+    assert actual_kinds == EXPECTED_PARAM_KINDS, (
+        f"_hash_config parameter kind drifted from A45.2: expected "
+        f"{EXPECTED_PARAM_KINDS}, got {actual_kinds}. The `*parts` "
+        "variadic form is what §A45.2's six-field tuple unpack "
+        "relies on; a change to POSITIONAL_OR_KEYWORD or "
+        "KEYWORD_ONLY would break the paste-ready block in §A45.6."
     )
 
     payload = _base_payload()
