@@ -215,15 +215,18 @@ def test_extract_drops_zero_kernel_multipoles():
     """A multipole with K_ℓ = 0 must be dropped (divide-by-zero guard)."""
     kl = _base_kl(sigma2_inject=100.0, sigma_obs_uK2=20.0, rng_seed=4)
     # Force K_ell to vanish at ℓ = 5 and ℓ = 17.
+    dropped = (5, 17)
     kl["K_ell"][3] = 0.0   # ell = 5
     kl["K_ell"][15] = 0.0  # ell = 17
     report = extract_from_kl_atlas(kl)
-    assert 5 in report.dropped_ells
-    assert 17 in report.dropped_ells
-    assert 5 not in report.ell.tolist()
-    assert 17 not in report.ell.tolist()
-    # Remaining ells should still recover the injection.
-    assert report.ell.size == 27  # 29 in window minus 2 dropped
+    for ell_drop in dropped:
+        assert ell_drop in report.dropped_ells
+        assert ell_drop not in report.ell.tolist()
+    # Remaining ells: the full inclusive window [ell_min, ell_max] from the
+    # default ShearExtractorConfig minus the two forced-zero multipoles above.
+    cfg = ShearExtractorConfig()
+    expected_window = cfg.ell_max - cfg.ell_min + 1
+    assert report.ell.size == expected_window - len(dropped)
 
 
 # ---------------------------------------------------------------------------
