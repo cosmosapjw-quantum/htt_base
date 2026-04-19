@@ -1,9 +1,9 @@
-"""FB-6.1 skeleton regression harness for full Bianchi coverage.
+"""FB-6 skeleton regression harness for full Bianchi coverage.
 
 This module is intentionally a skeleton-only plant for the first FB-6
-rotation. It commits the future 22-configuration regression matrix while
-leaving the test skipped until the actual FB-6.1 implementation session
-lands.
+rotation. It commits the future 22-configuration regression matrix and
+the named continuity-limit tuples while leaving the tests skipped until
+the actual FB-6 implementation sessions land.
 
 The explicit 22-row configuration table mirrors the 11-type registry in
 ``bass.background.bianchi_types`` but is written out flat so the future
@@ -42,6 +42,15 @@ FB61_CONFIGURATION_CASES = [
 ]
 
 
+FB62_CONTINUITY_LIMIT_CASES = [
+    pytest.param("VII_h", "VII_0", "h", "0+", id="VII_h-to-VII_0-h->0+"),
+    pytest.param("VI_h", "III", "h", "-1", id="VI_h-to-III-h->-1"),
+    pytest.param("VII_0", "I", "n", "0", id="VII_0-to-I-n->0"),
+    pytest.param("V", "I", "a_twist", "0", id="V-to-I-a->0"),
+    pytest.param("IX", "IX_BKL_isotropic", "n", "0", id="IX-to-BKL-isotropic-n->0"),
+]
+
+
 @pytest.mark.parametrize(
     ("type_label", "tilt_state", "fixture_key"),
     FB61_CONFIGURATION_CASES,
@@ -54,3 +63,18 @@ def test_fb61_full_bianchi_configuration_matrix(
     _ = (type_label, tilt_state, fixture_key)
     pytest.skip(reason="pending FB-6.1 implementation — skeleton only")
     raise NotImplementedError("FB-6.1")
+
+
+@pytest.mark.parametrize(
+    ("source_type", "target_type", "limit_parameter", "limit_value"),
+    FB62_CONTINUITY_LIMIT_CASES,
+)
+def test_fb62_cross_type_continuity_limits(
+    source_type: str,
+    target_type: str,
+    limit_parameter: str,
+    limit_value: str,
+) -> None:
+    _ = (source_type, target_type, limit_parameter, limit_value)
+    pytest.skip(reason="pending FB-6.2 implementation — skeleton only")
+    raise NotImplementedError("FB-6.2")

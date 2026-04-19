@@ -69,7 +69,20 @@
 
 ## §FB-6.2
 
-Pending `FB-META-6.2`: cross-type continuity-limit skeleton.
+### §FB-6.2 — cross-type continuity-limit skeleton
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-6` names exactly five continuity limits; verified `htt/bass/background/bianchi_types.py` already encodes `III = VI_{-1}`, `VII_h -> VII_0`, `VII_0 -> I`, `V` as the open-FLRW branch, and the isotropic Type IX parameterization; verified `htt/bass/hierarchy/nabla_dispatch.py` carries the same `III = VI_{h=-1}` identification with explicit literature citations; verified FB-6.1's committed 22-row matrix remained unchanged while this rotation added only named tuples; verified the same integration module is the intended home for the continuity harness; verified no helper abstraction is needed to plant the future tuple table.
+**Channel B**: 5 limit checks / 5 reconciled / 0 divergent. Evidence: `arXiv:0901.2122` (submitted 2009-01-15; revised 2009-05-11) states that the open/flat models are `VII_h` together with the limiting types `I`, `V`, and `VII_0`, and its Figure 1 caption identifies the `VII_h -> VII_0`, `VII_h -> V`, and `VII_0 -> I` limits in words. The same paper states that enlarging the physical curvature radius of Type IX yields Type I, which is the closed/isotropic branch behind the reserved `IX_BKL_isotropic` tuple. For `VI_h -> III`, the local SSOT and `nabla_dispatch.py` explicitly define Type III as `VI_{h=-1}` and cite Ellis-MacCallum 1969; DOI/OSTI metadata confirms the identity of that 1969 classification paper. I infer from those combined sources that the five named tuples are the correct continuity skeleton to reserve, even though the Cambridge preview still does not expose the W-E `§18` table text itself.
+**Channel C** (prose, 6-10 lines): The safest FB-6.2 skeleton is five explicit named tuples, not a generalized limit-builder helper. Each limit has different semantics: `h -> 0+` is one-sided, `h -> -1` lands on a distinct named type, `n -> 0` in `VII_0` and `IX` means isotropization rather than just parameter shrinkage, and `a_twist -> 0` for Type V is a direct structural-constant collapse. A helper would blur those distinctions before the actual epsilon schedules and normalization conventions are audited. Keeping the tuples in the same integration module also makes the phase structure linear and readable: FB-6.1 declares the coverage rows, FB-6.2 declares the continuity rows, and FB-6.3 will declare the oracle rows. The `IX_BKL_isotropic` target remains a descriptive label on purpose because the future assertion is about an isotropic branch of Type IX rather than a separate registry entry. As with FB-6.1, the test is still only a skipped placeholder with an unreachable `NotImplementedError`.
+**Alternatives**:
+| # | continuity surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Five explicit named tuples in the integration test module | Keeps sidedness and target semantics visible; no helper indirection; easy to add per-limit fixture metadata later. | Slightly repetitive. | ✅ |
+| 2 | One helper that constructs limits from `(source, parameter, target)` rules | Centralizes naming and could reduce repetition. | Hides load-bearing distinctions (`0+`, `-1`, isotropic branch labels) in helper code before the actual tolerances are verified. | — |
+**Core principles**: explicit named-limit declaration; no guessed epsilon schedule; no helper abstraction that hides sidedness or target-branch semantics.
+**Skeleton path**: `htt/bass/integration/test_full_bianchi_coverage.py::test_fb62_cross_type_continuity_limits`
+**Test path**: `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/integration/test_full_bianchi_coverage.py -q`
+**Guard rails** (yes/no): five named limits present? yes; FB-6.1 matrix unchanged? yes; `III = VI_{-1}` recorded explicitly? yes; no tolerance guesses introduced? yes
+**Regression after plant**: `3403 passed + 38 skipped`.
 
 ## §FB-6.3
 

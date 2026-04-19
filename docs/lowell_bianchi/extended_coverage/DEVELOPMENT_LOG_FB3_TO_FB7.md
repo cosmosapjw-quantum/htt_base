@@ -643,3 +643,23 @@ fresh cumulative count.
 - **Notes**: the flat 22-row list was chosen over a generated cross
   product so the future coverage declaration is reviewable without
   helper indirection.
+
+### FB-META-6.2 — cross-type continuity-limit skeleton
+
+- **Scope**: Recorded FB-6.2 three-channel verification and extended
+  `htt/bass/integration/test_full_bianchi_coverage.py` with the five
+  named continuity-limit tuples only, keeping the committed FB-6.1
+  22-row matrix unchanged. The source trail is explicit: `arXiv:0901.2122`
+  for the open/flat and closed limit statements, plus the local SSOT and
+  Ellis-MacCallum 1969 for `III = VI_{-1}`.
+- **Commit anchor**: see `git log --grep='FB-META-6.2'`.
+- **Test delta**: `3,403 passed + 33 skipped` →
+  `3,403 passed + 38 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META6_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META6_2026-04-20.md) §FB-6.2.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: literature/CAMB oracle-fixture paths remain
+  reserved for FB-6.3; the Cambridge preview still does not expose the
+  W-E `§18` table text directly.
+- **Notes**: explicit named tuples were chosen over a helper builder so
+  the one-sided and isotropic-branch semantics remain reviewable in the
+  test file itself.

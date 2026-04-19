@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-6.1 → FB-6.2**; 22-configuration harness skeleton recorded, continuity-limit tuples next)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` §FB-6.1
-**Current target session**: **FB-6.2** — cross-type continuity-limit skeleton
-**Phase status**: FB-6 skeleton cycle is in progress on 2026-04-20; the 22-configuration harness is sealed and the named limit tuples are next
+**Last rotated**: 2026-04-20 (**FB-6.2 → FB-6.3**; continuity-limit tuples recorded, literature/CAMB oracle paths next)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` §FB-6.2
+**Current target session**: **FB-6.3** — Pontzen-Challinor / CAMB oracle-fixture skeleton
+**Phase status**: FB-6 skeleton cycle is in progress on 2026-04-20; the matrix and continuity tuples are sealed and the oracle paths are next
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,29 +37,29 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-6.2 — cross-type continuity-limit skeleton contract
+# FB-6.3 — literature/CAMB oracle-fixture skeleton contract
 
-FB-6.1 landed the committed integration harness at
-`htt/bass/integration/test_full_bianchi_coverage.py`, and the audited
-local baseline is now `3,403 passing + 33 skipped`.
+FB-6.2 extended the committed integration harness with the five named
+continuity-limit tuples, and the audited local baseline is now
+`3,403 passing + 38 skipped`.
 
 Next session target:
-- Extend the same module with the FB-6.2 named-limit parametrization
+- Extend the same module with the FB-6.3 fixture-path parametrization
   only.
-- Keep the FB-6.1 22-row matrix unchanged.
-- Plant the five named limits exactly:
-  - `VII_h -> VII_0` as `h -> 0+`
-  - `VI_h -> III` as `h -> -1`
-  - `VII_0 -> I` as `n -> 0`
-  - `V -> I` as `a_twist -> 0`
-  - `IX -> BKL isotropic` as `n -> 0`
+- Keep the FB-6.1 and FB-6.2 tables unchanged.
+- Reserve literature oracles for `VII_h` and `IX`, plus CAMB FLRW-limit
+  cases for `I`, `V`, `VII_0`, `VII_h -> 0`, and `IX -> BKL`.
+- Reuse the shipped `data/camb_ref_planck2018.npz` path for CAMB-backed
+  rows.
+- Reserve new `tests/fixtures/fb6/...` paths for digitized
+  Pontzen-Challinor literature oracles.
 - Preserve the skeleton contract: skipped tests plus the explicit
   `NotImplementedError` placeholder.
 
 Carry-forward anchors:
 - Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
 - Latest audit artifact:
-  `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` §FB-6.1
+  `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` §FB-6.2
 - Verified 2009 Pontzen figure paper:
   `https://arxiv.org/abs/0901.2122` (submitted 2009-01-15; revised
   2009-05-11)
@@ -67,7 +67,7 @@ Carry-forward anchors:
   `https://arxiv.org/abs/0706.2075` (submitted 2007-06-14)
 - Latest regression anchor:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3403 passed, 33 skipped`
+  → `3403 passed, 38 skipped`
 ```
 
 ---
