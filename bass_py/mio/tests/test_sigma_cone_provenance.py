@@ -151,7 +151,17 @@ def test_hj02a_certificate_caveat_count_equals_flagged_set_with_no_caller_caveat
 
 def test_hj02a_caller_caveats_preserved_alongside_placeholder_tags():
     """A caller-supplied caveat is kept and the placeholder tags appear
-    exactly once even if the caller also supplied them."""
+    exactly once even if the caller also supplied them.
+
+    W16D1 (W15 F1) — union-equality clause. The W15D5 no-caller-caveats
+    over-emission guard (`test_hj02a_certificate_caveat_count_equals_
+    flagged_set_with_no_caller_caveats`) exercises only the empty-caller
+    path; an over-emission coexisting with caller-supplied caveats
+    would pass the dedup-count check below. The trailing
+    `set(cert.domain_caveats) == set(caller_caveats) | expected_tags`
+    assertion closes that residual: extra placeholder tags on a
+    caller-caveats path now fail the test.
+    """
     resultant = resultant_vector(STANDARD_PROBES)
     caller_caveats = ["masked_sky_partial", "Radio_sigma_cone_plan_placeholder"]
     cert = to_cert_hj02a(
@@ -164,3 +174,10 @@ def test_hj02a_caller_caveats_preserved_alongside_placeholder_tags():
     assert "masked_sky_partial" in caveats
     # Dedup: "Radio_sigma_cone_plan_placeholder" appears exactly once.
     assert caveats.count("Radio_sigma_cone_plan_placeholder") == 1
+    # W16D1 (W15 F1) — union-equality: no tag outside of
+    # caller_caveats ∪ expected placeholder set survives.
+    expected_flagged = {
+        p.name for p in STANDARD_PROBES if p.name not in PROMOTED_SIGMA_CONE_PROBES
+    }
+    expected_tags = {f"{n}{PLACEHOLDER_CAVEAT_SUFFIX}" for n in expected_flagged}
+    assert set(caveats) == set(caller_caveats) | expected_tags
