@@ -1,9 +1,10 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W12` phase.
+**As of**: 2026-04-19, post-`IND_TRACKS_W13` phase.
 **Last audited**: 2026-04-19
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md`,
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W13_2026-04-19.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W11_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`,
@@ -274,109 +275,155 @@ Week 11 final gate — **all five items green**:
 - [x] Phase-boundary audit log written.
 - [x] No touched-surface regressions (1041 passed / 0 failed / 4 skipped).
 
+## §1c-10. What shipped in Week 13
+
+Session of 2026-04-19 (compressed: one session covered Week-13
+Days 1-7). Four committed landings + one phase-boundary audit
+(`AUDIT_PHASE_IND_TRACKS_W13_2026-04-19.md`).
+
+| Track | Artefact | Status |
+|---|---|---|
+| W13D1 process discipline (W12 F1/R1) | `docs/INDEPENDENT_TRACKS_NEXT_SESSION.md` §0 first-order rules +5 L (pre-commit `git status --short` gate); paired durable entry in memory `feedback_git_workflow.md`. | landed (`41b7200`) |
+| W13D2 MIO PROBE_ID registry SSOT (W12 F3/R2) | `bass_py/mio/interface/probe_name_registry.py` (~55 L) + `bass_py/mio/tests/test_probe_name_registry.py` (6 tests). Public surface: `REGISTERED_PROBE_IDS: Tuple[str, ...]` (alphabetical, immutable) + `is_registered_probe_id(name) -> bool`. Parser test reads A37.3 markdown at import time; set-equality against code tuple guards the three-file invariant (code ↔ dossier ↔ `STANDARD_PROBES`/`STANDARD_Z_PROBES`). MIO contribution 89 → 95. | landed (`b7607ef`) |
+| W13D3 DOS-A36a σ_cone literature (W6 FM2 / W11 F3 docs close) | `docs/dossier/A36a_sigma_cone_literature.md` (~234 L). DOI/arXiv-anchors σ_cone per PROBE_ID (Planck 2018 LVI / Secrest+2021 / Rubart-Schwarz / Darling / Tully+2023 / Planck 2015 XVI) with Δ summary and three-condition retirement criterion (§A36a.5). Code-side σ values intentionally unchanged per "caller's judgement" plan directive. | landed (`ed2c9b1`) |
+| W13D5 DOS-A42 HJ-03 evidence_anatomy stub | `docs/dossier/A42_evidence_anatomy.md` (~198 L). Deferred design stub for HJ-03 — purpose (anatomy / sign-coherence / consistency), planned HTT input bundle, unweighted per-channel computation, decomposition-residual floor 1e-3, MioCertificate contract table, G19 posture, 5-test acceptance plan. §A42.6 documents the A34/A36/A40 "HJ-04 evidence anatomy" ↔ A32/A41 "HJ-03 evidence_anatomy" naming drift and adopts the schema-authoritative binding. | landed (`9dd64fa`) |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W13_2026-04-19.md` (includes mandatory §6 W12 FM1 recurrence check — returns **PASSED**; every W13 commit is scoped exactly to its described content) | landed |
+
+Final test tally over the touched surface at W13 boundary:
+**1065 passed, 0 failed, 4 skipped** (+6 vs W12's 1059; 0 skip
+change; 0 regressions). Skip composition unchanged from W10
+end-of-phase (2 × mio.core/reporting W6 carry, 1 ×
+`fig_certification_matrix` family W9 carry, 1 × dynesty
+composition-swap W10D1 carry).
+
+Week 13 final gate — **all five items green**:
+- [x] W12 R1 process note added (`41b7200` + memory
+      `feedback_git_workflow.md` durable entry).
+- [x] W12 R2 PROBE_ID registry landed (`b7607ef`; 6 new tests;
+      MIO 89 → 95).
+- [x] Two new A4x dossier files landed (A36a + A42 — exceeds
+      single-file gate).
+- [x] Phase-boundary audit log written; W12 FM1 recurrence check
+      included in §6 and returns **PASSED**.
+- [x] No touched-surface regressions (1065 passed; +6 over W12;
+      0 failed; 4 skipped unchanged).
+
 ## §1d. What was designed in the 2026-04-19 planning session
 
 (Preserved here for provenance; unchanged from earlier rotations.
 See v3 research plan + PART II + PART III of the governing plan.)
 
-## §2. Active priorities for the next session (Week 13)
+## §2. Active priorities for the next session (Week 14)
 
-**"Continued wait-on-bass_py + PROBE_ID registry single-source-of-
-truth + manuscript / dossier continuations"**. Week 12 closed all
-three carry-forwards that were scheduled (W11 F4 grammar, W11 F1
-exact-enumeration, W5 APPLY-BIAS-AMP) and landed one new A4x dossier
-(A41 extension protocol). The five W12 findings (F1–F5 in
-`AUDIT_PHASE_IND_TRACKS_W12_2026-04-19.md` §6) are P2 process /
-P3 coverage / by-design and are not all Week-13 blockers.
+**"Continued wait-on-bass_py + cross-producer σ parity test +
+dossier cross-ref hygiene + A43 schema-hash design"**. Week 13
+closed the two scheduled carry-forwards (W12 R1 process + W12 R2
+PROBE_ID registry) and landed two A4x dossiers (A36a σ_cone
+literature + A42 HJ-03 evidence_anatomy stub). The four W13
+findings (F1–F4 in `AUDIT_PHASE_IND_TRACKS_W13_2026-04-19.md` §6)
+are all P3 coverage / docs drift; none block Week-14 execution.
 
-Week 13 remains in the dependency-wait window: HJ-01 production
+Week 14 remains in the dependency-wait window: HJ-01 production
 wiring, HJ-03 evidence anatomy, HJ-04 departure skeleton, and
 MANU-CH12 §§12.1 / 12.4 / 12.5 / 12.8 are still blocked on bass_py
 W10-02 (K_ℓ atlas) and bass_py W11-02 (BiPoSH). Until those land,
-Week 13 should harvest the cleanest remaining carry-forwards — but
-with a **hardened process discipline** after the W12 FM1 cross-lane
-contamination incident.
+Week 14 harvests cleaner carry-forwards under the W13D1 pre-commit
+discipline (which held on all four W13 commits per the W13 audit
+§6 recurrence check).
 
-### Days 1–2 — Process mitigation + PROBE_ID registry (W12 R1 + R2)
+### Days 1–2 — W13 F2 cross-producer σ_cone parity test
 
-1. **W12 R1 — process doc.** Add a one-line pre-commit check to
-   this file (and to `feedback_git_workflow.md`): before every
-   `git commit` in this lane, run `git status --short` and visually
-   verify that only the intended files are staged. The W12D3 mixed
-   commit (`99465e5` — exact-enumeration pulled bass-lane + gallery-
-   lane changes into one commit) would have been prevented by this
-   discipline. No code change.
-2. **W12 R2 — PROBE_ID registry SSOT.** Create
-   `bass_py/mio/interface/probe_name_registry.py` with a frozen
-   `REGISTERED_PROBE_IDS: Tuple[str, ...]` mirroring the A37.3
-   catalogue (`CMB`, `CatWISE`, `Radio`, `CF4pp`, `BiPoSH`). Add a
-   test that parses A37.3 markdown and asserts the code registry
-   matches; also add a module-level helper
-   `is_registered_probe_id(name: str) -> bool`. Target: ~3 new
-   tests; MIO contribution 89 → ~92.
+1. **W13 F2 — cross-producer σ_cone parity.** The W13D2 registry
+   test `test_standard_probes_agree_with_registry` compares only
+   `name` set-equality. A paired σ_cone edit that touches only
+   HJ-02a (or only HJ-02b) would pass silently. Land
+   `bass_py/mio/tests/test_standard_probes_cross_producer_parity.py`
+   (or append to `test_probe_name_registry.py`) with a single
+   test that zips `STANDARD_PROBES` ↔ `STANDARD_Z_PROBES` by
+   `name` and asserts `sigma_cone_deg`, `l_deg`, `b_deg` match
+   exactly. Target: +1 test; MIO contribution 95 → 96.
+2. Opportunistic: edit `docs/dossier/A36_mio_channel_weighting.md`
+   §A36.4 to link to A36a as the new provenance anchor for the
+   `*_sigma_cone_plan_placeholder` caveat (W13 R3 follow-up).
 
-- Commit tags: `W13D1: process — pre-commit status discipline
-  (W12 F1/R1)`, `W13D2: MIO probe_id registry SSOT (W12 F3/R2)`.
-- Gate: A37.3 dossier + code registry agree verbatim; any new
-  probe must appear in both places in the same commit.
+- Commit tags: `W14D1: MIO cross-producer sigma parity (W13 F2)`,
+  `W14D2: AUDIT(W13 R3): A36 link to A36a`.
+- Gate: new test green; A36 §A36.4 sentence-level link to A36a.md
+  present.
 
-### Days 3–4 — HJ-02b σ_cone documentation tightening + W8 FM2 palette
+### Days 3–4 — Dossier naming-drift sweep (W13 F1) OR A43
 
-1. **W11 F3 / W6 FM2 — σ_cone literature citations.** The five
-   HJ-02a/b `STANDARD_Z_PROBES` σ_cone values are plan-suggested,
-   not DOI-anchored. Land a `docs/dossier/A36a_sigma_cone_literature.md`
-   (or extend A36.6) that cites the actual literature σ for each
-   probe (Planck 2018 VIII for CMB dipole, Secrest+2020 for CatWISE,
-   etc.) and records the delta vs the hardcoded values. This is the
-   W6 FM2 close.
-2. **W8 FM2 — figure palette unification (opportunistic).** If a
-   figure script is being regenerated for any other reason, apply
-   `apply_style()` in the same commit. Purely opportunistic; skip
-   if no natural co-landing.
+Pick ONE. Both are clean, non-blocking documentation-only items.
 
-- Commit tag: `W13D3: DOS-A36a sigma_cone literature (W6 FM2)`.
-- Gate: new dossier cites DOIs; no code change; MIO σ values may
-  or may not be updated (caller of judgement).
+1. **W13 F1 — cross-dossier HJ numbering rename.** One-pass sweep:
+   "HJ-04 evidence anatomy" → "HJ-03 evidence anatomy" across
+   `docs/dossier/A34_g19_cross_check_protocol.md`,
+   `docs/dossier/A36_mio_channel_weighting.md`,
+   `docs/dossier/A40_g19_architectural_stance.md` (verified three
+   occurrences via W13D5 A42.6 note). Also audit that
+   `"flrw_tension"` ↔ HJ-04 binding is consistent wherever mentioned.
+   No code change. Target: three one-line edits.
+2. Alternative: **A43 — MioCertificate schema-hash + digest test
+   design.** The W7 FM3 coordination note — how to add a
+   per-field SHA256 digest test on the first schema extension
+   (triggered by HJ-03 / HJ-04 landing). Follows A41/A42 structure;
+   cross-references A32.5 hash-freeze rule.
 
-### Days 5–6 — DOS-A42+ continuation
+- Commit tags: `W14D3: AUDIT(W13 F1): cross-dossier HJ-03/HJ-04
+  naming consistency` or `W14D3: DOS-A43 schema hash digest design`.
+- Gate (F1 path): zero remaining "HJ-04 evidence anatomy" strings
+  in docs/dossier/ (verify via `grep -rn "HJ-04 evidence"
+  docs/dossier/`).
+- Gate (A43 path): new dossier cross-references A32 + A34 + A41 +
+  A42; defines the digest-field list and the CI trigger point.
 
-A41 landed the report_type extension protocol. Next-up A4x targets:
+### Days 5–6 — A36a.6 follow-ups + opportunistic placeholder retirement
 
-1. **A42 — HJ-03 evidence anatomy dossier stub.** Documentation-only
-   placeholder defining what HJ-03 will compute (ΔlnB channel
-   decomposition) once the bass_py + HTT V-gates pass. Follows the
-   A35 structure; references A41 checklist.
-2. Alternative: **A43 — MioCertificate schema hash + digest test
-   design.** The W7 FM3 literal-freeze coordination note — how to
-   add a per-field SHA256 digest test on the first schema extension.
+The W13D3 A36a landing recorded §A36a.5 retirement criterion:
+`CatWISE` and `BiPoSH` are ready-to-promote under the three-
+condition rule. If bandwidth permits:
 
-Pick one; the other rolls to Week 14.
+1. Retire `*_sigma_cone_plan_placeholder` for `CatWISE`: edit
+   `bass_py/mio/coherence/directional.py` +
+   `bass_py/mio/coherence/redshift_binned.py` to drop the
+   CatWISE placeholder from `domain_caveats`; paired A36a.2
+   CatWISE row status update (→ "promoted 2026-W14"). 1 test
+   update (the `domain_caveats` assertion in
+   `test_directional_coherence.py` / `test_redshift_binned_coherence.py`).
+2. Same for `BiPoSH` in a separate commit.
 
-- Commit tag: `W13D5: DOS-A42 evidence_anatomy stub` or
-  `W13D5: DOS-A43 schema hash digest design`.
-- Gate: new dossier follows A35/A36/A37/A41 convention;
-  cross-references A32 + A34 + A41.
+- Commit tags: `W14D5: MIO retire CatWISE sigma placeholder
+  (A36a.5)`, `W14D6: MIO retire BiPoSH sigma placeholder (A36a.5)`.
+- Gate: per-probe paired update; A36a.2 status column reflects
+  the promotion; no new regression.
+
+If W14D3 picked the A43 path (not F1), swap D5-D6 to write the
+A34/A36/A40 naming sweep instead; the placeholder retirements
+can then move to W15.
 
 ### Day 7 — Phase audit + NEXT_SESSION rotation
 
 Standard phase-boundary audit per `feedback_phase_boundary_audit.md`.
-Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W13_2026-04-19.md`
-(date may shift). This audit MUST include a §6 finding that checks
-whether the W12 FM1 cross-lane contamination pattern recurred in
-any W13 commit; if so, add a P1 follow-up.
+Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W14_2026-04-19.md`
+(date may shift). Audit MUST include a §6 recurrence check for
+W12 F1 cross-lane contamination (same as W13 D7 gate); a second
+§6 finding should verify the W13D1 pre-commit gate was followed
+on every W14 commit (cross-check against `git show --stat` on
+each W14 sha).
 
-### Week 13 final gate
+### Week 14 final gate
 
-- [ ] W12 R1 process note added (one line in this file + memory).
-- [ ] W12 R2 PROBE_ID registry landed or explicitly deferred with
-      rationale.
-- [ ] At least one new A4x dossier file landed (A36a or A42 or A43).
-- [ ] Phase-boundary audit log written; W12 FM1 recurrence check
-      included.
-- [ ] No touched-surface regressions (≥ 1059 passed, 0 failed;
+- [ ] W13 F2 cross-producer σ parity test landed (+1 MIO test;
+      MIO contribution 95 → 96).
+- [ ] W13 F1 naming sweep OR A43 dossier landed (caller's choice).
+- [ ] At least one A36a.5 placeholder retirement landed
+      (CatWISE and/or BiPoSH), OR documented reason for skipping.
+- [ ] Phase-boundary audit log written; §6 W12 F1 + W14 pre-commit
+      gate recurrence checks included.
+- [ ] No touched-surface regressions (≥ 1065 passed, 0 failed;
       4 skipped unchanged unless new skips explicitly documented).
 
-### Deferred to Week 13+ (not Week-12 targets)
+### Deferred to Week 14+ (not Week-13 targets)
 
 - **HJ-01 production wiring** — when bass_py W10-02 K_ℓ atlas lands.
   Replace the diagonal independence χ² with the per-ℓ-covariance
@@ -423,7 +470,7 @@ bottom.
 | W5 DYNESTY-DEP | P2 | 1 skip on `dynesty`. | `venv/bin/pip install dynesty`. |
 | W5 APPLY-BIAS-AMP | **RESOLVED W12D2** | `_apply_bias_to_direction` scales by `\|V_true\|` not measurement amplitude. | Surfaced via `mio.diagnostics.masked_sky_caveats.BIAS_AMP_CAVEAT` + `build_report(..., mock_bias_applied=True)` kwarg in `cd220a6`; upstream helper intentionally untouched per W5 audit directive. |
 | W6 SKIP-02b-v3-LEGACY | P2 | 2 `test_figures_smoke.py` skips on `mio.core` / `mio.reporting`. | Week 8+ MANU-CH12-NEW rewrite or retire the two figures. |
-| W6 FM2 PROBE-SIGMA | P2 | Radio / CF4++ / BiPoSH σ_cone plan-placeholders. | Opportunistic during Week 8 MANU-CH12-NEW §12.2 (literature citations). |
+| W6 FM2 PROBE-SIGMA | **DOCS-RESOLVED W13D3** | Radio / CF4++ / BiPoSH σ_cone plan-placeholders. | `docs/dossier/A36a_sigma_cone_literature.md` (`ed2c9b1`) DOI/arXiv-anchors every σ and records Δ per probe. Code-side σ values intentionally unchanged per A36a.4 "caller's judgement" rule; §A36a.5 records the three-condition retirement criterion for the `*_sigma_cone_plan_placeholder` caveat flag. |
 | W6 FM4 MC-VECTORISE | P3 | `_sample_isotropic_unit_vectors` per-mock loop. | Only if HJ-02a moves to 1e6-mock regime. |
 | W6 FM5 PROBE-NAME-SCHEMA | P3 | ad-hoc probe_name string-join. | Deferred — CONTRACTS-01 schema-hash coordination. |
 | W6 FM6 GIT-SHA-DRIFT | P3 | git_commit resolves at instantiation time. | Expected behaviour; no action. |
@@ -445,14 +492,18 @@ bottom.
 | **W10 F5** | **RESOLVED W11D1** | `test_extract_drops_zero_kernel_multipoles` hardcoded `report.ell.size == 27`. | Fixed in `8aefbb8` — now computes `cfg.ell_max - cfg.ell_min + 1 - len(dropped)` from `ShearExtractorConfig()` defaults. |
 | **W11 F1** | **RESOLVED W12D3** | `mio.coherence.redshift_binned.drift_pvalue` has no exact-enumeration path for small-N reproducibility. | Landed in `99465e5` — `exact: bool = False` kwarg + `EXACT_ENUMERATION_MAX_PERMUTATIONS = 10_000` ceiling + 6 new tests. |
 | **W11 F2** | **P3** | permutation null distribution degenerate for (N ≤ 8, K = 2, antipodal injection) test designs. | Documentation-only; enforced culturally via "≥ 3 bins or N > 12" guidance in W11 audit §6. |
-| **W11 F3** | **P3** | HJ-02b inherits σ_cone placeholders from HJ-02a (v3 §16.2 FM2 / W6 FM2). | Same resolution as W6 FM2 — MANU-CH12-NEW §12.2 literature citations. |
+| **W11 F3** | **DOCS-RESOLVED W13D3** | HJ-02b inherits σ_cone placeholders from HJ-02a (v3 §16.2 FM2 / W6 FM2). | Same resolution as W6 FM2 — A36a literature anchoring; §A36a.5 retirement criterion applies per-probe to both HJ-02a and HJ-02b. |
 | **W11 F4** | **RESOLVED W12D1** | A37 grammar acceptance tests (`test_probe_name_is_alphabetical_bundle`, `test_probe_name_matches_grammar_v1`) deferred pending CONTRACTS-01 v2 hash-digest infrastructure. | Landed in `015246d` — 8 new tests in `test_probe_name_grammar.py`; producer tightening across all 3 MIO emitters (alphabetical sort + HJ-01 MODEL_ID singleton). |
 | **W11 F5** | **P3** | `emit_redshift_coherence_artefact` provenance SHA = `MioCertificate.git_commit` (instantiation-time; inherited from MIO-HJ-06a, already documented as W6 FM6). | No action — by design. |
-| **W12 F1** | **P2** (process) | W12D3 commit (`99465e5`) pulled in unrelated bass-lane + gallery-lane files (working-tree drift from a concurrent lane's staging). Cannot retroactively split per additive-commits rule. | W13 mitigation: always `git status --short` before every commit in this lane. See W12 audit §8 R1. |
+| **W12 F1** | **RESOLVED W13D1** | W12D3 commit (`99465e5`) pulled in unrelated bass-lane + gallery-lane files (working-tree drift from a concurrent lane's staging). Cannot retroactively split per additive-commits rule. | Mitigation landed in `41b7200` + memory `feedback_git_workflow.md` durable entry — pre-commit `git status --short` gate. Verified effective on all four W13 commits (W13 audit §6 check = PASSED). |
 | **W12 F2** | **P3** (docs) | A41 checklist is not mechanised — no acceptance test parses existing MIO modules to verify compliance. | Optional follow-up when HJ-03 lands: add `test_mio_report_types_pass_a41_checklist`. |
-| **W12 F3** | **P3** (coverage) | A37.3 registered PROBE_IDs only exist in markdown; code has no frozen registry. A new unregistered 12-char-alnum name would pass the regex. | **Slated for W13D2** — land `mio.interface.probe_name_registry` with `REGISTERED_PROBE_IDS` + dossier-vs-code parity test. |
+| **W12 F3** | **RESOLVED W13D2** | A37.3 registered PROBE_IDs only exist in markdown; code has no frozen registry. A new unregistered 12-char-alnum name would pass the regex. | Landed in `b7607ef` — `bass_py/mio/interface/probe_name_registry.py` with `REGISTERED_PROBE_IDS: Tuple[str, ...]` + `is_registered_probe_id` helper + 6 tests (code↔dossier parity via markdown parser; `STANDARD_PROBES ∪ STANDARD_Z_PROBES` parity). |
 | **W12 F4** | **P3** (coverage) | `build_report(mock_bias_applied=True)` is a documentation-only contract — a caller that lies about it mislabels the certificate. | Optional follow-up: require a `mock_bias_report: Optional[InjectedMockReport] = None` when flag is set. |
 | **W12 F5** | **P3** (testing) | `test_drift_pvalue_exact_matches_mc_at_small_N` uses `abs < 0.05` — loose enough to mask a 2σ MC bias. | Tighten to `abs < 3·sqrt(p·(1-p)/n)` only if precision becomes load-bearing; not currently blocking. |
+| **W13 F1** | **P3** (docs drift) | A34 / A36 / A40 tabular rows still label evidence-anatomy as **HJ-04**, while A32 / A41 / W13D5 A42 bind it to **HJ-03** (the schema-authoritative binding). | W14D3 candidate — one-pass `sed` rename across the three dossiers; batch with HJ-03 landing commit if opportunistic. Logged verbatim in A42.6. |
+| **W13 F2** | **P3** (coverage) | W13D2 `test_standard_probes_agree_with_registry` checks `name` set-equality only; σ_cone / l / b drift between HJ-02a and HJ-02b producers would silently pass. | **Slated for W14D1** — land `test_standard_probes_have_consistent_sigma_cone_across_producers`. |
+| **W13 F3** | **P3** (coverage) | W13D2 A37.3 markdown parser fails silently on cosmetic table-format drift (switching backtick to bold renders the regex zero-match). | Docstring comment on `_parse_a37_3_probe_ids_from_markdown`; no code change needed. |
+| **W13 F4** | **P3** (testing) | A36a.3 literature Δ table is not programmatically tested — a future σ edit could silently drift the dossier claim. | Opportunistic; add a YAML/JSON sidecar parser only if >1 σ update lands in a single session. |
 
 ## §4. Environment and quickstart
 
@@ -460,8 +511,8 @@ bottom.
 # Repo root
 cd /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 
-# Sanity: touched-surface test run.  As of 2026-04-19 post-W12:
-# 1059 passed, 0 failed, 4 skipped (+18 vs W11; 0 skip change).
+# Sanity: touched-surface test run.  As of 2026-04-19 post-W13:
+# 1065 passed, 0 failed, 4 skipped (+6 vs W12; 0 skip change).
 venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
                 bass_py/tsc/admissibility/ \
                 bass_py/tsc/diagnostics/ bass_py/tsc/charts/ \
@@ -471,7 +522,7 @@ venv/bin/pytest bass_py/htt/tests/ bass_py/src/ \
 # tsc standalone (18 s; 602 passed post-W9; unchanged W10-W11).
 venv/bin/pytest bass_py/tsc/
 
-# MIO standalone (collection check — 89 tests post-W12D3).
+# MIO standalone (collection check — 95 tests post-W13D2).
 venv/bin/pytest bass_py/mio/ --collect-only -q | tail -1
 
 # Full monorepo suite (slower).
@@ -518,7 +569,7 @@ session's responsibility and must not be touched here:
   V-gate signs the K_ℓ atlas** — see W11 audit §3 for the contract.
 * `plots/physics_gallery/` — gallery refresh is bass_py's per-phase rule.
 
-### §5a. This lane's new territory (updated post-W11)
+### §5a. This lane's new territory (updated post-W13)
 
 Directories that **this** lane now owns (created or will be created
 per the v1.3 plan — bass_py session must not touch):
@@ -531,17 +582,22 @@ per the v1.3 plan — bass_py session must not touch):
   MIO-BRIDGES-01 PR13AM re-export + MIO-HJ-05a-lite masked-sky caveats;
   Week 10 added `mio/extraction/hj01_shear.py` (HJ-01 skeleton);
   Week 11 added `mio/coherence/redshift_binned.py` (HJ-02b);
-  **Week 12 added**: A37 grammar tests + producer tightening
+  Week 12 added A37 grammar tests + producer tightening
   (alphabetical bundle, HJ-01 MODEL_ID singleton); APPLY-BIAS-AMP
   caveat surfacing in `mio/diagnostics/masked_sky_caveats.py`;
-  exact-enumeration path on `mio.coherence.redshift_binned.drift_pvalue`.
+  exact-enumeration path on `mio.coherence.redshift_binned.drift_pvalue`;
+  **Week 13 added**: `mio/interface/probe_name_registry.py`
+  (frozen `REGISTERED_PROBE_IDS` tuple + A37.3 markdown-vs-code
+  parity test).
 * **`bass_py/tsc/integration/*`** — NEW Week-7 subpackage; currently
   holds TSC-06 `htt_bridge` + tests. Distinct from `bass_py/tsc/{admissibility, charts, diagnostics}/`.
 * `docs/dossier/A13_*`, `A14_*`, `A32_*`, `A33_*`, `A34_*`,
-  `A35_*`, **`A36_*`** (new W11), **`A37_*`** (new W11), `A38_*`,
-  `A39_*`, `A40_*` — manuscript dossier. Week 7 added A34 + A35 +
+  `A35_*`, `A36_*`, **`A36a_*`** (new W13), `A37_*`, `A38_*`,
+  `A39_*`, `A40_*`, **`A41_*`** (new W12), **`A42_*`** (new W13)
+  — manuscript dossier. Week 7 added A34 + A35 +
   A38 + A40; `A13_02_*` through `A13_14_*` landed Week 9;
-  **A36 + A37 landed Week 11**.
+  A36 + A37 landed Week 11; A41 landed Week 12;
+  **A36a + A42 landed Week 13**.
 * `project/00_manuscript/ch03_framework.tex` (MANU-CH03 subsections;
   Week 1–4 landed; ~800 L gap vs v3 §11.3 target remains).
 * `project/00_manuscript/ch11_error_hierarchy.tex` — MANU-CH11-REDESIGN
