@@ -12,7 +12,7 @@ This way the file is a **living handoff contract**: one always-current prompt + 
 **Last rotated**: 2026-04-20 (**FB-META-7.CLOSE → FB-META-8**; Phase FB-7 skeleton cycle sealed, handoff reset to the next-phase META placeholder)
 **Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META8_2026-04-20.md` (pre-flight scaffold)
 **Current target session**: **FB-META-8** — paste the Phase FB-8 META prompt
-**Phase status**: FB-META-8 in progress on 2026-04-20; FB-8.1 through FB-8.5 are planted, the observer package now owns the boost carrier, kernel, adapters, composition-order pin, and discriminator contract, and the working baseline stands at `3403 passed + 58 skipped`
+**Phase status**: FB-META-8 in progress on 2026-04-20; FB-8.1 through FB-8.6 are planted, the observer package owns the observer-side contracts and `bass.likelihood` now owns the observer-frame wrapper contract, with the working baseline at `3403 passed + 59 skipped`
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---

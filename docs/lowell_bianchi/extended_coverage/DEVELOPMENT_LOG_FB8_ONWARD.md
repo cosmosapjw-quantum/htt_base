@@ -135,3 +135,23 @@ cross-reference.
 - **Carry-forward**: FB-8.6 likelihood-stack ingest.
 - **Notes**: the Kosowsky/Kahniashvili recovery argument is verified;
   the prompt's statistical locator is still an explicit TODO.
+
+### FB-8.6 — observer-frame likelihood adapter
+
+- **Scope**: Added the skeleton
+  [ObserverFrameLikelihood](../../../htt/bass/likelihood/observer_frame_adapter.py)
+  wrapper in `bass.likelihood` and exported it from the package
+  `__init__`. The contract composes over
+  `CosmologicalFrameLikelihood` rather than reopening it, and keeps the
+  observer prior typed through a local protocol instead of fabricating a
+  concrete prior implementation.
+- **Commit anchor**: see `git log --grep='FB-META-8.6'`.
+- **Test delta**: 3,403 passing + 58 skipped → 3,403 passing + 59
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META8_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META8_2026-04-20.md)
+  §FB-8.6.
+- **Gallery**: no-op (likelihood wrapper contract only).
+- **Carry-forward**: FB-8.7 docs + gallery skeleton.
+- **Notes**: the Lowell `§14` on-disk locator is still absent and is
+  kept visible as an audit gap.

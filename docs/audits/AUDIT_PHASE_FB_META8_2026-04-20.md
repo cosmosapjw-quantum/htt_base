@@ -379,9 +379,63 @@ phase-close gate.
 
 ## §FB-8.6
 
-**Type-distinct pin**: pending fill; likelihood-stack ingest will layer
-observer-frame logic on top of the cosmological-frame FB-7 likelihood
-without retyping cosmological tilt as observer boost.
+### §FB-8.6 — likelihood-stack ingest skeleton
+**Type-distinct pin**: likelihood-stack ingest layers observer-frame
+logic on top of the FB-7 cosmological-frame likelihood without retyping
+cosmological tilt as observer boost.
+**Channel A**: 7 checked / 6 verified / 1 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB8_DISCRIMINATOR_SDD.md §7`
+declares `ObserverFrameLikelihood`; verified the new wrapper is placed
+in `bass.likelihood.observer_frame_adapter` rather than inside
+`bass.observer`; verified `bass.likelihood.cosmological_frame` already
+states that FB-8 composes on top via `observer_frame_adapter`; verified
+`bass.likelihood.__init__` now exports `ObserverFrameLikelihood`;
+verified the new skipped test pins the wrapper wording and the three
+public methods; verified the local `Prior[ObserverBoost]` protocol keeps
+the observer prior typed without inventing a concrete prior
+implementation. Broken: the prompt-supplied on-disk Lowell `§14`
+reference is absent in this worktree, so the exact internal likelihood
+composition locator cannot be cited directly and remains a documented
+gap.
+**Channel B**: 2 source checks / 2 verified / 0 divergent. Evidence:
+Kosowsky & Kahniashvili 2011, `arXiv:1007.4539`, verifies the
+observer-motion signal is a part-in-a-thousand effect with detectable
+off-diagonal structure, which is the right external context for an
+observer-boost prior and likelihood wrapper. The local FB-7.4
+cosmological-frame contract already pins that observer-frame composition
+must happen in FB-8 rather than by reopening the FB-7 likelihood class,
+so the wrapper architecture is consistent with the existing codebase.
+**Channel C** (prose, 6-10 lines): FB-8.6 is where the extended bundle
+meets the already-audited FB-7 surface, so the main risk is accidental
+scope creep back into `CosmologicalFrameLikelihood`. A thin wrapper
+class is the cleanest skeleton because it preserves the existing
+cosmological-frame object, exposes the new observer prior as a separate
+constructor dependency, and leaves room for both marginalisation and
+profiling methods without deciding the implementation strategy today.
+Putting this in `bass.observer` would be wrong because the surface is now
+about likelihood composition rather than raw observer kinematics. The
+missing Lowell locator is recorded directly so future implementation work
+knows that one internal citation still needs a stronger source.
+**Alternatives**:
+| # | Ingest surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `ObserverFrameLikelihood` wrapper in `bass.likelihood.observer_frame_adapter` | Preserves the FB-7 class boundary and exposes observer priors as a separate layer. | Adds another class before implementation exists. | ✅ |
+| 2 | Add observer parameters directly to `CosmologicalFrameLikelihood` | Fewer classes. | Violates the FB-7 cosmological-frame scope pin and blurs the audit boundary. | — |
+| 3 | Hide observer ingestion inside the discriminator | Smaller public likelihood API. | Makes likelihood composition secondary to the FB-8.5 statistic and complicates later FB-11 sampler reuse. | — |
+**Core principles**: wrapper, not retrofit; observer prior remains a
+separate axis; missing Lowell locator stays explicit; deterministic
+failure until the adapter is implemented.
+**Skeleton path**:
+`htt/bass/likelihood/observer_frame_adapter.py::ObserverFrameLikelihood`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/likelihood/test_fb86_observer_frame_adapter_skeleton.py -q`
+**Guard rails** (yes/no): wrapper stays outside FB-7 class? yes; typed
+observer prior surface present? yes; missing Lowell locator recorded?
+yes; cosmological/observer split preserved? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 58 skipped` → `3403 passed + 59 skipped` pending the
+phase-close gate.
 
 ## §FB-8.7
 
