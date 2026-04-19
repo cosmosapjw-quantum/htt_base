@@ -126,3 +126,18 @@
 **Regression after plant**: 3,403 passed + 10 skipped (six local-only skipped contract tests over the 2026-04-20 baseline).
 
 ## §FB-5.7
+
+### §FB-5.7 — ``k × type`` regression skeleton
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-5` names FB-5.7 as the full `k × type` regression pass; verified `htt/bass/integration/test_lowell_bianchi.py` is already the shipped Planck/CAMB regression anchor; verified the parent plan's FB-5 exit criterion is explicitly framed in terms of the CAMB Planck-2018 `Dl_TT` oracle; verified the preceding FB-5.1 through FB-5.6 skeletons isolated the mode, operator, seed, limit, quantisation, and tilt surfaces that this future regression matrix will need to cover.
+**Channel B**: 1 arXiv check / 1 partial verification / 0 divergent sources. Evidence: `arXiv:1807.06209` verifies the identity of the Planck 2018 VI cosmological-parameter paper used as the phase-level external anchor. This session did not fetch a table-level `Dl_TT` locator from the arXiv HTML, so that narrower citation is demoted to `# TODO` rather than guessed.
+**Channel C** (prose, 6-10 lines): The safest FB-5.7 contract is a regression runner, not a hidden parametrization detail inside an existing test module. The reason is that this phase is not one more isolated physics helper; it is the cross-product audit surface that ties all the earlier FB-5 primitives together. Giving it an explicit `type_labels × k_values × ell_max` interface makes the future coverage decision visible and reviewable. It also avoids hard-coding one particular matrix shape into a test decorator before the phase exit criteria are fully sealed. The existing `test_lowell_bianchi.py` fixture policy remains the oracle anchor, but the new perturbation matrix needs its own contract because it spans types and wavenumbers rather than one background trajectory. The placeholder therefore raises until the coverage grid and fixture usage are finalized.
+**Alternatives**:
+| # | signature | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `run_k_type_regression_matrix(*, type_labels, k_values, ell_max) -> dict[str, object]` | Makes the coverage grid explicit; keeps regression orchestration separate from existing LB-6 background tests; easiest surface to extend later. | Future test modules must call a helper rather than only using static parametrization. | ✅ |
+| 2 | `@pytest.mark.parametrize(...)` only, no helper surface | Minimal new code path. | Hides the intended coverage matrix in test decoration and leaves no explicit contract surface for the phase-level regression runner. | — |
+**Core principles**: explicit coverage-grid construction; reuse of existing Planck/CAMB oracle policy; no hidden parametrization that silently defines the future phase exit criteria.
+**Skeleton path**: `htt/bass/perturbation/k_type_regression.py::run_k_type_regression_matrix`
+**Test path**: `htt/bass/perturbation/test_fb57_k_type_regression_skeleton.py::test_fb57_k_type_regression_skeleton_contract`
+**Guard rails** (yes/no): citations verified? partial with TODO demotion; imports exist? yes; ≥ 2 alternatives? yes; oracle anchor explicit? yes
+**Regression after plant**: 3,403 passed + 11 skipped (seven local-only skipped contract tests over the 2026-04-20 baseline).

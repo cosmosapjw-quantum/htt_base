@@ -585,3 +585,20 @@ fresh cumulative count.
   claim is still `# TODO` in the arXiv-only channel.
 - **Notes**: tilt regularisation stays as a post-seed helper so the
   orthogonal seed contract from FB-5.3 remains separate and explicit.
+
+### FB-META-5.7 — ``k × type`` regression skeleton
+
+- **Scope**: Recorded FB-5.7 three-channel verification and planted the
+  local-only `run_k_type_regression_matrix(...)` skeleton plus one
+  skipped contract test without staging any `htt/` changes. The
+  regression oracle remains the existing Planck/CAMB policy already
+  pinned in `test_lowell_bianchi.py`.
+- **Commit anchor**: see `git log --grep='FB-META-5.7'`.
+- **Test delta**: `3,403 passed + 10 skipped` →
+  `3,403 passed + 11 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META5_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META5_2026-04-20.md) §FB-5.7.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: exact Planck table-level `Dl_TT` locator remains
+  citation-needed if the future regression needs a direct table quote.
+- **Notes**: the chosen surface makes the future coverage grid explicit
+  rather than hiding it only inside a parametrized test decorator.

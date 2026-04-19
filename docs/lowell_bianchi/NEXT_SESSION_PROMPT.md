@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-5.6 → FB-5.7**; tilted-seed skeleton contract recorded, next handoff narrowed to the k×type regression skeleton)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.6
-**Current target session**: **FB-5.7** — k × type regression skeleton contract
-**Phase status**: FB-5 skeleton cycle is in progress on 2026-04-20; FB-5.6 is sealed locally and FB-5.7 is next
+**Last rotated**: 2026-04-20 (**FB-5.7 → FB-META-5.CLOSE**; k×type regression skeleton contract recorded, phase-close regression and handoff rotation next)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.7
+**Current target session**: **FB-META-5.CLOSE** — final regression, phase-close note, rotate to FB-META-6
+**Phase status**: FB-5 skeleton cycle is in progress on 2026-04-20; all seven local skeleton contracts are planted and the closeout pass is next
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,30 +37,27 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-5.7 — k × type regression skeleton contract
+# FB-META-5.CLOSE — close the Phase FB-5 skeleton cycle
 
-FB-5.6 landed as a local-only skeleton: the new placeholder is
-`htt/bass/perturbation/tilted_seed_rule.py::apply_tilted_boost_seed_rule`,
-and the audited local baseline is now `3,403 passing + 10 skipped`.
+All seven FB-5 local-only skeleton contracts are now planted under
+`htt/bass/perturbation/`, and the audited local expectation is
+`3,403 passing + 11 skipped`.
 
-Next session target:
-- Plant the FB-5.7 skeleton only.
-- Keep `htt/` unstaged by contract.
-- Carry forward the explicit split between orthogonal seed generation
-  and tilted regularisation from FB-5.3 / FB-5.6.
-- Keep the exact tilted initial-surface regularisation claim marked as
-  TODO unless you recover an arXiv-only source.
-
-Required carry-forward anchors:
-- Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
-- Latest audit artifact:
-  `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.6
-- Verified broad boost formalism anchor:
-  `https://arxiv.org/abs/astro-ph/9911481`
-- Latest full regression anchor:
+Closeout tasks:
+- Run the full regression once:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3403 passed, 4 skipped` pre-plant, so FB-5.7 should advance only
-    the skipped count if it lands cleanly.
+- Confirm the result is unchanged from the baseline except for the
+  seven new skipped skeleton tests.
+- Add a short phase-close note to:
+  - `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md`
+  - `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
+- Rotate `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` to the
+  generic `FB-META-6` placeholder.
+- Commit as `FB-META-5.CLOSE: Phase FB-5 skeletons planted (7 sub-phases)`.
+
+Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
+Latest audit artifact:
+`docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md`
 ```
 
 ---
