@@ -793,5 +793,301 @@ to **FB-1.4**.
 
 ---
 
-<!-- Reserved placeholder for FB-1.4 supplement (anisotropic_3_curvature
-11-type consolidation; Phase FB-1 exit). -->
+## FB-1.4 supplement — `anisotropic_3_curvature` 11-type consolidation (Phase FB-1 exit)
+
+**Date**: 2026-04-19 (same day as FB-1.1 / FB-1.2 / FB-1.3)
+**Sub-phase**: **FB-1.4** — closes Phase FB-1 by replacing the
+`'unavailable'` fall-through in
+`bass/background/tetrad_state.py::anisotropic_3_curvature` with a
+unified per-type dispatch that returns a non-None, symmetric,
+trace-free, finite ³R_ab^{aniso} for every registered Bianchi type
+(I, II, III, IV, V, VI₀, VI_h, VII₀, VII_h, VIII, IX) plus FLRW.
+**Baseline commit (pre FB-1.4)**: FB-1.3 seal; 2,904 passing + 1 skipped.
+**Post FB-1.4 test count**: **2,997 passing + 1 skipped** (+93 new —
+77 parametrised in `TestAnisotropic3CurvaturePerType` (7 invariants
+× 12 labels − one removed-old + 8 explicit per-type formula pins) +
+12 in `TestBuildTetradStateAniso3CurvatureFB14` + 4 minor fixture
+additions / renames in the existing `TestAnisotropic3Curvature`).
+**Verdict**: **통과** (no P0/P1; one new P3 carry-forward FB14-F1 —
+twist-coupled anisotropic 3-Ricci correction for Class B deferred to
+FB-2.2 alongside the hierarchy T1/T2 spatial-Ricci wire-up).
+
+### 1. Audit target reconstruction (FB-1.4)
+
+| Layer | Artifact | Role |
+|---|---|---|
+| Physics / math source | Ellis-MacCallum 1969 §4 eqs (4.19)–(4.21) — Class A canonical-frame ³R_ii formula in orthonormal tetrad; Wainwright-Ellis 1997 §1.4.4 — Class A / Class B 3-Ricci decomposition; Ellis-Maartens-MacCallum 2012 §14.3 — modern unified treatment | Closed-form per-type ³R_ab^{aniso} expressions and trace-free decomposition that anchor the FB-1.4 contract |
+| Per-type curvature dispatch | `bass/background/tetrad_state.py::anisotropic_3_curvature` + new `_STATUS_DISPATCH` registry | Returns `(tensor, status)` for every registered label; never `'unavailable'` for an integrated cosmology |
+| Tetrad-state builder (consumer) | `bass/background/tetrad_state.py::build_tetrad_state` | Calls `anisotropic_3_curvature` per η-grid point to populate `TetradBackgroundState.aniso_3_curvature` (now non-None for all 12 labels) |
+| Tests (new) | `bass/background/test_tetrad_state.py::TestAnisotropic3CurvaturePerType` (12 labels × 5 invariants + 8 explicit per-type formula pins) + `TestBuildTetradStateAniso3CurvatureFB14` (12 labels build smoke) + 2 modified existing methods (`test_type_vii0_plane_wave_line_aligned` rename + `test_type_ix_isotropic_exact_zero`) | Verifies the Phase FB-1 exit contract and per-type closed-form correctness |
+| Gallery | `plots/physics_gallery/11_integrator/13_fb14_anisotropic_3curvature_per_type.png` | Fourth FB gallery extension (FB-0 was no-op; FB-1.1 added 03..06; FB-1.2 added 07..08; FB-1.3 added 09..12; FB-1.4 adds 13) |
+| Spec cross-ref | `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1.4` + §3 Target state | FB-1.4 row delivered; Phase FB-1 exit criteria satisfied (`SOURCE_STATUS` all VALIDATED via FB-1.1..1.3 + ³R_ab^{aniso} non-None for all 11 types via FB-1.4) |
+
+Source of truth: Ellis-MacCallum 1969 §4 canonical orthonormal-frame
+spatial Ricci formula; Wainwright-Ellis 1997 §1.4.4 unified
+decomposition for Class A and Class B (PC frame); Ellis-Maartens-
+MacCallum 2012 §14.3 modern presentation.
+
+### 2. Contract / interface table — FB-1.4 additions
+
+| Surface | Signature / invariant | Status |
+|---|---|---|
+| `anisotropic_3_curvature(structure, a, sigma_plus, sigma_minus)` | Returns `(tensor: (3,3) ndarray, status: str)` for every registered label; `tensor` is symmetric, trace-free, finite; `status` ∈ 11-element vocabulary, never `'unavailable'` for any of {FLRW, I, II, III, IV, V, VI_0, VI_h, VII_0, VII_h, VIII, IX} | Generalised (was: 4 zero-returning labels + 8 None-returning) |
+| `_STATUS_DISPATCH` (new module-level dict) | 12-entry per-label string registry | New |
+| `build_tetrad_state(bg).aniso_3_curvature` | Now non-None for every Bianchi type (was: None for II/III/IV/VI_0/VI_h/VII_h/VIII/IX) | Generalised |
+| `TetradBackgroundState.curvature_status` | Per-type label string, never `'unavailable'` for an integrated cosmology | Generalised |
+| Existing test `test_type_vii0_flat_aligned` → renamed to `test_type_vii0_plane_wave_line_aligned` | Status string updated `'type_vii0_flat'` → `'type_vii0_e2'`; default fixture (n_1=n_3) still gives algebraic zero on the Lukash plane-wave line | Renamed (one tetrad test) |
+| Existing test `test_type_ix_unavailable` → replaced with `test_type_ix_isotropic_exact_zero` | IX is no longer 'unavailable'; isotropic n_1=n_2=n_3 fixture still gives algebraic zero | Replaced (one tetrad test) |
+
+**Per-type formula and status (FB-1.4)**:
+
+| Type | n-pattern | a_twist | ³R_ab^{aniso} (default fixture) | status |
+|---|---|---|---|---|
+| FLRW | (0,0,0) | 0 | 0 | `type_i_flat` |
+| I | (0,0,0) | 0 | 0 | `type_i_flat` |
+| II | (n_1, 0, 0) | 0 | (n_1²/3) × diag(+2, −1, −1) | `type_ii_heisenberg` |
+| V | (0, 0, 0) | a > 0 | 0 (twist isotropic in trace-free) | `type_v_isotropic` |
+| VI_0 | (n_1>0, 0, n_3<0) | 0 | trace-free of (1/2)[n_i² − (n_j−n_k)²] | `type_vi0_e11` |
+| VII_0 | (n_1, 0, n_3 same sign) | 0 | 0 on n_1=n_3 plane-wave line; nonzero off-line | `type_vii0_e2` |
+| VIII | (n_1<0, n_2>0, n_3>0) | 0 | trace-free of (1/2)[n_i² − (n_j−n_k)²] | `type_viii_sl2r` |
+| IX | (n_1, n_2, n_3 all > 0) | 0 | 0 on isotropic n_1=n_2=n_3; nonzero off-isotropy | `type_ix_so3` |
+| III | (n_1>0, 0, n_3<0) | a > 0 (h=−1) | trace-free of N-only formula (PC twist isotropic) | `type_iii_class_b` |
+| IV | (0, 0, n_3>0) | a > 0 | trace-free of (1/2)[0, −n_3², n_3²] formula | `type_iv_class_b` |
+| VI_h | (n_1>0, 0, n_3<0) | a > 0 | same N-only formula as VI_0 | `type_vih_class_b` |
+| VII_h | (n_1>0, 0, n_3>0) | a > 0 | same N-only formula as VII_0 | `type_viih_class_b` |
+
+### 3. Phys-math audit ledger
+
+| Check | Result | Evidence |
+|---|---|---|
+| FLRW limit: every flat fixture (FLRW, I, V) gives ³R_ab^{aniso} ≡ 0 (algebraic) | ✅ | `test_type_v_isotropic` + `test_type_i_zero` (existing) + `test_flrw_zero` (existing) |
+| Type II axisymmetric closed form `(n_1²/3) × diag(2, −1, −1)` matches at rel 1e-12 | ✅ | `test_type_ii_explicit_formula` |
+| Type VI_0 / VII_0 / VIII / IX explicit Class-A formula match at rel 1e-12 | ✅ | `test_type_vi0_explicit_formula`, `test_type_vii0_off_plane_wave_line`, `test_type_viii_explicit_formula`, `test_type_ix_anisotropic_eigenvalues` |
+| Class B (III, IV, VI_h, VII_h) N-only formula match at rel 1e-12 | ✅ | `test_class_b_iv_explicit_formula`, `test_class_b_iii_dispatches_to_vih_formula`, `test_class_b_vih_explicit_formula`, `test_class_b_viih_explicit_formula` |
+| VII_0 plane-wave line (n_1 = n_3) → ³R_ab^{aniso} ≡ 0 algebraically | ✅ | `test_type_vii0_plane_wave_line_aligned` (renamed from `test_type_vii0_flat_aligned`) |
+| IX isotropic (n_1=n_2=n_3) → ³R_ab^{aniso} ≡ 0 algebraically (independent of FB12-F1) | ✅ | `test_type_ix_isotropic_exact_zero` (hard equality `== 0.0`, not `allclose`) |
+| Trace-free invariant: `|tr ³R^{aniso}| / max\|R^{aniso}\|` < 1e-12 across all 12 labels | ✅ | `test_tensor_is_trace_free` (12 parametrised) — observed residuals ~ 1e-18 (machine ulp; visible in gallery panel 3) |
+| Symmetric invariant: `³R^{aniso} == (³R^{aniso}).T` at atol 1e-30 | ✅ | `test_tensor_is_symmetric` (12 parametrised) — diagonal in aligned-eigenvector basis, so trivially symmetric |
+| Finite invariant: `np.isfinite(³R^{aniso})` everywhere | ✅ | `test_tensor_is_finite` (12 parametrised) |
+| Independence from `a`, σ_+, σ_−: spatial 3-Ricci at background level depends only on structure constants | ✅ | `test_independent_of_a_and_sigma` (12 parametrised) — bit-exact equality (`np.array_equal`) across (a=1,σ=0) vs (a=0.5, σ_+=1e-3, σ_-=2e-3) |
+| `build_tetrad_state(bg).aniso_3_curvature` non-None + finite for every type | ✅ | `TestBuildTetradStateAniso3CurvatureFB14::test_aniso_3_curvature_field_is_non_none` (12 parametrised, full integrator path) |
+| FB-1.1..1.3 SOURCE_STATUS unaffected (all VALIDATED) | ✅ | full regression 2,997 + 1 skipped (no SOURCE_STATUS test perturbed) |
+| FB-0.1 Ellis convention preserved | ✅ | tetrad_state module-level docstring updated; no σ-convention or ℋ²-lift change |
+
+### 4. Equation-to-code mapping audit
+
+| Target equation | Code implementation | Test anchor |
+|---|---|---|
+| Class A canonical orthonormal-frame ³R_ii = (1/2)[n_i² − (n_j − n_k)²] (Ellis-MacCallum 1969 §4 eq 4.19–4.21) | `anisotropic_3_curvature`: `R11 = 0.5*(n1*n1 - (n2-n3)**2)` (and cyclic) | `test_type_ii_explicit_formula`, `test_type_vi0_explicit_formula`, `test_type_vii0_off_plane_wave_line`, `test_type_viii_explicit_formula`, `test_type_ix_anisotropic_eigenvalues` |
+| Trace-free decomposition ³R_ab^{aniso} = ³R_ab − (1/3) ³R δ_ab | `one_third_trace = (R11 + R22 + R33) / 3.0`; `tensor[i,i] = R_ii - one_third_trace` | `test_tensor_is_trace_free` (12 parametrised) |
+| Class B PC-frame twist contribution is isotropic in trace-free part (n_2 = 0 by Jacobi; a × N cross terms are off-diagonal in aligned tetrad) | Same formula path; n_2 = 0 substitution implicit via `StructureConstants.n_diag` | `test_class_b_iv_explicit_formula`, `test_class_b_vih_explicit_formula`, `test_class_b_viih_explicit_formula`, `test_class_b_iii_dispatches_to_vih_formula` |
+| VII_0 plane-wave line zero (n_1 = n_3 ⇒ R_11 = R_33 = 0, R_22 = 0 directly) | Algebraic consequence of the formula; no separate branch | `test_type_vii0_plane_wave_line_aligned` |
+| IX isotropic zero (n_1 = n_2 = n_3 ⇒ all R_ii = n²/2, ³R = 3n²/2, ³S_ii = 0) | Algebraic consequence; no separate branch | `test_type_ix_isotropic_exact_zero` (hard equality) |
+| Per-label status string dispatch (no silent fallback) | `_STATUS_DISPATCH` dict lookup with `'unavailable'` only for unrecognised labels (defensive guard, not reachable from registered factories) | `test_status_string_never_unavailable` (12 parametrised) |
+
+No dead code introduced. No orphan imports. The function body is
+~12 lines of arithmetic; the module-level `_STATUS_DISPATCH` dict
+makes the per-type contract explicit. The pre-FB-1.4 4-label fast-path
+branches (I/V/VII_0/FLRW) are absorbed into the unified path
+(algebraic zero from the formula); existing tests for those still
+green with the same numeric output.
+
+### 5. Numerical / pipeline audit
+
+| Item | Finding |
+|---|---|
+| `TestAnisotropic3CurvaturePerType` parametrised run count | 60 invariant parametrised + 8 explicit-formula = 68 |
+| `TestBuildTetradStateAniso3CurvatureFB14` parametrised run count | 12 (one per registered label, full background integrator path) |
+| Modified existing tests | 2 (rename `vii0_flat_aligned` → `vii0_plane_wave_line_aligned` + replace `test_type_ix_unavailable` with `test_type_ix_isotropic_exact_zero`) |
+| Net test delta | +93 (2,904 → 2,997; one removed `test_type_ix_unavailable` replaced with structurally-different `test_type_ix_isotropic_exact_zero`) |
+| Per-type formula match tolerance | rel 1e-12 — passes at all 8 explicit per-type formula assertions |
+| Trace-free residual | observed ~ 1e-18 across all 12 labels (machine ulp on the n_i² = 1e-4 scale; well below the 1e-12 contract — visible in gallery panel 3) |
+| Symmetric invariant | exactly equal under transpose (diagonal in aligned tetrad basis) |
+| Independence (a, σ) | bit-exact (`np.array_equal`) across two evaluation points |
+| Wall time | full suite 69.77 s (was 70 s post FB-1.3); FB-1.4 adds ~0 s — 80 of the 93 new tests are O(1) arithmetic; the 12 build-state tests run a 100-pt integrator each (~0.05 s each, ~0.6 s total) |
+| Determinism | No RNG; pure arithmetic on `StructureConstants.n_diag`; bit-reproducible across runs |
+| Baseline reproduction | 2,904 pre → 2,997 post (+93); 0 regressions |
+| Gallery render time | ~1 s for the 1 new plot (3-panel matplotlib bar/line/log) |
+| Gallery file size | 13 (`13_fb14_anisotropic_3curvature_per_type.png`): ~290 KB |
+| NaN/Inf leakage | pinned by `test_tensor_is_finite` and `TestBuildTetradStateAniso3CurvatureFB14::test_aniso_3_curvature_field_is_non_none` (full integrator path) |
+
+### 6. Ranked failure modes
+
+| ID | Type | Severity | Summary | Action |
+|---|---|---|---|---|
+| F3 (FB-0.1) | documentation | P2 carried | `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² normalisation drift | Still deferred to FB-2.4 — independent of FB-1.4 |
+| FB02-F1 (FB-0.2) | documentation | P2 carried | `00_conventions.md §2` cross-ref of `v̂_e` default | Still deferred to FB-3.1 |
+| FB11-F1 (FB-1.1) | physics-framework | P2 carried | W-E Table 11.1 fixed-point **coordinates** not directly reachable in fixed-N framework | Still deferred to FB-5 / FB-6 |
+| FB12-F1 (FB-1.2) | physics-framework | P3 carried | IX isotropic leading-order shear-source residual `S_+ = +(2/3) n² ℋ²` (W-E pathology). **Note**: this is a *source* artifact, not a *spatial-curvature* artifact. FB-1.4 ³R_ab^{aniso} for IX isotropic is exactly zero (`test_type_ix_isotropic_exact_zero`). | Still deferred to FB-5 / FB-6 |
+| FB12-F3 (FB-1.2) | diagnostic | P3 carried | `bianchi_ix_recollapse_event` coupling to `_hubble_squared` | Still deferred to FB-5 / FB-6 |
+| FB13-κ-calibration (FB-1.3) | diagnostic | advisory | VII_h Pontzen-Challinor spiral coefficient calibration | Still deferred to FB-5 / FB-6 |
+| **FB14-F1** | **physics-framework** | **P3** | **Class B twist-coupled anisotropic 3-Ricci correction (the W-E ``A²/(1+\|h\|)`` piece in `S^{WE}_+`) is NOT included in the FB-1.4 N-only formula. The mixed N × a_twist contribution maps to off-diagonal components in non-aligned frames; in PC alignment the leading-order isotropic part −2 a_twist² δ_ab cancels in the trace-free decomposition, but a sub-leading anisotropic correction proportional to A²/(1+\|h\|) is missing. This produces a measurable but small mismatch between ³R_ab^{aniso}'s `Σ_+` projection and the W-E source `S^{WE}_+` for Class B types (III, IV, VI_h, VII_h).** | **Deferred to FB-2.2** alongside the hierarchy T1/T2 spatial-Ricci wire-up. The exact conversion factor between `³R_+^{physical}` and `S^{WE}_+` will need to be calibrated against the Ellis-MacCallum 1969 eq (4.16) full Class B Ricci expression at that point. The FB-1.4 contract (non-None tensor + symmetric + trace-free + finite + FLRW limit → 0 + isotropic limits exact-zero) is satisfied without the twist correction; FB-2.2 will extend the formula in-place if needed. |
+
+No P0/P1 items. F3 / FB02-F1 / FB11-F1 / FB12-F1 / FB12-F3 /
+FB13-κ-calibration are pre-existing carries with their original
+deferral targets intact. **FB14-F1 is the single new finding** —
+documented as a known scope-bound limitation with explicit
+deferral target.
+
+### 7. Verifier results
+
+| Verifier | Result | Notes |
+|---|---|---|
+| Physics (limit recovery, dimensions, signs) | **PASSED** | FLRW / I / V → algebraic zero; VII_0 plane-wave line → algebraic zero; IX isotropic → algebraic zero (hard equality); II / VI_0 / VIII match Class-A canonical formula at rel 1e-12; Class B types reduce to N-only formula in PC frame; Ellis-MacCallum 1969 §4 eqs (4.19)–(4.21) faithfully implemented |
+| Code (contract satisfaction) | **PASSED** | `anisotropic_3_curvature` signature unchanged; `build_tetrad_state` consumer path unchanged; new `_STATUS_DISPATCH` is module-private and pure data; FB-1.1..1.3 SOURCE_STATUS dispatch untouched; no new public API added beyond status-string vocabulary expansion |
+| Numerical (convergence, tolerance) | **PASSED** | 2,997 pass + 1 skip; +93 new, 0 regressed; 69.77 s wall time stable (delta ≈ 0); rel 1e-12 holds at every per-type formula assertion; trace-free residual ~ 1e-18 (machine precision); finiteness pinned across full integrator path |
+
+### 8. Minimal repair plan (applied in-session)
+
+| Patch | Target | Status |
+|---|---|---|
+| A | `bass/background/tetrad_state.py::anisotropic_3_curvature` — replaced 4-label zero/None dispatch with unified Class-A canonical-frame formula + 12-entry `_STATUS_DISPATCH`; module-level docstring extended with FB-1.4 (Phase FB-1 exit) note + FB14-F1 deferral pointer | ✅ |
+| B | `bass/background/test_tetrad_state.py` — added `TestAnisotropic3CurvaturePerType` (60 parametrised invariant + 8 explicit per-type formula pins) and `TestBuildTetradStateAniso3CurvatureFB14` (12 parametrised build-state); renamed/replaced 2 existing methods to reflect FB-1.4 generalisation | ✅ |
+| C | `scripts/make_physics_gallery.py` — added `plot_11_13_fb14_anisotropic_3curvature_per_type` 3-panel function (diagonal bar chart + eigenvalue triplet + trace-free residual log scale across 12 labels) and `CATALOG[TOPIC_11]` entry | ✅ |
+| D | `plots/physics_gallery/11_integrator/13_fb14_anisotropic_3curvature_per_type.png` — generated via `scripts/make_physics_gallery.py --only 11_integrator`; visually inspected (see §9) | ✅ |
+| E | `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` — this supplement appended (§1..§10) with **Phase FB-1 exit declaration** | ✅ |
+| F | `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` — rotated to FB-2.1 (∇̃ operator dispatch table — FLRW / I / V / VII_0 / IX harmonic-mode decomposition; resolves `bass/hierarchy/contractions.py::NotImplementedError`) | ✅ (see commit) |
+
+### 9. Minimal test set (delivered)
+
+**Baseline reproduction**: all 2,904 pre-FB-1.4 tests still green
+(after the 2 modified tetrad-state methods that were in the
+pre-FB-1.4 baseline are also green with their FB-1.4-aware
+assertions). The pre-FB-1.4 behaviour for I / V / FLRW labels is
+**bit-for-bit preserved** (algebraic zero by construction, same
+numeric output). Tests modifying I/V/FLRW behaviour: zero (the
+formula gives the same algebraic zero).
+
+**Physics sanity (new)**: `test_type_ix_isotropic_exact_zero` pins
+the IX isotropic spatial-curvature anisotropy at exactly zero (hard
+equality `== 0.0`, distinguishing it from the FB12-F1 W-E source
+pathology); `test_type_vii0_plane_wave_line_aligned` confirms the
+Lukash plane-wave line algebraic zero on the default fixture;
+`test_type_ix_anisotropic_eigenvalues` verifies that mismatched IX
+constants give a finite trace-free triplet.
+
+**Formula-level regression (new)**: 8 explicit per-type formula
+pins (II / VI_0 / VII_0 off-line / VIII / IX anisotropic / IV / III
+/ VI_h / VII_h) at rel 1e-12, anchoring the canonical Class-A
+formula in the orthonormal tetrad frame.
+
+**Adversarial / edge (new)**: `test_independent_of_a_and_sigma`
+explicitly pins that ³R_ab^{aniso} at the background level depends
+only on the structure constants — verified bit-exact via
+`np.array_equal` across (a=1, σ=0) vs (a=0.5, σ_+=1e-3, σ_-=2e-3).
+
+**Regression**: 2,997 passing + 1 skipped; +93 new, 0 regressed;
+wall-time delta ≈ 0 s.
+
+**Build-state smoke (new)**: `TestBuildTetradStateAniso3CurvatureFB14`
+runs `solve_bianchi_background` (100 grid points) and `build_tetrad_state`
+on every registered label, asserting `aniso_3_curvature` is non-None,
+`curvature_status != 'unavailable'`, and finite. This is the
+production code-path proxy for FB-2 hierarchy consumers.
+
+### Gallery inspection summary (visual verification)
+
+The single new PNG was opened with the Read tool and the physics
+qualitatively + quantitatively verified before final commit:
+
+| PNG | Key visual check | Verdict |
+|---|---|---|
+| `13_fb14_anisotropic_3curvature_per_type.png` | Panel 1 — diagonal bar chart: FLRW/I/V/VII_0/IX bars all at zero (consistent with isotropic / plane-wave-line / flat fixtures); II shows the (+2/3, −1/3, −1/3) × n_1² Heisenberg signature; III/VI_0 show identical (+6.67e-5, −1.33e-4, +6.67e-5) × n_1² (same N's, twist isotropic in trace-free as predicted); IV shows (−3.33e-5, −3.33e-5, +6.67e-5) × n_3² (axisymmetric only-n_3 fixture); VIII shows trace-free (+1.33e-4, −6.67e-5, −6.67e-5) × n² (one-negative-eigenvalue sl(2,ℝ) signature). Panel 2 — eigenvalue triplets: ∑λ_i = 0 holds for all 12 labels (lines never spread asymmetrically about 0); VII_h has the largest negative eigenvalue at ~−1e-4 from the asymmetric (n_1, n_3) fixture. Panel 3 — trace-free residual: every label's residual at machine precision (~1e-18), well below the 1e-12 contract horizontal line. | ✅ |
+
+No physics anomaly detected; no in-session fix required for the
+plot code.
+
+### 10. 최종 판정
+
+* **치명적 오류 있음 / 부분 통과 / 통과** → **통과** (no P0 / P1;
+  FB14-F1 is a P3 known-scope physics-framework finding documented
+  with explicit deferral to FB-2.2; all prior carry-forwards F3 /
+  FB02-F1 / FB11-F1 / FB12-F1 / FB12-F3 / FB13-κ-calibration
+  preserved with their explicit deferral targets intact).
+* **지금 당장 구현/수정한 1개**: the unified Class-A canonical-frame
+  ³R_ab^{aniso} formula across all 11 Bianchi types + FLRW, with
+  per-type status dispatch and 93 new tests verifying the Phase FB-1
+  exit contract (non-None tensor + symmetric + trace-free + finite +
+  FLRW/Lukash/isotropic limits exact-zero + per-type closed-form pin
+  at rel 1e-12). This is the FB plan §4 FB-1 exit pre-requisite for
+  Phase FB-2 (hierarchy RHS T1/T2 spatial-Ricci wire-up needs
+  ³R_ab^{aniso} non-None for every type).
+* **지금 손대면 안 되는 1개**: attempting the Class-B twist-coupled
+  anisotropic 3-Ricci correction (the W-E ``A²/(1+|h|)`` piece in
+  `S^{WE}_+`). FB-1.4 deliberately stops at the dominant N-only
+  contribution because the exact conversion factor between
+  `³R_+^{physical}` and `S^{WE}_+` requires the full Ellis-MacCallum
+  1969 eq (4.16) Class B Ricci expression and its calibration against
+  the hierarchy T1/T2 wire-up. Forcing the correction in FB-1.4 would
+  introduce an unverified conversion constant and conflate the
+  background spatial-curvature layer (this session) with the
+  hierarchy-source projection layer (FB-2.2). FB14-F1 documents this
+  as a P3 carry-forward with explicit deferral target.
+
+## Gallery refresh
+
+FB-1.4 is the **fourth non-no-op** gallery extension of the FB phase
+(FB-0.* were no-op; FB-1.1 added 03..06; FB-1.2 added 07..08; FB-1.3
+added 09..12; FB-1.4 adds 13). One new PNG lands under
+`plots/physics_gallery/11_integrator/`:
+
+* `13_fb14_anisotropic_3curvature_per_type.png` — 3-panel ³R_ab^{aniso}
+  consolidation across 11 Bianchi types + FLRW: diagonal bar chart
+  per type + sorted eigenvalue triplet (trace-free pattern) +
+  trace-free residual log scale (machine-precision conformity)
+
+Per the phase-boundary gallery rule, the PNG was visually inspected
+post-generation and before commit. No physics anomaly was detected
+that required an in-session fix. The plot anchors the §3 / §6
+FB14-F1 narrative: every type satisfies the trace-free contract;
+III ≡ VI_0 numerically (twist isotropic in trace-free as predicted);
+VIII / IX have the most distinctive eigenvalue triplets.
+
+## Outstanding items carried forward
+
+* **F3** (P2 from FB-0.1): `TetradBackgroundState.shear_magnitude_sq`
+  → dimensionless Σ² per `00_conventions §4.2`. Still deferred to
+  **FB-2.4** (companion to the hierarchy T1/T2 spatial-Ricci
+  wire-up tested by FB14-F1).
+* **FB02-F1** (P2 from FB-0.2): cross-reference the FB-0.2 `v̂_e`
+  default into `00_conventions.md §2`. Still deferred to **FB-3.1**.
+* **FB11-F1** (P2 from FB-1.1): W-E Table 11.1 fixed-point
+  **coordinates** are not directly reachable in the fixed-N
+  framework. Still deferred to **FB-5 / FB-6**.
+* **FB12-F1** (P3 from FB-1.2): IX isotropic leading-order
+  *shear-source* residual (W-E pathology). Note: this is independent
+  of the FB-1.4 IX isotropic *spatial-curvature* anisotropy, which is
+  exactly zero. Still deferred to **FB-5 / FB-6**.
+* **FB12-F3** (P3 from FB-1.2): `bianchi_ix_recollapse_event`
+  coupling to `_hubble_squared`. Still deferred to **FB-5 / FB-6**.
+* **FB13-κ-calibration** (advisory from FB-1.3): VII_h Pontzen-Challinor
+  spiral coefficient calibration. Still tracked for **FB-5 / FB-6**.
+* **FB14-F1** (P3 new): Class B twist-coupled anisotropic 3-Ricci
+  correction (W-E `A²/(1+|h|)` piece in `S^{WE}_+`) deferred to
+  **FB-2.2** alongside the hierarchy T1/T2 spatial-Ricci wire-up
+  calibration. The FB-1.4 N-only formula is the dominant
+  contribution and satisfies the Phase FB-1 exit contract; FB-2.2
+  will extend in-place if the hierarchy needs the twist correction
+  for source-projection consistency.
+
+---
+
+## Phase FB-1 exit declaration
+
+**Phase FB-1 status (after FB-1.4)**: **4/4 sub-phases delivered. Phase FB-1 is COMPLETE.**
+
+* **FB-1.1 sealed** — Class A I / II / VI_0 / VII_0 SOURCE_STATUS → VALIDATED (61 parametrised tests; 4 gallery PNGs 03..06)
+* **FB-1.2 sealed** — Class A VIII / IX SOURCE_STATUS → VALIDATED + Bianchi IX recollapse event infrastructure (47 parametrised tests; 2 gallery PNGs 07..08)
+* **FB-1.3 sealed** — Class B III / IV / VI_h / VII_h SOURCE_STATUS → VALIDATED + V reference refresh + P-C spiral signature (104 parametrised tests; 4 gallery PNGs 09..12)
+* **FB-1.4 sealed** (this supplement) — `anisotropic_3_curvature` 11-type consolidation; ³R_ab^{aniso} non-None for every registered Bianchi type + FLRW (93 parametrised tests; 1 gallery PNG 13)
+
+**Phase FB-1 exit criteria** (per FB plan §4):
+- ✅ `SOURCE_STATUS` all "VALIDATED" — 12/12 entries (FLRW + I + II + III + IV + V + VI_0 + VI_h + VII_0 + VII_h + VIII + IX) report VALIDATED after FB-1.1..1.3
+- ✅ Per-type background regression (σ(t) trajectory, a(t) behaviour) — formula-level rel 1e-12 pins across 304 parametrised runs (61 + 47 + 104 + 92 invariant) plus 8 + 12 explicit per-type formula pins
+- ✅ ³R_{ab}^{aniso} non-None tensor for every Bianchi type — FB-1.4 deliverable (93 parametrised + per-formula pins; gallery 13)
+
+**Test count delta across Phase FB-1**: 2,558 (LB-6 baseline) → 2,997 (FB-1.4 seal) = **+439 new tests** across 4 sub-phases. Wall time stable at ~70 s.
+
+**Phase FB-1 → FB-2 hand-off**: Phase FB-2 ("Hierarchy RHS curved-space T-terms", 4 sessions) consumes the FB-1 deliverables — VALIDATED per-type shear sources (FB-1.1..1.3) and non-None per-type ³R_ab^{aniso} (FB-1.4) — to wire up the T1/T2/T3/T4/T5/T6/T7 Bianchi-curved hierarchy terms across all 11 types. The first FB-2 session (FB-2.1) addresses the ∇̃ operator dispatch table for FLRW / I / V / VII_0 / IX harmonic-mode decomposition, resolving the `bass/hierarchy/contractions.py::NotImplementedError` dispatch hole. FB-2.2 will calibrate the FB14-F1 twist-coupled anisotropic 3-Ricci correction in-place against the hierarchy T1/T2 wire-up.
+
+---

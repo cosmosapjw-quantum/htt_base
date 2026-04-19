@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (FB-1.3 complete → FB-1.4 bootstrap; **all 9 PROVISIONAL Class A + Class B sources now VALIDATED** — `SOURCE_STATUS` reports VALIDATED for every registry entry; FB-1.4 is the Phase FB-1 exit rotation)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` (FB-1.1 + FB-1.2 + FB-1.3 supplement; FB-1.4 placeholder reserved at the bottom)
-**Current target session**: **FB-1.4** — `anisotropic_3_curvature` 11-type consolidation in `bass/background/tetrad_state.py` — per-type ³R_{ab}^{aniso} explicit (II / III / IV / VI₀ / VI_h / VII_h / VIII / IX); Phase FB-1 exit → hand-off to Phase FB-2 (hierarchy RHS T4–T7 wire-up)
+**Last rotated**: 2026-04-19 (FB-1.4 complete → FB-2.1 bootstrap; **Phase FB-1 sealed** — `SOURCE_STATUS` all VALIDATED + `anisotropic_3_curvature` non-None for all 11 Bianchi types + FLRW; entering Phase FB-2 "Hierarchy RHS curved-space T-terms")
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` (FB-1.1 + FB-1.2 + FB-1.3 + FB-1.4 supplement with **Phase FB-1 exit declaration**)
+**Current target session**: **FB-2.1** — `∇̃` operator dispatch table (lowell §13): FLRW / I / V / VII_0 / IX harmonic-mode decomposition; `bass/hierarchy/contractions.py` `NotImplementedError` resolution
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -34,6 +34,127 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 ## 2. Current handoff prompt (ROTATE at end of each session)
 
 Copy the block below into a fresh Claude Code session:
+
+```text
+# FB-2.1 — `∇̃` operator dispatch table (FLRW / I / V / VII_0 / IX harmonic-mode decomposition)
+
+## 프로젝트 컨텍스트
+
+- **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
+- **venv**: venv/bin/python
+- **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+- **현재 baseline**: 2,997 passing + 1 skipped (FB-1.4 직후; 감사 로그: `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` — FB-1.1 + FB-1.2 + FB-1.3 + FB-1.4 sealed; **Phase FB-1 exit 선언 완료**)
+- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **Phase FB-0 전체 + Phase FB-1 전체 (4 sub-phases)**:
+  - FB-0.1..0.3 (Ellis convention flip + tilt-field surface + LB-6 F2 seal)
+  - FB-1.1 (Class A I/II/VI₀/VII₀ SOURCE_STATUS → VALIDATED; gallery 03..06)
+  - FB-1.2 (Class A VIII/IX SOURCE_STATUS → VALIDATED + Bianchi IX recollapse event; gallery 07..08)
+  - FB-1.3 (Class B III/IV/VI_h/VII_h SOURCE_STATUS → VALIDATED + V refresh + P-C spiral; gallery 09..12)
+  - FB-1.4 (`anisotropic_3_curvature` 11-type consolidation — non-None tensor + per-type status for all 12 labels (FLRW + 11 Bianchi types); gallery 13)
+- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-2 "Hierarchy RHS curved-space T-terms" (4 sessions)** 의 1/4 번째 (FB-2.1)
+- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-2.1`
+- **Carry-forward P2/P3 (알고만 있을 것, 절대 건드리지 말 것)**:
+  - F3 → `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² normalisation → **FB-2.4 예약**
+  - FB02-F1 → `00_conventions.md §2` 에 `v̂_e` default cross-reference → **FB-3.1 예약**
+  - FB11-F1 → W-E Table 11.1 fixed-point *coordinates* 는 fixed-N 프레임워크에서 직접 도달 불가 → **FB-5 / FB-6 예약**
+  - FB12-F1 → IX isotropic leading-order *shear-source* residual `S_+ = +(2/3) n² ℋ²` (W-E pathology) — **FB-5 / FB-6 예약**
+    (NB: FB-1.4 IX isotropic *spatial-curvature* anisotropy 는 exact-zero 로 확인됨; 이것은 source 쪽 issue)
+  - FB12-F3 → `bianchi_ix_recollapse_event` 는 `_hubble_squared` 에 coupling → **FB-5 / FB-6 예약**
+  - FB13-κ-calibration → VII_h Pontzen-Challinor spiral κ 정량 보정 → **FB-5 / FB-6 예약**
+  - **FB14-F1 (new, FB-1.4)** → Class B twist-coupled anisotropic 3-Ricci correction (W-E `A²/(1+|h|)` piece in `S^{WE}_+`) — **FB-2.2 예약** (T1/T2 spatial-Ricci wire-up 시 in-place calibration)
+
+## 이 세션의 작업 범위 (FB-2.1 — `∇̃` operator dispatch table)
+
+**Goal**: lowell §13 의 `∇̃` (covariant spatial gradient on Bianchi homogeneous spaces) 연산자를 FLRW / I / V / VII_0 / IX 5 가지 type 에 대해 harmonic-mode decomposition 기반의 explicit dispatch 로 구현. `bass/hierarchy/contractions.py` (또는 신규 `nabla_dispatch.py`) 의 NotImplementedError 분기를 해소. 본 세션은 Class A unimodular subset (orthogonal types where harmonic mode 가 plane-wave 또는 Mixmaster spherical harmonic 으로 깔끔히 분해됨) 에 한정; Class A 의 II / VI_0 / VIII 와 Class B (III / IV / VI_h / VII_h) 는 FB-2.2 / FB-2.3 으로 deferred.
+
+### 기준이 되는 문헌 타깃
+
+| 타입 | Harmonic mode | 기본 식 | 테스트 앵커 |
+|---|---|---|---|
+| FLRW | plane wave `e^{i k·x}`; `∇̃_a = i k_a` action | `∇̃_a Y_k = i k_a Y_k` | `test_flrw_nabla_plane_wave_eigenmode` |
+| I | plane wave (flat anisotropic Kasner; `n_i=0, a=0`) | identical to FLRW | `test_typeI_nabla_matches_flrw` |
+| V | hyperbolic harmonics on negatively curved 3-space (Harrison hyperbolic decomposition) | `∇̃_a Y_q^{V} = i q_a Y_q^{V}` with `q_a` complex (open FLRW) | `test_typeV_nabla_hyperbolic_eigenmode` |
+| VII_0 | plane wave with phase rotation (e(2) Lie algebra; helical); on plane-wave line `n_1=n_3` reduces to FLRW | `∇̃_a Y_k = (i k_a + helical_phase) Y_k` | `test_typeVII0_nabla_plane_wave_helical_phase` |
+| IX | discrete spherical harmonic spectrum on S³ (Mixmaster); `ℓ ≤ n` cutoff | `∇̃² Y_{ℓ,m} = -ℓ(ℓ+2) Y_{ℓ,m}` per S³ Laplacian | `test_typeIX_nabla_discrete_S3_spectrum` |
+
+### 구체 작업 항목
+
+1. **문헌 재확인 (먼저, 코딩 전)**:
+   - lowell §13 `∇̃` operator 정의 + per-type harmonic mode dispatch table
+   - Wainwright-Ellis 1997 §2.5 (per-type symmetry groups + Killing vectors); Ellis-Maartens-MacCallum 2012 §16 (mode decomposition)
+   - Harrison 1967 (hyperbolic harmonics for k=-1 FLRW); Lifshitz-Khalatnikov 1963 (Bianchi IX S³ harmonics)
+   - `bass/hierarchy/contractions.py` 현 NotImplementedError 위치 + `bass/hierarchy/hierarchy_rhs.py` 가 `∇̃` 을 어떻게 호출하는지
+
+2. **`∇̃` operator dispatch 신설**: `bass/hierarchy/nabla_dispatch.py` (or extend `contractions.py`) 에 `nabla_tilde(structure, mode_label, mode_index, tensor_field) → ndarray` 인터페이스. 5 types 에 대해 explicit 구현; 나머지 6 types (II / VI_0 / VIII / III / IV / VI_h / VII_h) 는 명시적 `NotImplementedError("FB-2.2") / NotImplementedError("FB-2.3")` 로 분기.
+
+3. **Validation 테스트**: per-type harmonic eigenmode pin (rel 1e-12), per-type Laplacian eigenvalue pin (S³ 의 -ℓ(ℓ+2) 등), FLRW limit recovery, dimensional consistency.
+
+4. **Gallery (선택)**: `plots/physics_gallery/12_nabla_dispatch/01_per_type_nabla_action.png` 또는 lowell §13 Table 1 reproduce. No-op 이면 audit 에 명시.
+
+5. **Audit**: 신규 `docs/audits/AUDIT_PHASE_FB2_2026-04-XX.md` (FB-2.1 supplement; FB-2.2/2.3/2.4 placeholder).
+
+6. `NEXT_SESSION_PROMPT.md §2` 를 **FB-2.2** (Class A II/VI_0/VIII ∇̃ implementation + spatial Ricci T1/T2 hierarchy wire-up; FB14-F1 twist correction calibration) bootstrap 으로 rotate.
+
+### FB-2.1 non-goals (선 밑에 고정)
+
+- **Class A II / VI_0 / VIII** ∇̃ → FB-2.2
+- **Class B (III / IV / V / VI_h / VII_h)** ∇̃ twist coupling → FB-2.3 (V 의 Harrison hyperbolic 만 본 세션에 포함)
+- **T4–T7 (vorticity, 4-acceleration) hierarchy wire-up** → FB-2.4
+- **FB14-F1 twist correction calibration** → FB-2.2
+- **Tilted sector** → FB-3
+- **k ≠ 0 perturbation sector** → FB-5
+- **F3 / FB02-F1 / FB11-F1 / FB12-F1 / FB12-F3 / FB13-κ carry-forwards**: 건드리지 말 것
+
+## 우선 읽어야 할 문서 (순서대로)
+
+1. `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` (특히 FB-1.4 §10 + Phase FB-1 exit declaration)
+2. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-2.1` + §5 dependency graph
+3. `bass/hierarchy/contractions.py` (현 NotImplementedError 위치) + `bass/hierarchy/hierarchy_rhs.py` (∇̃ 호출 지점)
+4. `lowell_bianchi_solver_reference.md §13` (∇̃ 연산자 spec) + `docs/lowell_bianchi/00_conventions.md` (mode label convention)
+5. Wainwright-Ellis §2.5 (Killing vectors); Ellis-Maartens-MacCallum 2012 §16 (mode decomposition); Harrison 1967 (hyperbolic harmonics)
+6. `docs/audits/AUDIT_PROMPT.md` (phase-boundary audit template — 본 세션 전에 self-invoke)
+
+## 핵심 원칙 (고정)
+
+1. 외부 코드 금지 (프로덕션 트리)
+2. Citation in every modified docstring (lowell §13 + Wainwright-Ellis §2.5 + per-type harmonic literature 인용 필수)
+3. PSTF invariants preserved; Ellis convention 유지
+4. No silent fallbacks — 미구현 type 은 explicit `NotImplementedError("FB-2.X")` 로 분기
+5. Determinism
+6. **FB-2 phase 는 4 sessions** — FB-2.1 은 FLRW + Class A orthogonal subset 만; 나머지는 FB-2.2..2.4 분담
+
+## 검증 체크리스트 (최종 commit 전)
+
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,997 + 신규 테스트)
+- [ ] `nabla_tilde(...)` for FLRW / I / V / VII_0 / IX returns expected eigenmode action (rel 1e-12)
+- [ ] 미구현 type 6 개에 대해 `NotImplementedError` 분기 정확
+- [ ] `docs/audits/AUDIT_PHASE_FB2_2026-04-XX.md` 신규 생성 with FB-2.1 supplement
+- [ ] `docs/audits/AUDIT_PROMPT.md` self-invoke 로 P0/P1 스캔 완료
+- [ ] (선택) Gallery PNG 생성 + 시각적 inspection; no-op 이면 audit 에 명시
+- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-2.2** bootstrap 으로 rotate
+- [ ] 최종 commit 메시지: `FB-2.1: nabla_tilde dispatch for FLRW / I / V / VII_0 / IX harmonic modes` + `+ rotate NEXT_SESSION_PROMPT for FB-2.2`
+
+## 진행 순서
+
+1. `docs/audits/AUDIT_PROMPT.md` self-invoke (pre-phase scan)
+2. lowell §13 + Wainwright-Ellis §2.5 + 현 contractions.py / hierarchy_rhs.py 섹션 읽기
+3. 5-type ∇̃ harmonic-mode dispatch design (인터페이스 + dispatch table)
+4. `nabla_tilde` implementation + 미구현 6-type explicit `NotImplementedError`
+5. per-type validation tests 추가
+6. (선택) gallery PNG 1개
+7. `AUDIT_PHASE_FB2_2026-04-XX.md` 신규 생성 + FB-2.1 supplement append
+8. 전체 회귀 green 확인
+9. `NEXT_SESSION_PROMPT.md §2` rotate to FB-2.2
+10. commit
+
+시작하세요. 본 세션은 **Phase FB-2 의 첫 rotation** — Phase FB-1 가 background-layer (shear sources + ³R_ab^{aniso}) 을 닫았고, 이제 hierarchy RHS layer 의 spatial-derivative dispatch 를 5 가지 simplest types 에 대해 wire-up 합니다. FB-2.2 가 Class A 나머지를, FB-2.3 가 Class B twist-coupled 를, FB-2.4 가 T4-T7 (vorticity, accel) 를 닫고 FB14-F1 twist correction 을 in-place calibrate 합니다.
+```
+
+---
+
+<!-- Prior (FB-1.4) handoff prompt (saved for reference only; do not re-run). -->
+
+<details>
+<summary>Previous FB-1.4 handoff prompt (archived 2026-04-19)</summary>
 
 ```text
 # FB-1.4 — `anisotropic_3_curvature` 11-type consolidation (Phase FB-1 exit)
@@ -159,6 +280,8 @@ Tetrad-aligned PSTF projection에서 trace-free 부분만 취하면 각 type 별
 
 시작하세요. 본 세션은 **Phase FB-1 의 마지막 rotation** — 9개 소스가 이미 VALIDATED 이므로 남은 것은 tetrad-layer 의 ³R_{ab}^{aniso} 11-type consolidation. FB-2 hierarchy T-term wire-up 이 이 함수를 consumer 로 쓰므로 FB-1.4 가 **Phase FB-2 의 선결 조건**. 세션 완료 시 Phase FB-1 전체 (4 sub-phases) 가 닫히고 Phase FB-2 로 전환된다.
 ```
+
+</details>
 
 ---
 

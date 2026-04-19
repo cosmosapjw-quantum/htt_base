@@ -3425,6 +3425,115 @@ def plot_11_12_fb13_classB_typeV_shear_zero() -> None:
     _save(fig, "12_fb13_classB_typeV_shear_zero", TOPIC_11)
 
 
+def plot_11_13_fb14_anisotropic_3curvature_per_type() -> None:
+    """FB-1.4 Phase FB-1 exit: ``³R_ab^{aniso}`` consolidation across
+    all 11 Bianchi types + FLRW.
+
+    Three panels:
+
+    1. Diagonal-component bar chart: ``³R_11^{aniso}``, ``³R_22^{aniso}``,
+       ``³R_33^{aniso}`` per type (signed, in units of [Mpc]⁻²) on the
+       per-type default ``StructureConstants`` fixtures. Demonstrates
+       (a) trace-free pattern across every type and (b) the type-specific
+       sign / magnitude texture (e.g., II's diag(2,−1,−1) signature, IX's
+       isotropic exact-zero signature, VII_0's plane-wave-line zero).
+
+    2. Eigenvalue triplet heatmap: sorted eigenvalues of ³R_ab^{aniso}
+       per type, colour-coded by sign. The trace-free condition forces
+       λ_1 + λ_2 + λ_3 = 0 exactly.
+
+    3. Trace-free residual log scale: |trace(³R_ab^{aniso})| / max |λ|
+       per type, demonstrating < 1e-15 (machine-precision) trace-free
+       conformity across the full 12-fixture sweep.
+
+    Reference: Ellis-MacCallum 1969 §4 eqs (4.19)–(4.21); Wainwright-Ellis
+    1997 §1.4.4; Ellis-Maartens-MacCallum 2012 §14.3;
+    docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.4.
+    """
+    from bass.background.bianchi_types import (
+        ALL_BIANCHI_TYPES, flrw_constants, get_type,
+    )
+    from bass.background.tetrad_state import anisotropic_3_curvature
+
+    labels = ["FLRW"] + ALL_BIANCHI_TYPES
+    diag = np.zeros((len(labels), 3), dtype=np.float64)
+    eigs = np.zeros((len(labels), 3), dtype=np.float64)
+    trace_resid = np.zeros(len(labels), dtype=np.float64)
+    for i, lab in enumerate(labels):
+        sc = flrw_constants() if lab == "FLRW" else get_type(lab)
+        tensor, _ = anisotropic_3_curvature(sc, 1.0, 0.0, 0.0)
+        diag[i] = np.diag(tensor)
+        eigs[i] = np.sort(np.linalg.eigvalsh(tensor))
+        scale = max(float(np.max(np.abs(tensor))), 1e-30)
+        trace_resid[i] = abs(float(np.trace(tensor))) / scale
+
+    fig, axes = plt.subplots(1, 3, figsize=(14.5, 4.4))
+
+    # Panel 1 — diagonal components per type, grouped bar chart.
+    x = np.arange(len(labels))
+    w = 0.27
+    axes[0].bar(x - w, diag[:, 0], width=w,
+                color=COLS["blue"], label=r"${}^3R_{11}^{\rm aniso}$")
+    axes[0].bar(x, diag[:, 1], width=w,
+                color=COLS["orange"], label=r"${}^3R_{22}^{\rm aniso}$")
+    axes[0].bar(x + w, diag[:, 2], width=w,
+                color=COLS["purple"], label=r"${}^3R_{33}^{\rm aniso}$")
+    axes[0].axhline(0.0, color="0.3", lw=0.5)
+    axes[0].set_xticks(x)
+    axes[0].set_xticklabels(labels, rotation=45, ha="right", fontsize=8)
+    _prepare_axes(
+        axes[0], r"Bianchi type",
+        r"${}^3R_{ii}^{\rm aniso}$  [Mpc$^{-2}$]",
+        title=r"Diagonal ${}^3R_{ab}^{\rm aniso}$ per type "
+              r"(default fixtures)",
+    )
+    axes[0].legend(loc="best", fontsize=7)
+
+    # Panel 2 — sorted eigenvalues per type.
+    axes[1].plot(x, eigs[:, 0], "o-", color=COLS["blue"], lw=1.0, ms=4,
+                 label=r"$\lambda_1$ (min)")
+    axes[1].plot(x, eigs[:, 1], "s-", color=COLS["orange"], lw=1.0, ms=4,
+                 label=r"$\lambda_2$ (mid)")
+    axes[1].plot(x, eigs[:, 2], "D-", color=COLS["purple"], lw=1.0, ms=4,
+                 label=r"$\lambda_3$ (max)")
+    axes[1].axhline(0.0, color="0.3", lw=0.5)
+    axes[1].set_xticks(x)
+    axes[1].set_xticklabels(labels, rotation=45, ha="right", fontsize=8)
+    _prepare_axes(
+        axes[1], r"Bianchi type",
+        r"eigenvalues  [Mpc$^{-2}$]",
+        title=r"Eigenvalue triplet $\sum \lambda_i = 0$ (trace-free)",
+    )
+    axes[1].legend(loc="best", fontsize=8)
+
+    # Panel 3 — trace-free residual on log scale (machine-zero baseline).
+    eps = 1e-18
+    axes[2].semilogy(x, np.maximum(trace_resid, eps), "o-",
+                     color=COLS["green"], lw=1.0, ms=5,
+                     label=r"$|{\rm tr}\,{}^3R^{\rm aniso}| / \max|\lambda|$")
+    axes[2].axhline(1e-12, color="0.4", ls="--", lw=0.6,
+                    label=r"FB-1.4 contract: $< 10^{-12}$")
+    axes[2].set_xticks(x)
+    axes[2].set_xticklabels(labels, rotation=45, ha="right", fontsize=8)
+    _prepare_axes(
+        axes[2], r"Bianchi type",
+        r"trace-free residual",
+        title=r"Trace-free conformity (machine precision)",
+        ylog=True,
+    )
+    axes[2].set_ylim(1e-19, 1.0)
+    axes[2].legend(loc="best", fontsize=8)
+
+    fig.suptitle(
+        r"FB-1.4 Phase FB-1 exit — ${}^3R_{ab}^{\rm aniso}$ consolidation "
+        r"across 11 Bianchi types + FLRW "
+        r"(canonical Class-A formula in orthonormal tetrad)",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "13_fb14_anisotropic_3curvature_per_type", TOPIC_11)
+
+
 # ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
@@ -3604,6 +3713,9 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("12_fb13_classB_typeV_shear_zero",
          plot_11_12_fb13_classB_typeV_shear_zero,
          "FB-1.3 Type V (k=-1) shear-specific source identically zero; Ellis Σ × a² invariant."),
+        ("13_fb14_anisotropic_3curvature_per_type",
+         plot_11_13_fb14_anisotropic_3curvature_per_type,
+         "FB-1.4 Phase FB-1 exit: ³R_ab^aniso diag + eigenvalues + trace-free residual across 11 types + FLRW."),
     ],
 }
 
