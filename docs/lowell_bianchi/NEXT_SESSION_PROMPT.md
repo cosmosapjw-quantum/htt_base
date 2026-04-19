@@ -12,7 +12,7 @@ This way the file is a **living handoff contract**: one always-current prompt + 
 **Last rotated**: 2026-04-20 (**FB-META-6.CLOSE → FB-META-7**; Phase FB-6 skeleton cycle sealed, handoff reset to the next-phase META placeholder)
 **Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md` (Phase close note)
 **Current target session**: **FB-META-7** — paste the Phase FB-7 META prompt
-**Phase status**: Phase FB-6 closed on 2026-04-20; awaiting a fresh Phase FB-7 META prompt
+**Phase status**: FB-META-7 entered on 2026-04-20; pre-flight baseline confirmed at `3403 passed + 48 skipped` and the Phase FB-7 audit scaffold is now in progress
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---

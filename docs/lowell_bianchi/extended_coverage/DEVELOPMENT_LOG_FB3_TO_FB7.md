@@ -699,3 +699,28 @@ fresh cumulative count.
 - **Notes**: final regression count matched the FB-6.3 state exactly,
   so the phase closes with unchanged passes and only the intended 37
   new skipped harness cases over the phase-entry baseline.
+
+---
+
+## Phase FB-META-7 — skeleton cycle (2026-04-20)
+
+### FB-META-7.0 — pre-flight scan + audit scaffolding
+
+- **Scope**: Completed the FB-7 META pre-flight scan, read the seven
+  required sources plus the local Lowell-reference fallback, confirmed
+  the exact `bass/ tsc/` baseline `3403 passed + 48 skipped`, and
+  created the Phase FB-7 audit scaffold with empty `§FB-7.1` through
+  `§FB-7.5` sections before any skeleton planting.
+- **Commit anchor**: see `git log --grep='FB-META-7.0'`.
+- **Test delta**: `3,403 passed + 48 skipped` →
+  `3,403 passed + 48 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META7_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META7_2026-04-20.md).
+- **Gallery**: no-op (META pre-flight only; no physics shipped).
+- **Carry-forward**: the prompt-supplied
+  `docs/lowell_bianchi/lowell_bianchi_solver_reference.md` path is
+  absent in this worktree; the tracked fallback for this phase is
+  `htt/docs/lowell_bianchi_solver_reference_PR_WBS.md`.
+- **Notes**: unlike FB-META-4 / FB-META-5, this cycle will commit
+  additive `htt/bass/` skeleton modules. Every FB-7.4 artifact must pin
+  the scope as cosmological-frame only, with observer-frame composition
+  deferred to FB-8.
