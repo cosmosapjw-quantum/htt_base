@@ -384,7 +384,67 @@ phase-close gate.
 
 ## §FB-11.6
 
-Pending pre-flight scaffold for the 11-type summary seam.
+### §FB-11.6 — 11-type `ln B_{Bianchi-k, FLRW}` summary seam
+**Determinism contract**: once implemented,
+`python -m bass.inference --config configs/fb11_summary.yaml --seed 42`
+must emit `figures/paper/fb11_summary_table.json` and
+`figures/paper/fb11_summary_table.md` byte-identically across two runs
+on the same machine.
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB11_INFERENCE_DRIVER_SDD.md §7`
+defines FB-11.6 as a CLI/output seam rather than a new runtime module;
+verified the new `configs/fb11_summary.yaml` placeholder reserves the
+11-type order against the FLRW baseline; verified the CLI docstrings now
+name the exact summary command and output paths; verified the new
+skip-marked harness test locks the 11-type SSOT order via
+`ALL_BIANCHI_TYPES`; verified no dummy `.json` or `.md` paper outputs
+were created during the skeleton cycle.
+**Channel B**: 3 source checks / 2 verified / 1 corrected. Evidence:
+Planck 2018 V (`arXiv:1907.12875`) is verified as the Planck 2018 CMB
+power-spectrum / likelihood paper and is therefore a defensible anchor
+for the local phrase "synthetic Planck-2018-quality dataset." Oxford
+metadata for the later Bayesian-analysis paper on anisotropic
+cosmologies states that tight constraints had already been placed on
+Bianchi IX models, which is directionally consistent with expecting a
+non-positive `ln B_{IX, FLRW}` on a Planck-like synthetic FLRW dataset.
+Corrected: the prompt-supplied `arXiv:0706.2075` is the 2007
+Pontzen-Challinor Bianchi `VII_h` / polarization paper, not a direct
+Bianchi-IX evidence-sign source, so the exact sign citation remains a
+carry-forward item for actual work rather than a silently accepted
+locator.
+**Channel C** (prose, 6-10 lines): The safe FB-11.6 skeleton is the
+summary seam itself: the config file, the CLI contract, and the reserved
+output paths. That makes the future review surface concrete without
+faking the paper artifacts. The summary run belongs at the command-line
+layer because it is orchestration across all 11 types, not a new piece
+of posterior math. Reserving the config now also pins the type order to
+the existing SSOT instead of leaving it implicit in a future loop. The
+source correction matters here because a wrong Bianchi-IX evidence
+citation would be easy to cargo-cult once the summary table exists. The
+audit therefore keeps the exact-sign claim at the level of an explicit
+inference and leaves the direct source requirement visible for the
+actual-work session.
+**Alternatives**:
+| # | FB-11.6 skeleton shape | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Placeholder config + CLI output-path contract + skipped harness test | Pins the exact command, output paths, and 11-type order without fabricating a paper artifact. | Adds a config file before any parser exists. | ✅ |
+| 2 | Pre-create dummy `fb11_summary_table.json` / `.md` files | Makes the future output names concrete. | Misleading, because no summary run has happened yet. | — |
+| 3 | New runtime `summary.py` module during the skeleton cycle | Could centralize orchestration later. | Invents an extra module the SDD does not require and broadens the public surface early. | — |
+**Core principles**: summary orchestration belongs at the CLI seam; no
+dummy paper outputs; 11-type order is pinned via the background SSOT;
+the Bianchi-IX sign citation gap stays explicit.
+**Skeleton path**:
+`configs/fb11_summary.yaml`,
+`htt/bass/inference/__main__.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/inference/test_fb116_summary_run_skeleton.py -q`
+**Guard rails** (yes/no): exact CLI command pinned? yes; output paths
+named explicitly? yes; 11-type order fixed via SSOT? yes; no dummy
+summary artifacts created? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 71 skipped` → `3403 passed + 72 skipped` pending the
+phase-close gate.
 
 ## §FB-11.7
 

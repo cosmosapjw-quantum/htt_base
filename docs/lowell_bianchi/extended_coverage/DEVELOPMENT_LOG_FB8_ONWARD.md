@@ -469,3 +469,25 @@ cross-reference.
 - **Notes**: the audit ties the harness shape back to
   Cook-Gelman-Rubin's simulation-based validation logic and records the
   inherited seed-roundtrip requirement explicitly.
+
+### FB-META-11.6 — 11-type `ln B` summary seam
+
+- **Scope**: Added the placeholder
+  [summary config](../../../configs/fb11_summary.yaml), expanded the
+  [inference CLI contract](../../../htt/bass/inference/__main__.py) to
+  name the deterministic summary command and output paths, and added the
+  skip-marked
+  [summary harness](../../../htt/bass/inference/test_fb116_summary_run_skeleton.py)
+  that pins the 11-type SSOT order. No dummy paper outputs were
+  created.
+- **Commit anchor**: see `git log --grep='FB-META-11.6'`.
+- **Test delta**: 3,403 passing + 71 skipped → 3,403 passing + 72
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META11_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META11_2026-04-20.md)
+  §FB-11.6.
+- **Gallery**: no-op (CLI/config contract only).
+- **Carry-forward**: FB-11.7 docs + gallery placeholders.
+- **Notes**: the prompt's `arXiv:0706.2075` locator is kept explicit as
+  a Bianchi `VII_h` mismatch rather than reused as a Bianchi-IX
+  evidence-sign citation.
