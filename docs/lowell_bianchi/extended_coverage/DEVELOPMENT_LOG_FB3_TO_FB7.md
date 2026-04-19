@@ -286,6 +286,9 @@ struck-through but retained for archaeology.
 Planned sub-phases per [FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-4](../FULL_BIANCHI_COVERAGE_PLAN.md).
 Bracket summary for bundle-completeness:
 
+- **FB-META-4.0**: pre-flight scan complete; required reading closed,
+  exact baseline confirmed, audit scaffold created before any
+  skeleton plant.
 - **FB-4.1**: full-Lorentz Thomson PSTF collision operator; β=0
   recovers the LB-4 kernel.
 - **FB-4.2**: E↔B mixing under tilted LOS; `PolarizationHierarchyState`
@@ -295,6 +298,23 @@ Bracket summary for bundle-completeness:
 
 Exit: β-sweep × polarisation regression. BB identically zero at
 β=0; at β = 0.1, BB scales as ~10⁻¹ × EE (P-C reference).
+
+### FB-META-4.0 — pre-flight scan + audit scaffolding
+
+- **Scope**: Completed the FB-4 META pre-flight scan, read the six
+  required sources, confirmed the exact `bass/ tsc/` baseline
+  `3403 passed + 1 skipped`, and created the Phase FB-4 audit scaffold
+  with empty `§FB-4.1` / `§FB-4.2` / `§FB-4.3` sections before any
+  skeleton planting.
+- **Commit anchor**: see `git log --grep='FB-META-4.0'`.
+- **Test delta**: `3,403 passed + 1 skipped` →
+  `3,403 passed + 1 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META4_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META4_2026-04-20.md).
+- **Gallery**: no-op (META pre-flight only; no physics shipped).
+- **Carry-forward**: —
+- **Notes**: `htt/` remains unstaged by contract; subsequent
+  FB-META-4.k commits advance one sub-phase at a time with docs-only
+  staging and local skeleton-only code plants.
 
 ---
 
@@ -376,6 +396,7 @@ dataset. At this point the parent plan's stated target is reached
 | FB-3.4 exit | 3,232 | +19 |
 | FB-3.5 exit | 3,286 | +54 |
 | FB-3.6 / Phase FB-3 exit | 3,403 | +117 |
+| FB-META-4.0 pre-flight | 3,403 | +117 |
 
 After each new FB row ships, append a new ledger row here with the
 fresh cumulative count.
