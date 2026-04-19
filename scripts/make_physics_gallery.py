@@ -2862,6 +2862,209 @@ def plot_11_06_fb11_classA_typeVII0_decay() -> None:
     _save(fig, "06_fb11_classA_typeVII0_decay", TOPIC_11)
 
 
+def plot_11_07_fb12_classA_typeVIII_WE_attractor() -> None:
+    """FB-1.2 Type VIII: W-E §18 Table 11.1 row VIII source
+    (sl(2,ℝ) algebra, one negative eigenvalue):
+
+        S^{WE}_+ = −(2/3) [2 N_1² − N_2² − N_3² + N_2 N_3]
+        S^{WE}_- = (2/√3) [N_2² − N_3²]
+
+    Three panels:
+      1. Σ_+(a) and Σ_-(a) along the background integrator for
+         (n_1, n_2, n_3) = (−1e-2, 1e-2, 2e-2) — asymmetric case with
+         S_- < 0 (because n_2² < n_3²).
+      2. The same for (n_1, n_2, n_3) = (−1e-2, 2e-2, 1e-2) — S_-
+         sign flipped (n_2² > n_3²) demonstrating the Table 11.1 row
+         VIII S_- signature.
+      3. Phase plane (Σ_+, Σ_-) for the asymmetric case coloured by
+         log_10 a, showing the source-driven trajectory through the
+         (Σ_+, Σ_-) plane.
+
+    Full nonlinear Mixmaster dispatch (additional N_1-mixed terms) is
+    deferred to FB-5 / FB-6 per the FB11-F1 carry-forward.
+
+    Reference: Wainwright-Ellis §18 Table 11.1 row VIII;
+    docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.2.
+    """
+    from bass.background.einstein_bianchi import (
+        type_viii_cosmology,
+    )
+    cosmo_a = type_viii_cosmology(
+        sigma_over_H_init=1e-4, n1=-1e-2, n2=1e-2, n3=2e-2,
+    )
+    bg_a = solve_bianchi_background(
+        cosmo_a, a_start=1e-6, a_end=1.0, n_pts=2000,
+    )
+    cosmo_b = type_viii_cosmology(
+        sigma_over_H_init=1e-4, n1=-1e-2, n2=2e-2, n3=1e-2,
+    )
+    bg_b = solve_bianchi_background(
+        cosmo_b, a_start=1e-6, a_end=1.0, n_pts=2000,
+    )
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.0))
+    axes[0].semilogx(bg_a.a, bg_a.sigma_plus,
+                     color=COLS["orange"], lw=1.4,
+                     label=r"$\Sigma_+$  $(n_2<n_3)$")
+    axes[0].semilogx(bg_a.a, bg_a.sigma_minus,
+                     color=COLS["purple"], lw=1.4, ls="--",
+                     label=r"$\Sigma_-$  $(n_2<n_3 \Rightarrow S_- < 0)$")
+    axes[0].axhline(0.0, color="0.3", lw=0.5)
+    _prepare_axes(
+        axes[0], r"$a$", r"$\Sigma_\pm$  [Mpc$^{-1}$]",
+        title=r"VIII asymmetric  $(-10^{-2}, 10^{-2}, 2\times10^{-2})$",
+        xlog=True,
+    )
+    axes[0].legend(loc="best", fontsize=8)
+
+    axes[1].semilogx(bg_b.a, bg_b.sigma_plus,
+                     color=COLS["orange"], lw=1.4,
+                     label=r"$\Sigma_+$  $(n_2>n_3)$")
+    axes[1].semilogx(bg_b.a, bg_b.sigma_minus,
+                     color=COLS["blue"], lw=1.4, ls="--",
+                     label=r"$\Sigma_-$  $(n_2>n_3 \Rightarrow S_- > 0)$")
+    axes[1].axhline(0.0, color="0.3", lw=0.5)
+    _prepare_axes(
+        axes[1], r"$a$", r"$\Sigma_\pm$  [Mpc$^{-1}$]",
+        title=r"VIII asymmetric  $(-10^{-2}, 2\times10^{-2}, 10^{-2})$",
+        xlog=True,
+    )
+    axes[1].legend(loc="best", fontsize=8)
+
+    # Phase plane for asymmetric case (first fixture) coloured by log_10 a
+    a_plot = np.maximum(bg_a.a, 1e-30)
+    sc = axes[2].scatter(
+        bg_a.sigma_plus, bg_a.sigma_minus,
+        c=np.log10(a_plot), cmap="viridis", s=3,
+    )
+    axes[2].axhline(0.0, color="0.3", lw=0.5)
+    axes[2].axvline(0.0, color="0.3", lw=0.5)
+    cbar = fig.colorbar(sc, ax=axes[2])
+    cbar.set_label(r"$\log_{10} a$", fontsize=8)
+    _prepare_axes(
+        axes[2], r"$\Sigma_+$  [Mpc$^{-1}$]", r"$\Sigma_-$  [Mpc$^{-1}$]",
+        title=r"Phase plane  (Σ_+, Σ_-)  for $(n_2<n_3)$",
+    )
+    fig.suptitle(
+        r"FB-1.2 Type VIII — Wainwright-Ellis Table 11.1 row VIII "
+        r"($\mathrm{sl}(2,\mathbb{R})$, one negative eigenvalue); "
+        r"$S_-$ sign flips with $(N_2^2 - N_3^2)$",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "07_fb12_classA_typeVIII_WE_attractor", TOPIC_11)
+
+
+def plot_11_08_fb12_classA_typeIX_recollapse_trace() -> None:
+    """FB-1.2 Type IX: W-E §18 Table 11.1 row IX source and recollapse
+    event infrastructure.
+
+    Three panels:
+      1. a(η) trajectory along the canonical (isotropic) Type IX
+         integration with Planck-2018 FLRW background. The recollapse
+         event (ℋ = 0 with ``floor = 0``) is registered and shown NOT
+         to fire — H > 0 always on the realistic background.
+      2. Σ_+(a) and Σ_-(a) for an asymmetric IX fixture
+         (n_1=2e-2, n_2=1e-2, n_3=5e-3). Σ_- is driven by (N_2² − N_3²);
+         Σ_+ picks up the source + isotropic W-E pathology residual.
+      3. Same-cosmology integration with a **synthetic floor event**
+         (``floor = 1e-3`` Mpc⁻¹), illustrating the solve_ivp event
+         branch firing mid-run. The vertical marker indicates the
+         event-η at which ℋ crosses the synthetic floor. This
+         demonstrates the FB plan §6 D5 dispatch that full vacuum-IX
+         Mixmaster / BKL work (FB-5 / FB-6) will use.
+
+    Reference: Wainwright-Ellis §18 Table 11.1 row IX; FB plan §6 D5;
+    docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.2.
+    """
+    from bass.background.einstein_bianchi import (
+        type_ix_cosmology,
+        bianchi_ix_recollapse_event,
+        BianchiCosmology,
+    )
+    from bass.background.bianchi_types import StructureConstants
+    # Panel 1: canonical IX + event with floor=0 (does not fire).
+    cosmo_iso = type_ix_cosmology(n=1e-2)
+    ev_zero = bianchi_ix_recollapse_event(cosmo_iso, floor=0.0)
+    bg_iso = solve_bianchi_background(
+        cosmo_iso, a_start=1e-6, a_end=1.0, n_pts=2000, events=ev_zero,
+    )
+    # Panel 2: asymmetric IX (fully anisotropic — no W-E pathology
+    # degeneracy). We cannot use the default factory (which pins
+    # n_1=n_2=n_3); build a custom cosmology.
+    sc_asym = StructureConstants(
+        n1=2e-2, n2=1e-2, n3=5e-3, a_twist=0.0,
+        label="IX", no_flrw_limit=False,
+    )
+    from bass.background.einstein_bianchi import _PLANCK18  # noqa: PLC2701
+    cosmo_asym = BianchiCosmology(
+        **_PLANCK18, structure=sc_asym, sigma_over_H_init=1e-4,
+    )
+    bg_asym = solve_bianchi_background(
+        cosmo_asym, a_start=1e-6, a_end=1.0, n_pts=2000,
+    )
+    # Panel 3: canonical IX + synthetic-floor event (fires mid-run).
+    ev_syn = bianchi_ix_recollapse_event(cosmo_iso, floor=1e-3)
+    bg_syn = solve_bianchi_background(
+        cosmo_iso, a_start=1e-6, a_end=1.0, n_pts=2000, events=ev_syn,
+    )
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.0))
+
+    axes[0].loglog(bg_iso.eta, bg_iso.a,
+                   color=COLS["blue"], lw=1.4, label=r"$a(\eta)$")
+    if bg_iso.terminated_by_event:
+        for te in bg_iso.event_eta:
+            axes[0].axvline(te, color=COLS["red"], ls="--", lw=0.8,
+                            label=r"event fired (unexpected)")
+    _prepare_axes(
+        axes[0], r"$\eta$  [Mpc]", r"$a$",
+        title=(r"Canonical IX + event (floor=0)  — " +
+               ("event NOT fired (as expected)"
+                if not bg_iso.terminated_by_event
+                else "event fired (UNEXPECTED)")),
+        xlog=True, ylog=True,
+    )
+    axes[0].legend(loc="best", fontsize=8)
+
+    axes[1].semilogx(bg_asym.a, bg_asym.sigma_plus,
+                     color=COLS["orange"], lw=1.4,
+                     label=r"$\Sigma_+$  (asymmetric IX)")
+    axes[1].semilogx(bg_asym.a, bg_asym.sigma_minus,
+                     color=COLS["purple"], lw=1.4, ls="--",
+                     label=r"$\Sigma_-$  $\propto (N_2^2 - N_3^2)$")
+    axes[1].axhline(0.0, color="0.3", lw=0.5)
+    _prepare_axes(
+        axes[1], r"$a$", r"$\Sigma_\pm$  [Mpc$^{-1}$]",
+        title=r"IX asymmetric  $(2, 1, 0.5) \times 10^{-2}$",
+        xlog=True,
+    )
+    axes[1].legend(loc="best", fontsize=8)
+
+    axes[2].semilogx(bg_syn.eta, bg_syn.calH,
+                     color=COLS["cyan"], lw=1.4, label=r"$\mathcal{H}(\eta)$")
+    axes[2].axhline(1e-3, color="0.3", ls=":", lw=0.8,
+                    label=r"floor $= 10^{-3}$")
+    if bg_syn.terminated_by_event:
+        for te in bg_syn.event_eta:
+            axes[2].axvline(te, color=COLS["red"], ls="--", lw=1.0,
+                            label=fr"event @ $\eta = {te:.0f}$ Mpc")
+    _prepare_axes(
+        axes[2], r"$\eta$  [Mpc]", r"$\mathcal{H}$  [Mpc$^{-1}$]",
+        title=r"Synthetic floor fires solve_ivp event (FB-1.2 D5)",
+        xlog=True, ylog=True,
+    )
+    axes[2].legend(loc="best", fontsize=8)
+
+    fig.suptitle(
+        r"FB-1.2 Type IX — Wainwright-Ellis Table 11.1 row IX (so(3)) "
+        r"+ solve_ivp event-terminated recollapse plumbing",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "08_fb12_classA_typeIX_recollapse_trace", TOPIC_11)
+
+
 # ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
@@ -3023,6 +3226,12 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("06_fb11_classA_typeVII0_decay",
          plot_11_06_fb11_classA_typeVII0_decay,
          "FB-1.1 Type VII₀ W-E Table 11.1 plane-wave line + asymmetric source."),
+        ("07_fb12_classA_typeVIII_WE_attractor",
+         plot_11_07_fb12_classA_typeVIII_WE_attractor,
+         "FB-1.2 Type VIII W-E Table 11.1 sl(2,ℝ) source; S_- sign flip with (N_2² − N_3²)."),
+        ("08_fb12_classA_typeIX_recollapse_trace",
+         plot_11_08_fb12_classA_typeIX_recollapse_trace,
+         "FB-1.2 Type IX W-E Table 11.1 so(3) source + solve_ivp event recollapse smoke."),
     ],
 }
 

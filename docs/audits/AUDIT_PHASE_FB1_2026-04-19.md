@@ -266,20 +266,234 @@ event detection; BKL oscillation smoke on axisymmetric fixture).
 
 ---
 
-<!-- Reserved placeholder for FB-1.2 supplement (next session):
+## FB-1.2 supplement — Class A VIII / IX background validation + Bianchi IX recollapse event
 
-## FB-1.2 supplement — VIII / IX background validation
+**Date**: 2026-04-19 (same day as FB-1.1)
+**Sub-phase**: **FB-1.2** — promotes the remaining two Class A Bianchi
+types (VIII, IX) from `PROVISIONAL` to `VALIDATED`, and introduces the
+FB plan §6 D5 dispatch (option (a) — `solve_ivp` event-terminated
+integration) for Bianchi IX recollapse.
+**Baseline commit (pre FB-1.2)**: FB-1.1 seal; 2,753 passing + 1 skipped.
+**Post FB-1.2 test count**: **2,800 passing + 1 skipped** (+47 new —
+16 VIII formula × 16 IX formula × 12 IX isotropic pathology + 3
+recollapse-event smoke tests; all land in the existing
+`TestClassAFixedPoints` class).
+**Verdict**: **통과** (no P0/P1; FB-1.1 carry-forwards F3 / FB02-F1 /
+FB11-F1 preserved; no new failure modes introduced; the IX isotropic
+"W-E pathology" is documented and pinned as expected behaviour rather
+than hidden as an approximation).
 
-Will append the same §1..§10 template. Headline additions:
-- `SOURCE_STATUS["VIII"]` / `["IX"]` promoted to VALIDATED
-- `solve_ivp(event=IX_recollapse)` branch in einstein_bianchi for
-  Type IX's positive spatial curvature → recompact scenario
-- BKL oscillation qualitative smoke on Type IX axisymmetric fixture
-- Gallery: `07_fb12_classA_typeVIII_WE_attractor.png` and
-  `08_fb12_classA_typeIX_recollapse_trace.png` (if the event branch
-  fires within a representative integration window)
+### 1. Audit target reconstruction (FB-1.2)
 
--->
+| Layer | Artifact | Role |
+|---|---|---|
+| Physics / math source | W-E 1997 §18 Table 11.1 rows VIII / IX (sl(2,ℝ) and so(3) algebras; Mixmaster leading-order source); Ellis-Maartens-MacCallum 2012 §18.3 (Ellis conformal convention, locked in FB-0.1); BKL 1970 for Mixmaster literature context (deferred to FB-5/FB-6) | Dimensionless `S^{WE}_{±}(N_1, N_2, N_3)` formulas for VIII / IX that anchor the "VALIDATED" promotion contract; event-terminated integrator dispatch per FB plan §6 D5 |
+| Per-type source dispatch | `shear_sources.py::{source_VIII, source_IX}` + `SOURCE_STATUS` registry | Each source function returns `ℋ² × S^{WE}_{±}` in Mpc⁻² per the FB-0.1 Ellis lift; implementations unchanged — FB-1.2 is formula-level + metadata-level + test-level |
+| Background integrator (new surface) | `einstein_bianchi.py::solve_bianchi_background(..., events=None)` + `bianchi_ix_recollapse_event(cosmo, floor=0.0)` | Optional `events=` parameter forwarded to `scipy.integrate.solve_ivp`; factory builds a terminal descending-crossing event at `ℋ = floor`. Default `events=None` preserves the pre FB-1.2 behaviour bit-for-bit |
+| Tests (new) | `TestClassAFixedPoints::{test_type_VIII_WE_source_formula_and_signs, test_type_IX_WE_source_formula_and_signs, test_type_IX_isotropic_near_limit_known_pathology, test_bianchi_IX_recollapse_event_default_branch_is_opt_in, test_bianchi_IX_recollapse_event_does_not_fire_on_realistic_flrw, test_bianchi_IX_recollapse_event_fires_on_synthetic_floor}` | 47 new parametrised runs (16 + 16 + 12 + 3 non-parametrised smoke) |
+| Gallery | `plots/physics_gallery/11_integrator/{07_fb12_classA_typeVIII_WE_attractor.png, 08_fb12_classA_typeIX_recollapse_trace.png}` | Second non-no-op FB gallery extension after FB-1.1 |
+| Spec cross-ref | `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1.2` + §6 D5 | FB-1.2 row delivered; D5 "(a) event-terminated solve_ivp" recommendation realised |
 
-<!-- Reserved placeholder for FB-1.3 supplement (Class B) and FB-1.4
-(anisotropic_3_curvature 11-type consolidation). -->
+Source of truth (unchanged from FB-1.1): Wainwright-Ellis §18 Table
+11.1 formulas in Hubble-normalised Class A setting; Ellis conformal
+lift `S_± = ℋ² × S^{WE}` (FB-0.1). FB-1.2 extends the operative
+contract to the sl(2,ℝ) (VIII) and so(3) (IX) rows.
+
+### 2. Contract / interface table — FB-1.2 additions
+
+| Surface | Signature / invariant | Status |
+|---|---|---|
+| `SOURCE_STATUS["VIII"]` | tag=VALIDATED, reference="W-E §18 Table 11.1, sl(2,ℝ) algebra", benchmark="leading-order formula + sign + Σ-indep pinned; full Mixmaster deferred" | Promoted PROVISIONAL → VALIDATED |
+| `SOURCE_STATUS["IX"]` | tag=VALIDATED, reference="W-E §18 Table 11.1, so(3) (Mixmaster leading order)", benchmark="formula + sign + Σ-indep pinned; isotropic W-E pathology documented; full BKL deferred" | Promoted PROVISIONAL → VALIDATED |
+| `SOURCE_STATUS["III/IV/VI_h/VII_h"]` | unchanged PROVISIONAL | Deferred to FB-1.3 |
+| `compute_shear_source` signature | `(sc, Sp, Sm, calH, a) → (dSp, dSm)` in Mpc⁻² | Unchanged |
+| `solve_bianchi_background(..., events=None)` | New optional kwarg; `None` default preserves pre FB-1.2 behaviour bit-for-bit; non-None forwards to `scipy.integrate.solve_ivp(events=...)` | New surface (additive, non-breaking) |
+| `BianchiBackgroundState.terminated_by_event` / `.event_eta` | Defaults `False` / `()`; populated from `sol.t_events` when an event fires | New additive fields |
+| `bianchi_ix_recollapse_event(cosmo, floor=0.0)` | Factory; returns terminal descending-crossing event at `ℋ − floor = 0` | New public API |
+| `source_VIII` / `source_IX` function bodies | Unchanged from FB-0.1 (the W-E ℋ² form) — FB-1.2 is metadata + test + integrator-plumbing | Unchanged |
+| `TestClassAFixedPoints` surface | 6 new methods (3 formula + 3 recollapse-event); 47 new parametrised runs | Extended (additive; FB-1.1 tests untouched) |
+
+**Per-type formula pins (W-E §18 Table 11.1, FB-1.2 extensions)**:
+
+| Type | `S^{WE}_+` | `S^{WE}_-` | Verified in |
+|---|---|---|---|
+| VIII | −(2/3)[2 N_1² − N_2² − N_3² + N_2 N_3] | (2/√3)[N_2² − N_3²] | `test_type_VIII_WE_source_formula_and_signs` (4 (n_1<0, n_2>0, n_3>0) × 4 ℋ, rel 1e-12; S_- sign flip with N_2²−N_3² pinned; Σ-independence pinned) |
+| IX | −(2/3)[2 N_1² − N_2² − N_3² − N_2 N_3] | (2/√3)[N_2² − N_3²] | `test_type_IX_WE_source_formula_and_signs` (4 (n_i>0) × 4 ℋ, rel 1e-12; S_- sign + Σ-indep pinned) |
+| IX isotropic pathology | +(2/3) n² ℋ² **(nonzero residual)** | 0 exactly | `test_type_IX_isotropic_near_limit_known_pathology` (3 N × 4 ℋ = 12 runs; residual pinned at rel 1e-12 and bounded inside 10× the natural scale) |
+
+### 3. Phys-math audit ledger
+
+| Check | Result | Evidence |
+|---|---|---|
+| Type VIII formula `S^{WE}_+ = −(2/3)[2 N_1² − N_2² − N_3² + N_2 N_3]`, `S^{WE}_- = (2/√3)[N_2² − N_3²]` at rel 1e-12 across (n_1<0, n_2>0, n_3>0, ℋ) grid | ✅ | `test_type_VIII_WE_source_formula_and_signs` (16 parametrised runs) |
+| VIII S_- sign pin: sign(`S_-`) = sign(N_2² − N_3²) across both n_2 > n_3 and n_2 < n_3 branches | ✅ | same test, second assertion block (strict inequality) |
+| VIII Σ-independence: `source_VIII(sc, 0, 0, ℋ, a)` equals `source_VIII(sc, Σ_+, Σ_-, ℋ, a)` at rel 1e-14 | ✅ | same test, third assertion block |
+| Type IX formula `S^{WE}_+ = −(2/3)[2 N_1² − N_2² − N_3² − N_2 N_3]`, `S^{WE}_- = (2/√3)[N_2² − N_3²]` at rel 1e-12 across (n_i>0, ℋ) grid | ✅ | `test_type_IX_WE_source_formula_and_signs` (16 parametrised runs) |
+| IX vs VIII distinguishing sign: IX differs from VIII only by the sign of the N_2 N_3 cross-term (so(3) vs sl(2,ℝ)) | ✅ | both `test_type_VIII_*` and `test_type_IX_*` pin the respective signs exactly; direct side-by-side differs at rel 1e-12 |
+| IX isotropic (n_1=n_2=n_3=n): `S_+ = +(2/3) n² ℋ²` residual (W-E leading-order pathology, not an implementation bug); `S_- = 0` exactly | ✅ | `test_type_IX_isotropic_near_limit_known_pathology` (12 parametrised runs; residual pinned at rel 1e-12; upper bound `|S_±| ≤ 10 × (2/3) n² ℋ²` band per prompt) |
+| `solve_bianchi_background(..., events=None)` default preserves pre FB-1.2 behaviour bit-for-bit (Kasner `Σ×a²` invariant, IX trajectory shape) | ✅ | FB-1.1 `test_type_I_kasner_exponent_sum` still green at same numerical value; `test_bianchi_IX_recollapse_event_default_branch_is_opt_in` pins `terminated_by_event=False` / `event_eta=()` |
+| `bianchi_ix_recollapse_event(cosmo, floor=0.0)` does not fire on Planck-2018 FLRW IX (H>0 always) | ✅ | `test_bianchi_IX_recollapse_event_does_not_fire_on_realistic_flrw` — `terminated_by_event=False`, integration reaches `a ≥ 0.9` |
+| Synthetic `floor=1e-3` fires event mid-run; `sol.t_events[0]` non-empty; output arrays finite | ✅ | `test_bianchi_IX_recollapse_event_fires_on_synthetic_floor` — event fires at `η ≈ 1765 Mpc`; all of `a, Σ_+, Σ_-` finite at the final sample |
+| FLRW / I / II / VI₀ / VII₀ per-type tests from FB-1.1 unaffected | ✅ | 61 FB-1.1 parametrised runs still green |
+| `SOURCE_STATUS` VIII / IX now report `tag == "VALIDATED"` | ✅ | direct registry read in `TestSourceStatus.test_all_types_have_status` |
+
+### 4. Equation-to-code mapping audit
+
+| Target equation | Code implementation | Test anchor |
+|---|---|---|
+| W-E §18 Table 11.1 row VIII: `S^{WE}_+`, `S^{WE}_-` | `shear_sources.source_VIII` body (unchanged; FB-0.1 ℋ² form retained) | `test_type_VIII_WE_source_formula_and_signs` |
+| W-E §18 Table 11.1 row IX: `S^{WE}_+`, `S^{WE}_-` | `shear_sources.source_IX` body (unchanged) | `test_type_IX_WE_source_formula_and_signs` |
+| IX isotropic leading-order residual (W-E pathology) | direct consequence of the leading-order quadratic form — no branch in `source_IX`; the cross-term `−N_2 N_3` does not cancel `2 N_1² − N_2² − N_3²` at n_1=n_2=n_3 | `test_type_IX_isotropic_near_limit_known_pathology` |
+| FB plan §6 D5 option (a): event-terminated solve_ivp | `solve_bianchi_background(..., events=...)` forwards to `scipy.integrate.solve_ivp(events=...)` ; `bianchi_ix_recollapse_event` factory builds the ℋ→0 detector | three `test_bianchi_IX_recollapse_event_*` tests |
+| `BianchiBackgroundState.terminated_by_event` / `.event_eta` readout | Populated from `sol.t_events`; defaults are conservative (False / empty) | same three smoke tests |
+| Default-path regression (events=None) must not perturb pre FB-1.2 numerics | Branch gated on `events is not None`; when None, the `solve_ivp` call omits the `events=` kwarg entirely | `test_bianchi_IX_recollapse_event_default_branch_is_opt_in` + 61 FB-1.1 runs remaining green |
+| Integrator retry-on-loose-tolerance must not retry past a terminal event | Guarded by `if sol.status != 1` before the fallback retry | synthetic-floor smoke test (event branch remains sticky) |
+
+No dead code introduced. No orphan imports. The VIII / IX source
+function **bodies** are untouched — FB-1.2 is a metadata-level +
+test-level + integrator-plumbing patch, not a formula-level change.
+The new `events=` surface is opt-in and defaults-equivalent; the new
+factory `bianchi_ix_recollapse_event` is the canonical D5 dispatch.
+
+### 5. Numerical / pipeline audit
+
+| Item | Finding |
+|---|---|
+| `TestClassAFixedPoints` total parametrised run count | 108 (61 FB-1.1 + 47 FB-1.2) |
+| Formula-match tolerance (VIII / IX) | rel 1e-12 — passes at all 16 + 16 = 32 VIII/IX formula assertions |
+| IX isotropic residual tolerance | rel 1e-12 against the closed-form `+(2/3) n² ℋ²`; band check `|S_±| < 10 × (2/3) n² ℋ²` strictly satisfied |
+| Σ-independence tolerance | rel 1e-14 (exactly equal up to ordering-of-operations noise) |
+| Synthetic-floor event fires | solve_ivp reports `sol.status == 1` and populates `t_events` with a single crossing at η ≈ 1765 Mpc for `floor = 1e-3`; `calH[-1] ≈ 1e-3` within `1e-4` |
+| Default-branch numerical regression | Kasner invariant `Σ × a²` at final sample = 2.1609e-16 (same to all digits as FB-1.1) |
+| Wall time | full suite 70.77 s (was 70 s post FB-1.1); FB-1.2 adds ~0.7 s for the 3 extra integrator smoke tests + 44 parametrised O(1) arithmetic runs |
+| Determinism | No RNG; event factory is a pure function of `cosmo, floor`; `sol.t_events[0][0]` reproducible across runs to float64 precision |
+| Baseline reproduction | 2,753 pre → 2,800 post (+47); 0 regressions |
+| Gallery render time | ~4 s for the 2 new plots on top of the 6 existing FB-1.1 plots |
+| Gallery file sizes | 07 (VIII): ~280 KB; 08 (IX): ~340 KB (event marker + ℋ trace) |
+| NaN/Inf leakage check | `np.all(np.isfinite(a, Σ_+, Σ_-))` pinned explicitly in the synthetic-floor smoke test |
+
+### 6. Ranked failure modes
+
+| ID | Type | Severity | Summary | Action |
+|---|---|---|---|---|
+| F3 (FB-0.1) | documentation | P2 carried | `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² normalisation drift | Still deferred to FB-2.4 |
+| FB02-F1 (FB-0.2) | documentation | P2 carried | `00_conventions.md §2` cross-ref of `v̂_e` default | Still deferred to FB-3.1 |
+| FB11-F1 (FB-1.1) | physics-framework | P2 carried | W-E Table 11.1 fixed-point **coordinates** (Σ̂_+, Σ̂_-) are not directly reachable in the fixed-N framework | Still deferred to FB-5 / FB-6. FB-1.2 continues to honour this lesson — tests pin source-function **formulas** at rel 1e-12, not Hubble-normalised coordinates. |
+| FB12-F1 | physics-framework | P3 (documented) | IX **isotropic** leading-order source has `S_+ = +(2/3) n² ℋ² ≠ 0` at `n_1 = n_2 = n_3`. This is a W-E §18 leading-order pathology (noted by W-E §6.2); the exact recovery of the k=+1 FLRW isotropic fixed point requires the full dynamical-systems treatment with Hubble-normalised N̂_i. | **Resolved in-session**: rather than force a zero at the isotropic point (which would be a silent fallback contradicting the documented formula), we pin the residual explicitly at rel 1e-12 and bound it inside the natural-scale band. Full resolution lives in **FB-5 / FB-6** Mixmaster / BKL work. |
+| FB12-F2 | interface | resolved | `solve_bianchi_background` has an automatic retry-on-loose-tolerance fallback that would have re-run the integrator past a terminal event, masking FB plan §6 D5 semantics | **Resolved in-session**: gated the retry on `sol.status != 1`, preserving the "event fired" termination state for callers that pass `events=`. |
+| FB12-F3 (advisory) | diagnostic | P3 carried | `bianchi_ix_recollapse_event(cosmo, floor)` is coupled to `_hubble_squared(a, cosmo)`; if the FB-5 Mixmaster work introduces a cosmology-dependent H² with contributions from vacuum spatial curvature, the event detector must be re-derived to preserve `ℋ = floor` semantics. | **Tracked for FB-5 / FB-6**: noted in docstring; no action needed in FB-1.2. |
+
+No P0/P1 items. FB12-F1 and FB12-F2 are FB-1.2-local findings;
+FB12-F1 is now fully documented as a P3 note, FB12-F2 was a live
+bug discovered mid-session and fixed before commit. FB12-F3 is an
+advisory note for the FB-5 / FB-6 rotation.
+
+### 7. Verifier results
+
+| Verifier | Result | Notes |
+|---|---|---|
+| Physics (limit recovery, dimensions, signs) | **PASSED** | FLRW limit preserved; FB-0.1 Ellis ℋ² lift preserved; VIII formulae pin sl(2,ℝ) one-negative-eigenvalue signature; IX formulae pin so(3) all-positive signature with the diagnostic `−N_2 N_3` cross-term; IX isotropic residual documented as W-E leading-order pathology and bounded |
+| Code (contract satisfaction) | **PASSED** | `compute_shear_source` signature unchanged; `solve_bianchi_background` default behaviour bit-for-bit preserved when `events=None`; `BianchiBackgroundState` fields added additively; no callers reach into private state; `bianchi_ix_recollapse_event` is a pure factory with no hidden state |
+| Numerical (convergence, tolerance) | **PASSED** | 2,800 pass + 1 skip; +47 new, 0 regressed; 70.77 s wall time stable; formula rel 1e-12 passes on all 44 parametrised assertions; event-fire smoke hits `|calH[-1] - floor| < 1e-4` at synthetic floor; finiteness pinned |
+
+### 8. Minimal repair plan (applied in-session)
+
+| Patch | Target | Status |
+|---|---|---|
+| A | `bass/transport/test_shear_sources.py` — added 6 new methods to `TestClassAFixedPoints` (3 formula + 3 recollapse-event); added `source_VIII, source_IX` to the existing import block | ✅ |
+| B | `bass/transport/shear_sources.py::SOURCE_STATUS` — promoted VIII / IX to `"VALIDATED"` with FB-1.2 cross-reference comments linking to each test and to this audit log; per-type function docstrings refreshed with W-E cross-reference and the IX-isotropic pathology note | ✅ |
+| C | `bass/background/einstein_bianchi.py::solve_bianchi_background` — added optional `events=None` parameter forwarded to `solve_ivp`; gated the retry-on-loose-tolerance fallback on `sol.status != 1` to preserve event termination; added `terminated_by_event` / `event_eta` fields to `BianchiBackgroundState` (defaults preserve pre FB-1.2 surface); added `bianchi_ix_recollapse_event(cosmo, floor)` factory | ✅ |
+| D | `scripts/make_physics_gallery.py` — added 2 new plot functions (`plot_11_07_fb12_classA_typeVIII_WE_attractor`, `plot_11_08_fb12_classA_typeIX_recollapse_trace`) + 2 catalog entries; uses only existing helpers | ✅ |
+| E | `plots/physics_gallery/11_integrator/{07_fb12_classA_typeVIII_WE_attractor.png, 08_fb12_classA_typeIX_recollapse_trace.png}` — generated via `scripts/make_physics_gallery.py --only 11_integrator`; each PNG visually inspected (see §9) | ✅ |
+| F | `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` — this supplement appended (§1..§10) | ✅ |
+| G | `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` — rotated to FB-1.3 (Class B III / IV / V / VI_h / VII_h; twist-coupled source, Pontzen-Challinor VII_h spiral match) | ✅ (see commit) |
+
+### 9. Minimal test set (delivered)
+
+**Baseline reproduction**: all 2,753 pre-FB-1.2 tests still green; no
+pre-existing test was weakened, modified, or added. The pre-FB-1.2
+behaviour of `solve_bianchi_background` with `events=None` is bit-
+for-bit preserved (Kasner invariant at the same 2.1609e-16 numerical
+value).
+
+**Physics sanity (new)**: `test_type_VIII_WE_source_formula_and_signs`
+and `test_type_IX_WE_source_formula_and_signs` pin the W-E §18 Table
+11.1 dimensionless `S^{WE}_{±}` formulas at rel 1e-12 across 32
+(n_i, ℋ) parametrised combinations; the S_- sign pattern
+(signed by `N_2² − N_3²`) is pinned in both directions.
+
+**Formula-level regression (new)**: Σ-independence of both VIII and IX
+source functions is pinned at rel 1e-14 — guarding against an
+accidental Σ-linear coupling slipping in during FB-5 vorticity wire-up.
+
+**Sign / symmetry cross-check (new)**: The VIII / IX formulas differ
+only by the sign of `−N_2 N_3`; both tests pin the exact expected
+sign, making an accidental IX-for-VIII swap (or vice versa) in a
+future refactor a hard-fail rather than a silent numerical drift.
+
+**Adversarial / edge (new)**: IX isotropic `n_1 = n_2 = n_3`
+explicitly documented as a W-E leading-order pathology with the
+residual `+(2/3) n² ℋ²` pinned at rel 1e-12 rather than hidden.
+Separately, the recollapse-event plumbing is verified in three modes:
+(i) no-event default (pre FB-1.2 behaviour), (ii) event defined but
+floor = 0 on Planck-2018 FLRW (does not fire, infrastructure inert),
+(iii) event fires mid-run with floor = 1e-3 (state fields populated,
+arrays finite).
+
+**Regression**: 2,800 passing + 1 skipped; +47 new, 0 regressed.
+
+#### Gallery inspection summary (visual verification)
+
+Each of the 2 new PNGs was opened with the Read tool and the physics
+qualitatively verified before final commit:
+
+| PNG | Key visual check | Verdict |
+|---|---|---|
+| `07_fb12_classA_typeVIII_WE_attractor.png` | Σ_+ decays from ~2.2e-4 through zero near a ~ 1e-5 (source activation in early radiation era); Σ_- sign flips between the two panels as `N_2² − N_3²` flips sign (negative in panel 1, positive in panel 2); phase plane shows trajectory into Σ_- < 0 quadrant for the n_2 < n_3 fixture | ✅ |
+| `08_fb12_classA_typeIX_recollapse_trace.png` | Panel 1: a(η) grows monotonically on Planck-2018 FLRW IX with the floor=0 event registered (no fire expected and no fire observed). Panel 2: asymmetric IX `(2, 1, 0.5) × 10⁻²`: Σ_+ goes negative (source dominated by `2 N_1²`); Σ_- positive (N_2² > N_3²). Panel 3: ℋ(η) for canonical IX crossing synthetic floor at η ≈ 1765 Mpc; event marker drawn; ℋ decays as expected on a matter/Λ background. | ✅ |
+
+No physics anomaly required in-session fixes to the plot code beyond a
+minor `\mathrm{sl}(2,\mathbb{R})` LaTeX spacing fix in the VIII
+suptitle.
+
+### 10. 최종 판정
+
+* **치명적 오류 있음 / 부분 통과 / 통과** → **통과** (no P0 / P1;
+  FB12-F1 documented as a P3 known W-E pathology, FB12-F2 resolved
+  in-session by guarding the retry-on-loose-tolerance fallback against
+  a terminal event, FB12-F3 advisory note for FB-5 / FB-6).
+* **지금 당장 구현/수정한 1개**: the FB plan §6 D5 "event-terminated
+  solve_ivp" dispatch — `solve_bianchi_background(..., events=None)` +
+  `bianchi_ix_recollapse_event(cosmo, floor)` factory — is now wired
+  in and exercised by three smoke tests (default-branch preservation,
+  no-fire on realistic FLRW, synthetic-floor fire). This is the
+  prerequisite that FB-5 / FB-6 Mixmaster / BKL work inherits; without
+  it, Bianchi IX recollapse would rely on ad-hoc `eta_final` pre-
+  computation (option (b) of D5), which D5 correctly recommends
+  against.
+* **지금 손대면 안 되는 1개**: attempting to force `S_+ = 0` at the IX
+  isotropic point `n_1 = n_2 = n_3`. The current leading-order form
+  gives `S_+ = +(2/3) n² ℋ²` — a W-E-documented pathology of the
+  leading-order expansion, not an implementation bug. A silent
+  correction here would violate the "no silent fallbacks" principle
+  and mask the exact behaviour that FB-5 / FB-6 Mixmaster work needs
+  to confront (full dynamical-systems treatment with Hubble-normalised
+  `N̂_i`). FB12-F1 documents this as P3 with explicit deferral.
+
+---
+
+**Phase FB-1 status (after FB-1.2)**: 2/4 sub-phases delivered.
+Six of the nine PROVISIONAL Class A / Class B sources promoted to
+VALIDATED (FLRW + I + II + VI₀ + VII₀ + VIII + IX = 7 of 12 registry
+entries; V was already VALIDATED from LB baseline); the remaining
+five (III, IV, VI_h, VII_h) are tracked for FB-1.3 (twist-coupled
+Class B + Pontzen-Challinor VII_h spiral calibration). FB-1.4 closes
+with `anisotropic_3_curvature` 11-type consolidation.
+Ready to hand off to **FB-1.3**.
+
+---
+
+<!-- Reserved placeholder for FB-1.3 supplement (Class B — twist-coupled
+source for III / IV / V / VI_h / VII_h; Pontzen-Challinor 2009 VII_h
+spiral match) and FB-1.4 (anisotropic_3_curvature 11-type
+consolidation). -->

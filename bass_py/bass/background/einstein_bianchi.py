@@ -61,7 +61,7 @@ from __future__ import annotations
 import math
 import warnings
 from dataclasses import dataclass, field
-from typing import Optional, Tuple
+from typing import Callable, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
 from scipy.integrate import solve_ivp
@@ -199,6 +199,11 @@ class BianchiBackgroundState:
     """Result container for the background solution.
 
     All arrays are on the same η grid.
+
+    ``terminated_by_event`` and ``event_eta`` are populated when the
+    integrator is given an ``events=`` argument (FB-1.2 D5 dispatch for
+    Bianchi IX recollapse). Default ``False`` / empty preserves the pre
+    FB-1.2 surface bit-for-bit for callers that pass no event.
     """
     eta: np.ndarray
     a: np.ndarray
@@ -209,6 +214,8 @@ class BianchiBackgroundState:
     sigma_minus: np.ndarray
     cosmo: BianchiCosmology
     source_status: str = "unknown"   # VALIDATED / PROVISIONAL / NOT_IMPLEMENTED
+    terminated_by_event: bool = False
+    event_eta: Tuple[float, ...] = ()
 
 
 def _hubble_squared(a: float, p: BianchiCosmology,
@@ -219,15 +226,32 @@ def _hubble_squared(a: float, p: BianchiCosmology,
     return max(friedmann, 1e-30)
 
 
+EventFunc = Callable[[float, np.ndarray], float]
+
+
 def solve_bianchi_background(
     cosmo: BianchiCosmology,
     a_start: float = 1e-6,
     a_end: float = 1.0,
     n_pts: int = 3000,
+    events: Optional[Union[EventFunc, Sequence[EventFunc]]] = None,
 ) -> BianchiBackgroundState:
     """Integrate the Bianchi background from a_start to a_end.
 
     Works for all 10 Bianchi types + FLRW via dispatch to shear_sources.
+
+    Parameters
+    ----------
+    cosmo, a_start, a_end, n_pts : see class-level docstring.
+    events : callable or list of callables, optional
+        Forwarded to ``scipy.integrate.solve_ivp``'s ``events=`` parameter
+        (FB plan §6 D5 — event-terminated integration for Bianchi IX
+        recollapse). Each callable has signature ``event(eta, y) -> float``
+        where a sign change triggers the event; set the ``terminal`` and
+        ``direction`` attributes on the callable per SciPy conventions.
+        Default ``None`` preserves the pre FB-1.2 behaviour bit-for-bit.
+        Use ``bianchi_ix_recollapse_event(cosmo)`` as the canonical IX
+        event factory.
     """
     # Validate type + comparator before starting
     sc = cosmo.structure
@@ -285,13 +309,23 @@ def solve_bianchi_background(
 
     eta_eval = np.linspace(0, eta_end_est, n_pts)
 
+    ivp_kwargs = {}
+    if events is not None:
+        ivp_kwargs["events"] = events
+
     sol = solve_ivp(rhs, (0.0, eta_end_est), y0, method='RK45',
                     t_eval=eta_eval, rtol=1e-10, atol=1e-14,
-                    max_step=eta_end_est / 200)
+                    max_step=eta_end_est / 200, **ivp_kwargs)
 
     if not sol.success or len(sol.y[0]) < n_pts // 2:
-        sol = solve_ivp(rhs, (0.0, eta_end_est), y0, method='RK45',
-                        t_eval=eta_eval, rtol=1e-8, atol=1e-12)
+        # Retry on looser tolerance — except when the integrator stopped
+        # early because an event fired (sol.status == 1). That is the
+        # intended terminal outcome for Bianchi IX recollapse (FB-1.2
+        # D5 dispatch) and must not be retried.
+        if sol.status != 1:
+            sol = solve_ivp(rhs, (0.0, eta_end_est), y0, method='RK45',
+                            t_eval=eta_eval, rtol=1e-8, atol=1e-12,
+                            **ivp_kwargs)
 
     a_arr = np.maximum(sol.y[0], 1e-30)
     Sp_arr = sol.y[1]
@@ -302,12 +336,73 @@ def solve_bianchi_background(
     H_arr = np.array([math.sqrt(_hubble_squared(a, cosmo)) for a in a_arr])
     calH_arr = a_arr * H_arr / C_KMS
 
+    terminated_by_event = bool(getattr(sol, "t_events", None)) and any(
+        len(te) > 0 for te in sol.t_events
+    )
+    event_eta: Tuple[float, ...] = ()
+    if terminated_by_event:
+        event_eta = tuple(
+            float(te[0]) for te in sol.t_events if len(te) > 0
+        )
+
     return BianchiBackgroundState(
         eta=eta_arr, a=a_arr, z=z_arr,
         H=H_arr, calH=calH_arr,
         sigma_plus=Sp_arr, sigma_minus=Sm_arr,
         cosmo=cosmo, source_status=source_status,
+        terminated_by_event=terminated_by_event,
+        event_eta=event_eta,
     )
+
+
+def bianchi_ix_recollapse_event(
+    cosmo: BianchiCosmology,
+    floor: float = 0.0,
+) -> EventFunc:
+    """Factory for a ``solve_ivp`` event that terminates on Bianchi IX
+    recollapse.
+
+    Returns a callable ``event(eta, y)`` that evaluates to
+    ``a × H / C_KMS − floor`` (= ℋ − floor). A sign change (decreasing)
+    signals the instant the universe stops expanding — the operative
+    definition of recollapse in conformal-time integration (``a' = a × ℋ``).
+
+    Usage
+    -----
+    >>> cosmo = type_ix_cosmology(n=1e-2)
+    >>> event = bianchi_ix_recollapse_event(cosmo)
+    >>> bg = solve_bianchi_background(cosmo, events=event)
+
+    With the production Planck-2018 FLRW background H(a) > 0 always, so
+    this event does not fire during canonical IX integration — it is
+    wired in for FB-5 / FB-6 Mixmaster / BKL work where ``H²`` may pick
+    up a negative spatial-curvature contribution sufficient to drive ℋ
+    through zero. The ``floor`` parameter allows synthetic triggering
+    for smoke tests (``floor > 0`` fires early).
+
+    Parameters
+    ----------
+    cosmo : BianchiCosmology
+        Used to evaluate ``H(a)`` via the same Friedmann callback the
+        integrator uses; keeps the event synchronous with the RHS.
+    floor : float, default 0.0
+        Threshold for the crossing. Real recollapse is ℋ = 0; tests set
+        ``floor > 0`` to force the event on a realistic FLRW background.
+
+    References
+    ----------
+    Wainwright & Ellis 1997 §18 (Type IX recollapse in the Kasner-
+    compact attractor); FB plan §6 D5; SciPy ``solve_ivp`` event API.
+    """
+    def event(eta: float, y: np.ndarray) -> float:
+        a_val = max(float(y[0]), 1e-30)
+        H = math.sqrt(_hubble_squared(a_val, cosmo))
+        calH = a_val * H / C_KMS
+        return calH - floor
+
+    event.terminal = True
+    event.direction = -1  # only a decreasing crossing (expansion → halt)
+    return event
 
 
 # ══════════════════════════════════════════════════════════════════

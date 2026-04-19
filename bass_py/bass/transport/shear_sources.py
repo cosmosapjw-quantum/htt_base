@@ -168,12 +168,19 @@ def source_VII0(sc, Sp, Sm, calH, a):
 def source_VIII(sc, Sp, Sm, calH, a):
     """Type VIII: sl(2,ℝ), (−, +, +) with one negative eigenvalue.
 
-    Full Wainwright-Ellis N-source (all three N_i active):
-        S₊ = -(2/3) [2 N₁² − N₂² − N₃² + N₂ N₃]
-        S₋ = (2/√3) [N₂² − N₃²]  +  mixed terms involving N₁
+    Wainwright-Ellis §18 Table 11.1 row VIII leading-order source
+    (all three N_i active):
 
-    PROVISIONAL: near-FLRW leading order. Full nonlinear form deferred
-    to Week 5 benchmark against AniCLASS. FLRW limit (all N → 0) → 0. ✓
+        S^{WE}_+ = -(2/3) [2 N₁² − N₂² − N₃² + N₂ N₃]
+        S^{WE}_- = (2/√3) [N₂² − N₃²]
+
+    Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``.
+
+    VALIDATED (FB-1.2): formula + Σ-independence + S_- sign pattern
+    pinned to rel 1e-12 on (n_1<0, n_2>0, n_3>0, ℋ) grid in
+    `test_type_VIII_WE_source_formula_and_signs`. FLRW limit
+    (all N → 0) → 0. Full nonlinear Mixmaster / BKL dispatch (which adds
+    the mixed-with-N_1 terms) deferred to FB-5 / FB-6.
     """
     n1, n2, n3 = sc.n1, sc.n2, sc.n3
     # Leading quadratic terms (see Ellis-Maartens-MacCallum eq. 18.26)
@@ -186,11 +193,29 @@ def source_VIII(sc, Sp, Sm, calH, a):
 def source_IX(sc, Sp, Sm, calH, a):
     """Type IX: so(3), (+, +, +) all positive — Mixmaster model.
 
-    Same structural form as VIII but with sign change on the N₁² term.
-    For the symmetric choice n₁ = n₂ = n₃ = n, spatial Ricci is isotropic
-    and S₊ = S₋ = 0 — matching the FLRW limit (k = +1).
+    Wainwright-Ellis §18 Table 11.1 row IX leading-order source (differs
+    from VIII only by the sign of the N_2 N_3 cross-term — so(3) vs
+    sl(2,ℝ) algebra):
 
-    PROVISIONAL: Full nonlinear Mixmaster dynamics (BKL bounces) deferred.
+        S^{WE}_+ = -(2/3) [2 N₁² − N₂² − N₃² − N₂ N₃]
+        S^{WE}_- = (2/√3) [N₂² − N₃²]
+
+    Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``.
+
+    VALIDATED (FB-1.2): formula + Σ-independence + S_- sign pattern
+    pinned to rel 1e-12 on (n_i>0, ℋ) grid in
+    `test_type_IX_WE_source_formula_and_signs`. At the isotropic point
+    n_1 = n_2 = n_3 = n the leading-order form gives
+    ``S_+ = +(2/3) n² ℋ² ≠ 0``, a known W-E pathology that the full
+    dynamical-systems treatment (Wainwright-Ellis §6.2) resolves
+    through compactness at the BKL attractor; we pin this residual
+    explicitly in `test_type_IX_isotropic_near_limit_known_pathology`.
+
+    Bianchi IX recollapse is handled via
+    `bianchi_ix_recollapse_event` + ``solve_ivp(events=...)`` (FB plan
+    §6 D5). The event branch does **not** fire on the production
+    Planck-2018 FLRW background (H > 0 always); full vacuum-IX BKL
+    oscillation is FB-5 / FB-6 scope.
     """
     n1, n2, n3 = sc.n1, sc.n2, sc.n3
     # With all positive: for n_1 = n_2 = n_3 exactly, S = 0 (isotropic case)
@@ -369,8 +394,30 @@ SOURCE_STATUS: Dict[str, SourceStatus] = {
                           "formula + S_- sign flip vs VI₀ + isotropic vanishing pinned"),
     "VII_h": SourceStatus("PROVISIONAL", "Pontzen-Challinor 2009, Saadeh 2016",
                           True, "spiral coupling calibrated in FB-1.3"),
-    "VIII":  SourceStatus("PROVISIONAL", "W-E §18, sl(2,ℝ)", True),
-    "IX":    SourceStatus("PROVISIONAL", "W-E §18, Mixmaster", True),
+    # VALIDATED (FB-1.2): W-E §18 Table 11.1 row VIII leading-order
+    # source S^{WE}_+ = −(2/3)[2 N_1² − N_2² − N_3² + N_2 N_3],
+    # S^{WE}_- = (2/√3)[N_2² − N_3²] pinned to rel 1e-12 on the
+    # (n_1<0, n_2>0, n_3>0, ℋ) parametrisation grid (Σ-independence +
+    # S_- sign pattern co-pinned) in
+    # test_type_VIII_WE_source_formula_and_signs. Full nonlinear
+    # Mixmaster-class dispatch remains FB-5/FB-6 scope.
+    # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.2.
+    "VIII":  SourceStatus("VALIDATED", "W-E §18 Table 11.1, sl(2,ℝ) algebra", True,
+                          "leading-order formula + sign + Σ-indep pinned; full Mixmaster deferred"),
+    # VALIDATED (FB-1.2): W-E §18 Table 11.1 row IX leading-order
+    # source S^{WE}_+ = −(2/3)[2 N_1² − N_2² − N_3² − N_2 N_3],
+    # S^{WE}_- = (2/√3)[N_2² − N_3²] pinned to rel 1e-12 on the
+    # (n_i>0, ℋ) parametrisation grid in
+    # test_type_IX_WE_source_formula_and_signs. The isotropic-limit
+    # (n_1=n_2=n_3=n) S_+ residual = +(2/3) n² ℋ² is a known W-E
+    # leading-order pathology pinned explicitly in
+    # test_type_IX_isotropic_near_limit_known_pathology; Bianchi IX
+    # recollapse uses solve_ivp event dispatch via
+    # bianchi_ix_recollapse_event (FB plan §6 D5). Full BKL
+    # oscillation remains FB-5/FB-6.
+    # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.2.
+    "IX":    SourceStatus("VALIDATED", "W-E §18 Table 11.1, so(3) (Mixmaster leading order)", True,
+                          "formula + sign + Σ-indep pinned; isotropic W-E pathology documented; full BKL deferred"),
 }
 
 

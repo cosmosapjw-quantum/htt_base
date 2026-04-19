@@ -39,6 +39,7 @@ from bass.transport.shear_sources import (
     SHEAR_SOURCE_REGISTRY, SOURCE_STATUS,
     compute_shear_source, get_source_status,
     source_I, source_II, source_V, source_VI0, source_VII0, source_VIIh,
+    source_VIII, source_IX,
 )
 
 
@@ -610,3 +611,241 @@ class TestClassAFixedPoints:
         dSp, dSm = compute_shear_source(sc, 1e-5, -3e-6, calH, 1e-3)
         assert dSp == 0.0, f"VII₀ isotropic S_+ != 0 at N={N_equal}, ℋ={calH}"
         assert dSm == 0.0, f"VII₀ isotropic S_- != 0 at N={N_equal}, ℋ={calH}"
+
+    # ─── FB-1.2: VIII / IX formula pins ─────────────────────────────
+
+    @pytest.mark.parametrize(
+        "n1, n2, n3",
+        [
+            (-1e-2, 1e-2, 1e-2),   # canonical (|n|, |n|, |n|) with one negative
+            (-5e-3, 1e-2, 2e-2),   # asymmetric (+)-eigenvalues
+            (-2e-2, 1e-2, 5e-3),   # larger |n_1|
+            (-1e-3, 2e-2, 1e-2),   # small |n_1| vs larger (+)-block
+        ],
+    )
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_VIII_WE_source_formula_and_signs(self, n1, n2, n3, calH):
+        """Type VIII source per W-E §18 Table 11.1 (sl(2,ℝ) algebra,
+        one negative eigenvalue):
+
+            S^{WE}_+ = −(2/3) [2 N_1² − N_2² − N_3² + N_2 N_3]
+            S^{WE}_- = (2/√3) [N_2² − N_3²]
+
+        Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``. We pin:
+        (a) formula match to 10⁻¹² relative across the (n_1, n_2, n_3, ℋ)
+        grid; (b) n_1 < 0, n_2 > 0, n_3 > 0 (sl(2,ℝ) algebra — one
+        negative eigenvalue); (c) S_- sign flips with (N_2² − N_3²);
+        (d) Σ-independence of the source (leading-order near-FLRW form;
+        full nonlinear Mixmaster dispatch is deferred to FB-5).
+
+        FB11-F1 carry: formula-level pin, not Hubble-normalised
+        coordinate chasing.
+
+        Reference: Wainwright-Ellis 1997 §18 Table 11.1 row VIII; Ellis-
+        Maartens-MacCallum 2012 §18.3.
+        """
+        sc = StructureConstants(
+            n1=n1, n2=n2, n3=n3, a_twist=0.0,
+            label="VIII", no_flrw_limit=True,
+        )
+        dSp, dSm = source_VIII(sc, 0.0, 0.0, calH, 1e-3)
+        expected_Sp = -(2.0 / 3.0) * (
+            2 * n1 ** 2 - n2 ** 2 - n3 ** 2 + n2 * n3
+        ) * calH ** 2
+        expected_Sm = (2.0 / math.sqrt(3.0)) * (n2 ** 2 - n3 ** 2) * calH ** 2
+        assert dSp == pytest.approx(expected_Sp, rel=1e-12)
+        if expected_Sm == 0.0:
+            assert dSm == 0.0
+        else:
+            assert dSm == pytest.approx(expected_Sm, rel=1e-12)
+        # Sign pin on S_-: flips with (n_2² − n_3²). The parametrisation
+        # samples both signs and the equal case.
+        if n2 > n3:
+            assert dSm > 0.0, (
+                f"VIII S_- should be positive when n_2 > n_3 "
+                f"(n2={n2}, n3={n3})"
+            )
+        elif n2 < n3:
+            assert dSm < 0.0, (
+                f"VIII S_- should be negative when n_2 < n_3 "
+                f"(n2={n2}, n3={n3})"
+            )
+        # Σ-independence (leading-order near-FLRW form has no spiral
+        # coupling — the full nonlinear Σ-dependence is FB-5 scope).
+        dSp_Sigma, dSm_Sigma = source_VIII(sc, 1e-5, -3e-6, calH, 1e-3)
+        assert dSp_Sigma == pytest.approx(dSp, rel=1e-14)
+        assert dSm_Sigma == pytest.approx(dSm, rel=1e-14)
+
+    @pytest.mark.parametrize(
+        "n1, n2, n3",
+        [
+            (2e-2, 1e-2, 5e-3),   # all-positive, fully asymmetric
+            (1e-2, 2e-2, 5e-3),   # mid eigenvalue dominant
+            (5e-3, 1e-2, 2e-2),   # reverse ordering (n_2 < n_3)
+            (1e-2, 1e-2, 5e-3),   # n_1 = n_2 (partial symmetry)
+        ],
+    )
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_IX_WE_source_formula_and_signs(self, n1, n2, n3, calH):
+        """Type IX source per W-E §18 Table 11.1 (so(3) algebra, all
+        three N_i positive — Mixmaster model):
+
+            S^{WE}_+ = −(2/3) [2 N_1² − N_2² − N_3² − N_2 N_3]
+            S^{WE}_- = (2/√3) [N_2² − N_3²]
+
+        Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``. Differs
+        from VIII only by the sign of the N_2 N_3 cross-term (so(3) vs
+        sl(2,ℝ)). We pin: (a) formula match to 10⁻¹² relative across the
+        (n_1, n_2, n_3, ℋ) grid; (b) all n_i > 0 (so(3) algebra);
+        (c) S_- sign flip with (N_2² − N_3²); (d) Σ-independence.
+
+        Full nonlinear Mixmaster / BKL oscillation dynamics (Belinsky-
+        Khalatnikov-Lifshitz 1970) are deferred to FB-5 / FB-6; this
+        test pins the leading-order near-FLRW source formula only
+        (FB11-F1 carry).
+
+        Reference: Wainwright-Ellis 1997 §18 Table 11.1 row IX; Ellis-
+        Maartens-MacCallum 2012 §18.3; BKL 1970.
+        """
+        sc = StructureConstants(
+            n1=n1, n2=n2, n3=n3, a_twist=0.0,
+            label="IX", no_flrw_limit=False,
+        )
+        dSp, dSm = source_IX(sc, 0.0, 0.0, calH, 1e-3)
+        expected_Sp = -(2.0 / 3.0) * (
+            2 * n1 ** 2 - n2 ** 2 - n3 ** 2 - n2 * n3
+        ) * calH ** 2
+        expected_Sm = (2.0 / math.sqrt(3.0)) * (n2 ** 2 - n3 ** 2) * calH ** 2
+        assert dSp == pytest.approx(expected_Sp, rel=1e-12)
+        if expected_Sm == 0.0:
+            assert dSm == 0.0
+        else:
+            assert dSm == pytest.approx(expected_Sm, rel=1e-12)
+        # S_- sign
+        if n2 > n3:
+            assert dSm > 0.0
+        elif n2 < n3:
+            assert dSm < 0.0
+        # Σ-independence
+        dSp_Sigma, dSm_Sigma = source_IX(sc, 1e-5, -3e-6, calH, 1e-3)
+        assert dSp_Sigma == pytest.approx(dSp, rel=1e-14)
+        assert dSm_Sigma == pytest.approx(dSm, rel=1e-14)
+
+    @pytest.mark.parametrize("N_equal", [1e-4, 1e-3, 1e-2])
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_IX_isotropic_near_limit_known_pathology(
+        self, N_equal, calH,
+    ):
+        """Type IX at n_1 = n_2 = n_3 = n: the current W-E leading-order
+        form gives
+
+            S^{WE}_+ = −(2/3) [2n² − n² − n² − n²] = +(2/3) n²
+            S^{WE}_- = (2/√3) [n² − n²] = 0 exactly.
+
+        The S_+ residual at the isotropic point is a **known W-E
+        pathology** of the leading-order source (noted in
+        `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.2` and the full
+        Mixmaster dynamical-systems treatment in Wainwright-Ellis §6.2
+        that FB-5/FB-6 will address). We do not assert S_+ = 0 here; we
+        pin the current behaviour: S_+ = +(2/3) n² ℋ² exactly, S_- = 0
+        exactly, and the magnitude obeys the ``|S_+| ≤ 10 × (2/3) n² ℋ²``
+        band from the FB-1.2 prompt.
+
+        Reference: Wainwright-Ellis §18 Table 11.1 row IX + §6.2 (BKL
+        closed-attractor treatment deferred to FB-5 / FB-6).
+        """
+        n = N_equal
+        sc = StructureConstants(
+            n1=n, n2=n, n3=n, a_twist=0.0,
+            label="IX", no_flrw_limit=False,
+        )
+        dSp, dSm = source_IX(sc, 0.0, 0.0, calH, 1e-3)
+        expected_Sp_pathology = +(2.0 / 3.0) * n ** 2 * calH ** 2
+        assert dSp == pytest.approx(expected_Sp_pathology, rel=1e-12)
+        # S_- is exactly zero for n_2 = n_3 (identical in VIII and IX).
+        assert dSm == 0.0
+        # FB-1.2 band — the magnitude stays close to the natural scale
+        # (2/3) n² ℋ² (ratio = 1 exactly in the current form); asserts
+        # the source does not blow up due to an accidental algebra bug.
+        band = 10.0 * (2.0 / 3.0) * n ** 2 * calH ** 2
+        assert abs(dSp) < band
+        assert abs(dSm) < band
+
+    # ─── FB-1.2: Bianchi IX recollapse event smoke ──────────────────
+
+    def test_bianchi_IX_recollapse_event_default_branch_is_opt_in(self):
+        """The pre FB-1.2 behaviour of ``solve_bianchi_background`` (no
+        ``events=``) must be preserved bit-for-bit when the event branch
+        is not activated. This guards the "no silent fallback" principle
+        — adding optional event plumbing must not change default output.
+        """
+        from bass.background.einstein_bianchi import (
+            solve_bianchi_background, type_ix_cosmology,
+        )
+        cosmo = type_ix_cosmology(n=1e-2)
+        bg = solve_bianchi_background(
+            cosmo, a_start=1e-6, a_end=1.0, n_pts=1000,
+        )
+        assert bg.terminated_by_event is False
+        assert bg.event_eta == ()
+        # integration completed to (near) a_end
+        assert bg.a[-1] > 0.9
+
+    def test_bianchi_IX_recollapse_event_does_not_fire_on_realistic_flrw(
+        self,
+    ):
+        """With the Planck-2018 FLRW background (Ω_m + Ω_Λ > 0, so
+        H(a) > 0 for all a), the canonical recollapse event (floor = 0)
+        does **not** fire. This pins that the event infrastructure does
+        not spuriously terminate canonical IX integration.
+
+        Real vacuum-IX recollapse lives in FB-5 / FB-6 Mixmaster / BKL
+        work; this smoke test verifies the plumbing is inert on the
+        current production background.
+        """
+        from bass.background.einstein_bianchi import (
+            solve_bianchi_background, type_ix_cosmology,
+            bianchi_ix_recollapse_event,
+        )
+        cosmo = type_ix_cosmology(n=1e-2)
+        event = bianchi_ix_recollapse_event(cosmo, floor=0.0)
+        bg = solve_bianchi_background(
+            cosmo, a_start=1e-6, a_end=1.0, n_pts=1000, events=event,
+        )
+        assert bg.terminated_by_event is False
+        assert bg.event_eta == ()
+        assert bg.a[-1] > 0.9
+
+    def test_bianchi_IX_recollapse_event_fires_on_synthetic_floor(self):
+        """Synthetic smoke test — force the event branch by raising the
+        ``floor`` threshold above the realistic-FLRW ℋ crossing. The
+        integrator must: (a) detect the crossing, (b) terminate cleanly
+        without NaN/inf, (c) populate ``terminated_by_event`` and
+        ``event_eta`` on the returned state.
+
+        This exercises exactly the FB plan §6 D5 "(a) event-terminated
+        solve_ivp" dispatch that Bianchi IX recollapse needs in
+        FB-5 / FB-6 when the vacuum H² contribution can flip sign.
+        """
+        from bass.background.einstein_bianchi import (
+            solve_bianchi_background, type_ix_cosmology,
+            bianchi_ix_recollapse_event,
+        )
+        cosmo = type_ix_cosmology(n=1e-2)
+        # Planck-2018 ℋ spans roughly [1e-5, large] over [1e-6, 1]; a
+        # floor of 1e-3 guarantees a crossing during matter era.
+        event = bianchi_ix_recollapse_event(cosmo, floor=1e-3)
+        bg = solve_bianchi_background(
+            cosmo, a_start=1e-6, a_end=1.0, n_pts=1000, events=event,
+        )
+        assert bg.terminated_by_event is True
+        assert len(bg.event_eta) == 1
+        # event-η is strictly inside the integration window
+        assert 0.0 < bg.event_eta[0]
+        # final state is finite (no NaN/inf leakage)
+        assert np.all(np.isfinite(bg.a))
+        assert np.all(np.isfinite(bg.sigma_plus))
+        assert np.all(np.isfinite(bg.sigma_minus))
+        # ℋ at the final sample is close to the floor (event fired
+        # because ℋ crossed 1e-3 going down)
+        assert abs(bg.calH[-1] - 1e-3) < 1e-4

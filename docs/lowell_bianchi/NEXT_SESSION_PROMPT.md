@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (FB-1.1 complete → FB-1.2 bootstrap; 4/9 Class-A sources VALIDATED)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` (FB-1.1 section; FB-1.2 / 1.3 / 1.4 placeholders reserved at the bottom)
-**Current target session**: **FB-1.2** — Class A VIII / IX background validation: Wainwright-Ellis §18 Table 11.1 per-type match; Bianchi IX `solve_ivp` event detection for recollapse; BKL axisymmetric smoke; promote `shear_sources.SOURCE_STATUS` VIII / IX from PROVISIONAL to VALIDATED; gallery extension `07_fb12_classA_typeVIII_WE_attractor.png` + `08_fb12_classA_typeIX_recollapse_trace.png`
+**Last rotated**: 2026-04-19 (FB-1.2 complete → FB-1.3 bootstrap; Class A fully VALIDATED — 4+2 = 6 of 9 PROVISIONAL sources promoted; only Class B III/IV/VI_h/VII_h remain)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` (FB-1.1 + FB-1.2 supplement; FB-1.3 / 1.4 placeholders reserved at the bottom)
+**Current target session**: **FB-1.3** — Class B background validation: III / IV / V / VI_h / VII_h — twist-coupled shear source; Pontzen-Challinor 2009 VII_h spiral calibration; promote `shear_sources.SOURCE_STATUS` Class B types (V already VALIDATED) to VALIDATED; gallery extension for Class B
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -34,6 +34,138 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 ## 2. Current handoff prompt (ROTATE at end of each session)
 
 Copy the block below into a fresh Claude Code session:
+
+```text
+# FB-1.3 — Class B background validation (III / IV / V / VI_h / VII_h) + Pontzen-Challinor VII_h spiral match
+
+## 프로젝트 컨텍스트
+
+- **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
+- **venv**: venv/bin/python
+- **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+- **현재 baseline**: 2,800 passing + 1 skipped (FB-1.2 직후; 감사 로그: `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` — FB-1.1 + FB-1.2 섹션, FB-1.3/1.4 placeholder 예약됨)
+- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **Phase FB-0 전체** + **FB-1.1 + FB-1.2**:
+  - FB-0.1..0.3 (Ellis convention flip + tilt-field surface + LB-6 F2 seal)
+  - FB-1.1 (Class A I/II/VI₀/VII₀ SOURCE_STATUS → VALIDATED; 4 gallery PNGs 03..06; `TestClassAFixedPoints` 61 runs)
+  - FB-1.2 (Class A VIII/IX SOURCE_STATUS → VALIDATED + `solve_bianchi_background(events=...)` + `bianchi_ix_recollapse_event(cosmo, floor)`; 2 gallery PNGs 07..08; `TestClassAFixedPoints` +47 runs = 108 total)
+- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-1 "Per-type background validation" (4 sessions)** 의 3/4 번째
+- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1.3`
+- **Carry-forward P2 (알고만 있을 것, 절대 건드리지 말 것)**:
+  - F3 → `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² normalisation → **FB-2.4 예약**
+  - FB02-F1 → `00_conventions.md §2` 에 `v̂_e` default cross-reference → **FB-3.1 예약**
+  - FB11-F1 → W-E Table 11.1 fixed-point *coordinates* 는 fixed-N 프레임워크에서 직접 도달 불가 → **FB-5 / FB-6 cross-type continuity**; 본 세션도 formula-level validation 유지, Hubble-normalised coordinate chasing 금지
+  - FB12-F1 (new, FB-1.2) → IX 은 isotropic limit 에서 leading-order residual `S_+ = +(2/3) n² ℋ²` (W-E 의 pathology) 가 있음; full resolution 은 **FB-5 / FB-6** Mixmaster / BKL 동적 시스템에서. 본 세션 Class B 는 이와 무관하지만 정보로 보관.
+  - FB12-F3 → `bianchi_ix_recollapse_event` 는 `_hubble_squared(a, cosmo)` 에 coupling; FB-5 의 vacuum-IX H² 변경 시 event detector 재도출 필요 → **FB-5 / FB-6 예약** (본 세션 Class B 에는 영향 없음)
+
+## 이 세션의 작업 범위 (FB-1.3 — Class B: III / IV / V / VI_h / VII_h)
+
+**Goal**: `bass/transport/shear_sources.py` 의 Class B 5 타입 소스를 W-E §18 + Pontzen-Challinor 2009 (VII_h spiral) 에 대해 per-type 검증하고 `SOURCE_STATUS` 를 `PROVISIONAL → VALIDATED` 로 승격. Class B 의 구분되는 특징: twist parameter `a` ≠ 0 + Jacobi constraint `n_2 = 0`. VII_h 은 spiral coupling (`ω_spiral × Σ_⊥`) 이 추가되는 principal CMB type 이므로 sign + magnitude 양쪽을 Pontzen-Challinor literature fixture 에 맞춰야 함.
+
+### 기준이 되는 문헌 타깃
+
+| 타입 | 해석해 / 수치 타깃 | 테스트 앵커 |
+|---|---|---|
+| III | III = VI_{h=-1} (특수 케이스). `source_III` 는 `source_VIh` 에 dispatch. h = -1 일 때 formula 유효성 pin. | `test_type_III_dispatches_to_VIh_at_h_minus_1` |
+| IV | (0, 0, +) with a > 0. S^{WE}_+ = -(2/3) N_3² + (2/3) A². S^{WE}_- = 0. Cosmologically marginal (no FLRW limit). | `test_type_IV_WE_source_formula` |
+| V | (0, 0, 0) with a > 0. Open FLRW (k=-1). S = (0, 0) shear-specifically (A² 는 curvature 로 흡수). 이미 VALIDATED; FB-1.3 은 benchmark reference 업데이트 + explicit formula pin만. | `test_type_V_shear_zero_pin` (regression) |
+| VI_h | (+, 0, −) with a > 0, h ∈ (-∞,-1)∪(-1,0). S^{WE}_+ = -(2/3)(n_1-n_3)² + (2/3)A²/(1+\|h\|). S^{WE}_- = -(2/√3)(n_1+n_3)(n_1-n_3). | `test_type_VIh_WE_source_formula` |
+| VII_h | **principal CMB type**. (+, 0, +) with a > 0, h > 0. W-E: S^{WE}_+ = -(2/3)(n_1-n_3)² + (2/3)A²/(1+h), S^{WE}_- = +(2/√3)(n_1+n_3)(n_1-n_3). **+ spiral coupling** `ω_spiral = √(\|n_1 n_3\|) × √h × ℋ` applied via `+ω × Σ_-` to dSp, `−ω × Σ_+` to dSm. **Pontzen-Challinor 2009 near-FLRW spiral signature**: rotation in (Σ_+, Σ_-) plane preserves Σ_+² + Σ_-² up to W-E decay. | `test_type_VIIh_WE_source_formula_and_spiral_signature` + `test_type_VIIh_spiral_rotation_conserves_amplitude` |
+| 공통 | `compute_shear_source` signature / Ellis conformal ℋ² lift (FB-0.1) / Σ-independence (except VII_h) 보존 | 기존 `TestDimensionalConsistency` / `TestVII_h_Spiral` 유지 + 확장 |
+
+### 구체 작업 항목
+
+1. **문헌 재확인 (먼저, 코딩 전)**:
+   - Wainwright-Ellis 1997 §18 Table 11.1 Class B rows + §6 Class B algebras (III = VI_{-1}, IV = Bianchi-IV, V = k<0 FLRW, VI_h 전반, VII_h)
+   - Pontzen & Challinor, *PRD* 79, 103518 (2009) — VII_h spiral signature in CMB; `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` FB12-F1 의 교훈 (formula-level validation)
+   - `bass/transport/shear_sources.py::source_{III,IV,V,VIh,VIIh}` 현 구현 + SOURCE_STATUS PROVISIONAL 주석
+
+2. **Validation 테스트 5개 추가** (III + IV + V regression + VI_h + VII_h):
+   - `bass/transport/test_shear_sources.py::TestClassBFixedPoints` 새 클래스:
+     - `test_type_III_dispatches_to_VIh_at_h_minus_1`: III factory 가 h=-1 의 VI_h 와 동일한 결과를 내는지 rel 1e-12 pin
+     - `test_type_IV_WE_source_formula`: (n_3, A, ℋ) grid 에서 공식 rel 1e-12 match
+     - `test_type_V_shear_zero_pin`: (A, ℋ) grid 에서 S_± = 0 exactly (regression)
+     - `test_type_VIh_WE_source_formula`: (n_1, n_3, A, h, ℋ) grid 에서 공식 rel 1e-12 match; h-dependent prefactor 확인
+     - `test_type_VIIh_WE_source_formula_and_spiral_signature`: W-E piece (Σ=0) rel 1e-12 + spiral piece (Σ≠0 - Σ=0) antisymmetric coupling + `ω_spiral ∝ √h` scaling
+     - `test_type_VIIh_spiral_rotation_conserves_amplitude`: Spiral-only (Σ=0 baseline 제거) 상황에서 `(Σ_+, Σ_-)` 의 회전으로 인한 `Σ_+² + Σ_-²` amplitude invariant — Pontzen-Challinor 의 rotation 시그니처
+   - Tolerance: 공식 rel 1e-12; FB-1.1/1.2 precedent 준수. `_CALH_GRID` 재활용.
+
+3. **SOURCE_STATUS 승격**: III / IV / VI_h / VII_h 을 `"PROVISIONAL"` → `"VALIDATED"` 로 변경. V 은 이미 VALIDATED 이므로 reference / benchmark 필드만 FB-1.3 cross-ref 로 업데이트.
+
+4. **Gallery 확장** (FB-1.3 의 non-no-op visual — 예상 3-4 PNG):
+   - `plots/physics_gallery/11_integrator/09_fb13_classB_typeIV_WE_source.png`: IV 의 N_3²/A² twist 구조
+   - `plots/physics_gallery/11_integrator/10_fb13_classB_typeVIh_WE_attractor.png`: VI_h h-dependent prefactor 시각화
+   - `plots/physics_gallery/11_integrator/11_fb13_classB_typeVIIh_spiral.png`: VII_h spiral signature — (Σ_+, Σ_-) plane rotation trace (Pontzen-Challinor 2009 의 CMB 시그니처와 qualitative match)
+   - (optional) `12_fb13_classB_typeV_shear_zero.png`: V 의 shear-vanishing + A²-in-curvature visualisation (regression 성격)
+   - `scripts/make_physics_gallery.py` 에 `plot_11_09`..`plot_11_12` 추가 + CATALOG 등록
+   - 각 PNG 눈으로 확인 (Read tool)
+
+5. **Audit append**: `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` 에 **FB-1.3 supplement** 섹션 append (§1..§10 template).
+
+6. `NEXT_SESSION_PROMPT.md §2` 를 **FB-1.4** (`anisotropic_3_curvature` 11-type consolidation — `tetrad_state.py` ³R_{ab}^{aniso} explicit per type; Phase FB-1 exit) bootstrap 으로 rotate.
+
+### FB-1.3 non-goals (선 밑에 고정)
+
+- **VII_h spiral coefficient κ 의 quantitative calibration 은 FB-5/FB-6** — 본 세션은 sign + scaling (∝ √h) + rotation 시그니처 pin 만
+- **`anisotropic_3_curvature` 11-type 구현은 FB-1.4** — 본 세션은 shear source 만
+- **Hierarchy RHS T4-T7 wire-up** 은 FB-2
+- **Tilted sector** 은 FB-3 (β=0 유지)
+- **Class B full Hewitt-Wainwright reduction** (Δ, Ñ 변수) 은 FB-5/FB-6
+- **F3 / FB02-F1 / FB11-F1 / FB12-F1 / FB12-F3 carry-forwards**: 건드리지 말 것
+
+## 우선 읽어야 할 문서 (순서대로)
+
+1. `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` §FB-1.2 + §10 + FB-1.3 placeholder (본 세션이 append 할 곳)
+2. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1.3`
+3. `bass/transport/shear_sources.py::{source_III, source_IV, source_V, source_VIh, source_VIIh}` (현 구현 + SOURCE_STATUS PROVISIONAL 주석)
+4. `bass/transport/test_shear_sources.py::TestClassAFixedPoints` + `TestVII_h_Spiral` + `TestDimensionalConsistency` (FB-1.2 precedent; 본 세션은 새 `TestClassBFixedPoints` 클래스)
+5. Wainwright-Ellis 1997 §18 Table 11.1 Class B rows + §6; Pontzen & Challinor 2009 Sec. III (VII_h spiral)
+6. `docs/audits/AUDIT_PROMPT.md` (phase-boundary audit template — 본 세션 전에 self-invoke)
+
+## 핵심 원칙 (고정)
+
+1. 외부 코드 금지 (프로덕션 트리)
+2. Citation in every modified docstring (W-E §18 + Pontzen-Challinor 2009 §III 인용 필수 for VII_h)
+3. PSTF invariants preserved; Ellis convention (FB-0.1) 유지
+4. No silent fallbacks
+5. Determinism
+6. **VALIDATED 승격은 수치 검증 후에만**; PROVISIONAL 유지가 안전한 default
+7. **Gallery PNG 는 눈으로 확인 후 commit**; physics 이상 시 즉시 in-session fix
+8. **FB11-F1 + FB12-F1 교훈**: fixed-point coordinate chasing 금지, formula-level pin + qualitative signature (spiral rotation) 이 operative contract
+
+## 검증 체크리스트 (최종 commit 전)
+
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,800 + 신규 테스트)
+- [ ] `TestClassBFixedPoints::test_type_{III,IV,V,VIh,VIIh}_*` green
+- [ ] `shear_sources.SOURCE_STATUS["III"|"IV"|"VI_h"|"VII_h"]` 모두 `"VALIDATED"` + cross-ref 주석 (V 는 reference 업데이트)
+- [ ] `plots/physics_gallery/11_integrator/{09..1N}_fb13_classB_*.png` 생성 + 시각적 inspection 완료
+- [ ] `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` 에 FB-1.3 supplement append (§1..§10)
+- [ ] `docs/audits/AUDIT_PROMPT.md` self-invoke 로 P0/P1 스캔 완료 (결과 audit log FB-1.3 §6 에 기록)
+- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-1.4** (`anisotropic_3_curvature` 11-type consolidation) bootstrap 으로 rotate
+- [ ] 최종 commit 메시지: `FB-1.3: Class B background validation + VII_h spiral signature match` + `+ rotate NEXT_SESSION_PROMPT for FB-1.4`
+
+## 진행 순서
+
+1. `docs/audits/AUDIT_PROMPT.md` self-invoke (pre-phase scan)
+2. FB plan §4 FB-1.3 + Pontzen-Challinor 2009 §III + shear_sources Class B 섹션 읽기
+3. 각 Class B type 에 대해 `compute_shear_source` 를 REPL 로 먼저 돌려 behaviour 확인 (특히 VII_h spiral 회전)
+4. `TestClassBFixedPoints` 에 테스트 6개 추가 (rel 1e-12 formula + spiral signature)
+5. `SOURCE_STATUS` III/IV/VI_h/VII_h 승격 + cross-ref 주석 (V reference 업데이트)
+6. Gallery 3-4 PNG 추가
+7. 각 PNG Read tool 로 inspect → physics 검증
+8. `AUDIT_PHASE_FB1_2026-04-19.md` 에 FB-1.3 supplement append
+9. 전체 회귀 green 확인
+10. `NEXT_SESSION_PROMPT.md §2` rotate to FB-1.4
+11. commit
+
+시작하세요. 본 세션은 **Class B 완주** — FB-1.2 의 formula-level pinning 방식을 Class B (twist-coupled) 에 확장하고, VII_h 의 Pontzen-Challinor spiral 시그니처를 qualitative 하게 (sign + scaling + rotation 보존) 고정합니다. FB-1.4 가 Phase FB-1 의 마지막 rotation 이며 `anisotropic_3_curvature` 로 닫힙니다.
+```
+
+---
+
+<!-- Prior (FB-1.2) handoff prompt (saved for reference only; do not re-run). -->
+
+<details>
+<summary>Previous FB-1.2 handoff prompt (archived 2026-04-19)</summary>
 
 ```text
 # FB-1.2 — Class A VIII / IX background validation + Bianchi IX recollapse event
@@ -158,6 +290,8 @@ Copy the block below into a fresh Claude Code session:
 
 시작하세요. 본 세션은 **Class A 완주** — FB-1.1 의 formula-level pinning 방식을 그대로 VIII / IX 에 확장하고, Bianchi IX 의 recollapse 처리를 위한 event-detection 인프라를 도입합니다. FB11-F1 의 교훈 (fixed-N 프레임워크에서 self-similar coordinate chasing 금지) 을 반드시 준수: W-E Table 11.1 "asymptotic" 언어는 formula-match 로 구체화, dynamical system 재매개화는 FB-5/FB-6 으로 유지.
 ```
+
+</details>
 
 ---
 
