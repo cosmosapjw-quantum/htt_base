@@ -302,3 +302,62 @@ recorded? yes; internal Lowell gap recorded explicitly? yes
 phase-close gate.
 
 ## §FB-7.5
+
+### §FB-7.5 — Planck-2018 FLRW-limit validation skeleton
+**Channel A**: 6 checked / 6 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-7`
+names a full Planck-2018 likelihood match at the FLRW limit as the
+fifth sub-phase; verified `data/camb_ref_planck2018.npz` exists and is
+the shipped CAMB oracle already reused elsewhere in the BASS stack;
+verified a local inspection of that NPZ shows scalar metadata
+`H0=67.36`, `ombh2=0.02237`, `omch2=0.12`, `tau=0.0544`, `As=2.1e-9`,
+`ns=0.9649`, `mnu=0.06`, and `omk=0.0`; verified
+`docs/dossier/A13_00_FLRW.md` already treats Planck 2018 VI as the
+local FLRW baseline; verified the new `bass.likelihood` package is the
+appropriate home for a full-stack FLRW-limit validator; verified no
+committed validator currently owns the full LOS + spectrum + HTT +
+likelihood stack at the FLRW limit.
+**Channel B**: 3 source checks / 3 verified / 0 divergent. Evidence:
+`arXiv:1907.12875` is the likelihood paper `Planck 2018 results. V. CMB
+power spectra and likelihoods`, submitted on 2019-07-30. `arXiv:1807.06209`
+is the parameter paper `Planck 2018 results. VI. Cosmological parameters`,
+submitted on 2018-07-17. The Planck VI PDF abstract reports the
+base-ΛCDM values in rounded form (`Ω_b h² ≈ 0.0224`, `n_s ≈ 0.965`,
+`τ ≈ 0.054`, `H0 ≈ 67.4`), which align with the exact local fixture
+scalars above. I therefore infer that `data/camb_ref_planck2018.npz` is
+the CAMB realization of the Planck-2018 parameter baseline carried by
+VI and intended for use with the Planck-2018 likelihood context from V.
+**Channel C** (prose, 6-10 lines): The safest FB-7.5 skeleton is an
+explicit validator function, not another hidden assertion inside one of
+the earlier spectrum modules. This phase is about cross-stack agreement:
+LOS, spectrum extraction, HTT decomposition, and the cosmological-frame
+likelihood all have to recover the FLRW oracle together. Naming the
+validator and pointing it directly at the shipped CAMB NPZ keeps that
+phase boundary auditably explicit. The signature also distinguishes the
+likelihood paper from the parameter paper because the fixture provenance
+depends on both: the data vector is a CAMB spectrum, while the intended
+reference semantics are Planck's 2018 likelihood. Folding those into one
+unnamed constant would make later provenance drift harder to detect. The
+body stays unimplemented, but the provenance contract is now visible and
+reviewable.
+**Alternatives**:
+| # | FLRW-limit surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `validate_planck2018_flrw_limit_match(...)` explicit validator | Keeps full-stack provenance visible; cleanly names both Planck papers and the CAMB fixture; additive to the new likelihood package. | Adds a dedicated validation helper rather than hiding the check elsewhere. | ✅ |
+| 2 | Bury the check inside `CosmologicalFrameLikelihood.__init__` | Fewer public names. | Mixes validation policy with runtime construction and makes the FLRW oracle harder to audit independently. | — |
+| 3 | Extend `test_lowell_bianchi.py` only, no helper surface | Reuses an existing test harness. | Leaves no explicit production-side contract for the phase-exit validator and hides provenance in test code only. | — |
+**Core principles**: full-stack FLRW-limit validation is explicit;
+Planck 2018 V and VI are distinguished rather than conflated; shipped
+CAMB NPZ remains the sole numeric oracle; deterministic failure until
+the validator is implemented.
+**Skeleton path**:
+`htt/bass/likelihood/planck2018_flrw_match.py::validate_planck2018_flrw_limit_match`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/likelihood/test_fb75_planck2018_flrw_match_skeleton.py -q`
+**Guard rails** (yes/no): likelihood-paper arXiv ID confirmed? yes;
+parameter-paper arXiv ID confirmed? yes; local fixture metadata checked?
+yes; Planck V vs VI distinction explicit? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 52 skipped` → `3403 passed + 53 skipped` pending the
+phase-close gate.

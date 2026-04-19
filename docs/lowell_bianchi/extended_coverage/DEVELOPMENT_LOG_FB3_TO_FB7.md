@@ -802,3 +802,23 @@ fresh cumulative count.
 - **Notes**: a named class was chosen over a bare callable because the
   FB-8 observer-frame adapter SDD already expects a
   `CosmologicalFrameLikelihood` type.
+
+### FB-META-7.5 — Planck-2018 FLRW-limit validation skeleton
+
+- **Scope**: Recorded FB-7.5 three-channel verification and added the
+  committed `validate_planck2018_flrw_limit_match(...)` skeleton plus
+  one skipped contract test. The contract names the shipped
+  `data/camb_ref_planck2018.npz` oracle directly and keeps the two
+  relevant Planck papers distinct: V (`1907.12875`) for the likelihood
+  and VI (`1807.06209`) for the base-ΛCDM parameter baseline embedded in
+  the fixture metadata.
+- **Commit anchor**: see `git log --grep='FB-META-7.5'`.
+- **Test delta**: `3,403 passed + 52 skipped` →
+  `3,403 passed + 53 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META7_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META7_2026-04-20.md) §FB-7.5.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: the full-stack FLRW validator itself remains
+  unimplemented; only the oracle provenance contract is planted here.
+- **Notes**: the validator is kept separate from runtime likelihood
+  construction so the phase-exit oracle policy stays independently
+  auditable.
