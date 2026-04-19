@@ -102,6 +102,30 @@ the failure mode as follows:
 4. `git log --oneline main` shows three commits in rapid order; the
    order of arrival is non-deterministic.
 
+Paste-ready shell block (W20D3 / W19 R-carry) — the concrete commands
+each terminal issues:
+
+```bash
+# Terminal A (ind-tracks lane)
+git add bass_py/mio/tests/test_foo.py
+git status --short                       # sees only the ind-tracks path
+git commit -m "INDTR: foo" -- bass_py/mio/tests/test_foo.py
+
+# Terminal B (bass lane) — runs in parallel with A
+git add bass_py/bass/hierarchy/bar.py
+git status --short                       # sees only the bass path
+git commit -m "BASS: bar" -- bass_py/bass/hierarchy/bar.py
+
+# Terminal C (gallery lane) — runs in parallel with A and B
+git add plots/physics_gallery/01_species_background/baz.png
+git status --short                       # sees only the gallery path
+git commit -m "GAL: baz" -- plots/physics_gallery/01_species_background/baz.png
+
+# Any terminal, after all three land on main:
+git log --oneline -3                     # three shas in arrival order
+git show --stat <sha>                    # each diff is single-lane
+```
+
 The scoped-pathspec rule guarantees that **no commit's diff is
 contaminated**, regardless of the arrival order — step 3's
 pathspec form makes `git commit` treat only those paths from the
