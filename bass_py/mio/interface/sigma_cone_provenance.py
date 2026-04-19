@@ -39,12 +39,12 @@ from __future__ import annotations
 from typing import FrozenSet, Iterable, List
 
 
-PROMOTED_SIGMA_CONE_PROBES: FrozenSet[str] = frozenset({"CatWISE"})
+PROMOTED_SIGMA_CONE_PROBES: FrozenSet[str] = frozenset({"BiPoSH", "CatWISE"})
 """A36a.5 promoted set: PROBE_IDs whose σ_cone is DOI-anchored or
 deliberately conservative and whose delta from literature is ≤ the
-published 1σ cone. Populated by W14D5 (`CatWISE`). `BiPoSH` is
-A36a.5-eligible but is retired in a paired W14D6 commit to match the
-plan's two-commit rhythm.
+published 1σ cone. Populated by W14D5 (`CatWISE`) and W14D6 (`BiPoSH`).
+`CMB`, `Radio`, `CF4pp` remain flagged per A36a.5 — their delta from
+literature is non-trivial even when conservative.
 Extending this set requires a paired commit touching this module + the
 corresponding A36a.2 row + a regression rationale per A36a.5 step 3."""
 

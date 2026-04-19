@@ -41,6 +41,21 @@ def test_promoted_set_is_frozen_and_contains_catwise():
     assert "CatWISE" in PROMOTED_SIGMA_CONE_PROBES
 
 
+def test_promoted_set_contains_biposh_post_w14d6():
+    """W14D6 post-condition: BiPoSH is the second A36a.5 promotion.
+
+    W14D6 lands BiPoSH as the second retirement per A36a.5 last line
+    (A36a.5 `Promotion log` row). The remaining three probes — CMB,
+    Radio, CF4pp — stay flagged because their delta from literature
+    is non-trivial even when the code value is conservative.
+    """
+    assert "BiPoSH" in PROMOTED_SIGMA_CONE_PROBES
+    # CMB / Radio / CF4pp remain flagged.
+    assert "CMB" not in PROMOTED_SIGMA_CONE_PROBES
+    assert "Radio" not in PROMOTED_SIGMA_CONE_PROBES
+    assert "CF4pp" not in PROMOTED_SIGMA_CONE_PROBES
+
+
 def test_placeholder_caveats_for_five_standard_probes_excludes_promoted():
     """Input = five SSOT probes → output drops every PROMOTED name."""
     names = [p.name for p in STANDARD_PROBES]

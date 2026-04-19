@@ -150,9 +150,12 @@ literature-consistent-but-not-verbatim, or plan-placeholder.
   cone sizes.
 - **C**: `sigma_cone_deg=20.0`.
 - **Δ**: centered in the quoted range.
-- **Status**: **literature-consistent-but-not-verbatim.** 20° is
-  close to the midpoint of the Planck 2015 BipoSH dipole direction
-  cone. The placeholder flag may be retired on the paired update.
+- **Status**: **literature-consistent-but-not-verbatim.**
+  A36a.5-promoted **2026-W14D6** — 20° is close to the midpoint of
+  the Planck 2015 BipoSH dipole direction cone and the arXiv:1506.07135
+  reference anchors the quote. `BiPoSH` is now absent from the
+  placeholder tag set emitted by HJ-02a / HJ-02b certificates per
+  `mio.interface.sigma_cone_provenance.PROMOTED_SIGMA_CONE_PROBES`.
 - **References**: Planck Collaboration (2016), A&A 594, A16
   (Planck 2015 Results XVI), arXiv:1506.07135.
 
@@ -216,7 +219,9 @@ conservative.
 - **W14D5** — `CatWISE` promoted. Code-side source of truth:
   `mio.interface.sigma_cone_provenance.PROMOTED_SIGMA_CONE_PROBES`;
   parity tests: `bass_py/mio/tests/test_sigma_cone_provenance.py`.
-- **W14D6** — `BiPoSH` promoted (planned; same commit shape).
+- **W14D6** — `BiPoSH` promoted. Same code-side SSOT and test file;
+  `PROMOTED_SIGMA_CONE_PROBES` is now `frozenset({"BiPoSH", "CatWISE"})`.
+  After W14D6 the flagged set is `{CMB, Radio, CF4pp}`.
 
 ## A36a.6 Follow-up (W13 / W14 opportunistic)
 
