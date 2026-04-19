@@ -76,6 +76,21 @@
 
 ## §FB-5.4
 
+### §FB-5.4 — ``k = 0`` limit gate skeleton
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-5` names FB-5.4 as the `k=0` recovery gate; verified `htt/bass/integration/test_lowell_bianchi.py` is the shipped LB-6 background / geometry regression anchor; verified `docs/PROGRESS_SCOREBOARD.md` already treats the `k=0` limit as an explicit physics check; verified the preceding FB-5.1 through FB-5.3 skeletons kept the mode, off-axis, and seed surfaces separate, leaving room for a standalone validator instead of an implicit integrator branch.
+**Channel B**: 0 arXiv-only verifications / 2 citations demoted to `# TODO`. Evidence: the prompt's primary anchors for this sub-phase are Sachs-Wolfe 1967 and Kolb-Turner 1990, neither of which is available as an arXiv-era source. No substitute arXiv-only locator was adopted in this session, so both remain explicit TODO citations rather than guessed stand-ins.
+**Channel C** (prose, 6-10 lines): The safest FB-5.4 contract is a validator, not a hidden integrator toggle. The reason is that `k = 0` is a recovery condition on the perturbation path, not a new production evolution mode by itself. Keeping the limit check as an assertion surface forces the future implementation to name both inputs: the perturbative state and the LB-6 background anchor it must collapse onto. That also prevents a subtle failure mode where an integrator silently detects a small k and switches algorithms without leaving an auditable trace. The large-scale Sachs-Wolfe gate belongs in the same validator family for the same reason: it is a known-limit check, not an excuse to widen runtime heuristics. The placeholder therefore raises until the comparison contract, tolerances, and observables are fully sealed.
+**Alternatives**:
+| # | signature | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `assert_k_zero_limit_matches_background(*, k_comoving, background_state, perturbation_state, atol, rtol) -> None` | Makes the recovery target explicit; keeps the gate outside runtime evolution; smallest blast radius. | Future callers must gather the two state vectors before checking. | ✅ |
+| 2 | `run(..., enforce_k_zero_limit=True)` | One integrator flag could own the comparison internally. | Hides a known-limit assertion inside runtime control flow and increases the risk of silent branch switching. | — |
+**Core principles**: explicit known-limit validation; no hidden runtime mode switches; deterministic failure until the background-recovery contract is sealed.
+**Skeleton path**: `htt/bass/perturbation/k_zero_limit_gate.py::assert_k_zero_limit_matches_background`
+**Test path**: `htt/bass/perturbation/test_fb54_k_zero_limit_gate_skeleton.py::test_fb54_k_zero_limit_gate_skeleton_contract`
+**Guard rails** (yes/no): citations verified? local yes / external TODO; imports exist? yes; ≥ 2 alternatives? yes; silent fallback avoided? yes
+**Regression after plant**: 3,403 passed + 8 skipped (four local-only skipped contract tests over the 2026-04-20 baseline).
+
 ## §FB-5.5
 
 ## §FB-5.6

@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-5.3 → FB-5.4**; CAMB seed skeleton contract recorded, next handoff narrowed to the k=0 limit gate skeleton)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.3
-**Current target session**: **FB-5.4** — k=0 limit gate skeleton contract
-**Phase status**: FB-5 skeleton cycle is in progress on 2026-04-20; FB-5.3 is sealed locally and FB-5.4 is next
+**Last rotated**: 2026-04-20 (**FB-5.4 → FB-5.5**; k=0 gate skeleton contract recorded, next handoff narrowed to the Class B quantisation skeleton)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.4
+**Current target session**: **FB-5.5** — Class B mode-quantisation skeleton contract
+**Phase status**: FB-5 skeleton cycle is in progress on 2026-04-20; FB-5.4 is sealed locally and FB-5.5 is next
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,28 +37,26 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-5.4 — k = 0 limit gate skeleton contract
+# FB-5.5 — Class B mode-quantisation skeleton contract
 
-FB-5.3 landed as a local-only skeleton: the new placeholder is
-`htt/bass/perturbation/regular_adiabatic_ic.py::make_camb_regular_adiabatic_seed`,
-and the audited local baseline is now `3,403 passing + 7 skipped`.
+FB-5.4 landed as a local-only skeleton: the new placeholder is
+`htt/bass/perturbation/k_zero_limit_gate.py::assert_k_zero_limit_matches_background`,
+and the audited local baseline is now `3,403 passing + 8 skipped`.
 
 Next session target:
-- Plant the FB-5.4 skeleton only.
+- Plant the FB-5.5 skeleton only.
 - Keep `htt/` unstaged by contract.
-- Treat Ma-Bertschinger `astro-ph/9506072` as the verified IC anchor.
-- Keep the prompt-supplied Lewis-Challinor `astro-ph/9911177` locator
-  demoted for seed work; it is not an IC derivation.
+- Carry forward the explicit validator design choice from FB-5.4.
+- Keep textbook-only Sachs-Wolfe / Kolb citations marked as TODO in the
+  arXiv-only channel.
 
 Required carry-forward anchors:
 - Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
 - Latest audit artifact:
-  `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.3
-- Verified FB-5.3 external anchor:
-  `https://arxiv.org/abs/astro-ph/9506072`
+  `docs/audits/AUDIT_PHASE_FB_META5_2026-04-20.md` §FB-5.4
 - Latest full regression anchor:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3403 passed, 4 skipped` pre-plant, so FB-5.4 should advance only
+  → `3403 passed, 4 skipped` pre-plant, so FB-5.5 should advance only
     the skipped count if it lands cleanly.
 ```
 

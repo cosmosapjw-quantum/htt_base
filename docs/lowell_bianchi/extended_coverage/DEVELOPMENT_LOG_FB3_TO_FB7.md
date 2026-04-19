@@ -530,3 +530,22 @@ fresh cumulative count.
 - **Notes**: the chosen surface stays separate from the shipped
   `make_initial_state` zero-IC contract to avoid implying that the
   analytic k-dependent seed has already been sealed.
+
+### FB-META-5.4 — ``k = 0`` limit gate skeleton
+
+- **Scope**: Recorded FB-5.4 three-channel verification and planted the
+  local-only `assert_k_zero_limit_matches_background(...)` skeleton
+  plus one skipped contract test without staging any `htt/` changes.
+  The external channel stayed honest: Sachs-Wolfe 1967 and
+  Kolb-Turner 1990 remain `# TODO` because this session restricted
+  verification to arXiv-only sources.
+- **Commit anchor**: see `git log --grep='FB-META-5.4'`.
+- **Test delta**: `3,403 passed + 7 skipped` →
+  `3,403 passed + 8 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META5_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META5_2026-04-20.md) §FB-5.4.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: textbook-only Sachs-Wolfe / Kolb references remain
+  citation-needed in the arXiv-only channel.
+- **Notes**: the chosen surface is an explicit validator rather than an
+  integrator flag so the `k = 0` recovery check cannot become a hidden
+  runtime branch.
