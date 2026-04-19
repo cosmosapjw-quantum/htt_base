@@ -449,3 +449,263 @@ FB-2.3 consumes:
 | G | ``docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2`` — rotated to FB-2.3 (Class B twist-coupled ∇̃ dispatch) | ✅ |
 
 *End of FB-2.2 audit supplement.*
+
+---
+
+## FB-2.3 — Class B III / IV / VI_h / VII_h ∇̃ twist-coupled dispatch on the abelian 2-plane + T1 Ricci hook activation
+
+**Session date**: 2026-04-19
+**Commit target**: `FB-2.3: Class B III / IV / VI_h / VII_h twist-coupled nabla_tilde + T1 Ricci hook activation`
+**Parent commit at entry**: `6f6df1c` (HEAD before FB-2.3) — pre-FB-2.3 baseline 3,056 passed + 1 skipped
+**Exit test count**: 3,083 passed + 1 skipped (+27 new)
+**Env note**: on entry the venv editable-install finder
+(`venv/lib/python3.12/site-packages/__editable___htt_8_3_0_finder.py`)
+still pointed ``htt``/``tests`` at the deleted
+`bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot/bass_py/htt/…`
+paths, blocking every `bass.species.constants` import. Re-running
+`../venv/bin/python -m pip install -e .` from `htt_base/htt/htt/`
+re-pinned the finder at `htt_base/htt/htt/htt` (present tree) — a pure
+environment fix, no code change.
+
+### §1 Audit target reconstruction
+
+1. **Physical/mathematical claim**. The Class B Bianchi types
+   (III / IV / VI_h / VII_h) all carry a twist vector
+   ``a_α = (0, a_twist, 0)`` in the PC frame; Jacobi
+   (``n^{αβ} a_β = 0``) forces ``n_2 = 0``, so
+   ``[e_3, e_1] = n_2 e_2 = 0`` and ``span{e_1, e_3}`` is an
+   **abelian** 2-subalgebra. On that abelian plane a scalar plane wave
+   ``Y = e^{i k · x}`` with ``k_2 = 0`` is an exact eigenmode of
+   ``∇̃``, and the scalar Laplacian acquires a Harrison-V-style
+   curvature offset from the twist sector:
+
+        ∇̃² Y = −(|k|² + a_twist² / (1 + |h|)) Y      (h = a²/(n₁ n₃))
+
+   The denominator ``1 + |h|`` matches the FB14-F1
+   ``(2/3) A² / (1 + |h|)`` piece of the Class B W-E ``S^{WE}_+``
+   shear source (already in-tree). Special cases: Type III
+   (``|h| = 1``) → factor 1/2; Type IV (``h = 0``) → factor 1
+   (Harrison-V limit); Type V at ``h = 0`` → identical eigenvalue.
+
+   For T1 / T2: the FB-1.4 consolidation made
+   ``anisotropic_3_curvature`` return a non-zero Class B
+   ``³R_{ab}^{aniso}``, so the FB-2.2 optional ``aniso_ricci_tensor``
+   kwarg on ``T1_expansion`` now activates automatically for Class B
+   callers. ``T2_gradient`` remains structurally zero at background
+   (``zero_nabla_operator``), awaiting FB-5 complex-dtype wire-up.
+
+2. **Algorithm**.
+   * Add ``III``, ``IV``, ``VI_h``, ``VII_h`` to
+     ``SUPPORTED_FB23_TYPES``; per-type validators
+     ``_validate_mode_typeIII / _IV / _VIh / _VIIh`` delegate to a
+     shared ``_validate_class_b_axis_aligned_k2_zero`` guard that
+     checks ``k_2 = 0`` and ``a_twist > 0``; off-plane modes raise
+     ``NotImplementedError("FB-5.2")``.
+   * Extend ``scalar_laplacian_eigenvalue`` with the
+     ``−(|k|² + a²/(1+|h|))`` branch for every ``label in
+     SUPPORTED_FB23_TYPES``.
+   * Drain ``DEFERRED_FB23_TYPES`` to ``()``; recompute
+     ``SUPPORTED_TYPES = FB21 ∪ FB22 ∪ FB23`` (12 labels).
+
+3. **Source of truth**. ``bass/hierarchy/nabla_dispatch.py``
+   docstrings cite Wainwright-Ellis 1997 §9.1, Ellis-Maartens-MacCallum
+   2012 §14.3, Harrison 1967 eq (4.5), Pontzen & Challinor 2007 eq
+   (2.12). The FB14-F1 ``1/(1+|h|)`` denominator is cross-linked to
+   ``bass/transport/shear_sources.py`` (source_VIh / source_VIIh) so
+   the ∇̃ twist offset and the W-E shear source share a single
+   parameterisation.
+
+### §2 Contract / interface table
+
+| Contract item | Value |
+|---|---|
+| Supported FB-2.3 types | ``III``, ``IV``, ``VI_h``, ``VII_h`` (all ``a_twist > 0``) |
+| Abelian subalgebra | ``span{e_1, e_3}`` for every Class B (Jacobi ``n_2 = 0``) |
+| Admissible mode | ``k_vec = (k_1, 0, k_3)`` (``k_2 = 0``); any finite real components |
+| Off-plane → FB-5.2 | Non-zero ``k_2`` on any Class B type raises ``NotImplementedError("FB-5.2")`` |
+| Laplacian III | ``λ = −(|k|² + a_twist²/2)`` (``|h|=1``) |
+| Laplacian IV | ``λ = −(|k|² + a_twist²)`` (``h=0``; Harrison-V analogue) |
+| Laplacian VI_h | ``λ = −(|k|² + a_twist²/(1+|h|))`` for ``h ∈ (−∞,−1) ∪ (−1,0)`` |
+| Laplacian VII_h | ``λ = −(|k|² + a_twist²/(1+h))`` for ``h > 0`` (PC 2007 spiral damping) |
+| Dispatch partition | ``SUPPORTED_TYPES = FB21 ∪ FB22 ∪ FB23 = 12 labels`` (disjoint); ``DEFERRED_FB22_TYPES = DEFERRED_FB23_TYPES = ()`` |
+| T1 Ricci hook | Active on Class B via the FB-2.2 optional kwarg (no code change; driver wire-up still parked for FB-2.4) |
+| Sign-constraint guards | ``n_1 > 0`` (III / VI_h / VII_h), ``n_3 < 0`` (III / VI_h), ``n_3 > 0`` (IV / VII_h), ``n_1 = 0`` (IV), ``h ≠ −1`` (VI_h — that's III) |
+| FB14-F1 cross-link | ``1/(1+|h|)`` denominator shared with ``bass/transport/shear_sources.py`` |
+
+### §3 Phys-math audit ledger
+
+| Check | Verdict | Notes |
+|---|---|---|
+| III axis-aligned plane wave ``∇̃ = i k`` | **pass** | `test_typeIII_nabla_axis_aligned` rel 1e-12 |
+| III divergence on a rank-1 probe | **pass** | `test_typeIII_divergence_rank1` rel 1e-12 |
+| III Laplacian offset ``a²/2`` at ``|h|=1`` | **pass** | `test_typeIII_laplacian_h_minus_one_half_offset` rel 1e-12 |
+| IV axis-aligned plane wave | **pass** | `test_typeIV_nabla_axis_aligned` rel 1e-12 |
+| IV Laplacian matches Harrison-V at ``h = 0`` | **pass** | `test_typeIV_laplacian_matches_harrison_V` rel 1e-12 |
+| VI_h plane wave on the abelian plane | **pass** | `test_typeVIh_nabla_on_abelian` rel 1e-12 |
+| VI_h Laplacian ``a²/(1+\|h\|)`` | **pass** | `test_typeVIh_laplacian_h_factor_denominator` rel 1e-12 |
+| VII_h symmetric-line + axis-aligned plane wave | **pass** | `test_typeVIIh_nabla_symmetric_axis_aligned` rel 1e-12 |
+| VII_h spiral damping ``a²/(1+h)`` | **pass** | `test_typeVIIh_laplacian_spiral_damping` rel 1e-12 |
+| VII_h ``h → 0`` limit → Harrison-V | **pass** | `test_typeVIIh_h_to_zero_limit_matches_harrison` rel 1e-12 |
+| Class B off-plane → ``NotImplementedError("FB-5.2")`` (4 types) | **pass** | `TestFB23ClassBOffAxis::test_class_b_off_plane_raises_fb52` parametrised on (III, IV, VI_h, VII_h) |
+| T1 Ricci contribution non-zero on every Class B type | **pass** | `TestT1ClassBRicciCoupling::test_T1_class_b_ricci_contribution_nonzero` parametrised; ``norm(out_ricci − out_base) > 1e-8`` |
+| h-parametrisation: VI_h ``h → −1`` matches III ``a²/2`` | **pass** | `test_III_matches_VI_h_approaching_minus_one` rel 1e-4 (h = −0.9999 perturbation) |
+| h-parametrisation: IV ↔ V at identical (``a``, ``k``) across 4 k magnitudes | **pass** | `test_IV_and_V_match_at_identical_a_k` rel 1e-12 |
+| Sign-constraint guards (III n_1>0; IV n_1=0; VII_h n_3>0; a_twist>0) | **pass** | `TestClassBValidatorSignGuards` (4 tests) |
+| ``SUPPORTED_FB23_TYPES`` = {III, IV, VI_h, VII_h} | **pass** | `test_fb23_supported_types_contains_class_b_additions` |
+| ``DEFERRED_FB23_TYPES`` drained to empty | **pass** | `test_fb23_deferred_tuple_is_drained` |
+| ``SUPPORTED_TYPES`` = 12 labels (11 Bianchi + FLRW), disjoint | **pass** | `test_fb23_supported_types_covers_twelve_labels` |
+| FB-2.1 partition test still green after merge | **pass** | `test_fb21_dispatch_covers_all_11_bianchi_types_plus_flrw` unaffected |
+| Dimensional consistency (``[k] = 1/Mpc``, ``[a_twist²] = 1/Mpc²``) | **pass** | inspection |
+| Ellis convention preserved; ``∇̃ = i k_a``; PSTF invariants | **pass** | inspection |
+| LB-6 baseline bit-identical (3,056 pre-existing tests) | **pass** | 3,083 − 27 = 3,056 |
+
+### §4 Equation-to-code mapping audit
+
+| Equation | Code location | Verdict |
+|---|---|---|
+| Class B axis-aligned guard (``k_2 = 0`` + ``a_twist > 0``) | `_validate_class_b_axis_aligned_k2_zero` in [htt/bass/hierarchy/nabla_dispatch.py](htt/bass/hierarchy/nabla_dispatch.py) | pass — tolerance-aware zero check on ``k_2``; uniform FB-5.2 message across all 4 types |
+| III validator (``n_1 > 0, n_3 < 0``) | `_validate_mode_typeIII` | pass — sign-constraint guard cites W-E §9.1 |
+| IV validator (``n_1 = 0, n_3 > 0``) | `_validate_mode_typeIV` | pass — admits ``h = 0`` marginal case |
+| VI_h validator (``n_1 > 0, n_3 < 0, h ≠ −1``) | `_validate_mode_typeVIh` | pass — rejects the III-coincident ``h = −1`` boundary |
+| VII_h validator (``n_1 > 0, n_3 > 0, h > 0``) | `_validate_mode_typeVIIh` | pass — admits the PC 2007 spiral range |
+| ``SUPPORTED_TYPES = FB21 ∪ FB22 ∪ FB23`` | `nabla_dispatch.py` module level | pass — 12 distinct labels, set equality enforced by test |
+| Laplacian ``−(|k|² + a²/(1+|h|))`` for Class B | `scalar_laplacian_eigenvalue` Class B branch | pass — unified ``h_denom = 1.0 + abs(h_parameter)`` for all four types |
+| Harrison-V reduction at ``h = 0`` (IV = V at identical a, k) | `scalar_laplacian_eigenvalue` IV branch vs V branch | pass — cross-type equality test pins rel 1e-12 |
+| T1 ``aniso_ricci_tensor`` kwarg active on Class B | `T1_expansion` in `bass/hierarchy/terms.py` | pass — no code change needed; FB-1.4 ``³R_{ab}^{aniso}`` feeds the FB-2.2 hook |
+| ``hierarchy_rhs_photon`` driver still passes ``aniso_ricci_tensor = None`` | consumer unchanged | **carry-forward** — intentional per FB-2.2 P2; driver wire-up scheduled for FB-2.4 |
+| No silent fallback for deferred subsets | inspection | pass — ``NotImplementedError("FB-5.2")`` raised before any operator is returned |
+
+### §5 Numerical / pipeline audit
+
+| Item | Status | Notes |
+|---|---|---|
+| Plane-wave eigenmode rel 1e-12 on III / IV / VI_h / VII_h | ok | Complex arithmetic at ε_mach |
+| Laplacian Class B offset rel 1e-12 across 4 k magnitudes | ok | Closed-form comparison, no cancellation |
+| VI_h ``h → −1`` continuity at h = −0.9999 | ok | Rel 1e-4 is the expected offset-ratio tolerance (``(1+1)/(1+0.9999) ≈ 1.00005``) |
+| VII_h ``h → 0`` limit vs V (Harrison) at ``a_twist = 1e-6`` | ok | Absolute diff < 1e-12 |
+| T1 Ricci coupling norm > 1e-8 on all 4 types | ok | Physical tensor magnitude from FB-1.4 ``³R_{ab}^{aniso}`` |
+| Off-plane raises on every type (parametrised) | ok | Uniform error surface |
+| Dtype promotion float64 → complex128 (inherits FB-2.1) | ok | ``_plane_wave_operator`` reused unchanged |
+| Determinism | ok | Pure functions; no global state |
+| No external code | ok | Only ``numpy`` imports |
+| Jacobi sanity (``n_2 = 0`` forced by ``a_β`` twist) | ok | Enforced by ``StructureConstants`` factories + validator sign guards |
+
+### §6 Ranked failure modes
+
+- **None P0 / P1** identified.
+- **P2 (carry-forward from FB-2.2)** — ``hierarchy_rhs_photon`` still
+  does not route ``tetrad_state.aniso_3_curvature`` into
+  ``T1_expansion`` / ``T2_gradient``. FB-2.3 deliberately leaves this
+  untouched (the plan explicitly parks it for FB-2.4 alongside the
+  T4-T7 vorticity / 4-accel wire-up and a per-type regression sweep).
+  **Not a new finding** — this supplement only re-documents the
+  carry-forward.
+- **P3 (future)** — Off-axis Class B modes require the full FB-5.2
+  dispatch (helical / Wigner-rotation lift around the ``e_2`` twist
+  generator). Raised explicitly at every Class B validator; no silent
+  approximation.
+- **P3 (env, out of FB scope)** — `venv/bin/pip` shebang still points
+  at the deleted snapshot path. Working around with
+  `../venv/bin/python -m pip`; a full `python -m venv --upgrade` or a
+  fresh venv rebuild would clean this up. Unrelated to FB physics; not
+  acted on this session.
+
+### §7 Verifier results
+
+| Verifier | Result |
+|---|---|
+| A. Physics: known-limit recovery | **passed** (IV = V at ``h = 0``; VII_h → V at ``h → 0``; VI_h → III as ``h → −1``) |
+| A. Physics: dimensional consistency | **passed** (``[k] = [a_twist] = 1/Mpc``; eigenvalue in ``1/Mpc²``) |
+| A. Physics: sign / normalisation (``∇̃ = i k``; ``+a²/(1+|h|)`` offset) | **passed** |
+| A. Physics: admissibility (Class B sign pattern + ``a_twist > 0`` enforced) | **passed** |
+| B. Code: contract satisfaction (plane-wave operator reuse; 12-label partition) | **passed** |
+| B. Code: reproducibility | **passed** (pure functions; no state) |
+| B. Code: regression risk | **passed** (3,056 pre-existing tests bit-identical; +27 new) |
+| C. Numerical: tolerance robustness | **passed** (rel 1e-12 on all eigenmode + Laplacian pins; rel 1e-4 on the III ↔ VI_h ``h → −1`` limit, rationalised) |
+| C. Numerical: baseline reproducibility | **passed** (3,083 passed + 1 skipped) |
+| C. Numerical: misspecification | **passed** (off-plane / wrong-sign / ``a_twist ≤ 0`` / ``h = −1`` all raise with FB-tag messages) |
+
+### §8 Minimal repair plan
+
+- **None required** — no P0 / P1 issues surfaced. The FB-2.2 P2 carry-
+  forward (driver wire-up of ``aniso_ricci_tensor``) remains deferred
+  to FB-2.4 per the approved plan; the env stale-shebang is P3.
+
+### §9 Minimal test set (all present, 27 total in `test_nabla_dispatch_fb23.py`)
+
+| Category | Test |
+|---|---|
+| Baseline reproduction | `test_IV_and_V_match_at_identical_a_k` (IV at ``h = 0`` reduces to Harrison-V across 4 k magnitudes, rel 1e-12) |
+| Edge / adversarial | 4 × `TestFB23ClassBOffAxis::test_class_b_off_plane_raises_fb52` + 4 × `TestClassBValidatorSignGuards` (n₁, n₃, a_twist sign rejection) |
+| Physics sanity | 4 × axis-aligned plane-wave pins + 4 × Laplacian eigenvalue pins |
+| Numerical stability | `test_typeVIIh_h_to_zero_limit_matches_harrison` (abs < 1e-12 at ``a = 1e-6``), `test_III_matches_VI_h_approaching_minus_one` (rel 1e-4 at h = −0.9999) |
+| Regression / dispatch | `test_fb23_supported_types_contains_class_b_additions` + `test_fb23_deferred_tuple_is_drained` + `test_fb23_supported_types_covers_twelve_labels` |
+| FB-1.4 × FB-2.2 coupling | 4 × `TestT1ClassBRicciCoupling::test_T1_class_b_ricci_contribution_nonzero` (parametrised on III / IV / VI_h / VII_h) |
+
+### §10 Verdict
+
+**통과 (pass)**. FB-2.3 closes the Class B (III / IV / VI_h / VII_h)
+∇̃ dispatch on the abelian ``(e_1, e_3)`` 2-plane with a unified
+Harrison-V twist offset ``−(|k|² + a_twist²/(1+|h|))`` that recovers
+the FB14-F1 ``S^{WE}_+`` ``(2/3) A²/(1+|h|)`` denominator and the
+PC 2007 VII_h spiral damping. The FB-2.2 ``T1_expansion``
+``aniso_ricci_tensor`` hook activates automatically on Class B via
+the FB-1.4 ``³R_{ab}^{aniso}`` output (no code change in
+``terms.py``). Off-plane modes raise ``NotImplementedError("FB-5.2")``
+uniformly across all four types. 27 new tests, all passing, zero
+regression (3,056 → 3,083 passed + 1 skipped).
+
+**Do now (1 item)**: rotate ``NEXT_SESSION_PROMPT §2`` to FB-2.4
+(T4-T7 vorticity / 4-acceleration wire-up + driver-level
+``aniso_ricci_tensor`` routing + per-type ``hierarchy_rhs_photon``
+regression sweep).
+
+**Do not touch (1 item)**: ``hierarchy_rhs_photon``'s T1 / T2 call
+sites — they continue to pass ``aniso_ricci_tensor = None``. FB-2.4
+owns the live Ricci wire-up alongside the per-type background
+regression sweep. Touching it this session would couple FB-2.3's
+dispatch test into the LB-6 regression suite prematurely.
+
+### Gallery note
+
+FB-2.3 is a no-op visually: the Class B twist offset is a scalar
+eigenvalue shift, not a trajectory observable. No new PNG added;
+FB-1.4 gallery 13 (``anisotropic_3_curvature`` per-type visualisation)
+already covers the ``³R_{ab}^{aniso}`` feed that drives the T1 hook.
+Documented explicitly per the phase-boundary gallery rule.
+
+### Phase FB-2.3 → FB-2.4 hand-off
+
+FB-2.4 consumes:
+
+1. ``SUPPORTED_TYPES`` (12 labels) — the complete ∇̃ dispatch that
+   ``hierarchy_rhs_photon`` will gate against before raising.
+2. The ``T1_expansion`` / ``T2_gradient`` ``aniso_ricci_tensor``
+   optional kwarg — the driver must now pass
+   ``tetrad_state.aniso_3_curvature`` when it is not None.
+3. The Class B twist eigenvalue formula — T4 (vorticity) / T5
+   (4-acceleration) couplings will reuse the same ``a_twist²/(1+|h|)``
+   denominator for their harmonic-mode projections.
+
+### Carry-forwards to FB-2.4 / FB-5
+
+| Tag | Item | Target |
+|---|---|---|
+| FB-2.1 P2 | Complex-dtype ``nabla_dispatch`` not wired into ``hierarchy_rhs_photon`` | FB-5.1 |
+| FB-2.2 P2 | ``hierarchy_rhs_photon`` does not pass ``aniso_ricci_tensor`` to T1 / T2 | FB-2.4 |
+| F3 (from LB-5) | ``TetradBackgroundState.shear_magnitude_sq`` dimensionless-Σ² normalisation | FB-2.4 |
+| FB-5.2 | Class B off-plane + II / VI_0 / VIII / VII_0 off-axis generic helical Wigner rotation | FB-5.2 |
+| FB-2.4 | T4-T7 (vorticity, 4-acceleration) hierarchy wire-up + driver aniso_ricci wire-up + per-type regression sweep | FB-2.4 (next session) |
+| FB-2.3 P3 (env) | Stale ``venv/bin/pip`` shebang still points at deleted snapshot path — use ``python -m pip`` until the venv is rebuilt | post-FB (devops) |
+
+### Deliverables (diff summary)
+
+| Item | File | Status |
+|---|---|---|
+| A | ``bass/hierarchy/nabla_dispatch.py`` — III / IV / VI_h / VII_h validators + ``SUPPORTED_FB23_TYPES`` + Class B Laplacian branch + updated module docstring | ✅ pre-landed |
+| B | ``bass/hierarchy/test_nabla_dispatch_fb23.py`` — 27 new tests (2 III axis + 1 III Laplacian + 2 IV axis + Laplacian + 2 VI_h axis + Laplacian + 3 VII_h axis + Laplacian + ``h → 0`` + 4 off-plane + 4 T1 coupling + 2 h-parametrisation + 3 partition + 4 sign guards) | ✅ pre-landed |
+| C | ``docs/audits/AUDIT_PHASE_FB2_2026-04-19.md`` — this FB-2.3 supplement | ✅ this commit |
+| D | ``docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2`` — rotated to FB-2.4 | ✅ this commit |
+| E | ``venv/lib/python3.12/site-packages/__editable___htt_8_3_0_finder.py`` — MAPPING re-pinned to ``htt_base/htt/htt/htt`` via ``pip install -e`` reinstall | ✅ environment fix only, no code change |
+
+*End of FB-2.3 audit supplement.*
