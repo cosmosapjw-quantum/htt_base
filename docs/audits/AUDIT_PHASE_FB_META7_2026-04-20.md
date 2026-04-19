@@ -361,3 +361,34 @@ yes; Planck V vs VI distinction explicit? yes
 **Regression after plant**: expected full-suite movement
 `3403 passed + 52 skipped` → `3403 passed + 53 skipped` pending the
 phase-close gate.
+
+## Phase close
+
+FB-META-7 closed on 2026-04-20 with five committed BASS-side skeleton
+plants across `htt/bass/spectrum/` and `htt/bass/likelihood/`.
+
+- Final regression gate:
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `3403 passed, 53 skipped`.
+- Net movement vs the phase-entry baseline: pass count unchanged;
+  skipped count `48 → 53` from the five intended FB-7 skeleton
+  contract tests.
+- All five `§FB-7.k` sections are complete, and the FB-7.4 scope pin is
+  preserved verbatim: cosmological-frame only, with observer-frame
+  composition deferred to `bass.likelihood.observer_frame_adapter` in
+  FB-8.
+- Source corrections retained at phase exit:
+  - the prompt-supplied Lowell solver-reference path remains absent on
+    disk, so the missing `§7` / `§14.2` / `§14.3` locators stay explicit
+    TODOs rather than guessed citations;
+  - `astro-ph/0607373` is rejected as the Pontzen-Challinor Bianchi
+    paper and replaced by `arXiv:0706.2075`;
+  - Planck 2018 V (`1907.12875`) and Planck 2018 VI (`1807.06209`) are
+    kept distinct and both tied to the shipped
+    `data/camb_ref_planck2018.npz` provenance contract.
+- Successor surfaces rotated at close:
+  - `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` now points to
+    `FB-META-8`.
+  - `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB8_ONWARD.md`
+    was created with an empty header to receive FB-8 / FB-9 / FB-11
+    rows.

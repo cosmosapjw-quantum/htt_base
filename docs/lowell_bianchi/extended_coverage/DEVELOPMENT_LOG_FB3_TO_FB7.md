@@ -822,3 +822,23 @@ fresh cumulative count.
 - **Notes**: the validator is kept separate from runtime likelihood
   construction so the phase-exit oracle policy stays independently
   auditable.
+
+### FB-META-7.CLOSE — Phase FB-7 skeleton cycle closed
+
+- **Scope**: Declared the Phase FB-7 skeleton-only rotation closed after
+  five committed spectrum/likelihood skeleton plants, a final full
+  regression, the handoff rotation to the generic FB-META-8
+  placeholder, and creation of the successor
+  `DEVELOPMENT_LOG_FB8_ONWARD.md` header for the extended bundle.
+- **Commit anchor**: see `git log --grep='FB-META-7.CLOSE'`.
+- **Test delta**: `3,403 passed + 53 skipped` →
+  `3,403 passed + 53 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META7_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META7_2026-04-20.md) (Phase close note).
+- **Gallery**: no-op.
+- **Carry-forward**: FB-META-8 requires a fresh phase prompt rather
+  than an inherited FB-7 task list; the exact Lowell `§7` / `§14.2` /
+  `§14.3` on-disk locators remain absent and explicit.
+- **Notes**: final regression count matched the intended +5 skip delta,
+  and the FB-7.4 scope distinction remains pinned as
+  cosmological-frame-only with observer-frame composition deferred to
+  FB-8.
