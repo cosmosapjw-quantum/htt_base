@@ -391,3 +391,24 @@ cross-reference.
 - **Carry-forward**: FB-11.2 sampler driver + reproducibility contract.
 - **Notes**: the package exports only the priors surface for now, so no
   driver import path is opened prematurely.
+
+### FB-META-11.2 — emcee driver + reproducibility contract
+
+- **Scope**: Added the
+  [emcee driver contract](../../../htt/bass/inference/drivers/emcee_driver.py),
+  exported `PosteriorSample` / `run_posterior` from the package root,
+  and created the
+  [CLI placeholder](../../../htt/bass/inference/__main__.py) with
+  explicit `--config` and `--seed` arguments. The planted docstrings now
+  pin the same-machine byte-reproducibility contract and the
+  single-threaded default without importing `emcee` yet.
+- **Commit anchor**: see `git log --grep='FB-META-11.2'`.
+- **Test delta**: 3,403 passing + 67 skipped → 3,403 passing + 68
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META11_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META11_2026-04-20.md)
+  §FB-11.2.
+- **Gallery**: no-op (driver contracts only).
+- **Carry-forward**: FB-11.3 `bayes_factor` skeleton.
+- **Notes**: the audit includes the required emcee vs dynesty vs zeus
+  table and keeps the third-party-driver boundary explicit.

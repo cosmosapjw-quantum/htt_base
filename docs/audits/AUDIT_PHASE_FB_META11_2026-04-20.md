@@ -135,8 +135,77 @@ phase-close gate.
 
 ## §FB-11.2
 
-Pending pre-flight scaffold for the emcee driver and the determinism
-contract.
+### §FB-11.2 — emcee driver + reproducibility contract skeleton
+**Determinism contract**: the planted docstrings now pin the future rule
+that `run_posterior(..., seed=42, parallel=False)` must return a
+`PosteriorSample` whose `samples`, `log_prob`, and `diagnostics` are
+byte-identical across two runs on the same machine; the parallel path is
+explicitly documented as non-default.
+**Channel A**: 7 checked / 7 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB11_INFERENCE_DRIVER_SDD.md §3`
+names `PosteriorSample`, `run_posterior`, and a CLI entry point as the
+canonical FB-11.2 surfaces; verified the new driver lives under
+`bass/inference/drivers/` so the external-driver boundary is explicit;
+verified the new package `__init__` re-exports the driver contract
+without importing any third-party sampler; verified the CLI parser now
+pins `--config` and `--seed`; verified the docstrings record the
+byte-reproducibility promise and the default single-threaded path;
+verified the skip-marked contract test inspects the exact defaults; and
+verified no production module outside `bass.inference.drivers/` now
+mentions `emcee`.
+**Channel B**: 5 source checks / 5 verified / 0 broken. Evidence:
+Foreman-Mackey et al. 2013 (`arXiv:1202.3665`) describe `emcee` as a
+stable, well-tested Python implementation of the affine-invariant
+ensemble sampler and emphasize its low hyperparameter count. The same
+paper's ar5iv-rendered §2 documents the stretch move and the split-
+ensemble parallel update, while warning that a naive all-walkers-at-once
+parallelization violates detailed balance. Goodman & Weare 2010 verify
+the affine-invariant ensemble rationale in the primary algorithm paper.
+Current package metadata further support the choice comparison used in
+the alternatives table: `emcee` is MIT-licensed and production-stable on
+PyPI; `dynesty`'s own docs position it as a dynamic nested-sampling
+package for posteriors *and evidences* with heavier dependencies
+(`numpy`, `scipy`, `matplotlib`); `zeus`'s PyPI page describes ensemble
+slice sampling and is GPLv3-licensed rather than MIT. Together these
+checks support the local SDD rationale for picking `emcee`.
+**Channel C** (prose, 6-10 lines): The right FB-11.2 skeleton is a
+driver contract, not a sampler import. The whole point of this phase is
+to pin the reproducibility rule before real chains ever run, and the
+cleanest way to do that is to define the container, the call signature,
+and the CLI interface while still refusing to sample. Keeping the module
+inside `bass.inference.drivers/` also enforces the external-driver
+policy at the path level. The alternatives table matters here because
+the choice is not arbitrary: `dynesty` is valuable for evidence work but
+comes with a broader dependency and algorithm surface, while `zeus`
+would import a GPL-licensed ensemble-slice implementation when the local
+bundle already chose the Goodman-Weare / emcee lineage. The deterministic
+default then follows directly from Foreman-Mackey's own parallel-update
+discussion: a split-ensemble parallel path is possible, but it should
+not become the invisible default for a contract that promises bytewise
+repeatability.
+**Alternatives**:
+| # | Driver choice | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `emcee` ensemble MCMC under `bass/inference/drivers/emcee_driver.py` | Direct Goodman-Weare lineage; MIT license; light pure-Python surface; ensemble geometry matches the local parameter-space story. | Does not provide marginal evidence directly, so FB-11.3 still needs thermodynamic integration. | ✅ |
+| 2 | `dynesty` production driver | Strong evidence story and built-in nested-sampling outputs. | Heavier dependency/runtime surface; docs explicitly frame it around posterior/evidence trade-offs; conflicts with the sealed SDD pick. | — |
+| 3 | `zeus` production driver | Ensemble sampler with low-tuning claims and parallel support. | GPLv3 license and a different ensemble-slice formalism than the sealed emcee/Goodman-Weare choice. | — |
+**Core principles**: keep third-party sampler ownership inside
+`drivers/`; document the deterministic single-threaded default; expose
+the CLI seed/config contract now; do not import `emcee` until actual
+work begins.
+**Skeleton path**:
+`htt/bass/inference/drivers/emcee_driver.py`,
+`htt/bass/inference/__main__.py`,
+`htt/bass/inference/__init__.py`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/inference/test_fb112_emcee_driver_skeleton.py -q`
+**Guard rails** (yes/no): driver confined to `drivers/`? yes;
+byte-identical contract pinned in docstrings? yes; non-default parallel
+path explicit? yes; alternatives table includes emcee/dynesty/zeus? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 67 skipped` → `3403 passed + 68 skipped` pending the
+phase-close gate.
 
 ## §FB-11.3
 
