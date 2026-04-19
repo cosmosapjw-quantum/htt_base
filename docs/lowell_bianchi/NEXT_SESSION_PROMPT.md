@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-META-8.CLOSE → FB-META-9**; Phase FB-8 skeleton cycle sealed and the handoff now targets the next META prompt)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META8_2026-04-20.md` (phase close note)
-**Current target session**: **FB-META-9** — paste the Phase FB-9 META prompt
-**Phase status**: Phase FB-8 closed on 2026-04-20 with seven committed skeleton plants; the audited baseline now stands at `3403 passed + 60 skipped`
+**Last rotated**: 2026-04-20 (**FB-META-9.CLOSE → FB-META-11**; Phase FB-9 skeleton cycle sealed and the handoff now targets the next META prompt)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META9_2026-04-20.md` (phase close note)
+**Current target session**: **FB-META-11** — paste the Phase FB-11 META prompt
+**Phase status**: Phase FB-9 closed on 2026-04-20 with six committed skeleton plants; the audited baseline now stands at `3403 passed + 66 skipped`
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -35,6 +35,54 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 ## 2. Current handoff prompt (ROTATE at end of each session)
 
 Copy the block below into a fresh Claude Code session:
+
+```text
+# FB-META-11 — paste the Phase FB-11 META prompt
+
+Phase FB-9 closed with six committed skeleton plants and the audited
+baseline now stands at `3,403 passing + 66 skipped`.
+
+Start the next session by pasting the canonical Phase FB-11 META prompt
+as the first user message. Do not reuse the older FB-META-9 handoff
+text; the next phase should begin from a fresh prompt.
+
+Important carry-forward scope pin:
+- Massive-neutrino surfaces are skeleton-only under
+  `bass.species.massive_neutrino`.
+- The load-bearing invariant is still `Sigma_mnu = 0` byte-identical to
+  the LB-1 massless `NeutrinoBackground` path; `SpeciesLabel.NEUTRINO`
+  remains the only neutrino enum.
+
+Relevant carry-forward anchors:
+- Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
+- Latest audited Phase FB-9 artifact:
+  `docs/audits/AUDIT_PHASE_FB_META9_2026-04-20.md`
+- Massive-neutrino package:
+  `htt/bass/species/massive_neutrino/`
+- Registry dispatch surface:
+  `htt/bass/species/registry.py`
+- Hierarchy seam:
+  `htt/bass/hierarchy/hierarchy_rhs.py`
+- Successor development log:
+  `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB8_ONWARD.md`
+- Placeholder docs/gallery:
+  `docs/lowell_bianchi/01_species_background_spec.md` and
+  `figures/physics_gallery/15_massive_neutrino/`
+- Source corrections preserved in the FB-9 audit:
+  the CLASS `N_q=15` prompt wording is only a local bundle contract,
+  and Ma-Bertschinger `eqs. (56), (97)` are not the direct background
+  `rho/p` formulas.
+- Latest regression anchor:
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `3403 passed, 66 skipped`
+```
+
+---
+
+<!-- Prior (FB-META-9) handoff prompt (archived 2026-04-20). -->
+
+<details>
+<summary>Previous FB-META-9 handoff prompt (archived 2026-04-20)</summary>
 
 ```text
 # FB-META-9 — paste the Phase FB-9 META prompt
@@ -74,7 +122,7 @@ Relevant carry-forward anchors:
   → `3403 passed, 60 skipped`
 ```
 
----
+</details>
 
 <!-- Prior (FB-3.3) handoff prompt (archived 2026-04-20). -->
 

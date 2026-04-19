@@ -322,3 +322,20 @@ zero-mass runtime remains the LB-1 massless implementation.
 **Regression after plant**: expected full-suite movement
 `3403 passed + 65 skipped` → `3403 passed + 66 skipped` pending the
 phase-close gate.
+
+## Phase close note
+
+- **Status**: Pass (skeleton scope).
+- **Regression gate**:
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `3403 passed, 66 skipped, 26 warnings`.
+- **Baseline movement**: `3403 passed + 60 skipped` → `3403 passed + 66 skipped`.
+- **LB-1 anchor verdict**: preserved. The default
+  `Sigma_mnu = 0` registry path still instantiates the original
+  `NeutrinoBackground`, and the full `bass/ tsc/` suite stayed
+  byte-identical in passed count.
+- **Gallery status**: no-op by design; topic
+  `figures/physics_gallery/15_massive_neutrino/` is reserved with a
+  README only.
+- **Handoff**: `NEXT_SESSION_PROMPT.md §2` rotated to
+  `FB-META-11 — paste the Phase FB-11 META prompt`.

@@ -329,3 +329,21 @@ cross-reference.
 - **Carry-forward**: phase-close regression + FB-META-11 handoff.
 - **Notes**: both placeholder docs state explicitly that the shipped
   zero-mass runtime is still the LB-1 massless neutrino path.
+
+### FB-META-9.CLOSE — Phase FB-9 skeletons planted (6 sub-phases)
+
+- **Scope**: Closed the FB-9 skeleton cycle after planting
+  `FB-9.1` through `FB-9.6`, reran the full `bass/ tsc/` regression,
+  and rotated the bootstrap handoff to FB-META-11.
+- **Commit anchor**: see `git log --grep='FB-META-9.CLOSE'`.
+- **Test delta**: 3,403 passing + 60 skipped → 3,403 passing + 66
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META9_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META9_2026-04-20.md)
+  (phase-close note).
+- **Gallery**: no-op (reserved topic only; no fabricated PNGs).
+- **Carry-forward**: FB-META-11 bootstrap plus the explicit source
+  corrections recorded in the FB-9 audit.
+- **Notes**: the shipped runtime still preserves the `Sigma_mnu = 0`
+  LB-1 anchor and keeps `SpeciesLabel.NEUTRINO` as the only neutrino
+  enum label.
