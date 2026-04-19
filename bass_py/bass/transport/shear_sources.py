@@ -335,19 +335,40 @@ SHEAR_SOURCE_REGISTRY: Dict[str, ShearSourceFunc] = {
 
 SOURCE_STATUS: Dict[str, SourceStatus] = {
     "FLRW":  SourceStatus("VALIDATED", "FLRW trivial", True),
-    "I":     SourceStatus("VALIDATED", "Kasner analytic", True, "σ ∝ 1/a² conformal"),
-    "II":    SourceStatus("PROVISIONAL", "W-E §18, Heisenberg algebra", True),
+    # VALIDATED (FB-1.1): Kasner σ × a³ = const pinned on
+    # solve_bianchi_background trajectory (test_type_I_kasner_exponent_sum);
+    # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.1.
+    "I":     SourceStatus("VALIDATED", "Kasner analytic + W-E §18 Table 11.1", True,
+                          "σ × a³ const on background integrator + FB-0.1 LB-5 I-11/I-12/I-12b"),
+    # VALIDATED (FB-1.1): W-E §18 Table 11.1 row II formula
+    # S^{WE}_+ = -(2/3) N_1², S^{WE}_- = 0 pinned to rel 1e-12 across
+    # (N_1, ℋ) grid in test_type_II_WE_fixed_point_asymptotic;
+    # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.1.
+    "II":    SourceStatus("VALIDATED", "W-E §18 Table 11.1, Heisenberg e(1) axisymmetric", True,
+                          "formula + sign + Σ-independence pinned on (N_1, ℋ) grid"),
     "III":   SourceStatus("PROVISIONAL", "VI_{h=-1} restriction", False,
                           "no FLRW limit → limit test vacuous"),
     "IV":    SourceStatus("PROVISIONAL", "cosmologically marginal, Class B", False,
                           "no FLRW limit"),
     "V":     SourceStatus("VALIDATED", "open FLRW (k=-1), σ→0", True, "standard open FLRW"),
-    "VI_0":  SourceStatus("PROVISIONAL", "W-E §18, e(1,1)", True),
+    # VALIDATED (FB-1.1): W-E §18 Table 11.1 row VI₀ formula
+    # S^{WE}_+ = -(2/3)(n_1-n_3)², S^{WE}_- = -(2/√3)(n_1+n_3)(n_1-n_3)
+    # pinned to rel 1e-12 in test_type_VI0_WE_fixed_point_asymptotic;
+    # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.1.
+    "VI_0":  SourceStatus("VALIDATED", "W-E §18 Table 11.1, e(1,1) algebra", True,
+                          "formula + S_+ < 0 sign + Σ-indep pinned on (n_1, n_3, ℋ) grid"),
     "VI_h":  SourceStatus("PROVISIONAL", "Hewitt-Wainwright reduction", False,
                           "no FLRW limit"),
-    "VII_0": SourceStatus("PROVISIONAL", "W-E §18, e(2)", True, "h→0⁺ of VII_h"),
+    # VALIDATED (FB-1.1): W-E §18 Table 11.1 row VII₀ formula
+    # S^{WE}_+ = -(2/3)(n_1-n_3)², S^{WE}_- = +(2/√3)(n_1+n_3)(n_1-n_3)
+    # pinned to rel 1e-12 in test_type_VII0_shear_decay_to_plane_wave_line;
+    # isotropic n_1=n_3 → S=0 exactly pinned in
+    # test_type_VII0_isotropic_limit_vanishes_exactly;
+    # docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.1.
+    "VII_0": SourceStatus("VALIDATED", "W-E §18 Table 11.1, e(2) algebra (plane-wave line)", True,
+                          "formula + S_- sign flip vs VI₀ + isotropic vanishing pinned"),
     "VII_h": SourceStatus("PROVISIONAL", "Pontzen-Challinor 2009, Saadeh 2016",
-                          True, "spiral coupling calibrated in Week 5"),
+                          True, "spiral coupling calibrated in FB-1.3"),
     "VIII":  SourceStatus("PROVISIONAL", "W-E §18, sl(2,ℝ)", True),
     "IX":    SourceStatus("PROVISIONAL", "W-E §18, Mixmaster", True),
 }

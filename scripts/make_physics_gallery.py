@@ -2564,6 +2564,305 @@ def plot_11_02_tca_activation_window() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
+# FB-1.1 Class A background validation (Wainwright-Ellis §18 Table 11.1)
+# ════════════════════════════════════════════════════════════════════
+
+
+def plot_11_03_fb11_classA_typeI_kasner_trace() -> None:
+    """FB-1.1 Type I: ``Σ × a² = const`` + Kasner ``σ × a³ = const`` +
+    shear energy ``ρ_σ ∝ 1/a⁶`` along the direct background integrator.
+
+    Vacuum Kasner exponent relations ``∑ p_i = ∑ p_i² = 1`` only hold in
+    vacuum Bianchi I; our framework simulates Planck-2018 FLRW
+    background with shear as a perturbation, so the preserved geometric
+    statement is ``σ_ab × a³ = const`` (Raychaudhuri companion), which
+    is what this plot pins.
+
+    Reference: Ellis §18.3; Wainwright-Ellis §18 Table 11.1 (Type I);
+    docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.1.
+    """
+    from bass.background.einstein_bianchi import type_i_cosmology
+    cosmo = type_i_cosmology(sigma_over_H_init=1e-4)
+    bg = solve_bianchi_background(
+        cosmo, a_start=1e-6, a_end=1.0, n_pts=2000,
+    )
+    mask = np.abs(bg.sigma_plus) > 1e-30
+    a = bg.a[mask]
+    Sp = bg.sigma_plus[mask]
+    sigma_proper = Sp / a
+
+    conformal_inv = Sp * a ** 2
+    kasner_inv = sigma_proper * a ** 3
+    rho_shear_proxy = Sp ** 2 / a ** 4  # ∝ σ² = (Σ/a)² = Σ²/a²; ρ_σ ∝ σ²
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.0))
+    axes[0].semilogx(a, conformal_inv, color=COLS["blue"], lw=1.4)
+    axes[0].axhline(float(conformal_inv.mean()), color="0.4", ls=":", lw=0.8,
+                    label=r"$\langle \Sigma\, a^2 \rangle$")
+    _prepare_axes(
+        axes[0], r"$a$", r"$\Sigma_+ \times a^2$  [Mpc$^{-1}$]",
+        title=r"Ellis invariant (FB-0.1)", xlog=True,
+    )
+    axes[0].legend(loc="best", fontsize=8)
+
+    axes[1].semilogx(a, kasner_inv, color=COLS["orange"], lw=1.4)
+    axes[1].axhline(float(kasner_inv.mean()), color="0.4", ls=":", lw=0.8,
+                    label=r"$\langle \sigma\, a^3 \rangle$")
+    _prepare_axes(
+        axes[1], r"$a$", r"$\sigma_+ \times a^3$  [Mpc$^{-1}$]",
+        title=r"Kasner invariant $\sigma \times a^3 = {\rm const}$", xlog=True,
+    )
+    axes[1].legend(loc="best", fontsize=8)
+
+    axes[2].loglog(a, rho_shear_proxy, color=COLS["purple"], lw=1.4,
+                   label=r"$\Sigma_+^2 / a^4$")
+    # Expected decay: Σ² × a⁴ const ⇒ Σ²/a⁴ ∝ 1/a⁸
+    ref = rho_shear_proxy[0] * (a[0] / a) ** 8
+    axes[2].loglog(a, ref, color="0.4", ls="--", lw=0.8,
+                   label=r"$\propto a^{-8}$ reference")
+    _prepare_axes(
+        axes[2], r"$a$", r"$\sigma_+^2$  [Mpc$^{-2}$]  (shear energy proxy)",
+        title=r"Shear density decay  $\rho_\sigma \propto 1/a^6$",
+        xlog=True, ylog=True,
+    )
+    axes[2].legend(loc="best", fontsize=8)
+    fig.suptitle(
+        r"FB-1.1 Type I — Kasner limit + Ellis conformal invariant "
+        r"(vacuum exponent triplet ∑p_i = ∑p_i² = 1 becomes σ × a³ = const "
+        r"at the tensor level)", fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "03_fb11_classA_typeI_kasner_trace", TOPIC_11)
+
+
+def plot_11_04_fb11_classA_typeII_WE_attractor() -> None:
+    """FB-1.1 Type II: W-E §18 Table 11.1 axisymmetric source
+    ``S^{WE}_+ = −(2/3) N_1²``, ``S^{WE}_- = 0``.
+
+    Shows Σ_+(a) with the source active (N_1 = 1e-2), Σ_-(a) identically
+    zero (axisymmetric), and the instantaneous W-E dimensionless
+    ``S^{WE}_+ = −(2/3) N_1²`` as a horizontal line (which is the
+    Hubble-normalised source magnitude — constant because N_1 is pinned
+    by StructureConstants).
+
+    Reference: Wainwright-Ellis §18 Table 11.1 row II (Heisenberg
+    algebra); Ellis §18.3; docs/audits/AUDIT_PHASE_FB1_2026-04-19.md
+    §FB-1.1.
+    """
+    from bass.background.einstein_bianchi import (
+        type_i_cosmology, type_ii_cosmology,
+    )
+    cosmo_II = type_ii_cosmology(sigma_over_H_init=1e-4, n1=1e-2)
+    bg_II = solve_bianchi_background(
+        cosmo_II, a_start=1e-6, a_end=1.0, n_pts=2000,
+    )
+    cosmo_I = type_i_cosmology(sigma_over_H_init=1e-4)
+    bg_I = solve_bianchi_background(
+        cosmo_I, a_start=1e-6, a_end=1.0, n_pts=2000,
+    )
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.0))
+    axes[0].semilogx(bg_I.a, bg_I.sigma_plus, color="0.5", lw=1.0, ls="--",
+                     label=r"Type I (no source)")
+    axes[0].semilogx(bg_II.a, bg_II.sigma_plus, color=COLS["orange"], lw=1.4,
+                     label=r"Type II ($N_1=10^{-2}$)")
+    axes[0].axhline(0.0, color="0.3", lw=0.5)
+    _prepare_axes(
+        axes[0], r"$a$", r"$\Sigma_+$  [Mpc$^{-1}$]",
+        title=r"Σ_+ trajectory (source drives it through zero)", xlog=True,
+    )
+    axes[0].legend(loc="best", fontsize=8)
+
+    axes[1].semilogx(bg_II.a, bg_II.sigma_minus, color=COLS["purple"], lw=1.4,
+                     label=r"Type II $\Sigma_-$")
+    axes[1].axhline(0.0, color="0.3", ls=":", lw=0.8,
+                    label=r"W-E $S^{WE}_- = 0$")
+    _prepare_axes(
+        axes[1], r"$a$", r"$\Sigma_-$  [Mpc$^{-1}$]",
+        title=r"Axisymmetric: $\Sigma_- \equiv 0$ along trajectory",
+        xlog=True,
+    )
+    axes[1].set_ylim(-1e-6, 1e-6)
+    axes[1].legend(loc="best", fontsize=8)
+
+    # W-E dimensionless S^{WE}_+ = -(2/3) N_1² (constant, since N_1 is
+    # pinned by the StructureConstants).
+    N1 = 1e-2
+    S_WE_plus = -(2.0 / 3.0) * N1 ** 2
+    axes[2].semilogx(bg_II.a,
+                     np.full_like(bg_II.a, S_WE_plus),
+                     color=COLS["cyan"], lw=1.4,
+                     label=fr"$S^{{WE}}_+ = -(2/3) N_1^2 = {S_WE_plus:.2e}$")
+    _prepare_axes(
+        axes[2], r"$a$", r"$S^{WE}_+$  (W-E dimensionless)",
+        title=r"W-E Table 11.1 row II source",
+        xlog=True,
+    )
+    axes[2].set_ylim(S_WE_plus * 2.0, -S_WE_plus)
+    axes[2].legend(loc="best", fontsize=8)
+    fig.suptitle(
+        r"FB-1.1 Type II — Wainwright-Ellis Table 11.1 axisymmetric "
+        r"source; Σ_- ≡ 0 along full trajectory",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "04_fb11_classA_typeII_WE_attractor", TOPIC_11)
+
+
+def plot_11_05_fb11_classA_typeVI0_WE_attractor() -> None:
+    """FB-1.1 Type VI₀: W-E §18 Table 11.1 row VI₀ source
+    ``S^{WE}_+ = −(2/3)(n_1−n_3)²``, ``S^{WE}_- = −(2/√3)(n_1+n_3)(n_1−n_3)``.
+
+    Shows Σ_+(a) and Σ_-(a) for two parameter choices that break the
+    sign degeneracy:
+      - n_1 = 1e-2, n_3 = -1e-2 (n_1+n_3 = 0 ⇒ S_- = 0)
+      - n_1 = 1e-2, n_3 = -5e-3 (n_1+n_3 > 0 ⇒ S_- < 0)
+    Plus a phase-plane view of (Σ_+, Σ_-) showing the source-driven
+    trajectory (distinct from Type I's pure decay).
+
+    Reference: Wainwright-Ellis §18 Table 11.1 row VI₀ (e(1,1) algebra);
+    Ellis §18.3; docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.1.
+    """
+    from bass.background.einstein_bianchi import type_vi0_cosmology
+    cases = [
+        (1e-2, -1e-2, COLS["blue"], r"$n_3 = -10^{-2}$  ($S_- = 0$)"),
+        (1e-2, -5e-3, COLS["orange"], r"$n_3 = -5 \times 10^{-3}$"),
+    ]
+    trajectories = []
+    for n1, n3, color, label in cases:
+        cosmo = type_vi0_cosmology(sigma_over_H_init=1e-4, n1=n1, n3=n3)
+        bg = solve_bianchi_background(
+            cosmo, a_start=1e-6, a_end=1.0, n_pts=2000,
+        )
+        trajectories.append((bg, color, label, n1, n3))
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.0))
+    for bg, color, label, _, _ in trajectories:
+        axes[0].semilogx(bg.a, bg.sigma_plus, color=color, lw=1.4, label=label)
+    axes[0].axhline(0.0, color="0.3", lw=0.5)
+    _prepare_axes(
+        axes[0], r"$a$", r"$\Sigma_+$  [Mpc$^{-1}$]",
+        title=r"Σ_+ trajectory  (both cases same $S_+ < 0$)", xlog=True,
+    )
+    axes[0].legend(loc="best", fontsize=8)
+
+    for bg, color, label, _, _ in trajectories:
+        axes[1].semilogx(bg.a, bg.sigma_minus, color=color, lw=1.4, label=label)
+    axes[1].axhline(0.0, color="0.3", lw=0.5)
+    _prepare_axes(
+        axes[1], r"$a$", r"$\Sigma_-$  [Mpc$^{-1}$]",
+        title=r"Σ_- trajectory  (sign ∝ −(n_1+n_3)(n_1−n_3))",
+        xlog=True,
+    )
+    axes[1].legend(loc="best", fontsize=8)
+
+    # Phase plane (Σ_+, Σ_-) coloured by log(a)
+    bg = trajectories[1][0]  # use the case where S_- ≠ 0
+    # Avoid zero-or-negative values for log coloring.
+    a_plot = np.maximum(bg.a, 1e-30)
+    sc = axes[2].scatter(
+        bg.sigma_plus, bg.sigma_minus,
+        c=np.log10(a_plot), cmap="viridis", s=3,
+    )
+    axes[2].axhline(0.0, color="0.3", lw=0.5)
+    axes[2].axvline(0.0, color="0.3", lw=0.5)
+    cbar = fig.colorbar(sc, ax=axes[2])
+    cbar.set_label(r"$\log_{10} a$", fontsize=8)
+    _prepare_axes(
+        axes[2], r"$\Sigma_+$  [Mpc$^{-1}$]", r"$\Sigma_-$  [Mpc$^{-1}$]",
+        title=r"Phase plane (Σ_+, Σ_-)  (asymmetric case)",
+    )
+    fig.suptitle(
+        r"FB-1.1 Type VI₀ — Wainwright-Ellis Table 11.1 row VI₀; "
+        r"S_- sign flips with $(n_1+n_3)$",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "05_fb11_classA_typeVI0_WE_attractor", TOPIC_11)
+
+
+def plot_11_06_fb11_classA_typeVII0_decay() -> None:
+    """FB-1.1 Type VII₀: W-E §18 Table 11.1 row VII₀ "plane-wave line"
+    — ``S^{WE}_- = +(2/√3)(n_1+n_3)(n_1−n_3)`` (sign flip vs VI₀).
+
+    Two panels isolate the two regimes:
+      - Isotropic (n_1 = n_3): source vanishes identically ⇒ Σ × a² = const
+        (recovered Type I / FLRW plane-wave line)
+      - Asymmetric (n_1 ≠ n_3): source active; Σ_+ and Σ_- evolve
+        nontrivially with opposite S_- sign vs VI₀
+    Phase-plane panel shows Σ_+ vs Σ_- for the asymmetric case.
+
+    Reference: Wainwright-Ellis §18 Table 11.1 row VII₀ (e(2) algebra);
+    Ellis §18.3; docs/audits/AUDIT_PHASE_FB1_2026-04-19.md §FB-1.1.
+    """
+    from bass.background.einstein_bianchi import type_vii0_cosmology
+    cosmo_iso = type_vii0_cosmology(
+        sigma_over_H_init=1e-4, n1=1e-2, n3=1e-2,
+    )
+    bg_iso = solve_bianchi_background(
+        cosmo_iso, a_start=1e-6, a_end=1.0, n_pts=2000,
+    )
+    cosmo_asym = type_vii0_cosmology(
+        sigma_over_H_init=1e-4, n1=1e-2, n3=5e-3,
+    )
+    bg_asym = solve_bianchi_background(
+        cosmo_asym, a_start=1e-6, a_end=1.0, n_pts=2000,
+    )
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.0))
+
+    mask_iso = np.abs(bg_iso.sigma_plus) > 1e-30
+    inv_iso = bg_iso.sigma_plus[mask_iso] * bg_iso.a[mask_iso] ** 2
+    axes[0].semilogx(bg_iso.a[mask_iso], inv_iso,
+                     color=COLS["blue"], lw=1.4,
+                     label=r"$n_1 = n_3$  (isotropic: $S = 0$)")
+    axes[0].axhline(float(inv_iso.mean()), color="0.4", ls=":", lw=0.8)
+    _prepare_axes(
+        axes[0], r"$a$", r"$\Sigma_+ \times a^2$  [Mpc$^{-1}$]",
+        title=r"Isotropic limit: Ellis invariant flat",
+        xlog=True,
+    )
+    axes[0].legend(loc="best", fontsize=8)
+
+    axes[1].semilogx(bg_asym.a, bg_asym.sigma_plus,
+                     color=COLS["orange"], lw=1.4,
+                     label=r"$\Sigma_+$ asymmetric ($n_1=10^{-2}, n_3=5 \times 10^{-3}$)")
+    axes[1].semilogx(bg_asym.a, bg_asym.sigma_minus,
+                     color=COLS["purple"], lw=1.4, ls="--",
+                     label=r"$\Sigma_-$ asymmetric")
+    axes[1].axhline(0.0, color="0.3", lw=0.5)
+    _prepare_axes(
+        axes[1], r"$a$", r"$\Sigma_\pm$  [Mpc$^{-1}$]",
+        title=r"Asymmetric: source active; $S_-$ sign flipped vs VI₀",
+        xlog=True,
+    )
+    axes[1].legend(loc="best", fontsize=8)
+
+    # Phase plane for the asymmetric case (Σ_+, Σ_-) coloured by log a
+    a_plot = np.maximum(bg_asym.a, 1e-30)
+    sc = axes[2].scatter(
+        bg_asym.sigma_plus, bg_asym.sigma_minus,
+        c=np.log10(a_plot), cmap="viridis", s=3,
+    )
+    axes[2].axhline(0.0, color="0.3", lw=0.5)
+    axes[2].axvline(0.0, color="0.3", lw=0.5)
+    cbar = fig.colorbar(sc, ax=axes[2])
+    cbar.set_label(r"$\log_{10} a$", fontsize=8)
+    _prepare_axes(
+        axes[2], r"$\Sigma_+$  [Mpc$^{-1}$]", r"$\Sigma_-$  [Mpc$^{-1}$]",
+        title=r"Phase plane (Σ_+, Σ_-)",
+    )
+    fig.suptitle(
+        r"FB-1.1 Type VII₀ — "
+        r"Wainwright-Ellis Table 11.1 row VII₀ plane-wave line "
+        r"(n_1 = n_3 ⇒ S = 0) + asymmetric active source",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "06_fb11_classA_typeVII0_decay", TOPIC_11)
+
+
+# ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
 
@@ -2712,6 +3011,18 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("02_tca_activation_window",
          plot_11_02_tca_activation_window,
          "LB-5 Γ_T(η)/H(η) vs TCA threshold with active-η shading."),
+        ("03_fb11_classA_typeI_kasner_trace",
+         plot_11_03_fb11_classA_typeI_kasner_trace,
+         "FB-1.1 Type I Kasner: Σ×a² + σ×a³ invariants + ρ_σ ∝ 1/a^6 decay."),
+        ("04_fb11_classA_typeII_WE_attractor",
+         plot_11_04_fb11_classA_typeII_WE_attractor,
+         "FB-1.1 Type II W-E Table 11.1 axisymmetric source; Σ_- ≡ 0."),
+        ("05_fb11_classA_typeVI0_WE_attractor",
+         plot_11_05_fb11_classA_typeVI0_WE_attractor,
+         "FB-1.1 Type VI₀ W-E Table 11.1 e(1,1) source; S_- sign pattern."),
+        ("06_fb11_classA_typeVII0_decay",
+         plot_11_06_fb11_classA_typeVII0_decay,
+         "FB-1.1 Type VII₀ W-E Table 11.1 plane-wave line + asymmetric source."),
     ],
 }
 

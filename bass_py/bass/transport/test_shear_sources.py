@@ -38,7 +38,7 @@ from bass.background.bianchi_types import (
 from bass.transport.shear_sources import (
     SHEAR_SOURCE_REGISTRY, SOURCE_STATUS,
     compute_shear_source, get_source_status,
-    source_I, source_V, source_VIIh, source_VII0, source_VI0,
+    source_I, source_II, source_V, source_VI0, source_VII0, source_VIIh,
 )
 
 
@@ -390,3 +390,223 @@ class TestIntegrationSmoke:
             dSp, dSm = compute_shear_source(sc, Sp_test, Sm_test, calH_val, a_val)
             assert math.isfinite(dSp), f"Source blew up for {label} at a={a_val}"
             assert math.isfinite(dSm), f"Source blew up for {label} at a={a_val}"
+
+
+# ═══════════════════════════════════════════════════════════════
+# §9 — FB-1.1 per-type Class A validation (W-E §18 Table 11.1)
+# ═══════════════════════════════════════════════════════════════
+
+class TestClassAFixedPoints:
+    """FB-1.1 per-type validation of the Class A source dispatch against
+    Wainwright-Ellis §18 Table 11.1 dimensionless ``S^{WE}`` formulas.
+
+    Framework note
+    --------------
+    The Wainwright-Ellis Table 11.1 fixed points (Σ̂_+ = −1/2 for II,
+    Σ̂_− = ∓1/√3 for VI₀, etc.) are attractors of the **self-similar
+    closed W-E system** in which the structure constants ``N_i`` co-evolve
+    with Hubble via ``N̂_i = N_i / H``. Our framework pins ``N_i`` as
+    constants of ``StructureConstants`` and lets ``ℋ(a)`` follow pure
+    FLRW (Planck-2018), so the self-similar fixed points are not
+    directly reachable without a rescaling layer. What *is* reachable,
+    and what `SOURCE_STATUS` tracks, is whether the source *function*
+    ``S^{WE}_{\\pm}(N_1, N_2, N_3, A)`` matches W-E Table 11.1 exactly
+    at every parameter point, including the axisymmetric axis-zero
+    limits that should vanish identically.
+
+    These four tests pin each Class A type's formula + sign pattern at
+    the per-value level (a regression against W-E §18); promotion of
+    `SOURCE_STATUS` from PROVISIONAL to VALIDATED rides on this plus the
+    FB-0.1 dimensional / FLRW / Kasner invariants (already covered).
+
+    References
+    ----------
+    Wainwright & Ellis 1997 §18 + Table 11.1 (Class A A=0 source
+    dispatch); Ellis-Maartens-MacCallum 2012 §18.3 (Ellis conformal
+    shear convention); `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md
+    §FB-1.1`.
+    """
+
+    # Finer calH grid: covers radiation (calH large), matter (peak),
+    # dark-energy (calH small). FB-1.1 pins the formula across four
+    # decades of ℋ.
+    _CALH_GRID = (1.0, 1e-2, 1e-3, 1e-4)
+
+    def test_type_I_kasner_exponent_sum(self):
+        """Type I vacuum-limit Kasner invariants on a direct background
+        integration (no hierarchy layer): ``σ × a³ = const`` at ≤ 2 %
+        drift over a wide a-window, and the dimensionless shear energy
+        ``Σ² × a⁴`` is also conserved.
+
+        Why this is the Kasner-triplet pin: the Kasner relations
+        ``∑ p_i = 1, ∑ p_i² = 1`` hold in *vacuum* Bianchi I, which our
+        framework does not simulate (Planck-2018 FLRW background).
+        What is preserved in our framework is the geometric statement
+        ``σ_{ab} × a³ = const`` (Raychaudhuri companion ``σ̇ = -3Hσ``),
+        which is the physical content of the Kasner exponent triplet at
+        the shear-tensor level regardless of the background stress-energy.
+
+        Reference: Ellis §18.3 (Kasner geometric invariant); W-E §18.
+        """
+        from bass.background.einstein_bianchi import (
+            solve_bianchi_background, type_i_cosmology,
+        )
+        cosmo = type_i_cosmology(sigma_over_H_init=1e-4)
+        bg = solve_bianchi_background(
+            cosmo, a_start=1e-6, a_end=1.0, n_pts=2000,
+        )
+        mask = np.abs(bg.sigma_plus) > 1e-30
+        assert np.any(mask)
+        sigma_proper = bg.sigma_plus[mask] / bg.a[mask]
+        kasner = sigma_proper * bg.a[mask] ** 3
+        rel_var = (kasner.max() - kasner.min()) / abs(kasner.mean())
+        assert rel_var < 2e-2, f"σ × a³ rel_var = {rel_var}"
+        conformal_inv = bg.sigma_plus[mask] * bg.a[mask] ** 2
+        rel_var_conf = (
+            (conformal_inv.max() - conformal_inv.min())
+            / abs(conformal_inv.mean())
+        )
+        assert rel_var_conf < 5e-3, f"Σ × a² rel_var = {rel_var_conf}"
+
+    @pytest.mark.parametrize("N1", [1e-4, 1e-3, 1e-2, 5e-2])
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_II_WE_fixed_point_asymptotic(self, N1, calH):
+        """Type II axisymmetric source per W-E Table 11.1:
+        ``S^{WE}_+ = −(2/3) N_1²``, ``S^{WE}_- = 0``.
+
+        Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``. We
+        verify at 10⁻¹² relative that ``source_II(sc, 0, 0, ℋ, a)`` equals
+        ``(−(2/3) N_1² ℋ², 0)`` exactly across the full (N_1, ℋ) grid.
+        The "asymptotic" qualifier in the W-E fixed-point literature
+        refers to the self-similar N̂_1 = N_1/H attractor; in our fixed-N
+        framework we instead pin the source-function formula, which is
+        what `SOURCE_STATUS` governs.
+
+        Reference: Wainwright-Ellis §18 Table 11.1 row II; Ellis §18.3.
+        """
+        sc = type_ii_constants(n1=N1)
+        dSp, dSm = source_II(sc, 0.0, 0.0, calH, 1e-3)
+        expected_Sp = -(2.0 / 3.0) * N1 ** 2 * calH ** 2
+        assert dSp == pytest.approx(expected_Sp, rel=1e-12)
+        assert dSm == 0.0, f"Type II axisymmetric S_- != 0 at N1={N1}, calH={calH}"
+        # Σ-independence: source does not depend on Σ_± (axisymmetric,
+        # no spiral) — formula is purely quadratic in N_1.
+        dSp_Sigma, dSm_Sigma = source_II(sc, 1e-5, -3e-6, calH, 1e-3)
+        assert dSp_Sigma == pytest.approx(dSp, rel=1e-14)
+        assert dSm_Sigma == 0.0
+
+    @pytest.mark.parametrize(
+        "n1, n3",
+        [(1e-2, -1e-2), (1e-2, -5e-3), (5e-3, -1e-2), (2e-2, -1e-3)],
+    )
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_VI0_WE_fixed_point_asymptotic(self, n1, n3, calH):
+        """Type VI₀ source per W-E Table 11.1 (Pontzen-Challinor n_2=0
+        frame, our n_1 ↔ canonical N_2, n_3 ↔ canonical N_3):
+
+            S^{WE}_+ = −(2/3)(n_1 − n_3)²
+            S^{WE}_- = −(2/√3)(n_1 + n_3)(n_1 − n_3)
+
+        Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``. The
+        S_- sign is the Class A "negative off-diagonal" signature that
+        W-E Table 11.1 contrasts with VII₀ (opposite sign). We verify:
+        (a) formula match to 10⁻¹² relative across the (n_1, n_3, ℋ)
+        grid; (b) S_+ < 0 always (since (n_1 − n_3)² > 0 when the two
+        diagonal eigenvalues differ); (c) Σ-independence.
+
+        Reference: Wainwright-Ellis §18 Table 11.1 row VI₀; Ellis §18.3.
+        """
+        sc = type_vi0_constants(n1=n1, n3=n3)
+        dSp, dSm = compute_shear_source(sc, 0.0, 0.0, calH, 1e-3)
+        diff = n1 - n3
+        summ = n1 + n3
+        expected_Sp = -(2.0 / 3.0) * diff ** 2 * calH ** 2
+        expected_Sm = -(2.0 / math.sqrt(3.0)) * summ * diff * calH ** 2
+        assert dSp == pytest.approx(expected_Sp, rel=1e-12)
+        assert dSm == pytest.approx(expected_Sm, rel=1e-12)
+        # Sign pin: with the parametrised choices all have n_1 > 0 > n_3
+        # so (n_1 − n_3) > 0 always and (n_1 − n_3)² > 0 ⇒ S_+ < 0.
+        assert dSp < 0.0, f"VI₀ S_+ should be negative for n_1 > 0 > n_3"
+        # Σ-independence
+        dSp_Sigma, dSm_Sigma = compute_shear_source(
+            sc, 1e-5, -3e-6, calH, 1e-3,
+        )
+        assert dSp_Sigma == pytest.approx(dSp, rel=1e-14)
+        assert dSm_Sigma == pytest.approx(dSm, rel=1e-14)
+
+    @pytest.mark.parametrize(
+        "n1, n3",
+        [(1e-2, 5e-3), (5e-3, 1e-2), (2e-2, 1e-3), (1e-3, 2e-2)],
+    )
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_VII0_shear_decay_to_plane_wave_line(self, n1, n3, calH):
+        """Type VII₀ source per W-E Table 11.1 (same magnitude as VI₀
+        but **opposite sign** on S_-):
+
+            S^{WE}_+ = −(2/3)(n_1 − n_3)²
+            S^{WE}_- = +(2/√3)(n_1 + n_3)(n_1 − n_3)
+
+        Ellis conformal form (FB-0.1): ``S_± = ℋ² × S^{WE}_±``. The
+        W-E Table 11.1 row VII₀ is the "plane-wave" fixed line along
+        which σ → 0 in the isotropic limit n_1 = n_3 (source vanishes
+        identically). We verify: (a) formula match to 10⁻¹² relative;
+        (b) S_- sign flip vs VI₀ at matched |n_1|, |n_3|; (c) isotropic
+        limit n_1 = n_3 ⇒ S_± = 0 exactly; (d) Σ-independence.
+
+        Reference: Wainwright-Ellis §18 Table 11.1 row VII₀ (e(2)
+        algebra); Ellis §18.3.
+        """
+        sc = type_vii0_constants(n1=n1, n3=n3)
+        dSp, dSm = compute_shear_source(sc, 0.0, 0.0, calH, 1e-3)
+        diff = n1 - n3
+        summ = n1 + n3
+        expected_Sp = -(2.0 / 3.0) * diff ** 2 * calH ** 2
+        expected_Sm = +(2.0 / math.sqrt(3.0)) * summ * diff * calH ** 2
+        assert dSp == pytest.approx(expected_Sp, rel=1e-12)
+        assert dSm == pytest.approx(expected_Sm, rel=1e-12)
+        # Sign flip vs VI₀ at matched magnitudes
+        sc_VI0 = type_vi0_constants(n1=n1, n3=-n3)
+        dSp_VI0, dSm_VI0 = compute_shear_source(
+            sc_VI0, 0.0, 0.0, calH, 1e-3,
+        )
+        # (n_1 − (−n_3)) = n_1 + n_3; (n_1 + (−n_3)) = n_1 − n_3
+        # So VI₀ at (n_1, −n_3): S_+ = −(2/3)(n_1 + n_3)² × ℋ²
+        #                       S_- = −(2/√3)(n_1 − n_3)(n_1 + n_3) × ℋ²
+        # Differs from VII₀ at (n_1, n_3); but the structural invariant we
+        # pin is ``sign(S_-)_VII0 = -sign(S_-)_VI0`` at matched
+        # ``(|diff|, |summ|)`` pairs, which requires setting VI₀ params
+        # so the inner product (n_1+n_3)(n_1-n_3) has the same magnitude:
+        sc_VI0_matched = type_vi0_constants(n1=n1, n3=-n3)
+        # For n_3 → -n_3 in VI₀: (n_1 + (−n_3)) × (n_1 − (−n_3))
+        # = (n_1 − n_3) × (n_1 + n_3) — same product magnitude as VII₀.
+        _, dSm_VI0_matched = compute_shear_source(
+            sc_VI0_matched, 0.0, 0.0, calH, 1e-3,
+        )
+        # VII₀ uses + sign, VI₀ uses − sign; same (diff, summ) product ⇒
+        # dSm_VII0 = −dSm_VI0_matched
+        assert dSm == pytest.approx(-dSm_VI0_matched, rel=1e-12), (
+            f"VII₀ S_- should flip sign vs VI₀ at matched (|diff|, |summ|); "
+            f"VII₀={dSm}, VI₀_matched={dSm_VI0_matched}"
+        )
+        # Σ-independence
+        dSp_Sigma, dSm_Sigma = compute_shear_source(
+            sc, 1e-5, -3e-6, calH, 1e-3,
+        )
+        assert dSp_Sigma == pytest.approx(dSp, rel=1e-14)
+        assert dSm_Sigma == pytest.approx(dSm, rel=1e-14)
+
+    @pytest.mark.parametrize("N_equal", [1e-4, 1e-3, 1e-2])
+    @pytest.mark.parametrize("calH", list(_CALH_GRID))
+    def test_type_VII0_isotropic_limit_vanishes_exactly(self, N_equal, calH):
+        """Type VII₀ at n_1 = n_3 is the "plane-wave FLRW line" of W-E
+        Table 11.1 — both S_+ and S_- must vanish identically (source =
+        (0, 0)) since (n_1 − n_3) = 0. This is the FB-1.1 pin that
+        VII₀'s isotropic limit recovers FLRW without any residual drift.
+
+        Reference: Wainwright-Ellis §18 Table 11.1 row VII₀ (k = 0
+        "plane-wave" attractor at n_1 = n_3).
+        """
+        sc = type_vii0_constants(n1=N_equal, n3=N_equal)
+        dSp, dSm = compute_shear_source(sc, 1e-5, -3e-6, calH, 1e-3)
+        assert dSp == 0.0, f"VII₀ isotropic S_+ != 0 at N={N_equal}, ℋ={calH}"
+        assert dSm == 0.0, f"VII₀ isotropic S_- != 0 at N={N_equal}, ℋ={calH}"

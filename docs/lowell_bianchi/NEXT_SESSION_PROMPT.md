@@ -9,9 +9,9 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-19 (FB-0.3 complete → FB-1.1 bootstrap; Phase FB-0 sealed)
-**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md` (includes FB-0.1 + FB-0.2 + FB-0.3 supplements; Phase FB-0 sealed at the bottom)
-**Current target session**: **FB-1.1** — Class A background validation (I / II / VI₀ / VII₀): Wainwright-Ellis §18 Table 11.1 per-type match + Kasner analytic limit; promote `shear_sources.SOURCE_STATUS` entries I / II / VI₀ / VII₀ from PROVISIONAL to VALIDATED; first FB gallery extension (per-type σ × a³ overlays)
+**Last rotated**: 2026-04-19 (FB-1.1 complete → FB-1.2 bootstrap; 4/9 Class-A sources VALIDATED)
+**Last audited**: 2026-04-19 — see `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` (FB-1.1 section; FB-1.2 / 1.3 / 1.4 placeholders reserved at the bottom)
+**Current target session**: **FB-1.2** — Class A VIII / IX background validation: Wainwright-Ellis §18 Table 11.1 per-type match; Bianchi IX `solve_ivp` event detection for recollapse; BKL axisymmetric smoke; promote `shear_sources.SOURCE_STATUS` VIII / IX from PROVISIONAL to VALIDATED; gallery extension `07_fb12_classA_typeVIII_WE_attractor.png` + `08_fb12_classA_typeIX_recollapse_trace.png`
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -36,131 +36,127 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-1.1 — Class A background validation (I / II / VI₀ / VII₀)
+# FB-1.2 — Class A VIII / IX background validation + Bianchi IX recollapse event
 
 ## 프로젝트 컨텍스트
 
 - **Repo**: /home/cosmosapjw/Dropbox/bianchi/bass_phase1_snapshot_2026-04-18/bass_phase1_snapshot
 - **venv**: venv/bin/python
 - **테스트 명령**: `cd bass_py && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-- **현재 baseline**: 2,688 passing + 1 skipped (Phase FB-0 직후; 감사 로그: `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md` — FB-0.1 + FB-0.2 + FB-0.3 supplements 포함, Phase FB-0 seal 마지막 섹션)
-- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **Phase FB-0 전체**:
-  - FB-0.1 (Ellis σ×a³=const convention flip; `einstein_bianchi` + `shear_sources` + LB-5 integrator 전 flip; `00_conventions §4` SSOT 재작성)
-  - FB-0.2 (`BianchiCosmology.v_hat_e` 필드 + 12 factories + `IntegratorConfig.tilt_rapidity`/`.tilt_direction` accessor; β=0 bit-identical)
-  - FB-0.3 (LB-6 F2 carry-forward seal — `detect_critical_events` 의 6-key contract 확정)
-- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-1 "Per-type background validation" (4 sessions)** 의 1/4 번째
-- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1`
-- **Carry-forward P2 (알고만 있을 것)**:
+- **현재 baseline**: 2,753 passing + 1 skipped (FB-1.1 직후; 감사 로그: `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` — FB-1.1 섹션, FB-1.2/1.3/1.4 placeholder 예약됨)
+- **완료된 단계**: LB-0 … LB-6 + LB audits P2/P3 cleanup + **Phase FB-0 전체** + **FB-1.1**:
+  - FB-0.1..0.3 (Ellis convention flip + tilt-field surface + LB-6 F2 seal)
+  - FB-1.1 (Class A I/II/VI₀/VII₀ SOURCE_STATUS → VALIDATED; 4 new gallery PNGs `plots/physics_gallery/11_integrator/{03..06}_fb11_classA_*.png`; `TestClassAFixedPoints` 61 parametrised runs)
+- **현재 phase**: **Full Bianchi Coverage (FB) — Phase FB-1 "Per-type background validation" (4 sessions)** 의 2/4 번째
+- **전체 로드맵**: `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1.2`
+- **Carry-forward P2 (알고만 있을 것, 절대 건드리지 말 것)**:
   - F3 → `TetradBackgroundState.shear_magnitude_sq` dimensionless-Σ² normalisation → **FB-2.4 예약**
   - FB02-F1 → `00_conventions.md §2` 에 `v̂_e` default cross-reference → **FB-3.1 예약**
-  - 둘 다 FB-1.1 에서는 **절대 건드리지 말 것**.
+  - FB11-F1 (new, FB-1.1) → W-E Table 11.1 fixed-point *coordinates* 는 fixed-N 프레임워크에서 직접 도달 불가 — **FB-5 / FB-6 cross-type continuity 에서 재검토**. 본 세션 FB-1.2 도 formula-level validation 에 집중, Hubble-normalised coordinate chasing 금지.
 
-## 이 세션의 작업 범위 (FB-1.1 — Class A 절반)
+## 이 세션의 작업 범위 (FB-1.2 — Class A 나머지: VIII + IX)
 
-**Goal**: `bass/transport/shear_sources.py` 의 Class A 4개 타입 (I / II / VI₀ / VII₀) 배경 소스를 literature ground truth 에 대해 per-type 검증하고 `SOURCE_STATUS` 를 `PROVISIONAL → VALIDATED` 로 승격. 동시에 FB plan §4 FB-1.1 row 에서 명시한 gallery 확장 (per-type Class A 배경 trace) 을 `plots/physics_gallery/11_integrator/` 에 추가.
+**Goal**: `bass/transport/shear_sources.py` 의 Class A 남은 2 타입 (VIII / IX) 배경 소스를 literature ground truth 에 대해 per-type 검증하고 `SOURCE_STATUS` 를 `PROVISIONAL → VALIDATED` 로 승격. 동시에 Bianchi IX recollapse 처리를 위한 `solve_ivp` event detection (FB plan D5 "event-terminated" 옵션) 을 `einstein_bianchi.solve_bianchi_background` 에 도입.
 
 ### 기준이 되는 문헌 타깃
 
 | 타입 | 해석해 / 수치 타깃 | 테스트 앵커 |
 |---|---|---|
-| I | Kasner: `(p_1, p_2, p_3) = (0, 0, 0)` vacuum 제외; `σ × a³ = const` 이미 FB-0.1 `test_I12b_kasner_analytic_recovery_type_I` 에서 검증. **여기서는** radiation-dominated era 에서 `Σ_± × a² = const` + Kasner exponent triplet 이 `∑p_i = ∑p_i² = 1` 을 만족하는지 고 `L_max = 6` full integration 에서 확인. |
-| II | Wainwright-Ellis §18 Table 11.1 fixed point "II": `(Σ_+, Σ_-, N_1) = (−1/2, 0, √{3}/2)` (Hubble-normalised). Ellis conformal source `−(2/3) N_1² ℋ²` 가 해당 fixed point 로 수렴. Axisymmetric limit 만. |
-| VI₀ | W-E Table 11.1 "VI₀": `(Σ_+, Σ_-, N_2, N_3) = (0, ∓1/√{3}, 1, −1)` (Hubble-norm, up to ± sign). Ellis 소스는 `2 N_2 N_3 ℋ²` 컴포넌트만. |
-| VII₀ | W-E Table 11.1 "VII₀": `(Σ_+, Σ_-, N_1, N_2) = (0, 0, 1, 1)` (2D attractor — σ decays to 0; "plane-wave" fixed line). Ellis 소스는 `(N_2 - N_3)² ℋ² / 3` 유사 pattern. Asymptotic σ → 0. |
-| 공통 | `rho_shear = 6 Σ² / (2 κ) / a^4` 의 monotonic decay; FLRW limit (Σ_0 → 0) 에서 σ ≡ 0 유지; `compute_shear_source` return signature / sign structure FB-0.1 과 bit-identical. |
+| VIII | Wainwright-Ellis §18 Table 11.1 row "VIII" (sl(2,ℝ) algebra, one negative eigenvalue). Ellis conformal source (현 구현) `S^{WE}_+ = -(2/3)[2N₁² - N₂² - N₃² + N₂N₃]`, `S^{WE}_- = (2/√3)[N₂² - N₃²]`. **Leading-order near-FLRW** form — full nonlinear Mixmaster dispatch 는 FB-5 로 유지. |
+| IX | W-E §18 Table 11.1 row "IX" (so(3), Mixmaster, recollapse). Ellis conformal source `S^{WE}_+ = -(2/3)[2N₁² - N₂² - N₃² - N₂N₃]`, `S^{WE}_- = (2/√3)[N₂² - N₃²]`. Isotropic limit n₁ = n₂ = n₃ 에서 `S_± = 0` 확인 (W-E 가 지적한 pathology 유의 — current impl 에서 `2n² - n² - n² - n² = -n² ≠ 0` 이 되어 완전히 0 은 아님; FB-1.2 에서 이 값이 small 한지 확인만). |
+| 공통 | `rho_shear ∝ 1/a⁶` (shear energy monotonic decay on non-recollapsing branches); `compute_shear_source` return signature / sign structure 변경 없음. |
+| 추가 (IX 전용) | **Bianchi IX recollapse**: `solve_ivp(event=IX_recollapse)` 를 도입. 이벤트 정의: `a'(η) = a × ℋ → 0` 점 (즉 ℋ(a) = 0 지점 in vacuum; Planck-2018 FLRW background 에서는 Ωm + ΩΛ > 0 이므로 ℋ > 0 항상 — 실 recollapse 는 vacuum IX 에만 발생, 즉 non-representative fixture 에서 synthetic 하게 트리거). **FB-1.2 의 event branch 는 integrator 가 NaN/inf 없이 event 를 감지하고 종료하는지 smoke 만** — 실제 production IX 는 FB-5 / FB-6 에서. |
 
 ### 구체 작업 항목
 
 1. **문헌 재확인 (먼저, 코딩 전)**:
-   - Wainwright-Ellis 1997 §18 Table 11.1 값 확인 (현재 `bass/transport/shear_sources.py` 의 SOURCE_STATUS 주석과 교차)
-   - Pontzen-Challinor 2009 fixture 는 **VII₀ 가 아니라 VII_h 용** 이므로 FB-1.3 에서 다룰 예정 — 본 세션에서는 참조만.
-   - `lowell_bianchi_solver_reference.md` (ellis §18.3 외 추가 anisotropic fixed-point 설명 유무 확인).
+   - Wainwright-Ellis 1997 §18 Table 11.1 VIII / IX rows + §6 sl(2,ℝ) / so(3) algebra 확인
+   - Bianchi IX Mixmaster literature: BKL oscillation (Belinsky-Khalatnikov-Lifshitz 1970) — 본 세션은 axisymmetric smoke 만, full BKL oscillation 은 FB-5/FB-6 deferred
+   - `lowell_bianchi_solver_reference.md §18` — anisotropic fixed-point additional notes
+   - `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` FB11-F1 의 "formula-level validation" 프레이밍 준수
 
-2. **Validation 테스트 4개 추가** (per-type, 각 file 의 existing fixture 를 재활용):
-   - `bass/transport/test_shear_sources.py` 에 `TestClassAFixedPoints` 클래스 신규:
-     - `test_type_I_kasner_exponent_sum`: Kasner `∑p_i = 1, ∑p_i² = 1` to rel 5e-3 on an L=6 full-background trajectory
-     - `test_type_II_WE_fixed_point_asymptotic`: 긴 η window (η ∈ [100, 10000] Mpc) 에서 `Σ_+/ℋ → −1/2 ± 0.05`
-     - `test_type_VI0_WE_fixed_point_asymptotic`: `Σ_-/(ℋ/√3) → ∓1 ± 0.05`
-     - `test_type_VII0_shear_decay_to_plane_wave_line`: `(Σ_+² + Σ_-²) × a^4 → 0` monotonically (4D → 2D reduction)
-   - Tolerance bands 는 FB-0.1 의 5% / 1% precedents 에 맞춰 완화 가능. LSODA `rtol=1e-9, atol=1e-14` 사용.
+2. **Validation 테스트 2개 추가** (VIII + IX):
+   - `bass/transport/test_shear_sources.py::TestClassAFixedPoints` 클래스에 append:
+     - `test_type_VIII_WE_source_formula_and_signs`: (n1, n2, n3) 파라미터 grid 에서 S_+ / S_- 공식이 W-E Table 11.1 VIII 에 대해 rel 1e-12 match. Σ-independence pin. `n1 < 0` 조건 (sl(2,ℝ) algebra) 유지.
+     - `test_type_IX_WE_source_formula_and_isotropic_near_limit`: 공식 match + isotropic n₁=n₂=n₃ 에서 `S_±` 가 small (W-E 의 알려진 pathology) — `|S_+| < 10 × (2/3) n² × ℋ²` band 같은 것 허용; 완전 zero 주장 안 함.
+   - Tolerance: 공식 rel 1e-12; FB-1.1 precedent 준수. 기존 `_CALH_GRID` 재활용.
 
-3. **SOURCE_STATUS 승격**: `bass/transport/shear_sources.py` 의 `SOURCE_STATUS` 딕셔너리에서 타입 I / II / VI_0 / VII_0 항목을 `"PROVISIONAL"` → `"VALIDATED"` 로 바꾸고, 각 entry 에 FB-1.1 audit cross-ref 주석 (`# VALIDATED (FB-1.1): ...`) 추가.
+3. **`solve_ivp(event=IX_recollapse)` 도입** (production-safe smoke):
+   - `bass/background/einstein_bianchi.py::solve_bianchi_background` 에 optional `event=recollapse_event` 인자 추가 (default None = 기존 동작; Type IX default factory 가 event 를 set). Event 정의: `ℋ → 0` 또는 `a' ≤ 0`. `solve_ivp` 의 `events=` 파라미터 사용.
+   - Test: `test_bianchi_IX_recollapse_event_fires_on_synthetic_vacuum_background`. FLRW 배경이 대체로 확장 중이므로 synthetic vacuum (H ∝ sqrt(-k/a²)) 시나리오를 작게 시뮬 — 또는 `a_end = small` 로 짧은 window 테스트만. Realistic Bianchi IX 는 FB-5/FB-6 이라 명시.
 
-4. **Gallery 확장** (Phase boundary gallery rule 첫 비-no-op 실행):
-   - `plots/physics_gallery/11_integrator/` 에 다음 4개 PNG 추가 (or 기존 plot-gen 스크립트에 loop 추가):
-     - `fb11_classA_typeI_kasner_trace.png`: Type I 의 `Σ × a²` flat line + `σ × a³` flat line (overlay)
-     - `fb11_classA_typeII_WE_attractor.png`: Type II 의 `(Σ_+/ℋ, Σ_-/ℋ)` phase-plane trajectory 가 Table 11.1 point 로 수렴
-     - `fb11_classA_typeVI0_WE_attractor.png`: Type VI₀ 동일 구조
-     - `fb11_classA_typeVII0_decay.png`: Type VII₀ 의 `Σ²` monotonic decay
-   - 각 PNG 생성 후 **눈으로 확인** (Read tool 로 open). Physics 가 이상하면 (e.g. divergent, negative decay) 즉시 flag — commit 전 수정.
+4. **SOURCE_STATUS 승격**: VIII / IX 을 `"PROVISIONAL"` → `"VALIDATED"` 로 변경. 각 entry 에 FB-1.2 audit cross-ref 주석 추가.
 
-5. **Audit 작성** (`docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` 신규):
-   - AUDIT_PROMPT.md 템플릿 따라 작성; §1..§10 구조.
-   - Phase FB-1 전체 (4 sub-phase) 의 첫 supplement 로 자리잡음 (FB-1.2/1.3/1.4 이 나중에 append).
+5. **Gallery 확장** (FB-1.2 의 두 번째 non-no-op visual):
+   - `plots/physics_gallery/11_integrator/07_fb12_classA_typeVIII_WE_attractor.png`: VIII S_+ / S_- 트라젝토리 + W-E formula 시각화
+   - `plots/physics_gallery/11_integrator/08_fb12_classA_typeIX_recollapse_trace.png`: IX 배경 trace + (event branch on 에서) event-fire 시점 표시
+   - `scripts/make_physics_gallery.py` 에 `plot_11_07_fb12_classA_typeVIII_WE_attractor` / `plot_11_08_fb12_classA_typeIX_recollapse_trace` 추가 + CATALOG 등록
+   - 각 PNG 눈으로 확인 (Read tool) — physics 이상 시 즉시 in-session fix
 
-6. **Phase boundary 트리거**: FB-1.1 은 Phase FB-1 의 시작이지만 sub-phase boundary 에 해당하므로 `docs/audits/AUDIT_PROMPT.md` self-invoke → P0/P1 fix in-session 규칙 적용.
+6. **Audit append**: `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` 에 **FB-1.2 supplement** 섹션 append (§1..§10 template).
 
-7. `NEXT_SESSION_PROMPT.md §2` 를 **FB-1.2** (Class A VIII / IX — Bianchi IX 는 recollapse event detection 필요) bootstrap 으로 rotate.
+7. `NEXT_SESSION_PROMPT.md §2` 를 **FB-1.3** (Class B: III / IV / V / VI_h / VII_h — twist-coupled source, Pontzen-Challinor VII_h spiral 매치) bootstrap 으로 rotate.
 
-### FB-1.1 non-goals (선 밑에 고정)
+### FB-1.2 non-goals (선 밑에 고정)
 
-- **VIII / IX** 는 FB-1.2 (Bianchi IX recollapse `solve_ivp` event 필요 — 별도 세션)
 - **Class B (III / IV / V / VI_h / VII_h)** 는 FB-1.3 — twist-coupled source, Pontzen-Challinor spiral 매치 필요
 - **`anisotropic_3_curvature`** 11-type 구현은 FB-1.4
 - **Hierarchy RHS T4-T7 wire-up** 은 FB-2 (배경만 본 세션)
 - **Tilted sector** 은 FB-3 (β=0 유지)
-- **F3 carry (`shear_magnitude_sq`)** 는 FB-2.4 — 절대 건드리지 말 것
+- **Bianchi IX full BKL oscillation / Mixmaster**: FB-5 / FB-6 (본 세션은 event-branch smoke 만)
+- **W-E fixed-point *coordinates* (Σ̂_+ → specific values)** 추구 금지 — FB11-F1 deferred 이므로 formula-level pin 만 수행
+- **F3 carry (`shear_magnitude_sq`)** 는 FB-2.4
 - **FB02-F1 carry (`00_conventions §2` 교차참조)** 는 FB-3.1
 - **Spectrum extraction / C_ℓ** 은 FB-7
 
 ## 우선 읽어야 할 문서 (순서대로)
 
-1. `docs/audits/AUDIT_PHASE_FB0_2026-04-19.md` (phase seal; gallery 확장이 FB-1.1 의 첫 non-no-op visual 임을 명시함)
-2. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1` (FB-1.1..1.4 roadmap)
-3. `bass/transport/shear_sources.py` (SOURCE_STATUS + 11 type 소스 구현 — 9 타입 PROVISIONAL)
-4. `bass/transport/test_shear_sources.py` (FB-0.1 flip 후 scaling/sign tests; 본 세션이 새 TestClassAFixedPoints 추가)
-5. `bass/background/einstein_bianchi.py` (Ellis ODE; `solve_bianchi_background` 이 L=6 trajectory 반환)
-6. `bass/hierarchy/test_integrator.py::test_I12b_kasner_analytic_recovery_type_I` (Type I Kasner 이미 검증 — FB-1.1 Type I test 는 이와 중복되지 않는 `∑p_i` triplet 검증)
-7. Wainwright-Ellis 1997 §18 Table 11.1 (문헌 — fixed-point coordinates)
-8. `lowell_bianchi_solver_reference.md §5, §18` (Ellis conformal-shear derivation 복습)
-9. `docs/audits/AUDIT_PROMPT.md` (phase-boundary audit template — 본 세션 전에 self-invoke)
+1. `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` §FB-1.1 + §10 + FB-1.2 placeholder (본 세션이 append 할 곳)
+2. `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 FB-1.2` + §6 D5 (Bianchi IX recollapse 처리 옵션 — (a) event-terminated solve_ivp 가 권장)
+3. `bass/transport/shear_sources.py::source_VIII, source_IX` (현 구현 + SOURCE_STATUS PROVISIONAL 주석)
+4. `bass/transport/test_shear_sources.py::TestClassAFixedPoints` (FB-1.1 precedent; 본 세션이 동일 클래스에 VIII/IX 추가)
+5. `bass/background/einstein_bianchi.py::solve_bianchi_background` (ODE integrator — event 파라미터 추가 지점)
+6. Wainwright-Ellis 1997 §18 Table 11.1 VIII/IX rows + §6 (sl(2,ℝ) / so(3) algebra)
+7. `docs/audits/AUDIT_PROMPT.md` (phase-boundary audit template — 본 세션 전에 self-invoke)
 
 ## 핵심 원칙 (고정)
 
 1. 외부 코드 금지 (프로덕션 트리)
-2. Citation in every modified docstring (Wainwright-Ellis §18 Table 11.1 reference 필수)
-3. PSTF invariants preserved; Ellis convention (FB-0.1) 유지 — Σ × a² = const for Type I
-4. No silent fallbacks
+2. Citation in every modified docstring (W-E §18 Table 11.1 row VIII / IX 인용 필수; BKL reference optional)
+3. PSTF invariants preserved; Ellis convention (FB-0.1) 유지
+4. No silent fallbacks — event-branch 는 `None` default 에서 이전 거동 유지
 5. Determinism
-6. **VALIDATED 승격은 수치 검증 후에만**. PROVISIONAL 상태 유지가 항상 허용되는 안전한 default.
-7. **Gallery PNG 는 눈으로 확인 후 commit**. Physics-이상 (예: shear grows, σ diverges, ∑p_i² ≠ 1) 은 즉시 in-session fix.
+6. **VALIDATED 승격은 수치 검증 후에만**. PROVISIONAL 상태 유지가 항상 허용되는 안전한 default. **FB11-F1 의 교훈: fixed-point coordinate chasing 금지**, formula-level pin 이 operative contract.
+7. **Gallery PNG 는 눈으로 확인 후 commit**. Physics-이상 (예: IX event 가 realistic 배경에서 잘못 발화, VIII S_+ 가 sign 반전) 은 즉시 in-session fix.
 
 ## 검증 체크리스트 (최종 commit 전)
 
-- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (≥ 2,692; +4 new)
-- [ ] `TestClassAFixedPoints` 4개 테스트 모두 green
-- [ ] `shear_sources.SOURCE_STATUS["I"]` / `["II"]` / `["VI_0"]` / `["VII_0"]` 모두 `"VALIDATED"` + cross-ref 주석
-- [ ] `plots/physics_gallery/11_integrator/fb11_classA_*.png` 4개 생성 + 시각적 inspection 완료
-- [ ] `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` 작성 (FB-1.1 section; FB-1.2/1.3/1.4 자리 준비)
-- [ ] `docs/audits/AUDIT_PROMPT.md` self-invoke 로 P0/P1 스캔 완료 (결과 audit log §6 에 기록)
-- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-1.2** (Class A VIII/IX; Bianchi IX recollapse event detection) bootstrap 으로 rotate
-- [ ] 최종 commit 메시지: `FB-1.1: Class A background validation (I/II/VI_0/VII_0) — promote SOURCE_STATUS to VALIDATED` + `+ rotate NEXT_SESSION_PROMPT for FB-1.2`
+- [ ] `PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q` — 전체 회귀 green (baseline 2,753 + 신규 테스트)
+- [ ] `TestClassAFixedPoints::test_type_VIII_*` / `test_type_IX_*` green
+- [ ] `test_bianchi_IX_recollapse_event_*` green (synthetic fixture)
+- [ ] `shear_sources.SOURCE_STATUS["VIII"]` / `["IX"]` 모두 `"VALIDATED"` + cross-ref 주석
+- [ ] `plots/physics_gallery/11_integrator/{07_fb12_classA_typeVIII_WE_attractor.png, 08_fb12_classA_typeIX_recollapse_trace.png}` 생성 + 시각적 inspection 완료
+- [ ] `docs/audits/AUDIT_PHASE_FB1_2026-04-19.md` 에 FB-1.2 supplement append (§1..§10)
+- [ ] `docs/audits/AUDIT_PROMPT.md` self-invoke 로 P0/P1 스캔 완료 (결과 audit log FB-1.2 §6 에 기록)
+- [ ] `NEXT_SESSION_PROMPT.md §2` → **FB-1.3** (Class B III/IV/V/VI_h/VII_h; twist-coupled source, Pontzen-Challinor spiral) bootstrap 으로 rotate
+- [ ] 최종 commit 메시지: `FB-1.2: Class A VIII/IX background validation + Bianchi IX recollapse event` + `+ rotate NEXT_SESSION_PROMPT for FB-1.3`
 
 ## 진행 순서
 
 1. `docs/audits/AUDIT_PROMPT.md` self-invoke (pre-phase scan)
-2. FB plan §4 FB-1 전체 + W-E Table 11.1 + shear_sources 소스 구현 읽기
-3. Type I / II / VI₀ / VII₀ 각각에 대해 `solve_bianchi_background` trajectory 를 Jupyter-style REPL script 로 먼저 돌려 fixed-point 수렴 behaviour 확인 (테스트 작성 전에; coarse bracket 확보)
-4. `TestClassAFixedPoints` 4개 테스트 추가 (rtol=1e-9, atol=1e-14)
-5. `SOURCE_STATUS` 4 entry 승격 + cross-ref 주석
-6. Gallery 4 PNG 생성 (plot-gen script 확장 or `plots/physics_gallery/11_integrator/generate_classA_fb11.py` 신규)
-7. 각 PNG Read tool 로 inspect → physics 검증
-8. `AUDIT_PHASE_FB1_2026-04-19.md` 신규 작성 (§1..§10 full template)
-9. 전체 회귀 green 확인
-10. `NEXT_SESSION_PROMPT.md §2` rotate to FB-1.2
-11. commit
+2. FB plan §4 FB-1.2 + §6 D5 + W-E §18 Table 11.1 VIII/IX rows + shear_sources 소스 구현 읽기
+3. VIII / IX 각각에 대해 `solve_bianchi_background` trajectory 를 Jupyter-style REPL 로 먼저 돌려 behaviour 확인
+4. `TestClassAFixedPoints` 에 VIII / IX 테스트 추가 (rel 1e-12 formula pin)
+5. `solve_bianchi_background` 에 `events=` 파라미터 추가 + synthetic vacuum-IX recollapse smoke test
+6. `SOURCE_STATUS` VIII / IX 승격 + cross-ref 주석
+7. Gallery 2 PNG 추가 (`scripts/make_physics_gallery.py` 에 `plot_11_07`, `plot_11_08`)
+8. 각 PNG Read tool 로 inspect → physics 검증
+9. `AUDIT_PHASE_FB1_2026-04-19.md` 에 FB-1.2 supplement append
+10. 전체 회귀 green 확인
+11. `NEXT_SESSION_PROMPT.md §2` rotate to FB-1.3
+12. commit
 
-시작하세요. 본 세션은 **첫 per-type physics validation** — FB-0 의 정적 API/convention 정비를 기반으로 실제 11-type 스펙트럼의 첫 4 개를 ground truth 에 대해 pin 합니다. 각 test band 는 보수적으로 (5%) 설정하고, fixed-point 수렴이 느리거나 asymmetric 인 경우 (특히 VII₀) η window 를 충분히 길게 (≥ 10000 Mpc conformal) 잡을 것.
+시작하세요. 본 세션은 **Class A 완주** — FB-1.1 의 formula-level pinning 방식을 그대로 VIII / IX 에 확장하고, Bianchi IX 의 recollapse 처리를 위한 event-detection 인프라를 도입합니다. FB11-F1 의 교훈 (fixed-N 프레임워크에서 self-similar coordinate chasing 금지) 을 반드시 준수: W-E Table 11.1 "asymptotic" 언어는 formula-match 로 구체화, dynamical system 재매개화는 FB-5/FB-6 으로 유지.
 ```
 
 ---
