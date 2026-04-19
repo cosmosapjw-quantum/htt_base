@@ -1,16 +1,17 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-19, post-`IND_TRACKS_W8` phase.
+**As of**: 2026-04-19, post-`IND_TRACKS_W9` phase.
 **Last audited**: 2026-04-19
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W7_2026-04-19.md`,
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`,
+`AUDIT_PHASE_IND_TRACKS_W7_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W6_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W5_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W4_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W3_2026-04-19.md`).
 **Governing plan**: `INDEPENDENT_TRACKS_PLAN.md` **v1.2** (PART II MIO
 integration patch + PART III Week-5+ realignment landed 2026-04-19;
-Week 1–8 routine shipped; Week 9 extension routine referenced below).
+Week 1–9 routine shipped; Week 10+ extension routine referenced below).
 **Parent plan**: **`BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN.md` v3** (MIO
 added as 4th pillar; supersedes `BASS_PY_HTT_TSC_RESEARCH_PLAN.md` v2
 which remains referenced from historical carry-forwards).
@@ -144,92 +145,114 @@ force-added the three manuscript files (ch11, ch12, main.tex)
 to unblock the Week-8 gate. Documented as **W8 FM1** — policy
 question deferred to the user.
 
+## §1c-6. What shipped in Week 9
+
+Session of 2026-04-19 (compressed: one session covered Week-9
+Days 1-7). Six landings + one phase-boundary audit
+(`AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md`).
+
+| Track | Artefact | Status |
+|---|---|---|
+| DOS-A13 (Days 1-3) | 12 new dossier files `A13_02_BI_orth.md` … `A13_13_BVIIh_tilt.md` (BI_orth, BVII0_orth, BII_orth, BVI0_orth, BVIII_orth, BIX_orth, BVIIh_orth + BVIIh_orth_grow inline, BI_tilt, BV_tilt, BIII_tilt, BIX_tilt, BVIIh_tilt + BVIIh_tilt_grow inline). Each file uses the §1–§9 template from `A13_template.md` and references the corresponding `htt.core.evidence_models_R03a` class by name + prior. 14 total numbered A13 files (template + 14 model files) | landed |
+| HTT-STAB round 2 (Day 4) | `robustness_sweeps_integrated.json` extended with `sweep_A_rho` key (11 rows, lnB monotone in ρ); new `IS06_3D_posterior.npz` fixture (n=2000 β/ℓ/b arrays); HTT_PIPELINE_OUTDIR pattern applied to `fig_rho_sweep.py`, `fig_departure_summary.py`, `fig_v_pushforward.py`; typo fix `catalog_velocity_likelihood` → `catalog_likelihood` in fig_v_pushforward; `test_figures_smoke.py` skip count 6 → 4 | landed (fig_departure_summary remains dynesty-blocked per W8 FM4 — by design) |
+| W7 FM2 close (Day 5) | `FillingFraction.mc_posterior` accepts keyword-only `pre_drawn_eps=(e1, e2, e3)` triple; `ff_htt_mc_cross_check` draws the triple once on the bridge side and hands it to both paths; 4-test `TestW7FM2StreamAlignment` class validates pre-drawn acceptance + shape-mismatch raise + reordering-proof bit-identity + rtol round-trip | landed |
+| Full-regression audit (Days 6-7) | Touched surface 1001 → 1007 passed; 6 → 4 skipped; tsc standalone 598 → 602 (+4 FM2); MIO contribution = 37 ≥ 25 gate; full `bass_py/` 3193 tests collected. MIO gap rank: HJ-01 shear extraction + HJ-03 evidence anatomy + HJ-04 departure skeleton — blocked on bass_py K_ℓ atlas / HTT posterior draws (v3 §17.3) — not actionable in this lane until bass_py LB-7+ lands | landed |
+| Phase audit | `docs/audits/AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md` | landed |
+
+Final test tally over the touched surface at W9 boundary:
+**1007 passed, 0 failed, 4 skipped** (+6 vs W8's 1001; −2 skips
+resolved). Composition of the 4 remaining skips: 2 × mio.core/reporting
+(W6 carry — blocked on MANU-CH12-NEW figure retirement), 1 × dynesty
+(W5 carry — `fig_departure_summary`; `venv/bin/pip install dynesty`
+unblocks), 1 × `fig_certification_matrix` / `fig_identified_reporting_split`
+/ `fig_direction_posterior` family (different legacy root — W9 carry).
+
+Week 9 final gate — **all four items green**:
+- [x] DOS-A13 14 numbered A13 files present (template + 14 model dossiers covering all 16 ALL_MODELS entries, with `*_grow` variants folded into their `_orth` / `_tilt` parents).
+- [x] W9D4 skip reduction: 6 → 4 (dynesty blocker noted separately).
+- [x] W7 FM2 TSC-06 RNG stream refactor landed + regression locked.
+- [x] Full-regression audit log written to `docs/audits/AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md`.
+- [x] MIO contribution ≥ 25 tests (37 — unchanged vs W8; no MIO code change this week).
+
 ## §1d. What was designed in the 2026-04-19 planning session
 
 (Preserved here for provenance; unchanged from earlier rotations.
 See v3 research plan + PART II + PART III of the governing plan.)
 
-## §2. Active priorities for the next session (Week 9)
+## §2. Active priorities for the next session (Week 10)
 
-**"DOS-A13 remaining models + full-regression audit + opportunistic
+**"MIO gap-closure + MANU-CH12 continuations + opportunistic
 carry-forwards"** — distilled from `INDEPENDENT_TRACKS_PLAN.md` §21
-Week 9 (recorded as "Week 9 이후" in plan; the session should also
-treat the W8 FM1-FM6 ledger in `AUDIT_PHASE_IND_TRACKS_W8_2026-04-19.md`
-as first-order input). Week 8 closed all four scheduled landings
-(MANU-CH11-REDESIGN, MANU-CH12-NEW, HTT-STAB final, HTT-NULL smoke);
-no W8 rollovers block Week 9.
+post-Week 9. Week 9 closed all scheduled landings; no W9 rollovers.
+The session should treat the W9 FM1–FM6 ledger in
+`AUDIT_PHASE_IND_TRACKS_W9_2026-04-19.md` (all P3, by-design) as
+background only — none are action items for Week 10.
 
-### Days 1–3 (Mon–Wed) — DOS-A13 remaining 12 models
+Week 10 is the first week where the MIO gap list becomes actionable.
+Read `§3 Carry-forward items` and the parent plan v3 §17.3 before
+picking up.
 
-**DOS-A13** (plan §21 Week 9). The A13 dossier series currently has
-the template plus two landings: `A13_00_FLRW.md` and
-`A13_01_FLRW_tilt.md`. The v3 §11.14.6 schedule requires the
-remaining 12 Bianchi models (BI, BII, BIII_tilt, BV, BVIIh_tilt,
-BVIIh_tilt_grow, BVIIh_tilt_dec, BVIIh_orth, BVIIh_orth_dec,
-BIX_tilt, and the two "grow/dec" variants not yet enumerated). Each
-dossier entry follows `A13_template.md` and is code-independent
-(no bass_py / HTT / tsc dependency).
+### Days 1–2 — DYNESTY-DEP install + dynesty-blocked figure unlock
 
-- Commit tag candidates: `W9D1: DOS-A13 BI/BII`, `W9D2: DOS-A13
-  BIII_tilt/BV`, `W9D3: DOS-A13 BVIIh family` (three per day).
-- Gate: 14 A13 files present; each follows the template; each
-  references the corresponding htt evidence model entry (from
-  v3 §0.3 table).
+Deferred since W5; Week 10 is a convenient window before MIO
+HJ-01 work. `venv/bin/pip install dynesty` unblocks
+`fig_departure_summary.py` (skip count 4 → 3) and enables the
+`TestHttMcCrossCheck` family to exercise the nested-sampling path
+end-to-end (not just the analytical approximation).
 
-### Day 4 (Thu) — W8 FM3 HTT-STAB extension (optional over-delivery)
+- Commit tag: `W10D1: AUDIT(W5-DYNESTY-DEP): install + smoke`
+- Gate: `test_figures_smoke.py` skip count drops to ≤ 3; pip-freeze
+  committed alongside; no new test regressions on touched surface.
 
-**HTT-STAB round 2** (plan v1.0 §3.4 + W8 FM3). Apply the W8D6
-`HTT_PIPELINE_OUTDIR` pattern to the three remaining /mnt/user-data
-figures and add the IS06 fixture:
+### Days 3–4 — MIO HJ-01 skeleton (shear extraction)
 
-- `fig_rho_sweep.py` (robustness_sweeps_integrated.json; the
-  existing W8D6 fixture already covers schema — extend with
-  `sweep_A_rho` key);
-- `fig_departure_summary.py` (note: this also requires the dynesty
-  chain — partial unblock only);
-- `fig_v_pushforward.py` (new fixture
-  `IS06_3D_posterior.npz` needed).
+Governing plan §17.3 + v3 §9.1. HJ-01 is the MIO shear-extraction
+primitive: given a bass_py K_ℓ atlas output, produce a shear
+estimator with a documented MES cap. Since bass_py K_ℓ atlas is
+not yet landed (bass_py session is still on the hierarchy
+integrator / LB lane), Week 10 lands the **skeleton only**:
 
-- Commit tag: `W9D4: HTT-STAB round 2 — /mnt/user-data residual`
-- Gate: `test_figures_smoke.py` skip count drops to ≤ 4 (from 6);
-  if the dynesty-chain figure remains skipped, that is acceptable
-  and documented as a separate carry-forward.
+- module `bass_py/mio/extraction/hj01_shear.py` with `ShearExtractor`
+  dataclass + `extract_from_kl_atlas(kl: dict) -> ShearExtractorReport`;
+- stub consumer that documents the bass_py K_ℓ atlas schema the
+  module expects (keyed to the `"truth certificate"` language
+  from ch11);
+- unit tests using a synthetic K_ℓ dict (no bass_py dependency);
+- target 10–15 new tests, bringing MIO contribution from 37 to
+  ≥ 47.
 
-### Day 5 (Fri) — W7 FM2 TSC-06 RNG stream refactor
+- Commit tag: `W10D3: MIO HJ-01 shear extraction skeleton`
+- Gate: new `bass_py/mio/extraction/` surface imports cleanly;
+  tests pass; no bass_py import required.
 
-**FillingFraction.mc_posterior pre-drawn triple** (plan v1.0 §3.4
-+ W7 FM2). Refactor `htt.core.analysis_extended.FillingFraction.mc_posterior`
-to accept a pre-drawn (ε₁, ε₂, ε₃) triple via a keyword argument;
-update `tsc.integration.htt_bridge.ff_htt_mc_cross_check` to pass
-the shared triple by construction instead of re-seeding.
+### Days 5–6 — MANU-CH12 §12.1 or §12.3 (pick whichever is less
+blocked on bass_py outputs)
 
-- Commit tag: `W9D5: AUDIT(W7-FM2): FillingFraction stream refactor`
-- Gate: TSC-06 rtol < 1e-6 preserved on S3; stream-alignment
-  coupling removed from the test-reader's mental model; W7 FM2
-  closes.
+§12.1 depends on the HJ-01 skeleton above; §12.3 depends on COMMON-F
+mock-calibration (landed W4). §12.3 is therefore the cleanest
+Week-10 target. Text-only — lands in the same `/project` gitignored
+path as ch11 / ch12, with the same force-add contract (W8 FM1).
 
-### Days 6–7 (Sat–Sun) — Full-regression audit + MIO ≥ 25 midpoint
+- Commit tag: `W10D5: MANU-CH12 §12.3 mock calibration`
+- Gate: §12.3 ≥ 150 L; cites A14 null-family derivations verbatim;
+  incorporates W4 F1 sandwich-coverage caveat; no banned vocab.
 
-**Full regression** (plan §15.1; parent plan v3 §15.1 target 2,800).
-Inventory the current `bass + tsc + htt + mio + common` combined test
-count; confirm MIO contribution ≥ 25; identify the first gap to
-close (likely HJ-04 evidence anatomy or HJ-01 shear extraction
-skeleton).
+### Day 7 — Phase audit + NEXT_SESSION rotation
 
-- Commit tag: `W9D7: full-regression inventory + MIO gap audit`
-- Gate: combined test count documented in audit; gap list ranked.
+Standard phase-boundary audit per `feedback_phase_boundary_audit.md`.
+Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W10_2026-04-19.md`
+(date may shift).
 
-### Week 9 final gate (plan §21 "Week 9 이후")
+### Week 10 final gate
 
-- [ ] DOS-A13 14 models present (template + 14 Bianchi types).
-- [ ] W9D4 skip reduction (or explicit skip-count rationale if
-      dynesty chain blocks).
-- [ ] W7 FM2 TSC-06 RNG stream refactor landed.
-- [ ] Full-regression audit log written to
-      `docs/audits/AUDIT_PHASE_IND_TRACKS_W9_YYYY-MM-DD.md`.
-- [ ] MIO contribution ≥ 25 tests (currently 40 — already over).
+- [ ] DYNESTY installed; `fig_departure_summary.py` smoke skip
+      retired.
+- [ ] MIO HJ-01 skeleton landed; ≥ 10 new tests; MIO contribution ≥ 47.
+- [ ] MANU-CH12 §12.3 drafted OR explicit deferral rationale.
+- [ ] Phase-boundary audit log written.
+- [ ] No touched-surface regressions (≥ 1007 passed, 0 failed).
 
-### Deferred to Week 10+ (not Week-9 targets)
+### Deferred to Week 11+ (not Week-10 targets)
 
 - **MANU-CH12 remaining sections** (§12.1, §12.3, §12.4, §12.5,
   §12.8) — blocked on bass_py K_ℓ atlas, HTT posterior draws,
