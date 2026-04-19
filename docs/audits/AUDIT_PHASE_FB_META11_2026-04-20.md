@@ -448,4 +448,48 @@ phase-close gate.
 
 ## §FB-11.7
 
-Pending pre-flight scaffold for docs + gallery placeholders.
+### §FB-11.7 — docs + gallery placeholders
+**Channel A**: 5 checked / 5 verified / 0 broken. Details: verified the
+integrator spec now includes an explicit FB-11 inference-driver
+placeholder section; verified the root gallery README now reserves topic
+`16_inference_corner`; verified the new topic README states the no-PNG
+status explicitly; verified the new skip-marked harness test locks the
+docs/gallery file presence; verified no fake paper tables or gallery
+PNGs were added during this docs-only sub-phase.
+**Channel B**: no external literature anchor required for FB-11.7; the
+local FB-11 SDD explicitly names the docs update plus gallery topic 16,
+and `SELF_AUDIT_AUTOMATION.md` requires gallery no-ops to be stated
+explicitly rather than implied. This sub-phase matches both local
+requirements.
+**Channel C** (prose, 6-10 lines): Docs-only closeouts are where a
+skeleton phase can quietly become misleading, so the wording matters.
+The new integrator-spec note says plainly that FB-11 is an inference
+layer layered on top of the forward-model runtime rather than part of
+the LB-5 integrator itself. The gallery README says the same thing in a
+different place: the topic exists, but no inference figures have been
+rendered yet. Reserving the topic number now avoids future ad hoc
+placement once corner plots and convergence bars are real. As in the
+earlier META placeholder phases, the honest move is a README and a
+skipped presence test, not fabricated outputs.
+**Alternatives**:
+| # | FB-11.7 docs strategy | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Explicit placeholder section + reserved gallery topic README | Honest about scope and keeps future doc/gallery paths stable. | Adds visible documentation for work that is not yet implemented. | ✅ |
+| 2 | Wait until real figures exist | Less placeholder prose today. | Violates the explicit no-op gallery rule and leaves the future topic path unstated. | — |
+| 3 | Generate fake placeholder PNGs or paper tables | Makes the tree look complete. | Misleading and directly against the no-fabricated-artifact rule. | — |
+**Core principles**: placeholder docs must say "not implemented" out
+loud; no dummy artifacts; future topic/path names pinned now; inference
+scope stays separate from the forward integrator runtime.
+**Skeleton path**:
+`docs/lowell_bianchi/05_integrator_spec.md`,
+`figures/physics_gallery/16_inference_corner/README.md`,
+`figures/physics_gallery/README.md`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/inference/test_fb117_docs_gallery_skeleton.py -q`
+**Guard rails** (yes/no): docs placeholder explicit? yes; gallery topic
+reserved? yes; no dummy PNGs created? yes; skip-marked presence test
+added? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 72 skipped` → `3403 passed + 73 skipped` pending the
+phase-close gate.

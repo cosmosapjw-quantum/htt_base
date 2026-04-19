@@ -39,6 +39,9 @@
 10. Test criteria
 11. Implementation checklist
 12. Cite map
+13. LB-5 extensions
+14. What LB-5 does NOT do
+15. FB-11 inference driver contract (placeholder)
 
 ---
 
@@ -581,3 +584,44 @@ Total: 18+ tests at LB-5.
 - **Does not handle tilted species**: LB-2b/LB-4b extensions required first
 - **Does not handle Types VI_h, VIII, IX**: requires full `∇̃` structure-constant dispatch (deferred)
 - **Does not auto-tune truncation L**: L is fixed at construction
+
+---
+
+## 15. FB-11 inference driver contract (placeholder)
+
+FB-META-11 adds a skeleton-only inference layer under
+`htt/bass/inference/`. The integrator remains the forward-model anchor;
+the inference package consumes its outputs later and is intentionally
+kept outside the LB-5 runtime path.
+
+### 15.1 Reproducibility pin
+
+- `run_posterior(..., seed=42)` is reserved as a same-machine
+  byte-reproducibility contract for posterior `samples`, `log_prob`, and
+  `diagnostics`.
+- `python -m bass.inference --config configs/fb11_summary.yaml --seed 42`
+  is reserved as the matching deterministic CLI seam for the FB-11.6
+  summary run.
+- The future summary outputs
+  `figures/paper/fb11_summary_table.json` and
+  `figures/paper/fb11_summary_table.md` must be byte-identical across
+  two runs on the same machine with the same seed.
+
+### 15.2 Diagnostics policy
+
+- Project thresholds are pinned as `R-hat < 1.01`, `ESS > 400`, and
+  Geweke `|z| < 2`.
+- Summary rows that fail convergence must be flagged explicitly and
+  rerun; no silent pass-through is allowed.
+- The synthetic-injection harness target is `68 % ± 5 %` coverage and
+  remains a skip-marked validation seam until actual work begins.
+
+### 15.3 Scope boundary
+
+- Third-party sampler ownership stays confined to
+  `htt/bass/inference/drivers/`; production modules do not import
+  `emcee` directly.
+- `dynesty` remains reference-only and off the default CI path.
+- Gallery topic `figures/physics_gallery/16_inference_corner/` is
+  reserved in FB-META-11, but no inference PNGs are shipped during the
+  skeleton cycle.

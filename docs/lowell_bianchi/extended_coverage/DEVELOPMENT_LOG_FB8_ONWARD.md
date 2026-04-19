@@ -491,3 +491,23 @@ cross-reference.
 - **Notes**: the prompt's `arXiv:0706.2075` locator is kept explicit as
   a Bianchi `VII_h` mismatch rather than reused as a Bianchi-IX
   evidence-sign citation.
+
+### FB-META-11.7 — docs + gallery placeholders
+
+- **Scope**: Added an FB-11 placeholder note to
+  [05_integrator_spec.md](../05_integrator_spec.md), reserved the
+  gallery topic
+  [16_inference_corner](../../../figures/physics_gallery/16_inference_corner/README.md),
+  updated the root gallery README, and added a skipped docs/gallery
+  harness test. No PNGs or paper-summary files were fabricated.
+- **Commit anchor**: see `git log --grep='FB-META-11.7'`.
+- **Test delta**: 3,403 passing + 72 skipped → 3,403 passing + 73
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META11_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META11_2026-04-20.md)
+  §FB-11.7.
+- **Gallery**: no-op (reserved topic directory + README only).
+- **Carry-forward**: phase-close regression + bundle-summary closeout.
+- **Notes**: the placeholder docs say explicitly that FB-11 is
+  skeleton-only; the future paper tables and gallery renders remain
+  actual-work outputs, not META artifacts.
