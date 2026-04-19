@@ -10,12 +10,15 @@ them.
 from bass.observer.adapters import apply_observer_boost, observed_alm_mixing
 from bass.observer.aberration import aberration_kernel
 from bass.observer.composition import compose_tilts
+from bass.observer.discriminator import DiscriminatorResult, likelihood_ratio
 from bass.observer.observer_boost import ObserverBoost
 
 __all__ = [
     "ObserverBoost",
+    "DiscriminatorResult",
     "aberration_kernel",
     "apply_observer_boost",
     "compose_tilts",
+    "likelihood_ratio",
     "observed_alm_mixing",
 ]

@@ -315,9 +315,67 @@ phase-close gate.
 
 ## §FB-8.5
 
-**Type-distinct pin**: pending fill; the discriminator will compare
-`H_obs` against `H_cosmo` as separate hypotheses rather than a single
-merged tilt parameter.
+### §FB-8.5 — discriminator skeleton
+**Type-distinct pin**: the discriminator compares `H_obs` and `H_cosmo`
+as separate hypotheses with separate parameter axes; it does not merge
+observer boost into cosmological tilt.
+**Channel A**: 7 checked / 7 verified / 0 broken. Details: verified
+`docs/lowell_bianchi/extended_coverage/FB8_DISCRIMINATOR_SDD.md §6`
+declares the discriminator to be the operational core of FB-8;
+verified the new module lives in `bass.observer.discriminator` rather
+than inside the FB-7 cosmological-frame likelihood package; verified the
+function signature keeps separate `boost_model` and `tilt_model`
+hypothesis inputs; verified the output schema is made explicit through
+`DiscriminatorResult`; verified the new package export adds both the
+function and result type; verified the docstring states the likelihood
+composes on top of `bass.likelihood.cosmological_frame`; verified the
+skipped test locks the `Lambda(data; H_obs, H_cosmo)` notation and the
+Kosowsky anchor into the public contract.
+**Channel B**: 3 source checks / 2 verified / 1 broken. Evidence:
+`arXiv:1007.4539`, submitted on 2010-07-26 and published as
+Phys. Rev. Lett. 106, 191301 (2011), states that observer motion induces
+non-zero off-diagonal correlations between multipole moments and that
+these signals should be detectable in future full-sky microwave maps
+from Planck. In the accessible ar5iv text, the authors then estimate a
+Planck signal-to-noise ratio of about five for the off-diagonal
+cross-power signature if the dipole is entirely due to peculiar motion,
+which is the requested recovery argument for an `H_obs`-style null.
+Broken: the prompt-supplied statistical locator `Wald 1984, Stat. Sci.
+3, 319, Ch. 6` could not be matched cleanly to an accessible primary
+source in-session, so the asymptotic-likelihood-ratio citation remains a
+documented TODO rather than invented support.
+**Channel C** (prose, 6-10 lines): The discriminator has to be a named
+surface now because FB-8 treats it as the operational core, not as a
+side effect of a future sampler. Choosing the likelihood-ratio form at
+the skeleton stage is the narrowest honest move: it matches the SDD, it
+maps directly onto the already existing cosmological-frame likelihood
+plus observer adapters, and it yields a concrete result schema that
+later phases can profile or marginalise around. Just as importantly, it
+does not force FB-8 to pretend that full evidence integration or
+posterior-density estimation already exists. The missing asymptotic
+citation is recorded explicitly, but that does not block the contract
+surface itself because no statistical calibration is implemented yet.
+**Alternatives**:
+| # | Discriminator statistic | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | Likelihood ratio `Lambda = 2(ln L_max(H_cosmo) - ln L_max(H_obs))` | Matches the SDD exactly; keeps the observer-vs-cosmological comparison focused; can report an asymptotic p-value once the calibration citation is sealed. | Requires a later clean asymptotic-calibration citation and explicit dof handling. | ✅ |
+| 2 | Bayes factor between `H_obs` and `H_cosmo` | Naturally incorporates prior volume and evidence. | Pulls FB-11 prior/evidence machinery into FB-8 too early and widens scope beyond the skeleton contract. | — |
+| 3 | Posterior-density ratio from a future sampler | Aligns with later posterior workflows. | Not a standalone discriminator, depends on sampler existence, and obscures the direct `H_obs` versus `H_cosmo` test. | — |
+**Core principles**: operational core stays explicit; observer and
+cosmological hypotheses remain separate; the chosen statistic is
+documented together with rejected alternatives; unverified asymptotic
+citation remains visible instead of implied.
+**Skeleton path**:
+`htt/bass/observer/discriminator.py::{likelihood_ratio, DiscriminatorResult}`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb85_discriminator_skeleton.py -q`
+**Guard rails** (yes/no): alternatives table explicit? yes; chosen
+statistic documented? yes; Kosowsky recovery anchor verified? yes;
+unverified Wald locator recorded openly? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 57 skipped` → `3403 passed + 58 skipped` pending the
+phase-close gate.
 
 ## §FB-8.6
 

@@ -114,3 +114,24 @@ cross-reference.
 - **Notes**: the accessible Ellis/Maartens/MacCallum preview confirms
   the book metadata but not the exact `§5.2` text, so the audit records
   that source gap explicitly.
+
+### FB-8.5 — discriminator `Lambda(data; H_obs, H_cosmo)`
+
+- **Scope**: Added the operational-core skeleton
+  [likelihood_ratio](../../../htt/bass/observer/discriminator.py) and
+  the matching
+  [DiscriminatorResult](../../../htt/bass/observer/discriminator.py)
+  schema under `bass.observer`. The audit includes the required
+  alternatives table and picks the likelihood-ratio statistic while
+  recording the unresolved asymptotic-citation gap instead of pretending
+  it is already closed.
+- **Commit anchor**: see `git log --grep='FB-META-8.5'`.
+- **Test delta**: 3,403 passing + 57 skipped → 3,403 passing + 58
+  skipped.
+- **Audit**:
+  [AUDIT_PHASE_FB_META8_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META8_2026-04-20.md)
+  §FB-8.5.
+- **Gallery**: no-op (discriminator contract only).
+- **Carry-forward**: FB-8.6 likelihood-stack ingest.
+- **Notes**: the Kosowsky/Kahniashvili recovery argument is verified;
+  the prompt's statistical locator is still an explicit TODO.
