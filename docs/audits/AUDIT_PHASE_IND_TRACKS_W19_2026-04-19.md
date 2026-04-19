@@ -536,3 +536,113 @@ zero new P0/P1/P2 findings; three documented P3 residuals
 (F1 / F2 / F3) feed the W20 repair plan, of which F3's docstring
 clarification is the only unblocked option (R1 and R2 are HJ-03-
 PR-gated).
+
+---
+
+## Post-audit addendum (W19 F4 — A46.2 window re-classification)
+
+**Committed 2026-04-19, post `bb82dd3`.** The audit body above
+was written against the then-current `git log 7a285b4..HEAD`
+output and declared the W19 window **single-lane** (W19 §6
+check #1 narrative: "Zero cross-lane commits landed on `main`
+during the W19 window"; W19 §6 check #2 classification: "one
+lane observed, not three"). That declaration held at the time
+of writing but was invalidated by the bass-lane commit
+**`d7d25da`** (`FB-2.4: T4-T7 hierarchy wire-up + driver aniso_
+ricci routing (Phase FB-2 exit)`, 2026-04-19 22:56:51 +0900),
+which landed on `main` between W19D5 `6d87082` (22:46:42) and
+the audit commit `bb82dd3` (22:58:49) — two minutes before my
+audit commit.
+
+This mirrors the W16 F1 / W16D7 post-audit addendum pattern and
+the W18 audit §6 narrative (where `92cefa2` arrived in the same
+relative position between W18D5 and the W18 audit commit).
+Mechanical re-verification:
+
+- `git show --stat d7d25da` returns: `bass_py/bass/hierarchy/
+  hierarchy_rhs.py` + `bass_py/bass/hierarchy/test_hierarchy_
+  rhs.py` + four related test file touches — **all bass-lane-
+  owned per A46.2 (`bass_py/bass/**`)**. Zero ind-tracks paths
+  (`bass_py/mio/**`, `bass_py/workspace/**`, `bass_py/src/
+  common/**`, `bass_py/tsc/**`, `docs/dossier/A*`, `docs/
+  INDEPENDENT_TRACKS_*`, `docs/audits/AUDIT_PHASE_IND_TRACKS_*`,
+  `project/00_manuscript/ch{03,11,12}_*.tex`). Zero gallery-
+  lane paths (`plots/physics_gallery/**`).
+- `git show --stat bb82dd3` returns: `docs/audits/AUDIT_PHASE_
+  IND_TRACKS_W19_2026-04-19.md` + `docs/INDEPENDENT_TRACKS_NEXT_
+  SESSION.md` — **both ind-tracks-owned per A46.2**. Zero bass
+  or gallery paths (verified despite 68 gallery-lane rename
+  entries being present in the pre-commit staging index; the
+  W15D1 scoped-pathspec rule excluded them by construction
+  — the commit was issued as `git commit -- docs/audits/...
+  docs/INDEPENDENT_TRACKS_NEXT_SESSION.md`).
+
+### Revised §6 check #1 — W12 F1 / W14 F1 recurrence check
+
+**PASSED** (unchanged verdict). `git show --stat` on the four
+W19-window shas (`3f2129f`, `ad27ee5`, `6d87082`, `d7d25da`,
+`bb82dd3`) shows each commit scoped to a single lane:
+
+- ind-tracks: `{3f2129f, ad27ee5, 6d87082, bb82dd3}` — four
+  commits, each touching exactly one ind-tracks file (or two
+  docs files for `bb82dd3`).
+- bass: `{d7d25da}` — one commit, touching only `bass_py/bass/
+  hierarchy/*` paths.
+- gallery: `{}` — zero commits.
+
+Zero file overlap between the ind-tracks and bass commit sets.
+The 68 gallery-lane staging-index renames (`plots/physics_
+gallery/` → `figures/physics_gallery/`) that sat in the index
+during my audit commit's staging window are **not** in any of
+the five commits — they remain in the working-tree index,
+presumably destined for a future gallery-lane commit. The
+scoped-pathspec rule held: `bb82dd3` contains exactly the two
+docs paths I listed, not the 68 renames.
+
+### Revised §6 check #2 — A46.2 lane classification
+
+A46.2 applied to the five W19-window shas produces:
+`{ind-tracks: 4, bass: 1, gallery: 0}`. **Two lanes observed,
+not three.** A46.4's first-three-lane-observation template
+remains paste-ready for a future phase; W18 → W19 both
+resolved to two-lane windows.
+
+### Stress-test ledger update
+
+The W15D1 scoped-pathspec rule has now been exercised under
+the following adversarial windows:
+
+- **W16D7** — concurrent-commit (bass-lane `4c50313` between
+  W16D5 and audit).
+- **W17D3** — working-tree-drift (four unstaged
+  `bass_py/bass/hierarchy/*` files at commit time).
+- **W18D5→W18D7** — second concurrent-commit observation (bass-
+  lane `92cefa2` between W18D5 and audit).
+- **W19D5→W19D7** — third concurrent-commit observation (bass-
+  lane `d7d25da` between W19D5 and audit) + **staging-index
+  drift** (68 gallery-lane renames pre-staged by a process
+  outside this lane's session, excluded by the scoped-pathspec
+  rule). First phase where **two** independent drift vectors
+  (lane arrival + staging-index contamination) coincided in
+  the same audit window; both were absorbed by the W15D1 rule
+  with zero manual intervention beyond the required pathspec
+  form.
+
+### Carry-forward W19 F4 → §3 table
+
+W19 F4 (this addendum — stale single-lane declaration in the
+audit body, corrected here) is **RESOLVED by this addendum**;
+no W20 repair is required beyond adopting the workflow
+reminder that the §6 text should be written against `git log
+T_prev..HEAD` **at audit-commit time**, not at audit-write time
+(this is a W13D1 status-gate analogue one level removed — the
+status snapshot should bracket the commit, not the write).
+Memory `feedback_git_workflow.md` could be updated with a
+"status-gate at audit-commit time" entry; this is an optional
+W20+ follow-up since the post-audit addendum pattern (W16 F1
+precedent, applied twice now) already handles the stale-body
+case cleanly.
+
+Phase `IND_TRACKS_W19` closure re-affirmed with the corrected
+two-lane window narrative; no gate re-test needed (all five
+items remain green under the corrected classification).
