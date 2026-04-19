@@ -258,7 +258,8 @@ def to_mio_certificate(
 
     return build_mio_certificate(
         report_type="directional_coherence",
-        probe_name="+".join(p.name for p in probes),
+        # A37.2 rule 2: bundle form is alphabetically sorted for stable cross-cert keys.
+        probe_name="+".join(sorted(p.name for p in probes)),
         channel="dipole",
         departure_variables=departure,
         adequacy_indicators=adequacy,

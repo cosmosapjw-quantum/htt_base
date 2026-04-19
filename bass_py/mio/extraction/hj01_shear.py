@@ -377,6 +377,23 @@ DIAGNOSTIC_ONLY_CAVEAT = (
 )
 
 
+def _bianchi_type_to_model_id(bianchi_type: str) -> str:
+    """Map a K_ℓ atlas ``bianchi_type`` string to an A37.2 MODEL_ID.
+
+    The bass_py K_ℓ atlas records the Bianchi class as a bare type suffix
+    (``'I'``, ``'VIIh'``, ``'IX'``, ``…``) or the literal ``'FLRW'``. A37.2
+    grammar v1 requires the emitted ``probe_name`` to be a `MODEL_ID`
+    (``FLRW`` or ``Bianchi<I|II|…>`` or ``Tilted<Name>``). This helper
+    prepends ``Bianchi`` when absent and returns the input unchanged for
+    the two already-compliant prefixes.
+    """
+    if bianchi_type == "FLRW":
+        return "FLRW"
+    if bianchi_type.startswith("Bianchi") or bianchi_type.startswith("Tilted"):
+        return bianchi_type
+    return f"Bianchi{bianchi_type}"
+
+
 def to_mio_certificate(
     report: ShearExtractorReport,
     *,
@@ -425,7 +442,9 @@ def to_mio_certificate(
 
     return build_mio_certificate(
         report_type="shear_extraction",
-        probe_name=f"{report.atlas_name}:{report.bianchi_type}",
+        # A37.2 atlas_label singleton form: MODEL_ID only. The atlas_name
+        # is preserved separately in the artefact JSON + generated_by.
+        probe_name=_bianchi_type_to_model_id(report.bianchi_type),
         channel="TT_low_ell",
         departure_variables=departure,
         adequacy_indicators=adequacy,
@@ -545,6 +564,7 @@ __all__ = [
     "ShearExtractor",
     "ShearExtractorConfig",
     "ShearExtractorReport",
+    "_bianchi_type_to_model_id",
     "emit_shear_extraction_artefact",
     "extract_from_atlas_entry",
     "extract_from_kl_atlas",

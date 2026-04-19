@@ -22,9 +22,9 @@ decisions have so far been ad hoc:
 
 | Module | Current value | Convention |
 |---|---|---|
-| HJ-01 (shear extraction) | `"FLRW_vs_BianchiVIIh"` or `"BianchiI+BianchiVIIh"` (atlas-dependent) | Bianchi-type identifier of the atlas entry |
-| HJ-02a (directional coherence) | `"CMB+CatWISE+Radio+CF4pp+BiPoSH"` | `"+".join(p.name for p in probes)` |
-| HJ-02b (z-binned coherence) | same as HJ-02a | `"+".join(p.name for p in probes)` |
+| HJ-01 (shear extraction) | `"FLRW"` or `"BianchiVIIh"` (per atlas entry) | MODEL_ID derived from `bianchi_type` via `_bianchi_type_to_model_id` (W12D1) |
+| HJ-02a (directional coherence) | `"BiPoSH+CF4pp+CMB+CatWISE+Radio"` | `"+".join(sorted(p.name for p in probes))` (W12D1) |
+| HJ-02b (z-binned coherence) | same as HJ-02a | `"+".join(sorted(p.name for p in probes))` (W12D1) |
 
 Downstream consumers (MANU-CH12-NEW, A34 cross-check tables,
 future figure scripts) need to parse this string. The **ad-hoc
@@ -101,17 +101,34 @@ A future writer that wants to emit `probe_names` directly should:
 2. Add the list via a sibling `probe_names` field on the schema v2 bump.
 3. Freeze both with the schema-hash digest test (W7 FM3 pattern).
 
-## A37.6 Acceptance tests (Week 11+)
+## A37.6 Acceptance tests (landed W12D1)
 
-- `test_probe_name_is_alphabetical_bundle` — for every MIO module
-  that bundles >1 probe, verify `probe_name == "+".join(sorted(...))`.
-- `test_probe_name_matches_grammar_v1` — regex-check every emitted
-  certificate against the BNF in A37.2.
+Shipped in [`bass_py/mio/tests/test_probe_name_grammar.py`](../../bass_py/mio/tests/test_probe_name_grammar.py)
+(8 tests; W12D1 / W11 F4 closure):
 
-(These tests are **deferred to Week 12+** pending the CONTRACTS-01 v2
-hash-digest infrastructure that will bundle-verify the schema. They
-are not action items for the current phase; the existing module
-string-joins already comply with A37.2 by construction.)
+- `test_probe_name_is_alphabetical_bundle_HJ02a` / `…_HJ02b` — verify
+  `probe_name == "+".join(sorted(p.name for p in probes))` for the two
+  bundle-emitting modules.
+- `test_probe_name_matches_grammar_v1_HJ01` / `…_HJ02a` / `…_HJ02b` —
+  regex-check each emitted certificate against the BNF in A37.2 via
+  ``PROBE_ID_RE`` / ``MODEL_ID_RE`` / ``BUNDLE_RE`` / ``ATLAS_LABEL_RE``.
+- `test_bianchi_type_to_model_id_handles_known_suffixes` — locks the
+  HJ-01 bare-suffix → MODEL_ID normaliser against the DOS-A13 atlas
+  (``"I"`` → ``"BianchiI"``; ``"FLRW"`` idempotent; etc.).
+- `test_grammar_regex_accepts_registered_probe_ids` /
+  `test_grammar_regex_accepts_model_ids` — regex self-tests against the
+  A37.3 PROBE_ID catalogue and the A37.2 MODEL_ID samples; guards
+  against harness regressions.
+
+The W12D1 landing also tightened the two bundle producers
+([`mio/coherence/directional.py`](../../bass_py/mio/coherence/directional.py),
+[`mio/coherence/redshift_binned.py`](../../bass_py/mio/coherence/redshift_binned.py))
+to emit alphabetically-sorted joins, and replaced the legacy
+``atlas_name:bianchi_type`` probe_name in
+[`mio/extraction/hj01_shear.py`](../../bass_py/mio/extraction/hj01_shear.py)
+with the MODEL_ID-only singleton form. No downstream consumer asserted
+on the unsorted / colonned strings; the change is backward-compatible
+with every prior artefact reader (A37.5 migration remains unaffected).
 
 ## A37.7 G19 posture
 
