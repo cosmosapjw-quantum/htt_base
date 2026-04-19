@@ -511,3 +511,27 @@ cross-reference.
 - **Notes**: the placeholder docs say explicitly that FB-11 is
   skeleton-only; the future paper tables and gallery renders remain
   actual-work outputs, not META artifacts.
+
+### FB-META-11.CLOSE — Phase FB-11 skeletons planted (7 sub-phases)
+
+- **Scope**: Closed the FB-11 skeleton cycle after planting
+  `FB-11.1` through `FB-11.7`, created the bundle-level summary audit
+  [AUDIT_FB_META_SUMMARY_2026-04-20.md](../../audits/AUDIT_FB_META_SUMMARY_2026-04-20.md),
+  and rotated the bootstrap handoff to FB-4.1 actual work.
+- **Commit anchor**: see `git log --grep='FB-META-11.CLOSE'`.
+- **Test delta**: last fully green pre-phase anchor
+  `3,403 passing + 66 skipped`; close-gate attempt
+  `3,400 passing + 73 skipped + 3 errors` because the pre-existing
+  dirty-worktree deletion of `data/camb_ref_planck2018.npz` blocks the
+  LB-6 CAMB oracle tests.
+- **Audit**:
+  [AUDIT_PHASE_FB_META11_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META11_2026-04-20.md)
+  (phase close note) and
+  [AUDIT_FB_META_SUMMARY_2026-04-20.md](../../audits/AUDIT_FB_META_SUMMARY_2026-04-20.md).
+- **Gallery**: no-op (topic `16_inference_corner` reserved; no PNGs
+  fabricated).
+- **Carry-forward**: FB-4.1 actual-work bootstrap plus the per-skeleton
+  audit pointers in the bundle summary.
+- **Notes**: the extended-bundle META sweep is complete across
+  FB-4/5/6/7/8/9/11; every remaining actual-work phase now has a
+  planted skeleton and a 3-channel audit section.

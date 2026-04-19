@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-META-9.CLOSE → FB-META-11**; Phase FB-9 skeleton cycle sealed and the handoff now targets the next META prompt)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META9_2026-04-20.md` (phase close note)
-**Current target session**: **FB-META-11** — paste the Phase FB-11 META prompt
-**Phase status**: Phase FB-9 closed on 2026-04-20 with six committed skeleton plants; the audited baseline now stands at `3403 passed + 66 skipped`
+**Last rotated**: 2026-04-20 (**FB-META-11.CLOSE → FB-4.1 actual-work**; the extended META sweep is sealed and the handoff now targets the first actual-work replacement of a planted skeleton)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META11_2026-04-20.md` (phase close note) and `docs/audits/AUDIT_FB_META_SUMMARY_2026-04-20.md`
+**Current target session**: **FB-4.1 actual-work** — replace the FB-4.1 skeleton body using the existing user-held prompt from the FB-3 closure
+**Phase status**: Extended META sweep complete across FB-4/5/6/7/8/9/11. The last close-gate suite run reached `3400 passed + 73 skipped + 3 errors` because `data/camb_ref_planck2018.npz` is missing in the dirty worktree; the last fully green pre-blocker anchor was `3403 passed + 66 skipped`
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,44 +37,41 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-META-11 — paste the Phase FB-11 META prompt
+# FB-4.1 — full-Lorentz PSTF collision actual-work bootstrap
 
-Phase FB-9 closed with six committed skeleton plants and the audited
-baseline now stands at `3,403 passing + 66 skipped`.
+Skeletons pre-planted per FB-META sweep; see
+`docs/audits/AUDIT_FB_META_SUMMARY_2026-04-20.md` for the per-skeleton
+audit section pointer before replacing any `NotImplementedError` body.
 
-Start the next session by pasting the canonical Phase FB-11 META prompt
-as the first user message. Do not reuse the older FB-META-9 handoff
-text; the next phase should begin from a fresh prompt.
+Use the canonical FB-4.1 actual-work prompt the user already holds from
+the FB-3 closure. Before editing any runtime body, read:
+- `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md §FB-4.1`
+- `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-4`
+- `docs/lowell_bianchi/04_thomson_collision_spec.md §8.2`
+- `htt/bass/collision/tilted_thomson_layer_b.py`
+- `htt/bass/collision/test_fb41_tilted_thomson_skeleton.py`
+- `htt/bass/collision/thomson_pstf.py`
+- `htt/bass/collision/tilted_visibility.py`
 
-Important carry-forward scope pin:
-- Massive-neutrino surfaces are skeleton-only under
-  `bass.species.massive_neutrino`.
-- The load-bearing invariant is still `Sigma_mnu = 0` byte-identical to
-  the LB-1 massless `NeutrinoBackground` path; `SpeciesLabel.NEUTRINO`
-  remains the only neutrino enum.
+Bundle-wide carry-forward pins:
+- Extended META sweep is complete across FB-4/5/6/7/8/9/11.
+- `emcee` remains confined to `bass.inference.drivers/`; `dynesty`
+  remains reference-only.
+- Observer boost and cosmological tilt remain type-distinct.
+- `Sigma_mnu = 0` remains byte-identical to the LB-1 massless neutrino
+  path.
+- FB-11 reserved `configs/fb11_summary.yaml`,
+  `figures/paper/fb11_summary_table.{json,md}`, and
+  `figures/physics_gallery/16_inference_corner/`, but created no dummy
+  inference outputs.
 
-Relevant carry-forward anchors:
-- Repo root: `/home/cosmosapjw/Dropbox/bianchi/htt_base`
-- Latest audited Phase FB-9 artifact:
-  `docs/audits/AUDIT_PHASE_FB_META9_2026-04-20.md`
-- Massive-neutrino package:
-  `htt/bass/species/massive_neutrino/`
-- Registry dispatch surface:
-  `htt/bass/species/registry.py`
-- Hierarchy seam:
-  `htt/bass/hierarchy/hierarchy_rhs.py`
-- Successor development log:
-  `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB8_ONWARD.md`
-- Placeholder docs/gallery:
-  `docs/lowell_bianchi/01_species_background_spec.md` and
-  `figures/physics_gallery/15_massive_neutrino/`
-- Source corrections preserved in the FB-9 audit:
-  the CLASS `N_q=15` prompt wording is only a local bundle contract,
-  and Ma-Bertschinger `eqs. (56), (97)` are not the direct background
-  `rho/p` formulas.
-- Latest regression anchor:
+Regression anchors:
+- Last fully green pre-blocker anchor:
   `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
   → `3403 passed, 66 skipped`
+- Current whole-suite blocker:
+  `data/camb_ref_planck2018.npz` is missing in the dirty worktree, so
+  the close-gate run currently stops at `3400 passed, 73 skipped, 3 errors`
 ```
 
 ---

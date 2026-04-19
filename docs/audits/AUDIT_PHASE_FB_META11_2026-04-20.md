@@ -493,3 +493,36 @@ added? yes
 **Regression after plant**: expected full-suite movement
 `3403 passed + 72 skipped` → `3403 passed + 73 skipped` pending the
 phase-close gate.
+
+## Phase close note
+
+- **Status**: Pass on the FB-11 touched surface; whole-suite close gate
+  is currently blocked by an unrelated dirty-worktree deletion.
+- **Targeted gates**:
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/inference/test_fb115_synthetic_injection_skeleton.py -q`
+  → `1 skipped`;
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/inference/test_fb116_summary_run_skeleton.py -q`
+  → `1 skipped`;
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/inference/test_fb117_docs_gallery_skeleton.py -q`
+  → `1 skipped`.
+- **Whole-suite close gate**:
+  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `3400 passed, 73 skipped, 26 warnings, 3 errors`.
+- **External blocker**: the failing rows are the three
+  `TestLBCAMBMatch` cases in `bass/integration/test_lowell_bianchi.py`,
+  and the traceback shows the root cause is a pre-existing missing
+  fixture at `data/camb_ref_planck2018.npz`. `git status --short`
+  already reports that path as deleted outside the FB-11 work.
+- **Baseline movement**: last fully green pre-phase anchor remained
+  `3403 passed + 66 skipped`; the FB-11 skeleton plants add seven
+  skip-marked tests, so the expected green profile after restoring the
+  unrelated CAMB fixture is `3403 passed + 73 skipped`.
+- **Determinism verdict**: preserved at the contract layer. FB-11 ships
+  only docstrings, placeholders, and skip-marked harnesses; no sampler
+  runtime was introduced.
+- **Gallery status**: no-op by design; topic
+  `figures/physics_gallery/16_inference_corner/` is reserved with a
+  README only.
+- **Handoff**: `NEXT_SESSION_PROMPT.md §2` rotated to the FB-4.1
+  actual-work bootstrap with the mandatory FB-META sweep banner and a
+  pointer to `AUDIT_FB_META_SUMMARY_2026-04-20.md`.
