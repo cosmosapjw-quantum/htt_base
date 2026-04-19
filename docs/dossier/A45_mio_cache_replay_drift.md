@@ -208,6 +208,20 @@ at t₁ rather than patching around the guard.
 
 ## A45.6 Acceptance test list (paste-ready for HJ-03 PR)
 
+**Harness-signature note (W17 F2 / W18D3).** This test block
+presumes the HJ-03 replay harness exposes the two-argument signature
+`verify_cache_replay(mio_cert, htt_input_bundle, *,
+allow_unsigned_config=False)` described in §A45.2, with
+`htt_input_bundle` carrying a `.paths` iterable for the step-3
+sha256 digest computation. A41.6's HJ-03 worked example (step 6.5)
+is the authoritative place to freeze that signature: if HJ-03 lands
+with a different input shape — e.g. a `bundle.digests` tuple in
+lieu of `bundle.paths`, or a `replay_context` object wrapping both
+— the harness-signature freeze and the paste-replace of this block
+must land in the same PR so the pseudocode, the worked example,
+and the tests agree at the point of first use. See A41.6 step 6.5
+for the reciprocal note.
+
 The HJ-03 landing PR's test block must include at least these
 five acceptance tests (name the file `test_cache_replay.py` under
 `bass_py/mio/tests/`):

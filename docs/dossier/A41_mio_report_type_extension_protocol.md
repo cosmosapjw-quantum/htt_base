@@ -179,6 +179,17 @@ infrastructure land, the HJ-03 author will:
 6. Tests per A41.3 step 6 + A34.3 cross-check channel entry pointing
    at `htt.core.analysis_extended.EvidenceComparison.run_all` as the
    HTT counterparty.
+6.5. **Freeze the replay-harness signature (W17 F2 / W18D3).** Before
+   paste-replacing §A45.6's five-test block, declare the public
+   signature of the replay helper — inputs `mio_cert` and
+   `htt_input_bundle` (with a `.paths` iterable) per §A45.2, plus
+   the `allow_unsigned_config=False` keyword-only guard. If the
+   HJ-03 harness chooses a different input shape (e.g. a
+   `bundle.digests` tuple or a `replay_context` wrapper), adapt
+   §A45.6's tests per item before pasting and land the §A45.6 prose
+   edit in the same PR so the dossier and the code agree at the
+   point of first use. See §A45.6 for the forward pointer and the
+   five-test block itself.
 7. Dossier: extend A34.3; create `docs/dossier/A42_evidence_anatomy.md`
    with the decomposition maths.
 
