@@ -110,4 +110,19 @@
 
 ## §FB-5.6
 
+### §FB-5.6 — tilted-boost seed-rule skeleton
+**Channel A**: 5 checked / 4 verified / 1 broken. Details: verified `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-5` names FB-5.6 as the tilted-boost seed rule; verified `htt/bass/hierarchy/boost_kernel.py` is the existing PSTF boost SSOT and already reserves the off-axis lift for FB-5.2; verified the new FB-5.3 seed skeleton keeps the orthogonal seed surface separate, so a post-seed boost helper has a clean place to live; verified the FB-5.1 and FB-5.2 skeletons kept mode/rotation semantics separate from initial-condition construction. Broken: the prompt-supplied Lowell solver reference `§13.5` path is absent on disk in this worktree.
+**Channel B**: 1 arXiv check / 1 partial verification / 1 unresolved claim. Evidence: `arXiv:astro-ph/9911481` verifies the broad PSTF boost / observer-dependence formalism (`"The PSTF representation allows us to discuss easily the observer dependence of the multipoles"`), but this session did not recover an arXiv-only source that seals the stronger `boost on the initial-value surface, then re-regularise` rule verbatim. That narrower claim remains `# TODO: citation needed`.
+**Channel C** (prose, 6-10 lines): The safest FB-5.6 contract is a post-seed helper, not a new tilt kwarg on the seed constructor itself. The orthogonal seed and the tilted regularisation are conceptually separate objects: first build a regular seed in one frame, then transform and clean it in the tilted frame. Keeping those stages separate mirrors the existing division between `regular_adiabatic_ic.py` and `boost_kernel.py`, and it avoids suggesting that the analytic seed formulas have already been re-derived directly in the tilted frame. The known-limit pin is clear and load-bearing: when `beta = 0`, the future implementation must return the seed byte-identically. Making that identity an explicit helper contract is safer than burying it in a widened seed-constructor signature. The placeholder therefore raises until the boost-and-regularise sequence is literature-sealed.
+**Alternatives**:
+| # | signature | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `apply_tilted_boost_seed_rule(seed_state, *, beta, v_hat_e) -> np.ndarray` | Separates orthogonal seed generation from tilted regularisation; makes the `β = 0` identity rule explicit; smallest blast radius. | Future callers must invoke two steps instead of one. | ✅ |
+| 2 | `make_camb_regular_adiabatic_seed(..., beta=0.0, v_hat_e=...) -> np.ndarray` | One call could produce either orthogonal or tilted seeds. | Blurs two distinct contracts and implies the tilted derivation is already sealed inside the seed builder. | — |
+**Core principles**: stage separation between seed generation and boost regularisation; explicit `β = 0` identity requirement; no silent frame-mixing inside unrelated factories.
+**Skeleton path**: `htt/bass/perturbation/tilted_seed_rule.py::apply_tilted_boost_seed_rule`
+**Test path**: `htt/bass/perturbation/test_fb56_tilted_seed_rule_skeleton.py::test_fb56_tilted_seed_rule_skeleton_contract`
+**Guard rails** (yes/no): citations verified? partial with TODO demotion; imports exist? yes; ≥ 2 alternatives? yes; `β = 0` identity documented? yes
+**Regression after plant**: 3,403 passed + 10 skipped (six local-only skipped contract tests over the 2026-04-20 baseline).
+
 ## §FB-5.7

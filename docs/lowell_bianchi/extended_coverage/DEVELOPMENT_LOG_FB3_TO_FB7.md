@@ -566,3 +566,22 @@ fresh cumulative count.
   citation-needed in the arXiv-only channel.
 - **Notes**: quantisation stays as a separate helper so the audited
   FB-2 `HarmonicMode` descriptor is not widened prematurely.
+
+### FB-META-5.6 — tilted-seed-rule skeleton
+
+- **Scope**: Recorded FB-5.6 three-channel verification and planted the
+  local-only `apply_tilted_boost_seed_rule(...)` skeleton plus one
+  skipped contract test without staging any `htt/` changes. The broad
+  PSTF boost formalism is externally anchored to Challinor 2000, while
+  the exact `boost then re-regularise on the initial surface` rule
+  remains citation-needed.
+- **Commit anchor**: see `git log --grep='FB-META-5.6'`.
+- **Test delta**: `3,403 passed + 9 skipped` →
+  `3,403 passed + 10 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META5_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META5_2026-04-20.md) §FB-5.6.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: exact Lowell `§13.5` tilted-seed text remains
+  unavailable on disk; the stronger initial-surface regularisation
+  claim is still `# TODO` in the arXiv-only channel.
+- **Notes**: tilt regularisation stays as a post-seed helper so the
+  orthogonal seed contract from FB-5.3 remains separate and explicit.
