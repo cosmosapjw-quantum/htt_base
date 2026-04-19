@@ -116,6 +116,146 @@ Earliest fire date given the 2026-04-19 W21 baseline: W<N> = W23
 third consecutive). W22 is therefore the **earliest eligible
 carry-forward audit**, not the earliest promotion audit.
 
+## A50.2a Alternate promotion path — "patient promotion" (W23 F4 / W24D1)
+
+### Problem
+
+The W23D1 sliding-window clarification (W22 R1) correctly tightened
+§A50.2 condition (4) to require an addendum trigger **within the
+currently-evaluated three-window span**. This is the right
+semantic for maturity — each promotion decision looks at fresh
+evidence, not historical carry-forward. However, the W23 audit's
+formal §A50.2 evaluation exposed a **starvation risk**: in a
+quiet-lane-activity period (no concurrent bass or gallery
+commits arriving between audit-write and audit-commit), condition
+(4) can never fire — the discipline `A49.3 → clean §6 #3 → no
+addendum needed` returns PASSED on every phase, but the hedge is
+never "load-bearing in practice" in the sense condition (4)
+requires.
+
+The W21/W22/W23 span at W23D1 evaluation returned (1)(2)(3) PASS
++ (4) FAIL; if W24/W25/W26/... all continue the clean-window
+streak, condition (4) stays FAIL indefinitely, even though the
+discipline is **demonstrably working correctly** (eight
+consecutive stress-tests of the W15D1 scoped-pathspec rule PASSED
+through W23; three consecutive A49.3 dogfoodings returned clean).
+The gate becomes effectively unfireable despite the discipline
+being exactly the load-bearing rule A50 was designed to promote.
+
+### Alternate fire condition
+
+§A50.2a fires when **all** of the following hold at audit-commit
+time for phase W<N>:
+
+1. Conditions **(1)–(3)** from §A50.2 hold (unchanged: three
+   consecutive notices without drift + §A49.3 dogfooded in ≥ two
+   of those three + zero §A49.6 failures).
+2. **§A49.3 dogfooded in *five* consecutive phases** (stronger
+   than §A50.2 (2)'s "≥ two of three" — §A50.2a requires strict
+   five-in-a-row accumulation). Baseline begins at W21 (first
+   dogfooding per W21 audit §6 check #3). Earliest count: W21 +
+   W22 + W23 + W24 + W25 = five.
+3. **Three consecutive §A50.2 gate evaluations returned (1)(2)(3)
+   PASS + (4) FAIL**, i.e., the strict gate has been attempted
+   and explicitly deferred three times under the W23D1 sliding-
+   window reading, with the defer reason always being condition
+   (4) (absent-trigger), never condition (1) drift or (2) skipped
+   dogfooding or (3) observed failure. Baseline begins at W23D1
+   (first strict-gate formal evaluation per W23 audit §6 check
+   #4; see W23D1 commit `4a1f7ed` body for the evaluation record).
+4. Zero §A49.6 failure mode observations across the **five-phase
+   window** used for condition 2, not just the three-phase span
+   from §A50.2 (1).
+
+Earliest §A50.2a fire date given the 2026-04-20 W23 baseline:
+**W25 audit**. Baseline: W21 dogfooding = 1; W22 = 2; W23 = 3;
+W24 (expected) = 4; W25 (expected) = 5 — satisfies condition 2.
+W23D1 strict-gate defer = 1; W24D1 (expected, if condition (4)
+stays FAIL) = 2; W25D1 (expected, if condition (4) still FAIL) =
+3 — satisfies condition 3. W25 audit-commit time is the earliest
+instant when all four §A50.2a conditions hold.
+
+### Relationship to §A50.2 (strict gate)
+
+§A50.2 and §A50.2a are **parallel paths**; either can fire the
+promotion. The strict gate (§A50.2) fires **immediately** on any
+phase where a real cross-lane addendum-triggering arrival lands
+in the three-window span — this is the fast path when the
+discipline demonstrates load-bearing on a real event. The
+patient path (§A50.2a) fires when accumulated clean-window
+maturity exceeds the five-dogfooding + three-defer threshold,
+even in the absence of any real trigger — this is the slow path
+for quiet lane-activity periods.
+
+If the strict gate fires first (e.g., W24 sees a cross-lane
+arrival in its §6 check #3), §A50.2a becomes moot for that
+promotion cycle. If the patient path fires first, condition (4)
+of §A50.2 is retroactively "satisfied by maturity accumulation"
+for logging purposes, and the memory bullet records the
+promotion basis as patient (see §A50.3 below).
+
+### Patient-promotion memory bullet basis clause
+
+When §A50.2a fires, the §A50.3 memory bullet is **identical in
+rule text** but gains a trailing basis clause:
+
+> `(Promotion basis: patient — five consecutive A49.3 dogfoodings
+> W21–W25, three consecutive strict-gate defers W23–W25 with
+> condition (4) absent-trigger; zero real addendum events in the
+> promotion window.)`
+
+The basis clause is machine-readable for future A50 re-audits and
+§A50.5 de-promotion reviews. If §A50.5 fires on a patient-
+promoted bullet, the de-promotion author checks **first** whether
+the false positive indicates patient-path under-specification
+(vs discipline-per-se failure); the basis clause guides that
+distinction.
+
+### Rationale for the five / three thresholds
+
+* **Five consecutive A49.3 dogfoodings** mirrors §A51.4's
+  "1–5 phases dense watch" threshold (§A51 is the post-
+  promotion verification protocol; §A50.2a borrows its
+  dense-watch count as the pre-promotion maturity threshold).
+  Five phases is ~5 weeks of flawless discipline under the
+  weekly-audit cadence; below 5 the evidence is thin, above 5
+  the threshold becomes gratuitously conservative.
+* **Three consecutive strict-gate defers** demonstrates the
+  strict gate was honestly attempted (not bypassed) and
+  explicitly fell short three times on condition (4). Without
+  this sub-condition, §A50.2a could be read as a way to
+  circumvent §A50.2 from the start; requiring three defers
+  preserves §A50.2's primary authority.
+* **Zero §A49.6 failures across the five-phase window** (not
+  just three) is the only condition §A50.2a strictly
+  *strengthens* beyond §A50.2. Rationale: patient promotion
+  grants durability without a load-bearing demonstration, so
+  the evidence window must be broader in the one dimension
+  that *can* be observed (absence of failure modes).
+
+### Step-by-step execution at W<N>D1 (when §A50.2a fires)
+
+1. Verify conditions 1–4 of §A50.2a at audit-write time;
+   record each PASS explicitly in audit §6 check #4 or a new
+   §6 check #5 row.
+2. Execute the §A50.4 paired dossier edits + NEXT_SESSION §0
+   edit (identical to §A50.2 strict-gate firing).
+3. Append the patient-promotion basis clause to the §A50.3
+   memory bullet body verbatim from the template above.
+4. Strike through **both** §A49.9 trigger #4 (per §A50.4 step
+   3) **and** add a note in the strikethrough "(FIRED W<N>D1
+   via §A50.2a patient path — strict gate §A50.2 still
+   available for post-promotion re-audit if false positive
+   observed per §A50.5)".
+5. Record the W<N>D1 commit body with the per-phase evaluation
+   history of both §A50.2 and §A50.2a conditions; this becomes
+   the durable record for later §A50.5 reviews.
+
+§A50.5 de-promotion applies identically to §A50.2- and §A50.2a-
+promoted bullets; the only post-promotion difference is the
+basis clause (which §A50.5 step 1 reads to classify the false
+positive).
+
 ## A50.3 Memory bullet body
 
 When §A50.2's gate fires at W<N>D1, a new bullet is appended to
@@ -200,7 +340,15 @@ meets A46.2 ind-tracks classification), or the precedent list
 grows too long to carry practically — the de-promotion path is:
 
 1. Open a new `Fx` finding in the phase's audit §3 carry-forward
-   table naming the specific false-positive symptom.
+   table naming the specific false-positive symptom. **Read the
+   promotion basis clause first** (appended to the §A50.3 bullet
+   body at promotion time): if the clause records "Promotion
+   basis: patient" (§A50.2a fire), evaluate whether the false
+   positive is an artefact of patient-path under-specification
+   (e.g., the five-dogfooding threshold was too low for the
+   quiet-period evidence shape) vs a genuine discipline failure;
+   if strict (§A50.2 fire), the false positive is discipline-per-
+   se and §A50.5 proceeds directly to step 2.
 2. Wait one full phase (the discipline's stability under this
    false-positive must be observable before reverting the rule).
 3. If the false positive recurs in the subsequent phase, land a
@@ -209,9 +357,12 @@ grows too long to carry practically — the de-promotion path is:
    strikethrough A49.9 trigger #4 (it becomes an active trigger
    again), (d) opens a new A49.9 trigger #5 naming the specific
    false-positive for future guidance.
-4. Update A50.2's gate conditions to reflect the observed
-   failure mode (e.g. add a "no-op commit classification" check
-   before the promotion trigger fires again).
+4. Update A50.2's gate conditions **or** §A50.2a's gate conditions
+   (whichever path fired) to reflect the observed failure mode
+   (e.g. add a "no-op commit classification" check before the
+   strict-gate trigger fires again, or tighten the §A50.2a
+   dogfooding-count threshold if patient-path under-specification
+   was the root cause).
 
 De-promotion is therefore a **three-phase** operation (observe,
 wait, revert) — never a single-phase panic revert. This mirrors
@@ -241,10 +392,17 @@ A50 must be rewritten if any of the following happens:
   promotion state of the A49/A50 pair is captured by the W<N>
   audit log and memory `feedback_git_workflow.md` version
   history (not by a new A50 revision).
+* **§A50.2a patient-promotion gate fires and the promotion lands**
+  (W24D1 addition). Identical to the strict-gate trigger above —
+  §A50.3 / §A50.4 / §A50.5 freeze; post-promotion record lives in
+  the audit log + memory version history. The only difference is
+  that the memory bullet carries the §A50.2a patient-promotion
+  basis clause, which §A50.5 de-promotion reviews read first.
 * **§A50.5 de-promotion fires** (false-positive recurs and the
   rule is reverted). A50 is re-audited with an additional
-  §A50.2 gate condition codifying the observed false-positive
-  shape.
+  §A50.2 or §A50.2a gate condition codifying the observed
+  false-positive shape. The basis clause (strict vs patient)
+  guides which gate section gets the new condition.
 * **Memory system format changes** (e.g. the memory storage
   moves from flat markdown to a structured schema, or the
   `feedback_git_workflow.md` file is split into two). A50.3 /
@@ -255,13 +413,23 @@ A50 must be rewritten if any of the following happens:
   automated pre-commit hook per A49.8.1 makes the notice
   redundant). A50 becomes moot; appendix is marked
   **superseded** with a forward pointer to the replacement.
+* **§A50.2a patient gate stalls past W30** (new trigger; fires if
+  neither §A50.2 nor §A50.2a fires by W30 audit — i.e., quiet
+  lane activity continues for 10+ weeks past the 2026-04-20 W23
+  baseline without any strict-gate trigger, and the patient-path
+  threshold has been hit but the evaluation revealed a spec gap).
+  A50 is re-audited to consider a further-relaxed §A50.2b or a
+  deliberate sunset of the promotion pathway.
 
 Until one of these triggers fires, A50 is stable and the
-promotion gate (§A50.2) remains the authoritative condition for
-lifting the Addendum protocol notice discipline into durable
-memory-rule status. The earliest realistic fire date is **W23
-audit** (2026-04-19 + 2 plan weeks, given the W21 → W22 → W23
-carry-forward sequence required by §A50.2 condition (1)).
+promotion gates (§A50.2 strict + §A50.2a patient) remain the
+authoritative conditions for lifting the Addendum protocol
+notice discipline into durable memory-rule status. The earliest
+realistic fire date under **§A50.2 (strict)** is W24 audit (per
+the W23D1 sliding-window clarification); under **§A50.2a
+(patient)** is W25 audit (five consecutive A49.3 dogfoodings +
+three consecutive strict-gate defers = W21/W22/W23/W24/W25 +
+W23D1/W24D1/W25D1).
 
 ## A50.8 Relation to other appendices
 
