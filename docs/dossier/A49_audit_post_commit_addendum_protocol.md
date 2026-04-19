@@ -454,6 +454,11 @@ A49 must be rewritten if any of the following happens:
   ownership prefixes). §A49.4 / §A49.5 paste templates require
   field updates to reflect the new lane vocabulary; §A49.7
   cross-reference to A46 is updated.
+  * **Co-edit target (W22 R2 / W23D3)**: §A49.8.1 stage-(d)
+    `ind_tracks_re` regex **must** be updated in the same PR as
+    the A46.2 prefix change — the regex mirrors A46.2's ind-
+    tracks ownership-prefix list verbatim and silently disables
+    the hook if it drifts. Closes W22 F1.
 * **The addendum-protocol notice is dropped from two
   consecutive audit bodies**. §A49.5 was introduced because
   the discipline was load-bearing (W20 hedged the W19 → W20
