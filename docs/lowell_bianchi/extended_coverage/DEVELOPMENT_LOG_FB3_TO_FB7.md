@@ -783,3 +783,22 @@ fresh cumulative count.
 - **Notes**: the BASS-side likelihood package is introduced here so
   FB-7.4 and the later FB-8 observer-frame adapter have a solver-owned
   home distinct from the legacy `htt/htt/` inference stack.
+
+### FB-META-7.4 — cosmological-frame likelihood skeleton
+
+- **Scope**: Recorded FB-7.4 three-channel verification and added the
+  committed `CosmologicalFrameLikelihood` skeleton plus one skipped
+  contract test. The class docstring pins the scope as cosmological-
+  frame only and names `bass.likelihood.observer_frame_adapter` as the
+  FB-8 layer that composes observer-frame effects on top.
+- **Commit anchor**: see `git log --grep='FB-META-7.4'`.
+- **Test delta**: `3,403 passed + 51 skipped` →
+  `3,403 passed + 52 skipped`.
+- **Audit**: [AUDIT_PHASE_FB_META7_2026-04-20.md](../../audits/AUDIT_PHASE_FB_META7_2026-04-20.md) §FB-7.4.
+- **Gallery**: no-op (skeleton only; no physics shipped).
+- **Carry-forward**: the exact on-disk Lowell `§14.3` locator remains
+  absent in this worktree, so the skeleton keeps that citation as an
+  explicit TODO rather than implying the file exists.
+- **Notes**: a named class was chosen over a bare callable because the
+  FB-8 observer-frame adapter SDD already expects a
+  `CosmologicalFrameLikelihood` type.

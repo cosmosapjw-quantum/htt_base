@@ -242,4 +242,63 @@ phase-close gate.
 
 ## §FB-7.4
 
+### §FB-7.4 — cosmological-frame likelihood skeleton
+**Channel A**: 6 checked / 5 verified / 1 broken. Details: verified
+`docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-7`
+names direction-dependent likelihood as FB-7.4; verified
+`docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
+already carries the crucial caveat that FB-7.4 is cosmological-frame
+only; verified `docs/lowell_bianchi/extended_coverage/FB8_DISCRIMINATOR_SDD.md`
+§1.1 and §7 define `bass.likelihood.observer_frame_adapter` as the FB-8
+consumer that wraps a `CosmologicalFrameLikelihood` from FB-7.4;
+verified `htt/docs/lowell_bianchi_solver_reference_PR_WBS.md §4`
+frames the honest likelihood surface in terms of observer-side maps or
+`a_{ℓm}` covariance rather than diagonal `C_ell` only; verified the new
+`bass.likelihood` package introduced at FB-7.3 is the right solver-owned
+home for this surface. Broken: the prompt-supplied on-disk Lowell
+`§14.3` locator is absent in this worktree.
+**Channel B**: 2 source checks / 1 verified / 1 broken. Evidence:
+`arXiv:1907.12875` is the Planck 2018 V likelihood paper; the arXiv
+record shows submission on 2019-07-30 and the title is exactly
+`"Planck 2018 results. V. CMB power spectra and likelihoods"`. That is
+the correct external likelihood-era anchor for the FB-7.4 contract.
+Broken: because the tracked Lowell `§14.3` file is absent, the exact
+internal direction-dependent-likelihood derivation cannot be quoted
+verbatim in-session and remains an explicit TODO.
+**Channel C** (prose, 6-10 lines): The safest FB-7.4 skeleton is a
+named `CosmologicalFrameLikelihood` class rather than another generic
+helper function. FB-8.6 already expects that type shape, and the scope
+pin is too important to leave implicit. Putting the cosmological-frame
+warning in the class docstring keeps the distinction close to the future
+consumer surface and prevents a later builder from quietly swallowing an
+observer-boost parameter. The constructor takes HTT decomposition plus a
+tier label because the phase contract itself says the resolution is
+tiered, but the class refuses to say anything about observer-frame data
+composition beyond the explicit FB-8 hand-off. A plain `build_*`
+function would work technically, but it would undercut the type name
+that the FB-8 adapter SDD already uses. The skipped test therefore checks
+the scope pin text directly even though the implementation body is still
+unreachable.
+**Alternatives**:
+| # | likelihood surface | Pros | Cons | Picked |
+|---|---|---|---|---|
+| 1 | `CosmologicalFrameLikelihood` class with `log_prob(...)` | Matches the FB-8.6 consumer contract already written in the SDD; lets the cosmological-frame scope pin live on the type itself. | Slightly more structure than a simple helper function. | ✅ |
+| 2 | `build_cosmological_frame_likelihood(...) -> Callable` | Minimal code surface. | Loses the named type that FB-8 already expects and makes the scope pin easier to miss. | — |
+| 3 | Add observer-frame kwargs now and let FB-8 refine later | One future entry point. | Violates the phase boundary immediately by collapsing cosmological-frame and observer-frame semantics into one contract. | — |
+**Core principles**: cosmological-frame scope pin is mandatory and
+visible on the type; FB-8 owns observer-frame composition via
+`bass.likelihood.observer_frame_adapter`; no silent boost parameter in
+FB-7.4; deterministic failure until the tiered likelihood lands.
+**Skeleton path**:
+`htt/bass/likelihood/cosmological_frame.py::CosmologicalFrameLikelihood`
+**Test path**:
+`cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/likelihood/test_fb74_cosmological_frame_skeleton.py -q`
+**Guard rails** (yes/no): cosmological-frame-only text in docstring?
+yes; FB-8 adapter named explicitly? yes; corrected Planck V arXiv ID
+recorded? yes; internal Lowell gap recorded explicitly? yes
+**Targeted result**: `1 skipped`.
+**Regression after plant**: expected full-suite movement
+`3403 passed + 51 skipped` → `3403 passed + 52 skipped` pending the
+phase-close gate.
+
 ## §FB-7.5
