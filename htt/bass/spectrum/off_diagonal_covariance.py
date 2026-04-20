@@ -14,6 +14,12 @@ from typing import Literal
 
 import numpy as np
 
+__all__ = [
+    "assemble_bianchi_spectrum_covariance",
+    "build_sparse_covariance_entries",
+    "compute_covariance_psd_guard",
+]
+
 _MODE_LABELS = ("m0", "m+2", "m-2")
 _T_CMB_K = 2.7255
 _SMALL_FLOAT = 1.0e-30
@@ -171,6 +177,99 @@ def _sparse_from_blocks(
                     }
                 )
     return sparse
+
+
+def _dense_views_from_result(
+    covariance_result: Mapping[str, object],
+) -> dict[str, np.ndarray]:
+    dense = covariance_result.get("dense_covariance")
+    if isinstance(dense, Mapping):
+        return {
+            spec: np.asarray(dense[spec], dtype=float)
+            for spec in ("TT", "EE", "TE", "BB")
+        }
+    return _dense_from_blocks(
+        blocks=covariance_result["off_diagonal_blocks"],  # type: ignore[arg-type]
+        diagonal_by_mode=covariance_result["diagonal_by_mode"],  # type: ignore[arg-type]
+    )
+
+
+def build_sparse_covariance_entries(
+    covariance_result: Mapping[str, object],
+    *,
+    threshold: float = 0.0,
+) -> dict[str, list[dict[str, object]]]:
+    """Return a sparse off-diagonal covariance view with unique indices."""
+    if threshold < 0.0:
+        raise ValueError("threshold must be non-negative")
+    sparse = covariance_result.get("wigner_d_sparse")
+    if not isinstance(sparse, Mapping):
+        sparse = _sparse_from_blocks(
+            blocks=covariance_result["off_diagonal_blocks"],  # type: ignore[arg-type]
+        )
+
+    out: dict[str, list[dict[str, object]]] = {}
+    for spec in ("TT", "EE", "TE", "BB"):
+        seen: set[tuple[int, int, str]] = set()
+        entries: list[dict[str, object]] = []
+        for row in sparse.get(spec, []):  # type: ignore[union-attr]
+            value = float(row["value"])
+            if abs(value) <= threshold:
+                continue
+            key = (int(row["ell"]), int(row["ell_prime"]), str(row["mode"]))
+            if key in seen:
+                raise ValueError(
+                    f"duplicate sparse covariance index for {spec}: {key}"
+                )
+            seen.add(key)
+            entries.append(
+                {
+                    "ell": key[0],
+                    "ell_prime": key[1],
+                    "mode": key[2],
+                    "value": value,
+                }
+            )
+        out[spec] = entries
+    return out
+
+
+def compute_covariance_psd_guard(
+    covariance_result: Mapping[str, object],
+    *,
+    atol: float = 1.0e-12,
+) -> dict[str, object]:
+    """Check PSD-style guards for TT/EE/BB and the joint T/E block."""
+    if atol < 0.0:
+        raise ValueError("atol must be non-negative")
+    dense = _dense_views_from_result(covariance_result)
+    tt = np.asarray(dense["TT"], dtype=float)
+    ee = np.asarray(dense["EE"], dtype=float)
+    bb = np.asarray(dense["BB"], dtype=float)
+    te = np.asarray(dense["TE"], dtype=float)
+    te_joint = np.block([[tt, te], [te.T, ee]])
+
+    def _min_eig(matrix: np.ndarray) -> float:
+        sym = 0.5 * (matrix + matrix.T)
+        return float(np.min(np.linalg.eigvalsh(sym)))
+
+    tt_min = _min_eig(tt)
+    ee_min = _min_eig(ee)
+    bb_min = _min_eig(bb)
+    te_joint_min = _min_eig(te_joint)
+    return {
+        "tolerance": float(atol),
+        "tt_min_eig": tt_min,
+        "ee_min_eig": ee_min,
+        "bb_min_eig": bb_min,
+        "te_joint_min_eig": te_joint_min,
+        "passed": (
+            tt_min >= -atol
+            and ee_min >= -atol
+            and bb_min >= -atol
+            and te_joint_min >= -atol
+        ),
+    }
 
 
 def assemble_bianchi_spectrum_covariance(

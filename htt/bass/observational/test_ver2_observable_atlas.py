@@ -1,0 +1,199 @@
+from __future__ import annotations
+
+import numpy as np
+
+from bass.observational import (
+    build_atlas_entry_lite,
+    build_covariance_feature_summary,
+    build_observable_vector_from_solver_output,
+    build_sparse_covariance_proxy,
+)
+from common.contracts import ArtifactManifest, SkySupport
+from bass.forward.ver2_solver_output import build_solver_core_output, BassReleaseMetadata
+from bass.runtime.ver2_execution import (
+    CheckpointPolicy,
+    CouplingMode,
+    ConstraintProjectionPolicy,
+    FeatureStatus,
+    IntegratorFamily,
+    RuntimeControlBlock,
+    SolverFeatureFlags,
+    SolverTier,
+)
+from bass.los.ver2_source_propagator import (
+    ObserverFrameMetadata,
+    PropagatorMode,
+    SourcePropagatorConfig,
+)
+
+
+def _manifest() -> ArtifactManifest:
+    return ArtifactManifest(
+        artifact_id="bass.solver.run0",
+        artifact_path="artifacts/bass/solver_run0.json",
+        owner="BASS",
+        implementation_scope="bass_py",
+        claim_tier="conditional",
+        production_status="production_candidate",
+        created_by="test-suite",
+        git_commit="abc123",
+        config_hash="cfg1",
+        input_hashes=["seed:0"],
+        code_version="0.0-test",
+        schema_version="ver2-v1",
+    )
+
+
+def _sky_support() -> SkySupport:
+    return SkySupport(
+        selection_mode="mock_calibrated",
+        sky_support_hash="sky123",
+        mask_hash="mask123",
+        mock_coverage_status="adequate",
+        scan_volume_hash="scan123",
+    )
+
+
+def _runtime_controls() -> RuntimeControlBlock:
+    return RuntimeControlBlock(
+        tier=SolverTier.TIER_A_ANGULAR,
+        integrator_family=IntegratorFamily.EXPLICIT_RK,
+        coupling_mode=CouplingMode.BACKGROUND_THEN_RADIATION,
+        multipole_cutoff=8,
+        rtol=1.0e-6,
+        atol=1.0e-8,
+        checkpoint=CheckpointPolicy(enabled=False),
+        constraint_projection=ConstraintProjectionPolicy(
+            enabled=False,
+            status=FeatureStatus.DISABLED,
+        ),
+    )
+
+
+def _feature_flags() -> SolverFeatureFlags:
+    return SolverFeatureFlags(
+        background_dynamics=FeatureStatus.APPROXIMATE,
+        photon_transport=FeatureStatus.APPROXIMATE,
+        thomson_collision=FeatureStatus.APPROXIMATE,
+        visibility_history=FeatureStatus.APPROXIMATE,
+        source_propagator=FeatureStatus.APPROXIMATE,
+        checkpoint_restart=FeatureStatus.DISABLED,
+    )
+
+
+def _propagator() -> SourcePropagatorConfig:
+    return SourcePropagatorConfig(
+        mode=PropagatorMode.ANISOTROPIC_FORWARD,
+        temperature_transport=FeatureStatus.APPROXIMATE,
+        polarization_rotation=FeatureStatus.APPROXIMATE,
+        flrw_validation_only=False,
+        observer_frame=ObserverFrameMetadata(
+            observer_frame="normal_tetrad",
+            screen_basis_convention="explicit_screen_basis",
+            harmonic_basis="m_explicit",
+            eb_sign_convention="cmb",
+        ),
+    )
+
+
+def _covariance_bundle() -> dict[str, object]:
+    ell = np.arange(9, dtype=int)
+    diagonal = np.vstack(
+        [
+            np.linspace(1.0, 0.2, ell.size),
+            np.linspace(0.8, 0.15, ell.size),
+            np.linspace(0.6, 0.1, ell.size),
+        ]
+    )
+    block = np.zeros((ell.size, ell.size), dtype=float)
+    block[2, 4] = block[4, 2] = 0.03
+    block[3, 5] = block[5, 3] = 0.02
+    return {
+        "structure_label": "VII_h",
+        "ell": ell,
+        "C_ell": {
+            "TT": diagonal.sum(axis=0),
+            "TE": 0.2 * diagonal.sum(axis=0),
+            "EE": 0.5 * diagonal.sum(axis=0),
+            "BB": np.zeros_like(ell, dtype=float),
+        },
+        "diagonal_by_mode": {
+            "TT": diagonal,
+            "TE": 0.2 * diagonal,
+            "EE": 0.5 * diagonal,
+            "BB": np.zeros_like(diagonal),
+        },
+        "off_diagonal_blocks": {
+            "TT": {"m0": block, "m+2": 0.5 * block, "m-2": 0.5 * block},
+            "TE": {"m0": 0.1 * block, "m+2": 0.05 * block, "m-2": 0.05 * block},
+            "EE": {"m0": 0.3 * block, "m+2": 0.15 * block, "m-2": 0.15 * block},
+            "BB": {"m0": np.zeros_like(block), "m+2": np.zeros_like(block), "m-2": np.zeros_like(block)},
+        },
+        "preferred_axis": np.array([0.0, 0.0, 1.0]),
+        "anisotropy_tensor": np.diag([0.2, -0.1, -0.1]),
+        "offdiag_strength": 0.12,
+        "rotation_strength": 0.03,
+    }
+
+
+def _solver_output() -> object:
+    return build_solver_core_output(
+        manifest=_manifest(),
+        bianchi_type="VII_h",
+        tilt_enabled=True,
+        harmonic_basis="m_explicit",
+        eb_sign_convention="cmb",
+        thomson_mode="electron_frame",
+        runtime_controls=_runtime_controls(),
+        feature_flags=_feature_flags(),
+        propagator=_propagator(),
+        release=BassReleaseMetadata(
+            release_stage="skeleton",
+            run_label="test-run",
+            config_hash="cfg1",
+            code_version="0.0-test",
+            schema_version="ver2-v1",
+            git_commit="abc123",
+        ),
+        deterministic_template={"Ahat": 0.2, "delta_chi2": 0.0},
+        anisotropic_covariance=_covariance_bundle(),
+    )
+
+
+def test_observable_vector_builder_attaches_sky_support_and_manifest():
+    observable = build_observable_vector_from_solver_output(
+        _solver_output(),
+        sky_support=_sky_support(),
+    )
+    assert observable.manifest.owner == "BASS"
+    assert observable.sky_support.selection_mode == "mock_calibrated"
+    assert observable.scan_volume["scan_volume_hash"]
+    assert observable.biposh is not None
+    assert observable.biposh["representation"] == "sparse_mode_block_proxy"
+
+
+def test_covariance_proxy_and_feature_summary_record_guards():
+    covariance = _covariance_bundle()
+    sparse = build_sparse_covariance_proxy(
+        covariance,
+        harmonic_convention="m_explicit",
+    )
+    summary = build_covariance_feature_summary(
+        covariance,
+        harmonic_convention="m_explicit",
+    )
+    assert sparse["unique_index_count"] > 0
+    assert "mode_block_proxy_not_full_biposh" in sparse["caveats"]
+    assert summary["psd_guard"]["passed"] is True
+
+
+def test_atlas_entry_lite_builder_carries_observable_reference():
+    solver_output = _solver_output()
+    observable = build_observable_vector_from_solver_output(
+        solver_output,
+        sky_support=_sky_support(),
+    )
+    atlas = build_atlas_entry_lite(solver_output, observable)
+    assert atlas.manifest.owner == "BASS"
+    assert atlas.observable_vector_ref == observable.manifest.artifact_id
+    assert atlas.validity_domain["sky_support"]["sky_support_hash"] == "sky123"
