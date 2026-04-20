@@ -4245,6 +4245,490 @@ def plot_18_04_pontzen_challinor_shape_match() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
+# Topic 19 — HTT likelihood (FB-7)
+# ════════════════════════════════════════════════════════════════════
+
+
+TOPIC_19 = "19_htt_likelihood"
+_FB7_CACHE: dict[tuple[object, ...], object] = {}
+
+
+def _fb7_imports():
+    from bass.likelihood.cosmological_frame import CosmologicalFrameLikelihood
+    from bass.likelihood.htt_decomposition import build_htt_decomposition
+    from bass.likelihood.planck2018_flrw_match import (
+        validate_planck2018_flrw_limit_match,
+    )
+    from bass.runtime.canonical_decision import make_canonical_decision
+    from bass.spectrum.lowell_los import build_lowell_line_of_sight_propagator
+    from bass.spectrum.off_diagonal_covariance import (
+        assemble_bianchi_spectrum_covariance,
+    )
+    from tsc.diagnostics.tangency import TangencyResult, TangentKind
+
+    return (
+        CosmologicalFrameLikelihood,
+        build_htt_decomposition,
+        validate_planck2018_flrw_limit_match,
+        make_canonical_decision,
+        build_lowell_line_of_sight_propagator,
+        assemble_bianchi_spectrum_covariance,
+        TangencyResult,
+        TangentKind,
+    )
+
+
+def _fb7_camb_fixture_path() -> Path:
+    return REPO_ROOT / "data" / "camb_ref_planck2018.npz"
+
+
+def _fb7_visibility(eta: float) -> float:
+    bg = Shared.bg()
+    _, recomb = Shared.recomb()
+    eta_clipped = float(np.clip(eta, bg.eta_min, bg.eta_today))
+    z = 1.0 / float(bg.interp_a(eta_clipped)) - 1.0
+    if z < recomb.table.z_min or z > recomb.table.z_max:
+        return 0.0
+    return float(recomb.query_visibility(z))
+
+
+def _fb7_structure_strengths(structure) -> tuple[float, float]:
+    geom = (
+        abs(float(structure.n1))
+        + abs(float(structure.n2))
+        + abs(float(structure.n3))
+        + abs(float(structure.a_twist))
+    )
+    strength = min(0.28, 7.0 * geom + 0.03 * abs(float(structure.h_parameter)))
+    if structure.no_flrw_limit:
+        strength = max(strength, 0.07)
+    if structure.label == "I":
+        strength = 0.0
+    rotation = 0.0
+    if structure.label in {"IV", "VI_h", "VII_h", "VIII", "IX"}:
+        rotation = min(0.20, 0.45 * strength + 5.0 * abs(float(structure.a_twist)))
+    if structure.label in {"I", "V", "VII_0"}:
+        rotation = 0.0
+    return strength, rotation
+
+
+def _fb7_source_builder(structure):
+    bg = Shared.bg()
+    _, recomb = Shared.recomb()
+    strength, rotation = _fb7_structure_strengths(structure)
+    eta_peak = bg.eta_at_a(1.0 / (1.0 + 1089.0))
+    eta_tail = bg.eta_at_a(1.0 / (1.0 + recomb.table.z_min))
+    width = max(55.0, 0.10 * (eta_tail - eta_peak))
+    phase_map = {
+        "I": 0.0,
+        "V": 0.2,
+        "VII_0": 0.35,
+        "VII_h": 0.8,
+        "VIII": 1.2,
+        "IX": 1.5,
+    }
+    phase0 = phase_map.get(structure.label, 0.5)
+
+    def _builder(eta: float, k: float) -> dict[str, float]:
+        x = (float(eta) - eta_peak) / width
+        envelope = np.exp(-0.5 * x * x) + 0.18 * np.exp(-0.5 * ((x + 1.8) / 1.6) ** 2)
+        phase = 0.16 * float(k) * (bg.eta_today - float(eta)) + phase0
+        return {
+            "temperature": 1.30 * envelope * (1.0 + 0.22 * np.cos(phase)),
+            "temperature_m_plus2": strength * envelope * np.sin(phase + 0.7),
+            "temperature_m_minus2": -0.80 * strength * envelope * np.cos(phase - 0.4),
+            "polarization": 0.26 * envelope * np.cos(phase - 0.15),
+            "polarization_m_plus2": 0.55 * strength * envelope * np.sin(phase + 1.0),
+            "polarization_m_minus2": -0.45 * strength * envelope * np.cos(phase + 0.3),
+            "b_mode": 0.0,
+            "b_mode_m_plus2": rotation * envelope * np.cos(phase + 0.4),
+            "b_mode_m_minus2": -rotation * envelope * np.sin(phase - 0.6),
+        }
+
+    return _builder
+
+
+def _fb7_transfer_bundle(structure) -> dict[str, object]:
+    key = (
+        "transfer",
+        structure.label,
+        float(structure.n1),
+        float(structure.n2),
+        float(structure.n3),
+        float(structure.a_twist),
+        float(structure.h_parameter),
+    )
+    cached = _FB7_CACHE.get(key)
+    if cached is not None:
+        return cached
+
+    (*_, build_lowell_line_of_sight_propagator, _, _, _) = _fb7_imports()
+    bg = Shared.bg()
+    _, recomb = Shared.recomb()
+    eta_start = bg.eta_at_a(1.0 / (1.0 + recomb.table.z_max))
+    eta_grid = np.linspace(eta_start, bg.eta_today, 220)
+    k_grid = np.geomspace(3.0e-3, 0.12, 28)
+    bundle = build_lowell_line_of_sight_propagator(
+        structure,
+        eta_grid_mpc=eta_grid,
+        k_grid_mpc=k_grid,
+        ell_max=30,
+        visibility_fn=_fb7_visibility,
+        source_builder=_fb7_source_builder(structure),
+    )
+    _FB7_CACHE[key] = bundle
+    return bundle
+
+
+def _fb7_covariance(structure) -> dict[str, object]:
+    key = (
+        "covariance",
+        structure.label,
+        float(structure.n1),
+        float(structure.n2),
+        float(structure.n3),
+        float(structure.a_twist),
+        float(structure.h_parameter),
+    )
+    cached = _FB7_CACHE.get(key)
+    if cached is not None:
+        return cached
+
+    (*_, assemble_bianchi_spectrum_covariance, _, _) = _fb7_imports()[4:]
+    bundle = _fb7_transfer_bundle(structure)
+    cov = assemble_bianchi_spectrum_covariance(
+        transfer_bundle=bundle,
+        k_grid_mpc=np.asarray(bundle["k_grid_mpc"], dtype=float),
+        ell_max=30,
+        off_diagonal_strategy="m_decoupled_blocks",
+    )
+    _FB7_CACHE[key] = cov
+    return cov
+
+
+def _fb7_tangency_anchor() -> object:
+    key = ("tangency_anchor",)
+    cached = _FB7_CACHE.get(key)
+    if cached is not None:
+        return cached
+
+    (*_, TangencyResult, TangentKind) = _fb7_imports()
+    tangency = TangencyResult(
+        coefficients=np.array([1.0], dtype=float),
+        tangent_norm_sq=0.88,
+        total_norm_sq=0.90,
+        D_sq=1.0e-16,
+        D=1.0e-8,
+        relative_residual=1.0e-8,
+        kind=TangentKind.ONE_FIELD,
+        xi=0,
+        eta=0.0,
+        gram_matrix=np.array([[1.0]], dtype=float),
+        moment_vector=np.array([1.0], dtype=float),
+    )
+    _FB7_CACHE[key] = tangency
+    return tangency
+
+
+def _fb7_decomposition_and_likelihood(structure) -> dict[str, object]:
+    key = (
+        "decomposition",
+        structure.label,
+        float(structure.n1),
+        float(structure.n2),
+        float(structure.n3),
+        float(structure.a_twist),
+        float(structure.h_parameter),
+    )
+    cached = _FB7_CACHE.get(key)
+    if cached is not None:
+        return cached
+
+    (
+        CosmologicalFrameLikelihood,
+        build_htt_decomposition,
+        _,
+        make_canonical_decision,
+        *_,
+    ) = _fb7_imports()
+    covariance = _fb7_covariance(structure)
+    preferred_axis = np.asarray(covariance["preferred_axis"], dtype=float)
+    prior_axis = preferred_axis + np.array([0.55, -0.25, 0.15], dtype=float)
+    prior_axis /= np.linalg.norm(prior_axis)
+    tangency = _fb7_tangency_anchor()
+    beta_gate = make_canonical_decision(
+        beta_result=(True, {
+            "beta": 1.3e-3,
+            "beta_max": 8.6e-3,
+            "epsilon_1": 2.0e-2,
+            "eta_u_dot": 0.16,
+        }),
+        sigma_result=(True, {
+            "sigma_sq": 2.0e-5,
+            "floor": 1.0e-6,
+            "log_margin_decades": 1.3,
+        }),
+        tangency_result=tangency,
+    )
+    decomposition = build_htt_decomposition(
+        directional_covariance=covariance,
+        prior_alignment={
+            "preferred_axis": prior_axis,
+            "alignment_tolerance_cos": 0.985,
+            "direction_grid_size": 144,
+        },
+        tangency_result=tangency,
+        beta_gate=beta_gate,
+    )
+    likelihood = CosmologicalFrameLikelihood(
+        htt_decomposition=decomposition,
+        tier="full",
+    )
+    result = {
+        "covariance": covariance,
+        "decomposition": decomposition,
+        "likelihood": likelihood,
+        "prior_axis": prior_axis,
+        "tangency_result": tangency,
+    }
+    _FB7_CACHE[key] = result
+    return result
+
+
+def _axis_to_lon_lat(vector: np.ndarray) -> tuple[float, float]:
+    arr = np.asarray(vector, dtype=float)
+    arr = arr / max(float(np.linalg.norm(arr)), 1.0e-30)
+    lon = (np.degrees(np.arctan2(arr[1], arr[0])) + 360.0) % 360.0
+    lat = np.degrees(np.arcsin(np.clip(arr[2], -1.0, 1.0)))
+    return float(lon), float(lat)
+
+
+def plot_19_01_los_propagator_heatmap() -> None:
+    """FB-7.1 LOS propagator norm over ``(k, ell)``."""
+    structure = type_viih_constants(n1=1.0e-3, n3=1.0e-3, a_twist=1.0e-4)
+    bundle = _fb7_transfer_bundle(structure)
+    ell = np.asarray(bundle["ell"], dtype=int)
+    k_grid = np.asarray(bundle["k_grid_mpc"], dtype=float)
+    propagator = np.asarray(bundle["propagator_matrix"], dtype=float)
+    drift = np.linalg.norm(
+        propagator - np.eye(3, dtype=float)[None, None, :, :],
+        axis=(2, 3),
+    )
+
+    fig, ax = plt.subplots(figsize=(7.6, 4.8))
+    mesh = ax.pcolormesh(
+        ell,
+        k_grid,
+        drift,
+        shading="nearest",
+        cmap="magma",
+    )
+    _prepare_axes(
+        ax,
+        r"multipole $\ell$",
+        r"$k\ [{\rm Mpc}^{-1}]$",
+        title=r"FB-7.1 LOS propagator drift $\|\mathsf{P}_{k\ell} - \mathbb{1}\|_F$ (Type VII$_h$)",
+        ylog=True,
+    )
+    cbar = fig.colorbar(mesh, ax=ax)
+    cbar.set_label(r"$\|\mathsf{P}_{k\ell} - \mathbb{1}\|_F$")
+    fig.tight_layout()
+    _save(fig, "plot_19_01_los_propagator_heatmap", TOPIC_19)
+
+
+def plot_19_02_offdiag_covariance_IX() -> None:
+    """FB-7.2 Bianchi-IX off-diagonal covariance slice."""
+    from matplotlib.colors import TwoSlopeNorm
+
+    structure = type_ix_constants(n=1.0e-3)
+    covariance = _fb7_covariance(structure)
+    ell = np.asarray(covariance["ell"], dtype=int)
+    block = np.asarray(
+        covariance["off_diagonal_blocks"]["TT"]["m0"],
+        dtype=float,
+    )
+    scale = max(float(np.max(np.abs(block))), 1.0e-20)
+
+    fig, ax = plt.subplots(figsize=(6.2, 5.4))
+    im = ax.imshow(
+        block,
+        origin="lower",
+        extent=[ell[0], ell[-1], ell[0], ell[-1]],
+        aspect="auto",
+        cmap="coolwarm",
+        norm=TwoSlopeNorm(vcenter=0.0, vmin=-scale, vmax=scale),
+    )
+    _prepare_axes(
+        ax,
+        r"$\ell$",
+        r"$\ell'$",
+        title=r"FB-7.2 off-diagonal $C_{\ell m,\ell' m'}^{TT}$ slice (Type IX, $m=0$ block)",
+    )
+    cbar = fig.colorbar(im, ax=ax)
+    cbar.set_label(r"$C_{\ell 0,\ell' 0}^{TT}$ proxy")
+    fig.tight_layout()
+    _save(fig, "plot_19_02_offdiag_covariance_IX", TOPIC_19)
+
+
+def plot_19_03_htt_p0_triad() -> None:
+    """FB-7.3 three-panel P0-triad resolution."""
+    payload = _fb7_decomposition_and_likelihood(
+        type_viih_constants(n1=1.0e-3, n3=1.0e-3, a_twist=1.0e-4)
+    )
+    decomposition = payload["decomposition"]
+    prior_axis = np.asarray(payload["prior_axis"], dtype=float)
+    dominant_axis = np.asarray(decomposition["dominant_axis"], dtype=float)
+    tangent_axis = np.asarray(decomposition["tangent_axis"], dtype=float)
+    resolved_axis = np.asarray(decomposition["resolved_axis"], dtype=float)
+    lon_lat = {
+        "prior": _axis_to_lon_lat(prior_axis),
+        "dominant": _axis_to_lon_lat(dominant_axis),
+        "tangent": _axis_to_lon_lat(tangent_axis),
+        "resolved": _axis_to_lon_lat(resolved_axis),
+    }
+
+    fig, axes = plt.subplots(1, 3, figsize=(12.0, 4.2), sharex=True, sharey=True)
+    panel_specs = [
+        (
+            axes[0],
+            "prior alignment",
+            [("prior", COLS["blue"]), ("dominant", COLS["orange"])],
+        ),
+        (
+            axes[1],
+            "tangency response",
+            [("prior", COLS["blue"]), ("tangent", COLS["green"]), ("dominant", COLS["orange"])],
+        ),
+        (
+            axes[2],
+            decomposition["triad_status"].replace("_", " "),
+            [("resolved", COLS["purple"]), ("tangent", COLS["green"]), ("dominant", COLS["orange"])],
+        ),
+    ]
+    for ax, title, labels in panel_specs:
+        theta = np.linspace(0.0, 2.0 * np.pi, 256)
+        ax.plot(np.cos(theta), np.sin(theta), color="0.75", lw=0.8)
+        ax.axhline(0.0, color="0.85", lw=0.6)
+        ax.axvline(0.0, color="0.85", lw=0.6)
+        for name, colour in labels:
+            lon, lat = lon_lat[name]
+            x = np.cos(np.radians(lon)) * np.cos(np.radians(lat))
+            y = np.sin(np.radians(lat))
+            ax.arrow(
+                0.0, 0.0, x, y,
+                width=0.012, head_width=0.08, head_length=0.10,
+                length_includes_head=True, color=colour, alpha=0.95,
+            )
+            ax.text(x * 1.08, y * 1.08, name, color=colour, fontsize=8,
+                    ha="center", va="center")
+        ax.set_title(title, fontsize=9)
+        ax.set_xlim(-1.15, 1.15)
+        ax.set_ylim(-1.15, 1.15)
+        ax.set_aspect("equal")
+        ax.grid(True, alpha=0.18, lw=0.4)
+        ax.set_xlabel(r"$\cos \ell \cos b$")
+    axes[0].set_ylabel(r"$\sin b$")
+    fig.suptitle(
+        r"FB-7.3 HTT P0 triad: prior axis, tangency blend, and resolved cosmological-frame axis",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "plot_19_03_htt_p0_triad", TOPIC_19)
+
+
+def plot_19_04_direction_likelihood_contours() -> None:
+    """FB-7.4 cosmological-frame directional likelihood surface."""
+    payload = _fb7_decomposition_and_likelihood(
+        type_viih_constants(n1=1.0e-3, n3=1.0e-3, a_twist=1.0e-4)
+    )
+    decomposition = payload["decomposition"]
+    likelihood = payload["likelihood"]
+    surface = likelihood.directional_surface(
+        amplitude=float(decomposition["effective_amplitude"]),
+        n_longitude=181,
+        n_latitude=91,
+    )
+    lon = np.asarray(surface["longitude_deg"], dtype=float)
+    lat = np.asarray(surface["latitude_deg"], dtype=float)
+    log_prob = np.asarray(surface["log_prob"], dtype=float)
+    lon0, lat0 = _axis_to_lon_lat(np.asarray(decomposition["resolved_axis"], dtype=float))
+
+    fig, ax = plt.subplots(figsize=(8.0, 4.8))
+    contour = ax.contourf(
+        lon,
+        lat,
+        log_prob,
+        levels=18,
+        cmap="cividis",
+    )
+    ax.contour(
+        lon,
+        lat,
+        log_prob,
+        levels=8,
+        colors="white",
+        linewidths=0.45,
+        alpha=0.45,
+    )
+    ax.scatter([lon0], [lat0], s=52, color=COLS["orange"], edgecolor="black", lw=0.5)
+    ax.text(lon0 + 6.0, lat0 + 4.0, "resolved axis", color="black", fontsize=8)
+    _prepare_axes(
+        ax,
+        r"longitude $l$ [deg]",
+        r"latitude $b$ [deg]",
+        title=r"FB-7.4 cosmological-frame $\ln p(\hat n_{\rm B} \mid \mathrm{TT,EE,TE,BB})$ over Bianchi-axis direction",
+    )
+    cbar = fig.colorbar(contour, ax=ax)
+    cbar.set_label(r"$\ln p$")
+    fig.tight_layout()
+    _save(fig, "plot_19_04_direction_likelihood_contours", TOPIC_19)
+
+
+def plot_19_05_lnB_11types_vs_FLRW() -> None:
+    """FB-7.5 Planck-2018 FLRW-limit Bayes-factor summary."""
+    key = ("planck2018_lnB_summary",)
+    cached = _FB7_CACHE.get(key)
+    if cached is None:
+        (_, _, validate_planck2018_flrw_limit_match, *_) = _fb7_imports()
+        cached = validate_planck2018_flrw_limit_match(
+            camb_fixture_path=_fb7_camb_fixture_path(),
+        )
+        _FB7_CACHE[key] = cached
+    result = cached
+    rows = result["rows"]
+    labels = [row["type_label"] for row in rows]
+    values = np.array([float(row["ln_B"]) for row in rows], dtype=float)
+    colors = [
+        COLS["green"] if row["status"] == "PASS" else COLS["orange"]
+        for row in rows
+    ]
+
+    fig, ax = plt.subplots(figsize=(9.8, 4.8))
+    x = np.arange(len(labels))
+    ax.bar(x, values, color=colors, alpha=0.88)
+    ax.axhline(0.0, color="0.25", lw=0.8)
+    ax.axhspan(-0.1, 0.1, color="0.85", alpha=0.5)
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=35, ha="right")
+    _prepare_axes(
+        ax,
+        "Bianchi type",
+        r"$\ln B_{\rm type,FLRW}$",
+        title=r"FB-7.5 Planck-2018 cosmological-frame evidence relative to FLRW",
+    )
+    ax.text(
+        0.02, 0.95,
+        r"grey band: $|\ln B| < 0.1$ FLRW-limit target",
+        transform=ax.transAxes,
+        fontsize=8,
+        ha="left",
+        va="top",
+    )
+    fig.tight_layout()
+    _save(fig, "plot_19_05_lnB_11types_vs_FLRW", TOPIC_19)
+
+
+# ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
 
@@ -4457,6 +4941,18 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
          "FB-6.3 orthogonal-branch D_ell^TT overlays against the shared CAMB Planck-2018 oracle."),
         ("plot_18_04_pontzen_challinor_shape_match", plot_18_04_pontzen_challinor_shape_match,
          "FB-6.3 Pontzen-Challinor VII_h and IX qualitative shape overlays."),
+    ],
+    TOPIC_19: [
+        ("plot_19_01_los_propagator_heatmap", plot_19_01_los_propagator_heatmap,
+         "FB-7.1 LOS propagator drift heatmap across (k, ell) for Type VII_h."),
+        ("plot_19_02_offdiag_covariance_IX", plot_19_02_offdiag_covariance_IX,
+         "FB-7.2 Bianchi-IX off-diagonal TT covariance slice in the m=0 block."),
+        ("plot_19_03_htt_p0_triad", plot_19_03_htt_p0_triad,
+         "FB-7.3 three-panel HTT P0-triad resolution: prior, tangency, resolved axis."),
+        ("plot_19_04_direction_likelihood_contours", plot_19_04_direction_likelihood_contours,
+         "FB-7.4 cosmological-frame directional log-likelihood over Bianchi-axis longitude and latitude."),
+        ("plot_19_05_lnB_11types_vs_FLRW", plot_19_05_lnB_11types_vs_FLRW,
+         "FB-7.5 Planck-2018 ln B summary across all 11 Bianchi types versus FLRW."),
     ],
 }
 

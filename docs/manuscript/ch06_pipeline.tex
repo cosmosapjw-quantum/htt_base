@@ -293,6 +293,95 @@ through the master identity to produce the three-layer output
 
 
 % ============================================================
+\section{Line-of-sight propagator}
+\label{sec:los-propagator}
+% ============================================================
+
+The FB-7 spectrum layer lifts the earlier low-$\ell$ temperature
+proxy into an explicit line-of-sight (LOS) transfer builder.
+Operationally, the solver samples the source terms and the Thomson
+visibility
+$g(\eta) = \dot{\tau}(\eta)\exp[-\kappa(\eta)]$
+on the shared conformal-time grid, then projects them onto the
+retained harmonic subspace $m \in \{0,\pm2\}$ using the familiar
+source-times-geometry split of Seljak \& Zaldarriaga
+\cite{SeljakZaldarriaga1996}.  The stationary-phase diagnostic is
+kept explicit at the interface,
+\begin{equation}\label{eq:fb7-limber}
+\eta_{\rm sp} = \eta_0 - \frac{\ell + 1/2}{k}\,,
+\end{equation}
+so that the earlier sign carry is closed by construction rather than
+hidden in an internal helper.  The returned transfer bundle carries
+temperature, $E$-mode, and $B$-mode blocks together with the
+type-dependent propagator matrix and the preferred-axis metadata
+needed by the downstream covariance stage.
+
+This separation is load-bearing for anisotropic cosmology.  Type~I
+remains block-diagonal with identically vanishing $B$-mode transfer,
+while curved or twisting types expose deterministic mode mixing that
+later feeds both the diagonal spectra
+$C_\ell^{TT,EE,TE,BB}$ and the anisotropic off-diagonal covariance
+$C_{\ell m,\ell' m'}^{XY}$.  In that sense the LOS layer is the bridge
+between the covariant hierarchy and the directional likelihood
+surface: it converts the Bianchi background and hierarchy trajectories
+into observable harmonic transfer functions on the same low-$\ell$
+band used by the perturbation-sector validation and the Planck-2018
+cross-checks \cite{LewisChallinor2006,Planck2018V,Planck2018VI}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/physics_gallery/19_htt_likelihood/plot_19_01_los_propagator_heatmap.png}
+\caption{FB-7.1 gallery diagnostic for the line-of-sight propagator:
+the Frobenius-norm drift of the Type~VII$_h$ propagator matrix away
+from the identity across the shared $(k,\ell)$ grid.}
+\label{fig:fb7_los_propagator}
+\end{figure}
+
+
+% ============================================================
+\section{Direction-dependent likelihood}
+\label{sec:direction-likelihood}
+% ============================================================
+
+The likelihood-facing FB-7 boundary keeps the anisotropic data
+reduction explicit.  The HTT decomposition resolves a visible P0 triad
+consisting of (i) a prior axis, (ii) the tangency response inherited
+from the chart-faithfulness diagnostic, and (iii) the $\beta$-gate
+verdict routed through the canonical reduction policy.  These three
+ingredients are then composed into a direction-dependent
+log-likelihood
+$\ln p(\hat{n}_{\rm B} \mid {\rm TT,EE,TE,BB})$
+defined on the full Bianchi-axis sphere rather than compressed to a
+single diagonal $C_\ell$ summary.  The construction is compatible with
+the Bianchi-polarization bookkeeping of Pontzen \& Challinor
+\cite{PontzenChallinor2007}, but the present implementation keeps the
+full covariance and the resolved axis visible at the API boundary.
+
+The scope pin is equally important: the probability density at this
+stage is evaluated in the \emph{cosmological} (Bianchi rest) frame
+only.  Observer-motion marginalisation, boost priors, and the
+composition with the Solar-system or CMB-dipole frame are not absorbed
+into the FB-7 likelihood.  Those kinematic re-labelling steps are
+reserved for the dedicated observer-frame adapter of FB-8.  This
+division keeps the Planck-2018 power-spectrum likelihood
+\cite{Planck2018V} and the cosmological-parameter anchor
+\cite{Planck2018VI} cleanly separated from later frame-composition
+choices.  Figure~\ref{fig:fb7_direction_surface} shows the resulting
+cosmological-frame directional surface for the implemented
+Type~VII$_h$ reference row.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/physics_gallery/19_htt_likelihood/plot_19_04_direction_likelihood_contours.png}
+\caption{FB-7.4 cosmological-frame directional likelihood surface over
+Bianchi-axis longitude and latitude.  The marked point is the resolved
+HTT axis; observer-motion marginalisation is intentionally absent at
+this stage and deferred to FB-8.}
+\label{fig:fb7_direction_surface}
+\end{figure}
+
+
+% ============================================================
 \section{Departure posterior integration}
 \label{sec:departure-integration}
 % ============================================================

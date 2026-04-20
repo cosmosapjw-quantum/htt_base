@@ -991,3 +991,47 @@ fresh cumulative count.
     gate
 - **Next target**: `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` now
   points to `FB-7 actual work — paste the FB-7 prompt`.
+
+### FB-7 actual-work — spectrum + HTT + cosmological-frame likelihood
+
+- **Scope**: Replaced the five committed FB-7 skeletons with working
+  implementations for the LOS propagator, anisotropic covariance, HTT
+  P0-triad decomposition, cosmological-frame direction likelihood, and
+  Planck-2018 FLRW-limit evidence validator.
+- **Code anchor**:
+  - `htt/bass/spectrum/{lowell_los,off_diagonal_covariance}.py`
+  - `htt/bass/likelihood/{htt_decomposition,cosmological_frame,planck2018_flrw_match}.py`
+- **Test delta**:
+  - `133 passed` on the dedicated FB-7 test slice
+  - `3871 passed, 21 skipped` on the full `bass/ + tsc/` regression gate
+- **Gallery**: added topic
+  `figures/physics_gallery/19_htt_likelihood/` with five rendered PNGs
+  and matching `scripts/make_physics_gallery.py` hooks.
+- **Manuscript**: added the Chapter-6 sections
+  `Line-of-sight propagator` and `Direction-dependent likelihood`, the
+  Chapter-7 section
+  `Bayesian evidence across the 11-type Bianchi classification`, the
+  FB-7.5 summary table / figure, and the bibliography entries for
+  Seljak-Zaldarriaga 1996, Lewis-Challinor 2006, and Planck 2018 V.
+- **Audit**: [AUDIT_PHASE_FB7_2026-04-20.md](../../audits/AUDIT_PHASE_FB7_2026-04-20.md).
+- **Carry-forward**: observer-frame composition remains intentionally
+  deferred to FB-8; the prompt-supplied Lowell `§7` / `§14.2` /
+  `§14.3` on-disk locators remain absent and explicit.
+
+### FB-7.CLOSE — M6 parent reached, observer-frame gap flows to FB-8
+
+- **Scope**: Closed Phase FB-7 after the Topic-19 gallery render, the
+  cosmological-frame scope-pin audit, the Chapter-6/7 manuscript pass,
+  and the handoff rotation to FB-8 actual work.
+- **Commit anchor**: pending current close commit
+  (`FB-7: Phase FB-7 complete (M6 parent, observer-frame gap flows to FB-8)`).
+- **Regression anchor**:
+  - `133 passed` on the dedicated FB-7 test slice
+  - `3871 passed, 21 skipped` on the full `bass/ + tsc/` suite
+- **Exit notes**:
+  - Phase-0 Limber-sign carry is closed explicitly in FB-7.1
+  - Types I / V / VII$_0$ satisfy the `|ln B| < 0.1` FLRW-limit gate
+  - no-FLRW-limit rows are explicit, not silent
+  - FB-7.4 remains cosmological-frame only by contract
+- **Next target**: `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` now
+  points to `FB-8 actual work — paste the FB-8 prompt`.

@@ -11,7 +11,7 @@ PSTF multipole hierarchy algebra shipped in LB-2a).
 and `figures/preliminary/`; moved here from `plots/physics_gallery/`
 during the 2026-04-19 figure-tree consolidation).
 **Generator**: [`scripts/make_physics_gallery.py`](../../scripts/make_physics_gallery.py)
-**Total**: 50 plots across 11 rendered topics + 3 reserved placeholder
+**Total**: 84 plots across 14 rendered topics + 3 reserved placeholder
 topics
 **Regenerate**: `venv/bin/python scripts/make_physics_gallery.py`
 **Cadence**: regenerated at the end of every LB-N phase; see the
@@ -155,6 +155,9 @@ wrapper with non-perturbative Lorentz boost ``B = cosh β + sinh β (ê·v̂)``.
 | [01_thomson_coefficient_spectrum.png](10_collision_and_visibility/01_thomson_coefficient_spectrum.png) | K_ℓ/Γ_T self-coupling (−1, −9/10, −1, …) and polter cross-coupling for temperature + E-mode |
 | [02_tca_equilibrium_convergence.png](10_collision_and_visibility/02_tca_equilibrium_convergence.png) | TCA-limit (Θ_2, E_2) ∝ 1/Γ_T scaling; polter ratio E_2/Θ_2 → −√6/4 at S_E → 0 |
 | [03_gamma_tilde_direction_asymmetry.png](10_collision_and_visibility/03_gamma_tilde_direction_asymmetry.png) | Layer A: forward/back/side Γ̃_T(η, e) at β=0.3 through recombination + direction/scalar ratio levels matching γ(1±β), γ |
+| [04_thomson_beta_sweep_Dl.png](10_collision_and_visibility/04_thomson_beta_sweep_Dl.png) | FB-4.1 Layer-B TT proxy ratio for β_e ∈ {0, 0.1, 0.3} |
+| [05_bb_from_tilted_lens_e.png](10_collision_and_visibility/05_bb_from_tilted_lens_e.png) | FB-4.2 Layer-B BB/EE amplitude ratio over β_e ∈ [0, 0.3], ℓ ∈ [2, 30] |
+| [06_doppler_second_order_residual.png](10_collision_and_visibility/06_doppler_second_order_residual.png) | FB-4.3 Layer-B quadratic Doppler residual (full-linear)/full at β_e = 0.1 |
 
 ## 11 · Unified LB-5 integrator
 
@@ -168,6 +171,17 @@ window.
 |---|---|
 | [01_unified_trajectory_bianchi_I.png](11_integrator/01_unified_trajectory_bianchi_I.png) | ``a(η), Σ_±(η), Π_2[m=0](η), E_2[m=0](η)`` along a Type I flat trajectory with seeded Π_2 — shows Thomson damping + polter-driven E_2 transient |
 | [02_tca_activation_window.png](11_integrator/02_tca_activation_window.png) | ``Γ_T / H`` across the Planck-2018 HyRec history (never crosses threshold) vs a synthetic high-``Γ_T`` override that activates the dispatch on 531/600 grid points |
+| [03_fb11_classA_typeI_kasner_trace.png](11_integrator/03_fb11_classA_typeI_kasner_trace.png) | FB-1.1 Type I Kasner: Σ×a² + σ×a³ invariants + ρ_σ ∝ 1/a⁶ decay |
+| [04_fb11_classA_typeII_WE_attractor.png](11_integrator/04_fb11_classA_typeII_WE_attractor.png) | FB-1.1 Type II Wainwright-Ellis Table 11.1 axisymmetric source, including Σ_- ≡ 0 |
+| [05_fb11_classA_typeVI0_WE_attractor.png](11_integrator/05_fb11_classA_typeVI0_WE_attractor.png) | FB-1.1 Type VI₀ Wainwright-Ellis Table 11.1 e(1,1) source with the S_- sign pattern |
+| [06_fb11_classA_typeVII0_decay.png](11_integrator/06_fb11_classA_typeVII0_decay.png) | FB-1.1 Type VII₀ plane-wave line + asymmetric source |
+| [07_fb12_classA_typeVIII_WE_attractor.png](11_integrator/07_fb12_classA_typeVIII_WE_attractor.png) | FB-1.2 Type VIII sl(2,ℝ) source with the S_- sign flip in (N₂² − N₃²) |
+| [08_fb12_classA_typeIX_recollapse_trace.png](11_integrator/08_fb12_classA_typeIX_recollapse_trace.png) | FB-1.2 Type IX so(3) source + recollapse event smoke trajectory |
+| [09_fb13_classB_typeIV_WE_source.png](11_integrator/09_fb13_classB_typeIV_WE_source.png) | FB-1.3 Type IV Class-B source, axisymmetric S_- = 0, and the A/N₃ crossover |
+| [10_fb13_classB_typeVIh_WE_attractor.png](11_integrator/10_fb13_classB_typeVIh_WE_attractor.png) | FB-1.3 Type VI_h Class-B attractor with h-dependent A² prefactor 1/(1+|h|) |
+| [11_fb13_classB_typeVIIh_spiral.png](11_integrator/11_fb13_classB_typeVIIh_spiral.png) | FB-1.3 Type VII_h Wainwright-Ellis + Pontzen-Challinor spiral rotation in (Σ_+, Σ_-) |
+| [12_fb13_classB_typeV_shear_zero.png](11_integrator/12_fb13_classB_typeV_shear_zero.png) | FB-1.3 Type V shear-specific source identically zero with the Ellis Σ×a² invariant |
+| [13_fb14_anisotropic_3curvature_per_type.png](11_integrator/13_fb14_anisotropic_3curvature_per_type.png) | FB-1.4 exit gallery: ³R_ab^aniso eigen-structure across all 11 types + FLRW |
 
 ## 14 · Observer frame (FB-8 placeholder)
 
@@ -192,12 +206,52 @@ reserved topic directory
 future target outputs and records this phase as an intentional gallery
 no-op.
 
+## 17 · Perturbation k-modes (FB-5)
+
+Mode-resolved perturbation validation on the shared low-$\ell$ CAMB
+Planck-2018 oracle grid.
+
+| File | Description |
+|---|---|
+| [01_harmonic_modes_per_type.png](17_perturbation_k_modes/01_harmonic_modes_per_type.png) | FB-5.1 representative harmonic-mode spectrum and family per Bianchi type |
+| [02_adiabatic_seed_ic.png](17_perturbation_k_modes/02_adiabatic_seed_ic.png) | FB-5.3 CAMB-regular adiabatic seed amplitudes versus k |
+| [03_k_zero_limit_recovery.png](17_perturbation_k_modes/03_k_zero_limit_recovery.png) | FB-5.4 recovery of the k→0 seed prefix against the LB-6 zero-IC anchor |
+| [04_tilted_boost_seed_rule.png](17_perturbation_k_modes/04_tilted_boost_seed_rule.png) | FB-5.6 temperature and E-mode m=0 slices before and after the axisymmetric boost |
+| [05_Dl_TT_vs_camb_per_k.png](17_perturbation_k_modes/05_Dl_TT_vs_camb_per_k.png) | FB-5.7 Type-I D_ℓ^TT proxy against the CAMB Planck-2018 oracle for four k values |
+
+## 18 · 22-config regression (FB-6)
+
+Phase-FB-6 regression summary for the explicit 22-row type×tilt matrix,
+the named continuity limits, and the CAMB / Pontzen-Challinor oracle
+cross-checks.
+
+| File | Description |
+|---|---|
+| [plot_18_01_22_config_sigma2_decay.png](18_22_config_regression/plot_18_01_22_config_sigma2_decay.png) | FB-6.1 Σ²(η) decay across the full 22-row type × tilt regression matrix |
+| [plot_18_02_cross_type_limits_grid.png](18_22_config_regression/plot_18_02_cross_type_limits_grid.png) | FB-6.2 five-panel named cross-type continuity-limit convergence grid |
+| [plot_18_03_Dl_TT_11_types_vs_camb.png](18_22_config_regression/plot_18_03_Dl_TT_11_types_vs_camb.png) | FB-6.3 orthogonal-branch D_ℓ^TT overlays against the shared CAMB Planck-2018 oracle |
+| [plot_18_04_pontzen_challinor_shape_match.png](18_22_config_regression/plot_18_04_pontzen_challinor_shape_match.png) | FB-6.3 Pontzen-Challinor VII_h and IX qualitative shape overlays |
+
+## 19 · HTT likelihood (FB-7)
+
+Line-of-sight propagation, anisotropic covariance, HTT P0-triad
+resolution, cosmological-frame direction likelihood, and the
+Planck-2018 FLRW-limit evidence summary for the FB-7 stack.
+
+| File | Description |
+|---|---|
+| [plot_19_01_los_propagator_heatmap.png](19_htt_likelihood/plot_19_01_los_propagator_heatmap.png) | FB-7.1 LOS propagator drift heatmap across (k, ℓ) for Type VII_h |
+| [plot_19_02_offdiag_covariance_IX.png](19_htt_likelihood/plot_19_02_offdiag_covariance_IX.png) | FB-7.2 Bianchi-IX off-diagonal TT covariance slice in the m=0 block |
+| [plot_19_03_htt_p0_triad.png](19_htt_likelihood/plot_19_03_htt_p0_triad.png) | FB-7.3 three-panel HTT P0-triad resolution: prior, tangency, resolved axis |
+| [plot_19_04_direction_likelihood_contours.png](19_htt_likelihood/plot_19_04_direction_likelihood_contours.png) | FB-7.4 cosmological-frame directional log-likelihood over Bianchi-axis longitude and latitude |
+| [plot_19_05_lnB_11types_vs_FLRW.png](19_htt_likelihood/plot_19_05_lnB_11types_vs_FLRW.png) | FB-7.5 Planck-2018 ln B summary across all 11 Bianchi types versus FLRW |
+
 ---
 
 ## Regenerating specific topics
 
 ```bash
-# Full gallery (37 plots, ~15 s)
+# Full gallery
 venv/bin/python scripts/make_physics_gallery.py
 
 # Only one topic

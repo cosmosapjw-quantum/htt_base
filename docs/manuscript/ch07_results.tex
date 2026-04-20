@@ -20,7 +20,10 @@ tensor growing mode (Section~\ref{sec:growing}), the redshift
 evolution of the filling fraction
 (Section~\ref{sec:filling-z}), and the Bayesian evidence
 comparison across the full Bianchi classification
-(Section~\ref{sec:evidence}).  All numerical values are drawn
+(Section~\ref{sec:evidence}).  The phase-FB-6 regression closure and
+the phase-FB-7 cosmological-frame evidence pass are recorded
+explicitly in Sections~\ref{sec:fb6-full-coverage} and
+\ref{sec:fb7-bayesian-evidence}.  All numerical values are drawn
 from the single-source-of-truth pipeline of
 Chapter~\ref{ch:pipeline}.
 
@@ -555,6 +558,72 @@ named type-continuity relations are tested at declared tolerances, and
 the low-$\ell$ temperature morphology is pinned both to the shared CAMB
 oracle and to the qualitative VII$_h$/IX literature shapes
 \cite{WainwrightEllis1997,Pontzen2009,Planck2018VI}.
+
+
+% ============================================================
+\section{Bayesian evidence across the 11-type Bianchi classification}
+\label{sec:fb7-bayesian-evidence}
+% ============================================================
+
+The FB-7 closeout composes the line-of-sight propagator, anisotropic
+covariance, HTT decomposition, and the direction-dependent
+cosmological-frame likelihood against the shipped Planck-2018 CAMB
+fixture.  The resulting Bayes factors are therefore \emph{rest-frame}
+numbers: observer-motion marginalisation is intentionally absent here
+and is deferred to the dedicated observer-frame adapter of FB-8.
+Throughout this section the shared fixture metadata remain those of the
+unlensed Planck-2018 anchor
+(``camb\_version = 1.6.6'', $\Omega_K = 0$)
+\cite{Planck2018V,Planck2018VI}.  The finite Monte-Carlo integration
+error of the implemented summary is
+$\sigma_{\ln B} = 5.87\times 10^{-2}$ per row.
+
+The phase-gate criterion
+$|\ln B_{\rm FLRW\mbox{-}limit}| < 0.1$
+is satisfied for Types~I, V, and VII$_0$.  Types~II, III, IV, VI$_0$,
+VI$_h$, and VIII have no honest FLRW-limit continuation at this phase
+boundary and are therefore carried explicitly as
+``NO\_FLRW\_LIMIT\_EXPLICIT'' rows rather than silently compared to
+FLRW.  The VII$_h$ and IX rows remain finite but are retained as
+curved/twisting reference configurations rather than as small-curvature
+limit tests.  Table~\ref{tab:fb7_lnB_11types} summarises the full
+eleven-row ledger and Figure~\ref{fig:fb7_lnB_bar} displays the same
+result as a bar chart.
+
+\begin{table}[t]
+\caption{FB-7.5 cosmological-frame evidence summary against the FLRW
+baseline.  Rows marked ``explicit no limit'' are carried forward
+honestly rather than silently treated as FLRW-limit comparisons.}
+\label{tab:fb7_lnB_11types}
+\centering
+\scriptsize
+\begin{tabular}{lcll}
+\hline\hline
+Type & $\ln B_{\rm type,FLRW}$ & code status & scope note \\
+\hline
+I         & $0.000$                  & \texttt{PASS} & FLRW-limit row \\
+II        & $-14.03$                 & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+III       & $-190.79$                & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+IV        & $-1.86 \times 10^{8}$    & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+V         & $0.000$                  & \texttt{PASS} & FLRW-limit row \\
+VI$_0$    & $-59.60$                 & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+VI$_h$    & $-1.53 \times 10^{8}$    & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+VII$_0$   & $0.000$                  & \texttt{PASS} & FLRW-limit row \\
+VII$_h$   & $-9.12 \times 10^{5}$    & \texttt{PASS} & finite curved reference row \\
+VIII      & $-1.59 \times 10^{8}$    & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+IX        & $-1.59 \times 10^{6}$    & \texttt{PASS} & finite curved reference row \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/physics_gallery/19_htt_likelihood/plot_19_05_lnB_11types_vs_FLRW.png}
+\caption{FB-7.5 cosmological-frame evidence summary across the eleven
+Bianchi types.  The shaded band marks the phase-close FLRW-limit target
+$|\ln B| < 0.1$, which is achieved by Types~I, V, and VII$_0$.}
+\label{fig:fb7_lnB_bar}
+\end{figure}
 
 
 % ============================================================
