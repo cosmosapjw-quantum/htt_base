@@ -20,7 +20,7 @@
 | `TSC` | `88–92%` | `80–85%` | `603 collected`, admissibility 공백 해소, charts/diagnostics/integration 활성 | 확장 deliverable보다 정교화 위주 잔여 |
 | `HTT common / infra` | `85–90%` | `78–83%` | `sky_geometry`, `healpix_selection`, `bulkflow_estimator`, `bulkflow_likelihood`, `mock_calibration`, `posterior_summary`가 실사용 가능 | Mode artifact chain 일부 미완 |
 | `HTT science layer` | `65–72%` | `50–58%` | `evidence/nulls/figures/infer` 표면은 넓음 | D2, D4 production, D8–D16, D23–D25 다수 prototype |
-| `MIO` | `40–50%` | `30–40%` | `122 collected`, HJ-01/HJ-02/registry/certificate 경로 존재 | `tension`, `decomposition` 본체 부재 |
+| `MIO` | `45–55%` | `35–45%` | `130 passed`, HJ-01/HJ-02/HJ-03/registry/certificate 경로 존재 | `decomposition` 본체 부재 |
 | `비-BASS 전체` | `75% 안팎` | `60% 안팎` | 패키지 표면과 테스트는 넓게 확보 | 논문용 production-grade science deliverable 잔량 큼 |
 
 현재 테스트 표면 스냅샷:
@@ -29,7 +29,7 @@
 |---|---:|
 | `htt/tsc` | `603` |
 | `htt/src/common + htt/htt/tests` | `363` |
-| `htt/mio/tests` | `122` |
+| `htt/mio/tests` | `130` |
 
 ## 2. Current Status Table
 
@@ -51,6 +51,12 @@
 | `matched_complexity_report_v1.json` | 완료 | `e331a86` |
 | `15model_evidence_matrix_v1.json` | 완료 | `37e92ae` |
 | `null_library_fpr_v1.json` | 완료 | `2397fcf` |
+| `cross_channel_coherence_v1.json` | 완료 | `8202bf2` |
+| `posterior_predictive_v1.json` | 완료 | `8202bf2` |
+| `loocv_report_v1.json` | 완료 | `8202bf2` |
+| `redshift_tomography_v1.json` | 완료 | `8202bf2` |
+| `mio_flrw_tension_ppp_v1.json` | 완료 | `96737f4` |
+| `mio_xc_direct_estimate_v1.json` | 완료 | `96737f4` |
 | `fig_zoa_ladder_mode0` | 완료 | `5f4dcd9` |
 | `fig_retention_fraction_vs_posterior` | 완료 | `88b099f` |
 
@@ -67,10 +73,10 @@
 | `D5` filling fraction | HTT/TSC | 부분 완료 | `prototype+` | tsc bridge와 filling fraction tests 활성 | manuscript-grade export/table |
 | `D6` three-bound hierarchy | HTT/TSC | 완료 | `완료` | bounds + tsc admissibility cross-check | 유지보수만 필요 |
 | `D8` MES audit | HTT | prototype | `prototype` | pipeline/identifiability surface 존재 | audit artifact + promotion gate |
-| `D9` depth tomography | HTT | prototype | `prototype` | advanced diagnostics 존재 | z-bin artifact + figure/table |
+| `D9` depth tomography | HTT | prototype | `prototype+` | `redshift_tomography_v1.json` artifact + regression path 확보 | figure/table consumer wiring |
 | `D10` Savage-Dickey | HTT | prototype | `prototype` | diagnostics shell 존재 | production report + regression |
-| `D11` cross-channel coherence + LOOCV | HTT | prototype | `prototype` | code exists | artifact export + figure/table |
-| `D12` posterior predictive checks | HTT | prototype | `prototype` | code exists | JSON/HDF5 artefact + residual figure path |
+| `D11` cross-channel coherence + LOOCV | HTT | prototype | `prototype+` | coherence/LOOCV artifact export + schema tests 확보 | figure/table consumer wiring |
+| `D12` posterior predictive checks | HTT | prototype | `prototype+` | PPC artifact export + schema tests 확보 | residual figure path + pipeline consumer |
 | `D13` matched-complexity report | HTT | prototype | `prototype+` | report artifact + regression path 확보 | pipeline/manuscript consumer wiring |
 | `D14` survey nuisance marginalisation | HTT | prototype | `prototype` | infer module exists | pipeline wiring + acceptance tests |
 | `D15` quadrupole axis + parity | HTT | prototype | `prototype` | geometry discrimination exists | figure/table export |
@@ -80,7 +86,7 @@
 | `D20` W_R window + frame bias | BASS-linked | 미착수 | `범위외(BASS)` | non-BASS ledger에서 제외 | BASS 쪽 선행 필요 |
 | `D21` ZoA-aware directional likelihood | HTT common | 재설계 요구 | `prototype+` | Mode 0/1/2 contracts + 핵심 artifact chain 확보 | full pipeline hook + publication run wiring |
 | `D22` mock calibration coverage report | HTT common | 미착수 | `prototype+` | `mock_calibration_report_v1.json` 경로 확보 | full mock suite + production thresholds |
-| `D23` depth-by-depth sensitivity | HTT | prototype | `prototype` | h0_sensitivity/diagnostics 존재 | z-bin coupling and report export |
+| `D23` depth-by-depth sensitivity | HTT | prototype | `prototype+` | tomography export path 확보 | sensitivity table + publication consumer |
 | `D24` type-by-type summary | HTT | prototype | `prototype` | figure exists | data contract stabilization |
 | `D25` equivalence class evidence | HTT | prototype | `prototype` | figure exists | report artifact + regression |
 | `D26` tilted-FLRW observables dictionary | HTT | 완료 | `완료` | core functions and figure path stable | 유지보수만 필요 |
@@ -94,7 +100,7 @@
 | `src/common` | Layer A–D 기초 경로가 살아 있고 artifact schema도 늘고 있음 | `가장 건강함` |
 | `htt/htt/htt` | figures/core/infer/nulls 표면은 넓지만 science export가 덜 닫힘 | `prototype-rich` |
 | `htt/tsc` | 계획 문서의 “admissibility test 부재”는 이미 해소 | `거의 stabilization 단계` |
-| `htt/mio` | HJ-01/HJ-02와 registry는 살아났지만 tension/decomposition이 비어 있음 | `가장 큰 구조 공백` |
+| `htt/mio` | HJ-01/HJ-02/HJ-03와 registry는 살아났고 남은 본체 공백은 decomposition 위주 | `여전히 구조 공백이 크지만 전진` |
 
 ## 3. Checklist
 
@@ -109,8 +115,12 @@
 - [x] `mock_calibration_report_v1.json` 생성 경로
 - [x] `fig_direction_posterior`의 fiducial bundle parity
 - [x] `fig_zoa_ladder_mode0` 추가
+- [x] `cross_channel_coherence_v1.json` / `posterior_predictive_v1.json` / `loocv_report_v1.json`
+- [x] `redshift_tomography_v1.json` 생성 경로
+- [x] `mio_flrw_tension_ppp_v1.json` / `mio_xc_direct_estimate_v1.json`
 - [x] `TSC admissibility` 테스트 복구
 - [x] `MIO` certificate / reporting registry bootstrap
+- [x] `MIO tension` minimal public API + tests
 - [x] `HJ-01` Bonferroni-aware FLRW band와 nonconvergence warning
 
 ### 3.2 Prototype but usable
@@ -136,7 +146,6 @@
 
 - [ ] `D2` three-signature discriminator
 - [ ] `D28` CatWISE vs CMB + 3-signature interpretation
-- [ ] `MIO tension` 본체
 - [ ] `MIO decomposition` 본체
 - [ ] `nulls.runner` production artifact and import hardening
 
@@ -150,8 +159,8 @@
 | `HTT-WBS-02` | Inference report exports | `D1/D13` | `15model_evidence_matrix`, `matched_complexity_report` | 대기 |
 | `HTT-WBS-03` | Null production reports | `D4` | `null_library_fpr_v1.json`, runner smoke hardening | 대기 |
 | `HTT-WBS-04` | Audit/report pipeline | `D8/D14/D16` | identifiability, nuisance, shared-cause JSON path | 대기 |
-| `HTT-WBS-05` | Posterior diagnostics | `D10/D11/D12` | Savage-Dickey, LOOCV, PPC artifacts | 대기 |
-| `HTT-WBS-06` | Tomography branch | `D9/D23` | z-bin artifacts, migration, sensitivity tables | 대기 |
+| `HTT-WBS-05` | Posterior diagnostics | `D10/D11/D12` | Savage-Dickey, LOOCV, PPC artifacts | 진행중 |
+| `HTT-WBS-06` | Tomography branch | `D9/D23` | z-bin artifacts, migration, sensitivity tables | 진행중 |
 | `HTT-WBS-07` | Figure contract stabilization | `D24/D25` | type/equiv data contracts and smoke coverage | 대기 |
 | `HTT-WBS-08` | W14 science block | `D2/D28` | 3-signature separator + CatWISE/CMB interpretation | 미착수 |
 
@@ -160,7 +169,7 @@
 | WBS ID | 작업 | 산출물 | 상태 |
 |---|---|---|---|
 | `MIO-WBS-01` | HJ-01 stabilization complete | stronger certificate/report link | 진행중 |
-| `MIO-WBS-02` | `tension` package actual implementation | minimal public API + tests | 미착수 |
+| `MIO-WBS-02` | `tension` package actual implementation | minimal public API + tests | 완료 |
 | `MIO-WBS-03` | `decomposition` package actual implementation | minimal public API + tests | 미착수 |
 | `MIO-WBS-04` | HTT→MIO promoted artifact ingestion | posterior/evidence contract bridge | 대기 |
 
@@ -191,34 +200,31 @@
 | `NB-PR-012` | HTT matched-complexity report | `e331a86` | `matched_complexity_report_v1.json` + deterministic hash |
 | `NB-PR-013` | HTT 15-model evidence matrix | `37e92ae` | `15model_evidence_matrix_v1.json` + deterministic hash |
 | `NB-PR-014` | HTT null-library FPR | `2397fcf` | `null_library_fpr_v1.json` + heatmap matrix export |
+| `NB-PR-016` | HTT coherence / LOOCV / PPC artifacts | `8202bf2` | `cross_channel_coherence`, `posterior_predictive`, `loocv_report`; mixed commit |
+| `NB-PR-017` | HTT z-bin tomography export | `8202bf2` | `redshift_tomography_v1.json`; mixed commit |
+| `NB-PR-018` | MIO tension minimal implementation | `96737f4` | `mio_flrw_tension_ppp_v1.json`, `mio_xc_direct_estimate_v1.json`; mixed commit |
 
 ### 5.2 다음 우선순위 PR backlog
 
 | PR ID | 우선순위 | 대상 | WBS | 범위 | acceptance |
 |---|---|---|---|---|---|
 | `NB-PR-015` | `P1` | HTT | `HTT-WBS-04` | identifiability audit artifact | pipeline subphase export + audit tests |
-| `NB-PR-016` | `P1` | HTT | `HTT-WBS-05` | LOOCV/coherence/PPC artifacts | three report builders + schema tests |
-| `NB-PR-017` | `P1` | HTT | `HTT-WBS-06` | z-bin tomography export and figure data | `redshift_tomography_v1.json` |
-| `NB-PR-018` | `P1` | MIO | `MIO-WBS-02` | `mio.tension` minimal implementation | import/test surface 확보 |
 | `NB-PR-019` | `P1` | MIO | `MIO-WBS-03` | `mio.decomposition` minimal implementation | import/test surface 확보 |
 | `NB-PR-020` | `P2` | HTT | `HTT-WBS-08` | 3-signature discriminator skeleton | D2 unblock only |
 
 ### 5.3 권장 실행 순서
 
-1. `NB-PR-016`
-2. `NB-PR-017`
-3. `NB-PR-018`
-4. `NB-PR-019`
-5. `NB-PR-015`
-6. `NB-PR-020`
+1. `NB-PR-019`
+2. `NB-PR-015`
+3. `NB-PR-020`
 
 ## 6. Immediate Next Action
 
-바로 다음 실제 코드 작업은 `NB-PR-016`이 맞다.
+바로 다음 실제 코드 작업은 `NB-PR-019`가 맞다.
 
 이유:
 
-1. `NB-PR-012`부터 `NB-PR-014`까지 report-family artifact contract가 연속으로 굳었다.
-2. `D10/D11/D12`는 같은 report 계열이라 다음 자연스러운 묶음이다.
-3. `NB-PR-016`은 pipeline subphase보다 write-set이 좁고, MIO 본체보다 독립적이다.
-4. `NB-PR-015` identifiability audit은 pipeline 결합도가 높아서 그 다음으로 미루는 편이 안전하다.
+1. `NB-PR-016/017/018`이 landed 되면서 HTT diagnostics와 MIO tension의 최소 표면은 확보됐다.
+2. 남은 MIO 구조 공백 중 가장 큰 것은 `decomposition`이며, import-only placeholder를 더 두는 이점이 없다.
+3. `NB-PR-015` identifiability audit은 여전히 pipeline 결합도가 높다.
+4. 따라서 독립 write-set을 유지하려면 `NB-PR-019`를 먼저 닫는 편이 안전하다.
