@@ -49,6 +49,7 @@
 | `mock_calibration_report_v1.json` | 완료 | `0d13a82` |
 | `retention_vs_posterior_v1.json` | 완료 | `88b099f` |
 | `matched_complexity_report_v1.json` | 완료 | `e331a86` |
+| `15model_evidence_matrix_v1.json` | 완료 | `37e92ae` |
 | `fig_zoa_ladder_mode0` | 완료 | `5f4dcd9` |
 | `fig_retention_fraction_vs_posterior` | 완료 | `88b099f` |
 
@@ -58,7 +59,7 @@
 
 | Deliverable | 영역 | 계획 문서 기준 | 현재 상태 | 현재 근거 | 다음 닫힘 조건 |
 |---|---|---|---|---|---|
-| `D1` 15-model evidence ranking | HTT | prototype | `prototype` | evidence model/figure 표면 존재 | `15model_evidence_matrix_v1.json` + pipeline export |
+| `D1` 15-model evidence ranking | HTT | prototype | `prototype+` | evidence matrix artifact + regression path 확보 | pipeline export + publication ranking consumer |
 | `D2` 3-signature discriminator | HTT | 미착수 | `미착수` | W14 블록 아직 없음 | signature template + likelihood + figure/table |
 | `D3` direction posterior | HTT | prototype | `prototype+` | `fiducial_posterior_bundle`, direction figure parity 확보 | production dataset wiring + full posterior output |
 | `D4` null competition FPR | HTT | prototype | `prototype` | null families/runner/tests 존재 | `null_library_fpr_v1.json` + sys.path 정리 |
@@ -113,7 +114,7 @@
 
 ### 3.2 Prototype but usable
 
-- [ ] `D1` evidence ranking export
+- [ ] `D1` evidence ranking의 downstream wiring
 - [ ] `D3` final posterior pipeline wiring
 - [ ] `D4` null-library FPR export
 - [ ] `D5` filling-fraction manuscript export
@@ -187,12 +188,12 @@
 | `NB-PR-010` | HTT Mode0 ZoA ladder figure | `5f4dcd9` | F44 path |
 | `NB-PR-011` | HTT retention-vs-posterior / plane alignment | `88b099f` | `diag_plane_alignment`, `retention_vs_posterior`, F102 path |
 | `NB-PR-012` | HTT matched-complexity report | `e331a86` | `matched_complexity_report_v1.json` + deterministic hash |
+| `NB-PR-013` | HTT 15-model evidence matrix | `37e92ae` | `15model_evidence_matrix_v1.json` + deterministic hash |
 
 ### 5.2 다음 우선순위 PR backlog
 
 | PR ID | 우선순위 | 대상 | WBS | 범위 | acceptance |
 |---|---|---|---|---|---|
-| `NB-PR-013` | `P1` | HTT | `HTT-WBS-02` | `15model_evidence_matrix_v1.json` export | 15×scenario matrix + regression |
 | `NB-PR-014` | `P1` | HTT | `HTT-WBS-03` | `null_library_fpr_v1.json` + import hardening | runner smoke + JSON export |
 | `NB-PR-015` | `P1` | HTT | `HTT-WBS-04` | identifiability audit artifact | pipeline subphase export + audit tests |
 | `NB-PR-016` | `P1` | HTT | `HTT-WBS-05` | LOOCV/coherence/PPC artifacts | three report builders + schema tests |
@@ -203,22 +204,21 @@
 
 ### 5.3 권장 실행 순서
 
-1. `NB-PR-013`
-2. `NB-PR-014`
-3. `NB-PR-016`
-4. `NB-PR-017`
-5. `NB-PR-018`
-6. `NB-PR-019`
-7. `NB-PR-015`
-8. `NB-PR-020`
+1. `NB-PR-014`
+2. `NB-PR-016`
+3. `NB-PR-017`
+4. `NB-PR-018`
+5. `NB-PR-019`
+6. `NB-PR-015`
+7. `NB-PR-020`
 
 ## 6. Immediate Next Action
 
-바로 다음 실제 코드 작업은 `NB-PR-013`이 맞다.
+바로 다음 실제 코드 작업은 `NB-PR-014`가 맞다.
 
 이유:
 
-1. `NB-PR-012`에서 report artifact metadata/hash contract를 이미 굳혔다.
-2. `D1` evidence matrix는 같은 report-family 패턴을 그대로 재사용할 수 있다.
-3. evidence export는 `D4/D8`보다 독립성이 높아 다음 slice로 넣기 좋다.
-4. `null_library_fpr`나 pipeline audit보다 write-set이 좁아서 현재 맥락을 가장 덜 잃는다.
+1. `NB-PR-012`와 `NB-PR-013`에서 report-family artifact contract가 이미 굳었다.
+2. `D4` null-library FPR은 다음 독립 report slice라 같은 패턴을 바로 재사용할 수 있다.
+3. `nulls.runner`는 현재 prototype 표면이 있어 write-set이 비교적 제한적이다.
+4. pipeline audit이나 MIO 본체보다 먼저 닫는 편이 리스크가 낮다.
