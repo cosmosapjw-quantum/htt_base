@@ -14,7 +14,11 @@ from htt.infer.latent_axis import LatentAxisModel, LatentAxisParams, dipole_proj
 from htt.infer.dipole_vector_likelihood import DipoleVectorLikelihood
 from htt.infer.shared_cause import SharedCauseResult, run_shared_cause_test
 from htt.infer.control_registry import ControlSpec, get_control, CONTROLS
-from htt.infer.matched_complexity import MatchedComplexityReport, enforce_matched_complexity
+from htt.infer.matched_complexity import (
+    MatchedComplexityReport,
+    enforce_matched_complexity,
+    matched_complexity_report_artifact,
+)
 from htt.infer.estimators import BridgeResult, tilt_velocity, delta_q, lambda_J_pec, delta_H
 
 __all__ = [
@@ -23,5 +27,6 @@ __all__ = [
     'SharedCauseResult', 'run_shared_cause_test',
     'ControlSpec', 'get_control', 'CONTROLS',
     'MatchedComplexityReport', 'enforce_matched_complexity',
+    'matched_complexity_report_artifact',
     'BridgeResult', 'tilt_velocity', 'delta_q', 'lambda_J_pec', 'delta_H',
 ]
