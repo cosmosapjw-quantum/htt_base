@@ -38,13 +38,14 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-OUT_ROOT = REPO_ROOT / "figures" / "paper"
+from figure_env import (  # noqa: E402
+    REPO_ROOT,
+    build_obs_catalog,
+    configure_repo_paths,
+)
 
-# bass_py uses src/ and workspace/ as additional roots (see bass_py/conftest.py).
-sys.path.insert(0, str(REPO_ROOT / "bass_py"))
-sys.path.insert(0, str(REPO_ROOT / "bass_py" / "src"))
-sys.path.insert(0, str(REPO_ROOT / "bass_py"))  # for workspace.contracts
+OUT_ROOT = REPO_ROOT / "figures" / "paper"
+configure_repo_paths()
 
 from htt.core.plot_style import apply_style, COLS  # noqa: E402
 
@@ -1787,15 +1788,12 @@ HJ-02a common-axis $\chi^2$ reported in Fig.\,\ref{fig:ch12a}.
 
 
 # =====================================================================
-# Observational-data helpers (dl_pipeline/obs_bundle)
+# Observational-data helpers (workdir/obs_bundle + raw/full fallbacks)
 # =====================================================================
 
 
 def _obs_catalog():
-    obs_root = REPO_ROOT / "dl_pipeline" / "obs_bundle" / "obs"
-    sys.path.insert(0, str(obs_root))
-    from obs_loader import ObsCatalog  # type: ignore  # noqa: E402
-    return ObsCatalog(root=obs_root)
+    return build_obs_catalog()
 
 
 # =====================================================================
@@ -1804,11 +1802,28 @@ def _obs_catalog():
 
 
 def fig_ch02f_multi_experiment_tt() -> None:
-    """Planck PR3 binned TT + ACT DR6 TT + Planck PR3 best-fit theory."""
+    """Planck PR3 binned TT + best available ACT TT + Planck best-fit."""
     cat = _obs_catalog()
     pl = cat.load("planck.pr3.tt_binned")
-    act = cat.load("act.dr6.tt")
     bf = cat.load("planck.pr3.bestfit")
+
+    act_source = "ACT DR6 TT (PA5 f150)"
+    act_caption_source = "ACT DR6 TT PA5 f150 bandpowers"
+    act_title = "ACT DR6"
+    try:
+        act = cat.load("act.dr6.tt")
+        act_ell = np.asarray(act["ell"])
+        act_dl = np.asarray(act["cl"])
+        act_err = np.asarray(act["cl_err"])
+    except FileNotFoundError:
+        act = cat.load("act.dr4.compact")
+        tt = np.asarray(act["clcmb__act_dr4_01_D_ell_TT_cmbonly_txt"])
+        act_ell = tt[:, 0]
+        act_dl = tt[:, 1]
+        act_err = tt[:, 2]
+        act_source = "ACT DR4 TT (cmb-only compact)"
+        act_caption_source = "ACT DR4 TT compact bandpowers"
+        act_title = "ACT DR4"
 
     fig, axes = plt.subplots(2, 1, figsize=(8.6, 5.6), sharex=True,
                              gridspec_kw={"height_ratios": [3.0, 1.3]})
@@ -1823,19 +1838,15 @@ def fig_ch02f_multi_experiment_tt() -> None:
     ax.errorbar(pl["ell"], pl["dl"], yerr=err, fmt="o", ms=3.5,
                 color=COLS["blue"], lw=0.0, elinewidth=0.8, capsize=1.5,
                 label="Planck PR3 TT (binned)")
-    # ACT DR6 schema: `cl` holds D_ell in uK^2 (the `dl` column is mis-scaled
-    # per the bundle's own meta note).
-    act_dl = np.asarray(act["cl"])
-    act_err = np.asarray(act["cl_err"])
-    ax.errorbar(act["ell"], act_dl, yerr=act_err, fmt="s", ms=3.0,
+    ax.errorbar(act_ell, act_dl, yerr=act_err, fmt="s", ms=3.0,
                 color=COLS["orange"], lw=0.0, elinewidth=0.8, capsize=1.5,
-                label="ACT DR6 TT (PA5 f150)")
+                label=act_source)
     ax.set_ylabel(r"$D_\ell^{\rm TT}\ [\mu K^2]$")
     ax.set_xlim(2.0, 8000.0)
     ax.set_ylim(-200.0, 6500.0)
     ax.grid(True, which="both", alpha=0.25)
     ax.legend(loc="upper right", fontsize=8.5)
-    ax.set_title(r"Multi-experiment CMB TT — Planck PR3 $\cup$ ACT DR6 vs "
+    ax.set_title(rf"Multi-experiment CMB TT — Planck PR3 $\cup$ {act_title} vs "
                  r"best-fit $\Lambda$CDM", fontsize=10)
 
     # Residuals: (D_obs - D_theory) / sigma at each experiment's ell
@@ -1843,13 +1854,13 @@ def fig_ch02f_multi_experiment_tt() -> None:
         return np.interp(np.asarray(ells), ell_th, dl_th)
 
     r_pl = (np.asarray(pl["dl"]) - _interp_theory(pl["ell"])) / np.maximum(err, 1e-6)
-    r_ac = (act_dl - _interp_theory(act["ell"])) / np.maximum(act_err, 1e-6)
+    r_ac = (act_dl - _interp_theory(act_ell)) / np.maximum(act_err, 1e-6)
     ax_r.axhline(0.0, color="0.3", lw=0.6)
     ax_r.axhspan(-1.0, 1.0, color="0.6", alpha=0.2)
     ax_r.scatter(pl["ell"], r_pl, s=8, color=COLS["blue"], alpha=0.85,
                  label="Planck PR3")
-    ax_r.scatter(act["ell"], r_ac, s=8, color=COLS["orange"], alpha=0.85,
-                 label="ACT DR6")
+    ax_r.scatter(act_ell, r_ac, s=8, color=COLS["orange"], alpha=0.85,
+                 label=act_title)
     ax_r.set_ylabel(r"$(D_\ell^{\rm obs}-D_\ell^{\rm th})/\sigma$")
     ax_r.set_xlabel(r"multipole $\ell$")
     ax_r.set_xscale("log")
@@ -1862,15 +1873,18 @@ def fig_ch02f_multi_experiment_tt() -> None:
         "ch02_dipole",
         r"""
 Multi-experiment CMB temperature power spectrum. Top: Planck PR3
-binned TT (blue) and ACT DR6 TT PA5 f150 bandpowers (orange) plotted
+binned TT (blue) and the best available ACT high-$\ell$ TT extension
+in the current workdir (orange: """
+        + act_caption_source
+        + r""") plotted
 against the Planck 2018 best-fit $\Lambda$CDM theory curve (black).
 Bottom: residuals $(D_\ell^{\rm obs}\!-\!D_\ell^{\rm th})/\sigma$
 with the $\pm1\sigma$ band shaded. The two experiments extend the
 effective $\ell$-lever arm from $\ell\!\approx\!2500$ (Planck cosmic
-variance limit) to $\ell\!\approx\!7500$ (ACT DR6), providing the
+variance limit) into the ACT damping tail, providing the
 high-$\ell$ anchor that tightens the tilted-FLRW shear-injection
 posterior through the damping-tail signature.
-"""
+""",
     )
 
 

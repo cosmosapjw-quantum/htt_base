@@ -1,0 +1,11 @@
+$T_{\rm eff}$-to-$\Theta^4$ bridge verification. The Legendre-$\ell=2$
+coefficient of the quartic $T_{\rm eff}$ map,
+$a_2[\Theta^4]=4Q+4A^2+\tfrac{12}{7}Q^2+\tfrac{44}{7}A^2Q+\mathcal O((A,Q)^4)$,
+is computed by two independent routes in
+$\mathtt{tsc.charts.theta4\_bridge\_verify}$: (i) a closed-form
+expansion using Gaunt / Legendre orthogonality, and (ii) direct
+Gauss-Legendre numerical quadrature on $\Theta^4 P_2$. Left: $A$-sweep
+at fixed $Q$. Right: $Q$-sweep at fixed $A$. Points are numerical,
+solid line is closed-form: the agreement across the tested range
+audits the ch03 $\S$ 3.X+3 polynomial coefficients entering the BASS
+shear-witness channel.

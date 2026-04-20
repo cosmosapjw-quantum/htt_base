@@ -39,11 +39,12 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+from figure_env import REPO_ROOT, configure_repo_paths  # noqa: E402
+
 OUT_A = REPO_ROOT / 'figures' / 'preliminary' / 'TIER_A'
 
-# Ensure bass_py is on path for 'bass.*' imports (htt installed editable).
-sys.path.insert(0, str(REPO_ROOT / 'bass_py'))
+# Ensure the active `htt/` tree is on path for `bass.*` / `htt.*` imports.
+configure_repo_paths()
 
 from htt.core.plot_style import apply_style, COLS, FIG_1COL, FIG_2COL  # noqa: E402
 

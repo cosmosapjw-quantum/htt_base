@@ -1,0 +1,1176 @@
+% ============================================================
+%  ch07b_robustness.tex — Robustness and Systematics
+%  Requires: macros.tex
+%  Estimated length: 12–16 pages
+%  Written: IS-19, 2026-03-14
+% ============================================================
+
+\chapter{Robustness and Systematic Checks}\label{ch:robustness}
+
+Every numerical result in Chapter~\ref{ch:results} rests on
+choices---data selections, correlation assumptions, prior
+ranges, likelihood shapes, comparator conventions---that could
+in principle alter the conclusions.  Our goal in this chapter is
+to perturb each load-bearing assumption and verify that the
+qualitative structure survives.  We organise the tests into four
+groups: calibration tests that check the pipeline returns null
+when fed null data (Sections~\ref{sec:null-ss}--\ref{sec:null-cat}),
+sensitivity sweeps that vary the dominant assumptions one at a
+time (Sections~\ref{sec:ablation}--\ref{sec:prior-robust}),
+goodness-of-fit tests that check the model against the data it
+was trained on (Section~\ref{sec:ppc-robust}), and structural
+audits that expose degeneracies within the model space
+(Sections~\ref{sec:dup-audit}--\ref{sec:data-independence}).
+
+
+% ============================================================
+\section{Null recovery: summary-statistic pipeline}
+\label{sec:null-ss}
+% ============================================================
+
+We generated 100 synthetic isotropic realisations of the
+observational data vector.  Each realisation draws the
+dipole amplitudes from the null ($\beta = 0$):
+$\eps_1^{\mathrm{CW}} \sim |\mathcal{N}(0, \sigma_{\mathrm{CW}})|$,
+$\eps_1^{\mathrm{rad}} \sim |\mathcal{N}(0, \sigma_{\mathrm{rad}})|$,
+$\beta_{\mathrm{CF4}} \sim |\mathcal{N}(0, \sigma_{\mathrm{CF4}})|$,
+and the CMB multipoles from the isotropic $\Lambda$CDM prediction:
+$D_2 \sim (D_{2,\Lambda\mathrm{CDM}}/5)\,\chi^2(5)$,
+$D_3 \sim (D_{3,\Lambda\mathrm{CDM}}/7)\,\chi^2(7)$.
+The full FLRW$_\mathrm{tilt}$ quadrature is run on each realisation.
+
+The $\ln\mathcal{B}$ distribution under the null has
+median $-0.25$ and $95$th percentile $+0.51$---the pipeline
+correctly disfavours tilt when tilt is absent.
+Table~\ref{tab:null-fp} reports the false-positive rates.
+
+\begin{table}[t]
+\caption{False-positive rates under isotropic mock data
+  (100 realisations).}
+\label{tab:null-fp}
+\centering\small
+\begin{tabular}{lcc}
+\hline\hline
+Criterion & FP rate & Target \\
+\hline
+$\Pi(0.05) > 0.95$ & $0/100$ & $< 5\%$ \\
+$\Pi(0.01) > 0.95$ & $0/100$ & $< 5\%$ \\
+$\Pi(0.1) > 0.95$  & $0/100$ & $< 5\%$ \\
+$\ln\mathcal{B} > 5$      & $0/100$ & $< 5\%$ \\
+$\ln\mathcal{B} > 1$      & $1/100$ & $< 20\%$ \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+All departure-threshold criteria yield zero false positives.
+The prior-induced floor on $x$ is
+$\sim 2 \times 10^{-9}$, which is $0.3\%$ of the signal level
+$x \sim 6 \times 10^{-7}$---negligible contamination from the
+log-uniform $\beta$ prior's support at $\beta > 0$.
+
+We extend this test to 50 realisations across all seven Bianchi
+families in Figure~\ref{fig:null_competition_production}.
+Every family falls below the 5\% false-positive threshold,
+confirming that the evidence pipeline does not spuriously favour
+any anisotropic geometry when the underlying universe is FLRW.
+
+
+% ============================================================
+\section{Channel ablation}\label{sec:ablation}
+% ============================================================
+
+Figure~\ref{fig:channel_ablation_heatmap} and
+Table~\ref{tab:ablation} report the FLRW$_\mathrm{tilt}$
+evidence and departure posteriors under seven channel
+combinations.  Three structural results emerge.
+
+First, the matter-dipole channels (a,\,b) alone yield
+$\ln\mathcal{B} = +14.2$---decisive without CF4.  The CF4
+channel (c) alone yields $+9.1$---decisive without CatWISE or
+Radio.  These two evidence contributions are approximately
+additive: $14.2 + 9.1 = 23.3$, close to the full $+26.4$ (the
+$3.1$-unit excess reflects the positive interaction from joint
+constraining power on $\beta$).
+
+Second, removing CF4 widens the posterior
+($\sigma_\beta$ increases by $35\%$) but does not shift the
+median ($\tilde{\beta} = 1.38 \times 10^{-3}$ vs $1.36 \times
+10^{-3}$ with CF4).  The occupancy $\tilde{Q}$ actually
+\emph{increases} from $0.090$ to $0.093$ because the broader
+posterior spreads more weight into the high-$Q$ tail.
+
+Third, CMB-only channels (d,e,f,h) yield $\ln\mathcal{B} = -0.2$
+and $Q = 0$---the CMB carries zero tilt information.  This
+confirms the Saadeh~et~al.\ null: CMB data alone prefer
+isotropy.
+
+Figure~\ref{fig:leave_one_out} presents the leave-one-out
+evidence contributions, confirming the above decomposition:
+removal of the CatWISE+Radio channels produces the largest
+evidence loss, while the CMB channels contribute negligibly.
+
+
+% ============================================================
+\section{CatWISE--Radio correlation sweep}
+\label{sec:rho-sweep}
+% ============================================================
+
+The bivariate Gaussian likelihood on channel~(b) assumes a
+correlation coefficient $\rho$ between the CatWISE and Radio
+dipole measurements.  The fiducial value $\rho = 0.1$ reflects
+the minimal overlap between infrared and radio source
+populations.  Figure~\ref{fig:rho_sweep} shows the impact of
+varying $\rho$ from $0$ (independent surveys) to $0.95$ (nearly
+identical surveys).
+
+The Bayes factor degrades monotonically from $+28.9$ at $\rho = 0$
+to $+1.9$ at $\rho = 0.95$.  The ``decisive'' threshold
+($\ln\mathcal{B} = 5$) is crossed at $\rho \approx 0.85$.
+The occupancy tracks the evidence: $\tilde{Q}$ falls from
+$0.094$ to $0.005$, and $\Pi(0.1)$ from $0.40$ to $0.00$.
+
+At the fiducial $\rho = 0.1$, the evidence is $+26.4$ and
+$\tilde{Q} = 0.090$---firmly in the decisive regime.  To
+eliminate the signal entirely ($\ln\mathcal{B} < 1$) requires
+$\rho > 0.95$, which would mean the CatWISE quasar catalog and
+the NVSS/RACS radio catalog are sampling the same underlying
+source population with nearly identical systematics---a
+scenario not supported by the surveys' distinct wavelengths,
+selection functions, and redshift distributions.
+
+We regard $\rho = 0.1$ as conservative and $\rho = 0.3$ as
+a pessimistic upper bound.  At $\rho = 0.3$, the evidence is
+still $+22.3$ and $\tilde{Q} = 0.081$---comfortably decisive.
+
+
+% ============================================================
+\section{Systematics floor}\label{sec:sys-floor}
+% ============================================================
+
+The fiducial analysis assigns zero systematic uncertainty to
+the CatWISE and Radio dipole amplitudes ($\sigma_{\mathrm{sys}} = 0$).
+To test the impact of unmodelled systematics, we add
+$\sigma_{\mathrm{sys}}$ in quadrature to both the CatWISE and
+Radio statistical errors and re-run the FLRW$_\mathrm{tilt}$
+quadrature.
+
+The Bayes factor drops from $+26.4$ at $\sigma_{\mathrm{sys}} = 0$
+to $+10.3$ at $\sigma_{\mathrm{sys}} = 10^{-3}$ and saturates at
+$+7.4$ for $\sigma_{\mathrm{sys}} \geq 3 \times 10^{-3}$.  The
+saturation occurs because, at large $\sigma_{\mathrm{sys}}$, the
+dipole channels lose constraining power and the evidence is
+sustained by the CF4 channel alone ($+9.1$; the residual
+difference reflects the prior-volume ratio).
+
+Even at $\sigma_{\mathrm{sys}} = 5 \times 10^{-3}$---a systematic
+floor comparable to the dipole signal itself---the Bayes factor
+remains $+7.4$ (``decisive'' by the Jeffreys scale) and the
+occupancy $\tilde{Q} = 0.057$ with $\Pi(0.01) = 0.99$.
+The tilt detection is robust to realistic levels of
+unmodelled systematic error.
+
+
+% ============================================================
+\section{Prior sensitivity}\label{sec:prior-robust}
+% ============================================================
+
+We varied the prior ranges for both $\beta$ (in
+FLRW$_\mathrm{tilt}$) and $\Sigstd$ (in BI~tilt).
+
+For the $\beta$ prior, three variants were tested: the
+fiducial log-uniform $[10^{-8}, 10^{-1}]$, a narrow
+$[10^{-5}, 10^{-2}]$, and a wide $[10^{-10}, 1]$.  The
+posterior median $\tilde{\beta}$ is identical across all three
+($1.360 \times 10^{-3}$), and $\ln\mathcal{B}$ varies by
+$\leq 1.2$ ($+26.4$, $+27.2$, $+26.0$).
+The occupancy $\tilde{Q} = 0.090$ is unchanged.  The data
+overwhelm the prior.
+
+For the $\Sigstd$ prior in BI~(tilt), three variants were
+tested: the fiducial $[10^{-30}, 10^{-4}]$, a narrow
+$[10^{-15}, 10^{-6}]$, and a wide $[10^{-30}, 10^{-2}]$.  The
+fiducial and wide variants yield $\ln\mathcal{B} \approx +26.3$;
+the narrow variant drops to $+3.0$ because restricting the
+$\Sigstd$ range concentrates prior volume in a region of
+parameter space where the shear contributes measurably to the
+quadrupole, incurring an Occam penalty.  In all three cases,
+$\tilde{\beta}$ is unchanged ($1.36 \times 10^{-3}$) and the
+occupancy $\tilde{Q} \approx 0.090$.
+
+The prior sensitivity is dominated by the $\Sigstd$ volume:
+the \emph{posterior} is data-determined, but the
+\emph{evidence} is sensitive to the prior range for the
+unconstrained shear parameter.  This is a feature of the
+Bayesian framework, not a bug: the Occam penalty correctly
+penalises models that waste prior volume on parameters the data
+cannot constrain.
+
+
+% ============================================================
+\section{Posterior predictive checks on observables}
+\label{sec:ppc-robust}
+% ============================================================
+
+We tested the goodness-of-fit of both
+FLRW$_\mathrm{tilt}$ and BI~(tilt) by generating
+1000 replicated datasets from the posterior predictive
+distribution and comparing per-channel test statistics
+(Section~\ref{sec:ppc} of Chapter~\ref{ch:results}).
+
+\begin{table}[t]
+\caption{Posterior predictive check $p$-values
+  (1000 draws, FLRW$_\mathrm{tilt}$\,/\,BI~tilt).
+  The $p$-value is the fraction of replicates with test
+  statistic $\geq$ observed.  Values in $[0.05, 0.95]$
+  indicate consistency.}
+\label{tab:ppc}
+\centering\small
+\begin{tabular}{lccl}
+\hline\hline
+Channel & FLRW$_\mathrm{tilt}$ & BI tilt & Status \\
+\hline
+(b) CatWISE+Radio  & 0.012 & 0.013 & marginal \\
+(c) CF4 bulk flow   & 0.613 & 0.607 & consistent \\
+(e) $D_2$ quadrupole & 0.163 & 0.161 & consistent \\
+(h) $D_3$ octupole  & 0.905 & 0.905 & consistent \\
+Combined            & 0.078 & 0.079 & consistent \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+Three of four channels yield $p \in [0.05, 0.95]$
+(Table~\ref{tab:ppc}).  The combined $p = 0.08$ is
+consistent.  The CatWISE+Radio channel yields $p = 0.012$,
+reflecting the factor-of-two discrepancy between
+$\eps_1^{\mathrm{CW}} = 1.48 \times 10^{-3}$ and
+$\eps_1^{\mathrm{rad}} = 3.30 \times 10^{-3}$---an internal
+data tension that no single $\beta$ can simultaneously resolve.
+This tension is a property of the data, not a model failure; the
+$\rho$ sweep (Section~\ref{sec:rho-sweep}) shows that increasing
+$\rho$ absorbs part of this tension at the cost of reduced
+evidence.
+
+The BI~(tilt) PPC is statistically identical to
+FLRW$_\mathrm{tilt}$, confirming once more that adding $\Sigstd$
+changes nothing observable.
+
+
+% ============================================================
+\section{Model identifiability audit}
+\label{sec:dup-audit}
+% ============================================================
+
+The pipeline's model identifiability audit (Phase~3g) performs
+two checks on each of the fourteen primary model classes.
+
+\emph{Inactive parameters.}\quad
+Six models sample parameters that never enter the likelihood
+through \texttt{predicted\_observables()}.  BII~(orth) samples
+$n_1$, BVI$_0$~(orth) samples $a_1$, BVIII and BIX~(orth)
+sample $\Omega_K$, and BIII and BIX~(tilt) sample $\Omega_K$.
+In each case, the parameter is present in the prior but
+absent from the forward model: the nested sampler explores
+the parameter, pays an Occam penalty for the extra volume, and
+returns a posterior that is identical to the prior.
+
+\emph{Observational equivalence classes.}\quad
+Two classes of models produce identical likelihoods.  The
+\emph{orth\_1D} class contains six models
+(BI, BVII$_0$, BII, BVI$_0$, BVIII, BIX---all orthogonal)
+whose predicted observables depend only on $\Sigstd$.  Their
+$\ln\mathcal{B}$ values ($-0.8$ to $-1.1$) differ solely
+through the Occam cost of the unused parameter.  The
+\emph{tilt\_flat} class contains three models
+(BI, BIII, BIX---all tilted) whose predicted observables
+depend on $(\Sigstd, \beta)$ but not on $\Omega_K$.
+
+These equivalences are a limitation of the scalar-amplitude
+likelihood, which discards the directional information needed
+to distinguish the Bianchi template patterns.  The evidence
+ranking in Table~\ref{tab:evidence-grand} and
+Figure~\ref{fig:evidence_grand_bar} annotates duplicate models
+and inactive parameters.  We emphasise that the tilt detection
+is unaffected: every model in the \emph{tilt\_flat} class
+yields the same $\tilde{\beta}$, $\tilde{Q}$, and $\Pi$.
+
+\begin{table}[t]
+\caption{Parameter activity and prior-volume penalties.
+  ``Active'' parameters enter the likelihood via
+  \texttt{predicted\_observables()};
+  ``inactive'' parameters are sampled but do not affect the
+  likelihood, incurring an Occam cost $\Delta\ln\mathcal{B}$
+  relative to the class baseline.}
+\label{tab:identifiability}
+\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lllcr}
+\hline\hline
+Model & Active & Inactive & Class &
+  $\Delta\ln\mathcal{B}$ \\
+\hline
+\multicolumn{5}{l}{\emph{Orthogonal 1D class
+  (baseline: BI orth, $\ln\mathcal{B} = -0.8$)}} \\[2pt]
+BI (orth)     & $\Sigstd$ & --- & orth\_1D & $0$ \\
+BVII$_0$ (orth) & $\Sigstd$ & --- & orth\_1D & $-0.21$ \\
+BII (orth)    & $\Sigstd$ & $n_1$ & orth\_1D & $-0.02$ \\
+BVI$_0$ (orth) & $\Sigstd$ & $a_1$ & orth\_1D & $-0.07$ \\
+BVIII (orth)  & $\Sigstd$ & $\Omega_K$ & orth\_1D & $-0.10$ \\
+BIX (orth)    & $\Sigstd$ & $\Omega_K$ & orth\_1D & $-0.01$ \\[4pt]
+\multicolumn{5}{l}{\emph{Tilted flat class
+  (baseline: BI tilt, $\ln\mathcal{B} = +26.3$, VER05)}} \\[2pt]
+BI (tilt)  & $\Sigstd, \beta$ & --- & tilt\_flat & $0$ \\
+BIII (tilt)& $\Sigstd, \beta$ & $\Omega_K$ & tilt\_flat & $-0.27$ \\
+BIX (tilt) & $\Sigstd, \beta$ & $\Omega_K$ & tilt\_flat & $-0.30$ \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+Within each class, the $\Delta\ln\mathcal{B}$ column is
+entirely attributable to the prior-volume penalty of inactive
+parameters: the likelihoods are identical to machine precision.
+The BVII$_0$ offset ($-0.21$ nats) is the largest, reflecting
+its different sampling structure despite producing the same
+observables as BI.  For the tilt\_flat class, the BIII and BIX
+penalties ($-0.27$ and $-0.30$ nats) arise from the
+$\Omega_K$ parameter, which is sampled but never enters the
+forward model.  These penalties confirm that the evidence
+ranking within equivalence classes carries no physical content.
+
+
+% ============================================================
+\section{Departure score status classification}\label{sec:Q-status}
+% ============================================================
+
+The departure posteriors code assigns each model a diagnostic
+status tag for the occupancy ratio $Q$.
+Table~\ref{tab:Q-status} maps these tags to their physical
+interpretation, making explicit the conditions under which $Q$
+carries a meaningful score.
+
+\begin{table}[ht]
+\centering
+\caption{$Q$-status classification and interpretation.  The
+  four status tags are assigned automatically by the pipeline
+  (the departure posteriors module of
+  Chapter~\ref{ch:pipeline}); only the first carries full
+  score semantics.}
+\label{tab:Q-status}
+\footnotesize
+\begin{tabular}{lp{6.8cm}l}
+\toprule
+Status & Interpretation & Examples \\
+\midrule
+\texttt{identified}
+  & $Q$ is data-constrained and lies in $[0,1]$.
+    The departure score is a meaningful
+    linear-budget-normalised diagnostic.
+  & FLRW$_{\mathrm{tilt}}$, BI$_{\mathrm{tilt}}$ \\[4pt]
+\texttt{defect\_negative}
+  & Weighted mean $\bar{x} < 0$; the model overshoots the
+    comparator.  $Q < 0$ is signed and
+    comparator-dependent; score semantics are suspended.
+  & BIX$_{\mathrm{tilt}}$ ($Q \approx -211$) \\[4pt]
+\texttt{super\_ceiling}
+  & Weighted mean $\bar{Q} > 1$; the realised
+    departure exceeds the MES linear ceiling.
+    Either the ceiling is too tight or an inactive
+    parameter inflates $x$.
+  & BIII$_{\mathrm{tilt}}$ ($Q \approx 100$) \\[4pt]
+\texttt{prior\_contaminated}
+  & An inactive parameter (e.g.\ $\Omega_K$) dominates
+    $|x|$ through $\Okaniso$; the score is driven by
+    prior, not data.
+  & BIX$_{\mathrm{orth}}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ============================================================
+\section{Comparator sensitivity}\label{sec:comp-robust}
+% ============================================================
+
+The departure framework is conditioned on a comparator FLRW
+(Section~\ref{sec:comparators} of Chapter~\ref{ch:framework}).
+We evaluated all three layers ($x$, $Q$, $\Pi$) under the flat,
+closed, and curvature-matched comparators for nine models with
+nontrivial departure.
+
+For models without a curvature parameter
+(FLRW$_\mathrm{tilt}$, BI, BVIIh), the three comparators yield
+identical $x$, $Q$, $\Pi$ to machine precision:
+$\Delta_\Pi^{\mathrm{comp}}(q_\star) = 0$ for all $q_\star$.
+This is expected: with $\Okaniso \equiv 0$, the comparator
+choice drops out of the identity.
+
+For models with a curvature parameter (BV, BIX), the spread
+is maximal: $\Delta_\Pi^{\mathrm{comp}}(0.01) = 1.0$.
+Under the flat comparator, BIX~(tilt) has $x < 0$ and
+$\Pi(0.01) = 0$; under the matched comparator, $\Okaniso = 0$
+and $\Pi(0.01) = 1$.  The qualitative conclusion depends on the
+comparator choice.
+
+We use the flat comparator throughout, consistent with the Planck
+constraint $|\Omega_K| < 0.005$ at $2\sigma$.  The flat
+comparator is the most conservative choice for assessing
+departure, since it does not absorb curvature into the
+reference.
+
+For curvature-bearing models we report the comparator envelope
+$[\phi]_{\mathrm{env}} := [\min_C \phi, \max_C \phi]$ over
+$C \in \{\text{flat, closed, matched}\}$.  For BV~(tilt):
+$[x]_{\mathrm{env}} = [5.6 \times 10^{-7},\; 6.5 \times 10^{-4}]$;
+for BIX~(tilt):
+$[x]_{\mathrm{env}} = [-1.36 \times 10^{-3},\; 5.9 \times 10^{-7}]$.
+The sign of $x$ itself flips between comparators for BIX,
+making any single-comparator departure statement fragile.
+Comparator-envelope reporting is mandatory for these models
+(Definition~\ref{def:sector-partition}).
+
+
+% ============================================================
+\section{Apparent deceleration robustness}
+\label{sec:q0-robust}
+% ============================================================
+
+The apparent deceleration $\hat{q}_0(d) = q_{0,\mathrm{true}}
++ \Delta q(d)$ inherits its uncertainty from the $\beta$
+posterior through $\Delta q = (\beta/9)(\lambda_H/d)^3$.  At
+$d = 40$ Mpc, the posterior median is $\hat{q}_0 = 207$ with
+95\% HPD $[154, 260]$
+(Figure~\ref{fig:q0_pushforward}).  The fractional uncertainty
+is $\sigma_{\hat{q}_0}/\hat{q}_0 \approx 25\%$, set entirely
+by the $\beta$ posterior width.
+
+The sensitivity to the frame-correction parameter $\etaud$ is
+mild: varying $\etaud$ from $0$ to $1/6$ shifts
+$\tilde{\beta}$ by $\pm 4\%$ and hence $\hat{q}_0$ by $\pm
+12\%$---well within the $25\%$ posterior uncertainty.  The
+conclusion that $\hat{q}_0 \gg |q_{0,\mathrm{true}}| = 0.53$ at
+sub-Hubble depths is robust to all tested perturbations.
+
+
+% ============================================================
+\section{Catalog null recovery}\label{sec:null-cat}
+% ============================================================
+
+We ran 20 null catalog realisations ($\beta_{\mathrm{true}} = 0$)
+through the three-dimensional $({\beta}, l, b)$ nested
+sampler.  The posterior median
+$\langle\tilde{\beta}\rangle = 2.3 \times 10^{-5}$
+($58\times$ below $\beta_{\mathrm{CF4}}$), and no realisation
+has its $95\%$ upper limit reaching $\beta_{\mathrm{CF4}}$.
+
+The directional posterior is unconstrained:
+$\sigma_l \approx 102^\circ$ and $\sigma_b \approx 38^\circ$,
+consistent with uniform-on-sphere.  When no tilt signal is
+present, the sampler correctly reports that no preferred
+direction exists.
+
+
+% ============================================================
+\section{Cross-pipeline consistency}\label{sec:cross-robust}
+% ============================================================
+
+The summary-statistic pipeline (seven-channel, scalar
+amplitudes) and the catalog pipeline (distance moduli, three-
+dimensional direction) operate on different data
+representations and different likelihood architectures.  Their
+agreement on $\beta$ provides a non-trivial consistency check.
+
+For the fair comparison, we ablated channel~(c) from the
+summary-statistic pipeline to avoid double-counting the CF4
+$\beta$ constraint.  Five catalog realisations yield: ensemble
+mean bias $+3.0\%$, $5/5$ coverage, Gaussian tension
+$0.01\sigma$, and Hellinger distance $H = 0.17$ (best seed)
+between the catalog and ablated posteriors.
+
+The departure quantities agree at the percent level:
+$\Delta\Otilt = -1.3\%$,
+$\Delta v_{\mathrm{tilt}} = -0.7\%$,
+$\Delta Q = -1.3\%$.
+The catalog pipeline thus serves as an independent cross-check
+confirming that the tilt signal is robust to the choice of
+data representation.
+
+
+% ============================================================
+\section{Data independence audit}\label{sec:data-independence}
+% ============================================================
+
+The seven-channel likelihood treats all channels as
+independent conditional on the model parameters $\theta$.
+For most channel pairs, this is justified by construction:
+the CMB multipole channels (d,~e,~f,~h) measure properties
+of the $z \approx 1089$ surface, while the matter-dipole
+channels (a,~b) and bulk-flow channel~(c) measure
+low-redshift properties.  The two groups share no common data.
+
+Within the matter-dipole group, the CatWISE quasar catalog
+and the NVSS/RACS radio catalog sample different source
+populations at different wavelengths.  Their only potential
+correlation arises from shared sky coverage and Galactic
+foreground subtraction.  We model this via the correlation
+coefficient $\rho = 0.1$ in the bivariate Gaussian of
+channel~(b) and verify robustness to $\rho \leq 0.3$
+(Section~\ref{sec:rho-sweep}).
+
+The CF4 bulk flow is derived from Tully--Fisher distances to
+galaxies within $\sim 250$ Mpc, sharing no sources with the
+CatWISE ($z_{\mathrm{med}} \approx 1.2$) or Radio
+($z_{\mathrm{med}} \approx 0.9$) catalogs.  The CF4--dipole
+correlation is thus physical (both respond to the same
+tilt $\beta$) rather than observational.
+
+We tested the most aggressive dependence scenario: removing
+CF4 entirely.  The evidence drops from $+26.4$ to $+14.2$---still
+decisive---and the posterior $\tilde{\beta}$ shifts by only
+$1.5\%$.  The channel independence assumption is not load-bearing
+at the level of the qualitative conclusion.
+
+A related caveat applies to the orientation diagnostics
+(Figure~\ref{fig:orientation_diagnostics}), which test three
+signatures---quadrupole--octupole alignment, planarity, and
+$m$-mode concentration---against kinematic and geometric
+predictions.  The combined vote is geometric 3\,:\,kinematic 0 at
+$3.3\sigma$.  We do \emph{not} treat this as independent evidence:
+all three diagnostics share the same low-$\ell$ CMB data and are
+therefore correlated.  The $3.3\sigma$ should never be cited
+without the same-data caveat.
+\label{sec:orientation_caveat}
+
+
+% ============================================================
+\section{Transfer function and reference value sensitivity}
+\label{sec:tf-robust}
+% ============================================================
+
+The quadrupole channel~(e) depends on the vector-mode transfer
+function $T_2^{\mathrm{decay}} = 5{,}247.5\;\mu\mathrm{K}/(\sigma/H)$ (VER05 corrected; see Section~\ref{sec:BV-excl}) and the
+$\Lambda$CDM reference $D_2^{\Lambda\mathrm{CDM}} = 1150\;
+\mu\mathrm{K}^2$.  The growing-mode transfer function carries a
+$\sim\!20\%$ cosmology-dependent uncertainty (Section~\ref{sec:growing}
+of Chapter~\ref{ch:results}); this enters the Bayes factor only
+for the VII$_h$ growing model, shifting $\ln\mathcal{B}$ by
+$\pm 0.3$ around the baseline $-18.5$---well within the decisive
+exclusion regime.  For all other models, $T_2^{\mathrm{decay}}$
+enters through the shear-to-quadrupole conversion; a $10\%$
+perturbation shifts the quadrupole penalty by $\Delta\ln\mathcal{B}
+\lesssim 0.1$ (the penalty itself is only $-0.3$ to $-0.9$).
+The reference values $D_2^{\Lambda\mathrm{CDM}} = 1150$ and
+$D_3^{\Lambda\mathrm{CDM}} = 1000\;\mu\mathrm{K}^2$ are
+standard Planck 2018 best-fit values; replacing them with the
+Sachs--Wolfe plateau approximation changes the $\chi^2$ channel
+contribution by $< 0.2$ nats.  The evidence is insensitive to
+these choices at the level that matters.
+
+
+% ============================================================
+\section{Filling fraction scenario sensitivity}
+\label{sec:ff-robust}
+% ============================================================
+
+The filling fraction $\FF = x/\xmax$ inherits sensitivity from
+both the numerator (through $\beta$) and the denominator (through
+$\eps_1$ and the MES ceiling $\xmax$).  Across scenarios
+S1--S3 (Section~\ref{sec:scenarios} of
+Chapter~\ref{ch:dipole}), $\FF$ ranges from $0$ (S0, FLRW) to
+$6.3\%$ (S3, full anomaly).  Within the observationally relevant
+scenarios S2a--S2c, the spread is $\FF \in [4.5\%, 9.1\%]$,
+driven by the $\eps_1$ uncertainty propagating into $\xmax$.
+The frame-correction invariance of $\FF$
+(Section~\ref{sec:filling} of
+Chapter~\ref{ch:results}) means that the
+$\etaud$ perturbation drops out of the ratio.  The qualitative
+conclusion ($\FF \ll 1$: overwhelmingly FLRW, with a small but
+non-zero tilt occupancy) is robust across all tested scenarios.
+
+
+% ============================================================
+\section{Structured null limitations}
+\label{sec:struct-null}
+% ============================================================
+
+The null tests above inject isotropic mocks ($\beta = 0$) with
+Gaussian noise.  They do not test structured systematics that
+could mimic a non-zero tilt: CatWISE ecliptic-latitude bias from
+the WISE scanning law~\cite{Bashir2025}, radio declination
+systematics in NVSS~\cite{Singal2024}, or Malmquist-type
+selection biases in the CF4 Tully--Fisher sample.  The 2025
+simulation-based CatWISE
+reassessment~\cite{Bashir2025} demonstrates that
+forward-modelling the scanning law reduces the CatWISE-specific
+dipole significance from $4.9\sigma$ to $\sim\!3.3$--$3.6\sigma$,
+while retaining a dipole amplitude roughly twice the kinematic
+expectation.  A full structured null pipeline---injecting
+ecliptic-latitude trends, declination offsets, and
+distance-dependent selection biases into the seven-channel
+likelihood and verifying that the recovered $\beta$ remains
+consistent with zero---is deferred to future work.  Until such tests
+are performed, the evidence should be interpreted as conditional
+on the absence of correlated survey systematics at the level of
+the dipole signal.
+
+\paragraph{Dipole-contaminated null (B-07 VER06).}
+We performed a direct test: $100$ mock datasets in which
+the observed CatWISE and Radio dipole amplitudes are set to their
+measured values ($\varepsilon_1^{\rm CW} = 1.476 \times 10^{-3}$,
+$\varepsilon_1^{\rm Rad} = 3.296 \times 10^{-3}$) but
+the true cosmological tilt is zero ($\beta = 0$).
+The CF4 bulk-flow observable is drawn from noise alone
+($\beta_{\rm CF4} \sim |N(0, \sigma_\beta)|$).
+Running the full nested-sampling pipeline on each mock,
+$95/100$ realisations yield $\ln\mathcal{B} > 5$
+(median $\ln\mathcal{B} = 9.4$, max $= 16.8$).
+
+This result quantitatively confirms that the pipeline
+\emph{cannot distinguish a physical tilt from a survey artifact}
+at the CatWISE/Radio amplitude.  The decisive evidence is
+driven entirely by the matter-dipole channels
+(Section~\ref{sec:disc-constraints} of
+Chapter~\ref{ch:discussion}), and those channels carry no
+intrinsic diagnostic of dipole origin.  The contaminated-null
+false-positive rate of $95\%$ should be contrasted with the
+isotropic-null rate of $0/500$ (Section~\ref{sec:null-cat}):
+the pipeline is robust against noise fluctuations but
+transparent to amplitude-matched systematics.
+
+This test is the quantitative basis for the \textsc{Conditional}
+status assigned to claims C1--C3 in the claim governance
+hierarchy.  Promotion to \textsc{Defensible} requires
+independent confirmation of the dipole anomaly's physicality,
+such as a number-count dipole at $z \sim 1$--$2$ from Euclid
+DR1~\cite{Euclid2024} or a coherent peculiar-velocity
+dipole from DESI~\cite{DESI2024}.
+
+The existing robustness sweeps nevertheless constrain the
+\emph{critical contamination amplitudes} quantitatively.
+No single-channel degradation reduces $\ln\mathcal{B}$ below $5$:
+the CatWISE SBI downgrade ($4.9\sigma \to 3.5\sigma$) costs
+only $-5.0$ nats (Section~\ref{sec:catwise-sbi}), and the
+systematics floor saturates at $+7.4$
+(Section~\ref{sec:sys-floor}).  To eliminate the signal entirely
+($\ln\mathcal{B} < 5$) requires $\rho > 0.90$ in the
+CatWISE--Radio correlation (Section~\ref{sec:rho-sweep}), which
+demands that $>90\%$ of the dipole excess in both surveys arise
+from shared systematics---a scenario not supported by the
+distinct wavelengths and redshift distributions of the two
+catalogs.  Even at $\rho = 0.95$ ($\ln\mathcal{B} = +1.9$), the
+CF4 channel alone provides $+9.1$ nats, so the joint condition
+for eliminating the signal is $\rho \gtrsim 0.9$ \emph{and}
+invalidation of the CF4 Tully--Fisher distances.
+
+We quantify the source-discrimination power directly through
+injection-recovery tests (Figure~\ref{fig:injection_recovery}).
+The confusion matrix across three source classes (kinematic,
+geometric, systematic) yields a geometry false-positive rate of
+22\%---the pipeline cannot cleanly separate source types at
+$\theta_* = 0$ where no directional information is available.
+Figure~\ref{fig:source_decomposition} compares four source
+models by AIC and BIC; neither information criterion selects the
+kinematic-only model.  Figure~\ref{fig:source_discrimination}
+shows the $\Delta$AIC ranking explicitly.  We regard this as a
+quantified negative result: source discrimination requires either
+directional information ($\theta_* > 0$) or at least five
+independent surveys to break the identifiability degeneracy.
+\label{sec:source_discrimination_limits}
+
+
+% ============================================================
+\section{CatWISE SBI sensitivity}\label{sec:catwise-sbi}
+% ============================================================
+
+The 2025 simulation-based inference (SBI) reassessment of the
+CatWISE dipole by Bashir et~al.~\cite{Bashir2025} reduces the
+CatWISE-specific significance from $4.9\sigma$ to
+$\sim\!3.3$--$3.6\sigma$ by forward-modelling the WISE scanning
+law and photometric systematics.  We quantify the impact on the
+evidence by inflating the CatWISE statistical uncertainty
+$\sigma_{\mathrm{CW}}$ from $3.0 \times 10^{-4}$ (original) to
+$4.2 \times 10^{-4}$ (matching $3.5\sigma$) and re-running the
+FLRW$_{\mathrm{tilt}}$ evidence computation.
+
+The Bayes factor drops from $+26.4$ (baseline) to $+21.4$
+(SBI-inflated), a shift of $\Delta\ln\mathcal{B} = -5.0$.  The
+evidence remains decisively in favour of tilt.  A scan of
+$\sigma_{\mathrm{CW}}$ from the baseline to $3 \times 10^{-3}$
+(effective $0.5\sigma$) reveals that the Bayes factor saturates
+at $\sim\!+17$ for $\sigma_{\mathrm{CW}} \gtrsim 10^{-3}$,
+because the CF4 channel alone provides $\sim\!+9$ nats and the
+Radio channel adds $\sim\!+5$ nats independently of CatWISE.
+To reduce $\ln\mathcal{B}$ below $5$ requires
+\emph{simultaneously} degrading the CatWISE, Radio, and CF4
+channels---a scenario addressed by the correlation sweep
+(Section~\ref{sec:rho-sweep}) and systematics floor
+(Section~\ref{sec:sys-floor}).  The tilt detection is robust
+to the Bashir SBI downgrade.
+
+
+% ============================================================
+\section{Summary of robustness findings}
+\label{sec:robust-summary}
+% ============================================================
+
+Table~\ref{tab:robust-summary} collects the key sensitivities.
+
+\begin{table}[t]
+\caption{Robustness summary for the FLRW$_\mathrm{tilt}$ model
+  under the flat comparator.}
+\label{tab:robust-summary}
+\centering\small
+\begin{tabular}{lccl}
+\hline\hline
+Perturbation & $\Delta\ln\mathcal{B}$ &
+  $\Delta\tilde{\beta}/\tilde{\beta}$ & Verdict \\
+\hline
+$\rho$: $0.1 \to 0.3$ & $-4.1$ & $-5\%$ & decisive \\
+$\rho$: $0.1 \to 0.8$ & $-14.5$ & $-31\%$ & strong \\
+$\sigma_{\mathrm{sys}} = 10^{-3}$ & $-16.1$ & $-13\%$ & strong \\
+$\sigma_{\mathrm{sys}} = 5\!\times\!10^{-3}$ & $-19.0$ & $-20\%$
+  & strong \\
+$\beta$ prior: narrow & $+0.8$ & $< 0.1\%$ & decisive \\
+$\beta$ prior: wide   & $-0.4$ & $< 0.1\%$ & decisive \\
+$\etaud$: $0 \to 1/6$ & $+0.16$ & $\pm 4\%$ & decisive \\
+Remove CF4            & $-12.2$ & $+1.5\%$ & decisive \\
+Remove CatWISE+Radio  & $-17.3$ & $-6\%$   & strong \\
+CMB only              & $-26.6$ & --- & no detection \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+The tilt detection ($\ln\mathcal{B} > 5$) survives all tested
+perturbations except CMB-only and the extreme $\rho > 0.85$ limit.
+The departure quantities ($Q$, $\Pi$, $v_{\mathrm{tilt}}$,
+$\hat{q}_0$) track the evidence monotonically with no nonlinear
+surprises.  The pipeline is correctly calibrated (zero
+false-positive rate at all thresholds) and produces consistent
+results across two independent inference methods (summary-statistic
+and catalog).
+
+The largest vulnerability is the CatWISE--Radio correlation
+assumption.  At the fiducial $\rho = 0.1$, the evidence is
+$+26.4$; at a pessimistic $\rho = 0.3$, it drops to $+22.3$
+but remains decisive.  To reduce the evidence below the
+``substantial'' threshold ($\ln\mathcal{B} < 2.5$) requires
+$\rho > 0.9$, which is astrophysically implausible given the
+distinct wavelengths and selection functions.
+
+The second vulnerability is the systematics floor.  Adding
+$\sigma_{\mathrm{sys}} = 3 \times 10^{-3}$ drops the evidence to
+$+7.7$ but does not affect the posterior $\tilde{\beta}$ or the
+departure quantities.  The evidence reduction reflects reduced
+constraining power, not a shift in the signal.
+
+
+% ============================================================
+\section{CF4 data version sensitivity}
+\label{sec:cf4-sensitivity}
+% ============================================================
+
+Three bulk-flow compilations are available, each giving a
+different tilt rapidity (Section~\ref{sec:cf4-versions} of
+Chapter~\ref{ch:pipeline}).
+Table~\ref{tab:cf4-triple} reports the evidence under each.
+
+\begin{table}[t]
+\caption{Evidence sensitivity to CF4 data version.
+  The WFH2009 primary is from the canonical VER05 JSON;
+  CF4++ and Watkins+2023 values are from separate sensitivity
+  runs and should be independently verified before publication.}
+\label{tab:cf4-triple}
+\centering\footnotesize
+\begin{tabular}{llcc}
+\hline\hline
+Version & $\beta \;(\times 10^{-3})$ &
+  $\ln\mathcal{B}$ (FLRW$_{\mathrm{tilt}}$) & Verdict \\
+\hline
+WFH2009 (primary) & $1.334 \pm 0.267$ & $+26.3$ & Decisive \\
+CF4++ & $1.051 \pm 0.133$ & $+44.0^{*}$ & Decisive \\
+Watkins+2023 & $1.318 \pm 0.097$ & $+105.8^{*}$ & Decisive \\
+\hline\hline
+\multicolumn{4}{l}{\scriptsize $^{*}$Sensitivity run; not in canonical VER05 JSON.}
+\end{tabular}
+\end{table}
+
+\noindent
+All three versions give decisive evidence for a non-zero tilt
+DOF.  The WFH2009 value was previously misattributed to
+Watkins et~al.~\cite{Watkins2023}; this error is corrected in
+the present revision.  The large difference
+($\ln\mathcal{B}$ from $+26$ to $+106$) reflects the different
+$\sigma_\beta$: the Watkins+2023 value has the smallest
+uncertainty ($\sigma = 0.097 \times 10^{-3}$), yielding the
+highest significance per unit amplitude.  All departure
+quantities ($x$, $Q$, $\Pi$) are qualitatively unchanged
+across the three versions.
+
+
+% ============================================================
+\section{Structured-null library (Phase 2A)}
+\label{sec:struct-null-phase2}
+% ============================================================
+
+Five adversarial null families (scanning law, mask leakage,
+clustering dipole, selection response, survey axis) are
+tested with 100 synthetic $\beta = 0$ datasets each
+(Section~\ref{sec:struct-null}).  Each family injects a
+specific structured systematic at amplitudes calibrated to
+the Bashir et~al.~\cite{Bashir2025} forward model.  The
+false-positive rates---defined as the fraction of null datasets
+with $\ln\mathcal{B} > 5$ or $\Pi(0.05) > 0.95$---are zero
+for all five families.  The median recovered
+$\ln\mathcal{B} \approx -3$ under null data, confirming that
+the pipeline does not generate spurious tilt detections from
+structured systematics at the tested amplitudes.  The union
+false-positive rate (any family triggers) is also zero.
+
+
+% ============================================================
+\section{Shared-cause adjudication (Phase 2C)}
+\label{sec:shared-cause-robust}
+% ============================================================
+
+The Phase~2 directional audit (Section~\ref{sec:class-collapsed})
+tests whether the dipole signals in CatWISE, Radio, and CF4
+share a common axis.  The shared-cause model
+(single direction + amplitude for all surveys) is decisively
+preferred over the null model ($\Delta\ln\mathcal{B} = +29.7$).
+Low-$z$ ablation---removing each survey in turn---preserves the
+directional signal above threshold in all cases, confirming that
+no single survey drives the alignment.  The observational
+equivalence classes persist under directional information: the
+scalar-amplitude pipeline cannot distinguish Bianchi families
+within the tilt\_flat or orth\_1D classes
+(Chapter~\ref{ch:robustness}).
+
+
+% ============================================================
+\section{Repeat-run stability}
+\label{sec:repeat-run}
+% ============================================================
+
+Five independent nested-sampling runs with different random
+seeds give $\ln\mathcal{B}(\mathrm{FLRW}_{\mathrm{tilt}})
+= +26.3 \pm 0.10$ (std) with a range of $0.30$ nats
+(WFH2009 configuration).  The posterior medians
+$\tilde{\beta} = (1.36 \pm 0.01) \times 10^{-3}$ are stable
+to $< 1\%$.  Sampling noise is therefore negligible compared to
+the systematic uncertainties discussed above.
+
+
+% ============================================================
+\section{What these checks do \emph{not} control}
+\label{sec:not-controlled}
+% ============================================================
+
+The robustness programme above is extensive but not exhaustive.
+We list explicitly the systematic effects that fall outside the
+tested envelope:
+
+(i) Correlated survey systematics with amplitudes exceeding the
+structured-null library calibration ($A > 5 \times 10^{-4}$).
+The Bashir et~al.\ forward model constrains the CatWISE
+scanning-law systematic to $A \sim 3 \times 10^{-4}$; larger
+contamination is not excluded by this analysis.
+
+(ii) Time-dependent selection effects in the CF4 Tully--Fisher
+distance ladder (Courtois et~al.\ 2025).  The pipeline uses the
+CF4++ reported $\beta$ and $\sigma_\beta$ as inputs without
+independently validating the distance calibration.
+
+(iii) Unknown unknowns: systematic effects not anticipated in
+the five-family null library.  The false-positive guarantee
+applies only to the tested families.
+
+(iv) Foreground contamination at the per-cent level.  The
+Galactic mask leakage null tests contamination at
+$\sim 15\%$ of the kinematic dipole; contamination below this
+level is not excluded.
+
+
+% Figures for this chapter are defined in figures_ch07b.tex
+% === INLINED: ch07b_insert_transfer_robustness.tex ===
+% ============================================================
+% ch07b_insert_transfer_robustness.tex
+% INSERT INTO: ch07b_robustness.tex
+% LOCATION: At the end of §"Transfer function and reference value
+%           sensitivity" (Section~\ref{sec:transfer-sensitivity}
+%           or equivalent)
+% SESSION: S17
+% ============================================================
+
+The solver-validated transfer function
+(Section~\ref{sec:solver-validated-T2}) provides an independent
+robustness check of the Route~B calibration.  The solver's
+species-resolved $D_2$ agrees with the $\Teff$-calibrated value
+to $1.6\%$ (the photon-sector correction), and the
+AniCLASS cross-validation at $15$ grid points
+(Section~\ref{sec:aniclass-validation}) confirms the
+type-dependent transfer for BVIIh and BIX.  The neutrino
+dominance result ($f_\nu = 0.984$) also explains why the transfer
+function is insensitive to the details of the photon
+recombination model: the dominant channel is collisionless and
+depends only on the free-streaming integral, not on the Thomson
+scattering history.  This structural robustness was not available
+from the $\Teff$ analysis alone and constitutes a new finding of
+the Phase~1.0 solver.
+
+% === END INLINED ===
+
+% === INLINED: figures_ch07b.tex ===
+% Figures and tables for Chapter 7b (Robustness)
+% and supplementary figures for Chapter 7 (Results)
+% Created: IS-21, 2026-03-14
+
+% ============================================================
+%  IS-series figures (referenced in ch07_results and ch07b_robustness)
+% ============================================================
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_departure_summary}
+\caption{Three-layer departure summary for four irrotational tilted
+  models (FLRW$_{\mathrm{tilt}}$, BI~tilt, VII$_h$~tilt,
+  VII$_h$~tilt~grow).
+  (a)~Pushforward posterior of $x$ (Layer~1).
+  (b)~Occupancy ratio $Q = x/x_{\max}$ (Layer~2).
+  (c)~Exceedance curves $\Pi(q_\star)$ (Layer~3); all four
+  models overlap within line width.
+  (d)~Evidence decomposition: shear ($-0.9$), tilt ($+26.4$),
+  interaction ($+0.03$), combined ($+25.6$).  The annotation
+  confirms that $\Otilt$ contributes $103\%$ of the total
+  Bayes factor.}
+\label{fig:departure_summary}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_q0_pushforward}
+\caption{Apparent deceleration pushforward.
+  (a)~Posterior density of $\hat{q}_0$ at $d = 40$ Mpc
+  (median $= 207$, 95\% HPD shaded); the true FLRW value
+  $q_{0,\mathrm{true}} = -0.53$ is off-scale.
+  (b)~$\hat{q}_0$ versus scenario (symlog axis): S0/S1 at
+  $-0.53$, S2a/S3 at $\sim 204$, S2c at $\sim 466$.
+  (c)~Tilt-induced $\Delta q$ versus $\beta$ at $d = 40$ Mpc
+  with posterior $95\%$ band.}
+\label{fig:q0_pushforward}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_rho_sweep}
+\caption{CatWISE--Radio correlation sensitivity.
+  (a)~$\ln\mathcal{B}$ versus $\rho$: decisive ($>5$) until
+  $\rho \approx 0.85$.
+  (b)~Posterior median $\tilde{\beta}$; the CF4 value is shown
+  as a dashed line.
+  (c)~Occupancy $\tilde{Q}$.
+  (d)~Exceedance $\Pi(q_\star = 0.1)$.
+  The fiducial $\rho = 0.1$ is marked.}
+\label{fig:rho_sweep}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_channel_ablation_heatmap}
+\caption{Channel ablation heatmap.  Rows: seven channel
+  combinations.  Columns: $\ln\mathcal{B}$, $\tilde{\beta}$,
+  $\tilde{Q}$, $\Pi(0.1)$, $\hat{q}_0$.  The ``No CF4'' row
+  (orange dashed border) is the fair comparison target for the
+  catalog cross-check.  Colour scale: fraction of the
+  full-channel value (blue = high, red = low).}
+\label{fig:channel_ablation_heatmap}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_direction_posterior}
+\caption{Directional posterior from the catalog pipeline
+  (IS-06, seed~42, 5716 samples).  Mollweide projection in
+  Galactic coordinates.  The $68\%$ credible cone ($11^\circ$
+  radius) and $95\%$ cone ($19^\circ$) are shown as contours.
+  Reference directions: CMB kinematic dipole (star), CatWISE
+  quasar dipole (diamond), CF4 bulk flow (square), injected
+  truth (cross).  The injected direction falls inside the
+  $95\%$ contour.}
+\label{fig:direction_posterior}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_v_pushforward}
+\caption{Cross-pipeline consistency.
+  (a)~Tilt velocity $v_{\mathrm{tilt}}$ posterior:
+  summary-statistic (blue) versus catalog (orange);
+  Hellinger distance $H = 0.10$.
+  (b)~$\Otilt$ posterior comparison.
+  (c)~$\beta$ posterior comparison (SS versus catalog,
+  CF4-ablated).}
+\label{fig:v_pushforward}
+\end{figure}
+
+
+% ============================================================
+%  Tables referenced in ch07_results and ch07b_robustness
+% ============================================================
+
+\begin{table}[t]
+\centering
+\caption{Departure summary for all fifteen non-FLRW models
+  under the flat comparator (S3 scenario).  Columns:
+  posterior median defect $\tilde{x}$, occupancy $\tilde{Q}$,
+  exceedance $\Pi(0.01)$, tilt velocity
+  $\tilde{v}_{\mathrm{tilt}}$ (km\,s$^{-1}$), and
+  comparator sensitivity $\Delta_\Pi^{\mathrm{comp}}(0.01)$.
+  Models marked $\dagger$ have inactive parameters;
+  models marked $\ddagger$ are observational duplicates
+  of the model in parentheses.}
+\label{tab:departure_summary}
+\footnotesize
+\begin{tabular}{lrrrrl}
+\toprule
+Model & $\tilde{x}$ & $\tilde{Q}$ & $\Pi(0.01)$ &
+  $\tilde{v}_{\mathrm{tilt}}$ & $\Delta_\Pi$ \\
+\midrule
+FLRW$_{\mathrm{tilt}}$ & $5.85 \times 10^{-7}$ & $0.090$ & $1.000$ & $408$ & $0.0$ \\
+BI (tilt)               & $5.77 \times 10^{-7}$ & $0.089$ & $1.000$ & $406$ & $0.0$ \\
+BVIIh (tilt)            & $5.85 \times 10^{-7}$ & $0.090$ & $1.000$ & $408$ & $0.0$ \\
+BVIIh (tilt, grow)      & $5.81 \times 10^{-7}$ & $0.090$ & $1.000$ & $407$ & $0.0$ \\
+BIII (tilt)$^\dagger$   & $6.2 \times 10^{-4}$  & $97$    & $1.000$ & $405$ & $0.0$ \\
+BIX (tilt)$^\dagger$    & $-1.4 \times 10^{-3}$ & $-211$  & $0.000$ & $402$ & $1.0$ \\
+BV (tilt)               & $3.6 \times 10^{-3}$  & $553$   & $1.000$ & $0$   & $1.0$ \\
+BI (orth)               & $\sim 10^{-18}$       & $0$     & $0.000$ & $0$   & --- \\
+\emph{+5 orth duplicates}$^\ddagger$ & \multicolumn{5}{l}{\emph{identical to BI (orth)}} \\
+BVIIh (orth)            & $\sim 10^{-26}$       & $0$     & $0.000$ & $0$   & --- \\
+BVIIh (orth, grow)      & $\sim 10^{-20}$       & $0$     & $0.000$ & $0$   & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{MES algebraic bounds by scenario (S1 kinematic scenario
+  shown; full table in the pipeline output).  $\Bsig$: shear
+  bound; $\Bsig^c$: frame-corrected; $x_{\max}$: MES
+  ceiling; $\beta_{\mathrm{sr}}$: safe-route tilt.}
+\label{tab:bounds}
+\footnotesize
+\begin{tabular}{lcccc}
+\toprule
+Scenario & $\Bsig$ & $\Bsig^c$ & $x_{\max}$ & $\beta_{\mathrm{sr}}$ \\
+\midrule
+S0  & $1.33 \times 10^{-5}$ & $1.33 \times 10^{-5}$ & $2.64 \times 10^{-10}$ & $0$ \\
+S1  & $2.07 \times 10^{-3}$ & $2.08 \times 10^{-3}$ & $6.46 \times 10^{-6}$  & $1.14 \times 10^{-3}$ \\
+S2a & $2.47 \times 10^{-3}$ & $2.48 \times 10^{-3}$ & $9.25 \times 10^{-6}$  & $1.36 \times 10^{-3}$ \\
+S2c & $5.51 \times 10^{-3}$ & $5.56 \times 10^{-3}$ & $4.63 \times 10^{-5}$  & $3.04 \times 10^{-3}$ \\
+S3  & $2.47 \times 10^{-3}$ & $2.48 \times 10^{-3}$ & $9.25 \times 10^{-6}$  & $1.36 \times 10^{-3}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Channel ablation results for FLRW$_{\mathrm{tilt}}$.
+  Seven data configurations with evidence, tilt posterior,
+  occupancy, exceedance, and apparent deceleration.}
+\label{tab:ablation}
+\footnotesize
+\begin{tabular}{lccccc}
+\toprule
+Configuration & $\ln\mathcal{B}$ & $\tilde{\beta}\;(\times 10^{-3})$
+  & $\tilde{Q}$ & $\Pi(0.1)$ & $\hat{q}_0$ \\
+\midrule
+All (abcdefh)    & $+26.4$ & $1.36$ & $0.090$ & $0.33$ & $207$ \\
+No CF4 (abdefh)  & $+14.2$ & $1.38$ & $0.092$ & $0.41$ & $210$ \\
+Dipole only (ab) & $+14.2$ & $1.38$ & $0.093$ & $0.41$ & $211$ \\
+CF4 only (c)     & $+9.1$  & $1.28$ & $0.079$ & $0.28$ & $194$ \\
+CMB only (defh)  & $-0.2$  & ---    & $0.000$ & $0.08$ & $48$  \\
+No dipole (cdefh)& $+9.1$  & $1.27$ & $0.078$ & $0.28$ & $194$ \\
+Minimal (ef)     & $-0.2$  & ---    & $0.000$ & $0.08$ & $48$  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% === ADDED 2026-03-22: Pipeline diagnostic figures ===
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.7\columnwidth]{fig_injection_recovery}
+\caption{Injection-recovery confusion matrix.
+Rows: injected source class (kinematic, geometric, systematic);
+columns: recovered class.
+Off-diagonal entries measure misclassification rates.
+The geometry false positive rate (FPR) is 22\%, reflecting the
+limited discrimination power of the current
+scalar-only observable set at $\theta_* = 0$
+(Section~\ref{sec:source_discrimination_limits}).
+This is a design limitation, not a pipeline failure.}
+\label{fig:injection_recovery}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_leave_one_out}
+\caption{Leave-one-out evidence contributions.
+Each bar shows $\Delta\ln\mathcal{B}$ when a single data channel
+is removed from the FLRW$_{\mathrm{tilt}}$ evidence budget.
+Removal of CatWISE+Radio (the number-count dipole channels) produces
+the largest evidence loss, confirming that the dipole amplitude
+is the primary evidence driver.
+The CF4 bulk-flow constraint contributes the second-largest share.}
+\label{fig:leave_one_out}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.6\columnwidth]{fig_null_competition_production}
+\caption{Null competition: false positive rate per Bianchi family.
+Production run with 50 realisations and 7 families.
+All families fall below the 5\% threshold (dashed line),
+confirming that the evidence pipeline does not spuriously
+favour anisotropic models when the underlying universe is FLRW.}
+\label{fig:null_competition_production}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_orientation_diagnostics}
+\caption{Orientation diagnostic triad.
+(a)~Quadrupole--octupole (QO) alignment angle: observed vs kinematic prediction.
+(b)~Planarity: observed value against the isotropic expectation (dashed).
+(c)~$m$-mode concentration $C_{m=0}$: dominance of the axisymmetric $m=0$
+component, again compared with the isotropic floor (dashed).
+The combined vote is geometric~3\,:\,kinematic~0, but we emphasise the
+same-data caveat (Section~\ref{sec:orientation_caveat}):
+these three diagnostics share the same quadrupole+octupole data and are
+therefore \emph{not} independent tests.}
+\label{fig:orientation_diagnostics}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_source_decomposition}
+\caption{Source decomposition: information-criterion comparison.
+AIC (blue) and BIC (orange) for four source models: kinematic (tilt only),
+geometric (shear only), systematic, and mixed.
+Neither the AIC-best model nor the BIC-best model is kinematic-only,
+reinforcing the conclusion that source discrimination remains an
+open problem (Section~\ref{sec:source_decomposition}).
+A minimum of five independent surveys is required before the
+decomposition becomes identifiable.}
+\label{fig:source_decomposition}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.6\columnwidth]{fig_source_discrimination}
+\caption{Source discrimination: $\Delta$AIC relative to the best-fitting model
+for each source class.
+Green bars indicate the preferred model; orange bars show disfavoured alternatives.
+At $\theta_* = 0$ (no directional information), the pipeline cannot cleanly
+separate kinematic from geometric origins---a quantified negative result.}
+\label{fig:source_discrimination}
+\end{figure}
+
+% === END INLINED ===

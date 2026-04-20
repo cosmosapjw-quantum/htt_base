@@ -1,0 +1,294 @@
+{
+  "_schema": {
+    "version": "1.0",
+    "created": "2026-04-16",
+    "description": "BASS observational data — single source of truth index. Every dataset is referenced by a stable string key (`dataset_id`). All paths are relative to the obs/ root.",
+    "id_convention": "{collection}.{instrument}.{spectrum_or_field}",
+    "Dl_units": "uK^2 unless noted",
+    "ell_index": "ell starts at 2 for Planck PR3 (low-l up to 29 for BB/EB)"
+  },
+
+  "cmb.powerspectra": {
+    "planck.pr3.tt_full": {
+      "path": "cmb/powerspectra/planck_pr3_tt_full.npz",
+      "keys": ["ell", "dl", "err_lo", "err_hi", "bestfit", "spectrum_type", "source"],
+      "ell_range": [2, 2508],
+      "n_pts": 2507,
+      "spectrum": "TT",
+      "binned": false,
+      "unit": "uK^2 (D_ell)",
+      "source_file": "COM_PowerSpect_CMB-TT-full_R3.01.txt",
+      "notes": "ell-by-ell unbinned; bestfit column is zeros (use planck.pr3.bestfit instead)."
+    },
+    "planck.pr3.tt_binned": {
+      "path": "cmb/powerspectra/planck_pr3_tt_binned.npz",
+      "keys": ["ell", "dl", "err_lo", "err_hi", "bestfit", "spectrum_type", "source"],
+      "ell_range": [47, 2499],
+      "n_pts": 83,
+      "spectrum": "TT",
+      "binned": true,
+      "unit": "uK^2 (D_ell)",
+      "source_file": "COM_PowerSpect_CMB-TT-binned_R3.01.txt",
+      "notes": "Binned TT; `bestfit` populated."
+    },
+    "planck.pr3.te_full": {
+      "path": "cmb/powerspectra/planck_pr3_te_full.npz",
+      "keys": ["ell", "dl", "err_lo", "err_hi", "bestfit", "spectrum_type", "source"],
+      "ell_range": [2, 1996],
+      "n_pts": 1995,
+      "spectrum": "TE",
+      "binned": false,
+      "unit": "uK^2 (D_ell)",
+      "source_file": "COM_PowerSpect_CMB-TE-full_R3.01.txt"
+    },
+    "planck.pr3.ee_full": {
+      "path": "cmb/powerspectra/planck_pr3_ee_full.npz",
+      "keys": ["ell", "dl", "err_lo", "err_hi", "bestfit", "spectrum_type", "source"],
+      "ell_range": [2, 1996],
+      "n_pts": 1995,
+      "spectrum": "EE",
+      "binned": false,
+      "unit": "uK^2 (D_ell)",
+      "source_file": "COM_PowerSpect_CMB-EE-full_R3.01.txt"
+    },
+    "planck.pr3.bb_lowl": {
+      "path": "cmb/powerspectra/planck_pr3_bb_lowl.npz",
+      "keys": ["ell", "dl", "err_lo", "err_hi", "bestfit", "spectrum_type", "source"],
+      "ell_range": [2, 29],
+      "n_pts": 28,
+      "spectrum": "BB",
+      "binned": false,
+      "unit": "uK^2 (D_ell)",
+      "source_file": "COM_PowerSpect_CMB-BB-low-ell_R3.01.txt"
+    },
+    "planck.pr3.eb_lowl": {
+      "path": "cmb/powerspectra/planck_pr3_eb_lowl.npz",
+      "keys": ["ell", "dl", "err_lo", "err_hi", "bestfit", "spectrum_type", "source"],
+      "ell_range": [2, 29],
+      "n_pts": 28,
+      "spectrum": "EB",
+      "binned": false,
+      "unit": "uK^2 (D_ell)",
+      "source_file": "COM_PowerSpect_CMB-EB-low-ell_R3.01.txt"
+    },
+    "act.dr6.tt": {
+      "path": "cmb/powerspectra/act_dr6_tt.npz",
+      "keys": ["ell", "dl", "dl_err", "cl", "cl_err", "tracer1", "tracer2", "spectrum_type", "source"],
+      "ell_range": [63.5, 7525.5],
+      "n_pts": 57,
+      "spectrum": "TT",
+      "binned": true,
+      "tracer": "dr6_pa5_f150_s0 x dr6_pa5_f150_s0",
+      "notes": "Single tracer pair (PA5 f150 T x T); dl in (uK)^2 units (very large) — use cl for sanity. ACT DR6 sacc file source."
+    },
+    "act.dr6.te": {
+      "path": "cmb/powerspectra/act_dr6_te.npz",
+      "keys": ["ell", "dl", "dl_err", "cl", "cl_err", "tracer1", "tracer2", "spectrum_type", "source"],
+      "ell_range": [63.5, 7525.5],
+      "n_pts": 57,
+      "spectrum": "TE",
+      "binned": true,
+      "tracer": "dr6_pa5_f150_s0 x dr6_pa5_f150_s2"
+    },
+    "act.dr6.ee": {
+      "path": "cmb/powerspectra/act_dr6_ee.npz",
+      "keys": ["ell", "dl", "dl_err", "cl", "cl_err", "tracer1", "tracer2", "spectrum_type", "source"],
+      "ell_range": [63.5, 7525.5],
+      "n_pts": 57,
+      "spectrum": "EE",
+      "binned": true,
+      "tracer": "dr6_pa5_f150_s2 x dr6_pa5_f150_s2"
+    },
+    "act.dr4.compact": {
+      "path": "cmb/powerspectra/act_dr4.npz",
+      "keys": ["binning", "clcmb", "theory"],
+      "shapes": {"binning": [52, 3], "clcmb": [260, 3], "theory": [5999, 6]},
+      "notes": "From actpollite_python_dr4.01. binning=[ell_lo, ell_hi, ell_eff]; clcmb=[ell_eff, Dl, sigma]; theory=[ell, TT, EE, TE, ...] reference best-fit ACTPol LCDM."
+    },
+    "spt.3g.y1": {
+      "path": "cmb/powerspectra/spt3g_y1.npz",
+      "keys": ["bandpowers", "cov", "windows", "templates"],
+      "shapes": {"bandpowers": [1, 792], "cov": [39, 39], "windows": [3200, 19], "templates": [3200, 2]},
+      "notes": "SPT-3G 2018 Y1 TTTEEE compact. cov is 39x39 (subset/main bins). windows[:, 0]=ell. Foreground template = tSZ Shaw10 153 GHz."
+    },
+    "bicep_keck.2018.bb": {
+      "path": "cmb/powerspectra/bicep_keck_2018_bb.npz",
+      "keys_kind": "dict-of-arrays (key per file in BK18 release)",
+      "primary_keys": [
+        "BK18lf_cl_hat.dat", "BK18lf_noise.dat", "BK18lf_fiducial_dust.dat",
+        "BK18lf_covmat_dust.dat",
+        "BK18lf_bpwf_bin1.txt ... BK18lf_bpwf_bin9.txt",
+        "bandpass_BK18_K95.txt", "bandpass_BK18_B95e.txt", "bandpass_BK18_150.txt", "bandpass_BK18_220.txt",
+        "bandpass_W023e.txt", "bandpass_W033e.txt",
+        "bandpass_P030e.txt", "bandpass_P044e.txt", "bandpass_P143e.txt", "bandpass_P217e.txt", "bandpass_P353e.txt"
+      ],
+      "shapes": {
+        "BK18lf_cl_hat.dat": [9, 254],
+        "BK18lf_covmat_dust.dat": [2277, 2277],
+        "BK18lf_bpwf_bin*.txt": [999, 254]
+      },
+      "notes": "Raw release file dump. Use file_list key to enumerate. Covmat is 2277x2277 = 9 bins x 253 cross-spectra (full BICEP/Keck likelihood matrix)."
+    }
+  },
+
+  "cmb.theory": {
+    "planck.pr3.bestfit": {
+      "path": "cmb/theory/planck_pr3_bestfit.npz",
+      "keys": ["ell", "dl_TT", "dl_TE", "dl_EE", "dl_BB", "dl_PP", "source"],
+      "ell_range": [2, 2508],
+      "n_pts": 2507,
+      "unit": "uK^2 (D_ell); dl_PP in (units of phi-phi)",
+      "source_file": "COM_PowerSpect_CMB_TT-TE-EE-BB-PP_R3.01.txt",
+      "notes": "Planck 2018 best-fit theory (TT,TE,EE,BB,PP)."
+    },
+    "camb.planck2018.lensing_refs": {
+      "path": "cmb/theory/camb_planck2018_lensing_refs.npz",
+      "keys": ["ell_cmb", "Dl_TT", "Dl_TE", "Dl_EE", "Dl_BB", "ell_pp", "lens_potential_cls", "input_params"],
+      "ell_cmb_range": [0, 4100],
+      "ell_pp_range": [0, 4096],
+      "lens_potential_cls_shape": [4097, 3],
+      "notes": "CAMB-computed reference for Planck 2018 cosmology; for use with camb_planck2018_lensing pipeline. input_params is a JSON-like string scalar."
+    }
+  },
+
+  "cmb.lensing": {
+    "planck.pr3.lensing": {
+      "path": "cmb/lensing/planck_pr3_lensing.npz",
+      "keys_kind": "dict-of-arrays (key per file in Planck PR3 lensing release)",
+      "primary_keys": [
+        "smica_g30_ftl_full_pp_bandpowers.dat",
+        "smica_g30_ftl_full_pp_cov.dat",
+        "smica_g30_ftl_full_pp_lensing_fiducial_correction.dat",
+        "smicadx12_Dec5_..._ndclpttptt_p_teb_consext8_*",
+        "smicadx12_Dec5_..._ndclpttptt_p_teb_agr2_*",
+        "smicadx12_Dec5_..._ndclpp_p_teb_*",
+        "windowN.dat for N in [1..14]"
+      ],
+      "notes": "Use file_list key to enumerate all 47 files. Three estimator branches: PTT-PTT (consext8/agr2) and PP (consext8/agr2/g30). bandpowers files have 7 columns [bin_lo, bin_hi, bin_mid, Cl_hat, sigma, ...]."
+    }
+  },
+
+  "cmb.maps": {
+    "planck.commander.nside16": {
+      "path": "cmb/maps/commander_nside16.npz",
+      "keys": ["I", "Q", "U", "nside", "nside_original", "npix", "unit", "source"],
+      "nside": 16,
+      "nside_original": 2048,
+      "npix": 3072,
+      "unit": "uK_CMB",
+      "ordering": "RING (default healpy)",
+      "notes": "Downsampled from NSIDE=2048. Commander component-separated CMB."
+    },
+    "planck.smica.nside16": {
+      "path": "cmb/maps/smica_nside16.npz",
+      "keys": ["I", "Q", "U", "nside", "nside_original", "npix", "unit", "source"],
+      "nside": 16,
+      "nside_original": 2048,
+      "npix": 3072,
+      "unit": "uK_CMB",
+      "ordering": "RING",
+      "notes": "SMICA component-separated CMB."
+    }
+  },
+
+  "cmb.masks": {
+    "planck.temp_mask.nside16": {
+      "path": "cmb/masks/temp_nside16.npz",
+      "keys": ["mask", "fsky", "nside", "nside_original", "source"],
+      "nside": 16,
+      "fsky": 0.7887,
+      "ordering": "RING",
+      "notes": "Apodized temperature mask, downsampled."
+    },
+    "planck.pol_mask.nside16": {
+      "path": "cmb/masks/pol_nside16.npz",
+      "keys": ["mask", "fsky", "nside", "nside_original", "source"],
+      "nside": 16,
+      "fsky": 0.7907,
+      "ordering": "RING",
+      "notes": "Apodized polarization mask, downsampled."
+    }
+  },
+
+  "lss.desi_y1": {
+    "_common": {
+      "keys": ["ra", "dec", "z", "weight", "n_hat"],
+      "dtypes": "float32 throughout",
+      "n_hat_definition": "unit Cartesian sky direction (3D); should satisfy |n_hat| ~ 1",
+      "ra_unit": "deg, [0, 360)",
+      "dec_unit": "deg, [-90, +90]",
+      "weight": "DESI clustering weight (FKP * completeness * systematics)",
+      "manifest": "lss/desi_y1/manifest.json"
+    },
+    "desi.bgs.ngc": {
+      "path": "lss/desi_y1/bgs_ngc.npz",
+      "tracer": "BGS_ANY", "cap": "NGC", "z_range": [0.01, 0.50], "n_rows": 4081227
+    },
+    "desi.bgs.sgc": {
+      "path": "lss/desi_y1/bgs_sgc.npz",
+      "tracer": "BGS_ANY", "cap": "SGC", "z_range": [0.01, 0.50], "n_rows": 1441126
+    },
+    "desi.lrg.ngc": {
+      "path": "lss/desi_y1/lrg_ngc.npz",
+      "tracer": "LRG", "cap": "NGC", "z_range": [0.40, 1.10], "n_rows": 1476135
+    },
+    "desi.lrg.sgc": {
+      "path": "lss/desi_y1/lrg_sgc.npz",
+      "tracer": "LRG", "cap": "SGC", "z_range": [0.40, 1.10], "n_rows": 662492
+    },
+    "desi.qso.ngc": {
+      "path": "lss/desi_y1/qso_ngc.npz",
+      "tracer": "QSO", "cap": "NGC", "z_range": [0.80, 3.50], "n_rows": 793219
+    },
+    "desi.qso.sgc": {
+      "path": "lss/desi_y1/qso_sgc.npz",
+      "tracer": "QSO", "cap": "SGC", "z_range": [0.80, 3.50], "n_rows": 430172
+    }
+  },
+
+  "pecvel.cf4": {
+    "cf4.query_single": {
+      "path": "pecvel/cf4/query_single.json",
+      "format": "json",
+      "fields": ["delta_mean", "delta_std", "vxyz_mean", "vxyz_std", "vr_mean", "vr_std", "sgx", "sgy", "sgz", "grid_index"],
+      "n_queries": 1,
+      "coords": "supergalactic Cartesian (Mpc/h)",
+      "vel_unit": "km/s",
+      "notes": "Single-point CF4 reconstruction query (LG / our position style)."
+    },
+    "cf4.query_batch": {
+      "path": "pecvel/cf4/query_batch.npz",
+      "keys": ["delta_mean", "delta_std", "vxyz_mean", "vxyz_std", "vr_mean", "vr_std", "sgx", "sgy", "sgz", "grid_index"],
+      "shapes": {"delta_mean": ["N"], "vxyz_mean": ["N", 3], "grid_index": ["N", 3]},
+      "n_queries": "dynamic",
+      "coords": "supergalactic Cartesian (Mpc/h)",
+      "vel_unit": "km/s",
+      "notes": "Batched CF4 reconstruction generated from DESI BGS targets; N is hardware-adaptive."
+    }
+  },
+
+  "scalars": {
+    "obs_defaults.canonical": {
+      "path": "scalars/obs_defaults.json",
+      "cf4_version": "legacy_watkins2009",
+      "beta": 0.001334,
+      "notes": "Legacy / canonical SSOT. β traced to Watkins+2009 COMPOSITE. Use this for backward compatibility with VT-08 era pipelines."
+    },
+    "obs_defaults.watkins2023": {
+      "path": "scalars/obs_defaults_watkins2023.json",
+      "cf4_version": "watkins2023",
+      "beta": 0.001318, "beta_sigma": 9.7e-05,
+      "notes": "Watkins+2023 CF4 MVE, 38058 groups."
+    },
+    "obs_defaults.courtois2025": {
+      "path": "scalars/obs_defaults_courtois2025.json",
+      "cf4_version": "courtois2025",
+      "beta": 0.001051, "beta_sigma": 0.000133,
+      "notes": "CF4++ HMC, Courtois+2025, 65518 galaxies. Largest, most modern."
+    },
+    "dipole_scalar_observations.consolidated": {
+      "path": "scalars/dipole_scalar_observations.json",
+      "notes": "Original consolidated file with all three CF4 variants embedded as alternates. Kept for back-compat."
+    }
+  }
+}

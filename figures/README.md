@@ -28,6 +28,20 @@ venv/bin/python scripts/make_third_wave_figures.py
 venv/bin/python scripts/make_physics_gallery.py
 ```
 
+Paper generators resolve observational inputs from the current
+`workdir/` tree, preferring `workdir/obs_bundle` and then falling back
+to `workdir/raw` or `workdir/compact_products` when the bundle index is
+ahead of the packaged files. In the 2026-04-20 rerun this means:
+
+- DESI footprint / density / `n(z)` figures use the full raw Y1 FITS
+  catalogs when available, not legacy plotting fixtures.
+- CF4 observational figures read the regenerated query products under
+  `workdir/compact_products/cf4/`, which are derived from the raw
+  `CF4pp_mean_std_grids.npz` adapter path.
+- The multi-experiment ACT extension figure prefers ACT DR6 bandpowers
+  when unpacked in `workdir/obs_bundle`; if DR6 is absent it degrades to
+  the real ACT DR4 compact release and labels the figure accordingly.
+
 See each subtree's README / INDEX for per-figure detail, captions, and
 known placeholder / mock figures.
 

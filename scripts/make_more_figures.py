@@ -36,14 +36,14 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-OUT_ROOT = REPO_ROOT / "figures" / "paper"
-OBS_ROOT = REPO_ROOT / "dl_pipeline" / "obs_bundle" / "obs"
+from figure_env import (  # noqa: E402
+    REPO_ROOT,
+    build_obs_catalog,
+    configure_repo_paths,
+)
 
-sys.path.insert(0, str(REPO_ROOT / "bass_py"))
-sys.path.insert(0, str(REPO_ROOT / "bass_py" / "src"))
-sys.path.insert(0, str(REPO_ROOT / "bass_py" / "htt"))
-sys.path.insert(0, str(OBS_ROOT))
+OUT_ROOT = REPO_ROOT / "figures" / "paper"
+configure_repo_paths()
 
 from htt.core.plot_style import apply_style, COLS  # noqa: E402
 
@@ -74,8 +74,7 @@ def _caption(name: str, chapter: str, text: str) -> None:
 
 
 def _obs_catalog():
-    from obs_loader import ObsCatalog  # type: ignore
-    return ObsCatalog(root=OBS_ROOT)
+    return build_obs_catalog()
 
 
 # =====================================================================
@@ -377,7 +376,7 @@ def fig_ch04f_growing_mode_window() -> None:
     # Mark Saadeh bound on shear (approximate translation)
     saadeh_sH = 3.4e-5   # Saadeh+2016 shear upper bound
     ax.axvline(saadeh_sH, color=COLS["purple"], ls="-.", lw=1.0,
-               label=rf"Saadeh+2016 shear UL $\sigma/H\le{saadeh_sH:.1e}$")
+               label=rf"Saadeh+2016 shear UL $\sigma/H\leq{saadeh_sH:.1e}$")
 
     ax.set_xlabel(r"shear amplitude $\sigma/H$")
     ax.set_ylabel(r"induced CMB quadrupole $D_2$ [$\mu$K$^2$]")
@@ -435,7 +434,7 @@ def fig_ch05h_filling_fraction_posterior() -> None:
         counts, edges = np.histogram(samp, bins=80, range=(0.0, 0.3), density=True)
         centers = 0.5 * (edges[1:] + edges[:-1])
         ax.step(centers, counts, where="mid", color=col, lw=1.4,
-                label=rf"{sc}: $\mathcal F_{{\rm Bayes}}={med:.3f}^{{+{q84-med:.3f}}}_{{-{med-q16:.3f}}}$")
+                label=rf"{sc}: $F_{{\rm Bayes}}={med:.3f}^{{+{q84-med:.3f}}}_{{-{med-q16:.3f}}}$")
         ax.axvline(med, color=col, ls=":", lw=0.8)
 
         # Point estimate
@@ -443,9 +442,9 @@ def fig_ch05h_filling_fraction_posterior() -> None:
         F_point = ff.F(sc_eps) if sc_eps > 0 else 0.0
         stats_rows.append((sc, F_point, med, q16, q84))
 
-    ax.set_xlabel(r"filling fraction $\mathcal F = \Omega_{\rm tilt}/\Sigma^2_{\max}$")
+    ax.set_xlabel(r"filling fraction $F = \Omega_{\rm tilt}/\Sigma^2_{\max}$")
     ax.set_ylabel("posterior density")
-    ax.set_title(r"Monte Carlo posterior on $\mathcal F_{\rm Bayes}$ "
+    ax.set_title(r"Monte Carlo posterior on $F_{\rm Bayes}$ "
                  r"(htt $\times$ tsc)",
                  fontsize=10)
     ax.grid(True, alpha=0.25)
@@ -462,18 +461,18 @@ def fig_ch05h_filling_fraction_posterior() -> None:
     w = 0.36
 
     ax2.bar(xpos - w / 2, Fpt, width=w, color=COLS["gray"], alpha=0.85,
-            edgecolor="0.1", lw=0.4, label=r"$\mathcal F_{\rm point}$")
+            edgecolor="0.1", lw=0.4, label=r"$F_{\rm point}$")
     ax2.bar(xpos + w / 2, Fbay, width=w, color=COLS["blue"],
             yerr=np.vstack([lower, upper]),
             error_kw=dict(ecolor="0.15", capsize=3.0, lw=0.8),
-            edgecolor="0.1", lw=0.4, label=r"$\mathcal F_{\rm Bayes}$")
+            edgecolor="0.1", lw=0.4, label=r"$F_{\rm Bayes}$")
     for j, (sc, pt, bay, _, _) in enumerate(stats_rows):
         gap = (bay - pt) / max(pt, 1e-12) * 100.0
         ax2.text(xpos[j], max(pt, bay) + 0.012,
                  f"+{gap:.0f}%", ha="center", fontsize=8.6, color="0.2")
     ax2.set_xticks(xpos)
     ax2.set_xticklabels([r[0] for r in stats_rows], fontsize=10)
-    ax2.set_ylabel(r"$\mathcal F$")
+    ax2.set_ylabel(r"$F$")
     ax2.set_title(r"posterior-mean vs point estimate", fontsize=10)
     ax2.grid(True, axis="y", alpha=0.25)
     ax2.legend(fontsize=9)
@@ -513,7 +512,7 @@ def fig_ch05i_theta4_bridge_convergence() -> None:
     expansion -- bridge verification figure."""
     from tsc.charts.theta4_bridge_verify import (
         THETA4_A2_COEFFS_EXACT,
-        theta4_a2_expansion_numerical,
+        theta4_a2_numerical,
     )
 
     # Evaluate numerically on a dense (A, Q) grid near the physical region
@@ -524,19 +523,30 @@ def fig_ch05i_theta4_bridge_convergence() -> None:
     A_vals = np.linspace(-0.05, 0.05, 11)
     Q_vals = np.linspace(-0.02, 0.02, 11)
 
+    coeff_q = THETA4_A2_COEFFS_EXACT[(0, 1)]
+    coeff_a2 = THETA4_A2_COEFFS_EXACT[(2, 0)]
+    coeff_q2 = THETA4_A2_COEFFS_EXACT[(0, 2)]
+    coeff_a2q = THETA4_A2_COEFFS_EXACT[(2, 1)]
+
+    def _a2_expansion(A: float, Q: float) -> float:
+        return (
+            coeff_q * Q
+            + coeff_a2 * A * A
+            + coeff_q2 * Q * Q
+            + coeff_a2q * A * A * Q
+        )
+
     a2_vs_A = []
     a2_expansion_A = []
     for A in A_vals:
-        nm = theta4_a2_expansion_numerical(float(A), float(Q_test))
-        a2_vs_A.append(nm["a2_numerical"])
-        a2_expansion_A.append(nm["a2_expansion"])
+        a2_vs_A.append(theta4_a2_numerical(float(A), float(Q_test)))
+        a2_expansion_A.append(_a2_expansion(float(A), float(Q_test)))
 
     a2_vs_Q = []
     a2_expansion_Q = []
     for Q in Q_vals:
-        nm = theta4_a2_expansion_numerical(float(A_test), float(Q))
-        a2_vs_Q.append(nm["a2_numerical"])
-        a2_expansion_Q.append(nm["a2_expansion"])
+        a2_vs_Q.append(theta4_a2_numerical(float(A_test), float(Q)))
+        a2_expansion_Q.append(_a2_expansion(float(A_test), float(Q)))
 
     fig, axes = plt.subplots(1, 2, figsize=(9.4, 3.4))
 
@@ -567,7 +577,7 @@ def fig_ch05i_theta4_bridge_convergence() -> None:
     # Annotate exact coefficients
     coeff_text = (
         r"Exact coefficients $a_2[\Theta^4]$:" + "\n"
-        + r"    $4Q + 4A^2 + \tfrac{12}{7}Q^2 + \tfrac{44}{7}A^2Q + O((A,Q)^4)$"
+        + r"    $4Q + 4A^2 + (12/7)Q^2 + (44/7)A^2Q + O((A,Q)^4)$"
     )
     fig.text(0.5, -0.02, coeff_text, ha="center", fontsize=9.0,
              color="0.15")
@@ -661,7 +671,7 @@ def fig_ch06n_visibility_polter_landscape() -> None:
     fwhm_level = 0.5 * gpi.max()
     above = np.where(gpi >= fwhm_level)[0]
     fwhm_dz = float(z[above].max() - z[above].min()) if len(above) > 0 else 0.0
-    int_gpi = float(np.trapz(gpi, z))
+    int_gpi = float(np.trapezoid(gpi, z))
 
     ax = axes[1]
     # Zoomed product region
@@ -742,16 +752,7 @@ def fig_ch08e_desi_y1_sky_maps() -> None:
         ra = np.asarray(d.ra, dtype=np.float64)
         dec = np.asarray(d.dec, dtype=np.float64)
         weight = np.asarray(d.weight, dtype=np.float64)
-
-        # Subsample to avoid memory blow-up on multi-million row catalogs
         n = ra.size
-        max_n = 600_000
-        if n > max_n:
-            rng = np.random.default_rng(42)
-            idx = rng.choice(n, size=max_n, replace=False)
-            ra = ra[idx]
-            dec = dec[idx]
-            weight = weight[idx]
 
         lon = np.where(ra > 180.0, ra - 360.0, ra) * np.pi / 180.0
         lat = dec * np.pi / 180.0
@@ -808,7 +809,8 @@ DESI FKP$\,\times\,$completeness$\,\times\,$systematics product. The
 maps are clipped by the DESI Y1 footprint (NGC/SGC separation and
 declination limits are visible), which defines the survey mask used
 by the Bianchi dipole likelihood pipeline. Colour scale is log-per-sr.
-Source: $\mathtt{obs\_bundle}$/$\mathtt{lss.desi\_y1.*}$.
+These panels are computed from the full raw DESI Y1 catalogs in
+$\mathtt{workdir/raw/desi/}$, not from a compact plotting stub.
 """
     )
 

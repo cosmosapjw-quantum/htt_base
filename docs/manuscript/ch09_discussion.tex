@@ -1,0 +1,1928 @@
+% ============================================================
+%  ch08_discussion.tex — Discussion
+%  Requires: macros.tex
+%  Estimated length: 18–25 pages
+%  Rewritten: VD-06W, 2026-03-07
+% ============================================================
+
+\chapter{Discussion}\label{ch:discussion}
+
+The numerical results of Chapter~\ref{ch:results} invite three
+levels of interpretation.  At the mathematical level, the
+master defect identity provides exact algebraic constraints on
+any Bianchi cosmology; no interpretation is required.  At the
+model-selection level, the Bayesian evidence comparison reveals
+a clean dichotomy between CMB-only data (which prefer isotropy)
+and the matter dipole (which, conditional on the anomaly being
+physical, drives strong Bianchi preference); here interpretation
+enters through the prior specification and the choice of data
+channels.  At the physical
+level, the connection between the defect framework, the Dipole
+Cosmological Principle, the Tsagas tilted-observer programme,
+cosmological backreaction, and the emerging observational
+picture of large-scale vorticity requires a more extended
+discussion that honestly delineates what is established, what is
+model-dependent, and what remains speculative.
+
+We address these levels in order: contrastive analysis of the
+seven principal results
+(Section~\ref{sec:contrastive}), the DCP--defect dictionary
+(Section~\ref{sec:DCP-defect}), the Tsagas programme
+(Section~\ref{sec:disc-tsagas}), the backreaction caveat
+(Section~\ref{sec:disc-backreaction}), cosmic-web vorticity
+(Section~\ref{sec:disc-cosmic-web}), and methodological
+limitations as design choices
+(Section~\ref{sec:disc-limitations}).
+
+
+% ============================================================
+\section{Contrastive analysis of the principal results}
+\label{sec:contrastive}
+% ============================================================
+
+Seven results from the preceding chapters merit separate
+assessment through the conservative, progressive, and
+data-honest lenses established in
+Section~\ref{sec:reframing} of Chapter~\ref{ch:dipole}.
+Figure~\ref{fig:contrastive_summary} presents these seven
+results on a common FLRW departure scale.
+
+
+\subsection{The CMB/non-CMB dichotomy}
+
+The most structurally informative finding of the evidence
+comparison is not the headline $\ln\mathcal{B} \approx +26.3$
+but the \emph{channel decomposition}: the matter dipole
+channels (b+c) alone yield $\ln\mathcal{B} \approx +29$ for
+all five surviving tilted models, while the CMB-only channels
+(a, d, e, f, h) return $\ln\mathcal{B} < 0$ for every model
+tested.  The entire case for anisotropy rests on the matter
+dipole.
+
+The conservative reading holds that this dichotomy exposes a
+vulnerability: if the CatWISE and radio dipole excesses are
+eventually attributed to unidentified survey systematics, the
+evidence for anisotropy vanishes entirely.  The 2025
+simulation-based reassessment of
+CatWISE~\cite{Bashir2025}---which reduced the
+CatWISE-specific significance from $4.9\sigma$ to
+$\sim\!3.3$--$3.6\sigma$ by forward-modelling the WISE scanning
+law and photometric systematics---illustrates precisely this
+pathway.  The data do not establish anisotropy independently of
+the anomaly.  The decisive evidence is conditional on the anomaly
+being substantially physical, and is one survey generation away
+from confirmation or refutation.
+
+The progressive reading holds that the dichotomy is
+consistent with what the Tsagas mechanism predicts: a tilt
+that is invisible to the CMB (because the CMB dipole is
+dominated by the kinematic component) but manifest in matter
+surveys (where the tilt-induced modulation adds to the
+kinematic signal).  Under this reading, the CMB's preference
+for isotropy is not evidence against anisotropy but evidence
+that the anisotropy resides in the tilt degree of freedom,
+which the CMB constrains only weakly.  The caveat is that
+the Tsagas mechanism predicts the \emph{qualitative}
+pattern (CMB-invisible, matter-visible) but does not
+uniquely predict the amplitude or the survey in which the
+excess first appears.
+
+The data-honest synthesis notes that the dichotomy is a
+\emph{measurement}, not an interpretation: the data factually
+prefer tilted geometries when matter dipole information is
+included and prefer isotropy when it is excluded.  Whether the
+dipole excess is physical or systematic is an empirical
+question that the present framework identifies but cannot
+resolve.  The conditional structure of the evidence
+($\ln\mathcal{B} \approx +26.3$ if dipole is physical;
+$\ln\mathcal{B} \leq 0$ if dipole is systematic) is itself a
+falsifiable prediction.  Euclid DR1 (October 2026), the full
+Vera Rubin LSST, and SKA Phase~1 will provide independent dipole
+measurements at different redshifts and frequencies, breaking the
+current reliance on a small number of surveys.
+
+
+\subsection{Conditional evidence: $\ln\mathcal{B} \approx +26$ (VER05 primary)}
+
+Six tilted models (FLRW$_{\mathrm{tilt}}$, BI, BIII, BIX,
+BV, BVIIh) cluster at
+$\ln\mathcal{B} \in [+24.8, +26.4]$ under the primary WFH2009
+input ($\beta = 1.334 \times 10^{-3}$), corresponding to
+odds exceeding $10^{11}:1$ in favour of tilted models over
+FLRW, conditional on the matter-dipole anomaly being
+substantially physical.  The pure-tilt
+FLRW$_{\mathrm{tilt}}$ reaches $+26.3$; the Bianchi
+models sit at $[+24.8, +26.4]$, with the tilt\_flat
+equivalence class (BI, BIII, BIX tilt) producing
+indistinguishable likelihoods.
+
+The evidence decomposition confirms that a pure-tilt model
+(FLRW$_{\mathrm{tilt}}$, with $\Sigma^2 = 0$) captures the
+entire signal, while anisotropic shear alone is mildly
+disfavoured.  The ``Bianchi evidence'' is therefore evidence
+for a non-zero dipole anomaly/tilt, not for anisotropic
+spatial geometry.
+
+The sensitivity to the CF4 data version is substantial:
+the CF4++ value (Courtois et~al.~\cite{Courtois2025})
+gives $\ln\mathcal{B} \approx +44$ (sensitivity run; see
+Table~\ref{tab:cf4-triple}), while
+Watkins et~al.~\cite{Watkins2023} gives
+$\ln\mathcal{B} \approx +106$ (smallest $\sigma_\beta$).  All three are
+decisive.  The attribution error that assigned
+$\beta = 1.334 \times 10^{-3}$ to Watkins+2023 (corrected
+in this revision) does not affect the qualitative conclusion
+but shifts the headline number by $\sim 18$ nats.
+
+The 2025 CatWISE reassessment~\cite{Bashir2025} demonstrates
+that survey-specific systematics can reduce the significance
+of individual dipole measurements by $\sim\!1.5\sigma$; the
+multi-survey radio combination retains $\geq 5\sigma$
+independently of CatWISE~\cite{Boehme2025}.
+
+
+\subsection{Bianchi~V: corrected result $\ln\mathcal{B} = +24.8$ (VER06)}
+
+The VER04 pipeline reported BV~(tilt) at $\ln\mathcal{B} = -24.5$,
+appearing to exclude the model decisively.  That result was
+a code artifact: the transfer-function formula incorrectly
+included a factor of $T_0 = 2.726 \times 10^6\;\mu\mathrm{K}$
+when $T_2$ was already in $\mu\mathrm{K}/(\sigma/H)$ units,
+compounded by a $5.24\times$ miscalibration in $T_2^{\mathrm{decay}}$.
+The corrected VER06 pipeline, with fresh dynesty runs and
+self-consistent $\ln\mathcal{Z}$/$\ln\mathcal{B}$ fields
+(three-seed convergence verification), gives
+$\ln\mathcal{B}_{\mathrm{VER06}}(\text{BV tilt}) = +24.8$
+(Section~\ref{sec:BV-excl} of Chapter~\ref{ch:results}).
+
+The conservative reading of this correction is that the framework
+is honest about its own limitations: when a code error is found,
+it must be corrected regardless of whether the result is
+``cleaner'' before or after the fix.  The framework does
+demonstrate falsifiability through BVIIh~(orth, grow) at
+$\ln\mathcal{B} = -18.7$, which is a genuine Saadeh-vorticity
+exclusion.
+
+The progressive reading notes that the correction resolves a
+former tension: the momentum constraint for BV~(tilt) is an
+algebraic identity of the Bianchi~V structure constants,
+independent of the equation of state.  For $w = 1/3$ the
+prefactor $(1+w)^2$ increases by $78\%$, worsening the
+overproduction.  Bianchi~V is falsified by the joint
+dipole--quadrupole data, not by the dipole alone.
+
+The data-honest caveat is that the exclusion assumes the LRS
+momentum constraint holds exactly at all epochs, for a
+single barotropic fluid with constant equation-of-state
+parameter $w \in [0, 1/3]$, and in the absence of a
+dark-energy--matter tilt coupling that could modify the
+momentum balance.  In a more general (non-LRS) Bianchi~V
+model, in the DCP extension with multi-fluid structure, or
+with a dynamical dark-energy equation of state, the constraint
+may be relaxed.  The exclusion should be reported as applying
+to the LRS single-fluid Bianchi~V class.
+
+
+\subsection{Filling fraction: $\FF \approx 6.3\%$}
+
+At the S3 scenario with $w = 0$, the tilt occupies $6.3\%$ of
+the MES-allowed anisotropy budget.  The Bayes factor for
+$\FF > 0$ exceeds $5 \times 10^4$, which is a restatement of
+the $>5\sigma$ dipole anomaly in defect language.
+
+The conservative reading notes that $\FF \ll 1$: the universe
+is overwhelmingly close to FLRW.
+
+The progressive reading notes that $\FF$ is invariant under
+frame corrections (because numerator and denominator shift by
+the same factor) and provides a dimensionless measure of FLRW
+departure directly comparable across scenarios.  A non-zero
+filling fraction is an observational fact contingent only on
+the anomaly being physical.
+
+
+\subsection{Frame-attribution bias: $\etaud \approx 8.3\%$}
+
+The acceleration dipole
+$\eps_1^{(\dot{u})} = \etaud\beta$ contributes $\sim 8.3\%$
+of the total dipole at S3.  The conservative reading treats
+$\etaud$ as a systematic correction that tightens the
+safe-route $\beta$ by $7.7\%$ and should be included in all
+analyses.  The progressive reading treats $\etaud$ as a
+prediction: the acceleration content of the CMB dipole
+generates a specific equation-of-state-dependent relationship
+between intrinsic and observed dipole amplitudes.  A measurement
+of the dipole at multiple redshifts (via Euclid and SKA) would
+test this prediction by measuring $\beta(z)$ and comparing with
+the $\etaud$-corrected safe-route.
+
+
+\subsection{Saadeh--MES gap: six orders of magnitude}
+
+The Saadeh model-dependent bound
+($\Wstd < 9.01 \times 10^{-22}$) is six orders of magnitude
+tighter than the MES algebraic bound
+($\Wstd < (3/2)\Bom^2 \sim 10^{-15}$), shrinking to
+approximately one order for the regular tensor growing mode of
+VII$_h$ (Section~\ref{sec:VIIh-modes}).
+
+The data-honest interpretation is that the two frameworks are
+complementary: MES provides type-independent algebraic ceilings
+(under the almost-FLRW and Copernican assumptions)
+holding for any Bianchi type, while Saadeh~et~al.\ exploit the
+full morphological information of the CMB sky for specific
+template shapes.  The gap quantifies the information gain from
+morphological analysis.  For the regular tensor mode, where the
+transfer function is $\sim 5000\times$ weaker, the information
+gain collapses and the two approaches converge---a structural
+consistency check.
+
+
+\subsection{Preferred-direction clustering}
+
+The anomaly directions---CMB dipole $(264^\circ, 48^\circ)$,
+CatWISE $(240^\circ, -4^\circ)$, radio
+$(230^\circ, -14^\circ)$, quadrupole--octupole axis
+$(237^\circ, 20^\circ)$, CF4 bulk flow
+$(276^\circ, 10^\circ)$---cluster within $\sim 30^\circ$ of
+each other in Galactic coordinates.  The probability of five
+independent directions clustering within a $30^\circ$-radius
+cap by chance is $\sim 2 \times 10^{-4}$.
+Figure~\ref{fig:anomaly_direction_sky} shows these anomaly directions
+in a Mollweide projection.
+
+The progressive reading identifies this clustering as evidence
+for a single preferred axis, consistent with the tilt direction
+of a Bianchi model.  The data-honest caveat is that the
+summary-statistic evidence (Chapter~\ref{ch:results}) treats
+the dipole as a scalar amplitude: directional information does
+not enter the seven-channel likelihood.  The preferred-axis
+clustering is therefore a \emph{post-likelihood external
+consistency check}, not a component of the Bayesian evidence.
+
+The catalog pipeline
+(Section~\ref{sec:catalog} of Chapter~\ref{ch:pipeline})
+provides a partial directional constraint that operates at
+the likelihood level.  The three-dimensional
+$(\beta, l, b)$ posterior from synthetic injection-recovery
+(Figure~\ref{fig:direction_posterior}) recovers the injected
+direction $(l, b) = (264^\circ, 48^\circ)$ within a
+$68\%$ credible cone of $11^\circ$ and a $95\%$ cone of
+$19^\circ$, with a posterior median at
+$(240^\circ, 48^\circ)$---offset $16^\circ$ from truth.
+The CMB dipole direction falls inside the $95\%$ contour.
+The CatWISE direction lies near the posterior peak.  The
+CF4 bulk-flow direction, which has a distinct physical
+origin (gravitational infall rather than cosmological tilt),
+is offset $\sim 60^\circ$ from the recovered axis.
+
+We regard this as encouraging but not conclusive: the catalog
+pipeline operates on synthetic data with known injection
+parameters.  Application to real catalogs (Pantheon+,
+DES-SN5YR) requires survey-specific selection functions beyond
+the scope of this work.  A pixel-level Bianchi template
+analysis---building on the Saadeh~et~al.~\cite{Saadeh2016b}
+framework but adding the matter-dipole constraint---would
+constitute the decisive directional test.
+
+
+% ============================================================
+\section{The Dipole Cosmological Principle in defect language}
+\label{sec:DCP-defect}
+% ============================================================
+
+Our goal in this section is to construct the explicit algebraic
+dictionary between the DCP dynamical variables and the defect
+variables, demonstrating that the two frameworks are not
+alternative descriptions but complementary projections of the
+same underlying geometry.
+Figure~\ref{fig:DCP_defect_mapping} summarises the coverage
+progression from MES algebraic bounds through the defect-variable
+framework of this work to a full Bayesian template analysis.
+
+
+\subsection{The DCP metric and parameter identification}
+
+The Dipole Cosmological Principle (DCP) of Krishnan, Mondol \&
+Sheikh-Jabbari~\cite{Krishnan2022,Krishnan2023} is the locally
+rotationally symmetric, tilted Bianchi~V cosmology with metric
+\begin{equation}\label{eq:DCP-metric}
+ds^2 = -dt^2 + X^2(t)\,dz^2
+     + Y^2(t)\,e^{-2A_0 z}(dx^2 + dy^2)\,,
+\end{equation}
+where $X(t)$ and $Y(t)$ are the longitudinal and transverse
+scale factors and $A_0 > 0$ encodes spatial curvature.
+Decomposing $X = ae^{2b}$, $Y = ae^{-b}$ with volumetric
+scale factor $a = (XY^2)^{1/3}$ and mean Hubble parameter
+$H = \dot{a}/a$, the translation proceeds through three exact
+identifications (Appendix~\ref{app:DCP}):
+\begin{align}
+\Sigstd &= \frac{\dot{b}^2}{H^2}
+= \frac{\sigma_{\mathrm{DCP}}^2}{9H^2}
+=: \Omega_\sigma^{(\mathrm{DCP})}\,,
+\label{eq:Sig-DCP}\\
+\Otilt &= (1+w)\,\Omega_m\,\sinh^2\!\beta\,,
+\label{eq:Otilt-DCP}\\
+\Omega_K &= \frac{4A_0^2}{9H^2 X^2}\,.
+\label{eq:OmK-DCP}
+\end{align}
+The defect standardised shear is numerically identical to the DCP
+shear density parameter.  The tilt density parameter is the same
+expression used in the DCP sum rule.  The curvature is negative
+in the convention of Section~\ref{sec:BV-geom}, giving open
+spatial sections with the open comparator yielding
+$\Okaniso = 0$.
+
+
+\subsection{The momentum constraint as a dictionary entry}
+
+The DCP momentum constraint
+(Eq.~\eqref{eq:BV-momentum-DCP}) provides the critical coupling
+\begin{equation}\label{eq:mom-dict}
+\Sigstd = \frac{[(1+w)\Omega_m]^2}{4|\Omega_K|}\,\beta^2\,,
+\end{equation}
+fixing the ratio
+$\Sigstd/\Otilt = (1+w)\Omega_m/(4|\Omega_K|)$.  For
+$|\Omega_K| = 0.001$, the shear-to-tilt ratio is $\sim 79$;
+the defect budget is overwhelmingly shear-dominated, with tilt
+contributing only $\sim 1.2\%$.  For $|\Omega_K| = 0.005$ the
+ratio drops to $\sim 16$ and the tilt fraction rises to
+$\sim 6\%$.  This extreme sensitivity to curvature is a DCP
+prediction that the defect framework quantifies.
+
+
+\subsection{Mutual enrichment}
+
+The defect framework and the DCP address complementary aspects
+of the same physics.
+
+The defect framework contributes:
+type-by-type specialisation (the master identity applies to all
+nine Bianchi types, not just type~V); MES algebraic bounds
+that translate CMB multipoles into a shear ceiling
+independently of the specific Bianchi dynamics; the nonlinear
+$\Teff$ corrections ($\sim 0.8\%$ at S3); and the frame-
+attribution bias that identifies the acceleration content of
+the CMB dipole.
+
+The DCP contributes:
+time evolution through four coupled ODEs
+(Appendix~\ref{app:DCP}) governing $\dot{\Sigstd}$,
+$\dot{\Otilt}$, $\dot{\Omega}_K$, and $\dot{\beta}$;
+attractor analysis establishing that the tilt can grow even
+while the shear decays under the cosmic no-hair theorem; and
+multi-fluid structure (the radiation--matter relative tilt
+$\beta_m - \beta_r$ generates additional defect components
+invisible to the single-fluid DCP).
+
+
+\subsection{Five predictions from the combination}
+
+Five predictions emerge only from the combination of both
+frameworks, unavailable to either alone.
+
+\emph{Shear-to-tilt diagnostic.}
+The ratio
+$f_\sigma/f_{\mathrm{tilt}} = (1+w)\Omega_m/(4|\Omega_K|)$
+is a geometric observable: an independent measurement of the
+shear (via the quadrupole) and tilt (via the dipole)
+contributions would test the Bianchi type.
+
+\emph{MES ceiling on DCP initial conditions.}
+The MES bounds constrain DCP initial conditions at any epoch
+where CMB data are available, providing an algebraic ceiling
+that the DCP evolution equations cannot derive independently.
+
+\emph{Redshift-dependent filling fraction.}
+Under the DCP tilt instability, $\FF(z)$ exhibits a
+plateau-then-upturn profile: approximately constant for
+$0.5 \lesssim z \lesssim z_*$ and rising toward $z = 0$---a
+falsifiable prediction testable with redshift-binned dipole
+measurements from Euclid and DESI.
+
+\emph{Five-order-of-magnitude $\beta$-gap.}
+The maximum curvature-sourced tilt is
+$\beta_{\max}^{(\mathrm{curv})} \sim 10^{-7}$ (from the DCP
+constraint at $|\Omega_K| = 0.002$), while the anomaly
+amplitude is $\beta \sim 10^{-3}$---a gap of five orders of
+magnitude that the DCP tilt instability must bridge.
+
+\emph{Defect budget reallocation.}
+The cosmic no-hair theorem forces $\Sigstd \to 0$
+exponentially, but if the DCP tilt instability simultaneously
+drives $\Otilt$ upward, the total defect undergoes an internal
+transfer from shear to tilt, so that the late-time defect is
+overwhelmingly tilt-dominated ($f_{\mathrm{tilt}} \to 1$).
+
+
+\bigskip
+\noindent\emph{Scope note on the Tsagas bridge
+(Sections~\ref{sec:disc-tsagas} ff.).}\quad
+The material that follows connects the homogeneous defect
+framework to the perturbative tilted-FLRW programme of Tsagas
+and collaborators.  This connection is a \emph{discussion-level
+extrapolation} that lies outside the formal scope of the
+algebraic identity.  The homogeneous framework provides the tilt
+rapidity $\beta$ and the departure $x$; the Tsagas
+formulae---apparent deceleration
+$\hat{q}_0 = q_{0,\mathrm{true}} + \Delta q(\beta, d)$,
+peculiar Jeans scale $\lambda_J^{\mathrm{pec}}$, directional
+Hubble correction $\Delta H/H$---operate in the perturbative
+tilted-observer regime at $d \ll \lambda_H$ and require
+additional assumptions (survey selection function, calibrator
+angular distribution, single-stream flow validity) that have not
+been validated against observational data.  The pushforward
+posterior $\hat{q}_0 = 207$ with $95\%$ HPD $[154, 260]$ at
+$d = 40$ Mpc ($\hat{q}_0 \approx 1.15$ at $d = 200$ Mpc;
+Figure~\ref{fig:q0_pushforward}) is exact given
+$\beta$, but the physical interpretation---that this apparent
+deceleration ``explains'' measured local-versus-global tension in
+$q_0$---requires survey-level verification.  We present these
+extrapolations as testable hypotheses, not established
+conclusions.\bigskip
+
+
+% === INLINED: ch08_solver_and_mechanisms.tex ===
+% ============================================================
+% ch08_solver_and_mechanisms.tex
+% New discussion sections for ch08
+% Part of: Tetrad-Based Departure Decomposition (Jiwon Park)
+% Session S6 draft — 2026-03-30
+% ============================================================
+
+
+\section{Species-resolved solver validation}
+\label{sec:disc-solver}
+
+The Phase~1.0 Bianchi Boltzmann solver
+(Chapter~\ref{ch:results}) provides the first
+species-resolved decomposition of the CMB quadrupole power
+$D_2$ within the departure parameter framework.  We now discuss the
+principal results and their implications for the departure
+parameter pipeline.
+
+
+\subsection{Neutrino dominance of the quadrupole}
+\label{sec:disc-nu-dom}
+
+The most consequential result of the solver is the
+discovery that neutrinos contribute $98.4\%$ of the total
+$D_2$ at recombination, with a neutrino-to-photon
+quadrupole ratio $N_2/F_2 = 28$
+(Section~\ref{sec:nu-dominance}).  The physical mechanism
+is the asymmetry between Thomson-suppressed photons and
+free-streaming neutrinos under a common shear source
+(Proposition~\ref{prop:nu-dominance}): the shear
+$\sigma_{ab}$ drives both species' quadrupoles, but
+Thomson scattering suppresses the photon response by a
+factor $\dot{\tau}/H \sim 40$ before recombination, while
+neutrinos accumulate quadrupole power without collisional
+damping.
+
+This result has three implications for the departure
+framework.  First, the calibrated transfer function $T_2$
+that maps $\Sigstd$ to $D_2$ is dominated by the neutrino
+channel: $T_2 \approx T_{2,\nu}$ to $98\%$ accuracy,
+and the photon contribution is a $1.6\%$ correction.
+The VER06 production value $\ln \mathcal{B}_{\rm tilt}
+= +25.29 \pm 0.07$ therefore constrains primarily the
+neutrino anisotropic stress $\pi_\nu^{ab}$, not the
+photon anisotropy that is directly observed.  Second, the
+$\Teff$ closure for neutrinos is exact, not approximate:
+since neutrinos are collisionless after decoupling, the
+tangency diagnostic $D_{\nu,\geq 2} = 0$
+(Eq.~\ref{eq:D-diagnostic}), and the finite-dimensional
+$\Teff$ manifold is an invariant submanifold of the full
+Boltzmann dynamics.  Third, the neutrino dominance is
+robust against the choice of $\ell_{\rm max}$, the
+recombination model, and the reionisation optical depth:
+the ratio $N_2/F_2$ varies by less than $3\%$ across the
+parameter ranges tested by the solver.
+
+
+\subsection{Oracle deviation budget}
+\label{sec:disc-oracle}
+
+The FLRW oracle (Section~\ref{sec:flrw-oracle}) provides
+an independent validation target.  The oracle computes
+$D_2 = 931~\mu\mathrm{K}^2$ for the fiducial Planck~2018
+cosmology, which is $8\%$ below the CAMB reference value
+of $1018~\mu\mathrm{K}^2$.  The deviation is accounted for
+by two identified sources: the analytic transfer function
+$\Psi(k, \eta)$ misses the late integrated Sachs--Wolfe
+contribution ($\sim\!5\%$), and the absence of neutrino
+anisotropic stress feedback on the gravitational potential
+accounts for the remaining $\sim\!3\%$.
+
+The oracle is a toy model, not a production tool.  Its
+role is to provide a closed-form baseline against which
+the Bianchi solver can be tested in the FLRW limit.  The
+AniCLASS code~\cite{VicentePereiraPitrou2026}, compiled
+from source and validated against $15$ grid points across
+Bianchi types VII$_h$ and IX, serves as the primary
+external validator.  At the tested grid points, the
+solver and AniCLASS agree on the type-dependent transfer
+$D_2(\Sigma^2)$ to within $5\%$ for BVIIh and to within
+the numerical noise floor for BIX.  The AniCLASS
+comparison also confirms the BVIIh cascade effect:
+$D_2(\mathrm{BVIIh}) < D_2(\mathrm{BI})$ at fixed
+$\Sigma^2$, because the curvature coupling leaks power
+from $\ell = 2$ to higher multipoles
+(Section~\ref{sec:bviih-cascade}).
+
+
+\subsection{Linearity and the FLRW recovery}
+\label{sec:disc-linearity}
+
+The solver validates the linearity $D_2 \propto \Sigma^2$
+over four decades in $\Sigma^2$ ($10^{-12}$ to $10^{-6}$)
+with a relative spread below $0.1\%$
+(Section~\ref{sec:solver-linearity}).  The FLRW limit is
+recovered exactly: at $\Sigma^2 = 0$, all five
+observables ($D_2$, $E_2$, $F_\ell$, $N_\ell$, $E_\ell$)
+vanish to machine precision
+(Section~\ref{sec:flrw-recovery}).  These two properties
+together confirm that the solver introduces no spurious
+anisotropy and that the transfer function $T_2 = D_2 /
+\Sigma^2$ is a well-defined constant in the linear regime.
+
+The reionisation correction $\exp(-2\tau_{\rm reio})$
+with $\tau_{\rm reio} = 0.050$ applies uniformly to the
+$\ell = 2$ power, and the Bayes factor $\ln \mathcal{B}$
+is exactly invariant under reionisation
+(Section~\ref{sec:reionisation-invariance}).  The
+polarisation feedback---the back-reaction of the E-mode
+quadrupole on the temperature quadrupole through the
+Thomson polarisation source $\Pi_{ab}$---is $0.006\%$, a
+correction that is negligible at any foreseeable precision.
+
+
+% ============================================================
+\section{Mechanism attribution after Clarkson--Maartens}
+\label{sec:disc-mechanisms}
+% ============================================================
+
+The departure parameter pipeline establishes a
+phenomenological detection of nonzero tilt: the Bayes
+factor $\ln \mathcal{B}_{\rm tilt} = +25.29 \pm 0.07$
+measures the statistical weight of the data against the
+untilted null hypothesis, without assuming a specific
+physical mechanism for the tilt.  We now assess the
+theoretical status of the candidate mechanisms as of
+March~2026, in light of two developments that have
+reshaped the field.
+
+
+\subsection{The Tsagas fast-growth mechanism: killed}
+\label{sec:disc-tsagas-killed}
+
+Clarkson \& Maartens~\cite{ClarksonMaartens2026}
+demonstrated that the enhanced peculiar-velocity growth
+claimed by Tsagas and
+collaborators~\cite{Tsagas2010,TsagasKadiltzoglou2013}---$v
+\propto a^{3/2}$ to $a^2$ on super-Hubble scales during
+matter domination, compared to the standard $v \propto
+a^{1/2}$---arises from treating constraint-determined
+quantities as independent sources in the 1+3 covariant
+perturbation equations.  When the constraint equations are
+imposed consistently, the standard perturbative result
+$v \propto t^{1/3}$ (equivalently $v \propto a^{1/2}$)
+is recovered exactly.
+
+The Clarkson--Maartens argument is technically decisive: it
+identifies the specific algebraic step at which the Tsagas
+derivation violates the Einstein constraints, and shows
+that restoring consistency eliminates the enhanced growth.
+No rebuttal has been filed as of March~2026, despite a
+vigorous defence of the fast-growth mechanism by
+Past{\'e}n \& Tsagas~\cite{PastenTsagas2026} published
+six weeks before the Clarkson--Maartens preprint.
+
+For the departure framework, the consequence is
+straightforward: the Tsagas mechanism cannot be invoked to
+explain the observed dipole excess through enhanced
+peculiar velocities in a perturbed FLRW setting.  The
+tilted-observer programme of
+Section~\ref{sec:disc-tsagas}---specifically the apparent
+deceleration $\tilde{q}$ and its connection to the
+$H_0$ tension---remains valid as a kinematic framework,
+but the dynamical mechanism (fast peculiar-velocity
+growth) that was supposed to drive $\tilde{q}$ away
+from $q$ is no longer available.
+
+
+\subsection{The Krishnan--Mondol tilt instability: survives}
+\label{sec:disc-krishnan}
+
+The dipole cosmology programme of Krishnan, Mondol \&
+Sheikh-Jabbari~\cite{Krishnan2023} operates in a
+fundamentally different mathematical setting from the
+Tsagas programme.  Where Tsagas works within perturbed
+FLRW using the 1+3 covariant formalism, Krishnan works
+with exact Bianchi~V solutions described by a
+finite-dimensional ODE system.  The Clarkson--Maartens
+critique targets inconsistencies in the perturbative
+truncation, not in the exact dynamics; the Krishnan
+framework is therefore unaffected.
+
+The key result of the dipole cosmology programme is that
+the cosmic no-hair theorem forces metric shear
+$\sigma \to 0$ during $\Lambda$-dominated expansion, but
+does \emph{not} force the fluid tilt $\beta \to 0$.  The
+tilt rapidity can grow or persist at late times, driven by
+the shear--tilt decoupling that occurs when
+$\Lambda$ dominates the expansion.  In the multi-fluid
+extension~\cite{Krishnan2023}, the relative flow between
+radiation and matter generically grows at late times---a
+behaviour that naturally explains why the matter dipole
+(traced by galaxy surveys) exceeds the CMB dipole.
+
+For the departure framework, the Krishnan tilt instability
+provides a viable dynamical mechanism that is independent
+of the Tsagas programme and compatible with the
+phenomenological detection.  The tilt instability does not
+by itself predict the amplitude $\beta \sim 10^{-3}$:
+that requires specifying initial conditions at decoupling,
+which is a free parameter in the exact Bianchi~V system.
+The departure pipeline constrains $\beta$ from the data;
+the Krishnan framework provides the theoretical context
+in which a nonzero $\beta$ is dynamically natural.
+
+
+\subsection{The khronon field as sole surviving standard source}
+\label{sec:disc-khronon}
+
+Mart{\'i}n, Skordis, Bartlett, Desmond, Ferreira \&
+Yasin~\cite{MartinSkordis2025} systematically evaluated
+four candidate tilt sources within Bianchi~V: spatial
+curvature, heat flow, electromagnetic fields, and a
+khronon field (the hypersurface-orthogonal limit of
+Einstein-aether theory).  Three of the four fail to
+produce the observed dipole amplitude by five to thirteen
+orders of magnitude under current observational constraints.
+The curvature-driven mechanism---the one most closely
+related to the departure parameter
+$\Okaniso$---yields $\beta \sim 10^{-13}$ for dust,
+far below the observed $\beta \sim 10^{-3}$.
+
+Only the khronon field, acting as dust-like dark matter
+with an independent four-velocity, achieves
+$\beta \sim 2$--$4 \times 10^{-3}$ within the
+post-GW170817 parameter space.  The viable parameter
+window requires $\Omega_K \sim \Omega_f$ (the khronon
+constitutes a significant fraction of the total matter
+density) and adiabatic initial conditions with
+$\delta_K \sim 5 \times 10^{-6}$, set by the CMB
+quadrupole shear bound.
+
+This result does not invalidate the departure parameter
+detection; it constrains the interpretation.  The Bayes
+factor $\ln \mathcal{B}_{\rm tilt} = +25.29$ measures the
+phenomenological signal for nonzero tilt across seven
+data channels.  The Mart{\'i}n--Skordis analysis narrows
+the physical mechanism that could produce this signal.
+Detection and mechanism attribution are separable
+questions: the pipeline establishes the former; the
+theoretical analysis constrains the latter.
+
+\begin{remark}[Detection versus mechanism]
+\label{rem:detection-mechanism}
+The departure parameter framework is mechanism-agnostic
+by construction: the master identity
+(Eq.~\ref{eq:master-identity}) is an algebraic
+relation among geometry-frame kinematic quantities, and
+the Bayesian evidence computation does not assume a
+specific tilt source.  The Mart{\'i}n--Skordis result
+that only the khronon field achieves $\beta \sim
+10^{-3}$ under standard ancillary constraints narrows
+the interpretation of the detection but does not
+weaken the detection itself.
+\end{remark}
+
+
+\subsection{The separation principle}
+\label{sec:disc-separation}
+
+The three developments---Clarkson--Maartens killing Tsagas,
+Krishnan surviving independently, and Mart{\'i}n--Skordis
+narrowing the source to the khronon---establish a clean
+separation between three levels of the analysis:
+\emph{(i)}~the phenomenological detection of nonzero tilt
+(this work, $\ln \mathcal{B} = +25.29$);
+\emph{(ii)}~the dynamical viability of persistent tilt at
+late times (Krishnan tilt instability, exact Bianchi~V);
+and \emph{(iii)}~the microscopic source that generates the
+tilt (khronon field, or competing exotic mechanisms such
+as QCD axion-induced isocurvature).
+
+The departure framework operates at level~(i) and provides
+the observational anchor for levels~(ii) and~(iii).  The
+species-resolved solver of
+Section~\ref{sec:multi-species-teff} adds a diagnostic
+capability: by tracking each species' quadrupole
+independently, the solver can distinguish tilt signatures
+that affect all species equally (as in the curvature-driven
+mechanism) from those that create differential tilt between
+radiation and matter (as in the Krishnan multi-fluid
+instability or the khronon field).  This distinction is not
+accessible to the scalar-amplitude pipeline of VER06 but
+is a primary target of the direction-dependent programme
+(Section~\ref{sec:solver-programme}).
+
+
+% ============================================================
+\section{Multi-fluid implications for the framework}
+\label{sec:disc-multi-fluid}
+% ============================================================
+
+The species-resolved framework of
+Section~\ref{sec:multi-fluid} extends the single-fluid
+departure decomposition to a realistic cosmological
+medium.  We now discuss the implications of this extension
+for the methodological limitations identified in
+Section~\ref{sec:disc-limitations}.
+
+
+\subsection{From single-fluid to species-resolved tilt}
+\label{sec:disc-species-tilt}
+
+The safe-route tilt bound
+$\beta \leq \varepsilon_1/(1 + \eta_{\dot{u}})$
+(Section~\ref{sec:corrected-bound}) was derived under the
+single-barotropic-fluid assumption, which gives
+$\eta_{\dot{u}} = 1/12$ through the tilt--acceleration
+relation $\dot{u}_a = [w/(3(1+w))]\,\tilde{D}_a \ln
+\rho$.  In a multi-component universe, the
+four-acceleration $\dot{u}_a$ retains independent degrees
+of freedom not captured by the tilt rapidity alone
+(Section~\ref{sec:disc-limitations}).
+
+The species-resolved framework
+(Section~\ref{sec:multi-fluid}) provides the natural
+language for this extension.  Each species carries its own
+tilt through the dipole $\Theta^{(s)}_a$
+(Eq.~\ref{eq:dipole-drift}), and the total
+four-acceleration receives contributions from all species
+through the Einstein equations.  The single-fluid
+$\eta_{\dot{u}} = 1/12$ is replaced by a species-weighted
+effective correction that depends on the relative tilts
+of radiation, matter, and dark energy.  Deriving the
+explicit multi-fluid bound requires specifying the
+inter-species tilt angles---additional free parameters that
+are not constrained by current data---and is deferred to
+the direction-dependent programme.
+
+For the present scalar-amplitude analysis, the single-fluid
+bound remains the tightest (most constraining) available,
+and the frame-attribution bias $\eta_{\dot{u}} \approx
+8.3\%$ reported in Section~\ref{sec:frame-bias} is a
+conservative upper bound on the multi-fluid correction.
+
+
+\subsection{The local-patch connection}
+\label{sec:disc-local-patch}
+
+The peculiar velocity $v_{\rm loc}$ of the Local Group
+relative to the CMB rest frame enters the departure
+analysis through the observer-frame boost
+(Section~\ref{sec:frame-problem}).  In the species-resolved
+framework, this local motion is encoded in the photon
+dipole $\Theta^{(\gamma)}_a$ and affects only the
+temperature power spectrum (TT) at $\ell = 1$; it does not
+source E-mode polarisation.  Cosmological tilt, by
+contrast, affects both TT and EE through the pre-recombination
+anisotropic stress
+(Sections~\ref{sec:thomson-coupling}--\ref{sec:nu-dominance}).
+
+This TT-vs-EE distinction provides a clean separation
+between local and cosmological contributions to the
+observed dipole.  The Bayesian filling fraction
+$\mathcal{F}_{\rm Bayes} = 0.093 \pm 0.025$
+(Section~\ref{sec:filling-fraction}) can be decomposed
+into a cosmological component (constrained by the
+multi-channel evidence) and a local component (absorbed by
+the observer-frame boost).  The CosmicFlows-4 bulk flow
+of $419 \pm 36$~km/s at
+$200\,h^{-1}$~Mpc~\cite{Watkins2023} is consistent with
+the local component but exceeds the $\Lambda$CDM
+expectation by $\sim\!3\sigma$, suggesting that part of
+the signal may have a cosmological origin.
+
+The species-resolved solver can quantify this
+decomposition by computing the differential response of
+$D_2$ to local versus cosmological tilt sources.  In the
+linear regime, the two contributions add in quadrature:
+\begin{equation}\label{eq:D2-local-cosmo}
+D_2 = D_{2,\rm cosmo}(\Sigstd, \beta)
+    + D_{2,\rm local}(v_{\rm loc}, W_R)
+    + O(\text{cross-terms})\,,
+\end{equation}
+where $W_R$ is the local-patch window function
+(Section~\ref{sec:quadratic-sources}).  The cross-terms
+vanish at linear order because the cosmological shear and
+the local velocity source different angular
+patterns on the sky.  At second order, the cross-terms
+(Eq.~\ref{eq:local-patch-2nd}) are of order
+$W_R\,(\Sigma^2)^{1/2}\,(v_{\rm loc}/c)
+\sim 10^{-6}$, which is negligible.
+
+
+\subsection{Implications for the $H_0$ tension}
+\label{sec:disc-H0}
+
+The tilted Hubble rate
+(Eq.~\ref{eq:tilted-H-tsagas}) predicts a systematic
+offset between the Hubble constant measured by a tilted
+observer and the background expansion rate:
+$H_{\rm tilt} / H_{\rm FLRW} = 1 + \tanh^2\!\beta\,
+\Sigstd + O(\beta^4)$.  For the VER06 production values
+($\beta = 1.360 \times 10^{-3}$,
+$\Sigstd \sim 10^{-5}$), the fractional offset is
+\begin{equation}\label{eq:H0-offset}
+\frac{\Delta H_0}{H_0}
+\sim \beta^2\,\Sigstd
+\sim (1.4 \times 10^{-3})^2 \times 10^{-5}
+\sim 2 \times 10^{-11}\,,
+\end{equation}
+which is many orders of magnitude below the $\sim\!8\%$
+$H_0$ discrepancy between the Planck CMB value
+($67.4 \pm 0.5$~km/s/Mpc) and the SH0ES distance-ladder
+value ($73.0 \pm 1.0$~km/s/Mpc).
+
+The departure framework therefore does not resolve the
+$H_0$ tension through the tilted Hubble rate mechanism
+alone---the detected tilt is too small by nine orders of
+magnitude.  This negative result is itself informative: it
+rules out the possibility that the observed cosmic dipole
+anomaly and the $H_0$ tension share a common origin in a
+global cosmological tilt, at least within the Bianchi
+framework and at the currently detected amplitude.
+
+Alternative routes through which anisotropy could affect
+$H_0$ measurements---such as direction-dependent Hubble
+diagrams, anisotropic void models, or backreaction-induced
+scale dependence (Section~\ref{sec:buchert-equations})---remain
+open and are structurally distinct from the global tilt
+mechanism.  The species-resolved solver provides the
+infrastructure to test these alternatives once
+direction-dependent data become available.
+
+% === END INLINED ===
+
+% === INLINED: ch08_sec83_tsagas_expanded.tex ===
+% ============================================================
+% ch08_sec83_tsagas_expanded.tex
+% Expanded §8.3: The Tsagas tilted-observer programme
+% Replaces existing sec:disc-tsagas (lines 299–366 of ch08)
+% Depends on: ch02_sec7 (§2.7), TF-T03/T06 results, TF-R03/R04 data
+% ============================================================
+
+\section{The Tsagas tilted-observer programme}
+\label{sec:disc-tsagas}
+
+Our goal in this section is to connect the homogeneous defect
+framework developed in Chapters~\ref{ch:framework}--\ref{ch:results}
+to the perturbative tilted-FLRW programme of
+Tsagas~\cite{Tsagas2010,TsagasKadiltzoglou2013,Tsagas2021_Jeans},
+which provides the dynamical mechanism that the algebraic defect
+identity lacks: a relativistic explanation for why observers
+embedded in bulk peculiar flows perceive different kinematics from
+the background Hubble flow.  Section~\ref{sec:tilted-kinematics}
+established the formal bridge; here we confront the theoretical
+predictions with observational data across five independent probes.
+
+
+% ────────────────────────────────────────────────────────────
+\subsection{The tilted-FLRW programme (2010--2026)}
+\label{sec:disc-tsagas-programme}
+
+The programme builds on a single physical insight: the energy flux
+$q_a = (\rho + p)v_a$ carried by a tilted observer gravitates in
+general relativity but has no Newtonian counterpart.  This term
+enters the tilted Raychaudhuri equation through
+$D^a\hat{A}_a$---the divergence of the matter-frame
+four-acceleration---and modifies the deceleration parameter
+measured by any observer not at rest with respect to the Hubble flow.
+The master relation (Section~\ref{sec:tilted-raych-defect},
+equation~\eqref{eq:delta-q-exact}) is
+\begin{equation}\label{eq:disc-qtilde}
+\tilde{q}
+= q - \frac{1}{3H^2}\,D^a\hat{A}_a\,.
+\end{equation}
+On sub-Hubble scales ($d \ll \lambda_H$), the self-consistent
+closure $|\vartheta|/H = \beta\lambda_H/d$
+(equation~\eqref{eq:vartheta-estimate}; conditional on a single
+coherent monopolar peculiar flow) gives the defect-variable
+form
+\begin{equation}\label{eq:disc-Dq}
+\Delta q(\beta, d)
+= \frac{\beta}{9}
+  \Bigl(\frac{\lambda_H}{d}\Bigr)^{\!3}\,,
+\end{equation}
+where $\beta$ is the tilt rapidity constrained by the defect
+identity and $d$ is the comoving survey depth.  The cubic scale
+dependence produces enormous amplification: at
+$d = 100\;\mathrm{Mpc}$, the factor
+$(\lambda_H/d)^3 \approx 8.8 \times 10^4$; at
+$d = 300\;\mathrm{Mpc}$, it drops to
+$\sim 3.3 \times 10^3$.
+
+\emph{Velocity growth.}
+The same energy-flux feedback drives the peculiar velocity
+growth law.  Tsagas \& Kadiltzoglou~\cite{TsagasKadiltzoglou2013}
+showed that, on an Einstein--de~Sitter background, the growth
+index satisfies $p^2 - (1/3)p - 2/3 = 0$, giving $p = 1$ and
+$v \propto a^{3/2}$ (the ``GR minimum''); the
+long-wavelength limit gives $v \propto a^2$
+(Section~\ref{sec:tilted-raych-defect},
+Remark~\ref{rem:scale-hierarchy}).
+Both exceed the Newtonian $v \propto a^{0.69}$
+($p = 0.457$ from $p^2 + p - 2/3 = 0$) by a growth-index
+ratio of $\sim\!2$--$4$.  The cumulative enhancement from
+matter--radiation equality to $z = 0$ is a factor of
+$\sim\!750$, qualitatively explaining why the CF4 bulk flow at
+$200\,h^{-1}\;\mathrm{Mpc}$ exceeds $\Lambda$CDM predictions
+at $4.8\sigma$~\cite{Watkins2023}.
+
+\emph{The peculiar Jeans length.}
+The scale at which the apparent deceleration changes sign defines
+$\lambda_J^{\mathrm{pec}}
+= \lambda_H(\beta/(9q))^{1/3}$
+(equation~\eqref{eq:lambda-J-defect}; conditional on the
+self-consistent closure and a fixed background $q$).  At the S3 anomaly
+amplitude ($\beta = 1.36 \times 10^{-3}$, $q = 1/2$):
+$\lambda_J^{\mathrm{pec}} \approx 298\;\mathrm{Mpc}$
+(Table~\ref{tab:pec-jeans}), coinciding with the CF4 measurement
+depth.  Below this scale, tilted observers in contracting flows
+perceive $\tilde{q} < 0$; above it, all observers agree on $q$.
+
+
+% ────────────────────────────────────────────────────────────
+\subsection{Apparent deceleration as a defect observable}
+\label{sec:disc-apparent-q}
+
+The directional structure of~\eqref{eq:disc-Dq} is dipolar:
+$\tilde{q}(\hat{n}) = q + \Delta q_{\mathrm{dip}}\cos\theta$,
+where $\theta$ is the angle between the line of sight and the
+tilt direction.  Three falsifiable predictions follow:
+\emph{(a)}~the dipole is aligned with the CMB dipole direction;
+\emph{(b)}~the amplitude decays with redshift; and
+\emph{(c)}~the monopole $q_m$ is consistent with zero
+acceleration.
+
+\emph{Colin et~al.\ (2019).}
+A maximum-likelihood fit to 740 JLA SNe Ia parametrised as
+$q_0(\hat{n}) = q_m + q_d\,(\hat{n}\cdot\hat{d})\,e^{-z/S}$
+yields $q_d = -8.03$, $S = 0.0262$, $q_m = -0.157$ at
+$3.9\sigma$ rejection of isotropy~\cite{Colin2019}.  All three
+Tsagas predictions are confirmed: dipole aligned with the CMB
+direction, exponential redshift decay (characteristic depth
+$d_S = cS/H_0 = 117\;\mathrm{Mpc}$), and $q_m$ consistent with
+zero at $1.4\sigma$.
+
+\emph{Translation to $\beta$.}
+Equating the Colin amplitude at a reference redshift $z_{\mathrm{ref}}$
+to the Tsagas formula~\eqref{eq:disc-Dq}, the tilt rapidity is
+\begin{equation}\label{eq:disc-betaSNe}
+\beta_{\mathrm{SNe}}
+= 9\,|q_d|\,z_{\mathrm{ref}}^3\,e^{-z_{\mathrm{ref}}/S}\,.
+\end{equation}
+At $z_{\mathrm{ref}} = 0.05$ ($d = 222\;\mathrm{Mpc}$, the JLA
+median depth):
+$\beta_{\mathrm{SNe}} = 1.34 \times 10^{-3}$, consistent
+with the CF4 value
+$\beta_{\mathrm{CF4}} = (1.334 \pm 0.267) \times 10^{-3}$
+within the $\sim\!20\%$ CF4 uncertainty
+(Table~\ref{tab:colin-beta}; Figure~\ref{fig:colin_beta}).  The agreement is
+$z_{\mathrm{ref}}$-dependent: at $z = 0.04$ the ratio
+$\beta_{\mathrm{SNe}}/\beta_{\mathrm{CF4}} = 0.75$; at $z = 0.06$
+it is $1.18$.  Both the $\beta$ translation and the Jeans length
+evaluation share the self-consistent closure
+(equation~\eqref{eq:vartheta-estimate}); the match therefore
+tests the Tsagas $d^{-3}$ scaling against the Colin exponential
+parametrisation, not the absolute tilt amplitude.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{Translation of the Colin et~al.\ (2019) dipolar
+deceleration to the tilt rapidity $\beta$ via the Tsagas
+formula~\eqref{eq:disc-Dq}, evaluated at six reference
+redshifts.  The CF4 value
+$\beta_{\mathrm{CF4}} = 1.334 \times 10^{-3}$ is shown
+for comparison.}
+\label{tab:colin-beta}
+\begin{tabular}{ccccl}
+\toprule
+$z_{\mathrm{ref}}$ & $d_{\mathrm{ref}}$ (Mpc) &
+  $|\Delta q|_{\mathrm{Colin}}$ &
+  $\beta_{\mathrm{SNe}}$ &
+  $\beta_{\mathrm{SNe}}/\beta_{\mathrm{CF4}}$ \\
+\midrule
+0.02 &  89 & 3.74 & $2.7 \times 10^{-4}$ & 0.20 \\
+0.03 & 133 & 2.56 & $6.2 \times 10^{-4}$ & 0.47 \\
+\textbf{0.05} & \textbf{222} & \textbf{1.19} &
+  $\mathbf{1.34 \times 10^{-3}}$ & \textbf{1.00} \\
+0.08 & 356 & 0.38 & $1.75 \times 10^{-3}$ & 1.31 \\
+0.10 & 445 & 0.18 & $1.59 \times 10^{-3}$ & 1.19 \\
+0.15 & 667 & 0.03 & $7.9 \times 10^{-4}$  & 0.60 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\emph{Sah et~al.\ (2025).}
+The analysis of 1533 Pantheon+ SNe
+Ia reports a dipolar $H_0$ variation exceeding
+$1.5\;\mathrm{km\,s}^{-1}\mathrm{Mpc}^{-1}$ in the shell
+$0.023 < z < 0.15$ at $>5\sigma$ in all reference frames
+(heliocentric, CMB, Local Group)~\cite{Sah2025}.  The Tsagas
+formula predicts $\Delta H \approx 1.3\;\mathrm{km\,s}^{-1}
+\mathrm{Mpc}^{-1}$ at the inner edge of the Sah shell
+($z = 0.023$, $d \approx 102\;\mathrm{Mpc}$)---marginally
+below the reported threshold but order-of-magnitude consistent.
+
+\emph{Channel independence.}
+Does the dipolar deceleration provide a new evidence channel?
+The corrected Fisher information comparison (TF-N02) gives
+$I_i/I_c \approx 0.6$ at $z = 0.05$---\emph{comparable} to the
+CF4 channel, not subdominant.  The decisive factor is the high
+physical correlation: both channels probe the same $\beta$ at
+similar depths, giving $\rho_{ci} \gtrsim 0.8$ and
+$\Delta\ln\mathcal{B} < 0.1$.  We therefore do not add
+channel~(i) to the evidence computation.  The dipolar deceleration
+is a powerful \emph{consistency check} and a \emph{test of
+scale dependence} ($\Delta q \propto d^{-3}$), not an
+independent parameter constraint.
+
+
+% ────────────────────────────────────────────────────────────
+\subsection{The progenitor age-bias route}
+\label{sec:disc-age-bias}
+
+An independent astrophysical programme arrives at the same
+qualitative conclusion---the present universe may not be
+accelerating---through an entirely different mechanism.
+
+\emph{The Yonsei result.}
+Chung et~al.~\cite{Chung2025} establish a $5.5\sigma$ correlation
+between post-standardisation Hubble residual and host-galaxy
+stellar population age at $s = -0.030 \pm 0.004\;\mathrm{mag\,
+Gyr}^{-1}$ from $>300$ hosts across $z < 0.45$.
+Son et~al.~\cite{Son2025} apply this correction to the
+Pantheon+ and DES-SN5YR catalogues, combined with DESI~DR2 BAO
+and Planck+ACT CMB data.  DESI BAO + CMB alone
+(no supernovae) prefer a $w_0w_a$CDM cosmology with
+$w_0 = -0.42$, $w_a = -1.75$, $\Omega_m = 0.353$, yielding
+$q_0 = +0.092 \pm 0.20$---marginally positive (decelerating)
+and inconsistent with $\Lambda$CDM at $3.1\sigma$.  After
+age-bias correction, the combined SN+BAO+CMB analysis shows
+$> 9\sigma$ tension with $\Lambda$CDM.
+
+We note that the Son et~al.\ $q_0$ is obtained within the
+$w_0w_a$CDM parametrisation; alternative dark-energy
+parametrisations or the standard $\Lambda$CDM model return
+$q_0 = -0.55$.  The shift in $q_0$ is therefore
+model-dependent at the $\sim\!0.6$ level.
+
+\emph{The three-term decomposition}
+(Figure~\ref{fig:q_decomposition}).
+In the most general case, the observed deceleration parameter
+from SNe Ia contains three contributions:
+\begin{equation}\label{eq:disc-q-decomp}
+q_0^{(\mathrm{obs})}
+= q_0^{(\mathrm{true})}
+  + \Delta q^{(\mathrm{tilt})}(\beta, d, \hat{n})
+  + \Delta q^{(\mathrm{age})}(z)\,.
+\end{equation}
+Standard $\Lambda$CDM sets both corrections to zero, yielding
+$q_0 = -0.55$.  The Tsagas programme sets
+$\Delta q^{(\mathrm{age})} = 0$ and attributes the full offset to
+tilt.  The Yonsei programme sets
+$\Delta q^{(\mathrm{tilt})} = 0$ and attributes it to age bias.
+If both operate, the budget must close:
+$\Delta q^{(\mathrm{tilt})} + \Delta q^{(\mathrm{age})}
+\approx 0.64$ for the BAO+CMB prediction to hold.
+
+At $d = 222\;\mathrm{Mpc}$, the Tsagas formula gives
+$\Delta q^{(\mathrm{tilt})} \approx 1.19$, exceeding the total
+required offset by a factor $\sim\!1.9$.  This overproduction
+reflects the breakdown of the self-consistent closure at
+$d \lesssim 300\;\mathrm{Mpc}$ :
+the $d^{-3}$ formula overpredicts the Colin amplitude by
+$\sim\!2\times$ at these depths.  At $d \sim 350$--$400\;
+\mathrm{Mpc}$, $\Delta q^{(\mathrm{tilt})} \sim 0.3$--$0.5$,
+and the budget closes with a residual
+$\Delta q^{(\mathrm{age})} \sim 0.15$--$0.35$.
+
+\emph{Distinguishability.}
+The two contributions are partially degenerate but
+separable through five observational discriminants
+(Table~\ref{tab:disc-discriminants}).
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Observational discriminants between the age-bias
+(Route~A) and tilt (Route~B) contributions to the apparent
+acceleration.  Each test exploits a qualitative difference in the
+predicted $q_0$ residual pattern.}
+\label{tab:disc-discriminants}
+\begin{tabular}{lcc}
+\toprule
+Test & Route A (age bias) & Route B (tilt) \\
+\midrule
+Directional dependence & Isotropic & Dipolar \\
+Redshift scaling & Grows with $z$ & Falls as $d^{-3}$ \\
+Evolution-free subsample & Signal vanishes & Signal persists \\
+BAO confirmation & Independent test & Independent test \\
+Host-age--$\hat{n}$ cross & Correlated & Uncorrelated \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The fifth row is the sharpest discriminant.  If the age bias
+dominates, the Hubble residual should correlate with host age
+but not with $\cos\theta$.  If the tilt dominates, the residual
+should correlate with direction but not host age.  A bivariate
+fit in (host age, $\cos\theta$) from the Rubin LSST sample
+($>20{,}000$ SN host galaxies with measured ages and full-sky
+coverage) can break the degeneracy on the timescale of 2028--2030.
+
+\emph{Peculiar Jeans length at $q = 0.09$.}
+If the Son et~al.\ $q_0^{(\mathrm{true})} = +0.09$ applies,
+$\lambda_J^{\mathrm{pec}} = 525\;\mathrm{Mpc}$---$77\%$ larger
+than the EdS value ($298\;\mathrm{Mpc}$) because a smaller
+$q$ is easier to overcome.  The contamination zone extends well
+beyond the CF4 scale, consistent with the Sah et~al.\ finding
+that the SN dipole persists out to $z \sim 0.15$
+($d \sim 670\;\mathrm{Mpc}$).
+
+
+% ────────────────────────────────────────────────────────────
+\subsection{The tilted Hubble rate and the $H_0$ tension}
+\label{sec:disc-tilted-H0}
+
+The tilted Hubble rate $\hat{H} = H\cosh\beta$ produces a
+fractional correction $\Delta H/H = \cosh\beta - 1 \approx
+\beta^2/2 \approx 8.9 \times 10^{-7}$ in the homogeneous Bianchi
+framework (equation~\eqref{eq:H-ratio-defect}).  The $H_0$ tension
+$\Delta H = 5.6\;\mathrm{km\,s}^{-1}\mathrm{Mpc}^{-1}$
+($8.4\%$) is five orders of magnitude beyond this reach.
+
+The perturbative Tsagas extension
+(equation~\eqref{eq:tilted-H-tsagas}; conditional on the
+same self-consistent closure) introduces the sub-Hubble
+amplification:
+\begin{equation}\label{eq:disc-dH}
+\frac{\hat{H} - H}{H}
+\approx \frac{\beta}{3}\,\frac{\lambda_H}{d}\,,
+\end{equation}
+which is scale-dependent and can be significant at local depths.
+Table~\ref{tab:disc-tilted-H0} and Figure~\ref{fig:tilted_H0_depth} evaluate this correction for
+the characteristic depths of the major $H_0$ measurement
+programmes.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Tilted Hubble correction $\Delta H$ at the effective
+depth of various $H_0$ methods, using $\beta = 1.334 \times
+10^{-3}$ (CF4).  Values give the \emph{maximum} directional
+correction ($\cos\theta = 1$); the sky-averaged contribution
+depends on the angular distribution of calibrators.
+The SH0ES--Planck tension is
+$\Delta H_0 = 5.6\;\mathrm{km\,s}^{-1}\mathrm{Mpc}^{-1}$
+($8.4\%$).}
+\label{tab:disc-tilted-H0}
+\begin{tabular}{lcccc}
+\toprule
+Scale & $d$ (Mpc) & $\Delta H/H$ &
+  $\Delta H$ (km/s/Mpc) &
+  \% of tension \\
+\midrule
+Cepheid hosts    &  30 & 6.6\% & 4.4  & 79\% \\
+SH0ES median     &  50 & 4.0\% & 2.7  & 47\% \\
+TRGB (Freedman)  &  75 & 2.6\% & 1.8  & 32\% \\
+CF4 inner        & 100 & 2.0\% & 1.3  & 24\% \\
+CF4 outer        & 200 & 1.0\% & 0.7  & 12\% \\
+$\lambda_J^{\mathrm{pec}}$ & 300 & 0.7\% & 0.4 & 8\% \\
+BAO low-$z$      & 500 & 0.4\% & 0.3  & 5\% \\
+CMB$^{\dagger}$  & 4450 & $9 \times 10^{-5}\%$ &
+  $6 \times 10^{-5}$ & $\sim 0$ \\
+\bottomrule
+\multicolumn{5}{l}{\scriptsize $^{\dagger}$At $d \sim \lambda_H$,
+equation~\eqref{eq:disc-dH} is invalid; the Bianchi result
+$\beta^2/2$ applies.}
+\end{tabular}
+\end{table}
+
+At the median SH0ES depth ($d \approx 50\;\mathrm{Mpc}$),
+$\Delta H \approx 2.7\;\mathrm{km\,s}^{-1}\mathrm{Mpc}^{-1}$
+covers $47\%$ of the tension.  For the TRGB method
+(Freedman et~al.\ 2024:
+$H_0 = 69.8 \pm 1.3\;\mathrm{km\,s}^{-1}\mathrm{Mpc}^{-1}$),
+the tension with Planck is only
+$2.4\;\mathrm{km\,s}^{-1}\mathrm{Mpc}^{-1}$, which the tilt
+correction at $d \approx 50\;\mathrm{Mpc}$ can in principle
+account for (the sky-averaged contribution depends on the angular
+distribution of TRGB calibrators, which has not been evaluated).
+
+The directional signature is dipolar:
+\begin{equation}\label{eq:disc-H-dir}
+\hat{H}(\hat{n})
+= H\Bigl[1
+  + \frac{\beta}{3}\,\frac{\lambda_H}{d}\,\cos\theta\Bigr]\,.
+\end{equation}
+At $d = 50\;\mathrm{Mpc}$, the full-sky spread is
+$\Delta\hat{H} \approx 5.3\;\mathrm{km\,s}^{-1}
+\mathrm{Mpc}^{-1}$---comparable to the tension itself.  The
+Migkas et~al.\ (2021) detection of a $9\%$ directional $H_0$
+variation in X-ray clusters, with maximum at
+$(l, b) \approx (280^\circ, -15^\circ)$ (only $19^\circ$ from
+the CF4 axis), is precisely the predicted pattern~\cite{Migkas2021}.
+
+\emph{Conservative, progressive, and data-honest readings.}
+The homogeneous Bianchi framework predicts
+$\Delta H/H \approx 9 \times 10^{-7}$; the $H_0$ tension cannot
+be addressed at this level.  The perturbative formula gives
+$2$--$4\%$ at SH0ES depth, but this contribution lies outside the
+formal scope of the homogeneous defect identity.  The data-honest
+position is that the tilt contribution is scale-dependent: at
+CMB scales, negligible ($6 \times 10^{-5}\;\mathrm{km\,s}^{-1}
+\mathrm{Mpc}^{-1}$); at SH0ES scales, comparable to the tension.
+The exact sky-averaged contribution depends on the angular
+distribution of distance-ladder calibrators, which has not been
+evaluated for the SH0ES sample.
+
+Three testable predictions distinguish the tilt contribution from
+other systematics.
+\emph{(a)}~$H_0$ should exhibit a $\cos\theta$ dipole toward
+the CF4 direction, decreasing as $d^{-1}$.
+\emph{(b)}~The tension should decrease monotonically with
+calibrator depth.
+\emph{(c)}~The directional $H_0$ maximum should coincide with
+the dipolar deceleration maximum.
+
+We frame the perturbative $H_0$ contribution as a
+\emph{discussion item}, not a principal result.  The defect
+framework's contribution to the $H_0$ question is indirect:
+it establishes $\beta$ from CF4, provides the theoretical ceiling
+$\betasr \leq \eps_1/(1+\etaud)$ from the CMB dipole, and
+derives $\etaud$ as the bridge between the Bianchi and Tsagas
+regimes.  The quantitative $H_0$ evaluation requires the
+perturbative extension and the SH0ES angular selection
+function---both outside the formal scope of this work.
+
+
+% === INLINED: ch08_H0_selfconsistency.tex ===
+% Section content is integrated inline in ch08_discussion.tex
+
+% === END INLINED ===
+
+
+% ────────────────────────────────────────────────────────────
+\subsection{Observational scorecard}
+\label{sec:disc-scorecard}
+
+Table~\ref{tab:disc-scorecard} compiles the observational
+status of the six independent probes that test Tsagas predictions.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Observational scorecard for the Tsagas tilted-FLRW
+programme.  ``Direction'' gives galactic coordinates
+$(l, b)$ of the detected anisotropy axis.}
+\label{tab:disc-scorecard}
+\begin{tabular}{lcccl}
+\toprule
+Probe & Significance & Direction &
+  Tsagas prediction & Status \\
+\midrule
+Sah Pantheon+ dipolar $q_0$
+  & $>5\sigma$ & $\sim 7^\circ$ from CMB
+  & $\Delta q = (\beta/9)(\lambda_H/d)^3$ & Pattern consistent$^{\ddagger}$ \\
+Colin SN dipolar $q$
+  & $3.9\sigma$ & $(264^\circ, 48^\circ)^{\dagger}$
+  & $\Delta q \propto d^{-3}$ & Pattern consistent$^{\ddagger}$ \\
+B\"ohme multi-survey radio
+  & $5.4\sigma$ & CMB-aligned
+  & Excess dipole & Consistent \\
+CF4++ bulk flow
+  & $>5\sigma$ & $(282^\circ, +6^\circ)$
+  & $v \propto a^{3/2}\text{--}a^2$ & Consistent \\
+Secrest quasar dipole
+  & $4.9\sigma$ & $(244^\circ, 46^\circ)$
+  & Excess dipole & Consistent \\
+Migkas X-ray clusters
+  & $5.4\sigma$ & $(280^\circ, -15^\circ)$
+  & Directional $H_0$ & Pattern consistent$^{\ddagger}$ \\
+\bottomrule
+\multicolumn{5}{l}{\scriptsize $^{\dagger}$Fixed to CMB dipole
+direction in the Colin analysis.}\\
+\multicolumn{5}{l}{\scriptsize $^{\ddagger}$Qualitative pattern
+matches; specific scaling not yet directly tested against
+alternatives.}
+\end{tabular}
+\end{table}
+
+The strongest new entry is Sah, Rameez, Sarkar \&
+Tsagas~\cite{Sah2025}, who report a $>5\sigma$ dipolar
+deceleration parameter $|q_d| \approx 8$ at
+$S = 0.0262$ ($d \approx 116\;\mathrm{Mpc}$) from the
+Pantheon+ compilation (1,533 supernovae).  Their dipole
+direction lies within $\sim 7^\circ$ of the CMB dipole
+axis, and the monopole $q_m$ is consistent with zero in
+their analysis~C2---suggesting no residual isotropic
+acceleration when the dipole is removed.  The defect
+framework predicts $\Delta q(\beta, d) = (\beta/9)
+(\lambda_H/d)^3 \approx 8.5$ at the WFH2009 primary amplitude (or
+$\approx 6.6$ at the CF4++ amplitude), yielding
+$\sim\!6\%$ (resp.\ $\sim\!18\%$) parameter-free agreement.
+Colin et~al.~\cite{Colin2019} provided the precursor at
+$3.9\sigma$ from the JLA sample, now confirmed at
+$>5\sigma$.  Companion analysis:
+Rameez~\cite{Rameez2024}.
+
+The Tsagas (2026)~\cite{Tsagas2026ApJ} result that general
+relativity doubles the peculiar-velocity growth rate compared
+to Newtonian estimates amplifies the $\Delta H/H$ bridge prediction
+by a factor $\sim 2$ at the SH0ES depth, strengthening the
+pattern (though not the status, which remains EXPLORATORY).
+
+Three issues prevent the tilted-FLRW programme from providing
+a complete replacement for $\Lambda$CDM at this time.
+
+\emph{(i) The $d^{-3}$ vs exponential form.}
+The Tsagas power law $\Delta q \propto d^{-3}$ agrees with the
+Colin exponential $e^{-z/S}$ within $20\%$ at
+$d \approx 200$--$400\;\mathrm{Mpc}$ but diverges sharply
+below $d \lesssim 150\;\mathrm{Mpc}$
+, where the self-consistent
+closure breaks down.  Redshift-binned analysis of the Rubin LSST
+SN sample can distinguish the two functional forms, providing a
+direct test of the scale-dependence prediction.
+
+\emph{(ii) Quantitative $\vartheta$ calibration.}
+The self-consistent closure $|\vartheta|/H = \beta\lambda_H/d$
+assumes a single coherent monopolar flow.  The real velocity
+field is filamentary, multi-scale, and direction-dependent.  A
+quantitative comparison requires the redshift-weighted integral
+of the Tsagas formula against the actual survey selection function
+and the CF4 velocity-field decomposition.
+
+\emph{(iii) BAO discrimination.}
+At $d \gtrsim 500\;\mathrm{Mpc}$ (BAO scales), the tilt
+correction drops below $0.5\%$ and all observers agree on $q$
+to better than one part in $10^3$.  The BAO-measured expansion
+history is therefore immune to the tilt mechanism.  If future BAO
+analyses (DESI DR3+, Euclid spectroscopic) independently confirm
+$w = -1$ at high precision, the tilt mechanism cannot substitute
+for $\Lambda$---it can only modify the local interpretation of
+the SN Hubble diagram.  If instead BAO data continue to prefer
+$w_0 \neq -1$ (as in DESI DR2), the tilt + age-bias + evolving
+$w$ decomposition~\eqref{eq:disc-q-decomp} becomes the natural
+interpretive framework.
+
+\emph{Data-honest synthesis.}
+The Tsagas programme makes three qualitative predictions---dipolar
+$q$, anomalous bulk flow, directional $H_0$ variation---all of
+which have observational support at $3.9$--$5.7\sigma$.  The
+defect framework contributes the algebraic ceiling on the tilt
+amplitude ($\betasr \leq \eps_1/(1 + \etaud)$), the bridge
+parameter $\etaud = 1/12$ connecting the two frameworks, and the
+peculiar Jeans length defining the contamination boundary.  The
+quantitative programme is limited by the self-consistent closure
+(which overestimates at $d < 300\;\mathrm{Mpc}$; see
+Section~\ref{sec:disc-backreaction} for the connection to
+Buchert's tilted-flow averaging formalism), the unresolved
+directional offset ($65^\circ$), and the model-dependence of the
+Son et~al.\ BAO+CMB $q_0$.  These three limitations define the
+frontier for future work.
+
+% === END INLINED ===
+
+
+% ============================================================
+\section{Homogeneous framework and inhomogeneous reality}
+\label{sec:disc-backreaction}
+% ============================================================
+
+The constraints derived in this work apply to the coherent,
+spatially homogeneous component of cosmic anisotropy.  In the
+real universe, structure formation generates kinematic
+anisotropy that is spatially inhomogeneous, scale-dependent,
+and epoch-dependent.
+
+
+\subsection{The Buchert equations}
+
+The scalar averaging of an irrotational dust cosmology over a
+compact domain $\mathcal{D}$ yields effective Friedmann
+equations with a kinematical backreaction
+$\mathcal{Q}_\mathcal{D} = (2/3)
+(\langle\theta^2\rangle_\mathcal{D}
+- \langle\theta\rangle_\mathcal{D}^2)
+- 2\langle\sigma^2\rangle_\mathcal{D}$~\cite{Buchert2000}.
+The averaged shear
+$\langle\sigma^2\rangle_\mathcal{D}$ is positive-definite and
+never vanishes, even when the coherent shear tensor
+$\langle\sigma_{ab}\rangle_\mathcal{D}$ averages to zero by
+statistical isotropy.  The departure parameter $x$ constrains only
+the coherent part; the variance part is invisible to the
+Bianchi framework.
+
+
+\subsection{Scale dependence}
+
+The magnitude of the backreaction is critically
+scale-dependent and foliation-dependent.  Three layers of
+complexity must be distinguished: the mathematical
+non-commutativity of averaging and evolution (a formal
+property of general relativity), the foliation and frame
+problem (which hypersurface and which congruence one
+averages over), and the observational closure problem
+(connecting averaged quantities to what observers actually
+measure).
+
+Numerical-relativity simulations on preferred hypersurfaces
+find negligible \emph{box-average} backreaction, with
+$\mathcal{Q}_\mathcal{D}/(6H^2) \sim 10^{-8}$ in
+Poisson-like gauges~\cite{Aurrekoetxea2025}.
+Oestreicher \& Koksbang~\cite{OestreicherKoksbang2024},
+however, demonstrate that within $\sim\!200\,$Mpc sub-volumes
+the effective curvature parameter $\Omega_R$ fluctuates by up
+to $\sim\!10\%$, and voids expand $10$--$30\%$ faster than the
+box average---a concrete realisation of the ``global small,
+local large'' dichotomy.  In comoving synchronous gauge the
+same simulations yield
+$\mathcal{Q}_\mathcal{D}/(6H^2) \sim 10^{-1}$ on
+$\sim 64\,h^{-1}\,$Mpc scales, a three-to-five order-of-magnitude
+foliation dependence that reflects the genuine non-uniqueness
+of spatial averaging in general relativity.
+
+The Wiltshire timescape programme~\cite{Wiltshire2024}
+provides explicit late-time magnitudes:
+$|\bar{\Omega}_Q| \sim 10^{-6}$--$10^{-5}$ at last
+scattering, growing to $\sim\!0.03$--$0.04$ by the present
+epoch as void kinetic energy accumulates.  Pantheon+
+reanalyses within this framework are competitive with
+$\Lambda$CDM under some pipelines, though the Newtonian
+$N$-body phenomenology (R\'acz AvERA: $H_0 \approx
+71$--$73\;\mathrm{km\,s^{-1}\,Mpc^{-1}}$ in high-resolution
+runs) does not constitute a full general-relativistic
+derivation.
+
+Buchert's scalar-averaging formalism has recently been extended
+to general 3+1 foliations with tilted
+flow~\cite{BuchertMourierRoy2020}---directly relevant to the
+present framework, where the tilt rapidity $\beta$ defines
+the frame mismatch between geometry and matter congruences.
+A systematic connection between the departure parameter $x$ and the
+Buchert backreaction
+$\mathcal{Q}_\mathcal{D}$---perhaps through a coarse-graining
+procedure that respects the tilt frame---remains an open
+problem (Section~\ref{sec:open-problems}).
+
+On sub-Hubble scales ($\lesssim 50\,$Mpc), local shear is of
+order unity and the effective anisotropy vastly exceeds the
+Bianchi constraint $x \sim 10^{-6}$.  On scales above the
+statistical homogeneity threshold
+($\sim 100$--$180\,$Mpc), structure-induced anisotropies
+average out and the effective contribution drops below $x$.
+The crossover scale at which backreaction-induced anisotropy
+falls below the CMB-derived Bianchi bound is likely near or
+slightly above the homogeneity scale.
+
+
+\subsection{The Green--Wald no-go and its limitations}
+
+The Green \& Wald~\cite{GreenWald2011,GreenWald2014}
+perturbative argument shows that backreaction is small in the
+weak-field limit.  Their framework uses a distributional weak
+limit---a local operation well-defined at each spacetime
+point---rather than the non-local spatial averaging that defines
+backreaction in the Buchert programme.  The backreaction may be
+inherently non-perturbative: even though the Newtonian potential
+$\Phi \sim 10^{-5}$, density perturbations $\delta \gg 1$ on
+sub-Mpc scales, and metric derivatives become large as structure
+goes nonlinear.
+
+
+\subsection{Practical assessment}
+
+For the defect-framework scenarios: the Bianchi CMB bound at
+$x \sim 10^{-6}$ is not contaminated by backreaction at
+observationally relevant levels.  Global backreaction contributes
+at most $\sim 10^{-5}$ to effective anisotropy in
+observationally relevant gauges, comparable to but not exceeding
+the Bianchi constraint.  The Bianchi bounds can therefore be
+treated as genuine constraints on primordial anisotropy, with
+backreaction corrections entering at a level below the current
+observational sensitivity.
+
+The honest acknowledgment is that the homogeneous Bianchi
+framework provides a necessary but not sufficient description
+of cosmic anisotropy.  Inhomogeneous anisotropy
+modes---spatially varying tilt fields, local bulk flows,
+effective anisotropy from super-cluster dynamics---are entirely
+unconstrained by the bounds derived here.  We return to this
+point in Section~\ref{sec:disc-limitations}.
+
+
+% ============================================================
+\section{Cosmic web vorticity and the scale hierarchy}
+\label{sec:disc-cosmic-web}
+% ============================================================
+
+\subsection{The rotating filament}
+
+Tudorache et~al.~\cite{Tudorache2025} report the detection of
+a $\sim 15\,$Mpc rotating galaxy filament at $z = 0.032$,
+comprising 14 HI-selected galaxies from the MIGHTEE-HI survey
+with significant spin--filament alignment
+($\langle|\cos\psi|\rangle = 0.64 \pm 0.05$, exceeding
+simulation predictions).  The detection constitutes the third
+HI-detected filamentary structure in the literature and the
+largest individual rotating structure with spectroscopically
+resolved kinematics.
+
+
+\subsection{Perturbative versus background vorticity}
+
+The filament rotation is perturbative, inhomogeneous vorticity
+generated by structure formation---not background rotation in
+the Bianchi sense.  The vorticity power spectrum has been
+quantified in relativistic $N$-body simulations:
+Jeli\'c-Cizmek et~al.~\cite{JelicCizmek2018} measure a peak
+at $k_p \approx 2\,h\,$Mpc$^{-1}$ at $z = 1$, shifting to
+$k_p \approx 1\,h\,$Mpc$^{-1}$ by $z = 0$ with peak amplitude
+$P_\omega/(Hf)^2 \approx 5\;(\mathrm{Mpc}/h)^3$.
+S\o rensen, Hannestad \& Tram~\cite{Sorensen2025} confirm these
+results with an independent $N$-body code and demonstrate
+estimator convergence to $\sim\!5\%$ accuracy across three
+decades in $k$.  Wang et~al.~\cite{Wang2021} report
+observational evidence for filament spin at
+$\pm 100\;\mathrm{km\,s^{-1}}$ on Mpc scales with a
+Hubble-timescale period, consistent with the
+simulation-predicted vorticity amplitudes.
+
+A rough estimate of the local vorticity from the Tudorache
+filament gives $\omega_{\mathrm{local}}/H_0 \sim
+v_{\mathrm{rot}}/r
+\sim 10^5\;\mathrm{m\,s^{-1}}/(3 \times 10^{22}\;\mathrm{m})
+\sim \mathcal{O}(1)$, exceeding the Saadeh background bound of
+$(\omega/H)_0 < 5 \times 10^{-11}$ by ten orders of magnitude.
+
+This discrepancy is not a contradiction.  The Saadeh bound
+constrains the coherent, spatially uniform rotation of the
+entire Bianchi background geometry, evaluated at
+$z \sim 1100$ and projected onto the full CMB sky.  The
+filament rotation and the vorticity power spectrum are
+nonlinear, small-to-intermediate scale phenomena generated by
+shell-crossing at expanding/collapsing boundaries---the
+Weyl-magnetism mechanism in 1+3 covariant
+language~\cite{Umeh2023}.  The Bianchi/CMB limits constrain
+homogeneous large-scale modes; cosmic-web vorticity populates
+an entirely different sector of the scale hierarchy.
+These two regimes are not in tension.
+
+
+\subsection{The scale hierarchy}
+
+The complete hierarchy of vorticity scales, spanning thirteen
+orders of magnitude, is:
+\begin{center}\footnotesize
+\begin{tabular}{ll}
+\toprule
+$\omega/H_0 \sim \mathcal{O}(1)$ &
+  Tudorache filament ($15\,$Mpc) \\
+$\omega/H_0 \sim 10^{-1}$ &
+  Filament spin: $\pm 100\;\mathrm{km\,s^{-1}}$ at Mpc scale \\
+$P_\omega/(Hf)^2 \approx 5\;(\mathrm{Mpc}/h)^3$ &
+  Vorticity power spectrum peak ($k_p \approx 1\,h\,$Mpc$^{-1}$, $z = 0$) \\
+$\omega/H_0 < 10^{-3}$ &
+  MES algebraic bound (type-independent) \\
+$(\omega/H)_0 < 5 \times 10^{-11}$ &
+  Saadeh CMB bound (model-dependent) \\
+$\omega/H_0 \sim 10^{-11}$ &
+  Bianchi~VII$_h$ posterior \\
+\bottomrule
+\end{tabular}
+\end{center}
+The seven-order gap between the MES algebraic bound and the
+Saadeh model-dependent bound quantifies the information gain
+from morphological template fitting.  The ten-order gap between
+the Saadeh bound and the Tudorache filament quantifies the
+distinction between background and perturbative vorticity.
+The vorticity power spectrum populates the intermediate regime,
+confirming that the perturbative and background sectors are
+well separated in scale space.
+Figure~\ref{fig:scale_hierarchy} presents this hierarchy graphically,
+spanning from the cosmic-web filament rotation at $\omega/H_0 \sim
+\mathcal{O}(1)$ down to the Saadeh model-dependent bound at
+$\sim 10^{-11}$.
+
+
+\subsection{Implications for the framework}
+
+Three implications are relevant.
+
+First, the Tudorache filament provides an observational
+calibration point for the backreaction limitation: effective
+anisotropy on sub-Hubble scales vastly exceeds the Bianchi
+bound, confirming that the crossover scale is at or above the
+statistical homogeneity threshold.
+
+Second, the spin--filament alignment exceeding simulation
+predictions is qualitatively consistent with the enhanced
+angular momentum transfer predicted by the Tsagas relativistic
+velocity growth law $v \propto a^2$.  In the 1+3 covariant
+language, the chain $E_{ab}$ (tidal field) $\to$ $\beta$ (tilt)
+$\to$ $\hat{\omega}_{ab}$ (matter-frame vorticity) is the
+covariant analogue of tidal torque theory.  We stress that this
+connection is speculative (level: ``speculation'' in the VT-08
+hierarchy) and would require dedicated relativistic simulations
+to test quantitatively.
+
+Third, the HI surveys (MIGHTEE, WALLABY, full SKA) that can
+detect rotating filaments open a complementary observational
+window.  The vorticity power spectrum is now predicted to
+$\sim\!5\%$ accuracy across three decades in
+$k$~\cite{Sorensen2025}; observational mapping from filament
+catalogues, combined with the background bounds from CMB
+polarisation (LiteBIRD), would enable a two-scale
+characterisation of cosmic angular momentum that
+independently tests the Weyl-magnetism generation mechanism.
+
+
+% ============================================================
+\section{Methodological limitations as design choices}
+\label{sec:disc-limitations}
+% ============================================================
+
+Before closing this chapter, we state five methodological
+limitations of the present framework.  Each is a deliberate
+design choice, not an oversight, and we explain the reasoning
+that led to it.
+
+
+\subsection{Summary statistics versus pixel-level analysis}
+
+The Bayesian evidence comparison operates at the
+summary-statistic level: it uses $D_2$, $D_3$, $\eps_1$, and
+$\beta$ as scalar inputs, discarding the full CMB sky map and
+the directional information of the matter dipole.  The
+Saadeh~et~al.~\cite{Saadeh2016b} analysis demonstrates that
+pixel-level template fitting yields constraints up to six orders
+of magnitude tighter for the shear and vorticity.
+
+We adopted summary statistics because the present framework's
+novelty lies in the multi-probe combination---incorporating
+matter dipole and bulk-flow data that pixel-level analyses
+cannot access---rather than in the morphological detail of the
+CMB sky.  The two approaches are complementary
+(Section~\ref{sec:saadeh-comp}), and a future joint analysis
+combining pixel-level CMB templates with matter dipole
+likelihoods would be the natural next step.  The directional
+information is the principal casualty of this design choice:
+the $\ln\mathcal{B} \approx +26.3$ is a direction-marginalised
+Bayes factor that could strengthen or weaken under directional
+constraints.
+
+
+\subsection{What the data constrain and what they do not}
+\label{sec:disc-constraints}
+
+The $K$-identifiability audit
+(Proposition~\ref{prop:K-audit} of Chapter~\ref{ch:framework})
+provides a sharp answer to the question ``what does the current
+analysis establish?''
+
+\emph{Established (C1--C2).}\quad
+The data constrain the tilt rapidity
+$\beta = (1.37 \pm 0.12) \times 10^{-3}$, conditional on the
+matter-dipole anomaly being physical.  The departure is
+tilt-dominated: $\Otilt$ contributes $>99\%$ of $x$; shear
+contributes $<10^{-12}$.  Non-zero departure ($\ln\mathcal{B}
+= +26.4$) is robust to LOCO ablation, prior variation, and
+correlation sweeps.
+
+\emph{Conditional (C3).}\quad
+Equivalence-class preference (Tflat over O1D) is conditional on
+anomaly physicality: if $\geq 50\%$ of the CatWISE/Radio dipole
+excess is survey artifact, $\ln\mathcal{B} \to \leq 0$.  The
+filling fraction $\FF \approx 9\%$ varies by $7\times$ with the
+assumed intrinsic dipole amplitude $\varepsilon_1^{\rm int}$
+(Section~\ref{sec:scenario-tables} of
+Chapter~\ref{ch:results}); it is a
+\emph{linear-budget-normalised score}, not a proven occupancy.
+
+\emph{Not established (C4).}\quad
+Bianchi type identification is not established.  The
+scalar-amplitude likelihood collapses 14 models into 7
+equivalence classes
+(Table~\ref{tab:class-collapsed}); intra-class
+$\Delta\ln\mathcal{B}$ is a prior-volume artifact.  The
+geometry norm $\mathcal{G}_u$ is not $K$-identifiable under the
+current compression (Proposition~\ref{prop:K-audit}(iv)).
+Breaking this requires directional information---the Tier~2
+programme of Chapter~\ref{ch:future}.
+
+\emph{Informative vs.\ constraint channels.}\quad
+Of seven active channels, two---(b) CatWISE+Radio and (c) CF4
+bulk flow---provide $107\%$ of the evidence gain; channel~(a)
+imposes a $-2.3$~nat F\&Q penalty; channels~(d), (e), (f),
+(h) contribute $0.0$~nats of model discrimination
+(Figure~\ref{fig:channel_ablation_heatmap}).  The evidence is a
+two-measurement result dressed in a seven-channel architecture.
+
+\emph{Three-layer reading.}\quad
+We summarise the analysis by separating three logically
+independent layers.
+\emph{Layer~A} (theorem proximity):
+$\FC \approx 6.3\%$ under the S3 scenario and flat comparator,
+meaning the observed departure occupies $\sim\!6\%$ of the
+MES-certified safe region.
+\emph{Layer~B} (active-channel impact):
+the standardised displacement norm $I_{\mathrm{act}} \approx 6.5$,
+dominated by the CF4 bulk-flow channel ($61\%$ of $I_{\mathrm{act}}^2$)
+and the CatWISE/Radio dipole channel ($28\%$), confirms that the
+signal is large despite the small theorem occupancy.
+\emph{Layer~C} (identifiability gate):
+the geometry false-positive rate remains $22\%$ (threshold: $<10\%$),
+so geometry claims are blocked
+(Proposition~\ref{prop:K-audit}(iv)).
+The combination---small $\FC$, large $I_{\mathrm{act}}$,
+blocked $G_{\mathrm{id}}$---is the honest summary of the
+current analysis level.
+
+
+\subsection{Calibrated transfer functions versus direct
+  Boltzmann computation}
+
+The shear-to-quadrupole conversion uses transfer functions
+$T_2^{\mathrm{decay}} = 5{,}247.5\;\mu\mathrm{K}/(\sigma/H)$ and
+$T_2^{\mathrm{grow}} = 1.05\;\mu\mathrm{K}/(\sigma/H)$ calibrated
+against the BASS VER04 cross-validation
+($D_2(\Sigstd=10^{-6}) = 17.53\;\mu\mathrm{K}^2$)
+using the corrected formula $D_2^{\mathrm{shear}} = (6/2\pi)(T_2 \sigma_H)^2$
+(no $T_0$ factor; see VER05 physics fix in Appendix).\footnote{%
+  The AniCLASS interface specification exists in the codebase
+  as an interface contract and stub; a live oracle connection
+  requiring a full $\ell$-space Boltzmann solve is the
+  planned next step.  The transfer-calibration flag
+  (\texttt{w\_tr}) marks this gap explicitly.}
+Direct integration of the Boltzmann hierarchy for each parameter
+combination (as ABSolve and AniCLASS do) would yield more precise
+$D_\ell(\boldsymbol{\theta})$ predictions.
+
+We adopted the calibrated approach because the transfer function
+is linear in the shear amplitude ($D_\ell \propto \sigma_H^2$)
+to high precision, so a single calibration point suffices for
+all amplitudes within the MES-allowed range.  The $x_h$
+dependence, which is non-trivial, is captured by the
+$f_2(x_h)$ and $f_3(x_h)$ interpolation tables.  The residual
+calibration uncertainty is $\sim 10\%$ for the decay mode and
+$\sim 20\%$ for the growing mode, propagated through the
+evidence computation as an additional error term.  Direct
+Boltzmann computation within the nested-sampling loop would
+increase runtime by a factor of $\sim 10^3$, making it
+computationally prohibitive for the 14-model comparison.
+
+
+\subsection{Homogeneous Bianchi framework versus
+  inhomogeneous reality}
+
+The entire analysis assumes spatially homogeneous anisotropy
+(the Bianchi classification) applied to a universe that is
+observably inhomogeneous on sub-Hubble scales.  The backreaction
+analysis of Section~\ref{sec:disc-backreaction} shows that the
+Bianchi bound $x \sim 10^{-6}$ is not contaminated by
+structure-formation backreaction at observationally relevant
+levels, but the framework cannot constrain inhomogeneous
+anisotropy modes---spatially varying tilt fields, local bulk
+flows, or effective anisotropy from super-cluster dynamics.
+
+We adopted the homogeneous framework because it is the simplest
+extension of FLRW that admits the four kinematic degrees of
+freedom (shear, vorticity, acceleration, tilt) simultaneously,
+and because the MES bounds are the most assumption-explicit
+constraints linking CMB observations to spacetime geometry.
+The honest statement is that the framework constrains only the
+coherent (monopole) component of cosmic anisotropy; the
+variance component requires inhomogeneous methods.
+
+
+\subsection{Single barotropic fluid versus multi-component}
+
+The tilt--acceleration relation
+$\dot{u}_a = [w/(3(1+w))]\tilde{D}_a\!\ln\rho$ and the
+resulting $\etaud = 1/12$ hold strictly for a single
+barotropic perfect fluid.  In a multi-component universe
+(radiation + dust + dark energy), the four-acceleration retains
+independent degrees of freedom not captured by the tilt
+rapidity alone.  The safe-route bound
+$\beta \leq \eps_1/(1 + \etaud)$ is therefore a
+\emph{necessary} condition for consistency with the observed
+dipole, but may not be sufficient in multi-fluid cosmologies.
+
+We adopted the single-fluid approximation because it yields the
+tightest (most constraining) bound on $\beta$, and because the
+multi-fluid extension requires specifying the relative tilt
+between radiation and matter---an additional free parameter not
+constrained by current data.
+
+
+\subsection{Static analysis versus dynamical evolution}
+
+The departure variables $\Sigstd$, $\Wstd$, $\Otilt$ are
+evaluated at the present epoch $z = 0$ and compared with CMB
+data at $z \sim 1100$ through the MES bounds.  The dynamical
+evolution between these epochs is captured only through the
+transfer functions (for the shear--quadrupole conversion) and
+the decay rates (Section~\ref{sec:teff-ode}), not through a
+full time-dependent solution of the Einstein--Boltzmann system.
+
+We adopted the static approach because the MES bounds are
+epoch-independent (they constrain the ratio $\sigma/\Theta$ at
+any time), and because the filling fraction $\FF$ is defined as
+a ratio of present-epoch quantities.  The redshift evolution
+$\FF(z)$ analysed in Section~\ref{sec:filling-z} uses
+phenomenological $\beta(z)$ models rather than solutions of the
+coupled DCP equations, which would require specifying initial
+conditions at decoupling---a task deferred to future work.
+
+
+% === INLINED: figures_ch08.tex ===
+% Figures for Chapter 8
+% Updated: TF-D06, 2026-03-12
+% Added: fig_colin_beta, fig_tilted_H0_depth, fig_q_decomposition
+% Replaced: fig_scale_hierarchy (lambda_J, d_S added)
+
+% fig_q_decomposition moved to ch09
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_tilted_H0_depth}
+\caption{Tilted Hubble correction $\Delta H = (\beta c/3)(1/d)$ versus survey depth for $\beta = 1.334 \times 10^{-3}$ (CF4).  The linear $y$-axis shows $\Delta H$ in km\,s$^{-1}$\,Mpc$^{-1}$.  Survey markers indicate the effective depth and corresponding percentage of the SH0ES--Planck tension: Cepheid hosts (79\%), SH0ES median (48\%), TRGB (32\%), CF4 (12\%), BAO (5\%).  The $\propto d^{-1}$ scaling is labelled.  The homogeneous Bianchi result ($\Delta H/H = \beta^2/2 \approx 10^{-7}$) is five orders of magnitude below the plotted range.}
+\label{fig:tilted_H0_depth}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_contrastive_summary}
+\caption{Contrastive summary of the seven principal results, plotted on a
+  qualitative FLRW departure scale.  Each point shows the central value with
+  uncertainty bar.  The grey band marks the FLRW-consistent zone ($|x|<1$).
+  The conservative reading (left) and progressive reading (right) are annotated;
+  the data-honest position occupies the centre.  All seven results are consistent
+  with the tilted-Bianchi framework at the VER05 departure scale.}
+\label{fig:contrastive_summary}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_DCP_defect_mapping}
+\caption{Framework comparison: parameter-space coverage of MES~(1995)
+  algebraic bounds, this work (departure variables with Bayesian evidence
+  comparison), and Saadeh et~al.\ (2016) pixel-level template fitting.
+  Arrows indicate \textit{extends} and \textit{complements} relationships.
+  The defect decomposition framework adds a probabilistic evidence layer
+  above the algebraic bound hierarchy.}
+\label{fig:DCP_defect_mapping}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_anomaly_direction_sky}
+\caption{Anomaly direction sky map in galactic coordinates (Mollweide
+  projection).  Coloured markers indicate independent dipole apex
+  measurements: Quaia quasar radio dipole (purple), CF4 bulk flow (red),
+  CatWISE photometric dipole (orange), and NVSS/SUMSS (green).  The grey
+  shaded ellipse marks the $68\%$ directional credible region.  The
+  remarkable agreement across independent data sets---spanning six orders of
+  magnitude in survey depth---is the primary motivation for the tilted-FLRW
+  framework.}
+\label{fig:anomaly_direction_sky}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_colin_beta}
+\caption{Colin et~al.\ (2019) bulk-flow velocity comparison.  The smooth
+  curve shows the theoretical prediction $\beta(z) = 9|q|\,z^3 e^{-z/S}$
+  with best-fit parameters (peak at $z_{\mathrm{peak}} = 0.079$).  The
+  orange band shows the CF4 constraint $\beta_{\mathrm{CF4}} \pm 20\%$.
+  Blue data points are survey estimates from the SNe compilation.  The VER05
+  posterior median (red star) is consistent with the Colin et~al.\ trend at
+  the $1\sigma$ level.}
+\label{fig:colin_beta}
+\end{figure}
+
+% === END INLINED ===

@@ -1,0 +1,3564 @@
+% ============================================================
+%  ch02_framework.tex — Mathematical Framework
+%  Requires: macros.tex, amsmath, amssymb, amsthm
+%  Estimated length: 25–35 pages
+%  Rewritten: VD-08, 2026-03-07
+% ============================================================
+
+\chapter{Mathematical Framework}\label{ch:framework}
+
+Our goal in this chapter is to build, from first principles, the
+mathematical machinery required for the departure-variable approach
+to Bianchi anisotropy bounds.  We begin with the 1+3 covariant
+decomposition of spacetime in its most general form---retaining
+vorticity and four-acceleration throughout---derive the
+propagation and constraint equations from the Ricci identity,
+introduce standardised kinematic variables and their
+normalisation convention, construct FLRW comparator geometries,
+prove the master defect identity, set up the three-frame problem
+and the King--Ellis frame-attribution corrections, and close with
+the tilted Raychaudhuri equation expressed in departure variables.
+Every derivation that later chapters rely on is given in full;
+results that serve only as context are stated with references.
+
+
+% ============================================================
+\section{The 1+3 covariant decomposition}\label{sec:13cov}
+% ============================================================
+
+\subsection{Choice of timelike congruence}\label{sec:congruence}
+
+Before diving into the algebraic machinery, we clarify the
+starting point.  General relativity provides no preferred time
+direction: the spacetime manifold $(\mathcal{M}, g_{ab})$ is a
+four-dimensional Lorentzian manifold, and any timelike vector
+field may serve as a local ``clock.''  In cosmology, a natural
+choice arises from the matter content.  A perfect fluid with
+four-velocity $\hat{u}^a$ picks out a preferred congruence of
+worldlines; a spatially homogeneous geometry picks out a
+group-invariant time direction $u^a$.  These two choices coincide
+(the fluid is \emph{comoving}) if and only if the tilt rapidity
+$\beta = 0$.  When tilt is non-zero, the distinction between the
+\emph{geometry frame} $u^a$ and the \emph{matter frame}
+$\hat{u}^a$ is central to the analysis
+(Section~\ref{sec:frame-problem}).
+
+For the 1+3 decomposition, we work with an arbitrary unit
+timelike vector field $u^a$ satisfying
+\begin{equation}\label{eq:u-norm}
+u_a\, u^a = -1\,.
+\end{equation}
+The minus sign follows from the $(-,+,+,+)$ metric signature.
+The four-velocity $u^a$ defines, at each point, a rest space
+orthogonal to itself, and we now construct the projection
+operator onto that space.
+
+
+\subsection{The spatial projector}\label{sec:projector}
+
+\begin{definition}[Spatial projector]\label{def:hab}
+The tensor
+\begin{equation}\label{eq:hab-def}
+h_{ab} := g_{ab} + u_a\, u_b
+\end{equation}
+projects any spacetime tensor onto the local rest space of $u^a$.
+\end{definition}
+
+We verify the essential algebraic properties.
+
+\begin{proposition}[Properties of $h_{ab}$]
+\label{prop:hab-properties}
+The projector $h_{ab}$ satisfies:
+\begin{enumerate}
+\item[\emph{(i)}] \textbf{Orthogonality:} $h_{ab}\,u^b = 0$.
+\item[\emph{(ii)}] \textbf{Idempotency:}
+  $h^a{}_c\,h^c{}_b = h^a{}_b$.
+\item[\emph{(iii)}] \textbf{Trace:} $h^a{}_a = 3$.
+\item[\emph{(iv)}] \textbf{Symmetry:} $h_{ab} = h_{ba}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)~Direct computation:
+$h_{ab}\,u^b = g_{ab}\,u^b + u_a\,u_b\,u^b
+= u_a + u_a(-1) = 0$.
+
+(ii)~Contract:
+$h^a{}_c\,h^c{}_b
+= (\delta^a_c + u^a u_c)(\delta^c_b + u^c u_b)
+= \delta^a_b + u^a u_b + u^a u_b + u^a(u_c u^c)u_b
+= \delta^a_b + 2u^a u_b + u^a(-1)u_b
+= \delta^a_b + u^a u_b = h^a{}_b$.
+
+(iii)~$h^a{}_a = \delta^a_a + u^a u_a = 4 + (-1) = 3$.
+
+(iv)~Both $g_{ab}$ and $u_a u_b$ are symmetric.
+\end{proof}
+
+We call a tensor \emph{spatial} (with respect to $u^a$) if
+every free index, upon contraction with $u^a$, gives zero.  The
+projector $h_{ab}$ extracts the spatial part of any tensor.  For
+instance, for a vector $V^a$, the spatial part is
+$h^a{}_b V^b = V^a + u^a(u_b V^b)$.  A spatial vector has
+three independent components---the rest space is
+three-dimensional, consistent with $h^a{}_a = 3$.
+
+
+\subsection{Irreducible decomposition of $\nabla_b u_a$}
+\label{sec:irred-decomp}
+
+The covariant derivative $\nabla_b u_a$ is a
+$(0,2)$~spacetime tensor with $4 \times 4 = 16$ independent
+components.  We decompose it into parts that are spatial (in
+both indices) and a part that involves the time direction $u^b$.
+The decomposition proceeds in three steps.
+
+\paragraph{Step 1: Time--space split.}
+Project both indices of $\nabla_b u_a$ using $h$ and $u$:
+\begin{equation}\label{eq:ts-split}
+\nabla_b u_a
+= h^c{}_a\, h^d{}_b\, \nabla_d u_c
+  + h^c{}_a\, u^d u_b\, \nabla_d u_c
+  + u^c u_a\, h^d{}_b\, \nabla_d u_c
+  + u^c u_a\, u^d u_b\, \nabla_d u_c\,.
+\end{equation}
+Now we evaluate each term.  The quantity
+$u^d \nabla_d u_c =: \dot{u}_c$ is the four-acceleration.
+Since $u_c u^c = -1$, differentiating gives
+$u^c \dot{u}_c = 0$---the acceleration is spatial.  The
+last two terms in Eq.~\eqref{eq:ts-split} involve
+$u^c u_a \,(\cdots)_c$; since $\nabla_d u_c$ contracted with
+$u^c$ gives $\frac{1}{2}\nabla_d(u_c u^c) = 0$, the third and
+fourth terms both vanish.  The second term gives
+$- \dot{u}_a\, u_b$ (using $h^c{}_a \dot{u}_c = \dot{u}_a$
+since $\dot{u}_a$ is spatial).  Hence
+\begin{equation}\label{eq:ts-result}
+\nabla_b u_a
+= h^c{}_a\, h^d{}_b\, \nabla_d u_c
+  - \dot{u}_a\, u_b\,.
+\end{equation}
+The first term is the fully spatial part of $\nabla_b u_a$; we
+denote it $\tilde{\nabla}_b u_a := h^c{}_a h^d{}_b \nabla_d u_c$.
+This spatial tensor has $3 \times 3 = 9$ independent components.
+
+\paragraph{Step 2: Symmetric--antisymmetric split.}
+Decompose $\tilde{\nabla}_b u_a$ into its symmetric and
+antisymmetric parts:
+\begin{equation}
+\tilde{\nabla}_b u_a
+= \tilde{\nabla}_{(b} u_{a)}
+  + \tilde{\nabla}_{[b} u_{a]}\,.
+\end{equation}
+The symmetric part has $6$ components; the antisymmetric part
+has $3$.
+
+\paragraph{Step 3: Trace extraction.}
+The symmetric part decomposes further into a trace and a
+trace-free piece.  The trace is
+\begin{equation}
+h^{ab}\tilde{\nabla}_b u_a
+= h^{ab}\nabla_b u_a
+= \nabla_a u^a + u^a u^b \nabla_b u_a
+= \nabla_a u^a + u^a \dot{u}_a
+= \nabla_a u^a =: \Theta\,,
+\end{equation}
+where we used $u^a \dot{u}_a = 0$.  The scalar $\Theta$ is the
+\emph{volume expansion}.  Removing the trace from the symmetric
+part gives the \emph{shear tensor}
+\begin{equation}\label{eq:sigma-extract}
+\sigma_{ab}
+:= \tilde{\nabla}_{(b} u_{a)}
+   - \tfrac{1}{3}\,\Theta\, h_{ab}\,,
+\end{equation}
+which is symmetric ($\sigma_{ab} = \sigma_{(ab)}$), spatial
+($\sigma_{ab} u^b = 0$), and trace-free
+($\sigma^a{}_a = 0$) by construction.  The antisymmetric part
+defines the \emph{vorticity tensor}
+\begin{equation}\label{eq:omega-extract}
+\omega_{ab}
+:= \tilde{\nabla}_{[b} u_{a]}\,,
+\end{equation}
+which is antisymmetric ($\omega_{ab} = -\omega_{ba}$) and spatial
+($\omega_{ab} u^b = 0$).
+
+Collecting everything, we arrive at the \emph{kinematic
+decomposition}:
+\begin{equation}\label{eq:u-decomp}
+\boxed{
+\nabla_b u_a
+= \tfrac{1}{3}\,\Theta\,h_{ab}
+  + \sigma_{ab} + \omega_{ab}
+  - \dot{u}_a\, u_b
+}\,.
+\end{equation}
+This identity is exact and holds for any unit timelike
+congruence in any spacetime.  The $16$ components of
+$\nabla_b u_a$ split as:
+$1\;(\Theta) + 5\;(\sigma_{ab}) + 3\;(\omega_{ab})
++ 3\;(\dot{u}_a) + 4\;\text{(identically zero by constraints)}
+= 16$.
+
+\begin{definition}[PSTF projection]\label{def:pstf}
+For any spatial rank-2 tensor $A_{ab}$, the \emph{projected
+symmetric trace-free} (PSTF) part is
+\begin{equation}\label{eq:pstf-def}
+A_{\langle ab\rangle}
+:= h^c{}_{(a}\,h^d{}_{b)}\,A_{cd}
+   - \tfrac{1}{3}\,h_{ab}\,h^{cd}A_{cd}\,.
+\end{equation}
+Angle brackets on indices denote this projection. In this
+notation, $\sigma_{ab} = \nabla_{\langle b} u_{a\rangle}$.
+\end{definition}
+
+
+\subsection{Physical interpretation of the kinematic
+  quantities}\label{sec:phys-interp}
+
+The \emph{expansion} $\Theta = \nabla_a u^a$ measures the
+rate of change of the volume element carried by the congruence.
+For a small fluid element with three-volume $V$, we have
+$\dot{V}/V = \Theta$, so positive $\Theta$ means expansion and
+negative $\Theta$ means contraction.  The Hubble rate is
+$\Htheta := \Theta/3$.
+
+The \emph{shear} $\sigma_{ab}$ measures the rate at which the
+shape of a fluid element distorts at constant volume.  Because
+$\sigma_{ab}$ is trace-free, it encodes distortion without
+volume change; because it is symmetric, it has five independent
+components (three eigenvalues summing to zero and two Euler
+angles specifying the principal axes).  In an FLRW spacetime,
+$\sigma_{ab} = 0$ identically.
+
+The \emph{vorticity} $\omega_{ab}$ measures the local rotation
+of the congruence.  The vorticity vector
+$\omega^a := \frac{1}{2}\eta^{abcd}u_b\omega_{cd}$ (where
+$\eta^{abcd}$ is the spacetime volume form) points along the
+instantaneous rotation axis.  Non-zero vorticity prevents the
+congruence from being hypersurface-orthogonal
+(Section~\ref{sec:frobenius}).
+
+The \emph{four-acceleration} $\dot{u}_a = u^b\nabla_b u_a$
+measures the deviation of the worldlines from geodesic motion.
+For a perfect barotropic fluid in a spatially homogeneous,
+non-tilted model, $\dot{u}_a = 0$---the fluid elements follow
+geodesics.  When tilt is present ($\beta \neq 0$) and
+$p \neq 0$, King \& Ellis~\cite{KingEllis1973} proved that
+$\dot{u}_a \neq 0$ necessarily: pressure gradients in the
+tilted frame force the fluid off geodesics.
+
+The scalar invariants of these tensors are
+\begin{equation}\label{eq:scalar-invariants}
+|\sigma|^2 := \tfrac{1}{2}\sigma_{ab}\sigma^{ab}\,,\qquad
+|\omega|^2 := \tfrac{1}{2}\omega_{ab}\omega^{ab}\,,\qquad
+|\dot{u}|^2 := \dot{u}_a\dot{u}^a\,.
+\end{equation}
+Each is non-negative by construction and vanishes if and only if
+the corresponding tensor vanishes.
+
+
+\subsection{Energy--momentum decomposition}\label{sec:em-decomp}
+
+The energy--momentum tensor of a general fluid, decomposed
+relative to $u^a$, takes the form
+\begin{equation}\label{eq:Tab-general}
+T_{ab} = \rho\, u_a u_b + p\, h_{ab}
+  + 2\,q_{(a}\,u_{b)} + \pi_{ab}\,,
+\end{equation}
+where
+$\rho = T_{ab}\,u^a u^b$ is the energy density,
+$p = \frac{1}{3} h^{ab} T_{ab}$ is the isotropic pressure,
+$q_a = -h^c{}_a\,T_{cd}\,u^d$ is the energy flux (heat flow),
+and $\pi_{ab}$ is the PSTF anisotropic stress.
+For a \emph{perfect fluid} observed in its rest frame
+$\hat{u}^a$, we have $q_a = 0$ and $\pi_{ab} = 0$:
+\begin{equation}\label{eq:Tab-pf}
+T_{ab} = (\hat{\rho} + \hat{p})\,\hat{u}_a\hat{u}_b
+       + \hat{p}\,g_{ab}\,.
+\end{equation}
+When the matter four-velocity $\hat{u}^a$ is tilted relative
+to the geometry-frame congruence $u^a$ by a rapidity $\beta$,
+the Lorentz boost gives
+\begin{equation}\label{eq:boost-u}
+\hat{u}^a = \cosh\beta\;(u^a + v^a)\,,
+\end{equation}
+where $v^a$ is spatial ($v_a u^a = 0$) with
+$|v| = \tanh\beta$.  Projecting Eq.~\eqref{eq:Tab-pf} onto
+the geometry frame, the effective energy density becomes
+\begin{equation}\label{eq:rho-geom}
+\rho_{\mathrm{tot}} := T_{ab}\,u^a u^b
+= \hat{\rho} + (\hat{\rho} + \hat{p})\sinh^2\!\beta\,.
+\end{equation}
+The tilt contributes a positive energy density
+$(\hat{\rho} + \hat{p})\sinh^2\!\beta$ to the geometry-frame
+energy budget, sourced by the relativistic kinetic energy of
+the fluid's bulk motion.
+
+
+\subsection{The Raychaudhuri equation}\label{sec:raychaudhuri}
+
+We now derive the evolution equation for the expansion scalar
+from first principles.  The starting point is the Ricci identity
+for the vector field $u^a$:
+\begin{equation}\label{eq:ricci-identity}
+(\nabla_a \nabla_b - \nabla_b \nabla_a)\,u^c
+= R^c{}_{dab}\,u^d\,,
+\end{equation}
+where $R^c{}_{dab}$ is the Riemann tensor.  We contract on $c$
+and $a$:
+\begin{equation}\label{eq:ricci-contract1}
+\nabla_a \nabla_b u^a - \nabla_b \nabla_a u^a
+= R_{db}\,u^d\,,
+\end{equation}
+and then contract with $u^b$:
+\begin{equation}\label{eq:raych-step1}
+u^b \nabla_a \nabla_b u^a
+- u^b \nabla_b (\nabla_a u^a)
+= R_{db}\,u^d u^b\,.
+\end{equation}
+The second term on the left is $-\dot{\Theta}$ (the covariant
+time derivative of the expansion).  The first term requires more
+work.  Using the product rule,
+\begin{equation}
+u^b \nabla_a \nabla_b u^a
+= \nabla_a(u^b \nabla_b u^a) - (\nabla_a u^b)(\nabla_b u^a)\,.
+\end{equation}
+The first piece is $\nabla_a \dot{u}^a$.  For the second, we
+substitute the kinematic decomposition~\eqref{eq:u-decomp}:
+\begin{equation}
+(\nabla_a u^b)(\nabla_b u^a)
+= \bigl(\tfrac{1}{3}\Theta\,h^b{}_a + \sigma^b{}_a
+  + \omega^b{}_a - \dot{u}^b u_a\bigr)
+  \bigl(\tfrac{1}{3}\Theta\,h_{b}{}^{a} + \sigma_{b}{}^{a}
+  + \omega_{b}{}^{a} - \dot{u}_b u^a\bigr)\,.
+\end{equation}
+We expand this product and use the orthogonality and trace
+properties: $h^b{}_a h_b{}^a = 3$,
+$\sigma^b{}_a \sigma_b{}^a = 2|\sigma|^2$,
+$\omega^b{}_a \omega_b{}^a = -2|\omega|^2$ (the minus sign arises
+because $\omega_{ab}$ is antisymmetric), the cross terms between
+$h_{ab}$ and the trace-free tensors vanish, and terms involving
+$u_a \dot{u}^a = 0$ drop out.  The result is
+\begin{equation}
+(\nabla_a u^b)(\nabla_b u^a)
+= \tfrac{1}{3}\Theta^2 + 2|\sigma|^2 - 2|\omega|^2\,.
+\end{equation}
+(Note that the ``time $\times$ time'' cross term
+$(-\dot{u}^b u_a)(-\dot{u}^a u_b)
+= (\dot{u}^a u_a)(\dot{u}^b u_b) = 0$
+vanishes because $\dot{u}^a u_a = 0$.)
+Assembling everything and introducing the Einstein field
+equation $R_{ab} - \frac{1}{2}R\,g_{ab} + \Lambda\,g_{ab}
+= \kappa\,T_{ab}$, which gives
+$R_{ab}\,u^a u^b = \frac{1}{2}\kappa(\rho + 3p) - \Lambda$
+(for a perfect fluid), we obtain
+\begin{equation}
+\dot{\Theta}
+= -\tfrac{1}{3}\Theta^2
+  - 2(|\sigma|^2 - |\omega|^2)
+  - \tfrac{1}{2}\kappa(\rho + 3p)
+  + \Lambda
+  + \nabla_a\dot{u}^a\,.
+\end{equation}
+For a spatial vector $V^a$ (with $V_a u^a = 0$), the full and
+projected divergences are related by
+$\nabla_a V^a = \tilde{\nabla}_a V^a + \dot{u}_a V^a$.
+Applying this identity to $V^a = \dot{u}^a$ gives
+$\nabla_a\dot{u}^a = \tilde{\nabla}_a\dot{u}^a + |\dot{u}|^2$.
+The \textbf{Raychaudhuri equation} thus takes its standard form:
+\begin{equation}\label{eq:raychaudhuri}
+\boxed{
+\dot{\Theta}
+= -\tfrac{1}{3}\Theta^2
+  - 2(|\sigma|^2 - |\omega|^2)
+  - \tfrac{1}{2}\kappa(\rho + 3p)
+  + \Lambda
+  + \tilde{\nabla}_a\dot{u}^a
+  + \dot{u}_a\dot{u}^a
+}\,.
+\end{equation}
+Note the sign structure: shear ($|\sigma|^2$) and matter
+($\rho + 3p > 0$) drive $\Theta$ towards negative values
+(focusing); vorticity ($|\omega|^2$), the cosmological constant
+($\Lambda > 0$), and acceleration
+($\tilde{\nabla}_a \dot{u}^a + |\dot{u}|^2$) resist focusing.  For
+a geodesic irrotational congruence ($\dot{u}_a = 0$,
+$\omega_{ab} = 0$) with $\Lambda \leq 0$ and
+$\rho + 3p > 0$, the Raychaudhuri equation guarantees
+$\dot{\Theta} < 0$: a singularity is unavoidable.
+
+
+\subsection{Shear propagation equation}\label{sec:shear-prop}
+
+We extract the PSTF part of the Ricci identity.  Starting
+again from Eq.~\eqref{eq:ricci-identity}, we project both
+free indices spatially and take the symmetric trace-free part.
+A tedious and mundane computation (carrying through the kinematic
+decomposition and collecting all PSTF-projected terms) yields
+\begin{equation}\label{eq:shear-prop}
+\dot{\sigma}_{\langle ab\rangle}
+= -\tfrac{2}{3}\Theta\,\sigma_{ab}
+  - \sigma_{c\langle a}\sigma^c{}_{b\rangle}
+  + \omega_{\langle a}\omega_{b\rangle}
+  - E_{ab}
+  + \tfrac{1}{2}\kappa\pi_{ab}
+  + \dot{u}_{\langle a}\dot{u}_{b\rangle}\,,
+\end{equation}
+where $E_{ab} = C_{acbd}\,u^c u^d$ is the electric part of the
+Weyl tensor $C_{abcd}$, and $\pi_{ab}$ is the anisotropic
+stress~\cite{EllisVanElst1999,EllisMaartens2012}.  The key
+features of this equation are: (a)~the $-\frac{2}{3}\Theta\sigma_{ab}$
+term provides Hubble damping of the shear; (b)~the Weyl tensor
+$E_{ab}$ acts as a source, encoding tidal gravitational fields
+from the anisotropic geometry; (c)~the acceleration term
+$\dot{u}_{\langle a}\dot{u}_{b\rangle}$ provides an anisotropic
+source from non-geodesic motion.
+
+
+\subsection{Vorticity propagation equation}
+\label{sec:vort-prop}
+
+The antisymmetric part of the spatially projected Ricci
+identity gives the vorticity propagation:
+\begin{equation}\label{eq:vort-prop}
+\dot{\omega}_{\langle ab\rangle}
+= -\tfrac{2}{3}\Theta\,\omega_{ab}
+  + \sigma_{c[a}\omega^c{}_{b]}
+  + \tfrac{1}{2}\bigl(\nabla_{[a}\dot{u}_{b]}
+    - u_{[a}\dot{\dot{u}}_{b]}\bigr)\,,
+\end{equation}
+where the last term involves the curl of the
+acceleration~\cite{EllisVanElst1999}.  For a barotropic perfect
+fluid, $\dot{u}_a = -\tilde{\nabla}_a p/(\rho+p)$, and the
+curl of $\dot{u}_a$ vanishes identically---the relativistic
+Kelvin theorem guarantees that vorticity-free initial data remain
+vorticity-free.  For non-barotropic or multi-component fluids,
+however, the curl of $\dot{u}_a$ can be non-zero, providing a
+source for vorticity generation.  The shear--vorticity coupling
+$\sigma_{c[a}\omega^c{}_{b]}$ transfers energy between shear
+and vorticity modes without external sources.
+
+
+% ============================================================
+\section{Spatial curvature}\label{sec:spatial-curv}
+% ============================================================
+
+\subsection{The irrotational case and the Frobenius theorem}
+\label{sec:frobenius}
+
+When $\omega_{ab} = 0$, the congruence $u^a$ is
+\emph{hypersurface-orthogonal}: there exist spacelike
+hypersurfaces $\Sigma_t$ everywhere orthogonal to $u^a$.  The
+Frobenius theorem provides the precise condition.
+
+\begin{theorem}[Frobenius]\label{thm:frobenius}
+A vector field $u^a$ is hypersurface-orthogonal if and only if
+\begin{equation}\label{eq:frobenius}
+u_{[a}\nabla_b u_{c]} = 0\,.
+\end{equation}
+\end{theorem}
+
+\noindent
+The connection to vorticity is direct: expanding
+Eq.~\eqref{eq:frobenius} using the kinematic decomposition
+shows that it is equivalent to $\omega_{ab} = 0$.
+
+When orthogonal hypersurfaces exist, the induced three-metric
+on $\Sigma_t$ is $\gamma_{ij} = h_{ab}\,e^a_i\,e^b_j$
+(where $e^a_i$ are basis vectors tangent to $\Sigma_t$), and
+we can define the \emph{three-dimensional Riemann tensor}
+${}^{(3)}\!R_{ijkl}$ from the Levi-Civita connection of
+$\gamma_{ij}$.  The three-dimensional Ricci scalar is
+\begin{equation}\label{eq:3Ricci}
+\sR := \gamma^{ij}\,{}^{(3)}\!R_{ij}\,,
+\end{equation}
+which encodes the intrinsic curvature of the spatial sections.
+For an FLRW spacetime with curvature parameter $k$ and scale
+factor $a$, we have $\sR = 6k/a^2$.
+
+The relation between the four-dimensional and
+three-dimensional curvatures is given by the Gauss equation:
+\begin{equation}\label{eq:gauss}
+{}^{(3)}\!R_{ijkl}
+= h^a{}_i\,h^b{}_j\,h^c{}_k\,h^d{}_l\,R_{abcd}
+  + K_{ik}\,K_{jl} - K_{il}\,K_{jk}\,,
+\end{equation}
+where $K_{ij} = h^a{}_i\,h^b{}_j\,\nabla_a u_b$ is the
+extrinsic curvature of $\Sigma_t$.  In the irrotational case,
+$K_{ij} = \frac{1}{3}\Theta\,\gamma_{ij} + \sigma_{ij}$
+(the acceleration term drops from the spatial projection).
+
+
+\subsection{The vortical case}\label{sec:vort-spatial}
+
+When $\omega_{ab} \neq 0$, the Frobenius condition fails and
+no family of orthogonal hypersurfaces exists.  Two approaches
+are available.  In the \emph{threading} approach, we retain
+the congruence $u^a$ and define ``spatial'' quantities by
+projection with $h_{ab}$, even though the projected tensors do
+not live on any genuine three-surface.  The ``spatial Ricci
+scalar'' $\sR$ is then defined algebraically through the
+constraint equations rather than through an intrinsic
+three-geometry.  The threading approach is adopted by Ellis \& van
+Elst~\cite{EllisVanElst1999} and the one we adopt.
+
+In the \emph{slicing} approach, available when a Bianchi
+symmetry group acts on the spacetime, the group orbits
+provide natural spacelike hypersurfaces even when the fluid
+congruence is not orthogonal to them.  The geometry-frame
+congruence $u^a$ is chosen as the unit normal to these orbits,
+and $\omega_{ab}^{(G)} = 0$ by construction.  Any non-zero
+vorticity then appears only in the matter frame after the tilt
+boost (Section~\ref{sec:frame-problem}).  For the Bianchi
+framework, we therefore compute $\sR$ from the group-orbit
+metric, where orthogonal surfaces do exist, and treat
+matter-frame vorticity through the King--Ellis
+transformation.
+
+
+\subsection{Bianchi structure constants and $\sR$}
+\label{sec:bianchi-Rstar}
+
+For a spatially homogeneous spacetime, the Lie algebra of the
+three-dimensional isometry group is specified by structure
+constants $C^\alpha{}_{\beta\gamma}$.  Following the
+Ellis--MacCallum~\cite{EllisMacCallum1969} parametrisation,
+we decompose
+\begin{equation}\label{eq:struct-decomp}
+C^{\alpha}{}_{\beta\gamma}
+= \epsilon_{\beta\gamma\delta}\,n^{\alpha\delta}
+  + \delta^{\alpha}_{[\beta}\,a_{\gamma]}\,,
+\end{equation}
+where $n^{\alpha\beta} = n^{(\alpha\beta)}$ is a symmetric
+$3\times 3$ tensor and $a_\alpha$ is a covector.  The Jacobi
+identity requires $n^{\alpha\beta}a_\beta = 0$.  The
+\emph{Class~A} models have $a_\alpha = 0$ (types I, II,
+VI$_0$, VII$_0$, VIII, IX); the \emph{Class~B} models have
+$a_\alpha \neq 0$ (types III, IV, V, VI$_h$, VII$_h$).
+
+The spatial Ricci scalar for the group-orbit metric takes the
+form~\cite{EllisMacCallum1969,RyanShepley1975}
+\begin{equation}\label{eq:Rstar-bianchi}
+\sR = -\tfrac{1}{2}\bigl(
+n_\alpha{}^\alpha\, n_\beta{}^\beta
+- n_{\alpha\beta}\,n^{\alpha\beta}\bigr)
++ 4\,a_\alpha\, a^\alpha\,.
+\end{equation}
+For Bianchi~I ($n^{\alpha\beta} = 0$, $a_\alpha = 0$), we have
+$\sR = 0$: flat spatial sections.  For Bianchi~V
+($n^{\alpha\beta} = 0$, $a_\alpha \neq 0$), we get
+$\sR = 4\,a_\alpha a^\alpha > 0$ in the Ellis--MacCallum sign
+convention, corresponding to $\Omega_k < 0$ (open, $k = -1$
+FLRW curvature).  For Bianchi~IX
+($n^{\alpha\beta} = \mathrm{diag}(1,1,1)$, $a_\alpha = 0$),
+$\sR = -3 < 0$ in the normalised case, corresponding to
+$\Omega_k > 0$ (closed, $k = +1$).
+
+
+% ============================================================
+\section{The generalised Friedmann equation}
+\label{sec:gen-friedmann}
+% ============================================================
+
+Our goal in this section is to derive the Hamiltonian constraint
+for a spatially homogeneous cosmology with vorticity---the
+generalised Friedmann equation that replaces
+Eq.~\eqref{eq:Friedmann1} of Chapter~\ref{ch:intro} when
+anisotropy is present.
+
+We start from the Gauss equation~\eqref{eq:gauss}.  Taking the
+double trace $\gamma^{ik}\gamma^{jl}$ of the Gauss equation and
+using the decomposition of $K_{ij}$ gives
+\begin{equation}\label{eq:gauss-trace}
+\sR = R + 2\,R_{ab}\,u^a u^b
+  - K_{ij}K^{ij} + (K^i{}_i)^2\,.
+\end{equation}
+Now $K^i{}_i = \Theta$ and
+$K_{ij}K^{ij} = \frac{1}{3}\Theta^2 + \sigma_{ab}\sigma^{ab}$
+(since the cross term between the trace and the trace-free
+part vanishes).  The Einstein equation gives
+$R_{ab}\,u^a u^b = \frac{1}{2}\kappa(\rho + 3p) - \Lambda$
+and $R = -\kappa(\rho - p) + 4\Lambda$.  Substituting and
+simplifying:
+\begin{equation}
+\sR = -\kappa(\rho - p) + 4\Lambda
+  + \kappa(\rho + 3p) - 2\Lambda
+  - \tfrac{1}{3}\Theta^2 - 2|\sigma|^2 + \Theta^2\,.
+\end{equation}
+The $\rho$ and $p$ terms combine to $2\kappa\rho$, and
+$-\frac{1}{3}\Theta^2 + \Theta^2 = \frac{2}{3}\Theta^2$.
+Rearranging:
+\begin{equation}\label{eq:ham-constraint-irrot}
+\tfrac{1}{3}\Theta^2
+= \kappa\,\rho + \Lambda
+  - \tfrac{1}{2}\sR
+  + |\sigma|^2\,.
+\end{equation}
+Equation~\eqref{eq:ham-constraint-irrot} is the Hamiltonian constraint for the irrotational case.
+When vorticity is present, the threading approach introduces a
+correction: the ``spatial Ricci scalar'' defined through the
+constraint equations acquires a vorticity contribution, and the
+generalised form becomes~\cite{EllisVanElst1999,EllisMaartens2012}
+\begin{equation}\label{eq:ham-constraint}
+\boxed{
+\tfrac{1}{3}\Theta^2
+= \kappa\,\rho_{\mathrm{tot}} + \Lambda
+  - \tfrac{1}{2}\sR
+  + |\sigma|^2 - |\omega|^2
+}\,.
+\end{equation}
+The $-|\omega|^2$ term enters with the opposite sign to the
+shear.  Vorticity acts as a \emph{negative} effective energy
+density in the Friedmann equation.  For the geometry-frame
+congruence in a Bianchi model, $\rho_{\mathrm{tot}}$ includes
+the tilt contribution~\eqref{eq:rho-geom}.
+
+Equation~\eqref{eq:ham-constraint} is the master constraint
+from which the defect identity will be extracted.  It relates
+the expansion rate to the total energy content, the spatial
+curvature, and all kinematic degrees of freedom.
+
+
+% ============================================================
+\section{Standardised kinematic variables}\label{sec:std-vars}
+% ============================================================
+
+To compare kinematic quantities across models and epochs, we
+normalise each scalar invariant by the expansion rate.  The
+normalisation convention requires care, and we explain its
+rationale.
+
+\begin{definition}[Standardised variables]\label{def:std-vars}
+The standardised shear, vorticity, and acceleration are
+\begin{align}
+\Sigstd &:= \frac{\sigma_{ab}\sigma^{ab}}{6\Htheta^2}\,,
+\label{eq:Sigstd-def}\\
+\Wstd   &:= \frac{\omega_{ab}\omega^{ab}}{6\Htheta^2}\,,
+\label{eq:Wstd-def}\\
+\Astd   &:= \frac{\dot{u}_a\dot{u}^a}{6\Htheta^2}\,,
+\label{eq:Astd-def}
+\end{align}
+where $\Htheta := \Theta/3$ is the Hubble rate of the
+geometry-frame congruence.  Each variable is dimensionless,
+non-negative, and vanishes if and only if the corresponding
+kinematic quantity vanishes.
+\end{definition}
+
+The factor of six in the denominator is a convention choice.
+We adopt it so that the conversion between the standardised
+variable and the shear-to-expansion ratio takes the simple form
+$\sigma_{ab}\sigma^{ab}/\Theta^2 = (2/3)\Sigstd$, or
+equivalently $(\sigma/\Theta)^2 = (2/3)\Sigstd$ where
+$\sigma/\Theta := \sqrt{\sigma_{ab}\sigma^{ab}}/\Theta$.
+The MES shear bound~\eqref{eq:intro-MES} constrains
+$\sigma/\Theta < \Bsig$, which translates to
+$\Sigstd < \tfrac{3}{2}\Bsig^2$.
+
+For vorticity, two conventions coexist in the literature:
+$\omega/H := \sqrt{\omega_a\omega^a}/H$
+(Saadeh~et~al.~\cite{Saadeh2016b}) and
+$\bar{\omega} := \sqrt{\omega_{ab}\omega^{ab}}/\Theta$.
+The relations to $\Wstd$ are
+\begin{equation}\label{eq:omH-W2}
+(\omega/H)^2 = 3\,\Wstd\,,\qquad
+\bar{\omega}^2 = \tfrac{2}{3}\,\Wstd\,.
+\end{equation}
+The Saadeh~et~al.\ 95\% upper limit
+$(\omega/H)_0 < 5.2 \times 10^{-11}$ thus translates to
+$\Wstd < 9.01 \times 10^{-22}$.
+
+
+\subsection{Density parameters}\label{sec:density-params}
+
+Dividing the generalised Friedmann
+equation~\eqref{eq:ham-constraint} by $3\Htheta^2$ converts
+every term into a dimensionless density parameter.  We define
+\begin{equation}\label{eq:density-params}
+\Omega_{\mathrm{tot}} := \frac{\kappa\,\rho_{\mathrm{tot}}}{3\Htheta^2}\,,\qquad
+\OL := \frac{\Lambda}{3\Htheta^2}\,,\qquad
+\Omega_k := -\frac{\sR}{6\Htheta^2}\,,
+\end{equation}
+so that the closure relation reads
+\begin{equation}\label{eq:closure-full}
+1 = \Omega_{\mathrm{tot}} + \OL + \Omega_k
+  + \Sigstd - \Wstd\,.
+\end{equation}
+Equation~\eqref{eq:closure-full} is the normalised Hamiltonian constraint.  Every Bianchi
+model, at every instant, satisfies this relation exactly.
+
+
+% ============================================================
+\section{FLRW comparators and the departure parameter}
+\label{sec:defect-def}
+% ============================================================
+
+\subsection{Comparator FLRW models}\label{sec:comparators}
+
+To define the ``distance from FLRW'' of a Bianchi model, we
+need a reference FLRW geometry against which to measure the
+departure.  We call this the \emph{comparator}.  A comparator
+is specified by choosing a reference curvature parameter
+$\Okref$ and defining the FLRW matter budget as
+\begin{equation}\label{eq:FLRW-budget}
+\OFLRW := 1 - \OL - \Okref\,.
+\end{equation}
+Three comparator policies are natural:
+\begin{equation}\label{eq:comparator-policies}
+\compflat:\;\; \Okref = 0\,,\quad
+\compclosed:\;\; \Okref = \Omega_k^{(\mathrm{IX})}\,,\quad
+\compmatched:\;\; \Okref = \Omega_k\,.
+\end{equation}
+The \emph{flat comparator} $\compflat$ ($\Okref = 0$) is
+appropriate for types with vanishing spatial curvature (Bianchi~I
+and its tilted extensions).  The \emph{closed comparator}
+$\compclosed$ uses the Bianchi~IX isotropic curvature.  The
+\emph{curvature-matched comparator} $\compmatched$
+($\Okref = \Omega_k$) sets the anisotropic curvature
+contribution to zero and isolates the shear and tilt
+contributions.  Throughout this work, we use $\compflat$ unless
+otherwise stated.
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{\small
+\textbf{Warning.}  The three comparators $\compflat$,
+$\compclosed$, $\compmatched$ are \emph{not} identical: they
+assign different values of $x$ to the same spacetime.  In
+particular, $x = 0$ under $\compflat$ means the model coincides
+with a spatially flat FLRW, while $x = 0$ under $\compmatched$
+means only that the shear and tilt vanish---the model may still
+have non-zero spatial curvature.  \emph{Every} statement
+involving $x$, $Q$, $\Pi$, or $\FC$ is implicitly conditioned on
+the comparator.}}
+\end{center}
+
+
+\subsection{The departure parameter}\label{sec:defect-x}
+
+\begin{definition}[Departure parameter]\label{def:defect}
+The \emph{defect} of a Bianchi model relative to a specified
+FLRW comparator is
+\begin{equation}\label{eq:defect-def}
+x := \OFLRW - \Omega\,,
+\end{equation}
+where $\Omega := \kappa\hat{\rho}/(3\Htheta^2)$ is the
+rest-frame (matter-frame) density parameter and $\hat{\rho}$
+is the matter-frame energy density.
+\end{definition}
+
+The departure parameter $x$ measures how much the matter density falls short
+of the FLRW budget.  Every unit of shear, tilt, or anisotropic
+curvature diverts energy density away from the FLRW value,
+increasing $x$.
+
+\begin{proposition}[Sector-dependent sign structure of $x$ {\normalfont $[\ExactStatus]$}]
+\label{prop:x-sign}
+The departure parameter $x$ is a signed quantity.  Its sign is determined by
+the sector to which the model belongs.
+\begin{enumerate}
+\item[\emph{(i)}]
+  \textbf{Irrotational non-negative sector} ($\Wstd = 0$,\;
+  $\Okaniso \geq 0$):
+  \begin{equation}\label{eq:x-irrot-pos}
+  x = \Sigstd + \Otilt + \Okaniso \geq 0\,,
+  \end{equation}
+  with equality if and only if the model coincides with the
+  chosen FLRW comparator.  All flat orthogonal Bianchi types
+  (BI, BVII$_0$, BII, BVI$_0$) and all flat tilted types (BI,
+  BIII) under the flat comparator belong to this sector.
+  Certification of $\FC = x/\xmax$ is straightforward.
+
+\item[\emph{(ii)}]
+  \textbf{Irrotational negative sector} ($\Wstd = 0$,\;
+  $\Okaniso < 0$ dominant):
+  \begin{equation}\label{eq:x-irrot-neg}
+  x = \Sigstd + \Otilt + \Okaniso < 0
+  \quad\text{when}\quad
+  |\Okaniso| > \Sigstd + \Otilt\,.
+  \end{equation}
+  The Bianchi~IX tilted model is the principal example:
+  $x = -1.36 \times 10^{-3}$, driven entirely by
+  $\Okaniso = -1.36 \times 10^{-3}$ from the Planck curvature
+  constraint (Table~\ref{tab:departure_summary}).  The standard
+  filling fraction $\FC = x/\xmax$ is ill-defined; a signed
+  saturation coordinate is required.  BVIII and BIX~(orth) under
+  the flat comparator also belong to this sector.
+
+\item[\emph{(iii)}]
+  \textbf{Vortical sector} ($\Wstd > 0$):
+  \begin{equation}\label{eq:x-vort}
+  x = \Sigstd - \Wstd + \Otilt + \Okaniso\,,
+  \end{equation}
+  where the sign depends on the balance of all four terms.
+  Certification is blocked: the $\Wstd$ subtraction can make $x$
+  negative even when the geometry is far from FLRW.  The
+  BVII$_h$ tilted models belong to this sector.
+\end{enumerate}
+\end{proposition}
+
+\noindent
+The proof of part~(i) is immediate from
+Theorem~\ref{thm:master-defect-id}: every term is individually
+non-negative.  Part~(ii) follows from the dominance of the
+negative $\Okaniso$ term.  Part~(iii) follows from the
+negative sign of $\Wstd$ in the identity.  The three sectors
+are exhaustive and mutually exclusive; every Bianchi model
+belongs to exactly one sector under a given comparator.
+
+
+% ============================================================
+\section{The master defect identity}\label{sec:master-id}
+% ============================================================
+
+We now state and prove the central algebraic result of this
+framework.
+
+\begin{theorem}[Extended master defect identity {\normalfont $[\ExactStatus]$}]
+\label{thm:master-defect-id}
+Let $(\mathcal{M}, g_{ab})$ be a spatially homogeneous
+(Bianchi) cosmology with geometry-frame congruence $u^a$
+[$\Gframe$-frame],
+expansion $\Theta > 0$, kinematical Hubble rate
+$\Htheta = \Theta/3$, shear $\sigma_{ab}$ [$\Gframe$], and
+vorticity $\omega_{ab}$ [$\Gframe$].  Assume:
+\begin{enumerate}
+\item[\emph{(i)}] $u^a$ is the Bianchi group-invariant time
+  direction and $\sR$ is computed from the group-orbit slicing.
+\item[\emph{(ii)}] The generalised Hamiltonian constraint
+  \eqref{eq:ham-constraint} holds.
+\item[\emph{(iii)}] An FLRW comparator is specified by
+  $\OL$ and $\Okref$, with
+  $1 = \OFLRW + \OL + \Okref$.
+\item[\emph{(iv)}] The matter content is a perfect fluid with
+  equation of state $w > -1$ and tilt rapidity $\beta$.
+\end{enumerate}
+Then the departure parameter $x := \OFLRW - \Omega$ satisfies
+\begin{equation}\label{eq:master-identity}
+\boxed{x = \Sigstd - \Wstd + \Otilt + \Okaniso}\,,
+\end{equation}
+where each term is defined as follows:
+\begin{align}
+\Sigstd &= \frac{\sigma_{ab}\sigma^{ab}}{6\Htheta^2} \geq 0
+  &&\text{(standardised shear)}\,,
+  \label{eq:Sigstd-id}\\[3pt]
+\Wstd &= \frac{\omega_{ab}\omega^{ab}}{6\Htheta^2} \geq 0
+  &&\text{(standardised vorticity)}\,,
+  \label{eq:Wstd-id}\\[3pt]
+\Otilt &= (1+w)\,\Omega\,\sinh^2\!\beta \geq 0
+  &&\text{(tilt density)}\,,
+  \label{eq:Otilt-def}\\[3pt]
+\Okaniso &= \Omega_k - \Okref
+  &&\text{(anisotropic curvature)}\,.
+  \label{eq:Oka-def}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+The argument proceeds in four steps from the normalised
+Hamiltonian constraint.
+
+\emph{Step~1 (Tilt split).}
+The geometry-frame total energy density decomposes via
+Eq.~\eqref{eq:rho-geom} as
+$\rho_{\mathrm{tot}} = \hat{\rho}
++ (\hat{\rho} + \hat{p})\sinh^2\!\beta$.
+Dividing by $3\Htheta^2$ and using
+$\hat{p} = w\hat{\rho}$, we obtain
+\begin{equation}\label{eq:Otot-split}
+\Omega_{\mathrm{tot}}
+= \Omega + (1+w)\,\Omega\,\sinh^2\!\beta
+= \Omega + \Otilt\,,
+\end{equation}
+where $\Omega = \kappa\hat{\rho}/(3\Htheta^2)$ is the
+matter-frame density parameter.  The condition $w > -1$ and
+$\Omega \geq 0$ ensures $\Otilt \geq 0$.
+
+\emph{Step~2 (Substitution into closure).}
+We substitute Eq.~\eqref{eq:Otot-split} into the closure
+relation~\eqref{eq:closure-full}:
+\begin{equation}\label{eq:pf-step2}
+1 = \Omega + \Otilt + \OL + \Omega_k
+  + \Sigstd - \Wstd\,.
+\end{equation}
+
+\emph{Step~3 (Curvature split).}
+We write $\Omega_k = \Okref + \Okaniso$ by
+Definition~\eqref{eq:Oka-def}, so that
+\begin{equation}\label{eq:pf-step3}
+1 = \Omega + \Otilt + \OL + \Okref + \Okaniso
+  + \Sigstd - \Wstd\,.
+\end{equation}
+
+\emph{Step~4 (Comparator subtraction).}
+The comparator FLRW satisfies $1 = \OFLRW + \OL + \Okref$
+by Eq.~\eqref{eq:FLRW-budget}.  Subtracting this from
+Eq.~\eqref{eq:pf-step3} and rearranging:
+\begin{equation}
+\OFLRW - \Omega
+= \Sigstd - \Wstd + \Otilt + \Okaniso\,.
+\end{equation}
+Since $x = \OFLRW - \Omega$ by
+Definition~\ref{def:defect}, the identity follows.
+\end{proof}
+
+We pause to emphasise several properties of this result.
+Figure~\ref{fig:defect_identity_schematic} provides a schematic
+decomposition of the four terms.
+
+\begin{remark}[Identity, not inequality]\label{rem:identity}
+Equation~\eqref{eq:master-identity} is exact and algebraic:
+it holds at every instant without perturbative or near-FLRW
+approximation.  Inequalities arise only when individual terms
+are bounded using observational data.
+\end{remark}
+
+\begin{remark}[FLRW limit]\label{rem:FLRW-limit}
+We verify the FLRW limit explicitly.  An FLRW model has
+$\sigma_{ab} = 0$ (hence $\Sigstd = 0$),
+$\omega_{ab} = 0$ (hence $\Wstd = 0$),
+$\beta = 0$ (hence $\Otilt = 0$), and isotropic curvature.
+If the comparator is curvature-matched ($\Okref = \Omega_k$),
+then $\Okaniso = 0$ and the identity gives
+$x = 0 + 0 + 0 + 0 = 0$.
+For the flat comparator, an FLRW model with $\Omega_k \neq 0$
+gives $x = \Okaniso \neq 0$; thus $x = 0$ with a flat
+comparator implies the model is \emph{spatially flat} FLRW.
+In short, $x = 0$ means the model coincides with the chosen
+comparator---not with ``FLRW'' in an absolute sense.
+\end{remark}
+
+\begin{remark}[Sign of the vorticity term]
+\label{rem:vort-sign}
+Vorticity enters with a \emph{negative} sign, reflecting its
+role in the generalised Friedmann equation as a negative
+effective energy density.  For observationally relevant
+amplitudes ($\Wstd < 10^{-21}$ from
+Eq.~\eqref{eq:omH-W2} and the Saadeh bound), this term is
+smaller than $\Sigstd \sim 10^{-6}$ by fifteen orders of
+magnitude; its contribution to $x$ is negligible in all
+irrotational and weakly-vortical models.
+
+The sign has stronger consequences when combined with negative
+anisotropic curvature.  For the Bianchi~IX tilted model, the
+dominant contribution is $\Okaniso = -1.36 \times 10^{-3}$
+(from the Planck curvature constraint), giving $x = -1.36
+\times 10^{-3}$---an explicitly negative defect
+(Proposition~\ref{prop:x-sign}, part~ii).  The occupancy ratio
+$Q = x / x_{\max}$ inherits this sign, producing $Q = -211$
+and exceedance $\Pi(q_\star) = 0$ for all positive thresholds.
+This is not a failure of the framework: negative $x$ means the
+model \emph{overshoots} the FLRW comparator, and the
+three-layer structure correctly propagates this through $Q$ and
+$\Pi$ without artificial sign-clipping.
+\end{remark}
+
+\begin{remark}[Irrotational limit]\label{rem:irrot}
+Setting $\omega_{ab} = 0$ gives $\Wstd = 0$ and reduces the
+identity to $x = \Sigstd + \Otilt + \Okaniso$---a sum of three
+non-negative terms.  In this limit, the component-wise bounds
+$x \geq \Sigstd$, $x \geq \Otilt$, and $x \geq \Okaniso$
+follow immediately.
+\end{remark}
+
+\begin{corollary}[Component-wise bounds {\normalfont $[\ConditionalStatus]$}]
+\label{cor:component-bounds}
+In the irrotational sector ($\Wstd = 0$),
+$x \geq \Sigstd$, $x \geq \Otilt$, and
+$x \geq \Okaniso$, with equality if and only if the remaining
+two terms vanish.
+\end{corollary}
+
+\begin{corollary}[Shear--expansion conversion]
+\label{cor:sigma-from-Bsigma}
+The MES bound $\sigma/\Theta < \Bsig$ implies
+$\Sigstd < \frac{3}{2}\Bsig^2$.
+\end{corollary}
+\begin{proof}
+By definition, $(\sigma/\Theta)^2
+= \sigma_{ab}\sigma^{ab}/\Theta^2 = (2/3)\Sigstd$.
+The bound $\sigma/\Theta < \Bsig$ gives
+$(2/3)\Sigstd < \Bsig^2$, hence
+$\Sigstd < \frac{3}{2}\Bsig^2$.
+\end{proof}
+
+\begin{remark}[Frame attribution of the defect identity]
+\label{rem:frame-ledger}
+The master identity~\eqref{eq:master-identity} mixes
+quantities from different frames.
+Table~\ref{tab:frame-ledger} records the frame
+origin of each term.
+
+\begin{table}[h]
+\caption{Frame ledger for the master defect identity.
+\Gframe\ = geometry frame; \Mframe\ = matter frame;
+\GMframe\ = mixed (involves M$\to$G boost).}
+\label{tab:frame-ledger}
+\centering\footnotesize
+\begin{tabular}{lcl}
+\hline\hline
+Quantity & Frame & Origin \\
+\hline
+$\Sigstd$ & \Gframe & $\sigma_{ab}\sigma^{ab}/(6\Htheta^2)$ \\
+$\Wstd$ & \Gframe & $\omega_{ab}\omega^{ab}/(6\Htheta^2)$ \\
+$\Okaniso$ & \Gframe & $\Omega_k - \Okref$ \\
+$\Otilt$ & \GMframe & $(1{+}w)\Omega\sinh^2\!\beta$
+  (involves M$\to$G rapidity) \\
+$x$ & \GMframe & $\Sigstd - \Wstd + \Otilt + \Okaniso$
+  (hybrid via $\Otilt$) \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+\noindent
+The defect $x$ is \emph{not} a pure geometry-frame scalar: it
+inherits mixed-frame character from $\Otilt$, which depends on
+the tilt rapidity $\beta$ between the matter and geometry
+congruences.  For irrotational, orthogonal models
+($\beta = 0$, $\omega_{ab} = 0$), the identity reduces to
+$x = \Sigstd + \Okaniso$, which is pure \Gframe.  For tilted
+models, the \GMframe\ character is irreducible.
+\end{remark}
+
+
+% ============================================================
+\section{The three-layer inference framework}
+\label{sec:three-layer}
+% ============================================================
+
+Our goal in this section is to connect the exact algebraic
+identity~\eqref{eq:master-identity} to Bayesian inference.  The
+departure parameter $x$ is not directly observable: it is a
+function of the model parameters $\theta$ through the master
+identity.  What enters the statistical analysis is the
+\emph{pushforward posterior}---the probability distribution of
+$x$ induced by propagating $p(\theta | D)$ through the identity.
+We organise this into three layers, each providing a distinct
+level of interpretive resolution.
+
+
+\subsection{Layer~1: The pushforward defect}
+\label{sec:layer1}
+
+Given posterior samples $\{\theta_i\}_{i=1}^N$ from the nested
+sampling of any Bianchi model, we compute
+\begin{equation}\label{eq:xi-pushforward}
+x_i = \Sigstd(\theta_i) - \Wstd(\theta_i)
+      + \Otilt(\theta_i) + \Okaniso(\theta_i)
+\end{equation}
+for each sample, inheriting the posterior weights $w_i$.  The
+resulting weighted collection $\{x_i, w_i\}$ is the pushforward
+posterior of $x$---exact, not approximate, since the identity
+holds for every $\theta$.
+
+The component-wise decomposition is retained: each sample
+carries all four contributions, enabling statements such as
+``the posterior median tilt contribution is
+$\tilde{\Otilt} = 5.85 \times 10^{-7}$, while the posterior
+median shear contribution is
+$\tilde{\Sigstd} \lesssim 10^{-18}$''
+(FLRW$_{\mathrm{tilt}}$ model, flat comparator, VER05 corrected; see
+Table~\ref{tab:departure_summary}).  The shear is negligible by
+nineteen orders of magnitude: the entire defect is tilt-driven.
+
+\begin{definition}[Pushforward summary statistics]
+\label{def:x-summaries}
+We report:
+the posterior median $\tilde{x}$,
+the posterior mean $\bar{x}$,
+the 95\% highest posterior density interval
+$[x_{2.5}, x_{97.5}]$,
+and the component medians
+$\tilde{\Sigstd}$, $\tilde{\Wstd}$,
+$\tilde{\Otilt}$, $\tilde{\Okaniso}$.
+\end{definition}
+
+
+\subsection{Layer~2: The occupancy ratio}
+\label{sec:layer2}
+
+The defect $x$ depends on the normalisation of the Hubble rate.
+To obtain a dimensionless measure of ``how close to the
+ceiling,'' we define the \emph{occupancy ratio}
+\begin{equation}\label{eq:Q-def}
+Q := \frac{x}{x_{\max}}\,,
+\end{equation}
+where $x_{\max}$ is the MES algebraic ceiling---the largest
+value of $\Sigstd$ permitted by the MES shear bound for
+the adopted scenario.
+For the S3 kinematic scenario with $\epsilon_1 = 1.233
+\times 10^{-3}$, the ceiling is
+$x_{\max} = \frac{3}{2}\Bsig^2 = 6.47 \times 10^{-6}$
+(Chapter~\ref{ch:bianchi-bounds},
+Table~\ref{tab:bounds}).
+
+The occupancy $Q$ is a ratio of two model-dependent
+quantities, and it inherits the sign of $x$: for models with
+$x < 0$ (such as Bianchi~IX with dominant negative $\Okaniso$),
+$Q < 0$.
+
+For the FLRW$_{\mathrm{tilt}}$ model under the flat comparator,
+the posterior mean occupancy is $\bar{Q} = 0.092$, with a 95\%
+highest posterior density interval
+$[0.035,\, 0.19]$.  That is, the data place the defect at
+roughly $9\%$ of the algebraic ceiling---detectable, but far
+from saturation.
+
+
+\subsection{Layer~3: The exceedance probability}
+\label{sec:layer3}
+
+The occupancy ratio $Q$ quantifies how much of the allowed
+anisotropy budget is filled.  To translate this into a
+decision-theoretic statement, we define the \emph{exceedance
+probability}
+\begin{equation}\label{eq:Pi-def}
+\Pi(q_\star) := P(Q > q_\star \,|\, D)\,,
+\end{equation}
+where $q_\star$ is a chosen threshold.  For the
+FLRW$_{\mathrm{tilt}}$ model: $\Pi(0.01) = 1.000$
+(the posterior unambiguously exceeds $1\%$ of the ceiling),
+$\Pi(0.05) = 0.974$,
+$\Pi(0.1) = 0.352$, and
+$\Pi(0.5) = 0.000$.  The data
+strongly support nonzero departure at the $1$--$5\%$
+threshold but are indeterminate at $10\%$ and exclude $50\%$.
+
+\begin{remark}[Interpretation guide]\label{rem:Pi-interpretation}
+The three layers form a chain of increasing interpretive
+commitment.  Layer~1 ($x$) is exact algebra---no choice is made
+beyond the comparator.  Layer~2 ($Q$) introduces the MES
+ceiling, coupling the result to the adopted observational bound.
+Layer~3 ($\Pi$) introduces a threshold $q_\star$, the choice of
+which is a matter of scientific judgement, not of the framework.
+A referee who objects to the ceiling choice can read $x$ alone;
+a referee who accepts the ceiling but disputes the threshold
+can read $Q$ alone.  This stratification makes the
+interpretive dependencies explicit and auditable.
+\end{remark}
+
+
+\subsection{Comparator sensitivity of the three layers}
+\label{sec:comp-sensitivity}
+
+We verified numerically that, for all models without a curvature
+parameter ($\Okaniso = 0$ by construction), the three layers are
+identically invariant under the comparator choice: the flat,
+closed, and curvature-matched comparators yield the same
+$x$, $Q$, and $\Pi$ to machine precision.  This follows from
+the fact that $\Okaniso$ is the only comparator-dependent term
+in the identity.
+
+For models with a curvature parameter (Bianchi~V and~IX),
+comparator dependence is maximal: the exceedance spread is
+$\Delta_{\Pi}^{\mathrm{comp}}(0.01) = 1.0$ for both
+BV$_{\mathrm{tilt}}$ and BIX$_{\mathrm{tilt}}$
+(Table~\ref{tab:departure_summary}).  This is expected:
+the curvature contribution $\Okaniso$ switches sign between
+comparators, changing the qualitative conclusion.  We report
+all departure quantities under the flat comparator throughout
+and flag curvature-bearing models explicitly.
+
+
+\subsection{Ontological status of derived quantities}
+\label{sec:ontology}
+
+The three-layer framework reports two additional derived
+quantities that must be carefully distinguished from the
+departure components.
+
+The \emph{tilt velocity}
+$v_{\mathrm{tilt}} := c\,\tanh\beta$ is a physical
+observable---the peculiar velocity of the matter frame
+relative to the geometry frame.  For the FLRW$_{\mathrm{tilt}}$
+posterior,
+$\tilde{v}_{\mathrm{tilt}} = 408\;\mathrm{km\,s}^{-1}$.
+This quantity is directly comparable to the CF4 bulk-flow
+measurement.
+
+The \emph{tilt density} $\Otilt = (1+w)\Omega\sinh^2\!\beta$
+is a component of the departure identity---a bookkeeping
+variable that enters the algebraic constraint, not a directly
+measurable energy density.  Its value
+($\tilde{\Otilt} = 5.85 \times 10^{-7}$) should not be
+interpreted as a ``fifth energy component'' but rather as the
+portion of the FLRW matter budget redirected by the tilt into
+the geometry-frame total.
+
+We enforce this distinction throughout: $v_{\mathrm{tilt}}$
+appears in observational comparisons
+(Chapter~\ref{ch:discussion}), while $\Otilt$ appears only in
+the defect identity algebra and its decomposition figures.
+
+
+% ============================================================
+\subsection{Ceiling semantics and certified \texorpdfstring{$\FC$}{F\_C}}
+\label{sec:ceiling-semantics}
+% ============================================================
+
+The three-layer framework uses $\xmax$ as a normalisation
+ceiling for the occupancy ratio $Q = x/\xmax$.  We now formalise
+the conditions under which this normalisation carries physical
+content.
+
+\begin{definition}[Admissible ceiling family]
+\label{def:ceiling-family}
+An \emph{admissible ceiling family} is a map
+$\xmaxC: \Theta \to \mathbb{R}_{>0}$,
+where $\Theta$ is the parameter space and $C$ labels the
+comparator, such that $\xmaxC(\theta) \geq |x(\theta)|$
+for all $\theta$ in the sector where $\xmaxC$ is
+evaluated.  The MES ceiling $\xmax = \frac{3}{2}\Bsig^2$
+is the principal instance used in this work.
+\end{definition}
+
+\begin{definition}[Class-conditioned filling fraction]
+\label{def:FC}
+For a model in sign-domain sector $S$ under comparator $C$,
+the \emph{class-conditioned filling fraction} is
+\begin{equation}\label{eq:FC-def}
+\FC := \frac{x}{\xmaxC}\,,
+\end{equation}
+defined only when $x \geq 0$ (irrotational non-negative
+sector) and $\xmaxC > 0$.
+\end{definition}
+
+\begin{proposition}[No automatic physical interpretation {\normalfont $[\ExactStatus]$}]
+\label{prop:FC-no-auto}
+The class-conditioned filling fraction $\FC$ does \emph{not}
+automatically carry a physical interpretation as ``the fraction
+of the anisotropy budget that is filled.''  A counterexample is
+the Bianchi~IX orthogonal model under the flat comparator: the
+negative $\Okaniso = -1.36 \times 10^{-3}$ drives $x < 0$,
+making $\FC$ undefined by Definition~\ref{def:FC}.  Switching
+to $\compmatched$ sets $\Okaniso = 0$ and restores $\FC \geq 0$,
+but the ``physical meaning'' of $\FC$ now depends entirely on
+the comparator choice.
+\end{proposition}
+
+\begin{proposition}[Certified saturation in the sign-clean
+  sector {\normalfont $[\ConditionalStatus]$}]\label{prop:FC-certified}
+In the irrotational non-negative sector
+(Proposition~\ref{prop:x-sign}, part~(i)), under any admissible
+ceiling, $0 \leq \FC \leq 1$.  The value $\FC = 0$ means exact
+coincidence with the comparator; $\FC = 1$ means the defect
+saturates the ceiling.  The MES ceiling gives $\FC \in
+[0, 0.090]$ (WFH2009 primary) to $[0, 0.063]$ (CF4++ sensitivity variant)
+across the observationally relevant scenarios.
+\end{proposition}
+
+\begin{remark}[Signed saturation coordinate]
+\label{rem:signed-sat}
+For models in the irrotational negative or vortical sectors,
+a signed saturation coordinate $\FC^{\pm} := x / |\xmaxC|$
+can be defined, taking values on $(-\infty, 1]$.  Negative
+values indicate ``overshoot'' beyond the comparator, not a
+failure of the framework.  We report $\FC^{\pm}$ for these
+models in the appendix but do not include them in the main
+evidence or occupancy tables.
+\end{remark}
+
+
+% ── Sector partition and conditional diagnostics ─────────
+\subsection{Sector partition and posterior decomposition}
+\label{sec:sector-partition}
+
+The sign structure of $x$ partitions the state space into
+three sectors that govern which diagnostics are well-defined.
+
+\begin{definition}[Sign-domain sector partition]
+\label{def:sector-partition}
+For each Bianchi type $T$ and comparator $C$, the constrained
+state space $\Theta_T$ admits the measurable partition
+\begin{equation}\label{eq:sector-partition}
+\Theta_T
+= \Theta_{T,+}^{\mathrm{irr}}
+  \;\sqcup\;
+  \Theta_{T,-}^{\mathrm{irr}}
+  \;\sqcup\;
+  \Theta_T^{\mathrm{vort}}\,,
+\end{equation}
+where
+$\Theta_{T,+}^{\mathrm{irr}} := \{\theta : W^2 = 0,\;
+x(\theta) \geq 0\}$ (irrotational non-negative),
+$\Theta_{T,-}^{\mathrm{irr}} := \{\theta : W^2 = 0,\;
+x(\theta) < 0\}$ (irrotational negative),
+and $\Theta_T^{\mathrm{vort}} := \{\theta : W^2 > 0\}$
+(vortical).
+\end{definition}
+
+\begin{definition}[Posterior sector masses]
+\label{def:sector-mass}
+Given the posterior $p(\theta \,|\, D, T)$, the
+\emph{posterior sector mass} for sector $s$ is
+\begin{equation}\label{eq:sector-mass}
+m_{T,s}(D)
+:= \int_{\Theta_{T,s}} p(\theta \,|\, D, T)\,
+   d\theta\,.
+\end{equation}
+The three masses sum to unity.  A large $m_{T,-}^{\mathrm{irr}}$
+signals that the posterior places substantial weight in the
+negative-departure region, where the occupancy ratio $\FC$ is
+undefined (Definition~\ref{def:FC}) and the signed coordinate
+$\FC^{\pm}$ (Remark~\ref{rem:signed-sat}) must be used instead.
+\end{definition}
+
+The full posterior summary for a model is therefore not a single
+occupancy number but the triple
+\begin{equation}\label{eq:full-summary}
+\bigl(\,
+  m_{T,+}^{\mathrm{irr}}(D),\;
+  m_{T,-}^{\mathrm{irr}}(D),\;
+  m_T^{\mathrm{vort}}(D)\,\bigr)
+\end{equation}
+together with the sector-conditional diagnostic laws
+$p(\FC \,|\, D,\,\theta \in \Theta_{T,+}^{\mathrm{irr}})$ and
+$p(\FC^{\pm} \,|\, D,\,\theta \in \Theta_{T,-}^{\mathrm{irr}}
+\cup \Theta_T^{\mathrm{vort}})$.
+
+\begin{proposition}[Sectoral ceiling existence
+  {\normalfont $[\ConditionalStatus]$}]
+\label{prop:ceiling-existence}
+Let $C_{\mathrm{irr}}^{+}$ denote the irrotational non-negative
+sector under the flat comparator, and suppose:
+\textup{(i)}~the MES shear bound gives
+$\Sigstd \leq (3/2)\Bsig^2$ for the adopted $\eps_\ell$;
+\textup{(ii)}~the safe-route tilt bound gives
+$\beta \leq \eps_1/(1 + \etaud)$;
+\textup{(iii)}~$\Omega_m \in (0,1]$ and $w \in [0, 1/3]$;
+\textup{(iv)}~$C_{\mathrm{irr}}^{+}$ is a closed bounded
+subset of $\Theta_T$.
+Then
+\begin{equation}
+U_{C_{\mathrm{irr}}^{+}}
+:= \max_{\theta \in C_{\mathrm{irr}}^{+}} x(\theta)
+= \tfrac{3}{2}\Bsig^2 + (1+w)\Omega_m\sinh^2\!\beta_{\max}
+\end{equation}
+exists and is finite.
+\end{proposition}
+
+\begin{proof}
+In $C_{\mathrm{irr}}^{+}$ we have $W^2 = 0$ and
+$\Okaniso \geq 0$, so $x = \Sigstd + \Otilt + \Okaniso$.
+Each summand is non-negative and bounded above:
+$\Sigstd \leq (3/2)\Bsig^2$ by~(i),
+$\Otilt = (1+w)\Omega_m\sinh^2\!\beta
+\leq (1+w)\Omega_m\sinh^2\!\beta_{\max}$ by~(ii)--(iii),
+and $\Okaniso \leq (3/2)\Bsig^2$ (it contributes to the
+same MES budget).  Hence $x$ is continuous and bounded on a
+compact set; by the Weierstrass extreme-value theorem the
+maximum exists.
+\end{proof}
+
+\begin{remark}[Scope of the ceiling guarantee]
+\label{rem:ceiling-scope}
+Proposition~\ref{prop:ceiling-existence} does \emph{not}
+extend to the irrotational negative or vortical sectors.  In
+those sectors, the interplay of $-W^2$ and negative $\Okaniso$
+can make $\sup x$ depend on cancellation structures for which
+no universal bound exists.  For this reason the occupancy ratio
+$Q = x/\xmax$ carries $\ConditionalStatus$: it is a
+theorem-backed quantity only within $C_{\mathrm{irr}}^{+}$, and
+a proxy score elsewhere.
+\end{remark}
+
+
+% ── Identifiability under scalar-amplitude compression ────
+\subsection{Identifiability under scalar-amplitude compression}
+\label{sec:identifiability}
+
+The scalar-amplitude likelihood compresses all directional
+information into amplitude summary statistics.  We formalise
+which quantities survive this compression.
+
+\begin{definition}[$K$-identifiable functional]
+\label{def:K-ident}
+Let $K_{M,\theta}(z)$ denote the likelihood evaluated on
+compressed observables $z$ for model $M$ at parameters~$\theta$.
+A functional $g(M,\theta)$ is \emph{$K$-identifiable} if
+\begin{equation}\label{eq:K-ident}
+K_{M,\theta}(z) = K_{M',\theta'}(z)\;\forall z
+\quad\Longrightarrow\quad
+g(M,\theta) = g(M',\theta')\,.
+\end{equation}
+Equivalently, $g$ factors through the quotient
+$\mathcal{Q}_K := \Theta / {\sim_K}$.
+\end{definition}
+
+\begin{proposition}[$K$-identifiability audit]
+\label{prop:K-audit}
+Under the VER06 scalar-amplitude likelihood:
+
+\textup{(i)}~$\beta$, $v_{\mathrm{tilt}} = c\tanh\beta$,
+$\sinh^2\!\beta$, $\Otilt$ are $K$-identifiable
+\emph{and data-constrained}: the posterior is data-dominated
+with $N_{\mathrm{eff}} > 700$.
+
+\textup{(ii)}~$\Sigstd$ is $K$-identifiable (constant within
+each equivalence class) but \emph{not data-constrained}:
+the posterior fills the prior at $\sim\!10^{-20}$.
+
+\textup{(iii)}~$x_C$ under the flat comparator for
+curvature-free types is $K$-identifiable and partially
+data-constrained (via $\Otilt$).  For curvature-bearing types,
+$x_C$ is \emph{not} $K$-identifiable: $\Omega_K$ is inactive
+and comparator-dependent.
+
+\textup{(iv)}~Any geometry norm $\mathcal{G}_u$ that depends on
+the \emph{type label} (beyond the equivalence class) is not
+$K$-identifiable.  In particular, the distinction between
+Bianchi~I and Bianchi~VII$_0$ orthogonal, or between
+FLRW$_{\mathrm{tilt}}$ and BI$_{\mathrm{tilt}}$, is not
+accessible at the scalar-amplitude level.
+\end{proposition}
+
+\begin{proof}
+Parts~(i)--(iii) follow by inspection of the
+\texttt{predicted\_observables()} output: within each
+equivalence class (Section~\ref{sec:equivalence} of
+Chapter~\ref{ch:results}), the likelihood-active parameters
+are identical.  Part~(iv) is immediate: the geometry norm
+$\mathcal{G}_u$ distinguishes types that share the same
+$K_{M,\theta}$, hence it does not factor through
+$\mathcal{Q}_K$.
+\end{proof}
+
+\begin{remark}[Geometry claim prohibition as a theorem]
+\label{rem:geom-prohibition}
+Proposition~\ref{prop:K-audit}(iv) is not a limitation
+paragraph---it is a \emph{structure theorem}.  Geometry
+identification (claim~C4 in the governance hierarchy of
+Section~\ref{sec:Q-status}) is \emph{prohibited}, not merely
+difficult, at the scalar-amplitude level.  Breaking this
+requires a finer kernel $K'$ incorporating directional
+information (Tier~2, Chapter~\ref{ch:future}).
+\end{remark}
+
+\begin{remark}[Identifiability gate $G_{\mathrm{id}}$]
+\label{rem:G-id}
+The current identifiability status is summarised by the triple
+$G_{\mathrm{id}} =
+(\mathrm{FPR}_{\mathrm{geo}} = 22\%,\;
+\mathrm{diag}(\mathbf{C}_{\mathrm{conf}}) = 67\%,\;
+\#\text{classes} = 7)$.
+Geometry claims require
+$\mathrm{FPR}_{\mathrm{geo}} < 10\%$; current status:
+\textbf{blocked}.  This gate is an \emph{inference adequacy}
+monitor, not a perturbative validity parameter---it tests
+source-attribution power, not approximation accuracy.
+\end{remark}
+
+
+% ============================================================
+\section{The PSTF multipole expansion and CMB connection}
+\label{sec:pstf-cmb}
+% ============================================================
+
+The CMB temperature anisotropy, observed along a spatial
+direction $e^a$ (with $e_a u^a = 0$, $e_a e^a = 1$), admits
+the PSTF multipole expansion
+\begin{equation}\label{eq:CMB-multipole}
+\frac{\Delta T(\mathbf{e})}{T_0}
+= \sum_{\ell=1}^{\infty}
+  \eps_\ell\,P_\ell(\cos\vartheta)\,,
+\end{equation}
+where $\vartheta$ is the angle between $e^a$ and the symmetry
+axis $\hat{n}^a$ of the Bianchi model, $P_\ell$ is the Legendre
+polynomial, and $\eps_\ell$ is the dimensionless amplitude of
+the $\ell$-th multipole.  For axisymmetric Bianchi models, the
+$m \neq 0$ modes vanish by symmetry and the anisotropy is fully
+characterised by the sequence $\{\eps_\ell\}$.
+
+The relation to the spherical-harmonic coefficients
+$a_{\ell m}$ of Chapter~\ref{ch:intro} is
+$\eps_\ell = |a_{\ell 0}| \sqrt{4\pi/(2\ell+1)}/T_0$
+for $m = 0$.  The first three multipoles---dipole $\eps_1$,
+quadrupole $\eps_2$, and octupole $\eps_3$---enter the MES
+bound hierarchy derived in
+Chapter~\ref{ch:bianchi-bounds} and dominate the constraint
+analysis.
+
+
+% ============================================================
+\section{The three-frame problem}\label{sec:frame-problem}
+% ============================================================
+
+The passage from a Bianchi geometry to CMB observations involves
+three distinct reference frames, each with its own kinematic
+decomposition (Figure~\ref{fig:frame_problem}).
+
+The \emph{geometry frame}~(G) is defined by the timelike
+eigenvector of the Bianchi symmetry group---the unit normal to
+the group orbits.  In this frame the spatial metric is
+homogeneous, and the kinematic quantities $\sigma_{ab}$,
+$\omega_{ab}$ are properties of the spacetime geometry itself.
+Because $u^a$ is hypersurface-orthogonal, we have
+$\omega_{ab}^{(G)} = 0$ and, for a comoving fluid,
+$\dot{u}_a^{(G)} = 0$.
+
+The \emph{matter frame}~(M) is defined by the four-velocity
+$\hat{u}^a$ of the dominant perfect fluid.  When the fluid
+is tilted relative to the geometry frame by rapidity $\beta$,
+the boost~\eqref{eq:boost-u} connects the two frames.  The
+matter-frame kinematic quantities ($\hat{\sigma}_{ab}$,
+$\hat{\omega}_{ab}$, $\hat{\dot{u}}_a$) are generically
+non-zero even when the geometry-frame quantities vanish.
+
+The \emph{observer frame}~(O) is the CMB rest frame,
+obtained from the matter frame by a further peculiar-velocity
+boost.  The CMB multipoles $\eps_\ell$ are measured in this
+frame.
+
+What does the Bianchi framework constrain?  The defect identity
+and the MES bounds are expressed in terms of geometry-frame
+quantities.  The CMB multipoles are measured in the observer
+frame.  The connection between these two frames---passing
+through the matter frame---introduces frame-dependent terms
+that must be tracked.  We now derive the relevant transformation
+formulas.
+
+
+\subsection{King--Ellis boost formulae}\label{sec:king-ellis}
+
+King \& Ellis~\cite{KingEllis1973} derived the exact nonlinear
+transformation of all kinematic quantities under a Lorentz boost
+from the geometry frame to the matter frame.  For a Bianchi
+model with $\omega_{ab}^{(G)} = 0$ and
+$\dot{u}_a^{(G)} = 0$, the key results are as follows.
+
+The matter-frame expansion is
+\begin{equation}\label{eq:KE-Theta}
+\hat{\Theta}
+= \gamma\,\Theta + \gamma^3\,\sigma_{ab}\,v^a v^b
+  + \tilde{D}_a(\gamma\, v^a)\,,
+\end{equation}
+where $\gamma = \cosh\beta$, $v^a$ is the tilt velocity with
+$|v| = \tanh\beta$, and $\tilde{D}_a$ is the spatially projected
+covariant derivative.  In the spatially homogeneous setting,
+the divergence term $\tilde{D}_a(\gamma v^a)$ involves the
+structure constants and does not generically vanish.
+
+The matter-frame \textbf{vorticity} is
+\begin{equation}\label{eq:KE-omega}
+\hat{\omega}_{ab}
+= \gamma^2\,v_{[a}\bigl[\tfrac{1}{3}\Theta\,v_{b]}
+  + \sigma_{b]c}\,v^c\bigr]
+  + \gamma^2\,\hat{h}_{[a}{}^c\,\tilde{D}_{|c|}
+    (\gamma\,v_{b]})\,.
+\end{equation}
+The leading term $\gamma^2 v_{[a}\sigma_{b]c}v^c$ is the
+shear--tilt coupling that generates matter-frame vorticity
+from an irrotational geometry frame---a purely relativistic
+effect analogous to Thomas precession.  This vorticity vanishes
+if and only if either $\sigma_{ab} = 0$ (no shear) or $v^a$
+is an eigenvector of $\sigma_{ab}$ (tilt aligned with a
+principal shear axis).  For a general tilt direction in a
+Bianchi model with non-degenerate shear eigenvalues,
+$\hat{\omega}_{ab} \neq 0$.
+
+The matter-frame \textbf{four-acceleration} is
+\begin{equation}\label{eq:KE-udot}
+\hat{\dot{u}}_a
+= \gamma^2\,\hat{h}_a{}^b\bigl[
+  \dot{v}_b + \tfrac{1}{3}\Theta\,v_b
+  + \sigma_{bc}\,v^c
+  + \gamma^2(\sigma_{cd}\,v^c v^d)\,v_b
+\bigr]\,,
+\end{equation}
+where $\dot{v}_b = u^c\nabla_c v_b$ is the geometry-frame time
+derivative of the tilt velocity.  King \& Ellis proved the
+sharp result: \emph{for a perfect fluid with $p \neq 0$ in an
+expanding tilted universe, $\hat{\dot{u}}_a \neq 0$
+necessarily}.  Only pressureless dust ($w = 0$) can be
+simultaneously tilted and geodesic.
+
+In the \textbf{linearised regime} ($v \ll 1$, $\gamma \approx 1$),
+these expressions simplify
+to~\cite{EllisVanElst1999,EllisMaartens2012}:
+\begin{align}
+\hat{\Theta} &\approx \Theta + \tilde{D}^a v_a\,,
+\label{eq:KE-lin-Theta}\\
+\hat{\sigma}_{ab} &\approx \sigma_{ab}
+  + \tilde{D}_{\langle a} v_{b\rangle}\,,
+\label{eq:KE-lin-sigma}\\
+\hat{\omega}_{ab} &\approx \tilde{D}_{[a}\,v_{b]}\,,
+\label{eq:KE-lin-omega}\\
+\hat{\dot{u}}_a &\approx \dot{v}_a
+  + \tfrac{1}{3}\Theta\,v_a
+  + \sigma_{ab}\,v^b\,.
+\label{eq:KE-lin-udot}
+\end{align}
+The linearised acceleration~\eqref{eq:KE-lin-udot} is driven
+by three effects: the time evolution of tilt ($\dot{v}_a$),
+Hubble drag ($\frac{1}{3}\Theta v_a$), and the shear--tilt
+coupling ($\sigma_{ab}v^b$).  For the dipole anomaly amplitude
+($\beta \sim 10^{-3}$), the linearised approximation is
+accurate to better than $10^{-6}$.
+
+
+\subsection{The acceleration dipole}\label{sec:accel-dipole}
+
+Our goal in this subsection is to derive the contribution of
+the matter-frame acceleration to the CMB dipole---the key
+result of VT-07.
+
+The 1+3 covariant Boltzmann equation for the radiation dipole
+$I_a^{(1)}$ contains the source
+term~\cite{MaartensGE1999,ChallinorLasenby1999}
+\begin{equation}\label{eq:boltz-dipole}
+\dot{I}_a^{(1)} \ni \tfrac{4}{3}\,I\,\dot{u}_a\,,
+\end{equation}
+where $I \propto T^4$ is the radiation monopole.  The
+acceleration generates a dipolar temperature anisotropy with
+amplitude
+\begin{equation}\label{eq:eps1-udot-raw}
+\eps_1^{(\dot{u})}
+\sim \frac{|\hat{\dot{u}}|}{\Theta}\,.
+\end{equation}
+For a barotropic perfect fluid with equation of state
+$\hat{p} = w\hat{\rho}$, the relativistic Euler equation gives
+$(\hat{\rho} + \hat{p})\hat{\dot{u}}_a
+= -\hat{h}_a{}^b\,\nabla_b \hat{p}$.
+In the linearised tilt regime, the dominant contribution
+to the acceleration comes from the Hubble drag term in
+Eq.~\eqref{eq:KE-lin-udot}.  Specifically, for a radiation-era
+fluid ($w = 1/3$), the tilt rapidity $\beta$ is frozen
+($\dot{\beta} = 0$; see Section~\ref{sec:tilt-raych}), and
+the acceleration reduces to
+\begin{equation}
+|\hat{\dot{u}}| \approx \Theta\,
+  \frac{w}{3(1+w)}\,\beta\,,
+\end{equation}
+yielding the acceleration efficiency
+\begin{equation}\label{eq:eta-udot}
+\etaud := \frac{w}{3(1+w)}\,,
+\end{equation}
+and the acceleration dipole
+\begin{equation}\label{eq:eps1-udot}
+\eps_1^{(\dot{u})} = \etaud\,\beta\,.
+\end{equation}
+For radiation ($w = 1/3$), $\etaud = 1/12 \approx 0.083$.
+At the matter--radiation equality and in the dust era,
+$\etaud \to 0$ (dust is geodesic), so the acceleration
+contribution is generated primarily during the radiation epoch
+and frozen thereafter.
+
+The total observed dipole is
+\begin{equation}\label{eq:eps1-total}
+\eps_1 = (1 + \etaud)\,\beta + \eps_1^{\mathrm{int}}\,,
+\end{equation}
+where $\eps_1^{\mathrm{int}}$ is any genuinely intrinsic
+(geometric) dipole.  The $(1 + \etaud)$ factor means that
+interpreting the entire $\eps_1$ as tilt (i.e.\ setting
+$\beta = \eps_1$) systematically overestimates the tilt
+rapidity by a factor $(1 + \etaud)$.
+
+
+\subsection{Frame-attribution bias}\label{sec:frame-bias}
+
+\begin{definition}[Frame-attribution bias]
+\label{def:frame-bias}
+The frame-attribution bias is
+\begin{equation}\label{eq:frame-bias}
+\Bbias := \Bsig^{(\mathrm{obs})} - \Bsig^{(\mathrm{geom})}\,,
+\end{equation}
+where $\Bsig^{(\mathrm{obs})}$ uses the total observed
+$\eps_1$ and $\Bsig^{(\mathrm{geom})}$ uses only the
+geometric dipole $\eps_1^{(\mathrm{geom})}
+= \eps_1 - \eps_1^{(\dot{u})}$.
+\end{definition}
+
+Since $\Bsig = \frac{5}{3}\eps_1 + 3\eps_2 + \frac{3}{7}\eps_3$
+is linear in $\eps_1$, the bias is
+\begin{equation}
+\Bbias = \tfrac{5}{3}\,\eps_1^{(\dot{u})}
+= \tfrac{5}{3}\,\etaud\,\beta\,.
+\end{equation}
+Using $\beta \approx \eps_1/(1+\etaud)$ from the corrected
+safe-route (below), the fractional bias is
+\begin{equation}
+\frac{\Bbias}{\Bsig}
+\approx \frac{\etaud}{1 + \etaud}
+\approx 7.7\% \quad (w = \tfrac{1}{3})\,.
+\end{equation}
+This propagates to a $\sim 16\%$ overestimation of $\xmax$ for
+shear-dominated types because $\xmax \propto \Bsig^2$.
+
+\subsection{Corrected safe-route tilt bound}
+\label{sec:safe-route}
+
+Solving Eq.~\eqref{eq:eps1-total} for $\beta$ with
+$\eps_1^{\mathrm{int}} = 0$ (the ``safe route''---attributing
+the entire dipole to tilt) gives
+\begin{equation}\label{eq:beta-sr}
+\betasr = \frac{\eps_1}{1 + \etaud}\,,
+\end{equation}
+which tightens the uncorrected bound $\beta \leq \eps_1$ by
+the factor $1/(1 + \etaud) \approx 0.923$ for $w = 1/3$.
+At the observed dipole amplitude
+$\eps_1 = 1.234 \times 10^{-3}$, the correction shifts the
+maximum tilt from $1.234 \times 10^{-3}$ to
+$1.140 \times 10^{-3}$---a $7.7\%$ reduction.
+
+This bias is not a correction to be applied and forgotten;
+it is a \emph{testable prediction}.  The acceleration content
+of the CMB dipole, encoded in $\etaud$, produces a specific
+relationship between the intrinsic and observed dipole
+amplitudes that can be tested by Euclid~DR1 and SKA Phase~1
+measurements of the matter dipole at different
+redshifts~\cite{TsagasReview2025}.
+
+
+% ============================================================
+\section{Tilted Raychaudhuri equation in departure variables}
+\label{sec:tilt-raych}
+% ============================================================
+
+Our goal in this section is to express the dynamical content
+of the Raychaudhuri equation in terms of the departure parameter
+and its components, revealing how shear, vorticity, tilt, and
+curvature interact during the cosmological expansion.  The
+derivation follows the analysis of VT-09a.
+
+
+\subsection{The deceleration parameter}\label{sec:decel-param}
+
+We define the geometry-frame deceleration parameter
+\begin{equation}\label{eq:q-def}
+q := -1 - \frac{\dot{\Htheta}}{\Htheta^2}\,,
+\end{equation}
+so that $\dot{\Htheta} = -(1+q)\Htheta^2$.
+For an FLRW model with equation of state $w$,
+\begin{equation}\label{eq:q-FLRW}
+q_{\mathrm{FLRW}} = \tfrac{1}{2}(1+3w)\,\Omega
+  - \OL\,.
+\end{equation}
+Equation~\eqref{eq:q-FLRW} gives $q = 1$ for radiation-dominated FLRW ($w = 1/3$,
+$\Omega = 1$) and $q = 1/2$ for matter-dominated FLRW
+($w = 0$, $\Omega = 1$).
+
+For a general Bianchi model, the Raychaudhuri
+equation~\eqref{eq:raychaudhuri} gives (dividing by
+$3\Htheta^2 = \Theta^2/3$ and using the density
+parameters)
+\begin{equation}\label{eq:raych-normalised}
+\frac{\dot{\Theta}}{3\Htheta^2}
+= -1 - 2(\Sigstd - \Wstd)
+  - \tfrac{1}{2}(1+3w)\,\Omega_{\mathrm{tot}}
+  + \OL
+  + \frac{\tilde{\nabla}_a\dot{u}^a + |\dot{u}|^2}{3\Htheta^2}\,.
+\end{equation}
+Rearranging in terms of $q$:
+\begin{equation}\label{eq:q-general}
+q = q_{\mathrm{FLRW}}
+  + 2(\Sigstd - \Wstd)
+  + \tfrac{1}{2}(1+3w)\,\Otilt
+  - \frac{\tilde{\nabla}_a\dot{u}^a
+    + |\dot{u}|^2}{3\Htheta^2}\,,
+\end{equation}
+where we used the tilt split $\Omega_{\mathrm{tot}}
+= \Omega + \Otilt$ and identified the FLRW deceleration
+from Eq.~\eqref{eq:q-FLRW}.
+
+Hence the \emph{deceleration excess} due to anisotropy is
+\begin{equation}\label{eq:delta-q}
+\delta q := q - q_{\mathrm{FLRW}}
+= 2\,\Sigstd
+  - 2\,\Wstd
+  + \tfrac{1}{2}(1+3w)\,\Otilt
+  + \delta q_{\mathrm{acc}}\,,
+\end{equation}
+where $\delta q_{\mathrm{acc}}$ collects the acceleration
+terms.  Each term has a transparent physical interpretation:
+shear increases deceleration (focusing), vorticity decreases
+it (centrifugal support), tilt contributes additional
+gravitational deceleration through the enhanced energy
+density, and acceleration provides pressure support.
+
+
+\subsection{Matter-frame deceleration}\label{sec:matter-decel}
+
+For comparison with supernova observations, we need the
+deceleration parameter along the matter worldlines.  The
+matter-frame Hubble rate $\hat{H}$ differs from the
+geometry-frame rate by the tilt correction
+$\hat{H} \approx H(1 + \sigma_{ab}v^a v^b/\Theta)$.
+The matter-frame deceleration parameter $\qhat$ receives
+contributions from both the geometry-frame anisotropy and
+the frame transformation itself.
+
+In departure variables, the leading-order result is
+\begin{equation}\label{eq:qhat}
+\qhat = q_{\mathrm{FLRW}} + \delta q
+  + \delta q_{\mathrm{frame}}\,,
+\end{equation}
+where $\delta q_{\mathrm{frame}}$ contains the
+King--Ellis boost corrections to the expansion rate.  For
+$\beta \sim 10^{-3}$, the frame correction
+$\delta q_{\mathrm{frame}} \sim O(\beta^2) \sim 10^{-6}$
+is negligible compared to $\delta q \sim \Sigstd \sim 10^{-6}$.
+The matter-frame and geometry-frame deceleration parameters
+thus agree to the precision of the present framework.
+
+
+\subsection{Decay rates and the defect hierarchy}
+\label{sec:decay-rates}
+
+The time derivatives of the standardised variables, evaluated
+in the near-FLRW regime, reveal the dynamical stability of the
+defect decomposition.  From the shear propagation
+equation~\eqref{eq:shear-prop}, the leading-order evolution
+of $\Sigstd$ is
+\begin{equation}\label{eq:Sigstd-dot}
+\dot{\Sigstd} \approx -2(1 - q)\,\Htheta\,\Sigstd\,,
+\end{equation}
+giving $\Sigstd \propto a^{-2(1-q)}$: frozen
+($\Sigstd = \mathrm{const}$) in the radiation era ($q = 1$,
+since numerator and denominator of
+$\Sigstd = \sigma_{ab}\sigma^{ab}/(6\Htheta^2)$ both scale
+as~$a^{-4}$), and decaying as $a^{-1}$ in the matter era
+($q = 1/2$).
+
+The vorticity decays faster.  From the vorticity propagation
+equation~\eqref{eq:vort-prop}, the leading-order result is
+\begin{equation}\label{eq:Wstd-dot}
+\dot{\Wstd} \approx -2(2 - \tfrac{3w}{2})\,\Htheta\,\Wstd\,,
+\end{equation}
+giving $\Wstd \propto a^{-2(2-3w/2)}$: decay as $a^{-3}$ for
+radiation ($w = 1/3$) and $a^{-4}$ for dust ($w = 0$).  Vorticity
+is subdominant to shear at late times for all $w < 2/3$.
+
+The tilt rapidity $\beta$ satisfies the evolution equation
+\begin{equation}\label{eq:beta-dot}
+\dot{\beta}
+= -(1 - 3w)\,\frac{\Htheta}{3}\,\beta
+  + (\text{acceleration sources})\,.
+\end{equation}
+For radiation ($w = 1/3$), the coefficient vanishes:
+$\dot{\beta} = 0$.  Tilt is \emph{frozen} during the
+radiation era.  For dust ($w = 0$), tilt decays as $\beta
+\propto a^{-1/3}$ (ignoring acceleration sources).  The
+radiation-era freezing is the physical reason why the tilt
+rapidity inferred from the CMB dipole anomaly at $z \approx
+1089$ is directly comparable to the present-epoch bulk flow
+measured by CF4~\cite{Watkins2023}: tilt survives from the
+radiation era without cosmological dilution.
+
+\begin{remark}[Conservation of the defect hierarchy]
+\label{rem:hierarchy-conservation}
+The decay rates $\Sigstd \gg \Wstd \gg \Astd$ at late times
+imply that the hierarchy established by the MES bound
+coefficients ($\Bsig > \Bom \geq \Bud$, with strict inequality
+when $\eps_2 > 0$;
+Chapter~\ref{ch:bianchi-bounds}) is preserved under dynamical
+evolution, not merely an algebraic coincidence.  The
+defect-variable formulation makes this stability manifest:
+the faster-decaying terms contribute less to $x$ at late times,
+and the shear term dominates the defect budget for all
+observationally relevant epochs.
+\end{remark}
+
+
+\subsection{Departure evolution equation}\label{sec:defect-evol}
+
+Taking the covariant time derivative of the master
+identity~\eqref{eq:master-identity} gives the exact evolution
+\begin{equation}\label{eq:xdot}
+\dot{x} = \dot{\Sigstd} - \dot{\Wstd}
+  + \dot{\Otilt} + \dot{\Okaniso}\,.
+\end{equation}
+Each term on the right-hand side is governed by the
+corresponding propagation equation.  In the near-FLRW regime,
+using the decay rates above:
+\begin{equation}\label{eq:xdot-approx}
+\dot{x} \approx -2(1 - q)\,\Htheta\,\Sigstd
+  + 2(2 - \tfrac{3w}{2})\,\Htheta\,\Wstd
+  + \dot{\Otilt} + \dot{\Okaniso}\,.
+\end{equation}
+For the observationally relevant case where $\Sigstd$
+dominates $x$, the defect decays at the same rate as the
+shear: $x \approx \Sigstd \propto a^{-2(1-q)}$.
+
+Before closing this chapter, we note that the framework
+developed here---the kinematic decomposition, the
+standardised variables, the master identity, the frame
+corrections, the three-layer inference chain, and the defect
+evolution---is exact within the Bianchi symmetry class and a
+chosen perfect-fluid equation of state.  It is not
+``model-independent'' in the sense of holding for arbitrary
+matter content: the tilt contribution $\Otilt$ assumes a
+perfect fluid with $w > -1$, and the MES ceiling assumes the
+Copernican extension postulate.  What the framework does provide
+is \emph{assumption-explicit} bookkeeping: every approximation
+and every dictionary choice is localised to a specific layer
+(algebraic identity, bound application, or observational
+connection), and the three-layer inference structure
+(Section~\ref{sec:three-layer}) makes the interpretive
+dependencies auditable.  The approximations that connect the
+exact algebra to observational data enter only in
+Chapters~\ref{ch:dipole}--\ref{ch:results}.
+
+
+% === INLINED: ch02_sec7_tilted_kinematics.tex ===
+% Tilted kinematics sections
+\section{Tilted Kinematics}
+\label{sec:tilted-kinematics}
+
+The kinematics of a tilted cosmology are characterised by the tilt
+four-velocity $u^a \neq n^a$, where $n^a$ is the normal to the homogeneous
+hypersurfaces.  The tilt rapidity $\beta$ satisfies $\sinh\beta = |u^a n_a|/\sqrt{-n^b n_b}$.
+
+\section{Raychaudhuri Equation and the Defect Decomposition}
+\label{sec:tilted-raych-defect}
+
+The Raychaudhuri equation in a tilted Bianchi spacetime acquires
+correction terms from the shear and tilt:
+\begin{equation}
+\dot{\theta} = -\tfrac{1}{3}\theta^2 - 2\sigma^2 + 2\omega^2 + \dot{u}^a{}_{;a} - \tfrac{1}{2}(\rho + 3p) + \Lambda.
+\end{equation}
+The defect $x = \Sigstd - \Wstd + \Otilt + \Okaniso$ measures the aggregate departure from the FLRW Raychaudhuri relation.
+
+% === END INLINED ===
+
+% === INLINED: ch02_sec8_multi_fluid.tex ===
+% ============================================================
+% ch02_sec8_multi_fluid.tex
+% Multi-fluid species-resolved framework
+% Part of: Tetrad-Based Departure Decomposition (Jiwon Park)
+% Session S2 draft — 2026-03-30
+% ============================================================
+
+\section{Multi-fluid species-resolved framework}
+\label{sec:multi-fluid}
+
+Our goal in this section is to extend the single-fluid
+departure decomposition developed in
+Sections~\ref{sec:std-vars}--\ref{sec:defect-evol} to a
+realistic cosmological medium consisting of multiple
+interacting species---photons, neutrinos, baryons, cold dark
+matter, and dark energy.  The physical motivation is
+immediate: the Phase~1.0 Boltzmann solver results of
+Chapter~\ref{ch:results} show that neutrinos contribute
+$98.4\%$ of the CMB quadrupole power $D_2$
+(Section~\ref{sec:sp03-result}), a dominance that is
+invisible to a single-fluid treatment.  To connect the
+departure parameter $x_C$ to species-resolved observables, we
+need a covariant framework that assigns each species its own
+kinematic variables while maintaining a single, unambiguous
+reference frame for the geometry.
+
+The construction proceeds in five steps.  We first establish
+why a single common frame is mandatory
+(Section~\ref{sec:common-frame}).  We then classify species
+into kinetic and fluid sectors
+(Section~\ref{sec:species-class}).  For each kinetic species,
+we define a per-species effective-temperature manifold
+(Section~\ref{sec:species-teff}).  We derive the macroscopic
+reconstruction that translates angular temperature fields
+into stress-energy tensors
+(Section~\ref{sec:macro-recon}).  We close with the
+conservation and interaction bookkeeping that couples
+all species through the Einstein equations
+(Section~\ref{sec:species-conservation}).
+
+
+% ============================================================
+\subsection{The common frame contract}
+\label{sec:common-frame}
+% ============================================================
+
+Before diving into the multi-fluid formalism, we must address
+a foundational question: in which frame do we define the
+kinematic quantities of each species?  Two strategies are
+logically possible.  The first assigns each species its own
+comoving frame, derives its kinematic quantities there, and
+boosts the results back to a common frame at the end.  The
+second fixes a single reference congruence $u^a$ from the
+outset and describes every species relative to that frame,
+encoding each species' bulk motion as a spatial drift vector.
+We now show that the second strategy is the only one
+consistent with the Bianchi symmetry structure and the
+departure decomposition.
+
+\begin{definition}[Common reference congruence]
+\label{def:common-frame}
+Let $(\mathcal{M}, g_{ab})$ be a Bianchi spacetime with
+group-invariant unit normal $n^a$.  The \emph{common reference
+congruence} is the choice $u^a = n^a$.  All species-specific
+kinematic quantities are defined by projection relative to
+this single $u^a$.
+\end{definition}
+
+The choice $u^a = n^a$ is not arbitrary.  The standardised
+kinematic variables of Section~\ref{sec:std-vars}---the
+shear parameter $\Sigstd$, the vorticity parameter $\Wstd$,
+and the curvature parameter $\Okaniso$---are defined relative
+to the geometry-frame expansion $\Theta$ and shear
+$\sigma_{ab}$, both of which belong to the group-invariant
+congruence $n^a$.  The master departure identity
+(Eq.~\ref{eq:master-identity}) is an algebraic identity in
+these geometry-frame variables.  Switching to a
+species-comoving frame would replace $\Theta$ and
+$\sigma_{ab}$ with tilted counterparts, and the identity
+would acquire frame-dependent correction terms that entangle
+geometry and matter content in a way that defeats the purpose
+of a universal bookkeeping scheme.
+
+
+\paragraph{Boost pathology for multi-component systems.}
+
+There is a deeper reason to avoid species-comoving frames.
+The King--Ellis boost formulae of
+Section~\ref{sec:king-ellis} are exact for a single perfect
+fluid with known tilt rapidity $\beta$.  For two fluids with
+different tilt vectors $v_1^a$ and $v_2^a$, one would need to
+boost each fluid separately and then superpose the boosted
+stress-energy tensors.  The superposition is algebraically
+correct, but the resulting $T^{ab}_{\rm tot}$ is no longer a
+single perfect fluid in any frame, so the inverse
+problem---recovering species-resolved information from
+$T^{ab}_{\rm tot}$---becomes ill-posed.
+
+For kinetic species with nonzero chemical potential
+$\mu_s \neq 0$, the situation is worse.  A Lorentz boost
+applied to the effective-temperature distribution
+$f_s \propto \Phi_{\xi_s}(x_s/\Theta_s - \eta_s)$
+mixes the temperature field $\Theta_s(\hat{e})$ and the
+fugacity field $\eta_s(\hat{e})$ in a
+direction-dependent manner.  That is, if we denote the
+boosted quantities by tildes, the transformation
+$(\Theta_s, \eta_s) \to (\tilde{\Theta}_s,
+\tilde{\eta}_s)$ does not factorise into separate
+transformations of $\Theta_s$ and $\eta_s$.  For the
+massless $\mu = 0$ case the boost law is clean:
+$\tilde{\Theta}_s(\hat{e}') = \Theta_s(\hat{e})
+/\gamma(1 - \mathbf{v} \cdot \hat{e})$, which is a pure
+rescaling of the temperature field.  Once $\eta_s \neq 0$,
+the boosted distribution function can be written
+\begin{equation}\label{eq:boost-pathology}
+\tilde{f}_s
+= \Phi_{\xi_s}\!\left(
+  \frac{\tilde{x}_s}{\tilde{\Theta}_s(\hat{e}')}
+  - \tilde{\eta}_s(\hat{e}')
+\right)
+\end{equation}
+only if $\tilde{\eta}_s$ absorbs a direction-dependent
+shift that depends on both $\beta$ and $\Theta_s$.  The
+one-field effective-temperature parameterisation is
+therefore not boost-covariant for $\mu \neq 0$ species.
+
+This pathology has a simple resolution: we do not boost.  We
+define all species in the common frame $u^a = n^a$ from the
+outset, and encode each species' bulk motion through the
+spatial components of its angular multipole expansion
+(Section~\ref{sec:species-teff}).  The dipole of
+$\Theta_s(\hat{e})$ absorbs the species drift, the
+quadrupole absorbs the species' response to the background
+shear, and so on.  No frame transformation is ever required.
+
+
+\paragraph{Frame-choice summary.}
+
+We adopt the following contract, valid throughout the
+remainder of this work.
+
+\begin{remark}[Common frame contract]
+\label{rem:frame-contract}
+\emph{(i)}~The geometry-frame normal $n^a$ serves as the
+unique reference congruence.
+\emph{(ii)}~The spatial projector $h_{ab} = g_{ab} + n_a n_b$
+and the kinematic quantities
+$(\Theta, \sigma_{ab}, \omega_{ab}, \dot{u}_a)$ are those of
+$n^a$, as in Section~\ref{sec:13cov}.
+\emph{(iii)}~Each species' bulk velocity relative to $n^a$
+is encoded in the dipole $\Theta^{(s)}_a$ of its angular
+temperature field, not in a separate Lorentz boost.
+\emph{(iv)}~The master departure identity
+(Eq.~\ref{eq:master-identity}) and the MES bound hierarchy
+(Chapter~\ref{ch:bianchi-bounds}) remain expressed in
+geometry-frame variables.
+\end{remark}
+
+This contract is consistent with the multi-fluid covariant
+formalism of Tsagas, Challinor \&
+Maartens~\cite{Tsagas2008}, who decompose
+each species' stress-energy relative to a single common
+$u^a$ (their~\S2.4).  It is also the natural frame for
+the Bianchi Boltzmann solver of Chapter~\ref{ch:results},
+which evolves species hierarchies in the group-invariant
+tetrad.
+
+
+% ============================================================
+\subsection{Species classification}
+\label{sec:species-class}
+% ============================================================
+
+Not all cosmological species require the same level of
+kinetic description.  A photon gas with its full angular
+distribution demands a very different treatment from cold
+dark matter, which is adequately described by a pressureless
+perfect fluid.  We now establish a classification that
+assigns each species to the appropriate tier.
+
+\begin{definition}[Kinetic and fluid sectors]
+\label{def:sectors}
+A cosmological species $s$ belongs to the \emph{kinetic
+sector}~$\mathcal{K}$ if its distribution function $f_s$
+carries physically relevant angular structure that must be
+tracked.  It belongs to the \emph{fluid
+sector}~$\mathcal{F}$ if a finite set of fluid variables
+$(\rho_\alpha, p_\alpha, q_\alpha^a, \pi_\alpha^{ab})$
+suffices.  The full matter content is
+\begin{equation}\label{eq:sector-union}
+\{\text{all species}\}
+= \mathcal{K} \;\cup\; \mathcal{F}\,,
+\qquad
+\mathcal{K} \cap \mathcal{F} = \varnothing\,.
+\end{equation}
+\end{definition}
+
+The classification is not a modelling choice made in
+ignorance of the physics.  It follows from the collision
+rates and the observational signatures of each species.
+We now state the decision criteria and apply them to the
+standard $\Lambda$CDM inventory.
+
+
+\paragraph{Criterion~1: collision rate versus expansion rate.}
+
+A species whose mean free path $\lambda_{\rm mfp}$ satisfies
+$\lambda_{\rm mfp} \gg H^{-1}$ at the epoch of interest is
+effectively collisionless.  Its distribution function
+evolves by free-streaming, and the angular multipole
+hierarchy is not truncated by collisions.  Such a species
+belongs to $\mathcal{K}$.  Conversely, a species with
+$\lambda_{\rm mfp} \ll H^{-1}$ is collision-dominated:
+its angular distribution is driven toward local thermodynamic
+equilibrium, and a fluid description with low-order
+moments suffices.  Such a species belongs to $\mathcal{F}$.
+
+
+\paragraph{Criterion~2: angular information content.}
+
+Even a collisionless species may be placed in
+$\mathcal{F}$ if its angular structure does not contribute
+measurably to the observables of interest.  Cold dark
+matter, for example, is collisionless after kinetic
+decoupling, but its velocity dispersion is negligible
+compared to the Hubble flow, and its higher multipoles
+($\ell \geq 2$) are suppressed by a factor $(v_{\rm th}/c)^2
+\sim 10^{-20}$ relative to the photon quadrupole.  The
+physically meaningful test is whether the species'
+anisotropic stress $\pi_s^{ab}$ or energy flux $q_s^a$
+affects the observables at the target precision.
+
+
+\paragraph{Criterion~3: number-flux separability.}
+
+For a kinetic species $s \in \mathcal{K}$, a further
+subdivision determines whether one or two angular fields are
+needed.  If the species carries a conserved quantum number
+(lepton number, baryon number) whose directional flux
+$j_s^a$ is physically distinct from the energy flux $q_s^a$,
+then the effective-temperature ansatz must include both a
+temperature field $\Theta_s(\hat{e})$ and a fugacity field
+$\eta_s(\hat{e})$.  We call this the \emph{two-field}
+configuration.  If the species has vanishing or negligible
+chemical potential ($\mu_s / k_B T_s \ll 1$) and its
+number flux is locked to its energy flux by
+$j_s^a \propto q_s^a$, then a single temperature field
+$\Theta_s(\hat{e})$ suffices.  We call this the
+\emph{one-field} configuration.
+
+The physical reason for the two-field minimum is a result
+from the effective-temperature literature: a scalar
+chemical potential $\eta_{0,s}$ does not change the ratio
+of number flux to energy flux,
+$j_s^a / q_s^a$, so it cannot capture a directional
+redistribution of particle number independent of energy.
+The direction-dependent fugacity $\eta_s(\hat{e})$ is the
+minimal additional degree of freedom that resolves this
+degeneracy.
+
+\begin{remark}[One-field diagnostic pitfall]
+\label{rem:1d-pitfall}
+Applying a one-dimensional tangency diagnostic
+$D_{s,\geq 2}$ (Section~\ref{sec:species-tangency}) to a
+number-conserving species that genuinely requires two
+fields can produce a spuriously large off-manifold
+residual.  The excess is not a sign of physical
+departure from equilibrium but an artefact of the
+under-parameterised manifold: the $\eta$-tangent content
+of the collision source is misattributed to higher
+energy-shape modes.  For Fermi--Dirac species at moderate
+degeneracy, this false-alarm fraction can reach
+${\sim}\,98\%$ of the total
+$D_{s,\geq 2}$ [CITATION NEEDED: Teff Paper~III].
+\end{remark}
+
+
+\paragraph{Application to $\Lambda$CDM.}
+
+We now apply the three criteria to the standard cosmological
+inventory.
+
+\emph{Photons ($\gamma$).}  Before recombination, photons
+are tightly coupled to baryons via Thomson scattering
+($\lambda_{\rm mfp} \ll H^{-1}$), but the anisotropy
+generated by the background shear $\sigma_{ab}$ is the
+primary observable.  After recombination, photons
+free-stream.  The chemical potential is negligible at the
+precision of current CMB measurements ($|\mu_\gamma| /
+k_B T_\gamma < 9 \times 10^{-5}$,
+Fixsen et al.~\cite{Fixsen1996}).
+Hence: $\gamma \in \mathcal{K}$, one-field.
+
+\emph{Neutrinos ($\nu$).}  Neutrinos decouple at
+$T \sim 1$~MeV and free-stream thereafter.  Their
+anisotropic stress $\pi_\nu^{ab}$ dominates the CMB
+quadrupole ($98.4\%$ of $D_2$ at recombination;
+Section~\ref{sec:sp03-result}).  The relic neutrino
+chemical potential is bounded by Big Bang nucleosynthesis
+to $|\eta_\nu| \lesssim 0.07$~\cite{Mangano2012}, which
+is small but not negligible for a precision treatment.
+Hence: $\nu \in \mathcal{K}$, two-field for maximal
+generality (one-field as a controlled approximation when
+$\eta_\nu \to 0$).
+
+\emph{Baryons ($b$).}  Before recombination, baryons are
+tightly coupled to photons and share their angular
+structure.  After recombination, the baryon velocity
+dispersion drops to $v_{\rm th} \sim 6$~km/s,
+and higher multipoles are negligible.  The baryon--CDM
+relative velocity $v_{bc} \sim 30$~km/s
+(Tseliakhovich \& Hirata~\cite{TseliakhovichHirata2010})
+is coherent on $\sim\!\text{few Mpc}$ scales and affects
+small-scale structure formation, but its contribution to
+the global departure parameter is
+$(v_{bc}/c)^2 \sim 10^{-8}$, far below the sensitivity
+of any current survey.  Hence: $b \in \mathcal{F}$.
+
+\emph{Cold dark matter ($c$).}  Collisionless and
+pressureless after kinetic decoupling, with
+$v_{\rm th}/c \sim 10^{-10}$ at matter--radiation
+equality.  No measurable angular structure.
+Hence: $c \in \mathcal{F}$.
+
+\emph{Dark energy ($\Lambda$).}  A cosmological constant
+has $T^{ab}_\Lambda = -(\Lambda/8\pi G)\,g^{ab}$ with no
+kinetic degrees of freedom.  Even for dynamical dark
+energy models, the effective fluid description with
+$(\rho_{\rm DE}, p_{\rm DE}, w_{\rm DE})$ is standard.
+Hence: $\Lambda \in \mathcal{F}$.
+
+
+\paragraph{Summary.}
+
+For the standard $\Lambda$CDM model, the classification is
+\begin{equation}\label{eq:species-partition}
+\mathcal{K} = \{\gamma,\; \nu_e,\;
+  \bar{\nu}_e,\; \nu_x,\; \bar{\nu}_x\}\,,
+\qquad
+\mathcal{F} = \{b,\; c,\; \Lambda\}\,,
+\end{equation}
+where $\nu_x$ denotes the $\mu$- and $\tau$-flavour
+neutrinos (treated as a single effective species with
+degeneracy $g_{\nu_x} = 4$ in the massless limit).  The
+photon sector uses one field; the neutrino sector uses two
+fields as the default, reducible to one field when the
+chemical potential is set to zero.  We adopt this partition
+throughout the remainder of this work.  Extensions
+to dark radiation, massive neutrinos, or non-standard
+species follow by adding entries to $\mathcal{K}$ or
+$\mathcal{F}$ as appropriate.
+
+
+% ============================================================
+\subsection{The effective-temperature manifold for each species}
+\label{sec:species-teff}
+% ============================================================
+
+For each kinetic species $s \in \mathcal{K}$, we now
+construct the finite-dimensional manifold that
+parameterises its angular distribution function.  The
+construction generalises the single-species $\Teff$ ansatz
+of Section~\ref{sec:teff-ansatz} to a multi-species
+setting with a common reference frame.
+
+\begin{definition}[Species effective-temperature manifold]
+\label{def:species-Teff}
+For species $s$ with quantum statistics
+$\xi_s \in \{0, -1, +1\}$ (Maxwell--Boltzmann,
+Fermi--Dirac, Bose--Einstein respectively), the
+\emph{species $\Teff$ manifold} is the set
+\begin{equation}\label{eq:Teff-manifold}
+\mathcal{M}_s^{\rm Teff}
+= \left\{
+f_s(x^a, p^b)
+= \Phi_{\xi_s}\!\left(
+  \frac{x_s}{\Theta_s(\hat{e})}
+  - \eta_s(\hat{e})
+\right)
+\right\}\,,
+\end{equation}
+where $x_s := E_s / (k_B T_{0,s})$ is the dimensionless
+energy, $E_s := -u_a p_s^a > 0$ is the particle energy
+measured in the common frame $u^a$,
+$\hat{e}^a$ is the spatial propagation direction
+($u_a \hat{e}^a = 0$, $\hat{e}_a \hat{e}^a = 1$),
+$T_{0,s}$ is the species reference temperature,
+$\Theta_s(\hat{e}) > 0$ is the normalised angular
+temperature field, $\eta_s(\hat{e})$ is the angular
+fugacity field, and $\Phi_\xi(z) := 1/(e^z - \xi)$ is
+the equilibrium occupation function.
+\end{definition}
+
+For a one-field species, we set $\eta_s(\hat{e}) = 0$
+identically, and the manifold reduces to the
+single-parameter family
+$f_s = \Phi_{\xi_s}(x_s/\Theta_s)$ used in
+Section~\ref{sec:teff-ansatz}.
+
+Two aspects of this definition merit comment: the choice
+of energy variable, and the angular expansion of
+$\Theta_s$ and $\eta_s$.
+
+
+\paragraph{Energy variable.}
+
+The dimensionless energy $x_s = E_s/(k_B T_{0,s})$ is
+defined with respect to the common-frame energy $E_s$,
+not the species rest-frame energy.  This choice is correct
+for two reasons.  First, the common frame $u^a$ is
+fixed by the geometry (Definition~\ref{def:common-frame}),
+so $E_s = -u_a p_s^a$ is unambiguous.  Second, the
+alternative variable
+$y_s = (E_s - \mu_s)/(k_B T_{0,s})$, which absorbs the
+chemical potential into the energy coordinate, develops a
+direction-dependent domain pathology when
+$\mu_s \to \mu_s(\hat{e})$: for certain directions
+$\hat{e}$, the variable $y_s$ can become negative at low
+energies, and the Laguerre polynomial basis used in the
+energy-integrated formalism loses its orthogonality
+domain.  The $x_s$-variable avoids this pathology because
+$x_s = E_s/(k_B T_{0,s}) > 0$ for all $E_s > 0$,
+regardless of the angular structure of $\eta_s$.
+
+
+\paragraph{Angular expansion.}
+
+The fields $\Theta_s(\hat{e})$ and $\eta_s(\hat{e})$
+admit PSTF multipole expansions on the sky sphere of the
+common frame:
+\begin{equation}\label{eq:Theta-s-PSTF}
+\Theta_s(\hat{e})
+= 1 + \sum_{\ell \geq 1}
+  \Theta^{(s)}_{A_\ell}\,
+  \hat{e}^{A_\ell}\,,
+\end{equation}
+\begin{equation}\label{eq:eta-s-PSTF}
+\eta_s(\hat{e})
+= \eta_{0,s}
++ \sum_{\ell \geq 1}
+  \eta^{(s)}_{A_\ell}\,
+  \hat{e}^{A_\ell}\,,
+\end{equation}
+where $A_\ell = a_1 \cdots a_\ell$ is a PSTF multi-index
+and $\hat{e}^{A_\ell}
+= \hat{e}^{\langle a_1} \cdots \hat{e}^{a_\ell \rangle}$
+is the corresponding PSTF product of direction cosines.
+The gauge condition
+\begin{equation}\label{eq:Theta-s-gauge}
+\langle \Theta_s \rangle_\Omega = 1
+\end{equation}
+(angular average over the sky sphere) fixes $T_{0,s}$ as
+the monopole temperature of species $s$.
+
+The physical content of the low multipoles is transparent.
+The dipole $\Theta^{(s)}_a$ encodes the species drift
+velocity relative to the common frame: to leading order in
+the small-anisotropy expansion,
+\begin{equation}\label{eq:dipole-drift}
+\Theta^{(s)}_a
+\simeq \frac{v^{(s)}_a}{c}\,,
+\end{equation}
+where $v^{(s)}_a$ is the spatial peculiar velocity of
+species $s$ relative to $u^a$.  The quadrupole
+$\Theta^{(s)}_{ab}$ encodes the species' response to
+the background shear $\sigma_{ab}$, and it is this
+quantity that enters the anisotropic stress
+$\pi_s^{ab}$ through the moment map
+(Section~\ref{sec:macro-recon}).  Higher multipoles
+describe the species' angular fine structure, generated
+by free-streaming or by mode coupling with the background
+geometry.
+
+For the fugacity field, the monopole $\eta_{0,s}$ is
+the familiar dimensionless chemical potential
+$\mu_s/(k_B T_{0,s})$, and the dipole $\eta^{(s)}_a$
+carries the directional number flux that is independent
+of the energy flux---precisely the degree of freedom
+that distinguishes two-field from one-field species
+(Criterion~3 of Section~\ref{sec:species-class}).
+
+
+\paragraph{Admissibility constraints.}
+
+The distribution function must satisfy $f_s \geq 0$ for
+all directions $\hat{e}$ and all energies $x_s > 0$.
+For Bose--Einstein species ($\xi_s = +1$), this requires
+\begin{equation}\label{eq:BE-admissibility}
+\frac{x_s}{\Theta_s(\hat{e})}
+- \eta_s(\hat{e}) > 0
+\qquad \forall\; x_s > 0,\;
+  \hat{e} \in S^2\,,
+\end{equation}
+which, in the limit $x_s \to 0^+$, implies
+$\eta_s(\hat{e}) \leq 0$ for all directions.  For
+Fermi--Dirac species ($\xi_s = -1$), there is no sign
+constraint on $\eta_s$, but the identification
+precision of $\eta_s$ from energy-integrated observables
+degrades at large positive degeneracy ($\eta_s \gg 1$)
+because the Fermi function saturates and the
+entropy-Hessian eigenvalue in the $\eta$-direction
+becomes small.  For cosmological neutrinos, the
+nucleosynthesis bound $|\eta_\nu| \lesssim 0.07$ places
+the system well within the regime where identification
+is straightforward.
+
+
+% ============================================================
+\subsection{Macroscopic reconstruction}
+\label{sec:macro-recon}
+% ============================================================
+
+The effective-temperature manifold of
+Definition~\ref{def:species-Teff} parameterises the
+microscopic distribution function of each kinetic species.
+The Einstein equations, however, require macroscopic
+quantities: the species energy density $\rho_s$, pressure
+$p_s$, energy flux $q_s^a$, and anisotropic stress
+$\pi_s^{ab}$.  We now derive the reconstruction formulae
+that extract these quantities from the angular fields
+$\Theta_s(\hat{e})$ and $\eta_s(\hat{e})$.
+
+
+\paragraph{Particle current and stress-energy.}
+
+For species $s \in \mathcal{K}$ with internal degeneracy
+$g_s$ (spin states $\times$ particle--antiparticle
+factor), the particle four-current and stress-energy
+tensor are
+\begin{equation}\label{eq:Ns-def}
+N_s^a
+= \frac{g_s}{(2\pi\hbar)^3}
+  \int p_s^a\, f_s\, dP_s\,,
+\end{equation}
+\begin{equation}\label{eq:Ts-def}
+T_s^{ab}
+= \frac{g_s}{(2\pi\hbar)^3}
+  \int p_s^a\, p_s^b\, f_s\, dP_s\,,
+\end{equation}
+where $dP_s = d^3 p_s / p_s^0$ is the Lorentz-invariant
+momentum-space measure.  For massless species, the
+on-shell condition $p_s^a p_{sa} = 0$ gives
+$p_s^a = E_s(u^a + \hat{e}^a)$, and the measure
+simplifies to $dP_s = E_s\, dE_s\, d\Omega$ in the
+common frame, where $d\Omega$ is the solid angle element
+on the sky sphere.
+
+
+\paragraph{1+3 decomposition of the species moments.}
+
+Projecting Eqs.~\eqref{eq:Ns-def}--\eqref{eq:Ts-def}
+relative to $u^a$ gives the irreducible decomposition
+\begin{equation}\label{eq:Ns-decomp}
+N_s^a = n_s\, u^a + j_s^a\,,
+\qquad u_a j_s^a = 0\,,
+\end{equation}
+\begin{equation}\label{eq:Ts-decomp}
+T_s^{ab}
+= \rho_s\, u^a u^b + p_s\, h^{ab}
+  + 2\,u^{(a} q_s^{b)} + \pi_s^{ab}\,,
+\end{equation}
+with the standard identifications
+(cf.\ Eq.~\ref{eq:Tab-general} for the total fluid):
+\begin{equation}\label{eq:species-projections}
+\begin{aligned}
+n_s &= -u_a N_s^a\,,
+&\qquad
+j_s^{\langle a\rangle} &= h^a{}_b\, N_s^b\,,\\[4pt]
+\rho_s &= u_a u_b\, T_s^{ab}\,,
+&\qquad
+p_s &= \tfrac{1}{3}\, h_{ab}\, T_s^{ab}\,,\\[4pt]
+q_s^{\langle a\rangle} &= -h^a{}_c\, u_d\, T_s^{cd}\,,
+&\qquad
+\pi_s^{\langle ab\rangle}
+  &= T_s^{\langle ab \rangle}\,.
+\end{aligned}
+\end{equation}
+The number density $n_s$ and number drift $j_s^a$
+belong to the particle-current sector; the energy
+density $\rho_s$, pressure $p_s$, energy flux $q_s^a$,
+and anisotropic stress $\pi_s^{ab}$ belong to the
+stress-energy sector.  Both sectors are built from the
+same underlying distribution function $f_s$ and hence
+from the same angular fields $(\Theta_s, \eta_s)$.
+
+
+\paragraph{Explicit reconstruction for massless species.}
+
+For a massless species with $p_s^a = E_s(u^a +
+\hat{e}^a)$, we substitute the $\Teff$ ansatz
+(Eq.~\ref{eq:Teff-manifold}) into the moment integrals.
+The energy integration produces standard thermodynamic
+integrals, and the angular integration projects out the
+PSTF multipoles of $\Theta_s$ and $\eta_s$.
+
+The energy density is
+\begin{equation}\label{eq:rho-s-recon}
+\rho_s
+= \frac{g_s}{2\pi^2\hbar^3}\,(k_B T_{0,s})^4
+  \left\langle \Theta_s^4\, \mathcal{I}_3(\xi_s,
+  \eta_s) \right\rangle_\Omega\,,
+\end{equation}
+where $\mathcal{I}_n(\xi, \eta)$ is the generalised
+thermodynamic integral
+\begin{equation}\label{eq:thermo-integral}
+\mathcal{I}_n(\xi, \eta)
+:= \int_0^\infty
+  \frac{x^n\, dx}{e^{x - \eta} - \xi}\,,
+\end{equation}
+and the angular brackets $\langle \cdot
+\rangle_\Omega$ denote the average over the sky sphere.
+For $\xi = +1$ and $\eta = 0$ (massless bosons),
+$\mathcal{I}_3(+1, 0) = \pi^4/15$, recovering the
+Stefan--Boltzmann law.  For $\xi = -1$ and $\eta = 0$
+(massless fermions),
+$\mathcal{I}_3(-1, 0) = 7\pi^4/120$.
+
+The pressure follows from the trace of the spatial
+stress:
+\begin{equation}\label{eq:p-s-recon}
+p_s = \frac{1}{3}\,\rho_s\,,
+\end{equation}
+which is the equation of state for massless
+radiation, valid direction by direction before angular
+averaging.  This relation is an exact consequence of the
+on-shell condition $p_s^a p_{sa} = 0$ and does not
+depend on the $\Teff$ ansatz.
+
+The energy flux is
+\begin{equation}\label{eq:q-s-recon}
+q_s^a
+= \frac{g_s}{2\pi^2\hbar^3}\,(k_B T_{0,s})^4
+  \left\langle \hat{e}^a\,\Theta_s^4\,
+  \mathcal{I}_3(\xi_s, \eta_s)
+  \right\rangle_\Omega\,.
+\end{equation}
+To leading order in the multipole expansion, the
+angular average picks out the dipole
+$\Theta^{(s)}_a$:
+\begin{equation}\label{eq:q-leading}
+q_s^a
+\simeq \frac{4}{3}\,\rho_s^{(0)}\,
+  \Theta^{(s)}_a\,,
+\end{equation}
+where $\rho_s^{(0)}$ is the isotropic (monopole)
+energy density.  This confirms the physical
+interpretation of $\Theta^{(s)}_a$ as a normalised
+drift velocity (Eq.~\ref{eq:dipole-drift}).
+
+The anisotropic stress is
+\begin{equation}\label{eq:pi-s-recon}
+\pi_s^{ab}
+= \frac{g_s}{2\pi^2\hbar^3}\,(k_B T_{0,s})^4
+  \left\langle \hat{e}^{\langle a}\hat{e}^{b\rangle}\,
+  \Theta_s^4\, \mathcal{I}_3(\xi_s, \eta_s)
+  \right\rangle_\Omega\,,
+\end{equation}
+and to leading order,
+\begin{equation}\label{eq:pi-leading}
+\pi_s^{ab}
+\simeq \frac{8}{15}\,\rho_s^{(0)}\,
+  \Theta^{(s)}_{ab}\,.
+\end{equation}
+The quadrupole $\Theta^{(s)}_{ab}$ therefore directly
+sources the anisotropic stress that enters the
+Einstein equations, the shear propagation equation
+(Section~\ref{sec:shear-prop}), and the gravitational
+Silk damping of the CMB.
+
+
+\paragraph{Number sector.}
+
+The number density and number drift are reconstructed
+from lower-weight integrals:
+\begin{equation}\label{eq:n-s-recon}
+n_s
+= \frac{g_s}{2\pi^2\hbar^3}\,(k_B T_{0,s})^3
+  \left\langle \Theta_s^3\,
+  \mathcal{I}_2(\xi_s, \eta_s)
+  \right\rangle_\Omega\,,
+\end{equation}
+\begin{equation}\label{eq:j-s-recon}
+j_s^a
+= \frac{g_s}{2\pi^2\hbar^3}\,(k_B T_{0,s})^3
+  \left\langle \hat{e}^a\, \Theta_s^3\,
+  \mathcal{I}_2(\xi_s, \eta_s)
+  \right\rangle_\Omega\,.
+\end{equation}
+These integrals involve $\mathcal{I}_2$ rather than
+$\mathcal{I}_3$, reflecting the different energy
+weight of the number current ($\sim E^2$) compared to
+the stress-energy ($\sim E^3$).  For a two-field
+species, the dependence of $\mathcal{I}_2(\xi_s,
+\eta_s(\hat{e}))$ on the angular fugacity field
+$\eta_s(\hat{e})$ is what allows the number drift
+$j_s^a$ to vary independently of the energy flux
+$q_s^a$.  This independence is the physical content of
+Criterion~3 and the mathematical reason why two-field
+species require two angular fields.
+
+\begin{proposition}[Number--energy flux independence]
+\label{prop:flux-independence}
+For a two-field species $s$ with $\eta_s(\hat{e})
+\neq \text{const}$, the number drift $j_s^a$ and the
+energy flux $q_s^a$ are generically linearly
+independent: there exists no scalar function
+$\lambda$ such that $j_s^a = \lambda\, q_s^a$ for all
+configurations $(\Theta_s, \eta_s)$.
+\end{proposition}
+
+\begin{proof}
+The energy flux $q_s^a$ is proportional to the angular
+average $\langle \hat{e}^a\, \Theta_s^4\,
+\mathcal{I}_3 \rangle_\Omega$
+(Eq.~\ref{eq:q-s-recon}), while the number drift
+$j_s^a$ is proportional to
+$\langle \hat{e}^a\, \Theta_s^3\,
+\mathcal{I}_2 \rangle_\Omega$
+(Eq.~\ref{eq:j-s-recon}).  Consider a configuration
+with $\Theta_s = 1 + \Theta^{(s)}_b \hat{e}^b$ and a
+dipolar fugacity $\eta_s(\hat{e}) = \eta_{0,s} +
+\eta^{(s)}_a \hat{e}^a$.  At linear order, both fluxes
+receive contributions from both $\Theta^{(s)}_a$ and
+$\eta^{(s)}_a$:
+$q_s^a \propto A_E\,\Theta^{(s)}_a
++ B_E\,\eta^{(s)}_a$ and
+$j_s^a \propto A_N\,\Theta^{(s)}_a
++ B_N\,\eta^{(s)}_a$,
+where $A_E \propto \mathcal{I}_3$,
+$B_E \propto \partial\mathcal{I}_3/\partial\eta$,
+$A_N \propto \mathcal{I}_2$, and
+$B_N \propto \partial\mathcal{I}_2/\partial\eta$.
+The proportionality $j_s^a = \lambda\,q_s^a$ would
+require $A_N/A_E = B_N/B_E$, i.e.\
+$\mathcal{I}_2/\mathcal{I}_3
+= (\partial\mathcal{I}_2/\partial\eta)
+ /(\partial\mathcal{I}_3/\partial\eta)$.
+This ratio identity fails for generic
+$(\xi_s, \eta_{0,s})$: differentiation with respect to
+$\eta$ shifts the energy weight from $x^n$ to
+$x^n e^{x-\eta}/(e^{x-\eta}-\xi)^2$, and the
+resulting $\eta$-dependence of
+$\partial\mathcal{I}_n/\partial\eta$ differs between
+$n = 2$ and $n = 3$.  Hence the $2 \times 2$ matrix
+$(A_E, B_E; A_N, B_N)$ generically has rank~2, and
+$j_s^a \neq \lambda\,q_s^a$.
+\end{proof}
+
+
+\paragraph{Fluid-sector species.}
+
+For species $\alpha \in \mathcal{F}$, no
+distribution-function reconstruction is needed.  The
+stress-energy tensor is specified directly by the fluid
+variables:
+\begin{equation}\label{eq:fluid-Tab}
+T_\alpha^{ab}
+= \rho_\alpha\, u^a u^b
+  + p_\alpha\, h^{ab}
+  + 2\,u^{(a} q_\alpha^{b)}
+  + \pi_\alpha^{ab}\,,
+\end{equation}
+with the equation of state $p_\alpha = w_\alpha
+\rho_\alpha$ (where $w_b = 0$ for baryons,
+$w_c = 0$ for CDM, $w_\Lambda = -1$ for a cosmological
+constant) and with $q_\alpha^a$ and $\pi_\alpha^{ab}$
+specified by the relevant transport equation---typically
+the Euler equation for baryons and CDM, or set to zero
+for $\Lambda$.
+
+
+% ============================================================
+\subsection{Conservation and interaction bookkeeping}
+\label{sec:species-conservation}
+% ============================================================
+
+The species-resolved stress-energy tensors are not
+separately conserved: energy and momentum are exchanged
+between species through collisions.  We now write the
+conservation equations that track these exchanges and
+impose the constraint that total energy--momentum is
+conserved.
+
+
+\paragraph{Species transport equations.}
+
+Each kinetic species $s \in \mathcal{K}$ satisfies the
+covariant Boltzmann equation
+\begin{equation}\label{eq:Boltzmann-s}
+\mathcal{L}_s[f_s] = C_s[\{f_r\}]\,,
+\end{equation}
+where $\mathcal{L}_s$ is the Liouville operator on the
+mass shell of species $s$
+(cf.\ Section~\ref{sec:liouville}), and $C_s[\{f_r\}]$
+is the collision integral, which depends on the
+distribution functions of all species $r$ that interact
+with $s$.  Integrating Eq.~\eqref{eq:Boltzmann-s} over
+momentum space yields the macroscopic conservation
+equations:
+\begin{equation}\label{eq:number-conservation}
+\nabla_a N_s^a = R_s\,,
+\end{equation}
+\begin{equation}\label{eq:energy-conservation}
+\nabla_a T_s^{ab} = Q_s^{\;b}\,,
+\end{equation}
+where $R_s$ is the net particle creation rate
+(vanishing for number-conserving species) and
+$Q_s^{\;b}$ is the energy--momentum exchange four-vector
+between species $s$ and the rest of the medium.
+
+For each fluid species $\alpha \in \mathcal{F}$, the
+analogous equations are
+\begin{equation}\label{eq:fluid-conservation}
+\nabla_a T_\alpha^{ab} = Q_\alpha^{\;b}\,.
+\end{equation}
+
+
+\paragraph{Global conservation constraint.}
+
+Total energy--momentum conservation,
+$\nabla_a T^{ab}_{\rm tot} = 0$, requires
+\begin{equation}\label{eq:total-conservation}
+\sum_{s \in \mathcal{K}} Q_s^{\;b}
++ \sum_{\alpha \in \mathcal{F}} Q_\alpha^{\;b}
+= 0\,.
+\end{equation}
+This constraint is not an additional equation of motion but an
+algebraic constraint on the interaction sources $Q_s^b$
+and $Q_\alpha^b$.  For the standard $\Lambda$CDM
+inventory, the dominant interaction is Thomson scattering
+between photons and baryons,
+\begin{equation}\label{eq:Thomson-Q}
+Q_\gamma^{\;a} = -Q_b^{\;a}
+= -n_e \sigma_T\, \big[
+  q_\gamma^a - \tfrac{4}{3}\rho_\gamma\, v_b^a
+  + \text{(polarisation terms)}
+\big]\,,
+\end{equation}
+where $n_e$ is the free-electron number density,
+$\sigma_T$ is the Thomson cross-section, and $v_b^a$ is
+the baryon velocity.  Neutrinos decouple before
+recombination and have $Q_\nu^a = 0$ at all epochs of
+interest.  Dark matter interacts only gravitationally:
+$Q_c^a = 0$.
+
+For a subset $\mathcal{C} \subseteq \mathcal{K}$ of
+number-conserving species (e.g.\ electron-type neutrinos
+and antineutrinos jointly conserving lepton number), the
+number sources satisfy
+\begin{equation}\label{eq:number-constraint}
+\sum_{s \in \mathcal{C}} R_s = 0\,.
+\end{equation}
+This bookkeeping is the natural habitat of the two-field
+fugacity $\eta_s(\hat{e})$: the directional number
+redistribution that $\eta_s$ encodes is driven by
+precisely the interactions that conserve total number
+within $\mathcal{C}$ while transferring particles between
+directions.
+
+
+\paragraph{Einstein coupling.}
+
+The total stress-energy entering the Einstein equations is
+\begin{equation}\label{eq:total-Tab}
+T^{ab}_{\rm tot}
+= \sum_{s \in \mathcal{K}} T_s^{ab}
++ \sum_{\alpha \in \mathcal{F}} T_\alpha^{ab}\,,
+\end{equation}
+and the Einstein equation reads
+\begin{equation}\label{eq:Einstein-multi}
+G^{ab} = 8\pi G\, T^{ab}_{\rm tot}\,,
+\end{equation}
+where we work in units with $c = 1$.  The geometry
+does not see the individual species directly; it couples
+to them only through the total reconstructed
+stress-energy.  The species-resolved information is
+carried by the angular fields $(\Theta_s, \eta_s)$ and
+the fluid variables $(\rho_\alpha, p_\alpha,
+q_\alpha^a, \pi_\alpha^{ab})$, which enter
+$T^{ab}_{\rm tot}$ through the reconstruction formulae
+of Section~\ref{sec:macro-recon}.
+
+
+\paragraph{FLRW limit.}
+
+As a consistency check, we verify the isotropic limit.
+Setting $\Theta_s(\hat{e}) = 1$ and
+$\eta_s(\hat{e}) = \eta_{0,s}$ (constant) for all
+$s \in \mathcal{K}$, and $q_\alpha^a = \pi_\alpha^{ab}
+= 0$ for all $\alpha \in \mathcal{F}$, the species
+angular structure vanishes:
+$j_s^a = q_s^a = \pi_s^{ab} = 0$ for each species.
+The total stress-energy reduces to
+\begin{equation}\label{eq:FLRW-limit-multi}
+T^{ab}_{\rm tot}
+= \rho_{\rm tot}\, u^a u^b
+  + p_{\rm tot}\, h^{ab}\,,
+\end{equation}
+with $\rho_{\rm tot} = \sum_s \rho_s + \sum_\alpha
+\rho_\alpha$ and $p_{\rm tot} = \sum_s p_s + \sum_\alpha
+p_\alpha$.  The Friedmann equation
+(Section~\ref{sec:gen-friedmann}) is recovered exactly,
+and the departure parameter $x_C = 0$ by the master
+identity (Eq.~\ref{eq:master-identity}).  This recovery is the
+multi-species generalisation of the
+single-fluid FLRW limit derived in
+Section~\ref{sec:defect-x}.
+
+
+\paragraph{Scope of the present formalism.}
+
+Before closing this section, we note explicitly what the
+multi-fluid framework does and does not provide.  It
+provides a species-resolved, covariant parameterisation
+of the matter content (the $\Teff$ manifold per species),
+a reconstruction map from angular fields to stress-energy
+(the moment integrals), and a bookkeeping structure for
+inter-species energy--momentum exchange (the $Q_s^b$
+sources).  It does \emph{not} provide a closed dynamical
+system: the evolution equations for $\Theta_s(\hat{e})$
+and $\eta_s(\hat{e})$ require projection of the
+Boltzmann equation onto the $\Teff$ manifold, which is
+the subject of Chapter~\ref{ch:teff}
+(Sections~\ref{sec:teff-ode}--\ref{sec:defect-prop}).
+It also does not provide a global-in-time existence or
+stability theorem for the coupled multi-species system;
+this is an open mathematical problem even for the
+two-fluid super-radiative case
+(Fournodavlos, Marshall \&
+Oliynyk~\cite{FournodavlosMarshallOliynyk2025};
+see Section~\ref{sec:open-problems}).
+The framework is best understood as a \emph{monitored
+closure layer}: it provides a finite-dimensional
+reduction of the infinite-dimensional kinetic
+description, together with a per-species diagnostic
+(Section~\ref{sec:species-tangency}) that certifies when
+the reduction is adequate and flags when it must be
+upgraded.
+
+
+% ============================================================
+\subsection{Species-resolved tangency diagnostics}
+\label{sec:species-tangency}
+% ============================================================
+
+The $\Teff$ manifold of
+Definition~\ref{def:species-Teff} parameterises each
+kinetic species' distribution function by one or two
+angular fields.  We now construct a diagnostic that
+measures, for each species independently, whether the
+exact collision source is tangent to the species' $\Teff$
+manifold.  When the diagnostic is small, the
+finite-dimensional parameterisation is adequate; when it
+is large, the parameterisation must be upgraded by adding
+energy-shape modes.  The construction generalises the
+single-species tangency diagnostic of
+Section~\ref{sec:tangency} to the multi-species setting.
+
+
+\paragraph{Per-ray tangent space.}
+
+Fix a spatial direction $\hat{e}$ and a kinetic species
+$s \in \mathcal{K}$ with two-field ansatz
+$f_s = \Phi_{\xi_s}(x_s/\Theta_s - \eta_s)$.  The
+tangent directions to the $\Teff$ manifold at the current
+state are obtained by differentiating $f_s$ with respect
+to the two parameters $\Theta_s$ and $\eta_s$:
+\begin{equation}\label{eq:tangent-dTheta}
+\frac{\partial f_s}{\partial \Theta_s}
+= w_{*,s}(x_s)\,
+  \frac{x_s}{\Theta_s^2}\,,
+\end{equation}
+\begin{equation}\label{eq:tangent-deta}
+\frac{\partial f_s}{\partial \eta_s}
+= w_{*,s}(x_s)\,,
+\end{equation}
+where the statistical weight function is
+\begin{equation}\label{eq:stat-weight}
+w_{*,s}(x_s)
+:= f_s(1 + \xi_s f_s)\,.
+\end{equation}
+The two tangent directions are proportional to the
+functions $x_s$ and $1$ (constant), respectively,
+weighted by $w_{*,s}$.  The per-ray tangent space is
+therefore
+\begin{equation}\label{eq:tangent-space}
+V_s = \mathrm{span}\{x_s,\; 1\}\,.
+\end{equation}
+For a one-field species ($\eta_s = 0$ fixed), the
+tangent space reduces to $V_s = \mathrm{span}\{x_s\}$.
+
+
+\paragraph{The Fisher--entropy inner product.}
+
+The natural inner product on functions of $x_s$ is the
+weighted $L^2$ product
+\begin{equation}\label{eq:fisher-inner}
+\langle g, h \rangle_{*,s}
+:= \int_0^\infty
+  g(x_s)\, h(x_s)\,
+  w_{*,s}(x_s)\, x_s^3\, dx_s\,,
+\end{equation}
+where the factor $x_s^3$ arises from the
+momentum-space measure for massless particles.  This
+inner product plays a triple role: it is the
+Fisher information metric on the $\Teff$ manifold, the
+Hessian of the entropy functional restricted to the
+manifold, and the kernel of the orthogonal projection
+onto $V_s$.  The triple identification is a structural
+result of the effective-temperature formalism
+[CITATION NEEDED: Teff Paper~III].
+
+
+\paragraph{Gram matrix.}
+
+The Gram matrix of $V_s$ with respect to the inner
+product~\eqref{eq:fisher-inner} is the $2 \times 2$
+symmetric positive-definite matrix
+\begin{equation}\label{eq:Gram-matrix}
+(\mathcal{G}_s)_{ij}
+= \langle v_i,\, v_j \rangle_{*,s}\,,
+\qquad
+v_1 = x_s,\;\; v_2 = 1\,,
+\end{equation}
+with entries
+\begin{equation}\label{eq:Gram-entries}
+\mathcal{G}_s
+= \begin{pmatrix}
+\langle x_s^2 \rangle_{*,s}
+  & \langle x_s \rangle_{*,s} \\[4pt]
+\langle x_s \rangle_{*,s}
+  & \langle 1 \rangle_{*,s}
+\end{pmatrix}\,,
+\end{equation}
+where we write $\langle x_s^k \rangle_{*,s}
+:= \int_0^\infty x_s^{k+3}\, w_{*,s}\, dx_s$ for
+brevity.  The positive-definiteness of $\mathcal{G}_s$
+is equivalent to the identifiability of $(\Theta_s,
+\eta_s)$ from the energy and number sectors: if the
+Gram matrix were degenerate, the two parameters could
+not be separately reconstructed from observables.  For
+Fermi--Dirac species at large positive degeneracy
+($\eta_s \gg 1$), the smaller eigenvalue of
+$\mathcal{G}_s$ decreases, reflecting the reduced
+sensitivity of the Fermi function to $\eta_s$ when the
+occupation is near saturation.  For cosmological
+neutrinos with $|\eta_\nu| \lesssim 0.07$, both
+eigenvalues are of order unity, and identification is
+well-conditioned.
+
+
+\paragraph{Collision field and tangency criterion.}
+
+The collision integral $C_s[\{f_r\}]$
+(Eq.~\ref{eq:Boltzmann-s}) drives the distribution
+function away from or toward the $\Teff$ manifold.  To
+quantify this, we define the \emph{normalised collision
+field}
+\begin{equation}\label{eq:collision-field}
+G_{\xi,s}(x_s)
+:= \frac{C_s[\{f_r\}](x_s)}{w_{*,s}(x_s)}\,.
+\end{equation}
+The division by $w_{*,s}$ converts the collision
+integral from a rate of change of $f_s$ into a rate of
+change of the ``natural coordinates'' on the manifold.
+The tangency condition is:
+\begin{equation}\label{eq:tangency-criterion}
+G_{\xi,s} \in V_s
+\quad \Longleftrightarrow \quad
+\text{the collision source for species $s$ is tangent
+to its $\Teff$ manifold.}
+\end{equation}
+When this condition holds, the collision integral
+drives $f_s$ along the manifold---changing $\Theta_s$
+and $\eta_s$ without exciting higher energy-shape
+modes.  When it fails, the collision integral has a
+component orthogonal to $V_s$, and the
+finite-dimensional parameterisation incurs an error
+that grows with time.
+
+
+\paragraph{The departure diagnostic $D_{s,\geq 2}$.}
+
+The off-manifold content of the collision source is
+measured by the orthogonal projection residual:
+\begin{equation}\label{eq:D-diagnostic}
+D_{s,\geq 2}^2
+:= \big\|
+  G_{\xi,s} - \Pi_{V_s} G_{\xi,s}
+\big\|_{*,s}^2\,,
+\end{equation}
+where $\Pi_{V_s}$ is the orthogonal projector onto
+$V_s$ with respect to the inner
+product~\eqref{eq:fisher-inner}.  The subscript
+``$\geq 2$'' indicates that the residual lives in the
+energy-shape modes of order two and higher---the
+components of $G_{\xi,s}$ that cannot be absorbed by
+adjusting $\Theta_s$ and $\eta_s$.
+
+For a one-field species, the projection is onto
+$V_s = \mathrm{span}\{x_s\}$, and the diagnostic
+reduces to
+\begin{equation}\label{eq:D-one-field}
+D_{s,\geq 2}^{\rm (1D)}
+= \left\|
+  G_{\xi,s}
+  - \frac{\langle x_s,\, G_{\xi,s}\rangle_{*,s}}
+         {\langle x_s^2 \rangle_{*,s}}\, x_s
+\right\|_{*,s}\,.
+\end{equation}
+
+
+\paragraph{Upgrade policy.}
+
+The diagnostic $D_{s,\geq 2}$ is evaluated per
+species and per ray.  It defines a graded response:
+\begin{equation}\label{eq:upgrade-policy}
+\begin{cases}
+D_{s,\geq 2} \ll 1:
+  & \text{current $\Teff$ manifold adequate;
+    retain $(\Theta_s, \eta_s)$}\,, \\[4pt]
+D_{s,\geq 2} \gtrsim \varepsilon_{\rm thr}:
+  & \text{add energy-shape mode(s) to species $s$,
+    or switch to multigroup.}
+\end{cases}
+\end{equation}
+The threshold $\varepsilon_{\rm thr}$ is set by the
+target observable accuracy; for the scalar-amplitude
+pipeline of this work, the dominant error sources are
+statistical (Section~\ref{sec:combined}), and
+$\varepsilon_{\rm thr} \sim 10^{-3}$ is conservative.
+The ``diagnose-to-upgrade'' philosophy---monitor
+tangency, then add complexity only where and when
+needed---is the operational core of the $\Teff$
+approach.  It replaces the traditional strategy of
+choosing $\ell_{\rm max}$ a priori and hoping that the
+truncation error is small.
+
+
+% ============================================================
+\subsection{Projected evolution and the Bianchi hierarchy}
+\label{sec:projected-evolution}
+% ============================================================
+
+The tangency diagnostic of
+Section~\ref{sec:species-tangency} certifies the
+instantaneous quality of the $\Teff$ reduction.  To
+evolve the species angular fields in time, we need a
+dynamical system.  We now derive the projected evolution
+equations by combining the covariant Boltzmann equation
+(Eq.~\ref{eq:Boltzmann-s}) with the $\Teff$ ansatz and
+the macroscopic reconstruction of
+Section~\ref{sec:macro-recon}.
+
+
+\paragraph{State vector and observable vector.}
+
+For species $s$ with a $(L_\Theta, L_\eta)$ truncation
+(angular multipoles retained up to $\ell = L_\Theta$
+for the temperature field and $\ell = L_\eta$ for the
+fugacity field), the state vector is
+\begin{equation}\label{eq:state-vector}
+\alpha_s
+= \Big(
+\ln T_{0,s},\;
+\eta_{0,s},\;
+\Theta^{(s)}_{\langle A_1 \rangle},\;
+\ldots,\;
+\Theta^{(s)}_{\langle A_{L_\Theta} \rangle},\;
+\eta^{(s)}_{\langle A_1 \rangle},\;
+\ldots,\;
+\eta^{(s)}_{\langle A_{L_\eta} \rangle}
+\Big)\,.
+\end{equation}
+The corresponding observable vector pairs energy-weighted
+and number-weighted angular moments:
+\begin{equation}\label{eq:obs-vector}
+m_s
+= \Big(
+\mathcal{E}_s,\;
+\mathcal{E}^{(s)}_{\langle A_1 \rangle},\;
+\ldots,\;
+\mathcal{E}^{(s)}_{\langle A_{L_\Theta} \rangle},\;
+\mathcal{N}_s,\;
+\mathcal{N}^{(s)}_{\langle A_1 \rangle},\;
+\ldots,\;
+\mathcal{N}^{(s)}_{\langle A_{L_\eta} \rangle}
+\Big)\,,
+\end{equation}
+where
+\begin{equation}\label{eq:energy-moments}
+\mathcal{E}^{(s)}_{\langle A_\ell \rangle}
+:= \Delta_\ell\,
+  \frac{g_s\,(k_B T_{0,s})^4}{(2\pi\hbar)^3}
+  \int_0^\infty dx_s\, x_s^3\,
+  F^{(s)}_{A_\ell}(x_s)
+\end{equation}
+are the energy-weighted multipoles and
+\begin{equation}\label{eq:number-moments}
+\mathcal{N}^{(s)}_{\langle A_\ell \rangle}
+:= \Delta_\ell\,
+  \frac{g_s\,(k_B T_{0,s})^3}{(2\pi\hbar)^3}
+  \int_0^\infty dx_s\, x_s^2\,
+  F^{(s)}_{A_\ell}(x_s)
+\end{equation}
+are the number-weighted multipoles.  Here
+$F^{(s)}_{A_\ell}(x_s)$ is the $\ell$-th PSTF
+coefficient in the angular expansion of $f_s$, and
+$\Delta_\ell$ is a normalisation constant.  The $x_s^3$
+versus $x_s^2$ weighting distinguishes the energy and
+number sectors---the same structural difference that
+underlies
+Proposition~\ref{prop:flux-independence} and the
+two-field requirement for number-conserving species.
+
+
+\paragraph{The projected evolution system.}
+
+The observable vector $m_s$ depends on the state vector
+$\alpha_s$ through the $\Teff$ ansatz and the moment
+integrals.  By the chain rule,
+\begin{equation}\label{eq:chain-rule}
+\dot{m}_s
+= J_s(\alpha_s)\, \dot{\alpha}_s\,,
+\qquad
+J_s := \frac{\partial m_s}{\partial \alpha_s}\,,
+\end{equation}
+where $J_s$ is the state-to-observable Jacobian.
+Substituting the Boltzmann
+equation~\eqref{eq:Boltzmann-s} and projecting its
+energy-weighted and number-weighted moments gives the
+exact reduced system
+\begin{equation}\label{eq:projected-system}
+\boxed{
+J_s(\alpha_s)\, \dot{\alpha}_s
+= \mathcal{R}_s[\alpha_s;\, u^a, \Theta,
+  \sigma_{ab}, \omega_{ab}, \dot{u}_a, D_a]
++ \mathcal{C}_s[\alpha_s, \{\alpha_r\}_{r \neq s}]\,,
+}
+\end{equation}
+where $\mathcal{R}_s$ is the streaming/kinematic
+projection (containing the expansion, shear, vorticity,
+acceleration, and spatial-gradient couplings) and
+$\mathcal{C}_s$ is the collision projection
+(containing the inter-species energy--momentum
+exchange).  The system~\eqref{eq:projected-system} is
+the species-resolved, two-field generalisation of the
+mass-matrix evolution equation derived for the
+single-species case in Section~\ref{sec:ode-system}.
+
+The Jacobian $J_s$ is generically a dense, nonlinear
+matrix: its entries are thermodynamic integrals that
+depend on the current state $(\Theta_s, \eta_s)$.
+Near the isotropic state, $J_s$ block-diagonalises by
+tensor rank (scalar, vector, tensor blocks decouple at
+linear order), and each block reduces to a small
+matrix whose entries are standard thermodynamic
+functions of $\eta_{0,s}$.  The invertibility of $J_s$
+is guaranteed by the positive-definiteness of the
+Gram matrix (Eq.~\ref{eq:Gram-matrix}), which ensures
+that the state vector can be recovered from the
+observable vector.
+
+
+\paragraph{FLRW isotropic limit.}
+
+Setting all anisotropic multipoles to zero
+($\Theta^{(s)}_{A_\ell} = \eta^{(s)}_{A_\ell} = 0$
+for $\ell \geq 1$) and all Bianchi kinematic
+quantities to their FLRW values
+($\sigma_{ab} = \omega_{ab} = \dot{u}_a = D_a = 0$,
+$\Theta = 3H$), the system~\eqref{eq:projected-system}
+collapses to the $2 \times 2$ monopole system
+\begin{equation}\label{eq:FLRW-monopole}
+\begin{pmatrix}
+3\,n_s & \chi^{(s)}_{N\eta} \\[4pt]
+4\,\rho_s & \chi^{(s)}_{E\eta}
+\end{pmatrix}
+\begin{pmatrix}
+\dot{(\ln T_{0,s})} \\[4pt]
+\dot{\eta}_{0,s}
+\end{pmatrix}
+=
+\begin{pmatrix}
+R_s - 3H\, n_s \\[4pt]
+S_{E,s} - 4H\, \rho_s
+\end{pmatrix}\,,
+\end{equation}
+where the susceptibilities are
+$\chi^{(s)}_{N\eta}
+:= \partial n_s / \partial \eta_{0,s}$
+and
+$\chi^{(s)}_{E\eta}
+:= \partial \rho_s / \partial \eta_{0,s}$,
+the number source is $R_s$
+(Eq.~\ref{eq:number-conservation}), and the energy
+source is $S_{E,s} := -u_b Q_s^{\;b}$
+(Eq.~\ref{eq:energy-conservation}).  The factors
+$3\,n_s$ and $4\,\rho_s$ on the left-hand side arise
+from $\partial_{\ln T_0} n \propto T_0^3$ and
+$\partial_{\ln T_0} \rho \propto T_0^4$ for massless
+species.
+
+For a collisionless massless species ($R_s = 0$,
+$S_{E,s} = 0$), the
+system~\eqref{eq:FLRW-monopole} yields
+\begin{equation}\label{eq:FLRW-solution}
+T_{0,s} \propto a^{-1}\,,
+\qquad
+\eta_{0,s} = \text{const}\,,
+\end{equation}
+recovering the standard adiabatic cooling law and the
+conservation of the dimensionless chemical potential for
+free-streaming relativistic species.  For photons with
+rapid number-changing processes ($R_\gamma \neq 0$), the
+system drives $\eta_{0,\gamma} \to 0$, consistent with
+the observed blackbody spectrum.  For decoupled neutrinos,
+$\eta_{0,\nu}$ freezes at its pre-decoupling value, in
+agreement with Big Bang nucleosynthesis constraints.
+
+
+\paragraph{Homogeneous Bianchi limit.}
+
+In a spatially homogeneous Bianchi spacetime, the
+spatial gradient $D_a$ vanishes, eliminating the
+$\ell \leftrightarrow \ell \pm 1$ coupling that
+connects adjacent multipoles in the inhomogeneous case.
+The surviving couplings are:
+the expansion ($\Theta$), which drives the adiabatic
+redshift of each species;
+the shear ($\sigma_{ab}$), which couples
+$\ell \leftrightarrow \ell \pm 2$ and is the primary
+source of the CMB quadrupole; and
+the vorticity ($\omega_{ab}$) and acceleration
+($\dot{u}_a$), which provide fixed-$\ell$ mixing and
+dipole sources respectively.
+
+For an orthogonal Bianchi model
+($\omega_{ab} = 0$, $\dot{u}_a = 0$), the
+system~\eqref{eq:projected-system} simplifies to
+\begin{equation}\label{eq:Bianchi-orth}
+J_s(\alpha_s)\, \dot{\alpha}_s
+= \mathcal{H}_s[\Theta;\, \alpha_s]
++ \mathcal{S}_s[\sigma_{ab};\, \alpha_s]
++ \mathcal{C}_s\,,
+\end{equation}
+where $\mathcal{H}_s$ collects the expansion-driven
+redshift terms and $\mathcal{S}_s$ collects the
+shear-driven coupling terms.  The structure of
+$\mathcal{S}_s$ has a decisive consequence: starting
+from an isotropic monopole state
+($\Theta^{(s)}_{A_\ell} = 0$ for $\ell \geq 1$), the
+shear $\sigma_{ab}$ sources the quadrupole
+$\Theta^{(s)}_{ab}$ directly, while the dipole
+$\Theta^{(s)}_a$ receives no shear source in the
+orthogonal case.  The dipole is sourced only by tilt
+(species drift relative to $n^a$), observer motion, or
+inter-species momentum exchange.  This asymmetry
+explains why the CMB quadrupole is the natural
+observable for constraining the background shear, while
+the dipole constrains the tilt sector---a separation
+that is central to the departure decomposition
+(Section~\ref{sec:master-id}).
+
+
+\paragraph{Minimal truncation.}
+
+The $(L_\Theta, L_\eta) = (2, 1)$ truncation retains the
+temperature field through the quadrupole and the fugacity
+field through the dipole:
+\begin{equation}\label{eq:minimal-state}
+\alpha_s
+= \big(
+\ln T_{0,s},\;
+\eta_{0,s},\;
+\Theta^{(s)}_{\langle a \rangle},\;
+\Theta^{(s)}_{\langle ab \rangle},\;
+\eta^{(s)}_{\langle a \rangle}
+\big)\,.
+\end{equation}
+This truncation is the covariant lift of the $(E_0, E_1, E_2, N_0,
+N_1)$ minimal observable set identified in the
+slab-symmetric analysis [CITATION NEEDED: Teff
+Paper~II]: the energy sector alone ($E_0, E_1, E_2$)
+cannot determine $\eta_{0,s}$ or $\eta^{(s)}_a$, and
+omitting the number moments $N_0$ and $N_1$ renders the
+fugacity sector unidentifiable.  The total number of
+independent components for a single two-field species is
+$1 + 1 + 3 + 5 + 3 = 13$; for a one-field species, it
+reduces to $1 + 3 + 5 = 9$.  Summing over
+$\mathcal{K} = \{\gamma, \nu_e, \bar{\nu}_e, \nu_x,
+\bar{\nu}_x\}$ with one-field photons and two-field
+neutrinos gives a total state-vector dimension of
+$9 + 4 \times 13 = 61$ per Bianchi evaluation---a
+number that is large but tractable for modern nested
+sampling.
+
+
+% ============================================================
+\subsection{Limit recovery and scope delineation}
+\label{sec:limit-recovery}
+% ============================================================
+
+We now verify that the multi-fluid framework
+reduces correctly to all known special cases and
+state explicitly the boundaries of the present
+formalism.
+
+
+\paragraph{FLRW isotropic limit.}
+
+Setting $\Theta_s(\hat{e}) = 1$,
+$\eta_s(\hat{e}) = \eta_{0,s}$, and all Bianchi
+kinematic quantities to zero, the
+system~\eqref{eq:projected-system} reduces to the
+$2 \times 2$ monopole
+system~\eqref{eq:FLRW-monopole}, and the departure
+parameter $x_C = 0$ by the master identity.  This
+limit is verified in Section~\ref{sec:species-conservation}
+and matches the standard multi-component Friedmann
+cosmology.
+
+
+\paragraph{Single-species limit.}
+
+Setting $|\mathcal{K}| = 1$ (a single kinetic species
+with no fluid sector), the interaction sources vanish
+($Q_s^b = 0$, $R_s = 0$), the total stress-energy is
+$T^{ab}_{\rm tot} = T_s^{ab}$, and the projected
+system~\eqref{eq:projected-system} reduces to the
+single-species mass-matrix ODE of
+Section~\ref{sec:ode-system}.  The tangency diagnostic
+$D_{s,\geq 2}$ reduces to the single-species
+diagnostic of Section~\ref{sec:tangency}.  The
+$\Theta^4$ moment map
+(Section~\ref{sec:moment-map}) and the nonlinear
+correction factors $R_\sigma$, $R_\omega$, $R_{\dot{u}}$
+(Section~\ref{sec:universal}) are recovered as the
+$\eta_s = 0$, single-$s$ specialisation of the
+multi-species reconstruction.
+
+
+\paragraph{Scalar-$\eta$ limit.}
+
+For a two-field species with
+$\eta_s(\hat{e}) = \eta_{0,s}$ (uniform fugacity,
+no angular structure in $\eta$), the number drift
+$j_s^a = 0$ (Eq.~\ref{eq:j-s-recon}), and the
+number sector decouples from the angular dynamics.
+The species behaves as a one-field species with a
+modified thermodynamic background---the integrals
+$\mathcal{I}_n(\xi_s, \eta_{0,s})$ replace the
+$\eta = 0$ values, but the angular coupling
+structure is unchanged.  This limit is relevant for
+neutrinos with a frozen homogeneous chemical potential
+after decoupling.
+
+
+\paragraph{Bianchi $\to$ FLRW limit of the hierarchy.}
+
+Setting $\sigma_{ab} \to 0$ in the Bianchi
+system~\eqref{eq:Bianchi-orth} removes the
+$\ell \leftrightarrow \ell \pm 2$ shear coupling.
+The quadrupole $\Theta^{(s)}_{ab}$ then evolves
+under collisional damping alone and decays to zero,
+while the monopole evolution reverts to the FLRW
+system~\eqref{eq:FLRW-monopole}.  The departure
+parameter $x_C \to 0$ continuously, confirming that
+the multi-species framework does not introduce
+spurious anisotropy in the isotropic limit---a
+non-trivial check given the additional degrees of
+freedom.
+
+
+\paragraph{Scope: what is established and what is not.}
+
+We close this section with a precise delineation of
+the status of each component of the multi-fluid
+framework, using the three-tier claim taxonomy
+adopted throughout this work.
+
+\medskip\noindent\textsc{Established.}\enspace
+The common-frame contract
+(Remark~\ref{rem:frame-contract}) and species
+classification (Definition~\ref{def:sectors}) are
+structural choices that do not depend on
+approximations.
+The macroscopic reconstruction formulae
+(Eqs.~\ref{eq:rho-s-recon}--\ref{eq:j-s-recon})
+are exact integrals of the $\Teff$ ansatz, and the
+conservation and Einstein coupling
+(Eqs.~\ref{eq:total-conservation}--\ref{eq:Einstein-multi})
+are exact consequences of general relativity.
+The Gram-matrix identifiability
+(Eq.~\ref{eq:Gram-matrix}) is a structural property
+of the $\Teff$ manifold geometry, and the tangency
+diagnostic $D_{s,\geq 2}$
+(Eq.~\ref{eq:D-diagnostic}) is a well-defined
+per-species, per-ray functional of the collision
+integral.
+All four limit recoveries---FLRW, single-species,
+scalar-$\eta$, and Bianchi$\to$FLRW---are verified
+analytically.
+
+\medskip\noindent\textsc{Conditional.}\enspace
+The projected evolution
+system~\eqref{eq:projected-system} is structurally
+exact, but its explicit coefficient tables
+(the entries of $J_s$, $\mathcal{R}_s$,
+$\mathcal{C}_s$) are derived here only in the
+isotropic limit (Eq.~\ref{eq:FLRW-monopole}) and
+the linearised Bianchi limit.  The full nonlinear
+Jacobian for arbitrary $(L_\Theta, L_\eta)$ requires
+Gaunt-type angular integrals that are deferred to the
+numerical implementation
+(Chapter~\ref{ch:results}).
+The minimal truncation
+$(L_\Theta, L_\eta) = (2, 1)$ is sufficient for
+the scalar-amplitude pipeline at the current
+precision; whether it remains sufficient for the
+direction-dependent programme
+(Section~\ref{sec:open-problems}) depends on the
+magnitude of $D_{s,\geq 2}$ at the required
+sky resolution.
+
+\medskip\noindent\textsc{Not established.}\enspace
+Four items remain open.
+First, global-in-time existence and stability of the
+coupled multi-species system: the rigorous
+well-posedness result of Fournodavlos, Marshall \&
+Oliynyk~\cite{FournodavlosMarshallOliynyk2025}
+covers only the two-fluid super-radiative case
+($1/3 < c_s^2 < 3/7$), and the physically relevant
+dust--radiation--$\Lambda$ system remains an open
+problem (Section~\ref{sec:open-problems}).
+Second, symmetric hyperbolicity of the projected
+system~\eqref{eq:projected-system}.
+Third, robustness of the $\Teff$ reduction under
+realistic microphysical collision kernels beyond
+Thomson scattering.
+Fourth, the equivalence between the local adequacy
+certificate $D_{s,\geq 2} < \varepsilon_{\rm thr}$
+and dynamical adequacy over cosmological
+timescales---the tangency diagnostic is a
+necessary but not sufficient condition for
+long-time accuracy.
+
+These open items define the boundary between the
+results of this work and the programme of future
+extensions discussed in
+Chapter~\ref{ch:future}.
+
+% === END INLINED ===
+
+% === INLINED: figures_ch02.tex ===
+% Figures for Chapter 2
+% Updated: TF-D06, 2026-03-12
+% Added: fig_tilted_dictionary, fig_peculiar_jeans, fig_vorticity_hierarchy
+
+% fig_peculiar_jeans placed in ch09
+
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_defect_identity_schematic}
+\caption{Schematic of the master defect identity $x = \Sigstd - \Wstd + \Otilt + \Okaniso$.
+  Each coloured block represents one departure component: shear (blue), vorticity (orange),
+  tilt (green), and anisotropic curvature (purple).  The sum $x$ is the total FLRW departure
+  scalar.  Arrows indicate the direction of information flow from the tetrad decomposition
+  to the MES kinematic bound hierarchy.}
+\label{fig:defect_identity_schematic}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_frame_problem}
+\caption{The three-frame problem.  Starting from the geometry frame~$G$ (CMB rest frame),
+  a tilt-rapidity boost $\beta$ defines the matter frame~$M$, from which the observer
+  frame~$O$ is reached by a peculiar-velocity correction.  The frame-attribution factor
+  $\eta_{\dot{u}} = 1/12$ (VT-07) corrects the safe-route bound
+  $\beta \leq \varepsilon_1 / (1 + \eta_{\dot{u}})$.}
+\label{fig:frame_problem}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_scale_hierarchy}
+\caption{Physical scale hierarchy for the tilted-FLRW framework.
+  Hubble flows, Cepheid hosts, survey volumes, and the tilt contamination zone
+  (shaded red) are shown on a logarithmic depth axis.  The depth scale at which
+  the tilt-rapidity $\beta$ crosses the Colin et al.\ completeness threshold is
+  marked with a dashed line.  Grey band: $1\sigma$ range for $\beta_{\mathrm{CF4}}$.}
+\label{fig:scale_hierarchy}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_defect_identity_schematic}
+\caption{Schematic of the master defect identity $x = \Sigstd - \Wstd + \Otilt + \Okaniso$.
+  Each coloured block represents one departure component: shear (blue), vorticity (orange),
+  tilt (green), and anisotropic curvature (purple).  The sum $x$ is the total FLRW departure
+  scalar.  Arrows indicate the direction of information flow from the tetrad decomposition
+  to the MES kinematic bound hierarchy.}
+\label{fig:defect_identity_schematic}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_frame_problem}
+\caption{The three-frame problem.  Starting from the geometry frame~$G$ (CMB rest frame),
+  a tilt-rapidity boost $\beta$ defines the matter frame~$M$, from which the observer
+  frame~$O$ is reached by a peculiar-velocity correction.  The frame-attribution factor
+  $\eta_{\dot{u}} = 1/12$ (VT-07) corrects the safe-route bound
+  $\beta \leq \varepsilon_1 / (1 + \eta_{\dot{u}})$.}
+\label{fig:frame_problem}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_scale_hierarchy}
+\caption{Physical scale hierarchy for the tilted-FLRW framework.
+  Hubble flows, Cepheid hosts, survey volumes, and the tilt contamination zone
+  (shaded red) are shown on a logarithmic depth axis.  The depth scale at which
+  the tilt-rapidity $\beta$ crosses the Colin et al.\ completeness threshold is
+  marked with a dashed line.  Grey band: $1\sigma$ range for $\beta_{\mathrm{CF4}}$.}
+\label{fig:scale_hierarchy}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_4D_projection_atlas}
+\caption{Four two-dimensional projections of the 4D departure constraint space
+  $(\Sigstd,\,W^2_{\mathrm{std}},\,\Otilt,\,Q)$.
+  (a)~$\Sigstd$--$\beta$ joint posterior for BI$_{\mathrm{tilt}}$ (VER05).
+  (b)~$W^2_{\mathrm{std}}$--$\beta$ projection with the Saadeh et al.\ vorticity
+  upper limit (dashed).
+  (c)~$\Sigstd$--$x$ ceiling structure: the red dashed line marks the MES shear
+  ceiling.
+  (d)~$Q = x/x_{\max}$--$\Otilt$ joint distribution.}
+\label{fig:4D_projection_atlas}
+\end{figure}
+% === END INLINED ===
+

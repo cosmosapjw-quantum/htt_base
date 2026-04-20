@@ -1,7 +1,10 @@
 Dipole-anomaly scenario summary (values from
 scalars/dipole_scalar_observations.json). Left: ε_1 multiplied by 1e3
-for S0 (FLRW, 0), S1 (kinematic Planck, 1.234), S2a (CatWISE, 1.476),
-S2b (kinematic ε_1 + CF4 β), S2c (radio Secrest+2021, 3.296), S3
-(CatWISE + CF4). Right: tilt rapidity β. The CF4 1-σ band
-β = (1.334 ± 0.267)e-3 is shown as the shaded region; non-zero β only
-appears for S2a-S3.
+for S0 (FLRW baseline), S1 (kinematic Planck), S2a (CatWISE dipole),
+S2b (kinematic ε_1 + CF4 β), S2c (radio dipole), and S3
+(CatWISE + CF4). When the consolidated scalar JSON no longer ships an
+explicit `scenarios` block, this figure rebuilds the six-scenario ladder
+from the current `dipole_observations` entries so the plotting layer
+tracks the latest workdir scalar SSOT. Right: tilt rapidity β. The CF4
+1-σ band is shown as the shaded region; non-zero β appears only in the
+scenarios that include the CF4 bulk-flow prior.

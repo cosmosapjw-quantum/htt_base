@@ -22,7 +22,6 @@ from __future__ import annotations
 
 import argparse
 import dataclasses
-import sys
 from pathlib import Path
 from typing import Callable, Dict, List, Tuple
 
@@ -32,15 +31,12 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+from figure_env import REPO_ROOT, configure_repo_paths, recombination_fixture_dir  # noqa: E402
+
 GALLERY_ROOT = REPO_ROOT / "figures" / "physics_gallery"
 
-# Make `bass.*` / `tsc.*` importable for the LB-1 species machinery.
-# Physics code migrated from `bass_py/` to `htt/` on 2026-04; keep the
-# legacy path as a fallback for partial checkouts.
-sys.path.insert(0, str(REPO_ROOT / "htt"))
-sys.path.insert(0, str(REPO_ROOT / "htt" / "src"))
-sys.path.insert(0, str(REPO_ROOT / "bass_py"))
+# Make `bass.*` / `tsc.*` importable from the active `htt/` tree.
+configure_repo_paths()
 
 from bass.background.einstein_bianchi import (  # noqa: E402
     BianchiCosmology,
@@ -169,7 +165,7 @@ def _prepare_axes(ax, xlabel: str, ylabel: str,
 
 def _hyrec_fixture_path() -> Path:
     return (
-        REPO_ROOT / "bass_py" / "bass" / "recombination" / "fixtures"
+        recombination_fixture_dir()
         / "recombination_ref_planck2018.csv"
     )
 

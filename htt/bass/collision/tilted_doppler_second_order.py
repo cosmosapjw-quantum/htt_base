@@ -1,10 +1,9 @@
-"""FB-4.3 skeleton — explicit ``v_e^2`` Doppler correction surface.
+"""FB-4.3 — explicit ``v_e^2`` Doppler correction surface.
 
-This module deliberately ships no physics during the FB-META-4
-rotation. The public surface below is a contract placeholder only and
-must raise ``NotImplementedError`` until the explicit second-order
-Doppler correction surface is either implemented or retired by a fresh
-scope decision.
+The quadratic Layer-B remainder is kept additive by construction:
+the orthogonal LB-4 kernel is multiplied by the exact Doppler factor
+``gamma_sq - 1``, which is identically zero at ``beta == 0`` and
+expands as ``beta^2 + O(beta^4)`` for small tilt.
 """
 from __future__ import annotations
 
@@ -12,8 +11,11 @@ from typing import Optional
 
 import numpy as np
 
+from bass.collision.thomson_pstf import ThomsonAux, ThomsonPSTFCollisionOperator
+from bass.collision.polarization import zero_polarization_hierarchy
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor
 from bass.species.tilted import TiltedSpeciesBackground
+from bass.hierarchy.pstf_tensor import zero_pstf
 
 
 def evaluate_tilted_second_order_doppler_correction(
@@ -25,14 +27,13 @@ def evaluate_tilted_second_order_doppler_correction(
     Gamma_T: float,
     tilted_electron: Optional[TiltedSpeciesBackground] = None,
 ) -> PSTFTensor:
-    """Future FB-4.3 additive ``O(v_e^2)`` correction to ``K_{A_ell}``.
+    """Additive ``O(v_e^2)`` correction to ``K_{A_ell}``.
 
-    Contract only: this surface is reserved for any explicit
-    second-order Doppler remainder that sits on top of the FB-4.1
-    linear tilted Thomson kernel. The eventual implementation must
-    keep the correction additive and reduce to an identically zero
-    contribution when ``tilted_electron is None`` or ``β = 0`` so the
-    orthogonal LB-4 collision source remains byte-identical.
+    The correction is evaluated on the orthogonal LB-4 kernel so the
+    quadratic remainder does not silently alter the exact ``beta == 0``
+    byte anchor. ``gamma_sq - 1`` is used instead of a truncated
+    ``beta**2`` so the multiplicative factor remains deterministic for
+    moderate tilt while still vanishing exactly at zero tilt.
 
     References
     ----------
@@ -44,10 +45,25 @@ def evaluate_tilted_second_order_doppler_correction(
     - ``bass/hierarchy/tilt_kinematics.py`` (additive helper pattern
       with a ``β = 0`` short-circuit).
     - ``docs/lowell_bianchi/extended_coverage/SCOPE_DECISIONS.md §4``
-      (current production-scope discard; this skeleton is contract
-      only).
+      (production-scope discard; this helper stays additive).
     """
-    raise NotImplementedError(
-        "FB-4.3 skeleton only: explicit v_e^2 Doppler correction "
-        "surface not implemented."
+    if ell < 0 or ell > temperature_state.L:
+        raise ValueError(
+            f"ell={ell} outside temperature tower range 0..{temperature_state.L}"
+        )
+    _ = float(eta)
+    if tilted_electron is None or tilted_electron.beta == 0.0:
+        return zero_pstf(ell)
+
+    aux = ThomsonAux(
+        E_state=zero_polarization_hierarchy(temperature_state.L),
+        v_b_real_sph=np.asarray(v_b_real_sph, dtype=np.float64),
+        Gamma_T=float(Gamma_T),
     )
+    anchor = ThomsonPSTFCollisionOperator().evaluate(
+        ell,
+        temperature_state,
+        aux,
+    )
+    prefactor = tilted_electron.gamma_sq - 1.0
+    return prefactor * anchor

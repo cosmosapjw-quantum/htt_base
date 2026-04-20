@@ -180,6 +180,24 @@ Each `--list` flag enumerates the script's registered figure IDs, and
 writes `<name>.png`, `<name>.pdf`, and `<name>.caption.txt` drafted
 for direct inclusion under `project/00_manuscript/`.
 
+## Data provenance after the 2026-04-20 rerun
+
+The current paper bundle was regenerated against the active `workdir/`
+tree rather than the old `dl_pipeline/obs_bundle/obs` layout:
+
+- CMB spectra, maps, masks, and Planck lensing come from
+  `workdir/obs_bundle/`.
+- DESI footprint and redshift-distribution figures prefer the full raw
+  Y1 FITS catalogs under `workdir/raw/desi/`; only visual-only scatter
+  panels may downsample *after* loading the full raw catalogs.
+- CF4 plots use the regenerated query artifacts under
+  `workdir/compact_products/cf4/`, which are adapter products of the raw
+  `CF4pp_mean_std_grids.npz` reconstruction grid.
+- ACT high-`ell` overlays prefer DR6 bandpowers when present in
+  `workdir/obs_bundle`; if those files are missing, the figure falls
+  back to the real ACT DR4 compact release and states that in the
+  caption.
+
 ## Figure status — mock / placeholder taxonomy
 
 Figures are categorised by **what would change when the bass_py low-ℓ

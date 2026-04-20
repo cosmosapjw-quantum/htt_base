@@ -43,15 +43,14 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-OUT_ROOT = REPO_ROOT / "figures" / "paper"
+from figure_env import (  # noqa: E402
+    REPO_ROOT,
+    build_obs_catalog,
+    configure_repo_paths,
+)
 
-# The physics code lives in REPO_ROOT/htt; the legacy `make_*` scripts
-# still reference `REPO_ROOT/bass_py`, which now only houses mio/.
-sys.path.insert(0, str(REPO_ROOT / "htt"))
-sys.path.insert(0, str(REPO_ROOT / "htt" / "src"))
-sys.path.insert(0, str(REPO_ROOT / "bass_py"))  # mio.interface
-sys.path.insert(0, str(REPO_ROOT / "dl_pipeline" / "obs_bundle" / "obs"))
+OUT_ROOT = REPO_ROOT / "figures" / "paper"
+configure_repo_paths()
 
 from htt.core.plot_style import apply_style, COLS  # noqa: E402
 
@@ -82,8 +81,7 @@ def _caption(name: str, chapter: str, text: str) -> None:
 
 
 def _obs_catalog():
-    from obs_loader import ObsCatalog  # type: ignore  # noqa: E402
-    return ObsCatalog(root=REPO_ROOT / "dl_pipeline" / "obs_bundle" / "obs")
+    return build_obs_catalog()
 
 
 # =====================================================================
@@ -1017,6 +1015,8 @@ def fig_ch12d_hj01_extraction_real_backbone() -> None:
     _caption(
         "fig_ch12d_hj01_extraction_real_backbone", "ch12_mio",
         rf"""
+STATUS: BLOCKED-ON-SOLVER (bass_py W10-02 K_ell atlas V-gate)
+
 MIO-HJ-01 shear extraction with a **real** observational backbone.
 Top: the binned Planck PR3 TT residual
 $D_\ell^{{\rm obs}}-D_\ell^{{\Lambda CDM}}$ on

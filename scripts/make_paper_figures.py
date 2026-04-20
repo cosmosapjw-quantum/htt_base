@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """make_paper_figures.py — comprehensive paper-quality figure generator.
 
-Renders every figure the current bass_py code + dl_pipeline/obs_bundle
-data can support, at publication quality (300 dpi PNG + PDF, Okabe-Ito
-palette, single/double column widths from htt.core.plot_style).
+Renders every figure the current `htt/` code plus the `workdir/`
+observational bundle can support, at publication quality (300 dpi PNG
++ PDF, Okabe-Ito palette, single/double column widths from
+`htt.core.plot_style`).
 
 Scope (2026-04-19):
 - Ch.02 observational motivation: CMB spectra overlay, CMB map,
@@ -40,12 +41,15 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-OUT_ROOT = REPO_ROOT / "figures" / "paper"
-OBS_ROOT = REPO_ROOT / "dl_pipeline" / "obs_bundle" / "obs"
+from figure_env import (  # noqa: E402
+    REPO_ROOT,
+    build_obs_catalog,
+    configure_repo_paths,
+    recombination_fixture_dir,
+)
 
-sys.path.insert(0, str(REPO_ROOT / "bass_py"))
-sys.path.insert(0, str(OBS_ROOT))
+OUT_ROOT = REPO_ROOT / "figures" / "paper"
+configure_repo_paths()
 
 from htt.core.plot_style import apply_style, COLS  # noqa: E402
 
@@ -83,9 +87,7 @@ class ObsCache:
     @classmethod
     def cat(cls):
         if cls._cat is None:
-            from obs_loader import ObsCatalog
-
-            cls._cat = ObsCatalog(root=OBS_ROOT)
+            cls._cat = build_obs_catalog()
         return cls._cat
 
 
@@ -177,7 +179,7 @@ Planck PR3 temperature power spectrum D_ell^{TT} binned bandpowers
 (blue points, COM_PowerSpect_CMB-TT-binned_R3.01) with the Planck 2018
 best-fit Lambda CDM theory curve (gray). Horizontal axis on log scale
 to expose the acoustic peak structure from ell ~ 50 to ell ~ 2500.
-Source: dl_pipeline/obs_bundle/obs/cmb/powerspectra.
+Source: workdir/obs_bundle/cmb/powerspectra.
 """,
     )
 
@@ -314,7 +316,21 @@ def fig_ch02d_dipole_scenarios() -> None:
     """Scenario bar chart: ε₁ and β for the S0-S3 hypotheses."""
     cat = ObsCache.cat()
     scalars = cat.load("dipole_scalar_observations.consolidated")
-    sc = scalars["scenarios"]
+    sc = dict(scalars.get("scenarios", {}))
+    if not sc:
+        obs = scalars["dipole_observations"]
+        eps1_kin = float(obs["cmb_planck_2018"]["eps1"])
+        eps1_cat = float(obs["catwise_bohme_2025"]["eps1"])
+        eps1_radio = float(obs["radio_secrest_2021"]["eps1"])
+        beta_cf4 = float(obs["cf4_watkins_2023"]["beta"])
+        sc = {
+            "S0": {"eps1": 0.0, "beta": 0.0},
+            "S1": {"eps1": eps1_kin, "beta": 0.0},
+            "S2a": {"eps1": eps1_cat, "beta": 0.0},
+            "S2b": {"eps1": eps1_kin, "beta": beta_cf4},
+            "S2c": {"eps1": eps1_radio, "beta": 0.0},
+            "S3": {"eps1": eps1_cat, "beta": beta_cf4},
+        }
 
     names = ["S0", "S1", "S2a", "S2b", "S2c", "S3"]
     eps1 = np.array([sc[n]["eps1"] for n in names], dtype=float) * 1e3
@@ -351,11 +367,14 @@ def fig_ch02d_dipole_scenarios() -> None:
         """
 Dipole-anomaly scenario summary (values from
 scalars/dipole_scalar_observations.json). Left: ε_1 multiplied by 1e3
-for S0 (FLRW, 0), S1 (kinematic Planck, 1.234), S2a (CatWISE, 1.476),
-S2b (kinematic ε_1 + CF4 β), S2c (radio Secrest+2021, 3.296), S3
-(CatWISE + CF4). Right: tilt rapidity β. The CF4 1-σ band
-β = (1.334 ± 0.267)e-3 is shown as the shaded region; non-zero β only
-appears for S2a-S3.
+for S0 (FLRW baseline), S1 (kinematic Planck), S2a (CatWISE dipole),
+S2b (kinematic ε_1 + CF4 β), S2c (radio dipole), and S3
+(CatWISE + CF4). When the consolidated scalar JSON no longer ships an
+explicit `scenarios` block, this figure rebuilds the six-scenario ladder
+from the current `dipole_observations` entries so the plotting layer
+tracks the latest workdir scalar SSOT. Right: tilt rapidity β. The CF4
+1-σ band is shown as the shaded region; non-zero β appears only in the
+scenarios that include the CF4 bulk-flow prior.
 """,
     )
 
@@ -372,6 +391,7 @@ def fig_ch02e_cf4_velocity_field() -> None:
     r = np.sqrt(sgx ** 2 + sgy ** 2 + sgz ** 2)
     vmag = np.linalg.norm(vxyz, axis=1)
     vmag_err = np.linalg.norm(vxyz_std, axis=1)
+    n_query = len(r)
 
     order = np.argsort(r)
     r = r[order]
@@ -397,16 +417,16 @@ def fig_ch02e_cf4_velocity_field() -> None:
 
     ax.set_xlabel(r"Supergalactic distance $|\vec r|$ [Mpc $h^{-1}$]")
     ax.set_ylabel(r"Peculiar velocity [km/s]")
-    ax.set_title("CF4 bulk-flow sampling (8 query points)", fontsize=10)
+    ax.set_title(f"CF4 bulk-flow sampling ({n_query} query points)", fontsize=10)
     ax.grid(True, alpha=0.25)
     ax.legend(fontsize=8.5, loc="upper right", framealpha=0.9)
     _save(fig, "fig_ch02e_cf4_velocity_field", "ch02_dipole")
     _caption(
         "fig_ch02e_cf4_velocity_field",
         "ch02_dipole",
-        """
+        f"""
 CF4 reconstruction peculiar-velocity batch sample
-(pecvel/cf4/query_batch.npz, 8 grid positions). Blue points:
+(pecvel/cf4/query_batch.npz, {n_query} grid positions). Blue points:
 magnitude |v_xyz| of the Cartesian mean velocity; error bar is the
 Euclidean norm of vxyz_std. Red squares: absolute radial component
 |v_r|. Dashed orange line: β_CF4 c ≈ 400 km/s (Watkins+2009 COMPOSITE
@@ -664,7 +684,7 @@ def fig_ch06c_recombination_panel() -> None:
         load_recombination_table, build_interpolators,
     )
 
-    fx = REPO_ROOT / "bass_py" / "bass" / "recombination" / "fixtures" / (
+    fx = recombination_fixture_dir() / (
         "recombination_ref_planck2018.csv"
     )
     tab = load_recombination_table(fx)
@@ -755,7 +775,7 @@ def fig_ch06d_reionization_tau_sweep() -> None:
         extend_table_with_reionization, cosmology_from_metadata,
     )
 
-    fx = REPO_ROOT / "bass_py" / "bass" / "recombination" / "fixtures" / (
+    fx = recombination_fixture_dir() / (
         "recombination_ref_planck2018.csv"
     )
     tab = load_recombination_table(fx)
@@ -1036,17 +1056,18 @@ def fig_ch08a_desi_sky_coverage() -> None:
     lrg = cat.load("desi.lrg.ngc")
     qso = cat.load("desi.qso.ngc")
 
-    # Subsample for plotting
+    # Display uses a random visual subsample, but all redshift statistics
+    # below are computed from the full raw catalogs.
     rng = np.random.default_rng(42)
     n_sub = 120000
     def _sub(cat_, n=n_sub):
         idx = rng.choice(len(cat_.ra), size=min(n, len(cat_.ra)),
                          replace=False)
-        return cat_.ra[idx], cat_.dec[idx], cat_.z[idx]
+        return cat_.ra[idx], cat_.dec[idx]
 
-    bgs_ra, bgs_dec, bgs_z = _sub(bgs)
-    lrg_ra, lrg_dec, lrg_z = _sub(lrg)
-    qso_ra, qso_dec, qso_z = _sub(qso)
+    bgs_ra, bgs_dec = _sub(bgs)
+    lrg_ra, lrg_dec = _sub(lrg)
+    qso_ra, qso_dec = _sub(qso)
 
     fig = plt.figure(figsize=(7.4, 6.4))
     gs = fig.add_gridspec(2, 1, height_ratios=[1.5, 1.0], hspace=0.35)
@@ -1073,9 +1094,9 @@ def fig_ch08a_desi_sky_coverage() -> None:
     ax2 = fig.add_subplot(gs[1])
     bins = np.linspace(0.0, 3.5, 60)
     for z, label, c in [
-        (bgs_z, "BGS (z<0.5)", COLS["blue"]),
-        (lrg_z, "LRG (0.4<z<1.1)", COLS["orange"]),
-        (qso_z, "QSO (0.8<z<3.5)", COLS["red"]),
+        (np.asarray(bgs.z), "BGS (z<0.5)", COLS["blue"]),
+        (np.asarray(lrg.z), "LRG (0.4<z<1.1)", COLS["orange"]),
+        (np.asarray(qso.z), "QSO (0.8<z<3.5)", COLS["red"]),
     ]:
         ax2.hist(z, bins=bins, histtype="stepfilled",
                  alpha=0.45, color=c, edgecolor="k", linewidth=0.4,
@@ -1093,10 +1114,10 @@ def fig_ch08a_desi_sky_coverage() -> None:
         """
 DESI Year-1 NGC footprint (top, Aitoff projection) for the three LSS
 tracers: BGS_ANY (blue, z < 0.5), LRG (orange, 0.4 < z < 1.1), QSO
-(red, 0.8 < z < 3.5). Each tracer is plotted as a random subsample of
-120k objects. Bottom: n(z) histogram for the same subsamples,
-illustrating the complementary redshift coverage used by the
-number-count dipole likelihoods.
+(red, 0.8 < z < 3.5). The footprint panel shows a random visual
+subsample of 120k objects per tracer for legibility, while the bottom
+$n(z)$ histogram is computed from the full raw NGC catalogs. This keeps
+the display readable without reverting to compact or fixture inputs.
 """,
     )
 
@@ -1165,6 +1186,7 @@ def fig_ch08c_cf4_delta_vs_distance() -> None:
     sgx, sgy, sgz = np.asarray(cf4.sgx), np.asarray(cf4.sgy), np.asarray(cf4.sgz)
     delta = np.asarray(cf4.delta_mean)
     delta_std = np.asarray(cf4.delta_std)
+    n_query = len(delta)
     r = np.sqrt(sgx ** 2 + sgy ** 2 + sgz ** 2)
     order = np.argsort(r)
 
@@ -1184,8 +1206,8 @@ def fig_ch08c_cf4_delta_vs_distance() -> None:
     _caption(
         "fig_ch08c_cf4_delta_vs_distance",
         "ch08_robustness",
-        """
-CF4 peculiar-velocity reconstruction density contrast delta at the 8
+        f"""
+CF4 peculiar-velocity reconstruction density contrast delta at {n_query}
 query positions, plotted versus Euclidean supergalactic distance.
 Error bars are delta_std from pecvel/cf4/query_batch.npz. The large
 negative delta at the closest sampled point (near the Local Group)
@@ -1215,7 +1237,7 @@ def fig_ch05d_tilted_visibility() -> None:
         cosmology_from_metadata,
     )
 
-    fx = REPO_ROOT / "bass_py" / "bass" / "recombination" / "fixtures" / (
+    fx = recombination_fixture_dir() / (
         "recombination_ref_planck2018.csv"
     )
     tab = load_recombination_table(fx)

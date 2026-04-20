@@ -1,0 +1,371 @@
+% ============================================================
+% appendices.tex — EXPANDED
+% Part of: Tetrad-Based Departure Decomposition (Jiwon Park)
+% Session S12 draft — 2026-03-30
+% ============================================================
+
+\appendix
+
+
+% ============================================================
+\chapter{Notation Dictionary}
+\label{app:notation}
+% ============================================================
+
+We collect the principal symbols used throughout this work.
+All quantities are defined relative to the common reference
+congruence $u^a = n^a$
+(Definition~\ref{def:common-frame}) unless otherwise noted.
+
+\medskip
+
+\paragraph{Spacetime and geometry.}
+$(\mathcal{M}, g_{ab})$: spacetime manifold with metric
+signature $(-,+,+,+)$.
+$u^a$: unit timelike reference congruence ($u_a u^a = -1$).
+$h_{ab} = g_{ab} + u_a u_b$: spatial projector.
+$\Theta = \nabla_a u^a$: expansion scalar.
+$H = \Theta/3$: Hubble rate.
+$\sigma_{ab}$: shear tensor (PSTF part of $\nabla_b u_a$).
+$\omega_{ab}$: vorticity tensor.
+$\dot{u}_a = u^b \nabla_b u_a$: four-acceleration.
+${}^3\!S_{ab}$: trace-free spatial Ricci tensor.
+$\mathcal{R}$: spatial Ricci scalar.
+
+\paragraph{Departure variables.}
+$\Sigstd = \sigma_{ab}\sigma^{ab}/(6H^2)$:
+standardised shear parameter.
+$\Wstd = \omega_{ab}\omega^{ab}/(6H^2)$:
+standardised vorticity parameter.
+$\Otilt$: tilt contribution to the departure parameter.
+$\Okaniso$: anisotropic curvature contribution.
+$x_C = \Sigstd - \Wstd + \Otilt + \Okaniso$:
+master departure parameter.
+$Q_C = |x_C|/x_{\max,C}$: occupancy ratio (Layer~2).
+$\Pi_C(q_\star)$: exceedance probability (Layer~3).
+$\mathcal{F}_{\rm Bayes}$: Bayesian filling fraction.
+
+\paragraph{Species-resolved quantities.}
+$s \in \mathcal{K}$: kinetic species ($\gamma$, $\nu_e$,
+$\bar{\nu}_e$, $\nu_x$, $\bar{\nu}_x$).
+$\alpha \in \mathcal{F}$: fluid species ($b$, $c$,
+$\Lambda$).
+$\Theta_s(\hat{e})$: species angular temperature field.
+$\eta_s(\hat{e})$: species angular fugacity field.
+$T_{0,s}$: species monopole temperature.
+$x_s = E_s/(k_B T_{0,s})$: dimensionless energy.
+$\xi_s \in \{0, -1, +1\}$: quantum statistics (MB, FD, BE).
+$\Phi_\xi(z) = 1/(e^z - \xi)$: equilibrium occupation
+function.
+$\mathcal{I}_n(\xi, \eta) = \int_0^\infty
+x^n\,dx/(e^{x-\eta} - \xi)$: generalised thermodynamic
+integral.
+$g_s$: internal degeneracy.
+
+\paragraph{Stress-energy decomposition.}
+$\rho_s$, $p_s$, $q_s^a$, $\pi_s^{ab}$: species energy
+density, pressure, energy flux, anisotropic stress.
+$n_s$, $j_s^a$: species number density, number drift.
+$Q_s^b$: energy--momentum exchange four-vector.
+$R_s$: net particle creation rate.
+$T^{ab}_{\rm tot} = \sum_s T_s^{ab}
++ \sum_\alpha T_\alpha^{ab}$: total stress-energy.
+
+\paragraph{Tangency and diagnostics.}
+$w_{*,s} = f_s(1 + \xi_s f_s)$: statistical weight.
+$V_s = \mathrm{span}\{x_s, 1\}$: per-ray tangent space
+(two-field).
+$\langle g, h \rangle_{*,s}$: Fisher--entropy inner product.
+$\mathcal{G}_s$: Gram matrix.
+$G_{\xi,s} = C_s / w_{*,s}$: normalised collision field.
+$D_{s,\geq 2}$: tangency diagnostic (off-manifold residual).
+
+\paragraph{Transfer and evidence.}
+$D_2$: CMB quadrupole power.
+$E_2$: E-mode quadrupole power.
+$T_2 = D_2/\Sigma^2$: calibrated transfer function.
+$\ln \mathcal{B}$: log Bayes factor.
+$n_{\rm live}$: number of live points (nested sampling).
+$\beta$: tilt rapidity.
+$\dot{\tau} = n_e \sigma_T a$: Thomson scattering rate.
+$g(\eta) = \dot{\tau}\,e^{-\tau}$: visibility function.
+$\tau_{\rm reio}$: reionisation optical depth.
+
+
+% ============================================================
+\chapter{AniCLASS Build and Validation Protocol}
+\label{app:aniclass}
+% ============================================================
+
+AniCLASS~\cite{VicentePereiraPitrou2026} is the primary
+external validation oracle for the Bianchi Boltzmann solver.
+We document the build sequence, environment requirements, and
+validation grid used in this work.
+
+
+\paragraph{Build sequence.}
+
+The code is compiled from source at
+\texttt{github.com/CyrilPitrou/aniclass}.  The build
+proceeds as follows:
+(1)~\texttt{git clone} the repository;
+(2)~\texttt{make -j4 class} to compile the C core;
+(3)~\texttt{make libclass.a} to build the static library;
+(4)~\texttt{pip install cython} for the Python interface;
+(5)~\texttt{pip install .} from the \texttt{python/}
+subdirectory.  The resulting shared library
+\texttt{classy.cpython-312-x86\_64-linux-gnu.so} provides
+the Python interface.
+
+
+\paragraph{Environment variables.}
+
+Two environment variables must be set at runtime:
+\texttt{LD\_LIBRARY\_PATH} must include the AniCLASS build
+directory (for the shared C library), and
+\texttt{PYTHONPATH} must include the \texttt{python/}
+subdirectory (for the \texttt{classy} module).  Failure to
+set these variables produces an import error at runtime.
+
+
+\paragraph{Bianchi type configuration.}
+
+For Bianchi~VII$_h$: set \texttt{Omega\_k > 0} (open
+geometry), \texttt{modes = `t, v'} (tensor and vector),
+and provide \texttt{k\_output\_values} for the desired
+wavenumbers.  For Bianchi~IX: set \texttt{Omega\_k < 0}
+(closed geometry), \texttt{modes = `t'} (tensor only---no
+vector modes are supported for type~IX), and note that the
+wavenumber is determined by the curvature and cannot be
+specified independently.  For Bianchi~V: recoverable as
+the $\ell_s \to \infty$ limit of VII$_h$.  Bianchi~I is
+excluded from AniCLASS because all supercurvature
+wavenumbers $\nu_m = 0$ in the linearised formalism.
+
+
+\paragraph{Validation grid.}
+
+The cross-validation uses $15$ grid points: $12$ for
+Bianchi~VII$_h$ (spanning
+$\Omega_K \in \{0.001, 0.01, 0.05\}$ and
+$\ell_s \in \{1, 3, 5, 10\}$) and $3$ for Bianchi~IX
+($\Omega_K \in \{-0.001, -0.01, -0.05\}$).  At each grid
+point, AniCLASS computes the $a_{\ell m}$ spectrum at the
+fiducial Planck~2018 cosmology.  The solver's $D_2$ is
+compared against the AniCLASS $\ell = 2$ power
+(Section~\ref{sec:aniclass-validation}).
+
+
+\paragraph{Limitations.}
+
+AniCLASS operates strictly in the linearised regime
+($\sigma/H \ll 1$), implements tensor and vector modes but
+not scalar modes ($m = 0$), and does not support tilted-fluid
+dynamics.  The code is valid as an oracle for Rungs~1--2 of
+the solver programme (linearised, orthogonal Bianchi) but
+cannot serve as a reference for the nonperturbative or
+tilted-fluid regimes (Section~\ref{sec:differentiation}).
+
+
+% ============================================================
+\chapter{Solver Numerical Register}
+\label{app:ssot}
+% ============================================================
+
+We reproduce the production values of the Phase~1.0 solver
+numerical register.  All constants derive from the SSOT
+module (\texttt{ssot.py} + \texttt{obs\_defaults.json})
+and are validated by \texttt{\_validate\_ssot()} at pipeline
+startup.
+
+\begin{center}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lll}
+\hline\hline
+Quantity & Value & Source \\
+\hline
+$\eta_0$ (conformal time today)
+  & $14{,}174.6$~Mpc & BG-01 \\[2pt]
+$z_{\rm eq}$ (matter--radiation equality)
+  & $3403.1$ & BG-01 \\[2pt]
+$z_*$ (Peebles recombination)
+  & $1074.2$ & TC-01 \\[2pt]
+$r_s$ (sound horizon)
+  & $144.2$~Mpc & BG-01 \\[2pt]
+$\tau(z_*)$ (optical depth at recombination)
+  & $1.040$ & TC-02 \\[2pt]
+$\tau_{\rm reio}$ (reionisation optical depth)
+  & $0.0496$ & MT-03 \\[2pt]
+$\exp(-2\tau_{\rm reio})$
+  & $0.9055$ & MT-03 \\[2pt]
+$D_2$(BI, $\Sigma^2 = 10^{-8}$, full)
+  & $5.50 \times 10^{-5}$ & SP-04 \\[2pt]
+$D_2/\Sigma^2$ (BI, linear regime)
+  & $5499$ & HSR-2 \\[2pt]
+$N_2/F_2$ at $\eta_*$
+  & $28\times$ & SP-03 \\[2pt]
+$\nu$ fraction of $D_2$
+  & $98.4\%$ & HSR-3 \\[2pt]
+ISW fraction of $D_2$
+  & $0.6\%$ & MT-02 \\[2pt]
+$E_2/F_2$ at $\eta_*$
+  & $7.05\%$ & PL-01 \\[2pt]
+Polarisation feedback
+  & $0.006\%$ & HSR-5 \\[2pt]
+Oracle $D_2$ (FLRW)
+  & $931~\mu\mathrm{K}^2$ & ORC-01 v3 \\[2pt]
+AniCLASS $D_2$ (FLRW)
+  & $1018~\mu\mathrm{K}^2$ & VL-01 \\[2pt]
+BianchiSolver speed
+  & $420$~ms/eval & PR-01 \\[2pt]
+\hline
+\multicolumn{3}{l}{\emph{VER06 production values}} \\[2pt]
+$\ln \mathcal{B}$(FLRW$_{\rm tilt}$)
+  & $+26.40$ (exact) & VER06 \\[2pt]
+$\ln \mathcal{B}_{\rm tilt}$ (Route~B)
+  & $+25.29 \pm 0.07$ & VER06 \\[2pt]
+$\beta$
+  & $1.360 \times 10^{-3}$ & VER06 \\[2pt]
+$\mathcal{F}_{\rm Bayes}$
+  & $0.093 \pm 0.025$ & VER06 \\[2pt]
+Route~B: $C_1$
+  & $1.753 \times 10^7$ & VER06 \\[2pt]
+Route~B: $C_2$
+  & $6.825 \times 10^5$ & VER06 \\
+\hline\hline
+\end{tabular}
+\end{center}
+
+
+% ============================================================
+\chapter{Evidence Decomposition Details}
+\label{app:evidence-full}
+% ============================================================
+
+Full channel-by-channel evidence decomposition tables are
+available in the pipeline output JSON
+(\texttt{VER06\_full\_evidence\_table.json}).
+The 14-model Bayesian evidence table is reproduced in
+Chapter~\ref{ch:results}.
+
+
+% ============================================================
+\chapter{Tilted DCP Scenario}
+\label{app:DCP}
+% ============================================================
+
+The tilted dark-coincidence-problem (DCP) scenario is
+analysed in Chapter~\ref{ch:results},
+Section~\ref{sec:prior-sensitivity}.
+
+
+% ============================================================
+\chapter{The Wiltshire--Bianchi Dictionary}
+\label{app:wiltshire}
+% ============================================================
+
+\begin{remark}[Quarantined content]
+\label{rem:wiltshire-quarantine}
+The material in this appendix is classified
+\textsc{Exploratory}.  The structural obstacle described
+below is unresolved, and the dictionary does not reach
+the level of a working correspondence.  We include it to
+document the attempt and to delineate the mathematical
+barrier for future work.
+\end{remark}
+
+The Wiltshire timescape cosmology reinterprets the
+observer's peculiar velocity as a gravitational-energy
+gradient tilt, with the apparent acceleration arising from
+differential lapse between voids and
+walls~\cite{Wiltshire2007,Wiltshire2009}.  A natural
+question is whether the timescape's emerging kinetic
+curvature can be mapped to the Bianchi anisotropic spatial
+curvature ${}^3\!S_{ab}$ that enters the departure
+parameter through $\Okaniso$.
+
+The structural obstacle is a scalar-versus-tensorial
+mismatch.  The timescape's monopole-averaged kinetic
+curvature $\langle \mathcal{R} \rangle_{\mathcal{D}}$ is
+a scalar (one independent component), while the Bianchi
+trace-free spatial curvature ${}^3\!S_{ab}$ is a rank-2
+PSTF tensor (five independent components in three spatial
+dimensions).  The Buchert spatial-averaging
+framework~\cite{BuchertMourierRoy2020} provides the
+kinematic backreaction $\mathcal{Q}_{\mathcal{D}}$ and the
+averaged curvature
+$\langle \mathcal{R} \rangle_{\mathcal{D}}$, but these are
+scalar integrals over a spatial domain, not tensorial
+quantities.
+
+Three partial bridges exist in the literature.
+The tilt sector of the departure identity maps to the
+stress-energy backreaction $\mathcal{T}_{\mathcal{D}}$ in
+the Buchert--Mourier--Roy generalisation, and the shear
+mapping $\Omega_{\mathcal{Q}} \leftrightarrow \Sigstd$ is
+structurally exact for homogeneous models.  Heinesen's
+multipole cosmography framework~\cite{Heinesen2021}
+decomposes observables in a covariant multipole expansion
+without assuming spatial homogeneity, providing the most
+natural mathematical language for a future bridge.  The
+Seifert et~al.\ (2025) Pantheon+ analysis favouring
+timescape over flat $\Lambda$CDM at $\sim\!3\sigma$
+provides observational motivation.
+
+A complete dictionary would require either promoting the
+timescape scalar averages to a tensorial level (perhaps
+through Heinesen's framework) or demoting the Bianchi
+tensorial curvature to a scalar average (losing information
+in the process).  Neither operation has been performed, and
+the mismatch remains an open mathematical problem.
+
+
+% ============================================================
+\chapter{Supplementary Figures}
+\label{app:supp-figures}
+% ============================================================
+
+This appendix collects supplementary figures referenced in
+the main text but not displayed inline.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_equiv_class_evidence}
+\caption{Evidence ranking collapsed by equivalence class.
+  Six classes are ordered by $\ln\mathcal{B}$ relative to
+  FLRW.  The tilt\_null (FLRW$_{\rm tilt}$) and tilt\_flat
+  classes achieve $\ln\mathcal{B} \approx 26.3$, while the
+  orth\_1D class is indistinguishable from FLRW.
+  See Section~\ref{sec:equivalence}.}
+\label{fig:equiv_class_evidence}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_cf4pp_sensitivity}
+\caption{CF4 peculiar-velocity posterior sensitivity.
+  (a)~Tilt rapidity $\beta$ posterior vs.\ prior width.
+  (b)~$\ln\mathcal{B}$ vs.\ the CF4 likelihood
+  normalisation scenario.  The evidence is stable across
+  both scenarios.}
+\label{fig:cf4pp_sensitivity}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_sigma_omega_contour}
+\caption{Joint $\Sigstd$--$\Wstd$ constraint contour.
+  Posterior samples from BI$_{\rm tilt}$ cluster at
+  $\Sigstd \lesssim 10^{-18}$, well below both MES
+  ceilings.}
+\label{fig:sigma_omega_contour}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_sigma_accel_contour}
+\caption{Joint $\Sigstd$--$A^2_{\rm std}$ constraint
+  contour with the VT-07 corrected four-acceleration
+  bound.}
+\label{fig:sigma_accel_contour}
+\end{figure}

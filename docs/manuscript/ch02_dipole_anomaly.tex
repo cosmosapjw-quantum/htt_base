@@ -1,0 +1,403 @@
+% ============================================================
+% ch01_dipole.tex — EXPANDED
+% The Cosmic Dipole Anomaly
+% Part of: Tetrad-Based Departure Decomposition (Jiwon Park)
+% Session S10 draft — 2026-03-30
+% ============================================================
+
+\chapter{The Cosmic Dipole Anomaly}
+\label{ch:dipole}
+
+The cosmic dipole anomaly is the primary observational
+motivation for this work.  Independent datasets spanning
+radio continuum, mid-infrared quasars, and peculiar velocity
+surveys each report a matter dipole in excess of the FLRW
+kinematic prediction, with a combined significance exceeding
+$5\sigma$.  We review the observational evidence in
+Section~\ref{sec:dipole-obs}, the statistical methodology in
+Section~\ref{sec:dipole-stats}, the peculiar velocity context
+in Section~\ref{sec:dipole-pv}, the theoretical status of
+candidate mechanisms in Section~\ref{sec:dipole-theory}, and
+the near-term experimental outlook in
+Section~\ref{sec:dipole-outlook}.  The anomaly parameters
+relevant to the departure framework are summarised in
+Section~\ref{sec:dipole-summary}.
+
+
+% ============================================================
+\section{Number-count dipole excess}
+\label{sec:dipole-obs}
+% ============================================================
+
+The Cosmological Principle predicts that the number-count
+dipole of distant sources is purely kinematic: it arises
+from the observer's motion relative to the matter rest
+frame, with amplitude $D = [2 + x(1 + \alpha)]\,v/c$,
+where $x$ is the number-count slope and $\alpha$ the
+spectral index~\cite{EllisBalwin1984}.  For the CMB dipole
+velocity $v = 369.82 \pm 0.11$~km/s, the predicted
+amplitude is $D_{\rm CMB} \simeq 0.0072$ for mid-infrared
+quasars and $D_{\rm CMB} \simeq 0.0043$ for radio
+continuum sources.
+
+Three generations of measurements have established that
+the observed dipole exceeds this prediction by a factor
+of two to four.
+
+
+\subsection{The CatWISE quasar dipole}
+\label{sec:catwise}
+
+Secrest, von Hausegger, Rameez, Mohayaee \&
+Sarkar~\cite{Secrest2021} measured the number-count dipole
+of $1.36$ million CatWISE2020 quasars at a mean redshift
+$\langle z \rangle = 1.2$.  The dipole amplitude is twice
+the kinematic expectation, directed $\sim\!28^\circ$ from
+the CMB dipole, at a significance of
+$4.9\sigma$~\cite{Secrest2021}.  A joint analysis combining
+NVSS radio galaxies and CatWISE quasars raised the
+rejection to $> 5\sigma$~\cite{Secrest2022}.
+
+The result has been scrutinised for systematics.
+Guandalin, Piat, Clarkson \&
+Maartens~\cite{Guandalin2023} showed that mask-induced
+mode coupling from the $52.6\%$ sky cut can transfer power
+from the octupole into the dipole at a level comparable to
+the reported excess.  Bashir, Tiwari \&
+Zhao~\cite{Bashir2025} performed a comprehensive
+reassessment incorporating shot noise, clustering, mask
+mode coupling, and cosmic variance via FLASK simulations,
+finding a revised significance of
+$3.3$--$3.6\sigma$---still anomalous, but more conservative
+than the original $4.9\sigma$.  Von Hausegger
+et~al.~\cite{vonHausegger2026} reanalysed the CatWISE
+multipole structure with a negative binomial likelihood and
+found no evidence for octupole contamination, reaffirming the
+anomalous dipole.
+
+
+\subsection{The radio continuum dipole at $5.4\sigma$}
+\label{sec:radio-dipole}
+
+B{\"o}hme, Schwarz, Tiwari
+et~al.~\cite{Boehme2025} combined three independent radio
+surveys---NVSS ($1.4$~GHz), RACS-low ($887.5$~MHz), and
+LoTSS-DR2 ($144$~MHz)---and reported a source-count dipole
+exceeding the kinematic expectation by a factor of
+$3.67 \pm 0.49$, a $5.4\sigma$ discrepancy.  The dipole
+direction is within $\sim\!1\sigma$ of the CMB dipole at
+$(l, b) \approx (265^\circ, 48^\circ)$.
+
+The methodology introduces a Bayesian estimator based on
+the negative binomial distribution, which accounts for
+overdispersion caused by multi-component radio sources
+(lobes, jets).  Standard Poisson models produce reduced
+$\chi^2$ values as high as $23.8$ for TGSS; the negative
+binomial model restores $\chi^2 \approx 1$ across all
+surveys.  The overdispersion parameter corresponds to
+$\sim\!1.1$--$1.3$ mean components per source.
+
+This result is the first $> 5\sigma$ detection using radio
+data alone, independent of the mid-infrared CatWISE sample.
+The multi-frequency consistency (from $144$~MHz to
+$1.4$~GHz) rules out frequency-dependent systematics as the
+source of the excess.
+
+
+\subsection{Cross-wavelength consistency}
+\label{sec:cross-wavelength}
+
+Wagenveld, von Hausegger, Kl{\"o}ckner \&
+Schwarz~\cite{Wagenveld2025} performed the first joint
+Bayesian decomposition of the observed dipole into kinematic
+and non-kinematic components, exploiting the different
+kinematic scaling of NVSS, RACS-low, and CatWISE.  The key
+result is a significant residual non-kinematic dipole with
+amplitude $D_{\rm resid} = (0.81 \pm 0.14) \times 10^{-2}$,
+offset from the CMB dipole direction by
+$39^\circ \pm 8^\circ$.  A common direction between the
+kinematic and residual components is disfavoured by model
+selection.
+
+Oayda, Land-Strykowski, Lewis \&
+Murphy~\cite{OaydaLewis2025} quantified the inter-dataset
+tension using suspiciousness statistics: Planck is in
+$> 5\sigma$ tension with CatWISE, and NVSS and CatWISE are
+concordant at only $0.4\sigma$ despite completely independent
+systematics.  The concordance between radio and infrared
+strongly suggests a common astrophysical or cosmological
+signal.
+
+The Secrest et~al.\ {\it Reviews of Modern Physics}
+Colloquium~\cite{SecrestRMP2025} synthesises these results,
+reporting a combined significance of $\sim\!6.4\sigma$ via
+sample-size-weighted $Z$-scores.  The Colloquium concludes
+that the cosmic dipole anomaly ``poses a serious challenge to
+FLRW cosmology.''
+
+
+% ============================================================
+\section{Statistical methodology}
+\label{sec:dipole-stats}
+% ============================================================
+
+The dipole measurements reviewed above employ three
+distinct estimators, each with different sensitivity to
+systematics.
+
+The \emph{Ellis--Baldwin estimator} computes the dipole
+from the variation of source counts across the sky as a
+function of flux threshold, using the number-count slope $x$
+and spectral index $\alpha$ to predict the kinematic
+amplitude.  The estimator is sensitive to the assumed
+power-law form of the source counts and to the accuracy of
+the spectral index measurement.
+
+The \emph{negative binomial Bayesian estimator} of
+B{\"o}hme et~al.~\cite{Boehme2025} replaces the Poisson
+likelihood with a negative binomial, accounting for
+overdispersion from multi-component sources.  The effect on
+the amplitude uncertainty is substantial: Poisson and
+negative binomial errors can differ by up to $60\%$.
+
+The \emph{simulation-based inference} approach of Oayda \&
+Lewis~\cite{OaydaLewis2026} uses forward-modelled mock
+catalogues with survey-specific selection functions to
+marginalise over photometric systematics, including the
+ecliptic-latitude-dependent Eddington bias induced by the
+WISE scanning law.  The CatWISE dipole excess survives this
+treatment, though with a $\sim\!3\sigma$ direction
+misalignment relative to the CMB dipole that requires
+further investigation.
+
+The spread in reported significances---from $3.3\sigma$
+(Bashir et~al.) to $6.4\sigma$ (Secrest
+et~al.\ combined)---reflects the dependence on the
+estimator and the treatment of systematics, not a
+fundamental disagreement about the existence of the excess.
+All analyses agree that the observed dipole exceeds the
+kinematic prediction; the debate concerns the precise
+amplitude and significance after accounting for
+mode coupling, overdispersion, and photometric errors.
+
+
+% ============================================================
+\section{Peculiar velocity surveys and bulk flow}
+\label{sec:dipole-pv}
+% ============================================================
+
+The number-count dipole constrains the matter rest frame
+through source statistics.  Peculiar velocity surveys
+constrain the same rest frame through direct distance
+measurements, providing an independent cross-check.
+
+
+\subsection{CosmicFlows-4 and CF4++}
+\label{sec:cf4}
+
+Watkins et~al.~\cite{Watkins2023} measured a bulk flow of
+$419 \pm 36$~km/s at $200\,h^{-1}$~Mpc from the
+CosmicFlows-4 catalogue ($55{,}877$ galaxies), with a
+$\Lambda$CDM probability below $0.003\%$.  Courtois
+et~al.~\cite{Courtois2025} extended the sample to CF4++
+($65{,}518$ galaxies, incorporating WALLABY, FAST/FASHI,
+and DESI-PV data) and found $315 \pm 40$~km/s at
+$150\,h^{-1}$~Mpc ($1.7\sigma$ tension) and
+$351 \pm 109$~km/s at $200\,h^{-1}$~Mpc ($2.5\sigma$
+tension).  The dynamical homogeneity scale---the depth at
+which the bulk flow converges to zero---is not reached
+within the $200$--$300\,h^{-1}$~Mpc interval.
+
+
+\subsection{DESI DR1 peculiar velocities}
+\label{sec:desi-pv}
+
+The DESI DR1 peculiar velocity programme~\cite{DESIDR1PV2025}
+delivered $76{,}616$ measurements---the largest peculiar
+velocity sample ever assembled---using both Fundamental Plane
+($\sim\!66{,}000$ early-type galaxies) and Tully--Fisher
+($\sim\!10{,}000$ spirals) distance indicators.  Three
+independent analysis methods yield a consensus growth rate
+$f\sigma_8(z_{\rm eff} = 0.07) = 0.450 \pm 0.055$, in
+remarkable agreement with the Planck+$\Lambda$CDM prediction
+of $0.449 \pm 0.008$.  The growth index
+$\gamma = 0.58 \pm 0.11$ is consistent with the GR prediction
+$\gamma_{\rm GR} = 0.55$.
+
+This result creates a tension within the anomaly picture that
+we must address honestly.  The DESI growth-rate measurement
+finds no departure from $\Lambda$CDM, yet the CF4++ bulk flow
+remains anomalously large at $> 150\,h^{-1}$~Mpc.  The
+decoupling between the growth rate (which measures the rate of
+structure formation through velocity-density correlations) and
+the bulk flow amplitude (which measures the large-scale
+coherent motion) suggests that the anomaly is not driven by
+anomalous gravitational collapse but by a large-scale
+kinematic mode that does not affect the local growth rate.
+A cosmological tilt in the Bianchi framework is precisely such
+a mode: it contributes a coherent bulk velocity without
+modifying the local gravitational dynamics.
+
+
+% ============================================================
+\section{Theoretical status of candidate mechanisms}
+\label{sec:dipole-theory}
+% ============================================================
+
+The observational evidence establishes that the matter
+dipole exceeds the FLRW kinematic prediction.  We now
+assess which theoretical mechanisms can produce this excess
+within the constraints imposed by the CMB, nucleosynthesis,
+and gravitational-wave observations.  A detailed discussion
+of each mechanism is deferred to
+Chapter~\ref{ch:discussion}
+(Section~\ref{sec:disc-mechanisms}); here we state the
+conclusions.
+
+
+\paragraph{Mechanisms ruled out.}
+
+Three developments since 2025 have eliminated previously
+viable candidates.
+Clarkson \& Maartens~\cite{ClarksonMaartens2026}
+demonstrated that the enhanced peculiar-velocity growth
+claimed by Tsagas and collaborators ($v \propto a^{3/2}$)
+arises from an inconsistent treatment of constraint
+equations in the 1+3 covariant formalism; when constraints
+are imposed consistently, the standard growth law
+$v \propto a^{1/2}$ is recovered.
+Mart{\'i}n, Skordis et~al.~\cite{MartinSkordis2025}
+systematically evaluated four tilt sources in Bianchi~V and
+found that spatial curvature, heat flow, and electromagnetic
+fields each fall short of the observed dipole amplitude by
+five to thirteen orders of magnitude.
+
+
+\paragraph{Surviving mechanisms.}
+
+Two mechanisms remain viable within the tilted-Bianchi
+framework.  The khronon field---a preferred-frame scalar
+field that is the hypersurface-orthogonal limit of
+Einstein-aether theory---achieves
+$\beta \sim 2$--$4 \times 10^{-3}$ within the
+post-GW170817 parameter
+space~\cite{MartinSkordis2025}.
+The Krishnan--Mondol--Sheikh-Jabbari tilt
+instability~\cite{Krishnan2023}, which operates at the exact
+(non-perturbative) Bianchi~V level, shows that the cosmic
+no-hair theorem forces metric shear $\sigma \to 0$ but does
+not force the fluid tilt $\beta \to 0$---tilt can persist
+or grow during $\Lambda$-dominated expansion.
+
+Outside the Bianchi framework, superhorizon axion-induced
+isocurvature perturbations offer a competing
+explanation that generates an intrinsic negative CMB dipole
+partially cancelling the kinematic component, with a testable
+quadrupole prediction [CITATION NEEDED: Chen, Han \& Qiu
+2025].
+
+
+\paragraph{Separation principle.}
+
+The departure framework is mechanism-agnostic by construction:
+the master identity (Eq.~\ref{eq:master-identity}) is an
+algebraic relation among geometry-frame kinematic quantities
+and does not assume a specific tilt source.  Detection and
+mechanism attribution are separable questions---the pipeline
+establishes the former; the theoretical analysis constrains
+the latter (Section~\ref{sec:disc-separation}).
+
+
+% ============================================================
+\section{Near-term experimental outlook}
+\label{sec:dipole-outlook}
+% ============================================================
+
+Three experiments will transform the anomaly picture within
+the next two to five years.
+
+\emph{Euclid DR1} (scheduled October~2026) will provide
+$\sim\!2100~\mathrm{deg}^2$ of wide-survey photometric data,
+enabling the first independent large-area Ellis--Baldwin
+dipole test at optical/near-infrared wavelengths.  The Euclid
+galaxy sample ($\langle z \rangle \sim 0.9$) is
+systematically independent of both CatWISE (mid-infrared) and
+NVSS/RACS (radio), making it the most powerful single-dataset
+test of the anomaly in the near term.
+
+\emph{Simons Observatory} first-light data
+($\sim\!2027$) will deliver CMB polarisation maps with noise
+levels $\sim\!3\times$ below Planck, enabling BiPoSH analyses
+and hemispherical asymmetry tests in polarisation at
+unprecedented sensitivity.
+
+\emph{SKA Phase~1} ($\sim\!2028$--$2030$) will survey the
+radio continuum dipole with a factor-of-ten improvement in
+source density over existing surveys, pushing the radio-only
+significance beyond $10\sigma$ if the anomaly is real.  The
+EMU precursor survey ($\sim\!20$ million expected
+extragalactic sources) will provide an interim test.
+
+The eROSITA X-ray catalogue ($\sim\!930{,}000$ sources from
+eRASS1) could fill a gap in the multi-wavelength picture, but
+no dedicated X-ray cosmic dipole measurement has been
+published as of March~2026.
+
+
+% ============================================================
+\section{Anomaly parameters for the departure framework}
+\label{sec:dipole-summary}
+% ============================================================
+
+We summarise the observational inputs that enter the departure
+framework of Chapter~\ref{ch:framework}.
+
+The tilt rapidity $\beta_{\rm CF4} = 1.334 \times 10^{-3}$
+is derived from the Watkins et~al.~\cite{Watkins2023}
+CosmicFlows-4 bulk flow of $400 \pm 30$~km/s at
+$200\,h^{-1}$~Mpc, converted to a rapidity via
+$\beta = v/c$.  This is the \emph{input} value from the
+CF4 catalogue; the VER06 posterior median after
+multi-channel inference is
+$\beta = 1.360 \times 10^{-3}$
+(Chapter~\ref{ch:results}), differing by $2\%$ due to
+the pull of the CMB and number-count channels.
+The dipole direction is consistent across
+radio, infrared, and peculiar velocity surveys within the
+directional coherence tolerance, at
+$(l, b) \approx (264^\circ, 48^\circ)$.
+
+The number-count dipole significance ranges from
+$\sim\!3.3\sigma$ (conservative, incorporating mode-coupling
+and photometric uncertainty;
+Bashir et~al.~\cite{Bashir2025}) to $\sim\!6.4\sigma$
+(combined $Z$-scores across all surveys;
+Secrest et~al.~\cite{SecrestRMP2025}).  The departure
+framework uses the Bayesian filling fraction
+$\mathcal{F}_{\rm Bayes} = 0.093 \pm 0.025$
+(Chapter~\ref{ch:results}), which integrates over the full
+$\beta$ posterior rather than relying on a single-point
+significance estimate.
+
+The non-kinematic residual dipole identified by Wagenveld
+et~al.~\cite{Wagenveld2025}---offset by $39^\circ \pm 8^\circ$
+from the CMB dipole---is not incorporated into the VER06
+pipeline, which assumes a common dipole direction for all
+channels.  Incorporating the directional offset is a target
+for the direction-dependent programme
+(Section~\ref{sec:phase30}).
+
+\begin{remark}[EGS theorem and isotropy]
+\label{rem:EGS}
+The Ehlers--Geren--Sachs theorem establishes that if all
+fundamental observers in an expanding universe measure an
+exactly isotropic CMB, the spacetime is exactly FLRW.
+Almost-EGS extensions allow for small anisotropies
+consistent with observations.  The dipole anomaly does
+not violate the EGS theorem directly---the CMB is
+isotropic to $10^{-5}$ in the CMB rest frame---but it
+implies that the matter rest frame is displaced from the
+CMB rest frame by more than the $\Lambda$CDM kinematic
+prediction.  The departure framework quantifies this
+displacement through the tilt parameter $\Otilt$.
+\end{remark}
