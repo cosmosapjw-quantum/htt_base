@@ -58,8 +58,10 @@ threshold, no §A49.3/§A49.5 update procedure) into a full
 promotion workflow: §A50.2 gate threshold, §A50.3 memory bullet
 body, §A50.4 downstream dossier edits, §A50.5 de-promotion
 protocol. The appendix is a **promotion spec**, not the
-promotion itself — the memory bullet lands in a separate W<N>D1
-commit once §A50.2's gate fires.
+promotion itself — the memory bullet lands in the paired
+promotion commit at W<N>D7 (or the immediate W<N>D(7+ε)
+follow-up if the audit author chooses to separate the audit
+body from the promotion edit) once §A50.2 or §A50.2a fires.
 
 A50 is **strictly procedural**: it adds no code, no test, and no
 audit-side discipline beyond the already-documented A49.5 notice.
@@ -155,25 +157,26 @@ time for phase W<N>:
    five-in-a-row accumulation). Baseline begins at W21 (first
    dogfooding per W21 audit §6 check #3). Earliest count: W21 +
    W22 + W23 + W24 + W25 = five.
-3. **Three consecutive §A50.2 gate evaluations returned (1)(2)(3)
-   PASS + (4) FAIL**, i.e., the strict gate has been attempted
-   and explicitly deferred three times under the W23D1 sliding-
-   window reading, with the defer reason always being condition
-   (4) (absent-trigger), never condition (1) drift or (2) skipped
-   dogfooding or (3) observed failure. Baseline begins at W23D1
-   (first strict-gate formal evaluation per W23 audit §6 check
-   #4; see W23D1 commit `4a1f7ed` body for the evaluation record).
+3. **Three consecutive audit-evaluated §A50.2 strict-gate
+   evaluations returned (1)(2)(3) PASS + (4) FAIL**, i.e., the
+   strict gate has been attempted and explicitly deferred three
+   times under the W23D1 sliding-window reading, with the defer
+   reason always being condition (4) (absent-trigger), never
+   condition (1) drift or (2) skipped dogfooding or (3) observed
+   failure. The accumulator counts the **phase-audit** row for
+   each phase (W23 audit = first defer, W24 audit = second, W25
+   audit = third), even if an earlier commit body in that same
+   phase also recorded the provisional outcome.
 4. Zero §A49.6 failure mode observations across the **five-phase
    window** used for condition 2, not just the three-phase span
    from §A50.2 (1).
 
 Earliest §A50.2a fire date given the 2026-04-20 W23 baseline:
 **W25 audit**. Baseline: W21 dogfooding = 1; W22 = 2; W23 = 3;
-W24 (expected) = 4; W25 (expected) = 5 — satisfies condition 2.
-W23D1 strict-gate defer = 1; W24D1 (expected, if condition (4)
-stays FAIL) = 2; W25D1 (expected, if condition (4) still FAIL) =
-3 — satisfies condition 3. W25 audit-commit time is the earliest
-instant when all four §A50.2a conditions hold.
+W24 = 4; W25 = 5 — satisfies condition 2. W23 audit strict-gate
+defer = 1; W24 audit = 2; W25 audit = 3 — satisfies condition 3.
+W25 audit-commit time is the earliest instant when all four
+§A50.2a conditions hold.
 
 ### Relationship to §A50.2 (strict gate)
 
@@ -200,7 +203,8 @@ When §A50.2a fires, the §A50.3 memory bullet is **identical in
 rule text** but gains a trailing basis clause:
 
 > `(Promotion basis: patient — five consecutive A49.3 dogfoodings
-> W21–W25, three consecutive strict-gate defers W23–W25 with
+> W21–W25, three consecutive audit-evaluated strict-gate defers
+> W23–W25 with
 > condition (4) absent-trigger; zero real addendum events in the
 > promotion window.)`
 
@@ -220,12 +224,12 @@ distinction.
   Five phases is ~5 weeks of flawless discipline under the
   weekly-audit cadence; below 5 the evidence is thin, above 5
   the threshold becomes gratuitously conservative.
-* **Three consecutive strict-gate defers** demonstrates the
-  strict gate was honestly attempted (not bypassed) and
-  explicitly fell short three times on condition (4). Without
-  this sub-condition, §A50.2a could be read as a way to
-  circumvent §A50.2 from the start; requiring three defers
-  preserves §A50.2's primary authority.
+* **Three consecutive audit-evaluated strict-gate defers**
+  demonstrates the strict gate was honestly attempted (not
+  bypassed) and explicitly fell short three times on condition
+  (4). Without this sub-condition, §A50.2a could be read as a
+  way to circumvent §A50.2 from the start; requiring three
+  audit-verified defers preserves §A50.2's primary authority.
 * **Zero §A49.6 failures across the five-phase window** (not
   just three) is the only condition §A50.2a strictly
   *strengthens* beyond §A50.2. Rationale: patient promotion
@@ -233,7 +237,7 @@ distinction.
   the evidence window must be broader in the one dimension
   that *can* be observed (absence of failure modes).
 
-### Step-by-step execution at W<N>D1 (when §A50.2a fires)
+### Step-by-step execution at W<N>D7 (when §A50.2a fires)
 
 1. Verify conditions 1–4 of §A50.2a at audit-write time;
    record each PASS explicitly in audit §6 check #4 or a new
@@ -243,11 +247,11 @@ distinction.
 3. Append the patient-promotion basis clause to the §A50.3
    memory bullet body verbatim from the template above.
 4. Strike through **both** §A49.9 trigger #4 (per §A50.4 step
-   3) **and** add a note in the strikethrough "(FIRED W<N>D1
+   3) **and** add a note in the strikethrough "(FIRED W<N>D7
    via §A50.2a patient path — strict gate §A50.2 still
    available for post-promotion re-audit if false positive
    observed per §A50.5)".
-5. Record the W<N>D1 commit body with the per-phase evaluation
+5. Record the W<N>D7 commit body with the per-phase evaluation
    history of both §A50.2 and §A50.2a conditions; this becomes
    the durable record for later §A50.5 reviews.
 
@@ -258,8 +262,8 @@ positive).
 
 ## A50.3 Memory bullet body
 
-When §A50.2's gate fires at W<N>D1, a new bullet is appended to
-memory `feedback_git_workflow.md` under the "How to apply:"
+When §A50.2 or §A50.2a fires at W<N>D7, a new bullet is appended
+to memory `feedback_git_workflow.md` under the "How to apply:"
 list (immediately after the W14 F1 / W15 D1 scoped-pathspec
 bullet — sibling discipline, same lineage). Paste-ready template:
 
@@ -279,34 +283,36 @@ bullet — sibling discipline, same lineage). Paste-ready template:
   landing on `main` between audit-draft and audit-commit
   invalidates the §6 narrative at the moment of committing; the
   addendum is the standard reconciliation. (A49.3 / A49.5
-  dogfooding promoted to durable rule W<N>D1, YYYY-MM-DD.)
+  dogfooding promoted to durable rule W<N>D7, YYYY-MM-DD.)
 ```
 
-Body-field rules the promoting author fills at W<N>D1:
+Body-field rules the promoting author fills at W<N>D7:
 
 * `<T_prev>` is the concrete sha of the previous phase's audit
   commit (named literally in the bullet for reviewer clarity).
 * Precedent list in the "Rationale" clause is the cumulative
   list from §A49.5 at W<N> (three to four entries minimum).
-* `W<N>D1, YYYY-MM-DD` stamp follows the existing memory
-  convention (see the W14 F1 / W15 D1 sibling bullet).
+* `W<N>D7, YYYY-MM-DD` stamp follows the existing memory
+  convention; if the author splits the promotion into an
+  immediate W<N>D(7+ε) follow-up commit, the stamp still uses
+  the phase's audit day rather than inventing a new pseudo-day.
 
 The body is stable under A46.2 v1; an A46.2 lane-ownership-prefix
 change (A49.9 trigger #2) does not invalidate the memory bullet
 (it invalidates §A49.3's reference-fidelity check, not the
 re-snapshot discipline itself).
 
-## A50.4 Downstream dossier edits (paired W<N>D1 commit)
+## A50.4 Downstream dossier edits (paired promotion commit)
 
-When §A50.2's gate fires, the single W<N>D1 commit that lands
-the memory bullet (§A50.3) **also** lands three dossier edits
-in the same scoped pathspec per W15D1:
+When §A50.2 or §A50.2a fires, the single W<N>D7 promotion commit
+that lands the memory bullet (§A50.3) **also** lands three
+dossier edits in the same scoped pathspec per W15D1:
 
 1. **A49.3 citation rewrite** — replace §A49.3's imperative
    re-snapshot paragraph (currently restates the rule inline)
    with a one-sentence pointer: "Per memory
    `feedback_git_workflow.md` bullet on audit-commit-time
-   re-snapshot (promoted W<N>D1), the check below is a durable
+   re-snapshot (promoted W<N>D7), the check below is a durable
    rule; the pseudocode is preserved as reference." The pseudocode
    itself is **kept** (removing it would break §A49.9 trigger #4's
    self-reference — A49.3 still canonicalises the implementation).
@@ -318,7 +324,7 @@ in the same scoped pathspec per W15D1:
 3. **A49.9 trigger #4 retirement** — cross out trigger #4
    ("Memory `feedback_git_workflow.md` adds an 'audit-commit-time
    status-gate' entry…") with `~~strikethrough~~` and append
-   "(FIRED W<N>D1 — memory bullet landed; §A49.3 / §A49.5
+   "(FIRED W<N>D7 — memory bullet landed; §A49.3 / §A49.5
    citations updated per A50.4; A50 §A50.5 de-promotion protocol
    is now the only avenue back.)". Keep the strikethrough text so
    the trigger history is auditable; do not delete.
@@ -328,7 +334,7 @@ a new first-order rule bullet mirroring §A50.3's memory bullet
 (NEXT_SESSION §0 is the copy-pasted authoritative rule list for
 fresh-session bootstrapping; the memory bullet and the §0 bullet
 are always kept in sync by convention). This is **not** a
-separate dossier file — the §0 edit lands in the same W<N>D1
+separate dossier file — the §0 edit lands in the same W<N>D7
 commit.
 
 ## A50.5 De-promotion protocol
@@ -428,8 +434,8 @@ notice discipline into durable memory-rule status. The earliest
 realistic fire date under **§A50.2 (strict)** is W24 audit (per
 the W23D1 sliding-window clarification); under **§A50.2a
 (patient)** is W25 audit (five consecutive A49.3 dogfoodings +
-three consecutive strict-gate defers = W21/W22/W23/W24/W25 +
-W23D1/W24D1/W25D1).
+three consecutive audit-evaluated strict-gate defers =
+W21/W22/W23/W24/W25 + W23-audit/W24-audit/W25-audit).
 
 ## A50.8 Relation to other appendices
 
