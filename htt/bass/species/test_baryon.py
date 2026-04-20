@@ -20,6 +20,7 @@ z≈200). We therefore anchor T-24 at z=800 instead, where T_m/T_γ is
 from __future__ import annotations
 
 from pathlib import Path
+import warnings
 
 import numpy as np
 import pytest
@@ -195,6 +196,40 @@ def test_nonpositive_Omega_b_raises(bg, recomb):
         BaryonBackground(bg, 0.0, recomb)
     with pytest.raises(ValueError):
         BaryonBackground(bg, -0.01, recomb)
+
+
+def test_recombination_warning_policy_ignore_silences_support_gap(bg, recomb):
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        BaryonBackground(
+            bg,
+            default_constants().Omega_b_0,
+            recomb,
+            recombination_warning_policy="ignore",
+        )
+    assert not caught
+
+
+def test_recombination_warning_policy_always_emits_support_gap(bg, recomb):
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        BaryonBackground(
+            bg,
+            default_constants().Omega_b_0,
+            recomb,
+            recombination_warning_policy="always",
+        )
+    assert any("recombination table z-range" in str(item.message) for item in caught)
+
+
+def test_invalid_recombination_warning_policy_raises(bg, recomb):
+    with pytest.raises(ValueError, match="recombination_warning_policy"):
+        BaryonBackground(
+            bg,
+            default_constants().Omega_b_0,
+            recomb,
+            recombination_warning_policy="bad",  # type: ignore[arg-type]
+        )
 
 
 def test_dot_rho_baryon_continuity(bg, baryon):

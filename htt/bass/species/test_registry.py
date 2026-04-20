@@ -5,6 +5,8 @@ Also covers the ``_a_of_eta`` consistency across all five species
 """
 from __future__ import annotations
 
+import warnings
+
 import numpy as np
 import pytest
 
@@ -205,6 +207,15 @@ def test_constants_property_returns_shared_bundle(registry):
     c2 = default_constants()
     assert c1.Omega_gamma_0 == c2.Omega_gamma_0
     assert c1.T_gamma_0_K == c2.T_gamma_0_K
+
+
+def test_factory_can_silence_recombination_gap_warning():
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        SpeciesBackgroundRegistry.from_planck2018(
+            recombination_warning_policy="ignore",
+        )
+    assert not caught
 
 
 def test_friedmann_residual_with_explicit_H(registry):

@@ -114,6 +114,16 @@ from bass.background.tetrad_state import axisymmetric_sigma_tensor  # noqa: E402
 from bass.hierarchy.ic import zero_IC  # noqa: E402
 from bass.hierarchy.nabla_dispatch import HarmonicMode  # noqa: E402
 from bass.integration import test_full_bianchi_coverage as fb6  # noqa: E402
+from bass.observer import (  # noqa: E402
+    GlobalTiltState,
+    ObserverBoost,
+    ObserverHypothesis,
+    TiltHypothesis,
+    aberration_kernel,
+    apply_observer_boost,
+    coverage_report,
+    observed_alm_mixing,
+)
 from bass.perturbation.harmonic_modes import (  # noqa: E402
     make_harmonic_mode_rhs_context,
 )
@@ -128,6 +138,7 @@ from bass.perturbation.regular_adiabatic_ic import (  # noqa: E402
 from bass.perturbation.tilted_seed_rule import (  # noqa: E402
     apply_tilted_boost_seed_rule,
 )
+from bass.species.tilted import velocity_to_rapidity  # noqa: E402
 from htt.htt.core.plot_style import COLS, apply_style  # noqa: E402
 
 
@@ -3762,6 +3773,343 @@ def plot_11_13_fb14_anisotropic_3curvature_per_type() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
+# Topic 14 — Observer frame
+# ════════════════════════════════════════════════════════════════════
+
+
+TOPIC_14 = "14_observer_frame"
+
+
+def _observer_gallery_axis() -> np.ndarray:
+    lon = np.radians(264.0)
+    lat = np.radians(48.0)
+    return np.array(
+        [
+            np.cos(lat) * np.cos(lon),
+            np.cos(lat) * np.sin(lon),
+            np.sin(lat),
+        ],
+        dtype=float,
+    )
+
+
+def _observer_gallery_boost(beta: float = 1.23e-3) -> ObserverBoost:
+    axis = tuple(float(value) for value in _observer_gallery_axis())
+    return ObserverBoost(
+        rapidity=float(velocity_to_rapidity(beta)),
+        v_hat=axis,
+    )
+
+
+def _observer_gallery_tilt(beta: float = 1.23e-3) -> GlobalTiltState:
+    axis = tuple(float(value) for value in _observer_gallery_axis())
+    return GlobalTiltState(
+        rapidity=float(velocity_to_rapidity(beta)),
+        v_hat=axis,
+    )
+
+
+def _observer_gallery_base_spectra(L_max: int = 30) -> dict[str, np.ndarray]:
+    ell = np.arange(L_max + 1, dtype=float)
+    mask = ell >= 2.0
+    tt = np.zeros(L_max + 1, dtype=float)
+    ee = np.zeros(L_max + 1, dtype=float)
+    te = np.zeros(L_max + 1, dtype=float)
+    bb = np.zeros(L_max + 1, dtype=float)
+    tt[mask] = 5600.0 * np.exp(-ell[mask] / 26.0) / (ell[mask] * (ell[mask] + 1.0))
+    ee[mask] = 440.0 * np.exp(-ell[mask] / 24.0) / (ell[mask] * (ell[mask] + 1.0))
+    te[mask] = 0.55 * np.sqrt(tt[mask] * ee[mask])
+    bb[mask] = 38.0 * np.exp(-ell[mask] / 18.0) / (ell[mask] * (ell[mask] + 1.0))
+    return {
+        "TT": tt,
+        "EE": ee,
+        "TE": te,
+        "BB": bb,
+    }
+
+
+def _observer_gallery_alm(L_max: int = 18) -> np.ndarray:
+    alm = np.zeros((L_max + 1, 3), dtype=float)
+    alm[2, 0] = 1.0
+    alm[3, 0] = 0.45
+    alm[4, 1] = -0.80
+    alm[5, 2] = 0.55
+    alm[7, 1] = 0.35
+    alm[8, 0] = -0.25
+    alm[10, 2] = 0.22
+    alm[12, 0] = 0.18
+    alm[14, 1] = -0.12
+    alm[16, 2] = 0.08
+    return alm
+
+
+def _observer_gallery_models() -> tuple[ObserverHypothesis, TiltHypothesis]:
+    base = _observer_gallery_base_spectra(L_max=12)
+    dipole_axis = tuple(float(value) for value in _observer_gallery_axis())
+    orth_axis = (1.0, 0.0, 0.0)
+    obs = ObserverHypothesis(
+        base_spectra=base,
+        candidates=(
+            _observer_gallery_boost(1.23e-3),
+            ObserverBoost(rapidity=0.0, v_hat=dipole_axis),
+            ObserverBoost(
+                rapidity=float(velocity_to_rapidity(8.0e-4)),
+                v_hat=orth_axis,
+            ),
+        ),
+        lambda_sigma=0.02,
+    )
+    tilt = TiltHypothesis(
+        base_spectra=base,
+        candidates=(
+            _observer_gallery_tilt(1.23e-3),
+            GlobalTiltState(rapidity=0.0, v_hat=dipole_axis),
+            GlobalTiltState(
+                rapidity=float(velocity_to_rapidity(8.0e-4)),
+                v_hat=orth_axis,
+            ),
+        ),
+        lambda_sigma=0.02,
+    )
+    return obs, tilt
+
+
+def plot_14_01_kernel_heatmap_1p23e_3() -> None:
+    """FB-8.2 aligned aberration kernel at the Sun-dipole speed."""
+    from matplotlib.colors import TwoSlopeNorm
+
+    L_max = 30
+    boost = _observer_gallery_boost(1.23e-3)
+    kernel = aberration_kernel(L_max, boost)
+    delta = 1.0e3 * (kernel - np.eye(L_max + 1, dtype=float))
+    scale = max(float(np.max(np.abs(delta))), 1.0e-8)
+
+    fig, axes = plt.subplots(1, 2, figsize=(12.0, 4.8))
+
+    im0 = axes[0].imshow(
+        kernel,
+        origin="lower",
+        cmap="viridis",
+        aspect="auto",
+        extent=[0, L_max, 0, L_max],
+    )
+    _prepare_axes(
+        axes[0],
+        r"$\ell'$",
+        r"$\ell$",
+        title=r"$K_{\ell\ell'}(\beta_{\rm obs}=1.23\times10^{-3})$",
+    )
+    cbar0 = fig.colorbar(im0, ax=axes[0])
+    cbar0.set_label(r"$K_{\ell\ell'}$")
+
+    im1 = axes[1].imshow(
+        delta,
+        origin="lower",
+        cmap="coolwarm",
+        aspect="auto",
+        extent=[0, L_max, 0, L_max],
+        norm=TwoSlopeNorm(vcenter=0.0, vmin=-scale, vmax=scale),
+    )
+    _prepare_axes(
+        axes[1],
+        r"$\ell'$",
+        r"$\ell$",
+        title=r"$10^3\,[K_{\ell\ell'} - \delta_{\ell\ell'}]$",
+    )
+    cbar1 = fig.colorbar(im1, ax=axes[1])
+    cbar1.set_label(r"$10^3\,\Delta K_{\ell\ell'}$")
+
+    fig.suptitle(
+        r"FB-8.2 observer-frame aberration kernel: diagonal identity + linear nearest-$\ell$ mixing",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "01_kernel_heatmap_1p23e-3", TOPIC_14)
+
+
+def plot_14_02_cl_ratio_before_after() -> None:
+    """FB-8.3 observer-frame diagonal-spectrum response."""
+    L_max = 30
+    ell = np.arange(L_max + 1, dtype=float)
+    spectra_before = _observer_gallery_base_spectra(L_max=L_max)
+    spectra_after = apply_observer_boost(
+        spectra_before,
+        _observer_gallery_boost(1.23e-3),
+        L_max,
+    )
+
+    fig, axes = plt.subplots(2, 1, figsize=(9.0, 7.0), sharex=True)
+    styles = {
+        "TT": (COLS["orange"], "-"),
+        "EE": (COLS["blue"], "--"),
+        "TE": (COLS["green"], "-."),
+        "BB": (COLS["purple"], ":"),
+    }
+    mask = ell >= 2.0
+    for key, (color, linestyle) in styles.items():
+        ratio = np.ones(L_max + 1, dtype=float)
+        before = spectra_before[key]
+        after = spectra_after[key]
+        ratio[mask] = after[mask] / np.maximum(before[mask], 1.0e-30)
+        axes[0].plot(
+            ell[mask],
+            ratio[mask],
+            color=color,
+            ls=linestyle,
+            lw=1.5,
+            label=key,
+        )
+    axes[0].axhline(1.0, color="0.3", lw=0.8)
+    _prepare_axes(
+        axes[0],
+        r"$\ell$",
+        r"$C_\ell^{\rm obs} / C_\ell^{\rm frame}$",
+        title=r"FB-8.3 observer-frame diagonal-spectrum ratio at $\beta_{\rm obs}=1.23\times10^{-3}$",
+    )
+    axes[0].legend(loc="best", ncol=2)
+
+    axes[1].semilogy(
+        ell[mask],
+        spectra_before["TT"][mask],
+        color=COLS["orange"],
+        lw=1.6,
+        label=r"TT frame",
+    )
+    axes[1].semilogy(
+        ell[mask],
+        spectra_after["TT"][mask],
+        color=COLS["red"],
+        lw=1.4,
+        ls="--",
+        label=r"TT observed",
+    )
+    _prepare_axes(
+        axes[1],
+        r"$\ell$",
+        r"$C_\ell^{TT}$  [arb.]",
+        title=r"same synthetic TT ladder before / after the observer boost",
+    )
+    axes[1].legend(loc="best")
+
+    fig.tight_layout()
+    _save(fig, "02_Cl_ratio_before_after", TOPIC_14)
+
+
+def plot_14_03_alm_mixing_demo() -> None:
+    """FB-8.3 harmonic-mixing demo for a single synthetic ``a_{ell m}`` map."""
+    from matplotlib.colors import TwoSlopeNorm
+
+    L_max = 18
+    alm_before = _observer_gallery_alm(L_max=L_max)
+    alm_after = observed_alm_mixing(
+        alm_before,
+        _observer_gallery_boost(1.23e-3),
+        L_max,
+    )
+    scale = max(
+        float(np.max(np.abs(alm_before[2:, :]))),
+        float(np.max(np.abs(alm_after[2:, :]))),
+        1.0e-10,
+    )
+
+    fig, axes = plt.subplots(1, 2, figsize=(10.0, 5.2), sharey=True)
+    panel_data = [
+        (axes[0], alm_before, "frame input"),
+        (axes[1], alm_after, "observer-mixed output"),
+    ]
+    for ax, data, title in panel_data:
+        mesh = ax.imshow(
+            data,
+            origin="lower",
+            aspect="auto",
+            cmap="coolwarm",
+            norm=TwoSlopeNorm(vcenter=0.0, vmin=-scale, vmax=scale),
+        )
+        ax.set_xticks([0, 1, 2])
+        ax.set_xticklabels([r"$m=0$", r"$m=1$", r"$m=2$"])
+        _prepare_axes(
+            ax,
+            "channel",
+            r"$\ell$",
+            title=title,
+        )
+        cbar = fig.colorbar(mesh, ax=ax)
+        cbar.set_label(r"$a_{\ell m}$  [arb.]")
+
+    axes[0].set_ylim(1.5, L_max + 0.5)
+    fig.suptitle(
+        r"FB-8.3 observer-frame $a_{\ell m}$ mixing: linear nearest-$\ell$ leakage for a fixed synthetic map",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "03_alm_mixing_demo", TOPIC_14)
+
+
+def plot_14_04_discriminator_coverage() -> None:
+    """FB-8.5 coverage histograms under both hypotheses."""
+    obs_model, tilt_model = _observer_gallery_models()
+    report_obs = coverage_report(
+        obs_model,
+        tilt_model,
+        hypothesis="H_obs",
+        n_draws=500,
+        seed=123,
+    )
+    report_cosmo = coverage_report(
+        obs_model,
+        tilt_model,
+        hypothesis="H_cosmo",
+        n_draws=500,
+        seed=321,
+    )
+
+    fig, axes = plt.subplots(1, 2, figsize=(11.0, 4.6), sharey=True)
+    bins = np.linspace(0.0, 1.0, 11)
+    for ax, report, color, label in [
+        (axes[0], report_obs, COLS["blue"], r"$H_{\rm obs}$ draws"),
+        (axes[1], report_cosmo, COLS["green"], r"$H_{\rm cosmo}$ draws"),
+    ]:
+        ax.hist(
+            report.p_values,
+            bins=bins,
+            color=color,
+            alpha=0.82,
+            edgecolor="white",
+            lw=0.8,
+        )
+        ax.axhline(report.p_values.size / 10.0, color="0.25", lw=0.8, ls="--")
+        _prepare_axes(
+            ax,
+            "empirical PIT p-value bin",
+            "count",
+            title=label,
+        )
+        ax.text(
+            0.03,
+            0.96,
+            "\n".join(
+                [
+                    fr"$D_{{\rm KS}} = {report.ks_statistic:.3f}$",
+                    fr"$p_{{\rm KS}} = {report.ks_p_value:.3f}$",
+                    fr"99\% gate: {'pass' if report.passed_99pct else 'fail'}",
+                ]
+            ),
+            transform=ax.transAxes,
+            ha="left",
+            va="top",
+            fontsize=8,
+            bbox={"facecolor": "white", "alpha": 0.9, "edgecolor": "0.8"},
+        )
+
+    fig.suptitle(
+        r"FB-8.5 discriminator coverage: KS-uniform empirical PIT under observer and cosmological truth draws",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "04_discriminator_coverage", TOPIC_14)
+
+
+# ════════════════════════════════════════════════════════════════════
 # Topic 17 — Perturbation k-modes
 # ════════════════════════════════════════════════════════════════════
 
@@ -4919,6 +5267,16 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("13_fb14_anisotropic_3curvature_per_type",
          plot_11_13_fb14_anisotropic_3curvature_per_type,
          "FB-1.4 Phase FB-1 exit: ³R_ab^aniso diag + eigenvalues + trace-free residual across 11 types + FLRW."),
+    ],
+    TOPIC_14: [
+        ("01_kernel_heatmap_1p23e-3", plot_14_01_kernel_heatmap_1p23e_3,
+         "FB-8.2 aligned observer-frame aberration kernel at the Sun-dipole speed."),
+        ("02_Cl_ratio_before_after", plot_14_02_cl_ratio_before_after,
+         "FB-8.3 diagonal observer-frame spectrum ratio C_ell^obs / C_ell^frame."),
+        ("03_alm_mixing_demo", plot_14_03_alm_mixing_demo,
+         "FB-8.3 harmonic-coefficient map before and after the linear observer boost."),
+        ("04_discriminator_coverage", plot_14_04_discriminator_coverage,
+         "FB-8.5 empirical-PIT coverage histograms for H_obs and H_cosmo synthetic draws."),
     ],
     TOPIC_17: [
         ("01_harmonic_modes_per_type", plot_17_01_harmonic_modes_per_type,

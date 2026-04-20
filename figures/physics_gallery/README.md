@@ -11,7 +11,7 @@ PSTF multipole hierarchy algebra shipped in LB-2a).
 and `figures/preliminary/`; moved here from `plots/physics_gallery/`
 during the 2026-04-19 figure-tree consolidation).
 **Generator**: [`scripts/make_physics_gallery.py`](../../scripts/make_physics_gallery.py)
-**Total**: 84 plots across 14 rendered topics + 3 reserved placeholder
+**Total**: 88 plots across 15 rendered topics + 2 reserved placeholder
 topics
 **Regenerate**: `venv/bin/python scripts/make_physics_gallery.py`
 **Cadence**: regenerated at the end of every LB-N phase; see the
@@ -183,12 +183,19 @@ window.
 | [12_fb13_classB_typeV_shear_zero.png](11_integrator/12_fb13_classB_typeV_shear_zero.png) | FB-1.3 Type V shear-specific source identically zero with the Ellis Σ×a² invariant |
 | [13_fb14_anisotropic_3curvature_per_type.png](11_integrator/13_fb14_anisotropic_3curvature_per_type.png) | FB-1.4 exit gallery: ³R_ab^aniso eigen-structure across all 11 types + FLRW |
 
-## 14 · Observer frame (FB-8 placeholder)
+## 14 · Observer frame (FB-8)
 
-FB-META-8 is skeleton-only, so no observer-frame PNGs are rendered yet.
-The reserved topic directory
-[14_observer_frame/](14_observer_frame/README.md) documents the future
-target outputs and records this phase as an intentional gallery no-op.
+Observer-frame post-processing on top of the FB-7 cosmological-frame
+likelihood: aligned aberration kernel, diagonal-spectrum response,
+harmonic mixing, and the local-boost vs global-tilt discriminator
+coverage check.
+
+| File | Description |
+|---|---|
+| [01_kernel_heatmap_1p23e-3.png](14_observer_frame/01_kernel_heatmap_1p23e-3.png) | FB-8.2 aligned observer-frame aberration kernel at the Sun-dipole speed, shown both as the full matrix and the $10^3(K-I)$ residual |
+| [02_Cl_ratio_before_after.png](14_observer_frame/02_Cl_ratio_before_after.png) | FB-8.3 synthetic diagonal-spectrum response $C_\ell^{\rm obs}/C_\ell^{\rm frame}$ at $\beta_{\rm obs}=1.23\times10^{-3}$ |
+| [03_alm_mixing_demo.png](14_observer_frame/03_alm_mixing_demo.png) | FB-8.3 single synthetic $a_{\ell m}$ map before and after the linear observer-frame mixing kernel |
+| [04_discriminator_coverage.png](14_observer_frame/04_discriminator_coverage.png) | FB-8.5 empirical-PIT coverage histograms for $\Lambda(d;H_{\rm obs},H_{\rm cosmo})$ under both truth hypotheses, including the KS-uniformity gate |
 
 ## 15 · Massive neutrino (FB-9 placeholder)
 

@@ -193,6 +193,7 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
         recombination: Optional[RecombinationInterp] = None,
         *,
         Sigma_mnu: float = 0.0,
+        recombination_warning_policy: str = "once",
     ) -> "SpeciesBackgroundRegistry":
         """Build the canonical Planck-2018 five-species registry.
 
@@ -212,6 +213,12 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
             path; positive values reserve the ``SpeciesLabel.NEUTRINO``
             slot for the FB-9 massive-neutrino placeholder without
             introducing a new enum label.
+        recombination_warning_policy : {'always', 'once', 'ignore'}, optional
+            Policy for the known HyRec/FLRW support-gap warning emitted
+            by ``BaryonBackground``. The default ``'once'`` warns only
+            once per distinct support signature in a process; use
+            ``'ignore'`` for high-volume parameter sweeps or inference
+            loops that intentionally rebuild the registry many times.
 
         Reference: ``01_species_background_spec.md §2.5``.
         """
@@ -237,7 +244,12 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
             neutrino = MassiveNeutrinoBackground(
                 bg_table, mass_eV=Sigma_mnu / 3.0, N_q=15,
             )
-        baryon = BaryonBackground(bg_table, c.Omega_b_0, recombination)
+        baryon = BaryonBackground(
+            bg_table,
+            c.Omega_b_0,
+            recombination,
+            recombination_warning_policy=recombination_warning_policy,
+        )
         cdm = CDMBackground(bg_table, c.Omega_c_0)
         lambda_ = LambdaBackground(bg_table, c.Omega_Lambda_0)
         return cls(

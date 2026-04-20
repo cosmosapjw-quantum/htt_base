@@ -535,3 +535,142 @@ cross-reference.
 - **Notes**: the extended-bundle META sweep is complete across
   FB-4/5/6/7/8/9/11; every remaining actual-work phase now has a
   planted skeleton and a 3-channel audit section.
+
+## Phase FB-8 — Actual-work closeout (post-META implementation)
+
+### FB-8.1 — `ObserverBoost` implementation
+
+- **Scope**: Replaced the FB-META skeleton
+  [ObserverBoost](../../../htt/bass/observer/observer_boost.py) with the
+  real frozen dataclass carrying rapidity, `v_hat`, `velocity`,
+  `gamma`, and `gamma_sq`, while routing admissibility through the
+  shared FB-3.5 `assert_tilt_admissible(...)` guard.
+- **Commit anchor**: see `git log --grep='FB-8.1'`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb81_observer_boost_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB8_2026-04-20.md](../../audits/AUDIT_PHASE_FB8_2026-04-20.md)
+  §FB-8.1.
+- **Notes**: the observer/cosmological type split is now enforced by
+  code rather than only by placeholder docstrings.
+
+### FB-8.2 — linear aligned aberration kernel
+
+- **Scope**: Implemented the real
+  [aberration kernel](../../../htt/bass/observer/aberration.py) as the
+  tridiagonal linear aligned recurrence with exact identity at
+  `beta_obs = 0`.
+- **Commit anchor**: see `git log --grep='FB-8.2'`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb82_aberration_kernel_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB8_2026-04-20.md](../../audits/AUDIT_PHASE_FB8_2026-04-20.md)
+  §FB-8.2.
+- **Notes**: the phase kept the linear-only scope pin; no `beta_obs^2`
+  extension was reopened.
+
+### FB-8.3 — observer-frame spectrum / harmonic adapters
+
+- **Scope**: Replaced the FB-META adapter contracts with the real
+  [apply_observer_boost / observed_alm_mixing](../../../htt/bass/observer/adapters.py)
+  implementation and wired both surfaces through the shared aligned
+  kernel.
+- **Commit anchor**: see `git log --grep='FB-8.3'`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb83_observer_adapters_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB8_2026-04-20.md](../../audits/AUDIT_PHASE_FB8_2026-04-20.md)
+  §FB-8.3.
+- **Notes**: zero-boost identity is now pinned in both the diagonal and
+  harmonic views.
+
+### FB-8.4 — composition-order diagnostic
+
+- **Scope**: Promoted
+  [composition.py](../../../htt/bass/observer/composition.py) from a
+  skeleton to a real diagnostic-only surface with `GlobalTiltState` and
+  the explicit `compose_tilts(...)` guard against observer/cosmological
+  conflation.
+- **Commit anchor**: see `git log --grep='FB-8.4'`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb84_composition_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB8_2026-04-20.md](../../audits/AUDIT_PHASE_FB8_2026-04-20.md)
+  §FB-8.4.
+- **Notes**: the audit now carries the explicit non-commutation witness
+  instead of only a placeholder warning.
+
+### FB-8.5 — discriminator implementation
+
+- **Scope**: Replaced the discriminator skeleton with the operational
+  core
+  [likelihood_ratio / coverage_report](../../../htt/bass/observer/discriminator.py),
+  added `ObservedSpectrumDataset`, and wired the FB-8.5 coverage test.
+- **Commit anchor**: see `git log --grep='FB-8.5'`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb85_discriminator_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB8_2026-04-20.md](../../audits/AUDIT_PHASE_FB8_2026-04-20.md)
+  §FB-8.5.
+- **Notes**: the phase kept the likelihood-ratio decision from the META
+  audit; Bayes-factor and posterior-density-ratio alternatives were not
+  reopened.
+
+### FB-8.6 — observer-frame likelihood wrapper
+
+- **Scope**: Implemented the real
+  [ObserverFrameLikelihood](../../../htt/bass/likelihood/observer_frame_adapter.py)
+  together with delta / flat / Gaussian boost priors, profile and
+  marginalisation helpers, and explicit `beta_obs` parsing.
+- **Commit anchor**: see `git log --grep='FB-8.6'`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/likelihood/test_fb86_observer_frame_adapter_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB8_2026-04-20.md](../../audits/AUDIT_PHASE_FB8_2026-04-20.md)
+  §FB-8.6.
+- **Notes**: the full-suite pass uncovered an eager-import cycle at the
+  observer package boundary, which was closed by lazy exports in
+  `bass.observer.__init__` without weakening the public surface.
+
+### FB-8.7 — docs + gallery closeout
+
+- **Scope**: Rendered the real gallery topic
+  [14_observer_frame](../../../figures/physics_gallery/14_observer_frame/README.md),
+  updated the root gallery README, populated
+  [00_conventions.md §13](../00_conventions.md), added the observer-frame
+  discriminator section to
+  [ch02_dipole_anomaly.tex](../../manuscript/ch02_dipole_anomaly.tex),
+  added the Chapter-9 cross-reference paragraph, refreshed the
+  bibliography, and replaced the skip-marked docs/gallery harness with a
+  real test file.
+- **Commit anchor**: see `git log --grep='FB-8.7'`.
+- **Verification**:
+  `venv/bin/python scripts/make_physics_gallery.py --only 14_observer_frame`;
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb87_docs_gallery_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB8_2026-04-20.md](../../audits/AUDIT_PHASE_FB8_2026-04-20.md)
+  §FB-8.7.
+- **Notes**: Topic 14 is no longer a reserved placeholder; all four PNG
+  outputs are now part of the rendered gallery tree.
+
+### FB-8.CLOSE — Phase FB-8 actual work complete
+
+- **Scope**: Closed FB-8 with the targeted observer-frame slice green,
+  Topic 14 rendered, the actual-work audit written, the conventions /
+  manuscript / bibliography updated, and the next-session handoff
+  rotated to FB-9 actual work. The same closeout pass also removed the
+  `laguerre_basis` overflow-warning signature and added a sweep-friendly
+  `recombination_warning_policy` for repeated registry construction
+  during parameter sweeps or inference loops.
+- **Commit anchor**: see `git log --grep='FB-8: Phase FB-8 complete'`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/observer/test_fb81_observer_boost_skeleton.py bass/observer/test_fb82_aberration_kernel_skeleton.py bass/observer/test_fb83_observer_adapters_skeleton.py bass/observer/test_fb84_composition_skeleton.py bass/observer/test_fb85_discriminator_skeleton.py bass/observer/test_fb87_docs_gallery_skeleton.py bass/likelihood/test_fb86_observer_frame_adapter_skeleton.py -q`
+  → `225 passed`;
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `4104 passed, 14 skipped, 2 warnings`.
+- **Audit**:
+  [AUDIT_PHASE_FB8_2026-04-20.md](../../audits/AUDIT_PHASE_FB8_2026-04-20.md).
+- **Carry-forward**: FB-9 actual work bootstrap.
+- **Notes**: FB-8 is now closed at the actual-work boundary; the next
+  open phase is FB-9. Warning count on the broad regression dropped
+  from 26 to 2 after the sweep-hygiene patch.

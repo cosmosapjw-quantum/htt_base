@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-7 actual work → FB-8 actual-work placeholder**; Phase FB-7 is closed locally at the cosmological-frame boundary with Topic-19 rendered, Chapter 6/7 updated, and the observer-frame gap carried explicitly to FB-8)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB7_2026-04-20.md`
-**Current target session**: **FB-8 actual work** — paste the canonical FB-8 prompt before coding
-**Phase status**: FB-7 is closed locally: the dedicated FB-7 slice reaches `133 passed`, the full `bass/ + tsc/` gate reaches `3871 passed, 21 skipped`, Topic 19 is rendered, and the handoff is rotated to FB-8 actual work.
+**Last rotated**: 2026-04-20 (**FB-8 actual work → FB-9 actual work**; Phase FB-8 is closed locally with Topic-14 rendered, Chapter 2/9 updated, and the observer-frame discriminator audited)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB8_2026-04-20.md`
+**Current target session**: **FB-9 actual work** — paste the canonical FB-9 prompt before coding
+**Phase status**: FB-8 is closed locally: the dedicated FB-8 slice reaches `225 passed`, the full `bass/ + tsc/` gate reaches `4104 passed, 14 skipped, 2 warnings`, Topic 14 is rendered, and the handoff is rotated to FB-9 actual work.
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,37 +37,37 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-8 actual work — paste the canonical FB-8 prompt
+# FB-9 actual work — paste the canonical FB-9 prompt
 
 Before doing anything else, read:
-- `docs/audits/AUDIT_PHASE_FB7_2026-04-20.md`
-- `docs/audits/AUDIT_PHASE_FB_META8_2026-04-20.md`
+- `docs/audits/AUDIT_PHASE_FB8_2026-04-20.md`
+- `docs/audits/AUDIT_PHASE_FB_META9_2026-04-20.md`
 - `docs/lowell_bianchi/extended_coverage/EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md`
-- `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
 - `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB8_ONWARD.md`
 - `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md`
-- `htt/bass/likelihood/cosmological_frame.py`
-- `htt/bass/likelihood/observer_frame_adapter.py`
-- `htt/bass/observer/`
+- `htt/bass/species/massive_neutrino/`
+- `htt/bass/species/registry.py`
+- `htt/bass/species/tilted.py`
 
 Baseline and carry-forward:
-- Phase FB-7 is closed on this branch. The BASS-side LOS propagator,
-  anisotropic covariance, HTT decomposition, cosmological-frame
-  likelihood, Planck-2018 FLRW-limit validator, Topic-19 gallery, and
-  Chapter 6 / 7 manuscript updates are already landed and should be
-  treated as the baseline rather than reopened.
+- Phase FB-8 is closed on this branch. The observer-frame boost carrier,
+  linear aberration kernel, observer-side `C_ell` / `a_{ell m}`
+  adapters, discriminator, observer-frame likelihood wrapper, Topic-14
+  gallery, and Chapter-2 / Chapter-9 observer-frame write-up are now
+  the baseline rather than open scope.
 - The load-bearing scope pin remains non-negotiable:
-  `CosmologicalFrameLikelihood` is rest-frame only, and observer-motion
-  composition belongs to FB-8.
-- The next actual-work scope should come from the canonical FB-8 prompt,
-  not by improvising from the old FB-7 checklist.
+  observer-frame and cosmological-frame velocity surfaces are
+  type-distinct, and FB-9 should build on that baseline rather than
+  collapsing it back into a shared carrier.
+- The next actual-work scope should come from the canonical FB-9 prompt,
+  not by improvising from the old FB-8 checklist.
 
 This session's target:
-- paste the canonical FB-8 actual-work prompt as the first user message
+- paste the canonical FB-9 actual-work prompt as the first user message
   and execute that contract
-- if the canonical FB-8 prompt is not available, stop and record a
+- if the canonical FB-9 prompt is not available, stop and record a
   blocker rather than inventing the next phase from memory
-- rotate this file again only after FB-8 closes or an honest blocker is
+- rotate this file again only after FB-9 closes or an honest blocker is
   recorded in the audit
 
 Suggested verification anchor:

@@ -1,13 +1,16 @@
-"""FB-8.1 skeleton — observer-frame boost dataclass contract.
+"""Observer-frame boost carrier for the FB-8 observer layer.
 
-This module deliberately ships no observer-boost physics during the
-FB-META-8 rotation. The public surface below is a contract placeholder
-only and must raise ``NotImplementedError`` until the observer-frame
-aberration and discriminator stack is wired.
+``ObserverBoost`` is the observer-side analogue of the cosmological
+tilt rapidity surface, but it is intentionally **not** the same type
+and does not inherit from it. The observer boost acts only after the
+cosmological-frame FB-7 quantities have been formed.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
+
+import numpy as np
 
 from bass.species.tilted import V_HAT_E_DEFAULT, assert_tilt_admissible
 
@@ -20,12 +23,12 @@ if not callable(assert_tilt_admissible):
 
 @dataclass(frozen=True)
 class ObserverBoost:
-    """Future FB-8.1 observer-frame rapidity carrier.
+    """Observer-frame rapidity carrier.
 
-    Contract only: this type is reserved for the observer peculiar boost
-    that acts *after* the cosmological-frame FB-7 outputs are computed.
-    It must not subclass, alias, or silently coerce the cosmological
-    tilt surface.
+    This type is reserved for the observer peculiar boost that acts
+    *after* the cosmological-frame FB-7 outputs are computed. It must
+    not subclass, alias, or silently coerce the cosmological tilt
+    surface.
 
     References
     ----------
@@ -45,32 +48,42 @@ class ObserverBoost:
     v_hat: tuple[float, float, float] = V_HAT_E_DEFAULT
 
     def __post_init__(self) -> None:
-        """Validate the future observer-boost contract via the shared gate."""
-        raise NotImplementedError(
-            "FB-8.1 skeleton only: ObserverBoost construction is not "
-            "implemented."
-        )
+        """Validate the observer boost via the shared FB-3.5 guard."""
+        rapidity = float(self.rapidity)
+        if not np.isfinite(rapidity):
+            raise ValueError(
+                f"rapidity must be finite; got rapidity={self.rapidity!r}"
+            )
+        if rapidity < 0.0:
+            raise ValueError(
+                f"rapidity must be non-negative; got rapidity={rapidity!r}. "
+                f"Sign of the motion lives in v_hat, not in the scalar rapidity."
+            )
+        v_hat = tuple(float(component) for component in self.v_hat)
+        beta = 0.0 if rapidity == 0.0 else float(np.tanh(rapidity))
+        if beta >= 1.0:
+            beta = math.nextafter(1.0, 0.0)
+        assert_tilt_admissible(beta, v_hat)
+        object.__setattr__(self, "rapidity", rapidity)
+        object.__setattr__(self, "v_hat", v_hat)
 
     @property
     def velocity(self) -> float:
-        """Return the future observer speed ``tanh(rapidity)``."""
-        raise NotImplementedError(
-            "FB-8.1 skeleton only: ObserverBoost.velocity is not "
-            "implemented."
-        )
+        """Return the observer speed ``tanh(rapidity)``."""
+        if self.rapidity == 0.0:
+            return 0.0
+        beta = float(np.tanh(self.rapidity))
+        if beta >= 1.0:
+            return math.nextafter(1.0, 0.0)
+        return beta
 
     @property
     def gamma(self) -> float:
-        """Return the future observer Lorentz factor ``cosh(rapidity)``."""
-        raise NotImplementedError(
-            "FB-8.1 skeleton only: ObserverBoost.gamma is not "
-            "implemented."
-        )
+        """Return the observer Lorentz factor ``cosh(rapidity)``."""
+        return float(np.cosh(self.rapidity))
 
     @property
     def gamma_sq(self) -> float:
-        """Return the future observer ``cosh(rapidity)**2`` factor."""
-        raise NotImplementedError(
-            "FB-8.1 skeleton only: ObserverBoost.gamma_sq is not "
-            "implemented."
-        )
+        """Return the observer ``cosh(rapidity)**2`` factor."""
+        gamma = self.gamma
+        return float(gamma * gamma)

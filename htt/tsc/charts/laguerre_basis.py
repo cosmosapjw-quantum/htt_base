@@ -63,6 +63,56 @@ from scipy.special import gamma, zeta
 from scipy.integrate import quad
 
 
+_LOG_FLOAT64_MAX = float(np.log(np.finfo(np.float64).max))
+
+
+def _mb_exp_minus(z: np.ndarray) -> np.ndarray:
+    """Return ``exp(-z)`` without overflow warnings.
+
+    For very negative ``z`` the exact result exceeds float64 range, so
+    the mathematically correct float64 return value is ``inf``.
+    """
+    z_arr = np.asarray(z, dtype=float)
+    result = np.empty_like(z_arr, dtype=float)
+    finite = np.isfinite(z_arr)
+    result[~finite] = np.nan
+    safe = finite & (z_arr > -_LOG_FLOAT64_MAX)
+    result[safe] = np.exp(-z_arr[safe])
+    result[finite & ~safe] = np.inf
+    return result
+
+
+def _fd_occupation(z: np.ndarray) -> np.ndarray:
+    """Stable Fermi-Dirac occupation ``1 / (exp(z) + 1)``."""
+    z_arr = np.asarray(z, dtype=float)
+    result = np.empty_like(z_arr, dtype=float)
+    finite = np.isfinite(z_arr)
+    result[~finite] = np.nan
+    nonneg = finite & (z_arr >= 0.0)
+    exp_neg = np.exp(-z_arr[nonneg])
+    result[nonneg] = exp_neg / (1.0 + exp_neg)
+    neg = finite & ~nonneg
+    exp_pos = np.exp(z_arr[neg])
+    result[neg] = 1.0 / (1.0 + exp_pos)
+    return result
+
+
+def _be_occupation(z: np.ndarray) -> np.ndarray:
+    """Stable Bose-Einstein occupation ``1 / (exp(z) - 1)``."""
+    z_arr = np.asarray(z, dtype=float)
+    result = np.empty_like(z_arr, dtype=float)
+    finite = np.isfinite(z_arr)
+    result[~finite] = np.nan
+    near_zero = finite & (np.abs(z_arr) <= 1.0e-14)
+    result[near_zero] = np.inf
+    large_pos = finite & (z_arr >= 50.0)
+    exp_neg = np.exp(-z_arr[large_pos])
+    result[large_pos] = exp_neg / np.maximum(1.0 - exp_neg, 1.0e-300)
+    regular = finite & ~(near_zero | large_pos)
+    result[regular] = 1.0 / np.expm1(z_arr[regular])
+    return result
+
+
 # ═══════════════════════════════════════════════════════════════
 # §1 — Generalized Laguerre polynomials
 # ═══════════════════════════════════════════════════════════════
@@ -175,13 +225,11 @@ def occupation_Phi(xi: int, z: Union[float, np.ndarray]) -> Union[float, np.ndar
     """
     z_arr = np.asarray(z, dtype=float)
     if xi == 0:
-        result = np.exp(-z_arr)
+        result = _mb_exp_minus(z_arr)
     elif xi == +1:
-        # BE: diverges at z=0; clip for safety
-        result = 1.0 / (np.exp(z_arr) - 1.0)
+        result = _be_occupation(z_arr)
     elif xi == -1:
-        # FD: well-defined for all z
-        result = 1.0 / (np.exp(z_arr) + 1.0)
+        result = _fd_occupation(z_arr)
     else:
         raise ValueError(f"ξ must be one of {{-1, 0, +1}}, got {xi}")
     return result if z_arr.ndim > 0 else float(result)
@@ -366,14 +414,14 @@ def xi_moment(
         # Analytical closed form at η = 0
         return moment_I(xi, n, Theta=1.0)
 
-    # Numerical integration for η ≠ 0 (FD or MB with shifted fugacity)
-    # Use np.exp which returns inf (silently) rather than raising on overflow,
-    # so 1/inf = 0 is handled correctly for large arguments.
+    # Numerical integration for η ≠ 0 (FD or BE with shifted fugacity).
     if xi == +1:
-        integrand = lambda x: x ** n / (np.exp(x - eta) - 1.0)
+        integrand = lambda x: x ** n * occupation_Phi(+1, x - eta)
     elif xi == -1:
-        integrand = lambda x: x ** n / (np.exp(x - eta) + 1.0)
+        integrand = lambda x: x ** n * occupation_Phi(-1, x - eta)
     else:  # MB: ∫ x^n e^{-(x-η)} dx = e^η Γ(n+1)
+        if eta > _LOG_FLOAT64_MAX:
+            return float("inf")
         return math.exp(eta) * float(gamma(n + 1))
 
     x_split = max(1.0, 2.0 * abs(eta))
@@ -451,8 +499,8 @@ def xi_weight(x, xi: int, eta: float = 0.0, alpha: float = 2.0) -> np.ndarray:
     """
     x_arr = np.asarray(x, dtype=float)
     if xi == 0:
-        return (x_arr ** alpha) * np.exp(-(x_arr - eta))
-    return (x_arr ** alpha) / (np.exp(x_arr - eta) - xi)
+        return (x_arr ** alpha) * _mb_exp_minus(x_arr - eta)
+    return (x_arr ** alpha) * occupation_Phi(xi, x_arr - eta)
 
 
 def laguerre_inner_product(
@@ -479,10 +527,7 @@ def laguerre_inner_product(
     def integrand(x):
         L1 = laguerre_L(s1, alpha, x)
         L2 = laguerre_L(s2, alpha, x)
-        if xi == 0:
-            w = (x ** alpha) * np.exp(-(x - eta))
-        else:
-            w = (x ** alpha) / (np.exp(x - eta) - xi)
+        w = float(xi_weight(x, xi, eta=eta, alpha=alpha))
         return w * L1 * L2
 
     x_max = 50.0 + 2.0 * abs(eta) + 3.0 * max(s1, s2)

@@ -21,7 +21,7 @@ Reference: Kolb §3.3, §5.4; Baumann §3.10; Ma-Bertschinger 1995 eq (68).
 from __future__ import annotations
 
 import warnings
-from typing import Optional, Union
+from typing import Literal, Optional, Union
 
 import numpy as np
 
@@ -33,6 +33,8 @@ from bass.species.background_table import FLRWBackgroundTable
 
 
 _Number = Union[float, np.ndarray]
+_RecombinationWarningPolicy = Literal["always", "once", "ignore"]
+_WARNED_RECOMBINATION_GAPS: set[tuple[float, float, float, float]] = set()
 
 
 class BaryonBackground(SpeciesBackground):
@@ -46,11 +48,13 @@ class BaryonBackground(SpeciesBackground):
 
     The η-domain is restricted to the intersection of the FLRW table's
     η range and the z range spanned by ``recombination.table``. A
-    ``warnings.warn`` is issued once on construction when the FLRW
-    η-grid extends outside the recombination table; physically this
-    means recombination queries at z > recomb.z_max (very early) or
-    z < recomb.z_min are not available, but ``rho_rest`` / ``p_rest``
-    / ``dot_rho`` remain well-defined on the full η-grid.
+    A configurable support-gap warning is available when the FLRW η-grid
+    extends outside the recombination table; physically this means
+    recombination queries at z > recomb.z_max (very early) or
+    z < recomb.z_min are not available, but ``rho_rest`` / ``p_rest`` /
+    ``dot_rho`` remain well-defined on the full η-grid. The default
+    policy is ``'once'`` so parameter sweeps and inference loops do not
+    re-emit the same warning on every registry construction.
 
     Reference: Kolb §3.3, §5.4; Baumann §3.10.
     """
@@ -61,10 +65,17 @@ class BaryonBackground(SpeciesBackground):
         bg_table: FLRWBackgroundTable,
         Omega_b_0: float,
         recombination: RecombinationInterp,
+        *,
+        recombination_warning_policy: _RecombinationWarningPolicy = "once",
     ):
         if Omega_b_0 <= 0.0:
             raise ValueError(
                 f"Omega_b_0 must be positive, got {Omega_b_0}"
+            )
+        if recombination_warning_policy not in {"always", "once", "ignore"}:
+            raise ValueError(
+                "recombination_warning_policy must be one of "
+                "{'always', 'once', 'ignore'}"
             )
         self._bg = bg_table
         self._Omega_b_0 = float(Omega_b_0)
@@ -87,14 +98,33 @@ class BaryonBackground(SpeciesBackground):
                 f"does not overlap FLRW table z-range "
                 f"[{z_min_bg}, {z_max_bg}]"
             )
-        if z_max_recomb < z_max_bg or z_min_recomb > z_min_bg:
-            warnings.warn(
-                f"recombination table z-range "
-                f"[{z_min_recomb}, {z_max_recomb}] does not fully cover "
-                f"FLRW η-grid (z ∈ [{z_min_bg}, {z_max_bg}]); queries of "
-                f"x_e / T_m / tau_dot outside the table will raise.",
-                RuntimeWarning, stacklevel=2,
+        if (
+            recombination_warning_policy != "ignore"
+            and (z_max_recomb < z_max_bg or z_min_recomb > z_min_bg)
+        ):
+            signature = (
+                round(z_min_recomb, 12),
+                round(z_max_recomb, 12),
+                round(z_min_bg, 12),
+                round(z_max_bg, 12),
             )
+            should_warn = (
+                recombination_warning_policy == "always"
+                or signature not in _WARNED_RECOMBINATION_GAPS
+            )
+            if recombination_warning_policy == "once":
+                _WARNED_RECOMBINATION_GAPS.add(signature)
+            if should_warn:
+                warnings.warn(
+                    f"recombination table z-range "
+                    f"[{z_min_recomb}, {z_max_recomb}] does not fully cover "
+                    f"FLRW η-grid (z ∈ [{z_min_bg}, {z_max_bg}]); queries of "
+                    f"x_e / T_m / tau_dot outside the table will raise. "
+                    "Use recombination_warning_policy='ignore' for "
+                    "high-volume parameter sweeps or inference loops that "
+                    "already treat the missing early-time region as expected.",
+                    RuntimeWarning, stacklevel=2,
+                )
 
     # --- SpeciesBackground interface --------------------------------------
 

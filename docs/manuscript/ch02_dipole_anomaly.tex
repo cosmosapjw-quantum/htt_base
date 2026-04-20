@@ -17,8 +17,10 @@ $5\sigma$.  We review the observational evidence in
 Section~\ref{sec:dipole-obs}, the statistical methodology in
 Section~\ref{sec:dipole-stats}, the peculiar velocity context
 in Section~\ref{sec:dipole-pv}, the theoretical status of
-candidate mechanisms in Section~\ref{sec:dipole-theory}, and
-the near-term experimental outlook in
+candidate mechanisms in Section~\ref{sec:dipole-theory}, the
+observer-frame discriminator in
+Section~\ref{sec:dipole-discriminator}, and the near-term
+experimental outlook in
 Section~\ref{sec:dipole-outlook}.  The anomaly parameters
 relevant to the departure framework are summarised in
 Section~\ref{sec:dipole-summary}.
@@ -306,6 +308,112 @@ and does not assume a specific tilt source.  Detection and
 mechanism attribution are separable questions---the pipeline
 establishes the former; the theoretical analysis constrains
 the latter (Section~\ref{sec:disc-separation}).
+
+
+% ============================================================
+\section{Observer-frame discriminator: separating kinematic dipole from Bianchi tilt}
+\label{sec:dipole-discriminator}
+% ============================================================
+
+The operational question raised by the dipole anomaly is not
+merely whether a dipole exists, but whether the observed sky is
+better described as a local observer boost or as a genuine
+cosmological tilt.  The FB-8 observer-frame layer makes that
+question explicit by leaving the FB-7 likelihood in the
+cosmological frame and adding a separate observer-frame wrapper
+with a type-distinct `ObserverBoost` carrier.  The resulting
+workflow enforces the physically relevant order
+``cosmo-tilt $\rightarrow$ observer-boost`` rather than
+collapsing both effects into a single effective velocity.
+
+
+\subsection{Linear aberration kernel}
+
+For an observer moving at speed $\beta_{\rm obs}$ relative to
+the cosmological frame, the temperature and polarisation
+multipoles are mixed by a linear aberration kernel
+$K_{\ell\ell'}(\beta_{\rm obs})$ of the
+Challinor--van Leeuwen form~\cite{ChallinorVanLeeuwen2002}.  In
+the aligned case used by the present implementation, the kernel
+is tridiagonal at ${\cal O}(\beta_{\rm obs})$: power leaks only
+between neighbouring multipoles, while the
+$\beta_{\rm obs} = 0$ limit returns the identity exactly.  The
+physically relevant scale is the Solar-system dipole speed
+$\beta_{\rm obs} \simeq 1.23\times 10^{-3}$ identified by the
+Planck observer-velocity analysis~\cite{Planck2013XXVII}, so the
+observer-frame correction is small but not negligible at the
+low-$\ell$ level where the dipole anomaly is analysed.
+
+
+\subsection{Observer-frame $C_\ell$ and $a_{\ell m}$ adapters}
+
+The kernel acts on both the harmonic coefficients and the
+diagonal spectra.  The $a_{\ell m}$ adapter applies the aligned
+mixing directly in multipole space, whereas the $C_\ell$
+adapter propagates the same linear leakage into the diagonal
+power spectra.  These two views are intentionally kept as
+separate audited surfaces because they answer different
+questions: the harmonic map shows the neighbouring-$\ell$
+transfer explicitly, while the spectrum adapter isolates the
+observable change in $C_\ell^{TT}$, $C_\ell^{EE}$,
+$C_\ell^{TE}$, and $C_\ell^{BB}$.  A genuine cosmological tilt
+changes the rest-frame sky before any observer correction is
+applied; a local boost instead remaps a pre-existing
+cosmological-frame sky.  The distinction becomes visible once
+both adapters are pinned to the same linear kernel.
+
+
+\subsection{Composition order and non-commutation}
+
+Observer motion and cosmological tilt do not commute.  If one
+first constructs a cosmological-frame tilted sky and then boosts
+to the local frame, the resulting multipoles differ from those
+obtained by first applying an observer boost to an untilted sky
+and only then trying to absorb the result into a global tilt.
+This is not a bookkeeping nuisance but the key physical point:
+observer aberration is a local frame transformation, whereas a
+Bianchi tilt changes the cosmological-frame source itself.  The
+implementation therefore keeps `compose_tilts(...)` as a
+diagnostic witness only, never as a production shortcut, and
+pins the ordering
+``cosmo-tilt $\rightarrow$ observer-boost`` in the conventions
+document and the audit ledger.
+
+
+\subsection{Likelihood-ratio discriminator and coverage}
+
+The operational discriminator is the likelihood-ratio statistic
+\begin{equation}
+\Lambda(d; H_{\rm obs}, H_{\rm cosmo})
+= 2\,[\ln L_{\rm cosmo}(d) - \ln L_{\rm obs}(d)]\,.
+\end{equation}
+Negative $\Lambda$ favours the local-boost explanation
+$H_{\rm obs}$; positive $\Lambda$ favours the cosmological-tilt
+explanation $H_{\rm cosmo}$.  The observer-frame likelihood is
+constructed by wrapping the FB-7 cosmological-frame likelihood
+with an explicit observer-boost prior rather than reopening the
+cosmological-frame class.  This preserves the type-distinct
+surface and makes the model comparison auditable.  Following the
+recoverability argument of Kosowsky \&
+Kahniashvili~\cite{KosowskyKahniashvili2011}, the phase-close
+verification uses $N=500$ seeded synthetic draws under each
+hypothesis and checks that the empirical PIT p-values remain
+consistent with a uniform distribution at the $99\%$ level.
+Figure~\ref{fig:fb8_discriminator_coverage} shows the resulting
+coverage histograms for both truth hypotheses.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/physics_gallery/14_observer_frame/04_discriminator_coverage.png}
+\caption[FB-8 observer-frame discriminator coverage]{Observer-frame
+discriminator coverage for the local-boost and cosmological-tilt
+hypotheses.  The plotted histograms are the empirical PIT
+p-values from $500$ seeded synthetic draws under each hypothesis;
+the KS annotations show that the FB-8 likelihood-ratio
+calibration remains consistent with uniform coverage at the
+$99\%$ gate.}
+\label{fig:fb8_discriminator_coverage}
+\end{figure}
 
 
 % ============================================================

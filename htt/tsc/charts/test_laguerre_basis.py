@@ -21,6 +21,7 @@ Run
 from __future__ import annotations
 
 import math
+import warnings
 import numpy as np
 import pytest
 from scipy.special import gamma, zeta
@@ -223,6 +224,14 @@ class TestOccupationFunction:
     def test_invalid_xi_raises(self):
         with pytest.raises(ValueError, match="ξ must be"):
             occupation_Phi(2, 1.0)
+
+    @pytest.mark.parametrize("xi", [-1, 0, +1])
+    def test_large_positive_argument_emits_no_overflow_warning(self, xi):
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            value = occupation_Phi(xi, 1000.0)
+        assert np.isfinite(value) or math.isinf(value)
+        assert not [item for item in caught if issubclass(item.category, RuntimeWarning)]
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -428,6 +437,17 @@ class TestFugacityMoments:
         I_eta_zero = xi_moment(3, +1, 0.0)
         I_eta_neg = xi_moment(3, +1, -0.5)
         assert I_eta_neg < I_eta_zero
+
+    def test_large_eta_paths_emit_no_runtime_warning(self):
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            fd = xi_moment(3, -1, eta=2.0)
+            be = xi_moment(3, +1, eta=-0.5)
+            weight = xi_weight(np.array([1.0, 10.0, 1.0e3]), -1, eta=2.0)
+        assert math.isfinite(fd)
+        assert math.isfinite(be)
+        assert np.all(np.isfinite(weight))
+        assert not [item for item in caught if issubclass(item.category, RuntimeWarning)]
 
 
 class TestSpectralStiffnessRatios:

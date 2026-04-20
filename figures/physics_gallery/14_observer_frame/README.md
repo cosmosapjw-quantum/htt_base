@@ -1,13 +1,24 @@
-# 14 · Observer frame (FB-8 placeholder)
+# 14 · Observer frame (FB-8)
 
-This topic directory is reserved by FB-META-8.7 for the future
-observer-frame gallery outputs:
+Observer-frame layering sits on top of the FB-7 cosmological-frame
+likelihood and stays type-distinct from the cosmological tilt surface.
+The rendered PNGs in this topic document the four operational pieces of
+that layer:
 
-- `01_kernel_heatmap_1p23e-3.png`
-- `02_Cl_ratio_before_after.png`
-- `03_alm_mixing_demo.png`
-- `04_discriminator_coverage.png`
+- `01_kernel_heatmap_1p23e-3.png`:
+  aligned aberration kernel `K_{ell ell'}` at the Sun-dipole speed
+  `beta_obs = 1.23e-3`, including the small off-diagonal leakage around
+  the identity.
+- `02_Cl_ratio_before_after.png`:
+  diagonal-spectrum adapter response
+  `C_ell^{obs} / C_ell^{frame}` on a synthetic TT/EE/TE/BB ladder.
+- `03_alm_mixing_demo.png`:
+  a single synthetic `a_{ell m}` map before and after the observer
+  mixing kernel.
+- `04_discriminator_coverage.png`:
+  the FB-8.5 empirical-PIT coverage histograms under both `H_obs` and
+  `H_cosmo`, with the KS-uniformity gate annotated on-panel.
 
-No PNGs are shipped in FB-META-8 because the phase is skeleton-only.
-The no-op is intentional and is recorded in
-`docs/audits/AUDIT_PHASE_FB_META8_2026-04-20.md §FB-8.7`.
+Generator:
+[`scripts/make_physics_gallery.py`](../../../scripts/make_physics_gallery.py)
+Topic key: `14_observer_frame`.

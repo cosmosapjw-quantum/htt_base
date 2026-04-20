@@ -20,7 +20,7 @@
 10. Numerical precision targets
 11. External-code policy
 12. Glossary
-13. Observer-frame layering (FB-8 placeholder)
+13. Observer-frame layering (FB-8)
 
 ---
 
@@ -391,37 +391,80 @@ They may NOT appear in:
 
 ## 12. Glossary
 
-## 13. Observer-frame layering (FB-8 placeholder)
+## 13. Observer-frame layering (FB-8)
 
-FB-8 introduces an **observer-frame** layer on top of the already
-audited FB-7 cosmological-frame likelihood stack. The following rules
-are SSOT for that layer:
+FB-8 closes the **observer-frame** layer that sits on top of the
+already-audited FB-7 cosmological-frame likelihood stack. The layering
+rule is part of the repository SSOT:
+
+```text
+cosmo-tilt -> observer-boost
+```
+
+The observer layer is not an alternative tilt carrier. It is the final
+post-processing step that maps cosmological-frame spectra / harmonics
+into the local observer frame and then evaluates the observer-vs-cosmic
+discriminator.
+
+### 13.1 Non-negotiable rules
 
 - **Type distinction is load-bearing**:
-  `(beta_cosmo, v_hat_cosmo)` and `(beta_obs, v_hat_obs)` are separate
-  surfaces with separate ownership. They must not inherit from each
-  other and must not be silently coerced into a shared runtime carrier.
-- **Rapidity convention is shared, not the type**:
-  the future `GlobalTilt` and the FB-8 `ObserverBoost` both use
-  non-negative rapidity as the decision-level scalar, with the sign of
-  the motion living in the direction vector. This inherits the FB-3.5
-  rapidity/admissibility SSOT.
-- **Composition order is pinned**:
-  cosmological-frame tilt is applied first, then observer-frame boost:
+  `(beta_cosmo, v_hat_cosmo)` and `(beta_obs, v_hat_obs)` are different
+  concepts with different owners. They stay in different modules, use
+  different runtime types, and must not inherit from or silently coerce
+  into one another.
+- **Rapidity convention is shared, not the runtime carrier**:
+  both `GlobalTiltState` and `ObserverBoost` store non-negative
+  rapidity internally; the sign of the motion lives in the direction
+  vector. Validation routes through the FB-3.5
+  `assert_tilt_admissible(...)` SSOT instead of duplicating the
+  admissibility rule.
+- **`beta_obs = 0` is an identity contract**:
+  the observer kernel, spectrum adapter, and harmonic adapter all
+  short-circuit to byte-identical copies at zero observer boost.
+- **Production composition stays in the likelihood wrapper**:
+  `bass.likelihood.observer_frame_adapter` is the only production entry
+  point that composes observer motion with the FB-7 cosmological-frame
+  likelihood. Diagnostic helpers under `bass.observer.composition`
+  exist only to pin the non-commutation audit.
 
-  ```text
-  cosmological tilt -> observer boost
-  ```
+### 13.2 Observer-frame SSOT cross-reference
 
-- **Production path**:
-  observer-frame likelihood composition happens in
-  `bass.likelihood.observer_frame_adapter`, which wraps the FB-7
-  cosmological-frame likelihood. The diagnostic helper
-  `bass.observer.compose_tilts` is not a production surface.
+| Surface | Module | Role | Scalar / direction convention | Production status |
+|---|---|---|---|---|
+| `ObserverBoost` | `bass.observer.observer_boost` | observer-only local boost carrier | stores non-negative rapidity; direction in `v_hat`; validated via `assert_tilt_admissible` | production |
+| `aberration_kernel(L_max, boost)` | `bass.observer.aberration` | linear aligned `K_{ell ell'}` kernel | consumes `ObserverBoost`; zero-boost returns exact identity | production |
+| `apply_observer_boost(...)` | `bass.observer.adapters` | diagonal-spectrum observer-frame adapter | acts on `C_ell` after cosmological-frame construction | production |
+| `observed_alm_mixing(...)` | `bass.observer.adapters` | harmonic-space observer-frame adapter | same `ObserverBoost` contract as the spectrum adapter | production |
+| `compose_tilts(...)` | `bass.observer.composition` | diagnostic-only non-commutation witness | explicit type-distinct inputs: `GlobalTiltState` plus `ObserverBoost` | diagnostic only |
+| `likelihood_ratio(...)` | `bass.observer.discriminator` | operational `Lambda = 2[\ln L_cosmo - \ln L_obs]` statistic | compares `H_obs` and `H_cosmo` without collapsing their parameter types | production |
+| `ObserverFrameLikelihood` | `bass.likelihood.observer_frame_adapter` | wrapper over `CosmologicalFrameLikelihood` | composes observer boost on top of FB-7.4 rather than reopening FB-7 | production |
 
-This section is a documentation placeholder only during FB-META-8. The
-rendered observer-frame gallery outputs are deferred until the phase
-ships physics rather than skeletons.
+### 13.3 ObserverBoost cross-reference
+
+| Field / property | Meaning | SSOT source |
+|---|---|---|
+| `rapidity` | observer rapidity `eta_obs >= 0` | `bass.species.tilted.velocity_to_rapidity` and `assert_tilt_admissible` |
+| `v_hat` | observer-frame direction unit vector | validated through FB-3.5 admissibility guard |
+| `velocity` | physical speed `tanh(rapidity)` | computed property; never stored as an independent mutable scalar |
+| `gamma`, `gamma_sq` | Lorentz factors for observer-frame adapters | derived from rapidity; no alternate normalisation allowed |
+
+### 13.4 Composition-order pin
+
+`ObserverBoost` is applied only after the cosmological-frame signal has
+been assembled. In symbols:
+
+```text
+build cosmological-frame spectra / a_lm
+    -> apply cosmological tilt (if any)
+    -> apply observer boost
+    -> evaluate observer-frame likelihood / discriminator
+```
+
+This ordering is the reason `compose_tilts(...)` is not a production
+surface. The order is physically meaningful, and FB-8's diagnostic
+non-commutation tests are there to keep that fact explicit rather than
+burying it in implementation detail.
 
 | Term | Definition |
 |---|---|
