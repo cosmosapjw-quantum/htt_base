@@ -48,6 +48,7 @@
 | `baseline_selection_aware_v1.json` | 완료 | `0d13a82` |
 | `mock_calibration_report_v1.json` | 완료 | `0d13a82` |
 | `retention_vs_posterior_v1.json` | 완료 | `88b099f` |
+| `matched_complexity_report_v1.json` | 완료 | `e331a86` |
 | `fig_zoa_ladder_mode0` | 완료 | `5f4dcd9` |
 | `fig_retention_fraction_vs_posterior` | 완료 | `88b099f` |
 
@@ -68,7 +69,7 @@
 | `D10` Savage-Dickey | HTT | prototype | `prototype` | diagnostics shell 존재 | production report + regression |
 | `D11` cross-channel coherence + LOOCV | HTT | prototype | `prototype` | code exists | artifact export + figure/table |
 | `D12` posterior predictive checks | HTT | prototype | `prototype` | code exists | JSON/HDF5 artefact + residual figure path |
-| `D13` matched-complexity report | HTT | prototype | `prototype` | infer module exists | `matched_complexity_report_v1.json` |
+| `D13` matched-complexity report | HTT | prototype | `prototype+` | report artifact + regression path 확보 | pipeline/manuscript consumer wiring |
 | `D14` survey nuisance marginalisation | HTT | prototype | `prototype` | infer module exists | pipeline wiring + acceptance tests |
 | `D15` quadrupole axis + parity | HTT | prototype | `prototype` | geometry discrimination exists | figure/table export |
 | `D16` shared-cause test | HTT | prototype | `prototype` | infer module exists | BF/report artifact |
@@ -121,7 +122,7 @@
 - [ ] `D10` Savage-Dickey report
 - [ ] `D11` coherence / LOOCV report
 - [ ] `D12` PPC report
-- [ ] `D13` matched-complexity report
+- [ ] `D13` matched-complexity report의 downstream wiring
 - [ ] `D14` survey nuisance production path
 - [ ] `D15` geometry/parity result export
 - [ ] `D16` shared-cause BF export
@@ -185,12 +186,12 @@
 | `NB-PR-009` | HTT directional artifact builders | `0d13a82` | Mode 0/1 + mock report |
 | `NB-PR-010` | HTT Mode0 ZoA ladder figure | `5f4dcd9` | F44 path |
 | `NB-PR-011` | HTT retention-vs-posterior / plane alignment | `88b099f` | `diag_plane_alignment`, `retention_vs_posterior`, F102 path |
+| `NB-PR-012` | HTT matched-complexity report | `e331a86` | `matched_complexity_report_v1.json` + deterministic hash |
 
 ### 5.2 다음 우선순위 PR backlog
 
 | PR ID | 우선순위 | 대상 | WBS | 범위 | acceptance |
 |---|---|---|---|---|---|
-| `NB-PR-012` | `P0` | HTT | `HTT-WBS-02` | `matched_complexity_report_v1.json` | report artifact + deterministic hash |
 | `NB-PR-013` | `P1` | HTT | `HTT-WBS-02` | `15model_evidence_matrix_v1.json` export | 15×scenario matrix + regression |
 | `NB-PR-014` | `P1` | HTT | `HTT-WBS-03` | `null_library_fpr_v1.json` + import hardening | runner smoke + JSON export |
 | `NB-PR-015` | `P1` | HTT | `HTT-WBS-04` | identifiability audit artifact | pipeline subphase export + audit tests |
@@ -202,23 +203,22 @@
 
 ### 5.3 권장 실행 순서
 
-1. `NB-PR-012`
-2. `NB-PR-013`
-3. `NB-PR-014`
-4. `NB-PR-016`
-5. `NB-PR-017`
-6. `NB-PR-018`
-7. `NB-PR-019`
-8. `NB-PR-015`
-9. `NB-PR-020`
+1. `NB-PR-013`
+2. `NB-PR-014`
+3. `NB-PR-016`
+4. `NB-PR-017`
+5. `NB-PR-018`
+6. `NB-PR-019`
+7. `NB-PR-015`
+8. `NB-PR-020`
 
 ## 6. Immediate Next Action
 
-바로 다음 실제 코드 작업은 `NB-PR-012`가 맞다.
+바로 다음 실제 코드 작업은 `NB-PR-013`이 맞다.
 
 이유:
 
-1. 방금 닫은 `NB-PR-011`의 artifact contract 패턴을 거의 그대로 재사용할 수 있다.
-2. `D13`은 코드 셸이 이미 존재해서 report export만 닫으면 production 문서화가 쉬운 축이다.
-3. `matched_complexity_report_v1.json`은 이후 `D1/D4/D8` report artifact들과 해시/metadata 구조를 공유할 수 있다.
-4. `NB-PR-013`의 evidence matrix export 전에 먼저 report skeleton 하나를 굳히는 편이 리스크가 낮다.
+1. `NB-PR-012`에서 report artifact metadata/hash contract를 이미 굳혔다.
+2. `D1` evidence matrix는 같은 report-family 패턴을 그대로 재사용할 수 있다.
+3. evidence export는 `D4/D8`보다 독립성이 높아 다음 slice로 넣기 좋다.
+4. `null_library_fpr`나 pipeline audit보다 write-set이 좁아서 현재 맥락을 가장 덜 잃는다.
