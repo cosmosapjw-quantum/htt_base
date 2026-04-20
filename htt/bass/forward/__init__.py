@@ -39,6 +39,12 @@ from bass.forward.teff_mes_bounds import (
     TeffMESBounds,
     VN04_SCENARIOS,
 )
+from bass.forward.ver2_solver_output import (
+    BassReleaseMetadata,
+    build_solver_core_output,
+    solver_core_output_from_payload,
+    solver_core_output_to_payload,
+)
 
 __all__ = [
     # Forward
@@ -58,4 +64,9 @@ __all__ = [
     # MES bounds
     'TeffMESBounds',
     'VN04_SCENARIOS',
+    # VER2 S3 solver output
+    'BassReleaseMetadata',
+    'build_solver_core_output',
+    'solver_core_output_to_payload',
+    'solver_core_output_from_payload',
 ]
