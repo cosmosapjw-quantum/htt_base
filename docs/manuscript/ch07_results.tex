@@ -334,6 +334,37 @@ the frame-corrected shear bound $\Bsig^{\mathrm{corr}}$
 across the five equation-of-state scenarios, confirming the
 monotonic dependence on the adopted $w$.
 
+\subsection{Perturbation-sector validation on the shared $k$ grid}
+
+The scenario tables above are background-side summaries; the
+FB-5 perturbation pass supplies the complementary statement that
+the harmonic-mode transport remains controlled once the
+inhomogeneous $k \neq 0$ sector is switched on.  Two checks are
+especially important.  First, the explicit $k \rightarrow 0$
+gate collapses onto the LB-6 zero-state anchor at machine
+precision, so the perturbative extension does not shift the
+background-only trajectory by stealth.  Second, the type-I
+regression harness stays within the parent-plan acceptance band
+against the Planck-2018 CAMB oracle on a common low-$\ell$ grid.
+The gallery summary is shown in
+Figure~\ref{fig:fb5_results_validation}; these diagnostics are
+the numerical bridge between the framework discussion of
+Section~\ref{sec:perturbation-bianchi-modes} and the later
+likelihood / evidence calculations.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/physics_gallery/17_perturbation_k_modes/03_k_zero_limit_recovery.png}
+\vspace{0.8em}
+\includegraphics[width=0.82\linewidth]{figures/physics_gallery/17_perturbation_k_modes/05_Dl_TT_vs_camb_per_k.png}
+\caption{Perturbation-sector validation used in the FB-5 numerical
+results.  Top: recovery of the $k \rightarrow 0$ seed prefix against
+the LB-6 background anchor.  Bottom: shared-$\ell$ comparison of the
+type-I $D_\ell^{TT}$ proxy against the CAMB Planck-2018 reference at
+four representative wavenumbers.}
+\label{fig:fb5_results_validation}
+\end{figure}
+
 
 % ============================================================
 \section{Filling fraction}\label{sec:filling}

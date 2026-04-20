@@ -44,9 +44,13 @@ from bass.background.einstein_bianchi import (  # noqa: E402
 )
 from bass.background.bianchi_types import (  # noqa: E402
     flrw_constants,
+    type_ii_constants,
+    type_ix_constants,
     type_i_constants,
+    type_vi0_constants,
     type_v_constants,
     type_vii0_constants,
+    type_viii_constants,
     type_iii_constants,
     type_iv_constants,
     type_vih_constants,
@@ -107,6 +111,22 @@ from bass.hierarchy import (  # noqa: E402
     zero_pstf,
 )
 from bass.background.tetrad_state import axisymmetric_sigma_tensor  # noqa: E402
+from bass.hierarchy.ic import zero_IC  # noqa: E402
+from bass.hierarchy.nabla_dispatch import HarmonicMode  # noqa: E402
+from bass.perturbation.harmonic_modes import (  # noqa: E402
+    make_harmonic_mode_rhs_context,
+)
+from bass.perturbation.k_type_regression import (  # noqa: E402
+    run_k_type_regression_matrix,
+)
+from bass.perturbation.regular_adiabatic_ic import (  # noqa: E402
+    make_camb_regular_adiabatic_seed,
+    seed_observables,
+    unpack_camb_regular_adiabatic_seed,
+)
+from bass.perturbation.tilted_seed_rule import (  # noqa: E402
+    apply_tilted_boost_seed_rule,
+)
 from htt.htt.core.plot_style import COLS, apply_style  # noqa: E402
 
 
@@ -3741,6 +3761,242 @@ def plot_11_13_fb14_anisotropic_3curvature_per_type() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
+# Topic 17 — Perturbation k-modes
+# ════════════════════════════════════════════════════════════════════
+
+
+TOPIC_17 = "17_perturbation_k_modes"
+
+
+def _fb5_structures():
+    return {
+        "I": type_i_constants(),
+        "II": type_ii_constants(),
+        "III": type_iii_constants(),
+        "IV": type_iv_constants(),
+        "V": type_v_constants(),
+        "VI_0": type_vi0_constants(),
+        "VI_h": type_vih_constants(),
+        "VII_0": type_vii0_constants(),
+        "VII_h": type_viih_constants(),
+        "VIII": type_viii_constants(),
+        "IX": type_ix_constants(),
+    }
+
+
+def _fb5_mode(label: str, k: float = 0.1) -> HarmonicMode:
+    if label == "VII_0":
+        return HarmonicMode(label, np.array([0.0, k, 0.0], dtype=np.float64))
+    if label in {"II", "VIII"}:
+        return HarmonicMode(label, np.array([k, 0.0, 0.0], dtype=np.float64))
+    if label in {"III", "IV", "VI_0", "VI_h", "VII_h"}:
+        return HarmonicMode(label, np.array([k, 0.0, 0.5 * k], dtype=np.float64))
+    if label == "IX":
+        ell = 4
+        return HarmonicMode(
+            label,
+            np.array([np.sqrt(ell * (ell + 2)), 0.0, 0.0], dtype=np.float64),
+            ell=ell,
+        )
+    return HarmonicMode(label, np.array([k, 0.0, 0.0], dtype=np.float64))
+
+
+def plot_17_01_harmonic_modes_per_type() -> None:
+    structures = _fb5_structures()
+    labels = list(structures)
+    families = []
+    lap_mag = []
+    spectrum_color = []
+    for label in labels:
+        context = make_harmonic_mode_rhs_context(
+            structures[label],
+            _fb5_mode(label),
+            L_max=6,
+        )
+        families.append(context["mode_family"])
+        lap_mag.append(abs(float(context["laplacian_eigenvalue"])))
+        spectrum_color.append(
+            COLS["orange"] if context["spectrum_kind"] == "discrete" else COLS["blue"]
+        )
+
+    family_codes = {name: i for i, name in enumerate(sorted(set(families)))}
+    fig, axes = plt.subplots(2, 1, figsize=(9.0, 6.5), sharex=True)
+    x = np.arange(len(labels))
+
+    axes[0].bar(x, lap_mag, color=spectrum_color, alpha=0.85)
+    axes[0].set_yscale("log")
+    _prepare_axes(
+        axes[0],
+        "",
+        r"$|\lambda_k|$",
+        title="Representative scalar Laplacian magnitude per type",
+        ylog=True,
+    )
+
+    axes[1].scatter(
+        x,
+        [family_codes[name] for name in families],
+        s=90,
+        c=spectrum_color,
+    )
+    axes[1].set_yticks(list(family_codes.values()))
+    axes[1].set_yticklabels(list(family_codes.keys()), fontsize=8)
+    axes[1].set_xticks(x)
+    axes[1].set_xticklabels(labels, rotation=45, ha="right")
+    _prepare_axes(
+        axes[1],
+        "Bianchi type",
+        "Mode family",
+        title="Continuous vs discrete harmonic families",
+    )
+    fig.suptitle(
+        "FB-5.1 harmonic-mode decomposition across the Bianchi classification",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "01_harmonic_modes_per_type", TOPIC_17)
+
+
+def plot_17_02_adiabatic_seed_ic() -> None:
+    bg = Shared.bg()
+    k_grid = np.geomspace(1.0e-3, 1.0e-1, 80)
+    eta_initial = 0.1
+    a_initial = float(bg.interp_a(eta_initial))
+    curves = {
+        r"$\delta_\gamma$": [],
+        r"$\delta_b$": [],
+        r"$\delta_c$": [],
+        r"$\theta_\gamma$": [],
+    }
+    for k in k_grid:
+        obs = seed_observables(
+            make_camb_regular_adiabatic_seed(
+                k_comoving=float(k),
+                eta_initial=eta_initial,
+                a_initial=a_initial,
+                L_max=6,
+            ),
+            L_max=6,
+        )
+        curves[r"$\delta_\gamma$"].append(obs["delta_gamma"])
+        curves[r"$\delta_b$"].append(obs["delta_b"])
+        curves[r"$\delta_c$"].append(obs["delta_c"])
+        curves[r"$\theta_\gamma$"].append(obs["theta_gamma"])
+
+    fig, ax = plt.subplots(figsize=(7.4, 4.8))
+    colors = [COLS["orange"], COLS["blue"], COLS["purple"], COLS["green"]]
+    for (label, values), color in zip(curves.items(), colors):
+        ax.plot(k_grid, np.asarray(values), lw=1.8, color=color, label=label)
+    _prepare_axes(
+        ax,
+        r"$k\ [{\rm Mpc}^{-1}]$",
+        "seed amplitude",
+        title=r"FB-5.3 CAMB-regular adiabatic IC at $\eta_i = 0.1$ Mpc",
+        xlog=True,
+        ylog=True,
+    )
+    ax.legend(loc="best")
+    fig.tight_layout()
+    _save(fig, "02_adiabatic_seed_ic", TOPIC_17)
+
+
+def plot_17_03_k_zero_limit_recovery() -> None:
+    eta_initial = 0.2
+    a_initial = float(Shared.bg().interp_a(eta_initial))
+    background = zero_IC(L_max=6, a_initial=a_initial)
+    k_grid = np.array([0.0, 1.0e-6, 1.0e-4, 1.0e-3, 1.0e-2, 1.0e-1])
+    prefix_delta = []
+    tail_delta = []
+    for k in k_grid:
+        seed = make_camb_regular_adiabatic_seed(
+            k_comoving=float(k),
+            eta_initial=eta_initial,
+            a_initial=a_initial,
+            L_max=6,
+        )
+        prefix = seed[: background.size]
+        tail = seed[background.size :]
+        prefix_delta.append(np.max(np.abs(prefix - background)))
+        tail_delta.append(np.max(np.abs(tail)))
+
+    fig, ax = plt.subplots(figsize=(7.0, 4.6))
+    ax.plot(k_grid + 1.0e-12, prefix_delta, marker="o", lw=1.8, color=COLS["blue"], label="prefix vs LB-6 background anchor")
+    ax.plot(k_grid + 1.0e-12, tail_delta, marker="s", lw=1.8, color=COLS["orange"], label="auxiliary tail amplitude")
+    _prepare_axes(
+        ax,
+        r"$k\ [{\rm Mpc}^{-1}]$",
+        r"$L_\infty$ deviation",
+        title=r"FB-5.4 $k \rightarrow 0$ recovery against the LB-6 zero-IC anchor",
+        xlog=True,
+        ylog=True,
+    )
+    ax.legend(loc="best")
+    fig.tight_layout()
+    _save(fig, "03_k_zero_limit_recovery", TOPIC_17)
+
+
+def plot_17_04_tilted_boost_seed_rule() -> None:
+    seed = make_camb_regular_adiabatic_seed(
+        k_comoving=1.0e-3,
+        eta_initial=0.2,
+        a_initial=float(Shared.bg().interp_a(0.2)),
+        L_max=6,
+    )
+    boosted = apply_tilted_boost_seed_rule(
+        seed,
+        beta=5.0e-2,
+        v_hat_e=(1.0, 0.0, 0.0),
+    )
+
+    def m0_slice(state: np.ndarray, which: str) -> np.ndarray:
+        packed = unpack_camb_regular_adiabatic_seed(state, L_max=6)
+        tower = packed["combined"].photon_T if which == "T" else packed["combined"].photon_E.E
+        return np.array(
+            [tower.tensors[ell].components[ell] for ell in range(tower.L + 1)],
+            dtype=np.float64,
+        )
+
+    ell = np.arange(7)
+    fig, axes = plt.subplots(1, 2, figsize=(9.0, 4.2), sharex=True)
+    axes[0].plot(ell, m0_slice(seed, "T"), marker="o", lw=1.6, label="orthogonal")
+    axes[0].plot(ell, m0_slice(boosted, "T"), marker="s", lw=1.6, label="boosted")
+    _prepare_axes(axes[0], r"$\ell$", r"$\Pi_\ell^{m=0}$", title="Temperature slice")
+    axes[0].legend(loc="best")
+
+    axes[1].plot(ell, m0_slice(seed, "E"), marker="o", lw=1.6, label="orthogonal")
+    axes[1].plot(ell, m0_slice(boosted, "E"), marker="s", lw=1.6, label="boosted")
+    _prepare_axes(axes[1], r"$\ell$", r"$E_\ell^{m=0}$", title="E-mode slice")
+    axes[1].legend(loc="best")
+
+    fig.suptitle("FB-5.6 tilted-boost seed rule on the axisymmetric startup surface", fontsize=10)
+    fig.tight_layout()
+    _save(fig, "04_tilted_boost_seed_rule", TOPIC_17)
+
+
+def plot_17_05_Dl_TT_vs_camb_per_k() -> None:
+    result = run_k_type_regression_matrix(
+        type_labels=("I",),
+        k_values=(0.0, 1.0e-3, 1.0e-2, 1.0e-1),
+        ell_max=30,
+    )
+    fig, axes = plt.subplots(2, 2, figsize=(10.0, 7.2), sharex=True, sharey=True)
+    for ax, case in zip(axes.ravel(), result["cases"]):
+        ell = np.asarray(case["ell"], dtype=np.int64)
+        ax.plot(ell, case["D_TT_reference"], color="black", lw=1.8, label="CAMB")
+        ax.plot(ell, case["D_TT_model"], color=COLS["orange"], lw=1.6, ls="--", label="FB-5.7")
+        ax.set_title(rf"$k = {case['k_comoving']:.3g}\,{{\rm Mpc}}^{{-1}}$", fontsize=9)
+        ax.grid(True, alpha=0.25, lw=0.5)
+    axes[0, 0].legend(loc="best", fontsize=8)
+    for ax in axes[:, 0]:
+        ax.set_ylabel(r"$D_\ell^{TT}\ [\mu{\rm K}^2]$")
+    for ax in axes[-1, :]:
+        ax.set_xlabel(r"$\ell$")
+    fig.suptitle("FB-5.7 Type-I regression harness against CAMB Planck-2018 on a shared $\\ell$ grid", fontsize=10)
+    fig.tight_layout()
+    _save(fig, "05_Dl_TT_vs_camb_per_k", TOPIC_17)
+
+
+# ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
 
@@ -3931,6 +4187,18 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("13_fb14_anisotropic_3curvature_per_type",
          plot_11_13_fb14_anisotropic_3curvature_per_type,
          "FB-1.4 Phase FB-1 exit: ³R_ab^aniso diag + eigenvalues + trace-free residual across 11 types + FLRW."),
+    ],
+    TOPIC_17: [
+        ("01_harmonic_modes_per_type", plot_17_01_harmonic_modes_per_type,
+         "FB-5.1 representative harmonic-mode spectrum and family per Bianchi type."),
+        ("02_adiabatic_seed_ic", plot_17_02_adiabatic_seed_ic,
+         "FB-5.3 CAMB-regular adiabatic seed amplitudes versus k."),
+        ("03_k_zero_limit_recovery", plot_17_03_k_zero_limit_recovery,
+         "FB-5.4 recovery of the k→0 seed prefix against the LB-6 zero-IC anchor."),
+        ("04_tilted_boost_seed_rule", plot_17_04_tilted_boost_seed_rule,
+         "FB-5.6 temperature and E-mode m=0 slices before and after the axisymmetric boost."),
+        ("05_Dl_TT_vs_camb_per_k", plot_17_05_Dl_TT_vs_camb_per_k,
+         "FB-5.7 Type-I D_ell^TT proxy against the CAMB Planck-2018 oracle for four k values."),
     ],
 }
 

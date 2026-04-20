@@ -901,3 +901,45 @@ fresh cumulative count.
   and the FB-7.4 scope distinction remains pinned as
   cosmological-frame-only with observer-frame composition deferred to
   FB-8.
+
+### FB-5 actual-work — local implementation pass
+
+- **Scope**: Replaced the seven FB-5 perturbation skeletons with
+  working local implementations, wired the complex-dtype harmonic-mode
+  dispatch through `hierarchy_rhs_photon`, and added a real test surface
+  across FB-5.1 through FB-5.7.
+- **Code anchor**:
+  - hierarchy-side dtype work in
+    `htt/bass/hierarchy/{contractions,pstf_tensor,terms,hierarchy_rhs}.py`
+  - perturbation-side implementations in
+    `htt/bass/perturbation/{harmonic_modes,full_nabla_operator,regular_adiabatic_ic,k_zero_limit_gate,class_b_mode_quantization,tilted_seed_rule,k_type_regression}.py`
+- **Test delta**:
+  - `208 passed` on the seven FB-5 perturbation modules
+  - `467 passed` on the touched hierarchy + perturbation verification
+    sweep
+- **Gallery**: added topic
+  `figures/physics_gallery/17_perturbation_k_modes/` with five rendered
+  PNGs and corresponding `scripts/make_physics_gallery.py` hooks.
+- **Manuscript**: added a new Chapter 3 section
+  `Perturbation sector: harmonic modes on Bianchi backgrounds`, a
+  Chapter 7 validation subsection, and bibliography entries for
+  Harrison 1967, Pontzen--Challinor 2007, and Sachs--Wolfe 1967.
+- **Audit**: `docs/audits/AUDIT_PHASE_FB5_2026-04-20.md`.
+- **Carry-forward**: the code, tests, gallery hooks, and manuscript
+  references are landed locally, but the prompt's requested per-subphase
+  commit chain and final FB-5 close commit were not produced in-session.
+
+### FB-5.CLOSE — perturbation sector k ≠ 0
+
+- **Scope**: Closed Phase FB-5 with the rendered Topic-17 gallery, a
+  completed manual visual pass on the key PNGs, the FB-5 audit
+  closeout, and the handoff rotated to FB-6 actual work.
+- **Commit anchor**: pending current close commit
+  (`FB-5: Phase FB-5 complete (k≠0 perturbation)`).
+- **Regression anchor**: `467 passed` on the touched hierarchy +
+  perturbation verification sweep.
+- **Deviation note**: the requested `FB-5.1:` ... `FB-5.7:` history was
+  not reconstructed after the local implementation pass; the phase
+  closes instead with one explicit audited closeout commit.
+- **Next target**: `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` now
+  points to FB-6 actual work.

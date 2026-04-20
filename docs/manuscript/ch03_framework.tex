@@ -3470,6 +3470,134 @@ results of this work and the programme of future
 extensions discussed in
 Chapter~\ref{ch:future}.
 
+% ============================================================
+\section{Perturbation sector: harmonic modes on Bianchi backgrounds}
+\label{sec:perturbation-bianchi-modes}
+% ============================================================
+
+The background-only Lowell system closes the homogeneous Bianchi
+sector, but the observable CMB anisotropy requires the
+inhomogeneous perturbation problem at $k \neq 0$.  In the present
+implementation we factor that extension into seven explicit
+surfaces: a harmonic-mode context builder, a rotated
+$\tilde{\nabla}$ operator, a regular adiabatic initial-condition
+constructor, a $k \rightarrow 0$ recovery gate, a Class-B
+quantisation helper, a tilted-seed boost rule, and a
+type-by-type regression harness.  This decomposition keeps the
+homogeneous LB-6 background anchor intact while making every
+perturbative assumption auditable in code and in figures.
+
+\subsection{Harmonic-mode decomposition and complex transport}
+
+The perturbation state is labelled by a harmonic mode
+$Y_k(x)$ adapted to the relevant Bianchi type.  Types~I and
+FLRW reduce to ordinary plane waves, Type~V carries the
+hyperbolic offset of Harrison's open-universe harmonics
+\cite{Harrison1967}, Type~VII$_0$ keeps the symmetric-line helical
+reduction, and Type~IX retains the discrete $S^3$ spectrum.
+Class-B types (III, IV, VI$_h$, VII$_h$) are represented on the
+abelian $(e_1,e_3)$ plane, with the spiral morphology of
+VII$_h$ following the Pontzen--Challinor description
+\cite{PontzenChallinor2007}.  The crucial bookkeeping point is
+that $\tilde{\nabla}_a$ acting on a mode is generically complex,
+so the hierarchy driver must preserve complex dtype all the way
+through the packed PSTF tower.
+
+\subsection{Full $\tilde{\nabla}$ operator}
+
+Axis-aligned subsets are already covered by the audited
+FB-2 dispatch.  The FB-5 lift adds a full rotated operator by
+constructing the verified axis-aligned operator in a canonical
+frame and conjugating it with an explicit Euler rotation.  This
+makes the off-axis Wigner-style dependence visible at the API
+level rather than burying it in hidden control flow, and it
+ensures that the identity-angle limit reduces exactly to the
+audited FB-2 branch.
+
+\subsection{Regular adiabatic seed}
+
+The regular adiabatic startup is anchored to the radiation-era
+series for $\eta_{\rm cov}$, $\Delta_\gamma$, $\Delta_b$,
+$\Delta_c$, $\Delta_\nu$, $q_\gamma$, $q_\nu$, $\pi_\nu$, and
+$G_3$, with the photon quadrupole placed on the tight-coupling
+manifold rather than forced to zero.  In the flat FLRW limit this
+is the same superhorizon regular mode that underlies the standard
+CAMB/CLASS startup and the Sachs--Wolfe large-scale picture
+\cite{SachsWolfe1967}.  Figure~\ref{fig:fb5_harmonic_modes}
+summarises the per-type harmonic families, while
+Figure~\ref{fig:fb5_seed_and_regression}a shows the startup
+scalings for the photon and matter perturbations.
+
+\subsection{$k = 0$ limit gate}
+
+The $k = 0$ branch is not a separate solver; it is a recovery
+condition on the perturbative pipeline.  We therefore expose it as
+an explicit validator that compares the perturbative prefix
+against the LB-6 zero-state anchor and requires byte identity at
+exact $k = 0$.  This sharpens two separate claims: the harmonic
+layer may introduce complex transport at $k \neq 0$, but it must
+collapse continuously onto the background-only branch as the mode
+scale vanishes; and any extra perturbation auxiliaries must also
+vanish in that limit.
+
+\subsection{Class-B quantisation}
+
+The Class-B families require a mode label beyond the raw
+three-vector because the scalar Laplacian carries a twist offset.
+For Type~V the offset is Harrison's $a^2$ term
+\cite{Harrison1967}; for III, IV, VI$_h$, and VII$_h$ the
+implementation generalises this to $a_{\rm twist}^2/(1+|h|)$
+using the same structure-constant single source of truth as the
+background sector.  The result is a metadata layer that can be
+threaded through the perturbation pipeline without widening the
+core harmonic descriptor.
+
+\subsection{Tilted seed regularisation}
+
+Tilted perturbation startup is treated as a two-step map: first
+construct the regular seed in the electron frame, then apply the
+axisymmetric boost kernel and re-project onto the retained
+$m=0$ surface.  The explicit separation matters because the
+$\beta = 0$ path must remain byte-identical to the orthogonal
+seed, while the non-zero tilt case mixes adjacent multipoles in
+the way anticipated by the PSTF boost algebra.
+
+\subsection{$k \times$ type regression surface}
+
+The final perturbation layer is a regression harness over
+Bianchi type and wavenumber.  Its role is not to hide the oracle
+inside an opaque test, but to make the coverage grid explicit:
+type label, mode family, spectrum kind, regular seed, and
+low-$\ell$ $D_\ell^{TT}$ comparison are all returned in one
+auditable bundle.  In the FLRW and Type-I limit the harness is
+compared directly to the Planck-2018 CAMB reference, while the
+other types retain their geometry-dependent modulation on the
+same shared $\ell$ grid.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/physics_gallery/17_perturbation_k_modes/01_harmonic_modes_per_type.png}
+\caption{Representative harmonic-mode families for the perturbation
+sector.  The upper panel shows the scalar Laplacian magnitude of a
+representative mode in each Bianchi type; the lower panel records the
+continuous versus discrete family label used by the FB-5 context
+builder.}
+\label{fig:fb5_harmonic_modes}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/physics_gallery/17_perturbation_k_modes/02_adiabatic_seed_ic.png}
+\vspace{0.8em}
+\includegraphics[width=0.82\linewidth]{figures/physics_gallery/17_perturbation_k_modes/05_Dl_TT_vs_camb_per_k.png}
+\caption{FB-5 perturbation validation surfaces.  Top: regular adiabatic
+seed amplitudes at the radiation-era initial surface.  Bottom:
+type-I $D_\ell^{TT}$ proxy curves from the perturbation regression
+harness against the Planck-2018 CAMB reference on a shared multipole
+grid.}
+\label{fig:fb5_seed_and_regression}
+\end{figure}
+
 % === END INLINED ===
 
 % === INLINED: figures_ch02.tex ===
@@ -3561,4 +3689,3 @@ Chapter~\ref{ch:future}.
 \label{fig:4D_projection_atlas}
 \end{figure}
 % === END INLINED ===
-

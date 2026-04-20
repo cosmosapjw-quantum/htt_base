@@ -358,8 +358,8 @@ def hierarchy_rhs_photon(
     # Materialise the full-tensor form of every Π_ℓ in the tower.
     Pi_full = [pstf_to_tensor(t) for t in state.tensors]
 
-    dy = np.empty_like(y_flat)
-    offset = 0
+    packed_blocks: list[np.ndarray] = []
+    target_dtype = np.complex128 if np.iscomplexobj(y_flat) else np.float64
     for ell in range(L_max + 1):
         size = 2 * ell + 1
 
@@ -444,16 +444,25 @@ def hierarchy_rhs_photon(
         Pi_dot_full = K_full - sum_T
 
         # Overdot → η-prime: Π'(η) = a(η) × Π̇.
-        dPi_deta_full = a_val * np.asarray(Pi_dot_full, dtype=np.float64)
+        dPi_deta_full = a_val * np.asarray(Pi_dot_full)
 
         # Pack (PSTF-project along the way for numerical hygiene; the
         # sum is already PSTF by construction up to ε_mach, so pack
         # returns identical output as pack(sym_trace_free(...)).)
-        components = pstf_pack(dPi_deta_full)
-        dy[offset:offset + size] = components
-        offset += size
+        components = np.asarray(
+            pstf_pack(dPi_deta_full),
+            dtype=np.result_type(target_dtype, dPi_deta_full.dtype),
+        )
+        if components.shape != (size,):
+            raise RuntimeError(
+                f"pstf_pack returned shape {components.shape} for ell={ell}, "
+                f"expected {(size,)}"
+            )
+        packed_blocks.append(components)
 
-    return dy
+    return np.concatenate(packed_blocks) if packed_blocks else np.zeros(
+        0, dtype=target_dtype
+    )
 
 
 # ════════════════════════════════════════════════════════════════════

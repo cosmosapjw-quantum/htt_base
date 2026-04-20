@@ -55,6 +55,18 @@ L_MAX_CACHED: int = 8
 _STF_BASIS_CACHE: Dict[int, np.ndarray] = {}
 
 
+def _numeric_dtype(value: np.ndarray | object) -> np.dtype:
+    """Return the canonical floating dtype for real/complex tensors.
+
+    The STF basis itself is real-valued, but FB-5 evolves complex mode
+    amplitudes. We therefore preserve complex128 whenever the input has
+    a non-zero imaginary lane and otherwise keep the historical float64
+    path byte-identical.
+    """
+    arr = np.asarray(value)
+    return np.dtype(np.complex128 if np.iscomplexobj(arr) else np.float64)
+
+
 def _symmetric_basis_flat(ell: int) -> np.ndarray:
     """Return the symmetric-tensor basis for rank ``ell`` as a flat matrix.
 
@@ -179,9 +191,11 @@ def sym_trace_free(tensor: np.ndarray) -> np.ndarray:
 
     Reference: Ellis §4.5 (STF projection); Ellis-Bruni-Ellis 1992.
     """
-    arr = np.asarray(tensor, dtype=np.float64)
+    arr = np.asarray(tensor)
+    dtype = _numeric_dtype(arr)
+    arr = arr.astype(dtype, copy=False)
     if arr.ndim == 0:
-        return np.asarray(arr, dtype=np.float64).copy()
+        return np.asarray(arr, dtype=dtype).copy()
     if arr.ndim == 1:
         return arr.copy()
 
@@ -207,9 +221,11 @@ def pstf_pack(tensor: np.ndarray) -> np.ndarray:
 
     Reference: 02_multipole_hierarchy_spec.md §2.3 (``pstf_from_tensor``).
     """
-    arr = np.asarray(tensor, dtype=np.float64)
+    arr = np.asarray(tensor)
+    dtype = _numeric_dtype(arr)
+    arr = arr.astype(dtype, copy=False)
     if arr.ndim == 0:
-        return np.array([float(arr)], dtype=np.float64)
+        return np.array([arr.item()], dtype=dtype)
     ell = arr.ndim
     if any(dim != 3 for dim in arr.shape):
         raise ValueError(
@@ -224,13 +240,15 @@ def pstf_unpack(components: np.ndarray, ell: int) -> np.ndarray:
 
     Reference: 02_multipole_hierarchy_spec.md §2.3 (``pstf_to_tensor``).
     """
-    c = np.asarray(components, dtype=np.float64)
+    c = np.asarray(components)
+    dtype = _numeric_dtype(c)
+    c = c.astype(dtype, copy=False)
     if c.shape != (2 * ell + 1,):
         raise ValueError(
             f"components shape {c.shape} != (2ell+1,) = ({2*ell+1},) for ell={ell}"
         )
     if ell == 0:
-        return np.array(float(c[0]), dtype=np.float64)
+        return np.array(c[0].item(), dtype=dtype)
     Q = stf_basis(ell)
     return (Q @ c).reshape((3,) * ell)
 
@@ -246,7 +264,7 @@ def verify_pstf_invariants(
 
     Reference: 00_conventions.md §5.1, invariant #6 of README §5.
     """
-    arr = np.asarray(tensor, dtype=np.float64)
+    arr = np.asarray(tensor)
     if arr.ndim < 2:
         return True, ""
     ell = arr.ndim

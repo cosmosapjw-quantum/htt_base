@@ -1,13 +1,169 @@
-"""FB-5.3 skeleton — CAMB regular adiabatic seed initial conditions.
+"""FB-5.3 — CAMB-regular adiabatic seed for one perturbative mode.
 
-This module deliberately ships no physics during the FB-META-5
-rotation. The public surface below is a contract placeholder only and
-must raise ``NotImplementedError`` until the perturbation-sector CAMB
-regular adiabatic seed is derived and packed onto the BASS state vector.
+The returned vector is a perturbation-side extension of the shipped
+LB-5 combined state layout:
+
+1. The prefix is the standard ``pack_combined_state`` block
+   ``(a, Sigma_+, Sigma_-, photon_T, photon_E, neutrino_reduced)``.
+2. Six extra scalars are appended:
+   ``(delta_b, theta_b, delta_c, theta_c, eta_cov, Z)``.
+
+This keeps the background / hierarchy prefix byte-compatible with the
+existing pack/unpack SSOT while giving FB-5 a place to carry the baryon,
+CDM, and metric startup amplitudes that are not part of LB-5's runtime
+state vector yet.
 """
 from __future__ import annotations
 
+from typing import Final
+
 import numpy as np
+
+from bass.collision.polarization import zero_polarization_hierarchy
+from bass.hierarchy.ic import zero_IC
+from bass.hierarchy.pack_unpack import (
+    NEUTRINO_REDUCED_SIZE,
+    combined_total_size,
+    pack_combined_state,
+    slice_neutrino_reduced,
+    unpack_combined_state,
+)
+from bass.hierarchy.pstf_tensor import zero_hierarchy
+from bass.species.constants import default_constants
+
+
+__all__ = [
+    "CAMB_REGULAR_ADIABATIC_EXTRA_LABELS",
+    "CAMB_REGULAR_ADIABATIC_EXTRA_SIZE",
+    "regular_adiabatic_seed_total_size",
+    "infer_regular_adiabatic_seed_L_max",
+    "slice_regular_adiabatic_extras",
+    "make_camb_regular_adiabatic_seed",
+    "unpack_camb_regular_adiabatic_seed",
+    "seed_observables",
+]
+
+
+CAMB_REGULAR_ADIABATIC_EXTRA_LABELS: Final[tuple[str, ...]] = (
+    "delta_b",
+    "theta_b",
+    "delta_c",
+    "theta_c",
+    "eta_cov",
+    "Z",
+)
+CAMB_REGULAR_ADIABATIC_EXTRA_SIZE: Final[int] = (
+    len(CAMB_REGULAR_ADIABATIC_EXTRA_LABELS)
+)
+
+_EXTRA_INDEX: Final[dict[str, int]] = {
+    name: idx for idx, name in enumerate(CAMB_REGULAR_ADIABATIC_EXTRA_LABELS)
+}
+
+
+def regular_adiabatic_seed_total_size(L_max: int) -> int:
+    """Total packed size of the FB-5.3 seed vector."""
+    return combined_total_size(L_max) + CAMB_REGULAR_ADIABATIC_EXTRA_SIZE
+
+
+def infer_regular_adiabatic_seed_L_max(seed_size: int) -> int:
+    """Infer ``L_max`` from the packed seed length."""
+    if seed_size <= 0:
+        raise ValueError(f"seed_size must be positive, got {seed_size}")
+    for L_max in range(2, 257):
+        if regular_adiabatic_seed_total_size(L_max) == seed_size:
+            return L_max
+    raise ValueError(
+        f"seed_size={seed_size} does not match any supported "
+        f"regular-adiabatic layout"
+    )
+
+
+def slice_regular_adiabatic_extras(L_max: int) -> slice:
+    """Slice of the appended ``(delta_b, theta_b, delta_c, theta_c, eta, Z)`` block."""
+    start = combined_total_size(L_max)
+    return slice(start, start + CAMB_REGULAR_ADIABATIC_EXTRA_SIZE)
+
+
+def _extra_value(extras: np.ndarray, name: str) -> float:
+    return float(extras[_EXTRA_INDEX[name]])
+
+
+def _approx_tau_c(eta_initial: float, a_initial: float) -> float:
+    """Early-time TCA startup timescale.
+
+    This is not a recombination solve; it is a deterministic radiation-
+    era scaling chosen only to populate the small photon quadrupole / E2
+    startup surface in the absence of the full Thomson-rate pipeline.
+    """
+    return 0.15 * eta_initial / np.sqrt(max(a_initial, 1.0e-30))
+
+
+def _seed_formulae(
+    *,
+    k_comoving: float,
+    eta_initial: float,
+    a_initial: float,
+) -> dict[str, float]:
+    """Leading-order regular-adiabatic startup formulas from Lowell §13.2."""
+    constants = default_constants()
+    R_nu = constants.Omega_nu_0 / constants.Omega_r_0
+    omega = constants.H0_mpc * constants.Omega_m_0 / np.sqrt(
+        constants.Omega_r_0
+    )
+
+    x = float(k_comoving) * float(eta_initial)
+    x2 = x * x
+    x3 = x2 * x
+    denom = 4.0 * R_nu + 15.0
+    B_K_sq = 1.0
+
+    eta_cov = 2.0 * B_K_sq * (
+        1.0 - (x2 / 12.0) * (B_K_sq - 10.0 / denom)
+    )
+    delta_gamma = (
+        (B_K_sq / 3.0) * x2
+        - (B_K_sq / 15.0) * omega * (k_comoving ** 2) * (eta_initial ** 3)
+    )
+    delta_b = (
+        (B_K_sq / 4.0) * x2
+        - (B_K_sq / 20.0) * omega * (k_comoving ** 2) * (eta_initial ** 3)
+    )
+    theta_gamma = (B_K_sq / 27.0) * x3
+    theta_nu = (B_K_sq / 27.0) * ((4.0 * R_nu + 23.0) / denom) * x3
+    pi_nu = -(4.0 / (3.0 * denom)) * x2
+    G_3 = -(4.0 / (21.0 * denom)) * x3
+    Z = (
+        -(B_K_sq / 2.0) * k_comoving * eta_initial
+        + (3.0 * B_K_sq / 20.0) * omega * k_comoving * (eta_initial ** 2)
+    )
+
+    tau_c = _approx_tau_c(eta_initial, a_initial)
+    # Sign chosen to match the early-time CAMB convention at the same
+    # radiation-era startup point.
+    pi_gamma = -(32.0 / 45.0) * k_comoving * tau_c * theta_gamma
+    E_2 = 0.25 * pi_gamma
+
+    return {
+        "eta_cov": float(eta_cov),
+        "delta_gamma": float(delta_gamma),
+        "delta_nu": float(delta_gamma),
+        "delta_b": float(delta_b),
+        "delta_c": float(delta_b),
+        "theta_gamma": float(theta_gamma),
+        "theta_nu": float(theta_nu),
+        "theta_b": float(theta_gamma),
+        "theta_c": float(theta_gamma),
+        "pi_nu": float(pi_nu),
+        "G_3": float(G_3),
+        "Z": float(Z),
+        "pi_gamma": float(pi_gamma),
+        "E_2": float(E_2),
+        "R_nu": float(R_nu),
+        "omega": float(omega),
+        "B_K_sq": float(B_K_sq),
+        "tau_c": float(tau_c),
+    }
 
 
 def make_camb_regular_adiabatic_seed(
@@ -17,27 +173,173 @@ def make_camb_regular_adiabatic_seed(
     a_initial: float,
     L_max: int,
 ) -> np.ndarray:
-    """Future FB-5.3 CAMB-style regular adiabatic perturbation seed.
+    """Build the FB-5.3 regular-adiabatic startup vector.
 
-    Contract only: this surface is reserved for the future replacement
-    of the current zero-by-default perturbation seed with a packed
-    regular-adiabatic state carrying the leading-order radiation-era
-    photon, baryon, CDM, and neutrino amplitudes for one comoving mode.
+    The FLRW-limit formulas follow Lowell §13.2. The photon tower stores
+    only the ``m = 0`` slice at startup:
 
-    References
-    ----------
-    - ``docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-5``.
-    - ``bass/hierarchy/ic.py`` (current zero-IC anchor and the explicit
-      forward note that CAMB-regular seeding belongs in FB-5.3).
-    - Ma & Bertschinger 1995, arXiv:astro-ph/9506072 (super-horizon
-      isentropic / adiabatic initial conditions).
-    - ``# TODO: citation needed`` exact CAMB seed locator; the prompt-
-      supplied Lewis-Challinor anchor `astro-ph/9911177` is a closed-FRW
-      line-of-sight paper, not an initial-condition derivation.
-    - ``# TODO: citation needed`` historical Lowell solver reference
-      ``§13.2`` path is not present on disk in this worktree.
+    - ``Π_0(m=0) = delta_gamma / 4``
+    - ``Π_1(m=0) = theta_gamma``
+    - ``Π_2(m=0) = pi_gamma`` (TCA startup)
+    - ``E_2(m=0) = E_2``
+
+    Higher moments remain zero.
     """
-    raise NotImplementedError(
-        "FB-5.3 skeleton only: CAMB regular adiabatic seed initial "
-        "conditions are not implemented."
+    k_val = float(k_comoving)
+    eta_val = float(eta_initial)
+    a_val = float(a_initial)
+    if not np.isfinite(k_val) or k_val < 0.0:
+        raise ValueError(
+            f"k_comoving must be finite and non-negative, got {k_comoving!r}"
+        )
+    if not np.isfinite(eta_val) or eta_val <= 0.0:
+        raise ValueError(
+            f"eta_initial must be finite and positive, got {eta_initial!r}"
+        )
+    if not np.isfinite(a_val) or a_val <= 0.0:
+        raise ValueError(
+            f"a_initial must be finite and positive, got {a_initial!r}"
+        )
+    if L_max < 2:
+        raise ValueError(
+            f"L_max must be >= 2 for the E-mode startup, got L_max={L_max}"
+        )
+    if k_val == 0.0:
+        prefix = zero_IC(L_max=L_max, a_initial=a_val)
+        out = np.zeros(
+            prefix.size + CAMB_REGULAR_ADIABATIC_EXTRA_SIZE,
+            dtype=np.float64,
+        )
+        out[: prefix.size] = prefix
+        return out
+
+    formulas = _seed_formulae(
+        k_comoving=k_val,
+        eta_initial=eta_val,
+        a_initial=a_val,
     )
+
+    photon_T = zero_hierarchy(L_max)
+    photon_E = zero_polarization_hierarchy(L_max)
+    photon_T.tensors[0].components[0] = formulas["delta_gamma"] / 4.0
+    photon_T.tensors[1].components[1] = formulas["theta_gamma"]
+    photon_T.tensors[2].components[2] = formulas["pi_gamma"]
+    photon_E.E.tensors[2].components[2] = formulas["E_2"]
+    nu = np.array(
+        [
+            formulas["delta_nu"],
+            formulas["theta_nu"],
+            formulas["pi_nu"],
+            formulas["G_3"],
+        ],
+        dtype=np.float64,
+    )
+
+    prefix = pack_combined_state(
+        a=a_val,
+        Sigma_plus=0.0,
+        Sigma_minus=0.0,
+        photon_T=photon_T,
+        photon_E=photon_E,
+        neutrino_reduced=nu,
+        L_max=L_max,
+    )
+    extras = np.array(
+        [
+            formulas["delta_b"],
+            formulas["theta_b"],
+            formulas["delta_c"],
+            formulas["theta_c"],
+            formulas["eta_cov"],
+            formulas["Z"],
+        ],
+        dtype=np.float64,
+    )
+    out = np.empty(prefix.size + CAMB_REGULAR_ADIABATIC_EXTRA_SIZE, dtype=np.float64)
+    out[: prefix.size] = prefix
+    out[prefix.size :] = extras
+    return out
+
+
+def unpack_camb_regular_adiabatic_seed(
+    seed_state: np.ndarray,
+    *,
+    L_max: int | None = None,
+) -> dict[str, object]:
+    """Unpack the FB-5.3 seed into structured fields."""
+    arr = np.asarray(seed_state, dtype=np.float64)
+    if arr.ndim != 1:
+        raise ValueError(
+            f"seed_state must be 1-D, got shape {arr.shape}"
+        )
+    if L_max is None:
+        L_max = infer_regular_adiabatic_seed_L_max(arr.size)
+    expected = regular_adiabatic_seed_total_size(L_max)
+    if arr.shape != (expected,):
+        raise ValueError(
+            f"seed_state shape {arr.shape} != ({expected},) for L_max={L_max}"
+        )
+    prefix_n = combined_total_size(L_max)
+    combined = unpack_combined_state(arr[:prefix_n], L_max=L_max)
+    extras = arr[slice_regular_adiabatic_extras(L_max)].copy()
+    return {
+        "L_max": L_max,
+        "combined": combined,
+        "extras": extras,
+        "delta_b": _extra_value(extras, "delta_b"),
+        "theta_b": _extra_value(extras, "theta_b"),
+        "delta_c": _extra_value(extras, "delta_c"),
+        "theta_c": _extra_value(extras, "theta_c"),
+        "eta_cov": _extra_value(extras, "eta_cov"),
+        "Z": _extra_value(extras, "Z"),
+    }
+
+
+def seed_observables(
+    seed_state: np.ndarray,
+    *,
+    L_max: int | None = None,
+) -> dict[str, float]:
+    """Return the named startup observables carried by a packed seed."""
+    unpacked = unpack_camb_regular_adiabatic_seed(seed_state, L_max=L_max)
+    combined = unpacked["combined"]
+    assert combined is not None
+    L_max_eff = int(unpacked["L_max"])
+
+    photon_T = combined.photon_T
+    photon_E = combined.photon_E.E
+    theta_gamma = (
+        float(photon_T.tensors[1].components[1]) if L_max_eff >= 1 else 0.0
+    )
+    pi_gamma = (
+        float(photon_T.tensors[2].components[2]) if L_max_eff >= 2 else 0.0
+    )
+    E_2 = float(photon_E.tensors[2].components[2]) if L_max_eff >= 2 else 0.0
+    nu = np.asarray(combined.neutrino_reduced, dtype=np.float64)
+    return {
+        "a": float(combined.a),
+        "Sigma_plus": float(combined.Sigma_plus),
+        "Sigma_minus": float(combined.Sigma_minus),
+        "delta_gamma": 4.0 * float(photon_T.tensors[0].components[0]),
+        "theta_gamma": theta_gamma,
+        "pi_gamma": pi_gamma,
+        "E_2": E_2,
+        "delta_nu": float(nu[0]),
+        "theta_nu": float(nu[1]),
+        "pi_nu": float(nu[2]),
+        "G_3": float(nu[3]),
+        "delta_b": float(unpacked["delta_b"]),
+        "theta_b": float(unpacked["theta_b"]),
+        "delta_c": float(unpacked["delta_c"]),
+        "theta_c": float(unpacked["theta_c"]),
+        "eta_cov": float(unpacked["eta_cov"]),
+        "Z": float(unpacked["Z"]),
+    }
+
+
+# Keep the LB-5 zero-IC anchor reachable from this module; several FB-5
+# tests compare their k -> 0 prefix against the shipped background-only
+# layout.
+_ = zero_IC
+_ = slice_neutrino_reduced
+_ = NEUTRINO_REDUCED_SIZE

@@ -114,9 +114,10 @@ def zero_nabla_operator(tensor: np.ndarray, kind: str = "gradient") -> np.ndarra
     Reference: 02_multipole_hierarchy_spec.md §4.2 — background-level
     shortcut for orthogonal Bianchi I/V/VII₀.
     """
-    arr = np.asarray(tensor, dtype=np.float64)
+    arr = np.asarray(tensor)
+    out_dtype = np.complex128 if np.iscomplexobj(arr) else np.float64
     if kind == "gradient":
-        return np.zeros((3,) * (arr.ndim + 1), dtype=np.float64)
+        return np.zeros((3,) * (arr.ndim + 1), dtype=out_dtype)
     if kind == "divergence":
         if arr.ndim == 0:
             raise ValueError(
@@ -124,8 +125,8 @@ def zero_nabla_operator(tensor: np.ndarray, kind: str = "gradient") -> np.ndarra
             )
         target_rank = arr.ndim - 1
         if target_rank == 0:
-            return np.array(0.0, dtype=np.float64)
-        return np.zeros((3,) * target_rank, dtype=np.float64)
+            return np.array(0.0, dtype=out_dtype)
+        return np.zeros((3,) * target_rank, dtype=out_dtype)
     raise ValueError(f"kind must be 'gradient' or 'divergence', got {kind!r}")
 
 
@@ -397,7 +398,7 @@ def T4_accel_divergence(
     # Contract A^b with the last axis of Π_{ℓ+1}.
     raw = np.tensordot(Pi_ell_plus_1_full, accel_vector, axes=([-1], [0]))
     if ell == 0:
-        return np.asarray(prefactor * raw, dtype=np.float64)
+        return np.asarray(prefactor * raw)
     return prefactor * sym_trace_free(raw)
 
 
@@ -525,7 +526,7 @@ def T7_shear_up(
         Pi_ell_plus_2_full, sigma_tensor, axes=([-2, -1], [0, 1])
     )
     if ell == 0:
-        return np.asarray(prefactor * raw, dtype=np.float64)
+        return np.asarray(prefactor * raw)
     return prefactor * sym_trace_free(raw)
 
 

@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-4 actual-work → FB-5 actual-work**; Phase FB-4 Layer-B seeds are now landed locally and the handoff advances to the next phase prompt)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB4_2026-04-20.md`
-**Current target session**: **FB-5 actual-work** — paste the canonical FB-5 prompt as the first user message
-**Phase status**: FB-4 actual-work is complete locally. The current close-gate suite reaches `3479 passed + 70 skipped + 3 errors`; the only remaining whole-suite blocker is the missing `data/camb_ref_planck2018.npz` fixture at LB-6-19/20/21.
+**Last rotated**: 2026-04-20 (**FB-5 closeout → FB-6 actual work**; Phase FB-5 is closed on this branch with an audited single-commit deviation from the requested per-subphase history)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB5_2026-04-20.md`
+**Current target session**: **FB-6 actual work** — implement the 22-configuration regression suite on top of the committed FB-6 harness
+**Phase status**: FB-5 is closed locally: the targeted verification surface reaches `467 passed`, topic 17 is rendered and visually checked, and the handoff is rotated to FB-6. The next coding surface is the committed FB-6 integration harness skeleton.
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,42 +37,101 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-5 actual-work — paste the Phase FB-5 prompt
+# FB-6 actual work — 22-configuration regression suite
 
-Phase FB-4 actual-work is now closed locally.
+Before doing anything else, read:
+- `docs/audits/AUDIT_PHASE_FB5_2026-04-20.md`
+- `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md`
+- `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-6`
+- `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
+- `htt/bass/integration/test_full_bianchi_coverage.py`
+- `htt/bass/integration/test_lowell_bianchi.py`
+- `htt/bass/hierarchy/test_fb36_tilted_regression.py`
 
-Before starting FB-5, read:
-- `docs/audits/AUDIT_PHASE_FB4_2026-04-20.md`
-- `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-5`
-- `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`
-- `docs/manuscript/ch04_bianchi_bounds.tex` (Robustness paragraph)
-- `scripts/make_physics_gallery.py` Topic 10 additions
-- `figures/physics_gallery/10_collision_and_visibility/04_thomson_beta_sweep_Dl.png`
-- `figures/physics_gallery/10_collision_and_visibility/05_bb_from_tilted_lens_e.png`
-- `figures/physics_gallery/10_collision_and_visibility/06_doppler_second_order_residual.png`
+Baseline and carry-forward:
+- Phase FB-5 is closed on this branch. The perturbation-sector code,
+  topic-17 gallery, and Chapter 3 / 7 manuscript references are
+  already landed.
+- `data/camb_ref_planck2018.npz` is present and reused by the committed
+  FB-6 oracle skeleton rows.
+- `htt/bass/integration/test_full_bianchi_coverage.py` already pins:
+  - 22 explicit per-type × tilt rows in `FB61_CONFIGURATION_CASES`
+  - 5 named continuity limits in `FB62_CONTINUITY_LIMIT_CASES`
+  - 10 literature/CAMB oracle rows in `FB63_ORACLE_FIXTURE_CASES`
+- Preserve the existing FB-5 / FB-6 deferred carries listed in the plan
+  and archived handoff history. Do not reopen them casually.
 
-FB-4 carry-forward pins:
-- Layer-B runtime changes live only in `htt/bass/collision/`; `htt/`
-  remains intentionally unstaged by contract.
-- The shipped Layer-B boost is axis-aligned only; arbitrary-direction
-  Wigner-d rotation is still reserved for **FB-5.2**.
-- The quadratic Thomson `v_e^2` term remains an additive
-  `gamma_sq - 1` remainder; a literature-complete version is still
-  deferred until a verified source is recovered.
+This session's target:
+- replace the skipped FB-6 harness skeleton with working coverage tests
+- implement the minimum production helpers needed for the 22-row
+  regression matrix, the five cross-type continuity checks, and the
+  Pontzen-Challinor/CAMB oracle comparisons
+- keep the integration harness explicit; do not collapse the audit
+  surface into opaque generators
+- rotate this file again only after FB-6 closes or an honest blocker is
+  recorded in the audit
 
-Regression anchor:
-- `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3479 passed, 70 skipped, 3 errors`
-- The 3 errors are still the pre-existing CAMB fixture blocker at
-  `bass/integration/test_lowell_bianchi.py::TestLBCAMBMatch::{LB_6_19,LB_6_20,LB_6_21}`
-  because `data/camb_ref_planck2018.npz` is missing in the dirty worktree.
-
-Next action:
-- Paste the canonical **FB-5 actual-work** prompt as the first user
-  message. Do not reuse the FB-4 handoff text.
+Suggested verification anchor:
+- `PYTHONPATH=htt venv/bin/python -m pytest -q \
+   htt/bass/integration/test_full_bianchi_coverage.py \
+   htt/bass/integration/test_lowell_bianchi.py`
 ```
 
 ---
+
+<!-- Prior (FB-5 closeout) handoff prompt (archived 2026-04-20). -->
+
+<details>
+<summary>Previous FB-5 closeout handoff prompt (archived 2026-04-20)</summary>
+
+```text
+# FB-5 closeout — finish the bookkeeping pass, then rotate to FB-6
+
+Phase FB-5 actual work is now implemented locally but not phase-closed.
+
+- `docs/audits/AUDIT_PHASE_FB5_2026-04-20.md`
+- `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-5`
+- `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
+- `scripts/make_physics_gallery.py` Topic 17 additions
+- `figures/physics_gallery/17_perturbation_k_modes/01_harmonic_modes_per_type.png`
+- `figures/physics_gallery/17_perturbation_k_modes/03_k_zero_limit_recovery.png`
+- `figures/physics_gallery/17_perturbation_k_modes/05_Dl_TT_vs_camb_per_k.png`
+
+Local FB-5 state:
+- Complex-dtype `nabla` is wired through `hierarchy_rhs_photon`.
+- All seven FB-5 perturbation helpers are implemented under
+  `htt/bass/perturbation/`.
+- The seven FB-5 perturbation test modules are real (no skips left) and
+  the touched-surface verification anchor is:
+  `PYTHONPATH=htt venv/bin/python -m pytest -q \
+   htt/bass/hierarchy/test_contractions.py \
+   htt/bass/hierarchy/test_pstf_tensor.py \
+   htt/bass/hierarchy/test_terms.py \
+   htt/bass/hierarchy/test_hierarchy_rhs.py \
+   htt/bass/hierarchy/test_nabla_dispatch.py \
+   htt/bass/hierarchy/test_nabla_dispatch_fb22.py \
+   htt/bass/hierarchy/test_nabla_dispatch_fb23.py \
+   htt/bass/perturbation/test_fb51_harmonic_modes_skeleton.py \
+   htt/bass/perturbation/test_fb52_full_nabla_operator_skeleton.py \
+   htt/bass/perturbation/test_fb53_regular_adiabatic_ic_skeleton.py \
+   htt/bass/perturbation/test_fb54_k_zero_limit_gate_skeleton.py \
+   htt/bass/perturbation/test_fb55_class_b_mode_quantization_skeleton.py \
+   htt/bass/perturbation/test_fb56_tilted_seed_rule_skeleton.py \
+   htt/bass/perturbation/test_fb57_k_type_regression_skeleton.py`
+  → `467 passed`
+- `data/camb_ref_planck2018.npz` is present again in the worktree.
+
+Remaining closeout tasks:
+- perform a manual visual pass on the topic-17 PNGs
+- split the local FB-5 work into the intended commit history if you want
+  to preserve the one-commit-per-subphase audit shape
+- otherwise create an explicit deviation note in the audit and make one
+  honest closeout commit
+- only after that rotate this handoff to **FB-6 actual work**
+```
+
+---
+</details>
 
 <!-- Prior (FB-META-9) handoff prompt (archived 2026-04-20). -->
 

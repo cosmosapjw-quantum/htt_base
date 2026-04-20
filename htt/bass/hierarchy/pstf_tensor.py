@@ -59,14 +59,15 @@ class PSTFTensor:
     ----------
     ell : non-negative int
         Tensor rank (number of spatial indices).
-    components : (2ℓ+1,) float64 ndarray
+    components : (2ℓ+1,) float64 or complex128 ndarray
         Packed amplitudes in the real spherical-harmonic basis,
         ordered ``m = -ℓ, …, 0, …, +ℓ``.
 
     Post-construction invariants
     ----------------------------
     - ``len(components) == 2*ell + 1``.
-    - ``components.dtype == float64`` (coerced if necessary).
+    - ``components.dtype`` is coerced to ``float64`` or ``complex128``
+      depending on whether the input carries an imaginary lane.
 
     Reference: ``00_conventions.md §5``; Ellis §4.5.2.
     """
@@ -81,7 +82,9 @@ class PSTFTensor:
         if ell < 0:
             raise ValueError(f"ell must be non-negative, got {ell}")
         self.ell = ell
-        arr = np.asarray(self.components, dtype=np.float64)
+        arr = np.asarray(self.components)
+        dtype = np.complex128 if np.iscomplexobj(arr) else np.float64
+        arr = arr.astype(dtype, copy=False)
         expected_shape = (2 * ell + 1,)
         if arr.shape != expected_shape:
             raise ValueError(
@@ -118,12 +121,15 @@ class PSTFTensor:
     def __neg__(self) -> "PSTFTensor":
         return PSTFTensor(ell=self.ell, components=-self.components)
 
-    def __mul__(self, scalar: float) -> "PSTFTensor":
+    def __mul__(self, scalar: float | complex) -> "PSTFTensor":
         if isinstance(scalar, PSTFTensor):
+            return NotImplemented
+        scalar_arr = np.asarray(scalar)
+        if scalar_arr.ndim != 0:
             return NotImplemented
         return PSTFTensor(
             ell=self.ell,
-            components=self.components * float(scalar),
+            components=self.components * scalar_arr.item(),
         )
 
     __rmul__ = __mul__
@@ -152,7 +158,7 @@ class PSTFTensor:
         Because the packed basis is flat-orthonormal (``Q_ℓ^T Q_ℓ = I``),
         this reduces to ``Σ_m c_m²``.
         """
-        return float(np.sum(self.components ** 2))
+        return float(np.vdot(self.components, self.components).real)
 
     # --- Representations --------------------------------------------------
 
@@ -193,7 +199,7 @@ def pstf_from_tensor(tensor: np.ndarray) -> PSTFTensor:
     Reference: Ellis §4.5 Clebsch-Gordan decomposition;
     02_multipole_hierarchy_spec.md §2.3.
     """
-    arr = np.asarray(tensor, dtype=np.float64)
+    arr = np.asarray(tensor)
     if arr.ndim == 0:
         ell = 0
     else:
@@ -279,7 +285,9 @@ class PSTFHierarchyState:
         Reference: 02_multipole_hierarchy_spec.md §9.3.
         """
         expected = hierarchy_total_size(L)
-        arr = np.asarray(flat, dtype=np.float64)
+        arr = np.asarray(flat)
+        dtype = np.complex128 if np.iscomplexobj(arr) else np.float64
+        arr = arr.astype(dtype, copy=False)
         if arr.shape != (expected,):
             raise ValueError(
                 f"flat shape {arr.shape} != ({expected},) for L={L}"
