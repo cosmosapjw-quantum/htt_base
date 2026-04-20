@@ -23,7 +23,7 @@ __all__ = ['TeffMomentMap', 'EllMixingMatrix', 'EinsteinTeffODE',
            'NonlinearCorrection', 'DefectPropagation']
 
 # ═══ SSOT Constants ═══
-T0_UK    = 2.7255e6
+T0_UK    = 2.72548e6
 EPS2     = 3.559629e-6
 EPS3     = 6.065291e-6
 ETA_UDOT = 1.0 / 12.0  # w/(3(1+w)) for w=1/3; exact (was 0.083)

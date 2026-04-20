@@ -37,7 +37,7 @@ from scipy.interpolate import interp1d
 #  SSOT: Physical and Observational Constants
 # =====================================================================
 T0        = 2.72548       # K, CMB monopole temperature
-T0_UK     = 2.7255e6      # μK
+T0_UK     = T0 * 1e6      # μK
 EPS2      = 3.559629e-6   # ε₂ quadrupole (ΔT/T)
 EPS3      = 6.065291e-6   # ε₃ octupole (ΔT/T)
 ETA_UDOT  = 1.0 / 12.0    # w/(3(1+w)) for w=1/3; exact (was 0.083)

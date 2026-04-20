@@ -51,7 +51,7 @@ _OBS = load_obs() if _DEFAULT_PATH.exists() else {}
 class C:
     """Namespace for physical constants (VA-02 standard)."""
     T0_K  = 2.72548
-    T0_uK = 2.7255e6
+    T0_uK = T0_K * 1e6
 
     # Planck 2018
     Omega_m     = 0.3153
