@@ -43,8 +43,29 @@ _ALLOWED_PRODUCTION_STATUSES = {
     "blocked_missing_atlas",
     "blocked_owner_violation",
 }
+_ALLOWED_OBSERVABLE_MODES = {
+    "isotropic_compressed",
+    "deterministic_template",
+    "anisotropic_covariance",
+    "mixed_template_covariance",
+}
+_ALLOWED_TSC_CHARTS = {
+    "one_field",
+    "two_field",
+    "higher_field",
+    "full_resolved_trace",
+}
+_ALLOWED_TSC_CHART_STATUSES = {
+    "valid_one_field",
+    "valid_two_field",
+    "two_field_recommended",
+    "higher_field_recommended",
+    "full_resolved_trace_required",
+    "invalid_domain",
+}
 _ALLOWED_SOURCE_STATUSES = {"adequate", "inadequate", "pending"}
 _ALLOWED_PROPAGATION_STATUSES = {"pending", "validated", "blocked"}
+_ALLOWED_CHANNELS = {"TT", "TE", "EE", "BB", "TB", "EB", "BiPoSH", "template", "scalar_summary"}
 
 _ALLOWED_SOURCES = {
     "raw_diagnostic",
@@ -81,6 +102,24 @@ ProductionStatus = Literal[
     "blocked_missing_atlas",
     "blocked_owner_violation",
 ]
+ObservableMode = Literal[
+    "isotropic_compressed",
+    "deterministic_template",
+    "anisotropic_covariance",
+    "mixed_template_covariance",
+]
+TscChart = Literal["one_field", "two_field", "higher_field", "full_resolved_trace"]
+TscChartStatus = Literal[
+    "valid_one_field",
+    "valid_two_field",
+    "two_field_recommended",
+    "higher_field_recommended",
+    "full_resolved_trace_required",
+    "invalid_domain",
+]
+SourceStatus = Literal["adequate", "inadequate", "pending"]
+PropagationStatus = Literal["pending", "validated", "blocked"]
+Channel = Literal["TT", "TE", "EE", "BB", "TB", "EB", "BiPoSH", "template", "scalar_summary"]
 
 
 @dataclass(frozen=True)
@@ -187,6 +226,39 @@ class StatusSnapshotEntry:
 
 
 @dataclass(frozen=True)
+class ClaimLedgerEntry:
+    """Machine-readable claim-ledger row.
+
+    This is the shared contract counterpart of ``docs/claim_ledger.md``. It is
+    intentionally lightweight so later lanes can emit generated claim-tier
+    records without redefining schema or promotion semantics.
+    """
+
+    artifact_id: str
+    owner: Owner
+    claim_tier: ClaimTier
+    allowed_claims: tuple[str, ...]
+    forbidden_claims: tuple[str, ...]
+    evidence_refs: tuple[str, ...]
+    source_commit: str
+    notes: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not self.artifact_id:
+            raise ValueError("ClaimLedgerEntry.artifact_id must be non-empty")
+        if self.owner not in _ALLOWED_OWNERS:
+            raise ValueError(f"Unknown owner {self.owner!r}")
+        if self.claim_tier not in _ALLOWED_CLAIM_TIERS:
+            raise ValueError(f"Unknown claim_tier {self.claim_tier!r}")
+        if not self.source_commit:
+            raise ValueError("ClaimLedgerEntry.source_commit must be non-empty")
+        if not self.allowed_claims and not self.forbidden_claims:
+            raise ValueError(
+                "ClaimLedgerEntry requires at least one allowed or forbidden claim"
+            )
+
+
+@dataclass(frozen=True)
 class RuntimeReductionDecision:
     """BASS-owned allow/block decision primitive.
 
@@ -269,6 +341,264 @@ class ObservableVector:
             raise ValueError("ObservableVector.ell_max must be >= 0")
         if not self.channels:
             raise ValueError("ObservableVector.channels must be non-empty")
+
+
+@dataclass(frozen=True)
+class AtlasEntryLite:
+    """Theory-side low-footprint atlas contract."""
+
+    atlas_id: str
+    theory_family: str
+    geometry_params: dict[str, float]
+    kinematic_params: dict[str, float]
+    tilt_params: dict[str, float]
+    solver_output_ref: str
+    observable_vector_ref: str
+    response_blocks: dict[str, object]
+    validity_domain: dict[str, object]
+    interpolation_status: str
+    manifest: ArtifactManifest
+
+    def __post_init__(self) -> None:
+        if not self.atlas_id:
+            raise ValueError("AtlasEntryLite.atlas_id must be non-empty")
+        if not self.theory_family:
+            raise ValueError("AtlasEntryLite.theory_family must be non-empty")
+        if self.manifest.owner != "BASS":
+            raise ValueError(
+                "AtlasEntryLite.manifest.owner must be 'BASS' "
+                f"(got {self.manifest.owner!r})"
+            )
+
+
+@dataclass(frozen=True)
+class FullCovMESReport:
+    """Full-covariance morphology-aware bound report."""
+
+    parameter_block: str
+    diagonal_bound: float
+    covariance_bound: float | None
+    dynamical_bound: float | None
+    final_bound: float
+    information_gain: float
+    response_rank: int
+    singular_values: list[float]
+    nuisance_projection_status: str
+    observable_set: list[str]
+    covariance_assumption: str
+    validity_radius: float | None
+    manifest: ArtifactManifest
+    tsc_overlay_ref: str | None = None
+
+    def __post_init__(self) -> None:
+        if not self.parameter_block:
+            raise ValueError("FullCovMESReport.parameter_block must be non-empty")
+        if self.response_rank < 0:
+            raise ValueError("FullCovMESReport.response_rank must be >= 0")
+
+
+@dataclass(frozen=True)
+class DiscriminationMatrix:
+    """Response-overlap and degeneracy matrix."""
+
+    hypotheses: tuple[str, ...]
+    overlap_matrix: object
+    response_norms: dict[str, float]
+    degeneracy_flags: dict[str, bool]
+    recommended_next_observable: dict[str, str]
+    claim_tier_by_pair: dict[str, str]
+    manifest: ArtifactManifest
+
+    def __post_init__(self) -> None:
+        if len(self.hypotheses) < 2:
+            raise ValueError("DiscriminationMatrix requires at least two hypotheses")
+        invalid = sorted(
+            set(self.claim_tier_by_pair.values()) - _ALLOWED_CLAIM_TIERS
+        )
+        if invalid:
+            raise ValueError(f"Unknown claim tiers in DiscriminationMatrix: {invalid}")
+
+
+@dataclass(frozen=True)
+class TscDomainReport:
+    """TSC chart-domain and admissibility report."""
+
+    chart: TscChart
+    theta_min: float
+    eta_max: float | None
+    be_eta_nonpositive: bool | None
+    weight_simplex_ok: bool
+    jacobian_sigma_min: float | None
+    domain_margin: float
+    status: TscChartStatus
+    blocking_reasons: tuple[str, ...]
+    manifest: ArtifactManifest
+
+    def __post_init__(self) -> None:
+        if self.chart not in _ALLOWED_TSC_CHARTS:
+            raise ValueError(f"Unknown TSC chart {self.chart!r}")
+        if self.status not in _ALLOWED_TSC_CHART_STATUSES:
+            raise ValueError(f"Unknown TSC chart status {self.status!r}")
+        if self.manifest.owner != "TSC":
+            raise ValueError(
+                "TscDomainReport.manifest.owner must be 'TSC' "
+                f"(got {self.manifest.owner!r})"
+            )
+
+
+@dataclass(frozen=True)
+class TscResidualReport:
+    """TSC residual and defect summary."""
+
+    chart: TscChart
+    laguerre_n_ge_2_norm: float
+    ambient_defect_rate: float | None
+    projected_defect_estimate: float | None
+    onefield_residual: float | None
+    twofield_residual: float | None
+    eta_tangent_fraction: float | None
+    trace_residual_q_tr: float | None
+    spin2_residual: float | None
+    high_residual: float | None
+    residual_origin: Literal["trace", "eta_tangent", "spin2", "high", "mixed", "unknown"]
+    labels: tuple[str, ...]
+    manifest: ArtifactManifest
+
+    def __post_init__(self) -> None:
+        if self.chart not in _ALLOWED_TSC_CHARTS:
+            raise ValueError(f"Unknown TSC chart {self.chart!r}")
+        if self.manifest.owner != "TSC":
+            raise ValueError(
+                "TscResidualReport.manifest.owner must be 'TSC' "
+                f"(got {self.manifest.owner!r})"
+            )
+
+
+@dataclass(frozen=True)
+class TscSourceBridgeReport:
+    """TSC trace-source bridge report."""
+
+    source_name: Literal["thomson_trace_quadrupole", "other"]
+    chart: TscChart
+    q2_norm: float
+    source_error_bound: float | None
+    nonlinear_dipole_quartic_correction: float | None
+    eta_correction_indicator: float | None
+    on_manifold_exact: bool
+    source_status: SourceStatus
+    required_bass_primitives: tuple[str, ...]
+    labels: tuple[str, ...]
+    manifest: ArtifactManifest
+
+    def __post_init__(self) -> None:
+        if self.chart not in _ALLOWED_TSC_CHARTS:
+            raise ValueError(f"Unknown TSC chart {self.chart!r}")
+        if self.source_status not in _ALLOWED_SOURCE_STATUSES:
+            raise ValueError(f"Unknown source_status {self.source_status!r}")
+        if self.manifest.owner != "TSC":
+            raise ValueError(
+                "TscSourceBridgeReport.manifest.owner must be 'TSC' "
+                f"(got {self.manifest.owner!r})"
+            )
+
+
+@dataclass(frozen=True)
+class TscChannelAdequacyBudget:
+    """TSC source-to-channel budget record."""
+
+    channel: Channel
+    trace_budget: float | None
+    spin2_budget: float | None
+    high_budget: float | None
+    source_to_field_bound: float | None
+    spectrum_bound_linear: float | None
+    spectrum_bound_quadratic: float | None
+    source_status: SourceStatus
+    propagation_status: PropagationStatus
+    claim_ceiling: ClaimTier
+    labels: tuple[str, ...]
+    manifest: ArtifactManifest
+
+    def __post_init__(self) -> None:
+        if self.channel not in _ALLOWED_CHANNELS:
+            raise ValueError(f"Unknown channel {self.channel!r}")
+        if self.source_status not in _ALLOWED_SOURCE_STATUSES:
+            raise ValueError(f"Unknown source_status {self.source_status!r}")
+        if self.propagation_status not in _ALLOWED_PROPAGATION_STATUSES:
+            raise ValueError(
+                f"Unknown propagation_status {self.propagation_status!r}"
+            )
+        if self.claim_ceiling not in _ALLOWED_CLAIM_TIERS:
+            raise ValueError(f"Unknown claim_ceiling {self.claim_ceiling!r}")
+        if self.manifest.owner != "TSC":
+            raise ValueError(
+                "TscChannelAdequacyBudget.manifest.owner must be 'TSC' "
+                f"(got {self.manifest.owner!r})"
+            )
+
+
+@dataclass(frozen=True)
+class TscUpgradeRecommendation:
+    """TSC chart-upgrade or block recommendation."""
+
+    current_chart: TscChart
+    recommended_chart: TscChart
+    reason: Literal[
+        "eta_tangent_false_trigger",
+        "spectral_distortion_residual",
+        "invalid_domain",
+        "jacobian_near_singular",
+        "source_error_bound_exceeded",
+        "spin2_required",
+        "high_residual_required",
+        "stable_no_upgrade",
+    ]
+    severity: Literal["info", "warn", "block"]
+    dwell_time_required: float | None
+    hysteresis_state: str | None
+    labels: tuple[str, ...]
+    manifest: ArtifactManifest
+
+    def __post_init__(self) -> None:
+        if self.current_chart not in _ALLOWED_TSC_CHARTS:
+            raise ValueError(f"Unknown current_chart {self.current_chart!r}")
+        if self.recommended_chart not in _ALLOWED_TSC_CHARTS:
+            raise ValueError(
+                f"Unknown recommended_chart {self.recommended_chart!r}"
+            )
+        if self.severity not in {"info", "warn", "block"}:
+            raise ValueError(f"Unknown severity {self.severity!r}")
+        if self.manifest.owner != "TSC":
+            raise ValueError(
+                "TscUpgradeRecommendation.manifest.owner must be 'TSC' "
+                f"(got {self.manifest.owner!r})"
+            )
+
+
+@dataclass(frozen=True)
+class TscAdequacyOverlay:
+    """Top-level TSC adequacy overlay object."""
+
+    domain_report: TscDomainReport
+    residual_report: TscResidualReport
+    source_bridge_report: TscSourceBridgeReport | None
+    channel_budgets: tuple[TscChannelAdequacyBudget, ...]
+    upgrade_recommendation: TscUpgradeRecommendation
+    no_overclaim_flags: dict[str, bool]
+    quarantine_reasons: tuple[str, ...]
+    public_caveat_snippet: str
+    manifest: ArtifactManifest
+
+    def __post_init__(self) -> None:
+        if self.manifest.owner != "TSC":
+            raise ValueError(
+                "TscAdequacyOverlay.manifest.owner must be 'TSC' "
+                f"(got {self.manifest.owner!r})"
+            )
+        if not self.public_caveat_snippet:
+            raise ValueError(
+                "TscAdequacyOverlay.public_caveat_snippet must be non-empty"
+            )
 
 
 @dataclass(frozen=True)

@@ -46,6 +46,7 @@ class MioCertificate:
     config_hash: str
     input_data_hashes: List[str]
     manifest: ArtifactManifest | None = None
+    tsc_overlay_ref: str | None = None
 
     # Cross-check hints (not posteriors!)
     htt_cross_check_suggested: Optional[Dict[str, str]] = None

@@ -56,6 +56,7 @@ def test_miocertificate_schema_frozen():
         "domain_caveats", "channel_caveats", "reduction_status",
         "generated_by", "git_commit", "config_hash", "input_data_hashes",
         "manifest",
+        "tsc_overlay_ref",
         "htt_cross_check_suggested",
     }
     names = {n for n, _ in field_sig}
@@ -128,3 +129,8 @@ def test_miocertificate_manifest_owner_must_be_mio():
     )
     with pytest.raises(ValueError, match="must be 'MIO'"):
         _certificate(manifest=manifest)
+
+
+def test_miocertificate_accepts_overlay_hook():
+    cert = _certificate(tsc_overlay_ref="tsc:overlay:001")
+    assert cert.tsc_overlay_ref == "tsc:overlay:001"

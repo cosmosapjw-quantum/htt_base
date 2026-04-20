@@ -10,6 +10,7 @@ import dataclasses
 
 import pytest
 
+from common.contracts import ArtifactManifest
 from workspace.contracts.htt_to_mio import PosteriorExportBundle
 
 
@@ -60,3 +61,22 @@ def test_required_field_surface_matches_to_mio_builder():
     }
     missing = required_by_builder - fields
     assert not missing, f"builder fields missing from contract: {missing}"
+
+
+def test_posterior_export_bundle_manifest_owner_must_be_htt():
+    manifest = ArtifactManifest(
+        artifact_id="posterior.bad-owner",
+        artifact_path="artifacts/mio/posterior.json",
+        owner="MIO",
+        implementation_scope="mio",
+        claim_tier="conditional",
+        production_status="production_candidate",
+        created_by="test-suite",
+        git_commit="abc123",
+        config_hash="cfg1",
+        input_hashes=["x"],
+        code_version="0.0-test",
+        schema_version="ver2-v1",
+    )
+    with pytest.raises(ValueError, match="must be 'HTT'"):
+        _bundle(manifest=manifest)

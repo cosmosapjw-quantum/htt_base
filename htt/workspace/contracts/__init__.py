@@ -14,13 +14,19 @@ G19 hard-separation (BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN v3 §10.2bis):
 """
 
 from .atlas_entry import AtlasEntry
+from .atlas_entry_lite import AtlasEntryLite
+from .departure_report import DepartureReport
 from .htt_forward_output import HttForwardOutput
 from .htt_to_mio import PosteriorExportBundle
 from .mio_certificate import MioCertificate
+from .tsc_overlay import TscAdequacyOverlay
 
 __all__ = [
     "AtlasEntry",
+    "AtlasEntryLite",
+    "DepartureReport",
     "HttForwardOutput",
     "MioCertificate",
     "PosteriorExportBundle",
+    "TscAdequacyOverlay",
 ]

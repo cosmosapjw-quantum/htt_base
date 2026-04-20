@@ -25,6 +25,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Mapping, Tuple
 
+from common.contracts import ArtifactManifest
 
 @dataclass(frozen=True)
 class PosteriorExportBundle:
@@ -44,6 +45,7 @@ class PosteriorExportBundle:
     model_evidences: Mapping[str, float] = field(default_factory=dict)
     model: str = ""
     is_cross_check_only: bool = True
+    manifest: ArtifactManifest | None = None
 
     def __post_init__(self) -> None:
         if not self.is_cross_check_only:
@@ -51,4 +53,9 @@ class PosteriorExportBundle:
                 "PosteriorExportBundle must be cross-check only (G19). "
                 "Cannot be merged into MIO evidence score; cannot be "
                 "ingested as an MIO likelihood input."
+            )
+        if self.manifest is not None and self.manifest.owner != "HTT":
+            raise ValueError(
+                "PosteriorExportBundle.manifest.owner must be 'HTT' "
+                f"(got {self.manifest.owner!r})"
             )

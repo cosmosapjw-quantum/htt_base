@@ -12,8 +12,11 @@ from workspace.contracts.mio_certificate import MioCertificate
 ROOT = Path(__file__).resolve().parents[1]
 MODULES = [
     ROOT / "atlas_entry.py",
+    ROOT / "atlas_entry_lite.py",
+    ROOT / "departure_report.py",
     ROOT / "htt_forward_output.py",
     ROOT / "mio_certificate.py",
+    ROOT / "tsc_overlay.py",
 ]
 FORBIDDEN_LOCAL_SCHEMA_NAMES = {
     "Owner",
@@ -54,3 +57,16 @@ def test_manifest_field_is_present_on_cross_package_contracts():
         assert "manifest" in field_names, (
             f"{contract.__name__} must expose a manifest hook under VER2-V0"
         )
+
+
+def test_thin_wrapper_aliases_point_to_common_contracts():
+    from common.contracts import AtlasEntryLite as CanonicalAtlasEntryLite
+    from common.contracts import TscAdequacyOverlay as CanonicalTscAdequacyOverlay
+    from common.departure_contracts import DepartureReport as CanonicalDepartureReport
+    from workspace.contracts.atlas_entry_lite import AtlasEntryLite
+    from workspace.contracts.departure_report import DepartureReport
+    from workspace.contracts.tsc_overlay import TscAdequacyOverlay
+
+    assert AtlasEntryLite is CanonicalAtlasEntryLite
+    assert DepartureReport is CanonicalDepartureReport
+    assert TscAdequacyOverlay is CanonicalTscAdequacyOverlay

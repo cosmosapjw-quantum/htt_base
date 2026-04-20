@@ -8,19 +8,21 @@
 4. `docs/ver2_upgrade/VER2_EXECUTION_LEDGER.md`
 5. `docs/ver2_upgrade/VER2_CARRY_FORWARD_LEDGER.md`
 6. `docs/ver2_upgrade/audits/AUDIT_SK-00_2026-04-20.md`
+7. `docs/ver2_upgrade/audits/AUDIT_SK-01C_2026-04-21.md`
 
 ## 2. Current State
 
 - `SK-00` barrier docs, ledgers, audit note, and schema/owner drift tests are in place.
-- Canonical shared schema now lives in `htt/src/common/contracts.py`.
+- Canonical shared schema now lives in `htt/src/common/contracts.py` and `htt/src/common/departure_contracts.py`.
 - `workspace/contracts` wrappers accept a canonical `ArtifactManifest` hook and enforce owner consistency when manifest is present.
+- Canonical VER2 contract coverage now includes `AtlasEntryLite`, `DepartureReport`, `FullCovMESReport`, `TscAdequacyOverlay`, `ClaimLedgerEntry`, and thin workspace aliases/hooks.
 - Full manifest propagation is not yet wired through every producer. That is expected at this stage.
 
 ## 3. Next Recommended Packet
 
-Run `SK-01C` first. It is the gateway to every solver-independent shell packet.
+`SK-01C` is closed. Start the solver-independent shell packets now.
 
-After `SK-01C`, prefer this order if the goal is to maximize solver-free progress:
+Prefer this order if the goal is to maximize solver-free progress:
 
 1. `SK-05T`
 2. `SK-06H`
@@ -28,7 +30,7 @@ After `SK-01C`, prefer this order if the goal is to maximize solver-free progres
 4. `SK-09D`
 5. only then `SK-01S1` -> `SK-02S2` -> `SK-03S3`
 
-Parallel recommendation after `SK-01C`:
+Parallel recommendation now:
 - one thread: `SK-05T`
 - one thread: `SK-06H`
 - one thread: `SK-07M`
