@@ -47,8 +47,184 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Literal, Optional, Tuple
 
+import numpy as np
+
+
+_IDENTITY_AXIS_PERMUTATION = (0, 1, 2)
+_PC_TO_VER2_CLASS_B_AXIS_PERMUTATION = (1, 0, 2)
+
+
+@dataclass(frozen=True)
+class BianchiBranchPolicy:
+    """Branch-admissibility metadata for the common VER2 backend.
+
+    The packet SSOT requires every algebra object to carry explicit branch
+    metadata rather than letting downstream modules infer it from type-name
+    conditionals. The strings below are intentionally policy labels, not
+    runtime allow/block booleans owned by a different package.
+    """
+
+    orthogonal_allowed: bool
+    tilted_allowed: bool
+    constraint_policy_required: str
+
+
+@dataclass(frozen=True)
+class BianchiAlgebra:
+    """Canonical VER2 algebra object for all eleven Bianchi types.
+
+    This is the skeleton/contract surface requested by `SK-01S1`. It sits
+    alongside the older `StructureConstants` helper without replacing it, so
+    reduced pre-VER2 paths can continue to import `StructureConstants` until
+    the full solver packets land.
+
+    Conventions follow `docs/ver2_upgrade/*`:
+    - Class-A/B metadata is explicit.
+    - The canonical class-B axis places `a_alpha` on the first axis.
+    - The sign convention for `h` is recorded in metadata.
+    - All later solver modules should consume only `(a, n, C)` and branch
+      metadata, not handwritten type-name logic.
+    """
+
+    type_name: str
+    a: np.ndarray
+    n: np.ndarray
+    C: np.ndarray
+    h_parameter: float | None
+    class_label: Literal["A", "B"]
+    h_convention: str
+    axis_permutation: Tuple[int, int, int]
+    branch_policy: BianchiBranchPolicy
+
+    def __post_init__(self) -> None:
+        a = np.asarray(self.a, dtype=np.float64)
+        n = np.asarray(self.n, dtype=np.float64)
+        C = np.asarray(self.C, dtype=np.float64)
+        if a.shape != (3,):
+            raise ValueError(f"BianchiAlgebra.a must have shape (3,), got {a.shape}")
+        if n.shape != (3, 3):
+            raise ValueError(f"BianchiAlgebra.n must have shape (3,3), got {n.shape}")
+        if C.shape != (3, 3, 3):
+            raise ValueError(f"BianchiAlgebra.C must have shape (3,3,3), got {C.shape}")
+        object.__setattr__(self, "a", a)
+        object.__setattr__(self, "n", n)
+        object.__setattr__(self, "C", C)
+        self.validate()
+
+    @property
+    def jacobi_violation(self) -> np.ndarray:
+        return self.n @ self.a
+
+    @property
+    def jacobi_residual_norm(self) -> float:
+        return float(np.linalg.norm(self.jacobi_violation))
+
+    @property
+    def antisymmetry_residual_norm(self) -> float:
+        return float(np.max(np.abs(self.C + np.swapaxes(self.C, 1, 2))))
+
+    def supports_branch(self, branch: Literal["orthogonal", "tilted"]) -> bool:
+        if branch == "orthogonal":
+            return self.branch_policy.orthogonal_allowed
+        if branch == "tilted":
+            return self.branch_policy.tilted_allowed
+        raise KeyError(f"Unknown branch {branch!r}")
+
+    def validate(self, *, atol: float = 1e-12) -> None:
+        if not np.allclose(self.n, self.n.T, atol=atol):
+            raise ValueError(f"{self.type_name}: n must be symmetric in the VER2 contract")
+        if self.antisymmetry_residual_norm > atol:
+            raise ValueError(
+                f"{self.type_name}: C^gamma_(alpha beta) must be antisymmetric in "
+                f"lower indices; residual={self.antisymmetry_residual_norm:.3e}"
+            )
+        if self.jacobi_residual_norm > atol:
+            raise ValueError(
+                f"{self.type_name}: Jacobi residual ||n @ a||={self.jacobi_residual_norm:.3e} "
+                f"exceeds tolerance {atol:.1e}"
+            )
+
+
+def _epsilon_3d() -> np.ndarray:
+    eps = np.zeros((3, 3, 3), dtype=np.float64)
+    eps[0, 1, 2] = eps[1, 2, 0] = eps[2, 0, 1] = +1.0
+    eps[0, 2, 1] = eps[2, 1, 0] = eps[1, 0, 2] = -1.0
+    return eps
+
+
+def build_structure_tensor(a_vec: np.ndarray, n_mat: np.ndarray) -> np.ndarray:
+    """Build `C^gamma_{alpha beta}` from the VER2 `(a, n)` split."""
+    a = np.asarray(a_vec, dtype=np.float64)
+    n = np.asarray(n_mat, dtype=np.float64)
+    delta = np.eye(3, dtype=np.float64)
+    eps = _epsilon_3d()
+    C = np.zeros((3, 3, 3), dtype=np.float64)
+    for gamma in range(3):
+        for alpha in range(3):
+            for beta in range(3):
+                term_a = a[alpha] * delta[beta, gamma] - a[beta] * delta[alpha, gamma]
+                term_n = float(np.sum(eps[alpha, beta, :] * n[:, gamma]))
+                C[gamma, alpha, beta] = term_a + term_n
+    return C
+
+
+def _branch_policy_for_type(label: str) -> BianchiBranchPolicy:
+    policies = {
+        "I": BianchiBranchPolicy(True, True, "codazzi_balanced_total_momentum"),
+        "II": BianchiBranchPolicy(True, True, "codazzi_project_shear_or_tilt"),
+        "III": BianchiBranchPolicy(True, True, "class_b_codazzi_projection"),
+        "IV": BianchiBranchPolicy(True, True, "class_b_codazzi_projection"),
+        "V": BianchiBranchPolicy(True, True, "class_b_divergence_tilt_coupling"),
+        "VI_0": BianchiBranchPolicy(True, True, "class_a_zero_flux_or_codazzi"),
+        "VI_h": BianchiBranchPolicy(True, True, "class_b_generic_h_constraint"),
+        "VII_0": BianchiBranchPolicy(True, True, "class_a_helical_codazzi"),
+        "VII_h": BianchiBranchPolicy(True, True, "class_b_helical_codazzi"),
+        "VIII": BianchiBranchPolicy(True, True, "class_a_semisimple_codazzi"),
+        "IX": BianchiBranchPolicy(True, True, "config_domain_restricted_tilt"),
+        "FLRW": BianchiBranchPolicy(True, True, "flat_zero_flux"),
+    }
+    return policies[label]
+
+
+def build_bianchi_algebra(label: str, **kwargs) -> BianchiAlgebra:
+    """Return the canonical VER2 algebra object for one type label.
+
+    Legacy `StructureConstants` use the Pontzen-Challinor class-B frame
+    (`a_alpha = (0,a,0)`). The VER2 solver docs instead freeze the canonical
+    class-B axis as `a_alpha = (a,0,0)`. This builder performs that axis
+    reconciliation once and stores the permutation explicitly so downstream
+    packets do not need to remember both conventions.
+    """
+
+    sc = get_type(label, **kwargs)
+    if sc.is_class_a:
+        a = np.zeros(3, dtype=np.float64)
+        n = np.diag([sc.n1, sc.n2, sc.n3]).astype(np.float64)
+        axis_permutation = _IDENTITY_AXIS_PERMUTATION
+    else:
+        a = np.array([sc.a_twist, 0.0, 0.0], dtype=np.float64)
+        n = np.diag([0.0, sc.n1, sc.n3]).astype(np.float64)
+        axis_permutation = _PC_TO_VER2_CLASS_B_AXIS_PERMUTATION
+    C = build_structure_tensor(a, n)
+    h_parameter = None if label in {"FLRW", "I", "II", "IV", "V", "VI_0", "VII_0", "VIII", "IX"} else sc.h_parameter
+    return BianchiAlgebra(
+        type_name=label,
+        a=a,
+        n=n,
+        C=C,
+        h_parameter=h_parameter,
+        class_label="A" if sc.is_class_a else "B",
+        h_convention="h = a^2/(n2*n3) in canonical VER2 class-B axes",
+        axis_permutation=axis_permutation,
+        branch_policy=_branch_policy_for_type(label),
+    )
+
+
+def all_bianchi_algebras() -> dict[str, BianchiAlgebra]:
+    """Build the full 11-type VER2 algebra registry plus FLRW."""
+    return {label: build_bianchi_algebra(label) for label in ["FLRW", *ALL_BIANCHI_TYPES]}
 
 @dataclass(frozen=True)
 class StructureConstants:

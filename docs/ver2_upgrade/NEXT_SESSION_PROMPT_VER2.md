@@ -14,6 +14,7 @@
 10. `docs/ver2_upgrade/audits/AUDIT_SK-09D_2026-04-21.md`
 11. `docs/ver2_upgrade/audits/AUDIT_SK-07M_2026-04-21.md`
 12. `docs/ver2_upgrade/audits/AUDIT_SK-06H_2026-04-21.md`
+13. `docs/ver2_upgrade/audits/AUDIT_SK-01S1_2026-04-21.md`
 
 ## 2. Current State
 
@@ -28,23 +29,24 @@
 - Targeted MIO verification is green: `venv/bin/python -m pytest htt/mio/tests -q` -> `153 passed`.
 - `SK-06H` is now closed: HTT owns a solver-free directional shell under `htt/htt/htt/infer/*`, with explicit production-axis gating, matched-complexity/null-competition hooks, local-boost/global-tilt discrimination scaffolds, and a closed-fail bridge promotion gate.
 - HTT verification is green for the packet scope: targeted `SK-06H` tests passed (`39 passed`) and `py_compile` passed.
+- `SK-01S1` is now closed: BASS owns a canonical `BianchiAlgebra`, tetrad connection / curvature operators, machine-readable Gauss/Codazzi/Jacobi residuals, orthogonal/tilted IC-builder shells, a 1+3 background RHS shell, and Weyl diagnostic hooks under `htt/bass/background/*`.
+- BASS S1 verification is green for the packet scope: targeted pytest `174 passed`, touched-surface pytest `696 passed`, and `py_compile` passed.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
 ## 3. Next Recommended Packet
 
-`SK-01C`, `SK-05T`, `SK-06H`, `SK-07M`, and `SK-09D` are closed. Continue into the solver-facing BASS packets now.
+`SK-01C`, `SK-01S1`, `SK-05T`, `SK-06H`, `SK-07M`, and `SK-09D` are closed. Continue into the remaining solver-facing BASS packets now.
 
 Prefer this order now:
 
-1. `SK-01S1`
-2. then `SK-02S2`
-3. then `SK-03S3`
+1. `SK-02S2`
+2. then `SK-03S3`
+3. then `SK-04O`
 
 Parallel recommendation now:
-- one thread: `SK-01S1`
+- one thread: `SK-02S2`
 
 Defer until solver surfaces exist:
-- `SK-04O`
 - `SK-08V`
 
 ## 4. Hard Reminders
@@ -55,4 +57,5 @@ Defer until solver surfaces exist:
 - Do not let TSC own runtime allow/block.
 - Do not merge MIO certificate semantics into HTT or BASS.
 - Do not generate figures or manuscript claims from non-manifest artifacts.
+- Do not silently treat the reduced `einstein_bianchi` path as the finished VER2 background engine; the new S1 contracts must be the implementation anchor from here onward.
 - Rerun `venv/bin/python scripts/ver2_artifact_export.py` after any D-lane change touching generated manuscript/export surfaces.

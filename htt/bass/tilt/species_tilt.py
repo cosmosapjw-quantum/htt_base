@@ -49,7 +49,7 @@ oracle.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional, Tuple
+from typing import Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -59,7 +59,9 @@ from bass.background.bianchi_types import StructureConstants
 __all__ = [
     'TiltedSpeciesParams',
     'TiltedSpeciesDecomposition',
+    'TiltedMatterState',
     'decompose_tilted_species',
+    'assemble_tilted_matter_state',
     'small_tilt_limit',
     'total_momentum_constraint',
 ]
@@ -152,6 +154,33 @@ class TiltedSpeciesDecomposition:
         return float(np.trace(self.pi))
 
 
+@dataclass(frozen=True)
+class TiltedMatterState:
+    """Aggregate normal-frame matter state assembled from tilted species.
+
+    This is the `SK-01S1` branch-builder hook: a light-weight bundle that
+    exposes the total `(rho, p, q, pi)` seen by the 1+3 background equations
+    while preserving the species-resolved decompositions for later packets.
+    """
+
+    rho: float
+    p: float
+    q: np.ndarray
+    pi: np.ndarray
+    species: Tuple[TiltedSpeciesDecomposition, ...] = ()
+
+    def __post_init__(self) -> None:
+        q = np.asarray(self.q, dtype=np.float64)
+        pi = _sym_traceless(np.asarray(self.pi, dtype=np.float64))
+        if q.shape != (3,):
+            raise ValueError(f"TiltedMatterState.q must have shape (3,), got {q.shape}")
+        if pi.shape != (3, 3):
+            raise ValueError(f"TiltedMatterState.pi must have shape (3,3), got {pi.shape}")
+        object.__setattr__(self, 'q', q)
+        object.__setattr__(self, 'pi', pi)
+        object.__setattr__(self, 'species', tuple(self.species))
+
+
 # ════════════════════════════════════════════════════════════════════
 # Main decomposition
 # ════════════════════════════════════════════════════════════════════
@@ -196,6 +225,23 @@ def decompose_tilted_species(
     return TiltedSpeciesDecomposition(
         mu=mu, q=q, p=p, pi=pi, params=params,
     )
+
+
+def assemble_tilted_matter_state(
+    species: Sequence[TiltedSpeciesDecomposition],
+) -> TiltedMatterState:
+    """Assemble total `(rho, p, q, pi)` from tilted species pieces."""
+    parts = tuple(species)
+    rho = 0.0
+    p = 0.0
+    q = np.zeros(3, dtype=np.float64)
+    pi = np.zeros((3, 3), dtype=np.float64)
+    for piece in parts:
+        rho += float(piece.mu)
+        p += float(piece.p)
+        q += piece.q
+        pi += piece.pi
+    return TiltedMatterState(rho=rho, p=p, q=q, pi=pi, species=parts)
 
 
 # ════════════════════════════════════════════════════════════════════
