@@ -6,6 +6,7 @@ import hashlib
 
 import pytest
 
+from common.contracts import ArtifactManifest
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -54,6 +55,7 @@ def test_miocertificate_schema_frozen():
         "departure_variables", "adequacy_indicators", "consistency_metrics",
         "domain_caveats", "channel_caveats", "reduction_status",
         "generated_by", "git_commit", "config_hash", "input_data_hashes",
+        "manifest",
         "htt_cross_check_suggested",
     }
     names = {n for n, _ in field_sig}
@@ -107,3 +109,22 @@ def test_git_commit_is_capture_time_not_lazy(monkeypatch):
         "git_commit must be a plain dataclass field on the instance, "
         "not a class-level descriptor / property that could re-resolve."
     )
+
+
+def test_miocertificate_manifest_owner_must_be_mio():
+    manifest = ArtifactManifest(
+        artifact_id="mio.bad-owner",
+        artifact_path="artifacts/htt/mio.json",
+        owner="HTT",
+        implementation_scope="htt",
+        claim_tier="conditional",
+        production_status="production_candidate",
+        created_by="test-suite",
+        git_commit="abc123",
+        config_hash="cfg1",
+        input_hashes=["x"],
+        code_version="0.0-test",
+        schema_version="ver2-v0",
+    )
+    with pytest.raises(ValueError, match="must be 'MIO'"):
+        _certificate(manifest=manifest)

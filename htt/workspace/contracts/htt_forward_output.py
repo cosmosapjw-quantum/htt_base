@@ -17,6 +17,7 @@ from dataclasses import dataclass, field
 from typing import Dict, Mapping, Sequence, Tuple
 
 import numpy as np
+from common.contracts import ArtifactManifest
 
 
 @dataclass(frozen=True)
@@ -48,6 +49,7 @@ class HttForwardOutput:
     generated_by: str = ""
     git_commit: str = ""
     config_hash: str = ""
+    manifest: ArtifactManifest | None = None
 
     def __post_init__(self) -> None:
         ell = np.asarray(self.ell)
@@ -66,3 +68,8 @@ class HttForwardOutput:
             )
         if self.shear_Sigma2 < 0.0:
             raise ValueError("HttForwardOutput.shear_Sigma2 must be non-negative")
+        if self.manifest is not None and self.manifest.owner != "BASS":
+            raise ValueError(
+                "HttForwardOutput.manifest.owner must be 'BASS' "
+                f"(got {self.manifest.owner!r})"
+            )

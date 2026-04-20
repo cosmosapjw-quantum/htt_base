@@ -19,6 +19,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
+from common.contracts import ArtifactManifest
 
 @dataclass(frozen=True)
 class MioCertificate:
@@ -44,9 +45,17 @@ class MioCertificate:
     git_commit: str
     config_hash: str
     input_data_hashes: List[str]
+    manifest: ArtifactManifest | None = None
 
     # Cross-check hints (not posteriors!)
     htt_cross_check_suggested: Optional[Dict[str, str]] = None
+
+    def __post_init__(self) -> None:
+        if self.manifest is not None and self.manifest.owner != "MIO":
+            raise ValueError(
+                "MioCertificate.manifest.owner must be 'MIO' "
+                f"(got {self.manifest.owner!r})"
+            )
 
     def as_posterior_bundle(self):
         """Intentionally unimplemented — MIO does NOT generate posteriors (v3 G19)."""

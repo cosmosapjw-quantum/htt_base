@@ -5,11 +5,17 @@ import numpy as np
 import pytest
 
 from common.contracts import (
+    ArtifactManifest,
     DirectionalSummary,
     DynestyResult,
     MockCalibrationReport,
     PreferredAxis,
+    RuntimeReductionDecision,
     SkySelectionConfig,
+    SkySupport,
+    SolverCoreOutput,
+    StatusSnapshotEntry,
+    ObservableVector,
 )
 
 
@@ -52,6 +58,25 @@ class TestPreferredAxisContract:
             ax.production_allowed = False  # type: ignore[misc]
 
 
+def _manifest(**overrides) -> ArtifactManifest:
+    base = dict(
+        artifact_id="bass.run.lowell.v0",
+        artifact_path="artifacts/bass/run.json",
+        owner="BASS",
+        implementation_scope="bass_py",
+        claim_tier="conditional",
+        production_status="production_candidate",
+        created_by="test-suite",
+        git_commit="deadbeef",
+        config_hash="cfg",
+        input_hashes=["in1", "in2"],
+        code_version="0.0-test",
+        schema_version="ver2-v0",
+    )
+    base.update(overrides)
+    return ArtifactManifest(**base)
+
+
 class TestSkySelectionConfigInvariants:
     def test_fiducial_config_ok(self):
         cfg = SkySelectionConfig(
@@ -85,6 +110,86 @@ class TestSkySelectionConfigInvariants:
     def test_rejects_non_power_of_two_nside(self):
         with pytest.raises(ValueError, match="power of two"):
             SkySelectionConfig(zoa_half_angle_deg=20.0, nside=96)
+
+
+class TestVer2BarrierContracts:
+    def test_artifact_manifest_accepts_valid_owner_scope(self):
+        manifest = _manifest()
+        assert manifest.owner == "BASS"
+        assert manifest.implementation_scope == "bass_py"
+
+    def test_artifact_manifest_rejects_unknown_owner(self):
+        with pytest.raises(ValueError, match="Unknown owner"):
+            _manifest(owner="UNKNOWN")
+
+    def test_runtime_reduction_decision_owner_is_bass_only(self):
+        decision = RuntimeReductionDecision(
+            owner="BASS",
+            allow_reduction=False,
+            source_status="adequate",
+            propagation_status="pending",
+            reason="sigma floor not met",
+        )
+        assert decision.owner == "BASS"
+
+    def test_runtime_reduction_decision_rejects_non_bass_owner(self):
+        with pytest.raises(ValueError, match="must be 'BASS'"):
+            RuntimeReductionDecision(
+                owner="TSC",
+                allow_reduction=False,
+                source_status="adequate",
+                propagation_status="pending",
+                reason="owner drift",
+            )
+
+    def test_status_snapshot_requires_source_commit(self):
+        with pytest.raises(ValueError, match="source_commit"):
+            StatusSnapshotEntry(
+                artifact_id="status.bass",
+                owner="BASS",
+                implementation_scope="bass_py",
+                claim_tier="conditional",
+                implemented=True,
+                smoke_tested=False,
+                production_validated=False,
+                manuscript_used=False,
+                source_commit="",
+            )
+
+    def test_solver_core_output_requires_metadata_keys(self):
+        with pytest.raises(ValueError, match="missing required keys"):
+            SolverCoreOutput(
+                alm_T=None,
+                alm_E=None,
+                alm_B=None,
+                map_T=None,
+                map_Q=None,
+                map_U=None,
+                deterministic_template=None,
+                anisotropic_covariance=None,
+                metadata={"bianchi_type": "I"},
+                manifest=_manifest(),
+            )
+
+    def test_observable_vector_requires_channels(self):
+        with pytest.raises(ValueError, match="channels must be non-empty"):
+            ObservableVector(
+                ell_max=8,
+                channels=tuple(),
+                cl={},
+                alm_features={},
+                biposh=None,
+                template_fit=None,
+                covariance_features=None,
+                scan_volume={},
+                sky_support=SkySupport(
+                    selection_mode="mock_calibrated",
+                    sky_support_hash="sky",
+                    mask_hash="mask",
+                    mock_coverage_status="ok",
+                ),
+                manifest=_manifest(),
+            )
 
 
 class TestDirectionalSummary:

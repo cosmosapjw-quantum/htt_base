@@ -6,6 +6,7 @@ import dataclasses
 import numpy as np
 import pytest
 
+from common.contracts import ArtifactManifest
 from workspace.contracts.atlas_entry import AtlasEntry
 
 
@@ -50,3 +51,22 @@ def test_atlas_entry_has_no_posterior_field():
             f"AtlasEntry must not expose a 'posterior' field "
             f"(found '{f.name}') — atlas lookup is interpolation, not inference."
         )
+
+
+def test_atlas_entry_manifest_owner_must_be_bass():
+    manifest = ArtifactManifest(
+        artifact_id="atlas.bad-owner",
+        artifact_path="artifacts/mio/atlas.json",
+        owner="MIO",
+        implementation_scope="mio",
+        claim_tier="conditional",
+        production_status="production_candidate",
+        created_by="test-suite",
+        git_commit="abc123",
+        config_hash="cfg1",
+        input_hashes=["x"],
+        code_version="0.0-test",
+        schema_version="ver2-v0",
+    )
+    with pytest.raises(ValueError, match="must be 'BASS'"):
+        _entry(manifest=manifest)

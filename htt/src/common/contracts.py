@@ -1,25 +1,50 @@
-"""common.contracts — shared dataclasses (COMMON-A, INDEPENDENT_TRACKS_PLAN §2.6).
+"""common.contracts — canonical shared schema layer.
 
-The five dataclasses here are the "public wire format" shared by bass, htt,
-and tsc. They are all frozen so consumers cannot silently mutate them.
+This module now carries two contract generations:
 
-Scope
------
-* ``PreferredAxis`` — directional axis with provenance and production gate.
-* ``SkySelectionConfig`` — the single ZoA/selection configuration object
-  with production-mode invariants (§6.6 of the parent plan).
-* ``DirectionalSummary`` — 4-channel summary aggregate (mirrors the AH-side
-  channels; the htt AH module has per-channel ``ChannelSummary`` records).
-* ``DynestyResult`` — Layer C posterior output container.
-* ``MockCalibrationReport`` — Layer D mock calibration outcome.
+1. Legacy COMMON-A directional and mock-calibration dataclasses used by the
+   existing HTT/MIO stack.
+2. VER2 barrier contracts frozen at the `docs/ver2_upgrade/*` authority layer.
+
+The VER2 rule is:
+
+* base enums, manifest primitives, ownership, claim tiers, and runtime
+  decision primitives live here;
+* cross-package wrappers under ``workspace/contracts`` may *reference* these
+  objects but must not redefine them;
+* all dataclasses remain frozen so downstream code cannot silently mutate
+  ownership or claim-tier metadata.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Mapping, Optional
+from typing import Any, Mapping, Optional, Literal
 
 import numpy as np
 
+
+_ALLOWED_OWNERS = {"BASS", "HTT", "MIO", "TSC", "COMMON"}
+_ALLOWED_CLAIM_TIERS = {"exploratory", "conditional", "validated", "blocked"}
+_ALLOWED_IMPLEMENTATION_SCOPES = {
+    "bass_py",
+    "bass_rs",
+    "canonical_BASS",
+    "htt",
+    "mio",
+    "tsc",
+    "common",
+}
+_ALLOWED_PRODUCTION_STATUSES = {
+    "diagnostic_only",
+    "production_candidate",
+    "production_validated",
+    "blocked_missing_covariance",
+    "blocked_missing_null_mocks",
+    "blocked_missing_atlas",
+    "blocked_owner_violation",
+}
+_ALLOWED_SOURCE_STATUSES = {"adequate", "inadequate", "pending"}
+_ALLOWED_PROPAGATION_STATUSES = {"pending", "validated", "blocked"}
 
 _ALLOWED_SOURCES = {
     "raw_diagnostic",
@@ -34,6 +59,216 @@ _ALLOWED_SELECTION_MODES = {
     "angular_completeness",
     "mock_calibrated",
 }
+
+
+Owner = Literal["BASS", "HTT", "MIO", "TSC", "COMMON"]
+ClaimTier = Literal["exploratory", "conditional", "validated", "blocked"]
+ImplementationScope = Literal[
+    "bass_py",
+    "bass_rs",
+    "canonical_BASS",
+    "htt",
+    "mio",
+    "tsc",
+    "common",
+]
+ProductionStatus = Literal[
+    "diagnostic_only",
+    "production_candidate",
+    "production_validated",
+    "blocked_missing_covariance",
+    "blocked_missing_null_mocks",
+    "blocked_missing_atlas",
+    "blocked_owner_violation",
+]
+
+
+@dataclass(frozen=True)
+class ArtifactManifest:
+    """Cross-package artifact provenance and promotion gate.
+
+    This is the canonical manifest primitive for the VER2 upgrade. Any
+    package-specific wrapper may embed this object but must not redefine it.
+    """
+
+    artifact_id: str
+    artifact_path: str
+    owner: Owner
+    implementation_scope: ImplementationScope
+    claim_tier: ClaimTier
+    production_status: ProductionStatus
+    created_by: str
+    git_commit: str | None
+    config_hash: str
+    input_hashes: list[str]
+    code_version: str
+    schema_version: str
+    caveats: list[str] = field(default_factory=list)
+    required_gates: list[str] = field(default_factory=list)
+    passed_gates: list[str] = field(default_factory=list)
+    failed_gates: list[str] = field(default_factory=list)
+    statistics_definitions: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not self.artifact_id:
+            raise ValueError("ArtifactManifest.artifact_id must be non-empty")
+        if not self.artifact_path:
+            raise ValueError("ArtifactManifest.artifact_path must be non-empty")
+        if self.owner not in _ALLOWED_OWNERS:
+            raise ValueError(f"Unknown owner {self.owner!r}")
+        if self.implementation_scope not in _ALLOWED_IMPLEMENTATION_SCOPES:
+            raise ValueError(
+                f"Unknown implementation_scope {self.implementation_scope!r}"
+            )
+        if self.claim_tier not in _ALLOWED_CLAIM_TIERS:
+            raise ValueError(f"Unknown claim_tier {self.claim_tier!r}")
+        if self.production_status not in _ALLOWED_PRODUCTION_STATUSES:
+            raise ValueError(
+                f"Unknown production_status {self.production_status!r}"
+            )
+        if not self.created_by:
+            raise ValueError("ArtifactManifest.created_by must be non-empty")
+        if not self.config_hash:
+            raise ValueError("ArtifactManifest.config_hash must be non-empty")
+        if not self.code_version:
+            raise ValueError("ArtifactManifest.code_version must be non-empty")
+        if not self.schema_version:
+            raise ValueError("ArtifactManifest.schema_version must be non-empty")
+
+
+@dataclass(frozen=True)
+class SkySupport:
+    """Minimal sky-support metadata for production directional surfaces."""
+
+    selection_mode: str
+    sky_support_hash: str
+    mask_hash: str
+    mock_coverage_status: str
+    scan_volume_hash: str = ""
+
+    def __post_init__(self) -> None:
+        if not self.selection_mode:
+            raise ValueError("SkySupport.selection_mode must be non-empty")
+        if not self.sky_support_hash:
+            raise ValueError("SkySupport.sky_support_hash must be non-empty")
+        if not self.mask_hash:
+            raise ValueError("SkySupport.mask_hash must be non-empty")
+        if not self.mock_coverage_status:
+            raise ValueError("SkySupport.mock_coverage_status must be non-empty")
+
+
+@dataclass(frozen=True)
+class StatusSnapshotEntry:
+    """Machine-readable package/module status row."""
+
+    artifact_id: str
+    owner: Owner
+    implementation_scope: ImplementationScope
+    claim_tier: ClaimTier
+    implemented: bool
+    smoke_tested: bool
+    production_validated: bool
+    manuscript_used: bool
+    source_commit: str
+
+    def __post_init__(self) -> None:
+        if self.owner not in _ALLOWED_OWNERS:
+            raise ValueError(f"Unknown owner {self.owner!r}")
+        if self.implementation_scope not in _ALLOWED_IMPLEMENTATION_SCOPES:
+            raise ValueError(
+                f"Unknown implementation_scope {self.implementation_scope!r}"
+            )
+        if self.claim_tier not in _ALLOWED_CLAIM_TIERS:
+            raise ValueError(f"Unknown claim_tier {self.claim_tier!r}")
+        if not self.artifact_id:
+            raise ValueError("StatusSnapshotEntry.artifact_id must be non-empty")
+        if not self.source_commit:
+            raise ValueError("StatusSnapshotEntry.source_commit must be non-empty")
+
+
+@dataclass(frozen=True)
+class RuntimeReductionDecision:
+    """BASS-owned allow/block decision primitive.
+
+    VER2 P0 freezes the rule that only BASS may own reduction allow/block.
+    """
+
+    owner: Owner
+    allow_reduction: bool
+    source_status: Literal["adequate", "inadequate", "pending"]
+    propagation_status: Literal["pending", "validated", "blocked"]
+    reason: str
+    claim_tier: ClaimTier = "conditional"
+
+    def __post_init__(self) -> None:
+        if self.owner != "BASS":
+            raise ValueError(
+                "RuntimeReductionDecision.owner must be 'BASS' "
+                f"(got {self.owner!r})"
+            )
+        if self.source_status not in _ALLOWED_SOURCE_STATUSES:
+            raise ValueError(f"Unknown source_status {self.source_status!r}")
+        if self.propagation_status not in _ALLOWED_PROPAGATION_STATUSES:
+            raise ValueError(
+                f"Unknown propagation_status {self.propagation_status!r}"
+            )
+        if self.claim_tier not in _ALLOWED_CLAIM_TIERS:
+            raise ValueError(f"Unknown claim_tier {self.claim_tier!r}")
+        if not self.reason:
+            raise ValueError("RuntimeReductionDecision.reason must be non-empty")
+
+
+@dataclass(frozen=True)
+class SolverCoreOutput:
+    """Observer-neutral solver output contract."""
+
+    alm_T: object | None
+    alm_E: object | None
+    alm_B: object | None
+    map_T: object | None
+    map_Q: object | None
+    map_U: object | None
+    deterministic_template: dict[str, Any] | None
+    anisotropic_covariance: object | None
+    metadata: Mapping[str, Any]
+    manifest: ArtifactManifest
+
+    def __post_init__(self) -> None:
+        required = {
+            "bianchi_type",
+            "harmonic_basis",
+            "eb_sign_convention",
+            "multipole_cutoff",
+            "tilt_enabled",
+            "thomson_mode",
+        }
+        missing = sorted(k for k in required if k not in self.metadata)
+        if missing:
+            raise ValueError(
+                f"SolverCoreOutput.metadata missing required keys: {missing}"
+            )
+
+
+@dataclass(frozen=True)
+class ObservableVector:
+    """Descriptive observable substrate shared across BASS/HTT/MIO/TSC."""
+
+    ell_max: int
+    channels: tuple[str, ...]
+    cl: dict[str, object]
+    alm_features: dict[str, object]
+    biposh: dict[str, object] | None
+    template_fit: dict[str, object] | None
+    covariance_features: dict[str, object] | None
+    scan_volume: dict[str, object]
+    sky_support: SkySupport
+    manifest: ArtifactManifest
+
+    def __post_init__(self) -> None:
+        if self.ell_max < 0:
+            raise ValueError("ObservableVector.ell_max must be >= 0")
+        if not self.channels:
+            raise ValueError("ObservableVector.channels must be non-empty")
 
 
 @dataclass(frozen=True)

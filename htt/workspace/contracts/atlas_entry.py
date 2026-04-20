@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 from typing import Mapping, Sequence
 
 import numpy as np
+from common.contracts import ArtifactManifest
 
 
 @dataclass(frozen=True)
@@ -41,6 +42,7 @@ class AtlasEntry:
 
     # Optional caveats
     domain_caveats: Sequence[str] = field(default_factory=tuple)
+    manifest: ArtifactManifest | None = None
 
     def __post_init__(self) -> None:
         ell = np.asarray(self.ell)
@@ -54,3 +56,8 @@ class AtlasEntry:
             )
         if not self.entry_hash:
             raise ValueError("AtlasEntry.entry_hash must be non-empty")
+        if self.manifest is not None and self.manifest.owner != "BASS":
+            raise ValueError(
+                "AtlasEntry.manifest.owner must be 'BASS' "
+                f"(got {self.manifest.owner!r})"
+            )
