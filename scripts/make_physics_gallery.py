@@ -2125,6 +2125,9 @@ def _lb4_imports():
         EModeThomsonAux, EModeThomsonCollisionOperator,
         ThomsonAux, ThomsonPSTFCollisionOperator,
     )
+    from bass.collision.tilted_eb_mixing import (
+        evaluate_tilted_polarization_eb_collision,
+    )
     from bass.collision.tilted_thomson_layer_b import (
         evaluate_tilted_thomson_pstf_collision,
     )
@@ -2183,6 +2186,7 @@ def _lb4_imports():
         TiltedVisibility,
         _allowing_decision,
         evaluate_tilted_thomson_pstf_collision,
+        evaluate_tilted_polarization_eb_collision,
         TiltedSpeciesBackground,
         _GalleryDummySpecies,
     )
@@ -2443,6 +2447,54 @@ def plot_10_04_thomson_beta_sweep_Dl() -> None:
     ax.legend(loc="upper right", fontsize=8)
     fig.tight_layout()
     _save(fig, "04_thomson_beta_sweep_Dl", TOPIC_10)
+
+
+def plot_10_05_bb_from_tilted_lens_e() -> None:
+    """BB/EE amplitude ratio from tilted E→B collision mixing."""
+    (
+        _, _, _, _, _, _, _, _,
+        _, evaluate_tilted_polarization_eb_collision,
+        TiltedSpeciesBackground, DummySpecies,
+    ) = _lb4_imports()
+    _, polarization, pi2 = _make_fb4_gallery_states(L_max=30)
+    betas = np.linspace(0.0, 0.3, 61)
+    ells = np.arange(2, 31)
+    ratio_grid = np.zeros((ells.size, betas.size), dtype=np.float64)
+
+    for i, ell in enumerate(ells):
+        for j, beta in enumerate(betas):
+            tilt = None if beta == 0.0 else TiltedSpeciesBackground(
+                base=DummySpecies(), beta=float(beta), v_hat_e=(1.0, 0.0, 0.0),
+            )
+            E_src, B_src = evaluate_tilted_polarization_eb_collision(
+                ell=int(ell),
+                e_state=polarization,
+                eta=0.0,
+                Pi_2_packed=pi2,
+                Gamma_T=1.0,
+                b_state=zero_hierarchy(30),
+                tilted_electron=tilt,
+            )
+            ratio_grid[i, j] = np.sqrt(B_src.norm()) / max(np.sqrt(E_src.norm()), 1.0e-16)
+
+    fig, ax = plt.subplots(figsize=(7.6, 4.6))
+    im = ax.imshow(
+        ratio_grid,
+        origin="lower",
+        aspect="auto",
+        extent=[betas[0], betas[-1], ells[0], ells[-1]],
+        cmap="viridis",
+    )
+    _prepare_axes(
+        ax,
+        r"tilt $\beta_e$",
+        r"multipole $\ell$",
+        title=r"Layer-B $|B|/|E|$ ratio from tilted E$\leftrightarrow$B mixing",
+    )
+    cbar = fig.colorbar(im, ax=ax)
+    cbar.set_label(r"$|K_\ell^B| / |K_\ell^E|$")
+    fig.tight_layout()
+    _save(fig, "05_bb_from_tilted_lens_e", TOPIC_10)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -3782,6 +3834,9 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("04_thomson_beta_sweep_Dl",
          plot_10_04_thomson_beta_sweep_Dl,
          "FB-4.1 Layer-B TT proxy ratio for β_e ∈ {0, 0.1, 0.3}."),
+        ("05_bb_from_tilted_lens_e",
+         plot_10_05_bb_from_tilted_lens_e,
+         "FB-4.2 Layer-B BB/EE amplitude ratio over β_e ∈ [0, 0.3], ℓ ∈ [2, 30]."),
     ],
     TOPIC_11: [
         ("01_unified_trajectory_bianchi_I",

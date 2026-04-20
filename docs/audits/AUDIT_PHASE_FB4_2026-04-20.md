@@ -1,7 +1,8 @@
 # AUDIT_PHASE_FB4_2026-04-20
 
 **Banner**: Phase FB-4 actual work — tilted Thomson kernel Layer B  
-**Scope**: FB-4.1 full-Lorentz PSTF Thomson seed  
+**Scope**: FB-4.1 full-Lorentz PSTF Thomson seed, FB-4.2 tilted
+E↔B mixing seed  
 **Invariant anchor**: `beta = 0` must reduce byte-for-byte to the LB-4
 orthogonal Thomson kernel on every path.
 
@@ -131,3 +132,125 @@ No P0 / P1 detected beyond the documented off-axis deferral to FB-5.2.
 - **Chapter anchor**: `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`
 - **Baseline movement**: `3401 passed, 73 skipped, 3 errors` → `3425 passed, 72 skipped, 3 errors`
 - **Carry-forward ledger**: arbitrary-direction boost remains reserved for `FB-5.2`
+
+
+## §FB-4.2
+
+### §FB-4.2 three-channel verification
+
+- **Channel A**: Verified local anchors
+  `htt/bass/collision/tilted_eb_mixing.py`,
+  `htt/bass/collision/test_fb42_eb_mixing_skeleton.py`,
+  `htt/bass/collision/polarization.py`,
+  `scripts/make_physics_gallery.py::plot_10_05_bb_from_tilted_lens_e`,
+  `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`.
+- **Channel B**: arXiv fetch verified `astro-ph/9611125`; quote:
+  “for scalar metric perturbations one set is identically zero”.
+  Source: <https://arxiv.org/abs/astro-ph/9611125>, abstract line 43
+  on 2026-04-20.
+- **Channel C**:
+  The shipped seed retains the E-only orthogonal collision operator as
+  the baseline.
+  B is introduced only through a same-ell rotation term on the packed
+  axisymmetric slice.
+  The self-damping branch for B mirrors the E self term but omits the
+  temperature quadrupole source, matching the orthogonal B floor.
+  At `beta = 0`, the wrapper returns the exact E anchor and an
+  identically zero B tensor.
+  Finite beta generates B from pure E input without touching the
+  orthogonal Bianchi-I floor.
+  Off-axis directions still raise explicitly.
+  The heatmap figure confirms the low-ell concentration of the induced
+  B amplitude.
+
+**Core principles**
+1. External-code policy intact (CAMB only as fixture).
+2. PSTF SSOT; any ℓm detour is a documented round-trip.
+3. β = 0 byte-identity vs LB-4 anchor on every test path.
+4. No silent fallback.
+5. Determinism.
+
+### §FB-4.2.0 Audit target reconstruction
+| Layer | Claim | Implementation | Output |
+|---|---|---|---|
+| Physics | Tilted LOS mixes E and B while preserving the orthogonal B floor | `htt/bass/collision/tilted_eb_mixing.py::evaluate_tilted_polarization_eb_collision` | `(PSTFTensor, PSTFTensor)` |
+| Invariant | `beta = 0` => existing E source + zero B | explicit short-circuit | `test_fb42_beta_zero_matches_e_anchor_and_zero_b` |
+| Routing | Wrap current E-only storage without changing `PolarizationHierarchyState` | optional `b_state` input | `test_fb42_none_b_state_matches_explicit_zero_b_state` |
+| Overlap | Type-I `psi' = 0` B floor | `bass/los/bianchi_propagator.py` + zero-B tests | `test_fb42_beta_zero_b_mode_floor_is_exact` |
+
+### §FB-4.2.1 Contract / interface table
+| Surface | Shape / dtype | Units | Admissible range |
+|---|---|---|---|
+| `Pi_2_packed` | `(5,) float64` | quadrupole amplitude | required |
+| `b_state` | `PSTFHierarchyState | None` | polarization tower | `None` means exact zero-B anchor |
+| `tilted_electron` | `TiltedSpeciesBackground | None` | dimensionless tilt wrapper | `0 <= beta < 1`, axis-aligned subset only |
+| return | `tuple[PSTFTensor, PSTFTensor]` | `Gamma_T × multipole` | finite |
+
+### §FB-4.2.2 Phys-math audit ledger
+- Known limit: `beta = 0` returns the exact E anchor and zero B.
+- Dimensional consistency: same `Gamma_T × multipole` units on both
+  channels.
+- Sign: E/B rotation is antisymmetric in the same-ell mixing term.
+- Determinism: no stochastic input.
+- Numerical stability: same-ell mixing plus axisymmetric recurrence
+  only.
+- Silent omission: off-axis tilt raises.
+- Storage stability: no mutation of the shipped `PolarizationHierarchyState`.
+- Gallery consistency: the BB/EE heatmap is smooth and monotone in
+  `beta`.
+
+### §FB-4.2.3 Equation-to-code mapping audit
+- Same-ell E/B rotation seed →
+  `docs/manuscript/ch05_teff_corrections.tex` eq. `fb42-eb`.
+- E anchor reuse →
+  `bass.collision.polarization.E_mode_collision_source`.
+- B damping mirror →
+  `htt/bass/collision/tilted_eb_mixing.py::_b_mode_collision_tower`.
+
+### §FB-4.2.4 Numerical / pipeline audit
+- The dominant signal sits at low `ell`; the heatmap decays rapidly by
+  `ell ~ 10`.
+- Zero-B default is explicit, not inferred.
+- The generated B amplitude remains finite over the full sweep
+  `beta in [0, 0.3]`.
+
+### §FB-4.2.5 Ranked failure modes
+| # | Type | Severity | Symptom | Root cause | Cheap probe | Misinterpretation |
+|---|---|---|---|---|---|---|
+| 1 | Scope | P1 | off-axis tilt raises | arbitrary-direction rotation deferred | `test_fb42_off_axis_direction_raises` | “full Wigner-d polarization rotation shipped” |
+| 2 | Regression | P0 | non-zero B at `beta = 0` | missing short-circuit | `test_fb42_beta_zero_b_mode_floor_is_exact` | false violation of Type-I floor |
+| 3 | Interface | P1 | depth mismatch crash | inconsistent `E/B` tower lengths | `test_fb42_b_state_depth_mismatch_raises` | unrelated numerical bug |
+
+### §FB-4.2.6 Verifier filter
+| Verifier | Verdict | Evidence |
+|---|---|---|
+| A. Physics — known-limit recovery | Passed | exact E anchor + zero B floor |
+| A. Physics — dimensional consistency | Passed | same collision units on both outputs |
+| A. Physics — sign / normalisation | Passed | antisymmetric same-ell rotation |
+| A. Physics — alternative explanation | Passed | B generation requires both `beta > 0` and non-zero E |
+| B. Code — contract satisfaction | Passed | pinned META signature preserved |
+| B. Code — actual code-path usage | Passed | `None`, zero-B, explicit B, off-axis, mismatch tests all execute |
+| B. Code — regression risk | Passed | targeted collision suite green |
+| B. Code — reproducibility | Passed | deterministic heatmap |
+| C. Numerical — tolerance robustness | Passed | exact/`allclose` tests across sweep |
+| C. Numerical — convergence / stability | Passed | finite for `beta = 0.01, 0.1, 0.3` |
+| C. Numerical — baseline reproducibility | Passed | no new suite-wide failures beyond CAMB fixture blocker |
+
+### §FB-4.2.7 Minimal repair plan
+No P0 / P1 detected beyond the documented off-axis deferral to FB-5.2.
+
+### §FB-4.2.8 Minimal test set (executed)
+| Test | Role | Verdict |
+|---|---|---|
+| `bass/collision/test_fb42_eb_mixing_skeleton.py` | E anchor, B floor, E→B generation, guards | Passed |
+| `venv/bin/python scripts/make_physics_gallery.py --only 10_collision_and_visibility` | gallery regeneration | Passed |
+
+### §FB-4.2.9 Final verdict
+- **Status**: Pass
+- **Implement now**: axis-aligned E/B collision seed with explicit zero-B orthogonal floor
+- **Do NOT touch**: arbitrary-direction polarization rotation (`FB-5.2`)
+- **Figure PNG**: `figures/physics_gallery/10_collision_and_visibility/05_bb_from_tilted_lens_e.png`
+- **Test file**: `htt/bass/collision/test_fb42_eb_mixing_skeleton.py`
+- **Chapter anchor**: `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`
+- **Baseline movement**: `3425 passed, 72 skipped, 3 errors` → `3448 passed, 71 skipped, 3 errors`
+- **Carry-forward ledger**: full Wigner-d E/B rotation remains reserved for `FB-5.2`

@@ -399,6 +399,22 @@ Exit: β-sweep × polarisation regression. BB identically zero at
   `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`.
 - **Carry-forward**: off-axis Wigner-d lift remains reserved for FB-5.2.
 
+### FB-4.2 — axis-aligned E↔B collision seed
+
+- **Scope**: Replaced the FB-4.2 skeleton with an axis-aligned
+  same-`ell` E/B rotation seed, kept the orthogonal Type-I B floor
+  exact, and added the Topic-10 BB/EE heatmap plus the matching
+  manuscript subsection.
+- **Commit anchor**: pending local commit (`FB-4.2: axis-aligned E↔B collision seed`).
+- **Test delta**: `3,425 passed + 72 skipped + 3 errors` →
+  `3,448 passed + 71 skipped + 3 errors`.
+- **Audit**: [AUDIT_PHASE_FB4_2026-04-20.md](../../audits/AUDIT_PHASE_FB4_2026-04-20.md) §FB-4.2.
+- **Gallery**: rendered
+  `figures/physics_gallery/10_collision_and_visibility/05_bb_from_tilted_lens_e.png`.
+- **Manuscript anchor**:
+  `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`.
+- **Carry-forward**: arbitrary-direction polarization rotation remains reserved for FB-5.2.
+
 ---
 
 ## Phase FB-5 (planned) — Perturbation sector k ≠ 0

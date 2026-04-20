@@ -2198,6 +2198,45 @@ the LB-4 operator, which is checked with
 \texttt{htt/bass/collision/test\_fb41\_tilted\_thomson\_skeleton.py}.
 
 
+\subsection{FB-4.2: tilted line-of-sight $E \leftrightarrow B$ mixing}
+
+In the same axisymmetric seed, the leading same-$\ell$
+polarisation rotation is written as
+\begin{equation}\label{eq:fb42-eb}
+\tilde E_\ell
+=
+E_\ell - \frac{6\beta_e}{\ell+1} B_\ell,
+\qquad
+\tilde B_\ell
+=
+B_\ell + \frac{6\beta_e}{\ell+1} E_\ell,
+\end{equation}
+which makes the orthogonal Bianchi-I floor manifest:
+if $B_\ell = 0$ and $\beta_e = 0$, no $B$-mode source is
+generated.  Equation~(\ref{eq:fb42-eb}) is the collision-side
+counterpart of the frame-change discussion in
+\cite{Challinor2000} and of the Bianchi-polarisation morphology
+analysed by Pontzen \& Challinor~\cite{Pontzen2011}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/physics_gallery/10_collision_and_visibility/05_bb_from_tilted_lens_e.png}
+\caption{FB-4.2 gallery plot: Layer-B $|B|/|E|$ ratio on the
+tilted collision seed over $0 \le \beta_e \le 0.3$ and
+$2 \le \ell \le 30$.}
+\label{fig:fb42-gallery}
+\end{figure}
+
+Figure~\ref{fig:fb42-gallery} shows that the generated $B$ power
+is concentrated in the lowest multipoles and grows monotonically
+with $\beta_e$, while the exact $\beta_e = 0$ floor remains zero.
+The numerical regression in
+\texttt{htt/bass/collision/test\_fb42\_eb\_mixing\_skeleton.py}
+verifies both the byte-identical $E$-mode reduction and the
+appearance of non-zero $B$ from a pure $E$ input once the line of
+sight is tilted.
+
+
 % ============================================================
 % ============================================================
 \section{The nonperturbative $\Teff$ regime}
