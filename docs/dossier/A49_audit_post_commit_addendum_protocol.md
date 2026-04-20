@@ -93,6 +93,11 @@ docs/INDEPENDENT_TRACKS_NEXT_SESSION.md`" — see §A49.5.
 
 ## A49.3 Trigger detection — the audit-commit-time check
 
+Per memory `feedback_git_workflow.md` bullet on audit-commit-time
+re-run (promoted W25D7 via §A50.2a patient path), the check below
+is now a **durable first-order rule**; the pseudocode is preserved
+here as the dossier-level reference implementation.
+
 The mechanical check that should precede every audit commit:
 
 ```bash
@@ -234,6 +239,14 @@ The body fields the author always fills:
   fourth, cite W16 + W19 + W20; etc.
 
 ## A49.5 Pre-emption discipline — the "Addendum protocol notice"
+
+Per memory `feedback_git_workflow.md` bullet on audit-commit-time
+re-run (promoted W25D7 via §A50.2a patient path), live audit bodies
+now cite the durable rule rather than restating the discipline
+inline. The template below is therefore preserved as the
+**historical inline form** and remains the fallback body shape if
+§A50.5 ever de-promotes the memory bullet back to dossier-only
+status.
 
 W20 introduced the discipline of pre-documenting the addendum
 hazard in the audit body itself, before the addendum has been
@@ -465,11 +478,14 @@ A49 must be rewritten if any of the following happens:
   pattern); if the practice is abandoned, A49 must either
   re-justify the discipline or remove §A49.5 to reflect
   reality.
-* **Memory `feedback_git_workflow.md` adds an "audit-commit-time
+* ~~**Memory `feedback_git_workflow.md` adds an "audit-commit-time
   status-gate" entry** (currently optional W19 F4 / W20 F4
   carry-forward). If the discipline is lifted into durable
   rules, §A49.3 / §A49.5 are updated to cite the memory entry
-  rather than restate the rule.
+  rather than restate the rule.~~ **(FIRED W25D7 via §A50.2a
+  patient path — memory bullet landed; §A49.3 / §A49.5 citations
+  updated per A50.4; A50 §A50.5 de-promotion protocol is now the
+  only avenue back.)**
 
 Until one of these triggers fires, A49 is stable and its
 addendum-protocol templates remain the authoritative format for

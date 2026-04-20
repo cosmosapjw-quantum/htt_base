@@ -6,12 +6,15 @@ no code landing — this appendix specifies the **promotion
 workflow** that lifts the A49.5 "Addendum protocol notice"
 discipline from audit-body convention into durable memory-rule
 status).
-**Status**: **gate-specified, trigger-pending** — the promotion
-gate is "notice carried forward in ≥ 3 consecutive audit bodies
-without drift" (§A50.2). As of 2026-04-19 (W21 audit), the count
-is **2** (W20 first occurrence + W21 first carry-over / dogfooding).
-W22's audit is the earliest possible promotion trigger; W23 or W24
-is the expected real trigger if the discipline holds through W22.
+**Status**: **promoted (patient path fired W25D7)** — the strict
+§A50.2 gate was formally evaluated against the W23/W24/W25 sliding
+window and returned a third consecutive `(1)(2)(3) PASS + (4) FAIL`
+defer; the parallel §A50.2a patient gate then fired with
+dogfooding count = **5** (W21–W25), audit-evaluated strict-defer
+count = **3** (W23–W25), and zero §A49.6 failures across the
+five-phase window. The paired §A50.4 landing updated A49.3 /
+A49.5 citations, retired A49.9 trigger #4, and landed the durable
+memory + NEXT_SESSION §0 bullet on 2026-04-20.
 **Governance anchors**:
 memory `feedback_git_workflow.md` (durable first-order rules —
 additive-commits, pre-commit `git status --short` gate, scoped

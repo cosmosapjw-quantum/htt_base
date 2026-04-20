@@ -131,21 +131,24 @@ brief. Audit authors who need the exact prose anchor should use:
 | [S5] | [S4] | §A51.3 drift detection flags on a quarterly spot-check; discipline reverts to per-phase check for three consecutive phases minimum. |
 | [S3]/[S4]/[S5] | [S1] | §A50.5 three-phase de-promotion walk completes: (1) Fx finding, (2) one-phase wait, (3) recurrence lands → W<N>D1 commit removes memory bullet, restores §A49.3/§A49.5 inline form, un-strikethroughs A49.9 trigger #4. |
 
-## A52.5 Current state (2026-04-20 W24D5)
+## A52.5 Current state (2026-04-20 W25D7)
 
-The Addendum-protocol-notice discipline is in **[S2] GATE-
-DEFERRED** as of the W23D1 §A50.2 strict-gate formal evaluation
-(W23 audit §6 check #4 returned (1)(2)(3) PASS + (4) FAIL). W24D1
-`2f02d1f` landed §A50.2a (patient promotion path, 179 L addition
-to A50); the patient gate's accumulators currently stand at
-dogfooding count ≥ 4 (W21–W24 expected) + strict-defer count 1
-(W23D1) with W24D1 not counting as a strict defer (it landed
-§A50.2a, not a strict-gate re-evaluation). W24D7 audit §6 check
-#4 (strict) + new check #5 (patient accumulators) decide whether
-the state advances toward [S3] or stays at [S2]; §A50.2a earliest
-fire is **W25 audit** (patient) per A50.2a's "5-dogfooding +
-3 audit-evaluated defers" baseline. A51 therefore remains
-**dormant** (trigger-gated) as of W24D5.
+The Addendum-protocol-notice discipline is now in **[S3]
+PROMOTED**. W25 audit §6 check #4 re-evaluated the strict
+§A50.2 gate against the W23/W24/W25 sliding window and returned a
+third consecutive `(1)(2)(3) PASS + (4) FAIL` defer (no in-span
+addendum trigger). W25 audit §6 check #5 then satisfied **all**
+§A50.2a patient-path conditions: dogfooding count = 5 (W21–W25),
+audit-evaluated strict-defer count = 3 (W23/W24/W25), and zero
+§A49.6 failures across the five-phase window. The paired §A50.4
+landing updated A49.3 / A49.5 citations, retired A49.9 trigger
+#4, and landed the durable memory + NEXT_SESSION §0 bullet in the
+same W25D7 rotation.
+
+A51 is therefore no longer dormant. **W26D7** becomes the first
+post-promotion audit expected to execute the §A51.2 positive-
+verification row and, if it runs clean, advance the lifecycle to
+**[S4] POST-PROMO VERIFIED** with A51.4 ledger count = 1.
 
 ## A52.6 No code landing in this appendix
 

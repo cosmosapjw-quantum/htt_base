@@ -6,12 +6,12 @@ no code landing — this appendix specifies the **positive
 verification discipline** that runs on every Week-N audit AFTER
 A50's promotion gate has fired, guarding the durable memory rule
 against silent drift).
-**Status**: **spec-pending, trigger-gated** — A51's discipline
-activates only once A50.2's gate fires and the §A50.4 paired
-landing executes. Until that moment, A51 is reference material
-for the first post-promotion audit author. As of 2026-04-19 W22
-audit (A50.2 gate not yet fired — condition (4) unsatisfied under
-the W22 R1 sliding-window reading), A51 is dormant.
+**Status**: **active from W25D7 onward** — the §A50.2a patient
+path fired at the W25 phase audit, the §A50.4 paired landing
+executed in the same rotation, and A51's first live per-phase
+§6 verification now begins at **W26D7**. The W23/W24
+pre-promotion dormancy caveat remains as historical context for
+how the template stayed inert before promotion.
 **Governance anchors**:
 memory `feedback_git_workflow.md` (the durable rule store that
 A50.3's bullet lands into — A51's verification target);
@@ -82,13 +82,18 @@ verbatim (as W23 / W24 do); the notice is rewritten to cite the
 just-landed memory rule only in the same commit that executes
 §A50.4.
 
+Historical note: the caveat above was the live rule through W24.
+From W25D7 onward the promotion has fired, so W26+ audits use the
+§A51.2 / §A51.3 surfaces rather than the pre-promotion A49.5-only
+form.
+
 ## A51.2 Positive verification — the per-phase §6 check
 
 On every post-promotion Week-N audit, the author performs this
 §6 row:
 
 ```markdown
-| W<N> check #4 | **PASSED** (§A51.2 positive verification) | process (A50.3 memory rule compliance) | §A49.3 pre-commit re-snapshot was executed per the durable rule in memory `feedback_git_workflow.md` (bullet promoted W<P>D1, SHA `<sha>`); `git log T_prev..HEAD --oneline` returned <n> shas matching the §6 check #1 / #2 narratives. Memory bullet's rationale clause currently names <m> precedents (<list>); this phase's precedent <count continues | count + 1 due to addendum trigger>. | the discipline is load-bearing post-promotion and produces clean windows. | n/a — positive finding. | §A51.3 drift check also ran clean. |
+| W<N> check #4 | **PASSED** (§A51.2 positive verification) | process (A50.3 memory rule compliance) | §A49.3 pre-commit re-snapshot was executed per the durable rule in memory `feedback_git_workflow.md` (bullet promoted W<P>D7, SHA `<sha>`); `git log T_prev..HEAD --oneline` returned <n> shas matching the §6 check #1 / #2 narratives. Memory bullet's rationale clause currently names <m> precedents (<list>); this phase's precedent <count continues | count + 1 due to addendum trigger>. | the discipline is load-bearing post-promotion and produces clean windows. | n/a — positive finding. | §A51.3 drift check also ran clean. |
 ```
 
 The check is a **three-question** mechanical audit:
@@ -236,7 +241,7 @@ The handoff:
 
 A51 is specification-only. The §A51.2 per-phase §6 row is prose
 the audit author paste-copies into `docs/audits/
-AUDIT_PHASE_IND_TRACKS_W<N>_<DATE>.md` once A50.2's gate has
+AUDIT_PHASE_IND_TRACKS_W<N>_<DATE>.md` once A50.2 or A50.2a has
 fired. The §A51.3 three-way diff is three shell commands the
 author runs at audit-write time. The §A51.4 maturation ledger
 is one sentence in the audit §8 ledger ("A51.4 counter: <n>

@@ -1,40 +1,31 @@
 # Independent Tracks — next-session resumption prompt
 
-**As of**: 2026-04-20, post-`IND_TRACKS_W24` phase.
-**Phase closed**: W24 landed all five gate items — §A50.2a
-patient-promotion path (`2f02d1f` W24D1), NEXT_SESSION rotation
-(`839817b` W24D1-docs), §A51.1 pre-promotion dormancy caveat
-(`289a45e` W24D3, closes W23 F1), DOS-A52 governance lifecycle
-diagram (`2f4ab7a` W24D5, 182 L eight-section dossier), and the
-phase-boundary audit (this rotation, W24D7). Touched-surface held
-at 1080 (+0 vs W23); MIO contribution held at 109. All four
-W24 ind-tracks landings were docs-only scoped commits on
-`docs/dossier/A{50,51,52}_*.md` and
-`docs/INDEPENDENT_TRACKS_NEXT_SESSION.md`. **Cross-lane activity
-in the W24 window**: 60 bass-lane commits (FB-3.3 through FB-3.6
-Phase-FB-3 closure + SDD planning-package doc bundle + FB-META-4
-through FB-META-11 skeleton-plant campaign + `8149bbb` repo-wide
-cleanup) — all 60 pre-landed before the W24D3 resumption per A49.2;
-zero post-write arrivals during the W24D7 audit write→commit gap.
-**W12 F1 / W14 F1 recurrence check**: W24 audit §6 check #1
-PASSED (scoped-pathspec rule held across all four W24 ind-tracks
-commits; ninth distinct phase exercising the rule; sixth distinct
-phase with active working-tree drift — drift vectors absorbed:
-legacy root-tree deletions, `legacy/bass/*` mass deletions,
-bass-lane pdf/md modifications, untracked pip leftovers,
-manuscript tree). **§6 check #2 (A46.2)**: two lanes observed
-(ind-tracks + bass); seven consecutive ≤ two-lane phases (W18-W24).
-**§6 check #3 (A49.3 dogfooding)**: fourth consecutive post-A49
-dogfooding cleanly PASSED. **§6 check #4 (§A50.2 strict gate)**:
-second consecutive defer (conditions 1-3 PASS + 4 FAIL under
-W23D1 sliding-window reading); W25 re-evaluates. **§6 check #5
-(§A50.2a patient-gate accumulator, NEW this phase)**: dogfooding
-count 4, strict-defer count 2, zero-failure-sub-gate PASSED, gate
-ineligible at W24 (needs 5+3 minimum); **earliest patient fire:
-W25 audit (W25D7)**.
+**As of**: 2026-04-20, post-`IND_TRACKS_W25` phase.
+**Phase closed**: W25 landed all five gate items — `W25D1`
+§A50.2a counting-semantics clarification (`2b6529a`), `W25D3`
+A52 parity + paste-template pointers (`ddf4d37`), `W25D5`
+DOS-A53 `_hash_config` anchor-location protocol (`f52447b`), and
+at `W25D7` the phase audit + **patient-path promotion fire**
+(this rotation). Touched-surface held at **1080 passed / 4 skipped /
+0 failed**; MIO contribution held at **109 tests**. **Cross-lane
+activity in the W25 window**: none observed in the committed window
+`ee9b0ec..HEAD`; the phase comprised three docs-only ind-tracks
+commits on `docs/dossier/A{50,52,53}_*.md`. **W12 F1 / W14 F1
+recurrence check**: W25 audit §6 check #1 PASSED (tenth distinct
+phase exercising the W15D1 scoped-pathspec rule; all three W25
+commits touched a single lane-owned file each). **§6 check #2
+(A46.2)**: one lane observed (ind-tracks only); eight consecutive
+≤ two-lane phases (W18-W25). **§6 check #3 (A49.3 dogfooding)**:
+fifth consecutive post-A49 dogfooding cleanly PASSED. **§6 check
+#4 (§A50.2 strict gate)**: third consecutive defer under the W23D1
+sliding-window reading. **§6 check #5 (§A50.2a patient gate)**:
+**FIRED** with dogfooding count 5, audit-evaluated strict-defer
+count 3, and zero §A49.6 failures across W21-W25. Promotion basis:
+**patient**.
 **Last audited**: 2026-04-20
-(`docs/audits/AUDIT_PHASE_IND_TRACKS_W24_2026-04-20.md`;
-prior phases `AUDIT_PHASE_IND_TRACKS_W23_2026-04-20.md`,
+(`docs/audits/AUDIT_PHASE_IND_TRACKS_W25_2026-04-20.md`;
+prior phases `AUDIT_PHASE_IND_TRACKS_W24_2026-04-20.md`,
+`AUDIT_PHASE_IND_TRACKS_W23_2026-04-20.md`,
 `AUDIT_PHASE_IND_TRACKS_W22_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W21_2026-04-19.md`,
 `AUDIT_PHASE_IND_TRACKS_W20_2026-04-19.md`,
@@ -93,6 +84,21 @@ First-order rules (copy-pasted from the governing plan):
   with the W13D1 status-gate in place because the gate cannot
   detect a concurrent lane's commit that lands in the gap. The
   pathspec form closes that race window (W14 F1 / W15D1).
+* **audit-commit-time re-run gate** — immediately before every
+  `IND_TRACKS` phase-audit commit, re-run `git log <T_prev>..HEAD
+  --oneline` and compare against the sha list named in audit §6.
+  If any new non-ind-tracks commit landed between audit-write and
+  audit-commit, append the A49.4 post-audit addendum instead of
+  pretending the earlier §6 narrative still holds. Rationale:
+  W16 F1 / W19 F4 / W20 F4 showed that a cross-lane commit landing
+  on `main` between audit draft and audit commit invalidates the
+  §6 window narrative at the moment of committing; the addendum is
+  the standard reconciliation. (A49.3 / A49.5 dogfooding promoted
+  to durable rule W25D7, 2026-04-20.) (Promotion basis: patient —
+  five consecutive A49.3 dogfoodings W21–W25, three consecutive
+  audit-evaluated strict-gate defers W23–W25 with condition (4)
+  absent-trigger; zero real addendum events in the promotion
+  window.)
 * **do not touch `bass_py/bass/*`** — that is the bass_py session's
   lane.
 * **do not touch `plots/physics_gallery/`** — bass_py session
@@ -770,281 +776,146 @@ Week 24 final gate — **all five items green**:
 - [x] No touched-surface regressions (1080 passed; unchanged vs
       W23; 0 failed; 4 skipped unchanged).
 
+## §1c-22. What shipped in Week 25
+
+Session of 2026-04-20 (compressed: one session covered Week-25
+Days 1-7). Three committed in-lane landings + one phase-boundary
+audit / promotion rotation (`AUDIT_PHASE_IND_TRACKS_W25_2026-04-20.md`).
+
+| Track | Artefact | Status |
+|---|---|---|
+| W25D1 §A50.2a counting semantics | `docs/dossier/A50_addendum_notice_memory_promotion_spec.md` — clarifies that the patient-path defer counter is **audit-evaluated** (W23 audit / W24 audit / W25 audit), not “any earlier same-phase mention”. | landed (`2b6529a`) |
+| W25D3 A52 parity + pointers | `docs/dossier/A52_governance_lifecycle_diagram.md` — adds §A52.3.1 paste-template pointers for [S1]/[S2] and §A52.7.1 parity-check protocol. | landed (`ddf4d37`) |
+| W25D5 DOS-A53 | `docs/dossier/A53_hash_config_anchor_location_protocol.md` — `_hash_config` anchor-location protocol; closes W18 F3 docs-side carry. | landed (`f52447b`) |
+| W25D7 patient-path promotion | `docs/audits/AUDIT_PHASE_IND_TRACKS_W25_2026-04-20.md` + A49/A50/A51/A52 updates + memory `feedback_git_workflow.md` + NEXT_SESSION §0 paired bullet. Strict gate deferred a third consecutive time; patient gate fired; A49.9 trigger #4 retired; A52 current state moved to `[S3] PROMOTED`; A51 activated for W26. | landed (this rotation) |
+
+Final test tally over the touched surface at W25 boundary:
+**1080 passed, 0 failed, 4 skipped** (unchanged vs W24). MIO
+contribution held at **109 tests**.
+
+Week 25 final gate — **all five items green**:
+
+- [x] §A50.2 / §A50.2a dual-gate re-evaluation performed at W25D7.
+- [x] Strict gate recorded third consecutive defer.
+- [x] Patient gate fired and §A50.4 paired landing executed.
+- [x] One W24 residual landed at W25D1.
+- [x] Second W24 residual set landed at W25D3.
+- [x] One A5x dossier landed at W25D5.
+- [x] Phase-boundary audit log written.
+- [x] No touched-surface regressions (1080 / 0 / 4 unchanged).
+
 ## §1d. What was designed in the 2026-04-19 planning session
 
 (Preserved here for provenance; unchanged from earlier rotations.
 See v3 research plan + PART II + PART III of the governing plan.)
 
 
-## §2. Active priorities for the next session (Week 25)
+## §2. Active priorities for the next session (Week 26)
 
-**"§A50.2 / §A50.2a dual-gate re-evaluation at W25D7 (first phase
-where patient-gate is eligible) + one W24 R-residual / W20-R3
-carry close + one A5x dossier / §A50-A52 expansion / MANU-CH03
-extension"**. Week 24 landed all five gate items — §A50.2a
-patient-promotion path (`2f02d1f` W24D1) + NEXT_SESSION rotation
-(`839817b` W24D1-docs) + §A51.1 pre-promotion dormancy caveat
-(`289a45e` W24D3, closes W23 F1) + DOS-A52 governance lifecycle
-diagram (`2f4ab7a` W24D5) + phase audit (W24D7). MIO contribution
-held at 109; touched-surface held at 1080 (all four W24 landings
-docs-only). The W12 F1 / W14 F1 cross-lane pattern did NOT recur
-(W24 audit §6 check #1 PASSED — four W24 ind-tracks commits
-scoped exactly to own paths; **60 bass-lane cross-lane commits
-pre-landed** before the W24D3 resumption, by far the largest
-cross-lane backlog observed in any ind-tracks phase window;
-scoped-pathspec rule held on every W24 ind-tracks commit absorbing
-both the 60-commit pre-landing backlog and four concurrent
-working-tree drift vectors — ninth distinct phase exercising
-the W15D1 rule; sixth phase with active working-tree drift).
-A46.4's three-lane template did NOT trigger (W24 audit §6 check
-#2 — two lanes observed (ind-tracks + bass), not three; W18 →
-W19 → W20 → W21 → W22 → W23 → W24 **seven consecutive ≤
-two-lane phases**). **A49.3's audit-commit-time re-snapshot rule
-was dogfooded a fourth consecutive time** (W24 §6 check #3);
-dogfooding streak is now W21 + W22 + W23 + W24. **§A50.2 strict
-gate evaluated at W24D7** (second consecutive defer; W23D1 first
-+ W24D7 second; conditions (1)(2)(3) PASS + (4) FAIL under the
-W23D1 sliding-window clarification — zero in-span addendum
-triggers across W22/W23/W24). **§A50.2a patient gate first
-accumulator tick at W24D7** (first phase running the new §6 check
-#5): dogfooding count 4, strict-defer count 2, zero-§A49.6-failure
-sub-gate PASSED; gate ineligible at W24 (needs 5+3 minimum);
-**earliest patient fire: W25 audit (W25D7)**. A51 remains dormant through W24
-(§A52.5 "Current state" = [S2] GATE-DEFERRED per the lifecycle
-diagram landed W24D5).
+**"First post-promotion verification cycle (A51 live) + one
+carry-forward docs close + one A5x / MANU-CH03 option"**.
+Week 25 promoted the audit-commit-time re-run discipline from
+dossier convention to a durable first-order rule via the
+**patient** path: W25 audit §6 check #4 returned the third
+consecutive strict defer against the W23/W24/W25 sliding window,
+while §6 check #5 satisfied the five-dogfooding / three-defer /
+zero-failure patient threshold and fired. The paired W25D7
+landing updated A49.3 / A49.5 citations, retired A49.9 trigger
+#4, landed the durable memory + NEXT_SESSION §0 bullet, and moved
+§A52.5 current state to **[S3] PROMOTED**. **Week 26 is therefore
+the first post-promotion phase**: the W26D7 audit is expected to
+run the live §A51.2 positive-verification row plus the §A51.3
+three-way consistency check for the first time. If both are clean,
+the lifecycle advances to **[S4] POST-PROMO VERIFIED** with
+`A51.4 counter = 1`.
 
-**Week 25 is the first phase where the §A50.2a patient gate is
-eligible** — the accumulators tick to dogfooding=5 / strict-
-defer=3 at W25D7 (assuming §A49.3 re-snapshot runs clean and
-§A50.2 strict gate defers a third consecutive time). If the
-patient gate fires at W25D7, §A50.4's paired dossier + memory
-landing executes in the same scoped W25D7 commit (or a dedicated
-W25D(7+ε) promotion commit; caller's judgement). The strict
-§A50.2 gate also re-evaluates against the new **W23/W24/W25
-sliding window** — first phase where the window fully rolls past
-the W23D1 clarification commit itself. If the strict gate fires
-(requires a W23/W24/W25 in-span addendum trigger via §6 check
-#3), the strict path takes precedence and §A50.3's memory bullet
-lands with the "Promotion basis: strict" clause; the patient
-path remains inactive and §A52.5 current-state moves directly
-from [S2] to [S3] PROMOTED. Either way, Week 25 audit §6 retains
-both check #4 (strict) + check #5 (patient) rows for transparency.
+Dependency-wait status is otherwise unchanged. HJ-01 production
+wiring, HJ-03 evidence anatomy, HJ-04 departure skeleton, HJ-05-full,
+and MANU-CH12 §§12.1 / 12.4 / 12.5 / 12.8 remain blocked on
+bass-lane outputs per `docs/dossier/A48_mio_htt_dependency_wait_
+contract.md` §A48.2. The first-schema-extension-triggered A43 digest
+test also remains deferred-to-trigger. W26 is therefore still a
+docs/governance / manuscript / low-risk test-surface phase unless
+the bass lane unblocks one of the gated MIO tracks mid-window.
 
-Week 25 remains in the dependency-wait window: HJ-01 production
-wiring, HJ-03 evidence anatomy, HJ-04 departure skeleton, and
-MANU-CH12 §§12.1 / 12.4 / 12.5 / 12.8 are still blocked on
-bass_py W10-02 (K_ℓ atlas) and bass_py W11-02 (BiPoSH) —
-consolidated in `docs/dossier/A48_mio_htt_dependency_wait_
-contract.md` §A48.2 as the SSOT ledger. A43 digest test stays
-deferred-to-trigger per §A43.3. A46.4 first-three-lane-
-observation row stays paste-ready. A47.5 per-test translation
-table and §A46.6 code-surface file list remain HJ-03-PR-gated.
-A49.3 + A49.5 continue to be exercised in every phase audit.
-A51 remains **dormant** through W24 (W24D3 §A51.1 caveat locks
-pre-promotion paste-template-ban); §A51.2 paste-template is
-paste-ready for W25D7 onwards **if** either §A50.2 or §A50.2a
-gate fires at W25D7.
+### Days 1–2 — One carry-forward docs close
 
-**Working-tree progress in this session**: the default docs path for
-W25D1/D3/D5 has been taken. W24 R2 is closed in A50 via the
-"audit-evaluated strict-gate defer" wording, W24 R1 + W24 R3 are
-closed in A52 via the new parity-check protocol + [S1]/[S2] paste-
-template pointers, and DOS-A53 now covers `_hash_config` anchor
-relocation. The remaining Week-25 mandatory item is Day-7's phase
-audit + NEXT_SESSION rotation + dual-gate decision.
+Recommended default: **W23 R2 — A50 per-firing evaluation log**.
+This is now more valuable post-promotion because W23 / W24 / W25
+strict-gate outcomes and the W25 patient fire have all occurred.
+Add a compact §A50.2.1 ledger table seeded with:
 
-### Days 1–2 — W24 R-residual close (one of R1/R2/R3)
+1. W23 audit — strict `(1)(2)(3) PASS + (4) FAIL`.
+2. W24 audit — strict defer + patient accumulator 4/2.
+3. W25 audit — strict defer + patient fire.
 
-W25D1 has no mandatory landing; the natural slot is a lightweight
-W24 R-residual close. Recommended default: **pick W24 R2** for
-W25D1:
+Unblocked alternatives:
 
-1. **W24 R2 (recommended) — §A50.2a strict-defer counting
-   semantics.** Amend §A50.2a's "three consecutive strict-gate
-   defers" clause to read "three consecutive audit-evaluated
-   §A50.2 strict-gate defers" for explicit audit-as-evaluator
-   semantics. Closes W24 F2. ~1 L amendment inside §A50.2a;
-   accumulator count unchanged.
-2. **W24 R1 — A52 re-audit-trigger automation.** Add a §A52.7.1
-   "Parity-check protocol" sub-bullet to A52 naming a simple
-   `grep -c "§A50.2a" docs/dossier/A50_*.md` vs A52 count parity
-   check, OR land a `test_a52_cross_references.py` analogous to
-   the A36a YAML parity test. Closes W24 F1. ~3-5 L docs or
-   ~30-50 L test.
-3. **W24 R3 — A52 paste-template pointers.** Add a minimal
-   §A52.3.1 sub-section with one-line references to the A49.5
-   template body paragraph for audit authors in [S1]/[S2]
-   states. Closes W24 F3. ~5-10 L docs.
-4. **Unblocked alternatives (W23 / W22 / W20 carries)**:
-   - **W23 R2 — A50 per-firing evaluation ledger.** Add a
-     §A50.2.1 "Per-firing evaluation log" subsection to A50
-     accumulating per-phase PASS/FAIL entries, seeded with
-     W23D1 + W24D7 strict rows + W24D7 patient row as the
-     first three entries (~15-25 L). Closes W23 F2.
-   - **W23 R3 — A51.3 placeholder-path resolution note.**
-     Amend §A51.3's shell-command block header with a note
-     about session-specific memory-store path substitution
-     (~1-3 L). Closes W23 F3.
-   - **W20 R3 — A48.2 milestone-tag YAML sidecar scaffold.**
-     Start `docs/dossier/A48_mio_htt_dependency_wait_
-     contract.yaml` sidecar analogous to A36a.yaml, mirroring
-     §A48.2's eight rows; land behind a
-     `test_a48_matrix_matches_yaml` parity test. Preemptive
-     W20 R3 close; ~50-80 L YAML + ~30-50 L test.
-5. Caller's choice; default to **W24 R2 §A50.2a counting-
-   semantics amendment** (shortest, closes the semantic
-   ambiguity the W24 audit surfaced in the §A50.2a body).
+1. **W23 R3 — A51.3 placeholder-path resolution note.**
+   Clarify the session-specific memory-store path substitution in
+   A51's shell block.
+2. **W20 R3 — A48.2 YAML sidecar scaffold.**
+   Start `docs/dossier/A48_mio_htt_dependency_wait_contract.yaml`
+   plus a parity test if you want a mechanised SSOT for the wait
+   matrix before HJ-01 opens.
 
-- Commit tag: `W25D1: AUDIT(W24 R<N>): <scope>` OR
-  `W25D1: DOS-A<NN> SSOT <scope>`.
-- Gate: +1-80 L prose or ~30-50 L test; cross-reference
-  resolution; no production-code change.
+### Days 3–4 — Post-promotion hygiene or alternative carry
 
-### Days 3–4 — Second W24 R-residual or alternative
-
-Pick a second W24 R-residual not picked at W25D1 OR a W23 /
-W22 / W20 carry alternative. All candidates unblocked and
-docs-only (~1-80 L). Caller's judgement. Default: whichever of
-W24 R1 / R2 / R3 was not picked at W25D1.
-
-- Commit tag: `W25D3: AUDIT(W24 R<N>): <scope>` OR
-  `W25D3: AUDIT(Wx Ry): <scope>`.
-- Gate: +1-80 L docs; cross-reference resolution.
+Recommended default: **A51 path hygiene** if W23 R3 was not picked
+at D1, otherwise take the `A48` YAML sidecar scaffold. The goal is
+to make the first W26D7 live A51 run as mechanical as possible.
 
 ### Days 5–6 — One new A5x dossier or MANU-CH03 extension
 
-Pick ONE per caller's judgement — both in-scope per the
-governing plan's dependency-wait window:
+Open options remain:
 
-1. **DOS-A53 (new A5x dossier — caller chooses topic).**
-   Candidate topics from the W18+ unpicked-option pool:
-   - **A53 W18 F3 anchor-location protocol** (carry-forward
-     from Week-18 through Week-24 unpicked option).
-     Specifies the procedure for relocating the W18D1/W19D1
-     `_hash_config` anchor if the MIO package layout is
-     reorganised. Two-anchor coexistence paragraph for the
-     HJ-03-landed-but-W18/W19-anchor-still-valid interim.
-     ~100-150 L.
-   - **A53 cross-check channel catalogue extension** (carry-
-     forward from W20D5 through W24D5 unpicked option).
-     Extends A34.3's channel catalogue with a third entry for
-     HJ-03 (once it lands) or for the W7 FM3 TSC-05 schema-
-     hash freeze (on first schema extension). ~100-150 L.
-   - **A53 §A52 audit-author quick-reference card** (new
-     option). A one-page TL;DR companion to A52's state
-     diagram: for each of the six lifecycle states, a single-
-     paragraph "what you, the audit author, paste into §6
-     this phase" box. ~60-100 L. Cross-refs A49 / A50 / A51 /
-     A52.
-2. **MANU-CH03 §3.X+8 extension (carry-forward from W16+
-   options).** Extend `project/00_manuscript/ch03_framework.tex`
-   with the W4 Θ⁴-bridge → A43 schema-hash subsection.
-   `/project` gitignored; gate is "+≥ 150 L with banned-vocab
-   scan = 0 hits", verified in audit §7 only (no force-add).
+1. **A54 audit-author quick-reference card** — a one-page
+   operational companion to A52 listing the exact §6 body shape to
+   paste in states [S3]/[S4]/[S5].
+2. **A54 cross-check channel catalogue extension** — expand A34's
+   catalogue when HJ-03 or the first schema-extension path becomes
+   concrete.
+3. **MANU-CH03 §3.X+8 extension** — still valid if the user wants a
+   manuscript-facing task while the MIO production tracks wait on
+   bass-lane outputs.
 
-- Commit tag: `W25D5: DOS-A53 <chosen topic>` OR
-  `W25D5: MANU-CH03 §3.X+8 (uncommitted)`.
-- Gate (option 1): new A53 file + cross-reference resolution;
-  no code change. Gate (option 2): ch03_framework.tex +≥ 150 L;
-  banned-vocab scan = 0; NOT committed (W8 FM1).
+### Day 7 — First live A51 audit cycle
 
-### Day 7 — Phase audit + NEXT_SESSION rotation + dual-gate decision
+The W26 phase-boundary audit should include:
 
-Standard phase-boundary audit per `feedback_phase_boundary_
-audit.md`. Write to `docs/audits/AUDIT_PHASE_IND_TRACKS_W25_
-2026-04-N.md` (date TBD). Audit MUST include:
+1. §6 W12 F1 / W14 F1 recurrence check (eleventh stress-test of
+   the W15D1 scoped-pathspec rule).
+2. §6 A46.2 lane-classification check.
+3. §6 A51.2 positive-verification row — now **live**, not dormant.
+4. §6 A51.3 three-way consistency check across:
+   memory `feedback_git_workflow.md`,
+   `docs/INDEPENDENT_TRACKS_NEXT_SESSION.md` §0,
+   and A49.3 / A49.5 citation paragraphs.
+5. A51.4 ledger update (`counter = 1`) if the verification is
+   clean, which promotes the lifecycle from [S3] to [S4].
 
-- **§6 W12 F1 / W14 F1 recurrence check** (per W15D1 rule —
-  tenth consecutive stress-test).
-- **§6 A46.2 lane-classification check** (first three-lane
-  observation template may or may not trigger this phase).
-- **§6 A49.3 re-snapshot dogfooding** (fifth consecutive).
-- **§6 check #4 strict §A50.2 re-evaluation** against the
-  W23/W24/W25 sliding window — first phase where the window
-  fully rolls past the W23D1 clarification commit itself.
-  Fires iff W23, W24, or W25 triggered an in-span addendum
-  (W25's own §6 check #3 or a post-audit addendum arrival).
-- **§6 check #5 patient §A50.2a accumulator** — first phase
-  where the gate is *eligible*: dogfooding count ticks to 5
-  (W21-W25) and strict-defer count ticks to 3 (W23 audit +
-  W24 audit + W25 audit assuming strict defers a third time) at
-  W25D7.
-  **If both thresholds met + zero §A49.6 failures across the
-  five-phase window + conditions (1)-(3) from §A50.2 hold**,
-  the patient gate fires and §A50.4 paired dossier + memory
-  landing executes in the same scoped W25D7 commit (or
-  bundled as a W25D(7+ε) follow-up; caller's judgement).
+### Week 26 final gate
 
-**If either gate fires at W25D7**:
-- §A50.4 paired commit lands the memory bullet to
-  `feedback_git_workflow.md` + the paired NEXT_SESSION.md
-  §0 edit + the `(Promotion basis: strict)` or
-  `(Promotion basis: patient — five consecutive A49.3
-  dogfoodings W21-W25, three consecutive audit-evaluated
-  strict-gate defers W23-W25 with condition (4) absent-trigger; zero real
-  addendum events in the promotion window.)` basis clause
-  per §A50.3.
-- A51 activates — the W25+1 audit §6 paste-template shifts
-  from §A49.5 inline notice to §A51.2 per-phase check.
-- §A52.5 current-state narrative updates to [S3] PROMOTED
-  (and one phase later to [S4] POST-PROMO VERIFIED after
-  §A51.2's first clean run).
+- [ ] First live A51.2 positive-verification row executed at W26D7.
+- [ ] A51.3 three-way drift check clean (memory / NEXT_SESSION /
+      A49 citations all in sync).
+- [ ] If clean, A52 current state advanced from [S3] PROMOTED to
+      [S4] POST-PROMO VERIFIED and A51.4 ledger initialised at 1.
+- [ ] One docs-side carry (W23 R2 / W23 R3 / W20 R3) landed.
+- [ ] No touched-surface regressions (baseline still 1080 passed,
+      0 failed, 4 skipped unless explicitly documented).
 
-**If both gates defer at W25D7**:
-- §A52.5 current-state stays [S2] GATE-DEFERRED.
-- A51 remains dormant. W26 re-evaluates both gates.
-- §A50.2a's dogfooding-count / strict-defer-count continue
-  to tick; patient-path remains the earliest fire route.
+### Deferred to Week 26+ — see `A48.2` SSOT ledger
 
-### Week 25 final gate
-
-- [ ] §A50.2 / §A50.2a dual-gate re-evaluation performed at
-      W25D7 — strict against W23/W24/W25 sliding window;
-      patient against 5-dogfooding / 3-defer accumulators
-      (first phase where patient gate is eligible). If either
-      fires, §A50.4 paired dossier + memory landing executed;
-      A51 activates. If both defer, §A52.5 stays [S2].
-- [x] One W24 R-residual / W23-R carry / W20-R3 carry landed
-      (W25D1 equivalent in this session — **W24 R2 §A50.2a
-      counting semantics** closed in A50).
-- [x] Second W24 R-residual or alternative landed (W25D3
-      equivalent in this session — **W24 R1 + W24 R3** closed in A52).
-- [x] One of A53 dossier / MANU-CH03 extension landed
-      (W25D5 equivalent in this session — **A53 anchor-location
-      protocol** picked).
-- [ ] Phase-boundary audit log written; §6 W12 F1 / W14 F1
-      recurrence check returns PASSED (tenth consecutive
-      stress-test); §6 check re-run at audit-commit time per
-      A49.3 (fifth consecutive dogfooding); Addendum protocol
-      notice carried forward per A49.5 (or updated to memory-
-      rule citation if either gate fires at W25D7). §6
-      includes check #4 (strict) + check #5 (patient) rows.
-- [ ] No touched-surface regressions (≥ 1080 passed, 0 failed;
-      4 skipped unchanged unless new skips explicitly documented).
-
-### Deferred to Week 25+ (not Week-25 targets) — see `A48.2` SSOT ledger
-
-- **HJ-01 production wiring** — when bass_py W10-02 K_ℓ atlas lands.
-  Replace the diagonal independence χ² with the per-ℓ-covariance
-  weighted χ² (W10 F2); promote `reduction_status` from
-  `'diagnostic-only'` to `'theory-direct'`; remove
-  `DIAGNOSTIC_ONLY_CAVEAT` from the certificate's first slot;
-  enable `MANU-CH12 §12.1` writeup. Requires paired bass_py
-  producer-side `v_gate_sha` commit per §A48.3 bilateral
-  contract (W22D1).
+- **HJ-01 production wiring** — when bass-lane W10-02 K_ℓ atlas
+  lands with the paired `v_gate_sha` contract.
 - **HJ-03 / HJ-04 / HJ-05-full** — same gating; see governing
   plan §17.3 dependency wait list.
 - **MANU-CH12 §12.4 / §12.5 / §12.8** — blocked on HTT Phase F
-  posteriors and the production HJ-01 / HJ-03 numbers.
-- **W10 F1 / F2 / F3** — production-HJ-01 hardening list (warn on
-  `_gammaincc` non-convergence; folded covariance χ²; Bonferroni
-  knob on `flrw_consistent_within_band`).
-- **W4 F1 mock coverage sandwich** — opportunistic; the manuscript
-  layer now scopes the caveat (W10D5 §12.3.4).
-- **W4 F4 Θ⁴ bridge htt audit tightening** — when htt lands
-  `_a2_coefficient_table`.
-- **W7 FM3 TSC-05 schema hash freeze** — add digest test on first
-  schema extension.
+  posteriors and production MIO numbers.
+- **W10 F1 / F2 / F3** — production-HJ-01 hardening list.
+- **W7 FM3 TSC-05 schema hash freeze** — lands only on the first
+  actual schema extension trigger.
 - **W8 FM2** palette unification — opportunistic on figure
   regeneration.
 - **W8 FM6** `clustering` vs `clustering_dipole` name mismatch —
