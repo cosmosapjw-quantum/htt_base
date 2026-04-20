@@ -7,6 +7,7 @@ IS-06 3D catalog sampling, with credible cones and reference
 directions (CMB dipole, CatWISE, CF4).
 """
 import sys
+import os
 import numpy as np
 
 sys.path.insert(0, '/mnt/project')
@@ -21,10 +22,24 @@ from plot_style import apply_style, save_fig, COLS
 
 apply_style()
 
+# HTT_PIPELINE_OUTDIR overrides the legacy '/mnt/user-data/outputs'
+# default so smoke tests can inject the repo-local synthetic fixture
+# (bass_py/htt/tests/fixtures/pipeline_outputs/IS06_3D_posterior.npz)
+# without depending on the original author mount.
+_OUTDIR = os.environ.get('HTT_PIPELINE_OUTDIR', '/mnt/user-data/outputs')
+
 # ─── Load IS-06 posterior ─────────────────────────────────────
-d = np.load('/mnt/user-data/outputs/IS06_3D_posterior.npz', allow_pickle=True)
-l_deg = np.degrees(d['l_rad'])
-b_deg = np.degrees(d['b_rad'])
+d = np.load(os.path.join(_OUTDIR, 'IS06_3D_posterior.npz'), allow_pickle=True)
+if 'l_rad' in d and 'b_rad' in d:
+    l_deg = np.degrees(d['l_rad'])
+    b_deg = np.degrees(d['b_rad'])
+elif 'l' in d and 'b' in d:
+    l_deg = np.asarray(d['l'], dtype=float)
+    b_deg = np.asarray(d['b'], dtype=float)
+else:
+    raise KeyError(
+        "IS06_3D_posterior.npz must contain either (l_rad, b_rad) or (l, b)"
+    )
 
 # Truth (injection)
 L_TRUE, B_TRUE = 264.0, 48.0
