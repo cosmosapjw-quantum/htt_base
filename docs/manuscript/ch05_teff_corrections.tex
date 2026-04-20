@@ -2237,6 +2237,41 @@ appearance of non-zero $B$ from a pure $E$ input once the line of
 sight is tilted.
 
 
+\subsection{FB-4.3: explicit quadratic Doppler remainder}
+
+For the additive second-order seed we isolate the quadratic
+remainder by multiplying the orthogonal collision source by the
+exact Doppler prefactor
+\begin{equation}\label{eq:fb43-v2}
+\Delta K^{(2)}_{A_\ell}
+=
+\left(\gamma_e^2 - 1\right) K^{(0)}_{A_\ell},
+\qquad
+\gamma_e = \left(1-\beta_e^2\right)^{-1/2}.
+\end{equation}
+This choice keeps the quadratic term separate from the linear
+Layer-B boost, vanishes identically at $\beta_e = 0$, and
+recovers the expected $\beta_e^2 + O(\beta_e^4)$ scaling for
+small tilt.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/physics_gallery/10_collision_and_visibility/06_doppler_second_order_residual.png}
+\caption{FB-4.3 gallery plot: fractional quadratic Doppler
+residual $(\mathrm{full}-\mathrm{linear})/\mathrm{full}$ at
+$\beta_e = 0.1$.}
+\label{fig:fb43-gallery}
+\end{figure}
+
+The resulting residual is nearly flat across the plotted multipole
+range, staying close to $10^{-2}$ at $\beta_e = 0.1$ in
+Figure~\ref{fig:fb43-gallery}.  This makes the quadratic term
+small but explicit, and the corresponding regression file
+\texttt{htt/bass/collision/test\_fb43\_second\_order\_doppler\_skeleton.py}
+checks both the exact zero-tilt limit and the closed-form
+$\gamma_e^2 - 1$ prefactor.
+
+
 % ============================================================
 % ============================================================
 \section{The nonperturbative $\Teff$ regime}

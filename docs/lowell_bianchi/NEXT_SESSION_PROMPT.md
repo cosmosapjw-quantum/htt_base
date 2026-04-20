@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-4.2 actual-work → FB-4.3 actual-work**; the axis-aligned E↔B seed is landed locally and the handoff advances to the quadratic Doppler replacement)
+**Last rotated**: 2026-04-20 (**FB-4 actual-work → FB-5 actual-work**; Phase FB-4 Layer-B seeds are now landed locally and the handoff advances to the next phase prompt)
 **Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB4_2026-04-20.md`
-**Current target session**: **FB-4.3 actual-work** — replace the quadratic Doppler skeleton using the canonical Phase FB-4 prompt
-**Phase status**: FB-4.2 is complete locally. The current close-gate suite reaches `3448 passed + 71 skipped + 3 errors`; the only remaining whole-suite blocker is the missing `data/camb_ref_planck2018.npz` fixture at LB-6-19/20/21.
+**Current target session**: **FB-5 actual-work** — paste the canonical FB-5 prompt as the first user message
+**Phase status**: FB-4 actual-work is complete locally. The current close-gate suite reaches `3479 passed + 70 skipped + 3 errors`; the only remaining whole-suite blocker is the missing `data/camb_ref_planck2018.npz` fixture at LB-6-19/20/21.
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,37 +37,39 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-4.3 actual-work — paste the Phase FB-4 prompt and execute only the third rotation
+# FB-5 actual-work — paste the Phase FB-5 prompt
 
-Phase FB-4.2 actual-work is now closed locally.
+Phase FB-4 actual-work is now closed locally.
 
-Before starting FB-4.3, read:
+Before starting FB-5, read:
 - `docs/audits/AUDIT_PHASE_FB4_2026-04-20.md`
-- `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-4`
+- `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-5`
 - `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`
 - `docs/manuscript/ch04_bianchi_bounds.tex` (Robustness paragraph)
 - `scripts/make_physics_gallery.py` Topic 10 additions
 - `figures/physics_gallery/10_collision_and_visibility/04_thomson_beta_sweep_Dl.png`
 - `figures/physics_gallery/10_collision_and_visibility/05_bb_from_tilted_lens_e.png`
+- `figures/physics_gallery/10_collision_and_visibility/06_doppler_second_order_residual.png`
 
-FB-4.2 carry-forward pins:
+FB-4 carry-forward pins:
 - Layer-B runtime changes live only in `htt/bass/collision/`; `htt/`
   remains intentionally unstaged by contract.
 - The shipped Layer-B boost is axis-aligned only; arbitrary-direction
   Wigner-d rotation is still reserved for **FB-5.2**.
-- The orthogonal Type-I B floor remains exact at `beta = 0`.
+- The quadratic Thomson `v_e^2` term remains an additive
+  `gamma_sq - 1` remainder; a literature-complete version is still
+  deferred until a verified source is recovered.
 
 Regression anchor:
 - `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3448 passed, 71 skipped, 3 errors`
+  → `3479 passed, 70 skipped, 3 errors`
 - The 3 errors are still the pre-existing CAMB fixture blocker at
   `bass/integration/test_lowell_bianchi.py::TestLBCAMBMatch::{LB_6_19,LB_6_20,LB_6_21}`
   because `data/camb_ref_planck2018.npz` is missing in the dirty worktree.
 
 Next action:
-- Paste the canonical **FB-4 actual-work** prompt as the first user
-  message, but execute only the FB-4.3 rotation. Do not reopen FB-4.1
-  or FB-4.2.
+- Paste the canonical **FB-5 actual-work** prompt as the first user
+  message. Do not reuse the FB-4 handoff text.
 ```
 
 ---

@@ -2128,6 +2128,9 @@ def _lb4_imports():
     from bass.collision.tilted_eb_mixing import (
         evaluate_tilted_polarization_eb_collision,
     )
+    from bass.collision.tilted_doppler_second_order import (
+        evaluate_tilted_second_order_doppler_correction,
+    )
     from bass.collision.tilted_thomson_layer_b import (
         evaluate_tilted_thomson_pstf_collision,
     )
@@ -2187,6 +2190,7 @@ def _lb4_imports():
         _allowing_decision,
         evaluate_tilted_thomson_pstf_collision,
         evaluate_tilted_polarization_eb_collision,
+        evaluate_tilted_second_order_doppler_correction,
         TiltedSpeciesBackground,
         _GalleryDummySpecies,
     )
@@ -2495,6 +2499,56 @@ def plot_10_05_bb_from_tilted_lens_e() -> None:
     cbar.set_label(r"$|K_\ell^B| / |K_\ell^E|$")
     fig.tight_layout()
     _save(fig, "05_bb_from_tilted_lens_e", TOPIC_10)
+
+
+def plot_10_06_doppler_second_order_residual() -> None:
+    """Quadratic Layer-B residual ``(full-linear)/full`` at β = 0.1."""
+    (
+        _, _, _, _, _, _, _, _,
+        evaluate_tilted_thomson_pstf_collision,
+        _, evaluate_tilted_second_order_doppler_correction,
+        TiltedSpeciesBackground, DummySpecies,
+    ) = _lb4_imports()
+    temperature, polarization, _ = _make_fb4_gallery_states(L_max=30)
+    tilt = TiltedSpeciesBackground(
+        base=DummySpecies(), beta=0.1, v_hat_e=(1.0, 0.0, 0.0),
+    )
+    v_b = np.zeros(3, dtype=np.float64)
+    Gamma_T = 1.0
+    ells = np.arange(2, 31)
+    residual = np.zeros_like(ells, dtype=np.float64)
+
+    for i, ell in enumerate(ells):
+        linear = evaluate_tilted_thomson_pstf_collision(
+            ell=int(ell),
+            temperature_state=temperature,
+            polarization_state=polarization,
+            eta=0.0,
+            v_b_real_sph=v_b,
+            Gamma_T=Gamma_T,
+            tilted_electron=tilt,
+        )
+        second = evaluate_tilted_second_order_doppler_correction(
+            ell=int(ell),
+            temperature_state=temperature,
+            eta=0.0,
+            v_b_real_sph=v_b,
+            Gamma_T=Gamma_T,
+            tilted_electron=tilt,
+        )
+        full = linear + second
+        residual[i] = np.sqrt(second.norm()) / max(np.sqrt(full.norm()), 1.0e-16)
+
+    fig, ax = plt.subplots(figsize=(7.0, 4.2))
+    ax.plot(ells, residual, color=COLS["green"], lw=1.6)
+    _prepare_axes(
+        ax,
+        r"multipole $\ell$",
+        r"$(\mathrm{full}-\mathrm{linear})/\mathrm{full}$",
+        title=r"Layer-B second-order Doppler residual at $\beta_e=0.1$",
+    )
+    fig.tight_layout()
+    _save(fig, "06_doppler_second_order_residual", TOPIC_10)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -3837,6 +3891,9 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("05_bb_from_tilted_lens_e",
          plot_10_05_bb_from_tilted_lens_e,
          "FB-4.2 Layer-B BB/EE amplitude ratio over β_e ∈ [0, 0.3], ℓ ∈ [2, 30]."),
+        ("06_doppler_second_order_residual",
+         plot_10_06_doppler_second_order_residual,
+         "FB-4.3 Layer-B quadratic Doppler residual (full-linear)/full at β_e = 0.1."),
     ],
     TOPIC_11: [
         ("01_unified_trajectory_bianchi_I",

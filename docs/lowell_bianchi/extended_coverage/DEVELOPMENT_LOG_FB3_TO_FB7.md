@@ -415,6 +415,22 @@ Exit: β-sweep × polarisation regression. BB identically zero at
   `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`.
 - **Carry-forward**: arbitrary-direction polarization rotation remains reserved for FB-5.2.
 
+### FB-4.3 — additive quadratic Doppler remainder
+
+- **Scope**: Replaced the FB-4.3 skeleton with an additive
+  `gamma_sq - 1` quadratic Doppler remainder, kept the zero-tilt path
+  exact, and added the Topic-10 residual plot plus the matching
+  manuscript subsection and audit note on the explicit scope demotion.
+- **Commit anchor**: pending local commit (`FB-4.3: additive quadratic Doppler remainder`).
+- **Test delta**: `3,448 passed + 71 skipped + 3 errors` →
+  `3,479 passed + 70 skipped + 3 errors`.
+- **Audit**: [AUDIT_PHASE_FB4_2026-04-20.md](../../audits/AUDIT_PHASE_FB4_2026-04-20.md) §FB-4.3.
+- **Gallery**: rendered
+  `figures/physics_gallery/10_collision_and_visibility/06_doppler_second_order_residual.png`.
+- **Manuscript anchor**:
+  `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`.
+- **Carry-forward**: literature-complete Thomson `v_e^2` term remains deferred until a verified source is recovered.
+
 ---
 
 ## Phase FB-5 (planned) — Perturbation sector k ≠ 0

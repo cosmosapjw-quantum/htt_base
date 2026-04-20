@@ -2,7 +2,7 @@
 
 **Banner**: Phase FB-4 actual work — tilted Thomson kernel Layer B  
 **Scope**: FB-4.1 full-Lorentz PSTF Thomson seed, FB-4.2 tilted
-E↔B mixing seed  
+E↔B mixing seed, FB-4.3 additive quadratic Doppler remainder  
 **Invariant anchor**: `beta = 0` must reduce byte-for-byte to the LB-4
 orthogonal Thomson kernel on every path.
 
@@ -254,3 +254,122 @@ No P0 / P1 detected beyond the documented off-axis deferral to FB-5.2.
 - **Chapter anchor**: `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`
 - **Baseline movement**: `3425 passed, 72 skipped, 3 errors` → `3448 passed, 71 skipped, 3 errors`
 - **Carry-forward ledger**: full Wigner-d E/B rotation remains reserved for `FB-5.2`
+
+
+## §FB-4.3
+
+### §FB-4.3 three-channel verification
+
+- **Channel A**: Verified local anchors
+  `htt/bass/collision/tilted_doppler_second_order.py`,
+  `htt/bass/collision/test_fb43_second_order_doppler_skeleton.py`,
+  `scripts/make_physics_gallery.py::plot_10_06_doppler_second_order_residual`,
+  `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`.
+- **Channel B**: arXiv fetch verified `0706.2075`; quote:
+  “the power in B-mode polarisation is predicted to be similar to the E-mode power”.
+  Source: <https://arxiv.org/abs/0706.2075>, abstract lines 17-18 on
+  2026-04-20.
+- **Channel C**:
+  The present implementation is intentionally scoped as an additive
+  seed because the prompt-supplied `v_e^2` locator was not verifiable on
+  disk.
+  The orthogonal collision source is reused as the unique amplitude
+  baseline.
+  Multiplication by `gamma_sq - 1` enforces the exact zero-tilt limit.
+  For small `beta`, this is `beta^2 + O(beta^4)`, so the remainder is
+  automatically quadratic.
+  The term stays separate from the linear Layer-B wrapper, preventing
+  silent contamination of the FB-4.1 source.
+  This is a deliberate scope demotion, not a claim of full literature
+  completeness.
+
+**Core principles**
+1. External-code policy intact (CAMB only as fixture).
+2. PSTF SSOT; any ℓm detour is a documented round-trip.
+3. β = 0 byte-identity vs LB-4 anchor on every test path.
+4. No silent fallback.
+5. Determinism.
+
+### §FB-4.3.0 Audit target reconstruction
+| Layer | Claim | Implementation | Output |
+|---|---|---|---|
+| Physics | quadratic tilt correction vanishes at `beta = 0` and scales as `beta^2` | `htt/bass/collision/tilted_doppler_second_order.py::evaluate_tilted_second_order_doppler_correction` | `PSTFTensor` |
+| Invariant | exact zero-tilt suppression | explicit short-circuit | `test_fb43_beta_zero_is_exact_zero_tensor` |
+| Scope | literature-complete `v_e^2` term not yet verified on-disk | documented demotion in code + manuscript + audit | `§FB-4.3.2` |
+| Routing | additive on top of FB-4.1 linear kernel | no change to LB-4 or FB-4.1 signatures | Topic 10 residual figure |
+
+### §FB-4.3.1 Contract / interface table
+| Surface | Shape / dtype | Units | Admissible range |
+|---|---|---|---|
+| `temperature_state` | `PSTFHierarchyState` | temperature tower | finite PSTF hierarchy |
+| `Gamma_T` | scalar `float` | `Mpc^-1` | finite, non-negative |
+| `tilted_electron` | `TiltedSpeciesBackground | None` | dimensionless tilt wrapper | `0 <= beta < 1`, axis-aligned subset only |
+| return | `PSTFTensor` | `Gamma_T × multipole` | finite |
+
+### §FB-4.3.2 Phys-math audit ledger
+- Known limit: `beta = 0` returns the exact zero tensor.
+- Dimensional consistency: `gamma_sq - 1` is dimensionless, so units are
+  inherited from the orthogonal source.
+- Sign: non-negative prefactor for all admissible `beta`.
+- Determinism: no RNG, no global cache mutation.
+- Numerical stability: no subtraction on the zero-tilt path.
+- Silent omission: no fallback to a guessed higher-order kernel.
+- Scope honesty: explicitly documented as an additive remainder only.
+- Baseline overlap: no mutation of FB-4.1 surface.
+
+### §FB-4.3.3 Equation-to-code mapping audit
+- Exact quadratic prefactor →
+  `docs/manuscript/ch05_teff_corrections.tex` eq. `fb43-v2`.
+- Orthogonal source reuse →
+  `htt/bass/collision/thomson_pstf.py::ThomsonPSTFCollisionOperator`.
+- Additive wrapper →
+  `htt/bass/collision/tilted_doppler_second_order.py`.
+
+### §FB-4.3.4 Numerical / pipeline audit
+- The residual track is nearly flat in `ell`, as expected from a pure
+  multiplicative prefactor.
+- The `beta = 0.1` gallery residual stays near `10^-2`.
+- The term is small enough to remain additive on the seeded surface.
+
+### §FB-4.3.5 Ranked failure modes
+| # | Type | Severity | Symptom | Root cause | Cheap probe | Misinterpretation |
+|---|---|---|---|---|---|---|
+| 1 | Scope | P1 | term mistaken for full literature `v_e^2` kernel | unresolved citation surface | `§FB-4.3.2` + manuscript wording | overclaim of physics completeness |
+| 2 | Regression | P0 | non-zero tensor at `beta = 0` | missing short-circuit | `test_fb43_beta_zero_is_exact_zero_tensor` | false second-order signal |
+| 3 | Numerical | P2 | noisy residual curve | accidental `ell`-dependent prefactor | inspect `06_doppler_second_order_residual.png` | spurious higher-order structure |
+
+### §FB-4.3.6 Verifier filter
+| Verifier | Verdict | Evidence |
+|---|---|---|
+| A. Physics — known-limit recovery | Passed | exact zero tensor at `beta = 0` |
+| A. Physics — dimensional consistency | Passed | dimensionless prefactor |
+| A. Physics — sign / normalisation | Passed | `gamma_sq - 1 >= 0` |
+| A. Physics — alternative explanation | Passed | manuscript explicitly marks additive-scope seed |
+| B. Code — contract satisfaction | Passed | pinned META signature preserved |
+| B. Code — actual code-path usage | Passed | zero-tilt, sweep, small-β, malformed-tilt tests execute |
+| B. Code — regression risk | Passed | targeted collision suite green |
+| B. Code — reproducibility | Passed | deterministic residual curve |
+| C. Numerical — tolerance robustness | Passed | exact / `allclose` prefactor checks |
+| C. Numerical — convergence / stability | Passed | finite for `beta = 0.01, 0.1, 0.3` |
+| C. Numerical — baseline reproducibility | Passed | full suite only retains CAMB fixture blocker |
+
+### §FB-4.3.7 Minimal repair plan
+- Keep the present additive remainder isolated.
+- Revisit only after a verified literature expression for the full
+  second-order Thomson kernel is recovered.
+
+### §FB-4.3.8 Minimal test set (executed)
+| Test | Role | Verdict |
+|---|---|---|
+| `bass/collision/test_fb43_second_order_doppler_skeleton.py` | zero-tilt, quadratic scaling, closed-form prefactor | Passed |
+| `venv/bin/python scripts/make_physics_gallery.py --only 10_collision_and_visibility` | gallery regeneration | Passed |
+
+### §FB-4.3.9 Final verdict
+- **Status**: Pass
+- **Implement now**: additive `gamma_sq - 1` quadratic Doppler remainder
+- **Do NOT touch**: literature-complete second-order Thomson kernel until a verified source is recovered
+- **Figure PNG**: `figures/physics_gallery/10_collision_and_visibility/06_doppler_second_order_residual.png`
+- **Test file**: `htt/bass/collision/test_fb43_second_order_doppler_skeleton.py`
+- **Chapter anchor**: `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`
+- **Baseline movement**: `3448 passed, 71 skipped, 3 errors` → `3479 passed, 70 skipped, 3 errors`
+- **Carry-forward ledger**: full literature `v_e^2` source remains deferred pending verified recovery
