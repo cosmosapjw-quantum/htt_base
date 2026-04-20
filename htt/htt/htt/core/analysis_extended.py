@@ -17,14 +17,18 @@ Convention: VA-02 (Σ²_std = σ_{ab}σ^{ab}/(6H²))
 """
 import numpy as np
 import json
+import hashlib
+import platform
 from pathlib import Path
+from typing import Any, Mapping
 
 from htt.core.ssot import C, sigma_H_from_Sig2
 from htt.core.bounds import (B_sigma as B_sigma_lin, B_sigma_corrected, Sig2_max_MES,
                     eps1_from_beta, beta_safe, Sig2_BV, filling_fraction)
 
 __all__ = ['FillingFraction', 'GrowingMode', 'ScenarioTable',
-           'ForecastTable', 'EvidenceComparison']
+           'ForecastTable', 'EvidenceComparison',
+           'evidence_matrix_report_artifact']
 
 # ─── SSOT scenarios ──────────────────────────────────────
 SCENARIOS = {
@@ -35,6 +39,43 @@ SCENARIOS = {
     'S2c': {'eps1': 3.296e-3,  'beta': 1.334e-3,  'desc': 'Radio'},
     'S3':  {'eps1': 1.476e-3,  'beta': 1.334e-3,  'desc': 'Full anomaly'},
 }
+
+EVIDENCE_MODEL_TAGS = [
+    'FLRW_tilt',
+    'BI_orth',
+    'BVII0_orth',
+    'BII_orth',
+    'BVI0_orth',
+    'BVIII_orth',
+    'BIX_orth',
+    'BVIIh_orth',
+    'BVIIh_orth_grow',
+    'BI_tilt',
+    'BV_tilt',
+    'BIII_tilt',
+    'BIX_tilt',
+    'BVIIh_tilt',
+    'BVIIh_tilt_grow',
+]
+
+
+def _jsonify(obj: Any) -> Any:
+    """Recursively convert numpy-heavy structures to JSON-native values."""
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.generic):
+        return obj.item()
+    if isinstance(obj, Mapping):
+        return {str(k): _jsonify(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_jsonify(v) for v in obj]
+    return obj
+
+
+def _config_hash(payload: Mapping[str, Any]) -> str:
+    """Stable SHA256 hash for report configuration payloads."""
+    blob = json.dumps(_jsonify(payload), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
 # ═══════════════════════════════════════════════════════════
@@ -493,3 +534,107 @@ class EvidenceComparison:
         
         with open(path, 'w') as f:
             json.dump(serialisable, f, indent=2)
+
+
+def evidence_matrix_report_artifact(
+    scenario_results: Mapping[str, list[Mapping[str, Any]]],
+    *,
+    scenario_order: list[str] | None = None,
+    model_order: list[str] | None = None,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build ``15model_evidence_matrix_v1.json`` from per-scenario run results.
+
+    Parameters
+    ----------
+    scenario_results
+        Mapping ``scenario -> list[run_single result]`` where each result
+        carries at least ``tag``, ``lnB``, and ``err``.
+    scenario_order
+        Defaults to the 5 production scenarios ``S1, S2a, S2b, S2c, S3``.
+    model_order
+        Defaults to the 15 non-FLRW models in :class:`EvidenceComparison`.
+    """
+    order = list(scenario_order or ['S1', 'S2a', 'S2b', 'S2c', 'S3'])
+    unknown_scenarios = [name for name in order if name not in SCENARIOS]
+    if unknown_scenarios:
+        raise KeyError(f"Unknown scenario(s): {unknown_scenarios}")
+    missing_scenarios = [name for name in order if name not in scenario_results]
+    if missing_scenarios:
+        raise KeyError(f"Missing scenario result(s): {missing_scenarios}")
+
+    models = list(model_order or EVIDENCE_MODEL_TAGS)
+    if len(models) != len(set(models)):
+        raise ValueError("model_order contains duplicates")
+
+    lnB = np.empty((len(models), len(order)), dtype=float)
+    err = np.empty((len(models), len(order)), dtype=float)
+    rankings: dict[str, list[dict[str, Any]]] = {}
+    top_model_by_scenario = []
+
+    for j, scenario in enumerate(order):
+        result_list = list(scenario_results[scenario])
+        by_tag = {str(r['tag']): r for r in result_list}
+        missing_models = [tag for tag in models if tag not in by_tag]
+        if missing_models:
+            raise KeyError(
+                f"scenario {scenario!r} missing model result(s): {missing_models}"
+            )
+        ranked = sorted(result_list, key=lambda r: float(r['lnB']), reverse=True)
+        rankings[scenario] = [
+            {
+                'rank': idx + 1,
+                'tag': str(r['tag']),
+                'lnB': float(r['lnB']),
+                'err': float(r.get('err', 0.0)),
+            }
+            for idx, r in enumerate(ranked)
+            if str(r['tag']) in models
+        ]
+        top_model_by_scenario.append({
+            'scenario': scenario,
+            'tag': rankings[scenario][0]['tag'],
+            'lnB': rankings[scenario][0]['lnB'],
+        })
+        for i, tag in enumerate(models):
+            row = by_tag[tag]
+            lnB[i, j] = float(row['lnB'])
+            err[i, j] = float(row.get('err', 0.0))
+
+    extra = dict(metadata or {})
+    config_payload = {
+        'scenario_order': order,
+        'model_order': models,
+        'metadata': extra,
+    }
+    return _jsonify({
+        'artifact_name': '15model_evidence_matrix_v1.json',
+        'generated_by': extra.get(
+            'generated_by',
+            'htt.core.analysis_extended.evidence_matrix_report_artifact',
+        ),
+        'git_commit': extra.get('git_commit', ''),
+        'config_hash': _config_hash(config_payload),
+        'input_data_hashes': list(extra.get('input_data_hashes', [])),
+        'random_seed': extra.get('random_seed'),
+        'wall_time_sec': extra.get('wall_time_sec'),
+        'python_version': extra.get('python_version', platform.python_version()),
+        'numpy_version': extra.get('numpy_version', np.__version__),
+        'claim_tier': extra.get('claim_tier', 'REPORT'),
+        'scope_label': extra.get('scope_label', 'report'),
+        'production_allowed': False,
+        'shape': {
+            'n_models': len(models),
+            'n_scenarios': len(order),
+            'orientation': 'rows=models, cols=scenarios',
+        },
+        'model_order': models,
+        'scenario_order': order,
+        'scenario_descriptions': {
+            name: SCENARIOS[name]['desc'] for name in order
+        },
+        'lnB_matrix': lnB,
+        'err_matrix': err,
+        'top_model_by_scenario': top_model_by_scenario,
+        'rankings': rankings,
+    })
