@@ -29,6 +29,19 @@ EPS3     = 6.065291e-6
 ETA_UDOT = 1.0 / 12.0  # w/(3(1+w)) for w=1/3; exact (was 0.083)
 OMEGA_M  = 0.3153
 
+
+def _a2_coefficient_table():
+    """Exact low-order coefficients of the axisymmetric a_2[Theta^4] bridge.
+
+    Keys are the monomial powers ``(m, n)`` in ``A^m Q^n``.
+    """
+    return {
+        (0, 1): 4.0,
+        (2, 0): 4.0,
+        (0, 2): 12.0 / 7.0,
+        (2, 1): 44.0 / 7.0,
+    }
+
 def B_sigma_lin(e1, e2=EPS2, e3=EPS3):
     return (5./3)*e1 + 3.*e2 + (3./7)*e3
 

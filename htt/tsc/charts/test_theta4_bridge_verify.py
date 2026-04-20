@@ -159,6 +159,15 @@ class TestVerifier:
             else:
                 assert isinstance(rep.htt_extracted, float)
 
+    def test_htt_native_table_matches_exact_when_available(self):
+        reports = verify_theta4_a2_coefficients(audit_htt=True)
+        if any(rep.htt_extracted is None for rep in reports.values()):
+            pytest.skip("htt import unavailable in this environment")
+        for monomial, rep in reports.items():
+            assert rep.htt_extracted == pytest.approx(
+                THETA4_A2_COEFFS_EXACT[monomial], rel=1e-12
+            )
+
     def test_tolerance_is_respected(self):
         """Setting a silly-tight tolerance should flip passed to False."""
         reports = verify_theta4_a2_coefficients(audit_htt=False, tol=1e-18)

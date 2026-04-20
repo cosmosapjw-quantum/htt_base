@@ -189,14 +189,22 @@ def theta4_a2_expansion_numerical() -> dict[tuple[int, int], float]:
 def _extract_htt_a2_coefficient(monomial: tuple[int, int]) -> float | None:
     """Pull ``c_{j,k}`` from ``htt.core.teff_extended.TeffMomentMap``.
 
-    ``htt``'s ``moment`` is a numerical quadrature of ``⟨Θ^α⟩``; we
-    convert to ``a_2`` via the same ``(5/2) ∫ Θ⁴ P_2`` formula and then
-    take finite differences in (A, Q) to isolate each monomial. Returns
-    ``None`` if htt is not importable in the current environment.
+    Newer htt builds may expose a native ``_a2_coefficient_table`` helper;
+    when present we use that exact table first. Older builds fall back to
+    finite-difference extraction from ``TeffMomentMap``. Returns ``None``
+    if htt is not importable in the current environment.
     """
     try:
-        from htt.core.teff_extended import TeffMomentMap
+        from htt.core import teff_extended as htt_teff
     except ImportError:
+        return None
+    table_fn = getattr(htt_teff, "_a2_coefficient_table", None)
+    if callable(table_fn):
+        coeffs = table_fn()
+        if monomial in coeffs:
+            return float(coeffs[monomial])
+    TeffMomentMap = getattr(htt_teff, "TeffMomentMap", None)
+    if TeffMomentMap is None:
         return None
     mm = TeffMomentMap(N_theta=200, N_phi=8)
 
