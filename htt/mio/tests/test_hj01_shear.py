@@ -53,6 +53,7 @@ from mio.extraction import (
     to_mio_certificate,
     validate_kl_atlas_schema,
 )
+from mio.extraction.hj01_shear import _gammaincc
 from workspace.contracts.atlas_entry import AtlasEntry
 from workspace.contracts.mio_certificate import MioCertificate
 
@@ -227,6 +228,18 @@ def test_extract_drops_zero_kernel_multipoles():
     cfg = ShearExtractorConfig()
     expected_window = cfg.ell_max - cfg.ell_min + 1
     assert report.ell.size == expected_window - len(dropped)
+
+
+def test_gammaincc_warns_on_series_nonconvergence():
+    with pytest.warns(RuntimeWarning, match="_gammaincc did not converge"):
+        value = _gammaincc(5.0, 1.0, max_iterations=1)
+    assert np.isfinite(value)
+
+
+def test_gammaincc_warns_on_continued_fraction_nonconvergence():
+    with pytest.warns(RuntimeWarning, match="_gammaincc did not converge"):
+        value = _gammaincc(5.0, 20.0, max_iterations=1)
+    assert np.isfinite(value)
 
 
 # ---------------------------------------------------------------------------

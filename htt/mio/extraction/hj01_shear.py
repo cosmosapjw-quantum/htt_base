@@ -44,6 +44,7 @@ from __future__ import annotations
 
 import json
 import math
+import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple, Union
@@ -232,7 +233,23 @@ def _chi2_sf(chi2: float, dof: int) -> float:
     return float(_gammaincc(dof / 2.0, chi2 / 2.0))
 
 
-def _gammaincc(a: float, x: float) -> float:
+def _warn_gammaincc_nonconvergence(
+    *,
+    branch: str,
+    a: float,
+    x: float,
+    max_iterations: int,
+) -> None:
+    warnings.warn(
+        "_gammaincc did not converge within "
+        f"{max_iterations} iterations on the {branch} branch "
+        f"(a={a:.6g}, x={x:.6g}); returning best-effort value",
+        RuntimeWarning,
+        stacklevel=3,
+    )
+
+
+def _gammaincc(a: float, x: float, *, max_iterations: int = 200) -> float:
     """Regularised upper incomplete gamma Q(a, x) via series / continued fraction.
 
     Lifted from Numerical Recipes §6.2 — accurate to ~1e-12 in the
@@ -247,12 +264,21 @@ def _gammaincc(a: float, x: float) -> float:
         ap = a
         s = 1.0 / a
         term = s
-        for _ in range(200):
+        converged = False
+        for _ in range(max_iterations):
             ap += 1.0
             term *= x / ap
             s += term
             if abs(term) < abs(s) * 1e-15:
+                converged = True
                 break
+        if not converged:
+            _warn_gammaincc_nonconvergence(
+                branch="series",
+                a=a,
+                x=x,
+                max_iterations=max_iterations,
+            )
         p = s * math.exp(-x + a * math.log(x) - math.lgamma(a))
         return 1.0 - p
     # Continued fraction for Q(a, x).
@@ -260,7 +286,8 @@ def _gammaincc(a: float, x: float) -> float:
     c = 1e300
     d = 1.0 / b
     h = d
-    for i in range(1, 201):
+    converged = False
+    for i in range(1, max_iterations + 1):
         an = -i * (i - a)
         b += 2.0
         d = an * d + b
@@ -273,7 +300,15 @@ def _gammaincc(a: float, x: float) -> float:
         delta = d * c
         h *= delta
         if abs(delta - 1.0) < 1e-15:
+            converged = True
             break
+    if not converged:
+        _warn_gammaincc_nonconvergence(
+            branch="continued-fraction",
+            a=a,
+            x=x,
+            max_iterations=max_iterations,
+        )
     return h * math.exp(-x + a * math.log(x) - math.lgamma(a))
 
 
