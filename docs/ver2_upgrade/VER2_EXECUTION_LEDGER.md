@@ -16,6 +16,7 @@
 |---|---|---|---|---|---|---|---|
 | 2026-04-20 | SK-00 | supervisor | schema barrier, ledgers, audit stubs, owner tests | yes | static green, targeted tests pending/see audit | local changes staged in workspace only | canonical common schema freeze and VER2 docs barrier established |
 | 2026-04-21 | SK-01C | C | shared contracts, wrapper aliases, owner hooks, contract tests, audit note | yes | static green; targeted pytest `58 passed`; `py_compile` passed | committed | canonical common layer now includes atlas-lite, departure, TSC overlay, claim-ledger row, and thin workspace aliases/hooks without widening into solver physics |
+| 2026-04-21 | SK-05T | T | TSC service skeletons, domain guard, no-overclaim lint, overlay builder, advisory adapters, theorem map, tests | no | static green; targeted pytest `97 passed`; `py_compile` passed | committed | TSC now exposes active-service skeletons without taking runtime or posterior ownership; overlay/lint/adapters remain package-local and manifest-backed |
 
 ## 2. Next Row Template
 
