@@ -153,8 +153,17 @@ def test_hj02a_certificate_caveat_count_equals_flagged_set_with_no_caller_caveat
     expected_tags = sorted(
         f"{n}{PLACEHOLDER_CAVEAT_SUFFIX}" for n in expected_flagged
     )
-    assert sorted(cert.domain_caveats) == expected_tags
-    assert len(cert.domain_caveats) == len(expected_flagged)
+    expected_sk07m_tags = sorted(
+        [
+            "covariance_prerequisite_missing",
+            "null_mock_prerequisite_missing",
+            "sky_support_partial",
+            "public_grade=diagnostic-only",
+            "production_status=blocked_missing_covariance",
+        ]
+    )
+    assert sorted(cert.domain_caveats) == sorted(expected_tags + expected_sk07m_tags)
+    assert len(cert.domain_caveats) == len(expected_flagged) + len(expected_sk07m_tags)
 
 
 def test_hj02a_caller_caveats_preserved_alongside_placeholder_tags():
@@ -188,7 +197,14 @@ def test_hj02a_caller_caveats_preserved_alongside_placeholder_tags():
         p.name for p in STANDARD_PROBES if p.name not in PROMOTED_SIGMA_CONE_PROBES
     }
     expected_tags = {f"{n}{PLACEHOLDER_CAVEAT_SUFFIX}" for n in expected_flagged}
-    assert set(caveats) == set(caller_caveats) | expected_tags
+    expected_sk07m_tags = {
+        "covariance_prerequisite_missing",
+        "null_mock_prerequisite_missing",
+        "sky_support_partial",
+        "public_grade=diagnostic-only",
+        "production_status=blocked_missing_covariance",
+    }
+    assert set(caveats) == set(caller_caveats) | expected_tags | expected_sk07m_tags
 
 
 def test_standard_probes_sigma_code_matches_a36a_yaml():

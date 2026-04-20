@@ -7,7 +7,8 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Mapping, Optional, Sequence
 
-from mio.interface.mio_certificate import build_mio_certificate
+from mio.interface.manifest import MioPrerequisites, assess_mio_readiness
+from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -97,6 +98,7 @@ def to_mio_certificate(
     generated_by: str = "mio.decomposition.evidence_anatomy v0.1",
     input_data_hashes: Optional[Sequence[str]] = None,
     config_hash: Optional[str] = None,
+    artifact_path: str = "artifacts/mio/mio_evidence_anatomy_v1.json",
 ) -> MioCertificate:
     """Pack a decomposition report into a ``MioCertificate``."""
     strongest = max(report.contributions, key=lambda item: abs(item.delta_lnB))
@@ -123,6 +125,7 @@ def to_mio_certificate(
     caveats = list(domain_caveats) if domain_caveats is not None else []
     if DEFAULT_DOMAIN_CAVEAT not in caveats:
         caveats.append(DEFAULT_DOMAIN_CAVEAT)
+    readiness = assess_mio_readiness(MioPrerequisites(eligible_for_production=False))
 
     return build_mio_certificate(
         report_type="evidence_anatomy",
@@ -139,6 +142,13 @@ def to_mio_certificate(
         htt_cross_check_suggested={
             "compare_to": "htt.core.analysis_extended.evidence_matrix_report_artifact",
             "expected_relation": "channel contributions should reconstruct the HTT total evidence within tolerance",
+        },
+        readiness=readiness,
+        artifact_id="mio.evidence_anatomy.certificate",
+        artifact_path=artifact_path,
+        statistics_definitions={
+            "report_type": "evidence_anatomy",
+            "channel": channel,
         },
     )
 
@@ -176,6 +186,7 @@ def emit_evidence_anatomy_artefact(
         report,
         domain_caveats=domain_caveats,
         input_data_hashes=input_data_hashes,
+        artifact_path=str(out_path),
     )
 
     payload = {
@@ -190,19 +201,7 @@ def emit_evidence_anatomy_artefact(
             "consistency_tolerance": report.consistency_tolerance,
             "consistent_with_total": report.consistent_with_total,
         },
-        "certificate": {
-            "report_type": cert.report_type,
-            "probe_name": cert.probe_name,
-            "channel": cert.channel,
-            "departure_variables": cert.departure_variables,
-            "adequacy_indicators": cert.adequacy_indicators,
-            "consistency_metrics": cert.consistency_metrics,
-            "domain_caveats": cert.domain_caveats,
-            "reduction_status": cert.reduction_status,
-            "generated_by": cert.generated_by,
-            "git_commit": cert.git_commit,
-            "config_hash": cert.config_hash,
-        },
+        "certificate": certificate_to_payload(cert),
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
     return payload

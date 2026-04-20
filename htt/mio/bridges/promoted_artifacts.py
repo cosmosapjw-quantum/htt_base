@@ -12,7 +12,8 @@ import json
 from pathlib import Path
 from typing import Any, Mapping
 
-from mio.interface.mio_certificate import build_mio_certificate
+from mio.interface.manifest import MioPrerequisites, assess_mio_readiness
+from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.mio_certificate import MioCertificate
 
 ARTEFACT_FILENAME = "mio_promoted_axis_ingest_v1.json"
@@ -95,6 +96,7 @@ def ingest_fiducial_posterior_bundle(
 
 def to_mio_certificate(summary: PromotedAxisSummary) -> MioCertificate:
     """Convert an ingested HTT promoted axis summary into a MioCertificate."""
+    readiness = assess_mio_readiness(MioPrerequisites(eligible_for_production=False))
     return build_mio_certificate(
         report_type="promoted_axis_ingest",
         probe_name="HTT",
@@ -126,6 +128,13 @@ def to_mio_certificate(summary: PromotedAxisSummary) -> MioCertificate:
             "module": "common.posterior_summary",
             "artifact_name": summary.artifact_name,
         },
+        readiness=readiness,
+        artifact_id="mio.promoted_axis_ingest.certificate",
+        artifact_path=f"artifacts/mio/{ARTEFACT_FILENAME}",
+        statistics_definitions={
+            "report_type": "promoted_axis_ingest",
+            "channel": "direction_axis",
+        },
     )
 
 
@@ -143,7 +152,7 @@ def emit_promoted_axis_ingestion_artefact(
     payload = {
         "artifact_name": ARTEFACT_FILENAME,
         "summary": asdict(summary),
-        "certificate": asdict(cert),
+        "certificate": certificate_to_payload(cert),
     }
     out.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
     return payload

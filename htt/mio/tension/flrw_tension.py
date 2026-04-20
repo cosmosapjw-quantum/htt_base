@@ -17,7 +17,8 @@ from typing import Dict, Mapping, Optional, Sequence
 
 import numpy as np
 
-from mio.interface.mio_certificate import build_mio_certificate
+from mio.interface.manifest import MioPrerequisites, assess_mio_readiness
+from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -172,6 +173,8 @@ def to_mio_certificate(
     generated_by: str = "mio.tension.flrw_tension v0.1",
     input_data_hashes: Optional[Sequence[str]] = None,
     config_hash: Optional[str] = None,
+    null_mocks_calibrated: bool = False,
+    artifact_path: str = "artifacts/mio/mio_flrw_tension_ppp_v1.json",
 ) -> MioCertificate:
     """Pack a PPP report into a ``MioCertificate``."""
     stats_by_name = {item.name: item for item in report.statistics}
@@ -201,6 +204,13 @@ def to_mio_certificate(
     caveats = list(domain_caveats) if domain_caveats is not None else []
     if DEFAULT_DOMAIN_CAVEAT not in caveats:
         caveats.append(DEFAULT_DOMAIN_CAVEAT)
+    readiness = assess_mio_readiness(
+        MioPrerequisites(
+            requires_null_mocks=True,
+            has_null_mocks=null_mocks_calibrated,
+            eligible_for_production=True,
+        )
+    )
 
     return build_mio_certificate(
         report_type="flrw_tension",
@@ -218,6 +228,13 @@ def to_mio_certificate(
             "compare_to": "htt.core.advanced_diagnostics.posterior_predictive_report_artifact",
             "expected_relation": "MIO PPP and HTT predictive residual alarms should agree in sign",
         },
+        readiness=readiness,
+        artifact_id="mio.flrw_tension.certificate",
+        artifact_path=artifact_path,
+        statistics_definitions={
+            "report_type": "flrw_tension",
+            "channel": channel,
+        },
     )
 
 
@@ -234,6 +251,7 @@ def emit_flrw_tension_artefact(
     channel: str = "ppp",
     domain_caveats: Optional[Sequence[str]] = None,
     input_data_hashes: Optional[Sequence[str]] = None,
+    null_mocks_calibrated: bool = False,
 ) -> dict:
     """Evaluate PPP statistics and persist a JSON artifact."""
     out_path = Path(out_path)
@@ -254,6 +272,8 @@ def emit_flrw_tension_artefact(
         channel=channel,
         domain_caveats=domain_caveats,
         input_data_hashes=input_data_hashes,
+        null_mocks_calibrated=null_mocks_calibrated,
+        artifact_path=str(out_path),
     )
 
     payload = {
@@ -263,19 +283,7 @@ def emit_flrw_tension_artefact(
         "min_raw_p_value": report.min_raw_p_value,
         "min_corrected_p_value": report.min_corrected_p_value,
         "statistics": [asdict(item) for item in report.statistics],
-        "certificate": {
-            "report_type": cert.report_type,
-            "probe_name": cert.probe_name,
-            "channel": cert.channel,
-            "departure_variables": cert.departure_variables,
-            "adequacy_indicators": cert.adequacy_indicators,
-            "consistency_metrics": cert.consistency_metrics,
-            "domain_caveats": cert.domain_caveats,
-            "reduction_status": cert.reduction_status,
-            "generated_by": cert.generated_by,
-            "git_commit": cert.git_commit,
-            "config_hash": cert.config_hash,
-        },
+        "certificate": certificate_to_payload(cert),
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
     return payload

@@ -19,9 +19,16 @@ from __future__ import annotations
 import hashlib
 import json
 import subprocess
+from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from common.contracts import ArtifactManifest
+from mio.interface.manifest import (
+    MioReadiness,
+    build_mio_manifest,
+    merge_domain_caveats,
+)
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -83,6 +90,14 @@ def build_mio_certificate(
     htt_cross_check_suggested: Optional[Dict[str, str]] = None,
     git_commit: Optional[str] = None,
     config_hash: Optional[str] = None,
+    manifest: ArtifactManifest | None = None,
+    tsc_overlay_ref: str | None = None,
+    readiness: MioReadiness | None = None,
+    artifact_id: str | None = None,
+    artifact_path: str | None = None,
+    code_version: str = "ver2-sk07m",
+    schema_version: str = "ver2-v7",
+    statistics_definitions: Optional[Dict[str, Any]] = None,
     **extra: Any,
 ) -> MioCertificate:
     """Build an immutable MioCertificate with auto-populated provenance.
@@ -121,6 +136,8 @@ def build_mio_certificate(
         raise TypeError(
             f"build_mio_certificate() got unexpected keyword arguments: {unknown}"
         )
+    if readiness is not None and manifest is not None:
+        raise ValueError("pass either manifest or readiness, not both")
 
     resolved_commit = git_commit if git_commit is not None else _resolve_git_commit()
     resolved_hash = (
@@ -135,6 +152,26 @@ def build_mio_certificate(
             consistency_metrics,
         )
     )
+    resolved_manifest = manifest
+    resolved_domain_caveats = list(domain_caveats)
+    if readiness is not None:
+        if not artifact_id or not artifact_path:
+            raise ValueError(
+                "artifact_id and artifact_path are required when readiness is provided"
+            )
+        resolved_manifest = build_mio_manifest(
+            artifact_id=artifact_id,
+            artifact_path=artifact_path,
+            created_by=generated_by,
+            git_commit=resolved_commit,
+            config_hash=resolved_hash,
+            input_hashes=input_data_hashes,
+            readiness=readiness,
+            code_version=code_version,
+            schema_version=schema_version,
+            statistics_definitions=statistics_definitions,
+        )
+        resolved_domain_caveats = merge_domain_caveats(domain_caveats, readiness)
 
     return MioCertificate(
         report_type=report_type,
@@ -143,17 +180,41 @@ def build_mio_certificate(
         departure_variables=dict(departure_variables),
         adequacy_indicators=dict(adequacy_indicators),
         consistency_metrics=dict(consistency_metrics),
-        domain_caveats=list(domain_caveats),
+        domain_caveats=resolved_domain_caveats,
         channel_caveats=list(channel_caveats) if channel_caveats is not None else [],
         reduction_status=reduction_status,
         generated_by=generated_by,
         git_commit=resolved_commit,
         config_hash=resolved_hash,
         input_data_hashes=list(input_data_hashes),
+        manifest=resolved_manifest,
+        tsc_overlay_ref=tsc_overlay_ref,
         htt_cross_check_suggested=(
             dict(htt_cross_check_suggested) if htt_cross_check_suggested is not None else None
         ),
     )
 
 
-__all__ = ["build_mio_certificate"]
+def certificate_to_payload(cert: MioCertificate) -> Dict[str, Any]:
+    """Return a stable JSON-ready payload for ``MioCertificate``."""
+    return {
+        "report_type": cert.report_type,
+        "probe_name": cert.probe_name,
+        "channel": cert.channel,
+        "departure_variables": cert.departure_variables,
+        "adequacy_indicators": cert.adequacy_indicators,
+        "consistency_metrics": cert.consistency_metrics,
+        "domain_caveats": cert.domain_caveats,
+        "channel_caveats": cert.channel_caveats,
+        "reduction_status": cert.reduction_status,
+        "generated_by": cert.generated_by,
+        "git_commit": cert.git_commit,
+        "config_hash": cert.config_hash,
+        "input_data_hashes": cert.input_data_hashes,
+        "manifest": asdict(cert.manifest) if cert.manifest is not None else None,
+        "tsc_overlay_ref": cert.tsc_overlay_ref,
+        "htt_cross_check_suggested": cert.htt_cross_check_suggested,
+    }
+
+
+__all__ = ["build_mio_certificate", "certificate_to_payload"]

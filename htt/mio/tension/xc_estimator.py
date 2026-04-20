@@ -18,7 +18,8 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Optional, Sequence, Tuple
 
-from mio.interface.mio_certificate import build_mio_certificate
+from mio.interface.manifest import MioPrerequisites, assess_mio_readiness
+from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -115,6 +116,7 @@ def to_mio_certificate(
     generated_by: str = "mio.tension.xc_estimator v0.1",
     input_data_hashes: Optional[Sequence[str]] = None,
     config_hash: Optional[str] = None,
+    artifact_path: str = "artifacts/mio/mio_xc_direct_estimate_v1.json",
 ) -> MioCertificate:
     """Pack an ``XCReport`` into a ``MioCertificate``."""
     departure = {
@@ -140,6 +142,7 @@ def to_mio_certificate(
     caveats = list(domain_caveats) if domain_caveats is not None else []
     if DEFAULT_DOMAIN_CAVEAT not in caveats:
         caveats.append(DEFAULT_DOMAIN_CAVEAT)
+    readiness = assess_mio_readiness(MioPrerequisites(eligible_for_production=False))
 
     return build_mio_certificate(
         report_type="flrw_tension",
@@ -156,6 +159,13 @@ def to_mio_certificate(
         htt_cross_check_suggested={
             "compare_to": "htt.core.advanced_diagnostics.redshift_tomography_report_artifact",
             "expected_relation": "non-zero x_C should coincide with directional-depth tension, not replace it",
+        },
+        readiness=readiness,
+        artifact_id="mio.xc_direct_estimate.certificate",
+        artifact_path=artifact_path,
+        statistics_definitions={
+            "report_type": "flrw_tension",
+            "channel": channel,
         },
     )
 
@@ -187,25 +197,14 @@ def emit_xc_direct_estimate_artefact(
         channel=channel,
         domain_caveats=domain_caveats,
         input_data_hashes=input_data_hashes,
+        artifact_path=str(out_path),
     )
 
     payload = {
         "schema_version": "v1",
         "inputs": asdict(inputs),
         "report": asdict(report),
-        "certificate": {
-            "report_type": cert.report_type,
-            "probe_name": cert.probe_name,
-            "channel": cert.channel,
-            "departure_variables": cert.departure_variables,
-            "adequacy_indicators": cert.adequacy_indicators,
-            "consistency_metrics": cert.consistency_metrics,
-            "domain_caveats": cert.domain_caveats,
-            "reduction_status": cert.reduction_status,
-            "generated_by": cert.generated_by,
-            "git_commit": cert.git_commit,
-            "config_hash": cert.config_hash,
-        },
+        "certificate": certificate_to_payload(cert),
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
     return payload

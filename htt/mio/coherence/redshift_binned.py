@@ -39,7 +39,12 @@ from common.sky_geometry import (
     lb_to_unitvec,
     spherical_mean,
 )
-from mio.interface.mio_certificate import build_mio_certificate
+from mio.interface.manifest import (
+    MioPrerequisites,
+    SkySupportStatus,
+    assess_mio_readiness,
+)
+from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from mio.interface.sigma_cone_provenance import placeholder_caveats_for
 from workspace.contracts.mio_certificate import MioCertificate
 
@@ -346,6 +351,9 @@ def to_mio_certificate(
     input_data_hashes: Optional[List[str]] = None,
     config_hash: Optional[str] = None,
     htt_cross_check_suggested: Optional[dict] = None,
+    has_covariance: bool = False,
+    sky_support_status: SkySupportStatus = "partial",
+    artifact_path: str = "artifacts/mio/mio_redshift_coherence_v1.json",
 ) -> MioCertificate:
     """Package z-binned-coherence results into a ``MioCertificate``.
 
@@ -379,6 +387,15 @@ def to_mio_certificate(
     for placeholder in placeholder_caveats_for(p.name for p in probes):
         if placeholder not in caveats:
             caveats.append(placeholder)
+    readiness = assess_mio_readiness(
+        MioPrerequisites(
+            requires_covariance=True,
+            has_covariance=has_covariance,
+            requires_sky_support=True,
+            sky_support_status=sky_support_status,
+            eligible_for_production=True,
+        )
+    )
 
     return build_mio_certificate(
         report_type="redshift_binned_coherence",
@@ -394,6 +411,13 @@ def to_mio_certificate(
         input_data_hashes=list(input_data_hashes) if input_data_hashes else [],
         htt_cross_check_suggested=htt_cross_check_suggested,
         config_hash=config_hash,
+        readiness=readiness,
+        artifact_id="mio.redshift_binned_coherence.certificate",
+        artifact_path=artifact_path,
+        statistics_definitions={
+            "report_type": "redshift_binned_coherence",
+            "channel": "dipole_vs_z",
+        },
     )
 
 
@@ -433,7 +457,11 @@ def emit_redshift_coherence_artefact(
     sep = pairwise_bin_separations(bin_results)
 
     cert = to_mio_certificate(
-        probes, bin_results, p_drift=p_drift, total_drift=total_drift,
+        probes,
+        bin_results,
+        p_drift=p_drift,
+        total_drift=total_drift,
+        artifact_path=str(out_path),
     )
 
     payload = {
@@ -455,19 +483,7 @@ def emit_redshift_coherence_artefact(
         "drift_pvalue": float(p_drift),
         "n_mock": int(n_mock),
         "pairwise_bin_separations_deg": sep.tolist(),
-        "certificate": {
-            "report_type": cert.report_type,
-            "probe_name": cert.probe_name,
-            "channel": cert.channel,
-            "departure_variables": cert.departure_variables,
-            "adequacy_indicators": cert.adequacy_indicators,
-            "consistency_metrics": cert.consistency_metrics,
-            "domain_caveats": cert.domain_caveats,
-            "reduction_status": cert.reduction_status,
-            "generated_by": cert.generated_by,
-            "git_commit": cert.git_commit,
-            "config_hash": cert.config_hash,
-        },
+        "certificate": certificate_to_payload(cert),
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
     return payload

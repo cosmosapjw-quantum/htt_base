@@ -52,7 +52,12 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple, Union
 
 import numpy as np
 
-from mio.interface.mio_certificate import build_mio_certificate
+from mio.interface.manifest import (
+    MioPrerequisites,
+    SkySupportStatus,
+    assess_mio_readiness,
+)
+from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.atlas_entry import AtlasEntry
 from workspace.contracts.mio_certificate import MioCertificate
 
@@ -475,6 +480,9 @@ def to_mio_certificate(
     config_hash: Optional[str] = None,
     htt_cross_check_suggested: Optional[Dict[str, str]] = None,
     config: Optional[ShearExtractorConfig] = None,
+    has_covariance: bool = False,
+    sky_support_status: SkySupportStatus = "partial",
+    artifact_path: str = "artifacts/mio/mio_hj01_shear_extraction_v1.json",
 ) -> MioCertificate:
     """Package a `ShearExtractorReport` into a `MioCertificate`.
 
@@ -515,6 +523,17 @@ def to_mio_certificate(
     caveats = [DIAGNOSTIC_ONLY_CAVEAT]
     if domain_caveats:
         caveats.extend(domain_caveats)
+    readiness = assess_mio_readiness(
+        MioPrerequisites(
+            requires_atlas=True,
+            has_atlas=True,
+            requires_covariance=True,
+            has_covariance=has_covariance,
+            requires_sky_support=True,
+            sky_support_status=sky_support_status,
+            eligible_for_production=True,
+        )
+    )
 
     return build_mio_certificate(
         report_type="shear_extraction",
@@ -531,6 +550,13 @@ def to_mio_certificate(
         input_data_hashes=list(input_data_hashes) if input_data_hashes else [],
         config_hash=config_hash,
         htt_cross_check_suggested=htt_cross_check_suggested,
+        readiness=readiness,
+        artifact_id="mio.shear_extraction.certificate",
+        artifact_path=artifact_path,
+        statistics_definitions={
+            "report_type": "shear_extraction",
+            "channel": "TT_low_ell",
+        },
     )
 
 
@@ -589,7 +615,7 @@ def emit_shear_extraction_artefact(
 
     cfg = config if config is not None else ShearExtractorConfig()
     report = extract_from_kl_atlas(kl, config=cfg)
-    cert = to_mio_certificate(report, config=cfg)
+    cert = to_mio_certificate(report, config=cfg, artifact_path=str(out_path))
 
     payload = {
         "schema_version": "v1",
@@ -616,19 +642,7 @@ def emit_shear_extraction_artefact(
             "p_value_independence": report.p_value_independence,
             "dropped_ells": list(report.dropped_ells),
         },
-        "certificate": {
-            "report_type": cert.report_type,
-            "probe_name": cert.probe_name,
-            "channel": cert.channel,
-            "departure_variables": cert.departure_variables,
-            "adequacy_indicators": cert.adequacy_indicators,
-            "consistency_metrics": cert.consistency_metrics,
-            "domain_caveats": cert.domain_caveats,
-            "reduction_status": cert.reduction_status,
-            "generated_by": cert.generated_by,
-            "git_commit": cert.git_commit,
-            "config_hash": cert.config_hash,
-        },
+        "certificate": certificate_to_payload(cert),
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
     return payload

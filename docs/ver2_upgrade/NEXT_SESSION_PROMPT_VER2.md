@@ -12,6 +12,7 @@
 8. `docs/ver2_upgrade/audits/AUDIT_SK-01C_2026-04-21.md`
 9. `docs/ver2_upgrade/audits/AUDIT_SK-05T_2026-04-21.md`
 10. `docs/ver2_upgrade/audits/AUDIT_SK-09D_2026-04-21.md`
+11. `docs/ver2_upgrade/audits/AUDIT_SK-07M_2026-04-21.md`
 
 ## 2. Current State
 
@@ -22,21 +23,21 @@
 - `SK-05T` is now closed: `htt/tsc/*` contains domain-guard, no-overclaim, overlay-builder, advisory-adapter, and theorem-map skeletons backed by common manifests and TSC-owned reports.
 - `SK-09D` is now closed: `scripts/ver2_artifact_export.py` generates placeholder D-lane outputs under `docs/ver2_upgrade/generated/*` and `docs/manuscript/generated/*`, and `figures/paper/VER2_MANIFEST_INDEX.md` now blocks legacy paper figures without manifests.
 - The exporter currently reports `83` paper-figure bases and `83` missing manifests. That is the expected blocked skeleton state before `IM-09D-FIG`.
-- Full manifest propagation is not yet wired through every producer. That is expected at this stage.
+- `SK-07M` is now closed: touched MIO certificate producers attach VER2 manifest-backed production status, explicit covariance/atlas/null-mock caveats, and JSON-ready manifest payloads; `htt/mio/diagnostics/predictive_residuals.py` exists as a blocked residual-atlas shell.
+- Targeted MIO verification is green: `venv/bin/python -m pytest htt/mio/tests -q` -> `153 passed`.
+- Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
 ## 3. Next Recommended Packet
 
-`SK-01C`, `SK-05T`, and `SK-09D` are closed. Continue the remaining solver-independent shell packets now.
+`SK-01C`, `SK-05T`, `SK-07M`, and `SK-09D` are closed. Continue the remaining solver-independent shell packets now.
 
 Prefer this order if the goal is to maximize solver-free progress:
 
 1. `SK-06H`
-2. `SK-07M`
-3. only then `SK-01S1` -> `SK-02S2` -> `SK-03S3`
+2. only then `SK-01S1` -> `SK-02S2` -> `SK-03S3`
 
 Parallel recommendation now:
 - one thread: `SK-06H`
-- one thread: `SK-07M`
 
 Defer until solver surfaces exist:
 - `SK-04O`
