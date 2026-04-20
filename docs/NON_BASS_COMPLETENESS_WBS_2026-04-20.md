@@ -44,9 +44,12 @@
 | `fiducial_posterior_bundle_v1.json` | 완료 | `c1ceb78` |
 | `MIO certification/reporting registries` | 완료 | `d3c375d` |
 | `diag_zoa_ladder_v1.json` | 완료 | `0d13a82` |
+| `diag_plane_alignment_v1.json` | 완료 | `88b099f` |
 | `baseline_selection_aware_v1.json` | 완료 | `0d13a82` |
 | `mock_calibration_report_v1.json` | 완료 | `0d13a82` |
+| `retention_vs_posterior_v1.json` | 완료 | `88b099f` |
 | `fig_zoa_ladder_mode0` | 완료 | `5f4dcd9` |
+| `fig_retention_fraction_vs_posterior` | 완료 | `88b099f` |
 
 ### 2.2 Deliverable ledger
 
@@ -72,7 +75,7 @@
 | `D18` CAMB FLRW V-gate | BASS-linked | 미착수 | `범위외(BASS)` | non-BASS ledger에서 제외 | BASS 쪽 선행 필요 |
 | `D19` BiPoSH coefficients | BASS-linked | 미착수 | `범위외(BASS)` | non-BASS ledger에서 제외 | BASS 쪽 선행 필요 |
 | `D20` W_R window + frame bias | BASS-linked | 미착수 | `범위외(BASS)` | non-BASS ledger에서 제외 | BASS 쪽 선행 필요 |
-| `D21` ZoA-aware directional likelihood | HTT common | 재설계 요구 | `prototype+` | Mode 0/1/2 contracts + 3 artifact 중 3개 확보 | plane-alignment / retention-vs-posterior / full pipeline hook |
+| `D21` ZoA-aware directional likelihood | HTT common | 재설계 요구 | `prototype+` | Mode 0/1/2 contracts + 핵심 artifact chain 확보 | full pipeline hook + publication run wiring |
 | `D22` mock calibration coverage report | HTT common | 미착수 | `prototype+` | `mock_calibration_report_v1.json` 경로 확보 | full mock suite + production thresholds |
 | `D23` depth-by-depth sensitivity | HTT | prototype | `prototype` | h0_sensitivity/diagnostics 존재 | z-bin coupling and report export |
 | `D24` type-by-type summary | HTT | prototype | `prototype` | figure exists | data contract stabilization |
@@ -122,7 +125,7 @@
 - [ ] `D14` survey nuisance production path
 - [ ] `D15` geometry/parity result export
 - [ ] `D16` shared-cause BF export
-- [ ] `D21` ZoA mode chain 완주 (`diag_plane_alignment`, `retention_vs_posterior`)
+- [ ] `D21` ZoA mode chain의 pipeline/publication wiring
 - [ ] `D22` full mock-calibration suite promotion
 - [ ] `D24/D25` figure-data contract stabilization
 
@@ -181,12 +184,12 @@
 | `NB-PR-008` | MIO certification/reporting registries | `d3c375d` | figure smoke unblock |
 | `NB-PR-009` | HTT directional artifact builders | `0d13a82` | Mode 0/1 + mock report |
 | `NB-PR-010` | HTT Mode0 ZoA ladder figure | `5f4dcd9` | F44 path |
+| `NB-PR-011` | HTT retention-vs-posterior / plane alignment | `88b099f` | `diag_plane_alignment`, `retention_vs_posterior`, F102 path |
 
 ### 5.2 다음 우선순위 PR backlog
 
 | PR ID | 우선순위 | 대상 | WBS | 범위 | acceptance |
 |---|---|---|---|---|---|
-| `NB-PR-011` | `P0` | HTT | `HTT-WBS-01` | `diag_plane_alignment_v1.json` + `retention_vs_posterior_v1.json` + figure path | artifact schema 고정, targeted tests, figure smoke green |
 | `NB-PR-012` | `P0` | HTT | `HTT-WBS-02` | `matched_complexity_report_v1.json` | report artifact + deterministic hash |
 | `NB-PR-013` | `P1` | HTT | `HTT-WBS-02` | `15model_evidence_matrix_v1.json` export | 15×scenario matrix + regression |
 | `NB-PR-014` | `P1` | HTT | `HTT-WBS-03` | `null_library_fpr_v1.json` + import hardening | runner smoke + JSON export |
@@ -199,24 +202,23 @@
 
 ### 5.3 권장 실행 순서
 
-1. `NB-PR-011`
-2. `NB-PR-012`
-3. `NB-PR-013`
-4. `NB-PR-014`
-5. `NB-PR-016`
-6. `NB-PR-017`
-7. `NB-PR-018`
-8. `NB-PR-019`
-9. `NB-PR-015`
-10. `NB-PR-020`
+1. `NB-PR-012`
+2. `NB-PR-013`
+3. `NB-PR-014`
+4. `NB-PR-016`
+5. `NB-PR-017`
+6. `NB-PR-018`
+7. `NB-PR-019`
+8. `NB-PR-015`
+9. `NB-PR-020`
 
 ## 6. Immediate Next Action
 
-바로 다음 실제 코드 작업은 `NB-PR-011`이 맞다.
+바로 다음 실제 코드 작업은 `NB-PR-012`가 맞다.
 
 이유:
 
-1. 최근 landed 경로와 write-set이 거의 겹쳐 context 전환 비용이 가장 낮다.
-2. `D21/D22`는 현재 non-BASS backlog에서 가장 “거의 닫힌” 축이다.
-3. `diag_plane_alignment`와 `retention_vs_posterior`가 들어오면 Mode 0/1/2 artifact chain이 문서 기준으로 한 단계 더 완성된다.
-4. 이후 `matched_complexity`나 `15model_evidence_matrix`로 넘어갈 때도 artifact contract 패턴을 재사용할 수 있다.
+1. 방금 닫은 `NB-PR-011`의 artifact contract 패턴을 거의 그대로 재사용할 수 있다.
+2. `D13`은 코드 셸이 이미 존재해서 report export만 닫으면 production 문서화가 쉬운 축이다.
+3. `matched_complexity_report_v1.json`은 이후 `D1/D4/D8` report artifact들과 해시/metadata 구조를 공유할 수 있다.
+4. `NB-PR-013`의 evidence matrix export 전에 먼저 report skeleton 하나를 굳히는 편이 리스크가 낮다.
