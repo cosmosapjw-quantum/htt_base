@@ -104,6 +104,19 @@ A52 only assembles the existing rules into a navigable map.
 | [S4] POST-PROMO VERIFIED | §A51.2 per-phase §6 check (positive verification + drift detection) | yes (load-bearing) | yes |
 | [S5] BATTLE-TESTED | §A51.5 relaxed quarterly spot-check; not every phase | yes (stable) | yes |
 
+### A52.3.1 Paste-template pointers for [S1] / [S2]
+
+For the two pre-promotion states, the table above is intentionally
+brief. Audit authors who need the exact prose anchor should use:
+
+* **[S1] GATE-SPECIFIED** — copy the inline Addendum protocol
+  notice body from A49.5; do not cite A51.2 yet because the memory
+  rule has not fired.
+* **[S2] GATE-DEFERRED** — same A49.5 body as [S1], plus the
+  current phase's §A50.2 strict row and, after W24D1, the
+  §A50.2a patient-accumulator row. A51 remains dormant until
+  §A50.4 lands the paired promotion edit.
+
 ## A52.4 Transition triggers
 
 | From | To | Trigger (citation) |
@@ -130,9 +143,9 @@ dogfooding count ≥ 4 (W21–W24 expected) + strict-defer count 1
 §A50.2a, not a strict-gate re-evaluation). W24D7 audit §6 check
 #4 (strict) + new check #5 (patient accumulators) decide whether
 the state advances toward [S3] or stays at [S2]; §A50.2a earliest
-fire is W25D1 (patient) per A50.2a's "5-dogfooding + 3-defer"
-baseline. A51 therefore remains **dormant** (trigger-gated) as
-of W24D5.
+fire is **W25 audit** (patient) per A50.2a's "5-dogfooding +
+3 audit-evaluated defers" baseline. A51 therefore remains
+**dormant** (trigger-gated) as of W24D5.
 
 ## A52.6 No code landing in this appendix
 
@@ -163,6 +176,24 @@ A52 must be rewritten if any of the following happens:
   discipline unrelated to the Addendum protocol notice that
   follows the same S0→S5 arc) — at that point A52 is generalised
   or forked into A52a / A52b.
+
+### A52.7.1 Parity-check protocol
+
+Whenever A49 / A50 / A51 gain a new transition, row, or paste-
+template pointer, re-run the two quick greps below before signing
+off an A52 edit:
+
+```bash
+grep -c "§A50\.2a" docs/dossier/A50_*.md
+grep -c "§A50\.2a" docs/dossier/A52_*.md
+```
+
+The counts are **not** expected to match numerically; the check is a
+cheap drift alarm. If the A50-side count changes but the A52-side
+count does not, confirm that A52 still mirrors every state /
+trigger / current-state mention it is supposed to assemble. If the
+A52-side count changes unexpectedly, verify the new mention belongs
+in the diagram rather than in the authoritative A49/A50/A51 prose.
 
 ## A52.8 Relation to other appendices
 
