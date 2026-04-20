@@ -44,7 +44,9 @@ __all__ = [
     "bulk_flow_mask_ladder",
     "bootstrap_covariance",
     "diagnostic_zoa_ladder_artifact",
+    "diagnostic_plane_alignment_artifact",
     "baseline_selection_aware_artifact",
+    "retention_vs_posterior_artifact",
 ]
 
 
@@ -554,6 +556,107 @@ def diagnostic_zoa_ladder_artifact(
     })
 
 
+def diagnostic_plane_alignment_artifact(
+    diagnostic_artifact: Mapping[str, Any],
+    *,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build ``diag_plane_alignment_v1.json`` from the Mode 0 ladder artifact.
+
+    The plan requests the ladder's ``(l, b)`` path plus a compact alignment
+    diagnostic. We operationalise that as the retention-weighted spherical
+    mean of the valid ladder axes and its resultant length ``R``.
+    """
+    from common.sky_geometry import spherical_mean
+
+    bcut = np.asarray(diagnostic_artifact.get("bcut_deg"), dtype=float)
+    retention = np.asarray(
+        diagnostic_artifact.get("retention_fraction"),
+        dtype=float,
+    )
+    axis_l = np.asarray(diagnostic_artifact.get("axis_l_deg"), dtype=float)
+    axis_b = np.asarray(diagnostic_artifact.get("axis_b_deg"), dtype=float)
+    if (
+        bcut.ndim != 1
+        or retention.shape != bcut.shape
+        or axis_l.shape != bcut.shape
+        or axis_b.shape != bcut.shape
+    ):
+        raise ValueError(
+            "diagnostic_plane_alignment_artifact requires a diag_zoa_ladder "
+            "payload with aligned bcut/retention/axis arrays"
+        )
+
+    valid = np.isfinite(axis_l) & np.isfinite(axis_b)
+    if not np.any(valid):
+        raise ValueError(
+            "diagnostic_plane_alignment_artifact: diagnostic ladder "
+            "contains no valid axis samples"
+        )
+
+    weights = retention[valid]
+    if float(np.sum(weights)) <= 0.0:
+        weights = np.ones(int(np.count_nonzero(valid)), dtype=float)
+    mean_axis = spherical_mean(axis_l[valid], axis_b[valid], weights)
+
+    step_drift = np.full(bcut.shape, np.nan, dtype=float)
+    last_valid_idx: int | None = None
+    for idx in np.flatnonzero(valid):
+        if last_valid_idx is not None:
+            step_drift[idx] = _angular_sep_deg(
+                float(axis_l[last_valid_idx]),
+                float(axis_b[last_valid_idx]),
+                float(axis_l[idx]),
+                float(axis_b[idx]),
+            )
+        last_valid_idx = int(idx)
+
+    extra = dict(metadata or {})
+    config_payload = {
+        "diagnostic_artifact_name": diagnostic_artifact.get("artifact_name", ""),
+        "diagnostic_config_hash": diagnostic_artifact.get("config_hash", ""),
+        "metadata": extra,
+    }
+    finite_step = step_drift[np.isfinite(step_drift)]
+    return _jsonify({
+        "artifact_name": "diag_plane_alignment_v1.json",
+        "generated_by": extra.get(
+            "generated_by",
+            "common.bulkflow_estimator.diagnostic_plane_alignment_artifact",
+        ),
+        "git_commit": extra.get("git_commit", ""),
+        "config_hash": _config_hash(config_payload),
+        "input_data_hashes": list(extra.get("input_data_hashes", [])),
+        "random_seed": extra.get("random_seed"),
+        "wall_time_sec": extra.get("wall_time_sec"),
+        "python_version": extra.get("python_version", platform.python_version()),
+        "numpy_version": extra.get("numpy_version", np.__version__),
+        "claim_tier": extra.get("claim_tier", "EXPLORATORY"),
+        "scope_label": extra.get("scope_label", "diagnostic"),
+        "production_allowed": False,
+        "source_artifact": {
+            "artifact_name": diagnostic_artifact.get("artifact_name", ""),
+            "config_hash": diagnostic_artifact.get("config_hash", ""),
+        },
+        "bcut_deg": bcut.tolist(),
+        "retention_fraction": retention.tolist(),
+        "axis_l_deg": axis_l.tolist(),
+        "axis_b_deg": axis_b.tolist(),
+        "valid_axis": valid.tolist(),
+        "step_drift_deg": step_drift.tolist(),
+        "mean_axis": {
+            "l_deg": float(mean_axis["l_deg"]),
+            "b_deg": float(mean_axis["b_deg"]),
+            "resultant_R": float(mean_axis["resultant_R"]),
+        },
+        "resultant_R": float(mean_axis["resultant_R"]),
+        "n_valid_axes": int(np.count_nonzero(valid)),
+        "max_step_drift_deg": (
+            None if finite_step.size == 0 else float(np.max(finite_step))
+        ),
+    })
+
+
 def baseline_selection_aware_artifact(
     catalogue: BulkFlowCatalogue,
     sky_config: "SkySelectionConfig",
@@ -693,4 +796,139 @@ def baseline_selection_aware_artifact(
             "V_hat_mean_kmps": boot["V_hat_mean"].tolist(),
             "n_boot": int(boot["n_boot"]),
         },
+    })
+
+
+def retention_vs_posterior_artifact(
+    diagnostic_artifact: Mapping[str, Any],
+    fiducial_bundle: Mapping[str, Any],
+    *,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build ``retention_vs_posterior_v1.json`` from Mode 0 and Mode 2 artifacts.
+
+    This compares each diagnostic ladder axis against the fiducial posterior
+    axis and records how directional drift scales with retained sky fraction.
+    """
+    from common.posterior_summary import credible_cone
+
+    bcut = np.asarray(diagnostic_artifact.get("bcut_deg"), dtype=float)
+    retention = np.asarray(
+        diagnostic_artifact.get("retention_fraction"),
+        dtype=float,
+    )
+    axis_l = np.asarray(diagnostic_artifact.get("axis_l_deg"), dtype=float)
+    axis_b = np.asarray(diagnostic_artifact.get("axis_b_deg"), dtype=float)
+    if (
+        bcut.ndim != 1
+        or retention.shape != bcut.shape
+        or axis_l.shape != bcut.shape
+        or axis_b.shape != bcut.shape
+    ):
+        raise ValueError(
+            "retention_vs_posterior_artifact requires a diag_zoa_ladder "
+            "payload with aligned bcut/retention/axis arrays"
+        )
+
+    axis_payload = fiducial_bundle.get("axis")
+    if not isinstance(axis_payload, Mapping):
+        raise ValueError(
+            "retention_vs_posterior_artifact requires a fiducial bundle "
+            "with an `axis` record"
+        )
+    fid_l = float(axis_payload["l_deg"])
+    fid_b = float(axis_payload["b_deg"])
+
+    summary = fiducial_bundle.get("posterior_summary", {})
+    if not isinstance(summary, Mapping):
+        raise ValueError(
+            "retention_vs_posterior_artifact requires a fiducial bundle "
+            "with `posterior_summary`"
+        )
+    lb_post = summary.get("lb_posterior", {})
+    if not isinstance(lb_post, Mapping):
+        raise ValueError(
+            "retention_vs_posterior_artifact requires posterior_summary.lb_posterior"
+        )
+    cone_68 = summary.get("credible_cone", {})
+    if not isinstance(cone_68, Mapping) or "radius_deg" not in cone_68:
+        raise ValueError(
+            "retention_vs_posterior_artifact requires posterior_summary.credible_cone"
+        )
+    cone_95 = credible_cone(
+        np.asarray(lb_post["l_deg"], dtype=float),
+        np.asarray(lb_post["b_deg"], dtype=float),
+        level=0.95,
+        weights=np.asarray(lb_post["weights"], dtype=float),
+    )
+
+    shift = np.full(bcut.shape, np.nan, dtype=float)
+    valid = np.isfinite(axis_l) & np.isfinite(axis_b)
+    for idx in np.flatnonzero(valid):
+        shift[idx] = _angular_sep_deg(
+            float(axis_l[idx]),
+            float(axis_b[idx]),
+            fid_l,
+            fid_b,
+        )
+
+    valid_shift = np.isfinite(shift)
+    corr = None
+    if int(np.count_nonzero(valid_shift)) >= 2:
+        corr = float(np.corrcoef(retention[valid_shift], shift[valid_shift])[0, 1])
+
+    extra = dict(metadata or {})
+    config_payload = {
+        "diagnostic_artifact_name": diagnostic_artifact.get("artifact_name", ""),
+        "diagnostic_config_hash": diagnostic_artifact.get("config_hash", ""),
+        "fiducial_artifact_name": fiducial_bundle.get("artifact_name", ""),
+        "fiducial_config_hash": fiducial_bundle.get("config_hash", ""),
+        "metadata": extra,
+    }
+    finite_shift = shift[np.isfinite(shift)]
+    radius_68 = float(cone_68["radius_deg"])
+    radius_95 = float(cone_95["radius_deg"])
+    return _jsonify({
+        "artifact_name": "retention_vs_posterior_v1.json",
+        "generated_by": extra.get(
+            "generated_by",
+            "common.bulkflow_estimator.retention_vs_posterior_artifact",
+        ),
+        "git_commit": extra.get("git_commit", ""),
+        "config_hash": _config_hash(config_payload),
+        "input_data_hashes": list(extra.get("input_data_hashes", [])),
+        "random_seed": extra.get("random_seed"),
+        "wall_time_sec": extra.get("wall_time_sec"),
+        "python_version": extra.get("python_version", platform.python_version()),
+        "numpy_version": extra.get("numpy_version", np.__version__),
+        "claim_tier": extra.get("claim_tier", "CONDITIONAL"),
+        "scope_label": extra.get("scope_label", "diagnostic_vs_fiducial"),
+        "production_allowed": False,
+        "source_artifacts": {
+            "diagnostic": {
+                "artifact_name": diagnostic_artifact.get("artifact_name", ""),
+                "config_hash": diagnostic_artifact.get("config_hash", ""),
+            },
+            "fiducial": {
+                "artifact_name": fiducial_bundle.get("artifact_name", ""),
+                "config_hash": fiducial_bundle.get("config_hash", ""),
+            },
+        },
+        "bcut_deg": bcut.tolist(),
+        "retention_fraction": retention.tolist(),
+        "axis_l_deg": axis_l.tolist(),
+        "axis_b_deg": axis_b.tolist(),
+        "posterior_shift_deg": shift.tolist(),
+        "within_68_cone": (shift <= radius_68).tolist(),
+        "within_95_cone": (shift <= radius_95).tolist(),
+        "fiducial_axis": {
+            "l_deg": fid_l,
+            "b_deg": fid_b,
+        },
+        "credible_cone_68_deg": radius_68,
+        "credible_cone_95_deg": radius_95,
+        "max_shift_deg": (
+            None if finite_shift.size == 0 else float(np.max(finite_shift))
+        ),
+        "correlation_retention_vs_shift": corr,
     })

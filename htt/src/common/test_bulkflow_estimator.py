@@ -13,10 +13,13 @@ from common.bulkflow_estimator import (
     baseline_selection_aware_artifact,
     bootstrap_covariance,
     bulk_flow_mask_ladder,
+    diagnostic_plane_alignment_artifact,
     diagnostic_zoa_ladder_artifact,
+    retention_vs_posterior_artifact,
     wls_bulk_flow,
 )
-from common.contracts import SkySelectionConfig
+from common.contracts import DynestyResult, MockCalibrationReport, SkySelectionConfig
+from common.posterior_summary import fiducial_posterior_bundle
 from common.sky_geometry import lb_to_unitvec
 
 
@@ -43,6 +46,27 @@ def _injected_catalogue(
         w_native=np.ones(n),
         w_selection=np.ones(n),
     )
+
+
+def _fiducial_bundle_fixture() -> dict:
+    rng = np.random.default_rng(123)
+    center = np.array([220.0, 80.0, 40.0])
+    samples = rng.normal(center, 20.0, size=(120, 3))
+    result = DynestyResult(
+        samples=samples,
+        logwt=np.log(np.linspace(1.0, 3.0, samples.shape[0])),
+        logz=9.5,
+        ncall=77,
+        config={"seed": 9, "sampler": "static"},
+    )
+    report = MockCalibrationReport(
+        bias_amp=0.02,
+        bias_direction_deg=1.5,
+        coverage_68=0.69,
+        credible_radius_deg=12.0,
+        n_mock=80,
+    )
+    return fiducial_posterior_bundle(result, mock_report=report, nside_hpd=16)
 
 
 # ---------------------------------------------------------------------------
@@ -338,3 +362,35 @@ class TestDirectionalArtifacts:
         )
         assert baseline["retention_fraction"] < cfg.min_retention_fraction
         assert baseline["mode0_to_mode1_gate_passed"] is False
+
+    def test_plane_alignment_artifact_summarises_axis_path(self):
+        cat = _injected_catalogue(np.array([190.0, 30.0, -15.0]), n=320, seed=12)
+        diagnostic = diagnostic_zoa_ladder_artifact(cat)
+        alignment = diagnostic_plane_alignment_artifact(
+            diagnostic,
+            metadata={"git_commit": "def456"},
+        )
+        assert alignment["artifact_name"] == "diag_plane_alignment_v1.json"
+        assert alignment["scope_label"] == "diagnostic"
+        assert alignment["production_allowed"] is False
+        assert alignment["n_valid_axes"] >= 1
+        assert 0.0 <= alignment["resultant_R"] <= 1.0
+        assert len(alignment["step_drift_deg"]) == len(alignment["bcut_deg"])
+        import json
+
+        json.dumps(alignment)
+
+    def test_retention_vs_posterior_artifact_compares_mode0_and_mode2(self):
+        cat = _injected_catalogue(np.array([220.0, -20.0, 35.0]), n=280, seed=13)
+        diagnostic = diagnostic_zoa_ladder_artifact(cat)
+        bundle = _fiducial_bundle_fixture()
+        comparison = retention_vs_posterior_artifact(diagnostic, bundle)
+        assert comparison["artifact_name"] == "retention_vs_posterior_v1.json"
+        assert comparison["scope_label"] == "diagnostic_vs_fiducial"
+        assert comparison["production_allowed"] is False
+        assert len(comparison["posterior_shift_deg"]) == len(comparison["bcut_deg"])
+        assert comparison["credible_cone_95_deg"] >= comparison["credible_cone_68_deg"]
+        assert len(comparison["within_68_cone"]) == len(comparison["bcut_deg"])
+        import json
+
+        json.dumps(comparison)
