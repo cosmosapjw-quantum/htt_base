@@ -485,15 +485,19 @@ results_store['phase3f_mes_boundary'] = {'ceiling': float(_Sig2_ceil) if ev_resu
 # ═══════════════════════════════════════════════════════════════
 phase_header("3g", "MODEL IDENTIFIABILITY AUDIT")
 
-from htt.core.evidence_models_R03a import audit_inactive_parameters, MODEL_AUDIT
+from htt.core.evidence_models_R03a import (
+    audit_inactive_parameters,
+    model_identifiability_audit_artifact,
+)
 _id_report = audit_inactive_parameters()
+_id_artifact = model_identifiability_audit_artifact()
 log(f"  Inactive parameters: {_id_report['inactive_parameters']}")
 log(f"  Duplicate models: {_id_report['duplicate_models']}")
 log(f"  Equivalence classes with >1 member:")
 for _cls, _members in _id_report['equivalence_classes'].items():
     log(f"    {_cls}: {_members}")
 
-results_store['phase3g_identifiability'] = _id_report
+results_store['phase3g_identifiability'] = _id_artifact
 
 
 # ═══════════════════════════════════════════════════════════════

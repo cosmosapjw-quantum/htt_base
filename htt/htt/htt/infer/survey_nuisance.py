@@ -19,14 +19,18 @@ The nuisance layer provides:
   3. Survey-combination weights accounting for systematic budgets.
   4. Compatibility checks between surveys.
 """
+import hashlib
+import json
+import platform
 import numpy as np
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Mapping, Optional, Tuple
 
 __all__ = [
     'SurveyNuisance', 'SurveyCovariance', 'SURVEY_REGISTRY',
     'get_survey_nuisance', 'combined_covariance',
     'nuisance_marginal_correction', 'survey_compatibility_test',
+    'survey_nuisance_report_artifact',
 ]
 
 
@@ -100,6 +104,25 @@ SURVEY_REGISTRY: Dict[str, SurveyNuisance] = {
         selection_function='Flux-limited radio continuum',
     ),
 }
+
+
+def _jsonify(obj: Any) -> Any:
+    """Recursively convert numpy-heavy structures to JSON-native values."""
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.generic):
+        return obj.item()
+    if isinstance(obj, Mapping):
+        return {str(k): _jsonify(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_jsonify(v) for v in obj]
+    return obj
+
+
+def _config_hash(payload: Mapping[str, Any]) -> str:
+    """Stable SHA256 hash for report configuration payloads."""
+    blob = json.dumps(_jsonify(payload), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
 def get_survey_nuisance(name: str) -> SurveyNuisance:
@@ -215,3 +238,80 @@ def survey_compatibility_test(beta_values: Dict[str, float],
         'compatible': p_value > 0.05,
         'surveys': names,
     }
+
+
+def survey_nuisance_report_artifact(
+    beta_values: Dict[str, float],
+    sigma_values: Dict[str, float] | None = None,
+    *,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build ``survey_nuisance_report_v1.json`` for the active survey set.
+
+    The current nuisance layer is intentionally conservative: it exposes
+    only diagonal covariance terms and carries that limitation explicitly
+    in the artifact so downstream consumers cannot mistake it for a full
+    cross-survey calibration model.
+    """
+    surveys = list(beta_values)
+    compatibility = survey_compatibility_test(beta_values, sigma_values=sigma_values)
+    covariance = combined_covariance(surveys)
+    marginalised = {
+        survey: {
+            'beta_raw': float(beta_values[survey]),
+            'beta_corrected': float(nuisance_marginal_correction(beta_values[survey], survey)[0]),
+            'sigma_marginalised': float(nuisance_marginal_correction(beta_values[survey], survey)[1]),
+        }
+        for survey in surveys
+    }
+    registry_snapshot = {
+        survey: {
+            'delta_name': SURVEY_REGISTRY[survey].delta_name,
+            'prior_width': float(SURVEY_REGISTRY[survey].prior_width),
+            'direction_systematic_deg': float(SURVEY_REGISTRY[survey].direction_systematic),
+            'malmquist_correction': float(SURVEY_REGISTRY[survey].malmquist_correction),
+            'selection_function': SURVEY_REGISTRY[survey].selection_function,
+            'covariance': {
+                'sigma_stat': float(SURVEY_REGISTRY[survey].covariance.sigma_stat),
+                'sigma_sys': float(SURVEY_REGISTRY[survey].covariance.sigma_sys),
+                'sigma_calibration': float(SURVEY_REGISTRY[survey].covariance.sigma_calibration),
+                'n_objects': int(SURVEY_REGISTRY[survey].covariance.n_objects),
+                'sigma_total': float(SURVEY_REGISTRY[survey].covariance.sigma_total),
+            },
+        }
+        for survey in surveys
+    }
+
+    extra = dict(metadata or {})
+    config_payload = {
+        'beta_values': beta_values,
+        'sigma_values': sigma_values,
+        'metadata': extra,
+    }
+    return _jsonify({
+        'artifact_name': 'survey_nuisance_report_v1.json',
+        'generated_by': extra.get(
+            'generated_by',
+            'htt.infer.survey_nuisance.survey_nuisance_report_artifact',
+        ),
+        'git_commit': extra.get('git_commit', ''),
+        'config_hash': _config_hash(config_payload),
+        'input_data_hashes': list(extra.get('input_data_hashes', [])),
+        'random_seed': extra.get('random_seed'),
+        'wall_time_sec': extra.get('wall_time_sec'),
+        'python_version': extra.get('python_version', platform.python_version()),
+        'numpy_version': extra.get('numpy_version', np.__version__),
+        'claim_tier': extra.get('claim_tier', 'REPORT'),
+        'scope_label': extra.get('scope_label', 'report'),
+        'production_allowed': False,
+        'off_diagonal_policy': 'diagonal_only_conservative',
+        'known_limitations': [
+            'shared calibration off-diagonal covariance terms are not modelled',
+            'direction systematics are represented as scalar survey-level budgets',
+        ],
+        'surveys': surveys,
+        'compatibility': compatibility,
+        'covariance_matrix': covariance,
+        'registry': registry_snapshot,
+        'marginalised_estimates': marginalised,
+    })

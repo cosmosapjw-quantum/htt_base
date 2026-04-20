@@ -26,10 +26,15 @@ Data values (Planck PR3 Commander):
   D₂^ΛCDM = 1150.0 μK²  (Planck 2018 best-fit, VR-15 calibration)
   D₃^ΛCDM = 1000.0 μK²  (approximate, Sachs-Wolfe plateau)
 """
+import hashlib
+import json
+import platform
 import warnings
+from typing import Any, Mapping
+
 import numpy as np
-from scipy.special import erfinv, gammaln
 from scipy.interpolate import interp1d
+from scipy.special import erfinv, gammaln
 
 # =====================================================================
 #  SSOT: Physical and Observational Constants
@@ -960,6 +965,26 @@ MODEL_AUDIT = {
     'BVIIh_tilt_grow': {'active': ['Sigma2','W2','beta','x_h'], 'inactive': [],        'equivalence': 'tilt_VIIh_g','duplicate_of': None},
 }
 
+
+def _jsonify(obj: Any) -> Any:
+    """Recursively convert numpy-heavy structures to JSON-native values."""
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.generic):
+        return obj.item()
+    if isinstance(obj, Mapping):
+        return {str(k): _jsonify(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_jsonify(v) for v in obj]
+    return obj
+
+
+def _config_hash(payload: Mapping[str, Any]) -> str:
+    """Stable SHA256 hash for report configuration payloads."""
+    blob = json.dumps(_jsonify(payload), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
 def audit_inactive_parameters():
     """Return summary of inactive parameters and duplicate models (CA-08)."""
     from collections import defaultdict
@@ -974,3 +999,46 @@ def audit_inactive_parameters():
         eq[info['equivalence']].append(tag)
     report['equivalence_classes'] = {k: v for k, v in eq.items() if len(v) > 1}
     return report
+
+
+def model_identifiability_audit_artifact(
+    *,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build ``model_identifiability_audit_v1.json`` from ``MODEL_AUDIT``."""
+    report = audit_inactive_parameters()
+    equivalence_classes = {
+        key: value
+        for key, value in report['equivalence_classes'].items()
+        if len(value) > 1
+    }
+    extra = dict(metadata or {})
+    config_payload = {
+        'metadata': extra,
+        'n_models': len(MODEL_AUDIT),
+    }
+    return _jsonify({
+        'artifact_name': 'model_identifiability_audit_v1.json',
+        'generated_by': extra.get(
+            'generated_by',
+            'htt.core.evidence_models_R03a.model_identifiability_audit_artifact',
+        ),
+        'git_commit': extra.get('git_commit', ''),
+        'config_hash': _config_hash(config_payload),
+        'input_data_hashes': list(extra.get('input_data_hashes', [])),
+        'random_seed': extra.get('random_seed'),
+        'wall_time_sec': extra.get('wall_time_sec'),
+        'python_version': extra.get('python_version', platform.python_version()),
+        'numpy_version': extra.get('numpy_version', np.__version__),
+        'claim_tier': extra.get('claim_tier', 'REPORT'),
+        'scope_label': extra.get('scope_label', 'report'),
+        'production_allowed': False,
+        'n_models': len(MODEL_AUDIT),
+        'n_models_with_inactive_params': len(report['inactive_parameters']),
+        'n_duplicate_models': len(report['duplicate_models']),
+        'n_equivalence_classes_gt1': len(equivalence_classes),
+        'inactive_parameters': report['inactive_parameters'],
+        'duplicate_models': report['duplicate_models'],
+        'equivalence_classes': equivalence_classes,
+        'model_audit': MODEL_AUDIT,
+    })

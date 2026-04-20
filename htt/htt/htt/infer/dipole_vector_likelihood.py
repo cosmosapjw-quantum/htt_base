@@ -10,7 +10,6 @@ The likelihood combines:
   - Direction: shared axis (l, b) or per-survey axes
 """
 import numpy as np
-from typing import Optional
 
 __all__ = ['DipoleVectorLikelihood']
 
@@ -44,11 +43,26 @@ class DipoleVectorLikelihood:
     CW_L = 240.0
     CW_B = -4.0
 
+    # Radio dipole direction (Secrest+2021 / NVSS+RACS)
+    RADIO_L = 251.0
+    RADIO_B = 38.0
+
+    # Approximate directional uncertainties used for the audit penalty.
+    CMB_SIGMA_DEG = 0.5
+    CF4_SIGMA_DEG = 15.0
+    CW_SIGMA_DEG = 6.0
+    RADIO_SIGMA_DEG = 10.0
+
     def __init__(self, obs_data: dict, control: str = 'C1'):
         self.obs = obs_data
         self.control = control
 
         dp = obs_data['dipole_observations']
+        cmb = dp.get('cmb_planck_2018', {})
+        cw = dp.get('catwise_bohme_2025', {})
+        radio = dp.get('radio_secrest_2021', {})
+        cf4 = dp.get('cf4_watkins_2023', {})
+
         self.e1_CW = dp['catwise_bohme_2025']['eps1']
         self.s_CW = dp['catwise_bohme_2025']['sigma_stat']
         self.e1_rad = dp['radio_secrest_2021']['eps1']
@@ -56,6 +70,14 @@ class DipoleVectorLikelihood:
         self.b_CF4 = dp['cf4_watkins_2023']['beta']
         self.s_CF4 = dp['cf4_watkins_2023']['sigma']
         self.rho = dp['rho_CW_radio']
+        self.cmb_l = float(cmb.get('l_deg', self.CMB_L))
+        self.cmb_b = float(cmb.get('b_deg', self.CMB_B))
+        self.cw_l = float(cw.get('l_deg', self.CW_L))
+        self.cw_b = float(cw.get('b_deg', self.CW_B))
+        self.radio_l = float(radio.get('l_deg', self.RADIO_L))
+        self.radio_b = float(radio.get('b_deg', self.RADIO_B))
+        self.cf4_l = float(cf4.get('l_deg', self.CF4_L))
+        self.cf4_b = float(cf4.get('b_deg', self.CF4_B))
 
     def _direction_unit(self, l_deg: float, b_deg: float) -> np.ndarray:
         """Convert (l, b) in degrees to unit vector."""
@@ -70,6 +92,19 @@ class DipoleVectorLikelihood:
         cos_sep = np.clip(np.dot(d1, d2), -1, 1)
         return np.arccos(cos_sep)
 
+    def scalar_log_likelihood(self, A: float) -> float:
+        """Scalar-amplitude likelihood without directional information."""
+        dx_CW = self.e1_CW - A
+        dx_rad = self.e1_rad - A
+        dx_CF4 = self.b_CF4 - A
+        det = 1 - self.rho**2
+
+        chi2_biv = (1.0/det) * (
+            (dx_CW/self.s_CW)**2 + (dx_rad/self.s_rad)**2
+            - 2*self.rho*dx_CW*dx_rad/(self.s_CW*self.s_rad)
+        )
+        return -0.5*chi2_biv - 0.5*(dx_CF4/self.s_CF4)**2
+
     def directional_log_likelihood(self, l_model: float,
                                    b_model: float,
                                    A: float) -> float:
@@ -81,30 +116,26 @@ class DipoleVectorLikelihood:
         """
         # Angular separations
         sep_CMB = self._angular_separation(l_model, b_model,
-                                           self.CMB_L, self.CMB_B)
+                                           self.cmb_l, self.cmb_b)
         sep_CF4 = self._angular_separation(l_model, b_model,
-                                           self.CF4_L, self.CF4_B)
+                                           self.cf4_l, self.cf4_b)
         sep_CW = self._angular_separation(l_model, b_model,
-                                          self.CW_L, self.CW_B)
+                                          self.cw_l, self.cw_b)
+        sep_radio = self._angular_separation(l_model, b_model,
+                                             self.radio_l, self.radio_b)
 
-        # Amplitude likelihood (same as scalar pipeline)
-        dx_CW = self.e1_CW - A
-        dx_rad = self.e1_rad - A
-        dx_CF4 = self.b_CF4 - A
-        det = 1 - self.rho**2
+        logL_amp = self.scalar_log_likelihood(A)
 
-        chi2_biv = (1.0/det) * (
-            (dx_CW/self.s_CW)**2 + (dx_rad/self.s_rad)**2
-            - 2*self.rho*dx_CW*dx_rad/(self.s_CW*self.s_rad)
+        # Gaussian angular penalty. The maximum is zero when the model
+        # aligns with all observed directions; misalignment strictly lowers
+        # the directional evidence.
+        chi2_dir = (
+            (np.degrees(sep_CMB) / self.CMB_SIGMA_DEG)**2
+            + (np.degrees(sep_CF4) / self.CF4_SIGMA_DEG)**2
+            + (np.degrees(sep_CW) / self.CW_SIGMA_DEG)**2
+            + (np.degrees(sep_radio) / self.RADIO_SIGMA_DEG)**2
         )
-        logL_amp = -0.5*chi2_biv - 0.5*(dx_CF4/self.s_CF4)**2
-
-        # Directional penalty: Fisher distribution on the sphere
-        # κ = (S/N)² sets the concentration
-        kappa_CF4 = (self.b_CF4 / self.s_CF4)**2
-        kappa_CW = (self.e1_CW / self.s_CW)**2
-
-        logL_dir = kappa_CF4 * np.cos(sep_CF4) + kappa_CW * np.cos(sep_CW)
+        logL_dir = -0.5 * chi2_dir
 
         return logL_amp + logL_dir
 
@@ -115,16 +146,4 @@ class DipoleVectorLikelihood:
         ΔI = L_dir(l,b,A) - L_scalar(A)
         """
         logL_dir = self.directional_log_likelihood(l_model, b_model, A)
-
-        # Scalar-only (no directional term)
-        dx_CW = self.e1_CW - A
-        dx_rad = self.e1_rad - A
-        dx_CF4 = self.b_CF4 - A
-        det = 1 - self.rho**2
-        chi2_biv = (1.0/det) * (
-            (dx_CW/self.s_CW)**2 + (dx_rad/self.s_rad)**2
-            - 2*self.rho*dx_CW*dx_rad/(self.s_CW*self.s_rad)
-        )
-        logL_scalar = -0.5*chi2_biv - 0.5*(dx_CF4/self.s_CF4)**2
-
-        return logL_dir - logL_scalar
+        return logL_dir - self.scalar_log_likelihood(A)
