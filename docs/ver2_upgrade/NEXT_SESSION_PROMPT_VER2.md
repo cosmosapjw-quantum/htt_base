@@ -15,6 +15,7 @@
 11. `docs/ver2_upgrade/audits/AUDIT_SK-07M_2026-04-21.md`
 12. `docs/ver2_upgrade/audits/AUDIT_SK-06H_2026-04-21.md`
 13. `docs/ver2_upgrade/audits/AUDIT_SK-01S1_2026-04-21.md`
+14. `docs/ver2_upgrade/audits/AUDIT_SK-02S2_2026-04-21.md`
 
 ## 2. Current State
 
@@ -31,20 +32,22 @@
 - HTT verification is green for the packet scope: targeted `SK-06H` tests passed (`39 passed`) and `py_compile` passed.
 - `SK-01S1` is now closed: BASS owns a canonical `BianchiAlgebra`, tetrad connection / curvature operators, machine-readable Gauss/Codazzi/Jacobi residuals, orthogonal/tilted IC-builder shells, a 1+3 background RHS shell, and Weyl diagnostic hooks under `htt/bass/background/*`.
 - BASS S1 verification is green for the packet scope: targeted pytest `174 passed`, touched-surface pytest `696 passed`, and `py_compile` passed.
+- `SK-02S2` is now closed: BASS owns canonical S2 shells for frame split, photon geodesics, low-`ell` `{I,E,B}` PSTF radiation state/truncation metadata, electron-frame Thomson projection ownership, scalar-history-first-pass visibility/reionization wiring, quadrupole-aware startup metadata, and FLRW-limit seed compatibility under `htt/bass/{hierarchy,transport,collision,recombination,closure}/*`.
+- BASS S2 verification is green for the packet scope: targeted pytest `22 passed`, touched-surface pytest `1742 passed`, and `py_compile` passed.
+- A minimal numerical repair also landed inside the existing collision path: `ThomsonAux` and `EModeThomsonAux` clip tiny negative interpolation noise in `Gamma_T` (`|Gamma_T| < 1e-7`) to zero so the legacy integrator remains stable at the recombination-table edge without redefining Thomson-rate semantics.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
 ## 3. Next Recommended Packet
 
-`SK-01C`, `SK-01S1`, `SK-05T`, `SK-06H`, `SK-07M`, and `SK-09D` are closed. Continue into the remaining solver-facing BASS packets now.
+`SK-00`, `SK-01C`, `SK-01S1`, `SK-02S2`, `SK-05T`, `SK-06H`, `SK-07M`, and `SK-09D` are closed. Continue into the remaining solver-facing BASS packets now.
 
 Prefer this order now:
 
-1. `SK-02S2`
-2. then `SK-03S3`
-3. then `SK-04O`
+1. `SK-03S3`
+2. then `SK-04O`
 
 Parallel recommendation now:
-- one thread: `SK-02S2`
+- one thread: `SK-03S3`
 
 Defer until solver surfaces exist:
 - `SK-08V`
@@ -58,4 +61,5 @@ Defer until solver surfaces exist:
 - Do not merge MIO certificate semantics into HTT or BASS.
 - Do not generate figures or manuscript claims from non-manifest artifacts.
 - Do not silently treat the reduced `einstein_bianchi` path as the finished VER2 background engine; the new S1 contracts must be the implementation anchor from here onward.
+- Do not silently treat the new S2 shells as executable solver completions; the real runtime binding still belongs to `SK-03S3` and later implementation packets.
 - Rerun `venv/bin/python scripts/ver2_artifact_export.py` after any D-lane change touching generated manuscript/export surfaces.

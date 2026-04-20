@@ -70,6 +70,15 @@ __all__ = [
 ]
 
 
+GAMMA_T_NUMERICAL_FLOOR: float = 1.0e-7
+"""Small negative τ̇ interpolation noise tolerated as zero.
+
+The physical Thomson rate is non-negative. Some early-time interpolators can
+undershoot by tiny amounts near the table edge; those values are numerical
+noise rather than a sign change and are clipped to zero here.
+"""
+
+
 # ════════════════════════════════════════════════════════════════════
 #   Thomson coefficients for the temperature collision source
 # ════════════════════════════════════════════════════════════════════
@@ -122,6 +131,10 @@ class ThomsonAux:
                 f"v_b_real_sph must have shape (3,), got {v.shape}"
             )
         object.__setattr__(self, "v_b_real_sph", v)
+        gamma = float(self.Gamma_T)
+        if gamma < 0.0 and gamma > -GAMMA_T_NUMERICAL_FLOOR:
+            gamma = 0.0
+        object.__setattr__(self, "Gamma_T", gamma)
         if not np.isfinite(self.Gamma_T) or self.Gamma_T < 0.0:
             raise ValueError(
                 f"Gamma_T must be non-negative finite, got {self.Gamma_T}"
@@ -154,6 +167,10 @@ class EModeThomsonAux:
                 f"Pi_2_packed must have shape (5,), got {pi2.shape}"
             )
         object.__setattr__(self, "Pi_2_packed", pi2)
+        gamma = float(self.Gamma_T)
+        if gamma < 0.0 and gamma > -GAMMA_T_NUMERICAL_FLOOR:
+            gamma = 0.0
+        object.__setattr__(self, "Gamma_T", gamma)
         if not np.isfinite(self.Gamma_T) or self.Gamma_T < 0.0:
             raise ValueError(
                 f"Gamma_T must be non-negative finite, got {self.Gamma_T}"

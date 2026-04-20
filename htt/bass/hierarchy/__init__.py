@@ -87,6 +87,30 @@ from bass.hierarchy.boost_kernel import (
     boost_project_axisymmetric,
     is_axis_aligned,
 )
+from bass.hierarchy.frame_contracts import (
+    BoostOrder,
+    FrameSplitMetadata,
+    PhotonDirectionConvention,
+    PolarizationPhaseConvention,
+)
+from bass.hierarchy.pstf_radiation import (
+    RadiationNormalization,
+    RadiationPSTFState,
+    TruncationMetadata,
+    make_radiation_state,
+    project_from_angular_samples_stub,
+    reconstruct_on_sphere_stub,
+)
+from bass.hierarchy.seed_compatibility import (
+    RegularSeedDescriptor,
+    RegularSeedState,
+    SeedAssignmentFrame,
+    SeedConvention,
+    SeedProjectionStub,
+    build_constraint_projection_stub,
+    build_flrw_regular_seed_stub,
+    promote_tilted_seed_stub,
+)
 
 
 __all__ = [
@@ -150,4 +174,23 @@ __all__ = [
     "AXIS_ALIGNMENT_TOL",
     "boost_project_axisymmetric",
     "is_axis_aligned",
+    # VER2 S2 frame split / radiation / seed contracts
+    "PhotonDirectionConvention",
+    "PolarizationPhaseConvention",
+    "BoostOrder",
+    "FrameSplitMetadata",
+    "RadiationNormalization",
+    "TruncationMetadata",
+    "RadiationPSTFState",
+    "make_radiation_state",
+    "project_from_angular_samples_stub",
+    "reconstruct_on_sphere_stub",
+    "SeedConvention",
+    "SeedAssignmentFrame",
+    "RegularSeedDescriptor",
+    "RegularSeedState",
+    "SeedProjectionStub",
+    "build_flrw_regular_seed_stub",
+    "promote_tilted_seed_stub",
+    "build_constraint_projection_stub",
 ]
