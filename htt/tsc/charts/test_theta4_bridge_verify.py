@@ -10,6 +10,8 @@ Covers:
 """
 from __future__ import annotations
 
+import json
+
 import numpy as np
 import pytest
 
@@ -19,6 +21,7 @@ from tsc.charts.theta4_bridge_verify import (
     gaunt_P_ell_int,
     theta4_a2_expansion_numerical,
     theta4_a2_numerical,
+    theta4_bridge_coeffs_artifact,
     verify_theta4_a2_coefficients,
 )
 
@@ -186,3 +189,15 @@ class TestVerifier:
                 rel_err_vs_exact=-0.1,
                 passed=True,
             )
+
+    def test_artifact_is_json_ready(self):
+        artifact = theta4_bridge_coeffs_artifact(
+            audit_htt=False,
+            metadata={"git_commit": "test"},
+        )
+        assert artifact["artifact_name"] == "theta4_bridge_coeffs_v1.json"
+        assert artifact["production_allowed"] is False
+        assert artifact["all_passed"] is True
+        assert len(artifact["reports"]) == 4
+        assert artifact["config_hash"] != ""
+        json.dumps(artifact)

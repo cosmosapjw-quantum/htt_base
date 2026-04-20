@@ -35,6 +35,9 @@ audit the ``fig_theta4_bridge`` figure produced by ch03 §3.X+3.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import hashlib
+import json
+import platform
 from typing import Any, Mapping
 
 import numpy as np
@@ -47,6 +50,7 @@ __all__ = [
     "theta4_a2_numerical",
     "theta4_a2_expansion_numerical",
     "verify_theta4_a2_coefficients",
+    "theta4_bridge_coeffs_artifact",
 ]
 
 
@@ -62,6 +66,25 @@ THETA4_A2_COEFFS_EXACT: Mapping[tuple[int, int], float] = {
     (0, 2): 12.0 / 7.0,        # (12/7) Q²
     (2, 1): 44.0 / 7.0,        # (44/7) A² Q
 }
+
+
+def _jsonify(obj: Any) -> Any:
+    """Recursively convert numpy-heavy structures to JSON-native values."""
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.generic):
+        return obj.item()
+    if isinstance(obj, Mapping):
+        return {str(k): _jsonify(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_jsonify(v) for v in obj]
+    return obj
+
+
+def _config_hash(payload: Mapping[str, Any]) -> str:
+    """Stable SHA256 hash for report configuration payloads."""
+    blob = json.dumps(_jsonify(payload), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
 # ---------------------------------------------------------------------------
@@ -298,3 +321,63 @@ def verify_theta4_a2_coefficients(
             },
         )
     return reports
+
+
+def theta4_bridge_coeffs_artifact(
+    *,
+    tol: float = 1e-6,
+    tol_htt: float = 5e-3,
+    audit_htt: bool = True,
+    N_quad: int = 256,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build ``theta4_bridge_coeffs_v1.json`` from the TSC bridge audit."""
+    reports = verify_theta4_a2_coefficients(
+        tol=tol,
+        tol_htt=tol_htt,
+        audit_htt=audit_htt,
+        N_quad=N_quad,
+    )
+    serialised_reports = []
+    for monomial, report in reports.items():
+        serialised_reports.append({
+            "monomial": [int(monomial[0]), int(monomial[1])],
+            "exact": float(report.exact),
+            "numerical": float(report.numerical),
+            "htt_extracted": (
+                None if report.htt_extracted is None else float(report.htt_extracted)
+            ),
+            "rel_err_vs_exact": float(report.rel_err_vs_exact),
+            "passed": bool(report.passed),
+            "config": dict(report.config),
+        })
+
+    extra = dict(metadata or {})
+    config_payload = {
+        "tol": tol,
+        "tol_htt": tol_htt,
+        "audit_htt": audit_htt,
+        "N_quad": N_quad,
+        "metadata": extra,
+    }
+    return _jsonify({
+        "artifact_name": "theta4_bridge_coeffs_v1.json",
+        "generated_by": extra.get(
+            "generated_by",
+            "tsc.charts.theta4_bridge_verify.theta4_bridge_coeffs_artifact",
+        ),
+        "git_commit": extra.get("git_commit", ""),
+        "config_hash": _config_hash(config_payload),
+        "input_data_hashes": list(extra.get("input_data_hashes", [])),
+        "python_version": extra.get("python_version", platform.python_version()),
+        "numpy_version": extra.get("numpy_version", np.__version__),
+        "claim_tier": extra.get("claim_tier", "REPORT"),
+        "scope_label": extra.get("scope_label", "report"),
+        "production_allowed": False,
+        "all_passed": bool(all(report.passed for report in reports.values())),
+        "coefficients_exact": {
+            f"A^{m}_Q^{n}": float(value)
+            for (m, n), value in THETA4_A2_COEFFS_EXACT.items()
+        },
+        "reports": serialised_reports,
+    })

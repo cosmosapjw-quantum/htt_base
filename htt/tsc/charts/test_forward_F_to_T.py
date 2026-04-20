@@ -15,7 +15,7 @@ Covers:
   §8 — Statistics comparison (BE/FD/MB at same Θ)
   §9 — Linear response cross-check vs full nonlinear
   §10 — ForwardResult property access
-  §11 — General 3D stub raises NotImplementedError
+  §11 — General 3D Lebedev forward map
 
 Run
 ---
@@ -33,7 +33,7 @@ from tsc.charts.forward_F_to_T import (
     check_theta_positive, check_be_admissibility,
     axisymmetric_F, isotropic_limit_T0, linear_response_F,
     general_F_stub,
-    ForwardResult,
+    ForwardResult, GeneralForwardResult,
 )
 from tsc.charts.laguerre_basis import xi_moment
 
@@ -350,10 +350,44 @@ class TestFAdmissibility:
 
 
 # ═══════════════════════════════════════════════════════════════
-# §11 — General 3D stub
+# §11 — General 3D Lebedev map
 # ═══════════════════════════════════════════════════════════════
 
 class TestGeneral3DStub:
-    def test_stub_raises_not_implemented(self):
-        with pytest.raises(NotImplementedError, match="Week 3"):
-            general_F_stub()
+    def test_returns_general_forward_result(self):
+        result = general_F_stub(0, lambda n: np.full(n.shape[0], 1.2), L_out=3, quadrature_order=7)
+        assert isinstance(result, GeneralForwardResult)
+        assert result.n_nodes > 0
+
+    def test_constant_field_is_isotropic(self):
+        Theta0 = 1.2
+        result = general_F_stub(0, Theta0, L_out=3, quadrature_order=7)
+        expected_T0 = Theta0 ** 4 * xi_moment(3, 0, 0.0)
+        assert result.T_0 == pytest.approx(expected_T0, rel=1e-12)
+        assert np.allclose(result.T_1, 0.0, atol=1e-12)
+        assert np.allclose(result.T_2, 0.0, atol=1e-12)
+        assert np.allclose(result.T_3, 0.0, atol=1e-12)
+
+    def test_axisymmetric_embedding_matches_axisymmetric_F(self):
+        Theta = quadrupole_theta(1.0, 0.05)
+        result_1d = axisymmetric_F(0, Theta, L_out=3)
+        result_3d = general_F_stub(0, Theta, L_out=3, quadrature_order=7)
+        assert result_3d.T_0 == pytest.approx(result_1d.T_0, rel=1e-10)
+        assert result_3d.T_1[2] == pytest.approx(result_1d.T_1, abs=1e-10)
+        assert result_3d.T_2[2, 2] == pytest.approx(result_1d.T_2, rel=1e-10)
+        assert result_3d.T_3[2, 2, 2] == pytest.approx(result_1d.T_3, rel=1e-10)
+
+    def test_vector_callable_produces_x_dipole(self):
+        result = general_F_stub(
+            0,
+            lambda n: 1.0 + 0.1 * n[:, 0],
+            L_out=1,
+            quadrature_order=7,
+        )
+        assert result.T_1[0] > 0.0
+        assert abs(result.T_1[1]) < 1e-12
+        assert abs(result.T_1[2]) < 1e-12
+
+    def test_be_positive_eta_raises(self):
+        with pytest.raises(ValueError, match="BE requires"):
+            general_F_stub(+1, 1.0, eta=lambda n: np.full(n.shape[0], 0.1))

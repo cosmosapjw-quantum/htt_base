@@ -58,13 +58,14 @@ Implementation conventions
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
+from typing import Any, Callable, Optional
 import math
 
 import numpy as np
 from scipy.special import eval_legendre
 
 from tsc.charts.laguerre_basis import xi_moment, build_stiffness_table
+from tsc.diagnostics.spherical_quadrature import lebedev_quadrature
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -202,6 +203,30 @@ class ForwardResult:
         if self.L_out >= 3:
             return float(self.T_ell[3])
         return 0.0
+
+
+@dataclass(frozen=True)
+class GeneralForwardResult:
+    """General 3D forward-map output up to octupole rank."""
+
+    T_0: float
+    T_1: np.ndarray
+    T_2: np.ndarray
+    T_3: np.ndarray | None
+    xi: int
+    moment_order: int
+    quadrature_order: int
+    n_nodes: int
+
+    def __post_init__(self):
+        if np.asarray(self.T_1).shape != (3,):
+            raise ValueError(f"T_1 must have shape (3,), got {np.asarray(self.T_1).shape}")
+        if np.asarray(self.T_2).shape != (3, 3):
+            raise ValueError(f"T_2 must have shape (3, 3), got {np.asarray(self.T_2).shape}")
+        if self.T_3 is not None and np.asarray(self.T_3).shape != (3, 3, 3):
+            raise ValueError(
+                f"T_3 must have shape (3, 3, 3), got {np.asarray(self.T_3).shape}"
+            )
 
 
 def axisymmetric_F(
@@ -364,16 +389,199 @@ def linear_response_F(
 # §6 — General 3D stub (Week 3 deferred)
 # ═══════════════════════════════════════════════════════════════
 
-def general_F_stub(*args, **kwargs):
-    """General 3D forward map F (Week 3 implementation).
+def _evaluate_general_field(
+    field: Any,
+    nodes: np.ndarray,
+    *,
+    default: float = 0.0,
+) -> np.ndarray:
+    """Evaluate a scalar field on Lebedev nodes.
 
-    Will use `teff/spherical_quadrature.py` (Lebedev quadrature on S²) to
-    handle non-axisymmetric Θ_{a_1...a_ℓ}(ê) inputs and produce fully
-    tensorial PSTF outputs.
-
-    Status: NOT_IMPLEMENTED — use `axisymmetric_F` for Day 2 — Week 3 work.
+    Supported input forms:
+      - scalar numeric constant
+      - ``AxisymmetricField`` (embedded on the z-axis via ``mu = n_z``)
+      - callable returning either a scalar per-node or a vectorized ``(N,)`` array
+      - explicit ``(N,)`` array matching the quadrature node count
     """
-    raise NotImplementedError(
-        "General 3D forward F deferred to Week 3 (requires Lebedev "
-        "quadrature module). Use axisymmetric_F for 1D reduction."
+    n_nodes = nodes.shape[0]
+    if field is None:
+        return np.full(n_nodes, float(default), dtype=float)
+    if isinstance(field, AxisymmetricField):
+        return np.asarray(field.evaluate(nodes[:, 2]), dtype=float)
+    if np.isscalar(field):
+        return np.full(n_nodes, float(field), dtype=float)
+    if callable(field):
+        try:
+            values = field(nodes)
+            arr = np.asarray(values, dtype=float)
+            if arr.shape == ():
+                return np.full(n_nodes, float(arr), dtype=float)
+            if arr.shape == (n_nodes,):
+                return arr
+        except Exception:
+            pass
+        arr = np.asarray([field(node) for node in nodes], dtype=float)
+        if arr.shape != (n_nodes,):
+            raise ValueError(
+                f"callable field must return shape ({n_nodes},) or scalar-per-node; got {arr.shape}"
+            )
+        return arr
+    arr = np.asarray(field, dtype=float)
+    if arr.shape != (n_nodes,):
+        raise ValueError(
+            f"field array must have shape ({n_nodes},), got {arr.shape}"
+        )
+    return arr
+
+
+def _p2_pstf(nodes: np.ndarray) -> np.ndarray:
+    """Rank-2 PSTF basis ``n_<ij> = n_i n_j - δ_ij/3`` per node."""
+    delta = np.eye(3)
+    return np.einsum('ni,nj->nij', nodes, nodes) - delta[None, :, :] / 3.0
+
+
+def _p3_pstf(nodes: np.ndarray) -> np.ndarray:
+    """Rank-3 PSTF basis ``n_<ijk>`` per node."""
+    delta = np.eye(3)
+    cubic = np.einsum('ni,nj,nk->nijk', nodes, nodes, nodes)
+    trace_term = (
+        np.einsum('ij,nk->nijk', delta, nodes)
+        + np.einsum('ik,nj->nijk', delta, nodes)
+        + np.einsum('jk,ni->nijk', delta, nodes)
+    )
+    return cubic - trace_term / 5.0
+
+
+def _lift_axisymmetric_result(
+    result: ForwardResult,
+    *,
+    quadrature_order: int,
+) -> GeneralForwardResult:
+    """Embed an axisymmetric ``ForwardResult`` into PSTF tensor form."""
+    axis = np.array([0.0, 0.0, 1.0], dtype=float)
+    delta = np.eye(3)
+    basis_t2 = 1.5 * np.outer(axis, axis) - 0.5 * delta
+    basis_t3 = (
+        2.5 * np.einsum('i,j,k->ijk', axis, axis, axis)
+        - 0.5 * (
+            np.einsum('ij,k->ijk', delta, axis)
+            + np.einsum('ik,j->ijk', delta, axis)
+            + np.einsum('jk,i->ijk', delta, axis)
+        )
+    )
+    return GeneralForwardResult(
+        T_0=float(result.T_0),
+        T_1=result.T_1 * axis,
+        T_2=result.T_2 * basis_t2 if result.L_out >= 2 else np.zeros((3, 3), dtype=float),
+        T_3=result.T_3 * basis_t3 if result.L_out >= 3 else None,
+        xi=int(result.xi),
+        moment_order=int(result.moment_order),
+        quadrature_order=int(quadrature_order),
+        n_nodes=0,
+    )
+
+
+def general_F_stub(
+    xi: int,
+    Theta: Any,
+    eta: Any = None,
+    *,
+    L_out: int = 3,
+    moment_order: int = 3,
+    quadrature_order: int = 7,
+    check_admissibility: bool = True,
+) -> GeneralForwardResult:
+    """General 3D forward map on ``S²`` via Lebedev quadrature.
+
+    This keeps the historical function name for backward compatibility, but
+    the implementation is now real rather than a placeholder. The output is
+    the PSTF moment hierarchy up to ``L_out <= 3``:
+
+    * ``T_0`` monopole scalar
+    * ``T_1`` dipole vector with normalisation ``3 <f n_i>``
+    * ``T_2`` quadrupole PSTF tensor with normalisation
+      ``(15/2) <f n_<ij>>``
+    * ``T_3`` octupole PSTF tensor with normalisation
+      ``(35/2) <f n_<ijk>>``
+
+    For axisymmetric inputs embedded along the z-axis, the z-projected
+    components reproduce :func:`axisymmetric_F`.
+    """
+    if xi not in (-1, 0, +1):
+        raise ValueError(f"ξ must be ∈ {{-1, 0, +1}}, got {xi}")
+    if moment_order not in (2, 3, 4):
+        raise ValueError(
+            f"moment_order must be 2, 3, or 4, got {moment_order}"
+        )
+    if L_out < 0 or L_out > 3:
+        raise ValueError(f"L_out must be in [0, 3], got {L_out}")
+
+    axisym_theta = None
+    axisym_eta = None
+    if isinstance(Theta, AxisymmetricField):
+        axisym_theta = Theta
+    elif np.isscalar(Theta):
+        axisym_theta = isotropic_theta(float(Theta))
+
+    if eta is None:
+        axisym_eta = None
+    elif isinstance(eta, AxisymmetricField):
+        axisym_eta = eta
+    elif np.isscalar(eta):
+        axisym_eta = AxisymmetricField(coeffs=np.array([float(eta)]), name="eta_iso")
+
+    if axisym_theta is not None and (eta is None or axisym_eta is not None):
+        return _lift_axisymmetric_result(
+            axisymmetric_F(
+                xi,
+                axisym_theta,
+                eta=axisym_eta,
+                L_out=L_out,
+                moment_order=moment_order,
+                check_admissibility=check_admissibility,
+            ),
+            quadrature_order=int(quadrature_order),
+        )
+
+    quadrature = lebedev_quadrature(int(quadrature_order))
+    nodes = quadrature.nodes
+    weights = quadrature.weights
+
+    Theta_vals = _evaluate_general_field(Theta, nodes, default=1.0)
+    eta_vals = _evaluate_general_field(eta, nodes, default=0.0)
+
+    if check_admissibility:
+        if not np.all(Theta_vals > 0.0):
+            raise ValueError("Θ(n̂) must be positive on the quadrature nodes")
+        if xi == +1 and np.any(eta_vals > 1.0e-15):
+            raise ValueError("BE requires η(n̂) ≤ 0 on the quadrature nodes")
+
+    I_vals = np.array(
+        [xi_moment(moment_order, xi, float(eta_i)) for eta_i in eta_vals],
+        dtype=float,
+    )
+    payload = (Theta_vals ** (moment_order + 1)) * I_vals
+    weighted = weights * payload
+
+    T_0 = float(np.sum(weighted))
+    T_1 = np.zeros(3, dtype=float)
+    T_2 = np.zeros((3, 3), dtype=float)
+    T_3 = None
+
+    if L_out >= 1:
+        T_1 = 3.0 * np.einsum('n,ni->i', weighted, nodes)
+    if L_out >= 2:
+        T_2 = (15.0 / 2.0) * np.einsum('n,nij->ij', weighted, _p2_pstf(nodes))
+    if L_out >= 3:
+        T_3 = (35.0 / 2.0) * np.einsum('n,nijk->ijk', weighted, _p3_pstf(nodes))
+
+    return GeneralForwardResult(
+        T_0=T_0,
+        T_1=T_1,
+        T_2=T_2,
+        T_3=T_3,
+        xi=int(xi),
+        moment_order=int(moment_order),
+        quadrature_order=int(quadrature.order),
+        n_nodes=int(quadrature.n_nodes),
     )
