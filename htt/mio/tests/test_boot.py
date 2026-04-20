@@ -15,11 +15,15 @@ import importlib
 
 _SUBPACKAGES = (
     "mio",
+    "mio.core",
+    "mio.core.ceiling_families",
     "mio.coherence",
     "mio.extraction",
     "mio.tension",
     "mio.decomposition",
     "mio.diagnostics",
+    "mio.reporting",
+    "mio.reporting.identified_vs_reporting",
     "mio.interface",
     "mio.interface.mio_certificate",
     "mio.bridges",

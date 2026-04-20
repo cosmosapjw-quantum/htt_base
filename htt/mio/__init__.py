@@ -10,11 +10,13 @@ combined with, a posterior — see workspace.contracts.MioCertificate
 which raises NotImplementedError from as_posterior_bundle().
 
 Subpackages (Week 6+):
+  core/            — ceiling-family certification registry used by F24
   coherence/       — HJ-02 directional coherence (HJ-02a lands Week 6 Day 3-5)
   extraction/      — HJ-01 shear extraction (Week 8+, depends on bass_py W11)
   tension/         — HJ-03 Hubble-tension triangulation (Week 9+)
   decomposition/   — HJ-04 class decomposition (Week 10+)
   diagnostics/     — HJ-05 masked-sky + selection caveats (HJ-05a-lite Week 6 Day 7)
+  reporting/       — identified/reporting semantic split used by F25
   interface/       — HJ-06 MioCertificate generator API (Week 6 Day 2)
   bridges/         — HJ-07 re-exports of htt modules that are MIO-owned
                       (PR13AM re-export lands Week 6 Day 6)
