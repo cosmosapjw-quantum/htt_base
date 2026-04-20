@@ -113,9 +113,11 @@ output is reproducible from a single command:
 \end{center}
 producing the canonical \texttt{VER05\_integrated\_results.json}
 with all evidence, departure, and derived quantities.  The
-test suite ($> 200$ tests across 12 test files) verifies
-numerical consistency; the exact passing count depends on the
-packaging configuration (Section~\ref{sec:validation}).
+regression and smoke-test surface is reported through the
+shared VER2 status snapshot rather than hand-maintained counts.
+
+\input{generated/ver2_status_snapshot}
+\input{generated/ver2_artifact_export_policy}
 
 
 % ============================================================

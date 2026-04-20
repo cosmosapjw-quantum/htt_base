@@ -7,9 +7,11 @@
 3. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_02_IMPLEMENTATION_FIGURES_MANUSCRIPT.md`
 4. `docs/ver2_upgrade/VER2_EXECUTION_LEDGER.md`
 5. `docs/ver2_upgrade/VER2_CARRY_FORWARD_LEDGER.md`
-6. `docs/ver2_upgrade/audits/AUDIT_SK-00_2026-04-20.md`
-7. `docs/ver2_upgrade/audits/AUDIT_SK-01C_2026-04-21.md`
-8. `docs/ver2_upgrade/audits/AUDIT_SK-05T_2026-04-21.md`
+6. `docs/ver2_upgrade/VER2_PHASE_PLACEHOLDER_INDEX.md`
+7. `docs/ver2_upgrade/audits/AUDIT_SK-00_2026-04-20.md`
+8. `docs/ver2_upgrade/audits/AUDIT_SK-01C_2026-04-21.md`
+9. `docs/ver2_upgrade/audits/AUDIT_SK-05T_2026-04-21.md`
+10. `docs/ver2_upgrade/audits/AUDIT_SK-09D_2026-04-21.md`
 
 ## 2. Current State
 
@@ -18,23 +20,23 @@
 - `workspace/contracts` wrappers accept a canonical `ArtifactManifest` hook and enforce owner consistency when manifest is present.
 - Canonical VER2 contract coverage now includes `AtlasEntryLite`, `DepartureReport`, `FullCovMESReport`, `TscAdequacyOverlay`, `ClaimLedgerEntry`, and thin workspace aliases/hooks.
 - `SK-05T` is now closed: `htt/tsc/*` contains domain-guard, no-overclaim, overlay-builder, advisory-adapter, and theorem-map skeletons backed by common manifests and TSC-owned reports.
+- `SK-09D` is now closed locally: `scripts/ver2_artifact_export.py` generates placeholder D-lane outputs under `docs/ver2_upgrade/generated/*` and `docs/manuscript/generated/*`, and `figures/paper/VER2_MANIFEST_INDEX.md` now blocks legacy paper figures without manifests.
+- The exporter currently reports `83` paper-figure bases and `83` missing manifests. That is the expected blocked skeleton state before `IM-09D-FIG`.
 - Full manifest propagation is not yet wired through every producer. That is expected at this stage.
 
 ## 3. Next Recommended Packet
 
-`SK-01C` and `SK-05T` are closed. Continue the remaining solver-independent shell packets now.
+`SK-01C`, `SK-05T`, and `SK-09D` are closed. Continue the remaining solver-independent shell packets now.
 
 Prefer this order if the goal is to maximize solver-free progress:
 
 1. `SK-06H`
 2. `SK-07M`
-3. `SK-09D`
-4. only then `SK-01S1` -> `SK-02S2` -> `SK-03S3`
+3. only then `SK-01S1` -> `SK-02S2` -> `SK-03S3`
 
 Parallel recommendation now:
 - one thread: `SK-06H`
 - one thread: `SK-07M`
-- one thread: `SK-09D`
 
 Defer until solver surfaces exist:
 - `SK-04O`
@@ -48,3 +50,4 @@ Defer until solver surfaces exist:
 - Do not let TSC own runtime allow/block.
 - Do not merge MIO certificate semantics into HTT or BASS.
 - Do not generate figures or manuscript claims from non-manifest artifacts.
+- Rerun `venv/bin/python scripts/ver2_artifact_export.py` after any D-lane change touching generated manuscript/export surfaces.

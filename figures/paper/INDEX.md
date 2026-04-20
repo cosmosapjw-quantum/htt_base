@@ -6,6 +6,11 @@ for attachment to `project/00_manuscript/`. All figures are PNG + PDF
 at 300 dpi (Okabe-Ito palette, single/double-column widths from
 `htt.core.plot_style`). Each figure has a matching `.caption.txt`.
 
+VER2 note: the presence of `png`/`pdf`/`caption` assets is not sufficient
+for manuscript promotion. The SK-09D manifest audit lives in
+[`VER2_MANIFEST_INDEX.md`](VER2_MANIFEST_INDEX.md) and blocks any figure
+base that does not yet carry a canonical `.manifest.json` sidecar.
+
 Siblings under `figures/`:
 
 - `paper/` — this tree (manuscript-grade figures with captions)
@@ -21,6 +26,7 @@ Siblings under `figures/`:
 | `scripts/make_additional_figures.py` | Second wave — ch03 framework, ch04 bounds, ch05/ch06/ch07 TSC diagnostics, ch12 MIO | ~30 |
 | `scripts/make_more_figures.py` | Third wave — ch02 f–j, ch03c, ch07j–l, ch08d–e, ch09 a–d, ch11a, ch12e | ~20 |
 | `scripts/make_third_wave_figures.py` | Fourth wave — ch02k/l, ch05h/i/j, ch06n, ch08f, ch12 regenerations | 10 |
+| `scripts/ver2_artifact_export.py` | SK-09D scaffold: status/claim hooks and figure-manifest audit | n/a |
 
 ## Contents by chapter
 

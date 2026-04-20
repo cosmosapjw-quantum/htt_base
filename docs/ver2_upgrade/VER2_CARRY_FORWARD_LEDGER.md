@@ -15,6 +15,9 @@
 | 2026-04-21 | SK-05T | P1 | TSC overlay builder and advisory adapters exist, but no BASS/HTT/MIO producer consumes or attaches them yet | cross-package wiring belongs to the downstream lane owners | `SK-06H`, `SK-07M`, `SK-09D`, `IM-04O`, `IM-05T`, `IM-06H`, `IM-07M` |
 | 2026-04-21 | SK-05T | P1 | Common `SourceStatus` / `PropagationStatus` remain coarse base statuses; richer TSC semantics currently live in combined labels and caveat vocabulary | write scope excluded `htt/src/common/*`; local reconciliation chosen to avoid reopening shared schema during T-lane skeleton work | future `C/O/T` schema-tightening packet if later lanes prove a shared-enum upgrade is necessary |
 | 2026-04-21 | SK-05T | P2 | No-overclaim registry is code-resident in `htt/tsc/audit/no_overclaim.py`, not yet mirrored into generated docs/claim ledgers | packet write scope stayed inside `htt/tsc/*` plus required ver2 ledgers; docs export belongs later | `SK-09D`, `IM-08V`, `IM-10D-MAN` |
+| 2026-04-21 | SK-09D | P1 | `docs/manuscript/generated/*` and `docs/ver2_upgrade/generated/*` are wired as D-lane consumers, but `status_snapshot.json` and `claim_ledger.json` do not exist yet | live generated ledgers belong to validation/audit phase, not skeleton D-lane work | `IM-08V`, `IM-10D-MAN` |
+| 2026-04-21 | SK-09D | P1 | `figures/paper/VER2_MANIFEST_INDEX.md` reports 83 legacy paper-figure bases and all are `blocked_no_manifest` | SK-09D installs the gate only; manifest-backed figure promotion belongs after validation artifacts exist | `IM-09D-FIG` |
+| 2026-04-21 | SK-09D | P2 | TSC manuscript caveat snippets now have insertion points in `docs/manuscript/ch11_error_hierarchy.tex`, but no live overlay-derived wording is attached yet | real TSC advisory text depends on `SK-05T` / `IM-05T` artifact production | `IM-05T`, `IM-10D-MAN` |
 
 ## Closed Template
 

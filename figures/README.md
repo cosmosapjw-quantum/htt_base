@@ -28,6 +28,14 @@ venv/bin/python scripts/make_third_wave_figures.py
 venv/bin/python scripts/make_physics_gallery.py
 ```
 
+VER2 manuscript/export scaffolding is separate from figure rendering:
+
+```bash
+# SK-09D skeleton exporter: status/claim hooks + figure-manifest audit
+venv/bin/python scripts/ver2_artifact_export.py
+venv/bin/python scripts/ver2_artifact_export.py --check
+```
+
 Paper generators resolve observational inputs from the current
 `workdir/` tree, preferring `workdir/obs_bundle` and then falling back
 to `workdir/raw` or `workdir/compact_products` when the bundle index is
@@ -43,7 +51,9 @@ ahead of the packaged files. In the 2026-04-20 rerun this means:
   the real ACT DR4 compact release and labels the figure accordingly.
 
 See each subtree's README / INDEX for per-figure detail, captions, and
-known placeholder / mock figures.
+known placeholder / mock figures. For the VER2 manifest gate, read
+`paper/VER2_MANIFEST_INDEX.md` before treating any legacy paper figure as
+manuscript-ready.
 
 ## Figures blocked on the bass_py low-ℓ solver
 
@@ -79,7 +89,8 @@ each stays mock.
 - **Paper figures** carry a matching `.caption.txt` drafted for direct
   inclusion in `project/00_manuscript/`. Each follows the Okabe-Ito
   colour palette from `htt.core.plot_style` and ships as both PNG and
-  PDF at 300 dpi.
+  PDF at 300 dpi. Under VER2, these figure triples still require a
+  canonical `.manifest.json` sidecar before manuscript promotion.
 - **Preliminary figures** exist for the Tier A / B / C / D review
   cadence (`make_preliminary_figures.py --tier X`). Only Tier A is
   populated at present.
