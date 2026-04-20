@@ -5,10 +5,15 @@ Every bridge observable must carry:
   name, estimator, assumptions, selection_model,
   depth_kernel, nuisance_model, status (always EXPLORATORY).
 """
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Tuple
 
-__all__ = ['BridgeMetadata', 'BRIDGE_REGISTRY']
+__all__ = [
+    'BridgeMetadata',
+    'BridgePromotionDecision',
+    'BRIDGE_REGISTRY',
+    'directional_bridge_promotion_gate',
+]
 
 @dataclass(frozen=True)
 class BridgeMetadata:
@@ -21,6 +26,17 @@ class BridgeMetadata:
     status: str = 'EXPLORATORY'
     H0_dependent: bool = False
     validated: bool = False
+
+
+@dataclass(frozen=True)
+class BridgePromotionDecision:
+    """Closed-fail decision for any bridge → HTT production promotion attempt."""
+
+    name: str
+    allowed: bool
+    reason: str
+    required_gate: str = 'bridge_exploratory_only'
+
 
 BRIDGE_REGISTRY = {
     'v_tilt': BridgeMetadata(
@@ -44,3 +60,17 @@ BRIDGE_REGISTRY = {
         assumptions=('Son+2025 methodology',),
         H0_dependent=True),
 }
+
+
+def directional_bridge_promotion_gate(name: str) -> BridgePromotionDecision:
+    """Bridge observables remain exploratory and cannot seed production HTT inputs."""
+    if name not in BRIDGE_REGISTRY:
+        raise KeyError(f"Unknown bridge observable: {name}")
+    return BridgePromotionDecision(
+        name=name,
+        allowed=False,
+        reason=(
+            "Bridge observables are exploratory-only and cannot be promoted into "
+            "HTT production directional likelihood inputs."
+        ),
+    )

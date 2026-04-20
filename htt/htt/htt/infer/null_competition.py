@@ -25,7 +25,8 @@ from htt.infer.shared_cause import run_shared_cause_test, SharedCauseResult
 
 __all__ = [
     'NullCompetitionResult', 'FamilyCompetitionResult',
-    'NullCompetitionEngine', 'run_null_competition',
+    'NullCompetitionHook',
+    'NullCompetitionEngine', 'build_null_competition_hook', 'run_null_competition',
 ]
 
 
@@ -53,6 +54,18 @@ class NullCompetitionResult:
     overall_robust: bool        # True if ALL families are robust
     family_results: Dict[str, FamilyCompetitionResult] = field(default_factory=dict)
     status: str = 'INFERENTIAL'
+
+
+@dataclass(frozen=True)
+class NullCompetitionHook:
+    """Pre-posterior readiness summary for structured-null competition."""
+
+    required_families: tuple[str, ...]
+    fpr_threshold: float
+    ready_for_inference: bool
+    worst_family: str | None
+    worst_fpr: float | None
+    scope: str = 'pre_posterior'
 
 
 class NullCompetitionEngine:
@@ -188,3 +201,20 @@ def run_null_competition(n_realizations: int = 50,
         fpr_threshold=fpr_threshold,
     )
     return engine.run_all()
+
+
+def build_null_competition_hook(
+    result: NullCompetitionResult | None = None,
+    *,
+    required_families: List[str] | None = None,
+    fpr_threshold: float = 0.10
+) -> NullCompetitionHook:
+    families = tuple(required_families or list(NULL_REGISTRY))
+    ready = bool(result.overall_robust) if result is not None else False
+    return NullCompetitionHook(
+        required_families=families,
+        fpr_threshold=float(fpr_threshold),
+        ready_for_inference=ready,
+        worst_family=None if result is None else result.worst_family,
+        worst_fpr=None if result is None else float(result.worst_fpr),
+    )

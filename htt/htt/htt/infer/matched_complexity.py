@@ -19,6 +19,8 @@ from .control_registry import CONTROLS, matched_complexity_check
 __all__ = [
     'enforce_matched_complexity',
     'MatchedComplexityReport',
+    'MatchedComplexityHook',
+    'build_matched_complexity_hook',
     'matched_complexity_report_artifact',
     'LowZAblation',
     'ablation_result',
@@ -34,6 +36,16 @@ class MatchedComplexityReport:
     prior_width_matched: bool
     overall_pass: bool
     violations: tuple
+
+
+@dataclass(frozen=True)
+class MatchedComplexityHook:
+    """Pre-inference hook consumed by VER2 HTT directional scope guards."""
+
+    controls_required: tuple[str, ...]
+    overall_pass: bool
+    violations: tuple[str, ...]
+    scope: str = "pre_inference_only"
 
 
 def _jsonify(obj: Any) -> Any:
@@ -103,6 +115,19 @@ def enforce_matched_complexity(
         prior_width_matched=pri_ok,
         overall_pass=len(violations) == 0,
         violations=tuple(violations),
+    )
+
+
+def build_matched_complexity_hook(
+    report: MatchedComplexityReport | None = None,
+    *,
+    control_codes: List[str] | None = None
+) -> MatchedComplexityHook:
+    resolved = report or enforce_matched_complexity(control_codes)
+    return MatchedComplexityHook(
+        controls_required=tuple(control_codes or resolved.controls_checked),
+        overall_pass=bool(resolved.overall_pass),
+        violations=tuple(str(v) for v in resolved.violations),
     )
 
 

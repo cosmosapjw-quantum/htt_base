@@ -13,6 +13,7 @@ Reads the integrated_pipeline_results.json structure:
 import json
 from pathlib import Path
 
+from common.contracts import ArtifactManifest
 from workspace.contracts.htt_to_mio import PosteriorExportBundle
 
 __all__ = ['build_posterior_bundle']
@@ -31,7 +32,8 @@ def _get_nested(d, *keys, default=0.0):
 
 
 def build_posterior_bundle(results_path: str = None,
-                           model: str = 'FLRW_tilt') -> 'PosteriorExportBundle':
+                           model: str = 'FLRW_tilt',
+                           manifest: ArtifactManifest | None = None) -> 'PosteriorExportBundle':
     """Build a PosteriorExportBundle from HTT pipeline results.
 
     Parameters
@@ -40,6 +42,8 @@ def build_posterior_bundle(results_path: str = None,
         Path to integrated_pipeline_results.json.
     model : str
         Reference model for posteriors (default: FLRW_tilt as best-fit).
+    manifest : ArtifactManifest, optional
+        HTT-owned VER2 manifest for cross-check export provenance.
     """
     if results_path is None:
         results_path = str(
@@ -94,4 +98,6 @@ def build_posterior_bundle(results_path: str = None,
         ln_B_total=ln_B, model_evidences=model_evidences,
         F_median=F_med, F_hpd68=F_68,
         n_live=n_live,
+        model=model,
+        manifest=manifest,
     )

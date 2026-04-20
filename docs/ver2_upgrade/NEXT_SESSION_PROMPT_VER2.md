@@ -13,6 +13,7 @@
 9. `docs/ver2_upgrade/audits/AUDIT_SK-05T_2026-04-21.md`
 10. `docs/ver2_upgrade/audits/AUDIT_SK-09D_2026-04-21.md`
 11. `docs/ver2_upgrade/audits/AUDIT_SK-07M_2026-04-21.md`
+12. `docs/ver2_upgrade/audits/AUDIT_SK-06H_2026-04-21.md`
 
 ## 2. Current State
 
@@ -25,19 +26,22 @@
 - The exporter currently reports `83` paper-figure bases and `83` missing manifests. That is the expected blocked skeleton state before `IM-09D-FIG`.
 - `SK-07M` is now closed: touched MIO certificate producers attach VER2 manifest-backed production status, explicit covariance/atlas/null-mock caveats, and JSON-ready manifest payloads; `htt/mio/diagnostics/predictive_residuals.py` exists as a blocked residual-atlas shell.
 - Targeted MIO verification is green: `venv/bin/python -m pytest htt/mio/tests -q` -> `153 passed`.
+- `SK-06H` is now closed: HTT owns a solver-free directional shell under `htt/htt/htt/infer/*`, with explicit production-axis gating, matched-complexity/null-competition hooks, local-boost/global-tilt discrimination scaffolds, and a closed-fail bridge promotion gate.
+- HTT verification is green: targeted `SK-06H` tests passed (`44 passed`) and full `venv/bin/python -m pytest htt/htt/tests -q` passed (`265 passed`, warnings only).
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
 ## 3. Next Recommended Packet
 
-`SK-01C`, `SK-05T`, `SK-07M`, and `SK-09D` are closed. Continue the remaining solver-independent shell packets now.
+`SK-01C`, `SK-05T`, `SK-06H`, `SK-07M`, and `SK-09D` are closed. Continue into the solver-facing BASS packets now.
 
 Prefer this order if the goal is to maximize solver-free progress:
 
-1. `SK-06H`
-2. only then `SK-01S1` -> `SK-02S2` -> `SK-03S3`
+1. `SK-01S1`
+2. then `SK-02S2`
+3. then `SK-03S3`
 
 Parallel recommendation now:
-- one thread: `SK-06H`
+- one thread: `SK-01S1`
 
 Defer until solver surfaces exist:
 - `SK-04O`
