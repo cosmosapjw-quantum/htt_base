@@ -57,9 +57,9 @@ Every implementation prompt must end with:
 | `IM-03S3A` | `VER2-V3` Tier B executable solver | `IM-02S2` | `S3` | `V2-S3:` |
 | `IM-03S3B` | `VER2-V3` Tier A validation solver | `IM-03S3A` or parallel read-only prep | `S3` | `V2-S3:` |
 | `IM-04O` | `VER2-V4` | `IM-03S3A` | `O` | `V2-O1:` |
-| `IM-05T` | `VER2-V5` | `SK-05T`,`IM-03S3A` | `T` | `V2-T1:` |
-| `IM-06H` | `VER2-V6` | `IM-04O`,`IM-05T` | `H` | `V2-H1:` |
-| `IM-07M` | `VER2-V7` | `IM-04O`,`IM-05T` | `M` | `V2-M1:` |
+| `IM-05T` | `VER2-V5` | `SK-05T`,`SK-01C` | `T` | `V2-T1:` |
+| `IM-06H` | `VER2-V6` | `SK-06H`,`SK-01C` | `H` | `V2-H1:` |
+| `IM-07M` | `VER2-V7` | `SK-07M`,`SK-01C` | `M` | `V2-M1:` |
 | `IM-08V` | `VER2-V8` | `IM-03S3A`,`IM-04O`,`IM-05T`,`IM-06H`,`IM-07M` | `V` | `V2-V1:` |
 | `IM-09D-FIG` | `VER2-V9` figure/export path | `IM-08V` | `D` | `V2-D1:` |
 | `IM-10D-MAN` | `VER2-V9` manuscript path | `IM-09D-FIG` | `D` | `V2-D1:` |
@@ -287,7 +287,7 @@ Dynamic checks:
 - no-overclaim vocabulary lint,
 - source/propagation split preserved in outputs.
 
-Commit `V2-T1:` after up to 5 repair loops.
+If solver-coupled adapters are not yet available, implement and validate the solver-independent TSC core first and record the adapter binding as carry-forward rather than blocking the packet. Commit `V2-T1:` after up to 5 repair loops.
 ```
 
 ### `IM-06H` HTT Directional / Model-Dependent Production
@@ -327,7 +327,7 @@ Dynamic checks:
 - null competition and PPC/LOOCV hooks remain explicit,
 - outputs remain model-dependent and distinct from MIO.
 
-Commit `V2-H1:`.
+If live solver outputs are not ready, implement contract-complete shell logic, gating, and caveat propagation first; leave solver binding explicit in carry-forward. Commit `V2-H1:`.
 ```
 
 ### `IM-07M` MIO Observatory
@@ -366,7 +366,7 @@ Dynamic checks:
 - no schema path to merge with HTT evidence,
 - certificate caveats are explicit.
 
-Commit `V2-M1:`.
+If atlas/covariance/null-mock inputs are not ready, implement production-status logic and diagnostic-only infrastructure first; record blocked estimators explicitly in carry-forward. Commit `V2-M1:`.
 ```
 
 ### `IM-08V` Validation Campaigns / Hostile Audit
@@ -475,25 +475,25 @@ Repair up to 5 loops, update all ledgers, and commit `V2-D1:`.
 
 ### Batch 1
 
-- `IM-01S1`
+- `IM-05T`
+- `IM-06H`
+- `IM-07M`
 
 ### Batch 2
 
-- `IM-02S2`
+- `IM-01S1`
 
 ### Batch 3
 
-- `IM-03S3A`
+- `IM-02S2`
 
 ### Batch 4
 
-- `IM-04O`
-- `IM-05T`
+- `IM-03S3A`
 
 ### Batch 5
 
-- `IM-06H`
-- `IM-07M`
+- `IM-04O`
 
 ### Batch 6
 

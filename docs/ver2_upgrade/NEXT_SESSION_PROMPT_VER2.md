@@ -18,11 +18,25 @@
 
 ## 3. Next Recommended Packet
 
-Run `SK-01C` first if the goal is to deepen the shared contract layer before any heavier solver work.
+Run `SK-01C` first. It is the gateway to every solver-independent shell packet.
 
-Alternative:
-- Run `SK-01S1` in parallel on a separate thread after reading the barrier docs.
-- Run `SK-05T` only after the `SK-01C` contract freeze is understood, since it depends on shared overlay primitives.
+After `SK-01C`, prefer this order if the goal is to maximize solver-free progress:
+
+1. `SK-05T`
+2. `SK-06H`
+3. `SK-07M`
+4. `SK-09D`
+5. only then `SK-01S1` -> `SK-02S2` -> `SK-03S3`
+
+Parallel recommendation after `SK-01C`:
+- one thread: `SK-05T`
+- one thread: `SK-06H`
+- one thread: `SK-07M`
+- one thread: `SK-09D`
+
+Defer until solver surfaces exist:
+- `SK-04O`
+- `SK-08V`
 
 ## 4. Hard Reminders
 

@@ -86,10 +86,10 @@ Every packet updates:
 | `SK-03S3` | `VER2-V3` | `SK-02S2` | `S3` | `V2-S3:` |
 | `SK-04O` | `VER2-V4` | `SK-03S3`,`SK-01C` | `O` | `V2-O1:` |
 | `SK-05T` | `VER2-V5` | `SK-00`,`SK-01C` | `T` | `V2-T1:` |
-| `SK-06H` | `VER2-V6` | `SK-03S3`,`SK-01C` | `H` | `V2-H1:` |
-| `SK-07M` | `VER2-V7` | `SK-03S3`,`SK-01C` | `M` | `V2-M1:` |
+| `SK-06H` | `VER2-V6` | `SK-01C` | `H` | `V2-H1:` |
+| `SK-07M` | `VER2-V7` | `SK-01C` | `M` | `V2-M1:` |
 | `SK-08V` | `VER2-V8` | any two executable lanes | `V` | `V2-V1:` |
-| `SK-09D` | `VER2-V9` | `SK-04O`,`SK-05T`,`SK-06H`,`SK-07M` | `D` | `V2-D1:` |
+| `SK-09D` | `VER2-V9` | `SK-01C` | `D` | `V2-D1:` |
 
 ## 3. Packet prompts
 
@@ -377,7 +377,7 @@ Hard rules:
 - no MIO certificate merge,
 - no TSC posterior correction.
 
-Skeleton interfaces, gate tests, and audit docs only. Use the required three verification lanes and commit `V2-H1:`.
+Skeleton interfaces, gate tests, and audit docs only. Do not wait for live solver outputs; bind only to common contracts and carry solver-coupled wiring forward explicitly. Use the required three verification lanes and commit `V2-H1:`.
 ```
 
 ### `SK-07M` MIO Observatory Skeleton Prompt
@@ -403,7 +403,7 @@ Rules:
 - covariance/atlas/null-mock prerequisites must be explicit,
 - MIO is not posterior, not evidence, not truth certificate.
 
-Do not implement final algorithms yet. Build status/caveat plumbing, tests, and audits. Commit `V2-M1:`.
+Do not implement final algorithms yet. Build status/caveat plumbing, tests, and audits. Solver-coupled estimators may remain stubbed if they are recorded explicitly in the carry-forward ledger. Commit `V2-M1:`.
 ```
 
 ### `SK-08V` Validation / Hostile Audit Skeleton Prompt
@@ -460,7 +460,7 @@ Rules:
 - docs must pull status from the shared snapshot rather than manual counts,
 - every phase gets a placeholder audit entry and carry-forward section.
 
-Skeleton docs/exporters only. Commit `V2-D1:`.
+Skeleton docs/exporters only. This packet is intentionally solver-independent at this stage. Commit `V2-D1:`.
 ```
 
 ## 4. Recommended parallel batches
@@ -472,27 +472,33 @@ Skeleton docs/exporters only. Commit `V2-D1:`.
 ### Batch B
 
 - `SK-01C`
-- `SK-01S1`
 
 ### Batch C
 
 - `SK-05T`
-- `SK-02S2`
+- `SK-06H`
+- `SK-07M`
+- `SK-09D`
 
 ### Batch D
 
-- `SK-03S3`
+- `SK-01S1`
 
 ### Batch E
 
-- `SK-04O`
-- `SK-06H`
-- `SK-07M`
+- `SK-02S2`
 
 ### Batch F
 
+- `SK-03S3`
+
+### Batch G
+
+- `SK-04O`
+
+### Batch H
+
 - `SK-08V`
-- `SK-09D`
 
 ## 5. Exit condition for prompt list 01
 

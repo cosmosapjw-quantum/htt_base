@@ -91,6 +91,7 @@ Freeze this rule at VER2-V0:
 8. Shared-contract files may only be touched by barrier prompts or explicitly reopened supervisor prompts.
 9. Approximation claims must be explicit.
 10. If literature/code/tests conflict, lower the claim tier first and escalate only after the conflict is resolved.
+11. When a lane has a solver-independent shell and a solver-coupled binding stage, implement the shell first and carry the binding stage explicitly in the ledger.
 
 ## 5. Parallel-development topology
 
@@ -332,13 +333,14 @@ If a packet does not update the ledger, it is not considered complete.
 ## 12. Immediate execution order
 
 1. Close `VER2-V0` first.
-2. Start `C` and `S1` only after the shared schema barrier closes.
-3. Start `T` only after `C` publishes stable shared overlay/schema primitives.
-4. Start `S2` only after `S1` publishes stable geometry/background contracts.
-5. Start `S3` only after `S2` publishes stable neutral solver outputs.
-6. Start `O`, `H`, and `M` only after `S3` and `C` publish stable `SolverCoreOutput` and manifest semantics.
-7. Start `V` once at least one lane in `S3/O/T/H/M` is executable.
-8. Start `D` last, except for audit/ledger maintenance.
+2. Start `C` immediately after the shared schema barrier closes.
+3. Front-load solver-independent shells in `T`, `H`, `M`, and `D` after `C`.
+4. Start `S1` after the barrier closes, but treat it as lower urgency than `C/T/H/M/D` if the goal is to maximize non-solver progress first.
+5. Start `S2` only after `S1` publishes stable geometry/background contracts.
+6. Start `S3` only after `S2` publishes stable neutral solver outputs.
+7. Start solver-coupled binding work in `O`, `H`, and `M` only after `S3` and `C` publish stable `SolverCoreOutput` and manifest semantics.
+8. Start `V` once at least one lane in `S3/O/T/H/M` is executable.
+9. Final figure generation remains last, except for docs/export scaffolding and ledger maintenance.
 
 ## 13. Final recommendation
 
