@@ -50,6 +50,7 @@
 | `retention_vs_posterior_v1.json` | 완료 | `88b099f` |
 | `matched_complexity_report_v1.json` | 완료 | `e331a86` |
 | `15model_evidence_matrix_v1.json` | 완료 | `37e92ae` |
+| `null_library_fpr_v1.json` | 완료 | `2397fcf` |
 | `fig_zoa_ladder_mode0` | 완료 | `5f4dcd9` |
 | `fig_retention_fraction_vs_posterior` | 완료 | `88b099f` |
 
@@ -62,7 +63,7 @@
 | `D1` 15-model evidence ranking | HTT | prototype | `prototype+` | evidence matrix artifact + regression path 확보 | pipeline export + publication ranking consumer |
 | `D2` 3-signature discriminator | HTT | 미착수 | `미착수` | W14 블록 아직 없음 | signature template + likelihood + figure/table |
 | `D3` direction posterior | HTT | prototype | `prototype+` | `fiducial_posterior_bundle`, direction figure parity 확보 | production dataset wiring + full posterior output |
-| `D4` null competition FPR | HTT | prototype | `prototype` | null families/runner/tests 존재 | `null_library_fpr_v1.json` + sys.path 정리 |
+| `D4` null competition FPR | HTT | prototype | `prototype+` | null-library FPR artifact + regression path 확보 | full pipeline wiring + import hardening 잔여 |
 | `D5` filling fraction | HTT/TSC | 부분 완료 | `prototype+` | tsc bridge와 filling fraction tests 활성 | manuscript-grade export/table |
 | `D6` three-bound hierarchy | HTT/TSC | 완료 | `완료` | bounds + tsc admissibility cross-check | 유지보수만 필요 |
 | `D8` MES audit | HTT | prototype | `prototype` | pipeline/identifiability surface 존재 | audit artifact + promotion gate |
@@ -116,7 +117,7 @@
 
 - [ ] `D1` evidence ranking의 downstream wiring
 - [ ] `D3` final posterior pipeline wiring
-- [ ] `D4` null-library FPR export
+- [ ] `D4` null-library FPR의 downstream wiring / import hardening
 - [ ] `D5` filling-fraction manuscript export
 - [ ] `D8` identifiability audit artifact
 - [ ] `D9/D23` z-bin tomography and sensitivity export
@@ -189,12 +190,12 @@
 | `NB-PR-011` | HTT retention-vs-posterior / plane alignment | `88b099f` | `diag_plane_alignment`, `retention_vs_posterior`, F102 path |
 | `NB-PR-012` | HTT matched-complexity report | `e331a86` | `matched_complexity_report_v1.json` + deterministic hash |
 | `NB-PR-013` | HTT 15-model evidence matrix | `37e92ae` | `15model_evidence_matrix_v1.json` + deterministic hash |
+| `NB-PR-014` | HTT null-library FPR | `2397fcf` | `null_library_fpr_v1.json` + heatmap matrix export |
 
 ### 5.2 다음 우선순위 PR backlog
 
 | PR ID | 우선순위 | 대상 | WBS | 범위 | acceptance |
 |---|---|---|---|---|---|
-| `NB-PR-014` | `P1` | HTT | `HTT-WBS-03` | `null_library_fpr_v1.json` + import hardening | runner smoke + JSON export |
 | `NB-PR-015` | `P1` | HTT | `HTT-WBS-04` | identifiability audit artifact | pipeline subphase export + audit tests |
 | `NB-PR-016` | `P1` | HTT | `HTT-WBS-05` | LOOCV/coherence/PPC artifacts | three report builders + schema tests |
 | `NB-PR-017` | `P1` | HTT | `HTT-WBS-06` | z-bin tomography export and figure data | `redshift_tomography_v1.json` |
@@ -204,21 +205,20 @@
 
 ### 5.3 권장 실행 순서
 
-1. `NB-PR-014`
-2. `NB-PR-016`
-3. `NB-PR-017`
-4. `NB-PR-018`
-5. `NB-PR-019`
-6. `NB-PR-015`
-7. `NB-PR-020`
+1. `NB-PR-016`
+2. `NB-PR-017`
+3. `NB-PR-018`
+4. `NB-PR-019`
+5. `NB-PR-015`
+6. `NB-PR-020`
 
 ## 6. Immediate Next Action
 
-바로 다음 실제 코드 작업은 `NB-PR-014`가 맞다.
+바로 다음 실제 코드 작업은 `NB-PR-016`이 맞다.
 
 이유:
 
-1. `NB-PR-012`와 `NB-PR-013`에서 report-family artifact contract가 이미 굳었다.
-2. `D4` null-library FPR은 다음 독립 report slice라 같은 패턴을 바로 재사용할 수 있다.
-3. `nulls.runner`는 현재 prototype 표면이 있어 write-set이 비교적 제한적이다.
-4. pipeline audit이나 MIO 본체보다 먼저 닫는 편이 리스크가 낮다.
+1. `NB-PR-012`부터 `NB-PR-014`까지 report-family artifact contract가 연속으로 굳었다.
+2. `D10/D11/D12`는 같은 report 계열이라 다음 자연스러운 묶음이다.
+3. `NB-PR-016`은 pipeline subphase보다 write-set이 좁고, MIO 본체보다 독립적이다.
+4. `NB-PR-015` identifiability audit은 pipeline 결합도가 높아서 그 다음으로 미루는 편이 안전하다.
