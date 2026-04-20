@@ -367,6 +367,197 @@ four representative wavenumbers.}
 
 
 % ============================================================
+\section{Full Bianchi coverage: 22-configuration regression}
+\label{sec:fb6-full-coverage}
+% ============================================================
+
+The FB-6 phase promotes the earlier coverage declaration into a fully
+passing regression surface.  The implementation keeps the audit contract
+literal: the phase is encoded as an explicit integration module with
+22 type$\times$tilt rows, five named cross-type limits, and ten
+oracle-backed rows rather than a generated matrix hidden behind helper
+logic.  Every row shares the same numerical window
+$\eta \in [1, 12]$~Mpc, probes the photon hierarchy at three fixed
+slices, and evaluates the low-$\ell$ temperature proxy on the common
+band $\ell = 2,\dots,30$.  The touched-surface verification anchor is
+``48 passed'' for the dedicated FB-6 module and
+``72 passed, 1 skipped''
+when it is run together with the retained LB-6 integration oracle.
+
+\subsection{FB-6.1: explicit type$\times$tilt matrix}
+
+The first ledger is the full $11 \times 2$ matrix.  Each row executes
+the real background solver, constructs the shipping tetrad state, calls
+the full ``LowellBianchiIntegrator.run()'' surface, and checks three
+independent invariants: finite background / hierarchy / proxy arrays,
+PSTF round-trip preservation on the sampled RHS slices, and exact
+$\beta = 0$ byte identity for the orthogonal rows against the retained
+LB-6 anchor path.  Figure~\ref{fig:fb6_matrix_sigma2} summarises the
+background side of that matrix through the conformal-shear norm
+$\Sigma^2(\eta)$.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/physics_gallery/18_22_config_regression/plot_18_01_22_config_sigma2_decay.png}
+\caption{FB-6.1 gallery summary for the 22 explicit type$\times$tilt
+rows.  Each panel overlays the orthogonal and $\beta = 0.1$ branches
+for one Bianchi type on the shared conformal-time window used by the
+regression harness.}
+\label{fig:fb6_matrix_sigma2}
+\end{figure}
+
+\begin{table}[p]
+\caption{FB-6.1 results ledger for the explicit 22-row regression
+matrix.  ``BG'' denotes finite background integration, ``RHS'' the
+three sampled hierarchy slices, ``PSTF'' the tensor round-trip
+projection, and ``TT'' the low-$\ell$ proxy extraction on
+$\ell \in [2,30]$.  The ``$\beta = 0$ anchor'' column is applicable
+only to the orthogonal rows.}
+\label{tab:fb6_matrix}
+\centering
+\scriptsize
+\begin{tabular}{llccccc}
+\hline\hline
+Type & Tilt & BG & RHS & PSTF & TT & $\beta = 0$ anchor \\
+\hline
+I      & orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+I      & tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+II     & orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+II     & tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+III    & orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+III    & tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+IV     & orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+IV     & tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+V      & orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+V      & tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+VI$_0$ & orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+VI$_0$ & tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+VI$_h$ & orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+VI$_h$ & tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+VII$_0$& orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+VII$_0$& tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+VII$_h$& orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+VII$_h$& tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+VIII   & orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+VIII   & tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+IX     & orth. & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+IX     & tilt  & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & --- \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+\subsection{FB-6.2: named cross-type limits}
+
+The second ledger makes the continuity relations explicit rather than
+leaving them implicit in the algebra of the type registry.  The five
+named sweeps are the load-bearing ones for the FB roadmap:
+VII$_h \rightarrow$ VII$_0$ as $h \rightarrow 0^+$,
+VI$_h \rightarrow$ III as $h \rightarrow -1$,
+VII$_0 \rightarrow$ I as the curvature entries vanish,
+V $\rightarrow$ I as $a \rightarrow 0$, and the isotropic Type-IX branch
+as $n \rightarrow 0$.  The worst relative trajectory mismatch in the
+implemented sweep is the VI$_h \rightarrow$ III row at
+$3.13\times 10^{-4}$, still below the declared
+$5\times 10^{-4}$ tolerance.  The remaining rows land between machine
+zero and $1.84\times 10^{-7}$.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/physics_gallery/18_22_config_regression/plot_18_02_cross_type_limits_grid.png}
+\caption{FB-6.2 cross-type continuity grid.  Each panel overlays the
+near-limit trajectory and its reference-type counterpart on the shared
+integration window used by the test harness.}
+\label{fig:fb6_limits}
+\end{figure}
+
+\begin{table}[t]
+\caption{FB-6.2 named-limit convergence metrics.  The quoted relative
+error is the maximum trajectory difference normalised by the reference
+trajectory scale used in the implementation audit.}
+\label{tab:fb6_limits}
+\centering
+\small
+\begin{tabular}{lccc}
+\hline\hline
+Limit & max rel. error & declared rtol & status \\
+\hline
+VII$_h \rightarrow$ VII$_0$ ($h \rightarrow 0^+$) & $1.84\times 10^{-7}$ & $1.0\times 10^{-6}$ & $\checkmark$ \\
+VI$_h \rightarrow$ III ($h \rightarrow -1$)       & $3.13\times 10^{-4}$ & $5.0\times 10^{-4}$ & $\checkmark$ \\
+VII$_0 \rightarrow$ I ($n \rightarrow 0$)         & $0$                   & $1.0\times 10^{-8}$ & $\checkmark$ \\
+V $\rightarrow$ I ($a \rightarrow 0$)             & $0$                   & $1.0\times 10^{-8}$ & $\checkmark$ \\
+IX $\rightarrow$ isotropic ($n \rightarrow 0$)    & $1.67\times 10^{-9}$ & $1.0\times 10^{-6}$ & $\checkmark$ \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+\subsection{FB-6.3: CAMB and literature oracles}
+
+The third ledger ties the near-FLRW rows back to external references.
+On the CAMB side the shared NPZ oracle is verified against the same
+header used by the LB-6 geometry tests:
+\texttt{camb\_version = 1.6.6}, \texttt{lensed = False},
+$\Omega_K = 0$, and the
+29-point multipole band $\ell = 2,\dots,30$.  All five FLRW-limit rows
+remain within the parent-plan $5\%$ tolerance, with the
+VII$_h \rightarrow 0$ branch as the limiting case at exactly $4\%$.
+On the literature side the qualitative digitised templates from the
+2009 rogues-gallery paper retain high shape agreement with the FB-6
+proxy, with correlations between $0.988$ and $0.998$ and mean absolute
+normalised offsets between $0.013$ and $0.038$.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/physics_gallery/18_22_config_regression/plot_18_03_Dl_TT_11_types_vs_camb.png}
+\caption{FB-6.3 CAMB cross-check summary.  Each panel overlays the
+orthogonal-branch $D_\ell^{TT}$ proxy for one Bianchi type against the
+shared CAMB Planck-2018 reference curve.}
+\label{fig:fb6_camb}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.9\linewidth]{figures/physics_gallery/18_22_config_regression/plot_18_04_pontzen_challinor_shape_match.png}
+\caption{FB-6.3 qualitative morphology comparison against the 2009
+rogues-gallery templates for VII$_h$ and IX, including the off-diagonal
+$C_\ell^{TT}$ patterns reserved by the phase plan.}
+\label{fig:fb6_pc2009}
+\end{figure}
+
+\begin{table}[p]
+\caption{FB-6.3 oracle metrics for the five CAMB-limit and five
+literature-template rows.}
+\label{tab:fb6_oracles}
+\centering
+\scriptsize
+\begin{tabular}{llccc}
+\hline\hline
+Oracle row & metric & value & acceptance band & status \\
+\hline
+Type I FLRW limit & max rel. vs CAMB & $0.0000$ & $\leq 0.05$ & $\checkmark$ \\
+Type V FLRW limit & max rel. vs CAMB & $2.0\times 10^{-6}$ & $\leq 0.05$ & $\checkmark$ \\
+Type VII$_0$ FLRW limit & max rel. vs CAMB & $4.0\times 10^{-6}$ & $\leq 0.05$ & $\checkmark$ \\
+Type VII$_h \rightarrow 0$ & max rel. vs CAMB & $4.0\times 10^{-2}$ & $\leq 0.05$ & $\checkmark$ \\
+Type IX isotropic limit & max rel. vs CAMB & $6.0\times 10^{-6}$ & $\leq 0.05$ & $\checkmark$ \\
+VII$_h$ vector temperature & corr. / $L_1$ & $0.997 / 0.016$ & $\rho \geq 0.97$, $L_1 \leq 0.12$ & $\checkmark$ \\
+VII$_h$ regular mode & corr. / $L_1$ & $0.998 / 0.014$ & $\rho \geq 0.97$, $L_1 \leq 0.12$ & $\checkmark$ \\
+IX closed quadrupole & corr. / $L_1$ & $0.988 / 0.038$ & $\rho \geq 0.97$, $L_1 \leq 0.12$ & $\checkmark$ \\
+VII$_h$ off-diagonal $C_\ell^{TT}$ & corr. / $L_1$ & $0.989 / 0.033$ & $\rho \geq 0.97$, $L_1 \leq 0.12$ & $\checkmark$ \\
+IX off-diagonal $C_\ell^{TT}$ & corr. / $L_1$ & $0.996 / 0.025$ & $\rho \geq 0.97$, $L_1 \leq 0.12$ & $\checkmark$ \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+Taken together, Figures~\ref{fig:fb6_matrix_sigma2},
+\ref{fig:fb6_limits}, \ref{fig:fb6_camb}, and \ref{fig:fb6_pc2009}
+show that the BASS-side coverage story is now numerically closed at the
+phase-FB-6 scope: the full 22-row matrix is explicit and green, the
+named type-continuity relations are tested at declared tolerances, and
+the low-$\ell$ temperature morphology is pinned both to the shared CAMB
+oracle and to the qualitative VII$_h$/IX literature shapes
+\cite{WainwrightEllis1997,Pontzen2009,Planck2018VI}.
+
+
+% ============================================================
 \section{Filling fraction}\label{sec:filling}
 % ============================================================
 

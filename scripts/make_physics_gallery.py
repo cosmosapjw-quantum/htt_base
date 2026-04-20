@@ -113,6 +113,7 @@ from bass.hierarchy import (  # noqa: E402
 from bass.background.tetrad_state import axisymmetric_sigma_tensor  # noqa: E402
 from bass.hierarchy.ic import zero_IC  # noqa: E402
 from bass.hierarchy.nabla_dispatch import HarmonicMode  # noqa: E402
+from bass.integration import test_full_bianchi_coverage as fb6  # noqa: E402
 from bass.perturbation.harmonic_modes import (  # noqa: E402
     make_harmonic_mode_rhs_context,
 )
@@ -3997,6 +3998,253 @@ def plot_17_05_Dl_TT_vs_camb_per_k() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
+# Topic 18 — 22-configuration regression suite
+# ════════════════════════════════════════════════════════════════════
+
+
+TOPIC_18 = "18_22_config_regression"
+
+
+def _fb6_case_lookup() -> dict[tuple[str, str], str]:
+    return {
+        (item.values[0], item.values[1]): item.values[2]
+        for item in fb6.FB61_CONFIGURATION_CASES
+    }
+
+
+def _fb6_type_labels() -> list[str]:
+    labels: list[str] = []
+    seen: set[str] = set()
+    for item in fb6.FB61_CONFIGURATION_CASES:
+        label = item.values[0]
+        if label not in seen:
+            labels.append(label)
+            seen.add(label)
+    return labels
+
+
+def _fb6_limit_background(type_label: str, **kwargs):
+    a_start, a_end = fb6._common_scale_factor_window()
+    cosmo = fb6.make_cosmology(type_label, **kwargs)
+    return solve_bianchi_background(
+        cosmo,
+        a_start=a_start,
+        a_end=a_end,
+        n_pts=fb6._COMMON_BG_POINTS * 2,
+    )
+
+
+def plot_18_01_22_config_sigma2_decay() -> None:
+    lookup = _fb6_case_lookup()
+    type_labels = _fb6_type_labels()
+    fig, axes = plt.subplots(3, 4, figsize=(13.5, 9.0), sharex=True, sharey=True)
+    axes_flat = axes.ravel()
+    style_map = {
+        "orthogonal": (COLS["blue"], "-"),
+        "tilted": (COLS["orange"], "--"),
+    }
+    for ax, type_label in zip(axes_flat, type_labels):
+        for tilt_state, legend_label in (
+            ("orthogonal", r"$\beta = 0$"),
+            ("tilted", r"$\beta = 0.1$"),
+        ):
+            case = fb6._build_runtime_case(lookup[(type_label, tilt_state)])
+            sigma2 = np.maximum(
+                case.result.Sigma_plus ** 2 + case.result.Sigma_minus ** 2,
+                1.0e-30,
+            )
+            color, linestyle = style_map[tilt_state]
+            ax.plot(
+                case.result.eta,
+                sigma2,
+                color=color,
+                ls=linestyle,
+                lw=1.5,
+                label=legend_label,
+            )
+        ax.set_title(type_label.replace("_", r"\_"), fontsize=9)
+        ax.grid(True, which="both", alpha=0.25, lw=0.5)
+    axes_flat[0].legend(loc="best", fontsize=8)
+    for ax in axes[:, 0]:
+        ax.set_ylabel(r"$\Sigma^2$")
+        ax.set_yscale("log")
+    for ax in axes[-1, :]:
+        ax.set_xlabel(r"$\eta\ [{\rm Mpc}]$")
+    axes_flat[-1].axis("off")
+    fig.suptitle(
+        r"FB-6.1 full 22-configuration regression matrix: $\Sigma^2(\eta)$ across 11 types and two tilt branches",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "plot_18_01_22_config_sigma2_decay", TOPIC_18)
+
+
+def plot_18_02_cross_type_limits_grid() -> None:
+    fig, axes = plt.subplots(2, 3, figsize=(13.0, 7.6), sharex=False, sharey=True)
+    axes_flat = axes.ravel()
+    for ax, item in zip(axes_flat, fb6.FB62_CONTINUITY_LIMIT_CASES):
+        source_type, target_type, limit_parameter, limit_value = item.values
+        spec = fb6._FB62_LIMIT_CONFIG[
+            (source_type, target_type, limit_parameter, limit_value)
+        ]
+        source_bg = _fb6_limit_background(source_type, **spec["source_kwargs"])
+        target_bg = _fb6_limit_background(spec["target_label"], **spec["target_kwargs"])
+        source_sigma2 = np.maximum(
+            source_bg.sigma_plus ** 2 + source_bg.sigma_minus ** 2, 1.0e-30
+        )
+        target_sigma2 = np.maximum(
+            target_bg.sigma_plus ** 2 + target_bg.sigma_minus ** 2, 1.0e-30
+        )
+        limit_traj = fb6._trajectory_for_cosmo(source_type, **spec["source_kwargs"])
+        ref_traj = fb6._trajectory_for_cosmo(spec["target_label"], **spec["target_kwargs"])
+        rel = float(
+            np.max(np.abs(limit_traj - ref_traj))
+            / max(np.max(np.abs(ref_traj)), 1.0e-30)
+        )
+
+        ax.plot(
+            source_bg.eta,
+            source_sigma2,
+            color=COLS["orange"],
+            lw=1.6,
+            label=source_type,
+        )
+        ax.plot(
+            target_bg.eta,
+            target_sigma2,
+            color="black",
+            lw=1.3,
+            ls="--",
+            label=spec["target_label"],
+        )
+        ax.set_title(
+            rf"{source_type} $\rightarrow$ {target_type}" "\n"
+            rf"{limit_parameter} \to {limit_value}, rel={rel:.2e}",
+            fontsize=8,
+        )
+        ax.grid(True, which="both", alpha=0.25, lw=0.5)
+        ax.set_yscale("log")
+    axes_flat[0].legend(loc="best", fontsize=8)
+    for ax in axes[:, 0]:
+        ax.set_ylabel(r"$\Sigma^2$")
+    for ax in axes[-1, :]:
+        ax.set_xlabel(r"$\eta\ [{\rm Mpc}]$")
+    axes_flat[-1].axis("off")
+    fig.suptitle(
+        r"FB-6.2 named cross-type limits: near-limit trajectories collapse onto their reference types",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "plot_18_02_cross_type_limits_grid", TOPIC_18)
+
+
+def plot_18_03_Dl_TT_11_types_vs_camb() -> None:
+    camb = fb6._camb_ref()
+    ell = np.asarray(camb["ell"], dtype=np.int64)
+    reference = np.asarray(camb["D_TT"], dtype=np.float64)
+    lookup = _fb6_case_lookup()
+    type_labels = _fb6_type_labels()
+
+    fig, axes = plt.subplots(3, 4, figsize=(13.5, 9.0), sharex=True, sharey=True)
+    axes_flat = axes.ravel()
+    for ax, type_label in zip(axes_flat, type_labels):
+        case = fb6._build_runtime_case(lookup[(type_label, "orthogonal")])
+        rel = float(
+            np.max(
+                np.abs(case.d_tt_proxy - reference)
+                / np.maximum(np.abs(reference), 1.0e-30)
+            )
+        )
+        ax.plot(ell, reference, color="black", lw=1.5, label="CAMB")
+        ax.plot(
+            ell,
+            case.d_tt_proxy,
+            color=COLS["orange"],
+            lw=1.4,
+            ls="--",
+            label="FB-6 proxy",
+        )
+        ax.set_title(
+            rf"{type_label.replace('_', r'\_')} ($\max \Delta/C = {100.0 * rel:.1f}\%$)",
+            fontsize=8,
+        )
+        ax.grid(True, alpha=0.25, lw=0.5)
+    axes_flat[0].legend(loc="best", fontsize=8)
+    for ax in axes[:, 0]:
+        ax.set_ylabel(r"$D_\ell^{TT}\ [\mu{\rm K}^2]$")
+    for ax in axes[-1, :]:
+        ax.set_xlabel(r"$\ell$")
+    axes_flat[-1].axis("off")
+    fig.suptitle(
+        r"FB-6.3 orthogonal-branch $D_\ell^{TT}$ overlays against the shared CAMB Planck-2018 oracle",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "plot_18_03_Dl_TT_11_types_vs_camb", TOPIC_18)
+
+
+def plot_18_04_pontzen_challinor_shape_match() -> None:
+    fixture_map = {
+        item.values[0]: item.values[1]
+        for item in fb6.FB63_ORACLE_FIXTURE_CASES
+        if item.values[2] == "literature"
+    }
+    panel_specs = [
+        (
+            "pc2009_fig1_vii_h_vector_temperature_grid",
+            r"VII$_h$ vector temperature (Fig. 1)",
+        ),
+        (
+            "pc2009_fig3_vii_h_regular_mode_temperature_grid",
+            r"VII$_h$ regular mode (Fig. 3)",
+        ),
+        (
+            "pc2009_sec4_ix_closed_quadrupole_grid",
+            r"IX closed quadrupole (§IV)",
+        ),
+    ]
+    fig, axes = plt.subplots(2, 2, figsize=(11.0, 7.6), sharex=True)
+    axes_flat = axes.ravel()
+    for ax, (oracle_name, title) in zip(axes_flat, panel_specs):
+        data = np.load(fixture_map[oracle_name])
+        ell = np.asarray(data["ell"], dtype=np.int64)
+        template = fb6._normalise_curve(np.asarray(data["template"], dtype=np.float64))
+        model = fb6._fb63_literature_shape_model(oracle_name, ell)
+        corr = float(np.corrcoef(template, model)[0, 1])
+        ax.plot(ell, template, color="black", lw=1.6, label="oracle template")
+        ax.plot(ell, model, color=COLS["orange"], lw=1.4, ls="--", label="FB-6 proxy")
+        ax.set_title(rf"{title}, $r = {corr:.3f}$", fontsize=8)
+        ax.grid(True, alpha=0.25, lw=0.5)
+
+    offdiag_ax = axes_flat[3]
+    for oracle_name, color, label in (
+        ("pc2009_vii_h_off_diagonal_ctt", COLS["blue"], r"VII$_h$ off-diagonal"),
+        ("pc2009_ix_off_diagonal_ctt", COLS["purple"], r"IX off-diagonal"),
+    ):
+        data = np.load(fixture_map[oracle_name])
+        ell = np.asarray(data["ell"], dtype=np.int64)
+        template = fb6._normalise_curve(np.asarray(data["template"], dtype=np.float64))
+        model = fb6._fb63_literature_shape_model(oracle_name, ell)
+        offdiag_ax.plot(ell, template, color=color, lw=1.5, label=label + " template")
+        offdiag_ax.plot(ell, model, color=color, lw=1.3, ls="--", label=label + " proxy")
+    offdiag_ax.set_title(r"Off-diagonal $C_\ell^{TT}$ morphology", fontsize=8)
+    offdiag_ax.grid(True, alpha=0.25, lw=0.5)
+
+    for ax in axes[:, 0]:
+        ax.set_ylabel("normalised amplitude")
+    for ax in axes[-1, :]:
+        ax.set_xlabel(r"$\ell$")
+    axes_flat[0].legend(loc="best", fontsize=7)
+    axes_flat[3].legend(loc="best", fontsize=7)
+    fig.suptitle(
+        r"FB-6.3 Pontzen-Challinor 2009 qualitative shape match for VII$_h$ and IX oracles",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    _save(fig, "plot_18_04_pontzen_challinor_shape_match", TOPIC_18)
+
+
+# ════════════════════════════════════════════════════════════════════
 # Catalog
 # ════════════════════════════════════════════════════════════════════
 
@@ -4199,6 +4447,16 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
          "FB-5.6 temperature and E-mode m=0 slices before and after the axisymmetric boost."),
         ("05_Dl_TT_vs_camb_per_k", plot_17_05_Dl_TT_vs_camb_per_k,
          "FB-5.7 Type-I D_ell^TT proxy against the CAMB Planck-2018 oracle for four k values."),
+    ],
+    TOPIC_18: [
+        ("plot_18_01_22_config_sigma2_decay", plot_18_01_22_config_sigma2_decay,
+         "FB-6.1 Σ²(η) decay across the full 22-row type × tilt regression matrix."),
+        ("plot_18_02_cross_type_limits_grid", plot_18_02_cross_type_limits_grid,
+         "FB-6.2 five-panel named cross-type continuity-limit convergence grid."),
+        ("plot_18_03_Dl_TT_11_types_vs_camb", plot_18_03_Dl_TT_11_types_vs_camb,
+         "FB-6.3 orthogonal-branch D_ell^TT overlays against the shared CAMB Planck-2018 oracle."),
+        ("plot_18_04_pontzen_challinor_shape_match", plot_18_04_pontzen_challinor_shape_match,
+         "FB-6.3 Pontzen-Challinor VII_h and IX qualitative shape overlays."),
     ],
 }
 

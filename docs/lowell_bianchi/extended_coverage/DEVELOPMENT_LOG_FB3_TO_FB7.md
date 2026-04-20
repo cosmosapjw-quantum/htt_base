@@ -943,3 +943,51 @@ fresh cumulative count.
   closes instead with one explicit audited closeout commit.
 - **Next target**: `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` now
   points to FB-6 actual work.
+
+### FB-6 actual-work — 22-configuration regression suite
+
+- **Scope**: Replaced the committed FB-6 skeleton with a working
+  integration harness covering the explicit 22-row type$\times$tilt
+  matrix, five named cross-type continuity limits, and ten CAMB /
+  literature oracle rows in
+  `htt/bass/integration/test_full_bianchi_coverage.py`.
+- **Code anchor**:
+  - harness implementation in
+    `htt/bass/integration/test_full_bianchi_coverage.py`
+  - new stable literature-shape fixtures in `tests/fixtures/fb6/`
+- **Test delta**:
+  - `48 passed` on the dedicated FB-6 harness
+  - `72 passed, 1 skipped` on
+    `test_full_bianchi_coverage.py + test_lowell_bianchi.py`
+- **Gallery**: added topic
+  `figures/physics_gallery/18_22_config_regression/` with four PNGs and
+  corresponding `scripts/make_physics_gallery.py` hooks.
+- **Manuscript**: added the Chapter-7 section
+  `Full Bianchi coverage: 22-configuration regression`, the Chapter-8
+  cross-type-limits robustness paragraph, and bibliography entries for
+  Wainwright--Ellis 1997, Pontzen 2009, and Planck 2018 VI.
+- **Audit**: `docs/audits/AUDIT_PHASE_FB6_2026-04-20.md`.
+- **Carry-forward correction**: the prompt's “Pontzen-Challinor 2009”
+  shorthand was normalized to the verified source split:
+  `arXiv:0901.2122` is Andrew Pontzen's single-author 2009
+  figure-bearing paper, while `arXiv:0706.2075` remains the earlier
+  joint Pontzen--Challinor hierarchy paper.
+
+### FB-6.CLOSE — 22 configurations green
+
+- **Scope**: Closed Phase FB-6 after the topic-18 gallery render,
+  manuscript updates, explicit audit write-up, and handoff rotation to
+  the FB-7 actual-work placeholder.
+- **Commit anchor**: pending current close commit
+  (`FB-6: Phase FB-6 complete (M5 achieved — 22 configurations green)`).
+- **Regression anchor**:
+  - `48 passed` on the FB-6 harness
+  - `72 passed, 1 skipped` on the harness + LB-6 oracle bundle
+- **Exit notes**:
+  - the 22-row matrix is explicit and green
+  - all five named limits converge within their declared tolerances
+  - all five CAMB-limit rows stay inside the 5\% band
+  - all five literature-shape rows pass the correlation / mean-offset
+    gate
+- **Next target**: `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2` now
+  points to `FB-7 actual work — paste the FB-7 prompt`.

@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-5 closeout → FB-6 actual work**; Phase FB-5 is closed on this branch with an audited single-commit deviation from the requested per-subphase history)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB5_2026-04-20.md`
-**Current target session**: **FB-6 actual work** — implement the 22-configuration regression suite on top of the committed FB-6 harness
-**Phase status**: FB-5 is closed locally: the targeted verification surface reaches `467 passed`, topic 17 is rendered and visually checked, and the handoff is rotated to FB-6. The next coding surface is the committed FB-6 integration harness skeleton.
+**Last rotated**: 2026-04-20 (**FB-6 actual work → FB-7 actual-work placeholder**; Phase FB-6 is closed on this branch at M5 with the 22-row matrix, named limits, oracle rows, topic-18 gallery, and Chapter 7/8 updates all landed)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB6_2026-04-20.md`
+**Current target session**: **FB-7 actual work** — paste the canonical FB-7 prompt before coding
+**Phase status**: FB-6 is closed locally: the dedicated harness reaches `48 passed`, the retained LB-6 combined anchor reaches `72 passed, 1 skipped`, topic 18 is rendered and visually checked, and the handoff is rotated to FB-7 actual work.
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,44 +37,35 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-6 actual work — 22-configuration regression suite
+# FB-7 actual work — paste the canonical FB-7 prompt
 
 Before doing anything else, read:
-- `docs/audits/AUDIT_PHASE_FB5_2026-04-20.md`
-- `docs/audits/AUDIT_PHASE_FB_META6_2026-04-20.md`
-- `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-6`
+- `docs/audits/AUDIT_PHASE_FB6_2026-04-20.md`
+- `docs/audits/AUDIT_PHASE_FB_META7_2026-04-20.md`
+- `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-7`
 - `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB3_TO_FB7.md`
-- `htt/bass/integration/test_full_bianchi_coverage.py`
-- `htt/bass/integration/test_lowell_bianchi.py`
-- `htt/bass/hierarchy/test_fb36_tilted_regression.py`
+- `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md`
+- `htt/bass/likelihood/`
 
 Baseline and carry-forward:
-- Phase FB-5 is closed on this branch. The perturbation-sector code,
-  topic-17 gallery, and Chapter 3 / 7 manuscript references are
-  already landed.
-- `data/camb_ref_planck2018.npz` is present and reused by the committed
-  FB-6 oracle skeleton rows.
-- `htt/bass/integration/test_full_bianchi_coverage.py` already pins:
-  - 22 explicit per-type × tilt rows in `FB61_CONFIGURATION_CASES`
-  - 5 named continuity limits in `FB62_CONTINUITY_LIMIT_CASES`
-  - 10 literature/CAMB oracle rows in `FB63_ORACLE_FIXTURE_CASES`
-- Preserve the existing FB-5 / FB-6 deferred carries listed in the plan
-  and archived handoff history. Do not reopen them casually.
+- Phase FB-6 is closed on this branch. The full-coverage integration
+  harness, topic-18 gallery, and Chapter 7 / 8 references are already
+  landed and should be treated as the baseline rather than reopened.
+- Phase FB-META-7 is also closed on this branch; the BASS-side FB-7
+  likelihood / LoS surfaces exist as committed skeletons only.
+- The next actual-work scope should come from the canonical FB-7 prompt,
+  not by improvising from the old FB-6 checklist.
 
 This session's target:
-- replace the skipped FB-6 harness skeleton with working coverage tests
-- implement the minimum production helpers needed for the 22-row
-  regression matrix, the five cross-type continuity checks, and the
-  Pontzen-Challinor/CAMB oracle comparisons
-- keep the integration harness explicit; do not collapse the audit
-  surface into opaque generators
-- rotate this file again only after FB-6 closes or an honest blocker is
+- paste the canonical FB-7 actual-work prompt as the first user message
+  and execute that contract
+- if the canonical FB-7 prompt is not available, stop and record a
+  blocker rather than inventing the next phase from memory
+- rotate this file again only after FB-7 closes or an honest blocker is
   recorded in the audit
 
 Suggested verification anchor:
-- `PYTHONPATH=htt venv/bin/python -m pytest -q \
-   htt/bass/integration/test_full_bianchi_coverage.py \
-   htt/bass/integration/test_lowell_bianchi.py`
+- `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
 ```
 
 ---
