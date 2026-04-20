@@ -389,7 +389,7 @@ Exit: β-sweep × polarisation regression. BB identically zero at
   electron-frame boost sandwich around the LB-4 Thomson operator,
   preserving the exact `beta = 0` anchor and wiring the new Topic-10
   TT proxy plot plus the manuscript Layer-B section.
-- **Commit anchor**: pending local commit (`FB-4.1: axis-aligned Layer-B Thomson seed`).
+- **Commit anchor**: inherited branch state before the dedicated FB-4.2 / FB-4.3 commits; no standalone `FB-4.1:` commit was present on the current branch.
 - **Test delta**: `3,401 passed + 73 skipped + 3 errors` →
   `3,425 passed + 72 skipped + 3 errors`.
 - **Audit**: [AUDIT_PHASE_FB4_2026-04-20.md](../../audits/AUDIT_PHASE_FB4_2026-04-20.md) §FB-4.1.
@@ -405,7 +405,7 @@ Exit: β-sweep × polarisation regression. BB identically zero at
   same-`ell` E/B rotation seed, kept the orthogonal Type-I B floor
   exact, and added the Topic-10 BB/EE heatmap plus the matching
   manuscript subsection.
-- **Commit anchor**: pending local commit (`FB-4.2: axis-aligned E↔B collision seed`).
+- **Commit anchor**: `96737f4` (`FB-4.2: axis-aligned E↔B collision seed`).
 - **Test delta**: `3,425 passed + 72 skipped + 3 errors` →
   `3,448 passed + 71 skipped + 3 errors`.
 - **Audit**: [AUDIT_PHASE_FB4_2026-04-20.md](../../audits/AUDIT_PHASE_FB4_2026-04-20.md) §FB-4.2.
@@ -421,7 +421,7 @@ Exit: β-sweep × polarisation regression. BB identically zero at
   `gamma_sq - 1` quadratic Doppler remainder, kept the zero-tilt path
   exact, and added the Topic-10 residual plot plus the matching
   manuscript subsection and audit note on the explicit scope demotion.
-- **Commit anchor**: pending local commit (`FB-4.3: additive quadratic Doppler remainder`).
+- **Commit anchor**: `e72e685` (`FB-4.3: additive quadratic Doppler remainder`).
 - **Test delta**: `3,448 passed + 71 skipped + 3 errors` →
   `3,479 passed + 70 skipped + 3 errors`.
 - **Audit**: [AUDIT_PHASE_FB4_2026-04-20.md](../../audits/AUDIT_PHASE_FB4_2026-04-20.md) §FB-4.3.
@@ -430,6 +430,17 @@ Exit: β-sweep × polarisation regression. BB identically zero at
 - **Manuscript anchor**:
   `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`.
 - **Carry-forward**: literature-complete Thomson `v_e^2` term remains deferred until a verified source is recovered.
+
+### FB-4.CLOSE — tilted Thomson Layer B
+
+- **Scope**: Phase FB-4 is closed locally with Topic-10 plots `04`--`06`,
+  the manuscript Layer-B section, the FB-4 audit supplement, and the
+  handoff rotated to FB-5 actual work.
+- **Commit anchor**: pending current close commit (`FB-4: Phase FB-4 complete (tilted Thomson Layer B)`).
+- **Regression anchor**: `3,479 passed + 70 skipped + 3 errors`
+  (same pre-existing CAMB fixture blocker at LB-6-19/20/21).
+- **Next target**: `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md §2`
+  now points to FB-5 actual work.
 
 ---
 
