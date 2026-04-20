@@ -29,6 +29,9 @@ not quietly silently collapsed in downstream consumers.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import hashlib
+import json
+import platform
 from typing import Any, Mapping
 
 import numpy as np
@@ -40,6 +43,8 @@ __all__ = [
     "wls_bulk_flow",
     "bulk_flow_mask_ladder",
     "bootstrap_covariance",
+    "diagnostic_zoa_ladder_artifact",
+    "baseline_selection_aware_artifact",
 ]
 
 
@@ -127,6 +132,78 @@ class ZoAResponseResult:
             raise ValueError("V_magnitude shape mismatch")
         if len(self.fits) != M:
             raise ValueError("fits length mismatch")
+
+
+# ---------------------------------------------------------------------------
+# Artifact helpers
+# ---------------------------------------------------------------------------
+
+def _jsonify(obj: Any) -> Any:
+    """Recursively convert numpy-heavy structures to JSON-native values."""
+    if isinstance(obj, float):
+        return obj if np.isfinite(obj) else None
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.generic):
+        item = obj.item()
+        return item if not isinstance(item, float) or np.isfinite(item) else None
+    if isinstance(obj, Mapping):
+        return {str(k): _jsonify(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_jsonify(v) for v in obj]
+    return obj
+
+
+def _config_hash(payload: Mapping[str, Any]) -> str:
+    """Stable SHA256 hash for artifact configuration payloads."""
+    blob = json.dumps(_jsonify(payload), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def _catalog_lb(catalogue: BulkFlowCatalogue) -> tuple[np.ndarray, np.ndarray]:
+    """Convert a catalogue's line-of-sight unit vectors back to (l, b)."""
+    from common.sky_geometry import unitvec_to_lb
+
+    return unitvec_to_lb(catalogue.n_hat)
+
+
+def _axis_from_vector(V_hat: np.ndarray) -> dict[str, float | bool]:
+    """Convert a 3-vector into an axis record with validity flags."""
+    from common.sky_geometry import unitvec_to_lb
+
+    V_hat = np.asarray(V_hat, dtype=float)
+    if V_hat.shape != (3,):
+        raise ValueError(f"V_hat must be (3,); got {V_hat.shape}")
+    amp = float(np.linalg.norm(V_hat))
+    if not np.isfinite(amp) or amp <= 0.0:
+        return {
+            "l_deg": float("nan"),
+            "b_deg": float("nan"),
+            "amplitude_kmps": amp,
+            "valid": False,
+        }
+    l_deg, b_deg = unitvec_to_lb(V_hat / amp)
+    return {
+        "l_deg": float(l_deg),
+        "b_deg": float(b_deg),
+        "amplitude_kmps": amp,
+        "valid": True,
+    }
+
+
+def _angular_sep_deg(
+    l1_deg: float,
+    b1_deg: float,
+    l2_deg: float,
+    b2_deg: float,
+) -> float:
+    """Great-circle separation between two directions in degrees."""
+    from common.sky_geometry import lb_to_unitvec
+
+    u1 = lb_to_unitvec(np.array([l1_deg]), np.array([b1_deg]))[0]
+    u2 = lb_to_unitvec(np.array([l2_deg]), np.array([b2_deg]))[0]
+    cos_sep = float(np.clip(u1 @ u2, -1.0, 1.0))
+    return float(np.degrees(np.arccos(cos_sep)))
 
 
 # ---------------------------------------------------------------------------
@@ -382,3 +459,238 @@ def bootstrap_covariance(
         "V_hat_mean": V_mean,
         "n_boot": succeeded,
     }
+
+
+# ---------------------------------------------------------------------------
+# JSON artifacts (Mode 0 / Mode 1)
+# ---------------------------------------------------------------------------
+
+def diagnostic_zoa_ladder_artifact(
+    catalogue: BulkFlowCatalogue,
+    *,
+    bcut_list: np.ndarray | None = None,
+    nside: int = 16,
+    sigma_star: float = 0.0,
+    stability_threshold_deg: float = 20.0,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build the Mode 0 ``diag_zoa_ladder_vX.json`` artifact.
+
+    The stability threshold is operational and intentionally configurable:
+    the research plan requires a boolean ``zoa_ladder_stable`` gate but does
+    not prescribe a unique angle.
+    """
+    if bcut_list is None:
+        bcut_list = np.array([0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0])
+    ladder = bulk_flow_mask_ladder(
+        catalogue,
+        np.asarray(bcut_list, dtype=float),
+        nside=nside,
+        sigma_star=sigma_star,
+    )
+    axis_l = np.full(ladder.bcut_deg.shape, np.nan, dtype=float)
+    axis_b = np.full(ladder.bcut_deg.shape, np.nan, dtype=float)
+    axis_instability = np.full(ladder.bcut_deg.shape, np.nan, dtype=float)
+    valid = np.isfinite(ladder.V_magnitude) & (ladder.V_magnitude > 0.0)
+    if np.any(valid):
+        ref_idx = int(np.flatnonzero(valid)[0])
+        ref = _axis_from_vector(ladder.V_hat[ref_idx])
+        for idx in np.flatnonzero(valid):
+            axis = _axis_from_vector(ladder.V_hat[idx])
+            axis_l[idx] = float(axis["l_deg"])
+            axis_b[idx] = float(axis["b_deg"])
+            axis_instability[idx] = _angular_sep_deg(
+                float(ref["l_deg"]),
+                float(ref["b_deg"]),
+                float(axis["l_deg"]),
+                float(axis["b_deg"]),
+            )
+        max_instability = float(np.nanmax(axis_instability))
+        zoa_ladder_stable = bool(max_instability <= stability_threshold_deg)
+    else:
+        ref_idx = None
+        max_instability = float("nan")
+        zoa_ladder_stable = False
+
+    extra = dict(metadata or {})
+    config_payload = {
+        "bcut_list": np.asarray(bcut_list, dtype=float),
+        "nside": nside,
+        "sigma_star": sigma_star,
+        "stability_threshold_deg": stability_threshold_deg,
+        "metadata": extra,
+    }
+    return _jsonify({
+        "artifact_name": "diag_zoa_ladder_v1.json",
+        "generated_by": extra.get(
+            "generated_by",
+            "common.bulkflow_estimator.diagnostic_zoa_ladder_artifact",
+        ),
+        "git_commit": extra.get("git_commit", ""),
+        "config_hash": _config_hash(config_payload),
+        "input_data_hashes": list(extra.get("input_data_hashes", [])),
+        "random_seed": extra.get("random_seed"),
+        "wall_time_sec": extra.get("wall_time_sec"),
+        "python_version": extra.get("python_version", platform.python_version()),
+        "numpy_version": extra.get("numpy_version", np.__version__),
+        "claim_tier": extra.get("claim_tier", "EXPLORATORY"),
+        "scope_label": extra.get("scope_label", "diagnostic"),
+        "production_allowed": False,
+        "bcut_deg": ladder.bcut_deg.tolist(),
+        "retention_fraction": ladder.retention_fraction.tolist(),
+        "V_hat_kmps": ladder.V_hat.tolist(),
+        "V_magnitude_kmps": ladder.V_magnitude.tolist(),
+        "axis_l_deg": axis_l.tolist(),
+        "axis_b_deg": axis_b.tolist(),
+        "axis_instability_deg": axis_instability.tolist(),
+        "reference_bcut_deg": (
+            None if ref_idx is None else float(ladder.bcut_deg[ref_idx])
+        ),
+        "stability_threshold_deg": float(stability_threshold_deg),
+        "max_axis_instability_deg": max_instability,
+        "zoa_ladder_stable": zoa_ladder_stable,
+        "n_source_total": int(catalogue.n_sources),
+        "n_valid_fits": int(np.count_nonzero(valid)),
+    })
+
+
+def baseline_selection_aware_artifact(
+    catalogue: BulkFlowCatalogue,
+    sky_config: "SkySelectionConfig",
+    *,
+    C_pix: np.ndarray | None = None,
+    n_boot: int = 256,
+    sigma_star: float = 0.0,
+    diagnostic_artifact: Mapping[str, Any] | None = None,
+    stability_threshold_deg: float = 20.0,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build the Mode 1 ``baseline_selection_aware_vX.json`` artifact."""
+    from common.contracts import SkySelectionConfig
+    from common.healpix_selection import (
+        build_angular_completeness,
+        build_zoa_mask,
+        compute_selection_weights,
+        lb_to_pix,
+    )
+
+    if not isinstance(sky_config, SkySelectionConfig):
+        raise TypeError(
+            "baseline_selection_aware_artifact requires a SkySelectionConfig"
+        )
+    l_deg, b_deg = _catalog_lb(catalogue)
+    mask_pix = build_zoa_mask(
+        l_deg,
+        b_deg,
+        bcut_deg=sky_config.zoa_half_angle_deg,
+        nside=sky_config.nside,
+    )
+    if C_pix is None:
+        C_pix = build_angular_completeness(
+            l_deg,
+            b_deg,
+            nside=sky_config.nside,
+            smooth_sigma_pix=sky_config.smooth_sigma_pix,
+        )
+    pix = lb_to_pix(l_deg, b_deg, sky_config.nside)
+    w_selection = compute_selection_weights(l_deg, b_deg, mask_pix, C_pix)
+    active = w_selection > 0.0
+    retention_fraction = float(active.mean()) if active.size else 0.0
+    if int(np.count_nonzero(active)) < 4:
+        raise RuntimeError(
+            "baseline_selection_aware_artifact: fewer than four active sources "
+            "survive the ZoA/completeness mask"
+        )
+    active_catalogue = BulkFlowCatalogue(
+        n_hat=catalogue.n_hat[active],
+        u=catalogue.u[active],
+        sigma=catalogue.sigma[active],
+        w_native=catalogue.w_native[active],
+        w_selection=w_selection[active],
+        label=f"{catalogue.label}.selection_aware",
+    )
+    fit = wls_bulk_flow(
+        active_catalogue.n_hat,
+        active_catalogue.u,
+        sigma=active_catalogue.sigma,
+        w_native=active_catalogue.w_native,
+        w_selection=active_catalogue.w_selection,
+        sigma_star=sigma_star,
+    )
+    seed_value = (metadata or {}).get("random_seed")
+    boot = bootstrap_covariance(
+        active_catalogue,
+        n_boot=n_boot,
+        sigma_star=sigma_star,
+        rng=np.random.default_rng(
+            None if seed_value is None else int(seed_value)
+        ),
+    )
+    diag = (
+        diagnostic_artifact
+        if diagnostic_artifact is not None
+        else diagnostic_zoa_ladder_artifact(
+            catalogue,
+            nside=sky_config.nside,
+            sigma_star=sigma_star,
+            stability_threshold_deg=stability_threshold_deg,
+            metadata=metadata,
+        )
+    )
+    axis = _axis_from_vector(fit.V_hat)
+    gate_passed = bool(
+        retention_fraction >= sky_config.min_retention_fraction
+        and diag.get("zoa_ladder_stable", False)
+    )
+    extra = dict(metadata or {})
+    config_payload = {
+        "sky_config": {
+            "zoa_half_angle_deg": sky_config.zoa_half_angle_deg,
+            "min_retention_fraction": sky_config.min_retention_fraction,
+            "nside": sky_config.nside,
+            "smooth_sigma_pix": sky_config.smooth_sigma_pix,
+        },
+        "n_boot": n_boot,
+        "sigma_star": sigma_star,
+        "stability_threshold_deg": stability_threshold_deg,
+        "metadata": extra,
+    }
+    return _jsonify({
+        "artifact_name": "baseline_selection_aware_v1.json",
+        "generated_by": extra.get(
+            "generated_by",
+            "common.bulkflow_estimator.baseline_selection_aware_artifact",
+        ),
+        "git_commit": extra.get("git_commit", ""),
+        "config_hash": _config_hash(config_payload),
+        "input_data_hashes": list(extra.get("input_data_hashes", [])),
+        "random_seed": extra.get("random_seed"),
+        "wall_time_sec": extra.get("wall_time_sec"),
+        "python_version": extra.get("python_version", platform.python_version()),
+        "numpy_version": extra.get("numpy_version", np.__version__),
+        "claim_tier": extra.get("claim_tier", "CONDITIONAL"),
+        "scope_label": extra.get("scope_label", "baseline"),
+        "production_allowed": False,
+        "retention_fraction": retention_fraction,
+        "min_retention_fraction": float(sky_config.min_retention_fraction),
+        "zoa_ladder_stable": bool(diag.get("zoa_ladder_stable", False)),
+        "mode0_to_mode1_gate_passed": gate_passed,
+        "n_source_total": int(catalogue.n_sources),
+        "n_source_active": int(active_catalogue.n_sources),
+        "V_hat_kmps": fit.V_hat.tolist(),
+        "cov_kmps2": fit.cov.tolist(),
+        "effective_weight_sum": float(fit.diagnostics["effective_weight_sum"]),
+        "axis": {
+            "l_deg": axis["l_deg"],
+            "b_deg": axis["b_deg"],
+            "source": "selection_aware",
+            "weight_mode": "native",
+            "selection_mode": "angular_completeness",
+            "production_allowed": False,
+        },
+        "bootstrap": {
+            "cov_kmps2": boot["cov"].tolist(),
+            "V_hat_mean_kmps": boot["V_hat_mean"].tolist(),
+            "n_boot": int(boot["n_boot"]),
+        },
+    })

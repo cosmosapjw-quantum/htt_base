@@ -369,6 +369,7 @@ def fiducial_posterior_bundle(
     coverage_window_68: tuple[float, float] = (0.60, 0.76),
     metadata: Mapping[str, Any] | None = None,
     posterior_samples_ref: str | None = None,
+    mock_calibration_ref: str | None = None,
 ) -> dict[str, Any]:
     """Build the Mode 2 ``fiducial_posterior_bundle`` artifact.
 
@@ -425,6 +426,7 @@ def fiducial_posterior_bundle(
         "coverage_window_68": coverage_window_68,
         "metadata": extra,
         "posterior_samples_ref": posterior_samples_ref,
+        "mock_calibration_ref": mock_calibration_ref,
     }
     bundle = {
         "artifact_name": "fiducial_posterior_bundle_v1.json",
@@ -444,6 +446,7 @@ def fiducial_posterior_bundle(
         "scope_label": extra.get("scope_label", "fiducial"),
         "production_allowed": True,
         "posterior_samples_ref": posterior_samples_ref,
+        "mock_calibration_ref": mock_calibration_ref,
         "logz": float(dynesty_result.logz),
         "ncall": int(dynesty_result.ncall),
         "dynesty_config": _jsonify(cfg),

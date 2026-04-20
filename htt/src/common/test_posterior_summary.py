@@ -261,6 +261,7 @@ class TestFiducialPosteriorBundle:
                 "input_data_hashes": ["deadbeef"],
             },
             posterior_samples_ref="posterior_samples_FLRW_tilt_S2.hdf5",
+            mock_calibration_ref="fiducial_mock_calibration_report_v1.json",
         )
         assert bundle["scope_label"] == "fiducial"
         assert bundle["production_allowed"] is True
@@ -268,6 +269,7 @@ class TestFiducialPosteriorBundle:
         assert bundle["axis"]["source"] == "fiducial_posterior"
         assert bundle["mock_calibration"]["coverage_68"] == pytest.approx(0.68)
         assert bundle["posterior_samples_ref"].endswith(".hdf5")
+        assert bundle["mock_calibration_ref"].endswith(".json")
         assert bundle["config_hash"] != ""
         assert bundle["python_version"] != ""
         # JSON artefact contract: no numpy arrays/scalars should remain.

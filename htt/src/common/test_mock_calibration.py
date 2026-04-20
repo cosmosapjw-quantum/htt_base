@@ -4,6 +4,8 @@ Includes the REG-01 ``test_mock_coverage_within_bounds`` regression.
 """
 from __future__ import annotations
 
+import json
+
 import numpy as np
 import pytest
 
@@ -16,6 +18,7 @@ from common.mock_calibration import (
     coverage_test,
     generate_injected_dipole_mock,
     generate_isotropic_mock,
+    mock_calibration_report_artifact,
     recovered_bias,
     run_injected_dipole_mocks,
     run_zoa_null_mocks,
@@ -273,3 +276,63 @@ class TestApplyBiasCorrection:
         )
         with pytest.raises(ValueError, match="V_true"):
             apply_bias_correction(np.array([1.0, 2.0, 3.0]), report)
+
+
+class TestMockCalibrationArtifact:
+    def test_artifact_is_json_ready_and_gate_passes_with_injected_bias(self):
+        report = MockCalibrationReport(
+            bias_amp=12.0,
+            bias_direction_deg=120.0,
+            coverage_68=0.67,
+            credible_radius_deg=14.0,
+            n_mock=120,
+            config={
+                "coverage_95": 0.94,
+                "null_amplitude_mean": 10.0,
+                "null_amplitude_std": 3.0,
+            },
+        )
+        injected = InjectedMockReport(
+            recovered_V_samples=np.tile(np.array([102.0, 0.0, 0.0]), (30, 1)),
+            amp_bias_fraction=0.02,
+            direction_bias_deg=1.2,
+            amp_spread_fractional=0.03,
+            n_mock=30,
+            config={"V_true": (100.0, 0.0, 0.0)},
+        )
+        artifact = mock_calibration_report_artifact(
+            report,
+            injected_report=injected,
+            metadata={"git_commit": "abc123"},
+        )
+        assert artifact["artifact_name"] == "mock_calibration_report_v1.json"
+        assert artifact["scope_label"] == "fiducial"
+        assert artifact["coverage_pass"] is True
+        assert artifact["bias_pass"] is True
+        assert artifact["mode1_to_mode2_gate_passed"] is True
+        json.dumps(artifact)
+
+    def test_artifact_gate_fails_when_bias_exceeds_threshold(self):
+        report = MockCalibrationReport(
+            bias_amp=12.0,
+            bias_direction_deg=120.0,
+            coverage_68=0.70,
+            credible_radius_deg=14.0,
+            n_mock=120,
+        )
+        injected = InjectedMockReport(
+            recovered_V_samples=np.tile(np.array([120.0, 0.0, 0.0]), (30, 1)),
+            amp_bias_fraction=0.20,
+            direction_bias_deg=4.0,
+            amp_spread_fractional=0.05,
+            n_mock=30,
+            config={"V_true": (100.0, 0.0, 0.0)},
+        )
+        artifact = mock_calibration_report_artifact(
+            report,
+            injected_report=injected,
+            bias_fraction_threshold=0.05,
+        )
+        assert artifact["coverage_pass"] is True
+        assert artifact["bias_pass"] is False
+        assert artifact["mode1_to_mode2_gate_passed"] is False

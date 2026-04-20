@@ -13,6 +13,9 @@ is the default).
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import hashlib
+import json
+import platform
 from typing import Any, Callable, Mapping
 
 import numpy as np
@@ -41,12 +44,35 @@ __all__ = [
     "run_zoa_null_mocks",
     "run_injected_dipole_mocks",
     "apply_bias_correction",
+    "mock_calibration_report_artifact",
 ]
 
 EstimatorFn = Callable[
     [np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray],
     tuple[np.ndarray, np.ndarray],
 ]
+
+
+def _jsonify(obj: Any) -> Any:
+    """Recursively convert numpy-heavy structures to JSON-native values."""
+    if isinstance(obj, float):
+        return obj if np.isfinite(obj) else None
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.generic):
+        item = obj.item()
+        return item if not isinstance(item, float) or np.isfinite(item) else None
+    if isinstance(obj, Mapping):
+        return {str(k): _jsonify(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_jsonify(v) for v in obj]
+    return obj
+
+
+def _config_hash(payload: Mapping[str, Any]) -> str:
+    """Stable SHA256 hash for artifact configuration payloads."""
+    blob = json.dumps(_jsonify(payload), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
 # ---------------------------------------------------------------------------
@@ -455,3 +481,89 @@ def apply_bias_correction(
     V_true = np.asarray(V_true_tuple, dtype=float)
     residual = injected_report.recovered_V_samples.mean(axis=0) - V_true
     return V_hat - residual
+
+
+def mock_calibration_report_artifact(
+    report: MockCalibrationReport,
+    *,
+    injected_report: InjectedMockReport | None = None,
+    coverage_window_68: tuple[float, float] = (0.60, 0.76),
+    bias_fraction_threshold: float = 0.05,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build the Mode 2 precondition ``mock_calibration_report_vX.json``.
+
+    When an ``InjectedMockReport`` is available, the artifact also evaluates
+    the amplitude-bias leg of the Mode 1 → Mode 2 gate from the research
+    plan. Without it, only the coverage gate is assessed.
+    """
+    if not isinstance(report, MockCalibrationReport):
+        raise TypeError(
+            "mock_calibration_report_artifact requires a MockCalibrationReport"
+        )
+    lower, upper = coverage_window_68
+    if not (0.0 <= lower <= upper <= 1.0):
+        raise ValueError(
+            "coverage_window_68 must satisfy 0 <= lower <= upper <= 1"
+        )
+    if bias_fraction_threshold < 0.0:
+        raise ValueError("bias_fraction_threshold must be >= 0")
+    coverage_pass = bool(lower <= report.coverage_68 <= upper)
+    injected_block: dict[str, Any] | None
+    if injected_report is None:
+        bias_fraction = None
+        bias_pass = None
+        injected_block = None
+    else:
+        bias_fraction = float(abs(injected_report.amp_bias_fraction))
+        bias_pass = bool(bias_fraction <= bias_fraction_threshold)
+        injected_block = {
+            "amp_bias_fraction": float(injected_report.amp_bias_fraction),
+            "direction_bias_deg": float(injected_report.direction_bias_deg),
+            "amp_spread_fractional": float(injected_report.amp_spread_fractional),
+            "n_mock": int(injected_report.n_mock),
+            "config": _jsonify(injected_report.config),
+        }
+    gate_passed = coverage_pass if bias_pass is None else bool(
+        coverage_pass and bias_pass
+    )
+    extra = dict(metadata or {})
+    config_payload = {
+        "coverage_window_68": coverage_window_68,
+        "bias_fraction_threshold": bias_fraction_threshold,
+        "metadata": extra,
+    }
+    return _jsonify({
+        "artifact_name": "mock_calibration_report_v1.json",
+        "generated_by": extra.get(
+            "generated_by",
+            "common.mock_calibration.mock_calibration_report_artifact",
+        ),
+        "git_commit": extra.get("git_commit", ""),
+        "config_hash": _config_hash(config_payload),
+        "input_data_hashes": list(extra.get("input_data_hashes", [])),
+        "random_seed": extra.get("random_seed"),
+        "wall_time_sec": extra.get("wall_time_sec"),
+        "python_version": extra.get("python_version", platform.python_version()),
+        "numpy_version": extra.get("numpy_version", np.__version__),
+        "claim_tier": extra.get("claim_tier", "CONDITIONAL"),
+        "scope_label": extra.get("scope_label", "fiducial"),
+        "production_allowed": False,
+        "coverage_window_68": list(coverage_window_68),
+        "coverage_pass": coverage_pass,
+        "bias_fraction_threshold": float(bias_fraction_threshold),
+        "bias_pass": bias_pass,
+        "mode1_to_mode2_gate_passed": gate_passed,
+        "bias_amp": float(report.bias_amp),
+        "bias_direction_deg": float(report.bias_direction_deg),
+        "coverage_68": float(report.coverage_68),
+        "credible_radius_deg": float(report.credible_radius_deg),
+        "n_mock": int(report.n_mock),
+        "null_distribution_summary": {
+            "coverage_95": report.config.get("coverage_95"),
+            "null_amplitude_mean": report.config.get("null_amplitude_mean"),
+            "null_amplitude_std": report.config.get("null_amplitude_std"),
+        },
+        "report_config": _jsonify(report.config),
+        "injected_dipole_summary": injected_block,
+    })

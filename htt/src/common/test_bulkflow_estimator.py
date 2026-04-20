@@ -10,10 +10,13 @@ from common.bulkflow_estimator import (
     BulkFlowCatalogue,
     BulkFlowFit,
     ZoAResponseResult,
+    baseline_selection_aware_artifact,
     bootstrap_covariance,
     bulk_flow_mask_ladder,
+    diagnostic_zoa_ladder_artifact,
     wls_bulk_flow,
 )
+from common.contracts import SkySelectionConfig
 from common.sky_geometry import lb_to_unitvec
 
 
@@ -275,3 +278,63 @@ class TestBootstrapCovariance:
         cat = _injected_catalogue(V_true, n=300, seed=6)
         out = bootstrap_covariance(cat, n_boot=128, rng=np.random.default_rng(7))
         np.testing.assert_allclose(out["V_hat_mean"], V_true, atol=20.0)
+
+
+# ---------------------------------------------------------------------------
+# §6 — JSON artifacts (Mode 0 / Mode 1)
+# ---------------------------------------------------------------------------
+
+class TestDirectionalArtifacts:
+    def test_diagnostic_zoa_ladder_artifact_is_json_ready(self):
+        cat = _injected_catalogue(np.array([220.0, -40.0, 30.0]), n=300, seed=9)
+        artifact = diagnostic_zoa_ladder_artifact(
+            cat,
+            metadata={"git_commit": "abc123"},
+        )
+        assert artifact["artifact_name"] == "diag_zoa_ladder_v1.json"
+        assert artifact["scope_label"] == "diagnostic"
+        assert artifact["production_allowed"] is False
+        assert len(artifact["bcut_deg"]) == 7
+        assert len(artifact["axis_instability_deg"]) == 7
+        assert artifact["config_hash"] != ""
+        import json
+
+        json.dumps(artifact)
+
+    def test_baseline_selection_aware_artifact_reports_mode_gate(self):
+        cat = _injected_catalogue(np.array([260.0, 50.0, -30.0]), n=350, seed=10)
+        cfg = SkySelectionConfig(
+            zoa_half_angle_deg=10.0,
+            min_retention_fraction=0.3,
+            nside=16,
+            smooth_sigma_pix=1.0,
+        )
+        baseline = baseline_selection_aware_artifact(
+            cat,
+            cfg,
+            n_boot=48,
+            metadata={"random_seed": 123},
+        )
+        assert baseline["artifact_name"] == "baseline_selection_aware_v1.json"
+        assert baseline["scope_label"] == "baseline"
+        assert baseline["production_allowed"] is False
+        assert baseline["retention_fraction"] >= 0.3
+        assert baseline["mode0_to_mode1_gate_passed"] is True
+        assert baseline["bootstrap"]["n_boot"] > 10
+        assert baseline["axis"]["selection_mode"] == "angular_completeness"
+
+    def test_baseline_gate_fails_when_retention_floor_not_met(self):
+        cat = _injected_catalogue(np.array([180.0, 0.0, 0.0]), n=250, seed=11)
+        cfg = SkySelectionConfig(
+            zoa_half_angle_deg=30.0,
+            min_retention_fraction=0.95,
+            nside=16,
+            smooth_sigma_pix=1.0,
+        )
+        baseline = baseline_selection_aware_artifact(
+            cat,
+            cfg,
+            n_boot=32,
+        )
+        assert baseline["retention_fraction"] < cfg.min_retention_fraction
+        assert baseline["mode0_to_mode1_gate_passed"] is False
