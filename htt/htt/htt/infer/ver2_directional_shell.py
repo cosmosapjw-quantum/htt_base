@@ -198,16 +198,16 @@ class DirectionalLikelihoodInputs:
     tsc_overlay_ref: str | None = None
 
     def __post_init__(self) -> None:
-        if self.observable_vector.manifest.owner not in {"BASS", "COMMON"}:
+        if self.observable_vector.manifest.owner != "BASS":
             raise ValueError(
-                "DirectionalLikelihoodInputs.observable_vector must come from BASS or COMMON"
+                "DirectionalLikelihoodInputs.observable_vector must come from BASS"
             )
         if (
             self.solver_core_output is not None
-            and self.solver_core_output.manifest.owner not in {"BASS", "COMMON"}
+            and self.solver_core_output.manifest.owner != "BASS"
         ):
             raise ValueError(
-                "DirectionalLikelihoodInputs.solver_core_output must come from BASS or COMMON"
+                "DirectionalLikelihoodInputs.solver_core_output must come from BASS"
             )
         if self.axis_gate.axis != self.preferred_axis:
             raise ValueError("axis_gate.axis must match preferred_axis")
@@ -281,8 +281,6 @@ def evaluate_production_axis_gate(
         "SkySupport.mock_coverage_status='adequate'",
     )
     blocked: list[str] = []
-    mock_status = sky_support.mock_coverage_status.strip().lower()
-    mock_coverage_ok = mock_status in {"adequate", "passed", "validated"}
     if not axis.production_allowed:
         blocked.append("PreferredAxis.production_allowed=False")
     if axis.source != "fiducial_posterior":
@@ -301,9 +299,9 @@ def evaluate_production_axis_gate(
         blocked.append(
             "PreferredAxis.selection_mode and SkySupport.selection_mode must match"
         )
-    if not mock_coverage_ok:
+    if sky_support.mock_coverage_status != "adequate":
         blocked.append(
-            "SkySupport.mock_coverage_status must indicate adequate mock coverage for production"
+            "SkySupport.mock_coverage_status must be 'adequate' for production"
         )
 
     carry_forward: list[str] = []

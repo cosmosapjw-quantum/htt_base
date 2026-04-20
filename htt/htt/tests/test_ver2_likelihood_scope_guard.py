@@ -15,6 +15,8 @@ from htt.infer.likelihood_scope_guard import (
     evaluate_likelihood_scope,
     guard_tsc_posterior_correction,
 )
+from htt.infer.matched_complexity import MatchedComplexityHook
+from htt.infer.null_competition import NullCompetitionHook
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -49,7 +51,8 @@ def _observable() -> ObservableVector:
             selection_mode="mock_calibrated",
             sky_support_hash="sky123",
             mask_hash="mask123",
-            mock_coverage_status="passed",
+            mock_coverage_status="adequate",
+            scan_volume_hash="scan123",
         ),
         manifest=_manifest("BASS", "canonical_BASS"),
     )
@@ -159,7 +162,7 @@ def test_rejects_mio_certificate_merge():
         input_data_hashes=["x"],
         manifest=_manifest("MIO", "mio"),
     )
-    with pytest.raises(TypeError, match="MioCertificate"):
+    with pytest.raises(TypeError, match="MIO certificates are diagnostic-only"):
         build_directional_likelihood_input(
             observable_vector=_observable(),
             external_artifacts=(cert,),
@@ -189,6 +192,41 @@ def test_blocks_spin2_channels_when_tsc_pending():
         for reason in decision.blocking_reasons
     )
     assert "scalar_only_discrimination_insufficient" in decision.caveats
+
+
+def test_matched_complexity_failure_is_a_hard_block():
+    bundle = build_directional_likelihood_input(
+        observable_vector=_observable(),
+        matched_complexity_hook=MatchedComplexityHook(
+            controls_required=("C1", "C2", "C3"),
+            overall_pass=False,
+            violations=("prior_width_mismatch",),
+        ),
+        null_competition_hook=NullCompetitionHook(
+            required_families=("mask_leakage",),
+            fpr_threshold=0.10,
+            ready_for_inference=True,
+            worst_family="mask_leakage",
+            worst_fpr=0.01,
+        ),
+    )
+    decision = evaluate_likelihood_scope(bundle)
+    assert decision.allowed is False
+    assert "matched_complexity_failed" in decision.blocking_reasons
+
+
+def test_integration_helper_binds_common_contracts_without_solver_output():
+    from htt.integration.from_bass import ingest_ver2_directional_inputs
+
+    bundle = ingest_ver2_directional_inputs(
+        _observable(),
+        required_channels=("TT",),
+    )
+    decision = evaluate_likelihood_scope(bundle)
+    assert bundle.observable_vector.manifest.owner == "BASS"
+    assert decision.allowed is True
+    assert "null_competition_hook_pending" in decision.caveats
+    assert "solver_coupled_wiring_pending" in decision.caveats
 
 
 def test_guard_tsc_posterior_correction_is_hard_block():

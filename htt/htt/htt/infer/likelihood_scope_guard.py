@@ -51,9 +51,9 @@ class DirectionalLikelihoodInput:
     caveats: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
-        if self.observable_vector.manifest.owner not in {"BASS", "COMMON"}:
+        if self.observable_vector.manifest.owner != "BASS":
             raise ValueError(
-                "DirectionalLikelihoodInput.observable_vector must carry a BASS- or COMMON-owned manifest"
+                "DirectionalLikelihoodInput.observable_vector must carry a BASS-owned manifest"
             )
         missing = sorted(set(self.required_channels) - set(self.observable_vector.channels))
         if missing:

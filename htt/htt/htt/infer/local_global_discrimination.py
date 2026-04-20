@@ -32,7 +32,7 @@ def _manifest(artifact_id: str) -> ArtifactManifest:
         artifact_path=f"artifacts/htt/{artifact_id}.json",
         owner="HTT",
         implementation_scope="htt",
-        claim_tier="conditional",
+        claim_tier="exploratory",
         production_status="diagnostic_only",
         created_by="htt.infer.local_global_discrimination",
         git_commit=None,
