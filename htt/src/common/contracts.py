@@ -5,10 +5,7 @@ and tsc. They are all frozen so consumers cannot silently mutate them.
 
 Scope
 -----
-* ``PreferredAxis`` — directional axis with provenance and production gate
-  (mirrors htt.PR13AJ_full_a2m_restoration.PreferredAxis; the htt-side copy
-  stays for now to keep HTT-P0-AJ atomic — §2.3 — and will be collapsed into
-  this contract later once COMMON-A is consumed by htt).
+* ``PreferredAxis`` — directional axis with provenance and production gate.
 * ``SkySelectionConfig`` — the single ZoA/selection configuration object
   with production-mode invariants (§6.6 of the parent plan).
 * ``DirectionalSummary`` — 4-channel summary aggregate (mirrors the AH-side

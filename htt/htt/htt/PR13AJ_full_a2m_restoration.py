@@ -9,64 +9,16 @@ wires ``restore_full_a2m`` so that it refuses to run on any diagnostic axis.
 The restoration kernel itself is intentionally minimal — the v2 plan gates
 the *entry point*, not the rotation internals. The rotation body raises
 ``NotImplementedError`` as a placeholder until the full a_{ℓm} rotation logic
-is ported. The point of this commit is to block diagnostic axes long before
+is ported. The point of this module is to block diagnostic axes long before
 they reach any rotation stage.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import Dict
 
+from common.contracts import PreferredAxis
 
-_ALLOWED_SOURCES = {
-    "raw_diagnostic",
-    "zoa_masked",
-    "selection_aware",
-    "fiducial_posterior",
-}
-_ALLOWED_WEIGHT_MODES = {"uniform_fallback", "native", "native_with_nuisance"}
-_ALLOWED_SELECTION_MODES = {
-    "none",
-    "zoa_hard_cut",
-    "angular_completeness",
-    "mock_calibrated",
-}
-
-
-@dataclass(frozen=True)
-class PreferredAxis:
-    """Directional axis with full provenance.
-
-    v2 extension of the legacy (l_deg, b_deg, label)-only record. Any axis
-    downstream of ``restore_full_a2m`` must have ``production_allowed=True``,
-    which can only be set by the posterior-derived constructors (see
-    ``common.posterior_summary.axis_from_posterior``).
-    """
-
-    l_deg: float
-    b_deg: float
-    label: str
-    source: str
-    weight_mode: str
-    selection_mode: str
-    production_allowed: bool = False
-    provenance_hash: str = ""
-
-    def __post_init__(self) -> None:
-        if self.source not in _ALLOWED_SOURCES:
-            raise ValueError(
-                f"PreferredAxis.source={self.source!r} not in {_ALLOWED_SOURCES}"
-            )
-        if self.weight_mode not in _ALLOWED_WEIGHT_MODES:
-            raise ValueError(
-                f"PreferredAxis.weight_mode={self.weight_mode!r} "
-                f"not in {_ALLOWED_WEIGHT_MODES}"
-            )
-        if self.selection_mode not in _ALLOWED_SELECTION_MODES:
-            raise ValueError(
-                f"PreferredAxis.selection_mode={self.selection_mode!r} "
-                f"not in {_ALLOWED_SELECTION_MODES}"
-            )
+__all__ = ["PreferredAxis", "restore_full_a2m"]
 
 
 def restore_full_a2m(axis: PreferredAxis, a20_seed: complex) -> Dict[int, complex]:

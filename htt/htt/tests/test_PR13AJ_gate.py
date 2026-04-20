@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import pytest
 
+from common.contracts import PreferredAxis as CommonPreferredAxis
 from htt.PR13AJ_full_a2m_restoration import PreferredAxis, restore_full_a2m
 
 
@@ -82,3 +83,7 @@ def test_preferred_axis_default_production_allowed_is_false():
         selection_mode="none",
     )
     assert axis.production_allowed is False
+
+
+def test_pr13aj_preferred_axis_is_common_contract_alias():
+    assert PreferredAxis is CommonPreferredAxis
