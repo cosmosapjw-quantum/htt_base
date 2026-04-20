@@ -1,13 +1,16 @@
 """COMMON-E tests — posterior_summary (INDEPENDENT_TRACKS_PLAN §3.1)."""
 from __future__ import annotations
 
+import json
+
 import numpy as np
 import pytest
 
-from common.contracts import PreferredAxis
+from common.contracts import DynestyResult, MockCalibrationReport, PreferredAxis
 from common.posterior_summary import (
     axis_from_posterior,
     credible_cone,
+    fiducial_posterior_bundle,
     hpd_region_healpix,
     posterior_summary_dict,
     samples_to_lb_posterior,
@@ -217,3 +220,71 @@ class TestPosteriorSummaryDict:
         amps = np.linalg.norm(samples, axis=1)
         np.testing.assert_allclose(bundle["amplitude_mean"], amps.mean(), rtol=1e-6)
         np.testing.assert_allclose(bundle["amplitude_std"], amps.std(), rtol=1e-6)
+
+
+# ---------------------------------------------------------------------------
+# §6 — fiducial_posterior_bundle
+# ---------------------------------------------------------------------------
+
+class TestFiducialPosteriorBundle:
+    def _dynesty_result(self) -> DynestyResult:
+        V = np.array([240.0, -80.0, 50.0])
+        samples = _gaussian_V_samples(V, n=800, sigma=25.0, seed=11)
+        # Deliberately unnormalised log-weights — the bundle builder should
+        # stabilise and renormalise them internally.
+        raw_w = np.linspace(1.0, 2.0, samples.shape[0])
+        return DynestyResult(
+            samples=samples,
+            logwt=np.log(raw_w),
+            logz=14.25,
+            ncall=321,
+            config={"seed": 17, "sampler": "static", "nlive": 128},
+        )
+
+    def _mock_report(self, coverage_68: float = 0.68) -> MockCalibrationReport:
+        return MockCalibrationReport(
+            bias_amp=0.03,
+            bias_direction_deg=2.5,
+            coverage_68=coverage_68,
+            credible_radius_deg=15.0,
+            n_mock=200,
+            config={"coverage_95": 0.94},
+        )
+
+    def test_bundle_is_json_serialisable_and_production_gated(self):
+        bundle = fiducial_posterior_bundle(
+            self._dynesty_result(),
+            mock_report=self._mock_report(),
+            nside_hpd=16,
+            metadata={
+                "git_commit": "abc123",
+                "input_data_hashes": ["deadbeef"],
+            },
+            posterior_samples_ref="posterior_samples_FLRW_tilt_S2.hdf5",
+        )
+        assert bundle["scope_label"] == "fiducial"
+        assert bundle["production_allowed"] is True
+        assert bundle["axis"]["production_allowed"] is True
+        assert bundle["axis"]["source"] == "fiducial_posterior"
+        assert bundle["mock_calibration"]["coverage_68"] == pytest.approx(0.68)
+        assert bundle["posterior_samples_ref"].endswith(".hdf5")
+        assert bundle["config_hash"] != ""
+        assert bundle["python_version"] != ""
+        # JSON artefact contract: no numpy arrays/scalars should remain.
+        encoded = json.dumps(bundle)
+        assert "fiducial_posterior_bundle_v1.json" in encoded
+
+    def test_bundle_rejects_out_of_window_mock_coverage(self):
+        with pytest.raises(ValueError, match="outside fiducial window"):
+            fiducial_posterior_bundle(
+                self._dynesty_result(),
+                mock_report=self._mock_report(coverage_68=0.55),
+            )
+
+    def test_bundle_rejects_invalid_coverage_window(self):
+        with pytest.raises(ValueError, match="coverage_window_68"):
+            fiducial_posterior_bundle(
+                self._dynesty_result(),
+                mock_report=self._mock_report(),
+                coverage_window_68=(0.80, 0.60),
+            )

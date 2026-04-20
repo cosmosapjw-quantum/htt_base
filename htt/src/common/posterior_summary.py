@@ -18,12 +18,14 @@ flow through a diagnostic constructor elsewhere.
 """
 from __future__ import annotations
 
+import json
 import hashlib
+import platform
 from typing import Any, Mapping
 
 import numpy as np
 
-from common.contracts import PreferredAxis
+from common.contracts import DynestyResult, MockCalibrationReport, PreferredAxis
 from common.healpix_selection import (
     lb_to_pix,
     nside_to_npix,
@@ -40,6 +42,7 @@ __all__ = [
     "hpd_region_healpix",
     "axis_from_posterior",
     "posterior_summary_dict",
+    "fiducial_posterior_bundle",
 ]
 
 
@@ -222,6 +225,40 @@ def _provenance_hash(samples: np.ndarray, config: Mapping[str, Any]) -> str:
     return h.hexdigest()[:16]
 
 
+def _normalised_weights_from_logwt(logwt: np.ndarray) -> np.ndarray:
+    """Convert dynesty ``logwt`` values to normalised linear weights."""
+    logwt = np.asarray(logwt, dtype=float)
+    if logwt.ndim != 1:
+        raise ValueError(f"logwt must be 1-D; got shape {logwt.shape}")
+    if logwt.size == 0:
+        raise ValueError("logwt is empty")
+    shifted = logwt - float(np.max(logwt))
+    w = np.exp(shifted)
+    total = float(w.sum())
+    if total <= 0.0 or not np.isfinite(total):
+        raise ValueError("logwt does not produce a finite positive weight sum")
+    return w / total
+
+
+def _jsonify(obj: Any) -> Any:
+    """Recursively convert numpy-heavy structures to JSON-native values."""
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.generic):
+        return obj.item()
+    if isinstance(obj, Mapping):
+        return {str(k): _jsonify(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_jsonify(v) for v in obj]
+    return obj
+
+
+def _config_hash(payload: Mapping[str, Any]) -> str:
+    """Stable SHA256 hash for the bundle configuration payload."""
+    blob = json.dumps(_jsonify(payload), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
 def axis_from_posterior(
     samples: np.ndarray,
     *,
@@ -320,3 +357,118 @@ def posterior_summary_dict(
         "credible_cone": cone,
         "hpd_region": hpd,
     }
+
+
+def fiducial_posterior_bundle(
+    dynesty_result: DynestyResult,
+    *,
+    mock_report: MockCalibrationReport,
+    level_cone: float = 0.68,
+    level_hpd: float = 0.68,
+    nside_hpd: int = 32,
+    coverage_window_68: tuple[float, float] = (0.60, 0.76),
+    metadata: Mapping[str, Any] | None = None,
+    posterior_samples_ref: str | None = None,
+) -> dict[str, Any]:
+    """Build the Mode 2 ``fiducial_posterior_bundle`` artifact.
+
+    This is the production bundle described in
+    ``BASS_PY_HTT_TSC_RESEARCH_PLAN.md`` §5.4 and §12.1. It only materialises
+    when the mock-calibration gate passes: a missing report or
+    ``coverage_68`` outside the published window aborts bundle creation.
+    """
+    if not isinstance(dynesty_result, DynestyResult):
+        raise TypeError(
+            "fiducial_posterior_bundle requires a DynestyResult input"
+        )
+    if not isinstance(mock_report, MockCalibrationReport):
+        raise TypeError(
+            "fiducial_posterior_bundle requires a MockCalibrationReport"
+        )
+    lower, upper = coverage_window_68
+    if not (0.0 <= lower <= upper <= 1.0):
+        raise ValueError(
+            "coverage_window_68 must satisfy 0 <= lower <= upper <= 1"
+        )
+    if lower > mock_report.coverage_68 or mock_report.coverage_68 > upper:
+        raise ValueError(
+            f"mock_report.coverage_68={mock_report.coverage_68:.3f} outside "
+            f"fiducial window [{lower:.2f}, {upper:.2f}]"
+        )
+
+    weights = _normalised_weights_from_logwt(dynesty_result.logwt)
+    cfg = dict(dynesty_result.config)
+    extra = dict(metadata or {})
+    axis = axis_from_posterior(
+        dynesty_result.samples,
+        weights=weights,
+        config={
+            **cfg,
+            "coverage_68": mock_report.coverage_68,
+            "coverage_window_68": coverage_window_68,
+            **extra,
+        },
+    )
+    summary = posterior_summary_dict(
+        dynesty_result.samples,
+        dynesty_result.logz,
+        level_cone=level_cone,
+        level_hpd=level_hpd,
+        nside_hpd=nside_hpd,
+        weights=weights,
+    )
+    config_payload = {
+        "dynesty_config": cfg,
+        "nside_hpd": nside_hpd,
+        "level_cone": level_cone,
+        "level_hpd": level_hpd,
+        "coverage_window_68": coverage_window_68,
+        "metadata": extra,
+        "posterior_samples_ref": posterior_samples_ref,
+    }
+    bundle = {
+        "artifact_name": "fiducial_posterior_bundle_v1.json",
+        "generated_by": extra.get(
+            "generated_by",
+            "common.posterior_summary.fiducial_posterior_bundle",
+        ),
+        "git_commit": extra.get("git_commit", ""),
+        "config_hash": _config_hash(config_payload),
+        "input_data_hashes": list(extra.get("input_data_hashes", [])),
+        "random_seed": extra.get("random_seed", cfg.get("seed")),
+        "wall_time_sec": extra.get("wall_time_sec"),
+        "python_version": extra.get("python_version", platform.python_version()),
+        "numpy_version": extra.get("numpy_version", np.__version__),
+        "dynesty_version": extra.get("dynesty_version", ""),
+        "claim_tier": extra.get("claim_tier", "CONDITIONAL"),
+        "scope_label": extra.get("scope_label", "fiducial"),
+        "production_allowed": True,
+        "posterior_samples_ref": posterior_samples_ref,
+        "logz": float(dynesty_result.logz),
+        "ncall": int(dynesty_result.ncall),
+        "dynesty_config": _jsonify(cfg),
+        "axis": {
+            "l_deg": axis.l_deg,
+            "b_deg": axis.b_deg,
+            "label": axis.label,
+            "source": axis.source,
+            "weight_mode": axis.weight_mode,
+            "selection_mode": axis.selection_mode,
+            "production_allowed": axis.production_allowed,
+            "provenance_hash": axis.provenance_hash,
+        },
+        "posterior_summary": _jsonify(summary),
+        "mock_calibration": _jsonify(
+            {
+                "bias_amp": mock_report.bias_amp,
+                "bias_direction_deg": mock_report.bias_direction_deg,
+                "coverage_68": mock_report.coverage_68,
+                "credible_radius_deg": mock_report.credible_radius_deg,
+                "n_mock": mock_report.n_mock,
+                "config": mock_report.config,
+                "coverage_window_68": list(coverage_window_68),
+                "passed_window": True,
+            }
+        ),
+    }
+    return bundle
