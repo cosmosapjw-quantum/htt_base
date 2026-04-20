@@ -18,6 +18,7 @@
 14. `docs/ver2_upgrade/audits/AUDIT_SK-02S2_2026-04-21.md`
 15. `docs/ver2_upgrade/audits/AUDIT_SK-03S3_2026-04-21.md`
 16. `docs/ver2_upgrade/audits/AUDIT_SK-04O_2026-04-21.md`
+17. `docs/ver2_upgrade/audits/AUDIT_SK-08V_2026-04-21.md`
 
 ## 2. Current State
 
@@ -43,22 +44,28 @@
 - `SK-04O` is now closed: BASS owns canonical O-lane producer shells for manifest-backed `ObservableVector`, sparse covariance/BiPoSH proxy export, `AtlasEntryLite`, rank-gated `FullCovMESReport`, and descriptive xQPiFG `DepartureReport` plumbing under `htt/bass/observational/*`, plus thin workspace aliases for `ObservableVector` and `FullCovMESReport`.
 - BASS O-lane verification is green for the packet scope: targeted pytest `103 passed`, touched-surface pytest `65 passed`, and `py_compile` passed.
 - The O-lane explicitly records proxy-vs-production boundaries: diagonal-only compression is never treated as sufficient, rank-deficient covariance upgrades return no-claim, uncertified filling remains descriptive/proxy-only, and FB-7 `m`-block sparse exports are labeled `sparse_mode_block_proxy` rather than full BiPoSH.
+- `SK-08V` is now closed: `workspace/contracts` carries a package-neutral theorem-to-test map, validation campaign registry, null/injection manifests, and hostile-audit runbook contracts; `htt/scripts` now exposes machine-readable registry/runbook checks.
+- Validation V-lane verification is green for the packet scope: targeted pytest `9 passed`, touched-surface pytest `40 passed`, `py_compile` passed, and both `htt/scripts/ver2_validation_registry.py --check` and `htt/scripts/ver2_hostile_audit.py --check` pass.
+- Prompt list 01 is now complete: every skeleton lane has an audit note, machine-readable carry-forward, and a frozen write-scope boundary.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
 ## 3. Next Recommended Packet
 
-`SK-00`, `SK-01C`, `SK-01S1`, `SK-02S2`, `SK-03S3`, `SK-04O`, `SK-05T`, `SK-06H`, `SK-07M`, and `SK-09D` are closed. Continue into the validation packet now.
+`SK-00`, `SK-01C`, `SK-01S1`, `SK-02S2`, `SK-03S3`, `SK-04O`, `SK-05T`, `SK-06H`, `SK-07M`, `SK-08V`, and `SK-09D` are closed. Move to prompt list 02.
 
-Prefer this order now:
+If working in one thread, start the solver critical path:
 
-1. `SK-08V`
+1. `IM-01S1`
+2. `IM-02S2`
+3. `IM-03S3A`
+4. `IM-04O`
+5. `IM-08V`
 
-Parallel recommendation now:
-- one thread: `SK-08V`
+If parallel threads are available, start these side lanes immediately while the solver path begins:
 
-Defer until validation artifacts exist:
-- `IM-03S3A`
-- `IM-04O`
+- `IM-05T`
+- `IM-06H`
+- `IM-07M`
 
 ## 4. Hard Reminders
 
@@ -73,4 +80,5 @@ Defer until validation artifacts exist:
 - Do not silently treat the new S3 shells as executable solver completion either; they freeze runtime/output ownership, but Tier A/Tier B numerics and observable extraction still require later implementation packets.
 - Do not silently promote `sparse_mode_block_proxy` into a full BiPoSH claim surface; executable O-lane work must replace or discharge that caveat explicitly.
 - Do not treat rank-blocked `FullCovMESReport` artifacts as weak covariance evidence; they are explicit no-claim outputs.
+- Do not treat `warn` campaigns in the V-lane registry as validated science gates; they are explicit placeholders until executable implementation packets discharge them.
 - Rerun `venv/bin/python scripts/ver2_artifact_export.py` after any D-lane change touching generated manuscript/export surfaces.

@@ -22,15 +22,29 @@ from .htt_to_mio import PosteriorExportBundle
 from .mio_certificate import MioCertificate
 from .observable_vector import ObservableVector
 from .tsc_overlay import TscAdequacyOverlay
+from .validation_registry import (
+    HostileAuditRunbook,
+    InjectionCampaignManifest,
+    NullEnsembleManifest,
+    TheoremToTestEntry,
+    ValidationCampaign,
+    ValidationTestLink,
+)
 
 __all__ = [
     "AtlasEntry",
     "AtlasEntryLite",
     "DepartureReport",
     "FullCovMESReport",
+    "HostileAuditRunbook",
     "HttForwardOutput",
+    "InjectionCampaignManifest",
     "MioCertificate",
+    "NullEnsembleManifest",
     "ObservableVector",
     "PosteriorExportBundle",
+    "TheoremToTestEntry",
     "TscAdequacyOverlay",
+    "ValidationCampaign",
+    "ValidationTestLink",
 ]

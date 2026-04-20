@@ -19,6 +19,7 @@ MODULES = [
     ROOT / "mio_certificate.py",
     ROOT / "observable_vector.py",
     ROOT / "tsc_overlay.py",
+    ROOT / "validation_registry.py",
 ]
 FORBIDDEN_LOCAL_SCHEMA_NAMES = {
     "Owner",
