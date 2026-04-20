@@ -12,7 +12,7 @@
 >
 > The technical content below is unaltered. The 48 tests and 580 cumulative count remain as-is. The
 > roundtrip MC sweep originally planned for v4 W3D2 is absorbed into merged W3D3 alongside the
-> directory move. See `BASS_PY_INTEGRATION_v4_1_MERGED.md` §8 for the full retrofit mapping.
+> directory move. See `BASS_PY_INTEGRATION_MERGED.md` §8 for the full retrofit mapping.
 >
 > The **revised W3D1** in the merged schedule is `bass/runtime/canonical_decision.py`, gated on
 > approval of `CANONICAL_DECISION_DESIGN.md`.

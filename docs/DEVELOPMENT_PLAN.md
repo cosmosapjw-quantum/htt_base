@@ -249,7 +249,7 @@ Exactly what this PR delivers in one line.
 - If YES, scope: <which files / which claims>
 
 ### Doc updates (self-triggered; see AUDIT_AND_UPDATE_PROCEDURE §2)
-- `docs/DEVELOPMENT_PLAN_v1.md` §1 commit ledger: add row with SHA
+- `docs/DEVELOPMENT_PLAN.md` §1 commit ledger: add row with SHA
 - `docs/ROADMAP_v3_APPROXIMATION_FREE_2026-04-18.md` §P2.6 / P2.X: mark PR DONE
 - <any other doc affected>
 
@@ -335,4 +335,4 @@ commits behind `git log --oneline -1`. This is caught by the audit procedure
 
 ---
 
-*End of DEVELOPMENT_PLAN_v1.md.*
+*End of DEVELOPMENT_PLAN.md.*

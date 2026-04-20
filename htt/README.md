@@ -75,6 +75,6 @@ tsc/                 Trace Semantics Controller (admissibility, charts, diagnost
 
 - `HANDOFF_PACKET.md` — 11-section research handoff (primary context)
 - `CHANGELOG.md` — version history
-- `BASS_PY_INTEGRATION_v4_1_MERGED.md` — architecture baseline
-- `MASTER_PROMPT_LIST_bass_py_v1_2.md` — W3–W15 roadmap
+- `BASS_PY_INTEGRATION_MERGED.md` — architecture baseline
+- `MASTER_PROMPT_LIST_bass_py.md` — W3–W15 roadmap
 - Session packets: `WEEK{3-8}_*_PACKET.md`

@@ -187,7 +187,7 @@ def test_bianchi_type_to_model_id_handles_known_suffixes():
 def test_probe_name_is_alphabetical_bundle_HJ02a(tmp_path: Path):
     """HJ-02a probe_name must equal the alphabetical "+"-join of probe names."""
     payload = emit_directional_coherence_artefact(
-        tmp_path / "mio_directional_coherence_v1.json",
+        tmp_path / "mio_directional_coherence.json",
         n_mock=8,
     )
     name = payload["certificate"]["probe_name"]
@@ -197,7 +197,7 @@ def test_probe_name_is_alphabetical_bundle_HJ02a(tmp_path: Path):
 
 def test_probe_name_matches_grammar_v1_HJ02a(tmp_path: Path):
     payload = emit_directional_coherence_artefact(
-        tmp_path / "mio_directional_coherence_v1.json",
+        tmp_path / "mio_directional_coherence.json",
         n_mock=8,
     )
     assert _matches_grammar_v1(payload["certificate"]["probe_name"])

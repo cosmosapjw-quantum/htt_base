@@ -63,7 +63,7 @@ References
   baryon-euler)
 - Ma-Bertschinger 1995 (synchronous gauge reference equations)
 - CAMB notes §7.3 (tight coupling closure and R_b definition)
-- MASTER_PROMPT_LIST_bass_py_v1.0.md §3 W6-01
+- MASTER_PROMPT_LIST_bass_py.md §3 W6-01
 """
 from __future__ import annotations
 

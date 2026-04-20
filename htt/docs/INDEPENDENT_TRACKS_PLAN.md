@@ -703,7 +703,7 @@ def to_mio_certificate(probes, p_iso, resultant, config_hash) -> 'MioCertificate
 - `test_pairwise_separations_cmb_catwise_literature_ge_28deg` — CMB-CatWISE separation ≈ 28° (Secrest+2020)
 - `test_to_mio_certificate_has_no_posterior_field` — G19
 
-**Gate**: 5 테스트 PASS + artifact `mio_directional_coherence_v1.json` 생성 가능 + `fig_resultant_vector_5probes` (F135) 플레이스홀더 스크립트.
+**Gate**: 5 테스트 PASS + artifact `mio_directional_coherence.json` 생성 가능 + `fig_resultant_vector_5probes` (F135) 플레이스홀더 스크립트.
 
 **SSOT probe 위치 (hardcoded 초안)**:
 ```python
@@ -901,7 +901,7 @@ def as_caveats_list(report) -> list[str]: ...  # MioCertificate.domain_caveats�
 
 | 구 prefix 후보 | v3 필수 prefix | 예시 |
 |---|---|---|
-| (없음) / ad-hoc | `mio_` | `mio_directional_coherence_v1.json` |
+| (없음) / ad-hoc | `mio_` | `mio_directional_coherence.json` |
 | `pr13am_*` | **`mio_pr13am_*`** | `mio_pr13am_te_sign_v1.json` (PATCH-01 해결 일환) |
 | `diag_*` / `baseline_*` / `fiducial_*` (기존 3-mode) | 그대로 유지 | — (MIO와 orthogonal) |
 
@@ -944,7 +944,7 @@ def as_caveats_list(report) -> list[str]: ...  # MioCertificate.domain_caveats�
 - [ ] **G19-ENFORCE-01** 3 enforcement 테스트 green + lint scan 로그 보존
 - [ ] **REG-02** 4건 추가 테스트 green
 - [ ] **MIO-BOOT-01** `bass_py/mio/` import 가능 + `test_boot.py` green
-- [ ] **MIO-HJ-02a** 5 테스트 green + `mio_directional_coherence_v1.json` artifact 생성 가능
+- [ ] **MIO-HJ-02a** 5 테스트 green + `mio_directional_coherence.json` artifact 생성 가능
 - [ ] **MIO-HJ-06a** 3 테스트 green + MioCertificate generator 정상
 - [ ] **MIO-BRIDGES-01** PR13AM `__mio_owned__=True` 태그 + `mio.bridges` re-export 작동
 - [ ] **MIO-HJ-05a-lite** masked_sky_caveats 2 테스트 green
@@ -1395,7 +1395,7 @@ def _mio_artifact_name(stem: str, version: int = 1) -> str:
 
 **Week 6 게이트**:
 - [ ] `import bass_py.mio` 성공
-- [ ] HJ-02a 5 테스트 green + `mio_directional_coherence_v1.json` artifact 생성 확인
+- [ ] HJ-02a 5 테스트 green + `mio_directional_coherence.json` artifact 생성 확인
 - [ ] HTT figure skip: 2 (`bounds` 관련만 남음) — MIO 관련 2 skip 은 0으로 해소
 - [ ] `MioCertificate`.as_posterior_bundle() → NotImplementedError 실행 확인
 
@@ -1489,4 +1489,3 @@ Days 5-6 DOS-A36/A37 등 A3x dossier 연속, Day 7 phase audit.
 | v1.1 | 2026-04-19 | v3 MIO 통합 패치 (§10~§17 추가). 앞 §1~§8 불변 유지 |
 | **v1.2** | **2026-04-19** | **코드 인스펙션 (기준 커밋 `115f505` LB-5, IND_TRACKS_W4) 결과 반영. §18 실태 요약 + §19 신규 트랙 7종 (WS-BOOT-01, HTT-FIG-SHIM, HTT-OBS-FIXTURE, PR13AH-v2-WIRE, PR13AM-MIO-TAG, LEGACY-README, FIG-MIO-SKIP-GATE) + §20 v1.1 트랙 업데이트 + §21 Week 5~9 실태 반영 실행 순서 (§16 대체) + §22 개정 게이트. PATCH-01/02/03/04 전부 Week 5 내 소멸 경로 확정.** |
 | **v1.3** | **2026-04-19** | **W10 F4 후속 — §21 에 Week 10 + Week 11 항목 정식 추가. Week 10 Day 5-6 (`MANU-CH12 §12.3`) 에 **post-W8-FM1 rule** (`/project` 경로 stage/commit 금지; `feedback_project_local_only.md` 준수) 를 명시하여 stale "force-add contract" 표현의 재도입 여지를 제거.** |
-

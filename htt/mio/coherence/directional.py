@@ -233,7 +233,7 @@ def to_mio_certificate(
     has_covariance: bool = False,
     has_null_mocks: bool = False,
     sky_support_status: SkySupportStatus = "partial",
-    artifact_path: str = "artifacts/mio/mio_directional_coherence_v1.json",
+    artifact_path: str = "artifacts/mio/mio_directional_coherence.json",
 ) -> MioCertificate:
     """Package directional-coherence results into a `MioCertificate`.
 
@@ -308,7 +308,7 @@ def to_mio_certificate(
 # Artefact emitter
 # ---------------------------------------------------------------------------
 
-ARTEFACT_FILENAME = "mio_directional_coherence_v1.json"
+ARTEFACT_FILENAME = "mio_directional_coherence.json"
 
 
 def emit_directional_coherence_artefact(

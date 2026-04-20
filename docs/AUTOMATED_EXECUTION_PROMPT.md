@@ -15,7 +15,7 @@ by reference:
 
 This document is the **operator**. The four planning docs remain the
 **sources of truth**:
-[`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md),
+[`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md),
 [`SESSION_KNOWLEDGE_LEDGER.md`](SESSION_KNOWLEDGE_LEDGER.md),
 [`PR_WBS_SDD.md`](PR_WBS_SDD.md),
 [`AUDIT_AND_UPDATE_PROCEDURE.md`](AUDIT_AND_UPDATE_PROCEDURE.md).
@@ -60,7 +60,7 @@ From [`SESSION_KNOWLEDGE_LEDGER.md`](SESSION_KNOWLEDGE_LEDGER.md) §2, §5, §6:
 
 Load these four files into working memory, in order:
 
-1. [`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md) — commit ledger +
+1. [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) — commit ledger +
    upcoming PR index + template.
 2. [`SESSION_KNOWLEDGE_LEDGER.md`](SESSION_KNOWLEDGE_LEDGER.md) — all
    user-provided constraints, measurements, killed directions.
@@ -258,7 +258,7 @@ the phase commit. P2/P3 findings log in
 Apply every doc update from
 [`AUDIT_AND_UPDATE_PROCEDURE.md`](AUDIT_AND_UPDATE_PROCEDURE.md) §2.1:
 
-- [`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md) §1 new row.
+- [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) §1 new row.
 - [`PR_WBS_SDD.md`](PR_WBS_SDD.md) → `Status: DONE <sha>` + Evidence.
 - Conditional docs per the PR's `Doc updates:` line.
 - If a new constraint / killed direction emerged, edit
@@ -494,7 +494,7 @@ If any answer is "no", fix before committing.
 - [ ] Audit self-triggered per §1 of AUDIT_AND_UPDATE_PROCEDURE;
       P0/P1 in `AUDIT(<PR-id>)` commit; P2/P3 in
       `AUDIT_PHASE_<PR-id>_<date>.md`.
-- [ ] `DEVELOPMENT_PLAN_v1.md` §1 row added.
+- [ ] `DEVELOPMENT_PLAN.md` §1 row added.
 - [ ] `PR_WBS_SDD.md` Status → `DONE <sha>`; Evidence bullet added.
 - [ ] Conditional docs updated per the PR's `Doc updates:` line.
 - [ ] If new constraint / killed direction:

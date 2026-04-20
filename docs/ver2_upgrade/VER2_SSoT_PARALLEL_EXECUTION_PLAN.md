@@ -17,7 +17,7 @@ Turn the current `htt/bass`-centered low-`ell` beyond-FLRW stack into a directio
    Solver-core physics, package layout, PR/WBS order, validation gates, hard non-negotiables.
 2. `docs/ver2_upgrade/lowell_bianchi_solver_core_selfcontained.md`
    Full physics/math reference for tetrad algebra, PSTF operators, background, tilt, transport, and exact electron-frame source logic.
-3. `docs/ver2_upgrade/BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_v4_critical_upgraded.md`
+3. `docs/ver2_upgrade/BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_critical_upgraded.md`
    Program-level critical path, P0 correction packs, package roles, manuscript gating.
 4. `docs/ver2_upgrade/BASS_HTT_MIO_TSC_observable_atlas_SDD_WBS_PR_plan.md`
    Shared contracts, manifests, atlas/covariance/report-card layer, manuscript exporter.
@@ -152,7 +152,7 @@ These files or surfaces are merge hotspots and require explicit lock ownership:
 ### 7.1 VER2-V0
 
 - Internal dev-doc anchors:
-  - `BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_v4_critical_upgraded.md`
+  - `BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_critical_upgraded.md`
   - `BASS_HTT_MIO_TSC_observable_atlas_SDD_WBS_PR_plan.md`
   - `TSC_active_service_SDD_WBS_PR_plan.md`
   - `x_Q_Pi_F_G_model_independent_framework_upgrade.md`
@@ -208,7 +208,7 @@ These files or surfaces are merge hotspots and require explicit lock ownership:
 
 - Internal dev-doc anchors:
   - `TSC_active_service_SDD_WBS_PR_plan.md`
-  - `BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_v4_critical_upgraded.md`
+  - `BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_critical_upgraded.md`
 - Internal literature:
   - current `htt/tsc/*`
   - current `htt/bass/runtime/*`
@@ -224,7 +224,7 @@ These files or surfaces are merge hotspots and require explicit lock ownership:
 
 - Internal dev-doc anchors:
   - `x_Q_Pi_F_G_model_independent_framework_upgrade.md`
-  - `BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_v4_critical_upgraded.md`
+  - `BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_critical_upgraded.md`
   - `BASS_HTT_MIO_TSC_observable_atlas_SDD_WBS_PR_plan.md`
 - Internal literature:
   - `htt/htt/htt/infer/*`

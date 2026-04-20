@@ -2,7 +2,7 @@
 
 **Purpose**: the procedural contract that every PR, and every phase-boundary
 commit, must follow. This document supplements
-[`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md) and
+[`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) and
 [`PR_WBS_SDD.md`](PR_WBS_SDD.md) with the how-to-run-the-audit, how-to-
 update-the-docs, and what-to-do-when-they-disagree rules.
 
@@ -145,7 +145,7 @@ Every merged PR must include the following doc updates in the **same
 commit** as the PR, or in the immediately-following `docs:` commit (never
 in a separate session — losing the linkage is the failure mode):
 
-1. **[`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md) §1 commit ledger**:
+1. **[`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) §1 commit ledger**:
    add a new row with the PR's SHA, title, summary, evidence link. The
    row format is fixed by §1 of that file.
 
@@ -200,7 +200,7 @@ To prevent accidentally duplicating the same fact in two places:
 
 | If the fact is … | It belongs in … |
 |---|---|
-| A commit-level event (SHA, title, what changed) | `DEVELOPMENT_PLAN_v1.md` §1 commit ledger |
+| A commit-level event (SHA, title, what changed) | `DEVELOPMENT_PLAN.md` §1 commit ledger |
 | The design for an unstarted PR | `PR_WBS_SDD.md` PR entry |
 | A universal rule the PR has to obey | `SESSION_KNOWLEDGE_LEDGER.md` (numbered section) |
 | A numerical / physical reference (D_2 = 1002.086744 μK²) | `SESSION_KNOWLEDGE_LEDGER.md` §2 |
@@ -225,7 +225,7 @@ Duplicates get out of sync.
 Run this at any of:
 
 - Start of a new session (after loading
-  [`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md)).
+  [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md)).
 - Before starting a PR if more than 5 commits have landed since the last
   doc update on the target doc.
 - As part of a phase-boundary audit if the PR touches planning docs.
@@ -233,7 +233,7 @@ Run this at any of:
 ### §3.2 Procedure
 
 1. `git log --oneline -20` to see the recent commit series.
-2. Compare against `DEVELOPMENT_PLAN_v1.md` §1. If the most-recent commit
+2. Compare against `DEVELOPMENT_PLAN.md` §1. If the most-recent commit
    in the plan is more than **two** commits behind the most-recent commit
    in `git log`, the plan is **stale**.
 3. If stale: reconstruct the missing rows from `git log --stat` and
@@ -267,7 +267,7 @@ If work is proposed that does not fit any entry in
 2. Write the SDD entry first, slotted at the right place in
    [`PR_WBS_SDD.md`](PR_WBS_SDD.md) (new PR-id if needed).
 3. Add a dependency-graph entry in
-   [`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md) §3.
+   [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) §3.
 4. Commit the new SDD entry as `docs: plan <new PR-id>` **before** any
    code change lands.
 5. Only then start implementation.
@@ -425,7 +425,7 @@ At every PR:
 - [ ] Implement code. Run `cargo test --release`. Green.
 - [ ] Self-trigger audit per §1.
 - [ ] P0/P1 → `AUDIT(<tag>):` commit. P2/P3 → log file.
-- [ ] Edit `DEVELOPMENT_PLAN_v1.md` §1 (add row).
+- [ ] Edit `DEVELOPMENT_PLAN.md` §1 (add row).
 - [ ] Edit `PR_WBS_SDD.md` (flip Status → DONE, add Evidence).
 - [ ] Edit conditionals per §2.1.3 (IMEX_DECISION §6 / ROADMAP / PERF /
       ENV / PHYSICS_REFERENCES / CHANGELOG).

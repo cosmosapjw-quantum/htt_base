@@ -1,4 +1,4 @@
-# BASS_PY / HTT / TSC / MIO 연구계획 및 Manuscript 확장안 — v4-critical upgrade
+# BASS_PY / HTT / TSC / MIO 연구계획 및 Manuscript 확장안 — critical upgrade
 
 **기준일**: 2026-04-20  
 **업그레이드 방식**: 이 v4 section이 아래 v3 본문보다 우선한다. 아래 v3 본문은 세부 inventory와 기존 WBS 보존용으로 남긴다.  

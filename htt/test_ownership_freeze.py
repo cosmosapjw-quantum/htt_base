@@ -4,7 +4,7 @@ test_ownership_freeze.py — repo root  (Week 3 Day 5b, merged v4.1)
 
 Executable invariants enforcing the v4.1 MERGED ownership model.
 
-Per `BASS_PY_INTEGRATION_v4_1_MERGED.md` §2 and `CANONICAL_DECISION_DESIGN.md`
+Per `BASS_PY_INTEGRATION_MERGED.md` §2 and `CANONICAL_DECISION_DESIGN.md`
 §4.3, the ownership architecture is:
 
     bass/     →  runtime, background geometry, transport, collision (future),

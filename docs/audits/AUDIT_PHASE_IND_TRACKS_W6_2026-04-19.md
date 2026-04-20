@@ -209,7 +209,7 @@ Seven modes observed this phase:
 |---|---|---|
 | Tolerance robustness | passed | Both the null-test and the alignment test carry comfortable margins (null p ≈ 0.5 » 0.05; aligned p < 0.001 « 0.01 with 10k mocks). |
 | Convergence / stability | passed | 10k mocks give ≈1 % p-value resolution; Lidstone smoothing prevents the degenerate p = 0 edge. |
-| Baseline reproducibility | passed | Persisted `mio_directional_coherence_v1.json` shows R = 0.9990, p_iso = 2.9997e-4, χ² / dof = 9.45 with seed 20260419. |
+| Baseline reproducibility | passed | Persisted `mio_directional_coherence.json` shows R = 0.9990, p_iso = 2.9997e-4, χ² / dof = 9.45 with seed 20260419. |
 | Uncertainty / misspecification awareness | partial | Certificate records `coherence_chi2_per_dof` (9.45 on STANDARD_PROBES is quite high — consistent with the χ² being dominated by probes whose σ_cone underestimates their true uncertainty, which is the FM2 story). Documented; cross-references HJ-05a-lite caveats. |
 
 ## 8. Minimal repair plan
@@ -261,7 +261,7 @@ All present and green (see §6 for the skip/pass split):
 
 * Phase 게이트 (plan §21 Week 6) 모두 달성:
   - [x] `import bass_py.mio` 성공 — test_mio_root_importable + test_figures_mio_skip_should_activate_after_mio_boot
-  - [x] HJ-02a 5 required tests green + `mio_directional_coherence_v1.json` artefact 생성
+  - [x] HJ-02a 5 required tests green + `mio_directional_coherence.json` artefact 생성
   - [x] `MioCertificate.as_posterior_bundle()` → NotImplementedError end-to-end through the new generator — test_generator_output_preserves_g19_contract
   - [x] Phase-boundary audit written (this file)
   - [~] HTT figure skip 2 → 0 cascade — documented divergence (FM1, P1) — the `import mio` root gate passes, but the two literal figure skips remain pending v3 legacy-submodule migration. Next-session prompt rotated.
@@ -289,7 +289,7 @@ Rationale: this lane's scope (governing plan §0 rule 2) forbids
 touching `plots/physics_gallery/`. That directory is auto-managed by
 the bass_py session per its per-phase gallery refresh rule. The Week 6
 MIO package does not yet produce publication figures (those land with
-MANU-CH12-NEW, Week 8+). The `mio_directional_coherence_v1.json`
+MANU-CH12-NEW, Week 8+). The `mio_directional_coherence.json`
 artefact under `bass_py/workspace/results/` is the Week 6 primary
 deliverable and is serialised data, not a plot. Visual inspection
 therefore has no new PNG target.

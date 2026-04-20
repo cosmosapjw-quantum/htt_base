@@ -9,7 +9,7 @@
 
 > **Note on week numbering.** Under the merged v4.1 plan (approved 2026-04-17), this is the
 > *revised* W3D1. The v4-baseline W3D1 work (`inverse_T_to_F.py`, 48 tests) is now retroactively
-> classified as W3D3-partial per `BASS_PY_INTEGRATION_v4_1_MERGED.md` §8. Both efforts land on
+> classified as W3D3-partial per `BASS_PY_INTEGRATION_MERGED.md` §8. Both efforts land on
 > 2026-04-17 in the same calendar day, but only the runtime skeleton documented here is the
 > authoritative W3D1 deliverable going forward.
 
@@ -109,7 +109,7 @@ stdlib, so it can be moved under `bass/runtime/` at W3D5 freeze without ripple e
 ### 3.2 Directory placement (pre-freeze)
 
 Both files live at the current flat repo root until the W3D5 freeze commit. Post-freeze paths
-per `BASS_PY_INTEGRATION_v4_1_MERGED.md` §2.2:
+per `BASS_PY_INTEGRATION_MERGED.md` §2.2:
 
 - `canonical_decision.py` → `bass/runtime/canonical_decision.py`
 - `validation_labels.py` → `bass/runtime/validation_labels.py`

@@ -110,7 +110,7 @@ Task: close VER2-V0. Do not implement science features. Freeze the authority sta
 
 Authority docs:
 - docs/ver2_upgrade/lowell_bianchi_solver_SDD_PR_WBS_pstf_tetrad.md
-- docs/ver2_upgrade/BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_v4_critical_upgraded.md
+- docs/ver2_upgrade/BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_critical_upgraded.md
 - docs/ver2_upgrade/BASS_HTT_MIO_TSC_observable_atlas_SDD_WBS_PR_plan.md
 - docs/ver2_upgrade/TSC_active_service_SDD_WBS_PR_plan.md
 - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md

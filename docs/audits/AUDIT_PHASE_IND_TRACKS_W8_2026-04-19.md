@@ -107,7 +107,7 @@ implementation:
 | "`test_g19_enforcement` repo-wide regex scan" (ch11 §11.7, ch12 §12.6) | same file | PASS — same test family |
 | "`FFCrossCheckReport.__post_init__` raises `ValueError` on `is_cross_check = False`" (ch12 §12.6) | `bass_py/tsc/integration/htt_bridge.py::FFCrossCheckReport.__post_init__` | PASS — confirmed during W7 §3 check 12 |
 | "TSC-06 agreement `rtol < 1e-6` on the S3 scenario" (ch12 §12.6) | `test_S3_tsc_htt_numerical_agreement` | PASS — W7 §3 check 11 anchor |
-| "HJ-02a landed artefact at seed 20260419" (ch12 §12.2) | `bass_py/workspace/results/mio_directional_coherence_v1.json` — via A35.4 | PASS — artefact written W6D5; numbers unchanged |
+| "HJ-02a landed artefact at seed 20260419" (ch12 §12.2) | `bass_py/workspace/results/mio_directional_coherence.json` — via A35.4 | PASS — artefact written W6D5; numbers unchanged |
 
 ## 5. Numerical / pipeline audit
 

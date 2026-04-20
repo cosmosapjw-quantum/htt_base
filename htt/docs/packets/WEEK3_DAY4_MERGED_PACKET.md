@@ -298,7 +298,7 @@ D5 is the closing day of Week 3 and splits per v4.1 MERGED §4.1:
 
 Oracle: analytic Paper I closed-form moment values + ch05 cross-reference table (no CAMB).
 
-Comparisons to lock in (per `BASS_PY_INTEGRATION_v4_1_MERGED.md` §3.1 Table):
+Comparisons to lock in (per `BASS_PY_INTEGRATION_MERGED.md` §3.1 Table):
 
 | Quantity | Oracle | Target tolerance |
 |----------|--------|------------------|

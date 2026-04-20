@@ -73,7 +73,7 @@ v3 §12.2bis identifies three semantic first-line-defence mechanisms that
 this ownership structure relies on:
 
 1. **Filename prefix**: MIO artefacts MUST begin with `mio_`
-   (`mio_directional_coherence_v1.json`, `mio_pr13am_te_sign_v1.json`).
+   (`mio_directional_coherence.json`, `mio_pr13am_te_sign_v1.json`).
    Enforced by
    [test_reg02_artifact_prefix.py](../../bass_py/workspace/contracts/tests/test_reg02_artifact_prefix.py).
 2. **Module tag**: MIO-owned modules physically located in other

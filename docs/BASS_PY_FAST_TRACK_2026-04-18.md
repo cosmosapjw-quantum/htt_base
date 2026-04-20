@@ -122,7 +122,7 @@ Tier D 는 scope limit 을 넘을 수 있어서 선택사항.
 2. bass_py `bass.spectrum.cl_assembly` 로 동일 parameter set 의 C_ℓ 생성
 3. 비교 스크립트: rel_err per ℓ + plot
 
-**target**: rel_err < 5% at ℓ ≤ 10, < 10% at ℓ ≤ 30 ([MASTER_PROMPT_LIST_bass_py_v1_2.md §2.3 V1](../bass_py/docs/design/MASTER_PROMPT_LIST_bass_py_v1_2.md)).
+**target**: rel_err < 5% at ℓ ≤ 10, < 10% at ℓ ≤ 30 ([MASTER_PROMPT_LIST_bass_py.md §2.3 V1](../bass_py/docs/design/MASTER_PROMPT_LIST_bass_py.md)).
 
 **산출 figure**:
 

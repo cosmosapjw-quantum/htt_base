@@ -2,7 +2,7 @@
 
 **Purpose**: capture, as explicit in-repo documentation, all project-level
 knowledge that previously lived only in conversational memory across Claude
-sessions. Reading this file plus [`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md)
+sessions. Reading this file plus [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md)
 gives a new session the full operating context without needing to inherit any
 prior chat state.
 
@@ -54,7 +54,7 @@ introduced them.
   "speed win".
 - **Roadmap-driven**. User operates via numbered PR ladders with weighted
   scorecards (`PR-020` … `PR-026` were the prior cycle; the current cycle is
-  IMEX-00 … IMEX-09, see §3 of [`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md)).
+  IMEX-00 … IMEX-09, see §3 of [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md)).
 - **Parallel tracks**. Rust main-line and Python side-track run in the same
   repository, interleaved by commit. Do not propose reorganising the repo or
   splitting into separate projects — see §5 on git workflow.
@@ -648,7 +648,7 @@ start in parallel but is not directed by this document set.
 ## §12. Cross-references and maintenance
 
 - This ledger is referenced from
-  [`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md) §1 (history) and
+  [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) §1 (history) and
   §2.4 (constraints).
 - PR-level WBS: [`docs/PR_WBS_SDD.md`](PR_WBS_SDD.md).
 - Audit + doc-update protocol:

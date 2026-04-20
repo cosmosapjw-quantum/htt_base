@@ -11,7 +11,7 @@
 | Module | `bass/perturbation/__init__.py` | (empty sentinel) |
 | Module | `bass/perturbation/baryon_fluid.py` | 321 |
 | Tests | `bass/perturbation/test_baryon_fluid.py` | 541 |
-| Roadmap patch | `MASTER_PROMPT_LIST_bass_py_v1.0.md` (→ v1.1 revision) | — |
+| Roadmap patch | `MASTER_PROMPT_LIST_bass_py.md` | — |
 
 Total new LoC: **862**.  
 New tests: **49** (target from §3 W6-01 was ~35; the additional 14
@@ -209,7 +209,7 @@ confirmation.
   NaN guard retained only for degenerate $H=\dot\tau=0$ case)
 - Module docstring: three passages updated (main equation block,
   Euler RHS docstring, momentum conservation note)
-- Roadmap: `MASTER_PROMPT_LIST_bass_py_v1.0.md` patched to v1.1,
+- Roadmap: `MASTER_PROMPT_LIST_bass_py.md` patched and consolidated,
   §18 revision history records the correction
 - Manuscript: `ch05_teff_corrections.tex` §thomson-coupling should be
   reviewed in a future retrofit task (not blocking W6-02)

@@ -256,7 +256,7 @@ require_allow_reduction(decision, context=f"stratum_{k}_eta_{i}")
 
 ## §9 — Next action (W3D3)
 
-D3 under the merged v4.1 schedule combines two strands per `BASS_PY_INTEGRATION_v4_1_MERGED.md`
+D3 under the merged schedule combines two strands per `BASS_PY_INTEGRATION_MERGED.md`
 §4.1 and §8:
 
 1. **`inverse_T_to_F.py` retrofit** — directory-move prep for `tsc/charts/inverse_T_to_F.py`.

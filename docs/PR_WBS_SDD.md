@@ -3,7 +3,7 @@
 **Purpose**: the concrete, merge-gate-level design for every upcoming PR on the
 bass_rs main-line, plus the parallel infrastructure PRs and the backup
 branch. Each entry follows the template defined in
-[`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md) §4.
+[`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) §4.
 
 **Reading rule**: before starting a PR, read only the section for that PR
 plus every PR listed under its **Depends on** line. That is sufficient to
@@ -11,7 +11,7 @@ pick up and execute the work cold.
 
 **Cross-references**:
 
-- Hub: [`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md).
+- Hub: [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md).
 - Session knowledge (constraints, killed directions, invariants):
   [`SESSION_KNOWLEDGE_LEDGER.md`](SESSION_KNOWLEDGE_LEDGER.md).
 - Audit + doc-update procedure invoked at each merge:
@@ -63,7 +63,7 @@ is allowed only when the `Audit:` line says so explicitly with justification.
 
 After the PR lands, update:
 
-1. [`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md) §1 commit ledger.
+1. [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) §1 commit ledger.
 2. This file: change the PR's `Status:` line to `DONE {sha}` and add an
    `Evidence:` bullet pointing to the merge gate tests that passed.
 3. Any PR-specific doc listed under the entry's `Doc updates:` heading.
@@ -185,7 +185,7 @@ to ULP across a representative state set.
 
 #### Doc updates
 
-- [`DEVELOPMENT_PLAN_v1.md`](DEVELOPMENT_PLAN_v1.md) §1 commit ledger row with SHA.
+- [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) §1 commit ledger row with SHA.
 - This file: Status → DONE.
 - Note in [`IMEX_DECISION_2026-04-18.md`](IMEX_DECISION_2026-04-18.md) §6
   IMEX-02 row → DONE.
@@ -270,7 +270,7 @@ within `1e-6` relative.
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - [`ENV_VARS.md`](ENV_VARS.md): new `BASS_PSTF_IMEX`.
 - [`IMEX_DECISION_2026-04-18.md`](IMEX_DECISION_2026-04-18.md) §6.
@@ -339,7 +339,7 @@ regression tests pass under that toggle.
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - [`ENV_VARS.md`](ENV_VARS.md): `BASS_IMEX` added.
 - [`IMEX_DECISION_2026-04-18.md`](IMEX_DECISION_2026-04-18.md) §6.
@@ -403,7 +403,7 @@ Rodas5P and IMEX-ARK4 drivers call the `LinearProfileSampler` trait for
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - [`ENV_VARS.md`](ENV_VARS.md): default flipped.
 - [`PERF_FRESH_2026-04-18.md`](PERF_FRESH_2026-04-18.md): add a new row
@@ -466,7 +466,7 @@ regression.
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - [`PHYSICS_REFERENCES.md`](PHYSICS_REFERENCES.md) — if the audit uncovers
   a convention note worth recording.
@@ -530,7 +530,7 @@ at ℓ ≤ 300.
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - [`PERF_FRESH_2026-04-18.md`](PERF_FRESH_2026-04-18.md) — new row.
 - [`PROGRESS_SCOREBOARD.md`](PROGRESS_SCOREBOARD.md) — mark the
@@ -603,7 +603,7 @@ Extend to Bianchi I with m ∈ {−2..+2}, preserving the split structure
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - [`ROADMAP_v3_APPROXIMATION_FREE_2026-04-18.md`](ROADMAP_v3_APPROXIMATION_FREE_2026-04-18.md):
   P2.1 DONE, P2.2 (m ≠ 0) DONE.
@@ -660,7 +660,7 @@ layout. Recover Planck cosmology with the mass-eigenstate sum.
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - `ROADMAP_v3_APPROXIMATION_FREE_2026-04-18.md`: if the PR closes a phase
   gate, mark it.
@@ -713,7 +713,7 @@ new type.
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - `ROADMAP_v3_APPROXIMATION_FREE_2026-04-18.md` P2.1 → DONE.
 
@@ -768,7 +768,7 @@ sparse backends (env toggle `BASS_SPARSE_JAC=1`).
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - `ROADMAP_v3_APPROXIMATION_FREE_2026-04-18.md` P2.3 → DONE.
 - [`ENV_VARS.md`](ENV_VARS.md): `BASS_SPARSE_JAC`.
@@ -820,7 +820,7 @@ bit-identical).
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - `ROADMAP_v3_APPROXIMATION_FREE_2026-04-18.md` P2.4 → DONE.
 
@@ -869,7 +869,7 @@ bit-identical on the FLRW path.
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - `ROADMAP_v3_APPROXIMATION_FREE_2026-04-18.md` P2.5 → DONE.
 
@@ -918,7 +918,7 @@ Two tests pass. Schema doc merged as single-source-of-truth.
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - `BASS_PY_BRIDGE_SPEC.md` (new).
 - `ROADMAP_v3_APPROXIMATION_FREE_2026-04-18.md` P4.1 → DONE.
@@ -964,7 +964,7 @@ Three tests pass. Grid reproduces deterministically.
 
 #### Doc updates
 
-- `DEVELOPMENT_PLAN_v1.md` §1.
+- `DEVELOPMENT_PLAN.md` §1.
 - This file.
 - `BASS_PY_BRIDGE_SPEC.md` — atlas section.
 - `ROADMAP_v3_APPROXIMATION_FREE_2026-04-18.md` P4.2 → DONE.
@@ -1067,7 +1067,7 @@ If an opportunity arises that does not fit any existing entry:
 
 1. Write the SDD entry in this file **first**, slotted where it fits (new
    number if needed; keep numbering gap-free only within a ladder).
-2. Update `DEVELOPMENT_PLAN_v1.md` §3 dependency graph.
+2. Update `DEVELOPMENT_PLAN.md` §3 dependency graph.
 3. Only then start work.
 
 This is the same rule as the universal "plan before act" in

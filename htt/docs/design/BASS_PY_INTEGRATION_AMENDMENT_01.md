@@ -1,4 +1,4 @@
-# BASS_PY_INTEGRATION_v4 — AMENDMENT 01
+# BASS_PY_INTEGRATION — AMENDMENT 01
 
 **Date**: 2026-04-17
 **Status**: PROPOSED, pending approval

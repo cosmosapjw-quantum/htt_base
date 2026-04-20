@@ -1,7 +1,7 @@
-# BASS-py Integration Plan v4.1 — MERGED
+# BASS-py Integration Plan — MERGED
 
 **Date**: 2026-04-17
-**Supersedes**: `BASS_PY_INTEGRATION_v4.md` (baseline), `BASS_PY_INTEGRATION_v4_AMENDMENT_01.md`, ad-hoc v4.1 ownership refactor
+**Supersedes**: `BASS_PY_INTEGRATION_v4.md` (baseline), `BASS_PY_INTEGRATION_AMENDMENT_01.md`, ad-hoc v4.1 ownership refactor
 **Combines**:
   - v4 baseline 10-week milestone structure
   - Amendment 01: precision ladder L0–L3 with hard gate at L2 and three-way consensus at L3

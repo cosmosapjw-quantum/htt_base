@@ -1,4 +1,4 @@
-# BASS Comprehensive Profiling Report v1.0
+# BASS Comprehensive Profiling Report
 
 **Date**: 2026-04-16
 **Commit**: 430b902 (PR-IMEX-03 WIP) + profiling infrastructure
@@ -234,7 +234,7 @@ Current working tree changes (atop 430b902):
 3. `src/solver/sync_gauge_camb.rs`:
    - `solve_production_spectrum` — phase timer (`BASS_PHASE_TIMER=1`)
    - `profile_mini` test — sampling profiler + Bessel counter report + module agg
-4. `docs/PROFILING_REPORT_v1.md` — this document
+4. `docs/PROFILING_REPORT.md` — this document
 
 Proposed commit message: "profiling: pprof-rs + phase timer + Bessel branch
 counters for BASS pipeline"

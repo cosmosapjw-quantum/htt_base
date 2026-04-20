@@ -4,7 +4,7 @@
 **Version**: 2026-04-19 draft (landed with DOS-A30-MIO Week 7 Day 7).
 **Code anchor**: [`bass_py/mio/coherence/directional.py`](../../bass_py/mio/coherence/directional.py)
 **Test anchor**: [`bass_py/mio/tests/test_directional_coherence.py`](../../bass_py/mio/tests/)
-**Artefact**: [`bass_py/workspace/results/mio_directional_coherence_v1.json`](../../bass_py/workspace/results/)
+**Artefact**: [`bass_py/workspace/results/mio_directional_coherence.json`](../../bass_py/workspace/results/)
 **Parent references**: v3 §4.5.3.2 (HJ-02 directional coherence);
 v3 §16.2 (MIO-HJ-02a "완전 독립" row).
 
@@ -60,7 +60,7 @@ Four derived statistics:
 
 ## A35.4 Landed artefact (2026-04-19, seed 20260419)
 
-Written to `bass_py/workspace/results/mio_directional_coherence_v1.json`
+Written to `bass_py/workspace/results/mio_directional_coherence.json`
 as part of W6D5 commit:
 
 | Quantity | Value |

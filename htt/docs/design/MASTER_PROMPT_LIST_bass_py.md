@@ -1,4 +1,4 @@
-# MASTER_PROMPT_LIST_bass_py_v1.0
+# MASTER_PROMPT_LIST_bass_py
 ## Low-ℓ Special-Purpose Solver + Direction-Dependent Likelihood Generator
 ## Date: 2026-04-18
 ## Basis: R-TILT-02/03 + 7 design documents + W3-W5 completed foundation
@@ -1865,4 +1865,4 @@ Production ready: [YES | NO | WARN]
 
 ---
 
-**End of MASTER_PROMPT_LIST_bass_py_v1.0.md**
+**End of MASTER_PROMPT_LIST_bass_py.md**

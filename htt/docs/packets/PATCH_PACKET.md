@@ -1,4 +1,4 @@
-# PATCH v1.2 PACKET — W6-04 TCA sign correction + verification
+# PATCH PACKET — W6-04 TCA sign correction + verification
 ## Date: 2026-04-18
 ## Scope: Post-verification batch fix
 
@@ -49,7 +49,7 @@ the roadmap comment had the two compounded typos.
 |------|--------|-------|
 | `bass/closure/quadrupole_tca.py` | Module header docstring + 2 function signs | ~50 |
 | `bass/closure/test_quadrupole_tca.py` | 2 fixtures + 1 comment | ~20 |
-| `MASTER_PROMPT_LIST_bass_py_v1.0.md` | W6-04 spec + W7-02 spec + §18 revision | ~40 |
+| `MASTER_PROMPT_LIST_bass_py.md` | W6-04 spec + W7-02 spec + §18 revision | ~40 |
 
 ---
 

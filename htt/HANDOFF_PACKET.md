@@ -193,7 +193,7 @@ $y=(1+z)^{3/2}$, $\Delta y = (3/2)(1+z_{\rm rei})^{1/2}\Delta z$, $f_{He}=Y_{He}
 | `WEEK6_02_PACKET.md` | Complete | Photon ℓ=1 dipole drive wrapper |
 | `WEEK6_03_PACKET.md` | Complete | CDM fluid |
 | `WEEK6_04_PACKET.md` | **v1.2** | TCA algebraic closure (sign-corrected) |
-| `PATCH_v1_2_PACKET.md` | Complete | Sign fix batch + new pattern codification |
+| `PATCH_PACKET.md` | Complete | Sign fix batch + new pattern codification |
 | `WEEK7_01_PACKET.md` | Complete | E-mode spin-2 hierarchy |
 | `WEEK7_02_PACKET.md` | Complete | Polter recoupling, 4-way cross-check |
 | `WEEK8_01_PACKET.md` | Complete | HyRec ingest, z_*=1089.89 |
@@ -201,9 +201,9 @@ $y=(1+z)^{3/2}$, $\Delta y = (3/2)(1+z_{\rm rei})^{1/2}\Delta z$, $f_{He}=Y_{He}
 
 ### 6.2 Design documents (pre-session, still canonical)
 
-- `MASTER_PROMPT_LIST_bass_py_v1_2.md` — full 21-prompt roadmap W3→W15
+- `MASTER_PROMPT_LIST_bass_py.md` — full 21-prompt roadmap W3→W15
 - `CANONICAL_DECISION_DESIGN.md` — W3 gating system
-- `BASS_PY_INTEGRATION_v4_1_MERGED.md` — integration architecture
+- `BASS_PY_INTEGRATION_MERGED.md` — integration architecture
 - `L0_PRECISION_REPORT.md` — baseline precision targets
 
 ### 6.3 Thesis LaTeX (pre-session, not modified this session)
