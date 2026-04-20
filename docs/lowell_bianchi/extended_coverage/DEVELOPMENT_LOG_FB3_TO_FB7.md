@@ -383,6 +383,22 @@ Exit: β-sweep × polarisation regression. BB identically zero at
 - **Notes**: `NEXT_SESSION_PROMPT.md §2` now intentionally contains
   only the generic FB-META-5 placeholder.
 
+### FB-4.1 — axis-aligned Layer-B Thomson seed
+
+- **Scope**: Replaced the FB-4.1 skeleton with an axis-aligned
+  electron-frame boost sandwich around the LB-4 Thomson operator,
+  preserving the exact `beta = 0` anchor and wiring the new Topic-10
+  TT proxy plot plus the manuscript Layer-B section.
+- **Commit anchor**: pending local commit (`FB-4.1: axis-aligned Layer-B Thomson seed`).
+- **Test delta**: `3,401 passed + 73 skipped + 3 errors` →
+  `3,425 passed + 72 skipped + 3 errors`.
+- **Audit**: [AUDIT_PHASE_FB4_2026-04-20.md](../../audits/AUDIT_PHASE_FB4_2026-04-20.md) §FB-4.1.
+- **Gallery**: rendered
+  `figures/physics_gallery/10_collision_and_visibility/04_thomson_beta_sweep_Dl.png`.
+- **Manuscript anchor**:
+  `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`.
+- **Carry-forward**: off-axis Wigner-d lift remains reserved for FB-5.2.
+
 ---
 
 ## Phase FB-5 (planned) — Perturbation sector k ≠ 0

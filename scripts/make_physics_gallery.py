@@ -2125,8 +2125,18 @@ def _lb4_imports():
         EModeThomsonAux, EModeThomsonCollisionOperator,
         ThomsonAux, ThomsonPSTFCollisionOperator,
     )
+    from bass.collision.tilted_thomson_layer_b import (
+        evaluate_tilted_thomson_pstf_collision,
+    )
     from bass.collision.tilted_visibility import TiltedVisibility
     from bass.runtime.canonical_decision import make_canonical_decision
+    from bass.species.base import (
+        SpeciesBackground,
+        SpeciesLabel,
+        _as_1d,
+        _squeeze_if_scalar,
+    )
+    from bass.species.tilted import TiltedSpeciesBackground
     from tsc.diagnostics.tangency import TangentKind, compute_D_diagnostic
 
     def _allowing_decision():
@@ -2144,10 +2154,53 @@ def _lb4_imports():
             }),
             tangency_result=tang,
         )
-    return (solve_tca_closure, zero_polarization_hierarchy, ThomsonAux,
-            ThomsonPSTFCollisionOperator, EModeThomsonAux,
-            EModeThomsonCollisionOperator, TiltedVisibility,
-            _allowing_decision)
+    class _GalleryDummySpecies(SpeciesBackground):
+        label = SpeciesLabel.BARYON
+
+        def rho_rest(self, eta):
+            arr, scalar = _as_1d(eta)
+            return _squeeze_if_scalar(np.ones_like(arr), scalar)
+
+        def p_rest(self, eta):
+            arr, scalar = _as_1d(eta)
+            return _squeeze_if_scalar(np.zeros_like(arr), scalar)
+
+        def dot_rho(self, eta):
+            arr, scalar = _as_1d(eta)
+            return _squeeze_if_scalar(np.zeros_like(arr), scalar)
+
+        def _a_of_eta(self, eta):
+            arr, scalar = _as_1d(eta)
+            return _squeeze_if_scalar(np.ones_like(arr), scalar)
+
+    return (
+        solve_tca_closure,
+        zero_polarization_hierarchy,
+        ThomsonAux,
+        ThomsonPSTFCollisionOperator,
+        EModeThomsonAux,
+        EModeThomsonCollisionOperator,
+        TiltedVisibility,
+        _allowing_decision,
+        evaluate_tilted_thomson_pstf_collision,
+        TiltedSpeciesBackground,
+        _GalleryDummySpecies,
+    )
+
+
+def _make_fb4_gallery_states(
+    L_max: int = 30,
+) -> tuple[PSTFHierarchyState, object, np.ndarray]:
+    """Synthetic axisymmetric towers for the FB-4 gallery plots."""
+    (_, zero_polarization_hierarchy, *_) = _lb4_imports()
+    temperature = zero_hierarchy(L_max)
+    polarization = zero_polarization_hierarchy(L_max)
+    for ell in range(1, L_max + 1):
+        temperature.tensors[ell].components[ell] = np.exp(-(ell - 1) / 9.0)
+        if ell >= 2:
+            polarization.tensors[ell].components[ell] = 0.45 * np.exp(-(ell - 2) / 10.0)
+    pi2 = np.array([0.0, 0.0, 0.24, 0.0, 0.0], dtype=np.float64)
+    return temperature, polarization, pi2
 
 
 def plot_10_01_thomson_coefficient_spectrum() -> None:
@@ -2218,7 +2271,7 @@ def plot_10_02_tca_equilibrium_convergence() -> None:
     Bottom panel: polter ratio E_2/Θ_2 converging to −√6/4 ≈ −0.6124
     as S_E → 0, independent of Γ_T.
     """
-    (solve_tca_closure, _, _, _, _, _, _, allowing) = _lb4_imports()
+    (solve_tca_closure, _, _, _, _, _, _, allowing, *_) = _lb4_imports()
     decision = allowing()
     Gamma_T_grid = np.geomspace(0.1, 1e4, 50)
     S_T_fixed = 1.0e-6
@@ -2271,7 +2324,7 @@ def plot_10_03_gamma_tilde_direction_asymmetry() -> None:
     The plot visualises these factors against the scalar HyRec-based
     Γ_T(η) through recombination.
     """
-    (_, _, _, _, _, _, TiltedVisibility, _) = _lb4_imports()
+    (_, _, _, _, _, _, TiltedVisibility, _, *_) = _lb4_imports()
     bg = Shared.bg()
     # Use reionization-extended baryon for full-history coverage.
     table, _ = Shared.recomb()
@@ -2343,6 +2396,53 @@ def plot_10_03_gamma_tilde_direction_asymmetry() -> None:
     ax_b.set_ylim(0.5, 1.7)
     fig.tight_layout()
     _save(fig, "03_gamma_tilde_direction_asymmetry", TOPIC_10)
+
+
+def plot_10_04_thomson_beta_sweep_Dl() -> None:
+    """Layer-B TT kernel ``D_ell`` proxy ratio for a β sweep."""
+    (
+        _, _, _, _, _, _, _, _,
+        evaluate_tilted_thomson_pstf_collision,
+        TiltedSpeciesBackground, DummySpecies,
+    ) = _lb4_imports()
+    temperature, polarization, _ = _make_fb4_gallery_states(L_max=30)
+    v_b = np.zeros(3, dtype=np.float64)
+    Gamma_T = 1.0
+    ells = np.arange(2, 31)
+
+    def _dl_proxy(beta: float) -> np.ndarray:
+        tilt = None if beta == 0.0 else TiltedSpeciesBackground(
+            base=DummySpecies(), beta=beta, v_hat_e=(1.0, 0.0, 0.0),
+        )
+        vals = []
+        for ell in ells:
+            K = evaluate_tilted_thomson_pstf_collision(
+                ell=ell,
+                temperature_state=temperature,
+                polarization_state=polarization,
+                eta=0.0,
+                v_b_real_sph=v_b,
+                Gamma_T=Gamma_T,
+                tilted_electron=tilt,
+            )
+            vals.append((ell * (ell + 1.0) / (2.0 * np.pi)) * K.norm())
+        return np.asarray(vals, dtype=np.float64)
+
+    base = _dl_proxy(0.0)
+    fig, ax = plt.subplots(figsize=(7.0, 4.2))
+    for beta, colour in ((0.0, COLS["blue"]), (0.1, COLS["orange"]), (0.3, COLS["purple"])):
+        ratio = _dl_proxy(beta) / np.maximum(base, 1.0e-16)
+        ax.plot(ells, ratio, lw=1.5, color=colour, label=fr"$\beta_e={beta:.1f}$")
+    ax.axhline(1.0, color="0.35", ls=":", lw=0.7)
+    _prepare_axes(
+        ax,
+        r"multipole $\ell$",
+        r"$D_\ell^{TT}(\beta_e) / D_\ell^{TT}(0)$",
+        title=r"Layer-B Thomson TT proxy ratio under electron tilt",
+    )
+    ax.legend(loc="upper right", fontsize=8)
+    fig.tight_layout()
+    _save(fig, "04_thomson_beta_sweep_Dl", TOPIC_10)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -3679,6 +3779,9 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
         ("03_gamma_tilde_direction_asymmetry",
          plot_10_03_gamma_tilde_direction_asymmetry,
          "LB-4 Layer A: Γ̃_T(η, e) forward/back/side asymmetry vs scalar Γ_T."),
+        ("04_thomson_beta_sweep_Dl",
+         plot_10_04_thomson_beta_sweep_Dl,
+         "FB-4.1 Layer-B TT proxy ratio for β_e ∈ {0, 0.1, 0.3}."),
     ],
     TOPIC_11: [
         ("01_unified_trajectory_bianchi_I",

@@ -19,15 +19,41 @@ Additional diagnostics:
   - Leave-one-out cross-validation stability
   - Information content per channel (bits)
 """
+import hashlib
+import json
 import numpy as np
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+import platform
+from typing import Any, Dict, List, Mapping, Optional, Tuple
 
 __all__ = [
     'DepthTomography', 'SavageDickeyRatio', 'CrossChannelCoherence',
     'PosteriorPredictive', 'LeaveOneOutCV',
+    'redshift_tomography_report_artifact',
+    'cross_channel_coherence_report_artifact',
+    'posterior_predictive_report_artifact',
+    'loocv_report_artifact',
     'run_advanced_diagnostics',
 ]
+
+
+def _jsonify(obj: Any) -> Any:
+    """Recursively convert numpy-heavy structures to JSON-native values."""
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.generic):
+        return obj.item()
+    if isinstance(obj, Mapping):
+        return {str(k): _jsonify(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_jsonify(v) for v in obj]
+    return obj
+
+
+def _config_hash(payload: Mapping[str, Any]) -> str:
+    """Stable SHA256 hash for report configuration payloads."""
+    blob = json.dumps(_jsonify(payload), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -453,6 +479,236 @@ class LeaveOneOutCV:
                     interpretation=interp,
                 ))
         return results
+
+
+def redshift_tomography_report_artifact(
+    result: DepthTomographyResult | None = None,
+    *,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build ``redshift_tomography_v1.json`` from the depth-tomography result."""
+    if result is None:
+        result = DepthTomography().run()
+    bins = list(result.bins)
+    z = np.asarray([b.z_eff for b in bins], dtype=float)
+    amp = np.asarray([b.amplitude for b in bins], dtype=float)
+    sigma = np.asarray([b.sigma for b in bins], dtype=float)
+    order = np.argsort(z)
+    z_sorted = z[order]
+    amp_sorted = amp[order]
+    drift_per_z = None
+    if len(z_sorted) >= 2 and z_sorted[-1] != z_sorted[0]:
+        drift_per_z = float((amp_sorted[-1] - amp_sorted[0]) / (z_sorted[-1] - z_sorted[0]))
+
+    extra = dict(metadata or {})
+    config_payload = {
+        'bins': [b.name for b in bins],
+        'metadata': extra,
+    }
+    return _jsonify({
+        'artifact_name': 'redshift_tomography_v1.json',
+        'generated_by': extra.get(
+            'generated_by',
+            'htt.core.advanced_diagnostics.redshift_tomography_report_artifact',
+        ),
+        'git_commit': extra.get('git_commit', ''),
+        'config_hash': _config_hash(config_payload),
+        'input_data_hashes': list(extra.get('input_data_hashes', [])),
+        'random_seed': extra.get('random_seed'),
+        'wall_time_sec': extra.get('wall_time_sec'),
+        'python_version': extra.get('python_version', platform.python_version()),
+        'numpy_version': extra.get('numpy_version', np.__version__),
+        'claim_tier': extra.get('claim_tier', 'REPORT'),
+        'scope_label': extra.get('scope_label', 'report'),
+        'production_allowed': False,
+        'n_bins': len(bins),
+        'bins': [
+            {
+                'name': b.name,
+                'z_eff': float(b.z_eff),
+                'amplitude': float(b.amplitude),
+                'sigma': float(b.sigma),
+                'depth_Mpc': float(b.depth_Mpc),
+                'survey_type': b.survey_type,
+            }
+            for b in bins
+        ],
+        'geometric_chi2': float(result.geometric_chi2),
+        'geometric_pvalue': float(result.geometric_pvalue),
+        'kinematic_chi2': float(result.kinematic_chi2),
+        'kinematic_pvalue': float(result.kinematic_pvalue),
+        'best_fit_constant': float(result.best_fit_constant),
+        'depth_gradient': float(result.depth_gradient),
+        'depth_gradient_sigma': float(result.depth_gradient_sigma),
+        'amplitude_drift_per_unit_z': drift_per_z,
+        'interpretation': result.interpretation,
+    })
+
+
+def cross_channel_coherence_report_artifact(
+    result: CrossChannelResult | None = None,
+    *,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build ``cross_channel_coherence_v1.json`` from the coherence result."""
+    if result is None:
+        result = CrossChannelCoherence().run()
+    estimates = list(result.estimates)
+    channel_order = [e.channel for e in estimates]
+    pairwise = np.zeros((len(estimates), len(estimates)), dtype=float)
+    for i, lhs in enumerate(estimates):
+        for j, rhs in enumerate(estimates):
+            if i == j:
+                continue
+            sigma = np.hypot(lhs.sigma, rhs.sigma)
+            pairwise[i, j] = 0.0 if sigma <= 0 else abs(
+                lhs.beta_estimate - rhs.beta_estimate
+            ) / sigma
+
+    extra = dict(metadata or {})
+    config_payload = {
+        'channel_order': channel_order,
+        'metadata': extra,
+    }
+    return _jsonify({
+        'artifact_name': 'cross_channel_coherence_v1.json',
+        'generated_by': extra.get(
+            'generated_by',
+            'htt.core.advanced_diagnostics.cross_channel_coherence_report_artifact',
+        ),
+        'git_commit': extra.get('git_commit', ''),
+        'config_hash': _config_hash(config_payload),
+        'input_data_hashes': list(extra.get('input_data_hashes', [])),
+        'random_seed': extra.get('random_seed'),
+        'wall_time_sec': extra.get('wall_time_sec'),
+        'python_version': extra.get('python_version', platform.python_version()),
+        'numpy_version': extra.get('numpy_version', np.__version__),
+        'claim_tier': extra.get('claim_tier', 'REPORT'),
+        'scope_label': extra.get('scope_label', 'report'),
+        'production_allowed': False,
+        'channel_order': channel_order,
+        'estimates': {
+            e.channel: {
+                'beta_estimate': float(e.beta_estimate),
+                'sigma': float(e.sigma),
+                'weight': float(e.weight),
+            }
+            for e in estimates
+        },
+        'weighted_mean_beta': float(result.weighted_mean_beta),
+        'chi2_consistency': float(result.chi2_consistency),
+        'ndof': int(result.ndof),
+        'pvalue': float(result.pvalue),
+        'tension_sigma': float(result.tension_sigma),
+        'most_discrepant': result.most_discrepant,
+        'pairwise_tension_sigma_matrix': pairwise,
+        'interpretation': result.interpretation,
+    })
+
+
+def posterior_predictive_report_artifact(
+    *,
+    model_name: str = 'FLRW_tilt',
+    beta_med: float = 1.36e-3,
+    result: PosteriorPredictiveResult | None = None,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build ``posterior_predictive_v1.json`` from PPC observables."""
+    if result is None:
+        result = PosteriorPredictive().compute(model_name, beta_med)
+    pulls = {}
+    for key, obs in result.observables.items():
+        sigma = float(obs['sigma'])
+        observed = float(obs['observed'])
+        predicted = float(obs['predicted'])
+        pulls[key] = (
+            None
+            if sigma <= 0.0
+            else float((predicted - observed) / sigma)
+        )
+
+    extra = dict(metadata or {})
+    config_payload = {
+        'model_name': result.model,
+        'beta_med': beta_med,
+        'metadata': extra,
+    }
+    return _jsonify({
+        'artifact_name': 'posterior_predictive_v1.json',
+        'generated_by': extra.get(
+            'generated_by',
+            'htt.core.advanced_diagnostics.posterior_predictive_report_artifact',
+        ),
+        'git_commit': extra.get('git_commit', ''),
+        'config_hash': _config_hash(config_payload),
+        'input_data_hashes': list(extra.get('input_data_hashes', [])),
+        'random_seed': extra.get('random_seed'),
+        'wall_time_sec': extra.get('wall_time_sec'),
+        'python_version': extra.get('python_version', platform.python_version()),
+        'numpy_version': extra.get('numpy_version', np.__version__),
+        'claim_tier': extra.get('claim_tier', 'REPORT'),
+        'scope_label': extra.get('scope_label', 'report'),
+        'production_allowed': False,
+        'model': result.model,
+        'chi2_total': float(result.chi2_total),
+        'ndof': int(result.ndof),
+        'pvalue': float(result.pvalue),
+        'observables': result.observables,
+        'pulls': pulls,
+        'interpretation': result.interpretation,
+    })
+
+
+def loocv_report_artifact(
+    channel_ablation: Mapping[str, Any],
+    *,
+    lnB_full: float = 26.33,
+    result: List[LOOCVResult] | None = None,
+    metadata: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build ``loocv_report_v1.json`` from channel-ablation results."""
+    if result is None:
+        result = LeaveOneOutCV().compute_from_ablation(channel_ablation, lnB_full)
+    entries = [
+        {
+            'dropped_channel': r.dropped_channel,
+            'lnZ_without': float(r.lnZ_without),
+            'lnB_without': float(r.lnB_without),
+            'delta_lnB': float(r.delta_lnB),
+            'beta_shift_pct': float(r.beta_shift_pct),
+            'interpretation': r.interpretation,
+        }
+        for r in result
+    ]
+    max_entry = None if not entries else max(entries, key=lambda r: abs(r['delta_lnB']))
+
+    extra = dict(metadata or {})
+    config_payload = {
+        'lnB_full': lnB_full,
+        'channels': list(channel_ablation.get('channels', {}).keys()),
+        'metadata': extra,
+    }
+    return _jsonify({
+        'artifact_name': 'loocv_report_v1.json',
+        'generated_by': extra.get(
+            'generated_by',
+            'htt.core.advanced_diagnostics.loocv_report_artifact',
+        ),
+        'git_commit': extra.get('git_commit', ''),
+        'config_hash': _config_hash(config_payload),
+        'input_data_hashes': list(extra.get('input_data_hashes', [])),
+        'random_seed': extra.get('random_seed'),
+        'wall_time_sec': extra.get('wall_time_sec'),
+        'python_version': extra.get('python_version', platform.python_version()),
+        'numpy_version': extra.get('numpy_version', np.__version__),
+        'claim_tier': extra.get('claim_tier', 'REPORT'),
+        'scope_label': extra.get('scope_label', 'report'),
+        'production_allowed': False,
+        'lnB_full': float(lnB_full),
+        'n_dropped_channels': len(entries),
+        'entries': entries,
+        'most_sensitive_channel': max_entry,
+    })
 
 
 # ═══════════════════════════════════════════════════════════════

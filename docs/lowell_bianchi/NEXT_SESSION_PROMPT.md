@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-META-11.CLOSE → FB-4.1 actual-work**; the extended META sweep is sealed and the handoff now targets the first actual-work replacement of a planted skeleton)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB_META11_2026-04-20.md` (phase close note) and `docs/audits/AUDIT_FB_META_SUMMARY_2026-04-20.md`
-**Current target session**: **FB-4.1 actual-work** — replace the FB-4.1 skeleton body using the existing user-held prompt from the FB-3 closure
-**Phase status**: Extended META sweep complete across FB-4/5/6/7/8/9/11. The last close-gate suite run reached `3400 passed + 73 skipped + 3 errors` because `data/camb_ref_planck2018.npz` is missing in the dirty worktree; the last fully green pre-blocker anchor was `3403 passed + 66 skipped`
+**Last rotated**: 2026-04-20 (**FB-4.1 actual-work → FB-4.2 actual-work**; the Layer-B Thomson seed is landed locally and the handoff advances to the E↔B rotation replacement)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB4_2026-04-20.md`
+**Current target session**: **FB-4.2 actual-work** — replace the tilted E↔B skeleton using the canonical Phase FB-4 prompt
+**Phase status**: FB-4.1 is complete locally. The current close-gate suite reaches `3425 passed + 72 skipped + 3 errors`; the only remaining whole-suite blocker is the missing `data/camb_ref_planck2018.npz` fixture at LB-6-19/20/21.
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,41 +37,34 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-4.1 — full-Lorentz PSTF collision actual-work bootstrap
+# FB-4.2 actual-work — paste the Phase FB-4 prompt and execute only the second rotation
 
-Skeletons pre-planted per FB-META sweep; see
-`docs/audits/AUDIT_FB_META_SUMMARY_2026-04-20.md` for the per-skeleton
-audit section pointer before replacing any `NotImplementedError` body.
+Phase FB-4.1 actual-work is now closed locally.
 
-Use the canonical FB-4.1 actual-work prompt the user already holds from
-the FB-3 closure. Before editing any runtime body, read:
-- `docs/audits/AUDIT_PHASE_FB_META4_2026-04-20.md §FB-4.1`
+Before starting FB-4.2, read:
+- `docs/audits/AUDIT_PHASE_FB4_2026-04-20.md`
 - `docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md §4 Phase FB-4`
-- `docs/lowell_bianchi/04_thomson_collision_spec.md §8.2`
-- `htt/bass/collision/tilted_thomson_layer_b.py`
-- `htt/bass/collision/test_fb41_tilted_thomson_skeleton.py`
-- `htt/bass/collision/thomson_pstf.py`
-- `htt/bass/collision/tilted_visibility.py`
+- `docs/manuscript/ch05_teff_corrections.tex §sec:tilted-thomson-layer-b`
+- `docs/manuscript/ch04_bianchi_bounds.tex` (Robustness paragraph)
+- `scripts/make_physics_gallery.py` Topic 10 addition `plot_10_04_thomson_beta_sweep_Dl`
+- `figures/physics_gallery/10_collision_and_visibility/04_thomson_beta_sweep_Dl.png`
 
-Bundle-wide carry-forward pins:
-- Extended META sweep is complete across FB-4/5/6/7/8/9/11.
-- `emcee` remains confined to `bass.inference.drivers/`; `dynesty`
-  remains reference-only.
-- Observer boost and cosmological tilt remain type-distinct.
-- `Sigma_mnu = 0` remains byte-identical to the LB-1 massless neutrino
-  path.
-- FB-11 reserved `configs/fb11_summary.yaml`,
-  `figures/paper/fb11_summary_table.{json,md}`, and
-  `figures/physics_gallery/16_inference_corner/`, but created no dummy
-  inference outputs.
+FB-4.1 carry-forward pins:
+- Layer-B runtime changes live only in `htt/bass/collision/`; `htt/`
+  remains intentionally unstaged by contract.
+- The shipped Layer-B boost is axis-aligned only; arbitrary-direction
+  Wigner-d rotation is still reserved for **FB-5.2**.
 
-Regression anchors:
-- Last fully green pre-blocker anchor:
-  `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
-  → `3403 passed, 66 skipped`
-- Current whole-suite blocker:
-  `data/camb_ref_planck2018.npz` is missing in the dirty worktree, so
-  the close-gate run currently stops at `3400 passed, 73 skipped, 3 errors`
+Regression anchor:
+- `cd htt_base/htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `3425 passed, 72 skipped, 3 errors`
+- The 3 errors are still the pre-existing CAMB fixture blocker at
+  `bass/integration/test_lowell_bianchi.py::TestLBCAMBMatch::{LB_6_19,LB_6_20,LB_6_21}`
+  because `data/camb_ref_planck2018.npz` is missing in the dirty worktree.
+
+Next action:
+- Paste the canonical **FB-4 actual-work** prompt as the first user
+  message, but execute only the FB-4.2 rotation. Do not reopen FB-4.1.
 ```
 
 ---
