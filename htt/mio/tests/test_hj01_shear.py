@@ -230,6 +230,33 @@ def test_extract_drops_zero_kernel_multipoles():
     assert report.ell.size == expected_window - len(dropped)
 
 
+def test_flrw_band_bonferroni_widens_threshold():
+    cfg = ShearExtractorConfig()
+    widened = cfg.effective_flrw_null_band_sigma(29)
+    assert widened > cfg.flrw_null_band_sigma
+    assert widened == pytest.approx(3.144, rel=5e-3)
+
+
+def test_is_flrw_consistent_can_use_bonferroni_adjustment():
+    report = ShearExtractorReport(
+        ell=np.arange(2, 31),
+        sigma2_per_ell=np.full(29, 2.5),
+        sigma_sigma2_per_ell=np.ones(29),
+        sigma2_best=2.5,
+        sigma2_best_uncertainty=1.0 / np.sqrt(29.0),
+        chi2_independence=0.0,
+        dof_independence=28,
+        p_value_independence=1.0,
+        dropped_ells=(),
+        bianchi_type="FLRW",
+        atlas_name="synthetic",
+    )
+    strict_cfg = ShearExtractorConfig(bonferroni_adjust_flrw_band=False)
+    widened_cfg = ShearExtractorConfig(bonferroni_adjust_flrw_band=True)
+    assert report.is_flrw_consistent(strict_cfg) is False
+    assert report.is_flrw_consistent(widened_cfg) is True
+
+
 def test_gammaincc_warns_on_series_nonconvergence():
     with pytest.warns(RuntimeWarning, match="_gammaincc did not converge"):
         value = _gammaincc(5.0, 1.0, max_iterations=1)
@@ -332,10 +359,9 @@ def test_to_mio_certificate_has_no_posterior_field():
 def test_to_mio_certificate_flrw_band_indicator():
     """flrw_consistent_within_band indicator behaves correctly on each side.
 
-    Uses noiseless inputs so the assertion is deterministic. With 29
-    iid 2σ tests the false-flag rate on a random FLRW realisation is
-    ~75% — that is a property of the band, not a property of the code,
-    so it is not what this test is for.
+    Uses noiseless inputs so the assertion is deterministic. The default
+    path is Bonferroni-aware, so the low-ℓ familywise false-flag rate is
+    materially lower than the earlier raw-2σ gate.
     """
     # FLRW input (noiseless) → band consistent.
     kl_flrw = _base_kl(sigma2_inject=0.0, sigma_obs_uK2=50.0, rng_seed=7,
@@ -348,6 +374,15 @@ def test_to_mio_certificate_flrw_band_indicator():
                          rng_seed=8, add_obs_noise=False)
     cert_strong = to_mio_certificate(extract_from_kl_atlas(kl_strong))
     assert cert_strong.adequacy_indicators["flrw_consistent_within_band"] is False
+
+
+def test_to_mio_certificate_records_effective_flrw_band():
+    report = extract_from_kl_atlas(_base_kl(sigma2_inject=0.0, add_obs_noise=False))
+    cert = to_mio_certificate(report)
+    assert cert.consistency_metrics["bonferroni_adjust_flrw_band"] is True
+    assert cert.consistency_metrics["flrw_effective_null_band_sigma"] > (
+        cert.consistency_metrics["flrw_null_band_sigma"]
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -400,3 +435,5 @@ def test_shear_extractor_class_extract_and_certify():
     assert cert.consistency_metrics["ell_min"] == 3.0
     assert cert.consistency_metrics["ell_max"] == 20.0
     assert cert.consistency_metrics["flrw_null_band_sigma"] == 2.5
+    assert cert.consistency_metrics["bonferroni_adjust_flrw_band"] is True
+    assert cert.consistency_metrics["flrw_effective_null_band_sigma"] > 2.5

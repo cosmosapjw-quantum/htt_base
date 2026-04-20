@@ -47,6 +47,7 @@ import math
 import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
+from statistics import NormalDist
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple, Union
 
 import numpy as np
@@ -114,13 +115,48 @@ class ShearExtractorConfig:
         :attr:`ShearExtractorReport.dropped_ells` so callers can audit.
     flrw_null_band_sigma
         How many σ around zero defines the FLRW null band (used by
-        :meth:`ShearExtractorReport.is_flrw_consistent`). Default 2.0.
+        :meth:`ShearExtractorReport.is_flrw_consistent`) before any
+        multiple-testing correction. Default 2.0.
+    bonferroni_adjust_flrw_band
+        When true, widen the null band so the family-wise false-flag rate
+        across all kept multipoles is bounded by ``flrw_familywise_alpha``.
+        This is the safer default for the 29-multipole low-ℓ window.
+    flrw_familywise_alpha
+        Family-wise false-flag target used by the Bonferroni widening.
     """
 
     ell_min: int = 2
     ell_max: int = 30
     min_kernel_abs: float = 1e-30
     flrw_null_band_sigma: float = 2.0
+    bonferroni_adjust_flrw_band: bool = True
+    flrw_familywise_alpha: float = 0.05
+
+    def __post_init__(self) -> None:
+        if self.ell_min > self.ell_max:
+            raise ValueError(
+                f"ell_min must be <= ell_max; got {self.ell_min} > {self.ell_max}"
+            )
+        if self.min_kernel_abs < 0.0:
+            raise ValueError(
+                f"min_kernel_abs must be >= 0; got {self.min_kernel_abs}"
+            )
+        if self.flrw_null_band_sigma <= 0.0:
+            raise ValueError(
+                "flrw_null_band_sigma must be strictly positive"
+            )
+        if not (0.0 < self.flrw_familywise_alpha < 1.0):
+            raise ValueError(
+                "flrw_familywise_alpha must lie in (0, 1)"
+            )
+
+    def effective_flrw_null_band_sigma(self, n_multipoles: int) -> float:
+        """Return the actual σ-threshold used for the FLRW consistency gate."""
+        if n_multipoles <= 0 or not self.bonferroni_adjust_flrw_band:
+            return float(self.flrw_null_band_sigma)
+        per_test_alpha = self.flrw_familywise_alpha / float(n_multipoles)
+        sigma = NormalDist().inv_cdf(1.0 - per_test_alpha / 2.0)
+        return float(max(self.flrw_null_band_sigma, sigma))
 
 
 @dataclass(frozen=True)
@@ -143,12 +179,13 @@ class ShearExtractorReport:
         self,
         config: Optional[ShearExtractorConfig] = None,
     ) -> bool:
-        """True iff every kept ℓ has |Σ²_ℓ| < band·σ_ℓ (default 2σ)."""
+        """True iff every kept ℓ has |Σ²_ℓ| < band·σ_ℓ after config widening."""
         cfg = config if config is not None else ShearExtractorConfig()
         if self.ell.size == 0:
             return True
         z = np.abs(self.sigma2_per_ell) / np.maximum(self.sigma_sigma2_per_ell, 1e-300)
-        return bool(np.all(z < cfg.flrw_null_band_sigma))
+        band_sigma = cfg.effective_flrw_null_band_sigma(int(self.ell.size))
+        return bool(np.all(z < band_sigma))
 
 
 # ---------------------------------------------------------------------------
@@ -447,6 +484,7 @@ def to_mio_certificate(
     epistemic state honest per ch11 §11.14.2.
     """
     cfg = config if config is not None else ShearExtractorConfig()
+    effective_band_sigma = cfg.effective_flrw_null_band_sigma(int(report.ell.size))
 
     departure = {
         "sigma2_best": float(report.sigma2_best),
@@ -469,6 +507,9 @@ def to_mio_certificate(
         "ell_min": float(cfg.ell_min),
         "ell_max": float(cfg.ell_max),
         "flrw_null_band_sigma": float(cfg.flrw_null_band_sigma),
+        "flrw_effective_null_band_sigma": float(effective_band_sigma),
+        "bonferroni_adjust_flrw_band": bool(cfg.bonferroni_adjust_flrw_band),
+        "flrw_familywise_alpha": float(cfg.flrw_familywise_alpha),
     }
 
     caveats = [DIAGNOSTIC_ONLY_CAVEAT]
@@ -559,6 +600,8 @@ def emit_shear_extraction_artefact(
             "ell_max": cfg.ell_max,
             "min_kernel_abs": cfg.min_kernel_abs,
             "flrw_null_band_sigma": cfg.flrw_null_band_sigma,
+            "bonferroni_adjust_flrw_band": cfg.bonferroni_adjust_flrw_band,
+            "flrw_familywise_alpha": cfg.flrw_familywise_alpha,
         },
         "per_ell": {
             "ell": report.ell.tolist(),
