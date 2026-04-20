@@ -210,9 +210,10 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
         Sigma_mnu : float, optional
             Sum of neutrino masses in eV. ``Sigma_mnu = 0.0`` preserves
             the byte-identical LB-1 massless ``NeutrinoBackground``
-            path; positive values reserve the ``SpeciesLabel.NEUTRINO``
-            slot for the FB-9 massive-neutrino placeholder without
-            introducing a new enum label.
+            path; positive values populate the
+            ``SpeciesLabel.NEUTRINO`` slot with an FB-9
+            ``MassiveNeutrinoBackground`` without introducing a new
+            enum label.
         recombination_warning_policy : {'always', 'once', 'ignore'}, optional
             Policy for the known HyRec/FLRW support-gap warning emitted
             by ``BaryonBackground``. The default ``'once'`` warns only

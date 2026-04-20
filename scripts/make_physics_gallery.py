@@ -67,6 +67,7 @@ from bass.recombination.reionization import (  # noqa: E402
     compute_reionization_tau,
 )
 from bass.species import (  # noqa: E402
+    MassiveNeutrinoBackground,
     SpeciesBackgroundRegistry,
     SpeciesConstants,
     build_flrw_background_table,
@@ -4110,6 +4111,187 @@ def plot_14_04_discriminator_coverage() -> None:
 
 
 # ════════════════════════════════════════════════════════════════════
+# Topic 15 — Massive neutrino (FB-9)
+# ════════════════════════════════════════════════════════════════════
+
+
+TOPIC_15 = "15_massive_neutrino"
+
+
+def _massive_nu_sigma_grid() -> tuple[float, ...]:
+    return (0.06, 0.12, 0.24)
+
+
+def _massive_nu_color_map() -> dict[float, str]:
+    return {
+        0.00: COLS["cyan"],
+        0.06: COLS["blue"],
+        0.12: COLS["green"],
+        0.24: COLS["orange"],
+    }
+
+
+def _massive_nu_background(
+    bg: FLRWBackgroundTable, sigma_mnu: float,
+) -> MassiveNeutrinoBackground | NeutrinoBackground:
+    if sigma_mnu == 0.0:
+        c = bg.constants
+        return NeutrinoBackground(bg, c.Omega_nu_0, N_eff=c.N_eff)
+    return MassiveNeutrinoBackground(bg, mass_eV=sigma_mnu / 3.0, N_q=15)
+
+
+def _massive_nu_eta_grid(
+    bg: FLRWBackgroundTable, a_min: float = 1.0e-4, n: int = 400,
+) -> tuple[np.ndarray, np.ndarray]:
+    a_grid = np.geomspace(a_min, 1.0, n)
+    eta_grid = np.array([bg.eta_at_a(a) for a in a_grid])
+    return a_grid, eta_grid
+
+
+def _massive_nu_power_suppression_proxy(
+    k: np.ndarray, *, k_fs: float, f_nu: float,
+) -> np.ndarray:
+    x2 = (np.asarray(k, dtype=np.float64) / float(k_fs)) ** 2
+    return -8.0 * float(f_nu) * x2 / (1.0 + x2)
+
+
+def plot_15_01_w_of_a_sweep() -> None:
+    bg = Shared.bg()
+    a_grid, eta_grid = _massive_nu_eta_grid(bg)
+    colors = _massive_nu_color_map()
+
+    fig, ax = plt.subplots(figsize=(7.0, 4.4))
+    for sigma_mnu in (0.0, *_massive_nu_sigma_grid()):
+        nu = _massive_nu_background(bg, sigma_mnu)
+        label = (
+            r"$\Sigma m_\nu = 0$"
+            if sigma_mnu == 0.0
+            else rf"$\Sigma m_\nu = {sigma_mnu:.2f}\,\mathrm{{eV}}$"
+        )
+        ax.plot(
+            a_grid,
+            np.asarray(nu.w(eta_grid)),
+            lw=1.8,
+            color=colors[sigma_mnu],
+            label=label,
+        )
+
+    _prepare_axes(
+        ax,
+        r"$a$",
+        r"$w_\nu(a) = p_\nu / \rho_\nu$",
+        title=r"Massive-neutrino equation of state across the NR transition",
+        xlog=True,
+    )
+    ax.set_xlim(a_grid[0], 1.0)
+    ax.set_ylim(-0.01, 0.35)
+    ax.legend(loc="upper right", framealpha=0.9)
+    _save(fig, "01_w_of_a_sweep", TOPIC_15)
+
+
+def plot_15_02_rho_p_nr_transition() -> None:
+    bg = Shared.bg()
+    sigma_mnu = 0.12
+    nu = MassiveNeutrinoBackground(bg, mass_eV=sigma_mnu / 3.0, N_q=15)
+    a_grid, eta_grid = _massive_nu_eta_grid(bg)
+    rho = np.asarray(nu.rho_rest(eta_grid))
+    p = np.asarray(nu.p_rest(eta_grid))
+    rho_scaled = rho * a_grid ** 4 / nu._Omega_ncdm_0
+    p_scaled = 3.0 * p * a_grid ** 4 / nu._Omega_ncdm_0
+    a_nr = nu.nr_transition_scale_factor()
+
+    fig, ax = plt.subplots(figsize=(7.0, 4.4))
+    ax.plot(a_grid, rho_scaled, lw=1.8, color=COLS["blue"],
+            label=r"$\rho_\nu a^4 / \Omega_{\nu,\mathrm{ncdm},0}$")
+    ax.plot(a_grid, p_scaled, lw=1.8, color=COLS["orange"],
+            label=r"$3 p_\nu a^4 / \Omega_{\nu,\mathrm{ncdm},0}$")
+    ax.axvline(a_nr, color="0.35", ls="--", lw=1.0)
+    ax.text(
+        a_nr * 1.05,
+        0.55 * (rho_scaled.min() + rho_scaled.max()),
+        rf"$a_{{\rm NR}} \approx {a_nr:.3e}$",
+        color="0.35",
+        fontsize=9,
+        rotation=90,
+        va="center",
+    )
+    _prepare_axes(
+        ax,
+        r"$a$",
+        r"scaled thermodynamic integrals",
+        title=r"$\Sigma m_\nu = 0.12\,\mathrm{eV}$: density and pressure through the NR turnover",
+        xlog=True,
+    )
+    ax.set_xlim(a_grid[0], 1.0)
+    ax.legend(loc="upper left", framealpha=0.9)
+    _save(fig, "02_rho_p_NR_transition", TOPIC_15)
+
+
+def plot_15_03_kfs_vs_a() -> None:
+    bg = Shared.bg()
+    a_grid, eta_grid = _massive_nu_eta_grid(bg)
+    colors = _massive_nu_color_map()
+
+    fig, ax = plt.subplots(figsize=(7.0, 4.4))
+    for sigma_mnu in _massive_nu_sigma_grid():
+        nu = MassiveNeutrinoBackground(bg, mass_eV=sigma_mnu / 3.0, N_q=15)
+        ax.plot(
+            a_grid,
+            np.asarray(nu.free_streaming_wavenumber(eta_grid)),
+            lw=1.8,
+            color=colors[sigma_mnu],
+            label=rf"$\Sigma m_\nu = {sigma_mnu:.2f}\,\mathrm{{eV}}$",
+        )
+    _prepare_axes(
+        ax,
+        r"$a$",
+        r"$k_{\rm fs}(a)\;[\mathrm{Mpc}^{-1}]$",
+        title=r"Massive-neutrino free-streaming scale",
+        xlog=True,
+        ylog=True,
+    )
+    ax.set_xlim(a_grid[0], 1.0)
+    ax.legend(loc="upper left", framealpha=0.9)
+    _save(fig, "03_kfs_vs_a", TOPIC_15)
+
+
+def plot_15_04_dPk_over_Pk() -> None:
+    bg = Shared.bg()
+    colors = _massive_nu_color_map()
+    k_grid = np.geomspace(1.0e-4, 2.0, 400)
+    eta_today = bg.eta_today
+
+    fig, ax = plt.subplots(figsize=(7.0, 4.4))
+    for sigma_mnu in _massive_nu_sigma_grid():
+        nu = MassiveNeutrinoBackground(bg, mass_eV=sigma_mnu / 3.0, N_q=15)
+        k_fs = float(nu.free_streaming_wavenumber(eta_today))
+        f_nu = float(nu.rho_rest(eta_today) / bg.constants.Omega_m_0)
+        delta = _massive_nu_power_suppression_proxy(
+            k_grid, k_fs=k_fs, f_nu=f_nu,
+        )
+        ax.plot(
+            k_grid,
+            delta,
+            lw=1.8,
+            color=colors[sigma_mnu],
+            label=rf"$\Sigma m_\nu = {sigma_mnu:.2f}\,\mathrm{{eV}}$",
+        )
+        ax.axvline(k_fs, color=colors[sigma_mnu], ls=":", lw=0.9, alpha=0.7)
+
+    _prepare_axes(
+        ax,
+        r"$k\;[\mathrm{Mpc}^{-1}]$",
+        r"$\Delta P(k) / P(k)$",
+        title=r"Hu-Eisenstein-Tegmark leading-order suppression proxy",
+        xlog=True,
+    )
+    ax.set_xlim(k_grid[0], k_grid[-1])
+    ax.set_ylim(-0.17, 0.01)
+    ax.legend(loc="lower left", framealpha=0.9)
+    _save(fig, "04_dPk_over_Pk", TOPIC_15)
+
+
+# ════════════════════════════════════════════════════════════════════
 # Topic 17 — Perturbation k-modes
 # ════════════════════════════════════════════════════════════════════
 
@@ -5277,6 +5459,16 @@ CATALOG: Dict[str, List[Tuple[str, Callable[[], None], str]]] = {
          "FB-8.3 harmonic-coefficient map before and after the linear observer boost."),
         ("04_discriminator_coverage", plot_14_04_discriminator_coverage,
          "FB-8.5 empirical-PIT coverage histograms for H_obs and H_cosmo synthetic draws."),
+    ],
+    TOPIC_15: [
+        ("01_w_of_a_sweep", plot_15_01_w_of_a_sweep,
+         "FB-9.6 neutrino equation-of-state sweep for Σmν ∈ {0, 0.06, 0.12, 0.24} eV."),
+        ("02_rho_p_NR_transition", plot_15_02_rho_p_nr_transition,
+         "FB-9.6 scaled density and pressure through the non-relativistic turnover at Σmν = 0.12 eV."),
+        ("03_kfs_vs_a", plot_15_03_kfs_vs_a,
+         "FB-9.6 free-streaming wavenumber k_fs(a) for the three fiducial neutrino masses."),
+        ("04_dPk_over_Pk", plot_15_04_dPk_over_Pk,
+         "FB-9.6 leading-order fractional power suppression proxy with k_fs(today) markers."),
     ],
     TOPIC_17: [
         ("01_harmonic_modes_per_type", plot_17_01_harmonic_modes_per_type,

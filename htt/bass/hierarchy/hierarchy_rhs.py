@@ -89,6 +89,7 @@ from bass.hierarchy.terms import (
     T9_shear_down,
     zero_nabla_operator,
 )
+from bass.species.base import SpeciesBackground
 from bass.species.massive_neutrino import MassiveNeutrinoBackground
 
 
@@ -480,7 +481,7 @@ def hierarchy_rhs_neutrino(
     bg_table: "object",
     tetrad_state: Optional["object"],
     closure: ClosureStrategy,
-    neutrino_background: Optional[MassiveNeutrinoBackground] = None,
+    neutrino_background: Optional[SpeciesBackground] = None,
     nabla_operator: Optional[Callable[..., np.ndarray]] = None,
     accel_vector: Optional[np.ndarray] = None,
     vorticity_vector: Optional[np.ndarray] = None,
@@ -490,18 +491,36 @@ def hierarchy_rhs_neutrino(
     Thin convenience wrapper that fixes
     ``collision = ZeroCollisionOperator()`` and forwards to
     ``hierarchy_rhs_photon``. See that function for the full parameter
-    list and unit conventions. The FB-9 skeleton adds an optional
-    ``neutrino_background`` kwarg while preserving the byte-identical
-    LB-1 / FB-2.4 path when that kwarg is left at ``None``.
+    list and unit conventions.
+
+    FB-9 extends the wrapper with an optional ``neutrino_background``
+    hook. When that object is a ``MassiveNeutrinoBackground`` with
+    positive mass, the free-streaming gradient/divergence operator is
+    multiplied by the energy-weighted Ma-Bertschinger ``q / epsilon``
+    factor exposed by
+    ``MassiveNeutrinoBackground.free_streaming_modifier(eta)``. The
+    byte-identical LB-1 / FB-2.4 path is preserved whenever
+    ``neutrino_background is None`` or when the caller passes the
+    original massless ``NeutrinoBackground`` from the default registry.
 
     Reference: 02_multipole_hierarchy_spec.md §1.2 (K_{A_ℓ} = 0 for
     collisionless neutrinos); Ma-Bertschinger 1995 §4.
     """
-    if isinstance(neutrino_background, MassiveNeutrinoBackground):
-        raise NotImplementedError(
-            "FB-9.4 skeleton only: hierarchy_rhs_neutrino does not yet "
-            "implement the massive-neutrino free-streaming correction."
-        )
+    effective_nabla = nabla_operator
+    if (
+        isinstance(neutrino_background, MassiveNeutrinoBackground)
+        and neutrino_background.mass_eV > 0.0
+    ):
+        base_nabla = nabla_operator or zero_nabla_operator
+        modifier = float(neutrino_background.free_streaming_modifier(eta))
+
+        def scaled_nabla(
+            tensor: np.ndarray, kind: str = "gradient",
+        ) -> np.ndarray:
+            return modifier * np.asarray(base_nabla(tensor, kind=kind))
+
+        effective_nabla = scaled_nabla
+
     return hierarchy_rhs_photon(
         eta,
         y_flat,
@@ -511,7 +530,7 @@ def hierarchy_rhs_neutrino(
         closure=closure,
         collision=_ZERO_COLLISION,
         collision_aux=None,
-        nabla_operator=nabla_operator,
+        nabla_operator=effective_nabla,
         accel_vector=accel_vector,
         vorticity_vector=vorticity_vector,
     )

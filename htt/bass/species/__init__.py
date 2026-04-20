@@ -16,7 +16,7 @@ Abstract base + canonical ordering:
 Concrete species classes:
     ``PhotonBackground``, ``NeutrinoBackground``,
     ``BaryonBackground``, ``CDMBackground``, ``LambdaBackground``,
-    ``MassiveNeutrinoBackground`` (FB-9 skeleton)
+    ``MassiveNeutrinoBackground``
 
 Registry + factory:
     ``SpeciesBackgroundRegistry``, ``SpeciesBackgroundRegistry.from_planck2018``
