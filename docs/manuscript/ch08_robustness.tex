@@ -774,6 +774,19 @@ family-adjacent interpretations in the Chapter~7 scenario tables are
 not numerical artifacts of a discontinuous implementation near the type
 boundaries.
 
+Massive neutrino systematics now add one more audited robustness axis.  FB-9
+promotes the previously massless neutrino background to a controlled
+``massive but default-off'' deformation, so the relevant question is no
+longer whether the neutrino approximation is exact, but whether the
+remaining uncertainty from $\Sigma m_\nu \neq 0$ is numerically and
+conceptually bounded.  Chapter~\ref{ch:error-hierarchy} addresses that
+point directly in Section~\ref{sec:massive-neutrino-systematic}: the
+massless LB-1 path is kept byte-identical at $\Sigma m_\nu = 0$, while
+the positive-mass branch is audited against frozen CLASS fixtures and
+against the expected free-streaming scale.  In other words, the
+massive-neutrino effect is now an explicit systematic knob, not an
+untracked model omission.
+
 
 % ============================================================
 \section{CF4 data version sensitivity}

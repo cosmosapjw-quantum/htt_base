@@ -93,34 +93,71 @@ For each species we specify: (a) rest-frame thermodynamic state, (b) equation of
 | Today's value | Ω_ν,0 = (7/8) × (4/11)^{4/3} × 3.044 × Ω_γ,0 ≈ 3.83 × 10⁻⁵ | derived |
 | Phase-space | Fermi-Dirac with μ_ν ≈ 0, T = T_ν | Kolb §3.3 |
 
-**Massive-neutrino extension (deferred)**: when m_ν ≲ 3 T_ν the fluid behaviour transitions from w = 1/3 to w → 0. For `Σ m_ν = 0.06 eV` the transition happens around `z_mν ≈ 185`. **LB-1 assumes massless** for all three generations; a massive-neutrino upgrade hook in the API accepts `m_nu_eV: float = 0.0` but treats any non-zero value as a `NotImplementedError` for now (explicit, not silent).
+**Massive-neutrino extension**: when `m_\nu \lesssim 3 T_\nu` the
+fluid behaviour transitions from `w = 1/3` to `w \rightarrow 0`.
+FB-9 ships the degenerate-mass approximation
+`m_1 = m_2 = m_3 = \Sigma m_\nu / 3` on top of the LB-1 massless
+baseline.
 
 **Key identity enforced in code**:
 
   `ρ_ν(a) = Ω_ν,0 / a⁴`   (exact in massless limit)
 
-### 1.2a Massive-neutrino placeholder (FB-9 skeleton)
+### 1.2a Massive neutrino (FB-9)
 
-FB-META-9 reserves, but does not yet implement, the future massive-ν
-background surfaces under `htt/bass/species/massive_neutrino/`:
+FB-9 extends the neutrino surface with a positive-mass branch under
+`htt/bass/species/massive_neutrino/` while preserving the exact LB-1
+massless runtime when `Sigma_mnu = 0`.
 
-- `phase_space_grid(mass_eV, N_q=15)` — future momentum-grid contract
-  for the phase-space quadrature.
-- `MassiveNeutrinoBackground(bg_table, mass_eV, N_q=15)` — future
-  `SpeciesBackground` subclass for `ρ_ν(a)` / `p_ν(a)` with
-  `w(a) = p/ρ` transitioning from `1/3` to `0`.
-- `SpeciesBackgroundRegistry.from_planck2018(..., Sigma_mnu=0.0)` —
-  future registry-side dispatch point; `SpeciesLabel.NEUTRINO` remains
-  the only neutrino enum label.
+**Public contract**
 
-The non-negotiable invariant is:
+- `phase_space_grid(mass_eV, N_q=15)` returns a deterministic
+  Gauss-Laguerre grid `(q_i, w_i)` with `q = p / T_{ncdm,0}` and the
+  Fermi-Dirac phase-space measure already absorbed into the weights.
+- `MassiveNeutrinoBackground(bg_table, mass_eV, N_q=15)` evaluates
+  `\rho_\nu(a)` and `p_\nu(a)` from the standard collisionless
+  Fermi-Dirac integrals and exposes `w(a) = p/\rho`,
+  `v_{\rm fs}(a)`, and `k_{\rm fs}(a)`.
+- `SpeciesBackgroundRegistry.from_planck2018(..., Sigma_mnu=0.0)`
+  dispatches internally on the existing `SpeciesLabel.NEUTRINO` slot:
+  `Sigma_mnu = 0.0` keeps the LB-1 `NeutrinoBackground` byte-for-byte,
+  while `Sigma_mnu > 0` constructs a `MassiveNeutrinoBackground`.
+
+**Phase-space and thermodynamic convention**
+
+For a degenerate species with mass `m = \Sigma m_\nu / 3`,
+
+```text
+\rho(a) = (T_{ncdm,0}/a)^4 \int dq\, q^2 \epsilon(q,a) f_{\rm FD}(q)
+p(a)    = (T_{ncdm,0}/a)^4 \frac{1}{3} \int dq\, q^4 \epsilon(q,a)^{-1} f_{\rm FD}(q)
+\epsilon(q,a) = \sqrt{q^2 + (m a / T_{ncdm,0})^2}.
+```
+
+The shipped implementation uses `N_q = 15` and caches `\rho(a)`,
+`p(a)`, and the effective free-streaming velocity on the shared
+`FLRWBackgroundTable.a` grid, then interpolates `\log \rho(a)`,
+`\log p(a)`, and `w(a)` via cubic splines in `\log a`.
+
+**CLASS / CAMB split used by the positive-mass branch**
+
+To match the standard three-`ncdm` Planck-2018 setup, the positive-mass
+branch follows the effective split
+
+```text
+N_eff = 3.044 \approx 3 \times 1.0132 + 0.00441,
+```
+
+so the massive species use a slightly hotter
+`T_{ncdm,0} \approx 0.71611\,T_{\gamma,0}` and an
+`Omega_{\nu,0}` rescaling by `3.0396 / 3.044` relative to the LB-1
+massless normalization. This makes the shipped `\rho(a)` / `p(a)` match
+the frozen CLASS fixtures at `rtol = 10^{-4}` on the shared BASS
+background grid.
+
+**Load-bearing invariant**
 
 > `Sigma_mnu = 0` must remain byte-identical to the LB-1 massless
 > `NeutrinoBackground` path on the full `bass/ tsc/` suite.
-
-Accordingly, the FB-9 skeleton code only exposes placeholder modules and
-raising contracts. The shipped production runtime for zero neutrino mass
-is still exactly the massless LB-1 implementation above.
 
 ### 1.3 Baryon (b)
 
@@ -469,9 +506,11 @@ class SpeciesBackgroundRegistry:
 
     @classmethod
     def from_planck2018(cls, bg_table: FLRWBackgroundTable,
-                         recombination: RecombinationInterp
+                         recombination: RecombinationInterp,
+                         *,
+                         Sigma_mnu: float = 0.0,
                         ) -> 'SpeciesBackgroundRegistry':
-        """Factory: Planck 2018 Ω's, N_eff=3.044, m_ν=0."""
+        """Factory: Planck 2018 Ω's, N_eff=3.044, optional Σm_ν."""
 ```
 
 ---

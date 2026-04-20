@@ -151,14 +151,14 @@ directory-level summary so the coordinator plan stays legible.
 
 ### FB-9 — Massive neutrino species
 
-| Unit | Title | Delivery doc |
-|---|---|---|
-| FB-9.1 | `phase_space_grid` + determinism tests | [§2 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) |
-| FB-9.2 | `MassiveNeutrinoBackground.rho_rest` / `.p_rest` | [§3 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) |
-| FB-9.3 | Registry integration + `m=0` byte-identity | [§4 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) |
-| FB-9.4 | Hierarchy wire-up + free-streaming regression | [§5 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) |
-| FB-9.5 | FB-3 compatibility (`TiltedSpeciesBackground` on massive ν) | [§6 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) |
-| FB-9.6 | Docs + gallery topic `15_massive_neutrino/` | [§7 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) |
+| Unit | Title | Delivery doc | Status |
+|---|---|---|---|
+| FB-9.1 | `phase_space_grid` + determinism tests | [§2 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) | ✅ shipped locally (2026-04-20; pending user commit hash) |
+| FB-9.2 | `MassiveNeutrinoBackground.rho_rest` / `.p_rest` | [§3 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) | ✅ shipped locally (2026-04-20; pending user commit hash) |
+| FB-9.3 | Registry integration + `m=0` byte-identity | [§4 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) | ✅ shipped locally (2026-04-20; pending user commit hash) |
+| FB-9.4 | Hierarchy wire-up + free-streaming regression | [§5 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) | ✅ shipped locally (2026-04-20; pending user commit hash) |
+| FB-9.5 | FB-3 compatibility (`TiltedSpeciesBackground` on massive ν) | [§6 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) | ✅ shipped locally (2026-04-20; pending user commit hash) |
+| FB-9.6 | Docs + gallery topic `15_massive_neutrino/` | [§7 of SDD](FB9_MASSIVE_NEUTRINO_SDD.md) | ✅ shipped locally (2026-04-20; pending user commit hash) |
 
 ### FB-11 — Inference driver + multi-type Bayes factor
 

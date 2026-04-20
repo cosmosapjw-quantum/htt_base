@@ -4,15 +4,16 @@ Structured PNG gallery of every physical quantity the `htt/bass` + `htt/tsc`
 codebase can currently produce at the **post-LB-2a baseline** (species
 backgrounds, FLRW geometry, HyRec-based recombination / tanh
 reionization, Y-Block Bianchi shear evolution, lowell §11.3
-tilt-boost kinematics, Friedmann closure, parameter sweeps, and the
-PSTF multipole hierarchy algebra shipped in LB-2a).
+tilt-boost kinematics, Friedmann closure, parameter sweeps, the
+PSTF multipole hierarchy algebra shipped in LB-2a, and the FB-9
+massive-neutrino background diagnostics).
 
 **Location:** `figures/physics_gallery/` (sibling of `figures/paper/`
 and `figures/preliminary/`; moved here from `plots/physics_gallery/`
 during the 2026-04-19 figure-tree consolidation).
 **Generator**: [`scripts/make_physics_gallery.py`](../../scripts/make_physics_gallery.py)
-**Total**: 88 plots across 15 rendered topics + 2 reserved placeholder
-topics
+**Total**: 92 plots across 16 rendered topics + 1 reserved placeholder
+topic
 **Regenerate**: `venv/bin/python scripts/make_physics_gallery.py`
 **Cadence**: regenerated at the end of every LB-N phase; see the
 [phase-boundary hook](../../.claude/hooks/check_phase_boundary_audit.py)
@@ -197,13 +198,17 @@ coverage check.
 | [03_alm_mixing_demo.png](14_observer_frame/03_alm_mixing_demo.png) | FB-8.3 single synthetic $a_{\ell m}$ map before and after the linear observer-frame mixing kernel |
 | [04_discriminator_coverage.png](14_observer_frame/04_discriminator_coverage.png) | FB-8.5 empirical-PIT coverage histograms for $\Lambda(d;H_{\rm obs},H_{\rm cosmo})$ under both truth hypotheses, including the KS-uniformity gate |
 
-## 15 · Massive neutrino (FB-9 placeholder)
+## 15 · Massive neutrino (FB-9)
 
-FB-META-9 is skeleton-only, so no massive-neutrino PNGs are rendered
-yet. The reserved topic directory
-[15_massive_neutrino/](15_massive_neutrino/README.md) documents the
-future target outputs and records this phase as an intentional gallery
-no-op.
+Massive-neutrino background thermodynamics and the leading-order
+free-streaming / suppression diagnostics introduced in FB-9.
+
+| File | Description |
+|---|---|
+| [01_w_of_a_sweep.png](15_massive_neutrino/01_w_of_a_sweep.png) | Equation-of-state sweep $w_\nu(a)$ for $\Sigma m_\nu \in \{0, 0.06, 0.12, 0.24\}\,\mathrm{eV}$ |
+| [02_rho_p_NR_transition.png](15_massive_neutrino/02_rho_p_NR_transition.png) | Scaled $\rho_\nu(a)$ and $p_\nu(a)$ through the non-relativistic turnover for $\Sigma m_\nu = 0.12\,\mathrm{eV}$ |
+| [03_kfs_vs_a.png](15_massive_neutrino/03_kfs_vs_a.png) | Free-streaming wavenumber $k_{\rm fs}(a)$ for the three fiducial mass sums |
+| [04_dPk_over_Pk.png](15_massive_neutrino/04_dPk_over_Pk.png) | Leading-order $\Delta P / P$ suppression proxy with $k_{\rm fs}(a{=}1)$ markers |
 
 ## 16 · Inference corner (FB-11 placeholder)
 

@@ -9,10 +9,10 @@
 
 This way the file is a **living handoff contract**: one always-current prompt + a persistent recipe for rotating it.
 
-**Last rotated**: 2026-04-20 (**FB-8 actual work → FB-9 actual work**; Phase FB-8 is closed locally with Topic-14 rendered, Chapter 2/9 updated, and the observer-frame discriminator audited)
-**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB8_2026-04-20.md`
-**Current target session**: **FB-9 actual work** — paste the canonical FB-9 prompt before coding
-**Phase status**: FB-8 is closed locally: the dedicated FB-8 slice reaches `225 passed`, the full `bass/ + tsc/` gate reaches `4104 passed, 14 skipped, 2 warnings`, Topic 14 is rendered, and the handoff is rotated to FB-9 actual work.
+**Last rotated**: 2026-04-20 (**FB-9 actual work → FB-11 actual work**; Phase FB-9 is closed locally with Topic-15 rendered, the CLASS fixtures frozen, and the massive-neutrino audit written)
+**Last audited**: 2026-04-20 — see `docs/audits/AUDIT_PHASE_FB9_2026-04-20.md`
+**Current target session**: **FB-11 actual work** — paste the canonical FB-11 prompt before coding
+**Phase status**: FB-9 is closed locally: the dedicated FB-9 slice reaches `165 passed`, the full `bass/ + tsc/` gate reaches `4269 passed, 8 skipped, 2 warnings`, Topic 15 is rendered, and the handoff is rotated to FB-11 actual work.
 **Phase-boundary audit prompt**: `docs/audits/AUDIT_PROMPT.md` (run before every next-phase commit)
 
 ---
@@ -37,17 +37,20 @@ This contract is **non-negotiable**. Skipping it breaks the chain.
 Copy the block below into a fresh Claude Code session:
 
 ```text
-# FB-9 actual work — paste the canonical FB-9 prompt
+# FB-11 actual work — paste the canonical FB-11 prompt
 
 Before doing anything else, read:
 - `docs/audits/AUDIT_PHASE_FB8_2026-04-20.md`
 - `docs/audits/AUDIT_PHASE_FB_META9_2026-04-20.md`
+- `docs/audits/AUDIT_PHASE_FB9_2026-04-20.md`
 - `docs/lowell_bianchi/extended_coverage/EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md`
 - `docs/lowell_bianchi/extended_coverage/DEVELOPMENT_LOG_FB8_ONWARD.md`
+- `docs/lowell_bianchi/extended_coverage/FB11_INFERENCE_DRIVER_SDD.md`
 - `docs/lowell_bianchi/NEXT_SESSION_PROMPT.md`
 - `htt/bass/species/massive_neutrino/`
 - `htt/bass/species/registry.py`
-- `htt/bass/species/tilted.py`
+- `htt/bass/observer/`
+- `htt/bass/likelihood/observer_frame_adapter.py`
 
 Baseline and carry-forward:
 - Phase FB-8 is closed on this branch. The observer-frame boost carrier,
@@ -55,19 +58,24 @@ Baseline and carry-forward:
   adapters, discriminator, observer-frame likelihood wrapper, Topic-14
   gallery, and Chapter-2 / Chapter-9 observer-frame write-up are now
   the baseline rather than open scope.
-- The load-bearing scope pin remains non-negotiable:
+- Phase FB-9 is also closed locally. The massive-neutrino phase-space
+  grid, positive-mass background, registry dispatch, hierarchy
+  free-streaming modifier, CLASS fixture set, Topic-15 gallery, and
+  Chapter-11 / Chapter-8 / Chapter-1 write-up are now baseline rather
+  than open scope.
+- The load-bearing scope pins remain non-negotiable:
   observer-frame and cosmological-frame velocity surfaces are
-  type-distinct, and FB-9 should build on that baseline rather than
-  collapsing it back into a shared carrier.
-- The next actual-work scope should come from the canonical FB-9 prompt,
-  not by improvising from the old FB-8 checklist.
+  type-distinct, and `Sigma_mnu = 0` stays byte-identical to the LB-1
+  massless neutrino path.
+- The next actual-work scope should come from the canonical FB-11
+  prompt, not by improvising from the old FB-9 checklist.
 
 This session's target:
-- paste the canonical FB-9 actual-work prompt as the first user message
+- paste the canonical FB-11 actual-work prompt as the first user message
   and execute that contract
-- if the canonical FB-9 prompt is not available, stop and record a
+- if the canonical FB-11 prompt is not available, stop and record a
   blocker rather than inventing the next phase from memory
-- rotate this file again only after FB-9 closes or an honest blocker is
+- rotate this file again only after FB-11 closes or an honest blocker is
   recorded in the audit
 
 Suggested verification anchor:

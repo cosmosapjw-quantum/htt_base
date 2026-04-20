@@ -674,3 +674,127 @@ cross-reference.
 - **Notes**: FB-8 is now closed at the actual-work boundary; the next
   open phase is FB-9. Warning count on the broad regression dropped
   from 26 to 2 after the sweep-hygiene patch.
+
+## Phase FB-9 — Massive neutrino species (actual work)
+
+### FB-9.1 — `phase_space_grid` implementation
+
+- **Scope**: Replaced the FB-META placeholder with the real
+  [phase-space grid](../../../htt/bass/species/massive_neutrino/phase_space.py):
+  deterministic Gauss-Laguerre nodes and Fermi-Dirac-weighted
+  quadrature weights at `N_q = 15`, together with the massless moment
+  constants used by the thermodynamic integrals.
+- **Commit anchor**: pending user closeout commit for `FB-9.1:`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_fb91_phase_space_grid_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB9_2026-04-20.md](../../audits/AUDIT_PHASE_FB9_2026-04-20.md)
+  §FB-9.1.
+- **Notes**: the production zero-mass path still does not call the new
+  helper; the LB-1 anchor remains the old massless closed form.
+
+### FB-9.2 — massive-neutrino background thermodynamics
+
+- **Scope**: Implemented the real
+  [MassiveNeutrinoBackground](../../../htt/bass/species/massive_neutrino/background.py)
+  with cached `rho(a)`, `p(a)`, `w(a)`, `v_fs(a)`, and `k_fs(a)`, and
+  added the CLASS-backed regression fixtures under
+  [data/class_massive_neutrino_fixtures](../../../data/class_massive_neutrino_fixtures/).
+- **Commit anchor**: pending user closeout commit for `FB-9.2:`.
+- **Verification**:
+  `venv/bin/python scripts/generate_class_massive_neutrino_fixtures.py`;
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_fb92_massive_neutrino_background_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB9_2026-04-20.md](../../audits/AUDIT_PHASE_FB9_2026-04-20.md)
+  §FB-9.2.
+- **Notes**: the positive-mass normalization follows the standard
+  three-`ncdm` split `3 x 1.0132 + 0.00441`, which was required to
+  bring the BASS background into `rtol = 1e-4` agreement with CLASS.
+
+### FB-9.3 — registry integration with `Sigma_mnu`
+
+- **Scope**: Promoted the registry-side `Sigma_mnu` kwarg from the
+  META contract to the real runtime path in
+  [registry.py](../../../htt/bass/species/registry.py), keeping
+  `SpeciesLabel.NEUTRINO` unchanged and preserving the exact LB-1
+  branch at `Sigma_mnu = 0.0`.
+- **Commit anchor**: pending user closeout commit for `FB-9.3:`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_fb93_registry_massive_neutrino_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB9_2026-04-20.md](../../audits/AUDIT_PHASE_FB9_2026-04-20.md)
+  §FB-9.3.
+- **Notes**: the registry remains the only load-bearing dispatch point;
+  no downstream label split was introduced.
+
+### FB-9.4 — hierarchy free-streaming wire-up
+
+- **Scope**: Extended
+  [hierarchy_rhs_neutrino](../../../htt/bass/hierarchy/hierarchy_rhs.py)
+  with the positive-mass free-streaming modifier, added the `k_fs`
+  recovery tests, and added the explicit seeded regression that
+  captures all `hierarchy_rhs_*` outputs under the `Sigma_mnu = 0`
+  anchor.
+- **Commit anchor**: pending user closeout commit for `FB-9.4:`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/hierarchy/test_fb94_massive_neutrino_hierarchy_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB9_2026-04-20.md](../../audits/AUDIT_PHASE_FB9_2026-04-20.md)
+  §FB-9.4.
+- **Notes**: the mass term only scales the streaming operator on the
+  positive branch; the no-kwargs and explicit-zero branches remain
+  byte-identical.
+
+### FB-9.5 — tilted composition over a massive-ν base
+
+- **Scope**: Replaced the FB-META skip harness with the real
+  [tilted massive-neutrino composition tests](../../../htt/bass/species/test_tilted_massive_neutrino_compose.py).
+  No production `tilted.py` edits were required.
+- **Commit anchor**: pending user closeout commit for `FB-9.5:`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_tilted_massive_neutrino_compose.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB9_2026-04-20.md](../../audits/AUDIT_PHASE_FB9_2026-04-20.md)
+  §FB-9.5.
+- **Notes**: the wrapper remains species-generic; FB-9.5 is purely a
+  composition proof.
+
+### FB-9.6 — docs + gallery closeout
+
+- **Scope**: Rendered the real gallery topic
+  [15_massive_neutrino](../../../figures/physics_gallery/15_massive_neutrino/README.md),
+  updated the root gallery README, populated the massive-neutrino
+  section in
+  [01_species_background_spec.md](../01_species_background_spec.md),
+  added the Chapter-11 systematic section plus the Chapter-8 and
+  Chapter-1 cross-references, refreshed the bibliography, and replaced
+  the skip-marked docs/gallery harness with a real test file.
+- **Commit anchor**: pending user closeout commit for `FB-9.6:`.
+- **Verification**:
+  `venv/bin/python scripts/make_physics_gallery.py --only 15_massive_neutrino`;
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_fb96_docs_gallery_skeleton.py -q`
+- **Audit**:
+  [AUDIT_PHASE_FB9_2026-04-20.md](../../audits/AUDIT_PHASE_FB9_2026-04-20.md)
+  §FB-9.6.
+- **Notes**: Topic 15 is no longer a placeholder; all four PNG outputs
+  are now part of the rendered gallery tree.
+
+### FB-9.CLOSE — Phase FB-9 actual work complete
+
+- **Scope**: Closed FB-9 with the phase-space grid, massive-neutrino
+  background, registry dispatch, hierarchy wire-up, tilt-composition
+  harness, CLASS fixtures, Topic-15 gallery, manuscript/spec updates,
+  and the actual-work audit all landed locally.
+- **Commit anchor**: pending user closeout commit for
+  `FB-9: Phase FB-9 complete (massive ν species)`.
+- **Verification**:
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/species/test_fb91_phase_space_grid_skeleton.py bass/species/test_fb92_massive_neutrino_background_skeleton.py bass/species/test_fb93_registry_massive_neutrino_skeleton.py bass/hierarchy/test_fb94_massive_neutrino_hierarchy_skeleton.py bass/species/test_tilted_massive_neutrino_compose.py bass/species/test_fb96_docs_gallery_skeleton.py -q`
+  → `165 passed, 1 warning`;
+  `cd htt && PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q`
+  → `4269 passed, 8 skipped, 2 warnings`.
+- **Audit**:
+  [AUDIT_PHASE_FB9_2026-04-20.md](../../audits/AUDIT_PHASE_FB9_2026-04-20.md).
+- **Carry-forward**: FB-11 actual work bootstrap.
+- **Notes**: the non-negotiable `Sigma_mnu = 0` anchor is preserved;
+  the suite growth is additive and comes from the new FB-9 coverage and
+  the rendered Topic-15 gallery.

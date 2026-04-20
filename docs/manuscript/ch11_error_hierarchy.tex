@@ -519,6 +519,84 @@ selective upgrading can reach an order of magnitude.
 
 
 % ============================================================
+\section{Massive neutrino as a systematic}
+\label{sec:massive-neutrino-systematic}
+% ============================================================
+
+The baseline error ledger in this chapter treats the neutrino sector as
+exactly massless.  That is the correct LB-1 anchor, but it is not the
+final systematic floor: Planck~2018 allows a non-zero summed neutrino
+mass at the sub-eV level \cite{Planck2018VI}.  FB-9 therefore adds a
+separate massive-neutrino branch whose purpose is not to reopen the
+entire solver programme, but to quantify how a finite
+$\Sigma m_\nu$ perturbs the background equation of state and the
+free-streaming scale while preserving the massless anchor exactly when
+$\Sigma m_\nu = 0$.
+
+\subsection{FB-9.1: phase-space grid}
+
+The positive-mass branch evaluates the usual collisionless Fermi-Dirac
+integrals on a deterministic Gauss-Laguerre grid with $N_q = 15$,
+matching the standard CLASS/CAMB non-cold-relic convention at the level
+needed for a frozen-oracle regression \cite{LesgourguesTram2011}.  The
+important point for the hierarchy is not the quadrature family by
+itself, but the fact that the same fixed momentum support is reused
+everywhere: background density, pressure, the effective streaming
+velocity, and the associated regression fixtures all derive from the
+same $(q_i, w_i)$ table.  This removes one hidden degree of freedom from
+the systematic budget.
+
+\subsection{FB-9.2: background thermodynamics}
+
+The massive-neutrino background replaces the exact radiation law
+$\rho_\nu \propto a^{-4}$ by the standard interpolation between the
+relativistic and non-relativistic limits
+\cite{MaBertschinger1995,LesgourguesTram2011}.  Figure
+~\ref{fig:massive-nu-nr-transition} shows the representative
+$\Sigma m_\nu = 0.12\,\mathrm{eV}$ turnover: the scaled density rises
+above its relativistic plateau while the scaled pressure drops away from
+the $w = 1/3$ branch.  The transition is mild on the expansion history
+but it is a real systematic in any species-resolved solver, because it
+changes the neutrino sector from a pure radiation fluid into a
+time-dependent effective fluid.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.78\columnwidth]{../../figures/physics_gallery/15_massive_neutrino/02_rho_p_NR_transition.png}
+\caption{FB-9.2 massive-neutrino background transition for
+  $\Sigma m_\nu = 0.12\,\mathrm{eV}$.  The vertical marker denotes the
+  nominal non-relativistic turnover scale $a_{\rm NR}$.}
+\label{fig:massive-nu-nr-transition}
+\end{figure}
+
+\subsection{FB-9.3: registry integration and the zero-mass anchor}
+
+The systematic is introduced through the existing neutrino registry
+slot, not through a new species label.  This matters for auditability:
+all downstream code continues to ask for ``the neutrino background'',
+while the factory dispatch decides whether that slot is massless or
+massive.  The corresponding regression pin is stronger than a numerical
+agreement test: with $\Sigma m_\nu = 0$ the hierarchy driver and the
+full \texttt{bass/tsc} suite remain byte-identical to the LB-1 massless
+path.
+That short-circuit turns the massive-neutrino systematic into an
+explicit opt-in perturbation rather than an ambient code-path drift.
+
+\subsection{FB-9.4: free streaming and power suppression}
+
+Once the neutrino species is massive, the relevant control parameter is
+the free-streaming scale $k_{\rm fs}(a)$ rather than the purely
+radiation-like ``free'' neutrino hierarchy.  FB-9 wires the hierarchy
+through an effective $q/\epsilon$ streaming factor and recovers the
+standard $k_{\rm fs}$ scaling to within the audit tolerance
+\cite{LesgourguesTram2011,HuEisensteinTegmark1998}.  In practical terms,
+the systematic is concentrated on modes with $k \gtrsim k_{\rm fs}$,
+where the leading-order matter-power response approaches the familiar
+$-8 f_\nu$ suppression.  The result is conceptually simple: the massive
+neutrino is not a new dynamical sector, but a controlled deformation of
+the neutrino hierarchy with a known large-$k$ footprint.
+
+% ============================================================
 \section{Phase~1.0 error budget summary}
 \label{sec:err-phase10-budget}
 % ============================================================
