@@ -278,6 +278,7 @@ def compute_departure_components(
     w: float = 0.0,         # equation of state (default: dust)
     Omega_matter: float = 1.0,  # matter density parameter
     Omega_k: float = 0.0,       # total Ω_k from spatial curvature
+    Omega_k_ref: Optional[float] = None,
     policy: Optional[ComparatorPolicy] = None,
 ) -> DepartureComponents:
     """Compute the four components of x_C for a given Bianchi state.
@@ -298,6 +299,13 @@ def compute_departure_components(
         Matter density parameter.
     Omega_k : float
         Spatial curvature density parameter Ω_k = -³R/(6 H_θ²).
+    Omega_k_ref : float, optional
+        Explicit comparator reference curvature. When omitted, the
+        matched-comparator path uses the canonical contract already
+        encoded in the manuscript: ``Ω_{k,aniso} = 0`` under the
+        curvature-matched comparator, so ``Omega_k_ref`` defaults to
+        ``Omega_k`` for curvature-carrying matched families and to
+        ``0`` for flat matched families.
     policy : ComparatorPolicy, optional
         If None, uses recommend_comparator(sc.label).
 
@@ -334,35 +342,25 @@ def compute_departure_components(
 
     # Comparator reference
     if policy == ComparatorPolicy.FLAT:
-        Omega_k_ref = 0.0
+        resolved_Omega_k_ref = 0.0 if Omega_k_ref is None else float(Omega_k_ref)
     elif policy == ComparatorPolicy.MATCHED:
-        # Matched comparator: Ω_{k,ref} = Ω_k of the FLRW limit of this type
-        # For I, VII_0: k=0 → Ω_k_ref = 0
-        # For V, VII_h: k=-1 → Ω_k_ref = -(curvature term)
-        # For IX: k=+1 → Ω_k_ref = +(curvature term)
-        # The exact value is set by the background cosmology; placeholder for now.
-        # Week 5 wires up the actual FLRW comparator computation.
-        if sc.label in ("I", "VII_0"):
-            Omega_k_ref = 0.0
-        elif sc.label in ("V", "VII_h"):
-            # Open FLRW: Ω_k > 0 (using convention Ω_k = -³R/(6H²))
-            Omega_k_ref = Omega_k  # placeholder: matched exactly
-        elif sc.label == "IX":
-            Omega_k_ref = Omega_k  # placeholder: matched exactly
-        elif sc.label == "FLRW":
-            Omega_k_ref = Omega_k  # self-matched
+        if Omega_k_ref is not None:
+            resolved_Omega_k_ref = float(Omega_k_ref)
+        elif sc.label in ("I", "VII_0"):
+            resolved_Omega_k_ref = 0.0
         else:
-            # Should not reach here (validation above catches this)
-            Omega_k_ref = 0.0
+            # Curvature-matched comparator sets Ω_{k,aniso} = 0 by
+            # construction for the matched FLRW branch.
+            resolved_Omega_k_ref = float(Omega_k)
     else:  # NULL
-        Omega_k_ref = None
+        resolved_Omega_k_ref = None
 
     return DepartureComponents(
         Sigstd_sq=Sigstd_sq,
         Wstd_sq=Wstd_sq,
         Omega_tilt=Omega_tilt,
         Omega_k=Omega_k,
-        Omega_k_ref=Omega_k_ref,
+        Omega_k_ref=resolved_Omega_k_ref,
         policy=policy,
     )
 

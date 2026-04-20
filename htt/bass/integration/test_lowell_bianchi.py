@@ -90,7 +90,7 @@ _CAMB_REF_PATH = (
 
 @pytest.fixture(scope="module")
 def species() -> SpeciesBackgroundRegistry:
-    """Canonical Planck-2018 five-species registry (recomb only, no reion)."""
+    """Canonical Planck-2018 five-species registry with default reionization."""
     return SpeciesBackgroundRegistry.from_planck2018()
 
 
@@ -99,9 +99,9 @@ def species_with_reion() -> SpeciesBackgroundRegistry:
     """Registry whose baryon species uses the reionization-extended HyRec
     fixture (tanh ``z_reion_H = 7.67``, Δz = 0.5).
 
-    LB-6-14 needs this variant to probe the integrated optical depth of
-    reionization; the default ``from_planck2018()`` registry only
-    ships the recombination fixture (``τ_reion = 0`` by construction).
+    This remains as an explicit injected-table path even though the
+    public ``from_planck2018()`` factory now extends the shipped HyRec
+    table with the default tanh reionization history.
     """
     tab0 = load_recombination_table(_FIXTURE_PATH)
     tab_ext = extend_table_with_reionization(tab0, ReionizationParameters())

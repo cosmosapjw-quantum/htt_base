@@ -19,6 +19,10 @@ from bass.recombination.recombination_ingest import (
     build_interpolators,
     load_recombination_table,
 )
+from bass.recombination.reionization import (
+    ReionizationParameters,
+    extend_table_with_reionization,
+)
 from bass.species.background_table import FLRWBackgroundTable
 from bass.species.base import (
     CANONICAL_ORDER, SpeciesBackground, SpeciesLabel,
@@ -194,6 +198,7 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
         *,
         Sigma_mnu: float = 0.0,
         recombination_warning_policy: str = "once",
+        apply_default_reionization: bool = True,
     ) -> "SpeciesBackgroundRegistry":
         """Build the canonical Planck-2018 five-species registry.
 
@@ -204,9 +209,10 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
             ``default_constants()``.
         recombination : RecombinationInterp, optional
             HyRec recombination interpolator. If ``None``, loads the
-            shipped Planck-2018 fixture (recombination only — no
-            reionization; tests that need reionization should build
-            their own via ``extend_table_with_reionization``).
+            shipped Planck-2018 fixture and, by default, extends it
+            with the standard tanh reionization history so the public
+            factory matches the late-time visibility / ``tau_reion``
+            physics expected from a Planck-2018 background.
         Sigma_mnu : float, optional
             Sum of neutrino masses in eV. ``Sigma_mnu = 0.0`` preserves
             the byte-identical LB-1 massless ``NeutrinoBackground``
@@ -220,6 +226,12 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
             once per distinct support signature in a process; use
             ``'ignore'`` for high-volume parameter sweeps or inference
             loops that intentionally rebuild the registry many times.
+        apply_default_reionization : bool, optional
+            When ``recombination is None`` and the shipped HyRec table is
+            loaded internally, extend it with ``ReionizationParameters()``
+            before building interpolators. Set ``False`` only for
+            recombination-era regression work that explicitly wants the
+            raw pre-reionization table.
 
         Reference: ``01_species_background_spec.md §2.5``.
         """
@@ -234,6 +246,11 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
 
         if recombination is None:
             table = load_recombination_table(_default_recombination_path())
+            if apply_default_reionization:
+                table = extend_table_with_reionization(
+                    table,
+                    ReionizationParameters(),
+                )
             recombination = build_interpolators(table)
 
         photon = PhotonBackground(bg_table, c.Omega_gamma_0)

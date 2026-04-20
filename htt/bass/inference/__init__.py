@@ -1,16 +1,20 @@
-"""bass.inference — FB-11 inference scaffolding.
-
-This package is introduced at FB-META-11 for inference-only contracts.
-During the skeleton cycle, public surfaces document the future posterior
-and evidence workflow but raise `NotImplementedError` rather than
-opening a fake sampling path.
-"""
+"""Posterior inference, diagnostics, and evidence helpers for FB-11."""
 
 from bass.inference.bayes import BayesFactorResult, bayes_factor
-from bass.inference.diagnostics import ess, geweke, r_hat, trace_plot_data
+from bass.inference.diagnostics import (
+    ESS_THRESHOLD,
+    GEWEKE_ABS_Z_THRESHOLD,
+    R_HAT_THRESHOLD,
+    convergence_report,
+    ess,
+    geweke,
+    r_hat,
+    trace_plot_data,
+)
 from bass.inference.drivers.emcee_driver import PosteriorSample, run_posterior
 from bass.inference.priors import (
     Prior,
+    SUN_CMB_DIPOLE_DIRECTION,
     prior_direction,
     prior_observer_boost,
     prior_rapidity,
@@ -20,9 +24,14 @@ from bass.inference.priors import (
 
 __all__ = [
     "BayesFactorResult",
+    "ESS_THRESHOLD",
+    "GEWEKE_ABS_Z_THRESHOLD",
     "Prior",
     "PosteriorSample",
+    "R_HAT_THRESHOLD",
+    "SUN_CMB_DIPOLE_DIRECTION",
     "bayes_factor",
+    "convergence_report",
     "ess",
     "geweke",
     "prior_rapidity",

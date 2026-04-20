@@ -13,7 +13,10 @@ FIXTURE_PATH = Path(__file__).resolve().parents[3] / "data" / "camb_ref_planck20
 
 @pytest.fixture(scope="module")
 def fb75_result() -> dict[str, object]:
-    return validate_planck2018_flrw_limit_match(camb_fixture_path=FIXTURE_PATH)
+    return validate_planck2018_flrw_limit_match(
+        camb_fixture_path=FIXTURE_PATH,
+        allow_surrogate=True,
+    )
 
 
 def test_fb75_planck2018_flrw_match_contract_is_callable() -> None:
@@ -23,7 +26,8 @@ def test_fb75_planck2018_flrw_match_contract_is_callable() -> None:
 def test_fb75_missing_fixture_raises() -> None:
     with pytest.raises(FileNotFoundError, match="CAMB Planck-2018 fixture"):
         validate_planck2018_flrw_limit_match(
-            camb_fixture_path=Path("/does/not/exist/camb_ref_planck2018.npz")
+            camb_fixture_path=Path("/does/not/exist/camb_ref_planck2018.npz"),
+            allow_surrogate=True,
         )
 
 

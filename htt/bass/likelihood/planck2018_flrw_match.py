@@ -1,4 +1,4 @@
-"""FB-7.5 Planck-2018 FLRW-limit validation.
+"""FB-7.5 surrogate Planck-2018 FLRW-limit validator.
 
 This validator composes the FB-7.3 HTT decomposition and the FB-7.4
 cosmological-frame likelihood against the shipped CAMB Planck-2018
@@ -34,6 +34,10 @@ from bass.runtime.canonical_decision import make_canonical_decision
 from tsc.diagnostics.tangency import TangencyResult, TangentKind
 
 _SMALL_FLOAT = 1.0e-30
+
+
+class SurrogatePlanckValidationError(RuntimeError):
+    """Raised when a surrogate-only validator is invoked as production physics."""
 
 
 def _normalise_axis(vector: np.ndarray, fallback: np.ndarray) -> np.ndarray:
@@ -159,8 +163,25 @@ def validate_planck2018_flrw_limit_match(
     camb_fixture_path: Path,
     planck_likelihood_arxiv: str = "1907.12875",
     planck_parameters_arxiv: str = "1807.06209",
+    allow_surrogate: bool = False,
 ) -> dict[str, object]:
-    """Validate the FB-7 cosmological-frame likelihood at the FLRW limit."""
+    """Run the FB-7 surrogate validator against a CAMB fixture.
+
+    This helper is not a first-principles Planck likelihood evaluation.
+    It constructs hand-built anisotropy signatures and synthetic spectra
+    perturbations, then scores those through the FB-7 surrogate
+    likelihood stack.  Callers must opt in explicitly via
+    ``allow_surrogate=True`` so the function cannot be mistaken for a
+    production-grade Planck validation path.
+    """
+    if not allow_surrogate:
+        raise SurrogatePlanckValidationError(
+            "validate_planck2018_flrw_limit_match() is a surrogate "
+            "FB-7 validator, not a physical Planck likelihood check. "
+            "Pass allow_surrogate=True only for audited regression or "
+            "gallery reproduction. Production validation must use an "
+            "actual likelihood implementation."
+        )
     fixture_path = Path(camb_fixture_path)
     if not fixture_path.exists():
         raise FileNotFoundError(f"CAMB Planck-2018 fixture not found: {fixture_path}")
@@ -249,6 +270,7 @@ def validate_planck2018_flrw_limit_match(
 
     return {
         "fixture_path": fixture_path,
+        "surrogate": True,
         "fixture_metadata": {
             "camb_version": str(data["camb_version"]),
             "lensed": bool(data["lensed"]),

@@ -1,16 +1,11 @@
-# FB-11.6 skeleton config placeholder.
-#
-# Reserved for the future deterministic summary invocation:
-#   python -m bass.inference --config configs/fb11_summary.yaml --seed 42
-#
-# During FB-META-11 this file is documentation-only. No shipped code
-# parses it yet, and no summary artifacts are fabricated.
-
 seed: 42
 
 dataset:
-  kind: synthetic_planck2018
+  kind: synthetic_surrogate
+  allow_surrogate: true
   reference_likelihood: planck2018_v
+  truth_type: IX
+  noise_scale: 1.0
 
 models:
   baseline: FLRW
@@ -30,10 +25,39 @@ models:
 outputs:
   summary_json: figures/paper/fb11_summary_table.json
   summary_markdown: figures/paper/fb11_summary_table.md
+  posterior_dir: figures/paper/fb11_posteriors
 
 sampler:
   driver: emcee
-  parallel: false
+  schedule:
+    - n_walkers: 48
+      n_steps: 320
+      burnin: 120
+      parallel: false
+    - n_walkers: 48
+      n_steps: 640
+      burnin: 320
+      parallel: false
+    - n_walkers: 48
+      n_steps: 960
+      burnin: 480
+      parallel: false
+    - n_walkers: 48
+      n_steps: 1600
+      burnin: 800
+      parallel: false
+    - n_walkers: 48
+      n_steps: 1600
+      burnin: 800
+      parallel: false
+    - n_walkers: 48
+      n_steps: 1600
+      burnin: 800
+      parallel: false
+    - n_walkers: 48
+      n_steps: 2400
+      burnin: 1200
+      parallel: false
 
 diagnostics:
   r_hat_max: 1.01

@@ -1,46 +1,29 @@
-"""FB-11.1 skeleton — documented prior contracts for inference.
-
-This module reserves the public prior-construction surface for the
-future inference driver without emitting any numerical prior samples
-during the FB-META-11 skeleton rotation.
-
-References
-----------
-- `docs/lowell_bianchi/extended_coverage/FB11_INFERENCE_DRIVER_SDD.md`
-  §2.
-- `docs/lowell_bianchi/extended_coverage/EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md`
-  §5 (FB-11 table).
-- Planck Collaboration 2018 VI, `arXiv:1807.06209` (parameter-set and
-  prior-range anchor).
-- Kosowsky & Kahniashvili 2011, `arXiv:1007.4539` (observer-motion
-  anchor for the dipole-scale prior).
-"""
+"""Inference priors for the FB-11 posterior driver."""
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Callable
 
 import numpy as np
 
+from bass.background.bianchi_types import TYPE_REGISTRY, get_type
+
 
 _LogPdf = Callable[[np.ndarray], np.ndarray]
 _SampleFn = Callable[[np.random.Generator, int], np.ndarray]
+_LOG_2PI = math.log(2.0 * math.pi)
+_LOG_4PI = math.log(4.0 * math.pi)
+_PLANCK_SIGMA_MNU_SIGMA_EV = 0.15
+_OBSERVER_BOOST_BETA_MEAN = 1.23e-3
+_OBSERVER_BOOST_BETA_SIGMA = 1.23e-3
+_SUN_CMB_DIPOLE_L_DEG = 264.02
+_SUN_CMB_DIPOLE_B_DEG = 48.25
 
 
 @dataclass(frozen=True)
 class Prior:
-    """Future FB-11.1 prior carrier.
-
-    Contract only: the future implementation couples each named prior to
-    a vectorized `log_pdf` and a seeded sampling rule. The actual
-    distributions are deferred until the non-skeleton FB-11.1 work.
-
-    References
-    ----------
-    - `docs/lowell_bianchi/extended_coverage/FB11_INFERENCE_DRIVER_SDD.md`
-      §2.1.
-    - Planck Collaboration 2018 VI, `arXiv:1807.06209`.
-    """
+    """Named inference prior with log-density and seeded sampling."""
 
     name: str
     domain: tuple[float, float] | None
@@ -48,32 +31,105 @@ class Prior:
     sample: _SampleFn
 
 
-def prior_rapidity(label: str, *, sigma: float) -> Prior:
-    """Reserve the truncated rapidity-prior constructor.
+def _as_row_vector(values: np.ndarray, *, width: int) -> np.ndarray:
+    array = np.asarray(values, dtype=float)
+    if array.ndim == 0:
+        if width != 1:
+            raise ValueError(f"expected width={width}; got scalar input")
+        return array.reshape(1, 1)
+    if array.ndim == 1:
+        if width == 0 and array.size == 0:
+            return array.reshape(1, 0)
+        if width == 1:
+            return array.reshape(-1, 1)
+        if array.size != width:
+            raise ValueError(f"expected width={width}; got shape {array.shape}")
+        return array.reshape(1, width)
+    if array.ndim == 2:
+        if array.shape[1] != width:
+            raise ValueError(f"expected width={width}; got shape {array.shape}")
+        return array
+    raise ValueError(f"expected at most 2 dimensions; got shape {array.shape}")
 
-    Contract only: this future constructor covers both cosmological
-    tilt rapidity and observer-boost rapidity. The sign of the motion
-    remains encoded in the direction vector rather than a signed scalar.
+
+def _scalarise(result: np.ndarray, original: np.ndarray) -> np.ndarray:
+    if np.asarray(original).ndim <= 1:
+        return np.asarray(result, dtype=float).reshape(-1)
+    return np.asarray(result, dtype=float)
+
+
+def _half_normal_log_pdf(values: np.ndarray, *, sigma: float) -> np.ndarray:
+    array = np.asarray(values, dtype=float)
+    row = _as_row_vector(array, width=1).reshape(-1)
+    out = np.full(row.shape, float("-inf"), dtype=float)
+    finite = np.isfinite(row) & (row >= 0.0)
+    if np.any(finite):
+        out[finite] = (
+            math.log(2.0)
+            - math.log(sigma)
+            - 0.5 * _LOG_2PI
+            - 0.5 * (row[finite] / sigma) ** 2
+        )
+    return _scalarise(out, array)
+
+
+def _sample_half_normal(
+    rng: np.random.Generator,
+    n: int,
+    *,
+    sigma: float,
+) -> np.ndarray:
+    return np.abs(rng.normal(loc=0.0, scale=sigma, size=int(n)))
+
+
+def _direction_from_galactic(l_deg: float, b_deg: float) -> np.ndarray:
+    lon = math.radians(float(l_deg))
+    lat = math.radians(float(b_deg))
+    return np.array(
+        [
+            math.cos(lat) * math.cos(lon),
+            math.cos(lat) * math.sin(lon),
+            math.sin(lat),
+        ],
+        dtype=float,
+    )
+
+
+SUN_CMB_DIPOLE_DIRECTION = _direction_from_galactic(
+    _SUN_CMB_DIPOLE_L_DEG,
+    _SUN_CMB_DIPOLE_B_DEG,
+)
+
+
+def prior_rapidity(label: str, *, sigma: float) -> Prior:
+    """Half-Gaussian prior on boost rapidity.
 
     References
     ----------
     - `docs/lowell_bianchi/extended_coverage/FB11_INFERENCE_DRIVER_SDD.md`
       §2.1.
-    - `docs/lowell_bianchi/extended_coverage/EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md`
-      §1 and §5.
+    - Planck Collaboration 2018 VI, `arXiv:1807.06209`.
     """
-    raise NotImplementedError(
-        "FB-11.1 skeleton only: prior_rapidity is reserved for the "
-        "future truncated rapidity prior implementation."
+    sigma = float(sigma)
+    if not np.isfinite(sigma) or sigma <= 0.0:
+        raise ValueError(f"sigma must be positive and finite; got {sigma!r}")
+
+    def _log_pdf(values: np.ndarray) -> np.ndarray:
+        return _half_normal_log_pdf(values, sigma=sigma)
+
+    def _sample(rng: np.random.Generator, n: int) -> np.ndarray:
+        return _sample_half_normal(rng, n, sigma=sigma)
+
+    return Prior(
+        name=str(label),
+        domain=(0.0, float("inf")),
+        log_pdf=_log_pdf,
+        sample=_sample,
     )
 
 
 def prior_direction() -> Prior:
-    """Reserve the isotropic `S^2` direction prior.
-
-    Contract only: this future constructor covers both `v_hat_cosmo`
-    and `v_hat_obs` while keeping those vectors on separate typed
-    ownership surfaces.
+    """Isotropic prior on the unit sphere `S^2`.
 
     References
     ----------
@@ -81,20 +137,36 @@ def prior_direction() -> Prior:
       §2.1.
     - `docs/lowell_bianchi/00_conventions.md` §13.
     """
-    raise NotImplementedError(
-        "FB-11.1 skeleton only: prior_direction is reserved for the "
-        "future isotropic directional prior implementation."
+
+    def _log_pdf(values: np.ndarray) -> np.ndarray:
+        array = np.asarray(values, dtype=float)
+        row = _as_row_vector(array, width=3)
+        norms = np.linalg.norm(row, axis=1)
+        out = np.full(norms.shape, float("-inf"), dtype=float)
+        valid = np.isfinite(norms) & np.isclose(norms, 1.0, atol=1.0e-10, rtol=0.0)
+        out[valid] = -_LOG_4PI
+        return _scalarise(out, array)
+
+    def _sample(rng: np.random.Generator, n: int) -> np.ndarray:
+        draws = rng.normal(size=(int(n), 3))
+        norms = np.linalg.norm(draws, axis=1, keepdims=True)
+        zero = norms[:, 0] == 0.0
+        while np.any(zero):
+            draws[zero] = rng.normal(size=(int(np.sum(zero)), 3))
+            norms = np.linalg.norm(draws, axis=1, keepdims=True)
+            zero = norms[:, 0] == 0.0
+        return draws / norms
+
+    return Prior(
+        name="direction",
+        domain=None,
+        log_pdf=_log_pdf,
+        sample=_sample,
     )
 
 
 def prior_Sigma_mnu() -> Prior:
-    """Reserve the `Sigma_mnu` prior constructor.
-
-    Contract only: the future implementation will expose the
-    `Sigma_mnu >= 0` prior promised by the FB-11 SDD. Planck 2018 VI
-    Table 2 is the parameter-range anchor, while the exact half-Gaussian
-    placeholder shape remains a local FB-11 SDD choice to be verified in
-    the actual-work session rather than fabricated here.
+    """Half-Gaussian prior on `Sigma_mnu` with the Planck 2018 VI scale.
 
     References
     ----------
@@ -103,19 +175,15 @@ def prior_Sigma_mnu() -> Prior:
     - Planck Collaboration 2018 VI, `arXiv:1807.06209`, Table 2.
     - `docs/audits/AUDIT_PHASE_FB_META11_2026-04-20.md` §FB-11.1.
     """
-    raise NotImplementedError(
-        "FB-11.1 skeleton only: prior_Sigma_mnu is reserved for the "
-        "future massive-neutrino prior implementation."
-    )
+    return prior_rapidity("Sigma_mnu", sigma=_PLANCK_SIGMA_MNU_SIGMA_EV)
 
 
 def prior_observer_boost() -> Prior:
-    """Reserve the measured-dipole observer-boost prior.
+    """Gaussian prior centred on the measured CMB dipole vector.
 
-    Contract only: this future constructor represents the observer-speed
-    prior centred on the CMB-dipole scale. The implementation is
-    deferred so the skeleton can pin the source anchor without claiming
-    a completed numeric fit.
+    The sampled quantity is the observer-velocity vector `beta * v_hat`
+    in Cartesian components. The prior mode therefore sits at the
+    Planck-era Sun-CMB dipole direction with magnitude `1.23e-3`.
 
     References
     ----------
@@ -123,18 +191,51 @@ def prior_observer_boost() -> Prior:
       §2.1.
     - Kosowsky & Kahniashvili 2011, `arXiv:1007.4539`, §IV.
     """
-    raise NotImplementedError(
-        "FB-11.1 skeleton only: prior_observer_boost is reserved for "
-        "the future dipole-informed observer prior implementation."
+    sigma = float(_OBSERVER_BOOST_BETA_SIGMA)
+    mean = float(_OBSERVER_BOOST_BETA_MEAN) * SUN_CMB_DIPOLE_DIRECTION
+
+    def _log_pdf(values: np.ndarray) -> np.ndarray:
+        array = np.asarray(values, dtype=float)
+        row = _as_row_vector(array, width=3)
+        diff = row - mean.reshape(1, 3)
+        norm_sq = np.sum(diff * diff, axis=1)
+        out = (
+            -1.5 * _LOG_2PI
+            - 3.0 * math.log(sigma)
+            - 0.5 * norm_sq / (sigma * sigma)
+        )
+        return _scalarise(out, array)
+
+    def _sample(rng: np.random.Generator, n: int) -> np.ndarray:
+        return rng.normal(loc=mean, scale=sigma, size=(int(n), 3))
+
+    return Prior(
+        name="observer_boost",
+        domain=None,
+        log_pdf=_log_pdf,
+        sample=_sample,
     )
 
 
-def prior_structure_constants(bianchi_type: str) -> Prior:
-    """Reserve the per-type structure-constant prior surface.
+def _structure_scale_bounds(bianchi_type: str) -> tuple[float, float]:
+    structure = get_type(str(bianchi_type))
+    base_scale = max(
+        abs(structure.n1),
+        abs(structure.n2),
+        abs(structure.n3),
+        abs(structure.a_twist),
+        1.0e-3,
+    )
+    return (base_scale * 1.0e-4, base_scale * 5.0e-2)
 
-    Contract only: admissible ranges remain delegated to
-    `bass.background.bianchi_types` and the future implementation must
-    map the chosen Bianchi type to the documented scale prior.
+
+def prior_structure_constants(bianchi_type: str) -> Prior:
+    """Prior on the free structure-constant scale for one Bianchi type.
+
+    The prior is log-flat on a single positive scale parameter anchored
+    to the canonical default amplitudes in
+    `bass.background.bianchi_types`. Types with no free structure
+    parameters (`FLRW` and `I`) expose a zero-dimensional delta prior.
 
     References
     ----------
@@ -143,7 +244,47 @@ def prior_structure_constants(bianchi_type: str) -> Prior:
     - `docs/lowell_bianchi/extended_coverage/EXTENDED_COVERAGE_PLAN_FB8_FB9_FB11.md`
       §5.
     """
-    raise NotImplementedError(
-        "FB-11.1 skeleton only: prior_structure_constants is reserved "
-        "for the future per-type structure prior implementation."
+    label = str(bianchi_type)
+    if label not in TYPE_REGISTRY:
+        raise KeyError(
+            f"Unknown Bianchi type {label!r}; valid labels: {sorted(TYPE_REGISTRY)}"
+        )
+    if label in {"FLRW", "I"}:
+        def _log_pdf(values: np.ndarray) -> np.ndarray:
+            array = np.asarray(values, dtype=float)
+            row = _as_row_vector(array, width=0)
+            out = np.zeros(row.shape[0], dtype=float)
+            return _scalarise(out, array)
+
+        def _sample(rng: np.random.Generator, n: int) -> np.ndarray:
+            _ = rng
+            return np.empty((int(n), 0), dtype=float)
+
+        return Prior(
+            name=f"{label}_structure_constants",
+            domain=None,
+            log_pdf=_log_pdf,
+            sample=_sample,
+        )
+
+    lower, upper = _structure_scale_bounds(label)
+    log_width = math.log(upper / lower)
+
+    def _log_pdf(values: np.ndarray) -> np.ndarray:
+        array = np.asarray(values, dtype=float)
+        row = _as_row_vector(array, width=1).reshape(-1)
+        out = np.full(row.shape, float("-inf"), dtype=float)
+        valid = np.isfinite(row) & (row >= lower) & (row <= upper)
+        if np.any(valid):
+            out[valid] = -np.log(row[valid]) - log_width
+        return _scalarise(out, array)
+
+    def _sample(rng: np.random.Generator, n: int) -> np.ndarray:
+        return np.exp(rng.uniform(math.log(lower), math.log(upper), size=int(n)))
+
+    return Prior(
+        name=f"{label}_structure_constants",
+        domain=(lower, upper),
+        log_pdf=_log_pdf,
+        sample=_sample,
     )
