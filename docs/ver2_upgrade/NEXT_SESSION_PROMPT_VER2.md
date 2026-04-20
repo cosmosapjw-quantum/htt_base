@@ -27,14 +27,14 @@
 - `SK-07M` is now closed: touched MIO certificate producers attach VER2 manifest-backed production status, explicit covariance/atlas/null-mock caveats, and JSON-ready manifest payloads; `htt/mio/diagnostics/predictive_residuals.py` exists as a blocked residual-atlas shell.
 - Targeted MIO verification is green: `venv/bin/python -m pytest htt/mio/tests -q` -> `153 passed`.
 - `SK-06H` is now closed: HTT owns a solver-free directional shell under `htt/htt/htt/infer/*`, with explicit production-axis gating, matched-complexity/null-competition hooks, local-boost/global-tilt discrimination scaffolds, and a closed-fail bridge promotion gate.
-- HTT verification is green: targeted `SK-06H` tests passed (`44 passed`) and full `venv/bin/python -m pytest htt/htt/tests -q` passed (`265 passed`, warnings only).
+- HTT verification is green for the packet scope: targeted `SK-06H` tests passed (`39 passed`) and `py_compile` passed.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
 ## 3. Next Recommended Packet
 
 `SK-01C`, `SK-05T`, `SK-06H`, `SK-07M`, and `SK-09D` are closed. Continue into the solver-facing BASS packets now.
 
-Prefer this order if the goal is to maximize solver-free progress:
+Prefer this order now:
 
 1. `SK-01S1`
 2. then `SK-02S2`
