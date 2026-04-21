@@ -1,0 +1,29 @@
+{
+  "gate_name": "exact_collision_gate",
+  "api_version": "ver3-pr06",
+  "backend": "electron_frame_thomson",
+  "truncation": "low_ell_pstf",
+  "opened_claim": "exact collision contract frozen",
+  "known_limit_checks": {
+    "isotropic_null_limit": true,
+    "monopole_only_collision_zero": true,
+    "quadrupole_only_recovers_standard_response": true
+  },
+  "forbidden_shortcut_checks": {
+    "no_flrw_only_collision_shortcut": true,
+    "no_monopole_directional_conflation": true,
+    "no_local_boost_folded_into_global_tilt": true
+  },
+  "metadata": {
+    "collision_frame": "electron_frame",
+    "projection_mode": "pstf_projected",
+    "source_split": "scalar_monopole_vs_directional_tensor",
+    "opacity_contract": "electron_frame_tilt_modulated"
+  },
+  "residual_summary": {
+    "isotropic_null_temperature_norm": 0.0,
+    "isotropic_null_polarization_E_norm": 0.0,
+    "isotropic_null_polarization_B_norm": 0.0,
+    "monopole_only_directional_temperature_norm": 0.0
+  }
+}

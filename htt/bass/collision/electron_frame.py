@@ -20,7 +20,9 @@ __all__ = [
     "ElectronFrameRate",
     "ElectronFrameThomsonContext",
     "ProjectedThomsonSource",
+    "ExactThomsonSource",
     "electron_frame_rate_factor",
+    "exact_thomson_source",
     "project_thomson_source",
     "project_thomson_source_stub",
 ]
@@ -79,6 +81,27 @@ class ProjectedThomsonSource:
             )
         if self.frame_metadata.collision_frame != "electron_frame":
             raise ValueError("projected Thomson source must remain electron-frame owned")
+
+
+@dataclass(frozen=True)
+class ExactThomsonSource:
+    """ver3 wrapper exposing scalar/directional Thomson source ownership."""
+
+    projected: ProjectedThomsonSource
+    scalar_monopole_input: float
+    directional_temperature_norm: float
+    polarization_quadrupole_norm: float
+    effective_opacity: float
+    source_split: str = "scalar_monopole_vs_directional_tensor"
+    opacity_contract: str = "electron_frame_tilt_modulated"
+
+    def __post_init__(self) -> None:
+        if self.effective_opacity < 0.0 or not np.isfinite(self.effective_opacity):
+            raise ValueError("effective_opacity must be non-negative finite")
+        if self.source_split != "scalar_monopole_vs_directional_tensor":
+            raise ValueError("exact Thomson split contract changed unexpectedly")
+        if self.opacity_contract != "electron_frame_tilt_modulated":
+            raise ValueError("exact Thomson opacity contract changed unexpectedly")
 
 
 def electron_frame_rate_factor(
@@ -223,6 +246,45 @@ def project_thomson_source(
         polarization_B=polarization_B,
         effective_rate=rate,
         frame_metadata=context.frame_metadata,
+    )
+
+
+def exact_thomson_source(
+    context: ElectronFrameThomsonContext,
+    *,
+    temperature_state: PSTFHierarchyState,
+    polarization_state: PolarizationHierarchyState,
+    v_b_real_sph: np.ndarray,
+    Gamma_T: float,
+    direction: np.ndarray | None = None,
+    tilted_electron: TiltedSpeciesBackground | None = None,
+    b_state: PSTFHierarchyState | None = None,
+) -> ExactThomsonSource:
+    """ver3 exact Thomson wrapper with explicit scalar/directional separation."""
+
+    projected = project_thomson_source(
+        context,
+        temperature_state=temperature_state,
+        polarization_state=polarization_state,
+        v_b_real_sph=v_b_real_sph,
+        Gamma_T=Gamma_T,
+        direction=direction,
+        tilted_electron=tilted_electron,
+        b_state=b_state,
+    )
+    scalar_monopole_input = float(temperature_state.tensors[0].components[0])
+    directional_norm = 0.0
+    for ell in range(1, temperature_state.L + 1):
+        directional_norm += float(np.dot(temperature_state.tensors[ell].components, temperature_state.tensors[ell].components))
+    polarization_quadrupole_norm = float(
+        np.linalg.norm(polarization_state.E.tensors[2].components)
+    )
+    return ExactThomsonSource(
+        projected=projected,
+        scalar_monopole_input=scalar_monopole_input,
+        directional_temperature_norm=float(np.sqrt(directional_norm)),
+        polarization_quadrupole_norm=polarization_quadrupole_norm,
+        effective_opacity=float(Gamma_T) * projected.effective_rate.factor,
     )
 
 
