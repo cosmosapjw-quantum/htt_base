@@ -62,9 +62,22 @@ def test_theorem_to_test_entry_has_artifact_refs():
 
 
 def test_warn_does_not_promote_to_validated():
-    campaign = build_default_validation_campaigns()[0]
+    campaign = next(
+        campaign
+        for campaign in build_default_validation_campaigns()
+        if campaign.status == "warn"
+    )
     assert campaign.status == "warn"
     assert campaign.promotes_to_validated is False
+
+
+def test_pass_campaign_promotes_to_validated():
+    campaign = next(
+        campaign
+        for campaign in build_default_validation_campaigns()
+        if campaign.status == "pass"
+    )
+    assert campaign.promotes_to_validated is True
 
 
 def test_fail_blocks_manuscript_export():

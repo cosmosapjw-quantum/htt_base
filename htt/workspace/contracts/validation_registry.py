@@ -442,6 +442,59 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
             no_claim_conditions=("missing_injection_campaign", "missing_scan_volume"),
         ),
         TheoremToTestEntry(
+            theorem_id="V8_bass_native_runtime_bridge",
+            theorem_label="native Type-I Tier-B runtime is reproducible, bounded across cutoffs, and matched by the Tier-A validation bridge",
+            owner="BASS",
+            implementation_scope="canonical_BASS",
+            claim_guard="this executable evidence validates only the shipped Type-I native runtime bridge and does not promote non-Type-I exact propagators or full BiPoSH science claims",
+            source_docs=(
+                "docs/ver2_upgrade/lowell_bianchi_solver_SDD_PR_WBS_pstf_tetrad.md",
+                "docs/ver2_upgrade/VER2_PHASE_PROMPTS_03_BASS_COMPLETION.md",
+            ),
+            test_links=(
+                ValidationTestLink(
+                    test_id="type_i_observable_null_recovery",
+                    category="baseline_reproduction",
+                    path="htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_passes_with_shipped_thresholds",
+                    purpose="the shipped Type-I native route recovers the isotropic-null observable status after live reconstruction",
+                    artifact_refs=("bass.validation.type_i_runtime_evidence",),
+                ),
+                ValidationTestLink(
+                    test_id="native_seed_projection_survives_without_startup",
+                    category="adversarial_edge",
+                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_injects_seed_even_without_startup_manifold",
+                    purpose="seed injection remains live even when the startup manifold is not selected",
+                    artifact_refs=("bass.runtime.trace",),
+                ),
+                ValidationTestLink(
+                    test_id="tier_a_tier_b_type_i_bridge_matches",
+                    category="physics_sanity",
+                    path="htt/bass/runtime/test_ver2_tier_a_validation.py::test_compare_tier_a_to_tier_b_reports_match_for_shared_bridge",
+                    purpose="Tier-A validation and native Tier-B Type-I observables agree within a declared tolerance",
+                    artifact_refs=("bass.validation.type_i_runtime_evidence",),
+                ),
+                ValidationTestLink(
+                    test_id="tier_b_cutoff_campaign_stays_bounded",
+                    category="numerical_stability",
+                    path="htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_passes_with_shipped_thresholds",
+                    purpose="the executable default cutoff campaign remains bounded on the shipped native route",
+                    artifact_refs=("bass.validation.type_i_runtime_evidence",),
+                ),
+                ValidationTestLink(
+                    test_id="tier_b_runtime_consumes_live_hooks_and_exact_type_i_propagator",
+                    category="regression",
+                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks",
+                    purpose="runtime ownership, live hooks, and exact Type-I propagator realization remain attached to the shipped route",
+                    artifact_refs=("bass.runtime.trace",),
+                ),
+            ),
+            artifact_refs=("bass.validation.type_i_runtime_evidence", "bass.runtime.trace"),
+            no_claim_conditions=(
+                "tier_a_validation_bridge_only",
+                "non_type_i_exact_propagator_missing",
+            ),
+        ),
+        TheoremToTestEntry(
             theorem_id="V8_mes_rank_no_claim",
             theorem_label="MES covariance rank failure is an explicit no-claim condition",
             owner="BASS",
@@ -561,6 +614,66 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
 
 def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
     return (
+        ValidationCampaign(
+            campaign_id="validation.bass_native_runtime_bridge",
+            title="Native Type-I Tier-B runtime bridge and cutoff evidence",
+            owner="BASS",
+            implementation_scope="canonical_BASS",
+            status="pass",
+            theorem_refs=("V8_bass_native_runtime_bridge",),
+            categories=REQUIRED_VALIDATION_CATEGORIES,
+            check_links=(
+                ValidationTestLink(
+                    test_id="type_i_observable_null_recovery",
+                    category="baseline_reproduction",
+                    path="htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_passes_with_shipped_thresholds",
+                    purpose="confirm that live observer-neutral outputs recover the Type-I isotropic-null branch",
+                    artifact_refs=("bass.validation.type_i_runtime_evidence",),
+                ),
+                ValidationTestLink(
+                    test_id="native_seed_projection_survives_without_startup",
+                    category="adversarial_edge",
+                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_injects_seed_even_without_startup_manifold",
+                    purpose="confirm that startup-manifold deactivation does not erase native seed injection",
+                    artifact_refs=("bass.runtime.trace",),
+                ),
+                ValidationTestLink(
+                    test_id="tier_a_tier_b_type_i_bridge_matches",
+                    category="physics_sanity",
+                    path="htt/bass/runtime/test_ver2_tier_a_validation.py::test_compare_tier_a_to_tier_b_reports_match_for_shared_bridge",
+                    purpose="bind the shipped native route to the declared Tier-A validation bridge",
+                    artifact_refs=("bass.validation.type_i_runtime_evidence",),
+                ),
+                ValidationTestLink(
+                    test_id="tier_b_cutoff_campaign_stays_bounded",
+                    category="numerical_stability",
+                    path="htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_passes_with_shipped_thresholds",
+                    purpose="verify the live L=4/6/8 cutoff campaign remains bounded on the shipped Type-I route",
+                    artifact_refs=("bass.validation.type_i_runtime_evidence",),
+                ),
+                ValidationTestLink(
+                    test_id="tier_b_runtime_consumes_live_hooks_and_exact_type_i_propagator",
+                    category="regression",
+                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks",
+                    purpose="guard the exact Type-I propagator plus live S1/S2/S3 hook chain against regressions",
+                    artifact_refs=("bass.runtime.trace",),
+                ),
+            ),
+            artifact_refs=("bass.validation.type_i_runtime_evidence", "bass.runtime.trace"),
+            manuscript_blocking=False,
+            no_claim_conditions=(
+                "tier_a_validation_bridge_only",
+                "non_type_i_exact_propagator_missing",
+            ),
+            null_manifest_refs=("null.bass.type_i_native_runtime",),
+            injection_manifest_refs=("validation.injection.native_seed_startup",),
+            runbook_refs=("runbook.bass_native_runtime",),
+            notes=(
+                "Executable BF-05 campaign: passes for the shipped Type-I native runtime route only.",
+                "The default gate runs L=4/6 cutoffs; L=8 remains an explicit extended validation run rather than the default check path.",
+                "This does not validate non-Type-I exact propagators or full BiPoSH science claims.",
+            ),
+        ),
         ValidationCampaign(
             campaign_id="validation.observable_null_proxy",
             title="FLRW null recovery and observable proxy quarantine",
@@ -821,6 +934,20 @@ def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
 def build_default_null_manifests() -> tuple[NullEnsembleManifest, ...]:
     return (
         NullEnsembleManifest(
+            ensemble_id="null.bass.type_i_native_runtime",
+            null_family="type_i_native_runtime_null",
+            observable_basis="ver2_native_pstf_sphere_reconstruction",
+            scan_volume_hash="scan.bass.native.type_i.v1",
+            status="pass",
+            artifact_refs=("bass.validation.type_i_runtime_evidence",),
+            no_claim_conditions=(
+                "tier_a_validation_bridge_only",
+                "non_type_i_exact_propagator_missing",
+            ),
+            theorem_refs=("V8_bass_native_runtime_bridge",),
+            campaign_refs=("validation.bass_native_runtime_bridge",),
+        ),
+        NullEnsembleManifest(
             ensemble_id="null.flrw_isotropic_gaussian_lowell",
             null_family="flrw_isotropic_gaussian",
             observable_basis="lowell_alm_features",
@@ -859,6 +986,21 @@ def build_default_null_manifests() -> tuple[NullEnsembleManifest, ...]:
 def build_default_injection_manifests() -> tuple[InjectionCampaignManifest, ...]:
     return (
         InjectionCampaignManifest(
+            injection_id="validation.injection.native_seed_startup",
+            hypothesis_family="native_seed_startup",
+            target_statistic="seeded_quadrupole_recovery",
+            scan_volume_hash="scan.bass.native.seed.v1",
+            status="pass",
+            artifact_refs=("bass.validation.type_i_runtime_evidence",),
+            downgrade_conditions=(
+                "startup_manifold_disabled",
+                "seed_projection_not_ready",
+            ),
+            theorem_refs=("V8_bass_native_runtime_bridge",),
+            campaign_refs=("validation.bass_native_runtime_bridge",),
+            required_null_refs=("null.bass.type_i_native_runtime",),
+        ),
+        InjectionCampaignManifest(
             injection_id="validation.injection.template_amplitude",
             hypothesis_family="deterministic_template",
             target_statistic="template_amplitude_recovery",
@@ -896,6 +1038,28 @@ def build_default_injection_manifests() -> tuple[InjectionCampaignManifest, ...]
 
 def build_default_hostile_audit_runbooks() -> tuple[HostileAuditRunbook, ...]:
     return (
+        HostileAuditRunbook(
+            runbook_id="runbook.bass_native_runtime",
+            title="BASS native runtime hostile audit",
+            owner="BASS",
+            implementation_scope="canonical_BASS",
+            theorem_refs=("V8_bass_native_runtime_bridge",),
+            campaign_refs=("validation.bass_native_runtime_bridge",),
+            baseline_checks=("type_i_observable_null_recovery",),
+            adversarial_checks=("native_seed_projection_survives_without_startup",),
+            physics_checks=("tier_a_tier_b_type_i_bridge_matches",),
+            numerical_checks=("tier_b_cutoff_campaign_stays_bounded",),
+            regression_checks=(
+                "tier_b_runtime_consumes_live_hooks_and_exact_type_i_propagator",
+            ),
+            quarantine_conditions=(
+                "tier_a_validation_bridge_only",
+                "non_type_i_exact_propagator_missing",
+                "startup_manifold_disabled",
+                "seed_projection_not_ready",
+            ),
+            artifact_refs=("bass.validation.type_i_runtime_evidence",),
+        ),
         HostileAuditRunbook(
             runbook_id="runbook.observable_promotion",
             title="Observable promotion hostile audit",

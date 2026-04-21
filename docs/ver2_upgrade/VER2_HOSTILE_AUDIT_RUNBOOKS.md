@@ -14,6 +14,17 @@ Required hostile-audit categories:
 
 ## Runbooks
 
+### `runbook.bass_native_runtime`
+
+- campaigns: `validation.bass_native_runtime_bridge`
+- theorems: `V8_bass_native_runtime_bridge`
+- baseline: `type_i_observable_null_recovery`
+- adversarial: `native_seed_projection_survives_without_startup`
+- physics: `tier_a_tier_b_type_i_bridge_matches`
+- numerical: `tier_b_cutoff_campaign_stays_bounded`
+- regression: `tier_b_runtime_consumes_live_hooks_and_exact_type_i_propagator`
+- quarantine: `tier_a_validation_bridge_only`, `non_type_i_exact_propagator_missing`, `startup_manifold_disabled`, `seed_projection_not_ready`
+
 ### `runbook.observable_promotion`
 
 - campaigns: `validation.observable_null_proxy`, `validation.mes_claim_gates`
@@ -40,4 +51,5 @@ Required hostile-audit categories:
 
 ```bash
 PYTHONPATH=htt:htt/src venv/bin/python htt/scripts/ver2_hostile_audit.py --check
+PYTHONPATH=htt:htt/src venv/bin/python htt/scripts/ver2_bass_validation.py --check
 ```

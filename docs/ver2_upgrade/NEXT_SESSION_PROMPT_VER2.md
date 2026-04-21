@@ -35,6 +35,7 @@
 31. `docs/ver2_upgrade/audits/AUDIT_BF-02B-SEED_2026-04-21.md`
 32. `docs/ver2_upgrade/audits/AUDIT_BF-03B-ANG_2026-04-21.md`
 33. `docs/ver2_upgrade/audits/AUDIT_BF-04B-COV_2026-04-21.md`
+34. `docs/ver2_upgrade/audits/AUDIT_BF-05B-VAL_2026-04-21.md`
 
 ## 2. Current State
 
@@ -108,6 +109,9 @@
 - `BF-03B-ANG` verification is green for the touched BASS-angular scope: targeted pytest `19 passed`, touched-surface pytest `258 passed`, public-surface pytest `2 passed`, and `py_compile` passed.
 - `BF-04B-COV` is now closed: live O-lane covariance narrows the old `sparse_mode_block_proxy` path to a basis-reduced explicit low-`ell` harmonic sparse representation whenever sphere-reconstructed angular support is available, while preserving no-claim boundaries on full BiPoSH promotion.
 - `BF-04B-COV` verification is green for the touched BASS-covariance scope: targeted pytest `39 passed`, full `htt/bass/observational` `88 passed`, public-surface plus FB-7.2 pytest `33 passed`, workspace-contract pytest `44 passed`, registry `--check` passed, and `py_compile` passed.
+- `BF-05B-VAL` is now closed: BASS owns an executable BF-05 runtime-evidence surface under `htt/bass/validation/ver2_campaign_evidence.py` plus `htt/scripts/ver2_bass_validation.py`, the validation registry now contains a bounded `pass` campaign for the shipped Type-I native Tier-B route, and the previous false `L=8` STF cache blocker is removed by on-demand basis extension in `htt/bass/hierarchy/contractions.py`.
+- `BF-05B-VAL` verification is green for the touched BASS-validation scope: targeted pytest `66 passed`, registry `--check` passed, hostile-audit `--check` passed, BF-05 script `--check` passed, and `py_compile` passed.
+- The converged BF-05 choice is deliberately narrow: the new `pass` campaign validates only the shipped Type-I native runtime/seed/cutoff/observer-neutral bridge, while the broader morphology/injection/MES science-facing campaigns remain `warn`.
 - The BASS-first sequence is now active in code, not just in planning docs: production Tier-B ownership, live seed/startup injection, live PSTF angular reconstruction, and basis-reduced low-`ell` covariance promotion have moved, while the remaining high-priority BASS debt is concentrated in validation-grade cross-checking and later observer/likelihood/inference retargeting.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
@@ -122,7 +126,7 @@ instead and run the follow-up packets in that order.
 
 The immediate next packet is:
 
-1. `BF-05B-VAL`
+1. `BF-06B-LIKE`
 
 The reordered priority is:
 
@@ -132,8 +136,7 @@ The reordered priority is:
 
 Parallel policy is now constrained by the solver spine:
 
-1. `BF-05B-VAL` follows the now-closed solver/O-lane packets,
-2. `BF-06B-LIKE` is blocked on `BF-05B-VAL`.
+1. `BF-06B-LIKE` follows the now-closed solver/O-lane/validation packets.
 
 ## 4. Hard Reminders
 
@@ -144,7 +147,9 @@ Parallel policy is now constrained by the solver spine:
 - Do not merge MIO certificate semantics into HTT or BASS.
 - Do not generate figures or manuscript claims from non-manifest artifacts.
 - Do not route new VER2 work back onto the reduced `einstein_bianchi` background engine; `htt/bass/background/evolution.py` and the S1 IC/geometry/RHS modules are now the implementation anchor.
-- Do not treat `BF-04B-COV` as if it already validated full BiPoSH, local/global separation, or covariance-aware science claims; the production Tier-B core is now native, seeded, angularly reconstructed, and basis-reduced in O-lane covariance, but `BF-05B-VAL` still remains.
+- Do not treat `BF-04B-COV` plus the new BF-05 runtime campaign as if they already validated full BiPoSH, local/global separation, or covariance-aware science claims; the production Tier-B core is now native, seeded, angularly reconstructed, basis-reduced in O-lane covariance, and boundedly validated for Type I, but the broader science-facing surfaces still remain unresolved.
+- Do not misread the new `validation.bass_native_runtime_bridge` pass campaign as a blanket science promotion; it validates only the shipped Type-I native runtime bridge and leaves non-Type-I exact propagation plus full BiPoSH science claims unresolved.
+- Do not silently widen the default BF-05 cutoff gate from `L=4,6` to `L=8` without recording the runtime cost and extended-sweep intent explicitly.
 - Do not read the current `IMEX_SPLIT` label as a shipped split-step executor on the seeded native route; BF-02 explicitly realizes it as a `BDF` backend and records that realization in metadata.
 - Treat `lowell_bianchi_solver_SDD_PR_WBS_pstf_tetrad.md` as equation-form authority: if it gives an explicit equation/operator/projection order, implement that form directly unless the SDD itself marks the step as first-pass, closure, startup-only, or validation-only.
 - Do not substitute a reduced symbolic bridge for an explicit SDD equation merely because it is easier to wire; if a reduced path survives, keep it diagnostic-only and record it in carry-forward.

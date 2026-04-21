@@ -52,9 +52,12 @@ def test_basis_columns_are_symmetric_and_trace_free(ell: int) -> None:
         assert ok, f"ell={ell}, basis column m={m}: {msg}"
 
 
-def test_basis_out_of_range_raises() -> None:
-    with pytest.raises(NotImplementedError):
-        stf_basis(L_MAX_CACHED + 1)
+def test_basis_builds_on_demand_beyond_eager_cache() -> None:
+    ell = L_MAX_CACHED + 1
+    Q = stf_basis(ell)
+    assert Q.shape == (3 ** ell, 2 * ell + 1)
+    gram = Q.T @ Q
+    assert np.allclose(gram, np.eye(2 * ell + 1), rtol=0, atol=1e-13)
     with pytest.raises(ValueError):
         stf_basis(-1)
 

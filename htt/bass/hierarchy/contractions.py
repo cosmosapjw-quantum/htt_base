@@ -45,9 +45,13 @@ from typing import Dict
 import numpy as np
 
 
-# Maximum ℓ for which we pre-build the orthonormal STF basis. The spec
-# constrains the hierarchy to ``L ≤ 8`` (00_conventions.md §10 and
-# 02_multipole_hierarchy_spec.md §2.5).
+# Maximum ℓ for which we pre-build the orthonormal STF basis eagerly at
+# import time. The public development cutoffs still satisfy ``L ≤ 8``
+# (00_conventions.md §10 and 02_multipole_hierarchy_spec.md §2.5), but
+# the equation-form hierarchy can request intermediate ``ell=L+1`` and
+# ``ell=L+2`` tensors while evaluating closure terms or startup
+# manifolds. Those higher ranks are built on demand below rather than
+# being silently blocked by the eager cache ceiling.
 L_MAX_CACHED: int = 8
 
 
@@ -169,11 +173,8 @@ def stf_basis(ell: int) -> np.ndarray:
     """
     if ell < 0:
         raise ValueError(f"ell must be non-negative, got {ell}")
-    if ell > L_MAX_CACHED:
-        raise NotImplementedError(
-            f"ell={ell} exceeds precomputed cache L_MAX_CACHED={L_MAX_CACHED}. "
-            f"Rebuild with higher L_MAX_CACHED if needed."
-        )
+    if ell not in _STF_BASIS_CACHE:
+        _STF_BASIS_CACHE[ell] = _build_stf_orthonormal_basis(ell)
     return _STF_BASIS_CACHE[ell]
 
 
