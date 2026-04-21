@@ -20,6 +20,7 @@ __all__ = [
     "spatial_connection",
     "spatial_ricci",
     "div_vector",
+    "covariant_derivative_rank2_homogeneous",
     "div_pstf2",
     "curl_pstf2",
     "build_geometry",
@@ -89,25 +90,40 @@ def div_vector(vector: np.ndarray, Gamma: np.ndarray) -> float:
     return float(out)
 
 
-def div_pstf2(tensor: np.ndarray, Gamma: np.ndarray) -> np.ndarray:
-    """Algebraic divergence of a homogeneous PSTF rank-2 tensor."""
+def covariant_derivative_rank2_homogeneous(tensor: np.ndarray, Gamma: np.ndarray) -> np.ndarray:
+    """Return `D_gamma X_{alpha beta}` for a homogeneous rank-2 spatial tensor.
+
+    The VER2 SDD fixes the anholonomic-frame convention as
+
+    `D_gamma X_{alpha beta} = -Gamma^mu_{gamma alpha} X_{mu beta}
+                              -Gamma^mu_{gamma beta} X_{alpha mu}`.
+    """
+
     X = np.asarray(tensor, dtype=np.float64)
     connection = np.asarray(Gamma, dtype=np.float64)
+    D = np.zeros((3, 3, 3), dtype=np.float64)
+    for gamma in range(3):
+        for alpha in range(3):
+            for beta in range(3):
+                for mu in range(3):
+                    D[gamma, alpha, beta] -= connection[mu, gamma, alpha] * X[mu, beta]
+                    D[gamma, alpha, beta] -= connection[mu, gamma, beta] * X[alpha, mu]
+    return D
+
+
+def div_pstf2(tensor: np.ndarray, Gamma: np.ndarray) -> np.ndarray:
+    """Algebraic divergence of a homogeneous PSTF rank-2 tensor."""
+    D = covariant_derivative_rank2_homogeneous(tensor, Gamma)
     out = np.zeros(3, dtype=np.float64)
     for alpha in range(3):
         for beta in range(3):
-            D = 0.0
-            for delta in range(3):
-                D -= connection[delta, alpha, beta] * X[delta, beta]
-                D -= connection[delta, beta, beta] * X[alpha, delta]
-            out[alpha] += D
+            out[alpha] += D[beta, alpha, beta]
     return out
 
 
 def curl_pstf2(tensor: np.ndarray, Gamma: np.ndarray) -> np.ndarray:
     """Algebraic curl of a homogeneous PSTF rank-2 tensor."""
-    X = np.asarray(tensor, dtype=np.float64)
-    connection = np.asarray(Gamma, dtype=np.float64)
+    D = covariant_derivative_rank2_homogeneous(tensor, Gamma)
     eps = _epsilon_3d()
     out = np.zeros((3, 3), dtype=np.float64)
     for alpha in range(3):
@@ -115,11 +131,7 @@ def curl_pstf2(tensor: np.ndarray, Gamma: np.ndarray) -> np.ndarray:
             val = 0.0
             for gamma in range(3):
                 for delta in range(3):
-                    D = 0.0
-                    for mu in range(3):
-                        D -= connection[mu, beta, gamma] * X[mu, delta]
-                        D -= connection[mu, delta, gamma] * X[beta, mu]
-                    val += eps[gamma, delta, alpha] * D
+                    val += eps[gamma, delta, alpha] * D[gamma, beta, delta]
             out[alpha, beta] = val
     return pstf_rank2(out)
 

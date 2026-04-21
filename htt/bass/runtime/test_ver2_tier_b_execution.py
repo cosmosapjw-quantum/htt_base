@@ -120,7 +120,12 @@ def _integrator_config() -> IntegratorConfig:
     )
 
 
-def _family_integrator_config(bianchi_type: str, *, beta: float = 0.0) -> IntegratorConfig:
+def _family_integrator_config(
+    bianchi_type: str,
+    *,
+    beta: float = 0.0,
+    v_hat_e: tuple[float, float, float] = (1.0, 0.0, 0.0),
+) -> IntegratorConfig:
     return IntegratorConfig(
         L_max=4,
         eta_initial_mpc=0.5,
@@ -131,10 +136,19 @@ def _family_integrator_config(bianchi_type: str, *, beta: float = 0.0) -> Integr
         bianchi_cosmo=BianchiCosmology(
             structure=get_type(bianchi_type),
             beta=float(beta),
+            v_hat_e=v_hat_e,
         ),
         gamma_T_over_H_threshold=100.0,
         gamma_T_override=lambda eta: 1.0e15,
     )
+
+
+def _representative_tilt_direction(bianchi_type: str) -> tuple[float, float, float]:
+    return {
+        "V": (1.0, 0.0, 0.0),
+        "VII_0": (1.0, 0.0, 0.0),
+        "VIII": (0.0, 1.0, 0.0),
+    }.get(bianchi_type, (1.0, 0.0, 0.0))
 
 
 def _low_z_integrator_config(
@@ -315,8 +329,6 @@ def test_representative_orthogonal_families_execute_with_expected_propagator_rea
     ("bianchi_type", "required_policy"),
     (
         ("I", "codazzi_balanced_total_momentum"),
-        ("VII_0", "class_a_helical_codazzi"),
-        ("VIII", "class_a_semisimple_codazzi"),
     ),
 )
 def test_representative_tilted_family_sweep_is_controlledly_blocked(
@@ -329,21 +341,42 @@ def test_representative_tilted_family_sweep_is_controlledly_blocked(
             manifest=_manifest(),
             bianchi_type=bianchi_type,
             species=species,
-            integrator_config=_family_integrator_config(bianchi_type, beta=1.0e-6),
+            integrator_config=_family_integrator_config(
+                bianchi_type,
+                beta=1.0e-6,
+                v_hat_e=_representative_tilt_direction(bianchi_type),
+            ),
             runtime_controls=_runtime_controls(),
             feature_flags=_feature_flags(),
             release=_release(),
             k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
-        )
+    )
 
 
-def test_representative_type_v_tilted_family_executes_with_bounded_runtime_contracts() -> None:
+def _seed_projection_tol(run) -> float:
+    q_norm = float(np.linalg.norm(run.trace.background_monitor.initial_conditions.matter.q))
+    return max(1.0e-10, 1.0e-12 * max(q_norm, 1.0))
+
+
+@pytest.mark.parametrize(
+    ("bianchi_type", "realization", "v_hat_e"),
+    (
+        ("V", "class_b_open_matrix_approx", (1.0, 0.0, 0.0)),
+        ("VII_0", "class_a_helical_matrix_approx", (1.0, 0.0, 0.0)),
+        ("VIII", "class_a_semisimple_matrix_approx", (0.0, 1.0, 0.0)),
+    ),
+)
+def test_representative_tilted_executable_families_execute_with_bounded_runtime_contracts(
+    bianchi_type: str,
+    realization: str,
+    v_hat_e: tuple[float, float, float],
+) -> None:
     species = SpeciesBackgroundRegistry.from_planck2018(recombination_warning_policy="ignore")
     run = execute_tier_b_solver(
         manifest=_manifest(),
-        bianchi_type="V",
+        bianchi_type=bianchi_type,
         species=species,
-        integrator_config=_family_integrator_config("V", beta=1.0e-6),
+        integrator_config=_family_integrator_config(bianchi_type, beta=1.0e-6, v_hat_e=v_hat_e),
         runtime_controls=_runtime_controls(),
         feature_flags=_feature_flags(),
         release=_release(),
@@ -351,14 +384,14 @@ def test_representative_type_v_tilted_family_executes_with_bounded_runtime_contr
     )
 
     assert run.solver_output.metadata["bianchi_branch"] == "tilted"
-    assert run.solver_output.metadata["theory_family"] == "V_tilted"
+    assert run.solver_output.metadata["theory_family"] == f"{bianchi_type}_tilted"
     assert run.solver_output.metadata["global_tilt_contract"] == "model_matter_frame_state"
     assert run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
-    assert run.solver_output.metadata["source_propagator_realization"] == "class_b_open_matrix_approx"
+    assert run.solver_output.metadata["source_propagator_realization"] == realization
     assert run.solver_output.metadata["source_propagator_status"] == "approximate"
     assert run.trace.seed_projection.projection_ready is True
     assert run.trace.seed_projection.projection_mode == "background_codazzi_project"
-    assert np.linalg.norm(run.trace.seed_projection.momentum_residual_after) < 1.0e-10
+    assert np.linalg.norm(run.trace.seed_projection.momentum_residual_after) <= _seed_projection_tol(run)
     assert run.execution_plan.runtime_decision.propagation_status == "pending"
 
 

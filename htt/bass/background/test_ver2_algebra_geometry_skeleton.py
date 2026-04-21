@@ -4,7 +4,13 @@ import numpy as np
 import pytest
 
 from bass.background.bianchi_types import ALL_BIANCHI_TYPES, all_bianchi_algebras, build_bianchi_algebra
-from bass.background.geometry import build_geometry, curl_pstf2, div_pstf2
+from bass.background.geometry import (
+    build_geometry,
+    covariant_derivative_rank2_homogeneous,
+    curl_pstf2,
+    div_pstf2,
+)
+from bass.background.initial_conditions import _ORTHONORMAL_PSTF_BASIS, _codazzi_operator_matrix
 
 
 ALL_LABELS = ["FLRW", *ALL_BIANCHI_TYPES]
@@ -66,6 +72,30 @@ def test_type_i_homogeneous_diagonal_sigma_has_zero_divergence_and_curl():
     sigma = np.diag([1.0e-3, -5.0e-4, -5.0e-4])
     assert np.allclose(div_pstf2(sigma, geometry.Gamma), 0.0)
     assert np.allclose(curl_pstf2(sigma, geometry.Gamma), 0.0)
+
+
+@pytest.mark.parametrize("label", ["VII_0", "VIII"])
+def test_rank2_covariant_derivative_matches_ver2_sdd_definition(label):
+    geometry = build_geometry(build_bianchi_algebra(label))
+    sigma = _ORTHONORMAL_PSTF_BASIS[2] + 0.5 * _ORTHONORMAL_PSTF_BASIS[4]
+    expected = np.zeros((3, 3, 3), dtype=np.float64)
+    for gamma in range(3):
+        for alpha in range(3):
+            for beta in range(3):
+                for mu in range(3):
+                    expected[gamma, alpha, beta] -= geometry.Gamma[mu, gamma, alpha] * sigma[mu, beta]
+                    expected[gamma, alpha, beta] -= geometry.Gamma[mu, gamma, beta] * sigma[alpha, mu]
+    np.testing.assert_allclose(
+        covariant_derivative_rank2_homogeneous(sigma, geometry.Gamma),
+        expected,
+    )
+
+
+@pytest.mark.parametrize("label", ["VII_0", "VIII"])
+def test_class_a_helical_and_semisimple_codazzi_operator_is_nontrivial(label):
+    geometry = build_geometry(build_bianchi_algebra(label))
+    operator = _codazzi_operator_matrix(geometry)
+    assert np.linalg.matrix_rank(operator) >= 2
 
 
 def test_branch_policy_is_explicit_for_type_i_tilt():

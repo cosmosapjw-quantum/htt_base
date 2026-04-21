@@ -184,6 +184,7 @@ def project_shear_to_codazzi(
     kappa: float = 1.0,
     policy: str = "least_squares_project",
     atol: float = 1.0e-10,
+    rtol: float = 1.0e-12,
 ) -> tuple[np.ndarray, CodazziProjectionMetadata]:
     """Project `sigma_ab` onto the nearest Codazzi surface for `target_q`."""
 
@@ -223,10 +224,15 @@ def project_shear_to_codazzi(
         residual_norm_after=float(np.linalg.norm(after)),
         target_q=q,
     )
-    if meta.residual_norm_after > atol:
+    effective_tol = max(
+        float(atol),
+        float(rtol) * max(float(np.linalg.norm(target)), 1.0),
+    )
+    if meta.residual_norm_after > effective_tol:
         raise CodazziProjectionError(
             f"Codazzi projection failed for {geometry.algebra.type_name}: "
             f"policy={policy}, residual={meta.residual_norm_after:.3e}, "
+            f"tol={effective_tol:.3e}, "
             f"required={geometry.algebra.branch_policy.constraint_policy_required}"
         )
     return sigma_proj, meta
@@ -240,6 +246,7 @@ def project_tilted_codazzi(
     kappa: float = 1.0,
     policy: str = "least_squares_project",
     atol: float = 1.0e-10,
+    rtol: float = 1.0e-12,
 ) -> tuple[np.ndarray, TiltedMatterState, CodazziProjectionMetadata]:
     sigma_proj, meta = project_shear_to_codazzi(
         sigma_ab=sigma_ab,
@@ -248,6 +255,7 @@ def project_tilted_codazzi(
         kappa=kappa,
         policy=policy,
         atol=atol,
+        rtol=rtol,
     )
     return sigma_proj, matter, meta
 

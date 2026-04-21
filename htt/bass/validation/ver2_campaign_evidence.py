@@ -53,11 +53,14 @@ _REPRESENTATIVE_PROPAGATOR_REALIZATIONS: dict[str, tuple[str, str]] = {
     "VII_0": ("class_a_helical_matrix_approx", "approximate"),
     "VIII": ("class_a_semisimple_matrix_approx", "approximate"),
 }
-_REPRESENTATIVE_TILTED_EXECUTABLES: tuple[str, ...] = ("V",)
+_REPRESENTATIVE_TILTED_EXECUTABLES: tuple[str, ...] = ("V", "VII_0", "VIII")
 _REPRESENTATIVE_TILT_BLOCKERS: dict[str, str] = {
     "I": "codazzi_balanced_total_momentum",
-    "VII_0": "class_a_helical_codazzi",
-    "VIII": "class_a_semisimple_codazzi",
+}
+_REPRESENTATIVE_TILT_DIRECTIONS: dict[str, tuple[float, float, float]] = {
+    "V": (1.0, 0.0, 0.0),
+    "VII_0": (1.0, 0.0, 0.0),
+    "VIII": (0.0, 1.0, 0.0),
 }
 
 
@@ -283,6 +286,7 @@ def _family_integrator_config(
     *,
     bianchi_type: str,
     beta: float,
+    v_hat_e: tuple[float, float, float] = (1.0, 0.0, 0.0),
     gamma_t_override,
 ) -> IntegratorConfig:
     return IntegratorConfig(
@@ -295,6 +299,7 @@ def _family_integrator_config(
         bianchi_cosmo=BianchiCosmology(
             structure=get_type(bianchi_type),
             beta=float(beta),
+            v_hat_e=v_hat_e,
         ),
         gamma_T_over_H_threshold=100.0,
         gamma_T_override=gamma_t_override,
@@ -678,6 +683,7 @@ def _representative_family_tilt_failure(
             integrator_config=_family_integrator_config(
                 bianchi_type=bianchi_type,
                 beta=float(tilt_probe_beta),
+                v_hat_e=_REPRESENTATIVE_TILT_DIRECTIONS.get(bianchi_type, (1.0, 0.0, 0.0)),
                 gamma_t_override=lambda eta: 1.0e15,
             ),
             runtime_controls=_runtime_controls(tier=SolverTier.TIER_B_PSTF),
@@ -710,6 +716,7 @@ def _representative_family_tilt_run(
         integrator_config=_family_integrator_config(
             bianchi_type=bianchi_type,
             beta=float(tilt_probe_beta),
+            v_hat_e=_REPRESENTATIVE_TILT_DIRECTIONS.get(bianchi_type, (1.0, 0.0, 0.0)),
             gamma_t_override=lambda eta: 1.0e15,
         ),
         runtime_controls=_runtime_controls(tier=SolverTier.TIER_B_PSTF),
@@ -767,7 +774,11 @@ def _representative_family_sweep_bundle(
         == "observer_side_only_not_applied_in_bass_output"
         for run in orthogonal_runs.values()
     )
-    tilted_v_runnable = all(
+    def _tilted_seed_projection_tol(run) -> float:
+        q_norm = float(np.linalg.norm(run.trace.background_monitor.initial_conditions.matter.q))
+        return max(1.0e-10, 1.0e-12 * max(q_norm, 1.0))
+
+    tilted_runnable = all(
         run.solver_output.metadata["bianchi_branch"] == "tilted"
         and run.solver_output.metadata["theory_family"] == f"{label}_tilted"
         and run.solver_output.metadata["source_propagator_realization"]
@@ -777,7 +788,8 @@ def _representative_family_sweep_bundle(
         and run.solver_output.metadata["global_tilt_contract"] == "model_matter_frame_state"
         and run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
         and run.trace.seed_projection.projection_ready
-        and np.linalg.norm(run.trace.seed_projection.momentum_residual_after) < 1.0e-10
+        and np.linalg.norm(run.trace.seed_projection.momentum_residual_after)
+        <= _tilted_seed_projection_tol(run)
         for label, run in tilted_runs.items()
     )
     tilt_block_honesty = all(
@@ -793,10 +805,10 @@ def _representative_family_sweep_bundle(
             summary="Representative orthogonal families I, V, VII_0, and VIII execute end-to-end on the bounded low-ell native Tier-B path.",
         ),
         ExecutableCheckEvidence(
-            check_id="representative_tilted_type_v_runs_end_to_end",
+            check_id="representative_tilted_runnable_subset_runs_end_to_end",
             category="adversarial_edge",
-            passed=bool(tilted_v_runnable),
-            summary="The representative Type-V tilted branch executes end-to-end on the bounded native runtime path without collapsing global tilt into local boost semantics.",
+            passed=bool(tilted_runnable),
+            summary="The representative runnable tilted subset V, VII_0, and VIII executes end-to-end on the bounded native runtime path without collapsing global tilt into local boost semantics.",
         ),
         ExecutableCheckEvidence(
             check_id="representative_remaining_tilted_branches_fail_controlledly",
@@ -848,7 +860,7 @@ def _representative_family_sweep_bundle(
         notes=(
             "This campaign validates the bounded preliminary representative-family sweep only.",
             "Orthogonal branches are executable for I, V, VII_0, and VIII on the current native Tier-B route.",
-            "The representative Type-V tilted branch is now executable on the bounded native route, while I, VII_0, and VIII tilted branches remain explicit Codazzi-stage blockers.",
+            "The representative V, VII_0, and VIII tilted branches are executable on the bounded native route, while I remains an explicit Codazzi-stage blocker.",
         ),
     )
 

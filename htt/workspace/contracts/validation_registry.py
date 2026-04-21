@@ -525,7 +525,7 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
         ),
         TheoremToTestEntry(
             theorem_id="V8_bass_representative_family_sweep",
-            theorem_label="representative preliminary family sweep keeps orthogonal I/V/VII_0/VIII executable, opens Type-V tilted, and keeps the remaining tilted runtime blockers explicit",
+            theorem_label="representative preliminary family sweep keeps orthogonal I/V/VII_0/VIII executable, opens V/VII_0/VIII tilted, and keeps the remaining tilted runtime blocker explicit",
             owner="BASS",
             implementation_scope="canonical_BASS",
             claim_guard="this executable evidence validates only the bounded representative family sweep and keeps tilted runtime blockers and non-Type-I exactness debt explicit",
@@ -542,10 +542,10 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
                     artifact_refs=("bass.validation.representative_family_sweep",),
                 ),
                 ValidationTestLink(
-                    test_id="representative_tilted_type_v_runs_end_to_end",
+                    test_id="representative_tilted_runnable_subset_runs_end_to_end",
                     category="adversarial_edge",
-                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_type_v_tilted_family_executes_with_bounded_runtime_contracts",
-                    purpose="the representative Type-V tilted branch executes end to end while preserving explicit global-tilt vs local-boost semantics",
+                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_tilted_executable_families_execute_with_bounded_runtime_contracts",
+                    purpose="the representative runnable tilted subset V, VII_0, and VIII executes end to end while preserving explicit global-tilt vs local-boost semantics",
                     artifact_refs=("bass.validation.representative_family_sweep",),
                 ),
                 ValidationTestLink(
@@ -762,7 +762,7 @@ def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
         ),
         ValidationCampaign(
             campaign_id="validation.bass_representative_family_sweep",
-            title="Representative preliminary family sweep with explicit tilted runtime blockers",
+            title="Representative preliminary family sweep with bounded tilted runtime opening",
             owner="BASS",
             implementation_scope="canonical_BASS",
             status="pass",
@@ -777,10 +777,10 @@ def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
                     artifact_refs=("bass.validation.representative_family_sweep",),
                 ),
                 ValidationTestLink(
-                    test_id="representative_tilted_type_v_runs_end_to_end",
+                    test_id="representative_tilted_runnable_subset_runs_end_to_end",
                     category="adversarial_edge",
-                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_type_v_tilted_family_executes_with_bounded_runtime_contracts",
-                    purpose="run the representative Type-V tilted branch end to end on the bounded native route without collapsing it into observer-boost semantics",
+                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_tilted_executable_families_execute_with_bounded_runtime_contracts",
+                    purpose="run the representative tilted executable subset V, VII_0, and VIII end to end on the bounded native route without collapsing it into observer-boost semantics",
                     artifact_refs=("bass.validation.representative_family_sweep",),
                 ),
                 ValidationTestLink(
@@ -826,7 +826,7 @@ def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
             runbook_refs=("runbook.bass_representative_family_sweep",),
             notes=(
                 "Executable preliminary campaign: passes for the representative orthogonal subset I, V, VII_0, VIII.",
-                "The representative Type-V tilted branch is executable on the bounded native route, while I, VII_0, and VIII remain explicit runtime blockers and must not be relabelled as executed science runs.",
+                "The representative V, VII_0, and VIII tilted branches are executable on the bounded native route, while I remains an explicit runtime blocker and must not be relabelled as executed science runs.",
                 "This campaign is for preliminary result-pack production, not full geometry identification or non-Type-I exact propagator promotion.",
             ),
         ),
@@ -1261,7 +1261,7 @@ def build_default_hostile_audit_runbooks() -> tuple[HostileAuditRunbook, ...]:
             campaign_refs=("validation.bass_representative_family_sweep",),
             baseline_checks=("representative_orthogonal_families_run_end_to_end",),
             adversarial_checks=(
-                "representative_tilted_type_v_runs_end_to_end",
+                "representative_tilted_runnable_subset_runs_end_to_end",
                 "representative_remaining_tilted_branches_fail_controlledly",
             ),
             physics_checks=("representative_family_realizations_are_algebra_aware",),

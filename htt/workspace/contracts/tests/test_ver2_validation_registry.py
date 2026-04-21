@@ -72,6 +72,7 @@ def test_tsc_registry_entry_pulls_live_local_validation_witnesses():
     assert "quadrupole_convention_roundtrip" in test_ids
     assert "collision_only_bridge_is_blocked" in test_ids
     assert "export_blocks_exploratory_claim_ceiling" in test_ids
+    assert "active_service_export_cli_preserves_blockers" in test_ids
 
 
 def test_warn_does_not_promote_to_validated():
@@ -191,7 +192,7 @@ def test_bass_representative_family_sweep_records_tilted_runtime_blocker() -> No
     )
     assert "representative_tilted_runtime_partial_only" in theorem.no_claim_conditions
     assert any(
-        link.test_id == "representative_tilted_type_v_runs_end_to_end"
+        link.test_id == "representative_tilted_runnable_subset_runs_end_to_end"
         for link in campaign.check_links
     )
     assert any(

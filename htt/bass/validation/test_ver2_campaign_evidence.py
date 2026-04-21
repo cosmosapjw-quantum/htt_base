@@ -63,7 +63,7 @@ def test_representative_family_sweep_evidence_passes_with_bounded_orthogonal_sub
     assert "representative_tilted_runtime_partial_only" in evidence.no_claim_conditions
     checks = {row.check_id: row for row in evidence.checks}
     assert checks["representative_orthogonal_families_run_end_to_end"].passed is True
-    assert checks["representative_tilted_type_v_runs_end_to_end"].passed is True
+    assert checks["representative_tilted_runnable_subset_runs_end_to_end"].passed is True
     assert checks["representative_remaining_tilted_branches_fail_controlledly"].passed is True
     assert checks["representative_family_realizations_are_algebra_aware"].passed is True
 
@@ -75,7 +75,7 @@ def test_representative_family_sweep_payload_is_json_ready() -> None:
     check_ids = {row["check_id"] for row in payload["checks"]}
     assert {
         "representative_orthogonal_families_run_end_to_end",
-        "representative_tilted_type_v_runs_end_to_end",
+        "representative_tilted_runnable_subset_runs_end_to_end",
         "representative_remaining_tilted_branches_fail_controlledly",
         "representative_family_realizations_are_algebra_aware",
         "representative_family_outputs_stay_finite_on_bounded_low_ell_grid",
