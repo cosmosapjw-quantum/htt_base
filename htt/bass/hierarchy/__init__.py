@@ -113,6 +113,17 @@ from bass.hierarchy.seed_compatibility import (
     project_packed_regular_seed,
     promote_tilted_seed,
 )
+from bass.hierarchy.ver3_layout_protocol import (
+    SECTOR_ORDER,
+    HierarchyLayout,
+    assemble_explicit_block,
+    assemble_implicit_block,
+    assemble_mass_matrix,
+    assemble_source_vector,
+    build_hierarchy_layout,
+    flatten,
+    unflatten,
+)
 
 
 __all__ = [
@@ -197,4 +208,14 @@ __all__ = [
     "promote_tilted_seed",
     "build_constraint_projection",
     "project_packed_regular_seed",
+    # ver3 PR-09 hierarchy layout and IMEX packing
+    "SECTOR_ORDER",
+    "HierarchyLayout",
+    "build_hierarchy_layout",
+    "flatten",
+    "unflatten",
+    "assemble_mass_matrix",
+    "assemble_explicit_block",
+    "assemble_implicit_block",
+    "assemble_source_vector",
 ]
