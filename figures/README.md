@@ -31,7 +31,7 @@ venv/bin/python scripts/make_physics_gallery.py
 VER2 manuscript/export scaffolding is separate from figure rendering:
 
 ```bash
-# SK-09D skeleton exporter: status/claim hooks + figure-manifest audit
+# IM-09D live exporter: result-pack surfaces + figure-manifest audit
 venv/bin/python scripts/ver2_artifact_export.py
 venv/bin/python scripts/ver2_artifact_export.py --check
 ```
