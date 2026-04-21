@@ -21,6 +21,18 @@ from .htt_forward_output import HttForwardOutput
 from .htt_to_mio import PosteriorExportBundle
 from .mio_certificate import MioCertificate
 from .observable_vector import ObservableVector
+from .preliminary_results import (
+    ExportedArtifactEnvelope,
+    PreliminaryPackArtifactRef,
+    PreliminaryResultPack,
+    load_exported_artifact,
+    load_exported_atlas_entry_lite,
+    load_exported_discrimination_matrix,
+    load_exported_mio_certificate,
+    load_exported_observable_vector,
+    load_exported_tsc_overlay,
+    load_preliminary_result_pack,
+)
 from .tsc_overlay import TscAdequacyOverlay
 from .validation_registry import (
     HostileAuditRunbook,
@@ -42,9 +54,19 @@ __all__ = [
     "MioCertificate",
     "NullEnsembleManifest",
     "ObservableVector",
+    "ExportedArtifactEnvelope",
+    "PreliminaryPackArtifactRef",
+    "PreliminaryResultPack",
     "PosteriorExportBundle",
     "TheoremToTestEntry",
     "TscAdequacyOverlay",
     "ValidationCampaign",
     "ValidationTestLink",
+    "load_exported_artifact",
+    "load_exported_atlas_entry_lite",
+    "load_exported_discrimination_matrix",
+    "load_exported_mio_certificate",
+    "load_exported_observable_vector",
+    "load_exported_tsc_overlay",
+    "load_preliminary_result_pack",
 ]

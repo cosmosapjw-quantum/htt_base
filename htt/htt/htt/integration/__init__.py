@@ -5,6 +5,10 @@ from htt.integration.from_bass import (
     ingest_bass_directional,
     ingest_ver2_directional_inputs,
 )
+from htt.integration.preliminary_results import (
+    PreliminaryDirectionalHandoff,
+    build_preliminary_directional_handoff,
+)
 from htt.integration.posterior_artifact import (
     HTT_DIRECTIONAL_POSTERIOR_ARTIFACT_KIND,
     build_cross_check_manifest_from_directional_artifact,
@@ -17,6 +21,8 @@ __all__ = [
     "ingest_bass_directional",
     "build_ver2_directional_inputs",
     "ingest_ver2_directional_inputs",
+    "PreliminaryDirectionalHandoff",
+    "build_preliminary_directional_handoff",
     "HTT_DIRECTIONAL_POSTERIOR_ARTIFACT_KIND",
     "emit_directional_posterior_artifact",
     "load_directional_posterior_artifact",

@@ -40,6 +40,7 @@
 35. `docs/ver2_upgrade/audits/AUDIT_BF-05B-VAL_2026-04-21.md`
 36. `docs/ver2_upgrade/audits/AUDIT_PRM-02_BASS_FAMILY_SWEEP_2026-04-22.md`
 37. `docs/ver2_upgrade/audits/AUDIT_PRM-03_PRELIM_RESULT_PACKS_2026-04-22.md`
+38. `docs/ver2_upgrade/audits/AUDIT_PRM-04_HTT_MIO_HANDOFF_2026-04-22.md`
 
 ## 2. Current State
 
@@ -131,6 +132,9 @@
 - `PRM-03-PRELIM-RESULT-PACKS` is now closed: `scripts/ver2_artifact_export.py` consumes the current native Tier-B runtime path, emits a dedicated representative-family-sweep artifact, and refreshes the generated result packs/manuscript hooks/manifest-backed figures from the committed preliminary BASS state.
 - `PRM-03-PRELIM-RESULT-PACKS` verification is green for the touched preliminary-results D-lane scope: `py_compile` passed; exporter pytest returned `9 passed`; `venv/bin/python scripts/ver2_artifact_export.py` and `--check` both passed; the family-sweep JSON probe confirms pack `E` now carries live `validation.bass_representative_family_sweep` evidence.
 - The current result-pack ceiling is now explicit inside the generated exports: executable orthogonal family-sweep evidence is present, but Pack `E` remains exploratory overall because tilted runtime blockers and non-Type-I exactness debt are still exported as no-claim conditions.
+- `PRM-04-HTT-MIO-HANDOFF` is now closed: `workspace/contracts.preliminary_results` exposes canonical generated-pack/artifact loaders, and HTT/MIO/TSC now each have package-local handoff helpers that consume the current VER2 preliminary packs without local JSON surgery.
+- `PRM-04-HTT-MIO-HANDOFF` verification is green for the touched preliminary-results interop scope: `py_compile` passed; targeted pytest returned `7 passed`; HTT/MIO/TSC smoke usage of the new handoff helpers passed on the committed generated surfaces.
+- The preliminary-results chain is now operational end to end: BASS emits bounded preliminary artifacts, exporter/result-pack generation serializes them, and HTT/MIO/TSC can ingest the generated packs directly through canonical loaders. Remaining debt is now physics/statistics debt again, not handoff friction.
 - The BASS-first implementation sequence is now closed in code. Remaining debt is no longer “wire observer/likelihood/inference at all”; it is the deeper physics/statistics carry-forward around non-Type-I exact propagation, full BiPoSH inversion, and later HTT-facing science claims.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
@@ -175,9 +179,9 @@ cleanup:
 4. `PRM-04-HTT-MIO-HANDOFF`,
 5. only then reopen deeper exactness debt if it blocks a concrete preliminary claim.
 
-`PRM-01-BASS-INTEROP`, `PRM-02-BASS-FAMILY-SWEEP`, and `PRM-03-PRELIM-RESULT-PACKS` are closed. The next BASS-adjacent preliminary-results packet is:
+`PRM-01-BASS-INTEROP`, `PRM-02-BASS-FAMILY-SWEEP`, `PRM-03-PRELIM-RESULT-PACKS`, and `PRM-04-HTT-MIO-HANDOFF` are closed. The next preliminary-results packet is:
 
-1. `PRM-04-HTT-MIO-HANDOFF`
+1. `PRM-05-TARGETED-PHYSICS`
 
 ## 4. Hard Reminders
 
