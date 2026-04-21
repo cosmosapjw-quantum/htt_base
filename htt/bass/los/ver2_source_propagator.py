@@ -17,6 +17,7 @@ __all__ = [
     "ObserverFrameMetadata",
     "SourcePropagatorConfig",
     "SourcePropagator",
+    "select_propagator_kernel_family",
     "build_source_propagator",
     "SourcePropagatorStub",
     "build_source_propagator_stub",
@@ -140,8 +141,17 @@ _TYPEI_MODE_SUFFIXES = {
     "m+2": ("_m_plus2", "_m2", "_plus2"),
     "m-2": ("_m_minus2", "_mneg2", "_minus2"),
 }
-_ROTATING_LABELS = frozenset({"IV", "VI_h", "VII_h", "VIII", "IX"})
-_FLRW_LIMIT_LABELS = frozenset({"I", "V", "VII_0", "VII_h", "IX"})
+_NON_TYPE_I_KERNEL_FAMILIES = frozenset(
+    {
+        "class_a_axis_matrix_approx",
+        "class_a_helical_matrix_approx",
+        "class_a_semisimple_matrix_approx",
+        "class_a_compact_matrix_approx",
+        "class_b_open_matrix_approx",
+        "class_b_twist_axis_matrix_approx",
+        "class_b_helical_matrix_approx",
+    }
+)
 
 
 def _source_sample_scalar(sample: Mapping[str, object], names: tuple[str, ...]) -> float:
@@ -176,7 +186,84 @@ def _interp_eta_callable(eta_grid: np.ndarray, values: np.ndarray):
     return fn
 
 
-def _structure_features(structure: StructureConstants) -> dict[str, object]:
+def select_propagator_kernel_family(structure: StructureConstants) -> str:
+    """Select the bounded non-Type-I family from algebra data alone."""
+    if structure.label == "I":
+        return "bianchi_i_matrix_exact"
+    n_diag = np.asarray(structure.n_diag, dtype=np.float64)
+    zero_count = int(np.count_nonzero(np.isclose(n_diag, 0.0, atol=1.0e-15)))
+    positive = int(np.count_nonzero(n_diag > 0.0))
+    negative = int(np.count_nonzero(n_diag < 0.0))
+    if structure.is_class_a:
+        if zero_count == 1 and positive == 2:
+            return "class_a_helical_matrix_approx"
+        if zero_count == 0 and positive == 3:
+            return "class_a_compact_matrix_approx"
+        if zero_count == 0 and positive == 2 and negative == 1:
+            return "class_a_semisimple_matrix_approx"
+        return "class_a_axis_matrix_approx"
+    if zero_count == 3:
+        return "class_b_open_matrix_approx"
+    if float(structure.n1) * float(structure.n3) > 0.0:
+        return "class_b_helical_matrix_approx"
+    return "class_b_twist_axis_matrix_approx"
+
+
+def _kernel_family_modifiers(kernel_family: str) -> dict[str, float]:
+    table = {
+        "class_a_axis_matrix_approx": {
+            "anisotropy_scale": 1.00,
+            "rotation_scale": 0.00,
+            "ell_slope": 0.018,
+            "bmix_scale": 0.00,
+        },
+        "class_a_helical_matrix_approx": {
+            "anisotropy_scale": 1.05,
+            "rotation_scale": 0.08,
+            "ell_slope": 0.022,
+            "bmix_scale": 0.08,
+        },
+        "class_a_semisimple_matrix_approx": {
+            "anisotropy_scale": 1.12,
+            "rotation_scale": 0.14,
+            "ell_slope": 0.026,
+            "bmix_scale": 0.14,
+        },
+        "class_a_compact_matrix_approx": {
+            "anisotropy_scale": 1.18,
+            "rotation_scale": 0.18,
+            "ell_slope": 0.028,
+            "bmix_scale": 0.18,
+        },
+        "class_b_open_matrix_approx": {
+            "anisotropy_scale": 0.95,
+            "rotation_scale": 0.00,
+            "ell_slope": 0.018,
+            "bmix_scale": 0.00,
+        },
+        "class_b_twist_axis_matrix_approx": {
+            "anisotropy_scale": 1.04,
+            "rotation_scale": 1.00,
+            "ell_slope": 0.022,
+            "bmix_scale": 1.00,
+        },
+        "class_b_helical_matrix_approx": {
+            "anisotropy_scale": 1.08,
+            "rotation_scale": 1.12,
+            "ell_slope": 0.024,
+            "bmix_scale": 1.10,
+        },
+    }
+    if kernel_family not in table:
+        raise ValueError(f"unsupported kernel_family {kernel_family!r}")
+    return table[kernel_family]
+
+
+def _structure_features(
+    structure: StructureConstants,
+    *,
+    kernel_family: str,
+) -> dict[str, object]:
     raw_axis = np.array(
         [
             structure.n1 - structure.n3,
@@ -199,22 +286,29 @@ def _structure_features(structure: StructureConstants) -> dict[str, object]:
         + abs(float(structure.a_twist))
     )
     h_abs = abs(float(structure.h_parameter))
-    anisotropy_strength = min(0.35, 8.0 * geom_norm + 0.05 * h_abs)
+    modifiers = _kernel_family_modifiers(kernel_family)
+    anisotropy_strength = min(
+        0.35,
+        modifiers["anisotropy_scale"] * (8.0 * geom_norm + 0.05 * h_abs),
+    )
     if structure.no_flrw_limit:
         anisotropy_strength = max(anisotropy_strength, 0.08)
     if structure.label == "I":
         anisotropy_strength = 0.0
 
     rotation_strength = 0.0
-    if structure.label in _ROTATING_LABELS:
+    if modifiers["rotation_scale"] > 0.0:
         rotation_strength = min(
             0.30,
-            0.45 * anisotropy_strength
-            + 6.0 * abs(float(structure.a_twist))
-            + (0.03 if structure.label in {"VII_h", "IX"} else 0.0),
+            modifiers["rotation_scale"]
+            * (
+                0.45 * anisotropy_strength
+                + 6.0 * abs(float(structure.a_twist))
+                + (0.03 if kernel_family in {"class_b_helical_matrix_approx", "class_a_compact_matrix_approx"} else 0.0)
+            ),
         )
 
-    if structure.label in _FLRW_LIMIT_LABELS and anisotropy_strength < 1.0e-4:
+    if (not structure.no_flrw_limit) and anisotropy_strength < 1.0e-4:
         rotation_strength = 0.0
 
     return {
@@ -413,6 +507,7 @@ def _build_type_i_matrix_transfer_bundle(
 def _build_non_type_i_matrix_transfer_bundle(
     structure: StructureConstants,
     *,
+    kernel_family: str,
     eta_grid_mpc: np.ndarray,
     k_grid_mpc: np.ndarray,
     ell_max: int,
@@ -427,7 +522,8 @@ def _build_non_type_i_matrix_transfer_bundle(
         visibility_fn=visibility_fn,
         source_builder=source_builder,
     )
-    features = _structure_features(structure)
+    features = _structure_features(structure, kernel_family=kernel_family)
+    modifiers = _kernel_family_modifiers(kernel_family)
     preferred_axis = np.asarray(features["preferred_axis"], dtype=np.float64)
     anisotropy_strength = float(features["anisotropy_strength"])
     rotation_strength = float(features["rotation_strength"])
@@ -447,7 +543,7 @@ def _build_non_type_i_matrix_transfer_bundle(
         dtype=np.float64,
     )
     ell_values = np.arange(raw_transfer_T.shape[1], dtype=np.float64)
-    ell_weight = 1.0 + 0.02 * anisotropy_strength * ell_values
+    ell_weight = 1.0 + modifiers["ell_slope"] * anisotropy_strength * ell_values
 
     for ik in range(raw_transfer_T.shape[0]):
         for iell, weight in enumerate(ell_weight):
@@ -455,7 +551,7 @@ def _build_non_type_i_matrix_transfer_bundle(
             propagator_matrix[ik, iell] = propagator
             mixed_T = propagator @ raw_transfer_T[ik, iell]
             mixed_E = propagator @ raw_transfer_E[ik, iell]
-            rotation_drive = rotation_strength * np.array(
+            rotation_drive = modifiers["bmix_scale"] * rotation_strength * np.array(
                 [0.0, raw_transfer_E[ik, iell, 1], -raw_transfer_E[ik, iell, 2]],
                 dtype=np.float64,
             )
@@ -510,13 +606,14 @@ def build_source_propagator(
             visibility_fn=visibility_fn,
             source_builder=source_builder,
         )
-    elif config.kernel_family == "m_channel_matrix_rotated_approx":
+    elif config.kernel_family in _NON_TYPE_I_KERNEL_FAMILIES:
         if structure.label == "I":
             raise ValueError(
-                "m_channel_matrix_rotated_approx is reserved for non-Type-I structures"
+                f"{config.kernel_family} is reserved for non-Type-I structures"
             )
         transfer_bundle = _build_non_type_i_matrix_transfer_bundle(
             structure,
+            kernel_family=config.kernel_family,
             eta_grid_mpc=eta_grid,
             k_grid_mpc=k_grid,
             ell_max=int(ell_max),

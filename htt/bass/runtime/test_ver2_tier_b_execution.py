@@ -190,7 +190,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.solver_output.metadata["neutrino_hierarchy_mode"] == "full_pstf_with_reduced_summary_export"
     assert run.solver_output.metadata["solver_method"] == "BDF"
-    assert run.solver_output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_ver2_native"
+    assert run.solver_output.metadata["source_builder_scope"] == "theta0_plus_combined_polter_visibility_ver2_native"
+    assert run.solver_output.metadata["source_builder_combined_polter"] is True
+    assert run.solver_output.metadata["source_builder_visibility_weighted_polter"] is True
     assert run.solver_output.metadata["startup_manifold_applied"] is True
     assert run.solver_output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
     assert run.solver_output.alm_T["coefficient_representation"] == "ver2_native_pstf_final_slice"

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from math import pi
-from typing import Any
+from typing import Any, Callable
 
 import numpy as np
 
@@ -24,6 +24,7 @@ from bass.los.ver2_source_propagator import (
     SourcePropagator,
     SourcePropagatorConfig,
     build_source_propagator,
+    select_propagator_kernel_family,
 )
 from bass.runtime.ver2_execution import (
     FeatureStatus,
@@ -31,6 +32,8 @@ from bass.runtime.ver2_execution import (
     SolverFeatureFlags,
     SolverTier,
 )
+from bass.recombination.recombination_ingest import find_visibility_peak
+from bass.recombination.reionization import compute_reionization_tau
 from bass.species.base import SpeciesLabel
 from bass.species.registry import SpeciesBackgroundRegistry
 
@@ -153,25 +156,120 @@ def _build_visibility_fn_from_a_lookup(species: SpeciesBackgroundRegistry, a_loo
     return visibility_fn
 
 
-def _build_lowell_source_builder(result: IntegrationResult):
+def _interp_redshift_series(a_grid: np.ndarray, values: np.ndarray, z: float) -> float | None:
+    target_a = 1.0 / (1.0 + float(z))
+    a = np.asarray(a_grid, dtype=np.float64)
+    series = np.asarray(values, dtype=np.float64)
+    if target_a < float(np.min(a)) or target_a > float(np.max(a)):
+        return None
+    return float(np.interp(target_a, a, series))
+
+
+def _build_visibility_source_metadata(
+    result: IntegrationResult,
+    *,
+    species: SpeciesBackgroundRegistry,
+    visibility_fn: Callable[[float], float],
+    gpi_m0: np.ndarray,
+) -> dict[str, Any]:
+    baryon = species[SpeciesLabel.BARYON]
+    interp = baryon._recomb  # noqa: SLF001 - stable internal ownership for the current tier-B bridge
+    table = interp.table
+    reionization_mode = "tanh" if table.metadata.get("reionization") == "tanh" else "disabled"
+    tau_reion = (
+        float(compute_reionization_tau(table, z_high_cutoff=min(30.0, float(table.z_max))))
+        if reionization_mode == "tanh"
+        else 0.0
+    )
+    visibility_peak_z, _ = find_visibility_peak(interp)
+    visibility_peak_gpi_m0 = _interp_redshift_series(
+        np.asarray(result.a, dtype=np.float64),
+        np.asarray(gpi_m0, dtype=np.float64),
+        float(visibility_peak_z),
+    )
+    low_z_probe = 8.0
+    low_z_gpi_m0 = _interp_redshift_series(
+        np.asarray(result.a, dtype=np.float64),
+        np.asarray(gpi_m0, dtype=np.float64),
+        low_z_probe,
+    )
+    low_z_eta = _interp_redshift_series(
+        np.asarray(result.a, dtype=np.float64),
+        np.asarray(result.eta, dtype=np.float64),
+        low_z_probe,
+    )
+    low_z_visibility = (
+        float(visibility_fn(float(low_z_eta)))
+        if low_z_eta is not None
+        else None
+    )
+    return {
+        "source_builder_combined_polter": True,
+        "source_builder_visibility_weighted_polter": True,
+        "visibility_reionization_mode": reionization_mode,
+        "visibility_reionization_detected": bool(reionization_mode == "tanh" and tau_reion > 0.0),
+        "visibility_tau_reion": tau_reion,
+        "visibility_peak_z": float(visibility_peak_z),
+        "source_builder_visibility_peak_gpi_m0": visibility_peak_gpi_m0,
+        "source_builder_low_z_probe_z": low_z_probe,
+        "source_builder_low_z_probe_available": low_z_gpi_m0 is not None,
+        "source_builder_low_z_visibility": low_z_visibility,
+        "source_builder_low_z_gpi_m0": low_z_gpi_m0,
+    }
+
+
+def _build_lowell_source_builder(
+    result: IntegrationResult,
+    *,
+    species: SpeciesBackgroundRegistry,
+    visibility_fn: Callable[[float], float],
+):
     eta_grid = np.asarray(result.eta, dtype=np.float64)
     theta_0 = np.asarray(result.pi_ell_m(0, 0), dtype=np.float64)
-    pi_2 = {
+    theta_2 = {
         "m0": np.asarray(result.pi_ell_m(2, 0), dtype=np.float64),
         "m_plus2": np.asarray(result.pi_ell_m(2, 2), dtype=np.float64),
         "m_minus2": np.asarray(result.pi_ell_m(2, -2), dtype=np.float64),
+    }
+    e_2 = {
+        "m0": np.asarray(result.e_ell_m(2, 0), dtype=np.float64),
+        "m_plus2": np.asarray(result.e_ell_m(2, 2), dtype=np.float64),
+        "m_minus2": np.asarray(result.e_ell_m(2, -2), dtype=np.float64),
+    }
+    polter = {
+        name: np.asarray(theta_2[name] - np.sqrt(6.0) * e_2[name], dtype=np.float64)
+        for name in theta_2
+    }
+    visibility = np.asarray([float(visibility_fn(float(eta))) for eta in eta_grid], dtype=np.float64)
+    gpi = {
+        name: visibility * polter[name]
+        for name in polter
     }
 
     def source_builder(eta: float, k: float) -> dict[str, float]:
         del k  # Tier-B low-ell bridge currently uses k-independent source amplitudes.
         return {
             "theta_0": _interp_series(eta_grid, theta_0, eta),
-            "pi_m0": _interp_series(eta_grid, pi_2["m0"], eta),
-            "pi_m_plus2": _interp_series(eta_grid, pi_2["m_plus2"], eta),
-            "pi_m_minus2": _interp_series(eta_grid, pi_2["m_minus2"], eta),
+            "theta_2_m0": _interp_series(eta_grid, theta_2["m0"], eta),
+            "theta_2_m_plus2": _interp_series(eta_grid, theta_2["m_plus2"], eta),
+            "theta_2_m_minus2": _interp_series(eta_grid, theta_2["m_minus2"], eta),
+            "E_2_m0": _interp_series(eta_grid, e_2["m0"], eta),
+            "E_2_m_plus2": _interp_series(eta_grid, e_2["m_plus2"], eta),
+            "E_2_m_minus2": _interp_series(eta_grid, e_2["m_minus2"], eta),
+            "pi_m0": _interp_series(eta_grid, polter["m0"], eta),
+            "pi_m_plus2": _interp_series(eta_grid, polter["m_plus2"], eta),
+            "pi_m_minus2": _interp_series(eta_grid, polter["m_minus2"], eta),
+            "gpi_m0": _interp_series(eta_grid, gpi["m0"], eta),
+            "gpi_m_plus2": _interp_series(eta_grid, gpi["m_plus2"], eta),
+            "gpi_m_minus2": _interp_series(eta_grid, gpi["m_minus2"], eta),
         }
 
-    return source_builder
+    return source_builder, _build_visibility_source_metadata(
+        result,
+        species=species,
+        visibility_fn=visibility_fn,
+        gpi_m0=gpi["m0"],
+    )
 
 
 def _build_template_from_result(
@@ -324,7 +422,7 @@ def _default_tier_b_propagator_config(
         polarization_rotation=requested_status,
         temperature_transport=requested_status,
         flrw_validation_only=False,
-        kernel_family="m_channel_matrix_rotated_approx",
+        kernel_family=select_propagator_kernel_family(structure),
         observer_frame=ObserverFrameMetadata(
             harmonic_basis="m_explicit",
             eb_sign_convention="cmb",
@@ -386,14 +484,20 @@ def build_solver_core_output_from_native_result(
         np.asarray(result.a, dtype=np.float64),
         eta,
     )
+    visibility_fn = _build_visibility_fn_from_a_lookup(species, a_lookup)
+    source_builder, source_builder_metadata = _build_lowell_source_builder(
+        result,
+        species=species,
+        visibility_fn=visibility_fn,
+    )
     live_propagator = build_source_propagator(
         propagator_config,
         structure=structure_constants,
         eta_grid_mpc=np.asarray(result.eta, dtype=np.float64),
         k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
         ell_max=int(runtime_controls.multipole_cutoff),
-        visibility_fn=_build_visibility_fn_from_a_lookup(species, a_lookup),
-        source_builder=_build_lowell_source_builder(result),
+        visibility_fn=visibility_fn,
+        source_builder=source_builder,
         limber_eta_sp_sign=limber_eta_sp_sign,
         off_diagonal_strategy=off_diagonal_strategy,
     )
@@ -429,7 +533,7 @@ def build_solver_core_output_from_native_result(
             "eta_grid_size": int(np.asarray(result.eta).size),
             "off_diagonal_strategy": off_diagonal_strategy,
             "limber_eta_sp_sign": limber_eta_sp_sign,
-            "source_builder_scope": "theta0_plus_pi_quadrupole_ver2_native",
+            "source_builder_scope": "theta0_plus_combined_polter_visibility_ver2_native",
             "source_propagator_status": live_propagator.config.temperature_transport.value,
             "source_propagator_requested_status": feature_flags.source_propagator.value,
             "source_propagator_rotation_status": live_propagator.config.polarization_rotation.value,
@@ -441,6 +545,7 @@ def build_solver_core_output_from_native_result(
             "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
             "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
             "startup_manifold_applied": bool(result.solver_info.get("startup_manifold_applied", False)),
+            **source_builder_metadata,
         },
     )
 
@@ -513,17 +618,23 @@ def build_solver_core_output_from_lowell_result(
         if propagator is None
         else propagator
     )
+    visibility_fn = _build_visibility_fn_from_a_lookup(
+        species,
+        lambda eta: float(species.bg_table.interp_a(float(eta))),
+    )
+    source_builder, source_builder_metadata = _build_lowell_source_builder(
+        result,
+        species=species,
+        visibility_fn=visibility_fn,
+    )
     live_propagator = build_source_propagator(
         propagator_config,
         structure=structure_constants,
         eta_grid_mpc=np.asarray(result.eta, dtype=np.float64),
         k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
         ell_max=int(runtime_controls.multipole_cutoff),
-        visibility_fn=_build_visibility_fn_from_a_lookup(
-            species,
-            lambda eta: float(species.bg_table.interp_a(float(eta))),
-        ),
-        source_builder=_build_lowell_source_builder(result),
+        visibility_fn=visibility_fn,
+        source_builder=source_builder,
         limber_eta_sp_sign=limber_eta_sp_sign,
         off_diagonal_strategy=off_diagonal_strategy,
     )
@@ -569,11 +680,12 @@ def build_solver_core_output_from_lowell_result(
             "eta_grid_size": int(np.asarray(result.eta).size),
             "off_diagonal_strategy": off_diagonal_strategy,
             "limber_eta_sp_sign": limber_eta_sp_sign,
-            "source_builder_scope": "theta0_plus_pi_quadrupole_lowell_bridge",
+            "source_builder_scope": "theta0_plus_combined_polter_visibility_lowell_bridge",
             "source_propagator_status": live_propagator.config.temperature_transport.value,
             "source_propagator_requested_status": feature_flags.source_propagator.value,
             "source_propagator_rotation_status": live_propagator.config.polarization_rotation.value,
             "source_propagator_realization": live_propagator.config.kernel_family,
+            **source_builder_metadata,
         },
     )
 

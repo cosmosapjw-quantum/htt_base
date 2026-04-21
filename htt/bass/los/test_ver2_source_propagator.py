@@ -53,7 +53,7 @@ def test_live_propagator_builder_returns_ready_covariance_bundle() -> None:
             mode=PropagatorMode.ANISOTROPIC_FORWARD,
             temperature_transport=FeatureStatus.APPROXIMATE,
             polarization_rotation=FeatureStatus.APPROXIMATE,
-            kernel_family="m_channel_matrix_rotated_approx",
+            kernel_family="class_b_helical_matrix_approx",
         ),
         structure=get_type("VII_h"),
         eta_grid_mpc=np.linspace(0.0, 6.0, 7),
@@ -73,7 +73,7 @@ def test_live_propagator_builder_returns_ready_covariance_bundle() -> None:
     assert propagator.transfer_bundle["transfer_T"].shape == (6, 5, 3)
     assert propagator.covariance_bundle["off_diagonal_strategy"] == "m_decoupled_blocks"
     assert propagator.transfer_bundle["structure_label"] == "VII_h"
-    assert propagator.config.kernel_family == "m_channel_matrix_rotated_approx"
+    assert propagator.config.kernel_family == "class_b_helical_matrix_approx"
     assert float(propagator.transfer_bundle["rotation_strength"]) > 0.0
     assert np.linalg.norm(np.asarray(propagator.transfer_bundle["transfer_B"], dtype=np.float64)) > 0.0
 
@@ -135,7 +135,7 @@ def test_rotated_matrix_backend_rejects_type_i() -> None:
                 mode=PropagatorMode.ANISOTROPIC_FORWARD,
                 temperature_transport=FeatureStatus.APPROXIMATE,
                 polarization_rotation=FeatureStatus.APPROXIMATE,
-                kernel_family="m_channel_matrix_rotated_approx",
+                kernel_family="class_b_twist_axis_matrix_approx",
             ),
             structure=get_type("I"),
             eta_grid_mpc=np.linspace(0.0, 4.0, 5),
@@ -147,3 +147,39 @@ def test_rotated_matrix_backend_rejects_type_i() -> None:
                 "pi_m0": float(0.1 * np.cos(0.1 * k)),
             },
         )
+
+
+@pytest.mark.parametrize(
+    ("bianchi_type", "kernel_family"),
+    [
+        ("V", "class_b_open_matrix_approx"),
+        ("VII_0", "class_a_helical_matrix_approx"),
+        ("VIII", "class_a_semisimple_matrix_approx"),
+    ],
+)
+def test_algebra_aware_non_type_i_families_build_live_propagators(
+    bianchi_type: str,
+    kernel_family: str,
+) -> None:
+    propagator = build_source_propagator(
+        SourcePropagatorConfig(
+            mode=PropagatorMode.ANISOTROPIC_FORWARD,
+            temperature_transport=FeatureStatus.APPROXIMATE,
+            polarization_rotation=FeatureStatus.APPROXIMATE,
+            kernel_family=kernel_family,
+        ),
+        structure=get_type(bianchi_type),
+        eta_grid_mpc=np.linspace(0.0, 5.0, 6),
+        k_grid_mpc=np.geomspace(1.0e-3, 1.0e-2, 4),
+        ell_max=3,
+        visibility_fn=lambda eta: float(np.exp(-0.5 * (eta - 2.0) ** 2)),
+        source_builder=lambda eta, k: {
+            "theta_0": float(np.exp(-0.25 * (eta - 2.0) ** 2) * np.cos(0.1 * k)),
+            "pi_m0": float(0.1 * np.cos(0.1 * k)),
+            "pi_m_plus2": float(0.03 * np.exp(-0.25 * (eta - 2.0) ** 2)),
+            "pi_m_minus2": float(-0.02 * np.exp(-0.25 * (eta - 2.0) ** 2)),
+        },
+    )
+    assert propagator.ready is True
+    assert propagator.transfer_bundle["structure_label"] == bianchi_type
+    assert propagator.config.kernel_family == kernel_family

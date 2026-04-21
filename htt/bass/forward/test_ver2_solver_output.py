@@ -118,6 +118,40 @@ def _synthetic_result() -> IntegrationResult:
     )
 
 
+def _synthetic_result_with_late_visibility_probe() -> IntegrationResult:
+    result = _synthetic_result()
+    eta = np.linspace(10.0, 40.0, 24)
+    a = np.geomspace(1.0e-3, 1.0, eta.size)
+    size = result.photon_T_tower.shape[1]
+    t_tower = np.zeros((eta.size, size), dtype=float)
+    e_tower = np.zeros((eta.size, size), dtype=float)
+    t_tower[:, 0] = np.linspace(1.0e-5, 3.0e-5, eta.size)
+    t_tower[:, 4] = np.linspace(-1.0e-6, -2.5e-6, eta.size)
+    t_tower[:, 6] = np.linspace(2.0e-6, 4.0e-6, eta.size)
+    t_tower[:, 8] = np.linspace(1.5e-6, 2.5e-6, eta.size)
+    e_tower[:, 4] = np.linspace(0.5e-6, 0.9e-6, eta.size)
+    e_tower[:, 6] = np.linspace(0.8e-6, 1.1e-6, eta.size)
+    e_tower[:, 8] = np.linspace(0.6e-6, 0.95e-6, eta.size)
+    return IntegrationResult(
+        eta=eta,
+        a=a,
+        Sigma_plus=np.linspace(1.0e-5, 0.8e-5, eta.size),
+        Sigma_minus=np.linspace(0.5e-5, 0.2e-5, eta.size),
+        photon_T_tower=t_tower,
+        photon_E_tower=e_tower,
+        neutrino_reduced=np.zeros((eta.size, 4), dtype=float),
+        critical_events={"z_eq": 3400.0, "z_star": 1089.0},
+        config=result.config.__class__(
+            L_max=result.config.L_max,
+            eta_initial_mpc=float(eta[0]),
+            eta_final_mpc=float(eta[-1]),
+            n_output=eta.size,
+        ),
+        solver_info={"status": 0, "message": "synthetic-late"},
+        tca_active_mask=np.array([True, True, False, False, False], dtype=bool),
+    )
+
+
 def test_solver_core_output_requires_bass_manifest_owner() -> None:
     with pytest.raises(ValueError, match="owned by BASS"):
         build_solver_core_output(
@@ -231,10 +265,13 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
         k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
     )
     assert output.metadata["propagator_ready"] is True
-    assert output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_lowell_bridge"
+    assert output.metadata["source_builder_scope"] == "theta0_plus_combined_polter_visibility_lowell_bridge"
     assert output.metadata["propagator_mode"] == "anisotropic_forward"
     assert output.metadata["source_propagator_status"] == "approximate"
-    assert output.metadata["source_propagator_realization"] == "m_channel_matrix_rotated_approx"
+    assert output.metadata["source_propagator_realization"] == "class_b_helical_matrix_approx"
+    assert output.metadata["source_builder_combined_polter"] is True
+    assert output.metadata["source_builder_visibility_weighted_polter"] is True
+    assert output.metadata["visibility_reionization_mode"] == "tanh"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_lowell_template"
     assert output.alm_T["representation"] == "lowell_pstf_sphere_reconstruction"
@@ -264,7 +301,7 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
         k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
     )
     assert output.metadata["propagator_ready"] is True
-    assert output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_ver2_native"
+    assert output.metadata["source_builder_scope"] == "theta0_plus_combined_polter_visibility_ver2_native"
     assert output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
     assert output.metadata["solver_method"] == "LSODA"
     assert output.metadata["solver_family_realization"] == "runtime_family_direct"
@@ -275,7 +312,9 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["source_propagator_status"] == "approximate"
     assert output.metadata["source_propagator_requested_status"] == "approximate"
     assert output.metadata["source_propagator_rotation_status"] == "approximate"
-    assert output.metadata["source_propagator_realization"] == "m_channel_matrix_rotated_approx"
+    assert output.metadata["source_propagator_realization"] == "class_b_helical_matrix_approx"
+    assert output.metadata["source_builder_combined_polter"] is True
+    assert output.metadata["source_builder_visibility_weighted_polter"] is True
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_native_template"
     assert output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
@@ -310,6 +349,79 @@ def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backe
     assert output.metadata["source_propagator_realization"] == "bianchi_i_matrix_exact"
     assert output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
     assert output.alm_T["coefficient_representation"] == "ver2_native_pstf_final_slice"
+
+
+def test_native_output_records_reionization_low_z_source_delta() -> None:
+    runtime_controls = _controls()
+    result = _synthetic_result_with_late_visibility_probe()
+    release = BassReleaseMetadata(
+        release_stage="research_executable",
+        run_label="tier-b-native-reionization",
+        config_hash="cfg-hash",
+        code_version="0.0-test",
+        schema_version="ver2-v0",
+        git_commit="deadbeef",
+        random_seed=42,
+    )
+    output_no_reion = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="VII_h",
+        result=result,
+        species=SpeciesBackgroundRegistry.from_planck2018(apply_default_reionization=False),
+        runtime_controls=runtime_controls,
+        feature_flags=_live_flags(),
+        release=release,
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+    )
+    output_with_reion = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="VII_h",
+        result=result,
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=runtime_controls,
+        feature_flags=_live_flags(),
+        release=release,
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+    )
+    assert output_no_reion.metadata["visibility_reionization_mode"] == "disabled"
+    assert output_with_reion.metadata["visibility_reionization_mode"] == "tanh"
+    assert output_no_reion.metadata["source_builder_low_z_probe_available"] is True
+    assert output_with_reion.metadata["source_builder_low_z_probe_available"] is True
+    assert output_with_reion.metadata["visibility_tau_reion"] > 0.0
+    assert output_with_reion.metadata["source_builder_low_z_gpi_m0"] > output_no_reion.metadata["source_builder_low_z_gpi_m0"]
+
+
+@pytest.mark.parametrize(
+    ("bianchi_type", "expected_realization"),
+    [
+        ("V", "class_b_open_matrix_approx"),
+        ("VII_0", "class_a_helical_matrix_approx"),
+        ("VIII", "class_a_semisimple_matrix_approx"),
+    ],
+)
+def test_native_output_uses_algebra_aware_non_type_i_family(
+    bianchi_type: str,
+    expected_realization: str,
+) -> None:
+    output = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type=bianchi_type,
+        result=_synthetic_result(),
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_executable",
+            run_label=f"tier-b-native-{bianchi_type}",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+    )
+    assert output.metadata["source_propagator_realization"] == expected_realization
 
 
 def test_tier_b_exact_source_propagator_requires_explicit_propagator_config() -> None:
