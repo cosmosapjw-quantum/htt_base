@@ -44,15 +44,20 @@ def test_active_service_bundle_from_samples_keeps_source_propagation_split():
         onefield_residual=0.1,
         trace_residual_q_tr=0.1,
         spin2_residual=0.2,
+        jacobian_singular_values=[0.1, 0.2],
         propagation_status_by_channel={"TT": "validated", "EE": "pending", "TE": "pending"},
         propagator_norm_bound=3.0,
     )
 
     assert bundle.overlay.source_bridge_report is not None
     assert bundle.overlay.source_bridge_report.source_status == "adequate"
+    assert bundle.residual_bridge_report.bridge_status == "conditional_state_bound"
     assert bundle.bass_suggestion.source_status == "adequate"
+    assert set(bundle.bass_suggestion.restricted_channels) == {"EE", "TE"}
     assert bundle.htt_caveats.channel_validity["EE"] == "pending"
+    assert bundle.htt_caveats.channel_claim_ceiling["TT"] == "conditional"
     assert bundle.mio_fields.trace_source_adequacy == "adequate"
+    assert bundle.mio_fields.channel_claim_ceiling["TT"] == "conditional"
     assert bundle.publication_ready is False
     assert any(str(blocker).startswith("propagation_pending:") for blocker in bundle.publication_blockers)
     assert "BB remains outside trace-only validation" in bundle.overlay.public_caveat_snippet

@@ -132,6 +132,7 @@ def test_tsc_overlay_object_populates_default_ref_and_overlay_caveats():
         caveat.startswith("tsc_channel_responsibility:")
         for caveat in cert.channel_caveats
     )
+    assert "tsc_claim_ceiling:TT=exploratory" in cert.channel_caveats
 
 
 def test_explicit_overlay_ref_overrides_overlay_manifest_ref():

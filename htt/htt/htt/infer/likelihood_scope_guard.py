@@ -33,6 +33,7 @@ __all__ = [
 
 _MORPHOLOGY_CHANNELS = {"BB", "BiPoSH", "template"}
 _SPIN2_CHANNELS = {"EE", "TE"}
+_CLAIM_CAVEAT_PREFIXES = ("observable_bridge_", "scalar_summary_")
 
 
 @dataclass(frozen=True)
@@ -162,6 +163,8 @@ def evaluate_likelihood_scope(bundle: DirectionalLikelihoodInput) -> LikelihoodS
 
     if bundle.tsc_caveats is not None:
         validity = bundle.tsc_caveats.channel_validity
+        claim_ceiling = bundle.tsc_caveats.channel_claim_ceiling
+        channel_labels = bundle.tsc_caveats.channel_labels
         if required & _SPIN2_CHANNELS:
             missing_spin2 = sorted(
                 channel
@@ -172,6 +175,20 @@ def evaluate_likelihood_scope(bundle: DirectionalLikelihoodInput) -> LikelihoodS
                 blocking.append(
                     "missing_spin2_validation:" + ",".join(missing_spin2)
                 )
+        insufficient_claims = sorted(
+            channel
+            for channel in required - _MORPHOLOGY_CHANNELS
+            if claim_ceiling.get(channel) in {"exploratory", "blocked"}
+        )
+        for channel in insufficient_claims:
+            blocking.append(
+                f"tsc_claim_ceiling_insufficient:{channel}={claim_ceiling[channel]}"
+            )
+            caveats.extend(
+                label
+                for label in channel_labels.get(channel, ())
+                if label.startswith(_CLAIM_CAVEAT_PREFIXES)
+            )
         if required & _MORPHOLOGY_CHANNELS:
             blocking.append("morphology_requires_external_validation")
             caveats.append("tsc_caveat_only_for_morphology")

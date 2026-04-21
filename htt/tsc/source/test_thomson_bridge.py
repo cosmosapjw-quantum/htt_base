@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 
 from common.contracts import ArtifactManifest
+from tsc.source.quadrupole_conventions import linear_intensity_quadrupole_from_parameter
 from tsc.source.thomson_bridge import (
     build_source_bridge_report,
     build_source_bridge_report_from_samples,
@@ -40,7 +41,10 @@ def test_axisymmetric_table_convention_matches_q_normalization_regression():
 
     intensity = intensity_from_theta(theta, T0=1.0, xi=0)
     exact_q2 = quadrupole_from_intensity(intensity, mu, weights)
-    linear_q2 = 8.0 * quadrupole_amp / 3.0
+    linear_q2 = linear_intensity_quadrupole_from_parameter(
+        quadrupole_amp,
+        "mu2_minus_one_third",
+    )
     underestimate = 1.0 - linear_q2 / exact_q2
 
     assert exact_q2 == pytest.approx(0.84214, rel=5.0e-4, abs=5.0e-5)
@@ -76,11 +80,16 @@ def test_linear_bridge_warning_fires_for_moderate_dipole():
         q2_norm=0.84214,
         manifest=_manifest(),
         source_error=0.05,
+        quadrupole_convention="mu2_minus_one_third",
         dipole_amplitude=0.30,
         linear_bridge_requested=True,
     )
 
     assert report.source_status == "adequate"
+    assert report.quadrupole_convention == "mu2_minus_one_third"
+    assert report.quadrupole_parameter_name == "Q_mu"
+    assert report.conversion_to_legendre_q == pytest.approx(2.0 / 3.0)
+    assert report.spin2_propagation_required is True
     assert "linear_bridge_underestimates_risk" in report.labels
 
 
@@ -94,12 +103,17 @@ def test_build_source_bridge_report_from_samples_infers_exact_trace_labels_and_p
         directions=mu,
         weights=weights,
         manifest=_manifest(),
+        quadrupole_convention="legendre_P2",
         on_manifold_exact=True,
         linear_bridge_requested=False,
     )
 
     assert report.source_status == "adequate"
     assert "trace_source_exact_on_manifold" in report.labels
+    assert report.quadrupole_convention == "legendre_P2"
+    assert report.quadrupole_parameter_name == "q"
+    assert report.conversion_to_legendre_q == pytest.approx(1.0)
+    assert report.spin2_propagation_required is True
     assert report.required_bass_primitives == (
         "theta_samples",
         "quadrature_weights",
@@ -118,6 +132,7 @@ def test_build_source_bridge_report_from_samples_marks_pending_off_manifold_brid
         directions=mu,
         weights=weights,
         manifest=_manifest(),
+        quadrupole_convention="mu2_minus_one_third",
         eta=np.full_like(theta, -0.3),
         on_manifold_exact=False,
         linear_bridge_requested=True,
@@ -125,6 +140,7 @@ def test_build_source_bridge_report_from_samples_marks_pending_off_manifold_brid
     )
 
     assert report.source_status == "pending"
+    assert report.quadrupole_convention == "mu2_minus_one_third"
     assert "source_bridge_bound_pending" in report.labels
     assert "eta_correction_not_small" in report.labels or "eta_correction_small" in report.labels
     assert "eta_samples" in report.required_bass_primitives

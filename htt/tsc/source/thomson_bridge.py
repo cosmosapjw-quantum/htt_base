@@ -6,8 +6,14 @@ from typing import Iterable
 
 import numpy as np
 
-from common.contracts import ArtifactManifest, TscSourceBridgeReport, TscChart
+from common.contracts import (
+    ArtifactManifest,
+    QuadrupoleConvention,
+    TscChart,
+    TscSourceBridgeReport,
+)
 from tsc.contracts import validate_tsc_service_labels
+from tsc.source.quadrupole_conventions import quadrupole_convention_metadata
 
 
 def _as_array(values: Iterable[float] | np.ndarray) -> np.ndarray:
@@ -152,6 +158,7 @@ def build_source_bridge_report(
     q2_norm: float,
     manifest: ArtifactManifest,
     source_error: float | None,
+    quadrupole_convention: QuadrupoleConvention = "mu2_minus_one_third",
     dipole_amplitude: float | None = None,
     eta_correction_indicator: float | None = None,
     on_manifold_exact: bool = False,
@@ -202,14 +209,19 @@ def build_source_bridge_report(
     else:
         status = "pending"
 
+    convention_metadata = quadrupole_convention_metadata(quadrupole_convention)
     return TscSourceBridgeReport(
         source_name="thomson_trace_quadrupole",
         chart=chart,
+        quadrupole_convention=convention_metadata.convention,
+        quadrupole_parameter_name=convention_metadata.quadrupole_parameter_name,
+        conversion_to_legendre_q=convention_metadata.conversion_to_legendre_q,
         q2_norm=q2_norm,
         source_error_bound=source_error,
         nonlinear_dipole_quartic_correction=None if dipole_amplitude is None else float(dipole_amplitude ** 4),
         eta_correction_indicator=eta_correction_indicator,
         on_manifold_exact=on_manifold_exact,
+        spin2_propagation_required=True,
         source_status=status,  # type: ignore[arg-type]
         required_bass_primitives=required_bass_primitives,
         labels=validate_tsc_service_labels(labels),
@@ -229,6 +241,7 @@ def build_source_bridge_report_from_samples(
     eta: Iterable[float] | np.ndarray | None = None,
     ne: float = 1.0,
     sigma_T: float = 1.0,
+    quadrupole_convention: QuadrupoleConvention = "mu2_minus_one_third",
     on_manifold_exact: bool = True,
     linear_bridge_requested: bool = False,
     dipole_amplitude: float | None = None,
@@ -280,6 +293,7 @@ def build_source_bridge_report_from_samples(
         q2_norm=abs(float(q2)),
         manifest=manifest,
         source_error=source_error,
+        quadrupole_convention=quadrupole_convention,
         dipole_amplitude=None if dipole_amplitude is None else abs(float(dipole_amplitude)),
         eta_correction_indicator=eta_indicator,
         on_manifold_exact=on_manifold_exact,

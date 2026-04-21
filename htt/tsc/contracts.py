@@ -44,6 +44,13 @@ ALLOWED_SERVICE_LABELS: Final[tuple[str, ...]] = (
     "eta_correction_small",
     "eta_correction_not_small",
     "linear_bridge_underestimates_risk",
+    "observable_bridge_conditional",
+    "observable_bridge_missing_state_residual",
+    "observable_bridge_blocked_collision_state_mismatch",
+    "observable_bridge_blocked_jacobian_conditioning",
+    "biposh_requires_external_validation",
+    "template_family_claim_blocked",
+    "scalar_summary_requires_state_residual",
     "stable_no_upgrade",
 )
 

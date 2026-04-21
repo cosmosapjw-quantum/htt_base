@@ -114,6 +114,23 @@ def _overlay_pending() -> TscAdequacyOverlay:
         source_bridge_report=None,
         channel_budgets=(
             TscChannelAdequacyBudget(
+                channel="TT",
+                trace_budget=0.1,
+                spin2_budget=None,
+                high_budget=None,
+                source_to_field_bound=None,
+                spectrum_bound_linear=None,
+                spectrum_bound_quadratic=None,
+                source_status="adequate",
+                propagation_status="validated",
+                claim_ceiling="exploratory",
+                labels=(
+                    "source_adequate__propagation_validated",
+                    "observable_bridge_missing_state_residual",
+                ),
+                manifest=man,
+            ),
+            TscChannelAdequacyBudget(
                 channel="EE",
                 trace_budget=0.1,
                 spin2_budget=0.2,
@@ -192,6 +209,18 @@ def test_blocks_spin2_channels_when_tsc_pending():
         for reason in decision.blocking_reasons
     )
     assert "scalar_only_discrimination_insufficient" in decision.caveats
+
+
+def test_blocks_tt_when_tsc_claim_ceiling_is_only_exploratory():
+    bundle = build_directional_likelihood_input(
+        observable_vector=_observable(),
+        tsc_overlay=_overlay_pending(),
+        required_channels=("TT",),
+    )
+    decision = evaluate_likelihood_scope(bundle)
+    assert decision.allowed is False
+    assert "tsc_claim_ceiling_insufficient:TT=exploratory" in decision.blocking_reasons
+    assert "observable_bridge_missing_state_residual" in decision.caveats
 
 
 def test_matched_complexity_failure_is_a_hard_block():

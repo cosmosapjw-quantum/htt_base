@@ -66,6 +66,8 @@ _ALLOWED_TSC_CHART_STATUSES = {
 _ALLOWED_SOURCE_STATUSES = {"adequate", "inadequate", "pending"}
 _ALLOWED_PROPAGATION_STATUSES = {"pending", "validated", "blocked"}
 _ALLOWED_CHANNELS = {"TT", "TE", "EE", "BB", "TB", "EB", "BiPoSH", "template", "scalar_summary"}
+_ALLOWED_QUADRUPOLE_CONVENTIONS = {"mu2_minus_one_third", "legendre_P2"}
+_ALLOWED_QUADRUPOLE_PARAMETER_NAMES = {"Q_mu", "q"}
 
 _ALLOWED_SOURCES = {
     "raw_diagnostic",
@@ -120,6 +122,8 @@ TscChartStatus = Literal[
 SourceStatus = Literal["adequate", "inadequate", "pending"]
 PropagationStatus = Literal["pending", "validated", "blocked"]
 Channel = Literal["TT", "TE", "EE", "BB", "TB", "EB", "BiPoSH", "template", "scalar_summary"]
+QuadrupoleConvention = Literal["mu2_minus_one_third", "legendre_P2"]
+QuadrupoleParameterName = Literal["Q_mu", "q"]
 
 
 @dataclass(frozen=True)
@@ -480,11 +484,15 @@ class TscSourceBridgeReport:
 
     source_name: Literal["thomson_trace_quadrupole", "other"]
     chart: TscChart
+    quadrupole_convention: QuadrupoleConvention
+    quadrupole_parameter_name: QuadrupoleParameterName
+    conversion_to_legendre_q: float
     q2_norm: float
     source_error_bound: float | None
     nonlinear_dipole_quartic_correction: float | None
     eta_correction_indicator: float | None
     on_manifold_exact: bool
+    spin2_propagation_required: bool
     source_status: SourceStatus
     required_bass_primitives: tuple[str, ...]
     labels: tuple[str, ...]
@@ -493,6 +501,15 @@ class TscSourceBridgeReport:
     def __post_init__(self) -> None:
         if self.chart not in _ALLOWED_TSC_CHARTS:
             raise ValueError(f"Unknown TSC chart {self.chart!r}")
+        if self.quadrupole_convention not in _ALLOWED_QUADRUPOLE_CONVENTIONS:
+            raise ValueError(
+                f"Unknown quadrupole_convention {self.quadrupole_convention!r}"
+            )
+        if self.quadrupole_parameter_name not in _ALLOWED_QUADRUPOLE_PARAMETER_NAMES:
+            raise ValueError(
+                "Unknown quadrupole_parameter_name "
+                f"{self.quadrupole_parameter_name!r}"
+            )
         if self.source_status not in _ALLOWED_SOURCE_STATUSES:
             raise ValueError(f"Unknown source_status {self.source_status!r}")
         if self.manifest.owner != "TSC":

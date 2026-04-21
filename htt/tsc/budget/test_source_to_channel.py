@@ -86,6 +86,7 @@ def test_inadequate_source_uses_conservative_nonclaim_label():
 
     assert by_channel["TT"].labels[0] == "source_inadequate__propagation_not_evaluated"
     assert by_channel["TE"].labels[0] == "source_inadequate__propagation_not_evaluated"
+    assert by_channel["TT"].claim_ceiling == "exploratory"
 
 
 def test_build_channel_budgets_from_reports_blocks_all_channels_for_invalid_domain():
@@ -156,3 +157,91 @@ def test_build_channel_budgets_from_reports_allows_per_channel_overrides():
     assert by_channel["EE"].propagation_status == "validated"
     assert by_channel["TE"].propagation_status == "blocked"
     assert by_channel["BB"].propagation_status == "blocked"
+
+
+def test_tt_claim_ceiling_requires_state_residual_bridge():
+    man = _manifest()
+    domain = build_domain_report(
+        chart="one_field",
+        theta_samples=[1.0, 1.1],
+        jacobian_singular_values=[0.1, 0.2],
+        manifest=man,
+    )
+    residual = ambient_vs_projected_defect_report(
+        chart="one_field",
+        laguerre_n_ge_2_norm=0.1,
+        ambient_defect_rate=None,
+        projected_defect_estimate=None,
+        onefield_residual=None,
+        twofield_residual=None,
+        eta_tangent_fraction=None,
+        trace_residual_q_tr=0.1,
+        spin2_residual=0.2,
+        high_residual=0.3,
+        labels=tuple(),
+        manifest=man,
+    )
+    source = build_source_bridge_report(
+        chart="one_field",
+        q2_norm=0.1,
+        manifest=man,
+        source_error=0.01,
+        on_manifold_exact=True,
+    )
+    budgets = build_channel_budgets_from_reports(
+        manifest=man,
+        domain_report=domain,
+        residual_report=residual,
+        source_report=source,
+    )
+    by_channel = {budget.channel: budget for budget in budgets}
+
+    assert by_channel["TT"].claim_ceiling == "exploratory"
+    assert "observable_bridge_blocked_collision_state_mismatch" in by_channel["TT"].labels
+
+
+def test_tt_claim_ceiling_becomes_conditional_with_state_residual_bridge():
+    man = _manifest()
+    domain = build_domain_report(
+        chart="one_field",
+        theta_samples=[1.0, 1.1],
+        jacobian_singular_values=[0.1, 0.2],
+        manifest=man,
+    )
+    residual = ambient_vs_projected_defect_report(
+        chart="one_field",
+        laguerre_n_ge_2_norm=0.1,
+        ambient_defect_rate=None,
+        projected_defect_estimate=None,
+        onefield_residual=0.08,
+        twofield_residual=0.04,
+        eta_tangent_fraction=0.5,
+        trace_residual_q_tr=0.1,
+        spin2_residual=0.2,
+        high_residual=0.3,
+        labels=tuple(),
+        manifest=man,
+    )
+    source = build_source_bridge_report(
+        chart="one_field",
+        q2_norm=0.1,
+        manifest=man,
+        source_error=0.01,
+        on_manifold_exact=True,
+    )
+    budgets = build_channel_budgets_from_reports(
+        manifest=man,
+        domain_report=domain,
+        residual_report=residual,
+        source_report=source,
+        include_extended_channels=True,
+    )
+    by_channel = {budget.channel: budget for budget in budgets}
+
+    assert by_channel["TT"].claim_ceiling == "conditional"
+    assert by_channel["scalar_summary"].claim_ceiling == "conditional"
+    assert by_channel["BiPoSH"].claim_ceiling == "exploratory"
+    assert by_channel["template"].claim_ceiling == "blocked"
+    assert "observable_bridge_conditional" in by_channel["TT"].labels
+    assert "biposh_requires_external_validation" in by_channel["BiPoSH"].labels
+    assert "template_family_claim_blocked" in by_channel["template"].labels

@@ -112,6 +112,8 @@ def _merge_tsc_overlay_fields(
 
     for channel in fields.propagation_status_required:
         resolved_channel.append(f"tsc_propagation_pending:{channel}")
+    for channel, claim_ceiling in sorted(fields.channel_claim_ceiling.items()):
+        resolved_channel.append(f"tsc_claim_ceiling:{channel}={claim_ceiling}")
     for channel, responsibility in sorted(fields.channel_responsibility.items()):
         resolved_channel.append(
             f"tsc_channel_responsibility:{channel}={responsibility}"

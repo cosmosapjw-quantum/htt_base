@@ -28,6 +28,10 @@ from tsc.reports.json_export import (
 )
 from tsc.reports.overlay_builder import build_tsc_overlay
 from tsc.residuals.blockwise import ambient_vs_projected_defect_report
+from tsc.residuals.observable_bridge import (
+    TscResidualBridgeReport,
+    build_residual_bridge_from_reports,
+)
 from tsc.source.thomson_bridge import build_source_bridge_report_from_samples
 
 
@@ -40,6 +44,7 @@ class TscActiveServiceBundle:
 
     domain_report: TscDomainReport
     residual_report: TscResidualReport
+    residual_bridge_report: TscResidualBridgeReport
     source_bridge_report: TscSourceBridgeReport | None
     channel_budgets: tuple[TscChannelAdequacyBudget, ...]
     upgrade_recommendation: TscUpgradeRecommendation
@@ -61,11 +66,13 @@ def build_active_service_bundle(
     artifact_manifest: ArtifactManifest | None = None,
     artifact_metadata: Mapping[str, object] | None = None,
     upgrade_config: UpgradeAdvisorConfig | None = None,
+    residual_bridge_report: TscResidualBridgeReport | None = None,
     propagator_norm_bound: float | None = None,
     amplification_bound: float | None = None,
     propagation_status_by_channel: Mapping[str, str] | None = None,
     uses_scalar_only_geometry: bool = False,
     required_channels: Sequence[str] = _DEFAULT_REQUIRED_CHANNELS,
+    include_extended_channels: bool = False,
     overlay_ref: str | None = None,
     enforce_production_domain: bool = False,
 ) -> TscActiveServiceBundle:
@@ -74,6 +81,10 @@ def build_active_service_bundle(
         guard_production_domain(domain_report)
 
     manifest = artifact_manifest or domain_report.manifest
+    bridge_report = residual_bridge_report or build_residual_bridge_from_reports(
+        domain_report=domain_report,
+        residual_report=residual_report,
+    )
     upgrade_recommendation = recommend_chart_transition(
         domain_report,
         residual_report,
@@ -88,6 +99,8 @@ def build_active_service_bundle(
         propagator_norm_bound=propagator_norm_bound,
         amplification_bound=amplification_bound,
         propagation_status_by_channel=propagation_status_by_channel,
+        residual_bridge_report=bridge_report,
+        include_extended_channels=include_extended_channels,
     )
     overlay = build_tsc_overlay(
         domain_report=domain_report,
@@ -105,6 +118,7 @@ def build_active_service_bundle(
     return TscActiveServiceBundle(
         domain_report=domain_report,
         residual_report=residual_report,
+        residual_bridge_report=bridge_report,
         source_bridge_report=source_bridge_report,
         channel_budgets=tuple(channel_budgets),
         upgrade_recommendation=upgrade_recommendation,
@@ -169,6 +183,7 @@ def build_active_service_bundle_from_samples(
     amplification_bound: float | None = None,
     uses_scalar_only_geometry: bool = False,
     required_channels: Sequence[str] = _DEFAULT_REQUIRED_CHANNELS,
+    include_extended_channels: bool = False,
     enforce_production_domain: bool = False,
 ) -> TscActiveServiceBundle:
     """Assemble the TSC service bundle directly from sampled angular inputs."""
@@ -225,6 +240,7 @@ def build_active_service_bundle_from_samples(
         propagation_status_by_channel=propagation_status_by_channel,
         uses_scalar_only_geometry=uses_scalar_only_geometry,
         required_channels=required_channels,
+        include_extended_channels=include_extended_channels,
         enforce_production_domain=enforce_production_domain,
     )
 

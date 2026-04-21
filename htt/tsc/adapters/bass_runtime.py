@@ -17,6 +17,8 @@ class SourceAdequacySuggestion:
     source_status: str
     domain_status: str
     recommended_label: str
+    channel_claim_ceiling: dict[str, str]
+    restricted_channels: tuple[str, ...]
     quarantine_reasons: tuple[str, ...]
     tsc_overlay_ref: str | None = None
 
@@ -31,13 +33,28 @@ def overlay_to_bass_suggestion(
         if overlay.source_bridge_report is not None
         else "pending"
     )
+    channel_claim_ceiling = {
+        budget.channel: budget.claim_ceiling for budget in overlay.channel_budgets
+    }
+    restricted_channels = tuple(
+        sorted(
+            budget.channel
+            for budget in overlay.channel_budgets
+            if budget.channel in {"TT", "EE", "TE", "scalar_summary"}
+            and budget.claim_ceiling not in {"conditional", "validated"}
+        )
+    )
     if overlay.domain_report.status == "invalid_domain":
         label = "source_invalid_domain__blocked"
     elif source_status == "inadequate":
         label = "source_inadequate__propagation_not_evaluated"
     elif source_status == "pending":
         label = "source_bridge_bound_pending"
-    elif any(b.propagation_status == "pending" for b in overlay.channel_budgets):
+    elif any(
+        b.channel in {"TT", "EE", "TE", "scalar_summary"}
+        and b.propagation_status == "pending"
+        for b in overlay.channel_budgets
+    ) or restricted_channels:
         label = "source_adequate__propagation_pending"
     else:
         label = "source_adequate__propagation_validated"
@@ -46,6 +63,8 @@ def overlay_to_bass_suggestion(
         source_status=source_status,
         domain_status=overlay.domain_report.status,
         recommended_label=label,
+        channel_claim_ceiling=channel_claim_ceiling,
+        restricted_channels=restricted_channels,
         quarantine_reasons=overlay.quarantine_reasons,
         tsc_overlay_ref=overlay_ref,
     )
