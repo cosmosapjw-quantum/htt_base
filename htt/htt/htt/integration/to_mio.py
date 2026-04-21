@@ -14,6 +14,10 @@ import json
 from pathlib import Path
 
 from common.contracts import ArtifactManifest
+from htt.infer.ver2_directional_shell import (
+    DirectionalLikelihoodInputs,
+    build_directional_output_manifest,
+)
 from workspace.contracts.htt_to_mio import PosteriorExportBundle
 
 __all__ = ['build_posterior_bundle']
@@ -33,7 +37,13 @@ def _get_nested(d, *keys, default=0.0):
 
 def build_posterior_bundle(results_path: str = None,
                            model: str = 'FLRW_tilt',
-                           manifest: ArtifactManifest | None = None) -> 'PosteriorExportBundle':
+                           manifest: ArtifactManifest | None = None,
+                           *,
+                           directional_inputs: DirectionalLikelihoodInputs | None = None,
+                           posterior_ref: str | None = None,
+                           evidence_ref: str | None = None,
+                           posterior_predictive_ref: str | None = None,
+                           loocv_ref: str | None = None) -> 'PosteriorExportBundle':
     """Build a PosteriorExportBundle from HTT pipeline results.
 
     Parameters
@@ -90,6 +100,22 @@ def build_posterior_bundle(results_path: str = None,
     F_68 = tuple(ff.get('F_S3_mc_68', [0.0, 0.0]))
 
     n_live = ev_model.get('neff', 500) if isinstance(ev_model, dict) else 500
+    resolved_manifest = manifest
+    if resolved_manifest is None and directional_inputs is not None:
+        results_ref = str(results_path)
+        resolved_manifest = build_directional_output_manifest(
+            inputs=directional_inputs,
+            artifact_id=f"htt.directional_posterior_export.{model}",
+            artifact_path=f"artifacts/htt/{model}_posterior_export.json",
+            model_name=model,
+            posterior_ref=posterior_ref or f"{results_ref}#departure/{model}",
+            evidence_ref=evidence_ref or f"{results_ref}#evidence/{model}",
+            output_role="posterior_export_bundle",
+            cross_check_only=True,
+            posterior_predictive_ref=posterior_predictive_ref,
+            loocv_ref=loocv_ref,
+            created_by="htt.integration.to_mio.build_posterior_bundle",
+        )
 
     return PosteriorExportBundle(
         x_median=x_med, x_hpd68=x_68, x_hpd95=x_95,
@@ -99,5 +125,5 @@ def build_posterior_bundle(results_path: str = None,
         F_median=F_med, F_hpd68=F_68,
         n_live=n_live,
         model=model,
-        manifest=manifest,
+        manifest=resolved_manifest,
     )

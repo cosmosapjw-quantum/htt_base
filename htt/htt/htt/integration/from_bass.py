@@ -67,6 +67,12 @@ def build_ver2_directional_inputs(
     matched_complexity_ref: str = "matched_complexity_report_v1.json",
     null_competition_ref: str = "null_competition_report_v1.json",
     morphology_atlas_ref: str | None = "template_morphology_atlas_v1.json",
+    posterior_predictive_ref: str = "posterior_predictive_v1.json",
+    loocv_ref: str = "loocv_report_v1.json",
+    matched_complexity: MatchedComplexityHook | None = None,
+    null_competition: NullCompetitionHook | None = None,
+    posterior_predictive_ready: bool = False,
+    loocv_ready: bool = False,
     tsc_overlay_ref: str | None = None,
 ) -> DirectionalLikelihoodInputs:
     """Build the solver-independent SK-06H directional shell from BASS inputs."""
@@ -78,6 +84,12 @@ def build_ver2_directional_inputs(
         matched_complexity_ref=matched_complexity_ref,
         null_competition_ref=null_competition_ref,
         morphology_atlas_ref=morphology_atlas_ref,
+        posterior_predictive_ref=posterior_predictive_ref,
+        loocv_ref=loocv_ref,
+        matched_complexity=matched_complexity,
+        null_competition=null_competition,
+        posterior_predictive_ready=posterior_predictive_ready,
+        loocv_ready=loocv_ready,
         tsc_overlay_ref=tsc_overlay_ref,
     )
 
