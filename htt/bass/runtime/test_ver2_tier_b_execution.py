@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from common.contracts import ArtifactManifest
 
@@ -20,6 +21,7 @@ from bass.runtime import (
     RuntimeControlBlock,
     SolverFeatureFlags,
     SolverTier,
+    execute_tier_b_solver,
     execute_tier_b_lowell_solver,
 )
 from bass.spectrum import CutoffCampaignSpec
@@ -103,9 +105,9 @@ def _integrator_config() -> IntegratorConfig:
     )
 
 
-def test_execute_tier_b_lowell_solver_consumes_live_s1_s2_s3_hooks() -> None:
+def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     species = SpeciesBackgroundRegistry.from_planck2018()
-    run = execute_tier_b_lowell_solver(
+    run = execute_tier_b_solver(
         manifest=_manifest(),
         bianchi_type="I",
         species=species,
@@ -129,13 +131,17 @@ def test_execute_tier_b_lowell_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.trace.thomson_probe.source_ready is True
     assert run.trace.visibility_source.contract.events is not None
     assert run.trace.geodesic_probe.direction_derivative.shape == (3,)
+    assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.solver_output.metadata["propagator_ready"] is True
+    assert run.solver_output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
+    assert run.solver_output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_ver2_native"
+    assert run.solver_output.alm_T["representation"] == "ver2_native_pstf_final_slice"
     assert run.cutoff_campaign is not None
     assert set(run.cutoff_campaign.runtime_seconds) == {4, 6}
     assert run.cutoff_campaign.deltas[4][0].relative_delta == 0.0
 
 
-def test_execute_tier_b_lowell_solver_is_deterministic_for_same_inputs() -> None:
+def test_execute_tier_b_solver_is_deterministic_for_same_inputs() -> None:
     species = SpeciesBackgroundRegistry.from_planck2018()
     kwargs = dict(
         manifest=_manifest(),
@@ -147,8 +153,8 @@ def test_execute_tier_b_lowell_solver_is_deterministic_for_same_inputs() -> None
         release=_release(),
         k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
     )
-    run_1 = execute_tier_b_lowell_solver(**kwargs)
-    run_2 = execute_tier_b_lowell_solver(**kwargs)
+    run_1 = execute_tier_b_solver(**kwargs)
+    run_2 = execute_tier_b_solver(**kwargs)
 
     payload_1 = solver_core_output_to_payload(run_1.solver_output)
     payload_2 = solver_core_output_to_payload(run_2.solver_output)
@@ -163,3 +169,26 @@ def test_execute_tier_b_lowell_solver_is_deterministic_for_same_inputs() -> None
         np.asarray(payload_1["alm_E"]["values"], dtype=np.float64),
         np.asarray(payload_2["alm_E"]["values"], dtype=np.float64),
     )
+
+
+def test_execute_tier_b_lowell_solver_is_a_compatibility_alias(monkeypatch: pytest.MonkeyPatch) -> None:
+    import bass.hierarchy.integrator as legacy_integrator
+
+    def _boom(*args, **kwargs):
+        raise AssertionError("legacy Lowell integrator should not be touched on the production route")
+
+    monkeypatch.setattr(legacy_integrator, "LowellBianchiIntegrator", _boom)
+
+    species = SpeciesBackgroundRegistry.from_planck2018()
+    run = execute_tier_b_lowell_solver(
+        manifest=_manifest(),
+        bianchi_type="I",
+        species=species,
+        integrator_config=_integrator_config(),
+        runtime_controls=_runtime_controls(),
+        feature_flags=_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+
+    assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"

@@ -31,6 +31,7 @@
 27. `docs/ver2_upgrade/audits/AUDIT_IM-08V_2026-04-21.md`
 28. `docs/ver2_upgrade/audits/AUDIT_IM-09D-FIG_2026-04-21.md`
 29. `docs/ver2_upgrade/audits/AUDIT_IM-10D-MAN_2026-04-21.md`
+30. `docs/ver2_upgrade/audits/AUDIT_BF-01B-HCORE_2026-04-21.md`
 
 ## 2. Current State
 
@@ -68,10 +69,10 @@
 - The reduced `einstein_bianchi` route still exists for compatibility, but the VER2 background implementation anchor is now `htt/bass/background/evolution.py` plus the S1 IC/geometry/RHS modules.
 - `IM-02S2` is now closed: BASS S2 owns live packet-local photon geodesics and screen-basis transport, projected electron-frame Thomson sourcing across orthogonal and tilted paths, visibility/reionization event markers plus a live tilted-visibility wrapper, explicit startup gating, and a geometry-backed seed-constraint projection surface under `htt/bass/{transport,collision,recombination,hierarchy,closure}/*`.
 - `IM-02S2` verification is green for the touched S2 scope: packet-local pytest `24 passed`, broader touched-surface pytest `422 passed`, transport/integrator pytest `85 passed`, and `py_compile` passed.
-- `IM-02S2` also carries a minimal numerical safeguard in the legacy collision helpers: tiny negative interpolation noise in `Gamma_T` (`|Gamma_T| < 1e-7`) is clipped to zero at the auxiliary surface so table-edge undershoot does not destabilize the current integrator while runtime retargeting is still pending.
-- `IM-03S3A` is now closed: BASS S3 owns an executable bounded Tier-B runtime/orchestrator path that consumes the S1 background monitor plus live S2 geodesic/collision/visibility/startup/seed hooks, packages manifest-backed observer-neutral `SolverCoreOutput`, and runs an executable cutoff campaign under `htt/bass/{runtime,spectrum,forward}/*`.
+- `IM-02S2` also carries a minimal numerical safeguard in the legacy collision helpers: tiny negative interpolation noise in `Gamma_T` (`|Gamma_T| < 1e-7`) is clipped to zero at the auxiliary surface so table-edge undershoot does not destabilize the retained legacy/validation paths while deeper numerical repair is still pending.
+- `IM-03S3A` is now closed: BASS S3 established the executable Tier-B runtime/orchestrator shell, live S1/S2 trace consumption, manifest-backed observer-neutral `SolverCoreOutput`, and executable cutoff-campaign plumbing under `htt/bass/{runtime,spectrum,forward}/*`.
 - `IM-03S3A` verification is green for the touched S3 scope: packet-local pytest `10 passed`, forward/LOS regression pytest `9 passed`, touched-surface pytest `449 passed`, and `py_compile` passed.
-- The converged implementation choice for `IM-03S3A` is the bounded bridge architecture, not a full solver rewrite: the runtime now consumes live S1/S2 surfaces end to end, but the core Tier-B ODE evolution still runs through the shipped Lowell hierarchy/integrator.
+- `IM-03S3A` should now be read together with `BF-01B-HCORE`: the original bounded-bridge shell landed there, and BF-01 later replaced the production Tier-B core with the native S1/S2-owned integrator while leaving Tier-A validation on the Lowell bridge.
 - `IM-03S3B` is now closed: BASS S3 owns a validation-only Tier-A angular-reference runtime plus explicit Tier A↔Tier B comparison surfaces under `htt/bass/{runtime,forward}/*`.
 - `IM-03S3B` verification is green for the touched S3 scope: packet-local pytest `9 passed`, touched-surface pytest `170 passed`, and `py_compile` passed.
 - The converged implementation choice for `IM-03S3B` is a bounded validation bridge, not an independent Tier-A solver rewrite: the packet now makes cross-checking explicit and machine-readable, but the Tier-A validation path still reuses the shipped Lowell hierarchy/integrator.
@@ -94,6 +95,10 @@
 - `IM-10D-MAN` verification is green for the touched D-lane scope: `venv/bin/python -m pytest scripts/test_ver2_artifact_export.py -q` -> `7 passed`, `py_compile` passed, and both `venv/bin/python scripts/ver2_artifact_export.py` / `--check` pass.
 - Prompt list 02 is now complete: there are no remaining implementation packets in the current VER2 prompt series.
 - Prompt list 01 is now complete: every skeleton lane has an audit note, machine-readable carry-forward, and a frozen write-scope boundary.
+- `BF-01B-HCORE` is now closed: BASS production Tier-B no longer runs through the shipped Lowell hierarchy/integrator, and `htt/bass/hierarchy/ver2_native_integrator.py` now owns the native S1-background/S2-radiation executable core consumed by `execute_tier_b_solver`.
+- `BF-01B-HCORE` verification is green for the touched BASS-core scope: packet-local pytest `11 passed`, touched-surface pytest `168 passed`, and `py_compile` passed.
+- `execute_tier_b_lowell_solver` is now a compatibility alias only; production Tier-B output provenance is emitted through `build_solver_core_output_from_native_result` with `tier_b_core_owner = ver2_s1s2_native`.
+- The BASS-first sequence is now active in code, not just in planning docs: Tier-B production-core ownership has moved, while the remaining high-priority BASS debt is concentrated in startup/seed injection, angular reconstruction, low-`ell` covariance/morphology promotion, and validation-grade cross-checking.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
 ## 3. Next Recommended Work
@@ -107,21 +112,20 @@ instead and run the follow-up packets in that order.
 
 The immediate next packet is:
 
-1. `BF-01B-HCORE`
+1. `BF-02B-SEED`
 
 The reordered priority is:
 
-1. replace the bounded Lowell Tier-B core with an S1/S2-native executable path,
-2. close startup/seed injection,
-3. close the angular reconstruction bridge,
-4. replace proxy morphology/covariance where justified,
-5. upgrade BASS-centered validation,
-6. only then retarget `bass/observer`, `bass/likelihood`, and `bass/inference`,
-7. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until after the BASS-first sequence.
+1. close startup/seed injection,
+2. close the angular reconstruction bridge,
+3. replace proxy morphology/covariance where justified,
+4. upgrade BASS-centered validation,
+5. only then retarget `bass/observer`, `bass/likelihood`, and `bass/inference`,
+6. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until after the BASS-first sequence.
 
 Parallel policy is now constrained by the solver spine:
 
-1. `BF-01B-HCORE`, `BF-02B-SEED`, and `BF-03B-ANG` are serial,
+1. `BF-02B-SEED` and `BF-03B-ANG` remain serial on the solver spine,
 2. `BF-04B-COV` starts after `BF-03B-ANG`,
 3. `BF-05B-VAL` may do read-only prep during `BF-03B-ANG` and `BF-04B-COV`,
 4. `BF-06B-LIKE` is blocked on `BF-05B-VAL`.
@@ -135,7 +139,8 @@ Parallel policy is now constrained by the solver spine:
 - Do not merge MIO certificate semantics into HTT or BASS.
 - Do not generate figures or manuscript claims from non-manifest artifacts.
 - Do not route new VER2 work back onto the reduced `einstein_bianchi` background engine; `htt/bass/background/evolution.py` and the S1 IC/geometry/RHS modules are now the implementation anchor.
-- Do not silently treat the S1/S2/S3 bridge now closed by `IM-03S3A` as a full universal-solver rewrite; the runtime is executable, but the core Tier-B ODE stack is still the bounded Lowell bridge.
+- Do not treat `BF-01B-HCORE` as if it also closed startup/seed injection or angular reconstruction; the production Tier-B core is now native, but `BF-02B-SEED` and `BF-03B-ANG` still remain.
+- Do not treat the Tier-A validation bridge as independent just because production Tier-B is now native; Tier A still reuses the bounded Lowell core and remains a validation-only path.
 - Do not silently promote `sparse_mode_block_proxy` into a full BiPoSH claim surface; executable O-lane work must replace or discharge that caveat explicitly.
 - Do not mistake explicit O-lane local/global degeneracy metadata for a calibrated separation result; that calibration still belongs to the H/T/V convergence packets.
 - Do not treat rank-blocked `FullCovMESReport` artifacts as weak covariance evidence; they are explicit no-claim outputs.

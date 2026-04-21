@@ -8,6 +8,7 @@ from common.contracts import ArtifactManifest
 from bass.forward import (
     BassReleaseMetadata,
     build_solver_core_output,
+    build_solver_core_output_from_native_result,
     build_solver_core_output_from_lowell_result,
     solver_core_output_from_payload,
     solver_core_output_to_payload,
@@ -235,3 +236,31 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_lowell_template"
     assert output.alm_T["representation"] == "lowell_pstf_final_slice"
+
+
+def test_build_solver_core_output_from_native_result_attaches_native_provenance() -> None:
+    output = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="VII_h",
+        result=_synthetic_result(),
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_executable",
+            run_label="tier-b-native",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+    )
+    assert output.metadata["propagator_ready"] is True
+    assert output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_ver2_native"
+    assert output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
+    assert output.metadata["propagator_mode"] == "anisotropic_forward"
+    assert output.anisotropic_covariance is not None
+    assert output.deterministic_template["kind"] == "tier_b_native_template"
+    assert output.alm_T["representation"] == "ver2_native_pstf_final_slice"

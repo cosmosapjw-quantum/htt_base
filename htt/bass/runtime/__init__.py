@@ -30,6 +30,7 @@ from bass.runtime.ver2_execution import (
     build_runtime_reduction_decision,
     compare_tier_a_to_tier_b,
     execute_tier_a_validation_solver,
+    execute_tier_b_solver,
     execute_tier_b_lowell_solver,
     plan_solver_execution,
 )
@@ -59,6 +60,7 @@ __all__ = [
     "build_runtime_reduction_decision",
     "compare_tier_a_to_tier_b",
     "execute_tier_a_validation_solver",
+    "execute_tier_b_solver",
     "plan_solver_execution",
     "execute_tier_b_lowell_solver",
 ]

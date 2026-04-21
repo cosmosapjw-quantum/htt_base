@@ -31,6 +31,7 @@ __all__ = [
     "build_runtime_reduction_decision",
     "plan_solver_execution",
     "execute_tier_a_validation_solver",
+    "execute_tier_b_solver",
     "execute_tier_b_lowell_solver",
     "compare_tier_a_to_tier_b",
 ]
@@ -645,10 +646,13 @@ def _resolved_gamma_t(
 
 def _campaign_runner(
     *,
+    bianchi_type: str,
     base_config: "IntegratorConfig",
     species: "SpeciesBackgroundRegistry",
 ):
-    from bass.hierarchy.integrator import IntegratorConfig, LowellBianchiIntegrator
+    from bass.hierarchy.aux_state import build_integrator_canonical_decision
+    from bass.hierarchy.integrator import IntegratorConfig
+    from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
 
     def runner(cutoff: int) -> tuple[Mapping[str, np.ndarray], float]:
         start = perf_counter()
@@ -669,7 +673,29 @@ def _campaign_runner(
             solver_method=base_config.solver_method,
             gamma_T_override=base_config.gamma_T_override,
         )
-        result = LowellBianchiIntegrator(config, species).run()
+        background_monitor = _build_background_monitor(
+            bianchi_type=bianchi_type,
+            config=config,
+            species=species,
+        )
+        visibility_source = _build_visibility_source(
+            species=species,
+            config=config,
+        )
+        canonical_decision = build_integrator_canonical_decision(
+            beta=float(config.bianchi_cosmo.beta),
+            sigma_squared=max(
+                0.5 * float(np.sum(background_monitor.sigma_tensor[0] ** 2)),
+                1.0e-12,
+            ),
+        )
+        result = Ver2TierBIntegrator(
+            config,
+            species,
+            background_monitor=background_monitor,
+            visibility_source=visibility_source,
+            canonical_decision=canonical_decision,
+        ).run()
         runtime_sec = perf_counter() - start
         return (
             {
@@ -906,20 +932,51 @@ def execute_tier_b_lowell_solver(
     validation_matrix: "ValidationMatrixSpec | None" = None,
     cutoff_spec: "CutoffCampaignSpec | None" = None,
 ) -> TierBExecutableRun:
-    """Execute the bounded VER2 Tier-B low-ell runtime/orchestrator path.
+    """Compatibility alias for the native VER2 Tier-B production route."""
+    return execute_tier_b_solver(
+        manifest=manifest,
+        bianchi_type=bianchi_type,
+        species=species,
+        integrator_config=integrator_config,
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        release=release,
+        k_grid_mpc=k_grid_mpc,
+        validation_matrix=validation_matrix,
+        cutoff_spec=cutoff_spec,
+    )
 
-    The selected implementation keeps the shipped Lowell Tier-B hierarchy as
-    the numerical core while making the S1/S2/S3 contracts live owners of the
-    execution trace, output assembly, and cutoff campaign. This is deliberately
-    narrower than a universal solver rewrite and is the lowest-risk executable
-    bridge within the IM-03S3A write scope.
+
+def execute_tier_b_solver(
+    *,
+    manifest,
+    bianchi_type: str,
+    species: "SpeciesBackgroundRegistry",
+    integrator_config: "IntegratorConfig",
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+    release,
+    k_grid_mpc: np.ndarray,
+    validation_matrix: "ValidationMatrixSpec | None" = None,
+    cutoff_spec: "CutoffCampaignSpec | None" = None,
+) -> TierBExecutableRun:
+    """Execute the VER2 Tier-B production route on the native S1/S2 core.
+
+    BF-01B-HCORE replaces the bounded Lowell bridge on the production path.
+    Tier-B now uses:
+
+    - `background.evolution` as the background owner,
+    - S2 photon/collision/history surfaces as the hierarchy owner,
+    - the Lowell integrator only as a retained compatibility path outside the
+      production route.
     """
     if runtime_controls.tier is not SolverTier.TIER_B_PSTF:
-        raise ValueError("execute_tier_b_lowell_solver requires Tier B runtime controls")
+        raise ValueError("execute_tier_b_solver requires Tier B runtime controls")
     if runtime_controls.multipole_cutoff > integrator_config.L_max:
         raise ValueError("runtime cutoff must not exceed integrator_config.L_max")
 
-    from bass.hierarchy.integrator import LowellBianchiIntegrator
+    from bass.hierarchy.aux_state import build_integrator_canonical_decision
+    from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
     from bass.spectrum.ver2_cutoff_campaign import run_executed_cutoff_campaign
 
     background_monitor = _build_background_monitor(
@@ -941,7 +998,20 @@ def execute_tier_b_lowell_solver(
         config=integrator_config,
     )
 
-    integrator = LowellBianchiIntegrator(integrator_config, species)
+    canonical_decision = build_integrator_canonical_decision(
+        beta=float(integrator_config.bianchi_cosmo.beta),
+        sigma_squared=max(
+            0.5 * float(np.sum(background_monitor.sigma_tensor[0] ** 2)),
+            1.0e-12,
+        ),
+    )
+    integrator = Ver2TierBIntegrator(
+        integrator_config,
+        species,
+        background_monitor=background_monitor,
+        visibility_source=visibility_source,
+        canonical_decision=canonical_decision,
+    )
     runtime_decision = _build_runtime_decision(
         feature_flags=feature_flags,
         canonical_decision=integrator.canonical_decision,
@@ -976,9 +1046,9 @@ def execute_tier_b_lowell_solver(
         gamma_t=gamma_t_probe,
     )
 
-    from bass.forward.ver2_solver_output import build_solver_core_output_from_lowell_result
+    from bass.forward.ver2_solver_output import build_solver_core_output_from_native_result
 
-    solver_output = build_solver_core_output_from_lowell_result(
+    solver_output = build_solver_core_output_from_native_result(
         manifest=manifest,
         bianchi_type=bianchi_type,
         result=result,
@@ -993,6 +1063,7 @@ def execute_tier_b_lowell_solver(
         cutoff_campaign = run_executed_cutoff_campaign(
             cutoff_spec,
             runner=_campaign_runner(
+                bianchi_type=bianchi_type,
                 base_config=integrator_config,
                 species=species,
             ),

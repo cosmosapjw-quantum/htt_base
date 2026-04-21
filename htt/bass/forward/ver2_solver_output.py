@@ -29,6 +29,7 @@ from bass.species.registry import SpeciesBackgroundRegistry
 __all__ = [
     "BassReleaseMetadata",
     "build_solver_core_output",
+    "build_solver_core_output_from_native_result",
     "build_solver_core_output_from_lowell_result",
     "solver_core_output_to_payload",
     "solver_core_output_from_payload",
@@ -130,13 +131,12 @@ def _interp_series(eta_grid: np.ndarray, values: np.ndarray, eta: float) -> floa
     return float(np.interp(float(eta), eta_grid, values))
 
 
-def _build_visibility_fn(species: SpeciesBackgroundRegistry):
+def _build_visibility_fn_from_a_lookup(species: SpeciesBackgroundRegistry, a_lookup):
     baryon = species[SpeciesLabel.BARYON]
     interp = baryon._recomb  # noqa: SLF001 - stable internal ownership for the current tier-B bridge
-    bg_table = species.bg_table
 
     def visibility_fn(eta: float) -> float:
-        a_val = float(bg_table.interp_a(float(eta)))
+        a_val = float(a_lookup(float(eta)))
         z_val = (1.0 / max(a_val, 1.0e-30)) - 1.0
         if z_val < interp.table.z_min or z_val > interp.table.z_max:
             return 0.0
@@ -169,9 +169,11 @@ def _build_lowell_source_builder(result: IntegrationResult):
 def _build_template_from_result(
     result: IntegrationResult,
     propagator: SourcePropagator,
+    *,
+    kind: str,
 ) -> dict[str, Any]:
     return {
-        "kind": "tier_b_lowell_template",
+        "kind": kind,
         "quadrupole_m0": float(result.pi_ell_m(2, 0)[-1]),
         "quadrupole_m_plus2": float(result.pi_ell_m(2, 2)[-1]),
         "quadrupole_m_minus2": float(result.pi_ell_m(2, -2)[-1]),
@@ -183,6 +185,109 @@ def _build_template_from_result(
         "propagator_mode": propagator.config.mode.value,
         "offdiag_strategy": str(propagator.covariance_bundle.get("off_diagonal_strategy", "")),
     }
+
+
+def build_solver_core_output_from_native_result(
+    *,
+    manifest: ArtifactManifest,
+    bianchi_type: str,
+    result: IntegrationResult,
+    species: SpeciesBackgroundRegistry,
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+    release: BassReleaseMetadata,
+    k_grid_mpc: np.ndarray,
+    structure: StructureConstants | None = None,
+    propagator: SourcePropagatorConfig | None = None,
+    thomson_mode: str = "electron_frame_projected",
+    limber_eta_sp_sign: str = "integrator",
+    off_diagonal_strategy: str = "m_decoupled_blocks",
+) -> SolverCoreOutput:
+    """Build an observer-neutral VER2 output from the native Tier-B core."""
+    if runtime_controls.tier is not SolverTier.TIER_B_PSTF:
+        raise ValueError(
+            "build_solver_core_output_from_native_result requires Tier B runtime controls"
+        )
+    if runtime_controls.multipole_cutoff > result.L_max:
+        raise ValueError(
+            f"runtime cutoff L={runtime_controls.multipole_cutoff} exceeds result.L_max={result.L_max}"
+        )
+    if propagator is None and feature_flags.source_propagator.value == "disabled":
+        raise ValueError(
+            "build_solver_core_output_from_native_result requires a live source_propagator feature flag "
+            "or an explicit propagator config"
+        )
+    structure_constants = get_type(bianchi_type) if structure is None else structure
+    propagator_config = (
+        SourcePropagatorConfig(
+            mode=PropagatorMode.ANISOTROPIC_FORWARD,
+            polarization_rotation=feature_flags.source_propagator,
+            temperature_transport=feature_flags.source_propagator,
+            flrw_validation_only=False,
+            kernel_family="anisotropic_green_function",
+            observer_frame=ObserverFrameMetadata(
+                harmonic_basis="m_explicit",
+                eb_sign_convention="cmb",
+            ),
+        )
+        if propagator is None
+        else propagator
+    )
+
+    a_lookup = lambda eta: _interp_series(
+        np.asarray(result.eta, dtype=np.float64),
+        np.asarray(result.a, dtype=np.float64),
+        eta,
+    )
+    live_propagator = build_source_propagator(
+        propagator_config,
+        structure=structure_constants,
+        eta_grid_mpc=np.asarray(result.eta, dtype=np.float64),
+        k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
+        ell_max=int(runtime_controls.multipole_cutoff),
+        visibility_fn=_build_visibility_fn_from_a_lookup(species, a_lookup),
+        source_builder=_build_lowell_source_builder(result),
+        limber_eta_sp_sign=limber_eta_sp_sign,
+        off_diagonal_strategy=off_diagonal_strategy,
+    )
+    final_T = np.asarray(result.photon_T_tower[-1], dtype=np.float64)
+    final_E = np.asarray(result.photon_E_tower[-1], dtype=np.float64)
+    alm_representation = {
+        "representation": "ver2_native_pstf_final_slice",
+        "ell_max": int(result.L_max),
+        "eta_final_mpc": float(result.eta[-1]),
+    }
+    return build_solver_core_output(
+        manifest=manifest,
+        bianchi_type=bianchi_type,
+        tilt_enabled=bool(abs(result.config.tilt_rapidity) > 0.0),
+        harmonic_basis=live_propagator.config.observer_frame.harmonic_basis,
+        eb_sign_convention=live_propagator.config.observer_frame.eb_sign_convention,
+        thomson_mode=thomson_mode,
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        propagator=live_propagator.config,
+        release=release,
+        alm_T={**alm_representation, "values": final_T},
+        alm_E={**alm_representation, "values": final_E},
+        alm_B={**alm_representation, "values": np.zeros_like(final_E)},
+        deterministic_template=_build_template_from_result(
+            result,
+            live_propagator,
+            kind="tier_b_native_template",
+        ),
+        anisotropic_covariance=live_propagator.covariance_bundle,
+        extra_metadata={
+            "propagator_ready": True,
+            "validation_reference": False,
+            "k_grid_size": int(np.asarray(k_grid_mpc).size),
+            "eta_grid_size": int(np.asarray(result.eta).size),
+            "off_diagonal_strategy": off_diagonal_strategy,
+            "limber_eta_sp_sign": limber_eta_sp_sign,
+            "source_builder_scope": "theta0_plus_pi_quadrupole_ver2_native",
+            "tier_b_core_owner": str(result.solver_info.get("tier_b_core_owner", "ver2_s1s2_native")),
+        },
+    )
 
 
 def build_solver_core_output_from_lowell_result(
@@ -262,7 +367,10 @@ def build_solver_core_output_from_lowell_result(
         eta_grid_mpc=np.asarray(result.eta, dtype=np.float64),
         k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
         ell_max=int(runtime_controls.multipole_cutoff),
-        visibility_fn=_build_visibility_fn(species),
+        visibility_fn=_build_visibility_fn_from_a_lookup(
+            species,
+            lambda eta: float(species.bg_table.interp_a(float(eta))),
+        ),
         source_builder=_build_lowell_source_builder(result),
         limber_eta_sp_sign=limber_eta_sp_sign,
         off_diagonal_strategy=off_diagonal_strategy,
@@ -292,7 +400,11 @@ def build_solver_core_output_from_lowell_result(
         alm_T={**alm_representation, "values": final_T},
         alm_E={**alm_representation, "values": final_E},
         alm_B={**alm_representation, "values": np.zeros_like(final_E)},
-        deterministic_template=_build_template_from_result(result, live_propagator),
+        deterministic_template=_build_template_from_result(
+            result,
+            live_propagator,
+            kind="tier_b_lowell_template",
+        ),
         anisotropic_covariance=live_propagator.covariance_bundle,
         extra_metadata={
             "propagator_ready": True,
