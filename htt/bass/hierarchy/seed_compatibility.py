@@ -1,4 +1,4 @@
-"""VER2 perturbation-seed compatibility skeletons for the BASS S2 lane."""
+"""VER2 perturbation-seed compatibility helpers for the BASS S2 lane."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
@@ -6,6 +6,9 @@ from enum import Enum
 
 import numpy as np
 
+from bass.background.constraints import MatterNormalFrameState, codazzi_constraint_residual
+from bass.background.geometry import TetradGeometry
+from bass.background.initial_conditions import project_shear_to_codazzi
 from bass.hierarchy.frame_contracts import BoostOrder
 
 __all__ = [
@@ -13,9 +16,12 @@ __all__ = [
     "SeedAssignmentFrame",
     "RegularSeedDescriptor",
     "RegularSeedState",
-    "SeedProjectionStub",
+    "SeedConstraintProjection",
+    "build_flrw_regular_seed",
     "build_flrw_regular_seed_stub",
+    "promote_tilted_seed",
     "promote_tilted_seed_stub",
+    "build_constraint_projection",
     "build_constraint_projection_stub",
 ]
 
@@ -82,18 +88,40 @@ class RegularSeedState:
 
 
 @dataclass(frozen=True)
-class SeedProjectionStub:
-    """Carry-forward hook for post-insertion constraint projection."""
+class SeedConstraintProjection:
+    """Post-insertion seed projection and its residual bookkeeping."""
 
-    projection_ready: bool = False
+    projected_seed: RegularSeedState
+    momentum_residual_before: np.ndarray
+    momentum_residual_after: np.ndarray
+    projection_mode: str
     constraint_projection_required: bool = True
-    reason: str = (
-        "Constraint projection after seed insertion is a later executable "
-        "implementation task; SK-02S2 freezes only the frame-aware hook."
-    )
+    projection_ready: bool = True
+    projected_sigma_ab: np.ndarray | None = None
+
+    def __post_init__(self) -> None:
+        before = np.asarray(self.momentum_residual_before, dtype=np.float64)
+        after = np.asarray(self.momentum_residual_after, dtype=np.float64)
+        if before.shape != (3,):
+            raise ValueError(
+                f"momentum_residual_before must have shape (3,), got {before.shape}"
+            )
+        if after.shape != (3,):
+            raise ValueError(
+                f"momentum_residual_after must have shape (3,), got {after.shape}"
+            )
+        object.__setattr__(self, "momentum_residual_before", before)
+        object.__setattr__(self, "momentum_residual_after", after)
+        if self.projected_sigma_ab is not None:
+            sigma = np.asarray(self.projected_sigma_ab, dtype=np.float64)
+            if sigma.shape != (3, 3):
+                raise ValueError(
+                    f"projected_sigma_ab must have shape (3,3), got {sigma.shape}"
+                )
+            object.__setattr__(self, "projected_sigma_ab", sigma)
 
 
-def build_flrw_regular_seed_stub(
+def build_flrw_regular_seed(
     *,
     amplitude: float,
     descriptor: RegularSeedDescriptor | None = None,
@@ -113,7 +141,16 @@ def build_flrw_regular_seed_stub(
     )
 
 
-def promote_tilted_seed_stub(
+def build_flrw_regular_seed_stub(
+    *,
+    amplitude: float,
+    descriptor: RegularSeedDescriptor | None = None,
+) -> RegularSeedState:
+    """Compatibility alias kept while call sites migrate to `build_flrw_regular_seed`."""
+    return build_flrw_regular_seed(amplitude=amplitude, descriptor=descriptor)
+
+
+def promote_tilted_seed(
     seed: RegularSeedState,
     *,
     electron_velocity: np.ndarray,
@@ -142,9 +179,108 @@ def promote_tilted_seed_stub(
     )
 
 
+def promote_tilted_seed_stub(
+    seed: RegularSeedState,
+    *,
+    electron_velocity: np.ndarray,
+    boost_order: BoostOrder = BoostOrder.LINEAR,
+) -> RegularSeedState:
+    """Compatibility alias kept while call sites migrate to `promote_tilted_seed`."""
+    return promote_tilted_seed(
+        seed,
+        electron_velocity=electron_velocity,
+        boost_order=boost_order,
+    )
+
+
+def build_constraint_projection(
+    seed: RegularSeedState,
+    *,
+    geometry: TetradGeometry | None = None,
+    sigma_ab: np.ndarray | None = None,
+    kappa: float = 1.0,
+    atol: float = 1.0e-10,
+) -> SeedConstraintProjection:
+    """Project a seeded state onto the currently available normal-frame constraint surface.
+
+    When geometry and a shear guess are available, this dispatches to the real
+    S1 Codazzi projector. Otherwise it applies a first-pass boost-consistency
+    reduction on the symbolic seed state so the reduced contract remains finite
+    and recovers the orthogonal seed as `v_e -> 0`.
+    """
+    tilt = np.asarray(seed.tilt_velocity, dtype=np.float64)
+    beta_sq = float(np.dot(tilt, tilt))
+    if beta_sq >= 1.0:
+        raise ValueError(f"tilt velocity must satisfy |v| < 1, got |v|^2={beta_sq!r}")
+    gamma = 1.0 / np.sqrt(max(1.0 - beta_sq, 1.0e-30))
+    residual_before = float(seed.theta_common) * tilt
+    theta_projected = float(seed.theta_common) / gamma
+    projected_seed = RegularSeedState(
+        amplitude=seed.amplitude,
+        delta_gamma=seed.delta_gamma,
+        delta_baryon=seed.delta_baryon,
+        delta_cdm=seed.delta_cdm,
+        delta_nu=seed.delta_nu,
+        theta_common=theta_projected,
+        descriptor=seed.descriptor,
+        tilt_velocity=tilt,
+    )
+    residual_after = float(projected_seed.theta_common) * tilt
+    if geometry is None or sigma_ab is None:
+        return SeedConstraintProjection(
+            projected_seed=projected_seed,
+            momentum_residual_before=residual_before,
+            momentum_residual_after=residual_after,
+            projection_mode="boost_consistency_first_pass",
+        )
+
+    sigma_guess = np.asarray(sigma_ab, dtype=np.float64)
+    matter = MatterNormalFrameState(
+        rho=0.0,
+        p=0.0,
+        q=residual_after,
+    )
+    projected_sigma, _meta = project_shear_to_codazzi(
+        sigma_ab=sigma_guess,
+        geometry=geometry,
+        target_q=matter.q,
+        kappa=kappa,
+        atol=atol,
+    )
+    codazzi_before = codazzi_constraint_residual(
+        sigma_guess,
+        MatterNormalFrameState(rho=0.0, p=0.0, q=residual_before),
+        geometry,
+        kappa=kappa,
+    )
+    codazzi_after = codazzi_constraint_residual(
+        projected_sigma,
+        matter,
+        geometry,
+        kappa=kappa,
+    )
+    return SeedConstraintProjection(
+        projected_seed=projected_seed,
+        momentum_residual_before=codazzi_before,
+        momentum_residual_after=codazzi_after,
+        projection_mode="background_codazzi_project",
+        projected_sigma_ab=projected_sigma,
+    )
+
+
 def build_constraint_projection_stub(
     seed: RegularSeedState,
-) -> SeedProjectionStub:
-    """Return the explicit carry-forward projection hook."""
-    _ = seed
-    return SeedProjectionStub()
+    *,
+    geometry: TetradGeometry | None = None,
+    sigma_ab: np.ndarray | None = None,
+    kappa: float = 1.0,
+    atol: float = 1.0e-10,
+) -> SeedConstraintProjection:
+    """Compatibility alias kept while call sites migrate to `build_constraint_projection`."""
+    return build_constraint_projection(
+        seed,
+        geometry=geometry,
+        sigma_ab=sigma_ab,
+        kappa=kappa,
+        atol=atol,
+    )

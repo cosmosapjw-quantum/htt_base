@@ -106,9 +106,12 @@ from bass.hierarchy.seed_compatibility import (
     RegularSeedState,
     SeedAssignmentFrame,
     SeedConvention,
-    SeedProjectionStub,
+    SeedConstraintProjection,
+    build_constraint_projection,
     build_constraint_projection_stub,
+    build_flrw_regular_seed,
     build_flrw_regular_seed_stub,
+    promote_tilted_seed,
     promote_tilted_seed_stub,
 )
 
@@ -189,8 +192,11 @@ __all__ = [
     "SeedAssignmentFrame",
     "RegularSeedDescriptor",
     "RegularSeedState",
-    "SeedProjectionStub",
+    "SeedConstraintProjection",
+    "build_flrw_regular_seed",
     "build_flrw_regular_seed_stub",
+    "promote_tilted_seed",
     "promote_tilted_seed_stub",
+    "build_constraint_projection",
     "build_constraint_projection_stub",
 ]

@@ -1,25 +1,36 @@
-"""VER2 scalar-history and visibility skeletons for the BASS S2 lane."""
+"""VER2 scalar-history and visibility wiring for the BASS S2 lane."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import TYPE_CHECKING
 
-from bass.hierarchy.frame_contracts import FrameSplitMetadata
+import numpy as np
+
+from bass.hierarchy.frame_contracts import FrameSplitMetadata, PhotonDirectionConvention
 from bass.recombination.recombination_ingest import (
     RecombinationInterp,
     RecombinationTable,
     build_interpolators,
+    find_visibility_peak,
 )
 from bass.recombination.reionization import (
     CosmologyForRecombination,
     ReionizationParameters,
+    compute_reionization_tau,
     extend_table_with_reionization,
 )
 
+if TYPE_CHECKING:
+    from bass.collision.tilted_visibility import TiltedVisibility
+    from bass.species.baryon import BaryonBackground
+
 __all__ = [
     "ScalarHistoryMetadata",
+    "VisibilityEventMarkers",
     "VisibilityHistoryContract",
-    "TiltedVisibilitySourceStub",
+    "TiltedVisibilitySource",
     "build_visibility_history_contract",
+    "build_tilted_visibility_source",
     "build_tilted_visibility_source_stub",
 ]
 
@@ -58,6 +69,7 @@ class VisibilityHistoryContract:
     interp: RecombinationInterp
     history_metadata: ScalarHistoryMetadata = field(default_factory=ScalarHistoryMetadata)
     frame_metadata: FrameSplitMetadata = field(default_factory=FrameSplitMetadata)
+    events: "VisibilityEventMarkers | None" = None
 
     def __post_init__(self) -> None:
         if self.frame_metadata.visibility_frame != "electron_frame":
@@ -74,21 +86,71 @@ class VisibilityHistoryContract:
 
 
 @dataclass(frozen=True)
-class TiltedVisibilitySourceStub:
-    """Non-executable record that visibility can later be tilt-modulated."""
+class VisibilityEventMarkers:
+    """Key visibility/reionization markers carried with the scalar history."""
 
-    source_ready: bool = False
-    tilt_active: bool = False
+    z_last_scattering: float
+    visibility_peak: float
+    reionization_detected: bool
+    tau_reion: float = 0.0
+    reionization_mode: str = "disabled"
+
+    def __post_init__(self) -> None:
+        if not np.isfinite(self.z_last_scattering) or self.z_last_scattering <= 0.0:
+            raise ValueError("z_last_scattering must be positive finite")
+        if not np.isfinite(self.visibility_peak) or self.visibility_peak < 0.0:
+            raise ValueError("visibility_peak must be non-negative finite")
+        if not np.isfinite(self.tau_reion) or self.tau_reion < 0.0:
+            raise ValueError("tau_reion must be non-negative finite")
+        if self.reionization_mode not in {"disabled", "tanh"}:
+            raise ValueError(f"unknown reionization_mode {self.reionization_mode!r}")
+
+
+@dataclass(frozen=True)
+class TiltedVisibilitySource:
+    """Direction-resolved visibility wrapper owned by the electron frame."""
+
+    contract: VisibilityHistoryContract
+    visibility: "TiltedVisibility"
+    direction_convention: PhotonDirectionConvention = PhotonDirectionConvention.PROPAGATION
+
+    source_ready: bool = True
+    tilt_active: bool = True
     reduces_to_scalar_when_tilt_zero: bool = True
     frame: str = "electron_frame"
-    reason: str = (
-        "Tilted visibility modulation is carried forward explicitly; "
-        "SK-02S2 freezes only the scalar-history and ownership contracts."
-    )
 
     def __post_init__(self) -> None:
         if self.frame != "electron_frame":
             raise ValueError("tilted visibility must stay electron-frame owned")
+        if self.contract.frame_metadata.visibility_frame != "electron_frame":
+            raise ValueError("contract visibility frame drifted away from the electron frame")
+
+    def Gamma_T(self, eta: float, direction: np.ndarray) -> float:
+        return float(self.visibility.Gamma_T(float(eta), np.asarray(direction, dtype=np.float64)))
+
+    def kappa(self, eta: float, direction: np.ndarray) -> float:
+        return float(self.visibility.kappa(float(eta), np.asarray(direction, dtype=np.float64)))
+
+    def g(self, eta: float, direction: np.ndarray) -> float:
+        return float(self.visibility.g(float(eta), np.asarray(direction, dtype=np.float64)))
+
+
+def _build_event_markers(
+    interp: RecombinationInterp,
+    history_metadata: ScalarHistoryMetadata,
+) -> VisibilityEventMarkers:
+    z_star, g_star = find_visibility_peak(interp)
+    tau_reion = 0.0
+    if history_metadata.reionization_mode == "tanh":
+        z_cut = min(30.0, float(interp.table.z_max))
+        tau_reion = compute_reionization_tau(interp.table, z_high_cutoff=z_cut)
+    return VisibilityEventMarkers(
+        z_last_scattering=z_star,
+        visibility_peak=g_star,
+        reionization_detected=history_metadata.reionization_mode == "tanh" and tau_reion > 0.0,
+        tau_reion=tau_reion,
+        reionization_mode=history_metadata.reionization_mode,
+    )
 
 
 def build_visibility_history_contract(
@@ -114,14 +176,50 @@ def build_visibility_history_contract(
         table=effective_table,
         interp=interp,
         history_metadata=history_metadata,
+        events=_build_event_markers(interp, history_metadata),
+    )
+
+
+def build_tilted_visibility_source(
+    contract: VisibilityHistoryContract,
+    *,
+    baryon: "BaryonBackground",
+    v_e,
+    direction_convention: PhotonDirectionConvention = PhotonDirectionConvention.PROPAGATION,
+    beta_from_v: bool = True,
+) -> TiltedVisibilitySource:
+    """Build the executable tilted visibility source on top of the scalar history."""
+    from bass.collision.tilted_visibility import TiltedVisibility
+
+    if baryon._recomb is not contract.interp:  # noqa: SLF001 - deliberate contract check
+        raise ValueError(
+            "baryon recombination interpolator must match the stored visibility contract"
+        )
+    return TiltedVisibilitySource(
+        contract=contract,
+        visibility=TiltedVisibility(
+            baryon=baryon,
+            v_e=v_e,
+            beta_from_v=beta_from_v,
+        ),
+        direction_convention=direction_convention,
+        tilt_active=True,
     )
 
 
 def build_tilted_visibility_source_stub(
     contract: VisibilityHistoryContract,
     *,
-    tilt_active: bool,
-) -> TiltedVisibilitySourceStub:
-    """Return the explicit carry-forward hook for tilted visibility."""
-    _ = contract
-    return TiltedVisibilitySourceStub(tilt_active=tilt_active)
+    baryon: "BaryonBackground",
+    v_e,
+    direction_convention: PhotonDirectionConvention = PhotonDirectionConvention.PROPAGATION,
+    beta_from_v: bool = True,
+) -> TiltedVisibilitySource:
+    """Compatibility alias kept while call sites migrate to `build_tilted_visibility_source`."""
+    return build_tilted_visibility_source(
+        contract,
+        baryon=baryon,
+        v_e=v_e,
+        direction_convention=direction_convention,
+        beta_from_v=beta_from_v,
+    )

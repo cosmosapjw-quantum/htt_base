@@ -9,6 +9,7 @@ from bass.transport.geodesics import (
     PhotonGeodesicState,
     ScreenBasisState,
     hard_redshift_check,
+    photon_geodesic_rhs,
     photon_geodesic_rhs_stub,
     redshift_log_derivative,
 )
@@ -19,5 +20,6 @@ __all__ = [
     "PhotonGeodesicRhs",
     "redshift_log_derivative",
     "hard_redshift_check",
+    "photon_geodesic_rhs",
     "photon_geodesic_rhs_stub",
 ]

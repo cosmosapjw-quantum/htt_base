@@ -22,6 +22,7 @@
 18. `docs/ver2_upgrade/audits/AUDIT_IM-06H_2026-04-21.md`
 19. `docs/ver2_upgrade/audits/AUDIT_IM-07M_2026-04-21.md`
 20. `docs/ver2_upgrade/audits/AUDIT_IM-01S1_2026-04-21.md`
+21. `docs/ver2_upgrade/audits/AUDIT_IM-02S2_2026-04-21.md`
 
 ## 2. Current State
 
@@ -58,6 +59,9 @@
 - `IM-01S1` verification is green for the touched S1 scope: targeted pytest `63 passed`, full `htt/bass/background` `329 passed`, runtime wiring `6 passed`, `htt/bass/species/test_tilted.py` `24 passed`, and `py_compile` passed.
 - The pre-existing `bass.background` ↔ `bass.tilt` package-import cycle surfaced by `SK-03S3` is now closed for the runtime wiring path; `htt/bass/runtime/test_end_to_end_wiring.py` collects and passes again.
 - The reduced `einstein_bianchi` route still exists for compatibility, but the VER2 background implementation anchor is now `htt/bass/background/evolution.py` plus the S1 IC/geometry/RHS modules.
+- `IM-02S2` is now closed: BASS S2 owns live packet-local photon geodesics and screen-basis transport, projected electron-frame Thomson sourcing across orthogonal and tilted paths, visibility/reionization event markers plus a live tilted-visibility wrapper, explicit startup gating, and a geometry-backed seed-constraint projection surface under `htt/bass/{transport,collision,recombination,hierarchy,closure}/*`.
+- `IM-02S2` verification is green for the touched S2 scope: packet-local pytest `24 passed`, broader touched-surface pytest `422 passed`, transport/integrator pytest `85 passed`, and `py_compile` passed.
+- `IM-02S2` also carries a minimal numerical safeguard in the legacy collision helpers: tiny negative interpolation noise in `Gamma_T` (`|Gamma_T| < 1e-7`) is clipped to zero at the auxiliary surface so table-edge undershoot does not destabilize the current integrator while runtime retargeting is still pending.
 - Prompt list 01 is now complete: every skeleton lane has an audit note, machine-readable carry-forward, and a frozen write-scope boundary.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
@@ -67,10 +71,9 @@
 
 If working in one thread, start the solver critical path:
 
-1. `IM-02S2`
-2. `IM-03S3A`
-3. `IM-04O`
-4. `IM-08V`
+1. `IM-03S3A`
+2. `IM-04O`
+3. `IM-08V`
 
 If parallel threads are available, start these side lanes immediately while the solver path begins:
 
@@ -85,7 +88,7 @@ If parallel threads are available, start these side lanes immediately while the 
 - Do not merge MIO certificate semantics into HTT or BASS.
 - Do not generate figures or manuscript claims from non-manifest artifacts.
 - Do not route new VER2 work back onto the reduced `einstein_bianchi` background engine; `htt/bass/background/evolution.py` and the S1 IC/geometry/RHS modules are now the implementation anchor.
-- Do not silently treat the new S2 shells as executable solver completions; the real runtime binding still belongs to `SK-03S3` and later implementation packets.
+- Do not silently treat the new S2 packet-local implementations as full solver completion; end-to-end runtime/orchestrator binding still belongs to `IM-03S3A`.
 - Do not silently treat the new S3 shells as executable solver completion either; they freeze runtime/output ownership, but Tier A/Tier B numerics and observable extraction still require later implementation packets.
 - Do not silently promote `sparse_mode_block_proxy` into a full BiPoSH claim surface; executable O-lane work must replace or discharge that caveat explicitly.
 - Do not treat rank-blocked `FullCovMESReport` artifacts as weak covariance evidence; they are explicit no-claim outputs.

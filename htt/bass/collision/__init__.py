@@ -7,15 +7,17 @@ ownership and rate-factor contracts.
 from bass.collision.electron_frame import (
     ElectronFrameRate,
     ElectronFrameThomsonContext,
-    ThomsonProjectionStub,
+    ProjectedThomsonSource,
     electron_frame_rate_factor,
+    project_thomson_source,
     project_thomson_source_stub,
 )
 
 __all__ = [
     "ElectronFrameRate",
     "ElectronFrameThomsonContext",
-    "ThomsonProjectionStub",
+    "ProjectedThomsonSource",
     "electron_frame_rate_factor",
+    "project_thomson_source",
     "project_thomson_source_stub",
 ]
