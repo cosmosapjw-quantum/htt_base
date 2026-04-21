@@ -1,6 +1,6 @@
 {
   "allowed_claims": [
-    "exploratory degeneracy summary"
+    "conditional local-vs-global discrimination summary"
   ],
   "evidence_refs": [
     "htt.ver2.export.discrimination_matrix"
@@ -13,33 +13,40 @@
     "artifact_id": "htt.ver2.export.discrimination_matrix",
     "artifact_path": "docs/ver2_upgrade/generated/artifacts/htt_ver2_export_discrimination_matrix.json",
     "caveats": [
-      "diagnostic_only",
-      "observer_vs_source_not_posterior_odds",
-      "local_global_degeneracy_summary"
+      "pre_inference_only",
+      "not_posterior_odds"
     ],
-    "claim_tier": "exploratory",
-    "code_version": "ver2-skeleton",
+    "claim_tier": "conditional",
+    "code_version": "ver2-d1",
     "config_hash": "d6dd4b4669ca01fb",
-    "created_by": "htt.infer.local_global_discrimination",
+    "created_by": "htt.infer.local_global_discrimination.build_discrimination_matrix",
     "failed_gates": [],
-    "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+    "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
     "implementation_scope": "htt",
-    "input_hashes": [],
+    "input_hashes": [
+      "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+      "bass.ver2.export.solver_core_output_tier_b.atlas_lite"
+    ],
     "owner": "HTT",
     "passed_gates": [],
-    "production_status": "diagnostic_only",
+    "production_status": "production_candidate",
     "required_gates": [],
-    "schema_version": "ver2-v1",
-    "statistics_definitions": {}
+    "schema_version": "ver2-v9",
+    "statistics_definitions": {
+      "atlas_available": true,
+      "mock_coverage_status": "adequate",
+      "selection_mode": "mock_calibrated",
+      "sky_support_hash": "sky-ver2-d1",
+      "surface": "DiscriminationMatrix"
+    }
   },
   "notes": [
-    "diagnostic_only",
-    "observer_vs_source_not_posterior_odds",
-    "local_global_degeneracy_summary"
+    "pre_inference_only",
+    "not_posterior_odds"
   ],
   "payload": {
     "claim_tier_by_pair": {
-      "local_boost|global_tilt": "exploratory"
+      "global_tilt|local_boost": "conditional"
     },
     "hypotheses": [
       "local_boost",
@@ -49,40 +56,48 @@
       "artifact_id": "htt.ver2.export.discrimination_matrix",
       "artifact_path": "docs/ver2_upgrade/generated/artifacts/htt_ver2_export_discrimination_matrix.json",
       "caveats": [
-        "diagnostic_only",
-        "observer_vs_source_not_posterior_odds",
-        "local_global_degeneracy_summary"
+        "pre_inference_only",
+        "not_posterior_odds"
       ],
-      "claim_tier": "exploratory",
-      "code_version": "ver2-skeleton",
+      "claim_tier": "conditional",
+      "code_version": "ver2-d1",
       "config_hash": "d6dd4b4669ca01fb",
-      "created_by": "htt.infer.local_global_discrimination",
+      "created_by": "htt.infer.local_global_discrimination.build_discrimination_matrix",
       "failed_gates": [],
-      "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+      "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
       "implementation_scope": "htt",
-      "input_hashes": [],
+      "input_hashes": [
+        "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+        "bass.ver2.export.solver_core_output_tier_b.atlas_lite"
+      ],
       "owner": "HTT",
       "passed_gates": [],
-      "production_status": "diagnostic_only",
+      "production_status": "production_candidate",
       "required_gates": [],
-      "schema_version": "ver2-v1",
-      "statistics_definitions": {}
+      "schema_version": "ver2-v9",
+      "statistics_definitions": {
+        "atlas_available": true,
+        "mock_coverage_status": "adequate",
+        "selection_mode": "mock_calibrated",
+        "sky_support_hash": "sky-ver2-d1",
+        "surface": "DiscriminationMatrix"
+      }
     },
     "overlap_matrix": [
       [
         1.0,
-        0.8
+        0.8660254037844387
       ],
       [
-        0.8,
+        0.8660254037844387,
         1.0
       ]
     ],
     "recommended_next_observable": {
-      "local_boost|global_tilt": "depth_direction_coherence"
+      "global_tilt|local_boost": "depth_direction_coherence"
     }
   },
-  "summary": "HTT discrimination matrix keeps observer-side and source-side hypotheses separate.",
+  "summary": "HTT discrimination matrix provides a bounded pre-inference local-vs-global separation audit.",
   "title": "Local-vs-global discrimination matrix",
   "topic": "local_global_discrimination"
 }

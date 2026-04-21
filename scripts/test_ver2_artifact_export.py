@@ -55,6 +55,17 @@ def test_local_global_pack_reflects_calibrated_conditional_discrimination() -> N
     assert pack.production_status == "production_candidate"
 
 
+def test_validation_pack_carries_representative_family_sweep_evidence() -> None:
+    exporter = _load_export_module()
+    records, packs = exporter.build_export_bundle()
+    family_sweep = records["family_sweep"]
+    pack = next(pack for pack in packs if pack.pack_id == "E")
+    assert family_sweep.manifest.claim_tier == "conditional"
+    assert "representative_tilted_runtime_blocked" in family_sweep.manifest.caveats
+    assert family_sweep.payload["evidence"]["campaign_id"] == "validation.bass_representative_family_sweep"
+    assert any(record.key == "family_sweep" for record in pack.artifacts)
+
+
 def test_scan_figures_blocks_missing_manifest_and_accepts_generated_override(
     tmp_path: Path,
 ) -> None:

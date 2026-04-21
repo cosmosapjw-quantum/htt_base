@@ -21,7 +21,7 @@
     "config_hash": "d61c4d60e718c7cc",
     "created_by": "mio.diagnostics.predictive_residuals v0.2",
     "failed_gates": [],
-    "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+    "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
     "implementation_scope": "mio",
     "input_hashes": [
       "bass.ver2.export.solver_core_output_tier_b.observable_vector",
@@ -67,10 +67,14 @@
       "tsc_propagation_pending:EE",
       "tsc_propagation_pending:TE",
       "tsc_propagation_pending:TT",
+      "tsc_claim_ceiling:BB=blocked",
+      "tsc_claim_ceiling:EE=exploratory",
+      "tsc_claim_ceiling:TE=exploratory",
+      "tsc_claim_ceiling:TT=exploratory",
       "tsc_channel_responsibility:BB=trace_only__bb_claim_forbidden",
       "tsc_channel_responsibility:EE=source_adequate__propagation_pending/trace_ok__spin2_required",
       "tsc_channel_responsibility:TE=source_adequate__propagation_pending/trace_ok__spin2_required/te_mixed_channel_requires_spin2",
-      "tsc_channel_responsibility:TT=source_adequate__propagation_pending"
+      "tsc_channel_responsibility:TT=source_adequate__propagation_pending/observable_bridge_missing_state_residual"
     ],
     "config_hash": "d61c4d60e718c7cc",
     "consistency_metrics": {
@@ -110,7 +114,7 @@
       "tsc_overlay_diagnostic_only"
     ],
     "generated_by": "mio.diagnostics.predictive_residuals v0.2",
-    "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+    "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
     "htt_cross_check_suggested": {
       "compare_to": "htt.core.advanced_diagnostics.posterior_predictive_report_artifact",
       "expected_relation": "large residual slices should line up with HTT posterior-predictive stress points"
@@ -133,7 +137,7 @@
       "config_hash": "d61c4d60e718c7cc",
       "created_by": "mio.diagnostics.predictive_residuals v0.2",
       "failed_gates": [],
-      "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+      "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
       "implementation_scope": "mio",
       "input_hashes": [
         "bass.ver2.export.solver_core_output_tier_b.observable_vector",

@@ -63,10 +63,11 @@ from bass.runtime import (  # noqa: E402
     SolverFeatureFlags,
     SolverTier,
     execute_tier_a_validation_solver,
-    execute_tier_b_lowell_solver,
+    execute_tier_b_solver,
 )
 from bass.spectrum import CutoffCampaignSpec  # noqa: E402
 from bass.species.registry import SpeciesBackgroundRegistry  # noqa: E402
+from bass.validation import build_representative_family_sweep_evidence  # noqa: E402
 from common.claim_ledger import claim_entry_to_dict  # noqa: E402
 from common.contracts import (  # noqa: E402
     ArtifactManifest,
@@ -418,7 +419,7 @@ def _build_live_runtime_runs() -> tuple[object, object]:
     integrator_config = _integrator_config()
     k_grid_mpc = np.array([1.0e-4, 2.0e-4], dtype=np.float64)
     feature_flags = _feature_flags()
-    tier_b_run = execute_tier_b_lowell_solver(
+    tier_b_run = execute_tier_b_solver(
         manifest=_solver_manifest("solver_core_output_tier_b"),
         bianchi_type="I",
         species=species,
@@ -728,6 +729,25 @@ def _build_export_records() -> dict[str, ArtifactRecord]:
             "theorem_count": len(registry_payload["theorem_map"]),
         },
     )
+    family_sweep_evidence = build_representative_family_sweep_evidence()
+    family_sweep_manifest = _make_manifest(
+        artifact_id="bass.ver2.export.representative_family_sweep",
+        artifact_path=_artifact_path("bass_ver2_export_representative_family_sweep"),
+        owner="BASS",
+        implementation_scope="canonical_BASS",
+        claim_tier="conditional",
+        production_status="production_candidate",
+        input_hashes=("validation.bass_representative_family_sweep",),
+        caveats=tuple(family_sweep_evidence.no_claim_conditions),
+        required_gates=("runtime", "validation"),
+        passed_gates=("runtime", "validation") if family_sweep_evidence.passed else ("runtime",),
+        failed_gates=() if family_sweep_evidence.passed else ("validation",),
+        statistics_definitions={
+            "surface": "RepresentativeFamilySweepEvidence",
+            "campaign_id": family_sweep_evidence.campaign_id,
+            "bianchi_type": family_sweep_evidence.bianchi_type,
+        },
+    )
 
     records = {
         "observable": ArtifactRecord(
@@ -887,6 +907,28 @@ def _build_export_records() -> dict[str, ArtifactRecord]:
             evidence_refs=(registry_manifest.artifact_id,),
             notes=("warn_campaigns_remain_no_claim",),
         ),
+        "family_sweep": ArtifactRecord(
+            key="family_sweep",
+            title="Representative family sweep evidence",
+            topic="equivalence_classes",
+            pack_id="E",
+            manifest=family_sweep_manifest,
+            payload={
+                "manifest": asdict(family_sweep_manifest),
+                "evidence": asdict(family_sweep_evidence),
+            },
+            summary="Representative orthogonal family sweep is executable for I/V/VII_0/VIII while tilted runtime blockers remain explicit no-claim conditions.",
+            allowed_claims=(
+                "bounded representative orthogonal family sweep summary",
+                "explicit tilted runtime blocker summary",
+            ),
+            forbidden_claims=(
+                "tilted_runtime_executed_claim",
+                "non_type_i_exact_geometry_claim",
+            ),
+            evidence_refs=("validation.bass_representative_family_sweep",),
+            notes=tuple(family_sweep_evidence.no_claim_conditions),
+        ),
     }
     return records
 
@@ -942,10 +984,10 @@ def _build_pack_records(records: dict[str, ArtifactRecord]) -> tuple[PackRecord,
             "Equivalence and validation classes",
             "equivalence_classes",
             "fig_ver2e_validation_campaign_matrix",
-            ("validation_registry",),
+            ("validation_registry", "family_sweep"),
             (
-                "The validation registry is exported as a manifest-backed coverage matrix.",
-                "Warn campaigns remain explicit no-claim gates until later manuscript closure.",
+                "The validation registry is exported together with the representative family sweep evidence.",
+                "Orthogonal I/V/VII_0/VIII are runnable on the bounded native route, while tilted representative branches remain explicit no-claim blockers.",
             ),
         ),
     )

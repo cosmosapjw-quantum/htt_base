@@ -16,12 +16,14 @@
     ],
     "claim_tier": "exploratory",
     "code_version": "ver2-d1",
-    "config_hash": "3497cb63e240589f",
+    "config_hash": "f064dd29b306d617",
     "created_by": "scripts.ver2_artifact_export.py",
     "failed_gates": [],
-    "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+    "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
     "implementation_scope": "common",
     "input_hashes": [
+      "validation.bass_native_runtime_bridge",
+      "validation.bass_representative_family_sweep",
       "validation.observable_null_proxy",
       "validation.synthetic_injection",
       "validation.mes_claim_gates",
@@ -33,9 +35,9 @@
     "required_gates": [],
     "schema_version": "ver2-v9",
     "statistics_definitions": {
-      "campaign_count": 4,
+      "campaign_count": 6,
       "surface": "ValidationRegistrySummary",
-      "theorem_count": 7
+      "theorem_count": 9
     }
   },
   "notes": [
@@ -50,12 +52,14 @@
       ],
       "claim_tier": "exploratory",
       "code_version": "ver2-d1",
-      "config_hash": "3497cb63e240589f",
+      "config_hash": "f064dd29b306d617",
       "created_by": "scripts.ver2_artifact_export.py",
       "failed_gates": [],
-      "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+      "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
       "implementation_scope": "common",
       "input_hashes": [
+        "validation.bass_native_runtime_bridge",
+        "validation.bass_representative_family_sweep",
         "validation.observable_null_proxy",
         "validation.synthetic_injection",
         "validation.mes_claim_gates",
@@ -67,13 +71,201 @@
       "required_gates": [],
       "schema_version": "ver2-v9",
       "statistics_definitions": {
-        "campaign_count": 4,
+        "campaign_count": 6,
         "surface": "ValidationRegistrySummary",
-        "theorem_count": 7
+        "theorem_count": 9
       }
     },
     "registry": {
       "campaigns": [
+        {
+          "artifact_refs": [
+            "bass.validation.type_i_runtime_evidence",
+            "bass.runtime.trace"
+          ],
+          "campaign_id": "validation.bass_native_runtime_bridge",
+          "categories": [
+            "baseline_reproduction",
+            "adversarial_edge",
+            "physics_sanity",
+            "numerical_stability",
+            "regression"
+          ],
+          "check_links": [
+            {
+              "artifact_refs": [
+                "bass.validation.type_i_runtime_evidence"
+              ],
+              "category": "baseline_reproduction",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_passes_with_shipped_thresholds",
+              "purpose": "confirm that live observer-neutral outputs recover the Type-I isotropic-null branch",
+              "test_id": "type_i_observable_null_recovery"
+            },
+            {
+              "artifact_refs": [
+                "bass.runtime.trace"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_injects_seed_even_without_startup_manifold",
+              "purpose": "confirm that startup-manifold deactivation does not erase native seed injection",
+              "test_id": "native_seed_projection_survives_without_startup"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.type_i_runtime_evidence"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/bass/runtime/test_ver2_tier_a_validation.py::test_compare_tier_a_to_tier_b_reports_match_for_shared_bridge",
+              "purpose": "bind the shipped native route to the declared Tier-A validation bridge",
+              "test_id": "tier_a_tier_b_type_i_bridge_matches"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.type_i_runtime_evidence"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_passes_with_shipped_thresholds",
+              "purpose": "verify the live L=4/6/8 cutoff campaign remains bounded on the shipped Type-I route",
+              "test_id": "tier_b_cutoff_campaign_stays_bounded"
+            },
+            {
+              "artifact_refs": [
+                "bass.runtime.trace"
+              ],
+              "category": "regression",
+              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks",
+              "purpose": "guard the exact Type-I propagator plus live S1/S2/S3 hook chain against regressions",
+              "test_id": "tier_b_runtime_consumes_live_hooks_and_exact_type_i_propagator"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.type_i_runtime_evidence"
+              ],
+              "category": "regression",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_records_missing_late_time_reionization_window",
+              "purpose": "require the shipped runtime to mark the missing late-time reionization source window as an explicit no-claim condition",
+              "test_id": "tier_b_runtime_explicitly_flags_missing_late_time_reionization_window"
+            }
+          ],
+          "implementation_scope": "canonical_BASS",
+          "injection_manifest_refs": [
+            "validation.injection.native_seed_startup"
+          ],
+          "manuscript_blocking": false,
+          "no_claim_conditions": [
+            "tier_a_validation_bridge_only",
+            "non_type_i_exact_propagator_missing",
+            "late_time_reionization_window_missing"
+          ],
+          "notes": [
+            "Executable BF-05 campaign: passes for the shipped Type-I native runtime route only.",
+            "The default gate runs L=4/6 cutoffs; L=8 remains an explicit extended validation run rather than the default check path.",
+            "This does not validate non-Type-I exact propagators or full BiPoSH science claims.",
+            "The shipped runtime does not yet cover the late-time reionization source window; that missing coverage must stay explicit."
+          ],
+          "null_manifest_refs": [
+            "null.bass.type_i_native_runtime"
+          ],
+          "owner": "BASS",
+          "runbook_refs": [
+            "runbook.bass_native_runtime"
+          ],
+          "status": "pass",
+          "theorem_refs": [
+            "V8_bass_native_runtime_bridge"
+          ],
+          "title": "Native Type-I Tier-B runtime bridge and cutoff evidence"
+        },
+        {
+          "artifact_refs": [
+            "bass.validation.representative_family_sweep",
+            "bass.runtime.trace"
+          ],
+          "campaign_id": "validation.bass_representative_family_sweep",
+          "categories": [
+            "baseline_reproduction",
+            "adversarial_edge",
+            "physics_sanity",
+            "numerical_stability",
+            "regression"
+          ],
+          "check_links": [
+            {
+              "artifact_refs": [
+                "bass.validation.representative_family_sweep"
+              ],
+              "category": "baseline_reproduction",
+              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_orthogonal_families_execute_with_expected_propagator_realizations",
+              "purpose": "run the representative orthogonal family subset I, V, VII_0, VIII end-to-end on the bounded native route",
+              "test_id": "representative_orthogonal_families_run_end_to_end"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.representative_family_sweep"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_tilted_family_sweep_is_controlledly_blocked",
+              "purpose": "require representative tilted families to fail loudly at the current Codazzi gate rather than hiding the block",
+              "test_id": "representative_tilted_branches_fail_controlledly"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.representative_family_sweep"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_representative_family_sweep_evidence_passes_with_bounded_orthogonal_subset",
+              "purpose": "keep family-specific propagator realizations and theory-family metadata aligned with the algebra registry",
+              "test_id": "representative_family_realizations_are_algebra_aware"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.representative_family_sweep"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_representative_family_sweep_evidence_passes_with_bounded_orthogonal_subset",
+              "purpose": "guard the bounded representative orthogonal subset against non-finite low-ell outputs",
+              "test_id": "representative_family_outputs_stay_finite_on_bounded_low_ell_grid"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.representative_family_sweep"
+              ],
+              "category": "regression",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_representative_family_sweep_payload_is_json_ready",
+              "purpose": "preserve global-tilt vs local-boost and orthogonal-branch contracts on exported family-sweep payloads",
+              "test_id": "representative_family_sweep_preserves_tilt_boost_contracts"
+            }
+          ],
+          "implementation_scope": "canonical_BASS",
+          "injection_manifest_refs": [
+            "validation.injection.representative_family_seed_startup"
+          ],
+          "manuscript_blocking": false,
+          "no_claim_conditions": [
+            "representative_family_sweep_only",
+            "representative_tilted_runtime_blocked",
+            "non_type_i_exact_propagator_missing",
+            "late_time_reionization_window_missing",
+            "direction_resolved_reionization_microphysics_missing"
+          ],
+          "notes": [
+            "Executable preliminary campaign: passes for the representative orthogonal subset I, V, VII_0, VIII.",
+            "Tilted representative branches remain explicit runtime blockers on the current global-tilt initial-condition construction and must not be relabelled as executed science runs.",
+            "This campaign is for preliminary result-pack production, not full geometry identification or non-Type-I exact propagator promotion."
+          ],
+          "null_manifest_refs": [
+            "null.bass.representative_family_sweep"
+          ],
+          "owner": "BASS",
+          "runbook_refs": [
+            "runbook.bass_representative_family_sweep"
+          ],
+          "status": "pass",
+          "theorem_refs": [
+            "V8_bass_representative_family_sweep"
+          ],
+          "title": "Representative preliminary family sweep with explicit tilted runtime blockers"
+        },
         {
           "artifact_refs": [
             "bass.observable_vector.proxy",
@@ -216,7 +408,7 @@
                 "bass.runtime.trace"
               ],
               "category": "regression",
-              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_lowell_solver_consumes_live_s1_s2_s3_hooks",
+              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks",
               "purpose": "keep the live S1/S2/S3 hook chain attached to the validation harness",
               "test_id": "tier_b_runtime_consumes_live_hooks"
             }
@@ -427,6 +619,83 @@
       "hostile_audit_runbooks": [
         {
           "adversarial_checks": [
+            "native_seed_projection_survives_without_startup"
+          ],
+          "artifact_refs": [
+            "bass.validation.type_i_runtime_evidence"
+          ],
+          "baseline_checks": [
+            "type_i_observable_null_recovery"
+          ],
+          "campaign_refs": [
+            "validation.bass_native_runtime_bridge"
+          ],
+          "implementation_scope": "canonical_BASS",
+          "numerical_checks": [
+            "tier_b_cutoff_campaign_stays_bounded"
+          ],
+          "owner": "BASS",
+          "physics_checks": [
+            "tier_a_tier_b_type_i_bridge_matches"
+          ],
+          "quarantine_conditions": [
+            "tier_a_validation_bridge_only",
+            "non_type_i_exact_propagator_missing",
+            "late_time_reionization_window_missing",
+            "startup_manifold_disabled",
+            "seed_projection_not_ready"
+          ],
+          "regression_checks": [
+            "tier_b_runtime_consumes_live_hooks_and_exact_type_i_propagator",
+            "tier_b_runtime_explicitly_flags_missing_late_time_reionization_window"
+          ],
+          "runbook_id": "runbook.bass_native_runtime",
+          "theorem_refs": [
+            "V8_bass_native_runtime_bridge"
+          ],
+          "title": "BASS native runtime hostile audit"
+        },
+        {
+          "adversarial_checks": [
+            "representative_tilted_branches_fail_controlledly"
+          ],
+          "artifact_refs": [
+            "bass.validation.representative_family_sweep"
+          ],
+          "baseline_checks": [
+            "representative_orthogonal_families_run_end_to_end"
+          ],
+          "campaign_refs": [
+            "validation.bass_representative_family_sweep"
+          ],
+          "implementation_scope": "canonical_BASS",
+          "numerical_checks": [
+            "representative_family_outputs_stay_finite_on_bounded_low_ell_grid"
+          ],
+          "owner": "BASS",
+          "physics_checks": [
+            "representative_family_realizations_are_algebra_aware"
+          ],
+          "quarantine_conditions": [
+            "representative_family_sweep_only",
+            "representative_tilted_runtime_blocked",
+            "non_type_i_exact_propagator_missing",
+            "late_time_reionization_window_missing",
+            "direction_resolved_reionization_microphysics_missing",
+            "startup_manifold_disabled",
+            "seed_projection_not_ready"
+          ],
+          "regression_checks": [
+            "representative_family_sweep_preserves_tilt_boost_contracts"
+          ],
+          "runbook_id": "runbook.bass_representative_family_sweep",
+          "theorem_refs": [
+            "V8_bass_representative_family_sweep"
+          ],
+          "title": "BASS representative family sweep hostile audit"
+        },
+        {
+          "adversarial_checks": [
             "rotating_types_activate_offdiag_blocks",
             "mes_rank_failure_returns_no_claim"
           ],
@@ -520,6 +789,53 @@
       "injection_manifests": [
         {
           "artifact_refs": [
+            "bass.validation.type_i_runtime_evidence"
+          ],
+          "campaign_refs": [
+            "validation.bass_native_runtime_bridge"
+          ],
+          "downgrade_conditions": [
+            "startup_manifold_disabled",
+            "seed_projection_not_ready"
+          ],
+          "hypothesis_family": "native_seed_startup",
+          "injection_id": "validation.injection.native_seed_startup",
+          "required_null_refs": [
+            "null.bass.type_i_native_runtime"
+          ],
+          "scan_volume_hash": "scan.bass.native.seed.v1",
+          "status": "pass",
+          "target_statistic": "seeded_quadrupole_recovery",
+          "theorem_refs": [
+            "V8_bass_native_runtime_bridge"
+          ]
+        },
+        {
+          "artifact_refs": [
+            "bass.validation.representative_family_sweep"
+          ],
+          "campaign_refs": [
+            "validation.bass_representative_family_sweep"
+          ],
+          "downgrade_conditions": [
+            "startup_manifold_disabled",
+            "seed_projection_not_ready",
+            "representative_tilted_runtime_blocked"
+          ],
+          "hypothesis_family": "representative_family_seed_startup",
+          "injection_id": "validation.injection.representative_family_seed_startup",
+          "required_null_refs": [
+            "null.bass.representative_family_sweep"
+          ],
+          "scan_volume_hash": "scan.bass.representative.seed.v1",
+          "status": "pass",
+          "target_statistic": "family_seed_projection_readiness",
+          "theorem_refs": [
+            "V8_bass_representative_family_sweep"
+          ]
+        },
+        {
+          "artifact_refs": [
             "validation.injection.template_amplitude"
           ],
           "campaign_refs": [
@@ -570,6 +886,50 @@
       ],
       "manuscript_export_blocked": false,
       "null_manifests": [
+        {
+          "artifact_refs": [
+            "bass.validation.type_i_runtime_evidence"
+          ],
+          "campaign_refs": [
+            "validation.bass_native_runtime_bridge"
+          ],
+          "ensemble_id": "null.bass.type_i_native_runtime",
+          "no_claim_conditions": [
+            "tier_a_validation_bridge_only",
+            "non_type_i_exact_propagator_missing",
+            "late_time_reionization_window_missing"
+          ],
+          "null_family": "type_i_native_runtime_null",
+          "observable_basis": "ver2_native_pstf_sphere_reconstruction",
+          "scan_volume_hash": "scan.bass.native.type_i.v1",
+          "status": "pass",
+          "theorem_refs": [
+            "V8_bass_native_runtime_bridge"
+          ]
+        },
+        {
+          "artifact_refs": [
+            "bass.validation.representative_family_sweep"
+          ],
+          "campaign_refs": [
+            "validation.bass_representative_family_sweep"
+          ],
+          "ensemble_id": "null.bass.representative_family_sweep",
+          "no_claim_conditions": [
+            "representative_family_sweep_only",
+            "representative_tilted_runtime_blocked",
+            "non_type_i_exact_propagator_missing",
+            "late_time_reionization_window_missing",
+            "direction_resolved_reionization_microphysics_missing"
+          ],
+          "null_family": "representative_orthogonal_family_runtime_null",
+          "observable_basis": "ver2_native_pstf_sphere_reconstruction",
+          "scan_volume_hash": "scan.bass.representative.family.v1",
+          "status": "pass",
+          "theorem_refs": [
+            "V8_bass_representative_family_sweep"
+          ]
+        },
         {
           "artifact_refs": [
             "validation.null.flrw_isotropic_gaussian_lowell"
@@ -665,6 +1025,7 @@
           "implementation_scope": "bass_py",
           "no_claim_conditions": [
             "sparse_mode_block_proxy",
+            "basis_reduced_not_full_biposh",
             "missing_biposh_basis"
           ],
           "owner": "BASS",
@@ -731,6 +1092,151 @@
           ],
           "theorem_id": "V8_template_injection_recovery",
           "theorem_label": "deterministic template injections must be tracked with explicit scan-volume metadata"
+        },
+        {
+          "artifact_refs": [
+            "bass.validation.type_i_runtime_evidence",
+            "bass.runtime.trace"
+          ],
+          "claim_guard": "this executable evidence validates only the shipped Type-I native runtime bridge and does not promote non-Type-I exact propagators or full BiPoSH science claims",
+          "implementation_scope": "canonical_BASS",
+          "no_claim_conditions": [
+            "tier_a_validation_bridge_only",
+            "non_type_i_exact_propagator_missing",
+            "late_time_reionization_window_missing"
+          ],
+          "owner": "BASS",
+          "source_docs": [
+            "docs/ver2_upgrade/lowell_bianchi_solver_SDD_PR_WBS_pstf_tetrad.md",
+            "docs/ver2_upgrade/VER2_PHASE_PROMPTS_03_BASS_COMPLETION.md"
+          ],
+          "test_links": [
+            {
+              "artifact_refs": [
+                "bass.validation.type_i_runtime_evidence"
+              ],
+              "category": "baseline_reproduction",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_passes_with_shipped_thresholds",
+              "purpose": "the shipped Type-I native route recovers the isotropic-null observable status after live reconstruction",
+              "test_id": "type_i_observable_null_recovery"
+            },
+            {
+              "artifact_refs": [
+                "bass.runtime.trace"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_injects_seed_even_without_startup_manifold",
+              "purpose": "seed injection remains live even when the startup manifold is not selected",
+              "test_id": "native_seed_projection_survives_without_startup"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.type_i_runtime_evidence"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/bass/runtime/test_ver2_tier_a_validation.py::test_compare_tier_a_to_tier_b_reports_match_for_shared_bridge",
+              "purpose": "Tier-A validation and native Tier-B Type-I observables agree within a declared tolerance",
+              "test_id": "tier_a_tier_b_type_i_bridge_matches"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.type_i_runtime_evidence"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_passes_with_shipped_thresholds",
+              "purpose": "the executable default cutoff campaign remains bounded on the shipped native route",
+              "test_id": "tier_b_cutoff_campaign_stays_bounded"
+            },
+            {
+              "artifact_refs": [
+                "bass.runtime.trace"
+              ],
+              "category": "regression",
+              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks",
+              "purpose": "runtime ownership, live hooks, and exact Type-I propagator realization remain attached to the shipped route",
+              "test_id": "tier_b_runtime_consumes_live_hooks_and_exact_type_i_propagator"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.type_i_runtime_evidence"
+              ],
+              "category": "regression",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_records_missing_late_time_reionization_window",
+              "purpose": "the shipped Type-I runtime explicitly records that the late-time reionization source window is not covered by the current runtime domain",
+              "test_id": "tier_b_runtime_explicitly_flags_missing_late_time_reionization_window"
+            }
+          ],
+          "theorem_id": "V8_bass_native_runtime_bridge",
+          "theorem_label": "native Type-I Tier-B runtime is reproducible, bounded across cutoffs, and matched by the Tier-A validation bridge"
+        },
+        {
+          "artifact_refs": [
+            "bass.validation.representative_family_sweep",
+            "bass.runtime.trace"
+          ],
+          "claim_guard": "this executable evidence validates only the bounded representative family sweep and keeps tilted runtime blockers and non-Type-I exactness debt explicit",
+          "implementation_scope": "canonical_BASS",
+          "no_claim_conditions": [
+            "representative_family_sweep_only",
+            "representative_tilted_runtime_blocked",
+            "non_type_i_exact_propagator_missing",
+            "late_time_reionization_window_missing",
+            "direction_resolved_reionization_microphysics_missing"
+          ],
+          "owner": "BASS",
+          "source_docs": [
+            "docs/ver2_upgrade/VER2_PHASE_PROMPTS_05_PRELIMINARY_RESULTS.md",
+            "docs/ver2_upgrade/lowell_bianchi_solver_SDD_PR_WBS_pstf_tetrad.md"
+          ],
+          "test_links": [
+            {
+              "artifact_refs": [
+                "bass.validation.representative_family_sweep"
+              ],
+              "category": "baseline_reproduction",
+              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_orthogonal_families_execute_with_expected_propagator_realizations",
+              "purpose": "the representative orthogonal family subset runs end-to-end on the bounded native Tier-B path",
+              "test_id": "representative_orthogonal_families_run_end_to_end"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.representative_family_sweep"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_tilted_family_sweep_is_controlledly_blocked",
+              "purpose": "tilted representative families remain explicit controlled blocks rather than silently collapsing into orthogonal or observer-boost semantics",
+              "test_id": "representative_tilted_branches_fail_controlledly"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.representative_family_sweep"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_representative_family_sweep_evidence_passes_with_bounded_orthogonal_subset",
+              "purpose": "family-specific propagator realizations remain algebra-aware and machine-readable across the representative orthogonal subset",
+              "test_id": "representative_family_realizations_are_algebra_aware"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.representative_family_sweep"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_representative_family_sweep_evidence_passes_with_bounded_orthogonal_subset",
+              "purpose": "bounded low-ell representative-family outputs remain finite on the shipped native runtime grid",
+              "test_id": "representative_family_outputs_stay_finite_on_bounded_low_ell_grid"
+            },
+            {
+              "artifact_refs": [
+                "bass.validation.representative_family_sweep"
+              ],
+              "category": "regression",
+              "path": "htt/bass/validation/test_ver2_campaign_evidence.py::test_representative_family_sweep_payload_is_json_ready",
+              "purpose": "global tilt vs local boost and orthogonal-vs-tilted contracts stay explicit on exported family-sweep payloads",
+              "test_id": "representative_family_sweep_preserves_tilt_boost_contracts"
+            }
+          ],
+          "theorem_id": "V8_bass_representative_family_sweep",
+          "theorem_label": "representative preliminary family sweep keeps orthogonal I/V/VII_0/VIII executable while tilted runtime blockers remain explicit"
         },
         {
           "artifact_refs": [
@@ -863,6 +1369,105 @@
           "test_links": [
             {
               "artifact_refs": [
+                "tsc.source_bridge_report"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/tsc/source/test_thomson_bridge.py::test_build_source_bridge_report_from_samples_infers_exact_trace_labels_and_primitives",
+              "purpose": "on-manifold source bridge preserves exact adequacy labels and required primitives",
+              "test_id": "tsc_source_exact_trace_bridge"
+            },
+            {
+              "artifact_refs": [
+                "tsc.source_bridge_report"
+              ],
+              "category": "baseline_reproduction",
+              "path": "htt/tsc/source/test_quadrupole_conventions.py::test_q_mu_to_legendre_q_conversion_and_inverse_roundtrip",
+              "purpose": "registered Q_mu and q conventions roundtrip without drift",
+              "test_id": "quadrupole_convention_roundtrip"
+            },
+            {
+              "artifact_refs": [
+                "tsc.source_bridge_report"
+              ],
+              "category": "regression",
+              "path": "htt/tsc/source/test_thomson_bridge.py::test_build_source_bridge_report_from_samples_infers_exact_trace_labels_and_primitives",
+              "purpose": "source bridge report carries quadrupole policy tags and spin-2 propagation requirement",
+              "test_id": "source_bridge_provenance_records_quadrupole_policy"
+            },
+            {
+              "artifact_refs": [
+                "tsc.domain_report"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/tsc/admissibility/test_domain.py::test_build_domain_report_invalid_domain_collects_reasons",
+              "purpose": "invalid domains stay explicit and collect blocking reasons instead of degrading silently",
+              "test_id": "domain_invalid_collects_reasons"
+            },
+            {
+              "artifact_refs": [
+                "tsc.domain_report"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/tsc/admissibility/test_domain.py::test_jacobian_sigma_min_guard",
+              "purpose": "near-singular Jacobians stay on the no-claim side of the domain gate",
+              "test_id": "jacobian_sigma_min_guard"
+            },
+            {
+              "artifact_refs": [
+                "tsc.residual_bridge_report"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/tsc/residuals/test_observable_bridge.py::test_collision_residual_alone_cannot_claim_observable_bound",
+              "purpose": "collision residual alone may not be promoted into an observable adequacy claim",
+              "test_id": "collision_only_bridge_is_blocked"
+            },
+            {
+              "artifact_refs": [
+                "tsc.residual_bridge_report"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/tsc/residuals/test_observable_bridge.py::test_state_residual_and_sigma_min_yield_conditional_observable_bound",
+              "purpose": "state residual plus Jacobian control yields only a conditional observable bound",
+              "test_id": "state_residual_yields_conditional_observable_bound"
+            },
+            {
+              "artifact_refs": [
+                "tsc.residual_bridge_report"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/tsc/residuals/test_observable_bridge.py::test_small_sigma_min_blocks_observable_claim_even_with_state_residual",
+              "purpose": "poor conditioning blocks observable claims even when state residuals are available",
+              "test_id": "small_sigma_min_blocks_observable_bound"
+            },
+            {
+              "artifact_refs": [
+                "tsc.channel_budget"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/tsc/budget/test_source_to_channel.py::test_tt_claim_ceiling_requires_state_residual_bridge",
+              "purpose": "TT remains exploratory when the residual bridge lacks state-side control",
+              "test_id": "tt_claim_ceiling_requires_state_bridge"
+            },
+            {
+              "artifact_refs": [
+                "tsc.channel_budget"
+              ],
+              "category": "regression",
+              "path": "htt/tsc/budget/test_source_to_channel.py::test_tt_claim_ceiling_becomes_conditional_with_state_residual_bridge",
+              "purpose": "TT becomes conditional only when the residual bridge and source split stay coherent",
+              "test_id": "tt_claim_ceiling_conditional_with_state_bridge"
+            },
+            {
+              "artifact_refs": [
+                "tsc.channel_budget"
+              ],
+              "category": "regression",
+              "path": "htt/tsc/budget/test_source_to_channel.py::test_validated_budgets_emit_field_bounds_but_keep_bb_claim_blocked",
+              "purpose": "trace-side validation never upgrades BB into an allowed claim",
+              "test_id": "bb_claim_remains_blocked_after_trace_validation"
+            },
+            {
+              "artifact_refs": [
                 "tsc.adequacy_overlay"
               ],
               "category": "regression",
@@ -875,8 +1480,17 @@
                 "tsc.adequacy_overlay"
               ],
               "category": "regression",
+              "path": "htt/tsc/reports/test_json_export.py::test_overlay_export_blocks_exploratory_claim_ceiling_even_when_propagation_validated",
+              "purpose": "publication/export gates remain blocked when claim ceilings stay exploratory",
+              "test_id": "export_blocks_exploratory_claim_ceiling"
+            },
+            {
+              "artifact_refs": [
+                "tsc.adequacy_overlay"
+              ],
+              "category": "regression",
               "path": "htt/tsc/validation/test_theorem_map.py::test_theorem_map_covers_source_budget_and_export_claims",
-              "purpose": "TSC theorem coverage stays anchored to source-budget and export claim ceilings",
+              "purpose": "local theorem coverage stays synchronized with export and claim-ceiling semantics",
               "test_id": "tsc_theorem_map_covers_export_claims"
             }
           ],

@@ -21,7 +21,7 @@
     "config_hash": "182233e44b40f0aa",
     "created_by": "scripts.ver2_artifact_export.py",
     "failed_gates": [],
-    "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+    "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
     "implementation_scope": "tsc",
     "input_hashes": [
       "bass.ver2.export.solver_core_output_tier_b.observable_vector",
@@ -44,10 +44,11 @@
     "channel_budgets": [
       {
         "channel": "TT",
-        "claim_ceiling": "conditional",
+        "claim_ceiling": "exploratory",
         "high_budget": null,
         "labels": [
-          "source_adequate__propagation_pending"
+          "source_adequate__propagation_pending",
+          "observable_bridge_missing_state_residual"
         ],
         "manifest": {
           "artifact_id": "tsc.ver2.export.overlay",
@@ -61,7 +62,7 @@
           "config_hash": "182233e44b40f0aa",
           "created_by": "scripts.ver2_artifact_export.py",
           "failed_gates": [],
-          "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+          "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
           "implementation_scope": "tsc",
           "input_hashes": [
             "bass.ver2.export.solver_core_output_tier_b.observable_vector",
@@ -86,7 +87,7 @@
       },
       {
         "channel": "EE",
-        "claim_ceiling": "conditional",
+        "claim_ceiling": "exploratory",
         "high_budget": null,
         "labels": [
           "source_adequate__propagation_pending",
@@ -104,7 +105,7 @@
           "config_hash": "182233e44b40f0aa",
           "created_by": "scripts.ver2_artifact_export.py",
           "failed_gates": [],
-          "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+          "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
           "implementation_scope": "tsc",
           "input_hashes": [
             "bass.ver2.export.solver_core_output_tier_b.observable_vector",
@@ -129,7 +130,7 @@
       },
       {
         "channel": "TE",
-        "claim_ceiling": "conditional",
+        "claim_ceiling": "exploratory",
         "high_budget": null,
         "labels": [
           "source_adequate__propagation_pending",
@@ -148,7 +149,7 @@
           "config_hash": "182233e44b40f0aa",
           "created_by": "scripts.ver2_artifact_export.py",
           "failed_gates": [],
-          "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+          "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
           "implementation_scope": "tsc",
           "input_hashes": [
             "bass.ver2.export.solver_core_output_tier_b.observable_vector",
@@ -190,7 +191,7 @@
           "config_hash": "182233e44b40f0aa",
           "created_by": "scripts.ver2_artifact_export.py",
           "failed_gates": [],
-          "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+          "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
           "implementation_scope": "tsc",
           "input_hashes": [
             "bass.ver2.export.solver_core_output_tier_b.observable_vector",
@@ -214,6 +215,12 @@
         "trace_budget": null
       }
     ],
+    "channel_claim_ceiling": {
+      "BB": "blocked",
+      "EE": "exploratory",
+      "TE": "exploratory",
+      "TT": "exploratory"
+    },
     "domain_report": {
       "be_eta_nonpositive": null,
       "blocking_reasons": [],
@@ -233,7 +240,7 @@
         "config_hash": "182233e44b40f0aa",
         "created_by": "scripts.ver2_artifact_export.py",
         "failed_gates": [],
-        "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+        "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
         "implementation_scope": "tsc",
         "input_hashes": [
           "bass.ver2.export.solver_core_output_tier_b.observable_vector",
@@ -264,7 +271,7 @@
       "config_hash": "182233e44b40f0aa",
       "created_by": "scripts.ver2_artifact_export.py",
       "failed_gates": [],
-      "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+      "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
       "implementation_scope": "tsc",
       "input_hashes": [
         "bass.ver2.export.solver_core_output_tier_b.observable_vector",
@@ -288,7 +295,8 @@
     },
     "public_caveat_snippet": "TSC source-side checks are available, but propagation validation is still pending for TT, EE, TE. BB remains outside trace-only validation.",
     "publication_blockers": [
-      "propagation_pending:EE,TE,TT"
+      "propagation_pending:EE,TE,TT",
+      "claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory"
     ],
     "publication_ready": false,
     "quarantine_reasons": [],
@@ -316,7 +324,7 @@
         "config_hash": "182233e44b40f0aa",
         "created_by": "scripts.ver2_artifact_export.py",
         "failed_gates": [],
-        "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+        "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
         "implementation_scope": "tsc",
         "input_hashes": [
           "bass.ver2.export.solver_core_output_tier_b.observable_vector",
@@ -340,6 +348,7 @@
     },
     "source_bridge_report": {
       "chart": "one_field",
+      "conversion_to_legendre_q": 0.6666666666666666,
       "eta_correction_indicator": null,
       "labels": [
         "trace_source_exact_on_manifold",
@@ -358,7 +367,7 @@
         "config_hash": "182233e44b40f0aa",
         "created_by": "scripts.ver2_artifact_export.py",
         "failed_gates": [],
-        "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+        "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
         "implementation_scope": "tsc",
         "input_hashes": [
           "bass.ver2.export.solver_core_output_tier_b.observable_vector",
@@ -376,10 +385,13 @@
       "nonlinear_dipole_quartic_correction": null,
       "on_manifold_exact": true,
       "q2_norm": 0.1,
+      "quadrupole_convention": "mu2_minus_one_third",
+      "quadrupole_parameter_name": "Q_mu",
       "required_bass_primitives": [],
       "source_error_bound": 0.01,
       "source_name": "thomson_trace_quadrupole",
-      "source_status": "adequate"
+      "source_status": "adequate",
+      "spin2_propagation_required": true
     },
     "upgrade_recommendation": {
       "current_chart": "one_field",
@@ -400,7 +412,7 @@
         "config_hash": "182233e44b40f0aa",
         "created_by": "scripts.ver2_artifact_export.py",
         "failed_gates": [],
-        "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+        "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
         "implementation_scope": "tsc",
         "input_hashes": [
           "bass.ver2.export.solver_core_output_tier_b.observable_vector",

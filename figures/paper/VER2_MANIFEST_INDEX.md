@@ -101,7 +101,7 @@ Current state:
 | `ch12_mio` | `fig_ch12d_hj01_extraction_real_backbone` | png, pdf, caption | no | `n/a` | `not_checked` | `blocked_no_manifest` |
 | `ch12_mio` | `fig_ch12e_pairwise_separations` | png, pdf, caption | no | `n/a` | `not_checked` | `blocked_no_manifest` |
 | `ver2_generated` | `fig_ver2a_scalar_to_morphology_summary` | png, pdf, caption | yes | `conditional` | `ok` | `manifest_ready` |
-| `ver2_generated` | `fig_ver2b_local_global_discrimination_matrix` | png, pdf, caption | yes | `exploratory` | `ok` | `manifest_ready` |
+| `ver2_generated` | `fig_ver2b_local_global_discrimination_matrix` | png, pdf, caption | yes | `conditional` | `ok` | `manifest_ready` |
 | `ver2_generated` | `fig_ver2c_departure_card_summary` | png, pdf, caption | yes | `exploratory` | `ok` | `manifest_ready` |
 | `ver2_generated` | `fig_ver2d_mio_predictive_residuals` | png, pdf, caption | yes | `conditional` | `ok` | `manifest_ready` |
 | `ver2_generated` | `fig_ver2e_validation_campaign_matrix` | png, pdf, caption | yes | `exploratory` | `ok` | `manifest_ready` |

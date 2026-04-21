@@ -5,7 +5,7 @@
 - claim tier: `exploratory`
 - production status: `diagnostic_only`
 - figure base: `fig_ver2c_departure_card_summary`
-- caveats: report_is_descriptive_until_claim_gates_pass, uncertified_filling_downgraded_to_proxy_score, observer_reconstruction_bridge_pending, TSC source-side checks are available, but propagation validation is still pending for TT, EE, TE. BB remains outside trace-only validation., advisory_only, no_runtime_decision_ownership
+- caveats: report_is_descriptive_until_claim_gates_pass, uncertified_filling_downgraded_to_proxy_score, TSC source-side checks are available, but propagation validation is still pending for TT, EE, TE. BB remains outside trace-only validation., advisory_only, no_runtime_decision_ownership
 
 - x/Q/F/G surfaces are emitted as descriptive cards with attached TSC caveats.
 - Certified filling language remains blocked in this export set.

@@ -22,7 +22,7 @@
     "config_hash": "c44f0739b60c70de",
     "created_by": "scripts.ver2_artifact_export.py",
     "failed_gates": [],
-    "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+    "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
     "implementation_scope": "bass_py",
     "input_hashes": [
       "species:planck2018",
@@ -77,7 +77,7 @@
       "config_hash": "c44f0739b60c70de",
       "created_by": "scripts.ver2_artifact_export.py",
       "failed_gates": [],
-      "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+      "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
       "implementation_scope": "bass_py",
       "input_hashes": [
         "species:planck2018",
@@ -585,6 +585,9 @@
           ]
         }
       },
+      "basis_reduction_status": "sphere_supported_harmonic_sparse",
+      "global_tilt_contract": "orthogonal_branch_zero_global_tilt",
+      "local_boost_contract": "observer_side_only_not_applied_in_bass_output",
       "local_global_degeneracy": {
         "distinguishing_observables": [],
         "offdiag_strength": 0.0,
@@ -597,17 +600,30 @@
         "rotation_strength": 0.0,
         "status": "not_applicable_isotropic"
       },
-      "morphology_representation": "sparse_mode_block_proxy",
+      "morphology_representation": "low_ell_harmonic_sparse_basis",
       "preferred_axis": [
         0.0,
         0.0,
         1.0
-      ]
+      ],
+      "tilt_boost_separation": "explicit_nonmerged"
     },
-    "theory_family": "I",
+    "theory_family": "I_orthogonal",
     "validity_domain": {
-      "covariance_representation": "sparse_mode_block_proxy",
+      "angular_reconstruction_guard": {
+        "available": true,
+        "coefficient_representation": "ver2_native_pstf_final_slice",
+        "passed": true,
+        "quadrature_points": 231,
+        "quadrature_rule": "gauss_legendre_x_uniform_phi_tensor_product",
+        "reason": "ok"
+      },
+      "basis_reduction_status": "sphere_supported_harmonic_sparse",
+      "bianchi_branch": "orthogonal",
+      "covariance_representation": "low_ell_harmonic_sparse_basis",
+      "global_tilt_contract": "orthogonal_branch_zero_global_tilt",
       "harmonic_basis": "m_explicit",
+      "local_boost_contract": "observer_side_only_not_applied_in_bass_output",
       "local_global_degeneracy": {
         "distinguishing_observables": [],
         "offdiag_strength": 0.0,
@@ -621,7 +637,7 @@
         "status": "not_applicable_isotropic"
       },
       "multipole_cutoff": 4,
-      "observer_reconstruction_status": "final_slice_only_no_sphere_reconstruction",
+      "observer_reconstruction_status": "sphere_reconstructed_from_pstf",
       "selection_mode": "mock_calibrated",
       "sky_support": {
         "mask_hash": "mask-ver2-d1",
@@ -629,7 +645,9 @@
         "scan_volume_hash": "scan-ver2-d1",
         "selection_mode": "mock_calibrated",
         "sky_support_hash": "sky-ver2-d1"
-      }
+      },
+      "solver_domain_scope": "all_11_bianchi_types",
+      "tilt_boost_separation": "explicit_nonmerged"
     }
   },
   "summary": "Theory-side atlas substrate that carries morphology validity and sky-support metadata.",

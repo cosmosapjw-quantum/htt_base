@@ -5,8 +5,8 @@ Semantic source: `htt/src/common/contracts.py::ClaimLedgerEntry`
 
 | Claim tier | Rows |
 | --- | ---: |
-| `conditional` | 5 |
-| `exploratory` | 3 |
+| `conditional` | 7 |
+| `exploratory` | 2 |
 
 Each row remains tied to owner/scope-specific forbidden-claim fences in
 the JSON artifact. This Markdown mirror exists only as a human-readable

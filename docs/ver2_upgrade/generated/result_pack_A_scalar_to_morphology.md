@@ -5,7 +5,7 @@
 - claim tier: `conditional`
 - production status: `production_candidate`
 - figure base: `fig_ver2a_scalar_to_morphology_summary`
-- caveats: diagonal_cl_not_sufficient_for_directional_claims, no_posterior_or_evidence_semantics, proxy_morphology_not_full_biposh, observer_reconstruction_bridge_pending, theory_side_substrate_not_observational_data, interpolation_only_not_posterior_update, local_global_degeneracy_requires_htt_discrimination, rank_failure_returns_no_claim_not_weak_evidence, covariance_upgrade_is_descriptive_until_validation_packet
+- caveats: diagonal_cl_not_sufficient_for_directional_claims, no_posterior_or_evidence_semantics, basis_reduced_covariance_not_full_biposh, theory_side_substrate_not_observational_data, interpolation_only_not_posterior_update, local_global_degeneracy_requires_htt_discrimination, rank_failure_returns_no_claim_not_weak_evidence, covariance_upgrade_is_descriptive_until_validation_packet
 
 - Observable channels, sparse morphology proxy, and MES ceilings are exported together.
 - The pack remains conditional because morphology is still proxy-scoped, not a full validated BiPoSH basis.

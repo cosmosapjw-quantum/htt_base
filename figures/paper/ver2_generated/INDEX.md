@@ -7,7 +7,7 @@ from current VER2 artifacts.
 | Figure base | Pack | Title | Claim tier | Production status |
 | --- | --- | --- | --- | --- |
 | `fig_ver2a_scalar_to_morphology_summary` | `A` | Scalar-to-morphology bridge | `conditional` | `production_candidate` |
-| `fig_ver2b_local_global_discrimination_matrix` | `B` | Local-vs-global discrimination | `exploratory` | `diagnostic_only` |
+| `fig_ver2b_local_global_discrimination_matrix` | `B` | Local-vs-global discrimination | `conditional` | `production_candidate` |
 | `fig_ver2c_departure_card_summary` | `C` | Departure cards | `exploratory` | `diagnostic_only` |
 | `fig_ver2d_mio_predictive_residuals` | `D` | MIO certificates | `conditional` | `production_candidate` |
 | `fig_ver2e_validation_campaign_matrix` | `E` | Equivalence and validation classes | `exploratory` | `diagnostic_only` |

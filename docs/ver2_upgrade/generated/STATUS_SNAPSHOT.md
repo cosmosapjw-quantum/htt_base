@@ -5,15 +5,15 @@ Semantic source: `htt/src/common/contracts.py::StatusSnapshotEntry`
 
 | Metric | Count |
 | --- | ---: |
-| Total rows | 8 |
-| Implemented | 8 |
-| Smoke tested | 8 |
+| Total rows | 9 |
+| Implemented | 9 |
+| Smoke tested | 9 |
 | Production validated | 0 |
-| Manuscript used | 8 |
+| Manuscript used | 9 |
 
 | Owner | Rows |
 | --- | ---: |
-| `BASS` | 3 |
+| `BASS` | 4 |
 | `COMMON` | 2 |
 | `HTT` | 1 |
 | `MIO` | 1 |

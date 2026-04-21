@@ -39,6 +39,7 @@
 34. `docs/ver2_upgrade/audits/AUDIT_BF-04B-COV_2026-04-21.md`
 35. `docs/ver2_upgrade/audits/AUDIT_BF-05B-VAL_2026-04-21.md`
 36. `docs/ver2_upgrade/audits/AUDIT_PRM-02_BASS_FAMILY_SWEEP_2026-04-22.md`
+37. `docs/ver2_upgrade/audits/AUDIT_PRM-03_PRELIM_RESULT_PACKS_2026-04-22.md`
 
 ## 2. Current State
 
@@ -127,6 +128,9 @@
 - `PRM-02-BASS-FAMILY-SWEEP` is now closed: the representative preliminary family sweep is executable for orthogonal `I/V/VII_0/VIII`, while representative tilted branches are now recorded as explicit controlled Codazzi-stage blockers instead of silent fallbacks.
 - `PRM-02-BASS-FAMILY-SWEEP` verification is green for the touched preliminary-results scope: `py_compile` passed; targeted pytest over runtime/validation/registry returned `37 passed`; `htt/scripts/ver2_bass_validation.py --family-sweep-check` passed; `htt/scripts/ver2_validation_registry.py --check` passed; `htt/scripts/ver2_hostile_audit.py --check` passed.
 - The current preliminary-results ceiling is sharper: representative orthogonal family runs may feed preliminary result packs directly, but tilted representative runtime blockers and non-Type-I exact-propagator debt must remain explicit no-claim conditions.
+- `PRM-03-PRELIM-RESULT-PACKS` is now closed: `scripts/ver2_artifact_export.py` consumes the current native Tier-B runtime path, emits a dedicated representative-family-sweep artifact, and refreshes the generated result packs/manuscript hooks/manifest-backed figures from the committed preliminary BASS state.
+- `PRM-03-PRELIM-RESULT-PACKS` verification is green for the touched preliminary-results D-lane scope: `py_compile` passed; exporter pytest returned `9 passed`; `venv/bin/python scripts/ver2_artifact_export.py` and `--check` both passed; the family-sweep JSON probe confirms pack `E` now carries live `validation.bass_representative_family_sweep` evidence.
+- The current result-pack ceiling is now explicit inside the generated exports: executable orthogonal family-sweep evidence is present, but Pack `E` remains exploratory overall because tilted runtime blockers and non-Type-I exactness debt are still exported as no-claim conditions.
 - The BASS-first implementation sequence is now closed in code. Remaining debt is no longer “wire observer/likelihood/inference at all”; it is the deeper physics/statistics carry-forward around non-Type-I exact propagation, full BiPoSH inversion, and later HTT-facing science claims.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
@@ -168,11 +172,12 @@ cleanup:
 1. `PRM-01-BASS-INTEROP`,
 2. `PRM-02-BASS-FAMILY-SWEEP`,
 3. `PRM-03-PRELIM-RESULT-PACKS`,
-4. only then reopen deeper exactness debt if it blocks a concrete preliminary claim.
+4. `PRM-04-HTT-MIO-HANDOFF`,
+5. only then reopen deeper exactness debt if it blocks a concrete preliminary claim.
 
-`PRM-01-BASS-INTEROP` and `PRM-02-BASS-FAMILY-SWEEP` are closed. The next BASS preliminary-results packet is:
+`PRM-01-BASS-INTEROP`, `PRM-02-BASS-FAMILY-SWEEP`, and `PRM-03-PRELIM-RESULT-PACKS` are closed. The next BASS-adjacent preliminary-results packet is:
 
-1. `PRM-03-PRELIM-RESULT-PACKS`
+1. `PRM-04-HTT-MIO-HANDOFF`
 
 ## 4. Hard Reminders
 

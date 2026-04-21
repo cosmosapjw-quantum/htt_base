@@ -1,0 +1,190 @@
+{
+  "allowed_claims": [
+    "bounded representative orthogonal family sweep summary",
+    "explicit tilted runtime blocker summary"
+  ],
+  "evidence_refs": [
+    "validation.bass_representative_family_sweep"
+  ],
+  "forbidden_claims": [
+    "tilted_runtime_executed_claim",
+    "non_type_i_exact_geometry_claim"
+  ],
+  "manifest": {
+    "artifact_id": "bass.ver2.export.representative_family_sweep",
+    "artifact_path": "docs/ver2_upgrade/generated/artifacts/bass_ver2_export_representative_family_sweep.json",
+    "caveats": [
+      "representative_family_sweep_only",
+      "representative_tilted_runtime_blocked",
+      "non_type_i_exact_propagator_missing",
+      "late_time_reionization_window_missing",
+      "direction_resolved_reionization_microphysics_missing"
+    ],
+    "claim_tier": "conditional",
+    "code_version": "ver2-d1",
+    "config_hash": "7f0d24a3710077d3",
+    "created_by": "scripts.ver2_artifact_export.py",
+    "failed_gates": [],
+    "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
+    "implementation_scope": "canonical_BASS",
+    "input_hashes": [
+      "validation.bass_representative_family_sweep"
+    ],
+    "owner": "BASS",
+    "passed_gates": [
+      "runtime",
+      "validation"
+    ],
+    "production_status": "production_candidate",
+    "required_gates": [
+      "runtime",
+      "validation"
+    ],
+    "schema_version": "ver2-v9",
+    "statistics_definitions": {
+      "bianchi_type": "I,V,VII_0,VIII",
+      "campaign_id": "validation.bass_representative_family_sweep",
+      "surface": "RepresentativeFamilySweepEvidence"
+    }
+  },
+  "notes": [
+    "representative_family_sweep_only",
+    "representative_tilted_runtime_blocked",
+    "non_type_i_exact_propagator_missing",
+    "late_time_reionization_window_missing",
+    "direction_resolved_reionization_microphysics_missing"
+  ],
+  "payload": {
+    "evidence": {
+      "artifact_refs": [
+        "bass.validation.representative_family_sweep",
+        "bass.runtime.trace"
+      ],
+      "bianchi_type": "I,V,VII_0,VIII",
+      "campaign_id": "validation.bass_representative_family_sweep",
+      "checks": [
+        {
+          "category": "baseline_reproduction",
+          "check_id": "representative_orthogonal_families_run_end_to_end",
+          "metric_name": null,
+          "metric_value": null,
+          "notes": [],
+          "passed": true,
+          "summary": "Representative orthogonal families I, V, VII_0, and VIII execute end-to-end on the bounded low-ell native Tier-B path.",
+          "threshold": null
+        },
+        {
+          "category": "adversarial_edge",
+          "check_id": "representative_tilted_branches_fail_controlledly",
+          "metric_name": null,
+          "metric_value": null,
+          "notes": [],
+          "passed": true,
+          "summary": "Representative tilted branches remain explicit controlled blocks at the Codazzi stage instead of silently degrading into orthogonal or local-boost behavior.",
+          "threshold": null
+        },
+        {
+          "category": "physics_sanity",
+          "check_id": "representative_family_realizations_are_algebra_aware",
+          "metric_name": null,
+          "metric_value": null,
+          "notes": [],
+          "passed": true,
+          "summary": "Representative orthogonal family runs keep algebra-aware propagator realizations and theory-family metadata attached to the output payload.",
+          "threshold": null
+        },
+        {
+          "category": "numerical_stability",
+          "check_id": "representative_family_outputs_stay_finite_on_bounded_low_ell_grid",
+          "metric_name": null,
+          "metric_value": null,
+          "notes": [],
+          "passed": true,
+          "summary": "Representative orthogonal family runs keep bounded low-ell outputs finite and propagator-ready on the shipped native grid.",
+          "threshold": null
+        },
+        {
+          "category": "regression",
+          "check_id": "representative_family_sweep_preserves_tilt_boost_contracts",
+          "metric_name": null,
+          "metric_value": null,
+          "notes": [],
+          "passed": true,
+          "summary": "Representative family sweep outputs keep global tilt, local boost, and orthogonal-branch contracts explicit and non-merged for downstream HTT/MIO/TSC consumers.",
+          "threshold": null
+        }
+      ],
+      "cutoff_max_relative_delta": 0.0,
+      "cutoffs": [
+        4
+      ],
+      "injection_manifest_refs": [
+        "validation.injection.representative_family_seed_startup"
+      ],
+      "no_claim_conditions": [
+        "representative_family_sweep_only",
+        "representative_tilted_runtime_blocked",
+        "non_type_i_exact_propagator_missing",
+        "late_time_reionization_window_missing",
+        "direction_resolved_reionization_microphysics_missing"
+      ],
+      "notes": [
+        "This campaign validates the bounded preliminary representative-family sweep only.",
+        "Orthogonal branches are executable for I, V, VII_0, and VIII on the current native Tier-B route.",
+        "Tilted representative branches remain explicit Codazzi-stage blocks on the current global-tilt runtime construction and are treated as no-claim conditions rather than silent fallbacks."
+      ],
+      "null_manifest_refs": [
+        "null.bass.representative_family_sweep"
+      ],
+      "preferred_axis_delta_deg": 0.0,
+      "runbook_refs": [
+        "runbook.bass_representative_family_sweep"
+      ],
+      "status": "pass",
+      "theorem_refs": [
+        "V8_bass_representative_family_sweep"
+      ],
+      "tier_a_tier_b_max_relative_l2": 0.0
+    },
+    "manifest": {
+      "artifact_id": "bass.ver2.export.representative_family_sweep",
+      "artifact_path": "docs/ver2_upgrade/generated/artifacts/bass_ver2_export_representative_family_sweep.json",
+      "caveats": [
+        "representative_family_sweep_only",
+        "representative_tilted_runtime_blocked",
+        "non_type_i_exact_propagator_missing",
+        "late_time_reionization_window_missing",
+        "direction_resolved_reionization_microphysics_missing"
+      ],
+      "claim_tier": "conditional",
+      "code_version": "ver2-d1",
+      "config_hash": "7f0d24a3710077d3",
+      "created_by": "scripts.ver2_artifact_export.py",
+      "failed_gates": [],
+      "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
+      "implementation_scope": "canonical_BASS",
+      "input_hashes": [
+        "validation.bass_representative_family_sweep"
+      ],
+      "owner": "BASS",
+      "passed_gates": [
+        "runtime",
+        "validation"
+      ],
+      "production_status": "production_candidate",
+      "required_gates": [
+        "runtime",
+        "validation"
+      ],
+      "schema_version": "ver2-v9",
+      "statistics_definitions": {
+        "bianchi_type": "I,V,VII_0,VIII",
+        "campaign_id": "validation.bass_representative_family_sweep",
+        "surface": "RepresentativeFamilySweepEvidence"
+      }
+    }
+  },
+  "summary": "Representative orthogonal family sweep is executable for I/V/VII_0/VIII while tilted runtime blockers remain explicit no-claim conditions.",
+  "title": "Representative family sweep evidence",
+  "topic": "equivalence_classes"
+}

@@ -2,14 +2,14 @@
 # Result Pack B — Local-vs-global discrimination
 
 - topic: `local_global_discrimination`
-- claim tier: `exploratory`
-- production status: `diagnostic_only`
+- claim tier: `conditional`
+- production status: `production_candidate`
 - figure base: `fig_ver2b_local_global_discrimination_matrix`
-- caveats: diagnostic_only, observer_vs_source_not_posterior_odds, local_global_degeneracy_summary
+- caveats: pre_inference_only, not_posterior_odds
 
 - The HTT discrimination matrix is exploratory and keeps local boost distinct from global tilt.
 - No posterior odds or source-side confirmation are exported here.
 
 | Artifact | Owner | Claim tier | Production status | Summary |
 | --- | --- | --- | --- | --- |
-| `htt.ver2.export.discrimination_matrix` | `HTT` | `exploratory` | `diagnostic_only` | HTT discrimination matrix keeps observer-side and source-side hypotheses separate. |
+| `htt.ver2.export.discrimination_matrix` | `HTT` | `conditional` | `production_candidate` | HTT discrimination matrix provides a bounded pre-inference local-vs-global separation audit. |

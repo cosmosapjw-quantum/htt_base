@@ -16,15 +16,14 @@
     "caveats": [
       "diagonal_cl_not_sufficient_for_directional_claims",
       "no_posterior_or_evidence_semantics",
-      "proxy_morphology_not_full_biposh",
-      "observer_reconstruction_bridge_pending"
+      "basis_reduced_covariance_not_full_biposh"
     ],
     "claim_tier": "conditional",
     "code_version": "ver2-d1",
     "config_hash": "c44f0739b60c70de",
     "created_by": "scripts.ver2_artifact_export.py",
     "failed_gates": [],
-    "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+    "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
     "implementation_scope": "bass_py",
     "input_hashes": [
       "species:planck2018",
@@ -57,7 +56,7 @@
         "BiPoSH",
         "template"
       ],
-      "covariance_representation": "sparse_mode_block_proxy",
+      "covariance_representation": "low_ell_harmonic_sparse_basis",
       "ell_max": 4,
       "local_global_degeneracy": {
         "distinguishing_observables": [],
@@ -71,7 +70,7 @@
         "rotation_strength": 0.0,
         "status": "not_applicable_isotropic"
       },
-      "scan_volume_hash": "51fad743a07092f7",
+      "scan_volume_hash": "31b8b66e35416789",
       "sky_support": {
         "mask_hash": "mask-ver2-d1",
         "mock_coverage_status": "adequate",
@@ -85,8 +84,7 @@
   "notes": [
     "diagonal_cl_not_sufficient_for_directional_claims",
     "no_posterior_or_evidence_semantics",
-    "proxy_morphology_not_full_biposh",
-    "observer_reconstruction_bridge_pending"
+    "basis_reduced_covariance_not_full_biposh"
   ],
   "payload": {
     "channels": [
@@ -98,9 +96,18 @@
       "template"
     ],
     "covariance_features": {
+      "angular_reconstruction_guard": {
+        "available": true,
+        "coefficient_representation": "ver2_native_pstf_final_slice",
+        "passed": true,
+        "quadrature_points": 231,
+        "quadrature_rule": "gauss_legendre_x_uniform_phi_tensor_product",
+        "reason": "ok"
+      },
       "anisotropy_tensor_tracefree": true,
+      "basis_reduction_status": "sphere_supported_harmonic_sparse",
       "caveats": [
-        "mode_block_proxy_not_full_biposh"
+        "basis_reduced_not_full_biposh"
       ],
       "frobenius_offdiag_norms": {
         "BB": 0.0,
@@ -142,10 +149,11 @@
         "tolerance": 1e-12,
         "tt_min_eig": 0.0
       },
-      "representation": "sparse_mode_block_proxy",
+      "representation": "low_ell_harmonic_sparse_basis",
       "rotation_strength": 0.0,
       "sparse_index_count": 0,
       "structure_label": "I",
+      "supports_basis_reduced_morphology": true,
       "supports_full_biposh": false,
       "symmetry_guard": {
         "bb_max_asymmetry": 0.0,
@@ -163,15 +171,14 @@
       "caveats": [
         "diagonal_cl_not_sufficient_for_directional_claims",
         "no_posterior_or_evidence_semantics",
-        "proxy_morphology_not_full_biposh",
-        "observer_reconstruction_bridge_pending"
+        "basis_reduced_covariance_not_full_biposh"
       ],
       "claim_tier": "conditional",
       "code_version": "ver2-d1",
       "config_hash": "c44f0739b60c70de",
       "created_by": "scripts.ver2_artifact_export.py",
       "failed_gates": [],
-      "git_commit": "2b0032694170ff9a8400bd73f752e6b4516ef54f",
+      "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
       "implementation_scope": "bass_py",
       "input_hashes": [
         "species:planck2018",
@@ -204,7 +211,7 @@
           "BiPoSH",
           "template"
         ],
-        "covariance_representation": "sparse_mode_block_proxy",
+        "covariance_representation": "low_ell_harmonic_sparse_basis",
         "ell_max": 4,
         "local_global_degeneracy": {
           "distinguishing_observables": [],
@@ -218,7 +225,7 @@
           "rotation_strength": 0.0,
           "status": "not_applicable_isotropic"
         },
-        "scan_volume_hash": "51fad743a07092f7",
+        "scan_volume_hash": "31b8b66e35416789",
         "sky_support": {
           "mask_hash": "mask-ver2-d1",
           "mock_coverage_status": "adequate",

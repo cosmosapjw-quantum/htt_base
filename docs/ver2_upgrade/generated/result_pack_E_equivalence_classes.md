@@ -5,11 +5,12 @@
 - claim tier: `exploratory`
 - production status: `diagnostic_only`
 - figure base: `fig_ver2e_validation_campaign_matrix`
-- caveats: warn_campaigns_do_not_validate_claims, warn_campaigns_remain_no_claim
+- caveats: warn_campaigns_do_not_validate_claims, warn_campaigns_remain_no_claim, representative_family_sweep_only, representative_tilted_runtime_blocked, non_type_i_exact_propagator_missing, late_time_reionization_window_missing, direction_resolved_reionization_microphysics_missing
 
-- The validation registry is exported as a manifest-backed coverage matrix.
-- Warn campaigns remain explicit no-claim gates until later manuscript closure.
+- The validation registry is exported together with the representative family sweep evidence.
+- Orthogonal I/V/VII_0/VIII are runnable on the bounded native route, while tilted representative branches remain explicit no-claim blockers.
 
 | Artifact | Owner | Claim tier | Production status | Summary |
 | --- | --- | --- | --- | --- |
 | `common.ver2.validation_registry_summary` | `COMMON` | `exploratory` | `production_candidate` | Executable theorem/campaign registry with five-category coverage and hostile-audit mirrors. |
+| `bass.ver2.export.representative_family_sweep` | `BASS` | `conditional` | `production_candidate` | Representative orthogonal family sweep is executable for I/V/VII_0/VIII while tilted runtime blockers remain explicit no-claim conditions. |
