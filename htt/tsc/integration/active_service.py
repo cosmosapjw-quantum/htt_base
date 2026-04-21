@@ -126,7 +126,11 @@ def build_active_service_bundle(
         channel_budgets=tuple(channel_budgets),
         upgrade_recommendation=upgrade_recommendation,
         overlay=overlay,
-        bass_suggestion=overlay_to_bass_suggestion(overlay, overlay_ref=overlay_ref),
+        bass_suggestion=overlay_to_bass_suggestion(
+            overlay,
+            required_channels=required_channels,
+            overlay_ref=overlay_ref,
+        ),
         htt_caveats=overlay_to_htt_caveats(
             overlay,
             uses_scalar_only_geometry=uses_scalar_only_geometry,

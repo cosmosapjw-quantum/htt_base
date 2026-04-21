@@ -92,6 +92,8 @@ def test_active_service_bundle_mio_fields_follow_required_channel_scope():
 
     assert bundle.publication_ready is True
     assert bundle.publication_blockers == ()
+    assert bundle.bass_suggestion.recommended_label == "source_adequate__propagation_validated"
+    assert bundle.bass_suggestion.restricted_channels == ()
     assert bundle.mio_fields.required_channels == ("TT",)
     assert bundle.mio_fields.propagation_status_required == ()
     assert bundle.mio_fields.publication_blockers == ()

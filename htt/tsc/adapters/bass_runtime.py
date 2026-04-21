@@ -1,10 +1,14 @@
 """BASS-facing TSC adapter that preserves BASS decision ownership."""
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 from common.contracts import TscAdequacyOverlay
 from tsc.contracts import validate_tsc_service_labels
+
+
+_DEFAULT_REQUIRED_CHANNELS = ("TT", "TE", "EE", "scalar_summary")
 
 
 @dataclass(frozen=True)
@@ -26,6 +30,7 @@ class SourceAdequacySuggestion:
 def overlay_to_bass_suggestion(
     overlay: TscAdequacyOverlay,
     *,
+    required_channels: Sequence[str] = _DEFAULT_REQUIRED_CHANNELS,
     overlay_ref: str | None = None,
 ) -> SourceAdequacySuggestion:
     source_status = (
@@ -33,6 +38,7 @@ def overlay_to_bass_suggestion(
         if overlay.source_bridge_report is not None
         else "pending"
     )
+    required_set = set(required_channels)
     channel_claim_ceiling = {
         budget.channel: budget.claim_ceiling for budget in overlay.channel_budgets
     }
@@ -40,7 +46,7 @@ def overlay_to_bass_suggestion(
         sorted(
             budget.channel
             for budget in overlay.channel_budgets
-            if budget.channel in {"TT", "EE", "TE", "scalar_summary"}
+            if budget.channel in required_set
             and budget.claim_ceiling not in {"conditional", "validated"}
         )
     )
@@ -51,7 +57,7 @@ def overlay_to_bass_suggestion(
     elif source_status == "pending":
         label = "source_bridge_bound_pending"
     elif any(
-        b.channel in {"TT", "EE", "TE", "scalar_summary"}
+        b.channel in required_set
         and b.propagation_status == "pending"
         for b in overlay.channel_budgets
     ) or restricted_channels:
