@@ -7,7 +7,9 @@ from pathlib import Path
 from common.contracts import TscAdequacyOverlay
 from workspace.contracts.mio_certificate import MioCertificate
 from workspace.contracts.preliminary_results import (
+    MIO_CERTIFICATE_ARTIFACT_ID,
     PreliminaryResultPack,
+    TSC_OVERLAY_ARTIFACT_ID,
     load_exported_mio_certificate,
     load_exported_tsc_overlay,
     load_preliminary_result_pack,
@@ -21,10 +23,31 @@ class PreliminaryMioHandoff:
     certificate: MioCertificate
     overlay: TscAdequacyOverlay
     pack_id: str
+    topic: str
     claim_tier: str
     production_status: str
     caveats: tuple[str, ...]
+    summary_lines: tuple[str, ...]
     artifact_ids: tuple[str, ...]
+
+
+def _require_pack_artifact(
+    pack: PreliminaryResultPack,
+    *,
+    artifact_id: str,
+    owner: str,
+):
+    for artifact in pack.artifacts:
+        if artifact.artifact_id == artifact_id:
+            if artifact.owner != owner:
+                raise ValueError(
+                    f"pack {pack.pack_id} artifact {artifact_id!r} must be owned by "
+                    f"{owner!r} (got {artifact.owner!r})"
+                )
+            return artifact
+    raise ValueError(
+        f"pack {pack.pack_id} does not contain required artifact {artifact_id!r}"
+    )
 
 
 def _validate_preliminary_mio_handoff(
@@ -60,8 +83,24 @@ def build_preliminary_mio_handoff(
     generated_root: str | Path | None = None,
 ) -> PreliminaryMioHandoff:
     pack_d = load_preliminary_result_pack("D", generated_root=generated_root)
-    certificate = load_exported_mio_certificate(generated_root=generated_root)
-    overlay = load_exported_tsc_overlay(generated_root=generated_root)
+    certificate_ref = _require_pack_artifact(
+        pack_d,
+        artifact_id=MIO_CERTIFICATE_ARTIFACT_ID,
+        owner="MIO",
+    )
+    overlay_ref = _require_pack_artifact(
+        pack_d,
+        artifact_id=TSC_OVERLAY_ARTIFACT_ID,
+        owner="TSC",
+    )
+    certificate = load_exported_mio_certificate(
+        artifact_id_or_path=certificate_ref.artifact_id,
+        generated_root=generated_root,
+    )
+    overlay = load_exported_tsc_overlay(
+        artifact_id_or_path=overlay_ref.artifact_id,
+        generated_root=generated_root,
+    )
     _validate_preliminary_mio_handoff(
         pack_d,
         certificate=certificate,
@@ -71,9 +110,11 @@ def build_preliminary_mio_handoff(
         certificate=certificate,
         overlay=overlay,
         pack_id=pack_d.pack_id,
+        topic=pack_d.topic,
         claim_tier=pack_d.claim_tier,
         production_status=pack_d.production_status,
         caveats=pack_d.caveats,
+        summary_lines=pack_d.summary_lines,
         artifact_ids=pack_d.artifact_ids(),
     )
 
