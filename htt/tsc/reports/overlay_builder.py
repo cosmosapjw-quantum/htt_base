@@ -16,6 +16,17 @@ from tsc.audit.no_overclaim import build_no_overclaim_flags, quarantine_reasons_
 from tsc.contracts import validate_tsc_service_labels
 
 
+def _claim_limited_channels(
+    channel_budgets: Sequence[TscChannelAdequacyBudget],
+) -> tuple[str, ...]:
+    return tuple(
+        budget.channel
+        for budget in channel_budgets
+        if budget.channel in {"TT", "EE", "TE", "scalar_summary"}
+        and budget.claim_ceiling in {"exploratory", "blocked"}
+    )
+
+
 def _validate_overlay_components(
     *,
     source_report: TscSourceBridgeReport | None,
@@ -40,6 +51,7 @@ def build_public_caveat_snippet(
     blocked_channels = tuple(
         budget.channel for budget in channel_budgets if budget.propagation_status == "blocked"
     )
+    claim_limited_channels = _claim_limited_channels(channel_budgets)
     bb_trace_only = "BB" in blocked_channels
     if domain_report.status == "invalid_domain":
         return "TSC domain invalid: chart use must remain diagnostic-only until domain blockers are resolved."
@@ -60,6 +72,13 @@ def build_public_caveat_snippet(
         return (
             "TSC source-side checks are available, but propagation validation is still pending for "
             f"{pending_text}.{suffix}"
+        )
+    if claim_limited_channels:
+        limited_text = ", ".join(claim_limited_channels)
+        suffix = " BB remains outside trace-only validation." if bb_trace_only else ""
+        return (
+            "TSC source-side checks are available, but publication claim ceilings remain limited for "
+            f"{limited_text}.{suffix}"
         )
     if bb_trace_only:
         return "TSC trace semantics do not validate BB; spin-2/high propagation remains required."

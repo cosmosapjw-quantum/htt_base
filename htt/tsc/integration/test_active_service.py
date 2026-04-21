@@ -88,3 +88,37 @@ def test_active_service_bundle_invalid_domain_can_raise_when_guarded():
             source_bridge_report=None,
             enforce_production_domain=True,
         )
+
+
+def test_active_service_bundle_blocks_publication_when_tt_claim_ceiling_is_exploratory():
+    man = _manifest()
+    domain = build_domain_report(
+        chart="one_field",
+        theta_samples=[1.0, 1.1],
+        jacobian_singular_values=[0.1, 0.2],
+        manifest=man,
+    )
+    residual = ambient_vs_projected_defect_report(
+        chart="one_field",
+        laguerre_n_ge_2_norm=0.1,
+        ambient_defect_rate=None,
+        projected_defect_estimate=None,
+        onefield_residual=None,
+        twofield_residual=None,
+        eta_tangent_fraction=None,
+        trace_residual_q_tr=0.1,
+        spin2_residual=0.2,
+        high_residual=None,
+        labels=tuple(),
+        manifest=man,
+    )
+    bundle = build_active_service_bundle(
+        domain_report=domain,
+        residual_report=residual,
+        source_bridge_report=None,
+        required_channels=("TT",),
+    )
+
+    assert bundle.publication_ready is False
+    assert "source_bridge_missing" in bundle.publication_blockers
+    assert "claim_ceiling_insufficient:TT=exploratory" in bundle.publication_blockers

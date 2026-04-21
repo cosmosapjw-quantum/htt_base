@@ -3,7 +3,7 @@ from __future__ import annotations
 from common.contracts import ArtifactManifest, FullCovMESReport
 from common.departure_contracts import DepartureReport
 from tsc.admissibility.domain import build_domain_report
-from tsc.budget.source_to_channel import build_channel_budgets
+from tsc.budget.source_to_channel import build_channel_budgets, build_channel_budgets_from_reports
 from tsc.control.upgrade_advisor import recommend_chart_transition
 from tsc.reports.json_export import (
     attach_overlay_to_departure_report,
@@ -66,6 +66,52 @@ def _overlay_pending():
         source_error_bound=0.01,
         propagator_norm_bound=4.0,
         spin2_budget=0.2,
+    )
+    return build_tsc_overlay(
+        domain_report=domain,
+        residual_report=residual,
+        source_bridge_report=source,
+        channel_budgets=budgets,
+        upgrade_recommendation=recommend_chart_transition(domain, residual, source),
+        artifact_manifest=man,
+    )
+
+
+def _overlay_tt_claim_limited():
+    man = _manifest("TSC", "tsc")
+    domain = build_domain_report(
+        chart="one_field",
+        theta_samples=[1.0, 1.1],
+        jacobian_singular_values=[0.1, 0.2],
+        manifest=man,
+    )
+    residual = ambient_vs_projected_defect_report(
+        chart="one_field",
+        laguerre_n_ge_2_norm=0.1,
+        ambient_defect_rate=None,
+        projected_defect_estimate=None,
+        onefield_residual=None,
+        twofield_residual=None,
+        eta_tangent_fraction=None,
+        trace_residual_q_tr=0.1,
+        spin2_residual=0.2,
+        high_residual=None,
+        labels=tuple(),
+        manifest=man,
+    )
+    source = build_source_bridge_report(
+        chart="one_field",
+        q2_norm=0.1,
+        manifest=man,
+        source_error=0.01,
+        on_manifold_exact=True,
+    )
+    budgets = build_channel_budgets_from_reports(
+        manifest=man,
+        domain_report=domain,
+        residual_report=residual,
+        source_report=source,
+        propagation_status_by_channel={"EE": "validated", "TE": "validated"},
     )
     return build_tsc_overlay(
         domain_report=domain,
@@ -152,3 +198,15 @@ def test_attach_overlay_helpers_set_ref_and_propagate_public_snippet():
     assert attached_mes.tsc_overlay_ref == overlay.manifest.artifact_id
     assert attached_cert.tsc_overlay_ref == overlay.manifest.artifact_id
     assert overlay.public_caveat_snippet in attached_cert.domain_caveats
+
+
+def test_overlay_export_blocks_exploratory_claim_ceiling_even_when_propagation_validated():
+    overlay = _overlay_tt_claim_limited()
+
+    payload = overlay_to_json_dict(overlay, required_channels=("TT",))
+    markdown = overlay_to_markdown(overlay, required_channels=("TT",))
+
+    assert payload["publication_ready"] is False
+    assert "claim_ceiling_insufficient:TT=exploratory" in payload["publication_blockers"]
+    assert payload["channel_claim_ceiling"]["TT"] == "exploratory"
+    assert "TT:adequate/validated/exploratory" in markdown

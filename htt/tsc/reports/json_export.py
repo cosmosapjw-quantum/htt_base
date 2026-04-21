@@ -13,6 +13,17 @@ from workspace.contracts.mio_certificate import MioCertificate
 _DEFAULT_EXPORT_CHANNELS = ("TT", "TE", "EE")
 
 
+def _required_budgets(
+    overlay: TscAdequacyOverlay,
+    *,
+    required_channels: Sequence[str],
+) -> tuple:
+    required = set(required_channels)
+    return tuple(
+        budget for budget in overlay.channel_budgets if budget.channel in required
+    )
+
+
 def overlay_publication_blockers(
     overlay: TscAdequacyOverlay,
     *,
@@ -28,15 +39,23 @@ def overlay_publication_blockers(
     elif source_report.source_status != "adequate":
         blockers.append(f"source_status:{source_report.source_status}")
 
-    required = set(required_channels)
-    if required:
+    required_budgets = _required_budgets(
+        overlay,
+        required_channels=required_channels,
+    )
+    if required_budgets:
         pending_channels = sorted(
-            budget.channel
-            for budget in overlay.channel_budgets
-            if budget.channel in required and budget.propagation_status != "validated"
+            budget.channel for budget in required_budgets if budget.propagation_status != "validated"
         )
         if pending_channels:
             blockers.append("propagation_pending:" + ",".join(pending_channels))
+        claim_limited = sorted(
+            f"{budget.channel}={budget.claim_ceiling}"
+            for budget in required_budgets
+            if budget.claim_ceiling not in {"conditional", "validated"}
+        )
+        if claim_limited:
+            blockers.append("claim_ceiling_insufficient:" + ",".join(claim_limited))
 
     return tuple(dict.fromkeys(blockers))
 
@@ -65,6 +84,9 @@ def overlay_to_json_dict(
     payload["publication_ready"] = not blockers
     payload["publication_blockers"] = blockers
     payload["required_channels"] = tuple(required_channels)
+    payload["channel_claim_ceiling"] = {
+        budget.channel: budget.claim_ceiling for budget in overlay.channel_budgets
+    }
     return payload
 
 
@@ -91,7 +113,7 @@ def overlay_to_markdown(
         required_channels=required_channels,
     )
     budgets = ", ".join(
-        f"{budget.channel}:{budget.source_status}/{budget.propagation_status}"
+        f"{budget.channel}:{budget.source_status}/{budget.propagation_status}/{budget.claim_ceiling}"
         for budget in overlay.channel_budgets
     ) or "none"
     blocker_text = ", ".join(blockers) if blockers else "none"
