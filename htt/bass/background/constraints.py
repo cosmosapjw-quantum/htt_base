@@ -13,6 +13,7 @@ __all__ = [
     "BackgroundConstraintResiduals",
     "gauss_constraint_residual",
     "codazzi_constraint_residual",
+    "background_constraint_residuals",
     "evaluate_background_constraints",
 ]
 
@@ -128,4 +129,29 @@ def evaluate_background_constraints(
         codazzi=codazzi_constraint_residual(sigma, matter, geometry, kappa=kappa),
         jacobi=algebra.jacobi_violation,
         twice_contracted_bianchi=bianchi,
+    )
+
+
+def background_constraint_residuals(
+    *,
+    algebra: BianchiAlgebra,
+    geometry: TetradGeometry,
+    H: float,
+    sigma_ab: np.ndarray,
+    matter: MatterNormalFrameState,
+    lambda_value: float,
+    kappa: float = 1.0,
+    conservation_residual: np.ndarray | None = None,
+) -> BackgroundConstraintResiduals:
+    """ver3 alias for the canonical background residual evaluator."""
+
+    return evaluate_background_constraints(
+        algebra=algebra,
+        geometry=geometry,
+        H=H,
+        sigma_ab=sigma_ab,
+        matter=matter,
+        lambda_value=lambda_value,
+        kappa=kappa,
+        conservation_residual=conservation_residual,
     )

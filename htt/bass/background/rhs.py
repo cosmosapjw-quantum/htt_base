@@ -14,6 +14,9 @@ from bass.background.geometry import TetradGeometry, div_vector, pstf_rank2
 
 __all__ = [
     "BackgroundRhsAssembly",
+    "raychaudhuri_rhs",
+    "shear_rhs",
+    "background_rhs",
     "assemble_background_rhs",
 ]
 
@@ -33,6 +36,39 @@ class BackgroundRhsAssembly:
     residuals: BackgroundConstraintResiduals
 
 
+def raychaudhuri_rhs(
+    *,
+    H: float,
+    sigma_ab: np.ndarray,
+    matter: MatterNormalFrameState,
+    lambda_value: float,
+    kappa: float = 1.0,
+) -> float:
+    """Return the homogeneous Raychaudhuri evolution for the Hubble scalar."""
+
+    sigma = pstf_rank2(sigma_ab)
+    sigma_sq = 0.5 * float(np.sum(sigma * sigma))
+    return -float(H) ** 2 - (2.0 / 3.0) * sigma_sq - (kappa / 6.0) * (
+        float(matter.rho) + 3.0 * float(matter.p)
+    ) + float(lambda_value) / 3.0
+
+
+def shear_rhs(
+    *,
+    H: float,
+    sigma_ab: np.ndarray,
+    S_ab: np.ndarray,
+    pi_ab: np.ndarray,
+    kappa: float = 1.0,
+) -> np.ndarray:
+    """Return the PSTF shear evolution block."""
+
+    sigma = pstf_rank2(sigma_ab)
+    S = pstf_rank2(S_ab)
+    pi = pstf_rank2(pi_ab)
+    return -3.0 * float(H) * sigma - S + kappa * pi
+
+
 def assemble_background_rhs(
     *,
     H: float,
@@ -45,11 +81,20 @@ def assemble_background_rhs(
 ) -> BackgroundRhsAssembly:
     """Assemble the 1+3 background RHS from geometry plus matter summaries."""
     sigma = pstf_rank2(sigma_ab)
-    sigma_sq = 0.5 * float(np.sum(sigma * sigma))
-    H_dot = -float(H) ** 2 - (2.0 / 3.0) * sigma_sq - (kappa / 6.0) * (
-        float(matter.rho) + 3.0 * float(matter.p)
-    ) + float(lambda_value) / 3.0
-    sigma_dot = -3.0 * float(H) * sigma - geometry.ricci_pstf + kappa * matter.pi
+    H_dot = raychaudhuri_rhs(
+        H=H,
+        sigma_ab=sigma,
+        matter=matter,
+        lambda_value=lambda_value,
+        kappa=kappa,
+    )
+    sigma_dot = shear_rhs(
+        H=H,
+        sigma_ab=sigma,
+        S_ab=geometry.S_AB,
+        pi_ab=matter.pi,
+        kappa=kappa,
+    )
     rho_dot = -3.0 * float(H) * (float(matter.rho) + float(matter.p)) - div_vector(
         matter.q, geometry.Gamma
     ) - float(np.sum(sigma * matter.pi))
@@ -69,3 +114,9 @@ def assemble_background_rhs(
         rho_dot=rho_dot,
         residuals=residuals,
     )
+
+
+def background_rhs(**kwargs) -> BackgroundRhsAssembly:
+    """ver3 alias for the canonical background RHS assembly."""
+
+    return assemble_background_rhs(**kwargs)

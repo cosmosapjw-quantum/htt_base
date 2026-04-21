@@ -30,6 +30,8 @@ from bass.species.barotropic_closures import (
 __all__ = [
     "BackgroundEvolutionConfig",
     "BackgroundEvolutionResult",
+    "BackgroundResidualSummary",
+    "summarize_background_residuals",
     "solve_background_evolution",
 ]
 
@@ -101,6 +103,53 @@ class BackgroundEvolutionResult:
     magnetic_weyl: np.ndarray
     initial_conditions: OrthogonalInitialConditions | TiltedInitialConditions
     matter_model_tag: str
+
+
+@dataclass(frozen=True)
+class BackgroundResidualSummary:
+    samples: int
+    H_reference: float
+    structure_reference: float
+    gauss_max_abs: float
+    gauss_max_over_H2_ref: float
+    codazzi_max_norm: float
+    codazzi_max_over_H2_ref: float
+    jacobi_max_norm: float
+    jacobi_max_over_structure_ref: float
+    bianchi_max_norm: float
+    bianchi_max_over_H2_ref: float
+
+
+def summarize_background_residuals(
+    result: BackgroundEvolutionResult,
+) -> BackgroundResidualSummary:
+    """Return a machine-readable normalized residual bundle for ver3 PR-05."""
+
+    H_ref = max(float(np.max(np.abs(result.H))), 1.0e-30)
+    H2_ref = H_ref * H_ref
+    structure_ref = max(
+        float(np.linalg.norm(result.initial_conditions.algebra.C)),
+        1.0e-30,
+    )
+    gauss_max_abs = max(abs(res.gauss) for res in result.residuals)
+    codazzi_max_norm = max(float(np.linalg.norm(res.codazzi)) for res in result.residuals)
+    jacobi_max_norm = max(float(np.linalg.norm(res.jacobi)) for res in result.residuals)
+    bianchi_max_norm = max(
+        float(np.linalg.norm(res.twice_contracted_bianchi)) for res in result.residuals
+    )
+    return BackgroundResidualSummary(
+        samples=len(result.residuals),
+        H_reference=H_ref,
+        structure_reference=structure_ref,
+        gauss_max_abs=gauss_max_abs,
+        gauss_max_over_H2_ref=gauss_max_abs / H2_ref,
+        codazzi_max_norm=codazzi_max_norm,
+        codazzi_max_over_H2_ref=codazzi_max_norm / H2_ref,
+        jacobi_max_norm=jacobi_max_norm,
+        jacobi_max_over_structure_ref=jacobi_max_norm / structure_ref,
+        bianchi_max_norm=bianchi_max_norm,
+        bianchi_max_over_H2_ref=bianchi_max_norm / H2_ref,
+    )
 
 
 def solve_background_evolution(
