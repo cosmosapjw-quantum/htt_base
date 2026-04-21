@@ -23,6 +23,7 @@
 ## 0. authority order
 
 1. `00_AUTHORITY_TREE.md`
+1.5. `00A_CURRENT_REPO_BINDING_NOTE.md` *(repo binding note; cannot override 00)*
 2. `01_SSOT_FORMALISM_AND_PHYSICS.md`
 3. `01A_GEOMETRY_AND_WEYL_AUTHORITY_NOTE.md`
 4. `02_NUMERICAL_ARCHITECTURE_AND_ALGORITHMS.md`
@@ -99,6 +100,7 @@ v3 이후 v4에서 추가된 핵심은 아래 여섯 가지다.
 ```text
 b a n c h i a _ d e s i g n _ p a c k _ v 4 /
 ├── 00_AUTHORITY_TREE.md
+├── 00A_CURRENT_REPO_BINDING_NOTE.md
 ├── 01_SSOT_FORMALISM_AND_PHYSICS.md
 ├── 01A_GEOMETRY_AND_WEYL_AUTHORITY_NOTE.md
 ├── 02_NUMERICAL_ARCHITECTURE_AND_ALGORITHMS.md
@@ -126,3 +128,5 @@ b a n c h i a _ d e s i g n _ p a c k _ v 4 /
 - local boost는 output-only다.
 - unsupported backend를 isotropic fallback으로 위장하면 안 된다.
 - mock spectrum fitting을 선행하면 안 된다.
+- current repo implementation must follow the explicit repo-path binding note
+  rather than inventing a parallel package tree.

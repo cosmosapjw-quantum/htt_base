@@ -25,6 +25,7 @@ import math
 import pytest
 
 from bass.background.bianchi_types import (
+    FamilySpec,
     StructureConstants,
     flrw_constants,
     type_i_constants, type_ii_constants, type_iii_constants, type_iv_constants,
@@ -33,7 +34,7 @@ from bass.background.bianchi_types import (
     type_ix_constants,
     TYPE_REGISTRY, ALL_BIANCHI_TYPES, CLASS_A_TYPES, CLASS_B_TYPES,
     TYPES_WITH_FLRW_LIMIT, MARGINAL_TYPES,
-    get_type,
+    all_family_specs, get_family_spec, get_type,
 )
 
 
@@ -256,6 +257,52 @@ class TestFLRWLimits:
         """6 marginal types: II, III, IV, VI₀, VI_h, VIII."""
         assert len(MARGINAL_TYPES) == 6
         assert set(MARGINAL_TYPES) == {"II", "III", "IV", "VI_0", "VI_h", "VIII"}
+
+
+# ═══════════════════════════════════════════════════════════════
+# §6 — ver3 PR-02 registry contract
+# ═══════════════════════════════════════════════════════════════
+
+
+class TestVer3FamilyRegistry:
+    def test_all_family_specs_cover_flrw_plus_eleven_types(self):
+        specs = all_family_specs()
+        assert set(specs) == {"FLRW", *ALL_BIANCHI_TYPES}
+
+    @pytest.mark.parametrize("label", ["FLRW", *ALL_BIANCHI_TYPES])
+    def test_get_family_spec_returns_registry_complete_contract(self, label):
+        spec = get_family_spec(label)
+        assert isinstance(spec, FamilySpec)
+        assert spec.family == label
+        assert spec.release_status == "registry-complete"
+        assert spec.orthogonal_global_tilt_local_boost_split == "frozen"
+        assert spec.generic_fallback == "generic_collocation"
+
+    @pytest.mark.parametrize("label", ["FLRW", "I", "V", "VII_0", "VII_h", "IX"])
+    def test_isotropic_anchor_family_flags(self, label):
+        assert get_family_spec(label).isotropic_anchor
+
+    @pytest.mark.parametrize("label", ["II", "III", "IV", "VI_0", "VI_h", "VIII"])
+    def test_intrinsic_family_flags(self, label):
+        assert not get_family_spec(label).isotropic_anchor
+
+    def test_type_iii_registry_stays_on_special_h_equals_minus_one_branch(self):
+        spec = get_family_spec("III")
+        assert spec.algebra.h_parameter == pytest.approx(-1.0)
+
+    def test_vih_h_override_builds_h_consistent_registry_spec(self):
+        spec = get_family_spec("VI_h", h=-0.5)
+        assert spec.algebra.h_parameter == pytest.approx(-0.5)
+        assert spec.class_label == "B"
+
+    def test_viih_h_override_builds_h_consistent_registry_spec(self):
+        spec = get_family_spec("VII_h", h=0.25)
+        assert spec.algebra.h_parameter == pytest.approx(0.25)
+        assert spec.class_label == "B"
+
+    def test_h_override_is_forbidden_for_non_h_families(self):
+        with pytest.raises(ValueError, match="h override"):
+            get_family_spec("V", h=0.1)
 
 
 # ═══════════════════════════════════════════════════════════════

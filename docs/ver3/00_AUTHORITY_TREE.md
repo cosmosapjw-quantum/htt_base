@@ -88,3 +88,16 @@ allowed claims / gate / forbidden shortcut / implementation order의 권위 문�
 - family-specific special-function normalization not written in cards
 - preferred collocation/stencil constants when a card marks them as backend-dependent
 - recombination engine adapter details if not following the frozen HYREC-like adapter contract
+
+---
+
+## 6. current repo binding
+
+Current implementation work in this repository is bound by
+`00A_CURRENT_REPO_BINDING_NOTE.md`.
+
+That note does **not** override the authority order above.
+It only maps the design-pack module tree to the active repo paths
+(`htt/src/common`, `htt/bass/*`, `htt/workspace/contracts/*`) and records
+the fail-closed rule that ver3 PR packets must touch only the currently
+mapped repo surface.

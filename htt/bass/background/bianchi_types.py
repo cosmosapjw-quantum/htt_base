@@ -147,6 +147,37 @@ class BianchiAlgebra:
             )
 
 
+@dataclass(frozen=True)
+class FamilySpec:
+    """Registry-level family metadata frozen by ver3 PR-02."""
+
+    family: str
+    algebra: BianchiAlgebra
+    class_label: Literal["A", "B"]
+    isotropic_anchor: bool
+    orthogonal_global_tilt_local_boost_split: Literal["frozen"]
+    preferred_backend: str
+    generic_fallback: str
+    ic_provenance_status: Literal["strong", "template-card"]
+    canonical_gauge: str
+    release_status: Literal["registry-complete"]
+
+    def as_metadata_dict(self) -> dict[str, object]:
+        return {
+            "family": self.family,
+            "class_label": self.class_label,
+            "isotropic_anchor": self.isotropic_anchor,
+            "orthogonal_global_tilt_local_boost_split": self.orthogonal_global_tilt_local_boost_split,
+            "preferred_backend": self.preferred_backend,
+            "generic_fallback": self.generic_fallback,
+            "ic_provenance_status": self.ic_provenance_status,
+            "canonical_gauge": self.canonical_gauge,
+            "release_status": self.release_status,
+            "h_parameter": self.algebra.h_parameter,
+            "constraint_policy_required": self.algebra.branch_policy.constraint_policy_required,
+        }
+
+
 def _epsilon_3d() -> np.ndarray:
     eps = np.zeros((3, 3, 3), dtype=np.float64)
     eps[0, 1, 2] = eps[1, 2, 0] = eps[2, 0, 1] = +1.0
@@ -225,6 +256,90 @@ def build_bianchi_algebra(label: str, **kwargs) -> BianchiAlgebra:
 def all_bianchi_algebras() -> dict[str, BianchiAlgebra]:
     """Build the full 11-type VER2 algebra registry plus FLRW."""
     return {label: build_bianchi_algebra(label) for label in ["FLRW", *ALL_BIANCHI_TYPES]}
+
+
+_PREFERRED_BACKEND = {
+    "FLRW": "isotropic_trivial",
+    "I": "plane_wave_cartesian",
+    "II": "nil_heisenberg",
+    "III": "class_b_hyperbolic_branch",
+    "IV": "solvable_group_chart",
+    "V": "hyperbolic_open_modes",
+    "VI_0": "solvable_intrinsic_modes",
+    "VI_h": "class_b_negative_h_modes",
+    "VII_0": "helical_euclidean_modes",
+    "VII_h": "helical_open_positive_h_modes",
+    "VIII": "sl2r_noncompact_backend",
+    "IX": "wigner_d_compact_backend",
+}
+
+_IC_PROVENANCE_STATUS = {
+    "FLRW": "strong",
+    "I": "strong",
+    "II": "template-card",
+    "III": "template-card",
+    "IV": "template-card",
+    "V": "strong",
+    "VI_0": "template-card",
+    "VI_h": "template-card",
+    "VII_0": "strong",
+    "VII_h": "strong",
+    "VIII": "template-card",
+    "IX": "strong",
+}
+
+_ISOTROPIC_ANCHORS = {"FLRW", "I", "V", "VII_0", "VII_h", "IX"}
+
+
+def _build_h_consistent_class_b_algebra(label: str, h: float) -> BianchiAlgebra:
+    n1 = 1.0e-2
+    if label == "VI_h":
+        if h >= 0.0 or abs(h + 1.0) < 1.0e-6:
+            raise ValueError("VI_h requires h < 0 and h != -1")
+        n3 = -1.0e-2
+        a_twist = math.sqrt(abs(h * n1 * n3))
+        return build_bianchi_algebra(label, n1=n1, n3=n3, a_twist=a_twist)
+    if label == "VII_h":
+        if h <= 0.0:
+            raise ValueError("VII_h requires h > 0")
+        n3 = 1.0e-2
+        a_twist = math.sqrt(h * n1 * n3)
+        return build_bianchi_algebra(label, n1=n1, n3=n3, a_twist=a_twist)
+    raise ValueError(f"h-override is not supported for {label}")
+
+
+def get_family_spec(name: str, h: float | None = None) -> FamilySpec:
+    """Return the canonical ver3 registry contract for one family.
+
+    ``h`` overrides are only legal for the class-B continuous families
+    ``VI_h`` and ``VII_h``. All other families are branch-fixed.
+    """
+
+    if h is not None and name not in {"VI_h", "VII_h"}:
+        raise ValueError(f"h override is only supported for VI_h/VII_h, not {name}")
+    algebra = _build_h_consistent_class_b_algebra(name, h) if h is not None else build_bianchi_algebra(name)
+    return FamilySpec(
+        family=name,
+        algebra=algebra,
+        class_label=algebra.class_label,
+        isotropic_anchor=name in _ISOTROPIC_ANCHORS,
+        orthogonal_global_tilt_local_boost_split="frozen",
+        preferred_backend=_PREFERRED_BACKEND[name],
+        generic_fallback="generic_collocation",
+        ic_provenance_status=_IC_PROVENANCE_STATUS[name],
+        canonical_gauge=(
+            "class_b_axis_a=(a,0,0), n=diag(0,n2,n3)"
+            if algebra.class_label == "B"
+            else "class_a_axis_identity"
+        ),
+        release_status="registry-complete",
+    )
+
+
+def all_family_specs() -> dict[str, FamilySpec]:
+    """Return the registry-complete family contract table for FLRW + all eleven types."""
+
+    return {label: get_family_spec(label) for label in ["FLRW", *ALL_BIANCHI_TYPES]}
 
 
 def rescale_bianchi_algebra(algebra: BianchiAlgebra, scale: float) -> BianchiAlgebra:

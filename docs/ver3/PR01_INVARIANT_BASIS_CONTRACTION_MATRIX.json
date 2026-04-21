@@ -1,0 +1,34 @@
+{
+  "artifact_id": "ver3.pr01.invariant_basis_contraction_matrix",
+  "pr": "PR-01",
+  "api_version": "ver3-pr01-v1",
+  "files": [
+    "htt/src/common/conventions.py",
+    "htt/src/common/test_conventions.py",
+    "htt/bass/background/geometry.py"
+  ],
+  "sample_metric_gamma_cov": [
+    [4.0, 0.0, 0.0],
+    [0.0, 9.0, 0.0],
+    [0.0, 0.0, 16.0]
+  ],
+  "sample_metric_gamma_contra": [
+    [0.25, 0.0, 0.0],
+    [0.0, 0.1111111111111111, 0.0],
+    [0.0, 0.0, 0.0625]
+  ],
+  "residual_summary": {
+    "identity_metric_pstf_matches_orthonormal_formula": true,
+    "raise_lower_roundtrip": true,
+    "gamma_trace_free_after_projector": true
+  },
+  "known_limit_checks": {
+    "orthonormal_identity_reduction": true,
+    "diagonal_metric_trace_formula": true
+  },
+  "forbidden_shortcut_checks": {
+    "direct_euclidean_invariant_contractions_frozen": true,
+    "family_logic_not_in_helper_layer": true
+  },
+  "opened_claim": "tensor helper frozen"
+}

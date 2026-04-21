@@ -13,6 +13,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from bass.background.bianchi_types import BianchiAlgebra
+from common.conventions import gamma_trace, pstf_gamma
 
 __all__ = [
     "TetradGeometry",
@@ -36,9 +37,7 @@ def _epsilon_3d() -> np.ndarray:
 
 def pstf_rank2(tensor: np.ndarray) -> np.ndarray:
     """Return the symmetric trace-free part of a spatial rank-2 tensor."""
-    arr = np.asarray(tensor, dtype=np.float64)
-    sym = 0.5 * (arr + arr.T)
-    return sym - np.trace(sym) * np.eye(3, dtype=np.float64) / 3.0
+    return pstf_gamma(np.asarray(tensor, dtype=np.float64))
 
 
 def spatial_connection(C: np.ndarray) -> np.ndarray:
@@ -75,7 +74,7 @@ def spatial_ricci(C: np.ndarray) -> tuple[np.ndarray, float, np.ndarray]:
     for gamma in range(3):
         for beta in range(3):
             ricci[gamma, beta] = float(np.sum(riemann[:, gamma, :, beta].diagonal()))
-    ricci_scalar = float(np.trace(ricci))
+    ricci_scalar = gamma_trace(ricci)
     return ricci, ricci_scalar, pstf_rank2(ricci)
 
 

@@ -11,4 +11,16 @@ Landing log:
   credible_cone, hpd_region_healpix, axis_from_posterior.
 * COMMON-F — ``mock_calibration`` (§3.1) — run_zoa_null_mocks,
   run_injected_dipole_mocks, coverage_test, apply_bias_correction.
+* COMMON-G — ``conventions`` (ver3 PR-01) — invariant-basis gamma helpers:
+  gamma-trace, PSTF, raise/lower.
 """
+
+from common.conventions import gamma_norm2_tensor, gamma_trace, lower_vector, pstf_gamma, raise_vector
+
+__all__ = [
+    "gamma_trace",
+    "gamma_norm2_tensor",
+    "pstf_gamma",
+    "raise_vector",
+    "lower_vector",
+]
