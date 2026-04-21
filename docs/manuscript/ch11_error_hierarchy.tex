@@ -47,6 +47,18 @@ Section~\ref{sec:err-phase10-budget}.
 \input{generated/ver2_source_vs_propagation}
 \input{generated/ver2_channel_responsibility}
 \input{generated/ver2_claim_ledger}
+\input{generated/ver2_validation_status}
+
+The practical consequence of these hooks is that the present VER2 paper
+surface remains a bounded research-grade release rather than a final
+science-certificate layer.  The shared snapshot currently reports zero
+production-validated rows, and the executable validation campaigns are
+still deliberately `warn'-grade.  Within this chapter that means the
+governance layer can quarantine source/propagation mismatch, rank
+failure, or residual inadequacy, but it cannot silently upgrade
+diagnostic artifacts into validated error bars or publication-grade
+truth labels.  Appendix~\ref{app:ver2-crosswalk} records the exact
+result-pack and figure-promotion consequences of these gates.
 
 
 % ============================================================

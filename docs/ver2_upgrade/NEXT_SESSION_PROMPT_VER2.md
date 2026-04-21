@@ -29,6 +29,7 @@
 25. `docs/ver2_upgrade/audits/AUDIT_IM-05T_2026-04-21.md`
 26. `docs/ver2_upgrade/audits/AUDIT_IM-08V_2026-04-21.md`
 27. `docs/ver2_upgrade/audits/AUDIT_IM-09D-FIG_2026-04-21.md`
+28. `docs/ver2_upgrade/audits/AUDIT_IM-10D-MAN_2026-04-21.md`
 
 ## 2. Current State
 
@@ -88,19 +89,26 @@
 - `IM-09D-FIG` verification is green for the touched D-lane scope: targeted pytest `6 passed`, `py_compile` passed, and both `venv/bin/python scripts/ver2_artifact_export.py` / `--check` pass.
 - The exporter currently reports `88` paper-figure bases, of which `5` are manifest-ready `ver2_generated` figures and `83` remain blocked legacy figures without canonical manifests.
 - `IM-09D-FIG` commit is now present in history as the current `V2-D1` landing commit.
+- `IM-10D-MAN` is now closed: `scripts/ver2_artifact_export.py` once again owns the manuscript-facing generated TeX hooks, `docs/manuscript/ch07_results.tex` promotes only the two conditional VER2 figures, `docs/manuscript/ch09_discussion.tex` states the export claim ceilings explicitly, `docs/manuscript/ch11_error_hierarchy.tex` surfaces the warn/no-claim validation ceiling, and `docs/manuscript/appendices.tex` now holds the exploratory result-pack crosswalk and appendix-only VER2 figures.
+- `IM-10D-MAN` verification is green for the touched D-lane scope: `venv/bin/python -m pytest scripts/test_ver2_artifact_export.py -q` -> `7 passed`, `py_compile` passed, and both `venv/bin/python scripts/ver2_artifact_export.py` / `--check` pass.
+- Prompt list 02 is now complete: there are no remaining implementation packets in the current VER2 prompt series.
 - Prompt list 01 is now complete: every skeleton lane has an audit note, machine-readable carry-forward, and a frozen write-scope boundary.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
-## 3. Next Recommended Packet
+## 3. Next Recommended Work
 
-`SK-00`, `SK-01C`, `SK-01S1`, `SK-02S2`, `SK-03S3`, `SK-04O`, `SK-05T`, `SK-06H`, `SK-07M`, `SK-08V`, and `SK-09D` are closed. Move to prompt list 02.
+All packets in prompt lists 01 and 02 are now closed.
 
-If working in one thread, continue with the remaining implementation packet:
+If continuing, restrict work to follow-up maintenance rather than a new
+VER2 packet:
 
-1. `IM-10D-MAN`
+1. legacy paper-figure manifest retrofit for the remaining `83` blocked figures,
+2. top-level `docs/status_matrix.md` / `docs/claim_ledger.md` sync cleanup,
+3. optional H/M/T serializer or wrapper-tightening follow-up where carry-forward rows still point to later maintenance.
 
 There are no same-list implementation packets left to run in parallel.
-Any extra thread should be treated as follow-up doc cleanup or deferred legacy-figure manifest retrofit work, not as a new VER2 packet from the current prompt list.
+Any extra thread should therefore be treated as legacy cleanup or a new
+scoped follow-up prompt, not as another packet from the current VER2 list.
 
 ## 4. Hard Reminders
 

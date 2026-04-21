@@ -106,7 +106,7 @@ def test_stale_generated_figure_assets_detects_changed_bytes(tmp_path: Path) -> 
     assert stale == [str((actual / "fig.caption.txt").as_posix())]
 
 
-def test_render_outputs_stays_inside_im09d_fig_scope(tmp_path: Path) -> None:
+def test_render_outputs_stays_inside_im10d_man_scope(tmp_path: Path) -> None:
     exporter = _load_export_module()
     records, packs = exporter.build_export_bundle()
     generated = tmp_path / "ver2_generated"
@@ -118,7 +118,27 @@ def test_render_outputs_stays_inside_im09d_fig_scope(tmp_path: Path) -> None:
         path.relative_to(exporter.REPO_ROOT).as_posix()
         for path in outputs
     ]
-    assert not any(path.startswith("docs/manuscript/") for path in output_paths)
+    manuscript_paths = [path for path in output_paths if path.startswith("docs/manuscript/")]
+    assert manuscript_paths
+    assert all(path.startswith("docs/manuscript/generated/") for path in manuscript_paths)
+    assert "docs/manuscript/generated/ver2_result_pack_summary.tex" in output_paths
+    assert "docs/manuscript/generated/ver2_validation_status.tex" in output_paths
+
+
+def test_validation_status_tex_preserves_warn_ceiling(tmp_path: Path) -> None:
+    exporter = _load_export_module()
+    records, packs = exporter.build_export_bundle()
+    generated_root = tmp_path / "ver2_generated"
+    exporter._generate_pack_figures(packs, figure_dir=generated_root)
+    figures = exporter._scan_figures(exporter.FIGURE_ROOT, generated_root=generated_root)
+    outputs = exporter._render_outputs(records, packs, figures)
+
+    validation_tex = outputs[
+        exporter.REPO_ROOT / "docs" / "manuscript" / "generated" / "ver2_validation_status.tex"
+    ]
+    assert "Warn-grade" in validation_tex
+    assert "no-claim gates" in validation_tex
+    assert "production-validated rows" in validation_tex
 
 
 def test_mio_export_consumes_live_tier_a_and_tier_b_forward_refs() -> None:
