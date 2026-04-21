@@ -54,6 +54,7 @@ from mio.extraction import (
     validate_kl_atlas_schema,
 )
 from mio.extraction.hj01_shear import _gammaincc
+from mio.tests._overlay_fixtures import build_pending_overlay
 from workspace.contracts.atlas_entry import AtlasEntry
 from workspace.contracts.mio_certificate import MioCertificate
 
@@ -403,7 +404,7 @@ def test_required_keys_constant_matches_validator():
 def test_artefact_emitter_writes_mio_prefixed_json(tmp_path: Path):
     kl = _base_kl(sigma2_inject=100.0, sigma_obs_uK2=25.0, rng_seed=9)
     out = tmp_path / ARTEFACT_FILENAME
-    payload = emit_shear_extraction_artefact(out, kl)
+    payload = emit_shear_extraction_artefact(out, kl, tsc_overlay=build_pending_overlay())
     assert out.exists()
     assert out.name.startswith("mio_")
     loaded = json.loads(out.read_text())
@@ -412,6 +413,7 @@ def test_artefact_emitter_writes_mio_prefixed_json(tmp_path: Path):
     assert loaded["atlas_name"] == kl["atlas_name"]
     assert "summary" in loaded and "sigma2_best" in loaded["summary"]
     assert payload["certificate"]["reduction_status"] == "diagnostic-only"
+    assert payload["certificate"]["tsc_overlay_ref"] == "tsc.overlay"
 
 
 def test_artefact_emitter_rejects_non_mio_filename(tmp_path: Path):

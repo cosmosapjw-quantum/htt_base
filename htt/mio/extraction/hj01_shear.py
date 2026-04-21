@@ -606,6 +606,8 @@ def emit_shear_extraction_artefact(
     kl: Mapping[str, Any],
     *,
     config: Optional[ShearExtractorConfig] = None,
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> dict:
     """Run the extraction and persist a JSON record.
 
@@ -620,7 +622,13 @@ def emit_shear_extraction_artefact(
 
     cfg = config if config is not None else ShearExtractorConfig()
     report = extract_from_kl_atlas(kl, config=cfg)
-    cert = to_mio_certificate(report, config=cfg, artifact_path=str(out_path))
+    cert = to_mio_certificate(
+        report,
+        config=cfg,
+        artifact_path=str(out_path),
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
+    )
 
     payload = {
         "schema_version": "v1",

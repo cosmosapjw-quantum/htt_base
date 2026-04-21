@@ -342,6 +342,8 @@ def emit_predictive_residuals_artefact(
     covariance_ref: str | None = None,
     domain_caveats: Optional[Sequence[str]] = None,
     input_data_hashes: Optional[Sequence[str]] = None,
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> dict:
     """Write a residual-atlas artifact from caller-supplied residual slices."""
     out = Path(out_path)
@@ -359,6 +361,8 @@ def emit_predictive_residuals_artefact(
         domain_caveats=domain_caveats,
         input_data_hashes=input_data_hashes,
         artifact_path=str(out),
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
     )
     payload = {
         "artifact_name": ARTEFACT_FILENAME,

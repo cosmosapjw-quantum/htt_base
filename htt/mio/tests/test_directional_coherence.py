@@ -28,6 +28,7 @@ from mio.coherence.directional import (
     resultant_vector,
     to_mio_certificate,
 )
+from mio.tests._overlay_fixtures import build_pending_overlay
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -141,11 +142,13 @@ def test_coherence_chi2_runs_on_standard_probes():
 
 def test_emit_artefact_writes_json(tmp_path):
     out = tmp_path / ARTEFACT_FILENAME
+    overlay = build_pending_overlay()
     payload = emit_directional_coherence_artefact(
         out,
         probes=STANDARD_PROBES,
         n_mock=500,
         rng=np.random.default_rng(seed=3),
+        tsc_overlay=overlay,
     )
     assert out.exists()
     loaded = json.loads(out.read_text(encoding="utf-8"))
@@ -153,6 +156,8 @@ def test_emit_artefact_writes_json(tmp_path):
     assert len(loaded["probes"]) == 5
     assert 0.0 <= loaded["resultant"]["R"] <= 1.0
     assert loaded["certificate"]["report_type"] == "directional_coherence"
+    assert loaded["certificate"]["tsc_overlay_ref"] == "tsc.overlay"
+    assert loaded["certificate"]["adequacy_indicators"]["tsc_overlay_attached"] is True
     assert payload == loaded
 
 

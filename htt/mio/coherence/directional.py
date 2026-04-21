@@ -322,6 +322,8 @@ def emit_directional_coherence_artefact(
     *,
     n_mock: int = 10_000,
     rng: Optional[np.random.Generator] = None,
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> dict:
     """Run the full analysis and persist JSON.
 
@@ -348,6 +350,8 @@ def emit_directional_coherence_artefact(
         resultant=resultant,
         chi2_stat=chi2_stat,
         artifact_path=str(out_path),
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
     )
 
     payload = {

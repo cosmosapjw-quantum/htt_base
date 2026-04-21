@@ -38,6 +38,7 @@ from mio.coherence.redshift_binned import (
     to_mio_certificate,
     total_drift_deg,
 )
+from mio.tests._overlay_fixtures import build_pending_overlay
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -235,10 +236,12 @@ def test_emit_rejects_non_mio_prefix_filename(tmp_path: Path):
 
 
 def test_emit_artefact_schema_is_stable(tmp_path: Path):
+    overlay = build_pending_overlay()
     payload = emit_redshift_coherence_artefact(
         tmp_path / ARTEFACT_FILENAME,
         n_mock=50,
         rng=np.random.default_rng(seed=42),
+        tsc_overlay=overlay,
     )
     expected_keys = {
         "schema_version", "probes", "bins", "bin_results",
@@ -247,6 +250,7 @@ def test_emit_artefact_schema_is_stable(tmp_path: Path):
     }
     assert set(payload.keys()) == expected_keys
     assert payload["schema_version"] == "v1"
+    assert payload["certificate"]["tsc_overlay_ref"] == "tsc.overlay"
     # JSON round-trip: the on-disk file parses back to the same dict.
     round_trip = json.loads((tmp_path / ARTEFACT_FILENAME).read_text(encoding="utf-8"))
     assert round_trip == payload

@@ -441,6 +441,8 @@ def emit_redshift_coherence_artefact(
     *,
     n_mock: int = 5_000,
     rng: Optional[np.random.Generator] = None,
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> dict:
     """Run the full analysis and persist JSON.
 
@@ -467,6 +469,8 @@ def emit_redshift_coherence_artefact(
         p_drift=p_drift,
         total_drift=total_drift,
         artifact_path=str(out_path),
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
     )
 
     payload = {

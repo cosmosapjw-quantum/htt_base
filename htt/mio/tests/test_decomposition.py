@@ -20,6 +20,7 @@ from mio.decomposition import (
 from mio.decomposition.redshift_tomography import (
     to_mio_certificate as redshift_to_mio_certificate,
 )
+from mio.tests._overlay_fixtures import build_pending_overlay
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -45,14 +46,17 @@ def test_evidence_anatomy_certificate_has_no_posterior_field():
 
 def test_emit_evidence_anatomy_artefact_round_trip(tmp_path: Path):
     out = tmp_path / ARTEFACT_FILENAME
+    overlay = build_pending_overlay()
     payload = emit_evidence_anatomy_artefact(
         out,
         {"cmb": 1.2, "cf4": 0.8, "biposh": -0.1},
         total_delta_lnB=1.95,
+        tsc_overlay=overlay,
     )
     loaded = json.loads(out.read_text(encoding="utf-8"))
     assert loaded == payload
     assert payload["certificate"]["report_type"] == "evidence_anatomy"
+    assert payload["certificate"]["tsc_overlay_ref"] == "tsc.overlay"
 
 
 def test_emit_evidence_anatomy_rejects_non_mio_prefix(tmp_path: Path):
@@ -88,6 +92,7 @@ def test_redshift_tomography_certificate_has_no_posterior_field():
 
 def test_emit_redshift_tomography_artefact_round_trip(tmp_path: Path):
     out = tmp_path / REDSHIFT_ARTEFACT_FILENAME
+    overlay = build_pending_overlay()
     payload = emit_redshift_tomography_artefact(
         out,
         (
@@ -95,10 +100,12 @@ def test_emit_redshift_tomography_artefact_round_trip(tmp_path: Path):
             RedshiftEvidenceSlice("late", 0.0, 10.0, 0.3),
         ),
         total_delta_lnB=1.9,
+        tsc_overlay=overlay,
     )
     loaded = json.loads(out.read_text(encoding="utf-8"))
     assert loaded == payload
     assert payload["certificate"]["channel"] == "redshift_tomography"
+    assert payload["certificate"]["tsc_overlay_ref"] == "tsc.overlay"
 
 
 def test_emit_redshift_tomography_rejects_non_mio_prefix(tmp_path: Path):

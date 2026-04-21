@@ -257,6 +257,8 @@ def emit_flrw_tension_artefact(
     domain_caveats: Optional[Sequence[str]] = None,
     input_data_hashes: Optional[Sequence[str]] = None,
     null_mocks_calibrated: bool = False,
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> dict:
     """Evaluate PPP statistics and persist a JSON artifact."""
     out_path = Path(out_path)
@@ -279,6 +281,8 @@ def emit_flrw_tension_artefact(
         input_data_hashes=input_data_hashes,
         null_mocks_calibrated=null_mocks_calibrated,
         artifact_path=str(out_path),
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
     )
 
     payload = {

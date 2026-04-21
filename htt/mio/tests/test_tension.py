@@ -19,6 +19,7 @@ from mio.tension import (
 )
 from mio.tension.flrw_tension import to_mio_certificate as flrw_to_mio_certificate
 from mio.tension.xc_estimator import estimate_xc_report
+from mio.tests._overlay_fixtures import build_pending_overlay
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -63,6 +64,7 @@ def test_flrw_tension_certificate_has_no_posterior_field():
 
 def test_emit_flrw_tension_artefact_round_trip(tmp_path: Path):
     out = tmp_path / ARTEFACT_FILENAME
+    overlay = build_pending_overlay()
     payload = emit_flrw_tension_artefact(
         out,
         {"T_directional": 2.5, "T_biposh": 0.3},
@@ -70,12 +72,14 @@ def test_emit_flrw_tension_artefact_round_trip(tmp_path: Path):
             "T_directional": [0.2, 0.4, 0.5, 0.7],
             "T_biposh": [0.1, 0.2, 0.4, 0.6],
         },
+        tsc_overlay=overlay,
     )
     loaded = json.loads(out.read_text(encoding="utf-8"))
     assert loaded == payload
     assert payload["certificate"]["report_type"] == "flrw_tension"
     assert payload["certificate"]["probe_name"] == "FLRW"
     assert payload["strongest_statistic"] == "T_directional"
+    assert payload["certificate"]["tsc_overlay_ref"] == "tsc.overlay"
 
 
 def test_emit_flrw_tension_artefact_rejects_non_mio_prefix(tmp_path: Path):
@@ -106,6 +110,7 @@ def test_departure_parameter_estimate_matches_plan_formula():
 
 def test_emit_xc_direct_estimate_artefact_round_trip(tmp_path: Path):
     out = tmp_path / XC_ARTEFACT_FILENAME
+    overlay = build_pending_overlay()
     payload = emit_xc_direct_estimate_artefact(
         out,
         XCInputs(
@@ -118,11 +123,13 @@ def test_emit_xc_direct_estimate_artefact_round_trip(tmp_path: Path):
             omega_k_aniso=0.01,
             omega_k_aniso_sigma=0.01,
         ),
+        tsc_overlay=overlay,
     )
     loaded = json.loads(out.read_text(encoding="utf-8"))
     assert loaded == payload
     assert payload["certificate"]["report_type"] == "flrw_tension"
     assert payload["certificate"]["channel"] == "xc_direct"
+    assert payload["certificate"]["tsc_overlay_ref"] == "tsc.overlay"
     assert payload["report"]["x_c"] == pytest.approx(0.29)
 
 

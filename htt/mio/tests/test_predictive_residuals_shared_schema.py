@@ -5,7 +5,9 @@ import numpy as np
 
 from common.contracts import ArtifactManifest, SkySupport
 from mio.diagnostics.predictive_residuals import (
+    ResidualChannelSlice,
     build_predictive_residual_atlas_from_shared_schema,
+    emit_predictive_residuals_artefact,
     emit_predictive_residuals_shared_schema_artefact,
 )
 from tsc.admissibility.domain import build_domain_report
@@ -205,3 +207,29 @@ def test_shared_schema_emitter_attaches_manifest_and_overlay(tmp_path):
     assert "tsc_overlay_diagnostic_only" in certificate["domain_caveats"]
     assert payload["shared_schema_inputs"]["observable_vector_ref"] == "bass.observable"
     assert payload["shared_schema_inputs"]["atlas_entry_ref"] == "bass.atlas_lite"
+
+
+def test_packaged_slice_emitter_attaches_overlay(tmp_path):
+    overlay = _overlay_pending()
+    out_path = tmp_path / "mio_predictive_residuals_v1.json"
+    payload = emit_predictive_residuals_artefact(
+        out_path,
+        (
+            ResidualChannelSlice(
+                model_label="FLRW_tilt",
+                channel="TT",
+                ell_min=2,
+                ell_max=5,
+                rms_residual=0.1,
+                max_abs_residual=0.2,
+                n_modes=4,
+            ),
+        ),
+        atlas_ref="bass.atlas_lite",
+        covariance_ref="cov:001",
+        tsc_overlay=overlay,
+    )
+    certificate = payload["certificate"]
+    assert certificate["tsc_overlay_ref"] == "tsc.overlay"
+    assert certificate["adequacy_indicators"]["tsc_overlay_attached"] is True
+    assert "tsc_overlay_diagnostic_only" in certificate["domain_caveats"]

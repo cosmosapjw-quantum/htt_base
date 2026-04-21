@@ -171,6 +171,8 @@ def emit_evidence_anatomy_artefact(
     residual_floor: float = 1e-3,
     domain_caveats: Optional[Sequence[str]] = None,
     input_data_hashes: Optional[Sequence[str]] = None,
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> dict:
     """Persist a JSON artifact for channel-by-channel evidence anatomy."""
     out_path = Path(out_path)
@@ -192,6 +194,8 @@ def emit_evidence_anatomy_artefact(
         domain_caveats=domain_caveats,
         input_data_hashes=input_data_hashes,
         artifact_path=str(out_path),
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
     )
 
     payload = {

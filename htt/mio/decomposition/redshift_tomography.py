@@ -145,6 +145,8 @@ def emit_redshift_tomography_artefact(
     consistency_tolerance: float = 0.10,
     domain_caveats: Optional[Sequence[str]] = None,
     input_data_hashes: Optional[Sequence[str]] = None,
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> dict:
     """Persist a JSON artifact for coarse redshift evidence slices."""
     out_path = Path(out_path)
@@ -165,6 +167,8 @@ def emit_redshift_tomography_artefact(
         domain_caveats=domain_caveats,
         input_data_hashes=input_data_hashes,
         artifact_path=str(out_path),
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
     )
 
     payload = {
