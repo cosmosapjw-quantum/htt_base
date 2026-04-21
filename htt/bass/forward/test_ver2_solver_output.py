@@ -233,6 +233,8 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
     assert output.metadata["propagator_ready"] is True
     assert output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_lowell_bridge"
     assert output.metadata["propagator_mode"] == "anisotropic_forward"
+    assert output.metadata["source_propagator_status"] == "approximate"
+    assert output.metadata["source_propagator_realization"] == "flrw_bessel_bridge_proxy"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_lowell_template"
     assert output.alm_T["representation"] == "lowell_pstf_final_slice"
@@ -265,6 +267,37 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["seed_k_comoving"] == pytest.approx(0.0)
     assert output.metadata["startup_manifold_applied"] is False
     assert output.metadata["propagator_mode"] == "anisotropic_forward"
+    assert output.metadata["source_propagator_status"] == "approximate"
+    assert output.metadata["source_propagator_realization"] == "flrw_bessel_bridge_proxy"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_native_template"
     assert output.alm_T["representation"] == "ver2_native_pstf_final_slice"
+
+
+def test_tier_b_exact_source_propagator_requires_explicit_propagator_config() -> None:
+    exact_flags = SolverFeatureFlags(
+        background_dynamics=FeatureStatus.APPROXIMATE,
+        photon_transport=FeatureStatus.APPROXIMATE,
+        thomson_collision=FeatureStatus.APPROXIMATE,
+        visibility_history=FeatureStatus.APPROXIMATE,
+        source_propagator=FeatureStatus.EXACT,
+        checkpoint_restart=FeatureStatus.DISABLED,
+    )
+    with pytest.raises(ValueError, match="exact source propagation requires an explicit propagator config"):
+        build_solver_core_output_from_native_result(
+            manifest=_manifest(),
+            bianchi_type="VII_h",
+            result=_synthetic_result(),
+            species=SpeciesBackgroundRegistry.from_planck2018(),
+            runtime_controls=_controls(),
+            feature_flags=exact_flags,
+            release=BassReleaseMetadata(
+                release_stage="research_executable",
+                run_label="tier-b-native-exact",
+                config_hash="cfg-hash",
+                code_version="0.0-test",
+                schema_version="ver2-v0",
+                git_commit="deadbeef",
+            ),
+            k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+        )

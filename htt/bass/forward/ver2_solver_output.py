@@ -217,6 +217,11 @@ def build_solver_core_output_from_native_result(
             "build_solver_core_output_from_native_result requires a live source_propagator feature flag "
             "or an explicit propagator config"
         )
+    if propagator is None and feature_flags.source_propagator is FeatureStatus.EXACT:
+        raise ValueError(
+            "Tier-B exact source propagation requires an explicit propagator config; "
+            "the default native bridge remains an approximate FLRW-kernel carry path."
+        )
     structure_constants = get_type(bianchi_type) if structure is None else structure
     propagator_config = (
         SourcePropagatorConfig(
@@ -224,7 +229,7 @@ def build_solver_core_output_from_native_result(
             polarization_rotation=feature_flags.source_propagator,
             temperature_transport=feature_flags.source_propagator,
             flrw_validation_only=False,
-            kernel_family="anisotropic_green_function",
+            kernel_family="flrw_bessel_bridge_proxy",
             observer_frame=ObserverFrameMetadata(
                 harmonic_basis="m_explicit",
                 eb_sign_convention="cmb",
@@ -285,6 +290,8 @@ def build_solver_core_output_from_native_result(
             "off_diagonal_strategy": off_diagonal_strategy,
             "limber_eta_sp_sign": limber_eta_sp_sign,
             "source_builder_scope": "theta0_plus_pi_quadrupole_ver2_native",
+            "source_propagator_status": feature_flags.source_propagator.value,
+            "source_propagator_realization": live_propagator.config.kernel_family,
             "tier_b_core_owner": str(result.solver_info.get("tier_b_core_owner", "ver2_s1s2_native")),
             "solver_method": str(result.solver_info.get("solver_method", result.config.solver_method)),
             "solver_family_realization": str(result.solver_info.get("solver_family_realization", "runtime_family_direct")),
@@ -330,6 +337,15 @@ def build_solver_core_output_from_lowell_result(
             "build_solver_core_output_from_lowell_result requires a live source_propagator feature flag "
             "or an explicit propagator config"
         )
+    if (
+        runtime_controls.tier is SolverTier.TIER_B_PSTF
+        and propagator is None
+        and feature_flags.source_propagator is FeatureStatus.EXACT
+    ):
+        raise ValueError(
+            "Tier-B exact source propagation requires an explicit propagator config; "
+            "the retained Lowell bridge is only an approximate FLRW-kernel carry path."
+        )
     structure_constants = get_type(bianchi_type) if structure is None else structure
     propagator_config = (
         SourcePropagatorConfig(
@@ -350,7 +366,7 @@ def build_solver_core_output_from_lowell_result(
             ),
             flrw_validation_only=(runtime_controls.tier is SolverTier.TIER_A_ANGULAR),
             kernel_family=(
-                "anisotropic_green_function"
+                "flrw_bessel_bridge_proxy"
                 if runtime_controls.tier is SolverTier.TIER_B_PSTF
                 else "flrw_scalar_validation"
             ),
@@ -419,6 +435,8 @@ def build_solver_core_output_from_lowell_result(
             "off_diagonal_strategy": off_diagonal_strategy,
             "limber_eta_sp_sign": limber_eta_sp_sign,
             "source_builder_scope": "theta0_plus_pi_quadrupole_lowell_bridge",
+            "source_propagator_status": feature_flags.source_propagator.value,
+            "source_propagator_realization": live_propagator.config.kernel_family,
         },
     )
 

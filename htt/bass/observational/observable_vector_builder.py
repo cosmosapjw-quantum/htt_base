@@ -53,7 +53,10 @@ def _default_alm_features(
     if isinstance(solver_output.alm_T, Mapping):
         alm_representation = str(solver_output.alm_T.get("representation", ""))
     observer_reconstruction_status = "unreported"
-    if alm_representation == "lowell_pstf_final_slice":
+    if alm_representation in {
+        "lowell_pstf_final_slice",
+        "ver2_native_pstf_final_slice",
+    }:
         observer_reconstruction_status = "final_slice_only_no_sphere_reconstruction"
     return {
         "harmonic_basis": str(solver_output.metadata["harmonic_basis"]),

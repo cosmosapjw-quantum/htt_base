@@ -125,7 +125,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     )
 
     assert run.execution_plan.runtime_decision.owner == "BASS"
-    assert run.execution_plan.runtime_decision.propagation_status == "validated"
+    assert run.execution_plan.runtime_decision.propagation_status == "pending"
     assert run.trace.seed_projection.projection_ready is True
     assert np.isfinite(run.trace.startup_gate.gamma_T_over_H)
     assert run.trace.startup_gate.threshold == 100.0
@@ -143,6 +143,8 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.integration_result.solver_info["startup_manifold_applied"] is True
     assert run.solver_output.metadata["propagator_ready"] is True
+    assert run.solver_output.metadata["source_propagator_status"] == "approximate"
+    assert run.solver_output.metadata["source_propagator_realization"] == "flrw_bessel_bridge_proxy"
     assert run.solver_output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.solver_output.metadata["solver_method"] == "BDF"
     assert run.solver_output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_ver2_native"

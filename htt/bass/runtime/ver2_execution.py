@@ -616,13 +616,13 @@ def _build_runtime_decision(
 ) -> RuntimeReductionDecision:
     propagation_status = (
         "validated"
-        if feature_flags.source_propagator is not FeatureStatus.DISABLED
+        if feature_flags.source_propagator is FeatureStatus.EXACT
         else "pending"
     )
     reason = (
-        "tier_b_native_s1s2_core"
+        "tier_b_native_s1s2_core_with_exact_propagator"
         if propagation_status == "validated"
-        else "tier_b_native_runtime_without_live_propagator"
+        else "tier_b_native_runtime_without_exact_propagator"
     )
     return build_runtime_reduction_decision(
         canonical_decision,

@@ -98,6 +98,8 @@ from bass.hierarchy.pstf_radiation import (
     RadiationPSTFState,
     TruncationMetadata,
     make_radiation_state,
+    project_from_angular_samples,
+    reconstruct_on_sphere,
 )
 from bass.hierarchy.seed_compatibility import (
     PackedRegularSeedInjection,
@@ -183,6 +185,8 @@ __all__ = [
     "TruncationMetadata",
     "RadiationPSTFState",
     "make_radiation_state",
+    "project_from_angular_samples",
+    "reconstruct_on_sphere",
     "SeedConvention",
     "SeedAssignmentFrame",
     "RegularSeedDescriptor",

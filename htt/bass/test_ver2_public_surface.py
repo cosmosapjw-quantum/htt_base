@@ -18,3 +18,7 @@ def test_public_packages_do_not_reexport_stub_aliases() -> None:
     assert not hasattr(hierarchy, "reconstruct_on_sphere_stub")
     assert not hasattr(los, "build_source_propagator_stub")
 
+
+def test_public_packages_export_live_ver2_radiation_projection_helpers() -> None:
+    assert hasattr(hierarchy, "project_from_angular_samples")
+    assert hasattr(hierarchy, "reconstruct_on_sphere")
