@@ -61,7 +61,7 @@ def test_validation_pack_carries_representative_family_sweep_evidence() -> None:
     family_sweep = records["family_sweep"]
     pack = next(pack for pack in packs if pack.pack_id == "E")
     assert family_sweep.manifest.claim_tier == "conditional"
-    assert "representative_tilted_runtime_blocked" in family_sweep.manifest.caveats
+    assert "representative_tilted_runtime_partial_only" in family_sweep.manifest.caveats
     assert family_sweep.payload["evidence"]["campaign_id"] == "validation.bass_representative_family_sweep"
     assert any(record.key == "family_sweep" for record in pack.artifacts)
 

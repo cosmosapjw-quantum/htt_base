@@ -105,3 +105,7 @@ After `HTT-A`, the next executable HTT packet is:
 1. `HTT-B`
 
 If `HTT-A` is already present in the local workspace, start with `HTT-B`.
+
+Concrete execution handoff for the current local state:
+
+1. `docs/ver2_upgrade/HTT_B_EXECUTION_PROMPT.md`
