@@ -38,6 +38,7 @@
 33. `docs/ver2_upgrade/audits/AUDIT_BF-03B-ANG_2026-04-21.md`
 34. `docs/ver2_upgrade/audits/AUDIT_BF-04B-COV_2026-04-21.md`
 35. `docs/ver2_upgrade/audits/AUDIT_BF-05B-VAL_2026-04-21.md`
+36. `docs/ver2_upgrade/audits/AUDIT_PRM-02_BASS_FAMILY_SWEEP_2026-04-22.md`
 
 ## 2. Current State
 
@@ -123,6 +124,9 @@
 - `CF-PR15A` verification is green for the touched LOS/forward/runtime scope: targeted pytest `18 passed`, `py_compile` passed, and the remaining gap is now the full PR-15 exact anisotropic Green-function / adjoint closure rather than the old FLRW-bridge default.
 - `CF-PR16A` is now closed: the native Tier-B runtime supports executable checkpoint/restart on the live path, writes algebra/frame compatibility metadata into checkpoint files, and rejects incompatible restart attempts before background/history execution begins.
 - `CF-PR16A` verification is green for the touched runtime scope: targeted pytest `10 passed`, `py_compile` passed, and the remaining solver-family caveat stays explicit as `IMEX_SPLIT` realized by `BDF` on the seeded native route.
+- `PRM-02-BASS-FAMILY-SWEEP` is now closed: the representative preliminary family sweep is executable for orthogonal `I/V/VII_0/VIII`, while representative tilted branches are now recorded as explicit controlled Codazzi-stage blockers instead of silent fallbacks.
+- `PRM-02-BASS-FAMILY-SWEEP` verification is green for the touched preliminary-results scope: `py_compile` passed; targeted pytest over runtime/validation/registry returned `37 passed`; `htt/scripts/ver2_bass_validation.py --family-sweep-check` passed; `htt/scripts/ver2_validation_registry.py --check` passed; `htt/scripts/ver2_hostile_audit.py --check` passed.
+- The current preliminary-results ceiling is sharper: representative orthogonal family runs may feed preliminary result packs directly, but tilted representative runtime blockers and non-Type-I exact-propagator debt must remain explicit no-claim conditions.
 - The BASS-first implementation sequence is now closed in code. Remaining debt is no longer “wire observer/likelihood/inference at all”; it is the deeper physics/statistics carry-forward around non-Type-I exact propagation, full BiPoSH inversion, and later HTT-facing science claims.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
@@ -166,9 +170,9 @@ cleanup:
 3. `PRM-03-PRELIM-RESULT-PACKS`,
 4. only then reopen deeper exactness debt if it blocks a concrete preliminary claim.
 
-`PRM-01-BASS-INTEROP` is closed. The next BASS preliminary-results packet is:
+`PRM-01-BASS-INTEROP` and `PRM-02-BASS-FAMILY-SWEEP` are closed. The next BASS preliminary-results packet is:
 
-1. `PRM-02-BASS-FAMILY-SWEEP`
+1. `PRM-03-PRELIM-RESULT-PACKS`
 
 ## 4. Hard Reminders
 

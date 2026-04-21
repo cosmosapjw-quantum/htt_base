@@ -3,8 +3,10 @@ from __future__ import annotations
 import pytest
 
 from bass.validation import (
+    build_representative_family_sweep_evidence,
     build_type_i_reionization_probe_evidence,
     build_type_i_runtime_validation_evidence,
+    representative_family_sweep_payload,
     type_i_reionization_probe_payload,
     type_i_runtime_validation_payload,
 )
@@ -51,6 +53,32 @@ def test_type_i_runtime_validation_evidence_records_missing_late_time_reionizati
     )
     assert check.passed is True
     assert "late-time low-z source window" in check.summary
+
+
+def test_representative_family_sweep_evidence_passes_with_bounded_orthogonal_subset() -> None:
+    evidence = build_representative_family_sweep_evidence()
+    assert evidence.status == "pass"
+    assert evidence.campaign_id == "validation.bass_representative_family_sweep"
+    assert evidence.bianchi_type == "I,V,VII_0,VIII"
+    assert "representative_tilted_runtime_blocked" in evidence.no_claim_conditions
+    checks = {row.check_id: row for row in evidence.checks}
+    assert checks["representative_orthogonal_families_run_end_to_end"].passed is True
+    assert checks["representative_tilted_branches_fail_controlledly"].passed is True
+    assert checks["representative_family_realizations_are_algebra_aware"].passed is True
+
+
+def test_representative_family_sweep_payload_is_json_ready() -> None:
+    payload = representative_family_sweep_payload()
+    assert payload["campaign_id"] == "validation.bass_representative_family_sweep"
+    assert payload["status"] == "pass"
+    check_ids = {row["check_id"] for row in payload["checks"]}
+    assert {
+        "representative_orthogonal_families_run_end_to_end",
+        "representative_tilted_branches_fail_controlledly",
+        "representative_family_realizations_are_algebra_aware",
+        "representative_family_outputs_stay_finite_on_bounded_low_ell_grid",
+        "representative_family_sweep_preserves_tilt_boost_contracts",
+    } <= check_ids
 
 
 def test_type_i_reionization_probe_evidence_passes_for_extended_low_z_runtime() -> None:

@@ -178,6 +178,24 @@ def test_bass_native_runtime_bridge_records_missing_late_time_reionization_windo
     )
 
 
+def test_bass_representative_family_sweep_records_tilted_runtime_blocker() -> None:
+    campaigns = build_default_validation_campaigns()
+    campaign = next(
+        row for row in campaigns if row.campaign_id == "validation.bass_representative_family_sweep"
+    )
+    assert "representative_tilted_runtime_blocked" in campaign.no_claim_conditions
+    theorem = next(
+        row
+        for row in build_default_theorem_to_test_map()
+        if row.theorem_id == "V8_bass_representative_family_sweep"
+    )
+    assert "representative_tilted_runtime_blocked" in theorem.no_claim_conditions
+    assert any(
+        link.test_id == "representative_tilted_branches_fail_controlledly"
+        for link in campaign.check_links
+    )
+
+
 def test_default_registry_has_no_link_or_coverage_issues():
     assert validation_registry_issues() == ()
 

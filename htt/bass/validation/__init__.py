@@ -1,8 +1,10 @@
 __all__ = [
     "ExecutableCampaignEvidence",
     "ExecutableCheckEvidence",
+    "build_representative_family_sweep_evidence",
     "build_type_i_reionization_probe_evidence",
     "build_type_i_runtime_validation_evidence",
+    "representative_family_sweep_payload",
     "type_i_reionization_probe_payload",
     "type_i_runtime_validation_payload",
 ]

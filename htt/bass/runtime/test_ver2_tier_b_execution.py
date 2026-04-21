@@ -5,6 +5,7 @@ import pytest
 
 from common.contracts import ArtifactManifest
 
+from bass.background import CodazziProjectionError
 from bass.background.bianchi_types import get_type
 from bass.background.einstein_bianchi import BianchiCosmology
 from bass.forward.ver2_solver_output import (
@@ -113,6 +114,23 @@ def _integrator_config() -> IntegratorConfig:
         bianchi_cosmo=BianchiCosmology(
             structure=get_type("I"),
             beta=0.0,
+        ),
+        gamma_T_over_H_threshold=100.0,
+        gamma_T_override=lambda eta: 1.0e15,
+    )
+
+
+def _family_integrator_config(bianchi_type: str, *, beta: float = 0.0) -> IntegratorConfig:
+    return IntegratorConfig(
+        L_max=4,
+        eta_initial_mpc=0.5,
+        eta_final_mpc=1.0,
+        n_output=12,
+        rtol=1.0e-6,
+        atol=1.0e-9,
+        bianchi_cosmo=BianchiCosmology(
+            structure=get_type(bianchi_type),
+            beta=float(beta),
         ),
         gamma_T_over_H_threshold=100.0,
         gamma_T_override=lambda eta: 1.0e15,
@@ -256,6 +274,68 @@ def test_execute_tier_b_solver_is_deterministic_for_same_inputs() -> None:
         np.asarray(payload_1["alm_E"]["values"], dtype=np.float64),
         np.asarray(payload_2["alm_E"]["values"], dtype=np.float64),
     )
+
+
+@pytest.mark.parametrize(
+    ("bianchi_type", "realization", "status"),
+    (
+        ("I", "bianchi_i_matrix_exact", "exact"),
+        ("V", "class_b_open_matrix_approx", "approximate"),
+        ("VII_0", "class_a_helical_matrix_approx", "approximate"),
+        ("VIII", "class_a_semisimple_matrix_approx", "approximate"),
+    ),
+)
+def test_representative_orthogonal_families_execute_with_expected_propagator_realizations(
+    bianchi_type: str,
+    realization: str,
+    status: str,
+) -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018(recombination_warning_policy="ignore")
+    run = execute_tier_b_solver(
+        manifest=_manifest(),
+        bianchi_type=bianchi_type,
+        species=species,
+        integrator_config=_family_integrator_config(bianchi_type),
+        runtime_controls=_runtime_controls(),
+        feature_flags=_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+    assert run.solver_output.metadata["bianchi_branch"] == "orthogonal"
+    assert run.solver_output.metadata["solver_domain_scope"] == "all_11_bianchi_types"
+    assert run.solver_output.metadata["theory_family"] == f"{bianchi_type}_orthogonal"
+    assert run.solver_output.metadata["source_propagator_realization"] == realization
+    assert run.solver_output.metadata["source_propagator_status"] == status
+    assert run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
+    assert run.solver_output.metadata["global_tilt_contract"] == "orthogonal_branch_zero_global_tilt"
+    assert run.execution_plan.runtime_decision.propagation_status == "pending"
+
+
+@pytest.mark.parametrize(
+    ("bianchi_type", "required_policy"),
+    (
+        ("I", "codazzi_balanced_total_momentum"),
+        ("V", "class_b_divergence_tilt_coupling"),
+        ("VII_0", "class_a_helical_codazzi"),
+        ("VIII", "class_a_semisimple_codazzi"),
+    ),
+)
+def test_representative_tilted_family_sweep_is_controlledly_blocked(
+    bianchi_type: str,
+    required_policy: str,
+) -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018(recombination_warning_policy="ignore")
+    with pytest.raises(CodazziProjectionError, match=required_policy):
+        execute_tier_b_solver(
+            manifest=_manifest(),
+            bianchi_type=bianchi_type,
+            species=species,
+            integrator_config=_family_integrator_config(bianchi_type, beta=1.0e-6),
+            runtime_controls=_runtime_controls(),
+            feature_flags=_feature_flags(),
+            release=_release(),
+            k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+        )
 
 
 def test_execute_tier_b_solver_can_reach_low_z_reionization_probe_with_extended_eta_domain() -> None:

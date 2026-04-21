@@ -9,6 +9,7 @@ import numpy as np
 
 from common.contracts import ArtifactManifest, SkySupport
 
+from bass.background import CodazziProjectionError
 from bass.background.bianchi_types import get_type
 from bass.background.einstein_bianchi import BianchiCosmology
 from bass.forward.ver2_solver_output import BassReleaseMetadata
@@ -36,11 +37,28 @@ ValidationOutcome = Literal["pass", "warn", "fail"]
 __all__ = [
     "ExecutableCheckEvidence",
     "ExecutableCampaignEvidence",
+    "build_representative_family_sweep_evidence",
     "build_type_i_reionization_probe_evidence",
     "build_type_i_runtime_validation_evidence",
+    "representative_family_sweep_payload",
     "type_i_reionization_probe_payload",
     "type_i_runtime_validation_payload",
 ]
+
+
+_REPRESENTATIVE_FAMILIES: tuple[str, ...] = ("I", "V", "VII_0", "VIII")
+_REPRESENTATIVE_PROPAGATOR_REALIZATIONS: dict[str, tuple[str, str]] = {
+    "I": ("bianchi_i_matrix_exact", "exact"),
+    "V": ("class_b_open_matrix_approx", "approximate"),
+    "VII_0": ("class_a_helical_matrix_approx", "approximate"),
+    "VIII": ("class_a_semisimple_matrix_approx", "approximate"),
+}
+_REPRESENTATIVE_TILT_BLOCKERS: dict[str, str] = {
+    "I": "codazzi_balanced_total_momentum",
+    "V": "class_b_divergence_tilt_coupling",
+    "VII_0": "class_a_helical_codazzi",
+    "VIII": "class_a_semisimple_codazzi",
+}
 
 
 @dataclass(frozen=True)
@@ -255,6 +273,28 @@ def _extended_low_z_integrator_config(
         bianchi_cosmo=BianchiCosmology(
             structure=get_type("I"),
             beta=0.0,
+        ),
+        gamma_T_over_H_threshold=100.0,
+        gamma_T_override=gamma_t_override,
+    )
+
+
+def _family_integrator_config(
+    *,
+    bianchi_type: str,
+    beta: float,
+    gamma_t_override,
+) -> IntegratorConfig:
+    return IntegratorConfig(
+        L_max=4,
+        eta_initial_mpc=0.5,
+        eta_final_mpc=1.0,
+        n_output=12,
+        rtol=1.0e-6,
+        atol=1.0e-9,
+        bianchi_cosmo=BianchiCosmology(
+            structure=get_type(bianchi_type),
+            beta=float(beta),
         ),
         gamma_T_over_H_threshold=100.0,
         gamma_T_override=gamma_t_override,
@@ -596,6 +636,173 @@ def _type_i_reionization_probe_bundle(
     )
 
 
+@lru_cache(maxsize=16)
+def _representative_family_orthogonal_run(
+    bianchi_type: str,
+):
+    species = SpeciesBackgroundRegistry.from_planck2018(
+        recombination_warning_policy="ignore",
+    )
+    return execute_tier_b_solver(
+        manifest=_manifest(f"bass.validation.representative_family_sweep.{bianchi_type}.orthogonal"),
+        bianchi_type=bianchi_type,
+        species=species,
+        integrator_config=_family_integrator_config(
+            bianchi_type=bianchi_type,
+            beta=0.0,
+            gamma_t_override=lambda eta: 1.0e15,
+        ),
+        runtime_controls=_runtime_controls(tier=SolverTier.TIER_B_PSTF),
+        feature_flags=_feature_flags(tier=SolverTier.TIER_B_PSTF),
+        release=_release(
+            f"prm02-{bianchi_type}-orthogonal",
+            stage="research_executable",
+        ),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+
+
+@lru_cache(maxsize=16)
+def _representative_family_tilt_failure(
+    bianchi_type: str,
+    tilt_probe_beta: float,
+) -> str:
+    species = SpeciesBackgroundRegistry.from_planck2018(
+        recombination_warning_policy="ignore",
+    )
+    try:
+        execute_tier_b_solver(
+            manifest=_manifest(f"bass.validation.representative_family_sweep.{bianchi_type}.tilted"),
+            bianchi_type=bianchi_type,
+            species=species,
+            integrator_config=_family_integrator_config(
+                bianchi_type=bianchi_type,
+                beta=float(tilt_probe_beta),
+                gamma_t_override=lambda eta: 1.0e15,
+            ),
+            runtime_controls=_runtime_controls(tier=SolverTier.TIER_B_PSTF),
+            feature_flags=_feature_flags(tier=SolverTier.TIER_B_PSTF),
+            release=_release(
+                f"prm02-{bianchi_type}-tilted",
+                stage="research_executable",
+            ),
+            k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+        )
+    except CodazziProjectionError as exc:
+        return str(exc)
+    raise ValueError(
+        "representative tilted branch unexpectedly executed without a controlled Codazzi block"
+    )
+
+
+def _representative_family_sweep_bundle(
+    *,
+    tilt_probe_beta: float,
+) -> ExecutableCampaignEvidence:
+    orthogonal_runs = {
+        label: _representative_family_orthogonal_run(label)
+        for label in _REPRESENTATIVE_FAMILIES
+    }
+    tilt_failures = {
+        label: _representative_family_tilt_failure(label, float(tilt_probe_beta))
+        for label in _REPRESENTATIVE_FAMILIES
+    }
+
+    orthogonal_runnable = all(
+        run.solver_output.metadata["bianchi_branch"] == "orthogonal"
+        and run.execution_plan.runtime_decision.propagation_status == "pending"
+        and run.solver_output.metadata["solver_domain_scope"] == "all_11_bianchi_types"
+        for run in orthogonal_runs.values()
+    )
+    algebra_aware_realizations = all(
+        run.solver_output.metadata["source_propagator_realization"]
+        == _REPRESENTATIVE_PROPAGATOR_REALIZATIONS[label][0]
+        and run.solver_output.metadata["source_propagator_status"]
+        == _REPRESENTATIVE_PROPAGATOR_REALIZATIONS[label][1]
+        and run.solver_output.metadata["theory_family"] == f"{label}_orthogonal"
+        for label, run in orthogonal_runs.items()
+    )
+    finite_outputs = all(
+        np.all(np.isfinite(np.asarray(run.solver_output.alm_T["values"], dtype=np.float64)))
+        and np.all(np.isfinite(np.asarray(run.solver_output.alm_E["values"], dtype=np.float64)))
+        and bool(run.solver_output.metadata["propagator_ready"])
+        for run in orthogonal_runs.values()
+    )
+    metadata_consistency = all(
+        run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
+        and run.solver_output.metadata["global_tilt_contract"]
+        == "orthogonal_branch_zero_global_tilt"
+        and run.solver_output.metadata["local_boost_contract"]
+        == "observer_side_only_not_applied_in_bass_output"
+        for run in orthogonal_runs.values()
+    )
+    tilt_block_honesty = all(
+        _REPRESENTATIVE_TILT_BLOCKERS[label] in failure
+        for label, failure in tilt_failures.items()
+    )
+
+    checks = (
+        ExecutableCheckEvidence(
+            check_id="representative_orthogonal_families_run_end_to_end",
+            category="baseline_reproduction",
+            passed=bool(orthogonal_runnable),
+            summary="Representative orthogonal families I, V, VII_0, and VIII execute end-to-end on the bounded low-ell native Tier-B path.",
+        ),
+        ExecutableCheckEvidence(
+            check_id="representative_tilted_branches_fail_controlledly",
+            category="adversarial_edge",
+            passed=bool(tilt_block_honesty),
+            summary="Representative tilted branches remain explicit controlled blocks at the Codazzi stage instead of silently degrading into orthogonal or local-boost behavior.",
+        ),
+        ExecutableCheckEvidence(
+            check_id="representative_family_realizations_are_algebra_aware",
+            category="physics_sanity",
+            passed=bool(algebra_aware_realizations),
+            summary="Representative orthogonal family runs keep algebra-aware propagator realizations and theory-family metadata attached to the output payload.",
+        ),
+        ExecutableCheckEvidence(
+            check_id="representative_family_outputs_stay_finite_on_bounded_low_ell_grid",
+            category="numerical_stability",
+            passed=bool(finite_outputs),
+            summary="Representative orthogonal family runs keep bounded low-ell outputs finite and propagator-ready on the shipped native grid.",
+        ),
+        ExecutableCheckEvidence(
+            check_id="representative_family_sweep_preserves_tilt_boost_contracts",
+            category="regression",
+            passed=bool(metadata_consistency),
+            summary="Representative family sweep outputs keep global tilt, local boost, and orthogonal-branch contracts explicit and non-merged for downstream HTT/MIO/TSC consumers.",
+        ),
+    )
+    status: ValidationOutcome = "pass" if all(check.passed for check in checks) else "fail"
+    return ExecutableCampaignEvidence(
+        campaign_id="validation.bass_representative_family_sweep",
+        status=status,
+        bianchi_type="I,V,VII_0,VIII",
+        cutoffs=(4,),
+        theorem_refs=("V8_bass_representative_family_sweep",),
+        null_manifest_refs=("null.bass.representative_family_sweep",),
+        injection_manifest_refs=("validation.injection.representative_family_seed_startup",),
+        runbook_refs=("runbook.bass_representative_family_sweep",),
+        no_claim_conditions=(
+            "representative_family_sweep_only",
+            "representative_tilted_runtime_blocked",
+            "non_type_i_exact_propagator_missing",
+            "late_time_reionization_window_missing",
+            "direction_resolved_reionization_microphysics_missing",
+        ),
+        checks=checks,
+        artifact_refs=("bass.validation.representative_family_sweep", "bass.runtime.trace"),
+        preferred_axis_delta_deg=0.0,
+        tier_a_tier_b_max_relative_l2=0.0,
+        cutoff_max_relative_delta=0.0,
+        notes=(
+            "This campaign validates the bounded preliminary representative-family sweep only.",
+            "Orthogonal branches are executable for I, V, VII_0, and VIII on the current native Tier-B route.",
+            "Tilted representative branches remain explicit Codazzi-stage blocks on the current global-tilt runtime construction and are treated as no-claim conditions rather than silent fallbacks.",
+        ),
+    )
+
+
 @lru_cache(maxsize=8)
 def build_type_i_runtime_validation_evidence(
     *,
@@ -616,6 +823,19 @@ def build_type_i_runtime_validation_evidence(
         cutoffs=tuple(int(value) for value in cutoffs),
         tier_compare_tolerance=float(tier_compare_tolerance),
         cutoff_delta_tolerance=float(cutoff_delta_tolerance),
+    )
+
+
+@lru_cache(maxsize=8)
+def build_representative_family_sweep_evidence(
+    *,
+    tilt_probe_beta: float = 1.0e-6,
+) -> ExecutableCampaignEvidence:
+    """Return executable evidence for the bounded representative preliminary sweep."""
+    if tilt_probe_beta <= 0.0:
+        raise ValueError("tilt_probe_beta must be positive")
+    return _representative_family_sweep_bundle(
+        tilt_probe_beta=float(tilt_probe_beta),
     )
 
 
@@ -648,6 +868,18 @@ def type_i_runtime_validation_payload(
             cutoffs=cutoffs,
             tier_compare_tolerance=tier_compare_tolerance,
             cutoff_delta_tolerance=cutoff_delta_tolerance,
+        )
+    )
+
+
+def representative_family_sweep_payload(
+    *,
+    tilt_probe_beta: float = 1.0e-6,
+) -> dict[str, object]:
+    """JSON-ready payload for the representative-family preliminary sweep evidence."""
+    return asdict(
+        build_representative_family_sweep_evidence(
+            tilt_probe_beta=tilt_probe_beta,
         )
     )
 

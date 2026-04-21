@@ -6,8 +6,10 @@ import json
 import sys
 
 from bass.validation import (
+    build_representative_family_sweep_evidence,
     build_type_i_reionization_probe_evidence,
     build_type_i_runtime_validation_evidence,
+    representative_family_sweep_payload,
     type_i_reionization_probe_payload,
     type_i_runtime_validation_payload,
 )
@@ -63,17 +65,43 @@ def _reion_probe_check(z_probe: float, z_final: float) -> int:
     return 0
 
 
+def _family_sweep_check(tilt_probe_beta: float) -> int:
+    evidence = build_representative_family_sweep_evidence(
+        tilt_probe_beta=float(tilt_probe_beta),
+    )
+    if not evidence.passed:
+        print(f"[FAIL] representative BASS family sweep ({evidence.campaign_id})")
+        for check in evidence.checks:
+            state = "PASS" if check.passed else "FAIL"
+            if check.metric_name is None:
+                print(f" - [{state}] {check.check_id}: {check.summary}")
+                continue
+            print(
+                f" - [{state}] {check.check_id}: {check.metric_name}="
+                f"{check.metric_value:.6e} (threshold={check.threshold:.6e})"
+            )
+        return 1
+    print(
+        "[PASS] representative BASS family sweep "
+        f"({evidence.campaign_id}, tilt_probe_beta={tilt_probe_beta:.1e})"
+    )
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--reion-probe-check", action="store_true")
+    parser.add_argument("--family-sweep-check", action="store_true")
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--reion-probe-json", action="store_true")
+    parser.add_argument("--family-sweep-json", action="store_true")
     parser.add_argument("--cutoffs", type=int, nargs="+", default=(4, 6))
     parser.add_argument("--tier-compare-tol", type=float, default=5.0e-2)
     parser.add_argument("--cutoff-delta-tol", type=float, default=7.5e-1)
     parser.add_argument("--z-probe", type=float, default=8.0)
     parser.add_argument("--z-final", type=float, default=4.0)
+    parser.add_argument("--tilt-probe-beta", type=float, default=1.0e-6)
     args = parser.parse_args(argv)
     cutoffs = tuple(int(value) for value in args.cutoffs)
     if args.check:
@@ -87,10 +115,21 @@ def main(argv: list[str] | None = None) -> int:
             z_probe=float(args.z_probe),
             z_final=float(args.z_final),
         )
+    if args.family_sweep_check:
+        return _family_sweep_check(
+            tilt_probe_beta=float(args.tilt_probe_beta),
+        )
     if args.reion_probe_json:
         payload = type_i_reionization_probe_payload(
             z_probe=float(args.z_probe),
             z_final=float(args.z_final),
+        )
+        json.dump(payload, sys.stdout, indent=2, sort_keys=True)
+        sys.stdout.write("\n")
+        return 0
+    if args.family_sweep_json:
+        payload = representative_family_sweep_payload(
+            tilt_probe_beta=float(args.tilt_probe_beta),
         )
         json.dump(payload, sys.stdout, indent=2, sort_keys=True)
         sys.stdout.write("\n")
