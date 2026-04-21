@@ -503,6 +503,7 @@ def _build_visibility_source(
     species: "SpeciesBackgroundRegistry",
     config: "IntegratorConfig",
 ) -> "TiltedVisibilitySource":
+    from bass.hierarchy.frame_contracts import PhotonDirectionConvention
     from bass.recombination.history_visibility import build_tilted_visibility_source
     from bass.species.base import SpeciesLabel
 
@@ -516,6 +517,7 @@ def _build_visibility_source(
         _build_visibility_contract(species),
         baryon=baryon,
         v_e=v_e,
+        direction_convention=PhotonDirectionConvention.PROPAGATION,
     )
 
 

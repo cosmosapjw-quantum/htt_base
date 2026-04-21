@@ -13,6 +13,7 @@ from bass.hierarchy.nabla_dispatch import (
     scalar_laplacian_eigenvalue,
 )
 from bass.perturbation.class_b_mode_quantization import quantise_class_b_mode
+from bass.perturbation.full_nabla_operator import make_full_mode_nabla_tilde_operator
 
 
 __all__ = ["make_harmonic_mode_rhs_context"]
@@ -42,6 +43,7 @@ def make_harmonic_mode_rhs_context(
     mode: HarmonicMode,
     *,
     L_max: int,
+    euler_angles: tuple[float, float, float] | None = None,
 ) -> dict[str, object]:
     """Wrap one harmonic mode into a ready-to-call photon RHS surface.
 
@@ -58,7 +60,16 @@ def make_harmonic_mode_rhs_context(
             f"mode.type_label={mode.type_label!r}"
         )
 
-    nabla_operator = make_nabla_tilde(structure, mode)
+    if euler_angles is None:
+        nabla_operator = make_nabla_tilde(structure, mode)
+        requires_full_operator = False
+    else:
+        nabla_operator = make_full_mode_nabla_tilde_operator(
+            structure,
+            mode,
+            euler_angles=euler_angles,
+        )
+        requires_full_operator = True
     laplacian = scalar_laplacian_eigenvalue(structure, mode)
     label = structure.label
 
@@ -99,8 +110,10 @@ def make_harmonic_mode_rhs_context(
         "laplacian_eigenvalue": float(laplacian),
         "k_magnitude": float(np.linalg.norm(mode.k_vec)),
         "photon_rhs": photon_rhs,
-        "requires_full_operator": False,
+        "requires_full_operator": requires_full_operator,
     }
+    if euler_angles is not None:
+        context["euler_angles"] = tuple(float(angle) for angle in euler_angles)
     if label in {"V", "III", "IV", "VI_h", "VII_h"}:
         context["mode_quantization"] = quantise_class_b_mode(
             structure,

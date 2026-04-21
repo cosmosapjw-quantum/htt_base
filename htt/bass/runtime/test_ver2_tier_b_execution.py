@@ -132,9 +132,14 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.trace.startup_state is not None
     initial_T = unpack_hierarchy(run.integration_result.photon_T_tower[0], run.integration_result.L_max)
     initial_E = unpack_hierarchy(run.integration_result.photon_E_tower[0], run.integration_result.L_max)
+    initial_nu = unpack_hierarchy(run.integration_result.neutrino_tower[0], run.integration_result.L_max)
     assert initial_T.tensors[1].components[1] != 0.0
     assert initial_T.tensors[2].components[2] == pytest.approx(run.trace.startup_state.theta_2)
     assert initial_E.tensors[2].components[2] == pytest.approx(run.trace.startup_state.E_2)
+    assert initial_nu.tensors[0].components[0] == pytest.approx(run.integration_result.neutrino_reduced[0, 0])
+    assert initial_nu.tensors[1].components[1] == pytest.approx(run.integration_result.neutrino_reduced[0, 1])
+    assert initial_nu.tensors[2].components[2] == pytest.approx(run.integration_result.neutrino_reduced[0, 2])
+    assert initial_nu.tensors[3].components[3] == pytest.approx(run.integration_result.neutrino_reduced[0, 3])
     assert run.trace.thomson_probe.source_ready is True
     assert run.trace.visibility_source.contract.events is not None
     assert run.trace.geodesic_probe.direction_derivative.shape == (3,)
@@ -143,9 +148,12 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.integration_result.solver_info["startup_manifold_applied"] is True
     assert run.solver_output.metadata["propagator_ready"] is True
-    assert run.solver_output.metadata["source_propagator_status"] == "approximate"
-    assert run.solver_output.metadata["source_propagator_realization"] == "flrw_bessel_bridge_proxy"
+    assert run.solver_output.metadata["source_propagator_status"] == "exact"
+    assert run.solver_output.metadata["source_propagator_requested_status"] == "approximate"
+    assert run.solver_output.metadata["source_propagator_rotation_status"] == "disabled"
+    assert run.solver_output.metadata["source_propagator_realization"] == "bianchi_i_matrix_exact"
     assert run.solver_output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
+    assert run.solver_output.metadata["neutrino_hierarchy_mode"] == "full_pstf_with_reduced_summary_export"
     assert run.solver_output.metadata["solver_method"] == "BDF"
     assert run.solver_output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_ver2_native"
     assert run.solver_output.metadata["startup_manifold_applied"] is True
@@ -153,6 +161,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.cutoff_campaign is not None
     assert set(run.cutoff_campaign.runtime_seconds) == {4, 6}
     assert run.cutoff_campaign.deltas[4][0].relative_delta == 0.0
+    assert run.integration_result.neutrino_tower is not None
 
 
 def test_execute_tier_b_solver_is_deterministic_for_same_inputs() -> None:

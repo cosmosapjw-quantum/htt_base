@@ -264,14 +264,42 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
     assert output.metadata["solver_method"] == "LSODA"
     assert output.metadata["solver_family_realization"] == "runtime_family_direct"
+    assert output.metadata["neutrino_hierarchy_mode"] == "reduced_summary_only"
     assert output.metadata["seed_k_comoving"] == pytest.approx(0.0)
     assert output.metadata["startup_manifold_applied"] is False
     assert output.metadata["propagator_mode"] == "anisotropic_forward"
     assert output.metadata["source_propagator_status"] == "approximate"
+    assert output.metadata["source_propagator_requested_status"] == "approximate"
+    assert output.metadata["source_propagator_rotation_status"] == "approximate"
     assert output.metadata["source_propagator_realization"] == "flrw_bessel_bridge_proxy"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_native_template"
     assert output.alm_T["representation"] == "ver2_native_pstf_final_slice"
+
+
+def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backend() -> None:
+    output = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="I",
+        result=_synthetic_result(),
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_executable",
+            run_label="tier-b-native-typei",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+    )
+    assert output.metadata["source_propagator_status"] == "exact"
+    assert output.metadata["source_propagator_requested_status"] == "approximate"
+    assert output.metadata["source_propagator_rotation_status"] == "disabled"
+    assert output.metadata["source_propagator_realization"] == "bianchi_i_matrix_exact"
 
 
 def test_tier_b_exact_source_propagator_requires_explicit_propagator_config() -> None:

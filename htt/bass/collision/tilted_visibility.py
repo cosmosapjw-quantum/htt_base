@@ -48,6 +48,7 @@ from typing import Callable, Union
 
 import numpy as np
 
+from bass.hierarchy.frame_contracts import PhotonDirectionConvention
 from bass.species.baryon import BaryonBackground
 
 
@@ -113,6 +114,7 @@ class TiltedVisibility:
         v_e: Callable[[float], np.ndarray],
         *,
         beta_from_v: bool = True,
+        direction_convention: PhotonDirectionConvention = PhotonDirectionConvention.SKY,
     ) -> None:
         if not isinstance(baryon, BaryonBackground):
             raise TypeError(
@@ -127,6 +129,7 @@ class TiltedVisibility:
         self._baryon = baryon
         self._v_e_func = v_e
         self._beta_from_v = bool(beta_from_v)
+        self._direction_convention = direction_convention
 
         # Shared FLRW η-grid (monotonically increasing to η_0).
         self._eta_grid = np.asarray(baryon._bg.eta, dtype=np.float64).copy()
@@ -196,13 +199,14 @@ class TiltedVisibility:
         return 1.0 / float(np.sqrt(1.0 - float(np.dot(v, v))))
 
     def boost_factor(self, eta: _Number, e: np.ndarray) -> float:
-        """``B(η, e) = cosh β_e + sinh β_e (ê · v̂_e)`` (exact).
+        """Exact Lorentz boost factor with explicit direction convention.
 
-        Implemented as the algebraically-equivalent
-        ``γ_e (1 + v_e · ê)`` to avoid division by ``|v_e|`` at
-        ``v_e = 0``. Both forms agree to machine precision; the
-        identity is documented in the module header and enforced by
-        TV-04 / TV-08.
+        For observed sky direction ``n_sky`` the factor is
+        ``γ_e (1 + v_e · n_sky)``. For propagation direction ``e`` the
+        factor is ``γ_e (1 - v_e · e)``. Both are the same physical law
+        with ``n_sky = -e``; the sign is routed through the stored
+        ``PhotonDirectionConvention`` so visibility and Thomson-rate
+        wiring stay single-sourced.
 
         Reference: lowell §11.3 eq (11.3.1); spec §8.1.
         """
@@ -210,8 +214,12 @@ class TiltedVisibility:
         e_hat = self._validate_direction(e)
         v_sq = float(np.dot(v, v))
         gamma = 1.0 / float(np.sqrt(1.0 - v_sq))
-        # γ (1 + v·ê) ≡ cosh β + sinh β (ê·v̂) — no linear truncation.
-        return gamma * (1.0 + float(np.dot(v, e_hat)))
+        sign = (
+            -1.0
+            if self._direction_convention is PhotonDirectionConvention.PROPAGATION
+            else 1.0
+        )
+        return gamma * (1.0 + sign * float(np.dot(v, e_hat)))
 
     def Gamma_T(self, eta: _Number, e: np.ndarray) -> float:
         """``Γ̃_T(η, e) = Γ_T(η) × B(η, e)`` [Mpc⁻¹].

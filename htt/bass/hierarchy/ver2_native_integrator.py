@@ -37,14 +37,13 @@ from bass.closure.stiff_closure import (
 from bass.closure.quadrupole_tca import solve_tca_closure
 from bass.hierarchy.collision_interface import CollisionOperator, ZeroCollisionOperator
 from bass.hierarchy.closure import TCAClosure, build_default_closure
-from bass.hierarchy.hierarchy_rhs import hierarchy_rhs_photon
+from bass.hierarchy.hierarchy_rhs import hierarchy_rhs_neutrino, hierarchy_rhs_photon
 from bass.hierarchy.integrator import (
     C_KMS,
     IntegratorConfig,
     IntegrationResult,
     _ell2_m0_slot_offset,
 )
-from bass.hierarchy.neutrino_reduced import neutrino_reduced_rhs
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor, pack_hierarchy, unpack_hierarchy, zero_hierarchy
 from bass.hierarchy.seed_compatibility import (
     PackedRegularSeedInjection,
@@ -226,7 +225,7 @@ class _EProjectedCollision(CollisionOperator):
 class _SeededInitialState:
     photon_T: PSTFHierarchyState
     photon_E: PolarizationHierarchyState
-    neutrino_reduced: np.ndarray
+    neutrino_tower: PSTFHierarchyState
     startup_gate: StartupGateDecision
     seed_projection: SeedConstraintProjection
     startup_state: QuadrupoleStartupState | None
@@ -235,37 +234,73 @@ class _SeededInitialState:
     velocity_scale: float
 
     def __post_init__(self) -> None:
-        nu = np.asarray(self.neutrino_reduced, dtype=np.float64)
-        if nu.shape != (4,):
-            raise ValueError(f"neutrino_reduced must have shape (4,), got {nu.shape}")
-        object.__setattr__(self, "neutrino_reduced", nu)
+        if self.neutrino_tower.L != self.photon_T.L:
+            raise ValueError(
+                f"neutrino_tower L={self.neutrino_tower.L} must match photon_T L={self.photon_T.L}"
+            )
 
 
 def _pack_radiation_state(
     *,
     photon_T: PSTFHierarchyState,
     photon_E: PolarizationHierarchyState,
-    neutrino_reduced: np.ndarray,
+    neutrino_tower: PSTFHierarchyState,
 ) -> np.ndarray:
-    nu = np.asarray(neutrino_reduced, dtype=np.float64)
     return np.concatenate(
         [
             pack_hierarchy(photon_T),
             pack_hierarchy(photon_E.E),
-            nu,
+            pack_hierarchy(neutrino_tower),
         ]
     )
 
 
-def _unpack_radiation_state(y: np.ndarray, L_max: int) -> tuple[PSTFHierarchyState, PolarizationHierarchyState, np.ndarray]:
+def _unpack_radiation_state(
+    y: np.ndarray, L_max: int
+) -> tuple[PSTFHierarchyState, PolarizationHierarchyState, PSTFHierarchyState]:
     arr = np.asarray(y, dtype=np.float64)
     tower_size = (L_max + 1) ** 2
-    if arr.shape != (2 * tower_size + 4,):
+    if arr.shape != (3 * tower_size,):
         raise ValueError(f"radiation state shape {arr.shape} does not match L_max={L_max}")
     photon_T = unpack_hierarchy(arr[:tower_size], L_max)
     photon_E = PolarizationHierarchyState(E=unpack_hierarchy(arr[tower_size : 2 * tower_size], L_max))
-    neutrino_reduced = np.asarray(arr[2 * tower_size :], dtype=np.float64)
-    return photon_T, photon_E, neutrino_reduced
+    neutrino_tower = unpack_hierarchy(arr[2 * tower_size :], L_max)
+    return photon_T, photon_E, neutrino_tower
+
+
+def _seed_neutrino_tower_from_reduced(
+    reduced: np.ndarray,
+    *,
+    L_max: int,
+) -> PSTFHierarchyState:
+    nu = np.asarray(reduced, dtype=np.float64)
+    if nu.shape != (4,):
+        raise ValueError(f"neutrino_reduced must have shape (4,), got {nu.shape}")
+    tower = zero_hierarchy(L_max)
+    if L_max >= 0:
+        tower.tensors[0].components[0] = float(nu[0])
+    if L_max >= 1:
+        tower.tensors[1].components[1] = float(nu[1])
+    if L_max >= 2:
+        tower.tensors[2].components[2] = float(nu[2])
+    if L_max >= 3:
+        tower.tensors[3].components[3] = float(nu[3])
+    return tower
+
+
+def _reduced_summary_from_neutrino_tower(
+    tower: PSTFHierarchyState,
+) -> np.ndarray:
+    summary = np.zeros(4, dtype=np.float64)
+    if tower.L >= 0:
+        summary[0] = float(tower.tensors[0].components[0])
+    if tower.L >= 1:
+        summary[1] = float(tower.tensors[1].components[1])
+    if tower.L >= 2:
+        summary[2] = float(tower.tensors[2].components[2])
+    if tower.L >= 3:
+        summary[3] = float(tower.tensors[3].components[3])
+    return summary
 
 
 class Ver2TierBIntegrator:
@@ -321,7 +356,7 @@ class Ver2TierBIntegrator:
         return _pack_radiation_state(
             photon_T=seeded.photon_T,
             photon_E=seeded.photon_E,
-            neutrino_reduced=seeded.neutrino_reduced,
+            neutrino_tower=seeded.neutrino_tower,
         )
 
     def _startup_gate_at_initial_time(self) -> StartupGateDecision:
@@ -372,7 +407,10 @@ class Ver2TierBIntegrator:
         combined = unpacked["combined"]
         photon_T = combined.photon_T.copy()
         photon_E = combined.photon_E.copy()
-        neutrino_reduced = np.asarray(combined.neutrino_reduced, dtype=np.float64).copy()
+        neutrino_tower = _seed_neutrino_tower_from_reduced(
+            np.asarray(combined.neutrino_reduced, dtype=np.float64).copy(),
+            L_max=self.config.L_max,
+        )
         startup_gate = self._startup_gate_at_initial_time()
         startup_state = None
         if startup_gate.startup_selected:
@@ -387,7 +425,7 @@ class Ver2TierBIntegrator:
         return _SeededInitialState(
             photon_T=photon_T,
             photon_E=photon_E,
-            neutrino_reduced=neutrino_reduced,
+            neutrino_tower=neutrino_tower,
             startup_gate=startup_gate,
             seed_projection=projected_seed.projection,
             startup_state=startup_state,
@@ -447,7 +485,7 @@ class Ver2TierBIntegrator:
         *,
         tca_tracker: list[bool] | None = None,
     ) -> np.ndarray:
-        photon_T, photon_E, neutrino_reduced = _unpack_radiation_state(y, self.config.L_max)
+        photon_T, photon_E, neutrino_tower = _unpack_radiation_state(y, self.config.L_max)
         gamma_t = _resolved_gamma_t(
             eta=float(eta),
             direction=self._direction,
@@ -484,10 +522,14 @@ class Ver2TierBIntegrator:
             collision=self._e_collision,
             collision_aux=aux,
         )
-        rhs_nu = neutrino_reduced_rhs(
+        rhs_nu = hierarchy_rhs_neutrino(
             eta,
-            neutrino_reduced,
+            neutrino_tower.as_flat(),
+            L_max=self.config.L_max,
             bg_table=self.bg_table,
+            tetrad_state=self.tetrad_state,
+            closure=self.closure,
+            neutrino_background=self.species[SpeciesLabel.NEUTRINO],
         )
 
         tca_active = False
@@ -617,7 +659,16 @@ class Ver2TierBIntegrator:
         tower_size = (self.config.L_max + 1) ** 2
         photon_T_tower = np.asarray(sol.y[:tower_size].T, dtype=np.float64)
         photon_E_tower = np.asarray(sol.y[tower_size : 2 * tower_size].T, dtype=np.float64)
-        neutrino_reduced = np.asarray(sol.y[2 * tower_size :].T, dtype=np.float64)
+        neutrino_tower = np.asarray(sol.y[2 * tower_size :].T, dtype=np.float64)
+        neutrino_reduced = np.asarray(
+            [
+                _reduced_summary_from_neutrino_tower(
+                    unpack_hierarchy(state, self.config.L_max)
+                )
+                for state in neutrino_tower
+            ],
+            dtype=np.float64,
+        )
         a_arr, sigma_plus, sigma_minus = self._background_projection(np.asarray(sol.t, dtype=np.float64))
         tca_mask = self._compute_tca_mask(np.asarray(sol.t, dtype=np.float64))
 
@@ -640,6 +691,7 @@ class Ver2TierBIntegrator:
             "seed_velocity_scale": float(self.seed_velocity_scale),
             "startup_manifold_applied": bool(self.startup_state is not None),
             "startup_gate_selected": bool(self.startup_gate.startup_selected if self.startup_gate is not None else False),
+            "neutrino_hierarchy_mode": "full_pstf_with_reduced_summary_export",
         }
         return IntegrationResult(
             eta=np.asarray(sol.t, dtype=np.float64),
@@ -653,4 +705,5 @@ class Ver2TierBIntegrator:
             config=self.config,
             solver_info=solver_info,
             tca_active_mask=tca_mask,
+            neutrino_tower=neutrino_tower,
         )

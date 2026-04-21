@@ -93,3 +93,31 @@ def test_flrw_validation_builder_disables_mode_coupling_expectation() -> None:
         },
     )
     assert propagator.mode_coupling_expected is False
+
+
+def test_type_i_exact_builder_uses_matrix_backend_and_zero_b_modes() -> None:
+    propagator = build_source_propagator(
+        SourcePropagatorConfig(
+            mode=PropagatorMode.ANISOTROPIC_FORWARD,
+            temperature_transport=FeatureStatus.EXACT,
+            polarization_rotation=FeatureStatus.DISABLED,
+            kernel_family="bianchi_i_matrix_exact",
+        ),
+        structure=get_type("I"),
+        eta_grid_mpc=np.linspace(0.0, 4.0, 5),
+        k_grid_mpc=np.geomspace(1.0e-3, 1.0e-2, 4),
+        ell_max=3,
+        visibility_fn=lambda eta: float(np.exp(-0.5 * (eta - 2.0) ** 2)),
+        source_builder=lambda eta, k: {
+            "theta_0": float(np.exp(-0.25 * (eta - 2.0) ** 2) * np.cos(0.1 * k)),
+            "pi_m0": float(0.1 * np.cos(0.1 * k)),
+            "pi_m_plus2": float(0.03 * np.exp(-0.25 * (eta - 2.0) ** 2)),
+            "pi_m_minus2": float(0.03 * np.exp(-0.25 * (eta - 2.0) ** 2)),
+        },
+    )
+    assert propagator.config.kernel_family == "bianchi_i_matrix_exact"
+    assert propagator.transfer_bundle["structure_label"] == "I"
+    np.testing.assert_allclose(
+        np.asarray(propagator.transfer_bundle["transfer_B"], dtype=np.float64),
+        0.0,
+    )

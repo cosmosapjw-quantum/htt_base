@@ -190,3 +190,32 @@ def test_fb51_context_rejects_label_mismatch() -> None:
             HarmonicMode("V", np.array([0.1, 0.0, 0.0])),
             L_max=3,
         )
+
+
+def test_fb51_context_can_activate_full_rotated_operator(bg_table) -> None:
+    structure = type_i_constants()
+    mode = HarmonicMode("I", np.array([0.08, 0.0, 0.0], dtype=np.float64))
+    context = make_harmonic_mode_rhs_context(
+        structure,
+        mode,
+        L_max=3,
+        euler_angles=(0.1, 0.2, -0.1),
+    )
+
+    state = zero_hierarchy(3)
+    state.tensors[0].components[0] = 1.0
+    y0 = pack_hierarchy(state).astype(np.complex128)
+    dy = context["photon_rhs"](
+        10.0,
+        y0,
+        bg_table=bg_table,
+        tetrad_state=None,
+        closure=HardCutClosure(),
+        collision=ZeroCollisionOperator(),
+    )
+
+    assert context["requires_full_operator"] is True
+    assert context["euler_angles"] == pytest.approx((0.1, 0.2, -0.1))
+    assert dy.shape == y0.shape
+    assert np.all(np.isfinite(dy.real))
+    assert np.all(np.isfinite(dy.imag))

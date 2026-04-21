@@ -7,6 +7,7 @@ from bass.recombination import (
     build_tilted_visibility_source,
     build_visibility_history_contract,
 )
+from bass.hierarchy.frame_contracts import PhotonDirectionConvention
 from bass.recombination.recombination_ingest import make_synthetic_tanh_table
 from bass.recombination.reionization import (
     CosmologyForRecombination,
@@ -88,9 +89,10 @@ def test_tilted_visibility_has_forward_back_asymmetry() -> None:
         contract,
         baryon=baryon,
         v_e=lambda eta: np.array([0.0, 0.0, 0.3], dtype=np.float64),
+        direction_convention=PhotonDirectionConvention.PROPAGATION,
     )
     eta = 0.5 * baryon._bg.eta_today  # noqa: SLF001
     gamma_forward = source.Gamma_T(eta, np.array([0.0, 0.0, 1.0]))
     gamma_side = source.Gamma_T(eta, np.array([1.0, 0.0, 0.0]))
     gamma_back = source.Gamma_T(eta, np.array([0.0, 0.0, -1.0]))
-    assert gamma_forward > gamma_side > gamma_back
+    assert gamma_back > gamma_side > gamma_forward

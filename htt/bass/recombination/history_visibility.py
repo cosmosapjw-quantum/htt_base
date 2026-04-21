@@ -201,6 +201,7 @@ def build_tilted_visibility_source(
             baryon=baryon,
             v_e=v_e,
             beta_from_v=beta_from_v,
+            direction_convention=direction_convention,
         ),
         direction_convention=direction_convention,
         tilt_active=True,

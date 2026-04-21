@@ -215,6 +215,7 @@ class IntegrationResult:
     config: IntegratorConfig
     solver_info: dict
     tca_active_mask: np.ndarray = field(repr=False)
+    neutrino_tower: np.ndarray | None = field(default=None, repr=False)
 
     @property
     def L_max(self) -> int:
@@ -250,6 +251,21 @@ class IntegrationResult:
             )
         offset = sum(2 * l + 1 for l in range(ell))
         return self.photon_E_tower[:, offset + (ell + m)].copy()
+
+    def nu_ell_m(self, ell: int, m: int = 0) -> np.ndarray:
+        """Return the neutrino PSTF tower component when available."""
+        if self.neutrino_tower is None:
+            raise ValueError("IntegrationResult does not carry a neutrino_tower")
+        if ell < 0 or ell > self.L_max:
+            raise ValueError(
+                f"ell must be in [0, {self.L_max}], got {ell}"
+            )
+        if abs(m) > ell:
+            raise ValueError(
+                f"|m| must be ≤ ell={ell}, got m={m}"
+            )
+        offset = sum(2 * l + 1 for l in range(ell))
+        return self.neutrino_tower[:, offset + (ell + m)].copy()
 
 
 # ════════════════════════════════════════════════════════════════════

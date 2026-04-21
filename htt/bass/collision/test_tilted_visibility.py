@@ -21,6 +21,7 @@ import pytest
 from scipy.special import roots_legendre
 
 from bass.collision.tilted_visibility import TiltedVisibility, scalar_visibility
+from bass.hierarchy.frame_contracts import PhotonDirectionConvention
 from bass.recombination.recombination_ingest import (
     build_interpolators, load_recombination_table,
 )
@@ -179,6 +180,21 @@ def test_TV02_forward_back_asymmetry(bg, baryon, constant_v_e_z):
     # The direction-averaged factor at ê ⊥ v̂ is γ_e, NOT the scalar Γ_T.
     gamma_e = tv.gamma_e(eta)
     assert gamma_side == pytest.approx(scalar_gamma_T * gamma_e, rel=1e-12)
+
+
+def test_TV02_propagation_direction_convention_flips_forward_back_order(
+    bg, baryon, constant_v_e_z,
+):
+    tv = TiltedVisibility(
+        baryon,
+        constant_v_e_z,
+        direction_convention=PhotonDirectionConvention.PROPAGATION,
+    )
+    eta = 0.4 * bg.eta_today
+    gamma_forward = tv.Gamma_T(eta, np.array([0.0, 0.0, 1.0]))
+    gamma_side = tv.Gamma_T(eta, np.array([1.0, 0.0, 0.0]))
+    gamma_back = tv.Gamma_T(eta, np.array([0.0, 0.0, -1.0]))
+    assert gamma_back > gamma_side > gamma_forward
 
 
 # ════════════════════════════════════════════════════════════════════
