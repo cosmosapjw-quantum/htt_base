@@ -27,6 +27,7 @@ if TYPE_CHECKING:
 __all__ = [
     "ScalarHistoryMetadata",
     "VisibilityEventMarkers",
+    "VisibilityNormalizationStatus",
     "VisibilityHistoryContract",
     "TiltedVisibilitySource",
     "build_visibility_history_contract",
@@ -62,12 +63,44 @@ class ScalarHistoryMetadata:
 
 
 @dataclass(frozen=True)
+class VisibilityNormalizationStatus:
+    """Normalization / monotonicity checks logged on the scalar history path."""
+
+    visibility_nonnegative: bool
+    kappa_monotone_increasing_in_z: bool
+    optical_depth_decreases_toward_observer: bool
+    sampled_on_table_grid: bool = True
+    min_visibility: float = 0.0
+
+    def __post_init__(self) -> None:
+        if not self.sampled_on_table_grid:
+            raise ValueError("visibility normalization checks must be sampled on the table grid")
+        if not np.isfinite(self.min_visibility):
+            raise ValueError("min_visibility must be finite")
+        if not self.visibility_nonnegative:
+            raise ValueError("visibility normalization failed: g(z) must be non-negative")
+        if not self.kappa_monotone_increasing_in_z:
+            raise ValueError("visibility normalization failed: kappa(z) must be monotone increasing")
+        if not self.optical_depth_decreases_toward_observer:
+            raise ValueError(
+                "visibility normalization failed: optical depth must decrease toward the observer"
+            )
+
+
+@dataclass(frozen=True)
 class VisibilityHistoryContract:
     """Scalar recombination/reionization history plus visibility interpolants."""
 
     table: RecombinationTable
     interp: RecombinationInterp
     history_metadata: ScalarHistoryMetadata = field(default_factory=ScalarHistoryMetadata)
+    normalization_status: VisibilityNormalizationStatus = field(
+        default_factory=lambda: VisibilityNormalizationStatus(
+            visibility_nonnegative=True,
+            kappa_monotone_increasing_in_z=True,
+            optical_depth_decreases_toward_observer=True,
+        )
+    )
     frame_metadata: FrameSplitMetadata = field(default_factory=FrameSplitMetadata)
     events: "VisibilityEventMarkers | None" = None
 
@@ -83,6 +116,8 @@ class VisibilityHistoryContract:
             and self.table.metadata.get("reionization") != "tanh"
         ):
             raise ValueError("tanh history mode requires reionization-tagged table metadata")
+        if self.history_metadata.visibility_normalization_check_required:
+            _ = self.normalization_status
 
 
 @dataclass(frozen=True)
@@ -153,6 +188,24 @@ def _build_event_markers(
     )
 
 
+def _build_normalization_status(
+    table: RecombinationTable,
+    interp: RecombinationInterp,
+) -> VisibilityNormalizationStatus:
+    z_grid = np.asarray(table.z, dtype=np.float64)
+    visibility = np.asarray(interp.query_visibility(z_grid), dtype=np.float64)
+    kappa = np.asarray(table.kappa, dtype=np.float64)
+    min_visibility = float(np.min(visibility))
+    visibility_nonnegative = bool(np.all(visibility >= -1.0e-12))
+    kappa_monotone = bool(np.all(np.diff(kappa) >= -1.0e-12))
+    return VisibilityNormalizationStatus(
+        visibility_nonnegative=visibility_nonnegative,
+        kappa_monotone_increasing_in_z=kappa_monotone,
+        optical_depth_decreases_toward_observer=kappa_monotone,
+        min_visibility=min_visibility,
+    )
+
+
 def build_visibility_history_contract(
     table: RecombinationTable,
     *,
@@ -176,6 +229,7 @@ def build_visibility_history_contract(
         table=effective_table,
         interp=interp,
         history_metadata=history_metadata,
+        normalization_status=_build_normalization_status(effective_table, interp),
         events=_build_event_markers(interp, history_metadata),
     )
 

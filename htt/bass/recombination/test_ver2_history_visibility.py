@@ -41,6 +41,10 @@ def test_scalar_history_contract_keeps_electron_frame_visibility() -> None:
     contract = build_visibility_history_contract(table)
     assert contract.frame_metadata.visibility_frame == "electron_frame"
     assert contract.history_metadata.reionization_mode == "disabled"
+    assert contract.normalization_status.visibility_nonnegative is True
+    assert contract.normalization_status.kappa_monotone_increasing_in_z is True
+    assert contract.normalization_status.optical_depth_decreases_toward_observer is True
+    assert contract.normalization_status.min_visibility >= 0.0
     assert contract.events is not None
     assert contract.events.z_last_scattering > 0.0
     assert contract.interp.query_visibility(np.array([1100.0])).shape == (1,)
@@ -96,3 +100,29 @@ def test_tilted_visibility_has_forward_back_asymmetry() -> None:
     gamma_side = source.Gamma_T(eta, np.array([1.0, 0.0, 0.0]))
     gamma_back = source.Gamma_T(eta, np.array([0.0, 0.0, -1.0]))
     assert gamma_back > gamma_side > gamma_forward
+
+
+def test_reionization_changes_low_z_visibility_source() -> None:
+    table = make_synthetic_tanh_table(z_min=30.0, z_max=3000.0)
+    no_reion_contract = build_visibility_history_contract(table)
+    with_reion_contract = build_visibility_history_contract(
+        table,
+        include_reionization=True,
+        reionization_params=ReionizationParameters(include_HeII=False),
+        cosmology=_test_cosmology(),
+    )
+    baryon_no_reion = _build_baryon(no_reion_contract)
+    baryon_with_reion = _build_baryon(with_reion_contract)
+    source_no_reion = build_tilted_visibility_source(
+        no_reion_contract,
+        baryon=baryon_no_reion,
+        v_e=lambda eta: np.zeros(3, dtype=np.float64),
+    )
+    source_with_reion = build_tilted_visibility_source(
+        with_reion_contract,
+        baryon=baryon_with_reion,
+        v_e=lambda eta: np.zeros(3, dtype=np.float64),
+    )
+    eta_low_z = baryon_no_reion._bg.eta_at_a(1.0 / 9.0)  # noqa: SLF001
+    direction = np.array([0.0, 0.0, 1.0], dtype=np.float64)
+    assert source_with_reion.g(eta_low_z, direction) > source_no_reion.g(eta_low_z, direction)

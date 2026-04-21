@@ -4,6 +4,8 @@ This package contains the legacy runtime decision gates and the VER2 S3
 execution/control skeletons.
 """
 
+from __future__ import annotations
+
 from bass.runtime.canonical_decision import (
     CanonicalBlockError,
     CanonicalDecision,
@@ -35,12 +37,6 @@ from bass.runtime.ver2_execution import (
     resume_tier_b_solver_from_checkpoint,
     plan_solver_execution,
 )
-from bass.runtime.ver2_checkpoint import (
-    TierBCheckpointRecord,
-    checkpoint_path_from_template,
-    load_tier_b_restart_checkpoint,
-)
-
 __all__ = [
     "CanonicalBlockError",
     "CanonicalDecision",
@@ -74,3 +70,18 @@ __all__ = [
     "checkpoint_path_from_template",
     "load_tier_b_restart_checkpoint",
 ]
+
+
+_LAZY_CHECKPOINT_EXPORTS = {
+    "TierBCheckpointRecord",
+    "checkpoint_path_from_template",
+    "load_tier_b_restart_checkpoint",
+}
+
+
+def __getattr__(name: str):
+    if name in _LAZY_CHECKPOINT_EXPORTS:
+        from bass.runtime import ver2_checkpoint
+
+        return getattr(ver2_checkpoint, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
