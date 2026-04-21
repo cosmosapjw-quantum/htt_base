@@ -26,6 +26,9 @@ def test_theorem_map_covers_source_budget_and_export_claims():
     assert "claim_ceiling" in by_theorem[
         "T90_overlay_export_no_overclaim"
     ].metrics
+    assert "active_service_export" in by_theorem[
+        "T90_overlay_export_no_overclaim"
+    ].tests
 
 
 def test_tsc_validation_witnesses_track_live_theorem_ids_and_paths():
@@ -43,6 +46,14 @@ def test_tsc_validation_witnesses_track_live_theorem_ids_and_paths():
         witness.theorem == "T90_overlay_export_no_overclaim"
         and witness.path.endswith(
             "::test_overlay_export_blocks_exploratory_claim_ceiling_even_when_propagation_validated"
+        )
+        for witness in witnesses
+    )
+    assert any(
+        witness.theorem == "T90_overlay_export_no_overclaim"
+        and witness.test_id == "active_service_export_cli_preserves_blockers"
+        and witness.path.endswith(
+            "::test_script_check_passes_for_pending_and_claim_limited_modes"
         )
         for witness in witnesses
     )

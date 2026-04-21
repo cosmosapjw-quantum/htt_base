@@ -112,7 +112,7 @@ CORE_THEOREM_MAP: tuple[TheoremTestLink, ...] = (
     ),
     TheoremTestLink(
         theorem="T90_overlay_export_no_overclaim",
-        tests=("audit_no_overclaim", "overlay_quarantine"),
+        tests=("audit_no_overclaim", "overlay_quarantine", "active_service_export"),
         metrics=("quarantine_count", "claim_ceiling", "publication_blockers"),
         required_artifacts=("summary", "passfail"),
     ),
@@ -270,6 +270,20 @@ TSC_VALIDATION_WITNESSES: tuple[TscValidationWitness, ...] = (
             "test_theorem_map_covers_source_budget_and_export_claims"
         ),
         purpose="local theorem coverage stays synchronized with export and claim-ceiling semantics",
+    ),
+    TscValidationWitness(
+        theorem="T90_overlay_export_no_overclaim",
+        test_id="active_service_export_cli_preserves_blockers",
+        category="regression",
+        path=(
+            "htt/scripts/test_ver2_tsc_active_service.py::"
+            "test_script_check_passes_for_pending_and_claim_limited_modes"
+        ),
+        purpose=(
+            "the TSC-local active-service exporter keeps propagation-pending and "
+            "claim-ceiling blockers live across CLI checks"
+        ),
+        artifact_refs=("tsc.active_service_bundle", "tsc.policy_ledger"),
     ),
 )
 

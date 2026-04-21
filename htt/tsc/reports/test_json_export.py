@@ -9,6 +9,8 @@ from tsc.reports.json_export import (
     attach_overlay_to_departure_report,
     attach_overlay_to_mes_report,
     attach_overlay_to_mio_certificate,
+    overlay_to_policy_ledger_dict,
+    overlay_to_policy_ledger_markdown,
     overlay_to_json_dict,
     overlay_to_markdown,
 )
@@ -210,3 +212,18 @@ def test_overlay_export_blocks_exploratory_claim_ceiling_even_when_propagation_v
     assert "claim_ceiling_insufficient:TT=exploratory" in payload["publication_blockers"]
     assert payload["channel_claim_ceiling"]["TT"] == "exploratory"
     assert "TT:adequate/validated/exploratory" in markdown
+
+
+def test_overlay_policy_ledger_summarizes_claim_and_no_overclaim_state():
+    overlay = _overlay_tt_claim_limited()
+
+    ledger = overlay_to_policy_ledger_dict(overlay, required_channels=("TT",))
+    markdown = overlay_to_policy_ledger_markdown(overlay, required_channels=("TT",))
+
+    assert ledger["advisory_only"] is True
+    assert ledger["publication_ready"] is False
+    assert ledger["channel_claim_ceiling"]["TT"] == "exploratory"
+    assert "TT" in ledger["claim_limited_channels"]
+    assert ledger["failed_no_overclaim_flags"] == ()
+    assert "claim-limited channels:" in markdown
+    assert "BB, TT" in markdown

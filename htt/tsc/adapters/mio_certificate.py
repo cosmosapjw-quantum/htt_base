@@ -1,9 +1,14 @@
 """MIO-facing adequacy fields derived from TSC overlays."""
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 from common.contracts import TscAdequacyOverlay
+from tsc.reports.json_export import overlay_publication_blockers
+
+
+_DEFAULT_REQUIRED_CHANNELS = ("TT", "TE", "EE")
 
 
 @dataclass(frozen=True)
@@ -14,30 +19,34 @@ class MioTscAdequacyFields:
     tsc_domain_status: str
     tsc_upgrade_hint: str | None
     trace_source_adequacy: str
+    required_channels: tuple[str, ...]
     propagation_status_required: tuple[str, ...]
+    publication_blockers: tuple[str, ...]
     diagnostic_only: bool
 
 
-def overlay_to_mio_fields(overlay: TscAdequacyOverlay) -> MioTscAdequacyFields:
+def overlay_to_mio_fields(
+    overlay: TscAdequacyOverlay,
+    *,
+    required_channels: Sequence[str] = _DEFAULT_REQUIRED_CHANNELS,
+) -> MioTscAdequacyFields:
     channel_claim_ceiling = {
         budget.channel: budget.claim_ceiling for budget in overlay.channel_budgets
     }
+    required_set = set(required_channels)
     required = tuple(
         sorted(
             {
                 budget.channel
                 for budget in overlay.channel_budgets
+                if budget.channel in required_set
                 if budget.propagation_status != "validated"
             }
         )
     )
-    limited_claim_channels = tuple(
-        sorted(
-            budget.channel
-            for budget in overlay.channel_budgets
-            if budget.channel in {"TT", "EE", "TE", "scalar_summary"}
-            and budget.claim_ceiling not in {"conditional", "validated"}
-        )
+    publication_blockers = overlay_publication_blockers(
+        overlay,
+        required_channels=required_channels,
     )
     return MioTscAdequacyFields(
         source_caveats=overlay.quarantine_reasons,
@@ -53,10 +62,10 @@ def overlay_to_mio_fields(overlay: TscAdequacyOverlay) -> MioTscAdequacyFields:
             if overlay.source_bridge_report is not None
             else "pending"
         ),
+        required_channels=tuple(required_channels),
         propagation_status_required=required,
-        diagnostic_only=bool(
-            required or overlay.quarantine_reasons or limited_claim_channels
-        ),
+        publication_blockers=publication_blockers,
+        diagnostic_only=bool(publication_blockers),
     )
 
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+import json
 
 from common.contracts import (
     ArtifactManifest,
@@ -22,6 +23,7 @@ from tsc.budget.source_to_channel import build_channel_budgets_from_reports
 from tsc.control.upgrade_advisor import UpgradeAdvisorConfig, recommend_chart_transition
 from tsc.reports.json_export import (
     overlay_is_publication_ready,
+    overlay_to_policy_ledger_dict,
     overlay_publication_blockers,
     overlay_to_json_dict,
     overlay_to_markdown,
@@ -52,6 +54,7 @@ class TscActiveServiceBundle:
     bass_suggestion: SourceAdequacySuggestion
     htt_caveats: HttTscCaveatBundle
     mio_fields: MioTscAdequacyFields
+    required_channels: tuple[str, ...]
     publication_blockers: tuple[str, ...]
     publication_ready: bool
     overlay_json: Mapping[str, object]
@@ -129,7 +132,11 @@ def build_active_service_bundle(
             uses_scalar_only_geometry=uses_scalar_only_geometry,
             overlay_ref=overlay_ref,
         ),
-        mio_fields=overlay_to_mio_fields(overlay),
+        mio_fields=overlay_to_mio_fields(
+            overlay,
+            required_channels=required_channels,
+        ),
+        required_channels=tuple(required_channels),
         publication_blockers=blockers,
         publication_ready=overlay_is_publication_ready(
             overlay,
@@ -245,8 +252,86 @@ def build_active_service_bundle_from_samples(
     )
 
 
+def active_service_bundle_to_dict(
+    bundle: TscActiveServiceBundle,
+) -> dict[str, object]:
+    return {
+        "artifact_id": bundle.overlay.manifest.artifact_id,
+        "required_channels": bundle.required_channels,
+        "publication_ready": bundle.publication_ready,
+        "publication_blockers": bundle.publication_blockers,
+        "domain_status": bundle.domain_report.status,
+        "source_status": (
+            "pending"
+            if bundle.source_bridge_report is None
+            else bundle.source_bridge_report.source_status
+        ),
+        "residual_bridge_status": bundle.residual_bridge_report.bridge_status,
+        "upgrade_reason": bundle.upgrade_recommendation.reason,
+        "upgrade_severity": bundle.upgrade_recommendation.severity,
+        "bass_suggestion": {
+            "recommended_label": bundle.bass_suggestion.recommended_label,
+            "restricted_channels": bundle.bass_suggestion.restricted_channels,
+            "channel_claim_ceiling": bundle.bass_suggestion.channel_claim_ceiling,
+        },
+        "htt_caveats": {
+            "caveats": bundle.htt_caveats.caveats,
+            "channel_validity": bundle.htt_caveats.channel_validity,
+            "channel_claim_ceiling": bundle.htt_caveats.channel_claim_ceiling,
+        },
+        "mio_fields": {
+            "diagnostic_only": bundle.mio_fields.diagnostic_only,
+            "trace_source_adequacy": bundle.mio_fields.trace_source_adequacy,
+            "required_channels": bundle.mio_fields.required_channels,
+            "propagation_status_required": bundle.mio_fields.propagation_status_required,
+            "publication_blockers": bundle.mio_fields.publication_blockers,
+            "channel_claim_ceiling": bundle.mio_fields.channel_claim_ceiling,
+        },
+        "overlay_policy_ledger": overlay_to_policy_ledger_dict(
+            bundle.overlay,
+            required_channels=bundle.required_channels,
+        ),
+        "overlay": dict(bundle.overlay_json),
+    }
+
+
+def active_service_bundle_to_json(
+    bundle: TscActiveServiceBundle,
+) -> str:
+    return json.dumps(
+        active_service_bundle_to_dict(bundle),
+        indent=2,
+        sort_keys=True,
+        default=str,
+    )
+
+
+def active_service_bundle_to_markdown(
+    bundle: TscActiveServiceBundle,
+) -> str:
+    payload = active_service_bundle_to_dict(bundle)
+    restricted = ", ".join(payload["bass_suggestion"]["restricted_channels"]) or "none"
+    blockers = ", ".join(payload["publication_blockers"]) or "none"
+    return "\n".join(
+        (
+            "# TSC Active Service Bundle",
+            "",
+            f"- artifact: `{payload['artifact_id']}`",
+            f"- domain/source/residual bridge: "
+            f"`{payload['domain_status']}` / `{payload['source_status']}` / "
+            f"`{payload['residual_bridge_status']}`",
+            f"- upgrade: `{payload['upgrade_reason']}` ({payload['upgrade_severity']})",
+            f"- BASS restricted channels: `{restricted}`",
+            f"- publication blockers: `{blockers}`",
+        )
+    )
+
+
 __all__ = [
     "TscActiveServiceBundle",
+    "active_service_bundle_to_dict",
+    "active_service_bundle_to_json",
+    "active_service_bundle_to_markdown",
     "build_active_service_bundle",
     "build_active_service_bundle_from_samples",
 ]

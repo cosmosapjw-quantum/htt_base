@@ -109,6 +109,8 @@ def _merge_tsc_overlay_fields(
         resolved_domain.append(f"tsc_upgrade_hint={fields.tsc_upgrade_hint}")
     if fields.diagnostic_only:
         resolved_domain.append("tsc_overlay_diagnostic_only")
+    for blocker in fields.publication_blockers:
+        resolved_domain.append(f"tsc_publication_blocker={blocker}")
 
     for channel in fields.propagation_status_required:
         resolved_channel.append(f"tsc_propagation_pending:{channel}")

@@ -131,6 +131,93 @@ def overlay_to_markdown(
     )
 
 
+def overlay_to_policy_ledger_dict(
+    overlay: TscAdequacyOverlay,
+    *,
+    required_channels: Sequence[str] = _DEFAULT_EXPORT_CHANNELS,
+) -> dict[str, object]:
+    failed_no_overclaim_flags = tuple(
+        code for code, passed in overlay.no_overclaim_flags.items() if not passed
+    )
+    channel_claim_ceiling = {
+        budget.channel: budget.claim_ceiling for budget in overlay.channel_budgets
+    }
+    channel_labels = {
+        budget.channel: tuple(budget.labels) for budget in overlay.channel_budgets
+    }
+    claim_limited_channels = tuple(
+        sorted(
+            budget.channel
+            for budget in overlay.channel_budgets
+            if budget.claim_ceiling not in {"conditional", "validated"}
+        )
+    )
+    return {
+        "artifact_id": overlay.manifest.artifact_id,
+        "artifact_path": overlay.manifest.artifact_path,
+        "advisory_only": True,
+        "required_channels": tuple(required_channels),
+        "publication_ready": overlay_is_publication_ready(
+            overlay,
+            required_channels=required_channels,
+        ),
+        "publication_blockers": overlay_publication_blockers(
+            overlay,
+            required_channels=required_channels,
+        ),
+        "public_caveat_snippet": overlay.public_caveat_snippet,
+        "quarantine_reasons": overlay.quarantine_reasons,
+        "quarantine_count": len(overlay.quarantine_reasons),
+        "no_overclaim_flags": dict(overlay.no_overclaim_flags),
+        "failed_no_overclaim_flags": failed_no_overclaim_flags,
+        "no_overclaim_failed_count": len(failed_no_overclaim_flags),
+        "channel_claim_ceiling": channel_claim_ceiling,
+        "channel_labels": channel_labels,
+        "claim_limited_channels": claim_limited_channels,
+    }
+
+
+def overlay_to_policy_ledger_json(
+    overlay: TscAdequacyOverlay,
+    *,
+    required_channels: Sequence[str] = _DEFAULT_EXPORT_CHANNELS,
+) -> str:
+    return json.dumps(
+        overlay_to_policy_ledger_dict(
+            overlay,
+            required_channels=required_channels,
+        ),
+        indent=2,
+        sort_keys=True,
+        default=str,
+    )
+
+
+def overlay_to_policy_ledger_markdown(
+    overlay: TscAdequacyOverlay,
+    *,
+    required_channels: Sequence[str] = _DEFAULT_EXPORT_CHANNELS,
+) -> str:
+    ledger = overlay_to_policy_ledger_dict(
+        overlay,
+        required_channels=required_channels,
+    )
+    failed = ", ".join(ledger["failed_no_overclaim_flags"]) or "none"
+    limited = ", ".join(ledger["claim_limited_channels"]) or "none"
+    blockers = ", ".join(ledger["publication_blockers"]) or "none"
+    return "\n".join(
+        (
+            "# TSC Policy Ledger",
+            "",
+            f"- artifact: `{ledger['artifact_id']}`",
+            f"- advisory only: `{ledger['advisory_only']}`",
+            f"- failed no-overclaim flags: `{failed}`",
+            f"- claim-limited channels: `{limited}`",
+            f"- publication blockers: `{blockers}`",
+        )
+    )
+
+
 def _overlay_ref(overlay: TscAdequacyOverlay) -> str:
     return overlay.manifest.artifact_id
 
@@ -176,6 +263,9 @@ __all__ = [
     "attach_overlay_to_mio_certificate",
     "overlay_is_publication_ready",
     "overlay_publication_blockers",
+    "overlay_to_policy_ledger_dict",
+    "overlay_to_policy_ledger_json",
+    "overlay_to_policy_ledger_markdown",
     "overlay_to_json",
     "overlay_to_json_dict",
     "overlay_to_markdown",
