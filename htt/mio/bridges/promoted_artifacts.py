@@ -15,6 +15,7 @@ from typing import Any, Mapping
 from mio.interface.manifest import MioPrerequisites, assess_mio_readiness
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.mio_certificate import MioCertificate
+from workspace.contracts.tsc_overlay import TscAdequacyOverlay
 
 ARTEFACT_FILENAME = "mio_promoted_axis_ingest_v1.json"
 
@@ -94,7 +95,12 @@ def ingest_fiducial_posterior_bundle(
     )
 
 
-def to_mio_certificate(summary: PromotedAxisSummary) -> MioCertificate:
+def to_mio_certificate(
+    summary: PromotedAxisSummary,
+    *,
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
+) -> MioCertificate:
     """Convert an ingested HTT promoted axis summary into a MioCertificate."""
     readiness = assess_mio_readiness(MioPrerequisites(eligible_for_production=False))
     return build_mio_certificate(
@@ -128,6 +134,8 @@ def to_mio_certificate(summary: PromotedAxisSummary) -> MioCertificate:
             "module": "common.posterior_summary",
             "artifact_name": summary.artifact_name,
         },
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
         readiness=readiness,
         artifact_id="mio.promoted_axis_ingest.certificate",
         artifact_path=f"artifacts/mio/{ARTEFACT_FILENAME}",
@@ -141,6 +149,9 @@ def to_mio_certificate(summary: PromotedAxisSummary) -> MioCertificate:
 def emit_promoted_axis_ingestion_artefact(
     out_path: str | Path,
     bundle_or_path: Mapping[str, Any] | str | Path,
+    *,
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> dict[str, Any]:
     """Write ``mio_promoted_axis_ingest_v1.json`` from an HTT promoted bundle."""
     out = Path(out_path)
@@ -148,7 +159,11 @@ def emit_promoted_axis_ingestion_artefact(
         raise ValueError("MIO artefact filename must start with 'mio_'")
 
     summary = ingest_fiducial_posterior_bundle(bundle_or_path)
-    cert = to_mio_certificate(summary)
+    cert = to_mio_certificate(
+        summary,
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
+    )
     payload = {
         "artifact_name": ARTEFACT_FILENAME,
         "summary": asdict(summary),

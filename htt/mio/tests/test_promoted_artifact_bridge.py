@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from mio.bridges import promoted_artifacts
+from mio.tests._overlay_fixtures import build_pending_overlay
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -80,14 +81,17 @@ def test_to_mio_certificate_preserves_g19_contract():
 
 def test_emit_promoted_axis_ingestion_artefact_round_trip(tmp_path: Path):
     out = tmp_path / promoted_artifacts.ARTEFACT_FILENAME
+    overlay = build_pending_overlay()
     payload = promoted_artifacts.emit_promoted_axis_ingestion_artefact(
         out,
         _sample_bundle(),
+        tsc_overlay=overlay,
     )
     loaded = json.loads(out.read_text(encoding="utf-8"))
     assert loaded == payload
     assert payload["artifact_name"] == promoted_artifacts.ARTEFACT_FILENAME
     assert payload["certificate"]["report_type"] == "promoted_axis_ingest"
+    assert payload["certificate"]["tsc_overlay_ref"] == "tsc.overlay"
 
 
 def test_package_exports_promoted_artifacts_module():
