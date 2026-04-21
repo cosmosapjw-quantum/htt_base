@@ -23,6 +23,7 @@
 19. `docs/ver2_upgrade/audits/AUDIT_IM-07M_2026-04-21.md`
 20. `docs/ver2_upgrade/audits/AUDIT_IM-01S1_2026-04-21.md`
 21. `docs/ver2_upgrade/audits/AUDIT_IM-02S2_2026-04-21.md`
+22. `docs/ver2_upgrade/audits/AUDIT_IM-03S3A_2026-04-21.md`
 
 ## 2. Current State
 
@@ -62,6 +63,10 @@
 - `IM-02S2` is now closed: BASS S2 owns live packet-local photon geodesics and screen-basis transport, projected electron-frame Thomson sourcing across orthogonal and tilted paths, visibility/reionization event markers plus a live tilted-visibility wrapper, explicit startup gating, and a geometry-backed seed-constraint projection surface under `htt/bass/{transport,collision,recombination,hierarchy,closure}/*`.
 - `IM-02S2` verification is green for the touched S2 scope: packet-local pytest `24 passed`, broader touched-surface pytest `422 passed`, transport/integrator pytest `85 passed`, and `py_compile` passed.
 - `IM-02S2` also carries a minimal numerical safeguard in the legacy collision helpers: tiny negative interpolation noise in `Gamma_T` (`|Gamma_T| < 1e-7`) is clipped to zero at the auxiliary surface so table-edge undershoot does not destabilize the current integrator while runtime retargeting is still pending.
+- `IM-03S3A` is now closed: BASS S3 owns an executable bounded Tier-B runtime/orchestrator path that consumes the S1 background monitor plus live S2 geodesic/collision/visibility/startup/seed hooks, packages manifest-backed observer-neutral `SolverCoreOutput`, and runs an executable cutoff campaign under `htt/bass/{runtime,spectrum,forward}/*`.
+- `IM-03S3A` verification is green for the touched S3 scope: packet-local pytest `10 passed`, forward/LOS regression pytest `9 passed`, touched-surface pytest `449 passed`, and `py_compile` passed.
+- The converged implementation choice for `IM-03S3A` is the bounded bridge architecture, not a full solver rewrite: the runtime now consumes live S1/S2 surfaces end to end, but the core Tier-B ODE evolution still runs through the shipped Lowell hierarchy/integrator.
+- There are no uncommitted local `IM-06H` / `IM-07M` code changes in the current checkout; the aborted rows in the execution ledger are historical records only.
 - Prompt list 01 is now complete: every skeleton lane has an audit note, machine-readable carry-forward, and a frozen write-scope boundary.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
@@ -71,9 +76,8 @@
 
 If working in one thread, start the solver critical path:
 
-1. `IM-03S3A`
-2. `IM-04O`
-3. `IM-08V`
+1. `IM-04O`
+2. `IM-08V`
 
 If parallel threads are available, start these side lanes immediately while the solver path begins:
 
@@ -88,8 +92,7 @@ If parallel threads are available, start these side lanes immediately while the 
 - Do not merge MIO certificate semantics into HTT or BASS.
 - Do not generate figures or manuscript claims from non-manifest artifacts.
 - Do not route new VER2 work back onto the reduced `einstein_bianchi` background engine; `htt/bass/background/evolution.py` and the S1 IC/geometry/RHS modules are now the implementation anchor.
-- Do not silently treat the new S2 packet-local implementations as full solver completion; end-to-end runtime/orchestrator binding still belongs to `IM-03S3A`.
-- Do not silently treat the new S3 shells as executable solver completion either; they freeze runtime/output ownership, but Tier A/Tier B numerics and observable extraction still require later implementation packets.
+- Do not silently treat the S1/S2/S3 bridge now closed by `IM-03S3A` as a full universal-solver rewrite; the runtime is executable, but the core Tier-B ODE stack is still the bounded Lowell bridge.
 - Do not silently promote `sparse_mode_block_proxy` into a full BiPoSH claim surface; executable O-lane work must replace or discharge that caveat explicitly.
 - Do not treat rank-blocked `FullCovMESReport` artifacts as weak covariance evidence; they are explicit no-claim outputs.
 - Do not treat `warn` campaigns in the V-lane registry as validated science gates; they are explicit placeholders until executable implementation packets discharge them.

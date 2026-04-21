@@ -1,7 +1,7 @@
-"""VER2 cutoff/convergence campaign skeletons for the BASS S3 lane."""
+"""VER2 cutoff/convergence campaign surfaces for the BASS S3 lane."""
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 
 import numpy as np
@@ -10,8 +10,11 @@ __all__ = [
     "MultipoleNormSummary",
     "CutoffCampaignSpec",
     "CutoffCampaignStub",
+    "CutoffChannelDelta",
+    "ExecutedCutoffCampaign",
     "summarize_multipole_norms",
     "build_cutoff_campaign_stub",
+    "run_executed_cutoff_campaign",
 ]
 
 
@@ -79,6 +82,57 @@ class CutoffCampaignStub:
             raise ValueError("cutoff campaigns must log runtime and memory metadata")
 
 
+@dataclass(frozen=True)
+class CutoffChannelDelta:
+    """Per-channel relative delta against the chosen baseline cutoff."""
+
+    channel: str
+    baseline_norm: float
+    cutoff_norm: float
+    relative_delta: float
+
+    def __post_init__(self) -> None:
+        if not self.channel:
+            raise ValueError("channel must be non-empty")
+        for name, value in (
+            ("baseline_norm", self.baseline_norm),
+            ("cutoff_norm", self.cutoff_norm),
+            ("relative_delta", self.relative_delta),
+        ):
+            if not np.isfinite(value) or value < 0.0:
+                raise ValueError(f"{name} must be finite and non-negative")
+
+
+@dataclass(frozen=True)
+class ExecutedCutoffCampaign:
+    """Executed cutoff campaign with finite norm deltas and runtime logs."""
+
+    spec: CutoffCampaignSpec
+    summaries: tuple[MultipoleNormSummary, ...]
+    deltas: Mapping[int, tuple[CutoffChannelDelta, ...]]
+    runtime_seconds: Mapping[int, float]
+    ready: bool = True
+    all_cutoffs_recorded: bool = True
+    runtime_logging_required: bool = True
+
+    def __post_init__(self) -> None:
+        if not self.ready:
+            raise ValueError("executed cutoff campaigns must be marked ready")
+        recorded = {summary.cutoff_L for summary in self.summaries}
+        missing = set(self.spec.cutoffs) - recorded
+        if missing:
+            raise ValueError(f"missing cutoff summaries for {sorted(missing)}")
+        if set(self.runtime_seconds) != set(self.spec.cutoffs):
+            raise ValueError("runtime_seconds must record every configured cutoff")
+        for cutoff, runtime_sec in self.runtime_seconds.items():
+            if cutoff not in self.spec.cutoffs:
+                raise ValueError(f"unexpected cutoff runtime entry {cutoff}")
+            if not np.isfinite(runtime_sec) or runtime_sec < 0.0:
+                raise ValueError("runtime_seconds entries must be finite and non-negative")
+        if set(self.deltas) != set(self.spec.cutoffs):
+            raise ValueError("deltas must contain one entry per configured cutoff")
+
+
 def summarize_multipole_norms(
     cutoff_L: int,
     *,
@@ -114,4 +168,58 @@ def build_cutoff_campaign_stub(
         spec=spec,
         summaries=summaries,
         all_cutoffs_recorded=True,
+    )
+
+
+def _relative_delta(*, baseline: float, cutoff: float) -> float:
+    scale = max(float(baseline), 1.0e-30)
+    return abs(float(cutoff) - float(baseline)) / scale
+
+
+def run_executed_cutoff_campaign(
+    spec: CutoffCampaignSpec,
+    *,
+    runner: Callable[[int], tuple[Mapping[str, np.ndarray], float]],
+) -> ExecutedCutoffCampaign:
+    """Execute the configured Tier-B cutoff campaign through a caller runner."""
+
+    summaries: list[MultipoleNormSummary] = []
+    runtime_seconds: dict[int, float] = {}
+    for cutoff in spec.cutoffs:
+        channel_arrays, runtime_sec = runner(int(cutoff))
+        summaries.append(
+            summarize_multipole_norms(
+                int(cutoff),
+                channel_arrays=channel_arrays,
+                closure_name=spec.closure_name,
+            )
+        )
+        runtime_seconds[int(cutoff)] = float(runtime_sec)
+
+    summary_by_cutoff = {summary.cutoff_L: summary for summary in summaries}
+    baseline = summary_by_cutoff[spec.baseline_cutoff]
+    deltas: dict[int, tuple[CutoffChannelDelta, ...]] = {}
+    baseline_channels = tuple(sorted(baseline.channel_norms))
+    for cutoff in spec.cutoffs:
+        summary = summary_by_cutoff[int(cutoff)]
+        if tuple(sorted(summary.channel_norms)) != baseline_channels:
+            raise ValueError("all cutoff summaries must expose the same channel set")
+        deltas[int(cutoff)] = tuple(
+            CutoffChannelDelta(
+                channel=channel,
+                baseline_norm=float(baseline.channel_norms[channel]),
+                cutoff_norm=float(summary.channel_norms[channel]),
+                relative_delta=_relative_delta(
+                    baseline=float(baseline.channel_norms[channel]),
+                    cutoff=float(summary.channel_norms[channel]),
+                ),
+            )
+            for channel in baseline_channels
+        )
+
+    return ExecutedCutoffCampaign(
+        spec=spec,
+        summaries=tuple(summaries),
+        deltas=deltas,
+        runtime_seconds=runtime_seconds,
     )

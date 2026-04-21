@@ -59,6 +59,9 @@
 | 2026-04-21 | IM-02S2 | P1 | `project_from_angular_samples_stub` and `reconstruct_on_sphere_stub` remain unresolved angular-grid/PSTF bridge hooks | IM-02S2 focused on live transport/collision/history ownership and did not widen into the radiation-reconstruction bridge | `IM-03S3A`, `IM-04O` |
 | 2026-04-21 | IM-02S2 | P2 | `build_constraint_projection` is now live, but the no-geometry branch remains an explicit first-pass symbolic reduction rather than a full perturbative seed solver | packet scope upgraded the geometry-backed branch and preserved honest reduced behavior where the runtime seed context is still absent | `IM-03S3A`, later seed-focused solver packet |
 | 2026-04-21 | IM-02S2 | P2 | tiny negative `Gamma_T` clipping remains a local numerical floor around legacy table-edge undershoot rather than a deeper upstream table/interpolator repair | the minimal repair keeps current integrator paths stable without changing physical Thomson-rate semantics inside the same packet | `IM-03S3A` |
+| 2026-04-21 | IM-03S3A | P1 | the VER2 runtime now consumes S1 background monitoring and the live S2 geodesic/collision/visibility/startup/seed surfaces, but the core Tier-B ODE evolution still uses the shipped Lowell hierarchy/integrator rather than a fully retargeted S1/S2-native RHS stack | the converged implementation intentionally chose the bounded bridge architecture over a full solver rewrite inside the same packet | `IM-03S3B`, `IM-08V` |
+| 2026-04-21 | IM-03S3A | P1 | `project_from_angular_samples_stub` and `reconstruct_on_sphere_stub` still have no live angular-grid/PSTF bridge, so observer-side reconstruction remains limited to the neutral final-slice/propagator route | this packet closed runtime/orchestrator ownership first and left angular reconstruction to the later O/V work | `IM-04O`, `IM-08V` |
+| 2026-04-21 | IM-03S3A | P2 | the runtime records an explicit startup-gate decision and seed projection, but it does not yet inject a quadrupole startup manifold or a full perturbative seed solver directly into the Tier-B initial state | the packet requirement was executable consumption and logging of the S2 hooks, not a hierarchy-IC rewrite | later seed-focused solver packet, `IM-08V` |
 
 ## Closed Template
 
@@ -72,3 +75,6 @@
 | 2026-04-21 | SK-02S2 | IM-02S2 | `build_tilted_visibility_source_stub` is replaced by live `build_tilted_visibility_source` and explicit visibility/reionization event markers |
 | 2026-04-21 | SK-02S2 | IM-02S2 | `build_constraint_projection_stub` is replaced by live `build_constraint_projection`, including a geometry-backed Codazzi projection branch |
 | 2026-04-21 | SK-02S2 | IM-02S2 | startup-gate selection is now explicit via `decide_startup_gate`, with hidden diagnostic zero-quadrupole promotion blocked |
+| 2026-04-21 | IM-02S2 | IM-03S3A | the executable runtime/orchestrator now consumes `photon_geodesic_rhs`, `project_thomson_source`, `build_tilted_visibility_source`, and `decide_startup_gate` end to end through the bounded Tier-B runtime bridge |
+| 2026-04-21 | SK-03S3 | IM-03S3A | Tier B now executes through the VER2 runtime/output shells instead of stopping at plan-only metadata |
+| 2026-04-21 | SK-03S3 | IM-03S3A | executable cutoff/convergence hooks now exist via `run_executed_cutoff_campaign`, while the old stub remains compatibility-only |

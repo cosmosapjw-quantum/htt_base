@@ -6,6 +6,7 @@ import pytest
 from bass.spectrum import (
     CutoffCampaignSpec,
     build_cutoff_campaign_stub,
+    run_executed_cutoff_campaign,
     summarize_multipole_norms,
 )
 
@@ -48,3 +49,20 @@ def test_cutoff_campaign_stub_records_all_requested_cutoffs() -> None:
     )
     assert stub.ready is False
     assert stub.all_cutoffs_recorded is True
+
+
+def test_run_executed_cutoff_campaign_records_runtime_and_deltas() -> None:
+    spec = CutoffCampaignSpec(
+        cutoffs=(4, 6),
+        closure_name="free_streaming",
+        baseline_cutoff=4,
+    )
+
+    def runner(cutoff: int):
+        return {"TT": np.arange(cutoff, dtype=float) + 1.0}, float(cutoff) / 10.0
+
+    campaign = run_executed_cutoff_campaign(spec, runner=runner)
+    assert campaign.ready is True
+    assert set(campaign.runtime_seconds) == {4, 6}
+    assert campaign.deltas[4][0].relative_delta == pytest.approx(0.0)
+    assert campaign.deltas[6][0].relative_delta > 0.0

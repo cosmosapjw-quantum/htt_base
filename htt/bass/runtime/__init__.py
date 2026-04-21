@@ -15,6 +15,8 @@ from bass.runtime.ver2_execution import (
     CheckpointPolicy,
     ConstraintProjectionPolicy,
     CouplingMode,
+    TierBExecutionTrace,
+    TierBExecutableRun,
     FeatureStatus,
     IntegratorFamily,
     RuntimeControlBlock,
@@ -23,6 +25,7 @@ from bass.runtime.ver2_execution import (
     SolverTier,
     ValidationMatrixSpec,
     build_runtime_reduction_decision,
+    execute_tier_b_lowell_solver,
     plan_solver_execution,
 )
 
@@ -43,6 +46,9 @@ __all__ = [
     "RuntimeControlBlock",
     "ValidationMatrixSpec",
     "SolverExecutionPlan",
+    "TierBExecutionTrace",
+    "TierBExecutableRun",
     "build_runtime_reduction_decision",
     "plan_solver_execution",
+    "execute_tier_b_lowell_solver",
 ]
