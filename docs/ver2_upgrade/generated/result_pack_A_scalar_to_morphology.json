@@ -1,0 +1,58 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+      "claim_tier": "conditional",
+      "evidence_refs": [
+        "bass.ver2.export.solver_core_output_tier_b.observable_vector"
+      ],
+      "owner": "BASS",
+      "production_status": "production_candidate",
+      "summary": "BASS low-ell observable substrate with explicit sparse covariance proxy semantics.",
+      "title": "Observable vector proxy"
+    },
+    {
+      "artifact_id": "bass.ver2.export.solver_core_output_tier_b.atlas_lite",
+      "claim_tier": "conditional",
+      "evidence_refs": [
+        "bass.ver2.export.solver_core_output_tier_b.atlas_lite"
+      ],
+      "owner": "BASS",
+      "production_status": "production_candidate",
+      "summary": "Theory-side atlas substrate that carries morphology validity and sky-support metadata.",
+      "title": "AtlasEntryLite substrate"
+    },
+    {
+      "artifact_id": "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy",
+      "claim_tier": "conditional",
+      "evidence_refs": [
+        "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+      ],
+      "owner": "BASS",
+      "production_status": "production_candidate",
+      "summary": "MES summary stays rank-gated and descriptive unless covariance prerequisites hold.",
+      "title": "Full-covariance MES report"
+    }
+  ],
+  "caveats": [
+    "diagonal_cl_not_sufficient_for_directional_claims",
+    "no_posterior_or_evidence_semantics",
+    "proxy_morphology_not_full_biposh",
+    "observer_reconstruction_bridge_pending",
+    "theory_side_substrate_not_observational_data",
+    "interpolation_only_not_posterior_update",
+    "local_global_degeneracy_requires_htt_discrimination",
+    "rank_failure_returns_no_claim_not_weak_evidence",
+    "covariance_upgrade_is_descriptive_until_validation_packet"
+  ],
+  "claim_tier": "conditional",
+  "figure_base": "fig_ver2a_scalar_to_morphology_summary",
+  "pack_id": "A",
+  "production_status": "production_candidate",
+  "summary_lines": [
+    "Observable channels, sparse morphology proxy, and MES ceilings are exported together.",
+    "The pack remains conditional because morphology is still proxy-scoped, not a full validated BiPoSH basis."
+  ],
+  "title": "Scalar-to-morphology bridge",
+  "topic": "scalar_to_morphology"
+}

@@ -3,8 +3,18 @@
 
 Semantic source: `htt/src/common/contracts.py::StatusSnapshotEntry`
 
-No `status_snapshot.json` is published yet.
+| Metric | Count |
+| --- | ---: |
+| Total rows | 8 |
+| Implemented | 8 |
+| Smoke tested | 8 |
+| Production validated | 0 |
+| Manuscript used | 8 |
 
-Until `IM-08V` emits `docs/ver2_upgrade/generated/status_snapshot.json`,
-manuscript-facing status counts remain intentionally omitted. The shared
-snapshot contract is already frozen; required fields are: `artifact_id`, `owner`, `implementation_scope`, `claim_tier`, `implemented`, `smoke_tested`, `production_validated`, `manuscript_used`, `source_commit`.
+| Owner | Rows |
+| --- | ---: |
+| `BASS` | 3 |
+| `COMMON` | 2 |
+| `HTT` | 1 |
+| `MIO` | 1 |
+| `TSC` | 1 |

@@ -1,0 +1,47 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "mio.predictive_residuals.certificate",
+      "claim_tier": "conditional",
+      "evidence_refs": [
+        "mio.predictive_residuals.certificate"
+      ],
+      "owner": "MIO",
+      "production_status": "production_candidate",
+      "summary": "MIO residual atlas stays diagnostic and owner-separated from HTT posterior semantics.",
+      "title": "MIO predictive residual certificate"
+    },
+    {
+      "artifact_id": "tsc.ver2.export.overlay",
+      "claim_tier": "conditional",
+      "evidence_refs": [
+        "tsc.ver2.export.overlay"
+      ],
+      "owner": "TSC",
+      "production_status": "production_candidate",
+      "summary": "TSC overlay remains advisory and records pending propagation explicitly.",
+      "title": "TSC adequacy overlay"
+    }
+  ],
+  "caveats": [
+    "public_grade=production-grade",
+    "production_status=production_candidate",
+    "Predictive residual atlas is a diagnostic model/data comparison surface; it must not be merged with HTT posterior evidence or reinterpreted as a truth certificate.",
+    "tsc_domain_status=valid_one_field",
+    "tsc_trace_source_adequacy=adequate",
+    "tsc_upgrade_hint=stable_no_upgrade",
+    "tsc_overlay_diagnostic_only",
+    "advisory_only",
+    "no_runtime_decision_ownership"
+  ],
+  "claim_tier": "conditional",
+  "figure_base": "fig_ver2d_mio_predictive_residuals",
+  "pack_id": "D",
+  "production_status": "production_candidate",
+  "summary_lines": [
+    "The MIO residual atlas and the TSC overlay are exported together without merging ownership semantics.",
+    "Residual slices remain diagnostic model/data comparisons, not posterior or truth outputs."
+  ],
+  "title": "MIO certificates",
+  "topic": "mio_residual_atlas"
+}

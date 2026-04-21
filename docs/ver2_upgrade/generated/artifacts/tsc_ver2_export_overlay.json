@@ -1,0 +1,426 @@
+{
+  "allowed_claims": [
+    "conditional adequacy caveat summary"
+  ],
+  "evidence_refs": [
+    "tsc.ver2.export.overlay"
+  ],
+  "forbidden_claims": [
+    "runtime_allow_block_claim",
+    "posterior_correction_claim"
+  ],
+  "manifest": {
+    "artifact_id": "tsc.ver2.export.overlay",
+    "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_overlay.json",
+    "caveats": [
+      "advisory_only",
+      "no_runtime_decision_ownership"
+    ],
+    "claim_tier": "conditional",
+    "code_version": "ver2-d1",
+    "config_hash": "182233e44b40f0aa",
+    "created_by": "scripts.ver2_artifact_export.py",
+    "failed_gates": [],
+    "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+    "implementation_scope": "tsc",
+    "input_hashes": [
+      "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+      "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+    ],
+    "owner": "TSC",
+    "passed_gates": [],
+    "production_status": "production_candidate",
+    "required_gates": [],
+    "schema_version": "ver2-v9",
+    "statistics_definitions": {
+      "surface": "TscAdequacyOverlay"
+    }
+  },
+  "notes": [
+    "advisory_only",
+    "no_runtime_decision_ownership"
+  ],
+  "payload": {
+    "channel_budgets": [
+      {
+        "channel": "TT",
+        "claim_ceiling": "conditional",
+        "high_budget": null,
+        "labels": [
+          "source_adequate__propagation_pending"
+        ],
+        "manifest": {
+          "artifact_id": "tsc.ver2.export.overlay",
+          "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_overlay.json",
+          "caveats": [
+            "advisory_only",
+            "no_runtime_decision_ownership"
+          ],
+          "claim_tier": "conditional",
+          "code_version": "ver2-d1",
+          "config_hash": "182233e44b40f0aa",
+          "created_by": "scripts.ver2_artifact_export.py",
+          "failed_gates": [],
+          "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+          "implementation_scope": "tsc",
+          "input_hashes": [
+            "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+            "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+          ],
+          "owner": "TSC",
+          "passed_gates": [],
+          "production_status": "production_candidate",
+          "required_gates": [],
+          "schema_version": "ver2-v9",
+          "statistics_definitions": {
+            "surface": "TscAdequacyOverlay"
+          }
+        },
+        "propagation_status": "pending",
+        "source_status": "adequate",
+        "source_to_field_bound": 0.04,
+        "spectrum_bound_linear": null,
+        "spectrum_bound_quadratic": null,
+        "spin2_budget": null,
+        "trace_budget": 0.01
+      },
+      {
+        "channel": "EE",
+        "claim_ceiling": "conditional",
+        "high_budget": null,
+        "labels": [
+          "source_adequate__propagation_pending",
+          "trace_ok__spin2_required"
+        ],
+        "manifest": {
+          "artifact_id": "tsc.ver2.export.overlay",
+          "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_overlay.json",
+          "caveats": [
+            "advisory_only",
+            "no_runtime_decision_ownership"
+          ],
+          "claim_tier": "conditional",
+          "code_version": "ver2-d1",
+          "config_hash": "182233e44b40f0aa",
+          "created_by": "scripts.ver2_artifact_export.py",
+          "failed_gates": [],
+          "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+          "implementation_scope": "tsc",
+          "input_hashes": [
+            "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+            "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+          ],
+          "owner": "TSC",
+          "passed_gates": [],
+          "production_status": "production_candidate",
+          "required_gates": [],
+          "schema_version": "ver2-v9",
+          "statistics_definitions": {
+            "surface": "TscAdequacyOverlay"
+          }
+        },
+        "propagation_status": "pending",
+        "source_status": "adequate",
+        "source_to_field_bound": 0.04,
+        "spectrum_bound_linear": null,
+        "spectrum_bound_quadratic": null,
+        "spin2_budget": 0.2,
+        "trace_budget": 0.01
+      },
+      {
+        "channel": "TE",
+        "claim_ceiling": "conditional",
+        "high_budget": null,
+        "labels": [
+          "source_adequate__propagation_pending",
+          "trace_ok__spin2_required",
+          "te_mixed_channel_requires_spin2"
+        ],
+        "manifest": {
+          "artifact_id": "tsc.ver2.export.overlay",
+          "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_overlay.json",
+          "caveats": [
+            "advisory_only",
+            "no_runtime_decision_ownership"
+          ],
+          "claim_tier": "conditional",
+          "code_version": "ver2-d1",
+          "config_hash": "182233e44b40f0aa",
+          "created_by": "scripts.ver2_artifact_export.py",
+          "failed_gates": [],
+          "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+          "implementation_scope": "tsc",
+          "input_hashes": [
+            "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+            "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+          ],
+          "owner": "TSC",
+          "passed_gates": [],
+          "production_status": "production_candidate",
+          "required_gates": [],
+          "schema_version": "ver2-v9",
+          "statistics_definitions": {
+            "surface": "TscAdequacyOverlay"
+          }
+        },
+        "propagation_status": "pending",
+        "source_status": "adequate",
+        "source_to_field_bound": 0.04,
+        "spectrum_bound_linear": null,
+        "spectrum_bound_quadratic": null,
+        "spin2_budget": 0.2,
+        "trace_budget": 0.01
+      },
+      {
+        "channel": "BB",
+        "claim_ceiling": "blocked",
+        "high_budget": null,
+        "labels": [
+          "trace_only__bb_claim_forbidden"
+        ],
+        "manifest": {
+          "artifact_id": "tsc.ver2.export.overlay",
+          "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_overlay.json",
+          "caveats": [
+            "advisory_only",
+            "no_runtime_decision_ownership"
+          ],
+          "claim_tier": "conditional",
+          "code_version": "ver2-d1",
+          "config_hash": "182233e44b40f0aa",
+          "created_by": "scripts.ver2_artifact_export.py",
+          "failed_gates": [],
+          "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+          "implementation_scope": "tsc",
+          "input_hashes": [
+            "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+            "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+          ],
+          "owner": "TSC",
+          "passed_gates": [],
+          "production_status": "production_candidate",
+          "required_gates": [],
+          "schema_version": "ver2-v9",
+          "statistics_definitions": {
+            "surface": "TscAdequacyOverlay"
+          }
+        },
+        "propagation_status": "blocked",
+        "source_status": "adequate",
+        "source_to_field_bound": null,
+        "spectrum_bound_linear": null,
+        "spectrum_bound_quadratic": null,
+        "spin2_budget": null,
+        "trace_budget": null
+      }
+    ],
+    "domain_report": {
+      "be_eta_nonpositive": null,
+      "blocking_reasons": [],
+      "chart": "one_field",
+      "domain_margin": 1.0,
+      "eta_max": null,
+      "jacobian_sigma_min": null,
+      "manifest": {
+        "artifact_id": "tsc.ver2.export.overlay",
+        "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_overlay.json",
+        "caveats": [
+          "advisory_only",
+          "no_runtime_decision_ownership"
+        ],
+        "claim_tier": "conditional",
+        "code_version": "ver2-d1",
+        "config_hash": "182233e44b40f0aa",
+        "created_by": "scripts.ver2_artifact_export.py",
+        "failed_gates": [],
+        "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+        "implementation_scope": "tsc",
+        "input_hashes": [
+          "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+          "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+        ],
+        "owner": "TSC",
+        "passed_gates": [],
+        "production_status": "production_candidate",
+        "required_gates": [],
+        "schema_version": "ver2-v9",
+        "statistics_definitions": {
+          "surface": "TscAdequacyOverlay"
+        }
+      },
+      "status": "valid_one_field",
+      "theta_min": 1.0,
+      "weight_simplex_ok": true
+    },
+    "manifest": {
+      "artifact_id": "tsc.ver2.export.overlay",
+      "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_overlay.json",
+      "caveats": [
+        "advisory_only",
+        "no_runtime_decision_ownership"
+      ],
+      "claim_tier": "conditional",
+      "code_version": "ver2-d1",
+      "config_hash": "182233e44b40f0aa",
+      "created_by": "scripts.ver2_artifact_export.py",
+      "failed_gates": [],
+      "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+      "implementation_scope": "tsc",
+      "input_hashes": [
+        "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+        "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+      ],
+      "owner": "TSC",
+      "passed_gates": [],
+      "production_status": "production_candidate",
+      "required_gates": [],
+      "schema_version": "ver2-v9",
+      "statistics_definitions": {
+        "surface": "TscAdequacyOverlay"
+      }
+    },
+    "no_overclaim_flags": {
+      "bianchi_family": true,
+      "full_polarization": true,
+      "htt_evidence_correction": true,
+      "mio_truth": true,
+      "source_implies_observable": true
+    },
+    "public_caveat_snippet": "TSC source-side checks are available, but propagation validation is still pending for TT, EE, TE. BB remains outside trace-only validation.",
+    "publication_blockers": [
+      "propagation_pending:EE,TE,TT"
+    ],
+    "publication_ready": false,
+    "quarantine_reasons": [],
+    "required_channels": [
+      "TT",
+      "TE",
+      "EE"
+    ],
+    "residual_report": {
+      "ambient_defect_rate": null,
+      "chart": "one_field",
+      "eta_tangent_fraction": 0.2,
+      "high_residual": null,
+      "labels": [],
+      "laguerre_n_ge_2_norm": 0.1,
+      "manifest": {
+        "artifact_id": "tsc.ver2.export.overlay",
+        "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_overlay.json",
+        "caveats": [
+          "advisory_only",
+          "no_runtime_decision_ownership"
+        ],
+        "claim_tier": "conditional",
+        "code_version": "ver2-d1",
+        "config_hash": "182233e44b40f0aa",
+        "created_by": "scripts.ver2_artifact_export.py",
+        "failed_gates": [],
+        "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+        "implementation_scope": "tsc",
+        "input_hashes": [
+          "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+          "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+        ],
+        "owner": "TSC",
+        "passed_gates": [],
+        "production_status": "production_candidate",
+        "required_gates": [],
+        "schema_version": "ver2-v9",
+        "statistics_definitions": {
+          "surface": "TscAdequacyOverlay"
+        }
+      },
+      "onefield_residual": 0.1,
+      "projected_defect_estimate": null,
+      "residual_origin": "trace",
+      "spin2_residual": null,
+      "trace_residual_q_tr": 0.1,
+      "twofield_residual": 0.05
+    },
+    "source_bridge_report": {
+      "chart": "one_field",
+      "eta_correction_indicator": null,
+      "labels": [
+        "trace_source_exact_on_manifold",
+        "trace_source_bound_available",
+        "source_bound_within_budget"
+      ],
+      "manifest": {
+        "artifact_id": "tsc.ver2.export.overlay",
+        "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_overlay.json",
+        "caveats": [
+          "advisory_only",
+          "no_runtime_decision_ownership"
+        ],
+        "claim_tier": "conditional",
+        "code_version": "ver2-d1",
+        "config_hash": "182233e44b40f0aa",
+        "created_by": "scripts.ver2_artifact_export.py",
+        "failed_gates": [],
+        "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+        "implementation_scope": "tsc",
+        "input_hashes": [
+          "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+          "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+        ],
+        "owner": "TSC",
+        "passed_gates": [],
+        "production_status": "production_candidate",
+        "required_gates": [],
+        "schema_version": "ver2-v9",
+        "statistics_definitions": {
+          "surface": "TscAdequacyOverlay"
+        }
+      },
+      "nonlinear_dipole_quartic_correction": null,
+      "on_manifold_exact": true,
+      "q2_norm": 0.1,
+      "required_bass_primitives": [],
+      "source_error_bound": 0.01,
+      "source_name": "thomson_trace_quadrupole",
+      "source_status": "adequate"
+    },
+    "upgrade_recommendation": {
+      "current_chart": "one_field",
+      "dwell_time_required": null,
+      "hysteresis_state": "stable",
+      "labels": [
+        "stable_no_upgrade"
+      ],
+      "manifest": {
+        "artifact_id": "tsc.ver2.export.overlay",
+        "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_overlay.json",
+        "caveats": [
+          "advisory_only",
+          "no_runtime_decision_ownership"
+        ],
+        "claim_tier": "conditional",
+        "code_version": "ver2-d1",
+        "config_hash": "182233e44b40f0aa",
+        "created_by": "scripts.ver2_artifact_export.py",
+        "failed_gates": [],
+        "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+        "implementation_scope": "tsc",
+        "input_hashes": [
+          "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+          "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+        ],
+        "owner": "TSC",
+        "passed_gates": [],
+        "production_status": "production_candidate",
+        "required_gates": [],
+        "schema_version": "ver2-v9",
+        "statistics_definitions": {
+          "surface": "TscAdequacyOverlay"
+        }
+      },
+      "reason": "stable_no_upgrade",
+      "recommended_chart": "one_field",
+      "severity": "info"
+    }
+  },
+  "summary": "TSC overlay remains advisory and records pending propagation explicitly.",
+  "title": "TSC adequacy overlay",
+  "topic": "adequacy_overlay"
+}

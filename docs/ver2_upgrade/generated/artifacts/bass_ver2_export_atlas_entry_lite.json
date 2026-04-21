@@ -1,0 +1,638 @@
+{
+  "allowed_claims": [
+    "theory-side response overlap summary"
+  ],
+  "evidence_refs": [
+    "bass.ver2.export.solver_core_output_tier_b.atlas_lite"
+  ],
+  "forbidden_claims": [
+    "observational_data_claim",
+    "posterior_update_claim"
+  ],
+  "manifest": {
+    "artifact_id": "bass.ver2.export.solver_core_output_tier_b.atlas_lite",
+    "artifact_path": "docs/ver2_upgrade/generated/artifacts/bass_ver2_export_atlas_entry_lite.json",
+    "caveats": [
+      "theory_side_substrate_not_observational_data",
+      "interpolation_only_not_posterior_update",
+      "local_global_degeneracy_requires_htt_discrimination"
+    ],
+    "claim_tier": "conditional",
+    "code_version": "ver2-d1",
+    "config_hash": "c44f0739b60c70de",
+    "created_by": "scripts.ver2_artifact_export.py",
+    "failed_gates": [],
+    "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+    "implementation_scope": "bass_py",
+    "input_hashes": [
+      "species:planck2018",
+      "bass.ver2.export.solver_core_output_tier_b",
+      "bass.ver2.export.solver_core_output_tier_b.observable_vector"
+    ],
+    "owner": "BASS",
+    "passed_gates": [],
+    "production_status": "production_candidate",
+    "required_gates": [],
+    "schema_version": "ver2-v9",
+    "statistics_definitions": {
+      "bianchi_type": "I",
+      "local_global_degeneracy": {
+        "distinguishing_observables": [],
+        "offdiag_strength": 0.0,
+        "preferred_axis_present": true,
+        "represented": true,
+        "required_followup": [
+          "atlas_response_overlap",
+          "htt_discrimination_matrix"
+        ],
+        "rotation_strength": 0.0,
+        "status": "not_applicable_isotropic"
+      },
+      "sky_support": {
+        "mask_hash": "mask-ver2-d1",
+        "mock_coverage_status": "adequate",
+        "scan_volume_hash": "scan-ver2-d1",
+        "selection_mode": "mock_calibrated",
+        "sky_support_hash": "sky-ver2-d1"
+      },
+      "surface": "AtlasEntryLite"
+    }
+  },
+  "notes": [
+    "theory_side_substrate_not_observational_data",
+    "interpolation_only_not_posterior_update",
+    "local_global_degeneracy_requires_htt_discrimination"
+  ],
+  "payload": {
+    "manifest": {
+      "artifact_id": "bass.ver2.export.solver_core_output_tier_b.atlas_lite",
+      "artifact_path": "docs/ver2_upgrade/generated/artifacts/bass_ver2_export_atlas_entry_lite.json",
+      "caveats": [
+        "theory_side_substrate_not_observational_data",
+        "interpolation_only_not_posterior_update",
+        "local_global_degeneracy_requires_htt_discrimination"
+      ],
+      "claim_tier": "conditional",
+      "code_version": "ver2-d1",
+      "config_hash": "c44f0739b60c70de",
+      "created_by": "scripts.ver2_artifact_export.py",
+      "failed_gates": [],
+      "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+      "implementation_scope": "bass_py",
+      "input_hashes": [
+        "species:planck2018",
+        "bass.ver2.export.solver_core_output_tier_b",
+        "bass.ver2.export.solver_core_output_tier_b.observable_vector"
+      ],
+      "owner": "BASS",
+      "passed_gates": [],
+      "production_status": "production_candidate",
+      "required_gates": [],
+      "schema_version": "ver2-v9",
+      "statistics_definitions": {
+        "bianchi_type": "I",
+        "local_global_degeneracy": {
+          "distinguishing_observables": [],
+          "offdiag_strength": 0.0,
+          "preferred_axis_present": true,
+          "represented": true,
+          "required_followup": [
+            "atlas_response_overlap",
+            "htt_discrimination_matrix"
+          ],
+          "rotation_strength": 0.0,
+          "status": "not_applicable_isotropic"
+        },
+        "sky_support": {
+          "mask_hash": "mask-ver2-d1",
+          "mock_coverage_status": "adequate",
+          "scan_volume_hash": "scan-ver2-d1",
+          "selection_mode": "mock_calibrated",
+          "sky_support_hash": "sky-ver2-d1"
+        },
+        "surface": "AtlasEntryLite"
+      }
+    },
+    "response_blocks": {
+      "R_covariance_proxy": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "R_sigma_proxy": {
+        "BB": {
+          "m+2": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "m-2": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "m0": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "EE": {
+          "m+2": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "m-2": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "m0": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "TE": {
+          "m+2": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "m-2": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "m0": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        },
+        "TT": {
+          "m+2": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "m-2": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "m0": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      },
+      "local_global_degeneracy": {
+        "distinguishing_observables": [],
+        "offdiag_strength": 0.0,
+        "preferred_axis_present": true,
+        "represented": true,
+        "required_followup": [
+          "atlas_response_overlap",
+          "htt_discrimination_matrix"
+        ],
+        "rotation_strength": 0.0,
+        "status": "not_applicable_isotropic"
+      },
+      "morphology_representation": "sparse_mode_block_proxy",
+      "preferred_axis": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "theory_family": "I",
+    "validity_domain": {
+      "covariance_representation": "sparse_mode_block_proxy",
+      "harmonic_basis": "m_explicit",
+      "local_global_degeneracy": {
+        "distinguishing_observables": [],
+        "offdiag_strength": 0.0,
+        "preferred_axis_present": true,
+        "represented": true,
+        "required_followup": [
+          "atlas_response_overlap",
+          "htt_discrimination_matrix"
+        ],
+        "rotation_strength": 0.0,
+        "status": "not_applicable_isotropic"
+      },
+      "multipole_cutoff": 4,
+      "observer_reconstruction_status": "final_slice_only_no_sphere_reconstruction",
+      "selection_mode": "mock_calibrated",
+      "sky_support": {
+        "mask_hash": "mask-ver2-d1",
+        "mock_coverage_status": "adequate",
+        "scan_volume_hash": "scan-ver2-d1",
+        "selection_mode": "mock_calibrated",
+        "sky_support_hash": "sky-ver2-d1"
+      }
+    }
+  },
+  "summary": "Theory-side atlas substrate that carries morphology validity and sky-support metadata.",
+  "title": "AtlasEntryLite substrate",
+  "topic": "scalar_to_morphology"
+}

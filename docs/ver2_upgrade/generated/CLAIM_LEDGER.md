@@ -3,9 +3,11 @@
 
 Semantic source: `htt/src/common/contracts.py::ClaimLedgerEntry`
 
-No `claim_ledger.json` is published yet.
+| Claim tier | Rows |
+| --- | ---: |
+| `conditional` | 5 |
+| `exploratory` | 3 |
 
-Until `IM-08V` emits `docs/ver2_upgrade/generated/claim_ledger.json`,
-manuscript wording must not invent claim-tier counts or promotion states.
-The shared claim-ledger contract is already frozen; required fields are:
-`artifact_id`, `owner`, `claim_tier`, `allowed_claims`, `forbidden_claims`, `evidence_refs`, `source_commit`, `notes`.
+Each row remains tied to owner/scope-specific forbidden-claim fences in
+the JSON artifact. This Markdown mirror exists only as a human-readable
+index over the canonical generated ledger.

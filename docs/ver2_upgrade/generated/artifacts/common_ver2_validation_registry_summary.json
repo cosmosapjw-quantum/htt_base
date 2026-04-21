@@ -1,0 +1,892 @@
+{
+  "allowed_claims": [
+    "exploratory validation coverage summary"
+  ],
+  "evidence_refs": [
+    "common.ver2.validation_registry_summary"
+  ],
+  "forbidden_claims": [
+    "validated_science_gate_from_warn_campaigns"
+  ],
+  "manifest": {
+    "artifact_id": "common.ver2.validation_registry_summary",
+    "artifact_path": "docs/ver2_upgrade/generated/artifacts/common_ver2_validation_registry_summary.json",
+    "caveats": [
+      "warn_campaigns_do_not_validate_claims"
+    ],
+    "claim_tier": "exploratory",
+    "code_version": "ver2-d1",
+    "config_hash": "3497cb63e240589f",
+    "created_by": "scripts.ver2_artifact_export.py",
+    "failed_gates": [],
+    "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+    "implementation_scope": "common",
+    "input_hashes": [
+      "validation.observable_null_proxy",
+      "validation.synthetic_injection",
+      "validation.mes_claim_gates",
+      "validation.semantic_firewall"
+    ],
+    "owner": "COMMON",
+    "passed_gates": [],
+    "production_status": "production_candidate",
+    "required_gates": [],
+    "schema_version": "ver2-v9",
+    "statistics_definitions": {
+      "campaign_count": 4,
+      "surface": "ValidationRegistrySummary",
+      "theorem_count": 7
+    }
+  },
+  "notes": [
+    "warn_campaigns_remain_no_claim"
+  ],
+  "payload": {
+    "manifest": {
+      "artifact_id": "common.ver2.validation_registry_summary",
+      "artifact_path": "docs/ver2_upgrade/generated/artifacts/common_ver2_validation_registry_summary.json",
+      "caveats": [
+        "warn_campaigns_do_not_validate_claims"
+      ],
+      "claim_tier": "exploratory",
+      "code_version": "ver2-d1",
+      "config_hash": "3497cb63e240589f",
+      "created_by": "scripts.ver2_artifact_export.py",
+      "failed_gates": [],
+      "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+      "implementation_scope": "common",
+      "input_hashes": [
+        "validation.observable_null_proxy",
+        "validation.synthetic_injection",
+        "validation.mes_claim_gates",
+        "validation.semantic_firewall"
+      ],
+      "owner": "COMMON",
+      "passed_gates": [],
+      "production_status": "production_candidate",
+      "required_gates": [],
+      "schema_version": "ver2-v9",
+      "statistics_definitions": {
+        "campaign_count": 4,
+        "surface": "ValidationRegistrySummary",
+        "theorem_count": 7
+      }
+    },
+    "registry": {
+      "campaigns": [
+        {
+          "artifact_refs": [
+            "bass.observable_vector.proxy",
+            "bass.full_cov_mes_report"
+          ],
+          "campaign_id": "validation.observable_null_proxy",
+          "categories": [
+            "baseline_reproduction",
+            "adversarial_edge",
+            "physics_sanity",
+            "numerical_stability",
+            "regression"
+          ],
+          "check_links": [
+            {
+              "artifact_refs": [
+                "bass.observable_vector.proxy"
+              ],
+              "category": "baseline_reproduction",
+              "path": "htt/bass/spectrum/test_fb72_off_diagonal_covariance_skeleton.py::test_fb72_type_i_off_diagonal_vanishes_identically",
+              "purpose": "pin the isotropic null before any morphology promotion",
+              "test_id": "flrw_limit_zero_offdiag"
+            },
+            {
+              "artifact_refs": [
+                "bass.observable_vector.proxy"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/bass/spectrum/test_fb72_off_diagonal_covariance_skeleton.py::test_fb72_anisotropic_types_produce_nonzero_off_diagonal_blocks",
+              "purpose": "ensure anisotropic structures do not collapse into the null proxy",
+              "test_id": "rotating_types_activate_offdiag_blocks"
+            },
+            {
+              "artifact_refs": [
+                "bass.observable_vector.proxy"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/bass/observational/test_ver2_observable_atlas.py::test_covariance_proxy_and_feature_summary_record_guards",
+              "purpose": "keep sparse-mode caveats explicit on observable outputs",
+              "test_id": "proxy_mode_records_no_claim"
+            },
+            {
+              "artifact_refs": [
+                "bass.observable_vector.proxy"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/bass/spectrum/test_fb72_off_diagonal_covariance_skeleton.py::test_fb72_te_is_finite_for_anisotropic_type",
+              "purpose": "guard the observable proxy against non-finite anisotropic transport outputs",
+              "test_id": "anisotropic_te_is_finite"
+            },
+            {
+              "artifact_refs": [
+                "bass.observable_vector.proxy"
+              ],
+              "category": "regression",
+              "path": "htt/bass/observational/test_ver2_observable_atlas.py::test_live_tier_b_type_i_observable_marks_isotropic_null_proxy",
+              "purpose": "keep the live Type-I export on the conservative isotropic-null branch",
+              "test_id": "type_i_observable_marks_isotropic_null_proxy"
+            }
+          ],
+          "implementation_scope": "common",
+          "injection_manifest_refs": [
+            "validation.injection.anisotropic_covariance"
+          ],
+          "manuscript_blocking": true,
+          "no_claim_conditions": [
+            "sparse_proxy_only",
+            "missing_biposh_basis"
+          ],
+          "notes": [
+            "Executable minimal campaign; remains warn until a dense BiPoSH basis and larger null bank land."
+          ],
+          "null_manifest_refs": [
+            "null.flrw_isotropic_gaussian_lowell"
+          ],
+          "owner": "COMMON",
+          "runbook_refs": [
+            "runbook.observable_promotion"
+          ],
+          "status": "warn",
+          "theorem_refs": [
+            "V8_isotropic_limit_recovery",
+            "V8_biposh_Lgt0_null_or_proxy_block"
+          ],
+          "title": "FLRW null recovery and observable proxy quarantine"
+        },
+        {
+          "artifact_refs": [
+            "validation.null.flrw_isotropic_gaussian_lowell",
+            "validation.injection.template_amplitude",
+            "htt.discrimination_matrix"
+          ],
+          "campaign_id": "validation.synthetic_injection",
+          "categories": [
+            "baseline_reproduction",
+            "adversarial_edge",
+            "physics_sanity",
+            "numerical_stability",
+            "regression"
+          ],
+          "check_links": [
+            {
+              "artifact_refs": [
+                "validation.null.flrw_isotropic_gaussian_lowell"
+              ],
+              "category": "baseline_reproduction",
+              "path": "htt/src/common/test_mock_calibration.py::TestMockGeneration::test_isotropic_mock_has_zero_mean_over_many_realisations",
+              "purpose": "replay the isotropic null before evaluating any injected anisotropy",
+              "test_id": "null_mock_zero_mean"
+            },
+            {
+              "artifact_refs": [
+                "validation.injection.template_amplitude"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/src/common/test_mock_calibration.py::TestMockGeneration::test_injected_dipole_reproduces_projection",
+              "purpose": "ensure the injection bank exposes controlled signals rather than hidden promotions",
+              "test_id": "injected_dipole_projection_recovered"
+            },
+            {
+              "artifact_refs": [
+                "htt.discrimination_matrix"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/htt/tests/test_ver2_local_global_discrimination.py::test_local_boost_and_global_tilt_are_not_merged",
+              "purpose": "keep injected observer-side structure distinct from background-side hypotheses",
+              "test_id": "local_boost_and_global_tilt_are_not_merged"
+            },
+            {
+              "artifact_refs": [
+                "validation.injection.template_amplitude"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/bass/inference/test_fb115_synthetic_injection_skeleton.py::test_fb115_synthetic_injection_coverage_reaches_nominal_band",
+              "purpose": "bind synthetic injections to explicit coverage criteria rather than point estimates",
+              "test_id": "synthetic_injection_coverage_reaches_nominal_band"
+            },
+            {
+              "artifact_refs": [
+                "bass.runtime.trace"
+              ],
+              "category": "regression",
+              "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_lowell_solver_consumes_live_s1_s2_s3_hooks",
+              "purpose": "keep the live S1/S2/S3 hook chain attached to the validation harness",
+              "test_id": "tier_b_runtime_consumes_live_hooks"
+            }
+          ],
+          "implementation_scope": "common",
+          "injection_manifest_refs": [
+            "validation.injection.template_amplitude"
+          ],
+          "manuscript_blocking": true,
+          "no_claim_conditions": [
+            "missing_injection_campaign",
+            "missing_null_ensemble",
+            "missing_scan_volume"
+          ],
+          "notes": [
+            "Executable minimal campaign; remains warn until the injection grid expands beyond the current smoke bank."
+          ],
+          "null_manifest_refs": [
+            "null.flrw_isotropic_gaussian_lowell",
+            "null.local_boost_only"
+          ],
+          "owner": "COMMON",
+          "runbook_refs": [
+            "runbook.semantic_firewall"
+          ],
+          "status": "warn",
+          "theorem_refs": [
+            "V8_template_injection_recovery",
+            "V8_local_vs_global_discrimination"
+          ],
+          "title": "Null ensembles, synthetic injections, and live hook replay"
+        },
+        {
+          "artifact_refs": [
+            "bass.full_cov_mes_report",
+            "common.departure_report",
+            "validation.null.flrw_isotropic_gaussian_lowell"
+          ],
+          "campaign_id": "validation.mes_claim_gates",
+          "categories": [
+            "baseline_reproduction",
+            "adversarial_edge",
+            "physics_sanity",
+            "numerical_stability",
+            "regression"
+          ],
+          "check_links": [
+            {
+              "artifact_refs": [
+                "bass.full_cov_mes_report"
+              ],
+              "category": "baseline_reproduction",
+              "path": "htt/bass/observational/test_ver2_mes_departure.py::test_full_cov_mes_uses_covariance_bound_when_rank_is_available",
+              "purpose": "exercise the positive branch before any rank-failure downgrade",
+              "test_id": "mes_covariance_bound_live"
+            },
+            {
+              "artifact_refs": [
+                "bass.full_cov_mes_report"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/bass/observational/test_ver2_mes_departure.py::test_full_cov_mes_rank_failure_returns_no_claim",
+              "purpose": "prove that rank failure downgrades instead of promoting weak evidence",
+              "test_id": "mes_rank_failure_returns_no_claim"
+            },
+            {
+              "artifact_refs": [
+                "common.departure_report"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/bass/observational/test_ver2_mes_departure.py::test_departure_report_stays_descriptive_without_claim_gate",
+              "purpose": "hold Q/F semantics apart until certification gates pass",
+              "test_id": "uncertified_f_downgrades_to_proxy"
+            },
+            {
+              "artifact_refs": [
+                "validation.null.flrw_isotropic_gaussian_lowell"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/src/common/test_mock_calibration.py::TestMockCoverageWithinBounds::test_zoa_null_coverage_within_published_window",
+              "purpose": "attach explicit calibration windows to the descriptive departure language",
+              "test_id": "mock_coverage_within_published_window"
+            },
+            {
+              "artifact_refs": [
+                "bass.full_cov_mes_report"
+              ],
+              "category": "regression",
+              "path": "htt/src/common/test_ver2_contract_layer.py::test_full_cov_mes_report_rejects_negative_rank",
+              "purpose": "pin the shared contract against negative-rank regressions",
+              "test_id": "full_cov_contract_rejects_negative_rank"
+            }
+          ],
+          "implementation_scope": "common",
+          "injection_manifest_refs": [],
+          "manuscript_blocking": true,
+          "no_claim_conditions": [
+            "response_rank_deficient",
+            "claim_gate_not_passed",
+            "occupancy_not_certified"
+          ],
+          "notes": [
+            "Executable minimal campaign; remains warn until covariance nuisance models move beyond the current conservative window."
+          ],
+          "null_manifest_refs": [
+            "null.flrw_isotropic_gaussian_lowell"
+          ],
+          "owner": "COMMON",
+          "runbook_refs": [
+            "runbook.observable_promotion"
+          ],
+          "status": "warn",
+          "theorem_refs": [
+            "V8_mes_rank_no_claim",
+            "V8_filling_requires_certification"
+          ],
+          "title": "Full-covariance MES claim gates and calibration windows"
+        },
+        {
+          "artifact_refs": [
+            "htt.discrimination_matrix",
+            "tsc.adequacy_overlay"
+          ],
+          "campaign_id": "validation.semantic_firewall",
+          "categories": [
+            "baseline_reproduction",
+            "adversarial_edge",
+            "physics_sanity",
+            "numerical_stability",
+            "regression"
+          ],
+          "check_links": [
+            {
+              "artifact_refs": [
+                "htt.discrimination_matrix"
+              ],
+              "category": "baseline_reproduction",
+              "path": "htt/htt/tests/test_ver2_local_global_discrimination.py::test_discrimination_matrix_stub_is_manifest_backed_and_not_posterior",
+              "purpose": "keep the directional manifest explicitly diagnostic before stronger claims are considered",
+              "test_id": "directional_manifest_not_posterior"
+            },
+            {
+              "artifact_refs": [
+                "htt.directional_shell",
+                "tsc.adequacy_overlay"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/htt/tests/test_ver2_directional_shell.py::test_policy_rejects_mio_merge_and_tsc_posterior_correction",
+              "purpose": "forbid TSC/MIO posterior correction paths at policy level",
+              "test_id": "policy_rejects_tsc_posterior_correction"
+            },
+            {
+              "artifact_refs": [
+                "htt.discrimination_matrix"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/htt/tests/test_ver2_directional_shell.py::test_response_library_keeps_local_boost_and_global_tilt_distinct",
+              "purpose": "preserve observer-side versus source-side semantics in the response library",
+              "test_id": "response_library_keeps_local_and_global_distinct"
+            },
+            {
+              "artifact_refs": [
+                "htt.directional_shell"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/htt/tests/test_ver2_directional_shell.py::test_axis_gate_requires_adequate_mock_coverage",
+              "purpose": "block directional promotion when mock calibration coverage is still pending",
+              "test_id": "axis_gate_requires_adequate_mock_coverage"
+            },
+            {
+              "artifact_refs": [
+                "tsc.adequacy_overlay"
+              ],
+              "category": "regression",
+              "path": "htt/tsc/audit/test_no_overclaim.py::test_metadata_lint_and_quarantine_reasons",
+              "purpose": "translate overclaim metadata into quarantine reasons instead of truth labels",
+              "test_id": "tsc_quarantine_flags_emitted"
+            }
+          ],
+          "implementation_scope": "common",
+          "injection_manifest_refs": [
+            "validation.injection.anisotropic_covariance"
+          ],
+          "manuscript_blocking": true,
+          "no_claim_conditions": [
+            "posterior_correction_attempted",
+            "missing_tsc_overlay",
+            "missing_response_library"
+          ],
+          "notes": [
+            "Executable minimal campaign; remains warn until IM-09D wires the same semantics into export-time figure gating."
+          ],
+          "null_manifest_refs": [
+            "null.local_boost_only"
+          ],
+          "owner": "COMMON",
+          "runbook_refs": [
+            "runbook.semantic_firewall"
+          ],
+          "status": "warn",
+          "theorem_refs": [
+            "V8_local_vs_global_discrimination",
+            "V8_tsc_no_overclaim"
+          ],
+          "title": "Directional and TSC semantic firewall campaign"
+        }
+      ],
+      "hostile_audit_runbooks": [
+        {
+          "adversarial_checks": [
+            "rotating_types_activate_offdiag_blocks",
+            "mes_rank_failure_returns_no_claim"
+          ],
+          "artifact_refs": [
+            "bass.observable_vector.proxy",
+            "bass.full_cov_mes_report"
+          ],
+          "baseline_checks": [
+            "flrw_limit_zero_offdiag",
+            "mes_covariance_bound_live"
+          ],
+          "campaign_refs": [
+            "validation.observable_null_proxy",
+            "validation.mes_claim_gates"
+          ],
+          "implementation_scope": "common",
+          "numerical_checks": [
+            "anisotropic_te_is_finite",
+            "mock_coverage_within_published_window"
+          ],
+          "owner": "COMMON",
+          "physics_checks": [
+            "proxy_mode_records_no_claim",
+            "uncertified_f_downgrades_to_proxy"
+          ],
+          "quarantine_conditions": [
+            "sparse_proxy_only",
+            "missing_biposh_basis",
+            "response_rank_deficient",
+            "claim_gate_not_passed"
+          ],
+          "regression_checks": [
+            "type_i_observable_marks_isotropic_null_proxy",
+            "full_cov_contract_rejects_negative_rank"
+          ],
+          "runbook_id": "runbook.observable_promotion",
+          "theorem_refs": [
+            "V8_isotropic_limit_recovery",
+            "V8_biposh_Lgt0_null_or_proxy_block",
+            "V8_mes_rank_no_claim",
+            "V8_filling_requires_certification"
+          ],
+          "title": "Observable promotion hostile audit"
+        },
+        {
+          "adversarial_checks": [
+            "injected_dipole_projection_recovered",
+            "policy_rejects_tsc_posterior_correction"
+          ],
+          "artifact_refs": [
+            "htt.discrimination_matrix",
+            "tsc.adequacy_overlay"
+          ],
+          "baseline_checks": [
+            "null_mock_zero_mean",
+            "directional_manifest_not_posterior"
+          ],
+          "campaign_refs": [
+            "validation.synthetic_injection",
+            "validation.semantic_firewall"
+          ],
+          "implementation_scope": "common",
+          "numerical_checks": [
+            "synthetic_injection_coverage_reaches_nominal_band",
+            "axis_gate_requires_adequate_mock_coverage"
+          ],
+          "owner": "COMMON",
+          "physics_checks": [
+            "local_boost_and_global_tilt_are_not_merged",
+            "response_library_keeps_local_and_global_distinct"
+          ],
+          "quarantine_conditions": [
+            "missing_injection_campaign",
+            "missing_null_ensemble",
+            "posterior_correction_attempted",
+            "missing_tsc_overlay"
+          ],
+          "regression_checks": [
+            "tier_b_runtime_consumes_live_hooks",
+            "tsc_quarantine_flags_emitted"
+          ],
+          "runbook_id": "runbook.semantic_firewall",
+          "theorem_refs": [
+            "V8_template_injection_recovery",
+            "V8_local_vs_global_discrimination",
+            "V8_tsc_no_overclaim"
+          ],
+          "title": "Semantic firewall hostile audit"
+        }
+      ],
+      "injection_manifests": [
+        {
+          "artifact_refs": [
+            "validation.injection.template_amplitude"
+          ],
+          "campaign_refs": [
+            "validation.synthetic_injection"
+          ],
+          "downgrade_conditions": [
+            "missing_injection_grid",
+            "missing_recovery_tolerance"
+          ],
+          "hypothesis_family": "deterministic_template",
+          "injection_id": "validation.injection.template_amplitude",
+          "required_null_refs": [
+            "null.flrw_isotropic_gaussian_lowell"
+          ],
+          "scan_volume_hash": "scan.template.injection.v1",
+          "status": "warn",
+          "target_statistic": "template_amplitude_recovery",
+          "theorem_refs": [
+            "V8_template_injection_recovery"
+          ]
+        },
+        {
+          "artifact_refs": [
+            "validation.injection.anisotropic_covariance"
+          ],
+          "campaign_refs": [
+            "validation.observable_null_proxy",
+            "validation.semantic_firewall"
+          ],
+          "downgrade_conditions": [
+            "covariance_sampler_unavailable",
+            "proxy_mode_only"
+          ],
+          "hypothesis_family": "anisotropic_covariance",
+          "injection_id": "validation.injection.anisotropic_covariance",
+          "required_null_refs": [
+            "null.flrw_isotropic_gaussian_lowell",
+            "null.local_boost_only"
+          ],
+          "scan_volume_hash": "scan.covariance.injection.v1",
+          "status": "warn",
+          "target_statistic": "covariance_feature_recovery",
+          "theorem_refs": [
+            "V8_biposh_Lgt0_null_or_proxy_block",
+            "V8_tsc_no_overclaim"
+          ]
+        }
+      ],
+      "manuscript_export_blocked": false,
+      "null_manifests": [
+        {
+          "artifact_refs": [
+            "validation.null.flrw_isotropic_gaussian_lowell"
+          ],
+          "campaign_refs": [
+            "validation.observable_null_proxy",
+            "validation.synthetic_injection",
+            "validation.mes_claim_gates"
+          ],
+          "ensemble_id": "null.flrw_isotropic_gaussian_lowell",
+          "no_claim_conditions": [
+            "missing_scan_volume",
+            "missing_tail_calibration"
+          ],
+          "null_family": "flrw_isotropic_gaussian",
+          "observable_basis": "lowell_alm_features",
+          "scan_volume_hash": "scan.flrw.lowell.v1",
+          "status": "warn",
+          "theorem_refs": [
+            "V8_isotropic_limit_recovery",
+            "V8_template_injection_recovery",
+            "V8_filling_requires_certification"
+          ]
+        },
+        {
+          "artifact_refs": [
+            "validation.null.local_boost_only"
+          ],
+          "campaign_refs": [
+            "validation.synthetic_injection",
+            "validation.semantic_firewall"
+          ],
+          "ensemble_id": "null.local_boost_only",
+          "no_claim_conditions": [
+            "missing_null_identity",
+            "missing_false_promotion_check"
+          ],
+          "null_family": "observer_local_boost_only",
+          "observable_basis": "directional_power_and_coherence",
+          "scan_volume_hash": "scan.local_boost.v1",
+          "status": "warn",
+          "theorem_refs": [
+            "V8_local_vs_global_discrimination"
+          ]
+        }
+      ],
+      "registry_issues": [],
+      "theorem_map": [
+        {
+          "artifact_refs": [
+            "bass.observable_vector.proxy",
+            "bass.full_cov_mes_report"
+          ],
+          "claim_guard": "anisotropic outputs must recover the isotropic null before any promotion",
+          "implementation_scope": "canonical_BASS",
+          "no_claim_conditions": [
+            "missing_observable_vector",
+            "sparse_proxy_only"
+          ],
+          "owner": "BASS",
+          "source_docs": [
+            "docs/ver2_upgrade/BASS_HTT_MIO_TSC_observable_atlas_SDD_WBS_PR_plan.md",
+            "docs/ver2_upgrade/VER2_PHASE_PROMPTS_01_SKELETON_PREIMPLANT.md"
+          ],
+          "test_links": [
+            {
+              "artifact_refs": [
+                "bass.observable_vector.proxy"
+              ],
+              "category": "baseline_reproduction",
+              "path": "htt/bass/spectrum/test_fb72_off_diagonal_covariance_skeleton.py::test_fb72_type_i_off_diagonal_vanishes_identically",
+              "purpose": "off-diagonal blocks vanish in the isotropic/type-I limit",
+              "test_id": "flrw_limit_zero_offdiag"
+            },
+            {
+              "artifact_refs": [
+                "bass.observable_vector.proxy"
+              ],
+              "category": "regression",
+              "path": "htt/bass/observational/test_ver2_observable_atlas.py::test_live_tier_b_type_i_observable_marks_isotropic_null_proxy",
+              "purpose": "the live Tier-B observable export preserves the isotropic-null proxy label",
+              "test_id": "type_i_observable_marks_isotropic_null_proxy"
+            }
+          ],
+          "theorem_id": "V8_isotropic_limit_recovery",
+          "theorem_label": "FLRW isotropic limit recovers zero anisotropic morphology"
+        },
+        {
+          "artifact_refs": [
+            "bass.observable_vector.proxy"
+          ],
+          "claim_guard": "proxy sparse morphology may not be promoted as invariant BiPoSH evidence",
+          "implementation_scope": "bass_py",
+          "no_claim_conditions": [
+            "sparse_mode_block_proxy",
+            "missing_biposh_basis"
+          ],
+          "owner": "BASS",
+          "source_docs": [
+            "docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md",
+            "docs/ver2_upgrade/BASS_HTT_MIO_TSC_observable_atlas_SDD_WBS_PR_plan.md"
+          ],
+          "test_links": [
+            {
+              "artifact_refs": [
+                "bass.observable_vector.proxy"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/bass/spectrum/test_fb72_off_diagonal_covariance_skeleton.py::test_fb72_anisotropic_types_produce_nonzero_off_diagonal_blocks",
+              "purpose": "anisotropic structures remain distinguishable from the isotropic null",
+              "test_id": "rotating_types_activate_offdiag_blocks"
+            },
+            {
+              "artifact_refs": [
+                "bass.observable_vector.proxy"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/bass/observational/test_ver2_observable_atlas.py::test_covariance_proxy_and_feature_summary_record_guards",
+              "purpose": "proxy morphology exports explicit caveats rather than invariant claims",
+              "test_id": "proxy_mode_records_no_claim"
+            }
+          ],
+          "theorem_id": "V8_biposh_Lgt0_null_or_proxy_block",
+          "theorem_label": "BiPoSH/off-diagonal morphology must vanish in the isotropic null or stay blocked as proxy-only"
+        },
+        {
+          "artifact_refs": [
+            "validation.injection.template_amplitude"
+          ],
+          "claim_guard": "injection recovery claims require declared null/injection manifests",
+          "implementation_scope": "htt",
+          "no_claim_conditions": [
+            "missing_injection_campaign",
+            "missing_scan_volume"
+          ],
+          "owner": "HTT",
+          "source_docs": [
+            "docs/ver2_upgrade/BASS_HTT_MIO_TSC_observable_atlas_SDD_WBS_PR_plan.md"
+          ],
+          "test_links": [
+            {
+              "artifact_refs": [
+                "validation.injection.template_amplitude"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/src/common/test_mock_calibration.py::TestMockGeneration::test_injected_dipole_reproduces_projection",
+              "purpose": "synthetic injections remain explicitly identified rather than folded into null logic",
+              "test_id": "injected_dipole_projection_recovered"
+            },
+            {
+              "artifact_refs": [
+                "validation.injection.template_amplitude"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/bass/inference/test_fb115_synthetic_injection_skeleton.py::test_fb115_synthetic_injection_coverage_reaches_nominal_band",
+              "purpose": "the synthetic injection bank reports bounded coverage rather than raw best fits",
+              "test_id": "synthetic_injection_coverage_reaches_nominal_band"
+            }
+          ],
+          "theorem_id": "V8_template_injection_recovery",
+          "theorem_label": "deterministic template injections must be tracked with explicit scan-volume metadata"
+        },
+        {
+          "artifact_refs": [
+            "bass.full_cov_mes_report"
+          ],
+          "claim_guard": "rank-deficient covariance upgrades may not be interpreted as weak evidence",
+          "implementation_scope": "bass_py",
+          "no_claim_conditions": [
+            "response_rank_deficient",
+            "missing_covariance_features"
+          ],
+          "owner": "BASS",
+          "source_docs": [
+            "docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md",
+            "docs/ver2_upgrade/audits/AUDIT_SK-04O_2026-04-21.md"
+          ],
+          "test_links": [
+            {
+              "artifact_refs": [
+                "bass.full_cov_mes_report"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/bass/observational/test_ver2_mes_departure.py::test_full_cov_mes_rank_failure_returns_no_claim",
+              "purpose": "rank deficiency blocks covariance claims",
+              "test_id": "mes_rank_failure_returns_no_claim"
+            },
+            {
+              "artifact_refs": [
+                "bass.full_cov_mes_report"
+              ],
+              "category": "regression",
+              "path": "htt/src/common/test_ver2_contract_layer.py::test_full_cov_mes_report_rejects_negative_rank",
+              "purpose": "the shared schema blocks negative-rank regressions at construction time",
+              "test_id": "full_cov_contract_rejects_negative_rank"
+            }
+          ],
+          "theorem_id": "V8_mes_rank_no_claim",
+          "theorem_label": "MES covariance rank failure is an explicit no-claim condition"
+        },
+        {
+          "artifact_refs": [
+            "common.departure_report"
+          ],
+          "claim_guard": "uncertified normalized scores remain Q/proxy surfaces, not F",
+          "implementation_scope": "common",
+          "no_claim_conditions": [
+            "claim_gate_not_passed",
+            "occupancy_not_certified"
+          ],
+          "owner": "COMMON",
+          "source_docs": [
+            "docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md",
+            "docs/ver2_upgrade/audits/AUDIT_SK-04O_2026-04-21.md"
+          ],
+          "test_links": [
+            {
+              "artifact_refs": [
+                "common.departure_report"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/bass/observational/test_ver2_mes_departure.py::test_departure_report_stays_descriptive_without_claim_gate",
+              "purpose": "Q/F semantics stay separated when claim gates are not passed",
+              "test_id": "uncertified_f_downgrades_to_proxy"
+            },
+            {
+              "artifact_refs": [
+                "validation.null.flrw_isotropic_gaussian_lowell"
+              ],
+              "category": "numerical_stability",
+              "path": "htt/src/common/test_mock_calibration.py::TestMockCoverageWithinBounds::test_zoa_null_coverage_within_published_window",
+              "purpose": "published calibration windows remain explicit before any filling language upgrade",
+              "test_id": "mock_coverage_within_published_window"
+            }
+          ],
+          "theorem_id": "V8_filling_requires_certification",
+          "theorem_label": "Filling fraction language requires certification and admissible ceilings"
+        },
+        {
+          "artifact_refs": [
+            "htt.discrimination_matrix"
+          ],
+          "claim_guard": "observer-side local boost may not be promoted to a source/background tilt claim",
+          "implementation_scope": "htt",
+          "no_claim_conditions": [
+            "missing_response_library",
+            "missing_null_ensemble"
+          ],
+          "owner": "HTT",
+          "source_docs": [
+            "docs/ver2_upgrade/BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN_critical_upgraded.md",
+            "docs/ver2_upgrade/audits/AUDIT_SK-06H_2026-04-21.md"
+          ],
+          "test_links": [
+            {
+              "artifact_refs": [
+                "htt.discrimination_matrix"
+              ],
+              "category": "physics_sanity",
+              "path": "htt/htt/tests/test_ver2_local_global_discrimination.py::test_local_boost_and_global_tilt_are_not_merged",
+              "purpose": "the discrimination library keeps observer-side and source-side hypotheses separate",
+              "test_id": "local_boost_and_global_tilt_are_not_merged"
+            },
+            {
+              "artifact_refs": [
+                "htt.directional_shell"
+              ],
+              "category": "adversarial_edge",
+              "path": "htt/htt/tests/test_ver2_directional_shell.py::test_directional_bridge_promotion_gate_is_closed_fail",
+              "purpose": "directional bridge outputs stay blocked until promotion gates are satisfied",
+              "test_id": "directional_promotion_gate_closed"
+            }
+          ],
+          "theorem_id": "V8_local_vs_global_discrimination",
+          "theorem_label": "local boost and global tilt remain distinct discrimination hypotheses"
+        },
+        {
+          "artifact_refs": [
+            "tsc.adequacy_overlay"
+          ],
+          "claim_guard": "TSC remains advisory and quarantines overclaim rather than emitting truth labels",
+          "implementation_scope": "tsc",
+          "no_claim_conditions": [
+            "missing_tsc_overlay",
+            "posterior_correction_attempted"
+          ],
+          "owner": "TSC",
+          "source_docs": [
+            "docs/ver2_upgrade/TSC_active_service_SDD_WBS_PR_plan.md"
+          ],
+          "test_links": [
+            {
+              "artifact_refs": [
+                "tsc.adequacy_overlay"
+              ],
+              "category": "regression",
+              "path": "htt/tsc/audit/test_no_overclaim.py::test_metadata_lint_and_quarantine_reasons",
+              "purpose": "overclaim metadata is converted into quarantine reasons rather than promotions",
+              "test_id": "tsc_quarantine_flags_emitted"
+            },
+            {
+              "artifact_refs": [
+                "tsc.adequacy_overlay"
+              ],
+              "category": "regression",
+              "path": "htt/tsc/validation/test_theorem_map.py::test_theorem_map_covers_source_budget_and_export_claims",
+              "purpose": "TSC theorem coverage stays anchored to source-budget and export claim ceilings",
+              "test_id": "tsc_theorem_map_covers_export_claims"
+            }
+          ],
+          "theorem_id": "V8_tsc_no_overclaim",
+          "theorem_label": "TSC caveat overlays do not promote posterior or runtime ownership"
+        }
+      ]
+    }
+  },
+  "summary": "Executable theorem/campaign registry with five-category coverage and hostile-audit mirrors.",
+  "title": "Validation registry summary",
+  "topic": "equivalence_classes"
+}

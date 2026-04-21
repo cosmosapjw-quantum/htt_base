@@ -1,0 +1,156 @@
+{
+  "allowed_claims": [
+    "exploratory departure-card summary"
+  ],
+  "evidence_refs": [
+    "bass.ver2.export.solver_core_output_tier_b.observable_vector.departure_report"
+  ],
+  "forbidden_claims": [
+    "certified_filling_language",
+    "validated_geometry_claim"
+  ],
+  "manifest": {
+    "artifact_id": "bass.ver2.export.solver_core_output_tier_b.observable_vector.departure_report",
+    "artifact_path": "docs/ver2_upgrade/generated/artifacts/common_ver2_export_departure_report.json",
+    "caveats": [
+      "report_is_descriptive_until_claim_gates_pass",
+      "uncertified_filling_downgraded_to_proxy_score",
+      "observer_reconstruction_bridge_pending"
+    ],
+    "claim_tier": "exploratory",
+    "code_version": "ver2-d1",
+    "config_hash": "c44f0739b60c70de",
+    "created_by": "scripts.ver2_artifact_export.py",
+    "failed_gates": [],
+    "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+    "implementation_scope": "common",
+    "input_hashes": [
+      "species:planck2018",
+      "bass.ver2.export.solver_core_output_tier_b",
+      "bass.ver2.export.solver_core_output_tier_b.observable_vector"
+    ],
+    "owner": "COMMON",
+    "passed_gates": [],
+    "production_status": "diagnostic_only",
+    "required_gates": [],
+    "schema_version": "ver2-v9",
+    "statistics_definitions": {
+      "bianchi_type": "I",
+      "channels": [
+        "TT",
+        "TE",
+        "EE",
+        "BB",
+        "BiPoSH",
+        "template"
+      ],
+      "comparator_policy": "matched",
+      "covariance_representation": "sparse_mode_block_proxy",
+      "ell_max": 4,
+      "local_global_degeneracy": {
+        "distinguishing_observables": [],
+        "offdiag_strength": 0.0,
+        "preferred_axis_present": true,
+        "represented": true,
+        "required_followup": [
+          "atlas_response_overlap",
+          "htt_discrimination_matrix"
+        ],
+        "rotation_strength": 0.0,
+        "status": "not_applicable_isotropic"
+      },
+      "local_global_degeneracy_status": "not_applicable_isotropic",
+      "scan_volume_hash": "51fad743a07092f7",
+      "sky_support": {
+        "mask_hash": "mask-ver2-d1",
+        "mock_coverage_status": "adequate",
+        "scan_volume_hash": "scan-ver2-d1",
+        "selection_mode": "mock_calibrated",
+        "sky_support_hash": "sky-ver2-d1"
+      },
+      "surface": "DepartureReport"
+    }
+  },
+  "notes": [
+    "report_is_descriptive_until_claim_gates_pass",
+    "uncertified_filling_downgraded_to_proxy_score",
+    "observer_reconstruction_bridge_pending",
+    "TSC source-side checks are available, but propagation validation is still pending for TT, EE, TE. BB remains outside trace-only validation."
+  ],
+  "payload": {
+    "F_status": "linear_proxy_score",
+    "F_value": 0.6,
+    "G_values": {
+      "ceiling": 0.18,
+      "morphology": 0.32
+    },
+    "Q_value": 0.6,
+    "manifest": {
+      "artifact_id": "bass.ver2.export.solver_core_output_tier_b.observable_vector.departure_report",
+      "artifact_path": "docs/ver2_upgrade/generated/artifacts/common_ver2_export_departure_report.json",
+      "caveats": [
+        "report_is_descriptive_until_claim_gates_pass",
+        "uncertified_filling_downgraded_to_proxy_score",
+        "observer_reconstruction_bridge_pending"
+      ],
+      "claim_tier": "exploratory",
+      "code_version": "ver2-d1",
+      "config_hash": "c44f0739b60c70de",
+      "created_by": "scripts.ver2_artifact_export.py",
+      "failed_gates": [],
+      "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+      "implementation_scope": "common",
+      "input_hashes": [
+        "species:planck2018",
+        "bass.ver2.export.solver_core_output_tier_b",
+        "bass.ver2.export.solver_core_output_tier_b.observable_vector"
+      ],
+      "owner": "COMMON",
+      "passed_gates": [],
+      "production_status": "diagnostic_only",
+      "required_gates": [],
+      "schema_version": "ver2-v9",
+      "statistics_definitions": {
+        "bianchi_type": "I",
+        "channels": [
+          "TT",
+          "TE",
+          "EE",
+          "BB",
+          "BiPoSH",
+          "template"
+        ],
+        "comparator_policy": "matched",
+        "covariance_representation": "sparse_mode_block_proxy",
+        "ell_max": 4,
+        "local_global_degeneracy": {
+          "distinguishing_observables": [],
+          "offdiag_strength": 0.0,
+          "preferred_axis_present": true,
+          "represented": true,
+          "required_followup": [
+            "atlas_response_overlap",
+            "htt_discrimination_matrix"
+          ],
+          "rotation_strength": 0.0,
+          "status": "not_applicable_isotropic"
+        },
+        "local_global_degeneracy_status": "not_applicable_isotropic",
+        "scan_volume_hash": "51fad743a07092f7",
+        "sky_support": {
+          "mask_hash": "mask-ver2-d1",
+          "mock_coverage_status": "adequate",
+          "scan_volume_hash": "scan-ver2-d1",
+          "selection_mode": "mock_calibrated",
+          "sky_support_hash": "sky-ver2-d1"
+        },
+        "surface": "DepartureReport"
+      }
+    },
+    "tsc_overlay_ref": "tsc.ver2.export.overlay",
+    "x_value": 0.6
+  },
+  "summary": "x/Q/Pi/F/G card remains descriptive because claim gates are intentionally not passed.",
+  "title": "Departure card",
+  "topic": "departure_cards"
+}

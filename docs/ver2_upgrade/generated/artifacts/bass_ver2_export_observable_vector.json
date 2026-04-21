@@ -1,0 +1,238 @@
+{
+  "allowed_claims": [
+    "manifest-backed channel availability summary",
+    "proxy morphology summary with explicit caveats"
+  ],
+  "evidence_refs": [
+    "bass.ver2.export.solver_core_output_tier_b.observable_vector"
+  ],
+  "forbidden_claims": [
+    "validated_biposh_detection",
+    "posterior_or_evidence_claim"
+  ],
+  "manifest": {
+    "artifact_id": "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+    "artifact_path": "docs/ver2_upgrade/generated/artifacts/bass_ver2_export_observable_vector.json",
+    "caveats": [
+      "diagonal_cl_not_sufficient_for_directional_claims",
+      "no_posterior_or_evidence_semantics",
+      "proxy_morphology_not_full_biposh",
+      "observer_reconstruction_bridge_pending"
+    ],
+    "claim_tier": "conditional",
+    "code_version": "ver2-d1",
+    "config_hash": "c44f0739b60c70de",
+    "created_by": "scripts.ver2_artifact_export.py",
+    "failed_gates": [],
+    "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+    "implementation_scope": "bass_py",
+    "input_hashes": [
+      "species:planck2018",
+      "bass.ver2.export.solver_core_output_tier_b"
+    ],
+    "owner": "BASS",
+    "passed_gates": [
+      "covariance_features_present",
+      "sky_support_mock_calibrated",
+      "covariance_psd_guard",
+      "covariance_symmetry_guard",
+      "covariance_invariant_guard"
+    ],
+    "production_status": "production_candidate",
+    "required_gates": [
+      "covariance_features_present",
+      "sky_support_mock_calibrated",
+      "covariance_psd_guard",
+      "covariance_symmetry_guard",
+      "covariance_invariant_guard"
+    ],
+    "schema_version": "ver2-v9",
+    "statistics_definitions": {
+      "bianchi_type": "I",
+      "channels": [
+        "TT",
+        "TE",
+        "EE",
+        "BB",
+        "BiPoSH",
+        "template"
+      ],
+      "covariance_representation": "sparse_mode_block_proxy",
+      "ell_max": 4,
+      "local_global_degeneracy": {
+        "distinguishing_observables": [],
+        "offdiag_strength": 0.0,
+        "preferred_axis_present": true,
+        "represented": true,
+        "required_followup": [
+          "atlas_response_overlap",
+          "htt_discrimination_matrix"
+        ],
+        "rotation_strength": 0.0,
+        "status": "not_applicable_isotropic"
+      },
+      "scan_volume_hash": "51fad743a07092f7",
+      "sky_support": {
+        "mask_hash": "mask-ver2-d1",
+        "mock_coverage_status": "adequate",
+        "scan_volume_hash": "scan-ver2-d1",
+        "selection_mode": "mock_calibrated",
+        "sky_support_hash": "sky-ver2-d1"
+      },
+      "surface": "ObservableVector"
+    }
+  },
+  "notes": [
+    "diagonal_cl_not_sufficient_for_directional_claims",
+    "no_posterior_or_evidence_semantics",
+    "proxy_morphology_not_full_biposh",
+    "observer_reconstruction_bridge_pending"
+  ],
+  "payload": {
+    "channels": [
+      "TT",
+      "TE",
+      "EE",
+      "BB",
+      "BiPoSH",
+      "template"
+    ],
+    "covariance_features": {
+      "anisotropy_tensor_tracefree": true,
+      "caveats": [
+        "mode_block_proxy_not_full_biposh"
+      ],
+      "frobenius_offdiag_norms": {
+        "BB": 0.0,
+        "EE": 0.0,
+        "TE": 0.0,
+        "TT": 0.0
+      },
+      "harmonic_convention": "m_explicit",
+      "invariant_guard": {
+        "anisotropy_tensor_symmetric": true,
+        "anisotropy_tensor_trace": 0.0,
+        "anisotropy_tensor_tracefree": true,
+        "offdiag_strength_nonnegative": true,
+        "passed": true,
+        "preferred_axis_is_unit": true,
+        "preferred_axis_norm": 1.0,
+        "rotation_strength_nonnegative": true,
+        "tolerance": 1e-12
+      },
+      "local_global_degeneracy": {
+        "distinguishing_observables": [],
+        "offdiag_strength": 0.0,
+        "preferred_axis_present": true,
+        "represented": true,
+        "required_followup": [
+          "atlas_response_overlap",
+          "htt_discrimination_matrix"
+        ],
+        "rotation_strength": 0.0,
+        "status": "not_applicable_isotropic"
+      },
+      "null_proxy_status": "consistent_with_isotropic_null",
+      "offdiag_strength": 0.0,
+      "psd_guard": {
+        "bb_min_eig": 0.0,
+        "ee_min_eig": 0.0,
+        "passed": true,
+        "te_joint_min_eig": 0.0,
+        "tolerance": 1e-12,
+        "tt_min_eig": 0.0
+      },
+      "representation": "sparse_mode_block_proxy",
+      "rotation_strength": 0.0,
+      "sparse_index_count": 0,
+      "structure_label": "I",
+      "supports_full_biposh": false,
+      "symmetry_guard": {
+        "bb_max_asymmetry": 0.0,
+        "ee_max_asymmetry": 0.0,
+        "passed": true,
+        "te_max_asymmetry": 0.0,
+        "tolerance": 1e-12,
+        "tt_max_asymmetry": 0.0
+      }
+    },
+    "ell_max": 4,
+    "manifest": {
+      "artifact_id": "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+      "artifact_path": "docs/ver2_upgrade/generated/artifacts/bass_ver2_export_observable_vector.json",
+      "caveats": [
+        "diagonal_cl_not_sufficient_for_directional_claims",
+        "no_posterior_or_evidence_semantics",
+        "proxy_morphology_not_full_biposh",
+        "observer_reconstruction_bridge_pending"
+      ],
+      "claim_tier": "conditional",
+      "code_version": "ver2-d1",
+      "config_hash": "c44f0739b60c70de",
+      "created_by": "scripts.ver2_artifact_export.py",
+      "failed_gates": [],
+      "git_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693",
+      "implementation_scope": "bass_py",
+      "input_hashes": [
+        "species:planck2018",
+        "bass.ver2.export.solver_core_output_tier_b"
+      ],
+      "owner": "BASS",
+      "passed_gates": [
+        "covariance_features_present",
+        "sky_support_mock_calibrated",
+        "covariance_psd_guard",
+        "covariance_symmetry_guard",
+        "covariance_invariant_guard"
+      ],
+      "production_status": "production_candidate",
+      "required_gates": [
+        "covariance_features_present",
+        "sky_support_mock_calibrated",
+        "covariance_psd_guard",
+        "covariance_symmetry_guard",
+        "covariance_invariant_guard"
+      ],
+      "schema_version": "ver2-v9",
+      "statistics_definitions": {
+        "bianchi_type": "I",
+        "channels": [
+          "TT",
+          "TE",
+          "EE",
+          "BB",
+          "BiPoSH",
+          "template"
+        ],
+        "covariance_representation": "sparse_mode_block_proxy",
+        "ell_max": 4,
+        "local_global_degeneracy": {
+          "distinguishing_observables": [],
+          "offdiag_strength": 0.0,
+          "preferred_axis_present": true,
+          "represented": true,
+          "required_followup": [
+            "atlas_response_overlap",
+            "htt_discrimination_matrix"
+          ],
+          "rotation_strength": 0.0,
+          "status": "not_applicable_isotropic"
+        },
+        "scan_volume_hash": "51fad743a07092f7",
+        "sky_support": {
+          "mask_hash": "mask-ver2-d1",
+          "mock_coverage_status": "adequate",
+          "scan_volume_hash": "scan-ver2-d1",
+          "selection_mode": "mock_calibrated",
+          "sky_support_hash": "sky-ver2-d1"
+        },
+        "surface": "ObservableVector"
+      }
+    },
+    "null_proxy_status": "consistent_with_isotropic_null",
+    "unique_index_count": 0
+  },
+  "summary": "BASS low-ell observable substrate with explicit sparse covariance proxy semantics.",
+  "title": "Observable vector proxy",
+  "topic": "scalar_to_morphology"
+}

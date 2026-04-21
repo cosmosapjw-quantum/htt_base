@@ -1,0 +1,171 @@
+[
+  {
+    "allowed_claims": [
+      "theory-side response overlap summary"
+    ],
+    "artifact_id": "bass.ver2.export.solver_core_output_tier_b.atlas_lite",
+    "claim_tier": "conditional",
+    "evidence_refs": [
+      "bass.ver2.export.solver_core_output_tier_b.atlas_lite"
+    ],
+    "forbidden_claims": [
+      "observational_data_claim",
+      "posterior_update_claim"
+    ],
+    "notes": [
+      "theory_side_substrate_not_observational_data",
+      "interpolation_only_not_posterior_update",
+      "local_global_degeneracy_requires_htt_discrimination"
+    ],
+    "owner": "BASS",
+    "source_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693"
+  },
+  {
+    "allowed_claims": [
+      "conditional morphology ceiling summary"
+    ],
+    "artifact_id": "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy",
+    "claim_tier": "conditional",
+    "evidence_refs": [
+      "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+    ],
+    "forbidden_claims": [
+      "weak_evidence_promotion_from_rank_failure"
+    ],
+    "notes": [
+      "rank_failure_returns_no_claim_not_weak_evidence",
+      "covariance_upgrade_is_descriptive_until_validation_packet"
+    ],
+    "owner": "BASS",
+    "source_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693"
+  },
+  {
+    "allowed_claims": [
+      "manifest-backed channel availability summary",
+      "proxy morphology summary with explicit caveats"
+    ],
+    "artifact_id": "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+    "claim_tier": "conditional",
+    "evidence_refs": [
+      "bass.ver2.export.solver_core_output_tier_b.observable_vector"
+    ],
+    "forbidden_claims": [
+      "validated_biposh_detection",
+      "posterior_or_evidence_claim"
+    ],
+    "notes": [
+      "diagonal_cl_not_sufficient_for_directional_claims",
+      "no_posterior_or_evidence_semantics",
+      "proxy_morphology_not_full_biposh",
+      "observer_reconstruction_bridge_pending"
+    ],
+    "owner": "BASS",
+    "source_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693"
+  },
+  {
+    "allowed_claims": [
+      "exploratory departure-card summary"
+    ],
+    "artifact_id": "bass.ver2.export.solver_core_output_tier_b.observable_vector.departure_report",
+    "claim_tier": "exploratory",
+    "evidence_refs": [
+      "bass.ver2.export.solver_core_output_tier_b.observable_vector.departure_report"
+    ],
+    "forbidden_claims": [
+      "certified_filling_language",
+      "validated_geometry_claim"
+    ],
+    "notes": [
+      "report_is_descriptive_until_claim_gates_pass",
+      "uncertified_filling_downgraded_to_proxy_score",
+      "observer_reconstruction_bridge_pending",
+      "TSC source-side checks are available, but propagation validation is still pending for TT, EE, TE. BB remains outside trace-only validation."
+    ],
+    "owner": "COMMON",
+    "source_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693"
+  },
+  {
+    "allowed_claims": [
+      "exploratory validation coverage summary"
+    ],
+    "artifact_id": "common.ver2.validation_registry_summary",
+    "claim_tier": "exploratory",
+    "evidence_refs": [
+      "common.ver2.validation_registry_summary"
+    ],
+    "forbidden_claims": [
+      "validated_science_gate_from_warn_campaigns"
+    ],
+    "notes": [
+      "warn_campaigns_remain_no_claim"
+    ],
+    "owner": "COMMON",
+    "source_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693"
+  },
+  {
+    "allowed_claims": [
+      "exploratory degeneracy summary"
+    ],
+    "artifact_id": "htt.ver2.export.discrimination_matrix",
+    "claim_tier": "exploratory",
+    "evidence_refs": [
+      "htt.ver2.export.discrimination_matrix"
+    ],
+    "forbidden_claims": [
+      "posterior_odds_claim",
+      "global_tilt_confirmation"
+    ],
+    "notes": [
+      "diagnostic_only",
+      "observer_vs_source_not_posterior_odds",
+      "local_global_degeneracy_summary"
+    ],
+    "owner": "HTT",
+    "source_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693"
+  },
+  {
+    "allowed_claims": [
+      "conditional residual-atlas comparison summary"
+    ],
+    "artifact_id": "mio.predictive_residuals.certificate",
+    "claim_tier": "conditional",
+    "evidence_refs": [
+      "mio.predictive_residuals.certificate"
+    ],
+    "forbidden_claims": [
+      "truth_certificate_claim",
+      "posterior_claim"
+    ],
+    "notes": [
+      "Predictive residual atlas is a diagnostic model/data comparison surface; it must not be merged with HTT posterior evidence or reinterpreted as a truth certificate.",
+      "public_grade=production-grade",
+      "production_status=production_candidate",
+      "tsc_domain_status=valid_one_field",
+      "tsc_trace_source_adequacy=adequate",
+      "tsc_upgrade_hint=stable_no_upgrade",
+      "tsc_overlay_diagnostic_only"
+    ],
+    "owner": "MIO",
+    "source_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693"
+  },
+  {
+    "allowed_claims": [
+      "conditional adequacy caveat summary"
+    ],
+    "artifact_id": "tsc.ver2.export.overlay",
+    "claim_tier": "conditional",
+    "evidence_refs": [
+      "tsc.ver2.export.overlay"
+    ],
+    "forbidden_claims": [
+      "runtime_allow_block_claim",
+      "posterior_correction_claim"
+    ],
+    "notes": [
+      "advisory_only",
+      "no_runtime_decision_ownership"
+    ],
+    "owner": "TSC",
+    "source_commit": "395b2786d33cd6c9cc56d30eb2479cef120bc693"
+  }
+]
