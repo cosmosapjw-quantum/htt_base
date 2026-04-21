@@ -32,7 +32,13 @@ from bass.runtime.ver2_execution import (
     execute_tier_a_validation_solver,
     execute_tier_b_solver,
     execute_tier_b_lowell_solver,
+    resume_tier_b_solver_from_checkpoint,
     plan_solver_execution,
+)
+from bass.runtime.ver2_checkpoint import (
+    TierBCheckpointRecord,
+    checkpoint_path_from_template,
+    load_tier_b_restart_checkpoint,
 )
 
 __all__ = [
@@ -63,4 +69,8 @@ __all__ = [
     "execute_tier_b_solver",
     "plan_solver_execution",
     "execute_tier_b_lowell_solver",
+    "resume_tier_b_solver_from_checkpoint",
+    "TierBCheckpointRecord",
+    "checkpoint_path_from_template",
+    "load_tier_b_restart_checkpoint",
 ]

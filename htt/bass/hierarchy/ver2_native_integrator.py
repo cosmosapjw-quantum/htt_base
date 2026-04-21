@@ -16,6 +16,7 @@ but it is no longer the production owner of the VER2 Tier-B route.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from collections.abc import Callable
 from typing import Optional
 
 import numpy as np
@@ -63,6 +64,7 @@ from bass.species.tilted import TiltedSpeciesBackground, rapidity_to_velocity
 
 __all__ = [
     "Ver2TierBIntegrator",
+    "NativeTierBRestartState",
 ]
 
 
@@ -238,6 +240,39 @@ class _SeededInitialState:
             raise ValueError(
                 f"neutrino_tower L={self.neutrino_tower.L} must match photon_T L={self.photon_T.L}"
             )
+
+
+@dataclass(frozen=True)
+class NativeTierBRestartState:
+    """Checkpoint-backed restart state for the native Tier-B integrator."""
+
+    step_index: int
+    eta_restart: float
+    state_vector: np.ndarray
+    eta_prefix: np.ndarray
+    photon_T_prefix: np.ndarray
+    photon_E_prefix: np.ndarray
+    neutrino_tower_prefix: np.ndarray
+
+    def __post_init__(self) -> None:
+        if self.step_index < 0:
+            raise ValueError("step_index must be non-negative")
+        if not np.isfinite(self.eta_restart):
+            raise ValueError("eta_restart must be finite")
+        state = np.asarray(self.state_vector, dtype=np.float64)
+        if state.ndim != 1:
+            raise ValueError("state_vector must be 1-D")
+        eta_prefix = np.asarray(self.eta_prefix, dtype=np.float64)
+        if eta_prefix.ndim != 1 or eta_prefix.size != self.step_index + 1:
+            raise ValueError("eta_prefix length must equal step_index + 1")
+        for name, value in (
+            ("photon_T_prefix", self.photon_T_prefix),
+            ("photon_E_prefix", self.photon_E_prefix),
+            ("neutrino_tower_prefix", self.neutrino_tower_prefix),
+        ):
+            arr = np.asarray(value, dtype=np.float64)
+            if arr.ndim != 2 or arr.shape[0] != eta_prefix.size:
+                raise ValueError(f"{name} must have shape (len(eta_prefix), n_state)")
 
 
 def _pack_radiation_state(
@@ -630,22 +665,23 @@ class Ver2TierBIntegrator:
                 mask[i] = gamma / H > self.config.gamma_T_over_H_threshold
         return mask
 
-    def run(self) -> IntegrationResult:
-        y0 = self.initial_state()
-        eta_out = np.linspace(
-            self.config.eta_initial_mpc,
-            self.config.eta_final_mpc,
-            self.config.n_output,
-        )
+    def _solve_segment(
+        self,
+        *,
+        eta_start: float,
+        eta_stop: float,
+        y0: np.ndarray,
+        eta_eval: np.ndarray,
+        tca_tracker: list[bool],
+    ):
         max_step = (
             self.config.eta_final_mpc - self.config.eta_initial_mpc
         ) / 1000.0
-        tca_tracker: list[bool] = []
         sol = solve_ivp(
             lambda eta, y: self._rhs(eta, y, tca_tracker=tca_tracker),
-            (self.config.eta_initial_mpc, self.config.eta_final_mpc),
-            y0,
-            t_eval=eta_out,
+            (float(eta_start), float(eta_stop)),
+            np.asarray(y0, dtype=np.float64),
+            t_eval=np.asarray(eta_eval, dtype=np.float64),
             method=self.config.solver_method,
             rtol=self.config.rtol,
             atol=self.config.atol,
@@ -655,11 +691,24 @@ class Ver2TierBIntegrator:
             raise RuntimeError(f"solve_ivp failed: {sol.message} at η={sol.t[-1]}")
         if np.any(~np.isfinite(sol.y)):
             raise RuntimeError("solve_ivp produced non-finite entries in VER2 native Tier-B core")
+        return sol
 
-        tower_size = (self.config.L_max + 1) ** 2
-        photon_T_tower = np.asarray(sol.y[:tower_size].T, dtype=np.float64)
-        photon_E_tower = np.asarray(sol.y[tower_size : 2 * tower_size].T, dtype=np.float64)
-        neutrino_tower = np.asarray(sol.y[2 * tower_size :].T, dtype=np.float64)
+    def _build_result(
+        self,
+        *,
+        eta: np.ndarray,
+        photon_T_tower: np.ndarray,
+        photon_E_tower: np.ndarray,
+        neutrino_tower: np.ndarray,
+        nfev: int,
+        njev: int,
+        nlu: int,
+        status: int,
+        message: str,
+        tca_tracker: list[bool],
+        checkpoint_write_count: int = 0,
+        restart_used: bool = False,
+    ) -> IntegrationResult:
         neutrino_reduced = np.asarray(
             [
                 _reduced_summary_from_neutrino_tower(
@@ -669,18 +718,19 @@ class Ver2TierBIntegrator:
             ],
             dtype=np.float64,
         )
-        a_arr, sigma_plus, sigma_minus = self._background_projection(np.asarray(sol.t, dtype=np.float64))
-        tca_mask = self._compute_tca_mask(np.asarray(sol.t, dtype=np.float64))
+        eta_arr = np.asarray(eta, dtype=np.float64)
+        a_arr, sigma_plus, sigma_minus = self._background_projection(eta_arr)
+        tca_mask = self._compute_tca_mask(eta_arr)
 
         from bass.hierarchy.event_detection import detect_critical_events
 
         events = detect_critical_events(self.species, self.species.bg_table)
         solver_info = {
-            "nfev": int(sol.nfev),
-            "njev": int(sol.njev),
-            "nlu": int(sol.nlu),
-            "status": int(sol.status),
-            "message": str(sol.message),
+            "nfev": int(nfev),
+            "njev": int(njev),
+            "nlu": int(nlu),
+            "status": int(status),
+            "message": str(message),
             "solver_method": str(self.config.solver_method),
             "tca_tracker_len": len(tca_tracker),
             "tca_tracker_any_active": any(tca_tracker),
@@ -692,18 +742,141 @@ class Ver2TierBIntegrator:
             "startup_manifold_applied": bool(self.startup_state is not None),
             "startup_gate_selected": bool(self.startup_gate.startup_selected if self.startup_gate is not None else False),
             "neutrino_hierarchy_mode": "full_pstf_with_reduced_summary_export",
+            "checkpoint_write_count": int(checkpoint_write_count),
+            "restart_used": bool(restart_used),
         }
         return IntegrationResult(
-            eta=np.asarray(sol.t, dtype=np.float64),
+            eta=eta_arr,
             a=a_arr,
             Sigma_plus=sigma_plus,
             Sigma_minus=sigma_minus,
-            photon_T_tower=photon_T_tower,
-            photon_E_tower=photon_E_tower,
+            photon_T_tower=np.asarray(photon_T_tower, dtype=np.float64),
+            photon_E_tower=np.asarray(photon_E_tower, dtype=np.float64),
             neutrino_reduced=neutrino_reduced,
             critical_events=events,
             config=self.config,
             solver_info=solver_info,
             tca_active_mask=tca_mask,
-            neutrino_tower=neutrino_tower,
+            neutrino_tower=np.asarray(neutrino_tower, dtype=np.float64),
+        )
+
+    def run(
+        self,
+        *,
+        checkpoint_every_n_steps: int | None = None,
+        checkpoint_callback: Callable[[NativeTierBRestartState], None] | None = None,
+        restart_state: NativeTierBRestartState | None = None,
+    ) -> IntegrationResult:
+        eta_out = np.linspace(
+            self.config.eta_initial_mpc,
+            self.config.eta_final_mpc,
+            self.config.n_output,
+        )
+        tower_size = (self.config.L_max + 1) ** 2
+        tca_tracker: list[bool] = []
+
+        if restart_state is None:
+            y_current = self.initial_state()
+            current_index = 0
+            eta_segments: list[np.ndarray] = []
+            photon_T_segments: list[np.ndarray] = []
+            photon_E_segments: list[np.ndarray] = []
+            neutrino_segments: list[np.ndarray] = []
+        else:
+            if self.startup_gate is None or self.seed_projection is None:
+                _ = self.initial_state()
+            y_current = np.asarray(restart_state.state_vector, dtype=np.float64)
+            current_index = int(restart_state.step_index)
+            if current_index >= eta_out.size:
+                raise ValueError("restart_state.step_index exceeds eta grid")
+            if not np.isclose(float(eta_out[current_index]), float(restart_state.eta_restart)):
+                raise ValueError("restart_state eta does not match the runtime eta grid")
+            eta_segments = [np.asarray(restart_state.eta_prefix, dtype=np.float64)]
+            photon_T_segments = [np.asarray(restart_state.photon_T_prefix, dtype=np.float64)]
+            photon_E_segments = [np.asarray(restart_state.photon_E_prefix, dtype=np.float64)]
+            neutrino_segments = [np.asarray(restart_state.neutrino_tower_prefix, dtype=np.float64)]
+
+        nfev = 0
+        njev = 0
+        nlu = 0
+        status = 0
+        message = "The solver successfully reached the end of the integration interval."
+        checkpoint_write_count = 0
+
+        if checkpoint_every_n_steps is None or checkpoint_every_n_steps <= 0:
+            if current_index < eta_out.size - 1:
+                sol = self._solve_segment(
+                    eta_start=float(eta_out[current_index]),
+                    eta_stop=float(eta_out[-1]),
+                    y0=y_current,
+                    eta_eval=eta_out[current_index:],
+                    tca_tracker=tca_tracker,
+                )
+                nfev += int(sol.nfev)
+                njev += int(sol.njev)
+                nlu += int(sol.nlu)
+                status = int(sol.status)
+                message = str(sol.message)
+                start_offset = 0 if len(eta_segments) == 0 else 1
+                eta_segments.append(np.asarray(sol.t, dtype=np.float64)[start_offset:])
+                photon_T_segments.append(np.asarray(sol.y[:tower_size].T, dtype=np.float64)[start_offset:])
+                photon_E_segments.append(
+                    np.asarray(sol.y[tower_size : 2 * tower_size].T, dtype=np.float64)[start_offset:]
+                )
+                neutrino_segments.append(
+                    np.asarray(sol.y[2 * tower_size :].T, dtype=np.float64)[start_offset:]
+                )
+        else:
+            while current_index < eta_out.size - 1:
+                next_index = min(current_index + int(checkpoint_every_n_steps), eta_out.size - 1)
+                sol = self._solve_segment(
+                    eta_start=float(eta_out[current_index]),
+                    eta_stop=float(eta_out[next_index]),
+                    y0=y_current,
+                    eta_eval=eta_out[current_index : next_index + 1],
+                    tca_tracker=tca_tracker,
+                )
+                nfev += int(sol.nfev)
+                njev += int(sol.njev)
+                nlu += int(sol.nlu)
+                status = int(sol.status)
+                message = str(sol.message)
+                start_offset = 0 if len(eta_segments) == 0 else 1
+                eta_chunk = np.asarray(sol.t, dtype=np.float64)[start_offset:]
+                photon_T_chunk = np.asarray(sol.y[:tower_size].T, dtype=np.float64)[start_offset:]
+                photon_E_chunk = np.asarray(sol.y[tower_size : 2 * tower_size].T, dtype=np.float64)[start_offset:]
+                neutrino_chunk = np.asarray(sol.y[2 * tower_size :].T, dtype=np.float64)[start_offset:]
+                eta_segments.append(eta_chunk)
+                photon_T_segments.append(photon_T_chunk)
+                photon_E_segments.append(photon_E_chunk)
+                neutrino_segments.append(neutrino_chunk)
+                y_current = np.asarray(sol.y[:, -1], dtype=np.float64)
+                current_index = next_index
+                if checkpoint_callback is not None and current_index < eta_out.size - 1:
+                    checkpoint_write_count += 1
+                    checkpoint_callback(
+                        NativeTierBRestartState(
+                            step_index=current_index,
+                            eta_restart=float(eta_out[current_index]),
+                            state_vector=y_current.copy(),
+                            eta_prefix=np.concatenate(eta_segments, axis=0),
+                            photon_T_prefix=np.vstack(photon_T_segments),
+                            photon_E_prefix=np.vstack(photon_E_segments),
+                            neutrino_tower_prefix=np.vstack(neutrino_segments),
+                        )
+                    )
+
+        return self._build_result(
+            eta=np.concatenate(eta_segments, axis=0),
+            photon_T_tower=np.vstack(photon_T_segments),
+            photon_E_tower=np.vstack(photon_E_segments),
+            neutrino_tower=np.vstack(neutrino_segments),
+            nfev=nfev,
+            njev=njev,
+            nlu=nlu,
+            status=status,
+            message=message,
+            tca_tracker=tca_tracker,
+            checkpoint_write_count=checkpoint_write_count,
+            restart_used=(restart_state is not None),
         )

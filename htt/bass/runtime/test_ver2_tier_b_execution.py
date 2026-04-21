@@ -23,6 +23,8 @@ from bass.runtime import (
     SolverTier,
     execute_tier_b_solver,
     execute_tier_b_lowell_solver,
+    load_tier_b_restart_checkpoint,
+    resume_tier_b_solver_from_checkpoint,
 )
 from bass.spectrum import CutoffCampaignSpec
 from bass.species.registry import SpeciesBackgroundRegistry
@@ -89,6 +91,17 @@ def _feature_flags() -> SolverFeatureFlags:
     )
 
 
+def _checkpoint_feature_flags() -> SolverFeatureFlags:
+    return SolverFeatureFlags(
+        background_dynamics=FeatureStatus.APPROXIMATE,
+        photon_transport=FeatureStatus.APPROXIMATE,
+        thomson_collision=FeatureStatus.APPROXIMATE,
+        visibility_history=FeatureStatus.APPROXIMATE,
+        source_propagator=FeatureStatus.APPROXIMATE,
+        checkpoint_restart=FeatureStatus.APPROXIMATE,
+    )
+
+
 def _integrator_config() -> IntegratorConfig:
     return IntegratorConfig(
         L_max=4,
@@ -103,6 +116,28 @@ def _integrator_config() -> IntegratorConfig:
         ),
         gamma_T_over_H_threshold=100.0,
         gamma_T_override=lambda eta: 1.0e15,
+    )
+
+
+def _checkpoint_runtime_controls(path_template: str) -> RuntimeControlBlock:
+    return RuntimeControlBlock(
+        tier=SolverTier.TIER_B_PSTF,
+        integrator_family=IntegratorFamily.IMEX_SPLIT,
+        coupling_mode=CouplingMode.BACKGROUND_THEN_RADIATION,
+        multipole_cutoff=4,
+        rtol=1.0e-6,
+        atol=1.0e-9,
+        checkpoint=CheckpointPolicy(
+            enabled=True,
+            every_n_steps=4,
+            path_template=path_template,
+        ),
+        constraint_projection=ConstraintProjectionPolicy(
+            enabled=True,
+            every_n_steps=4,
+            status=FeatureStatus.APPROXIMATE,
+        ),
+        random_seed=42,
     )
 
 
@@ -241,3 +276,94 @@ def test_execute_tier_b_solver_injects_seed_even_without_startup_manifold() -> N
     assert initial_T.tensors[1].components[1] != 0.0
     assert initial_T.tensors[2].components[2] != 0.0
     assert initial_E.tensors[2].components[2] != 0.0
+
+
+def test_tier_b_checkpoint_resume_reproduces_checkpointed_run(tmp_path) -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018()
+    path_template = str(tmp_path / "checkpoint_step_{step}.npz")
+    controls = _checkpoint_runtime_controls(path_template)
+    kwargs = dict(
+        manifest=_manifest(),
+        bianchi_type="I",
+        species=species,
+        integrator_config=_integrator_config(),
+        runtime_controls=controls,
+        feature_flags=_checkpoint_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+    full_run = execute_tier_b_solver(**kwargs)
+
+    checkpoint_paths = tuple(full_run.integration_result.solver_info["checkpoint_paths"])
+    assert checkpoint_paths
+    mid_checkpoint = checkpoint_paths[0]
+    checkpoint = load_tier_b_restart_checkpoint(mid_checkpoint)
+    assert checkpoint.step_index == 4
+    assert checkpoint.structure_label == "I"
+    np.testing.assert_allclose(checkpoint.structure_n_diag, np.array([0.0, 0.0, 0.0]))
+    assert checkpoint.structure_a_twist == 0.0
+    assert checkpoint.tilt_rapidity == 0.0
+    np.testing.assert_allclose(checkpoint.tilt_direction, np.array([1.0, 0.0, 0.0]))
+    assert checkpoint.direction_convention == "propagation_direction"
+    assert checkpoint.n_output == 12
+    assert checkpoint.solver_method == "BDF"
+    resumed = resume_tier_b_solver_from_checkpoint(
+        checkpoint_path=mid_checkpoint,
+        **kwargs,
+    )
+
+    np.testing.assert_allclose(
+        full_run.integration_result.eta,
+        resumed.integration_result.eta,
+    )
+    np.testing.assert_allclose(
+        full_run.integration_result.photon_T_tower,
+        resumed.integration_result.photon_T_tower,
+    )
+    np.testing.assert_allclose(
+        full_run.integration_result.photon_E_tower,
+        resumed.integration_result.photon_E_tower,
+    )
+    np.testing.assert_allclose(
+        np.asarray(full_run.solver_output.alm_T["values"], dtype=np.float64),
+        np.asarray(resumed.solver_output.alm_T["values"], dtype=np.float64),
+    )
+    assert resumed.integration_result.solver_info["restart_used"] is True
+    assert resumed.solver_output.metadata["restart_used"] is True
+
+
+def test_tier_b_checkpoint_rejects_tilt_metadata_mismatch(tmp_path) -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018()
+    path_template = str(tmp_path / "checkpoint_step_{step}.npz")
+    controls = _checkpoint_runtime_controls(path_template)
+    base_config = _integrator_config()
+    full_run = execute_tier_b_solver(
+        manifest=_manifest(),
+        bianchi_type="I",
+        species=species,
+        integrator_config=base_config,
+        runtime_controls=controls,
+        feature_flags=_checkpoint_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+    checkpoint_path = tuple(full_run.integration_result.solver_info["checkpoint_paths"])[0]
+
+    mismatched_config = _integrator_config()
+    mismatched_config.bianchi_cosmo = BianchiCosmology(
+        structure=get_type("I"),
+        beta=0.05,
+        v_hat_e=(0.0, 1.0, 0.0),
+    )
+    with pytest.raises(ValueError, match="tilt_rapidity|tilt_direction"):
+        resume_tier_b_solver_from_checkpoint(
+            checkpoint_path=checkpoint_path,
+            manifest=_manifest(),
+            bianchi_type="I",
+            species=species,
+            integrator_config=mismatched_config,
+            runtime_controls=controls,
+            feature_flags=_checkpoint_feature_flags(),
+            release=_release(),
+            k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+        )

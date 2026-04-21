@@ -32,6 +32,7 @@ __all__ = [
     "plan_solver_execution",
     "execute_tier_a_validation_solver",
     "execute_tier_b_solver",
+    "resume_tier_b_solver_from_checkpoint",
     "execute_tier_b_lowell_solver",
     "compare_tier_a_to_tier_b",
 ]
@@ -772,6 +773,104 @@ def _campaign_runner(
     return runner
 
 
+def _checkpoint_writer(
+    *,
+    path_template: str,
+    bianchi_type: str,
+    runtime_config: "IntegratorConfig",
+    direction_convention: str,
+    L_max: int,
+):
+    from bass.runtime.ver2_checkpoint import (
+        checkpoint_path_from_template,
+        write_tier_b_restart_checkpoint,
+    )
+
+    written_paths: list[str] = []
+
+    def writer(restart_state):
+        path = checkpoint_path_from_template(
+            path_template,
+            step=int(restart_state.step_index),
+            eta=float(restart_state.eta_restart),
+        )
+        write_tier_b_restart_checkpoint(
+            path,
+            bianchi_type=bianchi_type,
+            structure_label=str(runtime_config.bianchi_cosmo.structure.label),
+            structure_n_diag=np.asarray(
+                runtime_config.bianchi_cosmo.structure.n_diag,
+                dtype=np.float64,
+            ),
+            structure_a_twist=float(runtime_config.bianchi_cosmo.structure.a_twist),
+            tilt_rapidity=float(runtime_config.tilt_rapidity),
+            tilt_direction=np.asarray(runtime_config.tilt_direction, dtype=np.float64),
+            direction_convention=direction_convention,
+            eta_initial_mpc=float(runtime_config.eta_initial_mpc),
+            eta_final_mpc=float(runtime_config.eta_final_mpc),
+            n_output=int(runtime_config.n_output),
+            solver_method=str(runtime_config.solver_method),
+            L_max=int(L_max),
+            restart_state=restart_state,
+        )
+        written_paths.append(str(path))
+
+    return writer, written_paths
+
+
+def _validate_restart_checkpoint(
+    *,
+    checkpoint,
+    bianchi_type: str,
+    runtime_config: "IntegratorConfig",
+    direction_convention: str,
+) -> None:
+    if checkpoint.bianchi_type != bianchi_type:
+        raise ValueError(
+            "restart checkpoint bianchi_type does not match requested bianchi_type"
+        )
+    if checkpoint.L_max != runtime_config.L_max:
+        raise ValueError("restart checkpoint L_max does not match runtime_config.L_max")
+    if checkpoint.structure_label != runtime_config.bianchi_cosmo.structure.label:
+        raise ValueError("restart checkpoint structure_label does not match runtime configuration")
+    if not np.allclose(
+        np.asarray(checkpoint.structure_n_diag, dtype=np.float64),
+        np.asarray(runtime_config.bianchi_cosmo.structure.n_diag, dtype=np.float64),
+        atol=0.0,
+        rtol=0.0,
+    ):
+        raise ValueError("restart checkpoint structure_n_diag does not match runtime configuration")
+    if float(checkpoint.structure_a_twist) != float(runtime_config.bianchi_cosmo.structure.a_twist):
+        raise ValueError("restart checkpoint structure_a_twist does not match runtime configuration")
+    if float(checkpoint.tilt_rapidity) != float(runtime_config.tilt_rapidity):
+        raise ValueError("restart checkpoint tilt_rapidity does not match runtime configuration")
+    if not np.allclose(
+        np.asarray(checkpoint.tilt_direction, dtype=np.float64),
+        np.asarray(runtime_config.tilt_direction, dtype=np.float64),
+        atol=0.0,
+        rtol=0.0,
+    ):
+        raise ValueError("restart checkpoint tilt_direction does not match runtime configuration")
+    if checkpoint.direction_convention != direction_convention:
+        raise ValueError(
+            "restart checkpoint direction_convention does not match runtime configuration"
+        )
+    if float(checkpoint.eta_initial_mpc) != float(runtime_config.eta_initial_mpc):
+        raise ValueError(
+            "restart checkpoint eta_initial_mpc does not match runtime configuration"
+        )
+    if float(checkpoint.eta_final_mpc) != float(runtime_config.eta_final_mpc):
+        raise ValueError(
+            "restart checkpoint eta_final_mpc does not match runtime configuration"
+        )
+    if int(checkpoint.n_output) != int(runtime_config.n_output):
+        raise ValueError("restart checkpoint n_output does not match runtime configuration")
+    if checkpoint.solver_method != runtime_config.solver_method:
+        raise ValueError(
+            "restart checkpoint solver_method does not match runtime configuration"
+        )
+
+
 def _default_validation_matrix(
     *,
     bianchi_type: str,
@@ -1010,6 +1109,36 @@ def execute_tier_b_lowell_solver(
     )
 
 
+def resume_tier_b_solver_from_checkpoint(
+    *,
+    checkpoint_path: str,
+    manifest,
+    bianchi_type: str,
+    species: "SpeciesBackgroundRegistry",
+    integrator_config: "IntegratorConfig",
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+    release,
+    k_grid_mpc: np.ndarray,
+    validation_matrix: "ValidationMatrixSpec | None" = None,
+    cutoff_spec: "CutoffCampaignSpec | None" = None,
+) -> TierBExecutableRun:
+    """Resume the native Tier-B runtime from a saved checkpoint."""
+    return execute_tier_b_solver(
+        manifest=manifest,
+        bianchi_type=bianchi_type,
+        species=species,
+        integrator_config=integrator_config,
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        release=release,
+        k_grid_mpc=k_grid_mpc,
+        validation_matrix=validation_matrix,
+        cutoff_spec=cutoff_spec,
+        restart_checkpoint_path=checkpoint_path,
+    )
+
+
 def execute_tier_b_solver(
     *,
     manifest,
@@ -1022,6 +1151,7 @@ def execute_tier_b_solver(
     k_grid_mpc: np.ndarray,
     validation_matrix: "ValidationMatrixSpec | None" = None,
     cutoff_spec: "CutoffCampaignSpec | None" = None,
+    restart_checkpoint_path: str | None = None,
 ) -> TierBExecutableRun:
     """Execute the VER2 Tier-B production route on the native S1/S2 core.
 
@@ -1037,15 +1167,30 @@ def execute_tier_b_solver(
         raise ValueError("execute_tier_b_solver requires Tier B runtime controls")
     if runtime_controls.multipole_cutoff > integrator_config.L_max:
         raise ValueError("runtime cutoff must not exceed integrator_config.L_max")
+    if runtime_controls.checkpoint.enabled and feature_flags.checkpoint_restart is FeatureStatus.DISABLED:
+        raise ValueError("checkpoint policy requires checkpoint_restart feature flag to be enabled")
 
     from bass.hierarchy.aux_state import build_integrator_canonical_decision
+    from bass.hierarchy.frame_contracts import PhotonDirectionConvention
     from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
+    from bass.runtime.ver2_checkpoint import load_tier_b_restart_checkpoint
     from bass.spectrum.ver2_cutoff_campaign import run_executed_cutoff_campaign
 
     runtime_config, family_realization = _native_runtime_config(
         integrator_config,
         runtime_controls,
     )
+    direction_convention = str(PhotonDirectionConvention.PROPAGATION.value)
+    restart_state = None
+    if restart_checkpoint_path is not None:
+        checkpoint = load_tier_b_restart_checkpoint(restart_checkpoint_path)
+        _validate_restart_checkpoint(
+            checkpoint=checkpoint,
+            bianchi_type=bianchi_type,
+            runtime_config=runtime_config,
+            direction_convention=direction_convention,
+        )
+        restart_state = checkpoint.to_restart_state()
     background_monitor = _build_background_monitor(
         bianchi_type=bianchi_type,
         config=runtime_config,
@@ -1089,9 +1234,28 @@ def execute_tier_b_solver(
             )
         ),
     )
-    result = integrator.run()
+    checkpoint_callback = None
+    checkpoint_paths: list[str] = []
+    if runtime_controls.checkpoint.enabled:
+        checkpoint_callback, checkpoint_paths = _checkpoint_writer(
+            path_template=runtime_controls.checkpoint.path_template,
+            bianchi_type=bianchi_type,
+            runtime_config=runtime_config,
+            direction_convention=direction_convention,
+            L_max=int(runtime_config.L_max),
+        )
+    result = integrator.run(
+        checkpoint_every_n_steps=runtime_controls.checkpoint.every_n_steps
+        if runtime_controls.checkpoint.enabled
+        else None,
+        checkpoint_callback=checkpoint_callback,
+        restart_state=restart_state,
+    )
     result.solver_info["runtime_integrator_family"] = runtime_controls.integrator_family.value
     result.solver_info["solver_family_realization"] = family_realization
+    result.solver_info["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
+    result.solver_info["checkpoint_paths"] = tuple(checkpoint_paths)
+    result.solver_info["restart_checkpoint_path"] = restart_checkpoint_path
 
     geodesic_probe = _build_geodesic_probe(background_monitor=background_monitor)
     gamma_t_probe = _resolved_gamma_t(
@@ -1119,6 +1283,10 @@ def execute_tier_b_solver(
         release=release,
         k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
     )
+    solver_output.metadata["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
+    solver_output.metadata["checkpoint_write_count"] = int(result.solver_info.get("checkpoint_write_count", 0))
+    solver_output.metadata["restart_used"] = bool(result.solver_info.get("restart_used", False))
+    solver_output.metadata["restart_checkpoint_path"] = restart_checkpoint_path
     cutoff_campaign = None
     if cutoff_spec is not None:
         cutoff_campaign = run_executed_cutoff_campaign(
