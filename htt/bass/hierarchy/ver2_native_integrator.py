@@ -28,6 +28,12 @@ from bass.collision.electron_frame import (
     project_thomson_source,
 )
 from bass.collision.polarization import PolarizationHierarchyState, zero_polarization_hierarchy
+from bass.closure.stiff_closure import (
+    QuadrupoleStartupState,
+    StartupGateDecision,
+    decide_startup_gate,
+    quadrupole_startup_from_sources,
+)
 from bass.closure.quadrupole_tca import solve_tca_closure
 from bass.hierarchy.collision_interface import CollisionOperator, ZeroCollisionOperator
 from bass.hierarchy.closure import TCAClosure, build_default_closure
@@ -40,6 +46,17 @@ from bass.hierarchy.integrator import (
 )
 from bass.hierarchy.neutrino_reduced import neutrino_reduced_rhs
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor, pack_hierarchy, unpack_hierarchy, zero_hierarchy
+from bass.hierarchy.seed_compatibility import (
+    PackedRegularSeedInjection,
+    SeedConstraintProjection,
+    project_packed_regular_seed,
+)
+from bass.hierarchy.boost_kernel import is_axis_aligned
+from bass.perturbation.regular_adiabatic_ic import (
+    make_camb_regular_adiabatic_seed,
+    unpack_camb_regular_adiabatic_seed,
+)
+from bass.perturbation.tilted_seed_rule import apply_tilted_boost_seed_rule
 from bass.runtime.canonical_decision import CanonicalDecision
 from bass.species.base import SpeciesLabel
 from bass.species.registry import SpeciesBackgroundRegistry
@@ -205,6 +222,25 @@ class _EProjectedCollision(CollisionOperator):
         return aux.get_source().polarization_E.E.tensors[ell].copy()
 
 
+@dataclass(frozen=True)
+class _SeededInitialState:
+    photon_T: PSTFHierarchyState
+    photon_E: PolarizationHierarchyState
+    neutrino_reduced: np.ndarray
+    startup_gate: StartupGateDecision
+    seed_projection: SeedConstraintProjection
+    startup_state: QuadrupoleStartupState | None
+    seed_k_comoving: float
+    seed_injection_mode: str
+    velocity_scale: float
+
+    def __post_init__(self) -> None:
+        nu = np.asarray(self.neutrino_reduced, dtype=np.float64)
+        if nu.shape != (4,):
+            raise ValueError(f"neutrino_reduced must have shape (4,), got {nu.shape}")
+        object.__setattr__(self, "neutrino_reduced", nu)
+
+
 def _pack_radiation_state(
     *,
     photon_T: PSTFHierarchyState,
@@ -243,6 +279,7 @@ class Ver2TierBIntegrator:
         background_monitor: BackgroundEvolutionResult,
         visibility_source,
         canonical_decision: CanonicalDecision,
+        seed_k_comoving: float = 1.0e-4,
     ) -> None:
         self.config = config
         self.species = species
@@ -267,15 +304,134 @@ class Ver2TierBIntegrator:
         if not np.any(self._direction):
             self._direction = np.array([1.0, 0.0, 0.0], dtype=np.float64)
         self._direction = self._direction / max(float(np.linalg.norm(self._direction)), 1.0e-30)
+        self.seed_k_comoving = float(seed_k_comoving)
+        self.startup_gate: StartupGateDecision | None = None
+        self.seed_projection: SeedConstraintProjection | None = None
+        self.startup_state: QuadrupoleStartupState | None = None
+        self.seed_injection_mode: str = "uninitialized"
+        self.seed_velocity_scale: float = 1.0
 
     def initial_state(self) -> np.ndarray:
-        photon_T = zero_hierarchy(self.config.L_max)
-        photon_E = zero_polarization_hierarchy(self.config.L_max)
-        neutrino_reduced = np.zeros(4, dtype=np.float64)
+        seeded = self._build_seeded_initial_state()
+        self.startup_gate = seeded.startup_gate
+        self.seed_projection = seeded.seed_projection
+        self.startup_state = seeded.startup_state
+        self.seed_injection_mode = seeded.seed_injection_mode
+        self.seed_velocity_scale = seeded.velocity_scale
         return _pack_radiation_state(
+            photon_T=seeded.photon_T,
+            photon_E=seeded.photon_E,
+            neutrino_reduced=seeded.neutrino_reduced,
+        )
+
+    def _startup_gate_at_initial_time(self) -> StartupGateDecision:
+        gamma_t = _resolved_gamma_t(
+            eta=float(self.background_monitor.eta[0]),
+            direction=self._direction,
+            visibility_source=self.visibility_source,
+            config=self.config,
+        )
+        return decide_startup_gate(
+            gamma_T=float(gamma_t),
+            H=float(self.background_monitor.H[0]),
+            threshold=float(self.config.gamma_T_over_H_threshold),
+        )
+
+    def _build_seeded_initial_state(self) -> _SeededInitialState:
+        seed_state = make_camb_regular_adiabatic_seed(
+            k_comoving=max(self.seed_k_comoving, 0.0),
+            eta_initial=float(self.config.eta_initial_mpc),
+            a_initial=float(self.background_monitor.a[0]),
+            L_max=self.config.L_max,
+        )
+        injection_mode = "orthogonal_regular_adiabatic_seed"
+        if abs(float(self.config.tilt_rapidity)) > 0.0:
+            try:
+                if not is_axis_aligned(tuple(float(x) for x in self._direction)):
+                    raise NotImplementedError("FB-5.2")
+                seed_state = apply_tilted_boost_seed_rule(
+                    seed_state,
+                    beta=float(self.config.tilt_rapidity),
+                    v_hat_e=tuple(float(x) for x in self._direction),
+                )
+                injection_mode = "axisymmetric_tilted_regular_adiabatic_seed"
+            except NotImplementedError:
+                injection_mode = "orthogonal_regular_adiabatic_seed_off_axis_tilt_fallback"
+
+        tilt_speed = rapidity_to_velocity(float(self.config.tilt_rapidity))
+        projected_seed: PackedRegularSeedInjection = project_packed_regular_seed(
+            seed_state,
+            electron_velocity=tilt_speed * self._direction,
+            geometry=self.background_monitor.initial_conditions.geometry,
+            sigma_ab=self.background_monitor.sigma_tensor[0],
+        )
+        unpacked = unpack_camb_regular_adiabatic_seed(
+            projected_seed.seed_state,
+            L_max=self.config.L_max,
+        )
+        combined = unpacked["combined"]
+        photon_T = combined.photon_T.copy()
+        photon_E = combined.photon_E.copy()
+        neutrino_reduced = np.asarray(combined.neutrino_reduced, dtype=np.float64).copy()
+        startup_gate = self._startup_gate_at_initial_time()
+        startup_state = None
+        if startup_gate.startup_selected:
+            startup_state = self._resolve_startup_state(
+                photon_T=photon_T,
+                photon_E=photon_E,
+                gamma_t=float(startup_gate.gamma_T_over_H * self.background_monitor.H[0]),
+            )
+            photon_T.tensors[2].components[2] = float(startup_state.theta_2)
+            photon_E.E.tensors[2].components[2] = float(startup_state.E_2)
+            injection_mode = f"{injection_mode}+quadrupole_tca_startup"
+        return _SeededInitialState(
             photon_T=photon_T,
             photon_E=photon_E,
             neutrino_reduced=neutrino_reduced,
+            startup_gate=startup_gate,
+            seed_projection=projected_seed.projection,
+            startup_state=startup_state,
+            seed_k_comoving=max(self.seed_k_comoving, 0.0),
+            seed_injection_mode=f"{injection_mode}+{projected_seed.injection_mode}",
+            velocity_scale=float(projected_seed.velocity_scale),
+        )
+
+    def _resolve_startup_state(
+        self,
+        *,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        gamma_t: float,
+    ) -> QuadrupoleStartupState:
+        eta0 = float(self.background_monitor.eta[0])
+        rhs_T_free = hierarchy_rhs_photon(
+            eta0,
+            photon_T.as_flat(),
+            L_max=self.config.L_max,
+            bg_table=self.bg_table,
+            tetrad_state=self.tetrad_state,
+            closure=self.closure,
+            collision=ZeroCollisionOperator(),
+            collision_aux=None,
+        )
+        rhs_E_free = hierarchy_rhs_photon(
+            eta0,
+            photon_E.E.as_flat(),
+            L_max=self.config.L_max,
+            bg_table=self.bg_table,
+            tetrad_state=self.tetrad_state,
+            closure=self.closure,
+            collision=ZeroCollisionOperator(),
+            collision_aux=None,
+        )
+        slot = _ell2_m0_slot_offset(self.config.L_max)
+        a_val = self._a_at(eta0)
+        S_T = float(rhs_T_free[slot]) / a_val * (-1.0)
+        S_E = float(rhs_E_free[slot]) / a_val * (-1.0)
+        return quadrupole_startup_from_sources(
+            S_T=S_T,
+            S_E=S_E,
+            gamma_T=float(gamma_t),
         )
 
     def _h_local_at(self, eta: float) -> float:
@@ -474,10 +630,16 @@ class Ver2TierBIntegrator:
             "nlu": int(sol.nlu),
             "status": int(sol.status),
             "message": str(sol.message),
+            "solver_method": str(self.config.solver_method),
             "tca_tracker_len": len(tca_tracker),
             "tca_tracker_any_active": any(tca_tracker),
             "tier_b_core_owner": "ver2_s1s2_native",
             "background_owner": "background.evolution",
+            "seed_k_comoving": float(self.seed_k_comoving),
+            "seed_injection_mode": str(self.seed_injection_mode),
+            "seed_velocity_scale": float(self.seed_velocity_scale),
+            "startup_manifold_applied": bool(self.startup_state is not None),
+            "startup_gate_selected": bool(self.startup_gate.startup_selected if self.startup_gate is not None else False),
         }
         return IntegrationResult(
             eta=np.asarray(sol.t, dtype=np.float64),

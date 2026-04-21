@@ -260,6 +260,10 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["propagator_ready"] is True
     assert output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_ver2_native"
     assert output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
+    assert output.metadata["solver_method"] == "LSODA"
+    assert output.metadata["solver_family_realization"] == "runtime_family_direct"
+    assert output.metadata["seed_k_comoving"] == pytest.approx(0.0)
+    assert output.metadata["startup_manifold_applied"] is False
     assert output.metadata["propagator_mode"] == "anisotropic_forward"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_native_template"

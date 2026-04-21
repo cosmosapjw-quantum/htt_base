@@ -1,4 +1,4 @@
-"""VER2 perturbation-seed compatibility helpers for the BASS S2 lane."""
+"""VER2 perturbation-seed compatibility helpers for the BASS S2/BF-02 lane."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
@@ -10,6 +10,11 @@ from bass.background.constraints import MatterNormalFrameState, codazzi_constrai
 from bass.background.geometry import TetradGeometry
 from bass.background.initial_conditions import project_shear_to_codazzi
 from bass.hierarchy.frame_contracts import BoostOrder
+from bass.hierarchy.pack_unpack import pack_combined_state
+from bass.perturbation.regular_adiabatic_ic import (
+    seed_observables,
+    unpack_camb_regular_adiabatic_seed,
+)
 
 __all__ = [
     "SeedConvention",
@@ -17,12 +22,14 @@ __all__ = [
     "RegularSeedDescriptor",
     "RegularSeedState",
     "SeedConstraintProjection",
+    "PackedRegularSeedInjection",
     "build_flrw_regular_seed",
     "build_flrw_regular_seed_stub",
     "promote_tilted_seed",
     "promote_tilted_seed_stub",
     "build_constraint_projection",
     "build_constraint_projection_stub",
+    "project_packed_regular_seed",
 ]
 
 
@@ -119,6 +126,26 @@ class SeedConstraintProjection:
                     f"projected_sigma_ab must have shape (3,3), got {sigma.shape}"
                 )
             object.__setattr__(self, "projected_sigma_ab", sigma)
+
+
+@dataclass(frozen=True)
+class PackedRegularSeedInjection:
+    """Projected packed FB-5.3 seed ready for runtime IC injection."""
+
+    seed_state: np.ndarray
+    projection: SeedConstraintProjection
+    velocity_scale: float
+    injection_mode: str
+
+    def __post_init__(self) -> None:
+        arr = np.asarray(self.seed_state, dtype=np.float64)
+        if arr.ndim != 1:
+            raise ValueError(f"seed_state must be 1-D, got {arr.shape}")
+        if not np.isfinite(self.velocity_scale):
+            raise ValueError(f"velocity_scale must be finite, got {self.velocity_scale!r}")
+        if not self.injection_mode:
+            raise ValueError("injection_mode must be non-empty")
+        object.__setattr__(self, "seed_state", arr)
 
 
 def build_flrw_regular_seed(
@@ -283,4 +310,109 @@ def build_constraint_projection_stub(
         sigma_ab=sigma_ab,
         kappa=kappa,
         atol=atol,
+    )
+
+
+def _regular_seed_state_from_packed_seed(
+    seed_state: np.ndarray,
+    *,
+    electron_velocity: np.ndarray,
+    boost_order: BoostOrder,
+) -> RegularSeedState:
+    unpacked = unpack_camb_regular_adiabatic_seed(seed_state)
+    obs = seed_observables(seed_state, L_max=int(unpacked["L_max"]))
+    amplitude = max(
+        abs(float(obs["delta_gamma"])),
+        abs(float(obs["delta_b"])),
+        abs(float(obs["delta_c"])),
+        abs(float(obs["delta_nu"])),
+        abs(float(obs["theta_gamma"])),
+        1.0e-30,
+    )
+    seed = RegularSeedState(
+        amplitude=amplitude,
+        delta_gamma=float(obs["delta_gamma"]),
+        delta_baryon=float(obs["delta_b"]),
+        delta_cdm=float(obs["delta_c"]),
+        delta_nu=float(obs["delta_nu"]),
+        theta_common=float(obs["theta_gamma"]),
+    )
+    velocity = np.asarray(electron_velocity, dtype=np.float64)
+    if velocity.shape != (3,):
+        raise ValueError(
+            f"electron_velocity must have shape (3,), got {velocity.shape}"
+        )
+    if np.linalg.norm(velocity) > 0.0:
+        seed = promote_tilted_seed(
+            seed,
+            electron_velocity=velocity,
+            boost_order=boost_order,
+        )
+    return seed
+
+
+def project_packed_regular_seed(
+    seed_state: np.ndarray,
+    *,
+    electron_velocity: np.ndarray,
+    geometry: TetradGeometry | None = None,
+    sigma_ab: np.ndarray | None = None,
+    boost_order: BoostOrder = BoostOrder.LINEAR,
+    kappa: float = 1.0,
+    atol: float = 1.0e-10,
+) -> PackedRegularSeedInjection:
+    """Project a packed FB-5.3 seed onto the currently available constraint surface.
+
+    The packed seed already carries the full low-`ell` FB-5.3 radiation block.
+    BF-02 uses the common-theta constraint projection to make the injected
+    runtime IC finite and frame-aware without silently widening into a full
+    gauge/metric perturbation solver.
+    """
+    unpacked = unpack_camb_regular_adiabatic_seed(seed_state)
+    L_max = int(unpacked["L_max"])
+    combined = unpacked["combined"]
+    extras = np.asarray(unpacked["extras"], dtype=np.float64).copy()
+    regular_seed = _regular_seed_state_from_packed_seed(
+        seed_state,
+        electron_velocity=np.asarray(electron_velocity, dtype=np.float64),
+        boost_order=boost_order,
+    )
+    projection = build_constraint_projection(
+        regular_seed,
+        geometry=geometry,
+        sigma_ab=sigma_ab,
+        kappa=kappa,
+        atol=atol,
+    )
+    theta_before = float(regular_seed.theta_common)
+    if abs(theta_before) <= 1.0e-30:
+        scale = 1.0
+    else:
+        scale = float(projection.projected_seed.theta_common) / theta_before
+    combined.photon_T.tensors[1].components[1] *= scale
+    neutrino = np.asarray(combined.neutrino_reduced, dtype=np.float64).copy()
+    neutrino[1] *= scale
+    extras[1] *= scale
+    extras[3] *= scale
+    prefix = pack_combined_state(
+        a=combined.a,
+        Sigma_plus=combined.Sigma_plus,
+        Sigma_minus=combined.Sigma_minus,
+        photon_T=combined.photon_T,
+        photon_E=combined.photon_E,
+        neutrino_reduced=neutrino,
+        L_max=L_max,
+    )
+    out = np.empty(prefix.size + extras.size, dtype=np.float64)
+    out[: prefix.size] = prefix
+    out[prefix.size :] = extras
+    return PackedRegularSeedInjection(
+        seed_state=out,
+        projection=projection,
+        velocity_scale=scale,
+        injection_mode=(
+            "background_codazzi_projected_seed"
+            if projection.projection_mode == "background_codazzi_project"
+            else "boost_consistency_projected_seed"
+        ),
     )

@@ -100,6 +100,7 @@ from bass.hierarchy.pstf_radiation import (
     make_radiation_state,
 )
 from bass.hierarchy.seed_compatibility import (
+    PackedRegularSeedInjection,
     RegularSeedDescriptor,
     RegularSeedState,
     SeedAssignmentFrame,
@@ -107,6 +108,7 @@ from bass.hierarchy.seed_compatibility import (
     SeedConstraintProjection,
     build_constraint_projection,
     build_flrw_regular_seed,
+    project_packed_regular_seed,
     promote_tilted_seed,
 )
 
@@ -186,7 +188,9 @@ __all__ = [
     "RegularSeedDescriptor",
     "RegularSeedState",
     "SeedConstraintProjection",
+    "PackedRegularSeedInjection",
     "build_flrw_regular_seed",
     "promote_tilted_seed",
     "build_constraint_projection",
+    "project_packed_regular_seed",
 ]

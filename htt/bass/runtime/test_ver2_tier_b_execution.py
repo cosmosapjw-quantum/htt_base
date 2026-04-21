@@ -26,6 +26,7 @@ from bass.runtime import (
 )
 from bass.spectrum import CutoffCampaignSpec
 from bass.species.registry import SpeciesBackgroundRegistry
+from bass.hierarchy.pstf_tensor import unpack_hierarchy
 
 
 def _manifest() -> ArtifactManifest:
@@ -101,7 +102,7 @@ def _integrator_config() -> IntegratorConfig:
             beta=0.0,
         ),
         gamma_T_over_H_threshold=100.0,
-        gamma_T_override=lambda eta: 500.0,
+        gamma_T_override=lambda eta: 1.0e15,
     )
 
 
@@ -128,13 +129,24 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.trace.seed_projection.projection_ready is True
     assert np.isfinite(run.trace.startup_gate.gamma_T_over_H)
     assert run.trace.startup_gate.threshold == 100.0
+    assert run.trace.startup_state is not None
+    initial_T = unpack_hierarchy(run.integration_result.photon_T_tower[0], run.integration_result.L_max)
+    initial_E = unpack_hierarchy(run.integration_result.photon_E_tower[0], run.integration_result.L_max)
+    assert initial_T.tensors[1].components[1] != 0.0
+    assert initial_T.tensors[2].components[2] == pytest.approx(run.trace.startup_state.theta_2)
+    assert initial_E.tensors[2].components[2] == pytest.approx(run.trace.startup_state.E_2)
     assert run.trace.thomson_probe.source_ready is True
     assert run.trace.visibility_source.contract.events is not None
     assert run.trace.geodesic_probe.direction_derivative.shape == (3,)
+    assert run.integration_result.solver_info["solver_method"] == "BDF"
+    assert run.integration_result.solver_info["solver_family_realization"] == "imex_split_declared_bdf_executor"
     assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
+    assert run.integration_result.solver_info["startup_manifold_applied"] is True
     assert run.solver_output.metadata["propagator_ready"] is True
     assert run.solver_output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
+    assert run.solver_output.metadata["solver_method"] == "BDF"
     assert run.solver_output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_ver2_native"
+    assert run.solver_output.metadata["startup_manifold_applied"] is True
     assert run.solver_output.alm_T["representation"] == "ver2_native_pstf_final_slice"
     assert run.cutoff_campaign is not None
     assert set(run.cutoff_campaign.runtime_seconds) == {4, 6}
@@ -192,3 +204,27 @@ def test_execute_tier_b_lowell_solver_is_a_compatibility_alias(monkeypatch: pyte
     )
 
     assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
+
+
+def test_execute_tier_b_solver_injects_seed_even_without_startup_manifold() -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018()
+    cfg = _integrator_config()
+    cfg.gamma_T_override = lambda eta: 1.0
+    run = execute_tier_b_solver(
+        manifest=_manifest(),
+        bianchi_type="I",
+        species=species,
+        integrator_config=cfg,
+        runtime_controls=_runtime_controls(),
+        feature_flags=_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+    initial_T = unpack_hierarchy(run.integration_result.photon_T_tower[0], run.integration_result.L_max)
+    initial_E = unpack_hierarchy(run.integration_result.photon_E_tower[0], run.integration_result.L_max)
+    assert run.trace.startup_state is None
+    assert run.trace.seed_projection.projection_ready is True
+    assert initial_T.tensors[0].components[0] != 0.0
+    assert initial_T.tensors[1].components[1] != 0.0
+    assert initial_T.tensors[2].components[2] != 0.0
+    assert initial_E.tensors[2].components[2] != 0.0

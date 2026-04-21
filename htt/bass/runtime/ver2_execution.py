@@ -205,6 +205,7 @@ class TierBExecutionTrace:
 
     background_monitor: "BackgroundEvolutionResult"
     startup_gate: "StartupGateDecision"
+    startup_state: "QuadrupoleStartupState | None"
     seed_projection: "SeedConstraintProjection"
     geodesic_probe: "PhotonGeodesicRhs"
     thomson_probe: "ProjectedThomsonSource"
@@ -619,9 +620,9 @@ def _build_runtime_decision(
         else "pending"
     )
     reason = (
-        "tier_b_lowell_live_bridge"
+        "tier_b_native_s1s2_core"
         if propagation_status == "validated"
-        else "tier_b_lowell_runtime_without_live_propagator"
+        else "tier_b_native_runtime_without_live_propagator"
     )
     return build_runtime_reduction_decision(
         canonical_decision,
@@ -644,20 +645,44 @@ def _resolved_gamma_t(
     return float(config.gamma_T_override(float(eta))) * boost
 
 
-def _campaign_runner(
-    *,
-    bianchi_type: str,
-    base_config: "IntegratorConfig",
-    species: "SpeciesBackgroundRegistry",
-):
-    from bass.hierarchy.aux_state import build_integrator_canonical_decision
-    from bass.hierarchy.integrator import IntegratorConfig
-    from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
+def _representative_seed_k(k_grid_mpc: np.ndarray) -> float:
+    grid = np.asarray(k_grid_mpc, dtype=np.float64)
+    if grid.ndim != 1 or grid.size == 0:
+        raise ValueError(f"k_grid_mpc must be a non-empty 1-D array, got shape {grid.shape}")
+    positive = grid[np.isfinite(grid) & (grid >= 0.0)]
+    if positive.size == 0:
+        raise ValueError("k_grid_mpc must contain at least one finite non-negative entry")
+    return float(np.min(positive))
 
-    def runner(cutoff: int) -> tuple[Mapping[str, np.ndarray], float]:
-        start = perf_counter()
-        config = IntegratorConfig(
-            L_max=int(cutoff),
+
+def _resolve_native_solver_method(
+    runtime_controls: RuntimeControlBlock,
+) -> tuple[str, str]:
+    family = runtime_controls.integrator_family
+    if family is IntegratorFamily.IMPLICIT_BDF:
+        return "BDF", "runtime_family_direct"
+    if family is IntegratorFamily.IMPLICIT_RADAU:
+        return "Radau", "runtime_family_direct"
+    if family is IntegratorFamily.EXPLICIT_RK:
+        return "RK45", "runtime_family_direct"
+    if family is IntegratorFamily.IMEX_SPLIT:
+        # The native BF-02 seed/startup path is still a single stiff ODE
+        # solve; until an actual split executor exists, use the stable
+        # implicit backend explicitly rather than inheriting legacy LSODA.
+        return "BDF", "imex_split_declared_bdf_executor"
+    raise ValueError(f"Unsupported integrator family: {family!r}")
+
+
+def _native_runtime_config(
+    base_config: "IntegratorConfig",
+    runtime_controls: RuntimeControlBlock,
+) -> tuple["IntegratorConfig", str]:
+    from bass.hierarchy.integrator import IntegratorConfig
+
+    solver_method, realization = _resolve_native_solver_method(runtime_controls)
+    return (
+        IntegratorConfig(
+            L_max=int(base_config.L_max),
             eta_initial_mpc=float(base_config.eta_initial_mpc),
             eta_final_mpc=float(base_config.eta_final_mpc),
             n_output=int(base_config.n_output),
@@ -670,8 +695,43 @@ def _campaign_runner(
             collision_T=base_config.collision_T,
             collision_E=base_config.collision_E,
             gamma_T_over_H_threshold=float(base_config.gamma_T_over_H_threshold),
-            solver_method=base_config.solver_method,
+            solver_method=solver_method,
             gamma_T_override=base_config.gamma_T_override,
+        ),
+        realization,
+    )
+
+
+def _campaign_runner(
+    *,
+    bianchi_type: str,
+    base_config: "IntegratorConfig",
+    species: "SpeciesBackgroundRegistry",
+    seed_k_comoving: float,
+    runtime_controls: RuntimeControlBlock,
+):
+    from bass.hierarchy.aux_state import build_integrator_canonical_decision
+    from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
+
+    def runner(cutoff: int) -> tuple[Mapping[str, np.ndarray], float]:
+        start = perf_counter()
+        cutoff_config, _ = _native_runtime_config(base_config, runtime_controls)
+        config = cutoff_config.__class__(
+            L_max=int(cutoff),
+            eta_initial_mpc=float(cutoff_config.eta_initial_mpc),
+            eta_final_mpc=float(cutoff_config.eta_final_mpc),
+            n_output=int(cutoff_config.n_output),
+            rtol=float(cutoff_config.rtol),
+            atol=float(cutoff_config.atol),
+            bianchi_cosmo=cutoff_config.bianchi_cosmo,
+            Sigma_plus_initial=float(cutoff_config.Sigma_plus_initial),
+            Sigma_minus_initial=float(cutoff_config.Sigma_minus_initial),
+            closure_strategy=cutoff_config.closure_strategy,
+            collision_T=cutoff_config.collision_T,
+            collision_E=cutoff_config.collision_E,
+            gamma_T_over_H_threshold=float(cutoff_config.gamma_T_over_H_threshold),
+            solver_method=cutoff_config.solver_method,
+            gamma_T_override=cutoff_config.gamma_T_override,
         )
         background_monitor = _build_background_monitor(
             bianchi_type=bianchi_type,
@@ -695,6 +755,7 @@ def _campaign_runner(
             background_monitor=background_monitor,
             visibility_source=visibility_source,
             canonical_decision=canonical_decision,
+            seed_k_comoving=seed_k_comoving,
         ).run()
         runtime_sec = perf_counter() - start
         return (
@@ -979,38 +1040,34 @@ def execute_tier_b_solver(
     from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
     from bass.spectrum.ver2_cutoff_campaign import run_executed_cutoff_campaign
 
+    runtime_config, family_realization = _native_runtime_config(
+        integrator_config,
+        runtime_controls,
+    )
     background_monitor = _build_background_monitor(
         bianchi_type=bianchi_type,
-        config=integrator_config,
+        config=runtime_config,
         species=species,
     )
     visibility_source = _build_visibility_source(
         species=species,
-        config=integrator_config,
+        config=runtime_config,
     )
-    startup_gate = _build_startup_gate(
-        visibility_source=visibility_source,
-        background_monitor=background_monitor,
-        config=integrator_config,
-    )
-    seed_projection = _build_seed_projection(
-        background_monitor=background_monitor,
-        config=integrator_config,
-    )
-
     canonical_decision = build_integrator_canonical_decision(
-        beta=float(integrator_config.bianchi_cosmo.beta),
+        beta=float(runtime_config.bianchi_cosmo.beta),
         sigma_squared=max(
             0.5 * float(np.sum(background_monitor.sigma_tensor[0] ** 2)),
             1.0e-12,
         ),
     )
+    seed_k_comoving = _representative_seed_k(np.asarray(k_grid_mpc, dtype=np.float64))
     integrator = Ver2TierBIntegrator(
-        integrator_config,
+        runtime_config,
         species,
         background_monitor=background_monitor,
         visibility_source=visibility_source,
         canonical_decision=canonical_decision,
+        seed_k_comoving=seed_k_comoving,
     )
     runtime_decision = _build_runtime_decision(
         feature_flags=feature_flags,
@@ -1025,24 +1082,26 @@ def execute_tier_b_solver(
             if validation_matrix is not None
             else _default_validation_matrix(
                 bianchi_type=bianchi_type,
-                integrator_config=integrator_config,
+                integrator_config=runtime_config,
                 suite="tier_b_smoke",
             )
         ),
     )
     result = integrator.run()
+    result.solver_info["runtime_integrator_family"] = runtime_controls.integrator_family.value
+    result.solver_info["solver_family_realization"] = family_realization
 
     geodesic_probe = _build_geodesic_probe(background_monitor=background_monitor)
     gamma_t_probe = _resolved_gamma_t(
         visibility_source=visibility_source,
         eta=float(result.eta[-1]),
-        direction=np.asarray(integrator_config.tilt_direction, dtype=np.float64),
-        config=integrator_config,
+        direction=np.asarray(runtime_config.tilt_direction, dtype=np.float64),
+        config=runtime_config,
     )
     thomson_probe = _build_thomson_probe(
         result=result,
         species=species,
-        config=integrator_config,
+        config=runtime_config,
         gamma_t=gamma_t_probe,
     )
 
@@ -1066,6 +1125,8 @@ def execute_tier_b_solver(
                 bianchi_type=bianchi_type,
                 base_config=integrator_config,
                 species=species,
+                seed_k_comoving=seed_k_comoving,
+                runtime_controls=runtime_controls,
             ),
         )
     return TierBExecutableRun(
@@ -1073,8 +1134,9 @@ def execute_tier_b_solver(
         runtime_decision=runtime_decision,
         trace=TierBExecutionTrace(
             background_monitor=background_monitor,
-            startup_gate=startup_gate,
-            seed_projection=seed_projection,
+            startup_gate=integrator.startup_gate,
+            startup_state=integrator.startup_state,
+            seed_projection=integrator.seed_projection,
             geodesic_probe=geodesic_probe,
             thomson_probe=thomson_probe,
             visibility_source=visibility_source,

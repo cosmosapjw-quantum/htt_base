@@ -8,7 +8,7 @@
 
 ## 0. Why this list exists
 
-Prompt lists 01 and 02 are closed. `BF-01B-HCORE` has now removed the bounded Lowell bridge from the production Tier-B route. The largest remaining implementation debt is concentrated inside `htt/bass/*`, especially around startup/seed injection, unresolved angular reconstruction, and O-lane covariance/morphology outputs that remain explicit proxy/no-claim surfaces.
+Prompt lists 01 and 02 are closed. `BF-01B-HCORE` has removed the bounded Lowell bridge from the production Tier-B route, and `BF-02B-SEED` has closed the native startup/seed-injection gap. The largest remaining implementation debt is now concentrated inside `htt/bass/*` around unresolved angular reconstruction plus O-lane covariance/morphology outputs that remain explicit proxy/no-claim surfaces.
 
 This list does not reopen settled VER2 ownership rules. It only reorders the remaining follow-up work so that `htt/bass/*` reaches the highest feasible completion level first.
 
@@ -135,10 +135,10 @@ Only after the BASS physics path is completed, retarget observer/likelihood/infe
 
 ## 5. Immediate next action
 
-`BF-01B-HCORE` is now closed in the execution ledger. If the goal is to
+`BF-01B-HCORE` and `BF-02B-SEED` are now closed in the execution ledger. If the goal is to
 maximize `htt/bass/*` completion, the next packet is:
 
-1. `BF-02B-SEED`
+1. `BF-03B-ANG`
 
-Only after `BF-02B-SEED` and the serial solver-spine packets land should any
+Only after `BF-03B-ANG` and the remaining serial solver-spine packets land should any
 new non-BASS follow-up packet be considered.

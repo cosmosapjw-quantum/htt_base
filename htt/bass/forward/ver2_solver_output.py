@@ -286,6 +286,11 @@ def build_solver_core_output_from_native_result(
             "limber_eta_sp_sign": limber_eta_sp_sign,
             "source_builder_scope": "theta0_plus_pi_quadrupole_ver2_native",
             "tier_b_core_owner": str(result.solver_info.get("tier_b_core_owner", "ver2_s1s2_native")),
+            "solver_method": str(result.solver_info.get("solver_method", result.config.solver_method)),
+            "solver_family_realization": str(result.solver_info.get("solver_family_realization", "runtime_family_direct")),
+            "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
+            "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
+            "startup_manifold_applied": bool(result.solver_info.get("startup_manifold_applied", False)),
         },
     )
 
