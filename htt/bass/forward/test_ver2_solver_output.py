@@ -237,7 +237,11 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
     assert output.metadata["source_propagator_realization"] == "flrw_bessel_bridge_proxy"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_lowell_template"
-    assert output.alm_T["representation"] == "lowell_pstf_final_slice"
+    assert output.alm_T["representation"] == "lowell_pstf_sphere_reconstruction"
+    assert output.alm_T["coefficient_representation"] == "lowell_pstf_final_slice"
+    assert output.alm_T["quadrature_rule"] == "gauss_legendre_x_uniform_phi_tensor_product"
+    assert np.asarray(output.alm_T["sphere_samples"], dtype=np.float64).shape == (435,)
+    assert np.asarray(output.alm_T["values"], dtype=np.float64).shape == ((output.alm_T["ell_max"] + 1) ** 2,)
 
 
 def test_build_solver_core_output_from_native_result_attaches_native_provenance() -> None:
@@ -274,7 +278,11 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["source_propagator_realization"] == "flrw_bessel_bridge_proxy"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_native_template"
-    assert output.alm_T["representation"] == "ver2_native_pstf_final_slice"
+    assert output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
+    assert output.alm_T["coefficient_representation"] == "ver2_native_pstf_final_slice"
+    assert np.asarray(output.alm_T["sphere_directions"], dtype=np.float64).shape == (435, 3)
+    assert np.asarray(output.alm_E["sphere_samples"], dtype=np.float64).shape == (435,)
+    assert np.asarray(output.alm_B["sphere_samples"], dtype=np.float64).shape == (435,)
 
 
 def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backend() -> None:
@@ -300,6 +308,8 @@ def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backe
     assert output.metadata["source_propagator_requested_status"] == "approximate"
     assert output.metadata["source_propagator_rotation_status"] == "disabled"
     assert output.metadata["source_propagator_realization"] == "bianchi_i_matrix_exact"
+    assert output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
+    assert output.alm_T["coefficient_representation"] == "ver2_native_pstf_final_slice"
 
 
 def test_tier_b_exact_source_propagator_requires_explicit_propagator_config() -> None:

@@ -331,5 +331,10 @@ def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
     assert observable.covariance_features["local_global_degeneracy"]["status"] == "not_applicable_isotropic"
     assert (
         observable.alm_features["observer_reconstruction_status"]
-        == "final_slice_only_no_sphere_reconstruction"
+        == "sphere_reconstructed_from_pstf"
+    )
+    assert observable.alm_features["observer_quadrature_points"] == 231
+    assert (
+        observable.alm_features["observer_quadrature_rule"]
+        == "gauss_legendre_x_uniform_phi_tensor_product"
     )

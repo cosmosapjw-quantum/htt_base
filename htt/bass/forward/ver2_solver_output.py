@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from math import pi
 from typing import Any
 
 import numpy as np
@@ -9,6 +10,13 @@ import numpy as np
 from common.contracts import ArtifactManifest, SolverCoreOutput
 
 from bass.background.bianchi_types import StructureConstants, get_type
+from bass.collision.polarization import PolarizationHierarchyState
+from bass.hierarchy.pstf_radiation import (
+    RadiationPSTFState,
+    TruncationMetadata,
+    reconstruct_on_sphere,
+)
+from bass.hierarchy.pstf_tensor import unpack_hierarchy, zero_hierarchy
 from bass.hierarchy.integrator import IntegrationResult
 from bass.los.ver2_source_propagator import (
     ObserverFrameMetadata,
@@ -187,6 +195,113 @@ def _build_template_from_result(
     }
 
 
+def _tensor_product_sphere_rule(L: int) -> tuple[np.ndarray, np.ndarray]:
+    """Deterministic tensor-product sphere rule exact for polynomial content up to `L`."""
+    mu, mu_weights = np.polynomial.legendre.leggauss(2 * L + 3)
+    n_phi = 4 * L + 5
+    phi = np.linspace(0.0, 2.0 * pi, n_phi, endpoint=False, dtype=np.float64)
+    directions: list[list[float]] = []
+    weights: list[float] = []
+    for mu_i, w_i in zip(mu, mu_weights):
+        sin_theta = float(np.sqrt(max(0.0, 1.0 - float(mu_i) * float(mu_i))))
+        for phi_j in phi:
+            directions.append(
+                [
+                    sin_theta * float(np.cos(phi_j)),
+                    sin_theta * float(np.sin(phi_j)),
+                    float(mu_i),
+                ]
+            )
+            weights.append(float(w_i) * (2.0 * pi / float(n_phi)))
+    return np.asarray(directions, dtype=np.float64), np.asarray(weights, dtype=np.float64)
+
+
+def _final_slice_radiation_state(result: IntegrationResult) -> RadiationPSTFState:
+    L = int(result.L_max)
+    return RadiationPSTFState(
+        I=unpack_hierarchy(np.asarray(result.photon_T_tower[-1], dtype=np.float64), L),
+        E=PolarizationHierarchyState(
+            E=unpack_hierarchy(np.asarray(result.photon_E_tower[-1], dtype=np.float64), L)
+        ),
+        B=zero_hierarchy(L),
+        truncation=TruncationMetadata(
+            L=L,
+            allow_L2_override=(L == 2),
+            closure_name="ver2_runtime_final_slice_reconstruction",
+        ),
+    )
+
+
+def _build_reconstructed_channel_payload(
+    coefficient_values: np.ndarray,
+    sphere_samples: np.ndarray,
+    directions: np.ndarray,
+    weights: np.ndarray,
+    *,
+    representation: str,
+    coefficient_representation: str,
+    eta_final_mpc: float,
+    ell_max: int,
+) -> dict[str, Any]:
+    return {
+        "representation": representation,
+        "coefficient_representation": coefficient_representation,
+        "ell_max": int(ell_max),
+        "eta_final_mpc": float(eta_final_mpc),
+        "quadrature_rule": "gauss_legendre_x_uniform_phi_tensor_product",
+        "quadrature_exactness_contract": f"polynomial_exact_up_to_L={int(ell_max)}",
+        "values": np.asarray(coefficient_values, dtype=np.float64),
+        "sphere_directions": np.asarray(directions, dtype=np.float64),
+        "sphere_weights": np.asarray(weights, dtype=np.float64),
+        "sphere_samples": np.asarray(sphere_samples, dtype=np.float64),
+    }
+
+
+def _build_reconstructed_payloads(
+    result: IntegrationResult,
+    *,
+    coefficient_representation: str,
+    angular_representation: str,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    state = _final_slice_radiation_state(result)
+    directions, weights = _tensor_product_sphere_rule(int(result.L_max))
+    samples = reconstruct_on_sphere(state, directions)
+    eta_final = float(result.eta[-1])
+    ell_max = int(result.L_max)
+    return (
+        _build_reconstructed_channel_payload(
+            np.asarray(result.photon_T_tower[-1], dtype=np.float64),
+            np.asarray(samples["I"], dtype=np.float64),
+            directions,
+            weights,
+            representation=angular_representation,
+            coefficient_representation=coefficient_representation,
+            eta_final_mpc=eta_final,
+            ell_max=ell_max,
+        ),
+        _build_reconstructed_channel_payload(
+            np.asarray(result.photon_E_tower[-1], dtype=np.float64),
+            np.asarray(samples["E"], dtype=np.float64),
+            directions,
+            weights,
+            representation=angular_representation,
+            coefficient_representation=coefficient_representation,
+            eta_final_mpc=eta_final,
+            ell_max=ell_max,
+        ),
+        _build_reconstructed_channel_payload(
+            np.zeros_like(np.asarray(result.photon_E_tower[-1], dtype=np.float64)),
+            np.asarray(samples["B"], dtype=np.float64),
+            directions,
+            weights,
+            representation=angular_representation,
+            coefficient_representation=coefficient_representation,
+            eta_final_mpc=eta_final,
+            ell_max=ell_max,
+        ),
+    )
+
+
 def _default_tier_b_propagator_config(
     *,
     structure: StructureConstants,
@@ -282,13 +397,11 @@ def build_solver_core_output_from_native_result(
         limber_eta_sp_sign=limber_eta_sp_sign,
         off_diagonal_strategy=off_diagonal_strategy,
     )
-    final_T = np.asarray(result.photon_T_tower[-1], dtype=np.float64)
-    final_E = np.asarray(result.photon_E_tower[-1], dtype=np.float64)
-    alm_representation = {
-        "representation": "ver2_native_pstf_final_slice",
-        "ell_max": int(result.L_max),
-        "eta_final_mpc": float(result.eta[-1]),
-    }
+    alm_T, alm_E, alm_B = _build_reconstructed_payloads(
+        result,
+        coefficient_representation="ver2_native_pstf_final_slice",
+        angular_representation="ver2_native_pstf_sphere_reconstruction",
+    )
     return build_solver_core_output(
         manifest=manifest,
         bianchi_type=bianchi_type,
@@ -300,9 +413,9 @@ def build_solver_core_output_from_native_result(
         feature_flags=feature_flags,
         propagator=live_propagator.config,
         release=release,
-        alm_T={**alm_representation, "values": final_T},
-        alm_E={**alm_representation, "values": final_E},
-        alm_B={**alm_representation, "values": np.zeros_like(final_E)},
+        alm_T=alm_T,
+        alm_E=alm_E,
+        alm_B=alm_B,
         deterministic_template=_build_template_from_result(
             result,
             live_propagator,
@@ -414,17 +527,21 @@ def build_solver_core_output_from_lowell_result(
         limber_eta_sp_sign=limber_eta_sp_sign,
         off_diagonal_strategy=off_diagonal_strategy,
     )
-    final_T = np.asarray(result.photon_T_tower[-1], dtype=np.float64)
-    final_E = np.asarray(result.photon_E_tower[-1], dtype=np.float64)
-    alm_representation = {
-        "representation": (
-            "lowell_pstf_final_slice"
-            if runtime_controls.tier is SolverTier.TIER_B_PSTF
-            else "tier_a_validation_reference_slice"
-        ),
-        "ell_max": int(result.L_max),
-        "eta_final_mpc": float(result.eta[-1]),
-    }
+    coefficient_representation = (
+        "lowell_pstf_final_slice"
+        if runtime_controls.tier is SolverTier.TIER_B_PSTF
+        else "tier_a_validation_reference_slice"
+    )
+    angular_representation = (
+        "lowell_pstf_sphere_reconstruction"
+        if runtime_controls.tier is SolverTier.TIER_B_PSTF
+        else "tier_a_validation_reference_sphere_reconstruction"
+    )
+    alm_T, alm_E, alm_B = _build_reconstructed_payloads(
+        result,
+        coefficient_representation=coefficient_representation,
+        angular_representation=angular_representation,
+    )
     return build_solver_core_output(
         manifest=manifest,
         bianchi_type=bianchi_type,
@@ -436,9 +553,9 @@ def build_solver_core_output_from_lowell_result(
         feature_flags=feature_flags,
         propagator=live_propagator.config,
         release=release,
-        alm_T={**alm_representation, "values": final_T},
-        alm_E={**alm_representation, "values": final_E},
-        alm_B={**alm_representation, "values": np.zeros_like(final_E)},
+        alm_T=alm_T,
+        alm_E=alm_E,
+        alm_B=alm_B,
         deterministic_template=_build_template_from_result(
             result,
             live_propagator,

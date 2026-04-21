@@ -157,7 +157,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["solver_method"] == "BDF"
     assert run.solver_output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_ver2_native"
     assert run.solver_output.metadata["startup_manifold_applied"] is True
-    assert run.solver_output.alm_T["representation"] == "ver2_native_pstf_final_slice"
+    assert run.solver_output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
+    assert run.solver_output.alm_T["coefficient_representation"] == "ver2_native_pstf_final_slice"
+    assert np.asarray(run.solver_output.alm_T["sphere_directions"], dtype=np.float64).shape == (231, 3)
     assert run.cutoff_campaign is not None
     assert set(run.cutoff_campaign.runtime_seconds) == {4, 6}
     assert run.cutoff_campaign.deltas[4][0].relative_delta == 0.0

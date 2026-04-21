@@ -33,6 +33,7 @@
 29. `docs/ver2_upgrade/audits/AUDIT_IM-10D-MAN_2026-04-21.md`
 30. `docs/ver2_upgrade/audits/AUDIT_BF-01B-HCORE_2026-04-21.md`
 31. `docs/ver2_upgrade/audits/AUDIT_BF-02B-SEED_2026-04-21.md`
+32. `docs/ver2_upgrade/audits/AUDIT_BF-03B-ANG_2026-04-21.md`
 
 ## 2. Current State
 
@@ -102,7 +103,9 @@
 - `BF-02B-SEED` is now closed: the native Tier-B initial state injects a packed regular seed, applies the quadrupole startup manifold when `Gamma_T/H` selects it, and propagates seed/startup provenance through runtime and observer-neutral output metadata.
 - `BF-02B-SEED` verification is green for the touched BASS-seed scope: packet-local pytest `15 passed`, touched-surface pytest `169 passed`, seed-suite pytest `6 passed`, and `py_compile` passed.
 - The converged BF-02 implementation choice is explicit and honest: the seeded native route no longer inherits legacy `LSODA`, but the declared `IMEX_SPLIT` family is currently realized by a `BDF` executor and recorded as such in runtime/output metadata.
-- The BASS-first sequence is now active in code, not just in planning docs: production Tier-B ownership and live seed/startup injection have moved, while the remaining high-priority BASS debt is concentrated in angular reconstruction, low-`ell` covariance/morphology promotion, validation-grade cross-checking, and later observer/likelihood/inference retargeting.
+- `BF-03B-ANG` is now closed: observer-neutral solver outputs carry exact quadrature-based PSTF sphere reconstruction alongside the final multipole coefficients, and O-lane artifacts promote reconstruction status from pending to live when that payload is present.
+- `BF-03B-ANG` verification is green for the touched BASS-angular scope: targeted pytest `19 passed`, touched-surface pytest `258 passed`, public-surface pytest `2 passed`, and `py_compile` passed.
+- The BASS-first sequence is now active in code, not just in planning docs: production Tier-B ownership, live seed/startup injection, and live PSTF angular reconstruction have moved, while the remaining high-priority BASS debt is concentrated in low-`ell` covariance/morphology promotion, validation-grade cross-checking, and later observer/likelihood/inference retargeting.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
 ## 3. Next Recommended Work
@@ -116,22 +119,20 @@ instead and run the follow-up packets in that order.
 
 The immediate next packet is:
 
-1. `BF-03B-ANG`
+1. `BF-04B-COV`
 
 The reordered priority is:
 
-1. close the angular reconstruction bridge,
-2. replace proxy morphology/covariance where justified,
-3. upgrade BASS-centered validation,
-4. only then retarget `bass/observer`, `bass/likelihood`, and `bass/inference`,
-5. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until after the BASS-first sequence.
+1. replace proxy morphology/covariance where justified,
+2. upgrade BASS-centered validation,
+3. only then retarget `bass/observer`, `bass/likelihood`, and `bass/inference`,
+4. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until after the BASS-first sequence.
 
 Parallel policy is now constrained by the solver spine:
 
-1. `BF-03B-ANG` remains on the solver spine and must land before later BASS follow-up packets,
-2. `BF-04B-COV` starts after `BF-03B-ANG`,
-3. `BF-05B-VAL` may do read-only prep during `BF-03B-ANG` and `BF-04B-COV`,
-4. `BF-06B-LIKE` is blocked on `BF-05B-VAL`.
+1. `BF-04B-COV` starts after `BF-03B-ANG`,
+2. `BF-05B-VAL` may do read-only prep during `BF-04B-COV`,
+3. `BF-06B-LIKE` is blocked on `BF-05B-VAL`.
 
 ## 4. Hard Reminders
 
@@ -142,7 +143,7 @@ Parallel policy is now constrained by the solver spine:
 - Do not merge MIO certificate semantics into HTT or BASS.
 - Do not generate figures or manuscript claims from non-manifest artifacts.
 - Do not route new VER2 work back onto the reduced `einstein_bianchi` background engine; `htt/bass/background/evolution.py` and the S1 IC/geometry/RHS modules are now the implementation anchor.
-- Do not treat `BF-02B-SEED` as if it also closed angular reconstruction or validation-grade promotion; the production Tier-B core is now native and seeded, but `BF-03B-ANG`, `BF-04B-COV`, and `BF-05B-VAL` still remain.
+- Do not treat `BF-03B-ANG` as if it also closed covariance/morphology promotion or validation-grade evidence; the production Tier-B core is now native, seeded, and angularly reconstructed, but `BF-04B-COV` and `BF-05B-VAL` still remain.
 - Do not read the current `IMEX_SPLIT` label as a shipped split-step executor on the seeded native route; BF-02 explicitly realizes it as a `BDF` backend and records that realization in metadata.
 - Treat `lowell_bianchi_solver_SDD_PR_WBS_pstf_tetrad.md` as equation-form authority: if it gives an explicit equation/operator/projection order, implement that form directly unless the SDD itself marks the step as first-pass, closure, startup-only, or validation-only.
 - Do not substitute a reduced symbolic bridge for an explicit SDD equation merely because it is easier to wire; if a reduced path survives, keep it diagnostic-only and record it in carry-forward.

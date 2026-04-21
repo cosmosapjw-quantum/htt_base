@@ -50,14 +50,28 @@ def _default_alm_features(
             for value in np.asarray(covariance_bundle["preferred_axis"], dtype=float)
         )
     alm_representation = None
+    observer_quadrature_points = None
+    observer_quadrature_rule = None
     if isinstance(solver_output.alm_T, Mapping):
         alm_representation = str(solver_output.alm_T.get("representation", ""))
+        directions = solver_output.alm_T.get("sphere_directions")
+        if directions is not None:
+            observer_quadrature_points = int(np.asarray(directions, dtype=float).shape[0])
+        quadrature_rule = solver_output.alm_T.get("quadrature_rule")
+        if quadrature_rule is not None:
+            observer_quadrature_rule = str(quadrature_rule)
     observer_reconstruction_status = "unreported"
     if alm_representation in {
         "lowell_pstf_final_slice",
         "ver2_native_pstf_final_slice",
     }:
         observer_reconstruction_status = "final_slice_only_no_sphere_reconstruction"
+    if alm_representation in {
+        "lowell_pstf_sphere_reconstruction",
+        "ver2_native_pstf_sphere_reconstruction",
+        "tier_a_validation_reference_sphere_reconstruction",
+    }:
+        observer_reconstruction_status = "sphere_reconstructed_from_pstf"
     return {
         "harmonic_basis": str(solver_output.metadata["harmonic_basis"]),
         "eb_sign_convention": str(solver_output.metadata["eb_sign_convention"]),
@@ -68,6 +82,8 @@ def _default_alm_features(
         "off_diagonal_strategy": solver_output.metadata.get("off_diagonal_strategy"),
         "covariance_representation": None if biposh_payload is None else biposh_payload.get("representation"),
         "observer_reconstruction_status": observer_reconstruction_status,
+        "observer_quadrature_points": observer_quadrature_points,
+        "observer_quadrature_rule": observer_quadrature_rule,
         "local_global_degeneracy": None
         if covariance_features is None
         else covariance_features.get("local_global_degeneracy"),
@@ -81,6 +97,20 @@ def _default_scan_volume(
     ell_max: int,
     channels: tuple[str, ...],
 ) -> dict[str, object]:
+    reconstruction_status = "unreported"
+    if isinstance(solver_output.alm_T, Mapping):
+        representation = str(solver_output.alm_T.get("representation", ""))
+        if representation in {
+            "lowell_pstf_final_slice",
+            "ver2_native_pstf_final_slice",
+        }:
+            reconstruction_status = "final_slice_only_no_sphere_reconstruction"
+        if representation in {
+            "lowell_pstf_sphere_reconstruction",
+            "ver2_native_pstf_sphere_reconstruction",
+            "tier_a_validation_reference_sphere_reconstruction",
+        }:
+            reconstruction_status = "sphere_reconstructed_from_pstf"
     base = {
         "definition": "lowell_observable_vector_skeleton",
         "ell_max": ell_max,
@@ -88,6 +118,7 @@ def _default_scan_volume(
         "harmonic_basis": str(solver_output.metadata["harmonic_basis"]),
         "selection_mode": sky_support.selection_mode,
         "thomson_mode": str(solver_output.metadata["thomson_mode"]),
+        "observer_reconstruction_status": reconstruction_status,
     }
     base["scan_volume_hash"] = stable_payload_hash(base)
     return base
