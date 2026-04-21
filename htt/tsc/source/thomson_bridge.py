@@ -1,11 +1,99 @@
-"""Skeleton nonlinear Thomson trace-source bridge."""
+"""Trace-source bridge helpers for the VER2 TSC active service."""
 from __future__ import annotations
 
+from functools import lru_cache
 from typing import Iterable
 
 import numpy as np
 
 from common.contracts import ArtifactManifest, TscSourceBridgeReport, TscChart
+
+
+def _as_array(values: Iterable[float] | np.ndarray) -> np.ndarray:
+    arr = np.asarray(values, dtype=float)
+    if arr.ndim == 0:
+        arr = arr.reshape(1)
+    return arr
+
+
+@lru_cache(maxsize=4)
+def _moment_quadrature(order: int) -> tuple[np.ndarray, np.ndarray]:
+    nodes, weights = np.polynomial.legendre.leggauss(order)
+    t = 0.5 * (nodes + 1.0)
+    x = t / (1.0 - t)
+    jacobian = 0.5 * weights / (1.0 - t) ** 2
+    return x, jacobian
+
+
+def occupation_moment_order3(
+    eta: float | Iterable[float] | np.ndarray,
+    xi: int,
+    *,
+    quadrature_order: int = 128,
+) -> float | np.ndarray:
+    """Return the order-3 occupation moment factor for the two-field path.
+
+    ``xi`` follows the local TSC convention:
+
+    - ``0``: classical / Maxwell-Boltzmann
+    - ``1``: Bose-Einstein
+    - ``-1``: Fermi-Dirac
+
+    The returned value is the unnormalized moment integral
+
+    ``I^(3)_xi(eta) = ∫ y^3 / (exp(y - eta) - xi) dy``.
+    """
+
+    if xi not in {-1, 0, 1}:
+        raise ValueError(f"unsupported xi={xi!r}; expected one of (-1, 0, 1)")
+
+    eta_arr = np.asarray(eta, dtype=float)
+    scalar = eta_arr.ndim == 0
+    eta_flat = eta_arr.reshape(-1)
+
+    if xi == 1 and np.any(eta_flat > 1e-12):
+        raise ValueError(
+            "Bose-Einstein eta must remain nonpositive for the TSC source bridge"
+        )
+
+    x, quad_weights = _moment_quadrature(quadrature_order)
+    exponent = np.clip(x[None, :] - eta_flat[:, None], -700.0, 700.0)
+    denominator = np.exp(exponent) - float(xi)
+    values = np.sum(quad_weights[None, :] * x[None, :] ** 3 / denominator, axis=1)
+    reshaped = values.reshape(eta_arr.shape)
+    return float(reshaped) if scalar else reshaped
+
+
+@lru_cache(maxsize=3)
+def _baseline_occupation_moment_order3(xi: int) -> float:
+    return float(occupation_moment_order3(0.0, xi))
+
+
+def occupation_moment_ratio(
+    eta: float | Iterable[float] | np.ndarray,
+    xi: int,
+    *,
+    quadrature_order: int = 128,
+) -> float | np.ndarray:
+    baseline = _baseline_occupation_moment_order3(xi)
+    ratio = np.asarray(
+        occupation_moment_order3(eta, xi, quadrature_order=quadrature_order),
+        dtype=float,
+    ) / baseline
+    return float(ratio) if ratio.ndim == 0 else ratio
+
+
+def eta_correction_indicator(
+    eta: float | Iterable[float] | np.ndarray,
+    xi: int,
+    *,
+    quadrature_order: int = 128,
+) -> float:
+    ratio = np.asarray(
+        occupation_moment_ratio(eta, xi, quadrature_order=quadrature_order),
+        dtype=float,
+    )
+    return float(np.max(np.abs(ratio - 1.0)))
 
 
 def intensity_from_theta(
@@ -14,13 +102,18 @@ def intensity_from_theta(
     xi: int,
     eta: Iterable[float] | np.ndarray | None = None,
 ) -> np.ndarray:
-    del xi
-    theta_arr = np.asarray(theta, dtype=float)
+    theta_arr = _as_array(theta)
     base = (T0 ** 4) * theta_arr ** 4
     if eta is None:
         return base
     eta_arr = np.asarray(eta, dtype=float)
-    return base * np.exp(np.clip(eta_arr, -10.0, 10.0))
+    try:
+        eta_broadcast = np.broadcast_to(eta_arr, theta_arr.shape)
+    except ValueError as exc:
+        raise ValueError(
+            "eta must be broadcast-compatible with theta for the two-field path"
+        ) from exc
+    return base * np.asarray(occupation_moment_ratio(eta_broadcast, xi), dtype=float)
 
 
 def quadrupole_from_intensity(
@@ -28,19 +121,28 @@ def quadrupole_from_intensity(
     directions: Iterable[float] | np.ndarray,
     weights: Iterable[float] | np.ndarray,
 ) -> float:
-    intensity = np.asarray(intensity_samples, dtype=float)
-    mu = np.asarray(directions, dtype=float)
-    w = np.asarray(weights, dtype=float)
+    intensity = _as_array(intensity_samples)
+    mu = _as_array(directions)
+    w = _as_array(weights)
+    if intensity.shape != mu.shape or intensity.shape != w.shape:
+        raise ValueError(
+            "intensity_samples, directions, and weights must share the same shape"
+        )
+    weight_sum = float(np.sum(w))
+    if weight_sum <= 0.0:
+        raise ValueError("quadrupole weights must have positive total measure")
     p2 = 0.5 * (3.0 * mu ** 2 - 1.0)
-    return float(np.sum(w * intensity * p2))
+    return float(5.0 * np.sum(w * intensity * p2) / weight_sum)
 
 
 def thomson_source_from_quadrupole(q2: float, ne: float, sigma_T: float) -> float:
-    return float(ne * sigma_T * q2)
+    return float(-(ne * sigma_T * q2) / 10.0)
 
 
 def source_error_bound(delta_I_norm: float, q2_op_norm: float, ne: float, sigma_T: float) -> float:
-    return float(abs(delta_I_norm) * abs(q2_op_norm) * abs(ne) * abs(sigma_T))
+    return float(
+        abs(delta_I_norm) * abs(q2_op_norm) * abs(ne) * abs(sigma_T) / 10.0
+    )
 
 
 def build_source_bridge_report(
@@ -54,12 +156,23 @@ def build_source_bridge_report(
     on_manifold_exact: bool = False,
     linear_bridge_requested: bool = False,
     required_bass_primitives: tuple[str, ...] = (),
+    adequacy_ratio_threshold: float = 0.10,
+    inadequate_ratio_threshold: float = 1.00,
+    dipole_warning_threshold: float = 0.25,
 ) -> TscSourceBridgeReport:
     labels: list[str] = []
+    source_ratio: float | None = None
     if on_manifold_exact:
         labels.append("trace_source_exact_on_manifold")
     if source_error is not None:
         labels.append("trace_source_bound_available")
+        source_ratio = abs(source_error) / max(abs(q2_norm), 1.0e-12)
+        if source_ratio <= adequacy_ratio_threshold:
+            labels.append("source_bound_within_budget")
+        elif source_ratio >= inadequate_ratio_threshold:
+            labels.append("source_bound_exceeds_budget")
+        else:
+            labels.append("source_bridge_bound_pending")
     else:
         labels.append("source_bridge_not_applicable")
     if eta_correction_indicator is not None:
@@ -68,15 +181,25 @@ def build_source_bridge_report(
             if abs(eta_correction_indicator) < 0.1
             else "eta_correction_not_small"
         )
-    if linear_bridge_requested and dipole_amplitude is not None and abs(dipole_amplitude) >= 0.1:
+    if (
+        linear_bridge_requested
+        and dipole_amplitude is not None
+        and abs(dipole_amplitude) >= dipole_warning_threshold
+    ):
         labels.append("linear_bridge_underestimates_risk")
 
-    if on_manifold_exact or source_error is not None:
+    if on_manifold_exact:
         status = "adequate"
+    elif source_ratio is None:
+        status = "pending" if linear_bridge_requested else "inadequate"
+    elif source_ratio <= adequacy_ratio_threshold:
+        status = "adequate"
+    elif source_ratio >= inadequate_ratio_threshold:
+        status = "inadequate"
     elif linear_bridge_requested:
         status = "pending"
     else:
-        status = "inadequate"
+        status = "pending"
 
     return TscSourceBridgeReport(
         source_name="thomson_trace_quadrupole",
@@ -95,7 +218,10 @@ def build_source_bridge_report(
 
 __all__ = [
     "build_source_bridge_report",
+    "eta_correction_indicator",
     "intensity_from_theta",
+    "occupation_moment_order3",
+    "occupation_moment_ratio",
     "quadrupole_from_intensity",
     "source_error_bound",
     "thomson_source_from_quadrupole",

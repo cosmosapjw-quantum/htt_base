@@ -1,4 +1,4 @@
-"""Single-entrypoint TSC overlay builder for the skeleton phase."""
+"""Single-entrypoint TSC overlay builder for the active-service phase."""
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
@@ -24,6 +24,10 @@ def build_public_caveat_snippet(
         return "TSC domain invalid: chart use must remain diagnostic-only until domain blockers are resolved."
     if source_report is None:
         return "TSC source bridge not attached; artifact must declare TSC-not-applicable or stay caveated."
+    if source_report.source_status == "inadequate":
+        return "TSC trace-source adequacy is insufficient; artifact must remain diagnostic-only until source-side blockers are reduced."
+    if source_report.source_status == "pending":
+        return "TSC trace-source bridge is provisional; artifact must remain caveated until source-side adequacy is resolved."
     if any(budget.propagation_status == "pending" for budget in channel_budgets):
         return "TSC source-side checks are available, but propagation validation is still pending."
     if any(budget.channel == "BB" and budget.propagation_status != "validated" for budget in channel_budgets):
@@ -42,12 +46,12 @@ def build_tsc_overlay(
     artifact_metadata: Mapping[str, object] | None = None,
     public_snippet: str | None = None,
 ) -> TscAdequacyOverlay:
-    texts = [public_snippet] if public_snippet else []
-    flags = build_no_overclaim_flags(texts=texts, metadata=artifact_metadata)
-    quarantine = quarantine_reasons_from_flags(flags)
     snippet = public_snippet or build_public_caveat_snippet(
         domain_report, source_bridge_report, channel_budgets
     )
+    texts = (snippet,)
+    flags = build_no_overclaim_flags(texts=texts, metadata=artifact_metadata)
+    quarantine = tuple(dict.fromkeys(quarantine_reasons_from_flags(flags)))
     return TscAdequacyOverlay(
         domain_report=domain_report,
         residual_report=residual_report,
