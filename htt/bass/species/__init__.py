@@ -47,6 +47,10 @@ from bass.species.massive_neutrino import (
 from bass.species.neutrino import NeutrinoBackground
 from bass.species.photon import PhotonBackground
 from bass.species.registry import SpeciesBackgroundRegistry
+from bass.species.barotropic_closures import (
+    OrthogonalBarotropicClosure,
+    TiltedBarotropicClosure,
+)
 from bass.species.tilted import (
     TiltedSpeciesBackground,
     V_HAT_E_DEFAULT,
@@ -74,6 +78,8 @@ __all__ = [
     "MassiveNeutrinoBackground",
     # registry
     "SpeciesBackgroundRegistry",
+    "OrthogonalBarotropicClosure",
+    "TiltedBarotropicClosure",
     "phase_space_grid",
     # FB-3.1 tilt wrapper
     "TiltedSpeciesBackground",

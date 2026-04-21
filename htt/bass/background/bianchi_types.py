@@ -226,6 +226,32 @@ def all_bianchi_algebras() -> dict[str, BianchiAlgebra]:
     """Build the full 11-type VER2 algebra registry plus FLRW."""
     return {label: build_bianchi_algebra(label) for label in ["FLRW", *ALL_BIANCHI_TYPES]}
 
+
+def rescale_bianchi_algebra(algebra: BianchiAlgebra, scale: float) -> BianchiAlgebra:
+    """Return a uniformly rescaled algebra with unchanged type metadata.
+
+    The VER2 Hamiltonian closure can solve for a single algebra scale while
+    preserving the Bianchi type and the group parameter ``h``. Under this
+    uniform rescaling, ``a_alpha``, ``n_ab``, and ``C^gamma_{alpha beta}``
+    all scale linearly, while branch metadata and axis conventions remain
+    unchanged.
+    """
+
+    factor = float(scale)
+    if factor < 0.0:
+        raise ValueError(f"algebra scale must be non-negative; got {scale!r}")
+    return BianchiAlgebra(
+        type_name=algebra.type_name,
+        a=algebra.a * factor,
+        n=algebra.n * factor,
+        C=algebra.C * factor,
+        h_parameter=algebra.h_parameter,
+        class_label=algebra.class_label,
+        h_convention=algebra.h_convention,
+        axis_permutation=algebra.axis_permutation,
+        branch_policy=algebra.branch_policy,
+    )
+
 @dataclass(frozen=True)
 class StructureConstants:
     """Bianchi group structure constants in the Pontzen-Challinor frame.

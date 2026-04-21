@@ -7,6 +7,7 @@ from bass.background.bianchi_types import ALL_BIANCHI_TYPES, build_bianchi_algeb
 from bass.background.constraints import MatterNormalFrameState, evaluate_background_constraints
 from bass.background.geometry import build_geometry
 from bass.background.initial_conditions import (
+    CodazziProjectionError,
     build_orthogonal_initial_conditions,
     build_tilted_initial_conditions,
     solve_expanding_H,
@@ -102,20 +103,19 @@ def test_type_i_counterstreaming_tilt_can_satisfy_codazzi_zero():
     assert np.allclose(ic.residuals.codazzi, 0.0, atol=1e-12)
 
 
-def test_type_i_single_tilted_species_leaves_codazzi_mismatch_visible():
+def test_type_i_single_tilted_species_raises_controlled_codazzi_failure():
     algebra = build_bianchi_algebra("I")
     one = decompose_tilted_species(
         TiltedSpeciesParams(rho_hat=1.0, p_hat=0.0, v=np.array([0.1, 0.0, 0.0]), label="solo")
     )
-    ic = build_tilted_initial_conditions(
-        algebra=algebra,
-        species=[one],
-        sigma_ab=np.zeros((3, 3)),
-        H=1.0,
-        closure="hold_H",
-    )
-    assert np.linalg.norm(ic.matter.q) > 0.0
-    assert np.linalg.norm(ic.residuals.codazzi) > 0.0
+    with pytest.raises(CodazziProjectionError, match="Codazzi projection failed"):
+        build_tilted_initial_conditions(
+            algebra=algebra,
+            species=[one],
+            sigma_ab=np.zeros((3, 3)),
+            H=1.0,
+            closure="hold_H",
+        )
 
 
 def test_type_i_background_rhs_matches_shear_decay_limit():
