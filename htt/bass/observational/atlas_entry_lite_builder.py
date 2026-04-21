@@ -14,6 +14,20 @@ def _coerce_mapping(value: object) -> dict[str, object]:
     return dict(value) if isinstance(value, Mapping) else {}
 
 
+def _atlas_production_status(
+    solver_output: SolverCoreOutput,
+    observable_vector: ObservableVector,
+) -> str:
+    if observable_vector.manifest.production_status == "blocked_missing_covariance":
+        return "blocked_missing_covariance"
+    if (
+        solver_output.manifest.production_status == "production_candidate"
+        and observable_vector.manifest.production_status == "production_candidate"
+    ):
+        return "production_candidate"
+    return "diagnostic_only"
+
+
 def build_atlas_entry_lite(
     solver_output: SolverCoreOutput,
     observable_vector: ObservableVector,
@@ -37,12 +51,22 @@ def build_atlas_entry_lite(
         if isinstance(solver_output.anisotropic_covariance, Mapping)
         else {}
     )
+    covariance_features = (
+        dict(observable_vector.covariance_features)
+        if isinstance(observable_vector.covariance_features, Mapping)
+        else {}
+    )
     response_payload = (
         dict(response_blocks)
         if response_blocks is not None
         else {
             "R_sigma_proxy": covariance_bundle.get("off_diagonal_blocks", {}),
             "R_covariance_proxy": covariance_bundle.get("anisotropy_tensor"),
+            "morphology_representation": (
+                None if observable_vector.biposh is None else observable_vector.biposh.get("representation")
+            ),
+            "local_global_degeneracy": covariance_features.get("local_global_degeneracy"),
+            "preferred_axis": observable_vector.alm_features.get("preferred_axis"),
         }
     )
     validity_payload = (
@@ -53,6 +77,11 @@ def build_atlas_entry_lite(
             "harmonic_basis": str(solver_output.metadata["harmonic_basis"]),
             "selection_mode": observable_vector.sky_support.selection_mode,
             "sky_support": sky_support_metadata(observable_vector.sky_support),
+            "observer_reconstruction_status": observable_vector.alm_features.get(
+                "observer_reconstruction_status"
+            ),
+            "local_global_degeneracy": covariance_features.get("local_global_degeneracy"),
+            "covariance_representation": covariance_features.get("representation"),
         }
     )
     atlas_name = atlas_id or f"{solver_output.manifest.artifact_id}.atlas_lite"
@@ -63,14 +92,16 @@ def build_atlas_entry_lite(
         owner="BASS",
         implementation_scope="bass_py",
         claim_tier="conditional",
-        production_status="diagnostic_only",
+        production_status=_atlas_production_status(solver_output, observable_vector),
         caveats=(
             "theory_side_substrate_not_observational_data",
             "interpolation_only_not_posterior_update",
+            "local_global_degeneracy_requires_htt_discrimination",
         ),
         statistics_definitions={
             "surface": "AtlasEntryLite",
             "sky_support": sky_support_metadata(observable_vector.sky_support),
+            "local_global_degeneracy": covariance_features.get("local_global_degeneracy"),
         },
         extra_input_hashes=(observable_vector.manifest.artifact_id,),
     )

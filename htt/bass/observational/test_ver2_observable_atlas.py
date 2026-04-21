@@ -10,6 +10,9 @@ from bass.observational import (
 )
 from common.contracts import ArtifactManifest, SkySupport
 from bass.forward.ver2_solver_output import build_solver_core_output, BassReleaseMetadata
+from bass.background.bianchi_types import get_type
+from bass.background.einstein_bianchi import BianchiCosmology
+from bass.hierarchy.integrator import IntegratorConfig
 from bass.runtime.ver2_execution import (
     CheckpointPolicy,
     CouplingMode,
@@ -19,12 +22,15 @@ from bass.runtime.ver2_execution import (
     RuntimeControlBlock,
     SolverFeatureFlags,
     SolverTier,
+    execute_tier_b_lowell_solver,
 )
 from bass.los.ver2_source_propagator import (
     ObserverFrameMetadata,
     PropagatorMode,
     SourcePropagatorConfig,
 )
+from bass.spectrum import CutoffCampaignSpec
+from bass.species.registry import SpeciesBackgroundRegistry
 
 
 def _manifest() -> ArtifactManifest:
@@ -160,16 +166,104 @@ def _solver_output() -> object:
     )
 
 
+def _tier_b_controls() -> RuntimeControlBlock:
+    return RuntimeControlBlock(
+        tier=SolverTier.TIER_B_PSTF,
+        integrator_family=IntegratorFamily.IMEX_SPLIT,
+        coupling_mode=CouplingMode.BACKGROUND_THEN_RADIATION,
+        multipole_cutoff=4,
+        rtol=1.0e-6,
+        atol=1.0e-9,
+        checkpoint=CheckpointPolicy(enabled=False),
+        constraint_projection=ConstraintProjectionPolicy(
+            enabled=True,
+            every_n_steps=4,
+            status=FeatureStatus.APPROXIMATE,
+        ),
+        random_seed=42,
+    )
+
+
+def _tier_b_flags() -> SolverFeatureFlags:
+    return SolverFeatureFlags(
+        background_dynamics=FeatureStatus.APPROXIMATE,
+        photon_transport=FeatureStatus.APPROXIMATE,
+        thomson_collision=FeatureStatus.APPROXIMATE,
+        visibility_history=FeatureStatus.APPROXIMATE,
+        source_propagator=FeatureStatus.APPROXIMATE,
+        checkpoint_restart=FeatureStatus.DISABLED,
+    )
+
+
+def _tier_b_release() -> BassReleaseMetadata:
+    return BassReleaseMetadata(
+        release_stage="research_candidate",
+        run_label="observable-tier-b-smoke",
+        config_hash="cfg-hash",
+        code_version="ver2-test",
+        schema_version="1.0.0",
+        git_commit="test-commit",
+        random_seed=42,
+    )
+
+
+def _tier_b_manifest() -> ArtifactManifest:
+    return ArtifactManifest(
+        artifact_id="bass.ver2.o_lane.smoke",
+        artifact_path="artifacts/bass/ver2_o_lane_smoke.json",
+        owner="BASS",
+        implementation_scope="canonical_BASS",
+        claim_tier="conditional",
+        production_status="production_candidate",
+        created_by="pytest",
+        git_commit="test-commit",
+        config_hash="cfg-hash",
+        input_hashes=["species-hash"],
+        code_version="ver2-test",
+        schema_version="1.0.0",
+        required_gates=["runtime", "propagator"],
+        passed_gates=["runtime", "propagator"],
+    )
+
+
+def _tier_b_config() -> IntegratorConfig:
+    return IntegratorConfig(
+        L_max=4,
+        eta_initial_mpc=0.5,
+        eta_final_mpc=1.0,
+        n_output=12,
+        rtol=1.0e-6,
+        atol=1.0e-9,
+        bianchi_cosmo=BianchiCosmology(
+            structure=get_type("I"),
+            beta=0.0,
+        ),
+        gamma_T_over_H_threshold=100.0,
+        gamma_T_override=lambda eta: 500.0,
+    )
+
+
 def test_observable_vector_builder_attaches_sky_support_and_manifest():
     observable = build_observable_vector_from_solver_output(
         _solver_output(),
         sky_support=_sky_support(),
     )
     assert observable.manifest.owner == "BASS"
+    assert observable.manifest.production_status == "production_candidate"
     assert observable.sky_support.selection_mode == "mock_calibrated"
+    assert "BiPoSH" in observable.channels
+    assert "template" in observable.channels
     assert observable.scan_volume["scan_volume_hash"]
     assert observable.biposh is not None
     assert observable.biposh["representation"] == "sparse_mode_block_proxy"
+    assert (
+        observable.alm_features["observer_reconstruction_status"]
+        == "unreported"
+    )
+    assert (
+        observable.covariance_features["local_global_degeneracy"]["status"]
+        == "observer_source_discrimination_pending"
+    )
 
 
 def test_covariance_proxy_and_feature_summary_record_guards():
@@ -184,7 +278,10 @@ def test_covariance_proxy_and_feature_summary_record_guards():
     )
     assert sparse["unique_index_count"] > 0
     assert "mode_block_proxy_not_full_biposh" in sparse["caveats"]
+    assert sparse["supports_full_biposh"] is False
     assert summary["psd_guard"]["passed"] is True
+    assert summary["symmetry_guard"]["passed"] is True
+    assert summary["invariant_guard"]["passed"] is True
 
 
 def test_atlas_entry_lite_builder_carries_observable_reference():
@@ -196,4 +293,43 @@ def test_atlas_entry_lite_builder_carries_observable_reference():
     atlas = build_atlas_entry_lite(solver_output, observable)
     assert atlas.manifest.owner == "BASS"
     assert atlas.observable_vector_ref == observable.manifest.artifact_id
+    assert atlas.manifest.production_status == "production_candidate"
     assert atlas.validity_domain["sky_support"]["sky_support_hash"] == "sky123"
+    assert (
+        atlas.validity_domain["local_global_degeneracy"]["status"]
+        == "observer_source_discrimination_pending"
+    )
+
+
+def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018()
+    run = execute_tier_b_lowell_solver(
+        manifest=_tier_b_manifest(),
+        bianchi_type="I",
+        species=species,
+        integrator_config=_tier_b_config(),
+        runtime_controls=_tier_b_controls(),
+        feature_flags=_tier_b_flags(),
+        release=_tier_b_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+        cutoff_spec=CutoffCampaignSpec(
+            cutoffs=(4,),
+            closure_name="tier_b_tca",
+            baseline_cutoff=4,
+        ),
+    )
+    observable = build_observable_vector_from_solver_output(
+        run.solver_output,
+        sky_support=_sky_support(),
+    )
+    assert observable.manifest.production_status == "production_candidate"
+    assert observable.biposh is not None
+    assert observable.biposh["unique_index_count"] == 0
+    assert observable.biposh["null_proxy_status"] == "consistent_with_isotropic_null"
+    assert observable.covariance_features is not None
+    assert observable.covariance_features["null_proxy_status"] == "consistent_with_isotropic_null"
+    assert observable.covariance_features["local_global_degeneracy"]["status"] == "not_applicable_isotropic"
+    assert (
+        observable.alm_features["observer_reconstruction_status"]
+        == "final_slice_only_no_sphere_reconstruction"
+    )

@@ -66,6 +66,9 @@
 - `IM-03S3A` is now closed: BASS S3 owns an executable bounded Tier-B runtime/orchestrator path that consumes the S1 background monitor plus live S2 geodesic/collision/visibility/startup/seed hooks, packages manifest-backed observer-neutral `SolverCoreOutput`, and runs an executable cutoff campaign under `htt/bass/{runtime,spectrum,forward}/*`.
 - `IM-03S3A` verification is green for the touched S3 scope: packet-local pytest `10 passed`, forward/LOS regression pytest `9 passed`, touched-surface pytest `449 passed`, and `py_compile` passed.
 - The converged implementation choice for `IM-03S3A` is the bounded bridge architecture, not a full solver rewrite: the runtime now consumes live S1/S2 surfaces end to end, but the core Tier-B ODE evolution still runs through the shipped Lowell hierarchy/integrator.
+- `IM-04O` is now closed: BASS O-lane producers consume live executable Tier-B covariance outputs, expose explicit `BiPoSH` / `template` channels, carry sky-support-aware manifest gates, and propagate local/global degeneracy plus observer-reconstruction status through `ObservableVector`, `AtlasEntryLite`, `FullCovMESReport`, and descriptive xQPiFG report surfaces.
+- `IM-04O` verification is green for the touched O-lane scope: packet-local pytest `8 passed`, full `htt/bass/observational` `88 passed`, MIO/HTT/runtime regression pytest `34 passed`, `py_compile` passed, and both hostile-audit / validation-registry `--check` commands pass.
+- The converged implementation choice for `IM-04O` is explicit proxy discharge, not fake promotion: the O-lane now binds to live Tier-B outputs and can mark isotropic-null proxy cases, but it still does not pretend that `sparse_mode_block_proxy` is a validated low-`ell` BiPoSH basis reduction.
 - There are no uncommitted local `IM-06H` / `IM-07M` code changes in the current checkout; the aborted rows in the execution ledger are historical records only.
 - Prompt list 01 is now complete: every skeleton lane has an audit note, machine-readable carry-forward, and a frozen write-scope boundary.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
@@ -74,14 +77,18 @@
 
 `SK-00`, `SK-01C`, `SK-01S1`, `SK-02S2`, `SK-03S3`, `SK-04O`, `SK-05T`, `SK-06H`, `SK-07M`, `SK-08V`, and `SK-09D` are closed. Move to prompt list 02.
 
-If working in one thread, start the solver critical path:
+If working in one thread, continue with the remaining implementation packets:
 
-1. `IM-04O`
-2. `IM-08V`
+1. `IM-05T`
+2. `IM-06H`
+3. `IM-07M`
+4. `IM-08V`
 
-If parallel threads are available, start these side lanes immediately while the solver path begins:
+If parallel threads are available, use this order:
 
-- `IM-05T`
+- main thread: `IM-05T`
+- after the T-lane commit lands: `IM-06H` and `IM-07M` in parallel
+- final convergence thread: `IM-08V`
 
 ## 4. Hard Reminders
 
@@ -94,6 +101,7 @@ If parallel threads are available, start these side lanes immediately while the 
 - Do not route new VER2 work back onto the reduced `einstein_bianchi` background engine; `htt/bass/background/evolution.py` and the S1 IC/geometry/RHS modules are now the implementation anchor.
 - Do not silently treat the S1/S2/S3 bridge now closed by `IM-03S3A` as a full universal-solver rewrite; the runtime is executable, but the core Tier-B ODE stack is still the bounded Lowell bridge.
 - Do not silently promote `sparse_mode_block_proxy` into a full BiPoSH claim surface; executable O-lane work must replace or discharge that caveat explicitly.
+- Do not mistake explicit O-lane local/global degeneracy metadata for a calibrated separation result; that calibration still belongs to the H/T/V convergence packets.
 - Do not treat rank-blocked `FullCovMESReport` artifacts as weak covariance evidence; they are explicit no-claim outputs.
 - Do not treat `warn` campaigns in the V-lane registry as validated science gates; they are explicit placeholders until executable implementation packets discharge them.
 - Do not silently treat `diagnostic_only` H-lane manifests as production-ready; `IM-06H` now requires live solver/null/PPC/LOOCV hooks before candidate promotion.

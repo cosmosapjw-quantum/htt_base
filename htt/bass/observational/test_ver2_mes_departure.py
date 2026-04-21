@@ -30,12 +30,26 @@ def _manifest(owner: str = "BASS", scope: str = "bass_py") -> ArtifactManifest:
 def _observable(*, with_covariance: bool = True) -> ObservableVector:
     return ObservableVector(
         ell_max=8,
-        channels=("TT", "TE"),
+        channels=("TT", "TE", "BiPoSH"),
         cl={"TT": [1.0], "TE": [0.5]},
-        alm_features={"harmonic_basis": "m_explicit"},
+        alm_features={
+            "harmonic_basis": "m_explicit",
+            "observer_reconstruction_status": "final_slice_only_no_sphere_reconstruction",
+        },
         biposh={"representation": "sparse_mode_block_proxy"} if with_covariance else None,
         template_fit=None,
-        covariance_features={"psd_guard": {"passed": True}} if with_covariance else None,
+        covariance_features=(
+            {
+                "representation": "sparse_mode_block_proxy",
+                "psd_guard": {"passed": True},
+                "local_global_degeneracy": {
+                    "represented": True,
+                    "status": "observer_source_discrimination_pending",
+                },
+            }
+            if with_covariance
+            else None
+        ),
         scan_volume={"scan_volume_hash": "scan123"},
         sky_support=SkySupport(
             selection_mode="mock_calibrated",
@@ -77,6 +91,7 @@ def test_full_cov_mes_rank_failure_returns_no_claim():
     assert "response_rank_deficient" in result.blocked_reasons
     assert result.report.covariance_bound is None
     assert result.report.manifest.claim_tier == "blocked"
+    assert "local_global_degeneracy_status" in result.report.manifest.statistics_definitions
 
 
 def test_full_cov_mes_uses_covariance_bound_when_rank_is_available():
@@ -92,6 +107,7 @@ def test_full_cov_mes_uses_covariance_bound_when_rank_is_available():
     assert result.covariance_claim_allowed is True
     assert result.report.covariance_bound == 1.0
     assert result.report.information_gain >= 1.0
+    assert "local_global_degeneracy_unresolved" in result.report.manifest.caveats
 
 
 def test_departure_report_stays_descriptive_without_claim_gate():
@@ -128,6 +144,8 @@ def test_departure_report_stays_descriptive_without_claim_gate():
     assert "claim_gate_not_passed" in result.blocked_reasons
     assert result.report.F_status == "linear_proxy_score"
     assert "report_is_descriptive_until_claim_gates_pass" in result.report.caveats
+    assert "local_global_degeneracy_unresolved" in result.report.caveats
+    assert "observer_reconstruction_bridge_pending" in result.report.caveats
 
 
 def test_departure_report_blocks_negative_sector_certified_filling():

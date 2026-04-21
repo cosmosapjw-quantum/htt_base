@@ -40,6 +40,8 @@ def _default_cl(
 def _default_alm_features(
     solver_output: SolverCoreOutput,
     covariance_bundle: Mapping[str, object] | None,
+    covariance_features: Mapping[str, object] | None,
+    biposh_payload: Mapping[str, object] | None,
 ) -> dict[str, object]:
     preferred_axis = None
     if covariance_bundle is not None and covariance_bundle.get("preferred_axis") is not None:
@@ -47,12 +49,25 @@ def _default_alm_features(
             float(value)
             for value in np.asarray(covariance_bundle["preferred_axis"], dtype=float)
         )
+    alm_representation = None
+    if isinstance(solver_output.alm_T, Mapping):
+        alm_representation = str(solver_output.alm_T.get("representation", ""))
+    observer_reconstruction_status = "unreported"
+    if alm_representation == "lowell_pstf_final_slice":
+        observer_reconstruction_status = "final_slice_only_no_sphere_reconstruction"
     return {
         "harmonic_basis": str(solver_output.metadata["harmonic_basis"]),
         "eb_sign_convention": str(solver_output.metadata["eb_sign_convention"]),
         "observer_neutral": bool(solver_output.metadata.get("observer_neutral", True)),
         "preferred_axis": preferred_axis,
         "deterministic_template_present": solver_output.deterministic_template is not None,
+        "propagator_ready": bool(solver_output.metadata.get("propagator_ready", False)),
+        "off_diagonal_strategy": solver_output.metadata.get("off_diagonal_strategy"),
+        "covariance_representation": None if biposh_payload is None else biposh_payload.get("representation"),
+        "observer_reconstruction_status": observer_reconstruction_status,
+        "local_global_degeneracy": None
+        if covariance_features is None
+        else covariance_features.get("local_global_degeneracy"),
     }
 
 
@@ -75,6 +90,57 @@ def _default_scan_volume(
     return base
 
 
+def _resolved_channels(
+    cl_payload: Mapping[str, object],
+    *,
+    biposh_payload: Mapping[str, object] | None,
+    template_payload: Mapping[str, object] | None,
+) -> tuple[str, ...]:
+    ordered: list[str] = [
+        channel
+        for channel in ("TT", "TE", "EE", "BB", "TB", "EB")
+        if channel in cl_payload
+    ]
+    if biposh_payload is not None:
+        ordered.append("BiPoSH")
+    if template_payload is not None:
+        ordered.append("template")
+    return tuple(ordered) or ("scalar_summary",)
+
+
+def _observable_manifest_status(
+    *,
+    solver_output: SolverCoreOutput,
+    sky_support: SkySupport,
+    covariance_payload: Mapping[str, object] | None,
+) -> tuple[str, tuple[str, ...], tuple[str, ...], tuple[str, ...]]:
+    required_gates = (
+        "covariance_features_present",
+        "sky_support_mock_calibrated",
+        "covariance_psd_guard",
+        "covariance_symmetry_guard",
+        "covariance_invariant_guard",
+    )
+    failed: list[str] = []
+    if covariance_payload is None:
+        failed.append("covariance_features_present")
+    if sky_support.selection_mode != "mock_calibrated" or sky_support.mock_coverage_status != "adequate":
+        failed.append("sky_support_mock_calibrated")
+    if covariance_payload is not None:
+        if not bool(covariance_payload["psd_guard"]["passed"]):
+            failed.append("covariance_psd_guard")
+        if not bool(covariance_payload["symmetry_guard"]["passed"]):
+            failed.append("covariance_symmetry_guard")
+        if not bool(covariance_payload["invariant_guard"]["passed"]):
+            failed.append("covariance_invariant_guard")
+    passed = tuple(gate for gate in required_gates if gate not in failed)
+    if not failed:
+        return "production_candidate", required_gates, passed, ()
+    if covariance_payload is None:
+        return "blocked_missing_covariance", required_gates, passed, tuple(failed)
+    return "diagnostic_only", required_gates, passed, tuple(failed)
+
+
 def build_observable_vector_from_solver_output(
     solver_output: SolverCoreOutput,
     *,
@@ -91,11 +157,6 @@ def build_observable_vector_from_solver_output(
         raise ValueError("ObservableVector sources must be BASS-owned")
     covariance_bundle = _mapping_or_none(solver_output.anisotropic_covariance)
     cl_payload = dict(cl) if cl is not None else _default_cl(solver_output, covariance_bundle)
-    channels = tuple(
-        channel
-        for channel in ("TT", "TE", "EE", "BB", "TB", "EB")
-        if channel in cl_payload
-    ) or ("scalar_summary",)
     ell_max = int(solver_output.metadata.get("multipole_cutoff", 0))
     if cl_payload:
         ell_max = max(
@@ -119,10 +180,20 @@ def build_observable_vector_from_solver_output(
     if template_payload is None and solver_output.deterministic_template is not None:
         template_payload = dict(solver_output.deterministic_template)
         template_payload.setdefault("descriptive_only", True)
+    channels = _resolved_channels(
+        cl_payload,
+        biposh_payload=biposh_payload,
+        template_payload=template_payload,
+    )
     feature_payload = (
         dict(alm_features)
         if alm_features is not None
-        else _default_alm_features(solver_output, covariance_bundle)
+        else _default_alm_features(
+            solver_output,
+            covariance_bundle,
+            covariance_payload,
+            biposh_payload,
+        )
     )
     scan_payload = (
         dict(scan_volume)
@@ -135,6 +206,19 @@ def build_observable_vector_from_solver_output(
         )
     )
     scan_payload.setdefault("scan_volume_hash", stable_payload_hash(scan_payload))
+    production_status, required_gates, passed_gates, failed_gates = _observable_manifest_status(
+        solver_output=solver_output,
+        sky_support=sky_support,
+        covariance_payload=covariance_payload,
+    )
+    caveats = [
+        "diagonal_cl_not_sufficient_for_directional_claims",
+        "no_posterior_or_evidence_semantics",
+    ]
+    if biposh_payload is not None and biposh_payload.get("representation") == "sparse_mode_block_proxy":
+        caveats.append("proxy_morphology_not_full_biposh")
+    if feature_payload.get("observer_reconstruction_status") == "final_slice_only_no_sphere_reconstruction":
+        caveats.append("observer_reconstruction_bridge_pending")
     artifact_id = f"{solver_output.manifest.artifact_id}.observable_vector"
     artifact_path = (
         f"artifacts/bass/{artifact_id.replace('.', '_')}.json"
@@ -146,17 +230,21 @@ def build_observable_vector_from_solver_output(
         owner="BASS",
         implementation_scope="bass_py",
         claim_tier="conditional",
-        production_status="diagnostic_only",
-        caveats=(
-            "descriptive_only_observable_substrate",
-            "no_posterior_or_evidence_semantics",
-        ),
+        production_status=production_status,
+        caveats=tuple(caveats),
+        required_gates=required_gates,
+        passed_gates=passed_gates,
+        failed_gates=failed_gates,
         statistics_definitions={
             "surface": "ObservableVector",
             "channels": list(channels),
             "ell_max": ell_max,
             "scan_volume_hash": str(scan_payload["scan_volume_hash"]),
             "sky_support": sky_support_metadata(sky_support),
+            "covariance_representation": None if biposh_payload is None else biposh_payload.get("representation"),
+            "local_global_degeneracy": None
+            if covariance_payload is None
+            else covariance_payload.get("local_global_degeneracy"),
         },
     )
     return ObservableVector(

@@ -27,6 +27,17 @@ def _numerator(bundle: DepartureBundle, numerator_policy: str) -> float:
     return float(bundle.x_positive)
 
 
+def _local_global_status(observable_vector: ObservableVector) -> str | None:
+    features = observable_vector.covariance_features
+    if not isinstance(features, dict):
+        return None
+    degeneracy = features.get("local_global_degeneracy")
+    if not isinstance(degeneracy, dict):
+        return None
+    status = degeneracy.get("status")
+    return str(status) if status is not None else None
+
+
 def build_descriptive_departure_report(
     observable_vector: ObservableVector,
     *,
@@ -59,6 +70,7 @@ def build_descriptive_departure_report(
     U_value = float(budget.value)
     q_value = _numerator(bundle, numerator_policy) / U_value
     caveats = ["report_is_descriptive_until_claim_gates_pass"]
+    local_global_status = _local_global_status(observable_vector)
     if "negative_sector" in blocked_reasons:
         F_status = "invalid_negative_sector"
         F_value = None
@@ -77,6 +89,11 @@ def build_descriptive_departure_report(
             F_value = min(max(sum(float(v) for v in component_filling.values()), 0.0), 1.0)
         else:
             F_value = min(max(q_value, 0.0), 1.0)
+    if local_global_status not in {None, "not_applicable_isotropic"}:
+        caveats.append("local_global_degeneracy_unresolved")
+    reconstruction_status = observable_vector.alm_features.get("observer_reconstruction_status")
+    if reconstruction_status == "final_slice_only_no_sphere_reconstruction":
+        caveats.append("observer_reconstruction_bridge_pending")
     claim_language_allowed = not blocked_reasons
     manifest = derive_manifest(
         observable_vector.manifest,
@@ -91,6 +108,7 @@ def build_descriptive_departure_report(
             "surface": "DepartureReport",
             "sky_support": sky_support_metadata(observable_vector.sky_support),
             "comparator_policy": bundle.comparator,
+            "local_global_degeneracy_status": local_global_status,
         },
         extra_input_hashes=(observable_vector.manifest.artifact_id,),
     )

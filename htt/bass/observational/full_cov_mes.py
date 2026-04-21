@@ -42,6 +42,17 @@ def evaluate_mes_claim_gate(
     return not reasons, tuple(reasons), rank
 
 
+def _local_global_status(observable_vector: ObservableVector) -> str | None:
+    features = observable_vector.covariance_features
+    if not isinstance(features, dict):
+        return None
+    degeneracy = features.get("local_global_degeneracy")
+    if not isinstance(degeneracy, dict):
+        return None
+    status = degeneracy.get("status")
+    return str(status) if status is not None else None
+
+
 def build_full_cov_mes_report(
     atlas_entry: AtlasEntryLite,
     observable_vector: ObservableVector,
@@ -70,6 +81,7 @@ def build_full_cov_mes_report(
     cov_bound = covariance_bound
     if allowed and cov_bound is None and positive_svals:
         cov_bound = float(noise_radius) / min(positive_svals)
+    local_global_status = _local_global_status(observable_vector)
     baseline_candidates = [float(diagonal_bound)]
     if dynamical_bound is not None:
         baseline_candidates.append(float(dynamical_bound))
@@ -79,7 +91,12 @@ def build_full_cov_mes_report(
         claim_tier = "conditional"
         failed_gates: tuple[str, ...] = ()
         passed_gates = ("response_rank_sufficient",)
-        production_status = "diagnostic_only"
+        production_status = (
+            "production_candidate"
+            if atlas_entry.manifest.production_status == "production_candidate"
+            and observable_vector.manifest.production_status == "production_candidate"
+            else "diagnostic_only"
+        )
         projection_status = nuisance_projection_status
     else:
         final_bound = min(baseline_candidates)
@@ -103,9 +120,18 @@ def build_full_cov_mes_report(
         implementation_scope="bass_py",
         claim_tier=claim_tier,
         production_status=production_status,
-        caveats=(
-            "rank_failure_returns_no_claim_not_weak_evidence",
-            "covariance_upgrade_is_descriptive_until_validation_packet",
+        caveats=tuple(
+            dict.fromkeys(
+                (
+                    "rank_failure_returns_no_claim_not_weak_evidence",
+                    "covariance_upgrade_is_descriptive_until_validation_packet",
+                )
+                + (
+                    ()
+                    if local_global_status in {None, "not_applicable_isotropic"}
+                    else ("local_global_degeneracy_unresolved",)
+                )
+            )
         ),
         required_gates=("response_rank_sufficient",),
         passed_gates=passed_gates,
@@ -115,6 +141,10 @@ def build_full_cov_mes_report(
             "parameter_block": parameter_block,
             "observable_channels": list(observable_vector.channels),
             "sky_support": sky_support_metadata(observable_vector.sky_support),
+            "local_global_degeneracy_status": local_global_status,
+            "covariance_representation": None
+            if observable_vector.covariance_features is None
+            else observable_vector.covariance_features.get("representation"),
         },
         extra_input_hashes=(observable_vector.manifest.artifact_id,),
     )

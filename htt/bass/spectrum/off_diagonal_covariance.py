@@ -16,8 +16,10 @@ import numpy as np
 
 __all__ = [
     "assemble_bianchi_spectrum_covariance",
+    "compute_covariance_invariant_guard",
     "build_sparse_covariance_entries",
     "compute_covariance_psd_guard",
+    "compute_covariance_symmetry_guard",
 ]
 
 _MODE_LABELS = ("m0", "m+2", "m-2")
@@ -269,6 +271,80 @@ def compute_covariance_psd_guard(
             and bb_min >= -atol
             and te_joint_min >= -atol
         ),
+    }
+
+
+def compute_covariance_symmetry_guard(
+    covariance_result: Mapping[str, object],
+    *,
+    atol: float = 1.0e-12,
+) -> dict[str, object]:
+    """Check that all dense covariance views are symmetric within tolerance."""
+    if atol < 0.0:
+        raise ValueError("atol must be non-negative")
+    dense = _dense_views_from_result(covariance_result)
+
+    def _max_asymmetry(matrix: np.ndarray) -> float:
+        return float(np.max(np.abs(matrix - matrix.T)))
+
+    tt = _max_asymmetry(np.asarray(dense["TT"], dtype=float))
+    ee = _max_asymmetry(np.asarray(dense["EE"], dtype=float))
+    bb = _max_asymmetry(np.asarray(dense["BB"], dtype=float))
+    te = _max_asymmetry(np.asarray(dense["TE"], dtype=float))
+    return {
+        "tolerance": float(atol),
+        "tt_max_asymmetry": tt,
+        "ee_max_asymmetry": ee,
+        "bb_max_asymmetry": bb,
+        "te_max_asymmetry": te,
+        "passed": max(tt, ee, bb, te) <= atol,
+    }
+
+
+def compute_covariance_invariant_guard(
+    covariance_result: Mapping[str, object],
+    *,
+    atol: float = 1.0e-12,
+) -> dict[str, object]:
+    """Check preferred-axis and anisotropy-tensor consistency metadata."""
+    if atol < 0.0:
+        raise ValueError("atol must be non-negative")
+    preferred_axis = covariance_result.get("preferred_axis")
+    axis_norm = None
+    axis_unit = None
+    if preferred_axis is not None:
+        axis = np.asarray(preferred_axis, dtype=float)
+        axis_norm = float(np.linalg.norm(axis))
+        axis_unit = bool(abs(axis_norm - 1.0) <= atol)
+
+    tensor = covariance_result.get("anisotropy_tensor")
+    trace = None
+    symmetric = None
+    tracefree = None
+    if tensor is not None:
+        arr = np.asarray(tensor, dtype=float)
+        trace = float(np.trace(arr))
+        symmetric = bool(np.max(np.abs(arr - arr.T)) <= atol)
+        tracefree = bool(abs(trace) <= atol)
+
+    offdiag_strength = float(covariance_result.get("offdiag_strength", 0.0))
+    rotation_strength = float(covariance_result.get("rotation_strength", 0.0))
+    nonnegative_strengths = bool(offdiag_strength >= -atol and rotation_strength >= -atol)
+    passed = nonnegative_strengths
+    if axis_unit is False:
+        passed = False
+    if symmetric is False or tracefree is False:
+        passed = False
+    return {
+        "tolerance": float(atol),
+        "preferred_axis_norm": axis_norm,
+        "preferred_axis_is_unit": axis_unit,
+        "anisotropy_tensor_trace": trace,
+        "anisotropy_tensor_symmetric": symmetric,
+        "anisotropy_tensor_tracefree": tracefree,
+        "offdiag_strength_nonnegative": nonnegative_strengths,
+        "rotation_strength_nonnegative": bool(rotation_strength >= -atol),
+        "passed": passed,
     }
 
 
