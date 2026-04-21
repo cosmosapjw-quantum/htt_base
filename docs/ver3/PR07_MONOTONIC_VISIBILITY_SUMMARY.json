@@ -1,0 +1,28 @@
+{
+  "gate_name": "visibility_history_gate",
+  "api_version": "ver3-pr07",
+  "backend": "scalar_history_first_pass",
+  "truncation": "history_only",
+  "opened_claim": "source-history contract frozen",
+  "known_limit_checks": {
+    "visibility_nonnegative": true,
+    "optical_depth_monotone_increasing_in_z": true,
+    "homogeneous_reionization_mode_detected": true
+  },
+  "forbidden_shortcut_checks": {
+    "no_patchy_reionization_claim": true,
+    "no_direction_resolved_atomic_microphysics_claim": true,
+    "no_visibility_frame_drift": true
+  },
+  "metadata": {
+    "visibility_frame": "electron_frame",
+    "source_scope": "scalar_history_first_pass",
+    "reionization_mode": "tanh",
+    "homogeneous_reionization_only": true
+  },
+  "residual_summary": {
+    "visibility_nonnegative": true,
+    "kappa_monotone_increasing_in_z": true,
+    "optical_depth_decreases_toward_observer": true
+  }
+}

@@ -16,6 +16,8 @@ from bass.recombination.recombination_ingest import (
 from bass.recombination.reionization import (
     CosmologyForRecombination,
     ReionizationParameters,
+    compute_kappa_from_tau_dot,
+    compute_tau_dot_conformal_Mpc,
     compute_reionization_tau,
     extend_table_with_reionization,
 )
@@ -30,6 +32,10 @@ __all__ = [
     "VisibilityNormalizationStatus",
     "VisibilityHistoryContract",
     "TiltedVisibilitySource",
+    "opacity_from_physical_inputs",
+    "optical_depth",
+    "visibility_function",
+    "homogeneous_reionization_history",
     "build_visibility_history_contract",
     "build_tilted_visibility_source",
     "build_tilted_visibility_source_stub",
@@ -188,6 +194,52 @@ def _build_event_markers(
     )
 
 
+def opacity_from_physical_inputs(
+    *,
+    z: np.ndarray,
+    x_e: np.ndarray,
+    cosmology: CosmologyForRecombination,
+) -> np.ndarray:
+    """ver3 opacity adapter: conformal Thomson rate in 1/Mpc."""
+
+    return compute_tau_dot_conformal_Mpc(
+        np.asarray(z, dtype=np.float64),
+        np.asarray(x_e, dtype=np.float64),
+        cosmology,
+    )
+
+
+def optical_depth(
+    *,
+    z: np.ndarray,
+    tau_dot_Mpc: np.ndarray,
+    cosmology: CosmologyForRecombination,
+) -> np.ndarray:
+    """ver3 optical-depth adapter built from conformal opacity."""
+
+    return compute_kappa_from_tau_dot(
+        np.asarray(z, dtype=np.float64),
+        np.asarray(tau_dot_Mpc, dtype=np.float64),
+        cosmology,
+    )
+
+
+def visibility_function(
+    *,
+    tau_dot_Mpc: np.ndarray,
+    kappa: np.ndarray,
+) -> np.ndarray:
+    """Return the scalar visibility `g = tau_dot * exp(-kappa)`."""
+
+    tau_dot = np.asarray(tau_dot_Mpc, dtype=np.float64)
+    kappa_arr = np.asarray(kappa, dtype=np.float64)
+    if tau_dot.shape != kappa_arr.shape:
+        raise ValueError(
+            f"tau_dot_Mpc and kappa must share shape, got {tau_dot.shape} and {kappa_arr.shape}"
+        )
+    return tau_dot * np.exp(-kappa_arr)
+
+
 def _build_normalization_status(
     table: RecombinationTable,
     interp: RecombinationInterp,
@@ -203,6 +255,22 @@ def _build_normalization_status(
         kappa_monotone_increasing_in_z=kappa_monotone,
         optical_depth_decreases_toward_observer=kappa_monotone,
         min_visibility=min_visibility,
+    )
+
+
+def homogeneous_reionization_history(
+    table: RecombinationTable,
+    *,
+    reionization_params: ReionizationParameters | None = None,
+    cosmology: CosmologyForRecombination | None = None,
+) -> VisibilityHistoryContract:
+    """ver3 homogeneous reionization adapter."""
+
+    return build_visibility_history_contract(
+        table,
+        include_reionization=True,
+        reionization_params=reionization_params,
+        cosmology=cosmology,
     )
 
 

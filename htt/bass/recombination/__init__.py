@@ -11,6 +11,10 @@ from bass.recombination.history_visibility import (
     VisibilityHistoryContract,
     build_tilted_visibility_source,
     build_visibility_history_contract,
+    homogeneous_reionization_history,
+    opacity_from_physical_inputs,
+    optical_depth,
+    visibility_function,
 )
 
 __all__ = [
@@ -18,6 +22,10 @@ __all__ = [
     "VisibilityEventMarkers",
     "VisibilityHistoryContract",
     "TiltedVisibilitySource",
+    "opacity_from_physical_inputs",
+    "optical_depth",
+    "visibility_function",
+    "homogeneous_reionization_history",
     "build_visibility_history_contract",
     "build_tilted_visibility_source",
 ]
