@@ -60,6 +60,7 @@ from mio.interface.manifest import (
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.atlas_entry import AtlasEntry
 from workspace.contracts.mio_certificate import MioCertificate
+from workspace.contracts.tsc_overlay import TscAdequacyOverlay
 
 
 # ---------------------------------------------------------------------------
@@ -483,6 +484,8 @@ def to_mio_certificate(
     has_covariance: bool = False,
     sky_support_status: SkySupportStatus = "partial",
     artifact_path: str = "artifacts/mio/mio_hj01_shear_extraction_v1.json",
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> MioCertificate:
     """Package a `ShearExtractorReport` into a `MioCertificate`.
 
@@ -550,6 +553,8 @@ def to_mio_certificate(
         input_data_hashes=list(input_data_hashes) if input_data_hashes else [],
         config_hash=config_hash,
         htt_cross_check_suggested=htt_cross_check_suggested,
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
         readiness=readiness,
         artifact_id="mio.shear_extraction.certificate",
         artifact_path=artifact_path,

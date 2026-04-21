@@ -20,6 +20,7 @@ import numpy as np
 from mio.interface.manifest import MioPrerequisites, assess_mio_readiness
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.mio_certificate import MioCertificate
+from workspace.contracts.tsc_overlay import TscAdequacyOverlay
 
 
 DEFAULT_DOMAIN_CAVEAT = (
@@ -175,6 +176,8 @@ def to_mio_certificate(
     config_hash: Optional[str] = None,
     null_mocks_calibrated: bool = False,
     artifact_path: str = "artifacts/mio/mio_flrw_tension_ppp_v1.json",
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> MioCertificate:
     """Pack a PPP report into a ``MioCertificate``."""
     stats_by_name = {item.name: item for item in report.statistics}
@@ -228,6 +231,8 @@ def to_mio_certificate(
             "compare_to": "htt.core.advanced_diagnostics.posterior_predictive_report_artifact",
             "expected_relation": "MIO PPP and HTT predictive residual alarms should agree in sign",
         },
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
         readiness=readiness,
         artifact_id="mio.flrw_tension.certificate",
         artifact_path=artifact_path,

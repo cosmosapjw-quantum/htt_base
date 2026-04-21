@@ -9,6 +9,7 @@ from typing import Optional, Sequence
 from mio.interface.manifest import MioPrerequisites, assess_mio_readiness
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.mio_certificate import MioCertificate
+from workspace.contracts.tsc_overlay import TscAdequacyOverlay
 
 
 DEFAULT_DOMAIN_CAVEAT = (
@@ -75,6 +76,8 @@ def to_mio_certificate(
     input_data_hashes: Optional[Sequence[str]] = None,
     config_hash: Optional[str] = None,
     artifact_path: str = "artifacts/mio/mio_redshift_evidence_tomo_v1.json",
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> MioCertificate:
     """Pack a redshift decomposition report into a ``MioCertificate``."""
     strongest = max(report.slices, key=lambda item: abs(item.delta_lnB))
@@ -118,6 +121,8 @@ def to_mio_certificate(
             "compare_to": "htt.core.advanced_diagnostics.redshift_tomography_report_artifact",
             "expected_relation": "HTT and MIO redshift slicing should agree on the dominant era",
         },
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
         readiness=readiness,
         artifact_id="mio.redshift_tomography.certificate",
         artifact_path=artifact_path,

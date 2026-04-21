@@ -21,14 +21,15 @@ import json
 import subprocess
 from dataclasses import asdict
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Sequence
 
-from common.contracts import ArtifactManifest
+from common.contracts import ArtifactManifest, TscAdequacyOverlay
 from mio.interface.manifest import (
     MioReadiness,
     build_mio_manifest,
     merge_domain_caveats,
 )
+from tsc.adapters.mio_certificate import overlay_to_mio_fields
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -74,6 +75,56 @@ def _reject_posterior_keywords(raw_kwargs: Dict[str, Any]) -> None:
         )
 
 
+def _merge_tsc_overlay_fields(
+    *,
+    adequacy_indicators: Dict[str, bool],
+    domain_caveats: Sequence[str],
+    channel_caveats: Sequence[str] | None,
+    tsc_overlay: TscAdequacyOverlay | None,
+    tsc_overlay_ref: str | None,
+) -> tuple[Dict[str, bool], List[str], List[str], str | None]:
+    """Attach advisory TSC context without changing MIO ownership semantics."""
+    resolved_adequacy = dict(adequacy_indicators)
+    resolved_domain = list(domain_caveats)
+    resolved_channel = list(channel_caveats) if channel_caveats is not None else []
+    resolved_ref = tsc_overlay_ref
+
+    if resolved_ref is not None:
+        resolved_adequacy.setdefault("tsc_overlay_attached", True)
+
+    if tsc_overlay is None:
+        return resolved_adequacy, resolved_domain, resolved_channel, resolved_ref
+
+    fields = overlay_to_mio_fields(tsc_overlay)
+    if resolved_ref is None:
+        resolved_ref = tsc_overlay.manifest.artifact_id
+
+    resolved_adequacy["tsc_overlay_attached"] = True
+    resolved_adequacy["tsc_overlay_diagnostic_only"] = bool(fields.diagnostic_only)
+
+    resolved_domain.extend(fields.source_caveats)
+    resolved_domain.append(f"tsc_domain_status={fields.tsc_domain_status}")
+    resolved_domain.append(f"tsc_trace_source_adequacy={fields.trace_source_adequacy}")
+    if fields.tsc_upgrade_hint is not None:
+        resolved_domain.append(f"tsc_upgrade_hint={fields.tsc_upgrade_hint}")
+    if fields.diagnostic_only:
+        resolved_domain.append("tsc_overlay_diagnostic_only")
+
+    for channel in fields.propagation_status_required:
+        resolved_channel.append(f"tsc_propagation_pending:{channel}")
+    for channel, responsibility in sorted(fields.channel_responsibility.items()):
+        resolved_channel.append(
+            f"tsc_channel_responsibility:{channel}={responsibility}"
+        )
+
+    return (
+        resolved_adequacy,
+        list(dict.fromkeys(resolved_domain)),
+        list(dict.fromkeys(resolved_channel)),
+        resolved_ref,
+    )
+
+
 def build_mio_certificate(
     report_type: str,
     probe_name: str,
@@ -91,6 +142,7 @@ def build_mio_certificate(
     git_commit: Optional[str] = None,
     config_hash: Optional[str] = None,
     manifest: ArtifactManifest | None = None,
+    tsc_overlay: TscAdequacyOverlay | None = None,
     tsc_overlay_ref: str | None = None,
     readiness: MioReadiness | None = None,
     artifact_id: str | None = None,
@@ -173,22 +225,35 @@ def build_mio_certificate(
         )
         resolved_domain_caveats = merge_domain_caveats(domain_caveats, readiness)
 
+    (
+        resolved_adequacy_indicators,
+        resolved_domain_caveats,
+        resolved_channel_caveats,
+        resolved_overlay_ref,
+    ) = _merge_tsc_overlay_fields(
+        adequacy_indicators=adequacy_indicators,
+        domain_caveats=resolved_domain_caveats,
+        channel_caveats=channel_caveats,
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
+    )
+
     return MioCertificate(
         report_type=report_type,
         probe_name=probe_name,
         channel=channel,
         departure_variables=dict(departure_variables),
-        adequacy_indicators=dict(adequacy_indicators),
+        adequacy_indicators=resolved_adequacy_indicators,
         consistency_metrics=dict(consistency_metrics),
         domain_caveats=resolved_domain_caveats,
-        channel_caveats=list(channel_caveats) if channel_caveats is not None else [],
+        channel_caveats=resolved_channel_caveats,
         reduction_status=reduction_status,
         generated_by=generated_by,
         git_commit=resolved_commit,
         config_hash=resolved_hash,
         input_data_hashes=list(input_data_hashes),
         manifest=resolved_manifest,
-        tsc_overlay_ref=tsc_overlay_ref,
+        tsc_overlay_ref=resolved_overlay_ref,
         htt_cross_check_suggested=(
             dict(htt_cross_check_suggested) if htt_cross_check_suggested is not None else None
         ),

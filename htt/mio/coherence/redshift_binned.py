@@ -47,6 +47,7 @@ from mio.interface.manifest import (
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from mio.interface.sigma_cone_provenance import placeholder_caveats_for
 from workspace.contracts.mio_certificate import MioCertificate
+from workspace.contracts.tsc_overlay import TscAdequacyOverlay
 
 
 # ---------------------------------------------------------------------------
@@ -354,6 +355,8 @@ def to_mio_certificate(
     has_covariance: bool = False,
     sky_support_status: SkySupportStatus = "partial",
     artifact_path: str = "artifacts/mio/mio_redshift_coherence_v1.json",
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> MioCertificate:
     """Package z-binned-coherence results into a ``MioCertificate``.
 
@@ -411,6 +414,8 @@ def to_mio_certificate(
         input_data_hashes=list(input_data_hashes) if input_data_hashes else [],
         htt_cross_check_suggested=htt_cross_check_suggested,
         config_hash=config_hash,
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
         readiness=readiness,
         artifact_id="mio.redshift_binned_coherence.certificate",
         artifact_path=artifact_path,

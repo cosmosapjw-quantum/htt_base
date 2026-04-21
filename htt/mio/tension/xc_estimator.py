@@ -21,6 +21,7 @@ from typing import Optional, Sequence, Tuple
 from mio.interface.manifest import MioPrerequisites, assess_mio_readiness
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.mio_certificate import MioCertificate
+from workspace.contracts.tsc_overlay import TscAdequacyOverlay
 
 
 DEFAULT_DOMAIN_CAVEAT = (
@@ -117,6 +118,8 @@ def to_mio_certificate(
     input_data_hashes: Optional[Sequence[str]] = None,
     config_hash: Optional[str] = None,
     artifact_path: str = "artifacts/mio/mio_xc_direct_estimate_v1.json",
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> MioCertificate:
     """Pack an ``XCReport`` into a ``MioCertificate``."""
     departure = {
@@ -160,6 +163,8 @@ def to_mio_certificate(
             "compare_to": "htt.core.advanced_diagnostics.redshift_tomography_report_artifact",
             "expected_relation": "non-zero x_C should coincide with directional-depth tension, not replace it",
         },
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
         readiness=readiness,
         artifact_id="mio.xc_direct_estimate.certificate",
         artifact_path=artifact_path,

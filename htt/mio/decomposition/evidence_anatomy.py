@@ -10,6 +10,7 @@ from typing import Mapping, Optional, Sequence
 from mio.interface.manifest import MioPrerequisites, assess_mio_readiness
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.mio_certificate import MioCertificate
+from workspace.contracts.tsc_overlay import TscAdequacyOverlay
 
 
 DEFAULT_DOMAIN_CAVEAT = (
@@ -99,6 +100,8 @@ def to_mio_certificate(
     input_data_hashes: Optional[Sequence[str]] = None,
     config_hash: Optional[str] = None,
     artifact_path: str = "artifacts/mio/mio_evidence_anatomy_v1.json",
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> MioCertificate:
     """Pack a decomposition report into a ``MioCertificate``."""
     strongest = max(report.contributions, key=lambda item: abs(item.delta_lnB))
@@ -143,6 +146,8 @@ def to_mio_certificate(
             "compare_to": "htt.core.analysis_extended.evidence_matrix_report_artifact",
             "expected_relation": "channel contributions should reconstruct the HTT total evidence within tolerance",
         },
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
         readiness=readiness,
         artifact_id="mio.evidence_anatomy.certificate",
         artifact_path=artifact_path,

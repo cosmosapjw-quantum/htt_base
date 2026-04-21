@@ -48,6 +48,7 @@ from mio.interface.manifest import (
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from mio.interface.sigma_cone_provenance import placeholder_caveats_for
 from workspace.contracts.mio_certificate import MioCertificate
+from workspace.contracts.tsc_overlay import TscAdequacyOverlay
 
 
 # ---------------------------------------------------------------------------
@@ -234,6 +235,8 @@ def to_mio_certificate(
     has_null_mocks: bool = False,
     sky_support_status: SkySupportStatus = "partial",
     artifact_path: str = "artifacts/mio/mio_directional_coherence.json",
+    tsc_overlay: TscAdequacyOverlay | None = None,
+    tsc_overlay_ref: str | None = None,
 ) -> MioCertificate:
     """Package directional-coherence results into a `MioCertificate`.
 
@@ -294,6 +297,8 @@ def to_mio_certificate(
         input_data_hashes=list(input_data_hashes) if input_data_hashes else [],
         htt_cross_check_suggested=htt_cross_check_suggested,
         config_hash=config_hash,
+        tsc_overlay=tsc_overlay,
+        tsc_overlay_ref=tsc_overlay_ref,
         readiness=readiness,
         artifact_id="mio.directional_coherence.certificate",
         artifact_path=artifact_path,
