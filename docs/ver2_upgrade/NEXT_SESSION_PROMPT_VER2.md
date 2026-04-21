@@ -7,9 +7,10 @@
 3. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_02_IMPLEMENTATION_FIGURES_MANUSCRIPT.md`
 4. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_03_BASS_COMPLETION.md`
 5. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_04_HTT_PARALLEL.md`
-6. `docs/ver2_upgrade/VER2_EXECUTION_LEDGER.md`
-7. `docs/ver2_upgrade/VER2_CARRY_FORWARD_LEDGER.md`
-8. `docs/ver2_upgrade/VER2_PHASE_PLACEHOLDER_INDEX.md`
+6. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_05_PRELIMINARY_RESULTS.md`
+7. `docs/ver2_upgrade/VER2_EXECUTION_LEDGER.md`
+8. `docs/ver2_upgrade/VER2_CARRY_FORWARD_LEDGER.md`
+9. `docs/ver2_upgrade/VER2_PHASE_PLACEHOLDER_INDEX.md`
 9. `docs/ver2_upgrade/audits/AUDIT_SK-00_2026-04-20.md`
 10. `docs/ver2_upgrade/audits/AUDIT_SK-01C_2026-04-21.md`
 11. `docs/ver2_upgrade/audits/AUDIT_SK-05T_2026-04-21.md`
@@ -127,12 +128,11 @@
 
 All packets in prompt lists 01 and 02 are closed.
 
-If the priority is `htt/bass/*` completion, do **not** start with legacy
-figure/doc cleanup. Use
-`docs/ver2_upgrade/VER2_PHASE_PROMPTS_03_BASS_COMPLETION.md`
-instead and run the follow-up packets in that order.
-
-There is no new BASS-first implementation packet left in the list.
+If the priority is `htt/bass/*` as a usable low-`\ell` preliminary-results
+solver, do **not** jump straight to legacy cleanup or the deepest remaining
+exactness debt. Use
+`docs/ver2_upgrade/VER2_PHASE_PROMPTS_05_PRELIMINARY_RESULTS.md`
+instead.
 
 If the priority is parallel HTT follow-up while BASS carry-forward continues,
 use `docs/ver2_upgrade/VER2_PHASE_PROMPTS_04_HTT_PARALLEL.md`.
@@ -143,13 +143,13 @@ If the user explicitly wants cleanup-only work, the next formal packet is:
 
 1. `BF-07X-CLEANUP`
 
-Otherwise keep the priority on physics/statistics carry-forward, not legacy
+Otherwise keep the priority on preliminary-results delivery, not legacy
 cleanup:
 
-1. deeper visibility / microphysics fidelity,
-2. non-Type-I exact propagator closure beyond the new bounded matrix-backed default,
-3. later HTT-facing morphology / likelihood claim calibration,
-4. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until explicitly requested.
+1. `PRM-01-BASS-INTEROP`,
+2. `PRM-02-BASS-FAMILY-SWEEP`,
+3. `PRM-03-PRELIM-RESULT-PACKS`,
+4. only then reopen deeper exactness debt if it blocks a concrete preliminary claim.
 
 ## 4. Hard Reminders
 
@@ -178,3 +178,4 @@ cleanup:
 - Do not let the new T-lane `TscActiveServiceBundle` be mistaken for a BASS runtime decision object or an HTT/MIO truth surface; it is an advisory assembly layer only.
 - Do not let legacy cleanup jump ahead of unresolved physics/statistics carry-forward unless the task is explicitly cleanup-only.
 - Rerun `venv/bin/python scripts/ver2_artifact_export.py` after any D-lane change touching generated manuscript/export surfaces.
+- In preliminary-results mode, default verification is lighter: CoVe, metacognitive audit, equation-to-code consistency, touched-surface tests, and script/export checks. Plot-based visual audit is no longer mandatory unless the step touches figures directly or leaves a numerical mismatch unresolved.
