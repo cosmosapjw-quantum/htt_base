@@ -19,6 +19,12 @@ This list does not reopen settled VER2 ownership rules. It only reorders the rem
 3. Do not let BASS absorb HTT posterior ownership, MIO truth-certificate ownership, or TSC runtime allow/block ownership.
 4. Do not promote proxy morphology, diagonal covariance, or warn-only validation to science-grade claims.
 5. Preserve observer-neutral BASS outputs until a downstream packet explicitly owns the interpretation layer.
+6. Equation-form-first rule: whenever `lowell_bianchi_solver_SDD_PR_WBS_pstf_tetrad.md` specifies an explicit evolution, transport, projection, or collision equation, implement that equation form directly unless the SSOT itself marks the step as a controlled first-pass approximation, finite-`L` closure, startup manifold, or validation-only bridge.
+7. “Approximate but convenient” is not a sufficient reason to deviate from the SDD equation form. Any surviving approximation must be either:
+   - explicitly allowed by the SDD,
+   - numerically necessary and recorded as a carry-forward item, or
+   - confined to a non-production diagnostic/validation path.
+8. In particular, prefer direct PSTF/angular projection-reconstruction, direct electron-frame collision evaluation, and direct seed/boost/constraint sequencing over reduced symbolic stand-ins once the corresponding packet is active.
 
 ## 2. Reordered packet table
 
@@ -85,6 +91,16 @@ Close the seed/startup gap that VER2 left explicit: quadrupole startup manifold,
 
 Replace the remaining angular bridge stubs with executable, observer-neutral angular reconstruction so that O-lane products are built from real angular content rather than final-slice proxies alone.
 
+**Exactness rule**
+
+- Follow the SDD projection/reconstruction equations directly.
+- Do not stop at a proxy `final_slice -> observable` map if the SDD requires:
+  - PSTF-to-sphere reconstruction,
+  - angular occupation/screen-field transport on quadrature nodes,
+  - exact polynomial recovery up to `L`,
+  - or exact-angular boost/reprojection where the selected mode demands it.
+- Any retained reduced bridge must remain explicitly diagnostic-only.
+
 ### `BF-04B-COV`
 
 **Write scope**
@@ -97,6 +113,11 @@ Replace the remaining angular bridge stubs with executable, observer-neutral ang
 **Intent**
 
 Replace explicit proxy morphology/covariance status where possible with a validated low-`ell` basis reduction and better-founded covariance/nuisance handling. If full promotion is still unjustified, narrow the proxy region instead of silently overclaiming.
+
+**Exactness rule**
+
+- Build covariance/morphology summaries from the live angular/PSTF content produced by `BF-03B-ANG`, not from convenience templates or sparse heuristics alone.
+- If a statistic still depends on a reduced model, keep it behind a no-claim or proxy status rather than presenting it as the SDD equation-level quantity.
 
 ### `BF-05B-VAL`
 
@@ -112,6 +133,11 @@ Replace explicit proxy morphology/covariance status where possible with a valida
 
 Close the BASS-centered validation gap: nulls, injections, cutoff campaigns, Tier A↔Tier B evidence, and observer-neutral recovery checks should move from registry-only or warn-only status toward executable evidence.
 
+**Exactness rule**
+
+- Validation should test the equation-form implementation that actually shipped in the production Tier-B route.
+- Do not validate a reduced surrogate and treat that as evidence for the full SDD equation path.
+
 ### `BF-06B-LIKE`
 
 **Write scope**
@@ -124,6 +150,11 @@ Close the BASS-centered validation gap: nulls, injections, cutoff campaigns, Tie
 **Intent**
 
 Only after the BASS physics path is completed, retarget observer/likelihood/inference onto it. This packet must fence or retire residual surrogate/mock routes instead of letting them coexist ambiguously with the completed physics path.
+
+**Exactness rule**
+
+- Observer/likelihood/inference must bind to the completed equation-form BASS path, not to earlier reduced bridges or convenience proxies.
+- If a residual surrogate remains for testing, it must be explicitly fenced and non-production.
 
 ## 4. Parallel policy
 

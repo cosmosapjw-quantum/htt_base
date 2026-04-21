@@ -144,6 +144,8 @@ Parallel policy is now constrained by the solver spine:
 - Do not route new VER2 work back onto the reduced `einstein_bianchi` background engine; `htt/bass/background/evolution.py` and the S1 IC/geometry/RHS modules are now the implementation anchor.
 - Do not treat `BF-02B-SEED` as if it also closed angular reconstruction or validation-grade promotion; the production Tier-B core is now native and seeded, but `BF-03B-ANG`, `BF-04B-COV`, and `BF-05B-VAL` still remain.
 - Do not read the current `IMEX_SPLIT` label as a shipped split-step executor on the seeded native route; BF-02 explicitly realizes it as a `BDF` backend and records that realization in metadata.
+- Treat `lowell_bianchi_solver_SDD_PR_WBS_pstf_tetrad.md` as equation-form authority: if it gives an explicit equation/operator/projection order, implement that form directly unless the SDD itself marks the step as first-pass, closure, startup-only, or validation-only.
+- Do not substitute a reduced symbolic bridge for an explicit SDD equation merely because it is easier to wire; if a reduced path survives, keep it diagnostic-only and record it in carry-forward.
 - Do not treat the Tier-A validation bridge as independent just because production Tier-B is now native; Tier A still reuses the bounded Lowell core and remains a validation-only path.
 - Do not silently promote `sparse_mode_block_proxy` into a full BiPoSH claim surface; executable O-lane work must replace or discharge that caveat explicitly.
 - Do not mistake explicit O-lane local/global degeneracy metadata for a calibrated separation result; that calibration still belongs to the H/T/V convergence packets.
