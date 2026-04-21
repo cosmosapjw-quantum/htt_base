@@ -183,15 +183,19 @@ def test_bass_representative_family_sweep_records_tilted_runtime_blocker() -> No
     campaign = next(
         row for row in campaigns if row.campaign_id == "validation.bass_representative_family_sweep"
     )
-    assert "representative_tilted_runtime_blocked" in campaign.no_claim_conditions
+    assert "representative_tilted_runtime_partial_only" in campaign.no_claim_conditions
     theorem = next(
         row
         for row in build_default_theorem_to_test_map()
         if row.theorem_id == "V8_bass_representative_family_sweep"
     )
-    assert "representative_tilted_runtime_blocked" in theorem.no_claim_conditions
+    assert "representative_tilted_runtime_partial_only" in theorem.no_claim_conditions
     assert any(
-        link.test_id == "representative_tilted_branches_fail_controlledly"
+        link.test_id == "representative_tilted_type_v_runs_end_to_end"
+        for link in campaign.check_links
+    )
+    assert any(
+        link.test_id == "representative_remaining_tilted_branches_fail_controlledly"
         for link in campaign.check_links
     )
 

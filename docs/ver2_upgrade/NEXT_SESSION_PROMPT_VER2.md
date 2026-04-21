@@ -135,6 +135,9 @@
 - `PRM-04-HTT-MIO-HANDOFF` is now closed: `workspace/contracts.preliminary_results` exposes canonical generated-pack/artifact loaders, and HTT/MIO/TSC now each have package-local handoff helpers that consume the current VER2 preliminary packs without local JSON surgery.
 - `PRM-04-HTT-MIO-HANDOFF` verification is green for the touched preliminary-results interop scope: `py_compile` passed; targeted pytest returned `7 passed`; HTT/MIO/TSC smoke usage of the new handoff helpers passed on the committed generated surfaces.
 - The preliminary-results chain is now operational end to end: BASS emits bounded preliminary artifacts, exporter/result-pack generation serializes them, and HTT/MIO/TSC can ingest the generated packs directly through canonical loaders. Remaining debt is now physics/statistics debt again, not handoff friction.
+- `PRM-05-TARGETED-PHYSICS` has started and partially closed: representative `Type V` tilted runtime now executes on the native Tier-B path because BF-02 seed injection reuses the admitted S1 Codazzi surface instead of re-projecting against an orthogonal-style symbolic target.
+- `PRM-05-TARGETED-PHYSICS` verification is green for the touched preliminary-results physics scope: `py_compile` passed; targeted pytest over seed/runtime/validation/registry returned `44 passed`; `htt/scripts/ver2_bass_validation.py --family-sweep-check` passed.
+- The representative-family sweep ceiling is now sharper again: orthogonal `I/V/VII_0/VIII` and tilted `V` are executable on the bounded native route, while tilted `I`, `VII_0`, and `VIII` remain explicit controlled blockers and must stay no-claim conditions.
 - The BASS-first implementation sequence is now closed in code. Remaining debt is no longer “wire observer/likelihood/inference at all”; it is the deeper physics/statistics carry-forward around non-Type-I exact propagation, full BiPoSH inversion, and later HTT-facing science claims.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
@@ -179,9 +182,9 @@ cleanup:
 4. `PRM-04-HTT-MIO-HANDOFF`,
 5. only then reopen deeper exactness debt if it blocks a concrete preliminary claim.
 
-`PRM-01-BASS-INTEROP`, `PRM-02-BASS-FAMILY-SWEEP`, `PRM-03-PRELIM-RESULT-PACKS`, and `PRM-04-HTT-MIO-HANDOFF` are closed. The next preliminary-results packet is:
+`PRM-01-BASS-INTEROP`, `PRM-02-BASS-FAMILY-SWEEP`, `PRM-03-PRELIM-RESULT-PACKS`, and `PRM-04-HTT-MIO-HANDOFF` are closed. `PRM-05-TARGETED-PHYSICS` is open. The next preliminary-results substep is:
 
-1. `PRM-05-TARGETED-PHYSICS`
+1. continue `PRM-05-TARGETED-PHYSICS` with the representative `VII_0` tilted runtime blocker
 
 ## 4. Hard Reminders
 
@@ -221,3 +224,6 @@ cleanup:
 - Do not let downstream HTT/MIO/TSC or exporter consumers reconstruct branch,
   theory-family, or tilt-vs-boost semantics from type names or ad hoc local
   rules when those fields are already present in the BASS interop payload.
+- Do not misread the opened representative `Type V` tilted runtime path as
+  blanket tilted-family closure; `I`, `VII_0`, and `VIII` tilted branches
+  still remain explicit controlled blockers.
