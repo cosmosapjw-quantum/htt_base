@@ -6,6 +6,7 @@ import pytest
 from common.contracts import ArtifactManifest
 from tsc.source.thomson_bridge import (
     build_source_bridge_report,
+    build_source_bridge_report_from_samples,
     eta_correction_indicator,
     intensity_from_theta,
     quadrupole_from_intensity,
@@ -81,3 +82,49 @@ def test_linear_bridge_warning_fires_for_moderate_dipole():
 
     assert report.source_status == "adequate"
     assert "linear_bridge_underestimates_risk" in report.labels
+
+
+def test_build_source_bridge_report_from_samples_infers_exact_trace_labels_and_primitives():
+    mu, weights = np.polynomial.legendre.leggauss(32)
+    theta = 1.0 + 0.10 * mu
+
+    report = build_source_bridge_report_from_samples(
+        chart="one_field",
+        theta_samples=theta,
+        directions=mu,
+        weights=weights,
+        manifest=_manifest(),
+        on_manifold_exact=True,
+        linear_bridge_requested=False,
+    )
+
+    assert report.source_status == "adequate"
+    assert "trace_source_exact_on_manifold" in report.labels
+    assert report.required_bass_primitives == (
+        "theta_samples",
+        "quadrature_weights",
+        "electron_density",
+        "sigma_T",
+    )
+
+
+def test_build_source_bridge_report_from_samples_marks_pending_off_manifold_bridge():
+    mu, weights = np.polynomial.legendre.leggauss(32)
+    theta = 1.0 + 0.25 * mu
+
+    report = build_source_bridge_report_from_samples(
+        chart="two_field",
+        theta_samples=theta,
+        directions=mu,
+        weights=weights,
+        manifest=_manifest(),
+        eta=np.full_like(theta, -0.3),
+        on_manifold_exact=False,
+        linear_bridge_requested=True,
+        q2_op_norm=0.2,
+    )
+
+    assert report.source_status == "pending"
+    assert "source_bridge_bound_pending" in report.labels
+    assert "eta_correction_not_small" in report.labels or "eta_correction_small" in report.labels
+    assert "eta_samples" in report.required_bass_primitives

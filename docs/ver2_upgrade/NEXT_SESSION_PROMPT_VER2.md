@@ -24,6 +24,7 @@
 20. `docs/ver2_upgrade/audits/AUDIT_IM-01S1_2026-04-21.md`
 21. `docs/ver2_upgrade/audits/AUDIT_IM-02S2_2026-04-21.md`
 22. `docs/ver2_upgrade/audits/AUDIT_IM-03S3A_2026-04-21.md`
+23. `docs/ver2_upgrade/audits/AUDIT_IM-05T_2026-04-21.md`
 
 ## 2. Current State
 
@@ -70,6 +71,9 @@
 - `IM-04O` verification is green for the touched O-lane scope: packet-local pytest `8 passed`, full `htt/bass/observational` `88 passed`, MIO/HTT/runtime regression pytest `34 passed`, `py_compile` passed, and both hostile-audit / validation-registry `--check` commands pass.
 - The converged implementation choice for `IM-04O` is explicit proxy discharge, not fake promotion: the O-lane now binds to live Tier-B outputs and can mark isotropic-null proxy cases, but it still does not pretend that `sparse_mode_block_proxy` is a validated low-`ell` BiPoSH basis reduction.
 - There are no uncommitted local `IM-06H` / `IM-07M` code changes in the current checkout; the aborted rows in the execution ledger are historical records only.
+- `IM-05T` is now closed: TSC owns theorem-backed trace-source bridge numerics, report-to-budget assembly, validated service-label grammar, solver-independent active-service bundle assembly, publication-blocking overlay export, and advisory BASS/HTT/MIO handoff helpers under `htt/tsc/*` without taking runtime or posterior authority.
+- `IM-05T` verification is green for the touched T-lane scope: targeted pytest `29 passed`, full `venv/bin/python -m pytest htt/tsc -q` `653 passed`, selected `py_compile` passed, and `AUDIT_IM-05T_2026-04-21.md` records the converged implementation choice.
+- The older execution-ledger `IM-05T` row is superseded by the correction row that records active-service assembly, label-grammar closure, and faithful inadequate/pending-source propagation.
 - Prompt list 01 is now complete: every skeleton lane has an audit note, machine-readable carry-forward, and a frozen write-scope boundary.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
@@ -79,16 +83,15 @@
 
 If working in one thread, continue with the remaining implementation packets:
 
-1. `IM-05T`
-2. `IM-06H`
-3. `IM-07M`
-4. `IM-08V`
+1. `IM-08V`
+2. `IM-09D-FIG`
+3. `IM-10D-MAN`
 
 If parallel threads are available, use this order:
 
-- main thread: `IM-05T`
-- after the T-lane commit lands: `IM-06H` and `IM-07M` in parallel
-- final convergence thread: `IM-08V`
+- main thread: `IM-08V`
+- after the V-lane commit lands: `IM-09D-FIG`
+- final convergence thread: `IM-10D-MAN`
 
 ## 4. Hard Reminders
 
@@ -107,3 +110,4 @@ If parallel threads are available, use this order:
 - Do not silently treat `diagnostic_only` H-lane manifests as production-ready; `IM-06H` now requires live solver/null/PPC/LOOCV hooks before candidate promotion.
 - Do not treat IM-07M predictive residual outputs as final heatmap/validation artifacts yet; the live shared-schema slice path exists, but campaign/export promotion still belongs to later V/D packets.
 - Rerun `venv/bin/python scripts/ver2_artifact_export.py` after any D-lane change touching generated manuscript/export surfaces.
+- Do not let the new T-lane `TscActiveServiceBundle` be mistaken for a BASS runtime decision object or an HTT/MIO truth surface; it is an advisory assembly layer only.

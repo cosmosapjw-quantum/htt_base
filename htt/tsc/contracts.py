@@ -32,6 +32,21 @@ ALLOWED_COMBINED_LABELS: Final[tuple[str, ...]] = (
     "full_resolved_trace_required",
 )
 
+ALLOWED_SERVICE_LABELS: Final[tuple[str, ...]] = (
+    *ALLOWED_COMBINED_LABELS,
+    "te_mixed_channel_requires_spin2",
+    "trace_source_exact_on_manifold",
+    "trace_source_bound_available",
+    "source_bound_within_budget",
+    "source_bound_exceeds_budget",
+    "source_bridge_bound_pending",
+    "source_bridge_not_applicable",
+    "eta_correction_small",
+    "eta_correction_not_small",
+    "linear_bridge_underestimates_risk",
+    "stable_no_upgrade",
+)
+
 FORBIDDEN_COMBINED_LABELS: Final[tuple[str, ...]] = (
     "tsc_validated_full_polarization",
     "tsc_validated_bianchi_family",
@@ -73,8 +88,25 @@ def serious_artifact_has_tsc_annotation(
     return bool(meta.get(TSC_NOT_APPLICABLE))
 
 
+def validate_tsc_service_labels(labels: tuple[str, ...] | list[str]) -> tuple[str, ...]:
+    """Validate TSC-local service labels against the frozen VER2 registry."""
+    ordered = tuple(dict.fromkeys(str(label) for label in labels))
+    forbidden = tuple(label for label in ordered if label in FORBIDDEN_COMBINED_LABELS)
+    if forbidden:
+        raise ValueError(
+            "forbidden TSC service labels encountered: " + ", ".join(forbidden)
+        )
+    unknown = tuple(label for label in ordered if label not in ALLOWED_SERVICE_LABELS)
+    if unknown:
+        raise ValueError(
+            "unknown TSC service labels encountered: " + ", ".join(unknown)
+        )
+    return ordered
+
+
 __all__ = [
     "ALLOWED_COMBINED_LABELS",
+    "ALLOWED_SERVICE_LABELS",
     "CHANNEL_DEFAULT_CLAIM_CEILINGS",
     "FORBIDDEN_COMBINED_LABELS",
     "FORBIDDEN_TSC_FIELDS",
@@ -86,4 +118,5 @@ __all__ = [
     "TscSourceBridgeReport",
     "TscUpgradeRecommendation",
     "serious_artifact_has_tsc_annotation",
+    "validate_tsc_service_labels",
 ]

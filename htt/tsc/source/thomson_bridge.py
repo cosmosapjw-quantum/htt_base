@@ -7,6 +7,7 @@ from typing import Iterable
 import numpy as np
 
 from common.contracts import ArtifactManifest, TscSourceBridgeReport, TscChart
+from tsc.contracts import validate_tsc_service_labels
 
 
 def _as_array(values: Iterable[float] | np.ndarray) -> np.ndarray:
@@ -211,13 +212,85 @@ def build_source_bridge_report(
         on_manifold_exact=on_manifold_exact,
         source_status=status,  # type: ignore[arg-type]
         required_bass_primitives=required_bass_primitives,
-        labels=tuple(labels),
+        labels=validate_tsc_service_labels(labels),
         manifest=manifest,
+    )
+
+
+def build_source_bridge_report_from_samples(
+    *,
+    chart: TscChart,
+    theta_samples: Iterable[float] | np.ndarray,
+    directions: Iterable[float] | np.ndarray,
+    weights: Iterable[float] | np.ndarray,
+    manifest: ArtifactManifest,
+    T0: float = 1.0,
+    xi: int = 0,
+    eta: Iterable[float] | np.ndarray | None = None,
+    ne: float = 1.0,
+    sigma_T: float = 1.0,
+    on_manifold_exact: bool = True,
+    linear_bridge_requested: bool = False,
+    dipole_amplitude: float | None = None,
+    source_error: float | None = None,
+    q2_op_norm: float | None = None,
+    required_bass_primitives: tuple[str, ...] = (),
+) -> TscSourceBridgeReport:
+    """Build a live source-bridge report directly from sampled angular fields."""
+    theta_arr = _as_array(theta_samples)
+    mu_arr = _as_array(directions)
+    weight_arr = _as_array(weights)
+    if theta_arr.shape != mu_arr.shape or theta_arr.shape != weight_arr.shape:
+        raise ValueError("theta_samples, directions, and weights must share the same shape")
+
+    eta_arr = None if eta is None else np.asarray(eta, dtype=float)
+    intensity = intensity_from_theta(theta_arr, T0=T0, xi=xi, eta=eta_arr)
+    q2 = quadrupole_from_intensity(intensity, mu_arr, weight_arr)
+    _ = thomson_source_from_quadrupole(q2=q2, ne=ne, sigma_T=sigma_T)
+
+    if source_error is None and q2_op_norm is not None and not on_manifold_exact:
+        source_error = source_error_bound(
+            float(np.max(np.abs(intensity))),
+            q2_op_norm=q2_op_norm,
+            ne=ne,
+            sigma_T=sigma_T,
+        )
+
+    if dipole_amplitude is None and linear_bridge_requested:
+        weight_sum = float(np.sum(weight_arr))
+        dipole_amplitude = (
+            float(np.sum(weight_arr * theta_arr * mu_arr) / weight_sum)
+            if weight_sum > 0.0
+            else 0.0
+        )
+
+    eta_indicator = None
+    if eta_arr is not None:
+        eta_indicator = float(eta_correction_indicator(eta_arr, xi=xi))
+
+    primitives = required_bass_primitives
+    if not primitives:
+        inferred = ["theta_samples", "quadrature_weights", "electron_density", "sigma_T"]
+        if eta_arr is not None:
+            inferred.append("eta_samples")
+        primitives = tuple(inferred)
+
+    return build_source_bridge_report(
+        chart=chart,
+        q2_norm=abs(float(q2)),
+        manifest=manifest,
+        source_error=source_error,
+        dipole_amplitude=None if dipole_amplitude is None else abs(float(dipole_amplitude)),
+        eta_correction_indicator=eta_indicator,
+        on_manifold_exact=on_manifold_exact,
+        linear_bridge_requested=linear_bridge_requested,
+        required_bass_primitives=primitives,
     )
 
 
 __all__ = [
     "build_source_bridge_report",
+    "build_source_bridge_report_from_samples",
     "eta_correction_indicator",
     "intensity_from_theta",
     "occupation_moment_order3",

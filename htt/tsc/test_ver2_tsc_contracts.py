@@ -12,10 +12,12 @@ from tsc.adapters.bass_runtime import SourceAdequacySuggestion
 from tsc.audit.no_overclaim import FORBIDDEN_PHRASE_REGISTRY
 from tsc.contracts import (
     ALLOWED_COMBINED_LABELS,
+    ALLOWED_SERVICE_LABELS,
     FORBIDDEN_COMBINED_LABELS,
     FORBIDDEN_TSC_FIELDS,
     TSC_NOT_APPLICABLE,
     serious_artifact_has_tsc_annotation,
+    validate_tsc_service_labels,
 )
 
 
@@ -31,6 +33,7 @@ MODULES_TO_SCAN = (
     ROOT / "adapters" / "bass_runtime.py",
     ROOT / "adapters" / "htt_inference.py",
     ROOT / "adapters" / "mio_certificate.py",
+    ROOT / "integration" / "active_service.py",
     ROOT / "reports" / "overlay_builder.py",
 )
 
@@ -80,9 +83,20 @@ def test_forbidden_runtime_and_truth_fields_absent_from_tsc_outputs():
 
 def test_allowed_and_forbidden_label_vocabulary_present():
     assert "source_adequate__propagation_pending" in ALLOWED_COMBINED_LABELS
+    assert "source_bridge_bound_pending" in ALLOWED_SERVICE_LABELS
     assert "tsc_validated_full_polarization" in FORBIDDEN_COMBINED_LABELS
     assert TSC_NOT_APPLICABLE == "tsc_not_applicable"
     assert "full_polarization" in FORBIDDEN_PHRASE_REGISTRY
+
+
+def test_validate_tsc_service_labels_rejects_unknown_and_forbidden_labels():
+    assert validate_tsc_service_labels(("stable_no_upgrade", "stable_no_upgrade")) == (
+        "stable_no_upgrade",
+    )
+    with pytest.raises(ValueError, match="unknown TSC service labels"):
+        validate_tsc_service_labels(("not_a_real_label",))
+    with pytest.raises(ValueError, match="forbidden TSC service labels"):
+        validate_tsc_service_labels(("tsc_validated_full_polarization",))
 
 
 def test_serious_artifact_requires_overlay_or_explicit_na():

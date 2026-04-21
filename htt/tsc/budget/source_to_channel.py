@@ -1,8 +1,11 @@
 """Source-to-channel adequacy budgets for the VER2 TSC service."""
 from __future__ import annotations
 
+from collections.abc import Mapping
+
 from common.contracts import ArtifactManifest, TscChannelAdequacyBudget
-from tsc.contracts import CHANNEL_DEFAULT_CLAIM_CEILINGS
+from common.contracts import TscDomainReport, TscResidualReport, TscSourceBridgeReport
+from tsc.contracts import CHANNEL_DEFAULT_CLAIM_CEILINGS, validate_tsc_service_labels
 
 
 def source_to_field_prebudget(
@@ -28,7 +31,7 @@ def _status_labels(
     propagation_status: str,
 ) -> tuple[str, ...]:
     if channel == "BB":
-        return ("trace_only__bb_claim_forbidden",)
+        return validate_tsc_service_labels(("trace_only__bb_claim_forbidden",))
 
     labels: list[str] = []
     if source_status == "adequate" and propagation_status == "validated":
@@ -42,7 +45,7 @@ def _status_labels(
         labels.append("trace_ok__spin2_required")
     if channel == "TE":
         labels.append("te_mixed_channel_requires_spin2")
-    return tuple(dict.fromkeys(labels))
+    return validate_tsc_service_labels(labels)
 
 
 def _base_budget(
@@ -205,6 +208,7 @@ def build_channel_budgets(
     source_error_bound: float | None = None,
     propagator_norm_bound: float | None = None,
     amplification_bound: float | None = None,
+    propagation_status_by_channel: Mapping[str, str] | None = None,
 ) -> tuple[TscChannelAdequacyBudget, ...]:
     source_budget = trace_budget if trace_budget is not None else source_error_bound
     field_prebudget = source_to_field_prebudget(
@@ -212,12 +216,21 @@ def build_channel_budgets(
         propagator_norm_bound,
         amplification_bound=amplification_bound,
     )
+    status_map = {
+        "TT": "validated" if propagation_status == "validated" else "pending",
+        "EE": propagation_status,
+        "TE": propagation_status,
+        "BB": "blocked" if propagation_status != "validated" else "validated",
+    }
+    if propagation_status_by_channel is not None:
+        for channel, status in propagation_status_by_channel.items():
+            status_map[str(channel)] = str(status)
     return (
         channel_budget_TT(
             manifest=manifest,
             trace_budget=source_budget,
             source_status=source_status,
-            propagation_status="validated" if propagation_status == "validated" else "pending",
+            propagation_status=status_map["TT"],
             source_to_field_bound=field_prebudget,
         ),
         channel_budget_EE(
@@ -225,7 +238,7 @@ def build_channel_budgets(
             trace_budget=source_budget,
             spin2_budget=spin2_budget,
             source_status=source_status,
-            propagation_status=propagation_status,
+            propagation_status=status_map["EE"],
             source_to_field_bound=field_prebudget,
         ),
         channel_budget_TE(
@@ -233,20 +246,58 @@ def build_channel_budgets(
             trace_budget=source_budget,
             spin2_budget=spin2_budget,
             source_status=source_status,
-            propagation_status=propagation_status,
+            propagation_status=status_map["TE"],
             source_to_field_bound=field_prebudget,
         ),
         channel_budget_BB(
             manifest=manifest,
             source_status=source_status,
-            propagation_status="blocked" if propagation_status != "validated" else "validated",
+            propagation_status=status_map["BB"],
             high_budget=high_budget,
         ),
     )
 
 
+def build_channel_budgets_from_reports(
+    *,
+    manifest: ArtifactManifest,
+    domain_report: TscDomainReport,
+    residual_report: TscResidualReport,
+    source_report: TscSourceBridgeReport | None,
+    propagator_norm_bound: float | None = None,
+    amplification_bound: float | None = None,
+    propagation_status_by_channel: Mapping[str, str] | None = None,
+) -> tuple[TscChannelAdequacyBudget, ...]:
+    """Build channel budgets from active-service reports without taking propagation ownership."""
+    source_status = "pending" if source_report is None else str(source_report.source_status)
+    if domain_report.status == "invalid_domain":
+        status_map = {"TT": "blocked", "EE": "blocked", "TE": "blocked", "BB": "blocked"}
+    else:
+        status_map = {
+            "TT": "validated" if source_status == "adequate" else "pending",
+            "EE": "pending",
+            "TE": "pending",
+            "BB": "blocked",
+        }
+        if propagation_status_by_channel is not None:
+            status_map.update({str(key): str(value) for key, value in propagation_status_by_channel.items()})
+    return build_channel_budgets(
+        manifest=manifest,
+        source_status=source_status,
+        propagation_status=status_map["EE"],
+        trace_budget=None if source_report is None else source_report.q2_norm,
+        spin2_budget=residual_report.spin2_residual,
+        high_budget=residual_report.high_residual,
+        source_error_bound=None if source_report is None else source_report.source_error_bound,
+        propagator_norm_bound=propagator_norm_bound,
+        amplification_bound=amplification_bound,
+        propagation_status_by_channel=status_map,
+    )
+
+
 __all__ = [
     "build_channel_budgets",
+    "build_channel_budgets_from_reports",
     "channel_budget_BB",
     "channel_budget_EE",
     "channel_budget_TE",

@@ -3,10 +3,14 @@ from __future__ import annotations
 import pytest
 
 from common.contracts import ArtifactManifest
+from tsc.admissibility.domain import build_domain_report
 from tsc.budget.source_to_channel import (
     build_channel_budgets,
+    build_channel_budgets_from_reports,
     source_to_field_prebudget,
 )
+from tsc.residuals.blockwise import ambient_vs_projected_defect_report
+from tsc.source.thomson_bridge import build_source_bridge_report
 
 
 def _manifest() -> ArtifactManifest:
@@ -82,3 +86,73 @@ def test_inadequate_source_uses_conservative_nonclaim_label():
 
     assert by_channel["TT"].labels[0] == "source_inadequate__propagation_not_evaluated"
     assert by_channel["TE"].labels[0] == "source_inadequate__propagation_not_evaluated"
+
+
+def test_build_channel_budgets_from_reports_blocks_all_channels_for_invalid_domain():
+    man = _manifest()
+    domain = build_domain_report(
+        chart="one_field",
+        theta_samples=[-0.1, 0.2],
+        manifest=man,
+    )
+    residual = ambient_vs_projected_defect_report(
+        chart="one_field",
+        laguerre_n_ge_2_norm=0.1,
+        ambient_defect_rate=None,
+        projected_defect_estimate=None,
+        onefield_residual=0.1,
+        twofield_residual=None,
+        eta_tangent_fraction=None,
+        trace_residual_q_tr=0.1,
+        spin2_residual=None,
+        high_residual=None,
+        labels=tuple(),
+        manifest=man,
+    )
+    budgets = build_channel_budgets_from_reports(
+        manifest=man,
+        domain_report=domain,
+        residual_report=residual,
+        source_report=None,
+    )
+
+    assert {budget.propagation_status for budget in budgets} == {"blocked"}
+
+
+def test_build_channel_budgets_from_reports_allows_per_channel_overrides():
+    man = _manifest()
+    domain = build_domain_report(chart="one_field", theta_samples=[1.0, 1.1], manifest=man)
+    residual = ambient_vs_projected_defect_report(
+        chart="one_field",
+        laguerre_n_ge_2_norm=0.1,
+        ambient_defect_rate=None,
+        projected_defect_estimate=None,
+        onefield_residual=0.1,
+        twofield_residual=None,
+        eta_tangent_fraction=None,
+        trace_residual_q_tr=0.1,
+        spin2_residual=0.2,
+        high_residual=0.3,
+        labels=tuple(),
+        manifest=man,
+    )
+    source = build_source_bridge_report(
+        chart="one_field",
+        q2_norm=0.1,
+        manifest=man,
+        source_error=0.01,
+        on_manifold_exact=True,
+    )
+    budgets = build_channel_budgets_from_reports(
+        manifest=man,
+        domain_report=domain,
+        residual_report=residual,
+        source_report=source,
+        propagation_status_by_channel={"EE": "validated", "TE": "blocked"},
+    )
+    by_channel = {budget.channel: budget for budget in budgets}
+
+    assert by_channel["TT"].propagation_status == "validated"
+    assert by_channel["EE"].propagation_status == "validated"
+    assert by_channel["TE"].propagation_status == "blocked"
+    assert by_channel["BB"].propagation_status == "blocked"
