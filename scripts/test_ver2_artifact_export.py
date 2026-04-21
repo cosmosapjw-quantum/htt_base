@@ -53,6 +53,21 @@ def test_local_global_pack_reflects_calibrated_conditional_discrimination() -> N
     assert record.manifest.production_status == "production_candidate"
     assert pack.claim_tier == "conditional"
     assert pack.production_status == "production_candidate"
+    assert pack.summary_lines[0].startswith(
+        "The HTT discrimination matrix is a bounded conditional pre-inference audit"
+    )
+    assert "exploratory" not in pack.summary_lines[0].lower()
+
+
+def test_result_pack_summary_tex_tracks_conditional_local_global_pack() -> None:
+    exporter = _load_export_module()
+    _, packs = exporter.build_export_bundle()
+    summary_tex = exporter._render_result_pack_summary_tex(packs)
+    assert (
+        "appendix-only conditional pre-inference local-vs-global separation audit; not posterior odds"
+        in summary_tex
+    )
+    assert "appendix-only diagnostic on local-vs-global degeneracy; not posterior odds" not in summary_tex
 
 
 def test_validation_pack_carries_representative_family_sweep_evidence() -> None:

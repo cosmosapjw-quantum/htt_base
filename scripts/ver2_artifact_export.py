@@ -1008,6 +1008,21 @@ def _build_pack_records(records: dict[str, ArtifactRecord]) -> tuple[PackRecord,
                 for caveat in record.manifest.caveats + list(record.notes)
             )
         )
+        resolved_summary_lines = summary_lines
+        if pack_id == "B":
+            discrimination = artifacts[0]
+            resolved_summary_lines = (
+                (
+                    "The HTT discrimination matrix is a bounded conditional pre-inference audit "
+                    "that keeps local boost distinct from global tilt."
+                ),
+                "No posterior odds or source-side confirmation are exported here.",
+            )
+            if discrimination.manifest.claim_tier == "exploratory":
+                resolved_summary_lines = (
+                    "The HTT discrimination matrix is exploratory and keeps local boost distinct from global tilt.",
+                    "No posterior odds or source-side confirmation are exported here.",
+                )
         packs.append(
             PackRecord(
                 pack_id=pack_id,
@@ -1018,10 +1033,16 @@ def _build_pack_records(records: dict[str, ArtifactRecord]) -> tuple[PackRecord,
                 claim_tier=claim_tier,
                 production_status=production_status,
                 caveats=caveats,
-                summary_lines=summary_lines,
+                summary_lines=resolved_summary_lines,
             )
         )
     return tuple(packs)
+
+
+def _manuscript_role(pack: PackRecord) -> str:
+    if pack.pack_id == "B" and pack.claim_tier in {"conditional", "validated"}:
+        return "appendix-only conditional pre-inference local-vs-global separation audit; not posterior odds"
+    return MANUSCRIPT_ROLE_BY_PACK[pack.pack_id]
 
 
 def _status_rows(records: dict[str, ArtifactRecord]) -> list[dict[str, object]]:
@@ -1322,7 +1343,7 @@ def _render_result_pack_summary_tex(packs: tuple[PackRecord, ...]) -> str:
             f"{_escape_tex(pack.pack_id)} & {_escape_tex(pack.title)} & "
             f"\\texttt{{{_escape_tex(pack.claim_tier)}}} & "
             f"\\texttt{{{_escape_tex(pack.production_status)}}} & "
-            f"{_escape_tex(MANUSCRIPT_ROLE_BY_PACK[pack.pack_id])} \\\\"
+            f"{_escape_tex(_manuscript_role(pack))} \\\\"
         )
         for pack in packs
     )
