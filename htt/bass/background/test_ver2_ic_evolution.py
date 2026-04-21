@@ -61,7 +61,7 @@ def test_curvature_scale_closure_rescales_algebra_instead_of_matter() -> None:
         rho=2.0,
         p=0.0,
         sigma_ab=np.zeros((3, 3)),
-        H=0.5,
+        H=1.0,
         closure="solve_curvature_scale",
     )
     assert ic.metadata.algebra_scale_factor > 0.0

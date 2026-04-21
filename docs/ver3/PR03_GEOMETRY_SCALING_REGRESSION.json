@@ -1,0 +1,32 @@
+{
+  "artifact_id": "ver3.pr03.geometry_scaling_regression",
+  "pr": "PR-03",
+  "api_version": "ver3-pr03-v1",
+  "families": ["I", "V", "IX"],
+  "file_api": {
+    "geometry_file": "htt/bass/background/geometry.py",
+    "api": [
+      "build_geometry",
+      "connection_from_commutators",
+      "spatial_ricci_from_connection",
+      "spatial_ricci_from_compact_formula",
+      "dual_route_curvature_residual"
+    ]
+  },
+  "residual_summary": {
+    "type_I_dual_route_residual_max": 0.0,
+    "type_V_dual_route_residual_max": 0.0,
+    "type_IX_dual_route_residual_max": 0.0
+  },
+  "known_limit_checks": {
+    "type_I_flat_zero_curvature": true,
+    "type_V_open_isotropic_curvature": true,
+    "type_IX_closed_isotropic_curvature": true,
+    "quadratic_scaling_under_algebra_rescale": true
+  },
+  "forbidden_shortcut_checks": {
+    "single_route_only_geometry_forbidden": true,
+    "family_proxy_for_S_AB_forbidden": true
+  },
+  "opened_claim": "geometry-ready for named family branch only"
+}
