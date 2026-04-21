@@ -12,6 +12,12 @@ from bass.inference.diagnostics import (
     trace_plot_data,
 )
 from bass.inference.drivers.emcee_driver import PosteriorSample, run_posterior
+from bass.inference.live_binding import (
+    LiveObserverBoostProblem,
+    build_live_observer_boost_problem,
+    build_type_i_native_validation_problem,
+    run_type_i_native_validation_posterior,
+)
 from bass.inference.priors import (
     Prior,
     SUN_CMB_DIPOLE_DIRECTION,
@@ -30,7 +36,10 @@ __all__ = [
     "PosteriorSample",
     "R_HAT_THRESHOLD",
     "SUN_CMB_DIPOLE_DIRECTION",
+    "LiveObserverBoostProblem",
     "bayes_factor",
+    "build_live_observer_boost_problem",
+    "build_type_i_native_validation_problem",
     "convergence_report",
     "ess",
     "geweke",
@@ -41,5 +50,6 @@ __all__ = [
     "prior_structure_constants",
     "r_hat",
     "run_posterior",
+    "run_type_i_native_validation_posterior",
     "trace_plot_data",
 ]

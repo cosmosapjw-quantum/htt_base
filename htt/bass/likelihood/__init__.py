@@ -1,16 +1,19 @@
-"""bass.likelihood — cosmological-frame likelihood scaffolding.
+"""bass.likelihood — BASS-bound likelihood adapters.
 
-This package is introduced at FB-META-7 to host the spectrum-to-
-likelihood surfaces that sit between the BASS spectrum stack and the
-future observer-frame adapter planned for FB-8.
+BF-06 narrows the package-root surface to helpers that bind the legacy FB-7/8
+scaffolding to live BASS `SolverCoreOutput` artifacts. Transitional surrogate
+constructors remain available from their submodules for audited regression
+work, but they are no longer presented as the canonical package API.
 """
 
-from bass.likelihood.cosmological_frame import CosmologicalFrameLikelihood
-from bass.likelihood.htt_decomposition import build_htt_decomposition
-from bass.likelihood.observer_frame_adapter import ObserverFrameLikelihood
+from bass.likelihood.live_binding import (
+    build_cosmological_frame_likelihood_from_solver_output,
+    build_live_htt_decomposition_from_solver_output,
+    build_observer_frame_likelihood_from_solver_output,
+)
 
 __all__ = [
-    "CosmologicalFrameLikelihood",
-    "ObserverFrameLikelihood",
-    "build_htt_decomposition",
+    "build_live_htt_decomposition_from_solver_output",
+    "build_cosmological_frame_likelihood_from_solver_output",
+    "build_observer_frame_likelihood_from_solver_output",
 ]

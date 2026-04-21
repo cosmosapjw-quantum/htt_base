@@ -1,0 +1,37 @@
+from __future__ import annotations
+
+import numpy as np
+import pytest
+
+from bass.inference.live_binding import build_type_i_native_validation_problem
+from bass.likelihood.live_binding import (
+    build_cosmological_frame_likelihood_from_solver_output,
+    build_observer_frame_likelihood_from_solver_output,
+)
+from bass.observer.observer_boost import ObserverBoost
+
+
+@pytest.fixture(scope="module")
+def _live_problem():
+    return build_type_i_native_validation_problem(11)
+
+
+def test_live_cosmological_frame_likelihood_binds_to_solver_output(_live_problem) -> None:
+    likelihood = build_cosmological_frame_likelihood_from_solver_output(
+        _live_problem.solver_output
+    )
+    assert likelihood.htt_decomposition["binding_origin"] == "solver_core_output"
+    assert (
+        likelihood.htt_decomposition["solver_output_ref"]
+        == _live_problem.solver_output.manifest.artifact_id
+    )
+    assert bool(likelihood.htt_decomposition["live_bass_binding"]) is True
+    assert np.isfinite(likelihood.log_prob({}))
+
+
+def test_live_observer_frame_likelihood_accepts_live_solver_output(_live_problem) -> None:
+    likelihood = build_observer_frame_likelihood_from_solver_output(
+        _live_problem.solver_output
+    )
+    value = likelihood.log_prob({"observer_boost": ObserverBoost(rapidity=0.0)})
+    assert np.isfinite(value)

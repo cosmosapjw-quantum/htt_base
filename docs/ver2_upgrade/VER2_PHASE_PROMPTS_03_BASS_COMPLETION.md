@@ -166,10 +166,14 @@ Only after the BASS physics path is completed, retarget observer/likelihood/infe
 
 ## 5. Immediate next action
 
-`BF-01B-HCORE`, `BF-02B-SEED`, `BF-03B-ANG`, and `BF-04B-COV` are now closed in the execution ledger. If the goal is to
-maximize `htt/bass/*` completion, the next packet is:
+`BF-01B-HCORE` through `BF-06B-LIKE` are now closed in the execution ledger.
+The BASS-first implementation sequence is complete.
 
-1. `BF-06B-LIKE`
+The remaining formal packet in this list is:
 
-Only after `BF-05B-VAL` and the remaining serial solver-spine packets land should any
-new non-BASS follow-up packet be considered.
+1. `BF-07X-CLEANUP`
+
+That packet is cleanup-only and should remain deferred unless the user
+explicitly requests legacy figures/docs sync. Physics/statistics carry-forward
+items that remain after BF-06 are recorded in the ledgers rather than reopened
+as new implementation packets here.

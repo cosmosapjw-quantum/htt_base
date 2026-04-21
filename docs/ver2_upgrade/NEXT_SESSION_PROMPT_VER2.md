@@ -112,7 +112,9 @@
 - `BF-05B-VAL` is now closed: BASS owns an executable BF-05 runtime-evidence surface under `htt/bass/validation/ver2_campaign_evidence.py` plus `htt/scripts/ver2_bass_validation.py`, the validation registry now contains a bounded `pass` campaign for the shipped Type-I native Tier-B route, and the previous false `L=8` STF cache blocker is removed by on-demand basis extension in `htt/bass/hierarchy/contractions.py`.
 - `BF-05B-VAL` verification is green for the touched BASS-validation scope: targeted pytest `66 passed`, registry `--check` passed, hostile-audit `--check` passed, BF-05 script `--check` passed, and `py_compile` passed.
 - The converged BF-05 choice is deliberately narrow: the new `pass` campaign validates only the shipped Type-I native runtime/seed/cutoff/observer-neutral bridge, while the broader morphology/injection/MES science-facing campaigns remain `warn`.
-- The BASS-first sequence is now active in code, not just in planning docs: production Tier-B ownership, live seed/startup injection, live PSTF angular reconstruction, and basis-reduced low-`ell` covariance promotion have moved, while the remaining high-priority BASS debt is concentrated in validation-grade cross-checking and later observer/likelihood/inference retargeting.
+- `BF-06B-LIKE` is now closed: `bass.observer` package-root exports are production-only, `bass.likelihood` package-root exports now prefer live `SolverCoreOutput` bindings, and `bass.inference` now ships a bounded live Type-I native observer-boost path so the BASS CLI is no longer surrogate-only.
+- `BF-06B-LIKE` verification is green for the touched BASS observer/likelihood/inference scope: live-binding/public-surface pytest `6 passed`, live-inference pytest `3 passed`, observer regression pytest `132 passed`, likelihood/public-surface pytest `77 passed`, and `py_compile` passed.
+- The BASS-first implementation sequence is now closed in code. Remaining debt is no longer “wire observer/likelihood/inference at all”; it is the deeper physics/statistics carry-forward around non-Type-I exact propagation, full BiPoSH inversion, and later HTT-facing science claims.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
 ## 3. Next Recommended Work
@@ -124,19 +126,19 @@ figure/doc cleanup. Use
 `docs/ver2_upgrade/VER2_PHASE_PROMPTS_03_BASS_COMPLETION.md`
 instead and run the follow-up packets in that order.
 
-The immediate next packet is:
+There is no new BASS-first implementation packet left in the list.
 
-1. `BF-06B-LIKE`
+If the user explicitly wants cleanup-only work, the next formal packet is:
 
-The reordered priority is:
+1. `BF-07X-CLEANUP`
 
-1. upgrade BASS-centered validation,
-2. only then retarget `bass/observer`, `bass/likelihood`, and `bass/inference`,
-3. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until after the BASS-first sequence.
+Otherwise keep the priority on physics/statistics carry-forward, not legacy
+cleanup:
 
-Parallel policy is now constrained by the solver spine:
-
-1. `BF-06B-LIKE` follows the now-closed solver/O-lane/validation packets.
+1. non-Type-I exact propagator closure,
+2. deeper visibility / microphysics fidelity,
+3. later HTT-facing morphology / likelihood claim calibration,
+4. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until explicitly requested.
 
 ## 4. Hard Reminders
 
@@ -162,5 +164,5 @@ Parallel policy is now constrained by the solver spine:
 - Do not treat IM-07M predictive residual outputs as final heatmap/validation artifacts yet; the live shared-schema slice path exists, but campaign/export promotion still belongs to later V/D packets.
 - Do not treat the `83` legacy paper figures as manifest-ready just because IM-09D landed five generated figure bases; only `figures/paper/ver2_generated/*` currently pass the manifest gate.
 - Do not let the new T-lane `TscActiveServiceBundle` be mistaken for a BASS runtime decision object or an HTT/MIO truth surface; it is an advisory assembly layer only.
-- Do not let post-VER2 maintenance work jump ahead of the new BASS-first follow-up sequence unless the task is explicitly non-BASS cleanup.
+- Do not let legacy cleanup jump ahead of unresolved physics/statistics carry-forward unless the task is explicitly cleanup-only.
 - Rerun `venv/bin/python scripts/ver2_artifact_export.py` after any D-lane change touching generated manuscript/export surfaces.

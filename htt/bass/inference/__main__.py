@@ -3,9 +3,9 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
-from collections.abc import Sequence
 
 import numpy as np
 import yaml
@@ -13,6 +13,7 @@ import yaml
 from bass.background.bianchi_types import ALL_BIANCHI_TYPES
 from bass.inference.bayes import bayes_factor
 from bass.inference.drivers.emcee_driver import PosteriorSample, run_posterior
+from bass.inference.live_binding import run_type_i_native_validation_posterior
 from bass.inference.synthetic import (
     make_problem,
     posterior_mle,
@@ -44,6 +45,8 @@ def _validate_dataset_contract(config: dict[str, Any]) -> dict[str, Any]:
     kind = str(dataset.get("kind", "")).strip()
     if not kind:
         raise ValueError("dataset.kind must be set explicitly")
+    if kind == "type_i_native_validation":
+        return dataset
     allow_surrogate = bool(dataset.get("allow_surrogate", False))
     if kind in {"synthetic_planck2018", "synthetic_surrogate"}:
         if not allow_surrogate:
@@ -60,9 +63,8 @@ def _validate_dataset_contract(config: dict[str, Any]) -> dict[str, Any]:
         f"dataset.kind={kind!r} is not wired in this worktree. The "
         "surrogate test harness is available via "
         "dataset.kind='synthetic_surrogate' with "
-        "dataset.allow_surrogate=true; production inference requires "
-        "a first-principles observation/likelihood binding that is not "
-        "yet implemented locally."
+        "dataset.allow_surrogate=true; the shipped live BASS binding is "
+        "available via dataset.kind='type_i_native_validation'."
     )
 
 
@@ -70,10 +72,24 @@ def _round_float(value: float) -> float:
     return float(np.round(float(value), 12))
 
 
+def _json_ready(value: object) -> object:
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    if isinstance(value, (np.floating,)):
+        return float(value)
+    if isinstance(value, (np.integer,)):
+        return int(value)
+    if isinstance(value, dict):
+        return {str(key): _json_ready(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_ready(item) for item in value]
+    return value
+
+
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=True) + "\n",
+        json.dumps(_json_ready(payload), indent=2, sort_keys=True, ensure_ascii=True) + "\n",
         encoding="utf-8",
     )
 
@@ -101,6 +117,32 @@ def _write_markdown(path: Path, rows: list[dict[str, Any]], *, truth_type: str, 
                 Sigma_mnu=float(mle["Sigma_mnu"]),
             )
         )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _write_live_markdown(path: Path, payload: dict[str, Any]) -> None:
+    posterior = dict(payload["posterior"])
+    mle = dict(posterior["mle"])
+    lines = [
+        "# BF-06 live observer-boost fit",
+        "",
+        f"- dataset kind: `{payload['dataset']['kind']}`",
+        f"- seed: `{payload['seed']}`",
+        f"- solver output: `{payload['dataset']['solver_output_ref']}`",
+        f"- observable vector: `{payload['dataset']['observable_vector_ref']}`",
+        "",
+        "| Converged | beta_obs | rapidity_obs | v_hat_x | v_hat_y | v_hat_z |",
+        "|:---:|---:|---:|---:|---:|---:|",
+        "| {converged} | {beta_obs:.6e} | {rapidity_obs:.6e} | {vx:.6f} | {vy:.6f} | {vz:.6f} |".format(
+            converged="yes" if bool(posterior["converged"]) else "no",
+            beta_obs=float(mle["beta_obs"]),
+            rapidity_obs=float(mle["rapidity_obs"]),
+            vx=float(mle["v_hat_obs"][0]),
+            vy=float(mle["v_hat_obs"][1]),
+            vz=float(mle["v_hat_obs"][2]),
+        ),
+    ]
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -265,6 +307,73 @@ def _run_summary(config: dict[str, Any], *, seed: int) -> tuple[dict[str, Any], 
     return payload, exit_code
 
 
+def _observer_boost_mle(posterior: PosteriorSample) -> dict[str, Any]:
+    index = np.unravel_index(np.argmax(posterior.log_prob), posterior.log_prob.shape)
+    vector = np.asarray(posterior.samples[index], dtype=float).reshape(-1)
+    if vector.size != 3:
+        raise ValueError(
+            "live observer-boost posterior expects a 3-vector parameter sample"
+        )
+    beta = float(np.linalg.norm(vector))
+    if beta <= 1.0e-30:
+        v_hat = np.array([0.0, 0.0, 1.0], dtype=float)
+        rapidity = 0.0
+    else:
+        v_hat = vector / beta
+        rapidity = float(np.arctanh(min(beta, np.nextafter(1.0, 0.0))))
+    return {
+        "beta_obs": _round_float(beta),
+        "rapidity_obs": _round_float(rapidity),
+        "v_hat_obs": [_round_float(value) for value in np.asarray(v_hat, dtype=float)],
+    }
+
+
+def _run_live_type_i_validation(config: dict[str, Any], *, seed: int) -> tuple[dict[str, Any], int]:
+    dataset = _validate_dataset_contract(config)
+    schedule = _sampler_schedule(config)
+    summary_json, summary_markdown, posterior_dir = _summary_outputs(config)
+    posterior: PosteriorSample | None = None
+    problem = None
+    for stage_index, stage in enumerate(schedule):
+        stage_seed = int(seed) if stage_index < 2 else int(seed) + 20000 * (stage_index - 1)
+        problem, posterior = run_type_i_native_validation_posterior(
+            seed=stage_seed,
+            n_walkers=int(stage["n_walkers"]),
+            n_steps=int(stage["n_steps"]),
+            burnin=int(stage["burnin"]),
+            parallel=bool(stage["parallel"]),
+        )
+        if bool(posterior.diagnostics["converged"]):
+            break
+    assert posterior is not None
+    assert problem is not None
+    _save_posterior_npz(posterior_dir / "type_i_native_validation.npz", posterior)
+    payload = {
+        "seed": int(seed),
+        "dataset": {
+            "kind": str(dataset["kind"]),
+            "solver_output_ref": problem.solver_output.manifest.artifact_id,
+            "observable_vector_ref": problem.observable_vector.manifest.artifact_id,
+            "solver_tier": str(problem.solver_output.metadata.get("solver_tier", "")),
+            "source_propagator_realization": str(
+                problem.solver_output.metadata.get("source_propagator_realization", "")
+            ),
+            "observable_production_status": problem.observable_vector.manifest.production_status,
+        },
+        "posterior": {
+            "converged": bool(posterior.diagnostics["converged"]),
+            "sampler": posterior.sampler,
+            "mle": _observer_boost_mle(posterior),
+            "diagnostics": posterior.diagnostics,
+            "binding_origin": "solver_core_output",
+            "dataset_kind": problem.dataset_kind,
+        },
+    }
+    _write_json(summary_json, payload)
+    _write_live_markdown(summary_markdown, payload)
+    return payload, 0 if bool(posterior.diagnostics["converged"]) else 1
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the reproducible FB-11 summary workflow.
 
@@ -275,7 +384,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     """
     args = build_parser().parse_args(list(argv) if argv is not None else None)
     config = _load_config(Path(args.config))
-    _, exit_code = _run_summary(config, seed=int(args.seed))
+    dataset = _validate_dataset_contract(config)
+    if str(dataset["kind"]) == "type_i_native_validation":
+        _, exit_code = _run_live_type_i_validation(config, seed=int(args.seed))
+    else:
+        _, exit_code = _run_summary(config, seed=int(args.seed))
     return int(exit_code)
 
 
