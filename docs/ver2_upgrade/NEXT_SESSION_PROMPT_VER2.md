@@ -5,31 +5,32 @@
 1. `docs/ver2_upgrade/VER2_SSoT_PARALLEL_EXECUTION_PLAN.md`
 2. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_01_SKELETON_PREIMPLANT.md`
 3. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_02_IMPLEMENTATION_FIGURES_MANUSCRIPT.md`
-4. `docs/ver2_upgrade/VER2_EXECUTION_LEDGER.md`
-5. `docs/ver2_upgrade/VER2_CARRY_FORWARD_LEDGER.md`
-6. `docs/ver2_upgrade/VER2_PHASE_PLACEHOLDER_INDEX.md`
-7. `docs/ver2_upgrade/audits/AUDIT_SK-00_2026-04-20.md`
-8. `docs/ver2_upgrade/audits/AUDIT_SK-01C_2026-04-21.md`
-9. `docs/ver2_upgrade/audits/AUDIT_SK-05T_2026-04-21.md`
-10. `docs/ver2_upgrade/audits/AUDIT_SK-09D_2026-04-21.md`
-11. `docs/ver2_upgrade/audits/AUDIT_SK-07M_2026-04-21.md`
-12. `docs/ver2_upgrade/audits/AUDIT_SK-06H_2026-04-21.md`
-13. `docs/ver2_upgrade/audits/AUDIT_SK-01S1_2026-04-21.md`
-14. `docs/ver2_upgrade/audits/AUDIT_SK-02S2_2026-04-21.md`
-15. `docs/ver2_upgrade/audits/AUDIT_SK-03S3_2026-04-21.md`
-16. `docs/ver2_upgrade/audits/AUDIT_SK-04O_2026-04-21.md`
-17. `docs/ver2_upgrade/audits/AUDIT_SK-08V_2026-04-21.md`
-18. `docs/ver2_upgrade/audits/AUDIT_IM-06H_2026-04-21.md`
-19. `docs/ver2_upgrade/audits/AUDIT_IM-07M_2026-04-21.md`
-20. `docs/ver2_upgrade/audits/AUDIT_IM-01S1_2026-04-21.md`
-21. `docs/ver2_upgrade/audits/AUDIT_IM-02S2_2026-04-21.md`
-22. `docs/ver2_upgrade/audits/AUDIT_IM-03S3A_2026-04-21.md`
-23. `docs/ver2_upgrade/audits/AUDIT_IM-03S3B_2026-04-21.md`
-24. `docs/ver2_upgrade/audits/AUDIT_IM-04O_2026-04-21.md`
-25. `docs/ver2_upgrade/audits/AUDIT_IM-05T_2026-04-21.md`
-26. `docs/ver2_upgrade/audits/AUDIT_IM-08V_2026-04-21.md`
-27. `docs/ver2_upgrade/audits/AUDIT_IM-09D-FIG_2026-04-21.md`
-28. `docs/ver2_upgrade/audits/AUDIT_IM-10D-MAN_2026-04-21.md`
+4. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_03_BASS_COMPLETION.md`
+5. `docs/ver2_upgrade/VER2_EXECUTION_LEDGER.md`
+6. `docs/ver2_upgrade/VER2_CARRY_FORWARD_LEDGER.md`
+7. `docs/ver2_upgrade/VER2_PHASE_PLACEHOLDER_INDEX.md`
+8. `docs/ver2_upgrade/audits/AUDIT_SK-00_2026-04-20.md`
+9. `docs/ver2_upgrade/audits/AUDIT_SK-01C_2026-04-21.md`
+10. `docs/ver2_upgrade/audits/AUDIT_SK-05T_2026-04-21.md`
+11. `docs/ver2_upgrade/audits/AUDIT_SK-09D_2026-04-21.md`
+12. `docs/ver2_upgrade/audits/AUDIT_SK-07M_2026-04-21.md`
+13. `docs/ver2_upgrade/audits/AUDIT_SK-06H_2026-04-21.md`
+14. `docs/ver2_upgrade/audits/AUDIT_SK-01S1_2026-04-21.md`
+15. `docs/ver2_upgrade/audits/AUDIT_SK-02S2_2026-04-21.md`
+16. `docs/ver2_upgrade/audits/AUDIT_SK-03S3_2026-04-21.md`
+17. `docs/ver2_upgrade/audits/AUDIT_SK-04O_2026-04-21.md`
+18. `docs/ver2_upgrade/audits/AUDIT_SK-08V_2026-04-21.md`
+19. `docs/ver2_upgrade/audits/AUDIT_IM-06H_2026-04-21.md`
+20. `docs/ver2_upgrade/audits/AUDIT_IM-07M_2026-04-21.md`
+21. `docs/ver2_upgrade/audits/AUDIT_IM-01S1_2026-04-21.md`
+22. `docs/ver2_upgrade/audits/AUDIT_IM-02S2_2026-04-21.md`
+23. `docs/ver2_upgrade/audits/AUDIT_IM-03S3A_2026-04-21.md`
+24. `docs/ver2_upgrade/audits/AUDIT_IM-03S3B_2026-04-21.md`
+25. `docs/ver2_upgrade/audits/AUDIT_IM-04O_2026-04-21.md`
+26. `docs/ver2_upgrade/audits/AUDIT_IM-05T_2026-04-21.md`
+27. `docs/ver2_upgrade/audits/AUDIT_IM-08V_2026-04-21.md`
+28. `docs/ver2_upgrade/audits/AUDIT_IM-09D-FIG_2026-04-21.md`
+29. `docs/ver2_upgrade/audits/AUDIT_IM-10D-MAN_2026-04-21.md`
 
 ## 2. Current State
 
@@ -97,18 +98,33 @@
 
 ## 3. Next Recommended Work
 
-All packets in prompt lists 01 and 02 are now closed.
+All packets in prompt lists 01 and 02 are closed.
 
-If continuing, restrict work to follow-up maintenance rather than a new
-VER2 packet:
+If the priority is `htt/bass/*` completion, do **not** start with legacy
+figure/doc cleanup. Use
+`docs/ver2_upgrade/VER2_PHASE_PROMPTS_03_BASS_COMPLETION.md`
+instead and run the follow-up packets in that order.
 
-1. legacy paper-figure manifest retrofit for the remaining `83` blocked figures,
-2. top-level `docs/status_matrix.md` / `docs/claim_ledger.md` sync cleanup,
-3. optional H/M/T serializer or wrapper-tightening follow-up where carry-forward rows still point to later maintenance.
+The immediate next packet is:
 
-There are no same-list implementation packets left to run in parallel.
-Any extra thread should therefore be treated as legacy cleanup or a new
-scoped follow-up prompt, not as another packet from the current VER2 list.
+1. `BF-01B-HCORE`
+
+The reordered priority is:
+
+1. replace the bounded Lowell Tier-B core with an S1/S2-native executable path,
+2. close startup/seed injection,
+3. close the angular reconstruction bridge,
+4. replace proxy morphology/covariance where justified,
+5. upgrade BASS-centered validation,
+6. only then retarget `bass/observer`, `bass/likelihood`, and `bass/inference`,
+7. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until after the BASS-first sequence.
+
+Parallel policy is now constrained by the solver spine:
+
+1. `BF-01B-HCORE`, `BF-02B-SEED`, and `BF-03B-ANG` are serial,
+2. `BF-04B-COV` starts after `BF-03B-ANG`,
+3. `BF-05B-VAL` may do read-only prep during `BF-03B-ANG` and `BF-04B-COV`,
+4. `BF-06B-LIKE` is blocked on `BF-05B-VAL`.
 
 ## 4. Hard Reminders
 
@@ -128,4 +144,5 @@ scoped follow-up prompt, not as another packet from the current VER2 list.
 - Do not treat IM-07M predictive residual outputs as final heatmap/validation artifacts yet; the live shared-schema slice path exists, but campaign/export promotion still belongs to later V/D packets.
 - Do not treat the `83` legacy paper figures as manifest-ready just because IM-09D landed five generated figure bases; only `figures/paper/ver2_generated/*` currently pass the manifest gate.
 - Do not let the new T-lane `TscActiveServiceBundle` be mistaken for a BASS runtime decision object or an HTT/MIO truth surface; it is an advisory assembly layer only.
+- Do not let post-VER2 maintenance work jump ahead of the new BASS-first follow-up sequence unless the task is explicitly non-BASS cleanup.
 - Rerun `venv/bin/python scripts/ver2_artifact_export.py` after any D-lane change touching generated manuscript/export surfaces.

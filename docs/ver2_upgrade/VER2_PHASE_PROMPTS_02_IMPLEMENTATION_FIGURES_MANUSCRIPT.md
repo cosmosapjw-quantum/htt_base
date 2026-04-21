@@ -535,3 +535,17 @@ Prompt list 02 is complete only when:
 3. every figure/table is manifest-backed,
 4. manuscript text matches the actual implemented claim tier,
 5. no unresolved shared-schema conflict remains.
+
+## 9. Post-Closure Handoff
+
+Prompt list 02 is historically complete and should not be rewritten to
+hide that closure.
+
+If follow-up work must prioritize `htt/bass/*` completion instead of
+legacy D/H/M/T cleanup, switch to:
+
+- `docs/ver2_upgrade/VER2_PHASE_PROMPTS_03_BASS_COMPLETION.md`
+
+That follow-up list deliberately reorders the remaining work so that the
+BASS solver spine closes before legacy figures, top-level doc sync, or
+optional serializer cleanup.
