@@ -193,6 +193,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["source_builder_scope"] == "theta0_plus_combined_polter_visibility_ver2_native"
     assert run.solver_output.metadata["source_builder_combined_polter"] is True
     assert run.solver_output.metadata["source_builder_visibility_weighted_polter"] is True
+    assert run.solver_output.metadata["visibility_reionization_mode"] == "tanh"
+    assert run.solver_output.metadata["source_builder_low_z_probe_available"] is False
+    assert run.solver_output.metadata["source_builder_low_z_probe_status"] == "not_covered_by_runtime_domain"
+    assert run.solver_output.metadata["reionization_source_claim_status"] == "unavailable_due_to_runtime_domain"
     assert run.solver_output.metadata["startup_manifold_applied"] is True
     assert run.solver_output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
     assert run.solver_output.alm_T["coefficient_representation"] == "ver2_native_pstf_final_slice"

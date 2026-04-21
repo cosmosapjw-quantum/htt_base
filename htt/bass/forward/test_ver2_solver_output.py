@@ -272,6 +272,8 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
     assert output.metadata["source_builder_combined_polter"] is True
     assert output.metadata["source_builder_visibility_weighted_polter"] is True
     assert output.metadata["visibility_reionization_mode"] == "tanh"
+    assert output.metadata["source_builder_low_z_probe_status"] == "not_covered_by_runtime_domain"
+    assert output.metadata["reionization_source_claim_status"] == "unavailable_due_to_runtime_domain"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_lowell_template"
     assert output.alm_T["representation"] == "lowell_pstf_sphere_reconstruction"
@@ -387,6 +389,10 @@ def test_native_output_records_reionization_low_z_source_delta() -> None:
     assert output_with_reion.metadata["visibility_reionization_mode"] == "tanh"
     assert output_no_reion.metadata["source_builder_low_z_probe_available"] is True
     assert output_with_reion.metadata["source_builder_low_z_probe_available"] is True
+    assert output_no_reion.metadata["source_builder_low_z_probe_status"] == "available"
+    assert output_with_reion.metadata["source_builder_low_z_probe_status"] == "available"
+    assert output_no_reion.metadata["reionization_source_claim_status"] == "reionization_disabled"
+    assert output_with_reion.metadata["reionization_source_claim_status"] == "bounded_live_low_z_delta"
     assert output_with_reion.metadata["visibility_tau_reion"] > 0.0
     assert output_with_reion.metadata["source_builder_low_z_gpi_m0"] > output_no_reion.metadata["source_builder_low_z_gpi_m0"]
 

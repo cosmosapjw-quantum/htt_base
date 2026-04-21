@@ -352,6 +352,14 @@ def _type_i_native_bundle(
         == "bianchi_i_matrix_exact"
         and bool(tier_b.solver_output.metadata["propagator_ready"])
     )
+    reionization_window_honesty = (
+        tier_b.solver_output.metadata["visibility_reionization_mode"] == "tanh"
+        and tier_b.solver_output.metadata["source_builder_low_z_probe_available"] is False
+        and tier_b.solver_output.metadata["source_builder_low_z_probe_status"]
+        == "not_covered_by_runtime_domain"
+        and tier_b.solver_output.metadata["reionization_source_claim_status"]
+        == "unavailable_due_to_runtime_domain"
+    )
 
     checks = (
         ExecutableCheckEvidence(
@@ -390,6 +398,12 @@ def _type_i_native_bundle(
             passed=bool(regression_passed),
             summary="Native Tier-B runtime still consumes live S1/S2 hooks and realizes the exact Type-I propagator path.",
         ),
+        ExecutableCheckEvidence(
+            check_id="tier_b_runtime_explicitly_flags_missing_late_time_reionization_window",
+            category="regression",
+            passed=bool(reionization_window_honesty),
+            summary="The shipped Type-I runtime records that tanh reionization is enabled but the late-time low-z source window is not covered by the current runtime domain.",
+        ),
     )
     status: ValidationOutcome = "pass" if all(check.passed for check in checks) else "fail"
     return ExecutableCampaignEvidence(
@@ -404,6 +418,7 @@ def _type_i_native_bundle(
         no_claim_conditions=(
             "tier_a_validation_bridge_only",
             "non_type_i_exact_propagator_missing",
+            "late_time_reionization_window_missing",
         ),
         checks=checks,
         artifact_refs=("bass.validation.type_i_runtime_evidence", "bass.runtime.trace"),
@@ -413,6 +428,7 @@ def _type_i_native_bundle(
         notes=(
             "This executable evidence is intentionally limited to the shipped Type-I native route.",
             "It validates the runtime/seed/cutoff/observer-neutral bridge without promoting non-Type-I exact propagators or full BiPoSH science claims.",
+            "The shipped runtime does not yet cover the low-z reionization source window; that absence is treated as an explicit no-claim condition rather than hidden as a pass.",
         ),
     )
 

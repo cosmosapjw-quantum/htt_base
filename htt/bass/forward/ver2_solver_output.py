@@ -203,6 +203,17 @@ def _build_visibility_source_metadata(
         if low_z_eta is not None
         else None
     )
+    low_z_probe_available = low_z_gpi_m0 is not None
+    if low_z_probe_available:
+        low_z_probe_status = "available"
+    else:
+        low_z_probe_status = "not_covered_by_runtime_domain"
+    if reionization_mode != "tanh":
+        reionization_source_claim_status = "reionization_disabled"
+    elif low_z_probe_available:
+        reionization_source_claim_status = "bounded_live_low_z_delta"
+    else:
+        reionization_source_claim_status = "unavailable_due_to_runtime_domain"
     return {
         "source_builder_combined_polter": True,
         "source_builder_visibility_weighted_polter": True,
@@ -212,9 +223,11 @@ def _build_visibility_source_metadata(
         "visibility_peak_z": float(visibility_peak_z),
         "source_builder_visibility_peak_gpi_m0": visibility_peak_gpi_m0,
         "source_builder_low_z_probe_z": low_z_probe,
-        "source_builder_low_z_probe_available": low_z_gpi_m0 is not None,
+        "source_builder_low_z_probe_available": low_z_probe_available,
+        "source_builder_low_z_probe_status": low_z_probe_status,
         "source_builder_low_z_visibility": low_z_visibility,
         "source_builder_low_z_gpi_m0": low_z_gpi_m0,
+        "reionization_source_claim_status": reionization_source_claim_status,
     }
 
 

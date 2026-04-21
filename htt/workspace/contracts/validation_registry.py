@@ -487,11 +487,19 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
                     purpose="runtime ownership, live hooks, and exact Type-I propagator realization remain attached to the shipped route",
                     artifact_refs=("bass.runtime.trace",),
                 ),
+                ValidationTestLink(
+                    test_id="tier_b_runtime_explicitly_flags_missing_late_time_reionization_window",
+                    category="regression",
+                    path="htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_records_missing_late_time_reionization_window",
+                    purpose="the shipped Type-I runtime explicitly records that the late-time reionization source window is not covered by the current runtime domain",
+                    artifact_refs=("bass.validation.type_i_runtime_evidence",),
+                ),
             ),
             artifact_refs=("bass.validation.type_i_runtime_evidence", "bass.runtime.trace"),
             no_claim_conditions=(
                 "tier_a_validation_bridge_only",
                 "non_type_i_exact_propagator_missing",
+                "late_time_reionization_window_missing",
             ),
         ),
         TheoremToTestEntry(
@@ -658,12 +666,20 @@ def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
                     purpose="guard the exact Type-I propagator plus live S1/S2/S3 hook chain against regressions",
                     artifact_refs=("bass.runtime.trace",),
                 ),
+                ValidationTestLink(
+                    test_id="tier_b_runtime_explicitly_flags_missing_late_time_reionization_window",
+                    category="regression",
+                    path="htt/bass/validation/test_ver2_campaign_evidence.py::test_type_i_runtime_validation_evidence_records_missing_late_time_reionization_window",
+                    purpose="require the shipped runtime to mark the missing late-time reionization source window as an explicit no-claim condition",
+                    artifact_refs=("bass.validation.type_i_runtime_evidence",),
+                ),
             ),
             artifact_refs=("bass.validation.type_i_runtime_evidence", "bass.runtime.trace"),
             manuscript_blocking=False,
             no_claim_conditions=(
                 "tier_a_validation_bridge_only",
                 "non_type_i_exact_propagator_missing",
+                "late_time_reionization_window_missing",
             ),
             null_manifest_refs=("null.bass.type_i_native_runtime",),
             injection_manifest_refs=("validation.injection.native_seed_startup",),
@@ -672,6 +688,7 @@ def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
                 "Executable BF-05 campaign: passes for the shipped Type-I native runtime route only.",
                 "The default gate runs L=4/6 cutoffs; L=8 remains an explicit extended validation run rather than the default check path.",
                 "This does not validate non-Type-I exact propagators or full BiPoSH science claims.",
+                "The shipped runtime does not yet cover the late-time reionization source window; that missing coverage must stay explicit.",
             ),
         ),
         ValidationCampaign(
@@ -943,6 +960,7 @@ def build_default_null_manifests() -> tuple[NullEnsembleManifest, ...]:
             no_claim_conditions=(
                 "tier_a_validation_bridge_only",
                 "non_type_i_exact_propagator_missing",
+                "late_time_reionization_window_missing",
             ),
             theorem_refs=("V8_bass_native_runtime_bridge",),
             campaign_refs=("validation.bass_native_runtime_bridge",),
@@ -1051,10 +1069,12 @@ def build_default_hostile_audit_runbooks() -> tuple[HostileAuditRunbook, ...]:
             numerical_checks=("tier_b_cutoff_campaign_stays_bounded",),
             regression_checks=(
                 "tier_b_runtime_consumes_live_hooks_and_exact_type_i_propagator",
+                "tier_b_runtime_explicitly_flags_missing_late_time_reionization_window",
             ),
             quarantine_conditions=(
                 "tier_a_validation_bridge_only",
                 "non_type_i_exact_propagator_missing",
+                "late_time_reionization_window_missing",
                 "startup_manifold_disabled",
                 "seed_projection_not_ready",
             ),

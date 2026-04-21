@@ -147,6 +147,24 @@ def test_default_campaigns_cover_all_required_categories():
         assert {link.category for link in campaign.check_links} == required
 
 
+def test_bass_native_runtime_bridge_records_missing_late_time_reionization_window() -> None:
+    campaigns = build_default_validation_campaigns()
+    campaign = next(
+        row for row in campaigns if row.campaign_id == "validation.bass_native_runtime_bridge"
+    )
+    assert "late_time_reionization_window_missing" in campaign.no_claim_conditions
+    theorem = next(
+        row
+        for row in build_default_theorem_to_test_map()
+        if row.theorem_id == "V8_bass_native_runtime_bridge"
+    )
+    assert "late_time_reionization_window_missing" in theorem.no_claim_conditions
+    assert any(
+        link.test_id == "tier_b_runtime_explicitly_flags_missing_late_time_reionization_window"
+        for link in campaign.check_links
+    )
+
+
 def test_default_registry_has_no_link_or_coverage_issues():
     assert validation_registry_issues() == ()
 
