@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Literal
 
@@ -21,7 +22,9 @@ from bass.background.rhs import assemble_background_rhs
 from bass.background.weyl import build_weyl_diagnostics
 from bass.species.barotropic_closures import (
     OrthogonalBarotropicClosure,
+    OrthogonalSpeciesRegistryClosure,
     TiltedBarotropicClosure,
+    TiltedSpeciesRegistryClosure,
 )
 
 __all__ = [
@@ -68,8 +71,17 @@ class BackgroundEvolutionConfig:
     n_steps: int = 256
     rtol: float = 1.0e-8
     atol: float = 1.0e-10
+    solver_method: str = "DOP853"
     lambda_value: float = 0.0
     kappa: float = 1.0
+    matter_model_override: (
+        OrthogonalBarotropicClosure
+        | TiltedBarotropicClosure
+        | OrthogonalSpeciesRegistryClosure
+        | TiltedSpeciesRegistryClosure
+        | None
+    ) = None
+    eta_at_scale_factor: Callable[[float], float] | None = None
 
 
 @dataclass(frozen=True)
@@ -105,7 +117,13 @@ def solve_background_evolution(
         )
 
     branch = initial_conditions.metadata.branch
-    if branch == "orthogonal":
+    if cfg.matter_model_override is not None:
+        matter_model = cfg.matter_model_override
+        if branch == "orthogonal":
+            matter_model_tag = "orthogonal_species_registry_mixture"
+        else:
+            matter_model_tag = "tilted_species_registry_mixture"
+    elif branch == "orthogonal":
         matter_model = OrthogonalBarotropicClosure.from_state(
             initial_conditions.matter,
             a_ref=cfg.a_start,
@@ -153,7 +171,7 @@ def solve_background_evolution(
         rhs,
         (N_grid[0], N_grid[-1]),
         y0,
-        method="DOP853",
+        method=cfg.solver_method,
         t_eval=N_grid,
         rtol=cfg.rtol,
         atol=cfg.atol,
@@ -216,11 +234,17 @@ def solve_background_evolution(
         electric[i] = weyl.electric
         magnetic[i] = weyl.magnetic
 
-    eta = np.zeros_like(H)
-    integrand = C_KMS / np.maximum(a * H, 1.0e-30)
-    dN = np.diff(sol.t)
-    for i in range(1, eta.size):
-        eta[i] = eta[i - 1] + 0.5 * (integrand[i - 1] + integrand[i]) * dN[i - 1]
+    if cfg.eta_at_scale_factor is None:
+        eta = np.zeros_like(H)
+        integrand = C_KMS / np.maximum(a * H, 1.0e-30)
+        dN = np.diff(sol.t)
+        for i in range(1, eta.size):
+            eta[i] = eta[i - 1] + 0.5 * (integrand[i - 1] + integrand[i]) * dN[i - 1]
+    else:
+        eta = np.array(
+            [float(cfg.eta_at_scale_factor(float(a_i))) for a_i in a],
+            dtype=np.float64,
+        )
 
     return BackgroundEvolutionResult(
         branch=branch,

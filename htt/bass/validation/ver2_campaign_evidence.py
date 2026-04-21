@@ -36,7 +36,9 @@ ValidationOutcome = Literal["pass", "warn", "fail"]
 __all__ = [
     "ExecutableCheckEvidence",
     "ExecutableCampaignEvidence",
+    "build_type_i_reionization_probe_evidence",
     "build_type_i_runtime_validation_evidence",
+    "type_i_reionization_probe_payload",
     "type_i_runtime_validation_payload",
 ]
 
@@ -226,6 +228,28 @@ def _integrator_config(*, gamma_t_override) -> IntegratorConfig:
         eta_initial_mpc=0.5,
         eta_final_mpc=1.0,
         n_output=12,
+        rtol=1.0e-6,
+        atol=1.0e-9,
+        bianchi_cosmo=BianchiCosmology(
+            structure=get_type("I"),
+            beta=0.0,
+        ),
+        gamma_T_over_H_threshold=100.0,
+        gamma_T_override=gamma_t_override,
+    )
+
+
+def _extended_low_z_integrator_config(
+    *,
+    species: SpeciesBackgroundRegistry,
+    z_final: float,
+    gamma_t_override,
+) -> IntegratorConfig:
+    return IntegratorConfig(
+        L_max=4,
+        eta_initial_mpc=0.5,
+        eta_final_mpc=float(species.bg_table.eta_at_a(1.0 / (1.0 + float(z_final)))),
+        n_output=64,
         rtol=1.0e-6,
         atol=1.0e-9,
         bianchi_cosmo=BianchiCosmology(
@@ -433,6 +457,145 @@ def _type_i_native_bundle(
     )
 
 
+def _type_i_reionization_probe_bundle(
+    *,
+    z_probe: float,
+    z_final: float,
+) -> ExecutableCampaignEvidence:
+    species_with_reion = SpeciesBackgroundRegistry.from_planck2018(
+        recombination_warning_policy="ignore",
+    )
+    species_without_reion = SpeciesBackgroundRegistry.from_planck2018(
+        recombination_warning_policy="ignore",
+        apply_default_reionization=False,
+    )
+    k_grid = np.array([1.0e-4, 2.0e-4], dtype=np.float64)
+
+    run_with_reion = execute_tier_b_solver(
+        manifest=_manifest("bass.validation.type_i_reionization_probe"),
+        bianchi_type="I",
+        species=species_with_reion,
+        integrator_config=_extended_low_z_integrator_config(
+            species=species_with_reion,
+            z_final=z_final,
+            gamma_t_override=lambda eta: 1.0e15,
+        ),
+        runtime_controls=_runtime_controls(tier=SolverTier.TIER_B_PSTF),
+        feature_flags=_feature_flags(tier=SolverTier.TIER_B_PSTF),
+        release=_release("bf05-type-i-reionization-on", stage="research_executable"),
+        k_grid_mpc=k_grid,
+    )
+    run_without_reion = execute_tier_b_solver(
+        manifest=_manifest("bass.validation.type_i_reionization_probe"),
+        bianchi_type="I",
+        species=species_without_reion,
+        integrator_config=_extended_low_z_integrator_config(
+            species=species_without_reion,
+            z_final=z_final,
+            gamma_t_override=lambda eta: 1.0e15,
+        ),
+        runtime_controls=_runtime_controls(tier=SolverTier.TIER_B_PSTF),
+        feature_flags=_feature_flags(tier=SolverTier.TIER_B_PSTF),
+        release=_release("bf05-type-i-reionization-off", stage="research_executable"),
+        k_grid_mpc=k_grid,
+    )
+
+    metadata_on = run_with_reion.solver_output.metadata
+    metadata_off = run_without_reion.solver_output.metadata
+    target_a = 1.0 / (1.0 + float(z_final))
+    final_a_error = abs(float(run_with_reion.integration_result.a[-1]) - target_a) / target_a
+    probe_available = (
+        metadata_on["source_builder_low_z_probe_available"] is True
+        and metadata_off["source_builder_low_z_probe_available"] is True
+        and metadata_on["source_builder_low_z_probe_status"] == "available"
+        and metadata_off["source_builder_low_z_probe_status"] == "available"
+    )
+    claim_statuses = (
+        metadata_on["reionization_source_claim_status"] == "bounded_live_low_z_delta"
+        and metadata_off["reionization_source_claim_status"] == "reionization_disabled"
+        and metadata_on["visibility_reionization_mode"] == "tanh"
+        and metadata_off["visibility_reionization_mode"] == "disabled"
+    )
+    low_z_visibility_delta = float(metadata_on["source_builder_low_z_visibility"]) - float(
+        metadata_off["source_builder_low_z_visibility"]
+    )
+    low_z_gpi_delta = abs(float(metadata_on["source_builder_low_z_gpi_m0"])) - abs(
+        float(metadata_off["source_builder_low_z_gpi_m0"])
+    )
+    regression_passed = (
+        metadata_on["source_propagator_status"] == "exact"
+        and metadata_on["source_propagator_realization"] == "bianchi_i_matrix_exact"
+        and metadata_on["source_builder_low_z_probe_z"] == float(z_probe)
+        and metadata_off["source_builder_low_z_probe_z"] == float(z_probe)
+    )
+
+    checks = (
+        ExecutableCheckEvidence(
+            check_id="extended_runtime_reaches_low_z_probe",
+            category="baseline_reproduction",
+            passed=bool(probe_available),
+            summary="The extended Type-I runtime reaches the declared low-z probe and exposes live low-z source metadata in both reionization modes.",
+        ),
+        ExecutableCheckEvidence(
+            check_id="reionization_mode_toggle_changes_claim_surface",
+            category="adversarial_edge",
+            passed=bool(claim_statuses),
+            summary="Reionization on/off toggles keep the low-z probe available while preserving distinct claim-status and reionization-mode metadata.",
+        ),
+        ExecutableCheckEvidence(
+            check_id="reionization_increases_low_z_visibility_source",
+            category="physics_sanity",
+            passed=low_z_visibility_delta > 0.0 and low_z_gpi_delta > 0.0,
+            summary="Turning on homogeneous tanh reionization increases the low-z visibility carrier and the visibility-weighted combined-polter magnitude at the declared probe.",
+            metric_name="delta_low_z_visibility",
+            metric_value=float(low_z_visibility_delta),
+            threshold=0.0,
+        ),
+        ExecutableCheckEvidence(
+            check_id="extended_runtime_hits_declared_low_z_endpoint",
+            category="numerical_stability",
+            passed=float(final_a_error) <= 5.0e-6,
+            summary="The extended Type-I runtime reaches the declared low-z endpoint without drifting away from the requested scale factor.",
+            metric_name="relative_final_a_error",
+            metric_value=float(final_a_error),
+            threshold=5.0e-6,
+        ),
+        ExecutableCheckEvidence(
+            check_id="extended_runtime_preserves_exact_type_i_propagator",
+            category="regression",
+            passed=bool(regression_passed),
+            summary="The extended low-z run keeps the exact Type-I propagator and the declared low-z probe contract attached to the native route.",
+        ),
+    )
+    status: ValidationOutcome = "pass" if all(check.passed for check in checks) else "fail"
+    return ExecutableCampaignEvidence(
+        campaign_id="validation.bass_type_i_extended_reionization_probe",
+        status=status,
+        bianchi_type="I",
+        cutoffs=(4,),
+        theorem_refs=("V8_bass_native_runtime_bridge",),
+        null_manifest_refs=("null.bass.type_i_native_runtime",),
+        injection_manifest_refs=("validation.injection.native_seed_startup",),
+        runbook_refs=("runbook.bass_native_runtime",),
+        no_claim_conditions=(
+            "tier_a_validation_bridge_only",
+            "non_type_i_exact_propagator_missing",
+            "homogeneous_reionization_only",
+            "direction_resolved_reionization_microphysics_missing",
+        ),
+        checks=checks,
+        artifact_refs=("bass.validation.type_i_reionization_probe", "bass.runtime.trace"),
+        preferred_axis_delta_deg=0.0,
+        tier_a_tier_b_max_relative_l2=0.0,
+        cutoff_max_relative_delta=0.0,
+        notes=(
+            "This executable evidence validates only an extended Type-I low-z probe path, not the shipped BF-05 default runtime gate.",
+            "The probe is intentionally bounded to homogeneous tanh reionization wiring and does not promote direction-resolved microphysics claims.",
+            "Passing this campaign does not promote non-Type-I exact propagators or full BiPoSH science claims.",
+        ),
+    )
+
+
 @lru_cache(maxsize=8)
 def build_type_i_runtime_validation_evidence(
     *,
@@ -456,6 +619,23 @@ def build_type_i_runtime_validation_evidence(
     )
 
 
+@lru_cache(maxsize=8)
+def build_type_i_reionization_probe_evidence(
+    *,
+    z_probe: float = 8.0,
+    z_final: float = 4.0,
+) -> ExecutableCampaignEvidence:
+    """Return executable evidence for the bounded extended low-z Type-I probe."""
+    if z_probe <= 0.0:
+        raise ValueError("z_probe must be positive")
+    if z_final >= z_probe:
+        raise ValueError("z_final must be smaller than z_probe to cover the declared low-z probe")
+    return _type_i_reionization_probe_bundle(
+        z_probe=float(z_probe),
+        z_final=float(z_final),
+    )
+
+
 def type_i_runtime_validation_payload(
     *,
     cutoffs: tuple[int, ...] = (4, 6),
@@ -468,5 +648,19 @@ def type_i_runtime_validation_payload(
             cutoffs=cutoffs,
             tier_compare_tolerance=tier_compare_tolerance,
             cutoff_delta_tolerance=cutoff_delta_tolerance,
+        )
+    )
+
+
+def type_i_reionization_probe_payload(
+    *,
+    z_probe: float = 8.0,
+    z_final: float = 4.0,
+) -> dict[str, object]:
+    """JSON-ready payload for the bounded extended low-z Type-I probe evidence."""
+    return asdict(
+        build_type_i_reionization_probe_evidence(
+            z_probe=z_probe,
+            z_final=z_final,
         )
     )

@@ -3,7 +3,9 @@ from __future__ import annotations
 import pytest
 
 from bass.validation import (
+    build_type_i_reionization_probe_evidence,
     build_type_i_runtime_validation_evidence,
+    type_i_reionization_probe_payload,
     type_i_runtime_validation_payload,
 )
 
@@ -49,3 +51,29 @@ def test_type_i_runtime_validation_evidence_records_missing_late_time_reionizati
     )
     assert check.passed is True
     assert "late-time low-z source window" in check.summary
+
+
+def test_type_i_reionization_probe_evidence_passes_for_extended_low_z_runtime() -> None:
+    evidence = build_type_i_reionization_probe_evidence()
+    assert evidence.status == "pass"
+    assert evidence.campaign_id == "validation.bass_type_i_extended_reionization_probe"
+    assert evidence.cutoffs == (4,)
+    assert "direction_resolved_reionization_microphysics_missing" in evidence.no_claim_conditions
+    checks = {row.check_id: row for row in evidence.checks}
+    assert checks["extended_runtime_reaches_low_z_probe"].passed is True
+    assert checks["reionization_mode_toggle_changes_claim_surface"].passed is True
+    assert checks["reionization_increases_low_z_visibility_source"].passed is True
+
+
+def test_type_i_reionization_probe_payload_is_json_ready() -> None:
+    payload = type_i_reionization_probe_payload()
+    assert payload["campaign_id"] == "validation.bass_type_i_extended_reionization_probe"
+    assert payload["status"] == "pass"
+    check_ids = {row["check_id"] for row in payload["checks"]}
+    assert {
+        "extended_runtime_reaches_low_z_probe",
+        "reionization_mode_toggle_changes_claim_surface",
+        "reionization_increases_low_z_visibility_source",
+        "extended_runtime_hits_declared_low_z_endpoint",
+        "extended_runtime_preserves_exact_type_i_propagator",
+    } <= check_ids

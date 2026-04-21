@@ -160,9 +160,13 @@ def _interp_redshift_series(a_grid: np.ndarray, values: np.ndarray, z: float) ->
     target_a = 1.0 / (1.0 + float(z))
     a = np.asarray(a_grid, dtype=np.float64)
     series = np.asarray(values, dtype=np.float64)
-    if target_a < float(np.min(a)) or target_a > float(np.max(a)):
+    a_min = float(np.min(a))
+    a_max = float(np.max(a))
+    tol = max(abs(a_max) * 2.0e-8, 1.0e-12)
+    if target_a < a_min - tol or target_a > a_max + tol:
         return None
-    return float(np.interp(target_a, a, series))
+    target_clipped = min(max(target_a, a_min), a_max)
+    return float(np.interp(target_clipped, a, series))
 
 
 def _build_visibility_source_metadata(

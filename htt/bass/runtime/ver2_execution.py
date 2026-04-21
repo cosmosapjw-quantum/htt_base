@@ -408,6 +408,10 @@ def _build_background_monitor(
     )
     from bass.background.tetrad_state import axisymmetric_sigma_tensor
     from bass.species.base import CANONICAL_ORDER, SpeciesLabel
+    from bass.species.barotropic_closures import (
+        OrthogonalSpeciesRegistryClosure,
+        TiltedSpeciesRegistryClosure,
+    )
     from bass.tilt.species_tilt import TiltedSpeciesParams, decompose_tilted_species
 
     eta_start = float(config.eta_initial_mpc)
@@ -436,6 +440,7 @@ def _build_background_monitor(
             lambda_value=lambda_value,
             closure="solve_H",
         )
+        matter_model_override = OrthogonalSpeciesRegistryClosure(species)
     else:
         velocity = _tilt_velocity(config.bianchi_cosmo)
         decompositions = tuple(
@@ -457,6 +462,10 @@ def _build_background_monitor(
             lambda_value=lambda_value,
             closure="solve_H",
         )
+        matter_model_override = TiltedSpeciesRegistryClosure(
+            registry=species,
+            velocity=velocity,
+        )
     return solve_background_evolution(
         initial_conditions,
         config=BackgroundEvolutionConfig(
@@ -465,7 +474,10 @@ def _build_background_monitor(
             n_steps=max(16, min(int(config.n_output), 256)),
             rtol=min(float(config.rtol), 1.0e-8),
             atol=min(max(float(config.atol), 1.0e-12), 1.0e-10),
+            solver_method="BDF",
             lambda_value=lambda_value,
+            matter_model_override=matter_model_override,
+            eta_at_scale_factor=species.bg_table.eta_at_a,
         ),
     )
 

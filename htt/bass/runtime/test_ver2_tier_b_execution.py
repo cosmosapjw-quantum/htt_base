@@ -119,6 +119,27 @@ def _integrator_config() -> IntegratorConfig:
     )
 
 
+def _low_z_integrator_config(
+    species: SpeciesBackgroundRegistry,
+    *,
+    z_final: float = 4.0,
+) -> IntegratorConfig:
+    return IntegratorConfig(
+        L_max=4,
+        eta_initial_mpc=0.5,
+        eta_final_mpc=float(species.bg_table.eta_at_a(1.0 / (1.0 + float(z_final)))),
+        n_output=64,
+        rtol=1.0e-6,
+        atol=1.0e-9,
+        bianchi_cosmo=BianchiCosmology(
+            structure=get_type("I"),
+            beta=0.0,
+        ),
+        gamma_T_over_H_threshold=100.0,
+        gamma_T_override=lambda eta: 1.0e15,
+    )
+
+
 def _checkpoint_runtime_controls(path_template: str) -> RuntimeControlBlock:
     return RuntimeControlBlock(
         tier=SolverTier.TIER_B_PSTF,
@@ -235,6 +256,31 @@ def test_execute_tier_b_solver_is_deterministic_for_same_inputs() -> None:
         np.asarray(payload_1["alm_E"]["values"], dtype=np.float64),
         np.asarray(payload_2["alm_E"]["values"], dtype=np.float64),
     )
+
+
+def test_execute_tier_b_solver_can_reach_low_z_reionization_probe_with_extended_eta_domain() -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018(recombination_warning_policy="ignore")
+    z_final = 4.0
+    run = execute_tier_b_solver(
+        manifest=_manifest(),
+        bianchi_type="I",
+        species=species,
+        integrator_config=_low_z_integrator_config(species, z_final=z_final),
+        runtime_controls=_runtime_controls(),
+        feature_flags=_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+
+    assert run.integration_result.eta[-1] == pytest.approx(
+        species.bg_table.eta_at_a(1.0 / (1.0 + z_final)),
+        rel=5.0e-4,
+    )
+    assert run.integration_result.a[-1] == pytest.approx(1.0 / (1.0 + z_final), rel=5.0e-6)
+    assert run.solver_output.metadata["source_builder_low_z_probe_available"] is True
+    assert run.solver_output.metadata["source_builder_low_z_probe_status"] == "available"
+    assert run.solver_output.metadata["reionization_source_claim_status"] == "bounded_live_low_z_delta"
+    assert run.solver_output.metadata["source_builder_low_z_gpi_m0"] is not None
 
 
 def test_execute_tier_b_lowell_solver_is_a_compatibility_alias(monkeypatch: pytest.MonkeyPatch) -> None:

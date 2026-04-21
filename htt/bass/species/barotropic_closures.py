@@ -2,10 +2,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Callable
 
 import numpy as np
 
 from bass.background.constraints import MatterNormalFrameState
+from bass.species.base import CANONICAL_ORDER, SpeciesLabel
+from bass.species.registry import SpeciesBackgroundRegistry
 from bass.tilt.species_tilt import (
     TiltedMatterState,
     TiltedSpeciesDecomposition,
@@ -17,6 +20,8 @@ from bass.tilt.species_tilt import (
 __all__ = [
     "OrthogonalBarotropicClosure",
     "TiltedBarotropicClosure",
+    "OrthogonalSpeciesRegistryClosure",
+    "TiltedSpeciesRegistryClosure",
 ]
 
 
@@ -72,3 +77,61 @@ class TiltedBarotropicClosure:
             )
             evolved.append(decompose_tilted_species(params))
         return assemble_tilted_matter_state(tuple(evolved))
+
+
+@dataclass(frozen=True)
+class OrthogonalSpeciesRegistryClosure:
+    """Species-backed orthogonal matter closure over the shared FLRW table.
+
+    This keeps the S1 background path aligned with the live LB-1 species
+    mixture instead of freezing a single effective ``w`` at ``a_ref``.
+    """
+
+    registry: SpeciesBackgroundRegistry
+    include_lambda: bool = False
+
+    def state_at_scale_factor(self, a: float) -> MatterNormalFrameState:
+        eta = float(self.registry.bg_table.eta_at_a(float(a)))
+        rho = 0.0
+        p = 0.0
+        for label in CANONICAL_ORDER:
+            if not self.include_lambda and label is SpeciesLabel.LAMBDA:
+                continue
+            rho += float(self.registry[label].rho_rest(eta))
+            p += float(self.registry[label].p_rest(eta))
+        return MatterNormalFrameState(rho=rho, p=p)
+
+
+@dataclass(frozen=True)
+class TiltedSpeciesRegistryClosure:
+    """Species-backed tilted matter closure with fixed velocity direction."""
+
+    registry: SpeciesBackgroundRegistry
+    velocity: np.ndarray
+    label_formatter: Callable[[SpeciesLabel], str] = str
+
+    def __post_init__(self) -> None:
+        velocity = np.asarray(self.velocity, dtype=np.float64)
+        if velocity.shape != (3,):
+            raise ValueError(
+                f"TiltedSpeciesRegistryClosure.velocity must have shape (3,), got {velocity.shape}"
+            )
+        object.__setattr__(self, "velocity", velocity)
+
+    def state_at_scale_factor(self, a: float) -> TiltedMatterState:
+        eta = float(self.registry.bg_table.eta_at_a(float(a)))
+        pieces: list[TiltedSpeciesDecomposition] = []
+        for label in CANONICAL_ORDER:
+            if label is SpeciesLabel.LAMBDA:
+                continue
+            pieces.append(
+                decompose_tilted_species(
+                    TiltedSpeciesParams(
+                        rho_hat=float(self.registry[label].rho_rest(eta)),
+                        p_hat=float(self.registry[label].p_rest(eta)),
+                        v=self.velocity,
+                        label=self.label_formatter(label),
+                    )
+                )
+            )
+        return assemble_tilted_matter_state(tuple(pieces))

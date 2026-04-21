@@ -16,6 +16,8 @@ from bass.background import (
 )
 from bass.background.evolution import BackgroundEvolutionConfig
 from bass.background.geometry import build_geometry
+from bass.species.barotropic_closures import OrthogonalSpeciesRegistryClosure
+from bass.species.registry import SpeciesBackgroundRegistry
 from bass.tilt.species_tilt import TiltedSpeciesParams, decompose_tilted_species
 
 
@@ -162,3 +164,44 @@ def test_short_bianchi_i_run_tracks_a_cubed_sigma_invariant() -> None:
     )
     invariant = result.sigma_tensor[:, 0, 0] * result.a**3
     assert np.max(np.abs(invariant - invariant[0])) < 1.0e-6
+
+
+def test_species_backed_background_run_reaches_reionization_window_with_physical_eta_mapping() -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018(recombination_warning_policy="ignore")
+    eta_start = 0.5
+    eta_end = species.bg_table.eta_at_a(1.0 / 9.0)
+    a_start = float(species.bg_table.interp_a(eta_start))
+    a_end = float(species.bg_table.interp_a(eta_end))
+    rho = 0.0
+    p = 0.0
+    from bass.species.base import CANONICAL_ORDER, SpeciesLabel
+
+    for label in CANONICAL_ORDER:
+        if label is SpeciesLabel.LAMBDA:
+            continue
+        rho += float(species[label].rho_rest(eta_start))
+        p += float(species[label].p_rest(eta_start))
+    ic = build_orthogonal_initial_conditions(
+        algebra=build_bianchi_algebra("I"),
+        rho=rho,
+        p=p,
+        sigma_ab=np.zeros((3, 3)),
+        lambda_value=float(species[SpeciesLabel.LAMBDA].rho_rest(eta_start)),
+    )
+    result = solve_background_evolution(
+        ic,
+        config=BackgroundEvolutionConfig(
+            a_start=a_start,
+            a_end=a_end,
+            n_steps=96,
+            rtol=1.0e-8,
+            atol=1.0e-10,
+            solver_method="BDF",
+            matter_model_override=OrthogonalSpeciesRegistryClosure(species),
+            eta_at_scale_factor=species.bg_table.eta_at_a,
+            lambda_value=float(species[SpeciesLabel.LAMBDA].rho_rest(eta_start)),
+        ),
+    )
+    assert result.eta[0] == pytest.approx(eta_start, abs=1.0e-8)
+    assert result.eta[-1] == pytest.approx(eta_end, rel=5.0e-4)
+    assert result.a[-1] == pytest.approx(1.0 / 9.0, rel=1.0e-6)
