@@ -24,6 +24,11 @@ from bass.background.constraints import (
     evaluate_background_constraints,
 )
 from bass.background.geometry import TetradGeometry, build_geometry, pstf_rank2
+from bass.background.matter_projection import (
+    SpeciesProjectedState,
+    SpeciesRestFrameState,
+    total_matter_projection,
+)
 from bass.tilt.species_tilt import (
     TiltedMatterState,
     TiltedSpeciesDecomposition,
@@ -426,6 +431,25 @@ def build_tilted_initial_conditions(
     geometry = build_geometry(algebra)
     sigma_guess = project_trace_free_shear(np.zeros((3, 3)) if sigma_ab is None else sigma_ab)
     matter = assemble_tilted_matter_state(tuple(species))
+    projected_species = tuple(
+        SpeciesProjectedState(
+            label=piece.params.label,
+            rho=piece.mu,
+            p=piece.p,
+            q=piece.q,
+            pi=piece.pi,
+            tilt_contravariant=np.asarray(piece.params.v, dtype=np.float64),
+            tilt_covariant=np.asarray(piece.params.v, dtype=np.float64),
+            gamma_lorentz=piece.params.gamma,
+            rest_frame=SpeciesRestFrameState(
+                rho_hat=float(piece.params.rho_hat),
+                p_hat=float(piece.params.p_hat),
+                label=piece.params.label,
+            ),
+        )
+        for piece in tuple(species)
+    )
+    normal_frame = total_matter_projection(projected_species)
     sigma, matter, projection = project_tilted_codazzi(
         sigma_ab=sigma_guess,
         matter=matter,
@@ -433,7 +457,6 @@ def build_tilted_initial_conditions(
         kappa=kappa,
         policy=codazzi_policy,
     )
-    normal_frame = MatterNormalFrameState(rho=matter.rho, p=matter.p, q=matter.q, pi=matter.pi)
     H_value, algebra_eff, geometry_eff, sigma_eff, algebra_scale, shear_scale = _resolve_hamiltonian_closure(
         H=H,
         matter=normal_frame,

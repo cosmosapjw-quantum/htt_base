@@ -1,0 +1,37 @@
+{
+  "artifact_id": "ver3.pr04.orthogonal_vs_tilted_source_pack_table",
+  "pr": "PR-04",
+  "api_version": "ver3-pr04-v1",
+  "files": [
+    "htt/bass/background/matter_projection.py",
+    "htt/bass/background/initial_conditions.py"
+  ],
+  "source_pack_table": {
+    "orthogonal": {
+      "rho_hat": 2.0,
+      "p_hat": 0.5,
+      "tilt": [0.0, 0.0, 0.0],
+      "rho_normal": 2.0,
+      "p_normal": 0.5,
+      "q_norm": 0.0,
+      "pi_trace": 0.0
+    },
+    "tilted": {
+      "rho_hat": 2.0,
+      "p_hat": 0.5,
+      "tilt": [0.1, 0.0, 0.0],
+      "q_nonzero": true,
+      "pi_trace_free": true
+    }
+  },
+  "known_limit_checks": {
+    "orthogonal_identity_projection": true,
+    "identity_metric_matches_existing_tilt_decomposition": true,
+    "nontrivial_gamma_metric_lowers_velocity": true
+  },
+  "forbidden_shortcut_checks": {
+    "local_boost_not_in_source_pack": true,
+    "orthogonal_and_global_tilt_not_merged": true
+  },
+  "opened_claim": "normal-frame matter projection frozen"
+}
