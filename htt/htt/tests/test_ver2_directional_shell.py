@@ -364,6 +364,103 @@ def test_build_posterior_bundle_auto_materializes_htt_manifest(tmp_path):
     assert bundle.is_cross_check_only is True
 
 
+def test_emit_directional_posterior_artifact_writes_dedicated_htt_summary(tmp_path):
+    from htt.integration import emit_directional_posterior_artifact
+    from htt.integration.from_bass import build_ver2_directional_inputs
+
+    out_path = tmp_path / "htt_directional_posterior_summary.json"
+    shell = build_ver2_directional_inputs(
+        _observable_vector(),
+        _preferred_axis(),
+        solver_core_output=_solver_output(),
+        null_competition=NullCompetitionHook(
+            required_families=("registered_nulls",),
+            fpr_threshold=0.10,
+            ready_for_inference=True,
+            worst_family="mask_leakage",
+            worst_fpr=0.01,
+        ),
+        posterior_predictive_ready=True,
+        loocv_ready=True,
+    )
+    payload = emit_directional_posterior_artifact(
+        out_path,
+        model="FLRW_tilt",
+        x_median=0.2,
+        x_hpd68=(0.1, 0.3),
+        x_hpd95=(0.05, 0.35),
+        Q_median=0.4,
+        Q_hpd68=(0.2, 0.5),
+        Pi_median=0.1,
+        Pi_hpd68=(0.05, 0.2),
+        ln_B_total=5.0,
+        model_evidences={"FLRW_tilt": 5.0, "FLRW": 0.0},
+        F_median=0.07,
+        F_hpd68=(0.05, 0.09),
+        n_live=128,
+        directional_inputs=shell,
+        posterior_ref="results.json#departure/FLRW_tilt",
+        evidence_ref="results.json#evidence/FLRW_tilt",
+    )
+    assert out_path.exists()
+    assert payload["artifact_kind"] == "htt_directional_posterior_summary_v1"
+    manifest = payload["manifest"]
+    assert manifest["owner"] == "HTT"
+    assert manifest["statistics_definitions"]["surface"] == "directional_posterior_summary"
+    assert manifest["statistics_definitions"]["cross_check_only"] is False
+
+
+def test_build_posterior_bundle_reads_dedicated_htt_artifact(tmp_path):
+    from htt.integration import emit_directional_posterior_artifact
+    from htt.integration.to_mio import build_posterior_bundle
+    from htt.integration.from_bass import build_ver2_directional_inputs
+
+    out_path = tmp_path / "htt_directional_posterior_summary.json"
+    shell = build_ver2_directional_inputs(
+        _observable_vector(),
+        _preferred_axis(),
+        solver_core_output=_solver_output(),
+        null_competition=NullCompetitionHook(
+            required_families=("registered_nulls",),
+            fpr_threshold=0.10,
+            ready_for_inference=True,
+            worst_family="mask_leakage",
+            worst_fpr=0.01,
+        ),
+        posterior_predictive_ready=True,
+        loocv_ready=True,
+    )
+    emit_directional_posterior_artifact(
+        out_path,
+        model="FLRW_tilt",
+        x_median=0.2,
+        x_hpd68=(0.1, 0.3),
+        x_hpd95=(0.05, 0.35),
+        Q_median=0.4,
+        Q_hpd68=(0.2, 0.5),
+        Pi_median=0.1,
+        Pi_hpd68=(0.05, 0.2),
+        ln_B_total=5.0,
+        model_evidences={"FLRW_tilt": 5.0, "FLRW": 0.0},
+        F_median=0.07,
+        F_hpd68=(0.05, 0.09),
+        n_live=128,
+        directional_inputs=shell,
+        posterior_ref="results.json#departure/FLRW_tilt",
+        evidence_ref="results.json#evidence/FLRW_tilt",
+    )
+    bundle = build_posterior_bundle(results_path=str(out_path), model="FLRW_tilt")
+    assert bundle.model == "FLRW_tilt"
+    assert bundle.x_median == pytest.approx(0.2)
+    assert bundle.ln_B_total == pytest.approx(5.0)
+    assert bundle.is_cross_check_only is True
+    assert bundle.manifest is not None
+    assert bundle.manifest.statistics_definitions["surface"] == "posterior_export_bundle"
+    assert bundle.manifest.statistics_definitions["source_surface"] == "directional_posterior_summary"
+    assert bundle.manifest.statistics_definitions["cross_check_only"] is True
+    assert "mio_cross_check_only_export" in bundle.manifest.caveats
+
+
 def test_directional_bridge_promotion_gate_is_closed_fail():
     from htt.bridge.metadata import directional_bridge_promotion_gate
 

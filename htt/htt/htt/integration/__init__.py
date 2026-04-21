@@ -5,11 +5,21 @@ from htt.integration.from_bass import (
     ingest_bass_directional,
     ingest_ver2_directional_inputs,
 )
+from htt.integration.posterior_artifact import (
+    HTT_DIRECTIONAL_POSTERIOR_ARTIFACT_KIND,
+    build_cross_check_manifest_from_directional_artifact,
+    emit_directional_posterior_artifact,
+    load_directional_posterior_artifact,
+)
 from htt.integration.to_mio import build_posterior_bundle
 
 __all__ = [
     "ingest_bass_directional",
     "build_ver2_directional_inputs",
     "ingest_ver2_directional_inputs",
+    "HTT_DIRECTIONAL_POSTERIOR_ARTIFACT_KIND",
+    "emit_directional_posterior_artifact",
+    "load_directional_posterior_artifact",
+    "build_cross_check_manifest_from_directional_artifact",
     "build_posterior_bundle",
 ]

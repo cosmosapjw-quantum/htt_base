@@ -14,6 +14,11 @@ import json
 from pathlib import Path
 
 from common.contracts import ArtifactManifest
+from htt.integration.posterior_artifact import (
+    HTT_DIRECTIONAL_POSTERIOR_ARTIFACT_KIND,
+    build_cross_check_manifest_from_directional_artifact,
+    load_directional_posterior_artifact,
+)
 from htt.infer.ver2_directional_shell import (
     DirectionalLikelihoodInputs,
     build_directional_output_manifest,
@@ -35,6 +40,36 @@ def _get_nested(d, *keys, default=0.0):
     return d
 
 
+def _build_bundle_from_directional_artifact(
+    artifact_payload,
+    *,
+    model: str,
+    manifest: ArtifactManifest | None,
+) -> PosteriorExportBundle:
+    artifact = load_directional_posterior_artifact(artifact_payload)
+    resolved_manifest = manifest or build_cross_check_manifest_from_directional_artifact(
+        artifact,
+        artifact_id=f"htt.directional_posterior_export.{artifact.model}",
+        artifact_path=f"artifacts/htt/{artifact.model}_posterior_export.json",
+    )
+    return PosteriorExportBundle(
+        x_median=artifact.x_median,
+        x_hpd68=artifact.x_hpd68,
+        x_hpd95=artifact.x_hpd95,
+        Q_median=artifact.Q_median,
+        Q_hpd68=artifact.Q_hpd68,
+        Pi_median=artifact.Pi_median,
+        Pi_hpd68=artifact.Pi_hpd68,
+        ln_B_total=artifact.ln_B_total,
+        model_evidences=dict(artifact.model_evidences),
+        F_median=artifact.F_median,
+        F_hpd68=artifact.F_hpd68,
+        n_live=artifact.n_live,
+        model=artifact.model,
+        manifest=resolved_manifest,
+    )
+
+
 def build_posterior_bundle(results_path: str = None,
                            model: str = 'FLRW_tilt',
                            manifest: ArtifactManifest | None = None,
@@ -49,7 +84,8 @@ def build_posterior_bundle(results_path: str = None,
     Parameters
     ----------
     results_path : str, optional
-        Path to integrated_pipeline_results.json.
+        Path to either a dedicated HTT posterior summary artifact or the
+        legacy integrated_pipeline_results.json.
     model : str
         Reference model for posteriors (default: FLRW_tilt as best-fit).
     manifest : ArtifactManifest, optional
@@ -63,6 +99,12 @@ def build_posterior_bundle(results_path: str = None,
 
     with open(results_path) as f:
         data = json.load(f)
+    if data.get("artifact_kind") == HTT_DIRECTIONAL_POSTERIOR_ARTIFACT_KIND:
+        return _build_bundle_from_directional_artifact(
+            data,
+            model=model,
+            manifest=manifest,
+        )
 
     dep = data.get('departure', {}).get(model, {})
     ev_model = data.get('evidence', {}).get(model, {})
