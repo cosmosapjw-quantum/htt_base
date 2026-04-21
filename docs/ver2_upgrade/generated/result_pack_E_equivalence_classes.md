@@ -5,7 +5,7 @@
 - claim tier: `exploratory`
 - production status: `diagnostic_only`
 - figure base: `fig_ver2e_validation_campaign_matrix`
-- caveats: warn_campaigns_do_not_validate_claims, warn_campaigns_remain_no_claim, representative_family_sweep_only, representative_tilted_runtime_blocked, non_type_i_exact_propagator_missing, late_time_reionization_window_missing, direction_resolved_reionization_microphysics_missing
+- caveats: warn_campaigns_do_not_validate_claims, warn_campaigns_remain_no_claim, representative_family_sweep_only, representative_tilted_runtime_partial_only, non_type_i_exact_propagator_missing, late_time_reionization_window_missing, direction_resolved_reionization_microphysics_missing
 
 - The validation registry is exported together with the representative family sweep evidence.
 - Orthogonal I/V/VII_0/VIII are runnable on the bounded native route, while tilted representative branches remain explicit no-claim blockers.

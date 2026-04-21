@@ -15,17 +15,17 @@
     "artifact_path": "docs/ver2_upgrade/generated/artifacts/bass_ver2_export_representative_family_sweep.json",
     "caveats": [
       "representative_family_sweep_only",
-      "representative_tilted_runtime_blocked",
+      "representative_tilted_runtime_partial_only",
       "non_type_i_exact_propagator_missing",
       "late_time_reionization_window_missing",
       "direction_resolved_reionization_microphysics_missing"
     ],
     "claim_tier": "conditional",
     "code_version": "ver2-d1",
-    "config_hash": "7f0d24a3710077d3",
+    "config_hash": "991b17351745039c",
     "created_by": "scripts.ver2_artifact_export.py",
     "failed_gates": [],
-    "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
+    "git_commit": "2a93384016526b4b55463c24c49faec4d2ff0804",
     "implementation_scope": "canonical_BASS",
     "input_hashes": [
       "validation.bass_representative_family_sweep"
@@ -49,7 +49,7 @@
   },
   "notes": [
     "representative_family_sweep_only",
-    "representative_tilted_runtime_blocked",
+    "representative_tilted_runtime_partial_only",
     "non_type_i_exact_propagator_missing",
     "late_time_reionization_window_missing",
     "direction_resolved_reionization_microphysics_missing"
@@ -75,12 +75,22 @@
         },
         {
           "category": "adversarial_edge",
-          "check_id": "representative_tilted_branches_fail_controlledly",
+          "check_id": "representative_tilted_runnable_subset_runs_end_to_end",
           "metric_name": null,
           "metric_value": null,
           "notes": [],
           "passed": true,
-          "summary": "Representative tilted branches remain explicit controlled blocks at the Codazzi stage instead of silently degrading into orthogonal or local-boost behavior.",
+          "summary": "The representative runnable tilted subset V and VII_0 executes end-to-end on the bounded native runtime path without collapsing global tilt into local boost semantics.",
+          "threshold": null
+        },
+        {
+          "category": "adversarial_edge",
+          "check_id": "representative_remaining_tilted_branches_fail_controlledly",
+          "metric_name": null,
+          "metric_value": null,
+          "notes": [],
+          "passed": true,
+          "summary": "The remaining representative tilted branches stay explicit controlled blocks at the Codazzi stage instead of silently degrading into orthogonal or local-boost behavior.",
           "threshold": null
         },
         {
@@ -123,7 +133,7 @@
       ],
       "no_claim_conditions": [
         "representative_family_sweep_only",
-        "representative_tilted_runtime_blocked",
+        "representative_tilted_runtime_partial_only",
         "non_type_i_exact_propagator_missing",
         "late_time_reionization_window_missing",
         "direction_resolved_reionization_microphysics_missing"
@@ -131,7 +141,7 @@
       "notes": [
         "This campaign validates the bounded preliminary representative-family sweep only.",
         "Orthogonal branches are executable for I, V, VII_0, and VIII on the current native Tier-B route.",
-        "Tilted representative branches remain explicit Codazzi-stage blocks on the current global-tilt runtime construction and are treated as no-claim conditions rather than silent fallbacks."
+        "The representative V and VII_0 tilted branches are executable on the bounded native route, while I and VIII tilted branches remain explicit Codazzi-stage blockers."
       ],
       "null_manifest_refs": [
         "null.bass.representative_family_sweep"
@@ -151,17 +161,17 @@
       "artifact_path": "docs/ver2_upgrade/generated/artifacts/bass_ver2_export_representative_family_sweep.json",
       "caveats": [
         "representative_family_sweep_only",
-        "representative_tilted_runtime_blocked",
+        "representative_tilted_runtime_partial_only",
         "non_type_i_exact_propagator_missing",
         "late_time_reionization_window_missing",
         "direction_resolved_reionization_microphysics_missing"
       ],
       "claim_tier": "conditional",
       "code_version": "ver2-d1",
-      "config_hash": "7f0d24a3710077d3",
+      "config_hash": "991b17351745039c",
       "created_by": "scripts.ver2_artifact_export.py",
       "failed_gates": [],
-      "git_commit": "06e6215f158ec45791012a90508f9613102202a1",
+      "git_commit": "2a93384016526b4b55463c24c49faec4d2ff0804",
       "implementation_scope": "canonical_BASS",
       "input_hashes": [
         "validation.bass_representative_family_sweep"
