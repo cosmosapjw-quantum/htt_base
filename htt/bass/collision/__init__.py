@@ -10,7 +10,6 @@ from bass.collision.electron_frame import (
     ProjectedThomsonSource,
     electron_frame_rate_factor,
     project_thomson_source,
-    project_thomson_source_stub,
 )
 
 __all__ = [
@@ -19,5 +18,4 @@ __all__ = [
     "ProjectedThomsonSource",
     "electron_frame_rate_factor",
     "project_thomson_source",
-    "project_thomson_source_stub",
 ]

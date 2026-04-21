@@ -10,7 +10,6 @@ from bass.recombination.history_visibility import (
     VisibilityEventMarkers,
     VisibilityHistoryContract,
     build_tilted_visibility_source,
-    build_tilted_visibility_source_stub,
     build_visibility_history_contract,
 )
 
@@ -21,5 +20,4 @@ __all__ = [
     "TiltedVisibilitySource",
     "build_visibility_history_contract",
     "build_tilted_visibility_source",
-    "build_tilted_visibility_source_stub",
 ]

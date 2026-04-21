@@ -3,15 +3,15 @@
 from bass.los.ver2_source_propagator import (
     ObserverFrameMetadata,
     PropagatorMode,
+    SourcePropagator,
     SourcePropagatorConfig,
-    SourcePropagatorStub,
-    build_source_propagator_stub,
+    build_source_propagator,
 )
 
 __all__ = [
     "PropagatorMode",
     "ObserverFrameMetadata",
     "SourcePropagatorConfig",
-    "SourcePropagatorStub",
-    "build_source_propagator_stub",
+    "SourcePropagator",
+    "build_source_propagator",
 ]

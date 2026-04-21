@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import numpy as np
 import pytest
 
 from common.contracts import ArtifactManifest
@@ -7,9 +8,11 @@ from common.contracts import ArtifactManifest
 from bass.forward import (
     BassReleaseMetadata,
     build_solver_core_output,
+    build_solver_core_output_from_lowell_result,
     solver_core_output_from_payload,
     solver_core_output_to_payload,
 )
+from bass.hierarchy.integrator import IntegrationResult, IntegratorConfig
 from bass.los import PropagatorMode, SourcePropagatorConfig
 from bass.runtime import (
     CheckpointPolicy,
@@ -21,6 +24,7 @@ from bass.runtime import (
     SolverFeatureFlags,
     SolverTier,
 )
+from bass.species.registry import SpeciesBackgroundRegistry
 
 
 def _manifest(**overrides) -> ArtifactManifest:
@@ -64,6 +68,52 @@ def _flags() -> SolverFeatureFlags:
         visibility_history=FeatureStatus.APPROXIMATE,
         source_propagator=FeatureStatus.DISABLED,
         checkpoint_restart=FeatureStatus.DISABLED,
+    )
+
+
+def _live_flags() -> SolverFeatureFlags:
+    return SolverFeatureFlags(
+        background_dynamics=FeatureStatus.APPROXIMATE,
+        photon_transport=FeatureStatus.APPROXIMATE,
+        thomson_collision=FeatureStatus.APPROXIMATE,
+        visibility_history=FeatureStatus.APPROXIMATE,
+        source_propagator=FeatureStatus.APPROXIMATE,
+        checkpoint_restart=FeatureStatus.DISABLED,
+    )
+
+
+def _synthetic_result() -> IntegrationResult:
+    eta = np.linspace(10.0, 20.0, 10)
+    l_max = 6
+    size = (l_max + 1) ** 2
+    t_tower = np.zeros((eta.size, size), dtype=float)
+    e_tower = np.zeros((eta.size, size), dtype=float)
+    # ell=0,m=0 -> index 0
+    t_tower[:, 0] = np.linspace(1.0e-5, 3.0e-5, eta.size)
+    # ell=2 offset 4, indices m=-2,0,+2 -> 4,6,8
+    t_tower[:, 4] = np.linspace(-1.0e-6, -2.0e-6, eta.size)
+    t_tower[:, 6] = np.linspace(2.0e-6, 4.0e-6, eta.size)
+    t_tower[:, 8] = np.linspace(1.5e-6, 2.5e-6, eta.size)
+    e_tower[:, 4] = np.linspace(0.5e-6, 0.8e-6, eta.size)
+    e_tower[:, 6] = np.linspace(0.8e-6, 1.1e-6, eta.size)
+    e_tower[:, 8] = np.linspace(0.6e-6, 0.9e-6, eta.size)
+    return IntegrationResult(
+        eta=eta,
+        a=np.linspace(1.0e-3, 2.0e-3, eta.size),
+        Sigma_plus=np.linspace(1.0e-5, 0.8e-5, eta.size),
+        Sigma_minus=np.linspace(0.5e-5, 0.2e-5, eta.size),
+        photon_T_tower=t_tower,
+        photon_E_tower=e_tower,
+        neutrino_reduced=np.zeros((eta.size, 4), dtype=float),
+        critical_events={"z_eq": 3400.0, "z_star": 1089.0},
+        config=IntegratorConfig(
+            L_max=l_max,
+            eta_initial_mpc=float(eta[0]),
+            eta_final_mpc=float(eta[-1]),
+            n_output=eta.size,
+        ),
+        solver_info={"status": 0, "message": "synthetic"},
+        tca_active_mask=np.array([True, True, False, False, False], dtype=bool),
     )
 
 
@@ -158,3 +208,30 @@ def test_solver_core_output_payload_roundtrips() -> None:
     restored = solver_core_output_from_payload(payload)
     assert restored.metadata == output.metadata
     assert restored.manifest.artifact_id == output.manifest.artifact_id
+
+
+def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() -> None:
+    output = build_solver_core_output_from_lowell_result(
+        manifest=_manifest(),
+        bianchi_type="VII_h",
+        result=_synthetic_result(),
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_executable",
+            run_label="tier-b-live",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+    )
+    assert output.metadata["propagator_ready"] is True
+    assert output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_lowell_bridge"
+    assert output.metadata["propagator_mode"] == "anisotropic_forward"
+    assert output.anisotropic_covariance is not None
+    assert output.deterministic_template["kind"] == "tier_b_lowell_template"
+    assert output.alm_T["representation"] == "lowell_pstf_final_slice"

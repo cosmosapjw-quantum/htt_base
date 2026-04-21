@@ -98,8 +98,6 @@ from bass.hierarchy.pstf_radiation import (
     RadiationPSTFState,
     TruncationMetadata,
     make_radiation_state,
-    project_from_angular_samples_stub,
-    reconstruct_on_sphere_stub,
 )
 from bass.hierarchy.seed_compatibility import (
     RegularSeedDescriptor,
@@ -108,11 +106,8 @@ from bass.hierarchy.seed_compatibility import (
     SeedConvention,
     SeedConstraintProjection,
     build_constraint_projection,
-    build_constraint_projection_stub,
     build_flrw_regular_seed,
-    build_flrw_regular_seed_stub,
     promote_tilted_seed,
-    promote_tilted_seed_stub,
 )
 
 
@@ -186,17 +181,12 @@ __all__ = [
     "TruncationMetadata",
     "RadiationPSTFState",
     "make_radiation_state",
-    "project_from_angular_samples_stub",
-    "reconstruct_on_sphere_stub",
     "SeedConvention",
     "SeedAssignmentFrame",
     "RegularSeedDescriptor",
     "RegularSeedState",
     "SeedConstraintProjection",
     "build_flrw_regular_seed",
-    "build_flrw_regular_seed_stub",
     "promote_tilted_seed",
-    "promote_tilted_seed_stub",
     "build_constraint_projection",
-    "build_constraint_projection_stub",
 ]
