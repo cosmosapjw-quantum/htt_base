@@ -6,36 +6,37 @@
 2. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_01_SKELETON_PREIMPLANT.md`
 3. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_02_IMPLEMENTATION_FIGURES_MANUSCRIPT.md`
 4. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_03_BASS_COMPLETION.md`
-5. `docs/ver2_upgrade/VER2_EXECUTION_LEDGER.md`
-6. `docs/ver2_upgrade/VER2_CARRY_FORWARD_LEDGER.md`
-7. `docs/ver2_upgrade/VER2_PHASE_PLACEHOLDER_INDEX.md`
-8. `docs/ver2_upgrade/audits/AUDIT_SK-00_2026-04-20.md`
-9. `docs/ver2_upgrade/audits/AUDIT_SK-01C_2026-04-21.md`
-10. `docs/ver2_upgrade/audits/AUDIT_SK-05T_2026-04-21.md`
-11. `docs/ver2_upgrade/audits/AUDIT_SK-09D_2026-04-21.md`
-12. `docs/ver2_upgrade/audits/AUDIT_SK-07M_2026-04-21.md`
-13. `docs/ver2_upgrade/audits/AUDIT_SK-06H_2026-04-21.md`
-14. `docs/ver2_upgrade/audits/AUDIT_SK-01S1_2026-04-21.md`
-15. `docs/ver2_upgrade/audits/AUDIT_SK-02S2_2026-04-21.md`
-16. `docs/ver2_upgrade/audits/AUDIT_SK-03S3_2026-04-21.md`
-17. `docs/ver2_upgrade/audits/AUDIT_SK-04O_2026-04-21.md`
-18. `docs/ver2_upgrade/audits/AUDIT_SK-08V_2026-04-21.md`
-19. `docs/ver2_upgrade/audits/AUDIT_IM-06H_2026-04-21.md`
-20. `docs/ver2_upgrade/audits/AUDIT_IM-07M_2026-04-21.md`
-21. `docs/ver2_upgrade/audits/AUDIT_IM-01S1_2026-04-21.md`
-22. `docs/ver2_upgrade/audits/AUDIT_IM-02S2_2026-04-21.md`
-23. `docs/ver2_upgrade/audits/AUDIT_IM-03S3A_2026-04-21.md`
-24. `docs/ver2_upgrade/audits/AUDIT_IM-03S3B_2026-04-21.md`
-25. `docs/ver2_upgrade/audits/AUDIT_IM-04O_2026-04-21.md`
-26. `docs/ver2_upgrade/audits/AUDIT_IM-05T_2026-04-21.md`
-27. `docs/ver2_upgrade/audits/AUDIT_IM-08V_2026-04-21.md`
-28. `docs/ver2_upgrade/audits/AUDIT_IM-09D-FIG_2026-04-21.md`
-29. `docs/ver2_upgrade/audits/AUDIT_IM-10D-MAN_2026-04-21.md`
-30. `docs/ver2_upgrade/audits/AUDIT_BF-01B-HCORE_2026-04-21.md`
-31. `docs/ver2_upgrade/audits/AUDIT_BF-02B-SEED_2026-04-21.md`
-32. `docs/ver2_upgrade/audits/AUDIT_BF-03B-ANG_2026-04-21.md`
-33. `docs/ver2_upgrade/audits/AUDIT_BF-04B-COV_2026-04-21.md`
-34. `docs/ver2_upgrade/audits/AUDIT_BF-05B-VAL_2026-04-21.md`
+5. `docs/ver2_upgrade/VER2_PHASE_PROMPTS_04_HTT_PARALLEL.md`
+6. `docs/ver2_upgrade/VER2_EXECUTION_LEDGER.md`
+7. `docs/ver2_upgrade/VER2_CARRY_FORWARD_LEDGER.md`
+8. `docs/ver2_upgrade/VER2_PHASE_PLACEHOLDER_INDEX.md`
+9. `docs/ver2_upgrade/audits/AUDIT_SK-00_2026-04-20.md`
+10. `docs/ver2_upgrade/audits/AUDIT_SK-01C_2026-04-21.md`
+11. `docs/ver2_upgrade/audits/AUDIT_SK-05T_2026-04-21.md`
+12. `docs/ver2_upgrade/audits/AUDIT_SK-09D_2026-04-21.md`
+13. `docs/ver2_upgrade/audits/AUDIT_SK-07M_2026-04-21.md`
+14. `docs/ver2_upgrade/audits/AUDIT_SK-06H_2026-04-21.md`
+15. `docs/ver2_upgrade/audits/AUDIT_SK-01S1_2026-04-21.md`
+16. `docs/ver2_upgrade/audits/AUDIT_SK-02S2_2026-04-21.md`
+17. `docs/ver2_upgrade/audits/AUDIT_SK-03S3_2026-04-21.md`
+18. `docs/ver2_upgrade/audits/AUDIT_SK-04O_2026-04-21.md`
+19. `docs/ver2_upgrade/audits/AUDIT_SK-08V_2026-04-21.md`
+20. `docs/ver2_upgrade/audits/AUDIT_IM-06H_2026-04-21.md`
+21. `docs/ver2_upgrade/audits/AUDIT_IM-07M_2026-04-21.md`
+22. `docs/ver2_upgrade/audits/AUDIT_IM-01S1_2026-04-21.md`
+23. `docs/ver2_upgrade/audits/AUDIT_IM-02S2_2026-04-21.md`
+24. `docs/ver2_upgrade/audits/AUDIT_IM-03S3A_2026-04-21.md`
+25. `docs/ver2_upgrade/audits/AUDIT_IM-03S3B_2026-04-21.md`
+26. `docs/ver2_upgrade/audits/AUDIT_IM-04O_2026-04-21.md`
+27. `docs/ver2_upgrade/audits/AUDIT_IM-05T_2026-04-21.md`
+28. `docs/ver2_upgrade/audits/AUDIT_IM-08V_2026-04-21.md`
+29. `docs/ver2_upgrade/audits/AUDIT_IM-09D-FIG_2026-04-21.md`
+30. `docs/ver2_upgrade/audits/AUDIT_IM-10D-MAN_2026-04-21.md`
+31. `docs/ver2_upgrade/audits/AUDIT_BF-01B-HCORE_2026-04-21.md`
+32. `docs/ver2_upgrade/audits/AUDIT_BF-02B-SEED_2026-04-21.md`
+33. `docs/ver2_upgrade/audits/AUDIT_BF-03B-ANG_2026-04-21.md`
+34. `docs/ver2_upgrade/audits/AUDIT_BF-04B-COV_2026-04-21.md`
+35. `docs/ver2_upgrade/audits/AUDIT_BF-05B-VAL_2026-04-21.md`
 
 ## 2. Current State
 
@@ -64,6 +65,7 @@
 - `IM-06H` is now closed: HTT directional shells accept live matched-complexity/null-competition/PPC/LOOCV hooks, directional output surfaces auto-materialize HTT-owned manifests/readiness metadata, and `htt.integration.to_mio.build_posterior_bundle` can synthesize a cross-check-only HTT manifest when one is not supplied explicitly.
 - `IM-06H` verification is green for the touched H-lane scope: targeted pytest `20 passed`, full `htt/htt/tests` `271 passed`, and `py_compile` passed.
 - `IM-06H` commit is now present in history as `cecf5e7` (`V2-H1: implement HTT directional readiness and manifest plumbing`).
+- `HTT-A` is now green in the local workspace: HTT owns a dedicated posterior/evidence summary writer under `htt.integration.posterior_artifact`, and `build_posterior_bundle` can ingest that HTT artifact directly instead of relying only on legacy `integrated_pipeline_results.json`.
 - `IM-07M` is now closed: `htt/mio/diagnostics/predictive_residuals.py` can build live model×channel residual slices from `ObservableVector` + `HttForwardOutput`, and IM-07M MIO certificate producer surfaces now accept live `TscAdequacyOverlay` attachment without reopening ownership or evidence semantics.
 - `IM-07M` verification is green for the touched M-lane scope: targeted pytest `11 passed`, full `htt/mio/tests` `155 passed`, and `py_compile` passed.
 - `IM-07M` commit is now present in history as `c5ae6d1` (`V2-M1: implement MIO shared-schema residual atlas and overlay attachment`).
@@ -116,6 +118,8 @@
 - `BF-06B-LIKE` verification is green for the touched BASS observer/likelihood/inference scope: live-binding/public-surface pytest `6 passed`, live-inference pytest `3 passed`, observer regression pytest `132 passed`, likelihood/public-surface pytest `77 passed`, and `py_compile` passed.
 - `CF-PR15A` is now closed: the default non-Type-I Tier-B propagator no longer reports the old `flrw_bessel_bridge_proxy` realization and instead uses a bounded matrix-backed `m={0,±2}` transport with explicit anisotropic mode coupling / polarization rotation metadata.
 - `CF-PR15A` verification is green for the touched LOS/forward/runtime scope: targeted pytest `18 passed`, `py_compile` passed, and the remaining gap is now the full PR-15 exact anisotropic Green-function / adjoint closure rather than the old FLRW-bridge default.
+- `CF-PR16A` is now closed: the native Tier-B runtime supports executable checkpoint/restart on the live path, writes algebra/frame compatibility metadata into checkpoint files, and rejects incompatible restart attempts before background/history execution begins.
+- `CF-PR16A` verification is green for the touched runtime scope: targeted pytest `10 passed`, `py_compile` passed, and the remaining solver-family caveat stays explicit as `IMEX_SPLIT` realized by `BDF` on the seeded native route.
 - The BASS-first implementation sequence is now closed in code. Remaining debt is no longer “wire observer/likelihood/inference at all”; it is the deeper physics/statistics carry-forward around non-Type-I exact propagation, full BiPoSH inversion, and later HTT-facing science claims.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
@@ -130,6 +134,11 @@ instead and run the follow-up packets in that order.
 
 There is no new BASS-first implementation packet left in the list.
 
+If the priority is parallel HTT follow-up while BASS carry-forward continues,
+use `docs/ver2_upgrade/VER2_PHASE_PROMPTS_04_HTT_PARALLEL.md`.
+`HTT-A` is already green in the current local workspace, so the next HTT
+packet from this state is `HTT-B`.
+
 If the user explicitly wants cleanup-only work, the next formal packet is:
 
 1. `BF-07X-CLEANUP`
@@ -137,8 +146,8 @@ If the user explicitly wants cleanup-only work, the next formal packet is:
 Otherwise keep the priority on physics/statistics carry-forward, not legacy
 cleanup:
 
-1. non-Type-I exact propagator closure beyond the new bounded matrix-backed default,
-2. deeper visibility / microphysics fidelity,
+1. deeper visibility / microphysics fidelity,
+2. non-Type-I exact propagator closure beyond the new bounded matrix-backed default,
 3. later HTT-facing morphology / likelihood claim calibration,
 4. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until explicitly requested.
 

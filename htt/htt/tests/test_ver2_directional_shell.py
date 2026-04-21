@@ -200,6 +200,38 @@ def test_build_ver2_directional_inputs_carries_solver_forward():
     assert any("SK-01S1 -> SK-03S3" in note for note in shell.carry_forward)
 
 
+def test_build_ver2_directional_inputs_uses_calibrated_local_global_matrix():
+    from htt.integration.from_bass import build_ver2_directional_inputs
+
+    observable = _observable_vector()
+    object.__setattr__(
+        observable,
+        "template_fit",
+        {"atlas_ref": "template_morphology_atlas_v1.json"},
+    )
+    object.__setattr__(
+        observable,
+        "covariance_features",
+        {
+            "representation": "low_ell_harmonic_sparse_basis",
+            "basis_reduction_status": "low_ell_harmonic_sparse_basis",
+            "local_global_degeneracy": {
+                "represented": True,
+                "status": "observer_source_discrimination_pending",
+                "distinguishing_observables": ("BiPoSH", "BB", "template"),
+            },
+        },
+    )
+    shell = build_ver2_directional_inputs(
+        observable,
+        _preferred_axis(),
+        manifest=_manifest("HTT"),
+    )
+    pair = "global_tilt|local_boost"
+    assert shell.discrimination_matrix.claim_tier_by_pair[pair] == "conditional"
+    assert shell.discrimination_matrix.manifest.production_status == "production_candidate"
+
+
 def test_build_posterior_bundle_preserves_htt_manifest(tmp_path):
     from htt.integration.to_mio import build_posterior_bundle
 

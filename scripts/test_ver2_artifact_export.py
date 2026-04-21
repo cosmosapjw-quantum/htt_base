@@ -44,6 +44,17 @@ def test_conditional_pack_caption_includes_caveats() -> None:
     assert "Caveats: none." not in caption
 
 
+def test_local_global_pack_reflects_calibrated_conditional_discrimination() -> None:
+    exporter = _load_export_module()
+    records, packs = exporter.build_export_bundle()
+    record = records["discrimination"]
+    pack = next(pack for pack in packs if pack.pack_id == "B")
+    assert record.manifest.claim_tier == "conditional"
+    assert record.manifest.production_status == "production_candidate"
+    assert pack.claim_tier == "conditional"
+    assert pack.production_status == "production_candidate"
+
+
 def test_scan_figures_blocks_missing_manifest_and_accepts_generated_override(
     tmp_path: Path,
 ) -> None:

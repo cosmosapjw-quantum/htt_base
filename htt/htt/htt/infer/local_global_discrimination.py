@@ -1,18 +1,29 @@
 """Local-boost/global-tilt response-library skeletons for VER2 HTT."""
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 
 import numpy as np
 
-from common.contracts import ArtifactManifest, DiscriminationMatrix
+from common.contracts import (
+    ArtifactManifest,
+    AtlasEntryLite,
+    DiscriminationMatrix,
+    ObservableVector,
+)
 
 __all__ = [
     "HypothesisResponseTemplate",
+    "build_discrimination_matrix",
     "build_discrimination_matrix_stub",
     "default_response_library",
     "next_observable_recommendation",
+    "whitened_inner_product",
 ]
+
+_BASIS_ORDER = ("scalar_summary", "direction", "depth", "template", "BiPoSH", "EE", "BB")
+_CONDITIONAL_OVERLAP_THRESHOLD = 0.9
 
 
 @dataclass(frozen=True)
@@ -42,6 +53,10 @@ def _manifest(artifact_id: str) -> ArtifactManifest:
         schema_version="ver2-v1",
         caveats=["skeleton_only", "pre_inference_only", "not_posterior_odds"],
     )
+
+
+def _pair_key(left: str, right: str) -> str:
+    return "|".join(sorted((left, right)))
 
 
 def default_response_library() -> dict[str, HypothesisResponseTemplate]:
@@ -98,6 +113,306 @@ def next_observable_recommendation(pair: tuple[str, str]) -> str:
     if "bianchi_geometry" in ordered:
         return "atlas_template_biposh"
     return "null_mock_covariance"
+
+
+def whitened_inner_product(
+    response_i: np.ndarray,
+    response_j: np.ndarray,
+    noise_variances: np.ndarray,
+) -> float:
+    """Return the diagonal-noise whitened inner product."""
+
+    vector_i = np.asarray(response_i, dtype=float)
+    vector_j = np.asarray(response_j, dtype=float)
+    variances = np.asarray(noise_variances, dtype=float)
+    if vector_i.shape != vector_j.shape or vector_i.shape != variances.shape:
+        raise ValueError("response vectors and noise variances must share the same shape")
+    precision = np.zeros_like(variances, dtype=float)
+    finite = np.isfinite(variances) & (variances > 0.0)
+    precision[finite] = 1.0 / variances[finite]
+    return float(np.dot(vector_i, precision * vector_j))
+
+
+def _normalized_overlap(
+    response_i: np.ndarray,
+    response_j: np.ndarray,
+    noise_variances: np.ndarray,
+) -> float:
+    norm_i = whitened_inner_product(response_i, response_i, noise_variances)
+    norm_j = whitened_inner_product(response_j, response_j, noise_variances)
+    if norm_i <= 0.0 or norm_j <= 0.0:
+        return float("nan")
+    rho = whitened_inner_product(response_i, response_j, noise_variances) / np.sqrt(
+        norm_i * norm_j
+    )
+    return float(np.clip(rho, -1.0, 1.0))
+
+
+def _feature_support(
+    observable_vector: ObservableVector,
+    *,
+    atlas_entry: AtlasEntryLite | None,
+    morphology_atlas_ref: str | None,
+) -> dict[str, float]:
+    channels = set(observable_vector.channels)
+    template_fit = (
+        dict(observable_vector.template_fit)
+        if isinstance(observable_vector.template_fit, Mapping)
+        else {}
+    )
+    covariance_features = (
+        dict(observable_vector.covariance_features)
+        if isinstance(observable_vector.covariance_features, Mapping)
+        else {}
+    )
+    local_global = covariance_features.get("local_global_degeneracy")
+    local_global_payload = (
+        dict(local_global) if isinstance(local_global, Mapping) else {}
+    )
+    distinguishing = {
+        str(item)
+        for item in local_global_payload.get("distinguishing_observables", ())
+    }
+    atlas_available = bool(
+        morphology_atlas_ref
+        or template_fit.get("atlas_ref")
+        or (atlas_entry is not None and atlas_entry.atlas_id)
+    )
+    scalar_summary = 1.0 if ("TT" in channels or "scalar_summary" in channels) else 0.0
+    direction = 1.0 if observable_vector.alm_features else scalar_summary
+    depth = (
+        1.0
+        if (
+            observable_vector.sky_support.selection_mode == "mock_calibrated"
+            and observable_vector.sky_support.mock_coverage_status == "adequate"
+        )
+        else (
+            0.4
+            if observable_vector.sky_support.selection_mode == "mock_calibrated"
+            else 0.0
+        )
+    )
+    template = 1.0 if atlas_available else 0.0
+    biposh = 1.0 if atlas_available and ("BiPoSH" in channels or "BiPoSH" in distinguishing) else 0.0
+    ee = 1.0 if "EE" in channels else 0.0
+    bb = 1.0 if ("BB" in channels or "BB" in distinguishing) else 0.0
+
+    representation = str(covariance_features.get("representation", ""))
+    basis_status = str(covariance_features.get("basis_reduction_status", ""))
+    if representation == "sparse_mode_block_proxy":
+        template *= 0.6
+        biposh *= 0.6
+    elif basis_status == "low_ell_harmonic_sparse_basis":
+        template *= 0.9
+        biposh *= 0.9
+
+    return {
+        "scalar_summary": scalar_summary,
+        "direction": direction,
+        "depth": depth,
+        "template": template,
+        "BiPoSH": biposh,
+        "EE": ee,
+        "BB": bb,
+    }
+
+
+def _response_vector(
+    template: HypothesisResponseTemplate,
+) -> np.ndarray:
+    return np.asarray(
+        [1.0 if basis in template.observable_basis else 0.0 for basis in _BASIS_ORDER],
+        dtype=float,
+    )
+
+
+def _noise_variances(
+    support: Mapping[str, float],
+) -> np.ndarray:
+    variances = []
+    for basis in _BASIS_ORDER:
+        value = float(support.get(basis, 0.0))
+        variances.append(np.inf if value <= 0.0 else 1.0 / value)
+    return np.asarray(variances, dtype=float)
+
+
+def _pair_claim_tier(
+    pair: tuple[str, str],
+    *,
+    overlap: float,
+    support: Mapping[str, float],
+) -> str:
+    if not np.isfinite(overlap):
+        return "blocked"
+    ordered = tuple(sorted(pair))
+    if ordered == ("global_tilt", "local_boost"):
+        if (
+            support.get("depth", 0.0) >= 0.95
+            and support.get("template", 0.0) >= 0.75
+            and (
+                support.get("BiPoSH", 0.0) >= 0.5
+                or support.get("BB", 0.0) >= 0.75
+                or support.get("EE", 0.0) >= 0.75
+            )
+            and abs(overlap) < _CONDITIONAL_OVERLAP_THRESHOLD
+        ):
+            return "conditional"
+    return "exploratory"
+
+
+def _recommended_next_observable(
+    pair: tuple[str, str],
+    *,
+    overlap: float,
+    support: Mapping[str, float],
+) -> str:
+    if support.get("depth", 0.0) < 0.75:
+        return "depth_direction_coherence"
+    if support.get("template", 0.0) < 0.75 or support.get("BiPoSH", 0.0) < 0.5:
+        return "atlas_template_biposh"
+    if support.get("BB", 0.0) < 0.75 and support.get("EE", 0.0) < 0.75:
+        return "TE_EE_BB_morphology"
+    if np.isfinite(overlap) and abs(overlap) >= _CONDITIONAL_OVERLAP_THRESHOLD:
+        return "null_mock_covariance"
+    return next_observable_recommendation(pair)
+
+
+def _calibrated_manifest(
+    observable_vector: ObservableVector,
+    *,
+    claim_tier: str,
+    production_status: str,
+    caveats: list[str],
+    morphology_atlas_ref: str | None,
+    atlas_entry: AtlasEntryLite | None,
+) -> ArtifactManifest:
+    input_hashes = [observable_vector.manifest.artifact_id]
+    if morphology_atlas_ref:
+        input_hashes.append(str(morphology_atlas_ref))
+    if atlas_entry is not None:
+        input_hashes.append(atlas_entry.atlas_id)
+    return ArtifactManifest(
+        artifact_id="htt.discrimination_matrix",
+        artifact_path="artifacts/htt/htt_discrimination_matrix.json",
+        owner="HTT",
+        implementation_scope="htt",
+        claim_tier=claim_tier,  # type: ignore[arg-type]
+        production_status=production_status,  # type: ignore[arg-type]
+        created_by="htt.infer.local_global_discrimination.build_discrimination_matrix",
+        git_commit=observable_vector.manifest.git_commit,
+        config_hash=(
+            "disc:"
+            f"{observable_vector.manifest.config_hash}:"
+            f"{observable_vector.sky_support.sky_support_hash}"
+        ),
+        input_hashes=input_hashes,
+        code_version=observable_vector.manifest.code_version,
+        schema_version=observable_vector.manifest.schema_version,
+        caveats=caveats,
+        statistics_definitions={
+            "surface": "DiscriminationMatrix",
+            "selection_mode": observable_vector.sky_support.selection_mode,
+            "mock_coverage_status": observable_vector.sky_support.mock_coverage_status,
+            "sky_support_hash": observable_vector.sky_support.sky_support_hash,
+            "atlas_available": bool(morphology_atlas_ref or atlas_entry is not None),
+        },
+    )
+
+
+def build_discrimination_matrix(
+    observable_vector: ObservableVector,
+    *,
+    atlas_entry: AtlasEntryLite | None = None,
+    morphology_atlas_ref: str | None = None,
+    hypotheses: tuple[str, ...] = ("local_boost", "global_tilt"),
+) -> DiscriminationMatrix:
+    """Build an observable-aware HTT discrimination matrix."""
+
+    if len(hypotheses) < 2:
+        raise ValueError("Need at least two hypotheses for a discrimination matrix")
+    library = default_response_library()
+    missing = [name for name in hypotheses if name not in library]
+    if missing:
+        raise ValueError(f"Unknown discrimination hypotheses: {missing}")
+
+    support = _feature_support(
+        observable_vector,
+        atlas_entry=atlas_entry,
+        morphology_atlas_ref=morphology_atlas_ref,
+    )
+    noise_variances = _noise_variances(support)
+    responses = {
+        name: _response_vector(library[name])
+        for name in hypotheses
+    }
+    overlap = np.eye(len(hypotheses), dtype=float)
+    response_norms = {
+        name: whitened_inner_product(vector, vector, noise_variances)
+        for name, vector in responses.items()
+    }
+    degeneracy_flags: dict[str, bool] = {}
+    recommendations: dict[str, str] = {}
+    claim_tier_by_pair: dict[str, str] = {}
+
+    for i, left in enumerate(hypotheses):
+        for j, right in enumerate(hypotheses):
+            if i == j:
+                overlap[i, j] = 1.0 if response_norms[left] > 0.0 else 0.0
+                continue
+            if i > j:
+                continue
+            rho = _normalized_overlap(
+                responses[left],
+                responses[right],
+                noise_variances,
+            )
+            overlap[i, j] = overlap[j, i] = 0.0 if not np.isfinite(rho) else rho
+            pair = _pair_key(left, right)
+            claim_tier = _pair_claim_tier(
+                (left, right),
+                overlap=rho,
+                support=support,
+            )
+            claim_tier_by_pair[pair] = claim_tier
+            degeneracy_flags[pair] = (not np.isfinite(rho)) or (
+                abs(rho) >= _CONDITIONAL_OVERLAP_THRESHOLD
+            )
+            recommendations[pair] = _recommended_next_observable(
+                (left, right),
+                overlap=rho,
+                support=support,
+            )
+
+    conditional_pair = claim_tier_by_pair.get("global_tilt|local_boost") == "conditional"
+    caveats = ["pre_inference_only", "not_posterior_odds"]
+    if not conditional_pair:
+        caveats.append("local_global_degeneracy_summary")
+    if support.get("template", 0.0) < 0.75:
+        caveats.append("morphology_atlas_missing_or_weak")
+    if support.get("BiPoSH", 0.0) < 0.75:
+        caveats.append("basis_reduced_morphology_support")
+    if support.get("depth", 0.0) < 0.75:
+        caveats.append("mock_calibration_incomplete")
+
+    claim_tier = "conditional" if conditional_pair else "exploratory"
+    production_status = "production_candidate" if conditional_pair else "diagnostic_only"
+    manifest = _calibrated_manifest(
+        observable_vector,
+        claim_tier=claim_tier,
+        production_status=production_status,
+        caveats=list(dict.fromkeys(caveats)),
+        morphology_atlas_ref=morphology_atlas_ref,
+        atlas_entry=atlas_entry,
+    )
+    return DiscriminationMatrix(
+        hypotheses=hypotheses,
+        overlap_matrix=overlap,
+        response_norms=response_norms,
+        degeneracy_flags=degeneracy_flags,
+        recommended_next_observable=recommendations,
+        claim_tier_by_pair=claim_tier_by_pair,
+        manifest=manifest,
+    )
 
 
 def build_discrimination_matrix_stub(

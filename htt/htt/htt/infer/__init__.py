@@ -43,9 +43,11 @@ from htt.infer.likelihood_scope_guard import (
 )
 from htt.infer.local_global_discrimination import (
     HypothesisResponseTemplate,
+    build_discrimination_matrix,
     build_discrimination_matrix_stub,
     default_response_library,
     next_observable_recommendation,
+    whitened_inner_product,
 )
 from htt.infer.ver2_directional_shell import (
     DEFAULT_DIRECTIONAL_RESPONSE_LIBRARY,
@@ -77,8 +79,9 @@ __all__ = [
     'LikelihoodScopeDecision', 'build_directional_likelihood_input',
     'evaluate_likelihood_scope', 'guard_tsc_posterior_correction',
     'reject_mio_certificate_merge', 'HypothesisResponseTemplate',
-    'build_discrimination_matrix_stub', 'default_response_library',
-    'next_observable_recommendation',
+    'build_discrimination_matrix', 'build_discrimination_matrix_stub',
+    'default_response_library', 'next_observable_recommendation',
+    'whitened_inner_product',
     'DirectionalHypothesisSpec', 'DirectionalResponseLibrary',
     'DirectionalInferencePolicy', 'DirectionalEvidenceHooks',
     'ProductionAxisGateResult', 'DirectionalLikelihoodInputs',

@@ -79,7 +79,7 @@ from common.contracts import (  # noqa: E402
 from common.departure_contracts import BudgetSpec, DepartureBundle  # noqa: E402
 from common.status_snapshot import snapshot_entry_to_dict  # noqa: E402
 from htt.infer.local_global_discrimination import (  # noqa: E402
-    build_discrimination_matrix_stub,
+    build_discrimination_matrix,
 )
 from mio.diagnostics import (  # noqa: E402
     build_predictive_residual_atlas_from_shared_schema,
@@ -596,7 +596,10 @@ def _build_export_records() -> dict[str, ArtifactRecord]:
             git_commit=CURRENT_COMMIT,
         ),
     )
-    discrimination = build_discrimination_matrix_stub()
+    discrimination = build_discrimination_matrix(
+        observable,
+        atlas_entry=atlas,
+    )
     discrimination = replace(
         discrimination,
         manifest=replace(
@@ -605,11 +608,7 @@ def _build_export_records() -> dict[str, ArtifactRecord]:
             artifact_path=_artifact_path("htt_ver2_export_discrimination_matrix"),
             git_commit=CURRENT_COMMIT,
             config_hash=_stable_hash("htt.ver2.export.discrimination_matrix"),
-            caveats=[
-                "diagnostic_only",
-                "observer_vs_source_not_posterior_odds",
-                "local_global_degeneracy_summary",
-            ],
+            caveats=list(discrimination.manifest.caveats),
         ),
     )
 
@@ -831,8 +830,17 @@ def _build_export_records() -> dict[str, ArtifactRecord]:
                 "recommended_next_observable": dict(discrimination.recommended_next_observable),
                 "claim_tier_by_pair": dict(discrimination.claim_tier_by_pair),
             },
-            summary="HTT discrimination matrix keeps observer-side and source-side hypotheses separate.",
-            allowed_claims=("exploratory degeneracy summary",),
+            summary=(
+                "HTT discrimination matrix provides a bounded pre-inference "
+                "local-vs-global separation audit."
+                if discrimination.manifest.claim_tier == "conditional"
+                else "HTT discrimination matrix keeps observer-side and source-side hypotheses separate."
+            ),
+            allowed_claims=(
+                ("conditional local-vs-global discrimination summary",)
+                if discrimination.manifest.claim_tier == "conditional"
+                else ("exploratory degeneracy summary",)
+            ),
             forbidden_claims=("posterior_odds_claim", "global_tilt_confirmation"),
             evidence_refs=(discrimination.manifest.artifact_id,),
             notes=tuple(discrimination.manifest.caveats),

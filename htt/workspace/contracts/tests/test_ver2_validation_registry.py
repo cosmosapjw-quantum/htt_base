@@ -61,6 +61,19 @@ def test_theorem_to_test_entry_has_artifact_refs():
     )
 
 
+def test_tsc_registry_entry_pulls_live_local_validation_witnesses():
+    tsc_entry = next(
+        entry
+        for entry in build_default_theorem_to_test_map()
+        if entry.theorem_id == "V8_tsc_no_overclaim"
+    )
+    test_ids = {link.test_id for link in tsc_entry.test_links}
+
+    assert "quadrupole_convention_roundtrip" in test_ids
+    assert "collision_only_bridge_is_blocked" in test_ids
+    assert "export_blocks_exploratory_claim_ceiling" in test_ids
+
+
 def test_warn_does_not_promote_to_validated():
     campaign = next(
         campaign

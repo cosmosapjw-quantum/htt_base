@@ -158,6 +158,27 @@ class ValidationCampaign:
         return self.status == "pass"
 
 
+def _tsc_validation_test_links() -> tuple[ValidationTestLink, ...]:
+    from tsc.validation import build_tsc_validation_witnesses
+
+    ordered: list[ValidationTestLink] = []
+    seen: set[str] = set()
+    for witness in build_tsc_validation_witnesses():
+        if witness.test_id in seen:
+            continue
+        seen.add(witness.test_id)
+        ordered.append(
+            ValidationTestLink(
+                test_id=witness.test_id,
+                category=witness.category,
+                path=witness.path,
+                purpose=witness.purpose,
+                artifact_refs=witness.artifact_refs,
+            )
+        )
+    return tuple(ordered)
+
+
 @dataclass(frozen=True)
 class NullEnsembleManifest:
     """Declared null ensemble for calibration and false-promotion checks."""
@@ -598,22 +619,7 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
             source_docs=(
                 "docs/ver2_upgrade/TSC_active_service_SDD_WBS_PR_plan.md",
             ),
-            test_links=(
-                ValidationTestLink(
-                    test_id="tsc_quarantine_flags_emitted",
-                    category="regression",
-                    path="htt/tsc/audit/test_no_overclaim.py::test_metadata_lint_and_quarantine_reasons",
-                    purpose="overclaim metadata is converted into quarantine reasons rather than promotions",
-                    artifact_refs=("tsc.adequacy_overlay",),
-                ),
-                ValidationTestLink(
-                    test_id="tsc_theorem_map_covers_export_claims",
-                    category="regression",
-                    path="htt/tsc/validation/test_theorem_map.py::test_theorem_map_covers_source_budget_and_export_claims",
-                    purpose="TSC theorem coverage stays anchored to source-budget and export claim ceilings",
-                    artifact_refs=("tsc.adequacy_overlay",),
-                ),
-            ),
+            test_links=_tsc_validation_test_links(),
             artifact_refs=("tsc.adequacy_overlay",),
             no_claim_conditions=("missing_tsc_overlay", "posterior_correction_attempted"),
         ),

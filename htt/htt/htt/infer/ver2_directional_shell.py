@@ -20,6 +20,7 @@ from common.contracts import (
     SolverCoreOutput,
 )
 from htt.infer.local_global_discrimination import build_discrimination_matrix_stub
+from htt.infer.local_global_discrimination import build_discrimination_matrix
 from htt.infer.matched_complexity import (
     MatchedComplexityHook,
     build_matched_complexity_hook,
@@ -412,7 +413,10 @@ def build_directional_likelihood_inputs(
             posterior_predictive_ready=posterior_predictive_ready,
             loocv_ready=loocv_ready,
         ),
-        discrimination_matrix=build_discrimination_matrix_stub(),
+        discrimination_matrix=build_discrimination_matrix(
+            observable_vector,
+            morphology_atlas_ref=morphology_atlas_ref,
+        ),
         solver_core_output=solver_core_output,
         manifest=manifest,
         carry_forward=tuple(carry_forward),
