@@ -324,7 +324,7 @@ def _default_tier_b_propagator_config(
         polarization_rotation=requested_status,
         temperature_transport=requested_status,
         flrw_validation_only=False,
-        kernel_family="flrw_bessel_bridge_proxy",
+        kernel_family="m_channel_matrix_rotated_approx",
         observer_frame=ObserverFrameMetadata(
             harmonic_basis="m_explicit",
             eb_sign_convention="cmb",

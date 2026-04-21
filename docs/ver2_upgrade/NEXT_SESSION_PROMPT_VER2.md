@@ -114,6 +114,8 @@
 - The converged BF-05 choice is deliberately narrow: the new `pass` campaign validates only the shipped Type-I native runtime/seed/cutoff/observer-neutral bridge, while the broader morphology/injection/MES science-facing campaigns remain `warn`.
 - `BF-06B-LIKE` is now closed: `bass.observer` package-root exports are production-only, `bass.likelihood` package-root exports now prefer live `SolverCoreOutput` bindings, and `bass.inference` now ships a bounded live Type-I native observer-boost path so the BASS CLI is no longer surrogate-only.
 - `BF-06B-LIKE` verification is green for the touched BASS observer/likelihood/inference scope: live-binding/public-surface pytest `6 passed`, live-inference pytest `3 passed`, observer regression pytest `132 passed`, likelihood/public-surface pytest `77 passed`, and `py_compile` passed.
+- `CF-PR15A` is now closed: the default non-Type-I Tier-B propagator no longer reports the old `flrw_bessel_bridge_proxy` realization and instead uses a bounded matrix-backed `m={0,±2}` transport with explicit anisotropic mode coupling / polarization rotation metadata.
+- `CF-PR15A` verification is green for the touched LOS/forward/runtime scope: targeted pytest `18 passed`, `py_compile` passed, and the remaining gap is now the full PR-15 exact anisotropic Green-function / adjoint closure rather than the old FLRW-bridge default.
 - The BASS-first implementation sequence is now closed in code. Remaining debt is no longer “wire observer/likelihood/inference at all”; it is the deeper physics/statistics carry-forward around non-Type-I exact propagation, full BiPoSH inversion, and later HTT-facing science claims.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
@@ -135,7 +137,7 @@ If the user explicitly wants cleanup-only work, the next formal packet is:
 Otherwise keep the priority on physics/statistics carry-forward, not legacy
 cleanup:
 
-1. non-Type-I exact propagator closure,
+1. non-Type-I exact propagator closure beyond the new bounded matrix-backed default,
 2. deeper visibility / microphysics fidelity,
 3. later HTT-facing morphology / likelihood claim calibration,
 4. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until explicitly requested.
@@ -151,6 +153,7 @@ cleanup:
 - Do not route new VER2 work back onto the reduced `einstein_bianchi` background engine; `htt/bass/background/evolution.py` and the S1 IC/geometry/RHS modules are now the implementation anchor.
 - Do not treat `BF-04B-COV` plus the new BF-05 runtime campaign as if they already validated full BiPoSH, local/global separation, or covariance-aware science claims; the production Tier-B core is now native, seeded, angularly reconstructed, basis-reduced in O-lane covariance, and boundedly validated for Type I, but the broader science-facing surfaces still remain unresolved.
 - Do not misread the new `validation.bass_native_runtime_bridge` pass campaign as a blanket science promotion; it validates only the shipped Type-I native runtime bridge and leaves non-Type-I exact propagation plus full BiPoSH science claims unresolved.
+- Do not misread the new non-Type-I `m_channel_matrix_rotated_approx` default as full PR-15 closure; it is a bounded equation-form improvement over the old FLRW bridge, not an exact anisotropic Green-function / adjoint propagator.
 - Do not silently widen the default BF-05 cutoff gate from `L=4,6` to `L=8` without recording the runtime cost and extended-sweep intent explicitly.
 - Do not read the current `IMEX_SPLIT` label as a shipped split-step executor on the seeded native route; BF-02 explicitly realizes it as a `BDF` backend and records that realization in metadata.
 - Treat `lowell_bianchi_solver_SDD_PR_WBS_pstf_tetrad.md` as equation-form authority: if it gives an explicit equation/operator/projection order, implement that form directly unless the SDD itself marks the step as first-pass, closure, startup-only, or validation-only.

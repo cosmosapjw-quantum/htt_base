@@ -140,6 +140,8 @@ _TYPEI_MODE_SUFFIXES = {
     "m+2": ("_m_plus2", "_m2", "_plus2"),
     "m-2": ("_m_minus2", "_mneg2", "_minus2"),
 }
+_ROTATING_LABELS = frozenset({"IV", "VI_h", "VII_h", "VIII", "IX"})
+_FLRW_LIMIT_LABELS = frozenset({"I", "V", "VII_0", "VII_h", "IX"})
 
 
 def _source_sample_scalar(sample: Mapping[str, object], names: tuple[str, ...]) -> float:
@@ -172,6 +174,84 @@ def _interp_eta_callable(eta_grid: np.ndarray, values: np.ndarray):
         return np.asarray(out, dtype=np.float64)
 
     return fn
+
+
+def _structure_features(structure: StructureConstants) -> dict[str, object]:
+    raw_axis = np.array(
+        [
+            structure.n1 - structure.n3,
+            structure.a_twist,
+            structure.trace_n + (1.0 if structure.label == "IX" else 0.0),
+        ],
+        dtype=np.float64,
+    )
+    axis_norm = float(np.linalg.norm(raw_axis))
+    preferred_axis = (
+        raw_axis / axis_norm
+        if axis_norm > 1.0e-30 and np.all(np.isfinite(raw_axis))
+        else np.array([0.0, 0.0, 1.0], dtype=np.float64)
+    )
+
+    geom_norm = (
+        abs(float(structure.n1))
+        + abs(float(structure.n2))
+        + abs(float(structure.n3))
+        + abs(float(structure.a_twist))
+    )
+    h_abs = abs(float(structure.h_parameter))
+    anisotropy_strength = min(0.35, 8.0 * geom_norm + 0.05 * h_abs)
+    if structure.no_flrw_limit:
+        anisotropy_strength = max(anisotropy_strength, 0.08)
+    if structure.label == "I":
+        anisotropy_strength = 0.0
+
+    rotation_strength = 0.0
+    if structure.label in _ROTATING_LABELS:
+        rotation_strength = min(
+            0.30,
+            0.45 * anisotropy_strength
+            + 6.0 * abs(float(structure.a_twist))
+            + (0.03 if structure.label in {"VII_h", "IX"} else 0.0),
+        )
+
+    if structure.label in _FLRW_LIMIT_LABELS and anisotropy_strength < 1.0e-4:
+        rotation_strength = 0.0
+
+    return {
+        "preferred_axis": preferred_axis,
+        "anisotropy_strength": anisotropy_strength,
+        "rotation_strength": rotation_strength,
+    }
+
+
+def _mode_coupling_matrix(
+    *,
+    preferred_axis: np.ndarray,
+    anisotropy_strength: float,
+) -> np.ndarray:
+    if anisotropy_strength <= 0.0:
+        return np.eye(3, dtype=np.float64)
+    axis_x, axis_y, axis_z = np.asarray(preferred_axis, dtype=np.float64)
+    return np.array(
+        [
+            [
+                1.0,
+                0.15 * anisotropy_strength * axis_z,
+                -0.15 * anisotropy_strength * axis_z,
+            ],
+            [
+                0.10 * anisotropy_strength * axis_x,
+                1.0 + 0.25 * anisotropy_strength,
+                0.05 * anisotropy_strength * axis_y,
+            ],
+            [
+                -0.10 * anisotropy_strength * axis_x,
+                -0.05 * anisotropy_strength * axis_y,
+                1.0 - 0.25 * anisotropy_strength,
+            ],
+        ],
+        dtype=np.float64,
+    )
 
 
 def _build_type_i_matrix_transfer_bundle(
@@ -330,6 +410,75 @@ def _build_type_i_matrix_transfer_bundle(
     }
 
 
+def _build_non_type_i_matrix_transfer_bundle(
+    structure: StructureConstants,
+    *,
+    eta_grid_mpc: np.ndarray,
+    k_grid_mpc: np.ndarray,
+    ell_max: int,
+    visibility_fn: Callable[[float], float],
+    source_builder: Callable[[float, float], Mapping[str, object]],
+) -> dict[str, object]:
+    base_bundle = _build_type_i_matrix_transfer_bundle(
+        structure,
+        eta_grid_mpc=eta_grid_mpc,
+        k_grid_mpc=k_grid_mpc,
+        ell_max=ell_max,
+        visibility_fn=visibility_fn,
+        source_builder=source_builder,
+    )
+    features = _structure_features(structure)
+    preferred_axis = np.asarray(features["preferred_axis"], dtype=np.float64)
+    anisotropy_strength = float(features["anisotropy_strength"])
+    rotation_strength = float(features["rotation_strength"])
+    mode_coupling = _mode_coupling_matrix(
+        preferred_axis=preferred_axis,
+        anisotropy_strength=anisotropy_strength,
+    )
+
+    raw_transfer_T = np.asarray(base_bundle["raw_transfer_T"], dtype=np.float64)
+    raw_transfer_E = np.asarray(base_bundle["raw_transfer_E"], dtype=np.float64)
+    raw_transfer_B = np.asarray(base_bundle["raw_transfer_B"], dtype=np.float64)
+    transfer_T = np.zeros_like(raw_transfer_T)
+    transfer_E = np.zeros_like(raw_transfer_E)
+    transfer_B = np.zeros_like(raw_transfer_B)
+    propagator_matrix = np.zeros(
+        (raw_transfer_T.shape[0], raw_transfer_T.shape[1], 3, 3),
+        dtype=np.float64,
+    )
+    ell_values = np.arange(raw_transfer_T.shape[1], dtype=np.float64)
+    ell_weight = 1.0 + 0.02 * anisotropy_strength * ell_values
+
+    for ik in range(raw_transfer_T.shape[0]):
+        for iell, weight in enumerate(ell_weight):
+            propagator = float(weight) * mode_coupling
+            propagator_matrix[ik, iell] = propagator
+            mixed_T = propagator @ raw_transfer_T[ik, iell]
+            mixed_E = propagator @ raw_transfer_E[ik, iell]
+            rotation_drive = rotation_strength * np.array(
+                [0.0, raw_transfer_E[ik, iell, 1], -raw_transfer_E[ik, iell, 2]],
+                dtype=np.float64,
+            )
+            transfer_T[ik, iell] = mixed_T
+            transfer_E[ik, iell] = mixed_E
+            transfer_B[ik, iell] = propagator @ (raw_transfer_B[ik, iell] + rotation_drive)
+
+    bundle = dict(base_bundle)
+    bundle.update(
+        {
+            "transfer_T": transfer_T,
+            "transfer_E": transfer_E,
+            "transfer_B": transfer_B,
+            "propagator_matrix": propagator_matrix,
+            "mode_coupling_matrix": mode_coupling,
+            "preferred_axis": preferred_axis,
+            "anisotropy_strength": anisotropy_strength,
+            "rotation_strength": rotation_strength,
+        }
+    )
+    return bundle
+
+
 def build_source_propagator(
     config: SourcePropagatorConfig,
     *,
@@ -354,6 +503,19 @@ def build_source_propagator(
         raise ValueError("bianchi_i_matrix_exact may only be used with Bianchi Type I")
     if structure.label == "I" and config.kernel_family == "bianchi_i_matrix_exact":
         transfer_bundle = _build_type_i_matrix_transfer_bundle(
+            structure,
+            eta_grid_mpc=eta_grid,
+            k_grid_mpc=k_grid,
+            ell_max=int(ell_max),
+            visibility_fn=visibility_fn,
+            source_builder=source_builder,
+        )
+    elif config.kernel_family == "m_channel_matrix_rotated_approx":
+        if structure.label == "I":
+            raise ValueError(
+                "m_channel_matrix_rotated_approx is reserved for non-Type-I structures"
+            )
+        transfer_bundle = _build_non_type_i_matrix_transfer_bundle(
             structure,
             eta_grid_mpc=eta_grid,
             k_grid_mpc=k_grid,

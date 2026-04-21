@@ -234,7 +234,7 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
     assert output.metadata["source_builder_scope"] == "theta0_plus_pi_quadrupole_lowell_bridge"
     assert output.metadata["propagator_mode"] == "anisotropic_forward"
     assert output.metadata["source_propagator_status"] == "approximate"
-    assert output.metadata["source_propagator_realization"] == "flrw_bessel_bridge_proxy"
+    assert output.metadata["source_propagator_realization"] == "m_channel_matrix_rotated_approx"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_lowell_template"
     assert output.alm_T["representation"] == "lowell_pstf_sphere_reconstruction"
@@ -275,7 +275,7 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["source_propagator_status"] == "approximate"
     assert output.metadata["source_propagator_requested_status"] == "approximate"
     assert output.metadata["source_propagator_rotation_status"] == "approximate"
-    assert output.metadata["source_propagator_realization"] == "flrw_bessel_bridge_proxy"
+    assert output.metadata["source_propagator_realization"] == "m_channel_matrix_rotated_approx"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_native_template"
     assert output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
