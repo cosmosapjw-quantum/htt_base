@@ -279,6 +279,7 @@ def test_covariance_proxy_and_feature_summary_record_guards():
     assert sparse["unique_index_count"] > 0
     assert "mode_block_proxy_not_full_biposh" in sparse["caveats"]
     assert sparse["supports_full_biposh"] is False
+    assert sparse["supports_basis_reduced_morphology"] is False
     assert summary["psd_guard"]["passed"] is True
     assert summary["symmetry_guard"]["passed"] is True
     assert summary["invariant_guard"]["passed"] is True
@@ -299,6 +300,7 @@ def test_atlas_entry_lite_builder_carries_observable_reference():
         atlas.validity_domain["local_global_degeneracy"]["status"]
         == "observer_source_discrimination_pending"
     )
+    assert atlas.validity_domain["basis_reduction_status"] == "mode_proxy_only"
 
 
 def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
@@ -322,11 +324,18 @@ def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
         run.solver_output,
         sky_support=_sky_support(),
     )
+    atlas = build_atlas_entry_lite(run.solver_output, observable)
     assert observable.manifest.production_status == "production_candidate"
     assert observable.biposh is not None
+    assert observable.biposh["representation"] == "low_ell_harmonic_sparse_basis"
     assert observable.biposh["unique_index_count"] == 0
     assert observable.biposh["null_proxy_status"] == "consistent_with_isotropic_null"
+    assert observable.biposh["supports_basis_reduced_morphology"] is True
+    assert observable.biposh["angular_reconstruction_guard"]["passed"] is True
     assert observable.covariance_features is not None
+    assert observable.covariance_features["representation"] == "low_ell_harmonic_sparse_basis"
+    assert observable.covariance_features["supports_basis_reduced_morphology"] is True
+    assert observable.covariance_features["basis_reduction_status"] == "sphere_supported_harmonic_sparse"
     assert observable.covariance_features["null_proxy_status"] == "consistent_with_isotropic_null"
     assert observable.covariance_features["local_global_degeneracy"]["status"] == "not_applicable_isotropic"
     assert (
@@ -338,3 +347,7 @@ def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
         observable.alm_features["observer_quadrature_rule"]
         == "gauss_legendre_x_uniform_phi_tensor_product"
     )
+    assert "basis_reduced_covariance_not_full_biposh" in observable.manifest.caveats
+    assert "proxy_morphology_not_full_biposh" not in observable.manifest.caveats
+    assert atlas.validity_domain["basis_reduction_status"] == "sphere_supported_harmonic_sparse"
+    assert atlas.validity_domain["angular_reconstruction_guard"]["passed"] is True

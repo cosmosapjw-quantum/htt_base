@@ -407,7 +407,11 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
                 ),
             ),
             artifact_refs=("bass.observable_vector.proxy",),
-            no_claim_conditions=("sparse_mode_block_proxy", "missing_biposh_basis"),
+            no_claim_conditions=(
+                "sparse_mode_block_proxy",
+                "basis_reduced_not_full_biposh",
+                "missing_biposh_basis",
+            ),
         ),
         TheoremToTestEntry(
             theorem_id="V8_template_injection_recovery",
@@ -658,7 +662,7 @@ def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
                 ValidationTestLink(
                     test_id="tier_b_runtime_consumes_live_hooks",
                     category="regression",
-                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_lowell_solver_consumes_live_s1_s2_s3_hooks",
+                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks",
                     purpose="keep the live S1/S2/S3 hook chain attached to the validation harness",
                     artifact_refs=("bass.runtime.trace",),
                 ),

@@ -18,11 +18,13 @@ __all__ = [
     "assemble_bianchi_spectrum_covariance",
     "compute_covariance_invariant_guard",
     "build_sparse_covariance_entries",
+    "build_sparse_harmonic_entries",
     "compute_covariance_psd_guard",
     "compute_covariance_symmetry_guard",
 ]
 
 _MODE_LABELS = ("m0", "m+2", "m-2")
+_MODE_TO_M = {"m0": 0, "m+2": 2, "m-2": -2}
 _T_CMB_K = 2.7255
 _SMALL_FLOAT = 1.0e-30
 
@@ -233,6 +235,56 @@ def build_sparse_covariance_entries(
                 }
             )
         out[spec] = entries
+    return out
+
+
+def build_sparse_harmonic_entries(
+    covariance_result: Mapping[str, object],
+    *,
+    threshold: float = 0.0,
+) -> dict[str, list[dict[str, object]]]:
+    """Return a sparse explicit `(ell,m; ell',m')` harmonic covariance view.
+
+    This is still a low-`ell` basis reduction rather than a full BiPoSH
+    inversion, but it removes the `m`-block proxy representation and exposes
+    the actual harmonic support carried by the audited covariance bundle.
+    """
+    if threshold < 0.0:
+        raise ValueError("threshold must be non-negative")
+    dense = _dense_views_from_result(covariance_result)
+    mode_labels = tuple(
+        str(label) for label in covariance_result.get("mode_labels", _MODE_LABELS)
+    )
+    if any(label not in _MODE_TO_M for label in mode_labels):
+        raise ValueError("mode_labels must map to explicit harmonic m values")
+    n_mode = len(mode_labels)
+
+    def _decode(index: int) -> tuple[int, int]:
+        ell = index // n_mode
+        mode_label = mode_labels[index % n_mode]
+        return ell, _MODE_TO_M[mode_label]
+
+    out: dict[str, list[dict[str, object]]] = {}
+    for spec in ("TT", "EE", "TE", "BB"):
+        matrix = np.asarray(dense[spec], dtype=float)
+        rows: list[dict[str, object]] = []
+        for i in range(matrix.shape[0]):
+            for j in range(i + 1, matrix.shape[1]):
+                value = float(matrix[i, j])
+                if abs(value) <= threshold:
+                    continue
+                ell, m = _decode(i)
+                ell_prime, m_prime = _decode(j)
+                rows.append(
+                    {
+                        "ell": int(ell),
+                        "m": int(m),
+                        "ell_prime": int(ell_prime),
+                        "m_prime": int(m_prime),
+                        "value": value,
+                    }
+                )
+        out[spec] = rows
     return out
 
 

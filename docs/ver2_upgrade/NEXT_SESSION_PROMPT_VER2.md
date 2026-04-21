@@ -34,6 +34,7 @@
 30. `docs/ver2_upgrade/audits/AUDIT_BF-01B-HCORE_2026-04-21.md`
 31. `docs/ver2_upgrade/audits/AUDIT_BF-02B-SEED_2026-04-21.md`
 32. `docs/ver2_upgrade/audits/AUDIT_BF-03B-ANG_2026-04-21.md`
+33. `docs/ver2_upgrade/audits/AUDIT_BF-04B-COV_2026-04-21.md`
 
 ## 2. Current State
 
@@ -105,7 +106,9 @@
 - The converged BF-02 implementation choice is explicit and honest: the seeded native route no longer inherits legacy `LSODA`, but the declared `IMEX_SPLIT` family is currently realized by a `BDF` executor and recorded as such in runtime/output metadata.
 - `BF-03B-ANG` is now closed: observer-neutral solver outputs carry exact quadrature-based PSTF sphere reconstruction alongside the final multipole coefficients, and O-lane artifacts promote reconstruction status from pending to live when that payload is present.
 - `BF-03B-ANG` verification is green for the touched BASS-angular scope: targeted pytest `19 passed`, touched-surface pytest `258 passed`, public-surface pytest `2 passed`, and `py_compile` passed.
-- The BASS-first sequence is now active in code, not just in planning docs: production Tier-B ownership, live seed/startup injection, and live PSTF angular reconstruction have moved, while the remaining high-priority BASS debt is concentrated in low-`ell` covariance/morphology promotion, validation-grade cross-checking, and later observer/likelihood/inference retargeting.
+- `BF-04B-COV` is now closed: live O-lane covariance narrows the old `sparse_mode_block_proxy` path to a basis-reduced explicit low-`ell` harmonic sparse representation whenever sphere-reconstructed angular support is available, while preserving no-claim boundaries on full BiPoSH promotion.
+- `BF-04B-COV` verification is green for the touched BASS-covariance scope: targeted pytest `39 passed`, full `htt/bass/observational` `88 passed`, public-surface plus FB-7.2 pytest `33 passed`, workspace-contract pytest `44 passed`, registry `--check` passed, and `py_compile` passed.
+- The BASS-first sequence is now active in code, not just in planning docs: production Tier-B ownership, live seed/startup injection, live PSTF angular reconstruction, and basis-reduced low-`ell` covariance promotion have moved, while the remaining high-priority BASS debt is concentrated in validation-grade cross-checking and later observer/likelihood/inference retargeting.
 - Full manifest propagation is still not wired through every producer outside the M lane. That is expected at this stage.
 
 ## 3. Next Recommended Work
@@ -119,20 +122,18 @@ instead and run the follow-up packets in that order.
 
 The immediate next packet is:
 
-1. `BF-04B-COV`
+1. `BF-05B-VAL`
 
 The reordered priority is:
 
-1. replace proxy morphology/covariance where justified,
-2. upgrade BASS-centered validation,
-3. only then retarget `bass/observer`, `bass/likelihood`, and `bass/inference`,
-4. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until after the BASS-first sequence.
+1. upgrade BASS-centered validation,
+2. only then retarget `bass/observer`, `bass/likelihood`, and `bass/inference`,
+3. defer legacy figures / top-level doc sync / optional H/M/T serializer cleanup until after the BASS-first sequence.
 
 Parallel policy is now constrained by the solver spine:
 
-1. `BF-04B-COV` starts after `BF-03B-ANG`,
-2. `BF-05B-VAL` may do read-only prep during `BF-04B-COV`,
-3. `BF-06B-LIKE` is blocked on `BF-05B-VAL`.
+1. `BF-05B-VAL` follows the now-closed solver/O-lane packets,
+2. `BF-06B-LIKE` is blocked on `BF-05B-VAL`.
 
 ## 4. Hard Reminders
 
@@ -143,12 +144,12 @@ Parallel policy is now constrained by the solver spine:
 - Do not merge MIO certificate semantics into HTT or BASS.
 - Do not generate figures or manuscript claims from non-manifest artifacts.
 - Do not route new VER2 work back onto the reduced `einstein_bianchi` background engine; `htt/bass/background/evolution.py` and the S1 IC/geometry/RHS modules are now the implementation anchor.
-- Do not treat `BF-03B-ANG` as if it also closed covariance/morphology promotion or validation-grade evidence; the production Tier-B core is now native, seeded, and angularly reconstructed, but `BF-04B-COV` and `BF-05B-VAL` still remain.
+- Do not treat `BF-04B-COV` as if it already validated full BiPoSH, local/global separation, or covariance-aware science claims; the production Tier-B core is now native, seeded, angularly reconstructed, and basis-reduced in O-lane covariance, but `BF-05B-VAL` still remains.
 - Do not read the current `IMEX_SPLIT` label as a shipped split-step executor on the seeded native route; BF-02 explicitly realizes it as a `BDF` backend and records that realization in metadata.
 - Treat `lowell_bianchi_solver_SDD_PR_WBS_pstf_tetrad.md` as equation-form authority: if it gives an explicit equation/operator/projection order, implement that form directly unless the SDD itself marks the step as first-pass, closure, startup-only, or validation-only.
 - Do not substitute a reduced symbolic bridge for an explicit SDD equation merely because it is easier to wire; if a reduced path survives, keep it diagnostic-only and record it in carry-forward.
 - Do not treat the Tier-A validation bridge as independent just because production Tier-B is now native; Tier A still reuses the bounded Lowell core and remains a validation-only path.
-- Do not silently promote `sparse_mode_block_proxy` into a full BiPoSH claim surface; executable O-lane work must replace or discharge that caveat explicitly.
+- Do not silently promote the new `low_ell_harmonic_sparse_basis` surface into a full BiPoSH claim; it is a narrowed basis-reduced morphology path, not a validated invariant BiPoSH inversion.
 - Do not mistake explicit O-lane local/global degeneracy metadata for a calibrated separation result; that calibration still belongs to the H/T/V convergence packets.
 - Do not treat rank-blocked `FullCovMESReport` artifacts as weak covariance evidence; they are explicit no-claim outputs.
 - Do not treat `warn` campaigns in the V-lane registry as validated science gates; they are explicit placeholders until executable implementation packets discharge them.

@@ -8,7 +8,7 @@
 
 ## 0. Why this list exists
 
-Prompt lists 01 and 02 are closed. `BF-01B-HCORE` has removed the bounded Lowell bridge from the production Tier-B route, `BF-02B-SEED` has closed the native startup/seed-injection gap, and `BF-03B-ANG` has closed the observer-neutral PSTF sphere-reconstruction bridge. The largest remaining implementation debt is now concentrated inside `htt/bass/*` around O-lane covariance/morphology outputs that remain explicit proxy/no-claim surfaces.
+Prompt lists 01 and 02 are closed. `BF-01B-HCORE` has removed the bounded Lowell bridge from the production Tier-B route, `BF-02B-SEED` has closed the native startup/seed-injection gap, `BF-03B-ANG` has closed the observer-neutral PSTF sphere-reconstruction bridge, and `BF-04B-COV` has narrowed the old covariance proxy into a basis-reduced explicit low-`ell` harmonic sparse surface. The largest remaining implementation debt is now concentrated inside `htt/bass/*` around validation-grade evidence and later observer/likelihood/inference retargeting.
 
 This list does not reopen settled VER2 ownership rules. It only reorders the remaining follow-up work so that `htt/bass/*` reaches the highest feasible completion level first.
 
@@ -166,10 +166,10 @@ Only after the BASS physics path is completed, retarget observer/likelihood/infe
 
 ## 5. Immediate next action
 
-`BF-01B-HCORE`, `BF-02B-SEED`, and `BF-03B-ANG` are now closed in the execution ledger. If the goal is to
+`BF-01B-HCORE`, `BF-02B-SEED`, `BF-03B-ANG`, and `BF-04B-COV` are now closed in the execution ledger. If the goal is to
 maximize `htt/bass/*` completion, the next packet is:
 
-1. `BF-04B-COV`
+1. `BF-05B-VAL`
 
-Only after `BF-04B-COV` and the remaining serial solver-spine packets land should any
+Only after `BF-05B-VAL` and the remaining serial solver-spine packets land should any
 new non-BASS follow-up packet be considered.

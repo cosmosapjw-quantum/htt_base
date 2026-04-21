@@ -204,11 +204,13 @@ def build_observable_vector_from_solver_output(
             biposh_payload = build_sparse_covariance_proxy(
                 covariance_bundle,
                 harmonic_convention=str(solver_output.metadata["harmonic_basis"]),
+                angular_payload=_mapping_or_none(solver_output.alm_T),
             )
         if covariance_payload is None:
             covariance_payload = build_covariance_feature_summary(
                 covariance_bundle,
                 harmonic_convention=str(solver_output.metadata["harmonic_basis"]),
+                angular_payload=_mapping_or_none(solver_output.alm_T),
             )
     template_payload = dict(template_fit) if template_fit is not None else None
     if template_payload is None and solver_output.deterministic_template is not None:
@@ -251,6 +253,8 @@ def build_observable_vector_from_solver_output(
     ]
     if biposh_payload is not None and biposh_payload.get("representation") == "sparse_mode_block_proxy":
         caveats.append("proxy_morphology_not_full_biposh")
+    if biposh_payload is not None and biposh_payload.get("representation") == "low_ell_harmonic_sparse_basis":
+        caveats.append("basis_reduced_covariance_not_full_biposh")
     if feature_payload.get("observer_reconstruction_status") == "final_slice_only_no_sphere_reconstruction":
         caveats.append("observer_reconstruction_bridge_pending")
     artifact_id = f"{solver_output.manifest.artifact_id}.observable_vector"

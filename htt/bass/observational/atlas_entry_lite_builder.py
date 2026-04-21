@@ -65,6 +65,7 @@ def build_atlas_entry_lite(
             "morphology_representation": (
                 None if observable_vector.biposh is None else observable_vector.biposh.get("representation")
             ),
+            "basis_reduction_status": covariance_features.get("basis_reduction_status"),
             "local_global_degeneracy": covariance_features.get("local_global_degeneracy"),
             "preferred_axis": observable_vector.alm_features.get("preferred_axis"),
         }
@@ -82,6 +83,8 @@ def build_atlas_entry_lite(
             ),
             "local_global_degeneracy": covariance_features.get("local_global_degeneracy"),
             "covariance_representation": covariance_features.get("representation"),
+            "basis_reduction_status": covariance_features.get("basis_reduction_status"),
+            "angular_reconstruction_guard": covariance_features.get("angular_reconstruction_guard"),
         }
     )
     atlas_name = atlas_id or f"{solver_output.manifest.artifact_id}.atlas_lite"
