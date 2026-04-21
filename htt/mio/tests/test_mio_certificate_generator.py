@@ -13,7 +13,8 @@ import dataclasses
 
 import pytest
 
-from mio.interface.mio_certificate import build_mio_certificate
+from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
+from mio.tests._overlay_fixtures import build_pending_overlay
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -103,6 +104,53 @@ def test_caller_overrides_are_honoured():
 def test_channel_caveats_default_empty_list():
     cert = build_mio_certificate(**_base_payload())
     assert cert.channel_caveats == []
+
+
+def test_tsc_overlay_ref_only_marks_attachment_without_overlay_fields():
+    cert = build_mio_certificate(
+        **_base_payload(),
+        tsc_overlay_ref="tsc.overlay.external",
+    )
+    assert cert.tsc_overlay_ref == "tsc.overlay.external"
+    assert cert.adequacy_indicators["tsc_overlay_attached"] is True
+    assert "tsc_overlay_diagnostic_only" not in cert.adequacy_indicators
+    assert "tsc_overlay_diagnostic_only" not in cert.domain_caveats
+    assert cert.channel_caveats == []
+
+
+def test_tsc_overlay_object_populates_default_ref_and_overlay_caveats():
+    overlay = build_pending_overlay()
+    cert = build_mio_certificate(
+        **_base_payload(),
+        tsc_overlay=overlay,
+    )
+    assert cert.tsc_overlay_ref == "tsc.overlay"
+    assert cert.adequacy_indicators["tsc_overlay_attached"] is True
+    assert cert.adequacy_indicators["tsc_overlay_diagnostic_only"] is True
+    assert "tsc_overlay_diagnostic_only" in cert.domain_caveats
+    assert any(
+        caveat.startswith("tsc_channel_responsibility:")
+        for caveat in cert.channel_caveats
+    )
+
+
+def test_explicit_overlay_ref_overrides_overlay_manifest_ref():
+    overlay = build_pending_overlay()
+    cert = build_mio_certificate(
+        **_base_payload(),
+        tsc_overlay=overlay,
+        tsc_overlay_ref="tsc.overlay.alias",
+    )
+    assert cert.tsc_overlay_ref == "tsc.overlay.alias"
+
+
+def test_certificate_payload_serializes_overlay_ref():
+    cert = build_mio_certificate(
+        **_base_payload(),
+        tsc_overlay_ref="tsc.overlay.external",
+    )
+    payload = certificate_to_payload(cert)
+    assert payload["tsc_overlay_ref"] == "tsc.overlay.external"
 
 
 def test_htt_cross_check_hint_is_not_a_posterior():
