@@ -69,6 +69,26 @@ def test_constraint_projection_can_project_onto_background_codazzi_surface() -> 
     assert np.linalg.norm(projection.momentum_residual_after) < 1.0e-10
 
 
+def test_constraint_projection_accepts_explicit_runtime_target_q() -> None:
+    algebra = build_bianchi_algebra("V")
+    geometry = build_geometry(algebra)
+    seed = promote_tilted_seed(
+        build_flrw_regular_seed(amplitude=1.0),
+        electron_velocity=np.array([0.2, 0.0, 0.0]),
+    )
+    target_q = np.array([2.0e-3, 0.0, 0.0], dtype=np.float64)
+    projection = build_constraint_projection(
+        seed,
+        geometry=geometry,
+        sigma_ab=np.zeros((3, 3)),
+        target_q=target_q,
+    )
+    assert projection.projection_ready is True
+    assert projection.projection_mode == "background_codazzi_project"
+    assert projection.projected_sigma_ab is not None
+    assert np.linalg.norm(projection.momentum_residual_after) < 1.0e-10
+
+
 def test_project_packed_regular_seed_preserves_zero_tilt_limit() -> None:
     injected = project_packed_regular_seed(
         make_camb_regular_adiabatic_seed(

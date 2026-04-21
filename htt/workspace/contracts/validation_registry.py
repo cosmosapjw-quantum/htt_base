@@ -525,7 +525,7 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
         ),
         TheoremToTestEntry(
             theorem_id="V8_bass_representative_family_sweep",
-            theorem_label="representative preliminary family sweep keeps orthogonal I/V/VII_0/VIII executable while tilted runtime blockers remain explicit",
+            theorem_label="representative preliminary family sweep keeps orthogonal I/V/VII_0/VIII executable, opens Type-V tilted, and keeps the remaining tilted runtime blockers explicit",
             owner="BASS",
             implementation_scope="canonical_BASS",
             claim_guard="this executable evidence validates only the bounded representative family sweep and keeps tilted runtime blockers and non-Type-I exactness debt explicit",
@@ -542,10 +542,17 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
                     artifact_refs=("bass.validation.representative_family_sweep",),
                 ),
                 ValidationTestLink(
-                    test_id="representative_tilted_branches_fail_controlledly",
+                    test_id="representative_tilted_type_v_runs_end_to_end",
+                    category="adversarial_edge",
+                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_type_v_tilted_family_executes_with_bounded_runtime_contracts",
+                    purpose="the representative Type-V tilted branch executes end to end while preserving explicit global-tilt vs local-boost semantics",
+                    artifact_refs=("bass.validation.representative_family_sweep",),
+                ),
+                ValidationTestLink(
+                    test_id="representative_remaining_tilted_branches_fail_controlledly",
                     category="adversarial_edge",
                     path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_tilted_family_sweep_is_controlledly_blocked",
-                    purpose="tilted representative families remain explicit controlled blocks rather than silently collapsing into orthogonal or observer-boost semantics",
+                    purpose="the remaining representative tilted families still fail loudly instead of silently collapsing into orthogonal or observer-boost semantics",
                     artifact_refs=("bass.validation.representative_family_sweep",),
                 ),
                 ValidationTestLink(
@@ -573,7 +580,7 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
             artifact_refs=("bass.validation.representative_family_sweep", "bass.runtime.trace"),
             no_claim_conditions=(
                 "representative_family_sweep_only",
-                "representative_tilted_runtime_blocked",
+                "representative_tilted_runtime_partial_only",
                 "non_type_i_exact_propagator_missing",
                 "late_time_reionization_window_missing",
                 "direction_resolved_reionization_microphysics_missing",
@@ -770,10 +777,17 @@ def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
                     artifact_refs=("bass.validation.representative_family_sweep",),
                 ),
                 ValidationTestLink(
-                    test_id="representative_tilted_branches_fail_controlledly",
+                    test_id="representative_tilted_type_v_runs_end_to_end",
+                    category="adversarial_edge",
+                    path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_type_v_tilted_family_executes_with_bounded_runtime_contracts",
+                    purpose="run the representative Type-V tilted branch end to end on the bounded native route without collapsing it into observer-boost semantics",
+                    artifact_refs=("bass.validation.representative_family_sweep",),
+                ),
+                ValidationTestLink(
+                    test_id="representative_remaining_tilted_branches_fail_controlledly",
                     category="adversarial_edge",
                     path="htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_tilted_family_sweep_is_controlledly_blocked",
-                    purpose="require representative tilted families to fail loudly at the current Codazzi gate rather than hiding the block",
+                    purpose="require the remaining representative tilted families to fail loudly at the current Codazzi gate rather than hiding the block",
                     artifact_refs=("bass.validation.representative_family_sweep",),
                 ),
                 ValidationTestLink(
@@ -802,7 +816,7 @@ def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
             manuscript_blocking=False,
             no_claim_conditions=(
                 "representative_family_sweep_only",
-                "representative_tilted_runtime_blocked",
+                "representative_tilted_runtime_partial_only",
                 "non_type_i_exact_propagator_missing",
                 "late_time_reionization_window_missing",
                 "direction_resolved_reionization_microphysics_missing",
@@ -812,7 +826,7 @@ def build_default_validation_campaigns() -> tuple[ValidationCampaign, ...]:
             runbook_refs=("runbook.bass_representative_family_sweep",),
             notes=(
                 "Executable preliminary campaign: passes for the representative orthogonal subset I, V, VII_0, VIII.",
-                "Tilted representative branches remain explicit runtime blockers on the current global-tilt initial-condition construction and must not be relabelled as executed science runs.",
+                "The representative Type-V tilted branch is executable on the bounded native route, while I, VII_0, and VIII remain explicit runtime blockers and must not be relabelled as executed science runs.",
                 "This campaign is for preliminary result-pack production, not full geometry identification or non-Type-I exact propagator promotion.",
             ),
         ),
@@ -1099,7 +1113,7 @@ def build_default_null_manifests() -> tuple[NullEnsembleManifest, ...]:
             artifact_refs=("bass.validation.representative_family_sweep",),
             no_claim_conditions=(
                 "representative_family_sweep_only",
-                "representative_tilted_runtime_blocked",
+                "representative_tilted_runtime_partial_only",
                 "non_type_i_exact_propagator_missing",
                 "late_time_reionization_window_missing",
                 "direction_resolved_reionization_microphysics_missing",
@@ -1170,7 +1184,7 @@ def build_default_injection_manifests() -> tuple[InjectionCampaignManifest, ...]
             downgrade_conditions=(
                 "startup_manifold_disabled",
                 "seed_projection_not_ready",
-                "representative_tilted_runtime_blocked",
+                "representative_tilted_runtime_partial_only",
             ),
             theorem_refs=("V8_bass_representative_family_sweep",),
             campaign_refs=("validation.bass_representative_family_sweep",),
@@ -1246,13 +1260,16 @@ def build_default_hostile_audit_runbooks() -> tuple[HostileAuditRunbook, ...]:
             theorem_refs=("V8_bass_representative_family_sweep",),
             campaign_refs=("validation.bass_representative_family_sweep",),
             baseline_checks=("representative_orthogonal_families_run_end_to_end",),
-            adversarial_checks=("representative_tilted_branches_fail_controlledly",),
+            adversarial_checks=(
+                "representative_tilted_type_v_runs_end_to_end",
+                "representative_remaining_tilted_branches_fail_controlledly",
+            ),
             physics_checks=("representative_family_realizations_are_algebra_aware",),
             numerical_checks=("representative_family_outputs_stay_finite_on_bounded_low_ell_grid",),
             regression_checks=("representative_family_sweep_preserves_tilt_boost_contracts",),
             quarantine_conditions=(
                 "representative_family_sweep_only",
-                "representative_tilted_runtime_blocked",
+                "representative_tilted_runtime_partial_only",
                 "non_type_i_exact_propagator_missing",
                 "late_time_reionization_window_missing",
                 "direction_resolved_reionization_microphysics_missing",

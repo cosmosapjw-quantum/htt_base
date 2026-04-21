@@ -315,7 +315,6 @@ def test_representative_orthogonal_families_execute_with_expected_propagator_rea
     ("bianchi_type", "required_policy"),
     (
         ("I", "codazzi_balanced_total_momentum"),
-        ("V", "class_b_divergence_tilt_coupling"),
         ("VII_0", "class_a_helical_codazzi"),
         ("VIII", "class_a_semisimple_codazzi"),
     ),
@@ -336,6 +335,31 @@ def test_representative_tilted_family_sweep_is_controlledly_blocked(
             release=_release(),
             k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
         )
+
+
+def test_representative_type_v_tilted_family_executes_with_bounded_runtime_contracts() -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018(recombination_warning_policy="ignore")
+    run = execute_tier_b_solver(
+        manifest=_manifest(),
+        bianchi_type="V",
+        species=species,
+        integrator_config=_family_integrator_config("V", beta=1.0e-6),
+        runtime_controls=_runtime_controls(),
+        feature_flags=_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+
+    assert run.solver_output.metadata["bianchi_branch"] == "tilted"
+    assert run.solver_output.metadata["theory_family"] == "V_tilted"
+    assert run.solver_output.metadata["global_tilt_contract"] == "model_matter_frame_state"
+    assert run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
+    assert run.solver_output.metadata["source_propagator_realization"] == "class_b_open_matrix_approx"
+    assert run.solver_output.metadata["source_propagator_status"] == "approximate"
+    assert run.trace.seed_projection.projection_ready is True
+    assert run.trace.seed_projection.projection_mode == "background_codazzi_project"
+    assert np.linalg.norm(run.trace.seed_projection.momentum_residual_after) < 1.0e-10
+    assert run.execution_plan.runtime_decision.propagation_status == "pending"
 
 
 def test_execute_tier_b_solver_can_reach_low_z_reionization_probe_with_extended_eta_domain() -> None:

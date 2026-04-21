@@ -225,6 +225,7 @@ def build_constraint_projection(
     *,
     geometry: TetradGeometry | None = None,
     sigma_ab: np.ndarray | None = None,
+    target_q: np.ndarray | None = None,
     kappa: float = 1.0,
     atol: float = 1.0e-10,
 ) -> SeedConstraintProjection:
@@ -262,23 +263,34 @@ def build_constraint_projection(
         )
 
     sigma_guess = np.asarray(sigma_ab, dtype=np.float64)
+    q_target = residual_after if target_q is None else np.asarray(target_q, dtype=np.float64)
+    if q_target.shape != (3,):
+        raise ValueError(f"target_q must have shape (3,), got {q_target.shape}")
     matter = MatterNormalFrameState(
         rho=0.0,
         p=0.0,
-        q=residual_after,
+        q=q_target,
     )
+    codazzi_before = codazzi_constraint_residual(
+        sigma_guess,
+        MatterNormalFrameState(rho=0.0, p=0.0, q=q_target),
+        geometry,
+        kappa=kappa,
+    )
+    if float(np.linalg.norm(codazzi_before)) <= atol:
+        return SeedConstraintProjection(
+            projected_seed=projected_seed,
+            momentum_residual_before=codazzi_before,
+            momentum_residual_after=codazzi_before,
+            projection_mode="background_codazzi_project",
+            projected_sigma_ab=sigma_guess,
+        )
     projected_sigma, _meta = project_shear_to_codazzi(
         sigma_ab=sigma_guess,
         geometry=geometry,
         target_q=matter.q,
         kappa=kappa,
         atol=atol,
-    )
-    codazzi_before = codazzi_constraint_residual(
-        sigma_guess,
-        MatterNormalFrameState(rho=0.0, p=0.0, q=residual_before),
-        geometry,
-        kappa=kappa,
     )
     codazzi_after = codazzi_constraint_residual(
         projected_sigma,
@@ -300,6 +312,7 @@ def build_constraint_projection_stub(
     *,
     geometry: TetradGeometry | None = None,
     sigma_ab: np.ndarray | None = None,
+    target_q: np.ndarray | None = None,
     kappa: float = 1.0,
     atol: float = 1.0e-10,
 ) -> SeedConstraintProjection:
@@ -308,6 +321,7 @@ def build_constraint_projection_stub(
         seed,
         geometry=geometry,
         sigma_ab=sigma_ab,
+        target_q=target_q,
         kappa=kappa,
         atol=atol,
     )
@@ -357,6 +371,7 @@ def project_packed_regular_seed(
     electron_velocity: np.ndarray,
     geometry: TetradGeometry | None = None,
     sigma_ab: np.ndarray | None = None,
+    target_q: np.ndarray | None = None,
     boost_order: BoostOrder = BoostOrder.LINEAR,
     kappa: float = 1.0,
     atol: float = 1.0e-10,
@@ -381,6 +396,7 @@ def project_packed_regular_seed(
         regular_seed,
         geometry=geometry,
         sigma_ab=sigma_ab,
+        target_q=target_q,
         kappa=kappa,
         atol=atol,
     )

@@ -433,7 +433,8 @@ class Ver2TierBIntegrator:
             seed_state,
             electron_velocity=tilt_speed * self._direction,
             geometry=self.background_monitor.initial_conditions.geometry,
-            sigma_ab=self.background_monitor.sigma_tensor[0],
+            sigma_ab=self.background_monitor.initial_conditions.sigma_ab,
+            target_q=np.asarray(self.background_monitor.initial_conditions.matter.q, dtype=np.float64),
         )
         unpacked = unpack_camb_regular_adiabatic_seed(
             projected_seed.seed_state,

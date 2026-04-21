@@ -1,9 +1,0 @@
-MIO-HJ-05a-lite sky-coverage caveats (Week 6 Day 7). Effective
-$f_{\rm sky}$ under combined Zone-of-Avoidance (ZoA) and ecliptic
-polar-gap masks, shown as 1-D slices (left) and a 2-D heatmap
-(right). The analytic model $f_{\rm sky}\!\approx\!(1-\sin
-|b|_{\rm min})(1-(1-\cos\theta_{\rm ecl}))$ captures the combined
-impact; $\mathtt{mio.diagnostics.masked\_sky\_caveats.build\_report}$
-returns an integer-fraction pixel-count ratio that agrees to
-$O(1/\mathrm{nside})$. The demo point bakes in the domain caveat
-string feeding the MioCertificate $\mathtt{domain\_caveats}$ field.

@@ -53,9 +53,9 @@ _REPRESENTATIVE_PROPAGATOR_REALIZATIONS: dict[str, tuple[str, str]] = {
     "VII_0": ("class_a_helical_matrix_approx", "approximate"),
     "VIII": ("class_a_semisimple_matrix_approx", "approximate"),
 }
+_REPRESENTATIVE_TILTED_EXECUTABLES: tuple[str, ...] = ("V",)
 _REPRESENTATIVE_TILT_BLOCKERS: dict[str, str] = {
     "I": "codazzi_balanced_total_momentum",
-    "V": "class_b_divergence_tilt_coupling",
     "VII_0": "class_a_helical_codazzi",
     "VIII": "class_a_semisimple_codazzi",
 }
@@ -695,6 +695,33 @@ def _representative_family_tilt_failure(
     )
 
 
+@lru_cache(maxsize=16)
+def _representative_family_tilt_run(
+    bianchi_type: str,
+    tilt_probe_beta: float,
+):
+    species = SpeciesBackgroundRegistry.from_planck2018(
+        recombination_warning_policy="ignore",
+    )
+    return execute_tier_b_solver(
+        manifest=_manifest(f"bass.validation.representative_family_sweep.{bianchi_type}.tilted"),
+        bianchi_type=bianchi_type,
+        species=species,
+        integrator_config=_family_integrator_config(
+            bianchi_type=bianchi_type,
+            beta=float(tilt_probe_beta),
+            gamma_t_override=lambda eta: 1.0e15,
+        ),
+        runtime_controls=_runtime_controls(tier=SolverTier.TIER_B_PSTF),
+        feature_flags=_feature_flags(tier=SolverTier.TIER_B_PSTF),
+        release=_release(
+            f"prm05-{bianchi_type}-tilted",
+            stage="research_executable",
+        ),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+
+
 def _representative_family_sweep_bundle(
     *,
     tilt_probe_beta: float,
@@ -703,9 +730,13 @@ def _representative_family_sweep_bundle(
         label: _representative_family_orthogonal_run(label)
         for label in _REPRESENTATIVE_FAMILIES
     }
+    tilted_runs = {
+        label: _representative_family_tilt_run(label, float(tilt_probe_beta))
+        for label in _REPRESENTATIVE_TILTED_EXECUTABLES
+    }
     tilt_failures = {
         label: _representative_family_tilt_failure(label, float(tilt_probe_beta))
-        for label in _REPRESENTATIVE_FAMILIES
+        for label in _REPRESENTATIVE_TILT_BLOCKERS
     }
 
     orthogonal_runnable = all(
@@ -736,6 +767,19 @@ def _representative_family_sweep_bundle(
         == "observer_side_only_not_applied_in_bass_output"
         for run in orthogonal_runs.values()
     )
+    tilted_v_runnable = all(
+        run.solver_output.metadata["bianchi_branch"] == "tilted"
+        and run.solver_output.metadata["theory_family"] == f"{label}_tilted"
+        and run.solver_output.metadata["source_propagator_realization"]
+        == _REPRESENTATIVE_PROPAGATOR_REALIZATIONS[label][0]
+        and run.solver_output.metadata["source_propagator_status"]
+        == _REPRESENTATIVE_PROPAGATOR_REALIZATIONS[label][1]
+        and run.solver_output.metadata["global_tilt_contract"] == "model_matter_frame_state"
+        and run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
+        and run.trace.seed_projection.projection_ready
+        and np.linalg.norm(run.trace.seed_projection.momentum_residual_after) < 1.0e-10
+        for label, run in tilted_runs.items()
+    )
     tilt_block_honesty = all(
         _REPRESENTATIVE_TILT_BLOCKERS[label] in failure
         for label, failure in tilt_failures.items()
@@ -749,10 +793,16 @@ def _representative_family_sweep_bundle(
             summary="Representative orthogonal families I, V, VII_0, and VIII execute end-to-end on the bounded low-ell native Tier-B path.",
         ),
         ExecutableCheckEvidence(
-            check_id="representative_tilted_branches_fail_controlledly",
+            check_id="representative_tilted_type_v_runs_end_to_end",
+            category="adversarial_edge",
+            passed=bool(tilted_v_runnable),
+            summary="The representative Type-V tilted branch executes end-to-end on the bounded native runtime path without collapsing global tilt into local boost semantics.",
+        ),
+        ExecutableCheckEvidence(
+            check_id="representative_remaining_tilted_branches_fail_controlledly",
             category="adversarial_edge",
             passed=bool(tilt_block_honesty),
-            summary="Representative tilted branches remain explicit controlled blocks at the Codazzi stage instead of silently degrading into orthogonal or local-boost behavior.",
+            summary="The remaining representative tilted branches stay explicit controlled blocks at the Codazzi stage instead of silently degrading into orthogonal or local-boost behavior.",
         ),
         ExecutableCheckEvidence(
             check_id="representative_family_realizations_are_algebra_aware",
@@ -785,7 +835,7 @@ def _representative_family_sweep_bundle(
         runbook_refs=("runbook.bass_representative_family_sweep",),
         no_claim_conditions=(
             "representative_family_sweep_only",
-            "representative_tilted_runtime_blocked",
+            "representative_tilted_runtime_partial_only",
             "non_type_i_exact_propagator_missing",
             "late_time_reionization_window_missing",
             "direction_resolved_reionization_microphysics_missing",
@@ -798,7 +848,7 @@ def _representative_family_sweep_bundle(
         notes=(
             "This campaign validates the bounded preliminary representative-family sweep only.",
             "Orthogonal branches are executable for I, V, VII_0, and VIII on the current native Tier-B route.",
-            "Tilted representative branches remain explicit Codazzi-stage blocks on the current global-tilt runtime construction and are treated as no-claim conditions rather than silent fallbacks.",
+            "The representative Type-V tilted branch is now executable on the bounded native route, while I, VII_0, and VIII tilted branches remain explicit Codazzi-stage blockers.",
         ),
     )
 
