@@ -17,7 +17,12 @@ from bass.los.ver2_source_propagator import (
     SourcePropagatorConfig,
     build_source_propagator,
 )
-from bass.runtime.ver2_execution import RuntimeControlBlock, SolverFeatureFlags
+from bass.runtime.ver2_execution import (
+    FeatureStatus,
+    RuntimeControlBlock,
+    SolverFeatureFlags,
+    SolverTier,
+)
 from bass.species.base import SpeciesLabel
 from bass.species.registry import SpeciesBackgroundRegistry
 
@@ -202,8 +207,10 @@ def build_solver_core_output_from_lowell_result(
     live Tier-B hierarchy output through the VER2 S3/O contracts without
     introducing posterior or observational ownership into BASS.
     """
-    if runtime_controls.tier.value != "tier_b_pstf":
-        raise ValueError("build_solver_core_output_from_lowell_result requires Tier B runtime controls")
+    if runtime_controls.tier not in {SolverTier.TIER_B_PSTF, SolverTier.TIER_A_ANGULAR}:
+        raise ValueError(
+            "build_solver_core_output_from_lowell_result requires Tier A or Tier B runtime controls"
+        )
     if runtime_controls.multipole_cutoff > result.L_max:
         raise ValueError(
             f"runtime cutoff L={runtime_controls.multipole_cutoff} exceeds result.L_max={result.L_max}"
@@ -216,11 +223,33 @@ def build_solver_core_output_from_lowell_result(
     structure_constants = get_type(bianchi_type) if structure is None else structure
     propagator_config = (
         SourcePropagatorConfig(
-            mode=PropagatorMode.ANISOTROPIC_FORWARD,
-            polarization_rotation=feature_flags.source_propagator,
-            temperature_transport=feature_flags.source_propagator,
+            mode=(
+                PropagatorMode.ANISOTROPIC_FORWARD
+                if runtime_controls.tier is SolverTier.TIER_B_PSTF
+                else PropagatorMode.FLRW_VALIDATION
+            ),
+            polarization_rotation=(
+                feature_flags.source_propagator
+                if runtime_controls.tier is SolverTier.TIER_B_PSTF
+                else FeatureStatus.DISABLED
+            ),
+            temperature_transport=(
+                feature_flags.source_propagator
+                if runtime_controls.tier is SolverTier.TIER_B_PSTF
+                else FeatureStatus.EXACT
+            ),
+            flrw_validation_only=(runtime_controls.tier is SolverTier.TIER_A_ANGULAR),
+            kernel_family=(
+                "anisotropic_green_function"
+                if runtime_controls.tier is SolverTier.TIER_B_PSTF
+                else "flrw_scalar_validation"
+            ),
             observer_frame=ObserverFrameMetadata(
-                harmonic_basis="m_explicit",
+                harmonic_basis=(
+                    "m_explicit"
+                    if runtime_controls.tier is SolverTier.TIER_B_PSTF
+                    else "flrw_scalar_validation"
+                ),
                 eb_sign_convention="cmb",
             ),
         )
@@ -241,7 +270,11 @@ def build_solver_core_output_from_lowell_result(
     final_T = np.asarray(result.photon_T_tower[-1], dtype=np.float64)
     final_E = np.asarray(result.photon_E_tower[-1], dtype=np.float64)
     alm_representation = {
-        "representation": "lowell_pstf_final_slice",
+        "representation": (
+            "lowell_pstf_final_slice"
+            if runtime_controls.tier is SolverTier.TIER_B_PSTF
+            else "tier_a_validation_reference_slice"
+        ),
         "ell_max": int(result.L_max),
         "eta_final_mpc": float(result.eta[-1]),
     }
@@ -263,6 +296,7 @@ def build_solver_core_output_from_lowell_result(
         anisotropic_covariance=live_propagator.covariance_bundle,
         extra_metadata={
             "propagator_ready": True,
+            "validation_reference": runtime_controls.tier is SolverTier.TIER_A_ANGULAR,
             "k_grid_size": int(np.asarray(k_grid_mpc).size),
             "eta_grid_size": int(np.asarray(result.eta).size),
             "off_diagonal_strategy": off_diagonal_strategy,

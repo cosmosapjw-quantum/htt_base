@@ -2,7 +2,9 @@
 
 ## Purpose
 
-These runbooks keep hostile audit categories explicit and separated:
+These runbooks are no longer prose-only buckets. Each bucket now resolves to campaign-linked check IDs, and every quarantine reason must be backed by a campaign or manifest downgrade rule.
+
+Required hostile-audit categories:
 
 - baseline reproduction
 - adversarial edge
@@ -14,21 +16,25 @@ These runbooks keep hostile audit categories explicit and separated:
 
 ### `runbook.observable_promotion`
 
-- baseline: `recover_flrw_limit`
-- adversarial: `proxy_not_promoted_as_biposh`, `rank_failure_not_spun_as_signal`
-- physics: `diagonal_only_not_sufficient`, `no_claim_conditions_explicit`
-- numerical: `psd_guard_present`, `scan_volume_hash_recorded`
-- regression: `observable_manifest_owner_scope`
-- quarantine: `sparse_proxy_only`, `response_rank_deficient`
+- campaigns: `validation.observable_null_proxy`, `validation.mes_claim_gates`
+- theorems: `V8_isotropic_limit_recovery`, `V8_biposh_Lgt0_null_or_proxy_block`, `V8_mes_rank_no_claim`, `V8_filling_requires_certification`
+- baseline: `flrw_limit_zero_offdiag`, `mes_covariance_bound_live`
+- adversarial: `rotating_types_activate_offdiag_blocks`, `mes_rank_failure_returns_no_claim`
+- physics: `proxy_mode_records_no_claim`, `uncertified_f_downgrades_to_proxy`
+- numerical: `anisotropic_te_is_finite`, `mock_coverage_within_published_window`
+- regression: `type_i_observable_marks_isotropic_null_proxy`, `full_cov_contract_rejects_negative_rank`
+- quarantine: `sparse_proxy_only`, `missing_biposh_basis`, `response_rank_deficient`, `claim_gate_not_passed`
 
 ### `runbook.semantic_firewall`
 
-- baseline: `q_f_separation_preserved`
-- adversarial: `local_boost_not_global_tilt`, `tsc_not_posterior`
-- physics: `certified_f_requires_admissible_ceiling`
-- numerical: `manuscript_blocking_fail_semantics`
-- regression: `workspace_schema_barrier`
-- quarantine: `claim_gate_not_passed`, `posterior_correction_attempted`
+- campaigns: `validation.synthetic_injection`, `validation.semantic_firewall`
+- theorems: `V8_template_injection_recovery`, `V8_local_vs_global_discrimination`, `V8_tsc_no_overclaim`
+- baseline: `null_mock_zero_mean`, `directional_manifest_not_posterior`
+- adversarial: `injected_dipole_projection_recovered`, `policy_rejects_tsc_posterior_correction`
+- physics: `local_boost_and_global_tilt_are_not_merged`, `response_library_keeps_local_and_global_distinct`
+- numerical: `synthetic_injection_coverage_reaches_nominal_band`, `axis_gate_requires_adequate_mock_coverage`
+- regression: `tier_b_runtime_consumes_live_hooks`, `tsc_quarantine_flags_emitted`
+- quarantine: `missing_injection_campaign`, `missing_null_ensemble`, `posterior_correction_attempted`, `missing_tsc_overlay`
 
 ## Check command
 

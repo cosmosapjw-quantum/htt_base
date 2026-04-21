@@ -7,24 +7,27 @@ import sys
 
 from workspace.contracts.validation_registry import (
     build_default_hostile_audit_runbooks,
+    build_default_injection_manifests,
+    build_default_null_manifests,
+    build_default_theorem_to_test_map,
+    build_default_validation_campaigns,
+    hostile_audit_issues,
 )
 
 
 def _check_runbooks() -> int:
     runbooks = build_default_hostile_audit_runbooks()
-    bad = [
-        runbook.runbook_id
-        for runbook in runbooks
-        if not (
-            runbook.baseline_checks
-            and runbook.adversarial_checks
-            and runbook.physics_checks
-            and runbook.numerical_checks
-            and runbook.regression_checks
-        )
-    ]
-    if bad:
-        print(f"[FAIL] incomplete hostile-audit runbooks: {bad}")
+    issues = hostile_audit_issues(
+        theorem_map=build_default_theorem_to_test_map(),
+        campaigns=build_default_validation_campaigns(),
+        nulls=build_default_null_manifests(),
+        injections=build_default_injection_manifests(),
+        runbooks=runbooks,
+    )
+    if issues:
+        print("[FAIL] hostile-audit runbook check")
+        for issue in issues:
+            print(f" - {issue}")
         return 1
     print(f"[PASS] hostile-audit runbook check ({len(runbooks)} runbooks)")
     return 0
@@ -44,7 +47,13 @@ def main(argv: list[str] | None = None) -> int:
                 {
                     "runbook_id": runbook.runbook_id,
                     "title": runbook.title,
+                    "campaign_refs": list(runbook.campaign_refs),
                     "theorem_refs": list(runbook.theorem_refs),
+                    "baseline_checks": list(runbook.baseline_checks),
+                    "adversarial_checks": list(runbook.adversarial_checks),
+                    "physics_checks": list(runbook.physics_checks),
+                    "numerical_checks": list(runbook.numerical_checks),
+                    "regression_checks": list(runbook.regression_checks),
                     "quarantine_conditions": list(runbook.quarantine_conditions),
                 }
                 for runbook in runbooks

@@ -25,9 +25,14 @@ __all__ = [
     "SolverExecutionPlan",
     "TierBExecutionTrace",
     "TierBExecutableRun",
+    "TierAValidationTrace",
+    "TierAValidationRun",
+    "TierATierBComparison",
     "build_runtime_reduction_decision",
     "plan_solver_execution",
+    "execute_tier_a_validation_solver",
     "execute_tier_b_lowell_solver",
+    "compare_tier_a_to_tier_b",
 ]
 
 
@@ -215,6 +220,89 @@ class TierBExecutableRun:
     integration_result: "IntegrationResult"
     solver_output: SolverCoreOutput
     cutoff_campaign: "ExecutedCutoffCampaign | None" = None
+
+
+@dataclass(frozen=True)
+class TierAValidationTrace:
+    """Validation-only angular-reference payload for Tier A cross-checks."""
+
+    background_monitor: "BackgroundEvolutionResult"
+    source_builder_scope: str
+    reference_scope: str
+    propagator_mode: str
+    off_diagonal_strategy: str
+    preferred_axis: tuple[float, float, float]
+    dl_reference: Mapping[str, np.ndarray]
+
+    def __post_init__(self) -> None:
+        if not self.source_builder_scope:
+            raise ValueError("source_builder_scope must be non-empty")
+        if not self.reference_scope:
+            raise ValueError("reference_scope must be non-empty")
+        if not self.propagator_mode:
+            raise ValueError("propagator_mode must be non-empty")
+        if not self.off_diagonal_strategy:
+            raise ValueError("off_diagonal_strategy must be non-empty")
+        if len(self.preferred_axis) != 3:
+            raise ValueError("preferred_axis must be a 3-vector")
+        if not self.dl_reference:
+            raise ValueError("dl_reference must be non-empty")
+        for channel, values in self.dl_reference.items():
+            arr = np.asarray(values, dtype=np.float64)
+            if arr.ndim != 1:
+                raise ValueError(f"dl_reference[{channel!r}] must be 1-D")
+            if not np.all(np.isfinite(arr)):
+                raise ValueError(f"dl_reference[{channel!r}] must be finite")
+
+
+@dataclass(frozen=True)
+class TierAValidationRun:
+    """Validation-grade angular reference run for Tier-B cross-checking."""
+
+    execution_plan: SolverExecutionPlan
+    runtime_decision: RuntimeReductionDecision
+    trace: TierAValidationTrace
+    integration_result: "IntegrationResult"
+    solver_output: SolverCoreOutput
+
+    def __post_init__(self) -> None:
+        if self.execution_plan.runtime_controls.tier is not SolverTier.TIER_A_ANGULAR:
+            raise ValueError("TierAValidationRun requires Tier A runtime controls")
+        if self.solver_output.metadata.get("solver_tier") != SolverTier.TIER_A_ANGULAR.value:
+            raise ValueError("solver_output must advertise solver_tier='tier_a_angular'")
+
+
+@dataclass(frozen=True)
+class TierATierBComparison:
+    """Machine-readable comparison between Tier A validation and Tier B runtime."""
+
+    compared_channels: tuple[str, ...]
+    relative_l2_by_channel: Mapping[str, float]
+    max_abs_delta_by_channel: Mapping[str, float]
+    preferred_axis_delta_deg: float
+    ell_grid_match: bool
+    k_grid_match: bool
+    tolerance: float
+    passed: bool
+    notes: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not self.compared_channels:
+            raise ValueError("compared_channels must be non-empty")
+        if self.tolerance < 0.0:
+            raise ValueError("tolerance must be non-negative")
+        if not np.isfinite(self.preferred_axis_delta_deg) or self.preferred_axis_delta_deg < 0.0:
+            raise ValueError("preferred_axis_delta_deg must be finite and non-negative")
+        for name, values in (
+            ("relative_l2_by_channel", self.relative_l2_by_channel),
+            ("max_abs_delta_by_channel", self.max_abs_delta_by_channel),
+        ):
+            missing = sorted(set(self.compared_channels) - set(values))
+            if missing:
+                raise ValueError(f"{name} missing channels: {missing}")
+            for channel, value in values.items():
+                if not np.isfinite(value) or value < 0.0:
+                    raise ValueError(f"{name}[{channel!r}] must be finite and non-negative")
 
 
 def build_runtime_reduction_decision(
@@ -595,6 +683,216 @@ def _campaign_runner(
     return runner
 
 
+def _default_validation_matrix(
+    *,
+    bianchi_type: str,
+    integrator_config: "IntegratorConfig",
+    suite: str,
+) -> ValidationMatrixSpec:
+    branch = "tilted" if abs(float(integrator_config.tilt_rapidity)) > 0.0 else "orthogonal"
+    return ValidationMatrixSpec(
+        bianchi_types=(bianchi_type,),
+        branches=(branch,),
+        suites=("background", "photon", "collision", suite),
+    )
+
+
+def _covariance_bundle(output: SolverCoreOutput) -> Mapping[str, object]:
+    covariance = output.anisotropic_covariance
+    if not isinstance(covariance, Mapping):
+        raise TypeError("solver_output.anisotropic_covariance must be a mapping")
+    return covariance
+
+
+def _relative_l2_delta(reference: np.ndarray, candidate: np.ndarray) -> float:
+    ref = np.asarray(reference, dtype=np.float64)
+    cand = np.asarray(candidate, dtype=np.float64)
+    scale = max(float(np.linalg.norm(ref)), 1.0e-30)
+    return float(np.linalg.norm(cand - ref) / scale)
+
+
+def _max_abs_delta(reference: np.ndarray, candidate: np.ndarray) -> float:
+    ref = np.asarray(reference, dtype=np.float64)
+    cand = np.asarray(candidate, dtype=np.float64)
+    return float(np.max(np.abs(cand - ref)))
+
+
+def _axis_delta_deg(reference_axis: np.ndarray, candidate_axis: np.ndarray) -> float:
+    ref = np.asarray(reference_axis, dtype=np.float64)
+    cand = np.asarray(candidate_axis, dtype=np.float64)
+    ref_norm = max(float(np.linalg.norm(ref)), 1.0e-30)
+    cand_norm = max(float(np.linalg.norm(cand)), 1.0e-30)
+    cosine = float(np.clip(np.dot(ref, cand) / (ref_norm * cand_norm), -1.0, 1.0))
+    return float(np.degrees(np.arccos(cosine)))
+
+
+def execute_tier_a_validation_solver(
+    *,
+    manifest,
+    bianchi_type: str,
+    species: "SpeciesBackgroundRegistry",
+    integrator_config: "IntegratorConfig",
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+    release,
+    k_grid_mpc: np.ndarray,
+    validation_matrix: "ValidationMatrixSpec | None" = None,
+    off_diagonal_strategy: str = "dense_matrix",
+) -> TierAValidationRun:
+    """Execute the Tier A angular-reference path for Tier-B validation.
+
+    The current implementation deliberately stays bounded to the existing
+    Lowell hierarchy core, but it emits a Tier-A-labelled observer-neutral
+    reference bundle and machine-readable comparison metadata so Tier B
+    cannot be promoted without an explicit cross-check surface.
+    """
+    if runtime_controls.tier is not SolverTier.TIER_A_ANGULAR:
+        raise ValueError("execute_tier_a_validation_solver requires Tier A runtime controls")
+
+    from bass.hierarchy.integrator import LowellBianchiIntegrator
+    from bass.forward.ver2_solver_output import build_solver_core_output_from_lowell_result
+
+    background_monitor = _build_background_monitor(
+        bianchi_type=bianchi_type,
+        config=integrator_config,
+        species=species,
+    )
+    integrator = LowellBianchiIntegrator(integrator_config, species)
+    runtime_decision = build_runtime_reduction_decision(
+        integrator.canonical_decision,
+        propagation_status="validated",
+        reason="tier_a_validation_reference",
+    )
+    plan = plan_solver_execution(
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        runtime_decision=runtime_decision,
+        validation_matrix=(
+            validation_matrix
+            if validation_matrix is not None
+            else _default_validation_matrix(
+                bianchi_type=bianchi_type,
+                integrator_config=integrator_config,
+                suite="tier_a_validation",
+            )
+        ),
+    )
+    result = integrator.run()
+    solver_output = build_solver_core_output_from_lowell_result(
+        manifest=manifest,
+        bianchi_type=bianchi_type,
+        result=result,
+        species=species,
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        release=release,
+        k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
+        off_diagonal_strategy=off_diagonal_strategy,
+        thomson_mode="electron_frame_projected_validation",
+    )
+    covariance = _covariance_bundle(solver_output)
+    d_ell = covariance.get("D_ell")
+    if not isinstance(d_ell, Mapping):
+        raise TypeError("Tier A validation covariance must expose D_ell mapping")
+    preferred_axis = np.asarray(
+        covariance.get("preferred_axis", np.array([0.0, 0.0, 1.0], dtype=np.float64)),
+        dtype=np.float64,
+    )
+    preferred_axis /= max(float(np.linalg.norm(preferred_axis)), 1.0e-30)
+    reference_channels = {
+        channel: np.asarray(values, dtype=np.float64)
+        for channel, values in d_ell.items()
+        if channel in {"TT", "EE", "TE"}
+    }
+    return TierAValidationRun(
+        execution_plan=plan,
+        runtime_decision=runtime_decision,
+        trace=TierAValidationTrace(
+            background_monitor=background_monitor,
+            source_builder_scope=str(solver_output.metadata.get("source_builder_scope", "")),
+            reference_scope="validation_only_angular_truth",
+            propagator_mode=str(solver_output.metadata.get("propagator_mode", "")),
+            off_diagonal_strategy=str(covariance.get("off_diagonal_strategy", "")),
+            preferred_axis=tuple(float(x) for x in preferred_axis),
+            dl_reference=reference_channels,
+        ),
+        integration_result=result,
+        solver_output=solver_output,
+    )
+
+
+def compare_tier_a_to_tier_b(
+    tier_a_run: TierAValidationRun,
+    tier_b_run: TierBExecutableRun,
+    *,
+    tolerance: float = 5.0e-2,
+) -> TierATierBComparison:
+    """Compare Tier A validation spectra against Tier B executable outputs."""
+
+    tier_a_cov = _covariance_bundle(tier_a_run.solver_output)
+    tier_b_cov = _covariance_bundle(tier_b_run.solver_output)
+    tier_a_d_ell = tier_a_cov.get("D_ell")
+    tier_b_d_ell = tier_b_cov.get("D_ell")
+    if not isinstance(tier_a_d_ell, Mapping) or not isinstance(tier_b_d_ell, Mapping):
+        raise TypeError("Tier A and Tier B covariance bundles must expose D_ell mappings")
+
+    compared_channels = tuple(
+        channel for channel in ("TT", "EE", "TE")
+        if channel in tier_a_d_ell and channel in tier_b_d_ell
+    )
+    if not compared_channels:
+        raise ValueError("No overlapping TT/EE/TE channels available for comparison")
+
+    tier_a_ell = np.asarray(tier_a_cov.get("ell"), dtype=np.int64)
+    tier_b_ell = np.asarray(tier_b_cov.get("ell"), dtype=np.int64)
+    ell_match = tier_a_ell.shape == tier_b_ell.shape and np.array_equal(tier_a_ell, tier_b_ell)
+
+    tier_a_k = np.asarray(tier_a_cov.get("k_grid_mpc"), dtype=np.float64)
+    tier_b_k = np.asarray(tier_b_cov.get("k_grid_mpc"), dtype=np.float64)
+    k_grid_match = tier_a_k.shape == tier_b_k.shape and np.allclose(tier_a_k, tier_b_k)
+
+    relative_l2_by_channel: dict[str, float] = {}
+    max_abs_delta_by_channel: dict[str, float] = {}
+    notes: list[str] = []
+    for channel in compared_channels:
+        ref = np.asarray(tier_a_d_ell[channel], dtype=np.float64)
+        cand = np.asarray(tier_b_d_ell[channel], dtype=np.float64)
+        if ref.shape != cand.shape:
+            raise ValueError(
+                f"Tier A/Tier B D_ell shape mismatch for {channel}: {ref.shape} vs {cand.shape}"
+            )
+        relative_l2_by_channel[channel] = _relative_l2_delta(ref, cand)
+        max_abs_delta_by_channel[channel] = _max_abs_delta(ref, cand)
+
+    axis_delta = _axis_delta_deg(
+        np.asarray(tier_a_cov.get("preferred_axis"), dtype=np.float64),
+        np.asarray(tier_b_cov.get("preferred_axis"), dtype=np.float64),
+    )
+    if not ell_match:
+        notes.append("ell_grid_mismatch")
+    if not k_grid_match:
+        notes.append("k_grid_mismatch")
+    passed = ell_match and k_grid_match and all(
+        relative_l2_by_channel[channel] <= tolerance for channel in compared_channels
+    )
+    if passed:
+        notes.append("tier_a_validation_matches_tier_b_within_tolerance")
+    else:
+        notes.append("tier_a_validation_exceeds_tolerance")
+
+    return TierATierBComparison(
+        compared_channels=compared_channels,
+        relative_l2_by_channel=relative_l2_by_channel,
+        max_abs_delta_by_channel=max_abs_delta_by_channel,
+        preferred_axis_delta_deg=axis_delta,
+        ell_grid_match=ell_match,
+        k_grid_match=k_grid_match,
+        tolerance=float(tolerance),
+        passed=passed,
+        notes=tuple(notes),
+    )
+
+
 def execute_tier_b_lowell_solver(
     *,
     manifest,
@@ -655,11 +953,10 @@ def execute_tier_b_lowell_solver(
         validation_matrix=(
             validation_matrix
             if validation_matrix is not None
-            else ValidationMatrixSpec(
-                bianchi_types=(bianchi_type,),
-                branches=(
-                    ("tilted",) if abs(float(integrator_config.tilt_rapidity)) > 0.0 else ("orthogonal",)
-                ),
+            else _default_validation_matrix(
+                bianchi_type=bianchi_type,
+                integrator_config=integrator_config,
+                suite="tier_b_smoke",
             )
         ),
     )

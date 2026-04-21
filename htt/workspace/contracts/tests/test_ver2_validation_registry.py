@@ -1,16 +1,33 @@
 from __future__ import annotations
 
 from workspace.contracts.validation_registry import (
-    HostileAuditRunbook,
     NullEnsembleManifest,
-    TheoremToTestEntry,
+    REQUIRED_VALIDATION_CATEGORIES,
     ValidationCampaign,
     ValidationTestLink,
     build_default_hostile_audit_runbooks,
     build_default_theorem_to_test_map,
     build_default_validation_campaigns,
+    hostile_audit_issues,
     manuscript_export_blocked,
+    validation_registry_issues,
+    validation_test_path_exists,
 )
+
+
+def _link(
+    *,
+    test_id: str = "regression.anchor",
+    category: str = "regression",
+    path: str = "htt/workspace/contracts/tests/test_ver2_validation_registry.py::test_campaign_requires_owner_and_scope",
+) -> ValidationTestLink:
+    return ValidationTestLink(
+        test_id=test_id,
+        category=category,  # type: ignore[arg-type]
+        path=path,
+        purpose="test anchor",
+        artifact_refs=("validation.anchor",),
+    )
 
 
 def test_campaign_requires_owner_and_scope():
@@ -22,7 +39,8 @@ def test_campaign_requires_owner_and_scope():
             implementation_scope="htt",
             status="warn",
             theorem_refs=("x",),
-            categories=("baseline_reproduction",),
+            categories=("regression",),
+            check_links=(_link(),),
             artifact_refs=("a",),
             manuscript_blocking=True,
             no_claim_conditions=("n",),
@@ -36,6 +54,7 @@ def test_campaign_requires_owner_and_scope():
 def test_theorem_to_test_entry_has_artifact_refs():
     entries = build_default_theorem_to_test_map()
     assert all(entry.artifact_refs for entry in entries)
+    assert all(entry.no_claim_conditions for entry in entries)
     assert any(
         any(link.category == "adversarial_edge" for link in entry.test_links)
         for entry in entries
@@ -57,6 +76,12 @@ def test_fail_blocks_manuscript_export():
         status="fail",
         theorem_refs=("t",),
         categories=("regression",),
+        check_links=(
+            _link(
+                test_id="blocking.fail.regression",
+                path="htt/workspace/contracts/tests/test_ver2_validation_registry.py::test_fail_blocks_manuscript_export",
+            ),
+        ),
         artifact_refs=("a",),
         manuscript_blocking=True,
         no_claim_conditions=("n",),
@@ -83,9 +108,35 @@ def test_null_manifest_requires_scan_volume_and_no_claim_conditions():
 
 def test_hostile_audit_runbook_has_all_check_buckets():
     runbook = build_default_hostile_audit_runbooks()[0]
+    assert runbook.campaign_refs
     assert runbook.baseline_checks
     assert runbook.adversarial_checks
     assert runbook.physics_checks
     assert runbook.numerical_checks
     assert runbook.regression_checks
 
+
+def test_validation_test_path_exists_for_function_and_class_method():
+    assert validation_test_path_exists(
+        "htt/workspace/contracts/tests/test_ver2_validation_registry.py::test_campaign_requires_owner_and_scope"
+    )
+    assert validation_test_path_exists(
+        "htt/src/common/test_mock_calibration.py::TestMockGeneration::test_isotropic_mock_has_zero_mean_over_many_realisations"
+    )
+
+
+def test_default_campaigns_cover_all_required_categories():
+    required = set(REQUIRED_VALIDATION_CATEGORIES)
+    campaigns = build_default_validation_campaigns()
+    assert campaigns
+    for campaign in campaigns:
+        assert set(campaign.categories) == required
+        assert {link.category for link in campaign.check_links} == required
+
+
+def test_default_registry_has_no_link_or_coverage_issues():
+    assert validation_registry_issues() == ()
+
+
+def test_default_hostile_audit_has_no_bucket_or_quarantine_issues():
+    assert hostile_audit_issues() == ()
