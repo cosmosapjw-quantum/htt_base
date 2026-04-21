@@ -102,6 +102,8 @@
 - `IM-10D-MAN` verification is green for the touched D-lane scope: `venv/bin/python -m pytest scripts/test_ver2_artifact_export.py -q` -> `7 passed`, `py_compile` passed, and both `venv/bin/python scripts/ver2_artifact_export.py` / `--check` pass.
 - Prompt list 02 is now complete: there are no remaining implementation packets in the current VER2 prompt series.
 - Prompt list 01 is now complete: every skeleton lane has an audit note, machine-readable carry-forward, and a frozen write-scope boundary.
+- `PRM-01-BASS-INTEROP` is now closed: the observer-neutral BASS export path (`SolverCoreOutput`, `ObservableVector`, `AtlasEntryLite`, and live likelihood bindings) now carries explicit all-11-type domain scope, orthogonal-vs-tilted branch tags, theory-family labels, and global-tilt vs local-boost separation metadata so HTT/MIO/TSC and exporter consumers do not need package-local semantic glue.
+- `PRM-01-BASS-INTEROP` verification is green for the touched preliminary-results scope: `py_compile` passed and targeted pytest over `htt/bass/{forward,observational,likelihood,inference}` returned `20 passed`.
 - `BF-01B-HCORE` is now closed: BASS production Tier-B no longer runs through the shipped Lowell hierarchy/integrator, and `htt/bass/hierarchy/ver2_native_integrator.py` now owns the native S1-background/S2-radiation executable core consumed by `execute_tier_b_solver`.
 - `BF-01B-HCORE` verification is green for the touched BASS-core scope: packet-local pytest `11 passed`, touched-surface pytest `168 passed`, and `py_compile` passed.
 - `execute_tier_b_lowell_solver` is now a compatibility alias only; production Tier-B output provenance is emitted through `build_solver_core_output_from_native_result` with `tier_b_core_owner = ver2_s1s2_native`.
@@ -164,6 +166,10 @@ cleanup:
 3. `PRM-03-PRELIM-RESULT-PACKS`,
 4. only then reopen deeper exactness debt if it blocks a concrete preliminary claim.
 
+`PRM-01-BASS-INTEROP` is closed. The next BASS preliminary-results packet is:
+
+1. `PRM-02-BASS-FAMILY-SWEEP`
+
 ## 4. Hard Reminders
 
 - `docs/ver2_upgrade/*` is the only semantic SSOT.
@@ -199,3 +205,6 @@ cleanup:
   geometry/tilt handling, for convenience.
 - Do not replace the common PSTF/tetrad backbone with family-specific ad hoc
   rewrites when an algebra substitution on the shared backend is sufficient.
+- Do not let downstream HTT/MIO/TSC or exporter consumers reconstruct branch,
+  theory-family, or tilt-vs-boost semantics from type names or ad hoc local
+  rules when those fields are already present in the BASS interop payload.

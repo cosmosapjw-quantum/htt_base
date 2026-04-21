@@ -68,6 +68,9 @@ def build_atlas_entry_lite(
             "basis_reduction_status": covariance_features.get("basis_reduction_status"),
             "local_global_degeneracy": covariance_features.get("local_global_degeneracy"),
             "preferred_axis": observable_vector.alm_features.get("preferred_axis"),
+            "global_tilt_contract": solver_output.metadata.get("global_tilt_contract"),
+            "local_boost_contract": solver_output.metadata.get("local_boost_contract"),
+            "tilt_boost_separation": solver_output.metadata.get("tilt_boost_separation"),
         }
     )
     validity_payload = (
@@ -81,6 +84,11 @@ def build_atlas_entry_lite(
             "observer_reconstruction_status": observable_vector.alm_features.get(
                 "observer_reconstruction_status"
             ),
+            "bianchi_branch": solver_output.metadata.get("bianchi_branch"),
+            "solver_domain_scope": solver_output.metadata.get("solver_domain_scope"),
+            "global_tilt_contract": solver_output.metadata.get("global_tilt_contract"),
+            "local_boost_contract": solver_output.metadata.get("local_boost_contract"),
+            "tilt_boost_separation": solver_output.metadata.get("tilt_boost_separation"),
             "local_global_degeneracy": covariance_features.get("local_global_degeneracy"),
             "covariance_representation": covariance_features.get("representation"),
             "basis_reduction_status": covariance_features.get("basis_reduction_status"),
@@ -110,7 +118,9 @@ def build_atlas_entry_lite(
     )
     return AtlasEntryLite(
         atlas_id=atlas_name,
-        theory_family=theory_family or str(solver_output.metadata["bianchi_type"]),
+        theory_family=theory_family or str(
+            solver_output.metadata.get("theory_family", solver_output.metadata["bianchi_type"])
+        ),
         geometry_params=dict(geometry_params or _coerce_mapping(solver_output.metadata.get("geometry_params"))),
         kinematic_params=dict(
             kinematic_params or _coerce_mapping(solver_output.metadata.get("kinematic_params"))

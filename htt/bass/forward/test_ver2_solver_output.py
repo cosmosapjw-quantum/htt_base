@@ -207,6 +207,12 @@ def test_solver_core_output_builder_attaches_required_metadata() -> None:
         deterministic_template={"kind": "pending"},
     )
     assert output.metadata["bianchi_type"] == "VII_h"
+    assert output.metadata["bianchi_branch"] == "tilted"
+    assert output.metadata["solver_domain_scope"] == "all_11_bianchi_types"
+    assert output.metadata["global_tilt_contract"] == "model_matter_frame_state"
+    assert output.metadata["local_boost_contract"] == "observer_side_only_not_applied_in_bass_output"
+    assert output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
+    assert output.metadata["theory_family"] == "VII_h_tilted"
     assert output.metadata["observer_neutral"] is True
     assert output.metadata["multipole_cutoff"] == 6
 
@@ -317,6 +323,13 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["source_propagator_realization"] == "class_b_helical_matrix_approx"
     assert output.metadata["source_builder_combined_polter"] is True
     assert output.metadata["source_builder_visibility_weighted_polter"] is True
+    assert output.metadata["bianchi_branch"] == "orthogonal"
+    assert output.metadata["bianchi_class_label"] == "B"
+    assert output.metadata["global_tilt_contract"] == "orthogonal_branch_zero_global_tilt"
+    assert output.metadata["theory_family"] == "VII_h_orthogonal"
+    assert output.metadata["geometry_params"]["type_label"] == "VII_h"
+    assert output.metadata["kinematic_params"]["branch"] == "orthogonal"
+    assert output.metadata["tilt_params"]["enabled"] is False
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_native_template"
     assert output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
@@ -349,6 +362,10 @@ def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backe
     assert output.metadata["source_propagator_requested_status"] == "approximate"
     assert output.metadata["source_propagator_rotation_status"] == "disabled"
     assert output.metadata["source_propagator_realization"] == "bianchi_i_matrix_exact"
+    assert output.metadata["bianchi_branch"] == "orthogonal"
+    assert output.metadata["bianchi_class_label"] == "A"
+    assert output.metadata["global_tilt_contract"] == "orthogonal_branch_zero_global_tilt"
+    assert output.metadata["theory_family"] == "I_orthogonal"
     assert output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
     assert output.alm_T["coefficient_representation"] == "ver2_native_pstf_final_slice"
 

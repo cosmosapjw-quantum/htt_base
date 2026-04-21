@@ -16,6 +16,12 @@ def test_build_type_i_native_validation_problem_is_bound_to_live_bass_outputs() 
     assert problem.solver_output.manifest.owner == "BASS"
     assert problem.observable_vector.manifest.owner == "BASS"
     assert problem.solver_output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
+    assert problem.solver_output.metadata["theory_family"] == "I_orthogonal"
+    assert problem.observable_vector.alm_features["bianchi_branch"] == "orthogonal"
+    assert (
+        problem.observable_vector.alm_features["local_boost_contract"]
+        == "observer_side_only_not_applied_in_bass_output"
+    )
     assert problem.dataset_kind == "type_i_native_validation"
     assert np.isfinite(problem.log_likelihood(np.zeros(3, dtype=float)))
 

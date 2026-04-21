@@ -77,6 +77,23 @@ def _axis_precision(
     )
 
 
+def _interop_summary(solver_output: SolverCoreOutput) -> dict[str, Any]:
+    return {
+        "bianchi_type": solver_output.metadata.get("bianchi_type"),
+        "model_branch": solver_output.metadata.get("bianchi_branch"),
+        "solver_domain_scope": solver_output.metadata.get("solver_domain_scope"),
+        "theory_family": solver_output.metadata.get("theory_family"),
+        "global_tilt_contract": solver_output.metadata.get("global_tilt_contract"),
+        "local_boost_contract": solver_output.metadata.get("local_boost_contract"),
+        "tilt_boost_separation": solver_output.metadata.get("tilt_boost_separation"),
+        "frame_split_contract": solver_output.metadata.get("frame_split_contract"),
+        "constraint_backend_contract": solver_output.metadata.get("constraint_backend_contract"),
+        "geometry_params": solver_output.metadata.get("geometry_params"),
+        "kinematic_params": solver_output.metadata.get("kinematic_params"),
+        "tilt_params": solver_output.metadata.get("tilt_params"),
+    }
+
+
 def build_live_htt_decomposition_from_solver_output(
     solver_output: SolverCoreOutput,
     *,
@@ -169,6 +186,7 @@ def build_live_htt_decomposition_from_solver_output(
             key: np.asarray(covariance["C_ell"].get(key, np.zeros(ell.size)), dtype=float)
             for key in _SPECTRUM_KEYS
         },
+        **_interop_summary(solver_output),
         "binding_origin": "solver_core_output",
         "solver_output_ref": solver_output.manifest.artifact_id,
         "live_bass_binding": True,

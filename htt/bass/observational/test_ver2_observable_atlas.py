@@ -256,6 +256,14 @@ def test_observable_vector_builder_attaches_sky_support_and_manifest():
     assert observable.scan_volume["scan_volume_hash"]
     assert observable.biposh is not None
     assert observable.biposh["representation"] == "sparse_mode_block_proxy"
+    assert observable.alm_features["bianchi_branch"] == "tilted"
+    assert observable.alm_features["global_tilt_contract"] == "model_matter_frame_state"
+    assert (
+        observable.alm_features["local_boost_contract"]
+        == "observer_side_only_not_applied_in_bass_output"
+    )
+    assert observable.alm_features["tilt_boost_separation"] == "explicit_nonmerged"
+    assert observable.scan_volume["solver_domain_scope"] == "all_11_bianchi_types"
     assert (
         observable.alm_features["observer_reconstruction_status"]
         == "unreported"
@@ -294,8 +302,13 @@ def test_atlas_entry_lite_builder_carries_observable_reference():
     atlas = build_atlas_entry_lite(solver_output, observable)
     assert atlas.manifest.owner == "BASS"
     assert atlas.observable_vector_ref == observable.manifest.artifact_id
+    assert atlas.theory_family == "VII_h_tilted"
+    assert atlas.tilt_params["enabled"] is True
+    assert atlas.kinematic_params["local_boost_applied"] is False
     assert atlas.manifest.production_status == "production_candidate"
     assert atlas.validity_domain["sky_support"]["sky_support_hash"] == "sky123"
+    assert atlas.validity_domain["bianchi_branch"] == "tilted"
+    assert atlas.validity_domain["global_tilt_contract"] == "model_matter_frame_state"
     assert (
         atlas.validity_domain["local_global_degeneracy"]["status"]
         == "observer_source_discrimination_pending"
@@ -342,6 +355,12 @@ def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
         observable.alm_features["observer_reconstruction_status"]
         == "sphere_reconstructed_from_pstf"
     )
+    assert observable.alm_features["bianchi_branch"] == "orthogonal"
+    assert observable.alm_features["global_tilt_contract"] == "orthogonal_branch_zero_global_tilt"
+    assert (
+        observable.alm_features["local_boost_contract"]
+        == "observer_side_only_not_applied_in_bass_output"
+    )
     assert observable.alm_features["observer_quadrature_points"] == 231
     assert (
         observable.alm_features["observer_quadrature_rule"]
@@ -349,5 +368,7 @@ def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
     )
     assert "basis_reduced_covariance_not_full_biposh" in observable.manifest.caveats
     assert "proxy_morphology_not_full_biposh" not in observable.manifest.caveats
+    assert atlas.theory_family == "I_orthogonal"
     assert atlas.validity_domain["basis_reduction_status"] == "sphere_supported_harmonic_sparse"
+    assert atlas.validity_domain["bianchi_branch"] == "orthogonal"
     assert atlas.validity_domain["angular_reconstruction_guard"]["passed"] is True

@@ -26,6 +26,16 @@ def test_live_cosmological_frame_likelihood_binds_to_solver_output(_live_problem
         == _live_problem.solver_output.manifest.artifact_id
     )
     assert bool(likelihood.htt_decomposition["live_bass_binding"]) is True
+    assert likelihood.htt_decomposition["model_branch"] == "orthogonal"
+    assert (
+        likelihood.htt_decomposition["global_tilt_contract"]
+        == "orthogonal_branch_zero_global_tilt"
+    )
+    assert (
+        likelihood.htt_decomposition["local_boost_contract"]
+        == "observer_side_only_not_applied_in_bass_output"
+    )
+    assert likelihood.htt_decomposition["tilt_boost_separation"] == "explicit_nonmerged"
     assert np.isfinite(likelihood.log_prob({}))
 
 

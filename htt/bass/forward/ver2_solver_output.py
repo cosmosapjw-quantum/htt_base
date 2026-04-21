@@ -47,6 +47,110 @@ __all__ = [
 ]
 
 
+def _branch_name(*, tilt_enabled: bool) -> str:
+    return "tilted" if bool(tilt_enabled) else "orthogonal"
+
+
+def _base_interop_metadata(
+    *,
+    bianchi_type: str,
+    tilt_enabled: bool,
+) -> dict[str, Any]:
+    branch = _branch_name(tilt_enabled=tilt_enabled)
+    try:
+        structure = get_type(bianchi_type)
+    except Exception:  # pragma: no cover - defensive only
+        structure = None
+    return {
+        "solver_domain_scope": "all_11_bianchi_types",
+        "branch_contract": "explicit_orthogonal_vs_tilted",
+        "bianchi_branch": branch,
+        "bianchi_class_label": None if structure is None else ("A" if structure.is_class_a else "B"),
+        "no_flrw_limit": None if structure is None else bool(structure.no_flrw_limit),
+        "global_tilt_contract": (
+            "model_matter_frame_state"
+            if tilt_enabled
+            else "orthogonal_branch_zero_global_tilt"
+        ),
+        "local_boost_contract": "observer_side_only_not_applied_in_bass_output",
+        "local_boost_applied": False,
+        "tilt_boost_separation": "explicit_nonmerged",
+        "frame_split_contract": "transport_normal_tetrad_collision_electron_frame",
+        "algebra_backend_contract": "tetrad_commutator_substitution",
+        "constraint_backend_contract": "identity_derived_jacobi_ricci_gauss_codazzi_bianchi",
+        "theory_family": f"{bianchi_type}_{branch}",
+        "geometry_params": {
+            "type_label": bianchi_type,
+            "class_label": None if structure is None else ("A" if structure.is_class_a else "B"),
+            "h_parameter": None
+            if structure is None or abs(float(structure.h_parameter)) == 0.0
+            else float(structure.h_parameter),
+            "no_flrw_limit": None if structure is None else bool(structure.no_flrw_limit),
+        },
+        "kinematic_params": {
+            "branch": branch,
+            "global_tilt_enabled": bool(tilt_enabled),
+            "local_boost_applied": False,
+            "local_boost_contract": "observer_side_only_not_applied_in_bass_output",
+        },
+        "tilt_params": {
+            "branch": branch,
+            "enabled": bool(tilt_enabled),
+            "rapidity": None,
+            "direction": None,
+            "contract": (
+                "global_tilt_matter_frame"
+                if tilt_enabled
+                else "orthogonal_branch_zero_global_tilt"
+            ),
+        },
+    }
+
+
+def _structure_metadata(
+    *,
+    structure: StructureConstants,
+    tilt_enabled: bool,
+    tilt_rapidity: float,
+    tilt_direction: tuple[float, float, float],
+) -> dict[str, Any]:
+    branch = _branch_name(tilt_enabled=tilt_enabled)
+    return {
+        "bianchi_class_label": "A" if structure.is_class_a else "B",
+        "bianchi_h_parameter": None if abs(float(structure.h_parameter)) == 0.0 else float(structure.h_parameter),
+        "no_flrw_limit": bool(structure.no_flrw_limit),
+        "geometry_params": {
+            "type_label": str(structure.label),
+            "class_label": "A" if structure.is_class_a else "B",
+            "n1": float(structure.n1),
+            "n2": float(structure.n2),
+            "n3": float(structure.n3),
+            "a_twist": float(structure.a_twist),
+            "h_parameter": None if abs(float(structure.h_parameter)) == 0.0 else float(structure.h_parameter),
+            "no_flrw_limit": bool(structure.no_flrw_limit),
+        },
+        "kinematic_params": {
+            "branch": branch,
+            "global_tilt_enabled": bool(tilt_enabled),
+            "global_tilt_rapidity": float(tilt_rapidity),
+            "global_tilt_direction": tuple(float(x) for x in tilt_direction),
+            "local_boost_applied": False,
+            "local_boost_contract": "observer_side_only_not_applied_in_bass_output",
+        },
+        "tilt_params": {
+            "branch": branch,
+            "enabled": bool(tilt_enabled),
+            "rapidity": float(tilt_rapidity),
+            "direction": tuple(float(x) for x in tilt_direction),
+            "contract": (
+                "global_tilt_matter_frame"
+                if tilt_enabled
+                else "orthogonal_branch_zero_global_tilt"
+            ),
+        },
+    }
+
+
 @dataclass(frozen=True)
 class BassReleaseMetadata:
     """Release and reproducibility metadata for one solver run."""
@@ -115,6 +219,10 @@ def build_solver_core_output(
         "run_label": release.run_label,
         "observer_neutral": True,
         "forbidden_products": ("posterior", "likelihood", "p_value"),
+        **_base_interop_metadata(
+            bianchi_type=bianchi_type,
+            tilt_enabled=tilt_enabled,
+        ),
     }
     if extra_metadata is not None:
         overlap = {
@@ -544,6 +652,12 @@ def build_solver_core_output_from_native_result(
         ),
         anisotropic_covariance=live_propagator.covariance_bundle,
         extra_metadata={
+            **_structure_metadata(
+                structure=structure_constants,
+                tilt_enabled=bool(abs(result.config.tilt_rapidity) > 0.0),
+                tilt_rapidity=float(result.config.tilt_rapidity),
+                tilt_direction=tuple(float(x) for x in result.config.tilt_direction),
+            ),
             "propagator_ready": True,
             "validation_reference": False,
             "k_grid_size": int(np.asarray(k_grid_mpc).size),
@@ -691,6 +805,12 @@ def build_solver_core_output_from_lowell_result(
         ),
         anisotropic_covariance=live_propagator.covariance_bundle,
         extra_metadata={
+            **_structure_metadata(
+                structure=structure_constants,
+                tilt_enabled=bool(abs(result.config.tilt_rapidity) > 0.0),
+                tilt_rapidity=float(result.config.tilt_rapidity),
+                tilt_direction=tuple(float(x) for x in result.config.tilt_direction),
+            ),
             "propagator_ready": True,
             "validation_reference": runtime_controls.tier is SolverTier.TIER_A_ANGULAR,
             "k_grid_size": int(np.asarray(k_grid_mpc).size),
