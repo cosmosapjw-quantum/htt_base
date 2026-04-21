@@ -134,6 +134,19 @@ exactness debt. Use
 `docs/ver2_upgrade/VER2_PHASE_PROMPTS_05_PRELIMINARY_RESULTS.md`
 instead.
 
+For preliminary-results-mode BASS work, keep the following architectural axioms
+fixed:
+
+1. the solver domain remains all eleven Bianchi types;
+2. both orthogonal and tilted branches remain explicit for that domain;
+3. global tilt geometry/matter-frame effects must stay distinct from local
+   boost / peculiar-velocity artifacts;
+4. 1+3 gauge-invariant covariant PSTF objects remain the semantic authority,
+   with tetrad components as the implementation representation;
+5. constraint handling should continue to descend from the SDD identity path
+   (Jacobi/Ricci/Gauss/Codazzi/Bianchi) unless the SDD explicitly approves a
+   closure.
+
 If the priority is parallel HTT follow-up while BASS carry-forward continues,
 use `docs/ver2_upgrade/VER2_PHASE_PROMPTS_04_HTT_PARALLEL.md`.
 `HTT-A` is already green in the current local workspace, so the next HTT
@@ -179,3 +192,10 @@ cleanup:
 - Do not let legacy cleanup jump ahead of unresolved physics/statistics carry-forward unless the task is explicitly cleanup-only.
 - Rerun `venv/bin/python scripts/ver2_artifact_export.py` after any D-lane change touching generated manuscript/export surfaces.
 - In preliminary-results mode, default verification is lighter: CoVe, metacognitive audit, equation-to-code consistency, touched-surface tests, and script/export checks. Plot-based visual audit is no longer mandatory unless the step touches figures directly or leaves a numerical mismatch unresolved.
+- Do not misread the representative-family preliminary sweep as narrowing the
+  architecture away from all eleven Bianchi types or from explicit
+  orthogonal-vs-tilted branching.
+- Do not collapse global tilt into local boost handling, or local boost into
+  geometry/tilt handling, for convenience.
+- Do not replace the common PSTF/tetrad backbone with family-specific ad hoc
+  rewrites when an algebra substitution on the shared backend is sufficient.

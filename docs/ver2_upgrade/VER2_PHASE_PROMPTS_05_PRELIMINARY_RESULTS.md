@@ -4,7 +4,7 @@
 
 **Status**: post-BASS-first operating mode  
 **Authority**: `docs/ver2_upgrade/*` + `docs/manuscript/*`  
-**Purpose**: keep `htt/bass/*` scientifically useful as a low-`\ell` preliminary Boltzmann solver that can feed HTT/MIO/TSC and the plotting/export scripts, without reopening every remaining exactness debt before preliminary results are produced.
+**Purpose**: keep `htt/bass/*` scientifically useful as a low-`\ell` preliminary Boltzmann solver that can feed HTT/MIO/TSC and the plotting/export scripts, without reopening every remaining exactness debt before preliminary results are produced, while preserving the all-11-type 1+3 PSTF/tetrad architecture as the solver backbone.
 
 ## 0. Why this mode exists
 
@@ -43,6 +43,17 @@ So the next development mode is not “maximize exactness at any cost.” It is:
 > low-`\ell` results, pass them to HTT/MIO/TSC cleanly, and keep the residual
 > caveats explicit.
 
+This mode does **not** redefine the architectural target. The solver domain
+remains:
+
+1. all eleven Bianchi types;
+2. both orthogonal and tilted matter branches for each type;
+3. nonperturbative time-dependent homogeneous background evolution;
+4. perturbative spatial/temporal fluctuation transport on top of that
+   background;
+5. explicit distinction between global tilt geometry/matter-frame effects and
+   local observer boost / peculiar-velocity artifacts.
+
 ## 1. Operating rules
 
 1. `docs/ver2_upgrade/*` remains the semantic SSOT.
@@ -65,6 +76,23 @@ So the next development mode is not “maximize exactness at any cost.” It is:
    claims.
 8. The target artifact is not “perfect science closure.” The target artifact is
    “conditional, caveated, script-runnable preliminary result packs.”
+9. The representative family sweep is a staging order only. It must never be
+   misread as narrowing the solver architecture away from the full eleven-type
+   registry with orthogonal/tilted branches.
+10. Preserve the 1+3 gauge-invariant covariant PSTF objects as the semantic
+    source of truth. Tetrad components are the code representation of those
+    objects, not a replacement formalism.
+11. Keep global tilt and local boost distinct:
+    - global tilt belongs to the model/background/matter-frame state;
+    - local boost belongs to observer or peculiar-velocity artifact handling;
+    - neither may be silently folded into the other for convenience.
+12. Prefer algebra substitution over handwritten family rewrites: when a new
+    Bianchi family is enabled, the default path should be to swap the
+    tetrad/commutator algebra backend and retain the common PSTF transport
+    machinery unless the SDD explicitly requires a family-specific operator.
+13. Constraint handling must continue to descend from the SDD identity path
+    (Jacobi, Ricci, Codazzi, Gauss, Bianchi identities) or from an explicit
+    SDD-approved closure. Ad hoc runtime constraints are not a substitute.
 
 ## 2. Success criteria for BASS in this mode
 
@@ -72,13 +100,18 @@ BASS is “good enough for preliminary results” when all of the following hold
 
 1. `execute_tier_b_solver(...)` runs reproducibly for the representative family
    set on bounded low-`\ell` configurations.
-2. `SolverCoreOutput -> ObservableVector -> HTT/MIO/TSC adapters` stays live.
-3. `scripts/ver2_artifact_export.py` and the relevant paper/gallery plotters run
+2. The common solver contracts continue to expose the full eleven-type /
+   orthogonal-vs-tilted architecture even if only a representative subset is
+   exercised in the current sweep.
+3. The runtime/forward/observable path keeps global tilt and local boost
+   metadata distinct enough for HTT/MIO/TSC to avoid semantic drift.
+4. `SolverCoreOutput -> ObservableVector -> HTT/MIO/TSC adapters` stays live.
+5. `scripts/ver2_artifact_export.py` and the relevant paper/gallery plotters run
    without requiring manual data patching.
-4. The generated artifacts carry the right caveats:
+6. The generated artifacts carry the right caveats:
    - tilt-compatible preliminary result: allowed;
    - exact geometry identification: blocked unless separately validated.
-5. Manuscript-facing conditional claims can be generated from current artifacts
+7. Manuscript-facing conditional claims can be generated from current artifacts
    without hand-editing science numbers.
 
 ## 3. Packet table
@@ -133,6 +166,10 @@ cases. This is not new physics; it is contract cleanup for preliminary results.
 Close the most obvious family blockers for a representative preliminary sweep.
 This packet is about making a useful family subset run end-to-end, not about
 closing every exact propagator debt.
+
+The subset is a sequencing choice, not a semantic downgrade of the solver
+domain. The algebra registry, branch metadata, and tetrad/PSTF contracts remain
+all-11-type and orthogonal-vs-tilted throughout.
 
 **Representative target set**
 
@@ -230,3 +267,11 @@ The recommended next packet in this mode is:
 That is the cheapest DAG-correct step because it improves the current BASS
 artifact usability for HTT/MIO/TSC and the plotting/export scripts without
 reopening the hardest remaining physics debt first.
+
+The hard design axioms for every packet in this mode are:
+
+1. all eleven Bianchi types remain the architectural target;
+2. orthogonal and tilted branches remain explicit, not implicit;
+3. global tilt and local boost remain distinct contracts;
+4. 1+3 PSTF semantics remain the equation-level authority;
+5. tetrad algebra substitution remains the preferred family-extension path.
