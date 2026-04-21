@@ -71,6 +71,7 @@
 | 2026-04-21 | IM-04O | P2 | descriptive xQPiFG reports now propagate local/global and reconstruction caveats, but certified filling still depends on later admissibility/occupancy artifacts and must not be promoted by O-lane alone | no HTT/MIO/TSC semantic merge was introduced in this packet | `IM-05T`, `IM-06H`, `IM-07M`, `IM-08V` |
 | 2026-04-21 | IM-05T | P1 | TSC now assembles a solver-independent active-service bundle, but BASS runtime does not yet consume `SourceAdequacySuggestion` end to end and generated D-lane/manuscript artifacts still lack automatic overlay-derived wording | the packet closed T-lane semantics inside `htt/tsc/*` and deliberately left downstream authority/export ownership outside scope | `IM-08V`, `IM-09D-FIG`, `IM-10D-MAN` |
 | 2026-04-21 | IM-05T | P2 | richer TSC-local label grammar is now validated in `htt/tsc/contracts.py`, but the shared `SourceStatus` / `PropagationStatus` enums remain intentionally coarser | reopening `htt/src/common/*` would violate the converged write-scope choice for this packet | future `C/T/V` schema-tightening packet only if later validation proves the shared enums are genuinely insufficient |
+| 2026-04-21 | IM-08V | P1 | executable validation-registry wiring is now landed, but campaign statuses intentionally remain `warn` until D-lane export and manuscript packets consume the registry outputs and discharge the remaining no-claim ceilings | the packet closed live theorem/campaign/runbook/manifest resolution without promoting any science gate or fabricating generated export artifacts | `IM-09D-FIG`, `IM-10D-MAN` |
 
 ## Closed Template
 
@@ -92,3 +93,4 @@
 | 2026-04-21 | SK-01C | IM-04O | producer-side `AtlasEntryLite`, `FullCovMESReport`, and `DepartureReport` adapters now exist on the live BASS O-lane path |
 | 2026-04-21 | SK-05T | IM-05T | TSC source-bridge/budget/overlay services are no longer skeleton-only; theorem-backed numerics, label validation, and active-service assembly are live under `htt/tsc/*` |
 | 2026-04-21 | SK-05T | IM-05T | invalid-domain blocking, source/propagation split, and advisory BASS/HTT/MIO bundle generation are now exercised through a single TSC-local active-service path |
+| 2026-04-21 | SK-08V | IM-08V | validation campaigns, theorem/test entrypoints, manifest mirrors, and hostile-audit runbooks are now live-link checked and executable instead of prose-only registry skeletons |
