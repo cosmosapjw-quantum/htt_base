@@ -10,6 +10,7 @@ from common.contracts import DiscriminationMatrix
 from htt.integration.from_bass import ingest_ver2_directional_inputs
 from htt.infer.likelihood_scope_guard import DirectionalLikelihoodInput
 from workspace.contracts.preliminary_results import (
+    PreliminaryResultPack,
     load_exported_atlas_entry_lite,
     load_exported_discrimination_matrix,
     load_exported_observable_vector,
@@ -25,6 +26,7 @@ class PreliminaryDirectionalHandoff:
     likelihood_input: DirectionalLikelihoodInput
     discrimination_matrix: DiscriminationMatrix
     pack_ids: tuple[str, ...]
+    packs: tuple[PreliminaryResultPack, ...] = ()
 
     @property
     def support_profile(self) -> dict[str, float]:
@@ -103,6 +105,31 @@ class PreliminaryDirectionalHandoff:
             for key, value in self.discrimination_matrix.recommended_next_observable.items()
         }
 
+    @property
+    def pack_index(self) -> dict[str, PreliminaryResultPack]:
+        return {pack.pack_id: pack for pack in self.packs}
+
+    @property
+    def pack_claim_tiers(self) -> dict[str, str]:
+        return {
+            pack_id: pack.claim_tier
+            for pack_id, pack in sorted(self.pack_index.items())
+        }
+
+    @property
+    def pack_production_statuses(self) -> dict[str, str]:
+        return {
+            pack_id: pack.production_status
+            for pack_id, pack in sorted(self.pack_index.items())
+        }
+
+    @property
+    def pack_summary_lines(self) -> dict[str, tuple[str, ...]]:
+        return {
+            pack_id: tuple(pack.summary_lines)
+            for pack_id, pack in sorted(self.pack_index.items())
+        }
+
 
 def build_preliminary_directional_handoff(
     *,
@@ -136,6 +163,7 @@ def build_preliminary_directional_handoff(
         likelihood_input=likelihood_input,
         discrimination_matrix=discrimination_matrix,
         pack_ids=(pack_a.pack_id, pack_b.pack_id, pack_d.pack_id),
+        packs=(pack_a, pack_b, pack_d),
     )
 
 
