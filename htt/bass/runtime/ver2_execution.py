@@ -370,11 +370,8 @@ def _build_tier_b_executable_run(
 ) -> TierBExecutableRun:
     _stamp_native_result_solver_info(
         result=result,
-        runtime_controls=request.runtime_controls,
-        runtime_config=prepared.runtime_config,
-        family_realization=prepared.family_realization,
-        checkpoint_paths=prepared.checkpoint_paths,
-        restart_checkpoint_path=request.restart_checkpoint_path,
+        request=request,
+        prepared=prepared,
     )
     post_run = _assemble_tier_b_post_run_bundle(
         request=request,
@@ -413,20 +410,17 @@ def _execute_prepared_tier_b_runtime(
 def _stamp_native_result_solver_info(
     *,
     result,
-    runtime_controls: RuntimeControlBlock,
-    runtime_config,
-    family_realization: str,
-    checkpoint_paths: tuple[str, ...],
-    restart_checkpoint_path: str | None,
+    request: _TierBRuntimeRequest,
+    prepared: _TierBPreparedRuntimeContext,
 ) -> None:
-    result.solver_info["runtime_integrator_family"] = runtime_controls.integrator_family.value
-    result.solver_info["requested_integrator_family"] = runtime_controls.integrator_family.value
-    result.solver_info["resolved_solver_method"] = runtime_config.solver_method
-    result.solver_info["executor_realization"] = family_realization
-    result.solver_info["solver_family_realization"] = family_realization
-    result.solver_info["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
-    result.solver_info["checkpoint_paths"] = tuple(checkpoint_paths)
-    result.solver_info["restart_checkpoint_path"] = restart_checkpoint_path
+    result.solver_info["runtime_integrator_family"] = request.runtime_controls.integrator_family.value
+    result.solver_info["requested_integrator_family"] = request.runtime_controls.integrator_family.value
+    result.solver_info["resolved_solver_method"] = prepared.runtime_config.solver_method
+    result.solver_info["executor_realization"] = prepared.family_realization
+    result.solver_info["solver_family_realization"] = prepared.family_realization
+    result.solver_info["checkpoint_enabled"] = bool(request.runtime_controls.checkpoint.enabled)
+    result.solver_info["checkpoint_paths"] = tuple(prepared.checkpoint_paths)
+    result.solver_info["restart_checkpoint_path"] = request.restart_checkpoint_path
 
 
 @dataclass(frozen=True)
