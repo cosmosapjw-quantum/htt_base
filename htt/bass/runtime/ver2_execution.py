@@ -1684,9 +1684,9 @@ def execute_tier_b_solver(
         cutoff_campaign=cutoff_campaign,
     )
 
-    from bass.forward.ver2_solver_output import build_solver_core_output_from_native_result
+    from bass.forward.ver2_solver_output import build_solver_core_output_from_execution_bundle
 
-    solver_output = build_solver_core_output_from_native_result(
+    solver_output = build_solver_core_output_from_execution_bundle(
         manifest=manifest,
         bianchi_type=bianchi_type,
         result=result,
@@ -1695,11 +1695,9 @@ def execute_tier_b_solver(
         feature_flags=feature_flags,
         release=release,
         k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
+        runtime_trace=runtime_trace,
         thomson_mode="electron_frame_exact_wrapper",
         gate_registry=gate_registry,
-        mode_ops=mode_ops,
-        seed_pack=runtime_trace.seed_pack,
-        canonical_projection=canonical_projection,
     )
     solver_output.metadata["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
     solver_output.metadata["checkpoint_write_count"] = int(result.solver_info.get("checkpoint_write_count", 0))

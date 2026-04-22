@@ -1052,6 +1052,47 @@ def build_solver_core_output_from_native_result(
     return output
 
 
+def build_solver_core_output_from_execution_bundle(
+    *,
+    manifest: ArtifactManifest,
+    bianchi_type: str,
+    result: IntegrationResult,
+    species: SpeciesBackgroundRegistry,
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+    release: BassReleaseMetadata,
+    k_grid_mpc: np.ndarray,
+    runtime_trace,
+    gate_registry: Mapping[str, object] | None = None,
+    structure: StructureConstants | None = None,
+    propagator: SourcePropagatorConfig | None = None,
+    thomson_mode: str = "electron_frame_projected",
+    limber_eta_sp_sign: str = "integrator",
+    off_diagonal_strategy: str = "m_decoupled_blocks",
+) -> SolverCoreOutput:
+    """Build a VER2 observer-neutral output from an integrator-owned execution bundle."""
+
+    return build_solver_core_output_from_native_result(
+        manifest=manifest,
+        bianchi_type=bianchi_type,
+        result=result,
+        species=species,
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        release=release,
+        k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
+        structure=structure,
+        propagator=propagator,
+        thomson_mode=thomson_mode,
+        limber_eta_sp_sign=limber_eta_sp_sign,
+        off_diagonal_strategy=off_diagonal_strategy,
+        gate_registry=gate_registry,
+        mode_ops=runtime_trace.mode_ops,
+        seed_pack=runtime_trace.seed_pack,
+        canonical_projection=runtime_trace.canonical_projection,
+    )
+
+
 def build_solver_core_output_from_lowell_result(
     *,
     manifest: ArtifactManifest,
