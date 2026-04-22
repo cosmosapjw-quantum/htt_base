@@ -1296,6 +1296,12 @@ def _validate_tier_b_runtime_request(
         raise ValueError("checkpoint policy requires checkpoint_restart feature flag to be enabled")
 
 
+def _run_tier_b_runtime_request(request: _TierBRuntimeRequest) -> TierBExecutableRun:
+    _validate_tier_b_runtime_request(request=request)
+    prepared = _prepare_tier_b_runtime_context(request=request)
+    return _execute_prepared_tier_b_runtime(request=request, prepared=prepared)
+
+
 def _build_runtime_decision(
     *,
     feature_flags: SolverFeatureFlags,
@@ -1908,7 +1914,4 @@ def execute_tier_b_solver(
         cutoff_spec=cutoff_spec,
         restart_checkpoint_path=restart_checkpoint_path,
     )
-    _validate_tier_b_runtime_request(request=request)
-
-    prepared = _prepare_tier_b_runtime_context(request=request)
-    return _execute_prepared_tier_b_runtime(request=request, prepared=prepared)
+    return _run_tier_b_runtime_request(request)
