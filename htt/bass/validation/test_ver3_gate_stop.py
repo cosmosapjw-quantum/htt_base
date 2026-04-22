@@ -44,8 +44,13 @@ def test_hard_gate_before_fitting_blocks_when_output_split_missing() -> None:
         }
     )
     assert report["allowed"] is False
-    assert "output_split_gate" in report["missing_gates"]
-    assert report["gate_status"]["output_split_gate"] == "closed"
+    assert {
+        "tilt_boost_separation_gate",
+        "ic_provenance_gate",
+        "production_cutoff_gate",
+        "output_split_gate",
+    }.issubset(set(report["missing_gates"]))
+    assert report["gate_status"]["output_split_gate"] == "unavailable"
     assert report["gate_status"]["fitting_gate"] == "unavailable"
 
 

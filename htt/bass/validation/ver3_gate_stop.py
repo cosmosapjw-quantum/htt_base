@@ -26,8 +26,11 @@ GATE_LADDER: tuple[str, ...] = (
     "background_core_gate",
     "exact_thomson_gate",
     "visibility_history_gate",
+    "tilt_boost_separation_gate",
+    "ic_provenance_gate",
     "family_backend_gate",
     "hierarchy_layout_gate",
+    "production_cutoff_gate",
     "output_split_gate",
     "fitting_gate",
 )
@@ -298,8 +301,8 @@ def score_branch_readiness(gates: Mapping[str, object]) -> int:
         return 0
     if consecutive <= 3:
         return 4
-    if consecutive <= 9:
+    if consecutive <= 10:
         return 6
-    if consecutive <= 11:
+    if consecutive <= len(GATE_LADDER) - 1:
         return 8
     return 10

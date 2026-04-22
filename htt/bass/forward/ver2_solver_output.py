@@ -39,6 +39,7 @@ from bass.recombination.reionization import compute_reionization_tau
 from bass.species.base import SpeciesLabel
 from bass.species.massive_neutrino import MassiveNeutrinoBackground
 from bass.species.registry import SpeciesBackgroundRegistry
+from bass.validation import summarize_gate_status
 
 __all__ = [
     "BassReleaseMetadata",
@@ -180,6 +181,36 @@ def _propagator_readiness(
     if propagator.kernel_family == "bianchi_i_matrix_exact":
         return "exact"
     if propagator.kernel_family == "flrw_scalar_validation":
+        return "contract_only_unavailable"
+    return "approximate_family_kernel"
+
+
+def _native_propagator_readiness(
+    *,
+    propagator: SourcePropagatorConfig,
+    feature_flags: SolverFeatureFlags,
+    gate_registry: Mapping[str, object] | None,
+    mode_ops: object | None,
+) -> str:
+    fallback = _propagator_readiness(propagator, feature_flags)
+    if mode_ops is None:
+        return fallback
+    gate_status = {} if gate_registry is None else summarize_gate_status(gate_registry)
+    required_gates = (
+        "tilt_boost_separation_gate",
+        "ic_provenance_gate",
+        "family_backend_gate",
+        "hierarchy_layout_gate",
+    )
+    if gate_status and any(gate_status.get(gate) != "open" for gate in required_gates):
+        return "contract_only_unavailable"
+    exact_kernel = str(getattr(mode_ops, "operator_kernel_family", "")) == "bianchi_i_matrix_exact"
+    exact_layout = bool(
+        getattr(mode_ops, "layout_metadata", {}).get("exact_family_operator_available", False)
+    )
+    if fallback == "exact" and exact_kernel and exact_layout:
+        return "exact"
+    if feature_flags.source_propagator is FeatureStatus.DISABLED:
         return "contract_only_unavailable"
     return "approximate_family_kernel"
 
@@ -559,12 +590,16 @@ def _build_reconstructed_channel_payload(
     coefficient_representation: str,
     eta_final_mpc: float,
     ell_max: int,
+    component_status: str,
+    available: bool,
 ) -> dict[str, Any]:
     return {
         "representation": representation,
         "coefficient_representation": coefficient_representation,
         "ell_max": int(ell_max),
         "eta_final_mpc": float(eta_final_mpc),
+        "component_status": component_status,
+        "available": bool(available),
         "quadrature_rule": "gauss_legendre_x_uniform_phi_tensor_product",
         "quadrature_exactness_contract": f"polynomial_exact_up_to_L={int(ell_max)}",
         "values": np.asarray(coefficient_values, dtype=np.float64),
@@ -579,6 +614,7 @@ def _build_reconstructed_payloads(
     *,
     coefficient_representation: str,
     angular_representation: str,
+    b_mode_runtime_available: bool = False,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     state = _final_slice_radiation_state(result)
     directions, weights = _tensor_product_sphere_rule(int(result.L_max))
@@ -595,6 +631,8 @@ def _build_reconstructed_payloads(
             coefficient_representation=coefficient_representation,
             eta_final_mpc=eta_final,
             ell_max=ell_max,
+            component_status="runtime_evolved",
+            available=True,
         ),
         _build_reconstructed_channel_payload(
             np.asarray(result.photon_E_tower[-1], dtype=np.float64),
@@ -605,6 +643,8 @@ def _build_reconstructed_payloads(
             coefficient_representation=coefficient_representation,
             eta_final_mpc=eta_final,
             ell_max=ell_max,
+            component_status="runtime_evolved",
+            available=True,
         ),
         _build_reconstructed_channel_payload(
             np.zeros_like(np.asarray(result.photon_E_tower[-1], dtype=np.float64)),
@@ -615,6 +655,12 @@ def _build_reconstructed_payloads(
             coefficient_representation=coefficient_representation,
             eta_final_mpc=eta_final,
             ell_max=ell_max,
+            component_status=(
+                "runtime_evolved"
+                if b_mode_runtime_available
+                else "zero_filled_layout_contract_only"
+            ),
+            available=bool(b_mode_runtime_available),
         ),
     )
 
@@ -665,6 +711,8 @@ def build_solver_core_output_from_native_result(
     limber_eta_sp_sign: str = "integrator",
     off_diagonal_strategy: str = "m_decoupled_blocks",
     gate_registry: Mapping[str, object] | None = None,
+    mode_ops: object | None = None,
+    seed_pack: object | None = None,
 ) -> SolverCoreOutput:
     """Build an observer-neutral VER2 output from the native Tier-B core."""
     if runtime_controls.tier is not SolverTier.TIER_B_PSTF:
@@ -725,13 +773,14 @@ def build_solver_core_output_from_native_result(
         result,
         coefficient_representation="ver2_native_pstf_final_slice",
         angular_representation="ver2_native_pstf_sphere_reconstruction",
+        b_mode_runtime_available=False,
     )
     tilt_direction = tuple(float(x) for x in result.config.tilt_direction)
     off_axis_supported = bool(
         abs(float(result.config.tilt_rapidity)) > 0.0
         and not is_axis_aligned(tilt_direction)
     )
-    return build_solver_core_output(
+    output = build_solver_core_output(
         manifest=manifest,
         bianchi_type=bianchi_type,
         tilt_enabled=bool(abs(result.config.tilt_rapidity) > 0.0),
@@ -801,15 +850,52 @@ def build_solver_core_output_from_native_result(
             "neutrino_hierarchy_mode": str(result.solver_info.get("neutrino_hierarchy_mode", "reduced_summary_only")),
             "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
             "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
+            "seed_factory_owner": str(result.solver_info.get("seed_factory_owner", "legacy_runtime_seed")),
+            "seed_factory_mode": result.solver_info.get("seed_factory_mode"),
+            "seed_chart": result.solver_info.get("seed_chart"),
+            "seed_family": result.solver_info.get("seed_family"),
+            "seed_branch": result.solver_info.get("seed_branch"),
+            "seed_pack_metadata": dict(result.solver_info.get("seed_pack_metadata", {})),
+            "seed_pack_normalization": dict(result.solver_info.get("seed_pack_normalization", {})),
             "startup_manifold_applied": bool(result.solver_info.get("startup_manifold_applied", False)),
             "off_axis_support": off_axis_supported,
             "axis_aligned_tilt_support": True,
             "off_axis_fallback_applied": False,
             "off_axis_block_reason": None if off_axis_supported else "off_axis_not_closed",
+            "canonical_sector_order_contract": ("ph_I", "ph_E", "ph_B", "nu_I", "baryon", "cdm", "src"),
+            "runtime_resolved_sector_order": ("ph_I", "ph_E", "nu_I"),
+            "b_mode_runtime_available": False,
+            "b_mode_payload_status": "zero_filled_layout_contract_only",
+            "layout_contract_consumed": bool(mode_ops is not None),
+            "layout_mode_labels": []
+            if mode_ops is None
+            else list(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [])),
+            "layout_sector_order": []
+            if mode_ops is None
+            else list(getattr(mode_ops, "layout_metadata", {}).get("sector_order", [])),
+            "layout_operator_kernel_family": None
+            if mode_ops is None
+            else str(getattr(mode_ops, "operator_kernel_family", "")),
+            "seed_provenance_mode": None
+            if mode_ops is None
+            else str(getattr(mode_ops, "seed_provenance_mode", "")),
+            "ic_provenance_status": None
+            if seed_pack is None
+            else str(getattr(seed_pack, "seed_mode", "")),
             **_neutrino_runtime_metadata(species),
             **source_builder_metadata,
         },
     )
+    readiness = _native_propagator_readiness(
+        propagator=live_propagator.config,
+        feature_flags=feature_flags,
+        gate_registry=gate_registry,
+        mode_ops=mode_ops,
+    )
+    output.metadata["propagator_readiness"] = readiness
+    output.metadata["propagator_exactness"] = readiness
+    output.metadata["propagator_ready"] = readiness != "contract_only_unavailable"
+    return output
 
 
 def build_solver_core_output_from_lowell_result(

@@ -66,6 +66,7 @@ from bass.hierarchy.seed_compatibility import (
     project_packed_regular_seed,
 )
 from bass.hierarchy.boost_kernel import is_axis_aligned
+from bass.los.family_backend_protocol import FamilyBackend, SeedPack, SeedRequest
 from bass.perturbation.regular_adiabatic_ic import (
     make_camb_regular_adiabatic_seed,
     unpack_camb_regular_adiabatic_seed,
@@ -75,6 +76,7 @@ from bass.runtime.canonical_decision import CanonicalDecision
 from bass.species.base import SpeciesLabel
 from bass.species.registry import SpeciesBackgroundRegistry
 from bass.species.tilted import TiltedSpeciesBackground, rapidity_to_velocity
+from bass.ver3_contracts import BackgroundState, background_interpolator
 
 __all__ = [
     "Ver2TierBIntegrator",
@@ -105,10 +107,16 @@ def _interp_matrix(eta_grid: np.ndarray, values: np.ndarray, eta: float) -> np.n
 class _BackgroundTableAdapter:
     """Minimal `FLRWBackgroundTable`-like adapter backed by S1 history."""
 
-    def __init__(self, background_monitor: BackgroundEvolutionResult) -> None:
-        self._eta = np.asarray(background_monitor.eta, dtype=np.float64)
-        self._a = np.asarray(background_monitor.a, dtype=np.float64)
-        self._H = np.asarray(background_monitor.H, dtype=np.float64)
+    def __init__(self, background_interp) -> None:
+        self._eta = np.asarray(background_interp.eta_grid, dtype=np.float64)
+        self._a = np.array(
+            [float(np.exp(state.alpha)) for state in background_interp.states],
+            dtype=np.float64,
+        )
+        self._H = np.array(
+            [float(state.theta) / 3.0 for state in background_interp.states],
+            dtype=np.float64,
+        )
 
     def interp_a(self, eta: float | np.ndarray) -> float | np.ndarray:
         eta_arr = np.asarray(eta, dtype=np.float64)
@@ -140,11 +148,17 @@ class _TetradStateAdapter:
     shear, so we convert here once.
     """
 
-    def __init__(self, background_monitor: BackgroundEvolutionResult) -> None:
-        eta = np.asarray(background_monitor.eta, dtype=np.float64)
-        a = np.asarray(background_monitor.a, dtype=np.float64)
-        sigma = np.asarray(background_monitor.sigma_tensor, dtype=np.float64)
-        ricci = np.asarray(background_monitor.initial_conditions.geometry.ricci_pstf, dtype=np.float64)
+    def __init__(self, background_interp, ricci_pstf: np.ndarray) -> None:
+        eta = np.asarray(background_interp.eta_grid, dtype=np.float64)
+        a = np.array(
+            [float(np.exp(state.alpha)) for state in background_interp.states],
+            dtype=np.float64,
+        )
+        sigma = np.stack(
+            [np.asarray(state.sigma_AB, dtype=np.float64) for state in background_interp.states],
+            axis=0,
+        )
+        ricci = np.asarray(ricci_pstf, dtype=np.float64)
         self.eta = eta
         self.sigma_tensor = sigma * a[:, None, None]
         self.aniso_3_curvature = (
@@ -152,6 +166,52 @@ class _TetradStateAdapter:
             if not np.any(ricci)
             else ricci
         )
+
+
+def _proper_time_grid(background_monitor: BackgroundEvolutionResult) -> np.ndarray:
+    N = np.asarray(background_monitor.N, dtype=np.float64)
+    H = np.maximum(np.asarray(background_monitor.H, dtype=np.float64), 1.0e-30)
+    t = np.zeros_like(N)
+    if N.size > 1:
+        dN = np.diff(N)
+        dt_dN = 1.0 / H
+        t[1:] = np.cumsum(0.5 * (dt_dN[:-1] + dt_dN[1:]) * dN)
+    return t
+
+
+def _build_background_interpolator(
+    background_monitor: BackgroundEvolutionResult,
+    *,
+    backend: FamilyBackend,
+):
+    t_grid = _proper_time_grid(background_monitor)
+    states = tuple(
+        BackgroundState(
+            t=float(t_grid[i]),
+            alpha=float(np.log(max(background_monitor.a[i], 1.0e-30))),
+            gamma_AB=np.eye(3, dtype=np.float64),
+            theta=3.0 * float(background_monitor.H[i]),
+            sigma_AB=np.asarray(background_monitor.sigma_tensor[i], dtype=np.float64),
+            family_spec=backend.family_spec,
+            species_hat={
+                "rho": float(background_monitor.rho[i]),
+                "p": float(background_monitor.p[i]),
+                "q": np.asarray(background_monitor.q[i], dtype=np.float64),
+                "pi": np.asarray(background_monitor.pi[i], dtype=np.float64),
+            },
+            species_tilt={
+                "rapidity": float(background_monitor.tilt_rapidity[i]),
+                "velocity": np.asarray(background_monitor.tilt_velocity[i], dtype=np.float64),
+            },
+            metadata={
+                "branch": str(background_monitor.branch),
+                "matter_model_tag": str(background_monitor.matter_model_tag),
+                "eta": float(background_monitor.eta[i]),
+            },
+        )
+        for i in range(len(background_monitor.eta))
+    )
+    return background_interpolator(t_grid, states)
 
 
 def _sigma_pm_from_conformal_sigma(sigma_ab: np.ndarray) -> tuple[float, float]:
@@ -259,6 +319,7 @@ class _SeededInitialState:
     seed_k_comoving: float
     seed_injection_mode: str
     velocity_scale: float
+    seed_pack: SeedPack
 
     def __post_init__(self) -> None:
         if self.neutrino_tower.L != self.photon_T.L:
@@ -408,6 +469,7 @@ class Ver2TierBIntegrator:
         config: IntegratorConfig,
         species: SpeciesBackgroundRegistry,
         *,
+        backend: FamilyBackend,
         background_monitor: BackgroundEvolutionResult,
         visibility_source,
         canonical_decision: CanonicalDecision,
@@ -415,11 +477,19 @@ class Ver2TierBIntegrator:
     ) -> None:
         self.config = config
         self.species = species
+        self.backend = backend
         self.background_monitor = background_monitor
         self.visibility_source = visibility_source
         self.canonical_decision = canonical_decision
-        self.bg_table = _BackgroundTableAdapter(background_monitor)
-        self.tetrad_state = _TetradStateAdapter(background_monitor)
+        self.background_interp = _build_background_interpolator(
+            background_monitor,
+            backend=backend,
+        )
+        self.bg_table = _BackgroundTableAdapter(self.background_interp)
+        self.tetrad_state = _TetradStateAdapter(
+            self.background_interp,
+            np.asarray(background_monitor.initial_conditions.geometry.ricci_pstf, dtype=np.float64),
+        )
         self.closure = (
             config.closure_strategy
             if config.closure_strategy is not None
@@ -442,6 +512,7 @@ class Ver2TierBIntegrator:
         self.startup_gate: StartupGateDecision | None = None
         self.seed_projection: SeedConstraintProjection | None = None
         self.startup_state: QuadrupoleStartupState | None = None
+        self.seed_pack: SeedPack | None = None
         self.seed_injection_mode: str = "uninitialized"
         self.seed_velocity_scale: float = 1.0
         _ = sample_hierarchy_background(
@@ -479,6 +550,7 @@ class Ver2TierBIntegrator:
         self.startup_gate = seeded.startup_gate
         self.seed_projection = seeded.seed_projection
         self.startup_state = seeded.startup_state
+        self.seed_pack = seeded.seed_pack
         self.seed_injection_mode = seeded.seed_injection_mode
         self.seed_velocity_scale = seeded.velocity_scale
         return _pack_radiation_state(
@@ -501,24 +573,49 @@ class Ver2TierBIntegrator:
         )
 
     def _build_seeded_initial_state(self) -> _SeededInitialState:
+        branch = "tilted" if abs(float(self.config.tilt_rapidity)) > 0.0 else "orthogonal"
+        intrinsic_family = self.backend.family_spec.family in {"II", "III", "IV", "VI_0", "VI_h", "VIII"}
+        seed_mode = (
+            "collocation_projected"
+            if intrinsic_family
+            else ("boosted_electron_frame" if branch == "tilted" else "flrw_like_regular")
+        )
+        seed_pack = self.backend.seed_factory(
+            SeedRequest(
+                branch=branch,
+                seed_mode=seed_mode,
+                amplitude_reference=max(self.seed_k_comoving, 1.0e-30),
+                native_label=str(self.backend.required_metadata()["native_mode_labels"]),
+                metadata={
+                    "runtime_owner": "ver2_tier_b_native",
+                    "seed_numeric_bridge": (
+                        "family_collocation_projection_bridge"
+                        if intrinsic_family
+                        else "backend_anchor_regular_seed"
+                    ),
+                    "tilt_enabled": bool(branch == "tilted"),
+                },
+            )
+        )
         seed_state = make_camb_regular_adiabatic_seed(
             k_comoving=max(self.seed_k_comoving, 0.0),
             eta_initial=float(self.config.eta_initial_mpc),
             a_initial=float(self.background_monitor.a[0]),
             L_max=self.config.L_max,
         )
-        injection_mode = "orthogonal_regular_adiabatic_seed"
-        if abs(float(self.config.tilt_rapidity)) > 0.0:
+        injection_mode = str(seed_pack.seed_mode)
+        if branch == "tilted":
             seed_state = apply_tilted_boost_seed_rule(
                 seed_state,
                 beta=float(self.config.tilt_rapidity),
                 v_hat_e=tuple(float(x) for x in self._direction),
             )
-            injection_mode = (
+            boost_mode = (
                 "axisymmetric_tilted_regular_adiabatic_seed"
                 if is_axis_aligned(tuple(float(x) for x in self._direction))
                 else "offaxis_tilted_regular_adiabatic_seed"
             )
+            injection_mode = f"{injection_mode}+{boost_mode}"
 
         tilt_speed = rapidity_to_velocity(float(self.config.tilt_rapidity))
         projected_seed: PackedRegularSeedInjection = project_packed_regular_seed(
@@ -560,6 +657,7 @@ class Ver2TierBIntegrator:
             seed_k_comoving=max(self.seed_k_comoving, 0.0),
             seed_injection_mode=f"{injection_mode}+{projected_seed.injection_mode}",
             velocity_scale=float(projected_seed.velocity_scale),
+            seed_pack=seed_pack,
         )
 
     def _resolve_startup_state(
@@ -1151,6 +1249,13 @@ class Ver2TierBIntegrator:
             "seed_k_comoving": float(self.seed_k_comoving),
             "seed_injection_mode": str(self.seed_injection_mode),
             "seed_velocity_scale": float(self.seed_velocity_scale),
+            "seed_factory_owner": "family_backend.seed_factory",
+            "seed_factory_mode": None if self.seed_pack is None else str(self.seed_pack.seed_mode),
+            "seed_chart": None if self.seed_pack is None else str(self.seed_pack.chart),
+            "seed_family": None if self.seed_pack is None else str(self.seed_pack.family),
+            "seed_branch": None if self.seed_pack is None else str(self.seed_pack.branch),
+            "seed_pack_metadata": {} if self.seed_pack is None else dict(self.seed_pack.metadata),
+            "seed_pack_normalization": {} if self.seed_pack is None else dict(self.seed_pack.normalization),
             "startup_manifold_applied": bool(self.startup_state is not None),
             "startup_gate_selected": bool(self.startup_gate.startup_selected if self.startup_gate is not None else False),
             "neutrino_hierarchy_mode": "full_pstf_with_reduced_summary_export",

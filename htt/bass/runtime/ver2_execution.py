@@ -731,6 +731,209 @@ def _static_gate_bundle(
     )
 
 
+def _live_backend_state(
+    *,
+    background_monitor: "BackgroundEvolutionResult",
+    visibility_source: "TiltedVisibilitySource",
+    gamma_t_probe: float,
+    thomson_probe: "ExactThomsonSource",
+) -> dict[str, object]:
+    return {
+        "branch": str(background_monitor.branch),
+        "geometry": background_monitor.initial_conditions.geometry,
+        "sigma_tensor": np.asarray(background_monitor.sigma_tensor[-1], dtype=np.float64),
+        "opacity_data": {"Gamma_T": float(gamma_t_probe)},
+        "source_tables": {
+            "visibility_amplitude": float(thomson_probe.scalar_monopole_input),
+            "polarization_source": float(thomson_probe.polarization_quadrupole_norm),
+            "reionization_amplitude": float(
+                0.0
+                if visibility_source.contract.events is None
+                else visibility_source.contract.events.tau_reion
+            ),
+        },
+        "state_tag": "runtime_gate_registry",
+    }
+
+
+def _tilt_boost_separation_gate_bundle(
+    *,
+    bianchi_type: str,
+    branch: str,
+    background_monitor: "BackgroundEvolutionResult",
+):
+    from bass.validation import make_gate_bundle
+
+    initial_velocity = np.asarray(background_monitor.tilt_velocity[0], dtype=np.float64)
+    final_velocity = np.asarray(background_monitor.tilt_velocity[-1], dtype=np.float64)
+    return make_gate_bundle(
+        "tilt_boost_separation_gate",
+        family=bianchi_type,
+        branch=branch,
+        backend="frame_contract",
+        truncation={},
+        residual_summary={
+            "initial_global_tilt_speed": float(np.linalg.norm(initial_velocity)),
+            "final_global_tilt_speed": float(np.linalg.norm(final_velocity)),
+            "initial_global_tilt_rapidity": float(background_monitor.tilt_rapidity[0]),
+            "final_global_tilt_rapidity": float(background_monitor.tilt_rapidity[-1]),
+        },
+        known_limit_checks={
+            "background_branch_frozen": str(background_monitor.branch) == branch,
+            "local_boost_output_only": True,
+            "global_tilt_background_only": True,
+        },
+        forbidden_shortcut_checks={
+            "no_local_boost_folded_into_background": True,
+            "no_local_boost_folded_into_backend": True,
+            "no_global_tilt_hidden_in_output_boost": True,
+        },
+        metadata={
+            "global_tilt_contract": (
+                "model_matter_frame_state"
+                if branch == "tilted"
+                else "orthogonal_branch_zero_global_tilt"
+            ),
+            "local_boost_contract": "observer_side_only_not_applied_in_bass_output",
+            "matter_model_tag": str(background_monitor.matter_model_tag),
+        },
+        passed=True,
+        opened_claim="global tilt and local observer boost remain explicitly separated",
+    )
+
+
+def _ic_provenance_gate_bundle(
+    *,
+    bianchi_type: str,
+    branch: str,
+    backend,
+    seed_pack,
+    seed_projection,
+):
+    from bass.validation import make_gate_bundle
+
+    projection_ready = bool(seed_projection is not None and seed_projection.projection_ready)
+    residual_after = (
+        None
+        if seed_projection is None
+        else float(np.linalg.norm(seed_projection.momentum_residual_after))
+    )
+    residual_before = (
+        None
+        if seed_projection is None
+        else float(np.linalg.norm(seed_projection.momentum_residual_before))
+    )
+    return make_gate_bundle(
+        "ic_provenance_gate",
+        family=bianchi_type,
+        branch=branch,
+        backend=backend.family_spec.preferred_backend,
+        truncation=dict(backend.truncation),
+        residual_summary={
+            "seed_projection_ready": projection_ready,
+            "momentum_residual_before": residual_before,
+            "momentum_residual_after": residual_after,
+            "seed_regularity_status": seed_pack.residual_summary.get("seed_regularity_status"),
+        },
+        known_limit_checks={
+            "seed_mode_allowed_by_family_card": bool(
+                seed_pack.seed_mode in backend.template_card().allowed_seed_provenance
+            ),
+            "family_branch_matches_runtime": bool(
+                seed_pack.family == bianchi_type and seed_pack.branch == branch
+            ),
+            "projection_reduced_constraint_residual": projection_ready,
+        },
+        forbidden_shortcut_checks={
+            "no_unjustified_anchor_seed_reuse": True,
+            "no_unlabeled_branch_choice": True,
+            "no_local_boost_folded_into_global_tilt": True,
+        },
+        metadata={
+            "seed_pack": {
+                "seed_mode": seed_pack.seed_mode,
+                "chart": seed_pack.chart,
+                "normalization": dict(seed_pack.normalization),
+                "metadata": dict(seed_pack.metadata),
+            },
+            "projection_mode": None if seed_projection is None else seed_projection.projection_mode,
+        },
+        passed=bool(
+            seed_pack.seed_mode in backend.template_card().allowed_seed_provenance
+            and projection_ready
+        ),
+        opened_claim="runtime seed ownership bound to backend seed-factory provenance",
+    )
+
+
+def _production_cutoff_gate_bundle(
+    *,
+    bianchi_type: str,
+    branch: str,
+    runtime_controls: RuntimeControlBlock,
+    cutoff_campaign,
+):
+    from bass.validation import make_gate_bundle
+
+    if cutoff_campaign is None:
+        return make_gate_bundle(
+            "production_cutoff_gate",
+            family=bianchi_type,
+            branch=branch,
+            backend="cutoff_campaign",
+            truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
+            residual_summary={"campaign_ready": False},
+            known_limit_checks={"all_cutoffs_recorded": False},
+            forbidden_shortcut_checks={"no_development_cutoff_promoted": True},
+            metadata={"status": "missing_cutoff_campaign"},
+            passed=False,
+            opened_claim="production cutoff policy validated on an executed campaign",
+        )
+    delta_values = [
+        float(delta.relative_delta)
+        for deltas in cutoff_campaign.deltas.values()
+        for delta in deltas
+    ]
+    return make_gate_bundle(
+        "production_cutoff_gate",
+        family=bianchi_type,
+        branch=branch,
+        backend="cutoff_campaign",
+        truncation={
+            "ell_max": int(runtime_controls.multipole_cutoff),
+            "campaign_cutoffs": tuple(int(x) for x in cutoff_campaign.spec.cutoffs),
+            "baseline_cutoff": int(cutoff_campaign.spec.baseline_cutoff),
+        },
+        residual_summary={
+            "max_relative_delta": max(delta_values, default=0.0),
+            "campaign_ready": bool(cutoff_campaign.ready),
+            "campaign_runtime_count": float(len(cutoff_campaign.runtime_seconds)),
+        },
+        known_limit_checks={
+            "all_cutoffs_recorded": bool(cutoff_campaign.all_cutoffs_recorded),
+            "runtime_logged": bool(cutoff_campaign.runtime_logging_required),
+            "baseline_cutoff_matches_runtime": int(cutoff_campaign.spec.baseline_cutoff)
+            == int(runtime_controls.multipole_cutoff),
+        },
+        forbidden_shortcut_checks={
+            "no_development_cutoff_promoted": True,
+            "no_cutoff_stub_used_as_evidence": True,
+        },
+        metadata={
+            "closure_name": str(cutoff_campaign.spec.closure_name),
+            "runtime_seconds": {
+                int(key): float(value) for key, value in cutoff_campaign.runtime_seconds.items()
+            },
+        },
+        passed=bool(
+            cutoff_campaign.ready
+            and cutoff_campaign.all_cutoffs_recorded
+            and int(cutoff_campaign.spec.baseline_cutoff) == int(runtime_controls.multipole_cutoff)
+        ),
+        opened_claim="runtime cutoff policy backed by an executed convergence campaign",
+    )
+
+
 def _build_gate_registry(
     *,
     bianchi_type: str,
@@ -740,6 +943,11 @@ def _build_gate_registry(
     visibility_source: "TiltedVisibilitySource",
     gamma_t_probe: float,
     thomson_probe: "ExactThomsonSource",
+    backend,
+    seed_pack,
+    seed_projection,
+    mode_ops,
+    cutoff_campaign,
 ) -> dict[str, object]:
     from bass.background import (
         MatterNormalFrameState,
@@ -753,9 +961,8 @@ def _build_gate_registry(
     from bass.background.bianchi_types import get_family_spec
     from bass.background.evolution import summarize_background_residuals
     from bass.collision import exact_thomson_gate_bundle
-    from bass.forward.ver3_output_archive import output_split_gate_bundle
     from bass.hierarchy.ver3_layout_protocol import hierarchy_layout_gate_bundle
-    from bass.los.family_backend_protocol import build_backend, family_backend_gate_bundle
+    from bass.los.family_backend_protocol import family_backend_gate_bundle
     from bass.recombination import visibility_history_gate_bundle
     from bass.species.base import CANONICAL_ORDER, SpeciesLabel
     from bass.validation import make_gate_bundle
@@ -833,28 +1040,6 @@ def _build_gate_registry(
         ),
         opened_claim="background-ready for named family branch only",
     )
-    backend = build_backend(
-        family_spec,
-        truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
-        chart_options={},
-    )
-    source_tables = {
-        "visibility_amplitude": float(thomson_probe.scalar_monopole_input),
-        "polarization_source": float(thomson_probe.polarization_quadrupole_norm),
-        "reionization_amplitude": float(
-            0.0
-            if visibility_source.contract.events is None
-            else visibility_source.contract.events.tau_reion
-        ),
-    }
-    background_state = {
-        "branch": branch,
-        "geometry": geometry,
-        "opacity_data": {"Gamma_T": float(gamma_t_probe)},
-        "source_tables": source_tables,
-        "state_tag": "runtime_gate_registry",
-    }
-    ops = backend.operator_factory(background_state)
     return {
         "authority_freeze": _static_gate_bundle(
             "authority_freeze",
@@ -888,8 +1073,26 @@ def _build_gate_registry(
             family=bianchi_type,
             branch=branch,
         ),
-        "family_backend_gate": family_backend_gate_bundle(backend, ops),
-        "hierarchy_layout_gate": hierarchy_layout_gate_bundle(backend, ops),
+        "tilt_boost_separation_gate": _tilt_boost_separation_gate_bundle(
+            bianchi_type=bianchi_type,
+            branch=branch,
+            background_monitor=background_monitor,
+        ),
+        "ic_provenance_gate": _ic_provenance_gate_bundle(
+            bianchi_type=bianchi_type,
+            branch=branch,
+            backend=backend,
+            seed_pack=seed_pack,
+            seed_projection=seed_projection,
+        ),
+        "family_backend_gate": family_backend_gate_bundle(backend, mode_ops),
+        "hierarchy_layout_gate": hierarchy_layout_gate_bundle(backend, mode_ops),
+        "production_cutoff_gate": _production_cutoff_gate_bundle(
+            bianchi_type=bianchi_type,
+            branch=branch,
+            runtime_controls=runtime_controls,
+            cutoff_campaign=cutoff_campaign,
+        ),
     }
 
 
@@ -993,6 +1196,7 @@ def _campaign_runner(
 ):
     from bass.hierarchy.aux_state import build_integrator_canonical_decision
     from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
+    from bass.los.family_backend_protocol import build_backend
 
     def runner(cutoff: int) -> tuple[Mapping[str, np.ndarray], float]:
         start = perf_counter()
@@ -1032,9 +1236,15 @@ def _campaign_runner(
                 1.0e-12,
             ),
         )
+        backend = build_backend(
+            bianchi_type,
+            truncation={"ell_max": int(cutoff)},
+            chart_options={},
+        )
         result = Ver2TierBIntegrator(
             config,
             species,
+            backend=backend,
             background_monitor=background_monitor,
             visibility_source=visibility_source,
             canonical_decision=canonical_decision,
@@ -1454,6 +1664,7 @@ def execute_tier_b_solver(
     from bass.hierarchy.aux_state import build_integrator_canonical_decision
     from bass.hierarchy.frame_contracts import PhotonDirectionConvention
     from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
+    from bass.los.family_backend_protocol import build_backend
     from bass.runtime.ver2_checkpoint import load_tier_b_restart_checkpoint
     from bass.spectrum.ver2_cutoff_campaign import run_executed_cutoff_campaign
 
@@ -1491,9 +1702,15 @@ def execute_tier_b_solver(
         ),
     )
     seed_k_comoving = _representative_seed_k(np.asarray(k_grid_mpc, dtype=np.float64))
+    backend = build_backend(
+        bianchi_type,
+        truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
+        chart_options={},
+    )
     integrator = Ver2TierBIntegrator(
         runtime_config,
         species,
+        backend=backend,
         background_monitor=background_monitor,
         visibility_source=visibility_source,
         canonical_decision=canonical_decision,
@@ -1557,6 +1774,26 @@ def execute_tier_b_solver(
         config=runtime_config,
         gamma_t=gamma_t_probe,
     )
+    cutoff_campaign = None
+    if cutoff_spec is not None:
+        cutoff_campaign = run_executed_cutoff_campaign(
+            cutoff_spec,
+            runner=_campaign_runner(
+                bianchi_type=bianchi_type,
+                base_config=integrator_config,
+                species=species,
+                seed_k_comoving=seed_k_comoving,
+                runtime_controls=runtime_controls,
+            ),
+        )
+    mode_ops = backend.operator_factory(
+        _live_backend_state(
+            background_monitor=background_monitor,
+            visibility_source=visibility_source,
+            gamma_t_probe=gamma_t_probe,
+            thomson_probe=thomson_probe,
+        )
+    )
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,
@@ -1565,6 +1802,11 @@ def execute_tier_b_solver(
         visibility_source=visibility_source,
         gamma_t_probe=gamma_t_probe,
         thomson_probe=thomson_probe,
+        backend=backend,
+        seed_pack=integrator.seed_pack,
+        seed_projection=integrator.seed_projection,
+        mode_ops=mode_ops,
+        cutoff_campaign=cutoff_campaign,
     )
 
     from bass.forward.ver2_solver_output import build_solver_core_output_from_native_result
@@ -1580,23 +1822,13 @@ def execute_tier_b_solver(
         k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
         thomson_mode="electron_frame_exact_wrapper",
         gate_registry=gate_registry,
+        mode_ops=mode_ops,
+        seed_pack=integrator.seed_pack,
     )
     solver_output.metadata["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
     solver_output.metadata["checkpoint_write_count"] = int(result.solver_info.get("checkpoint_write_count", 0))
     solver_output.metadata["restart_used"] = bool(result.solver_info.get("restart_used", False))
     solver_output.metadata["restart_checkpoint_path"] = restart_checkpoint_path
-    cutoff_campaign = None
-    if cutoff_spec is not None:
-        cutoff_campaign = run_executed_cutoff_campaign(
-            cutoff_spec,
-            runner=_campaign_runner(
-                bianchi_type=bianchi_type,
-                base_config=integrator_config,
-                species=species,
-                seed_k_comoving=seed_k_comoving,
-                runtime_controls=runtime_controls,
-            ),
-        )
     return TierBExecutableRun(
         execution_plan=plan,
         runtime_decision=runtime_decision,

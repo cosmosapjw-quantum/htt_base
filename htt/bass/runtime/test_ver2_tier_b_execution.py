@@ -256,6 +256,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["executor_realization"] == "native_imex_midpoint_bdf_split"
     assert run.integration_result.solver_info["solver_family_realization"] == "native_imex_midpoint_bdf_split"
     assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
+    assert run.integration_result.solver_info["seed_factory_owner"] == "family_backend.seed_factory"
+    assert run.integration_result.solver_info["seed_factory_mode"] == "flrw_like_regular"
+    assert run.integration_result.solver_info["seed_family"] == "I"
+    assert run.integration_result.solver_info["seed_branch"] == "orthogonal"
     assert run.integration_result.solver_info["startup_manifold_applied"] is True
     assert run.solver_output.metadata["propagator_ready"] is True
     assert run.solver_output.metadata["propagator_readiness"] == "exact"
@@ -271,6 +275,25 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["requested_integrator_family"] == "imex_split"
     assert run.solver_output.metadata["resolved_solver_method"] == "IMEX_MIDPOINT_BDF"
     assert run.solver_output.metadata["executor_realization"] == "native_imex_midpoint_bdf_split"
+    assert run.solver_output.metadata["seed_factory_owner"] == "family_backend.seed_factory"
+    assert run.solver_output.metadata["seed_factory_mode"] == "flrw_like_regular"
+    assert run.solver_output.metadata["layout_contract_consumed"] is True
+    assert run.solver_output.metadata["layout_sector_order"] == [
+        "ph_I",
+        "ph_E",
+        "ph_B",
+        "nu_I",
+        "baryon",
+        "cdm",
+        "src",
+    ]
+    assert run.solver_output.metadata["runtime_resolved_sector_order"] == (
+        "ph_I",
+        "ph_E",
+        "nu_I",
+    )
+    assert run.solver_output.metadata["b_mode_runtime_available"] is False
+    assert run.solver_output.metadata["b_mode_payload_status"] == "zero_filled_layout_contract_only"
     assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
     assert run.solver_output.metadata["off_axis_support"] is False
     assert run.solver_output.metadata["off_axis_fallback_applied"] is False
@@ -288,6 +311,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.cutoff_campaign is not None
     assert set(run.cutoff_campaign.runtime_seconds) == {4, 6}
     assert run.cutoff_campaign.deltas[4][0].relative_delta == 0.0
+    registry = run.solver_output.metadata["gate_registry"]
+    assert registry["tilt_boost_separation_gate"].passed is True
+    assert registry["ic_provenance_gate"].passed is True
+    assert registry["production_cutoff_gate"].passed is True
     assert run.integration_result.neutrino_tower is not None
 
 
