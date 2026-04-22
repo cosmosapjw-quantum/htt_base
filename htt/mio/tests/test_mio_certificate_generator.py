@@ -11,10 +11,13 @@ from __future__ import annotations
 
 import dataclasses
 
+import numpy as np
 import pytest
 
+from common.contracts import ArtifactManifest
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from mio.tests._overlay_fixtures import build_pending_overlay
+from tsc.integration.active_service import build_active_service_bundle_from_samples
 from workspace.contracts.mio_certificate import MioCertificate
 
 
@@ -31,6 +34,45 @@ def _base_payload():
         generated_by="mio.coherence.directional v0.1",
         input_data_hashes=["h1", "h2"],
     )
+
+
+def _tsc_manifest(artifact_id: str = "tsc.overlay.tt_validated") -> ArtifactManifest:
+    return ArtifactManifest(
+        artifact_id=artifact_id,
+        artifact_path=f"artifacts/tsc/{artifact_id.replace('.', '_')}.json",
+        owner="TSC",
+        implementation_scope="tsc",
+        claim_tier="conditional",
+        production_status="production_candidate",
+        created_by="test-suite",
+        git_commit="abc123",
+        config_hash=f"cfg:{artifact_id}",
+        input_hashes=["seed:0"],
+        code_version="0.0-test",
+        schema_version="ver2-v1",
+    )
+
+
+def _overlay_tt_validated_only():
+    mu, weights = np.polynomial.legendre.leggauss(32)
+    weights = weights / np.sum(weights)
+    theta = 1.0 + 0.10 * mu
+    bundle = build_active_service_bundle_from_samples(
+        chart="one_field",
+        theta_samples=theta.tolist(),
+        directions=mu.tolist(),
+        weights=weights.tolist(),
+        manifest=_tsc_manifest(),
+        laguerre_n_ge_2_norm=0.1,
+        onefield_residual=0.1,
+        trace_residual_q_tr=0.1,
+        spin2_residual=0.2,
+        jacobian_singular_values=[0.1, 0.2],
+        propagation_status_by_channel={"TT": "validated", "EE": "pending", "TE": "pending"},
+        propagator_norm_bound=3.0,
+        required_channels=("TT",),
+    )
+    return bundle.overlay
 
 
 def test_build_certificate_frozen():
@@ -137,6 +179,24 @@ def test_tsc_overlay_object_populates_default_ref_and_overlay_caveats():
         caveat.startswith("tsc_publication_blocker=")
         for caveat in cert.domain_caveats
     )
+
+
+def test_tsc_overlay_scope_can_narrow_for_tt_channel() -> None:
+    payload = _base_payload()
+    payload["channel"] = "TT"
+    cert = build_mio_certificate(
+        **payload,
+        tsc_overlay=_overlay_tt_validated_only(),
+    )
+    assert cert.adequacy_indicators["tsc_overlay_attached"] is True
+    assert cert.adequacy_indicators["tsc_overlay_diagnostic_only"] is False
+    assert "tsc_overlay_diagnostic_only" not in cert.domain_caveats
+    assert not any(
+        caveat.startswith("tsc_publication_blocker=")
+        for caveat in cert.domain_caveats
+    )
+    assert "tsc_propagation_pending:EE" not in cert.channel_caveats
+    assert "tsc_propagation_pending:TE" not in cert.channel_caveats
 
 
 def test_explicit_overlay_ref_overrides_overlay_manifest_ref():

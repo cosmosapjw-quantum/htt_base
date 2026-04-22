@@ -33,6 +33,19 @@ from tsc.adapters.mio_certificate import overlay_to_mio_fields
 from workspace.contracts.mio_certificate import MioCertificate
 
 
+def _tsc_required_channels_for_mio_channel(
+    channel: str,
+) -> tuple[str, ...] | None:
+    normalized = channel.strip().upper()
+    if normalized == "TT" or normalized.startswith("TT_"):
+        return ("TT",)
+    if normalized == "EE" or normalized.startswith("EE_"):
+        return ("EE",)
+    if normalized == "TE" or normalized.startswith("TE_"):
+        return ("TE",)
+    return None
+
+
 def _resolve_git_commit() -> str:
     """Resolve the current HEAD sha. Returns 'unknown' outside a git tree."""
     try:
@@ -77,6 +90,7 @@ def _reject_posterior_keywords(raw_kwargs: Dict[str, Any]) -> None:
 
 def _merge_tsc_overlay_fields(
     *,
+    channel: str,
     adequacy_indicators: Dict[str, bool],
     domain_caveats: Sequence[str],
     channel_caveats: Sequence[str] | None,
@@ -95,7 +109,14 @@ def _merge_tsc_overlay_fields(
     if tsc_overlay is None:
         return resolved_adequacy, resolved_domain, resolved_channel, resolved_ref
 
-    fields = overlay_to_mio_fields(tsc_overlay)
+    required_channels = _tsc_required_channels_for_mio_channel(channel)
+    if required_channels is None:
+        fields = overlay_to_mio_fields(tsc_overlay)
+    else:
+        fields = overlay_to_mio_fields(
+            tsc_overlay,
+            required_channels=required_channels,
+        )
     if resolved_ref is None:
         resolved_ref = tsc_overlay.manifest.artifact_id
 
@@ -235,6 +256,7 @@ def build_mio_certificate(
         resolved_channel_caveats,
         resolved_overlay_ref,
     ) = _merge_tsc_overlay_fields(
+        channel=channel,
         adequacy_indicators=adequacy_indicators,
         domain_caveats=resolved_domain_caveats,
         channel_caveats=channel_caveats,
