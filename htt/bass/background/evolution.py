@@ -21,6 +21,7 @@ from bass.background.initial_conditions import (
 from bass.background.rhs import assemble_background_rhs
 from bass.background.weyl import build_weyl_diagnostics
 from bass.species.barotropic_closures import (
+    DynamicTiltedSpeciesRegistryClosure,
     OrthogonalBarotropicClosure,
     OrthogonalSpeciesRegistryClosure,
     TiltedBarotropicClosure,
@@ -81,6 +82,7 @@ class BackgroundEvolutionConfig:
         | TiltedBarotropicClosure
         | OrthogonalSpeciesRegistryClosure
         | TiltedSpeciesRegistryClosure
+        | DynamicTiltedSpeciesRegistryClosure
         | None
     ) = None
     eta_at_scale_factor: Callable[[float], float] | None = None
@@ -101,6 +103,8 @@ class BackgroundEvolutionResult:
     residuals: tuple[BackgroundConstraintResiduals, ...]
     electric_weyl: np.ndarray
     magnetic_weyl: np.ndarray
+    tilt_rapidity: np.ndarray
+    tilt_velocity: np.ndarray
     initial_conditions: OrthogonalInitialConditions | TiltedInitialConditions
     matter_model_tag: str
 
@@ -170,6 +174,8 @@ def solve_background_evolution(
         matter_model = cfg.matter_model_override
         if branch == "orthogonal":
             matter_model_tag = "orthogonal_species_registry_mixture"
+        elif isinstance(matter_model, DynamicTiltedSpeciesRegistryClosure):
+            matter_model_tag = "tilted_species_registry_dynamic_rapidity"
         else:
             matter_model_tag = "tilted_species_registry_mixture"
     elif branch == "orthogonal":
@@ -242,6 +248,8 @@ def solve_background_evolution(
     residuals: list[BackgroundConstraintResiduals] = []
     electric = np.zeros((H.size, 3, 3), dtype=np.float64)
     magnetic = np.zeros((H.size, 3, 3), dtype=np.float64)
+    tilt_rapidity = np.zeros_like(H)
+    tilt_velocity = np.zeros((H.size, 3), dtype=np.float64)
 
     for i, (a_i, H_i, sigma_i) in enumerate(zip(a, H, sigma_history)):
         matter_state = matter_model.state_at_scale_factor(float(a_i))
@@ -262,6 +270,11 @@ def solve_background_evolution(
             p[i] = matter_state.p
             q[i] = matter_state.q
             pi[i] = matter_state.pi
+            if matter_state.species:
+                first_velocity = np.asarray(matter_state.species[0].params.v, dtype=np.float64)
+                speed = float(np.linalg.norm(first_velocity))
+                tilt_velocity[i] = first_velocity
+                tilt_rapidity[i] = 0.0 if speed <= 0.0 else float(np.arctanh(min(speed, 1.0 - 1.0e-15)))
         assembly = assemble_background_rhs(
             H=float(H_i),
             sigma_ab=sigma_i,
@@ -309,6 +322,8 @@ def solve_background_evolution(
         residuals=tuple(residuals),
         electric_weyl=electric,
         magnetic_weyl=magnetic,
+        tilt_rapidity=tilt_rapidity,
+        tilt_velocity=tilt_velocity,
         initial_conditions=initial_conditions,
         matter_model_tag=matter_model_tag,
     )

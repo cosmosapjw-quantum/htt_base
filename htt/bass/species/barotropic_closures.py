@@ -22,6 +22,7 @@ __all__ = [
     "TiltedBarotropicClosure",
     "OrthogonalSpeciesRegistryClosure",
     "TiltedSpeciesRegistryClosure",
+    "DynamicTiltedSpeciesRegistryClosure",
 ]
 
 
@@ -130,6 +131,49 @@ class TiltedSpeciesRegistryClosure:
                         rho_hat=float(self.registry[label].rho_rest(eta)),
                         p_hat=float(self.registry[label].p_rest(eta)),
                         v=self.velocity,
+                        label=self.label_formatter(label),
+                    )
+                )
+            )
+        return assemble_tilted_matter_state(tuple(pieces))
+
+
+@dataclass(frozen=True)
+class DynamicTiltedSpeciesRegistryClosure:
+    """Species-backed tilted matter closure with dynamic rapidity magnitude."""
+
+    registry: SpeciesBackgroundRegistry
+    tilt_direction: np.ndarray
+    rapidity_at_scale_factor: Callable[[float], float]
+    label_formatter: Callable[[SpeciesLabel], str] = str
+
+    def __post_init__(self) -> None:
+        direction = np.asarray(self.tilt_direction, dtype=np.float64)
+        if direction.shape != (3,):
+            raise ValueError(
+                "DynamicTiltedSpeciesRegistryClosure.tilt_direction must have "
+                f"shape (3,), got {direction.shape}"
+            )
+        norm = float(np.linalg.norm(direction))
+        if norm <= 0.0:
+            raise ValueError("tilt_direction must be non-zero")
+        object.__setattr__(self, "tilt_direction", direction / norm)
+
+    def state_at_scale_factor(self, a: float) -> TiltedMatterState:
+        eta = float(self.registry.bg_table.eta_at_a(float(a)))
+        rapidity = float(self.rapidity_at_scale_factor(float(a)))
+        beta = float(np.tanh(max(rapidity, 0.0)))
+        velocity = beta * np.asarray(self.tilt_direction, dtype=np.float64)
+        pieces: list[TiltedSpeciesDecomposition] = []
+        for label in CANONICAL_ORDER:
+            if label is SpeciesLabel.LAMBDA:
+                continue
+            pieces.append(
+                decompose_tilted_species(
+                    TiltedSpeciesParams(
+                        rho_hat=float(self.registry[label].rho_rest(eta)),
+                        p_hat=float(self.registry[label].p_rest(eta)),
+                        v=velocity,
                         label=self.label_formatter(label),
                     )
                 )

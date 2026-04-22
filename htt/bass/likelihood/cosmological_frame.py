@@ -49,6 +49,10 @@ def _axis_from_angles(longitude_deg: float, latitude_deg: float) -> np.ndarray:
     )
 
 
+def _as_mapping(value: object) -> Mapping[str, object] | None:
+    return value if isinstance(value, Mapping) else None
+
+
 class CosmologicalFrameLikelihood:
     """Direction-dependent likelihood in the cosmological frame only.
 
@@ -108,6 +112,55 @@ class CosmologicalFrameLikelihood:
         else:
             self.ell_mask = np.zeros(0, dtype=bool)
         self.noise_fraction = {"low_ell": 0.08, "hybrid": 0.06, "full": 0.04}[tier]
+        self.harmonic_support = tuple(htt_decomposition.get("harmonic_support", ()))
+        self.alm_reference = _as_mapping(htt_decomposition.get("alm_reference"))
+        self.alm_reference_packed = _as_mapping(
+            htt_decomposition.get("alm_reference_packed")
+        )
+        harmonic_covariance = _as_mapping(htt_decomposition.get("harmonic_covariance"))
+        self.harmonic_gaussian_ready = False
+        self._joint_covariance = None
+        self._joint_covariance_inv = None
+        self._harmonic_size = 0
+        if (
+            harmonic_covariance is not None
+            and self.alm_reference is not None
+            and "dense_blocks" in harmonic_covariance
+        ):
+            blocks = _as_mapping(harmonic_covariance["dense_blocks"])
+            if blocks is not None:
+                tt = np.asarray(blocks.get("TT", np.zeros((0, 0))), dtype=float)
+                ee = np.asarray(blocks.get("EE", np.zeros((0, 0))), dtype=float)
+                te = np.asarray(blocks.get("TE", np.zeros((0, 0))), dtype=float)
+                bb = np.asarray(blocks.get("BB", np.zeros((0, 0))), dtype=float)
+                size = int(tt.shape[0])
+                if (
+                    tt.shape == (size, size)
+                    and ee.shape == (size, size)
+                    and te.shape == (size, size)
+                    and bb.shape == (size, size)
+                ):
+                    scale = max(
+                        float(np.max(np.abs(np.diag(tt)))) if size else 0.0,
+                        float(np.max(np.abs(np.diag(ee)))) if size else 0.0,
+                        float(np.max(np.abs(np.diag(bb)))) if size else 0.0,
+                        1.0e-12,
+                    )
+                    regularization = 1.0e-9 * scale
+                    zero = np.zeros_like(tt)
+                    joint = np.block(
+                        [
+                            [tt, te, zero],
+                            [te.T, ee, zero],
+                            [zero, zero, bb],
+                        ]
+                    )
+                    joint = 0.5 * (joint + joint.T)
+                    joint += regularization * np.eye(joint.shape[0], dtype=float)
+                    self._joint_covariance = joint
+                    self._joint_covariance_inv = np.linalg.inv(joint)
+                    self._harmonic_size = size
+                    self.harmonic_gaussian_ready = bool(size > 0)
 
     def _reject_observer_frame_params(self, params: Mapping[str, object]) -> None:
         overlap = _OBSERVER_FRAME_KEYS.intersection(params)
@@ -156,9 +209,40 @@ class CosmologicalFrameLikelihood:
             logp += -0.5 * float(np.sum((residual / sigma) ** 2))
         return logp
 
+    def _harmonic_vector(self, params: Mapping[str, object]) -> np.ndarray:
+        assert self.alm_reference is not None
+        size = self._harmonic_size
+        vectors: list[np.ndarray] = []
+        for key, fallback_name in (("alm_T", "T"), ("alm_E", "E"), ("alm_B", "B")):
+            fallback = np.asarray(self.alm_reference[fallback_name], dtype=float)
+            values = np.asarray(params.get(key, fallback), dtype=float)
+            if values.shape != (size,):
+                raise ValueError(
+                    f"{key} must have shape ({size},), got {values.shape}"
+                )
+            vectors.append(values)
+        return np.concatenate(vectors)
+
+    def _harmonic_log_prob(self, params: Mapping[str, object]) -> float:
+        assert self._joint_covariance_inv is not None
+        assert self.alm_reference is not None
+        reference = np.concatenate(
+            [
+                np.asarray(self.alm_reference["T"], dtype=float),
+                np.asarray(self.alm_reference["E"], dtype=float),
+                np.asarray(self.alm_reference["B"], dtype=float),
+            ]
+        )
+        model = self._harmonic_vector(params)
+        residual = model - reference
+        quad = float(residual @ self._joint_covariance_inv @ residual)
+        return -0.5 * quad
+
     def log_prob(self, params: Mapping[str, object]) -> float:
         """Evaluate the cosmological-frame log-likelihood."""
         self._reject_observer_frame_params(params)
+        if self.harmonic_gaussian_ready:
+            return float(self._harmonic_log_prob(params))
         axis = self._axis_from_params(params)
         amplitude = float(params.get("amplitude", params.get("anisotropy_amplitude", self.effective_amplitude)))
 

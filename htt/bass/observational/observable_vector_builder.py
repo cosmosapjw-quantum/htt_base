@@ -37,12 +37,44 @@ def _default_cl(
     return {}
 
 
+def _covariance_readiness(
+    covariance_bundle: Mapping[str, object] | None,
+    covariance_features: Mapping[str, object] | None,
+    biposh_payload: Mapping[str, object] | None,
+) -> str:
+    if covariance_bundle is None or covariance_features is None or biposh_payload is None:
+        return "missing"
+    if bool(covariance_features.get("supports_harmonic_gaussian", False)):
+        psd_guard = _mapping_or_none(covariance_features.get("psd_guard"))
+        symmetry_guard = _mapping_or_none(covariance_features.get("symmetry_guard"))
+        invariant_guard = _mapping_or_none(covariance_features.get("invariant_guard"))
+        if (
+            psd_guard is not None
+            and symmetry_guard is not None
+            and invariant_guard is not None
+            and bool(psd_guard.get("passed", False))
+            and bool(symmetry_guard.get("passed", False))
+            and bool(invariant_guard.get("passed", False))
+        ):
+            return "full"
+    if bool(covariance_features.get("supports_full_biposh", False)):
+        return "full"
+    if bool(covariance_features.get("supports_basis_reduced_morphology", False)):
+        return "reduced"
+    return "proxy"
+
+
 def _default_alm_features(
     solver_output: SolverCoreOutput,
     covariance_bundle: Mapping[str, object] | None,
     covariance_features: Mapping[str, object] | None,
     biposh_payload: Mapping[str, object] | None,
 ) -> dict[str, object]:
+    covariance_readiness = _covariance_readiness(
+        covariance_bundle,
+        covariance_features,
+        biposh_payload,
+    )
     preferred_axis = None
     if covariance_bundle is not None and covariance_bundle.get("preferred_axis") is not None:
         preferred_axis = tuple(
@@ -85,8 +117,33 @@ def _default_alm_features(
         "preferred_axis": preferred_axis,
         "deterministic_template_present": solver_output.deterministic_template is not None,
         "propagator_ready": bool(solver_output.metadata.get("propagator_ready", False)),
+        "propagator_readiness": solver_output.metadata.get(
+            "propagator_readiness",
+            "contract_only_unavailable",
+        ),
+        "propagator_exactness": solver_output.metadata.get(
+            "propagator_exactness",
+            solver_output.metadata.get(
+                "propagator_readiness",
+                "contract_only_unavailable",
+            ),
+        ),
+        "covariance_readiness": covariance_readiness,
+        "fitting_ready": covariance_readiness == "full",
         "off_diagonal_strategy": solver_output.metadata.get("off_diagonal_strategy"),
         "covariance_representation": None if biposh_payload is None else biposh_payload.get("representation"),
+        "harmonic_gaussian_ready": False
+        if covariance_features is None
+        else bool(covariance_features.get("supports_harmonic_gaussian", False)),
+        "harmonic_subspace_size": None
+        if covariance_features is None
+        or not isinstance(covariance_features.get("harmonic_gaussian_covariance"), Mapping)
+        else int(
+            covariance_features["harmonic_gaussian_covariance"].get(  # type: ignore[index]
+                "subspace_size",
+                0,
+            )
+        ),
         "observer_reconstruction_status": observer_reconstruction_status,
         "observer_quadrature_points": observer_quadrature_points,
         "observer_quadrature_rule": observer_quadrature_rule,
@@ -102,6 +159,9 @@ def _default_scan_volume(
     *,
     ell_max: int,
     channels: tuple[str, ...],
+    covariance_bundle: Mapping[str, object] | None,
+    covariance_features: Mapping[str, object] | None,
+    biposh_payload: Mapping[str, object] | None,
 ) -> dict[str, object]:
     reconstruction_status = "unreported"
     if isinstance(solver_output.alm_T, Mapping):
@@ -128,6 +188,11 @@ def _default_scan_volume(
         "global_tilt_contract": solver_output.metadata.get("global_tilt_contract"),
         "local_boost_contract": solver_output.metadata.get("local_boost_contract"),
         "tilt_boost_separation": solver_output.metadata.get("tilt_boost_separation"),
+        "covariance_readiness": _covariance_readiness(
+            covariance_bundle,
+            covariance_features,
+            biposh_payload,
+        ),
         "selection_mode": sky_support.selection_mode,
         "thomson_mode": str(solver_output.metadata["thomson_mode"]),
         "observer_reconstruction_status": reconstruction_status,
@@ -159,9 +224,11 @@ def _observable_manifest_status(
     solver_output: SolverCoreOutput,
     sky_support: SkySupport,
     covariance_payload: Mapping[str, object] | None,
+    covariance_readiness: str,
 ) -> tuple[str, tuple[str, ...], tuple[str, ...], tuple[str, ...]]:
     required_gates = (
         "covariance_features_present",
+        "covariance_full_readiness",
         "sky_support_mock_calibrated",
         "covariance_psd_guard",
         "covariance_symmetry_guard",
@@ -170,6 +237,8 @@ def _observable_manifest_status(
     failed: list[str] = []
     if covariance_payload is None:
         failed.append("covariance_features_present")
+    if covariance_readiness != "full":
+        failed.append("covariance_full_readiness")
     if sky_support.selection_mode != "mock_calibrated" or sky_support.mock_coverage_status != "adequate":
         failed.append("sky_support_mock_calibrated")
     if covariance_payload is not None:
@@ -251,22 +320,42 @@ def build_observable_vector_from_solver_output(
             sky_support,
             ell_max=ell_max,
             channels=channels,
+            covariance_bundle=covariance_bundle,
+            covariance_features=covariance_payload,
+            biposh_payload=biposh_payload,
         )
     )
+    covariance_readiness = _covariance_readiness(
+        covariance_bundle,
+        covariance_payload,
+        biposh_payload,
+    )
+    feature_payload.setdefault("covariance_readiness", covariance_readiness)
+    feature_payload.setdefault("fitting_ready", covariance_readiness == "full")
+    scan_payload.setdefault("covariance_readiness", covariance_readiness)
     scan_payload.setdefault("scan_volume_hash", stable_payload_hash(scan_payload))
     production_status, required_gates, passed_gates, failed_gates = _observable_manifest_status(
         solver_output=solver_output,
         sky_support=sky_support,
         covariance_payload=covariance_payload,
+        covariance_readiness=covariance_readiness,
     )
     caveats = [
         "diagonal_cl_not_sufficient_for_directional_claims",
         "no_posterior_or_evidence_semantics",
     ]
+    if covariance_readiness != "full":
+        caveats.append(f"covariance_readiness_{covariance_readiness}")
+        caveats.append("posterior_blocked_by_covariance_readiness")
     if biposh_payload is not None and biposh_payload.get("representation") == "sparse_mode_block_proxy":
         caveats.append("proxy_morphology_not_full_biposh")
     if biposh_payload is not None and biposh_payload.get("representation") == "low_ell_harmonic_sparse_basis":
         caveats.append("basis_reduced_covariance_not_full_biposh")
+    if (
+        covariance_payload is not None
+        and bool(covariance_payload.get("supports_harmonic_gaussian", False))
+    ):
+        caveats = [item for item in caveats if item != "no_posterior_or_evidence_semantics"]
     if feature_payload.get("observer_reconstruction_status") == "final_slice_only_no_sphere_reconstruction":
         caveats.append("observer_reconstruction_bridge_pending")
     artifact_id = f"{solver_output.manifest.artifact_id}.observable_vector"
@@ -292,6 +381,10 @@ def build_observable_vector_from_solver_output(
             "scan_volume_hash": str(scan_payload["scan_volume_hash"]),
             "sky_support": sky_support_metadata(sky_support),
             "covariance_representation": None if biposh_payload is None else biposh_payload.get("representation"),
+            "covariance_readiness": covariance_readiness,
+            "harmonic_gaussian_ready": False
+            if covariance_payload is None
+            else bool(covariance_payload.get("supports_harmonic_gaussian", False)),
             "local_global_degeneracy": None
             if covariance_payload is None
             else covariance_payload.get("local_global_degeneracy"),

@@ -215,6 +215,14 @@ def test_solver_core_output_builder_attaches_required_metadata() -> None:
     assert output.metadata["theory_family"] == "VII_h_tilted"
     assert output.metadata["observer_neutral"] is True
     assert output.metadata["multipole_cutoff"] == 6
+    assert output.metadata["requested_integrator_family"] == "imex_split"
+    assert output.metadata["resolved_solver_method"] == "BDF"
+    assert output.metadata["executor_realization"] == "declared_imex_policy_bdf_executor"
+    assert output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
+    assert output.metadata["off_axis_support"] is False
+    assert output.metadata["covariance_readiness"] == "missing"
+    assert output.metadata["neutrino_background_readiness"] == "massless_only"
+    assert output.metadata["reionization_history_readiness"] == "homogeneous_tanh_only"
 
 
 def test_solver_core_output_payload_roundtrips() -> None:
@@ -271,6 +279,9 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
         k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
     )
     assert output.metadata["propagator_ready"] is True
+    assert output.metadata["propagator_readiness"] == "approximate_family_kernel"
+    assert output.metadata["propagator_exactness"] == "approximate_family_kernel"
+    assert output.metadata["covariance_readiness"] == "proxy"
     assert output.metadata["source_builder_scope"] == "theta0_plus_combined_polter_visibility_lowell_bridge"
     assert output.metadata["propagator_mode"] == "anisotropic_forward"
     assert output.metadata["source_propagator_status"] == "approximate"
@@ -309,9 +320,14 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
         k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
     )
     assert output.metadata["propagator_ready"] is True
+    assert output.metadata["propagator_readiness"] == "approximate_family_kernel"
+    assert output.metadata["propagator_exactness"] == "approximate_family_kernel"
+    assert output.metadata["covariance_readiness"] == "proxy"
     assert output.metadata["source_builder_scope"] == "theta0_plus_combined_polter_visibility_ver2_native"
     assert output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
     assert output.metadata["solver_method"] == "LSODA"
+    assert output.metadata["resolved_solver_method"] == "LSODA"
+    assert output.metadata["executor_realization"] == "runtime_family_direct"
     assert output.metadata["solver_family_realization"] == "runtime_family_direct"
     assert output.metadata["neutrino_hierarchy_mode"] == "reduced_summary_only"
     assert output.metadata["seed_k_comoving"] == pytest.approx(0.0)
@@ -358,6 +374,8 @@ def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backe
         ),
         k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
     )
+    assert output.metadata["propagator_readiness"] == "exact"
+    assert output.metadata["propagator_exactness"] == "exact"
     assert output.metadata["source_propagator_status"] == "exact"
     assert output.metadata["source_propagator_requested_status"] == "approximate"
     assert output.metadata["source_propagator_rotation_status"] == "disabled"

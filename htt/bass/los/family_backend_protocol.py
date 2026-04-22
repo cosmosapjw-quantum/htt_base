@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 from typing import Any, Iterable, Mapping
 
 from bass.background.bianchi_types import FamilySpec, get_family_spec
+from bass.validation import GateBundle, make_gate_bundle
 
 __all__ = [
     "CollocationPolicy",
@@ -21,6 +22,7 @@ __all__ = [
     "SeedPack",
     "ModeOps",
     "FamilyBackend",
+    "family_backend_gate_bundle",
     "build_backend",
 ]
 
@@ -670,6 +672,52 @@ class FamilyBackend:
             "generic_fallback": self.family_spec.generic_fallback,
             "template_card": template_card.as_payload(),
         }
+
+
+def family_backend_gate_bundle(
+    backend: FamilyBackend,
+    ops: ModeOps,
+) -> GateBundle:
+    """Emit the machine-readable PR-08 family-backend gate bundle."""
+
+    template = backend.template_card()
+    residuals = backend.backend_residuals()
+    return make_gate_bundle(
+        "family_backend_gate",
+        family=backend.family_spec.family,
+        branch=ops.branch,
+        backend=backend.family_spec.preferred_backend,
+        truncation=dict(backend.truncation),
+        residual_summary={
+            "translator_roundtrip_residual": (
+                -1.0
+                if residuals["translator_roundtrip_residual"] is None
+                else float(residuals["translator_roundtrip_residual"])
+            ),
+            "family_specific_residual_count": float(len(template.family_specific_residuals)),
+            "must_not_do_count": float(len(template.must_not_do)),
+        },
+        known_limit_checks={
+            "operator_payload_bound": bool(ops.release_status == "backend-operator-bound"),
+            "chart_frozen": bool(ops.chart == template.preferred_chart),
+            "kernel_family_frozen": bool(ops.operator_kernel_family == template.operator_kernel_family),
+        },
+        forbidden_shortcut_checks={
+            "no_local_boost_folded_into_backend": True,
+            "translator_layer_present": True,
+            "no_hidden_branch_choice": True,
+        },
+        metadata={
+            "template_card": template.as_payload(),
+            "layout_metadata": dict(ops.layout_metadata),
+            "operator_payload_status": ops.metadata.get("operator_payload_status"),
+        },
+        passed=bool(
+            ops.release_status == "backend-operator-bound"
+            and ops.operator_kernel_family == template.operator_kernel_family
+        ),
+        opened_claim="family backend contract bound to executable operator payload",
+    )
 
 
 def build_backend(

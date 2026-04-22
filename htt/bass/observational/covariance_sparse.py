@@ -7,6 +7,7 @@ from typing import Any
 import numpy as np
 
 from bass.spectrum.off_diagonal_covariance import (
+    build_dense_harmonic_covariance,
     build_sparse_covariance_entries,
     build_sparse_harmonic_entries,
     compute_covariance_invariant_guard,
@@ -178,6 +179,12 @@ def build_covariance_feature_summary(
         threshold=threshold,
         angular_payload=angular_payload,
     )
+    dense_harmonic = None
+    if bool(sparse["angular_reconstruction_guard"]["passed"]):
+        dense_harmonic = build_dense_harmonic_covariance(
+            covariance_bundle,
+            threshold=threshold,
+        )
     anisotropy_tensor = covariance_bundle.get("anisotropy_tensor")
     trace_free = None
     if anisotropy_tensor is not None:
@@ -190,6 +197,15 @@ def build_covariance_feature_summary(
     invariant_guard = compute_covariance_invariant_guard(
         covariance_bundle,
         atol=psd_tolerance,
+    )
+    harmonic_gaussian_ready = bool(
+        dense_harmonic is not None
+        and compute_covariance_psd_guard(
+            covariance_bundle,
+            atol=psd_tolerance,
+        )["passed"]
+        and symmetry_guard["passed"]
+        and invariant_guard["passed"]
     )
     return {
         "representation": sparse["representation"],
@@ -206,6 +222,8 @@ def build_covariance_feature_summary(
         "anisotropy_tensor_tracefree": trace_free,
         "supports_full_biposh": bool(sparse["supports_full_biposh"]),
         "supports_basis_reduced_morphology": bool(sparse["supports_basis_reduced_morphology"]),
+        "supports_harmonic_gaussian": harmonic_gaussian_ready,
+        "harmonic_gaussian_covariance": dense_harmonic,
         "basis_reduction_status": str(sparse["basis_reduction_status"]),
         "angular_reconstruction_guard": dict(sparse["angular_reconstruction_guard"]),
         "null_proxy_status": str(sparse["null_proxy_status"]),

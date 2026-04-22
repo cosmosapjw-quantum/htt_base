@@ -21,6 +21,10 @@ from bass.likelihood.observer_frame_adapter import (
     ObserverFrameLikelihood,
 )
 from bass.observer.observer_boost import ObserverBoost
+from bass.spectrum.off_diagonal_covariance import (
+    build_dense_harmonic_covariance,
+    extract_supported_harmonic_subspace,
+)
 
 __all__ = [
     "build_live_htt_decomposition_from_solver_output",
@@ -68,13 +72,36 @@ def _axis_precision(
     rotation_strength: float,
     solver_output: SolverCoreOutput,
 ) -> float:
-    propagated = 1.0 if bool(solver_output.metadata.get("propagator_ready", False)) else 0.0
+    propagated = (
+        1.0
+        if str(
+            solver_output.metadata.get(
+                "propagator_readiness",
+                "contract_only_unavailable",
+            )
+        )
+        != "contract_only_unavailable"
+        else 0.0
+    )
     reconstruction = 1.0 if isinstance(solver_output.alm_T, Mapping) else 0.0
     return max(
         2.0,
         4.0 + 24.0 * max(offdiag_strength, 0.0) + 8.0 * max(rotation_strength, 0.0)
         + propagated + reconstruction,
     )
+
+
+def _covariance_readiness(solver_output: SolverCoreOutput) -> str:
+    covariance = solver_output.anisotropic_covariance
+    if covariance is None or not isinstance(covariance, Mapping):
+        return "missing"
+    try:
+        dense = build_dense_harmonic_covariance(covariance)
+    except Exception:
+        return str(solver_output.metadata.get("covariance_readiness", "proxy"))
+    if int(dense.get("subspace_size", 0)) <= 0:
+        return "missing"
+    return "full"
 
 
 def _interop_summary(solver_output: SolverCoreOutput) -> dict[str, Any]:
@@ -141,6 +168,18 @@ def build_live_htt_decomposition_from_solver_output(
         ),
         dtype=int,
     )
+    harmonic_covariance = build_dense_harmonic_covariance(covariance)
+    support = tuple(harmonic_covariance["support"])  # type: ignore[index]
+    alm_reference = {
+        "T": extract_supported_harmonic_subspace(solver_output.alm_T, support),
+        "E": extract_supported_harmonic_subspace(solver_output.alm_E, support),
+        "B": extract_supported_harmonic_subspace(solver_output.alm_B, support),
+    }
+    alm_reference_packed = {
+        "alm_T": np.asarray(solver_output.alm_T["values"], dtype=float),
+        "alm_E": np.asarray(solver_output.alm_E["values"], dtype=float),
+        "alm_B": np.asarray(solver_output.alm_B["values"], dtype=float),
+    }
     return {
         "resolved_axis": preferred_axis,
         "prior_axis": preferred_axis,
@@ -154,7 +193,13 @@ def build_live_htt_decomposition_from_solver_output(
         "tangency_is_tangent": True,
         "tangency_fraction_on_manifold": 1.0,
         "tangency_relative_residual": 0.0,
-        "beta_gate_pass": bool(solver_output.metadata.get("propagator_ready", False)),
+        "beta_gate_pass": str(
+            solver_output.metadata.get(
+                "propagator_readiness",
+                "contract_only_unavailable",
+            )
+        )
+        != "contract_only_unavailable",
         "beta_gate_labels": (),
         "beta_gate_diagnostics": {
             "binding_origin": "solver_core_output",
@@ -182,15 +227,30 @@ def build_live_htt_decomposition_from_solver_output(
                 for key in _SPECTRUM_KEYS
             },
         },
+        "harmonic_covariance": harmonic_covariance,
+        "harmonic_support": support,
+        "harmonic_support_modes": tuple(
+            f"(ell={int(row['ell'])},m={int(row['m'])})" for row in support
+        ),
+        "alm_reference": alm_reference,
+        "alm_reference_packed": alm_reference_packed,
         "spectra_reference": {
             key: np.asarray(covariance["C_ell"].get(key, np.zeros(ell.size)), dtype=float)
             for key in _SPECTRUM_KEYS
         },
+        "propagator_readiness": solver_output.metadata.get("propagator_readiness"),
+        "propagator_exactness": solver_output.metadata.get("propagator_exactness"),
+        "covariance_readiness": _covariance_readiness(solver_output),
+        "fitting_ready": _covariance_readiness(solver_output) == "full",
+        "tilt_background_owner": solver_output.metadata.get("tilt_background_owner"),
+        "requested_integrator_family": solver_output.metadata.get("requested_integrator_family"),
+        "resolved_solver_method": solver_output.metadata.get("resolved_solver_method"),
+        "executor_realization": solver_output.metadata.get("executor_realization"),
         **_interop_summary(solver_output),
         "binding_origin": "solver_core_output",
         "solver_output_ref": solver_output.manifest.artifact_id,
         "live_bass_binding": True,
-        "diagnostic_only": True,
+        "diagnostic_only": _covariance_readiness(solver_output) != "full",
     }
 
 

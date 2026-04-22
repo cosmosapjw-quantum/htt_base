@@ -16,6 +16,8 @@ import numpy as np
 
 __all__ = [
     "assemble_bianchi_spectrum_covariance",
+    "build_dense_harmonic_covariance",
+    "extract_supported_harmonic_subspace",
     "compute_covariance_invariant_guard",
     "build_sparse_covariance_entries",
     "build_sparse_harmonic_entries",
@@ -236,6 +238,116 @@ def build_sparse_covariance_entries(
             )
         out[spec] = entries
     return out
+
+
+def _packed_flat_index(ell: int, m: int) -> int:
+    return ell * ell + (m + ell)
+
+
+def build_dense_harmonic_covariance(
+    covariance_result: Mapping[str, object],
+    *,
+    threshold: float = 0.0,
+) -> dict[str, object]:
+    """Return a dense low-ell harmonic covariance payload on the supported subspace.
+
+    The underlying covariance bundle is stored in the audited ``m in {0, +/-2}``
+    support. This helper removes invalid low-ell ``|m| > ell`` rows, maps the
+    remaining basis states onto the packed real-harmonic ordering used by the
+    PSTF hierarchy, and exposes a dense covariance object suitable for a
+    low-ell Gaussian likelihood on that supported harmonic subspace.
+    """
+    if threshold < 0.0:
+        raise ValueError("threshold must be non-negative")
+    dense = _dense_views_from_result(covariance_result)
+    ell_values = np.asarray(covariance_result.get("ell", ()), dtype=int)
+    mode_labels = tuple(
+        str(label) for label in covariance_result.get("mode_labels", _MODE_LABELS)
+    )
+    if any(label not in _MODE_TO_M for label in mode_labels):
+        raise ValueError("mode_labels must map to explicit harmonic m values")
+    n_mode = len(mode_labels)
+    if any(matrix.shape[0] != ell_values.size * n_mode for matrix in dense.values()):
+        raise ValueError("dense covariance views do not match ell/mode dimensions")
+
+    keep: list[int] = []
+    support: list[dict[str, object]] = []
+    invalid_mode_residual = 0.0
+    for ell in ell_values.tolist():
+        for mode_index, mode_label in enumerate(mode_labels):
+            matrix_index = int(ell) * n_mode + mode_index
+            m_value = _MODE_TO_M[mode_label]
+            if abs(m_value) <= int(ell):
+                keep.append(matrix_index)
+                support.append(
+                    {
+                        "ell": int(ell),
+                        "m": int(m_value),
+                        "mode_label": mode_label,
+                        "flat_index": _packed_flat_index(int(ell), int(m_value)),
+                    }
+                )
+                continue
+            for spec in ("TT", "EE", "TE", "BB"):
+                matrix = np.asarray(dense[spec], dtype=float)
+                invalid_mode_residual = max(
+                    invalid_mode_residual,
+                    float(np.max(np.abs(matrix[matrix_index]))),
+                    float(np.max(np.abs(matrix[:, matrix_index]))),
+                )
+
+    if invalid_mode_residual > threshold:
+        raise ValueError(
+            "covariance bundle carries non-negligible support in invalid low-ell "
+            f"mode slots (residual={invalid_mode_residual:.3e}, threshold={threshold:.3e})"
+        )
+
+    keep_arr = np.asarray(keep, dtype=int)
+    sliced = {
+        spec: np.asarray(matrix, dtype=float)[np.ix_(keep_arr, keep_arr)]
+        for spec, matrix in dense.items()
+    }
+    return {
+        "representation": "low_ell_harmonic_dense_gaussian",
+        "harmonic_basis": "real_pstf_packed",
+        "support": support,
+        "subspace_size": int(len(support)),
+        "dense_blocks": sliced,
+        "invalid_mode_residual": float(invalid_mode_residual),
+        "structure_label": covariance_result.get("structure_label", "unknown"),
+        "preferred_axis": None
+        if covariance_result.get("preferred_axis") is None
+        else np.asarray(covariance_result["preferred_axis"], dtype=float),
+        "anisotropy_tensor": None
+        if covariance_result.get("anisotropy_tensor") is None
+        else np.asarray(covariance_result["anisotropy_tensor"], dtype=float),
+        "offdiag_strength": float(covariance_result.get("offdiag_strength", 0.0)),
+        "rotation_strength": float(covariance_result.get("rotation_strength", 0.0)),
+    }
+
+
+def extract_supported_harmonic_subspace(
+    alm_payload: Mapping[str, object] | np.ndarray,
+    support: list[Mapping[str, object]] | tuple[Mapping[str, object], ...],
+) -> np.ndarray:
+    """Extract the supported harmonic subspace in the covariance order."""
+    if isinstance(alm_payload, Mapping):
+        if "values" not in alm_payload:
+            raise KeyError("alm payload must contain 'values'")
+        values = np.asarray(alm_payload["values"], dtype=float)
+    else:
+        values = np.asarray(alm_payload, dtype=float)
+    if values.ndim != 1:
+        raise ValueError(f"alm payload must be 1-D, got {values.shape}")
+    extracted = np.zeros(len(support), dtype=float)
+    for idx, row in enumerate(support):
+        flat_index = int(row["flat_index"])
+        if flat_index < 0 or flat_index >= values.size:
+            raise ValueError(
+                f"flat_index={flat_index} outside harmonic payload of size {values.size}"
+            )
+        extracted[idx] = float(values[flat_index])
+    return extracted
 
 
 def build_sparse_harmonic_entries(

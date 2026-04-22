@@ -24,9 +24,10 @@ from scipy.integrate import solve_ivp
 
 from bass.background.evolution import BackgroundEvolutionResult
 from bass.collision.electron_frame import (
+    ExactThomsonSource,
     ElectronFrameThomsonContext,
     ProjectedThomsonSource,
-    project_thomson_source,
+    exact_thomson_source,
 )
 from bass.collision.polarization import PolarizationHierarchyState, zero_polarization_hierarchy
 from bass.closure.stiff_closure import (
@@ -180,11 +181,11 @@ class _ProjectedCollisionAux:
     tilted_electron: TiltedSpeciesBackground | None
     v_b_real_sph: np.ndarray
     b_state: PSTFHierarchyState
-    projected_source: ProjectedThomsonSource | None = None
+    exact_source: ExactThomsonSource | None = None
 
     def get_source(self) -> ProjectedThomsonSource:
-        if self.projected_source is None:
-            self.projected_source = project_thomson_source(
+        if self.exact_source is None:
+            self.exact_source = exact_thomson_source(
                 ElectronFrameThomsonContext(),
                 temperature_state=self.temperature_state,
                 polarization_state=self.polarization_state,
@@ -194,7 +195,13 @@ class _ProjectedCollisionAux:
                 tilted_electron=self.tilted_electron,
                 b_state=self.b_state,
             )
-        return self.projected_source
+        return self.exact_source.projected
+
+    def get_exact_source(self) -> ExactThomsonSource:
+        if self.exact_source is None:
+            _ = self.get_source()
+        assert self.exact_source is not None
+        return self.exact_source
 
 
 class _TemperatureProjectedCollision(CollisionOperator):
@@ -369,7 +376,6 @@ class Ver2TierBIntegrator:
         )
         self._temperature_collision = _TemperatureProjectedCollision()
         self._e_collision = _EProjectedCollision()
-        self._tilted_electron = _tilted_electron(species=species, config=config)
         self._direction = np.asarray(config.tilt_direction, dtype=np.float64)
         if not np.any(self._direction):
             self._direction = np.array([1.0, 0.0, 0.0], dtype=np.float64)
@@ -380,6 +386,30 @@ class Ver2TierBIntegrator:
         self.startup_state: QuadrupoleStartupState | None = None
         self.seed_injection_mode: str = "uninitialized"
         self.seed_velocity_scale: float = 1.0
+
+    def _tilted_electron_at(self, eta: float) -> TiltedSpeciesBackground | None:
+        if abs(float(self.config.tilt_rapidity)) == 0.0:
+            return None
+        velocity = np.asarray(
+            [
+                np.interp(
+                    float(eta),
+                    np.asarray(self.background_monitor.eta, dtype=np.float64),
+                    np.asarray(self.background_monitor.tilt_velocity, dtype=np.float64)[:, axis],
+                )
+                for axis in range(3)
+            ],
+            dtype=np.float64,
+        )
+        speed = float(np.linalg.norm(velocity))
+        if speed <= 0.0:
+            return None
+        direction = tuple((velocity / speed).tolist())
+        return TiltedSpeciesBackground.from_rapidity(
+            base=self.species[SpeciesLabel.BARYON],
+            rapidity=float(np.arctanh(min(speed, 1.0 - 1.0e-15))),
+            v_hat_e=direction,
+        )
 
     def initial_state(self) -> np.ndarray:
         seeded = self._build_seeded_initial_state()
@@ -416,17 +446,16 @@ class Ver2TierBIntegrator:
         )
         injection_mode = "orthogonal_regular_adiabatic_seed"
         if abs(float(self.config.tilt_rapidity)) > 0.0:
-            try:
-                if not is_axis_aligned(tuple(float(x) for x in self._direction)):
-                    raise NotImplementedError("FB-5.2")
-                seed_state = apply_tilted_boost_seed_rule(
-                    seed_state,
-                    beta=float(self.config.tilt_rapidity),
-                    v_hat_e=tuple(float(x) for x in self._direction),
+            if not is_axis_aligned(tuple(float(x) for x in self._direction)):
+                raise NotImplementedError(
+                    "FB-5.2 off_axis_not_closed: no orthogonal seed fallback is allowed"
                 )
-                injection_mode = "axisymmetric_tilted_regular_adiabatic_seed"
-            except NotImplementedError:
-                injection_mode = "orthogonal_regular_adiabatic_seed_off_axis_tilt_fallback"
+            seed_state = apply_tilted_boost_seed_rule(
+                seed_state,
+                beta=float(self.config.tilt_rapidity),
+                v_hat_e=tuple(float(x) for x in self._direction),
+            )
+            injection_mode = "axisymmetric_tilted_regular_adiabatic_seed"
 
         tilt_speed = rapidity_to_velocity(float(self.config.tilt_rapidity))
         projected_seed: PackedRegularSeedInjection = project_packed_regular_seed(
@@ -534,7 +563,7 @@ class Ver2TierBIntegrator:
             polarization_state=photon_E,
             Gamma_T=float(gamma_t),
             direction=self._direction,
-            tilted_electron=self._tilted_electron,
+            tilted_electron=self._tilted_electron_at(float(eta)),
             v_b_real_sph=np.zeros(3, dtype=np.float64),
             b_state=zero_hierarchy(self.config.L_max),
         )
@@ -745,6 +774,7 @@ class Ver2TierBIntegrator:
             "neutrino_hierarchy_mode": "full_pstf_with_reduced_summary_export",
             "checkpoint_write_count": int(checkpoint_write_count),
             "restart_used": bool(restart_used),
+            "collision_owner": "exact_thomson_wrapper",
         }
         return IntegrationResult(
             eta=eta_arr,

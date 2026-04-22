@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from math import pi
-from typing import Any, Callable
+from typing import Any, Callable, Mapping
 
 import numpy as np
 
@@ -28,6 +28,7 @@ from bass.los.ver2_source_propagator import (
 )
 from bass.runtime.ver2_execution import (
     FeatureStatus,
+    IntegratorFamily,
     RuntimeControlBlock,
     SolverFeatureFlags,
     SolverTier,
@@ -151,6 +152,40 @@ def _structure_metadata(
     }
 
 
+def _default_solver_resolution(
+    runtime_controls: RuntimeControlBlock,
+) -> tuple[str, str]:
+    family = runtime_controls.integrator_family
+    if family is IntegratorFamily.IMPLICIT_BDF:
+        return "BDF", "runtime_family_direct"
+    if family is IntegratorFamily.IMPLICIT_RADAU:
+        return "Radau", "runtime_family_direct"
+    if family is IntegratorFamily.EXPLICIT_RK:
+        return "RK45", "runtime_family_direct"
+    if family is IntegratorFamily.IMEX_SPLIT:
+        return "BDF", "declared_imex_policy_bdf_executor"
+    raise ValueError(f"unsupported integrator_family {family!r}")
+
+
+def _propagator_readiness(
+    propagator: SourcePropagatorConfig,
+    feature_flags: SolverFeatureFlags,
+) -> str:
+    if feature_flags.source_propagator is FeatureStatus.DISABLED:
+        return "contract_only_unavailable"
+    if propagator.temperature_transport is FeatureStatus.DISABLED:
+        return "contract_only_unavailable"
+    if propagator.kernel_family == "bianchi_i_matrix_exact":
+        return "exact"
+    if propagator.kernel_family == "flrw_scalar_validation":
+        return "contract_only_unavailable"
+    return "approximate_family_kernel"
+
+
+def _base_covariance_readiness(anisotropic_covariance: object | None) -> str:
+    return "proxy" if anisotropic_covariance is not None else "missing"
+
+
 @dataclass(frozen=True)
 class BassReleaseMetadata:
     """Release and reproducibility metadata for one solver run."""
@@ -198,11 +233,16 @@ def build_solver_core_output(
     map_U: object | None = None,
     deterministic_template: dict[str, Any] | None = None,
     anisotropic_covariance: object | None = None,
+    gate_registry: Mapping[str, object] | None = None,
     extra_metadata: dict[str, Any] | None = None,
 ) -> SolverCoreOutput:
     """Build the canonical observer-neutral `SolverCoreOutput` shell."""
     if manifest.owner != "BASS":
         raise ValueError("SolverCoreOutput manifests must be owned by BASS")
+    resolved_solver_method, executor_realization = _default_solver_resolution(
+        runtime_controls
+    )
+    propagator_readiness = _propagator_readiness(propagator, feature_flags)
     metadata = {
         "bianchi_type": bianchi_type,
         "harmonic_basis": harmonic_basis,
@@ -212,18 +252,47 @@ def build_solver_core_output(
         "thomson_mode": thomson_mode,
         "solver_tier": runtime_controls.tier.value,
         "integrator_family": runtime_controls.integrator_family.value,
+        "requested_integrator_family": runtime_controls.integrator_family.value,
+        "resolved_solver_method": resolved_solver_method,
+        "executor_realization": executor_realization,
         "coupling_mode": runtime_controls.coupling_mode.value,
         "propagator_mode": propagator.mode.value,
+        "propagator_readiness": propagator_readiness,
+        "propagator_exactness": propagator_readiness,
+        "covariance_readiness": _base_covariance_readiness(anisotropic_covariance),
         "feature_flags": {key: value.value for key, value in asdict(feature_flags).items()},
         "release_stage": release.release_stage,
         "run_label": release.run_label,
         "observer_neutral": True,
         "forbidden_products": ("posterior", "likelihood", "p_value"),
+        "tilt_background_owner": runtime_controls.tilt_background_owner,
+        "tilt_background_owner_status": (
+            "production_dynamic_nonperturbative_rapidity"
+            if runtime_controls.tilt_background_owner == "nonperturbative_tilt_rhs"
+            else "production_policy_fixed_velocity_closure"
+        ),
+        "nonperturbative_tilt_rhs_status": (
+            "runtime_wired_dynamic_rapidity_owner"
+            if runtime_controls.tilt_background_owner == "nonperturbative_tilt_rhs"
+            else "research_contract_only"
+        ),
+        "off_axis_support": False,
+        "axis_aligned_tilt_support": True,
+        "off_axis_fallback_applied": False,
+        "off_axis_block_reason": "off_axis_not_closed",
+        "reionization_history_readiness": "homogeneous_tanh_only",
+        "reionization_anisotropy_support": False,
+        "reionization_block_reason": "anisotropic_reionization_not_implemented",
+        "neutrino_background_readiness": "massless_only",
+        "massive_neutrino_support": False,
+        "massive_neutrino_block_reason": "massive_neutrino_background_not_implemented",
         **_base_interop_metadata(
             bianchi_type=bianchi_type,
             tilt_enabled=tilt_enabled,
         ),
     }
+    if gate_registry is not None:
+        metadata["gate_registry"] = dict(gate_registry)
     if extra_metadata is not None:
         overlap = {
             key for key in extra_metadata
@@ -570,6 +639,7 @@ def build_solver_core_output_from_native_result(
     thomson_mode: str = "electron_frame_projected",
     limber_eta_sp_sign: str = "integrator",
     off_diagonal_strategy: str = "m_decoupled_blocks",
+    gate_registry: Mapping[str, object] | None = None,
 ) -> SolverCoreOutput:
     """Build an observer-neutral VER2 output from the native Tier-B core."""
     if runtime_controls.tier is not SolverTier.TIER_B_PSTF:
@@ -651,6 +721,7 @@ def build_solver_core_output_from_native_result(
             kind="tier_b_native_template",
         ),
         anisotropic_covariance=live_propagator.covariance_bundle,
+        gate_registry=gate_registry,
         extra_metadata={
             **_structure_metadata(
                 structure=structure_constants,
@@ -669,9 +740,34 @@ def build_solver_core_output_from_native_result(
             "source_propagator_requested_status": feature_flags.source_propagator.value,
             "source_propagator_rotation_status": live_propagator.config.polarization_rotation.value,
             "source_propagator_realization": live_propagator.config.kernel_family,
+            "requested_integrator_family": str(
+                result.solver_info.get(
+                    "requested_integrator_family",
+                    runtime_controls.integrator_family.value,
+                )
+            ),
             "tier_b_core_owner": str(result.solver_info.get("tier_b_core_owner", "ver2_s1s2_native")),
-            "solver_method": str(result.solver_info.get("solver_method", result.config.solver_method)),
-            "solver_family_realization": str(result.solver_info.get("solver_family_realization", "runtime_family_direct")),
+            "solver_method": str(
+                result.solver_info.get("solver_method", result.config.solver_method)
+            ),
+            "resolved_solver_method": str(
+                result.solver_info.get(
+                    "resolved_solver_method",
+                    result.solver_info.get("solver_method", result.config.solver_method),
+                )
+            ),
+            "executor_realization": str(
+                result.solver_info.get(
+                    "executor_realization",
+                    result.solver_info.get(
+                        "solver_family_realization",
+                        "runtime_family_direct",
+                    ),
+                )
+            ),
+            "solver_family_realization": str(
+                result.solver_info.get("solver_family_realization", "runtime_family_direct")
+            ),
             "neutrino_hierarchy_mode": str(result.solver_info.get("neutrino_hierarchy_mode", "reduced_summary_only")),
             "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
             "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
@@ -696,6 +792,7 @@ def build_solver_core_output_from_lowell_result(
     thomson_mode: str = "electron_frame_projected",
     limber_eta_sp_sign: str = "integrator",
     off_diagonal_strategy: str = "m_decoupled_blocks",
+    gate_registry: Mapping[str, object] | None = None,
 ) -> SolverCoreOutput:
     """Build an executable Tier-B neutral output from the current Lowell result.
 
@@ -804,6 +901,7 @@ def build_solver_core_output_from_lowell_result(
             kind="tier_b_lowell_template",
         ),
         anisotropic_covariance=live_propagator.covariance_bundle,
+        gate_registry=gate_registry,
         extra_metadata={
             **_structure_metadata(
                 structure=structure_constants,
@@ -822,6 +920,24 @@ def build_solver_core_output_from_lowell_result(
             "source_propagator_requested_status": feature_flags.source_propagator.value,
             "source_propagator_rotation_status": live_propagator.config.polarization_rotation.value,
             "source_propagator_realization": live_propagator.config.kernel_family,
+            "solver_method": str(
+                result.solver_info.get("solver_method", result.config.solver_method)
+            ),
+            "resolved_solver_method": str(
+                result.solver_info.get(
+                    "resolved_solver_method",
+                    result.solver_info.get("solver_method", result.config.solver_method),
+                )
+            ),
+            "executor_realization": str(
+                result.solver_info.get(
+                    "executor_realization",
+                    result.solver_info.get(
+                        "solver_family_realization",
+                        "runtime_family_direct",
+                    ),
+                )
+            ),
             **source_builder_metadata,
         },
     )

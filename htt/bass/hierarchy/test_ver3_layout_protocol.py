@@ -102,6 +102,8 @@ def test_layout_manifest_records_backend_metadata() -> None:
     assert manifest["branch"] == "tilted"
     assert manifest["mode_labels"] == ["m0"]
     assert manifest["boundary_policy"] == "cartesian_regular"
+    assert manifest["operator_realization"] == "contract_template_operator"
+    assert manifest["exact_family_operator_available"] is False
 
 
 def test_assemble_hierarchy_ops_binds_backend_with_source_tables() -> None:

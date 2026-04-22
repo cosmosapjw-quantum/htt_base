@@ -47,12 +47,16 @@ from __future__ import annotations
 from typing import Callable
 
 import numpy as np
+from scipy.integrate import solve_ivp
 
 from bass.background.hooks import HookState
+from bass.species.base import CANONICAL_ORDER, SpeciesLabel
+from bass.species.registry import SpeciesBackgroundRegistry
 
 __all__ = [
     'omega_tilt_exact',
     'omega_tilt_exact_vec',
+    'integrate_tilt_rapidity_history',
     'rhs_bianchi',
     'rhs_for_family',
     'SUPPORTED_FAMILIES',
@@ -131,6 +135,68 @@ def omega_tilt_exact_vec(
     """Vectorised ``omega_tilt_exact`` along matching arrays."""
     one_plus_w_Omega = (4.0 / 3.0) * np.asarray(Omega_r) + np.asarray(Omega_m)
     return one_plus_w_Omega * np.sinh(np.asarray(beta)) ** 2
+
+
+def integrate_tilt_rapidity_history(
+    *,
+    registry: SpeciesBackgroundRegistry,
+    a_start: float,
+    a_end: float,
+    beta_initial: float,
+    n_steps: int = 256,
+    solver_method: str = "BDF",
+    rtol: float = 1.0e-8,
+    atol: float = 1.0e-10,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Integrate the exact King-Ellis rapidity history on the FLRW table.
+
+    The nonperturbative rapidity equation used by the tilted-background owner is
+
+    ``dβ/dN = -(1 - 3 c_s^2) sinh(β) cosh(β)``,
+
+    with ``c_s^2 = w_eff = p_total / rho_total`` evaluated from the live species
+    registry at the corresponding scale factor. The tilt direction stays fixed;
+    only the rapidity magnitude is evolved here.
+    """
+    if a_start <= 0.0 or a_end <= a_start:
+        raise ValueError(
+            f"require 0 < a_start < a_end, got a_start={a_start!r}, a_end={a_end!r}"
+        )
+    beta0 = float(beta_initial)
+    if not np.isfinite(beta0) or beta0 < 0.0:
+        raise ValueError(f"beta_initial must be non-negative finite, got {beta_initial!r}")
+    N_grid = np.linspace(np.log(float(a_start)), np.log(float(a_end)), int(n_steps))
+
+    def rhs(N: float, y: np.ndarray) -> np.ndarray:
+        a_val = float(np.exp(float(N)))
+        eta = float(registry.bg_table.eta_at_a(a_val))
+        rho_total = 0.0
+        p_total = 0.0
+        for label in CANONICAL_ORDER:
+            if label is SpeciesLabel.LAMBDA:
+                continue
+            rho_total += float(registry[label].rho_rest(eta))
+            p_total += float(registry[label].p_rest(eta))
+        w_eff = 0.0 if abs(rho_total) < 1.0e-30 else p_total / rho_total
+        beta = float(y[0])
+        return np.array(
+            [-(1.0 - 3.0 * w_eff) * np.sinh(beta) * np.cosh(beta)],
+            dtype=np.float64,
+        )
+
+    sol = solve_ivp(
+        rhs,
+        (float(N_grid[0]), float(N_grid[-1])),
+        np.array([beta0], dtype=np.float64),
+        t_eval=N_grid,
+        method=str(solver_method),
+        rtol=float(rtol),
+        atol=float(atol),
+    )
+    if not sol.success:
+        raise RuntimeError(f"nonperturbative tilt rapidity solve failed: {sol.message}")
+    beta = np.maximum(np.asarray(sol.y[0], dtype=np.float64), 0.0)
+    return np.exp(np.asarray(sol.t, dtype=np.float64)), beta
 
 
 # ════════════════════════════════════════════════════════════════════

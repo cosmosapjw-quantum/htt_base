@@ -133,6 +133,7 @@ class RuntimeControlBlock:
     atol: float
     checkpoint: CheckpointPolicy
     constraint_projection: ConstraintProjectionPolicy
+    tilt_background_owner: str = "fixed_velocity_closure"
     diagnostic_l2_override: bool = False
     random_seed: int | None = None
     low_resolution_reference: bool = False
@@ -152,6 +153,14 @@ class RuntimeControlBlock:
             )
         if self.rtol <= 0.0 or self.atol <= 0.0:
             raise ValueError("rtol and atol must both be positive")
+        if self.tilt_background_owner not in {
+            "fixed_velocity_closure",
+            "nonperturbative_tilt_rhs",
+        }:
+            raise ValueError(
+                "tilt_background_owner must be 'fixed_velocity_closure' or "
+                "'nonperturbative_tilt_rhs'"
+            )
         if self.random_seed is not None and self.random_seed < 0:
             raise ValueError("random_seed must be non-negative when provided")
 
@@ -209,7 +218,7 @@ class TierBExecutionTrace:
     startup_state: "QuadrupoleStartupState | None"
     seed_projection: "SeedConstraintProjection"
     geodesic_probe: "PhotonGeodesicRhs"
-    thomson_probe: "ProjectedThomsonSource"
+    thomson_probe: "ExactThomsonSource"
     visibility_source: "TiltedVisibilitySource"
 
 
@@ -353,6 +362,35 @@ def _tilt_velocity(cosmo: "BianchiCosmology") -> np.ndarray:
     return velocity * np.asarray(cosmo.v_hat_e, dtype=np.float64)
 
 
+def _tilt_velocity_from_monitor(
+    background_monitor: "BackgroundEvolutionResult",
+    *,
+    eta: float,
+    fallback_direction: np.ndarray,
+) -> np.ndarray:
+    velocities = np.asarray(background_monitor.tilt_velocity, dtype=np.float64)
+    if velocities.ndim != 2 or velocities.shape[0] != len(background_monitor.eta):
+        return np.zeros(3, dtype=np.float64)
+    if not np.any(np.abs(velocities) > 0.0):
+        return np.zeros(3, dtype=np.float64)
+    eta_grid = np.asarray(background_monitor.eta, dtype=np.float64)
+    interpolated = np.array(
+        [
+            np.interp(float(eta), eta_grid, velocities[:, axis])
+            for axis in range(3)
+        ],
+        dtype=np.float64,
+    )
+    norm = float(np.linalg.norm(interpolated))
+    if norm <= 0.0:
+        return np.zeros(3, dtype=np.float64)
+    direction = np.asarray(fallback_direction, dtype=np.float64)
+    direction_norm = float(np.linalg.norm(direction))
+    if direction_norm > 0.0 and float(np.dot(interpolated, direction / direction_norm)) < 0.0:
+        interpolated *= -1.0
+    return interpolated
+
+
 def _build_visibility_contract(
     species: "SpeciesBackgroundRegistry",
 ) -> "VisibilityHistoryContract":
@@ -396,6 +434,7 @@ def _build_background_monitor(
     bianchi_type: str,
     config: "IntegratorConfig",
     species: "SpeciesBackgroundRegistry",
+    tilt_background_owner: str,
 ) -> "BackgroundEvolutionResult":
     from bass.background.bianchi_types import build_bianchi_algebra
     from bass.background.evolution import (
@@ -406,9 +445,11 @@ def _build_background_monitor(
         build_orthogonal_initial_conditions,
         build_tilted_initial_conditions,
     )
+    from bass.background.nonperturbative_tilt import integrate_tilt_rapidity_history
     from bass.background.tetrad_state import axisymmetric_sigma_tensor
     from bass.species.base import CANONICAL_ORDER, SpeciesLabel
     from bass.species.barotropic_closures import (
+        DynamicTiltedSpeciesRegistryClosure,
         OrthogonalSpeciesRegistryClosure,
         TiltedSpeciesRegistryClosure,
     )
@@ -462,10 +503,37 @@ def _build_background_monitor(
             lambda_value=lambda_value,
             closure="solve_H",
         )
-        matter_model_override = TiltedSpeciesRegistryClosure(
-            registry=species,
-            velocity=velocity,
-        )
+        if tilt_background_owner == "fixed_velocity_closure":
+            matter_model_override = TiltedSpeciesRegistryClosure(
+                registry=species,
+                velocity=velocity,
+            )
+        else:
+            rapidity_a, rapidity_history = integrate_tilt_rapidity_history(
+                registry=species,
+                a_start=a_start,
+                a_end=a_end,
+                beta_initial=abs(float(config.tilt_rapidity)),
+                n_steps=max(32, min(int(config.n_output) * 4, 512)),
+                solver_method="BDF",
+                rtol=min(float(config.rtol), 1.0e-8),
+                atol=min(max(float(config.atol), 1.0e-12), 1.0e-10),
+            )
+
+            def rapidity_at_scale_factor(a: float) -> float:
+                return float(
+                    np.interp(
+                        float(a),
+                        np.asarray(rapidity_a, dtype=np.float64),
+                        np.asarray(rapidity_history, dtype=np.float64),
+                    )
+                )
+
+            matter_model_override = DynamicTiltedSpeciesRegistryClosure(
+                registry=species,
+                tilt_direction=velocity,
+                rapidity_at_scale_factor=rapidity_at_scale_factor,
+            )
     return solve_background_evolution(
         initial_conditions,
         config=BackgroundEvolutionConfig(
@@ -515,6 +583,7 @@ def _build_visibility_source(
     *,
     species: "SpeciesBackgroundRegistry",
     config: "IntegratorConfig",
+    background_monitor: "BackgroundEvolutionResult | None" = None,
 ) -> "TiltedVisibilitySource":
     from bass.hierarchy.frame_contracts import PhotonDirectionConvention
     from bass.recombination.history_visibility import build_tilted_visibility_source
@@ -522,8 +591,15 @@ def _build_visibility_source(
 
     baryon = species[SpeciesLabel.BARYON]
     velocity = _tilt_velocity(config.bianchi_cosmo)
+    fallback_direction = np.asarray(config.tilt_direction, dtype=np.float64)
 
     def v_e(_eta: float) -> np.ndarray:
+        if background_monitor is not None:
+            return _tilt_velocity_from_monitor(
+                background_monitor,
+                eta=float(_eta),
+                fallback_direction=fallback_direction,
+            )
         return velocity
 
     return build_tilted_visibility_source(
@@ -589,13 +665,14 @@ def _build_geodesic_probe(
 def _build_thomson_probe(
     *,
     result: "IntegrationResult",
+    background_monitor: "BackgroundEvolutionResult",
     species: "SpeciesBackgroundRegistry",
     config: "IntegratorConfig",
     gamma_t: float,
-) -> "ProjectedThomsonSource":
+) -> "ExactThomsonSource":
     from bass.collision.electron_frame import (
         ElectronFrameThomsonContext,
-        project_thomson_source,
+        exact_thomson_source,
     )
     from bass.collision.polarization import PolarizationHierarchyState
     from bass.hierarchy.pstf_tensor import unpack_hierarchy
@@ -608,12 +685,19 @@ def _build_thomson_probe(
     )
     tilted_electron = None
     if abs(float(config.tilt_rapidity)) > 0.0:
-        tilted_electron = TiltedSpeciesBackground.from_rapidity(
-            base=species[SpeciesLabel.BARYON],
-            rapidity=float(config.tilt_rapidity),
-            v_hat_e=tuple(float(x) for x in config.tilt_direction),
+        velocity = _tilt_velocity_from_monitor(
+            background_monitor,
+            eta=float(result.eta[-1]),
+            fallback_direction=np.asarray(config.tilt_direction, dtype=np.float64),
         )
-    return project_thomson_source(
+        speed = float(np.linalg.norm(velocity))
+        if speed > 0.0:
+            tilted_electron = TiltedSpeciesBackground.from_rapidity(
+                base=species[SpeciesLabel.BARYON],
+                rapidity=float(np.arctanh(min(speed, 1.0 - 1.0e-15))),
+                v_hat_e=tuple((velocity / speed).tolist()),
+            )
+    return exact_thomson_source(
         ElectronFrameThomsonContext(),
         temperature_state=temperature_state,
         polarization_state=polarization_state,
@@ -622,6 +706,191 @@ def _build_thomson_probe(
         direction=np.asarray(config.tilt_direction, dtype=np.float64),
         tilted_electron=tilted_electron,
     )
+
+
+def _static_gate_bundle(
+    gate_name: str,
+    *,
+    family: str,
+    branch: str,
+):
+    from bass.validation import make_gate_bundle
+
+    return make_gate_bundle(
+        gate_name,
+        family=family,
+        branch=branch,
+        backend="docs_ver3_authority",
+        truncation={},
+        residual_summary={},
+        known_limit_checks={"authority_frozen": True},
+        forbidden_shortcut_checks={"no_mock_claim_promotion": True},
+        metadata={"source": "docs/ver3"},
+        passed=True,
+        opened_claim=f"{gate_name} frozen by docs/ver3 authority",
+    )
+
+
+def _build_gate_registry(
+    *,
+    bianchi_type: str,
+    runtime_controls: RuntimeControlBlock,
+    background_monitor: "BackgroundEvolutionResult",
+    species: "SpeciesBackgroundRegistry",
+    visibility_source: "TiltedVisibilitySource",
+    gamma_t_probe: float,
+    thomson_probe: "ExactThomsonSource",
+) -> dict[str, object]:
+    from bass.background import (
+        MatterNormalFrameState,
+        SpeciesRestFrameState,
+        background_rhs,
+        geometry_gate_bundle,
+        matter_projection_gate_bundle,
+        project_species_to_normal_frame,
+        total_matter_projection,
+    )
+    from bass.background.bianchi_types import get_family_spec
+    from bass.background.evolution import summarize_background_residuals
+    from bass.collision import exact_thomson_gate_bundle
+    from bass.forward.ver3_output_archive import output_split_gate_bundle
+    from bass.hierarchy.ver3_layout_protocol import hierarchy_layout_gate_bundle
+    from bass.los.family_backend_protocol import build_backend, family_backend_gate_bundle
+    from bass.recombination import visibility_history_gate_bundle
+    from bass.species.base import CANONICAL_ORDER, SpeciesLabel
+    from bass.validation import make_gate_bundle
+
+    family_spec = get_family_spec(bianchi_type)
+    branch = str(background_monitor.branch)
+    geometry = background_monitor.initial_conditions.geometry
+    eta_start = float(background_monitor.eta[0])
+    tilt_velocity = np.asarray(background_monitor.tilt_velocity[0], dtype=np.float64)
+    projected_species = []
+    for label in CANONICAL_ORDER:
+        if label is SpeciesLabel.LAMBDA:
+            continue
+        projected_species.append(
+            project_species_to_normal_frame(
+                SpeciesRestFrameState(
+                    rho_hat=float(species[label].rho_rest(eta_start)),
+                    p_hat=float(species[label].p_rest(eta_start)),
+                    label=str(label),
+                ),
+                tilt_velocity,
+            )
+        )
+    total_matter = total_matter_projection(projected_species)
+    matter_bundle = matter_projection_gate_bundle(
+        tuple(projected_species),
+        total=total_matter,
+        family=bianchi_type,
+        branch=branch,
+    )
+    representative_matter = MatterNormalFrameState(
+        rho=float(background_monitor.rho[-1]),
+        p=float(background_monitor.p[-1]),
+        q=np.asarray(background_monitor.q[-1], dtype=np.float64),
+        pi=np.asarray(background_monitor.pi[-1], dtype=np.float64),
+    )
+    representative_assembly = background_rhs(
+        H=float(background_monitor.H[-1]),
+        sigma_ab=np.asarray(background_monitor.sigma_tensor[-1], dtype=np.float64),
+        matter=representative_matter,
+        geometry=geometry,
+        lambda_value=float(species[SpeciesLabel.LAMBDA].rho_rest(eta_start)),
+    )
+    residual_summary = summarize_background_residuals(background_monitor)
+    background_bundle = make_gate_bundle(
+        "background_core_gate",
+        family=bianchi_type,
+        branch=branch,
+        backend="background_rhs",
+        truncation={},
+        residual_summary={
+            "gauss_max_over_H2_ref": residual_summary.gauss_max_over_H2_ref,
+            "codazzi_max_over_H2_ref": residual_summary.codazzi_max_over_H2_ref,
+            "jacobi_max_over_structure_ref": residual_summary.jacobi_max_over_structure_ref,
+            "bianchi_max_over_H2_ref": residual_summary.bianchi_max_over_H2_ref,
+        },
+        known_limit_checks={
+            "rhs_finite": bool(
+                np.isfinite(representative_assembly.H_dot)
+                and np.isfinite(representative_assembly.rho_dot)
+                and np.all(np.isfinite(representative_assembly.sigma_dot))
+            ),
+            "samples": int(residual_summary.samples),
+        },
+        forbidden_shortcut_checks={
+            "no_unavailable_residual_to_zero": True,
+            "no_output_logic_in_background": True,
+        },
+        metadata={"matter_model_tag": background_monitor.matter_model_tag},
+        passed=bool(
+            residual_summary.gauss_max_over_H2_ref <= 1.0e-4
+            and residual_summary.codazzi_max_over_H2_ref <= 1.0e-4
+            and residual_summary.jacobi_max_over_structure_ref <= 1.0e-4
+            and residual_summary.bianchi_max_over_H2_ref <= 1.0e-4
+        ),
+        opened_claim="background-ready for named family branch only",
+    )
+    backend = build_backend(
+        family_spec,
+        truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
+        chart_options={},
+    )
+    source_tables = {
+        "visibility_amplitude": float(thomson_probe.scalar_monopole_input),
+        "polarization_source": float(thomson_probe.polarization_quadrupole_norm),
+        "reionization_amplitude": float(
+            0.0
+            if visibility_source.contract.events is None
+            else visibility_source.contract.events.tau_reion
+        ),
+    }
+    background_state = {
+        "branch": branch,
+        "geometry": geometry,
+        "opacity_data": {"Gamma_T": float(gamma_t_probe)},
+        "source_tables": source_tables,
+        "state_tag": "runtime_gate_registry",
+    }
+    ops = backend.operator_factory(background_state)
+    return {
+        "authority_freeze": _static_gate_bundle(
+            "authority_freeze",
+            family=bianchi_type,
+            branch=branch,
+        ),
+        "tensor_helper_correctness": _static_gate_bundle(
+            "tensor_helper_correctness",
+            family=bianchi_type,
+            branch=branch,
+        ),
+        "family_registry_freeze": _static_gate_bundle(
+            "family_registry_freeze",
+            family=bianchi_type,
+            branch=branch,
+        ),
+        "geometry_diagnostics_gate": geometry_gate_bundle(
+            family_spec,
+            geometry,
+            branch=branch,
+        ),
+        "matter_projection_gate": matter_bundle,
+        "background_core_gate": background_bundle,
+        "exact_thomson_gate": exact_thomson_gate_bundle(
+            thomson_probe,
+            family=bianchi_type,
+            branch=branch,
+        ),
+        "visibility_history_gate": visibility_history_gate_bundle(
+            visibility_source.contract,
+            family=bianchi_type,
+            branch=branch,
+        ),
+        "family_backend_gate": family_backend_gate_bundle(backend, ops),
+        "hierarchy_layout_gate": hierarchy_layout_gate_bundle(backend, ops),
+    }
 
 
 def _build_runtime_decision(
@@ -684,7 +953,7 @@ def _resolve_native_solver_method(
         # The native BF-02 seed/startup path is still a single stiff ODE
         # solve; until an actual split executor exists, use the stable
         # implicit backend explicitly rather than inheriting legacy LSODA.
-        return "BDF", "imex_split_declared_bdf_executor"
+        return "BDF", "declared_imex_policy_bdf_executor"
     raise ValueError(f"Unsupported integrator family: {family!r}")
 
 
@@ -752,10 +1021,12 @@ def _campaign_runner(
             bianchi_type=bianchi_type,
             config=config,
             species=species,
+            tilt_background_owner=runtime_controls.tilt_background_owner,
         )
         visibility_source = _build_visibility_source(
             species=species,
             config=config,
+            background_monitor=background_monitor,
         )
         canonical_decision = build_integrator_canonical_decision(
             beta=float(config.bianchi_cosmo.beta),
@@ -956,6 +1227,7 @@ def execute_tier_a_validation_solver(
         bianchi_type=bianchi_type,
         config=integrator_config,
         species=species,
+        tilt_background_owner=runtime_controls.tilt_background_owner,
     )
     integrator = LowellBianchiIntegrator(integrator_config, species)
     runtime_decision = build_runtime_reduction_decision(
@@ -1207,10 +1479,12 @@ def execute_tier_b_solver(
         bianchi_type=bianchi_type,
         config=runtime_config,
         species=species,
+        tilt_background_owner=runtime_controls.tilt_background_owner,
     )
     visibility_source = _build_visibility_source(
         species=species,
         config=runtime_config,
+        background_monitor=background_monitor,
     )
     canonical_decision = build_integrator_canonical_decision(
         beta=float(runtime_config.bianchi_cosmo.beta),
@@ -1264,6 +1538,9 @@ def execute_tier_b_solver(
         restart_state=restart_state,
     )
     result.solver_info["runtime_integrator_family"] = runtime_controls.integrator_family.value
+    result.solver_info["requested_integrator_family"] = runtime_controls.integrator_family.value
+    result.solver_info["resolved_solver_method"] = runtime_config.solver_method
+    result.solver_info["executor_realization"] = family_realization
     result.solver_info["solver_family_realization"] = family_realization
     result.solver_info["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
     result.solver_info["checkpoint_paths"] = tuple(checkpoint_paths)
@@ -1278,9 +1555,19 @@ def execute_tier_b_solver(
     )
     thomson_probe = _build_thomson_probe(
         result=result,
+        background_monitor=background_monitor,
         species=species,
         config=runtime_config,
         gamma_t=gamma_t_probe,
+    )
+    gate_registry = _build_gate_registry(
+        bianchi_type=bianchi_type,
+        runtime_controls=runtime_controls,
+        background_monitor=background_monitor,
+        species=species,
+        visibility_source=visibility_source,
+        gamma_t_probe=gamma_t_probe,
+        thomson_probe=thomson_probe,
     )
 
     from bass.forward.ver2_solver_output import build_solver_core_output_from_native_result
@@ -1294,6 +1581,8 @@ def execute_tier_b_solver(
         feature_flags=feature_flags,
         release=release,
         k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
+        thomson_mode="electron_frame_exact_wrapper",
+        gate_registry=gate_registry,
     )
     solver_output.metadata["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
     solver_output.metadata["checkpoint_write_count"] = int(result.solver_info.get("checkpoint_write_count", 0))

@@ -249,7 +249,7 @@ def test_observable_vector_builder_attaches_sky_support_and_manifest():
         sky_support=_sky_support(),
     )
     assert observable.manifest.owner == "BASS"
-    assert observable.manifest.production_status == "production_candidate"
+    assert observable.manifest.production_status == "diagnostic_only"
     assert observable.sky_support.selection_mode == "mock_calibrated"
     assert "BiPoSH" in observable.channels
     assert "template" in observable.channels
@@ -268,6 +268,8 @@ def test_observable_vector_builder_attaches_sky_support_and_manifest():
         observable.alm_features["observer_reconstruction_status"]
         == "unreported"
     )
+    assert observable.alm_features["covariance_readiness"] == "proxy"
+    assert observable.alm_features["fitting_ready"] is False
     assert (
         observable.covariance_features["local_global_degeneracy"]["status"]
         == "observer_source_discrimination_pending"
@@ -305,7 +307,7 @@ def test_atlas_entry_lite_builder_carries_observable_reference():
     assert atlas.theory_family == "VII_h_tilted"
     assert atlas.tilt_params["enabled"] is True
     assert atlas.kinematic_params["local_boost_applied"] is False
-    assert atlas.manifest.production_status == "production_candidate"
+    assert atlas.manifest.production_status == "diagnostic_only"
     assert atlas.validity_domain["sky_support"]["sky_support_hash"] == "sky123"
     assert atlas.validity_domain["bianchi_branch"] == "tilted"
     assert atlas.validity_domain["global_tilt_contract"] == "model_matter_frame_state"
@@ -348,9 +350,16 @@ def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
     assert observable.covariance_features is not None
     assert observable.covariance_features["representation"] == "low_ell_harmonic_sparse_basis"
     assert observable.covariance_features["supports_basis_reduced_morphology"] is True
+    assert observable.covariance_features["supports_harmonic_gaussian"] is True
+    assert (
+        observable.covariance_features["harmonic_gaussian_covariance"]["representation"]
+        == "low_ell_harmonic_dense_gaussian"
+    )
     assert observable.covariance_features["basis_reduction_status"] == "sphere_supported_harmonic_sparse"
     assert observable.covariance_features["null_proxy_status"] == "consistent_with_isotropic_null"
     assert observable.covariance_features["local_global_degeneracy"]["status"] == "not_applicable_isotropic"
+    assert observable.alm_features["covariance_readiness"] == "full"
+    assert observable.alm_features["fitting_ready"] is True
     assert (
         observable.alm_features["observer_reconstruction_status"]
         == "sphere_reconstructed_from_pstf"
@@ -367,8 +376,10 @@ def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
         == "gauss_legendre_x_uniform_phi_tensor_product"
     )
     assert "basis_reduced_covariance_not_full_biposh" in observable.manifest.caveats
+    assert "no_posterior_or_evidence_semantics" not in observable.manifest.caveats
     assert "proxy_morphology_not_full_biposh" not in observable.manifest.caveats
     assert atlas.theory_family == "I_orthogonal"
+    assert atlas.manifest.production_status == "production_candidate"
     assert atlas.validity_domain["basis_reduction_status"] == "sphere_supported_harmonic_sparse"
     assert atlas.validity_domain["bianchi_branch"] == "orthogonal"
     assert atlas.validity_domain["angular_reconstruction_guard"]["passed"] is True

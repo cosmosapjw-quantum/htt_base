@@ -13,6 +13,7 @@ from bass.inference.diagnostics import (
 )
 from bass.inference.drivers.emcee_driver import PosteriorSample, run_posterior
 from bass.inference.live_binding import (
+    FittingBlockedError,
     LiveObserverBoostProblem,
     build_live_observer_boost_problem,
     build_type_i_native_validation_problem,
@@ -31,6 +32,7 @@ from bass.inference.priors import (
 __all__ = [
     "BayesFactorResult",
     "ESS_THRESHOLD",
+    "FittingBlockedError",
     "GEWEKE_ABS_Z_THRESHOLD",
     "Prior",
     "PosteriorSample",

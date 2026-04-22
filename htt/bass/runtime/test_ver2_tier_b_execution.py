@@ -81,6 +81,25 @@ def _runtime_controls() -> RuntimeControlBlock:
     )
 
 
+def _runtime_controls_with_owner(owner: str) -> RuntimeControlBlock:
+    return RuntimeControlBlock(
+        tier=SolverTier.TIER_B_PSTF,
+        integrator_family=IntegratorFamily.IMEX_SPLIT,
+        coupling_mode=CouplingMode.BACKGROUND_THEN_RADIATION,
+        multipole_cutoff=4,
+        rtol=1.0e-6,
+        atol=1.0e-9,
+        checkpoint=CheckpointPolicy(enabled=False),
+        constraint_projection=ConstraintProjectionPolicy(
+            enabled=True,
+            every_n_steps=4,
+            status=FeatureStatus.APPROXIMATE,
+        ),
+        tilt_background_owner=owner,
+        random_seed=42,
+    )
+
+
 def _feature_flags() -> SolverFeatureFlags:
     return SolverFeatureFlags(
         background_dynamics=FeatureStatus.APPROXIMATE,
@@ -232,10 +251,16 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.trace.visibility_source.contract.events is not None
     assert run.trace.geodesic_probe.direction_derivative.shape == (3,)
     assert run.integration_result.solver_info["solver_method"] == "BDF"
-    assert run.integration_result.solver_info["solver_family_realization"] == "imex_split_declared_bdf_executor"
+    assert run.integration_result.solver_info["requested_integrator_family"] == "imex_split"
+    assert run.integration_result.solver_info["resolved_solver_method"] == "BDF"
+    assert run.integration_result.solver_info["executor_realization"] == "declared_imex_policy_bdf_executor"
+    assert run.integration_result.solver_info["solver_family_realization"] == "declared_imex_policy_bdf_executor"
     assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.integration_result.solver_info["startup_manifold_applied"] is True
     assert run.solver_output.metadata["propagator_ready"] is True
+    assert run.solver_output.metadata["propagator_readiness"] == "exact"
+    assert run.solver_output.metadata["propagator_exactness"] == "exact"
+    assert run.solver_output.metadata["covariance_readiness"] == "proxy"
     assert run.solver_output.metadata["source_propagator_status"] == "exact"
     assert run.solver_output.metadata["source_propagator_requested_status"] == "approximate"
     assert run.solver_output.metadata["source_propagator_rotation_status"] == "disabled"
@@ -243,6 +268,12 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.solver_output.metadata["neutrino_hierarchy_mode"] == "full_pstf_with_reduced_summary_export"
     assert run.solver_output.metadata["solver_method"] == "BDF"
+    assert run.solver_output.metadata["requested_integrator_family"] == "imex_split"
+    assert run.solver_output.metadata["resolved_solver_method"] == "BDF"
+    assert run.solver_output.metadata["executor_realization"] == "declared_imex_policy_bdf_executor"
+    assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
+    assert run.solver_output.metadata["off_axis_support"] is False
+    assert run.solver_output.metadata["off_axis_fallback_applied"] is False
     assert run.solver_output.metadata["source_builder_scope"] == "theta0_plus_combined_polter_visibility_ver2_native"
     assert run.solver_output.metadata["source_builder_combined_polter"] is True
     assert run.solver_output.metadata["source_builder_visibility_weighted_polter"] is True
@@ -320,6 +351,9 @@ def test_representative_orthogonal_families_execute_with_expected_propagator_rea
     assert run.solver_output.metadata["theory_family"] == f"{bianchi_type}_orthogonal"
     assert run.solver_output.metadata["source_propagator_realization"] == realization
     assert run.solver_output.metadata["source_propagator_status"] == status
+    expected_readiness = "exact" if status == "exact" else "approximate_family_kernel"
+    assert run.solver_output.metadata["propagator_readiness"] == expected_readiness
+    assert run.solver_output.metadata["propagator_exactness"] == expected_readiness
     assert run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
     assert run.solver_output.metadata["global_tilt_contract"] == "orthogonal_branch_zero_global_tilt"
     assert run.execution_plan.runtime_decision.propagation_status == "pending"
@@ -389,10 +423,40 @@ def test_representative_tilted_executable_families_execute_with_bounded_runtime_
     assert run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
     assert run.solver_output.metadata["source_propagator_realization"] == realization
     assert run.solver_output.metadata["source_propagator_status"] == "approximate"
+    assert run.solver_output.metadata["propagator_readiness"] == "approximate_family_kernel"
+    assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
     assert run.trace.seed_projection.projection_ready is True
     assert run.trace.seed_projection.projection_mode == "background_codazzi_project"
     assert np.linalg.norm(run.trace.seed_projection.momentum_residual_after) <= _seed_projection_tol(run)
     assert run.execution_plan.runtime_decision.propagation_status == "pending"
+
+
+def test_nonperturbative_tilt_owner_is_wired_into_runtime_background_and_collision() -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018(recombination_warning_policy="ignore")
+    run = execute_tier_b_solver(
+        manifest=_manifest(),
+        bianchi_type="V",
+        species=species,
+        integrator_config=_family_integrator_config("V", beta=1.0e-3, v_hat_e=(1.0, 0.0, 0.0)),
+        runtime_controls=_runtime_controls_with_owner("nonperturbative_tilt_rhs"),
+        feature_flags=_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+
+    assert run.trace.background_monitor.matter_model_tag == "tilted_species_registry_dynamic_rapidity"
+    assert run.solver_output.metadata["tilt_background_owner"] == "nonperturbative_tilt_rhs"
+    assert (
+        run.solver_output.metadata["tilt_background_owner_status"]
+        == "production_dynamic_nonperturbative_rapidity"
+    )
+    assert (
+        run.solver_output.metadata["nonperturbative_tilt_rhs_status"]
+        == "runtime_wired_dynamic_rapidity_owner"
+    )
+    assert run.trace.thomson_probe.opacity_contract == "electron_frame_tilt_modulated"
+    assert run.trace.background_monitor.tilt_rapidity[0] > 0.0
+    assert run.trace.background_monitor.tilt_rapidity[-1] <= run.trace.background_monitor.tilt_rapidity[0]
 
 
 def test_execute_tier_b_solver_can_reach_low_z_reionization_probe_with_extended_eta_domain() -> None:

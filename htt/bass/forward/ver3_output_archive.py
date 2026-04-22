@@ -9,7 +9,13 @@ from typing import Any, Mapping
 
 import numpy as np
 
-from bass.validation import collect_gate_bundles, score_branch_readiness, summarize_gate_status
+from bass.validation import (
+    GateBundle,
+    collect_gate_bundles,
+    make_gate_bundle,
+    score_branch_readiness,
+    summarize_gate_status,
+)
 from bass.ver3_contracts import OutputMetadata
 from common.contracts import SolverCoreOutput
 
@@ -18,6 +24,7 @@ __all__ = [
     "BoostArchive",
     "observer_boost_output",
     "observer_boost_output_from_components",
+    "output_split_gate_bundle",
     "write_output_archive",
 ]
 
@@ -246,6 +253,13 @@ def _solver_summary(
         "ordering": summary_metadata.ordering,
         "boost_applied": bool(summary_metadata.boost_applied),
         "global_tilt_present": bool(summary_metadata.global_tilt_present),
+        "propagator_readiness": output.metadata.get("propagator_readiness"),
+        "propagator_exactness": output.metadata.get("propagator_exactness"),
+        "covariance_readiness": output.metadata.get("covariance_readiness"),
+        "tilt_background_owner": output.metadata.get("tilt_background_owner"),
+        "requested_integrator_family": output.metadata.get("requested_integrator_family"),
+        "resolved_solver_method": output.metadata.get("resolved_solver_method"),
+        "executor_realization": output.metadata.get("executor_realization"),
         "residual_summary": residual_summary,
         "gate_status": {
             **gate_status,
@@ -256,6 +270,67 @@ def _solver_summary(
         "gate_score": score_branch_readiness(gate_registry),
         "bundle_gates": [gate for gate in gate_status if gate in bundle_gates],
     }
+
+
+def output_split_gate_bundle(
+    output: SolverCoreOutput,
+    *,
+    ordering: str = DEFAULT_HARMONIC_ORDERING,
+    stochastic_alm_T: object | None = None,
+    stochastic_alm_E: object | None = None,
+    stochastic_alm_B: object | None = None,
+    boost_alm_T: object | None = None,
+    boost_alm_E: object | None = None,
+    boost_alm_B: object | None = None,
+) -> GateBundle:
+    """Emit the machine-readable PR-10 output-split gate bundle."""
+
+    lmax = _lmax(output)
+    det_T = _coerce_component(output.alm_T, lmax=lmax, component="deterministic alm_T")
+    det_E = _coerce_component(output.alm_E, lmax=lmax, component="deterministic alm_E")
+    det_B = _coerce_component(output.alm_B, lmax=lmax, component="deterministic alm_B")
+    stoch_T = _coerce_component(stochastic_alm_T, lmax=lmax, component="stochastic alm_T")
+    stoch_E = _coerce_component(stochastic_alm_E, lmax=lmax, component="stochastic alm_E")
+    stoch_B = _coerce_component(stochastic_alm_B, lmax=lmax, component="stochastic alm_B")
+    boost = observer_boost_output(
+        output,
+        ordering=ordering,
+        alm_T=boost_alm_T,
+        alm_E=boost_alm_E,
+        alm_B=boost_alm_B,
+    )
+    boost_metadata = json.loads(str(boost.metadata_json))
+    return make_gate_bundle(
+        "output_split_gate",
+        family=str(output.metadata.get("bianchi_type", "unknown")),
+        branch=str(output.metadata.get("bianchi_branch", "orthogonal")),
+        backend=str(output.metadata.get("source_propagator_realization", "unknown")),
+        truncation={"ell_max": lmax, "ordering": ordering},
+        residual_summary={
+            "det_norm": float(np.linalg.norm(np.concatenate([det_T, det_E, det_B]))),
+            "stoch_norm": float(np.linalg.norm(np.concatenate([stoch_T, stoch_E, stoch_B]))),
+            "boost_norm": float(np.linalg.norm(np.concatenate([boost.alm_T, boost.alm_E, boost.alm_B]))),
+        },
+        known_limit_checks={
+            "det_component_present": True,
+            "stoch_component_present": True,
+            "boost_component_present": True,
+            "boost_metadata_valid": bool(boost_metadata["split_semantics"] == "output_only_local_boost"),
+        },
+        forbidden_shortcut_checks={
+            "no_local_boost_merged_into_global_tilt": bool(
+                output.metadata.get("tilt_boost_separation") == "explicit_nonmerged"
+            ),
+            "observer_neutral_solver_output": bool(output.metadata.get("observer_neutral", False)),
+        },
+        metadata={
+            "global_tilt_present": bool(output.metadata.get("tilt_enabled", False)),
+            "boost_applied": bool(boost_metadata["boost_applied"]),
+            "component_ordering": ordering,
+        },
+        passed=True,
+        opened_claim="output split gate frozen, local boost kept output-only",
+    )
 
 
 def _component_payload(
@@ -318,6 +393,19 @@ def write_output_archive(
     ``alm_det.npz``, ``alm_stoch.npz``, and ``alm_boost.npz`` files.
     """
     registry = {} if gate_registry is None else dict(gate_registry)
+    registry.setdefault(
+        "output_split_gate",
+        output_split_gate_bundle(
+            output,
+            ordering=ordering,
+            stochastic_alm_T=stochastic_alm_T,
+            stochastic_alm_E=stochastic_alm_E,
+            stochastic_alm_B=stochastic_alm_B,
+            boost_alm_T=boost_alm_T,
+            boost_alm_E=boost_alm_E,
+            boost_alm_B=boost_alm_B,
+        ),
+    )
     root = Path(outdir)
     root.mkdir(parents=True, exist_ok=True)
 

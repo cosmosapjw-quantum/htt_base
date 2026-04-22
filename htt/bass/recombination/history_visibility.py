@@ -50,6 +50,8 @@ class ScalarHistoryMetadata:
 
     reionization_mode: str = "disabled"
     homogeneous_reionization_only: bool = True
+    anisotropic_reionization_supported: bool = False
+    reionization_readiness: str = "homogeneous_tanh_only"
     tilted_visibility_available: bool = True
     visibility_normalization_check_required: bool = True
     source_scope: str = "scalar_history_first_pass"
@@ -64,6 +66,12 @@ class ScalarHistoryMetadata:
             raise ValueError(
                 "SK-02S2 only allows homogeneous reionization wiring"
             )
+        if self.anisotropic_reionization_supported:
+            raise ValueError(
+                "SK-02S2 does not support anisotropic or patchy reionization wiring"
+            )
+        if self.reionization_readiness != "homogeneous_tanh_only":
+            raise ValueError("scalar-history visibility freezes homogeneous_tanh_only readiness")
         if self.source_scope != "scalar_history_first_pass":
             raise ValueError(
                 "SK-02S2 freezes scalar-history-first-pass only"

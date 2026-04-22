@@ -13,7 +13,11 @@ import yaml
 from bass.background.bianchi_types import ALL_BIANCHI_TYPES
 from bass.inference.bayes import bayes_factor
 from bass.inference.drivers.emcee_driver import PosteriorSample, run_posterior
-from bass.inference.live_binding import run_type_i_native_validation_posterior
+from bass.inference.live_binding import (
+    FittingBlockedError,
+    build_type_i_native_validation_problem,
+    run_type_i_native_validation_posterior,
+)
 from bass.inference.synthetic import (
     make_problem,
     posterior_mle,
@@ -332,17 +336,101 @@ def _run_live_type_i_validation(config: dict[str, Any], *, seed: int) -> tuple[d
     dataset = _validate_dataset_contract(config)
     schedule = _sampler_schedule(config)
     summary_json, summary_markdown, posterior_dir = _summary_outputs(config)
+    baseline_problem = build_type_i_native_validation_problem(int(seed))
+    if not baseline_problem.fitting_ready:
+        blocked_payload = {
+            "seed": int(seed),
+            "dataset": {
+                "kind": str(dataset["kind"]),
+                "solver_output_ref": baseline_problem.solver_output.manifest.artifact_id,
+                "observable_vector_ref": baseline_problem.observable_vector.manifest.artifact_id,
+                "solver_tier": str(
+                    baseline_problem.solver_output.metadata.get("solver_tier", "")
+                ),
+                "source_propagator_realization": str(
+                    baseline_problem.solver_output.metadata.get(
+                        "source_propagator_realization",
+                        "",
+                    )
+                ),
+                "observable_production_status": baseline_problem.observable_vector.manifest.production_status,
+            },
+            "posterior": {
+                "converged": False,
+                "sampler": "blocked_by_fitting_gate",
+                "mle": {
+                    "beta_obs": 0.0,
+                    "rapidity_obs": 0.0,
+                    "v_hat_obs": [0.0, 0.0, 1.0],
+                },
+                "diagnostics": {
+                    "blocked": True,
+                    "block_reason": baseline_problem.gate_decision.reason,
+                    "missing_gates": list(baseline_problem.gate_decision.missing_gates),
+                    "covariance_readiness": baseline_problem.covariance_readiness,
+                },
+                "binding_origin": "solver_core_output",
+                "dataset_kind": baseline_problem.dataset_kind,
+                "fitting_ready": False,
+                "gate_decision": baseline_problem.gate_decision.as_payload(),
+            },
+        }
+        _write_json(summary_json, blocked_payload)
+        _write_live_markdown(summary_markdown, blocked_payload)
+        return blocked_payload, 1
     posterior: PosteriorSample | None = None
     problem = None
     for stage_index, stage in enumerate(schedule):
         stage_seed = int(seed) if stage_index < 2 else int(seed) + 20000 * (stage_index - 1)
-        problem, posterior = run_type_i_native_validation_posterior(
-            seed=stage_seed,
-            n_walkers=int(stage["n_walkers"]),
-            n_steps=int(stage["n_steps"]),
-            burnin=int(stage["burnin"]),
-            parallel=bool(stage["parallel"]),
-        )
+        try:
+            problem, posterior = run_type_i_native_validation_posterior(
+                seed=stage_seed,
+                n_walkers=int(stage["n_walkers"]),
+                n_steps=int(stage["n_steps"]),
+                burnin=int(stage["burnin"]),
+                parallel=bool(stage["parallel"]),
+            )
+        except FittingBlockedError as exc:
+            blocked_payload = {
+                "seed": int(stage_seed),
+                "dataset": {
+                    "kind": str(dataset["kind"]),
+                    "solver_output_ref": baseline_problem.solver_output.manifest.artifact_id,
+                    "observable_vector_ref": baseline_problem.observable_vector.manifest.artifact_id,
+                    "solver_tier": str(
+                        baseline_problem.solver_output.metadata.get("solver_tier", "")
+                    ),
+                    "source_propagator_realization": str(
+                        baseline_problem.solver_output.metadata.get(
+                            "source_propagator_realization",
+                            "",
+                        )
+                    ),
+                    "observable_production_status": baseline_problem.observable_vector.manifest.production_status,
+                },
+                "posterior": {
+                    "converged": False,
+                    "sampler": "blocked_by_fitting_gate",
+                    "mle": {
+                        "beta_obs": 0.0,
+                        "rapidity_obs": 0.0,
+                        "v_hat_obs": [0.0, 0.0, 1.0],
+                    },
+                    "diagnostics": {
+                        "blocked": True,
+                        "block_reason": str(exc),
+                        "missing_gates": list(exc.gate_decision.missing_gates),
+                        "covariance_readiness": exc.covariance_readiness,
+                    },
+                    "binding_origin": "solver_core_output",
+                    "dataset_kind": baseline_problem.dataset_kind,
+                    "fitting_ready": False,
+                    "gate_decision": exc.gate_decision.as_payload(),
+                },
+            }
+            _write_json(summary_json, blocked_payload)
+            _write_live_markdown(summary_markdown, blocked_payload)
+            return blocked_payload, 1
         if bool(posterior.diagnostics["converged"]):
             break
     assert posterior is not None

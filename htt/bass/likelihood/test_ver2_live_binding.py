@@ -36,6 +36,9 @@ def test_live_cosmological_frame_likelihood_binds_to_solver_output(_live_problem
         == "observer_side_only_not_applied_in_bass_output"
     )
     assert likelihood.htt_decomposition["tilt_boost_separation"] == "explicit_nonmerged"
+    assert likelihood.htt_decomposition["covariance_readiness"] == "full"
+    assert likelihood.htt_decomposition["fitting_ready"] is True
+    assert likelihood.harmonic_gaussian_ready is True
     assert np.isfinite(likelihood.log_prob({}))
 
 

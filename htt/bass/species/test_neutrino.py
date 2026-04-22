@@ -72,6 +72,8 @@ def test_massive_neutrino_zero_allowed(bg):
     c = default_constants()
     nu = NeutrinoBackground(bg, c.Omega_nu_0, m_nu_eV=0.0)
     assert isinstance(nu, NeutrinoBackground)
+    assert nu.background_readiness == "massless_only"
+    assert nu.massive_neutrino_supported is False
 
 
 # --- T-23: T_ν(z=0) = (4/11)^{1/3} × 2.7255 K ------------------------------

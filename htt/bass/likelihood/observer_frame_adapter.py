@@ -1,13 +1,14 @@
 """Observer-frame likelihood adapter over the FB-7 cosmological stack."""
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Protocol, TypeVar
 
 import numpy as np
 
 from bass.likelihood.cosmological_frame import CosmologicalFrameLikelihood
-from bass.observer.adapters import apply_observer_boost
+from bass.observer.adapters import apply_observer_boost, observed_alm_mixing
 from bass.observer.observer_boost import ObserverBoost
 from bass.species.tilted import V_HAT_E_DEFAULT, velocity_to_rapidity
 
@@ -84,6 +85,46 @@ def _extract_frame_spectra(
         for key, value in fallback.items()
         if key in _SPECTRUM_KEYS
     }
+
+
+def _extract_frame_alms(
+    params: dict[str, object],
+    fallback: dict[str, np.ndarray] | None,
+) -> dict[str, np.ndarray]:
+    if fallback is None:
+        fallback = {}
+    if "alm_frame" in params:
+        payload = params["alm_frame"]
+        if not isinstance(payload, dict):
+            raise TypeError("alm_frame must be a dict[str, ndarray]")
+        return {
+            key: np.asarray(value, dtype=float)
+            for key, value in payload.items()
+            if key in {"alm_T", "alm_E", "alm_B"}
+        }
+    extracted: dict[str, np.ndarray] = {}
+    for key in ("alm_T", "alm_E", "alm_B"):
+        frame_key = f"{key}_frame"
+        if frame_key in params:
+            extracted[key] = np.asarray(params[frame_key], dtype=float)
+        elif key in params:
+            extracted[key] = np.asarray(params[key], dtype=float)
+        elif key in fallback:
+            extracted[key] = np.asarray(fallback[key], dtype=float)
+    return extracted
+
+
+def _restrict_to_support(
+    values: np.ndarray,
+    support: tuple[object, ...],
+) -> np.ndarray:
+    out = np.zeros(len(support), dtype=float)
+    for idx, row in enumerate(support):
+        if not isinstance(row, Mapping):
+            raise TypeError("harmonic_support entries must be mappings")
+        flat_index = int(row["flat_index"])
+        out[idx] = float(values[flat_index])
+    return out
 
 
 @dataclass(frozen=True)
@@ -226,6 +267,14 @@ class ObserverFrameLikelihood:
             if key not in skipped_keys
         }
         frame_spectra = _extract_frame_spectra(params, self.cosmo_likelihood.spectra_reference)
+        fallback_alms = None
+        if self.cosmo_likelihood.alm_reference_packed is not None:
+            fallback_alms = {
+                "alm_T": np.asarray(self.cosmo_likelihood.alm_reference_packed["alm_T"], dtype=float),
+                "alm_E": np.asarray(self.cosmo_likelihood.alm_reference_packed["alm_E"], dtype=float),
+                "alm_B": np.asarray(self.cosmo_likelihood.alm_reference_packed["alm_B"], dtype=float),
+            }
+        frame_alms = _extract_frame_alms(params, fallback_alms)
         ell_max = len(self.cosmo_likelihood.ell) - 1
         adapted = (
             {key: np.array(value, copy=True) for key, value in frame_spectra.items()}
@@ -235,6 +284,24 @@ class ObserverFrameLikelihood:
         for key in _SPECTRUM_KEYS:
             if key in adapted:
                 forwarded[f"spectra_{key}"] = adapted[key]
+        if frame_alms:
+            adapted_alms = (
+                {key: np.array(value, copy=True) for key, value in frame_alms.items()}
+                if boost.rapidity == 0.0
+                else {
+                    key: observed_alm_mixing(value, boost, ell_max)
+                    for key, value in frame_alms.items()
+                }
+            )
+            if self.cosmo_likelihood.harmonic_gaussian_ready:
+                adapted_alms = {
+                    key: _restrict_to_support(
+                        np.asarray(value, dtype=float),
+                        self.cosmo_likelihood.harmonic_support,
+                    )
+                    for key, value in adapted_alms.items()
+                }
+            forwarded.update(adapted_alms)
         if boost.velocity > 0.0 and "axis_vector" not in forwarded and "preferred_axis" not in forwarded:
             forwarded["axis_vector"] = np.asarray(boost.v_hat, dtype=float)
         if (

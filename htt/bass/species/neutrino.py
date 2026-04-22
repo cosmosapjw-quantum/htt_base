@@ -40,6 +40,8 @@ class NeutrinoBackground(SpeciesBackground):
     Reference: Kolb §5.5; Baumann §3.6.
     """
     label = SpeciesLabel.NEUTRINO
+    background_readiness = "massless_only"
+    massive_neutrino_supported = False
 
     def __init__(
         self,

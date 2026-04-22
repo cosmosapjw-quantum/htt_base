@@ -102,6 +102,22 @@ def observed_alm_mixing(
     ell_max = int(L_max)
     if arr.ndim == 0:
         raise ValueError("alm must carry an ell axis; scalar input is invalid")
+    packed_size = (ell_max + 1) ** 2
+    if arr.ndim == 1 and arr.shape[0] == packed_size:
+        out = np.array(arr, copy=True)
+        if boost.rapidity == 0.0:
+            return out
+        kernel = aberration_kernel(ell_max, boost)
+        for ell in range(ell_max + 1):
+            offset = ell * ell
+            for m in range(-ell, ell + 1):
+                index = offset + (m + ell)
+                mixed = 0.0
+                for ell_prime in range(abs(m), ell_max + 1):
+                    source_index = ell_prime * ell_prime + (m + ell_prime)
+                    mixed += float(kernel[ell, ell_prime]) * float(arr[source_index])
+                out[index] = mixed
+        return out
     if arr.shape[0] < ell_max + 1:
         raise ValueError(
             f"alm first-axis length {arr.shape[0]} is smaller than "

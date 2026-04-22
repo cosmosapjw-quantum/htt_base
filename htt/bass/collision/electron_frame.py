@@ -107,6 +107,10 @@ class ExactThomsonSource:
         if self.opacity_contract != "electron_frame_tilt_modulated":
             raise ValueError("exact Thomson opacity contract changed unexpectedly")
 
+    @property
+    def source_ready(self) -> bool:
+        return bool(self.projected.source_ready)
+
 
 @dataclass(frozen=True)
 class SourceTerms:

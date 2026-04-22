@@ -10,6 +10,7 @@ import numpy as np
 from common.contracts import ArtifactManifest, ObservableVector, SkySupport, SolverCoreOutput
 
 from bass.background.bianchi_types import get_type
+from bass.forward.ver3_output_archive import output_split_gate_bundle
 from bass.background.einstein_bianchi import BianchiCosmology
 from bass.forward.ver2_solver_output import BassReleaseMetadata
 from bass.hierarchy.integrator import IntegratorConfig
@@ -33,13 +34,33 @@ from bass.runtime import (
 )
 from bass.spectrum import CutoffCampaignSpec
 from bass.species.registry import SpeciesBackgroundRegistry
+from bass.validation import GateDecision, hard_gate_before_fitting
 
 __all__ = [
+    "FittingBlockedError",
     "LiveObserverBoostProblem",
     "build_live_observer_boost_problem",
     "build_type_i_native_validation_problem",
     "run_type_i_native_validation_posterior",
 ]
+
+
+class FittingBlockedError(RuntimeError):
+    """Raised when a live posterior path is attempted without fitting readiness."""
+
+    def __init__(
+        self,
+        *,
+        gate_decision: GateDecision,
+        covariance_readiness: str,
+    ) -> None:
+        self.gate_decision = gate_decision
+        self.covariance_readiness = str(covariance_readiness)
+        super().__init__(
+            "live observer-boost posterior blocked: "
+            f"covariance_readiness={self.covariance_readiness}, "
+            f"missing_gates={list(self.gate_decision.missing_gates)}"
+        )
 
 
 @dataclass(frozen=True)
@@ -51,8 +72,16 @@ class LiveObserverBoostProblem:
     priors: dict[str, Prior]
     likelihood: object
     dataset_kind: str
+    gate_decision: GateDecision
+    covariance_readiness: str
+    fitting_ready: bool
 
     def log_likelihood(self, theta: np.ndarray) -> float:
+        if not self.fitting_ready:
+            raise FittingBlockedError(
+                gate_decision=self.gate_decision,
+                covariance_readiness=self.covariance_readiness,
+            )
         vector = np.asarray(theta, dtype=float).reshape(-1)
         if vector.size != 3 or not np.all(np.isfinite(vector)):
             return float("-inf")
@@ -159,6 +188,63 @@ def _sky_support() -> SkySupport:
     )
 
 
+def _covariance_readiness(observable_vector: ObservableVector) -> str:
+    if observable_vector.covariance_features is None:
+        return "missing"
+    readiness = observable_vector.alm_features.get("covariance_readiness")
+    if readiness is not None:
+        return str(readiness)
+    if bool(observable_vector.covariance_features.get("supports_full_biposh", False)):
+        return "full"
+    if bool(
+        observable_vector.covariance_features.get(
+            "supports_basis_reduced_morphology",
+            False,
+        )
+    ):
+        return "reduced"
+    return "proxy"
+
+
+def _gate_registry(solver_output: SolverCoreOutput) -> dict[str, object]:
+    registry = solver_output.metadata.get("gate_registry")
+    out = dict(registry) if isinstance(registry, dict) else {}
+    out["output_split_gate"] = output_split_gate_bundle(solver_output)
+    return out
+
+
+def _fitting_decision(
+    *,
+    solver_output: SolverCoreOutput,
+    observable_vector: ObservableVector,
+) -> tuple[GateDecision, str, bool]:
+    covariance_readiness = _covariance_readiness(observable_vector)
+    gate_decision = hard_gate_before_fitting(
+        _gate_registry(solver_output),
+        residuals={
+            "offdiag_strength": None
+            if observable_vector.covariance_features is None
+            else observable_vector.covariance_features.get("offdiag_strength"),
+            "rotation_strength": None
+            if observable_vector.covariance_features is None
+            else observable_vector.covariance_features.get("rotation_strength"),
+        },
+        metadata={
+            "solver_output_ref": solver_output.manifest.artifact_id,
+            "observable_vector_ref": observable_vector.manifest.artifact_id,
+            "covariance_readiness": covariance_readiness,
+            "observable_production_status": observable_vector.manifest.production_status,
+        },
+    )
+    fitting_ready = bool(gate_decision.allowed) and covariance_readiness == "full"
+    solver_output.metadata["fitting_gate_enforced"] = True
+    solver_output.metadata["fitting_gate_allowed"] = fitting_ready
+    solver_output.metadata["missing_gates"] = gate_decision.missing_gates
+    solver_output.metadata["covariance_readiness"] = covariance_readiness
+    solver_output.metadata["fitting_gate_decision"] = gate_decision.as_payload()
+    return gate_decision, covariance_readiness, fitting_ready
+
+
 def build_type_i_native_validation_problem(seed: int) -> LiveObserverBoostProblem:
     """Build the bounded BF-06 live inference problem from a native Type-I run."""
     species = SpeciesBackgroundRegistry.from_planck2018()
@@ -185,12 +271,19 @@ def build_type_i_native_validation_problem(seed: int) -> LiveObserverBoostProble
         run.solver_output,
         tier="low_ell",
     )
+    gate_decision, covariance_readiness, fitting_ready = _fitting_decision(
+        solver_output=run.solver_output,
+        observable_vector=observable,
+    )
     return LiveObserverBoostProblem(
         solver_output=run.solver_output,
         observable_vector=observable,
         priors={"observer_boost": prior_observer_boost()},
         likelihood=likelihood,
         dataset_kind="type_i_native_validation",
+        gate_decision=gate_decision,
+        covariance_readiness=covariance_readiness,
+        fitting_ready=fitting_ready,
     )
 
 
@@ -208,12 +301,19 @@ def build_live_observer_boost_problem(
             sky_support=_sky_support(),
         )
     )
+    gate_decision, covariance_readiness, fitting_ready = _fitting_decision(
+        solver_output=solver_output,
+        observable_vector=observable,
+    )
     return LiveObserverBoostProblem(
         solver_output=solver_output,
         observable_vector=observable,
         priors={"observer_boost": prior_observer_boost()},
         likelihood=build_observer_frame_likelihood_from_solver_output(solver_output),
         dataset_kind="solver_core_output_live",
+        gate_decision=gate_decision,
+        covariance_readiness=covariance_readiness,
+        fitting_ready=fitting_ready,
     )
 
 
@@ -227,6 +327,11 @@ def run_type_i_native_validation_posterior(
 ) -> tuple[LiveObserverBoostProblem, PosteriorSample]:
     """Run the bounded BF-06 live observer-boost posterior."""
     problem = build_type_i_native_validation_problem(int(seed))
+    if not problem.fitting_ready:
+        raise FittingBlockedError(
+            gate_decision=problem.gate_decision,
+            covariance_readiness=problem.covariance_readiness,
+        )
     posterior = run_posterior(
         problem.log_likelihood,
         problem.priors,
