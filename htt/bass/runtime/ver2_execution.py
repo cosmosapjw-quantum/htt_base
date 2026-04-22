@@ -1136,12 +1136,14 @@ def _build_gate_registry(
             seed_projection=seed_projection,
         ),
         "family_backend_gate": family_backend_gate_bundle(backend, mode_ops),
-        "hierarchy_layout_gate": hierarchy_layout_gate_bundle(
-            backend,
-            mode_ops,
-            provenance_metadata={}
+        "hierarchy_layout_gate": (
+            hierarchy_layout_gate_bundle(
+                backend,
+                mode_ops,
+                provenance_metadata={},
+            )
             if layout_projection is None
-            else dict(layout_projection.metadata.get("layout_gate_provenance", {})),
+            else layout_projection.metadata.get("hierarchy_layout_gate_bundle")
         ),
         "production_cutoff_gate": _production_cutoff_gate_bundle(
             bianchi_type=bianchi_type,
