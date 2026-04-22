@@ -1038,6 +1038,11 @@ def _build_gate_registry(
 
     family_spec = get_family_spec(bianchi_type)
     branch = str(background_monitor.branch)
+    gate_fragment = (
+        {}
+        if layout_projection is None
+        else dict(layout_projection.metadata.get("gate_registry_fragment", {}))
+    )
     geometry = background_monitor.initial_conditions.geometry
     eta_start = float(background_monitor.eta[0])
     tilt_velocity = np.asarray(background_monitor.tilt_velocity[0], dtype=np.float64)
@@ -1135,15 +1140,17 @@ def _build_gate_registry(
             seed_pack=seed_pack,
             seed_projection=seed_projection,
         ),
-        "family_backend_gate": family_backend_gate_bundle(backend, mode_ops),
-        "hierarchy_layout_gate": (
+        "family_backend_gate": gate_fragment.get(
+            "family_backend_gate",
+            family_backend_gate_bundle(backend, mode_ops),
+        ),
+        "hierarchy_layout_gate": gate_fragment.get(
+            "hierarchy_layout_gate",
             hierarchy_layout_gate_bundle(
                 backend,
                 mode_ops,
                 provenance_metadata={},
-            )
-            if layout_projection is None
-            else layout_projection.metadata.get("hierarchy_layout_gate_bundle")
+            ),
         ),
         "production_cutoff_gate": _production_cutoff_gate_bundle(
             bianchi_type=bianchi_type,

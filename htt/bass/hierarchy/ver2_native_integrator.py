@@ -1595,6 +1595,7 @@ class Ver2TierBIntegrator:
         reionization_amplitude: float,
         covered_mode_label: str | None = None,
     ) -> _RuntimeLayoutProjectionBundle:
+        from bass.los.family_backend_protocol import family_backend_gate_bundle
         from bass.hierarchy.ver3_layout_protocol import hierarchy_layout_gate_bundle
         from bass.hierarchy.ver3_state_contracts import project_runtime_native_state
 
@@ -1695,11 +1696,14 @@ class Ver2TierBIntegrator:
                 "owner": "ver2_native_integrator.build_runtime_layout_projection",
                 "gamma_t_probe": float(gamma_t_probe),
                 "layout_gate_provenance": gate_provenance,
-                "hierarchy_layout_gate_bundle": hierarchy_layout_gate_bundle(
-                    self.backend,
-                    mode_ops,
-                    provenance_metadata=gate_provenance,
-                ),
+                "gate_registry_fragment": {
+                    "family_backend_gate": family_backend_gate_bundle(self.backend, mode_ops),
+                    "hierarchy_layout_gate": hierarchy_layout_gate_bundle(
+                        self.backend,
+                        mode_ops,
+                        provenance_metadata=gate_provenance,
+                    ),
+                },
                 "solver_info_fragment": {
                     "layout_contract_consumed": True,
                     "layout_mode_labels": list(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [])),

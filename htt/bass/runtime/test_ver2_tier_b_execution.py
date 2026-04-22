@@ -386,6 +386,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert registry["output_split_gate"].gate_name == "output_split_gate"
     assert registry["tilt_boost_separation_gate"].passed is True
     assert registry["ic_provenance_gate"].passed is True
+    assert registry["family_backend_gate"].passed is True
+    assert registry["family_backend_gate"].known_limit_checks["operator_payload_bound"] is True
+    assert registry["family_backend_gate"].metadata["lookup_resolution_status"] == "frozen_v5_formula_set"
     assert registry["production_cutoff_gate"].passed is True
     assert registry["background_core_gate"].known_limit_checks["samples"] > 0
     assert registry["background_core_gate"].metadata["matter_model_tag"] == (
