@@ -15,4 +15,11 @@ def test_preliminary_directional_handoff_loads_generated_bundle() -> None:
     assert handoff.pair_claim_tier[pair] == "conditional"
     assert pair in handoff.conditional_pairs
     assert handoff.blocked_pairs == ()
+    assert handoff.pair_degeneracy_flags[pair] is False
+    assert handoff.pair_recommended_next_observable[pair] in {
+        "depth_direction_coherence",
+        "atlas_template_biposh",
+        "null_mock_covariance",
+        "TE_EE_BB_morphology",
+    }
     assert handoff.support_profile == {} or handoff.support_profile["template"] >= 0.75

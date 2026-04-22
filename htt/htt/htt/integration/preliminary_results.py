@@ -4,6 +4,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
+import numpy as np
+
 from common.contracts import DiscriminationMatrix
 from htt.integration.from_bass import ingest_ver2_directional_inputs
 from htt.infer.likelihood_scope_guard import DirectionalLikelihoodInput
@@ -62,6 +64,44 @@ class PreliminaryDirectionalHandoff:
         return tuple(
             pair for pair, tier in sorted(self.pair_claim_tier.items()) if tier == "blocked"
         )
+
+    @property
+    def pair_degeneracy_flags(self) -> dict[str, bool]:
+        stats = self.discrimination_matrix.manifest.statistics_definitions
+        mapping = stats.get("pair_degeneracy_flags", {})
+        if isinstance(mapping, dict) and mapping:
+            return {str(key): bool(value) for key, value in mapping.items()}
+        if self.discrimination_matrix.degeneracy_flags:
+            return {
+                str(key): bool(value)
+                for key, value in self.discrimination_matrix.degeneracy_flags.items()
+            }
+        overlap = np.asarray(self.discrimination_matrix.overlap_matrix, dtype=float)
+        index_by_hypothesis = {
+            name: idx for idx, name in enumerate(self.discrimination_matrix.hypotheses)
+        }
+        derived: dict[str, bool] = {}
+        for pair, tier in sorted(self.pair_claim_tier.items()):
+            left, right = pair.split("|", 1)
+            left_index = index_by_hypothesis.get(left)
+            right_index = index_by_hypothesis.get(right)
+            if left_index is None or right_index is None:
+                derived[pair] = tier != "conditional"
+                continue
+            rho = float(overlap[left_index, right_index])
+            derived[pair] = (not np.isfinite(rho)) or abs(rho) >= 0.9
+        return derived
+
+    @property
+    def pair_recommended_next_observable(self) -> dict[str, str]:
+        stats = self.discrimination_matrix.manifest.statistics_definitions
+        mapping = stats.get("pair_recommended_next_observable", {})
+        if isinstance(mapping, dict) and mapping:
+            return {str(key): str(value) for key, value in mapping.items()}
+        return {
+            str(key): str(value)
+            for key, value in self.discrimination_matrix.recommended_next_observable.items()
+        }
 
 
 def build_preliminary_directional_handoff(
