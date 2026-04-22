@@ -310,6 +310,8 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_b_mode_history_sample_count"] == len(
         run.integration_result.eta
     )
+    assert run.solver_output.metadata["layout_b_mode_payload_available"] is False
+    assert run.solver_output.metadata["layout_b_mode_payload_status"] == "zero_filled_not_evolved"
     assert run.solver_output.metadata["layout_b_mode_proxy_source"] == (
         "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
@@ -474,6 +476,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert set(
         registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_local_matter_mode_labels"]
     ) == {"m0", "m+2", "m-2"}
+    assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_b_mode_payload_available"] is False
+    assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_b_mode_payload_status"] == (
+        "zero_filled_not_evolved"
+    )
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_b_mode_proxy_source"] == (
         "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
@@ -598,6 +604,16 @@ def test_representative_orthogonal_families_execute_with_expected_propagator_rea
     assert run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
     assert run.solver_output.metadata["global_tilt_contract"] == "orthogonal_branch_zero_global_tilt"
     assert run.execution_plan.runtime_decision.propagation_status == "pending"
+    if bianchi_type == "V":
+        assert run.solver_output.metadata["b_mode_runtime_available"] is True
+        assert run.solver_output.metadata["b_mode_payload_status"] == "layout_operator_auxiliary_b_mode_history"
+        assert run.solver_output.metadata["layout_b_mode_payload_available"] is True
+        assert run.solver_output.metadata["layout_b_mode_payload_status"] == (
+            "layout_operator_auxiliary_b_mode_history"
+        )
+        assert run.trace.canonical_projection.sector_status["ph_B"] == (
+            "layout_operator_auxiliary_b_mode_history"
+        )
     if bianchi_type == "VIII":
         assert run.integration_result.solver_info["seed_factory_mode"] == "collocation_projected"
         assert "family_adapted_intrinsic_seed" in str(

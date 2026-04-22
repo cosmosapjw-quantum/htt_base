@@ -939,6 +939,12 @@ def build_solver_core_output_from_native_result(
             "layout_b_mode_proxy_consumed": bool(
                 result.solver_info.get("layout_b_mode_proxy_consumed", False)
             ),
+            "layout_b_mode_payload_available": bool(
+                result.solver_info.get("layout_b_mode_payload_available", False)
+            ),
+            "layout_b_mode_payload_status": str(
+                result.solver_info.get("layout_b_mode_payload_status", "zero_filled_not_evolved")
+            ),
             "layout_b_mode_proxy_norm": float(
                 result.solver_info.get("layout_b_mode_proxy_norm", 0.0)
             ),

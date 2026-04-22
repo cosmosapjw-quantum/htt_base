@@ -1858,6 +1858,8 @@ class Ver2TierBIntegrator:
             dtype=np.float64,
         )
         b_mode_proxy = np.asarray(b_history[-1], dtype=np.float64)
+        b_mode_sector_status = str(canonical_projection.sector_status.get("ph_B", "zero_filled_not_evolved"))
+        b_mode_payload_available = b_mode_sector_status != "zero_filled_not_evolved"
         gate_provenance = {
             "layout_projection_owner": "ver2_native_integrator.build_runtime_layout_projection",
             "layout_auxiliary_bundle_owner": str(auxiliary_bundle.metadata["owner"]),
@@ -1882,6 +1884,8 @@ class Ver2TierBIntegrator:
                     {},
                 ).keys()
             ),
+            "layout_b_mode_payload_available": bool(b_mode_payload_available),
+            "layout_b_mode_payload_status": b_mode_sector_status,
             "layout_b_mode_proxy_source": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
         }
         return _RuntimeLayoutProjectionBundle(
@@ -1958,6 +1962,8 @@ class Ver2TierBIntegrator:
                     "layout_local_matter_reference_delta_norm": float(
                         coupled.metadata["reference_delta_norm"]
                     ),
+                    "layout_b_mode_payload_available": bool(b_mode_payload_available),
+                    "layout_b_mode_payload_status": b_mode_sector_status,
                     "layout_b_mode_proxy_consumed": bool(np.any(np.abs(b_mode_proxy) > 0.0)),
                     "layout_b_mode_proxy_norm": float(np.linalg.norm(b_mode_proxy)),
                     "layout_b_mode_proxy_source": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
