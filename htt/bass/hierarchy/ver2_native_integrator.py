@@ -587,7 +587,6 @@ class Ver2TierBIntegrator:
         species: SpeciesBackgroundRegistry,
         *,
         backend: FamilyBackend,
-        mode_ops=None,
         background_monitor: BackgroundEvolutionResult,
         visibility_source,
         canonical_decision: CanonicalDecision,
@@ -596,7 +595,6 @@ class Ver2TierBIntegrator:
         self.config = config
         self.species = species
         self.backend = backend
-        self.mode_ops = mode_ops
         self.background_monitor = background_monitor
         self.visibility_source = visibility_source
         self.canonical_decision = canonical_decision
@@ -635,51 +633,40 @@ class Ver2TierBIntegrator:
         self.seed_injection_mode: str = "uninitialized"
         self.seed_velocity_scale: float = 1.0
         self._matter_seed_observables: dict[str, float] | None = None
-        if self.mode_ops is None:
-            gamma_t_initial = _resolved_gamma_t(
-                visibility_source=self.visibility_source,
+        gamma_t_initial = _resolved_gamma_t(
+            visibility_source=self.visibility_source,
+            eta=float(self.background_monitor.eta[0]),
+            direction=self._direction,
+            config=self.config,
+        )
+        reionization_amplitude = (
+            0.0
+            if self.visibility_source.contract.events is None
+            else float(self.visibility_source.contract.events.tau_reion)
+        )
+        self.mode_ops = self.backend.operator_factory(
+            self._live_backend_state_payload(
                 eta=float(self.background_monitor.eta[0]),
-                direction=self._direction,
-                config=self.config,
+                gamma_t_probe=float(gamma_t_initial),
+                visibility_amplitude=0.0,
+                polarization_source=0.0,
+                reionization_amplitude=reionization_amplitude,
             )
-            reionization_amplitude = (
-                0.0
-                if self.visibility_source.contract.events is None
-                else float(self.visibility_source.contract.events.tau_reion)
-            )
-            self.mode_ops = self.backend.operator_factory(
-                self._live_backend_state_payload(
-                    eta=float(self.background_monitor.eta[0]),
-                    gamma_t_probe=float(gamma_t_initial),
-                    visibility_amplitude=0.0,
-                    polarization_source=0.0,
-                    reionization_amplitude=reionization_amplitude,
-                )
-            )
+        )
         self._layout_covered_mode_label = (
-            None
-            if self.mode_ops is None
-            else str(getattr(self.mode_ops, "layout_metadata", {}).get("mode_labels", [None])[0])
+            str(getattr(self.mode_ops, "layout_metadata", {}).get("mode_labels", [None])[0])
         )
-        self._coll_T_diag = (
-            None
-            if self.mode_ops is None
-            else _extract_operator_diag(
-                backend=backend,
-                mode_ops=self.mode_ops,
-                sector="ph_I",
-                covered_mode_label=self._layout_covered_mode_label,
-            )
+        self._coll_T_diag = _extract_operator_diag(
+            backend=backend,
+            mode_ops=self.mode_ops,
+            sector="ph_I",
+            covered_mode_label=self._layout_covered_mode_label,
         )
-        self._coll_E_diag = (
-            None
-            if self.mode_ops is None
-            else _extract_operator_diag(
-                backend=backend,
-                mode_ops=self.mode_ops,
-                sector="ph_E",
-                covered_mode_label=self._layout_covered_mode_label,
-            )
+        self._coll_E_diag = _extract_operator_diag(
+            backend=backend,
+            mode_ops=self.mode_ops,
+            sector="ph_E",
+            covered_mode_label=self._layout_covered_mode_label,
         )
         _ = sample_hierarchy_background(
             float(self.background_monitor.eta[0]),
