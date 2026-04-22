@@ -195,6 +195,7 @@ def _native_propagator_readiness(
     fallback = _propagator_readiness(propagator, feature_flags)
     if mode_ops is None:
         return fallback
+    mode_ops_metadata = dict(getattr(mode_ops, "metadata", {}))
     gate_status = {} if gate_registry is None else summarize_gate_status(gate_registry)
     required_gates = (
         "tilt_boost_separation_gate",
@@ -203,6 +204,11 @@ def _native_propagator_readiness(
         "hierarchy_layout_gate",
     )
     if gate_status and any(gate_status.get(gate) != "open" for gate in required_gates):
+        return "contract_only_unavailable"
+    if (
+        mode_ops_metadata.get("lookup_resolution_status") != "frozen_v5_formula_set"
+        or not bool(mode_ops_metadata.get("verification_crosscheck_pass", False))
+    ):
         return "contract_only_unavailable"
     exact_kernel = str(getattr(mode_ops, "operator_kernel_family", "")) == "bianchi_i_matrix_exact"
     exact_layout = bool(
@@ -1008,6 +1014,23 @@ def build_solver_core_output_from_native_result(
                 if mode_ops is None
                 else str(getattr(mode_ops, "seed_provenance_mode", ""))
             ),
+            "backend_lookup_resolution_status": None
+            if mode_ops is None
+            else str(getattr(mode_ops, "metadata", {}).get("lookup_resolution_status", "")),
+            "backend_verification_crosscheck_pass": bool(
+                False
+                if mode_ops is None
+                else getattr(mode_ops, "metadata", {}).get("verification_crosscheck_pass", False)
+            ),
+            "backend_verification_reference": None
+            if mode_ops is None
+            else getattr(mode_ops, "metadata", {}).get("verification_reference"),
+            "backend_operator_payload_status": None
+            if mode_ops is None
+            else getattr(mode_ops, "metadata", {}).get("operator_payload_status"),
+            "backend_contract_release_status": None
+            if mode_ops is None
+            else getattr(mode_ops, "metadata", {}).get("contract_release_status"),
             "ic_provenance_status": None
             if seed_pack is None
             else str(getattr(seed_pack, "seed_mode", "")),

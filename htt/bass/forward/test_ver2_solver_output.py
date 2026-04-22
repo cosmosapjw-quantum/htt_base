@@ -442,6 +442,45 @@ def test_native_output_promotes_auxiliary_b_mode_runtime_payload() -> None:
     assert output.metadata["canonical_projection_b_history_sample_count"] == 2
 
 
+def test_native_output_blocks_readiness_when_backend_verification_bundle_is_unresolved() -> None:
+    unresolved_mode_ops = SimpleNamespace(
+        metadata={
+            "lookup_resolution_status": "unresolved_lookup",
+            "verification_crosscheck_pass": False,
+            "verification_reference": None,
+            "operator_payload_status": "geometry_opacity_coupled_sparse_blocks",
+            "contract_release_status": "backend-contract-complete",
+        },
+        operator_kernel_family="class_b_helical_matrix_approx",
+        layout_metadata={"exact_family_operator_available": False},
+        seed_provenance_mode="template_card_family_adapted",
+    )
+    output = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="VII_h",
+        result=_synthetic_result(),
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_executable",
+            run_label="tier-b-native-backend-unresolved",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+        mode_ops=unresolved_mode_ops,
+    )
+    assert output.metadata["backend_lookup_resolution_status"] == "unresolved_lookup"
+    assert output.metadata["backend_verification_crosscheck_pass"] is False
+    assert output.metadata["propagator_readiness"] == "contract_only_unavailable"
+    assert output.metadata["propagator_exactness"] == "contract_only_unavailable"
+    assert output.metadata["propagator_ready"] is False
+
+
 def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backend() -> None:
     output = build_solver_core_output_from_native_result(
         manifest=_manifest(),

@@ -315,6 +315,17 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_projection_owner"] == (
         "ver2_native_integrator.build_runtime_layout_projection"
     )
+    assert run.solver_output.metadata["backend_lookup_resolution_status"] == "frozen_v5_formula_set"
+    assert run.solver_output.metadata["backend_verification_crosscheck_pass"] is True
+    assert (
+        run.solver_output.metadata["backend_verification_reference"]
+        == "docs/bianchi_design_pack_v5/verification/crosscheck_results.json"
+    )
+    assert (
+        run.solver_output.metadata["backend_operator_payload_status"]
+        == "geometry_opacity_coupled_sparse_blocks"
+    )
+    assert run.solver_output.metadata["backend_contract_release_status"] == "backend-contract-complete"
     assert run.solver_output.metadata["layout_sector_order"] == [
         "ph_I",
         "ph_E",
