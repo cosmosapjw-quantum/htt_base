@@ -273,6 +273,18 @@ class TierBExecutableRun:
         )
 
 
+@dataclass(frozen=True)
+class _TierBPostRunBundle:
+    runtime_trace: object
+    gate_registry: Mapping[str, object]
+    solver_output: SolverCoreOutput
+    cutoff_campaign: object | None
+    metadata: Mapping[str, object]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "metadata", dict(self.metadata))
+
+
 def _stamp_native_result_solver_info(
     *,
     result,
@@ -282,14 +294,14 @@ def _stamp_native_result_solver_info(
     checkpoint_paths: tuple[str, ...],
     restart_checkpoint_path: str | None,
 ) -> None:
-    _stamp_native_result_solver_info(
-        result=result,
-        runtime_controls=runtime_controls,
-        runtime_config=runtime_config,
-        family_realization=family_realization,
-        checkpoint_paths=tuple(checkpoint_paths),
-        restart_checkpoint_path=restart_checkpoint_path,
-    )
+    result.solver_info["runtime_integrator_family"] = runtime_controls.integrator_family.value
+    result.solver_info["requested_integrator_family"] = runtime_controls.integrator_family.value
+    result.solver_info["resolved_solver_method"] = runtime_config.solver_method
+    result.solver_info["executor_realization"] = family_realization
+    result.solver_info["solver_family_realization"] = family_realization
+    result.solver_info["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
+    result.solver_info["checkpoint_paths"] = tuple(checkpoint_paths)
+    result.solver_info["restart_checkpoint_path"] = restart_checkpoint_path
 
 
 @dataclass(frozen=True)
@@ -983,6 +995,73 @@ def _build_gate_registry(
     }
 
 
+def _assemble_tier_b_post_run_bundle(
+    *,
+    manifest,
+    bianchi_type: str,
+    species: "SpeciesBackgroundRegistry",
+    integrator,
+    result,
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+    release,
+    k_grid_mpc: np.ndarray,
+    backend,
+    reionization_amplitude: float,
+    integrator_config,
+    cutoff_spec,
+    seed_k_comoving: float,
+) -> _TierBPostRunBundle:
+    from bass.forward.ver2_solver_output import build_solver_core_output_from_execution_bundle
+    from bass.spectrum.ver2_cutoff_campaign import run_executed_cutoff_campaign
+
+    runtime_trace = integrator.build_runtime_execution_trace(
+        result,
+        reionization_amplitude=reionization_amplitude,
+    )
+    cutoff_campaign = None
+    if cutoff_spec is not None:
+        cutoff_campaign = run_executed_cutoff_campaign(
+            cutoff_spec,
+            runner=_campaign_runner(
+                bianchi_type=bianchi_type,
+                base_config=integrator_config,
+                species=species,
+                seed_k_comoving=seed_k_comoving,
+                runtime_controls=runtime_controls,
+            ),
+        )
+    result.solver_info.update(dict(runtime_trace.layout_projection.metadata["solver_info_fragment"]))
+    gate_registry = _build_gate_registry(
+        bianchi_type=bianchi_type,
+        runtime_controls=runtime_controls,
+        species=species,
+        runtime_trace=runtime_trace,
+        backend=backend,
+        cutoff_campaign=cutoff_campaign,
+    )
+    solver_output = build_solver_core_output_from_execution_bundle(
+        manifest=manifest,
+        bianchi_type=bianchi_type,
+        result=result,
+        species=species,
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        release=release,
+        k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
+        runtime_trace=runtime_trace,
+        thomson_mode="electron_frame_exact_wrapper",
+        gate_registry=gate_registry,
+    )
+    return _TierBPostRunBundle(
+        runtime_trace=runtime_trace,
+        gate_registry=gate_registry,
+        solver_output=solver_output,
+        cutoff_campaign=cutoff_campaign,
+        metadata={"owner": "runtime._assemble_tier_b_post_run_bundle"},
+    )
+
+
 def _build_runtime_decision(
     *,
     feature_flags: SolverFeatureFlags,
@@ -1594,8 +1673,6 @@ def execute_tier_b_solver(
     from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
     from bass.los.family_backend_protocol import build_backend
     from bass.runtime.ver2_checkpoint import load_tier_b_restart_checkpoint
-    from bass.spectrum.ver2_cutoff_campaign import run_executed_cutoff_campaign
-
     runtime_config, family_realization = _native_runtime_config(
         bianchi_type,
         integrator_config,
@@ -1685,64 +1762,36 @@ def execute_tier_b_solver(
         checkpoint_callback=checkpoint_callback,
         restart_state=restart_state,
     )
-    result.solver_info["runtime_integrator_family"] = runtime_controls.integrator_family.value
-    result.solver_info["requested_integrator_family"] = runtime_controls.integrator_family.value
-    result.solver_info["resolved_solver_method"] = runtime_config.solver_method
-    result.solver_info["executor_realization"] = family_realization
-    result.solver_info["solver_family_realization"] = family_realization
-    result.solver_info["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
-    result.solver_info["checkpoint_paths"] = tuple(checkpoint_paths)
-    result.solver_info["restart_checkpoint_path"] = restart_checkpoint_path
-
-    runtime_trace = integrator.build_runtime_execution_trace(
-        result,
-        reionization_amplitude=reionization_amplitude,
-    )
-    cutoff_campaign = None
-    if cutoff_spec is not None:
-        cutoff_campaign = run_executed_cutoff_campaign(
-            cutoff_spec,
-            runner=_campaign_runner(
-                bianchi_type=bianchi_type,
-                base_config=integrator_config,
-                species=species,
-                seed_k_comoving=seed_k_comoving,
-                runtime_controls=runtime_controls,
-            ),
-        )
-    layout_projection = runtime_trace.layout_projection
-    mode_ops = runtime_trace.mode_ops
-    canonical_projection = runtime_trace.canonical_projection
-    result.solver_info.update(dict(layout_projection.metadata["solver_info_fragment"]))
-    gate_registry = _build_gate_registry(
-        bianchi_type=bianchi_type,
+    _stamp_native_result_solver_info(
+        result=result,
         runtime_controls=runtime_controls,
-        species=species,
-        runtime_trace=runtime_trace,
-        backend=backend,
-        cutoff_campaign=cutoff_campaign,
+        runtime_config=runtime_config,
+        family_realization=family_realization,
+        checkpoint_paths=tuple(checkpoint_paths),
+        restart_checkpoint_path=restart_checkpoint_path,
     )
 
-    from bass.forward.ver2_solver_output import build_solver_core_output_from_execution_bundle
-
-    solver_output = build_solver_core_output_from_execution_bundle(
+    post_run = _assemble_tier_b_post_run_bundle(
         manifest=manifest,
         bianchi_type=bianchi_type,
-        result=result,
         species=species,
+        integrator=integrator,
+        result=result,
         runtime_controls=runtime_controls,
         feature_flags=feature_flags,
         release=release,
         k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
-        runtime_trace=runtime_trace,
-        thomson_mode="electron_frame_exact_wrapper",
-        gate_registry=gate_registry,
+        backend=backend,
+        reionization_amplitude=reionization_amplitude,
+        integrator_config=integrator_config,
+        cutoff_spec=cutoff_spec,
+        seed_k_comoving=seed_k_comoving,
     )
     return TierBExecutableRun.from_execution_bundle(
         execution_plan=plan,
         runtime_decision=runtime_decision,
-        runtime_trace=runtime_trace,
+        runtime_trace=post_run.runtime_trace,
         integration_result=result,
-        solver_output=solver_output,
-        cutoff_campaign=cutoff_campaign,
+        solver_output=post_run.solver_output,
+        cutoff_campaign=post_run.cutoff_campaign,
     )
