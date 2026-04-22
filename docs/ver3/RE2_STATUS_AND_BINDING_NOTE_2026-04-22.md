@@ -27,11 +27,11 @@ RE2 in the active repo means:
 | PR-00 | authority freeze | docs present, binding note present | authority frozen |
 | PR-01 | tensor helpers | live helpers in `htt/src/common/conventions.py` | tensor helper frozen |
 | PR-02 | family registry | live all-family metadata in `htt/bass/background/bianchi_types.py` | registry-complete |
-| PR-03 | geometry core | live geometry operators + owner-module gate emitter | geometry contract present |
-| PR-04 | matter projection | live projection helpers + owner-module gate emitter | matter projection contract present |
-| PR-05 | background core | live RHS / residual helpers + owner-module gate emitter; branch-level production claim still closed | background contract present |
-| PR-06 | exact Thomson | live electron-frame collision wrapper + tests | exact collision contract present |
-| PR-07 | visibility/history | live visibility adapters + tests | source-history contract present |
+| PR-03 | geometry core | live geometry operators + owner-module gate emitter; runtime consumes integrator-routed upstream geometry gate fragments | geometry contract present |
+| PR-04 | matter projection | live projection helpers + owner-module gate emitter; runtime consumes integrator-routed matter gate fragments | matter projection contract present |
+| PR-05 | background core | live RHS / residual helpers + owner-module gate emitter; runtime consumes integrator-routed background gate fragments; branch-level production claim still closed | background contract present |
+| PR-06 | exact Thomson | live electron-frame collision wrapper + tests; final runtime Thomson probe is integrator-owned | exact collision contract present |
+| PR-07 | visibility/history | live visibility adapters + tests; visibility gate evidence routes through integrator-owned gate fragments | source-history contract present |
 | PR-08 | backend protocol | live backend/translator/seed contract plus bound operator payloads; runtime consumes backend-owned seed packs and integrator-bundled backend gate evidence | backend contract bound to executable sparse payloads, but not all-family production numerics |
 | PR-09 | hierarchy layout | live layout/packing helpers, split block templates, integrator-owned canonical projection bundle, auxiliary `ph_B/baryon/cdm/src` histories, and integrator-bundled hierarchy gate evidence | hierarchy layout frozen with integrator-owned canonical projection; auxiliary sectors are bounded, not fully live-coevolved |
 | PR-10 | output split | live archive writer; solver output and archive auto-carry upstream+output bundle chain | output split surface present, claim depends on supplied bundles |
@@ -42,6 +42,7 @@ RE2 in the active repo means:
 ## 3. implementation stance after RE2
 
 - `ModeOps` is no longer metadata-only; it now carries bound mass/exact-template block payloads.
+- Upstream PR-03..09 gate evidence now routes through shared gate fragments, with PR-06/08/09 runtime probes and bundles owned by the integrator.
 - `write_output_archive(...)` no longer assumes `output_split_gate=open`; it derives gate status from the supplied registry.
 - `hard_gate_before_fitting(...)` and `score_branch_readiness(...)` accept machine-readable gate bundles as well as legacy bool maps.
 - Empty or partial gate registries keep higher gates unavailable by construction.
