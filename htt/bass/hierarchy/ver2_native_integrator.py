@@ -456,6 +456,10 @@ class _RuntimeExecutionTraceBundle:
     def canonical_projection(self):
         return self.runtime_trace_products.layout_projection.canonical_projection
 
+    @property
+    def mode_ops(self):
+        return self.runtime_trace_products.layout_projection.mode_ops
+
 
 @dataclass(frozen=True)
 class NativeTierBRestartState:

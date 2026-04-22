@@ -1672,7 +1672,7 @@ def execute_tier_b_solver(
             ),
         )
     layout_projection = runtime_trace.layout_projection
-    mode_ops = layout_projection.mode_ops
+    mode_ops = runtime_trace.mode_ops
     canonical_projection = runtime_trace.canonical_projection
     result.solver_info.update(dict(layout_projection.metadata["solver_info_fragment"]))
     gate_registry = _build_gate_registry(
@@ -1698,7 +1698,7 @@ def execute_tier_b_solver(
         thomson_mode="electron_frame_exact_wrapper",
         gate_registry=gate_registry,
         mode_ops=mode_ops,
-        seed_pack=integrator.seed_pack,
+        seed_pack=runtime_trace.seed_pack,
         canonical_projection=canonical_projection,
     )
     solver_output.metadata["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
