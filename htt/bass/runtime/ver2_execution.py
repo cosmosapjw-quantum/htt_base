@@ -227,6 +227,19 @@ class TierBExecutionTrace:
     visibility_source: "TiltedVisibilitySource"
     canonical_projection: "CanonicalLayoutProjection"
 
+    @classmethod
+    def from_runtime_bundle(cls, runtime_trace) -> "TierBExecutionTrace":
+        return cls(
+            background_monitor=runtime_trace.background_monitor,
+            startup_gate=runtime_trace.startup_gate,
+            startup_state=runtime_trace.startup_state,
+            seed_projection=runtime_trace.seed_projection,
+            geodesic_probe=runtime_trace.geodesic_probe,
+            thomson_probe=runtime_trace.thomson_probe,
+            visibility_source=runtime_trace.visibility_source,
+            canonical_projection=runtime_trace.canonical_projection,
+        )
+
 
 @dataclass(frozen=True)
 class TierBExecutableRun:
@@ -1695,16 +1708,7 @@ def execute_tier_b_solver(
     return TierBExecutableRun(
         execution_plan=plan,
         runtime_decision=runtime_decision,
-        trace=TierBExecutionTrace(
-            background_monitor=runtime_trace.background_monitor,
-            startup_gate=runtime_trace.startup_gate,
-            startup_state=runtime_trace.startup_state,
-            seed_projection=runtime_trace.seed_projection,
-            geodesic_probe=runtime_trace.geodesic_probe,
-            thomson_probe=runtime_trace.thomson_probe,
-            visibility_source=runtime_trace.visibility_source,
-            canonical_projection=runtime_trace.canonical_projection,
-        ),
+        trace=TierBExecutionTrace.from_runtime_bundle(runtime_trace),
         integration_result=result,
         solver_output=solver_output,
         cutoff_campaign=cutoff_campaign,
