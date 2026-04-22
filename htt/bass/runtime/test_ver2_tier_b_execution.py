@@ -406,6 +406,21 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "ver2_native_integrator.layout_auxiliary_history_bundle"
     )
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["covered_mode_label"] == "m0"
+    assert set(
+        registry["hierarchy_layout_gate"].metadata["projection_provenance"]["covered_mode_labels"]
+    ) == {"m0", "m+2", "m-2"}
+    assert (
+        registry["hierarchy_layout_gate"].metadata["projection_provenance"]["projection_mode"]
+        == "multi_live_mode_label_with_layout_auxiliary_local_matter_blocks"
+    )
+    assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["resolved_sector_order"] == [
+        "ph_I",
+        "ph_E",
+        "nu_I",
+        "baryon",
+        "cdm",
+        "src",
+    ]
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_block_owner"] == (
         "mode_ops_source_template"
     )

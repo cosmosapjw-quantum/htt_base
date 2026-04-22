@@ -1740,6 +1740,10 @@ class Ver2TierBIntegrator:
             "layout_projection_owner": "ver2_native_integrator.build_runtime_layout_projection",
             "layout_auxiliary_bundle_owner": str(auxiliary_bundle.metadata["owner"]),
             "covered_mode_label": covered,
+            "covered_mode_labels": list(canonical_projection.covered_mode_labels),
+            "zero_filled_mode_labels": list(canonical_projection.zero_filled_mode_labels),
+            "projection_mode": str(canonical_projection.metadata.get("projection_mode", "")),
+            "resolved_sector_order": list(canonical_projection.metadata.get("resolved_sector_order", ())),
             "layout_source_block_owner": str(
                 canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
             ),
