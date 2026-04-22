@@ -42,6 +42,8 @@ DISCRIMINATION_MATRIX_ARTIFACT_ID = "htt.ver2.export.discrimination_matrix"
 TSC_OVERLAY_ARTIFACT_ID = "tsc.ver2.export.overlay"
 MIO_CERTIFICATE_ARTIFACT_ID = "mio.predictive_residuals.certificate"
 REPRESENTATIVE_FAMILY_SWEEP_ARTIFACT_ID = "bass.ver2.export.representative_family_sweep"
+TSC_ACTIVE_SERVICE_BUNDLE_ARTIFACT_ID = "tsc.ver2.export.active_service_bundle"
+TSC_POLICY_LEDGER_ARTIFACT_ID = "tsc.ver2.export.policy_ledger"
 
 
 @dataclass(frozen=True)
@@ -84,6 +86,47 @@ class ExportedArtifactEnvelope:
     payload: Mapping[str, Any]
 
 
+@dataclass(frozen=True)
+class ExportedTscPolicyLedger:
+    manifest: ArtifactManifest
+    overlay_ref: str
+    overlay_artifact_id: str
+    advisory_only: bool
+    required_channels: tuple[str, ...]
+    publication_ready: bool
+    publication_blockers: tuple[str, ...]
+    public_caveat_snippet: str
+    quarantine_reasons: tuple[str, ...]
+    failed_no_overclaim_flags: tuple[str, ...]
+    claim_limited_channels: tuple[str, ...]
+    channel_claim_ceiling: dict[str, str]
+    channel_labels: dict[str, tuple[str, ...]]
+
+
+@dataclass(frozen=True)
+class ExportedTscActiveServiceBundle:
+    manifest: ArtifactManifest
+    overlay_ref: str
+    overlay_artifact_id: str
+    required_channels: tuple[str, ...]
+    publication_ready: bool
+    publication_blockers: tuple[str, ...]
+    domain_status: str
+    source_status: str
+    residual_bridge_status: str
+    upgrade_reason: str
+    upgrade_severity: str
+    bass_recommended_label: str
+    bass_restricted_channels: tuple[str, ...]
+    htt_required_channels: tuple[str, ...]
+    htt_publication_blockers: tuple[str, ...]
+    mio_required_channels: tuple[str, ...]
+    mio_publication_blockers: tuple[str, ...]
+    overlay_policy_ledger_publication_blockers: tuple[str, ...]
+    overlay_policy_ledger_claim_limited_channels: tuple[str, ...]
+    overlay_policy_ledger_failed_no_overclaim_flags: tuple[str, ...]
+
+
 def _resolve_generated_root(generated_root: str | Path | None) -> Path:
     return Path(generated_root) if generated_root is not None else DEFAULT_GENERATED_ROOT
 
@@ -98,6 +141,27 @@ def _manifest(raw: Mapping[str, Any]) -> ArtifactManifest:
 
 def _artifact_root(generated_root: Path) -> Path:
     return generated_root / "artifacts"
+
+
+def _tuple_of_str(values: Any) -> tuple[str, ...]:
+    if isinstance(values, (list, tuple)):
+        return tuple(str(value) for value in values)
+    return ()
+
+
+def _dict_of_str(values: Any) -> dict[str, str]:
+    if not isinstance(values, Mapping):
+        return {}
+    return {str(key): str(value) for key, value in values.items()}
+
+
+def _dict_of_tuple_str(values: Any) -> dict[str, tuple[str, ...]]:
+    if not isinstance(values, Mapping):
+        return {}
+    return {
+        str(key): _tuple_of_str(value)
+        for key, value in values.items()
+    }
 
 
 @lru_cache(maxsize=None)
@@ -401,6 +465,85 @@ def load_exported_tsc_overlay(
     )
 
 
+def load_exported_tsc_policy_ledger(
+    *,
+    artifact_id_or_path: str | Path = TSC_POLICY_LEDGER_ARTIFACT_ID,
+    generated_root: str | Path | None = None,
+) -> ExportedTscPolicyLedger:
+    envelope = load_exported_artifact(
+        artifact_id_or_path,
+        generated_root=generated_root,
+    )
+    payload = envelope.payload
+    ledger_payload = payload.get("ledger", payload)
+    if not isinstance(ledger_payload, Mapping):
+        raise ValueError("exported TSC policy ledger payload must be a mapping")
+    return ExportedTscPolicyLedger(
+        manifest=envelope.manifest,
+        overlay_ref=str(payload.get("overlay_ref", ledger_payload.get("artifact_id", ""))),
+        overlay_artifact_id=str(ledger_payload["artifact_id"]),
+        advisory_only=bool(ledger_payload["advisory_only"]),
+        required_channels=_tuple_of_str(ledger_payload.get("required_channels")),
+        publication_ready=bool(ledger_payload["publication_ready"]),
+        publication_blockers=_tuple_of_str(ledger_payload.get("publication_blockers")),
+        public_caveat_snippet=str(ledger_payload["public_caveat_snippet"]),
+        quarantine_reasons=_tuple_of_str(ledger_payload.get("quarantine_reasons")),
+        failed_no_overclaim_flags=_tuple_of_str(
+            ledger_payload.get("failed_no_overclaim_flags")
+        ),
+        claim_limited_channels=_tuple_of_str(ledger_payload.get("claim_limited_channels")),
+        channel_claim_ceiling=_dict_of_str(ledger_payload.get("channel_claim_ceiling")),
+        channel_labels=_dict_of_tuple_str(ledger_payload.get("channel_labels")),
+    )
+
+
+def load_exported_tsc_active_service_bundle(
+    *,
+    artifact_id_or_path: str | Path = TSC_ACTIVE_SERVICE_BUNDLE_ARTIFACT_ID,
+    generated_root: str | Path | None = None,
+) -> ExportedTscActiveServiceBundle:
+    envelope = load_exported_artifact(
+        artifact_id_or_path,
+        generated_root=generated_root,
+    )
+    payload = envelope.payload
+    bundle_payload = payload.get("bundle", payload)
+    if not isinstance(bundle_payload, Mapping):
+        raise ValueError("exported TSC active-service bundle payload must be a mapping")
+    bass_payload = dict(bundle_payload.get("bass_suggestion", {}))
+    htt_payload = dict(bundle_payload.get("htt_caveats", {}))
+    mio_payload = dict(bundle_payload.get("mio_fields", {}))
+    policy_payload = dict(bundle_payload.get("overlay_policy_ledger", {}))
+    return ExportedTscActiveServiceBundle(
+        manifest=envelope.manifest,
+        overlay_ref=str(payload.get("overlay_ref", bundle_payload.get("artifact_id", ""))),
+        overlay_artifact_id=str(bundle_payload["artifact_id"]),
+        required_channels=_tuple_of_str(bundle_payload.get("required_channels")),
+        publication_ready=bool(bundle_payload["publication_ready"]),
+        publication_blockers=_tuple_of_str(bundle_payload.get("publication_blockers")),
+        domain_status=str(bundle_payload["domain_status"]),
+        source_status=str(bundle_payload["source_status"]),
+        residual_bridge_status=str(bundle_payload["residual_bridge_status"]),
+        upgrade_reason=str(bundle_payload["upgrade_reason"]),
+        upgrade_severity=str(bundle_payload["upgrade_severity"]),
+        bass_recommended_label=str(bass_payload.get("recommended_label", "")),
+        bass_restricted_channels=_tuple_of_str(bass_payload.get("restricted_channels")),
+        htt_required_channels=_tuple_of_str(htt_payload.get("required_channels")),
+        htt_publication_blockers=_tuple_of_str(htt_payload.get("publication_blockers")),
+        mio_required_channels=_tuple_of_str(mio_payload.get("required_channels")),
+        mio_publication_blockers=_tuple_of_str(mio_payload.get("publication_blockers")),
+        overlay_policy_ledger_publication_blockers=_tuple_of_str(
+            policy_payload.get("publication_blockers")
+        ),
+        overlay_policy_ledger_claim_limited_channels=_tuple_of_str(
+            policy_payload.get("claim_limited_channels")
+        ),
+        overlay_policy_ledger_failed_no_overclaim_flags=_tuple_of_str(
+            policy_payload.get("failed_no_overclaim_flags")
+        ),
+    )
+
+
 def load_exported_mio_certificate(
     *,
     artifact_id_or_path: str | Path = MIO_CERTIFICATE_ARTIFACT_ID,
@@ -440,17 +583,23 @@ __all__ = [
     "DEFAULT_GENERATED_ROOT",
     "DISCRIMINATION_MATRIX_ARTIFACT_ID",
     "ExportedArtifactEnvelope",
+    "ExportedTscActiveServiceBundle",
+    "ExportedTscPolicyLedger",
     "MIO_CERTIFICATE_ARTIFACT_ID",
     "OBSERVABLE_VECTOR_ARTIFACT_ID",
     "PreliminaryPackArtifactRef",
     "PreliminaryResultPack",
     "REPRESENTATIVE_FAMILY_SWEEP_ARTIFACT_ID",
+    "TSC_ACTIVE_SERVICE_BUNDLE_ARTIFACT_ID",
     "TSC_OVERLAY_ARTIFACT_ID",
+    "TSC_POLICY_LEDGER_ARTIFACT_ID",
     "load_exported_artifact",
+    "load_exported_tsc_active_service_bundle",
     "load_exported_atlas_entry_lite",
     "load_exported_discrimination_matrix",
     "load_exported_mio_certificate",
     "load_exported_observable_vector",
     "load_exported_tsc_overlay",
+    "load_exported_tsc_policy_ledger",
     "load_preliminary_result_pack",
 ]

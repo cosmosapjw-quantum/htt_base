@@ -2,10 +2,14 @@ from __future__ import annotations
 
 from workspace.contracts.preliminary_results import (
     REPRESENTATIVE_FAMILY_SWEEP_ARTIFACT_ID,
+    TSC_ACTIVE_SERVICE_BUNDLE_ARTIFACT_ID,
+    TSC_POLICY_LEDGER_ARTIFACT_ID,
     load_exported_artifact,
+    load_exported_tsc_active_service_bundle,
     load_exported_discrimination_matrix,
     load_exported_observable_vector,
     load_exported_tsc_overlay,
+    load_exported_tsc_policy_ledger,
     load_preliminary_result_pack,
 )
 
@@ -42,6 +46,29 @@ def test_exported_tsc_overlay_reconstructs_overlay_contract() -> None:
     assert overlay.manifest.owner == "TSC"
     assert overlay.public_caveat_snippet
     assert overlay.channel_budgets
+
+
+def test_exported_tsc_active_service_bundle_recovers_policy_blockers() -> None:
+    bundle = load_exported_tsc_active_service_bundle()
+    assert bundle.manifest.artifact_id == TSC_ACTIVE_SERVICE_BUNDLE_ARTIFACT_ID
+    assert bundle.overlay_ref == "tsc.ver2.export.overlay"
+    assert bundle.overlay_artifact_id == "tsc.ver2.export.overlay"
+    assert bundle.required_channels == ("TT", "TE", "EE")
+    assert bundle.publication_blockers
+    assert bundle.publication_blockers == bundle.htt_publication_blockers
+    assert bundle.publication_blockers == bundle.mio_publication_blockers
+
+
+def test_exported_tsc_policy_ledger_recovers_no_overclaim_surface() -> None:
+    ledger = load_exported_tsc_policy_ledger()
+    assert ledger.manifest.artifact_id == TSC_POLICY_LEDGER_ARTIFACT_ID
+    assert ledger.overlay_ref == "tsc.ver2.export.overlay"
+    assert ledger.overlay_artifact_id == "tsc.ver2.export.overlay"
+    assert ledger.advisory_only is True
+    assert ledger.required_channels == ("TT", "TE", "EE")
+    assert ledger.publication_blockers
+    assert "TT" in ledger.claim_limited_channels
+    assert ledger.channel_claim_ceiling["TT"] == "exploratory"
 
 
 def test_family_sweep_artifact_envelope_keeps_claim_ceiling() -> None:
