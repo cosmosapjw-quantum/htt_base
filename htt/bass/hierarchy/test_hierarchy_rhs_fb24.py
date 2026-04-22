@@ -29,6 +29,8 @@ Reference — Ellis-Maartens-MacCallum 2012 §16 (nine-term hierarchy);
 """
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 import numpy as np
 import pytest
 
@@ -49,6 +51,12 @@ from bass.hierarchy import (
 )
 from bass.hierarchy.hierarchy_rhs import aniso_ricci_at_eta
 from bass.species.background_table import build_flrw_background_table
+
+
+@dataclass(frozen=True)
+class _ConstantRicciFixture:
+    eta: np.ndarray
+    aniso_3_curvature: np.ndarray
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -92,6 +100,25 @@ def _build_tetrad(label: str):
 @pytest.fixture(scope="module")
 def bg_table():
     return build_flrw_background_table(n_eta=400)
+
+
+def test_constant_2d_aniso_ricci_fixture_bypasses_spline() -> None:
+    """A constant 2D Ricci tensor should be returned directly."""
+    ricci = np.array(
+        [
+            [2.0, -0.3, 0.1],
+            [-0.3, -1.0, 0.2],
+            [0.1, 0.2, -1.0],
+        ],
+        dtype=np.float64,
+    )
+    tetrad = _ConstantRicciFixture(
+        eta=np.linspace(1.0, 5.0, 4, dtype=np.float64),
+        aniso_3_curvature=ricci,
+    )
+    recovered = aniso_ricci_at_eta(3.0, tetrad)
+    assert recovered is not None
+    assert np.array_equal(recovered, ricci)
 
 
 # ════════════════════════════════════════════════════════════════════

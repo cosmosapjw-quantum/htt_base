@@ -47,6 +47,11 @@ from bass.hierarchy import (
     zero_hierarchy,
     zero_pstf,
 )
+from bass.hierarchy.hierarchy_rhs import (
+    hierarchy_rhs_neutrino_from_state,
+    hierarchy_rhs_photon_from_state,
+    sample_hierarchy_background,
+)
 from bass.hierarchy.terms import zero_nabla_operator
 from bass.species.background_table import build_flrw_background_table
 
@@ -710,3 +715,80 @@ def test_neutrino_driver_matches_zero_collision_photon(bg_table) -> None:
         collision=ZeroCollisionOperator(),
     )
     assert np.allclose(dy_neutrino, dy_photon, rtol=0, atol=1e-15)
+
+
+def test_photon_internal_state_helper_matches_public_wrapper(bg_table) -> None:
+    """Internal array-first helper must preserve the public RHS exactly."""
+    L_max = 3
+    rng = np.random.default_rng(1234)
+    y0 = rng.normal(size=hierarchy_total_size(L_max)) * 1e-3
+    eta_eval = float(bg_table.eta[bg_table.eta.size // 2])
+    nabla = _axis_aligned_gradient(np.array([0.7, -0.4, 0.2]))
+    accel = np.array([0.01, -0.02, 0.03], dtype=np.float64)
+    vorticity = np.array([-0.04, 0.02, 0.01], dtype=np.float64)
+
+    dy_public = hierarchy_rhs_photon(
+        eta_eval,
+        y0,
+        L_max=L_max,
+        bg_table=bg_table,
+        tetrad_state=None,
+        closure=HardCutClosure(),
+        collision=ZeroCollisionOperator(),
+        nabla_operator=nabla,
+        accel_vector=accel,
+        vorticity_vector=vorticity,
+    )
+
+    state = unpack_hierarchy(y0, L_max)
+    background = sample_hierarchy_background(
+        eta_eval,
+        bg_table=bg_table,
+        tetrad_state=None,
+    )
+    dy_internal = hierarchy_rhs_photon_from_state(
+        state,
+        background=background,
+        closure=HardCutClosure(),
+        collision=ZeroCollisionOperator(),
+        collision_aux=None,
+        nabla_operator=nabla,
+        accel_vector=accel,
+        vorticity_vector=vorticity,
+    )
+
+    assert np.allclose(dy_internal, dy_public, rtol=0, atol=1e-15)
+
+
+def test_neutrino_internal_state_helper_matches_public_wrapper(bg_table) -> None:
+    """Internal neutrino helper must preserve the public wrapper output."""
+    from bass.hierarchy import hierarchy_rhs_neutrino
+
+    L_max = 3
+    rng = np.random.default_rng(5678)
+    y0 = rng.normal(size=hierarchy_total_size(L_max)) * 1e-3
+    eta_eval = float(bg_table.eta[bg_table.eta.size // 2])
+
+    dy_public = hierarchy_rhs_neutrino(
+        eta_eval,
+        y0,
+        L_max=L_max,
+        bg_table=bg_table,
+        tetrad_state=None,
+        closure=HardCutClosure(),
+    )
+
+    state = unpack_hierarchy(y0, L_max)
+    background = sample_hierarchy_background(
+        eta_eval,
+        bg_table=bg_table,
+        tetrad_state=None,
+    )
+    dy_internal = hierarchy_rhs_neutrino_from_state(
+        state,
+        background=background,
+        closure=HardCutClosure(),
+        neutrino_background=None,
+    )
+
+    assert np.allclose(dy_internal, dy_public, rtol=0, atol=1e-15)

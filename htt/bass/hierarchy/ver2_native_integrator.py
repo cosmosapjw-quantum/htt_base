@@ -48,7 +48,11 @@ from bass.closure.stiff_closure import (
 from bass.closure.quadrupole_tca import solve_tca_closure
 from bass.hierarchy.collision_interface import CollisionOperator, ZeroCollisionOperator
 from bass.hierarchy.closure import TCAClosure, build_default_closure
-from bass.hierarchy.hierarchy_rhs import hierarchy_rhs_neutrino, hierarchy_rhs_photon
+from bass.hierarchy.hierarchy_rhs import (
+    hierarchy_rhs_neutrino_from_state,
+    hierarchy_rhs_photon_from_state,
+    sample_hierarchy_background,
+)
 from bass.hierarchy.integrator import (
     C_KMS,
     IntegratorConfig,
@@ -80,6 +84,7 @@ __all__ = [
 
 _SIGMA_PLUS_BASIS = np.diag([-2.0, 1.0, 1.0]) / np.sqrt(6.0)
 _SIGMA_MINUS_BASIS = np.diag([0.0, 1.0, -1.0]) / np.sqrt(2.0)
+_ZERO_COLLISION = ZeroCollisionOperator()
 
 
 def _interp_scalar(eta_grid: np.ndarray, values: np.ndarray, eta: float) -> float:
@@ -145,7 +150,7 @@ class _TetradStateAdapter:
         self.aniso_3_curvature = (
             None
             if not np.any(ricci)
-            else np.repeat(ricci[None, :, :], eta.size, axis=0)
+            else ricci
         )
 
 
@@ -321,6 +326,32 @@ def _pack_radiation_state(
     )
 
 
+def _make_pstf_tensor_view(ell: int, components: np.ndarray) -> PSTFTensor:
+    tensor = object.__new__(PSTFTensor)
+    tensor.ell = int(ell)
+    tensor.components = np.asarray(components)
+    return tensor
+
+
+def _unpack_hierarchy_view(flat: np.ndarray, L: int) -> PSTFHierarchyState:
+    expected = (L + 1) ** 2
+    arr = np.asarray(flat, dtype=np.float64)
+    if arr.shape != (expected,):
+        raise ValueError(
+            f"flat shape {arr.shape} != ({expected},) for L={L}"
+        )
+    tensors: list[PSTFTensor] = []
+    offset = 0
+    for ell in range(L + 1):
+        size = 2 * ell + 1
+        tensors.append(_make_pstf_tensor_view(ell, arr[offset : offset + size]))
+        offset += size
+    state = object.__new__(PSTFHierarchyState)
+    state.L = int(L)
+    state.tensors = tensors
+    return state
+
+
 def _unpack_radiation_state(
     y: np.ndarray, L_max: int
 ) -> tuple[PSTFHierarchyState, PolarizationHierarchyState, PSTFHierarchyState]:
@@ -328,9 +359,9 @@ def _unpack_radiation_state(
     tower_size = (L_max + 1) ** 2
     if arr.shape != (3 * tower_size,):
         raise ValueError(f"radiation state shape {arr.shape} does not match L_max={L_max}")
-    photon_T = unpack_hierarchy(arr[:tower_size], L_max)
-    photon_E = PolarizationHierarchyState(E=unpack_hierarchy(arr[tower_size : 2 * tower_size], L_max))
-    neutrino_tower = unpack_hierarchy(arr[2 * tower_size :], L_max)
+    photon_T = _unpack_hierarchy_view(arr[:tower_size], L_max)
+    photon_E = PolarizationHierarchyState(E=_unpack_hierarchy_view(arr[tower_size : 2 * tower_size], L_max))
+    neutrino_tower = _unpack_hierarchy_view(arr[2 * tower_size :], L_max)
     return photon_T, photon_E, neutrino_tower
 
 
@@ -400,6 +431,9 @@ class Ver2TierBIntegrator:
         )
         self._temperature_collision = _TemperatureProjectedCollision()
         self._e_collision = _EProjectedCollision()
+        self._zero_b_state = zero_hierarchy(config.L_max)
+        self._zero_v_b_real_sph = np.zeros(3, dtype=np.float64)
+        self._neutrino_background = self.species[SpeciesLabel.NEUTRINO]
         self._direction = np.asarray(config.tilt_direction, dtype=np.float64)
         if not np.any(self._direction):
             self._direction = np.array([1.0, 0.0, 0.0], dtype=np.float64)
@@ -410,6 +444,11 @@ class Ver2TierBIntegrator:
         self.startup_state: QuadrupoleStartupState | None = None
         self.seed_injection_mode: str = "uninitialized"
         self.seed_velocity_scale: float = 1.0
+        _ = sample_hierarchy_background(
+            float(self.background_monitor.eta[0]),
+            bg_table=self.bg_table,
+            tetrad_state=self.tetrad_state,
+        )
 
     def _tilted_electron_at(self, eta: float) -> TiltedSpeciesBackground | None:
         if abs(float(self.config.tilt_rapidity)) == 0.0:
@@ -531,30 +570,15 @@ class Ver2TierBIntegrator:
         gamma_t: float,
     ) -> QuadrupoleStartupState:
         eta0 = float(self.background_monitor.eta[0])
-        rhs_T_free = hierarchy_rhs_photon(
-            eta0,
-            photon_T.as_flat(),
-            L_max=self.config.L_max,
-            bg_table=self.bg_table,
-            tetrad_state=self.tetrad_state,
-            closure=self.closure,
-            collision=ZeroCollisionOperator(),
-            collision_aux=None,
-        )
-        rhs_E_free = hierarchy_rhs_photon(
-            eta0,
-            photon_E.E.as_flat(),
-            L_max=self.config.L_max,
-            bg_table=self.bg_table,
-            tetrad_state=self.tetrad_state,
-            closure=self.closure,
-            collision=ZeroCollisionOperator(),
-            collision_aux=None,
+        background = self._background_snapshot(eta0)
+        rhs_T_free, rhs_E_free = self._collisionless_photon_rhs(
+            photon_T=photon_T,
+            photon_E=photon_E,
+            background=background,
         )
         slot = _ell2_m0_slot_offset(self.config.L_max)
-        a_val = self._a_at(eta0)
-        S_T = float(rhs_T_free[slot]) / a_val * (-1.0)
-        S_E = float(rhs_E_free[slot]) / a_val * (-1.0)
+        S_T = float(rhs_T_free[slot]) / background.a_val * (-1.0)
+        S_E = float(rhs_E_free[slot]) / background.a_val * (-1.0)
         return quadrupole_startup_from_sources(
             S_T=S_T,
             S_E=S_E,
@@ -564,8 +588,66 @@ class Ver2TierBIntegrator:
     def _h_local_at(self, eta: float) -> float:
         return _interp_scalar(self.background_monitor.eta, self.background_monitor.H, eta)
 
-    def _a_at(self, eta: float) -> float:
-        return _interp_scalar(self.background_monitor.eta, self.background_monitor.a, eta)
+    def _background_snapshot(self, eta: float):
+        return sample_hierarchy_background(
+            float(eta),
+            bg_table=self.bg_table,
+            tetrad_state=self.tetrad_state,
+        )
+
+    def _collisionless_photon_rhs(
+        self,
+        *,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        background,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        rhs_T = hierarchy_rhs_photon_from_state(
+            photon_T,
+            background=background,
+            closure=self.closure,
+            collision=_ZERO_COLLISION,
+            collision_aux=None,
+        )
+        rhs_E = hierarchy_rhs_photon_from_state(
+            photon_E.E,
+            background=background,
+            closure=self.closure,
+            collision=_ZERO_COLLISION,
+            collision_aux=None,
+        )
+        return rhs_T, rhs_E
+
+    def _radiation_rhs_components(
+        self,
+        *,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        neutrino_tower: PSTFHierarchyState,
+        background,
+        collision_aux: _ProjectedCollisionAux | None,
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        rhs_T = hierarchy_rhs_photon_from_state(
+            photon_T,
+            background=background,
+            closure=self.closure,
+            collision=self._temperature_collision if collision_aux is not None else _ZERO_COLLISION,
+            collision_aux=collision_aux,
+        )
+        rhs_E = hierarchy_rhs_photon_from_state(
+            photon_E.E,
+            background=background,
+            closure=self.closure,
+            collision=self._e_collision if collision_aux is not None else _ZERO_COLLISION,
+            collision_aux=collision_aux,
+        )
+        rhs_nu = hierarchy_rhs_neutrino_from_state(
+            neutrino_tower,
+            background=background,
+            closure=self.closure,
+            neutrino_background=self._neutrino_background,
+        )
+        return rhs_T, rhs_E, rhs_nu
 
     def _rhs(
         self,
@@ -575,6 +657,7 @@ class Ver2TierBIntegrator:
         tca_tracker: list[bool] | None = None,
     ) -> np.ndarray:
         photon_T, photon_E, neutrino_tower = _unpack_radiation_state(y, self.config.L_max)
+        background = self._background_snapshot(float(eta))
         gamma_t = _resolved_gamma_t(
             eta=float(eta),
             direction=self._direction,
@@ -588,37 +671,15 @@ class Ver2TierBIntegrator:
             Gamma_T=float(gamma_t),
             direction=self._direction,
             tilted_electron=self._tilted_electron_at(float(eta)),
-            v_b_real_sph=np.zeros(3, dtype=np.float64),
-            b_state=zero_hierarchy(self.config.L_max),
+            v_b_real_sph=self._zero_v_b_real_sph,
+            b_state=self._zero_b_state,
         )
-        rhs_T = hierarchy_rhs_photon(
-            eta,
-            photon_T.as_flat(),
-            L_max=self.config.L_max,
-            bg_table=self.bg_table,
-            tetrad_state=self.tetrad_state,
-            closure=self.closure,
-            collision=self._temperature_collision,
+        rhs_T, rhs_E, rhs_nu = self._radiation_rhs_components(
+            photon_T=photon_T,
+            photon_E=photon_E,
+            neutrino_tower=neutrino_tower,
+            background=background,
             collision_aux=aux,
-        )
-        rhs_E = hierarchy_rhs_photon(
-            eta,
-            photon_E.E.as_flat(),
-            L_max=self.config.L_max,
-            bg_table=self.bg_table,
-            tetrad_state=self.tetrad_state,
-            closure=self.closure,
-            collision=self._e_collision,
-            collision_aux=aux,
-        )
-        rhs_nu = hierarchy_rhs_neutrino(
-            eta,
-            neutrino_tower.as_flat(),
-            L_max=self.config.L_max,
-            bg_table=self.bg_table,
-            tetrad_state=self.tetrad_state,
-            closure=self.closure,
-            neutrino_background=self.species[SpeciesLabel.NEUTRINO],
         )
 
         tca_active = False
@@ -626,30 +687,14 @@ class Ver2TierBIntegrator:
             H_local = self._h_local_at(float(eta))
             if H_local > 0.0 and gamma_t / H_local > self.config.gamma_T_over_H_threshold:
                 tca_active = True
-                rhs_T_free = hierarchy_rhs_photon(
-                    eta,
-                    photon_T.as_flat(),
-                    L_max=self.config.L_max,
-                    bg_table=self.bg_table,
-                    tetrad_state=self.tetrad_state,
-                    closure=self.closure,
-                    collision=ZeroCollisionOperator(),
-                    collision_aux=None,
-                )
-                rhs_E_free = hierarchy_rhs_photon(
-                    eta,
-                    photon_E.E.as_flat(),
-                    L_max=self.config.L_max,
-                    bg_table=self.bg_table,
-                    tetrad_state=self.tetrad_state,
-                    closure=self.closure,
-                    collision=ZeroCollisionOperator(),
-                    collision_aux=None,
+                rhs_T_free, rhs_E_free = self._collisionless_photon_rhs(
+                    photon_T=photon_T,
+                    photon_E=photon_E,
+                    background=background,
                 )
                 slot = _ell2_m0_slot_offset(self.config.L_max)
-                a_val = self._a_at(float(eta))
-                S_T = float(rhs_T_free[slot]) / a_val * (-1.0)
-                S_E = float(rhs_E_free[slot]) / a_val * (-1.0)
+                S_T = float(rhs_T_free[slot]) / background.a_val * (-1.0)
+                S_E = float(rhs_E_free[slot]) / background.a_val * (-1.0)
                 theta_2_alg, e_2_alg = self._solve_tca_scalars(
                     S_T=S_T,
                     S_E=S_E,
@@ -658,7 +703,7 @@ class Ver2TierBIntegrator:
                 )
                 current_pi2 = float(photon_T.tensors[2].components[2])
                 current_e2 = float(photon_E.E.tensors[2].components[2])
-                relax_rate = a_val * float(gamma_t)
+                relax_rate = background.a_val * float(gamma_t)
                 rhs_T[slot] = -relax_rate * (current_pi2 - theta_2_alg)
                 rhs_E[slot] = -relax_rate * (current_e2 - e_2_alg)
 
@@ -669,34 +714,13 @@ class Ver2TierBIntegrator:
 
     def _explicit_rhs(self, eta: float, y: np.ndarray) -> np.ndarray:
         photon_T, photon_E, neutrino_tower = _unpack_radiation_state(y, self.config.L_max)
-        rhs_T = hierarchy_rhs_photon(
-            eta,
-            photon_T.as_flat(),
-            L_max=self.config.L_max,
-            bg_table=self.bg_table,
-            tetrad_state=self.tetrad_state,
-            closure=self.closure,
-            collision=ZeroCollisionOperator(),
+        background = self._background_snapshot(float(eta))
+        rhs_T, rhs_E, rhs_nu = self._radiation_rhs_components(
+            photon_T=photon_T,
+            photon_E=photon_E,
+            neutrino_tower=neutrino_tower,
+            background=background,
             collision_aux=None,
-        )
-        rhs_E = hierarchy_rhs_photon(
-            eta,
-            photon_E.E.as_flat(),
-            L_max=self.config.L_max,
-            bg_table=self.bg_table,
-            tetrad_state=self.tetrad_state,
-            closure=self.closure,
-            collision=ZeroCollisionOperator(),
-            collision_aux=None,
-        )
-        rhs_nu = hierarchy_rhs_neutrino(
-            eta,
-            neutrino_tower.as_flat(),
-            L_max=self.config.L_max,
-            bg_table=self.bg_table,
-            tetrad_state=self.tetrad_state,
-            closure=self.closure,
-            neutrino_background=self.species[SpeciesLabel.NEUTRINO],
         )
         return np.concatenate([rhs_T, rhs_E, rhs_nu])
 
@@ -723,6 +747,7 @@ class Ver2TierBIntegrator:
         tca_tracker: list[bool],
     ) -> np.ndarray:
         photon_T, photon_E, neutrino_tower = _unpack_radiation_state(stage, self.config.L_max)
+        background = self._background_snapshot(float(eta))
         gamma_t = _resolved_gamma_t(
             eta=float(eta),
             direction=self._direction,
@@ -762,37 +787,21 @@ class Ver2TierBIntegrator:
             out_E.tensors[2].components = (-A21 * T2_rhs + A11 * E2_rhs) / det
 
             if tca_active:
-                rhs_T_free = hierarchy_rhs_photon(
-                    eta,
-                    photon_T.as_flat(),
-                    L_max=self.config.L_max,
-                    bg_table=self.bg_table,
-                    tetrad_state=self.tetrad_state,
-                    closure=self.closure,
-                    collision=ZeroCollisionOperator(),
-                    collision_aux=None,
+                rhs_T_free, rhs_E_free = self._collisionless_photon_rhs(
+                    photon_T=photon_T,
+                    photon_E=photon_E,
+                    background=background,
                 )
-                rhs_E_free = hierarchy_rhs_photon(
-                    eta,
-                    photon_E.E.as_flat(),
-                    L_max=self.config.L_max,
-                    bg_table=self.bg_table,
-                    tetrad_state=self.tetrad_state,
-                    closure=self.closure,
-                    collision=ZeroCollisionOperator(),
-                    collision_aux=None,
-                )
-                a_val = self._a_at(float(eta))
                 slot = _ell2_m0_slot_offset(self.config.L_max)
-                S_T = float(rhs_T_free[slot]) / a_val * (-1.0)
-                S_E = float(rhs_E_free[slot]) / a_val * (-1.0)
+                S_T = float(rhs_T_free[slot]) / background.a_val * (-1.0)
+                S_E = float(rhs_E_free[slot]) / background.a_val * (-1.0)
                 theta_2_alg, e_2_alg = self._solve_tca_scalars(
                     S_T=S_T,
                     S_E=S_E,
                     gamma_t=float(gamma_t),
                     H_local=float(H_local),
                 )
-                relax_rate = a_val * float(gamma_t)
+                relax_rate = background.a_val * float(gamma_t)
                 relax_dt = float(dt) * float(relax_rate)
                 out_T.tensors[2].components[2] = (
                     photon_T.tensors[2].components[2] + relax_dt * theta_2_alg

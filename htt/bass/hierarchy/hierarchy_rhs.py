@@ -62,6 +62,7 @@ References
 """
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Callable, Optional
 
 import numpy as np
@@ -101,6 +102,22 @@ __all__ = [
     "proper_shear_at_eta",
     "aniso_ricci_at_eta",
 ]
+
+
+@dataclass(frozen=True)
+class HierarchyBackgroundSample:
+    eta: float
+    a_val: float
+    Theta: float
+    sigma: np.ndarray
+    aniso_ricci: np.ndarray | None
+    has_sigma: bool
+    has_ricci: bool
+    sigma_coeffs: np.ndarray | None
+    ricci_coeffs: np.ndarray | None
+
+
+_ZERO_VECTOR3 = np.zeros(3, dtype=np.float64)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -242,6 +259,9 @@ def aniso_ricci_at_eta(
     ricci_grid = getattr(tetrad_state, "aniso_3_curvature", None)
     if ricci_grid is None:
         return None
+    ricci_arr = np.asarray(ricci_grid, dtype=np.float64)
+    if ricci_arr.shape == (3, 3):
+        return ricci_arr
     eta_grid = tetrad_state.eta
     eta_query = float(np.clip(eta, float(eta_grid[0]), float(eta_grid[-1])))
     spline = _get_or_build_aniso_ricci_spline(tetrad_state)
@@ -274,9 +294,236 @@ def _get_or_build_aniso_ricci_spline(tetrad_state):
     return spline
 
 
+def sample_hierarchy_background(
+    eta: float,
+    *,
+    bg_table: "object",
+    tetrad_state: Optional["object"],
+) -> HierarchyBackgroundSample:
+    """Sample all background quantities needed by the hierarchy at one ``η``.
+
+    This keeps the interpolation boundary explicit, matching VER3's
+    proper-time background / conformal-time hierarchy split, while
+    allowing callers that already share an ``η`` to reuse one sampled
+    snapshot across multiple T/E/ν RHS evaluations.
+    """
+    a_val = float(bg_table.interp_a(eta))
+    Theta = float(bg_table.interp_Theta(eta))
+    sigma = proper_shear_at_eta(eta, tetrad_state, a_val)
+    aniso_ricci = aniso_ricci_at_eta(eta, tetrad_state)
+    has_sigma = bool(np.any(sigma))
+    has_ricci = aniso_ricci is not None and bool(np.any(aniso_ricci))
+    sigma_coeffs = (
+        np.asarray(pstf_pack(np.asarray(sigma, dtype=np.float64)), dtype=np.float64)
+        if has_sigma
+        else None
+    )
+    ricci_coeffs = (
+        np.asarray(pstf_pack(np.asarray(aniso_ricci, dtype=np.float64)), dtype=np.float64)
+        if has_ricci
+        else None
+    )
+    return HierarchyBackgroundSample(
+        eta=float(eta),
+        a_val=a_val,
+        Theta=Theta,
+        sigma=np.asarray(sigma, dtype=np.float64),
+        aniso_ricci=None if aniso_ricci is None else np.asarray(aniso_ricci, dtype=np.float64),
+        has_sigma=has_sigma,
+        has_ricci=has_ricci,
+        sigma_coeffs=sigma_coeffs,
+        ricci_coeffs=ricci_coeffs,
+    )
+
+
 # ════════════════════════════════════════════════════════════════════
 #   Photon hierarchy RHS
 # ════════════════════════════════════════════════════════════════════
+
+def hierarchy_rhs_photon_from_state(
+    state: PSTFHierarchyState,
+    *,
+    background: HierarchyBackgroundSample,
+    closure: ClosureStrategy,
+    collision: CollisionOperator,
+    collision_aux: Optional[object] = None,
+    nabla_operator: Optional[Callable[..., np.ndarray]] = None,
+    accel_vector: Optional[np.ndarray] = None,
+    vorticity_vector: Optional[np.ndarray] = None,
+) -> np.ndarray:
+    """Internal array-first photon RHS helper.
+
+    This preserves the public packed storage contract while allowing
+    callers that already hold an unpacked ``PSTFHierarchyState`` to
+    avoid a second pack/unpack cycle on the hot path.
+    """
+    L_max = state.L
+    target_dtype = np.result_type(
+        np.float64,
+        *[np.asarray(t.components).dtype for t in state.tensors],
+    )
+    if accel_vector is None:
+        accel_vector = _ZERO_VECTOR3
+        has_accel = False
+    else:
+        accel_vector = np.asarray(accel_vector, dtype=np.float64)
+        has_accel = bool(np.any(accel_vector))
+    if vorticity_vector is None:
+        vorticity_vector = _ZERO_VECTOR3
+        has_vorticity = False
+    else:
+        vorticity_vector = np.asarray(vorticity_vector, dtype=np.float64)
+        has_vorticity = bool(np.any(vorticity_vector))
+    if nabla_operator is None:
+        nabla_operator = zero_nabla_operator
+
+    needs_full_gradient_terms = nabla_operator is not zero_nabla_operator
+    state_full_cache: list[np.ndarray | None] | None = [None] * (L_max + 1) if needs_full_gradient_terms else None
+    closure_packed_cache: dict[int, np.ndarray] = {}
+    closure_full_cache: dict[int, np.ndarray] | None = {} if needs_full_gradient_terms else None
+
+    def _state_full(ell: int) -> np.ndarray:
+        assert state_full_cache is not None
+        cached = state_full_cache[ell]
+        if cached is None:
+            cached = pstf_to_tensor(state.tensors[ell])
+            state_full_cache[ell] = cached
+        return cached
+
+    def _closure_packed(ell: int) -> np.ndarray:
+        cached = closure_packed_cache.get(ell)
+        if cached is None:
+            cached = np.asarray(
+                closure.get_closure(state, ell).components,
+                dtype=target_dtype,
+            )
+            closure_packed_cache[ell] = cached
+        return cached
+
+    def _closure_full(ell: int) -> np.ndarray:
+        assert closure_full_cache is not None
+        cached = closure_full_cache.get(ell)
+        if cached is None:
+            cached = pstf_to_tensor(closure.get_closure(state, ell))
+            closure_full_cache[ell] = cached
+        return cached
+
+    has_sigma = background.has_sigma
+    zero_collision = isinstance(collision, ZeroCollisionOperator)
+
+    packed_blocks: list[np.ndarray] = []
+    for ell in range(L_max + 1):
+        size = 2 * ell + 1
+        zero_block = np.zeros(size, dtype=target_dtype)
+        Pi_components = np.asarray(state.tensors[ell].components, dtype=target_dtype)
+
+        if ell - 1 >= 0:
+            Pi_prev_components = np.asarray(state.tensors[ell - 1].components, dtype=target_dtype)
+        else:
+            Pi_prev_components = None
+        if ell + 1 <= L_max:
+            Pi_next_components = np.asarray(state.tensors[ell + 1].components, dtype=target_dtype)
+        else:
+            Pi_next_components = _closure_packed(ell + 1)
+        if ell + 2 <= L_max:
+            Pi_next_next_components = np.asarray(state.tensors[ell + 2].components, dtype=target_dtype)
+        else:
+            Pi_next_next_components = _closure_packed(ell + 2)
+        if ell - 2 >= 0:
+            Pi_prev_prev_components = np.asarray(state.tensors[ell - 2].components, dtype=target_dtype)
+        else:
+            Pi_prev_prev_components = None
+
+        T1 = apply_T1_expansion_packed(
+            ell,
+            Pi_components,
+            background.Theta,
+            aniso_ricci_tensor=background.ricci_coeffs,
+        )
+
+        if needs_full_gradient_terms:
+            if ell > 0:
+                T2 = np.asarray(
+                    pstf_pack(
+                        T2_gradient(
+                            ell,
+                            _state_full(ell - 1),
+                            nabla_operator,
+                            aniso_ricci_tensor=background.aniso_ricci,
+                        )
+                    ),
+                    dtype=target_dtype,
+                )
+            else:
+                T2 = zero_block
+            T3 = np.asarray(
+                pstf_pack(
+                    T3_divergence(
+                        ell,
+                        _state_full(ell + 1) if ell + 1 <= L_max else _closure_full(ell + 1),
+                        nabla_operator,
+                    )
+                ),
+                dtype=target_dtype,
+            )
+        else:
+            T2 = zero_block
+            T3 = zero_block
+
+        T4 = (
+            apply_T4_accel_divergence_packed(ell, Pi_next_components, accel_vector)
+            if has_accel
+            else zero_block
+        )
+        if ell > 0 and has_accel:
+            T5 = apply_T5_accel_gradient_packed(ell, Pi_prev_components, accel_vector)
+        else:
+            T5 = zero_block
+        if ell > 0 and has_vorticity:
+            T6 = apply_T6_vorticity_packed(ell, Pi_components, vorticity_vector)
+        else:
+            T6 = zero_block
+
+        if has_sigma:
+            T7 = apply_T7_shear_up_packed(ell, Pi_next_next_components, background.sigma_coeffs)
+            T8 = apply_T8_shear_same_packed(ell, Pi_components, background.sigma_coeffs)
+            T9 = (
+                apply_T9_shear_down_packed(ell, Pi_prev_prev_components, background.sigma_coeffs)
+                if ell >= 2
+                else zero_block
+            )
+        else:
+            T7 = zero_block
+            T8 = zero_block
+            T9 = zero_block
+
+        sum_T = T1 + T2 + T3 + T4 + T5 + T6 + T7 + T8 + T9
+        if zero_collision:
+            components = np.asarray(
+                -background.a_val * sum_T,
+                dtype=target_dtype,
+            )
+        else:
+            K_packed = collision.evaluate(ell, state, collision_aux)
+            if K_packed.ell != ell:
+                raise ValueError(
+                    f"CollisionOperator returned ell={K_packed.ell}, expected {ell}"
+                )
+            components = np.asarray(
+                background.a_val * (np.asarray(K_packed.components) - sum_T),
+                dtype=np.result_type(target_dtype, K_packed.components.dtype, sum_T.dtype),
+            )
+        if components.shape != (size,):
+            raise RuntimeError(
+                f"packed derivative returned shape {components.shape} for ell={ell}, "
+                f"expected {(size,)}"
+            )
+        packed_blocks.append(components)
+
+    return np.concatenate(packed_blocks) if packed_blocks else np.zeros(
+        0, dtype=target_dtype
+    )
+
 
 def hierarchy_rhs_photon(
     eta: float,
@@ -338,187 +585,20 @@ def hierarchy_rhs_photon(
     Reference: 02_multipole_hierarchy_spec.md §4, §9.2.
     """
     state = unpack_hierarchy(y_flat, L_max)
-    a_val = float(bg_table.interp_a(eta))
-    Theta = float(bg_table.interp_Theta(eta))
-
-    sigma = proper_shear_at_eta(eta, tetrad_state, a_val)
-    # FB-2.4: curved-space ³R_ab^{aniso} forwarded to T1/T2 (None-safe;
-    # FLRW and unavailable-curvature states leave T1/T2 on the LB-6
-    # bit-identical base path).
-    aniso_ricci = aniso_ricci_at_eta(eta, tetrad_state)
-
-    if accel_vector is None:
-        accel_vector = np.zeros(3, dtype=np.float64)
-    else:
-        accel_vector = np.asarray(accel_vector, dtype=np.float64)
-    if vorticity_vector is None:
-        vorticity_vector = np.zeros(3, dtype=np.float64)
-    else:
-        vorticity_vector = np.asarray(vorticity_vector, dtype=np.float64)
-    if nabla_operator is None:
-        nabla_operator = zero_nabla_operator
-    needs_full_gradient_terms = nabla_operator is not zero_nabla_operator
-    state_full_cache: list[np.ndarray | None] = [None] * (L_max + 1)
-    closure_packed_cache: dict[int, np.ndarray] = {}
-    closure_full_cache: dict[int, np.ndarray] = {}
-
-    def _state_full(ell: int) -> np.ndarray:
-        cached = state_full_cache[ell]
-        if cached is None:
-            cached = pstf_to_tensor(state.tensors[ell])
-            state_full_cache[ell] = cached
-        return cached
-
-    def _closure_packed(ell: int) -> np.ndarray:
-        cached = closure_packed_cache.get(ell)
-        if cached is None:
-            cached = np.asarray(
-                closure.get_closure(state, ell).components,
-                dtype=np.result_type(y_flat.dtype, np.float64),
-            )
-            closure_packed_cache[ell] = cached
-        return cached
-
-    def _closure_full(ell: int) -> np.ndarray:
-        cached = closure_full_cache.get(ell)
-        if cached is None:
-            cached = pstf_to_tensor(closure.get_closure(state, ell))
-            closure_full_cache[ell] = cached
-        return cached
-
-    has_accel = bool(np.any(accel_vector))
-    has_vorticity = bool(np.any(vorticity_vector))
-    has_sigma = bool(np.any(sigma))
-    sigma_coeffs = (
-        np.asarray(pstf_pack(np.asarray(sigma, dtype=np.float64)), dtype=np.float64)
-        if has_sigma
-        else None
+    background = sample_hierarchy_background(
+        eta,
+        bg_table=bg_table,
+        tetrad_state=tetrad_state,
     )
-    ricci_coeffs = (
-        np.asarray(pstf_pack(np.asarray(aniso_ricci, dtype=np.float64)), dtype=np.float64)
-        if aniso_ricci is not None
-        else None
-    )
-
-    packed_blocks: list[np.ndarray] = []
-    target_dtype = np.complex128 if np.iscomplexobj(y_flat) else np.float64
-    for ell in range(L_max + 1):
-        size = 2 * ell + 1
-        zero_block = np.zeros(size, dtype=target_dtype)
-        Pi_components = np.asarray(state.tensors[ell].components, dtype=target_dtype)
-
-        # Neighbours through the closure when the tower runs out.
-        if ell - 1 >= 0:
-            Pi_prev_components = np.asarray(state.tensors[ell - 1].components, dtype=target_dtype)
-        else:
-            Pi_prev_components = None
-        if ell + 1 <= L_max:
-            Pi_next_components = np.asarray(state.tensors[ell + 1].components, dtype=target_dtype)
-        else:
-            Pi_next_components = _closure_packed(ell + 1)
-        if ell + 2 <= L_max:
-            Pi_next_next_components = np.asarray(state.tensors[ell + 2].components, dtype=target_dtype)
-        else:
-            Pi_next_next_components = _closure_packed(ell + 2)
-        if ell - 2 >= 0:
-            Pi_prev_prev_components = np.asarray(state.tensors[ell - 2].components, dtype=target_dtype)
-        else:
-            Pi_prev_prev_components = None
-
-        # Expansion (always active). FB-2.4: forward curved-space
-        # ³R_ab^{aniso} via the T1 Ricci hook (None at FLRW / flat).
-        T1 = apply_T1_expansion_packed(
-            ell,
-            Pi_components,
-            Theta,
-            aniso_ricci_tensor=ricci_coeffs,
-        )
-
-        # Gradient-type couplings (zero at background unless nabla_operator
-        # is supplied by the perturbation layer). FB-2.4: Ricci hook is
-        # also forwarded; it is identically zero at background because
-        # ∇̃ ³R_ab = 0 in the left-invariant tetrad frame (structural
-        # plumbing awaiting the FB-5.1 harmonic-mode wire-up).
-        if needs_full_gradient_terms:
-            if ell > 0:
-                T2 = np.asarray(
-                    pstf_pack(
-                        T2_gradient(
-                            ell,
-                            _state_full(ell - 1),
-                            nabla_operator,
-                            aniso_ricci_tensor=aniso_ricci,
-                        )
-                    ),
-                    dtype=target_dtype,
-                )
-            else:
-                T2 = zero_block
-            T3 = np.asarray(
-                pstf_pack(
-                    T3_divergence(
-                        ell,
-                        _state_full(ell + 1) if ell + 1 <= L_max else _closure_full(ell + 1),
-                        nabla_operator,
-                    )
-                ),
-                dtype=target_dtype,
-            )
-        else:
-            T2 = zero_block
-            T3 = zero_block
-
-        # Acceleration / vorticity (orthogonal Bianchi: vectors are 0).
-        T4 = (
-            apply_T4_accel_divergence_packed(ell, Pi_next_components, accel_vector)
-            if has_accel
-            else zero_block
-        )
-        if ell > 0 and has_accel:
-            T5 = apply_T5_accel_gradient_packed(ell, Pi_prev_components, accel_vector)
-        else:
-            T5 = zero_block
-        if ell > 0 and has_vorticity:
-            T6 = apply_T6_vorticity_packed(ell, Pi_components, vorticity_vector)
-        else:
-            T6 = zero_block
-
-        # Shear couplings (T7/T8/T9).
-        if has_sigma:
-            T7 = apply_T7_shear_up_packed(ell, Pi_next_next_components, sigma_coeffs)
-            T8 = apply_T8_shear_same_packed(ell, Pi_components, sigma_coeffs)
-            T9 = (
-                apply_T9_shear_down_packed(ell, Pi_prev_prev_components, sigma_coeffs)
-                if ell >= 2
-                else zero_block
-            )
-        else:
-            T7 = zero_block
-            T8 = zero_block
-            T9 = zero_block
-
-        # Collision source K_{A_ℓ} in packed storage.
-        K_packed = collision.evaluate(ell, state, collision_aux)
-        if K_packed.ell != ell:
-            raise ValueError(
-                f"CollisionOperator returned ell={K_packed.ell}, expected {ell}"
-            )
-
-        # Π̇_{⟨A_ℓ⟩} = K − Σ_n T_n.
-        sum_T = T1 + T2 + T3 + T4 + T5 + T6 + T7 + T8 + T9
-        components = np.asarray(
-            a_val * (np.asarray(K_packed.components) - sum_T),
-            dtype=np.result_type(target_dtype, K_packed.components.dtype, sum_T.dtype),
-        )
-        if components.shape != (size,):
-            raise RuntimeError(
-                f"packed derivative returned shape {components.shape} for ell={ell}, "
-                f"expected {(size,)}"
-            )
-        packed_blocks.append(components)
-
-    return np.concatenate(packed_blocks) if packed_blocks else np.zeros(
-        0, dtype=target_dtype
+    return hierarchy_rhs_photon_from_state(
+        state,
+        background=background,
+        closure=closure,
+        collision=collision,
+        collision_aux=collision_aux,
+        nabla_operator=nabla_operator,
+        accel_vector=accel_vector,
+        vorticity_vector=vorticity_vector,
     )
 
 
@@ -527,6 +607,43 @@ def hierarchy_rhs_photon(
 # ════════════════════════════════════════════════════════════════════
 
 _ZERO_COLLISION = ZeroCollisionOperator()
+
+
+def hierarchy_rhs_neutrino_from_state(
+    state: PSTFHierarchyState,
+    *,
+    background: HierarchyBackgroundSample,
+    closure: ClosureStrategy,
+    neutrino_background: Optional[SpeciesBackground] = None,
+    nabla_operator: Optional[Callable[..., np.ndarray]] = None,
+    accel_vector: Optional[np.ndarray] = None,
+    vorticity_vector: Optional[np.ndarray] = None,
+) -> np.ndarray:
+    effective_nabla = nabla_operator
+    if (
+        isinstance(neutrino_background, MassiveNeutrinoBackground)
+        and neutrino_background.mass_eV > 0.0
+    ):
+        base_nabla = nabla_operator or zero_nabla_operator
+        modifier = float(neutrino_background.free_streaming_modifier(background.eta))
+
+        def scaled_nabla(
+            tensor: np.ndarray, kind: str = "gradient",
+        ) -> np.ndarray:
+            return modifier * np.asarray(base_nabla(tensor, kind=kind))
+
+        effective_nabla = scaled_nabla
+
+    return hierarchy_rhs_photon_from_state(
+        state,
+        background=background,
+        closure=closure,
+        collision=_ZERO_COLLISION,
+        collision_aux=None,
+        nabla_operator=effective_nabla,
+        accel_vector=accel_vector,
+        vorticity_vector=vorticity_vector,
+    )
 
 
 def hierarchy_rhs_neutrino(
@@ -562,31 +679,18 @@ def hierarchy_rhs_neutrino(
     Reference: 02_multipole_hierarchy_spec.md §1.2 (K_{A_ℓ} = 0 for
     collisionless neutrinos); Ma-Bertschinger 1995 §4.
     """
-    effective_nabla = nabla_operator
-    if (
-        isinstance(neutrino_background, MassiveNeutrinoBackground)
-        and neutrino_background.mass_eV > 0.0
-    ):
-        base_nabla = nabla_operator or zero_nabla_operator
-        modifier = float(neutrino_background.free_streaming_modifier(eta))
-
-        def scaled_nabla(
-            tensor: np.ndarray, kind: str = "gradient",
-        ) -> np.ndarray:
-            return modifier * np.asarray(base_nabla(tensor, kind=kind))
-
-        effective_nabla = scaled_nabla
-
-    return hierarchy_rhs_photon(
+    state = unpack_hierarchy(y_flat, L_max)
+    background = sample_hierarchy_background(
         eta,
-        y_flat,
-        L_max=L_max,
         bg_table=bg_table,
         tetrad_state=tetrad_state,
+    )
+    return hierarchy_rhs_neutrino_from_state(
+        state,
+        background=background,
         closure=closure,
-        collision=_ZERO_COLLISION,
-        collision_aux=None,
-        nabla_operator=effective_nabla,
+        neutrino_background=neutrino_background,
+        nabla_operator=nabla_operator,
         accel_vector=accel_vector,
         vorticity_vector=vorticity_vector,
     )
