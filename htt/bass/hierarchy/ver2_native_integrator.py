@@ -1596,12 +1596,18 @@ class Ver2TierBIntegrator:
         covered_mode_label: str | None = None,
     ) -> _RuntimeLayoutProjectionBundle:
         from bass.los.family_backend_protocol import family_backend_gate_bundle
+        from bass.runtime.gate_fragments import (
+            ic_provenance_gate_bundle,
+            tilt_boost_separation_gate_bundle,
+        )
         from bass.hierarchy.ver3_layout_protocol import hierarchy_layout_gate_bundle
         from bass.hierarchy.ver3_state_contracts import project_runtime_native_state
 
         neutrino_tower = result.neutrino_tower
         if neutrino_tower is None:
             raise ValueError("runtime layout projection requires result.neutrino_tower")
+        if self.seed_pack is None or self.seed_projection is None:
+            raise ValueError("runtime layout projection requires initialized seed provenance")
         gamma_t_probe = _resolved_gamma_t(
             visibility_source=self.visibility_source,
             eta=float(result.eta[-1]),
@@ -1697,6 +1703,18 @@ class Ver2TierBIntegrator:
                 "gamma_t_probe": float(gamma_t_probe),
                 "layout_gate_provenance": gate_provenance,
                 "gate_registry_fragment": {
+                    "tilt_boost_separation_gate": tilt_boost_separation_gate_bundle(
+                        bianchi_type=self.backend.family_spec.family,
+                        branch=str(self.background_monitor.branch),
+                        background_monitor=self.background_monitor,
+                    ),
+                    "ic_provenance_gate": ic_provenance_gate_bundle(
+                        bianchi_type=self.backend.family_spec.family,
+                        branch=str(self.background_monitor.branch),
+                        backend=self.backend,
+                        seed_pack=self.seed_pack,
+                        seed_projection=self.seed_projection,
+                    ),
                     "family_backend_gate": family_backend_gate_bundle(self.backend, mode_ops),
                     "hierarchy_layout_gate": hierarchy_layout_gate_bundle(
                         self.backend,
