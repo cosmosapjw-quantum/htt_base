@@ -824,33 +824,6 @@ def _static_gate_bundle(
     )
 
 
-def _live_backend_state(
-    *,
-    background_monitor: "BackgroundEvolutionResult",
-    gamma_t_probe: float,
-    visibility_amplitude: float = 0.0,
-    polarization_source: float = 0.0,
-    reionization_amplitude: float = 0.0,
-    sigma_tensor: np.ndarray | None = None,
-) -> dict[str, object]:
-    return {
-        "branch": str(background_monitor.branch),
-        "geometry": background_monitor.initial_conditions.geometry,
-        "sigma_tensor": (
-            np.asarray(background_monitor.sigma_tensor[-1], dtype=np.float64)
-            if sigma_tensor is None
-            else np.asarray(sigma_tensor, dtype=np.float64)
-        ),
-        "opacity_data": {"Gamma_T": float(gamma_t_probe)},
-        "source_tables": {
-            "visibility_amplitude": float(visibility_amplitude),
-            "polarization_source": float(polarization_source),
-            "reionization_amplitude": float(reionization_amplitude),
-        },
-        "state_tag": "runtime_gate_registry",
-    }
-
-
 def _tilt_boost_separation_gate_bundle(
     *,
     bianchi_type: str,
