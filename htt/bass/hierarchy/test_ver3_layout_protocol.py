@@ -16,6 +16,7 @@ from bass.hierarchy import (
     build_hierarchy_layout,
     build_layout_manifest,
     flatten,
+    project_runtime_native_state,
     unflatten,
 )
 from bass.los import build_backend
@@ -123,3 +124,47 @@ def test_assemble_hierarchy_ops_binds_backend_with_source_tables() -> None:
     assert ops.layout_metadata["branch"] == "tilted"
     assert ops.A_coll.nnz > 0
     assert ops.source_template.shape == (ops.mass_matrix.shape[0],)
+
+
+def test_project_runtime_native_state_embeds_live_towers_into_canonical_layout() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    ops = assemble_hierarchy_ops(
+        {
+            "branch": "orthogonal",
+            "opacity_data": {"Gamma_T": 2.0},
+            "source_tables": {"visibility_amplitude": 1.25},
+        },
+        backend,
+        truncation,
+        {"polarization_source": 0.5, "reionization_amplitude": 0.2},
+    )
+    size = (layout.ell_max + 1) ** 2
+    projection = project_runtime_native_state(
+        layout=layout,
+        layout_manifest=ops.layout_metadata,
+        photon_T=np.arange(size, dtype=np.float64),
+        photon_E=np.arange(size, dtype=np.float64) + 100.0,
+        neutrino_tower=np.arange(size, dtype=np.float64) + 200.0,
+        source_template=np.asarray(ops.source_template, dtype=np.float64),
+    )
+    assert projection.covered_mode_labels == ("m0",)
+    assert projection.zero_filled_mode_labels == ("m+2",)
+    assert projection.sector_status["ph_I"] == "live_runtime_projection"
+    assert projection.sector_status["ph_B"] == "zero_filled_not_evolved"
+    assert projection.sector_status["src"] == "mode_ops_source_template"
+    assert projection.state_vector.shape == (layout.size,)
+    assert projection.state_vector[flatten(layout, "m0", "ph_I", 2, 1)] == pytest.approx(7.0)
+    assert projection.state_vector[flatten(layout, "m0", "ph_E", 2, 1)] == pytest.approx(107.0)
+    assert projection.state_vector[flatten(layout, "m0", "nu_I", 2, 1)] == pytest.approx(207.0)
+    assert projection.state_vector[flatten(layout, "m+2", "ph_I", 2, 1)] == pytest.approx(0.0)
+    assert projection.state_vector[flatten(layout, "m0", "src", None, None, 0)] == pytest.approx(
+        ops.source_template[flatten(layout, "m0", "src", None, None, 0)]
+    )
+    assert projection.state_vector[flatten(layout, "m+2", "src", None, None, 0)] == pytest.approx(
+        ops.source_template[flatten(layout, "m+2", "src", None, None, 0)]
+    )

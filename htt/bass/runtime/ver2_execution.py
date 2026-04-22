@@ -220,6 +220,7 @@ class TierBExecutionTrace:
     geodesic_probe: "PhotonGeodesicRhs"
     thomson_probe: "ExactThomsonSource"
     visibility_source: "TiltedVisibilitySource"
+    canonical_projection: "CanonicalLayoutProjection"
 
 
 @dataclass(frozen=True)
@@ -1663,6 +1664,7 @@ def execute_tier_b_solver(
 
     from bass.hierarchy.aux_state import build_integrator_canonical_decision
     from bass.hierarchy.frame_contracts import PhotonDirectionConvention
+    from bass.hierarchy import build_hierarchy_layout, project_runtime_native_state
     from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
     from bass.los.family_backend_protocol import build_backend
     from bass.runtime.ver2_checkpoint import load_tier_b_restart_checkpoint
@@ -1794,6 +1796,15 @@ def execute_tier_b_solver(
             thomson_probe=thomson_probe,
         )
     )
+    layout = build_hierarchy_layout(backend, backend.truncation)
+    canonical_projection = project_runtime_native_state(
+        layout=layout,
+        layout_manifest=getattr(mode_ops, "layout_metadata", {}),
+        photon_T=np.asarray(result.photon_T_tower[-1], dtype=np.float64),
+        photon_E=np.asarray(result.photon_E_tower[-1], dtype=np.float64),
+        neutrino_tower=np.asarray(result.neutrino_tower[-1], dtype=np.float64),
+        source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
+    )
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,
@@ -1824,6 +1835,7 @@ def execute_tier_b_solver(
         gate_registry=gate_registry,
         mode_ops=mode_ops,
         seed_pack=integrator.seed_pack,
+        canonical_projection=canonical_projection,
     )
     solver_output.metadata["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
     solver_output.metadata["checkpoint_write_count"] = int(result.solver_info.get("checkpoint_write_count", 0))
@@ -1840,6 +1852,7 @@ def execute_tier_b_solver(
             geodesic_probe=geodesic_probe,
             thomson_probe=thomson_probe,
             visibility_source=visibility_source,
+            canonical_projection=canonical_projection,
         ),
         integration_result=result,
         solver_output=solver_output,

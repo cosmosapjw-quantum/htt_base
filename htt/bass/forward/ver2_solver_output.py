@@ -713,6 +713,7 @@ def build_solver_core_output_from_native_result(
     gate_registry: Mapping[str, object] | None = None,
     mode_ops: object | None = None,
     seed_pack: object | None = None,
+    canonical_projection: object | None = None,
 ) -> SolverCoreOutput:
     """Build an observer-neutral VER2 output from the native Tier-B core."""
     if runtime_controls.tier is not SolverTier.TIER_B_PSTF:
@@ -882,6 +883,22 @@ def build_solver_core_output_from_native_result(
             "ic_provenance_status": None
             if seed_pack is None
             else str(getattr(seed_pack, "seed_mode", "")),
+            "canonical_projection_available": bool(canonical_projection is not None),
+            "canonical_projection_mode": None
+            if canonical_projection is None
+            else str(getattr(canonical_projection, "metadata", {}).get("projection_mode")),
+            "canonical_projection_state_size": None
+            if canonical_projection is None
+            else int(np.asarray(getattr(canonical_projection, "state_vector")).size),
+            "canonical_projection_covered_mode_labels": []
+            if canonical_projection is None
+            else list(getattr(canonical_projection, "covered_mode_labels", ())),
+            "canonical_projection_zero_filled_mode_labels": []
+            if canonical_projection is None
+            else list(getattr(canonical_projection, "zero_filled_mode_labels", ())),
+            "canonical_projection_sector_status": {}
+            if canonical_projection is None
+            else dict(getattr(canonical_projection, "sector_status", {})),
             **_neutrino_runtime_metadata(species),
             **source_builder_metadata,
         },

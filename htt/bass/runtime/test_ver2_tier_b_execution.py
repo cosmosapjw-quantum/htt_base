@@ -292,6 +292,14 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "ph_E",
         "nu_I",
     )
+    assert run.solver_output.metadata["canonical_projection_available"] is True
+    assert run.solver_output.metadata["canonical_projection_mode"] == (
+        "single_live_mode_label_with_zero_filled_residual_layout"
+    )
+    assert run.solver_output.metadata["canonical_projection_covered_mode_labels"] == ["m0"]
+    assert run.solver_output.metadata["canonical_projection_sector_status"]["src"] == (
+        "mode_ops_source_template"
+    )
     assert run.solver_output.metadata["b_mode_runtime_available"] is False
     assert run.solver_output.metadata["b_mode_payload_status"] == "zero_filled_layout_contract_only"
     assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
@@ -315,6 +323,8 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert registry["tilt_boost_separation_gate"].passed is True
     assert registry["ic_provenance_gate"].passed is True
     assert registry["production_cutoff_gate"].passed is True
+    assert run.trace.canonical_projection.covered_mode_labels == ("m0",)
+    assert run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
     assert run.integration_result.neutrino_tower is not None
 
 

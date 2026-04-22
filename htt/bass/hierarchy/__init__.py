@@ -128,7 +128,11 @@ from bass.hierarchy.ver3_layout_protocol import (
     flatten,
     unflatten,
 )
-from bass.hierarchy.ver3_state_contracts import HierarchyState
+from bass.hierarchy.ver3_state_contracts import (
+    CanonicalLayoutProjection,
+    HierarchyState,
+    project_runtime_native_state,
+)
 
 
 __all__ = [
@@ -215,6 +219,7 @@ __all__ = [
     "project_packed_regular_seed",
     # ver3 PR-09 hierarchy layout and IMEX packing
     "SECTOR_ORDER",
+    "CanonicalLayoutProjection",
     "HierarchyState",
     "HierarchyLayout",
     "build_hierarchy_layout",
@@ -228,4 +233,5 @@ __all__ = [
     "assemble_explicit_block",
     "assemble_implicit_block",
     "assemble_source_vector",
+    "project_runtime_native_state",
 ]
