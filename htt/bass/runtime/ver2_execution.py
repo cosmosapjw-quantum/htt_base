@@ -1825,31 +1825,15 @@ def execute_tier_b_solver(
         truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
         chart_options={},
     )
-    gamma_t_initial = _resolved_gamma_t(
-        visibility_source=visibility_source,
-        eta=float(background_monitor.eta[0]),
-        direction=np.asarray(runtime_config.tilt_direction, dtype=np.float64),
-        config=runtime_config,
-    )
     reionization_amplitude = (
         0.0
         if visibility_source.contract.events is None
         else float(visibility_source.contract.events.tau_reion)
     )
-    runtime_mode_ops = backend.operator_factory(
-        _live_backend_state(
-            background_monitor=background_monitor,
-            gamma_t_probe=gamma_t_initial,
-            visibility_amplitude=0.0,
-            polarization_source=0.0,
-            reionization_amplitude=reionization_amplitude,
-        )
-    )
     integrator = Ver2TierBIntegrator(
         runtime_config,
         species,
         backend=backend,
-        mode_ops=runtime_mode_ops,
         background_monitor=background_monitor,
         visibility_source=visibility_source,
         canonical_decision=canonical_decision,

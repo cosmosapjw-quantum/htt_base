@@ -877,6 +877,9 @@ def build_solver_core_output_from_native_result(
             ),
             "neutrino_hierarchy_mode": str(result.solver_info.get("neutrino_hierarchy_mode", "reduced_summary_only")),
             "layout_operator_consumed": bool(result.solver_info.get("layout_operator_consumed", False)),
+            "layout_initial_mode_ops_owner": str(
+                result.solver_info.get("layout_initial_mode_ops_owner", "unconsumed")
+            ),
             "layout_collision_operator_source": str(
                 result.solver_info.get(
                     "layout_collision_operator_source",

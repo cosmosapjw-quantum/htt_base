@@ -291,6 +291,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["seed_factory_mode"] == "flrw_like_regular"
     assert run.solver_output.metadata["layout_contract_consumed"] is True
     assert run.solver_output.metadata["layout_operator_consumed"] is True
+    assert run.solver_output.metadata["layout_initial_mode_ops_owner"] == (
+        "ver2_native_integrator.__init__"
+    )
     assert run.solver_output.metadata["layout_collision_operator_source"] == "mode_ops.A_coll_diagonal"
     assert run.solver_output.metadata["layout_source_template_consumed"] is True
     assert run.solver_output.metadata["layout_source_template_channel"] == "canonical_projection.src_block"

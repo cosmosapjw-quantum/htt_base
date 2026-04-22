@@ -635,27 +635,48 @@ class Ver2TierBIntegrator:
         self.seed_injection_mode: str = "uninitialized"
         self.seed_velocity_scale: float = 1.0
         self._matter_seed_observables: dict[str, float] | None = None
+        if self.mode_ops is None:
+            gamma_t_initial = _resolved_gamma_t(
+                visibility_source=self.visibility_source,
+                eta=float(self.background_monitor.eta[0]),
+                direction=self._direction,
+                config=self.config,
+            )
+            reionization_amplitude = (
+                0.0
+                if self.visibility_source.contract.events is None
+                else float(self.visibility_source.contract.events.tau_reion)
+            )
+            self.mode_ops = self.backend.operator_factory(
+                self._live_backend_state_payload(
+                    eta=float(self.background_monitor.eta[0]),
+                    gamma_t_probe=float(gamma_t_initial),
+                    visibility_amplitude=0.0,
+                    polarization_source=0.0,
+                    reionization_amplitude=reionization_amplitude,
+                )
+            )
         self._layout_covered_mode_label = (
             None
-            if mode_ops is None
-            else str(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [None])[0])
+            if self.mode_ops is None
+            else str(getattr(self.mode_ops, "layout_metadata", {}).get("mode_labels", [None])[0])
         )
         self._coll_T_diag = (
             None
-            if mode_ops is None
+            if self.mode_ops is None
             else _extract_operator_diag(
                 backend=backend,
-                mode_ops=mode_ops,
+                mode_ops=self.mode_ops,
                 sector="ph_I",
                 covered_mode_label=self._layout_covered_mode_label,
             )
         )
         self._coll_E_diag = (
             None
-            if mode_ops is None
+            if self.mode_ops is None
             else _extract_operator_diag(
                 backend=backend,
-                mode_ops=mode_ops,
+                mode_ops=self.mode_ops,
                 sector="ph_E",
                 covered_mode_label=self._layout_covered_mode_label,
             )
@@ -1977,6 +1998,11 @@ class Ver2TierBIntegrator:
                 "mode_ops.A_coll_diagonal"
                 if self.mode_ops is not None
                 else "gamma_t_scalar_fallback"
+            ),
+            "layout_initial_mode_ops_owner": (
+                "ver2_native_integrator.__init__"
+                if self.mode_ops is not None
+                else "disabled"
             ),
             "checkpoint_write_count": int(checkpoint_write_count),
             "restart_used": bool(restart_used),
