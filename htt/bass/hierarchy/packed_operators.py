@@ -41,7 +41,7 @@ __all__ = [
 def _rank2_parameter_coefficients(value: np.ndarray) -> np.ndarray:
     arr = np.asarray(value)
     if arr.shape == (5,):
-        return arr.astype(np.float64, copy=False)
+        return arr if arr.dtype == np.float64 else arr.astype(np.float64, copy=False)
     if arr.shape != (3, 3):
         raise ValueError(f"rank-2 parameter must have shape (3, 3) or (5,), got {arr.shape}")
     return np.asarray(pstf_pack(arr.astype(np.float64, copy=False)), dtype=np.float64)
@@ -120,12 +120,23 @@ def _apply_parametric_operator(
         raise ValueError(
             f"parameter_components shape {coeffs.shape} does not match parameter size {(basis_ops.shape[0],)}"
         )
+    if (
+        basis_ops.dtype == np.float64
+        and source.dtype == np.float64
+        and coeffs.dtype == np.float64
+    ):
+        if not np.any(coeffs):
+            return np.zeros(basis_ops.shape[1], dtype=np.float64)
+        projected = np.matmul(basis_ops, source)
+        return np.matmul(coeffs, projected)
+
     out_dtype = np.result_type(source.dtype, coeffs.dtype, basis_ops.dtype)
     if not np.any(coeffs):
         return np.zeros(basis_ops.shape[1], dtype=out_dtype)
     source_arr = source.astype(out_dtype, copy=False)
     coeff_arr = coeffs.astype(out_dtype, copy=False)
-    projected = np.matmul(basis_ops.astype(out_dtype, copy=False), source_arr)
+    basis_arr = basis_ops if basis_ops.dtype == out_dtype else basis_ops.astype(out_dtype, copy=False)
+    projected = np.matmul(basis_arr, source_arr)
     return np.matmul(coeff_arr, projected)
 
 
@@ -223,8 +234,8 @@ def apply_T4_accel_divergence_packed(
 ) -> np.ndarray:
     return _apply_parametric_operator(
         _t4_basis_ops(ell),
-        np.asarray(next_components),
-        np.asarray(accel_vector, dtype=np.float64),
+        next_components,
+        accel_vector,
     )
 
 
@@ -235,8 +246,8 @@ def apply_T5_accel_gradient_packed(
 ) -> np.ndarray:
     return _apply_parametric_operator(
         _t5_basis_ops(ell),
-        np.asarray(prev_components),
-        np.asarray(accel_vector, dtype=np.float64),
+        prev_components,
+        accel_vector,
     )
 
 
@@ -247,8 +258,8 @@ def apply_T6_vorticity_packed(
 ) -> np.ndarray:
     return _apply_parametric_operator(
         _t6_basis_ops(ell),
-        np.asarray(components),
-        np.asarray(omega_vector, dtype=np.float64),
+        components,
+        omega_vector,
     )
 
 

@@ -62,7 +62,13 @@ from typing import Tuple
 
 import numpy as np
 
-from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor, pstf_from_tensor
+from bass.hierarchy.pstf_tensor import (
+    PSTFHierarchyState,
+    PSTFTensor,
+    _trusted_hierarchy_state,
+    _trusted_pstf_tensor,
+    pstf_from_tensor,
+)
 from bass.species.tilted import V_HAT_E_DEFAULT, V_HAT_NORM_TOL
 
 
@@ -94,15 +100,31 @@ def is_axis_aligned(
     default SSOT ``V_HAT_E_DEFAULT = (1, 0, 0)`` is axis-aligned by
     construction.
     """
-    arr = np.asarray(v_hat_e, dtype=np.float64)
-    if arr.shape != (3,):
-        raise ValueError(
-            f"v_hat_e must have shape (3,), got {arr.shape}"
-        )
-    mags = np.abs(arr)
-    big = mags > (1.0 - tol)
-    small = mags < tol
-    return int(big.sum()) == 1 and int(small.sum()) == 2
+    return _axis_alignment_sign(v_hat_e, tol=tol) is not None
+
+
+def _axis_alignment_sign(
+    v_hat_e: Tuple[float, float, float],
+    *,
+    tol: float = AXIS_ALIGNMENT_TOL,
+) -> float | None:
+    try:
+        x, y, z = (float(v_hat_e[0]), float(v_hat_e[1]), float(v_hat_e[2]))
+    except (TypeError, IndexError):
+        arr = np.asarray(v_hat_e, dtype=np.float64)
+        raise ValueError(f"v_hat_e must have shape (3,), got {arr.shape}") from None
+    axes = (x, y, z)
+    dominant = None
+    for value in axes:
+        if abs(value) > (1.0 - tol):
+            if dominant is not None:
+                return None
+            dominant = value
+        elif abs(value) >= tol:
+            return None
+    if dominant is None:
+        return None
+    return 1.0 if dominant >= 0.0 else -1.0
 
 
 def _skew_matrix(axis: np.ndarray) -> np.ndarray:
@@ -284,16 +306,10 @@ def _copy_hierarchy_with_axisymmetric_slice(
 ) -> PSTFHierarchyState:
     tensors: list[PSTFTensor] = []
     for ell, tensor in enumerate(state.tensors):
-        components = np.array(tensor.components, copy=True)
+        components = tensor.components.copy()
         components[ell] = float(axisymmetric_values[ell])
-        copied = object.__new__(PSTFTensor)
-        copied.ell = int(ell)
-        copied.components = components
-        tensors.append(copied)
-    copied_state = object.__new__(PSTFHierarchyState)
-    copied_state.L = int(state.L)
-    copied_state.tensors = tensors
-    return copied_state
+        tensors.append(_trusted_pstf_tensor(ell, components))
+    return _trusted_hierarchy_state(state.L, tensors)
 
 
 def apply_linear_boost_to_tower(
@@ -317,14 +333,12 @@ def apply_linear_boost_to_tower(
         raise ValueError(f"beta must satisfy |β| < 1; got beta={beta_val!r}")
     if beta_val == 0.0:
         return state.copy()
-    if is_axis_aligned(v_hat_e):
+    sign = _axis_alignment_sign(v_hat_e)
+    if sign is not None:
         coeffs = np.array(
             [tensor.components[ell] for ell, tensor in enumerate(state.tensors)],
             dtype=np.float64,
         )
-        axis = np.asarray(v_hat_e, dtype=np.float64)
-        sign = float(np.sign(axis[int(np.argmax(np.abs(axis)))]))
-        sign = 1.0 if sign == 0.0 else sign
         boosted = _signed_boost_recurrence(coeffs, signed_beta=beta_val * sign)
         return _copy_hierarchy_with_axisymmetric_slice(state, boosted)
 
