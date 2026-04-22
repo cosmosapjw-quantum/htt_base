@@ -142,7 +142,11 @@ class _TetradStateAdapter:
         ricci = np.asarray(background_monitor.initial_conditions.geometry.ricci_pstf, dtype=np.float64)
         self.eta = eta
         self.sigma_tensor = sigma * a[:, None, None]
-        self.aniso_3_curvature = np.repeat(ricci[None, :, :], eta.size, axis=0)
+        self.aniso_3_curvature = (
+            None
+            if not np.any(ricci)
+            else np.repeat(ricci[None, :, :], eta.size, axis=0)
+        )
 
 
 def _sigma_pm_from_conformal_sigma(sigma_ab: np.ndarray) -> tuple[float, float]:

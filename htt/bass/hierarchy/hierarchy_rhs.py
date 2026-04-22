@@ -72,21 +72,23 @@ from bass.hierarchy.collision_interface import (
     ZeroCollisionOperator,
 )
 from bass.hierarchy.contractions import pstf_pack, sym_trace_free
+from bass.hierarchy.packed_operators import (
+    apply_T1_expansion_packed,
+    apply_T4_accel_divergence_packed,
+    apply_T5_accel_gradient_packed,
+    apply_T6_vorticity_packed,
+    apply_T7_shear_up_packed,
+    apply_T8_shear_same_packed,
+    apply_T9_shear_down_packed,
+)
 from bass.hierarchy.pstf_tensor import (
     PSTFHierarchyState,
     pstf_to_tensor,
     unpack_hierarchy,
 )
 from bass.hierarchy.terms import (
-    T1_expansion,
     T2_gradient,
     T3_divergence,
-    T4_accel_divergence,
-    T5_accel_gradient,
-    T6_vorticity,
-    T7_shear_up,
-    T8_shear_same,
-    T9_shear_down,
     zero_nabla_operator,
 )
 from bass.species.base import SpeciesBackground
@@ -355,44 +357,81 @@ def hierarchy_rhs_photon(
         vorticity_vector = np.asarray(vorticity_vector, dtype=np.float64)
     if nabla_operator is None:
         nabla_operator = zero_nabla_operator
+    needs_full_gradient_terms = nabla_operator is not zero_nabla_operator
+    state_full_cache: list[np.ndarray | None] = [None] * (L_max + 1)
+    closure_packed_cache: dict[int, np.ndarray] = {}
+    closure_full_cache: dict[int, np.ndarray] = {}
 
-    # Materialise the full-tensor form of every Π_ℓ in the tower.
-    Pi_full = [pstf_to_tensor(t) for t in state.tensors]
+    def _state_full(ell: int) -> np.ndarray:
+        cached = state_full_cache[ell]
+        if cached is None:
+            cached = pstf_to_tensor(state.tensors[ell])
+            state_full_cache[ell] = cached
+        return cached
+
+    def _closure_packed(ell: int) -> np.ndarray:
+        cached = closure_packed_cache.get(ell)
+        if cached is None:
+            cached = np.asarray(
+                closure.get_closure(state, ell).components,
+                dtype=np.result_type(y_flat.dtype, np.float64),
+            )
+            closure_packed_cache[ell] = cached
+        return cached
+
+    def _closure_full(ell: int) -> np.ndarray:
+        cached = closure_full_cache.get(ell)
+        if cached is None:
+            cached = pstf_to_tensor(closure.get_closure(state, ell))
+            closure_full_cache[ell] = cached
+        return cached
+
+    has_accel = bool(np.any(accel_vector))
+    has_vorticity = bool(np.any(vorticity_vector))
+    has_sigma = bool(np.any(sigma))
+    sigma_coeffs = (
+        np.asarray(pstf_pack(np.asarray(sigma, dtype=np.float64)), dtype=np.float64)
+        if has_sigma
+        else None
+    )
+    ricci_coeffs = (
+        np.asarray(pstf_pack(np.asarray(aniso_ricci, dtype=np.float64)), dtype=np.float64)
+        if aniso_ricci is not None
+        else None
+    )
 
     packed_blocks: list[np.ndarray] = []
     target_dtype = np.complex128 if np.iscomplexobj(y_flat) else np.float64
     for ell in range(L_max + 1):
         size = 2 * ell + 1
+        zero_block = np.zeros(size, dtype=target_dtype)
+        Pi_components = np.asarray(state.tensors[ell].components, dtype=target_dtype)
 
         # Neighbours through the closure when the tower runs out.
         if ell - 1 >= 0:
-            Pi_prev_full = Pi_full[ell - 1]
+            Pi_prev_components = np.asarray(state.tensors[ell - 1].components, dtype=target_dtype)
         else:
-            Pi_prev_full = None
+            Pi_prev_components = None
         if ell + 1 <= L_max:
-            Pi_next_full = Pi_full[ell + 1]
+            Pi_next_components = np.asarray(state.tensors[ell + 1].components, dtype=target_dtype)
         else:
-            Pi_next_full = pstf_to_tensor(
-                closure.get_closure(state, ell + 1)
-            )
+            Pi_next_components = _closure_packed(ell + 1)
         if ell + 2 <= L_max:
-            Pi_next_next_full = Pi_full[ell + 2]
+            Pi_next_next_components = np.asarray(state.tensors[ell + 2].components, dtype=target_dtype)
         else:
-            Pi_next_next_full = pstf_to_tensor(
-                closure.get_closure(state, ell + 2)
-            )
+            Pi_next_next_components = _closure_packed(ell + 2)
         if ell - 2 >= 0:
-            Pi_prev_prev_full = Pi_full[ell - 2]
+            Pi_prev_prev_components = np.asarray(state.tensors[ell - 2].components, dtype=target_dtype)
         else:
-            Pi_prev_prev_full = None
+            Pi_prev_prev_components = None
 
         # Expansion (always active). FB-2.4: forward curved-space
         # ³R_ab^{aniso} via the T1 Ricci hook (None at FLRW / flat).
-        T1 = T1_expansion(
+        T1 = apply_T1_expansion_packed(
             ell,
-            Pi_full[ell],
+            Pi_components,
             Theta,
-            aniso_ricci_tensor=aniso_ricci,
+            aniso_ricci_tensor=ricci_coeffs,
         )
 
         # Gradient-type couplings (zero at background unless nabla_operator
@@ -400,63 +439,80 @@ def hierarchy_rhs_photon(
         # also forwarded; it is identically zero at background because
         # ∇̃ ³R_ab = 0 in the left-invariant tetrad frame (structural
         # plumbing awaiting the FB-5.1 harmonic-mode wire-up).
-        if ell > 0:
-            T2 = T2_gradient(
-                ell,
-                Pi_prev_full,
-                nabla_operator,
-                aniso_ricci_tensor=aniso_ricci,
+        if needs_full_gradient_terms:
+            if ell > 0:
+                T2 = np.asarray(
+                    pstf_pack(
+                        T2_gradient(
+                            ell,
+                            _state_full(ell - 1),
+                            nabla_operator,
+                            aniso_ricci_tensor=aniso_ricci,
+                        )
+                    ),
+                    dtype=target_dtype,
+                )
+            else:
+                T2 = zero_block
+            T3 = np.asarray(
+                pstf_pack(
+                    T3_divergence(
+                        ell,
+                        _state_full(ell + 1) if ell + 1 <= L_max else _closure_full(ell + 1),
+                        nabla_operator,
+                    )
+                ),
+                dtype=target_dtype,
             )
         else:
-            T2 = np.zeros((), dtype=np.float64)
-        T3 = T3_divergence(ell, Pi_next_full, nabla_operator)
+            T2 = zero_block
+            T3 = zero_block
 
         # Acceleration / vorticity (orthogonal Bianchi: vectors are 0).
-        T4 = T4_accel_divergence(ell, Pi_next_full, accel_vector)
-        if ell > 0:
-            T5 = T5_accel_gradient(ell, Pi_prev_full, accel_vector)
+        T4 = (
+            apply_T4_accel_divergence_packed(ell, Pi_next_components, accel_vector)
+            if has_accel
+            else zero_block
+        )
+        if ell > 0 and has_accel:
+            T5 = apply_T5_accel_gradient_packed(ell, Pi_prev_components, accel_vector)
         else:
-            T5 = np.zeros((), dtype=np.float64)
-        if ell > 0:
-            T6 = T6_vorticity(ell, Pi_full[ell], vorticity_vector)
+            T5 = zero_block
+        if ell > 0 and has_vorticity:
+            T6 = apply_T6_vorticity_packed(ell, Pi_components, vorticity_vector)
         else:
-            T6 = np.zeros((), dtype=np.float64)
+            T6 = zero_block
 
         # Shear couplings (T7/T8/T9).
-        T7 = T7_shear_up(ell, Pi_next_next_full, sigma)
-        T8 = T8_shear_same(ell, Pi_full[ell], sigma)
-        if ell >= 2:
-            T9 = T9_shear_down(ell, Pi_prev_prev_full, sigma)
-        elif ell == 1:
-            T9 = np.zeros(3, dtype=np.float64)
+        if has_sigma:
+            T7 = apply_T7_shear_up_packed(ell, Pi_next_next_components, sigma_coeffs)
+            T8 = apply_T8_shear_same_packed(ell, Pi_components, sigma_coeffs)
+            T9 = (
+                apply_T9_shear_down_packed(ell, Pi_prev_prev_components, sigma_coeffs)
+                if ell >= 2
+                else zero_block
+            )
         else:
-            T9 = np.zeros((), dtype=np.float64)
+            T7 = zero_block
+            T8 = zero_block
+            T9 = zero_block
 
-        # Collision source K_{A_ℓ} (PSTF-packed → full).
+        # Collision source K_{A_ℓ} in packed storage.
         K_packed = collision.evaluate(ell, state, collision_aux)
         if K_packed.ell != ell:
             raise ValueError(
                 f"CollisionOperator returned ell={K_packed.ell}, expected {ell}"
             )
-        K_full = pstf_to_tensor(K_packed)
 
         # Π̇_{⟨A_ℓ⟩} = K − Σ_n T_n.
         sum_T = T1 + T2 + T3 + T4 + T5 + T6 + T7 + T8 + T9
-        Pi_dot_full = K_full - sum_T
-
-        # Overdot → η-prime: Π'(η) = a(η) × Π̇.
-        dPi_deta_full = a_val * np.asarray(Pi_dot_full)
-
-        # Pack (PSTF-project along the way for numerical hygiene; the
-        # sum is already PSTF by construction up to ε_mach, so pack
-        # returns identical output as pack(sym_trace_free(...)).)
         components = np.asarray(
-            pstf_pack(dPi_deta_full),
-            dtype=np.result_type(target_dtype, dPi_deta_full.dtype),
+            a_val * (np.asarray(K_packed.components) - sum_T),
+            dtype=np.result_type(target_dtype, K_packed.components.dtype, sum_T.dtype),
         )
         if components.shape != (size,):
             raise RuntimeError(
-                f"pstf_pack returned shape {components.shape} for ell={ell}, "
+                f"packed derivative returned shape {components.shape} for ell={ell}, "
                 f"expected {(size,)}"
             )
         packed_blocks.append(components)
