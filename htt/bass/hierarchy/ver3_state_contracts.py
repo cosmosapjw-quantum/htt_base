@@ -98,6 +98,18 @@ def _extract_local_sector(layout: HierarchyLayout, vector: np.ndarray, *, mu: st
     )
 
 
+def _extract_local_sector_by_mode_label(
+    layout: HierarchyLayout,
+    vector: np.ndarray,
+    *,
+    sector: str,
+) -> dict[str, np.ndarray]:
+    return {
+        str(mu): _extract_local_sector(layout, vector, mu=str(mu), sector=sector)
+        for mu in layout.mode_labels
+    }
+
+
 def _stable_l2_norm(value: np.ndarray) -> float:
     arr = np.asarray(value, dtype=np.float64)
     if arr.size == 0:
@@ -141,6 +153,7 @@ def project_runtime_native_state(
     matter_block_metadata: Mapping[str, object] | None = None,
     source_history_eta: np.ndarray | None = None,
     source_history_samples: np.ndarray | None = None,
+    source_history_by_mode_label: Mapping[str, np.ndarray] | None = None,
     covered_mode_label: str | None = None,
 ) -> CanonicalLayoutProjection:
     """Embed the live Tier-B harmonic towers into the ver3 canonical sector order.
@@ -253,7 +266,8 @@ def project_runtime_native_state(
         if cdm_block is not None and "cdm" in status_override:
             cdm_sector_status = str(status_override["cdm"])
 
-    source_block = _extract_local_sector(layout, vector, mu=covered, sector="src")
+    source_blocks_by_mode_label = _extract_local_sector_by_mode_label(layout, vector, sector="src")
+    source_block = np.asarray(source_blocks_by_mode_label[covered], dtype=np.float64)
     history_samples = (
         None if source_history_samples is None else np.asarray(source_history_samples, dtype=np.float64)
     )
@@ -267,6 +281,23 @@ def project_runtime_native_state(
             raise ValueError(
                 "source_history_eta must be provided with one entry per sampled source row"
             )
+    source_history_payload = {}
+    if source_history_by_mode_label is not None:
+        for mu, values in dict(source_history_by_mode_label).items():
+            if mu not in layout.mode_labels:
+                raise ValueError(f"source_history_by_mode_label contains unknown mode label {mu!r}")
+            arr = np.asarray(values, dtype=np.float64)
+            if arr.ndim != 2 or arr.shape[1] != source_block.shape[0]:
+                raise ValueError(
+                    "source_history_by_mode_label values must have shape (n_samples, src_local_dofs)"
+                )
+            if history_eta is None or history_eta.shape != (arr.shape[0],):
+                raise ValueError(
+                    "source_history_eta must be provided with one entry per sampled source row"
+                )
+            source_history_payload[str(mu)] = arr
+    elif history_samples is not None:
+        source_history_payload[covered] = history_samples
 
     matter_block_payload = {
         "baryon": baryon_arr,
@@ -293,6 +324,8 @@ def project_runtime_native_state(
             "src": source_block,
             "eta": history_eta,
             "history": history_samples,
+            "mode_label_blocks": source_blocks_by_mode_label,
+            "mode_label_history": source_history_payload,
         },
         metadata={
             "covered_mode_label": covered,
@@ -353,6 +386,8 @@ def project_runtime_native_state(
             "source_block_owner": str(sector_status["src"]),
             "source_history_available": bool(history_samples is not None),
             "source_history_sample_count": 0 if history_samples is None else int(history_samples.shape[0]),
+            "source_mode_labels": list(source_blocks_by_mode_label.keys()),
+            "source_history_mode_labels": list(source_history_payload.keys()),
             "b_history_available": bool(b_history is not None),
             "b_history_sample_count": 0 if b_history is None else int(b_history.shape[0]),
             "matter_history_available": bool(baryon_history is not None and cdm_history is not None),

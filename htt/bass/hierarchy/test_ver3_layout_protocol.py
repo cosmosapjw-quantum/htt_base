@@ -176,9 +176,21 @@ def test_project_runtime_native_state_embeds_live_towers_into_canonical_layout()
     assert projection.metadata["source_block_owner"] == "mode_ops_source_template"
     assert projection.metadata["source_history_available"] is True
     assert projection.metadata["source_history_sample_count"] == 2
+    assert set(projection.metadata["source_mode_labels"]) == {"m0", "m+2"}
+    assert set(projection.metadata["source_history_mode_labels"]) == {"m0"}
     assert projection.metadata["resolved_sector_order"] == ("ph_I", "ph_E", "nu_I", "src")
     assert np.asarray(projection.hierarchy_state.source_history_block["eta"]).shape == (2,)
     assert np.asarray(projection.hierarchy_state.source_history_block["history"]).shape == (2, src_width)
+    assert set(projection.hierarchy_state.source_history_block["mode_label_blocks"]) == {"m0", "m+2"}
+    assert np.asarray(
+        projection.hierarchy_state.source_history_block["mode_label_blocks"]["m0"],
+        dtype=np.float64,
+    ).shape == (src_width,)
+    assert np.asarray(
+        projection.hierarchy_state.source_history_block["mode_label_blocks"]["m+2"],
+        dtype=np.float64,
+    ).shape == (src_width,)
+    assert set(projection.hierarchy_state.source_history_block["mode_label_history"]) == {"m0"}
 
 
 def test_project_runtime_native_state_can_embed_runtime_local_matter_blocks() -> None:
@@ -224,6 +236,47 @@ def test_project_runtime_native_state_can_embed_runtime_local_matter_blocks() ->
     assert projection.metadata["resolved_sector_order"] == ("ph_I", "ph_E", "nu_I", "baryon", "cdm", "src")
     assert projection.state_vector[flatten(layout, "m0", "baryon", None, None, local_dof=1)] == pytest.approx(2.0)
     assert projection.state_vector[flatten(layout, "m0", "cdm", None, None, local_dof=1)] == pytest.approx(5.0)
+
+
+def test_project_runtime_native_state_can_preserve_mode_label_resolved_source_history() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    ops = assemble_hierarchy_ops(
+        {
+            "branch": "orthogonal",
+            "opacity_data": {"Gamma_T": 2.0},
+            "source_tables": {"visibility_amplitude": 1.25},
+        },
+        backend,
+        truncation,
+        {"polarization_source": 0.5, "reionization_amplitude": 0.2},
+    )
+    size = (layout.ell_max + 1) ** 2
+    src_width = int(layout.sector_local_dofs["src"])
+    projection = project_runtime_native_state(
+        layout=layout,
+        layout_manifest=ops.layout_metadata,
+        photon_T=np.arange(size, dtype=np.float64),
+        photon_E=np.arange(size, dtype=np.float64) + 100.0,
+        neutrino_tower=np.arange(size, dtype=np.float64) + 200.0,
+        source_template=np.asarray(ops.source_template, dtype=np.float64),
+        source_history_eta=np.array([0.1, 0.2], dtype=np.float64),
+        source_history_samples=np.arange(2 * src_width, dtype=np.float64).reshape(2, src_width),
+        source_history_by_mode_label={
+            "m0": np.arange(2 * src_width, dtype=np.float64).reshape(2, src_width),
+            "m+2": (10.0 + np.arange(2 * src_width, dtype=np.float64)).reshape(2, src_width),
+        },
+    )
+    assert set(projection.metadata["source_history_mode_labels"]) == {"m0", "m+2"}
+    assert set(projection.hierarchy_state.source_history_block["mode_label_history"]) == {"m0", "m+2"}
+    np.testing.assert_allclose(
+        np.asarray(projection.hierarchy_state.source_history_block["mode_label_history"]["m+2"], dtype=np.float64),
+        (10.0 + np.arange(2 * src_width, dtype=np.float64)).reshape(2, src_width),
+    )
 
 
 def test_project_runtime_native_state_can_embed_layout_auxiliary_local_matter_blocks() -> None:

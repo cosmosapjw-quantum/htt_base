@@ -385,12 +385,21 @@ class _CoupledAuxiliarySectorHistory:
 class _LayoutAuxiliaryHistoryBundle:
     eta: np.ndarray
     source_history: np.ndarray
+    source_history_by_mode_label: dict[str, np.ndarray]
     coupled_sector_history: _CoupledAuxiliarySectorHistory
     metadata: dict[str, object]
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "eta", np.asarray(self.eta, dtype=np.float64))
         object.__setattr__(self, "source_history", np.asarray(self.source_history, dtype=np.float64))
+        object.__setattr__(
+            self,
+            "source_history_by_mode_label",
+            {
+                str(key): np.asarray(value, dtype=np.float64)
+                for key, value in dict(self.source_history_by_mode_label).items()
+            },
+        )
         object.__setattr__(self, "coupled_sector_history", self.coupled_sector_history)
         object.__setattr__(self, "metadata", dict(self.metadata))
 
@@ -628,6 +637,21 @@ def _extract_src_local_block(
         ],
         dtype=np.float64,
     )
+
+
+def _extract_src_local_blocks_by_mode_label(
+    *,
+    layout,
+    source_template: np.ndarray,
+) -> dict[str, np.ndarray]:
+    return {
+        str(mu): _extract_src_local_block(
+            layout=layout,
+            source_template=source_template,
+            covered_mode_label=str(mu),
+        )
+        for mu in layout.mode_labels
+    }
 
 
 class Ver2TierBIntegrator:
@@ -1464,6 +1488,10 @@ class Ver2TierBIntegrator:
         )
         source_width = int(layout.sector_local_dofs["src"])
         source_rows = np.zeros((eta_samples.size, source_width), dtype=np.float64)
+        source_rows_by_mode_label = {
+            str(mu): np.zeros((eta_samples.size, source_width), dtype=np.float64)
+            for mu in layout.mode_labels
+        }
         size = (int(layout.ell_max) + 1) ** 2
         b_rows = np.zeros((eta_samples.size, size), dtype=np.float64)
         baryon_rows = np.zeros_like(np.asarray(reference_history.baryon_history, dtype=np.float64))
@@ -1522,6 +1550,11 @@ class Ver2TierBIntegrator:
                 source_template=np.asarray(sample_ops.source_template, dtype=np.float64),
                 covered_mode_label=covered,
             )
+            for mu, values in _extract_src_local_blocks_by_mode_label(
+                layout=layout,
+                source_template=np.asarray(sample_ops.source_template, dtype=np.float64),
+            ).items():
+                source_rows_by_mode_label[mu][index, :] = np.asarray(values, dtype=np.float64)
             sample_projection = project_runtime_native_state(
                 layout=layout,
                 layout_manifest=getattr(sample_ops, "layout_metadata", {}),
@@ -1607,11 +1640,13 @@ class Ver2TierBIntegrator:
         return _LayoutAuxiliaryHistoryBundle(
             eta=eta_samples,
             source_history=source_rows,
+            source_history_by_mode_label=source_rows_by_mode_label,
             coupled_sector_history=coupled_history,
             metadata={
                 "owner": "ver2_native_integrator.layout_auxiliary_history_bundle",
                 "history_sample_count": int(eta_samples.size),
                 "covered_mode_label": covered,
+                "source_history_mode_labels": list(layout.mode_labels),
             },
         )
 
@@ -1729,6 +1764,10 @@ class Ver2TierBIntegrator:
             matter_block_metadata=matter_block_metadata,
             source_history_eta=np.asarray(auxiliary_bundle.eta, dtype=np.float64),
             source_history_samples=np.asarray(auxiliary_bundle.source_history, dtype=np.float64),
+            source_history_by_mode_label={
+                str(mu): np.asarray(values, dtype=np.float64)
+                for mu, values in auxiliary_bundle.source_history_by_mode_label.items()
+            },
             covered_mode_label=covered,
         )
         source_block = np.asarray(
@@ -1746,6 +1785,12 @@ class Ver2TierBIntegrator:
             "resolved_sector_order": list(canonical_projection.metadata.get("resolved_sector_order", ())),
             "layout_source_block_owner": str(
                 canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
+            ),
+            "layout_source_mode_labels": list(
+                canonical_projection.hierarchy_state.source_history_block.get(
+                    "mode_label_blocks",
+                    {},
+                ).keys()
             ),
             "layout_local_matter_owner": str(coupled.metadata["owner"]),
             "layout_b_mode_proxy_source": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
@@ -1802,6 +1847,12 @@ class Ver2TierBIntegrator:
                         canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
                     ),
                     "layout_source_history_sample_count": int(auxiliary_bundle.source_history.shape[0]),
+                    "layout_source_mode_labels": list(
+                        canonical_projection.hierarchy_state.source_history_block.get(
+                            "mode_label_blocks",
+                            {},
+                        ).keys()
+                    ),
                     "layout_local_matter_blocks_consumed": True,
                     "layout_local_matter_owner": str(coupled.metadata["owner"]),
                     "layout_local_matter_sample_count": int(coupled.metadata["history_sample_count"]),
