@@ -146,3 +146,31 @@ def test_background_gate_bundle_tracks_residual_summary() -> None:
     assert bundle.gate_name == "background_core_gate"
     assert bundle.passed is True
     assert bundle.residual_summary["gauss_abs"] >= 0.0
+
+
+def test_background_gate_bundle_accepts_history_normalization_summary() -> None:
+    algebra = build_bianchi_algebra("V")
+    geometry = build_geometry(algebra)
+    assembly = background_rhs(
+        H=1.5,
+        sigma_ab=np.diag([1.5e-3, -7.5e-4, -7.5e-4]),
+        matter=MatterNormalFrameState(rho=2.5, p=0.1),
+        geometry=geometry,
+        lambda_value=0.0,
+    )
+    bundle = background_gate_bundle(
+        assembly,
+        geometry,
+        residual_history_summary={
+            "gauss_max_over_H2_ref": 1.0e-6,
+            "codazzi_max_over_H2_ref": 2.0e-6,
+            "jacobi_max_over_structure_ref": 3.0e-6,
+            "bianchi_max_over_H2_ref": 4.0e-6,
+            "samples": 12,
+        },
+        metadata_extra={"matter_model_tag": "tilted_total_source_pack"},
+    )
+    assert bundle.passed is True
+    assert bundle.residual_summary["gauss_max_over_H2_ref"] == pytest.approx(1.0e-6)
+    assert bundle.known_limit_checks["samples"] == 12
+    assert bundle.metadata["matter_model_tag"] == "tilted_total_source_pack"

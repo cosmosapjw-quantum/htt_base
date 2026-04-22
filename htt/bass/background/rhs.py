@@ -147,43 +147,66 @@ def background_gate_bundle(
     branch: str = "orthogonal",
     backend: str = "background_rhs",
     truncation: Mapping[str, object] | None = None,
+    residual_history_summary: Mapping[str, object] | None = None,
+    metadata_extra: Mapping[str, object] | None = None,
 ) -> GateBundle:
     """Emit the machine-readable PR-05 background gate bundle."""
 
     residuals = assembly.residuals
+    history = {} if residual_history_summary is None else dict(residual_history_summary)
+    metadata = {
+        "compact_formula_status": geometry.compact_formula_status,
+        **({} if metadata_extra is None else dict(metadata_extra)),
+    }
+    residual_summary = {
+        "gauss_abs": float(abs(residuals.gauss)),
+        "codazzi_max_abs": float(np.max(np.abs(residuals.codazzi))),
+        "jacobi_max_abs": float(np.max(np.abs(residuals.jacobi))),
+        "twice_contracted_bianchi_max_abs": float(
+            np.max(np.abs(residuals.twice_contracted_bianchi))
+        ),
+    }
+    if history:
+        residual_summary.update(
+            {
+                "gauss_max_over_H2_ref": float(history["gauss_max_over_H2_ref"]),
+                "codazzi_max_over_H2_ref": float(history["codazzi_max_over_H2_ref"]),
+                "jacobi_max_over_structure_ref": float(
+                    history["jacobi_max_over_structure_ref"]
+                ),
+                "bianchi_max_over_H2_ref": float(history["bianchi_max_over_H2_ref"]),
+            }
+        )
+    rhs_finite = bool(
+        np.isfinite(assembly.H_dot)
+        and np.isfinite(assembly.rho_dot)
+        and np.all(np.isfinite(assembly.sigma_dot))
+    )
+    passed = rhs_finite
+    if history:
+        passed = passed and bool(
+            float(history["gauss_max_over_H2_ref"]) <= 1.0e-4
+            and float(history["codazzi_max_over_H2_ref"]) <= 1.0e-4
+            and float(history["jacobi_max_over_structure_ref"]) <= 1.0e-4
+            and float(history["bianchi_max_over_H2_ref"]) <= 1.0e-4
+        )
     return make_gate_bundle(
         "background_core_gate",
         family=geometry.algebra.type_name if family is None else family,
         branch=branch,
         backend=backend,
         truncation={} if truncation is None else dict(truncation),
-        residual_summary={
-            "gauss_abs": float(abs(residuals.gauss)),
-            "codazzi_max_abs": float(np.max(np.abs(residuals.codazzi))),
-            "jacobi_max_abs": float(np.max(np.abs(residuals.jacobi))),
-            "twice_contracted_bianchi_max_abs": float(
-                np.max(np.abs(residuals.twice_contracted_bianchi))
-            ),
-        },
+        residual_summary=residual_summary,
         known_limit_checks={
-            "rhs_finite": bool(
-                np.isfinite(assembly.H_dot)
-                and np.isfinite(assembly.rho_dot)
-                and np.all(np.isfinite(assembly.sigma_dot))
-            ),
+            "rhs_finite": rhs_finite,
             "geometry_dual_route_status": geometry.dual_route_status,
+            "samples": int(history.get("samples", 0)),
         },
         forbidden_shortcut_checks={
             "no_unavailable_residual_to_zero": True,
             "no_output_logic_in_background": True,
         },
-        metadata={
-            "compact_formula_status": geometry.compact_formula_status,
-        },
-        passed=bool(
-            np.isfinite(assembly.H_dot)
-            and np.isfinite(assembly.rho_dot)
-            and np.all(np.isfinite(assembly.sigma_dot))
-        ),
+        metadata=metadata,
+        passed=passed,
         opened_claim="background-ready for named family branch only",
     )

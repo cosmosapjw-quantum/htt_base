@@ -52,6 +52,7 @@ from bass.forward.ver3_output_archive import (
     DEFAULT_HARMONIC_ORDERING,
     observer_boost_output,
     observer_boost_output_from_components,
+    resolve_output_gate_registry,
     write_output_archive,
 )
 from bass.ver3_contracts import OutputMetadata
@@ -87,5 +88,6 @@ __all__ = [
     'DEFAULT_HARMONIC_ORDERING',
     'observer_boost_output',
     'observer_boost_output_from_components',
+    'resolve_output_gate_registry',
     'write_output_archive',
 ]

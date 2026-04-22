@@ -1032,6 +1032,7 @@ def _build_gate_registry(
     from bass.background import (
         MatterNormalFrameState,
         SpeciesRestFrameState,
+        background_gate_bundle,
         background_rhs,
         geometry_gate_bundle,
         matter_projection_gate_bundle,
@@ -1045,7 +1046,6 @@ def _build_gate_registry(
     from bass.los.family_backend_protocol import family_backend_gate_bundle
     from bass.recombination import visibility_history_gate_bundle
     from bass.species.base import CANONICAL_ORDER, SpeciesLabel
-    from bass.validation import make_gate_bundle
 
     family_spec = get_family_spec(bianchi_type)
     branch = str(background_monitor.branch)
@@ -1087,38 +1087,19 @@ def _build_gate_registry(
         lambda_value=float(species[SpeciesLabel.LAMBDA].rho_rest(eta_start)),
     )
     residual_summary = summarize_background_residuals(background_monitor)
-    background_bundle = make_gate_bundle(
-        "background_core_gate",
+    background_bundle = background_gate_bundle(
+        representative_assembly,
+        geometry,
         family=bianchi_type,
         branch=branch,
-        backend="background_rhs",
-        truncation={},
-        residual_summary={
+        residual_history_summary={
             "gauss_max_over_H2_ref": residual_summary.gauss_max_over_H2_ref,
             "codazzi_max_over_H2_ref": residual_summary.codazzi_max_over_H2_ref,
             "jacobi_max_over_structure_ref": residual_summary.jacobi_max_over_structure_ref,
             "bianchi_max_over_H2_ref": residual_summary.bianchi_max_over_H2_ref,
-        },
-        known_limit_checks={
-            "rhs_finite": bool(
-                np.isfinite(representative_assembly.H_dot)
-                and np.isfinite(representative_assembly.rho_dot)
-                and np.all(np.isfinite(representative_assembly.sigma_dot))
-            ),
             "samples": int(residual_summary.samples),
         },
-        forbidden_shortcut_checks={
-            "no_unavailable_residual_to_zero": True,
-            "no_output_logic_in_background": True,
-        },
-        metadata={"matter_model_tag": background_monitor.matter_model_tag},
-        passed=bool(
-            residual_summary.gauss_max_over_H2_ref <= 1.0e-4
-            and residual_summary.codazzi_max_over_H2_ref <= 1.0e-4
-            and residual_summary.jacobi_max_over_structure_ref <= 1.0e-4
-            and residual_summary.bianchi_max_over_H2_ref <= 1.0e-4
-        ),
-        opened_claim="background-ready for named family branch only",
+        metadata_extra={"matter_model_tag": background_monitor.matter_model_tag},
     )
     return {
         "authority_freeze": _static_gate_bundle(

@@ -937,6 +937,12 @@ def build_solver_core_output_from_native_result(
     output.metadata["propagator_readiness"] = readiness
     output.metadata["propagator_exactness"] = readiness
     output.metadata["propagator_ready"] = readiness != "contract_only_unavailable"
+    from bass.forward.ver3_output_archive import resolve_output_gate_registry
+
+    output.metadata["gate_registry"] = resolve_output_gate_registry(
+        output,
+        gate_registry=gate_registry,
+    )
     return output
 
 
@@ -1044,7 +1050,7 @@ def build_solver_core_output_from_lowell_result(
         coefficient_representation=coefficient_representation,
         angular_representation=angular_representation,
     )
-    return build_solver_core_output(
+    output = build_solver_core_output(
         manifest=manifest,
         bianchi_type=bianchi_type,
         tilt_enabled=bool(abs(result.config.tilt_rapidity) > 0.0),
@@ -1105,6 +1111,13 @@ def build_solver_core_output_from_lowell_result(
             **source_builder_metadata,
         },
     )
+    from bass.forward.ver3_output_archive import resolve_output_gate_registry
+
+    output.metadata["gate_registry"] = resolve_output_gate_registry(
+        output,
+        gate_registry=gate_registry,
+    )
+    return output
 
 
 def solver_core_output_to_payload(output: SolverCoreOutput) -> dict[str, Any]:

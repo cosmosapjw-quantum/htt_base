@@ -174,3 +174,13 @@ def test_write_output_archive_keeps_output_gate_closed_without_registry(tmp_path
     assert summary["gate_status"]["output_split_gate"] == "unavailable"
     assert summary["gate_status"]["fitting_gate"] == "unavailable"
     assert summary["gate_score"] == 0
+
+
+def test_write_output_archive_uses_embedded_upstream_gate_registry(tmp_path: Path) -> None:
+    output = _solver_output()
+    output.metadata["gate_registry"] = _gate_registry()
+    write_output_archive(output, tmp_path)
+    summary = json.loads((tmp_path / "solver_summary.json").read_text(encoding="utf-8"))
+    assert summary["gate_status"]["authority_freeze"] == "open"
+    assert summary["gate_status"]["output_split_gate"] == "open"
+    assert "authority_freeze" in summary["bundle_gates"]

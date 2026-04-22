@@ -338,9 +338,14 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert set(run.cutoff_campaign.runtime_seconds) == {4, 6}
     assert run.cutoff_campaign.deltas[4][0].relative_delta == 0.0
     registry = run.solver_output.metadata["gate_registry"]
+    assert registry["output_split_gate"].gate_name == "output_split_gate"
     assert registry["tilt_boost_separation_gate"].passed is True
     assert registry["ic_provenance_gate"].passed is True
     assert registry["production_cutoff_gate"].passed is True
+    assert registry["background_core_gate"].known_limit_checks["samples"] > 0
+    assert registry["background_core_gate"].metadata["matter_model_tag"] == (
+        run.trace.background_monitor.matter_model_tag
+    )
     assert run.trace.canonical_projection.covered_mode_labels == ("m0",)
     assert run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
     assert run.integration_result.neutrino_tower is not None

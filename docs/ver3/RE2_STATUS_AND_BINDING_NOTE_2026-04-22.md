@@ -27,14 +27,14 @@ RE2 in the active repo means:
 | PR-00 | authority freeze | docs present, binding note present | authority frozen |
 | PR-01 | tensor helpers | live helpers in `htt/src/common/conventions.py` | tensor helper frozen |
 | PR-02 | family registry | live all-family metadata in `htt/bass/background/bianchi_types.py` | registry-complete |
-| PR-03 | geometry core | live geometry operators + tests; gate bundles not yet auto-emitted by geometry module | geometry contract present |
-| PR-04 | matter projection | live projection helpers + tests; gate bundles not yet auto-emitted by background module | matter projection contract present |
-| PR-05 | background core | live RHS / residual helpers + tests; branch-level production claim still closed | background contract present |
+| PR-03 | geometry core | live geometry operators + owner-module gate emitter | geometry contract present |
+| PR-04 | matter projection | live projection helpers + owner-module gate emitter | matter projection contract present |
+| PR-05 | background core | live RHS / residual helpers + owner-module gate emitter; branch-level production claim still closed | background contract present |
 | PR-06 | exact Thomson | live electron-frame collision wrapper + tests | exact collision contract present |
 | PR-07 | visibility/history | live visibility adapters + tests | source-history contract present |
 | PR-08 | backend protocol | live backend/translator/seed contract plus bound operator payloads | backend contract bound to layout templates |
 | PR-09 | hierarchy layout | live layout/packing helpers and split block templates | hierarchy layout frozen at template-block level |
-| PR-10 | output split | live archive writer; gate status now reads bundle registry rather than hardcoded opens | output split surface present, claim depends on supplied bundles |
+| PR-10 | output split | live archive writer; solver output and archive auto-carry upstream+output bundle chain | output split surface present, claim depends on supplied bundles |
 | PR-11 | validation hard stop | live gate bundle schema, gate status summary, readiness scoring, fitting hard stop | fitting remains blocked unless upstream bundles exist |
 
 ---
@@ -50,7 +50,5 @@ RE2 in the active repo means:
 
 ## 4. remaining open work
 
-- PR-03 through PR-07 still need first-class bundle emitters at the owning module boundaries.
 - PR-08 and PR-09 are wired to template blocks, not all-family production numerics.
-- PR-10 archive output is bundle-aware, but the repo does not yet auto-generate a complete upstream bundle chain.
 - PR-11 hard-stop logic is live, but fitting authority remains closed until real upstream bundles are present.

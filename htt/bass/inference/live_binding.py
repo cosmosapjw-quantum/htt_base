@@ -10,7 +10,7 @@ import numpy as np
 from common.contracts import ArtifactManifest, ObservableVector, SkySupport, SolverCoreOutput
 
 from bass.background.bianchi_types import get_type
-from bass.forward.ver3_output_archive import output_split_gate_bundle
+from bass.forward.ver3_output_archive import resolve_output_gate_registry
 from bass.background.einstein_bianchi import BianchiCosmology
 from bass.forward.ver2_solver_output import BassReleaseMetadata
 from bass.hierarchy.integrator import IntegratorConfig
@@ -207,10 +207,7 @@ def _covariance_readiness(observable_vector: ObservableVector) -> str:
 
 
 def _gate_registry(solver_output: SolverCoreOutput) -> dict[str, object]:
-    registry = solver_output.metadata.get("gate_registry")
-    out = dict(registry) if isinstance(registry, dict) else {}
-    out["output_split_gate"] = output_split_gate_bundle(solver_output)
-    return out
+    return resolve_output_gate_registry(solver_output)
 
 
 def _fitting_decision(

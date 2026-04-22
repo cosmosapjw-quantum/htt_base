@@ -25,6 +25,7 @@ __all__ = [
     "observer_boost_output",
     "observer_boost_output_from_components",
     "output_split_gate_bundle",
+    "resolve_output_gate_registry",
     "write_output_archive",
 ]
 
@@ -333,6 +334,39 @@ def output_split_gate_bundle(
     )
 
 
+def resolve_output_gate_registry(
+    output: SolverCoreOutput,
+    *,
+    ordering: str = DEFAULT_HARMONIC_ORDERING,
+    gate_registry: Mapping[str, object] | None = None,
+    stochastic_alm_T: object | None = None,
+    stochastic_alm_E: object | None = None,
+    stochastic_alm_B: object | None = None,
+    boost_alm_T: object | None = None,
+    boost_alm_E: object | None = None,
+    boost_alm_B: object | None = None,
+) -> dict[str, object]:
+    """Return the output-aware gate registry merged with embedded runtime bundles."""
+
+    registry: dict[str, object] = {}
+    embedded = output.metadata.get("gate_registry")
+    if isinstance(embedded, Mapping):
+        registry.update(dict(embedded))
+    if gate_registry is not None:
+        registry.update(dict(gate_registry))
+    registry["output_split_gate"] = output_split_gate_bundle(
+        output,
+        ordering=ordering,
+        stochastic_alm_T=stochastic_alm_T,
+        stochastic_alm_E=stochastic_alm_E,
+        stochastic_alm_B=stochastic_alm_B,
+        boost_alm_T=boost_alm_T,
+        boost_alm_E=boost_alm_E,
+        boost_alm_B=boost_alm_B,
+    )
+    return registry
+
+
 def _component_payload(
     output: SolverCoreOutput,
     *,
@@ -392,19 +426,16 @@ def write_output_archive(
     The function writes ``solver_summary.json`` plus the mandatory
     ``alm_det.npz``, ``alm_stoch.npz``, and ``alm_boost.npz`` files.
     """
-    registry = {} if gate_registry is None else dict(gate_registry)
-    registry.setdefault(
-        "output_split_gate",
-        output_split_gate_bundle(
-            output,
-            ordering=ordering,
-            stochastic_alm_T=stochastic_alm_T,
-            stochastic_alm_E=stochastic_alm_E,
-            stochastic_alm_B=stochastic_alm_B,
-            boost_alm_T=boost_alm_T,
-            boost_alm_E=boost_alm_E,
-            boost_alm_B=boost_alm_B,
-        ),
+    registry = resolve_output_gate_registry(
+        output,
+        ordering=ordering,
+        gate_registry=gate_registry,
+        stochastic_alm_T=stochastic_alm_T,
+        stochastic_alm_E=stochastic_alm_E,
+        stochastic_alm_B=stochastic_alm_B,
+        boost_alm_T=boost_alm_T,
+        boost_alm_E=boost_alm_E,
+        boost_alm_B=boost_alm_B,
     )
     root = Path(outdir)
     root.mkdir(parents=True, exist_ok=True)

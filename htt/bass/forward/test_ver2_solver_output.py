@@ -375,6 +375,7 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["geometry_params"]["type_label"] == "VII_h"
     assert output.metadata["kinematic_params"]["branch"] == "orthogonal"
     assert output.metadata["tilt_params"]["enabled"] is False
+    assert output.metadata["gate_registry"]["output_split_gate"].gate_name == "output_split_gate"
     assert output.anisotropic_covariance is not None
     assert output.deterministic_template["kind"] == "tier_b_native_template"
     assert output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
