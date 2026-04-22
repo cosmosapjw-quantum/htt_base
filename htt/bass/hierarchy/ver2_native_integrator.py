@@ -1503,6 +1503,8 @@ class Ver2TierBIntegrator:
                 "history_sample_count": int(eta_samples.size),
                 "reference_sample_count": int(reference_baryon.shape[0]),
                 "reference_delta_norm": float(scaled_delta_norm),
+                "reference_baryon_history": reference_baryon,
+                "reference_cdm_history": reference_cdm,
                 "coupling_passes": 1,
                 "coupled_sectors": ("ph_B", "baryon", "cdm"),
             },

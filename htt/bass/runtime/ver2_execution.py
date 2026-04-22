@@ -1937,10 +1937,6 @@ def execute_tier_b_solver(
     )
     layout = build_hierarchy_layout(backend, backend.truncation)
     covered_mode_label = str(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [layout.mode_labels[0]])[0])
-    reference_local_matter_history = integrator._postprocess_local_matter_history(  # noqa: SLF001 - runtime-owned postprocess bridge
-        eta=np.asarray(result.eta, dtype=np.float64),
-        photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
-    )
     source_history_eta, source_history_samples = integrator.build_sampled_source_history(
         result,
         covered_mode_label=covered_mode_label,
@@ -1959,13 +1955,13 @@ def execute_tier_b_solver(
     }
     matter_block_metadata = {
         "owner": str(local_matter_history.metadata["owner"]),
-        "reference_owner": str(reference_local_matter_history.metadata["owner"]),
+        "reference_owner": str(local_matter_history.metadata["reference_owner"]),
         "reference_baryon_history": np.asarray(
-            reference_local_matter_history.baryon_history,
+            local_matter_history.metadata["reference_baryon_history"],
             dtype=np.float64,
         ),
         "reference_cdm_history": np.asarray(
-            reference_local_matter_history.cdm_history,
+            local_matter_history.metadata["reference_cdm_history"],
             dtype=np.float64,
         ),
     }
