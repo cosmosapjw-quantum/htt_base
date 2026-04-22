@@ -534,6 +534,22 @@ def _extract_operator_diag(
     return out
 
 
+def _extract_src_local_block(
+    *,
+    layout,
+    source_template: np.ndarray,
+    covered_mode_label: str,
+) -> np.ndarray:
+    width = int(layout.sector_local_dofs["src"])
+    return np.array(
+        [
+            float(source_template[flatten(layout, covered_mode_label, "src", None, None, local_dof=i)])
+            for i in range(width)
+        ],
+        dtype=np.float64,
+    )
+
+
 class Ver2TierBIntegrator:
     """Executable Tier-B integrator owned by S1 background + S2 hierarchy."""
 
@@ -1491,6 +1507,55 @@ class Ver2TierBIntegrator:
                 "coupled_sectors": ("ph_B", "baryon", "cdm"),
             },
         )
+
+    def build_sampled_source_history(
+        self,
+        result: IntegrationResult,
+        *,
+        covered_mode_label: str | None = None,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        layout = build_hierarchy_layout(self.backend, self.backend.truncation)
+        covered = self._layout_covered_mode_label
+        if covered is None:
+            covered = layout.mode_labels[0] if covered_mode_label is None else str(covered_mode_label)
+        eta_samples = np.asarray(result.eta, dtype=np.float64)
+        photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
+        photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
+        ell2_m0_slot = _ell2_m0_slot_offset(int(result.L_max)) if int(result.L_max) >= 2 else None
+        reionization_amplitude = (
+            0.0
+            if self.visibility_source.contract.events is None
+            else float(self.visibility_source.contract.events.tau_reion)
+        )
+        rows: list[np.ndarray] = []
+        for index, eta in enumerate(eta_samples):
+            gamma_t = _resolved_gamma_t(
+                visibility_source=self.visibility_source,
+                eta=float(eta),
+                direction=self._direction,
+                config=self.config,
+            )
+            visibility_amplitude = abs(float(photon_T_tower[index, 0]))
+            polarization_source = (
+                0.0 if ell2_m0_slot is None else abs(float(photon_E_tower[index, ell2_m0_slot]))
+            )
+            sample_ops = self.backend.operator_factory(
+                self._live_backend_state_payload(
+                    eta=float(eta),
+                    gamma_t_probe=float(gamma_t),
+                    visibility_amplitude=visibility_amplitude,
+                    polarization_source=polarization_source,
+                    reionization_amplitude=reionization_amplitude,
+                )
+            )
+            rows.append(
+                _extract_src_local_block(
+                    layout=layout,
+                    source_template=np.asarray(sample_ops.source_template, dtype=np.float64),
+                    covered_mode_label=covered,
+                )
+            )
+        return eta_samples, np.vstack(rows)
 
     def _compute_tca_mask(self, etas: np.ndarray) -> np.ndarray:
         mask = np.zeros(len(etas), dtype=bool)

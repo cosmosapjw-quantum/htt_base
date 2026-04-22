@@ -2466,14 +2466,8 @@ def execute_tier_b_solver(
         eta=np.asarray(result.eta, dtype=np.float64),
         photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
     )
-    source_history_eta, source_history_samples = _build_sampled_source_history(
-        layout=layout,
-        backend=backend,
-        background_monitor=background_monitor,
-        runtime_config=runtime_config,
-        result=result,
-        visibility_source=visibility_source,
-        reionization_amplitude=reionization_amplitude,
+    source_history_eta, source_history_samples = integrator.build_sampled_source_history(
+        result,
         covered_mode_label=covered_mode_label,
     )
     coupled_auxiliary_history = integrator.build_coupled_auxiliary_sector_history(
