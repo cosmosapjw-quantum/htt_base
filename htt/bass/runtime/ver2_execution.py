@@ -361,6 +361,43 @@ def _build_tier_b_executable_run(
     )
 
 
+def _execute_prepared_tier_b_runtime(
+    *,
+    manifest,
+    bianchi_type: str,
+    species: "SpeciesBackgroundRegistry",
+    prepared: _TierBPreparedRuntimeContext,
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+    release,
+    k_grid_mpc: np.ndarray,
+    restart_checkpoint_path: str | None,
+    integrator_config,
+    cutoff_spec,
+) -> TierBExecutableRun:
+    result = prepared.integrator.run(
+        checkpoint_every_n_steps=runtime_controls.checkpoint.every_n_steps
+        if runtime_controls.checkpoint.enabled
+        else None,
+        checkpoint_callback=prepared.checkpoint_callback,
+        restart_state=prepared.restart_state,
+    )
+    return _build_tier_b_executable_run(
+        manifest=manifest,
+        bianchi_type=bianchi_type,
+        species=species,
+        prepared=prepared,
+        result=result,
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        release=release,
+        k_grid_mpc=k_grid_mpc,
+        restart_checkpoint_path=restart_checkpoint_path,
+        integrator_config=integrator_config,
+        cutoff_spec=cutoff_spec,
+    )
+
+
 def _stamp_native_result_solver_info(
     *,
     result,
@@ -1884,19 +1921,11 @@ def execute_tier_b_solver(
         validation_matrix=validation_matrix,
         restart_checkpoint_path=restart_checkpoint_path,
     )
-    result = prepared.integrator.run(
-        checkpoint_every_n_steps=runtime_controls.checkpoint.every_n_steps
-        if runtime_controls.checkpoint.enabled
-        else None,
-        checkpoint_callback=prepared.checkpoint_callback,
-        restart_state=prepared.restart_state,
-    )
-    return _build_tier_b_executable_run(
+    return _execute_prepared_tier_b_runtime(
         manifest=manifest,
         bianchi_type=bianchi_type,
         species=species,
         prepared=prepared,
-        result=result,
         runtime_controls=runtime_controls,
         feature_flags=feature_flags,
         release=release,
