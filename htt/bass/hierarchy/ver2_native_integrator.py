@@ -423,6 +423,41 @@ class _RuntimeTraceProducts:
 
 
 @dataclass(frozen=True)
+class _RuntimeExecutionTraceBundle:
+    background_monitor: object
+    startup_gate: object
+    startup_state: object
+    seed_projection: object
+    seed_pack: object
+    visibility_source: object
+    runtime_trace_products: _RuntimeTraceProducts
+    metadata: dict[str, object]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "metadata", dict(self.metadata))
+
+    @property
+    def geodesic_probe(self):
+        return self.runtime_trace_products.geodesic_probe
+
+    @property
+    def gamma_t_probe(self) -> float:
+        return float(self.runtime_trace_products.gamma_t_probe)
+
+    @property
+    def thomson_probe(self):
+        return self.runtime_trace_products.thomson_probe
+
+    @property
+    def layout_projection(self) -> _RuntimeLayoutProjectionBundle:
+        return self.runtime_trace_products.layout_projection
+
+    @property
+    def canonical_projection(self):
+        return self.runtime_trace_products.layout_projection.canonical_projection
+
+
+@dataclass(frozen=True)
 class NativeTierBRestartState:
     """Checkpoint-backed restart state for the native Tier-B integrator."""
 
@@ -1856,6 +1891,32 @@ class Ver2TierBIntegrator:
             metadata={
                 "owner": "ver2_native_integrator.build_runtime_trace_products",
                 "layout_projection_owner": str(layout_projection.metadata.get("owner", "")),
+            },
+        )
+
+    def build_runtime_execution_trace(
+        self,
+        result: IntegrationResult,
+        *,
+        reionization_amplitude: float,
+    ) -> _RuntimeExecutionTraceBundle:
+        if self.startup_gate is None or self.seed_projection is None or self.seed_pack is None:
+            raise ValueError("runtime execution trace requires initialized startup and seed provenance")
+        runtime_trace_products = self.build_runtime_trace_products(
+            result,
+            reionization_amplitude=float(reionization_amplitude),
+        )
+        return _RuntimeExecutionTraceBundle(
+            background_monitor=self.background_monitor,
+            startup_gate=self.startup_gate,
+            startup_state=self.startup_state,
+            seed_projection=self.seed_projection,
+            seed_pack=self.seed_pack,
+            visibility_source=self.visibility_source,
+            runtime_trace_products=runtime_trace_products,
+            metadata={
+                "owner": "ver2_native_integrator.build_runtime_execution_trace",
+                "runtime_trace_products_owner": str(runtime_trace_products.metadata.get("owner", "")),
             },
         )
 

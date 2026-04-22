@@ -1641,13 +1641,10 @@ def execute_tier_b_solver(
     result.solver_info["checkpoint_paths"] = tuple(checkpoint_paths)
     result.solver_info["restart_checkpoint_path"] = restart_checkpoint_path
 
-    runtime_trace_products = integrator.build_runtime_trace_products(
+    runtime_trace = integrator.build_runtime_execution_trace(
         result,
         reionization_amplitude=reionization_amplitude,
     )
-    geodesic_probe = runtime_trace_products.geodesic_probe
-    gamma_t_probe = float(runtime_trace_products.gamma_t_probe)
-    thomson_probe = runtime_trace_products.thomson_probe
     cutoff_campaign = None
     if cutoff_spec is not None:
         cutoff_campaign = run_executed_cutoff_campaign(
@@ -1660,9 +1657,9 @@ def execute_tier_b_solver(
                 runtime_controls=runtime_controls,
             ),
         )
-    layout_projection = runtime_trace_products.layout_projection
+    layout_projection = runtime_trace.layout_projection
     mode_ops = layout_projection.mode_ops
-    canonical_projection = layout_projection.canonical_projection
+    canonical_projection = runtime_trace.canonical_projection
     result.solver_info.update(dict(layout_projection.metadata["solver_info_fragment"]))
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
@@ -1670,7 +1667,7 @@ def execute_tier_b_solver(
         background_monitor=background_monitor,
         species=species,
         visibility_source=visibility_source,
-        runtime_trace_products=runtime_trace_products,
+        runtime_trace_products=runtime_trace.runtime_trace_products,
         backend=backend,
         seed_pack=integrator.seed_pack,
         seed_projection=integrator.seed_projection,
@@ -1702,14 +1699,14 @@ def execute_tier_b_solver(
         execution_plan=plan,
         runtime_decision=runtime_decision,
         trace=TierBExecutionTrace(
-            background_monitor=background_monitor,
-            startup_gate=integrator.startup_gate,
-            startup_state=integrator.startup_state,
-            seed_projection=integrator.seed_projection,
-            geodesic_probe=geodesic_probe,
-            thomson_probe=thomson_probe,
-            visibility_source=visibility_source,
-            canonical_projection=canonical_projection,
+            background_monitor=runtime_trace.background_monitor,
+            startup_gate=runtime_trace.startup_gate,
+            startup_state=runtime_trace.startup_state,
+            seed_projection=runtime_trace.seed_projection,
+            geodesic_probe=runtime_trace.geodesic_probe,
+            thomson_probe=runtime_trace.thomson_probe,
+            visibility_source=runtime_trace.visibility_source,
+            canonical_projection=runtime_trace.canonical_projection,
         ),
         integration_result=result,
         solver_output=solver_output,
