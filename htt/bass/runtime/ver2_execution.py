@@ -1008,11 +1008,9 @@ def _production_cutoff_gate_bundle(
 
 def _build_gate_registry(
     *,
-    bianchi_type: str,
-    runtime_controls: RuntimeControlBlock,
-    species: "SpeciesBackgroundRegistry",
+    request: _TierBRuntimeRequest,
+    prepared: _TierBPreparedRuntimeContext,
     runtime_trace,
-    backend,
     cutoff_campaign,
 ) -> dict[str, object]:
     from bass.hierarchy.ver3_layout_protocol import hierarchy_layout_gate_bundle
@@ -1028,9 +1026,9 @@ def _build_gate_registry(
     layout_projection = runtime_trace_products.layout_projection
     mode_ops = layout_projection.mode_ops
     physics_fragment = physics_gate_fragment(
-        bianchi_type=bianchi_type,
+        bianchi_type=request.bianchi_type,
         background_monitor=background_monitor,
-        species=species,
+        species=request.species,
         visibility_source=visibility_source,
         thomson_probe=thomson_probe,
     )
@@ -1042,17 +1040,17 @@ def _build_gate_registry(
     return {
         "authority_freeze": _static_gate_bundle(
             "authority_freeze",
-            family=bianchi_type,
+            family=request.bianchi_type,
             branch=branch,
         ),
         "tensor_helper_correctness": _static_gate_bundle(
             "tensor_helper_correctness",
-            family=bianchi_type,
+            family=request.bianchi_type,
             branch=branch,
         ),
         "family_registry_freeze": _static_gate_bundle(
             "family_registry_freeze",
-            family=bianchi_type,
+            family=request.bianchi_type,
             branch=branch,
         ),
         "geometry_diagnostics_gate": gate_fragment.get(
@@ -1078,7 +1076,7 @@ def _build_gate_registry(
         "tilt_boost_separation_gate": gate_fragment.get(
             "tilt_boost_separation_gate",
             tilt_boost_separation_gate_bundle(
-                bianchi_type=bianchi_type,
+                bianchi_type=request.bianchi_type,
                 branch=branch,
                 background_monitor=background_monitor,
             ),
@@ -1086,29 +1084,29 @@ def _build_gate_registry(
         "ic_provenance_gate": gate_fragment.get(
             "ic_provenance_gate",
             ic_provenance_gate_bundle(
-                bianchi_type=bianchi_type,
+                bianchi_type=request.bianchi_type,
                 branch=branch,
-                backend=backend,
+                backend=prepared.backend,
                 seed_pack=seed_pack,
                 seed_projection=seed_projection,
             ),
         ),
         "family_backend_gate": gate_fragment.get(
             "family_backend_gate",
-            family_backend_gate_bundle(backend, mode_ops),
+            family_backend_gate_bundle(prepared.backend, mode_ops),
         ),
         "hierarchy_layout_gate": gate_fragment.get(
             "hierarchy_layout_gate",
             hierarchy_layout_gate_bundle(
-                backend,
+                prepared.backend,
                 mode_ops,
                 provenance_metadata={},
             ),
         ),
         "production_cutoff_gate": _production_cutoff_gate_bundle(
-            bianchi_type=bianchi_type,
+            bianchi_type=request.bianchi_type,
             branch=branch,
-            runtime_controls=runtime_controls,
+            runtime_controls=request.runtime_controls,
             cutoff_campaign=cutoff_campaign,
         ),
     }
@@ -1141,11 +1139,9 @@ def _assemble_tier_b_post_run_bundle(
         )
     result.solver_info.update(dict(runtime_trace.layout_projection.metadata["solver_info_fragment"]))
     gate_registry = _build_gate_registry(
-        bianchi_type=request.bianchi_type,
-        runtime_controls=request.runtime_controls,
-        species=request.species,
+        request=request,
+        prepared=prepared,
         runtime_trace=runtime_trace,
-        backend=prepared.backend,
         cutoff_campaign=cutoff_campaign,
     )
     solver_output = build_solver_core_output_from_execution_bundle(
