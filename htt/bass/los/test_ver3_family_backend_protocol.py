@@ -108,7 +108,10 @@ def test_isotropic_anchor_seed_factory_allows_regular_seed() -> None:
     )
     assert seed.family == "VII_0"
     assert seed.seed_mode == "flrw_like_regular"
-    assert seed.normalization["amp_ref"] == pytest.approx(2.5)
+    assert seed.normalization["amp_ref"] == "disc_L2_unit"
+    assert seed.normalization["amplitude_reference_value"] == pytest.approx(2.5)
+    assert seed.normalization["mu_ref"] == "native_cross_section_label"
+    assert seed.normalization["release_convention"] == "frozen_discrete_weighted_L2"
 
 
 def test_operator_factory_maps_named_family_to_expected_kernel() -> None:
@@ -156,12 +159,17 @@ def test_template_card_exposes_intrinsic_family_constraints() -> None:
     backend = build_backend(get_family_spec("VI_h", h=-2.0), truncation={"ell_max": 4})
     card = backend.template_card()
     assert card.family == "VI_h"
-    assert card.analytic_normalization_status == "LOOKUP_REQUIRED"
+    assert card.analytic_normalization_status == "frozen_discrete_weighted_l2_release_convention"
+    assert card.lookup_resolution_status == "frozen_v5_formula_set"
     assert card.label_translator_card.h_parameter == pytest.approx(-2.0)
     assert "h_consistency" in card.family_specific_residuals
     assert "no_using_vi0_seed_at_nonzero_h" in card.must_not_do
     assert "h" in card.collocation_policy.edge_metadata_fields
     assert "h_aware_local_regular" in card.allowed_seed_provenance
+    resolved = card.metadata["class_b_parameter_bridge"]["resolved_value"]
+    assert resolved["h"] == pytest.approx(-2.0)
+    assert resolved["q"] == pytest.approx(-0.1715728752538099)
+    assert card.metadata["seed_normalization_convention"]["amp_ref"] == "disc_L2_unit"
 
 
 def test_required_metadata_embeds_template_card_payload() -> None:
@@ -174,4 +182,28 @@ def test_required_metadata_embeds_template_card_payload() -> None:
         "y_shear",
         "z_twist",
     ]
-    assert template_card["analytic_normalization_status"] == "LOOKUP_REQUIRED"
+    assert template_card["analytic_normalization_status"] == "frozen_discrete_weighted_l2_release_convention"
+    assert template_card["lookup_resolution_status"] == "frozen_v5_formula_set"
+    assert metadata["seed_normalization_convention"]["norm_rule"] == "<phi,phi>_h = 1"
+
+
+def test_type_viii_template_card_carries_frozen_plancherel_conventions() -> None:
+    backend = build_backend(get_family_spec("VIII"), truncation={"ell_max": 4})
+    template = backend.template_card()
+    lookup = template.metadata["type_viii_lookup"]
+    assert template.lookup_resolution_status == "frozen_v5_formula_set"
+    assert lookup["principal_series_labels"] == "(mu,s), -1/2 <= mu < 1/2, s>=0"
+    assert "sinh(2*pi*s)" in lookup["principal_series_measure"]
+    assert lookup["mu0_reduction"] == "(2*pi)^(-2) * s*tanh(pi*s)"
+
+
+def test_intrinsic_seed_factory_records_frozen_normalization_and_lookup_metadata() -> None:
+    backend = build_backend(get_family_spec("II"), truncation={"ell_max": 4})
+    seed = backend.seed_factory(
+        SeedRequest(branch="intrinsic", seed_mode="frobenius", amplitude_reference=3.0)
+    )
+    assert seed.normalization["amp_ref"] == "disc_L2_unit"
+    assert seed.normalization["amplitude_reference_value"] == pytest.approx(3.0)
+    assert seed.normalization["inner_product"] == "<phi,psi>_h = sum_q w_q phi_q^* psi_q"
+    assert seed.metadata["lookup_resolution_status"] == "frozen_v5_formula_set"
+    assert seed.metadata["resolved_lookup"]["frozen_backend_constants"]["rho"] == "Abs(k)"

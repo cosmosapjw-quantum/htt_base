@@ -6,6 +6,7 @@ translator, and seed provenance contract in machine-readable form.
 """
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
 from typing import Any, Iterable, Mapping
 
@@ -177,6 +178,142 @@ _COLLOCATION_NOTES: dict[str, tuple[str, ...]] = {
     "IX": ("compact harmonic backend with explicit storage translator",),
 }
 
+_FROZEN_SEED_NORMALIZATION = {
+    "amp_ref": "disc_L2_unit",
+    "mu_ref": "native_cross_section_label",
+    "inner_product": "<phi,psi>_h = sum_q w_q phi_q^* psi_q",
+    "norm_rule": "<phi,phi>_h = 1",
+    "phase_rule": "phi(q_anchor) in R_{>0}",
+    "release_convention": "frozen_discrete_weighted_L2",
+}
+
+_FROZEN_COLLOCATION_DEFAULTS = {
+    "weights": {
+        "w0": "h/2",
+        "wi": "h",
+        "wN": "h/2",
+    },
+    "d1": "(f[i-2]-8*f[i-1]+8*f[i+1]-f[i+2])/(12*h)",
+    "d2": "(-f[i-2]+16*f[i-1]-30*f[i]+16*f[i+1]-f[i+2])/(12*h**2)",
+    "bcl": "(-3*f0+4*f1-f2)/(2*h)",
+    "bcr": "(3*fN-4*fN1+fN2)/(2*h)",
+}
+
+_FROZEN_SOLVABLE_LOOKUP = {
+    "II": {
+        "K": "R\\{0}",
+        "k0": "(0,k)",
+        "rho": "Abs(k)",
+        "nudot": "Abs(k)",
+    },
+    "III": {
+        "K": "R x {+-1}",
+        "k0": "(k2,k1)",
+        "rho": "exp(-r)",
+        "nudot": "1",
+    },
+    "IV": {
+        "K": "R_+ x {+-1}",
+        "k0": "(k2, k2*k1)",
+        "rho": "exp(-2*r)*(1+k1)",
+        "nudot": "1+k1",
+    },
+    "VI_0": {
+        "K": "R_+ x Z4",
+        "k0": "R_pi/2^k2 (1,k1)",
+        "nudot": "1",
+        "limit_note": "q=1 -> h=0^- VI_h limit",
+    },
+    "VII_h": {
+        "K": "(-exp(pi*p),-1] U [1,exp(pi*p))",
+        "k0": "(k,0)",
+        "rho": "exp(-2*p*r)*Abs(k)",
+        "nudot": "Abs(k)",
+    },
+}
+
+_TYPE_VIII_LOOKUP = {
+    "principal_series_labels": "(mu,s), -1/2 <= mu < 1/2, s>=0",
+    "principal_series_measure": "(2*pi)^(-2) * s*sinh(2*pi*s)/(cosh(2*pi*s)+cos(2*pi*mu))",
+    "discrete_series_labels": "D_lambda^+|D_lambda^-, lambda>=1/2",
+    "discrete_series_measure": "(2*pi)^(-2) * (lambda - 1/2)",
+    "mu0_reduction": "(2*pi)^(-2) * s*tanh(pi*s)",
+    "mu_half_reduction": "(2*pi)^(-2) * s*coth(pi*s)",
+    "branch_flags": ("principal", "discrete"),
+}
+
+
+def _class_b_bridge_payload(family_spec: FamilySpec) -> dict[str, object]:
+    family = family_spec.family
+    if family == "III":
+        return {
+            "special_branch": "VI_-1_special",
+            "bridge_formula": "h = -((1-q)/(1+q))**2",
+            "inverse_formula": "q = (1-sqrt(-h))/(1+sqrt(-h))",
+            "resolved_value": {"q": 0.0, "h": -1.0},
+        }
+    if family == "VI_0":
+        return {
+            "limit_from": "VI_h",
+            "bridge_formula": "h = -((1-q)/(1+q))**2",
+            "inverse_formula": "q = (1-sqrt(-h))/(1+sqrt(-h))",
+            "resolved_limit": {"q": 1.0, "h": 0.0},
+        }
+    if family == "VI_h":
+        h = float(family_spec.algebra.h_parameter)
+        root = math.sqrt(-h)
+        q = (1.0 - root) / (1.0 + root)
+        return {
+            "bridge_formula": "h = -((1-q)/(1+q))**2",
+            "inverse_formula": "q = (1-sqrt(-h))/(1+sqrt(-h))",
+            "resolved_value": {"h": h, "q": q},
+            "resolved_branch": "q_positive_branch" if q > 0.0 else "q_negative_branch",
+        }
+    if family == "VII_h":
+        h = float(family_spec.algebra.h_parameter)
+        p = math.sqrt(h)
+        return {
+            "bridge_formula": "h = p^2",
+            "inverse_formula": "p = sqrt(h)",
+            "resolved_value": {"h": h, "p": p},
+            "resolved_branch": "positive_h_branch",
+        }
+    return {}
+
+
+def _resolved_lookup_payload(family_spec: FamilySpec) -> dict[str, object]:
+    family = family_spec.family
+    payload: dict[str, object] = {
+        "lookup_resolution_status": "frozen_v5_formula_set",
+        "seed_normalization_convention": dict(_FROZEN_SEED_NORMALIZATION),
+        "collocation_default_stencil": dict(_FROZEN_COLLOCATION_DEFAULTS),
+    }
+    class_b_bridge = _class_b_bridge_payload(family_spec)
+    if class_b_bridge:
+        payload["class_b_parameter_bridge"] = class_b_bridge
+    if family in _FROZEN_SOLVABLE_LOOKUP:
+        payload["frozen_backend_constants"] = dict(_FROZEN_SOLVABLE_LOOKUP[family])
+    elif family == "VI_h":
+        h = float(family_spec.algebra.h_parameter)
+        root = math.sqrt(-h)
+        q = (1.0 - root) / (1.0 + root)
+        if q > 0.0:
+            payload["frozen_backend_constants"] = {
+                "K": "R_+ x Z4",
+                "k0": "R_pi/2^k2 (1,k1)",
+                "nudot": "q^(k2 mod 2)",
+            }
+        else:
+            payload["frozen_backend_constants"] = {
+                "K": "R/2piZ",
+                "k0": "(cos(k), sin(k))",
+                "nudot": "cos(k)^2 - q*sin(k)^2",
+                "positive_rewrite": "u*sin(k)^2 + cos(k)^2 for q=-u, u>0",
+            }
+    elif family == "VIII":
+        payload["type_viii_lookup"] = dict(_TYPE_VIII_LOOKUP)
+    return payload
+
 
 @dataclass(frozen=True)
 class CollocationPolicy:
@@ -237,6 +374,7 @@ class FamilyTemplateCard:
     family_specific_residuals: tuple[str, ...]
     must_not_do: tuple[str, ...]
     analytic_normalization_status: str
+    lookup_resolution_status: str
     metadata: Mapping[str, object] = field(default_factory=dict)
 
     def as_payload(self) -> dict[str, object]:
@@ -252,6 +390,7 @@ class FamilyTemplateCard:
             "family_specific_residuals": list(self.family_specific_residuals),
             "must_not_do": list(self.must_not_do),
             "analytic_normalization_status": self.analytic_normalization_status,
+            "lookup_resolution_status": self.lookup_resolution_status,
             "metadata": dict(self.metadata),
         }
 
@@ -378,7 +517,6 @@ class FamilyBackend:
 
     def template_card(self) -> FamilyTemplateCard:
         family = self.family_spec.family
-        intrinsic_family = family in {"II", "III", "IV", "VI_0", "VI_h", "VIII"}
         chart = self._chart()
         boundary_policy = str(
             self.chart_options.get("boundary_policy", _BOUNDARY_POLICIES[family])
@@ -415,13 +553,17 @@ class FamilyBackend:
             family_specific_residuals=_FAMILY_RESIDUALS[family],
             must_not_do=_MUST_NOT_DO[family],
             analytic_normalization_status=(
-                "LOOKUP_REQUIRED" if intrinsic_family else "documented_anchor_normalization"
+                "documented_anchor_normalization"
+                if self.family_spec.isotropic_anchor
+                else "frozen_discrete_weighted_l2_release_convention"
             ),
+            lookup_resolution_status="frozen_v5_formula_set",
             metadata={
                 "ic_provenance_status": self.family_spec.ic_provenance_status,
                 "canonical_gauge": self.family_spec.canonical_gauge,
                 "constraint_policy_required": self.family_spec.algebra.branch_policy.constraint_policy_required,
                 "isotropic_anchor": self.family_spec.isotropic_anchor,
+                **_resolved_lookup_payload(self.family_spec),
             },
         )
 
@@ -463,6 +605,7 @@ class FamilyBackend:
             "contract_release_status": "backend-contract-complete",
             "operator_payload_status": "geometry_opacity_coupled_sparse_blocks",
             "analytic_normalization_status": template_card.analytic_normalization_status,
+            "lookup_resolution_status": template_card.lookup_resolution_status,
             "template_card": template_card.as_payload(),
         }
         ops = ModeOps(
@@ -530,9 +673,16 @@ class FamilyBackend:
             "branch": seed_request.branch,
         }
         normalization = {
-            "amp_ref": float(seed_request.amplitude_reference),
+            "amp_ref": _FROZEN_SEED_NORMALIZATION["amp_ref"],
+            "amplitude_reference_value": float(seed_request.amplitude_reference),
+            "mu_ref": _FROZEN_SEED_NORMALIZATION["mu_ref"],
+            "inner_product": _FROZEN_SEED_NORMALIZATION["inner_product"],
+            "norm_rule": _FROZEN_SEED_NORMALIZATION["norm_rule"],
+            "phase_rule": _FROZEN_SEED_NORMALIZATION["phase_rule"],
+            "release_convention": _FROZEN_SEED_NORMALIZATION["release_convention"],
             "chart": self._chart(),
             "analytic_normalization_status": template_card.analytic_normalization_status,
+            "lookup_resolution_status": template_card.lookup_resolution_status,
         }
         residual_summary = {
             "seed_regularity_status": "not_executed",
@@ -553,6 +703,8 @@ class FamilyBackend:
             "coordinate_order": self._coordinate_order(),
             "directional_tag": self._directional_tag(),
             "must_not_do": list(template_card.must_not_do),
+            "lookup_resolution_status": template_card.lookup_resolution_status,
+            "resolved_lookup": dict(template_card.metadata),
             **dict(seed_request.metadata),
         }
         return SeedPack(
@@ -670,6 +822,8 @@ class FamilyBackend:
             "orthogonal_global_tilt_local_boost_split": self.family_spec.orthogonal_global_tilt_local_boost_split,
             "preferred_backend": self.family_spec.preferred_backend,
             "generic_fallback": self.family_spec.generic_fallback,
+            "lookup_resolution_status": template_card.lookup_resolution_status,
+            "seed_normalization_convention": dict(_FROZEN_SEED_NORMALIZATION),
             "template_card": template_card.as_payload(),
         }
 
@@ -696,6 +850,9 @@ def family_backend_gate_bundle(
             ),
             "family_specific_residual_count": float(len(template.family_specific_residuals)),
             "must_not_do_count": float(len(template.must_not_do)),
+            "lookup_resolution_frozen": float(
+                template.lookup_resolution_status == "frozen_v5_formula_set"
+            ),
         },
         known_limit_checks={
             "operator_payload_bound": bool(ops.release_status == "backend-operator-bound"),
@@ -711,10 +868,12 @@ def family_backend_gate_bundle(
             "template_card": template.as_payload(),
             "layout_metadata": dict(ops.layout_metadata),
             "operator_payload_status": ops.metadata.get("operator_payload_status"),
+            "lookup_resolution_status": template.lookup_resolution_status,
         },
         passed=bool(
             ops.release_status == "backend-operator-bound"
             and ops.operator_kernel_family == template.operator_kernel_family
+            and template.lookup_resolution_status == "frozen_v5_formula_set"
         ),
         opened_claim="family backend contract bound to executable operator payload",
     )
