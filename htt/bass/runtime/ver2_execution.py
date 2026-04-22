@@ -945,7 +945,26 @@ def _build_gate_registry(
             family=bianchi_type,
             branch=branch,
         ),
-        **physics_fragment,
+        "geometry_diagnostics_gate": gate_fragment.get(
+            "geometry_diagnostics_gate",
+            physics_fragment["geometry_diagnostics_gate"],
+        ),
+        "matter_projection_gate": gate_fragment.get(
+            "matter_projection_gate",
+            physics_fragment["matter_projection_gate"],
+        ),
+        "background_core_gate": gate_fragment.get(
+            "background_core_gate",
+            physics_fragment["background_core_gate"],
+        ),
+        "exact_thomson_gate": gate_fragment.get(
+            "exact_thomson_gate",
+            physics_fragment["exact_thomson_gate"],
+        ),
+        "visibility_history_gate": gate_fragment.get(
+            "visibility_history_gate",
+            physics_fragment["visibility_history_gate"],
+        ),
         "tilt_boost_separation_gate": gate_fragment.get(
             "tilt_boost_separation_gate",
             tilt_boost_separation_gate_bundle(
@@ -1724,6 +1743,7 @@ def execute_tier_b_solver(
         )
     layout_projection = integrator.build_runtime_layout_projection(
         result,
+        thomson_probe=thomson_probe,
         visibility_amplitude=float(thomson_probe.scalar_monopole_input),
         polarization_source=float(thomson_probe.polarization_quadrupole_norm),
         reionization_amplitude=reionization_amplitude,

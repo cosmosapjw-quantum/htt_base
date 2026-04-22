@@ -1590,6 +1590,7 @@ class Ver2TierBIntegrator:
         self,
         result: IntegrationResult,
         *,
+        thomson_probe,
         visibility_amplitude: float,
         polarization_source: float,
         reionization_amplitude: float,
@@ -1598,6 +1599,7 @@ class Ver2TierBIntegrator:
         from bass.los.family_backend_protocol import family_backend_gate_bundle
         from bass.runtime.gate_fragments import (
             ic_provenance_gate_bundle,
+            physics_gate_fragment,
             tilt_boost_separation_gate_bundle,
         )
         from bass.hierarchy.ver3_layout_protocol import hierarchy_layout_gate_bundle
@@ -1703,6 +1705,13 @@ class Ver2TierBIntegrator:
                 "gamma_t_probe": float(gamma_t_probe),
                 "layout_gate_provenance": gate_provenance,
                 "gate_registry_fragment": {
+                    **physics_gate_fragment(
+                        bianchi_type=self.backend.family_spec.family,
+                        background_monitor=self.background_monitor,
+                        species=self.species,
+                        visibility_source=self.visibility_source,
+                        thomson_probe=thomson_probe,
+                    ),
                     "tilt_boost_separation_gate": tilt_boost_separation_gate_bundle(
                         bianchi_type=self.backend.family_spec.family,
                         branch=str(self.background_monitor.branch),
