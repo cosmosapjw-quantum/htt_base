@@ -40,6 +40,7 @@ import numpy as np
 from bass.hierarchy.pstf_tensor import (
     PSTFHierarchyState,
     PSTFTensor,
+    _trusted_pstf_tensor,
     zero_hierarchy,
     zero_pstf,
 )
@@ -211,10 +212,10 @@ def E_mode_collision_source(
             E_MODE_ELL2_SELF_COEFF * E_ell.components
             + E_MODE_ELL2_TEMPERATURE_COEFF * pi2
         )
-        return PSTFTensor(ell=2, components=components)
+        return _trusted_pstf_tensor(ell=2, components=components)
 
     # ell >= 3: simple Thomson damping.
-    return PSTFTensor(
+    return _trusted_pstf_tensor(
         ell=ell,
         components=-Gamma_T * E_ell.components,
     )

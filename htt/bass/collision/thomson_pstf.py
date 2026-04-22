@@ -55,6 +55,8 @@ from bass.collision.polarization import (
 from bass.hierarchy.pstf_tensor import (
     PSTFHierarchyState,
     PSTFTensor,
+    _trusted_hierarchy_state,
+    _trusted_pstf_tensor,
     zero_hierarchy,
     zero_pstf,
 )
@@ -286,7 +288,7 @@ class ThomsonPSTFCollisionOperator:
             )
             for ell in range(state.L + 1)
         ]
-        return PSTFHierarchyState(L=state.L, tensors=tensors)
+        return _trusted_hierarchy_state(L=state.L, tensors=tensors)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -378,7 +380,7 @@ class EModeThomsonCollisionOperator:
             for ell in range(E_state.L + 1)
         ]
         return PolarizationHierarchyState(
-            E=PSTFHierarchyState(L=E_state.L, tensors=tensors),
+            E=_trusted_hierarchy_state(L=E_state.L, tensors=tensors),
         )
 
 
@@ -415,7 +417,7 @@ def _compute_K_T_at_ell(
     if ell == 1:
         # Compton drag: K_1 = Γ_T (v_b − Π_1).
         components = Gamma_T * (v_b_real_sph - Pi.components)
-        return PSTFTensor(ell=1, components=components)
+        return _trusted_pstf_tensor(ell=1, components=components)
 
     if ell == 2:
         # Polter coupling: K_2 = -(9/10) Γ_T Π_2 - (√6/10) Γ_T E_2.
@@ -424,10 +426,10 @@ def _compute_K_T_at_ell(
             THOMSON_ELL2_SELF_COEFF * Pi.components
             + THOMSON_ELL2_POLARIZATION_COEFF * E_2_packed
         )
-        return PSTFTensor(ell=2, components=components)
+        return _trusted_pstf_tensor(ell=2, components=components)
 
     # ell >= 3: Thomson damping.
-    return PSTFTensor(
+    return _trusted_pstf_tensor(
         ell=ell,
         components=-Gamma_T * Pi.components,
     )

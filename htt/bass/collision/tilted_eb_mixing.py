@@ -22,7 +22,12 @@ from bass.collision.polarization import (
     PolarizationHierarchyState,
 )
 from bass.collision.thomson_pstf import EModeThomsonCollisionOperator
-from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor
+from bass.hierarchy.pstf_tensor import (
+    PSTFHierarchyState,
+    PSTFTensor,
+    _trusted_hierarchy_state,
+    _trusted_pstf_tensor,
+)
 from bass.species.tilted import TiltedSpeciesBackground
 from bass.hierarchy.pstf_tensor import zero_hierarchy, zero_pstf
 
@@ -87,7 +92,7 @@ def _b_mode_collision_tower(
             tensors.append(zero_pstf(ell))
         elif ell == 2:
             tensors.append(
-                PSTFTensor(
+                _trusted_pstf_tensor(
                     ell=2,
                     components=Gamma_T * E_MODE_ELL2_SELF_COEFF
                     * b_state.tensors[2].components,
@@ -95,12 +100,12 @@ def _b_mode_collision_tower(
             )
         else:
             tensors.append(
-                PSTFTensor(
+                _trusted_pstf_tensor(
                     ell=ell,
                     components=-Gamma_T * b_state.tensors[ell].components,
                 )
             )
-    return PSTFHierarchyState(L=b_state.L, tensors=tensors)
+    return _trusted_hierarchy_state(L=b_state.L, tensors=tensors)
 
 
 def evaluate_tilted_polarization_eb_collision(

@@ -51,6 +51,25 @@ __all__ = [
 ]
 
 
+def _trusted_pstf_tensor(ell: int, components: np.ndarray) -> "PSTFTensor":
+    """Internal fast constructor for already-validated packed tensors."""
+    tensor = object.__new__(PSTFTensor)
+    tensor.ell = int(ell)
+    tensor.components = components
+    return tensor
+
+
+def _trusted_hierarchy_state(
+    L: int,
+    tensors: List["PSTFTensor"],
+) -> "PSTFHierarchyState":
+    """Internal fast constructor for already-validated tower lists."""
+    state = object.__new__(PSTFHierarchyState)
+    state.L = int(L)
+    state.tensors = tensors
+    return state
+
+
 @dataclass
 class PSTFTensor:
     """Rank-ℓ projected symmetric trace-free tensor on 3-space.
@@ -101,7 +120,7 @@ class PSTFTensor:
             raise ValueError(
                 f"PSTFTensor ℓ mismatch: {self.ell} vs {other.ell}"
             )
-        return PSTFTensor(
+        return _trusted_pstf_tensor(
             ell=self.ell,
             components=self.components + other.components,
         )
@@ -113,13 +132,13 @@ class PSTFTensor:
             raise ValueError(
                 f"PSTFTensor ℓ mismatch: {self.ell} vs {other.ell}"
             )
-        return PSTFTensor(
+        return _trusted_pstf_tensor(
             ell=self.ell,
             components=self.components - other.components,
         )
 
     def __neg__(self) -> "PSTFTensor":
-        return PSTFTensor(ell=self.ell, components=-self.components)
+        return _trusted_pstf_tensor(ell=self.ell, components=-self.components)
 
     def __mul__(self, scalar: float | complex) -> "PSTFTensor":
         if isinstance(scalar, PSTFTensor):
@@ -127,7 +146,7 @@ class PSTFTensor:
         scalar_arr = np.asarray(scalar)
         if scalar_arr.ndim != 0:
             return NotImplemented
-        return PSTFTensor(
+        return _trusted_pstf_tensor(
             ell=self.ell,
             components=self.components * scalar_arr.item(),
         )
@@ -174,10 +193,7 @@ class PSTFTensor:
         return pstf_unpack(self.components, self.ell)
 
     def copy(self) -> "PSTFTensor":
-        tensor = object.__new__(PSTFTensor)
-        tensor.ell = int(self.ell)
-        tensor.components = self.components.copy()
-        return tensor
+        return _trusted_pstf_tensor(self.ell, self.components.copy())
 
 
 def zero_pstf(ell: int) -> PSTFTensor:
@@ -187,7 +203,7 @@ def zero_pstf(ell: int) -> PSTFTensor:
     """
     if ell < 0:
         raise ValueError(f"ell must be non-negative, got {ell}")
-    return PSTFTensor(
+    return _trusted_pstf_tensor(
         ell=ell,
         components=np.zeros(2 * ell + 1, dtype=np.float64),
     )
@@ -208,7 +224,7 @@ def pstf_from_tensor(tensor: np.ndarray) -> PSTFTensor:
     else:
         ell = arr.ndim
     components = pstf_pack(arr)
-    return PSTFTensor(ell=ell, components=components)
+    return _trusted_pstf_tensor(ell=ell, components=components)
 
 
 def pstf_to_tensor(pstf: PSTFTensor) -> np.ndarray:
@@ -300,15 +316,15 @@ class PSTFHierarchyState:
         for ell in range(L + 1):
             size = 2 * ell + 1
             comp = arr[offset:offset + size].copy()
-            tensors.append(PSTFTensor(ell=ell, components=comp))
+            tensors.append(_trusted_pstf_tensor(ell=ell, components=comp))
             offset += size
-        return cls(L=L, tensors=tensors)
+        return _trusted_hierarchy_state(L=L, tensors=tensors)
 
     def copy(self) -> "PSTFHierarchyState":
-        state = object.__new__(PSTFHierarchyState)
-        state.L = int(self.L)
-        state.tensors = [t.copy() for t in self.tensors]
-        return state
+        return _trusted_hierarchy_state(
+            L=self.L,
+            tensors=[t.copy() for t in self.tensors],
+        )
 
 
 def zero_hierarchy(L: int) -> PSTFHierarchyState:
@@ -316,7 +332,7 @@ def zero_hierarchy(L: int) -> PSTFHierarchyState:
 
     Reference: 02_multipole_hierarchy_spec.md §2.5.
     """
-    return PSTFHierarchyState(
+    return _trusted_hierarchy_state(
         L=L,
         tensors=[zero_pstf(ell) for ell in range(L + 1)],
     )
