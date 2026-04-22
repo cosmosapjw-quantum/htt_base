@@ -753,7 +753,6 @@ def _live_backend_state(
         "state_tag": "runtime_gate_registry",
     }
 
-
 def _tilt_boost_separation_gate_bundle(
     *,
     bianchi_type: str,
@@ -1823,6 +1822,18 @@ def execute_tier_b_solver(
         photon_E=np.asarray(result.photon_E_tower[-1], dtype=np.float64),
         neutrino_tower=np.asarray(result.neutrino_tower[-1], dtype=np.float64),
         source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
+    )
+    source_block = np.asarray(
+        canonical_projection.hierarchy_state.source_history_block["src"],
+        dtype=np.float64,
+    )
+    result.solver_info["layout_source_template_consumed"] = bool(
+        np.any(np.abs(source_block) > 0.0)
+    )
+    result.solver_info["layout_source_template_channel"] = "canonical_projection.src_block"
+    result.solver_info["layout_source_block_norm"] = float(np.linalg.norm(source_block))
+    result.solver_info["layout_source_block_owner"] = str(
+        canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
     )
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,

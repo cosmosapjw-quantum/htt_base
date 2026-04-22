@@ -178,6 +178,7 @@ def project_runtime_native_state(
     )
     zero_filled = tuple(mu for mu in layout.mode_labels if mu != covered)
     sector_status = dict(hierarchy_state.metadata["sector_status"])
+    source_block = np.asarray(hierarchy_state.source_history_block["src"], dtype=np.float64)
     return CanonicalLayoutProjection(
         layout_manifest=dict(layout_manifest),
         hierarchy_state=hierarchy_state,
@@ -188,5 +189,8 @@ def project_runtime_native_state(
         metadata={
             "projection_mode": "single_live_mode_label_with_zero_filled_residual_layout",
             "state_norm": float(np.linalg.norm(vector)),
+            "source_block_norm": float(np.linalg.norm(source_block)),
+            "source_block_nonzero": bool(np.any(np.abs(source_block) > 0.0)),
+            "source_block_owner": str(sector_status["src"]),
         },
     )

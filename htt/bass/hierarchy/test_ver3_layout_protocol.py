@@ -168,3 +168,6 @@ def test_project_runtime_native_state_embeds_live_towers_into_canonical_layout()
     assert projection.state_vector[flatten(layout, "m+2", "src", None, None, 0)] == pytest.approx(
         ops.source_template[flatten(layout, "m+2", "src", None, None, 0)]
     )
+    assert projection.metadata["source_block_nonzero"] is True
+    assert projection.metadata["source_block_norm"] > 0.0
+    assert projection.metadata["source_block_owner"] == "mode_ops_source_template"

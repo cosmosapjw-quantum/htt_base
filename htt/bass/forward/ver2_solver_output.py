@@ -856,6 +856,21 @@ def build_solver_core_output_from_native_result(
                     "gamma_t_scalar_fallback",
                 )
             ),
+            "layout_source_template_consumed": bool(
+                result.solver_info.get("layout_source_template_consumed", False)
+            ),
+            "layout_source_template_channel": str(
+                result.solver_info.get(
+                    "layout_source_template_channel",
+                    "disabled",
+                )
+            ),
+            "layout_source_block_norm": float(
+                result.solver_info.get("layout_source_block_norm", 0.0)
+            ),
+            "layout_source_block_owner": str(
+                result.solver_info.get("layout_source_block_owner", "unconsumed")
+            ),
             "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
             "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
             "seed_factory_owner": str(result.solver_info.get("seed_factory_owner", "legacy_runtime_seed")),
