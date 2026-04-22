@@ -303,14 +303,14 @@ def project_runtime_native_state(
     )
     zero_filled = tuple(mu for mu in layout.mode_labels if mu != covered)
     sector_status = dict(hierarchy_state.metadata["sector_status"])
-    resolved_sector_order = ["ph_I", "ph_E", "nu_I"]
+    resolved_runtime_sectors = ["ph_I", "ph_E", "nu_I"]
     if sector_status["ph_B"] != "zero_filled_not_evolved":
-        resolved_sector_order.insert(2, "ph_B")
+        resolved_runtime_sectors.insert(2, "ph_B")
     if sector_status["baryon"] != "zero_filled_local_sector_not_evolved":
-        resolved_sector_order.append("baryon")
+        resolved_runtime_sectors.append("baryon")
     if sector_status["cdm"] != "zero_filled_local_sector_not_evolved":
-        resolved_sector_order.append("cdm")
-    if len(resolved_sector_order) <= 3:
+        resolved_runtime_sectors.append("cdm")
+    if len(resolved_runtime_sectors) <= 3:
         projection_mode = "single_live_mode_label_with_zero_filled_residual_layout"
     elif (
         sector_status["baryon"] == "layout_operator_auxiliary_local_matter"
@@ -319,6 +319,7 @@ def project_runtime_native_state(
         projection_mode = "single_live_mode_label_with_layout_auxiliary_local_matter_blocks"
     else:
         projection_mode = "single_live_mode_label_with_runtime_local_matter_blocks"
+    resolved_sector_order = [*resolved_runtime_sectors, "src"]
     return CanonicalLayoutProjection(
         layout_manifest=dict(layout_manifest),
         hierarchy_state=hierarchy_state,

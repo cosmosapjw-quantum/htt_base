@@ -330,6 +330,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "nu_I",
         "baryon",
         "cdm",
+        "src",
     )
     assert run.solver_output.metadata["canonical_projection_available"] is True
     assert run.solver_output.metadata["canonical_projection_mode"] == (
