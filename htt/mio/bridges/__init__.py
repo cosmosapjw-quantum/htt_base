@@ -18,14 +18,26 @@ from .preliminary_results import (  # noqa: F401 — re-export
     PreliminaryMioHandoff,
     build_preliminary_mio_handoff,
 )
+from .promoted_artifacts import (  # noqa: F401 — re-export
+    ARTEFACT_FILENAME,
+    PromotedAxisSummary,
+    emit_promoted_axis_ingestion_artefact,
+    ingest_fiducial_posterior_bundle,
+    to_mio_certificate,
+)
 from . import preliminary_results  # noqa: F401 — re-export
 from . import promoted_artifacts  # noqa: F401 — re-export
 
 
 __all__ = [
     "PR13AM_te_sign_d1d3_bridge",
+    "ARTEFACT_FILENAME",
     "PreliminaryMioHandoff",
+    "PromotedAxisSummary",
     "build_preliminary_mio_handoff",
+    "emit_promoted_axis_ingestion_artefact",
+    "ingest_fiducial_posterior_bundle",
     "preliminary_results",
     "promoted_artifacts",
+    "to_mio_certificate",
 ]

@@ -7,6 +7,7 @@ from pathlib import Path
 
 import pytest
 
+import mio.bridges as bridges
 from mio.bridges import promoted_artifacts
 from mio.tests._overlay_fixtures import build_pending_overlay
 from workspace.contracts.mio_certificate import MioCertificate
@@ -95,7 +96,24 @@ def test_emit_promoted_axis_ingestion_artefact_round_trip(tmp_path: Path):
 
 
 def test_package_exports_promoted_artifacts_module():
-    import mio.bridges as bridges
-
     assert hasattr(bridges, "promoted_artifacts")
     assert "promoted_artifacts" in bridges.__all__
+
+
+def test_package_exports_promoted_artifact_entrypoints():
+    assert bridges.ARTEFACT_FILENAME == promoted_artifacts.ARTEFACT_FILENAME
+    assert bridges.PromotedAxisSummary is promoted_artifacts.PromotedAxisSummary
+    assert (
+        bridges.ingest_fiducial_posterior_bundle
+        is promoted_artifacts.ingest_fiducial_posterior_bundle
+    )
+    assert bridges.to_mio_certificate is promoted_artifacts.to_mio_certificate
+    assert (
+        bridges.emit_promoted_axis_ingestion_artefact
+        is promoted_artifacts.emit_promoted_axis_ingestion_artefact
+    )
+    assert "ARTEFACT_FILENAME" in bridges.__all__
+    assert "PromotedAxisSummary" in bridges.__all__
+    assert "ingest_fiducial_posterior_bundle" in bridges.__all__
+    assert "to_mio_certificate" in bridges.__all__
+    assert "emit_promoted_axis_ingestion_artefact" in bridges.__all__
