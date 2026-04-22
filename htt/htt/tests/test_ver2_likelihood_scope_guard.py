@@ -202,6 +202,10 @@ def test_blocks_spin2_channels_when_tsc_pending():
         required_channels=("EE",),
         scalar_only_geometry=True,
     )
+    assert bundle.tsc_caveats is not None
+    assert bundle.tsc_caveats.required_channels == ("EE",)
+    assert "source_bridge_missing" in bundle.tsc_caveats.publication_blockers
+    assert "propagation_pending:EE" in bundle.tsc_caveats.publication_blockers
     decision = evaluate_likelihood_scope(bundle)
     assert not decision.allowed
     assert any(
@@ -216,6 +220,13 @@ def test_blocks_tt_when_tsc_claim_ceiling_is_only_exploratory():
         observable_vector=_observable(),
         tsc_overlay=_overlay_pending(),
         required_channels=("TT",),
+    )
+    assert bundle.tsc_caveats is not None
+    assert bundle.tsc_caveats.required_channels == ("TT",)
+    assert "source_bridge_missing" in bundle.tsc_caveats.publication_blockers
+    assert (
+        "claim_ceiling_insufficient:TT=exploratory"
+        in bundle.tsc_caveats.publication_blockers
     )
     decision = evaluate_likelihood_scope(bundle)
     assert decision.allowed is False

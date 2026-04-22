@@ -56,6 +56,8 @@ def test_active_service_bundle_from_samples_keeps_source_propagation_split():
     assert bundle.residual_bridge_report.bridge_status == "conditional_state_bound"
     assert bundle.bass_suggestion.source_status == "adequate"
     assert set(bundle.bass_suggestion.restricted_channels) == {"EE", "TE"}
+    assert bundle.htt_caveats.required_channels == ("TT", "TE", "EE")
+    assert "propagation_pending:EE,TE" in bundle.htt_caveats.publication_blockers
     assert bundle.htt_caveats.channel_validity["EE"] == "pending"
     assert bundle.htt_caveats.channel_claim_ceiling["TT"] == "conditional"
     assert bundle.mio_fields.trace_source_adequacy == "adequate"
@@ -94,10 +96,14 @@ def test_active_service_bundle_mio_fields_follow_required_channel_scope():
     assert bundle.publication_blockers == ()
     assert bundle.bass_suggestion.recommended_label == "source_adequate__propagation_validated"
     assert bundle.bass_suggestion.restricted_channels == ()
+    assert bundle.htt_caveats.required_channels == ("TT",)
+    assert bundle.htt_caveats.publication_blockers == ()
     assert bundle.mio_fields.required_channels == ("TT",)
     assert bundle.mio_fields.propagation_status_required == ()
     assert bundle.mio_fields.publication_blockers == ()
     assert bundle.mio_fields.diagnostic_only is False
+    assert payload["htt_caveats"]["required_channels"] == ("TT",)
+    assert payload["htt_caveats"]["publication_blockers"] == ()
     assert payload["mio_fields"]["required_channels"] == ("TT",)
     assert payload["mio_fields"]["publication_blockers"] == ()
 
@@ -198,6 +204,8 @@ def test_active_service_bundle_export_summarizes_policy_and_bridge_state():
     assert payload["publication_ready"] is False
     assert payload["residual_bridge_status"] == "blocked_collision_state_mismatch"
     assert payload["bass_suggestion"]["recommended_label"] == "source_bridge_bound_pending"
+    assert payload["htt_caveats"]["required_channels"] == ("TT",)
+    assert "source_bridge_missing" in payload["htt_caveats"]["publication_blockers"]
     assert payload["overlay_policy_ledger"]["channel_claim_ceiling"]["TT"] == "exploratory"
     assert "source_bridge_missing" in payload["publication_blockers"]
     assert "publication blockers: `source_bridge_missing" in markdown

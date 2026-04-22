@@ -133,6 +133,7 @@ def build_active_service_bundle(
         ),
         htt_caveats=overlay_to_htt_caveats(
             overlay,
+            required_channels=required_channels,
             uses_scalar_only_geometry=uses_scalar_only_geometry,
             overlay_ref=overlay_ref,
         ),
@@ -280,6 +281,8 @@ def active_service_bundle_to_dict(
         },
         "htt_caveats": {
             "caveats": bundle.htt_caveats.caveats,
+            "required_channels": bundle.htt_caveats.required_channels,
+            "publication_blockers": bundle.htt_caveats.publication_blockers,
             "channel_validity": bundle.htt_caveats.channel_validity,
             "channel_claim_ceiling": bundle.htt_caveats.channel_claim_ceiling,
         },

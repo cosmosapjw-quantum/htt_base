@@ -120,6 +120,7 @@ def build_directional_likelihood_input(
     tsc_caveats = (
         overlay_to_htt_caveats(
             tsc_overlay,
+            required_channels=channels,
             uses_scalar_only_geometry=scalar_only_geometry,
             overlay_ref=tsc_overlay.manifest.artifact_id,
         )

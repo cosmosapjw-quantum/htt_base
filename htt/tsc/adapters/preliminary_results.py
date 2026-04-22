@@ -26,6 +26,7 @@ class PreliminaryTscHandoff:
 def build_preliminary_tsc_handoff(
     *,
     generated_root: str | Path | None = None,
+    required_channels: tuple[str, ...] = ("TT", "TE", "EE"),
     uses_scalar_only_geometry: bool = False,
 ) -> PreliminaryTscHandoff:
     pack_c = load_preliminary_result_pack("C", generated_root=generated_root)
@@ -36,10 +37,12 @@ def build_preliminary_tsc_handoff(
         overlay=overlay,
         bass_suggestion=overlay_to_bass_suggestion(
             overlay,
+            required_channels=required_channels,
             overlay_ref=overlay_ref,
         ),
         htt_caveats=overlay_to_htt_caveats(
             overlay,
+            required_channels=required_channels,
             uses_scalar_only_geometry=uses_scalar_only_geometry,
             overlay_ref=overlay_ref,
         ),
