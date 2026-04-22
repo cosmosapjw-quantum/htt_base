@@ -19,7 +19,7 @@
     "config_hash": "f064dd29b306d617",
     "created_by": "scripts.ver2_artifact_export.py",
     "failed_gates": [],
-    "git_commit": "2a93384016526b4b55463c24c49faec4d2ff0804",
+    "git_commit": "e6385f885166c5dc94100aced8bdb089d1db41c3",
     "implementation_scope": "common",
     "input_hashes": [
       "validation.bass_native_runtime_bridge",
@@ -55,7 +55,7 @@
       "config_hash": "f064dd29b306d617",
       "created_by": "scripts.ver2_artifact_export.py",
       "failed_gates": [],
-      "git_commit": "2a93384016526b4b55463c24c49faec4d2ff0804",
+      "git_commit": "e6385f885166c5dc94100aced8bdb089d1db41c3",
       "implementation_scope": "common",
       "input_hashes": [
         "validation.bass_native_runtime_bridge",
@@ -205,7 +205,7 @@
               ],
               "category": "adversarial_edge",
               "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_tilted_executable_families_execute_with_bounded_runtime_contracts",
-              "purpose": "run the representative tilted executable subset V and VII_0 end to end on the bounded native route without collapsing it into observer-boost semantics",
+              "purpose": "run the representative tilted executable subset V, VII_0, and VIII end to end on the bounded native route without collapsing it into observer-boost semantics",
               "test_id": "representative_tilted_runnable_subset_runs_end_to_end"
             },
             {
@@ -259,7 +259,7 @@
           ],
           "notes": [
             "Executable preliminary campaign: passes for the representative orthogonal subset I, V, VII_0, VIII.",
-            "The representative V and VII_0 tilted branches are executable on the bounded native route, while I and VIII remain explicit runtime blockers and must not be relabelled as executed science runs.",
+            "The representative V, VII_0, and VIII tilted branches are executable on the bounded native route, while I remains an explicit runtime blocker and must not be relabelled as executed science runs.",
             "This campaign is for preliminary result-pack production, not full geometry identification or non-Type-I exact propagator promotion."
           ],
           "null_manifest_refs": [
@@ -273,7 +273,7 @@
           "theorem_refs": [
             "V8_bass_representative_family_sweep"
           ],
-          "title": "Representative preliminary family sweep with partial tilted runtime opening"
+          "title": "Representative preliminary family sweep with bounded tilted runtime opening"
         },
         {
           "artifact_refs": [
@@ -1214,7 +1214,7 @@
               ],
               "category": "adversarial_edge",
               "path": "htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_tilted_executable_families_execute_with_bounded_runtime_contracts",
-              "purpose": "the representative runnable tilted subset V and VII_0 executes end to end while preserving explicit global-tilt vs local-boost semantics",
+              "purpose": "the representative runnable tilted subset V, VII_0, and VIII executes end to end while preserving explicit global-tilt vs local-boost semantics",
               "test_id": "representative_tilted_runnable_subset_runs_end_to_end"
             },
             {
@@ -1255,7 +1255,7 @@
             }
           ],
           "theorem_id": "V8_bass_representative_family_sweep",
-          "theorem_label": "representative preliminary family sweep keeps orthogonal I/V/VII_0/VIII executable, opens V and VII_0 tilted, and keeps the remaining tilted runtime blockers explicit"
+          "theorem_label": "representative preliminary family sweep keeps orthogonal I/V/VII_0/VIII executable, opens V/VII_0/VIII tilted, and keeps the remaining tilted runtime blocker explicit"
         },
         {
           "artifact_refs": [
@@ -1511,6 +1511,16 @@
               "path": "htt/tsc/validation/test_theorem_map.py::test_theorem_map_covers_source_budget_and_export_claims",
               "purpose": "local theorem coverage stays synchronized with export and claim-ceiling semantics",
               "test_id": "tsc_theorem_map_covers_export_claims"
+            },
+            {
+              "artifact_refs": [
+                "tsc.active_service_bundle",
+                "tsc.policy_ledger"
+              ],
+              "category": "regression",
+              "path": "htt/scripts/test_ver2_tsc_active_service.py::test_script_check_passes_for_pending_and_claim_limited_modes",
+              "purpose": "the TSC-local active-service exporter keeps propagation-pending and claim-ceiling blockers live across CLI checks",
+              "test_id": "active_service_export_cli_preserves_blockers"
             }
           ],
           "theorem_id": "V8_tsc_no_overclaim",

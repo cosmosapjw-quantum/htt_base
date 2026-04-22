@@ -88,13 +88,14 @@ from mio.diagnostics import (  # noqa: E402
 )
 from mio.interface.mio_certificate import certificate_to_payload  # noqa: E402
 from tsc.admissibility.domain import build_domain_report  # noqa: E402
-from tsc.budget.source_to_channel import build_channel_budgets  # noqa: E402
-from tsc.control.upgrade_advisor import recommend_chart_transition  # noqa: E402
+from tsc.integration import (  # noqa: E402
+    active_service_bundle_to_dict,
+    build_active_service_bundle,
+)
 from tsc.reports import (  # noqa: E402
     attach_overlay_to_departure_report,
     attach_overlay_to_mes_report,
-    build_tsc_overlay,
-    overlay_publication_blockers,
+    overlay_to_policy_ledger_dict,
     overlay_to_json_dict,
 )
 from tsc.residuals.blockwise import ambient_vs_projected_defect_report  # noqa: E402
@@ -650,20 +651,10 @@ def _build_export_records() -> dict[str, ArtifactRecord]:
         source_error=0.01,
         on_manifold_exact=True,
     )
-    budgets = build_channel_budgets(
-        manifest=tsc_manifest,
-        source_status=source.source_status,
-        propagation_status="pending",
-        source_error_bound=0.01,
-        propagator_norm_bound=4.0,
-        spin2_budget=0.2,
-    )
-    overlay = build_tsc_overlay(
+    active_service = build_active_service_bundle(
         domain_report=domain,
         residual_report=residual,
         source_bridge_report=source,
-        channel_budgets=budgets,
-        upgrade_recommendation=recommend_chart_transition(domain, residual, source),
         artifact_manifest=tsc_manifest,
         artifact_metadata={
             "source_artifact_ids": [
@@ -671,9 +662,50 @@ def _build_export_records() -> dict[str, ArtifactRecord]:
                 mes_report.manifest.artifact_id,
             ]
         },
+        propagator_norm_bound=4.0,
+        propagation_status_by_channel={
+            "TT": "pending",
+            "EE": "pending",
+            "TE": "pending",
+        },
     )
+    overlay = active_service.overlay
     departure_report = attach_overlay_to_departure_report(departure_report, overlay)
     mes_report = attach_overlay_to_mes_report(mes_report, overlay)
+    policy_ledger = overlay_to_policy_ledger_dict(
+        overlay,
+        required_channels=active_service.required_channels,
+    )
+    active_service_manifest = _make_manifest(
+        artifact_id="tsc.ver2.export.active_service_bundle",
+        artifact_path=_artifact_path("tsc_ver2_export_active_service_bundle"),
+        owner="TSC",
+        implementation_scope="tsc",
+        claim_tier="conditional",
+        production_status="production_candidate",
+        input_hashes=(overlay.manifest.artifact_id,),
+        caveats=("advisory_only", "no_runtime_decision_ownership"),
+        statistics_definitions={
+            "surface": "TscActiveServiceBundleExport",
+            "overlay_ref": overlay.manifest.artifact_id,
+            "required_channels": list(active_service.required_channels),
+        },
+    )
+    policy_ledger_manifest = _make_manifest(
+        artifact_id="tsc.ver2.export.policy_ledger",
+        artifact_path=_artifact_path("tsc_ver2_export_policy_ledger"),
+        owner="TSC",
+        implementation_scope="tsc",
+        claim_tier="conditional",
+        production_status="production_candidate",
+        input_hashes=(overlay.manifest.artifact_id,),
+        caveats=("advisory_only", "no_runtime_decision_ownership"),
+        statistics_definitions={
+            "surface": "TscPolicyLedgerExport",
+            "overlay_ref": overlay.manifest.artifact_id,
+            "required_channels": list(active_service.required_channels),
+        },
+    )
 
     forward_a = _forward_output_from_solver_output(
         artifact_id="bass.ver2.export.forward.tier_a_validation",
@@ -878,6 +910,46 @@ def _build_export_records() -> dict[str, ArtifactRecord]:
             evidence_refs=(overlay.manifest.artifact_id,),
             notes=tuple(overlay.manifest.caveats),
         ),
+        "active_service": ArtifactRecord(
+            key="active_service",
+            title="TSC active-service bundle",
+            topic="adequacy_overlay",
+            pack_id="D",
+            manifest=active_service_manifest,
+            payload={
+                "manifest": asdict(active_service_manifest),
+                "overlay_ref": overlay.manifest.artifact_id,
+                "bundle": active_service_bundle_to_dict(active_service),
+            },
+            summary=(
+                "TSC active-service bundle keeps residual/source/projection caveats "
+                "machine-readable for downstream HTT/MIO/BASS handoffs."
+            ),
+            allowed_claims=("conditional active-service caveat bundle summary",),
+            forbidden_claims=("runtime_authority_claim", "posterior_or_truth_claim"),
+            evidence_refs=(overlay.manifest.artifact_id,),
+            notes=tuple(active_service.publication_blockers),
+        ),
+        "policy_ledger": ArtifactRecord(
+            key="policy_ledger",
+            title="TSC no-overclaim policy ledger",
+            topic="adequacy_overlay",
+            pack_id="D",
+            manifest=policy_ledger_manifest,
+            payload={
+                "manifest": asdict(policy_ledger_manifest),
+                "overlay_ref": overlay.manifest.artifact_id,
+                "ledger": policy_ledger,
+            },
+            summary=(
+                "TSC policy ledger exposes failed no-overclaim flags, claim-limited "
+                "channels, and publication blockers as a separate advisory surface."
+            ),
+            allowed_claims=("conditional no-overclaim gate summary",),
+            forbidden_claims=("runtime_authority_claim", "posterior_or_truth_claim"),
+            evidence_refs=(overlay.manifest.artifact_id,),
+            notes=tuple(policy_ledger["publication_blockers"]),
+        ),
         "mio": ArtifactRecord(
             key="mio",
             title="MIO predictive residual certificate",
@@ -973,10 +1045,10 @@ def _build_pack_records(records: dict[str, ArtifactRecord]) -> tuple[PackRecord,
             "MIO certificates",
             "mio_residual_atlas",
             "fig_ver2d_mio_predictive_residuals",
-            ("mio", "overlay"),
+            ("mio", "overlay", "active_service", "policy_ledger"),
             (
-                "The MIO residual atlas and the TSC overlay are exported together without merging ownership semantics.",
-                "Residual slices remain diagnostic model/data comparisons, not posterior or truth outputs.",
+                "The MIO residual atlas, TSC overlay, active-service bundle, and policy ledger are exported together without merging ownership semantics.",
+                "The TSC side surfaces publication blockers and claim ceilings, while residual slices remain diagnostic model/data comparisons, not posterior or truth outputs.",
             ),
         ),
         (
@@ -1661,6 +1733,7 @@ def _plot_pack_figure(pack: PackRecord, base_path: Path) -> tuple[str, dict[str,
         _figure_axes_style(ax, title="Departure card summary", ylabel="value")
     elif pack.pack_id == "D":
         mio = next(record for record in pack.artifacts if record.key == "mio")
+        policy = next(record for record in pack.artifacts if record.key == "policy_ledger")
         metrics = mio.payload["consistency_metrics"]  # type: ignore[index]
         slice_keys = sorted(
             key for key in metrics if key.endswith("_max_abs")
@@ -1671,6 +1744,20 @@ def _plot_pack_figure(pack: PackRecord, base_path: Path) -> tuple[str, dict[str,
         ax.invert_yaxis()
         _figure_axes_style(ax, title="MIO predictive residual slices", ylabel=None)
         ax.set_xlabel("max |residual|")
+        ledger = policy.payload["ledger"]  # type: ignore[index]
+        blockers = list(ledger["publication_blockers"])
+        claim_limited = list(ledger["claim_limited_channels"])
+        ax.text(
+            0.98,
+            0.95,
+            f"blockers={len(blockers)}\n"
+            f"claim_limited={','.join(claim_limited) or 'none'}",
+            transform=ax.transAxes,
+            ha="right",
+            va="top",
+            fontsize=9,
+            bbox={"facecolor": "white", "alpha": 0.85, "edgecolor": "#999999"},
+        )
     else:
         registry = pack.artifacts[0]
         campaigns = registry.payload["registry"]["campaigns"]  # type: ignore[index]

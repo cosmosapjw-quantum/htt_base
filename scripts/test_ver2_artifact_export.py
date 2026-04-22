@@ -81,6 +81,29 @@ def test_validation_pack_carries_representative_family_sweep_evidence() -> None:
     assert any(record.key == "family_sweep" for record in pack.artifacts)
 
 
+def test_mio_pack_carries_active_service_bundle_and_policy_ledger() -> None:
+    exporter = _load_export_module()
+    records, packs = exporter.build_export_bundle()
+    pack = next(pack for pack in packs if pack.pack_id == "D")
+    active_service = records["active_service"]
+    policy_ledger = records["policy_ledger"]
+
+    assert active_service.manifest.artifact_id == "tsc.ver2.export.active_service_bundle"
+    assert policy_ledger.manifest.artifact_id == "tsc.ver2.export.policy_ledger"
+    assert active_service.payload["overlay_ref"] == "tsc.ver2.export.overlay"
+    assert active_service.payload["bundle"]["required_channels"] == ("TT", "TE", "EE")
+    assert (
+        active_service.payload["bundle"]["overlay_policy_ledger"]["publication_blockers"]
+        == policy_ledger.payload["ledger"]["publication_blockers"]
+    )
+    assert {record.key for record in pack.artifacts} == {
+        "mio",
+        "overlay",
+        "active_service",
+        "policy_ledger",
+    }
+
+
 def test_scan_figures_blocks_missing_manifest_and_accepts_generated_override(
     tmp_path: Path,
 ) -> None:

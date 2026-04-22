@@ -5,12 +5,14 @@
 - claim tier: `conditional`
 - production status: `production_candidate`
 - figure base: `fig_ver2d_mio_predictive_residuals`
-- caveats: public_grade=production-grade, production_status=production_candidate, Predictive residual atlas is a diagnostic model/data comparison surface; it must not be merged with HTT posterior evidence or reinterpreted as a truth certificate., tsc_domain_status=valid_one_field, tsc_trace_source_adequacy=adequate, tsc_upgrade_hint=stable_no_upgrade, tsc_overlay_diagnostic_only, advisory_only, no_runtime_decision_ownership
+- caveats: public_grade=production-grade, production_status=production_candidate, Predictive residual atlas is a diagnostic model/data comparison surface; it must not be merged with HTT posterior evidence or reinterpreted as a truth certificate., tsc_domain_status=valid_one_field, tsc_trace_source_adequacy=adequate, tsc_upgrade_hint=stable_no_upgrade, tsc_overlay_diagnostic_only, tsc_publication_blocker=propagation_pending:EE,TE,TT, tsc_publication_blocker=claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory, advisory_only, no_runtime_decision_ownership, propagation_pending:EE,TE,TT, claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory
 
-- The MIO residual atlas and the TSC overlay are exported together without merging ownership semantics.
-- Residual slices remain diagnostic model/data comparisons, not posterior or truth outputs.
+- The MIO residual atlas, TSC overlay, active-service bundle, and policy ledger are exported together without merging ownership semantics.
+- The TSC side surfaces publication blockers and claim ceilings, while residual slices remain diagnostic model/data comparisons, not posterior or truth outputs.
 
 | Artifact | Owner | Claim tier | Production status | Summary |
 | --- | --- | --- | --- | --- |
 | `mio.predictive_residuals.certificate` | `MIO` | `conditional` | `production_candidate` | MIO residual atlas stays diagnostic and owner-separated from HTT posterior semantics. |
 | `tsc.ver2.export.overlay` | `TSC` | `conditional` | `production_candidate` | TSC overlay remains advisory and records pending propagation explicitly. |
+| `tsc.ver2.export.active_service_bundle` | `TSC` | `conditional` | `production_candidate` | TSC active-service bundle keeps residual/source/projection caveats machine-readable for downstream HTT/MIO/BASS handoffs. |
+| `tsc.ver2.export.policy_ledger` | `TSC` | `conditional` | `production_candidate` | TSC policy ledger exposes failed no-overclaim flags, claim-limited channels, and publication blockers as a separate advisory surface. |

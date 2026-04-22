@@ -7,7 +7,7 @@
 - figure base: `fig_ver2b_local_global_discrimination_matrix`
 - caveats: pre_inference_only, not_posterior_odds
 
-- The HTT discrimination matrix is exploratory and keeps local boost distinct from global tilt.
+- The HTT discrimination matrix is a bounded conditional pre-inference audit that keeps local boost distinct from global tilt.
 - No posterior odds or source-side confirmation are exported here.
 
 | Artifact | Owner | Claim tier | Production status | Summary |

@@ -21,6 +21,28 @@
       "production_status": "production_candidate",
       "summary": "TSC overlay remains advisory and records pending propagation explicitly.",
       "title": "TSC adequacy overlay"
+    },
+    {
+      "artifact_id": "tsc.ver2.export.active_service_bundle",
+      "claim_tier": "conditional",
+      "evidence_refs": [
+        "tsc.ver2.export.overlay"
+      ],
+      "owner": "TSC",
+      "production_status": "production_candidate",
+      "summary": "TSC active-service bundle keeps residual/source/projection caveats machine-readable for downstream HTT/MIO/BASS handoffs.",
+      "title": "TSC active-service bundle"
+    },
+    {
+      "artifact_id": "tsc.ver2.export.policy_ledger",
+      "claim_tier": "conditional",
+      "evidence_refs": [
+        "tsc.ver2.export.overlay"
+      ],
+      "owner": "TSC",
+      "production_status": "production_candidate",
+      "summary": "TSC policy ledger exposes failed no-overclaim flags, claim-limited channels, and publication blockers as a separate advisory surface.",
+      "title": "TSC no-overclaim policy ledger"
     }
   ],
   "caveats": [
@@ -31,16 +53,20 @@
     "tsc_trace_source_adequacy=adequate",
     "tsc_upgrade_hint=stable_no_upgrade",
     "tsc_overlay_diagnostic_only",
+    "tsc_publication_blocker=propagation_pending:EE,TE,TT",
+    "tsc_publication_blocker=claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory",
     "advisory_only",
-    "no_runtime_decision_ownership"
+    "no_runtime_decision_ownership",
+    "propagation_pending:EE,TE,TT",
+    "claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory"
   ],
   "claim_tier": "conditional",
   "figure_base": "fig_ver2d_mio_predictive_residuals",
   "pack_id": "D",
   "production_status": "production_candidate",
   "summary_lines": [
-    "The MIO residual atlas and the TSC overlay are exported together without merging ownership semantics.",
-    "Residual slices remain diagnostic model/data comparisons, not posterior or truth outputs."
+    "The MIO residual atlas, TSC overlay, active-service bundle, and policy ledger are exported together without merging ownership semantics.",
+    "The TSC side surfaces publication blockers and claim ceilings, while residual slices remain diagnostic model/data comparisons, not posterior or truth outputs."
   ],
   "title": "MIO certificates",
   "topic": "mio_residual_atlas"

@@ -8,5 +8,5 @@ Manifest-backed result-pack registry for `PR-MAN-15`.
 | `A` | Scalar-to-morphology bridge | `conditional` | `production_candidate` | `fig_ver2a_scalar_to_morphology_summary` | 3 |
 | `B` | Local-vs-global discrimination | `conditional` | `production_candidate` | `fig_ver2b_local_global_discrimination_matrix` | 1 |
 | `C` | Departure cards | `exploratory` | `diagnostic_only` | `fig_ver2c_departure_card_summary` | 2 |
-| `D` | MIO certificates | `conditional` | `production_candidate` | `fig_ver2d_mio_predictive_residuals` | 2 |
+| `D` | MIO certificates | `conditional` | `production_candidate` | `fig_ver2d_mio_predictive_residuals` | 4 |
 | `E` | Equivalence and validation classes | `exploratory` | `diagnostic_only` | `fig_ver2e_validation_campaign_matrix` | 2 |

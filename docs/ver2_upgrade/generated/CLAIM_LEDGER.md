@@ -5,7 +5,7 @@ Semantic source: `htt/src/common/contracts.py::ClaimLedgerEntry`
 
 | Claim tier | Rows |
 | --- | ---: |
-| `conditional` | 7 |
+| `conditional` | 9 |
 | `exploratory` | 2 |
 
 Each row remains tied to owner/scope-specific forbidden-claim fences in

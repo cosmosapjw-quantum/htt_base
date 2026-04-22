@@ -6,5 +6,5 @@
 | `fig_ver2a_scalar_to_morphology_summary` | `A` | Scalar-to-morphology bridge | `conditional` | `production_candidate` | `bass.ver2.export.solver_core_output_tier_b.observable_vector`, `bass.ver2.export.solver_core_output_tier_b.atlas_lite`, `bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy` |
 | `fig_ver2b_local_global_discrimination_matrix` | `B` | Local-vs-global discrimination | `conditional` | `production_candidate` | `htt.ver2.export.discrimination_matrix` |
 | `fig_ver2c_departure_card_summary` | `C` | Departure cards | `exploratory` | `diagnostic_only` | `bass.ver2.export.solver_core_output_tier_b.observable_vector.departure_report`, `tsc.ver2.export.overlay` |
-| `fig_ver2d_mio_predictive_residuals` | `D` | MIO certificates | `conditional` | `production_candidate` | `mio.predictive_residuals.certificate`, `tsc.ver2.export.overlay` |
+| `fig_ver2d_mio_predictive_residuals` | `D` | MIO certificates | `conditional` | `production_candidate` | `mio.predictive_residuals.certificate`, `tsc.ver2.export.overlay`, `tsc.ver2.export.active_service_bundle`, `tsc.ver2.export.policy_ledger` |
 | `fig_ver2e_validation_campaign_matrix` | `E` | Equivalence and validation classes | `exploratory` | `diagnostic_only` | `common.ver2.validation_registry_summary`, `bass.ver2.export.representative_family_sweep` |
