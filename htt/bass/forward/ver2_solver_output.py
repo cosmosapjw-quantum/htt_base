@@ -912,6 +912,9 @@ def build_solver_core_output_from_native_result(
             "layout_source_history_sample_count": int(
                 result.solver_info.get("layout_source_history_sample_count", 0)
             ),
+            "layout_source_mode_labels": list(
+                result.solver_info.get("layout_source_mode_labels", [])
+            ),
             "layout_local_matter_blocks_consumed": bool(
                 result.solver_info.get("layout_local_matter_blocks_consumed", False)
             ),
@@ -1056,6 +1059,14 @@ def build_solver_core_output_from_native_result(
             "canonical_projection_b_history_sample_count": 0
             if canonical_projection is None
             else int(getattr(canonical_projection, "metadata", {}).get("b_history_sample_count", 0)),
+            "canonical_projection_source_mode_labels": []
+            if canonical_projection is None
+            else list(getattr(canonical_projection, "metadata", {}).get("source_mode_labels", ())),
+            "canonical_projection_source_history_mode_labels": []
+            if canonical_projection is None
+            else list(
+                getattr(canonical_projection, "metadata", {}).get("source_history_mode_labels", ())
+            ),
             "canonical_projection_matter_labels": {}
             if canonical_projection is None
             else dict(getattr(canonical_projection, "metadata", {}).get("matter_block_labels", {})),

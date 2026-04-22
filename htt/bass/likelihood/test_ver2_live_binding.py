@@ -46,6 +46,16 @@ def test_live_cosmological_frame_likelihood_binds_to_solver_output(_live_problem
         "m+2",
         "m-2",
     }
+    assert set(likelihood.htt_decomposition["canonical_projection_source_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
+    assert set(likelihood.htt_decomposition["canonical_projection_source_history_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
     assert likelihood.harmonic_gaussian_ready is True
     assert np.isfinite(likelihood.log_prob({}))
 

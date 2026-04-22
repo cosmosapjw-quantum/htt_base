@@ -127,6 +127,12 @@ def _interop_summary(solver_output: SolverCoreOutput) -> dict[str, Any]:
         "canonical_projection_covered_mode_labels": list(
             solver_output.metadata.get("canonical_projection_covered_mode_labels", [])
         ),
+        "canonical_projection_source_mode_labels": list(
+            solver_output.metadata.get("canonical_projection_source_mode_labels", [])
+        ),
+        "canonical_projection_source_history_mode_labels": list(
+            solver_output.metadata.get("canonical_projection_source_history_mode_labels", [])
+        ),
         "geometry_params": solver_output.metadata.get("geometry_params"),
         "kinematic_params": solver_output.metadata.get("kinematic_params"),
         "tilt_params": solver_output.metadata.get("tilt_params"),

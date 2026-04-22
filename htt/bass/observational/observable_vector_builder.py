@@ -141,6 +141,12 @@ def _default_alm_features(
         "canonical_projection_covered_mode_labels": list(
             solver_output.metadata.get("canonical_projection_covered_mode_labels", [])
         ),
+        "canonical_projection_source_mode_labels": list(
+            solver_output.metadata.get("canonical_projection_source_mode_labels", [])
+        ),
+        "canonical_projection_source_history_mode_labels": list(
+            solver_output.metadata.get("canonical_projection_source_history_mode_labels", [])
+        ),
         "covariance_readiness": covariance_readiness,
         "fitting_ready": covariance_readiness == "full",
         "off_diagonal_strategy": solver_output.metadata.get("off_diagonal_strategy"),

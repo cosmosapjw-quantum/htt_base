@@ -302,6 +302,11 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_source_history_sample_count"] == len(
         run.integration_result.eta
     )
+    assert set(run.solver_output.metadata["layout_source_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
     assert run.solver_output.metadata["layout_b_mode_history_sample_count"] == len(
         run.integration_result.eta
     )
@@ -348,6 +353,16 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "multi_live_mode_label_with_layout_auxiliary_local_matter_blocks"
     )
     assert set(run.solver_output.metadata["canonical_projection_covered_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
+    assert set(run.solver_output.metadata["canonical_projection_source_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
+    assert set(run.solver_output.metadata["canonical_projection_source_history_mode_labels"]) == {
         "m0",
         "m+2",
         "m-2",
@@ -435,6 +450,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_block_owner"] == (
         "mode_ops_source_template"
     )
+    assert set(
+        registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_mode_labels"]
+    ) == {"m0", "m+2", "m-2"}
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_local_matter_owner"] == (
         "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
@@ -473,6 +491,16 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         run.trace.canonical_projection.hierarchy_state.photon_polarization_block["B_history"],
         dtype=np.float64,
     ).shape[0] == len(run.integration_result.eta)
+    assert set(run.trace.canonical_projection.hierarchy_state.source_history_block["mode_label_blocks"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
+    assert set(run.trace.canonical_projection.hierarchy_state.source_history_block["mode_label_history"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
     assert run.integration_result.neutrino_tower is not None
 
 
