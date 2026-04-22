@@ -113,6 +113,11 @@ def test_build_discrimination_matrix_promotes_local_global_pair_with_morphology_
         "atlas_template_biposh",
         "null_mock_covariance",
     }
+    stats = matrix.manifest.statistics_definitions
+    assert stats["pair_claim_tier"][pair] == "conditional"
+    assert stats["pair_degeneracy_flags"][pair] is False
+    assert pair in stats["conditional_pairs"]
+    assert stats["support_profile"]["template"] >= 0.75
 
 
 def test_build_discrimination_matrix_blocks_geometry_pair_without_morphology_support():
@@ -126,5 +131,10 @@ def test_build_discrimination_matrix_blocks_geometry_pair_without_morphology_sup
         ),
         hypotheses=("local_boost", "bianchi_geometry"),
     )
+    pair = "bianchi_geometry|local_boost"
     assert matrix.manifest.production_status == "diagnostic_only"
-    assert matrix.claim_tier_by_pair["bianchi_geometry|local_boost"] == "blocked"
+    assert matrix.claim_tier_by_pair[pair] == "blocked"
+    stats = matrix.manifest.statistics_definitions
+    assert stats["pair_claim_tier"][pair] == "blocked"
+    assert pair in stats["blocked_pairs"]
+    assert stats["support_profile"]["template"] == 0.0

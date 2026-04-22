@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import mio.bridges as bridges
 import mio.bridges.preliminary_results as preliminary_results
 from mio.bridges.preliminary_results import build_preliminary_mio_handoff
 
@@ -45,3 +46,10 @@ def test_preliminary_mio_handoff_loads_artifacts_by_pack_ref(monkeypatch) -> Non
     handoff = preliminary_results.build_preliminary_mio_handoff()
     assert seen["certificate"] == handoff.certificate.manifest.artifact_id
     assert seen["overlay"] == handoff.overlay.manifest.artifact_id
+
+
+def test_package_exports_preliminary_mio_handoff_entrypoint() -> None:
+    assert bridges.build_preliminary_mio_handoff is build_preliminary_mio_handoff
+    assert bridges.PreliminaryMioHandoff is preliminary_results.PreliminaryMioHandoff
+    assert "build_preliminary_mio_handoff" in bridges.__all__
+    assert "PreliminaryMioHandoff" in bridges.__all__

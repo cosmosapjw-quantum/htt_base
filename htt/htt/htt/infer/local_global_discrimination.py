@@ -1,4 +1,4 @@
-"""Local-boost/global-tilt response-library skeletons for VER2 HTT."""
+"""Local-boost/global-tilt response-library calibration helpers for VER2 HTT."""
 from __future__ import annotations
 
 from collections.abc import Mapping
@@ -285,12 +285,22 @@ def _calibrated_manifest(
     caveats: list[str],
     morphology_atlas_ref: str | None,
     atlas_entry: AtlasEntryLite | None,
+    support: Mapping[str, float],
+    degeneracy_flags: Mapping[str, bool],
+    recommendations: Mapping[str, str],
+    claim_tier_by_pair: Mapping[str, str],
 ) -> ArtifactManifest:
     input_hashes = [observable_vector.manifest.artifact_id]
     if morphology_atlas_ref:
         input_hashes.append(str(morphology_atlas_ref))
     if atlas_entry is not None:
         input_hashes.append(atlas_entry.atlas_id)
+    conditional_pairs = tuple(
+        pair for pair, tier in sorted(claim_tier_by_pair.items()) if tier == "conditional"
+    )
+    blocked_pairs = tuple(
+        pair for pair, tier in sorted(claim_tier_by_pair.items()) if tier == "blocked"
+    )
     return ArtifactManifest(
         artifact_id="htt.discrimination_matrix",
         artifact_path="artifacts/htt/htt_discrimination_matrix.json",
@@ -315,6 +325,12 @@ def _calibrated_manifest(
             "mock_coverage_status": observable_vector.sky_support.mock_coverage_status,
             "sky_support_hash": observable_vector.sky_support.sky_support_hash,
             "atlas_available": bool(morphology_atlas_ref or atlas_entry is not None),
+            "support_profile": {basis: float(value) for basis, value in support.items()},
+            "pair_claim_tier": dict(sorted(claim_tier_by_pair.items())),
+            "pair_degeneracy_flags": dict(sorted(degeneracy_flags.items())),
+            "pair_recommended_next_observable": dict(sorted(recommendations.items())),
+            "conditional_pairs": list(conditional_pairs),
+            "blocked_pairs": list(blocked_pairs),
         },
     )
 
@@ -403,6 +419,10 @@ def build_discrimination_matrix(
         caveats=list(dict.fromkeys(caveats)),
         morphology_atlas_ref=morphology_atlas_ref,
         atlas_entry=atlas_entry,
+        support=support,
+        degeneracy_flags=degeneracy_flags,
+        recommendations=recommendations,
+        claim_tier_by_pair=claim_tier_by_pair,
     )
     return DiscriminationMatrix(
         hypotheses=hypotheses,

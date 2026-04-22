@@ -14,8 +14,18 @@ from __future__ import annotations
 # Option A re-export (plan §12.5) — preserve existing `htt.PR13AM_*`
 # import path; expose the same module under `mio.bridges.PR13AM_*`.
 from htt import PR13AM_te_sign_d1d3_bridge  # noqa: F401 — re-export
+from .preliminary_results import (  # noqa: F401 — re-export
+    PreliminaryMioHandoff,
+    build_preliminary_mio_handoff,
+)
 from . import preliminary_results  # noqa: F401 — re-export
 from . import promoted_artifacts  # noqa: F401 — re-export
 
 
-__all__ = ["PR13AM_te_sign_d1d3_bridge", "preliminary_results", "promoted_artifacts"]
+__all__ = [
+    "PR13AM_te_sign_d1d3_bridge",
+    "PreliminaryMioHandoff",
+    "build_preliminary_mio_handoff",
+    "preliminary_results",
+    "promoted_artifacts",
+]

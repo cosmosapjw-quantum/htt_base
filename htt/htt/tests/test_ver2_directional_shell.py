@@ -230,6 +230,10 @@ def test_build_ver2_directional_inputs_uses_calibrated_local_global_matrix():
     pair = "global_tilt|local_boost"
     assert shell.discrimination_matrix.claim_tier_by_pair[pair] == "conditional"
     assert shell.discrimination_matrix.manifest.production_status == "production_candidate"
+    stats = shell.discrimination_matrix.manifest.statistics_definitions
+    assert stats["pair_claim_tier"][pair] == "conditional"
+    assert stats["pair_degeneracy_flags"][pair] is False
+    assert pair in stats["conditional_pairs"]
 
 
 def test_build_posterior_bundle_preserves_htt_manifest(tmp_path):
