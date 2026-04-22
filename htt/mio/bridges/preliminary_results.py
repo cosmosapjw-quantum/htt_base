@@ -9,6 +9,7 @@ from tsc.adapters.mio_certificate import MioTscAdequacyFields, overlay_to_mio_fi
 from workspace.contracts.mio_certificate import MioCertificate
 from workspace.contracts.preliminary_results import (
     MIO_CERTIFICATE_ARTIFACT_ID,
+    PreliminaryPackArtifactRef,
     PreliminaryResultPack,
     TSC_OVERLAY_ARTIFACT_ID,
     load_exported_mio_certificate,
@@ -23,6 +24,7 @@ class PreliminaryMioHandoff:
 
     certificate: MioCertificate
     overlay: TscAdequacyOverlay
+    pack: PreliminaryResultPack
     pack_id: str
     topic: str
     claim_tier: str
@@ -35,6 +37,34 @@ class PreliminaryMioHandoff:
     tsc_claim_ceiling: dict[str, str]
     tsc_trace_source_adequacy: str
     tsc_consistency_issues: tuple[str, ...]
+
+    @property
+    def artifact_index(self) -> dict[str, PreliminaryPackArtifactRef]:
+        return {
+            artifact.artifact_id: artifact
+            for artifact in self.pack.artifacts
+        }
+
+    @property
+    def artifact_claim_tiers(self) -> dict[str, str]:
+        return {
+            artifact_id: artifact.claim_tier
+            for artifact_id, artifact in sorted(self.artifact_index.items())
+        }
+
+    @property
+    def artifact_production_statuses(self) -> dict[str, str]:
+        return {
+            artifact_id: artifact.production_status
+            for artifact_id, artifact in sorted(self.artifact_index.items())
+        }
+
+    @property
+    def artifact_summaries(self) -> dict[str, str]:
+        return {
+            artifact_id: artifact.summary
+            for artifact_id, artifact in sorted(self.artifact_index.items())
+        }
 
 
 def _certificate_tsc_publication_blockers(
@@ -170,6 +200,7 @@ def build_preliminary_mio_handoff(
     return PreliminaryMioHandoff(
         certificate=certificate,
         overlay=overlay,
+        pack=pack_d,
         pack_id=pack_d.pack_id,
         topic=pack_d.topic,
         claim_tier=pack_d.claim_tier,

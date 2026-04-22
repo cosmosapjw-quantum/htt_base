@@ -16,6 +16,7 @@ def test_preliminary_mio_handoff_loads_certificate_and_overlay() -> None:
         expected_fields,
     )
     assert handoff.pack_id == "D"
+    assert handoff.pack.pack_id == "D"
     assert handoff.topic == "mio_residual_atlas"
     assert handoff.claim_tier == "conditional"
     assert handoff.production_status == "production_candidate"
@@ -32,6 +33,15 @@ def test_preliminary_mio_handoff_loads_certificate_and_overlay() -> None:
     assert handoff.tsc_claim_ceiling == expected_fields.channel_claim_ceiling
     assert handoff.tsc_trace_source_adequacy == expected_fields.trace_source_adequacy
     assert handoff.tsc_consistency_issues == expected_issues
+    assert (
+        handoff.artifact_claim_tiers[handoff.certificate.manifest.artifact_id]
+        == handoff.certificate.manifest.claim_tier
+    )
+    assert (
+        handoff.artifact_production_statuses[handoff.overlay.manifest.artifact_id]
+        == handoff.overlay.manifest.production_status
+    )
+    assert handoff.artifact_summaries[handoff.overlay.manifest.artifact_id]
 
 
 def test_preliminary_mio_handoff_loads_artifacts_by_pack_ref(monkeypatch) -> None:

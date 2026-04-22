@@ -8,6 +8,7 @@ from common.contracts import TscAdequacyOverlay
 from tsc.adapters.bass_runtime import SourceAdequacySuggestion, overlay_to_bass_suggestion
 from tsc.adapters.htt_inference import HttTscCaveatBundle, overlay_to_htt_caveats
 from workspace.contracts.preliminary_results import (
+    PreliminaryResultPack,
     load_exported_tsc_overlay,
     load_preliminary_result_pack,
 )
@@ -21,6 +22,39 @@ class PreliminaryTscHandoff:
     bass_suggestion: SourceAdequacySuggestion
     htt_caveats: HttTscCaveatBundle
     pack_ids: tuple[str, ...]
+    packs: tuple[PreliminaryResultPack, ...] = ()
+
+    @property
+    def pack_index(self) -> dict[str, PreliminaryResultPack]:
+        return {pack.pack_id: pack for pack in self.packs}
+
+    @property
+    def pack_claim_tiers(self) -> dict[str, str]:
+        return {
+            pack_id: pack.claim_tier
+            for pack_id, pack in sorted(self.pack_index.items())
+        }
+
+    @property
+    def pack_production_statuses(self) -> dict[str, str]:
+        return {
+            pack_id: pack.production_status
+            for pack_id, pack in sorted(self.pack_index.items())
+        }
+
+    @property
+    def pack_summary_lines(self) -> dict[str, tuple[str, ...]]:
+        return {
+            pack_id: tuple(pack.summary_lines)
+            for pack_id, pack in sorted(self.pack_index.items())
+        }
+
+    @property
+    def pack_artifact_ids(self) -> dict[str, tuple[str, ...]]:
+        return {
+            pack_id: pack.artifact_ids()
+            for pack_id, pack in sorted(self.pack_index.items())
+        }
 
 
 def build_preliminary_tsc_handoff(
@@ -47,6 +81,7 @@ def build_preliminary_tsc_handoff(
             overlay_ref=overlay_ref,
         ),
         pack_ids=(pack_c.pack_id, pack_d.pack_id),
+        packs=(pack_c, pack_d),
     )
 
 
