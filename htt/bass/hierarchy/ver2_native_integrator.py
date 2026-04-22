@@ -1767,6 +1767,26 @@ class Ver2TierBIntegrator:
             },
         )
 
+    def build_runtime_thomson_probe(
+        self,
+        result: IntegrationResult,
+        *,
+        gamma_t: float,
+    ) -> ExactThomsonSource:
+        temperature_state = unpack_hierarchy(result.photon_T_tower[-1], result.L_max)
+        polarization_state = PolarizationHierarchyState(
+            E=unpack_hierarchy(result.photon_E_tower[-1], result.L_max)
+        )
+        return exact_thomson_source(
+            ElectronFrameThomsonContext(),
+            temperature_state=temperature_state,
+            polarization_state=polarization_state,
+            v_b_real_sph=np.zeros(3, dtype=np.float64),
+            Gamma_T=float(gamma_t),
+            direction=np.asarray(self.config.tilt_direction, dtype=np.float64),
+            tilted_electron=self._tilted_electron_at(float(result.eta[-1])),
+        )
+
     def _compute_tca_mask(self, etas: np.ndarray) -> np.ndarray:
         mask = np.zeros(len(etas), dtype=bool)
         if not isinstance(self.closure, TCAClosure):

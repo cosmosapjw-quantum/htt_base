@@ -760,52 +760,6 @@ def _build_geodesic_probe(
     )
 
 
-def _build_thomson_probe(
-    *,
-    result: "IntegrationResult",
-    background_monitor: "BackgroundEvolutionResult",
-    species: "SpeciesBackgroundRegistry",
-    config: "IntegratorConfig",
-    gamma_t: float,
-) -> "ExactThomsonSource":
-    from bass.collision.electron_frame import (
-        ElectronFrameThomsonContext,
-        exact_thomson_source,
-    )
-    from bass.collision.polarization import PolarizationHierarchyState
-    from bass.hierarchy.pstf_tensor import unpack_hierarchy
-    from bass.species.base import SpeciesLabel
-    from bass.species.tilted import TiltedSpeciesBackground
-
-    temperature_state = unpack_hierarchy(result.photon_T_tower[-1], result.L_max)
-    polarization_state = PolarizationHierarchyState(
-        E=unpack_hierarchy(result.photon_E_tower[-1], result.L_max)
-    )
-    tilted_electron = None
-    if abs(float(config.tilt_rapidity)) > 0.0:
-        velocity = _tilt_velocity_from_monitor(
-            background_monitor,
-            eta=float(result.eta[-1]),
-            fallback_direction=np.asarray(config.tilt_direction, dtype=np.float64),
-        )
-        speed = float(np.linalg.norm(velocity))
-        if speed > 0.0:
-            tilted_electron = TiltedSpeciesBackground.from_rapidity(
-                base=species[SpeciesLabel.BARYON],
-                rapidity=float(np.arctanh(min(speed, 1.0 - 1.0e-15))),
-                v_hat_e=tuple((velocity / speed).tolist()),
-            )
-    return exact_thomson_source(
-        ElectronFrameThomsonContext(),
-        temperature_state=temperature_state,
-        polarization_state=polarization_state,
-        v_b_real_sph=np.zeros(3, dtype=np.float64),
-        Gamma_T=float(gamma_t),
-        direction=np.asarray(config.tilt_direction, dtype=np.float64),
-        tilted_electron=tilted_electron,
-    )
-
-
 def _static_gate_bundle(
     gate_name: str,
     *,
@@ -1722,11 +1676,8 @@ def execute_tier_b_solver(
         direction=np.asarray(runtime_config.tilt_direction, dtype=np.float64),
         config=runtime_config,
     )
-    thomson_probe = _build_thomson_probe(
+    thomson_probe = integrator.build_runtime_thomson_probe(
         result=result,
-        background_monitor=background_monitor,
-        species=species,
-        config=runtime_config,
         gamma_t=gamma_t_probe,
     )
     cutoff_campaign = None
