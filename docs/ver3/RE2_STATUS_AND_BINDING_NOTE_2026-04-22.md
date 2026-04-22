@@ -33,7 +33,7 @@ RE2 in the active repo means:
 | PR-06 | exact Thomson | live electron-frame collision wrapper + tests | exact collision contract present |
 | PR-07 | visibility/history | live visibility adapters + tests | source-history contract present |
 | PR-08 | backend protocol | live backend/translator/seed contract plus bound operator payloads | backend contract bound to layout templates |
-| PR-09 | hierarchy layout | live layout/packing helpers, split block templates, and runtime-derived local matter block projection | hierarchy layout frozen with runtime-derived local matter blocks; harmonic B-sector still partial |
+| PR-09 | hierarchy layout | live layout/packing helpers, split block templates, runtime-derived local matter block projection, and bounded postprocessed `ph_B` proxy path | hierarchy layout frozen with runtime-derived local matter blocks; harmonic `ph_B` is postprocessed, not live-coevolved |
 | PR-10 | output split | live archive writer; solver output and archive auto-carry upstream+output bundle chain | output split surface present, claim depends on supplied bundles |
 | PR-11 | validation hard stop | live gate bundle schema, gate status summary, readiness scoring, fitting hard stop | fitting remains blocked unless upstream bundles exist |
 
@@ -50,5 +50,5 @@ RE2 in the active repo means:
 
 ## 4. remaining open work
 
-- PR-08 and the harmonic part of PR-09 are wired to template blocks, not all-family production numerics.
+- PR-08 and the live-coevolved harmonic part of PR-09 are wired to template blocks, not all-family production numerics.
 - PR-11 hard-stop logic is live, but fitting authority remains closed until real upstream bundles are present.

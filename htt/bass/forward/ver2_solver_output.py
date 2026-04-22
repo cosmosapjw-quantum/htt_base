@@ -564,14 +564,22 @@ def _tensor_product_sphere_rule(L: int) -> tuple[np.ndarray, np.ndarray]:
     return np.asarray(directions, dtype=np.float64), np.asarray(weights, dtype=np.float64)
 
 
-def _final_slice_radiation_state(result: IntegrationResult) -> RadiationPSTFState:
+def _final_slice_radiation_state(
+    result: IntegrationResult,
+    *,
+    b_coefficients: np.ndarray | None = None,
+) -> RadiationPSTFState:
     L = int(result.L_max)
     return RadiationPSTFState(
         I=unpack_hierarchy(np.asarray(result.photon_T_tower[-1], dtype=np.float64), L),
         E=PolarizationHierarchyState(
             E=unpack_hierarchy(np.asarray(result.photon_E_tower[-1], dtype=np.float64), L)
         ),
-        B=zero_hierarchy(L),
+        B=(
+            zero_hierarchy(L)
+            if b_coefficients is None
+            else unpack_hierarchy(np.asarray(b_coefficients, dtype=np.float64), L)
+        ),
         truncation=TruncationMetadata(
             L=L,
             allow_L2_override=(L == 2),
@@ -614,9 +622,11 @@ def _build_reconstructed_payloads(
     *,
     coefficient_representation: str,
     angular_representation: str,
-    b_mode_runtime_available: bool = False,
+    b_mode_coefficients: np.ndarray | None = None,
+    b_mode_payload_available: bool = False,
+    b_mode_component_status: str = "zero_filled_layout_contract_only",
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
-    state = _final_slice_radiation_state(result)
+    state = _final_slice_radiation_state(result, b_coefficients=b_mode_coefficients)
     directions, weights = _tensor_product_sphere_rule(int(result.L_max))
     samples = reconstruct_on_sphere(state, directions)
     eta_final = float(result.eta[-1])
@@ -647,7 +657,11 @@ def _build_reconstructed_payloads(
             available=True,
         ),
         _build_reconstructed_channel_payload(
-            np.zeros_like(np.asarray(result.photon_E_tower[-1], dtype=np.float64)),
+            (
+                np.zeros_like(np.asarray(result.photon_E_tower[-1], dtype=np.float64))
+                if b_mode_coefficients is None
+                else np.asarray(b_mode_coefficients, dtype=np.float64)
+            ),
             np.asarray(samples["B"], dtype=np.float64),
             directions,
             weights,
@@ -655,12 +669,8 @@ def _build_reconstructed_payloads(
             coefficient_representation=coefficient_representation,
             eta_final_mpc=eta_final,
             ell_max=ell_max,
-            component_status=(
-                "runtime_evolved"
-                if b_mode_runtime_available
-                else "zero_filled_layout_contract_only"
-            ),
-            available=bool(b_mode_runtime_available),
+            component_status=str(b_mode_component_status),
+            available=bool(b_mode_payload_available),
         ),
     )
 
@@ -770,11 +780,28 @@ def build_solver_core_output_from_native_result(
         limber_eta_sp_sign=limber_eta_sp_sign,
         off_diagonal_strategy=off_diagonal_strategy,
     )
+    b_mode_payload_status = "zero_filled_layout_contract_only"
+    b_mode_payload_available = False
+    b_mode_coefficients = None
+    if canonical_projection is not None:
+        b_mode_coefficients = np.asarray(
+            getattr(canonical_projection, "hierarchy_state").photon_polarization_block.get("B"),
+            dtype=np.float64,
+        )
+        if (
+            getattr(canonical_projection, "sector_status", {}).get("ph_B")
+            == "layout_operator_postprocessed_proxy"
+            and np.any(np.abs(b_mode_coefficients) > 0.0)
+        ):
+            b_mode_payload_status = "layout_operator_postprocessed_proxy"
+            b_mode_payload_available = True
     alm_T, alm_E, alm_B = _build_reconstructed_payloads(
         result,
         coefficient_representation="ver2_native_pstf_final_slice",
         angular_representation="ver2_native_pstf_sphere_reconstruction",
-        b_mode_runtime_available=False,
+        b_mode_coefficients=b_mode_coefficients,
+        b_mode_payload_available=b_mode_payload_available,
+        b_mode_component_status=b_mode_payload_status,
     )
     tilt_direction = tuple(float(x) for x in result.config.tilt_direction)
     off_axis_supported = bool(
@@ -883,6 +910,15 @@ def build_solver_core_output_from_native_result(
             "layout_local_matter_sample_count": int(
                 result.solver_info.get("layout_local_matter_sample_count", 0)
             ),
+            "layout_b_mode_proxy_consumed": bool(
+                result.solver_info.get("layout_b_mode_proxy_consumed", False)
+            ),
+            "layout_b_mode_proxy_norm": float(
+                result.solver_info.get("layout_b_mode_proxy_norm", 0.0)
+            ),
+            "layout_b_mode_proxy_source": str(
+                result.solver_info.get("layout_b_mode_proxy_source", "disabled")
+            ),
             "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
             "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
             "seed_factory_owner": str(result.solver_info.get("seed_factory_owner", "legacy_runtime_seed")),
@@ -909,7 +945,8 @@ def build_solver_core_output_from_native_result(
                 )
             ),
             "b_mode_runtime_available": False,
-            "b_mode_payload_status": "zero_filled_layout_contract_only",
+            "b_mode_payload_available": bool(b_mode_payload_available),
+            "b_mode_payload_status": str(b_mode_payload_status),
             "layout_contract_consumed": bool(mode_ops is not None),
             "layout_mode_labels": []
             if mode_ops is None

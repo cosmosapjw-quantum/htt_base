@@ -790,6 +790,32 @@ def _extract_src_local_block(
     )
 
 
+def _build_layout_b_mode_proxy(
+    *,
+    layout,
+    mode_ops,
+    covered_mode_label: str,
+    state_vector: np.ndarray,
+) -> np.ndarray:
+    from bass.hierarchy.ver3_layout_protocol import flatten
+
+    vector = np.asarray(state_vector, dtype=np.float64)
+    mix_drive = np.asarray(mode_ops.A_mix @ vector, dtype=np.float64)
+    source = np.asarray(mode_ops.source_template, dtype=np.float64)
+    damping = (
+        np.abs(np.asarray(mode_ops.A_fs.diagonal(), dtype=np.float64))
+        + np.abs(np.asarray(mode_ops.A_coll.diagonal(), dtype=np.float64))
+        + 1.0
+    )
+    out = np.zeros((int(layout.ell_max) + 1) ** 2, dtype=np.float64)
+    for ell in range(layout.ell_max + 1):
+        for m in range(-ell, ell + 1):
+            slot = sum(2 * l + 1 for l in range(ell)) + (m + ell)
+            idx = flatten(layout, covered_mode_label, "ph_B", ell, m)
+            out[slot] = float((mix_drive[idx] + source[idx]) / max(damping[idx], 1.0e-30))
+    return out
+
+
 def _build_sampled_source_history(
     *,
     layout,
@@ -1914,6 +1940,33 @@ def execute_tier_b_solver(
         source_history_samples=source_history_samples,
         covered_mode_label=covered_mode_label,
     )
+    b_mode_proxy = _build_layout_b_mode_proxy(
+        layout=layout,
+        mode_ops=mode_ops,
+        covered_mode_label=covered_mode_label,
+        state_vector=np.asarray(canonical_projection.state_vector, dtype=np.float64),
+    )
+    canonical_projection = project_runtime_native_state(
+        layout=layout,
+        layout_manifest=getattr(mode_ops, "layout_metadata", {}),
+        photon_T=np.asarray(result.photon_T_tower[-1], dtype=np.float64),
+        photon_E=np.asarray(result.photon_E_tower[-1], dtype=np.float64),
+        photon_B=np.asarray(b_mode_proxy, dtype=np.float64),
+        neutrino_tower=np.asarray(result.neutrino_tower[-1], dtype=np.float64),
+        source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
+        baryon_block=np.asarray(local_matter_history.baryon_history[-1], dtype=np.float64),
+        cdm_block=np.asarray(local_matter_history.cdm_history[-1], dtype=np.float64),
+        matter_history_eta=np.asarray(local_matter_history.eta, dtype=np.float64),
+        baryon_history_samples=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
+        cdm_history_samples=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
+        matter_block_labels={
+            "baryon": tuple(local_matter_history.baryon_labels),
+            "cdm": tuple(local_matter_history.cdm_labels),
+        },
+        source_history_eta=source_history_eta,
+        source_history_samples=source_history_samples,
+        covered_mode_label=covered_mode_label,
+    )
     source_block = np.asarray(
         canonical_projection.hierarchy_state.source_history_block["src"],
         dtype=np.float64,
@@ -1932,6 +1985,9 @@ def execute_tier_b_solver(
     result.solver_info["layout_local_matter_sample_count"] = int(
         local_matter_history.metadata["history_sample_count"]
     )
+    result.solver_info["layout_b_mode_proxy_consumed"] = bool(np.any(np.abs(b_mode_proxy) > 0.0))
+    result.solver_info["layout_b_mode_proxy_norm"] = float(np.linalg.norm(b_mode_proxy))
+    result.solver_info["layout_b_mode_proxy_source"] = "mode_ops.A_mix_plus_source_over_diagonal_damping"
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,

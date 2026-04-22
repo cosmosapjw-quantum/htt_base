@@ -104,6 +104,7 @@ def project_runtime_native_state(
     layout_manifest: Mapping[str, object],
     photon_T: PSTFHierarchyState | np.ndarray,
     photon_E: PolarizationHierarchyState | PSTFHierarchyState | np.ndarray,
+    photon_B: PSTFHierarchyState | np.ndarray | None = None,
     neutrino_tower: PSTFHierarchyState | np.ndarray,
     source_template: np.ndarray,
     baryon_block: np.ndarray | None = None,
@@ -133,6 +134,9 @@ def project_runtime_native_state(
     L = int(layout.ell_max)
     photon_T_state = _coerce_hierarchy_state(photon_T, L=L)
     photon_E_state = _coerce_polarization_state(photon_E, L=L)
+    photon_B_state = None
+    if photon_B is not None:
+        photon_B_state = _coerce_hierarchy_state(photon_B, L=L)
     neutrino_state = _coerce_hierarchy_state(neutrino_tower, L=L)
     source = np.asarray(source_template, dtype=np.float64)
     if source.shape != (layout.size,):
@@ -149,12 +153,18 @@ def project_runtime_native_state(
 
     tower_T = np.asarray(pack_hierarchy(photon_T_state), dtype=np.float64)
     tower_E = np.asarray(pack_hierarchy(photon_E_state.E), dtype=np.float64)
+    tower_B = (
+        np.zeros_like(tower_E)
+        if photon_B_state is None
+        else np.asarray(pack_hierarchy(photon_B_state), dtype=np.float64)
+    )
     tower_nu = np.asarray(pack_hierarchy(neutrino_state), dtype=np.float64)
     for ell in range(L + 1):
         for m in range(-ell, ell + 1):
             slot = sum(2 * l + 1 for l in range(ell)) + (m + ell)
             vector[flatten(layout, covered, "ph_I", ell, m)] = float(tower_T[slot])
             vector[flatten(layout, covered, "ph_E", ell, m)] = float(tower_E[slot])
+            vector[flatten(layout, covered, "ph_B", ell, m)] = float(tower_B[slot])
             vector[flatten(layout, covered, "nu_I", ell, m)] = float(tower_nu[slot])
 
     matter_eta = None if matter_history_eta is None else np.asarray(matter_history_eta, dtype=np.float64)
@@ -221,7 +231,7 @@ def project_runtime_native_state(
         photon_intensity_block=tower_T,
         photon_polarization_block={
             "E": tower_E,
-            "B": np.zeros_like(tower_E),
+            "B": tower_B,
         },
         neutrino_block=tower_nu,
         source_history_block={
@@ -235,7 +245,11 @@ def project_runtime_native_state(
             "sector_status": {
                 "ph_I": "live_runtime_projection",
                 "ph_E": "live_runtime_projection",
-                "ph_B": "zero_filled_not_evolved",
+                "ph_B": (
+                    "layout_operator_postprocessed_proxy"
+                    if bool(np.any(np.abs(tower_B) > 0.0))
+                    else "zero_filled_not_evolved"
+                ),
                 "nu_I": "live_runtime_projection",
                 "baryon": baryon_sector_status,
                 "cdm": cdm_sector_status,
@@ -246,6 +260,8 @@ def project_runtime_native_state(
     zero_filled = tuple(mu for mu in layout.mode_labels if mu != covered)
     sector_status = dict(hierarchy_state.metadata["sector_status"])
     resolved_sector_order = ["ph_I", "ph_E", "nu_I"]
+    if sector_status["ph_B"] != "zero_filled_not_evolved":
+        resolved_sector_order.insert(2, "ph_B")
     if sector_status["baryon"] != "zero_filled_local_sector_not_evolved":
         resolved_sector_order.append("baryon")
     if sector_status["cdm"] != "zero_filled_local_sector_not_evolved":
