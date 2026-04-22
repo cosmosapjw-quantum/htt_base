@@ -38,6 +38,14 @@ def test_live_cosmological_frame_likelihood_binds_to_solver_output(_live_problem
     assert likelihood.htt_decomposition["tilt_boost_separation"] == "explicit_nonmerged"
     assert likelihood.htt_decomposition["covariance_readiness"] == "full"
     assert likelihood.htt_decomposition["fitting_ready"] is True
+    assert likelihood.htt_decomposition["backend_lookup_resolution_status"] == "frozen_v5_formula_set"
+    assert likelihood.htt_decomposition["backend_verification_crosscheck_pass"] is True
+    assert likelihood.htt_decomposition["b_mode_runtime_available"] is False
+    assert set(likelihood.htt_decomposition["canonical_projection_covered_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
     assert likelihood.harmonic_gaussian_ready is True
     assert np.isfinite(likelihood.log_prob({}))
 
