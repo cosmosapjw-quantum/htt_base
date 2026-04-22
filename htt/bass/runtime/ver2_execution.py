@@ -2324,6 +2324,18 @@ def execute_tier_b_solver(
         photon_B_history=b_history_samples,
         reference_history=reference_local_matter_history,
     )
+    b_history_eta, b_history_samples = _build_sampled_b_mode_history(
+        layout=layout,
+        backend=backend,
+        background_monitor=background_monitor,
+        runtime_config=runtime_config,
+        result=result,
+        visibility_source=visibility_source,
+        reionization_amplitude=reionization_amplitude,
+        covered_mode_label=covered_mode_label,
+        baryon_history=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
+        cdm_history=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
+    )
     canonical_projection = project_runtime_native_state(
         layout=layout,
         layout_manifest=getattr(mode_ops, "layout_metadata", {}),
@@ -2433,6 +2445,7 @@ def execute_tier_b_solver(
         "mode_ops.mass_inverse_auxiliary_b_evolution"
     )
     result.solver_info["layout_b_mode_history_sample_count"] = int(b_history_samples.shape[0])
+    result.solver_info["layout_auxiliary_coupling_passes"] = 2
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,
