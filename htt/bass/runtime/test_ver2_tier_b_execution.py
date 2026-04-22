@@ -768,7 +768,7 @@ def test_tier_b_checkpoint_resume_reproduces_checkpointed_run(tmp_path) -> None:
     np.testing.assert_allclose(checkpoint.tilt_direction, np.array([1.0, 0.0, 0.0]))
     assert checkpoint.direction_convention == "propagation_direction"
     assert checkpoint.n_output == 12
-    assert checkpoint.solver_method == "BDF"
+    assert checkpoint.solver_method == "IMEX_MIDPOINT_BDF"
     resumed = resume_tier_b_solver_from_checkpoint(
         checkpoint_path=mid_checkpoint,
         **kwargs,

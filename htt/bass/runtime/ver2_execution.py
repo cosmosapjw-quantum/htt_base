@@ -1719,10 +1719,6 @@ def execute_tier_b_solver(
         thomson_mode="electron_frame_exact_wrapper",
         gate_registry=gate_registry,
     )
-    solver_output.metadata["checkpoint_enabled"] = bool(runtime_controls.checkpoint.enabled)
-    solver_output.metadata["checkpoint_write_count"] = int(result.solver_info.get("checkpoint_write_count", 0))
-    solver_output.metadata["restart_used"] = bool(result.solver_info.get("restart_used", False))
-    solver_output.metadata["restart_checkpoint_path"] = restart_checkpoint_path
     return TierBExecutableRun.from_execution_bundle(
         execution_plan=plan,
         runtime_decision=runtime_decision,
