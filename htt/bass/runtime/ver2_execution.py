@@ -732,34 +732,6 @@ def _build_startup_gate(
     )
 
 
-def _build_geodesic_probe(
-    *,
-    background_monitor: "BackgroundEvolutionResult",
-) -> "PhotonGeodesicRhs":
-    from bass.transport.geodesics import (
-        PhotonGeodesicState,
-        ScreenBasisState,
-        photon_geodesic_rhs,
-    )
-
-    direction = np.array([1.0, 0.0, 0.0], dtype=np.float64)
-    screen_basis = ScreenBasisState(
-        u=np.array([0.0, 1.0, 0.0], dtype=np.float64),
-        v=np.array([0.0, 0.0, 1.0], dtype=np.float64),
-    )
-    state = PhotonGeodesicState(
-        energy=1.0,
-        direction=direction,
-        screen_basis=screen_basis,
-    )
-    return photon_geodesic_rhs(
-        state=state,
-        H=float(background_monitor.H[-1]),
-        sigma_ab=background_monitor.sigma_tensor[-1],
-        geometry=background_monitor.initial_conditions.geometry,
-    )
-
-
 def _static_gate_bundle(
     gate_name: str,
     *,
@@ -1669,7 +1641,7 @@ def execute_tier_b_solver(
     result.solver_info["checkpoint_paths"] = tuple(checkpoint_paths)
     result.solver_info["restart_checkpoint_path"] = restart_checkpoint_path
 
-    geodesic_probe = _build_geodesic_probe(background_monitor=background_monitor)
+    geodesic_probe = integrator.build_runtime_geodesic_probe()
     gamma_t_probe = _resolved_gamma_t(
         visibility_source=visibility_source,
         eta=float(result.eta[-1]),

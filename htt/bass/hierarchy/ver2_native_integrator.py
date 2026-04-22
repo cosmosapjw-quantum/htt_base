@@ -1787,6 +1787,30 @@ class Ver2TierBIntegrator:
             tilted_electron=self._tilted_electron_at(float(result.eta[-1])),
         )
 
+    def build_runtime_geodesic_probe(self):
+        from bass.transport.geodesics import (
+            PhotonGeodesicState,
+            ScreenBasisState,
+            photon_geodesic_rhs,
+        )
+
+        direction = np.array([1.0, 0.0, 0.0], dtype=np.float64)
+        screen_basis = ScreenBasisState(
+            u=np.array([0.0, 1.0, 0.0], dtype=np.float64),
+            v=np.array([0.0, 0.0, 1.0], dtype=np.float64),
+        )
+        state = PhotonGeodesicState(
+            energy=1.0,
+            direction=direction,
+            screen_basis=screen_basis,
+        )
+        return photon_geodesic_rhs(
+            state=state,
+            H=float(self.background_monitor.H[-1]),
+            sigma_ab=self.background_monitor.sigma_tensor[-1],
+            geometry=self.background_monitor.initial_conditions.geometry,
+        )
+
     def _compute_tca_mask(self, etas: np.ndarray) -> np.ndarray:
         mask = np.zeros(len(etas), dtype=bool)
         if not isinstance(self.closure, TCAClosure):
