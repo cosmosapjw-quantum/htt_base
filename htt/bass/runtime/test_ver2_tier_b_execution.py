@@ -303,9 +303,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         run.integration_result.eta
     )
     assert run.solver_output.metadata["layout_b_mode_proxy_source"] == (
-        "mode_ops.mass_inverse_auxiliary_b_evolution"
+        "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
-    assert run.solver_output.metadata["layout_auxiliary_coupling_passes"] == 2
+    assert run.solver_output.metadata["layout_auxiliary_coupling_passes"] == 1
     assert run.solver_output.metadata["layout_sector_order"] == [
         "ph_I",
         "ph_E",
@@ -342,7 +342,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     )
     assert run.solver_output.metadata["layout_local_matter_blocks_consumed"] is True
     assert run.solver_output.metadata["layout_local_matter_owner"] == (
-        "mode_ops.mass_inverse_auxiliary_local_matter_evolution"
+        "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
     assert run.solver_output.metadata["layout_local_matter_sample_count"] == len(
         run.integration_result.eta
@@ -405,7 +405,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         dtype=np.float64,
     ).shape[0] == len(run.integration_result.eta)
     assert run.trace.canonical_projection.hierarchy_state.matter_block["owner"] == (
-        "mode_ops.mass_inverse_auxiliary_local_matter_evolution"
+        "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
     assert run.trace.canonical_projection.hierarchy_state.matter_block["reference_owner"] == (
         "runtime_postprocessed_homogeneous_local_matter"

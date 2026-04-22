@@ -428,6 +428,26 @@ class _AuxiliaryLocalMatterHistory:
         object.__setattr__(self, "metadata", dict(self.metadata))
 
 
+@dataclass(frozen=True)
+class _CoupledAuxiliarySectorHistory:
+    eta: np.ndarray
+    photon_B_history: np.ndarray
+    baryon_history: np.ndarray
+    cdm_history: np.ndarray
+    baryon_labels: tuple[str, ...]
+    cdm_labels: tuple[str, ...]
+    metadata: Mapping[str, object]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "eta", np.asarray(self.eta, dtype=np.float64))
+        object.__setattr__(self, "photon_B_history", np.asarray(self.photon_B_history, dtype=np.float64))
+        object.__setattr__(self, "baryon_history", np.asarray(self.baryon_history, dtype=np.float64))
+        object.__setattr__(self, "cdm_history", np.asarray(self.cdm_history, dtype=np.float64))
+        object.__setattr__(self, "baryon_labels", tuple(self.baryon_labels))
+        object.__setattr__(self, "cdm_labels", tuple(self.cdm_labels))
+        object.__setattr__(self, "metadata", dict(self.metadata))
+
+
 def build_runtime_reduction_decision(
     canonical_decision: CanonicalDecision,
     *,
@@ -1150,6 +1170,162 @@ def _build_sampled_local_matter_history(
             "history_sample_count": int(eta_samples.size),
             "reference_sample_count": int(reference_baryon.shape[0]),
             "reference_delta_norm": float(scaled_delta_norm),
+        },
+    )
+
+
+def _build_coupled_auxiliary_sector_history(
+    *,
+    layout,
+    backend,
+    background_monitor: "BackgroundEvolutionResult",
+    runtime_config,
+    result,
+    visibility_source,
+    reionization_amplitude: float,
+    covered_mode_label: str,
+    reference_history,
+) -> _CoupledAuxiliarySectorHistory:
+    from bass.hierarchy import project_runtime_native_state
+    from bass.hierarchy.ver3_layout_protocol import flatten
+
+    eta_samples = np.asarray(result.eta, dtype=np.float64)
+    photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
+    photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
+    neutrino_tower = np.asarray(result.neutrino_tower, dtype=np.float64)
+    ell2_m0_slot = sum(2 * ell + 1 for ell in range(2)) + 2 if int(result.L_max) >= 2 else None
+    size = (int(layout.ell_max) + 1) ** 2
+    b_rows = np.zeros((eta_samples.size, size), dtype=np.float64)
+    baryon_rows = np.zeros_like(np.asarray(reference_history.baryon_history, dtype=np.float64))
+    cdm_rows = np.zeros_like(np.asarray(reference_history.cdm_history, dtype=np.float64))
+    b_prev = np.zeros(size, dtype=np.float64)
+    baryon_prev = np.asarray(reference_history.baryon_history[0], dtype=np.float64)
+    cdm_prev = np.asarray(reference_history.cdm_history[0], dtype=np.float64)
+    b_rows[0] = b_prev
+    baryon_rows[0] = baryon_prev
+    cdm_rows[0] = cdm_prev
+    b_indices = np.array(
+        [
+            flatten(layout, covered_mode_label, "ph_B", ell, m)
+            for ell in range(layout.ell_max + 1)
+            for m in range(-ell, ell + 1)
+        ],
+        dtype=np.int64,
+    )
+    baryon_indices = np.array(
+        [
+            flatten(layout, covered_mode_label, "baryon", None, None, local_dof=i)
+            for i in range(int(layout.sector_local_dofs["baryon"]))
+        ],
+        dtype=np.int64,
+    )
+    cdm_indices = np.array(
+        [
+            flatten(layout, covered_mode_label, "cdm", None, None, local_dof=i)
+            for i in range(int(layout.sector_local_dofs["cdm"]))
+        ],
+        dtype=np.int64,
+    )
+
+    for index, eta in enumerate(eta_samples):
+        gamma_t = _resolved_gamma_t(
+            visibility_source=visibility_source,
+            eta=float(eta),
+            direction=np.asarray(runtime_config.tilt_direction, dtype=np.float64),
+            config=runtime_config,
+        )
+        visibility_amplitude = abs(float(photon_T_tower[index, 0]))
+        polarization_source = (
+            0.0 if ell2_m0_slot is None else abs(float(photon_E_tower[index, ell2_m0_slot]))
+        )
+        sample_ops = backend.operator_factory(
+            _live_backend_state(
+                background_monitor=background_monitor,
+                gamma_t_probe=float(gamma_t),
+                visibility_amplitude=visibility_amplitude,
+                polarization_source=polarization_source,
+                reionization_amplitude=float(reionization_amplitude),
+                sigma_tensor=_sigma_tensor_at_eta(background_monitor, float(eta)),
+            )
+        )
+        sample_projection = project_runtime_native_state(
+            layout=layout,
+            layout_manifest=getattr(sample_ops, "layout_metadata", {}),
+            photon_T=np.asarray(photon_T_tower[index], dtype=np.float64),
+            photon_E=np.asarray(photon_E_tower[index], dtype=np.float64),
+            photon_B=b_prev,
+            neutrino_tower=np.asarray(neutrino_tower[index], dtype=np.float64),
+            source_template=np.asarray(sample_ops.source_template, dtype=np.float64),
+            baryon_block=baryon_prev,
+            cdm_block=cdm_prev,
+            matter_sector_status={
+                "baryon": "layout_operator_auxiliary_local_matter",
+                "cdm": "layout_operator_auxiliary_local_matter",
+            },
+            covered_mode_label=covered_mode_label,
+        )
+        if index == eta_samples.size - 1:
+            break
+        dt = float(eta_samples[index + 1] - eta_samples[index])
+        if dt <= 0.0:
+            raise ValueError("eta grid must be strictly increasing for coupled auxiliary history sampling")
+        vector = np.asarray(sample_projection.state_vector, dtype=np.float64)
+        drive = (
+            np.asarray(sample_ops.A_fs @ vector, dtype=np.float64)
+            + np.asarray(sample_ops.A_mix @ vector, dtype=np.float64)
+            + np.asarray(sample_ops.A_coll @ vector, dtype=np.float64)
+            + np.asarray(sample_ops.source_template, dtype=np.float64)
+        )
+        mass_diag = np.asarray(sample_ops.mass_matrix.diagonal(), dtype=np.float64)
+        b_next = b_prev.copy()
+        baryon_next = baryon_prev.copy()
+        cdm_next = cdm_prev.copy()
+        for slot, idx in enumerate(b_indices):
+            inv_mass = 1.0 / max(abs(float(mass_diag[idx])), 1.0e-30)
+            b_next[slot] = float(b_prev[slot] + dt * inv_mass * float(drive[idx]))
+        for slot, idx in enumerate(baryon_indices):
+            inv_mass = 1.0 / max(abs(float(mass_diag[idx])), 1.0e-30)
+            baryon_next[slot] = float(baryon_prev[slot] + dt * inv_mass * float(drive[idx]))
+        for slot, idx in enumerate(cdm_indices):
+            inv_mass = 1.0 / max(abs(float(mass_diag[idx])), 1.0e-30)
+            cdm_next[slot] = float(cdm_prev[slot] + dt * inv_mass * float(drive[idx]))
+        b_prev = b_next
+        baryon_prev = baryon_next
+        cdm_prev = cdm_next
+        b_rows[index + 1] = b_prev
+        baryon_rows[index + 1] = baryon_prev
+        cdm_rows[index + 1] = cdm_prev
+
+    reference_baryon = np.asarray(reference_history.baryon_history, dtype=np.float64)
+    reference_cdm = np.asarray(reference_history.cdm_history, dtype=np.float64)
+    baryon_delta = baryon_rows - reference_baryon
+    cdm_delta = cdm_rows - reference_cdm
+    max_abs = max(
+        1.0,
+        float(np.max(np.abs(baryon_delta))),
+        float(np.max(np.abs(cdm_delta))),
+    )
+    scaled_delta_norm = max_abs * float(
+        np.sqrt(
+            np.sum(np.square(baryon_delta / max_abs), dtype=np.float64)
+            + np.sum(np.square(cdm_delta / max_abs), dtype=np.float64)
+        )
+    )
+    return _CoupledAuxiliarySectorHistory(
+        eta=eta_samples,
+        photon_B_history=b_rows,
+        baryon_history=baryon_rows,
+        cdm_history=cdm_rows,
+        baryon_labels=tuple(reference_history.baryon_labels),
+        cdm_labels=tuple(reference_history.cdm_labels),
+        metadata={
+            "owner": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
+            "reference_owner": str(reference_history.metadata.get("owner", "unknown")),
+            "history_sample_count": int(eta_samples.size),
+            "reference_sample_count": int(reference_baryon.shape[0]),
+            "reference_delta_norm": float(scaled_delta_norm),
+            "coupling_passes": 1,
+            "coupled_sectors": ("ph_B", "baryon", "cdm"),
         },
     )
 
@@ -2300,7 +2476,7 @@ def execute_tier_b_solver(
         reionization_amplitude=reionization_amplitude,
         covered_mode_label=covered_mode_label,
     )
-    b_history_eta, b_history_samples = _build_sampled_b_mode_history(
+    coupled_auxiliary_history = _build_coupled_auxiliary_sector_history(
         layout=layout,
         backend=backend,
         background_monitor=background_monitor,
@@ -2309,33 +2485,11 @@ def execute_tier_b_solver(
         visibility_source=visibility_source,
         reionization_amplitude=reionization_amplitude,
         covered_mode_label=covered_mode_label,
-        baryon_history=np.asarray(reference_local_matter_history.baryon_history, dtype=np.float64),
-        cdm_history=np.asarray(reference_local_matter_history.cdm_history, dtype=np.float64),
-    )
-    local_matter_history = _build_sampled_local_matter_history(
-        layout=layout,
-        backend=backend,
-        background_monitor=background_monitor,
-        runtime_config=runtime_config,
-        result=result,
-        visibility_source=visibility_source,
-        reionization_amplitude=reionization_amplitude,
-        covered_mode_label=covered_mode_label,
-        photon_B_history=b_history_samples,
         reference_history=reference_local_matter_history,
     )
-    b_history_eta, b_history_samples = _build_sampled_b_mode_history(
-        layout=layout,
-        backend=backend,
-        background_monitor=background_monitor,
-        runtime_config=runtime_config,
-        result=result,
-        visibility_source=visibility_source,
-        reionization_amplitude=reionization_amplitude,
-        covered_mode_label=covered_mode_label,
-        baryon_history=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
-        cdm_history=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
-    )
+    b_history_eta = np.asarray(coupled_auxiliary_history.eta, dtype=np.float64)
+    b_history_samples = np.asarray(coupled_auxiliary_history.photon_B_history, dtype=np.float64)
+    local_matter_history = coupled_auxiliary_history
     canonical_projection = project_runtime_native_state(
         layout=layout,
         layout_manifest=getattr(mode_ops, "layout_metadata", {}),
@@ -2442,10 +2596,12 @@ def execute_tier_b_solver(
     result.solver_info["layout_b_mode_proxy_consumed"] = bool(np.any(np.abs(b_mode_proxy) > 0.0))
     result.solver_info["layout_b_mode_proxy_norm"] = float(np.linalg.norm(b_mode_proxy))
     result.solver_info["layout_b_mode_proxy_source"] = (
-        "mode_ops.mass_inverse_auxiliary_b_evolution"
+        "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
     result.solver_info["layout_b_mode_history_sample_count"] = int(b_history_samples.shape[0])
-    result.solver_info["layout_auxiliary_coupling_passes"] = 2
+    result.solver_info["layout_auxiliary_coupling_passes"] = int(
+        local_matter_history.metadata["coupling_passes"]
+    )
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,
