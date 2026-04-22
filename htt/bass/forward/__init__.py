@@ -47,6 +47,11 @@ from bass.forward.ver2_solver_output import (
     solver_core_output_from_payload,
     solver_core_output_to_payload,
 )
+from bass.forward.ver3_output_archive import (
+    DEFAULT_HARMONIC_ORDERING,
+    observer_boost_output,
+    write_output_archive,
+)
 
 __all__ = [
     # Forward
@@ -73,4 +78,8 @@ __all__ = [
     'build_solver_core_output_from_lowell_result',
     'solver_core_output_to_payload',
     'solver_core_output_from_payload',
+    # ver3 PR-10 output split
+    'DEFAULT_HARMONIC_ORDERING',
+    'observer_boost_output',
+    'write_output_archive',
 ]
