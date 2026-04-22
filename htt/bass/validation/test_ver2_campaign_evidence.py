@@ -66,6 +66,7 @@ def test_representative_family_sweep_evidence_passes_with_bounded_orthogonal_sub
     assert checks["representative_tilted_runnable_subset_runs_end_to_end"].passed is True
     assert checks["representative_remaining_tilted_branches_fail_controlledly"].passed is True
     assert checks["representative_family_realizations_are_algebra_aware"].passed is True
+    assert checks["representative_family_b_mode_payloads_remain_family_conditional"].passed is True
 
 
 def test_representative_family_sweep_payload_is_json_ready() -> None:
@@ -79,6 +80,7 @@ def test_representative_family_sweep_payload_is_json_ready() -> None:
         "representative_remaining_tilted_branches_fail_controlledly",
         "representative_family_realizations_are_algebra_aware",
         "representative_family_outputs_stay_finite_on_bounded_low_ell_grid",
+        "representative_family_b_mode_payloads_remain_family_conditional",
         "representative_family_sweep_preserves_tilt_boost_contracts",
     } <= check_ids
 

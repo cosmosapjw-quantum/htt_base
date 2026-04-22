@@ -774,6 +774,17 @@ def _representative_family_sweep_bundle(
         == "observer_side_only_not_applied_in_bass_output"
         for run in orthogonal_runs.values()
     )
+    family_conditional_b_mode = (
+        bool(orthogonal_runs["V"].solver_output.metadata["b_mode_runtime_available"])
+        and orthogonal_runs["V"].solver_output.metadata["b_mode_payload_status"]
+        == "layout_operator_auxiliary_b_mode_history"
+        and orthogonal_runs["V"].trace.canonical_projection.sector_status["ph_B"]
+        == "layout_operator_auxiliary_b_mode_history"
+        and all(
+            not bool(orthogonal_runs[label].solver_output.metadata["b_mode_runtime_available"])
+            for label in ("I", "VII_0", "VIII")
+        )
+    )
     def _tilted_seed_projection_tol(run) -> float:
         q_norm = float(np.linalg.norm(run.trace.background_monitor.initial_conditions.matter.q))
         return max(1.0e-10, 1.0e-12 * max(q_norm, 1.0))
@@ -827,6 +838,12 @@ def _representative_family_sweep_bundle(
             category="numerical_stability",
             passed=bool(finite_outputs),
             summary="Representative orthogonal family runs keep bounded low-ell outputs finite and propagator-ready on the shipped native grid.",
+        ),
+        ExecutableCheckEvidence(
+            check_id="representative_family_b_mode_payloads_remain_family_conditional",
+            category="physics_sanity",
+            passed=bool(family_conditional_b_mode),
+            summary="Representative orthogonal family runs expose live B-mode payloads only on branches whose auxiliary B history is actually nonzero on the shipped native route.",
         ),
         ExecutableCheckEvidence(
             check_id="representative_family_sweep_preserves_tilt_boost_contracts",
