@@ -44,10 +44,11 @@ def _mix_axisymmetric_eb_slices(
 
     out_e = e_arr.copy()
     out_b = b_arr.copy()
-    for ell in range(2, e_arr.size):
+    if e_arr.size > 2:
+        ell = np.arange(2, e_arr.size, dtype=np.float64)
         coeff = beta * (6.0 / (ell + 1.0))
-        out_e[ell] = e_arr[ell] - coeff * b_arr[ell]
-        out_b[ell] = b_arr[ell] + coeff * e_arr[ell]
+        out_e[2:] = e_arr[2:] - coeff * b_arr[2:]
+        out_b[2:] = b_arr[2:] + coeff * e_arr[2:]
     return out_e, out_b
 
 
@@ -163,8 +164,8 @@ def evaluate_tilted_polarization_eb_collision(
     )
 
     restored_E_state, restored_B_state = _boost_eb_towers(
-        PolarizationHierarchyState(E=collision_e_frame_E.E.copy()),
-        collision_e_frame_B.copy(),
+        collision_e_frame_E,
+        collision_e_frame_B,
         beta=-tilted_electron.beta,
         v_hat_e=tilted_electron.v_hat_e,
     )

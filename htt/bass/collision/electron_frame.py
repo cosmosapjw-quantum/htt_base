@@ -13,8 +13,8 @@ from bass.collision.thomson_pstf import (
     EModeThomsonCollisionOperator,
     ThomsonPSTFCollisionOperator,
 )
-from bass.collision.tilted_eb_mixing import evaluate_tilted_polarization_eb_collision
-from bass.collision.tilted_thomson_layer_b import evaluate_tilted_thomson_pstf_collision
+from bass.collision._tilted_layer_b_common import apply_axisymmetric_boost_to_tower
+from bass.collision.tilted_eb_mixing import _b_mode_collision_tower, _boost_eb_towers
 from bass.species.tilted import TiltedSpeciesBackground
 from bass.validation import GateBundle, make_gate_bundle
 
@@ -225,9 +225,9 @@ def project_thomson_source(
         tilted_electron=tilted_electron,
     )
     effective_gamma = float(Gamma_T) * rate.factor
+    t_op = ThomsonPSTFCollisionOperator()
+    e_op = EModeThomsonCollisionOperator()
     if tilted_electron is None or tilted_electron.beta == 0.0:
-        t_op = ThomsonPSTFCollisionOperator()
-        e_op = EModeThomsonCollisionOperator()
         temperature = t_op.evaluate_tower(
             temperature_state,
             polarization_state,
@@ -241,37 +241,55 @@ def project_thomson_source(
         )
         polarization_B = zero_hierarchy(temperature_state.L)
     else:
-        temperature_tensors = []
-        e_tensors = []
-        b_tensors = []
-        for ell in range(temperature_state.L + 1):
-            temperature_tensors.append(
-                evaluate_tilted_thomson_pstf_collision(
-                    ell,
-                    temperature_state,
-                    polarization_state,
-                    eta=0.0,
-                    v_b_real_sph=np.asarray(v_b_real_sph, dtype=np.float64),
-                    Gamma_T=effective_gamma,
-                    tilted_electron=tilted_electron,
-                )
-            )
-            e_tensor, b_tensor = evaluate_tilted_polarization_eb_collision(
-                ell,
-                polarization_state,
-                eta=0.0,
-                Pi_2_packed=np.asarray(temperature_state.tensors[2].components, dtype=np.float64),
-                Gamma_T=effective_gamma,
-                b_state=b_mode_state,
-                tilted_electron=tilted_electron,
-            )
-            e_tensors.append(e_tensor)
-            b_tensors.append(b_tensor)
-        temperature = PSTFHierarchyState(L=temperature_state.L, tensors=temperature_tensors)
-        polarization_E = PolarizationHierarchyState(
-            E=PSTFHierarchyState(L=temperature_state.L, tensors=e_tensors)
+        v_b_arr = np.asarray(v_b_real_sph, dtype=np.float64)
+        pi_2_packed = np.asarray(temperature_state.tensors[2].components, dtype=np.float64)
+        boosted_temperature = apply_axisymmetric_boost_to_tower(
+            temperature_state,
+            beta=tilted_electron.beta,
+            v_hat_e=tilted_electron.v_hat_e,
         )
-        polarization_B = PSTFHierarchyState(L=temperature_state.L, tensors=b_tensors)
+        boosted_polarization = PolarizationHierarchyState(
+            E=apply_axisymmetric_boost_to_tower(
+                polarization_state.E,
+                beta=tilted_electron.beta,
+                v_hat_e=tilted_electron.v_hat_e,
+            )
+        )
+        collision_e_frame_temperature = t_op.evaluate_tower(
+            boosted_temperature,
+            boosted_polarization,
+            v_b_arr,
+            effective_gamma,
+        )
+        temperature = apply_axisymmetric_boost_to_tower(
+            collision_e_frame_temperature,
+            beta=-tilted_electron.beta,
+            v_hat_e=tilted_electron.v_hat_e,
+        )
+
+        boosted_e_state, boosted_b_state = _boost_eb_towers(
+            polarization_state,
+            b_mode_state,
+            beta=tilted_electron.beta,
+            v_hat_e=tilted_electron.v_hat_e,
+        )
+        collision_e_frame_E = e_op.evaluate_tower(
+            boosted_e_state,
+            pi_2_packed,
+            effective_gamma,
+        )
+        collision_e_frame_B = _b_mode_collision_tower(
+            boosted_b_state,
+            effective_gamma,
+        )
+        restored_E_state, restored_B_state = _boost_eb_towers(
+            collision_e_frame_E,
+            collision_e_frame_B,
+            beta=-tilted_electron.beta,
+            v_hat_e=tilted_electron.v_hat_e,
+        )
+        polarization_E = restored_E_state
+        polarization_B = restored_B_state
     return ProjectedThomsonSource(
         temperature=temperature,
         polarization_E=polarization_E,

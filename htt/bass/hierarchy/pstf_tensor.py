@@ -174,7 +174,10 @@ class PSTFTensor:
         return pstf_unpack(self.components, self.ell)
 
     def copy(self) -> "PSTFTensor":
-        return PSTFTensor(ell=self.ell, components=self.components.copy())
+        tensor = object.__new__(PSTFTensor)
+        tensor.ell = int(self.ell)
+        tensor.components = self.components.copy()
+        return tensor
 
 
 def zero_pstf(ell: int) -> PSTFTensor:
@@ -302,10 +305,10 @@ class PSTFHierarchyState:
         return cls(L=L, tensors=tensors)
 
     def copy(self) -> "PSTFHierarchyState":
-        return PSTFHierarchyState(
-            L=self.L,
-            tensors=[t.copy() for t in self.tensors],
-        )
+        state = object.__new__(PSTFHierarchyState)
+        state.L = int(self.L)
+        state.tensors = [t.copy() for t in self.tensors]
+        return state
 
 
 def zero_hierarchy(L: int) -> PSTFHierarchyState:

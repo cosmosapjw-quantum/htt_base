@@ -410,40 +410,47 @@ def hierarchy_rhs_photon_from_state(
 
     has_sigma = background.has_sigma
     zero_collision = isinstance(collision, ZeroCollisionOperator)
+    sigma_coeffs = background.sigma_coeffs
+    ricci_coeffs = background.ricci_coeffs
+    a_val = float(background.a_val)
+    theta = float(background.Theta)
+    component_blocks = [
+        np.asarray(t.components, dtype=target_dtype)
+        for t in state.tensors
+    ]
 
     packed_blocks: list[np.ndarray] = []
     for ell in range(L_max + 1):
         size = 2 * ell + 1
-        zero_block = np.zeros(size, dtype=target_dtype)
-        Pi_components = np.asarray(state.tensors[ell].components, dtype=target_dtype)
+        Pi_components = component_blocks[ell]
 
         if ell - 1 >= 0:
-            Pi_prev_components = np.asarray(state.tensors[ell - 1].components, dtype=target_dtype)
+            Pi_prev_components = component_blocks[ell - 1]
         else:
             Pi_prev_components = None
         if ell + 1 <= L_max:
-            Pi_next_components = np.asarray(state.tensors[ell + 1].components, dtype=target_dtype)
+            Pi_next_components = component_blocks[ell + 1]
         else:
             Pi_next_components = _closure_packed(ell + 1)
         if ell + 2 <= L_max:
-            Pi_next_next_components = np.asarray(state.tensors[ell + 2].components, dtype=target_dtype)
+            Pi_next_next_components = component_blocks[ell + 2]
         else:
             Pi_next_next_components = _closure_packed(ell + 2)
         if ell - 2 >= 0:
-            Pi_prev_prev_components = np.asarray(state.tensors[ell - 2].components, dtype=target_dtype)
+            Pi_prev_prev_components = component_blocks[ell - 2]
         else:
             Pi_prev_prev_components = None
 
-        T1 = apply_T1_expansion_packed(
+        sum_T = apply_T1_expansion_packed(
             ell,
             Pi_components,
-            background.Theta,
-            aniso_ricci_tensor=background.ricci_coeffs,
+            theta,
+            aniso_ricci_tensor=ricci_coeffs,
         )
 
         if needs_full_gradient_terms:
             if ell > 0:
-                T2 = np.asarray(
+                sum_T += np.asarray(
                     pstf_pack(
                         T2_gradient(
                             ell,
@@ -454,9 +461,7 @@ def hierarchy_rhs_photon_from_state(
                     ),
                     dtype=target_dtype,
                 )
-            else:
-                T2 = zero_block
-            T3 = np.asarray(
+            sum_T += np.asarray(
                 pstf_pack(
                     T3_divergence(
                         ell,
@@ -466,41 +471,22 @@ def hierarchy_rhs_photon_from_state(
                 ),
                 dtype=target_dtype,
             )
-        else:
-            T2 = zero_block
-            T3 = zero_block
 
-        T4 = (
-            apply_T4_accel_divergence_packed(ell, Pi_next_components, accel_vector)
-            if has_accel
-            else zero_block
-        )
-        if ell > 0 and has_accel:
-            T5 = apply_T5_accel_gradient_packed(ell, Pi_prev_components, accel_vector)
-        else:
-            T5 = zero_block
+        if has_accel:
+            sum_T += apply_T4_accel_divergence_packed(ell, Pi_next_components, accel_vector)
+            if ell > 0:
+                sum_T += apply_T5_accel_gradient_packed(ell, Pi_prev_components, accel_vector)
         if ell > 0 and has_vorticity:
-            T6 = apply_T6_vorticity_packed(ell, Pi_components, vorticity_vector)
-        else:
-            T6 = zero_block
+            sum_T += apply_T6_vorticity_packed(ell, Pi_components, vorticity_vector)
 
         if has_sigma:
-            T7 = apply_T7_shear_up_packed(ell, Pi_next_next_components, background.sigma_coeffs)
-            T8 = apply_T8_shear_same_packed(ell, Pi_components, background.sigma_coeffs)
-            T9 = (
-                apply_T9_shear_down_packed(ell, Pi_prev_prev_components, background.sigma_coeffs)
-                if ell >= 2
-                else zero_block
-            )
-        else:
-            T7 = zero_block
-            T8 = zero_block
-            T9 = zero_block
-
-        sum_T = T1 + T2 + T3 + T4 + T5 + T6 + T7 + T8 + T9
+            sum_T += apply_T7_shear_up_packed(ell, Pi_next_next_components, sigma_coeffs)
+            sum_T += apply_T8_shear_same_packed(ell, Pi_components, sigma_coeffs)
+            if ell >= 2:
+                sum_T += apply_T9_shear_down_packed(ell, Pi_prev_prev_components, sigma_coeffs)
         if zero_collision:
             components = np.asarray(
-                -background.a_val * sum_T,
+                -a_val * sum_T,
                 dtype=target_dtype,
             )
         else:
@@ -510,7 +496,7 @@ def hierarchy_rhs_photon_from_state(
                     f"CollisionOperator returned ell={K_packed.ell}, expected {ell}"
                 )
             components = np.asarray(
-                background.a_val * (np.asarray(K_packed.components) - sum_T),
+                a_val * (np.asarray(K_packed.components) - sum_T),
                 dtype=np.result_type(target_dtype, K_packed.components.dtype, sum_T.dtype),
             )
         if components.shape != (size,):

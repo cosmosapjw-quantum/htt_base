@@ -62,7 +62,7 @@ from typing import Tuple
 
 import numpy as np
 
-from bass.hierarchy.pstf_tensor import PSTFHierarchyState, pstf_from_tensor
+from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor, pstf_from_tensor
 from bass.species.tilted import V_HAT_E_DEFAULT, V_HAT_NORM_TOL
 
 
@@ -268,14 +268,32 @@ def _signed_boost_recurrence(
 ) -> np.ndarray:
     arr = np.asarray(coeffs, dtype=np.float64)
     out = arr.copy()
-    for ell in range(arr.size):
-        delta = 0.0
-        if ell - 1 >= 0:
-            delta += (ell / (2.0 * ell - 1.0)) * arr[ell - 1]
-        if ell + 1 < arr.size:
-            delta -= ((ell + 1.0) / (2.0 * ell + 3.0)) * arr[ell + 1]
-        out[ell] = arr[ell] + float(signed_beta) * delta
+    if arr.size <= 1 or signed_beta == 0.0:
+        return out
+    delta = np.zeros_like(arr)
+    ell = np.arange(arr.size, dtype=np.float64)
+    delta[1:] += (ell[1:] / (2.0 * ell[1:] - 1.0)) * arr[:-1]
+    delta[:-1] -= ((ell[:-1] + 1.0) / (2.0 * ell[:-1] + 3.0)) * arr[1:]
+    out += float(signed_beta) * delta
     return out
+
+
+def _copy_hierarchy_with_axisymmetric_slice(
+    state: PSTFHierarchyState,
+    axisymmetric_values: np.ndarray,
+) -> PSTFHierarchyState:
+    tensors: list[PSTFTensor] = []
+    for ell, tensor in enumerate(state.tensors):
+        components = np.array(tensor.components, copy=True)
+        components[ell] = float(axisymmetric_values[ell])
+        copied = object.__new__(PSTFTensor)
+        copied.ell = int(ell)
+        copied.components = components
+        tensors.append(copied)
+    copied_state = object.__new__(PSTFHierarchyState)
+    copied_state.L = int(state.L)
+    copied_state.tensors = tensors
+    return copied_state
 
 
 def apply_linear_boost_to_tower(
@@ -308,10 +326,7 @@ def apply_linear_boost_to_tower(
         sign = float(np.sign(axis[int(np.argmax(np.abs(axis)))]))
         sign = 1.0 if sign == 0.0 else sign
         boosted = _signed_boost_recurrence(coeffs, signed_beta=beta_val * sign)
-        out = state.copy()
-        for ell, value in enumerate(boosted):
-            out.tensors[ell].components[ell] = float(value)
-        return out
+        return _copy_hierarchy_with_axisymmetric_slice(state, boosted)
 
     rotation = _rotation_from_reference_axis(v_hat_e)
     canonical_state = _rotate_pstf_hierarchy(state, rotation.T)
@@ -323,7 +338,5 @@ def apply_linear_boost_to_tower(
         canonical_coeffs,
         signed_beta=beta_val,
     )
-    boosted_canonical = canonical_state.copy()
-    for ell, value in enumerate(boosted_coeffs):
-        boosted_canonical.tensors[ell].components[ell] = float(value)
+    boosted_canonical = _copy_hierarchy_with_axisymmetric_slice(canonical_state, boosted_coeffs)
     return _rotate_pstf_hierarchy(boosted_canonical, rotation)

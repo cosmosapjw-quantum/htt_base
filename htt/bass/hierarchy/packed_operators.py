@@ -123,8 +123,10 @@ def _apply_parametric_operator(
     out_dtype = np.result_type(source.dtype, coeffs.dtype, basis_ops.dtype)
     if not np.any(coeffs):
         return np.zeros(basis_ops.shape[1], dtype=out_dtype)
-    projected = np.matmul(basis_ops, source.astype(out_dtype, copy=False))
-    return np.tensordot(coeffs.astype(out_dtype, copy=False), projected, axes=(0, 0))
+    source_arr = source.astype(out_dtype, copy=False)
+    coeff_arr = coeffs.astype(out_dtype, copy=False)
+    projected = np.matmul(basis_ops.astype(out_dtype, copy=False), source_arr)
+    return np.matmul(coeff_arr, projected)
 
 
 @lru_cache(maxsize=None)
