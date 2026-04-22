@@ -1255,6 +1255,20 @@ def _prepare_tier_b_runtime_context(
     )
 
 
+def _validate_tier_b_runtime_request(
+    *,
+    integrator_config,
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+) -> None:
+    if runtime_controls.tier is not SolverTier.TIER_B_PSTF:
+        raise ValueError("execute_tier_b_solver requires Tier B runtime controls")
+    if runtime_controls.multipole_cutoff > integrator_config.L_max:
+        raise ValueError("runtime cutoff must not exceed integrator_config.L_max")
+    if runtime_controls.checkpoint.enabled and feature_flags.checkpoint_restart is FeatureStatus.DISABLED:
+        raise ValueError("checkpoint policy requires checkpoint_restart feature flag to be enabled")
+
+
 def _build_runtime_decision(
     *,
     feature_flags: SolverFeatureFlags,
@@ -1854,12 +1868,11 @@ def execute_tier_b_solver(
     - the Lowell integrator only as a retained compatibility path outside the
       production route.
     """
-    if runtime_controls.tier is not SolverTier.TIER_B_PSTF:
-        raise ValueError("execute_tier_b_solver requires Tier B runtime controls")
-    if runtime_controls.multipole_cutoff > integrator_config.L_max:
-        raise ValueError("runtime cutoff must not exceed integrator_config.L_max")
-    if runtime_controls.checkpoint.enabled and feature_flags.checkpoint_restart is FeatureStatus.DISABLED:
-        raise ValueError("checkpoint policy requires checkpoint_restart feature flag to be enabled")
+    _validate_tier_b_runtime_request(
+        integrator_config=integrator_config,
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+    )
 
     prepared = _prepare_tier_b_runtime_context(
         bianchi_type=bianchi_type,
