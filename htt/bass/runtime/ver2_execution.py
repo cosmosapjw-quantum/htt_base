@@ -377,20 +377,9 @@ def _build_tier_b_executable_run(
         restart_checkpoint_path=request.restart_checkpoint_path,
     )
     post_run = _assemble_tier_b_post_run_bundle(
-        manifest=request.manifest,
-        bianchi_type=request.bianchi_type,
-        species=request.species,
-        integrator=prepared.integrator,
+        request=request,
+        prepared=prepared,
         result=result,
-        runtime_controls=request.runtime_controls,
-        feature_flags=request.feature_flags,
-        release=request.release,
-        k_grid_mpc=prepared.k_grid_mpc,
-        backend=prepared.backend,
-        reionization_amplitude=prepared.reionization_amplitude,
-        integrator_config=request.integrator_config,
-        cutoff_spec=request.cutoff_spec,
-        seed_k_comoving=prepared.seed_k_comoving,
     )
     return TierBExecutableRun.from_execution_bundle(
         execution_plan=prepared.execution_plan,
@@ -1133,58 +1122,47 @@ def _build_gate_registry(
 
 def _assemble_tier_b_post_run_bundle(
     *,
-    manifest,
-    bianchi_type: str,
-    species: "SpeciesBackgroundRegistry",
-    integrator,
+    request: _TierBRuntimeRequest,
+    prepared: _TierBPreparedRuntimeContext,
     result,
-    runtime_controls: RuntimeControlBlock,
-    feature_flags: SolverFeatureFlags,
-    release,
-    k_grid_mpc: np.ndarray,
-    backend,
-    reionization_amplitude: float,
-    integrator_config,
-    cutoff_spec,
-    seed_k_comoving: float,
 ) -> _TierBPostRunBundle:
     from bass.forward.ver2_solver_output import build_solver_core_output_from_execution_bundle
     from bass.spectrum.ver2_cutoff_campaign import run_executed_cutoff_campaign
 
-    runtime_trace = integrator.build_runtime_execution_trace(
+    runtime_trace = prepared.integrator.build_runtime_execution_trace(
         result,
-        reionization_amplitude=reionization_amplitude,
+        reionization_amplitude=prepared.reionization_amplitude,
     )
     cutoff_campaign = None
-    if cutoff_spec is not None:
+    if request.cutoff_spec is not None:
         cutoff_campaign = run_executed_cutoff_campaign(
-            cutoff_spec,
+            request.cutoff_spec,
             runner=_campaign_runner(
-                bianchi_type=bianchi_type,
-                base_config=integrator_config,
-                species=species,
-                seed_k_comoving=seed_k_comoving,
-                runtime_controls=runtime_controls,
+                bianchi_type=request.bianchi_type,
+                base_config=request.integrator_config,
+                species=request.species,
+                seed_k_comoving=prepared.seed_k_comoving,
+                runtime_controls=request.runtime_controls,
             ),
         )
     result.solver_info.update(dict(runtime_trace.layout_projection.metadata["solver_info_fragment"]))
     gate_registry = _build_gate_registry(
-        bianchi_type=bianchi_type,
-        runtime_controls=runtime_controls,
-        species=species,
+        bianchi_type=request.bianchi_type,
+        runtime_controls=request.runtime_controls,
+        species=request.species,
         runtime_trace=runtime_trace,
-        backend=backend,
+        backend=prepared.backend,
         cutoff_campaign=cutoff_campaign,
     )
     solver_output = build_solver_core_output_from_execution_bundle(
-        manifest=manifest,
-        bianchi_type=bianchi_type,
+        manifest=request.manifest,
+        bianchi_type=request.bianchi_type,
         result=result,
-        species=species,
-        runtime_controls=runtime_controls,
-        feature_flags=feature_flags,
-        release=release,
-        k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
+        species=request.species,
+        runtime_controls=request.runtime_controls,
+        feature_flags=request.feature_flags,
+        release=request.release,
+        k_grid_mpc=prepared.k_grid_mpc,
         runtime_trace=runtime_trace,
         thomson_mode="electron_frame_exact_wrapper",
         gate_registry=gate_registry,
