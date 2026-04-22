@@ -1496,12 +1496,39 @@ class Ver2TierBIntegrator:
         b_rows = np.zeros((eta_samples.size, size), dtype=np.float64)
         baryon_rows = np.zeros_like(np.asarray(reference_history.baryon_history, dtype=np.float64))
         cdm_rows = np.zeros_like(np.asarray(reference_history.cdm_history, dtype=np.float64))
+        baryon_rows_by_mode_label = {
+            str(mu): np.zeros_like(np.asarray(reference_history.baryon_history, dtype=np.float64))
+            for mu in layout.mode_labels
+        }
+        cdm_rows_by_mode_label = {
+            str(mu): np.zeros_like(np.asarray(reference_history.cdm_history, dtype=np.float64))
+            for mu in layout.mode_labels
+        }
         b_prev = np.zeros(size, dtype=np.float64)
-        baryon_prev = np.asarray(reference_history.baryon_history[0], dtype=np.float64)
-        cdm_prev = np.asarray(reference_history.cdm_history[0], dtype=np.float64)
+        baryon_prev_by_mode_label = {
+            str(mu): np.zeros(reference_history.baryon_history.shape[1], dtype=np.float64)
+            for mu in layout.mode_labels
+        }
+        cdm_prev_by_mode_label = {
+            str(mu): np.zeros(reference_history.cdm_history.shape[1], dtype=np.float64)
+            for mu in layout.mode_labels
+        }
+        baryon_prev_by_mode_label[covered] = np.asarray(reference_history.baryon_history[0], dtype=np.float64)
+        cdm_prev_by_mode_label[covered] = np.asarray(reference_history.cdm_history[0], dtype=np.float64)
+        baryon_prev = np.asarray(baryon_prev_by_mode_label[covered], dtype=np.float64)
+        cdm_prev = np.asarray(cdm_prev_by_mode_label[covered], dtype=np.float64)
         b_rows[0] = b_prev
         baryon_rows[0] = baryon_prev
         cdm_rows[0] = cdm_prev
+        for mu in layout.mode_labels:
+            baryon_rows_by_mode_label[str(mu)][0] = np.asarray(
+                baryon_prev_by_mode_label[str(mu)],
+                dtype=np.float64,
+            )
+            cdm_rows_by_mode_label[str(mu)][0] = np.asarray(
+                cdm_prev_by_mode_label[str(mu)],
+                dtype=np.float64,
+            )
         b_indices = np.array(
             [
                 flatten(layout, covered, "ph_B", ell, m)
@@ -1510,20 +1537,26 @@ class Ver2TierBIntegrator:
             ],
             dtype=np.int64,
         )
-        baryon_indices = np.array(
-            [
-                flatten(layout, covered, "baryon", None, None, local_dof=i)
-                for i in range(int(layout.sector_local_dofs["baryon"]))
-            ],
-            dtype=np.int64,
-        )
-        cdm_indices = np.array(
-            [
-                flatten(layout, covered, "cdm", None, None, local_dof=i)
-                for i in range(int(layout.sector_local_dofs["cdm"]))
-            ],
-            dtype=np.int64,
-        )
+        baryon_indices_by_mode_label = {
+            str(mu): np.array(
+                [
+                    flatten(layout, str(mu), "baryon", None, None, local_dof=i)
+                    for i in range(int(layout.sector_local_dofs["baryon"]))
+                ],
+                dtype=np.int64,
+            )
+            for mu in layout.mode_labels
+        }
+        cdm_indices_by_mode_label = {
+            str(mu): np.array(
+                [
+                    flatten(layout, str(mu), "cdm", None, None, local_dof=i)
+                    for i in range(int(layout.sector_local_dofs["cdm"]))
+                ],
+                dtype=np.int64,
+            )
+            for mu in layout.mode_labels
+        }
 
         for index, eta in enumerate(eta_samples):
             gamma_t = _resolved_gamma_t(
@@ -1565,6 +1598,14 @@ class Ver2TierBIntegrator:
                 source_template=np.asarray(sample_ops.source_template, dtype=np.float64),
                 baryon_block=baryon_prev,
                 cdm_block=cdm_prev,
+                baryon_blocks_by_mode_label={
+                    str(mu): np.asarray(values, dtype=np.float64)
+                    for mu, values in baryon_prev_by_mode_label.items()
+                },
+                cdm_blocks_by_mode_label={
+                    str(mu): np.asarray(values, dtype=np.float64)
+                    for mu, values in cdm_prev_by_mode_label.items()
+                },
                 matter_sector_status={
                     "baryon": "layout_operator_auxiliary_local_matter",
                     "cdm": "layout_operator_auxiliary_local_matter",
@@ -1585,23 +1626,46 @@ class Ver2TierBIntegrator:
             )
             mass_diag = np.asarray(sample_ops.mass_matrix.diagonal(), dtype=np.float64)
             b_next = b_prev.copy()
-            baryon_next = baryon_prev.copy()
-            cdm_next = cdm_prev.copy()
+            baryon_next_by_mode_label = {
+                str(mu): np.asarray(values, dtype=np.float64).copy()
+                for mu, values in baryon_prev_by_mode_label.items()
+            }
+            cdm_next_by_mode_label = {
+                str(mu): np.asarray(values, dtype=np.float64).copy()
+                for mu, values in cdm_prev_by_mode_label.items()
+            }
             for slot, idx in enumerate(b_indices):
                 inv_mass = 1.0 / max(abs(float(mass_diag[idx])), 1.0e-30)
                 b_next[slot] = float(b_prev[slot] + dt * inv_mass * float(drive[idx]))
-            for slot, idx in enumerate(baryon_indices):
-                inv_mass = 1.0 / max(abs(float(mass_diag[idx])), 1.0e-30)
-                baryon_next[slot] = float(baryon_prev[slot] + dt * inv_mass * float(drive[idx]))
-            for slot, idx in enumerate(cdm_indices):
-                inv_mass = 1.0 / max(abs(float(mass_diag[idx])), 1.0e-30)
-                cdm_next[slot] = float(cdm_prev[slot] + dt * inv_mass * float(drive[idx]))
+            for mu, indices in baryon_indices_by_mode_label.items():
+                current = np.asarray(baryon_prev_by_mode_label[str(mu)], dtype=np.float64)
+                next_values = baryon_next_by_mode_label[str(mu)]
+                for slot, idx in enumerate(indices):
+                    inv_mass = 1.0 / max(abs(float(mass_diag[idx])), 1.0e-30)
+                    next_values[slot] = float(current[slot] + dt * inv_mass * float(drive[idx]))
+            for mu, indices in cdm_indices_by_mode_label.items():
+                current = np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
+                next_values = cdm_next_by_mode_label[str(mu)]
+                for slot, idx in enumerate(indices):
+                    inv_mass = 1.0 / max(abs(float(mass_diag[idx])), 1.0e-30)
+                    next_values[slot] = float(current[slot] + dt * inv_mass * float(drive[idx]))
             b_prev = b_next
-            baryon_prev = baryon_next
-            cdm_prev = cdm_next
+            baryon_prev_by_mode_label = baryon_next_by_mode_label
+            cdm_prev_by_mode_label = cdm_next_by_mode_label
+            baryon_prev = np.asarray(baryon_prev_by_mode_label[covered], dtype=np.float64)
+            cdm_prev = np.asarray(cdm_prev_by_mode_label[covered], dtype=np.float64)
             b_rows[index + 1] = b_prev
             baryon_rows[index + 1] = baryon_prev
             cdm_rows[index + 1] = cdm_prev
+            for mu in layout.mode_labels:
+                baryon_rows_by_mode_label[str(mu)][index + 1] = np.asarray(
+                    baryon_prev_by_mode_label[str(mu)],
+                    dtype=np.float64,
+                )
+                cdm_rows_by_mode_label[str(mu)][index + 1] = np.asarray(
+                    cdm_prev_by_mode_label[str(mu)],
+                    dtype=np.float64,
+                )
 
         reference_baryon = np.asarray(reference_history.baryon_history, dtype=np.float64)
         reference_cdm = np.asarray(reference_history.cdm_history, dtype=np.float64)
@@ -1647,6 +1711,9 @@ class Ver2TierBIntegrator:
                 "history_sample_count": int(eta_samples.size),
                 "covered_mode_label": covered,
                 "source_history_mode_labels": list(layout.mode_labels),
+                "local_matter_mode_labels": list(layout.mode_labels),
+                "baryon_history_by_mode_label": baryon_rows_by_mode_label,
+                "cdm_history_by_mode_label": cdm_rows_by_mode_label,
             },
         )
 
@@ -1753,9 +1820,25 @@ class Ver2TierBIntegrator:
             source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
             baryon_block=np.asarray(coupled.baryon_history[-1], dtype=np.float64),
             cdm_block=np.asarray(coupled.cdm_history[-1], dtype=np.float64),
+            baryon_blocks_by_mode_label={
+                str(mu): np.asarray(values[-1], dtype=np.float64)
+                for mu, values in auxiliary_bundle.metadata["baryon_history_by_mode_label"].items()
+            },
+            cdm_blocks_by_mode_label={
+                str(mu): np.asarray(values[-1], dtype=np.float64)
+                for mu, values in auxiliary_bundle.metadata["cdm_history_by_mode_label"].items()
+            },
             matter_history_eta=np.asarray(coupled.eta, dtype=np.float64),
             baryon_history_samples=np.asarray(coupled.baryon_history, dtype=np.float64),
             cdm_history_samples=np.asarray(coupled.cdm_history, dtype=np.float64),
+            baryon_history_by_mode_label={
+                str(mu): np.asarray(values, dtype=np.float64)
+                for mu, values in auxiliary_bundle.metadata["baryon_history_by_mode_label"].items()
+            },
+            cdm_history_by_mode_label={
+                str(mu): np.asarray(values, dtype=np.float64)
+                for mu, values in auxiliary_bundle.metadata["cdm_history_by_mode_label"].items()
+            },
             matter_block_labels={
                 "baryon": tuple(coupled.baryon_labels),
                 "cdm": tuple(coupled.cdm_labels),
@@ -1793,6 +1876,12 @@ class Ver2TierBIntegrator:
                 ).keys()
             ),
             "layout_local_matter_owner": str(coupled.metadata["owner"]),
+            "layout_local_matter_mode_labels": list(
+                canonical_projection.hierarchy_state.matter_block.get(
+                    "mode_label_blocks",
+                    {},
+                ).keys()
+            ),
             "layout_b_mode_proxy_source": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
         }
         return _RuntimeLayoutProjectionBundle(
@@ -1855,6 +1944,12 @@ class Ver2TierBIntegrator:
                     ),
                     "layout_local_matter_blocks_consumed": True,
                     "layout_local_matter_owner": str(coupled.metadata["owner"]),
+                    "layout_local_matter_mode_labels": list(
+                        canonical_projection.hierarchy_state.matter_block.get(
+                            "mode_label_blocks",
+                            {},
+                        ).keys()
+                    ),
                     "layout_local_matter_sample_count": int(coupled.metadata["history_sample_count"]),
                     "layout_local_matter_reference_owner": str(coupled.metadata["reference_owner"]),
                     "layout_local_matter_reference_sample_count": int(

@@ -921,6 +921,9 @@ def build_solver_core_output_from_native_result(
             "layout_local_matter_owner": str(
                 result.solver_info.get("layout_local_matter_owner", "unconsumed")
             ),
+            "layout_local_matter_mode_labels": list(
+                result.solver_info.get("layout_local_matter_mode_labels", [])
+            ),
             "layout_local_matter_sample_count": int(
                 result.solver_info.get("layout_local_matter_sample_count", 0)
             ),
@@ -1070,6 +1073,14 @@ def build_solver_core_output_from_native_result(
             "canonical_projection_matter_labels": {}
             if canonical_projection is None
             else dict(getattr(canonical_projection, "metadata", {}).get("matter_block_labels", {})),
+            "canonical_projection_matter_mode_labels": []
+            if canonical_projection is None
+            else list(getattr(canonical_projection, "metadata", {}).get("matter_mode_labels", ())),
+            "canonical_projection_matter_history_mode_labels": []
+            if canonical_projection is None
+            else list(
+                getattr(canonical_projection, "metadata", {}).get("matter_history_mode_labels", ())
+            ),
             **_neutrino_runtime_metadata(species),
             **source_builder_metadata,
         },

@@ -376,6 +376,16 @@ def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
         "m+2",
         "m-2",
     }
+    assert set(observable.alm_features["canonical_projection_matter_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
+    assert set(observable.alm_features["canonical_projection_matter_history_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
     assert observable.alm_features["covariance_readiness"] == "full"
     assert observable.alm_features["fitting_ready"] is True
     assert (

@@ -145,9 +145,13 @@ def project_runtime_native_state(
     source_template: np.ndarray,
     baryon_block: np.ndarray | None = None,
     cdm_block: np.ndarray | None = None,
+    baryon_blocks_by_mode_label: Mapping[str, np.ndarray] | None = None,
+    cdm_blocks_by_mode_label: Mapping[str, np.ndarray] | None = None,
     matter_history_eta: np.ndarray | None = None,
     baryon_history_samples: np.ndarray | None = None,
     cdm_history_samples: np.ndarray | None = None,
+    baryon_history_by_mode_label: Mapping[str, np.ndarray] | None = None,
+    cdm_history_by_mode_label: Mapping[str, np.ndarray] | None = None,
     matter_block_labels: Mapping[str, tuple[str, ...]] | None = None,
     matter_sector_status: Mapping[str, str] | None = None,
     matter_block_metadata: Mapping[str, object] | None = None,
@@ -241,29 +245,53 @@ def project_runtime_native_state(
         }
     baryon_sector_status = "zero_filled_local_sector_not_evolved"
     cdm_sector_status = "zero_filled_local_sector_not_evolved"
-    if baryon_block is not None:
+    baryon_blocks_payload = _extract_local_sector_by_mode_label(layout, vector, sector="baryon")
+    cdm_blocks_payload = _extract_local_sector_by_mode_label(layout, vector, sector="cdm")
+    if baryon_blocks_by_mode_label is not None:
+        for mu, values in dict(baryon_blocks_by_mode_label).items():
+            if mu not in layout.mode_labels:
+                raise ValueError(f"baryon_blocks_by_mode_label contains unknown mode label {mu!r}")
+            arr = np.asarray(values, dtype=np.float64)
+            if arr.shape != (int(layout.sector_local_dofs["baryon"]),):
+                raise ValueError("baryon block does not match layout baryon local dofs")
+            for local_dof, value in enumerate(arr):
+                vector[flatten(layout, mu, "baryon", None, None, local_dof=local_dof)] = float(value)
+            baryon_blocks_payload[str(mu)] = arr
+        baryon_sector_status = "runtime_postprocessed_homogeneous_limit"
+    elif baryon_block is not None:
         baryon_arr = np.asarray(baryon_block, dtype=np.float64)
         if baryon_arr.shape != (int(layout.sector_local_dofs["baryon"]),):
             raise ValueError("baryon_block does not match layout baryon local dofs")
         for local_dof, value in enumerate(baryon_arr):
             vector[flatten(layout, covered, "baryon", None, None, local_dof=local_dof)] = float(value)
+        baryon_blocks_payload[covered] = baryon_arr
         baryon_sector_status = "runtime_postprocessed_homogeneous_limit"
-    else:
-        baryon_arr = _extract_local_sector(layout, vector, mu=covered, sector="baryon")
-    if cdm_block is not None:
+    baryon_arr = np.asarray(baryon_blocks_payload[covered], dtype=np.float64)
+    if cdm_blocks_by_mode_label is not None:
+        for mu, values in dict(cdm_blocks_by_mode_label).items():
+            if mu not in layout.mode_labels:
+                raise ValueError(f"cdm_blocks_by_mode_label contains unknown mode label {mu!r}")
+            arr = np.asarray(values, dtype=np.float64)
+            if arr.shape != (int(layout.sector_local_dofs["cdm"]),):
+                raise ValueError("cdm block does not match layout cdm local dofs")
+            for local_dof, value in enumerate(arr):
+                vector[flatten(layout, mu, "cdm", None, None, local_dof=local_dof)] = float(value)
+            cdm_blocks_payload[str(mu)] = arr
+        cdm_sector_status = "runtime_postprocessed_homogeneous_limit"
+    elif cdm_block is not None:
         cdm_arr = np.asarray(cdm_block, dtype=np.float64)
         if cdm_arr.shape != (int(layout.sector_local_dofs["cdm"]),):
             raise ValueError("cdm_block does not match layout cdm local dofs")
         for local_dof, value in enumerate(cdm_arr):
             vector[flatten(layout, covered, "cdm", None, None, local_dof=local_dof)] = float(value)
+        cdm_blocks_payload[covered] = cdm_arr
         cdm_sector_status = "runtime_postprocessed_homogeneous_limit"
-    else:
-        cdm_arr = _extract_local_sector(layout, vector, mu=covered, sector="cdm")
+    cdm_arr = np.asarray(cdm_blocks_payload[covered], dtype=np.float64)
     if matter_sector_status is not None:
         status_override = dict(matter_sector_status)
-        if baryon_block is not None and "baryon" in status_override:
+        if (baryon_block is not None or baryon_blocks_by_mode_label is not None) and "baryon" in status_override:
             baryon_sector_status = str(status_override["baryon"])
-        if cdm_block is not None and "cdm" in status_override:
+        if (cdm_block is not None or cdm_blocks_by_mode_label is not None) and "cdm" in status_override:
             cdm_sector_status = str(status_override["cdm"])
 
     source_blocks_by_mode_label = _extract_local_sector_by_mode_label(layout, vector, sector="src")
@@ -299,12 +327,61 @@ def project_runtime_native_state(
     elif history_samples is not None:
         source_history_payload[covered] = history_samples
 
+    baryon_history_payload = {}
+    if baryon_history_by_mode_label is not None:
+        for mu, values in dict(baryon_history_by_mode_label).items():
+            if mu not in layout.mode_labels:
+                raise ValueError(f"baryon_history_by_mode_label contains unknown mode label {mu!r}")
+            arr = np.asarray(values, dtype=np.float64)
+            if arr.ndim != 2 or arr.shape[1] != baryon_arr.shape[0]:
+                raise ValueError(
+                    "baryon_history_by_mode_label values must have shape (n_samples, baryon_local_dofs)"
+                )
+            if matter_eta is None or matter_eta.shape != (arr.shape[0],):
+                raise ValueError(
+                    "matter_history_eta must be provided with one entry per sampled baryon row"
+                )
+            baryon_history_payload[str(mu)] = arr
+    elif baryon_history is not None:
+        baryon_history_payload[covered] = baryon_history
+    cdm_history_payload = {}
+    if cdm_history_by_mode_label is not None:
+        for mu, values in dict(cdm_history_by_mode_label).items():
+            if mu not in layout.mode_labels:
+                raise ValueError(f"cdm_history_by_mode_label contains unknown mode label {mu!r}")
+            arr = np.asarray(values, dtype=np.float64)
+            if arr.ndim != 2 or arr.shape[1] != cdm_arr.shape[0]:
+                raise ValueError(
+                    "cdm_history_by_mode_label values must have shape (n_samples, cdm_local_dofs)"
+                )
+            if matter_eta is None or matter_eta.shape != (arr.shape[0],):
+                raise ValueError(
+                    "matter_history_eta must be provided with one entry per sampled cdm row"
+                )
+            cdm_history_payload[str(mu)] = arr
+    elif cdm_history is not None:
+        cdm_history_payload[covered] = cdm_history
+
     matter_block_payload = {
         "baryon": baryon_arr,
         "cdm": cdm_arr,
         "eta": matter_eta,
         "baryon_history": baryon_history,
         "cdm_history": cdm_history,
+        "mode_label_blocks": {
+            str(mu): {
+                "baryon": np.asarray(baryon_blocks_payload[str(mu)], dtype=np.float64),
+                "cdm": np.asarray(cdm_blocks_payload[str(mu)], dtype=np.float64),
+            }
+            for mu in layout.mode_labels
+        },
+        "mode_label_history": {
+            str(mu): {
+                "baryon": np.asarray(baryon_history_payload[str(mu)], dtype=np.float64),
+                "cdm": np.asarray(cdm_history_payload[str(mu)], dtype=np.float64),
+            }
+            for mu in sorted(baryon_history_payload.keys() & cdm_history_payload.keys())
+        },
         "labels": labels_payload,
     }
     if matter_block_metadata is not None:
@@ -392,6 +469,10 @@ def project_runtime_native_state(
             "b_history_sample_count": 0 if b_history is None else int(b_history.shape[0]),
             "matter_history_available": bool(baryon_history is not None and cdm_history is not None),
             "matter_history_sample_count": 0 if baryon_history is None else int(baryon_history.shape[0]),
+            "matter_mode_labels": list(layout.mode_labels),
+            "matter_history_mode_labels": sorted(
+                baryon_history_payload.keys() & cdm_history_payload.keys()
+            ),
             "resolved_sector_order": tuple(resolved_sector_order),
             "matter_block_labels": {
                 "baryon": list(labels_payload["baryon"]),

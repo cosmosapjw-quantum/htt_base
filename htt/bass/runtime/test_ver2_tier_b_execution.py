@@ -380,10 +380,25 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["canonical_projection_sector_status"]["cdm"] == (
         "layout_operator_auxiliary_local_matter"
     )
+    assert set(run.solver_output.metadata["canonical_projection_matter_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
+    assert set(run.solver_output.metadata["canonical_projection_matter_history_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
     assert run.solver_output.metadata["layout_local_matter_blocks_consumed"] is True
     assert run.solver_output.metadata["layout_local_matter_owner"] == (
         "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
+    assert set(run.solver_output.metadata["layout_local_matter_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
     assert run.solver_output.metadata["layout_local_matter_sample_count"] == len(
         run.integration_result.eta
     )
@@ -456,6 +471,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_local_matter_owner"] == (
         "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
+    assert set(
+        registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_local_matter_mode_labels"]
+    ) == {"m0", "m+2", "m-2"}
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_b_mode_proxy_source"] == (
         "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
@@ -487,6 +505,16 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.trace.canonical_projection.hierarchy_state.matter_block["reference_owner"] == (
         "runtime_postprocessed_homogeneous_local_matter"
     )
+    assert set(run.trace.canonical_projection.hierarchy_state.matter_block["mode_label_blocks"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
+    assert set(run.trace.canonical_projection.hierarchy_state.matter_block["mode_label_history"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
     assert np.asarray(
         run.trace.canonical_projection.hierarchy_state.photon_polarization_block["B_history"],
         dtype=np.float64,
