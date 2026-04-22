@@ -461,11 +461,6 @@ def test_representative_orthogonal_families_execute_with_expected_propagator_rea
             run.integration_result.solver_info["seed_pack_metadata"]["seed_numeric_bridge"]
             == "family_adapted_lowell_startup_owner"
         )
-        assert run.integration_result.solver_info["resolved_solver_method"] == "BDF"
-        assert (
-            run.integration_result.solver_info["executor_realization"]
-            == "native_guarded_tilted_bdf_full_rhs"
-        )
         initial_T = unpack_hierarchy(
             run.integration_result.photon_T_tower[0],
             run.integration_result.L_max,
@@ -552,6 +547,11 @@ def test_representative_tilted_executable_families_execute_with_bounded_runtime_
         assert (
             run.integration_result.solver_info["seed_pack_metadata"]["seed_numeric_bridge"]
             == "family_adapted_lowell_startup_owner"
+        )
+        assert run.integration_result.solver_info["resolved_solver_method"] == "BDF"
+        assert (
+            run.integration_result.solver_info["executor_realization"]
+            == "native_guarded_tilted_bdf_full_rhs"
         )
 
 
