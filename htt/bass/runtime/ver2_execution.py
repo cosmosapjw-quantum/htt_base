@@ -312,6 +312,55 @@ class _TierBPreparedRuntimeContext:
         object.__setattr__(self, "metadata", dict(self.metadata))
 
 
+def _build_tier_b_executable_run(
+    *,
+    manifest,
+    bianchi_type: str,
+    species: "SpeciesBackgroundRegistry",
+    prepared: _TierBPreparedRuntimeContext,
+    result,
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+    release,
+    k_grid_mpc: np.ndarray,
+    restart_checkpoint_path: str | None,
+    integrator_config,
+    cutoff_spec,
+) -> TierBExecutableRun:
+    _stamp_native_result_solver_info(
+        result=result,
+        runtime_controls=runtime_controls,
+        runtime_config=prepared.runtime_config,
+        family_realization=prepared.family_realization,
+        checkpoint_paths=prepared.checkpoint_paths,
+        restart_checkpoint_path=restart_checkpoint_path,
+    )
+    post_run = _assemble_tier_b_post_run_bundle(
+        manifest=manifest,
+        bianchi_type=bianchi_type,
+        species=species,
+        integrator=prepared.integrator,
+        result=result,
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        release=release,
+        k_grid_mpc=k_grid_mpc,
+        backend=prepared.backend,
+        reionization_amplitude=prepared.reionization_amplitude,
+        integrator_config=integrator_config,
+        cutoff_spec=cutoff_spec,
+        seed_k_comoving=prepared.seed_k_comoving,
+    )
+    return TierBExecutableRun.from_execution_bundle(
+        execution_plan=prepared.execution_plan,
+        runtime_decision=prepared.runtime_decision,
+        runtime_trace=post_run.runtime_trace,
+        integration_result=result,
+        solver_output=post_run.solver_output,
+        cutoff_campaign=post_run.cutoff_campaign,
+    )
+
+
 def _stamp_native_result_solver_info(
     *,
     result,
@@ -1829,36 +1878,17 @@ def execute_tier_b_solver(
         checkpoint_callback=prepared.checkpoint_callback,
         restart_state=prepared.restart_state,
     )
-    _stamp_native_result_solver_info(
-        result=result,
-        runtime_controls=runtime_controls,
-        runtime_config=prepared.runtime_config,
-        family_realization=prepared.family_realization,
-        checkpoint_paths=prepared.checkpoint_paths,
-        restart_checkpoint_path=restart_checkpoint_path,
-    )
-
-    post_run = _assemble_tier_b_post_run_bundle(
+    return _build_tier_b_executable_run(
         manifest=manifest,
         bianchi_type=bianchi_type,
         species=species,
-        integrator=prepared.integrator,
+        prepared=prepared,
         result=result,
         runtime_controls=runtime_controls,
         feature_flags=feature_flags,
         release=release,
         k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
-        backend=prepared.backend,
-        reionization_amplitude=prepared.reionization_amplitude,
+        restart_checkpoint_path=restart_checkpoint_path,
         integrator_config=integrator_config,
         cutoff_spec=cutoff_spec,
-        seed_k_comoving=prepared.seed_k_comoving,
-    )
-    return TierBExecutableRun.from_execution_bundle(
-        execution_plan=prepared.execution_plan,
-        runtime_decision=prepared.runtime_decision,
-        runtime_trace=post_run.runtime_trace,
-        integration_result=result,
-        solver_output=post_run.solver_output,
-        cutoff_campaign=post_run.cutoff_campaign,
     )
