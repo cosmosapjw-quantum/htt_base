@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 from typing import Any, Mapping
 
+import numpy as np
+
 from common.contracts import (
     ArtifactManifest,
     AtlasEntryLite,
@@ -303,14 +305,36 @@ def load_exported_discrimination_matrix(
         generated_root=generated_root,
     )
     payload = envelope.payload
+    manifest = _manifest(payload["manifest"])
+    degeneracy_flags = dict(payload.get("degeneracy_flags", {}))
+    if not degeneracy_flags:
+        stats_flags = manifest.statistics_definitions.get("pair_degeneracy_flags", {})
+        if isinstance(stats_flags, Mapping) and stats_flags:
+            degeneracy_flags = {str(key): bool(value) for key, value in stats_flags.items()}
+        else:
+            overlap = np.asarray(payload["overlap_matrix"], dtype=float)
+            hypotheses = tuple(payload["hypotheses"])
+            claim_tier_by_pair = dict(payload["claim_tier_by_pair"])
+            index_by_hypothesis = {
+                name: idx for idx, name in enumerate(hypotheses)
+            }
+            for pair, tier in sorted(claim_tier_by_pair.items()):
+                left, right = str(pair).split("|", 1)
+                left_index = index_by_hypothesis.get(left)
+                right_index = index_by_hypothesis.get(right)
+                if left_index is None or right_index is None:
+                    degeneracy_flags[str(pair)] = str(tier) != "conditional"
+                    continue
+                rho = float(overlap[left_index, right_index])
+                degeneracy_flags[str(pair)] = (not np.isfinite(rho)) or abs(rho) >= 0.9
     return DiscriminationMatrix(
         hypotheses=tuple(payload["hypotheses"]),
         overlap_matrix=payload["overlap_matrix"],
         response_norms=dict(payload.get("response_norms", {})),
-        degeneracy_flags=dict(payload.get("degeneracy_flags", {})),
+        degeneracy_flags=degeneracy_flags,
         recommended_next_observable=dict(payload["recommended_next_observable"]),
         claim_tier_by_pair=dict(payload["claim_tier_by_pair"]),
-        manifest=_manifest(payload["manifest"]),
+        manifest=manifest,
     )
 
 
