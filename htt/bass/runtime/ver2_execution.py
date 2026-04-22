@@ -1141,13 +1141,7 @@ def _build_gate_registry(
             mode_ops,
             provenance_metadata={}
             if layout_projection is None
-            else {
-                "layout_projection_owner": str(layout_projection.metadata.get("owner", "")),
-                "layout_auxiliary_bundle_owner": str(
-                    getattr(layout_projection.auxiliary_history_bundle, "metadata", {}).get("owner", "")
-                ),
-                "covered_mode_label": str(getattr(layout_projection, "covered_mode_label", "")),
-            },
+            else dict(layout_projection.metadata.get("layout_gate_provenance", {})),
         ),
         "production_cutoff_gate": _production_cutoff_gate_bundle(
             bianchi_type=bianchi_type,

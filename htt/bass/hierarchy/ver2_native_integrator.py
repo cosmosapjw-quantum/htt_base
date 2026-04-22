@@ -1674,6 +1674,16 @@ class Ver2TierBIntegrator:
             dtype=np.float64,
         )
         b_mode_proxy = np.asarray(b_history[-1], dtype=np.float64)
+        gate_provenance = {
+            "layout_projection_owner": "ver2_native_integrator.build_runtime_layout_projection",
+            "layout_auxiliary_bundle_owner": str(auxiliary_bundle.metadata["owner"]),
+            "covered_mode_label": covered,
+            "layout_source_block_owner": str(
+                canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
+            ),
+            "layout_local_matter_owner": str(coupled.metadata["owner"]),
+            "layout_b_mode_proxy_source": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
+        }
         return _RuntimeLayoutProjectionBundle(
             mode_ops=mode_ops,
             layout=layout,
@@ -1683,6 +1693,7 @@ class Ver2TierBIntegrator:
             metadata={
                 "owner": "ver2_native_integrator.build_runtime_layout_projection",
                 "gamma_t_probe": float(gamma_t_probe),
+                "layout_gate_provenance": gate_provenance,
                 "solver_info_fragment": {
                     "layout_contract_consumed": True,
                     "layout_mode_labels": list(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [])),
