@@ -285,6 +285,33 @@ class _TierBPostRunBundle:
         object.__setattr__(self, "metadata", dict(self.metadata))
 
 
+@dataclass(frozen=True)
+class _TierBPreparedRuntimeContext:
+    runtime_config: object
+    family_realization: str
+    restart_state: object | None
+    background_monitor: object
+    visibility_source: object
+    seed_k_comoving: float
+    backend: object
+    reionization_amplitude: float
+    integrator: object
+    runtime_decision: RuntimeReductionDecision
+    execution_plan: SolverExecutionPlan
+    checkpoint_callback: object | None
+    checkpoint_paths: list[str]
+    metadata: Mapping[str, object]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "seed_k_comoving", float(self.seed_k_comoving))
+        object.__setattr__(
+            self,
+            "checkpoint_paths",
+            self.checkpoint_paths if isinstance(self.checkpoint_paths, list) else list(self.checkpoint_paths),
+        )
+        object.__setattr__(self, "metadata", dict(self.metadata))
+
+
 def _stamp_native_result_solver_info(
     *,
     result,
@@ -1062,6 +1089,123 @@ def _assemble_tier_b_post_run_bundle(
     )
 
 
+def _prepare_tier_b_runtime_context(
+    *,
+    bianchi_type: str,
+    species: "SpeciesBackgroundRegistry",
+    integrator_config: "IntegratorConfig",
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+    k_grid_mpc: np.ndarray,
+    validation_matrix: "ValidationMatrixSpec | None",
+    restart_checkpoint_path: str | None,
+) -> _TierBPreparedRuntimeContext:
+    from bass.hierarchy.aux_state import build_integrator_canonical_decision
+    from bass.hierarchy.frame_contracts import PhotonDirectionConvention
+    from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
+    from bass.los.family_backend_protocol import build_backend
+    from bass.runtime.ver2_checkpoint import load_tier_b_restart_checkpoint
+
+    runtime_config, family_realization = _native_runtime_config(
+        bianchi_type,
+        integrator_config,
+        runtime_controls,
+    )
+    direction_convention = str(PhotonDirectionConvention.PROPAGATION.value)
+    restart_state = None
+    if restart_checkpoint_path is not None:
+        checkpoint = load_tier_b_restart_checkpoint(restart_checkpoint_path)
+        _validate_restart_checkpoint(
+            checkpoint=checkpoint,
+            bianchi_type=bianchi_type,
+            runtime_config=runtime_config,
+            direction_convention=direction_convention,
+        )
+        restart_state = checkpoint.to_restart_state()
+    background_monitor = _build_background_monitor(
+        bianchi_type=bianchi_type,
+        config=runtime_config,
+        species=species,
+        tilt_background_owner=runtime_controls.tilt_background_owner,
+    )
+    visibility_source = _build_visibility_source(
+        species=species,
+        config=runtime_config,
+        background_monitor=background_monitor,
+    )
+    canonical_decision = build_integrator_canonical_decision(
+        beta=float(runtime_config.bianchi_cosmo.beta),
+        sigma_squared=max(
+            0.5 * float(np.sum(background_monitor.sigma_tensor[0] ** 2)),
+            1.0e-12,
+        ),
+    )
+    seed_k_comoving = _representative_seed_k(np.asarray(k_grid_mpc, dtype=np.float64))
+    backend = build_backend(
+        bianchi_type,
+        truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
+        chart_options={},
+    )
+    reionization_amplitude = (
+        0.0
+        if visibility_source.contract.events is None
+        else float(visibility_source.contract.events.tau_reion)
+    )
+    integrator = Ver2TierBIntegrator(
+        runtime_config,
+        species,
+        backend=backend,
+        background_monitor=background_monitor,
+        visibility_source=visibility_source,
+        canonical_decision=canonical_decision,
+        seed_k_comoving=seed_k_comoving,
+    )
+    runtime_decision = _build_runtime_decision(
+        feature_flags=feature_flags,
+        canonical_decision=integrator.canonical_decision,
+    )
+    execution_plan = plan_solver_execution(
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        runtime_decision=runtime_decision,
+        validation_matrix=(
+            validation_matrix
+            if validation_matrix is not None
+            else _default_validation_matrix(
+                bianchi_type=bianchi_type,
+                integrator_config=runtime_config,
+                suite="tier_b_smoke",
+            )
+        ),
+    )
+    checkpoint_callback = None
+    checkpoint_paths: list[str] = []
+    if runtime_controls.checkpoint.enabled:
+        checkpoint_callback, checkpoint_paths = _checkpoint_writer(
+            path_template=runtime_controls.checkpoint.path_template,
+            bianchi_type=bianchi_type,
+            runtime_config=runtime_config,
+            direction_convention=direction_convention,
+            L_max=int(runtime_config.L_max),
+        )
+    return _TierBPreparedRuntimeContext(
+        runtime_config=runtime_config,
+        family_realization=family_realization,
+        restart_state=restart_state,
+        background_monitor=background_monitor,
+        visibility_source=visibility_source,
+        seed_k_comoving=seed_k_comoving,
+        backend=backend,
+        reionization_amplitude=reionization_amplitude,
+        integrator=integrator,
+        runtime_decision=runtime_decision,
+        execution_plan=execution_plan,
+        checkpoint_callback=checkpoint_callback,
+        checkpoint_paths=checkpoint_paths,
+        metadata={"owner": "runtime._prepare_tier_b_runtime_context"},
+    )
+
+
 def _build_runtime_decision(
     *,
     feature_flags: SolverFeatureFlags,
@@ -1668,106 +1812,29 @@ def execute_tier_b_solver(
     if runtime_controls.checkpoint.enabled and feature_flags.checkpoint_restart is FeatureStatus.DISABLED:
         raise ValueError("checkpoint policy requires checkpoint_restart feature flag to be enabled")
 
-    from bass.hierarchy.aux_state import build_integrator_canonical_decision
-    from bass.hierarchy.frame_contracts import PhotonDirectionConvention
-    from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
-    from bass.los.family_backend_protocol import build_backend
-    from bass.runtime.ver2_checkpoint import load_tier_b_restart_checkpoint
-    runtime_config, family_realization = _native_runtime_config(
-        bianchi_type,
-        integrator_config,
-        runtime_controls,
-    )
-    direction_convention = str(PhotonDirectionConvention.PROPAGATION.value)
-    restart_state = None
-    if restart_checkpoint_path is not None:
-        checkpoint = load_tier_b_restart_checkpoint(restart_checkpoint_path)
-        _validate_restart_checkpoint(
-            checkpoint=checkpoint,
-            bianchi_type=bianchi_type,
-            runtime_config=runtime_config,
-            direction_convention=direction_convention,
-        )
-        restart_state = checkpoint.to_restart_state()
-    background_monitor = _build_background_monitor(
+    prepared = _prepare_tier_b_runtime_context(
         bianchi_type=bianchi_type,
-        config=runtime_config,
         species=species,
-        tilt_background_owner=runtime_controls.tilt_background_owner,
-    )
-    visibility_source = _build_visibility_source(
-        species=species,
-        config=runtime_config,
-        background_monitor=background_monitor,
-    )
-    canonical_decision = build_integrator_canonical_decision(
-        beta=float(runtime_config.bianchi_cosmo.beta),
-        sigma_squared=max(
-            0.5 * float(np.sum(background_monitor.sigma_tensor[0] ** 2)),
-            1.0e-12,
-        ),
-    )
-    seed_k_comoving = _representative_seed_k(np.asarray(k_grid_mpc, dtype=np.float64))
-    backend = build_backend(
-        bianchi_type,
-        truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
-        chart_options={},
-    )
-    reionization_amplitude = (
-        0.0
-        if visibility_source.contract.events is None
-        else float(visibility_source.contract.events.tau_reion)
-    )
-    integrator = Ver2TierBIntegrator(
-        runtime_config,
-        species,
-        backend=backend,
-        background_monitor=background_monitor,
-        visibility_source=visibility_source,
-        canonical_decision=canonical_decision,
-        seed_k_comoving=seed_k_comoving,
-    )
-    runtime_decision = _build_runtime_decision(
-        feature_flags=feature_flags,
-        canonical_decision=integrator.canonical_decision,
-    )
-    plan = plan_solver_execution(
+        integrator_config=integrator_config,
         runtime_controls=runtime_controls,
         feature_flags=feature_flags,
-        runtime_decision=runtime_decision,
-        validation_matrix=(
-            validation_matrix
-            if validation_matrix is not None
-            else _default_validation_matrix(
-                bianchi_type=bianchi_type,
-                integrator_config=runtime_config,
-                suite="tier_b_smoke",
-            )
-        ),
+        k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
+        validation_matrix=validation_matrix,
+        restart_checkpoint_path=restart_checkpoint_path,
     )
-    checkpoint_callback = None
-    checkpoint_paths: list[str] = []
-    if runtime_controls.checkpoint.enabled:
-        checkpoint_callback, checkpoint_paths = _checkpoint_writer(
-            path_template=runtime_controls.checkpoint.path_template,
-            bianchi_type=bianchi_type,
-            runtime_config=runtime_config,
-            direction_convention=direction_convention,
-            L_max=int(runtime_config.L_max),
-        )
-    result = integrator.run(
+    result = prepared.integrator.run(
         checkpoint_every_n_steps=runtime_controls.checkpoint.every_n_steps
         if runtime_controls.checkpoint.enabled
         else None,
-        checkpoint_callback=checkpoint_callback,
-        restart_state=restart_state,
+        checkpoint_callback=prepared.checkpoint_callback,
+        restart_state=prepared.restart_state,
     )
     _stamp_native_result_solver_info(
         result=result,
         runtime_controls=runtime_controls,
-        runtime_config=runtime_config,
-        family_realization=family_realization,
-        checkpoint_paths=tuple(checkpoint_paths),
+        runtime_config=prepared.runtime_config,
+        family_realization=prepared.family_realization,
+        checkpoint_paths=prepared.checkpoint_paths,
         restart_checkpoint_path=restart_checkpoint_path,
     )
 
@@ -1775,21 +1842,21 @@ def execute_tier_b_solver(
         manifest=manifest,
         bianchi_type=bianchi_type,
         species=species,
-        integrator=integrator,
+        integrator=prepared.integrator,
         result=result,
         runtime_controls=runtime_controls,
         feature_flags=feature_flags,
         release=release,
         k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
-        backend=backend,
-        reionization_amplitude=reionization_amplitude,
+        backend=prepared.backend,
+        reionization_amplitude=prepared.reionization_amplitude,
         integrator_config=integrator_config,
         cutoff_spec=cutoff_spec,
-        seed_k_comoving=seed_k_comoving,
+        seed_k_comoving=prepared.seed_k_comoving,
     )
     return TierBExecutableRun.from_execution_bundle(
-        execution_plan=plan,
-        runtime_decision=runtime_decision,
+        execution_plan=prepared.execution_plan,
+        runtime_decision=prepared.runtime_decision,
         runtime_trace=post_run.runtime_trace,
         integration_result=result,
         solver_output=post_run.solver_output,
