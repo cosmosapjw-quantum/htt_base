@@ -1641,17 +1641,13 @@ def execute_tier_b_solver(
     result.solver_info["checkpoint_paths"] = tuple(checkpoint_paths)
     result.solver_info["restart_checkpoint_path"] = restart_checkpoint_path
 
-    geodesic_probe = integrator.build_runtime_geodesic_probe()
-    gamma_t_probe = _resolved_gamma_t(
-        visibility_source=visibility_source,
-        eta=float(result.eta[-1]),
-        direction=np.asarray(runtime_config.tilt_direction, dtype=np.float64),
-        config=runtime_config,
+    runtime_trace_products = integrator.build_runtime_trace_products(
+        result,
+        reionization_amplitude=reionization_amplitude,
     )
-    thomson_probe = integrator.build_runtime_thomson_probe(
-        result=result,
-        gamma_t=gamma_t_probe,
-    )
+    geodesic_probe = runtime_trace_products.geodesic_probe
+    gamma_t_probe = float(runtime_trace_products.gamma_t_probe)
+    thomson_probe = runtime_trace_products.thomson_probe
     cutoff_campaign = None
     if cutoff_spec is not None:
         cutoff_campaign = run_executed_cutoff_campaign(
@@ -1664,13 +1660,7 @@ def execute_tier_b_solver(
                 runtime_controls=runtime_controls,
             ),
         )
-    layout_projection = integrator.build_runtime_layout_projection(
-        result,
-        thomson_probe=thomson_probe,
-        visibility_amplitude=float(thomson_probe.scalar_monopole_input),
-        polarization_source=float(thomson_probe.polarization_quadrupole_norm),
-        reionization_amplitude=reionization_amplitude,
-    )
+    layout_projection = runtime_trace_products.layout_projection
     mode_ops = layout_projection.mode_ops
     canonical_projection = layout_projection.canonical_projection
     result.solver_info.update(dict(layout_projection.metadata["solver_info_fragment"]))

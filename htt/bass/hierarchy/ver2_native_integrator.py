@@ -410,6 +410,19 @@ class _RuntimeLayoutProjectionBundle:
 
 
 @dataclass(frozen=True)
+class _RuntimeTraceProducts:
+    geodesic_probe: object
+    gamma_t_probe: float
+    thomson_probe: object
+    layout_projection: _RuntimeLayoutProjectionBundle
+    metadata: dict[str, object]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "gamma_t_probe", float(self.gamma_t_probe))
+        object.__setattr__(self, "metadata", dict(self.metadata))
+
+
+@dataclass(frozen=True)
 class NativeTierBRestartState:
     """Checkpoint-backed restart state for the native Tier-B integrator."""
 
@@ -1809,6 +1822,41 @@ class Ver2TierBIntegrator:
             H=float(self.background_monitor.H[-1]),
             sigma_ab=self.background_monitor.sigma_tensor[-1],
             geometry=self.background_monitor.initial_conditions.geometry,
+        )
+
+    def build_runtime_trace_products(
+        self,
+        result: IntegrationResult,
+        *,
+        reionization_amplitude: float,
+    ) -> _RuntimeTraceProducts:
+        geodesic_probe = self.build_runtime_geodesic_probe()
+        gamma_t_probe = _resolved_gamma_t(
+            visibility_source=self.visibility_source,
+            eta=float(result.eta[-1]),
+            direction=np.asarray(self.config.tilt_direction, dtype=np.float64),
+            config=self.config,
+        )
+        thomson_probe = self.build_runtime_thomson_probe(
+            result=result,
+            gamma_t=float(gamma_t_probe),
+        )
+        layout_projection = self.build_runtime_layout_projection(
+            result,
+            thomson_probe=thomson_probe,
+            visibility_amplitude=float(thomson_probe.scalar_monopole_input),
+            polarization_source=float(thomson_probe.polarization_quadrupole_norm),
+            reionization_amplitude=float(reionization_amplitude),
+        )
+        return _RuntimeTraceProducts(
+            geodesic_probe=geodesic_probe,
+            gamma_t_probe=float(gamma_t_probe),
+            thomson_probe=thomson_probe,
+            layout_projection=layout_projection,
+            metadata={
+                "owner": "ver2_native_integrator.build_runtime_trace_products",
+                "layout_projection_owner": str(layout_projection.metadata.get("owner", "")),
+            },
         )
 
     def _compute_tca_mask(self, etas: np.ndarray) -> np.ndarray:
