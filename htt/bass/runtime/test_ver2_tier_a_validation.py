@@ -167,6 +167,9 @@ def test_execute_tier_a_validation_solver_builds_reference_output() -> None:
     assert run.trace.reference_scope == "validation_only_angular_truth"
     assert run.trace.off_diagonal_strategy == "dense_matrix"
     assert set(run.trace.dl_reference) >= {"TT", "EE", "TE"}
+    assert run.trace.transport_contract["owner"] == "ver3_tiera_transport_reference_probe"
+    assert run.trace.transport_contract["collision_effective_opacity"] >= 0.0
+    assert run.trace.transport_contract["collision_source_split"] == "scalar_monopole_vs_directional_tensor"
 
 
 def test_execute_tier_a_validation_solver_requires_tier_a_controls() -> None:

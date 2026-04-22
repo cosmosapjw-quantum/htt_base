@@ -246,6 +246,7 @@ class TierAValidationTrace:
     off_diagonal_strategy: str
     preferred_axis: tuple[float, float, float]
     dl_reference: Mapping[str, np.ndarray]
+    transport_contract: Mapping[str, object]
 
     def __post_init__(self) -> None:
         if not self.source_builder_scope:
@@ -260,12 +261,103 @@ class TierAValidationTrace:
             raise ValueError("preferred_axis must be a 3-vector")
         if not self.dl_reference:
             raise ValueError("dl_reference must be non-empty")
+        if not self.transport_contract:
+            raise ValueError("transport_contract must be non-empty")
         for channel, values in self.dl_reference.items():
             arr = np.asarray(values, dtype=np.float64)
             if arr.ndim != 1:
                 raise ValueError(f"dl_reference[{channel!r}] must be 1-D")
             if not np.all(np.isfinite(arr)):
                 raise ValueError(f"dl_reference[{channel!r}] must be finite")
+
+
+def _screen_basis_from_direction(direction: np.ndarray):
+    from bass.transport.geodesics import ScreenBasisState
+
+    ray = np.asarray(direction, dtype=np.float64)
+    ray /= max(float(np.linalg.norm(ray)), 1.0e-30)
+    anchor = np.array([1.0, 0.0, 0.0], dtype=np.float64)
+    if abs(float(np.dot(anchor, ray))) > 0.9:
+        anchor = np.array([0.0, 1.0, 0.0], dtype=np.float64)
+    u = anchor - float(np.dot(anchor, ray)) * ray
+    u /= max(float(np.linalg.norm(u)), 1.0e-30)
+    v = np.cross(ray, u)
+    v /= max(float(np.linalg.norm(v)), 1.0e-30)
+    return ScreenBasisState(u=u, v=v)
+
+
+def _build_tiera_transport_reference_probe(
+    *,
+    result,
+    background_monitor: "BackgroundEvolutionResult",
+    visibility_source: "TiltedVisibilitySource",
+    config: "IntegratorConfig",
+) -> Mapping[str, object]:
+    from bass.hierarchy.pstf_tensor import unpack_hierarchy
+    from bass.transport import TierAState, collision_source_tierA, ray_rhs, screen_basis_rhs
+
+    direction = np.asarray(config.tilt_direction, dtype=np.float64)
+    if not np.any(direction):
+        direction = np.array([0.0, 0.0, 1.0], dtype=np.float64)
+    direction /= max(float(np.linalg.norm(direction)), 1.0e-30)
+    temperature = unpack_hierarchy(result.photon_T_tower[-1], result.L_max)
+    polarization = unpack_hierarchy(result.photon_E_tower[-1], result.L_max)
+    I_dir = (
+        np.asarray(temperature.tensors[1].components, dtype=np.float64)
+        if result.L_max >= 1
+        else np.zeros(3, dtype=np.float64)
+    )
+    if result.L_max >= 2:
+        e2 = np.asarray(polarization.tensors[2].components, dtype=np.float64)
+        P_dir = np.asarray([e2[0], e2[2], e2[4]], dtype=np.float64)
+        I2 = float(np.linalg.norm(np.asarray(temperature.tensors[2].components, dtype=np.float64)))
+        E2_pol = float(np.linalg.norm(e2))
+    else:
+        P_dir = np.zeros_like(I_dir)
+        I2 = 0.0
+        E2_pol = 0.0
+    ray_state = TierAState(
+        eta=float(result.eta[-1]),
+        ray_direction=direction,
+        screen_basis=_screen_basis_from_direction(direction),
+        phase=0.0,
+        I_dir=I_dir,
+        P_dir=P_dir,
+    )
+    bg = {
+        "H": float(background_monitor.H[-1]),
+        "sigma_ab": np.asarray(background_monitor.sigma_tensor[-1], dtype=np.float64),
+        "geometry": background_monitor.initial_conditions.geometry,
+    }
+    ray_probe = ray_rhs(float(result.eta[-1]), ray_state, bg)
+    screen_probe = screen_basis_rhs(float(result.eta[-1]), ray_state, bg)
+    gamma_t = _resolved_gamma_t(
+        visibility_source=visibility_source,
+        eta=float(result.eta[-1]),
+        direction=direction,
+        config=config,
+    )
+    collision_probe = collision_source_tierA(
+        float(result.eta[-1]),
+        ray_state,
+        bg,
+        {
+            "Gamma_T": float(gamma_t),
+            "I0": float(temperature.tensors[0].components[0]),
+            "I2": I2,
+            "E2_pol": E2_pol,
+            "opacity_data": {"Gamma_T": float(gamma_t)},
+        },
+    )
+    return {
+        "owner": "ver3_tiera_transport_reference_probe",
+        "ray_rhs_direction_norm": float(np.linalg.norm(ray_probe.direction_dot)),
+        "ray_rhs_energy_dot": float(ray_probe.energy_dot),
+        "screen_phase_dot": float(screen_probe.phase_dot),
+        "collision_effective_opacity": float(collision_probe.effective_opacity),
+        "collision_source_split": str(collision_probe.metadata.get("source_split", "")),
+        "direction_convention": collision_probe.direction_convention.value,
+    }
 
 
 @dataclass(frozen=True)
@@ -1552,6 +1644,11 @@ def execute_tier_a_validation_solver(
         species=species,
         tilt_background_owner=runtime_controls.tilt_background_owner,
     )
+    visibility_source = _build_visibility_source(
+        species=species,
+        config=integrator_config,
+        background_monitor=background_monitor,
+    )
     integrator = LowellBianchiIntegrator(integrator_config, species)
     runtime_decision = build_runtime_reduction_decision(
         integrator.canonical_decision,
@@ -1599,6 +1696,12 @@ def execute_tier_a_validation_solver(
         for channel, values in d_ell.items()
         if channel in {"TT", "EE", "TE"}
     }
+    transport_contract = _build_tiera_transport_reference_probe(
+        result=result,
+        background_monitor=background_monitor,
+        visibility_source=visibility_source,
+        config=integrator_config,
+    )
     return TierAValidationRun(
         execution_plan=plan,
         runtime_decision=runtime_decision,
@@ -1610,6 +1713,7 @@ def execute_tier_a_validation_solver(
             off_diagonal_strategy=str(covariance.get("off_diagonal_strategy", "")),
             preferred_axis=tuple(float(x) for x in preferred_axis),
             dl_reference=reference_channels,
+            transport_contract=transport_contract,
         ),
         integration_result=result,
         solver_output=solver_output,
