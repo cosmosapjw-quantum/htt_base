@@ -38,6 +38,8 @@ __all__ = [
     "regular_adiabatic_seed_total_size",
     "infer_regular_adiabatic_seed_L_max",
     "slice_regular_adiabatic_extras",
+    "regular_adiabatic_formulae",
+    "pack_regular_adiabatic_seed_from_formulae",
     "make_camb_regular_adiabatic_seed",
     "unpack_camb_regular_adiabatic_seed",
     "seed_observables",
@@ -166,6 +168,77 @@ def _seed_formulae(
     }
 
 
+def regular_adiabatic_formulae(
+    *,
+    k_comoving: float,
+    eta_initial: float,
+    a_initial: float,
+) -> dict[str, float]:
+    """Public Lowell-regular startup formulas used by backend-owned seed builders."""
+    return _seed_formulae(
+        k_comoving=float(k_comoving),
+        eta_initial=float(eta_initial),
+        a_initial=float(a_initial),
+    )
+
+
+def pack_regular_adiabatic_seed_from_formulae(
+    *,
+    a_initial: float,
+    L_max: int,
+    formulas: dict[str, float],
+) -> np.ndarray:
+    """Pack a Lowell-regular startup vector from precomputed formula values."""
+    a_val = float(a_initial)
+    if not np.isfinite(a_val) or a_val <= 0.0:
+        raise ValueError(
+            f"a_initial must be finite and positive, got {a_initial!r}"
+        )
+    if L_max < 2:
+        raise ValueError(
+            f"L_max must be >= 2 for the E-mode startup, got L_max={L_max}"
+        )
+    photon_T = zero_hierarchy(L_max)
+    photon_E = zero_polarization_hierarchy(L_max)
+    photon_T.tensors[0].components[0] = float(formulas["delta_gamma"]) / 4.0
+    photon_T.tensors[1].components[1] = float(formulas["theta_gamma"])
+    photon_T.tensors[2].components[2] = float(formulas["pi_gamma"])
+    photon_E.E.tensors[2].components[2] = float(formulas["E_2"])
+    nu = np.array(
+        [
+            float(formulas["delta_nu"]),
+            float(formulas["theta_nu"]),
+            float(formulas["pi_nu"]),
+            float(formulas["G_3"]),
+        ],
+        dtype=np.float64,
+    )
+    prefix = pack_combined_state(
+        a=a_val,
+        Sigma_plus=0.0,
+        Sigma_minus=0.0,
+        photon_T=photon_T,
+        photon_E=photon_E,
+        neutrino_reduced=nu,
+        L_max=L_max,
+    )
+    extras = np.array(
+        [
+            float(formulas["delta_b"]),
+            float(formulas["theta_b"]),
+            float(formulas["delta_c"]),
+            float(formulas["theta_c"]),
+            float(formulas["eta_cov"]),
+            float(formulas["Z"]),
+        ],
+        dtype=np.float64,
+    )
+    out = np.empty(prefix.size + CAMB_REGULAR_ADIABATIC_EXTRA_SIZE, dtype=np.float64)
+    out[: prefix.size] = prefix
+    out[prefix.size :] = extras
+    return out
+
+
 def make_camb_regular_adiabatic_seed(
     *,
     k_comoving: float,
@@ -218,47 +291,11 @@ def make_camb_regular_adiabatic_seed(
         eta_initial=eta_val,
         a_initial=a_val,
     )
-
-    photon_T = zero_hierarchy(L_max)
-    photon_E = zero_polarization_hierarchy(L_max)
-    photon_T.tensors[0].components[0] = formulas["delta_gamma"] / 4.0
-    photon_T.tensors[1].components[1] = formulas["theta_gamma"]
-    photon_T.tensors[2].components[2] = formulas["pi_gamma"]
-    photon_E.E.tensors[2].components[2] = formulas["E_2"]
-    nu = np.array(
-        [
-            formulas["delta_nu"],
-            formulas["theta_nu"],
-            formulas["pi_nu"],
-            formulas["G_3"],
-        ],
-        dtype=np.float64,
-    )
-
-    prefix = pack_combined_state(
-        a=a_val,
-        Sigma_plus=0.0,
-        Sigma_minus=0.0,
-        photon_T=photon_T,
-        photon_E=photon_E,
-        neutrino_reduced=nu,
+    return pack_regular_adiabatic_seed_from_formulae(
+        a_initial=a_val,
         L_max=L_max,
+        formulas=formulas,
     )
-    extras = np.array(
-        [
-            formulas["delta_b"],
-            formulas["theta_b"],
-            formulas["delta_c"],
-            formulas["theta_c"],
-            formulas["eta_cov"],
-            formulas["Z"],
-        ],
-        dtype=np.float64,
-    )
-    out = np.empty(prefix.size + CAMB_REGULAR_ADIABATIC_EXTRA_SIZE, dtype=np.float64)
-    out[: prefix.size] = prefix
-    out[prefix.size :] = extras
-    return out
 
 
 def unpack_camb_regular_adiabatic_seed(

@@ -81,6 +81,8 @@ from bass.perturbation.cdm_fluid import (
 )
 from bass.perturbation.regular_adiabatic_ic import (
     make_camb_regular_adiabatic_seed,
+    pack_regular_adiabatic_seed_from_formulae,
+    regular_adiabatic_formulae,
     unpack_camb_regular_adiabatic_seed,
 )
 from bass.perturbation.tilted_seed_rule import apply_tilted_boost_seed_rule
@@ -652,6 +654,87 @@ class Ver2TierBIntegrator:
             threshold=float(self.config.gamma_T_over_H_threshold),
         )
 
+    def _build_intrinsic_family_seeded_initial_state(
+        self,
+        *,
+        branch: str,
+        seed_pack: SeedPack,
+    ) -> _SeededInitialState:
+        formulas = regular_adiabatic_formulae(
+            k_comoving=max(self.seed_k_comoving, 0.0),
+            eta_initial=float(self.config.eta_initial_mpc),
+            a_initial=float(self.background_monitor.a[0]),
+        )
+        seed_state = pack_regular_adiabatic_seed_from_formulae(
+            a_initial=float(self.background_monitor.a[0]),
+            L_max=self.config.L_max,
+            formulas=formulas,
+        )
+        if branch == "tilted":
+            seed_state = apply_tilted_boost_seed_rule(
+                seed_state,
+                beta=float(self.config.tilt_rapidity),
+                v_hat_e=tuple(float(x) for x in self._direction),
+            )
+        projected_seed: PackedRegularSeedInjection = project_packed_regular_seed(
+            seed_state,
+            electron_velocity=rapidity_to_velocity(float(self.config.tilt_rapidity))
+            * self._direction,
+            geometry=self.background_monitor.initial_conditions.geometry,
+            sigma_ab=self.background_monitor.initial_conditions.sigma_ab,
+            target_q=np.asarray(
+                self.background_monitor.initial_conditions.matter.q,
+                dtype=np.float64,
+            ),
+        )
+        unpacked = unpack_camb_regular_adiabatic_seed(
+            projected_seed.seed_state,
+            L_max=self.config.L_max,
+        )
+        combined = unpacked["combined"]
+        photon_T = combined.photon_T.copy()
+        photon_E = combined.photon_E.copy()
+        neutrino_tower = _seed_neutrino_tower_from_reduced(
+            np.asarray(combined.neutrino_reduced, dtype=np.float64).copy(),
+            L_max=self.config.L_max,
+        )
+
+        startup_gate = self._startup_gate_at_initial_time()
+        startup_state = None
+        injection_mode = f"{seed_pack.seed_mode}+family_adapted_intrinsic_seed"
+        if branch == "tilted":
+            injection_mode = f"{injection_mode}+intrinsic_tilted_boost"
+        if startup_gate.startup_selected:
+            startup_state = self._resolve_startup_state(
+                photon_T=photon_T,
+                photon_E=photon_E,
+                gamma_t=float(startup_gate.gamma_T_over_H * self.background_monitor.H[0]),
+            )
+            photon_T.tensors[2].components[2] = float(startup_state.theta_2)
+            photon_E.E.tensors[2].components[2] = float(startup_state.E_2)
+            injection_mode = f"{injection_mode}+quadrupole_tca_startup"
+
+        return _SeededInitialState(
+            photon_T=photon_T,
+            photon_E=photon_E,
+            neutrino_tower=neutrino_tower,
+            startup_gate=startup_gate,
+            seed_projection=projected_seed.projection,
+            startup_state=startup_state,
+            seed_k_comoving=max(self.seed_k_comoving, 0.0),
+            seed_injection_mode=f"{injection_mode}+{projected_seed.injection_mode}",
+            velocity_scale=float(projected_seed.velocity_scale),
+            seed_pack=seed_pack,
+            matter_seed_observables={
+                "delta_b": float(unpacked["delta_b"]),
+                "theta_b": float(unpacked["theta_b"]),
+                "delta_c": float(unpacked["delta_c"]),
+                "theta_c": float(unpacked["theta_c"]),
+                "eta_cov": float(unpacked["eta_cov"]),
+                "Z": float(unpacked["Z"]),
+            },
+        )
+
     def _build_seeded_initial_state(self) -> _SeededInitialState:
         branch = "tilted" if abs(float(self.config.tilt_rapidity)) > 0.0 else "orthogonal"
         intrinsic_family = self.backend.family_spec.family in {"II", "III", "IV", "VI_0", "VI_h", "VIII"}
@@ -669,7 +752,7 @@ class Ver2TierBIntegrator:
                 metadata={
                     "runtime_owner": "ver2_tier_b_native",
                     "seed_numeric_bridge": (
-                        "family_collocation_projection_bridge"
+                        "family_adapted_lowell_startup_owner"
                         if intrinsic_family
                         else "backend_anchor_regular_seed"
                     ),
@@ -677,6 +760,11 @@ class Ver2TierBIntegrator:
                 },
             )
         )
+        if intrinsic_family:
+            return self._build_intrinsic_family_seeded_initial_state(
+                branch=branch,
+                seed_pack=seed_pack,
+            )
         seed_state = make_camb_regular_adiabatic_seed(
             k_comoving=max(self.seed_k_comoving, 0.0),
             eta_initial=float(self.config.eta_initial_mpc),

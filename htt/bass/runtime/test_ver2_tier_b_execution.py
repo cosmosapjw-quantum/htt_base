@@ -452,6 +452,26 @@ def test_representative_orthogonal_families_execute_with_expected_propagator_rea
     assert run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
     assert run.solver_output.metadata["global_tilt_contract"] == "orthogonal_branch_zero_global_tilt"
     assert run.execution_plan.runtime_decision.propagation_status == "pending"
+    if bianchi_type == "VIII":
+        assert run.integration_result.solver_info["seed_factory_mode"] == "collocation_projected"
+        assert "family_adapted_intrinsic_seed" in str(
+            run.integration_result.solver_info["seed_injection_mode"]
+        )
+        assert (
+            run.integration_result.solver_info["seed_pack_metadata"]["seed_numeric_bridge"]
+            == "family_adapted_lowell_startup_owner"
+        )
+        assert run.integration_result.solver_info["resolved_solver_method"] == "BDF"
+        assert (
+            run.integration_result.solver_info["executor_realization"]
+            == "native_guarded_tilted_bdf_full_rhs"
+        )
+        initial_T = unpack_hierarchy(
+            run.integration_result.photon_T_tower[0],
+            run.integration_result.L_max,
+        )
+        assert initial_T.tensors[0].components[0] != 0.0
+        assert np.linalg.norm(initial_T.tensors[1].components) > 0.0
 
 
 @pytest.mark.parametrize(
@@ -524,6 +544,15 @@ def test_representative_tilted_executable_families_execute_with_bounded_runtime_
     assert run.trace.seed_projection.projection_mode == "background_codazzi_project"
     assert np.linalg.norm(run.trace.seed_projection.momentum_residual_after) <= _seed_projection_tol(run)
     assert run.execution_plan.runtime_decision.propagation_status == "pending"
+    if bianchi_type == "VIII":
+        assert run.integration_result.solver_info["seed_factory_mode"] == "collocation_projected"
+        assert "family_adapted_intrinsic_seed" in str(
+            run.integration_result.solver_info["seed_injection_mode"]
+        )
+        assert (
+            run.integration_result.solver_info["seed_pack_metadata"]["seed_numeric_bridge"]
+            == "family_adapted_lowell_startup_owner"
+        )
 
 
 def test_nonperturbative_tilt_owner_is_wired_into_runtime_background_and_collision() -> None:

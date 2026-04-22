@@ -1244,13 +1244,38 @@ def _resolve_native_solver_method(
     raise ValueError(f"Unsupported integrator family: {family!r}")
 
 
+def _resolve_guarded_solver_override(
+    *,
+    bianchi_type: str,
+    beta: float,
+    runtime_controls: RuntimeControlBlock,
+    solver_method: str,
+    realization: str,
+) -> tuple[str, str]:
+    if (
+        runtime_controls.integrator_family is IntegratorFamily.IMEX_SPLIT
+        and str(bianchi_type) == "VIII"
+        and abs(float(beta)) > 0.0
+    ):
+        return "BDF", "native_guarded_tilted_bdf_full_rhs"
+    return solver_method, realization
+
+
 def _native_runtime_config(
+    bianchi_type: str,
     base_config: "IntegratorConfig",
     runtime_controls: RuntimeControlBlock,
 ) -> tuple["IntegratorConfig", str]:
     from bass.hierarchy.integrator import IntegratorConfig
 
     solver_method, realization = _resolve_native_solver_method(runtime_controls)
+    solver_method, realization = _resolve_guarded_solver_override(
+        bianchi_type=bianchi_type,
+        beta=float(base_config.bianchi_cosmo.beta),
+        runtime_controls=runtime_controls,
+        solver_method=solver_method,
+        realization=realization,
+    )
     return (
         IntegratorConfig(
             L_max=int(base_config.L_max),
@@ -1287,7 +1312,11 @@ def _campaign_runner(
 
     def runner(cutoff: int) -> tuple[Mapping[str, np.ndarray], float]:
         start = perf_counter()
-        cutoff_config, _ = _native_runtime_config(base_config, runtime_controls)
+        cutoff_config, _ = _native_runtime_config(
+            bianchi_type,
+            base_config,
+            runtime_controls,
+        )
         config = cutoff_config.__class__(
             L_max=int(cutoff),
             eta_initial_mpc=float(cutoff_config.eta_initial_mpc),
@@ -1757,6 +1786,7 @@ def execute_tier_b_solver(
     from bass.spectrum.ver2_cutoff_campaign import run_executed_cutoff_campaign
 
     runtime_config, family_realization = _native_runtime_config(
+        bianchi_type,
         integrator_config,
         runtime_controls,
     )
