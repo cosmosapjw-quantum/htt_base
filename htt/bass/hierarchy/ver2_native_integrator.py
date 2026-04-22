@@ -68,6 +68,17 @@ from bass.hierarchy.seed_compatibility import (
 )
 from bass.hierarchy.boost_kernel import is_axis_aligned
 from bass.los.family_backend_protocol import FamilyBackend, SeedPack, SeedRequest
+from bass.perturbation.baryon_fluid import (
+    BaryonFluidState,
+    BaryonParameters,
+    SymmetryAxis,
+    baryon_euler_rhs,
+)
+from bass.perturbation.cdm_fluid import (
+    CDMFluidState,
+    CDMParameters,
+    cdm_euler_rhs,
+)
 from bass.perturbation.regular_adiabatic_ic import (
     make_camb_regular_adiabatic_seed,
     unpack_camb_regular_adiabatic_seed,
@@ -321,12 +332,31 @@ class _SeededInitialState:
     seed_injection_mode: str
     velocity_scale: float
     seed_pack: SeedPack
+    matter_seed_observables: dict[str, float]
 
     def __post_init__(self) -> None:
         if self.neutrino_tower.L != self.photon_T.L:
             raise ValueError(
                 f"neutrino_tower L={self.neutrino_tower.L} must match photon_T L={self.photon_T.L}"
             )
+
+
+@dataclass(frozen=True)
+class _LocalMatterHistory:
+    eta: np.ndarray
+    baryon_history: np.ndarray
+    cdm_history: np.ndarray
+    baryon_labels: tuple[str, ...]
+    cdm_labels: tuple[str, ...]
+    metadata: dict[str, object]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "eta", np.asarray(self.eta, dtype=np.float64))
+        object.__setattr__(self, "baryon_history", np.asarray(self.baryon_history, dtype=np.float64))
+        object.__setattr__(self, "cdm_history", np.asarray(self.cdm_history, dtype=np.float64))
+        object.__setattr__(self, "baryon_labels", tuple(self.baryon_labels))
+        object.__setattr__(self, "cdm_labels", tuple(self.cdm_labels))
+        object.__setattr__(self, "metadata", dict(self.metadata))
 
 
 @dataclass(frozen=True)
@@ -538,6 +568,7 @@ class Ver2TierBIntegrator:
         self.seed_pack: SeedPack | None = None
         self.seed_injection_mode: str = "uninitialized"
         self.seed_velocity_scale: float = 1.0
+        self._matter_seed_observables: dict[str, float] | None = None
         self._layout_covered_mode_label = (
             None
             if mode_ops is None
@@ -601,6 +632,7 @@ class Ver2TierBIntegrator:
         self.seed_pack = seeded.seed_pack
         self.seed_injection_mode = seeded.seed_injection_mode
         self.seed_velocity_scale = seeded.velocity_scale
+        self._matter_seed_observables = dict(seeded.matter_seed_observables)
         return _pack_radiation_state(
             photon_T=seeded.photon_T,
             photon_E=seeded.photon_E,
@@ -706,6 +738,14 @@ class Ver2TierBIntegrator:
             seed_injection_mode=f"{injection_mode}+{projected_seed.injection_mode}",
             velocity_scale=float(projected_seed.velocity_scale),
             seed_pack=seed_pack,
+            matter_seed_observables={
+                "delta_b": float(unpacked["delta_b"]),
+                "theta_b": float(unpacked["theta_b"]),
+                "delta_c": float(unpacked["delta_c"]),
+                "theta_c": float(unpacked["theta_c"]),
+                "eta_cov": float(unpacked["eta_cov"]),
+                "Z": float(unpacked["Z"]),
+            },
         )
 
     def _resolve_startup_state(
@@ -1024,6 +1064,133 @@ class Ver2TierBIntegrator:
             sigma_conformal = float(a_i) * sigma_proper
             sigma_plus[i], sigma_minus[i] = _sigma_pm_from_conformal_sigma(sigma_conformal)
         return a, sigma_plus, sigma_minus
+
+    def _theta_1_photon_m0(self, photon_T_row: np.ndarray) -> float:
+        arr = np.asarray(photon_T_row, dtype=np.float64)
+        if self.config.L_max < 1:
+            return 0.0
+        slot = sum(2 * ell + 1 for ell in range(1)) + 1
+        if slot >= arr.size:
+            return 0.0
+        return float(arr[slot])
+
+    def _postprocess_local_matter_history(
+        self,
+        *,
+        eta: np.ndarray,
+        photon_T_tower: np.ndarray,
+    ) -> _LocalMatterHistory:
+        if self._matter_seed_observables is None:
+            raise RuntimeError("local matter post-processing requires seeded initial observables")
+
+        eta_arr = np.asarray(eta, dtype=np.float64)
+        photon_arr = np.asarray(photon_T_tower, dtype=np.float64)
+        if eta_arr.ndim != 1 or eta_arr.size == 0:
+            raise ValueError("eta must be a non-empty 1-D array")
+        if photon_arr.ndim != 2 or photon_arr.shape[0] != eta_arr.size:
+            raise ValueError("photon_T_tower must have shape (len(eta), n_state)")
+
+        baryon_history = np.zeros((eta_arr.size, 4), dtype=np.float64)
+        cdm_history = np.zeros((eta_arr.size, 2), dtype=np.float64)
+        baryon_state = BaryonFluidState(
+            delta_b=float(self._matter_seed_observables["delta_b"]),
+            v_b=float(self._matter_seed_observables["theta_b"]),
+            axis=SymmetryAxis.X,
+        )
+        cdm_state = CDMFluidState(
+            delta_c=float(self._matter_seed_observables["delta_c"]),
+            v_c=float(self._matter_seed_observables["theta_c"]),
+            axis=SymmetryAxis.X,
+        )
+        photon = self.species[SpeciesLabel.PHOTON]
+        baryon = self.species[SpeciesLabel.BARYON]
+        phi_dot_assumed = 0.0
+
+        def _store(slot: int, theta_1: float) -> None:
+            baryon_history[slot, :] = (
+                float(baryon_state.delta_b),
+                float(baryon_state.v_b),
+                float(baryon_state.v_b),
+                float(3.0 * theta_1 - baryon_state.v_b),
+            )
+            cdm_history[slot, :] = (
+                float(cdm_state.delta_c),
+                float(cdm_state.v_c),
+            )
+
+        _store(0, self._theta_1_photon_m0(photon_arr[0]))
+        for idx in range(eta_arr.size - 1):
+            eta_left = float(eta_arr[idx])
+            eta_right = float(eta_arr[idx + 1])
+            dt = eta_right - eta_left
+            if dt <= 0.0:
+                raise ValueError("eta grid must be strictly increasing")
+            eta_mid = 0.5 * (eta_left + eta_right)
+            H_mid = max(self._h_local_at(eta_mid), 0.0)
+            rho_b = max(float(baryon.rho_rest(eta_mid)), 1.0e-30)
+            rho_gamma = max(float(photon.rho_rest(eta_mid)), 1.0e-30)
+            gamma_mid = max(
+                _resolved_gamma_t(
+                    eta=eta_mid,
+                    direction=self._direction,
+                    visibility_source=self.visibility_source,
+                    config=self.config,
+                ),
+                0.0,
+            )
+            theta_mid = 0.5 * (
+                self._theta_1_photon_m0(photon_arr[idx])
+                + self._theta_1_photon_m0(photon_arr[idx + 1])
+            )
+            baryon_params = BaryonParameters(
+                R_b=max(3.0 * rho_b / (4.0 * rho_gamma), 1.0e-30),
+                tau_dot=gamma_mid,
+                H=H_mid,
+            )
+            cdm_params = CDMParameters(H=H_mid)
+            baryon_state = BaryonFluidState(
+                delta_b=float(baryon_state.delta_b - 3.0 * phi_dot_assumed * dt),
+                v_b=float(
+                    baryon_state.v_b
+                    + dt
+                    * baryon_euler_rhs(
+                        baryon_state,
+                        theta_mid,
+                        baryon_params,
+                        self.canonical_decision,
+                    )
+                ),
+                axis=baryon_state.axis,
+            )
+            cdm_state = CDMFluidState(
+                delta_c=float(cdm_state.delta_c - 3.0 * phi_dot_assumed * dt),
+                v_c=float(
+                    cdm_state.v_c
+                    + dt
+                    * cdm_euler_rhs(
+                        cdm_state,
+                        cdm_params,
+                        self.canonical_decision,
+                    )
+                ),
+                axis=cdm_state.axis,
+            )
+            _store(idx + 1, self._theta_1_photon_m0(photon_arr[idx + 1]))
+
+        return _LocalMatterHistory(
+            eta=eta_arr,
+            baryon_history=baryon_history,
+            cdm_history=cdm_history,
+            baryon_labels=("delta_b", "v_b", "v_e", "drag_lock_residual"),
+            cdm_labels=("delta_c", "v_c"),
+            metadata={
+                "owner": "runtime_postprocessed_homogeneous_local_matter",
+                "phi_dot_source": "unavailable_assumed_zero_homogeneous_limit",
+                "photon_dipole_source": "live_runtime_ph_I_ell1_m0",
+                "gamma_t_source": "resolved_visibility_gamma_t",
+                "history_sample_count": int(eta_arr.size),
+            },
+        )
 
     def _compute_tca_mask(self, etas: np.ndarray) -> np.ndarray:
         mask = np.zeros(len(etas), dtype=bool)

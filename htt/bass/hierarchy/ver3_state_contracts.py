@@ -106,6 +106,12 @@ def project_runtime_native_state(
     photon_E: PolarizationHierarchyState | PSTFHierarchyState | np.ndarray,
     neutrino_tower: PSTFHierarchyState | np.ndarray,
     source_template: np.ndarray,
+    baryon_block: np.ndarray | None = None,
+    cdm_block: np.ndarray | None = None,
+    matter_history_eta: np.ndarray | None = None,
+    baryon_history_samples: np.ndarray | None = None,
+    cdm_history_samples: np.ndarray | None = None,
+    matter_block_labels: Mapping[str, tuple[str, ...]] | None = None,
     source_history_eta: np.ndarray | None = None,
     source_history_samples: np.ndarray | None = None,
     covered_mode_label: str | None = None,
@@ -151,6 +157,43 @@ def project_runtime_native_state(
             vector[flatten(layout, covered, "ph_E", ell, m)] = float(tower_E[slot])
             vector[flatten(layout, covered, "nu_I", ell, m)] = float(tower_nu[slot])
 
+    matter_eta = None if matter_history_eta is None else np.asarray(matter_history_eta, dtype=np.float64)
+    baryon_history = (
+        None if baryon_history_samples is None else np.asarray(baryon_history_samples, dtype=np.float64)
+    )
+    cdm_history = (
+        None if cdm_history_samples is None else np.asarray(cdm_history_samples, dtype=np.float64)
+    )
+    labels_payload = {
+        "baryon": ("delta_b", "v_b", "v_e", "drag_lock_residual"),
+        "cdm": ("delta_c", "v_c"),
+    }
+    if matter_block_labels is not None:
+        labels_payload = {
+            "baryon": tuple(matter_block_labels.get("baryon", labels_payload["baryon"])),
+            "cdm": tuple(matter_block_labels.get("cdm", labels_payload["cdm"])),
+        }
+    baryon_sector_status = "zero_filled_local_sector_not_evolved"
+    cdm_sector_status = "zero_filled_local_sector_not_evolved"
+    if baryon_block is not None:
+        baryon_arr = np.asarray(baryon_block, dtype=np.float64)
+        if baryon_arr.shape != (int(layout.sector_local_dofs["baryon"]),):
+            raise ValueError("baryon_block does not match layout baryon local dofs")
+        for local_dof, value in enumerate(baryon_arr):
+            vector[flatten(layout, covered, "baryon", None, None, local_dof=local_dof)] = float(value)
+        baryon_sector_status = "runtime_postprocessed_homogeneous_limit"
+    else:
+        baryon_arr = _extract_local_sector(layout, vector, mu=covered, sector="baryon")
+    if cdm_block is not None:
+        cdm_arr = np.asarray(cdm_block, dtype=np.float64)
+        if cdm_arr.shape != (int(layout.sector_local_dofs["cdm"]),):
+            raise ValueError("cdm_block does not match layout cdm local dofs")
+        for local_dof, value in enumerate(cdm_arr):
+            vector[flatten(layout, covered, "cdm", None, None, local_dof=local_dof)] = float(value)
+        cdm_sector_status = "runtime_postprocessed_homogeneous_limit"
+    else:
+        cdm_arr = _extract_local_sector(layout, vector, mu=covered, sector="cdm")
+
     source_block = _extract_local_sector(layout, vector, mu=covered, sector="src")
     history_samples = (
         None if source_history_samples is None else np.asarray(source_history_samples, dtype=np.float64)
@@ -168,8 +211,12 @@ def project_runtime_native_state(
 
     hierarchy_state = HierarchyState(
         matter_block={
-            "baryon": _extract_local_sector(layout, vector, mu=covered, sector="baryon"),
-            "cdm": _extract_local_sector(layout, vector, mu=covered, sector="cdm"),
+            "baryon": baryon_arr,
+            "cdm": cdm_arr,
+            "eta": matter_eta,
+            "baryon_history": baryon_history,
+            "cdm_history": cdm_history,
+            "labels": labels_payload,
         },
         photon_intensity_block=tower_T,
         photon_polarization_block={
@@ -190,14 +237,19 @@ def project_runtime_native_state(
                 "ph_E": "live_runtime_projection",
                 "ph_B": "zero_filled_not_evolved",
                 "nu_I": "live_runtime_projection",
-                "baryon": "zero_filled_local_sector_not_evolved",
-                "cdm": "zero_filled_local_sector_not_evolved",
+                "baryon": baryon_sector_status,
+                "cdm": cdm_sector_status,
                 "src": "mode_ops_source_template",
             },
         },
     )
     zero_filled = tuple(mu for mu in layout.mode_labels if mu != covered)
     sector_status = dict(hierarchy_state.metadata["sector_status"])
+    resolved_sector_order = ["ph_I", "ph_E", "nu_I"]
+    if sector_status["baryon"] != "zero_filled_local_sector_not_evolved":
+        resolved_sector_order.append("baryon")
+    if sector_status["cdm"] != "zero_filled_local_sector_not_evolved":
+        resolved_sector_order.append("cdm")
     return CanonicalLayoutProjection(
         layout_manifest=dict(layout_manifest),
         hierarchy_state=hierarchy_state,
@@ -206,12 +258,23 @@ def project_runtime_native_state(
         covered_mode_labels=(covered,),
         zero_filled_mode_labels=zero_filled,
         metadata={
-            "projection_mode": "single_live_mode_label_with_zero_filled_residual_layout",
+            "projection_mode": (
+                "single_live_mode_label_with_runtime_local_matter_blocks"
+                if len(resolved_sector_order) > 3
+                else "single_live_mode_label_with_zero_filled_residual_layout"
+            ),
             "state_norm": float(np.linalg.norm(vector)),
             "source_block_norm": float(np.linalg.norm(source_block)),
             "source_block_nonzero": bool(np.any(np.abs(source_block) > 0.0)),
             "source_block_owner": str(sector_status["src"]),
             "source_history_available": bool(history_samples is not None),
             "source_history_sample_count": 0 if history_samples is None else int(history_samples.shape[0]),
+            "matter_history_available": bool(baryon_history is not None and cdm_history is not None),
+            "matter_history_sample_count": 0 if baryon_history is None else int(baryon_history.shape[0]),
+            "resolved_sector_order": tuple(resolved_sector_order),
+            "matter_block_labels": {
+                "baryon": list(labels_payload["baryon"]),
+                "cdm": list(labels_payload["cdm"]),
+            },
         },
     )

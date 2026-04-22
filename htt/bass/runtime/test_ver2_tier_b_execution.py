@@ -309,14 +309,29 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "ph_I",
         "ph_E",
         "nu_I",
+        "baryon",
+        "cdm",
     )
     assert run.solver_output.metadata["canonical_projection_available"] is True
     assert run.solver_output.metadata["canonical_projection_mode"] == (
-        "single_live_mode_label_with_zero_filled_residual_layout"
+        "single_live_mode_label_with_runtime_local_matter_blocks"
     )
     assert run.solver_output.metadata["canonical_projection_covered_mode_labels"] == ["m0"]
     assert run.solver_output.metadata["canonical_projection_sector_status"]["src"] == (
         "mode_ops_source_template"
+    )
+    assert run.solver_output.metadata["canonical_projection_sector_status"]["baryon"] == (
+        "runtime_postprocessed_homogeneous_limit"
+    )
+    assert run.solver_output.metadata["canonical_projection_sector_status"]["cdm"] == (
+        "runtime_postprocessed_homogeneous_limit"
+    )
+    assert run.solver_output.metadata["layout_local_matter_blocks_consumed"] is True
+    assert run.solver_output.metadata["layout_local_matter_owner"] == (
+        "runtime_postprocessed_homogeneous_local_matter"
+    )
+    assert run.solver_output.metadata["layout_local_matter_sample_count"] == len(
+        run.integration_result.eta
     )
     assert run.solver_output.metadata["b_mode_runtime_available"] is False
     assert run.solver_output.metadata["b_mode_payload_status"] == "zero_filled_layout_contract_only"
@@ -348,6 +363,26 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     )
     assert run.trace.canonical_projection.covered_mode_labels == ("m0",)
     assert run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
+    assert run.trace.canonical_projection.sector_status["baryon"] == (
+        "runtime_postprocessed_homogeneous_limit"
+    )
+    assert run.trace.canonical_projection.sector_status["cdm"] == (
+        "runtime_postprocessed_homogeneous_limit"
+    )
+    baryon_block = np.asarray(
+        run.trace.canonical_projection.hierarchy_state.matter_block["baryon"],
+        dtype=np.float64,
+    )
+    cdm_block = np.asarray(
+        run.trace.canonical_projection.hierarchy_state.matter_block["cdm"],
+        dtype=np.float64,
+    )
+    assert baryon_block.shape == (4,)
+    assert cdm_block.shape == (2,)
+    assert np.asarray(
+        run.trace.canonical_projection.hierarchy_state.matter_block["baryon_history"],
+        dtype=np.float64,
+    ).shape[0] == len(run.integration_result.eta)
     assert run.integration_result.neutrino_tower is not None
 
 

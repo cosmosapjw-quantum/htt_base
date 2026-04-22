@@ -178,3 +178,48 @@ def test_project_runtime_native_state_embeds_live_towers_into_canonical_layout()
     assert projection.metadata["source_history_sample_count"] == 2
     assert np.asarray(projection.hierarchy_state.source_history_block["eta"]).shape == (2,)
     assert np.asarray(projection.hierarchy_state.source_history_block["history"]).shape == (2, src_width)
+
+
+def test_project_runtime_native_state_can_embed_runtime_local_matter_blocks() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    ops = assemble_hierarchy_ops(
+        {
+            "branch": "orthogonal",
+            "opacity_data": {"Gamma_T": 2.0},
+            "source_tables": {"visibility_amplitude": 1.25},
+        },
+        backend,
+        truncation,
+        {"polarization_source": 0.5},
+    )
+    size = (layout.ell_max + 1) ** 2
+    projection = project_runtime_native_state(
+        layout=layout,
+        layout_manifest=ops.layout_metadata,
+        photon_T=np.arange(size, dtype=np.float64),
+        photon_E=np.arange(size, dtype=np.float64) + 100.0,
+        neutrino_tower=np.arange(size, dtype=np.float64) + 200.0,
+        source_template=np.asarray(ops.source_template, dtype=np.float64),
+        baryon_block=np.array([1.0, 2.0, 2.0, 3.0], dtype=np.float64),
+        cdm_block=np.array([4.0, 5.0], dtype=np.float64),
+        matter_history_eta=np.array([0.1, 0.2], dtype=np.float64),
+        baryon_history_samples=np.array([[1.0, 2.0, 2.0, 3.0], [1.5, 2.5, 2.5, 3.5]], dtype=np.float64),
+        cdm_history_samples=np.array([[4.0, 5.0], [4.5, 5.5]], dtype=np.float64),
+        matter_block_labels={
+            "baryon": ("delta_b", "v_b", "v_e", "drag_lock_residual"),
+            "cdm": ("delta_c", "v_c"),
+        },
+    )
+    assert projection.sector_status["baryon"] == "runtime_postprocessed_homogeneous_limit"
+    assert projection.sector_status["cdm"] == "runtime_postprocessed_homogeneous_limit"
+    assert projection.metadata["projection_mode"] == "single_live_mode_label_with_runtime_local_matter_blocks"
+    assert projection.metadata["matter_history_available"] is True
+    assert projection.metadata["matter_history_sample_count"] == 2
+    assert projection.metadata["resolved_sector_order"] == ("ph_I", "ph_E", "nu_I", "baryon", "cdm")
+    assert projection.state_vector[flatten(layout, "m0", "baryon", None, None, local_dof=1)] == pytest.approx(2.0)
+    assert projection.state_vector[flatten(layout, "m0", "cdm", None, None, local_dof=1)] == pytest.approx(5.0)

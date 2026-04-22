@@ -1890,6 +1890,10 @@ def execute_tier_b_solver(
         reionization_amplitude=reionization_amplitude,
         covered_mode_label=covered_mode_label,
     )
+    local_matter_history = integrator._postprocess_local_matter_history(  # noqa: SLF001 - runtime-owned postprocess bridge
+        eta=np.asarray(result.eta, dtype=np.float64),
+        photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
+    )
     canonical_projection = project_runtime_native_state(
         layout=layout,
         layout_manifest=getattr(mode_ops, "layout_metadata", {}),
@@ -1897,6 +1901,15 @@ def execute_tier_b_solver(
         photon_E=np.asarray(result.photon_E_tower[-1], dtype=np.float64),
         neutrino_tower=np.asarray(result.neutrino_tower[-1], dtype=np.float64),
         source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
+        baryon_block=np.asarray(local_matter_history.baryon_history[-1], dtype=np.float64),
+        cdm_block=np.asarray(local_matter_history.cdm_history[-1], dtype=np.float64),
+        matter_history_eta=np.asarray(local_matter_history.eta, dtype=np.float64),
+        baryon_history_samples=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
+        cdm_history_samples=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
+        matter_block_labels={
+            "baryon": tuple(local_matter_history.baryon_labels),
+            "cdm": tuple(local_matter_history.cdm_labels),
+        },
         source_history_eta=source_history_eta,
         source_history_samples=source_history_samples,
         covered_mode_label=covered_mode_label,
@@ -1914,6 +1927,11 @@ def execute_tier_b_solver(
         canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
     )
     result.solver_info["layout_source_history_sample_count"] = int(source_history_samples.shape[0])
+    result.solver_info["layout_local_matter_blocks_consumed"] = True
+    result.solver_info["layout_local_matter_owner"] = str(local_matter_history.metadata["owner"])
+    result.solver_info["layout_local_matter_sample_count"] = int(
+        local_matter_history.metadata["history_sample_count"]
+    )
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,

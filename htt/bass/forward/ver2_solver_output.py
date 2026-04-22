@@ -874,6 +874,15 @@ def build_solver_core_output_from_native_result(
             "layout_source_history_sample_count": int(
                 result.solver_info.get("layout_source_history_sample_count", 0)
             ),
+            "layout_local_matter_blocks_consumed": bool(
+                result.solver_info.get("layout_local_matter_blocks_consumed", False)
+            ),
+            "layout_local_matter_owner": str(
+                result.solver_info.get("layout_local_matter_owner", "unconsumed")
+            ),
+            "layout_local_matter_sample_count": int(
+                result.solver_info.get("layout_local_matter_sample_count", 0)
+            ),
             "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
             "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
             "seed_factory_owner": str(result.solver_info.get("seed_factory_owner", "legacy_runtime_seed")),
@@ -889,7 +898,16 @@ def build_solver_core_output_from_native_result(
             "off_axis_fallback_applied": False,
             "off_axis_block_reason": None if off_axis_supported else "off_axis_not_closed",
             "canonical_sector_order_contract": ("ph_I", "ph_E", "ph_B", "nu_I", "baryon", "cdm", "src"),
-            "runtime_resolved_sector_order": ("ph_I", "ph_E", "nu_I"),
+            "runtime_resolved_sector_order": (
+                ("ph_I", "ph_E", "nu_I")
+                if canonical_projection is None
+                else tuple(
+                    getattr(canonical_projection, "metadata", {}).get(
+                        "resolved_sector_order",
+                        ("ph_I", "ph_E", "nu_I"),
+                    )
+                )
+            ),
             "b_mode_runtime_available": False,
             "b_mode_payload_status": "zero_filled_layout_contract_only",
             "layout_contract_consumed": bool(mode_ops is not None),
@@ -924,6 +942,9 @@ def build_solver_core_output_from_native_result(
             "canonical_projection_sector_status": {}
             if canonical_projection is None
             else dict(getattr(canonical_projection, "sector_status", {})),
+            "canonical_projection_matter_labels": {}
+            if canonical_projection is None
+            else dict(getattr(canonical_projection, "metadata", {}).get("matter_block_labels", {})),
             **_neutrino_runtime_metadata(species),
             **source_builder_metadata,
         },
