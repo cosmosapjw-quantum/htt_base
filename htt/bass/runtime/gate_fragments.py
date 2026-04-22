@@ -6,9 +6,109 @@ import numpy as np
 from bass.validation import make_gate_bundle
 
 __all__ = [
+    "physics_gate_fragment",
     "ic_provenance_gate_bundle",
     "tilt_boost_separation_gate_bundle",
 ]
+
+
+def physics_gate_fragment(
+    *,
+    bianchi_type: str,
+    background_monitor,
+    species,
+    visibility_source,
+    thomson_probe,
+):
+    from bass.background import (
+        MatterNormalFrameState,
+        SpeciesRestFrameState,
+        background_gate_bundle,
+        background_rhs,
+        geometry_gate_bundle,
+        matter_projection_gate_bundle,
+        project_species_to_normal_frame,
+        total_matter_projection,
+    )
+    from bass.background.bianchi_types import get_family_spec
+    from bass.background.evolution import summarize_background_residuals
+    from bass.collision import exact_thomson_gate_bundle
+    from bass.recombination import visibility_history_gate_bundle
+    from bass.species.base import CANONICAL_ORDER, SpeciesLabel
+
+    family_spec = get_family_spec(bianchi_type)
+    branch = str(background_monitor.branch)
+    geometry = background_monitor.initial_conditions.geometry
+    eta_start = float(background_monitor.eta[0])
+    tilt_velocity = np.asarray(background_monitor.tilt_velocity[0], dtype=np.float64)
+    projected_species = []
+    for label in CANONICAL_ORDER:
+        if label is SpeciesLabel.LAMBDA:
+            continue
+        projected_species.append(
+            project_species_to_normal_frame(
+                SpeciesRestFrameState(
+                    rho_hat=float(species[label].rho_rest(eta_start)),
+                    p_hat=float(species[label].p_rest(eta_start)),
+                    label=str(label),
+                ),
+                tilt_velocity,
+            )
+        )
+    total_matter = total_matter_projection(projected_species)
+    matter_bundle = matter_projection_gate_bundle(
+        tuple(projected_species),
+        total=total_matter,
+        family=bianchi_type,
+        branch=branch,
+    )
+    representative_matter = MatterNormalFrameState(
+        rho=float(background_monitor.rho[-1]),
+        p=float(background_monitor.p[-1]),
+        q=np.asarray(background_monitor.q[-1], dtype=np.float64),
+        pi=np.asarray(background_monitor.pi[-1], dtype=np.float64),
+    )
+    representative_assembly = background_rhs(
+        H=float(background_monitor.H[-1]),
+        sigma_ab=np.asarray(background_monitor.sigma_tensor[-1], dtype=np.float64),
+        matter=representative_matter,
+        geometry=geometry,
+        lambda_value=float(species[SpeciesLabel.LAMBDA].rho_rest(eta_start)),
+    )
+    residual_summary = summarize_background_residuals(background_monitor)
+    background_bundle = background_gate_bundle(
+        representative_assembly,
+        geometry,
+        family=bianchi_type,
+        branch=branch,
+        residual_history_summary={
+            "gauss_max_over_H2_ref": residual_summary.gauss_max_over_H2_ref,
+            "codazzi_max_over_H2_ref": residual_summary.codazzi_max_over_H2_ref,
+            "jacobi_max_over_structure_ref": residual_summary.jacobi_max_over_structure_ref,
+            "bianchi_max_over_H2_ref": residual_summary.bianchi_max_over_H2_ref,
+            "samples": int(residual_summary.samples),
+        },
+        metadata_extra={"matter_model_tag": background_monitor.matter_model_tag},
+    )
+    return {
+        "geometry_diagnostics_gate": geometry_gate_bundle(
+            family_spec,
+            geometry,
+            branch=branch,
+        ),
+        "matter_projection_gate": matter_bundle,
+        "background_core_gate": background_bundle,
+        "exact_thomson_gate": exact_thomson_gate_bundle(
+            thomson_probe,
+            family=bianchi_type,
+            branch=branch,
+        ),
+        "visibility_history_gate": visibility_history_gate_bundle(
+            visibility_source.contract,
+            family=bianchi_type,
+            branch=branch,
+        ),
+    }
 
 
 def tilt_boost_separation_gate_bundle(
