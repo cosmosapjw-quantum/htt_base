@@ -155,8 +155,8 @@ def test_project_runtime_native_state_embeds_live_towers_into_canonical_layout()
         source_history_eta=np.array([0.1, 0.2], dtype=np.float64),
         source_history_samples=np.arange(2 * src_width, dtype=np.float64).reshape(2, src_width),
     )
-    assert projection.covered_mode_labels == ("m0",)
-    assert projection.zero_filled_mode_labels == ("m+2",)
+    assert set(projection.covered_mode_labels) == {"m0", "m+2"}
+    assert projection.zero_filled_mode_labels == ()
     assert projection.sector_status["ph_I"] == "live_runtime_projection"
     assert projection.sector_status["ph_B"] == "zero_filled_not_evolved"
     assert projection.sector_status["src"] == "mode_ops_source_template"
@@ -218,7 +218,7 @@ def test_project_runtime_native_state_can_embed_runtime_local_matter_blocks() ->
     )
     assert projection.sector_status["baryon"] == "runtime_postprocessed_homogeneous_limit"
     assert projection.sector_status["cdm"] == "runtime_postprocessed_homogeneous_limit"
-    assert projection.metadata["projection_mode"] == "single_live_mode_label_with_runtime_local_matter_blocks"
+    assert projection.metadata["projection_mode"] == "multi_live_mode_label_with_runtime_local_matter_blocks"
     assert projection.metadata["matter_history_available"] is True
     assert projection.metadata["matter_history_sample_count"] == 2
     assert projection.metadata["resolved_sector_order"] == ("ph_I", "ph_E", "nu_I", "baryon", "cdm", "src")
@@ -268,7 +268,7 @@ def test_project_runtime_native_state_can_embed_layout_auxiliary_local_matter_bl
     assert projection.sector_status["baryon"] == "layout_operator_auxiliary_local_matter"
     assert projection.sector_status["cdm"] == "layout_operator_auxiliary_local_matter"
     assert projection.metadata["projection_mode"] == (
-        "single_live_mode_label_with_layout_auxiliary_local_matter_blocks"
+        "multi_live_mode_label_with_layout_auxiliary_local_matter_blocks"
     )
     assert projection.hierarchy_state.matter_block["owner"] == (
         "mode_ops.mass_inverse_auxiliary_local_matter_evolution"

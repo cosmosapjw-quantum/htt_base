@@ -109,6 +109,17 @@ def _stable_l2_norm(value: np.ndarray) -> float:
     return max_abs * float(np.sqrt(np.sum(np.square(scaled), dtype=np.float64)))
 
 
+def _resolve_runtime_mode_label(layout: HierarchyLayout, fallback: str, *, m: int) -> str:
+    preferred = {
+        0: "m0",
+        2: "m+2",
+        -2: "m-2",
+    }.get(int(m))
+    if preferred is not None and preferred in layout.mode_labels:
+        return preferred
+    return fallback
+
+
 def project_runtime_native_state(
     *,
     layout: HierarchyLayout,
@@ -145,6 +156,7 @@ def project_runtime_native_state(
     covered = layout.mode_labels[0] if covered_mode_label is None else str(covered_mode_label)
     if covered not in layout.mode_labels:
         raise ValueError(f"covered_mode_label {covered!r} not present in layout.mode_labels")
+    covered_mode_labels = {covered}
 
     L = int(layout.ell_max)
     photon_T_state = _coerce_hierarchy_state(photon_T, L=L)
@@ -191,10 +203,12 @@ def project_runtime_native_state(
     for ell in range(L + 1):
         for m in range(-ell, ell + 1):
             slot = sum(2 * l + 1 for l in range(ell)) + (m + ell)
-            vector[flatten(layout, covered, "ph_I", ell, m)] = float(tower_T[slot])
-            vector[flatten(layout, covered, "ph_E", ell, m)] = float(tower_E[slot])
-            vector[flatten(layout, covered, "ph_B", ell, m)] = float(tower_B[slot])
-            vector[flatten(layout, covered, "nu_I", ell, m)] = float(tower_nu[slot])
+            mode_label = _resolve_runtime_mode_label(layout, covered, m=m)
+            covered_mode_labels.add(mode_label)
+            vector[flatten(layout, mode_label, "ph_I", ell, m)] = float(tower_T[slot])
+            vector[flatten(layout, mode_label, "ph_E", ell, m)] = float(tower_E[slot])
+            vector[flatten(layout, mode_label, "ph_B", ell, m)] = float(tower_B[slot])
+            vector[flatten(layout, mode_label, "nu_I", ell, m)] = float(tower_nu[slot])
 
     matter_eta = None if matter_history_eta is None else np.asarray(matter_history_eta, dtype=np.float64)
     baryon_history = (
@@ -282,7 +296,8 @@ def project_runtime_native_state(
         },
         metadata={
             "covered_mode_label": covered,
-            "zero_filled_mode_labels": [mu for mu in layout.mode_labels if mu != covered],
+            "covered_mode_labels": sorted(covered_mode_labels),
+            "zero_filled_mode_labels": [mu for mu in layout.mode_labels if mu not in covered_mode_labels],
             "sector_status": {
                 "ph_I": "live_runtime_projection",
                 "ph_E": "live_runtime_projection",
@@ -301,7 +316,7 @@ def project_runtime_native_state(
             },
         },
     )
-    zero_filled = tuple(mu for mu in layout.mode_labels if mu != covered)
+    zero_filled = tuple(mu for mu in layout.mode_labels if mu not in covered_mode_labels)
     sector_status = dict(hierarchy_state.metadata["sector_status"])
     resolved_runtime_sectors = ["ph_I", "ph_E", "nu_I"]
     if sector_status["ph_B"] != "zero_filled_not_evolved":
@@ -310,22 +325,25 @@ def project_runtime_native_state(
         resolved_runtime_sectors.append("baryon")
     if sector_status["cdm"] != "zero_filled_local_sector_not_evolved":
         resolved_runtime_sectors.append("cdm")
+    harmonic_projection_kind = (
+        "multi_live_mode_label" if len(covered_mode_labels) > 1 else "single_live_mode_label"
+    )
     if len(resolved_runtime_sectors) <= 3:
-        projection_mode = "single_live_mode_label_with_zero_filled_residual_layout"
+        projection_mode = f"{harmonic_projection_kind}_with_zero_filled_residual_layout"
     elif (
         sector_status["baryon"] == "layout_operator_auxiliary_local_matter"
         or sector_status["cdm"] == "layout_operator_auxiliary_local_matter"
     ):
-        projection_mode = "single_live_mode_label_with_layout_auxiliary_local_matter_blocks"
+        projection_mode = f"{harmonic_projection_kind}_with_layout_auxiliary_local_matter_blocks"
     else:
-        projection_mode = "single_live_mode_label_with_runtime_local_matter_blocks"
+        projection_mode = f"{harmonic_projection_kind}_with_runtime_local_matter_blocks"
     resolved_sector_order = [*resolved_runtime_sectors, "src"]
     return CanonicalLayoutProjection(
         layout_manifest=dict(layout_manifest),
         hierarchy_state=hierarchy_state,
         state_vector=vector,
         sector_status=sector_status,
-        covered_mode_labels=(covered,),
+        covered_mode_labels=tuple(sorted(covered_mode_labels)),
         zero_filled_mode_labels=zero_filled,
         metadata={
             "projection_mode": projection_mode,
