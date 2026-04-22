@@ -1015,6 +1015,7 @@ def _build_gate_registry(
     seed_pack,
     seed_projection,
     mode_ops,
+    layout_projection,
     cutoff_campaign,
 ) -> dict[str, object]:
     from bass.background import (
@@ -1135,7 +1136,19 @@ def _build_gate_registry(
             seed_projection=seed_projection,
         ),
         "family_backend_gate": family_backend_gate_bundle(backend, mode_ops),
-        "hierarchy_layout_gate": hierarchy_layout_gate_bundle(backend, mode_ops),
+        "hierarchy_layout_gate": hierarchy_layout_gate_bundle(
+            backend,
+            mode_ops,
+            provenance_metadata={}
+            if layout_projection is None
+            else {
+                "layout_projection_owner": str(layout_projection.metadata.get("owner", "")),
+                "layout_auxiliary_bundle_owner": str(
+                    getattr(layout_projection.auxiliary_history_bundle, "metadata", {}).get("owner", "")
+                ),
+                "covered_mode_label": str(getattr(layout_projection, "covered_mode_label", "")),
+            },
+        ),
         "production_cutoff_gate": _production_cutoff_gate_bundle(
             bianchi_type=bianchi_type,
             branch=branch,
@@ -1903,6 +1916,7 @@ def execute_tier_b_solver(
         seed_pack=integrator.seed_pack,
         seed_projection=integrator.seed_projection,
         mode_ops=mode_ops,
+        layout_projection=layout_projection,
         cutoff_campaign=cutoff_campaign,
     )
 

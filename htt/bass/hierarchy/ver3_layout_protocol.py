@@ -469,6 +469,8 @@ def assemble_hierarchy_ops(
 def hierarchy_layout_gate_bundle(
     backend: FamilyBackend,
     ops,
+    *,
+    provenance_metadata: Mapping[str, object] | None = None,
 ) -> GateBundle:
     """Emit the machine-readable PR-09 hierarchy-layout gate bundle."""
 
@@ -505,6 +507,9 @@ def hierarchy_layout_gate_bundle(
             "layout_manifest": layout_metadata,
             "operator_realization": layout_metadata.get("operator_realization"),
             "exact_family_operator_available": layout_metadata.get("exact_family_operator_available"),
+            "projection_provenance": {}
+            if provenance_metadata is None
+            else dict(provenance_metadata),
         },
         passed=bool(
             mass_matrix.shape[0] == mass_matrix.shape[1]

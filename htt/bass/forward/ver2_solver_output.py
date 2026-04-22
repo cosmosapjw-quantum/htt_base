@@ -971,19 +971,37 @@ def build_solver_core_output_from_native_result(
             "b_mode_runtime_available": False,
             "b_mode_payload_available": bool(b_mode_payload_available),
             "b_mode_payload_status": str(b_mode_payload_status),
-            "layout_contract_consumed": bool(mode_ops is not None),
-            "layout_mode_labels": []
-            if mode_ops is None
-            else list(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [])),
-            "layout_sector_order": []
-            if mode_ops is None
-            else list(getattr(mode_ops, "layout_metadata", {}).get("sector_order", [])),
-            "layout_operator_kernel_family": None
-            if mode_ops is None
-            else str(getattr(mode_ops, "operator_kernel_family", "")),
-            "seed_provenance_mode": None
-            if mode_ops is None
-            else str(getattr(mode_ops, "seed_provenance_mode", "")),
+            "layout_contract_consumed": bool(
+                result.solver_info.get("layout_contract_consumed", mode_ops is not None)
+            ),
+            "layout_mode_labels": list(result.solver_info.get("layout_mode_labels", []))
+            if "layout_mode_labels" in result.solver_info
+            else (
+                []
+                if mode_ops is None
+                else list(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", []))
+            ),
+            "layout_sector_order": list(result.solver_info.get("layout_sector_order", []))
+            if "layout_sector_order" in result.solver_info
+            else (
+                []
+                if mode_ops is None
+                else list(getattr(mode_ops, "layout_metadata", {}).get("sector_order", []))
+            ),
+            "layout_operator_kernel_family": result.solver_info.get("layout_operator_kernel_family")
+            if "layout_operator_kernel_family" in result.solver_info
+            else (
+                None
+                if mode_ops is None
+                else str(getattr(mode_ops, "operator_kernel_family", ""))
+            ),
+            "seed_provenance_mode": result.solver_info.get("seed_provenance_mode")
+            if "seed_provenance_mode" in result.solver_info
+            else (
+                None
+                if mode_ops is None
+                else str(getattr(mode_ops, "seed_provenance_mode", ""))
+            ),
             "ic_provenance_status": None
             if seed_pack is None
             else str(getattr(seed_pack, "seed_mode", "")),

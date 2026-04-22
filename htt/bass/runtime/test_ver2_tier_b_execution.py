@@ -391,6 +391,12 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert registry["background_core_gate"].metadata["matter_model_tag"] == (
         run.trace.background_monitor.matter_model_tag
     )
+    assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_projection_owner"] == (
+        "ver2_native_integrator.build_runtime_layout_projection"
+    )
+    assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_auxiliary_bundle_owner"] == (
+        "ver2_native_integrator.layout_auxiliary_history_bundle"
+    )
     assert run.trace.canonical_projection.covered_mode_labels == ("m0",)
     assert run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
     assert run.trace.canonical_projection.sector_status["baryon"] == (

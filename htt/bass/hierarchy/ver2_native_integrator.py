@@ -1684,6 +1684,11 @@ class Ver2TierBIntegrator:
                 "owner": "ver2_native_integrator.build_runtime_layout_projection",
                 "gamma_t_probe": float(gamma_t_probe),
                 "solver_info_fragment": {
+                    "layout_contract_consumed": True,
+                    "layout_mode_labels": list(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [])),
+                    "layout_sector_order": list(getattr(mode_ops, "layout_metadata", {}).get("sector_order", [])),
+                    "layout_operator_kernel_family": str(getattr(mode_ops, "operator_kernel_family", "")),
+                    "seed_provenance_mode": str(getattr(mode_ops, "seed_provenance_mode", "")),
                     "layout_source_template_consumed": bool(
                         np.any(np.abs(source_block) > 0.0)
                     ),
