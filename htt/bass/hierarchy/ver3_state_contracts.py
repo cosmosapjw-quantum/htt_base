@@ -98,6 +98,17 @@ def _extract_local_sector(layout: HierarchyLayout, vector: np.ndarray, *, mu: st
     )
 
 
+def _stable_l2_norm(value: np.ndarray) -> float:
+    arr = np.asarray(value, dtype=np.float64)
+    if arr.size == 0:
+        return 0.0
+    max_abs = float(np.max(np.abs(arr)))
+    if max_abs <= 0.0:
+        return 0.0
+    scaled = arr / max_abs
+    return max_abs * float(np.sqrt(np.sum(np.square(scaled), dtype=np.float64)))
+
+
 def project_runtime_native_state(
     *,
     layout: HierarchyLayout,
@@ -115,6 +126,8 @@ def project_runtime_native_state(
     baryon_history_samples: np.ndarray | None = None,
     cdm_history_samples: np.ndarray | None = None,
     matter_block_labels: Mapping[str, tuple[str, ...]] | None = None,
+    matter_sector_status: Mapping[str, str] | None = None,
+    matter_block_metadata: Mapping[str, object] | None = None,
     source_history_eta: np.ndarray | None = None,
     source_history_samples: np.ndarray | None = None,
     covered_mode_label: str | None = None,
@@ -219,6 +232,12 @@ def project_runtime_native_state(
         cdm_sector_status = "runtime_postprocessed_homogeneous_limit"
     else:
         cdm_arr = _extract_local_sector(layout, vector, mu=covered, sector="cdm")
+    if matter_sector_status is not None:
+        status_override = dict(matter_sector_status)
+        if baryon_block is not None and "baryon" in status_override:
+            baryon_sector_status = str(status_override["baryon"])
+        if cdm_block is not None and "cdm" in status_override:
+            cdm_sector_status = str(status_override["cdm"])
 
     source_block = _extract_local_sector(layout, vector, mu=covered, sector="src")
     history_samples = (
@@ -235,15 +254,19 @@ def project_runtime_native_state(
                 "source_history_eta must be provided with one entry per sampled source row"
             )
 
+    matter_block_payload = {
+        "baryon": baryon_arr,
+        "cdm": cdm_arr,
+        "eta": matter_eta,
+        "baryon_history": baryon_history,
+        "cdm_history": cdm_history,
+        "labels": labels_payload,
+    }
+    if matter_block_metadata is not None:
+        matter_block_payload.update(dict(matter_block_metadata))
+
     hierarchy_state = HierarchyState(
-        matter_block={
-            "baryon": baryon_arr,
-            "cdm": cdm_arr,
-            "eta": matter_eta,
-            "baryon_history": baryon_history,
-            "cdm_history": cdm_history,
-            "labels": labels_payload,
-        },
+        matter_block=matter_block_payload,
         photon_intensity_block=tower_T,
         photon_polarization_block={
             "E": tower_E,
@@ -284,6 +307,15 @@ def project_runtime_native_state(
         resolved_sector_order.append("baryon")
     if sector_status["cdm"] != "zero_filled_local_sector_not_evolved":
         resolved_sector_order.append("cdm")
+    if len(resolved_sector_order) <= 3:
+        projection_mode = "single_live_mode_label_with_zero_filled_residual_layout"
+    elif (
+        sector_status["baryon"] == "layout_operator_auxiliary_local_matter"
+        or sector_status["cdm"] == "layout_operator_auxiliary_local_matter"
+    ):
+        projection_mode = "single_live_mode_label_with_layout_auxiliary_local_matter_blocks"
+    else:
+        projection_mode = "single_live_mode_label_with_runtime_local_matter_blocks"
     return CanonicalLayoutProjection(
         layout_manifest=dict(layout_manifest),
         hierarchy_state=hierarchy_state,
@@ -292,13 +324,9 @@ def project_runtime_native_state(
         covered_mode_labels=(covered,),
         zero_filled_mode_labels=zero_filled,
         metadata={
-            "projection_mode": (
-                "single_live_mode_label_with_runtime_local_matter_blocks"
-                if len(resolved_sector_order) > 3
-                else "single_live_mode_label_with_zero_filled_residual_layout"
-            ),
-            "state_norm": float(np.linalg.norm(vector)),
-            "source_block_norm": float(np.linalg.norm(source_block)),
+            "projection_mode": projection_mode,
+            "state_norm": _stable_l2_norm(vector),
+            "source_block_norm": _stable_l2_norm(source_block),
             "source_block_nonzero": bool(np.any(np.abs(source_block) > 0.0)),
             "source_block_owner": str(sector_status["src"]),
             "source_history_available": bool(history_samples is not None),

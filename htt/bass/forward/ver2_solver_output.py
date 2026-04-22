@@ -910,6 +910,15 @@ def build_solver_core_output_from_native_result(
             "layout_local_matter_sample_count": int(
                 result.solver_info.get("layout_local_matter_sample_count", 0)
             ),
+            "layout_local_matter_reference_owner": str(
+                result.solver_info.get("layout_local_matter_reference_owner", "unavailable")
+            ),
+            "layout_local_matter_reference_sample_count": int(
+                result.solver_info.get("layout_local_matter_reference_sample_count", 0)
+            ),
+            "layout_local_matter_reference_delta_norm": float(
+                result.solver_info.get("layout_local_matter_reference_delta_norm", 0.0)
+            ),
             "layout_b_mode_proxy_consumed": bool(
                 result.solver_info.get("layout_b_mode_proxy_consumed", False)
             ),

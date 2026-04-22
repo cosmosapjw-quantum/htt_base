@@ -323,7 +323,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     )
     assert run.solver_output.metadata["canonical_projection_available"] is True
     assert run.solver_output.metadata["canonical_projection_mode"] == (
-        "single_live_mode_label_with_runtime_local_matter_blocks"
+        "single_live_mode_label_with_layout_auxiliary_local_matter_blocks"
     )
     assert run.solver_output.metadata["canonical_projection_covered_mode_labels"] == ["m0"]
     assert run.solver_output.metadata["canonical_projection_sector_status"]["src"] == (
@@ -334,18 +334,25 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         run.integration_result.eta
     )
     assert run.solver_output.metadata["canonical_projection_sector_status"]["baryon"] == (
-        "runtime_postprocessed_homogeneous_limit"
+        "layout_operator_auxiliary_local_matter"
     )
     assert run.solver_output.metadata["canonical_projection_sector_status"]["cdm"] == (
-        "runtime_postprocessed_homogeneous_limit"
+        "layout_operator_auxiliary_local_matter"
     )
     assert run.solver_output.metadata["layout_local_matter_blocks_consumed"] is True
     assert run.solver_output.metadata["layout_local_matter_owner"] == (
-        "runtime_postprocessed_homogeneous_local_matter"
+        "mode_ops.mass_inverse_auxiliary_local_matter_evolution"
     )
     assert run.solver_output.metadata["layout_local_matter_sample_count"] == len(
         run.integration_result.eta
     )
+    assert run.solver_output.metadata["layout_local_matter_reference_owner"] == (
+        "runtime_postprocessed_homogeneous_local_matter"
+    )
+    assert run.solver_output.metadata["layout_local_matter_reference_sample_count"] == len(
+        run.integration_result.eta
+    )
+    assert run.solver_output.metadata["layout_local_matter_reference_delta_norm"] >= 0.0
     assert run.solver_output.metadata["b_mode_runtime_available"] is False
     assert run.solver_output.metadata["b_mode_payload_status"] == "zero_filled_layout_contract_only"
     assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
@@ -377,10 +384,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.trace.canonical_projection.covered_mode_labels == ("m0",)
     assert run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
     assert run.trace.canonical_projection.sector_status["baryon"] == (
-        "runtime_postprocessed_homogeneous_limit"
+        "layout_operator_auxiliary_local_matter"
     )
     assert run.trace.canonical_projection.sector_status["cdm"] == (
-        "runtime_postprocessed_homogeneous_limit"
+        "layout_operator_auxiliary_local_matter"
     )
     baryon_block = np.asarray(
         run.trace.canonical_projection.hierarchy_state.matter_block["baryon"],
@@ -396,6 +403,12 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         run.trace.canonical_projection.hierarchy_state.matter_block["baryon_history"],
         dtype=np.float64,
     ).shape[0] == len(run.integration_result.eta)
+    assert run.trace.canonical_projection.hierarchy_state.matter_block["owner"] == (
+        "mode_ops.mass_inverse_auxiliary_local_matter_evolution"
+    )
+    assert run.trace.canonical_projection.hierarchy_state.matter_block["reference_owner"] == (
+        "runtime_postprocessed_homogeneous_local_matter"
+    )
     assert np.asarray(
         run.trace.canonical_projection.hierarchy_state.photon_polarization_block["B_history"],
         dtype=np.float64,
