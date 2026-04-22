@@ -6,8 +6,10 @@ translator, and seed provenance contract in machine-readable form.
 """
 from __future__ import annotations
 
+import json
 import math
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 from bass.background.bianchi_types import FamilySpec, get_family_spec
@@ -42,6 +44,32 @@ _CHART_DEFAULTS: dict[str, str] = {
     "VIII": "sl2r_noncompact_chart",
     "IX": "wigner_d_compact_chart",
 }
+
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+_V5_VERIFICATION_PATH = _REPO_ROOT / "docs" / "bianchi_design_pack_v5" / "verification" / "crosscheck_results.json"
+
+
+def _load_v5_verification_bundle() -> dict[str, object]:
+    try:
+        payload = json.loads(_V5_VERIFICATION_PATH.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return {
+            "crosscheck_pass": False,
+            "load_status": "missing",
+            "verification_reference": "docs/bianchi_design_pack_v5/verification/crosscheck_results.json",
+        }
+    except json.JSONDecodeError:
+        return {
+            "crosscheck_pass": False,
+            "load_status": "invalid_json",
+            "verification_reference": "docs/bianchi_design_pack_v5/verification/crosscheck_results.json",
+        }
+    payload["load_status"] = "loaded"
+    payload["verification_reference"] = "docs/bianchi_design_pack_v5/verification/crosscheck_results.json"
+    return payload
+
+
+_V5_VERIFICATION_BUNDLE = _load_v5_verification_bundle()
 
 _BOUNDARY_POLICIES: dict[str, str] = {
     "FLRW": "isotropic_regular",
@@ -563,6 +591,16 @@ class FamilyBackend:
                 "canonical_gauge": self.family_spec.canonical_gauge,
                 "constraint_policy_required": self.family_spec.algebra.branch_policy.constraint_policy_required,
                 "isotropic_anchor": self.family_spec.isotropic_anchor,
+                "verification_bundle": dict(_V5_VERIFICATION_BUNDLE),
+                "verification_crosscheck_pass": bool(
+                    _V5_VERIFICATION_BUNDLE.get("crosscheck_pass", False)
+                ),
+                "verification_reference": str(
+                    _V5_VERIFICATION_BUNDLE.get(
+                        "verification_reference",
+                        "docs/bianchi_design_pack_v5/verification/crosscheck_results.json",
+                    )
+                ),
                 **_resolved_lookup_payload(self.family_spec),
             },
         )
@@ -606,6 +644,10 @@ class FamilyBackend:
             "operator_payload_status": "geometry_opacity_coupled_sparse_blocks",
             "analytic_normalization_status": template_card.analytic_normalization_status,
             "lookup_resolution_status": template_card.lookup_resolution_status,
+            "verification_crosscheck_pass": bool(
+                template_card.metadata.get("verification_crosscheck_pass", False)
+            ),
+            "verification_reference": template_card.metadata.get("verification_reference"),
             "template_card": template_card.as_payload(),
         }
         ops = ModeOps(
@@ -704,6 +746,10 @@ class FamilyBackend:
             "directional_tag": self._directional_tag(),
             "must_not_do": list(template_card.must_not_do),
             "lookup_resolution_status": template_card.lookup_resolution_status,
+            "verification_crosscheck_pass": bool(
+                template_card.metadata.get("verification_crosscheck_pass", False)
+            ),
+            "verification_reference": template_card.metadata.get("verification_reference"),
             "resolved_lookup": dict(template_card.metadata),
             **dict(seed_request.metadata),
         }
@@ -823,6 +869,10 @@ class FamilyBackend:
             "preferred_backend": self.family_spec.preferred_backend,
             "generic_fallback": self.family_spec.generic_fallback,
             "lookup_resolution_status": template_card.lookup_resolution_status,
+            "verification_crosscheck_pass": bool(
+                template_card.metadata.get("verification_crosscheck_pass", False)
+            ),
+            "verification_reference": template_card.metadata.get("verification_reference"),
             "seed_normalization_convention": dict(_FROZEN_SEED_NORMALIZATION),
             "template_card": template_card.as_payload(),
         }
@@ -853,11 +903,17 @@ def family_backend_gate_bundle(
             "lookup_resolution_frozen": float(
                 template.lookup_resolution_status == "frozen_v5_formula_set"
             ),
+            "verification_crosscheck_pass": float(
+                bool(template.metadata.get("verification_crosscheck_pass", False))
+            ),
         },
         known_limit_checks={
             "operator_payload_bound": bool(ops.release_status == "backend-operator-bound"),
             "chart_frozen": bool(ops.chart == template.preferred_chart),
             "kernel_family_frozen": bool(ops.operator_kernel_family == template.operator_kernel_family),
+            "verification_bundle_pass": bool(
+                template.metadata.get("verification_crosscheck_pass", False)
+            ),
         },
         forbidden_shortcut_checks={
             "no_local_boost_folded_into_backend": True,
@@ -869,11 +925,13 @@ def family_backend_gate_bundle(
             "layout_metadata": dict(ops.layout_metadata),
             "operator_payload_status": ops.metadata.get("operator_payload_status"),
             "lookup_resolution_status": template.lookup_resolution_status,
+            "verification_reference": template.metadata.get("verification_reference"),
         },
         passed=bool(
             ops.release_status == "backend-operator-bound"
             and ops.operator_kernel_family == template.operator_kernel_family
             and template.lookup_resolution_status == "frozen_v5_formula_set"
+            and bool(template.metadata.get("verification_crosscheck_pass", False))
         ),
         opened_claim="family backend contract bound to executable operator payload",
     )

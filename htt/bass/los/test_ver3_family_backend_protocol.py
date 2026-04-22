@@ -7,6 +7,7 @@ from bass.los import (
     NativeLabelCard,
     SeedRequest,
     build_backend,
+    family_backend_gate_bundle,
 )
 
 
@@ -170,6 +171,11 @@ def test_template_card_exposes_intrinsic_family_constraints() -> None:
     assert resolved["h"] == pytest.approx(-2.0)
     assert resolved["q"] == pytest.approx(-0.1715728752538099)
     assert card.metadata["seed_normalization_convention"]["amp_ref"] == "disc_L2_unit"
+    assert card.metadata["verification_crosscheck_pass"] is True
+    assert (
+        card.metadata["verification_reference"]
+        == "docs/bianchi_design_pack_v5/verification/crosscheck_results.json"
+    )
 
 
 def test_required_metadata_embeds_template_card_payload() -> None:
@@ -184,7 +190,9 @@ def test_required_metadata_embeds_template_card_payload() -> None:
     ]
     assert template_card["analytic_normalization_status"] == "frozen_discrete_weighted_l2_release_convention"
     assert template_card["lookup_resolution_status"] == "frozen_v5_formula_set"
+    assert template_card["metadata"]["verification_crosscheck_pass"] is True
     assert metadata["seed_normalization_convention"]["norm_rule"] == "<phi,phi>_h = 1"
+    assert metadata["verification_crosscheck_pass"] is True
 
 
 def test_type_viii_template_card_carries_frozen_plancherel_conventions() -> None:
@@ -206,4 +214,18 @@ def test_intrinsic_seed_factory_records_frozen_normalization_and_lookup_metadata
     assert seed.normalization["amplitude_reference_value"] == pytest.approx(3.0)
     assert seed.normalization["inner_product"] == "<phi,psi>_h = sum_q w_q phi_q^* psi_q"
     assert seed.metadata["lookup_resolution_status"] == "frozen_v5_formula_set"
+    assert seed.metadata["verification_crosscheck_pass"] is True
     assert seed.metadata["resolved_lookup"]["frozen_backend_constants"]["rho"] == "Abs(k)"
+
+
+def test_family_backend_gate_bundle_carries_v5_verification_authority() -> None:
+    backend = build_backend(get_family_spec("VIII"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "opacity_data": {}, "source_tables": {}})
+    gate = family_backend_gate_bundle(backend, ops)
+    assert gate.known_limit_checks["verification_bundle_pass"] is True
+    assert gate.residual_summary["verification_crosscheck_pass"] == pytest.approx(1.0)
+    assert (
+        gate.metadata["verification_reference"]
+        == "docs/bianchi_design_pack_v5/verification/crosscheck_results.json"
+    )
+    assert gate.passed is True
