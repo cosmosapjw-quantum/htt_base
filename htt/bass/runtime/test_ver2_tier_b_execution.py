@@ -302,6 +302,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_b_mode_history_sample_count"] == len(
         run.integration_result.eta
     )
+    assert run.solver_output.metadata["layout_b_mode_proxy_source"] == (
+        "mode_ops.mass_inverse_auxiliary_b_evolution"
+    )
     assert run.solver_output.metadata["layout_sector_order"] == [
         "ph_I",
         "ph_E",

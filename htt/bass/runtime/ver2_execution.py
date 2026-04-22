@@ -922,13 +922,25 @@ def _build_sampled_b_mode_history(
     cdm_history: np.ndarray,
 ) -> tuple[np.ndarray, np.ndarray]:
     from bass.hierarchy import project_runtime_native_state
+    from bass.hierarchy.ver3_layout_protocol import flatten
 
     eta_samples = np.asarray(result.eta, dtype=np.float64)
     photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
     photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
     neutrino_tower = np.asarray(result.neutrino_tower, dtype=np.float64)
     ell2_m0_slot = sum(2 * ell + 1 for ell in range(2)) + 2 if int(result.L_max) >= 2 else None
-    rows: list[np.ndarray] = []
+    size = (int(layout.ell_max) + 1) ** 2
+    rows = np.zeros((eta_samples.size, size), dtype=np.float64)
+    b_prev = np.zeros(size, dtype=np.float64)
+    b_indices = np.array(
+        [
+            flatten(layout, covered_mode_label, "ph_B", ell, m)
+            for ell in range(layout.ell_max + 1)
+            for m in range(-ell, ell + 1)
+        ],
+        dtype=np.int64,
+    )
+    rows[0] = b_prev
     for index, eta in enumerate(eta_samples):
         gamma_t = _resolved_gamma_t(
             visibility_source=visibility_source,
@@ -955,21 +967,33 @@ def _build_sampled_b_mode_history(
             layout_manifest=getattr(sample_ops, "layout_metadata", {}),
             photon_T=np.asarray(photon_T_tower[index], dtype=np.float64),
             photon_E=np.asarray(photon_E_tower[index], dtype=np.float64),
+            photon_B=b_prev,
             neutrino_tower=np.asarray(neutrino_tower[index], dtype=np.float64),
             source_template=np.asarray(sample_ops.source_template, dtype=np.float64),
             baryon_block=np.asarray(baryon_history[index], dtype=np.float64),
             cdm_block=np.asarray(cdm_history[index], dtype=np.float64),
             covered_mode_label=covered_mode_label,
         )
-        rows.append(
-            _build_layout_b_mode_proxy(
-                layout=layout,
-                mode_ops=sample_ops,
-                covered_mode_label=covered_mode_label,
-                state_vector=np.asarray(sample_projection.state_vector, dtype=np.float64),
-            )
+        if index == eta_samples.size - 1:
+            break
+        dt = float(eta_samples[index + 1] - eta_samples[index])
+        if dt <= 0.0:
+            raise ValueError("eta grid must be strictly increasing for B-mode history sampling")
+        vector = np.asarray(sample_projection.state_vector, dtype=np.float64)
+        drive = (
+            np.asarray(sample_ops.A_fs @ vector, dtype=np.float64)
+            + np.asarray(sample_ops.A_mix @ vector, dtype=np.float64)
+            + np.asarray(sample_ops.A_coll @ vector, dtype=np.float64)
+            + np.asarray(sample_ops.source_template, dtype=np.float64)
         )
-    return eta_samples, np.asarray(rows, dtype=np.float64)
+        mass_diag = np.asarray(sample_ops.mass_matrix.diagonal(), dtype=np.float64)
+        b_next = b_prev.copy()
+        for slot, idx in enumerate(b_indices):
+            inv_mass = 1.0 / max(abs(float(mass_diag[idx])), 1.0e-30)
+            b_next[slot] = float(b_prev[slot] + dt * inv_mass * float(drive[idx]))
+        b_prev = b_next
+        rows[index + 1] = b_prev
+    return eta_samples, rows
 
 
 def _build_sampled_source_history(
@@ -2150,12 +2174,7 @@ def execute_tier_b_solver(
         source_history_samples=source_history_samples,
         covered_mode_label=covered_mode_label,
     )
-    b_mode_proxy = _build_layout_b_mode_proxy(
-        layout=layout,
-        mode_ops=mode_ops,
-        covered_mode_label=covered_mode_label,
-        state_vector=np.asarray(canonical_projection.state_vector, dtype=np.float64),
-    )
+    b_mode_proxy = np.asarray(b_history_samples[-1], dtype=np.float64)
     canonical_projection = project_runtime_native_state(
         layout=layout,
         layout_manifest=getattr(mode_ops, "layout_metadata", {}),
@@ -2199,7 +2218,9 @@ def execute_tier_b_solver(
     )
     result.solver_info["layout_b_mode_proxy_consumed"] = bool(np.any(np.abs(b_mode_proxy) > 0.0))
     result.solver_info["layout_b_mode_proxy_norm"] = float(np.linalg.norm(b_mode_proxy))
-    result.solver_info["layout_b_mode_proxy_source"] = "mode_ops.A_mix_plus_source_over_diagonal_damping"
+    result.solver_info["layout_b_mode_proxy_source"] = (
+        "mode_ops.mass_inverse_auxiliary_b_evolution"
+    )
     result.solver_info["layout_b_mode_history_sample_count"] = int(b_history_samples.shape[0])
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
