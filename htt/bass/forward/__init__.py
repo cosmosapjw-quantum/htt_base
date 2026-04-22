@@ -42,6 +42,7 @@ from bass.forward.teff_mes_bounds import (
 from bass.forward.ver2_solver_output import (
     BassReleaseMetadata,
     build_solver_core_output,
+    build_solver_core_output_from_execution_bundle,
     build_solver_core_output_from_native_result,
     build_solver_core_output_from_lowell_result,
     solver_core_output_from_payload,
@@ -78,6 +79,7 @@ __all__ = [
     # VER2 S3 solver output
     'BassReleaseMetadata',
     'build_solver_core_output',
+    'build_solver_core_output_from_execution_bundle',
     'build_solver_core_output_from_native_result',
     'build_solver_core_output_from_lowell_result',
     'solver_core_output_to_payload',
