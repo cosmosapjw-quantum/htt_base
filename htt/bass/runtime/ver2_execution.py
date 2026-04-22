@@ -2476,16 +2476,9 @@ def execute_tier_b_solver(
         reionization_amplitude=reionization_amplitude,
         covered_mode_label=covered_mode_label,
     )
-    coupled_auxiliary_history = _build_coupled_auxiliary_sector_history(
-        layout=layout,
-        backend=backend,
-        background_monitor=background_monitor,
-        runtime_config=runtime_config,
-        result=result,
-        visibility_source=visibility_source,
-        reionization_amplitude=reionization_amplitude,
+    coupled_auxiliary_history = integrator.build_coupled_auxiliary_sector_history(
+        result,
         covered_mode_label=covered_mode_label,
-        reference_history=reference_local_matter_history,
     )
     b_history_eta = np.asarray(coupled_auxiliary_history.eta, dtype=np.float64)
     b_history_samples = np.asarray(coupled_auxiliary_history.photon_B_history, dtype=np.float64)
