@@ -144,6 +144,7 @@ def test_project_runtime_native_state_embeds_live_towers_into_canonical_layout()
         {"polarization_source": 0.5, "reionization_amplitude": 0.2},
     )
     size = (layout.ell_max + 1) ** 2
+    src_width = int(layout.sector_local_dofs["src"])
     projection = project_runtime_native_state(
         layout=layout,
         layout_manifest=ops.layout_metadata,
@@ -151,6 +152,8 @@ def test_project_runtime_native_state_embeds_live_towers_into_canonical_layout()
         photon_E=np.arange(size, dtype=np.float64) + 100.0,
         neutrino_tower=np.arange(size, dtype=np.float64) + 200.0,
         source_template=np.asarray(ops.source_template, dtype=np.float64),
+        source_history_eta=np.array([0.1, 0.2], dtype=np.float64),
+        source_history_samples=np.arange(2 * src_width, dtype=np.float64).reshape(2, src_width),
     )
     assert projection.covered_mode_labels == ("m0",)
     assert projection.zero_filled_mode_labels == ("m+2",)
@@ -171,3 +174,7 @@ def test_project_runtime_native_state_embeds_live_towers_into_canonical_layout()
     assert projection.metadata["source_block_nonzero"] is True
     assert projection.metadata["source_block_norm"] > 0.0
     assert projection.metadata["source_block_owner"] == "mode_ops_source_template"
+    assert projection.metadata["source_history_available"] is True
+    assert projection.metadata["source_history_sample_count"] == 2
+    assert np.asarray(projection.hierarchy_state.source_history_block["eta"]).shape == (2,)
+    assert np.asarray(projection.hierarchy_state.source_history_block["history"]).shape == (2, src_width)

@@ -739,11 +739,16 @@ def _live_backend_state(
     visibility_amplitude: float = 0.0,
     polarization_source: float = 0.0,
     reionization_amplitude: float = 0.0,
+    sigma_tensor: np.ndarray | None = None,
 ) -> dict[str, object]:
     return {
         "branch": str(background_monitor.branch),
         "geometry": background_monitor.initial_conditions.geometry,
-        "sigma_tensor": np.asarray(background_monitor.sigma_tensor[-1], dtype=np.float64),
+        "sigma_tensor": (
+            np.asarray(background_monitor.sigma_tensor[-1], dtype=np.float64)
+            if sigma_tensor is None
+            else np.asarray(sigma_tensor, dtype=np.float64)
+        ),
         "opacity_data": {"Gamma_T": float(gamma_t_probe)},
         "source_tables": {
             "visibility_amplitude": float(visibility_amplitude),
@@ -752,6 +757,84 @@ def _live_backend_state(
         },
         "state_tag": "runtime_gate_registry",
     }
+
+
+def _sigma_tensor_at_eta(
+    background_monitor: "BackgroundEvolutionResult",
+    eta: float,
+) -> np.ndarray:
+    eta_grid = np.asarray(background_monitor.eta, dtype=np.float64)
+    sigma_hist = np.asarray(background_monitor.sigma_tensor, dtype=np.float64)
+    out = np.empty((3, 3), dtype=np.float64)
+    for i in range(3):
+        for j in range(3):
+            out[i, j] = float(np.interp(float(eta), eta_grid, sigma_hist[:, i, j]))
+    return out
+
+
+def _extract_src_local_block(
+    *,
+    layout,
+    source_template: np.ndarray,
+    covered_mode_label: str,
+) -> np.ndarray:
+    from bass.hierarchy.ver3_layout_protocol import flatten
+
+    width = int(layout.sector_local_dofs["src"])
+    return np.array(
+        [
+            float(source_template[flatten(layout, covered_mode_label, "src", None, None, local_dof=i)])
+            for i in range(width)
+        ],
+        dtype=np.float64,
+    )
+
+
+def _build_sampled_source_history(
+    *,
+    layout,
+    backend,
+    background_monitor: "BackgroundEvolutionResult",
+    runtime_config,
+    result,
+    visibility_source,
+    reionization_amplitude: float,
+    covered_mode_label: str,
+) -> tuple[np.ndarray, np.ndarray]:
+    eta_samples = np.asarray(result.eta, dtype=np.float64)
+    photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
+    photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
+    ell2_m0_slot = sum(2 * ell + 1 for ell in range(2)) + 2 if int(result.L_max) >= 2 else None
+    rows: list[np.ndarray] = []
+    for index, eta in enumerate(eta_samples):
+        gamma_t = _resolved_gamma_t(
+            visibility_source=visibility_source,
+            eta=float(eta),
+            direction=np.asarray(runtime_config.tilt_direction, dtype=np.float64),
+            config=runtime_config,
+        )
+        visibility_amplitude = abs(float(photon_T_tower[index, 0]))
+        polarization_source = (
+            0.0 if ell2_m0_slot is None else abs(float(photon_E_tower[index, ell2_m0_slot]))
+        )
+        sample_ops = backend.operator_factory(
+            _live_backend_state(
+                background_monitor=background_monitor,
+                gamma_t_probe=float(gamma_t),
+                visibility_amplitude=visibility_amplitude,
+                polarization_source=polarization_source,
+                reionization_amplitude=float(reionization_amplitude),
+                sigma_tensor=_sigma_tensor_at_eta(background_monitor, float(eta)),
+            )
+        )
+        rows.append(
+            _extract_src_local_block(
+                layout=layout,
+                source_template=np.asarray(sample_ops.source_template, dtype=np.float64),
+                covered_mode_label=covered_mode_label,
+            )
+        )
+    return eta_samples, np.vstack(rows)
 
 def _tilt_boost_separation_gate_bundle(
     *,
@@ -1815,6 +1898,17 @@ def execute_tier_b_solver(
         )
     )
     layout = build_hierarchy_layout(backend, backend.truncation)
+    covered_mode_label = str(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [layout.mode_labels[0]])[0])
+    source_history_eta, source_history_samples = _build_sampled_source_history(
+        layout=layout,
+        backend=backend,
+        background_monitor=background_monitor,
+        runtime_config=runtime_config,
+        result=result,
+        visibility_source=visibility_source,
+        reionization_amplitude=reionization_amplitude,
+        covered_mode_label=covered_mode_label,
+    )
     canonical_projection = project_runtime_native_state(
         layout=layout,
         layout_manifest=getattr(mode_ops, "layout_metadata", {}),
@@ -1822,6 +1916,9 @@ def execute_tier_b_solver(
         photon_E=np.asarray(result.photon_E_tower[-1], dtype=np.float64),
         neutrino_tower=np.asarray(result.neutrino_tower[-1], dtype=np.float64),
         source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
+        source_history_eta=source_history_eta,
+        source_history_samples=source_history_samples,
+        covered_mode_label=covered_mode_label,
     )
     source_block = np.asarray(
         canonical_projection.hierarchy_state.source_history_block["src"],
@@ -1835,6 +1932,7 @@ def execute_tier_b_solver(
     result.solver_info["layout_source_block_owner"] = str(
         canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
     )
+    result.solver_info["layout_source_history_sample_count"] = int(source_history_samples.shape[0])
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,

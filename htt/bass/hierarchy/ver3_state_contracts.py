@@ -106,6 +106,8 @@ def project_runtime_native_state(
     photon_E: PolarizationHierarchyState | PSTFHierarchyState | np.ndarray,
     neutrino_tower: PSTFHierarchyState | np.ndarray,
     source_template: np.ndarray,
+    source_history_eta: np.ndarray | None = None,
+    source_history_samples: np.ndarray | None = None,
     covered_mode_label: str | None = None,
 ) -> CanonicalLayoutProjection:
     """Embed the live Tier-B harmonic towers into the ver3 canonical sector order.
@@ -131,6 +133,7 @@ def project_runtime_native_state(
         raise ValueError(
             f"source_template shape {source.shape} does not match layout size {layout.size}"
         )
+    history_eta = None if source_history_eta is None else np.asarray(source_history_eta, dtype=np.float64)
 
     vector = np.zeros(layout.size, dtype=np.float64)
     for mu in layout.mode_labels:
@@ -148,6 +151,21 @@ def project_runtime_native_state(
             vector[flatten(layout, covered, "ph_E", ell, m)] = float(tower_E[slot])
             vector[flatten(layout, covered, "nu_I", ell, m)] = float(tower_nu[slot])
 
+    source_block = _extract_local_sector(layout, vector, mu=covered, sector="src")
+    history_samples = (
+        None if source_history_samples is None else np.asarray(source_history_samples, dtype=np.float64)
+    )
+    if history_samples is not None:
+        expected_width = source_block.shape[0]
+        if history_samples.ndim != 2 or history_samples.shape[1] != expected_width:
+            raise ValueError(
+                "source_history_samples must have shape (n_samples, src_local_dofs)"
+            )
+        if history_eta is None or history_eta.shape != (history_samples.shape[0],):
+            raise ValueError(
+                "source_history_eta must be provided with one entry per sampled source row"
+            )
+
     hierarchy_state = HierarchyState(
         matter_block={
             "baryon": _extract_local_sector(layout, vector, mu=covered, sector="baryon"),
@@ -160,7 +178,9 @@ def project_runtime_native_state(
         },
         neutrino_block=tower_nu,
         source_history_block={
-            "src": _extract_local_sector(layout, vector, mu=covered, sector="src"),
+            "src": source_block,
+            "eta": history_eta,
+            "history": history_samples,
         },
         metadata={
             "covered_mode_label": covered,
@@ -178,7 +198,6 @@ def project_runtime_native_state(
     )
     zero_filled = tuple(mu for mu in layout.mode_labels if mu != covered)
     sector_status = dict(hierarchy_state.metadata["sector_status"])
-    source_block = np.asarray(hierarchy_state.source_history_block["src"], dtype=np.float64)
     return CanonicalLayoutProjection(
         layout_manifest=dict(layout_manifest),
         hierarchy_state=hierarchy_state,
@@ -192,5 +211,7 @@ def project_runtime_native_state(
             "source_block_norm": float(np.linalg.norm(source_block)),
             "source_block_nonzero": bool(np.any(np.abs(source_block) > 0.0)),
             "source_block_owner": str(sector_status["src"]),
+            "source_history_available": bool(history_samples is not None),
+            "source_history_sample_count": 0 if history_samples is None else int(history_samples.shape[0]),
         },
     )
