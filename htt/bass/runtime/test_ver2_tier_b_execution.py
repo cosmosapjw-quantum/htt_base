@@ -260,6 +260,8 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["seed_factory_mode"] == "flrw_like_regular"
     assert run.integration_result.solver_info["seed_family"] == "I"
     assert run.integration_result.solver_info["seed_branch"] == "orthogonal"
+    assert run.integration_result.solver_info["layout_operator_consumed"] is True
+    assert run.integration_result.solver_info["layout_collision_operator_source"] == "mode_ops.A_coll_diagonal"
     assert run.integration_result.solver_info["startup_manifold_applied"] is True
     assert run.solver_output.metadata["propagator_ready"] is True
     assert run.solver_output.metadata["propagator_readiness"] == "exact"
@@ -278,6 +280,8 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["seed_factory_owner"] == "family_backend.seed_factory"
     assert run.solver_output.metadata["seed_factory_mode"] == "flrw_like_regular"
     assert run.solver_output.metadata["layout_contract_consumed"] is True
+    assert run.solver_output.metadata["layout_operator_consumed"] is True
+    assert run.solver_output.metadata["layout_collision_operator_source"] == "mode_ops.A_coll_diagonal"
     assert run.solver_output.metadata["layout_sector_order"] == [
         "ph_I",
         "ph_E",

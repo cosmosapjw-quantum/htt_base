@@ -60,6 +60,7 @@ from bass.hierarchy.integrator import (
     _ell2_m0_slot_offset,
 )
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor, pack_hierarchy, unpack_hierarchy, zero_hierarchy
+from bass.hierarchy.ver3_layout_protocol import build_hierarchy_layout, flatten
 from bass.hierarchy.seed_compatibility import (
     PackedRegularSeedInjection,
     SeedConstraintProjection,
@@ -461,6 +462,26 @@ def _reduced_summary_from_neutrino_tower(
     return summary
 
 
+def _extract_operator_diag(
+    *,
+    backend: FamilyBackend,
+    mode_ops,
+    sector: str,
+    covered_mode_label: str | None = None,
+) -> np.ndarray:
+    layout = build_hierarchy_layout(backend, backend.truncation)
+    mu = layout.mode_labels[0] if covered_mode_label is None else str(covered_mode_label)
+    if mu not in layout.mode_labels:
+        raise ValueError(f"covered_mode_label {mu!r} not present in layout.mode_labels")
+    diagonal = np.asarray(mode_ops.A_coll.diagonal(), dtype=np.float64)
+    out = np.zeros((layout.ell_max + 1) ** 2, dtype=np.float64)
+    for ell in range(layout.ell_max + 1):
+        for m in range(-ell, ell + 1):
+            slot = sum(2 * l + 1 for l in range(ell)) + (m + ell)
+            out[slot] = float(diagonal[flatten(layout, mu, sector, ell, m)])
+    return out
+
+
 class Ver2TierBIntegrator:
     """Executable Tier-B integrator owned by S1 background + S2 hierarchy."""
 
@@ -470,6 +491,7 @@ class Ver2TierBIntegrator:
         species: SpeciesBackgroundRegistry,
         *,
         backend: FamilyBackend,
+        mode_ops=None,
         background_monitor: BackgroundEvolutionResult,
         visibility_source,
         canonical_decision: CanonicalDecision,
@@ -478,6 +500,7 @@ class Ver2TierBIntegrator:
         self.config = config
         self.species = species
         self.backend = backend
+        self.mode_ops = mode_ops
         self.background_monitor = background_monitor
         self.visibility_source = visibility_source
         self.canonical_decision = canonical_decision
@@ -515,6 +538,31 @@ class Ver2TierBIntegrator:
         self.seed_pack: SeedPack | None = None
         self.seed_injection_mode: str = "uninitialized"
         self.seed_velocity_scale: float = 1.0
+        self._layout_covered_mode_label = (
+            None
+            if mode_ops is None
+            else str(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [None])[0])
+        )
+        self._coll_T_diag = (
+            None
+            if mode_ops is None
+            else _extract_operator_diag(
+                backend=backend,
+                mode_ops=mode_ops,
+                sector="ph_I",
+                covered_mode_label=self._layout_covered_mode_label,
+            )
+        )
+        self._coll_E_diag = (
+            None
+            if mode_ops is None
+            else _extract_operator_diag(
+                backend=backend,
+                mode_ops=mode_ops,
+                sector="ph_E",
+                covered_mode_label=self._layout_covered_mode_label,
+            )
+        )
         _ = sample_hierarchy_background(
             float(self.background_monitor.eta[0]),
             bg_table=self.bg_table,
@@ -866,9 +914,16 @@ class Ver2TierBIntegrator:
         gamma_dt = float(dt) * float(gamma_t)
         out_T = photon_T.copy()
         out_E = photon_E.E.copy()
+        coll_T_diag = self._coll_T_diag
+        coll_E_diag = self._coll_E_diag
 
         if self.config.L_max >= 1:
-            out_T.tensors[1].components = photon_T.tensors[1].components / (1.0 + gamma_dt)
+            if coll_T_diag is None:
+                dipole_dt = np.full_like(photon_T.tensors[1].components, gamma_dt, dtype=np.float64)
+            else:
+                base = sum(2 * l + 1 for l in range(1))
+                dipole_dt = float(dt) * np.asarray(coll_T_diag[base : base + 3], dtype=np.float64)
+            out_T.tensors[1].components = photon_T.tensors[1].components / (1.0 + dipole_dt)
 
         ell2_has_tca_override = False
         if self.config.L_max >= 2:
@@ -910,8 +965,18 @@ class Ver2TierBIntegrator:
                 ell2_has_tca_override = True
 
         for ell in range(3, self.config.L_max + 1):
-            out_T.tensors[ell].components = photon_T.tensors[ell].components / (1.0 + gamma_dt)
-            out_E.tensors[ell].components = photon_E.E.tensors[ell].components / (1.0 + gamma_dt)
+            base = sum(2 * l + 1 for l in range(ell))
+            width = 2 * ell + 1
+            if coll_T_diag is None:
+                T_dt = np.full(width, gamma_dt, dtype=np.float64)
+            else:
+                T_dt = float(dt) * np.asarray(coll_T_diag[base : base + width], dtype=np.float64)
+            if coll_E_diag is None:
+                E_dt = np.full(width, gamma_dt, dtype=np.float64)
+            else:
+                E_dt = float(dt) * np.asarray(coll_E_diag[base : base + width], dtype=np.float64)
+            out_T.tensors[ell].components = photon_T.tensors[ell].components / (1.0 + T_dt)
+            out_E.tensors[ell].components = photon_E.E.tensors[ell].components / (1.0 + E_dt)
 
         if self.config.L_max >= 2 and ell2_has_tca_override:
             # TCA ownership replaces only the m=0 quadrupole entry; keep the
@@ -1259,6 +1324,12 @@ class Ver2TierBIntegrator:
             "startup_manifold_applied": bool(self.startup_state is not None),
             "startup_gate_selected": bool(self.startup_gate.startup_selected if self.startup_gate is not None else False),
             "neutrino_hierarchy_mode": "full_pstf_with_reduced_summary_export",
+            "layout_operator_consumed": bool(self.mode_ops is not None),
+            "layout_collision_operator_source": (
+                "mode_ops.A_coll_diagonal"
+                if self.mode_ops is not None
+                else "gamma_t_scalar_fallback"
+            ),
             "checkpoint_write_count": int(checkpoint_write_count),
             "restart_used": bool(restart_used),
             "collision_owner": "exact_thomson_wrapper",

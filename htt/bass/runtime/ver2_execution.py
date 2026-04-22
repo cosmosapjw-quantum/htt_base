@@ -735,9 +735,10 @@ def _static_gate_bundle(
 def _live_backend_state(
     *,
     background_monitor: "BackgroundEvolutionResult",
-    visibility_source: "TiltedVisibilitySource",
     gamma_t_probe: float,
-    thomson_probe: "ExactThomsonSource",
+    visibility_amplitude: float = 0.0,
+    polarization_source: float = 0.0,
+    reionization_amplitude: float = 0.0,
 ) -> dict[str, object]:
     return {
         "branch": str(background_monitor.branch),
@@ -745,13 +746,9 @@ def _live_backend_state(
         "sigma_tensor": np.asarray(background_monitor.sigma_tensor[-1], dtype=np.float64),
         "opacity_data": {"Gamma_T": float(gamma_t_probe)},
         "source_tables": {
-            "visibility_amplitude": float(thomson_probe.scalar_monopole_input),
-            "polarization_source": float(thomson_probe.polarization_quadrupole_norm),
-            "reionization_amplitude": float(
-                0.0
-                if visibility_source.contract.events is None
-                else visibility_source.contract.events.tau_reion
-            ),
+            "visibility_amplitude": float(visibility_amplitude),
+            "polarization_source": float(polarization_source),
+            "reionization_amplitude": float(reionization_amplitude),
         },
         "state_tag": "runtime_gate_registry",
     }
@@ -1709,10 +1706,31 @@ def execute_tier_b_solver(
         truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
         chart_options={},
     )
+    gamma_t_initial = _resolved_gamma_t(
+        visibility_source=visibility_source,
+        eta=float(background_monitor.eta[0]),
+        direction=np.asarray(runtime_config.tilt_direction, dtype=np.float64),
+        config=runtime_config,
+    )
+    reionization_amplitude = (
+        0.0
+        if visibility_source.contract.events is None
+        else float(visibility_source.contract.events.tau_reion)
+    )
+    runtime_mode_ops = backend.operator_factory(
+        _live_backend_state(
+            background_monitor=background_monitor,
+            gamma_t_probe=gamma_t_initial,
+            visibility_amplitude=0.0,
+            polarization_source=0.0,
+            reionization_amplitude=reionization_amplitude,
+        )
+    )
     integrator = Ver2TierBIntegrator(
         runtime_config,
         species,
         backend=backend,
+        mode_ops=runtime_mode_ops,
         background_monitor=background_monitor,
         visibility_source=visibility_source,
         canonical_decision=canonical_decision,
@@ -1791,9 +1809,10 @@ def execute_tier_b_solver(
     mode_ops = backend.operator_factory(
         _live_backend_state(
             background_monitor=background_monitor,
-            visibility_source=visibility_source,
             gamma_t_probe=gamma_t_probe,
-            thomson_probe=thomson_probe,
+            visibility_amplitude=float(thomson_probe.scalar_monopole_input),
+            polarization_source=float(thomson_probe.polarization_quadrupole_norm),
+            reionization_amplitude=reionization_amplitude,
         )
     )
     layout = build_hierarchy_layout(backend, backend.truncation)

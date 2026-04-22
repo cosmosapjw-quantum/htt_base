@@ -849,6 +849,13 @@ def build_solver_core_output_from_native_result(
                 result.solver_info.get("solver_family_realization", "runtime_family_direct")
             ),
             "neutrino_hierarchy_mode": str(result.solver_info.get("neutrino_hierarchy_mode", "reduced_summary_only")),
+            "layout_operator_consumed": bool(result.solver_info.get("layout_operator_consumed", False)),
+            "layout_collision_operator_source": str(
+                result.solver_info.get(
+                    "layout_collision_operator_source",
+                    "gamma_t_scalar_fallback",
+                )
+            ),
             "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
             "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
             "seed_factory_owner": str(result.solver_info.get("seed_factory_owner", "legacy_runtime_seed")),
