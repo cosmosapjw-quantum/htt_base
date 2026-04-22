@@ -216,13 +216,42 @@ def test_solver_core_output_builder_attaches_required_metadata() -> None:
     assert output.metadata["observer_neutral"] is True
     assert output.metadata["multipole_cutoff"] == 6
     assert output.metadata["requested_integrator_family"] == "imex_split"
-    assert output.metadata["resolved_solver_method"] == "BDF"
-    assert output.metadata["executor_realization"] == "declared_imex_policy_bdf_executor"
+    assert output.metadata["resolved_solver_method"] == "IMEX_MIDPOINT_BDF"
+    assert output.metadata["executor_realization"] == "native_imex_midpoint_bdf_split"
     assert output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
     assert output.metadata["off_axis_support"] is False
     assert output.metadata["covariance_readiness"] == "missing"
     assert output.metadata["neutrino_background_readiness"] == "massless_only"
     assert output.metadata["reionization_history_readiness"] == "homogeneous_tanh_only"
+
+
+def test_native_output_promotes_massive_neutrino_runtime_metadata() -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018(
+        Sigma_mnu=0.12,
+        recombination_warning_policy="ignore",
+    )
+    output = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="I",
+        result=_synthetic_result(),
+        species=species,
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_candidate",
+            run_label="tier-b-native",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+    assert output.metadata["neutrino_background_readiness"] == "massive_fd_background_and_hierarchy"
+    assert output.metadata["massive_neutrino_support"] is True
+    assert output.metadata["massive_neutrino_block_reason"] is None
+    assert output.metadata["massive_neutrino_mass_eV"] == pytest.approx(0.04)
 
 
 def test_solver_core_output_payload_roundtrips() -> None:

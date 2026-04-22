@@ -62,10 +62,12 @@ from typing import Tuple
 
 import numpy as np
 
+from bass.hierarchy.pstf_tensor import PSTFHierarchyState, pstf_from_tensor
 from bass.species.tilted import V_HAT_E_DEFAULT, V_HAT_NORM_TOL
 
 
 __all__ = [
+    "apply_linear_boost_to_tower",
     "boost_project_axisymmetric",
     "is_axis_aligned",
     "AXIS_ALIGNMENT_TOL",
@@ -101,6 +103,61 @@ def is_axis_aligned(
     big = mags > (1.0 - tol)
     small = mags < tol
     return int(big.sum()) == 1 and int(small.sum()) == 2
+
+
+def _skew_matrix(axis: np.ndarray) -> np.ndarray:
+    x, y, z = np.asarray(axis, dtype=np.float64)
+    return np.array(
+        [[0.0, -z, y], [z, 0.0, -x], [-y, x, 0.0]],
+        dtype=np.float64,
+    )
+
+
+def _rotation_from_reference_axis(
+    v_hat_e: Tuple[float, float, float],
+) -> np.ndarray:
+    target = np.asarray(v_hat_e, dtype=np.float64)
+    if target.shape != (3,):
+        raise ValueError(f"v_hat_e must have shape (3,), got {target.shape}")
+    norm = float(np.linalg.norm(target))
+    if not np.isfinite(norm) or norm <= 0.0:
+        raise ValueError(f"v_hat_e must be a non-zero finite vector, got {v_hat_e!r}")
+    target = target / norm
+    reference = np.asarray(V_HAT_E_DEFAULT, dtype=np.float64)
+    cross = np.cross(reference, target)
+    sin_theta = float(np.linalg.norm(cross))
+    cos_theta = float(np.clip(np.dot(reference, target), -1.0, 1.0))
+    if sin_theta <= AXIS_ALIGNMENT_TOL:
+        if cos_theta > 0.0:
+            return np.eye(3, dtype=np.float64)
+        return np.diag([-1.0, -1.0, 1.0]).astype(np.float64)
+    axis = cross / sin_theta
+    K = _skew_matrix(axis)
+    return np.eye(3, dtype=np.float64) + sin_theta * K + (1.0 - cos_theta) * (K @ K)
+
+
+def _rotate_spatial_tensor(tensor: np.ndarray, rotation: np.ndarray) -> np.ndarray:
+    arr = np.asarray(tensor)
+    if arr.ndim == 0:
+        return arr.copy()
+    out = arr
+    for axis in range(arr.ndim):
+        out = np.tensordot(rotation, out, axes=([1], [axis]))
+        out = np.moveaxis(out, 0, axis)
+    return out
+
+
+def _rotate_pstf_hierarchy(
+    state: PSTFHierarchyState,
+    rotation: np.ndarray,
+) -> PSTFHierarchyState:
+    return PSTFHierarchyState(
+        L=state.L,
+        tensors=[
+            pstf_from_tensor(_rotate_spatial_tensor(tensor.to_full_tensor(), rotation))
+            for tensor in state.tensors
+        ],
+    )
 
 
 def boost_project_axisymmetric(
@@ -202,3 +259,71 @@ def boost_project_axisymmetric(
     # the SSOT alignment; no runtime use.
     _ = V_HAT_NORM_TOL
     return out
+
+
+def _signed_boost_recurrence(
+    coeffs: np.ndarray,
+    *,
+    signed_beta: float,
+) -> np.ndarray:
+    arr = np.asarray(coeffs, dtype=np.float64)
+    out = arr.copy()
+    for ell in range(arr.size):
+        delta = 0.0
+        if ell - 1 >= 0:
+            delta += (ell / (2.0 * ell - 1.0)) * arr[ell - 1]
+        if ell + 1 < arr.size:
+            delta -= ((ell + 1.0) / (2.0 * ell + 3.0)) * arr[ell + 1]
+        out[ell] = arr[ell] + float(signed_beta) * delta
+    return out
+
+
+def apply_linear_boost_to_tower(
+    state: PSTFHierarchyState,
+    beta: float,
+    v_hat_e: Tuple[float, float, float] = V_HAT_E_DEFAULT,
+) -> PSTFHierarchyState:
+    """Apply the shipped linear boost law to a full PSTF tower.
+
+    Axis-aligned directions use the original packed ``m=0`` recurrence
+    directly. Generic directions are evaluated in a rotated tetrad:
+
+    1. rotate the tower so ``v̂_e`` aligns with ``V_HAT_E_DEFAULT``,
+    2. apply the axisymmetric recurrence on that canonical tower,
+    3. rotate the boosted tower back to the physical frame.
+    """
+    beta_val = float(beta)
+    if not np.isfinite(beta_val):
+        raise ValueError(f"beta must be finite; got {beta!r}")
+    if abs(beta_val) >= 1.0:
+        raise ValueError(f"beta must satisfy |β| < 1; got beta={beta_val!r}")
+    if beta_val == 0.0:
+        return state.copy()
+    if is_axis_aligned(v_hat_e):
+        coeffs = np.array(
+            [tensor.components[ell] for ell, tensor in enumerate(state.tensors)],
+            dtype=np.float64,
+        )
+        axis = np.asarray(v_hat_e, dtype=np.float64)
+        sign = float(np.sign(axis[int(np.argmax(np.abs(axis)))]))
+        sign = 1.0 if sign == 0.0 else sign
+        boosted = _signed_boost_recurrence(coeffs, signed_beta=beta_val * sign)
+        out = state.copy()
+        for ell, value in enumerate(boosted):
+            out.tensors[ell].components[ell] = float(value)
+        return out
+
+    rotation = _rotation_from_reference_axis(v_hat_e)
+    canonical_state = _rotate_pstf_hierarchy(state, rotation.T)
+    canonical_coeffs = np.array(
+        [tensor.components[ell] for ell, tensor in enumerate(canonical_state.tensors)],
+        dtype=np.float64,
+    )
+    boosted_coeffs = _signed_boost_recurrence(
+        canonical_coeffs,
+        signed_beta=beta_val,
+    )
+    boosted_canonical = canonical_state.copy()
+    for ell, value in enumerate(boosted_coeffs):
+        boosted_canonical.tensors[ell].components[ell] = float(value)
+    return _rotate_pstf_hierarchy(boosted_canonical, rotation)

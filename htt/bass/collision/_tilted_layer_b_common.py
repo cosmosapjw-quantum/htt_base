@@ -14,7 +14,7 @@ from typing import Iterable, Tuple
 
 import numpy as np
 
-from bass.hierarchy.boost_kernel import is_axis_aligned
+from bass.hierarchy.boost_kernel import apply_linear_boost_to_tower, is_axis_aligned
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState
 
 
@@ -109,7 +109,10 @@ def apply_axisymmetric_boost_to_tower(
     beta: float,
     v_hat_e: Tuple[float, float, float],
 ) -> PSTFHierarchyState:
-    """Apply the signed axisymmetric recurrence to a full tower."""
-    coeffs = extract_axisymmetric_slice(state)
-    boosted = signed_axisymmetric_boost(coeffs, beta=beta, v_hat_e=v_hat_e)
-    return replace_axisymmetric_slice(state, boosted)
+    """Apply the shipped linear boost to a full tower.
+
+    The legacy name is kept for call-site stability. Internally this now
+    lifts off-axis directions through the common PSTF rotate/boost/unrotate
+    path rather than reserving them to a later placeholder.
+    """
+    return apply_linear_boost_to_tower(state, beta=beta, v_hat_e=v_hat_e)

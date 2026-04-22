@@ -461,7 +461,7 @@ class FamilyBackend:
             "h_parameter": self.family_spec.algebra.h_parameter,
             "background_state_tag": background_state.get("state_tag", "background_state"),
             "contract_release_status": "backend-contract-complete",
-            "operator_payload_status": "bound_template_blocks",
+            "operator_payload_status": "geometry_opacity_coupled_sparse_blocks",
             "analytic_normalization_status": template_card.analytic_normalization_status,
             "template_card": template_card.as_payload(),
         }

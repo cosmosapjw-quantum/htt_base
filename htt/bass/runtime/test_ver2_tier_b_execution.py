@@ -250,11 +250,11 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.trace.thomson_probe.source_ready is True
     assert run.trace.visibility_source.contract.events is not None
     assert run.trace.geodesic_probe.direction_derivative.shape == (3,)
-    assert run.integration_result.solver_info["solver_method"] == "BDF"
+    assert run.integration_result.solver_info["solver_method"] == "IMEX_MIDPOINT_BDF"
     assert run.integration_result.solver_info["requested_integrator_family"] == "imex_split"
-    assert run.integration_result.solver_info["resolved_solver_method"] == "BDF"
-    assert run.integration_result.solver_info["executor_realization"] == "declared_imex_policy_bdf_executor"
-    assert run.integration_result.solver_info["solver_family_realization"] == "declared_imex_policy_bdf_executor"
+    assert run.integration_result.solver_info["resolved_solver_method"] == "IMEX_MIDPOINT_BDF"
+    assert run.integration_result.solver_info["executor_realization"] == "native_imex_midpoint_bdf_split"
+    assert run.integration_result.solver_info["solver_family_realization"] == "native_imex_midpoint_bdf_split"
     assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.integration_result.solver_info["startup_manifold_applied"] is True
     assert run.solver_output.metadata["propagator_ready"] is True
@@ -267,10 +267,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["source_propagator_realization"] == "bianchi_i_matrix_exact"
     assert run.solver_output.metadata["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.solver_output.metadata["neutrino_hierarchy_mode"] == "full_pstf_with_reduced_summary_export"
-    assert run.solver_output.metadata["solver_method"] == "BDF"
+    assert run.solver_output.metadata["solver_method"] == "IMEX_MIDPOINT_BDF"
     assert run.solver_output.metadata["requested_integrator_family"] == "imex_split"
-    assert run.solver_output.metadata["resolved_solver_method"] == "BDF"
-    assert run.solver_output.metadata["executor_realization"] == "declared_imex_policy_bdf_executor"
+    assert run.solver_output.metadata["resolved_solver_method"] == "IMEX_MIDPOINT_BDF"
+    assert run.solver_output.metadata["executor_realization"] == "native_imex_midpoint_bdf_split"
     assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
     assert run.solver_output.metadata["off_axis_support"] is False
     assert run.solver_output.metadata["off_axis_fallback_applied"] is False
@@ -457,6 +457,32 @@ def test_nonperturbative_tilt_owner_is_wired_into_runtime_background_and_collisi
     assert run.trace.thomson_probe.opacity_contract == "electron_frame_tilt_modulated"
     assert run.trace.background_monitor.tilt_rapidity[0] > 0.0
     assert run.trace.background_monitor.tilt_rapidity[-1] <= run.trace.background_monitor.tilt_rapidity[0]
+
+
+def test_off_axis_tilted_runtime_path_executes_without_fallback() -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018(recombination_warning_policy="ignore")
+    off_axis = (1.0 / np.sqrt(2.0), 1.0 / np.sqrt(2.0), 0.0)
+    run = execute_tier_b_solver(
+        manifest=_manifest(),
+        bianchi_type="V",
+        species=species,
+        integrator_config=_family_integrator_config("V", beta=1.0e-6, v_hat_e=off_axis),
+        runtime_controls=_runtime_controls(),
+        feature_flags=_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+
+    assert run.solver_output.metadata["bianchi_branch"] == "tilted"
+    assert run.solver_output.metadata["off_axis_support"] is True
+    assert run.solver_output.metadata["off_axis_fallback_applied"] is False
+    assert run.solver_output.metadata["off_axis_block_reason"] is None
+    assert str(run.integration_result.solver_info["seed_injection_mode"]).startswith(
+        "offaxis_tilted_regular_adiabatic_seed"
+    )
+    assert run.trace.thomson_probe.source_ready is True
+    initial_T = unpack_hierarchy(run.integration_result.photon_T_tower[0], run.integration_result.L_max)
+    assert np.linalg.norm(np.delete(initial_T.tensors[2].components, 2)) > 0.0
 
 
 def test_execute_tier_b_solver_can_reach_low_z_reionization_probe_with_extended_eta_domain() -> None:

@@ -187,17 +187,22 @@ def test_fb42_beta_zero_b_mode_floor_is_exact() -> None:
     np.testing.assert_array_equal(b_result.components, np.zeros(9))
 
 
-def test_fb42_off_axis_direction_raises() -> None:
-    with pytest.raises(NotImplementedError, match="off-axis"):
-        evaluate_tilted_polarization_eb_collision(
-            ell=2,
-            e_state=_make_e_state(),
-            eta=2.0,
-            Pi_2_packed=PI2_FIXTURE,
-            Gamma_T=1.0,
-            b_state=zero_hierarchy(4),
-            tilted_electron=_make_tilt(0.1, v_hat_e=(1.0 / np.sqrt(2.0), 1.0 / np.sqrt(2.0), 0.0)),
-        )
+def test_fb42_off_axis_direction_is_supported() -> None:
+    e_result, b_result = evaluate_tilted_polarization_eb_collision(
+        ell=2,
+        e_state=_make_e_state(),
+        eta=2.0,
+        Pi_2_packed=PI2_FIXTURE,
+        Gamma_T=1.0,
+        b_state=zero_hierarchy(4),
+        tilted_electron=_make_tilt(
+            0.1,
+            v_hat_e=(1.0 / np.sqrt(2.0), 1.0 / np.sqrt(2.0), 0.0),
+        ),
+    )
+    assert np.all(np.isfinite(e_result.components))
+    assert np.all(np.isfinite(b_result.components))
+    assert np.linalg.norm(np.delete(e_result.components, 2)) > 0.0
 
 
 def test_fb42_b_state_depth_mismatch_raises() -> None:

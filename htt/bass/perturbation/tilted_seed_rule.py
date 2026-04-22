@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from bass.hierarchy.boost_kernel import boost_project_axisymmetric
+from bass.hierarchy.boost_kernel import apply_linear_boost_to_tower, boost_project_axisymmetric
 from bass.hierarchy.pack_unpack import combined_total_size, pack_combined_state
 from bass.perturbation.regular_adiabatic_ic import (
     CAMB_REGULAR_ADIABATIC_EXTRA_SIZE,
@@ -58,27 +58,26 @@ def apply_tilted_boost_seed_rule(
     photon_T = combined.photon_T.copy()
     photon_E = combined.photon_E.copy()
 
-    boosted_T = boost_project_axisymmetric(
-        _m0_slice_from_tower(photon_T),
-        beta_val,
-        v_hat_e,
+    photon_T = apply_linear_boost_to_tower(
+        photon_T,
+        beta=beta_val,
+        v_hat_e=v_hat_e,
     )
-    boosted_E = boost_project_axisymmetric(
-        _m0_slice_from_tower(photon_E.E),
-        beta_val,
-        v_hat_e,
+    photon_E_E = apply_linear_boost_to_tower(
+        photon_E.E,
+        beta=beta_val,
+        v_hat_e=v_hat_e,
     )
-    _write_m0_slice_to_tower(photon_T, boosted_T)
-    _write_m0_slice_to_tower(photon_E.E, boosted_E)
+    photon_E = type(photon_E)(E=photon_E_E)
 
     neutrino = boost_project_axisymmetric(
         np.asarray(combined.neutrino_reduced, dtype=np.float64),
         beta_val,
-        v_hat_e,
+        (1.0, 0.0, 0.0),
     )
-    extras[0:2] = boost_project_axisymmetric(extras[0:2], beta_val, v_hat_e)
-    extras[2:4] = boost_project_axisymmetric(extras[2:4], beta_val, v_hat_e)
-    extras[4:6] = boost_project_axisymmetric(extras[4:6], beta_val, v_hat_e)
+    extras[0:2] = boost_project_axisymmetric(extras[0:2], beta_val, (1.0, 0.0, 0.0))
+    extras[2:4] = boost_project_axisymmetric(extras[2:4], beta_val, (1.0, 0.0, 0.0))
+    extras[4:6] = boost_project_axisymmetric(extras[4:6], beta_val, (1.0, 0.0, 0.0))
 
     prefix = pack_combined_state(
         a=combined.a,

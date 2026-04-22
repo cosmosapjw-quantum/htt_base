@@ -80,13 +80,26 @@ def test_fb56_boosted_slices_match_axisymmetric_kernel(
 
 @pytest.mark.parametrize(
     "v_hat_e",
-    ((0.4, 0.5, 0.7), (1.0, 1.0, 0.0), (0.1, -0.2, 0.3)),
+    (
+        (1.0 / np.sqrt(2.0), 1.0 / np.sqrt(2.0), 0.0),
+        (1.0 / np.sqrt(3.0), -1.0 / np.sqrt(3.0), 1.0 / np.sqrt(3.0)),
+    ),
 )
-def test_fb56_off_axis_boost_is_reserved_to_fb52(
+def test_fb56_off_axis_boost_populates_nonaxisymmetric_components(
     v_hat_e: tuple[float, float, float],
 ) -> None:
-    with pytest.raises(NotImplementedError, match="FB-5.2"):
-        apply_tilted_boost_seed_rule(_seed_state(), beta=1.0e-2, v_hat_e=v_hat_e)
+    boosted = apply_tilted_boost_seed_rule(_seed_state(), beta=1.0e-2, v_hat_e=v_hat_e)
+    unpacked = unpack_camb_regular_adiabatic_seed(boosted, L_max=6)
+    non_axisymmetric_norm = 0.0
+    for ell in range(1, unpacked["combined"].photon_T.L + 1):
+        components = np.asarray(
+            unpacked["combined"].photon_T.tensors[ell].components,
+            dtype=np.float64,
+        )
+        mask = np.ones_like(components, dtype=bool)
+        mask[ell] = False
+        non_axisymmetric_norm += float(np.linalg.norm(components[mask]))
+    assert non_axisymmetric_norm > 0.0
 
 
 @pytest.mark.parametrize("beta", (-1.0e-3, -0.1, 1.0, 1.5))

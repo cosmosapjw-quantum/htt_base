@@ -29,7 +29,16 @@ from bass.collision.electron_frame import (
     ProjectedThomsonSource,
     exact_thomson_source,
 )
-from bass.collision.polarization import PolarizationHierarchyState, zero_polarization_hierarchy
+from bass.collision.polarization import (
+    E_MODE_ELL2_SELF_COEFF,
+    E_MODE_ELL2_TEMPERATURE_COEFF,
+    PolarizationHierarchyState,
+    zero_polarization_hierarchy,
+)
+from bass.collision.thomson_pstf import (
+    THOMSON_ELL2_POLARIZATION_COEFF,
+    THOMSON_ELL2_SELF_COEFF,
+)
 from bass.closure.stiff_closure import (
     QuadrupoleStartupState,
     StartupGateDecision,
@@ -282,6 +291,17 @@ class NativeTierBRestartState:
                 raise ValueError(f"{name} must have shape (len(eta_prefix), n_state)")
 
 
+@dataclass(frozen=True)
+class _SegmentResult:
+    t: np.ndarray
+    y: np.ndarray
+    nfev: int
+    njev: int
+    nlu: int
+    status: int
+    message: str
+
+
 def _pack_radiation_state(
     *,
     photon_T: PSTFHierarchyState,
@@ -446,16 +466,16 @@ class Ver2TierBIntegrator:
         )
         injection_mode = "orthogonal_regular_adiabatic_seed"
         if abs(float(self.config.tilt_rapidity)) > 0.0:
-            if not is_axis_aligned(tuple(float(x) for x in self._direction)):
-                raise NotImplementedError(
-                    "FB-5.2 off_axis_not_closed: no orthogonal seed fallback is allowed"
-                )
             seed_state = apply_tilted_boost_seed_rule(
                 seed_state,
                 beta=float(self.config.tilt_rapidity),
                 v_hat_e=tuple(float(x) for x in self._direction),
             )
-            injection_mode = "axisymmetric_tilted_regular_adiabatic_seed"
+            injection_mode = (
+                "axisymmetric_tilted_regular_adiabatic_seed"
+                if is_axis_aligned(tuple(float(x) for x in self._direction))
+                else "offaxis_tilted_regular_adiabatic_seed"
+            )
 
         tilt_speed = rapidity_to_velocity(float(self.config.tilt_rapidity))
         projected_seed: PackedRegularSeedInjection = project_packed_regular_seed(
@@ -643,6 +663,156 @@ class Ver2TierBIntegrator:
 
         return np.concatenate([rhs_T, rhs_E, rhs_nu])
 
+    def _explicit_rhs(self, eta: float, y: np.ndarray) -> np.ndarray:
+        photon_T, photon_E, neutrino_tower = _unpack_radiation_state(y, self.config.L_max)
+        rhs_T = hierarchy_rhs_photon(
+            eta,
+            photon_T.as_flat(),
+            L_max=self.config.L_max,
+            bg_table=self.bg_table,
+            tetrad_state=self.tetrad_state,
+            closure=self.closure,
+            collision=ZeroCollisionOperator(),
+            collision_aux=None,
+        )
+        rhs_E = hierarchy_rhs_photon(
+            eta,
+            photon_E.E.as_flat(),
+            L_max=self.config.L_max,
+            bg_table=self.bg_table,
+            tetrad_state=self.tetrad_state,
+            closure=self.closure,
+            collision=ZeroCollisionOperator(),
+            collision_aux=None,
+        )
+        rhs_nu = hierarchy_rhs_neutrino(
+            eta,
+            neutrino_tower.as_flat(),
+            L_max=self.config.L_max,
+            bg_table=self.bg_table,
+            tetrad_state=self.tetrad_state,
+            closure=self.closure,
+            neutrino_background=self.species[SpeciesLabel.NEUTRINO],
+        )
+        return np.concatenate([rhs_T, rhs_E, rhs_nu])
+
+    def _implicit_rhs(
+        self,
+        eta: float,
+        y: np.ndarray,
+        *,
+        tca_tracker: list[bool] | None = None,
+    ) -> np.ndarray:
+        full = self._rhs(eta, y, tca_tracker=tca_tracker)
+        explicit = self._explicit_rhs(eta, y)
+        implicit = np.asarray(full - explicit, dtype=np.float64)
+        tower_size = (self.config.L_max + 1) ** 2
+        implicit[2 * tower_size :] = 0.0
+        return implicit
+
+    def _orthogonal_implicit_step(
+        self,
+        *,
+        eta: float,
+        stage: np.ndarray,
+        dt: float,
+        tca_tracker: list[bool],
+    ) -> np.ndarray:
+        photon_T, photon_E, neutrino_tower = _unpack_radiation_state(stage, self.config.L_max)
+        gamma_t = _resolved_gamma_t(
+            eta=float(eta),
+            direction=self._direction,
+            visibility_source=self.visibility_source,
+            config=self.config,
+        )
+        H_local = self._h_local_at(float(eta))
+        tca_active = bool(
+            isinstance(self.closure, TCAClosure)
+            and gamma_t > 0.0
+            and H_local > 0.0
+            and gamma_t / H_local > self.config.gamma_T_over_H_threshold
+        )
+        tca_tracker.append(tca_active)
+        if gamma_t <= 0.0:
+            return stage.copy()
+
+        gamma_dt = float(dt) * float(gamma_t)
+        out_T = photon_T.copy()
+        out_E = photon_E.E.copy()
+
+        if self.config.L_max >= 1:
+            out_T.tensors[1].components = photon_T.tensors[1].components / (1.0 + gamma_dt)
+
+        ell2_has_tca_override = False
+        if self.config.L_max >= 2:
+            A11 = 1.0 - gamma_dt * THOMSON_ELL2_SELF_COEFF
+            A12 = -gamma_dt * THOMSON_ELL2_POLARIZATION_COEFF
+            A21 = -gamma_dt * E_MODE_ELL2_TEMPERATURE_COEFF
+            A22 = 1.0 - gamma_dt * E_MODE_ELL2_SELF_COEFF
+            det = A11 * A22 - A12 * A21
+            if abs(det) <= 1.0e-30:
+                raise RuntimeError("orthogonal implicit ell=2 solve became singular")
+            T2_rhs = np.asarray(photon_T.tensors[2].components, dtype=np.float64)
+            E2_rhs = np.asarray(photon_E.E.tensors[2].components, dtype=np.float64)
+            out_T.tensors[2].components = (A22 * T2_rhs - A12 * E2_rhs) / det
+            out_E.tensors[2].components = (-A21 * T2_rhs + A11 * E2_rhs) / det
+
+            if tca_active:
+                rhs_T_free = hierarchy_rhs_photon(
+                    eta,
+                    photon_T.as_flat(),
+                    L_max=self.config.L_max,
+                    bg_table=self.bg_table,
+                    tetrad_state=self.tetrad_state,
+                    closure=self.closure,
+                    collision=ZeroCollisionOperator(),
+                    collision_aux=None,
+                )
+                rhs_E_free = hierarchy_rhs_photon(
+                    eta,
+                    photon_E.E.as_flat(),
+                    L_max=self.config.L_max,
+                    bg_table=self.bg_table,
+                    tetrad_state=self.tetrad_state,
+                    closure=self.closure,
+                    collision=ZeroCollisionOperator(),
+                    collision_aux=None,
+                )
+                a_val = self._a_at(float(eta))
+                slot = _ell2_m0_slot_offset(self.config.L_max)
+                S_T = float(rhs_T_free[slot]) / a_val * (-1.0)
+                S_E = float(rhs_E_free[slot]) / a_val * (-1.0)
+                theta_2_alg, e_2_alg = self._solve_tca_scalars(
+                    S_T=S_T,
+                    S_E=S_E,
+                    gamma_t=float(gamma_t),
+                    H_local=float(H_local),
+                )
+                relax_rate = a_val * float(gamma_t)
+                relax_dt = float(dt) * float(relax_rate)
+                out_T.tensors[2].components[2] = (
+                    photon_T.tensors[2].components[2] + relax_dt * theta_2_alg
+                ) / (1.0 + relax_dt)
+                out_E.tensors[2].components[2] = (
+                    photon_E.E.tensors[2].components[2] + relax_dt * e_2_alg
+                ) / (1.0 + relax_dt)
+                ell2_has_tca_override = True
+
+        for ell in range(3, self.config.L_max + 1):
+            out_T.tensors[ell].components = photon_T.tensors[ell].components / (1.0 + gamma_dt)
+            out_E.tensors[ell].components = photon_E.E.tensors[ell].components / (1.0 + gamma_dt)
+
+        if self.config.L_max >= 2 and ell2_has_tca_override:
+            # TCA ownership replaces only the m=0 quadrupole entry; keep the
+            # non-m0 entries on the exact orthogonal Thomson solve above.
+            pass
+
+        return _pack_radiation_state(
+            photon_T=out_T,
+            photon_E=PolarizationHierarchyState(E=out_E),
+            neutrino_tower=neutrino_tower,
+        )
+
     def _solve_tca_scalars(
         self,
         *,
@@ -704,6 +874,14 @@ class Ver2TierBIntegrator:
         eta_eval: np.ndarray,
         tca_tracker: list[bool],
     ):
+        if str(self.config.solver_method).upper() == "IMEX_MIDPOINT_BDF":
+            return self._solve_segment_imex(
+                eta_start=eta_start,
+                eta_stop=eta_stop,
+                y0=y0,
+                eta_eval=eta_eval,
+                tca_tracker=tca_tracker,
+            )
         max_step = (
             self.config.eta_final_mpc - self.config.eta_initial_mpc
         ) / 1000.0
@@ -722,6 +900,197 @@ class Ver2TierBIntegrator:
         if np.any(~np.isfinite(sol.y)):
             raise RuntimeError("solve_ivp produced non-finite entries in VER2 native Tier-B core")
         return sol
+
+    def _solve_segment_imex(
+        self,
+        *,
+        eta_start: float,
+        eta_stop: float,
+        y0: np.ndarray,
+        eta_eval: np.ndarray,
+        tca_tracker: list[bool],
+    ) -> _SegmentResult:
+        eta_nodes = np.asarray(eta_eval, dtype=np.float64)
+        if eta_nodes.ndim != 1 or eta_nodes.size == 0:
+            raise ValueError("eta_eval must be a non-empty 1-D array")
+        if not np.isclose(float(eta_nodes[0]), float(eta_start)):
+            raise ValueError("eta_eval[0] must match eta_start for IMEX segment solves")
+        if not np.isclose(float(eta_nodes[-1]), float(eta_stop)):
+            raise ValueError("eta_eval[-1] must match eta_stop for IMEX segment solves")
+
+        total_span = max(float(self.config.eta_final_mpc - self.config.eta_initial_mpc), 1.0e-12)
+        nominal_interval = max(float(np.max(np.diff(eta_nodes))), 1.0e-12)
+        split_step = min(0.05, nominal_interval)
+        split_step = max(split_step, total_span / 2000.0)
+        min_step = max(total_span / 50000.0, 1.0e-8)
+        fixed_point_iters = 6
+
+        states = [np.asarray(y0, dtype=np.float64)]
+        nfev = 0
+        njev = 0
+        nlu = 0
+        message = "The IMEX split executor successfully reached the end of the integration interval."
+        y_current = np.asarray(y0, dtype=np.float64)
+
+        for left, right in zip(eta_nodes[:-1], eta_nodes[1:]):
+            eta_current = float(left)
+            eta_target = float(right)
+            while eta_current < eta_target - 1.0e-15:
+                remaining = eta_target - eta_current
+                state_scale = max(float(np.linalg.norm(y_current, ord=np.inf)), 1.0)
+                explicit_0 = self._explicit_rhs(eta_current, y_current)
+                nfev += 1
+                explicit_scale = float(np.linalg.norm(explicit_0, ord=np.inf)) / state_scale
+                trial_h = min(remaining, split_step, 0.05 / max(explicit_scale, 1.0e-12))
+                trial_h = remaining if remaining <= min_step else max(min(trial_h, remaining), min_step)
+                accepted = False
+                for _ in range(20):
+                    midpoint = eta_current + 0.5 * trial_h
+                    predictor = np.asarray(y_current + 0.5 * trial_h * explicit_0, dtype=np.float64)
+                    if np.any(~np.isfinite(predictor)):
+                        trial_h *= 0.5
+                        if trial_h < min_step:
+                            break
+                        continue
+                    explicit_mid = self._explicit_rhs(midpoint, predictor)
+                    nfev += 1
+                    stage = np.asarray(y_current + trial_h * explicit_mid, dtype=np.float64)
+                    if np.any(~np.isfinite(stage)):
+                        trial_h *= 0.5
+                        if trial_h < min_step:
+                            break
+                        continue
+                    eta_next = eta_current + trial_h
+                    if abs(float(self.config.tilt_rapidity)) == 0.0:
+                        candidate = self._orthogonal_implicit_step(
+                            eta=float(eta_next),
+                            stage=stage,
+                            dt=float(trial_h),
+                            tca_tracker=tca_tracker,
+                        )
+                        if np.any(~np.isfinite(candidate)):
+                            trial_h *= 0.5
+                            if trial_h < min_step:
+                                break
+                            continue
+                        candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
+                        if (
+                            candidate_scale > max(8.0 * state_scale, 1.0e6)
+                            and trial_h > min_step
+                        ):
+                            trial_h *= 0.5
+                            continue
+                        y_current = candidate
+                        eta_current = float(eta_next)
+                        accepted = True
+                        break
+                    candidate = stage.copy()
+                    converged = False
+                    fp_tol = float(self.config.atol) + float(self.config.rtol) * max(
+                        1.0,
+                        float(np.linalg.norm(stage, ord=np.inf)),
+                    )
+                    for _ in range(fixed_point_iters):
+                        implicit_val = self._implicit_rhs(eta_next, candidate, tca_tracker=None)
+                        nfev += 1
+                        next_candidate = np.asarray(stage + trial_h * implicit_val, dtype=np.float64)
+                        if np.any(~np.isfinite(next_candidate)):
+                            break
+                        delta = float(np.linalg.norm(next_candidate - candidate, ord=np.inf))
+                        candidate = next_candidate
+                        njev += 1
+                        if delta <= fp_tol:
+                            converged = True
+                            break
+                    if not converged:
+                        implicit_sol = solve_ivp(
+                            lambda eta, y: self._implicit_rhs(eta, y, tca_tracker=None),
+                            (eta_current, eta_next),
+                            stage,
+                            t_eval=np.array([eta_next], dtype=np.float64),
+                            method="BDF",
+                            rtol=self.config.rtol,
+                            atol=self.config.atol,
+                            max_step=max(abs(trial_h), 1.0e-12),
+                        )
+                        nfev += int(implicit_sol.nfev)
+                        njev += int(implicit_sol.njev)
+                        nlu += int(implicit_sol.nlu)
+                        if not implicit_sol.success or np.any(~np.isfinite(implicit_sol.y)):
+                            trial_h *= 0.5
+                            if trial_h < min_step:
+                                break
+                            continue
+                        candidate = np.asarray(implicit_sol.y[:, -1], dtype=np.float64)
+                    candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
+                    if (
+                        candidate_scale > max(8.0 * state_scale, 1.0e6)
+                        and trial_h > min_step
+                    ):
+                        trial_h *= 0.5
+                        continue
+                    gamma_t = _resolved_gamma_t(
+                        eta=float(eta_next),
+                        direction=self._direction,
+                        visibility_source=self.visibility_source,
+                        config=self.config,
+                    )
+                    H_local = self._h_local_at(float(eta_next))
+                    if H_local > 0.0 and gamma_t > 0.0:
+                        tca_tracker.append(gamma_t / H_local > self.config.gamma_T_over_H_threshold)
+                    else:
+                        tca_tracker.append(False)
+                    y_current = candidate
+                    eta_current = float(eta_next)
+                    accepted = True
+                    break
+                if not accepted:
+                    if abs(float(self.config.tilt_rapidity)) > 0.0:
+                        fallback_sol = solve_ivp(
+                            lambda eta, y: self._rhs(eta, y, tca_tracker=None),
+                            (eta_current, eta_target),
+                            y_current,
+                            t_eval=np.array([eta_target], dtype=np.float64),
+                            method="BDF",
+                            rtol=self.config.rtol,
+                            atol=self.config.atol,
+                            max_step=max(abs(eta_target - eta_current), 1.0e-12),
+                        )
+                        nfev += int(fallback_sol.nfev)
+                        njev += int(fallback_sol.njev)
+                        nlu += int(fallback_sol.nlu)
+                        if fallback_sol.success and np.all(np.isfinite(fallback_sol.y)):
+                            gamma_t = _resolved_gamma_t(
+                                eta=float(eta_target),
+                                direction=self._direction,
+                                visibility_source=self.visibility_source,
+                                config=self.config,
+                            )
+                            H_local = self._h_local_at(float(eta_target))
+                            if H_local > 0.0 and gamma_t > 0.0:
+                                tca_tracker.append(
+                                    gamma_t / H_local > self.config.gamma_T_over_H_threshold
+                                )
+                            else:
+                                tca_tracker.append(False)
+                            y_current = np.asarray(fallback_sol.y[:, -1], dtype=np.float64)
+                            eta_current = float(eta_target)
+                            accepted = True
+                            continue
+                    raise RuntimeError(
+                        "IMEX split executor failed to find a finite accepted substep "
+                        f"before η={eta_target}"
+                    )
+            states.append(y_current.copy())
+        return _SegmentResult(
+            t=eta_nodes,
+            y=np.column_stack(states),
+            nfev=nfev,
+            njev=njev,
+            nlu=nlu,
+            status=0,
+            message=message,
+        )
 
     def _build_result(
         self,

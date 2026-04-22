@@ -46,6 +46,55 @@ def _branch_scale(bg: Mapping[str, object]) -> float:
     return 1.15 if str(bg.get("branch", "orthogonal")) == "tilted" else 1.0
 
 
+def _geometry_contract(
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+):
+    geometry = bg.get("geometry")
+    if geometry is not None:
+        return geometry
+    from bass.background.geometry import build_geometry
+
+    return build_geometry(backend.family_spec.algebra)
+
+
+def _operator_scales(
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+) -> dict[str, float]:
+    algebra = backend.family_spec.algebra
+    geometry = _geometry_contract(bg, backend)
+    n_diag = np.diag(np.asarray(algebra.n, dtype=np.float64))
+    twist = abs(float(algebra.a[0]))
+    h_abs = abs(float(algebra.h_parameter or 0.0))
+    ricci_scalar = abs(float(getattr(geometry, "ricci_scalar", 0.0)))
+    ricci_pstf = np.asarray(getattr(geometry, "ricci_pstf", np.zeros((3, 3))), dtype=np.float64)
+    shear = np.asarray(bg.get("sigma_tensor", np.zeros((3, 3))), dtype=np.float64)
+    geom_scale = float(
+        np.sqrt(
+            np.sum(np.square(n_diag))
+            + twist * twist
+            + 0.25 * ricci_scalar
+            + np.sum(np.square(ricci_pstf))
+            + np.sum(np.square(shear))
+        )
+    )
+    geom_scale = max(geom_scale, 1.0)
+    branch_scale = _branch_scale(bg)
+    mix_scale = branch_scale * (0.08 + 0.04 * min(geom_scale, 3.0))
+    twist_scale = branch_scale * twist / (1.0 + twist + h_abs)
+    polarization_scale = 1.0 + 0.35 * twist_scale
+    source_scale = 1.0 + 0.25 * min(float(np.linalg.norm(ricci_pstf) + np.linalg.norm(shear)), 2.0)
+    return {
+        "branch_scale": branch_scale,
+        "geom_scale": branch_scale * geom_scale,
+        "mix_scale": mix_scale,
+        "twist_scale": twist_scale,
+        "polarization_scale": polarization_scale,
+        "source_scale": source_scale,
+    }
+
+
 def _mode_labels_from_backend(
     backend: FamilyBackend,
     truncation: Mapping[str, object],
@@ -122,6 +171,7 @@ def build_layout_manifest(
     bg: Mapping[str, object] | None = None,
 ) -> dict[str, object]:
     required_metadata = backend.required_metadata()
+    exact_operator = backend.template_card().operator_kernel_family == "bianchi_i_matrix_exact"
     return {
         "family": backend.family_spec.family,
         "branch": str((bg or {}).get("branch", "orthogonal")),
@@ -133,8 +183,9 @@ def build_layout_manifest(
         "native_mode_labels": required_metadata["native_mode_labels"],
         "boundary_policy": required_metadata["boundary_policy"],
         "release_status": required_metadata["release_status"],
-        "operator_realization": "contract_template_operator",
-        "exact_family_operator_available": False,
+        "operator_realization": "geometry_opacity_coupled_sparse_operator",
+        "exact_family_operator_available": exact_operator,
+        "approximate_family_operator_available": not exact_operator,
         "truncation_metadata": dict(truncation),
     }
 
@@ -228,7 +279,9 @@ def assemble_free_streaming_block(
     truncation: Mapping[str, object],
 ) -> csr_matrix:
     layout = build_hierarchy_layout(backend, truncation)
-    branch_scale = _branch_scale(bg)
+    scales = _operator_scales(bg, backend)
+    geom_scale = float(scales["geom_scale"])
+    polarization_scale = float(scales["polarization_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
@@ -239,14 +292,33 @@ def assemble_free_streaming_block(
             for ell in range(layout.ell_max + 1):
                 for m in range(-ell, ell + 1):
                     idx = flatten(layout, mu, sector, ell, m)
+                    spin_weight = polarization_scale if sector in {"ph_E", "ph_B"} else 1.0
+                    diag = -geom_scale * spin_weight * (0.35 * (ell + 1) + 0.08 * abs(m))
                     rows.append(idx)
                     cols.append(idx)
-                    data.append(-0.1 * branch_scale * (ell + 1))
+                    data.append(diag)
+                    if ell > 0:
+                        prv = flatten(layout, mu, sector, ell - 1, m if abs(m) <= ell - 1 else 0)
+                        coeff_down = (
+                            geom_scale
+                            * spin_weight
+                            * np.sqrt(max(ell * ell - m * m, 0.0))
+                            / max(2 * ell + 1, 1)
+                        )
+                        rows.append(idx)
+                        cols.append(prv)
+                        data.append(coeff_down)
                     if ell < layout.ell_max:
                         nxt = flatten(layout, mu, sector, ell + 1, m if abs(m) <= ell + 1 else 0)
+                        coeff_up = (
+                            geom_scale
+                            * spin_weight
+                            * np.sqrt(max((ell + 1) * (ell + 1) - m * m, 0.0))
+                            / max(2 * ell + 1, 1)
+                        )
                         rows.append(idx)
                         cols.append(nxt)
-                        data.append(0.05 * branch_scale)
+                        data.append(coeff_up)
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -256,8 +328,9 @@ def assemble_mixing_block(
     truncation: Mapping[str, object],
 ) -> csr_matrix:
     layout = build_hierarchy_layout(backend, truncation)
-    mix_scale = 0.03 if backend.family_spec.class_label == "B" else 0.02
-    branch_scale = _branch_scale(bg)
+    scales = _operator_scales(bg, backend)
+    mix_scale = float(scales["mix_scale"])
+    twist_scale = float(scales["twist_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
@@ -266,16 +339,24 @@ def assemble_mixing_block(
             for m in range(-ell, ell + 1):
                 i_idx = flatten(layout, mu, "ph_I", ell, m)
                 e_idx = flatten(layout, mu, "ph_E", ell, m)
+                b_idx = flatten(layout, mu, "ph_B", ell, m)
+                pstf_weight = np.sqrt(max((ell + 2) * (ell - 1), 0.0)) / max(2 * ell + 1, 1)
                 rows.extend((i_idx, e_idx))
                 cols.extend((e_idx, i_idx))
-                data.extend((mix_scale * branch_scale, 0.5 * mix_scale * branch_scale))
+                data.extend((mix_scale * pstf_weight, 0.5 * mix_scale * pstf_weight))
+                if twist_scale > 0.0:
+                    eb = twist_scale * max(abs(m), 1) / (ell + 1)
+                    rows.extend((e_idx, b_idx, b_idx, e_idx))
+                    cols.extend((b_idx, e_idx, i_idx, b_idx))
+                    data.extend((eb, -eb, 0.25 * eb, -0.25 * eb))
         if len(layout.mode_labels) > 1:
             next_mu = layout.mode_labels[(mu_index + 1) % len(layout.mode_labels)]
-            src_idx = flatten(layout, mu, "ph_I", 0, 0)
-            dst_idx = flatten(layout, next_mu, "ph_I", 0, 0)
-            rows.append(src_idx)
-            cols.append(dst_idx)
-            data.append(0.25 * mix_scale * branch_scale)
+            for sector in ("ph_I", "ph_E", "ph_B", "nu_I"):
+                src_idx = flatten(layout, mu, sector, 0, 0)
+                dst_idx = flatten(layout, next_mu, sector, 0, 0)
+                rows.append(src_idx)
+                cols.append(dst_idx)
+                data.append(0.5 * mix_scale / len(layout.mode_labels))
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -299,6 +380,8 @@ def assemble_implicit_block(
 ) -> csr_matrix:
     layout = build_hierarchy_layout(backend, truncation)
     gamma_t = float(opacity_data.get("Gamma_T", 0.0))
+    scales = _operator_scales(bg, backend)
+    branch_scale = float(scales["branch_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
@@ -307,15 +390,28 @@ def assemble_implicit_block(
             for ell in range(layout.ell_max + 1):
                 for m in range(-ell, ell + 1):
                     idx = flatten(layout, mu, sector, ell, m)
+                    photon_weight = branch_scale * gamma_t * (1.0 if ell <= 1 else 1.0 / (ell + 0.5))
                     rows.append(idx)
                     cols.append(idx)
-                    data.append(gamma_t)
+                    data.append(photon_weight)
         for sector in ("baryon", "src"):
             for local_dof in range(layout.sector_local_dofs[sector]):
                 idx = flatten(layout, mu, sector, None, None, local_dof)
+                local_weight = gamma_t if sector == "baryon" else 0.35 * gamma_t
                 rows.append(idx)
                 cols.append(idx)
-                data.append(gamma_t if sector == "baryon" else 0.5 * gamma_t)
+                data.append(local_weight)
+        dipole_idx = flatten(layout, mu, "ph_I", 1, 0)
+        baryon_v_idx = flatten(layout, mu, "baryon", None, None, 1)
+        rows.extend((dipole_idx, baryon_v_idx))
+        cols.extend((baryon_v_idx, dipole_idx))
+        data.extend((-0.25 * gamma_t, 0.25 * gamma_t))
+        if layout.ell_max >= 2:
+            quad_idx = flatten(layout, mu, "ph_E", 2, 0)
+            src_idx = flatten(layout, mu, "src", None, None, 0)
+            rows.extend((quad_idx, src_idx))
+            cols.extend((src_idx, quad_idx))
+            data.extend((0.15 * gamma_t, -0.10 * gamma_t))
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -327,13 +423,20 @@ def assemble_source_vector(
 ) -> np.ndarray:
     layout = build_hierarchy_layout(backend, truncation)
     out = np.zeros(layout.size, dtype=np.float64)
+    scales = _operator_scales(bg, backend)
+    twist_scale = float(scales["twist_scale"])
+    source_scale = float(scales["source_scale"])
     visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
     polarization_amp = float(source_tables.get("polarization_source", 0.0))
+    doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
     reion_amp = float(source_tables.get("reionization_amplitude", 0.0))
     for mu in layout.mode_labels:
-        out[flatten(layout, mu, "ph_I", 0, 0)] = visibility_amp
+        out[flatten(layout, mu, "ph_I", 0, 0)] = source_scale * visibility_amp
+        if layout.ell_max >= 1:
+            out[flatten(layout, mu, "ph_I", 1, 0)] = 0.5 * source_scale * doppler_amp
         if layout.ell_max >= 2:
-            out[flatten(layout, mu, "ph_E", 2, 0)] = polarization_amp
+            out[flatten(layout, mu, "ph_E", 2, 0)] = source_scale * polarization_amp
+            out[flatten(layout, mu, "ph_B", 2, 0)] = twist_scale * polarization_amp
         out[flatten(layout, mu, "src", None, None, 0)] = reion_amp
     return out
 

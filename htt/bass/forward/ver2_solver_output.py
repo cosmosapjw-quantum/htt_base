@@ -11,6 +11,7 @@ from common.contracts import ArtifactManifest, SolverCoreOutput
 
 from bass.background.bianchi_types import StructureConstants, get_type
 from bass.collision.polarization import PolarizationHierarchyState
+from bass.hierarchy.boost_kernel import is_axis_aligned
 from bass.hierarchy.pstf_radiation import (
     RadiationPSTFState,
     TruncationMetadata,
@@ -36,6 +37,7 @@ from bass.runtime.ver2_execution import (
 from bass.recombination.recombination_ingest import find_visibility_peak
 from bass.recombination.reionization import compute_reionization_tau
 from bass.species.base import SpeciesLabel
+from bass.species.massive_neutrino import MassiveNeutrinoBackground
 from bass.species.registry import SpeciesBackgroundRegistry
 
 __all__ = [
@@ -163,7 +165,7 @@ def _default_solver_resolution(
     if family is IntegratorFamily.EXPLICIT_RK:
         return "RK45", "runtime_family_direct"
     if family is IntegratorFamily.IMEX_SPLIT:
-        return "BDF", "declared_imex_policy_bdf_executor"
+        return "IMEX_MIDPOINT_BDF", "native_imex_midpoint_bdf_split"
     raise ValueError(f"unsupported integrator_family {family!r}")
 
 
@@ -184,6 +186,29 @@ def _propagator_readiness(
 
 def _base_covariance_readiness(anisotropic_covariance: object | None) -> str:
     return "proxy" if anisotropic_covariance is not None else "missing"
+
+
+def _neutrino_runtime_metadata(
+    species: SpeciesBackgroundRegistry,
+) -> dict[str, object]:
+    neutrino = species[SpeciesLabel.NEUTRINO]
+    if isinstance(neutrino, MassiveNeutrinoBackground) and neutrino.mass_eV > 0.0:
+        return {
+            "neutrino_background_readiness": "massive_fd_background_and_hierarchy",
+            "massive_neutrino_support": True,
+            "massive_neutrino_block_reason": None,
+            "massive_neutrino_mass_eV": float(neutrino.mass_eV),
+        }
+    readiness = str(getattr(neutrino, "background_readiness", "massless_only"))
+    supported = bool(getattr(neutrino, "massive_neutrino_supported", False))
+    return {
+        "neutrino_background_readiness": readiness,
+        "massive_neutrino_support": supported,
+        "massive_neutrino_block_reason": (
+            None if supported else "massive_neutrino_background_not_implemented"
+        ),
+        "massive_neutrino_mass_eV": 0.0,
+    }
 
 
 @dataclass(frozen=True)
@@ -701,6 +726,11 @@ def build_solver_core_output_from_native_result(
         coefficient_representation="ver2_native_pstf_final_slice",
         angular_representation="ver2_native_pstf_sphere_reconstruction",
     )
+    tilt_direction = tuple(float(x) for x in result.config.tilt_direction)
+    off_axis_supported = bool(
+        abs(float(result.config.tilt_rapidity)) > 0.0
+        and not is_axis_aligned(tilt_direction)
+    )
     return build_solver_core_output(
         manifest=manifest,
         bianchi_type=bianchi_type,
@@ -727,7 +757,7 @@ def build_solver_core_output_from_native_result(
                 structure=structure_constants,
                 tilt_enabled=bool(abs(result.config.tilt_rapidity) > 0.0),
                 tilt_rapidity=float(result.config.tilt_rapidity),
-                tilt_direction=tuple(float(x) for x in result.config.tilt_direction),
+                tilt_direction=tilt_direction,
             ),
             "propagator_ready": True,
             "validation_reference": False,
@@ -772,6 +802,11 @@ def build_solver_core_output_from_native_result(
             "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
             "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
             "startup_manifold_applied": bool(result.solver_info.get("startup_manifold_applied", False)),
+            "off_axis_support": off_axis_supported,
+            "axis_aligned_tilt_support": True,
+            "off_axis_fallback_applied": False,
+            "off_axis_block_reason": None if off_axis_supported else "off_axis_not_closed",
+            **_neutrino_runtime_metadata(species),
             **source_builder_metadata,
         },
     )
@@ -938,6 +973,7 @@ def build_solver_core_output_from_lowell_result(
                     ),
                 )
             ),
+            **_neutrino_runtime_metadata(species),
             **source_builder_metadata,
         },
     )

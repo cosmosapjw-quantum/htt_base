@@ -236,20 +236,21 @@ def test_fb41_none_tilt_matches_anchor_operator() -> None:
     np.testing.assert_array_equal(result.components, anchor.components)
 
 
-def test_fb41_off_axis_direction_raises() -> None:
-    with pytest.raises(NotImplementedError, match="off-axis"):
-        evaluate_tilted_thomson_pstf_collision(
-            ell=2,
-            temperature_state=_make_temperature_state(),
-            polarization_state=_make_polarization_state(),
-            eta=4.0,
-            v_b_real_sph=np.zeros(3, dtype=np.float64),
-            Gamma_T=1.0,
-            tilted_electron=_make_tilt(
-                0.1,
-                v_hat_e=(1.0 / np.sqrt(2.0), 1.0 / np.sqrt(2.0), 0.0),
-            ),
-        )
+def test_fb41_off_axis_direction_is_supported() -> None:
+    result = evaluate_tilted_thomson_pstf_collision(
+        ell=2,
+        temperature_state=_make_temperature_state(),
+        polarization_state=_make_polarization_state(),
+        eta=4.0,
+        v_b_real_sph=np.zeros(3, dtype=np.float64),
+        Gamma_T=1.0,
+        tilted_electron=_make_tilt(
+            0.1,
+            v_hat_e=(1.0 / np.sqrt(2.0), 1.0 / np.sqrt(2.0), 0.0),
+        ),
+    )
+    assert np.all(np.isfinite(result.components))
+    assert np.linalg.norm(np.delete(result.components, 2)) > 0.0
 
 
 def test_fb41_superluminal_beta_rejected() -> None:

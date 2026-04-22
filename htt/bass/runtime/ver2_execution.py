@@ -950,10 +950,7 @@ def _resolve_native_solver_method(
     if family is IntegratorFamily.EXPLICIT_RK:
         return "RK45", "runtime_family_direct"
     if family is IntegratorFamily.IMEX_SPLIT:
-        # The native BF-02 seed/startup path is still a single stiff ODE
-        # solve; until an actual split executor exists, use the stable
-        # implicit backend explicitly rather than inheriting legacy LSODA.
-        return "BDF", "declared_imex_policy_bdf_executor"
+        return "IMEX_MIDPOINT_BDF", "native_imex_midpoint_bdf_split"
     raise ValueError(f"Unsupported integrator family: {family!r}")
 
 
