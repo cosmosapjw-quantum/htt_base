@@ -333,6 +333,35 @@ class _TierBRuntimeRequest:
         object.__setattr__(self, "k_grid_mpc", np.asarray(self.k_grid_mpc, dtype=np.float64))
 
 
+def _build_tier_b_runtime_request(
+    *,
+    manifest,
+    bianchi_type: str,
+    species: "SpeciesBackgroundRegistry",
+    integrator_config,
+    runtime_controls: RuntimeControlBlock,
+    feature_flags: SolverFeatureFlags,
+    release,
+    k_grid_mpc: np.ndarray,
+    validation_matrix: "ValidationMatrixSpec | None" = None,
+    cutoff_spec: "CutoffCampaignSpec | None" = None,
+    restart_checkpoint_path: str | None = None,
+) -> _TierBRuntimeRequest:
+    return _TierBRuntimeRequest(
+        manifest=manifest,
+        bianchi_type=bianchi_type,
+        species=species,
+        integrator_config=integrator_config,
+        runtime_controls=runtime_controls,
+        feature_flags=feature_flags,
+        release=release,
+        k_grid_mpc=k_grid_mpc,
+        validation_matrix=validation_matrix,
+        cutoff_spec=cutoff_spec,
+        restart_checkpoint_path=restart_checkpoint_path,
+    )
+
+
 def _build_tier_b_executable_run(
     *,
     request: _TierBRuntimeRequest,
@@ -1833,17 +1862,19 @@ def execute_tier_b_lowell_solver(
     cutoff_spec: "CutoffCampaignSpec | None" = None,
 ) -> TierBExecutableRun:
     """Compatibility alias for the native VER2 Tier-B production route."""
-    return execute_tier_b_solver(
-        manifest=manifest,
-        bianchi_type=bianchi_type,
-        species=species,
-        integrator_config=integrator_config,
-        runtime_controls=runtime_controls,
-        feature_flags=feature_flags,
-        release=release,
-        k_grid_mpc=k_grid_mpc,
-        validation_matrix=validation_matrix,
-        cutoff_spec=cutoff_spec,
+    return _run_tier_b_runtime_request(
+        _build_tier_b_runtime_request(
+            manifest=manifest,
+            bianchi_type=bianchi_type,
+            species=species,
+            integrator_config=integrator_config,
+            runtime_controls=runtime_controls,
+            feature_flags=feature_flags,
+            release=release,
+            k_grid_mpc=k_grid_mpc,
+            validation_matrix=validation_matrix,
+            cutoff_spec=cutoff_spec,
+        )
     )
 
 
@@ -1862,18 +1893,20 @@ def resume_tier_b_solver_from_checkpoint(
     cutoff_spec: "CutoffCampaignSpec | None" = None,
 ) -> TierBExecutableRun:
     """Resume the native Tier-B runtime from a saved checkpoint."""
-    return execute_tier_b_solver(
-        manifest=manifest,
-        bianchi_type=bianchi_type,
-        species=species,
-        integrator_config=integrator_config,
-        runtime_controls=runtime_controls,
-        feature_flags=feature_flags,
-        release=release,
-        k_grid_mpc=k_grid_mpc,
-        validation_matrix=validation_matrix,
-        cutoff_spec=cutoff_spec,
-        restart_checkpoint_path=checkpoint_path,
+    return _run_tier_b_runtime_request(
+        _build_tier_b_runtime_request(
+            manifest=manifest,
+            bianchi_type=bianchi_type,
+            species=species,
+            integrator_config=integrator_config,
+            runtime_controls=runtime_controls,
+            feature_flags=feature_flags,
+            release=release,
+            k_grid_mpc=k_grid_mpc,
+            validation_matrix=validation_matrix,
+            cutoff_spec=cutoff_spec,
+            restart_checkpoint_path=checkpoint_path,
+        )
     )
 
 
@@ -1901,17 +1934,18 @@ def execute_tier_b_solver(
     - the Lowell integrator only as a retained compatibility path outside the
       production route.
     """
-    request = _TierBRuntimeRequest(
-        manifest=manifest,
-        bianchi_type=bianchi_type,
-        species=species,
-        integrator_config=integrator_config,
-        runtime_controls=runtime_controls,
-        feature_flags=feature_flags,
-        release=release,
-        k_grid_mpc=k_grid_mpc,
-        validation_matrix=validation_matrix,
-        cutoff_spec=cutoff_spec,
-        restart_checkpoint_path=restart_checkpoint_path,
+    return _run_tier_b_runtime_request(
+        _build_tier_b_runtime_request(
+            manifest=manifest,
+            bianchi_type=bianchi_type,
+            species=species,
+            integrator_config=integrator_config,
+            runtime_controls=runtime_controls,
+            feature_flags=feature_flags,
+            release=release,
+            k_grid_mpc=k_grid_mpc,
+            validation_matrix=validation_matrix,
+            cutoff_spec=cutoff_spec,
+            restart_checkpoint_path=restart_checkpoint_path,
+        )
     )
-    return _run_tier_b_runtime_request(request)
