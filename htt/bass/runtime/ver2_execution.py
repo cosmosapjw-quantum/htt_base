@@ -830,19 +830,19 @@ def _build_gate_registry(
     background_monitor: "BackgroundEvolutionResult",
     species: "SpeciesBackgroundRegistry",
     visibility_source: "TiltedVisibilitySource",
-    gamma_t_probe: float,
-    thomson_probe: "ExactThomsonSource",
+    runtime_trace_products,
     backend,
     seed_pack,
     seed_projection,
-    mode_ops,
-    layout_projection,
     cutoff_campaign,
 ) -> dict[str, object]:
     from bass.hierarchy.ver3_layout_protocol import hierarchy_layout_gate_bundle
     from bass.los.family_backend_protocol import family_backend_gate_bundle
 
     branch = str(background_monitor.branch)
+    thomson_probe = runtime_trace_products.thomson_probe
+    layout_projection = runtime_trace_products.layout_projection
+    mode_ops = layout_projection.mode_ops
     physics_fragment = physics_gate_fragment(
         bianchi_type=bianchi_type,
         background_monitor=background_monitor,
@@ -1670,13 +1670,10 @@ def execute_tier_b_solver(
         background_monitor=background_monitor,
         species=species,
         visibility_source=visibility_source,
-        gamma_t_probe=gamma_t_probe,
-        thomson_probe=thomson_probe,
+        runtime_trace_products=runtime_trace_products,
         backend=backend,
         seed_pack=integrator.seed_pack,
         seed_projection=integrator.seed_projection,
-        mode_ops=mode_ops,
-        layout_projection=layout_projection,
         cutoff_campaign=cutoff_campaign,
     )
 
