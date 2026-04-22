@@ -128,6 +128,19 @@ def _default_alm_features(
                 "contract_only_unavailable",
             ),
         ),
+        "backend_lookup_resolution_status": solver_output.metadata.get(
+            "backend_lookup_resolution_status"
+        ),
+        "backend_verification_crosscheck_pass": bool(
+            solver_output.metadata.get("backend_verification_crosscheck_pass", False)
+        ),
+        "b_mode_runtime_available": bool(
+            solver_output.metadata.get("b_mode_runtime_available", False)
+        ),
+        "b_mode_payload_status": solver_output.metadata.get("b_mode_payload_status"),
+        "canonical_projection_covered_mode_labels": list(
+            solver_output.metadata.get("canonical_projection_covered_mode_labels", [])
+        ),
         "covariance_readiness": covariance_readiness,
         "fitting_ready": covariance_readiness == "full",
         "off_diagonal_strategy": solver_output.metadata.get("off_diagonal_strategy"),

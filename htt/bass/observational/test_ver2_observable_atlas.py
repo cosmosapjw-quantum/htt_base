@@ -358,6 +358,14 @@ def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
     assert observable.covariance_features["basis_reduction_status"] == "sphere_supported_harmonic_sparse"
     assert observable.covariance_features["null_proxy_status"] == "consistent_with_isotropic_null"
     assert observable.covariance_features["local_global_degeneracy"]["status"] == "not_applicable_isotropic"
+    assert observable.alm_features["backend_lookup_resolution_status"] == "frozen_v5_formula_set"
+    assert observable.alm_features["backend_verification_crosscheck_pass"] is True
+    assert observable.alm_features["b_mode_runtime_available"] is False
+    assert set(observable.alm_features["canonical_projection_covered_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
     assert observable.alm_features["covariance_readiness"] == "full"
     assert observable.alm_features["fitting_ready"] is True
     assert (
