@@ -34,7 +34,7 @@ RE2 in the active repo means:
 | PR-07 | visibility/history | live visibility adapters + tests; visibility gate evidence routes through integrator-owned gate fragments | source-history contract present |
 | PR-08 | backend protocol | live backend/translator/seed contract plus bound operator payloads; runtime consumes backend-owned seed packs and integrator-bundled backend gate evidence | backend contract bound to executable sparse payloads, but not all-family production numerics |
 | PR-09 | hierarchy layout | live layout/packing helpers, split block templates, integrator-owned runtime execution/trace bundle, auxiliary `ph_B/baryon/cdm/src` histories, and integrator-bundled hierarchy gate evidence | hierarchy layout frozen with integrator-owned canonical projection and execution trace bundle; auxiliary sectors are bounded, not fully live-coevolved |
-| PR-10 | output split | live archive writer; solver output and archive auto-carry upstream+output bundle chain; native runtime now sources solver-output inputs from the integrator-owned execution bundle | output split surface present, claim depends on supplied bundles |
+| PR-10 | output split | live archive writer; solver output and archive auto-carry upstream+output bundle chain; native runtime now sources solver-output inputs from the integrator-owned execution bundle, and the execution-bundle builder is exposed on the forward public surface | output split surface present, claim depends on supplied bundles |
 | PR-11 | validation hard stop | live gate bundle schema, gate status summary, readiness scoring, fitting hard stop | fitting remains blocked unless upstream bundles exist |
 
 ---
