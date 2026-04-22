@@ -11,3 +11,8 @@ def test_preliminary_directional_handoff_loads_generated_bundle() -> None:
     assert handoff.likelihood_input.tsc_caveats is not None
     assert handoff.likelihood_input.tsc_caveats.required_channels == ("TT",)
     assert handoff.discrimination_matrix.manifest.owner == "HTT"
+    pair = "global_tilt|local_boost"
+    assert handoff.pair_claim_tier[pair] == "conditional"
+    assert pair in handoff.conditional_pairs
+    assert handoff.blocked_pairs == ()
+    assert handoff.support_profile == {} or handoff.support_profile["template"] >= 0.75

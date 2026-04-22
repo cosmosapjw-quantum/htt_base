@@ -24,6 +24,45 @@ class PreliminaryDirectionalHandoff:
     discrimination_matrix: DiscriminationMatrix
     pack_ids: tuple[str, ...]
 
+    @property
+    def support_profile(self) -> dict[str, float]:
+        stats = self.discrimination_matrix.manifest.statistics_definitions
+        profile = stats.get("support_profile", {})
+        if not isinstance(profile, dict):
+            return {}
+        return {str(key): float(value) for key, value in profile.items()}
+
+    @property
+    def pair_claim_tier(self) -> dict[str, str]:
+        stats = self.discrimination_matrix.manifest.statistics_definitions
+        mapping = stats.get("pair_claim_tier", {})
+        if isinstance(mapping, dict) and mapping:
+            return {str(key): str(value) for key, value in mapping.items()}
+        return {
+            str(key): str(value)
+            for key, value in self.discrimination_matrix.claim_tier_by_pair.items()
+        }
+
+    @property
+    def conditional_pairs(self) -> tuple[str, ...]:
+        stats = self.discrimination_matrix.manifest.statistics_definitions
+        pairs = stats.get("conditional_pairs", ())
+        if isinstance(pairs, (list, tuple)) and pairs:
+            return tuple(str(pair) for pair in pairs)
+        return tuple(
+            pair for pair, tier in sorted(self.pair_claim_tier.items()) if tier == "conditional"
+        )
+
+    @property
+    def blocked_pairs(self) -> tuple[str, ...]:
+        stats = self.discrimination_matrix.manifest.statistics_definitions
+        pairs = stats.get("blocked_pairs", ())
+        if isinstance(pairs, (list, tuple)) and pairs:
+            return tuple(str(pair) for pair in pairs)
+        return tuple(
+            pair for pair, tier in sorted(self.pair_claim_tier.items()) if tier == "blocked"
+        )
+
 
 def build_preliminary_directional_handoff(
     *,
