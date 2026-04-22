@@ -287,8 +287,11 @@ def project_runtime_native_state(
                 "ph_I": "live_runtime_projection",
                 "ph_E": "live_runtime_projection",
                 "ph_B": (
-                    "layout_operator_postprocessed_proxy"
-                    if bool(np.any(np.abs(tower_B) > 0.0))
+                    "layout_operator_auxiliary_b_mode_history"
+                    if bool(
+                        np.any(np.abs(tower_B) > 0.0)
+                        or (b_history is not None and np.any(np.abs(b_history) > 0.0))
+                    )
                     else "zero_filled_not_evolved"
                 ),
                 "nu_I": "live_runtime_projection",

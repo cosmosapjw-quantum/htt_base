@@ -309,7 +309,7 @@ def test_project_runtime_native_state_can_embed_postprocessed_b_mode_proxy() -> 
         neutrino_tower=np.arange(size, dtype=np.float64) + 200.0,
         source_template=np.asarray(ops.source_template, dtype=np.float64),
     )
-    assert projection.sector_status["ph_B"] == "layout_operator_postprocessed_proxy"
+    assert projection.sector_status["ph_B"] == "layout_operator_auxiliary_b_mode_history"
     assert projection.metadata["resolved_sector_order"] == ("ph_I", "ph_E", "ph_B", "nu_I")
     assert projection.metadata["b_history_available"] is True
     assert projection.metadata["b_history_sample_count"] == 2

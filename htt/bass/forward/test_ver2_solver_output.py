@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import numpy as np
 import pytest
 
@@ -387,6 +389,57 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert np.asarray(output.alm_T["sphere_directions"], dtype=np.float64).shape == (435, 3)
     assert np.asarray(output.alm_E["sphere_samples"], dtype=np.float64).shape == (435,)
     assert np.asarray(output.alm_B["sphere_samples"], dtype=np.float64).shape == (435,)
+
+
+def test_native_output_promotes_auxiliary_b_mode_runtime_payload() -> None:
+    size = (_controls().multipole_cutoff + 1) ** 2
+    b_coefficients = np.zeros(size, dtype=np.float64)
+    b_coefficients[6] = 2.5e-6
+    canonical_projection = SimpleNamespace(
+        hierarchy_state=SimpleNamespace(
+            photon_polarization_block={
+                "B": b_coefficients,
+                "eta": np.array([0.1, 0.2], dtype=np.float64),
+                "B_history": np.vstack([np.zeros(size, dtype=np.float64), b_coefficients]),
+            }
+        ),
+        sector_status={"ph_B": "layout_operator_auxiliary_b_mode_history"},
+        metadata={
+            "projection_mode": "single_live_mode_label_with_layout_auxiliary_local_matter_blocks",
+            "b_history_available": True,
+            "b_history_sample_count": 2,
+            "resolved_sector_order": ("ph_I", "ph_E", "ph_B", "nu_I"),
+            "matter_block_labels": {},
+        },
+        state_vector=np.zeros(size * 7, dtype=np.float64),
+        covered_mode_labels=("m0",),
+        zero_filled_mode_labels=(),
+    )
+    output = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="VII_h",
+        result=_synthetic_result(),
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_executable",
+            run_label="tier-b-native-b-aux",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+        canonical_projection=canonical_projection,
+    )
+    assert output.metadata["b_mode_runtime_available"] is True
+    assert output.metadata["b_mode_payload_available"] is True
+    assert output.metadata["b_mode_payload_status"] == "layout_operator_auxiliary_b_mode_history"
+    assert output.alm_B["available"] is True
+    assert output.metadata["canonical_projection_b_history_available"] is True
+    assert output.metadata["canonical_projection_b_history_sample_count"] == 2
 
 
 def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backend() -> None:

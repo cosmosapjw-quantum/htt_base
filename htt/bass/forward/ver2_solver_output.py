@@ -782,19 +782,21 @@ def build_solver_core_output_from_native_result(
     )
     b_mode_payload_status = "zero_filled_layout_contract_only"
     b_mode_payload_available = False
+    b_mode_runtime_available = False
     b_mode_coefficients = None
     if canonical_projection is not None:
         b_mode_coefficients = np.asarray(
             getattr(canonical_projection, "hierarchy_state").photon_polarization_block.get("B"),
             dtype=np.float64,
         )
+        b_mode_sector_status = str(getattr(canonical_projection, "sector_status", {}).get("ph_B", ""))
         if (
-            getattr(canonical_projection, "sector_status", {}).get("ph_B")
-            == "layout_operator_postprocessed_proxy"
+            b_mode_sector_status == "layout_operator_auxiliary_b_mode_history"
             and np.any(np.abs(b_mode_coefficients) > 0.0)
         ):
-            b_mode_payload_status = "layout_operator_postprocessed_proxy"
+            b_mode_payload_status = b_mode_sector_status
             b_mode_payload_available = True
+            b_mode_runtime_available = True
     alm_T, alm_E, alm_B = _build_reconstructed_payloads(
         result,
         coefficient_representation="ver2_native_pstf_final_slice",
@@ -972,7 +974,7 @@ def build_solver_core_output_from_native_result(
                     )
                 )
             ),
-            "b_mode_runtime_available": False,
+            "b_mode_runtime_available": bool(b_mode_runtime_available),
             "b_mode_payload_available": bool(b_mode_payload_available),
             "b_mode_payload_status": str(b_mode_payload_status),
             "layout_contract_consumed": bool(
