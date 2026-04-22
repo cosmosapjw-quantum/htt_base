@@ -273,6 +273,25 @@ class TierBExecutableRun:
         )
 
 
+def _stamp_native_result_solver_info(
+    *,
+    result,
+    runtime_controls: RuntimeControlBlock,
+    runtime_config,
+    family_realization: str,
+    checkpoint_paths: tuple[str, ...],
+    restart_checkpoint_path: str | None,
+) -> None:
+    _stamp_native_result_solver_info(
+        result=result,
+        runtime_controls=runtime_controls,
+        runtime_config=runtime_config,
+        family_realization=family_realization,
+        checkpoint_paths=tuple(checkpoint_paths),
+        restart_checkpoint_path=restart_checkpoint_path,
+    )
+
+
 @dataclass(frozen=True)
 class TierAValidationTrace:
     """Validation-only angular-reference payload for Tier A cross-checks."""
