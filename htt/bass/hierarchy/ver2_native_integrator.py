@@ -1669,6 +1669,11 @@ class Ver2TierBIntegrator:
             source_history_samples=np.asarray(auxiliary_bundle.source_history, dtype=np.float64),
             covered_mode_label=covered,
         )
+        source_block = np.asarray(
+            canonical_projection.hierarchy_state.source_history_block["src"],
+            dtype=np.float64,
+        )
+        b_mode_proxy = np.asarray(b_history[-1], dtype=np.float64)
         return _RuntimeLayoutProjectionBundle(
             mode_ops=mode_ops,
             layout=layout,
@@ -1678,6 +1683,34 @@ class Ver2TierBIntegrator:
             metadata={
                 "owner": "ver2_native_integrator.build_runtime_layout_projection",
                 "gamma_t_probe": float(gamma_t_probe),
+                "solver_info_fragment": {
+                    "layout_source_template_consumed": bool(
+                        np.any(np.abs(source_block) > 0.0)
+                    ),
+                    "layout_source_template_channel": "canonical_projection.src_block",
+                    "layout_source_block_norm": float(np.linalg.norm(source_block)),
+                    "layout_source_block_owner": str(
+                        canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
+                    ),
+                    "layout_source_history_sample_count": int(auxiliary_bundle.source_history.shape[0]),
+                    "layout_local_matter_blocks_consumed": True,
+                    "layout_local_matter_owner": str(coupled.metadata["owner"]),
+                    "layout_local_matter_sample_count": int(coupled.metadata["history_sample_count"]),
+                    "layout_local_matter_reference_owner": str(coupled.metadata["reference_owner"]),
+                    "layout_local_matter_reference_sample_count": int(
+                        coupled.metadata["reference_sample_count"]
+                    ),
+                    "layout_local_matter_reference_delta_norm": float(
+                        coupled.metadata["reference_delta_norm"]
+                    ),
+                    "layout_b_mode_proxy_consumed": bool(np.any(np.abs(b_mode_proxy) > 0.0)),
+                    "layout_b_mode_proxy_norm": float(np.linalg.norm(b_mode_proxy)),
+                    "layout_b_mode_proxy_source": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
+                    "layout_b_mode_history_sample_count": int(b_history.shape[0]),
+                    "layout_auxiliary_coupling_passes": int(coupled.metadata["coupling_passes"]),
+                    "layout_auxiliary_bundle_owner": str(auxiliary_bundle.metadata["owner"]),
+                    "layout_projection_owner": "ver2_native_integrator.build_runtime_layout_projection",
+                },
             },
         )
 

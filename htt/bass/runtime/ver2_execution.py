@@ -1889,52 +1889,8 @@ def execute_tier_b_solver(
         reionization_amplitude=reionization_amplitude,
     )
     mode_ops = layout_projection.mode_ops
-    auxiliary_bundle = layout_projection.auxiliary_history_bundle
-    source_history_eta = np.asarray(auxiliary_bundle.eta, dtype=np.float64)
-    source_history_samples = np.asarray(auxiliary_bundle.source_history, dtype=np.float64)
-    coupled_auxiliary_history = auxiliary_bundle.coupled_sector_history
-    b_history_samples = np.asarray(coupled_auxiliary_history.photon_B_history, dtype=np.float64)
-    local_matter_history = coupled_auxiliary_history
     canonical_projection = layout_projection.canonical_projection
-    b_mode_proxy = np.asarray(b_history_samples[-1], dtype=np.float64)
-    source_block = np.asarray(
-        canonical_projection.hierarchy_state.source_history_block["src"],
-        dtype=np.float64,
-    )
-    result.solver_info["layout_source_template_consumed"] = bool(
-        np.any(np.abs(source_block) > 0.0)
-    )
-    result.solver_info["layout_source_template_channel"] = "canonical_projection.src_block"
-    result.solver_info["layout_source_block_norm"] = float(np.linalg.norm(source_block))
-    result.solver_info["layout_source_block_owner"] = str(
-        canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
-    )
-    result.solver_info["layout_source_history_sample_count"] = int(source_history_samples.shape[0])
-    result.solver_info["layout_local_matter_blocks_consumed"] = True
-    result.solver_info["layout_local_matter_owner"] = str(local_matter_history.metadata["owner"])
-    result.solver_info["layout_local_matter_sample_count"] = int(
-        local_matter_history.metadata["history_sample_count"]
-    )
-    result.solver_info["layout_local_matter_reference_owner"] = str(
-        local_matter_history.metadata["reference_owner"]
-    )
-    result.solver_info["layout_local_matter_reference_sample_count"] = int(
-        local_matter_history.metadata["reference_sample_count"]
-    )
-    result.solver_info["layout_local_matter_reference_delta_norm"] = float(
-        local_matter_history.metadata["reference_delta_norm"]
-    )
-    result.solver_info["layout_b_mode_proxy_consumed"] = bool(np.any(np.abs(b_mode_proxy) > 0.0))
-    result.solver_info["layout_b_mode_proxy_norm"] = float(np.linalg.norm(b_mode_proxy))
-    result.solver_info["layout_b_mode_proxy_source"] = (
-        "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
-    )
-    result.solver_info["layout_b_mode_history_sample_count"] = int(b_history_samples.shape[0])
-    result.solver_info["layout_auxiliary_coupling_passes"] = int(
-        local_matter_history.metadata["coupling_passes"]
-    )
-    result.solver_info["layout_auxiliary_bundle_owner"] = str(auxiliary_bundle.metadata["owner"])
-    result.solver_info["layout_projection_owner"] = str(layout_projection.metadata["owner"])
+    result.solver_info.update(dict(layout_projection.metadata["solver_info_fragment"]))
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,
