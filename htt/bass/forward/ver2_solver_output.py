@@ -937,6 +937,9 @@ def build_solver_core_output_from_native_result(
             "layout_auxiliary_bundle_owner": str(
                 result.solver_info.get("layout_auxiliary_bundle_owner", "unconsumed")
             ),
+            "layout_projection_owner": str(
+                result.solver_info.get("layout_projection_owner", "unconsumed")
+            ),
             "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
             "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
             "seed_factory_owner": str(result.solver_info.get("seed_factory_owner", "legacy_runtime_seed")),

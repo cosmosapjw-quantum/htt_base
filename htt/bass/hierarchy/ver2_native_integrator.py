@@ -396,6 +396,20 @@ class _LayoutAuxiliaryHistoryBundle:
 
 
 @dataclass(frozen=True)
+class _RuntimeLayoutProjectionBundle:
+    mode_ops: object
+    layout: object
+    covered_mode_label: str
+    auxiliary_history_bundle: _LayoutAuxiliaryHistoryBundle
+    canonical_projection: object
+    metadata: dict[str, object]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "covered_mode_label", str(self.covered_mode_label))
+        object.__setattr__(self, "metadata", dict(self.metadata))
+
+
+@dataclass(frozen=True)
 class NativeTierBRestartState:
     """Checkpoint-backed restart state for the native Tier-B integrator."""
 
@@ -1563,6 +1577,101 @@ class Ver2TierBIntegrator:
             covered_mode_label=covered_mode_label,
         )
         return np.asarray(bundle.eta, dtype=np.float64), np.asarray(bundle.source_history, dtype=np.float64)
+
+    def build_runtime_layout_projection(
+        self,
+        result: IntegrationResult,
+        *,
+        visibility_amplitude: float,
+        polarization_source: float,
+        reionization_amplitude: float,
+        covered_mode_label: str | None = None,
+    ) -> _RuntimeLayoutProjectionBundle:
+        from bass.hierarchy.ver3_state_contracts import project_runtime_native_state
+
+        neutrino_tower = result.neutrino_tower
+        if neutrino_tower is None:
+            raise ValueError("runtime layout projection requires result.neutrino_tower")
+        gamma_t_probe = _resolved_gamma_t(
+            visibility_source=self.visibility_source,
+            eta=float(result.eta[-1]),
+            direction=self._direction,
+            config=self.config,
+        )
+        mode_ops = self.backend.operator_factory(
+            self._live_backend_state_payload(
+                eta=float(result.eta[-1]),
+                gamma_t_probe=float(gamma_t_probe),
+                visibility_amplitude=float(visibility_amplitude),
+                polarization_source=float(polarization_source),
+                reionization_amplitude=float(reionization_amplitude),
+            )
+        )
+        layout = build_hierarchy_layout(self.backend, self.backend.truncation)
+        covered = str(
+            getattr(mode_ops, "layout_metadata", {}).get(
+                "mode_labels",
+                [layout.mode_labels[0] if covered_mode_label is None else str(covered_mode_label)],
+            )[0]
+        )
+        auxiliary_bundle = self.build_layout_auxiliary_history_bundle(
+            result,
+            covered_mode_label=covered,
+        )
+        coupled = auxiliary_bundle.coupled_sector_history
+        matter_sector_status = {
+            "baryon": "layout_operator_auxiliary_local_matter",
+            "cdm": "layout_operator_auxiliary_local_matter",
+        }
+        matter_block_metadata = {
+            "owner": str(coupled.metadata["owner"]),
+            "reference_owner": str(coupled.metadata["reference_owner"]),
+            "reference_baryon_history": np.asarray(
+                coupled.metadata["reference_baryon_history"],
+                dtype=np.float64,
+            ),
+            "reference_cdm_history": np.asarray(
+                coupled.metadata["reference_cdm_history"],
+                dtype=np.float64,
+            ),
+        }
+        b_history = np.asarray(coupled.photon_B_history, dtype=np.float64)
+        canonical_projection = project_runtime_native_state(
+            layout=layout,
+            layout_manifest=getattr(mode_ops, "layout_metadata", {}),
+            photon_T=np.asarray(result.photon_T_tower[-1], dtype=np.float64),
+            photon_E=np.asarray(result.photon_E_tower[-1], dtype=np.float64),
+            photon_B=np.asarray(b_history[-1], dtype=np.float64),
+            photon_B_history_eta=np.asarray(auxiliary_bundle.eta, dtype=np.float64),
+            photon_B_history_samples=b_history,
+            neutrino_tower=np.asarray(neutrino_tower[-1], dtype=np.float64),
+            source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
+            baryon_block=np.asarray(coupled.baryon_history[-1], dtype=np.float64),
+            cdm_block=np.asarray(coupled.cdm_history[-1], dtype=np.float64),
+            matter_history_eta=np.asarray(coupled.eta, dtype=np.float64),
+            baryon_history_samples=np.asarray(coupled.baryon_history, dtype=np.float64),
+            cdm_history_samples=np.asarray(coupled.cdm_history, dtype=np.float64),
+            matter_block_labels={
+                "baryon": tuple(coupled.baryon_labels),
+                "cdm": tuple(coupled.cdm_labels),
+            },
+            matter_sector_status=matter_sector_status,
+            matter_block_metadata=matter_block_metadata,
+            source_history_eta=np.asarray(auxiliary_bundle.eta, dtype=np.float64),
+            source_history_samples=np.asarray(auxiliary_bundle.source_history, dtype=np.float64),
+            covered_mode_label=covered,
+        )
+        return _RuntimeLayoutProjectionBundle(
+            mode_ops=mode_ops,
+            layout=layout,
+            covered_mode_label=covered,
+            auxiliary_history_bundle=auxiliary_bundle,
+            canonical_projection=canonical_projection,
+            metadata={
+                "owner": "ver2_native_integrator.build_runtime_layout_projection",
+                "gamma_t_probe": float(gamma_t_probe),
+            },
+        )
 
     def _compute_tca_mask(self, etas: np.ndarray) -> np.ndarray:
         mask = np.zeros(len(etas), dtype=bool)

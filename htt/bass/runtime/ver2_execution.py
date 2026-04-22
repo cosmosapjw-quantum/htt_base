@@ -1780,7 +1780,6 @@ def execute_tier_b_solver(
 
     from bass.hierarchy.aux_state import build_integrator_canonical_decision
     from bass.hierarchy.frame_contracts import PhotonDirectionConvention
-    from bass.hierarchy import build_hierarchy_layout, project_runtime_native_state
     from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
     from bass.los.family_backend_protocol import build_backend
     from bass.runtime.ver2_checkpoint import load_tier_b_restart_checkpoint
@@ -1926,69 +1925,21 @@ def execute_tier_b_solver(
                 runtime_controls=runtime_controls,
             ),
         )
-    mode_ops = backend.operator_factory(
-        _live_backend_state(
-            background_monitor=background_monitor,
-            gamma_t_probe=gamma_t_probe,
-            visibility_amplitude=float(thomson_probe.scalar_monopole_input),
-            polarization_source=float(thomson_probe.polarization_quadrupole_norm),
-            reionization_amplitude=reionization_amplitude,
-        )
-    )
-    layout = build_hierarchy_layout(backend, backend.truncation)
-    covered_mode_label = str(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [layout.mode_labels[0]])[0])
-    auxiliary_bundle = integrator.build_layout_auxiliary_history_bundle(
+    layout_projection = integrator.build_runtime_layout_projection(
         result,
-        covered_mode_label=covered_mode_label,
+        visibility_amplitude=float(thomson_probe.scalar_monopole_input),
+        polarization_source=float(thomson_probe.polarization_quadrupole_norm),
+        reionization_amplitude=reionization_amplitude,
     )
+    mode_ops = layout_projection.mode_ops
+    auxiliary_bundle = layout_projection.auxiliary_history_bundle
     source_history_eta = np.asarray(auxiliary_bundle.eta, dtype=np.float64)
     source_history_samples = np.asarray(auxiliary_bundle.source_history, dtype=np.float64)
     coupled_auxiliary_history = auxiliary_bundle.coupled_sector_history
-    b_history_eta = np.asarray(coupled_auxiliary_history.eta, dtype=np.float64)
     b_history_samples = np.asarray(coupled_auxiliary_history.photon_B_history, dtype=np.float64)
     local_matter_history = coupled_auxiliary_history
+    canonical_projection = layout_projection.canonical_projection
     b_mode_proxy = np.asarray(b_history_samples[-1], dtype=np.float64)
-    matter_sector_status = {
-        "baryon": "layout_operator_auxiliary_local_matter",
-        "cdm": "layout_operator_auxiliary_local_matter",
-    }
-    matter_block_metadata = {
-        "owner": str(local_matter_history.metadata["owner"]),
-        "reference_owner": str(local_matter_history.metadata["reference_owner"]),
-        "reference_baryon_history": np.asarray(
-            local_matter_history.metadata["reference_baryon_history"],
-            dtype=np.float64,
-        ),
-        "reference_cdm_history": np.asarray(
-            local_matter_history.metadata["reference_cdm_history"],
-            dtype=np.float64,
-        ),
-    }
-    canonical_projection = project_runtime_native_state(
-        layout=layout,
-        layout_manifest=getattr(mode_ops, "layout_metadata", {}),
-        photon_T=np.asarray(result.photon_T_tower[-1], dtype=np.float64),
-        photon_E=np.asarray(result.photon_E_tower[-1], dtype=np.float64),
-        photon_B=np.asarray(b_mode_proxy, dtype=np.float64),
-        photon_B_history_eta=b_history_eta,
-        photon_B_history_samples=b_history_samples,
-        neutrino_tower=np.asarray(result.neutrino_tower[-1], dtype=np.float64),
-        source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
-        baryon_block=np.asarray(local_matter_history.baryon_history[-1], dtype=np.float64),
-        cdm_block=np.asarray(local_matter_history.cdm_history[-1], dtype=np.float64),
-        matter_history_eta=np.asarray(local_matter_history.eta, dtype=np.float64),
-        baryon_history_samples=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
-        cdm_history_samples=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
-        matter_block_labels={
-            "baryon": tuple(local_matter_history.baryon_labels),
-            "cdm": tuple(local_matter_history.cdm_labels),
-        },
-        matter_sector_status=matter_sector_status,
-        matter_block_metadata=matter_block_metadata,
-        source_history_eta=source_history_eta,
-        source_history_samples=source_history_samples,
-        covered_mode_label=covered_mode_label,
-    )
     source_block = np.asarray(
         canonical_projection.hierarchy_state.source_history_block["src"],
         dtype=np.float64,
@@ -2026,6 +1977,7 @@ def execute_tier_b_solver(
         local_matter_history.metadata["coupling_passes"]
     )
     result.solver_info["layout_auxiliary_bundle_owner"] = str(auxiliary_bundle.metadata["owner"])
+    result.solver_info["layout_projection_owner"] = str(layout_projection.metadata["owner"])
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,
