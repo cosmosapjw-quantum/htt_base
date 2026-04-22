@@ -252,6 +252,26 @@ class TierBExecutableRun:
     solver_output: SolverCoreOutput
     cutoff_campaign: "ExecutedCutoffCampaign | None" = None
 
+    @classmethod
+    def from_execution_bundle(
+        cls,
+        *,
+        execution_plan: SolverExecutionPlan,
+        runtime_decision: RuntimeReductionDecision,
+        runtime_trace,
+        integration_result,
+        solver_output: SolverCoreOutput,
+        cutoff_campaign=None,
+    ) -> "TierBExecutableRun":
+        return cls(
+            execution_plan=execution_plan,
+            runtime_decision=runtime_decision,
+            trace=TierBExecutionTrace.from_runtime_bundle(runtime_trace),
+            integration_result=integration_result,
+            solver_output=solver_output,
+            cutoff_campaign=cutoff_campaign,
+        )
+
 
 @dataclass(frozen=True)
 class TierAValidationTrace:
@@ -1703,10 +1723,10 @@ def execute_tier_b_solver(
     solver_output.metadata["checkpoint_write_count"] = int(result.solver_info.get("checkpoint_write_count", 0))
     solver_output.metadata["restart_used"] = bool(result.solver_info.get("restart_used", False))
     solver_output.metadata["restart_checkpoint_path"] = restart_checkpoint_path
-    return TierBExecutableRun(
+    return TierBExecutableRun.from_execution_bundle(
         execution_plan=plan,
         runtime_decision=runtime_decision,
-        trace=TierBExecutionTrace.from_runtime_bundle(runtime_trace),
+        runtime_trace=runtime_trace,
         integration_result=result,
         solver_output=solver_output,
         cutoff_campaign=cutoff_campaign,
