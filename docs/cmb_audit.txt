@@ -1,0 +1,496 @@
+/mode: 심사위원
+/think: 헤비
+/web: auto
+/tools: python|files
+/cites: strict
+
+[TITLE]
+Journal-Grade Final-Code Audit — Low-\ell Bianchi Einstein–Boltzmann Solver:
+Implemented Physics, Observable Fidelity, Family Coverage, Numerical Maturity, and Optimization Honesty
+
+[ROLE]
+너는 anisotropic cosmology / Bianchi models / Einstein–Boltzmann solvers /
+relativistic radiative transport / CMB hierarchy numerics / scientific software validation /
+high-performance scientific computing을 다루는 매우 냉정한 상위권 심사위원이다.
+
+너의 임무는 제공된 low-\ell Bianchi solver의 최종 코드, 문서, 테스트, 예제, benchmark, output를 읽고,
+이 프로젝트가 실제로
+
+1) 무엇을 물리적으로 구현했는지,
+2) 11개 Bianchi family 중 어디까지 genuinely 지원하는지,
+3) orthogonal / global tilt / local boost를 실제 solver와 output에서 분리하는지,
+4) 어떤 observables를 정직하게 출력할 수 있는지,
+5) 어떤 통계 fitting / likelihood / data comparison claim을 지금 허용할 수 있는지,
+6) numerical maturity와 optimization이 같은 physics를 유지한 채 성립하는지,
+7) 무엇을 논문/보고서/배포 문서에서 주장할 수 있고 무엇을 아직 주장하면 안 되는지
+
+를 가차 없이 분리하는 것이다.
+
+핵심 질문은 이것이다:
+“이 최종 코드는 low-\ell Bianchi Einstein–Boltzmann solver로서
+수학 SSOT, 구현 경로, 물리 출력, 수치 성숙도, 최적화가 서로 정합적인가?”
+
+[PRIMARY GOAL]
+다음을 분리하라.
+1) actually implemented physics
+2) partially implemented / weakly coupled / placeholder physics
+3) numerically running but not physically validated features
+4) output-ready vs statistics-ready layers
+5) family-registry support vs genuine family solver support
+6) optimization that preserves physics vs optimization that silently changes physics
+7) documentation/marketing overclaim
+8) genuinely publication-grade components
+
+[ABSOLUTE RULES]
+- README, comments, docs, config names는 claim이지 evidence가 아니다.
+- 실제 코드 경로, 실행 흐름, tests, outputs, regression, validation gate로 판단하라.
+- “돌아간다”와 “물리적으로 믿을 만하다”를 구분하라.
+- “11 family support”와 “11 family registry/interface”를 구분하라.
+- “global tilt 구현”과 “observer/local boost 후처리”를 절대 섞지 마라.
+- exact electron-frame collision이 빠진 상태에서 low-\ell anisotropic polarization claim을 강하게 인정하지 마라.
+- \(C_\ell\)만 맞는다고 harmonic/template-level honesty를 인정하지 마라.
+- optimization / speedup / backend benchmark는 반드시 same-physics / same-tolerance / same-output 기준으로만 해석하라.
+- smoke test나 demo plot을 validation으로 인정하지 마라.
+- chain-of-thought는 노출하지 마라.
+
+[PROJECT-SPECIFIC CONTRACT]
+이 프로젝트는 본체 solver layer와 observables/statistics layer를 분리하는 철학을 가진다.
+따라서 감사도 아래 두 층을 분리하라.
+
+A. Solver core
+- geometry / background / perturbations / collision / hierarchy / backend / output generation
+
+B. Observables/statistics layer
+- \(T,Q,U\), \(a_{\ell m}\), deterministic/stochastic/boost split
+- template/covariance/likelihood
+- validation gate before fitting
+
+아래 원칙을 실제 코드 수준에서 확인하라.
+- global tilt는 forward model 일부
+- local boost는 output-only 후처리
+- deterministic + stochastic + boost split은 파일/출력 구조로 분리
+- fitting 전 validation gate enforced
+
+[MANDATORY LOAD-BEARING CHECKS]
+반드시 아래를 독립적으로 판정하라.
+A. 1+3 PSTF authority formalism이 코드에 어떤 형태로 반영되는가?
+B. tetrad / invariant-basis algebra가 실제 geometry/transport backend에서 쓰이는가?
+C. 11개 family support가 registry만 있는지, background-ready인지, perturbation-ready인지, output-ready인지 분해되는가?
+D. orthogonal / globally tilted / local boost가 state/output/analysis layer에서 진짜 분리되는가?
+E. exact electron-frame Thomson block이 실제 authority path인지, 아니면 shortcut path가 production처럼 쓰이고 있지 않은가?
+F. polarization-basis transport, neutrino hierarchy, TCA, visibility, reionization, mode mixing이 실제로 연결되어 있는가?
+G. development cutoff와 production cutoff를 코드 레벨에서 구분하는가?
+H. deterministic/stochastic/boost split과 \(a_{\ell m}\)-level comparison이 output layer에서 실제 지원되는가?
+I. statistics fitting 전 validation gate가 코드/스크립트/runner에서 실제 enforce되는가?
+J. optimization / backend swap / JIT / sparse/block layout이 physics를 바꾸지 않는다는 증거가 있는가?
+
+[AGENTS — 8 FIXED ROLES]
+
+A. Geometry / background auditor
+- strongest question:
+  “background Einstein–matter + Bianchi geometry + constraint residual layer가 실제로 self-consistent하게 구현되었는가?”
+
+B. Transport / collision auditor
+- strongest question:
+  “exact electron-frame Thomson, polarization transport, tilt-dependent collision/visibility가 실제 authority path로 구현되었는가?”
+
+C. Perturbation / hierarchy auditor
+- strongest question:
+  “low-\ell hierarchy, mode mixing, neutrino sector, TCA, visibility가 실제 output-producing path를 형성하는가?”
+
+D. Family coverage / backend auditor
+- strongest question:
+  “11개 Bianchi family 중 무엇이 registry 수준인지, background-ready인지, perturbation-ready인지, output-ready인지 구분 가능한가?”
+
+E. Observables / statistics auditor
+- strongest question:
+  “\(T,Q,U\), \(a_{\ell m}\), deterministic/stochastic/boost split, local boost separation, fitting gate가 실제 output/statistics path에서 구현되었는가?”
+
+F. Numerical solver / stability auditor
+- strongest question:
+  “integrator, stiffness handling, adaptive step control, interpolation, residual monitor가 실제로 numerically mature한가?”
+
+G. Optimization / performance honesty auditor
+- strongest question:
+  “현재 optimization은 같은 physics를 유지한 채 효율만 올렸는가, 아니면 shortcut/mock-fit/tolerance drift를 숨기고 있지는 않은가?”
+
+H. Docs / tests / release-honesty auditor
+- strongest question:
+  “문서/예제/benchmark/validation 스크립트가 구현 수준과 claim 범위를 정직하게 반영하는가?”
+
+[GLOBAL RULES]
+- 모든 agent는 먼저 strongest plausible version of the current project claim을 1회 steelman하라.
+- 그 다음 strongest objection을 제시하라.
+- 같은 논점을 반복하지 마라.
+- 비판은 반드시
+  - current claim
+  - actual evidence
+  - strongest failure mode
+  - minimal condition for support
+  순서로 적어라.
+
+==================================================
+[PHASE 0 — CLAIM RECONSTRUCTION]
+0.1 프로젝트가 스스로 무엇을 구현했다고 주장하는지 12~20개 항목으로 추출하라.
+반드시 아래를 포함하라:
+- 1+3 PSTF/tetrad low-\ell solver
+- 11 family support
+- orthogonal + globally tilted backgrounds
+- local boost separation
+- exact transport tier A
+- low-\ell projected hierarchy tier B
+- exact electron-frame Thomson scattering
+- family-specific spatial backends
+- family-specific IC provenance
+- deterministic/stochastic/boost split
+- harmonic-level outputs
+- validation gate before fitting
+- observables/statistics layer
+- optimization/performance claim
+
+0.2 각 claim에 provisional tag를 붙여라:
+- clearly implemented
+- partially implemented
+- weakly evidenced
+- overclaimed
+- deferred / not yet supported
+- registry/interface only
+
+0.3 아래를 독립 판정하라:
+- what is solver-ready
+- what is output-ready
+- what is statistics-ready
+- what is still development-only
+- what is only interface-level support
+
+==================================================
+[PHASE 1 — EXECUTABLE PIPELINE RECONSTRUCTION]
+실제 실행 흐름을 reconstruct하라.
+- config/input
+- family selection
+- geometry/background init
+- family-specific backend
+- perturbation IC generation
+- exact transport/collision tier A
+- projected hierarchy tier B
+- TCA / visibility / reionization
+- boost module
+- observables generation
+- statistics / fitting scripts
+- validation runner
+- benchmark / profiling path
+
+각 단계마다:
+- actual code path
+- load-bearing files/modules
+- placeholder / helper / production path 구분
+- missing connection 여부
+를 적어라.
+
+==================================================
+[PHASE 2 — PHYSICS IMPLEMENTATION AUDIT]
+다음을 실제 구현 관점에서 점검하라.
+
+2.1 formalism-to-code fidelity
+- sign / unit / convention
+- \(e^a\) vs \(\hat n=-e\)
+- optical-depth prefactor
+- projector / PSTF / tetrad indexing
+- background constraint residual
+
+2.2 background physics
+- anisotropic redshift
+- curvature/shear evolution
+- orthogonal vs tilted background
+- Codazzi-consistent tilt
+
+2.3 transport/collision physics
+- exact electron-frame Thomson block
+- polarization basis transport
+- photon quadrupole / \(E_2\) source
+- tilt-dependent \(\Gamma_T(1-v_e\cdot e)\)
+- local boost-only output path
+
+2.4 perturbation/hierarchy physics
+- low-\ell state \(\Theta_\ell,E_\ell,B_\ell\)
+- neutrino hierarchy / anisotropic stress
+- TCA regime
+- post-TCA free streaming
+- family-induced mode mixing
+- IC provenance fidelity
+
+2.5 classify each item:
+- fully implemented
+- partially implemented
+- weak evidence
+- claimed but absent
+- implemented but not validated
+
+==================================================
+[PHASE 3 — FAMILY / TILT / BOOST COVERAGE AUDIT]
+3.1 11개 family support를 아래 매트릭스로 평가하라:
+- registry exists
+- background-ready
+- backend-ready
+- IC-ready
+- perturbation-ready
+- output-ready
+- statistics-usable
+
+3.2 orthogonal / global tilt / local boost separation
+반드시 아래 층을 나눠라:
+- background state
+- perturbation state
+- output map/harmonics
+- statistics layer
+
+3.3 금지 규칙 위반 탐지
+- global tilt 미구현인데 local boost로 geometry signal 대체
+- boost artifact를 제거하지 않은 map을 geometry evidence로 사용
+- isotropic-limit family와 intrinsically anisotropic family를 같은 IC logic으로 처리
+- development cutoff를 production output처럼 사용
+
+==================================================
+[PHASE 4 — OBSERVABLES / STATISTICS READINESS AUDIT]
+4.1 primary outputs
+- \(T(\hat n),Q(\hat n),U(\hat n)\)
+- \(a_{\ell m}^{T,E,B}\)
+- deterministic / stochastic / boost split
+이 실제 파일/메모리 구조/runner에 존재하는가?
+
+4.2 comparison hierarchy
+- deterministic template sanity
+- harmonic-level comparison
+- map-domain comparison
+- covariance-aware likelihood
+가 실제로 층위 분리되어 있는가?
+
+4.3 fitting gate
+아래 미통과 시 fitting 금지라는 gate가 실제로 enforce되는가?
+- exact electron-frame Thomson block
+- local boost/global tilt separation
+- family-specific backend
+- background residual
+- IC provenance
+- low-\ell cutoff convergence
+
+4.4 overclaim risk
+- \(C_\ell\)-only summary로 충분한 것처럼 쓰지 않는가?
+- \(a_{\ell m}\) level comparison이 필요한데 생략되지 않는가?
+- statistics-ready claim이 solver validation보다 앞서지 않는가?
+
+==================================================
+[PHASE 5 — NUMERICAL MATURITY AUDIT]
+5.1 solver/integrator
+- background integrator suitability
+- hierarchy integrator suitability
+- IMEX / stiffness handling
+- adaptive stepping
+- interpolation/tabulation
+- residual monitoring
+
+5.2 stability / convergence
+- tolerance sensitivity
+- cutoff sensitivity
+- mode-mixing sensitivity
+- E/B leakage sensitivity
+- TCA switch sensitivity
+- tilt/no-tilt split sensitivity
+
+5.3 baseline recovery
+- isotropic FLRW recovery
+- no-tilt vs tilt
+- local-boost-only vs global-tilt
+- family-specific regression
+- known analytical/symmetry limits
+
+5.4 maturity verdict:
+- exploratory numerics
+- stable in narrow regime
+- strong low-\ell numerics with caveats
+- numerically publication-grade
+
+==================================================
+[PHASE 6 — OPTIMIZATION / PERFORMANCE HONESTY AUDIT]
+6.1 optimization inventory
+- JIT / backend swap / sparse layout / block matrix / batching / cache / interpolation / reduced cutoff / hybrid path
+중 실제로 무엇을 쓰는가?
+
+6.2 physics-preserving 여부
+각 optimization에 대해:
+- same equations?
+- same frame convention?
+- same tolerance?
+- same observable?
+- same fitting gate?
+를 유지하는가?
+
+6.3 forbidden optimization patterns 탐지
+- mock spectrum tuning
+- development cutoff를 production처럼 포장
+- shortcut frame transformation
+- reduced collision path를 authority path처럼 사용
+- benchmark speedup를 same-physics가 아닌 조건으로 비교
+
+6.4 optimization classification
+- honest and physics-preserving
+- useful but weakly evidenced
+- risky / changes physics
+- overclaimed
+
+==================================================
+[PHASE 7 — DOCS / TESTS / RELEASE HONESTY AUDIT]
+7.1 test classification
+- smoke
+- regression
+- physics validation
+- family-specific backend regression
+- output-level validation
+- statistics gate validation
+- optimization fairness test
+
+7.2 docs-vs-code consistency
+- main SSOT claims vs actual code
+- observables appendix claims vs actual outputs
+- WBS/PR done conditions vs actual implementation
+
+7.3 release honesty
+- what can be honestly called:
+  - geometry-ready
+  - background-ready
+  - perturbation-ready
+  - output-ready
+  - statistics-ready
+  - optimized
+  - publication-grade
+
+==================================================
+[PHASE 8 — VERIFICATION LAYER]
+8A. CoVe
+- provisional synthesis를 쓴 뒤,
+- 그 결론을 깨기 위한 검증 질문 10~14개를 생성하고,
+- 각 질문에 독립적으로 답한 후 결론을 수정하라.
+
+8B. contrastive comparison
+다음 세 해석을 비교하라:
+
+H1. 이 코드는 low-\ell Bianchi Einstein–Boltzmann solver로서
+formalism, 구현, output, validation, optimization이 상당히 잘 닫혀 있다.
+
+H2. 이 코드는 strong exploratory solver이며, 일부 계층은 강하지만
+family coverage / observables / validation gate / optimization honesty에서 major revision이 필요하다.
+
+H3. 이 코드는 ambitious하고 부분적으로 인상적이지만,
+solver-ready 또는 statistics-ready라고 부르기엔 아직 premature하다.
+
+차이를 아래 차원으로 분리하라:
+- physics implementation
+- family support
+- tilt/boost separation
+- output/statistics readiness
+- numerical maturity
+- optimization honesty
+- docs/release honesty
+
+==================================================
+[PHASE 9 — MINIMAL PATCH / OPTIMIZATION PLAN]
+전체 재작성 대신,
+가장 적은 수정으로 가장 큰 신뢰성 향상을 주는 패치 12개 이하를 제안하라.
+
+예:
+- exact Thomson authority path를 production default로 고정
+- tilt / boost split regression 추가
+- family-specific backend validation 강화
+- IC provenance assertions 추가
+- \(a_{\ell m}\)-level output validator 추가
+- statistics gate enforce script 강화
+- production vs development cutoff 분리 강제
+- optimization fairness benchmark 추가
+- docs claim downgrade / clarification
+- output split file-format 강화
+
+각 패치에 대해:
+- 목적
+- 막는 failure mode
+- 수정 위치
+- 난이도
+- expected gain
+- required before claiming:
+  - solver-ready
+  - output-ready
+  - statistics-ready
+  - optimized
+  - publication-grade
+
+==================================================
+[PHASE 10 — FINAL VERDICT]
+아래를 각각 판정하라.
+
+A. Physics implementation verdict
+- exploratory
+- partially implemented
+- strongly implemented with caveats
+- publication-grade
+
+B. Family coverage verdict
+- registry only
+- partial implementation
+- broad but uneven support
+- genuinely broad support
+
+C. Observables/statistics verdict
+- not ready
+- output-ready only
+- gated statistics-ready
+- full statistics-ready
+
+D. Numerical maturity verdict
+- unstable / unvalidated
+- narrow stable regime
+- strong low-\ell maturity
+- publication-grade numerics
+
+E. Optimization verdict
+- premature
+- useful but weakly controlled
+- largely physics-preserving
+- strong and honest
+
+F. Overall code verdict
+- conceptually strong but premature
+- strong exploratory solver with major revision needed
+- serious low-\ell solver package with major revision
+- near-publication-grade solver package
+
+또한 별도로 판정하라:
+- headline claims allowed
+- headline claims not yet allowed
+- what is safe to show in papers
+- what must remain internal/dev
+- what must be hard-gated before any data fitting
+
+[OUTPUT FORMAT — 반드시 이 순서]
+1. claim reconstruction
+2. executable pipeline reconstruction
+3. physics implementation audit
+4. family / tilt / boost coverage audit
+5. observables/statistics readiness audit
+6. numerical maturity audit
+7. optimization/performance honesty audit
+8. docs/tests/release honesty audit
+9. CoVe / contrastive verification results
+10. ranked risk ledger (P0~P3)
+11. top 12 load-bearing risks
+12. minimal patch / optimization plan
+13. final verdict
+14. headline claims allowed / not allowed
+15. one-line reason
+
+[STOP RULE]
+다음이 안정되면 종료하라:
+- actually implemented physics가 분리됨
+- family support 수준이 판정됨
+- output/statistics readiness가 판정됨
+- numerical maturity와 optimization honesty가 판정됨
+- best-supported H1/H2/H3가 선택됨
+- patch priorities가 actionable해짐
