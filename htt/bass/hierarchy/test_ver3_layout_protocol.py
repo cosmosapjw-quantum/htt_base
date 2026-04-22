@@ -6,11 +6,15 @@ import pytest
 from bass.background import get_family_spec
 from bass.hierarchy import (
     SECTOR_ORDER,
+    assemble_hierarchy_ops,
+    assemble_free_streaming_block,
+    assemble_mixing_block,
     assemble_explicit_block,
     assemble_implicit_block,
     assemble_mass_matrix,
     assemble_source_vector,
     build_hierarchy_layout,
+    build_layout_manifest,
     flatten,
     unflatten,
 )
@@ -61,12 +65,16 @@ def test_explicit_and_implicit_blocks_match_layout_shape_and_are_sparse() -> Non
     backend = _backend()
     truncation = {"ell_max": 3, "mode_labels": ("m0",)}
     layout = build_hierarchy_layout(backend, truncation)
+    A_fs = assemble_free_streaming_block({}, backend, truncation)
+    A_mix = assemble_mixing_block({}, backend, truncation)
     A_exp = assemble_explicit_block({}, backend, truncation)
     A_imp = assemble_implicit_block({}, backend, truncation, {"Gamma_T": 4.0})
     assert A_exp.shape == (layout.size, layout.size)
     assert A_imp.shape == (layout.size, layout.size)
+    assert A_fs.shape == A_mix.shape == A_exp.shape
     assert A_exp.nnz > 0
     assert A_imp.nnz > 0
+    np.testing.assert_allclose((A_fs + A_mix).toarray(), A_exp.toarray())
 
 
 def test_source_vector_injects_visibility_and_polarization_slots() -> None:
@@ -83,3 +91,33 @@ def test_source_vector_injects_visibility_and_polarization_slots() -> None:
     assert source[flatten(layout, "m0", "ph_I", 0, 0)] == pytest.approx(1.5)
     assert source[flatten(layout, "m0", "ph_E", 2, 0)] == pytest.approx(0.3)
     assert source[flatten(layout, "m0", "src", None, None, 0)] == pytest.approx(0.2)
+
+
+def test_layout_manifest_records_backend_metadata() -> None:
+    backend = _backend()
+    truncation = {"ell_max": 2, "mode_labels": ("m0",)}
+    layout = build_hierarchy_layout(backend, truncation)
+    manifest = build_layout_manifest(layout, backend, truncation, {"branch": "tilted"})
+    assert manifest["family"] == "I"
+    assert manifest["branch"] == "tilted"
+    assert manifest["mode_labels"] == ["m0"]
+    assert manifest["boundary_policy"] == "cartesian_regular"
+
+
+def test_assemble_hierarchy_ops_binds_backend_with_source_tables() -> None:
+    backend = _backend()
+    truncation = {"ell_max": 2, "mode_labels": ("m0",)}
+    ops = assemble_hierarchy_ops(
+        {
+            "branch": "tilted",
+            "opacity_data": {"Gamma_T": 2.0},
+            "source_tables": {"visibility_amplitude": 1.25},
+        },
+        backend,
+        truncation,
+        {"polarization_source": 0.5},
+    )
+    assert ops.branch == "tilted"
+    assert ops.layout_metadata["branch"] == "tilted"
+    assert ops.A_coll.nnz > 0
+    assert ops.source_template.shape == (ops.mass_matrix.shape[0],)

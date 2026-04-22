@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Mapping
 
 import numpy as np
 
@@ -15,14 +16,17 @@ from bass.collision.thomson_pstf import (
 from bass.collision.tilted_eb_mixing import evaluate_tilted_polarization_eb_collision
 from bass.collision.tilted_thomson_layer_b import evaluate_tilted_thomson_pstf_collision
 from bass.species.tilted import TiltedSpeciesBackground
+from bass.validation import GateBundle, make_gate_bundle
 
 __all__ = [
     "ElectronFrameRate",
     "ElectronFrameThomsonContext",
     "ProjectedThomsonSource",
     "ExactThomsonSource",
+    "SourceTerms",
     "electron_frame_rate_factor",
     "exact_thomson_source",
+    "exact_thomson_gate_bundle",
     "project_thomson_source",
     "project_thomson_source_stub",
 ]
@@ -102,6 +106,30 @@ class ExactThomsonSource:
             raise ValueError("exact Thomson split contract changed unexpectedly")
         if self.opacity_contract != "electron_frame_tilt_modulated":
             raise ValueError("exact Thomson opacity contract changed unexpectedly")
+
+
+@dataclass(frozen=True)
+class SourceTerms:
+    """Document-level directional Thomson source terms."""
+
+    dI_dir: np.ndarray
+    dP_dir: np.ndarray
+    effective_opacity: float
+    direction_convention: PhotonDirectionConvention
+    metadata: Mapping[str, object] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        dI = np.asarray(self.dI_dir, dtype=np.float64)
+        dP = np.asarray(self.dP_dir, dtype=np.float64)
+        if dI.shape != dP.shape:
+            raise ValueError(
+                f"dI_dir and dP_dir must share shape, got {dI.shape} and {dP.shape}"
+            )
+        if not np.isfinite(self.effective_opacity) or self.effective_opacity < 0.0:
+            raise ValueError("effective_opacity must be non-negative finite")
+        object.__setattr__(self, "dI_dir", dI)
+        object.__setattr__(self, "dP_dir", dP)
+        object.__setattr__(self, "metadata", dict(self.metadata))
 
 
 def electron_frame_rate_factor(
@@ -249,42 +277,171 @@ def project_thomson_source(
     )
 
 
+def _directional_exact_thomson_source(
+    e_dir: np.ndarray,
+    I_dir: np.ndarray,
+    I0: float | np.ndarray,
+    P_dir: np.ndarray,
+    I2: float | np.ndarray,
+    E2_pol: float | np.ndarray,
+    opacity_data: Mapping[str, object],
+) -> SourceTerms:
+    if not isinstance(opacity_data, Mapping):
+        raise ValueError("opacity_data must be a mapping")
+    direction = np.asarray(e_dir, dtype=np.float64)
+    if direction.shape != (3,):
+        raise ValueError(f"e_dir must have shape (3,), got {direction.shape}")
+    direction_norm = float(np.linalg.norm(direction))
+    if direction_norm == 0.0:
+        raise ValueError("e_dir must be non-zero")
+    direction_hat = direction / direction_norm
+    I_arr = np.asarray(I_dir, dtype=np.float64)
+    P_arr = np.asarray(P_dir, dtype=np.float64)
+    I0_arr, I2_arr, E2_arr = np.broadcast_arrays(
+        np.asarray(I0, dtype=np.float64),
+        np.asarray(I2, dtype=np.float64),
+        np.asarray(E2_pol, dtype=np.float64),
+    )
+    if I_arr.shape != P_arr.shape:
+        raise ValueError(f"I_dir and P_dir must share shape, got {I_arr.shape} and {P_arr.shape}")
+    if I_arr.shape != I0_arr.shape:
+        I0_arr = np.broadcast_to(I0_arr, I_arr.shape)
+        I2_arr = np.broadcast_to(I2_arr, I_arr.shape)
+        E2_arr = np.broadcast_to(E2_arr, I_arr.shape)
+    convention = PhotonDirectionConvention(
+        opacity_data.get("direction_convention", PhotonDirectionConvention.PROPAGATION)
+    )
+    gamma_e = float(opacity_data.get("gamma_e", 1.0))
+    v_dot_direction = float(opacity_data.get("v_dot_direction", 0.0))
+    rate = electron_frame_rate_factor(
+        gamma_e=gamma_e,
+        v_dot_direction=v_dot_direction,
+        convention=convention,
+    )
+    base_opacity = float(opacity_data.get("Gamma_T", 0.0))
+    if not np.isfinite(base_opacity) or base_opacity < 0.0:
+        raise ValueError("opacity_data['Gamma_T'] must be non-negative finite")
+    effective_opacity = base_opacity * rate.factor
+    dI_dir = effective_opacity * ((I0_arr + I2_arr) - I_arr)
+    dP_dir = effective_opacity * (E2_arr - P_arr)
+    return SourceTerms(
+        dI_dir=dI_dir,
+        dP_dir=dP_dir,
+        effective_opacity=effective_opacity,
+        direction_convention=convention,
+        metadata={
+            "direction_norm": direction_norm,
+            "direction_hat": direction_hat.tolist(),
+            "scalar_monopole_input": float(np.mean(I0_arr)),
+            "quadrupole_input_norm": float(np.linalg.norm(I2_arr)),
+            "polarization_source_norm": float(np.linalg.norm(E2_arr)),
+            "source_split": "scalar_monopole_vs_directional_tensor",
+        },
+    )
+
+
 def exact_thomson_source(
-    context: ElectronFrameThomsonContext,
-    *,
-    temperature_state: PSTFHierarchyState,
-    polarization_state: PolarizationHierarchyState,
-    v_b_real_sph: np.ndarray,
-    Gamma_T: float,
-    direction: np.ndarray | None = None,
-    tilted_electron: TiltedSpeciesBackground | None = None,
-    b_state: PSTFHierarchyState | None = None,
-) -> ExactThomsonSource:
+    context: ElectronFrameThomsonContext | np.ndarray,
+    *args,
+    **kwargs,
+) -> ExactThomsonSource | SourceTerms:
     """ver3 exact Thomson wrapper with explicit scalar/directional separation."""
 
-    projected = project_thomson_source(
-        context,
-        temperature_state=temperature_state,
-        polarization_state=polarization_state,
-        v_b_real_sph=v_b_real_sph,
-        Gamma_T=Gamma_T,
-        direction=direction,
-        tilted_electron=tilted_electron,
-        b_state=b_state,
+    if isinstance(context, ElectronFrameThomsonContext):
+        temperature_state = kwargs["temperature_state"]
+        polarization_state = kwargs["polarization_state"]
+        v_b_real_sph = kwargs["v_b_real_sph"]
+        Gamma_T = kwargs["Gamma_T"]
+        direction = kwargs.get("direction")
+        tilted_electron = kwargs.get("tilted_electron")
+        b_state = kwargs.get("b_state")
+        projected = project_thomson_source(
+            context,
+            temperature_state=temperature_state,
+            polarization_state=polarization_state,
+            v_b_real_sph=v_b_real_sph,
+            Gamma_T=Gamma_T,
+            direction=direction,
+            tilted_electron=tilted_electron,
+            b_state=b_state,
+        )
+        scalar_monopole_input = float(temperature_state.tensors[0].components[0])
+        directional_norm = 0.0
+        for ell in range(1, temperature_state.L + 1):
+            directional_norm += float(
+                np.dot(
+                    temperature_state.tensors[ell].components,
+                    temperature_state.tensors[ell].components,
+                )
+            )
+        polarization_quadrupole_norm = float(
+            np.linalg.norm(polarization_state.E.tensors[2].components)
+        )
+        return ExactThomsonSource(
+            projected=projected,
+            scalar_monopole_input=scalar_monopole_input,
+            directional_temperature_norm=float(np.sqrt(directional_norm)),
+            polarization_quadrupole_norm=polarization_quadrupole_norm,
+            effective_opacity=float(Gamma_T) * projected.effective_rate.factor,
+        )
+
+    if len(args) != 6:
+        raise TypeError(
+            "directional exact_thomson_source expects "
+            "(e_dir, I_dir, I0, P_dir, I2, E2_pol, opacity_data)"
+        )
+    return _directional_exact_thomson_source(
+        np.asarray(context, dtype=np.float64),
+        args[0],
+        args[1],
+        args[2],
+        args[3],
+        args[4],
+        args[5],
     )
-    scalar_monopole_input = float(temperature_state.tensors[0].components[0])
-    directional_norm = 0.0
-    for ell in range(1, temperature_state.L + 1):
-        directional_norm += float(np.dot(temperature_state.tensors[ell].components, temperature_state.tensors[ell].components))
-    polarization_quadrupole_norm = float(
-        np.linalg.norm(polarization_state.E.tensors[2].components)
-    )
-    return ExactThomsonSource(
-        projected=projected,
-        scalar_monopole_input=scalar_monopole_input,
-        directional_temperature_norm=float(np.sqrt(directional_norm)),
-        polarization_quadrupole_norm=polarization_quadrupole_norm,
-        effective_opacity=float(Gamma_T) * projected.effective_rate.factor,
+
+
+def exact_thomson_gate_bundle(
+    source: ExactThomsonSource,
+    *,
+    family: str = "unspecified",
+    branch: str = "orthogonal",
+    backend: str = "electron_frame_tilt_modulated",
+    truncation: Mapping[str, object] | None = None,
+) -> GateBundle:
+    """Emit the machine-readable PR-06 exact-Thomson gate bundle."""
+
+    return make_gate_bundle(
+        "exact_thomson_gate",
+        family=family,
+        branch=branch,
+        backend=backend,
+        truncation={} if truncation is None else dict(truncation),
+        residual_summary={
+            "scalar_monopole_input": float(source.scalar_monopole_input),
+            "directional_temperature_norm": float(source.directional_temperature_norm),
+            "polarization_quadrupole_norm": float(source.polarization_quadrupole_norm),
+            "effective_opacity": float(source.effective_opacity),
+        },
+        known_limit_checks={
+            "isotropic_null_mode_required": source.projected.isotropic_null_mode_required,
+            "pure_quadrupole_response_required": source.projected.pure_quadrupole_response_required,
+            "linearity_required": source.projected.linearity_required,
+        },
+        forbidden_shortcut_checks={
+            "no_flrw_only_collision_shortcut": (
+                source.projected.frame_metadata.no_flrw_only_collision_shortcut
+            ),
+            "electron_frame_owned": (
+                source.projected.frame_metadata.collision_frame == "electron_frame"
+            ),
+        },
+        metadata={
+            "source_split": source.source_split,
+            "opacity_contract": source.opacity_contract,
+        },
+        passed=bool(np.isfinite(source.effective_opacity) and source.effective_opacity >= 0.0),
+        opened_claim="exact collision contract frozen",
     )
 
 

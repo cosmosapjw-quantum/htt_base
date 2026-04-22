@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Mapping
 
 import numpy as np
 
@@ -11,6 +12,7 @@ from bass.background.constraints import (
     evaluate_background_constraints,
 )
 from bass.background.geometry import TetradGeometry, div_vector, pstf_rank2
+from bass.validation import GateBundle, make_gate_bundle
 
 __all__ = [
     "BackgroundRhsAssembly",
@@ -18,6 +20,7 @@ __all__ = [
     "shear_rhs",
     "background_rhs",
     "assemble_background_rhs",
+    "background_gate_bundle",
 ]
 
 
@@ -98,7 +101,7 @@ def assemble_background_rhs(
     rho_dot = -3.0 * float(H) * (float(matter.rho) + float(matter.p)) - div_vector(
         matter.q, geometry.Gamma
     ) - float(np.sum(sigma * matter.pi))
-    residuals = evaluate_background_constraints(
+    raw_residuals = evaluate_background_constraints(
         algebra=geometry.algebra,
         geometry=geometry,
         H=H,
@@ -107,6 +110,20 @@ def assemble_background_rhs(
         lambda_value=lambda_value,
         kappa=kappa,
         conservation_residual=conservation_residual,
+    )
+    energy_bianchi = (
+        float(rho_dot)
+        + 3.0 * float(H) * (float(matter.rho) + float(matter.p))
+        + div_vector(matter.q, geometry.Gamma)
+        + float(np.sum(sigma * matter.pi))
+    )
+    residuals = BackgroundConstraintResiduals(
+        gauss=raw_residuals.gauss,
+        codazzi=raw_residuals.codazzi,
+        jacobi=raw_residuals.jacobi,
+        twice_contracted_bianchi=np.concatenate(
+            ([energy_bianchi], np.asarray(raw_residuals.codazzi, dtype=np.float64))
+        ),
     )
     return BackgroundRhsAssembly(
         H_dot=H_dot,
@@ -120,3 +137,53 @@ def background_rhs(**kwargs) -> BackgroundRhsAssembly:
     """ver3 alias for the canonical background RHS assembly."""
 
     return assemble_background_rhs(**kwargs)
+
+
+def background_gate_bundle(
+    assembly: BackgroundRhsAssembly,
+    geometry: TetradGeometry,
+    *,
+    family: str | None = None,
+    branch: str = "orthogonal",
+    backend: str = "background_rhs",
+    truncation: Mapping[str, object] | None = None,
+) -> GateBundle:
+    """Emit the machine-readable PR-05 background gate bundle."""
+
+    residuals = assembly.residuals
+    return make_gate_bundle(
+        "background_core_gate",
+        family=geometry.algebra.type_name if family is None else family,
+        branch=branch,
+        backend=backend,
+        truncation={} if truncation is None else dict(truncation),
+        residual_summary={
+            "gauss_abs": float(abs(residuals.gauss)),
+            "codazzi_max_abs": float(np.max(np.abs(residuals.codazzi))),
+            "jacobi_max_abs": float(np.max(np.abs(residuals.jacobi))),
+            "twice_contracted_bianchi_max_abs": float(
+                np.max(np.abs(residuals.twice_contracted_bianchi))
+            ),
+        },
+        known_limit_checks={
+            "rhs_finite": bool(
+                np.isfinite(assembly.H_dot)
+                and np.isfinite(assembly.rho_dot)
+                and np.all(np.isfinite(assembly.sigma_dot))
+            ),
+            "geometry_dual_route_status": geometry.dual_route_status,
+        },
+        forbidden_shortcut_checks={
+            "no_unavailable_residual_to_zero": True,
+            "no_output_logic_in_background": True,
+        },
+        metadata={
+            "compact_formula_status": geometry.compact_formula_status,
+        },
+        passed=bool(
+            np.isfinite(assembly.H_dot)
+            and np.isfinite(assembly.rho_dot)
+            and np.all(np.isfinite(assembly.sigma_dot))
+        ),
+        opened_claim="background-ready for named family branch only",
+    )

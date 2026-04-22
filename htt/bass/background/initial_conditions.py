@@ -29,6 +29,7 @@ from bass.background.matter_projection import (
     SpeciesRestFrameState,
     total_matter_projection,
 )
+from bass.background.rhs import assemble_background_rhs
 from bass.tilt.species_tilt import (
     TiltedMatterState,
     TiltedSpeciesDecomposition,
@@ -378,15 +379,14 @@ def build_orthogonal_initial_conditions(
         closure=closure,
         kappa=kappa,
     )
-    residuals = evaluate_background_constraints(
-        algebra=algebra_eff,
-        geometry=geometry_eff,
+    residuals = assemble_background_rhs(
         H=H_value,
         sigma_ab=sigma_eff,
         matter=matter,
+        geometry=geometry_eff,
         lambda_value=lambda_value,
         kappa=kappa,
-    )
+    ).residuals
     return OrthogonalInitialConditions(
         algebra=algebra_eff,
         geometry=geometry_eff,
@@ -467,15 +467,14 @@ def build_tilted_initial_conditions(
         closure=closure,
         kappa=kappa,
     )
-    residuals = evaluate_background_constraints(
-        algebra=algebra_eff,
-        geometry=geometry_eff,
+    residuals = assemble_background_rhs(
         H=H_value,
         sigma_ab=sigma_eff,
         matter=normal_frame,
+        geometry=geometry_eff,
         lambda_value=lambda_value,
         kappa=kappa,
-    )
+    ).residuals
     return TiltedInitialConditions(
         algebra=algebra_eff,
         geometry=geometry_eff,

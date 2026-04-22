@@ -2,16 +2,22 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Iterator, Mapping as AbcMapping
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping
 
 import numpy as np
 
+from bass.validation import collect_gate_bundles, score_branch_readiness, summarize_gate_status
+from bass.ver3_contracts import OutputMetadata
 from common.contracts import SolverCoreOutput
 
 __all__ = [
     "DEFAULT_HARMONIC_ORDERING",
+    "BoostArchive",
     "observer_boost_output",
+    "observer_boost_output_from_components",
     "write_output_archive",
 ]
 
@@ -23,6 +29,47 @@ _NUMERIC_RESIDUAL_KEYS = (
     "seed_k_comoving",
     "visibility_peak_eta_mpc",
 )
+
+
+@dataclass(frozen=True)
+class BoostArchive(AbcMapping[str, Any]):
+    """Output-only boost archive with mapping compatibility."""
+
+    lmax: int
+    ordering: str
+    alm_T: np.ndarray
+    alm_E: np.ndarray
+    alm_B: np.ndarray
+    metadata_json: str
+
+    def __post_init__(self) -> None:
+        for name in ("alm_T", "alm_E", "alm_B"):
+            arr = np.asarray(getattr(self, name), dtype=np.float64)
+            if arr.ndim != 1:
+                raise ValueError(f"{name} must be 1-D, got {arr.shape}")
+            object.__setattr__(self, name, arr)
+        if not self.ordering:
+            raise ValueError("BoostArchive.ordering must be non-empty")
+        json.loads(self.metadata_json)
+
+    def as_payload(self) -> dict[str, Any]:
+        return {
+            "lmax": int(self.lmax),
+            "ordering": self.ordering,
+            "alm_T": np.array(self.alm_T, copy=True),
+            "alm_E": np.array(self.alm_E, copy=True),
+            "alm_B": np.array(self.alm_B, copy=True),
+            "metadata_json": self.metadata_json,
+        }
+
+    def __getitem__(self, key: str) -> Any:
+        return self.as_payload()[key]
+
+    def __iter__(self) -> Iterator[str]:
+        return iter(self.as_payload())
+
+    def __len__(self) -> int:
+        return len(self.as_payload())
 
 
 def _lmax(output: SolverCoreOutput) -> int:
@@ -62,55 +109,106 @@ def _base_component_metadata(
     boost_applied: bool,
     component_status: str,
 ) -> dict[str, Any]:
-    return {
-        "family": output.metadata.get("bianchi_type"),
-        "branch": output.metadata.get("bianchi_branch", "orthogonal"),
-        "backend": output.metadata.get("source_propagator_realization"),
-        "ordering": ordering,
-        "boost_applied": bool(boost_applied),
-        "global_tilt_present": bool(output.metadata.get("tilt_enabled", False)),
-        "component_kind": component_kind,
-        "component_status": component_status,
-        "local_boost_contract": output.metadata.get("local_boost_contract"),
-        "global_tilt_contract": output.metadata.get("global_tilt_contract"),
-    }
+    return OutputMetadata.from_solver_output(
+        output,
+        ordering=ordering,
+        component_kind=component_kind,
+        component_status=component_status,
+        boost_applied=boost_applied,
+    ).as_dict()
 
 
 def observer_boost_output(
-    output: SolverCoreOutput,
-    *,
+    output: SolverCoreOutput | object,
+    *args,
     ordering: str = DEFAULT_HARMONIC_ORDERING,
     alm_T: object | None = None,
     alm_E: object | None = None,
     alm_B: object | None = None,
-) -> dict[str, Any]:
+) -> BoostArchive:
     """Return the output-only local-boost split payload.
 
     If no boost arrays are provided, this returns explicit zero arrays with
     ``boost_applied=false``. The helper never folds boost into the upstream
     deterministic component.
     """
-    lmax = _lmax(output)
-    any_component = any(value is not None for value in (alm_T, alm_E, alm_B))
-    boost_T = _coerce_component(alm_T, lmax=lmax, component="boost alm_T")
-    boost_E = _coerce_component(alm_E, lmax=lmax, component="boost alm_E")
-    boost_B = _coerce_component(alm_B, lmax=lmax, component="boost alm_B")
-    metadata = _base_component_metadata(
-        output,
-        ordering=ordering,
-        component_kind="boost",
-        boost_applied=any_component,
-        component_status="observer_boost_applied" if any_component else "zero_filled_no_boost",
+    if isinstance(output, SolverCoreOutput):
+        lmax = _lmax(output)
+        any_component = any(value is not None for value in (alm_T, alm_E, alm_B))
+        boost_T = _coerce_component(alm_T, lmax=lmax, component="boost alm_T")
+        boost_E = _coerce_component(alm_E, lmax=lmax, component="boost alm_E")
+        boost_B = _coerce_component(alm_B, lmax=lmax, component="boost alm_B")
+        metadata = _base_component_metadata(
+            output,
+            ordering=ordering,
+            component_kind="boost",
+            boost_applied=any_component,
+            component_status="observer_boost_applied" if any_component else "zero_filled_no_boost",
+        )
+        metadata["split_semantics"] = "output_only_local_boost"
+        return BoostArchive(
+            lmax=lmax,
+            ordering=ordering,
+            alm_T=boost_T,
+            alm_E=boost_E,
+            alm_B=boost_B,
+            metadata_json=json.dumps(metadata, sort_keys=True),
+        )
+    if len(args) != 3:
+        raise TypeError(
+            "component-form observer_boost_output expects "
+            "(alm_det, alm_stoch, boost_params, metadata)"
+        )
+    return observer_boost_output_from_components(output, args[0], args[1], args[2])
+
+
+def observer_boost_output_from_components(
+    alm_det: object,
+    alm_stoch: object,
+    boost_params: Mapping[str, object],
+    metadata: Mapping[str, object],
+) -> BoostArchive:
+    """Document-level component signature for output-only boost separation."""
+
+    if not isinstance(boost_params, Mapping):
+        raise ValueError("boost_params must be a mapping")
+    if not isinstance(metadata, Mapping):
+        raise ValueError("metadata must be a mapping")
+    lmax = int(boost_params.get("lmax", metadata.get("multipole_cutoff", 0)))
+    if lmax < 0:
+        raise ValueError("lmax must be non-negative")
+    ordering = str(boost_params.get("ordering", metadata.get("ordering", DEFAULT_HARMONIC_ORDERING)))
+    det_component = None if alm_det is None else alm_det
+    stoch_component = None if alm_stoch is None else alm_stoch
+    any_component = any(
+        key in boost_params for key in ("alm_T", "alm_E", "alm_B")
     )
-    metadata["split_semantics"] = "output_only_local_boost"
-    return {
-        "lmax": lmax,
+    boost_T = _coerce_component(boost_params.get("alm_T"), lmax=lmax, component="boost alm_T")
+    boost_E = _coerce_component(boost_params.get("alm_E"), lmax=lmax, component="boost alm_E")
+    boost_B = _coerce_component(boost_params.get("alm_B"), lmax=lmax, component="boost alm_B")
+    payload_metadata = {
+        "family": metadata.get("family"),
+        "branch": metadata.get("branch", "orthogonal"),
+        "backend": metadata.get("backend"),
         "ordering": ordering,
-        "alm_T": boost_T,
-        "alm_E": boost_E,
-        "alm_B": boost_B,
-        "metadata_json": json.dumps(metadata, sort_keys=True),
+        "boost_applied": any_component,
+        "global_tilt_present": bool(metadata.get("global_tilt_present", False)),
+        "component_kind": "boost",
+        "component_status": "observer_boost_applied" if any_component else "zero_filled_no_boost",
+        "local_boost_contract": metadata.get("local_boost_contract"),
+        "global_tilt_contract": metadata.get("global_tilt_contract"),
+        "split_semantics": "output_only_local_boost",
+        "det_component_present": det_component is not None,
+        "stoch_component_present": stoch_component is not None,
     }
+    return BoostArchive(
+        lmax=lmax,
+        ordering=ordering,
+        alm_T=boost_T,
+        alm_E=boost_E,
+        alm_B=boost_B,
+        metadata_json=json.dumps(payload_metadata, sort_keys=True),
+    )
 
 
 def _solver_summary(
@@ -118,6 +216,7 @@ def _solver_summary(
     *,
     ordering: str,
     boost_applied: bool,
+    gate_registry: Mapping[str, object],
 ) -> dict[str, Any]:
     residual_summary: dict[str, Any] = {}
     for key in _NUMERIC_RESIDUAL_KEYS:
@@ -126,25 +225,36 @@ def _solver_summary(
             if not np.isfinite(value):
                 raise ValueError(f"non-finite residual metadata at {key}")
             residual_summary[key] = value
-    gate_status = {
-        "output_split_gate": "open",
-        "fitting_gate": "closed",
-        "boost_split_present": True,
-        "manifest_claim_tier": output.manifest.claim_tier,
-        "manifest_production_status": output.manifest.production_status,
-    }
+    bundle_gates = collect_gate_bundles(gate_registry)
+    gate_status = summarize_gate_status(gate_registry)
+    summary_metadata = OutputMetadata.from_solver_output(
+        output,
+        ordering=ordering,
+        component_kind="solver_summary",
+        component_status="solver_summary",
+        boost_applied=boost_applied,
+        gate_registry=gate_registry,
+        residual_summary=residual_summary,
+    )
     return {
-        "family": output.metadata.get("bianchi_type"),
-        "branch": output.metadata.get("bianchi_branch", "orthogonal"),
-        "backend": output.metadata.get("source_propagator_realization"),
+        "family": summary_metadata.family,
+        "branch": summary_metadata.branch,
+        "backend": summary_metadata.backend,
         "ic_mode": output.metadata.get("seed_injection_mode", "unspecified"),
         "lmax_dev": _lmax(output),
         "lmax_prod": _lmax(output),
-        "ordering": ordering,
-        "boost_applied": bool(boost_applied),
-        "global_tilt_present": bool(output.metadata.get("tilt_enabled", False)),
+        "ordering": summary_metadata.ordering,
+        "boost_applied": bool(summary_metadata.boost_applied),
+        "global_tilt_present": bool(summary_metadata.global_tilt_present),
         "residual_summary": residual_summary,
-        "gate_status": gate_status,
+        "gate_status": {
+            **gate_status,
+            "boost_split_present": True,
+            "manifest_claim_tier": summary_metadata.manifest_claim_tier,
+            "manifest_production_status": summary_metadata.manifest_production_status,
+        },
+        "gate_score": score_branch_readiness(gate_registry),
+        "bundle_gates": [gate for gate in gate_status if gate in bundle_gates],
     }
 
 
@@ -194,6 +304,7 @@ def write_output_archive(
     outdir: str | Path,
     *,
     ordering: str = DEFAULT_HARMONIC_ORDERING,
+    gate_registry: Mapping[str, object] | None = None,
     stochastic_alm_T: object | None = None,
     stochastic_alm_E: object | None = None,
     stochastic_alm_B: object | None = None,
@@ -206,6 +317,7 @@ def write_output_archive(
     The function writes ``solver_summary.json`` plus the mandatory
     ``alm_det.npz``, ``alm_stoch.npz``, and ``alm_boost.npz`` files.
     """
+    registry = {} if gate_registry is None else dict(gate_registry)
     root = Path(outdir)
     root.mkdir(parents=True, exist_ok=True)
 
@@ -242,6 +354,7 @@ def write_output_archive(
         output,
         ordering=ordering,
         boost_applied=json.loads(str(boost_payload["metadata_json"]))["boost_applied"],
+        gate_registry=registry,
     )
 
     summary_path = root / "solver_summary.json"

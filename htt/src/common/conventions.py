@@ -18,6 +18,7 @@ __all__ = [
     "pstf_gamma",
     "raise_vector",
     "lower_vector",
+    "gamma_from_vsq",
 ]
 
 
@@ -49,6 +50,21 @@ def lower_vector(v_a: np.ndarray, gamma_ab: np.ndarray | None = None) -> np.ndar
         raise ValueError(f"v^A must have shape (3,), got {vector.shape}")
     gamma, _ = _coerce_metric(gamma_ab)
     return gamma @ vector
+
+
+def gamma_from_vsq(v_sq: float) -> float:
+    """Return the Lorentz factor ``gamma = 1/sqrt(1-v^2)``.
+
+    The ver3 helper layer freezes this as the single SSOT conversion from
+    homogeneous global-tilt speed squared to the corresponding boost factor.
+    """
+
+    value = float(v_sq)
+    if value < 0.0:
+        raise ValueError(f"v^2 must be non-negative, got {v_sq!r}")
+    if value >= 1.0:
+        raise ValueError(f"v^2 must stay below 1, got {v_sq!r}")
+    return 1.0 / np.sqrt(1.0 - value)
 
 
 def gamma_trace(tensor_ab: np.ndarray, gamma_ab: np.ndarray | None = None) -> float:

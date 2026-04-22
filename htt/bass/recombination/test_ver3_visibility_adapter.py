@@ -8,6 +8,7 @@ from bass.recombination import (
     homogeneous_reionization_history,
     opacity_from_physical_inputs,
     optical_depth,
+    visibility_history_gate_bundle,
     visibility_function,
 )
 from bass.recombination.recombination_ingest import build_interpolators, make_synthetic_tanh_table
@@ -77,3 +78,16 @@ def test_reionization_adapter_preserves_monotonic_visibility_metadata() -> None:
     assert contract.normalization_status.visibility_nonnegative is True
     assert contract.normalization_status.kappa_monotone_increasing_in_z is True
     assert contract.normalization_status.optical_depth_decreases_toward_observer is True
+
+
+def test_visibility_history_gate_bundle_uses_normalization_checks() -> None:
+    table = make_synthetic_tanh_table(z_min=30.0, z_max=3000.0)
+    contract = homogeneous_reionization_history(
+        table,
+        reionization_params=ReionizationParameters(include_HeII=False),
+        cosmology=_test_cosmology(),
+    )
+    bundle = visibility_history_gate_bundle(contract, family="V")
+    assert bundle.gate_name == "visibility_history_gate"
+    assert bundle.passed is True
+    assert bundle.metadata["reionization_mode"] == "tanh"

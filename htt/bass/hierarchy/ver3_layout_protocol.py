@@ -13,12 +13,16 @@ __all__ = [
     "SECTOR_ORDER",
     "HierarchyLayout",
     "build_hierarchy_layout",
+    "build_layout_manifest",
     "flatten",
     "unflatten",
+    "assemble_free_streaming_block",
+    "assemble_mixing_block",
     "assemble_mass_matrix",
     "assemble_explicit_block",
     "assemble_implicit_block",
     "assemble_source_vector",
+    "assemble_hierarchy_ops",
 ]
 
 
@@ -34,6 +38,10 @@ class HierarchyLayout:
     ell_max: int
     sector_local_dofs: Mapping[str, int]
     size: int
+
+
+def _branch_scale(bg: Mapping[str, object]) -> float:
+    return 1.15 if str(bg.get("branch", "orthogonal")) == "tilted" else 1.0
 
 
 def _mode_labels_from_backend(
@@ -103,6 +111,28 @@ def build_hierarchy_layout(
         sector_local_dofs=local_dofs,
         size=size,
     )
+
+
+def build_layout_manifest(
+    layout: HierarchyLayout,
+    backend: FamilyBackend,
+    truncation: Mapping[str, object],
+    bg: Mapping[str, object] | None = None,
+) -> dict[str, object]:
+    required_metadata = backend.required_metadata()
+    return {
+        "family": backend.family_spec.family,
+        "branch": str((bg or {}).get("branch", "orthogonal")),
+        "mode_labels": list(layout.mode_labels),
+        "sector_order": list(layout.sector_order),
+        "ell_max": layout.ell_max,
+        "sector_local_dofs": dict(layout.sector_local_dofs),
+        "size": layout.size,
+        "native_mode_labels": required_metadata["native_mode_labels"],
+        "boundary_policy": required_metadata["boundary_policy"],
+        "release_status": required_metadata["release_status"],
+        "truncation_metadata": dict(truncation),
+    }
 
 
 def flatten(
@@ -188,12 +218,13 @@ def assemble_mass_matrix(
     return eye(layout.size, format="csr", dtype=np.float64)
 
 
-def assemble_explicit_block(
+def assemble_free_streaming_block(
     bg: Mapping[str, object],
     backend: FamilyBackend,
     truncation: Mapping[str, object],
 ) -> csr_matrix:
     layout = build_hierarchy_layout(backend, truncation)
+    branch_scale = _branch_scale(bg)
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
@@ -206,13 +237,54 @@ def assemble_explicit_block(
                     idx = flatten(layout, mu, sector, ell, m)
                     rows.append(idx)
                     cols.append(idx)
-                    data.append(-0.1 * (ell + 1))
+                    data.append(-0.1 * branch_scale * (ell + 1))
                     if ell < layout.ell_max:
                         nxt = flatten(layout, mu, sector, ell + 1, m if abs(m) <= ell + 1 else 0)
                         rows.append(idx)
                         cols.append(nxt)
-                        data.append(0.05)
+                        data.append(0.05 * branch_scale)
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
+
+
+def assemble_mixing_block(
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    truncation: Mapping[str, object],
+) -> csr_matrix:
+    layout = build_hierarchy_layout(backend, truncation)
+    mix_scale = 0.03 if backend.family_spec.class_label == "B" else 0.02
+    branch_scale = _branch_scale(bg)
+    rows: list[int] = []
+    cols: list[int] = []
+    data: list[float] = []
+    for mu_index, mu in enumerate(layout.mode_labels):
+        for ell in range(2, layout.ell_max + 1):
+            for m in range(-ell, ell + 1):
+                i_idx = flatten(layout, mu, "ph_I", ell, m)
+                e_idx = flatten(layout, mu, "ph_E", ell, m)
+                rows.extend((i_idx, e_idx))
+                cols.extend((e_idx, i_idx))
+                data.extend((mix_scale * branch_scale, 0.5 * mix_scale * branch_scale))
+        if len(layout.mode_labels) > 1:
+            next_mu = layout.mode_labels[(mu_index + 1) % len(layout.mode_labels)]
+            src_idx = flatten(layout, mu, "ph_I", 0, 0)
+            dst_idx = flatten(layout, next_mu, "ph_I", 0, 0)
+            rows.append(src_idx)
+            cols.append(dst_idx)
+            data.append(0.25 * mix_scale * branch_scale)
+    return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
+
+
+def assemble_explicit_block(
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    truncation: Mapping[str, object],
+) -> csr_matrix:
+    return assemble_free_streaming_block(bg, backend, truncation) + assemble_mixing_block(
+        bg,
+        backend,
+        truncation,
+    )
 
 
 def assemble_implicit_block(
@@ -260,3 +332,28 @@ def assemble_source_vector(
             out[flatten(layout, mu, "ph_E", 2, 0)] = polarization_amp
         out[flatten(layout, mu, "src", None, None, 0)] = reion_amp
     return out
+
+
+def assemble_hierarchy_ops(
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    truncation: Mapping[str, object],
+    source_data: Mapping[str, object],
+):
+    """Return the concrete ver3 hierarchy operator bundle for one background state."""
+
+    if not isinstance(bg, Mapping):
+        raise ValueError("bg must be a mapping")
+    if not isinstance(source_data, Mapping):
+        raise ValueError("source_data must be a mapping")
+    state = dict(bg)
+    opacity_data = state.get("opacity_data", {})
+    if not isinstance(opacity_data, Mapping):
+        raise ValueError("bg.opacity_data must be a mapping when provided")
+    state["opacity_data"] = dict(opacity_data)
+    existing_sources = state.get("source_tables", {})
+    if not isinstance(existing_sources, Mapping):
+        raise ValueError("bg.source_tables must be a mapping when provided")
+    state["source_tables"] = {**dict(existing_sources), **dict(source_data)}
+    state.setdefault("state_tag", "hierarchy_ops_state")
+    return backend.operator_factory(state)

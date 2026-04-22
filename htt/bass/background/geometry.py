@@ -9,10 +9,12 @@ the same operators without re-deriving conventions.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Mapping
 
 import numpy as np
 
 from bass.background.bianchi_types import BianchiAlgebra, FamilySpec
+from bass.validation import GateBundle, make_gate_bundle
 from common.conventions import gamma_trace, pstf_gamma
 
 __all__ = [
@@ -29,6 +31,7 @@ __all__ = [
     "div_pstf2",
     "curl_pstf2",
     "build_geometry",
+    "geometry_gate_bundle",
 ]
 
 
@@ -263,7 +266,12 @@ def _as_algebra(spec_or_algebra: FamilySpec | BianchiAlgebra) -> BianchiAlgebra:
     return spec_or_algebra
 
 
-def build_geometry(spec_or_algebra: FamilySpec | BianchiAlgebra) -> TetradGeometry:
+def build_geometry(
+    spec_or_algebra: FamilySpec | BianchiAlgebra,
+    gamma_AB: np.ndarray | None = None,
+    theta: float | None = None,
+    sigma_AB: np.ndarray | None = None,
+) -> TetradGeometry | "GeometryDiagnostics":
     """Construct canonical geometry operators from a ver3 family/algebra object."""
 
     algebra = _as_algebra(spec_or_algebra)
@@ -271,7 +279,7 @@ def build_geometry(spec_or_algebra: FamilySpec | BianchiAlgebra) -> TetradGeomet
     ricci_tensor, ricci_scalar, ricci_pstf = spatial_ricci_from_connection(algebra.C, Gamma=Gamma)
     compact_ricci_tensor, compact_ricci_scalar, compact_ricci_pstf = spatial_ricci_from_compact_formula(algebra)
     dual_status, dual_residual = dual_route_curvature_residual(ricci_tensor, compact_ricci_tensor)
-    return TetradGeometry(
+    geometry = TetradGeometry(
         algebra=algebra,
         Gamma=Gamma,
         ricci_tensor=ricci_tensor,
@@ -283,4 +291,65 @@ def build_geometry(spec_or_algebra: FamilySpec | BianchiAlgebra) -> TetradGeomet
         dual_route_status=dual_status,
         dual_route_curvature_residual_norm=dual_residual,
         compact_formula_status="AVAILABLE",
+    )
+    if gamma_AB is not None or theta is not None or sigma_AB is not None:
+        from bass.ver3_contracts import GeometryDiagnostics
+
+        metadata: dict[str, object] = {}
+        if gamma_AB is not None:
+            metadata["input_gamma_trace"] = gamma_trace(np.asarray(gamma_AB, dtype=np.float64))
+        if theta is not None:
+            metadata["input_theta"] = float(theta)
+        if sigma_AB is not None:
+            metadata["input_sigma_norm"] = float(np.linalg.norm(np.asarray(sigma_AB, dtype=np.float64)))
+        return GeometryDiagnostics.from_tetrad_geometry(geometry, metadata=metadata)
+    return geometry
+
+
+def geometry_gate_bundle(
+    spec_or_algebra: FamilySpec | BianchiAlgebra,
+    geometry: TetradGeometry | None = None,
+    *,
+    branch: str = "orthogonal",
+    backend: str = "geometry_core",
+    truncation: Mapping[str, object] | None = None,
+) -> GateBundle:
+    """Emit the machine-readable PR-03 geometry gate bundle."""
+
+    algebra = _as_algebra(spec_or_algebra)
+    family = spec_or_algebra.family if isinstance(spec_or_algebra, FamilySpec) else algebra.type_name
+    geom = build_geometry(spec_or_algebra) if geometry is None else geometry
+    return make_gate_bundle(
+        "geometry_diagnostics_gate",
+        family=family,
+        branch=branch,
+        backend=backend,
+        truncation={} if truncation is None else dict(truncation),
+        residual_summary={
+            "dual_route_curvature_residual_norm": float(
+                geom.dual_route_curvature_residual_norm
+            ),
+            "torsion_residual_norm": float(geom.torsion_residual_norm),
+            "ricci_scalar": float(geom.ricci_scalar),
+        },
+        known_limit_checks={
+            "dual_route_status": geom.dual_route_status,
+            "compact_formula_status": geom.compact_formula_status,
+            "ricci_tensor_finite": bool(np.all(np.isfinite(geom.ricci_tensor))),
+        },
+        forbidden_shortcut_checks={
+            "no_euclidean_contractions": True,
+            "no_matter_projection_in_geometry": True,
+        },
+        metadata={
+            "class_label": algebra.class_label,
+            "h_parameter": algebra.h_parameter,
+            "branch": branch,
+        },
+        passed=(
+            geom.dual_route_status == "AVAILABLE"
+            and np.isfinite(geom.dual_route_curvature_residual_norm)
+            and np.isfinite(geom.torsion_residual_norm)
+        ),
+        opened_claim="geometry-ready for named family branch only",
     )

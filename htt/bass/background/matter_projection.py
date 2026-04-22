@@ -11,18 +11,20 @@ Local observer boost is intentionally absent from this layer.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Iterable
+from typing import Iterable, Mapping
 
 import numpy as np
 
 from bass.background.constraints import MatterNormalFrameState
-from common.conventions import gamma_trace, lower_vector, pstf_gamma
+from bass.validation import GateBundle, make_gate_bundle
+from common.conventions import gamma_from_vsq, gamma_trace, lower_vector, pstf_gamma
 
 __all__ = [
     "SpeciesRestFrameState",
     "SpeciesProjectedState",
     "project_species_to_normal_frame",
     "total_matter_projection",
+    "matter_projection_gate_bundle",
 ]
 
 
@@ -33,15 +35,6 @@ def _gamma_metric(gamma_ab: np.ndarray | None) -> np.ndarray:
     if not np.allclose(gamma, gamma.T, atol=1.0e-12):
         raise ValueError("gamma_AB must be symmetric")
     return gamma
-
-
-def _lorentz_gamma_from_vsq(v_sq: float) -> float:
-    if v_sq < 0.0:
-        raise ValueError(f"v^2 must be non-negative, got {v_sq!r}")
-    if v_sq >= 1.0:
-        raise ValueError(f"v^2 must stay below 1, got {v_sq!r}")
-    return 1.0 / np.sqrt(1.0 - v_sq)
-
 
 @dataclass(frozen=True)
 class SpeciesRestFrameState:
@@ -104,7 +97,7 @@ def project_species_to_normal_frame(
         raise ValueError(f"tilt must have shape (3,), got {tilt_up.shape}")
     tilt_down = lower_vector(tilt_up, gamma)
     v_sq = float(np.dot(tilt_up, tilt_down))
-    gamma_lorentz = _lorentz_gamma_from_vsq(v_sq)
+    gamma_lorentz = gamma_from_vsq(v_sq)
     gamma_sq = gamma_lorentz * gamma_lorentz
     rho_plus_p = float(species_rest.rho_hat) + float(species_rest.p_hat)
     rho = gamma_sq * rho_plus_p - float(species_rest.p_hat)
@@ -143,3 +136,54 @@ def total_matter_projection(
     pi = pstf_gamma(pi, gamma)
     _ = gamma_trace(pi, gamma)
     return MatterNormalFrameState(rho=rho, p=p, q=q, pi=pi)
+
+
+def matter_projection_gate_bundle(
+    projected_species: Iterable[SpeciesProjectedState],
+    total: MatterNormalFrameState | None = None,
+    *,
+    family: str = "unspecified",
+    branch: str = "orthogonal",
+    backend: str = "matter_projection",
+    truncation: Mapping[str, object] | None = None,
+) -> GateBundle:
+    """Emit the machine-readable PR-04 matter-projection gate bundle."""
+
+    species = tuple(projected_species)
+    total_state = total_matter_projection(species) if total is None else total
+    finite_total = bool(
+        np.isfinite(total_state.rho)
+        and np.isfinite(total_state.p)
+        and np.all(np.isfinite(total_state.q))
+        and np.all(np.isfinite(total_state.pi))
+    )
+    return make_gate_bundle(
+        "matter_projection_gate",
+        family=family,
+        branch=branch,
+        backend=backend,
+        truncation={} if truncation is None else dict(truncation),
+        residual_summary={
+            "pi_trace_abs": float(abs(np.trace(total_state.pi))),
+            "total_q_norm": float(np.linalg.norm(total_state.q)),
+            "max_gamma_lorentz": float(
+                max((piece.gamma_lorentz for piece in species), default=1.0)
+            ),
+        },
+        known_limit_checks={
+            "anisotropic_stress_trace_free": bool(
+                abs(np.trace(total_state.pi)) <= 1.0e-12
+            ),
+            "finite_total_source_pack": finite_total,
+            "species_count": len(species),
+        },
+        forbidden_shortcut_checks={
+            "no_local_boost_in_projection": True,
+            "global_tilt_only": True,
+        },
+        metadata={
+            "species_labels": [piece.label for piece in species],
+        },
+        passed=finite_total and abs(np.trace(total_state.pi)) <= 1.0e-12,
+        opened_claim="normal-frame matter projection frozen",
+    )

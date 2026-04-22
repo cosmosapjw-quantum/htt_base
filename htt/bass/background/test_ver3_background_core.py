@@ -6,9 +6,11 @@ import pytest
 from bass.background import (
     MatterNormalFrameState,
     background_constraint_residuals,
+    background_gate_bundle,
     background_rhs,
     build_bianchi_algebra,
     build_geometry,
+    geometry_gate_bundle,
     build_orthogonal_initial_conditions,
     evaluate_background_constraints,
     raychaudhuri_rhs,
@@ -119,3 +121,28 @@ def test_named_branch_background_residual_summary_is_finite_and_dimensionless() 
     assert np.isfinite(summary.jacobi_max_over_structure_ref)
     assert summary.gauss_max_over_H2_ref < 1.0e-3
     assert summary.codazzi_max_over_H2_ref < 1.0e-4
+
+
+def test_geometry_gate_bundle_reports_dual_route_diagnostics() -> None:
+    spec = build_bianchi_algebra("V")
+    geometry = build_geometry(spec)
+    bundle = geometry_gate_bundle(spec, geometry, branch="orthogonal")
+    assert bundle.gate_name == "geometry_diagnostics_gate"
+    assert bundle.passed is True
+    assert bundle.known_limit_checks["dual_route_status"] == "AVAILABLE"
+
+
+def test_background_gate_bundle_tracks_residual_summary() -> None:
+    algebra = build_bianchi_algebra("I")
+    geometry = build_geometry(algebra)
+    assembly = background_rhs(
+        H=2.0,
+        sigma_ab=np.diag([2.0e-3, -1.0e-3, -1.0e-3]),
+        matter=MatterNormalFrameState(rho=3.0, p=0.0),
+        geometry=geometry,
+        lambda_value=0.0,
+    )
+    bundle = background_gate_bundle(assembly, geometry)
+    assert bundle.gate_name == "background_core_gate"
+    assert bundle.passed is True
+    assert bundle.residual_summary["gauss_abs"] >= 0.0

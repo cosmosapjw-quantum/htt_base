@@ -14,6 +14,7 @@ from bass.recombination.history_visibility import (
     homogeneous_reionization_history,
     opacity_from_physical_inputs,
     optical_depth,
+    visibility_history_gate_bundle,
     visibility_function,
 )
 
@@ -26,6 +27,7 @@ __all__ = [
     "optical_depth",
     "visibility_function",
     "homogeneous_reionization_history",
+    "visibility_history_gate_bundle",
     "build_visibility_history_contract",
     "build_tilted_visibility_source",
 ]

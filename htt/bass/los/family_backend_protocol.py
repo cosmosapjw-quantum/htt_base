@@ -7,11 +7,15 @@ translator, and seed provenance contract in machine-readable form.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Iterable, Mapping
+from typing import Any, Iterable, Mapping
 
 from bass.background.bianchi_types import FamilySpec, get_family_spec
 
 __all__ = [
+    "CollocationPolicy",
+    "GeometryOps",
+    "NativeLabelTranslatorCard",
+    "FamilyTemplateCard",
     "NativeLabelCard",
     "SeedRequest",
     "SeedPack",
@@ -111,6 +115,144 @@ _SEED_MODES: dict[str, tuple[str, ...]] = {
     "VIII": ("local_regular", "group_adapted", "collocation_projected"),
 }
 
+_EDGE_METADATA_FIELDS: dict[str, tuple[str, ...]] = {
+    "FLRW": ("regularity_domain",),
+    "I": ("cartesian_domain",),
+    "II": ("domain_edge", "truncation_edge", "edge_treatment"),
+    "III": ("radial_cutoff", "branch_flag", "edge_treatment"),
+    "IV": ("coordinate_order", "anisotropic_edge", "edge_treatment"),
+    "V": ("radial_cutoff", "open_domain"),
+    "VI_0": ("principal_direction_refinement", "directional_tag", "edge_treatment"),
+    "VI_h": ("h", "branch_refinement", "edge_treatment"),
+    "VII_0": ("helical_domain",),
+    "VII_h": ("h", "radial_cutoff", "helical_domain"),
+    "VIII": ("noncompact_cutoff", "branch_tag", "residual_trend"),
+    "IX": ("compact_domain",),
+}
+
+_FAMILY_RESIDUALS: dict[str, tuple[str, ...]] = {
+    "FLRW": ("isotropic_anchor_limit", "label_translator_roundtrip", "seed_regularity"),
+    "I": ("cartesian_anchor_limit", "label_translator_roundtrip", "seed_regularity"),
+    "II": ("nil_chart_regularity", "label_translator_roundtrip", "seed_regularity"),
+    "III": ("class_b_branch_consistency", "hyperbolic_cutoff", "seed_branch_label_consistency"),
+    "IV": ("chart_order", "edge_anisotropy", "seed_regularity"),
+    "V": ("open_anchor_limit", "label_translator_roundtrip", "seed_regularity"),
+    "VI_0": ("directional_truncation", "translator_directional_tag", "seed_regularity"),
+    "VI_h": ("h_consistency", "branch_label", "cutoff_refinement"),
+    "VII_0": ("helical_anchor_limit", "label_translator_roundtrip", "seed_regularity"),
+    "VII_h": ("positive_h_anchor_limit", "label_translator_roundtrip", "seed_regularity"),
+    "VIII": ("noncompact_truncation", "branch_tag", "seed_regularity"),
+    "IX": ("compact_anchor_limit", "label_translator_roundtrip", "seed_regularity"),
+}
+
+_MUST_NOT_DO: dict[str, tuple[str, ...]] = {
+    "FLRW": ("no_hidden_branch_choice",),
+    "I": ("no_hidden_branch_choice", "no_local_boost_folded_into_backend"),
+    "II": ("no_flrw_seed_reuse", "no_implicit_periodic_boundary", "no_unlabeled_branch_choice"),
+    "III": ("no_open_flrw_seed_import_without_branch_justification", "no_dropping_special_branch_flag"),
+    "IV": ("no_isotropic_radial_reduction", "no_chart_swap_without_translator_update"),
+    "V": ("no_hidden_flrw_import_without_open_chart_metadata",),
+    "VI_0": ("no_borrowing_type_i_or_vii_seeds", "no_isotropic_direction_compression"),
+    "VI_h": ("no_using_vi0_seed_at_nonzero_h", "no_hiding_h_inside_generic_branch_label"),
+    "VII_0": ("no_hidden_branch_choice", "no_local_boost_folded_into_backend"),
+    "VII_h": ("no_hidden_h_branch_choice", "no_local_boost_folded_into_backend"),
+    "VIII": ("no_compact_su2_reuse", "no_wigner_d_assumption_without_explicit_approximation_tag"),
+    "IX": ("no_untracked_compact_basis_reordering",),
+}
+
+_COLLOCATION_NOTES: dict[str, tuple[str, ...]] = {
+    "FLRW": ("anchor branch uses regular documented domain",),
+    "I": ("cartesian regular branch with explicit storage ordering",),
+    "II": ("finite domain truncation; no periodic closure by default",),
+    "III": ("truncated hyperbolic domain with explicit class-B branch metadata",),
+    "IV": ("finite truncation with anisotropic edge metadata and logged coordinate remap",),
+    "V": ("open hyperbolic chart with explicit radial cutoff metadata",),
+    "VI_0": ("mixed-sign directional bookkeeping with per-axis refinement",),
+    "VI_h": ("h-dependent truncated class-B chart; h changes require branch refinement",),
+    "VII_0": ("helical Euclidean-like anchor backend with explicit storage order",),
+    "VII_h": ("positive-h open helical chart with explicit h metadata",),
+    "VIII": ("noncompact truncation must log residual trend and cutoff strategy",),
+    "IX": ("compact harmonic backend with explicit storage translator",),
+}
+
+
+@dataclass(frozen=True)
+class CollocationPolicy:
+    domain_policy: str
+    boundary_policy: str
+    refinement_study_required: bool
+    periodic_closure_allowed: bool
+    edge_metadata_fields: tuple[str, ...]
+    notes: tuple[str, ...] = ()
+
+    def as_payload(self) -> dict[str, object]:
+        return {
+            "domain_policy": self.domain_policy,
+            "boundary_policy": self.boundary_policy,
+            "refinement_study_required": self.refinement_study_required,
+            "periodic_closure_allowed": self.periodic_closure_allowed,
+            "edge_metadata_fields": list(self.edge_metadata_fields),
+            "notes": list(self.notes),
+        }
+
+
+@dataclass(frozen=True)
+class NativeLabelTranslatorCard:
+    family: str
+    native_label_name: str
+    parity_flag: str | None
+    helicity_flag: str | None
+    branch_flag: str | None
+    h_parameter: float | None = None
+    directional_tag: str | None = None
+    coordinate_order: tuple[str, ...] | None = None
+    chart: str | None = None
+
+    def as_payload(self) -> dict[str, object]:
+        return {
+            "family": self.family,
+            "native_label_name": self.native_label_name,
+            "parity_flag": self.parity_flag,
+            "helicity_flag": self.helicity_flag,
+            "branch_flag": self.branch_flag,
+            "h_parameter": self.h_parameter,
+            "directional_tag": self.directional_tag,
+            "coordinate_order": None if self.coordinate_order is None else list(self.coordinate_order),
+            "chart": self.chart,
+        }
+
+
+@dataclass(frozen=True)
+class FamilyTemplateCard:
+    family: str
+    preferred_chart: str
+    operator_kernel_family: str
+    preferred_backend: str
+    generic_fallback: str
+    collocation_policy: CollocationPolicy
+    label_translator_card: NativeLabelTranslatorCard
+    allowed_seed_provenance: tuple[str, ...]
+    family_specific_residuals: tuple[str, ...]
+    must_not_do: tuple[str, ...]
+    analytic_normalization_status: str
+    metadata: Mapping[str, object] = field(default_factory=dict)
+
+    def as_payload(self) -> dict[str, object]:
+        return {
+            "family": self.family,
+            "preferred_chart": self.preferred_chart,
+            "operator_kernel_family": self.operator_kernel_family,
+            "preferred_backend": self.preferred_backend,
+            "generic_fallback": self.generic_fallback,
+            "collocation_policy": self.collocation_policy.as_payload(),
+            "label_translator_card": self.label_translator_card.as_payload(),
+            "allowed_seed_provenance": list(self.allowed_seed_provenance),
+            "family_specific_residuals": list(self.family_specific_residuals),
+            "must_not_do": list(self.must_not_do),
+            "analytic_normalization_status": self.analytic_normalization_status,
+            "metadata": dict(self.metadata),
+        }
+
 
 @dataclass(frozen=True)
 class NativeLabelCard:
@@ -170,6 +312,24 @@ class ModeOps:
     boundary_policy: str
     seed_provenance_mode: str
     release_status: str
+    mass_matrix: Any
+    A_fs: Any
+    A_mix: Any
+    A_coll: Any
+    source_template: Any
+    layout_metadata: Mapping[str, object]
+    metadata: Mapping[str, object]
+
+
+@dataclass(frozen=True)
+class GeometryOps:
+    family: str
+    branch: str
+    chart: str
+    Gamma: Any
+    ricci_tensor: Any
+    ricci_scalar: float
+    S_AB: Any
     metadata: Mapping[str, object]
 
 
@@ -202,24 +362,94 @@ class FamilyBackend:
         return str(value)
 
     def _label_template(self) -> dict[str, object]:
-        family = self.family_spec.family
+        translator = self.template_card().label_translator_card
         return {
-            "native_label_name": _NATIVE_LABELS[family],
-            "parity_flag": None,
-            "helicity_flag": None,
-            "branch_flag": self._branch_flag(),
-            "h_parameter": self.family_spec.algebra.h_parameter,
-            "directional_tag": self._directional_tag(),
-            "coordinate_order": self._coordinate_order(),
-            "chart": self._chart(),
+            "native_label_name": translator.native_label_name,
+            "parity_flag": translator.parity_flag,
+            "helicity_flag": translator.helicity_flag,
+            "branch_flag": translator.branch_flag,
+            "h_parameter": translator.h_parameter,
+            "directional_tag": translator.directional_tag,
+            "coordinate_order": translator.coordinate_order,
+            "chart": translator.chart,
         }
 
-    def operator_factory(self, background_state: Mapping[str, object]) -> ModeOps:
+    def template_card(self) -> FamilyTemplateCard:
+        family = self.family_spec.family
+        intrinsic_family = family in {"II", "III", "IV", "VI_0", "VI_h", "VIII"}
+        chart = self._chart()
+        boundary_policy = str(
+            self.chart_options.get("boundary_policy", _BOUNDARY_POLICIES[family])
+        )
+        branch_flag = self._branch_flag()
+        translator = NativeLabelTranslatorCard(
+            family=family,
+            native_label_name=_NATIVE_LABELS[family],
+            parity_flag=None,
+            helicity_flag=None,
+            branch_flag=branch_flag,
+            h_parameter=self.family_spec.algebra.h_parameter,
+            directional_tag=self._directional_tag(),
+            coordinate_order=self._coordinate_order(),
+            chart=chart,
+        )
+        collocation = CollocationPolicy(
+            domain_policy=boundary_policy,
+            boundary_policy=boundary_policy,
+            refinement_study_required=True,
+            periodic_closure_allowed=False,
+            edge_metadata_fields=_EDGE_METADATA_FIELDS[family],
+            notes=_COLLOCATION_NOTES[family],
+        )
+        return FamilyTemplateCard(
+            family=family,
+            preferred_chart=chart,
+            operator_kernel_family=_OPERATOR_KERNELS[family],
+            preferred_backend=self.family_spec.preferred_backend,
+            generic_fallback=self.family_spec.generic_fallback,
+            collocation_policy=collocation,
+            label_translator_card=translator,
+            allowed_seed_provenance=_SEED_MODES[family],
+            family_specific_residuals=_FAMILY_RESIDUALS[family],
+            must_not_do=_MUST_NOT_DO[family],
+            analytic_normalization_status=(
+                "LOOKUP_REQUIRED" if intrinsic_family else "documented_anchor_normalization"
+            ),
+            metadata={
+                "ic_provenance_status": self.family_spec.ic_provenance_status,
+                "canonical_gauge": self.family_spec.canonical_gauge,
+                "constraint_policy_required": self.family_spec.algebra.branch_policy.constraint_policy_required,
+                "isotropic_anchor": self.family_spec.isotropic_anchor,
+            },
+        )
+
+    def operator_factory(self, background_state: Mapping[str, object]) -> ModeOps | tuple[GeometryOps, ModeOps]:
+        from bass.hierarchy.ver3_layout_protocol import (
+            assemble_free_streaming_block,
+            assemble_implicit_block,
+            assemble_mass_matrix,
+            assemble_mixing_block,
+            assemble_source_vector,
+            build_hierarchy_layout,
+            build_layout_manifest,
+        )
+        from bass.background.geometry import build_geometry
+
         branch = str(background_state.get("branch", "orthogonal"))
         if branch not in {"orthogonal", "tilted"}:
             raise ValueError(f"unknown branch {branch!r}")
         if not self.family_spec.algebra.supports_branch(branch):
             raise ValueError(f"{self.family_spec.family} does not support branch {branch!r}")
+        opacity_data = background_state.get("opacity_data", {})
+        if not isinstance(opacity_data, Mapping):
+            raise ValueError("opacity_data must be a mapping when provided")
+        source_tables = background_state.get("source_tables", {})
+        if not isinstance(source_tables, Mapping):
+            raise ValueError("source_tables must be a mapping when provided")
+        layout = build_hierarchy_layout(self, self.truncation)
+        template_card = self.template_card()
+        geometry_contract = background_state.get("geometry")
+        geometry = build_geometry(self.family_spec) if geometry_contract is None else geometry_contract
         metadata = {
             "family": self.family_spec.family,
             "class_label": self.family_spec.class_label,
@@ -228,24 +458,66 @@ class FamilyBackend:
             "constraint_policy_required": self.family_spec.algebra.branch_policy.constraint_policy_required,
             "h_parameter": self.family_spec.algebra.h_parameter,
             "background_state_tag": background_state.get("state_tag", "background_state"),
+            "contract_release_status": "backend-contract-complete",
+            "operator_payload_status": "bound_template_blocks",
+            "analytic_normalization_status": template_card.analytic_normalization_status,
+            "template_card": template_card.as_payload(),
         }
-        return ModeOps(
+        ops = ModeOps(
             family=self.family_spec.family,
             branch=branch,
-            chart=self._chart(),
+            chart=template_card.preferred_chart,
             backend_name=self.family_spec.preferred_backend,
-            operator_kernel_family=_OPERATOR_KERNELS[self.family_spec.family],
+            operator_kernel_family=template_card.operator_kernel_family,
             truncation=dict(self.truncation),
-            boundary_policy=str(self.chart_options.get("boundary_policy", _BOUNDARY_POLICIES[self.family_spec.family])),
+            boundary_policy=template_card.collocation_policy.boundary_policy,
             seed_provenance_mode="isotropic_anchor_continuation"
             if self.family_spec.ic_provenance_status == "strong"
             else "template_card_family_adapted",
-            release_status="backend-contract-complete",
+            release_status="backend-operator-bound",
+            mass_matrix=assemble_mass_matrix(background_state, self, self.truncation),
+            A_fs=assemble_free_streaming_block(background_state, self, self.truncation),
+            A_mix=assemble_mixing_block(background_state, self, self.truncation),
+            A_coll=assemble_implicit_block(
+                background_state,
+                self,
+                self.truncation,
+                opacity_data,
+            ),
+            source_template=assemble_source_vector(
+                background_state,
+                self,
+                self.truncation,
+                source_tables,
+            ),
+            layout_metadata=build_layout_manifest(
+                layout,
+                self,
+                self.truncation,
+                background_state,
+            ),
             metadata=metadata,
         )
+        if bool(background_state.get("include_geometry", False)):
+            geometry_ops = GeometryOps(
+                family=self.family_spec.family,
+                branch=branch,
+                chart=template_card.preferred_chart,
+                Gamma=geometry.Gamma,
+                ricci_tensor=geometry.ricci_tensor,
+                ricci_scalar=float(geometry.ricci_scalar),
+                S_AB=geometry.S_AB,
+                metadata={
+                    "dual_route_status": geometry.dual_route_status,
+                    "compact_formula_status": geometry.compact_formula_status,
+                },
+            )
+            return geometry_ops, ops
+        return ops
 
     def seed_factory(self, seed_request: SeedRequest) -> SeedPack:
-        allowed = _SEED_MODES[self.family_spec.family]
+        template_card = self.template_card()
+        allowed = template_card.allowed_seed_provenance
         if seed_request.seed_mode not in allowed:
             raise ValueError(
                 f"{self.family_spec.family} seed_mode {seed_request.seed_mode!r} not allowed; "
@@ -258,10 +530,12 @@ class FamilyBackend:
         normalization = {
             "amp_ref": float(seed_request.amplitude_reference),
             "chart": self._chart(),
+            "analytic_normalization_status": template_card.analytic_normalization_status,
         }
         residual_summary = {
             "seed_regularity_status": "not_executed",
             "translator_roundtrip_status": "required",
+            "required_family_residuals": list(template_card.family_specific_residuals),
             "forbidden_shortcut_checks": {
                 "no_local_boost_folded_into_global_tilt": True,
                 "no_unlabeled_branch_choice": True,
@@ -276,6 +550,7 @@ class FamilyBackend:
             "chart": self._chart(),
             "coordinate_order": self._coordinate_order(),
             "directional_tag": self._directional_tag(),
+            "must_not_do": list(template_card.must_not_do),
             **dict(seed_request.metadata),
         }
         return SeedPack(
@@ -378,20 +653,22 @@ class FamilyBackend:
         }
 
     def required_metadata(self) -> dict[str, object]:
+        template_card = self.template_card()
         return {
-            "chart_model_name": self._chart(),
-            "native_mode_labels": _NATIVE_LABELS[self.family_spec.family],
-            "parity_flag": None,
-            "helicity_flag": None,
-            "branch_flag": self._branch_flag(),
+            "chart_model_name": template_card.preferred_chart,
+            "native_mode_labels": template_card.label_translator_card.native_label_name,
+            "parity_flag": template_card.label_translator_card.parity_flag,
+            "helicity_flag": template_card.label_translator_card.helicity_flag,
+            "branch_flag": template_card.label_translator_card.branch_flag,
             "truncation_metadata": dict(self.truncation),
-            "boundary_policy": str(self.chart_options.get("boundary_policy", _BOUNDARY_POLICIES[self.family_spec.family])),
+            "boundary_policy": template_card.collocation_policy.boundary_policy,
             "seed_provenance_mode": self.family_spec.ic_provenance_status,
             "release_status": "backend-contract-complete",
             "h_parameter": self.family_spec.algebra.h_parameter,
             "orthogonal_global_tilt_local_boost_split": self.family_spec.orthogonal_global_tilt_local_boost_split,
             "preferred_backend": self.family_spec.preferred_backend,
             "generic_fallback": self.family_spec.generic_fallback,
+            "template_card": template_card.as_payload(),
         }
 
 

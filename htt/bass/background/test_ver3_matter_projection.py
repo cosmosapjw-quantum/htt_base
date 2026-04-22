@@ -8,6 +8,7 @@ from bass.background.initial_conditions import build_tilted_initial_conditions
 from bass.background.matter_projection import (
     SpeciesProjectedState,
     SpeciesRestFrameState,
+    matter_projection_gate_bundle,
     project_species_to_normal_frame,
     total_matter_projection,
 )
@@ -83,3 +84,20 @@ def test_tilted_ic_builder_matches_projected_total_source_pack():
     assert ic.residuals.gauss == pytest.approx(ic.residuals.gauss)
     np.testing.assert_allclose(ic.matter.q, expected.q)
     np.testing.assert_allclose(ic.matter.pi, expected.pi)
+
+
+def test_matter_projection_gate_bundle_tracks_trace_free_total() -> None:
+    species = (
+        project_species_to_normal_frame(
+            SpeciesRestFrameState(rho_hat=1.0, p_hat=0.0, label="x"),
+            np.array([0.1, 0.0, 0.0]),
+        ),
+        project_species_to_normal_frame(
+            SpeciesRestFrameState(rho_hat=1.0, p_hat=0.0, label="y"),
+            np.array([0.0, 0.1, 0.0]),
+        ),
+    )
+    bundle = matter_projection_gate_bundle(species, family="V")
+    assert bundle.gate_name == "matter_projection_gate"
+    assert bundle.passed is True
+    assert bundle.known_limit_checks["anisotropic_stress_trace_free"] is True

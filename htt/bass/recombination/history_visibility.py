@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Mapping
 
 import numpy as np
 
@@ -13,6 +13,7 @@ from bass.recombination.recombination_ingest import (
     build_interpolators,
     find_visibility_peak,
 )
+from bass.validation import GateBundle, make_gate_bundle
 from bass.recombination.reionization import (
     CosmologyForRecombination,
     ReionizationParameters,
@@ -36,6 +37,7 @@ __all__ = [
     "optical_depth",
     "visibility_function",
     "homogeneous_reionization_history",
+    "visibility_history_gate_bundle",
     "build_visibility_history_contract",
     "build_tilted_visibility_source",
     "build_tilted_visibility_source_stub",
@@ -345,4 +347,59 @@ def build_tilted_visibility_source_stub(
         v_e=v_e,
         direction_convention=direction_convention,
         beta_from_v=beta_from_v,
+    )
+
+
+def visibility_history_gate_bundle(
+    contract: VisibilityHistoryContract,
+    *,
+    family: str = "unspecified",
+    branch: str = "orthogonal",
+    backend: str = "visibility_history_contract",
+    truncation: Mapping[str, object] | None = None,
+) -> GateBundle:
+    """Emit the machine-readable PR-07 visibility/history gate bundle."""
+
+    events = contract.events
+    return make_gate_bundle(
+        "visibility_history_gate",
+        family=family,
+        branch=branch,
+        backend=backend,
+        truncation={} if truncation is None else dict(truncation),
+        residual_summary={
+            "min_visibility": float(contract.normalization_status.min_visibility),
+            "tau_reion": float(0.0 if events is None else events.tau_reion),
+            "z_last_scattering": float(
+                0.0 if events is None else events.z_last_scattering
+            ),
+        },
+        known_limit_checks={
+            "visibility_nonnegative": contract.normalization_status.visibility_nonnegative,
+            "kappa_monotone_increasing_in_z": (
+                contract.normalization_status.kappa_monotone_increasing_in_z
+            ),
+            "optical_depth_decreases_toward_observer": (
+                contract.normalization_status.optical_depth_decreases_toward_observer
+            ),
+            "homogeneous_reionization_only": (
+                contract.history_metadata.homogeneous_reionization_only
+            ),
+        },
+        forbidden_shortcut_checks={
+            "electron_frame_visibility_ownership": (
+                contract.frame_metadata.visibility_frame == "electron_frame"
+            ),
+            "no_statistics_layer": True,
+        },
+        metadata={
+            "reionization_mode": contract.history_metadata.reionization_mode,
+            "source_scope": contract.history_metadata.source_scope,
+        },
+        passed=bool(
+            contract.normalization_status.visibility_nonnegative
+            and contract.normalization_status.kappa_monotone_increasing_in_z
+            and contract.normalization_status.optical_depth_decreases_toward_observer
+        ),
+        opened_claim="source-history contract frozen",
     )

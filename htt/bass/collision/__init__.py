@@ -9,8 +9,10 @@ from bass.collision.electron_frame import (
     ElectronFrameThomsonContext,
     ExactThomsonSource,
     ProjectedThomsonSource,
+    SourceTerms,
     electron_frame_rate_factor,
     exact_thomson_source,
+    exact_thomson_gate_bundle,
     project_thomson_source,
 )
 
@@ -19,7 +21,9 @@ __all__ = [
     "ElectronFrameThomsonContext",
     "ExactThomsonSource",
     "ProjectedThomsonSource",
+    "SourceTerms",
     "electron_frame_rate_factor",
     "exact_thomson_source",
+    "exact_thomson_gate_bundle",
     "project_thomson_source",
 ]

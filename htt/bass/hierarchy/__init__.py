@@ -116,14 +116,19 @@ from bass.hierarchy.seed_compatibility import (
 from bass.hierarchy.ver3_layout_protocol import (
     SECTOR_ORDER,
     HierarchyLayout,
+    assemble_hierarchy_ops,
+    assemble_free_streaming_block,
+    assemble_mixing_block,
     assemble_explicit_block,
     assemble_implicit_block,
     assemble_mass_matrix,
     assemble_source_vector,
     build_hierarchy_layout,
+    build_layout_manifest,
     flatten,
     unflatten,
 )
+from bass.hierarchy.ver3_state_contracts import HierarchyState
 
 
 __all__ = [
@@ -210,10 +215,15 @@ __all__ = [
     "project_packed_regular_seed",
     # ver3 PR-09 hierarchy layout and IMEX packing
     "SECTOR_ORDER",
+    "HierarchyState",
     "HierarchyLayout",
     "build_hierarchy_layout",
+    "build_layout_manifest",
     "flatten",
     "unflatten",
+    "assemble_hierarchy_ops",
+    "assemble_free_streaming_block",
+    "assemble_mixing_block",
     "assemble_mass_matrix",
     "assemble_explicit_block",
     "assemble_implicit_block",

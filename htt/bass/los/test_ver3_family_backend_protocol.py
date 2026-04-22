@@ -116,7 +116,24 @@ def test_operator_factory_maps_named_family_to_expected_kernel() -> None:
     ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "named_branch"})
     assert ops.operator_kernel_family == "class_a_compact_matrix_approx"
     assert ops.backend_name == "wigner_d_compact_backend"
-    assert ops.release_status == "backend-contract-complete"
+    assert ops.release_status == "backend-operator-bound"
+    assert ops.metadata["contract_release_status"] == "backend-contract-complete"
+    assert ops.mass_matrix.shape == ops.A_fs.shape
+    assert ops.A_fs.shape == ops.A_mix.shape == ops.A_coll.shape
+    assert ops.source_template.shape == (ops.mass_matrix.shape[0],)
+    assert ops.layout_metadata["family"] == "IX"
+    assert ops.layout_metadata["branch"] == "orthogonal"
+
+
+def test_operator_factory_can_return_geometry_ops_with_mode_ops() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 4})
+    geometry_ops, mode_ops = backend.operator_factory(
+        {"branch": "tilted", "include_geometry": True}
+    )
+    assert geometry_ops.family == "I"
+    assert geometry_ops.branch == "tilted"
+    assert geometry_ops.Gamma.shape == (3, 3, 3)
+    assert mode_ops.branch == "tilted"
 
 
 def test_backend_residuals_reports_roundtrip_zero_when_translator_is_consistent() -> None:
@@ -133,3 +150,28 @@ def test_backend_residuals_reports_roundtrip_zero_when_translator_is_consistent(
     )
     residuals = backend.backend_residuals(native)
     assert residuals["translator_roundtrip_residual"] == 0
+
+
+def test_template_card_exposes_intrinsic_family_constraints() -> None:
+    backend = build_backend(get_family_spec("VI_h", h=-2.0), truncation={"ell_max": 4})
+    card = backend.template_card()
+    assert card.family == "VI_h"
+    assert card.analytic_normalization_status == "LOOKUP_REQUIRED"
+    assert card.label_translator_card.h_parameter == pytest.approx(-2.0)
+    assert "h_consistency" in card.family_specific_residuals
+    assert "no_using_vi0_seed_at_nonzero_h" in card.must_not_do
+    assert "h" in card.collocation_policy.edge_metadata_fields
+    assert "h_aware_local_regular" in card.allowed_seed_provenance
+
+
+def test_required_metadata_embeds_template_card_payload() -> None:
+    backend = build_backend(get_family_spec("IV"), truncation={"ell_max": 3})
+    metadata = backend.required_metadata()
+    template_card = metadata["template_card"]
+    assert template_card["family"] == "IV"
+    assert template_card["label_translator_card"]["coordinate_order"] == [
+        "x_noncompact",
+        "y_shear",
+        "z_twist",
+    ]
+    assert template_card["analytic_normalization_status"] == "LOOKUP_REQUIRED"

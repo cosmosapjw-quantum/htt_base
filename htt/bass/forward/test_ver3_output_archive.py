@@ -9,10 +9,13 @@ import pytest
 from common.contracts import ArtifactManifest, SolverCoreOutput
 
 from bass.forward import (
+    BoostArchive,
     DEFAULT_HARMONIC_ORDERING,
     observer_boost_output,
+    observer_boost_output_from_components,
     write_output_archive,
 )
+from bass.validation import GATE_LADDER, make_gate_bundle
 
 
 def _manifest() -> ArtifactManifest:
@@ -68,8 +71,26 @@ def _solver_output(*, with_nan_residual: bool = False) -> SolverCoreOutput:
     )
 
 
+def _gate_registry() -> dict[str, object]:
+    return {
+        gate: make_gate_bundle(
+            gate,
+            family="V",
+            branch="orthogonal",
+            backend="class_b_open_matrix_approx",
+            truncation={"ell_max": 2},
+            residual_summary={"max_residual": 1.0e-8},
+            known_limit_checks={"status": "passed"},
+            forbidden_shortcut_checks={"no_fake_support": True},
+            metadata={"artifact": f"{gate}.json"},
+        )
+        for gate in GATE_LADDER[:-1]
+    }
+
+
 def test_observer_boost_output_is_zero_filled_when_not_applied() -> None:
     payload = observer_boost_output(_solver_output())
+    assert isinstance(payload, BoostArchive)
     assert payload["lmax"] == 2
     assert payload["ordering"] == DEFAULT_HARMONIC_ORDERING
     np.testing.assert_allclose(payload["alm_T"], 0.0)
@@ -82,7 +103,7 @@ def test_observer_boost_output_is_zero_filled_when_not_applied() -> None:
 
 def test_write_output_archive_writes_required_schema(tmp_path: Path) -> None:
     output = _solver_output()
-    written = write_output_archive(output, tmp_path)
+    written = write_output_archive(output, tmp_path, gate_registry=_gate_registry())
     assert sorted(written) == [
         "alm_boost.npz",
         "alm_det.npz",
@@ -97,6 +118,9 @@ def test_write_output_archive_writes_required_schema(tmp_path: Path) -> None:
     assert summary["boost_applied"] is False
     assert summary["global_tilt_present"] is False
     assert summary["gate_status"]["output_split_gate"] == "open"
+    assert summary["gate_status"]["fitting_gate"] == "closed"
+    assert summary["gate_score"] == 8
+    assert "output_split_gate" in summary["bundle_gates"]
 
     det = np.load(tmp_path / "alm_det.npz", allow_pickle=False)
     stoch = np.load(tmp_path / "alm_stoch.npz", allow_pickle=False)
@@ -115,6 +139,38 @@ def test_write_output_archive_writes_required_schema(tmp_path: Path) -> None:
     assert boost_meta["component_kind"] == "boost"
 
 
+def test_component_form_observer_boost_output_returns_boost_archive() -> None:
+    archive = observer_boost_output(
+        np.zeros(9),
+        None,
+        {"lmax": 2, "alm_T": np.ones(9)},
+        {"family": "V", "branch": "orthogonal", "multipole_cutoff": 2},
+    )
+    assert isinstance(archive, BoostArchive)
+    assert archive["lmax"] == 2
+    np.testing.assert_allclose(archive["alm_T"], 1.0)
+
+
+def test_component_helper_observer_boost_output_matches_component_signature() -> None:
+    archive = observer_boost_output_from_components(
+        np.zeros(9),
+        None,
+        {"lmax": 2},
+        {"family": "V", "branch": "orthogonal", "multipole_cutoff": 2},
+    )
+    assert isinstance(archive, BoostArchive)
+    np.testing.assert_allclose(archive["alm_E"], 0.0)
+
+
 def test_write_output_archive_rejects_nonfinite_residual_summary(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="non-finite residual metadata"):
         write_output_archive(_solver_output(with_nan_residual=True), tmp_path)
+
+
+def test_write_output_archive_keeps_output_gate_closed_without_registry(tmp_path: Path) -> None:
+    write_output_archive(_solver_output(), tmp_path)
+    summary = json.loads((tmp_path / "solver_summary.json").read_text(encoding="utf-8"))
+    assert summary["gate_status"]["authority_freeze"] == "closed"
+    assert summary["gate_status"]["output_split_gate"] == "unavailable"
+    assert summary["gate_status"]["fitting_gate"] == "unavailable"
+    assert summary["gate_score"] == 0
