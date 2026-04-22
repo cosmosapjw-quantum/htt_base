@@ -382,6 +382,20 @@ class _CoupledAuxiliarySectorHistory:
 
 
 @dataclass(frozen=True)
+class _LayoutAuxiliaryHistoryBundle:
+    eta: np.ndarray
+    source_history: np.ndarray
+    coupled_sector_history: _CoupledAuxiliarySectorHistory
+    metadata: dict[str, object]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "eta", np.asarray(self.eta, dtype=np.float64))
+        object.__setattr__(self, "source_history", np.asarray(self.source_history, dtype=np.float64))
+        object.__setattr__(self, "coupled_sector_history", self.coupled_sector_history)
+        object.__setattr__(self, "metadata", dict(self.metadata))
+
+
+@dataclass(frozen=True)
 class NativeTierBRestartState:
     """Checkpoint-backed restart state for the native Tier-B integrator."""
 
@@ -1345,17 +1359,17 @@ class Ver2TierBIntegrator:
             },
         )
 
-    def build_coupled_auxiliary_sector_history(
+    def build_layout_auxiliary_history_bundle(
         self,
         result: IntegrationResult,
         *,
         covered_mode_label: str | None = None,
-    ) -> _CoupledAuxiliarySectorHistory:
+    ) -> _LayoutAuxiliaryHistoryBundle:
         from bass.hierarchy.ver3_state_contracts import project_runtime_native_state
 
         neutrino_tower = result.neutrino_tower
         if neutrino_tower is None:
-            raise ValueError("coupled auxiliary sector history requires result.neutrino_tower")
+            raise ValueError("layout auxiliary history bundle requires result.neutrino_tower")
         layout = build_hierarchy_layout(self.backend, self.backend.truncation)
         covered = self._layout_covered_mode_label
         if covered is None:
@@ -1374,6 +1388,8 @@ class Ver2TierBIntegrator:
             if self.visibility_source.contract.events is None
             else float(self.visibility_source.contract.events.tau_reion)
         )
+        source_width = int(layout.sector_local_dofs["src"])
+        source_rows = np.zeros((eta_samples.size, source_width), dtype=np.float64)
         size = (int(layout.ell_max) + 1) ** 2
         b_rows = np.zeros((eta_samples.size, size), dtype=np.float64)
         baryon_rows = np.zeros_like(np.asarray(reference_history.baryon_history, dtype=np.float64))
@@ -1426,6 +1442,11 @@ class Ver2TierBIntegrator:
                     polarization_source=polarization_source,
                     reionization_amplitude=reionization_amplitude,
                 )
+            )
+            source_rows[index, :] = _extract_src_local_block(
+                layout=layout,
+                source_template=np.asarray(sample_ops.source_template, dtype=np.float64),
+                covered_mode_label=covered,
             )
             sample_projection = project_runtime_native_state(
                 layout=layout,
@@ -1490,7 +1511,7 @@ class Ver2TierBIntegrator:
                 + np.sum(np.square(cdm_delta / max_abs), dtype=np.float64)
             )
         )
-        return _CoupledAuxiliarySectorHistory(
+        coupled_history = _CoupledAuxiliarySectorHistory(
             eta=eta_samples,
             photon_B_history=b_rows,
             baryon_history=baryon_rows,
@@ -1509,6 +1530,27 @@ class Ver2TierBIntegrator:
                 "coupled_sectors": ("ph_B", "baryon", "cdm"),
             },
         )
+        return _LayoutAuxiliaryHistoryBundle(
+            eta=eta_samples,
+            source_history=source_rows,
+            coupled_sector_history=coupled_history,
+            metadata={
+                "owner": "ver2_native_integrator.layout_auxiliary_history_bundle",
+                "history_sample_count": int(eta_samples.size),
+                "covered_mode_label": covered,
+            },
+        )
+
+    def build_coupled_auxiliary_sector_history(
+        self,
+        result: IntegrationResult,
+        *,
+        covered_mode_label: str | None = None,
+    ) -> _CoupledAuxiliarySectorHistory:
+        return self.build_layout_auxiliary_history_bundle(
+            result,
+            covered_mode_label=covered_mode_label,
+        ).coupled_sector_history
 
     def build_sampled_source_history(
         self,
@@ -1516,48 +1558,11 @@ class Ver2TierBIntegrator:
         *,
         covered_mode_label: str | None = None,
     ) -> tuple[np.ndarray, np.ndarray]:
-        layout = build_hierarchy_layout(self.backend, self.backend.truncation)
-        covered = self._layout_covered_mode_label
-        if covered is None:
-            covered = layout.mode_labels[0] if covered_mode_label is None else str(covered_mode_label)
-        eta_samples = np.asarray(result.eta, dtype=np.float64)
-        photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
-        photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
-        ell2_m0_slot = _ell2_m0_slot_offset(int(result.L_max)) if int(result.L_max) >= 2 else None
-        reionization_amplitude = (
-            0.0
-            if self.visibility_source.contract.events is None
-            else float(self.visibility_source.contract.events.tau_reion)
+        bundle = self.build_layout_auxiliary_history_bundle(
+            result,
+            covered_mode_label=covered_mode_label,
         )
-        rows: list[np.ndarray] = []
-        for index, eta in enumerate(eta_samples):
-            gamma_t = _resolved_gamma_t(
-                visibility_source=self.visibility_source,
-                eta=float(eta),
-                direction=self._direction,
-                config=self.config,
-            )
-            visibility_amplitude = abs(float(photon_T_tower[index, 0]))
-            polarization_source = (
-                0.0 if ell2_m0_slot is None else abs(float(photon_E_tower[index, ell2_m0_slot]))
-            )
-            sample_ops = self.backend.operator_factory(
-                self._live_backend_state_payload(
-                    eta=float(eta),
-                    gamma_t_probe=float(gamma_t),
-                    visibility_amplitude=visibility_amplitude,
-                    polarization_source=polarization_source,
-                    reionization_amplitude=reionization_amplitude,
-                )
-            )
-            rows.append(
-                _extract_src_local_block(
-                    layout=layout,
-                    source_template=np.asarray(sample_ops.source_template, dtype=np.float64),
-                    covered_mode_label=covered,
-                )
-            )
-        return eta_samples, np.vstack(rows)
+        return np.asarray(bundle.eta, dtype=np.float64), np.asarray(bundle.source_history, dtype=np.float64)
 
     def _compute_tca_mask(self, etas: np.ndarray) -> np.ndarray:
         mask = np.zeros(len(etas), dtype=bool)

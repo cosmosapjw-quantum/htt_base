@@ -306,6 +306,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
     )
     assert run.solver_output.metadata["layout_auxiliary_coupling_passes"] == 1
+    assert run.solver_output.metadata["layout_auxiliary_bundle_owner"] == (
+        "ver2_native_integrator.layout_auxiliary_history_bundle"
+    )
     assert run.solver_output.metadata["layout_sector_order"] == [
         "ph_I",
         "ph_E",

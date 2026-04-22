@@ -1937,14 +1937,13 @@ def execute_tier_b_solver(
     )
     layout = build_hierarchy_layout(backend, backend.truncation)
     covered_mode_label = str(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [layout.mode_labels[0]])[0])
-    source_history_eta, source_history_samples = integrator.build_sampled_source_history(
+    auxiliary_bundle = integrator.build_layout_auxiliary_history_bundle(
         result,
         covered_mode_label=covered_mode_label,
     )
-    coupled_auxiliary_history = integrator.build_coupled_auxiliary_sector_history(
-        result,
-        covered_mode_label=covered_mode_label,
-    )
+    source_history_eta = np.asarray(auxiliary_bundle.eta, dtype=np.float64)
+    source_history_samples = np.asarray(auxiliary_bundle.source_history, dtype=np.float64)
+    coupled_auxiliary_history = auxiliary_bundle.coupled_sector_history
     b_history_eta = np.asarray(coupled_auxiliary_history.eta, dtype=np.float64)
     b_history_samples = np.asarray(coupled_auxiliary_history.photon_B_history, dtype=np.float64)
     local_matter_history = coupled_auxiliary_history
@@ -2026,6 +2025,7 @@ def execute_tier_b_solver(
     result.solver_info["layout_auxiliary_coupling_passes"] = int(
         local_matter_history.metadata["coupling_passes"]
     )
+    result.solver_info["layout_auxiliary_bundle_owner"] = str(auxiliary_bundle.metadata["owner"])
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,
