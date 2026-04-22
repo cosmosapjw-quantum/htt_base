@@ -314,43 +314,53 @@ class _TierBPreparedRuntimeContext:
         object.__setattr__(self, "metadata", dict(self.metadata))
 
 
+@dataclass(frozen=True)
+class _TierBRuntimeRequest:
+    manifest: object
+    bianchi_type: str
+    species: "SpeciesBackgroundRegistry"
+    integrator_config: object
+    runtime_controls: RuntimeControlBlock
+    feature_flags: SolverFeatureFlags
+    release: object
+    k_grid_mpc: np.ndarray
+    validation_matrix: "ValidationMatrixSpec | None" = None
+    cutoff_spec: "CutoffCampaignSpec | None" = None
+    restart_checkpoint_path: str | None = None
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "bianchi_type", str(self.bianchi_type))
+        object.__setattr__(self, "k_grid_mpc", np.asarray(self.k_grid_mpc, dtype=np.float64))
+
+
 def _build_tier_b_executable_run(
     *,
-    manifest,
-    bianchi_type: str,
-    species: "SpeciesBackgroundRegistry",
+    request: _TierBRuntimeRequest,
     prepared: _TierBPreparedRuntimeContext,
     result,
-    runtime_controls: RuntimeControlBlock,
-    feature_flags: SolverFeatureFlags,
-    release,
-    k_grid_mpc: np.ndarray,
-    restart_checkpoint_path: str | None,
-    integrator_config,
-    cutoff_spec,
 ) -> TierBExecutableRun:
     _stamp_native_result_solver_info(
         result=result,
-        runtime_controls=runtime_controls,
+        runtime_controls=request.runtime_controls,
         runtime_config=prepared.runtime_config,
         family_realization=prepared.family_realization,
         checkpoint_paths=prepared.checkpoint_paths,
-        restart_checkpoint_path=restart_checkpoint_path,
+        restart_checkpoint_path=request.restart_checkpoint_path,
     )
     post_run = _assemble_tier_b_post_run_bundle(
-        manifest=manifest,
-        bianchi_type=bianchi_type,
-        species=species,
+        manifest=request.manifest,
+        bianchi_type=request.bianchi_type,
+        species=request.species,
         integrator=prepared.integrator,
         result=result,
-        runtime_controls=runtime_controls,
-        feature_flags=feature_flags,
-        release=release,
+        runtime_controls=request.runtime_controls,
+        feature_flags=request.feature_flags,
+        release=request.release,
         k_grid_mpc=prepared.k_grid_mpc,
         backend=prepared.backend,
         reionization_amplitude=prepared.reionization_amplitude,
-        integrator_config=integrator_config,
-        cutoff_spec=cutoff_spec,
+        integrator_config=request.integrator_config,
+        cutoff_spec=request.cutoff_spec,
         seed_k_comoving=prepared.seed_k_comoving,
     )
     return TierBExecutableRun.from_execution_bundle(
@@ -365,38 +375,20 @@ def _build_tier_b_executable_run(
 
 def _execute_prepared_tier_b_runtime(
     *,
-    manifest,
-    bianchi_type: str,
-    species: "SpeciesBackgroundRegistry",
+    request: _TierBRuntimeRequest,
     prepared: _TierBPreparedRuntimeContext,
-    runtime_controls: RuntimeControlBlock,
-    feature_flags: SolverFeatureFlags,
-    release,
-    k_grid_mpc: np.ndarray,
-    restart_checkpoint_path: str | None,
-    integrator_config,
-    cutoff_spec,
 ) -> TierBExecutableRun:
     result = prepared.integrator.run(
-        checkpoint_every_n_steps=runtime_controls.checkpoint.every_n_steps
-        if runtime_controls.checkpoint.enabled
+        checkpoint_every_n_steps=request.runtime_controls.checkpoint.every_n_steps
+        if request.runtime_controls.checkpoint.enabled
         else None,
         checkpoint_callback=prepared.checkpoint_callback,
         restart_state=prepared.restart_state,
     )
     return _build_tier_b_executable_run(
-        manifest=manifest,
-        bianchi_type=bianchi_type,
-        species=species,
+        request=request,
         prepared=prepared,
         result=result,
-        runtime_controls=runtime_controls,
-        feature_flags=feature_flags,
-        release=release,
-        k_grid_mpc=prepared.k_grid_mpc,
-        restart_checkpoint_path=restart_checkpoint_path,
-        integrator_config=integrator_config,
-        cutoff_spec=cutoff_spec,
     )
 
 
@@ -1179,14 +1171,7 @@ def _assemble_tier_b_post_run_bundle(
 
 def _prepare_tier_b_runtime_context(
     *,
-    bianchi_type: str,
-    species: "SpeciesBackgroundRegistry",
-    integrator_config: "IntegratorConfig",
-    runtime_controls: RuntimeControlBlock,
-    feature_flags: SolverFeatureFlags,
-    k_grid_mpc: np.ndarray,
-    validation_matrix: "ValidationMatrixSpec | None",
-    restart_checkpoint_path: str | None,
+    request: _TierBRuntimeRequest,
 ) -> _TierBPreparedRuntimeContext:
     from bass.hierarchy.aux_state import build_integrator_canonical_decision
     from bass.hierarchy.frame_contracts import PhotonDirectionConvention
@@ -1195,30 +1180,30 @@ def _prepare_tier_b_runtime_context(
     from bass.runtime.ver2_checkpoint import load_tier_b_restart_checkpoint
 
     runtime_config, family_realization = _native_runtime_config(
-        bianchi_type,
-        integrator_config,
-        runtime_controls,
+        request.bianchi_type,
+        request.integrator_config,
+        request.runtime_controls,
     )
     direction_convention = str(PhotonDirectionConvention.PROPAGATION.value)
-    k_grid = np.asarray(k_grid_mpc, dtype=np.float64)
+    k_grid = request.k_grid_mpc
     restart_state = None
-    if restart_checkpoint_path is not None:
-        checkpoint = load_tier_b_restart_checkpoint(restart_checkpoint_path)
+    if request.restart_checkpoint_path is not None:
+        checkpoint = load_tier_b_restart_checkpoint(request.restart_checkpoint_path)
         _validate_restart_checkpoint(
             checkpoint=checkpoint,
-            bianchi_type=bianchi_type,
+            bianchi_type=request.bianchi_type,
             runtime_config=runtime_config,
             direction_convention=direction_convention,
         )
         restart_state = checkpoint.to_restart_state()
     background_monitor = _build_background_monitor(
-        bianchi_type=bianchi_type,
+        bianchi_type=request.bianchi_type,
         config=runtime_config,
-        species=species,
-        tilt_background_owner=runtime_controls.tilt_background_owner,
+        species=request.species,
+        tilt_background_owner=request.runtime_controls.tilt_background_owner,
     )
     visibility_source = _build_visibility_source(
-        species=species,
+        species=request.species,
         config=runtime_config,
         background_monitor=background_monitor,
     )
@@ -1231,8 +1216,8 @@ def _prepare_tier_b_runtime_context(
     )
     seed_k_comoving = _representative_seed_k(k_grid)
     backend = build_backend(
-        bianchi_type,
-        truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
+        request.bianchi_type,
+        truncation={"ell_max": int(request.runtime_controls.multipole_cutoff)},
         chart_options={},
     )
     reionization_amplitude = (
@@ -1242,7 +1227,7 @@ def _prepare_tier_b_runtime_context(
     )
     integrator = Ver2TierBIntegrator(
         runtime_config,
-        species,
+        request.species,
         backend=backend,
         background_monitor=background_monitor,
         visibility_source=visibility_source,
@@ -1250,18 +1235,18 @@ def _prepare_tier_b_runtime_context(
         seed_k_comoving=seed_k_comoving,
     )
     runtime_decision = _build_runtime_decision(
-        feature_flags=feature_flags,
+        feature_flags=request.feature_flags,
         canonical_decision=integrator.canonical_decision,
     )
     execution_plan = plan_solver_execution(
-        runtime_controls=runtime_controls,
-        feature_flags=feature_flags,
+        runtime_controls=request.runtime_controls,
+        feature_flags=request.feature_flags,
         runtime_decision=runtime_decision,
         validation_matrix=(
-            validation_matrix
-            if validation_matrix is not None
+            request.validation_matrix
+            if request.validation_matrix is not None
             else _default_validation_matrix(
-                bianchi_type=bianchi_type,
+                bianchi_type=request.bianchi_type,
                 integrator_config=runtime_config,
                 suite="tier_b_smoke",
             )
@@ -1269,10 +1254,10 @@ def _prepare_tier_b_runtime_context(
     )
     checkpoint_callback = None
     checkpoint_paths: list[str] = []
-    if runtime_controls.checkpoint.enabled:
+    if request.runtime_controls.checkpoint.enabled:
         checkpoint_callback, checkpoint_paths = _checkpoint_writer(
-            path_template=runtime_controls.checkpoint.path_template,
-            bianchi_type=bianchi_type,
+            path_template=request.runtime_controls.checkpoint.path_template,
+            bianchi_type=request.bianchi_type,
             runtime_config=runtime_config,
             direction_convention=direction_convention,
             L_max=int(runtime_config.L_max),
@@ -1298,15 +1283,16 @@ def _prepare_tier_b_runtime_context(
 
 def _validate_tier_b_runtime_request(
     *,
-    integrator_config,
-    runtime_controls: RuntimeControlBlock,
-    feature_flags: SolverFeatureFlags,
+    request: _TierBRuntimeRequest,
 ) -> None:
-    if runtime_controls.tier is not SolverTier.TIER_B_PSTF:
+    if request.runtime_controls.tier is not SolverTier.TIER_B_PSTF:
         raise ValueError("execute_tier_b_solver requires Tier B runtime controls")
-    if runtime_controls.multipole_cutoff > integrator_config.L_max:
+    if request.runtime_controls.multipole_cutoff > request.integrator_config.L_max:
         raise ValueError("runtime cutoff must not exceed integrator_config.L_max")
-    if runtime_controls.checkpoint.enabled and feature_flags.checkpoint_restart is FeatureStatus.DISABLED:
+    if (
+        request.runtime_controls.checkpoint.enabled
+        and request.feature_flags.checkpoint_restart is FeatureStatus.DISABLED
+    ):
         raise ValueError("checkpoint policy requires checkpoint_restart feature flag to be enabled")
 
 
@@ -1909,32 +1895,20 @@ def execute_tier_b_solver(
     - the Lowell integrator only as a retained compatibility path outside the
       production route.
     """
-    _validate_tier_b_runtime_request(
-        integrator_config=integrator_config,
-        runtime_controls=runtime_controls,
-        feature_flags=feature_flags,
-    )
-
-    prepared = _prepare_tier_b_runtime_context(
-        bianchi_type=bianchi_type,
-        species=species,
-        integrator_config=integrator_config,
-        runtime_controls=runtime_controls,
-        feature_flags=feature_flags,
-        k_grid_mpc=k_grid_mpc,
-        validation_matrix=validation_matrix,
-        restart_checkpoint_path=restart_checkpoint_path,
-    )
-    return _execute_prepared_tier_b_runtime(
+    request = _TierBRuntimeRequest(
         manifest=manifest,
         bianchi_type=bianchi_type,
         species=species,
-        prepared=prepared,
+        integrator_config=integrator_config,
         runtime_controls=runtime_controls,
         feature_flags=feature_flags,
         release=release,
-        k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
-        restart_checkpoint_path=restart_checkpoint_path,
-        integrator_config=integrator_config,
+        k_grid_mpc=k_grid_mpc,
+        validation_matrix=validation_matrix,
         cutoff_spec=cutoff_spec,
+        restart_checkpoint_path=restart_checkpoint_path,
     )
+    _validate_tier_b_runtime_request(request=request)
+
+    prepared = _prepare_tier_b_runtime_context(request=request)
+    return _execute_prepared_tier_b_runtime(request=request, prepared=prepared)
