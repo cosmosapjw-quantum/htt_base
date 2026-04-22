@@ -292,6 +292,7 @@ class _TierBPreparedRuntimeContext:
     restart_state: object | None
     background_monitor: object
     visibility_source: object
+    k_grid_mpc: np.ndarray
     seed_k_comoving: float
     backend: object
     reionization_amplitude: float
@@ -303,6 +304,7 @@ class _TierBPreparedRuntimeContext:
     metadata: Mapping[str, object]
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, "k_grid_mpc", np.asarray(self.k_grid_mpc, dtype=np.float64))
         object.__setattr__(self, "seed_k_comoving", float(self.seed_k_comoving))
         object.__setattr__(
             self,
@@ -344,7 +346,7 @@ def _build_tier_b_executable_run(
         runtime_controls=runtime_controls,
         feature_flags=feature_flags,
         release=release,
-        k_grid_mpc=k_grid_mpc,
+        k_grid_mpc=prepared.k_grid_mpc,
         backend=prepared.backend,
         reionization_amplitude=prepared.reionization_amplitude,
         integrator_config=integrator_config,
@@ -391,7 +393,7 @@ def _execute_prepared_tier_b_runtime(
         runtime_controls=runtime_controls,
         feature_flags=feature_flags,
         release=release,
-        k_grid_mpc=k_grid_mpc,
+        k_grid_mpc=prepared.k_grid_mpc,
         restart_checkpoint_path=restart_checkpoint_path,
         integrator_config=integrator_config,
         cutoff_spec=cutoff_spec,
@@ -1198,6 +1200,7 @@ def _prepare_tier_b_runtime_context(
         runtime_controls,
     )
     direction_convention = str(PhotonDirectionConvention.PROPAGATION.value)
+    k_grid = np.asarray(k_grid_mpc, dtype=np.float64)
     restart_state = None
     if restart_checkpoint_path is not None:
         checkpoint = load_tier_b_restart_checkpoint(restart_checkpoint_path)
@@ -1226,7 +1229,7 @@ def _prepare_tier_b_runtime_context(
             1.0e-12,
         ),
     )
-    seed_k_comoving = _representative_seed_k(np.asarray(k_grid_mpc, dtype=np.float64))
+    seed_k_comoving = _representative_seed_k(k_grid)
     backend = build_backend(
         bianchi_type,
         truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
@@ -1280,6 +1283,7 @@ def _prepare_tier_b_runtime_context(
         restart_state=restart_state,
         background_monitor=background_monitor,
         visibility_source=visibility_source,
+        k_grid_mpc=k_grid,
         seed_k_comoving=seed_k_comoving,
         backend=backend,
         reionization_amplitude=reionization_amplitude,
@@ -1917,7 +1921,7 @@ def execute_tier_b_solver(
         integrator_config=integrator_config,
         runtime_controls=runtime_controls,
         feature_flags=feature_flags,
-        k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
+        k_grid_mpc=k_grid_mpc,
         validation_matrix=validation_matrix,
         restart_checkpoint_path=restart_checkpoint_path,
     )
