@@ -919,6 +919,9 @@ def build_solver_core_output_from_native_result(
             "layout_b_mode_proxy_source": str(
                 result.solver_info.get("layout_b_mode_proxy_source", "disabled")
             ),
+            "layout_b_mode_history_sample_count": int(
+                result.solver_info.get("layout_b_mode_history_sample_count", 0)
+            ),
             "seed_k_comoving": float(result.solver_info.get("seed_k_comoving", 0.0)),
             "seed_injection_mode": str(result.solver_info.get("seed_injection_mode", "unknown")),
             "seed_factory_owner": str(result.solver_info.get("seed_factory_owner", "legacy_runtime_seed")),
@@ -979,6 +982,12 @@ def build_solver_core_output_from_native_result(
             "canonical_projection_sector_status": {}
             if canonical_projection is None
             else dict(getattr(canonical_projection, "sector_status", {})),
+            "canonical_projection_b_history_available": False
+            if canonical_projection is None
+            else bool(getattr(canonical_projection, "metadata", {}).get("b_history_available", False)),
+            "canonical_projection_b_history_sample_count": 0
+            if canonical_projection is None
+            else int(getattr(canonical_projection, "metadata", {}).get("b_history_sample_count", 0)),
             "canonical_projection_matter_labels": {}
             if canonical_projection is None
             else dict(getattr(canonical_projection, "metadata", {}).get("matter_block_labels", {})),

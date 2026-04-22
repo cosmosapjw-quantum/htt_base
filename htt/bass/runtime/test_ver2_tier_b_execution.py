@@ -269,6 +269,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["layout_source_history_sample_count"] == len(
         run.integration_result.eta
     )
+    assert run.integration_result.solver_info["layout_b_mode_history_sample_count"] == len(
+        run.integration_result.eta
+    )
     assert run.integration_result.solver_info["startup_manifold_applied"] is True
     assert run.solver_output.metadata["propagator_ready"] is True
     assert run.solver_output.metadata["propagator_readiness"] == "exact"
@@ -296,6 +299,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_source_history_sample_count"] == len(
         run.integration_result.eta
     )
+    assert run.solver_output.metadata["layout_b_mode_history_sample_count"] == len(
+        run.integration_result.eta
+    )
     assert run.solver_output.metadata["layout_sector_order"] == [
         "ph_I",
         "ph_E",
@@ -319,6 +325,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["canonical_projection_covered_mode_labels"] == ["m0"]
     assert run.solver_output.metadata["canonical_projection_sector_status"]["src"] == (
         "mode_ops_source_template"
+    )
+    assert run.solver_output.metadata["canonical_projection_b_history_available"] is True
+    assert run.solver_output.metadata["canonical_projection_b_history_sample_count"] == len(
+        run.integration_result.eta
     )
     assert run.solver_output.metadata["canonical_projection_sector_status"]["baryon"] == (
         "runtime_postprocessed_homogeneous_limit"
@@ -381,6 +391,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert cdm_block.shape == (2,)
     assert np.asarray(
         run.trace.canonical_projection.hierarchy_state.matter_block["baryon_history"],
+        dtype=np.float64,
+    ).shape[0] == len(run.integration_result.eta)
+    assert np.asarray(
+        run.trace.canonical_projection.hierarchy_state.photon_polarization_block["B_history"],
         dtype=np.float64,
     ).shape[0] == len(run.integration_result.eta)
     assert run.integration_result.neutrino_tower is not None

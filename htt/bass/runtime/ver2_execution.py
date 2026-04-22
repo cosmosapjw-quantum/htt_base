@@ -908,6 +908,70 @@ def _build_layout_b_mode_proxy(
     return out
 
 
+def _build_sampled_b_mode_history(
+    *,
+    layout,
+    backend,
+    background_monitor: "BackgroundEvolutionResult",
+    runtime_config,
+    result,
+    visibility_source,
+    reionization_amplitude: float,
+    covered_mode_label: str,
+    baryon_history: np.ndarray,
+    cdm_history: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    from bass.hierarchy import project_runtime_native_state
+
+    eta_samples = np.asarray(result.eta, dtype=np.float64)
+    photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
+    photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
+    neutrino_tower = np.asarray(result.neutrino_tower, dtype=np.float64)
+    ell2_m0_slot = sum(2 * ell + 1 for ell in range(2)) + 2 if int(result.L_max) >= 2 else None
+    rows: list[np.ndarray] = []
+    for index, eta in enumerate(eta_samples):
+        gamma_t = _resolved_gamma_t(
+            visibility_source=visibility_source,
+            eta=float(eta),
+            direction=np.asarray(runtime_config.tilt_direction, dtype=np.float64),
+            config=runtime_config,
+        )
+        visibility_amplitude = abs(float(photon_T_tower[index, 0]))
+        polarization_source = (
+            0.0 if ell2_m0_slot is None else abs(float(photon_E_tower[index, ell2_m0_slot]))
+        )
+        sample_ops = backend.operator_factory(
+            _live_backend_state(
+                background_monitor=background_monitor,
+                gamma_t_probe=gamma_t,
+                visibility_amplitude=visibility_amplitude,
+                polarization_source=polarization_source,
+                reionization_amplitude=reionization_amplitude,
+                sigma_tensor=_sigma_tensor_at_eta(background_monitor, float(eta)),
+            )
+        )
+        sample_projection = project_runtime_native_state(
+            layout=layout,
+            layout_manifest=getattr(sample_ops, "layout_metadata", {}),
+            photon_T=np.asarray(photon_T_tower[index], dtype=np.float64),
+            photon_E=np.asarray(photon_E_tower[index], dtype=np.float64),
+            neutrino_tower=np.asarray(neutrino_tower[index], dtype=np.float64),
+            source_template=np.asarray(sample_ops.source_template, dtype=np.float64),
+            baryon_block=np.asarray(baryon_history[index], dtype=np.float64),
+            cdm_block=np.asarray(cdm_history[index], dtype=np.float64),
+            covered_mode_label=covered_mode_label,
+        )
+        rows.append(
+            _build_layout_b_mode_proxy(
+                layout=layout,
+                mode_ops=sample_ops,
+                covered_mode_label=covered_mode_label,
+                state_vector=np.asarray(sample_projection.state_vector, dtype=np.float64),
+            )
+        )
+    return eta_samples, np.asarray(rows, dtype=np.float64)
+
+
 def _build_sampled_source_history(
     *,
     layout,
@@ -2040,6 +2104,10 @@ def execute_tier_b_solver(
     )
     layout = build_hierarchy_layout(backend, backend.truncation)
     covered_mode_label = str(getattr(mode_ops, "layout_metadata", {}).get("mode_labels", [layout.mode_labels[0]])[0])
+    local_matter_history = integrator._postprocess_local_matter_history(  # noqa: SLF001 - runtime-owned postprocess bridge
+        eta=np.asarray(result.eta, dtype=np.float64),
+        photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
+    )
     source_history_eta, source_history_samples = _build_sampled_source_history(
         layout=layout,
         backend=backend,
@@ -2050,9 +2118,17 @@ def execute_tier_b_solver(
         reionization_amplitude=reionization_amplitude,
         covered_mode_label=covered_mode_label,
     )
-    local_matter_history = integrator._postprocess_local_matter_history(  # noqa: SLF001 - runtime-owned postprocess bridge
-        eta=np.asarray(result.eta, dtype=np.float64),
-        photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
+    b_history_eta, b_history_samples = _build_sampled_b_mode_history(
+        layout=layout,
+        backend=backend,
+        background_monitor=background_monitor,
+        runtime_config=runtime_config,
+        result=result,
+        visibility_source=visibility_source,
+        reionization_amplitude=reionization_amplitude,
+        covered_mode_label=covered_mode_label,
+        baryon_history=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
+        cdm_history=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
     )
     canonical_projection = project_runtime_native_state(
         layout=layout,
@@ -2086,6 +2162,8 @@ def execute_tier_b_solver(
         photon_T=np.asarray(result.photon_T_tower[-1], dtype=np.float64),
         photon_E=np.asarray(result.photon_E_tower[-1], dtype=np.float64),
         photon_B=np.asarray(b_mode_proxy, dtype=np.float64),
+        photon_B_history_eta=b_history_eta,
+        photon_B_history_samples=b_history_samples,
         neutrino_tower=np.asarray(result.neutrino_tower[-1], dtype=np.float64),
         source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
         baryon_block=np.asarray(local_matter_history.baryon_history[-1], dtype=np.float64),
@@ -2122,6 +2200,7 @@ def execute_tier_b_solver(
     result.solver_info["layout_b_mode_proxy_consumed"] = bool(np.any(np.abs(b_mode_proxy) > 0.0))
     result.solver_info["layout_b_mode_proxy_norm"] = float(np.linalg.norm(b_mode_proxy))
     result.solver_info["layout_b_mode_proxy_source"] = "mode_ops.A_mix_plus_source_over_diagonal_damping"
+    result.solver_info["layout_b_mode_history_sample_count"] = int(b_history_samples.shape[0])
     gate_registry = _build_gate_registry(
         bianchi_type=bianchi_type,
         runtime_controls=runtime_controls,

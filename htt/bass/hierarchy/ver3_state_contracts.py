@@ -105,6 +105,8 @@ def project_runtime_native_state(
     photon_T: PSTFHierarchyState | np.ndarray,
     photon_E: PolarizationHierarchyState | PSTFHierarchyState | np.ndarray,
     photon_B: PSTFHierarchyState | np.ndarray | None = None,
+    photon_B_history_eta: np.ndarray | None = None,
+    photon_B_history_samples: np.ndarray | None = None,
     neutrino_tower: PSTFHierarchyState | np.ndarray,
     source_template: np.ndarray,
     baryon_block: np.ndarray | None = None,
@@ -144,6 +146,7 @@ def project_runtime_native_state(
             f"source_template shape {source.shape} does not match layout size {layout.size}"
         )
     history_eta = None if source_history_eta is None else np.asarray(source_history_eta, dtype=np.float64)
+    b_history_eta = None if photon_B_history_eta is None else np.asarray(photon_B_history_eta, dtype=np.float64)
 
     vector = np.zeros(layout.size, dtype=np.float64)
     for mu in layout.mode_labels:
@@ -158,6 +161,19 @@ def project_runtime_native_state(
         if photon_B_state is None
         else np.asarray(pack_hierarchy(photon_B_state), dtype=np.float64)
     )
+    b_history = (
+        None if photon_B_history_samples is None else np.asarray(photon_B_history_samples, dtype=np.float64)
+    )
+    if b_history is not None:
+        expected_width = tower_B.shape[0]
+        if b_history.ndim != 2 or b_history.shape[1] != expected_width:
+            raise ValueError(
+                "photon_B_history_samples must have shape (n_samples, harmonic_state_size)"
+            )
+        if b_history_eta is None or b_history_eta.shape != (b_history.shape[0],):
+            raise ValueError(
+                "photon_B_history_eta must be provided with one entry per sampled B row"
+            )
     tower_nu = np.asarray(pack_hierarchy(neutrino_state), dtype=np.float64)
     for ell in range(L + 1):
         for m in range(-ell, ell + 1):
@@ -232,6 +248,8 @@ def project_runtime_native_state(
         photon_polarization_block={
             "E": tower_E,
             "B": tower_B,
+            "eta": b_history_eta,
+            "B_history": b_history,
         },
         neutrino_block=tower_nu,
         source_history_block={
@@ -285,6 +303,8 @@ def project_runtime_native_state(
             "source_block_owner": str(sector_status["src"]),
             "source_history_available": bool(history_samples is not None),
             "source_history_sample_count": 0 if history_samples is None else int(history_samples.shape[0]),
+            "b_history_available": bool(b_history is not None),
+            "b_history_sample_count": 0 if b_history is None else int(b_history.shape[0]),
             "matter_history_available": bool(baryon_history is not None and cdm_history is not None),
             "matter_history_sample_count": 0 if baryon_history is None else int(baryon_history.shape[0]),
             "resolved_sector_order": tuple(resolved_sector_order),

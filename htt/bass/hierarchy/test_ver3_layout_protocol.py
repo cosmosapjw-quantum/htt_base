@@ -245,15 +245,22 @@ def test_project_runtime_native_state_can_embed_postprocessed_b_mode_proxy() -> 
     size = (layout.ell_max + 1) ** 2
     b_proxy = np.zeros(size, dtype=np.float64)
     b_proxy[7] = 0.25
+    b_history = np.vstack([np.zeros(size, dtype=np.float64), b_proxy])
     projection = project_runtime_native_state(
         layout=layout,
         layout_manifest=ops.layout_metadata,
         photon_T=np.arange(size, dtype=np.float64),
         photon_E=np.arange(size, dtype=np.float64) + 100.0,
         photon_B=b_proxy,
+        photon_B_history_eta=np.array([0.1, 0.2], dtype=np.float64),
+        photon_B_history_samples=b_history,
         neutrino_tower=np.arange(size, dtype=np.float64) + 200.0,
         source_template=np.asarray(ops.source_template, dtype=np.float64),
     )
     assert projection.sector_status["ph_B"] == "layout_operator_postprocessed_proxy"
     assert projection.metadata["resolved_sector_order"] == ("ph_I", "ph_E", "ph_B", "nu_I")
+    assert projection.metadata["b_history_available"] is True
+    assert projection.metadata["b_history_sample_count"] == 2
     assert projection.state_vector[flatten(layout, "m0", "ph_B", 2, 1)] == pytest.approx(0.25)
+    assert np.asarray(projection.hierarchy_state.photon_polarization_block["eta"]).shape == (2,)
+    assert np.asarray(projection.hierarchy_state.photon_polarization_block["B_history"]).shape == (2, size)
