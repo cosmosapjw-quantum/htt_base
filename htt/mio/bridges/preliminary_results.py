@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from common.contracts import TscAdequacyOverlay
+from tsc.adapters.mio_certificate import MioTscAdequacyFields, overlay_to_mio_fields
 from workspace.contracts.mio_certificate import MioCertificate
 from workspace.contracts.preliminary_results import (
     MIO_CERTIFICATE_ARTIFACT_ID,
@@ -29,6 +30,64 @@ class PreliminaryMioHandoff:
     caveats: tuple[str, ...]
     summary_lines: tuple[str, ...]
     artifact_ids: tuple[str, ...]
+    tsc_required_channels: tuple[str, ...]
+    tsc_publication_blockers: tuple[str, ...]
+    tsc_claim_ceiling: dict[str, str]
+    tsc_trace_source_adequacy: str
+    tsc_consistency_issues: tuple[str, ...]
+
+
+def _certificate_tsc_publication_blockers(
+    certificate: MioCertificate,
+) -> tuple[str, ...]:
+    prefix = "tsc_publication_blocker="
+    return tuple(
+        caveat[len(prefix) :]
+        for caveat in certificate.domain_caveats
+        if caveat.startswith(prefix)
+    )
+
+
+def _certificate_tsc_trace_source_adequacy(
+    certificate: MioCertificate,
+) -> str | None:
+    prefix = "tsc_trace_source_adequacy="
+    for caveat in certificate.domain_caveats:
+        if caveat.startswith(prefix):
+            return caveat[len(prefix) :]
+    return None
+
+
+def _certificate_tsc_claim_ceiling(
+    certificate: MioCertificate,
+) -> dict[str, str]:
+    prefix = "tsc_claim_ceiling:"
+    ceilings: dict[str, str] = {}
+    for caveat in certificate.channel_caveats:
+        if not caveat.startswith(prefix):
+            continue
+        payload = caveat[len(prefix) :]
+        channel, sep, ceiling = payload.partition("=")
+        if not sep or not channel or not ceiling:
+            raise ValueError(f"invalid tsc claim ceiling caveat {caveat!r}")
+        ceilings[channel] = ceiling
+    return ceilings
+
+
+def _tsc_certificate_consistency_issues(
+    certificate: MioCertificate,
+    fields: MioTscAdequacyFields,
+) -> tuple[str, ...]:
+    issues: list[str] = []
+    if _certificate_tsc_publication_blockers(certificate) != fields.publication_blockers:
+        issues.append("tsc_publication_blockers_mismatch")
+    if _certificate_tsc_claim_ceiling(certificate) != fields.channel_claim_ceiling:
+        issues.append("tsc_claim_ceiling_mismatch")
+    if _certificate_tsc_trace_source_adequacy(certificate) != fields.trace_source_adequacy:
+        issues.append("tsc_trace_source_adequacy_mismatch")
+    if bool(certificate.adequacy_indicators.get("tsc_overlay_diagnostic_only")) != fields.diagnostic_only:
+        issues.append("tsc_diagnostic_only_flag_mismatch")
+    return tuple(issues)
 
 
 def _require_pack_artifact(
@@ -55,11 +114,12 @@ def _validate_preliminary_mio_handoff(
     *,
     certificate: MioCertificate,
     overlay: TscAdequacyOverlay,
-) -> None:
+) -> MioTscAdequacyFields:
     if certificate.manifest is None:
         raise ValueError("preliminary MIO handoff requires a manifest-backed certificate")
     certificate_id = certificate.manifest.artifact_id
     overlay_id = overlay.manifest.artifact_id
+    fields = overlay_to_mio_fields(overlay)
     artifact_ids = pack_d.artifact_ids()
     if certificate_id not in artifact_ids:
         raise ValueError(
@@ -76,6 +136,7 @@ def _validate_preliminary_mio_handoff(
             "exported MIO certificate overlay ref does not match the exported TSC overlay "
             f"({certificate.tsc_overlay_ref!r} != {overlay_id!r})"
         )
+    return fields
 
 
 def build_preliminary_mio_handoff(
@@ -101,7 +162,7 @@ def build_preliminary_mio_handoff(
         artifact_id_or_path=overlay_ref.artifact_id,
         generated_root=generated_root,
     )
-    _validate_preliminary_mio_handoff(
+    fields = _validate_preliminary_mio_handoff(
         pack_d,
         certificate=certificate,
         overlay=overlay,
@@ -116,6 +177,14 @@ def build_preliminary_mio_handoff(
         caveats=pack_d.caveats,
         summary_lines=pack_d.summary_lines,
         artifact_ids=pack_d.artifact_ids(),
+        tsc_required_channels=fields.required_channels,
+        tsc_publication_blockers=fields.publication_blockers,
+        tsc_claim_ceiling=fields.channel_claim_ceiling,
+        tsc_trace_source_adequacy=fields.trace_source_adequacy,
+        tsc_consistency_issues=_tsc_certificate_consistency_issues(
+            certificate,
+            fields,
+        ),
     )
 
 
