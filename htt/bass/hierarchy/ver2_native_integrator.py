@@ -250,6 +250,26 @@ def _resolved_gamma_t(
     return float(config.gamma_T_override(float(eta))) * boost
 
 
+def _electron_velocity_real_sph_from_baryon_row(row: np.ndarray) -> np.ndarray:
+    baryon_row = np.asarray(row, dtype=np.float64)
+    if baryon_row.shape[0] < 3:
+        raise ValueError("baryon local matter row must contain v_e in slot 2")
+    return np.array([0.0, float(baryon_row[2]), 0.0], dtype=np.float64)
+
+
+def _interp_electron_velocity_real_sph(
+    *,
+    eta: float,
+    eta_grid: np.ndarray,
+    baryon_history: np.ndarray,
+) -> np.ndarray:
+    history = np.asarray(baryon_history, dtype=np.float64)
+    if history.ndim != 2 or history.shape[1] < 3:
+        raise ValueError("baryon_history must have shape (n_samples, >=3)")
+    v_e = _interp_scalar(np.asarray(eta_grid, dtype=np.float64), history[:, 2], float(eta))
+    return np.array([0.0, float(v_e), 0.0], dtype=np.float64)
+
+
 def _tilted_electron(
     *,
     species: SpeciesBackgroundRegistry,
@@ -1221,6 +1241,7 @@ class Ver2TierBIntegrator:
         snapshot: _EtaRuntimeSnapshot,
         photon_T: PSTFHierarchyState,
         photon_E: PolarizationHierarchyState,
+        v_b_real_sph: np.ndarray | None = None,
         b_state: PSTFHierarchyState | None = None,
     ) -> _ProjectedCollisionAux:
         return _ProjectedCollisionAux(
@@ -1230,7 +1251,11 @@ class Ver2TierBIntegrator:
             Gamma_T=float(snapshot.gamma_t),
             direction=self._direction,
             tilted_electron=snapshot.tilted_electron,
-            v_b_real_sph=self._zero_v_b_real_sph,
+            v_b_real_sph=(
+                self._zero_v_b_real_sph
+                if v_b_real_sph is None
+                else np.asarray(v_b_real_sph, dtype=np.float64)
+            ),
             b_state=self._zero_b_state if b_state is None else b_state,
         )
 
@@ -1825,6 +1850,7 @@ class Ver2TierBIntegrator:
         eta: np.ndarray,
         photon_T_tower: np.ndarray,
         photon_E_tower: np.ndarray,
+        local_matter_history: _LocalMatterHistory,
     ) -> tuple[np.ndarray, dict[str, object]]:
         eta_arr = np.asarray(eta, dtype=np.float64)
         photon_T_arr = np.asarray(photon_T_tower, dtype=np.float64)
@@ -1853,6 +1879,11 @@ class Ver2TierBIntegrator:
                 E=_unpack_hierarchy_view(np.asarray(photon_E_row, dtype=np.float64), self.config.L_max)
             )
             b_state = _unpack_hierarchy_view(np.asarray(b_row, dtype=np.float64), self.config.L_max)
+            v_b_real_sph = _interp_electron_velocity_real_sph(
+                eta=float(eta_value),
+                eta_grid=np.asarray(local_matter_history.eta, dtype=np.float64),
+                baryon_history=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
+            )
             if snapshot.gamma_t <= 0.0:
                 collision = _ZERO_COLLISION
                 collision_aux = None
@@ -1862,6 +1893,7 @@ class Ver2TierBIntegrator:
                     snapshot=snapshot,
                     photon_T=photon_T_state,
                     photon_E=photon_E_state,
+                    v_b_real_sph=v_b_real_sph,
                     b_state=b_state,
                 )
             return hierarchy_rhs_photon_from_state(
@@ -1912,10 +1944,12 @@ class Ver2TierBIntegrator:
         metadata = result.solver_info.get("live_b_mode_history_metadata")
         if cached is not None and isinstance(metadata, Mapping):
             return np.asarray(cached, dtype=np.float64), dict(metadata)
+        local_matter_history = self._ensure_live_local_matter_history(result)
         b_rows, b_metadata = self._integrate_live_b_mode_history(
             eta=np.asarray(result.eta, dtype=np.float64),
             photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
             photon_E_tower=np.asarray(result.photon_E_tower, dtype=np.float64),
+            local_matter_history=local_matter_history,
         )
         result.photon_B_tower = np.asarray(b_rows, dtype=np.float64)
         result.solver_info["live_b_mode_history_metadata"] = dict(b_metadata)
@@ -2585,6 +2619,7 @@ class Ver2TierBIntegrator:
         gamma_t: float,
     ) -> ExactThomsonSource:
         b_history, _ = self._ensure_live_b_mode_history(result)
+        local_matter_history = self._ensure_live_local_matter_history(result)
         temperature_state = unpack_hierarchy(result.photon_T_tower[-1], result.L_max)
         polarization_state = PolarizationHierarchyState(
             E=unpack_hierarchy(result.photon_E_tower[-1], result.L_max)
@@ -2593,7 +2628,9 @@ class Ver2TierBIntegrator:
             ElectronFrameThomsonContext(),
             temperature_state=temperature_state,
             polarization_state=polarization_state,
-            v_b_real_sph=np.zeros(3, dtype=np.float64),
+            v_b_real_sph=_electron_velocity_real_sph_from_baryon_row(
+                np.asarray(local_matter_history.baryon_history[-1], dtype=np.float64)
+            ),
             Gamma_T=float(gamma_t),
             direction=np.asarray(self.config.tilt_direction, dtype=np.float64),
             tilted_electron=self._tilted_electron_at(float(result.eta[-1])),
