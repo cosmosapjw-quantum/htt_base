@@ -2123,10 +2123,8 @@ class Ver2TierBIntegrator:
         baryon_local: np.ndarray,
     ) -> ReducedJointAffineOperator:
         covered = str(self._layout_covered_mode_label)
-        return build_reduced_joint_affine_operator(
-            self._layout,
+        return self.backend.build_reduced_joint_affine_operator(
             self._residual_harmonic_background_state(snapshot=snapshot),
-            self.backend,
             residual_mode_labels=self._residual_mode_labels,
             photon_T_by_mode_label={covered: np.asarray(pack_hierarchy(photon_T), dtype=np.float64)},
             photon_E_by_mode_label={covered: np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64)},

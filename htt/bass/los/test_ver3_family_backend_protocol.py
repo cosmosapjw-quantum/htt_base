@@ -6,6 +6,7 @@ import pytest
 from bass.background import get_family_spec
 from bass.hierarchy import (
     build_hierarchy_layout,
+    build_reduced_joint_affine_operator,
     evaluate_reduced_harmonic_rhs,
     evaluate_reduced_local_rhs,
 )
@@ -135,6 +136,7 @@ def test_operator_factory_maps_named_family_to_expected_kernel() -> None:
     assert ops.layout_metadata["branch"] == "orthogonal"
     assert ops.metadata["reduced_local_evaluator_available"] is True
     assert ops.metadata["reduced_harmonic_evaluator_available"] is True
+    assert ops.metadata["reduced_joint_evaluator_available"] is True
     assert ops.metadata["family_conditioned_kernel_status"] == "frozen_v5_family_conditioned"
     assert ops.layout_metadata["family_conditioned_kernel_status"] == "frozen_v5_family_conditioned"
     assert ops.metadata["family_conditioned_kernel_law"] == "ix_compact_wigner_frozen_v5"
@@ -340,6 +342,82 @@ def test_backend_reduced_harmonic_rhs_matches_layout_evaluator() -> None:
     for sector_direct, sector_backend in zip(reduced_direct, reduced_backend, strict=True):
         for mu in layout.mode_labels:
             np.testing.assert_allclose(sector_backend[str(mu)], sector_direct[str(mu)])
+
+
+def test_backend_reduced_joint_affine_operator_matches_layout_builder() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    layout = build_hierarchy_layout(backend, backend.truncation)
+    width = (layout.ell_max + 1) ** 2
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 2.5},
+        "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
+        "source_tables": {
+            "visibility_amplitude": 1.25,
+            "polarization_source": 0.4,
+            "reionization_amplitude": 0.2,
+        },
+    }
+    photon_t_by_mode_label = {
+        "m0": np.linspace(0.1, 0.9, width, dtype=np.float64),
+        "m+2": np.linspace(-0.3, 0.5, width, dtype=np.float64),
+        "m-2": np.linspace(0.2, -0.4, width, dtype=np.float64),
+    }
+    photon_e_by_mode_label = {
+        "m0": np.linspace(0.6, -0.2, width, dtype=np.float64),
+        "m+2": np.linspace(0.3, 0.9, width, dtype=np.float64),
+        "m-2": np.linspace(-0.5, 0.1, width, dtype=np.float64),
+    }
+    photon_b_by_mode_label = {
+        "m0": np.linspace(-0.4, 0.4, width, dtype=np.float64),
+        "m+2": np.linspace(0.7, -0.1, width, dtype=np.float64),
+        "m-2": np.linspace(0.05, 0.25, dtype=np.float64),
+    }
+    neutrino_by_mode_label = {
+        "m0": np.linspace(0.15, 0.75, width, dtype=np.float64),
+        "m+2": np.linspace(-0.2, 0.6, width, dtype=np.float64),
+        "m-2": np.linspace(0.4, -0.1, dtype=np.float64),
+    }
+    baryon_by_mode_label = {
+        "m0": np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float64),
+        "m+2": np.array([0.5, 0.6, 0.7, 0.8], dtype=np.float64),
+        "m-2": np.array([-0.3, -0.2, -0.1, 0.0], dtype=np.float64),
+    }
+    source_by_mode_label = {
+        "m0": np.array([0.2, -0.1, 0.0], dtype=np.float64),
+        "m+2": np.array([0.3, 0.4, -0.2], dtype=np.float64),
+        "m-2": np.array([-0.25, 0.15, 0.05], dtype=np.float64),
+    }
+    direct = build_reduced_joint_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=("m+2", "m-2"),
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+        source_by_mode_label=source_by_mode_label,
+    )
+    owned = backend.build_reduced_joint_affine_operator(
+        bg,
+        residual_mode_labels=("m+2", "m-2"),
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+        source_by_mode_label=source_by_mode_label,
+    )
+    assert owned.mode_labels == direct.mode_labels
+    assert owned.local_dof == direct.local_dof
+    assert owned.harmonic_dof == direct.harmonic_dof
+    np.testing.assert_allclose(owned.matrix.toarray(), direct.matrix.toarray())
+    np.testing.assert_allclose(owned.bias, direct.bias)
 
 
 def test_family_conditioned_kernel_law_varies_with_family_branch() -> None:
