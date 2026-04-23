@@ -840,6 +840,62 @@ def test_reduced_harmonic_rhs_couples_nonmonopole_mode_labels() -> None:
     assert abs(float(reduced_t["m0"][slot_ell2_m0])) > 0.0
 
 
+def test_reduced_harmonic_rhs_uses_anchor_star_topology_for_residual_labels() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    width = (layout.ell_max + 1) ** 2
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {"Gamma_T": 0.0},
+        "sigma_tensor": np.zeros((3, 3), dtype=np.float64),
+        "source_tables": {},
+    }
+    empty = np.zeros(width, dtype=np.float64)
+    slot_ell2_m0 = sum(2 * ell + 1 for ell in range(2)) + 2
+    photon_t_by_mode_label = {
+        "m0": empty.copy(),
+        "m+2": empty.copy(),
+        "m-2": empty.copy(),
+    }
+    photon_e_by_mode_label = {
+        "m0": empty.copy(),
+        "m+2": empty.copy(),
+        "m-2": empty.copy(),
+    }
+    photon_b_by_mode_label = {
+        "m0": empty.copy(),
+        "m+2": empty.copy(),
+        "m-2": empty.copy(),
+    }
+    neutrino_by_mode_label = {
+        "m0": empty.copy(),
+        "m+2": empty.copy(),
+        "m-2": empty.copy(),
+    }
+    photon_t_by_mode_label["m-2"][slot_ell2_m0] = 1.0
+    baryon_by_mode_label = {
+        "m0": np.zeros(4, dtype=np.float64),
+        "m+2": np.zeros(4, dtype=np.float64),
+        "m-2": np.zeros(4, dtype=np.float64),
+    }
+    reduced_t, _, _, _ = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend,
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+    )
+    assert abs(float(reduced_t["m0"][slot_ell2_m0])) > 0.0
+    assert float(reduced_t["m+2"][slot_ell2_m0]) == pytest.approx(0.0)
+
+
 def test_mode_label_weights_resolve_standard_m_signatures() -> None:
     backend = build_backend(
         get_family_spec("I"),

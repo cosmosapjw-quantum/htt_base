@@ -110,8 +110,8 @@ class _ReducedHarmonicOperatorStructure:
     self_pattern_cols: np.ndarray
     cross_pattern_rows: np.ndarray
     cross_pattern_cols: np.ndarray
-    next_residual_index: tuple[int, ...]
-    next_external_label: tuple[str | None, ...]
+    cross_residual_indices: tuple[tuple[int, ...], ...]
+    cross_external_labels: tuple[tuple[str, ...], ...]
     monopole_slot: int
     dipole_slot: int | None
     quadrupole_slot: int | None
@@ -463,6 +463,20 @@ def _harmonic_cross_mode_coeff(
     raise KeyError(f"unsupported harmonic sector {sector!r}")
 
 
+def _mode_label_coupling_targets(
+    mode_labels: tuple[str, ...],
+    source_label: str,
+) -> tuple[str, ...]:
+    labels = tuple(str(mu) for mu in mode_labels)
+    if len(labels) <= 1:
+        return ()
+    anchor = str(labels[0])
+    source = str(source_label)
+    if source == anchor:
+        return tuple(str(mu) for mu in labels[1:])
+    return (anchor,)
+
+
 @lru_cache(maxsize=None)
 def _reduced_harmonic_structure(
     ell_max: int,
@@ -511,14 +525,20 @@ def _reduced_harmonic_structure(
 
     label_to_residual = {str(mu): idx for idx, mu in enumerate(residual_labels)}
     mode_labels_list = tuple(str(mu) for mu in mode_labels)
-    next_residual_index: list[int] = []
-    next_external_label: list[str | None] = []
+    cross_residual_indices: list[tuple[int, ...]] = []
+    cross_external_labels: list[tuple[str, ...]] = []
     for mu in residual_labels:
         mu_key = str(mu)
-        mu_index = mode_labels_list.index(mu_key)
-        next_mu = mode_labels_list[(mu_index + 1) % len(mode_labels_list)]
-        next_residual_index.append(label_to_residual.get(next_mu, -1))
-        next_external_label.append(None if next_mu in label_to_residual else next_mu)
+        residual_targets: list[int] = []
+        external_targets: list[str] = []
+        for target in _mode_label_coupling_targets(mode_labels_list, mu_key):
+            target_key = str(target)
+            if target_key in label_to_residual:
+                residual_targets.append(int(label_to_residual[target_key]))
+            else:
+                external_targets.append(target_key)
+        cross_residual_indices.append(tuple(residual_targets))
+        cross_external_labels.append(tuple(external_targets))
 
     t_off = 0
     e_off = width
@@ -582,8 +602,8 @@ def _reduced_harmonic_structure(
         self_pattern_cols=np.asarray(self_pattern_cols, dtype=np.int64),
         cross_pattern_rows=np.asarray(cross_pattern_rows, dtype=np.int64),
         cross_pattern_cols=np.asarray(cross_pattern_cols, dtype=np.int64),
-        next_residual_index=tuple(next_residual_index),
-        next_external_label=tuple(next_external_label),
+        cross_residual_indices=tuple(cross_residual_indices),
+        cross_external_labels=tuple(cross_external_labels),
         monopole_slot=slot_lookup[(0, 0)],
         dipole_slot=slot_lookup.get((1, 0)),
         quadrupole_slot=slot_lookup.get((2, 0)),
@@ -886,62 +906,65 @@ def assemble_mixing_block(
                         rows.extend((e_idx, b_idx, b_idx, e_idx))
                         cols.extend((b_idx, e_idx, i_idx, b_idx))
                         data.extend((eb, -eb, 0.25 * eb, -0.25 * eb))
-                if len(layout.mode_labels) > 1:
-                    next_mu = layout.mode_labels[(mu_index + 1) % len(layout.mode_labels)]
-                    next_i_idx = flatten(layout, next_mu, "ph_I", ell, m)
-                    next_e_idx = flatten(layout, next_mu, "ph_E", ell, m)
-                    next_b_idx = flatten(layout, next_mu, "ph_B", ell, m)
-                    next_nu_idx = flatten(layout, next_mu, "nu_I", ell, m)
-                    rows.extend((i_idx, e_idx, b_idx, nu_idx))
-                    cols.extend((next_i_idx, next_e_idx, next_b_idx, next_nu_idx))
-                    data.extend(
-                        (
-                            _harmonic_cross_mode_coeff(
-                                mu_weight=mu_weight,
-                                mix_scale=mix_scale,
-                                cross_mode_scale=cross_mode_scale,
-                                twist_scale=twist_scale,
-                                sector="ph_I",
-                                ell=ell,
-                                mu_count=mu_count,
-                            ),
-                            _harmonic_cross_mode_coeff(
-                                mu_weight=mu_weight,
-                                mix_scale=mix_scale,
-                                cross_mode_scale=cross_mode_scale,
-                                twist_scale=twist_scale,
-                                sector="ph_E",
-                                ell=ell,
-                                mu_count=mu_count,
-                            ),
-                            _harmonic_cross_mode_coeff(
-                                mu_weight=mu_weight,
-                                mix_scale=mix_scale,
-                                cross_mode_scale=cross_mode_scale,
-                                twist_scale=twist_scale,
-                                sector="ph_B",
-                                ell=ell,
-                                mu_count=mu_count,
-                            ),
-                            _harmonic_cross_mode_coeff(
-                                mu_weight=mu_weight,
-                                mix_scale=mix_scale,
-                                cross_mode_scale=cross_mode_scale,
-                                twist_scale=twist_scale,
-                                sector="nu_I",
-                                ell=ell,
-                                mu_count=mu_count,
-                            ),
-                        )
-                    )
-        if len(layout.mode_labels) > 1:
-            next_mu = layout.mode_labels[(mu_index + 1) % len(layout.mode_labels)]
-            for sector in ("ph_I", "ph_E", "ph_B", "nu_I"):
-                src_idx = flatten(layout, mu, sector, 0, 0)
-                dst_idx = flatten(layout, next_mu, sector, 0, 0)
-                rows.append(src_idx)
-                cols.append(dst_idx)
-                data.append(mu_weight * 0.5 * mix_scale * cross_mode_scale / len(layout.mode_labels))
+                target_labels = _mode_label_coupling_targets(tuple(str(x) for x in layout.mode_labels), str(mu))
+                if target_labels:
+                    target_norm = float(len(target_labels))
+                    coeff_i = _harmonic_cross_mode_coeff(
+                        mu_weight=mu_weight,
+                        mix_scale=mix_scale,
+                        cross_mode_scale=cross_mode_scale,
+                        twist_scale=twist_scale,
+                        sector="ph_I",
+                        ell=ell,
+                        mu_count=mu_count,
+                    ) / target_norm
+                    coeff_e = _harmonic_cross_mode_coeff(
+                        mu_weight=mu_weight,
+                        mix_scale=mix_scale,
+                        cross_mode_scale=cross_mode_scale,
+                        twist_scale=twist_scale,
+                        sector="ph_E",
+                        ell=ell,
+                        mu_count=mu_count,
+                    ) / target_norm
+                    coeff_b = _harmonic_cross_mode_coeff(
+                        mu_weight=mu_weight,
+                        mix_scale=mix_scale,
+                        cross_mode_scale=cross_mode_scale,
+                        twist_scale=twist_scale,
+                        sector="ph_B",
+                        ell=ell,
+                        mu_count=mu_count,
+                    ) / target_norm
+                    coeff_nu = _harmonic_cross_mode_coeff(
+                        mu_weight=mu_weight,
+                        mix_scale=mix_scale,
+                        cross_mode_scale=cross_mode_scale,
+                        twist_scale=twist_scale,
+                        sector="nu_I",
+                        ell=ell,
+                        mu_count=mu_count,
+                    ) / target_norm
+                    for target_mu in target_labels:
+                        next_i_idx = flatten(layout, target_mu, "ph_I", ell, m)
+                        next_e_idx = flatten(layout, target_mu, "ph_E", ell, m)
+                        next_b_idx = flatten(layout, target_mu, "ph_B", ell, m)
+                        next_nu_idx = flatten(layout, target_mu, "nu_I", ell, m)
+                        rows.extend((i_idx, e_idx, b_idx, nu_idx))
+                        cols.extend((next_i_idx, next_e_idx, next_b_idx, next_nu_idx))
+                        data.extend((coeff_i, coeff_e, coeff_b, coeff_nu))
+        target_labels = _mode_label_coupling_targets(tuple(str(x) for x in layout.mode_labels), str(mu))
+        if target_labels:
+            monopole_coeff = mu_weight * 0.5 * mix_scale * cross_mode_scale / (
+                len(layout.mode_labels) * float(len(target_labels))
+            )
+            for target_mu in target_labels:
+                for sector in ("ph_I", "ph_E", "ph_B", "nu_I"):
+                    src_idx = flatten(layout, mu, sector, 0, 0)
+                    dst_idx = flatten(layout, target_mu, sector, 0, 0)
+                    rows.append(src_idx)
+                    cols.append(dst_idx)
+                    data.append(monopole_coeff)
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -1212,7 +1235,6 @@ def evaluate_reduced_harmonic_rhs(
             plus_scale=mode_plus_scale,
             minus_scale=mode_minus_scale,
         )
-        next_mu = str(layout.mode_labels[(mu_index + 1) % len(layout.mode_labels)])
         t_state = np.asarray(photon_T_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
         e_state = np.asarray(photon_E_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
         b_state = np.asarray(photon_B_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
@@ -1222,19 +1244,21 @@ def evaluate_reduced_harmonic_rhs(
             src_state = np.asarray(default_source_blocks[mu_key], dtype=np.float64)
         else:
             src_state = np.asarray(source_by_mode_label.get(mu_key, zeros_s), dtype=np.float64)
-        next_t = np.asarray(photon_T_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
-        next_e = np.asarray(photon_E_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
-        next_b = np.asarray(photon_B_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
-        next_nu = np.asarray(neutrino_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
+        target_labels = _mode_label_coupling_targets(tuple(str(x) for x in layout.mode_labels), mu_key)
+        target_towers: tuple[tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray], ...] = tuple(
+            (
+                np.asarray(photon_T_by_mode_label.get(target_mu, zeros_h), dtype=np.float64),
+                np.asarray(photon_E_by_mode_label.get(target_mu, zeros_h), dtype=np.float64),
+                np.asarray(photon_B_by_mode_label.get(target_mu, zeros_h), dtype=np.float64),
+                np.asarray(neutrino_by_mode_label.get(target_mu, zeros_h), dtype=np.float64),
+            )
+            for target_mu in target_labels
+        )
         for name, arr in (
             ("photon_T", t_state),
             ("photon_E", e_state),
             ("photon_B", b_state),
             ("neutrino", nu_state),
-            ("next_photon_T", next_t),
-            ("next_photon_E", next_e),
-            ("next_photon_B", next_b),
-            ("next_neutrino", next_nu),
         ):
             if arr.shape != (width,):
                 raise ValueError(f"{name} state for {mu_key!r} must have shape ({width},)")
@@ -1288,8 +1312,9 @@ def evaluate_reduced_harmonic_rhs(
                         eb = mu_weight * twist_scale * max(abs(m), 1) / (ell + 1)
                         e_drive += 0.75 * eb * b_state[slot]
                         b_drive += (-eb * e_state[slot]) + (0.25 * eb * t_state[slot])
-                    if len(layout.mode_labels) > 1:
-                        t_drive += _harmonic_cross_mode_coeff(
+                    if target_towers:
+                        target_norm = float(len(target_towers))
+                        coeff_i = _harmonic_cross_mode_coeff(
                             mu_weight=mu_weight,
                             mix_scale=mix_scale,
                             cross_mode_scale=cross_mode_scale,
@@ -1297,8 +1322,8 @@ def evaluate_reduced_harmonic_rhs(
                             sector="ph_I",
                             ell=ell,
                             mu_count=mu_count,
-                        ) * next_t[slot]
-                        e_drive += _harmonic_cross_mode_coeff(
+                        ) / target_norm
+                        coeff_e = _harmonic_cross_mode_coeff(
                             mu_weight=mu_weight,
                             mix_scale=mix_scale,
                             cross_mode_scale=cross_mode_scale,
@@ -1306,8 +1331,8 @@ def evaluate_reduced_harmonic_rhs(
                             sector="ph_E",
                             ell=ell,
                             mu_count=mu_count,
-                        ) * next_e[slot]
-                        b_drive += _harmonic_cross_mode_coeff(
+                        ) / target_norm
+                        coeff_b = _harmonic_cross_mode_coeff(
                             mu_weight=mu_weight,
                             mix_scale=mix_scale,
                             cross_mode_scale=cross_mode_scale,
@@ -1315,8 +1340,8 @@ def evaluate_reduced_harmonic_rhs(
                             sector="ph_B",
                             ell=ell,
                             mu_count=mu_count,
-                        ) * next_b[slot]
-                        nu_drive += _harmonic_cross_mode_coeff(
+                        ) / target_norm
+                        coeff_nu = _harmonic_cross_mode_coeff(
                             mu_weight=mu_weight,
                             mix_scale=mix_scale,
                             cross_mode_scale=cross_mode_scale,
@@ -1324,13 +1349,20 @@ def evaluate_reduced_harmonic_rhs(
                             sector="nu_I",
                             ell=ell,
                             mu_count=mu_count,
-                        ) * next_nu[slot]
+                        ) / target_norm
+                        for target_t, target_e, target_b, target_nu in target_towers:
+                            t_drive += coeff_i * target_t[slot]
+                            e_drive += coeff_e * target_e[slot]
+                            b_drive += coeff_b * target_b[slot]
+                            nu_drive += coeff_nu * target_nu[slot]
 
-                if ell == 0 and cross_coeff != 0.0:
-                    t_drive += cross_coeff * next_t[slot]
-                    e_drive += cross_coeff * next_e[slot]
-                    b_drive += cross_coeff * next_b[slot]
-                    nu_drive += cross_coeff * next_nu[slot]
+                if ell == 0 and cross_coeff != 0.0 and target_towers:
+                    monopole_coeff = cross_coeff / float(len(target_towers))
+                    for target_t, target_e, target_b, target_nu in target_towers:
+                        t_drive += monopole_coeff * target_t[slot]
+                        e_drive += monopole_coeff * target_e[slot]
+                        b_drive += monopole_coeff * target_b[slot]
+                        nu_drive += monopole_coeff * target_nu[slot]
 
                 if ell <= 1:
                     photon_coll = mu_weight * branch_scale * collision_scale * gamma_t
@@ -1545,16 +1577,19 @@ def build_reduced_harmonic_affine_operator(
     row_chunks: list[np.ndarray] = []
     col_chunks: list[np.ndarray] = []
     data_chunks: list[np.ndarray] = []
-    for residual_index, next_residual in enumerate(structure.next_residual_index):
+    for residual_index, residual_targets in enumerate(structure.cross_residual_indices):
         row_start = residual_index * block_size
         row_chunks.append(structure.self_pattern_rows + row_start)
         col_chunks.append(structure.self_pattern_cols + row_start)
         data_chunks.append(self_data)
-        if next_residual >= 0 and cross_data.size:
-            col_start = next_residual * block_size
-            row_chunks.append(structure.cross_pattern_rows + row_start)
-            col_chunks.append(structure.cross_pattern_cols + col_start)
-            data_chunks.append(cross_data)
+        if residual_targets and cross_data.size:
+            target_norm = float(len(residual_targets))
+            scaled_cross = cross_data / target_norm
+            for target_residual in residual_targets:
+                col_start = int(target_residual) * block_size
+                row_chunks.append(structure.cross_pattern_rows + row_start)
+                col_chunks.append(structure.cross_pattern_cols + col_start)
+                data_chunks.append(scaled_cross)
 
     bias = np.zeros(structure.n_unknown, dtype=np.float64)
     for residual_index, mu in enumerate(residual_labels):
@@ -1569,16 +1604,18 @@ def build_reduced_harmonic_affine_operator(
             raise ValueError(f"source state for {mu!r} must have shape ({src_width},)")
 
         row_start = residual_index * block_size
-        next_label = structure.next_external_label[residual_index]
-        if next_label is not None and mu_count > 1:
-            next_t = np.asarray(photon_T_by_mode_label.get(next_label, zeros_h), dtype=np.float64)
-            next_e = np.asarray(photon_E_by_mode_label.get(next_label, zeros_h), dtype=np.float64)
-            next_b = np.asarray(photon_B_by_mode_label.get(next_label, zeros_h), dtype=np.float64)
-            next_nu = np.asarray(neutrino_by_mode_label.get(next_label, zeros_h), dtype=np.float64)
-            bias[row_start + t_off : row_start + t_off + width] += cross_t * next_t
-            bias[row_start + e_off : row_start + e_off + width] += cross_e * next_e
-            bias[row_start + b_off : row_start + b_off + width] += cross_b * next_b
-            bias[row_start + nu_off : row_start + nu_off + width] += cross_nu * next_nu
+        external_targets = structure.cross_external_labels[residual_index]
+        if external_targets and mu_count > 1:
+            target_norm = float(len(external_targets))
+            for target_label in external_targets:
+                next_t = np.asarray(photon_T_by_mode_label.get(target_label, zeros_h), dtype=np.float64)
+                next_e = np.asarray(photon_E_by_mode_label.get(target_label, zeros_h), dtype=np.float64)
+                next_b = np.asarray(photon_B_by_mode_label.get(target_label, zeros_h), dtype=np.float64)
+                next_nu = np.asarray(neutrino_by_mode_label.get(target_label, zeros_h), dtype=np.float64)
+                bias[row_start + t_off : row_start + t_off + width] += (cross_t / target_norm) * next_t
+                bias[row_start + e_off : row_start + e_off + width] += (cross_e / target_norm) * next_e
+                bias[row_start + b_off : row_start + b_off + width] += (cross_b / target_norm) * next_b
+                bias[row_start + nu_off : row_start + nu_off + width] += (cross_nu / target_norm) * next_nu
 
         bias[row_start + t_off + structure.monopole_slot] += inv_t[structure.monopole_slot] * source_scale * visibility_amp
         if structure.dipole_slot is not None:
