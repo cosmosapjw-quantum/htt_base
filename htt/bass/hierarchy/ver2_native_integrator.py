@@ -2086,6 +2086,7 @@ class Ver2TierBIntegrator:
         photon_B: PSTFHierarchyState,
         neutrino_tower: PSTFHierarchyState,
         baryon_local: np.ndarray,
+        source_local: np.ndarray,
     ) -> ReducedJointAffineOperator:
         covered = str(self._layout_covered_mode_label)
         return self.backend.build_reduced_joint_affine_operator(
@@ -2096,6 +2097,7 @@ class Ver2TierBIntegrator:
             photon_B_by_mode_label={covered: np.asarray(pack_hierarchy(photon_B), dtype=np.float64)},
             neutrino_by_mode_label={covered: np.asarray(pack_hierarchy(neutrino_tower), dtype=np.float64)},
             baryon_by_mode_label={covered: np.asarray(baryon_local, dtype=np.float64)},
+            source_by_mode_label={covered: np.asarray(source_local, dtype=np.float64)},
         )
 
     def _build_covered_source_affine_operator(
@@ -2144,6 +2146,7 @@ class Ver2TierBIntegrator:
         photon_B: PSTFHierarchyState,
         neutrino_tower: PSTFHierarchyState,
         baryon_local: np.ndarray,
+        source_local: np.ndarray,
         residual_local: np.ndarray,
         residual_harmonic: np.ndarray,
         residual_source: np.ndarray,
@@ -2155,6 +2158,7 @@ class Ver2TierBIntegrator:
             photon_B=photon_B,
             neutrino_tower=neutrino_tower,
             baryon_local=baryon_local,
+            source_local=source_local,
         )
         rhs = np.asarray(
             affine.matrix
@@ -2241,6 +2245,7 @@ class Ver2TierBIntegrator:
                 photon_B=photon_B_left,
                 neutrino_tower=neutrino_left,
                 baryon_local=baryon_left,
+                source_local=source_left,
             )
         state_left = np.concatenate(
             [
@@ -2262,6 +2267,7 @@ class Ver2TierBIntegrator:
             photon_B=photon_B_right,
             neutrino_tower=neutrino_right,
             baryon_local=baryon_right,
+            source_local=source_right,
         )
         rhs_stage = np.asarray(affine_right.matrix @ stage_state + affine_right.bias, dtype=np.float64)
         k2 = np.asarray(
@@ -2453,6 +2459,7 @@ class Ver2TierBIntegrator:
                 photon_B=photon_B,
                 neutrino_tower=neutrino_tower,
                 baryon_local=baryon_local,
+                source_local=source_local,
                 residual_local=residual_local,
                 residual_harmonic=residual_harmonic,
                 residual_source=residual_source,
