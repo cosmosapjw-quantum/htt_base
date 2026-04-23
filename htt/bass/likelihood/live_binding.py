@@ -145,6 +145,27 @@ def _interop_summary(solver_output: SolverCoreOutput) -> dict[str, Any]:
         "canonical_projection_matter_history_mode_labels": list(
             solver_output.metadata.get("canonical_projection_matter_history_mode_labels", [])
         ),
+        "live_mode_label_harmonic_history_owner": solver_output.metadata.get(
+            "live_mode_label_harmonic_history_owner"
+        ),
+        "live_mode_label_harmonic_history_integration_scheme": solver_output.metadata.get(
+            "live_mode_label_harmonic_history_integration_scheme"
+        ),
+        "live_mode_label_harmonic_history_sample_count": int(
+            solver_output.metadata.get("live_mode_label_harmonic_history_sample_count", 0)
+        ),
+        "live_mode_label_harmonic_history_mode_labels": list(
+            solver_output.metadata.get("live_mode_label_harmonic_history_mode_labels", [])
+        ),
+        "live_mode_label_harmonic_history_residual_mode_labels": list(
+            solver_output.metadata.get("live_mode_label_harmonic_history_residual_mode_labels", [])
+        ),
+        "live_mode_label_harmonic_history_nonzero_mode_labels": list(
+            solver_output.metadata.get("live_mode_label_harmonic_history_nonzero_mode_labels", [])
+        ),
+        "live_mode_label_harmonic_history_sector_norms": dict(
+            solver_output.metadata.get("live_mode_label_harmonic_history_sector_norms", {})
+        ),
         "layout_state_history_sample_count": int(
             solver_output.metadata.get("layout_state_history_sample_count", 0)
         ),

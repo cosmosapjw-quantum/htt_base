@@ -339,6 +339,23 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_source_history_sample_count"] == len(
         run.integration_result.eta
     )
+    assert run.solver_output.metadata["live_mode_label_harmonic_history_owner"] == (
+        "ver2_native_integrator.reduced_mode_label_harmonics"
+    )
+    assert run.solver_output.metadata["live_mode_label_harmonic_history_integration_scheme"] == (
+        "predictor_corrector_trapezoidal"
+    )
+    assert set(run.solver_output.metadata["live_mode_label_harmonic_history_mode_labels"]) == {
+        "m0",
+        "m+2",
+        "m-2",
+    }
+    assert set(
+        run.solver_output.metadata["live_mode_label_harmonic_history_nonzero_mode_labels"]
+    ) == {"m0", "m+2", "m-2"}
+    assert run.solver_output.metadata["live_mode_label_harmonic_history_sample_count"] == len(
+        run.integration_result.eta
+    )
     assert set(run.solver_output.metadata["layout_source_mode_labels"]) == {
         "m0",
         "m+2",

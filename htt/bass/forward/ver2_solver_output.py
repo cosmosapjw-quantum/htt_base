@@ -55,6 +55,45 @@ def _branch_name(*, tilt_enabled: bool) -> str:
     return "tilted" if bool(tilt_enabled) else "orthogonal"
 
 
+def _mode_label_history_payload_summary(
+    result: IntegrationResult,
+) -> dict[str, Any]:
+    metadata = result.solver_info.get("live_mode_label_harmonic_history_metadata", {})
+    sector_maps = {
+        "ph_I": getattr(result, "photon_T_history_by_mode_label", None),
+        "ph_E": getattr(result, "photon_E_history_by_mode_label", None),
+        "ph_B": getattr(result, "photon_B_history_by_mode_label", None),
+        "nu_I": getattr(result, "neutrino_history_by_mode_label", None),
+    }
+    mode_labels: list[str] = []
+    sector_norms: dict[str, dict[str, float]] = {}
+    for sector, mapping in sector_maps.items():
+        if not isinstance(mapping, Mapping):
+            continue
+        sector_norms[sector] = {}
+        for mu, values in mapping.items():
+            mu_key = str(mu)
+            if mu_key not in mode_labels:
+                mode_labels.append(mu_key)
+            sector_norms[sector][mu_key] = float(np.linalg.norm(np.asarray(values, dtype=np.float64)))
+    nonzero_mode_labels = [
+        mu
+        for mu in mode_labels
+        if any(sector_norms.get(sector, {}).get(mu, 0.0) > 0.0 for sector in sector_norms)
+    ]
+    return {
+        "live_mode_label_harmonic_history_owner": str(metadata.get("owner", "unavailable")),
+        "live_mode_label_harmonic_history_integration_scheme": metadata.get("integration_scheme"),
+        "live_mode_label_harmonic_history_sample_count": int(metadata.get("history_sample_count", 0)),
+        "live_mode_label_harmonic_history_mode_labels": mode_labels,
+        "live_mode_label_harmonic_history_residual_mode_labels": list(
+            metadata.get("residual_mode_labels", [])
+        ),
+        "live_mode_label_harmonic_history_sector_norms": sector_norms,
+        "live_mode_label_harmonic_history_nonzero_mode_labels": nonzero_mode_labels,
+    }
+
+
 def _base_interop_metadata(
     *,
     bianchi_type: str,
@@ -1141,6 +1180,7 @@ def build_solver_core_output_from_native_result(
             else list(
                 getattr(canonical_projection, "metadata", {}).get("matter_history_mode_labels", ())
             ),
+            **_mode_label_history_payload_summary(result),
             **_neutrino_runtime_metadata(species),
             **source_builder_metadata,
         },
