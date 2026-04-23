@@ -313,9 +313,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_b_mode_payload_available"] is False
     assert run.solver_output.metadata["layout_b_mode_payload_status"] == "zero_filled_not_evolved"
     assert run.solver_output.metadata["layout_b_mode_proxy_source"] == (
-        "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
+        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution"
     )
-    assert run.solver_output.metadata["layout_auxiliary_coupling_passes"] == 1
+    assert run.solver_output.metadata["layout_auxiliary_coupling_passes"] == 2
     assert run.solver_output.metadata["layout_auxiliary_bundle_owner"] == (
         "ver2_native_integrator.layout_auxiliary_history_bundle"
     )
@@ -408,7 +408,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     }
     assert run.solver_output.metadata["layout_local_matter_blocks_consumed"] is True
     assert run.solver_output.metadata["layout_local_matter_owner"] == (
-        "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
+        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution"
     )
     assert set(run.solver_output.metadata["layout_local_matter_mode_labels"]) == {
         "m0",
@@ -485,7 +485,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_mode_labels"]
     ) == {"m0", "m+2", "m-2"}
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_local_matter_owner"] == (
-        "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
+        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution"
     )
     assert set(
         registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_local_matter_mode_labels"]
@@ -495,7 +495,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "zero_filled_not_evolved"
     )
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_b_mode_proxy_source"] == (
-        "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
+        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution"
     )
     assert set(run.trace.canonical_projection.covered_mode_labels) == {"m0", "m+2", "m-2"}
     assert run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
@@ -520,7 +520,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         dtype=np.float64,
     ).shape[0] == len(run.integration_result.eta)
     assert run.trace.canonical_projection.hierarchy_state.matter_block["owner"] == (
-        "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution"
+        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution"
     )
     assert run.trace.canonical_projection.hierarchy_state.matter_block["reference_owner"] == (
         "runtime_postprocessed_homogeneous_local_matter"

@@ -539,6 +539,26 @@ class _EtaRuntimeSnapshot:
 
 
 @dataclass(frozen=True)
+class _AuxiliaryOperatorSample:
+    mode_ops: object
+    source_template: np.ndarray
+    mass_diag: np.ndarray
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "source_template", np.asarray(self.source_template, dtype=np.float64))
+        object.__setattr__(self, "mass_diag", np.asarray(self.mass_diag, dtype=np.float64))
+
+    def drive(self, state_vector: np.ndarray) -> np.ndarray:
+        vector = np.asarray(state_vector, dtype=np.float64)
+        return (
+            np.asarray(self.mode_ops.A_fs @ vector, dtype=np.float64)
+            + np.asarray(self.mode_ops.A_mix @ vector, dtype=np.float64)
+            + np.asarray(self.mode_ops.A_coll @ vector, dtype=np.float64)
+            + np.asarray(self.source_template, dtype=np.float64)
+        )
+
+
+@dataclass(frozen=True)
 class _LayoutProjectionIndexCache:
     harmonic_photon_T: np.ndarray
     harmonic_photon_E: np.ndarray
@@ -1550,6 +1570,42 @@ class Ver2TierBIntegrator:
             "state_tag": "ver2_native_integrator_auxiliary_sector_history",
         }
 
+    def _build_auxiliary_operator_sample(
+        self,
+        *,
+        eta: float,
+        photon_T_row: np.ndarray,
+        photon_E_row: np.ndarray,
+        reionization_amplitude: float,
+    ) -> _AuxiliaryOperatorSample:
+        gamma_t = _resolved_gamma_t(
+            visibility_source=self.visibility_source,
+            eta=float(eta),
+            direction=self._direction,
+            config=self.config,
+        )
+        visibility_amplitude = abs(float(np.asarray(photon_T_row, dtype=np.float64)[0]))
+        ell2_m0_slot = _ell2_m0_slot_offset(int(self.config.L_max)) if int(self.config.L_max) >= 2 else None
+        polarization_source = (
+            0.0
+            if ell2_m0_slot is None
+            else abs(float(np.asarray(photon_E_row, dtype=np.float64)[ell2_m0_slot]))
+        )
+        mode_ops = self.backend.operator_factory(
+            self._live_backend_state_payload(
+                eta=float(eta),
+                gamma_t_probe=float(gamma_t),
+                visibility_amplitude=visibility_amplitude,
+                polarization_source=polarization_source,
+                reionization_amplitude=reionization_amplitude,
+            )
+        )
+        return _AuxiliaryOperatorSample(
+            mode_ops=mode_ops,
+            source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
+            mass_diag=np.asarray(mode_ops.mass_matrix.diagonal(), dtype=np.float64),
+        )
+
     def _theta_1_photon_m0(self, photon_T_row: np.ndarray) -> float:
         arr = np.asarray(photon_T_row, dtype=np.float64)
         if self.config.L_max < 1:
@@ -1702,7 +1758,6 @@ class Ver2TierBIntegrator:
         photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
         photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
         neutrino_arr = np.asarray(neutrino_tower, dtype=np.float64)
-        ell2_m0_slot = _ell2_m0_slot_offset(int(result.L_max)) if int(result.L_max) >= 2 else None
         reionization_amplitude = (
             0.0
             if self.visibility_source.contract.events is None
@@ -1753,76 +1808,111 @@ class Ver2TierBIntegrator:
                 dtype=np.float64,
             )
         state_vector = np.zeros(layout.size, dtype=np.float64)
+        predictor_state_vector = np.zeros(layout.size, dtype=np.float64)
 
+        def _fill_layout_state_vector(
+            out: np.ndarray,
+            *,
+            sample: _AuxiliaryOperatorSample,
+            photon_T_row: np.ndarray,
+            photon_E_row: np.ndarray,
+            neutrino_row: np.ndarray,
+            photon_B_row: np.ndarray,
+            baryon_by_mode_label: dict[str, np.ndarray],
+            cdm_by_mode_label: dict[str, np.ndarray],
+        ) -> None:
+            out.fill(0.0)
+            out[projection_index_cache.src_all] = sample.source_template[projection_index_cache.src_all]
+            out[projection_index_cache.harmonic_photon_T] = np.asarray(photon_T_row, dtype=np.float64)
+            out[projection_index_cache.harmonic_photon_E] = np.asarray(photon_E_row, dtype=np.float64)
+            out[projection_index_cache.harmonic_photon_B] = np.asarray(photon_B_row, dtype=np.float64)
+            out[projection_index_cache.harmonic_neutrino] = np.asarray(neutrino_row, dtype=np.float64)
+            for mu, indices in projection_index_cache.baryon_by_mode_label.items():
+                out[indices] = np.asarray(baryon_by_mode_label[str(mu)], dtype=np.float64)
+            for mu, indices in projection_index_cache.cdm_by_mode_label.items():
+                out[indices] = np.asarray(cdm_by_mode_label[str(mu)], dtype=np.float64)
+
+        current_sample = self._build_auxiliary_operator_sample(
+            eta=float(eta_samples[0]),
+            photon_T_row=photon_T_tower[0],
+            photon_E_row=photon_E_tower[0],
+            reionization_amplitude=reionization_amplitude,
+        )
         for index, eta in enumerate(eta_samples):
-            gamma_t = _resolved_gamma_t(
-                visibility_source=self.visibility_source,
-                eta=float(eta),
-                direction=self._direction,
-                config=self.config,
-            )
-            visibility_amplitude = abs(float(photon_T_tower[index, 0]))
-            polarization_source = (
-                0.0 if ell2_m0_slot is None else abs(float(photon_E_tower[index, ell2_m0_slot]))
-            )
-            sample_ops = self.backend.operator_factory(
-                self._live_backend_state_payload(
-                    eta=float(eta),
-                    gamma_t_probe=float(gamma_t),
-                    visibility_amplitude=visibility_amplitude,
-                    polarization_source=polarization_source,
-                    reionization_amplitude=reionization_amplitude,
-                )
-            )
-            source_template = np.asarray(sample_ops.source_template, dtype=np.float64)
+            source_template = np.asarray(current_sample.source_template, dtype=np.float64)
             source_rows[index, :] = source_template[projection_index_cache.src_by_mode_label[covered]]
             for mu, indices in projection_index_cache.src_by_mode_label.items():
                 source_rows_by_mode_label[str(mu)][index, :] = source_template[indices]
-            state_vector.fill(0.0)
-            state_vector[projection_index_cache.src_all] = source_template[projection_index_cache.src_all]
-            state_vector[projection_index_cache.harmonic_photon_T] = np.asarray(
-                photon_T_tower[index],
-                dtype=np.float64,
+            _fill_layout_state_vector(
+                state_vector,
+                sample=current_sample,
+                photon_T_row=photon_T_tower[index],
+                photon_E_row=photon_E_tower[index],
+                neutrino_row=neutrino_arr[index],
+                photon_B_row=b_prev,
+                baryon_by_mode_label=baryon_prev_by_mode_label,
+                cdm_by_mode_label=cdm_prev_by_mode_label,
             )
-            state_vector[projection_index_cache.harmonic_photon_E] = np.asarray(
-                photon_E_tower[index],
-                dtype=np.float64,
-            )
-            state_vector[projection_index_cache.harmonic_photon_B] = np.asarray(b_prev, dtype=np.float64)
-            state_vector[projection_index_cache.harmonic_neutrino] = np.asarray(
-                neutrino_arr[index],
-                dtype=np.float64,
-            )
-            for mu, indices in projection_index_cache.baryon_by_mode_label.items():
-                state_vector[indices] = np.asarray(baryon_prev_by_mode_label[str(mu)], dtype=np.float64)
-            for mu, indices in projection_index_cache.cdm_by_mode_label.items():
-                state_vector[indices] = np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
             layout_state_rows[index, :] = state_vector
             if index == eta_samples.size - 1:
                 break
             dt = float(eta_samples[index + 1] - eta_samples[index])
             if dt <= 0.0:
                 raise ValueError("eta grid must be strictly increasing for coupled auxiliary history sampling")
-            drive = (
-                np.asarray(sample_ops.A_fs @ state_vector, dtype=np.float64)
-                + np.asarray(sample_ops.A_mix @ state_vector, dtype=np.float64)
-                + np.asarray(sample_ops.A_coll @ state_vector, dtype=np.float64)
-                + source_template
-            )
-            mass_diag = np.asarray(sample_ops.mass_matrix.diagonal(), dtype=np.float64)
+            drive = current_sample.drive(state_vector)
+            mass_diag = np.asarray(current_sample.mass_diag, dtype=np.float64)
             b_indices = projection_index_cache.harmonic_photon_B
             b_inv_mass = 1.0 / np.maximum(np.abs(mass_diag[b_indices]), 1.0e-30)
-            b_next = np.asarray(b_prev, dtype=np.float64) + dt * b_inv_mass * drive[b_indices]
+            b_predict = np.asarray(b_prev, dtype=np.float64) + dt * b_inv_mass * drive[b_indices]
+            baryon_predict_by_mode_label = {}
+            cdm_predict_by_mode_label = {}
+            for mu, indices in projection_index_cache.baryon_by_mode_label.items():
+                current = np.asarray(baryon_prev_by_mode_label[str(mu)], dtype=np.float64)
+                inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
+                baryon_predict_by_mode_label[str(mu)] = current + dt * inv_mass * drive[indices]
+            for mu, indices in projection_index_cache.cdm_by_mode_label.items():
+                current = np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
+                inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
+                cdm_predict_by_mode_label[str(mu)] = current + dt * inv_mass * drive[indices]
+
+            next_sample = self._build_auxiliary_operator_sample(
+                eta=float(eta_samples[index + 1]),
+                photon_T_row=photon_T_tower[index + 1],
+                photon_E_row=photon_E_tower[index + 1],
+                reionization_amplitude=reionization_amplitude,
+            )
+            _fill_layout_state_vector(
+                predictor_state_vector,
+                sample=next_sample,
+                photon_T_row=photon_T_tower[index + 1],
+                photon_E_row=photon_E_tower[index + 1],
+                neutrino_row=neutrino_arr[index + 1],
+                photon_B_row=b_predict,
+                baryon_by_mode_label=baryon_predict_by_mode_label,
+                cdm_by_mode_label=cdm_predict_by_mode_label,
+            )
+            drive_next = next_sample.drive(predictor_state_vector)
+            mass_diag_next = np.asarray(next_sample.mass_diag, dtype=np.float64)
+            b_inv_mass_next = 1.0 / np.maximum(np.abs(mass_diag_next[b_indices]), 1.0e-30)
+            b_next = np.asarray(b_prev, dtype=np.float64) + 0.5 * dt * (
+                b_inv_mass * drive[b_indices] + b_inv_mass_next * drive_next[b_indices]
+            )
             baryon_next_by_mode_label = {}
             cdm_next_by_mode_label = {}
             for mu, indices in projection_index_cache.baryon_by_mode_label.items():
                 current = np.asarray(baryon_prev_by_mode_label[str(mu)], dtype=np.float64)
                 inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
-                baryon_next_by_mode_label[str(mu)] = current + dt * inv_mass * drive[indices]
+                inv_mass_next = 1.0 / np.maximum(np.abs(mass_diag_next[indices]), 1.0e-30)
+                baryon_next_by_mode_label[str(mu)] = current + 0.5 * dt * (
+                    inv_mass * drive[indices] + inv_mass_next * drive_next[indices]
+                )
             for mu, indices in projection_index_cache.cdm_by_mode_label.items():
                 current = np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
                 inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
-                cdm_next_by_mode_label[str(mu)] = current + dt * inv_mass * drive[indices]
+                inv_mass_next = 1.0 / np.maximum(np.abs(mass_diag_next[indices]), 1.0e-30)
+                cdm_next_by_mode_label[str(mu)] = current + 0.5 * dt * (
+                    inv_mass * drive[indices] + inv_mass_next * drive_next[indices]
+                )
             b_prev = b_next
             baryon_prev_by_mode_label = baryon_next_by_mode_label
             cdm_prev_by_mode_label = cdm_next_by_mode_label
@@ -1840,6 +1930,7 @@ class Ver2TierBIntegrator:
                     cdm_prev_by_mode_label[str(mu)],
                     dtype=np.float64,
                 )
+            current_sample = next_sample
 
         reference_baryon = np.asarray(reference_history.baryon_history, dtype=np.float64)
         reference_cdm = np.asarray(reference_history.cdm_history, dtype=np.float64)
@@ -1864,14 +1955,15 @@ class Ver2TierBIntegrator:
             baryon_labels=tuple(reference_history.baryon_labels),
             cdm_labels=tuple(reference_history.cdm_labels),
             metadata={
-                "owner": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
+                "owner": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution",
                 "reference_owner": str(reference_history.metadata.get("owner", "unknown")),
                 "history_sample_count": int(eta_samples.size),
                 "reference_sample_count": int(reference_baryon.shape[0]),
                 "reference_delta_norm": float(scaled_delta_norm),
                 "reference_baryon_history": reference_baryon,
                 "reference_cdm_history": reference_cdm,
-                "coupling_passes": 1,
+                "coupling_passes": 2,
+                "integration_scheme": "predictor_corrector_trapezoidal",
                 "coupled_sectors": ("ph_B", "baryon", "cdm"),
             },
         )
@@ -2064,7 +2156,7 @@ class Ver2TierBIntegrator:
             ),
             "layout_b_mode_payload_available": bool(b_mode_payload_available),
             "layout_b_mode_payload_status": b_mode_sector_status,
-            "layout_b_mode_proxy_source": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
+            "layout_b_mode_proxy_source": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution",
             "layout_b_mode_mode_labels": list(
                 canonical_projection.hierarchy_state.photon_polarization_block.get(
                     "mode_label_blocks",
@@ -2156,7 +2248,7 @@ class Ver2TierBIntegrator:
                     "layout_b_mode_payload_status": b_mode_sector_status,
                     "layout_b_mode_proxy_consumed": bool(np.any(np.abs(b_mode_proxy) > 0.0)),
                     "layout_b_mode_proxy_norm": float(np.linalg.norm(b_mode_proxy)),
-                    "layout_b_mode_proxy_source": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
+                    "layout_b_mode_proxy_source": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution",
                     "layout_b_mode_history_sample_count": int(b_history.shape[0]),
                     "layout_b_mode_mode_labels": list(
                         canonical_projection.hierarchy_state.photon_polarization_block.get(
