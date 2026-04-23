@@ -172,6 +172,8 @@ def _operator_scales(
         "local_drag_scale": float(family_law["local_drag_scale"]),
         "cross_mode_scale": float(family_law["cross_mode_scale"]),
         "collision_scale": float(family_law["collision_scale"]),
+        "mode_plus_scale": float(family_law["mode_plus_scale"]),
+        "mode_minus_scale": float(family_law["mode_minus_scale"]),
         "family_conditioned_kernel_status": str(family_law["status"]),
         "family_conditioned_kernel_law": str(family_law["law_name"]),
     }
@@ -197,6 +199,8 @@ def _family_conditioned_kernel_law(
         "local_drag_scale": 1.0,
         "cross_mode_scale": 1.0,
         "collision_scale": 1.0,
+        "mode_plus_scale": 1.0,
+        "mode_minus_scale": 1.0,
     }
     if family == "II":
         law.update(
@@ -210,6 +214,8 @@ def _family_conditioned_kernel_law(
             local_drag_scale=0.96,
             cross_mode_scale=0.90,
             collision_scale=1.03,
+            mode_plus_scale=1.02,
+            mode_minus_scale=0.99,
         )
     elif family == "III":
         law.update(
@@ -223,6 +229,8 @@ def _family_conditioned_kernel_law(
             local_drag_scale=0.94,
             cross_mode_scale=1.02,
             collision_scale=1.05,
+            mode_plus_scale=1.04,
+            mode_minus_scale=0.98,
         )
     elif family == "IV":
         law.update(
@@ -236,6 +244,8 @@ def _family_conditioned_kernel_law(
             local_drag_scale=0.92,
             cross_mode_scale=1.06,
             collision_scale=1.04,
+            mode_plus_scale=1.05,
+            mode_minus_scale=0.97,
         )
     elif family == "V":
         law.update(
@@ -249,6 +259,8 @@ def _family_conditioned_kernel_law(
             local_drag_scale=0.98,
             cross_mode_scale=1.01,
             collision_scale=1.02,
+            mode_plus_scale=1.03,
+            mode_minus_scale=0.99,
         )
     elif family == "VI_0":
         law.update(
@@ -262,6 +274,8 @@ def _family_conditioned_kernel_law(
             local_drag_scale=0.95,
             cross_mode_scale=1.08,
             collision_scale=1.04,
+            mode_plus_scale=1.06,
+            mode_minus_scale=0.96,
         )
     elif family == "VI_h":
         root = np.sqrt(max(-h_parameter, 0.0))
@@ -278,6 +292,8 @@ def _family_conditioned_kernel_law(
             local_drag_scale=0.94 + 0.04 * q_mag,
             cross_mode_scale=1.04 + 0.08 * q_mag,
             collision_scale=1.02 + 0.04 * q_mag,
+            mode_plus_scale=1.02 + 0.10 * q_mag,
+            mode_minus_scale=max(0.88, 0.99 - 0.06 * q_mag),
         )
     elif family == "VII_0":
         law.update(
@@ -291,6 +307,8 @@ def _family_conditioned_kernel_law(
             local_drag_scale=1.00,
             cross_mode_scale=1.05,
             collision_scale=1.03,
+            mode_plus_scale=1.05,
+            mode_minus_scale=0.97,
         )
     elif family == "VII_h":
         p = np.sqrt(max(h_parameter, 0.0))
@@ -306,6 +324,8 @@ def _family_conditioned_kernel_law(
             local_drag_scale=0.99 + 0.02 * p_eff,
             cross_mode_scale=1.03 + 0.04 * p_eff,
             collision_scale=1.02 + 0.03 * p_eff,
+            mode_plus_scale=1.03 + 0.05 * p_eff,
+            mode_minus_scale=max(0.90, 0.99 - 0.03 * p_eff),
         )
     elif family == "VIII":
         s_ref = 0.5
@@ -323,6 +343,8 @@ def _family_conditioned_kernel_law(
             local_drag_scale=0.98 + 0.01 * measure_ratio,
             cross_mode_scale=1.04 + 0.02 * measure_ratio,
             collision_scale=1.03 + 0.01 * measure_ratio,
+            mode_plus_scale=1.01 + 0.08 * (measure_ratio - 1.0),
+            mode_minus_scale=max(0.88, 0.99 - 0.03 * (measure_ratio - 1.0)),
         )
     elif family == "IX":
         compact_boost = 1.0 + 0.1 * min(twist, 1.0)
@@ -337,6 +359,8 @@ def _family_conditioned_kernel_law(
             local_drag_scale=1.00,
             cross_mode_scale=1.06,
             collision_scale=1.05,
+            mode_plus_scale=1.02 + 0.03 * compact_boost,
+            mode_minus_scale=max(0.90, 0.99 - 0.02 * compact_boost),
         )
     return law
 
@@ -398,18 +422,20 @@ def _mode_label_weight(
     mu_index: int,
     mu_count: int,
     branch_scale: float,
+    plus_scale: float = 1.0,
+    minus_scale: float = 1.0,
 ) -> float:
     label = str(mu)
     if label == "m0":
         return 1.0
     if label == "m+2":
-        return 1.0 + 0.12 * branch_scale
+        return (1.0 + 0.12 * branch_scale) * plus_scale
     if label == "m-2":
-        return 1.0 - 0.08 * branch_scale
+        return (1.0 - 0.08 * branch_scale) * minus_scale
     if label.endswith("+"):
-        return 1.0 + 0.12 * branch_scale
+        return (1.0 + 0.12 * branch_scale) * plus_scale
     if label.endswith("-"):
-        return 1.0 - 0.08 * branch_scale
+        return (1.0 - 0.08 * branch_scale) * minus_scale
     return 1.0 + 0.03 * (mu_index / max(mu_count, 1))
 
 
@@ -707,6 +733,8 @@ def assemble_mass_matrix(
     twist_scale = float(scales["twist_scale"])
     source_scale = float(scales["source_scale"])
     mass_scale = float(scales["mass_scale"])
+    mode_plus_scale = float(scales["mode_plus_scale"])
+    mode_minus_scale = float(scales["mode_minus_scale"])
     diag = np.ones(layout.size, dtype=np.float64)
     mu_count = max(len(layout.mode_labels), 1)
     for mu_index, mu in enumerate(layout.mode_labels):
@@ -715,6 +743,8 @@ def assemble_mass_matrix(
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=branch_scale,
+            plus_scale=mode_plus_scale,
+            minus_scale=mode_minus_scale,
         )
         for sector in layout.sector_order:
             if sector in _HARMONIC_SECTORS:
@@ -757,6 +787,8 @@ def assemble_free_streaming_block(
     branch_scale = float(scales["branch_scale"])
     polarization_scale = float(scales["polarization_scale"])
     cross_mode_scale = float(scales["cross_mode_scale"])
+    mode_plus_scale = float(scales["mode_plus_scale"])
+    mode_minus_scale = float(scales["mode_minus_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
@@ -767,6 +799,8 @@ def assemble_free_streaming_block(
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=branch_scale,
+            plus_scale=mode_plus_scale,
+            minus_scale=mode_minus_scale,
         )
         for sector in layout.sector_order:
             if sector not in _HARMONIC_SECTORS:
@@ -817,6 +851,8 @@ def assemble_mixing_block(
     mix_scale = float(scales["mix_scale"])
     twist_scale = float(scales["twist_scale"])
     cross_mode_scale = float(scales["cross_mode_scale"])
+    mode_plus_scale = float(scales["mode_plus_scale"])
+    mode_minus_scale = float(scales["mode_minus_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
@@ -827,6 +863,8 @@ def assemble_mixing_block(
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=branch_scale,
+            plus_scale=mode_plus_scale,
+            minus_scale=mode_minus_scale,
         )
         for ell in range(2, layout.ell_max + 1):
             for m in range(-ell, ell + 1):
@@ -932,6 +970,8 @@ def assemble_implicit_block(
     local_drag_scale = float(scales["local_drag_scale"])
     collision_scale = float(scales["collision_scale"])
     twist_scale = float(scales["twist_scale"])
+    mode_plus_scale = float(scales["mode_plus_scale"])
+    mode_minus_scale = float(scales["mode_minus_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
@@ -942,6 +982,8 @@ def assemble_implicit_block(
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=branch_scale,
+            plus_scale=mode_plus_scale,
+            minus_scale=mode_minus_scale,
         )
         for sector in ("ph_I", "ph_E", "ph_B"):
             for ell in range(layout.ell_max + 1):
@@ -1034,6 +1076,8 @@ def assemble_source_vector(
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=float(scales["branch_scale"]),
+            plus_scale=float(scales["mode_plus_scale"]),
+            minus_scale=float(scales["mode_minus_scale"]),
         )
         out[flatten(layout, mu, "ph_I", 0, 0)] = mu_weight * source_scale * visibility_amp
         if layout.ell_max >= 1:
@@ -1058,6 +1102,8 @@ def evaluate_reduced_source_blocks(
         raise ValueError("bg.source_tables must be a mapping when provided")
     scales = _operator_scales(bg, backend)
     branch_scale = float(scales["branch_scale"])
+    mode_plus_scale = float(scales["mode_plus_scale"])
+    mode_minus_scale = float(scales["mode_minus_scale"])
     visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
     polarization_amp = float(source_tables.get("polarization_source", 0.0))
     doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
@@ -1071,6 +1117,8 @@ def evaluate_reduced_source_blocks(
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=branch_scale,
+            plus_scale=mode_plus_scale,
+            minus_scale=mode_minus_scale,
         )
         src = np.zeros(source_width, dtype=np.float64)
         if source_width > 0:
@@ -1120,6 +1168,8 @@ def evaluate_reduced_harmonic_rhs(
     cross_mode_scale = float(scales["cross_mode_scale"])
     collision_scale = float(scales["collision_scale"])
     local_drag_scale = float(scales["local_drag_scale"])
+    mode_plus_scale = float(scales["mode_plus_scale"])
+    mode_minus_scale = float(scales["mode_minus_scale"])
     width = (int(layout.ell_max) + 1) ** 2
     baryon_width = int(layout.sector_local_dofs["baryon"])
     src_width = int(layout.sector_local_dofs["src"])
@@ -1159,6 +1209,8 @@ def evaluate_reduced_harmonic_rhs(
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=branch_scale,
+            plus_scale=mode_plus_scale,
+            minus_scale=mode_minus_scale,
         )
         next_mu = str(layout.mode_labels[(mu_index + 1) % len(layout.mode_labels)])
         t_state = np.asarray(photon_T_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
@@ -1610,6 +1662,8 @@ def build_reduced_source_affine_operator(
     polarization_scale = float(scales["polarization_scale"])
     twist_scale = float(scales["twist_scale"])
     geom_scale = float(scales["geom_scale"])
+    mode_plus_scale = float(scales["mode_plus_scale"])
+    mode_minus_scale = float(scales["mode_minus_scale"])
     forcing_blocks = evaluate_reduced_source_blocks(layout, bg, backend)
     width = (int(layout.ell_max) + 1) ** 2
     mu_count = max(len(layout.mode_labels), 1)
@@ -1629,6 +1683,8 @@ def build_reduced_source_affine_operator(
             mu_index=int(mode_index[mu]),
             mu_count=mu_count,
             branch_scale=branch_scale,
+            plus_scale=mode_plus_scale,
+            minus_scale=mode_minus_scale,
         )
         source_mass = mu_weight * (1.0 + 0.06 * source_scale + 0.04 * np.arange(src_width, dtype=np.float64))
         inv_source = 1.0 / np.maximum(source_mass, 1.0e-30)
@@ -1704,6 +1760,8 @@ def build_reduced_joint_affine_operator(
     source_scale = float(scales["source_scale"])
     polarization_scale = float(scales["polarization_scale"])
     twist_scale = float(scales["twist_scale"])
+    mode_plus_scale = float(scales["mode_plus_scale"])
+    mode_minus_scale = float(scales["mode_minus_scale"])
     structure = _reduced_harmonic_structure(
         int(layout.ell_max),
         tuple(str(mu) for mu in layout.mode_labels),
@@ -1803,6 +1861,8 @@ def build_reduced_joint_affine_operator(
             mu_index=int(mode_index[mu]),
             mu_count=max(len(layout.mode_labels), 1),
             branch_scale=branch_scale,
+            plus_scale=mode_plus_scale,
+            minus_scale=mode_minus_scale,
         )
         source_mass = mu_weight * (1.0 + 0.06 * source_scale + 0.04 * np.arange(src_width, dtype=np.float64))
         inv_source = 1.0 / np.maximum(source_mass, 1.0e-30)
@@ -1900,6 +1960,8 @@ def build_reduced_local_affine_operator(
     geom_scale = float(scales["geom_scale"])
     branch_scale = float(scales["branch_scale"])
     local_drag_scale = float(scales["local_drag_scale"])
+    mode_plus_scale = float(scales["mode_plus_scale"])
+    mode_minus_scale = float(scales["mode_minus_scale"])
     mu_count = max(len(layout.mode_labels), 1)
     baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(baryon_width, dtype=np.float64)
 
@@ -1914,6 +1976,8 @@ def build_reduced_local_affine_operator(
             mu_index=int(mode_index[mu]),
             mu_count=mu_count,
             branch_scale=branch_scale,
+            plus_scale=mode_plus_scale,
+            minus_scale=mode_minus_scale,
         )
         baryon_diag = mu_weight * baryon_base_diag
         coeff = np.divide(
@@ -1965,6 +2029,8 @@ def evaluate_reduced_local_rhs(
     geom_scale = float(scales["geom_scale"])
     branch_scale = float(scales["branch_scale"])
     local_drag_scale = float(scales["local_drag_scale"])
+    mode_plus_scale = float(scales["mode_plus_scale"])
+    mode_minus_scale = float(scales["mode_minus_scale"])
     baryon_width = int(layout.sector_local_dofs["baryon"])
     cdm_width = int(layout.sector_local_dofs["cdm"])
     baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(baryon_width, dtype=np.float64)
@@ -1978,6 +2044,8 @@ def evaluate_reduced_local_rhs(
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=branch_scale,
+            plus_scale=mode_plus_scale,
+            minus_scale=mode_minus_scale,
         )
         baryon_state = np.asarray(
             baryon_by_mode_label.get(mu_key, np.zeros(baryon_width, dtype=np.float64)),

@@ -48,6 +48,30 @@ def test_layout_defaults_open_multi_label_runtime_for_family_backends() -> None:
     assert layout_viii.mode_labels == ("mu_sl2r", "mu_sl2r+", "mu_sl2r-")
 
 
+def test_family_conditioned_mode_label_weights_vary_by_backend() -> None:
+    truncation = {"ell_max": 2}
+
+    backend_v = build_backend(get_family_spec("V"), truncation=truncation)
+    layout_v = build_hierarchy_layout(backend_v, truncation)
+    diag_v = np.asarray(assemble_mass_matrix({"branch": "orthogonal"}, backend_v, truncation).diagonal(), dtype=np.float64)
+    ratio_v = diag_v[flatten(layout_v, "mu_open+", "ph_I", 0, 0)] / diag_v[flatten(layout_v, "mu_open", "ph_I", 0, 0)]
+
+    backend_viii = build_backend(get_family_spec("VIII"), truncation=truncation)
+    layout_viii = build_hierarchy_layout(backend_viii, truncation)
+    diag_viii = np.asarray(
+        assemble_mass_matrix({"branch": "orthogonal"}, backend_viii, truncation).diagonal(),
+        dtype=np.float64,
+    )
+    ratio_viii = (
+        diag_viii[flatten(layout_viii, "mu_sl2r+", "ph_I", 0, 0)]
+        / diag_viii[flatten(layout_viii, "mu_sl2r", "ph_I", 0, 0)]
+    )
+
+    assert ratio_v > 1.0
+    assert ratio_viii > 1.0
+    assert ratio_viii != pytest.approx(ratio_v)
+
+
 def test_flatten_unflatten_roundtrip_for_harmonic_slot() -> None:
     layout = build_hierarchy_layout(_backend(), {"ell_max": 4, "mode_labels": ("m0", "m+2", "m-2")})
     idx = flatten(layout, "m+2", "ph_E", 2, -1)
