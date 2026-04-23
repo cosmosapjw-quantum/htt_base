@@ -935,6 +935,9 @@ def build_solver_core_output_from_native_result(
             "layout_local_matter_owner": str(
                 result.solver_info.get("layout_local_matter_owner", "unconsumed")
             ),
+            "layout_local_matter_extension_owner": str(
+                result.solver_info.get("layout_local_matter_extension_owner", "unconsumed")
+            ),
             "layout_local_matter_mode_labels": list(
                 result.solver_info.get("layout_local_matter_mode_labels", [])
             ),

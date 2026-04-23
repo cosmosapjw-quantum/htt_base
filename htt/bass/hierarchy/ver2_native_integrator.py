@@ -73,12 +73,12 @@ from bass.perturbation.baryon_fluid import (
     BaryonFluidState,
     BaryonParameters,
     SymmetryAxis,
-    baryon_euler_rhs,
+    baryon_continuity_rhs,
 )
 from bass.perturbation.cdm_fluid import (
     CDMFluidState,
     CDMParameters,
-    cdm_euler_rhs,
+    cdm_continuity_rhs,
 )
 from bass.perturbation.regular_adiabatic_ic import (
     make_camb_regular_adiabatic_seed,
@@ -1714,57 +1714,94 @@ class Ver2TierBIntegrator:
             dt = eta_right - eta_left
             if dt <= 0.0:
                 raise ValueError("eta grid must be strictly increasing")
-            eta_mid = 0.5 * (eta_left + eta_right)
-            H_mid = max(self._h_local_at(eta_mid), 0.0)
-            rho_b = max(float(baryon.rho_rest(eta_mid)), 1.0e-30)
-            rho_gamma = max(float(photon.rho_rest(eta_mid)), 1.0e-30)
-            gamma_mid = max(
+
+            H_left = max(self._h_local_at(eta_left), 0.0)
+            H_right = max(self._h_local_at(eta_right), 0.0)
+            rho_b_left = max(float(baryon.rho_rest(eta_left)), 1.0e-30)
+            rho_b_right = max(float(baryon.rho_rest(eta_right)), 1.0e-30)
+            rho_gamma_left = max(float(photon.rho_rest(eta_left)), 1.0e-30)
+            rho_gamma_right = max(float(photon.rho_rest(eta_right)), 1.0e-30)
+            gamma_left = max(
                 _resolved_gamma_t(
-                    eta=eta_mid,
+                    eta=eta_left,
                     direction=self._direction,
                     visibility_source=self.visibility_source,
                     config=self.config,
                 ),
                 0.0,
             )
-            theta_mid = 0.5 * (
-                self._theta_1_photon_m0(photon_arr[idx])
-                + self._theta_1_photon_m0(photon_arr[idx + 1])
-            )
-            baryon_params = BaryonParameters(
-                R_b=max(3.0 * rho_b / (4.0 * rho_gamma), 1.0e-30),
-                tau_dot=gamma_mid,
-                H=H_mid,
-            )
-            cdm_params = CDMParameters(H=H_mid)
-            baryon_state = BaryonFluidState(
-                delta_b=float(baryon_state.delta_b - 3.0 * phi_dot_assumed * dt),
-                v_b=float(
-                    baryon_state.v_b
-                    + dt
-                    * baryon_euler_rhs(
-                        baryon_state,
-                        theta_mid,
-                        baryon_params,
-                        self.canonical_decision,
-                    )
+            gamma_right = max(
+                _resolved_gamma_t(
+                    eta=eta_right,
+                    direction=self._direction,
+                    visibility_source=self.visibility_source,
+                    config=self.config,
                 ),
+                0.0,
+            )
+            theta_left = self._theta_1_photon_m0(photon_arr[idx])
+            theta_right = self._theta_1_photon_m0(photon_arr[idx + 1])
+            baryon_params_left = BaryonParameters(
+                R_b=max(3.0 * rho_b_left / (4.0 * rho_gamma_left), 1.0e-30),
+                tau_dot=gamma_left,
+                H=H_left,
+            )
+            baryon_params_right = BaryonParameters(
+                R_b=max(3.0 * rho_b_right / (4.0 * rho_gamma_right), 1.0e-30),
+                tau_dot=gamma_right,
+                H=H_right,
+            )
+            cdm_params_left = CDMParameters(H=H_left)
+            cdm_params_right = CDMParameters(H=H_right)
+
+            baryon_delta_left = baryon_continuity_rhs(
+                baryon_state,
+                phi_dot_assumed,
+                self.canonical_decision,
+            )
+            baryon_delta_right = baryon_continuity_rhs(
+                baryon_state,
+                phi_dot_assumed,
+                self.canonical_decision,
+            )
+            drag_left = float(baryon_params_left.tau_dot / max(baryon_params_left.R_b, 1.0e-30))
+            drag_right = float(baryon_params_right.tau_dot / max(baryon_params_right.R_b, 1.0e-30))
+            lambda_left = float(baryon_params_left.H + drag_left)
+            lambda_right = float(baryon_params_right.H + drag_right)
+            forcing_left = float(3.0 * drag_left * theta_left)
+            forcing_right = float(3.0 * drag_right * theta_right)
+            baryon_v_next = (
+                float(baryon_state.v_b)
+                + 0.5 * dt * (forcing_left - lambda_left * float(baryon_state.v_b) + forcing_right)
+            ) / max(1.0 + 0.5 * dt * lambda_right, 1.0e-30)
+            baryon_state = BaryonFluidState(
+                delta_b=float(
+                    baryon_state.delta_b + 0.5 * dt * (baryon_delta_left + baryon_delta_right)
+                ),
+                v_b=float(baryon_v_next),
                 axis=baryon_state.axis,
             )
+
+            cdm_delta_left = cdm_continuity_rhs(
+                cdm_state,
+                phi_dot_assumed,
+                self.canonical_decision,
+            )
+            cdm_delta_right = cdm_continuity_rhs(
+                cdm_state,
+                phi_dot_assumed,
+                self.canonical_decision,
+            )
+            cdm_v_next = float(cdm_state.v_c) * max(
+                1.0 - 0.5 * dt * float(cdm_params_left.H),
+                0.0,
+            ) / max(1.0 + 0.5 * dt * float(cdm_params_right.H), 1.0e-30)
             cdm_state = CDMFluidState(
-                delta_c=float(cdm_state.delta_c - 3.0 * phi_dot_assumed * dt),
-                v_c=float(
-                    cdm_state.v_c
-                    + dt
-                    * cdm_euler_rhs(
-                        cdm_state,
-                        cdm_params,
-                        self.canonical_decision,
-                    )
-                ),
+                delta_c=float(cdm_state.delta_c + 0.5 * dt * (cdm_delta_left + cdm_delta_right)),
+                v_c=float(cdm_v_next),
                 axis=cdm_state.axis,
             )
-            _store(idx + 1, self._theta_1_photon_m0(photon_arr[idx + 1]))
+            _store(idx + 1, theta_right)
 
         return _LocalMatterHistory(
             eta=eta_arr,
@@ -1773,10 +1810,11 @@ class Ver2TierBIntegrator:
             baryon_labels=("delta_b", "v_b", "v_e", "drag_lock_residual"),
             cdm_labels=("delta_c", "v_c"),
             metadata={
-                "owner": "runtime_postprocessed_homogeneous_local_matter",
+                "owner": "baryon_fluid.cdm_fluid.live_homogeneous_history",
                 "phi_dot_source": "unavailable_assumed_zero_homogeneous_limit",
                 "photon_dipole_source": "live_runtime_ph_I_ell1_m0",
                 "gamma_t_source": "resolved_visibility_gamma_t",
+                "integration_scheme": "predictor_corrector_trapezoidal",
                 "history_sample_count": int(eta_arr.size),
             },
         )
@@ -1900,7 +1938,7 @@ class Ver2TierBIntegrator:
             layout,
             covered_mode_label=covered,
         )
-        reference_history = self._postprocess_local_matter_history(
+        direct_history = self._postprocess_local_matter_history(
             eta=np.asarray(result.eta, dtype=np.float64),
             photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
         )
@@ -1921,39 +1959,43 @@ class Ver2TierBIntegrator:
             for mu in layout.mode_labels
         }
         layout_state_rows = np.zeros((eta_samples.size, layout.size), dtype=np.float64)
-        baryon_rows = np.zeros_like(np.asarray(reference_history.baryon_history, dtype=np.float64))
-        cdm_rows = np.zeros_like(np.asarray(reference_history.cdm_history, dtype=np.float64))
+        baryon_rows = np.asarray(direct_history.baryon_history, dtype=np.float64).copy()
+        cdm_rows = np.asarray(direct_history.cdm_history, dtype=np.float64).copy()
+        auxiliary_baryon_reference = np.zeros_like(baryon_rows)
+        auxiliary_cdm_reference = np.zeros_like(cdm_rows)
         baryon_rows_by_mode_label = {
-            str(mu): np.zeros_like(np.asarray(reference_history.baryon_history, dtype=np.float64))
+            str(mu): np.zeros_like(baryon_rows)
             for mu in layout.mode_labels
         }
         cdm_rows_by_mode_label = {
-            str(mu): np.zeros_like(np.asarray(reference_history.cdm_history, dtype=np.float64))
+            str(mu): np.zeros_like(cdm_rows)
             for mu in layout.mode_labels
         }
         baryon_prev_by_mode_label = {
-            str(mu): np.zeros(reference_history.baryon_history.shape[1], dtype=np.float64)
+            str(mu): np.zeros(baryon_rows.shape[1], dtype=np.float64)
             for mu in layout.mode_labels
         }
         cdm_prev_by_mode_label = {
-            str(mu): np.zeros(reference_history.cdm_history.shape[1], dtype=np.float64)
+            str(mu): np.zeros(cdm_rows.shape[1], dtype=np.float64)
             for mu in layout.mode_labels
         }
-        baryon_prev_by_mode_label[covered] = np.asarray(reference_history.baryon_history[0], dtype=np.float64)
-        cdm_prev_by_mode_label[covered] = np.asarray(reference_history.cdm_history[0], dtype=np.float64)
-        baryon_prev = np.asarray(baryon_prev_by_mode_label[covered], dtype=np.float64)
-        cdm_prev = np.asarray(cdm_prev_by_mode_label[covered], dtype=np.float64)
-        baryon_rows[0] = baryon_prev
-        cdm_rows[0] = cdm_prev
+        baryon_prev_by_mode_label[covered] = np.asarray(direct_history.baryon_history[0], dtype=np.float64)
+        cdm_prev_by_mode_label[covered] = np.asarray(direct_history.cdm_history[0], dtype=np.float64)
+        auxiliary_baryon_reference[0] = np.asarray(baryon_prev_by_mode_label[covered], dtype=np.float64)
+        auxiliary_cdm_reference[0] = np.asarray(cdm_prev_by_mode_label[covered], dtype=np.float64)
         for mu in layout.mode_labels:
-            baryon_rows_by_mode_label[str(mu)][0] = np.asarray(
-                baryon_prev_by_mode_label[str(mu)],
-                dtype=np.float64,
-            )
-            cdm_rows_by_mode_label[str(mu)][0] = np.asarray(
-                cdm_prev_by_mode_label[str(mu)],
-                dtype=np.float64,
-            )
+            if str(mu) == covered:
+                baryon_rows_by_mode_label[str(mu)][0] = np.asarray(direct_history.baryon_history[0], dtype=np.float64)
+                cdm_rows_by_mode_label[str(mu)][0] = np.asarray(direct_history.cdm_history[0], dtype=np.float64)
+            else:
+                baryon_rows_by_mode_label[str(mu)][0] = np.asarray(
+                    baryon_prev_by_mode_label[str(mu)],
+                    dtype=np.float64,
+                )
+                cdm_rows_by_mode_label[str(mu)][0] = np.asarray(
+                    cdm_prev_by_mode_label[str(mu)],
+                    dtype=np.float64,
+                )
         state_vector = np.zeros(layout.size, dtype=np.float64)
         predictor_state_vector = np.zeros(layout.size, dtype=np.float64)
 
@@ -1986,6 +2028,24 @@ class Ver2TierBIntegrator:
             reionization_amplitude=reionization_amplitude,
         )
         for index, eta in enumerate(eta_samples):
+            direct_baryon_row = np.asarray(direct_history.baryon_history[index], dtype=np.float64)
+            direct_cdm_row = np.asarray(direct_history.cdm_history[index], dtype=np.float64)
+            display_baryon_by_mode_label = {
+                str(mu): (
+                    direct_baryon_row
+                    if str(mu) == covered
+                    else np.asarray(baryon_prev_by_mode_label[str(mu)], dtype=np.float64)
+                )
+                for mu in layout.mode_labels
+            }
+            display_cdm_by_mode_label = {
+                str(mu): (
+                    direct_cdm_row
+                    if str(mu) == covered
+                    else np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
+                )
+                for mu in layout.mode_labels
+            }
             source_template = np.asarray(current_sample.source_template, dtype=np.float64)
             source_rows[index, :] = source_template[projection_index_cache.src_by_mode_label[covered]]
             for mu, indices in projection_index_cache.src_by_mode_label.items():
@@ -1997,8 +2057,8 @@ class Ver2TierBIntegrator:
                 photon_E_row=photon_E_tower[index],
                 neutrino_row=neutrino_arr[index],
                 photon_B_row=b_rows[index],
-                baryon_by_mode_label=baryon_prev_by_mode_label,
-                cdm_by_mode_label=cdm_prev_by_mode_label,
+                baryon_by_mode_label=display_baryon_by_mode_label,
+                cdm_by_mode_label=display_cdm_by_mode_label,
             )
             layout_state_rows[index, :] = state_vector
             if index == eta_samples.size - 1:
@@ -2032,6 +2092,24 @@ class Ver2TierBIntegrator:
                 photon_E_row=photon_E_tower[index + 1],
                 reionization_amplitude=reionization_amplitude,
             )
+            direct_baryon_next = np.asarray(direct_history.baryon_history[index + 1], dtype=np.float64)
+            direct_cdm_next = np.asarray(direct_history.cdm_history[index + 1], dtype=np.float64)
+            display_baryon_predict = {
+                str(mu): (
+                    direct_baryon_next
+                    if str(mu) == covered
+                    else np.asarray(baryon_predict_by_mode_label[str(mu)], dtype=np.float64)
+                )
+                for mu in layout.mode_labels
+            }
+            display_cdm_predict = {
+                str(mu): (
+                    direct_cdm_next
+                    if str(mu) == covered
+                    else np.asarray(cdm_predict_by_mode_label[str(mu)], dtype=np.float64)
+                )
+                for mu in layout.mode_labels
+            }
             _fill_layout_state_vector(
                 predictor_state_vector,
                 sample=next_sample,
@@ -2039,8 +2117,8 @@ class Ver2TierBIntegrator:
                 photon_E_row=photon_E_tower[index + 1],
                 neutrino_row=neutrino_arr[index + 1],
                 photon_B_row=b_rows[index + 1],
-                baryon_by_mode_label=baryon_predict_by_mode_label,
-                cdm_by_mode_label=cdm_predict_by_mode_label,
+                baryon_by_mode_label=display_baryon_predict,
+                cdm_by_mode_label=display_cdm_predict,
             )
             reduced_drive_next = next_sample.drive_subset(
                 predictor_state_vector,
@@ -2069,23 +2147,31 @@ class Ver2TierBIntegrator:
                 )
             baryon_prev_by_mode_label = baryon_next_by_mode_label
             cdm_prev_by_mode_label = cdm_next_by_mode_label
-            baryon_prev = np.asarray(baryon_prev_by_mode_label[covered], dtype=np.float64)
-            cdm_prev = np.asarray(cdm_prev_by_mode_label[covered], dtype=np.float64)
-            baryon_rows[index + 1] = baryon_prev
-            cdm_rows[index + 1] = cdm_prev
+            auxiliary_baryon_reference[index + 1] = np.asarray(
+                baryon_prev_by_mode_label[covered],
+                dtype=np.float64,
+            )
+            auxiliary_cdm_reference[index + 1] = np.asarray(
+                cdm_prev_by_mode_label[covered],
+                dtype=np.float64,
+            )
             for mu in layout.mode_labels:
-                baryon_rows_by_mode_label[str(mu)][index + 1] = np.asarray(
-                    baryon_prev_by_mode_label[str(mu)],
-                    dtype=np.float64,
-                )
-                cdm_rows_by_mode_label[str(mu)][index + 1] = np.asarray(
-                    cdm_prev_by_mode_label[str(mu)],
-                    dtype=np.float64,
-                )
+                if str(mu) == covered:
+                    baryon_rows_by_mode_label[str(mu)][index + 1] = direct_baryon_next
+                    cdm_rows_by_mode_label[str(mu)][index + 1] = direct_cdm_next
+                else:
+                    baryon_rows_by_mode_label[str(mu)][index + 1] = np.asarray(
+                        baryon_prev_by_mode_label[str(mu)],
+                        dtype=np.float64,
+                    )
+                    cdm_rows_by_mode_label[str(mu)][index + 1] = np.asarray(
+                        cdm_prev_by_mode_label[str(mu)],
+                        dtype=np.float64,
+                    )
             current_sample = next_sample
 
-        reference_baryon = np.asarray(reference_history.baryon_history, dtype=np.float64)
-        reference_cdm = np.asarray(reference_history.cdm_history, dtype=np.float64)
+        reference_baryon = np.asarray(auxiliary_baryon_reference, dtype=np.float64)
+        reference_cdm = np.asarray(auxiliary_cdm_reference, dtype=np.float64)
         baryon_delta = baryon_rows - reference_baryon
         cdm_delta = cdm_rows - reference_cdm
         max_abs = max(
@@ -2104,19 +2190,21 @@ class Ver2TierBIntegrator:
             photon_B_history=b_rows,
             baryon_history=baryon_rows,
             cdm_history=cdm_rows,
-            baryon_labels=tuple(reference_history.baryon_labels),
-            cdm_labels=tuple(reference_history.cdm_labels),
+            baryon_labels=tuple(direct_history.baryon_labels),
+            cdm_labels=tuple(direct_history.cdm_labels),
             metadata={
-                "owner": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution",
+                "owner": str(direct_history.metadata["owner"]),
                 "b_mode_owner": str(b_metadata["owner"]),
-                "reference_owner": str(reference_history.metadata.get("owner", "unknown")),
+                "reference_owner": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension",
+                "mode_label_extension_owner": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension",
                 "history_sample_count": int(eta_samples.size),
                 "reference_sample_count": int(reference_baryon.shape[0]),
                 "reference_delta_norm": float(scaled_delta_norm),
                 "reference_baryon_history": reference_baryon,
                 "reference_cdm_history": reference_cdm,
                 "coupling_passes": 2,
-                "integration_scheme": "predictor_corrector_trapezoidal",
+                "integration_scheme": str(direct_history.metadata.get("integration_scheme", "")),
+                "extension_integration_scheme": "predictor_corrector_trapezoidal",
                 "reduced_block_size": int(projection_index_cache.auxiliary_coupled_rows.size),
                 "b_mode_integration_scheme": str(b_metadata["integration_scheme"]),
                 "coupled_sectors": ("ph_B", "baryon", "cdm"),
@@ -2215,12 +2303,13 @@ class Ver2TierBIntegrator:
         )
         coupled = auxiliary_bundle.coupled_sector_history
         matter_sector_status = {
-            "baryon": "layout_operator_auxiliary_local_matter",
-            "cdm": "layout_operator_auxiliary_local_matter",
+            "baryon": "direct_fluid_rhs_live_history",
+            "cdm": "direct_fluid_rhs_live_history",
         }
         matter_block_metadata = {
             "owner": str(coupled.metadata["owner"]),
             "reference_owner": str(coupled.metadata["reference_owner"]),
+            "mode_label_extension_owner": str(coupled.metadata["mode_label_extension_owner"]),
             "reference_baryon_history": np.asarray(
                 coupled.metadata["reference_baryon_history"],
                 dtype=np.float64,
@@ -2313,6 +2402,7 @@ class Ver2TierBIntegrator:
                 ).keys()
             ),
             "layout_local_matter_owner": str(coupled.metadata["owner"]),
+            "layout_local_matter_extension_owner": str(coupled.metadata["mode_label_extension_owner"]),
             "layout_local_matter_mode_labels": list(
                 canonical_projection.hierarchy_state.matter_block.get(
                     "mode_label_blocks",
@@ -2398,6 +2488,9 @@ class Ver2TierBIntegrator:
                     ),
                     "layout_local_matter_blocks_consumed": True,
                     "layout_local_matter_owner": str(coupled.metadata["owner"]),
+                    "layout_local_matter_extension_owner": str(
+                        coupled.metadata["mode_label_extension_owner"]
+                    ),
                     "layout_local_matter_mode_labels": list(
                         canonical_projection.hierarchy_state.matter_block.get(
                             "mode_label_blocks",

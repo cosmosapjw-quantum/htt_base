@@ -357,24 +357,24 @@ def test_project_runtime_native_state_can_embed_layout_auxiliary_local_matter_bl
         baryon_history_samples=np.array([[1.0, 2.0, 2.0, 3.0], [1.5, 2.5, 2.5, 3.5]], dtype=np.float64),
         cdm_history_samples=np.array([[4.0, 5.0], [4.5, 5.5]], dtype=np.float64),
         matter_sector_status={
-            "baryon": "layout_operator_auxiliary_local_matter",
-            "cdm": "layout_operator_auxiliary_local_matter",
+            "baryon": "direct_fluid_rhs_live_history",
+            "cdm": "direct_fluid_rhs_live_history",
         },
         matter_block_metadata={
-            "owner": "mode_ops.mass_inverse_auxiliary_local_matter_evolution",
-            "reference_owner": "runtime_postprocessed_homogeneous_local_matter",
+            "owner": "baryon_fluid.cdm_fluid.live_homogeneous_history",
+            "reference_owner": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension",
         },
     )
-    assert projection.sector_status["baryon"] == "layout_operator_auxiliary_local_matter"
-    assert projection.sector_status["cdm"] == "layout_operator_auxiliary_local_matter"
+    assert projection.sector_status["baryon"] == "direct_fluid_rhs_live_history"
+    assert projection.sector_status["cdm"] == "direct_fluid_rhs_live_history"
     assert projection.metadata["projection_mode"] == (
-        "multi_live_mode_label_with_layout_auxiliary_local_matter_blocks"
+        "multi_live_mode_label_with_runtime_local_matter_blocks"
     )
     assert projection.hierarchy_state.matter_block["owner"] == (
-        "mode_ops.mass_inverse_auxiliary_local_matter_evolution"
+        "baryon_fluid.cdm_fluid.live_homogeneous_history"
     )
     assert projection.hierarchy_state.matter_block["reference_owner"] == (
-        "runtime_postprocessed_homogeneous_local_matter"
+        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension"
     )
 
 
