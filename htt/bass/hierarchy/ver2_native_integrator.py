@@ -2051,6 +2051,20 @@ class Ver2TierBIntegrator:
             cdm_local=cdm_local,
             residual_local=residual_local,
         )
+        residual_harmonic_rhs = (
+            self._residual_mode_label_harmonic_rhs(
+                snapshot=snapshot,
+                photon_T=photon_T,
+                photon_E=photon_E,
+                photon_B=photon_B,
+                neutrino_tower=neutrino_tower,
+                baryon_local=baryon_local,
+                residual_local=residual_local,
+                residual_harmonic=residual_harmonic,
+            )
+            if str(self.config.solver_method).upper() != "IMEX_MIDPOINT_BDF"
+            else np.zeros(self._residual_harmonic_dof, dtype=np.float64)
+        )
         return np.concatenate(
             [
                 rhs_T,
@@ -2060,7 +2074,7 @@ class Ver2TierBIntegrator:
                 baryon_rhs,
                 cdm_rhs,
                 residual_rhs,
-                np.zeros(self._residual_harmonic_dof, dtype=np.float64),
+                residual_harmonic_rhs,
             ]
         )
 
@@ -4021,12 +4035,6 @@ class Ver2TierBIntegrator:
                     ):
                         trial_h *= 0.5
                         continue
-                    candidate = self._advance_residual_mode_label_harmonics_step(
-                        eta_left=float(eta_left),
-                        y_left=y_left,
-                        eta_right=float(eta_next),
-                        y_right=candidate,
-                    )
                     gamma_t = _resolved_gamma_t(
                         eta=float(eta_next),
                         direction=self._direction,
@@ -4071,12 +4079,7 @@ class Ver2TierBIntegrator:
                                 )
                             else:
                                 tca_tracker.append(False)
-                            y_current = self._advance_residual_mode_label_harmonics_step(
-                                eta_left=float(eta_left),
-                                y_left=y_left,
-                                eta_right=float(eta_target),
-                                y_right=np.asarray(fallback_sol.y[:, -1], dtype=np.float64),
-                            )
+                            y_current = np.asarray(fallback_sol.y[:, -1], dtype=np.float64)
                             eta_current = float(eta_target)
                             accepted = True
                             continue
