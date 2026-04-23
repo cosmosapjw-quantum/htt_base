@@ -11,8 +11,11 @@ from bass.los.families.type_viii import (
     CONTINUOUS_SERIES_TAG,
     DISCRETE_SERIES_TAGS,
     KERNEL,
+    continuous_principal_series_norm,
+    continuous_series_l2_residual,
     noncompact_disc_norm_residual,
     noncompact_disc_seed_amplitude,
+    principal_series_plancherel_weight,
     translate_native_to_storage,
     translate_storage_to_native,
 )
@@ -37,9 +40,49 @@ def test_translator_roundtrip(native, storage):
     assert translate_storage_to_native(storage) == native
 
 
-def test_continuous_series_raises_notimplemented():
-    with pytest.raises(NotImplementedError, match="continuous principal series"):
-        translate_native_to_storage(("mu_sl2r", CONTINUOUS_SERIES_TAG, "scalar"))
+@pytest.mark.parametrize(
+    "component,storage",
+    [("scalar", "m0"), ("tensor_plus", "m+2"), ("tensor_minus", "m-2")],
+)
+def test_continuous_series_translator_routes_by_component(component, storage):
+    # S7 upgrade: continuous series is now a live branch.
+    label = ("mu_sl2r", CONTINUOUS_SERIES_TAG, component)
+    assert translate_native_to_storage(label) == storage
+
+
+def test_continuous_series_rejects_unknown_component():
+    with pytest.raises(ValueError, match="continuous-series component"):
+        translate_native_to_storage(("mu_sl2r", CONTINUOUS_SERIES_TAG, "banana"))
+
+
+def test_plancherel_weight_matches_closed_form():
+    import math
+
+    for nu in [0.5, 1.0, 1.5, 3.0]:
+        assert principal_series_plancherel_weight(nu) == nu * math.tanh(math.pi * nu)
+
+
+def test_plancherel_weight_rejects_non_positive():
+    with pytest.raises(ValueError, match="nu must be > 0"):
+        principal_series_plancherel_weight(0.0)
+
+
+def test_continuous_principal_series_norm_is_positive():
+    disc_radius = math.tanh(1.5)
+    norm = continuous_principal_series_norm(1.5, disc_radius=disc_radius, n_samples=64)
+    assert norm > 0.0
+
+
+def test_continuous_series_l2_residual_within_precision():
+    disc_radius = math.tanh(1.5)
+    for nu in [0.5, 1.5, 3.0]:
+        r = continuous_series_l2_residual(nu, disc_radius=disc_radius, n_samples=64)
+        assert r < 1.0e-10
+
+
+def test_continuous_principal_series_norm_rejects_nu_le_zero():
+    with pytest.raises(ValueError, match="nu must be > 0"):
+        continuous_principal_series_norm(0.0, disc_radius=0.9, n_samples=32)
 
 
 def test_translator_rejects_unknown_series():
@@ -110,7 +153,7 @@ def test_kernel_rejects_non_type_viii():
         )
 
 
-def test_bundle_metadata_flags_continuous_series_deferral():
+def test_bundle_metadata_exposes_continuous_series_branch():
     bundle = KERNEL.build_transport_bundle(
         structure=type_viii_constants(),
         eta_grid_mpc=ETA,
@@ -120,7 +163,10 @@ def test_bundle_metadata_flags_continuous_series_deferral():
         source_builder=_src,
     )
     md = bundle.metadata
-    assert "deferred" in md["continuous_series_status"]
+    assert md["continuous_series_status"] == "active_via_mpmath_hyp2f1"
+    assert md["continuous_series_tag"] == CONTINUOUS_SERIES_TAG
+    assert md["plancherel_weight_formula"] == "nu * tanh(pi * nu)"
+    assert list(md["continuous_series_nu_probes"]) == list(KERNEL.default_continuous_nu_probes)
     assert md["discrete_series_tags"] == list(DISCRETE_SERIES_TAGS)
     assert math.isclose(md["disc_radius_x_eq_tanh_xi"], math.tanh(1.5))
     for shortcut in (
@@ -143,6 +189,8 @@ def test_residuals_pass_within_tolerance():
     assert r["branch_tag"] == 0.0
     assert r["seed_regularity"] < 1.0e-10
     assert r["noncompact_truncation"] < KERNEL.tolerance_noncompact_truncation
+    assert r["continuous_series_l2_residual"] < KERNEL.tolerance_continuous_series_l2
+    assert r["plancherel_weight_consistency"] < KERNEL.tolerance_plancherel_weight_consistency
 
 
 def test_residual_pack_passes():
