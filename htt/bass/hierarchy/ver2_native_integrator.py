@@ -2328,8 +2328,10 @@ class Ver2TierBIntegrator:
             source_local=source_right,
         )
         rhs_stage = np.asarray(affine_right.matrix @ stage_state + affine_right.bias, dtype=np.float64)
+        system_right = self._residual_joint_sparse_identity - (dt * _ROS2_GAMMA) * affine_right.matrix
+        lu_right = splu(system_right)
         k2 = np.asarray(
-            lu_left.solve(dt * _ROS2_GAMMA * rhs_stage + (_ROS2_GAMMA * _ROS2_C21) * k1),
+            lu_right.solve(dt * _ROS2_GAMMA * rhs_stage + (_ROS2_GAMMA * _ROS2_C21) * k1),
             dtype=np.float64,
         )
         next_state = state_left + _ROS2_M1 * k1 + _ROS2_M2 * k2
@@ -2434,8 +2436,10 @@ class Ver2TierBIntegrator:
             photon_B=photon_B_right,
         )
         rhs_stage = np.asarray(affine_right.matrix @ stage_state + affine_right.bias, dtype=np.float64)
+        system_right = csc_matrix(np.eye(_SOURCE_LOCAL_DOF, dtype=np.float64)) - (dt * _ROS2_GAMMA) * affine_right.matrix
+        lu_right = splu(system_right)
         k2 = np.asarray(
-            lu_left.solve(dt * _ROS2_GAMMA * rhs_stage + (_ROS2_GAMMA * _ROS2_C21) * k1),
+            lu_right.solve(dt * _ROS2_GAMMA * rhs_stage + (_ROS2_GAMMA * _ROS2_C21) * k1),
             dtype=np.float64,
         )
         next_source = np.asarray(source_left, dtype=np.float64) + _ROS2_M1 * k1 + _ROS2_M2 * k2
@@ -4801,7 +4805,7 @@ class Ver2TierBIntegrator:
             "restart_used": bool(restart_used),
             "collision_owner": "exact_thomson_wrapper",
             "residual_harmonic_orthogonal_bridge": (
-                "ros2w_lagged_sparse_reduced_joint_block"
+                "ros2w_sparse_reduced_joint_block"
                 if self._residual_harmonic_dof > 0 and str(self.config.solver_method).upper() == "IMEX_MIDPOINT_BDF"
                 else "disabled"
             ),
