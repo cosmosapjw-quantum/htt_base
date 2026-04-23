@@ -159,6 +159,12 @@ def _default_alm_features(
         "canonical_projection_matter_history_mode_labels": list(
             solver_output.metadata.get("canonical_projection_matter_history_mode_labels", [])
         ),
+        "layout_state_history_sample_count": int(
+            solver_output.metadata.get("layout_state_history_sample_count", 0)
+        ),
+        "layout_state_history_size": int(
+            solver_output.metadata.get("layout_state_history_size", 0)
+        ),
         "covariance_readiness": covariance_readiness,
         "fitting_ready": covariance_readiness == "full",
         "off_diagonal_strategy": solver_output.metadata.get("off_diagonal_strategy"),

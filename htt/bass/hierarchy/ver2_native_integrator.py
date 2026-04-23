@@ -399,6 +399,7 @@ class _LayoutAuxiliaryHistoryBundle:
     eta: np.ndarray
     source_history: np.ndarray
     source_history_by_mode_label: dict[str, np.ndarray]
+    layout_state_history: np.ndarray
     coupled_sector_history: _CoupledAuxiliarySectorHistory
     metadata: dict[str, object]
 
@@ -413,6 +414,7 @@ class _LayoutAuxiliaryHistoryBundle:
                 for key, value in dict(self.source_history_by_mode_label).items()
             },
         )
+        object.__setattr__(self, "layout_state_history", np.asarray(self.layout_state_history, dtype=np.float64))
         object.__setattr__(self, "coupled_sector_history", self.coupled_sector_history)
         object.__setattr__(self, "metadata", dict(self.metadata))
 
@@ -1712,6 +1714,7 @@ class Ver2TierBIntegrator:
             str(mu): np.zeros((eta_samples.size, source_width), dtype=np.float64)
             for mu in layout.mode_labels
         }
+        layout_state_rows = np.zeros((eta_samples.size, layout.size), dtype=np.float64)
         size = (int(layout.ell_max) + 1) ** 2
         b_rows = np.zeros((eta_samples.size, size), dtype=np.float64)
         baryon_rows = np.zeros_like(np.asarray(reference_history.baryon_history, dtype=np.float64))
@@ -1775,11 +1778,6 @@ class Ver2TierBIntegrator:
             source_rows[index, :] = source_template[projection_index_cache.src_by_mode_label[covered]]
             for mu, indices in projection_index_cache.src_by_mode_label.items():
                 source_rows_by_mode_label[str(mu)][index, :] = source_template[indices]
-            if index == eta_samples.size - 1:
-                break
-            dt = float(eta_samples[index + 1] - eta_samples[index])
-            if dt <= 0.0:
-                raise ValueError("eta grid must be strictly increasing for coupled auxiliary history sampling")
             state_vector.fill(0.0)
             state_vector[projection_index_cache.src_all] = source_template[projection_index_cache.src_all]
             state_vector[projection_index_cache.harmonic_photon_T] = np.asarray(
@@ -1799,6 +1797,12 @@ class Ver2TierBIntegrator:
                 state_vector[indices] = np.asarray(baryon_prev_by_mode_label[str(mu)], dtype=np.float64)
             for mu, indices in projection_index_cache.cdm_by_mode_label.items():
                 state_vector[indices] = np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
+            layout_state_rows[index, :] = state_vector
+            if index == eta_samples.size - 1:
+                break
+            dt = float(eta_samples[index + 1] - eta_samples[index])
+            if dt <= 0.0:
+                raise ValueError("eta grid must be strictly increasing for coupled auxiliary history sampling")
             drive = (
                 np.asarray(sample_ops.A_fs @ state_vector, dtype=np.float64)
                 + np.asarray(sample_ops.A_mix @ state_vector, dtype=np.float64)
@@ -1875,10 +1879,12 @@ class Ver2TierBIntegrator:
             eta=eta_samples,
             source_history=source_rows,
             source_history_by_mode_label=source_rows_by_mode_label,
+            layout_state_history=layout_state_rows,
             coupled_sector_history=coupled_history,
             metadata={
                 "owner": "ver2_native_integrator.layout_auxiliary_history_bundle",
                 "history_sample_count": int(eta_samples.size),
+                "layout_state_history_size": int(layout.size),
                 "covered_mode_label": covered,
                 "source_history_mode_labels": list(layout.mode_labels),
                 "local_matter_mode_labels": list(layout.mode_labels),
@@ -2032,9 +2038,11 @@ class Ver2TierBIntegrator:
         b_mode_payload_available = b_mode_sector_status != "zero_filled_not_evolved"
         gate_provenance = {
             "layout_projection_owner": "ver2_native_integrator.build_runtime_layout_projection",
-            "layout_auxiliary_bundle_owner": str(auxiliary_bundle.metadata["owner"]),
-            "covered_mode_label": covered,
-            "covered_mode_labels": list(canonical_projection.covered_mode_labels),
+                "layout_auxiliary_bundle_owner": str(auxiliary_bundle.metadata["owner"]),
+                "layout_state_history_sample_count": int(auxiliary_bundle.layout_state_history.shape[0]),
+                "layout_state_history_size": int(auxiliary_bundle.layout_state_history.shape[1]),
+                "covered_mode_label": covered,
+                "covered_mode_labels": list(canonical_projection.covered_mode_labels),
             "zero_filled_mode_labels": list(canonical_projection.zero_filled_mode_labels),
             "projection_mode": str(canonical_projection.metadata.get("projection_mode", "")),
             "resolved_sector_order": list(canonical_projection.metadata.get("resolved_sector_order", ())),
@@ -2164,6 +2172,8 @@ class Ver2TierBIntegrator:
                     ),
                     "layout_auxiliary_coupling_passes": int(coupled.metadata["coupling_passes"]),
                     "layout_auxiliary_bundle_owner": str(auxiliary_bundle.metadata["owner"]),
+                    "layout_state_history_sample_count": int(auxiliary_bundle.layout_state_history.shape[0]),
+                    "layout_state_history_size": int(auxiliary_bundle.layout_state_history.shape[1]),
                     "layout_projection_owner": "ver2_native_integrator.build_runtime_layout_projection",
                 },
             },

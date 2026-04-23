@@ -145,6 +145,12 @@ def _interop_summary(solver_output: SolverCoreOutput) -> dict[str, Any]:
         "canonical_projection_matter_history_mode_labels": list(
             solver_output.metadata.get("canonical_projection_matter_history_mode_labels", [])
         ),
+        "layout_state_history_sample_count": int(
+            solver_output.metadata.get("layout_state_history_sample_count", 0)
+        ),
+        "layout_state_history_size": int(
+            solver_output.metadata.get("layout_state_history_size", 0)
+        ),
         "geometry_params": solver_output.metadata.get("geometry_params"),
         "kinematic_params": solver_output.metadata.get("kinematic_params"),
         "tilt_params": solver_output.metadata.get("tilt_params"),

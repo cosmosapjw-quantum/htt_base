@@ -319,6 +319,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_auxiliary_bundle_owner"] == (
         "ver2_native_integrator.layout_auxiliary_history_bundle"
     )
+    assert run.solver_output.metadata["layout_state_history_sample_count"] == len(
+        run.integration_result.eta
+    )
+    assert run.solver_output.metadata["layout_state_history_size"] > 0
     assert run.solver_output.metadata["layout_projection_owner"] == (
         "ver2_native_integrator.build_runtime_layout_projection"
     )

@@ -448,6 +448,8 @@ def test_native_output_promotes_auxiliary_b_mode_runtime_payload() -> None:
     assert output.metadata["canonical_projection_b_history_sample_count"] == 2
     assert output.metadata["canonical_projection_b_mode_labels"] == ["m0"]
     assert output.metadata["canonical_projection_b_history_mode_labels"] == ["m0"]
+    assert output.metadata["layout_state_history_sample_count"] == 0
+    assert output.metadata["layout_state_history_size"] == 0
 
 
 def test_native_output_blocks_readiness_when_backend_verification_bundle_is_unresolved() -> None:

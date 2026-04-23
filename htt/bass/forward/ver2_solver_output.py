@@ -966,6 +966,12 @@ def build_solver_core_output_from_native_result(
             "layout_auxiliary_bundle_owner": str(
                 result.solver_info.get("layout_auxiliary_bundle_owner", "unconsumed")
             ),
+            "layout_state_history_sample_count": int(
+                result.solver_info.get("layout_state_history_sample_count", 0)
+            ),
+            "layout_state_history_size": int(
+                result.solver_info.get("layout_state_history_size", 0)
+            ),
             "layout_projection_owner": str(
                 result.solver_info.get("layout_projection_owner", "unconsumed")
             ),
