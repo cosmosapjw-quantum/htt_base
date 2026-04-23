@@ -4452,6 +4452,12 @@ class Ver2TierBIntegrator:
                             y_right=candidate,
                             affine_left=cached_residual_harmonic_affine,
                         )
+                        candidate = self._orthogonal_residual_local_ros2_step(
+                            eta_left=float(eta_left),
+                            y_left=y_left,
+                            eta_right=float(eta_next),
+                            y_right=candidate,
+                        )
                         y_current = candidate
                         eta_current = float(eta_next)
                         accepted = True
