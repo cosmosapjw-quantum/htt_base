@@ -805,6 +805,7 @@ def build_solver_core_output_from_native_result(
             b_mode_sector_status in {
                 "layout_operator_auxiliary_b_mode_history",
                 "hierarchy_rhs_direct_b_mode_history",
+                "main_state_coevolved_b_mode_history",
             }
             and np.any(np.abs(b_mode_coefficients) > 0.0)
         ):
@@ -814,7 +815,13 @@ def build_solver_core_output_from_native_result(
     elif runtime_b_tower is not None:
         b_mode_coefficients = np.asarray(runtime_b_tower[-1], dtype=np.float64)
         if np.any(np.abs(b_mode_coefficients) > 0.0):
-            b_mode_payload_status = "hierarchy_rhs_direct_b_mode_history"
+            b_history_metadata = result.solver_info.get("live_b_mode_history_metadata", {})
+            b_mode_payload_status = (
+                "main_state_coevolved_b_mode_history"
+                if str(getattr(b_history_metadata, "get", lambda *_: "")("owner", ""))
+                == "ver2_native_integrator.main_state_photon_B"
+                else "hierarchy_rhs_direct_b_mode_history"
+            )
             b_mode_payload_available = True
             b_mode_runtime_available = True
     alm_T, alm_E, alm_B = _build_reconstructed_payloads(

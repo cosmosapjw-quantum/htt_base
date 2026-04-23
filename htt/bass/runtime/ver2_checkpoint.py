@@ -41,6 +41,7 @@ class TierBCheckpointRecord:
     eta_prefix: np.ndarray
     photon_T_prefix: np.ndarray
     photon_E_prefix: np.ndarray
+    photon_B_prefix: np.ndarray
     neutrino_tower_prefix: np.ndarray
     baryon_local_prefix: np.ndarray
     cdm_local_prefix: np.ndarray
@@ -78,6 +79,7 @@ class TierBCheckpointRecord:
         for name, value in (
             ("photon_T_prefix", self.photon_T_prefix),
             ("photon_E_prefix", self.photon_E_prefix),
+            ("photon_B_prefix", self.photon_B_prefix),
             ("neutrino_tower_prefix", self.neutrino_tower_prefix),
             ("baryon_local_prefix", self.baryon_local_prefix),
             ("cdm_local_prefix", self.cdm_local_prefix),
@@ -94,6 +96,7 @@ class TierBCheckpointRecord:
             eta_prefix=np.asarray(self.eta_prefix, dtype=np.float64),
             photon_T_prefix=np.asarray(self.photon_T_prefix, dtype=np.float64),
             photon_E_prefix=np.asarray(self.photon_E_prefix, dtype=np.float64),
+            photon_B_prefix=np.asarray(self.photon_B_prefix, dtype=np.float64),
             neutrino_tower_prefix=np.asarray(self.neutrino_tower_prefix, dtype=np.float64),
             baryon_local_prefix=np.asarray(self.baryon_local_prefix, dtype=np.float64),
             cdm_local_prefix=np.asarray(self.cdm_local_prefix, dtype=np.float64),
@@ -151,6 +154,7 @@ def write_tier_b_restart_checkpoint(
         eta_prefix=np.asarray(restart_state.eta_prefix, dtype=np.float64),
         photon_T_prefix=np.asarray(restart_state.photon_T_prefix, dtype=np.float64),
         photon_E_prefix=np.asarray(restart_state.photon_E_prefix, dtype=np.float64),
+        photon_B_prefix=np.asarray(restart_state.photon_B_prefix, dtype=np.float64),
         neutrino_tower_prefix=np.asarray(restart_state.neutrino_tower_prefix, dtype=np.float64),
         baryon_local_prefix=np.asarray(restart_state.baryon_local_prefix, dtype=np.float64),
         cdm_local_prefix=np.asarray(restart_state.cdm_local_prefix, dtype=np.float64),
@@ -180,6 +184,17 @@ def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
             eta_prefix=np.asarray(data["eta_prefix"], dtype=np.float64),
             photon_T_prefix=np.asarray(data["photon_T_prefix"], dtype=np.float64),
             photon_E_prefix=np.asarray(data["photon_E_prefix"], dtype=np.float64),
+            photon_B_prefix=(
+                np.asarray(data["photon_B_prefix"], dtype=np.float64)
+                if "photon_B_prefix" in data
+                else np.zeros(
+                    (
+                        np.asarray(data["eta_prefix"]).shape[0],
+                        (int(np.asarray(data["L_max"]).item()) + 1) ** 2,
+                    ),
+                    dtype=np.float64,
+                )
+            ),
             neutrino_tower_prefix=np.asarray(data["neutrino_tower_prefix"], dtype=np.float64),
             baryon_local_prefix=(
                 np.asarray(data["baryon_local_prefix"], dtype=np.float64)

@@ -328,10 +328,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_b_mode_payload_available"] is False
     assert run.solver_output.metadata["layout_b_mode_payload_status"] == "zero_filled_not_evolved"
     assert run.solver_output.metadata["layout_b_mode_proxy_source"] == (
-        "hierarchy_rhs.exact_thomson_b_mode_history"
+        "ver2_native_integrator.main_state_photon_B"
     )
     assert run.solver_output.metadata["layout_b_mode_integration_scheme"] == (
-        "predictor_corrector_trapezoidal"
+        "main_state_coevolved"
     )
     assert run.solver_output.metadata["layout_auxiliary_coupling_passes"] == 2
     assert run.solver_output.metadata["layout_auxiliary_integration_scheme"] == (
@@ -523,11 +523,11 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "zero_filled_not_evolved"
     )
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_b_mode_proxy_source"] == (
-        "hierarchy_rhs.exact_thomson_b_mode_history"
+        "ver2_native_integrator.main_state_photon_B"
     )
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"][
         "layout_b_mode_integration_scheme"
-    ] == "predictor_corrector_trapezoidal"
+    ] == "main_state_coevolved"
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"][
         "layout_auxiliary_integration_scheme"
     ] == "predictor_corrector_trapezoidal"
@@ -670,18 +670,18 @@ def test_representative_orthogonal_families_execute_with_expected_propagator_rea
     assert run.execution_plan.runtime_decision.propagation_status == "pending"
     if bianchi_type == "V":
         assert run.solver_output.metadata["layout_b_mode_proxy_source"] == (
-            "hierarchy_rhs.exact_thomson_b_mode_history"
+            "ver2_native_integrator.main_state_photon_B"
         )
         if run.solver_output.metadata["b_mode_runtime_available"]:
             assert run.solver_output.metadata["b_mode_payload_status"] == (
-                "hierarchy_rhs_direct_b_mode_history"
+                "main_state_coevolved_b_mode_history"
             )
             assert run.solver_output.metadata["layout_b_mode_payload_available"] is True
             assert run.solver_output.metadata["layout_b_mode_payload_status"] == (
-                "hierarchy_rhs_direct_b_mode_history"
+                "main_state_coevolved_b_mode_history"
             )
             assert run.trace.canonical_projection.sector_status["ph_B"] == (
-                "hierarchy_rhs_direct_b_mode_history"
+                "main_state_coevolved_b_mode_history"
             )
         else:
             assert run.solver_output.metadata["layout_b_mode_payload_available"] is False

@@ -107,6 +107,14 @@ _CDM_LOCAL_DOF = 2
 _LOCAL_MATTER_DOF = _BARYON_LOCAL_DOF + _CDM_LOCAL_DOF
 
 
+def _tower_size(L_max: int) -> int:
+    return (int(L_max) + 1) ** 2
+
+
+def _radiation_state_size(L_max: int) -> int:
+    return 4 * _tower_size(L_max) + _LOCAL_MATTER_DOF
+
+
 def _interp_scalar(eta_grid: np.ndarray, values: np.ndarray, eta: float) -> float:
     return float(np.interp(float(eta), eta_grid, np.asarray(values, dtype=np.float64)))
 
@@ -537,6 +545,7 @@ class NativeTierBRestartState:
     eta_prefix: np.ndarray
     photon_T_prefix: np.ndarray
     photon_E_prefix: np.ndarray
+    photon_B_prefix: np.ndarray
     neutrino_tower_prefix: np.ndarray
     baryon_local_prefix: np.ndarray
     cdm_local_prefix: np.ndarray
@@ -555,6 +564,7 @@ class NativeTierBRestartState:
         for name, value in (
             ("photon_T_prefix", self.photon_T_prefix),
             ("photon_E_prefix", self.photon_E_prefix),
+            ("photon_B_prefix", self.photon_B_prefix),
             ("neutrino_tower_prefix", self.neutrino_tower_prefix),
             ("baryon_local_prefix", self.baryon_local_prefix),
             ("cdm_local_prefix", self.cdm_local_prefix),
@@ -733,10 +743,12 @@ def _pack_radiation_state(
     *,
     photon_T: PSTFHierarchyState,
     photon_E: PolarizationHierarchyState,
+    photon_B: PSTFHierarchyState | None = None,
     neutrino_tower: PSTFHierarchyState,
     baryon_local: np.ndarray | None = None,
     cdm_local: np.ndarray | None = None,
 ) -> np.ndarray:
+    b_mode = zero_hierarchy(photon_T.L) if photon_B is None else photon_B
     baryon = (
         np.zeros(_BARYON_LOCAL_DOF, dtype=np.float64)
         if baryon_local is None
@@ -755,6 +767,7 @@ def _pack_radiation_state(
         [
             pack_hierarchy(photon_T),
             pack_hierarchy(photon_E.E),
+            pack_hierarchy(b_mode),
             pack_hierarchy(neutrino_tower),
             baryon,
             cdm,
@@ -790,19 +803,27 @@ def _unpack_hierarchy_view(flat: np.ndarray, L: int) -> PSTFHierarchyState:
 
 def _unpack_radiation_state(
     y: np.ndarray, L_max: int
-) -> tuple[PSTFHierarchyState, PolarizationHierarchyState, PSTFHierarchyState, np.ndarray, np.ndarray]:
+) -> tuple[
+    PSTFHierarchyState,
+    PolarizationHierarchyState,
+    PSTFHierarchyState,
+    PSTFHierarchyState,
+    np.ndarray,
+    np.ndarray,
+]:
     arr = np.asarray(y, dtype=np.float64)
-    tower_size = (L_max + 1) ** 2
-    expected = 3 * tower_size + _LOCAL_MATTER_DOF
+    tower_size = _tower_size(L_max)
+    expected = _radiation_state_size(L_max)
     if arr.shape != (expected,):
         raise ValueError(f"radiation state shape {arr.shape} does not match L_max={L_max}")
     photon_T = _unpack_hierarchy_view(arr[:tower_size], L_max)
     photon_E = PolarizationHierarchyState(E=_unpack_hierarchy_view(arr[tower_size : 2 * tower_size], L_max))
-    neutrino_tower = _unpack_hierarchy_view(arr[2 * tower_size : 3 * tower_size], L_max)
-    local_offset = 3 * tower_size
+    photon_B = _unpack_hierarchy_view(arr[2 * tower_size : 3 * tower_size], L_max)
+    neutrino_tower = _unpack_hierarchy_view(arr[3 * tower_size : 4 * tower_size], L_max)
+    local_offset = 4 * tower_size
     baryon_local = np.asarray(arr[local_offset : local_offset + _BARYON_LOCAL_DOF], dtype=np.float64)
     cdm_local = np.asarray(arr[local_offset + _BARYON_LOCAL_DOF : local_offset + _LOCAL_MATTER_DOF], dtype=np.float64)
-    return photon_T, photon_E, neutrino_tower, baryon_local, cdm_local
+    return photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local
 
 
 def _seed_neutrino_tower_from_reduced(
@@ -982,6 +1003,12 @@ class Ver2TierBIntegrator:
             sector="ph_E",
             covered_mode_label=self._layout_covered_mode_label,
         )
+        self._coll_B_diag = _extract_operator_diag(
+            backend=backend,
+            mode_ops=self.mode_ops,
+            sector="ph_B",
+            covered_mode_label=self._layout_covered_mode_label,
+        )
         _ = sample_hierarchy_background(
             float(self.background_monitor.eta[0]),
             bg_table=self.bg_table,
@@ -1042,6 +1069,7 @@ class Ver2TierBIntegrator:
         return _pack_radiation_state(
             photon_T=seeded.photon_T,
             photon_E=seeded.photon_E,
+            photon_B=zero_hierarchy(self.config.L_max),
             neutrino_tower=seeded.neutrino_tower,
             baryon_local=baryon_local,
             cdm_local=cdm_local,
@@ -1323,13 +1351,14 @@ class Ver2TierBIntegrator:
         *,
         photon_T: PSTFHierarchyState,
         photon_E: PolarizationHierarchyState,
+        photon_B: PSTFHierarchyState,
         neutrino_tower: PSTFHierarchyState,
         baryon_local: np.ndarray | None,
         snapshot: _EtaRuntimeSnapshot,
         need_explicit: bool,
         need_full: bool,
         tca_tracker: list[bool] | None = None,
-    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         tca_active = bool(
             isinstance(self.closure, TCAClosure)
             and snapshot.gamma_t > 0.0
@@ -1338,11 +1367,12 @@ class Ver2TierBIntegrator:
         )
         explicit_required = bool(need_explicit or tca_active or snapshot.gamma_t <= 0.0)
         full_required = bool(need_full or tca_active)
-        rhs_T_explicit = rhs_E_explicit = None
+        rhs_T_explicit = rhs_E_explicit = rhs_B_explicit = None
         if explicit_required:
-            rhs_T_explicit, rhs_E_explicit, rhs_nu = self._radiation_rhs_components(
+            rhs_T_explicit, rhs_E_explicit, rhs_B_explicit, rhs_nu = self._radiation_rhs_components(
                 photon_T=photon_T,
                 photon_E=photon_E,
+                photon_B=photon_B,
                 neutrino_tower=neutrino_tower,
                 background=snapshot.background,
                 collision_aux=None,
@@ -1356,9 +1386,10 @@ class Ver2TierBIntegrator:
             )
 
         if full_required and snapshot.gamma_t > 0.0:
-            rhs_T_full, rhs_E_full, _ = self._radiation_rhs_components(
+            rhs_T_full, rhs_E_full, rhs_B_full, _ = self._radiation_rhs_components(
                 photon_T=photon_T,
                 photon_E=photon_E,
+                photon_B=photon_B,
                 neutrino_tower=neutrino_tower,
                 background=snapshot.background,
                 collision_aux=self._collision_aux_from_snapshot(
@@ -1369,16 +1400,18 @@ class Ver2TierBIntegrator:
             ),
         )
         else:
-            if rhs_T_explicit is None or rhs_E_explicit is None:
-                rhs_T_explicit, rhs_E_explicit, _ = self._radiation_rhs_components(
+            if rhs_T_explicit is None or rhs_E_explicit is None or rhs_B_explicit is None:
+                rhs_T_explicit, rhs_E_explicit, rhs_B_explicit, _ = self._radiation_rhs_components(
                     photon_T=photon_T,
                     photon_E=photon_E,
+                    photon_B=photon_B,
                     neutrino_tower=neutrino_tower,
                     background=snapshot.background,
                     collision_aux=None,
                 )
             rhs_T_full = np.asarray(rhs_T_explicit, dtype=np.float64)
             rhs_E_full = np.asarray(rhs_E_explicit, dtype=np.float64)
+            rhs_B_full = np.asarray(rhs_B_explicit, dtype=np.float64)
 
         if tca_active:
             assert rhs_T_explicit is not None and rhs_E_explicit is not None
@@ -1413,8 +1446,14 @@ class Ver2TierBIntegrator:
                 if rhs_E_explicit is not None
                 else np.asarray(rhs_E_full, dtype=np.float64)
             ),
+            (
+                np.asarray(rhs_B_explicit, dtype=np.float64)
+                if rhs_B_explicit is not None
+                else np.asarray(rhs_B_full, dtype=np.float64)
+            ),
             np.asarray(rhs_T_full, dtype=np.float64),
             np.asarray(rhs_E_full, dtype=np.float64),
+            np.asarray(rhs_B_full, dtype=np.float64),
             np.asarray(rhs_nu, dtype=np.float64),
         )
 
@@ -1446,10 +1485,11 @@ class Ver2TierBIntegrator:
         *,
         photon_T: PSTFHierarchyState,
         photon_E: PolarizationHierarchyState,
+        photon_B: PSTFHierarchyState,
         neutrino_tower: PSTFHierarchyState,
         background,
         collision_aux: _ProjectedCollisionAux | None,
-    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         rhs_T = hierarchy_rhs_photon_from_state(
             photon_T,
             background=background,
@@ -1464,13 +1504,20 @@ class Ver2TierBIntegrator:
             collision=self._e_collision if collision_aux is not None else _ZERO_COLLISION,
             collision_aux=collision_aux,
         )
+        rhs_B = hierarchy_rhs_photon_from_state(
+            photon_B,
+            background=background,
+            closure=self.closure,
+            collision=self._b_collision if collision_aux is not None else _ZERO_COLLISION,
+            collision_aux=collision_aux,
+        )
         rhs_nu = hierarchy_rhs_neutrino_from_state(
             neutrino_tower,
             background=background,
             closure=self.closure,
             neutrino_background=self._neutrino_background,
         )
-        return rhs_T, rhs_E, rhs_nu
+        return rhs_T, rhs_E, rhs_B, rhs_nu
 
     def _local_matter_rhs(
         self,
@@ -1551,11 +1598,15 @@ class Ver2TierBIntegrator:
         *,
         tca_tracker: list[bool] | None = None,
     ) -> np.ndarray:
-        photon_T, photon_E, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(y, self.config.L_max)
+        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(
+            y,
+            self.config.L_max,
+        )
         snapshot = self._eta_runtime_snapshot(float(eta))
-        _, _, rhs_T, rhs_E, rhs_nu = self._rhs_components_from_snapshot(
+        _, _, _, rhs_T, rhs_E, rhs_B, rhs_nu = self._rhs_components_from_snapshot(
             photon_T=photon_T,
             photon_E=photon_E,
+            photon_B=photon_B,
             neutrino_tower=neutrino_tower,
             baryon_local=baryon_local,
             snapshot=snapshot,
@@ -1570,14 +1621,18 @@ class Ver2TierBIntegrator:
             theta_1=_theta_1_from_temperature_state(photon_T),
             theta_1_dot=float(rhs_T[sum(2 * ell + 1 for ell in range(1)) + 1]) if self.config.L_max >= 1 else 0.0,
         )
-        return np.concatenate([rhs_T, rhs_E, rhs_nu, baryon_rhs, cdm_rhs])
+        return np.concatenate([rhs_T, rhs_E, rhs_B, rhs_nu, baryon_rhs, cdm_rhs])
 
     def _explicit_rhs(self, eta: float, y: np.ndarray) -> np.ndarray:
-        photon_T, photon_E, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(y, self.config.L_max)
+        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(
+            y,
+            self.config.L_max,
+        )
         snapshot = self._eta_runtime_snapshot(float(eta))
-        rhs_T, rhs_E, _, _, rhs_nu = self._rhs_components_from_snapshot(
+        rhs_T, rhs_E, rhs_B, _, _, _, rhs_nu = self._rhs_components_from_snapshot(
             photon_T=photon_T,
             photon_E=photon_E,
+            photon_B=photon_B,
             neutrino_tower=neutrino_tower,
             baryon_local=baryon_local,
             snapshot=snapshot,
@@ -1585,7 +1640,9 @@ class Ver2TierBIntegrator:
             need_full=False,
         )
         del baryon_local, cdm_local
-        return np.concatenate([rhs_T, rhs_E, rhs_nu, np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64)])
+        return np.concatenate(
+            [rhs_T, rhs_E, rhs_B, rhs_nu, np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64)]
+        )
 
     def _implicit_rhs(
         self,
@@ -1594,28 +1651,34 @@ class Ver2TierBIntegrator:
         *,
         tca_tracker: list[bool] | None = None,
     ) -> np.ndarray:
-        photon_T, photon_E, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(y, self.config.L_max)
+        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(
+            y,
+            self.config.L_max,
+        )
         snapshot = self._eta_runtime_snapshot(float(eta))
-        rhs_T_explicit, rhs_E_explicit, rhs_T_full, rhs_E_full, rhs_nu = self._rhs_components_from_snapshot(
+        rhs_T_explicit, rhs_E_explicit, rhs_B_explicit, rhs_T_full, rhs_E_full, rhs_B_full, rhs_nu = (
+            self._rhs_components_from_snapshot(
             photon_T=photon_T,
             photon_E=photon_E,
+            photon_B=photon_B,
             neutrino_tower=neutrino_tower,
             baryon_local=baryon_local,
             snapshot=snapshot,
             need_explicit=True,
             need_full=True,
             tca_tracker=tca_tracker,
-        )
+        ))
         implicit = np.concatenate(
             [
                 np.asarray(rhs_T_full - rhs_T_explicit, dtype=np.float64),
                 np.asarray(rhs_E_full - rhs_E_explicit, dtype=np.float64),
+                np.asarray(rhs_B_full - rhs_B_explicit, dtype=np.float64),
                 np.zeros_like(rhs_nu),
                 np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64),
             ]
         )
-        tower_size = (self.config.L_max + 1) ** 2
-        implicit[2 * tower_size :] = 0.0
+        tower_size = _tower_size(self.config.L_max)
+        implicit[3 * tower_size :] = 0.0
         baryon_rhs, cdm_rhs = self._local_matter_rhs(
             snapshot=snapshot,
             baryon_local=baryon_local,
@@ -1623,8 +1686,8 @@ class Ver2TierBIntegrator:
             theta_1=_theta_1_from_temperature_state(photon_T),
             theta_1_dot=float(rhs_T_full[sum(2 * ell + 1 for ell in range(1)) + 1]) if self.config.L_max >= 1 else 0.0,
         )
-        implicit[3 * tower_size : 3 * tower_size + _BARYON_LOCAL_DOF] = baryon_rhs
-        implicit[3 * tower_size + _BARYON_LOCAL_DOF : 3 * tower_size + _LOCAL_MATTER_DOF] = cdm_rhs
+        implicit[4 * tower_size : 4 * tower_size + _BARYON_LOCAL_DOF] = baryon_rhs
+        implicit[4 * tower_size + _BARYON_LOCAL_DOF : 4 * tower_size + _LOCAL_MATTER_DOF] = cdm_rhs
         return implicit
 
     def _orthogonal_implicit_step(
@@ -1635,7 +1698,10 @@ class Ver2TierBIntegrator:
         dt: float,
         tca_tracker: list[bool],
     ) -> np.ndarray:
-        photon_T, photon_E, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(stage, self.config.L_max)
+        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(
+            stage,
+            self.config.L_max,
+        )
         background = self._background_snapshot(float(eta))
         gamma_t = _resolved_gamma_t(
             eta=float(eta),
@@ -1657,8 +1723,10 @@ class Ver2TierBIntegrator:
         gamma_dt = float(dt) * float(gamma_t)
         out_T = photon_T.copy()
         out_E = photon_E.E.copy()
+        out_B = photon_B.copy()
         coll_T_diag = self._coll_T_diag
         coll_E_diag = self._coll_E_diag
+        coll_B_diag = self._coll_B_diag
 
         if self.config.L_max >= 1:
             if coll_T_diag is None:
@@ -1681,6 +1749,12 @@ class Ver2TierBIntegrator:
             E2_rhs = np.asarray(photon_E.E.tensors[2].components, dtype=np.float64)
             out_T.tensors[2].components = (A22 * T2_rhs - A12 * E2_rhs) / det
             out_E.tensors[2].components = (-A21 * T2_rhs + A11 * E2_rhs) / det
+            if coll_B_diag is None:
+                B2_dt = np.full_like(photon_B.tensors[2].components, gamma_dt, dtype=np.float64)
+            else:
+                base = sum(2 * l + 1 for l in range(2))
+                B2_dt = float(dt) * np.asarray(coll_B_diag[base : base + 5], dtype=np.float64)
+            out_B.tensors[2].components = photon_B.tensors[2].components / (1.0 + B2_dt)
 
             if tca_active:
                 rhs_T_free, rhs_E_free = self._collisionless_photon_rhs(
@@ -1718,8 +1792,13 @@ class Ver2TierBIntegrator:
                 E_dt = np.full(width, gamma_dt, dtype=np.float64)
             else:
                 E_dt = float(dt) * np.asarray(coll_E_diag[base : base + width], dtype=np.float64)
+            if coll_B_diag is None:
+                B_dt = np.full(width, gamma_dt, dtype=np.float64)
+            else:
+                B_dt = float(dt) * np.asarray(coll_B_diag[base : base + width], dtype=np.float64)
             out_T.tensors[ell].components = photon_T.tensors[ell].components / (1.0 + T_dt)
             out_E.tensors[ell].components = photon_E.E.tensors[ell].components / (1.0 + E_dt)
+            out_B.tensors[ell].components = photon_B.tensors[ell].components / (1.0 + B_dt)
 
         if self.config.L_max >= 2 and ell2_has_tca_override:
             # TCA ownership replaces only the m=0 quadrupole entry; keep the
@@ -1754,6 +1833,7 @@ class Ver2TierBIntegrator:
         return _pack_radiation_state(
             photon_T=out_T,
             photon_E=PolarizationHierarchyState(E=out_E),
+            photon_B=out_B,
             neutrino_tower=neutrino_tower,
             baryon_local=baryon_next,
             cdm_local=cdm_next,
@@ -2583,6 +2663,11 @@ class Ver2TierBIntegrator:
                 coupled.metadata.get("b_mode_integration_scheme", coupled.metadata.get("integration_scheme", "")),
             )
         )
+        b_mode_sector_status_resolved = (
+            "main_state_coevolved_b_mode_history"
+            if b_mode_owner == "ver2_native_integrator.main_state_photon_B"
+            else "hierarchy_rhs_direct_b_mode_history"
+        )
         canonical_projection = project_runtime_native_state(
             layout=layout,
             layout_manifest=getattr(mode_ops, "layout_metadata", {}),
@@ -2591,7 +2676,7 @@ class Ver2TierBIntegrator:
             photon_B=np.asarray(b_history[-1], dtype=np.float64),
             photon_B_history_eta=np.asarray(auxiliary_bundle.eta, dtype=np.float64),
             photon_B_history_samples=b_history,
-            b_sector_status="hierarchy_rhs_direct_b_mode_history",
+            b_sector_status=b_mode_sector_status_resolved,
             neutrino_tower=np.asarray(neutrino_tower[-1], dtype=np.float64),
             source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
             baryon_block=np.asarray(coupled.baryon_history[-1], dtype=np.float64),
@@ -3160,6 +3245,7 @@ class Ver2TierBIntegrator:
         eta: np.ndarray,
         photon_T_tower: np.ndarray,
         photon_E_tower: np.ndarray,
+        photon_B_tower: np.ndarray,
         neutrino_tower: np.ndarray,
         baryon_local_history: np.ndarray,
         cdm_local_history: np.ndarray,
@@ -3249,6 +3335,13 @@ class Ver2TierBIntegrator:
                 "cdm": tuple(local_matter_history.cdm_labels),
             },
         }
+        solver_info["live_b_mode_history_metadata"] = {
+            "owner": "ver2_native_integrator.main_state_photon_B",
+            "history_sample_count": int(eta_arr.size),
+            "integration_scheme": "main_state_coevolved",
+            "radiation_rhs_owner": "hierarchy_rhs_photon_from_state",
+            "collision_owner": "projected_thomson_source.polarization_B",
+        }
         return IntegrationResult(
             eta=eta_arr,
             a=a_arr,
@@ -3262,6 +3355,7 @@ class Ver2TierBIntegrator:
             solver_info=solver_info,
             tca_active_mask=tca_mask,
             neutrino_tower=np.asarray(neutrino_tower, dtype=np.float64),
+            photon_B_tower=np.asarray(photon_B_tower, dtype=np.float64),
             baryon_local_history=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
             cdm_local_history=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
         )
@@ -3287,6 +3381,7 @@ class Ver2TierBIntegrator:
             eta_segments: list[np.ndarray] = []
             photon_T_segments: list[np.ndarray] = []
             photon_E_segments: list[np.ndarray] = []
+            photon_B_segments: list[np.ndarray] = []
             neutrino_segments: list[np.ndarray] = []
             baryon_segments: list[np.ndarray] = []
             cdm_segments: list[np.ndarray] = []
@@ -3302,6 +3397,7 @@ class Ver2TierBIntegrator:
             eta_segments = [np.asarray(restart_state.eta_prefix, dtype=np.float64)]
             photon_T_segments = [np.asarray(restart_state.photon_T_prefix, dtype=np.float64)]
             photon_E_segments = [np.asarray(restart_state.photon_E_prefix, dtype=np.float64)]
+            photon_B_segments = [np.asarray(restart_state.photon_B_prefix, dtype=np.float64)]
             neutrino_segments = [np.asarray(restart_state.neutrino_tower_prefix, dtype=np.float64)]
             baryon_segments = [np.asarray(restart_state.baryon_local_prefix, dtype=np.float64)]
             cdm_segments = [np.asarray(restart_state.cdm_local_prefix, dtype=np.float64)]
@@ -3334,18 +3430,21 @@ class Ver2TierBIntegrator:
                     np.asarray(sol.y[tower_size : 2 * tower_size].T, dtype=np.float64)[start_offset:]
                 )
                 neutrino_segments.append(
+                    np.asarray(sol.y[3 * tower_size : 4 * tower_size].T, dtype=np.float64)[start_offset:]
+                )
+                photon_B_segments.append(
                     np.asarray(sol.y[2 * tower_size : 3 * tower_size].T, dtype=np.float64)[start_offset:]
                 )
                 baryon_segments.append(
                     np.asarray(
-                        sol.y[3 * tower_size : 3 * tower_size + _BARYON_LOCAL_DOF].T,
+                        sol.y[4 * tower_size : 4 * tower_size + _BARYON_LOCAL_DOF].T,
                         dtype=np.float64,
                     )[start_offset:]
                 )
                 cdm_segments.append(
                     np.asarray(
                         sol.y[
-                            3 * tower_size + _BARYON_LOCAL_DOF : 3 * tower_size + _LOCAL_MATTER_DOF
+                            4 * tower_size + _BARYON_LOCAL_DOF : 4 * tower_size + _LOCAL_MATTER_DOF
                         ].T,
                         dtype=np.float64,
                     )[start_offset:]
@@ -3369,18 +3468,20 @@ class Ver2TierBIntegrator:
                 eta_chunk = np.asarray(sol.t, dtype=np.float64)[start_offset:]
                 photon_T_chunk = np.asarray(sol.y[:tower_size].T, dtype=np.float64)[start_offset:]
                 photon_E_chunk = np.asarray(sol.y[tower_size : 2 * tower_size].T, dtype=np.float64)[start_offset:]
-                neutrino_chunk = np.asarray(sol.y[2 * tower_size : 3 * tower_size].T, dtype=np.float64)[start_offset:]
+                photon_B_chunk = np.asarray(sol.y[2 * tower_size : 3 * tower_size].T, dtype=np.float64)[start_offset:]
+                neutrino_chunk = np.asarray(sol.y[3 * tower_size : 4 * tower_size].T, dtype=np.float64)[start_offset:]
                 baryon_chunk = np.asarray(
-                    sol.y[3 * tower_size : 3 * tower_size + _BARYON_LOCAL_DOF].T,
+                    sol.y[4 * tower_size : 4 * tower_size + _BARYON_LOCAL_DOF].T,
                     dtype=np.float64,
                 )[start_offset:]
                 cdm_chunk = np.asarray(
-                    sol.y[3 * tower_size + _BARYON_LOCAL_DOF : 3 * tower_size + _LOCAL_MATTER_DOF].T,
+                    sol.y[4 * tower_size + _BARYON_LOCAL_DOF : 4 * tower_size + _LOCAL_MATTER_DOF].T,
                     dtype=np.float64,
                 )[start_offset:]
                 eta_segments.append(eta_chunk)
                 photon_T_segments.append(photon_T_chunk)
                 photon_E_segments.append(photon_E_chunk)
+                photon_B_segments.append(photon_B_chunk)
                 neutrino_segments.append(neutrino_chunk)
                 baryon_segments.append(baryon_chunk)
                 cdm_segments.append(cdm_chunk)
@@ -3396,6 +3497,7 @@ class Ver2TierBIntegrator:
                             eta_prefix=np.concatenate(eta_segments, axis=0),
                             photon_T_prefix=np.vstack(photon_T_segments),
                             photon_E_prefix=np.vstack(photon_E_segments),
+                            photon_B_prefix=np.vstack(photon_B_segments),
                             neutrino_tower_prefix=np.vstack(neutrino_segments),
                             baryon_local_prefix=np.vstack(baryon_segments),
                             cdm_local_prefix=np.vstack(cdm_segments),
@@ -3406,6 +3508,7 @@ class Ver2TierBIntegrator:
             eta=np.concatenate(eta_segments, axis=0),
             photon_T_tower=np.vstack(photon_T_segments),
             photon_E_tower=np.vstack(photon_E_segments),
+            photon_B_tower=np.vstack(photon_B_segments),
             neutrino_tower=np.vstack(neutrino_segments),
             baryon_local_history=np.vstack(baryon_segments),
             cdm_local_history=np.vstack(cdm_segments),
