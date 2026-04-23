@@ -217,6 +217,7 @@ class IntegrationResult:
     tca_active_mask: np.ndarray = field(repr=False)
     neutrino_tower: np.ndarray | None = field(default=None, repr=False)
     photon_B_tower: np.ndarray | None = field(default=None, repr=False)
+    photon_B_history_by_mode_label: object | None = field(default=None, repr=False)
     baryon_local_history: np.ndarray | None = field(default=None, repr=False)
     cdm_local_history: np.ndarray | None = field(default=None, repr=False)
     residual_local_history: np.ndarray | None = field(default=None, repr=False)

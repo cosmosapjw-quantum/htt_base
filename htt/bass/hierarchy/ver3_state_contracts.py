@@ -203,8 +203,10 @@ def project_runtime_native_state(
     photon_T: PSTFHierarchyState | np.ndarray,
     photon_E: PolarizationHierarchyState | PSTFHierarchyState | np.ndarray,
     photon_B: PSTFHierarchyState | np.ndarray | None = None,
+    photon_B_blocks_by_mode_label: Mapping[str, np.ndarray] | None = None,
     photon_B_history_eta: np.ndarray | None = None,
     photon_B_history_samples: np.ndarray | None = None,
+    photon_B_history_by_mode_label: Mapping[str, np.ndarray] | None = None,
     b_sector_status: str | None = None,
     neutrino_tower: PSTFHierarchyState | np.ndarray,
     source_template: np.ndarray,
@@ -303,8 +305,40 @@ def project_runtime_native_state(
         vector,
         sector="ph_B",
     )
+    if photon_B_blocks_by_mode_label is not None:
+        polarization_blocks_by_mode_label = {}
+        for mu, values in dict(photon_B_blocks_by_mode_label).items():
+            if mu not in layout.mode_labels:
+                raise ValueError(f"photon_B_blocks_by_mode_label contains unknown mode label {mu!r}")
+            arr = np.asarray(values, dtype=np.float64)
+            if arr.shape != tower_B.shape:
+                raise ValueError(
+                    "photon_B_blocks_by_mode_label values must have shape (harmonic_state_size,)"
+                )
+            polarization_blocks_by_mode_label[str(mu)] = arr
+            covered_mode_labels.add(str(mu))
+            slot = 0
+            for ell in range(L + 1):
+                for m in range(-ell, ell + 1):
+                    vector[flatten(layout, str(mu), "ph_B", ell, m)] = float(arr[slot])
+                    slot += 1
     polarization_history_by_mode_label = {}
-    if b_history is not None:
+    if photon_B_history_by_mode_label is not None:
+        for mu, values in dict(photon_B_history_by_mode_label).items():
+            if mu not in layout.mode_labels:
+                raise ValueError(f"photon_B_history_by_mode_label contains unknown mode label {mu!r}")
+            arr = np.asarray(values, dtype=np.float64)
+            if arr.ndim != 2 or arr.shape[1] != tower_B.shape[0]:
+                raise ValueError(
+                    "photon_B_history_by_mode_label values must have shape (n_samples, harmonic_state_size)"
+                )
+            if b_history_eta is None or b_history_eta.shape != (arr.shape[0],):
+                raise ValueError(
+                    "photon_B_history_eta must be provided with one entry per sampled B row"
+                )
+            polarization_history_by_mode_label[str(mu)] = arr
+            covered_mode_labels.add(str(mu))
+    elif b_history is not None:
         polarization_history_by_mode_label = _resolve_harmonic_history_by_mode_label(
             layout,
             b_history,

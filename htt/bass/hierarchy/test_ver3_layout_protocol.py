@@ -488,3 +488,54 @@ def test_project_runtime_native_state_can_embed_postprocessed_b_mode_proxy() -> 
     assert np.asarray(projection.hierarchy_state.photon_polarization_block["B_history"]).shape == (2, size)
     assert set(projection.hierarchy_state.photon_polarization_block["mode_label_blocks"]) == {"m0", "m+2"}
     assert set(projection.hierarchy_state.photon_polarization_block["mode_label_history"]) == {"m0", "m+2"}
+
+
+def test_project_runtime_native_state_can_preserve_mode_label_resolved_b_history() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    ops = assemble_hierarchy_ops(
+        {
+            "branch": "orthogonal",
+            "opacity_data": {"Gamma_T": 2.0},
+            "source_tables": {"visibility_amplitude": 1.25},
+        },
+        backend,
+        truncation,
+        {"polarization_source": 0.5},
+    )
+    size = (layout.ell_max + 1) ** 2
+    b_m0 = np.zeros(size, dtype=np.float64)
+    b_m0[6] = 0.1
+    b_m2 = np.zeros(size, dtype=np.float64)
+    b_m2[8] = 0.3
+    history_m0 = np.vstack([np.zeros(size, dtype=np.float64), b_m0])
+    history_m2 = np.vstack([np.zeros(size, dtype=np.float64), b_m2])
+    projection = project_runtime_native_state(
+        layout=layout,
+        layout_manifest=ops.layout_metadata,
+        photon_T=np.arange(size, dtype=np.float64),
+        photon_E=np.arange(size, dtype=np.float64) + 100.0,
+        photon_B=b_m0,
+        photon_B_blocks_by_mode_label={"m0": b_m0, "m+2": b_m2},
+        photon_B_history_eta=np.array([0.1, 0.2], dtype=np.float64),
+        photon_B_history_samples=history_m0,
+        photon_B_history_by_mode_label={"m0": history_m0, "m+2": history_m2},
+        neutrino_tower=np.arange(size, dtype=np.float64) + 200.0,
+        source_template=np.asarray(ops.source_template, dtype=np.float64),
+    )
+    np.testing.assert_allclose(
+        np.asarray(projection.hierarchy_state.photon_polarization_block["mode_label_blocks"]["m0"], dtype=np.float64),
+        b_m0,
+    )
+    np.testing.assert_allclose(
+        np.asarray(projection.hierarchy_state.photon_polarization_block["mode_label_blocks"]["m+2"], dtype=np.float64),
+        b_m2,
+    )
+    np.testing.assert_allclose(
+        np.asarray(projection.hierarchy_state.photon_polarization_block["mode_label_history"]["m+2"], dtype=np.float64),
+        history_m2,
+    )

@@ -2387,6 +2387,42 @@ class Ver2TierBIntegrator:
         result.solver_info["live_b_mode_history_metadata"] = dict(b_metadata)
         return np.asarray(b_rows, dtype=np.float64), dict(b_metadata)
 
+    def _ensure_live_b_mode_history_by_mode_label(
+        self,
+        result: IntegrationResult,
+    ) -> tuple[dict[str, np.ndarray], dict[str, object]]:
+        cached = getattr(result, "photon_B_history_by_mode_label", None)
+        metadata = result.solver_info.get("live_b_mode_history_by_mode_label_metadata")
+        if isinstance(cached, Mapping) and isinstance(metadata, Mapping):
+            return (
+                {str(mu): np.asarray(values, dtype=np.float64) for mu, values in cached.items()},
+                dict(metadata),
+            )
+        b_history, _ = self._ensure_live_b_mode_history(result)
+        resolved: dict[str, np.ndarray] = {
+            str(mu): np.zeros_like(np.asarray(b_history, dtype=np.float64))
+            for mu in self._layout.mode_labels
+        }
+        for ell in range(self.config.L_max + 1):
+            offset = sum(2 * level + 1 for level in range(ell))
+            for m in range(-ell, ell + 1):
+                slot = offset + (m + ell)
+                mode_label = _resolve_projection_mode_label(
+                    self._layout.mode_labels,
+                    self._layout_covered_mode_label,
+                    m=m,
+                )
+                resolved[str(mode_label)][:, slot] = np.asarray(b_history[:, slot], dtype=np.float64)
+        metadata_out = {
+            "owner": "ver2_native_integrator.main_state_mode_label_photon_B",
+            "history_sample_count": int(len(result.eta)),
+            "mode_labels": list(self._layout.mode_labels),
+            "covered_mode_label": self._layout_covered_mode_label,
+        }
+        result.photon_B_history_by_mode_label = resolved
+        result.solver_info["live_b_mode_history_by_mode_label_metadata"] = dict(metadata_out)
+        return resolved, metadata_out
+
     def _ensure_live_local_matter_history(
         self,
         result: IntegrationResult,
@@ -2785,6 +2821,7 @@ class Ver2TierBIntegrator:
             ),
         }
         b_history = np.asarray(coupled.photon_B_history, dtype=np.float64)
+        b_history_by_mode_label, _ = self._ensure_live_b_mode_history_by_mode_label(result)
         result.photon_B_tower = np.asarray(b_history, dtype=np.float64)
         b_metadata = dict(result.solver_info.get("live_b_mode_history_metadata", {}))
         b_mode_owner = str(coupled.metadata.get("b_mode_owner", coupled.metadata["owner"]))
@@ -2805,8 +2842,16 @@ class Ver2TierBIntegrator:
             photon_T=np.asarray(result.photon_T_tower[-1], dtype=np.float64),
             photon_E=np.asarray(result.photon_E_tower[-1], dtype=np.float64),
             photon_B=np.asarray(b_history[-1], dtype=np.float64),
+            photon_B_blocks_by_mode_label={
+                str(mu): np.asarray(values[-1], dtype=np.float64)
+                for mu, values in b_history_by_mode_label.items()
+            },
             photon_B_history_eta=np.asarray(auxiliary_bundle.eta, dtype=np.float64),
             photon_B_history_samples=b_history,
+            photon_B_history_by_mode_label={
+                str(mu): np.asarray(values, dtype=np.float64)
+                for mu, values in b_history_by_mode_label.items()
+            },
             b_sector_status=b_mode_sector_status_resolved,
             neutrino_tower=np.asarray(neutrino_tower[-1], dtype=np.float64),
             source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
@@ -3518,7 +3563,7 @@ class Ver2TierBIntegrator:
             "radiation_rhs_owner": "hierarchy_rhs_photon_from_state",
             "collision_owner": "projected_thomson_source.polarization_B",
         }
-        return IntegrationResult(
+        result = IntegrationResult(
             eta=eta_arr,
             a=a_arr,
             Sigma_plus=sigma_plus,
@@ -3538,6 +3583,11 @@ class Ver2TierBIntegrator:
             baryon_local_history_by_mode_label=baryon_by_mode_label,
             cdm_local_history_by_mode_label=cdm_by_mode_label,
         )
+        result.photon_B_history_by_mode_label = {
+            str(mu): np.asarray(values, dtype=np.float64)
+            for mu, values in self._ensure_live_b_mode_history_by_mode_label(result)[0].items()
+        }
+        return result
 
     def run(
         self,
