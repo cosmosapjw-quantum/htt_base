@@ -53,13 +53,33 @@ def test_outer_to_inner_order_is_mu_then_sector_then_ell_then_m() -> None:
     assert first < later_ell < later_sector < second_mu
 
 
-def test_mass_matrix_is_identity_in_frozen_layout() -> None:
+def test_mass_matrix_is_positive_diagonal_identity_like_pack() -> None:
     backend = _backend()
     truncation = {"ell_max": 3, "mode_labels": ("m0",)}
     layout = build_hierarchy_layout(backend, truncation)
     M = assemble_mass_matrix({}, backend, truncation)
     assert M.shape == (layout.size, layout.size)
-    np.testing.assert_allclose(M.diagonal(), 1.0)
+    diag = np.asarray(M.diagonal(), dtype=np.float64)
+    assert np.all(diag > 0.0)
+    assert not np.allclose(diag, 1.0)
+
+
+def test_mass_matrix_tracks_branch_and_sector_weights() -> None:
+    backend = _backend()
+    truncation = {"ell_max": 2, "mode_labels": ("m0",)}
+    layout = build_hierarchy_layout(backend, truncation)
+    M_orth = assemble_mass_matrix({"branch": "orthogonal"}, backend, truncation)
+    M_tilt = assemble_mass_matrix({"branch": "tilted"}, backend, truncation)
+    orth_diag = np.asarray(M_orth.diagonal(), dtype=np.float64)
+    tilt_diag = np.asarray(M_tilt.diagonal(), dtype=np.float64)
+    i_idx = flatten(layout, "m0", "ph_I", 2, 0)
+    e_idx = flatten(layout, "m0", "ph_E", 2, 0)
+    b_idx = flatten(layout, "m0", "ph_B", 2, 0)
+    baryon_idx = flatten(layout, "m0", "baryon", None, None, local_dof=0)
+    assert tilt_diag[i_idx] > orth_diag[i_idx]
+    assert orth_diag[e_idx] > orth_diag[i_idx]
+    assert orth_diag[b_idx] >= orth_diag[e_idx]
+    assert orth_diag[baryon_idx] != orth_diag[i_idx]
 
 
 def test_explicit_and_implicit_blocks_match_layout_shape_and_are_sparse() -> None:
@@ -104,6 +124,7 @@ def test_layout_manifest_records_backend_metadata() -> None:
     assert manifest["mode_labels"] == ["m0"]
     assert manifest["boundary_policy"] == "cartesian_regular"
     assert manifest["operator_realization"] == "geometry_opacity_coupled_sparse_operator"
+    assert manifest["mass_matrix_realization"] == "family_branch_sector_weighted_diagonal"
     assert manifest["exact_family_operator_available"] is True
 
 

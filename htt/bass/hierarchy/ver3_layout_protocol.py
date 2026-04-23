@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import Mapping
 
 import numpy as np
-from scipy.sparse import csr_matrix, eye
+from scipy.sparse import csr_matrix, diags
 
 from bass.los.family_backend_protocol import FamilyBackend
 from bass.validation import GateBundle, make_gate_bundle
@@ -184,6 +184,7 @@ def build_layout_manifest(
         "boundary_policy": required_metadata["boundary_policy"],
         "release_status": required_metadata["release_status"],
         "operator_realization": "geometry_opacity_coupled_sparse_operator",
+        "mass_matrix_realization": "family_branch_sector_weighted_diagonal",
         "exact_family_operator_available": exact_operator,
         "approximate_family_operator_available": not exact_operator,
         "truncation_metadata": dict(truncation),
@@ -270,7 +271,44 @@ def assemble_mass_matrix(
     truncation: Mapping[str, object],
 ) -> csr_matrix:
     layout = build_hierarchy_layout(backend, truncation)
-    return eye(layout.size, format="csr", dtype=np.float64)
+    scales = _operator_scales(bg, backend)
+    geom_scale = float(scales["geom_scale"])
+    branch_scale = float(scales["branch_scale"])
+    polarization_scale = float(scales["polarization_scale"])
+    twist_scale = float(scales["twist_scale"])
+    source_scale = float(scales["source_scale"])
+    diag = np.ones(layout.size, dtype=np.float64)
+    mu_count = max(len(layout.mode_labels), 1)
+    for mu_index, mu in enumerate(layout.mode_labels):
+        mu_weight = 1.0 + 0.03 * (mu_index / mu_count)
+        for sector in layout.sector_order:
+            if sector in _HARMONIC_SECTORS:
+                for ell in range(layout.ell_max + 1):
+                    ell_weight = 1.0 + 0.04 * ell + 0.015 * geom_scale
+                    sector_weight = 1.0
+                    if sector == "ph_I":
+                        sector_weight = branch_scale
+                    elif sector == "ph_E":
+                        sector_weight = branch_scale * (1.08 * polarization_scale)
+                    elif sector == "ph_B":
+                        sector_weight = branch_scale * (1.12 + 0.5 * twist_scale) * polarization_scale
+                    elif sector == "nu_I":
+                        sector_weight = 1.0 + 0.1 * branch_scale + 0.02 * geom_scale
+                    block_weight = mu_weight * sector_weight * ell_weight
+                    for m in range(-ell, ell + 1):
+                        diag[flatten(layout, mu, sector, ell, m)] = block_weight
+                continue
+            width = int(layout.sector_local_dofs[sector])
+            for local_dof in range(width):
+                idx = flatten(layout, mu, sector, None, None, local_dof)
+                if sector == "baryon":
+                    value = mu_weight * (1.0 + 0.08 * geom_scale + 0.03 * local_dof)
+                elif sector == "cdm":
+                    value = mu_weight * (1.0 + 0.05 * geom_scale + 0.02 * local_dof)
+                else:
+                    value = mu_weight * (1.0 + 0.06 * source_scale + 0.04 * local_dof)
+                diag[idx] = value
+    return diags(diag, offsets=0, format="csr", dtype=np.float64)
 
 
 def assemble_free_streaming_block(
