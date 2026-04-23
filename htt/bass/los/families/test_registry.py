@@ -88,8 +88,26 @@ def test_get_family_kernel_rejects_unknown():
 # ---------------------------------------------------------------------------
 
 
-@pytest.mark.parametrize("family", SKELETON_FAMILIES)
-def test_skeleton_kernel_raises_when_invoked(family):
+def test_skeleton_kernel_raises_when_invoked():
+    """Contract check on ``NotImplementedKernel.build_transport_bundle``.
+
+    Post-S5 there are no skeleton families left in ``KNOWN_FAMILIES``;
+    exercise the base behavior via a synthetic subclass so the contract
+    stays covered."""
+    class _DummySkeleton(NotImplementedKernel):
+        family = "II"
+        deferred_to = "test-fixture"
+
+    with pytest.raises(FamilyBackendNotImplemented, match="Family 'II'"):
+        _DummySkeleton().build_transport_bundle()
+
+
+@pytest.mark.parametrize("family", SKELETON_FAMILIES if SKELETON_FAMILIES else ["<no skeletons>"])
+def test_skeleton_families_cover_their_label_sets(family):
+    """Parametrized across any remaining skeleton families. Safe to run
+    with a single placeholder when the list is empty."""
+    if family == "<no skeletons>":
+        pytest.skip("no skeleton families remain — all landed in S4/S5")
     kernel = get_family_kernel(family)
     assert is_skeleton(family)
     assert isinstance(kernel, NotImplementedKernel)
@@ -98,10 +116,18 @@ def test_skeleton_kernel_raises_when_invoked(family):
 
 
 def test_skeleton_residual_pack_always_fails():
-    # Pick whichever family is still a skeleton at this commit.
-    assert SKELETON_FAMILIES, "expected at least one skeleton family to remain"
-    kernel = get_family_kernel(SKELETON_FAMILIES[0])
-    pack = kernel.residual_pack()
+    """Guards ``NotImplementedKernel.residual_pack`` behavior.
+
+    Once every family lands real numerics (post-S5) there is no skeleton
+    kernel left in ``KNOWN_FAMILIES``. Instantiate a synthetic one so the
+    behavior contract stays covered even at full-stack completion."""
+    from bass.los.families import NotImplementedKernel
+
+    class _DummySkeleton(NotImplementedKernel):
+        family = "II"  # any real family — we only exercise the base class
+        deferred_to = "test-fixture"
+
+    pack = _DummySkeleton().residual_pack()
     assert pack.passed is False
     assert pack.metadata["status"] == "skeleton"
 
