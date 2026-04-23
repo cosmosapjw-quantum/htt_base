@@ -760,6 +760,42 @@ def test_photon_internal_state_helper_matches_public_wrapper(bg_table) -> None:
     assert np.allclose(dy_internal, dy_public, rtol=0, atol=1e-15)
 
 
+def test_photon_internal_state_helper_matches_public_wrapper_on_homogeneous_shear(bg_table) -> None:
+    """Internal helper must preserve the homogeneous zero-collision fast path."""
+    L_max = 4
+    rng = np.random.default_rng(4321)
+    y0 = rng.normal(size=hierarchy_total_size(L_max)) * 1e-3
+    eta_eval = float(bg_table.eta[bg_table.eta.size // 2])
+    sigma = axisymmetric_sigma_tensor(2.0e-3, -1.0e-3)
+    tetrad = _const_proper_shear_fixture(bg_table, sigma)
+
+    dy_public = hierarchy_rhs_photon(
+        eta_eval,
+        y0,
+        L_max=L_max,
+        bg_table=bg_table,
+        tetrad_state=tetrad,
+        closure=HardCutClosure(),
+        collision=ZeroCollisionOperator(),
+    )
+
+    state = unpack_hierarchy(y0, L_max)
+    background = sample_hierarchy_background(
+        eta_eval,
+        bg_table=bg_table,
+        tetrad_state=tetrad,
+    )
+    dy_internal = hierarchy_rhs_photon_from_state(
+        state,
+        background=background,
+        closure=HardCutClosure(),
+        collision=ZeroCollisionOperator(),
+        collision_aux=None,
+    )
+
+    assert np.allclose(dy_internal, dy_public, rtol=0, atol=1e-15)
+
+
 def test_neutrino_internal_state_helper_matches_public_wrapper(bg_table) -> None:
     """Internal neutrino helper must preserve the public wrapper output."""
     from bass.hierarchy import hierarchy_rhs_neutrino

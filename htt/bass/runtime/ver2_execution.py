@@ -1141,6 +1141,9 @@ def _assemble_tier_b_post_run_bundle(
             species=request.species,
             seed_k_comoving=prepared.seed_k_comoving,
             runtime_controls=request.runtime_controls,
+            background_monitor=prepared.background_monitor,
+            visibility_source=prepared.visibility_source,
+            canonical_decision=prepared.integrator.canonical_decision,
         )
 
         def runner(cutoff: int) -> tuple[Mapping[str, np.ndarray], float]:
@@ -1467,6 +1470,9 @@ def _campaign_runner(
     species: "SpeciesBackgroundRegistry",
     seed_k_comoving: float,
     runtime_controls: RuntimeControlBlock,
+    background_monitor=None,
+    visibility_source=None,
+    canonical_decision: CanonicalDecision | None = None,
 ):
     from bass.hierarchy.aux_state import build_integrator_canonical_decision
     from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
@@ -1496,24 +1502,30 @@ def _campaign_runner(
             solver_method=cutoff_config.solver_method,
             gamma_T_override=cutoff_config.gamma_T_override,
         )
-        background_monitor = _build_background_monitor(
-            bianchi_type=bianchi_type,
-            config=config,
-            species=species,
-            tilt_background_owner=runtime_controls.tilt_background_owner,
-        )
-        visibility_source = _build_visibility_source(
-            species=species,
-            config=config,
-            background_monitor=background_monitor,
-        )
-        canonical_decision = build_integrator_canonical_decision(
-            beta=float(config.bianchi_cosmo.beta),
-            sigma_squared=max(
-                0.5 * float(np.sum(background_monitor.sigma_tensor[0] ** 2)),
-                1.0e-12,
-            ),
-        )
+        resolved_background_monitor = background_monitor
+        if resolved_background_monitor is None:
+            resolved_background_monitor = _build_background_monitor(
+                bianchi_type=bianchi_type,
+                config=config,
+                species=species,
+                tilt_background_owner=runtime_controls.tilt_background_owner,
+            )
+        resolved_visibility_source = visibility_source
+        if resolved_visibility_source is None:
+            resolved_visibility_source = _build_visibility_source(
+                species=species,
+                config=config,
+                background_monitor=resolved_background_monitor,
+            )
+        resolved_canonical_decision = canonical_decision
+        if resolved_canonical_decision is None:
+            resolved_canonical_decision = build_integrator_canonical_decision(
+                beta=float(config.bianchi_cosmo.beta),
+                sigma_squared=max(
+                    0.5 * float(np.sum(resolved_background_monitor.sigma_tensor[0] ** 2)),
+                    1.0e-12,
+                ),
+            )
         backend = build_backend(
             bianchi_type,
             truncation={"ell_max": int(cutoff)},
@@ -1523,9 +1535,9 @@ def _campaign_runner(
             config,
             species,
             backend=backend,
-            background_monitor=background_monitor,
-            visibility_source=visibility_source,
-            canonical_decision=canonical_decision,
+            background_monitor=resolved_background_monitor,
+            visibility_source=resolved_visibility_source,
+            canonical_decision=resolved_canonical_decision,
             seed_k_comoving=seed_k_comoving,
         ).run()
         runtime_sec = perf_counter() - start

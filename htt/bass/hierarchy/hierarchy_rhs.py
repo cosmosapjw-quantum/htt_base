@@ -418,6 +418,34 @@ def hierarchy_rhs_photon_from_state(
         np.asarray(t.components, dtype=target_dtype)
         for t in state.tensors
     ]
+    if zero_collision and not needs_full_gradient_terms and not has_accel and not has_vorticity:
+        t1_scale = np.asarray((4.0 / 3.0) * theta, dtype=target_dtype)
+        rhs = np.empty((L_max + 1) ** 2, dtype=target_dtype)
+        offset = 0
+        for ell in range(L_max + 1):
+            size = 2 * ell + 1
+            Pi_components = component_blocks[ell]
+            if ricci_coeffs is None:
+                sum_T = np.asarray(t1_scale * Pi_components, dtype=target_dtype)
+            else:
+                sum_T = apply_T1_expansion_packed(
+                    ell,
+                    Pi_components,
+                    theta,
+                    aniso_ricci_tensor=ricci_coeffs,
+                )
+            if has_sigma:
+                if ell + 2 <= L_max:
+                    Pi_next_next_components = component_blocks[ell + 2]
+                else:
+                    Pi_next_next_components = _closure_packed(ell + 2)
+                sum_T += apply_T7_shear_up_packed(ell, Pi_next_next_components, sigma_coeffs)
+                sum_T += apply_T8_shear_same_packed(ell, Pi_components, sigma_coeffs)
+                if ell >= 2:
+                    sum_T += apply_T9_shear_down_packed(ell, component_blocks[ell - 2], sigma_coeffs)
+            rhs[offset : offset + size] = np.asarray(-a_val * sum_T, dtype=target_dtype)
+            offset += size
+        return rhs
 
     packed_blocks: list[np.ndarray] = []
     for ell in range(L_max + 1):
