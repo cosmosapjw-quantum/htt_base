@@ -1,8 +1,14 @@
 from __future__ import annotations
 
+import numpy as np
 import pytest
 
 from bass.background import get_family_spec
+from bass.hierarchy import (
+    build_hierarchy_layout,
+    evaluate_reduced_harmonic_rhs,
+    evaluate_reduced_local_rhs,
+)
 from bass.los import (
     NativeLabelCard,
     SeedRequest,
@@ -216,6 +222,119 @@ def test_intrinsic_seed_factory_records_frozen_normalization_and_lookup_metadata
     assert seed.metadata["lookup_resolution_status"] == "frozen_v5_formula_set"
     assert seed.metadata["verification_crosscheck_pass"] is True
     assert seed.metadata["resolved_lookup"]["frozen_backend_constants"]["rho"] == "Abs(k)"
+
+
+def test_backend_reduced_local_rhs_matches_layout_evaluator() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    layout = build_hierarchy_layout(backend, backend.truncation)
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {"Gamma_T": 2.5},
+        "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
+    }
+    baryon_by_mode_label = {
+        "m0": np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float64),
+        "m+2": np.array([0.5, 0.6, 0.7, 0.8], dtype=np.float64),
+        "m-2": np.array([-0.3, -0.2, -0.1, 0.0], dtype=np.float64),
+    }
+    cdm_by_mode_label = {
+        "m0": np.array([0.9, 1.0], dtype=np.float64),
+        "m+2": np.array([1.1, 1.2], dtype=np.float64),
+        "m-2": np.array([-0.4, 0.2], dtype=np.float64),
+    }
+    theta_1_by_mode_label = {"m0": 0.15, "m+2": -0.25, "m-2": 0.35}
+    reduced_direct = evaluate_reduced_local_rhs(
+        layout,
+        bg,
+        backend,
+        baryon_by_mode_label=baryon_by_mode_label,
+        cdm_by_mode_label=cdm_by_mode_label,
+        theta_1_by_mode_label=theta_1_by_mode_label,
+    )
+    reduced_backend = backend.evaluate_reduced_local_rhs(
+        bg,
+        baryon_by_mode_label=baryon_by_mode_label,
+        cdm_by_mode_label=cdm_by_mode_label,
+        theta_1_by_mode_label=theta_1_by_mode_label,
+    )
+    for mu in layout.mode_labels:
+        np.testing.assert_allclose(reduced_backend[0][str(mu)], reduced_direct[0][str(mu)])
+        np.testing.assert_allclose(reduced_backend[1][str(mu)], reduced_direct[1][str(mu)])
+
+
+def test_backend_reduced_harmonic_rhs_matches_layout_evaluator() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    layout = build_hierarchy_layout(backend, backend.truncation)
+    width = (layout.ell_max + 1) ** 2
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {"Gamma_T": 2.5},
+        "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
+        "source_tables": {
+            "visibility_amplitude": 1.25,
+            "polarization_source": 0.4,
+            "reionization_amplitude": 0.2,
+        },
+    }
+    photon_t_by_mode_label = {
+        "m0": np.linspace(0.1, 0.9, width, dtype=np.float64),
+        "m+2": np.linspace(-0.3, 0.5, width, dtype=np.float64),
+        "m-2": np.linspace(0.2, -0.4, width, dtype=np.float64),
+    }
+    photon_e_by_mode_label = {
+        "m0": np.linspace(0.6, -0.2, width, dtype=np.float64),
+        "m+2": np.linspace(0.3, 0.9, width, dtype=np.float64),
+        "m-2": np.linspace(-0.5, 0.1, width, dtype=np.float64),
+    }
+    photon_b_by_mode_label = {
+        "m0": np.linspace(-0.4, 0.4, width, dtype=np.float64),
+        "m+2": np.linspace(0.7, -0.1, width, dtype=np.float64),
+        "m-2": np.linspace(0.05, 0.25, width, dtype=np.float64),
+    }
+    neutrino_by_mode_label = {
+        "m0": np.linspace(0.15, 0.75, width, dtype=np.float64),
+        "m+2": np.linspace(-0.2, 0.6, width, dtype=np.float64),
+        "m-2": np.linspace(0.4, -0.1, width, dtype=np.float64),
+    }
+    baryon_by_mode_label = {
+        "m0": np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float64),
+        "m+2": np.array([0.5, 0.6, 0.7, 0.8], dtype=np.float64),
+        "m-2": np.array([-0.3, -0.2, -0.1, 0.0], dtype=np.float64),
+    }
+    source_by_mode_label = {
+        "m0": np.array([0.2, -0.1, 0.0], dtype=np.float64),
+        "m+2": np.array([0.3, 0.4, -0.2], dtype=np.float64),
+        "m-2": np.array([-0.25, 0.15, 0.05], dtype=np.float64),
+    }
+    reduced_direct = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend,
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+        source_by_mode_label=source_by_mode_label,
+    )
+    reduced_backend = backend.evaluate_reduced_harmonic_rhs(
+        bg,
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+        source_by_mode_label=source_by_mode_label,
+    )
+    for sector_direct, sector_backend in zip(reduced_direct, reduced_backend, strict=True):
+        for mu in layout.mode_labels:
+            np.testing.assert_allclose(sector_backend[str(mu)], sector_direct[str(mu)])
 
 
 def test_family_backend_gate_bundle_carries_v5_verification_authority() -> None:

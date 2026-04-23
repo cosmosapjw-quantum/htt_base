@@ -63,8 +63,6 @@ from bass.hierarchy.integrator import (
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor, pack_hierarchy, unpack_hierarchy, zero_hierarchy
 from bass.hierarchy.ver3_layout_protocol import (
     build_hierarchy_layout,
-    evaluate_reduced_harmonic_rhs,
-    evaluate_reduced_local_rhs,
     flatten,
 )
 from bass.hierarchy.seed_compatibility import (
@@ -1734,15 +1732,13 @@ class Ver2TierBIntegrator:
                 m=0,
             )
         ] = _theta_1_from_temperature_state(photon_T)
-        baryon_rhs_by_mode_label, cdm_rhs_by_mode_label = evaluate_reduced_local_rhs(
-            self._layout,
+        baryon_rhs_by_mode_label, cdm_rhs_by_mode_label = self.backend.evaluate_reduced_local_rhs(
             {
                 "branch": str(self.background_monitor.branch),
                 "geometry": self.background_monitor.initial_conditions.geometry,
                 "sigma_tensor": self._sigma_tensor_at_eta(float(snapshot.eta)),
                 "opacity_data": {"Gamma_T": float(snapshot.gamma_t)},
             },
-            self.backend,
             baryon_by_mode_label=baryon_by_mode_label,
             cdm_by_mode_label=cdm_by_mode_label,
             theta_1_by_mode_label=theta_1_by_mode_label,
@@ -2534,10 +2530,8 @@ class Ver2TierBIntegrator:
                 polarization_source=polarization_left,
                 reionization_amplitude=reionization_amplitude,
             )
-            rhs_t_left, rhs_e_left, rhs_b_left, rhs_nu_left = evaluate_reduced_harmonic_rhs(
-                self._layout,
+            rhs_t_left, rhs_e_left, rhs_b_left, rhs_nu_left = self.backend.evaluate_reduced_harmonic_rhs(
                 bg_left,
-                self.backend,
                 photon_T_by_mode_label=left_t,
                 photon_E_by_mode_label=left_e,
                 photon_B_by_mode_label=left_b,
@@ -2602,10 +2596,8 @@ class Ver2TierBIntegrator:
                 polarization_source=polarization_right,
                 reionization_amplitude=reionization_amplitude,
             )
-            rhs_t_right, rhs_e_right, rhs_b_right, rhs_nu_right = evaluate_reduced_harmonic_rhs(
-                self._layout,
+            rhs_t_right, rhs_e_right, rhs_b_right, rhs_nu_right = self.backend.evaluate_reduced_harmonic_rhs(
                 bg_right,
-                self.backend,
                 photon_T_by_mode_label=right_t,
                 photon_E_by_mode_label=right_e,
                 photon_B_by_mode_label=right_b,

@@ -702,6 +702,58 @@ class FamilyBackend:
             return geometry_ops, ops
         return ops
 
+    def evaluate_reduced_local_rhs(
+        self,
+        background_state: Mapping[str, object],
+        *,
+        baryon_by_mode_label: Mapping[str, np.ndarray],
+        cdm_by_mode_label: Mapping[str, np.ndarray],
+        theta_1_by_mode_label: Mapping[str, float],
+    ) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray]]:
+        from bass.hierarchy.ver3_layout_protocol import (
+            build_hierarchy_layout,
+            evaluate_reduced_local_rhs,
+        )
+
+        layout = build_hierarchy_layout(self, self.truncation)
+        return evaluate_reduced_local_rhs(
+            layout,
+            background_state,
+            self,
+            baryon_by_mode_label=baryon_by_mode_label,
+            cdm_by_mode_label=cdm_by_mode_label,
+            theta_1_by_mode_label=theta_1_by_mode_label,
+        )
+
+    def evaluate_reduced_harmonic_rhs(
+        self,
+        background_state: Mapping[str, object],
+        *,
+        photon_T_by_mode_label: Mapping[str, np.ndarray],
+        photon_E_by_mode_label: Mapping[str, np.ndarray],
+        photon_B_by_mode_label: Mapping[str, np.ndarray],
+        neutrino_by_mode_label: Mapping[str, np.ndarray],
+        baryon_by_mode_label: Mapping[str, np.ndarray],
+        source_by_mode_label: Mapping[str, np.ndarray],
+    ) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray]]:
+        from bass.hierarchy.ver3_layout_protocol import (
+            build_hierarchy_layout,
+            evaluate_reduced_harmonic_rhs,
+        )
+
+        layout = build_hierarchy_layout(self, self.truncation)
+        return evaluate_reduced_harmonic_rhs(
+            layout,
+            background_state,
+            self,
+            photon_T_by_mode_label=photon_T_by_mode_label,
+            photon_E_by_mode_label=photon_E_by_mode_label,
+            photon_B_by_mode_label=photon_B_by_mode_label,
+            neutrino_by_mode_label=neutrino_by_mode_label,
+            baryon_by_mode_label=baryon_by_mode_label,
+            source_by_mode_label=source_by_mode_label,
+        )
+
     def seed_factory(self, seed_request: SeedRequest) -> SeedPack:
         template_card = self.template_card()
         allowed = template_card.allowed_seed_provenance
