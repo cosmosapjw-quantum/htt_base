@@ -15,6 +15,7 @@ __all__ = [
     "SECTOR_ORDER",
     "HierarchyLayout",
     "ReducedHarmonicAffineOperator",
+    "ReducedLocalAffineOperator",
     "build_hierarchy_layout",
     "build_layout_manifest",
     "flatten",
@@ -23,6 +24,7 @@ __all__ = [
     "evaluate_reduced_harmonic_rhs",
     "build_reduced_harmonic_affine_operator",
     "evaluate_reduced_local_rhs",
+    "build_reduced_local_affine_operator",
     "assemble_free_streaming_block",
     "assemble_mixing_block",
     "assemble_mass_matrix",
@@ -50,6 +52,13 @@ class HierarchyLayout:
 
 @dataclass(frozen=True)
 class ReducedHarmonicAffineOperator:
+    mode_labels: tuple[str, ...]
+    matrix: csc_matrix
+    bias: np.ndarray
+
+
+@dataclass(frozen=True)
+class ReducedLocalAffineOperator:
     mode_labels: tuple[str, ...]
     matrix: csc_matrix
     bias: np.ndarray
@@ -1530,6 +1539,85 @@ def build_reduced_harmonic_affine_operator(
     return ReducedHarmonicAffineOperator(
         mode_labels=residual_labels,
         matrix=matrix_sparse,
+        bias=bias,
+    )
+
+
+def build_reduced_local_affine_operator(
+    layout: HierarchyLayout,
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    *,
+    residual_mode_labels: tuple[str, ...],
+    theta_1_by_mode_label: Mapping[str, float],
+) -> ReducedLocalAffineOperator:
+    """Return the exact frozen-snapshot affine operator for residual local sectors."""
+
+    residual_labels = tuple(str(mu) for mu in residual_mode_labels)
+    baryon_width = int(layout.sector_local_dofs["baryon"])
+    cdm_width = int(layout.sector_local_dofs["cdm"])
+    block_size = baryon_width + cdm_width
+    if len(residual_labels) == 0:
+        return ReducedLocalAffineOperator(
+            mode_labels=(),
+            matrix=csc_matrix((0, 0), dtype=np.float64),
+            bias=np.zeros(0, dtype=np.float64),
+        )
+
+    invalid = frozenset(residual_labels).difference(str(mu) for mu in layout.mode_labels)
+    if invalid:
+        raise ValueError(f"residual_mode_labels must be a subset of layout.mode_labels, got extras {sorted(invalid)!r}")
+
+    opacity_data = bg.get("opacity_data", {})
+    if not isinstance(opacity_data, Mapping):
+        raise ValueError("bg.opacity_data must be a mapping when provided")
+    gamma_t = float(opacity_data.get("Gamma_T", 0.0))
+    scales = _operator_scales(bg, backend)
+    geom_scale = float(scales["geom_scale"])
+    branch_scale = float(scales["branch_scale"])
+    local_drag_scale = float(scales["local_drag_scale"])
+    mu_count = max(len(layout.mode_labels), 1)
+    baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(baryon_width, dtype=np.float64)
+
+    rows: list[int] = []
+    cols: list[int] = []
+    data: list[float] = []
+    bias = np.zeros(len(residual_labels) * block_size, dtype=np.float64)
+    mode_index = {str(mu): idx for idx, mu in enumerate(layout.mode_labels)}
+    for residual_index, mu in enumerate(residual_labels):
+        mu_weight = _mode_label_weight(
+            mu,
+            mu_index=int(mode_index[mu]),
+            mu_count=mu_count,
+            branch_scale=branch_scale,
+        )
+        baryon_diag = mu_weight * baryon_base_diag
+        coeff = np.divide(
+            mu_weight * local_drag_scale * gamma_t,
+            np.maximum(np.abs(baryon_diag), 1.0e-30),
+            dtype=np.float64,
+        )
+        row_start = residual_index * block_size
+        for local_dof, value in enumerate(coeff):
+            rows.append(row_start + local_dof)
+            cols.append(row_start + local_dof)
+            data.append(float(value))
+        if baryon_width > 1:
+            bias[row_start + 1] = float(
+                0.25
+                * mu_weight
+                * local_drag_scale
+                * gamma_t
+                * float(theta_1_by_mode_label.get(mu, 0.0))
+                / max(abs(float(baryon_diag[1])), 1.0e-30)
+            )
+
+    return ReducedLocalAffineOperator(
+        mode_labels=residual_labels,
+        matrix=csc_matrix(
+            (np.asarray(data, dtype=np.float64), (np.asarray(rows, dtype=np.int64), np.asarray(cols, dtype=np.int64))),
+            shape=(len(residual_labels) * block_size, len(residual_labels) * block_size),
+        ),
         bias=bias,
     )
 

@@ -1922,45 +1922,51 @@ class Ver2TierBIntegrator:
         if self._residual_local_dof == 0:
             return np.zeros(0, dtype=np.float64)
         baryon_residual, cdm_residual = self._split_residual_local_state(residual_local)
-        baryon_by_mode_label: dict[str, np.ndarray] = {
-            self._layout_covered_mode_label: np.asarray(baryon_local, dtype=np.float64),
-            **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in baryon_residual.items()},
+        background_state = {
+            "branch": str(self.background_monitor.branch),
+            "geometry": self.background_monitor.initial_conditions.geometry,
+            "sigma_tensor": self._sigma_tensor_at_eta(float(snapshot.eta)),
+            "opacity_data": {"Gamma_T": float(snapshot.gamma_t)},
         }
-        cdm_by_mode_label: dict[str, np.ndarray] = {
-            self._layout_covered_mode_label: np.asarray(cdm_local, dtype=np.float64),
-            **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in cdm_residual.items()},
-        }
-        theta_1_by_mode_label = {
-            str(mu): 0.0
-            for mu in self._layout.mode_labels
-        }
-        theta_1_by_mode_label[
-            _resolve_projection_mode_label(
-                self._layout.mode_labels,
-                self._layout_covered_mode_label,
-                m=0,
+        from bass.hierarchy.ver3_layout_protocol import _mode_label_weight, _operator_scales
+
+        operator_scales = _operator_scales(background_state, self.backend)
+        geom_scale = float(operator_scales["geom_scale"])
+        local_drag_scale = float(operator_scales["local_drag_scale"])
+        baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(_BARYON_LOCAL_DOF, dtype=np.float64)
+        mu_count = max(len(self._layout.mode_labels), 1)
+        mode_index = {str(mu): idx for idx, mu in enumerate(self._layout.mode_labels)}
+        theta_covered = _theta_1_from_temperature_state(photon_T)
+        baryon_rhs_by_mode_label: dict[str, np.ndarray] = {}
+        cdm_rhs_by_mode_label: dict[str, np.ndarray] = {}
+        for mu in self._residual_mode_labels:
+            mu_key = str(mu)
+            mu_weight = _mode_label_weight(
+                mu_key,
+                mu_index=int(mode_index[mu_key]),
+                mu_count=mu_count,
+                branch_scale=1.15 if str(self.background_monitor.branch) == "tilted" else 1.0,
             )
-        ] = _theta_1_from_temperature_state(photon_T)
-        baryon_rhs_by_mode_label, cdm_rhs_by_mode_label = self.backend.evaluate_reduced_local_rhs(
-            {
-                "branch": str(self.background_monitor.branch),
-                "geometry": self.background_monitor.initial_conditions.geometry,
-                "sigma_tensor": self._sigma_tensor_at_eta(float(snapshot.eta)),
-                "opacity_data": {"Gamma_T": float(snapshot.gamma_t)},
-            },
-            baryon_by_mode_label=baryon_by_mode_label,
-            cdm_by_mode_label=cdm_by_mode_label,
-            theta_1_by_mode_label=theta_1_by_mode_label,
-        )
+            baryon_state = np.asarray(baryon_residual[mu_key], dtype=np.float64)
+            cdm_state = np.asarray(cdm_residual[mu_key], dtype=np.float64)
+            baryon_diag = mu_weight * baryon_base_diag
+            baryon_rhs = (
+                mu_weight * local_drag_scale * float(snapshot.gamma_t) * baryon_state
+            ) / np.maximum(np.abs(baryon_diag), 1.0e-30)
+            if mu_key == self._layout_covered_mode_label and _BARYON_LOCAL_DOF > 1:
+                baryon_rhs[1] += (
+                    0.25
+                    * mu_weight
+                    * local_drag_scale
+                    * float(snapshot.gamma_t)
+                    * float(theta_covered)
+                    / max(abs(float(baryon_diag[1])), 1.0e-30)
+                )
+            baryon_rhs_by_mode_label[mu_key] = baryon_rhs
+            cdm_rhs_by_mode_label[mu_key] = np.zeros_like(cdm_state)
         return self._pack_residual_local_state(
-            baryon_by_mode_label={
-                str(mu): np.asarray(baryon_rhs_by_mode_label[str(mu)], dtype=np.float64)
-                for mu in self._residual_mode_labels
-            },
-            cdm_by_mode_label={
-                str(mu): np.asarray(cdm_rhs_by_mode_label[str(mu)], dtype=np.float64)
-                for mu in self._residual_mode_labels
-            },
+            baryon_by_mode_label=baryon_rhs_by_mode_label,
+            cdm_by_mode_label=cdm_rhs_by_mode_label,
         )
 
     def _residual_harmonic_mode_label_maps(

@@ -11,6 +11,7 @@ from bass.hierarchy import (
     assemble_mixing_block,
     assemble_explicit_block,
     build_reduced_harmonic_affine_operator,
+    build_reduced_local_affine_operator,
     evaluate_reduced_harmonic_rhs,
     evaluate_reduced_local_rhs,
     evaluate_reduced_source_blocks,
@@ -181,6 +182,70 @@ def test_reduced_local_rhs_matches_full_operator_subset() -> None:
             reduced_cdm[str(mu)],
             full_drive[cdm_idx] / mass_diag[cdm_idx],
         )
+
+
+def test_reduced_local_affine_operator_matches_direct_evaluator_on_residual_labels() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {"Gamma_T": 2.5},
+        "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
+    }
+    residual_labels = ("m+2", "m-2")
+    baryon_by_mode_label = {
+        "m0": np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float64),
+        "m+2": np.array([0.5, 0.6, 0.7, 0.8], dtype=np.float64),
+        "m-2": np.array([-0.3, -0.2, -0.1, 0.0], dtype=np.float64),
+    }
+    cdm_by_mode_label = {
+        "m0": np.array([0.9, 1.0], dtype=np.float64),
+        "m+2": np.array([1.1, 1.2], dtype=np.float64),
+        "m-2": np.array([-0.4, 0.2], dtype=np.float64),
+    }
+    theta_1_by_mode_label = {"m0": 0.15, "m+2": -0.25, "m-2": 0.35}
+    reduced_baryon, reduced_cdm = evaluate_reduced_local_rhs(
+        layout,
+        bg,
+        backend,
+        baryon_by_mode_label=baryon_by_mode_label,
+        cdm_by_mode_label=cdm_by_mode_label,
+        theta_1_by_mode_label=theta_1_by_mode_label,
+    )
+    affine = build_reduced_local_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=residual_labels,
+        theta_1_by_mode_label=theta_1_by_mode_label,
+    )
+    residual_state = np.concatenate(
+        [
+            baryon_by_mode_label["m+2"],
+            cdm_by_mode_label["m+2"],
+            baryon_by_mode_label["m-2"],
+            cdm_by_mode_label["m-2"],
+        ],
+        dtype=np.float64,
+    )
+    direct = np.concatenate(
+        [
+            reduced_baryon["m+2"],
+            reduced_cdm["m+2"],
+            reduced_baryon["m-2"],
+            reduced_cdm["m-2"],
+        ],
+        dtype=np.float64,
+    )
+    applied = np.asarray(affine.matrix @ residual_state + affine.bias, dtype=np.float64)
+    assert affine.mode_labels == residual_labels
+    assert affine.matrix.shape == (direct.size, direct.size)
+    assert affine.matrix.nnz > 0
+    np.testing.assert_allclose(applied, direct)
 
 
 def test_reduced_harmonic_rhs_matches_full_operator_subset() -> None:
