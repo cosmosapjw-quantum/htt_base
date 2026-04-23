@@ -1,0 +1,107 @@
+"""Per-family transport kernels (v5 PR-08 body; S3 scaffolding).
+
+Import layout:
+
+* ``bass.los.families.base`` — ``LegacyDelegationKernel`` /
+  ``NotImplementedKernel`` base classes plus ``FamilyMetadata``.
+* ``bass.los.families.type_<family>`` — one module per family. Each
+  module defines a concrete kernel class and exposes a singleton
+  ``KERNEL`` instance.
+* ``KNOWN_FAMILIES`` — mapping ``family -> KERNEL``. All 11 Bianchi
+  families (excluding FLRW, which the facade early-returns) are
+  represented. Today one (Type I) has real numerics via
+  ``LegacyDelegationKernel``; the other ten raise
+  ``FamilyBackendNotImplemented`` when invoked.
+
+Opt-in registration: ``register_all_defaults()`` wires every kernel
+into ``bass.transport.exact_transport._TRANSPORT_DISPATCH``. This is
+**not** called automatically — legacy tests must continue to see the
+legacy fallback path until S6 flips the default.
+"""
+from __future__ import annotations
+
+from collections.abc import Mapping
+
+from bass.los.families import (
+    type_i,
+    type_ii,
+    type_iii,
+    type_iv,
+    type_v,
+    type_vi_0,
+    type_vi_h,
+    type_vii_0,
+    type_vii_h,
+    type_viii,
+    type_ix,
+)
+from bass.los.families.base import (
+    FamilyMetadata,
+    LegacyDelegationKernel,
+    NotImplementedKernel,
+    family_metadata_from_registry,
+)
+from bass.transport.exact_transport import (
+    _TRANSPORT_DISPATCH,
+    register_family_kernel,
+)
+
+
+__all__ = (
+    "FamilyMetadata",
+    "LegacyDelegationKernel",
+    "NotImplementedKernel",
+    "KNOWN_FAMILIES",
+    "family_metadata_from_registry",
+    "get_family_kernel",
+    "register_all_defaults",
+    "unregister_all_defaults",
+)
+
+
+KNOWN_FAMILIES: Mapping[str, object] = {
+    "I": type_i.KERNEL,
+    "II": type_ii.KERNEL,
+    "III": type_iii.KERNEL,
+    "IV": type_iv.KERNEL,
+    "V": type_v.KERNEL,
+    "VI_0": type_vi_0.KERNEL,
+    "VI_h": type_vi_h.KERNEL,
+    "VII_0": type_vii_0.KERNEL,
+    "VII_h": type_vii_h.KERNEL,
+    "VIII": type_viii.KERNEL,
+    "IX": type_ix.KERNEL,
+}
+
+
+def get_family_kernel(family: str) -> object:
+    """Return the kernel singleton for ``family``. KeyError on unknown."""
+    if family not in KNOWN_FAMILIES:
+        raise KeyError(
+            f"Unknown Bianchi family '{family}'. Known: {sorted(KNOWN_FAMILIES)}"
+        )
+    return KNOWN_FAMILIES[family]
+
+
+def register_all_defaults() -> tuple[str, ...]:
+    """Register every ``KNOWN_FAMILIES`` kernel into the transport dispatch.
+
+    Returns the tuple of family names registered. Safe to call multiple
+    times: ``register_family_kernel`` is idempotent for the same object.
+    """
+    registered: list[str] = []
+    for family, kernel in KNOWN_FAMILIES.items():
+        register_family_kernel(kernel)
+        registered.append(family)
+    return tuple(registered)
+
+
+def unregister_all_defaults() -> None:
+    """Remove every ``KNOWN_FAMILIES`` kernel from the dispatch.
+
+    Intended for test teardown; in production the registry grows
+    monotonically through the session.
+    """
+    for family, kernel in KNOWN_FAMILIES.items():
+        if _TRANSPORT_DISPATCH.get(family) is kernel:
+            del _TRANSPORT_DISPATCH[family]
