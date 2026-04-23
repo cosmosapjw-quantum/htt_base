@@ -1921,6 +1921,48 @@ class Ver2TierBIntegrator:
         result.solver_info["live_b_mode_history_metadata"] = dict(b_metadata)
         return np.asarray(b_rows, dtype=np.float64), dict(b_metadata)
 
+    def _ensure_live_local_matter_history(
+        self,
+        result: IntegrationResult,
+    ) -> _LocalMatterHistory:
+        baryon_cached = getattr(result, "baryon_local_history", None)
+        cdm_cached = getattr(result, "cdm_local_history", None)
+        metadata = result.solver_info.get("live_local_matter_history_metadata")
+        if (
+            baryon_cached is not None
+            and cdm_cached is not None
+            and isinstance(metadata, Mapping)
+        ):
+            labels = metadata.get(
+                "labels",
+                {
+                    "baryon": ("delta_b", "v_b", "v_e", "drag_lock_residual"),
+                    "cdm": ("delta_c", "v_c"),
+                },
+            )
+            return _LocalMatterHistory(
+                eta=np.asarray(result.eta, dtype=np.float64),
+                baryon_history=np.asarray(baryon_cached, dtype=np.float64),
+                cdm_history=np.asarray(cdm_cached, dtype=np.float64),
+                baryon_labels=tuple(labels.get("baryon", ("delta_b", "v_b", "v_e", "drag_lock_residual"))),
+                cdm_labels=tuple(labels.get("cdm", ("delta_c", "v_c"))),
+                metadata=dict(metadata),
+            )
+        history = self._postprocess_local_matter_history(
+            eta=np.asarray(result.eta, dtype=np.float64),
+            photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
+        )
+        result.baryon_local_history = np.asarray(history.baryon_history, dtype=np.float64)
+        result.cdm_local_history = np.asarray(history.cdm_history, dtype=np.float64)
+        result.solver_info["live_local_matter_history_metadata"] = {
+            **dict(history.metadata),
+            "labels": {
+                "baryon": tuple(history.baryon_labels),
+                "cdm": tuple(history.cdm_labels),
+            },
+        }
+        return history
+
     def build_layout_auxiliary_history_bundle(
         self,
         result: IntegrationResult,
@@ -1938,10 +1980,7 @@ class Ver2TierBIntegrator:
             layout,
             covered_mode_label=covered,
         )
-        direct_history = self._postprocess_local_matter_history(
-            eta=np.asarray(result.eta, dtype=np.float64),
-            photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
-        )
+        direct_history = self._ensure_live_local_matter_history(result)
         eta_samples = np.asarray(result.eta, dtype=np.float64)
         photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
         photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
@@ -2960,6 +2999,17 @@ class Ver2TierBIntegrator:
             "restart_used": bool(restart_used),
             "collision_owner": "exact_thomson_wrapper",
         }
+        local_matter_history = self._postprocess_local_matter_history(
+            eta=eta_arr,
+            photon_T_tower=np.asarray(photon_T_tower, dtype=np.float64),
+        )
+        solver_info["live_local_matter_history_metadata"] = {
+            **dict(local_matter_history.metadata),
+            "labels": {
+                "baryon": tuple(local_matter_history.baryon_labels),
+                "cdm": tuple(local_matter_history.cdm_labels),
+            },
+        }
         return IntegrationResult(
             eta=eta_arr,
             a=a_arr,
@@ -2973,6 +3023,8 @@ class Ver2TierBIntegrator:
             solver_info=solver_info,
             tca_active_mask=tca_mask,
             neutrino_tower=np.asarray(neutrino_tower, dtype=np.float64),
+            baryon_local_history=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
+            cdm_local_history=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
         )
 
     def run(

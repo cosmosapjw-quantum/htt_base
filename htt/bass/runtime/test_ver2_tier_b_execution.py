@@ -277,6 +277,16 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         len(run.integration_result.eta),
         (run.integration_result.L_max + 1) ** 2,
     )
+    assert run.integration_result.baryon_local_history is not None
+    assert run.integration_result.cdm_local_history is not None
+    assert np.asarray(run.integration_result.baryon_local_history, dtype=np.float64).shape == (
+        len(run.integration_result.eta),
+        4,
+    )
+    assert np.asarray(run.integration_result.cdm_local_history, dtype=np.float64).shape == (
+        len(run.integration_result.eta),
+        2,
+    )
     assert run.integration_result.solver_info["startup_manifold_applied"] is True
     assert run.solver_output.metadata["propagator_ready"] is True
     assert run.solver_output.metadata["propagator_readiness"] == "exact"
