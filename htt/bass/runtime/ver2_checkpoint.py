@@ -45,6 +45,7 @@ class TierBCheckpointRecord:
     neutrino_tower_prefix: np.ndarray
     baryon_local_prefix: np.ndarray
     cdm_local_prefix: np.ndarray
+    residual_local_prefix: np.ndarray
 
     def __post_init__(self) -> None:
         if self.schema_version != _SCHEMA_VERSION:
@@ -83,6 +84,7 @@ class TierBCheckpointRecord:
             ("neutrino_tower_prefix", self.neutrino_tower_prefix),
             ("baryon_local_prefix", self.baryon_local_prefix),
             ("cdm_local_prefix", self.cdm_local_prefix),
+            ("residual_local_prefix", self.residual_local_prefix),
         ):
             arr = np.asarray(value, dtype=np.float64)
             if arr.ndim != 2 or arr.shape[0] != eta_prefix.size:
@@ -100,6 +102,7 @@ class TierBCheckpointRecord:
             neutrino_tower_prefix=np.asarray(self.neutrino_tower_prefix, dtype=np.float64),
             baryon_local_prefix=np.asarray(self.baryon_local_prefix, dtype=np.float64),
             cdm_local_prefix=np.asarray(self.cdm_local_prefix, dtype=np.float64),
+            residual_local_prefix=np.asarray(self.residual_local_prefix, dtype=np.float64),
         )
 
 
@@ -158,12 +161,19 @@ def write_tier_b_restart_checkpoint(
         neutrino_tower_prefix=np.asarray(restart_state.neutrino_tower_prefix, dtype=np.float64),
         baryon_local_prefix=np.asarray(restart_state.baryon_local_prefix, dtype=np.float64),
         cdm_local_prefix=np.asarray(restart_state.cdm_local_prefix, dtype=np.float64),
+        residual_local_prefix=np.asarray(restart_state.residual_local_prefix, dtype=np.float64),
     )
     return out
 
 
 def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
     with np.load(Path(path), allow_pickle=False) as data:
+        eta_prefix = np.asarray(data["eta_prefix"], dtype=np.float64)
+        l_max = int(np.asarray(data["L_max"]).item())
+        tower_size = (l_max + 1) ** 2
+        base_state_size = 4 * tower_size + 6
+        state_vector = np.asarray(data["state_vector"], dtype=np.float64)
+        residual_width = max(int(state_vector.size) - base_state_size, 0)
         return TierBCheckpointRecord(
             schema_version=str(np.asarray(data["schema_version"]).item()),
             bianchi_type=str(np.asarray(data["bianchi_type"]).item()),
@@ -177,11 +187,11 @@ def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
             eta_final_mpc=float(np.asarray(data["eta_final_mpc"]).item()),
             n_output=int(np.asarray(data["n_output"]).item()),
             solver_method=str(np.asarray(data["solver_method"]).item()),
-            L_max=int(np.asarray(data["L_max"]).item()),
+            L_max=l_max,
             step_index=int(np.asarray(data["step_index"]).item()),
             eta_restart=float(np.asarray(data["eta_restart"]).item()),
-            state_vector=np.asarray(data["state_vector"], dtype=np.float64),
-            eta_prefix=np.asarray(data["eta_prefix"], dtype=np.float64),
+            state_vector=state_vector,
+            eta_prefix=eta_prefix,
             photon_T_prefix=np.asarray(data["photon_T_prefix"], dtype=np.float64),
             photon_E_prefix=np.asarray(data["photon_E_prefix"], dtype=np.float64),
             photon_B_prefix=(
@@ -189,8 +199,8 @@ def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
                 if "photon_B_prefix" in data
                 else np.zeros(
                     (
-                        np.asarray(data["eta_prefix"]).shape[0],
-                        (int(np.asarray(data["L_max"]).item()) + 1) ** 2,
+                        eta_prefix.shape[0],
+                        tower_size,
                     ),
                     dtype=np.float64,
                 )
@@ -199,11 +209,16 @@ def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
             baryon_local_prefix=(
                 np.asarray(data["baryon_local_prefix"], dtype=np.float64)
                 if "baryon_local_prefix" in data
-                else np.zeros((np.asarray(data["eta_prefix"]).shape[0], 4), dtype=np.float64)
+                else np.zeros((eta_prefix.shape[0], 4), dtype=np.float64)
             ),
             cdm_local_prefix=(
                 np.asarray(data["cdm_local_prefix"], dtype=np.float64)
                 if "cdm_local_prefix" in data
-                else np.zeros((np.asarray(data["eta_prefix"]).shape[0], 2), dtype=np.float64)
+                else np.zeros((eta_prefix.shape[0], 2), dtype=np.float64)
+            ),
+            residual_local_prefix=(
+                np.asarray(data["residual_local_prefix"], dtype=np.float64)
+                if "residual_local_prefix" in data
+                else np.zeros((eta_prefix.shape[0], residual_width), dtype=np.float64)
             ),
         )

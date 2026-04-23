@@ -362,7 +362,7 @@ def test_project_runtime_native_state_can_embed_layout_auxiliary_local_matter_bl
         },
         matter_block_metadata={
             "owner": "ver2_native_integrator.main_state_local_matter",
-            "reference_owner": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension",
+            "reference_owner": "ver2_native_integrator.main_state_mode_label_local_matter",
         },
     )
     assert projection.sector_status["baryon"] == "direct_fluid_rhs_live_history"
@@ -374,7 +374,7 @@ def test_project_runtime_native_state_can_embed_layout_auxiliary_local_matter_bl
         "ver2_native_integrator.main_state_local_matter"
     )
     assert projection.hierarchy_state.matter_block["reference_owner"] == (
-        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension"
+        "ver2_native_integrator.main_state_mode_label_local_matter"
     )
 
 

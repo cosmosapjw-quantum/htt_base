@@ -258,6 +258,12 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.integration_result.solver_info["seed_factory_owner"] == "family_backend.seed_factory"
     assert run.integration_result.solver_info["seed_factory_mode"] == "flrw_like_regular"
+    assert run.integration_result.residual_local_history is not None
+    assert set(run.integration_result.baryon_local_history_by_mode_label) == {"m0", "m+2", "m-2"}
+    assert set(run.integration_result.cdm_local_history_by_mode_label) == {"m0", "m+2", "m-2"}
+    assert run.integration_result.solver_info["live_mode_label_local_matter_history_metadata"]["owner"] == (
+        "ver2_native_integrator.main_state_mode_label_local_matter"
+    )
     assert run.integration_result.solver_info["seed_family"] == "I"
     assert run.integration_result.solver_info["seed_branch"] == "orthogonal"
     assert run.integration_result.solver_info["layout_operator_consumed"] is True
@@ -336,11 +342,11 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_b_mode_integration_scheme"] == (
         "main_state_coevolved"
     )
-    assert run.solver_output.metadata["layout_auxiliary_coupling_passes"] == 2
+    assert run.solver_output.metadata["layout_auxiliary_coupling_passes"] == 0
     assert run.solver_output.metadata["layout_auxiliary_integration_scheme"] == (
-        "predictor_corrector_trapezoidal"
+        "main_state_coevolved"
     )
-    assert run.solver_output.metadata["layout_auxiliary_reduced_block_size"] > 0
+    assert run.solver_output.metadata["layout_auxiliary_reduced_block_size"] == 0
     assert run.solver_output.metadata["layout_auxiliary_bundle_owner"] == (
         "ver2_native_integrator.layout_auxiliary_history_bundle"
     )
@@ -436,7 +442,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "ver2_native_integrator.main_state_local_matter"
     )
     assert run.solver_output.metadata["layout_local_matter_extension_owner"] == (
-        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension"
+        "ver2_native_integrator.main_state_mode_label_local_matter"
     )
     assert set(run.solver_output.metadata["layout_local_matter_mode_labels"]) == {
         "m0",
@@ -447,7 +453,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         run.integration_result.eta
     )
     assert run.solver_output.metadata["layout_local_matter_reference_owner"] == (
-        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension"
+        "ver2_native_integrator.main_state_mode_label_local_matter"
     )
     assert run.solver_output.metadata["layout_local_matter_reference_sample_count"] == len(
         run.integration_result.eta
@@ -520,7 +526,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     )
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"][
         "layout_local_matter_extension_owner"
-    ] == "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension"
+    ] == "ver2_native_integrator.main_state_mode_label_local_matter"
     assert set(
         registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_local_matter_mode_labels"]
     ) == {"m0", "m+2", "m-2"}
@@ -536,10 +542,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     ] == "main_state_coevolved"
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"][
         "layout_auxiliary_integration_scheme"
-    ] == "predictor_corrector_trapezoidal"
+    ] == "main_state_coevolved"
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"][
         "layout_auxiliary_reduced_block_size"
-    ] > 0
+    ] == 0
     assert set(run.trace.canonical_projection.covered_mode_labels) == {"m0", "m+2", "m-2"}
     assert run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
     assert run.trace.canonical_projection.sector_status["baryon"] == (
@@ -566,10 +572,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "ver2_native_integrator.main_state_local_matter"
     )
     assert run.trace.canonical_projection.hierarchy_state.matter_block["reference_owner"] == (
-        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension"
+        "ver2_native_integrator.main_state_mode_label_local_matter"
     )
     assert run.trace.canonical_projection.hierarchy_state.matter_block["mode_label_extension_owner"] == (
-        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension"
+        "ver2_native_integrator.main_state_mode_label_local_matter"
     )
     assert set(run.trace.canonical_projection.hierarchy_state.matter_block["mode_label_blocks"]) == {
         "m0",
@@ -953,6 +959,8 @@ def test_tier_b_checkpoint_resume_reproduces_checkpointed_run(tmp_path) -> None:
     assert checkpoint.direction_convention == "propagation_direction"
     assert checkpoint.n_output == 12
     assert checkpoint.solver_method == "IMEX_MIDPOINT_BDF"
+    assert checkpoint.residual_local_prefix.shape[0] == checkpoint.eta_prefix.shape[0]
+    assert checkpoint.residual_local_prefix.shape[1] >= 0
     resumed = resume_tier_b_solver_from_checkpoint(
         checkpoint_path=mid_checkpoint,
         **kwargs,
@@ -969,6 +977,10 @@ def test_tier_b_checkpoint_resume_reproduces_checkpointed_run(tmp_path) -> None:
     np.testing.assert_allclose(
         full_run.integration_result.photon_E_tower,
         resumed.integration_result.photon_E_tower,
+    )
+    np.testing.assert_allclose(
+        np.asarray(full_run.integration_result.residual_local_history, dtype=np.float64),
+        np.asarray(resumed.integration_result.residual_local_history, dtype=np.float64),
     )
     np.testing.assert_allclose(
         np.asarray(full_run.solver_output.alm_T["values"], dtype=np.float64),

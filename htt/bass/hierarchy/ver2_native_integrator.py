@@ -549,6 +549,7 @@ class NativeTierBRestartState:
     neutrino_tower_prefix: np.ndarray
     baryon_local_prefix: np.ndarray
     cdm_local_prefix: np.ndarray
+    residual_local_prefix: np.ndarray
 
     def __post_init__(self) -> None:
         if self.step_index < 0:
@@ -568,6 +569,7 @@ class NativeTierBRestartState:
             ("neutrino_tower_prefix", self.neutrino_tower_prefix),
             ("baryon_local_prefix", self.baryon_local_prefix),
             ("cdm_local_prefix", self.cdm_local_prefix),
+            ("residual_local_prefix", self.residual_local_prefix),
         ):
             arr = np.asarray(value, dtype=np.float64)
             if arr.ndim != 2 or arr.shape[0] != eta_prefix.size:
@@ -747,6 +749,7 @@ def _pack_radiation_state(
     neutrino_tower: PSTFHierarchyState,
     baryon_local: np.ndarray | None = None,
     cdm_local: np.ndarray | None = None,
+    residual_local: np.ndarray | None = None,
 ) -> np.ndarray:
     b_mode = zero_hierarchy(photon_T.L) if photon_B is None else photon_B
     baryon = (
@@ -759,10 +762,17 @@ def _pack_radiation_state(
         if cdm_local is None
         else np.asarray(cdm_local, dtype=np.float64)
     )
+    residual = (
+        np.zeros(0, dtype=np.float64)
+        if residual_local is None
+        else np.asarray(residual_local, dtype=np.float64)
+    )
     if baryon.shape != (_BARYON_LOCAL_DOF,):
         raise ValueError(f"baryon_local must have shape ({_BARYON_LOCAL_DOF},)")
     if cdm.shape != (_CDM_LOCAL_DOF,):
         raise ValueError(f"cdm_local must have shape ({_CDM_LOCAL_DOF},)")
+    if residual.ndim != 1:
+        raise ValueError("residual_local must be a 1-D vector when provided")
     return np.concatenate(
         [
             pack_hierarchy(photon_T),
@@ -771,6 +781,7 @@ def _pack_radiation_state(
             pack_hierarchy(neutrino_tower),
             baryon,
             cdm,
+            residual,
         ]
     )
 
@@ -802,7 +813,7 @@ def _unpack_hierarchy_view(flat: np.ndarray, L: int) -> PSTFHierarchyState:
 
 
 def _unpack_radiation_state(
-    y: np.ndarray, L_max: int
+    y: np.ndarray, L_max: int, *, residual_local_dof: int = 0
 ) -> tuple[
     PSTFHierarchyState,
     PolarizationHierarchyState,
@@ -810,10 +821,11 @@ def _unpack_radiation_state(
     PSTFHierarchyState,
     np.ndarray,
     np.ndarray,
+    np.ndarray,
 ]:
     arr = np.asarray(y, dtype=np.float64)
     tower_size = _tower_size(L_max)
-    expected = _radiation_state_size(L_max)
+    expected = _radiation_state_size(L_max) + int(residual_local_dof)
     if arr.shape != (expected,):
         raise ValueError(f"radiation state shape {arr.shape} does not match L_max={L_max}")
     photon_T = _unpack_hierarchy_view(arr[:tower_size], L_max)
@@ -823,7 +835,11 @@ def _unpack_radiation_state(
     local_offset = 4 * tower_size
     baryon_local = np.asarray(arr[local_offset : local_offset + _BARYON_LOCAL_DOF], dtype=np.float64)
     cdm_local = np.asarray(arr[local_offset + _BARYON_LOCAL_DOF : local_offset + _LOCAL_MATTER_DOF], dtype=np.float64)
-    return photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local
+    residual_local = np.asarray(
+        arr[local_offset + _LOCAL_MATTER_DOF : local_offset + _LOCAL_MATTER_DOF + int(residual_local_dof)],
+        dtype=np.float64,
+    )
+    return photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local, residual_local
 
 
 def _seed_neutrino_tower_from_reduced(
@@ -991,6 +1007,22 @@ class Ver2TierBIntegrator:
         self._layout_covered_mode_label = (
             str(getattr(self.mode_ops, "layout_metadata", {}).get("mode_labels", [None])[0])
         )
+        self._layout = build_hierarchy_layout(self.backend, self.backend.truncation)
+        if self._layout_covered_mode_label == "None" or self._layout_covered_mode_label not in self._layout.mode_labels:
+            self._layout_covered_mode_label = str(self._layout.mode_labels[0])
+        self._projection_index_cache = _build_layout_projection_index_cache(
+            self._layout,
+            covered_mode_label=self._layout_covered_mode_label,
+        )
+        self._residual_mode_labels = tuple(
+            str(mu) for mu in self._layout.mode_labels if str(mu) != self._layout_covered_mode_label
+        )
+        self._residual_local_dof = len(self._residual_mode_labels) * (_BARYON_LOCAL_DOF + _CDM_LOCAL_DOF)
+        residual_rows: list[int] = []
+        for mu in self._residual_mode_labels:
+            residual_rows.extend(int(value) for value in self._projection_index_cache.baryon_by_mode_label[mu])
+            residual_rows.extend(int(value) for value in self._projection_index_cache.cdm_by_mode_label[mu])
+        self._residual_local_layout_rows = np.asarray(residual_rows, dtype=np.int64)
         self._coll_T_diag = _extract_operator_diag(
             backend=backend,
             mode_ops=self.mode_ops,
@@ -1073,7 +1105,77 @@ class Ver2TierBIntegrator:
             neutrino_tower=seeded.neutrino_tower,
             baryon_local=baryon_local,
             cdm_local=cdm_local,
+            residual_local=np.zeros(self._residual_local_dof, dtype=np.float64),
         )
+
+    def _reionization_amplitude(self) -> float:
+        return (
+            0.0
+            if self.visibility_source.contract.events is None
+            else float(self.visibility_source.contract.events.tau_reion)
+        )
+
+    def _split_residual_local_state(
+        self,
+        residual_local: np.ndarray,
+    ) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray]]:
+        residual = np.asarray(residual_local, dtype=np.float64)
+        if residual.shape != (self._residual_local_dof,):
+            raise ValueError(
+                f"residual_local must have shape ({self._residual_local_dof},), got {residual.shape}"
+            )
+        baryon_by_mode_label: dict[str, np.ndarray] = {}
+        cdm_by_mode_label: dict[str, np.ndarray] = {}
+        offset = 0
+        for mu in self._residual_mode_labels:
+            baryon_by_mode_label[str(mu)] = np.asarray(
+                residual[offset : offset + _BARYON_LOCAL_DOF],
+                dtype=np.float64,
+            )
+            offset += _BARYON_LOCAL_DOF
+            cdm_by_mode_label[str(mu)] = np.asarray(
+                residual[offset : offset + _CDM_LOCAL_DOF],
+                dtype=np.float64,
+            )
+            offset += _CDM_LOCAL_DOF
+        return baryon_by_mode_label, cdm_by_mode_label
+
+    def _pack_residual_local_state(
+        self,
+        *,
+        baryon_by_mode_label: Mapping[str, np.ndarray],
+        cdm_by_mode_label: Mapping[str, np.ndarray],
+    ) -> np.ndarray:
+        if self._residual_local_dof == 0:
+            return np.zeros(0, dtype=np.float64)
+        pieces: list[np.ndarray] = []
+        for mu in self._residual_mode_labels:
+            pieces.append(np.asarray(baryon_by_mode_label[str(mu)], dtype=np.float64))
+            pieces.append(np.asarray(cdm_by_mode_label[str(mu)], dtype=np.float64))
+        return np.concatenate(pieces, dtype=np.float64)
+
+    def _fill_layout_state_vector_from_components(
+        self,
+        *,
+        out: np.ndarray,
+        sample: _AuxiliaryOperatorSample,
+        photon_T_row: np.ndarray,
+        photon_E_row: np.ndarray,
+        photon_B_row: np.ndarray,
+        neutrino_row: np.ndarray,
+        baryon_by_mode_label: Mapping[str, np.ndarray],
+        cdm_by_mode_label: Mapping[str, np.ndarray],
+    ) -> None:
+        out.fill(0.0)
+        out[self._projection_index_cache.src_all] = sample.source_template[self._projection_index_cache.src_all]
+        out[self._projection_index_cache.harmonic_photon_T] = np.asarray(photon_T_row, dtype=np.float64)
+        out[self._projection_index_cache.harmonic_photon_E] = np.asarray(photon_E_row, dtype=np.float64)
+        out[self._projection_index_cache.harmonic_photon_B] = np.asarray(photon_B_row, dtype=np.float64)
+        out[self._projection_index_cache.harmonic_neutrino] = np.asarray(neutrino_row, dtype=np.float64)
+        for mu, indices in self._projection_index_cache.baryon_by_mode_label.items():
+            out[indices] = np.asarray(baryon_by_mode_label[str(mu)], dtype=np.float64)
+        for mu, indices in self._projection_index_cache.cdm_by_mode_label.items():
+            out[indices] = np.asarray(cdm_by_mode_label[str(mu)], dtype=np.float64)
 
     def _startup_gate_at_initial_time(self) -> StartupGateDecision:
         gamma_t = _resolved_gamma_t(
@@ -1591,6 +1693,50 @@ class Ver2TierBIntegrator:
         )
         return baryon_rhs, cdm_rhs
 
+    def _residual_mode_label_local_rhs(
+        self,
+        *,
+        snapshot: _EtaRuntimeSnapshot,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        photon_B: PSTFHierarchyState,
+        neutrino_tower: PSTFHierarchyState,
+        baryon_local: np.ndarray,
+        cdm_local: np.ndarray,
+        residual_local: np.ndarray,
+    ) -> np.ndarray:
+        if self._residual_local_dof == 0:
+            return np.zeros(0, dtype=np.float64)
+        baryon_residual, cdm_residual = self._split_residual_local_state(residual_local)
+        baryon_by_mode_label: dict[str, np.ndarray] = {
+            self._layout_covered_mode_label: np.asarray(baryon_local, dtype=np.float64),
+            **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in baryon_residual.items()},
+        }
+        cdm_by_mode_label: dict[str, np.ndarray] = {
+            self._layout_covered_mode_label: np.asarray(cdm_local, dtype=np.float64),
+            **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in cdm_residual.items()},
+        }
+        sample = self._build_auxiliary_operator_sample(
+            eta=float(snapshot.eta),
+            photon_T_row=np.asarray(pack_hierarchy(photon_T), dtype=np.float64),
+            photon_E_row=np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64),
+            reionization_amplitude=self._reionization_amplitude(),
+        )
+        layout_state = np.zeros(self._layout.size, dtype=np.float64)
+        self._fill_layout_state_vector_from_components(
+            out=layout_state,
+            sample=sample,
+            photon_T_row=np.asarray(pack_hierarchy(photon_T), dtype=np.float64),
+            photon_E_row=np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64),
+            photon_B_row=np.asarray(pack_hierarchy(photon_B), dtype=np.float64),
+            neutrino_row=np.asarray(pack_hierarchy(neutrino_tower), dtype=np.float64),
+            baryon_by_mode_label=baryon_by_mode_label,
+            cdm_by_mode_label=cdm_by_mode_label,
+        )
+        drive_rows = sample.drive_subset(layout_state, self._residual_local_layout_rows)
+        mass_diag = np.asarray(sample.mass_diag[self._residual_local_layout_rows], dtype=np.float64)
+        return np.asarray(drive_rows, dtype=np.float64) / np.maximum(np.abs(mass_diag), 1.0e-30)
+
     def _rhs(
         self,
         eta: float,
@@ -1598,9 +1744,10 @@ class Ver2TierBIntegrator:
         *,
         tca_tracker: list[bool] | None = None,
     ) -> np.ndarray:
-        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(
+        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local, residual_local = _unpack_radiation_state(
             y,
             self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
         )
         snapshot = self._eta_runtime_snapshot(float(eta))
         _, _, _, rhs_T, rhs_E, rhs_B, rhs_nu = self._rhs_components_from_snapshot(
@@ -1621,12 +1768,23 @@ class Ver2TierBIntegrator:
             theta_1=_theta_1_from_temperature_state(photon_T),
             theta_1_dot=float(rhs_T[sum(2 * ell + 1 for ell in range(1)) + 1]) if self.config.L_max >= 1 else 0.0,
         )
-        return np.concatenate([rhs_T, rhs_E, rhs_B, rhs_nu, baryon_rhs, cdm_rhs])
+        residual_rhs = self._residual_mode_label_local_rhs(
+            snapshot=snapshot,
+            photon_T=photon_T,
+            photon_E=photon_E,
+            photon_B=photon_B,
+            neutrino_tower=neutrino_tower,
+            baryon_local=baryon_local,
+            cdm_local=cdm_local,
+            residual_local=residual_local,
+        )
+        return np.concatenate([rhs_T, rhs_E, rhs_B, rhs_nu, baryon_rhs, cdm_rhs, residual_rhs])
 
     def _explicit_rhs(self, eta: float, y: np.ndarray) -> np.ndarray:
-        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(
+        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local, residual_local = _unpack_radiation_state(
             y,
             self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
         )
         snapshot = self._eta_runtime_snapshot(float(eta))
         rhs_T, rhs_E, rhs_B, _, _, _, rhs_nu = self._rhs_components_from_snapshot(
@@ -1639,9 +1797,18 @@ class Ver2TierBIntegrator:
             need_explicit=True,
             need_full=False,
         )
-        del baryon_local, cdm_local
+        residual_rhs = self._residual_mode_label_local_rhs(
+            snapshot=snapshot,
+            photon_T=photon_T,
+            photon_E=photon_E,
+            photon_B=photon_B,
+            neutrino_tower=neutrino_tower,
+            baryon_local=baryon_local,
+            cdm_local=cdm_local,
+            residual_local=residual_local,
+        )
         return np.concatenate(
-            [rhs_T, rhs_E, rhs_B, rhs_nu, np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64)]
+            [rhs_T, rhs_E, rhs_B, rhs_nu, np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64), residual_rhs]
         )
 
     def _implicit_rhs(
@@ -1651,9 +1818,10 @@ class Ver2TierBIntegrator:
         *,
         tca_tracker: list[bool] | None = None,
     ) -> np.ndarray:
-        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(
+        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local, residual_local = _unpack_radiation_state(
             y,
             self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
         )
         snapshot = self._eta_runtime_snapshot(float(eta))
         rhs_T_explicit, rhs_E_explicit, rhs_B_explicit, rhs_T_full, rhs_E_full, rhs_B_full, rhs_nu = (
@@ -1675,6 +1843,7 @@ class Ver2TierBIntegrator:
                 np.asarray(rhs_B_full - rhs_B_explicit, dtype=np.float64),
                 np.zeros_like(rhs_nu),
                 np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64),
+                np.zeros(self._residual_local_dof, dtype=np.float64),
             ]
         )
         tower_size = _tower_size(self.config.L_max)
@@ -1698,9 +1867,10 @@ class Ver2TierBIntegrator:
         dt: float,
         tca_tracker: list[bool],
     ) -> np.ndarray:
-        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local = _unpack_radiation_state(
+        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local, residual_local = _unpack_radiation_state(
             stage,
             self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
         )
         background = self._background_snapshot(float(eta))
         gamma_t = _resolved_gamma_t(
@@ -1837,6 +2007,7 @@ class Ver2TierBIntegrator:
             neutrino_tower=neutrino_tower,
             baryon_local=baryon_next,
             cdm_local=cdm_next,
+            residual_local=residual_local,
         )
 
     def _solve_tca_scalars(
@@ -2258,6 +2429,59 @@ class Ver2TierBIntegrator:
         }
         return history
 
+    def _ensure_live_mode_label_local_matter_history(
+        self,
+        result: IntegrationResult,
+    ) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], dict[str, object]]:
+        baryon_cached = getattr(result, "baryon_local_history_by_mode_label", None)
+        cdm_cached = getattr(result, "cdm_local_history_by_mode_label", None)
+        metadata = result.solver_info.get("live_mode_label_local_matter_history_metadata")
+        if (
+            isinstance(baryon_cached, Mapping)
+            and isinstance(cdm_cached, Mapping)
+            and isinstance(metadata, Mapping)
+        ):
+            return (
+                {str(mu): np.asarray(values, dtype=np.float64) for mu, values in baryon_cached.items()},
+                {str(mu): np.asarray(values, dtype=np.float64) for mu, values in cdm_cached.items()},
+                dict(metadata),
+            )
+        direct_history = self._ensure_live_local_matter_history(result)
+        baryon_by_mode_label = {
+            self._layout_covered_mode_label: np.asarray(direct_history.baryon_history, dtype=np.float64)
+        }
+        cdm_by_mode_label = {
+            self._layout_covered_mode_label: np.asarray(direct_history.cdm_history, dtype=np.float64)
+        }
+        residual_history = getattr(result, "residual_local_history", None)
+        residual_arr = (
+            np.zeros((len(result.eta), self._residual_local_dof), dtype=np.float64)
+            if residual_history is None
+            else np.asarray(residual_history, dtype=np.float64)
+        )
+        offset = 0
+        for mu in self._residual_mode_labels:
+            baryon_by_mode_label[str(mu)] = np.asarray(
+                residual_arr[:, offset : offset + _BARYON_LOCAL_DOF],
+                dtype=np.float64,
+            )
+            offset += _BARYON_LOCAL_DOF
+            cdm_by_mode_label[str(mu)] = np.asarray(
+                residual_arr[:, offset : offset + _CDM_LOCAL_DOF],
+                dtype=np.float64,
+            )
+            offset += _CDM_LOCAL_DOF
+        metadata_out = {
+            "owner": "ver2_native_integrator.main_state_mode_label_local_matter",
+            "history_sample_count": int(len(result.eta)),
+            "mode_labels": list(self._layout.mode_labels),
+            "covered_mode_label": self._layout_covered_mode_label,
+        }
+        result.baryon_local_history_by_mode_label = baryon_by_mode_label
+        result.cdm_local_history_by_mode_label = cdm_by_mode_label
+        result.solver_info["live_mode_label_local_matter_history_metadata"] = dict(metadata_out)
+        return baryon_by_mode_label, cdm_by_mode_label, metadata_out
+
     def _ensure_live_source_history(
         self,
         result: IntegrationResult,
@@ -2359,15 +2583,19 @@ class Ver2TierBIntegrator:
         neutrino_tower = result.neutrino_tower
         if neutrino_tower is None:
             raise ValueError("layout auxiliary history bundle requires result.neutrino_tower")
-        layout = build_hierarchy_layout(self.backend, self.backend.truncation)
+        layout = self._layout
         covered = self._layout_covered_mode_label
-        if covered is None:
-            covered = layout.mode_labels[0] if covered_mode_label is None else str(covered_mode_label)
-        projection_index_cache = _build_layout_projection_index_cache(
-            layout,
-            covered_mode_label=covered,
+        if covered_mode_label is not None:
+            covered = str(covered_mode_label)
+        projection_index_cache = (
+            self._projection_index_cache
+            if covered == self._layout_covered_mode_label
+            else _build_layout_projection_index_cache(layout, covered_mode_label=covered)
         )
         direct_history = self._ensure_live_local_matter_history(result)
+        baryon_rows_by_mode_label, cdm_rows_by_mode_label, mode_label_metadata = (
+            self._ensure_live_mode_label_local_matter_history(result)
+        )
         eta_samples = np.asarray(result.eta, dtype=np.float64)
         photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
         photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
@@ -2377,12 +2605,6 @@ class Ver2TierBIntegrator:
             result,
             covered_mode_label=covered,
         )
-        reionization_amplitude = (
-            0.0
-            if self.visibility_source.contract.events is None
-            else float(self.visibility_source.contract.events.tau_reion)
-        )
-        source_width = int(layout.sector_local_dofs["src"])
         source_rows = np.asarray(source_rows_live, dtype=np.float64)
         source_rows_by_mode_label = {
             str(mu): np.asarray(values, dtype=np.float64)
@@ -2391,227 +2613,41 @@ class Ver2TierBIntegrator:
         layout_state_rows = np.zeros((eta_samples.size, layout.size), dtype=np.float64)
         baryon_rows = np.asarray(direct_history.baryon_history, dtype=np.float64).copy()
         cdm_rows = np.asarray(direct_history.cdm_history, dtype=np.float64).copy()
-        auxiliary_baryon_reference = np.zeros_like(baryon_rows)
-        auxiliary_cdm_reference = np.zeros_like(cdm_rows)
-        baryon_rows_by_mode_label = {
-            str(mu): np.zeros_like(baryon_rows)
-            for mu in layout.mode_labels
-        }
-        cdm_rows_by_mode_label = {
-            str(mu): np.zeros_like(cdm_rows)
-            for mu in layout.mode_labels
-        }
-        baryon_prev_by_mode_label = {
-            str(mu): np.zeros(baryon_rows.shape[1], dtype=np.float64)
-            for mu in layout.mode_labels
-        }
-        cdm_prev_by_mode_label = {
-            str(mu): np.zeros(cdm_rows.shape[1], dtype=np.float64)
-            for mu in layout.mode_labels
-        }
-        baryon_prev_by_mode_label[covered] = np.asarray(direct_history.baryon_history[0], dtype=np.float64)
-        cdm_prev_by_mode_label[covered] = np.asarray(direct_history.cdm_history[0], dtype=np.float64)
-        auxiliary_baryon_reference[0] = np.asarray(baryon_prev_by_mode_label[covered], dtype=np.float64)
-        auxiliary_cdm_reference[0] = np.asarray(cdm_prev_by_mode_label[covered], dtype=np.float64)
-        for mu in layout.mode_labels:
-            if str(mu) == covered:
-                baryon_rows_by_mode_label[str(mu)][0] = np.asarray(direct_history.baryon_history[0], dtype=np.float64)
-                cdm_rows_by_mode_label[str(mu)][0] = np.asarray(direct_history.cdm_history[0], dtype=np.float64)
-            else:
-                baryon_rows_by_mode_label[str(mu)][0] = np.asarray(
-                    baryon_prev_by_mode_label[str(mu)],
-                    dtype=np.float64,
-                )
-                cdm_rows_by_mode_label[str(mu)][0] = np.asarray(
-                    cdm_prev_by_mode_label[str(mu)],
-                    dtype=np.float64,
-                )
         state_vector = np.zeros(layout.size, dtype=np.float64)
-        predictor_state_vector = np.zeros(layout.size, dtype=np.float64)
-
-        def _fill_layout_state_vector(
-            out: np.ndarray,
-            *,
-            sample: _AuxiliaryOperatorSample,
-            photon_T_row: np.ndarray,
-            photon_E_row: np.ndarray,
-            neutrino_row: np.ndarray,
-            photon_B_row: np.ndarray,
-            baryon_by_mode_label: dict[str, np.ndarray],
-            cdm_by_mode_label: dict[str, np.ndarray],
-        ) -> None:
-            out.fill(0.0)
-            out[projection_index_cache.src_all] = sample.source_template[projection_index_cache.src_all]
-            out[projection_index_cache.harmonic_photon_T] = np.asarray(photon_T_row, dtype=np.float64)
-            out[projection_index_cache.harmonic_photon_E] = np.asarray(photon_E_row, dtype=np.float64)
-            out[projection_index_cache.harmonic_photon_B] = np.asarray(photon_B_row, dtype=np.float64)
-            out[projection_index_cache.harmonic_neutrino] = np.asarray(neutrino_row, dtype=np.float64)
-            for mu, indices in projection_index_cache.baryon_by_mode_label.items():
-                out[indices] = np.asarray(baryon_by_mode_label[str(mu)], dtype=np.float64)
-            for mu, indices in projection_index_cache.cdm_by_mode_label.items():
-                out[indices] = np.asarray(cdm_by_mode_label[str(mu)], dtype=np.float64)
-
-        current_sample = self._build_auxiliary_operator_sample(
-            eta=float(eta_samples[0]),
-            photon_T_row=photon_T_tower[0],
-            photon_E_row=photon_E_tower[0],
-            reionization_amplitude=reionization_amplitude,
-        )
         for index, eta in enumerate(eta_samples):
-            direct_baryon_row = np.asarray(direct_history.baryon_history[index], dtype=np.float64)
-            direct_cdm_row = np.asarray(direct_history.cdm_history[index], dtype=np.float64)
-            display_baryon_by_mode_label = {
-                str(mu): (
-                    direct_baryon_row
-                    if str(mu) == covered
-                    else np.asarray(baryon_prev_by_mode_label[str(mu)], dtype=np.float64)
-                )
-                for mu in layout.mode_labels
-            }
-            display_cdm_by_mode_label = {
-                str(mu): (
-                    direct_cdm_row
-                    if str(mu) == covered
-                    else np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
-                )
-                for mu in layout.mode_labels
-            }
-            source_template = np.asarray(current_sample.source_template, dtype=np.float64)
-            _fill_layout_state_vector(
-                state_vector,
-                sample=current_sample,
-                photon_T_row=photon_T_tower[index],
-                photon_E_row=photon_E_tower[index],
-                neutrino_row=neutrino_arr[index],
-                photon_B_row=b_rows[index],
-                baryon_by_mode_label=display_baryon_by_mode_label,
-                cdm_by_mode_label=display_cdm_by_mode_label,
-            )
+            state_vector.fill(0.0)
+            for mu, indices in projection_index_cache.src_by_mode_label.items():
+                state_vector[indices] = np.asarray(source_rows_by_mode_label[str(mu)][index], dtype=np.float64)
+            state_vector[projection_index_cache.harmonic_photon_T] = np.asarray(photon_T_tower[index], dtype=np.float64)
+            state_vector[projection_index_cache.harmonic_photon_E] = np.asarray(photon_E_tower[index], dtype=np.float64)
+            state_vector[projection_index_cache.harmonic_photon_B] = np.asarray(b_rows[index], dtype=np.float64)
+            state_vector[projection_index_cache.harmonic_neutrino] = np.asarray(neutrino_arr[index], dtype=np.float64)
+            for mu, indices in projection_index_cache.baryon_by_mode_label.items():
+                state_vector[indices] = np.asarray(baryon_rows_by_mode_label[str(mu)][index], dtype=np.float64)
+            for mu, indices in projection_index_cache.cdm_by_mode_label.items():
+                state_vector[indices] = np.asarray(cdm_rows_by_mode_label[str(mu)][index], dtype=np.float64)
             layout_state_rows[index, :] = state_vector
-            if index == eta_samples.size - 1:
-                break
-            dt = float(eta_samples[index + 1] - eta_samples[index])
-            if dt <= 0.0:
-                raise ValueError("eta grid must be strictly increasing for coupled auxiliary history sampling")
-            reduced_drive = current_sample.drive_subset(
-                state_vector,
-                projection_index_cache.auxiliary_coupled_rows,
-            )
-            mass_diag = np.asarray(current_sample.mass_diag, dtype=np.float64)
-            baryon_predict_by_mode_label = {}
-            cdm_predict_by_mode_label = {}
-            for mu, indices in projection_index_cache.baryon_by_mode_label.items():
-                current = np.asarray(baryon_prev_by_mode_label[str(mu)], dtype=np.float64)
-                inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
-                baryon_predict_by_mode_label[str(mu)] = current + dt * inv_mass * reduced_drive[
-                    projection_index_cache.auxiliary_baryon_rows[str(mu)]
-                ]
-            for mu, indices in projection_index_cache.cdm_by_mode_label.items():
-                current = np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
-                inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
-                cdm_predict_by_mode_label[str(mu)] = current + dt * inv_mass * reduced_drive[
-                    projection_index_cache.auxiliary_cdm_rows[str(mu)]
-                ]
-
-            next_sample = self._build_auxiliary_operator_sample(
-                eta=float(eta_samples[index + 1]),
-                photon_T_row=photon_T_tower[index + 1],
-                photon_E_row=photon_E_tower[index + 1],
-                reionization_amplitude=reionization_amplitude,
-            )
-            direct_baryon_next = np.asarray(direct_history.baryon_history[index + 1], dtype=np.float64)
-            direct_cdm_next = np.asarray(direct_history.cdm_history[index + 1], dtype=np.float64)
-            display_baryon_predict = {
-                str(mu): (
-                    direct_baryon_next
-                    if str(mu) == covered
-                    else np.asarray(baryon_predict_by_mode_label[str(mu)], dtype=np.float64)
-                )
-                for mu in layout.mode_labels
-            }
-            display_cdm_predict = {
-                str(mu): (
-                    direct_cdm_next
-                    if str(mu) == covered
-                    else np.asarray(cdm_predict_by_mode_label[str(mu)], dtype=np.float64)
-                )
-                for mu in layout.mode_labels
-            }
-            _fill_layout_state_vector(
-                predictor_state_vector,
-                sample=next_sample,
-                photon_T_row=photon_T_tower[index + 1],
-                photon_E_row=photon_E_tower[index + 1],
-                neutrino_row=neutrino_arr[index + 1],
-                photon_B_row=b_rows[index + 1],
-                baryon_by_mode_label=display_baryon_predict,
-                cdm_by_mode_label=display_cdm_predict,
-            )
-            reduced_drive_next = next_sample.drive_subset(
-                predictor_state_vector,
-                projection_index_cache.auxiliary_coupled_rows,
-            )
-            mass_diag_next = np.asarray(next_sample.mass_diag, dtype=np.float64)
-            baryon_next_by_mode_label = {}
-            cdm_next_by_mode_label = {}
-            for mu, indices in projection_index_cache.baryon_by_mode_label.items():
-                current = np.asarray(baryon_prev_by_mode_label[str(mu)], dtype=np.float64)
-                inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
-                inv_mass_next = 1.0 / np.maximum(np.abs(mass_diag_next[indices]), 1.0e-30)
-                baryon_next_by_mode_label[str(mu)] = current + 0.5 * dt * (
-                    inv_mass * reduced_drive[projection_index_cache.auxiliary_baryon_rows[str(mu)]]
-                    + inv_mass_next
-                    * reduced_drive_next[projection_index_cache.auxiliary_baryon_rows[str(mu)]]
-                )
-            for mu, indices in projection_index_cache.cdm_by_mode_label.items():
-                current = np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
-                inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
-                inv_mass_next = 1.0 / np.maximum(np.abs(mass_diag_next[indices]), 1.0e-30)
-                cdm_next_by_mode_label[str(mu)] = current + 0.5 * dt * (
-                    inv_mass * reduced_drive[projection_index_cache.auxiliary_cdm_rows[str(mu)]]
-                    + inv_mass_next
-                    * reduced_drive_next[projection_index_cache.auxiliary_cdm_rows[str(mu)]]
-                )
-            baryon_prev_by_mode_label = baryon_next_by_mode_label
-            cdm_prev_by_mode_label = cdm_next_by_mode_label
-            auxiliary_baryon_reference[index + 1] = np.asarray(
-                baryon_prev_by_mode_label[covered],
-                dtype=np.float64,
-            )
-            auxiliary_cdm_reference[index + 1] = np.asarray(
-                cdm_prev_by_mode_label[covered],
-                dtype=np.float64,
-            )
-            for mu in layout.mode_labels:
-                if str(mu) == covered:
-                    baryon_rows_by_mode_label[str(mu)][index + 1] = direct_baryon_next
-                    cdm_rows_by_mode_label[str(mu)][index + 1] = direct_cdm_next
-                else:
-                    baryon_rows_by_mode_label[str(mu)][index + 1] = np.asarray(
-                        baryon_prev_by_mode_label[str(mu)],
-                        dtype=np.float64,
+        reference_baryon = np.asarray(baryon_rows_by_mode_label[str(covered)], dtype=np.float64)
+        reference_cdm = np.asarray(cdm_rows_by_mode_label[str(covered)], dtype=np.float64)
+        delta_terms: list[float] = []
+        for mu in layout.mode_labels:
+            if str(mu) == str(covered):
+                continue
+            delta_terms.append(
+                float(
+                    np.linalg.norm(
+                        np.asarray(baryon_rows_by_mode_label[str(mu)], dtype=np.float64) - reference_baryon
                     )
-                    cdm_rows_by_mode_label[str(mu)][index + 1] = np.asarray(
-                        cdm_prev_by_mode_label[str(mu)],
-                        dtype=np.float64,
-                    )
-            current_sample = next_sample
-
-        reference_baryon = np.asarray(auxiliary_baryon_reference, dtype=np.float64)
-        reference_cdm = np.asarray(auxiliary_cdm_reference, dtype=np.float64)
-        baryon_delta = baryon_rows - reference_baryon
-        cdm_delta = cdm_rows - reference_cdm
-        max_abs = max(
-            1.0,
-            float(np.max(np.abs(baryon_delta))),
-            float(np.max(np.abs(cdm_delta))),
-        )
-        scaled_delta_norm = max_abs * float(
-            np.sqrt(
-                np.sum(np.square(baryon_delta / max_abs), dtype=np.float64)
-                + np.sum(np.square(cdm_delta / max_abs), dtype=np.float64)
+                )
             )
-        )
+            delta_terms.append(
+                float(
+                    np.linalg.norm(
+                        np.asarray(cdm_rows_by_mode_label[str(mu)], dtype=np.float64) - reference_cdm
+                    )
+                )
+            )
+        scaled_delta_norm = float(np.sqrt(np.sum(np.square(delta_terms), dtype=np.float64))) if delta_terms else 0.0
         coupled_history = _CoupledAuxiliarySectorHistory(
             eta=eta_samples,
             photon_B_history=b_rows,
@@ -2622,17 +2658,17 @@ class Ver2TierBIntegrator:
             metadata={
                 "owner": str(direct_history.metadata["owner"]),
                 "b_mode_owner": str(b_metadata["owner"]),
-                "reference_owner": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension",
-                "mode_label_extension_owner": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension",
+                "reference_owner": str(mode_label_metadata["owner"]),
+                "mode_label_extension_owner": str(mode_label_metadata["owner"]),
                 "history_sample_count": int(eta_samples.size),
                 "reference_sample_count": int(reference_baryon.shape[0]),
                 "reference_delta_norm": float(scaled_delta_norm),
                 "reference_baryon_history": reference_baryon,
                 "reference_cdm_history": reference_cdm,
-                "coupling_passes": 2,
+                "coupling_passes": 0,
                 "integration_scheme": str(direct_history.metadata.get("integration_scheme", "")),
-                "extension_integration_scheme": "predictor_corrector_trapezoidal",
-                "reduced_block_size": int(projection_index_cache.auxiliary_coupled_rows.size),
+                "extension_integration_scheme": "main_state_coevolved",
+                "reduced_block_size": 0,
                 "b_mode_integration_scheme": str(b_metadata["integration_scheme"]),
                 "coupled_sectors": ("ph_B", "baryon", "cdm"),
             },
@@ -3361,6 +3397,7 @@ class Ver2TierBIntegrator:
         neutrino_tower: np.ndarray,
         baryon_local_history: np.ndarray,
         cdm_local_history: np.ndarray,
+        residual_local_history: np.ndarray,
         nfev: int,
         njev: int,
         nlu: int,
@@ -3447,6 +3484,33 @@ class Ver2TierBIntegrator:
                 "cdm": tuple(local_matter_history.cdm_labels),
             },
         }
+        baryon_by_mode_label = {
+            self._layout_covered_mode_label: np.asarray(local_matter_history.baryon_history, dtype=np.float64)
+        }
+        cdm_by_mode_label = {
+            self._layout_covered_mode_label: np.asarray(local_matter_history.cdm_history, dtype=np.float64)
+        }
+        residual_history_arr = np.asarray(residual_local_history, dtype=np.float64)
+        if residual_history_arr.ndim != 2 or residual_history_arr.shape[0] != eta_arr.size:
+            raise ValueError("residual_local_history must have shape (len(eta), n_residual)")
+        offset = 0
+        for mu in self._residual_mode_labels:
+            baryon_by_mode_label[str(mu)] = np.asarray(
+                residual_history_arr[:, offset : offset + _BARYON_LOCAL_DOF],
+                dtype=np.float64,
+            )
+            offset += _BARYON_LOCAL_DOF
+            cdm_by_mode_label[str(mu)] = np.asarray(
+                residual_history_arr[:, offset : offset + _CDM_LOCAL_DOF],
+                dtype=np.float64,
+            )
+            offset += _CDM_LOCAL_DOF
+        solver_info["live_mode_label_local_matter_history_metadata"] = {
+            "owner": "ver2_native_integrator.main_state_mode_label_local_matter",
+            "history_sample_count": int(eta_arr.size),
+            "mode_labels": list(self._layout.mode_labels),
+            "covered_mode_label": self._layout_covered_mode_label,
+        }
         solver_info["live_b_mode_history_metadata"] = {
             "owner": "ver2_native_integrator.main_state_photon_B",
             "history_sample_count": int(eta_arr.size),
@@ -3470,6 +3534,9 @@ class Ver2TierBIntegrator:
             photon_B_tower=np.asarray(photon_B_tower, dtype=np.float64),
             baryon_local_history=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
             cdm_local_history=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
+            residual_local_history=residual_history_arr,
+            baryon_local_history_by_mode_label=baryon_by_mode_label,
+            cdm_local_history_by_mode_label=cdm_by_mode_label,
         )
 
     def run(
@@ -3497,6 +3564,7 @@ class Ver2TierBIntegrator:
             neutrino_segments: list[np.ndarray] = []
             baryon_segments: list[np.ndarray] = []
             cdm_segments: list[np.ndarray] = []
+            residual_segments: list[np.ndarray] = []
         else:
             if self.startup_gate is None or self.seed_projection is None:
                 _ = self.initial_state()
@@ -3513,6 +3581,7 @@ class Ver2TierBIntegrator:
             neutrino_segments = [np.asarray(restart_state.neutrino_tower_prefix, dtype=np.float64)]
             baryon_segments = [np.asarray(restart_state.baryon_local_prefix, dtype=np.float64)]
             cdm_segments = [np.asarray(restart_state.cdm_local_prefix, dtype=np.float64)]
+            residual_segments = [np.asarray(restart_state.residual_local_prefix, dtype=np.float64)]
 
         nfev = 0
         njev = 0
@@ -3561,6 +3630,12 @@ class Ver2TierBIntegrator:
                         dtype=np.float64,
                     )[start_offset:]
                 )
+                residual_segments.append(
+                    np.asarray(
+                        sol.y[4 * tower_size + _LOCAL_MATTER_DOF :].T,
+                        dtype=np.float64,
+                    )[start_offset:]
+                )
         else:
             while current_index < eta_out.size - 1:
                 next_index = min(current_index + int(checkpoint_every_n_steps), eta_out.size - 1)
@@ -3590,6 +3665,10 @@ class Ver2TierBIntegrator:
                     sol.y[4 * tower_size + _BARYON_LOCAL_DOF : 4 * tower_size + _LOCAL_MATTER_DOF].T,
                     dtype=np.float64,
                 )[start_offset:]
+                residual_chunk = np.asarray(
+                    sol.y[4 * tower_size + _LOCAL_MATTER_DOF :].T,
+                    dtype=np.float64,
+                )[start_offset:]
                 eta_segments.append(eta_chunk)
                 photon_T_segments.append(photon_T_chunk)
                 photon_E_segments.append(photon_E_chunk)
@@ -3597,6 +3676,7 @@ class Ver2TierBIntegrator:
                 neutrino_segments.append(neutrino_chunk)
                 baryon_segments.append(baryon_chunk)
                 cdm_segments.append(cdm_chunk)
+                residual_segments.append(residual_chunk)
                 y_current = np.asarray(sol.y[:, -1], dtype=np.float64)
                 current_index = next_index
                 if checkpoint_callback is not None and current_index < eta_out.size - 1:
@@ -3613,6 +3693,7 @@ class Ver2TierBIntegrator:
                             neutrino_tower_prefix=np.vstack(neutrino_segments),
                             baryon_local_prefix=np.vstack(baryon_segments),
                             cdm_local_prefix=np.vstack(cdm_segments),
+                            residual_local_prefix=np.vstack(residual_segments),
                         )
                     )
 
@@ -3624,6 +3705,7 @@ class Ver2TierBIntegrator:
             neutrino_tower=np.vstack(neutrino_segments),
             baryon_local_history=np.vstack(baryon_segments),
             cdm_local_history=np.vstack(cdm_segments),
+            residual_local_history=np.vstack(residual_segments) if residual_segments else np.zeros((len(np.concatenate(eta_segments, axis=0)), 0), dtype=np.float64),
             nfev=nfev,
             njev=njev,
             nlu=nlu,
