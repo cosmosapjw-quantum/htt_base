@@ -361,7 +361,7 @@ def test_project_runtime_native_state_can_embed_layout_auxiliary_local_matter_bl
             "cdm": "direct_fluid_rhs_live_history",
         },
         matter_block_metadata={
-            "owner": "baryon_fluid.cdm_fluid.live_homogeneous_history",
+            "owner": "ver2_native_integrator.main_state_local_matter",
             "reference_owner": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension",
         },
     )
@@ -371,7 +371,7 @@ def test_project_runtime_native_state_can_embed_layout_auxiliary_local_matter_bl
         "multi_live_mode_label_with_runtime_local_matter_blocks"
     )
     assert projection.hierarchy_state.matter_block["owner"] == (
-        "baryon_fluid.cdm_fluid.live_homogeneous_history"
+        "ver2_native_integrator.main_state_local_matter"
     )
     assert projection.hierarchy_state.matter_block["reference_owner"] == (
         "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension"

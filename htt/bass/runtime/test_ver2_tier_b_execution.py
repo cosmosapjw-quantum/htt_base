@@ -430,7 +430,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     }
     assert run.solver_output.metadata["layout_local_matter_blocks_consumed"] is True
     assert run.solver_output.metadata["layout_local_matter_owner"] == (
-        "baryon_fluid.cdm_fluid.live_homogeneous_history"
+        "ver2_native_integrator.main_state_local_matter"
     )
     assert run.solver_output.metadata["layout_local_matter_extension_owner"] == (
         "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension"
@@ -510,7 +510,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_mode_labels"]
     ) == {"m0", "m+2", "m-2"}
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_local_matter_owner"] == (
-        "baryon_fluid.cdm_fluid.live_homogeneous_history"
+        "ver2_native_integrator.main_state_local_matter"
     )
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"][
         "layout_local_matter_extension_owner"
@@ -557,7 +557,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         dtype=np.float64,
     ).shape[0] == len(run.integration_result.eta)
     assert run.trace.canonical_projection.hierarchy_state.matter_block["owner"] == (
-        "baryon_fluid.cdm_fluid.live_homogeneous_history"
+        "ver2_native_integrator.main_state_local_matter"
     )
     assert run.trace.canonical_projection.hierarchy_state.matter_block["reference_owner"] == (
         "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_extension"
