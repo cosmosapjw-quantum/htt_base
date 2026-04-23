@@ -488,6 +488,7 @@ def test_native_output_blocks_readiness_when_backend_verification_bundle_is_unre
     assert output.metadata["backend_verification_crosscheck_pass"] is False
     assert output.metadata["backend_reduced_local_evaluator_available"] is False
     assert output.metadata["backend_reduced_harmonic_evaluator_available"] is False
+    assert output.metadata["backend_reduced_source_evaluator_available"] is False
     assert output.metadata["propagator_readiness"] == "contract_only_unavailable"
     assert output.metadata["propagator_exactness"] == "contract_only_unavailable"
     assert output.metadata["propagator_ready"] is False

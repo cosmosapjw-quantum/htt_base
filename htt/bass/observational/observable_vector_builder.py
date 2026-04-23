@@ -140,6 +140,9 @@ def _default_alm_features(
         "backend_reduced_harmonic_evaluator_available": bool(
             solver_output.metadata.get("backend_reduced_harmonic_evaluator_available", False)
         ),
+        "backend_reduced_source_evaluator_available": bool(
+            solver_output.metadata.get("backend_reduced_source_evaluator_available", False)
+        ),
         "b_mode_runtime_available": bool(
             solver_output.metadata.get("b_mode_runtime_available", False)
         ),

@@ -362,6 +362,7 @@ def test_live_tier_b_type_i_observable_marks_isotropic_null_proxy() -> None:
     assert observable.alm_features["backend_verification_crosscheck_pass"] is True
     assert observable.alm_features["backend_reduced_local_evaluator_available"] is True
     assert observable.alm_features["backend_reduced_harmonic_evaluator_available"] is True
+    assert observable.alm_features["backend_reduced_source_evaluator_available"] is True
     assert observable.alm_features["b_mode_runtime_available"] is False
     assert observable.alm_features["live_mode_label_harmonic_history_owner"] == (
         "ver2_native_integrator.main_state_mode_label_harmonics"

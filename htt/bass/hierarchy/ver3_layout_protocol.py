@@ -380,6 +380,7 @@ def build_layout_manifest(
         "approximate_family_operator_available": not exact_operator,
         "reduced_local_evaluator_available": True,
         "reduced_harmonic_evaluator_available": True,
+        "reduced_source_evaluator_available": True,
         "family_conditioned_kernel_status": "frozen_v5_family_conditioned",
         "family_conditioned_kernel_law": _family_conditioned_kernel_law((bg or {}), backend)["law_name"],
         "truncation_metadata": dict(truncation),

@@ -253,6 +253,8 @@ def _native_propagator_readiness(
         return "contract_only_unavailable"
     if not bool(mode_ops_metadata.get("reduced_harmonic_evaluator_available", False)):
         return "contract_only_unavailable"
+    if not bool(mode_ops_metadata.get("reduced_source_evaluator_available", False)):
+        return "contract_only_unavailable"
     exact_kernel = str(getattr(mode_ops, "operator_kernel_family", "")) == "bianchi_i_matrix_exact"
     exact_layout = bool(
         getattr(mode_ops, "layout_metadata", {}).get("exact_family_operator_available", False)
@@ -1140,6 +1142,11 @@ def build_solver_core_output_from_native_result(
                 False
                 if mode_ops is None
                 else getattr(mode_ops, "metadata", {}).get("reduced_harmonic_evaluator_available", False)
+            ),
+            "backend_reduced_source_evaluator_available": bool(
+                False
+                if mode_ops is None
+                else getattr(mode_ops, "metadata", {}).get("reduced_source_evaluator_available", False)
             ),
             "backend_contract_release_status": None
             if mode_ops is None
