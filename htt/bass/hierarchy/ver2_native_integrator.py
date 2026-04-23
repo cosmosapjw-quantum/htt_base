@@ -3241,6 +3241,7 @@ class Ver2TierBIntegrator:
         reionization_amplitude = self._reionization_amplitude()
 
         baryon_by_mode_label, _, _ = self._ensure_live_mode_label_local_matter_history(result)
+        _, source_by_mode_label, source_history_metadata = self._ensure_live_source_history(result)
         b_history, b_history_metadata = self._ensure_live_b_mode_history(result)
 
         projected_t = self._resolve_mode_label_harmonic_history(np.asarray(result.photon_T_tower, dtype=np.float64))
@@ -3324,7 +3325,10 @@ class Ver2TierBIntegrator:
                 polarization_source=polarization_left,
                 reionization_amplitude=reionization_amplitude,
             )
-            source_left = self.backend.evaluate_reduced_source_blocks(bg_left)
+            source_left = {
+                mu: np.asarray(source_by_mode_label[mu][index], dtype=np.float64)
+                for mu in mode_labels
+            }
             rhs_t_left, rhs_e_left, rhs_b_left, rhs_nu_left = self.backend.evaluate_reduced_harmonic_rhs(
                 bg_left,
                 photon_T_by_mode_label=left_t,
@@ -3388,7 +3392,10 @@ class Ver2TierBIntegrator:
                 polarization_source=polarization_right,
                 reionization_amplitude=reionization_amplitude,
             )
-            source_right = self.backend.evaluate_reduced_source_blocks(bg_right)
+            source_right = {
+                mu: np.asarray(source_by_mode_label[mu][index + 1], dtype=np.float64)
+                for mu in mode_labels
+            }
             rhs_t_right, rhs_e_right, rhs_b_right, rhs_nu_right = self.backend.evaluate_reduced_harmonic_rhs(
                 bg_right,
                 photon_T_by_mode_label=right_t,
@@ -3429,6 +3436,7 @@ class Ver2TierBIntegrator:
             "sectors": ("ph_I", "ph_E", "ph_B", "nu_I"),
             "covered_owner": "ver2_native_integrator.main_state_harmonics",
             "residual_owner": "ver2_native_integrator.reduced_mode_label_harmonics",
+            "source_owner": str(source_history_metadata.get("owner", "unavailable")),
             "integration_scheme": "predictor_corrector_trapezoidal",
         }
         result.photon_T_history_by_mode_label = {
