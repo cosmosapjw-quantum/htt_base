@@ -1121,10 +1121,12 @@ def _assemble_tier_b_post_run_bundle(
     from bass.forward.ver2_solver_output import build_solver_core_output_from_execution_bundle
     from bass.spectrum.ver2_cutoff_campaign import run_executed_cutoff_campaign
 
-    runtime_trace = prepared.integrator.build_runtime_execution_trace(
-        result,
-        reionization_amplitude=prepared.reionization_amplitude,
-    )
+    runtime_trace = getattr(result, "runtime_execution_trace", None)
+    if runtime_trace is None:
+        runtime_trace = prepared.integrator.build_runtime_execution_trace(
+            result,
+            reionization_amplitude=prepared.reionization_amplitude,
+        )
     cutoff_campaign = None
     if request.cutoff_spec is not None:
         cutoff_campaign = run_executed_cutoff_campaign(
