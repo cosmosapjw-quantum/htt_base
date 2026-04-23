@@ -72,6 +72,41 @@ def test_family_conditioned_mode_label_weights_vary_by_backend() -> None:
     assert ratio_viii != pytest.approx(ratio_v)
 
 
+def test_family_conditioned_harmonic_topology_varies_by_backend() -> None:
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {"Gamma_T": 0.0},
+        "sigma_tensor": np.zeros((3, 3), dtype=np.float64),
+        "source_tables": {},
+    }
+
+    def _cross_block(family: str) -> np.ndarray:
+        backend = build_backend(get_family_spec(family), truncation={"ell_max": 2})
+        layout = build_hierarchy_layout(backend, {"ell_max": 2})
+        width = (layout.ell_max + 1) ** 2
+        block_size = 4 * width
+        empty_h = {str(mu): np.zeros(width, dtype=np.float64) for mu in layout.mode_labels}
+        baryon = {str(mu): np.zeros(4, dtype=np.float64) for mu in layout.mode_labels}
+        affine = build_reduced_harmonic_affine_operator(
+            layout,
+            bg,
+            backend,
+            residual_mode_labels=tuple(str(mu) for mu in layout.mode_labels[1:]),
+            photon_T_by_mode_label=empty_h,
+            photon_E_by_mode_label=empty_h,
+            photon_B_by_mode_label=empty_h,
+            neutrino_by_mode_label=empty_h,
+            baryon_by_mode_label=baryon,
+        )
+        return np.asarray(affine.matrix[:block_size, block_size : 2 * block_size].todense(), dtype=np.float64)
+
+    cross_v = _cross_block("V")
+    cross_viii = _cross_block("VIII")
+
+    assert np.allclose(cross_v, 0.0)
+    assert np.linalg.norm(cross_viii) > 0.0
+
+
 def test_flatten_unflatten_roundtrip_for_harmonic_slot() -> None:
     layout = build_hierarchy_layout(_backend(), {"ell_max": 4, "mode_labels": ("m0", "m+2", "m-2")})
     idx = flatten(layout, "m+2", "ph_E", 2, -1)

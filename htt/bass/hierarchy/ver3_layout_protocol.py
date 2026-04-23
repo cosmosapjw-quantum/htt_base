@@ -466,6 +466,8 @@ def _harmonic_cross_mode_coeff(
 def _mode_label_coupling_targets(
     mode_labels: tuple[str, ...],
     source_label: str,
+    *,
+    family: str | None = None,
 ) -> tuple[str, ...]:
     labels = tuple(str(mu) for mu in mode_labels)
     if len(labels) <= 1:
@@ -474,6 +476,12 @@ def _mode_label_coupling_targets(
     source = str(source_label)
     if source == anchor:
         return tuple(str(mu) for mu in labels[1:])
+    residuals = tuple(str(mu) for mu in labels[1:])
+    if family in {"VII_0", "VII_h", "VIII", "IX"} and len(residuals) >= 2:
+        plus_label = next((mu for mu in residuals if mu.endswith("+")), residuals[0])
+        minus_label = next((mu for mu in residuals if mu.endswith("-")), residuals[-1])
+        if source == plus_label and minus_label != plus_label:
+            return (anchor, minus_label)
     return (anchor,)
 
 
@@ -482,6 +490,7 @@ def _reduced_harmonic_structure(
     ell_max: int,
     mode_labels: tuple[str, ...],
     residual_labels: tuple[str, ...],
+    family: str,
 ) -> _ReducedHarmonicOperatorStructure:
     width = (int(ell_max) + 1) ** 2
     block_size = 4 * width
@@ -531,7 +540,11 @@ def _reduced_harmonic_structure(
         mu_key = str(mu)
         residual_targets: list[int] = []
         external_targets: list[str] = []
-        for target in _mode_label_coupling_targets(mode_labels_list, mu_key):
+        for target in _mode_label_coupling_targets(
+            mode_labels_list,
+            mu_key,
+            family=family,
+        ):
             target_key = str(target)
             if target_key in label_to_residual:
                 residual_targets.append(int(label_to_residual[target_key]))
@@ -906,7 +919,11 @@ def assemble_mixing_block(
                         rows.extend((e_idx, b_idx, b_idx, e_idx))
                         cols.extend((b_idx, e_idx, i_idx, b_idx))
                         data.extend((eb, -eb, 0.25 * eb, -0.25 * eb))
-                target_labels = _mode_label_coupling_targets(tuple(str(x) for x in layout.mode_labels), str(mu))
+                target_labels = _mode_label_coupling_targets(
+                    tuple(str(x) for x in layout.mode_labels),
+                    str(mu),
+                    family=backend.family_spec.family,
+                )
                 if target_labels:
                     target_norm = float(len(target_labels))
                     coeff_i = _harmonic_cross_mode_coeff(
@@ -953,7 +970,11 @@ def assemble_mixing_block(
                         rows.extend((i_idx, e_idx, b_idx, nu_idx))
                         cols.extend((next_i_idx, next_e_idx, next_b_idx, next_nu_idx))
                         data.extend((coeff_i, coeff_e, coeff_b, coeff_nu))
-        target_labels = _mode_label_coupling_targets(tuple(str(x) for x in layout.mode_labels), str(mu))
+        target_labels = _mode_label_coupling_targets(
+            tuple(str(x) for x in layout.mode_labels),
+            str(mu),
+            family=backend.family_spec.family,
+        )
         if target_labels:
             monopole_coeff = mu_weight * 0.5 * mix_scale * cross_mode_scale / (
                 len(layout.mode_labels) * float(len(target_labels))
@@ -1244,7 +1265,11 @@ def evaluate_reduced_harmonic_rhs(
             src_state = np.asarray(default_source_blocks[mu_key], dtype=np.float64)
         else:
             src_state = np.asarray(source_by_mode_label.get(mu_key, zeros_s), dtype=np.float64)
-        target_labels = _mode_label_coupling_targets(tuple(str(x) for x in layout.mode_labels), mu_key)
+        target_labels = _mode_label_coupling_targets(
+            tuple(str(x) for x in layout.mode_labels),
+            mu_key,
+            family=backend.family_spec.family,
+        )
         target_towers: tuple[tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray], ...] = tuple(
             (
                 np.asarray(photon_T_by_mode_label.get(target_mu, zeros_h), dtype=np.float64),
@@ -1472,6 +1497,7 @@ def build_reduced_harmonic_affine_operator(
         int(layout.ell_max),
         tuple(str(mu) for mu in layout.mode_labels),
         residual_labels,
+        backend.family_spec.family,
     )
     width = structure.width
     mu_count = max(len(layout.mode_labels), 1)
@@ -1803,6 +1829,7 @@ def build_reduced_joint_affine_operator(
         int(layout.ell_max),
         tuple(str(mu) for mu in layout.mode_labels),
         residual_labels,
+        backend.family_spec.family,
     )
     harmonic_block_size = int(structure.block_size)
     harmonic_dof = int(structure.n_unknown)
