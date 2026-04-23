@@ -1285,6 +1285,35 @@ class Ver2TierBIntegrator:
             ],
             dtype=np.float64,
         )
+        eta_initial = float(self.config.eta_initial_mpc)
+        gamma_t_initial = _resolved_gamma_t(
+            eta=eta_initial,
+            direction=self._direction,
+            visibility_source=self.visibility_source,
+            config=self.config,
+        )
+        polarization_slot = _ell2_m0_slot_offset(int(self.config.L_max)) if int(self.config.L_max) >= 2 else None
+        source_seed_blocks = self.backend.evaluate_reduced_source_blocks(
+            self._live_backend_state_payload(
+                eta=eta_initial,
+                gamma_t_probe=float(gamma_t_initial),
+                visibility_amplitude=abs(float(pack_hierarchy(seeded.photon_T)[0])),
+                polarization_source=(
+                    0.0
+                    if polarization_slot is None
+                    else abs(float(pack_hierarchy(seeded.photon_E.E)[polarization_slot]))
+                ),
+                reionization_amplitude=float(self._reionization_amplitude()),
+            )
+        )
+        source_local = np.asarray(source_seed_blocks[str(self._layout_covered_mode_label)], dtype=np.float64)
+        residual_source = np.concatenate(
+            [
+                np.asarray(source_seed_blocks[str(mu)], dtype=np.float64)
+                for mu in self._residual_mode_labels
+            ],
+            dtype=np.float64,
+        ) if self._residual_mode_labels else np.zeros(0, dtype=np.float64)
         return _pack_radiation_state(
             photon_T=seeded.photon_T,
             photon_E=seeded.photon_E,
@@ -1292,10 +1321,10 @@ class Ver2TierBIntegrator:
             neutrino_tower=seeded.neutrino_tower,
             baryon_local=baryon_local,
             cdm_local=cdm_local,
-            source_local=np.zeros(_SOURCE_LOCAL_DOF, dtype=np.float64),
+            source_local=source_local,
             residual_local=np.zeros(self._residual_local_dof, dtype=np.float64),
             residual_harmonic=np.zeros(self._residual_harmonic_dof, dtype=np.float64),
-            residual_source=np.zeros(self._residual_source_dof, dtype=np.float64),
+            residual_source=residual_source,
         )
 
     def _reionization_amplitude(self) -> float:
