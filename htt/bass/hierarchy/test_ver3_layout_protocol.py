@@ -10,6 +10,7 @@ from bass.hierarchy import (
     assemble_free_streaming_block,
     assemble_mixing_block,
     assemble_explicit_block,
+    build_reduced_harmonic_affine_operator,
     evaluate_reduced_harmonic_rhs,
     evaluate_reduced_local_rhs,
     evaluate_reduced_source_blocks,
@@ -282,6 +283,111 @@ def test_reduced_harmonic_rhs_matches_full_operator_subset() -> None:
         np.testing.assert_allclose(reduced_e[str(mu)], full_drive[idx_e] / mass_diag[idx_e])
         np.testing.assert_allclose(reduced_b[str(mu)], full_drive[idx_b] / mass_diag[idx_b])
         np.testing.assert_allclose(reduced_nu[str(mu)], full_drive[idx_nu] / mass_diag[idx_nu])
+
+
+def test_reduced_harmonic_affine_operator_matches_direct_evaluator_on_residual_labels() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {"Gamma_T": 2.5},
+        "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
+        "source_tables": {
+            "visibility_amplitude": 1.25,
+            "polarization_source": 0.4,
+            "reionization_amplitude": 0.2,
+        },
+    }
+    width = (layout.ell_max + 1) ** 2
+    residual_labels = ("m+2", "m-2")
+    photon_t_by_mode_label = {
+        "m0": np.linspace(0.1, 0.9, width, dtype=np.float64),
+        "m+2": np.linspace(-0.3, 0.5, width, dtype=np.float64),
+        "m-2": np.linspace(0.2, -0.4, width, dtype=np.float64),
+    }
+    photon_e_by_mode_label = {
+        "m0": np.linspace(0.6, -0.2, width, dtype=np.float64),
+        "m+2": np.linspace(0.3, 0.9, width, dtype=np.float64),
+        "m-2": np.linspace(-0.5, 0.1, width, dtype=np.float64),
+    }
+    photon_b_by_mode_label = {
+        "m0": np.linspace(-0.4, 0.4, width, dtype=np.float64),
+        "m+2": np.linspace(0.7, -0.1, width, dtype=np.float64),
+        "m-2": np.linspace(0.05, 0.25, width, dtype=np.float64),
+    }
+    neutrino_by_mode_label = {
+        "m0": np.linspace(0.15, 0.75, width, dtype=np.float64),
+        "m+2": np.linspace(-0.2, 0.6, width, dtype=np.float64),
+        "m-2": np.linspace(0.4, -0.1, width, dtype=np.float64),
+    }
+    baryon_by_mode_label = {
+        "m0": np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float64),
+        "m+2": np.array([0.5, 0.6, 0.7, 0.8], dtype=np.float64),
+        "m-2": np.array([-0.3, -0.2, -0.1, 0.0], dtype=np.float64),
+    }
+    source_by_mode_label = {
+        "m0": np.array([0.2, -0.1, 0.0], dtype=np.float64),
+        "m+2": np.array([0.3, 0.4, -0.2], dtype=np.float64),
+        "m-2": np.array([-0.25, 0.15, 0.05], dtype=np.float64),
+    }
+    reduced_t, reduced_e, reduced_b, reduced_nu = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend,
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+        source_by_mode_label=source_by_mode_label,
+    )
+    affine = build_reduced_harmonic_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=residual_labels,
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+        source_by_mode_label=source_by_mode_label,
+    )
+    residual_state = np.concatenate(
+        [
+            photon_t_by_mode_label["m+2"],
+            photon_e_by_mode_label["m+2"],
+            photon_b_by_mode_label["m+2"],
+            neutrino_by_mode_label["m+2"],
+            photon_t_by_mode_label["m-2"],
+            photon_e_by_mode_label["m-2"],
+            photon_b_by_mode_label["m-2"],
+            neutrino_by_mode_label["m-2"],
+        ],
+        dtype=np.float64,
+    )
+    direct = np.concatenate(
+        [
+            reduced_t["m+2"],
+            reduced_e["m+2"],
+            reduced_b["m+2"],
+            reduced_nu["m+2"],
+            reduced_t["m-2"],
+            reduced_e["m-2"],
+            reduced_b["m-2"],
+            reduced_nu["m-2"],
+        ],
+        dtype=np.float64,
+    )
+    applied = np.asarray(affine.matrix @ residual_state + affine.bias, dtype=np.float64)
+    assert affine.mode_labels == residual_labels
+    assert affine.matrix.shape == (direct.size, direct.size)
+    assert affine.matrix.nnz > 0
+    np.testing.assert_allclose(applied, direct)
 
 
 def test_reduced_harmonic_rhs_can_reconstruct_source_local_block_from_source_tables() -> None:

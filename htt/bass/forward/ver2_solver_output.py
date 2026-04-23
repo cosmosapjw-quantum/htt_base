@@ -981,6 +981,9 @@ def build_solver_core_output_from_native_result(
             "layout_source_history_sample_count": int(
                 result.solver_info.get("layout_source_history_sample_count", 0)
             ),
+            "residual_harmonic_orthogonal_bridge": str(
+                result.solver_info.get("residual_harmonic_orthogonal_bridge", "disabled")
+            ),
             "layout_source_mode_labels": list(
                 result.solver_info.get("layout_source_mode_labels", [])
             ),

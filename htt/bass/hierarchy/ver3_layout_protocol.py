@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import Mapping
 
 import numpy as np
-from scipy.sparse import csr_matrix, diags
+from scipy.sparse import csc_matrix, csr_matrix, diags
 
 from bass.los.family_backend_protocol import FamilyBackend
 from bass.validation import GateBundle, make_gate_bundle
@@ -13,12 +14,14 @@ from bass.validation import GateBundle, make_gate_bundle
 __all__ = [
     "SECTOR_ORDER",
     "HierarchyLayout",
+    "ReducedHarmonicAffineOperator",
     "build_hierarchy_layout",
     "build_layout_manifest",
     "flatten",
     "unflatten",
     "evaluate_reduced_source_blocks",
     "evaluate_reduced_harmonic_rhs",
+    "build_reduced_harmonic_affine_operator",
     "evaluate_reduced_local_rhs",
     "assemble_free_streaming_block",
     "assemble_mixing_block",
@@ -43,6 +46,45 @@ class HierarchyLayout:
     ell_max: int
     sector_local_dofs: Mapping[str, int]
     size: int
+
+
+@dataclass(frozen=True)
+class ReducedHarmonicAffineOperator:
+    mode_labels: tuple[str, ...]
+    matrix: csc_matrix
+    bias: np.ndarray
+
+
+@dataclass(frozen=True)
+class _ReducedHarmonicOperatorStructure:
+    mode_labels: tuple[str, ...]
+    residual_labels: tuple[str, ...]
+    residual_count: int
+    width: int
+    block_size: int
+    n_unknown: int
+    ell_by_slot: np.ndarray
+    abs_m_by_slot: np.ndarray
+    prev_slot_by_slot: np.ndarray
+    prev_coeff_by_slot: np.ndarray
+    next_slot_by_slot: np.ndarray
+    next_coeff_by_slot: np.ndarray
+    pstf_weight_by_slot: np.ndarray
+    eb_base_by_slot: np.ndarray
+    collision_factor_by_slot: np.ndarray
+    diag_base_by_slot: np.ndarray
+    ge2_mask: np.ndarray
+    ell0_mask: np.ndarray
+    sector_slots: np.ndarray
+    self_pattern_rows: np.ndarray
+    self_pattern_cols: np.ndarray
+    cross_pattern_rows: np.ndarray
+    cross_pattern_cols: np.ndarray
+    next_residual_index: tuple[int, ...]
+    next_external_label: tuple[str | None, ...]
+    monopole_slot: int
+    dipole_slot: int | None
+    quadrupole_slot: int | None
 
 
 def _branch_scale(bg: Mapping[str, object]) -> float:
@@ -353,6 +395,133 @@ def _harmonic_cross_mode_coeff(
     if sector == "nu_I":
         return 0.12 * base
     raise KeyError(f"unsupported harmonic sector {sector!r}")
+
+
+@lru_cache(maxsize=None)
+def _reduced_harmonic_structure(
+    ell_max: int,
+    mode_labels: tuple[str, ...],
+    residual_labels: tuple[str, ...],
+) -> _ReducedHarmonicOperatorStructure:
+    width = (int(ell_max) + 1) ** 2
+    block_size = 4 * width
+    residual_count = len(residual_labels)
+    slots = np.arange(width, dtype=np.int64)
+    ell_by_slot = np.zeros(width, dtype=np.int64)
+    abs_m_by_slot = np.zeros(width, dtype=np.float64)
+    prev_slot_by_slot = np.full(width, -1, dtype=np.int64)
+    prev_coeff_by_slot = np.zeros(width, dtype=np.float64)
+    next_slot_by_slot = np.full(width, -1, dtype=np.int64)
+    next_coeff_by_slot = np.zeros(width, dtype=np.float64)
+    pstf_weight_by_slot = np.zeros(width, dtype=np.float64)
+    eb_base_by_slot = np.zeros(width, dtype=np.float64)
+    collision_factor_by_slot = np.zeros(width, dtype=np.float64)
+    diag_base_by_slot = np.zeros(width, dtype=np.float64)
+    slot_lookup: dict[tuple[int, int], int] = {}
+    offset = 0
+    for ell in range(int(ell_max) + 1):
+        pstf_weight = np.sqrt(max((ell + 2) * (ell - 1), 0.0)) / max(2 * ell + 1, 1) if ell >= 2 else 0.0
+        for m in range(-ell, ell + 1):
+            slot = offset + (m + ell)
+            slot_lookup[(ell, m)] = slot
+            ell_by_slot[slot] = ell
+            abs_m_by_slot[slot] = float(abs(m))
+            diag_base_by_slot[slot] = 0.35 * (ell + 1) + 0.08 * abs(m)
+            collision_factor_by_slot[slot] = 1.0 if ell <= 1 else 1.0 / (ell + 0.5)
+            if ell >= 2:
+                pstf_weight_by_slot[slot] = pstf_weight
+                eb_base_by_slot[slot] = max(abs(m), 1) / (ell + 1)
+            if ell > 0:
+                prev_m = m if abs(m) <= ell - 1 else 0
+                prev_slot = slot_lookup[(ell - 1, prev_m)]
+                prev_slot_by_slot[slot] = prev_slot
+                prev_coeff_by_slot[slot] = np.sqrt(max(ell * ell - m * m, 0.0)) / max(2 * ell + 1, 1)
+            if ell < int(ell_max):
+                next_m = m if abs(m) <= ell + 1 else 0
+                next_slot = offset + (2 * ell + 1) + (next_m + (ell + 1))
+                next_slot_by_slot[slot] = next_slot
+                next_coeff_by_slot[slot] = np.sqrt(max((ell + 1) * (ell + 1) - m * m, 0.0)) / max(2 * ell + 1, 1)
+        offset += 2 * ell + 1
+
+    label_to_residual = {str(mu): idx for idx, mu in enumerate(residual_labels)}
+    mode_labels_list = tuple(str(mu) for mu in mode_labels)
+    next_residual_index: list[int] = []
+    next_external_label: list[str | None] = []
+    for mu in residual_labels:
+        mu_key = str(mu)
+        mu_index = mode_labels_list.index(mu_key)
+        next_mu = mode_labels_list[(mu_index + 1) % len(mode_labels_list)]
+        next_residual_index.append(label_to_residual.get(next_mu, -1))
+        next_external_label.append(None if next_mu in label_to_residual else next_mu)
+
+    t_off = 0
+    e_off = width
+    b_off = 2 * width
+    nu_off = 3 * width
+    self_pattern = np.zeros((block_size, block_size), dtype=bool)
+    cross_pattern = np.zeros((block_size, block_size), dtype=bool)
+    self_pattern[t_off + slots, t_off + slots] = True
+    self_pattern[e_off + slots, e_off + slots] = True
+    self_pattern[b_off + slots, b_off + slots] = True
+    self_pattern[nu_off + slots, nu_off + slots] = True
+    valid_prev = prev_slot_by_slot >= 0
+    valid_next = next_slot_by_slot >= 0
+    self_pattern[t_off + slots[valid_prev], t_off + prev_slot_by_slot[valid_prev]] = True
+    self_pattern[e_off + slots[valid_prev], e_off + prev_slot_by_slot[valid_prev]] = True
+    self_pattern[b_off + slots[valid_prev], b_off + prev_slot_by_slot[valid_prev]] = True
+    self_pattern[nu_off + slots[valid_prev], nu_off + prev_slot_by_slot[valid_prev]] = True
+    self_pattern[t_off + slots[valid_next], t_off + next_slot_by_slot[valid_next]] = True
+    self_pattern[e_off + slots[valid_next], e_off + next_slot_by_slot[valid_next]] = True
+    self_pattern[b_off + slots[valid_next], b_off + next_slot_by_slot[valid_next]] = True
+    self_pattern[nu_off + slots[valid_next], nu_off + next_slot_by_slot[valid_next]] = True
+    ge2_slots = slots[ell_by_slot >= 2]
+    self_pattern[t_off + ge2_slots, e_off + ge2_slots] = True
+    self_pattern[e_off + ge2_slots, t_off + ge2_slots] = True
+    self_pattern[e_off + ge2_slots, b_off + ge2_slots] = True
+    self_pattern[b_off + ge2_slots, e_off + ge2_slots] = True
+    self_pattern[b_off + ge2_slots, t_off + ge2_slots] = True
+    if len(mode_labels_list) > 1:
+        cross_pattern[t_off + slots[ell_by_slot == 0], t_off + slots[ell_by_slot == 0]] = True
+        cross_pattern[e_off + slots[ell_by_slot == 0], e_off + slots[ell_by_slot == 0]] = True
+        cross_pattern[b_off + slots[ell_by_slot == 0], b_off + slots[ell_by_slot == 0]] = True
+        cross_pattern[nu_off + slots[ell_by_slot == 0], nu_off + slots[ell_by_slot == 0]] = True
+        cross_pattern[t_off + ge2_slots, t_off + ge2_slots] = True
+        cross_pattern[e_off + ge2_slots, e_off + ge2_slots] = True
+        cross_pattern[b_off + ge2_slots, b_off + ge2_slots] = True
+        cross_pattern[nu_off + ge2_slots, nu_off + ge2_slots] = True
+    self_pattern_rows, self_pattern_cols = np.nonzero(self_pattern)
+    cross_pattern_rows, cross_pattern_cols = np.nonzero(cross_pattern)
+
+    return _ReducedHarmonicOperatorStructure(
+        mode_labels=mode_labels_list,
+        residual_labels=tuple(str(mu) for mu in residual_labels),
+        residual_count=residual_count,
+        width=width,
+        block_size=block_size,
+        n_unknown=residual_count * block_size,
+        ell_by_slot=ell_by_slot,
+        abs_m_by_slot=abs_m_by_slot,
+        prev_slot_by_slot=prev_slot_by_slot,
+        prev_coeff_by_slot=prev_coeff_by_slot,
+        next_slot_by_slot=next_slot_by_slot,
+        next_coeff_by_slot=next_coeff_by_slot,
+        pstf_weight_by_slot=pstf_weight_by_slot,
+        eb_base_by_slot=eb_base_by_slot,
+        collision_factor_by_slot=collision_factor_by_slot,
+        diag_base_by_slot=diag_base_by_slot,
+        ge2_mask=ell_by_slot >= 2,
+        ell0_mask=ell_by_slot == 0,
+        sector_slots=slots,
+        self_pattern_rows=np.asarray(self_pattern_rows, dtype=np.int64),
+        self_pattern_cols=np.asarray(self_pattern_cols, dtype=np.int64),
+        cross_pattern_rows=np.asarray(cross_pattern_rows, dtype=np.int64),
+        cross_pattern_cols=np.asarray(cross_pattern_cols, dtype=np.int64),
+        next_residual_index=tuple(next_residual_index),
+        next_external_label=tuple(next_external_label),
+        monopole_slot=slot_lookup[(0, 0)],
+        dipole_slot=slot_lookup.get((1, 0)),
+        quadrupole_slot=slot_lookup.get((2, 0)),
+    )
 
 
 def build_hierarchy_layout(
@@ -1115,6 +1284,254 @@ def evaluate_reduced_harmonic_rhs(
         neutrino_rhs[mu_key] = nu_rhs
 
     return photon_t_rhs, photon_e_rhs, photon_b_rhs, neutrino_rhs
+
+
+def build_reduced_harmonic_affine_operator(
+    layout: HierarchyLayout,
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    *,
+    residual_mode_labels: tuple[str, ...],
+    photon_T_by_mode_label: Mapping[str, np.ndarray],
+    photon_E_by_mode_label: Mapping[str, np.ndarray],
+    photon_B_by_mode_label: Mapping[str, np.ndarray],
+    neutrino_by_mode_label: Mapping[str, np.ndarray],
+    baryon_by_mode_label: Mapping[str, np.ndarray],
+    source_by_mode_label: Mapping[str, np.ndarray] | None = None,
+) -> ReducedHarmonicAffineOperator:
+    """Return the exact frozen-snapshot affine operator ``A r + b``.
+
+    The returned operator acts only on the residual harmonic labels in
+    ``residual_mode_labels``. For fixed ``bg`` and fixed covered/local/source
+    inputs, this is exactly equivalent to ``evaluate_reduced_harmonic_rhs``.
+    """
+
+    opacity_data = bg.get("opacity_data", {})
+    if not isinstance(opacity_data, Mapping):
+        raise ValueError("bg.opacity_data must be a mapping when provided")
+    source_tables = bg.get("source_tables", {})
+    if not isinstance(source_tables, Mapping):
+        raise ValueError("bg.source_tables must be a mapping when provided")
+
+    residual_labels = tuple(str(mu) for mu in residual_mode_labels)
+    if len(residual_labels) == 0:
+        return ReducedHarmonicAffineOperator(
+            mode_labels=(),
+            matrix=csc_matrix((0, 0), dtype=np.float64),
+            bias=np.zeros(0, dtype=np.float64),
+        )
+
+    residual_label_set = frozenset(residual_labels)
+    invalid = residual_label_set.difference(str(mu) for mu in layout.mode_labels)
+    if invalid:
+        raise ValueError(f"residual_mode_labels must be a subset of layout.mode_labels, got extras {sorted(invalid)!r}")
+
+    gamma_t = float(opacity_data.get("Gamma_T", 0.0))
+    visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
+    polarization_amp = float(source_tables.get("polarization_source", 0.0))
+    doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
+
+    scales = _operator_scales(bg, backend)
+    geom_scale = float(scales["geom_scale"])
+    branch_scale = float(scales["branch_scale"])
+    mix_scale = float(scales["mix_scale"])
+    twist_scale = float(scales["twist_scale"])
+    polarization_scale = float(scales["polarization_scale"])
+    source_scale = float(scales["source_scale"])
+    cross_mode_scale = float(scales["cross_mode_scale"])
+    collision_scale = float(scales["collision_scale"])
+    local_drag_scale = float(scales["local_drag_scale"])
+
+    baryon_width = int(layout.sector_local_dofs["baryon"])
+    src_width = int(layout.sector_local_dofs["src"])
+    structure = _reduced_harmonic_structure(
+        int(layout.ell_max),
+        tuple(str(mu) for mu in layout.mode_labels),
+        residual_labels,
+    )
+    width = structure.width
+    mu_count = max(len(layout.mode_labels), 1)
+    zeros_h = np.zeros(width, dtype=np.float64)
+    zeros_b = np.zeros(baryon_width, dtype=np.float64)
+    zeros_s = np.zeros(src_width, dtype=np.float64)
+    default_source_blocks = evaluate_reduced_source_blocks(layout, bg, backend)
+
+    ell_weight = 1.0 + 0.04 * structure.ell_by_slot + 0.015 * geom_scale
+    inv_t = 1.0 / np.maximum(branch_scale * ell_weight, 1.0e-30)
+    inv_e = 1.0 / np.maximum(branch_scale * (1.08 * polarization_scale) * ell_weight, 1.0e-30)
+    inv_b = 1.0 / np.maximum(
+        branch_scale * (1.12 + 0.5 * twist_scale) * polarization_scale * ell_weight,
+        1.0e-30,
+    )
+    inv_nu = 1.0 / np.maximum((1.0 + 0.1 * branch_scale + 0.02 * geom_scale) * ell_weight, 1.0e-30)
+    stream_base = geom_scale * structure.diag_base_by_slot
+    prev_t = inv_t * geom_scale * structure.prev_coeff_by_slot
+    prev_e = inv_e * geom_scale * polarization_scale * structure.prev_coeff_by_slot
+    prev_b = inv_b * geom_scale * polarization_scale * structure.prev_coeff_by_slot
+    prev_nu = inv_nu * geom_scale * structure.prev_coeff_by_slot
+    next_t_same = inv_t * geom_scale * structure.next_coeff_by_slot
+    next_e_same = inv_e * geom_scale * polarization_scale * structure.next_coeff_by_slot
+    next_b_same = inv_b * geom_scale * polarization_scale * structure.next_coeff_by_slot
+    next_nu_same = inv_nu * geom_scale * structure.next_coeff_by_slot
+    photon_coll = branch_scale * collision_scale * gamma_t * structure.collision_factor_by_slot
+    diag_t = inv_t * (-stream_base + photon_coll)
+    diag_e = inv_e * (-stream_base * polarization_scale + photon_coll)
+    diag_b = inv_b * (-stream_base * polarization_scale + photon_coll)
+    diag_nu = inv_nu * (-stream_base)
+    mix_t = inv_t * mix_scale * structure.pstf_weight_by_slot
+    mix_e = inv_e * (0.5 * mix_scale * structure.pstf_weight_by_slot)
+    eb_base = twist_scale * structure.eb_base_by_slot
+    eb_e = inv_e * (0.75 * eb_base)
+    eb_b = inv_b * (-eb_base)
+    eb_bt = inv_b * (0.25 * eb_base)
+
+    cross_t = np.zeros(width, dtype=np.float64)
+    cross_e = np.zeros(width, dtype=np.float64)
+    cross_b = np.zeros(width, dtype=np.float64)
+    cross_nu = np.zeros(width, dtype=np.float64)
+    if mu_count > 1:
+        base_cross = mix_scale * cross_mode_scale / np.maximum(structure.ell_by_slot + 1, 1)
+        ge2 = structure.ge2_mask
+        cross_t[ge2] = inv_t[ge2] * (0.18 * base_cross[ge2] / mu_count)
+        cross_e[ge2] = inv_e[ge2] * (0.16 * base_cross[ge2] / mu_count)
+        cross_b[ge2] = inv_b[ge2] * (0.16 * (1.0 + 0.5 * twist_scale) * base_cross[ge2] / mu_count)
+        cross_nu[ge2] = inv_nu[ge2] * (0.12 * base_cross[ge2] / mu_count)
+        ell0_coeff = 0.5 * mix_scale * cross_mode_scale / mu_count
+        ell0 = structure.ell0_mask
+        cross_t[ell0] = inv_t[ell0] * ell0_coeff
+        cross_e[ell0] = inv_e[ell0] * ell0_coeff
+        cross_b[ell0] = inv_b[ell0] * ell0_coeff
+        cross_nu[ell0] = inv_nu[ell0] * ell0_coeff
+
+    slots = structure.sector_slots
+    prev_valid = structure.prev_slot_by_slot >= 0
+    next_valid = structure.next_slot_by_slot >= 0
+    t_off = 0
+    e_off = width
+    b_off = 2 * width
+    nu_off = 3 * width
+    block_size = structure.block_size
+    self_block = np.zeros((block_size, block_size), dtype=np.float64)
+    cross_block = np.zeros((block_size, block_size), dtype=np.float64)
+
+    self_block[t_off + slots, t_off + slots] += diag_t
+    self_block[e_off + slots, e_off + slots] += diag_e
+    self_block[b_off + slots, b_off + slots] += diag_b
+    self_block[nu_off + slots, nu_off + slots] += diag_nu
+
+    self_block[t_off + slots[prev_valid], t_off + structure.prev_slot_by_slot[prev_valid]] += prev_t[prev_valid]
+    self_block[e_off + slots[prev_valid], e_off + structure.prev_slot_by_slot[prev_valid]] += prev_e[prev_valid]
+    self_block[b_off + slots[prev_valid], b_off + structure.prev_slot_by_slot[prev_valid]] += prev_b[prev_valid]
+    self_block[nu_off + slots[prev_valid], nu_off + structure.prev_slot_by_slot[prev_valid]] += prev_nu[prev_valid]
+
+    self_block[t_off + slots[next_valid], t_off + structure.next_slot_by_slot[next_valid]] += next_t_same[next_valid]
+    self_block[e_off + slots[next_valid], e_off + structure.next_slot_by_slot[next_valid]] += next_e_same[next_valid]
+    self_block[b_off + slots[next_valid], b_off + structure.next_slot_by_slot[next_valid]] += next_b_same[next_valid]
+    self_block[nu_off + slots[next_valid], nu_off + structure.next_slot_by_slot[next_valid]] += next_nu_same[next_valid]
+
+    ge2_slots = slots[structure.ge2_mask]
+    self_block[t_off + ge2_slots, e_off + ge2_slots] += mix_t[structure.ge2_mask]
+    self_block[e_off + ge2_slots, t_off + ge2_slots] += mix_e[structure.ge2_mask]
+    self_block[e_off + ge2_slots, b_off + ge2_slots] += eb_e[structure.ge2_mask]
+    self_block[b_off + ge2_slots, e_off + ge2_slots] += eb_b[structure.ge2_mask]
+    self_block[b_off + ge2_slots, t_off + ge2_slots] += eb_bt[structure.ge2_mask]
+
+    if mu_count > 1:
+        cross_block[t_off + slots, t_off + slots] += cross_t
+        cross_block[e_off + slots, e_off + slots] += cross_e
+        cross_block[b_off + slots, b_off + slots] += cross_b
+        cross_block[nu_off + slots, nu_off + slots] += cross_nu
+
+    self_data = np.asarray(
+        self_block[structure.self_pattern_rows, structure.self_pattern_cols],
+        dtype=np.float64,
+    )
+    cross_data = np.asarray(
+        cross_block[structure.cross_pattern_rows, structure.cross_pattern_cols],
+        dtype=np.float64,
+    )
+    row_chunks: list[np.ndarray] = []
+    col_chunks: list[np.ndarray] = []
+    data_chunks: list[np.ndarray] = []
+    for residual_index, next_residual in enumerate(structure.next_residual_index):
+        row_start = residual_index * block_size
+        row_chunks.append(structure.self_pattern_rows + row_start)
+        col_chunks.append(structure.self_pattern_cols + row_start)
+        data_chunks.append(self_data)
+        if next_residual >= 0 and cross_data.size:
+            col_start = next_residual * block_size
+            row_chunks.append(structure.cross_pattern_rows + row_start)
+            col_chunks.append(structure.cross_pattern_cols + col_start)
+            data_chunks.append(cross_data)
+
+    bias = np.zeros(structure.n_unknown, dtype=np.float64)
+    for residual_index, mu in enumerate(residual_labels):
+        baryon_state = np.asarray(baryon_by_mode_label.get(str(mu), zeros_b), dtype=np.float64)
+        if baryon_state.shape != (baryon_width,):
+            raise ValueError(f"baryon state for {mu!r} must have shape ({baryon_width},)")
+        if source_by_mode_label is None:
+            src_state = np.asarray(default_source_blocks[str(mu)], dtype=np.float64)
+        else:
+            src_state = np.asarray(source_by_mode_label.get(str(mu), zeros_s), dtype=np.float64)
+        if src_state.shape != (src_width,):
+            raise ValueError(f"source state for {mu!r} must have shape ({src_width},)")
+
+        row_start = residual_index * block_size
+        next_label = structure.next_external_label[residual_index]
+        if next_label is not None and mu_count > 1:
+            next_t = np.asarray(photon_T_by_mode_label.get(next_label, zeros_h), dtype=np.float64)
+            next_e = np.asarray(photon_E_by_mode_label.get(next_label, zeros_h), dtype=np.float64)
+            next_b = np.asarray(photon_B_by_mode_label.get(next_label, zeros_h), dtype=np.float64)
+            next_nu = np.asarray(neutrino_by_mode_label.get(next_label, zeros_h), dtype=np.float64)
+            bias[row_start + t_off : row_start + t_off + width] += cross_t * next_t
+            bias[row_start + e_off : row_start + e_off + width] += cross_e * next_e
+            bias[row_start + b_off : row_start + b_off + width] += cross_b * next_b
+            bias[row_start + nu_off : row_start + nu_off + width] += cross_nu * next_nu
+
+        bias[row_start + t_off + structure.monopole_slot] += inv_t[structure.monopole_slot] * source_scale * visibility_amp
+        if structure.dipole_slot is not None:
+            dipole_slot = structure.dipole_slot
+            bias[row_start + t_off + dipole_slot] += inv_t[dipole_slot] * (0.5 * source_scale * doppler_amp)
+            if baryon_width > 1:
+                bias[row_start + t_off + dipole_slot] += (
+                    inv_t[dipole_slot] * (-0.25 * local_drag_scale * gamma_t * float(baryon_state[1]))
+                )
+            if src_width > 1:
+                bias[row_start + t_off + dipole_slot] += (
+                    inv_t[dipole_slot] * (0.10 * local_drag_scale * gamma_t * float(src_state[1]))
+                )
+        if structure.quadrupole_slot is not None:
+            quad_slot = structure.quadrupole_slot
+            bias[row_start + e_off + quad_slot] += inv_e[quad_slot] * (source_scale * polarization_amp)
+            bias[row_start + b_off + quad_slot] += inv_b[quad_slot] * (twist_scale * cross_mode_scale * polarization_amp)
+            if src_width > 0:
+                bias[row_start + e_off + quad_slot] += (
+                    inv_e[quad_slot] * (0.15 * local_drag_scale * gamma_t * float(src_state[0]))
+                )
+            if src_width > 2:
+                bias[row_start + e_off + quad_slot] += (
+                    inv_e[quad_slot] * (0.08 * local_drag_scale * gamma_t * float(src_state[2]))
+                )
+                bias[row_start + b_off + quad_slot] += (
+                    inv_b[quad_slot] * (0.06 * twist_scale * local_drag_scale * gamma_t * float(src_state[2]))
+                )
+
+    matrix_sparse = csc_matrix(
+        (
+            np.concatenate(data_chunks, dtype=np.float64),
+            (
+                np.concatenate(row_chunks, dtype=np.int64),
+                np.concatenate(col_chunks, dtype=np.int64),
+            ),
+        ),
+        shape=(structure.n_unknown, structure.n_unknown),
+    )
+    matrix_sparse.eliminate_zeros()
+    return ReducedHarmonicAffineOperator(
+        mode_labels=residual_labels,
+        matrix=matrix_sparse,
+        bias=bias,
+    )
 
 
 def evaluate_reduced_local_rhs(

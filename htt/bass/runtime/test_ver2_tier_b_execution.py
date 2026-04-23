@@ -292,6 +292,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["layout_source_history_sample_count"] == len(
         run.integration_result.eta
     )
+    assert run.integration_result.solver_info["residual_harmonic_orthogonal_bridge"] == "ros2w_lagged_sparse_reduced_block"
     assert run.integration_result.solver_info["layout_b_mode_history_sample_count"] == len(
         run.integration_result.eta
     )
@@ -337,6 +338,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_source_template_channel"] == "canonical_projection.src_block"
     assert run.solver_output.metadata["layout_source_block_norm"] > 0.0
     assert run.solver_output.metadata["layout_source_block_owner"] == "mode_ops_source_template"
+    assert run.solver_output.metadata["residual_harmonic_orthogonal_bridge"] == "ros2w_lagged_sparse_reduced_block"
     assert run.solver_output.metadata["layout_source_history_owner"] == (
         "ver2_native_integrator.mode_ops_source_history"
     )
