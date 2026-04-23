@@ -140,6 +140,23 @@ def _sector_block_size(
     return int(local_dofs[sector])
 
 
+def _mode_label_weight(
+    mu: str,
+    *,
+    mu_index: int,
+    mu_count: int,
+    branch_scale: float,
+) -> float:
+    label = str(mu)
+    if label == "m0":
+        return 1.0
+    if label == "m+2":
+        return 1.0 + 0.12 * branch_scale
+    if label == "m-2":
+        return 1.0 - 0.08 * branch_scale
+    return 1.0 + 0.03 * (mu_index / max(mu_count, 1))
+
+
 def build_hierarchy_layout(
     backend: FamilyBackend,
     truncation: Mapping[str, object],
@@ -280,7 +297,12 @@ def assemble_mass_matrix(
     diag = np.ones(layout.size, dtype=np.float64)
     mu_count = max(len(layout.mode_labels), 1)
     for mu_index, mu in enumerate(layout.mode_labels):
-        mu_weight = 1.0 + 0.03 * (mu_index / mu_count)
+        mu_weight = _mode_label_weight(
+            mu,
+            mu_index=mu_index,
+            mu_count=mu_count,
+            branch_scale=branch_scale,
+        )
         for sector in layout.sector_order:
             if sector in _HARMONIC_SECTORS:
                 for ell in range(layout.ell_max + 1):
@@ -319,11 +341,19 @@ def assemble_free_streaming_block(
     layout = build_hierarchy_layout(backend, truncation)
     scales = _operator_scales(bg, backend)
     geom_scale = float(scales["geom_scale"])
+    branch_scale = float(scales["branch_scale"])
     polarization_scale = float(scales["polarization_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
-    for mu in layout.mode_labels:
+    mu_count = max(len(layout.mode_labels), 1)
+    for mu_index, mu in enumerate(layout.mode_labels):
+        mu_weight = _mode_label_weight(
+            mu,
+            mu_index=mu_index,
+            mu_count=mu_count,
+            branch_scale=branch_scale,
+        )
         for sector in layout.sector_order:
             if sector not in _HARMONIC_SECTORS:
                 continue
@@ -331,7 +361,7 @@ def assemble_free_streaming_block(
                 for m in range(-ell, ell + 1):
                     idx = flatten(layout, mu, sector, ell, m)
                     spin_weight = polarization_scale if sector in {"ph_E", "ph_B"} else 1.0
-                    diag = -geom_scale * spin_weight * (0.35 * (ell + 1) + 0.08 * abs(m))
+                    diag = -geom_scale * mu_weight * spin_weight * (0.35 * (ell + 1) + 0.08 * abs(m))
                     rows.append(idx)
                     cols.append(idx)
                     data.append(diag)
@@ -339,6 +369,7 @@ def assemble_free_streaming_block(
                         prv = flatten(layout, mu, sector, ell - 1, m if abs(m) <= ell - 1 else 0)
                         coeff_down = (
                             geom_scale
+                            * mu_weight
                             * spin_weight
                             * np.sqrt(max(ell * ell - m * m, 0.0))
                             / max(2 * ell + 1, 1)
@@ -350,6 +381,7 @@ def assemble_free_streaming_block(
                         nxt = flatten(layout, mu, sector, ell + 1, m if abs(m) <= ell + 1 else 0)
                         coeff_up = (
                             geom_scale
+                            * mu_weight
                             * spin_weight
                             * np.sqrt(max((ell + 1) * (ell + 1) - m * m, 0.0))
                             / max(2 * ell + 1, 1)
@@ -367,12 +399,20 @@ def assemble_mixing_block(
 ) -> csr_matrix:
     layout = build_hierarchy_layout(backend, truncation)
     scales = _operator_scales(bg, backend)
+    branch_scale = float(scales["branch_scale"])
     mix_scale = float(scales["mix_scale"])
     twist_scale = float(scales["twist_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
+    mu_count = max(len(layout.mode_labels), 1)
     for mu_index, mu in enumerate(layout.mode_labels):
+        mu_weight = _mode_label_weight(
+            mu,
+            mu_index=mu_index,
+            mu_count=mu_count,
+            branch_scale=branch_scale,
+        )
         for ell in range(2, layout.ell_max + 1):
             for m in range(-ell, ell + 1):
                 i_idx = flatten(layout, mu, "ph_I", ell, m)
@@ -381,9 +421,14 @@ def assemble_mixing_block(
                 pstf_weight = np.sqrt(max((ell + 2) * (ell - 1), 0.0)) / max(2 * ell + 1, 1)
                 rows.extend((i_idx, e_idx))
                 cols.extend((e_idx, i_idx))
-                data.extend((mix_scale * pstf_weight, 0.5 * mix_scale * pstf_weight))
+                data.extend(
+                    (
+                        mu_weight * mix_scale * pstf_weight,
+                        mu_weight * 0.5 * mix_scale * pstf_weight,
+                    )
+                )
                 if twist_scale > 0.0:
-                    eb = twist_scale * max(abs(m), 1) / (ell + 1)
+                    eb = mu_weight * twist_scale * max(abs(m), 1) / (ell + 1)
                     rows.extend((e_idx, b_idx, b_idx, e_idx))
                     cols.extend((b_idx, e_idx, i_idx, b_idx))
                     data.extend((eb, -eb, 0.25 * eb, -0.25 * eb))
@@ -394,7 +439,7 @@ def assemble_mixing_block(
                 dst_idx = flatten(layout, next_mu, sector, 0, 0)
                 rows.append(src_idx)
                 cols.append(dst_idx)
-                data.append(0.5 * mix_scale / len(layout.mode_labels))
+                data.append(mu_weight * 0.5 * mix_scale / len(layout.mode_labels))
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -423,19 +468,28 @@ def assemble_implicit_block(
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
-    for mu in layout.mode_labels:
+    mu_count = max(len(layout.mode_labels), 1)
+    for mu_index, mu in enumerate(layout.mode_labels):
+        mu_weight = _mode_label_weight(
+            mu,
+            mu_index=mu_index,
+            mu_count=mu_count,
+            branch_scale=branch_scale,
+        )
         for sector in ("ph_I", "ph_E", "ph_B"):
             for ell in range(layout.ell_max + 1):
                 for m in range(-ell, ell + 1):
                     idx = flatten(layout, mu, sector, ell, m)
-                    photon_weight = branch_scale * gamma_t * (1.0 if ell <= 1 else 1.0 / (ell + 0.5))
+                    photon_weight = mu_weight * branch_scale * gamma_t * (
+                        1.0 if ell <= 1 else 1.0 / (ell + 0.5)
+                    )
                     rows.append(idx)
                     cols.append(idx)
                     data.append(photon_weight)
         for sector in ("baryon", "src"):
             for local_dof in range(layout.sector_local_dofs[sector]):
                 idx = flatten(layout, mu, sector, None, None, local_dof)
-                local_weight = gamma_t if sector == "baryon" else 0.35 * gamma_t
+                local_weight = mu_weight * (gamma_t if sector == "baryon" else 0.35 * gamma_t)
                 rows.append(idx)
                 cols.append(idx)
                 data.append(local_weight)
@@ -443,13 +497,13 @@ def assemble_implicit_block(
         baryon_v_idx = flatten(layout, mu, "baryon", None, None, 1)
         rows.extend((dipole_idx, baryon_v_idx))
         cols.extend((baryon_v_idx, dipole_idx))
-        data.extend((-0.25 * gamma_t, 0.25 * gamma_t))
+        data.extend((-0.25 * mu_weight * gamma_t, 0.25 * mu_weight * gamma_t))
         if layout.ell_max >= 2:
             quad_idx = flatten(layout, mu, "ph_E", 2, 0)
             src_idx = flatten(layout, mu, "src", None, None, 0)
             rows.extend((quad_idx, src_idx))
             cols.extend((src_idx, quad_idx))
-            data.extend((0.15 * gamma_t, -0.10 * gamma_t))
+            data.extend((0.15 * mu_weight * gamma_t, -0.10 * mu_weight * gamma_t))
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -468,14 +522,21 @@ def assemble_source_vector(
     polarization_amp = float(source_tables.get("polarization_source", 0.0))
     doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
     reion_amp = float(source_tables.get("reionization_amplitude", 0.0))
-    for mu in layout.mode_labels:
-        out[flatten(layout, mu, "ph_I", 0, 0)] = source_scale * visibility_amp
+    mu_count = max(len(layout.mode_labels), 1)
+    for mu_index, mu in enumerate(layout.mode_labels):
+        mu_weight = _mode_label_weight(
+            mu,
+            mu_index=mu_index,
+            mu_count=mu_count,
+            branch_scale=float(scales["branch_scale"]),
+        )
+        out[flatten(layout, mu, "ph_I", 0, 0)] = mu_weight * source_scale * visibility_amp
         if layout.ell_max >= 1:
-            out[flatten(layout, mu, "ph_I", 1, 0)] = 0.5 * source_scale * doppler_amp
+            out[flatten(layout, mu, "ph_I", 1, 0)] = mu_weight * 0.5 * source_scale * doppler_amp
         if layout.ell_max >= 2:
-            out[flatten(layout, mu, "ph_E", 2, 0)] = source_scale * polarization_amp
-            out[flatten(layout, mu, "ph_B", 2, 0)] = twist_scale * polarization_amp
-        out[flatten(layout, mu, "src", None, None, 0)] = reion_amp
+            out[flatten(layout, mu, "ph_E", 2, 0)] = mu_weight * source_scale * polarization_amp
+            out[flatten(layout, mu, "ph_B", 2, 0)] = mu_weight * twist_scale * polarization_amp
+        out[flatten(layout, mu, "src", None, None, 0)] = mu_weight * reion_amp
     return out
 
 

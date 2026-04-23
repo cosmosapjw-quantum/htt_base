@@ -114,6 +114,28 @@ def test_source_vector_injects_visibility_and_polarization_slots() -> None:
     assert source[flatten(layout, "m0", "src", None, None, 0)] == pytest.approx(0.2)
 
 
+def test_mode_label_weights_resolve_standard_m_signatures() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    source = assemble_source_vector(
+        {"branch": "tilted"},
+        backend,
+        truncation,
+        {"visibility_amplitude": 1.0, "polarization_source": 0.5, "reionization_amplitude": 0.2},
+    )
+    assert source[flatten(layout, "m+2", "ph_I", 0, 0)] > source[flatten(layout, "m0", "ph_I", 0, 0)]
+    assert source[flatten(layout, "m-2", "ph_I", 0, 0)] < source[flatten(layout, "m0", "ph_I", 0, 0)]
+    A_fs = assemble_free_streaming_block({"branch": "tilted"}, backend, truncation)
+    plus_diag = A_fs[flatten(layout, "m+2", "ph_E", 2, 0), flatten(layout, "m+2", "ph_E", 2, 0)]
+    zero_diag = A_fs[flatten(layout, "m0", "ph_E", 2, 0), flatten(layout, "m0", "ph_E", 2, 0)]
+    minus_diag = A_fs[flatten(layout, "m-2", "ph_E", 2, 0), flatten(layout, "m-2", "ph_E", 2, 0)]
+    assert abs(float(plus_diag)) > abs(float(zero_diag)) > abs(float(minus_diag))
+
+
 def test_layout_manifest_records_backend_metadata() -> None:
     backend = _backend()
     truncation = {"ell_max": 2, "mode_labels": ("m0",)}
