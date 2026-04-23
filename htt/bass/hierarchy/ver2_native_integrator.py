@@ -116,6 +116,8 @@ _ZERO_COLLISION = ZeroCollisionOperator()
 _BARYON_LOCAL_DOF = 4
 _CDM_LOCAL_DOF = 2
 _LOCAL_MATTER_DOF = _BARYON_LOCAL_DOF + _CDM_LOCAL_DOF
+_SOURCE_LOCAL_DOF = 3
+_PRIMARY_LOCAL_DOF = _LOCAL_MATTER_DOF + _SOURCE_LOCAL_DOF
 _ROS2_GAMMA = 1.0 + 1.0 / np.sqrt(2.0)
 _ROS2_A21 = 1.0 / _ROS2_GAMMA
 _ROS2_C21 = -2.0 / _ROS2_GAMMA
@@ -128,7 +130,7 @@ def _tower_size(L_max: int) -> int:
 
 
 def _radiation_state_size(L_max: int) -> int:
-    return 4 * _tower_size(L_max) + _LOCAL_MATTER_DOF
+    return 4 * _tower_size(L_max) + _PRIMARY_LOCAL_DOF
 
 
 def _interp_scalar(eta_grid: np.ndarray, values: np.ndarray, eta: float) -> float:
@@ -565,6 +567,7 @@ class NativeTierBRestartState:
     neutrino_tower_prefix: np.ndarray
     baryon_local_prefix: np.ndarray
     cdm_local_prefix: np.ndarray
+    source_local_prefix: np.ndarray
     residual_local_prefix: np.ndarray
     residual_harmonic_prefix: np.ndarray
     residual_source_prefix: np.ndarray
@@ -587,6 +590,7 @@ class NativeTierBRestartState:
             ("neutrino_tower_prefix", self.neutrino_tower_prefix),
             ("baryon_local_prefix", self.baryon_local_prefix),
             ("cdm_local_prefix", self.cdm_local_prefix),
+            ("source_local_prefix", self.source_local_prefix),
             ("residual_local_prefix", self.residual_local_prefix),
             ("residual_harmonic_prefix", self.residual_harmonic_prefix),
             ("residual_source_prefix", self.residual_source_prefix),
@@ -785,6 +789,7 @@ def _pack_radiation_state(
     neutrino_tower: PSTFHierarchyState,
     baryon_local: np.ndarray | None = None,
     cdm_local: np.ndarray | None = None,
+    source_local: np.ndarray | None = None,
     residual_local: np.ndarray | None = None,
     residual_harmonic: np.ndarray | None = None,
     residual_source: np.ndarray | None = None,
@@ -799,6 +804,11 @@ def _pack_radiation_state(
         np.zeros(_CDM_LOCAL_DOF, dtype=np.float64)
         if cdm_local is None
         else np.asarray(cdm_local, dtype=np.float64)
+    )
+    source = (
+        np.zeros(_SOURCE_LOCAL_DOF, dtype=np.float64)
+        if source_local is None
+        else np.asarray(source_local, dtype=np.float64)
     )
     residual = (
         np.zeros(0, dtype=np.float64)
@@ -819,6 +829,8 @@ def _pack_radiation_state(
         raise ValueError(f"baryon_local must have shape ({_BARYON_LOCAL_DOF},)")
     if cdm.shape != (_CDM_LOCAL_DOF,):
         raise ValueError(f"cdm_local must have shape ({_CDM_LOCAL_DOF},)")
+    if source.shape != (_SOURCE_LOCAL_DOF,):
+        raise ValueError(f"source_local must have shape ({_SOURCE_LOCAL_DOF},)")
     if residual.ndim != 1:
         raise ValueError("residual_local must be a 1-D vector when provided")
     if residual_h.ndim != 1:
@@ -833,6 +845,7 @@ def _pack_radiation_state(
             pack_hierarchy(neutrino_tower),
             baryon,
             cdm,
+            source,
             residual,
             residual_h,
             residual_s,
@@ -883,6 +896,7 @@ def _unpack_radiation_state(
     np.ndarray,
     np.ndarray,
     np.ndarray,
+    np.ndarray,
 ]:
     arr = np.asarray(y, dtype=np.float64)
     tower_size = _tower_size(L_max)
@@ -896,16 +910,20 @@ def _unpack_radiation_state(
     local_offset = 4 * tower_size
     baryon_local = np.asarray(arr[local_offset : local_offset + _BARYON_LOCAL_DOF], dtype=np.float64)
     cdm_local = np.asarray(arr[local_offset + _BARYON_LOCAL_DOF : local_offset + _LOCAL_MATTER_DOF], dtype=np.float64)
+    source_local = np.asarray(
+        arr[local_offset + _LOCAL_MATTER_DOF : local_offset + _PRIMARY_LOCAL_DOF],
+        dtype=np.float64,
+    )
     residual_local = np.asarray(
-        arr[local_offset + _LOCAL_MATTER_DOF : local_offset + _LOCAL_MATTER_DOF + int(residual_local_dof)],
+        arr[local_offset + _PRIMARY_LOCAL_DOF : local_offset + _PRIMARY_LOCAL_DOF + int(residual_local_dof)],
         dtype=np.float64,
     )
     residual_harmonic = np.asarray(
         arr[
             local_offset
-            + _LOCAL_MATTER_DOF
+            + _PRIMARY_LOCAL_DOF
             + int(residual_local_dof) : local_offset
-            + _LOCAL_MATTER_DOF
+            + _PRIMARY_LOCAL_DOF
             + int(residual_local_dof)
             + int(residual_harmonic_dof)
         ],
@@ -914,10 +932,10 @@ def _unpack_radiation_state(
     residual_source = np.asarray(
         arr[
             local_offset
-            + _LOCAL_MATTER_DOF
+            + _PRIMARY_LOCAL_DOF
             + int(residual_local_dof)
             + int(residual_harmonic_dof) : local_offset
-            + _LOCAL_MATTER_DOF
+            + _PRIMARY_LOCAL_DOF
             + int(residual_local_dof)
             + int(residual_harmonic_dof)
             + int(residual_source_dof)
@@ -931,6 +949,7 @@ def _unpack_radiation_state(
         neutrino_tower,
         baryon_local,
         cdm_local,
+        source_local,
         residual_local,
         residual_harmonic,
         residual_source,
@@ -1273,6 +1292,7 @@ class Ver2TierBIntegrator:
             neutrino_tower=seeded.neutrino_tower,
             baryon_local=baryon_local,
             cdm_local=cdm_local,
+            source_local=np.zeros(_SOURCE_LOCAL_DOF, dtype=np.float64),
             residual_local=np.zeros(self._residual_local_dof, dtype=np.float64),
             residual_harmonic=np.zeros(self._residual_harmonic_dof, dtype=np.float64),
             residual_source=np.zeros(self._residual_source_dof, dtype=np.float64),
@@ -2049,6 +2069,43 @@ class Ver2TierBIntegrator:
             baryon_by_mode_label={covered: np.asarray(baryon_local, dtype=np.float64)},
         )
 
+    def _build_covered_source_affine_operator(
+        self,
+        *,
+        snapshot: _EtaRuntimeSnapshot,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        photon_B: PSTFHierarchyState,
+    ):
+        covered = str(self._layout_covered_mode_label)
+        return self.backend.build_reduced_source_affine_operator(
+            self._residual_harmonic_background_state(snapshot=snapshot),
+            mode_labels=(covered,),
+            photon_T_by_mode_label={covered: np.asarray(pack_hierarchy(photon_T), dtype=np.float64)},
+            photon_E_by_mode_label={covered: np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64)},
+            photon_B_by_mode_label={covered: np.asarray(pack_hierarchy(photon_B), dtype=np.float64)},
+        )
+
+    def _exact_covered_source_rhs(
+        self,
+        *,
+        snapshot: _EtaRuntimeSnapshot,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        photon_B: PSTFHierarchyState,
+        source_local: np.ndarray,
+    ) -> np.ndarray:
+        affine = self._build_covered_source_affine_operator(
+            snapshot=snapshot,
+            photon_T=photon_T,
+            photon_E=photon_E,
+            photon_B=photon_B,
+        )
+        return np.asarray(
+            affine.matrix @ np.asarray(source_local, dtype=np.float64) + affine.bias,
+            dtype=np.float64,
+        )
+
     def _exact_residual_joint_rhs(
         self,
         *,
@@ -2116,6 +2173,7 @@ class Ver2TierBIntegrator:
             neutrino_left,
             baryon_left,
             cdm_left,
+            source_left,
             residual_local_left,
             residual_harmonic_left,
             residual_source_left,
@@ -2133,6 +2191,7 @@ class Ver2TierBIntegrator:
             neutrino_right,
             baryon_right,
             cdm_right,
+            source_right,
             _residual_local_right,
             _residual_harmonic_right,
             _residual_source_right,
@@ -2200,9 +2259,105 @@ class Ver2TierBIntegrator:
                 neutrino_tower=neutrino_right,
                 baryon_local=baryon_right,
                 cdm_local=cdm_right,
+                source_local=source_right,
                 residual_local=next_local,
                 residual_harmonic=next_harmonic,
                 residual_source=next_source,
+            ),
+            affine_right,
+        )
+
+    def _orthogonal_covered_source_ros2_step(
+        self,
+        *,
+        eta_left: float,
+        y_left: np.ndarray,
+        eta_right: float,
+        y_right: np.ndarray,
+        affine_left=None,
+    ) -> tuple[np.ndarray, object | None]:
+        if _SOURCE_LOCAL_DOF == 0:
+            return np.asarray(y_right, dtype=np.float64), affine_left
+        dt = float(eta_right - eta_left)
+        if dt == 0.0:
+            return np.asarray(y_right, dtype=np.float64), affine_left
+        (
+            photon_T_left,
+            photon_E_left,
+            photon_B_left,
+            neutrino_left,
+            baryon_left,
+            cdm_left,
+            source_left,
+            residual_local_left,
+            residual_harmonic_left,
+            residual_source_left,
+        ) = _unpack_radiation_state(
+            y_left,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+            residual_source_dof=self._residual_source_dof,
+        )
+        (
+            photon_T_right,
+            photon_E_right,
+            photon_B_right,
+            neutrino_right,
+            baryon_right,
+            cdm_right,
+            _source_right,
+            residual_local_right,
+            residual_harmonic_right,
+            residual_source_right,
+        ) = _unpack_radiation_state(
+            y_right,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+            residual_source_dof=self._residual_source_dof,
+        )
+        snapshot_left = self._eta_runtime_snapshot(float(eta_left))
+        snapshot_right = self._eta_runtime_snapshot(float(eta_right))
+        if affine_left is None:
+            affine_left = self._build_covered_source_affine_operator(
+                snapshot=snapshot_left,
+                photon_T=photon_T_left,
+                photon_E=photon_E_left,
+                photon_B=photon_B_left,
+            )
+        system_left = csc_matrix(np.eye(_SOURCE_LOCAL_DOF, dtype=np.float64)) - (dt * _ROS2_GAMMA) * affine_left.matrix
+        lu_left = splu(system_left)
+        rhs_left = np.asarray(
+            affine_left.matrix @ np.asarray(source_left, dtype=np.float64) + affine_left.bias,
+            dtype=np.float64,
+        )
+        k1 = np.asarray(lu_left.solve(dt * _ROS2_GAMMA * rhs_left), dtype=np.float64)
+        stage_state = np.asarray(source_left, dtype=np.float64) + _ROS2_A21 * k1
+        affine_right = self._build_covered_source_affine_operator(
+            snapshot=snapshot_right,
+            photon_T=photon_T_right,
+            photon_E=photon_E_right,
+            photon_B=photon_B_right,
+        )
+        rhs_stage = np.asarray(affine_right.matrix @ stage_state + affine_right.bias, dtype=np.float64)
+        k2 = np.asarray(
+            lu_left.solve(dt * _ROS2_GAMMA * rhs_stage + (_ROS2_GAMMA * _ROS2_C21) * k1),
+            dtype=np.float64,
+        )
+        next_source = np.asarray(source_left, dtype=np.float64) + _ROS2_M1 * k1 + _ROS2_M2 * k2
+        return (
+            _pack_radiation_state(
+                photon_T=photon_T_right,
+                photon_E=photon_E_right,
+                photon_B=photon_B_right,
+                neutrino_tower=neutrino_right,
+                baryon_local=baryon_right,
+                cdm_local=cdm_right,
+                source_local=next_source,
+                residual_local=residual_local_right,
+                residual_harmonic=residual_harmonic_right,
+                residual_source=residual_source_right,
             ),
             affine_right,
         )
@@ -2221,6 +2376,7 @@ class Ver2TierBIntegrator:
             neutrino_tower,
             baryon_local,
             cdm_local,
+            source_local,
             residual_local,
             residual_harmonic,
             residual_source,
@@ -2250,6 +2406,16 @@ class Ver2TierBIntegrator:
             theta_1=_theta_1_from_temperature_state(photon_T),
             theta_1_dot=float(rhs_T[sum(2 * ell + 1 for ell in range(1)) + 1]) if self.config.L_max >= 1 else 0.0,
         )
+        if str(self.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+            source_rhs = self._exact_covered_source_rhs(
+                snapshot=snapshot,
+                photon_T=photon_T,
+                photon_E=photon_E,
+                photon_B=photon_B,
+                source_local=source_local,
+            )
+        else:
+            source_rhs = np.zeros(_SOURCE_LOCAL_DOF, dtype=np.float64)
         if str(self.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
             residual_rhs, residual_harmonic_rhs, residual_source_rhs = self._exact_residual_joint_rhs(
                 snapshot=snapshot,
@@ -2284,6 +2450,7 @@ class Ver2TierBIntegrator:
                 rhs_nu,
                 baryon_rhs,
                 cdm_rhs,
+                source_rhs,
                 residual_rhs,
                 residual_harmonic_rhs,
                 residual_source_rhs,
@@ -2298,6 +2465,7 @@ class Ver2TierBIntegrator:
             neutrino_tower,
             baryon_local,
             cdm_local,
+            source_local,
             residual_local,
             residual_harmonic,
             residual_source,
@@ -2325,7 +2493,7 @@ class Ver2TierBIntegrator:
                 rhs_E,
                 rhs_B,
                 rhs_nu,
-                np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64),
+                np.zeros(_PRIMARY_LOCAL_DOF, dtype=np.float64),
                 np.zeros(self._residual_local_dof, dtype=np.float64),
                 np.zeros(self._residual_harmonic_dof, dtype=np.float64),
                 np.zeros(self._residual_source_dof, dtype=np.float64),
@@ -2346,6 +2514,7 @@ class Ver2TierBIntegrator:
             neutrino_tower,
             baryon_local,
             cdm_local,
+            source_local,
             residual_local,
             residual_harmonic,
             residual_source,
@@ -2375,7 +2544,7 @@ class Ver2TierBIntegrator:
                 np.asarray(rhs_E_full - rhs_E_explicit, dtype=np.float64),
                 np.asarray(rhs_B_full - rhs_B_explicit, dtype=np.float64),
                 np.zeros_like(rhs_nu),
-                np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64),
+                np.zeros(_PRIMARY_LOCAL_DOF, dtype=np.float64),
                 np.zeros(self._residual_local_dof, dtype=np.float64),
                 np.zeros(self._residual_harmonic_dof, dtype=np.float64),
                 np.zeros(self._residual_source_dof, dtype=np.float64),
@@ -2409,6 +2578,7 @@ class Ver2TierBIntegrator:
             neutrino_tower,
             baryon_local,
             cdm_local,
+            source_local,
             residual_local,
             residual_harmonic,
             residual_source,
@@ -2554,6 +2724,7 @@ class Ver2TierBIntegrator:
             neutrino_tower=neutrino_tower,
             baryon_local=baryon_next,
             cdm_local=cdm_next,
+            source_local=source_local,
             residual_local=residual_local,
             residual_harmonic=residual_harmonic,
             residual_source=residual_source,
@@ -4141,6 +4312,7 @@ class Ver2TierBIntegrator:
         message = "The IMEX split executor successfully reached the end of the integration interval."
         y_current = np.asarray(y0, dtype=np.float64)
         cached_residual_joint_affine: ReducedJointAffineOperator | None = None
+        cached_covered_source_affine = None
 
         for left, right in zip(eta_nodes[:-1], eta_nodes[1:]):
             eta_current = float(left)
@@ -4192,6 +4364,13 @@ class Ver2TierBIntegrator:
                         ):
                             trial_h *= 0.5
                             continue
+                        candidate, cached_covered_source_affine = self._orthogonal_covered_source_ros2_step(
+                            eta_left=float(eta_left),
+                            y_left=y_left,
+                            eta_right=float(eta_next),
+                            y_right=candidate,
+                            affine_left=cached_covered_source_affine,
+                        )
                         candidate, cached_residual_joint_affine = self._orthogonal_residual_joint_ros2_step(
                             eta_left=float(eta_left),
                             y_left=y_left,
@@ -4266,6 +4445,7 @@ class Ver2TierBIntegrator:
                     break
                 if not accepted:
                     cached_residual_joint_affine = None
+                    cached_covered_source_affine = None
                     if abs(float(self.config.tilt_rapidity)) > 0.0:
                         fallback_sol = solve_ivp(
                             lambda eta, y: self._rhs(eta, y, tca_tracker=None),
@@ -4297,6 +4477,7 @@ class Ver2TierBIntegrator:
                             y_current = np.asarray(fallback_sol.y[:, -1], dtype=np.float64)
                             eta_current = float(eta_target)
                             cached_residual_joint_affine = None
+                            cached_covered_source_affine = None
                             accepted = True
                             continue
                     raise RuntimeError(
@@ -4324,6 +4505,7 @@ class Ver2TierBIntegrator:
         neutrino_tower: np.ndarray,
         baryon_local_history: np.ndarray,
         cdm_local_history: np.ndarray,
+        source_local_history: np.ndarray,
         residual_local_history: np.ndarray,
         residual_harmonic_history: np.ndarray,
         residual_source_history: np.ndarray,
@@ -4511,11 +4693,9 @@ class Ver2TierBIntegrator:
             "covered_owner": "ver2_native_integrator.main_state_photon_B",
             "integration_scheme": "main_state_coevolved",
         }
-        covered_source_history, covered_source_by_mode_label, _ = self._compute_live_source_history_payload(
-            eta_samples=eta_arr,
-            photon_T_tower=np.asarray(photon_T_tower, dtype=np.float64),
-            photon_E_tower=np.asarray(photon_E_tower, dtype=np.float64),
-        )
+        covered_source_history = np.asarray(source_local_history, dtype=np.float64)
+        if covered_source_history.ndim != 2 or covered_source_history.shape[0] != eta_arr.size:
+            raise ValueError("source_local_history must have shape (len(eta), n_source)")
         residual_source_history_arr = np.asarray(residual_source_history, dtype=np.float64)
         if residual_source_history_arr.ndim != 2 or residual_source_history_arr.shape[0] != eta_arr.size:
             raise ValueError("residual_source_history must have shape (len(eta), n_residual)")
@@ -4531,13 +4711,13 @@ class Ver2TierBIntegrator:
             )
             offset += source_width
         solver_info["live_source_history_metadata"] = {
-            "owner": "ver2_native_integrator.hybrid_source_history",
-            "covered_owner": "ver2_native_integrator.mode_ops_source_history",
+            "owner": "ver2_native_integrator.main_state_source_history",
+            "covered_owner": "ver2_native_integrator.main_state_covered_source",
             "residual_owner": "ver2_native_integrator.main_state_mode_label_source",
             "history_sample_count": int(eta_arr.size),
             "mode_labels": list(self._layout.mode_labels),
             "covered_mode_label": self._layout_covered_mode_label,
-            "integration_scheme": "covered_source_kernel_plus_main_state_coevolved",
+            "integration_scheme": "main_state_coevolved",
         }
         result = IntegrationResult(
             eta=eta_arr,
@@ -4597,6 +4777,7 @@ class Ver2TierBIntegrator:
             neutrino_segments: list[np.ndarray] = []
             baryon_segments: list[np.ndarray] = []
             cdm_segments: list[np.ndarray] = []
+            source_segments: list[np.ndarray] = []
             residual_segments: list[np.ndarray] = []
             residual_harmonic_segments: list[np.ndarray] = []
             residual_source_segments: list[np.ndarray] = []
@@ -4616,6 +4797,7 @@ class Ver2TierBIntegrator:
             neutrino_segments = [np.asarray(restart_state.neutrino_tower_prefix, dtype=np.float64)]
             baryon_segments = [np.asarray(restart_state.baryon_local_prefix, dtype=np.float64)]
             cdm_segments = [np.asarray(restart_state.cdm_local_prefix, dtype=np.float64)]
+            source_segments = [np.asarray(restart_state.source_local_prefix, dtype=np.float64)]
             residual_segments = [np.asarray(restart_state.residual_local_prefix, dtype=np.float64)]
             residual_harmonic_segments = [
                 np.asarray(restart_state.residual_harmonic_prefix, dtype=np.float64)
@@ -4671,12 +4853,20 @@ class Ver2TierBIntegrator:
                         dtype=np.float64,
                     )[start_offset:]
                 )
+                source_segments.append(
+                    np.asarray(
+                        sol.y[
+                            4 * tower_size + _LOCAL_MATTER_DOF : 4 * tower_size + _PRIMARY_LOCAL_DOF
+                        ].T,
+                        dtype=np.float64,
+                    )[start_offset:]
+                )
                 residual_segments.append(
                     np.asarray(
                         sol.y[
                             4 * tower_size
-                            + _LOCAL_MATTER_DOF : 4 * tower_size
-                            + _LOCAL_MATTER_DOF
+                            + _PRIMARY_LOCAL_DOF : 4 * tower_size
+                            + _PRIMARY_LOCAL_DOF
                             + self._residual_local_dof
                         ].T,
                         dtype=np.float64,
@@ -4686,9 +4876,9 @@ class Ver2TierBIntegrator:
                     np.asarray(
                         sol.y[
                             4 * tower_size
-                            + _LOCAL_MATTER_DOF
+                            + _PRIMARY_LOCAL_DOF
                             + self._residual_local_dof : 4 * tower_size
-                            + _LOCAL_MATTER_DOF
+                            + _PRIMARY_LOCAL_DOF
                             + self._residual_local_dof
                             + self._residual_harmonic_dof
                         ].T,
@@ -4699,7 +4889,7 @@ class Ver2TierBIntegrator:
                     np.asarray(
                         sol.y[
                             4 * tower_size
-                            + _LOCAL_MATTER_DOF
+                            + _PRIMARY_LOCAL_DOF
                             + self._residual_local_dof
                             + self._residual_harmonic_dof :
                         ].T,
@@ -4735,11 +4925,15 @@ class Ver2TierBIntegrator:
                     sol.y[4 * tower_size + _BARYON_LOCAL_DOF : 4 * tower_size + _LOCAL_MATTER_DOF].T,
                     dtype=np.float64,
                 )[start_offset:]
+                source_chunk = np.asarray(
+                    sol.y[4 * tower_size + _LOCAL_MATTER_DOF : 4 * tower_size + _PRIMARY_LOCAL_DOF].T,
+                    dtype=np.float64,
+                )[start_offset:]
                 residual_chunk = np.asarray(
                     sol.y[
                         4 * tower_size
-                        + _LOCAL_MATTER_DOF : 4 * tower_size
-                        + _LOCAL_MATTER_DOF
+                        + _PRIMARY_LOCAL_DOF : 4 * tower_size
+                        + _PRIMARY_LOCAL_DOF
                         + self._residual_local_dof
                     ].T,
                     dtype=np.float64,
@@ -4747,9 +4941,9 @@ class Ver2TierBIntegrator:
                 residual_harmonic_chunk = np.asarray(
                     sol.y[
                         4 * tower_size
-                        + _LOCAL_MATTER_DOF
+                        + _PRIMARY_LOCAL_DOF
                         + self._residual_local_dof : 4 * tower_size
-                        + _LOCAL_MATTER_DOF
+                        + _PRIMARY_LOCAL_DOF
                         + self._residual_local_dof
                         + self._residual_harmonic_dof
                     ].T,
@@ -4758,7 +4952,7 @@ class Ver2TierBIntegrator:
                 residual_source_chunk = np.asarray(
                     sol.y[
                         4 * tower_size
-                        + _LOCAL_MATTER_DOF
+                        + _PRIMARY_LOCAL_DOF
                         + self._residual_local_dof
                         + self._residual_harmonic_dof :
                     ].T,
@@ -4771,6 +4965,7 @@ class Ver2TierBIntegrator:
                 neutrino_segments.append(neutrino_chunk)
                 baryon_segments.append(baryon_chunk)
                 cdm_segments.append(cdm_chunk)
+                source_segments.append(source_chunk)
                 residual_segments.append(residual_chunk)
                 residual_harmonic_segments.append(residual_harmonic_chunk)
                 residual_source_segments.append(residual_source_chunk)
@@ -4790,6 +4985,7 @@ class Ver2TierBIntegrator:
                             neutrino_tower_prefix=np.vstack(neutrino_segments),
                             baryon_local_prefix=np.vstack(baryon_segments),
                             cdm_local_prefix=np.vstack(cdm_segments),
+                            source_local_prefix=np.vstack(source_segments),
                             residual_local_prefix=np.vstack(residual_segments),
                             residual_harmonic_prefix=np.vstack(residual_harmonic_segments),
                             residual_source_prefix=np.vstack(residual_source_segments),
@@ -4804,6 +5000,7 @@ class Ver2TierBIntegrator:
             neutrino_tower=np.vstack(neutrino_segments),
             baryon_local_history=np.vstack(baryon_segments),
             cdm_local_history=np.vstack(cdm_segments),
+            source_local_history=np.vstack(source_segments),
             residual_local_history=np.vstack(residual_segments) if residual_segments else np.zeros((len(np.concatenate(eta_segments, axis=0)), 0), dtype=np.float64),
             residual_harmonic_history=np.vstack(residual_harmonic_segments) if residual_harmonic_segments else np.zeros((len(np.concatenate(eta_segments, axis=0)), 0), dtype=np.float64),
             residual_source_history=np.vstack(residual_source_segments) if residual_source_segments else np.zeros((len(np.concatenate(eta_segments, axis=0)), 0), dtype=np.float64),

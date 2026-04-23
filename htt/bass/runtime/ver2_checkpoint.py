@@ -45,6 +45,7 @@ class TierBCheckpointRecord:
     neutrino_tower_prefix: np.ndarray
     baryon_local_prefix: np.ndarray
     cdm_local_prefix: np.ndarray
+    source_local_prefix: np.ndarray
     residual_local_prefix: np.ndarray
     residual_harmonic_prefix: np.ndarray
     residual_source_prefix: np.ndarray
@@ -86,6 +87,7 @@ class TierBCheckpointRecord:
             ("neutrino_tower_prefix", self.neutrino_tower_prefix),
             ("baryon_local_prefix", self.baryon_local_prefix),
             ("cdm_local_prefix", self.cdm_local_prefix),
+            ("source_local_prefix", self.source_local_prefix),
             ("residual_local_prefix", self.residual_local_prefix),
             ("residual_harmonic_prefix", self.residual_harmonic_prefix),
             ("residual_source_prefix", self.residual_source_prefix),
@@ -106,6 +108,7 @@ class TierBCheckpointRecord:
             neutrino_tower_prefix=np.asarray(self.neutrino_tower_prefix, dtype=np.float64),
             baryon_local_prefix=np.asarray(self.baryon_local_prefix, dtype=np.float64),
             cdm_local_prefix=np.asarray(self.cdm_local_prefix, dtype=np.float64),
+            source_local_prefix=np.asarray(self.source_local_prefix, dtype=np.float64),
             residual_local_prefix=np.asarray(self.residual_local_prefix, dtype=np.float64),
             residual_harmonic_prefix=np.asarray(self.residual_harmonic_prefix, dtype=np.float64),
             residual_source_prefix=np.asarray(self.residual_source_prefix, dtype=np.float64),
@@ -167,6 +170,7 @@ def write_tier_b_restart_checkpoint(
         neutrino_tower_prefix=np.asarray(restart_state.neutrino_tower_prefix, dtype=np.float64),
         baryon_local_prefix=np.asarray(restart_state.baryon_local_prefix, dtype=np.float64),
         cdm_local_prefix=np.asarray(restart_state.cdm_local_prefix, dtype=np.float64),
+        source_local_prefix=np.asarray(restart_state.source_local_prefix, dtype=np.float64),
         residual_local_prefix=np.asarray(restart_state.residual_local_prefix, dtype=np.float64),
         residual_harmonic_prefix=np.asarray(restart_state.residual_harmonic_prefix, dtype=np.float64),
         residual_source_prefix=np.asarray(restart_state.residual_source_prefix, dtype=np.float64),
@@ -240,6 +244,11 @@ def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
                 np.asarray(data["cdm_local_prefix"], dtype=np.float64)
                 if "cdm_local_prefix" in data
                 else np.zeros((eta_prefix.shape[0], 2), dtype=np.float64)
+            ),
+            source_local_prefix=(
+                np.asarray(data["source_local_prefix"], dtype=np.float64)
+                if "source_local_prefix" in data
+                else np.zeros((eta_prefix.shape[0], 3), dtype=np.float64)
             ),
             residual_local_prefix=residual_local_prefix,
             residual_harmonic_prefix=residual_harmonic_prefix,

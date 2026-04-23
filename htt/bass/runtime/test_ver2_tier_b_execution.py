@@ -279,7 +279,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "ver2_native_integrator.main_state_mode_label_harmonics"
     )
     assert run.integration_result.solver_info["live_source_history_metadata"]["owner"] == (
-        "ver2_native_integrator.hybrid_source_history"
+        "ver2_native_integrator.main_state_source_history"
+    )
+    assert run.integration_result.solver_info["live_source_history_metadata"]["covered_owner"] == (
+        "ver2_native_integrator.main_state_covered_source"
     )
     assert run.integration_result.solver_info["live_source_history_metadata"]["residual_owner"] == (
         "ver2_native_integrator.main_state_mode_label_source"
@@ -343,7 +346,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_source_block_owner"] == "mode_ops_source_template"
     assert run.solver_output.metadata["residual_harmonic_orthogonal_bridge"] == "ros2w_lagged_sparse_reduced_joint_block"
     assert run.solver_output.metadata["layout_source_history_owner"] == (
-        "ver2_native_integrator.hybrid_source_history"
+        "ver2_native_integrator.main_state_source_history"
     )
     assert run.solver_output.metadata["layout_source_history_sample_count"] == len(
         run.integration_result.eta
@@ -558,7 +561,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "mode_ops_source_template"
     )
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_history_owner"] == (
-        "ver2_native_integrator.hybrid_source_history"
+        "ver2_native_integrator.main_state_source_history"
     )
     assert set(
         registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_mode_labels"]

@@ -16,6 +16,7 @@ __all__ = [
     "HierarchyLayout",
     "ReducedHarmonicAffineOperator",
     "ReducedLocalAffineOperator",
+    "ReducedSourceAffineOperator",
     "ReducedJointAffineOperator",
     "build_hierarchy_layout",
     "build_layout_manifest",
@@ -26,6 +27,7 @@ __all__ = [
     "build_reduced_harmonic_affine_operator",
     "evaluate_reduced_local_rhs",
     "build_reduced_local_affine_operator",
+    "build_reduced_source_affine_operator",
     "build_reduced_joint_affine_operator",
     "assemble_free_streaming_block",
     "assemble_mixing_block",
@@ -61,6 +63,13 @@ class ReducedHarmonicAffineOperator:
 
 @dataclass(frozen=True)
 class ReducedLocalAffineOperator:
+    mode_labels: tuple[str, ...]
+    matrix: csc_matrix
+    bias: np.ndarray
+
+
+@dataclass(frozen=True)
+class ReducedSourceAffineOperator:
     mode_labels: tuple[str, ...]
     matrix: csc_matrix
     bias: np.ndarray
@@ -1550,6 +1559,95 @@ def build_reduced_harmonic_affine_operator(
     matrix_sparse.eliminate_zeros()
     return ReducedHarmonicAffineOperator(
         mode_labels=residual_labels,
+        matrix=matrix_sparse,
+        bias=bias,
+    )
+
+
+def build_reduced_source_affine_operator(
+    layout: HierarchyLayout,
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    *,
+    mode_labels: tuple[str, ...],
+    photon_T_by_mode_label: Mapping[str, np.ndarray],
+    photon_E_by_mode_label: Mapping[str, np.ndarray],
+    photon_B_by_mode_label: Mapping[str, np.ndarray],
+) -> ReducedSourceAffineOperator:
+    """Return the exact frozen-snapshot affine operator for source local blocks."""
+
+    selected_labels = tuple(str(mu) for mu in mode_labels)
+    src_width = int(layout.sector_local_dofs["src"])
+    if len(selected_labels) == 0:
+        return ReducedSourceAffineOperator(
+            mode_labels=(),
+            matrix=csc_matrix((0, 0), dtype=np.float64),
+            bias=np.zeros(0, dtype=np.float64),
+        )
+
+    invalid = frozenset(selected_labels).difference(str(mu) for mu in layout.mode_labels)
+    if invalid:
+        raise ValueError(f"mode_labels must be a subset of layout.mode_labels, got extras {sorted(invalid)!r}")
+
+    opacity_data = bg.get("opacity_data", {})
+    if not isinstance(opacity_data, Mapping):
+        raise ValueError("bg.opacity_data must be a mapping when provided")
+    gamma_t = float(opacity_data.get("Gamma_T", 0.0))
+    scales = _operator_scales(bg, backend)
+    branch_scale = float(scales["branch_scale"])
+    local_drag_scale = float(scales["local_drag_scale"])
+    source_scale = float(scales["source_scale"])
+    polarization_scale = float(scales["polarization_scale"])
+    twist_scale = float(scales["twist_scale"])
+    geom_scale = float(scales["geom_scale"])
+    forcing_blocks = evaluate_reduced_source_blocks(layout, bg, backend)
+    width = (int(layout.ell_max) + 1) ** 2
+    mu_count = max(len(layout.mode_labels), 1)
+    mode_index = {str(mu): idx for idx, mu in enumerate(layout.mode_labels)}
+    zeros_h = np.zeros(width, dtype=np.float64)
+
+    total_dof = len(selected_labels) * src_width
+    matrix = np.zeros((total_dof, total_dof), dtype=np.float64)
+    bias = np.zeros(total_dof, dtype=np.float64)
+
+    dipole_slot = sum(2 * ell + 1 for ell in range(1)) + 1 if int(layout.ell_max) >= 1 else None
+    quadrupole_slot = sum(2 * ell + 1 for ell in range(2)) + 2 if int(layout.ell_max) >= 2 else None
+
+    for residual_index, mu in enumerate(selected_labels):
+        mu_weight = _mode_label_weight(
+            mu,
+            mu_index=int(mode_index[mu]),
+            mu_count=mu_count,
+            branch_scale=branch_scale,
+        )
+        source_mass = mu_weight * (1.0 + 0.06 * source_scale + 0.04 * np.arange(src_width, dtype=np.float64))
+        inv_source = 1.0 / np.maximum(source_mass, 1.0e-30)
+        row_start = residual_index * src_width
+        matrix[row_start : row_start + src_width, row_start : row_start + src_width] += np.diag(
+            inv_source * (mu_weight * local_drag_scale * (0.35 * gamma_t))
+        )
+        bias[row_start : row_start + src_width] = inv_source * np.asarray(forcing_blocks[mu], dtype=np.float64)
+
+        t_state = np.asarray(photon_T_by_mode_label.get(mu, zeros_h), dtype=np.float64)
+        e_state = np.asarray(photon_E_by_mode_label.get(mu, zeros_h), dtype=np.float64)
+        b_state = np.asarray(photon_B_by_mode_label.get(mu, zeros_h), dtype=np.float64)
+        if t_state.shape != (width,) or e_state.shape != (width,) or b_state.shape != (width,):
+            raise ValueError(f"harmonic state for {mu!r} must have shape ({width},)")
+        if dipole_slot is not None and src_width > 1:
+            bias[row_start + 1] += inv_source[1] * (-0.08 * mu_weight * local_drag_scale * gamma_t * float(t_state[dipole_slot]))
+        if quadrupole_slot is not None and src_width > 0:
+            bias[row_start + 0] += inv_source[0] * (-0.10 * mu_weight * local_drag_scale * gamma_t * float(e_state[quadrupole_slot]))
+        if quadrupole_slot is not None and src_width > 2:
+            bias[row_start + 2] += inv_source[2] * (-0.06 * mu_weight * local_drag_scale * gamma_t * float(e_state[quadrupole_slot]))
+            bias[row_start + 2] += (
+                inv_source[2]
+                * (-0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t * float(b_state[quadrupole_slot]))
+            )
+
+    matrix_sparse = csc_matrix(matrix)
+    matrix_sparse.eliminate_zeros()
+    return ReducedSourceAffineOperator(
+        mode_labels=selected_labels,
         matrix=matrix_sparse,
         bias=bias,
     )

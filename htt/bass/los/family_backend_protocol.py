@@ -653,6 +653,7 @@ class FamilyBackend:
             "lookup_resolution_status": template_card.lookup_resolution_status,
             "reduced_local_evaluator_available": True,
             "reduced_harmonic_evaluator_available": True,
+            "reduced_source_evaluator_available": True,
             "reduced_joint_evaluator_available": True,
             "reduced_source_evaluator_available": True,
             "verification_crosscheck_pass": bool(
@@ -789,6 +790,31 @@ class FamilyBackend:
             neutrino_by_mode_label=neutrino_by_mode_label,
             baryon_by_mode_label=baryon_by_mode_label,
             source_by_mode_label=source_by_mode_label,
+        )
+
+    def build_reduced_source_affine_operator(
+        self,
+        background_state: Mapping[str, object],
+        *,
+        mode_labels: tuple[str, ...],
+        photon_T_by_mode_label: Mapping[str, np.ndarray],
+        photon_E_by_mode_label: Mapping[str, np.ndarray],
+        photon_B_by_mode_label: Mapping[str, np.ndarray],
+    ):
+        from bass.hierarchy.ver3_layout_protocol import (
+            build_hierarchy_layout,
+            build_reduced_source_affine_operator,
+        )
+
+        layout = build_hierarchy_layout(self, self.truncation)
+        return build_reduced_source_affine_operator(
+            layout,
+            background_state,
+            self,
+            mode_labels=mode_labels,
+            photon_T_by_mode_label=photon_T_by_mode_label,
+            photon_E_by_mode_label=photon_E_by_mode_label,
+            photon_B_by_mode_label=photon_B_by_mode_label,
         )
 
     def evaluate_reduced_source_blocks(
