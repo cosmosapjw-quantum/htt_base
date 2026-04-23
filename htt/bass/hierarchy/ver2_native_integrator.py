@@ -61,7 +61,12 @@ from bass.hierarchy.integrator import (
     _ell2_m0_slot_offset,
 )
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor, pack_hierarchy, unpack_hierarchy, zero_hierarchy
-from bass.hierarchy.ver3_layout_protocol import build_hierarchy_layout, evaluate_reduced_local_rhs, flatten
+from bass.hierarchy.ver3_layout_protocol import (
+    build_hierarchy_layout,
+    evaluate_reduced_harmonic_rhs,
+    evaluate_reduced_local_rhs,
+    flatten,
+)
 from bass.hierarchy.seed_compatibility import (
     PackedRegularSeedInjection,
     SeedConstraintProjection,
@@ -2403,28 +2408,289 @@ class Ver2TierBIntegrator:
         result.solver_info["live_b_mode_history_metadata"] = dict(b_metadata)
         return np.asarray(b_rows, dtype=np.float64), dict(b_metadata)
 
+    def _ensure_live_mode_label_harmonic_histories(
+        self,
+        result: IntegrationResult,
+    ) -> tuple[
+        dict[str, np.ndarray],
+        dict[str, np.ndarray],
+        dict[str, np.ndarray],
+        dict[str, np.ndarray],
+        dict[str, object],
+    ]:
+        cached_t = getattr(result, "photon_T_history_by_mode_label", None)
+        cached_e = getattr(result, "photon_E_history_by_mode_label", None)
+        cached_b = getattr(result, "photon_B_history_by_mode_label", None)
+        cached_nu = getattr(result, "neutrino_history_by_mode_label", None)
+        metadata = result.solver_info.get("live_mode_label_harmonic_history_metadata")
+        if (
+            isinstance(cached_t, Mapping)
+            and isinstance(cached_e, Mapping)
+            and isinstance(cached_b, Mapping)
+            and isinstance(cached_nu, Mapping)
+            and isinstance(metadata, Mapping)
+            and str(metadata.get("owner", "")) == "ver2_native_integrator.reduced_mode_label_harmonics"
+        ):
+            return (
+                {str(mu): np.asarray(values, dtype=np.float64) for mu, values in cached_t.items()},
+                {str(mu): np.asarray(values, dtype=np.float64) for mu, values in cached_e.items()},
+                {str(mu): np.asarray(values, dtype=np.float64) for mu, values in cached_b.items()},
+                {str(mu): np.asarray(values, dtype=np.float64) for mu, values in cached_nu.items()},
+                dict(metadata),
+            )
+
+        eta_samples = np.asarray(result.eta, dtype=np.float64)
+        mode_labels = tuple(str(mu) for mu in self._layout.mode_labels)
+        covered = str(self._layout_covered_mode_label)
+        residual_mode_labels = tuple(str(mu) for mu in mode_labels if str(mu) != covered)
+        harmonic_width = (int(self.config.L_max) + 1) ** 2
+        reionization_amplitude = self._reionization_amplitude()
+
+        baryon_by_mode_label, _, _ = self._ensure_live_mode_label_local_matter_history(result)
+        _, source_by_mode_label, _ = self._ensure_live_source_history(
+            result,
+            covered_mode_label=covered,
+        )
+        b_history, b_history_metadata = self._ensure_live_b_mode_history(result)
+
+        projected_t = self._resolve_mode_label_harmonic_history(np.asarray(result.photon_T_tower, dtype=np.float64))
+        projected_e = self._resolve_mode_label_harmonic_history(np.asarray(result.photon_E_tower, dtype=np.float64))
+        projected_b = self._resolve_mode_label_harmonic_history(np.asarray(b_history, dtype=np.float64))
+        projected_nu = self._resolve_mode_label_harmonic_history(np.asarray(result.neutrino_tower, dtype=np.float64))
+
+        photon_t_histories = {
+            mu: np.zeros((eta_samples.size, harmonic_width), dtype=np.float64)
+            for mu in mode_labels
+        }
+        photon_e_histories = {
+            mu: np.zeros((eta_samples.size, harmonic_width), dtype=np.float64)
+            for mu in mode_labels
+        }
+        photon_b_histories = {
+            mu: np.zeros((eta_samples.size, harmonic_width), dtype=np.float64)
+            for mu in mode_labels
+        }
+        neutrino_histories = {
+            mu: np.zeros((eta_samples.size, harmonic_width), dtype=np.float64)
+            for mu in mode_labels
+        }
+
+        photon_t_histories[covered][:, :] = np.asarray(result.photon_T_tower, dtype=np.float64)
+        photon_e_histories[covered][:, :] = np.asarray(result.photon_E_tower, dtype=np.float64)
+        photon_b_histories[covered][:, :] = np.asarray(b_history, dtype=np.float64)
+        neutrino_histories[covered][:, :] = np.asarray(result.neutrino_tower, dtype=np.float64)
+
+        if eta_samples.size > 0:
+            for mu in residual_mode_labels:
+                photon_t_histories[mu][0, :] = np.asarray(projected_t[mu][0], dtype=np.float64)
+                photon_e_histories[mu][0, :] = np.asarray(projected_e[mu][0], dtype=np.float64)
+                photon_b_histories[mu][0, :] = np.asarray(projected_b[mu][0], dtype=np.float64)
+                neutrino_histories[mu][0, :] = np.asarray(projected_nu[mu][0], dtype=np.float64)
+
+        for index in range(max(eta_samples.size - 1, 0)):
+            eta_left = float(eta_samples[index])
+            eta_right = float(eta_samples[index + 1])
+            dt = float(eta_right - eta_left)
+            if dt == 0.0:
+                for mu in residual_mode_labels:
+                    photon_t_histories[mu][index + 1, :] = photon_t_histories[mu][index, :]
+                    photon_e_histories[mu][index + 1, :] = photon_e_histories[mu][index, :]
+                    photon_b_histories[mu][index + 1, :] = photon_b_histories[mu][index, :]
+                    neutrino_histories[mu][index + 1, :] = neutrino_histories[mu][index, :]
+                continue
+
+            left_t = {
+                mu: np.asarray(photon_t_histories[mu][index], dtype=np.float64)
+                for mu in mode_labels
+            }
+            left_e = {
+                mu: np.asarray(photon_e_histories[mu][index], dtype=np.float64)
+                for mu in mode_labels
+            }
+            left_b = {
+                mu: np.asarray(photon_b_histories[mu][index], dtype=np.float64)
+                for mu in mode_labels
+            }
+            left_nu = {
+                mu: np.asarray(neutrino_histories[mu][index], dtype=np.float64)
+                for mu in mode_labels
+            }
+            visibility_left = abs(float(np.asarray(result.photon_T_tower[index], dtype=np.float64)[0]))
+            ell2_m0_slot = _ell2_m0_slot_offset(int(self.config.L_max)) if int(self.config.L_max) >= 2 else None
+            polarization_left = (
+                0.0
+                if ell2_m0_slot is None
+                else abs(float(np.asarray(result.photon_E_tower[index], dtype=np.float64)[ell2_m0_slot]))
+            )
+            bg_left = self._live_backend_state_payload(
+                eta=eta_left,
+                gamma_t_probe=_resolved_gamma_t(
+                    visibility_source=self.visibility_source,
+                    eta=eta_left,
+                    direction=self._direction,
+                    config=self.config,
+                ),
+                visibility_amplitude=visibility_left,
+                polarization_source=polarization_left,
+                reionization_amplitude=reionization_amplitude,
+            )
+            rhs_t_left, rhs_e_left, rhs_b_left, rhs_nu_left = evaluate_reduced_harmonic_rhs(
+                self._layout,
+                bg_left,
+                self.backend,
+                photon_T_by_mode_label=left_t,
+                photon_E_by_mode_label=left_e,
+                photon_B_by_mode_label=left_b,
+                neutrino_by_mode_label=left_nu,
+                baryon_by_mode_label={
+                    mu: np.asarray(baryon_by_mode_label[mu][index], dtype=np.float64)
+                    for mu in mode_labels
+                },
+                source_by_mode_label={
+                    mu: np.asarray(source_by_mode_label[mu][index], dtype=np.float64)
+                    for mu in mode_labels
+                },
+            )
+
+            right_t = {
+                covered: np.asarray(result.photon_T_tower[index + 1], dtype=np.float64),
+                **{
+                    mu: np.asarray(photon_t_histories[mu][index], dtype=np.float64)
+                    + dt * np.asarray(rhs_t_left[mu], dtype=np.float64)
+                    for mu in residual_mode_labels
+                },
+            }
+            right_e = {
+                covered: np.asarray(result.photon_E_tower[index + 1], dtype=np.float64),
+                **{
+                    mu: np.asarray(photon_e_histories[mu][index], dtype=np.float64)
+                    + dt * np.asarray(rhs_e_left[mu], dtype=np.float64)
+                    for mu in residual_mode_labels
+                },
+            }
+            right_b = {
+                covered: np.asarray(b_history[index + 1], dtype=np.float64),
+                **{
+                    mu: np.asarray(photon_b_histories[mu][index], dtype=np.float64)
+                    + dt * np.asarray(rhs_b_left[mu], dtype=np.float64)
+                    for mu in residual_mode_labels
+                },
+            }
+            right_nu = {
+                covered: np.asarray(result.neutrino_tower[index + 1], dtype=np.float64),
+                **{
+                    mu: np.asarray(neutrino_histories[mu][index], dtype=np.float64)
+                    + dt * np.asarray(rhs_nu_left[mu], dtype=np.float64)
+                    for mu in residual_mode_labels
+                },
+            }
+            visibility_right = abs(float(np.asarray(result.photon_T_tower[index + 1], dtype=np.float64)[0]))
+            polarization_right = (
+                0.0
+                if ell2_m0_slot is None
+                else abs(float(np.asarray(result.photon_E_tower[index + 1], dtype=np.float64)[ell2_m0_slot]))
+            )
+            bg_right = self._live_backend_state_payload(
+                eta=eta_right,
+                gamma_t_probe=_resolved_gamma_t(
+                    visibility_source=self.visibility_source,
+                    eta=eta_right,
+                    direction=self._direction,
+                    config=self.config,
+                ),
+                visibility_amplitude=visibility_right,
+                polarization_source=polarization_right,
+                reionization_amplitude=reionization_amplitude,
+            )
+            rhs_t_right, rhs_e_right, rhs_b_right, rhs_nu_right = evaluate_reduced_harmonic_rhs(
+                self._layout,
+                bg_right,
+                self.backend,
+                photon_T_by_mode_label=right_t,
+                photon_E_by_mode_label=right_e,
+                photon_B_by_mode_label=right_b,
+                neutrino_by_mode_label=right_nu,
+                baryon_by_mode_label={
+                    mu: np.asarray(baryon_by_mode_label[mu][index + 1], dtype=np.float64)
+                    for mu in mode_labels
+                },
+                source_by_mode_label={
+                    mu: np.asarray(source_by_mode_label[mu][index + 1], dtype=np.float64)
+                    for mu in mode_labels
+                },
+            )
+
+            for mu in residual_mode_labels:
+                photon_t_histories[mu][index + 1, :] = (
+                    np.asarray(photon_t_histories[mu][index], dtype=np.float64)
+                    + 0.5 * dt * (np.asarray(rhs_t_left[mu], dtype=np.float64) + np.asarray(rhs_t_right[mu], dtype=np.float64))
+                )
+                photon_e_histories[mu][index + 1, :] = (
+                    np.asarray(photon_e_histories[mu][index], dtype=np.float64)
+                    + 0.5 * dt * (np.asarray(rhs_e_left[mu], dtype=np.float64) + np.asarray(rhs_e_right[mu], dtype=np.float64))
+                )
+                photon_b_histories[mu][index + 1, :] = (
+                    np.asarray(photon_b_histories[mu][index], dtype=np.float64)
+                    + 0.5 * dt * (np.asarray(rhs_b_left[mu], dtype=np.float64) + np.asarray(rhs_b_right[mu], dtype=np.float64))
+                )
+                neutrino_histories[mu][index + 1, :] = (
+                    np.asarray(neutrino_histories[mu][index], dtype=np.float64)
+                    + 0.5 * dt * (np.asarray(rhs_nu_left[mu], dtype=np.float64) + np.asarray(rhs_nu_right[mu], dtype=np.float64))
+                )
+
+        metadata_out = {
+            "owner": "ver2_native_integrator.reduced_mode_label_harmonics",
+            "history_sample_count": int(eta_samples.size),
+            "mode_labels": list(mode_labels),
+            "covered_mode_label": covered,
+            "residual_mode_labels": list(residual_mode_labels),
+            "sectors": ("ph_I", "ph_E", "ph_B", "nu_I"),
+            "covered_owner": "ver2_native_integrator.main_state_harmonics",
+            "residual_owner": "ver2_native_integrator.reduced_mode_label_harmonics",
+            "integration_scheme": "predictor_corrector_trapezoidal",
+        }
+        result.photon_T_history_by_mode_label = {
+            mu: np.asarray(values, dtype=np.float64)
+            for mu, values in photon_t_histories.items()
+        }
+        result.photon_E_history_by_mode_label = {
+            mu: np.asarray(values, dtype=np.float64)
+            for mu, values in photon_e_histories.items()
+        }
+        result.photon_B_history_by_mode_label = {
+            mu: np.asarray(values, dtype=np.float64)
+            for mu, values in photon_b_histories.items()
+        }
+        result.neutrino_history_by_mode_label = {
+            mu: np.asarray(values, dtype=np.float64)
+            for mu, values in neutrino_histories.items()
+        }
+        result.solver_info["live_mode_label_harmonic_history_metadata"] = dict(metadata_out)
+        result.solver_info["live_b_mode_history_by_mode_label_metadata"] = {
+            "owner": "ver2_native_integrator.reduced_mode_label_harmonics",
+            "sector": "ph_B",
+            "history_sample_count": int(eta_samples.size),
+            "mode_labels": list(mode_labels),
+            "covered_mode_label": covered,
+            "residual_mode_labels": list(residual_mode_labels),
+            "covered_owner": str(b_history_metadata.get("owner", "ver2_native_integrator.main_state_photon_B")),
+            "integration_scheme": "predictor_corrector_trapezoidal",
+        }
+        return (
+            {mu: np.asarray(values, dtype=np.float64) for mu, values in result.photon_T_history_by_mode_label.items()},
+            {mu: np.asarray(values, dtype=np.float64) for mu, values in result.photon_E_history_by_mode_label.items()},
+            {mu: np.asarray(values, dtype=np.float64) for mu, values in result.photon_B_history_by_mode_label.items()},
+            {mu: np.asarray(values, dtype=np.float64) for mu, values in result.neutrino_history_by_mode_label.items()},
+            metadata_out,
+        )
+
     def _ensure_live_b_mode_history_by_mode_label(
         self,
         result: IntegrationResult,
     ) -> tuple[dict[str, np.ndarray], dict[str, object]]:
-        cached = getattr(result, "photon_B_history_by_mode_label", None)
-        metadata = result.solver_info.get("live_b_mode_history_by_mode_label_metadata")
-        if isinstance(cached, Mapping) and isinstance(metadata, Mapping):
-            return (
-                {str(mu): np.asarray(values, dtype=np.float64) for mu, values in cached.items()},
-                dict(metadata),
-            )
-        b_history, _ = self._ensure_live_b_mode_history(result)
-        resolved = self._resolve_mode_label_harmonic_history(b_history)
-        metadata_out = {
-            "owner": "ver2_native_integrator.main_state_mode_label_photon_B",
-            "history_sample_count": int(len(result.eta)),
-            "mode_labels": list(self._layout.mode_labels),
-            "covered_mode_label": self._layout_covered_mode_label,
-        }
-        result.photon_B_history_by_mode_label = resolved
-        result.solver_info["live_b_mode_history_by_mode_label_metadata"] = dict(metadata_out)
-        return resolved, metadata_out
+        _, _, resolved_b, _, _ = self._ensure_live_mode_label_harmonic_histories(result)
+        metadata = dict(result.solver_info.get("live_b_mode_history_by_mode_label_metadata", {}))
+        return resolved_b, metadata
 
     def _resolve_mode_label_harmonic_history(
         self,
@@ -3611,22 +3877,6 @@ class Ver2TierBIntegrator:
             "radiation_rhs_owner": "hierarchy_rhs_photon_from_state",
             "collision_owner": "projected_thomson_source.polarization_B",
         }
-        solver_info["live_mode_label_harmonic_history_metadata"] = {
-            "owner": "ver2_native_integrator.main_state_mode_label_harmonics",
-            "history_sample_count": int(eta_arr.size),
-            "mode_labels": list(self._layout.mode_labels),
-            "covered_mode_label": self._layout_covered_mode_label,
-            "sectors": ("ph_I", "ph_E", "nu_I"),
-        }
-        photon_t_by_mode_label = self._resolve_mode_label_harmonic_history(
-            np.asarray(photon_T_tower, dtype=np.float64)
-        )
-        photon_e_by_mode_label = self._resolve_mode_label_harmonic_history(
-            np.asarray(photon_E_tower, dtype=np.float64)
-        )
-        neutrino_by_mode_label = self._resolve_mode_label_harmonic_history(
-            np.asarray(neutrino_tower, dtype=np.float64)
-        )
         result = IntegrationResult(
             eta=eta_arr,
             a=a_arr,
@@ -3639,10 +3889,10 @@ class Ver2TierBIntegrator:
             config=self.config,
             solver_info=solver_info,
             tca_active_mask=tca_mask,
-            photon_T_history_by_mode_label=photon_t_by_mode_label,
-            photon_E_history_by_mode_label=photon_e_by_mode_label,
+            photon_T_history_by_mode_label=None,
+            photon_E_history_by_mode_label=None,
             neutrino_tower=np.asarray(neutrino_tower, dtype=np.float64),
-            neutrino_history_by_mode_label=neutrino_by_mode_label,
+            neutrino_history_by_mode_label=None,
             photon_B_tower=np.asarray(photon_B_tower, dtype=np.float64),
             baryon_local_history=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
             cdm_local_history=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
@@ -3650,10 +3900,7 @@ class Ver2TierBIntegrator:
             baryon_local_history_by_mode_label=baryon_by_mode_label,
             cdm_local_history_by_mode_label=cdm_by_mode_label,
         )
-        result.photon_B_history_by_mode_label = {
-            str(mu): np.asarray(values, dtype=np.float64)
-            for mu, values in self._ensure_live_b_mode_history_by_mode_label(result)[0].items()
-        }
+        self._ensure_live_mode_label_harmonic_histories(result)
         return result
 
     def run(

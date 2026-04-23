@@ -266,13 +266,16 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert set(run.integration_result.baryon_local_history_by_mode_label) == {"m0", "m+2", "m-2"}
     assert set(run.integration_result.cdm_local_history_by_mode_label) == {"m0", "m+2", "m-2"}
     assert run.integration_result.solver_info["live_mode_label_harmonic_history_metadata"]["owner"] == (
-        "ver2_native_integrator.main_state_mode_label_harmonics"
+        "ver2_native_integrator.reduced_mode_label_harmonics"
+    )
+    assert run.integration_result.solver_info["live_mode_label_harmonic_history_metadata"]["integration_scheme"] == (
+        "predictor_corrector_trapezoidal"
     )
     assert run.integration_result.solver_info["live_mode_label_local_matter_history_metadata"]["owner"] == (
         "ver2_native_integrator.main_state_mode_label_local_matter"
     )
     assert run.integration_result.solver_info["live_b_mode_history_by_mode_label_metadata"]["owner"] == (
-        "ver2_native_integrator.main_state_mode_label_photon_B"
+        "ver2_native_integrator.reduced_mode_label_harmonics"
     )
     assert run.integration_result.solver_info["seed_family"] == "I"
     assert run.integration_result.solver_info["seed_branch"] == "orthogonal"
