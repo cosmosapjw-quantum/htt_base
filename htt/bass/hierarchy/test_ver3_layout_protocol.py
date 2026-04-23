@@ -534,6 +534,28 @@ def test_reduced_joint_affine_operator_matches_direct_local_and_harmonic_evaluat
         baryon_by_mode_label=baryon_by_mode_label,
         source_by_mode_label=source_by_mode_label,
     )
+    ops = assemble_hierarchy_ops(bg, backend, truncation, bg["source_tables"])
+    state = np.zeros(layout.size, dtype=np.float64)
+    for mu in layout.mode_labels:
+        for ell in range(layout.ell_max + 1):
+            offset = sum(2 * level + 1 for level in range(ell))
+            for m in range(-ell, ell + 1):
+                slot = offset + (m + ell)
+                state[flatten(layout, mu, "ph_I", ell, m)] = photon_t_by_mode_label[str(mu)][slot]
+                state[flatten(layout, mu, "ph_E", ell, m)] = photon_e_by_mode_label[str(mu)][slot]
+                state[flatten(layout, mu, "ph_B", ell, m)] = photon_b_by_mode_label[str(mu)][slot]
+                state[flatten(layout, mu, "nu_I", ell, m)] = neutrino_by_mode_label[str(mu)][slot]
+        for local_dof, value in enumerate(baryon_by_mode_label[str(mu)]):
+            state[flatten(layout, mu, "baryon", None, None, local_dof)] = value
+        for local_dof, value in enumerate(cdm_by_mode_label[str(mu)]):
+            state[flatten(layout, mu, "cdm", None, None, local_dof)] = value
+        for local_dof, value in enumerate(source_by_mode_label[str(mu)]):
+            state[flatten(layout, mu, "src", None, None, local_dof)] = value
+    full_drive = np.asarray(
+        (ops.A_fs @ state) + (ops.A_mix @ state) + (ops.A_coll @ state) + np.asarray(ops.source_template, dtype=np.float64),
+        dtype=np.float64,
+    )
+    mass_diag = np.asarray(ops.mass_matrix.diagonal(), dtype=np.float64)
     affine = build_reduced_joint_affine_operator(
         layout,
         bg,
@@ -568,6 +590,34 @@ def test_reduced_joint_affine_operator_matches_direct_local_and_harmonic_evaluat
         ],
         dtype=np.float64,
     )
+    source_state = np.concatenate(
+        [
+            source_by_mode_label["m+2"],
+            source_by_mode_label["m-2"],
+        ],
+        dtype=np.float64,
+    )
+    direct_source = np.concatenate(
+        [
+            np.array(
+                [
+                    full_drive[flatten(layout, "m+2", "src", None, None, local_dof)]
+                    / mass_diag[flatten(layout, "m+2", "src", None, None, local_dof)]
+                    for local_dof in range(layout.sector_local_dofs["src"])
+                ],
+                dtype=np.float64,
+            ),
+            np.array(
+                [
+                    full_drive[flatten(layout, "m-2", "src", None, None, local_dof)]
+                    / mass_diag[flatten(layout, "m-2", "src", None, None, local_dof)]
+                    for local_dof in range(layout.sector_local_dofs["src"])
+                ],
+                dtype=np.float64,
+            ),
+        ],
+        dtype=np.float64,
+    )
     direct = np.concatenate(
         [
             direct_local_b["m+2"],
@@ -582,16 +632,18 @@ def test_reduced_joint_affine_operator_matches_direct_local_and_harmonic_evaluat
             direct_e["m-2"],
             direct_b["m-2"],
             direct_nu["m-2"],
+            direct_source,
         ],
         dtype=np.float64,
     )
     applied = np.asarray(
-        affine.matrix @ np.concatenate([local_state, harmonic_state], dtype=np.float64) + affine.bias,
+        affine.matrix @ np.concatenate([local_state, harmonic_state, source_state], dtype=np.float64) + affine.bias,
         dtype=np.float64,
     )
     assert affine.mode_labels == residual_labels
     assert affine.local_dof == local_state.size
     assert affine.harmonic_dof == harmonic_state.size
+    assert affine.source_dof == source_state.size
     np.testing.assert_allclose(applied, direct)
 
 

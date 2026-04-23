@@ -224,6 +224,8 @@ class IntegrationResult:
     baryon_local_history: np.ndarray | None = field(default=None, repr=False)
     cdm_local_history: np.ndarray | None = field(default=None, repr=False)
     residual_local_history: np.ndarray | None = field(default=None, repr=False)
+    residual_harmonic_history: np.ndarray | None = field(default=None, repr=False)
+    residual_source_history: np.ndarray | None = field(default=None, repr=False)
     baryon_local_history_by_mode_label: object | None = field(default=None, repr=False)
     cdm_local_history_by_mode_label: object | None = field(default=None, repr=False)
     source_history: np.ndarray | None = field(default=None, repr=False)

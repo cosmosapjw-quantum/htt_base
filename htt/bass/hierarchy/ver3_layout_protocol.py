@@ -71,6 +71,7 @@ class ReducedJointAffineOperator:
     mode_labels: tuple[str, ...]
     local_dof: int
     harmonic_dof: int
+    source_dof: int
     matrix: csc_matrix
     bias: np.ndarray
 
@@ -1567,17 +1568,19 @@ def build_reduced_joint_affine_operator(
     baryon_by_mode_label: Mapping[str, np.ndarray],
     source_by_mode_label: Mapping[str, np.ndarray] | None = None,
 ) -> ReducedJointAffineOperator:
-    """Return the exact frozen-snapshot affine operator for local+harmonic residual blocks."""
+    """Return the exact frozen-snapshot affine operator for local+harmonic+source residual blocks."""
 
     residual_labels = tuple(str(mu) for mu in residual_mode_labels)
     baryon_width = int(layout.sector_local_dofs["baryon"])
     cdm_width = int(layout.sector_local_dofs["cdm"])
+    src_width = int(layout.sector_local_dofs["src"])
     local_block_size = baryon_width + cdm_width
     if len(residual_labels) == 0:
         return ReducedJointAffineOperator(
             mode_labels=(),
             local_dof=0,
             harmonic_dof=0,
+            source_dof=0,
             matrix=csc_matrix((0, 0), dtype=np.float64),
             bias=np.zeros(0, dtype=np.float64),
         )
@@ -1590,6 +1593,9 @@ def build_reduced_joint_affine_operator(
     geom_scale = float(scales["geom_scale"])
     branch_scale = float(scales["branch_scale"])
     local_drag_scale = float(scales["local_drag_scale"])
+    source_scale = float(scales["source_scale"])
+    polarization_scale = float(scales["polarization_scale"])
+    twist_scale = float(scales["twist_scale"])
     structure = _reduced_harmonic_structure(
         int(layout.ell_max),
         tuple(str(mu) for mu in layout.mode_labels),
@@ -1598,6 +1604,8 @@ def build_reduced_joint_affine_operator(
     harmonic_block_size = int(structure.block_size)
     harmonic_dof = int(structure.n_unknown)
     local_dof = len(residual_labels) * local_block_size
+    source_dof = len(residual_labels) * src_width
+    mode_index = {str(mu): idx for idx, mu in enumerate(layout.mode_labels)}
 
     zero_theta = {mu: 0.0 for mu in residual_labels}
     local_affine = build_reduced_local_affine_operator(
@@ -1616,6 +1624,18 @@ def build_reduced_joint_affine_operator(
         )
         for mu in layout.mode_labels
     }
+    default_source_blocks = evaluate_reduced_source_blocks(layout, bg, backend)
+    zeros_s = np.zeros(src_width, dtype=np.float64)
+    harmonic_source_by_mode_label: dict[str, np.ndarray] = {}
+    for mu in layout.mode_labels:
+        mu_key = str(mu)
+        if source_by_mode_label is None:
+            source_state = np.asarray(default_source_blocks[mu_key], dtype=np.float64)
+        else:
+            source_state = np.asarray(source_by_mode_label.get(mu_key, default_source_blocks[mu_key]), dtype=np.float64)
+        harmonic_source_by_mode_label[mu_key] = (
+            zeros_s if mu_key in residual_labels else np.asarray(source_state, dtype=np.float64)
+        )
     harmonic_affine = build_reduced_harmonic_affine_operator(
         layout,
         bg,
@@ -1626,14 +1646,19 @@ def build_reduced_joint_affine_operator(
         photon_B_by_mode_label=photon_B_by_mode_label,
         neutrino_by_mode_label=neutrino_by_mode_label,
         baryon_by_mode_label=harmonic_baryon_by_mode_label,
-        source_by_mode_label=source_by_mode_label,
+        source_by_mode_label=harmonic_source_by_mode_label,
     )
 
-    joint = np.zeros((local_dof + harmonic_dof, local_dof + harmonic_dof), dtype=np.float64)
+    total_dof = local_dof + harmonic_dof + source_dof
+    source_offset = local_dof + harmonic_dof
+    joint = np.zeros((total_dof, total_dof), dtype=np.float64)
     if local_dof > 0:
         joint[:local_dof, :local_dof] = np.asarray(local_affine.matrix.toarray(), dtype=np.float64)
     if harmonic_dof > 0:
-        joint[local_dof:, local_dof:] = np.asarray(harmonic_affine.matrix.toarray(), dtype=np.float64)
+        joint[local_dof : local_dof + harmonic_dof, local_dof : local_dof + harmonic_dof] = np.asarray(
+            harmonic_affine.matrix.toarray(),
+            dtype=np.float64,
+        )
 
     # local <- harmonic(theta_1) coupling
     baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(baryon_width, dtype=np.float64)
@@ -1660,13 +1685,75 @@ def build_reduced_joint_affine_operator(
         [
             np.asarray(local_affine.bias, dtype=np.float64),
             np.asarray(harmonic_affine.bias, dtype=np.float64),
+            np.zeros(source_dof, dtype=np.float64),
         ],
         dtype=np.float64,
     )
+    for residual_index, mu in enumerate(residual_labels):
+        mu_weight = _mode_label_weight(
+            mu,
+            mu_index=int(mode_index[mu]),
+            mu_count=max(len(layout.mode_labels), 1),
+            branch_scale=branch_scale,
+        )
+        source_mass = mu_weight * (1.0 + 0.06 * source_scale + 0.04 * np.arange(src_width, dtype=np.float64))
+        inv_source = 1.0 / np.maximum(source_mass, 1.0e-30)
+        source_block = np.asarray(default_source_blocks[mu], dtype=np.float64)
+        source_row = source_offset + residual_index * src_width
+        harmonic_row = local_dof + residual_index * harmonic_block_size
+
+        joint[source_row : source_row + src_width, source_row : source_row + src_width] += np.diag(
+            inv_source * (mu_weight * local_drag_scale * (0.35 * gamma_t))
+        )
+
+        bias_source = inv_source * source_block
+        if src_width > 0:
+            bias[source_row : source_row + src_width] = bias_source
+        if structure.dipole_slot is not None and src_width > 1:
+            ell_weight = 1.0 + 0.04 * 1.0 + 0.015 * geom_scale
+            inv_t_dipole = 1.0 / max(branch_scale * ell_weight, 1.0e-30)
+            joint[harmonic_row + int(structure.dipole_slot), source_row + 1] += (
+                inv_t_dipole * (0.10 * local_drag_scale * gamma_t)
+            )
+            joint[source_row + 1, harmonic_row + int(structure.dipole_slot)] += (
+                inv_source[1] * (-0.08 * mu_weight * local_drag_scale * gamma_t)
+            )
+        if structure.quadrupole_slot is not None:
+            ell_weight = 1.0 + 0.04 * 2.0 + 0.015 * geom_scale
+            inv_e_quad = 1.0 / max(branch_scale * (1.08 * polarization_scale) * ell_weight, 1.0e-30)
+            if src_width > 0:
+                joint[harmonic_row + structure.width + int(structure.quadrupole_slot), source_row + 0] += (
+                    inv_e_quad * (0.15 * local_drag_scale * gamma_t)
+                )
+                joint[source_row + 0, harmonic_row + structure.width + int(structure.quadrupole_slot)] += (
+                    inv_source[0] * (-0.10 * mu_weight * local_drag_scale * gamma_t)
+                )
+            if src_width > 2:
+                inv_b_quad = 1.0 / max(
+                    branch_scale
+                    * (1.12 + 0.5 * twist_scale)
+                    * polarization_scale
+                    * ell_weight,
+                    1.0e-30,
+                )
+                joint[harmonic_row + structure.width + int(structure.quadrupole_slot), source_row + 2] += (
+                    inv_e_quad * (0.08 * local_drag_scale * gamma_t)
+                )
+                joint[harmonic_row + 2 * structure.width + int(structure.quadrupole_slot), source_row + 2] += (
+                    inv_b_quad * (0.06 * twist_scale * local_drag_scale * gamma_t)
+                )
+                joint[source_row + 2, harmonic_row + structure.width + int(structure.quadrupole_slot)] += (
+                    inv_source[2] * (-0.06 * mu_weight * local_drag_scale * gamma_t)
+                )
+                joint[source_row + 2, harmonic_row + 2 * structure.width + int(structure.quadrupole_slot)] += (
+                    inv_source[2] * (-0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t)
+                )
+
     return ReducedJointAffineOperator(
         mode_labels=residual_labels,
         local_dof=local_dof,
         harmonic_dof=harmonic_dof,
+        source_dof=source_dof,
         matrix=csc_matrix(joint),
         bias=bias,
     )

@@ -416,6 +416,7 @@ def test_backend_reduced_joint_affine_operator_matches_layout_builder() -> None:
     assert owned.mode_labels == direct.mode_labels
     assert owned.local_dof == direct.local_dof
     assert owned.harmonic_dof == direct.harmonic_dof
+    assert owned.source_dof == direct.source_dof
     np.testing.assert_allclose(owned.matrix.toarray(), direct.matrix.toarray())
     np.testing.assert_allclose(owned.bias, direct.bias)
 

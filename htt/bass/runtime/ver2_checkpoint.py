@@ -47,6 +47,7 @@ class TierBCheckpointRecord:
     cdm_local_prefix: np.ndarray
     residual_local_prefix: np.ndarray
     residual_harmonic_prefix: np.ndarray
+    residual_source_prefix: np.ndarray
 
     def __post_init__(self) -> None:
         if self.schema_version != _SCHEMA_VERSION:
@@ -87,6 +88,7 @@ class TierBCheckpointRecord:
             ("cdm_local_prefix", self.cdm_local_prefix),
             ("residual_local_prefix", self.residual_local_prefix),
             ("residual_harmonic_prefix", self.residual_harmonic_prefix),
+            ("residual_source_prefix", self.residual_source_prefix),
         ):
             arr = np.asarray(value, dtype=np.float64)
             if arr.ndim != 2 or arr.shape[0] != eta_prefix.size:
@@ -106,6 +108,7 @@ class TierBCheckpointRecord:
             cdm_local_prefix=np.asarray(self.cdm_local_prefix, dtype=np.float64),
             residual_local_prefix=np.asarray(self.residual_local_prefix, dtype=np.float64),
             residual_harmonic_prefix=np.asarray(self.residual_harmonic_prefix, dtype=np.float64),
+            residual_source_prefix=np.asarray(self.residual_source_prefix, dtype=np.float64),
         )
 
 
@@ -166,6 +169,7 @@ def write_tier_b_restart_checkpoint(
         cdm_local_prefix=np.asarray(restart_state.cdm_local_prefix, dtype=np.float64),
         residual_local_prefix=np.asarray(restart_state.residual_local_prefix, dtype=np.float64),
         residual_harmonic_prefix=np.asarray(restart_state.residual_harmonic_prefix, dtype=np.float64),
+        residual_source_prefix=np.asarray(restart_state.residual_source_prefix, dtype=np.float64),
     )
     return out
 
@@ -183,6 +187,18 @@ def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
             else np.zeros((eta_prefix.shape[0], max(int(state_vector.size) - base_state_size, 0)), dtype=np.float64)
         )
         residual_width = max(int(state_vector.size) - base_state_size - int(residual_local_prefix.shape[1]), 0)
+        residual_harmonic_prefix = (
+            np.asarray(data["residual_harmonic_prefix"], dtype=np.float64)
+            if "residual_harmonic_prefix" in data
+            else np.zeros((eta_prefix.shape[0], residual_width), dtype=np.float64)
+        )
+        residual_source_width = max(
+            int(state_vector.size)
+            - base_state_size
+            - int(residual_local_prefix.shape[1])
+            - int(residual_harmonic_prefix.shape[1]),
+            0,
+        )
         return TierBCheckpointRecord(
             schema_version=str(np.asarray(data["schema_version"]).item()),
             bianchi_type=str(np.asarray(data["bianchi_type"]).item()),
@@ -226,9 +242,10 @@ def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
                 else np.zeros((eta_prefix.shape[0], 2), dtype=np.float64)
             ),
             residual_local_prefix=residual_local_prefix,
-            residual_harmonic_prefix=(
-                np.asarray(data["residual_harmonic_prefix"], dtype=np.float64)
-                if "residual_harmonic_prefix" in data
-                else np.zeros((eta_prefix.shape[0], residual_width), dtype=np.float64)
+            residual_harmonic_prefix=residual_harmonic_prefix,
+            residual_source_prefix=(
+                np.asarray(data["residual_source_prefix"], dtype=np.float64)
+                if "residual_source_prefix" in data
+                else np.zeros((eta_prefix.shape[0], residual_source_width), dtype=np.float64)
             ),
         )
