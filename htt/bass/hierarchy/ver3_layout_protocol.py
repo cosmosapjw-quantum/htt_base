@@ -16,6 +16,7 @@ __all__ = [
     "HierarchyLayout",
     "ReducedHarmonicAffineOperator",
     "ReducedLocalAffineOperator",
+    "ReducedJointAffineOperator",
     "build_hierarchy_layout",
     "build_layout_manifest",
     "flatten",
@@ -25,6 +26,7 @@ __all__ = [
     "build_reduced_harmonic_affine_operator",
     "evaluate_reduced_local_rhs",
     "build_reduced_local_affine_operator",
+    "build_reduced_joint_affine_operator",
     "assemble_free_streaming_block",
     "assemble_mixing_block",
     "assemble_mass_matrix",
@@ -60,6 +62,15 @@ class ReducedHarmonicAffineOperator:
 @dataclass(frozen=True)
 class ReducedLocalAffineOperator:
     mode_labels: tuple[str, ...]
+    matrix: csc_matrix
+    bias: np.ndarray
+
+
+@dataclass(frozen=True)
+class ReducedJointAffineOperator:
+    mode_labels: tuple[str, ...]
+    local_dof: int
+    harmonic_dof: int
     matrix: csc_matrix
     bias: np.ndarray
 
@@ -1539,6 +1550,124 @@ def build_reduced_harmonic_affine_operator(
     return ReducedHarmonicAffineOperator(
         mode_labels=residual_labels,
         matrix=matrix_sparse,
+        bias=bias,
+    )
+
+
+def build_reduced_joint_affine_operator(
+    layout: HierarchyLayout,
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    *,
+    residual_mode_labels: tuple[str, ...],
+    photon_T_by_mode_label: Mapping[str, np.ndarray],
+    photon_E_by_mode_label: Mapping[str, np.ndarray],
+    photon_B_by_mode_label: Mapping[str, np.ndarray],
+    neutrino_by_mode_label: Mapping[str, np.ndarray],
+    baryon_by_mode_label: Mapping[str, np.ndarray],
+    source_by_mode_label: Mapping[str, np.ndarray] | None = None,
+) -> ReducedJointAffineOperator:
+    """Return the exact frozen-snapshot affine operator for local+harmonic residual blocks."""
+
+    residual_labels = tuple(str(mu) for mu in residual_mode_labels)
+    baryon_width = int(layout.sector_local_dofs["baryon"])
+    cdm_width = int(layout.sector_local_dofs["cdm"])
+    local_block_size = baryon_width + cdm_width
+    if len(residual_labels) == 0:
+        return ReducedJointAffineOperator(
+            mode_labels=(),
+            local_dof=0,
+            harmonic_dof=0,
+            matrix=csc_matrix((0, 0), dtype=np.float64),
+            bias=np.zeros(0, dtype=np.float64),
+        )
+
+    opacity_data = bg.get("opacity_data", {})
+    if not isinstance(opacity_data, Mapping):
+        raise ValueError("bg.opacity_data must be a mapping when provided")
+    gamma_t = float(opacity_data.get("Gamma_T", 0.0))
+    scales = _operator_scales(bg, backend)
+    geom_scale = float(scales["geom_scale"])
+    branch_scale = float(scales["branch_scale"])
+    local_drag_scale = float(scales["local_drag_scale"])
+    structure = _reduced_harmonic_structure(
+        int(layout.ell_max),
+        tuple(str(mu) for mu in layout.mode_labels),
+        residual_labels,
+    )
+    harmonic_block_size = int(structure.block_size)
+    harmonic_dof = int(structure.n_unknown)
+    local_dof = len(residual_labels) * local_block_size
+
+    zero_theta = {mu: 0.0 for mu in residual_labels}
+    local_affine = build_reduced_local_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=residual_labels,
+        theta_1_by_mode_label=zero_theta,
+    )
+    zeros_b = np.zeros(baryon_width, dtype=np.float64)
+    harmonic_baryon_by_mode_label = {
+        str(mu): (
+            zeros_b
+            if str(mu) in residual_labels
+            else np.asarray(baryon_by_mode_label.get(str(mu), zeros_b), dtype=np.float64)
+        )
+        for mu in layout.mode_labels
+    }
+    harmonic_affine = build_reduced_harmonic_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=residual_labels,
+        photon_T_by_mode_label=photon_T_by_mode_label,
+        photon_E_by_mode_label=photon_E_by_mode_label,
+        photon_B_by_mode_label=photon_B_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=harmonic_baryon_by_mode_label,
+        source_by_mode_label=source_by_mode_label,
+    )
+
+    joint = np.zeros((local_dof + harmonic_dof, local_dof + harmonic_dof), dtype=np.float64)
+    if local_dof > 0:
+        joint[:local_dof, :local_dof] = np.asarray(local_affine.matrix.toarray(), dtype=np.float64)
+    if harmonic_dof > 0:
+        joint[local_dof:, local_dof:] = np.asarray(harmonic_affine.matrix.toarray(), dtype=np.float64)
+
+    # local <- harmonic(theta_1) coupling
+    baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(baryon_width, dtype=np.float64)
+    if baryon_width > 1 and structure.dipole_slot is not None:
+        local_theta_coeff = float(
+            0.25 * local_drag_scale * gamma_t / max(abs(float(baryon_base_diag[1])), 1.0e-30)
+        )
+        for residual_index in range(len(residual_labels)):
+            local_row = residual_index * local_block_size + 1
+            harmonic_col = local_dof + residual_index * harmonic_block_size + int(structure.dipole_slot)
+            joint[local_row, harmonic_col] = local_theta_coeff
+
+    # harmonic <- local(baryon velocity) coupling
+    if baryon_width > 1 and structure.dipole_slot is not None:
+        ell_weight = 1.0 + 0.04 * 1.0 + 0.015 * geom_scale
+        inv_t_dipole = 1.0 / max(branch_scale * ell_weight, 1.0e-30)
+        harmonic_baryon_coeff = float(inv_t_dipole * (-0.25 * local_drag_scale * gamma_t))
+        for residual_index in range(len(residual_labels)):
+            harmonic_row = local_dof + residual_index * harmonic_block_size + int(structure.dipole_slot)
+            local_col = residual_index * local_block_size + 1
+            joint[harmonic_row, local_col] = harmonic_baryon_coeff
+
+    bias = np.concatenate(
+        [
+            np.asarray(local_affine.bias, dtype=np.float64),
+            np.asarray(harmonic_affine.bias, dtype=np.float64),
+        ],
+        dtype=np.float64,
+    )
+    return ReducedJointAffineOperator(
+        mode_labels=residual_labels,
+        local_dof=local_dof,
+        harmonic_dof=harmonic_dof,
+        matrix=csc_matrix(joint),
         bias=bias,
     )
 

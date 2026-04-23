@@ -65,8 +65,10 @@ from bass.hierarchy.integrator import (
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor, pack_hierarchy, unpack_hierarchy, zero_hierarchy
 from bass.hierarchy.ver3_layout_protocol import (
     ReducedHarmonicAffineOperator,
+    ReducedJointAffineOperator,
     ReducedLocalAffineOperator,
     build_reduced_harmonic_affine_operator,
+    build_reduced_joint_affine_operator,
     build_reduced_local_affine_operator,
     build_hierarchy_layout,
     flatten,
@@ -1158,6 +1160,8 @@ class Ver2TierBIntegrator:
         self._residual_harmonic_sparse_identity = csc_matrix(self._residual_harmonic_identity)
         self._residual_local_identity = np.eye(self._residual_local_dof, dtype=np.float64)
         self._residual_local_sparse_identity = csc_matrix(self._residual_local_identity)
+        self._residual_joint_identity = np.eye(self._residual_local_dof + self._residual_harmonic_dof, dtype=np.float64)
+        self._residual_joint_sparse_identity = csc_matrix(self._residual_joint_identity)
         self._coll_T_diag = _extract_operator_diag(
             backend=backend,
             mode_ops=self.mode_ops,
@@ -2108,6 +2112,29 @@ class Ver2TierBIntegrator:
             baryon_by_mode_label=baryon_by_mode_label,
         )
 
+    def _build_residual_joint_affine_operator(
+        self,
+        *,
+        snapshot: _EtaRuntimeSnapshot,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        photon_B: PSTFHierarchyState,
+        neutrino_tower: PSTFHierarchyState,
+        baryon_local: np.ndarray,
+    ) -> ReducedJointAffineOperator:
+        covered = str(self._layout_covered_mode_label)
+        return build_reduced_joint_affine_operator(
+            self._layout,
+            self._residual_harmonic_background_state(snapshot=snapshot),
+            self.backend,
+            residual_mode_labels=self._residual_mode_labels,
+            photon_T_by_mode_label={covered: np.asarray(pack_hierarchy(photon_T), dtype=np.float64)},
+            photon_E_by_mode_label={covered: np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64)},
+            photon_B_by_mode_label={covered: np.asarray(pack_hierarchy(photon_B), dtype=np.float64)},
+            neutrino_by_mode_label={covered: np.asarray(pack_hierarchy(neutrino_tower), dtype=np.float64)},
+            baryon_by_mode_label={covered: np.asarray(baryon_local, dtype=np.float64)},
+        )
+
     def _exact_residual_harmonic_rhs(
         self,
         *,
@@ -2465,6 +2492,104 @@ class Ver2TierBIntegrator:
             cdm_local=cdm_right,
             residual_local=next_local,
             residual_harmonic=residual_harmonic_right,
+        )
+
+    def _orthogonal_residual_joint_ros2_step(
+        self,
+        *,
+        eta_left: float,
+        y_left: np.ndarray,
+        eta_right: float,
+        y_right: np.ndarray,
+        affine_left: ReducedJointAffineOperator | None = None,
+    ) -> tuple[np.ndarray, ReducedJointAffineOperator | None]:
+        joint_dof = self._residual_local_dof + self._residual_harmonic_dof
+        if joint_dof == 0:
+            return np.asarray(y_right, dtype=np.float64), None
+        dt = float(eta_right - eta_left)
+        if dt == 0.0:
+            return np.asarray(y_right, dtype=np.float64), affine_left
+        (
+            photon_T_left,
+            photon_E_left,
+            photon_B_left,
+            neutrino_left,
+            baryon_left,
+            cdm_left,
+            residual_local_left,
+            residual_harmonic_left,
+        ) = _unpack_radiation_state(
+            y_left,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+        )
+        (
+            photon_T_right,
+            photon_E_right,
+            photon_B_right,
+            neutrino_right,
+            baryon_right,
+            cdm_right,
+            _residual_local_right,
+            _residual_harmonic_right,
+        ) = _unpack_radiation_state(
+            y_right,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+        )
+        snapshot_left = self._eta_runtime_snapshot(float(eta_left))
+        snapshot_right = self._eta_runtime_snapshot(float(eta_right))
+        if affine_left is None:
+            affine_left = self._build_residual_joint_affine_operator(
+                snapshot=snapshot_left,
+                photon_T=photon_T_left,
+                photon_E=photon_E_left,
+                photon_B=photon_B_left,
+                neutrino_tower=neutrino_left,
+                baryon_local=baryon_left,
+            )
+        state_left = np.concatenate(
+            [
+                np.asarray(residual_local_left, dtype=np.float64),
+                np.asarray(residual_harmonic_left, dtype=np.float64),
+            ],
+            dtype=np.float64,
+        )
+        system_left = self._residual_joint_sparse_identity - (dt * _ROS2_GAMMA) * affine_left.matrix
+        lu_left = splu(system_left)
+        rhs_left = np.asarray(affine_left.matrix @ state_left + affine_left.bias, dtype=np.float64)
+        k1 = np.asarray(lu_left.solve(dt * _ROS2_GAMMA * rhs_left), dtype=np.float64)
+        stage_state = state_left + _ROS2_A21 * k1
+        affine_right = self._build_residual_joint_affine_operator(
+            snapshot=snapshot_right,
+            photon_T=photon_T_right,
+            photon_E=photon_E_right,
+            photon_B=photon_B_right,
+            neutrino_tower=neutrino_right,
+            baryon_local=baryon_right,
+        )
+        rhs_stage = np.asarray(affine_right.matrix @ stage_state + affine_right.bias, dtype=np.float64)
+        k2 = np.asarray(
+            lu_left.solve(dt * _ROS2_GAMMA * rhs_stage + (_ROS2_GAMMA * _ROS2_C21) * k1),
+            dtype=np.float64,
+        )
+        next_state = state_left + _ROS2_M1 * k1 + _ROS2_M2 * k2
+        next_local = np.asarray(next_state[: self._residual_local_dof], dtype=np.float64)
+        next_harmonic = np.asarray(next_state[self._residual_local_dof :], dtype=np.float64)
+        return (
+            _pack_radiation_state(
+                photon_T=photon_T_right,
+                photon_E=photon_E_right,
+                photon_B=photon_B_right,
+                neutrino_tower=neutrino_right,
+                baryon_local=baryon_right,
+                cdm_local=cdm_right,
+                residual_local=next_local,
+                residual_harmonic=next_harmonic,
+            ),
+            affine_right,
         )
 
     def _rhs(
@@ -4387,7 +4512,7 @@ class Ver2TierBIntegrator:
         nlu = 0
         message = "The IMEX split executor successfully reached the end of the integration interval."
         y_current = np.asarray(y0, dtype=np.float64)
-        cached_residual_harmonic_affine: ReducedHarmonicAffineOperator | None = None
+        cached_residual_joint_affine: ReducedJointAffineOperator | None = None
 
         for left, right in zip(eta_nodes[:-1], eta_nodes[1:]):
             eta_current = float(left)
@@ -4439,24 +4564,12 @@ class Ver2TierBIntegrator:
                         ):
                             trial_h *= 0.5
                             continue
-                        candidate = self._orthogonal_residual_local_ros2_step(
+                        candidate, cached_residual_joint_affine = self._orthogonal_residual_joint_ros2_step(
                             eta_left=float(eta_left),
                             y_left=y_left,
                             eta_right=float(eta_next),
                             y_right=candidate,
-                        )
-                        candidate, cached_residual_harmonic_affine = self._orthogonal_residual_harmonic_ros2_step(
-                            eta_left=float(eta_left),
-                            y_left=y_left,
-                            eta_right=float(eta_next),
-                            y_right=candidate,
-                            affine_left=cached_residual_harmonic_affine,
-                        )
-                        candidate = self._orthogonal_residual_local_ros2_step(
-                            eta_left=float(eta_left),
-                            y_left=y_left,
-                            eta_right=float(eta_next),
-                            y_right=candidate,
+                            affine_left=cached_residual_joint_affine,
                         )
                         y_current = candidate
                         eta_current = float(eta_next)
@@ -4520,11 +4633,11 @@ class Ver2TierBIntegrator:
                         tca_tracker.append(False)
                     y_current = candidate
                     eta_current = float(eta_next)
-                    cached_residual_harmonic_affine = None
+                    cached_residual_joint_affine = None
                     accepted = True
                     break
                 if not accepted:
-                    cached_residual_harmonic_affine = None
+                    cached_residual_joint_affine = None
                     if abs(float(self.config.tilt_rapidity)) > 0.0:
                         fallback_sol = solve_ivp(
                             lambda eta, y: self._rhs(eta, y, tca_tracker=None),
@@ -4555,7 +4668,7 @@ class Ver2TierBIntegrator:
                                 tca_tracker.append(False)
                             y_current = np.asarray(fallback_sol.y[:, -1], dtype=np.float64)
                             eta_current = float(eta_target)
-                            cached_residual_harmonic_affine = None
+                            cached_residual_joint_affine = None
                             accepted = True
                             continue
                     raise RuntimeError(
@@ -4649,7 +4762,7 @@ class Ver2TierBIntegrator:
             "restart_used": bool(restart_used),
             "collision_owner": "exact_thomson_wrapper",
             "residual_harmonic_orthogonal_bridge": (
-                "ros2w_lagged_sparse_reduced_block"
+                "ros2w_lagged_sparse_reduced_joint_block"
                 if self._residual_harmonic_dof > 0 and str(self.config.solver_method).upper() == "IMEX_MIDPOINT_BDF"
                 else "disabled"
             ),

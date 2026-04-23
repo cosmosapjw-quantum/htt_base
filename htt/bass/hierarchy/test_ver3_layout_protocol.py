@@ -11,6 +11,7 @@ from bass.hierarchy import (
     assemble_mixing_block,
     assemble_explicit_block,
     build_reduced_harmonic_affine_operator,
+    build_reduced_joint_affine_operator,
     build_reduced_local_affine_operator,
     evaluate_reduced_harmonic_rhs,
     evaluate_reduced_local_rhs,
@@ -452,6 +453,145 @@ def test_reduced_harmonic_affine_operator_matches_direct_evaluator_on_residual_l
     assert affine.mode_labels == residual_labels
     assert affine.matrix.shape == (direct.size, direct.size)
     assert affine.matrix.nnz > 0
+    np.testing.assert_allclose(applied, direct)
+
+
+def test_reduced_joint_affine_operator_matches_direct_local_and_harmonic_evaluators() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 2.5},
+        "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
+        "source_tables": {
+            "visibility_amplitude": 1.25,
+            "polarization_source": 0.4,
+            "reionization_amplitude": 0.2,
+        },
+    }
+    residual_labels = ("m+2", "m-2")
+    width = (layout.ell_max + 1) ** 2
+    photon_t_by_mode_label = {
+        "m0": np.linspace(0.1, 0.9, width, dtype=np.float64),
+        "m+2": np.linspace(-0.3, 0.5, width, dtype=np.float64),
+        "m-2": np.linspace(0.2, -0.4, width, dtype=np.float64),
+    }
+    photon_e_by_mode_label = {
+        "m0": np.linspace(0.6, -0.2, width, dtype=np.float64),
+        "m+2": np.linspace(0.3, 0.9, width, dtype=np.float64),
+        "m-2": np.linspace(-0.5, 0.1, width, dtype=np.float64),
+    }
+    photon_b_by_mode_label = {
+        "m0": np.linspace(-0.4, 0.4, width, dtype=np.float64),
+        "m+2": np.linspace(0.7, -0.1, width, dtype=np.float64),
+        "m-2": np.linspace(0.05, 0.25, width, dtype=np.float64),
+    }
+    neutrino_by_mode_label = {
+        "m0": np.linspace(0.15, 0.75, width, dtype=np.float64),
+        "m+2": np.linspace(-0.2, 0.6, width, dtype=np.float64),
+        "m-2": np.linspace(0.4, -0.1, width, dtype=np.float64),
+    }
+    baryon_by_mode_label = {
+        "m0": np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float64),
+        "m+2": np.array([0.5, 0.6, 0.7, 0.8], dtype=np.float64),
+        "m-2": np.array([-0.3, -0.2, -0.1, 0.0], dtype=np.float64),
+    }
+    cdm_by_mode_label = {
+        "m0": np.array([0.9, 1.0], dtype=np.float64),
+        "m+2": np.array([1.1, 1.2], dtype=np.float64),
+        "m-2": np.array([-0.4, 0.2], dtype=np.float64),
+    }
+    source_by_mode_label = {
+        "m0": np.array([0.2, -0.1, 0.0], dtype=np.float64),
+        "m+2": np.array([0.3, 0.4, -0.2], dtype=np.float64),
+        "m-2": np.array([-0.25, 0.15, 0.05], dtype=np.float64),
+    }
+    theta_1_by_mode_label = {
+        "m0": photon_t_by_mode_label["m0"][2],
+        "m+2": photon_t_by_mode_label["m+2"][2],
+        "m-2": photon_t_by_mode_label["m-2"][2],
+    }
+    direct_local_b, direct_local_c = evaluate_reduced_local_rhs(
+        layout,
+        bg,
+        backend,
+        baryon_by_mode_label=baryon_by_mode_label,
+        cdm_by_mode_label=cdm_by_mode_label,
+        theta_1_by_mode_label=theta_1_by_mode_label,
+    )
+    direct_t, direct_e, direct_b, direct_nu = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend,
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+        source_by_mode_label=source_by_mode_label,
+    )
+    affine = build_reduced_joint_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=residual_labels,
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+        source_by_mode_label=source_by_mode_label,
+    )
+    local_state = np.concatenate(
+        [
+            baryon_by_mode_label["m+2"],
+            cdm_by_mode_label["m+2"],
+            baryon_by_mode_label["m-2"],
+            cdm_by_mode_label["m-2"],
+        ],
+        dtype=np.float64,
+    )
+    harmonic_state = np.concatenate(
+        [
+            photon_t_by_mode_label["m+2"],
+            photon_e_by_mode_label["m+2"],
+            photon_b_by_mode_label["m+2"],
+            neutrino_by_mode_label["m+2"],
+            photon_t_by_mode_label["m-2"],
+            photon_e_by_mode_label["m-2"],
+            photon_b_by_mode_label["m-2"],
+            neutrino_by_mode_label["m-2"],
+        ],
+        dtype=np.float64,
+    )
+    direct = np.concatenate(
+        [
+            direct_local_b["m+2"],
+            direct_local_c["m+2"],
+            direct_local_b["m-2"],
+            direct_local_c["m-2"],
+            direct_t["m+2"],
+            direct_e["m+2"],
+            direct_b["m+2"],
+            direct_nu["m+2"],
+            direct_t["m-2"],
+            direct_e["m-2"],
+            direct_b["m-2"],
+            direct_nu["m-2"],
+        ],
+        dtype=np.float64,
+    )
+    applied = np.asarray(
+        affine.matrix @ np.concatenate([local_state, harmonic_state], dtype=np.float64) + affine.bias,
+        dtype=np.float64,
+    )
+    assert affine.mode_labels == residual_labels
+    assert affine.local_dof == local_state.size
+    assert affine.harmonic_dof == harmonic_state.size
     np.testing.assert_allclose(applied, direct)
 
 
