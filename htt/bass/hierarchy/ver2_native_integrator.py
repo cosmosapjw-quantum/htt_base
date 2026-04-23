@@ -3240,6 +3240,73 @@ class Ver2TierBIntegrator:
         harmonic_width = (int(self.config.L_max) + 1) ** 2
         reionization_amplitude = self._reionization_amplitude()
 
+        residual_harmonic_history = getattr(result, "residual_harmonic_history", None)
+        if residual_harmonic_history is not None:
+            residual_arr = np.asarray(residual_harmonic_history, dtype=np.float64)
+            if residual_arr.ndim == 2 and residual_arr.shape[0] == eta_samples.size:
+                b_history, b_history_metadata = self._ensure_live_b_mode_history(result)
+                photon_t_histories = {covered: np.asarray(result.photon_T_tower, dtype=np.float64)}
+                photon_e_histories = {covered: np.asarray(result.photon_E_tower, dtype=np.float64)}
+                photon_b_histories = {covered: np.asarray(b_history, dtype=np.float64)}
+                neutrino_histories = {covered: np.asarray(result.neutrino_tower, dtype=np.float64)}
+                offset = 0
+                for mu in residual_mode_labels:
+                    photon_t_histories[str(mu)] = np.asarray(
+                        residual_arr[:, offset : offset + harmonic_width],
+                        dtype=np.float64,
+                    )
+                    offset += harmonic_width
+                    photon_e_histories[str(mu)] = np.asarray(
+                        residual_arr[:, offset : offset + harmonic_width],
+                        dtype=np.float64,
+                    )
+                    offset += harmonic_width
+                    photon_b_histories[str(mu)] = np.asarray(
+                        residual_arr[:, offset : offset + harmonic_width],
+                        dtype=np.float64,
+                    )
+                    offset += harmonic_width
+                    neutrino_histories[str(mu)] = np.asarray(
+                        residual_arr[:, offset : offset + harmonic_width],
+                        dtype=np.float64,
+                    )
+                    offset += harmonic_width
+                metadata_out = {
+                    "owner": "ver2_native_integrator.main_state_mode_label_harmonics",
+                    "history_sample_count": int(eta_samples.size),
+                    "mode_labels": list(mode_labels),
+                    "covered_mode_label": covered,
+                    "residual_mode_labels": list(residual_mode_labels),
+                    "sectors": ("ph_I", "ph_E", "ph_B", "nu_I"),
+                    "covered_owner": "ver2_native_integrator.main_state_harmonics",
+                    "residual_owner": "ver2_native_integrator.main_state_mode_label_harmonics",
+                    "integration_scheme": "main_state_coevolved",
+                }
+                result.photon_T_history_by_mode_label = photon_t_histories
+                result.photon_E_history_by_mode_label = photon_e_histories
+                result.photon_B_history_by_mode_label = photon_b_histories
+                result.neutrino_history_by_mode_label = neutrino_histories
+                result.solver_info["live_mode_label_harmonic_history_metadata"] = dict(metadata_out)
+                result.solver_info["live_b_mode_history_by_mode_label_metadata"] = {
+                    "owner": "ver2_native_integrator.main_state_mode_label_harmonics",
+                    "sector": "ph_B",
+                    "history_sample_count": int(eta_samples.size),
+                    "mode_labels": list(mode_labels),
+                    "covered_mode_label": covered,
+                    "residual_mode_labels": list(residual_mode_labels),
+                    "covered_owner": str(
+                        b_history_metadata.get("owner", "ver2_native_integrator.main_state_photon_B")
+                    ),
+                    "integration_scheme": "main_state_coevolved",
+                }
+                return (
+                    {mu: np.asarray(values, dtype=np.float64) for mu, values in photon_t_histories.items()},
+                    {mu: np.asarray(values, dtype=np.float64) for mu, values in photon_e_histories.items()},
+                    {mu: np.asarray(values, dtype=np.float64) for mu, values in photon_b_histories.items()},
+                    {mu: np.asarray(values, dtype=np.float64) for mu, values in neutrino_histories.items()},
+                    metadata_out,
+                )
+
         baryon_by_mode_label, _, _ = self._ensure_live_mode_label_local_matter_history(result)
         _, source_by_mode_label, source_history_metadata = self._ensure_live_source_history(result)
         b_history, b_history_metadata = self._ensure_live_b_mode_history(result)
