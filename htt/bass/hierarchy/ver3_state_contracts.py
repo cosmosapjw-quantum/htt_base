@@ -461,6 +461,17 @@ def project_runtime_native_state(
     elif history_samples is not None:
         source_history_payload[covered] = history_samples
 
+    if source_history_payload:
+        for mu, values in source_history_payload.items():
+            final_slice = np.asarray(values[-1], dtype=np.float64)
+            if final_slice.shape != (int(layout.sector_local_dofs["src"]),):
+                raise ValueError("final source history slice does not match src local dofs")
+            for local_dof, value in enumerate(final_slice):
+                vector[flatten(layout, str(mu), "src", None, None, local_dof=local_dof)] = float(value)
+            source_blocks_by_mode_label[str(mu)] = final_slice
+            covered_mode_labels.add(str(mu))
+    source_block = np.asarray(source_blocks_by_mode_label[covered], dtype=np.float64)
+
     baryon_history_payload = {}
     if baryon_history_by_mode_label is not None:
         for mu, values in dict(baryon_history_by_mode_label).items():

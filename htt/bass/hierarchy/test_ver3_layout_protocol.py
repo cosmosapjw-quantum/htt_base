@@ -903,7 +903,7 @@ def test_project_runtime_native_state_embeds_live_towers_into_canonical_layout()
     assert projection.state_vector[flatten(layout, "m0", "nu_I", 2, 1)] == pytest.approx(207.0)
     assert projection.state_vector[flatten(layout, "m+2", "ph_I", 2, 1)] == pytest.approx(0.0)
     assert projection.state_vector[flatten(layout, "m0", "src", None, None, 0)] == pytest.approx(
-        ops.source_template[flatten(layout, "m0", "src", None, None, 0)]
+        float(np.arange(2 * src_width, dtype=np.float64).reshape(2, src_width)[-1, 0])
     )
     assert projection.state_vector[flatten(layout, "m+2", "src", None, None, 0)] == pytest.approx(
         ops.source_template[flatten(layout, "m+2", "src", None, None, 0)]
