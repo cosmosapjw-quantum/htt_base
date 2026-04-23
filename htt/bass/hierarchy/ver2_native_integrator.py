@@ -2258,6 +2258,83 @@ class Ver2TierBIntegrator:
         }
         return history
 
+    def _ensure_live_source_history(
+        self,
+        result: IntegrationResult,
+        *,
+        covered_mode_label: str | None = None,
+    ) -> tuple[np.ndarray, dict[str, np.ndarray], dict[str, object]]:
+        cached_rows = getattr(result, "source_history", None)
+        cached_by_mode = getattr(result, "source_history_by_mode_label", None)
+        metadata = result.solver_info.get("live_source_history_metadata")
+        if (
+            cached_rows is not None
+            and isinstance(cached_by_mode, Mapping)
+            and isinstance(metadata, Mapping)
+        ):
+            return (
+                np.asarray(cached_rows, dtype=np.float64),
+                {
+                    str(mu): np.asarray(values, dtype=np.float64)
+                    for mu, values in cached_by_mode.items()
+                },
+                dict(metadata),
+            )
+
+        layout = build_hierarchy_layout(self.backend, self.backend.truncation)
+        covered = self._layout_covered_mode_label
+        if covered is None:
+            covered = layout.mode_labels[0] if covered_mode_label is None else str(covered_mode_label)
+        index_cache = _build_layout_projection_index_cache(
+            layout,
+            covered_mode_label=str(covered),
+        )
+        eta_samples = np.asarray(result.eta, dtype=np.float64)
+        photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
+        photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
+        reionization_amplitude = (
+            0.0
+            if self.visibility_source.contract.events is None
+            else float(self.visibility_source.contract.events.tau_reion)
+        )
+        source_width = int(layout.sector_local_dofs["src"])
+        source_rows = np.zeros((eta_samples.size, source_width), dtype=np.float64)
+        source_rows_by_mode_label = {
+            str(mu): np.zeros((eta_samples.size, source_width), dtype=np.float64)
+            for mu in layout.mode_labels
+        }
+        for index, eta in enumerate(eta_samples):
+            sample = self._build_auxiliary_operator_sample(
+                eta=float(eta),
+                photon_T_row=photon_T_tower[index],
+                photon_E_row=photon_E_tower[index],
+                reionization_amplitude=reionization_amplitude,
+            )
+            source_template = np.asarray(sample.source_template, dtype=np.float64)
+            source_rows[index, :] = source_template[index_cache.src_by_mode_label[str(covered)]]
+            for mu, indices in index_cache.src_by_mode_label.items():
+                source_rows_by_mode_label[str(mu)][index, :] = source_template[indices]
+        metadata_out = {
+            "owner": "ver2_native_integrator.mode_ops_source_history",
+            "history_sample_count": int(eta_samples.size),
+            "covered_mode_label": str(covered),
+            "mode_labels": list(layout.mode_labels),
+        }
+        result.source_history = np.asarray(source_rows, dtype=np.float64)
+        result.source_history_by_mode_label = {
+            str(mu): np.asarray(values, dtype=np.float64)
+            for mu, values in source_rows_by_mode_label.items()
+        }
+        result.solver_info["live_source_history_metadata"] = dict(metadata_out)
+        return (
+            np.asarray(result.source_history, dtype=np.float64),
+            {
+                str(mu): np.asarray(values, dtype=np.float64)
+                for mu, values in result.source_history_by_mode_label.items()
+            },
+            metadata_out,
+        )
+
     def build_layout_auxiliary_history_bundle(
         self,
         result: IntegrationResult,
@@ -2296,16 +2373,20 @@ class Ver2TierBIntegrator:
         photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
         neutrino_arr = np.asarray(neutrino_tower, dtype=np.float64)
         b_rows, b_metadata = self._ensure_live_b_mode_history(result)
+        source_rows_live, source_rows_by_mode_label_live, _ = self._ensure_live_source_history(
+            result,
+            covered_mode_label=covered,
+        )
         reionization_amplitude = (
             0.0
             if self.visibility_source.contract.events is None
             else float(self.visibility_source.contract.events.tau_reion)
         )
         source_width = int(layout.sector_local_dofs["src"])
-        source_rows = np.zeros((eta_samples.size, source_width), dtype=np.float64)
+        source_rows = np.asarray(source_rows_live, dtype=np.float64)
         source_rows_by_mode_label = {
-            str(mu): np.zeros((eta_samples.size, source_width), dtype=np.float64)
-            for mu in layout.mode_labels
+            str(mu): np.asarray(values, dtype=np.float64)
+            for mu, values in source_rows_by_mode_label_live.items()
         }
         layout_state_rows = np.zeros((eta_samples.size, layout.size), dtype=np.float64)
         baryon_rows = np.asarray(direct_history.baryon_history, dtype=np.float64).copy()
@@ -2396,9 +2477,6 @@ class Ver2TierBIntegrator:
                 for mu in layout.mode_labels
             }
             source_template = np.asarray(current_sample.source_template, dtype=np.float64)
-            source_rows[index, :] = source_template[projection_index_cache.src_by_mode_label[covered]]
-            for mu, indices in projection_index_cache.src_by_mode_label.items():
-                source_rows_by_mode_label[str(mu)][index, :] = source_template[indices]
             _fill_layout_state_vector(
                 state_vector,
                 sample=current_sample,
