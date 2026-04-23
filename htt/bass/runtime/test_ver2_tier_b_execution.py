@@ -272,6 +272,11 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["layout_b_mode_history_sample_count"] == len(
         run.integration_result.eta
     )
+    assert run.integration_result.photon_B_tower is not None
+    assert np.asarray(run.integration_result.photon_B_tower, dtype=np.float64).shape == (
+        len(run.integration_result.eta),
+        (run.integration_result.L_max + 1) ** 2,
+    )
     assert run.integration_result.solver_info["startup_manifold_applied"] is True
     assert run.solver_output.metadata["propagator_ready"] is True
     assert run.solver_output.metadata["propagator_readiness"] == "exact"

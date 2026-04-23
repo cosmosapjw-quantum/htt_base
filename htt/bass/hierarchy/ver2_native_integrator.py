@@ -2218,6 +2218,7 @@ class Ver2TierBIntegrator:
             ),
         }
         b_history = np.asarray(coupled.photon_B_history, dtype=np.float64)
+        result.photon_B_tower = np.asarray(b_history, dtype=np.float64)
         b_mode_owner = str(coupled.metadata.get("b_mode_owner", coupled.metadata["owner"]))
         b_mode_integration_scheme = str(
             coupled.metadata.get("b_mode_integration_scheme", coupled.metadata.get("integration_scheme", ""))

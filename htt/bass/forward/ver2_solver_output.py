@@ -790,17 +790,31 @@ def build_solver_core_output_from_native_result(
     b_mode_payload_available = False
     b_mode_runtime_available = False
     b_mode_coefficients = None
+    runtime_b_tower = getattr(result, "photon_B_tower", None)
     if canonical_projection is not None:
-        b_mode_coefficients = np.asarray(
-            getattr(canonical_projection, "hierarchy_state").photon_polarization_block.get("B"),
-            dtype=np.float64,
+        b_mode_coefficients = (
+            np.asarray(runtime_b_tower[-1], dtype=np.float64)
+            if runtime_b_tower is not None
+            else np.asarray(
+                getattr(canonical_projection, "hierarchy_state").photon_polarization_block.get("B"),
+                dtype=np.float64,
+            )
         )
         b_mode_sector_status = str(getattr(canonical_projection, "sector_status", {}).get("ph_B", ""))
         if (
-            b_mode_sector_status == "layout_operator_auxiliary_b_mode_history"
+            b_mode_sector_status in {
+                "layout_operator_auxiliary_b_mode_history",
+                "hierarchy_rhs_direct_b_mode_history",
+            }
             and np.any(np.abs(b_mode_coefficients) > 0.0)
         ):
             b_mode_payload_status = b_mode_sector_status
+            b_mode_payload_available = True
+            b_mode_runtime_available = True
+    elif runtime_b_tower is not None:
+        b_mode_coefficients = np.asarray(runtime_b_tower[-1], dtype=np.float64)
+        if np.any(np.abs(b_mode_coefficients) > 0.0):
+            b_mode_payload_status = "hierarchy_rhs_direct_b_mode_history"
             b_mode_payload_available = True
             b_mode_runtime_available = True
     alm_T, alm_E, alm_B = _build_reconstructed_payloads(
