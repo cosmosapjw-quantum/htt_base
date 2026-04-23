@@ -331,6 +331,30 @@ def _mode_label_weight(
     return 1.0 + 0.03 * (mu_index / max(mu_count, 1))
 
 
+def _harmonic_cross_mode_coeff(
+    *,
+    mu_weight: float,
+    mix_scale: float,
+    cross_mode_scale: float,
+    twist_scale: float,
+    sector: str,
+    ell: int,
+    mu_count: int,
+) -> float:
+    if mu_count <= 1:
+        return 0.0
+    base = mu_weight * mix_scale * cross_mode_scale / max((ell + 1) * mu_count, 1)
+    if sector == "ph_I":
+        return 0.18 * base
+    if sector == "ph_E":
+        return 0.16 * base
+    if sector == "ph_B":
+        return 0.16 * (1.0 + 0.5 * twist_scale) * base
+    if sector == "nu_I":
+        return 0.12 * base
+    raise KeyError(f"unsupported harmonic sector {sector!r}")
+
+
 def build_hierarchy_layout(
     backend: FamilyBackend,
     truncation: Mapping[str, object],
@@ -600,6 +624,7 @@ def assemble_mixing_block(
                 i_idx = flatten(layout, mu, "ph_I", ell, m)
                 e_idx = flatten(layout, mu, "ph_E", ell, m)
                 b_idx = flatten(layout, mu, "ph_B", ell, m)
+                nu_idx = flatten(layout, mu, "nu_I", ell, m)
                 pstf_weight = np.sqrt(max((ell + 2) * (ell - 1), 0.0)) / max(2 * ell + 1, 1)
                 rows.extend((i_idx, e_idx))
                 cols.extend((e_idx, i_idx))
@@ -610,10 +635,58 @@ def assemble_mixing_block(
                     )
                 )
                 if twist_scale > 0.0:
-                    eb = mu_weight * twist_scale * max(abs(m), 1) / (ell + 1)
-                    rows.extend((e_idx, b_idx, b_idx, e_idx))
-                    cols.extend((b_idx, e_idx, i_idx, b_idx))
-                    data.extend((eb, -eb, 0.25 * eb, -0.25 * eb))
+                        eb = mu_weight * twist_scale * max(abs(m), 1) / (ell + 1)
+                        rows.extend((e_idx, b_idx, b_idx, e_idx))
+                        cols.extend((b_idx, e_idx, i_idx, b_idx))
+                        data.extend((eb, -eb, 0.25 * eb, -0.25 * eb))
+                if len(layout.mode_labels) > 1:
+                    next_mu = layout.mode_labels[(mu_index + 1) % len(layout.mode_labels)]
+                    next_i_idx = flatten(layout, next_mu, "ph_I", ell, m)
+                    next_e_idx = flatten(layout, next_mu, "ph_E", ell, m)
+                    next_b_idx = flatten(layout, next_mu, "ph_B", ell, m)
+                    next_nu_idx = flatten(layout, next_mu, "nu_I", ell, m)
+                    rows.extend((i_idx, e_idx, b_idx, nu_idx))
+                    cols.extend((next_i_idx, next_e_idx, next_b_idx, next_nu_idx))
+                    data.extend(
+                        (
+                            _harmonic_cross_mode_coeff(
+                                mu_weight=mu_weight,
+                                mix_scale=mix_scale,
+                                cross_mode_scale=cross_mode_scale,
+                                twist_scale=twist_scale,
+                                sector="ph_I",
+                                ell=ell,
+                                mu_count=mu_count,
+                            ),
+                            _harmonic_cross_mode_coeff(
+                                mu_weight=mu_weight,
+                                mix_scale=mix_scale,
+                                cross_mode_scale=cross_mode_scale,
+                                twist_scale=twist_scale,
+                                sector="ph_E",
+                                ell=ell,
+                                mu_count=mu_count,
+                            ),
+                            _harmonic_cross_mode_coeff(
+                                mu_weight=mu_weight,
+                                mix_scale=mix_scale,
+                                cross_mode_scale=cross_mode_scale,
+                                twist_scale=twist_scale,
+                                sector="ph_B",
+                                ell=ell,
+                                mu_count=mu_count,
+                            ),
+                            _harmonic_cross_mode_coeff(
+                                mu_weight=mu_weight,
+                                mix_scale=mix_scale,
+                                cross_mode_scale=cross_mode_scale,
+                                twist_scale=twist_scale,
+                                sector="nu_I",
+                                ell=ell,
+                                mu_count=mu_count,
+                            ),
+                        )
+                    )
         if len(layout.mode_labels) > 1:
             next_mu = layout.mode_labels[(mu_index + 1) % len(layout.mode_labels)]
             for sector in ("ph_I", "ph_E", "ph_B", "nu_I"):
@@ -954,6 +1027,43 @@ def evaluate_reduced_harmonic_rhs(
                         eb = mu_weight * twist_scale * max(abs(m), 1) / (ell + 1)
                         e_drive += 0.75 * eb * b_state[slot]
                         b_drive += (-eb * e_state[slot]) + (0.25 * eb * t_state[slot])
+                    if len(layout.mode_labels) > 1:
+                        t_drive += _harmonic_cross_mode_coeff(
+                            mu_weight=mu_weight,
+                            mix_scale=mix_scale,
+                            cross_mode_scale=cross_mode_scale,
+                            twist_scale=twist_scale,
+                            sector="ph_I",
+                            ell=ell,
+                            mu_count=mu_count,
+                        ) * next_t[slot]
+                        e_drive += _harmonic_cross_mode_coeff(
+                            mu_weight=mu_weight,
+                            mix_scale=mix_scale,
+                            cross_mode_scale=cross_mode_scale,
+                            twist_scale=twist_scale,
+                            sector="ph_E",
+                            ell=ell,
+                            mu_count=mu_count,
+                        ) * next_e[slot]
+                        b_drive += _harmonic_cross_mode_coeff(
+                            mu_weight=mu_weight,
+                            mix_scale=mix_scale,
+                            cross_mode_scale=cross_mode_scale,
+                            twist_scale=twist_scale,
+                            sector="ph_B",
+                            ell=ell,
+                            mu_count=mu_count,
+                        ) * next_b[slot]
+                        nu_drive += _harmonic_cross_mode_coeff(
+                            mu_weight=mu_weight,
+                            mix_scale=mix_scale,
+                            cross_mode_scale=cross_mode_scale,
+                            twist_scale=twist_scale,
+                            sector="nu_I",
+                            ell=ell,
+                            mu_count=mu_count,
+                        ) * next_nu[slot]
 
                 if ell == 0 and cross_coeff != 0.0:
                     t_drive += cross_coeff * next_t[slot]
