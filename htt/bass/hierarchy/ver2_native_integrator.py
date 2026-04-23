@@ -1879,22 +1879,25 @@ class Ver2TierBIntegrator:
             self._layout_covered_mode_label: np.asarray(baryon_local, dtype=np.float64),
             **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in baryon_residual.items()},
         }
+        background_state = {
+            "branch": str(self.background_monitor.branch),
+            "geometry": self.background_monitor.initial_conditions.geometry,
+            "sigma_tensor": self._sigma_tensor_at_eta(float(snapshot.eta)),
+            "opacity_data": {"Gamma_T": float(snapshot.gamma_t)},
+            "source_tables": {
+                "reionization_amplitude": float(self._reionization_amplitude()),
+            },
+        }
+        source_by_mode_label = self.backend.evaluate_reduced_source_blocks(background_state)
         rhs_t_by_mode_label, rhs_e_by_mode_label, rhs_b_by_mode_label, rhs_nu_by_mode_label = (
             self.backend.evaluate_reduced_harmonic_rhs(
-                {
-                    "branch": str(self.background_monitor.branch),
-                    "geometry": self.background_monitor.initial_conditions.geometry,
-                    "sigma_tensor": self._sigma_tensor_at_eta(float(snapshot.eta)),
-                    "opacity_data": {"Gamma_T": float(snapshot.gamma_t)},
-                    "source_tables": {
-                        "reionization_amplitude": float(self._reionization_amplitude()),
-                    },
-                },
+                background_state,
                 photon_T_by_mode_label=photon_t_by_mode_label,
                 photon_E_by_mode_label=photon_e_by_mode_label,
                 photon_B_by_mode_label=photon_b_by_mode_label,
                 neutrino_by_mode_label=neutrino_by_mode_label,
                 baryon_by_mode_label=baryon_by_mode_label,
+                source_by_mode_label=source_by_mode_label,
             )
         )
         return self._pack_residual_harmonic_state(
@@ -2833,6 +2836,7 @@ class Ver2TierBIntegrator:
                 polarization_source=polarization_left,
                 reionization_amplitude=reionization_amplitude,
             )
+            source_left = self.backend.evaluate_reduced_source_blocks(bg_left)
             rhs_t_left, rhs_e_left, rhs_b_left, rhs_nu_left = self.backend.evaluate_reduced_harmonic_rhs(
                 bg_left,
                 photon_T_by_mode_label=left_t,
@@ -2843,6 +2847,7 @@ class Ver2TierBIntegrator:
                     mu: np.asarray(baryon_by_mode_label[mu][index], dtype=np.float64)
                     for mu in mode_labels
                 },
+                source_by_mode_label=source_left,
             )
 
             right_t = {
@@ -2895,6 +2900,7 @@ class Ver2TierBIntegrator:
                 polarization_source=polarization_right,
                 reionization_amplitude=reionization_amplitude,
             )
+            source_right = self.backend.evaluate_reduced_source_blocks(bg_right)
             rhs_t_right, rhs_e_right, rhs_b_right, rhs_nu_right = self.backend.evaluate_reduced_harmonic_rhs(
                 bg_right,
                 photon_T_by_mode_label=right_t,
@@ -2905,6 +2911,7 @@ class Ver2TierBIntegrator:
                     mu: np.asarray(baryon_by_mode_label[mu][index + 1], dtype=np.float64)
                     for mu in mode_labels
                 },
+                source_by_mode_label=source_right,
             )
 
             for mu in residual_mode_labels:
@@ -3030,16 +3037,35 @@ class Ver2TierBIntegrator:
             for mu in layout.mode_labels
         }
         for index, eta in enumerate(eta_arr):
-            sample = self._build_auxiliary_operator_sample(
+            background_state = self._live_backend_state_payload(
                 eta=float(eta),
-                photon_T_row=photon_t_arr[index],
-                photon_E_row=photon_e_arr[index],
+                gamma_t_probe=_resolved_gamma_t(
+                    visibility_source=self.visibility_source,
+                    eta=float(eta),
+                    direction=self._direction,
+                    config=self.config,
+                ),
+                visibility_amplitude=abs(float(np.asarray(photon_t_arr[index], dtype=np.float64)[0])),
+                polarization_source=(
+                    0.0
+                    if int(self.config.L_max) < 2
+                    else abs(
+                        float(
+                            np.asarray(photon_e_arr[index], dtype=np.float64)[
+                                _ell2_m0_slot_offset(int(self.config.L_max))
+                            ]
+                        )
+                    )
+                ),
                 reionization_amplitude=reionization_amplitude,
             )
-            source_template = np.asarray(sample.source_template, dtype=np.float64)
-            source_rows[index, :] = source_template[index_cache.src_by_mode_label[str(covered)]]
-            for mu, indices in index_cache.src_by_mode_label.items():
-                source_rows_by_mode_label[str(mu)][index, :] = source_template[indices]
+            reduced_source = self.backend.evaluate_reduced_source_blocks(background_state)
+            source_rows[index, :] = np.asarray(reduced_source[str(covered)], dtype=np.float64)
+            for mu in layout.mode_labels:
+                source_rows_by_mode_label[str(mu)][index, :] = np.asarray(
+                    reduced_source[str(mu)],
+                    dtype=np.float64,
+                )
         return (
             source_rows,
             source_rows_by_mode_label,

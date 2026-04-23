@@ -642,6 +642,13 @@ class FamilyBackend:
             "background_state_tag": background_state.get("state_tag", "background_state"),
             "contract_release_status": "backend-contract-complete",
             "operator_payload_status": "geometry_opacity_coupled_sparse_blocks",
+            "family_conditioned_kernel_status": "frozen_v5_family_conditioned",
+            "family_conditioned_kernel_law": build_layout_manifest(
+                layout,
+                self,
+                self.truncation,
+                background_state,
+            )["family_conditioned_kernel_law"],
             "analytic_normalization_status": template_card.analytic_normalization_status,
             "lookup_resolution_status": template_card.lookup_resolution_status,
             "reduced_local_evaluator_available": True,
@@ -679,12 +686,7 @@ class FamilyBackend:
                 self.truncation,
                 source_tables,
             ),
-            layout_metadata=build_layout_manifest(
-                layout,
-                self,
-                self.truncation,
-                background_state,
-            ),
+            layout_metadata=build_layout_manifest(layout, self, self.truncation, background_state),
             metadata=metadata,
         )
         if bool(background_state.get("include_geometry", False)):
@@ -755,6 +757,18 @@ class FamilyBackend:
             baryon_by_mode_label=baryon_by_mode_label,
             source_by_mode_label=source_by_mode_label,
         )
+
+    def evaluate_reduced_source_blocks(
+        self,
+        background_state: Mapping[str, object],
+    ) -> dict[str, np.ndarray]:
+        from bass.hierarchy.ver3_layout_protocol import (
+            build_hierarchy_layout,
+            evaluate_reduced_source_blocks,
+        )
+
+        layout = build_hierarchy_layout(self, self.truncation)
+        return evaluate_reduced_source_blocks(layout, background_state, self)
 
     def seed_factory(self, seed_request: SeedRequest) -> SeedPack:
         template_card = self.template_card()

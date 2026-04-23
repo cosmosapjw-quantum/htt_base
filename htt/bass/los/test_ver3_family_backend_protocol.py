@@ -135,6 +135,9 @@ def test_operator_factory_maps_named_family_to_expected_kernel() -> None:
     assert ops.layout_metadata["branch"] == "orthogonal"
     assert ops.metadata["reduced_local_evaluator_available"] is True
     assert ops.metadata["reduced_harmonic_evaluator_available"] is True
+    assert ops.metadata["family_conditioned_kernel_status"] == "frozen_v5_family_conditioned"
+    assert ops.layout_metadata["family_conditioned_kernel_status"] == "frozen_v5_family_conditioned"
+    assert ops.metadata["family_conditioned_kernel_law"] == "ix_compact_wigner_frozen_v5"
 
 
 def test_operator_factory_can_return_geometry_ops_with_mode_ops() -> None:
@@ -337,6 +340,38 @@ def test_backend_reduced_harmonic_rhs_matches_layout_evaluator() -> None:
     for sector_direct, sector_backend in zip(reduced_direct, reduced_backend, strict=True):
         for mu in layout.mode_labels:
             np.testing.assert_allclose(sector_backend[str(mu)], sector_direct[str(mu)])
+
+
+def test_family_conditioned_kernel_law_varies_with_family_branch() -> None:
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    backend_open = build_backend(get_family_spec("VI_h", h=-0.25), truncation=truncation)
+    backend_deep = build_backend(get_family_spec("VI_h", h=-2.0), truncation=truncation)
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {"Gamma_T": 2.5},
+        "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
+        "source_tables": {
+            "visibility_amplitude": 1.0,
+            "polarization_source": 0.3,
+            "reionization_amplitude": 0.2,
+        },
+    }
+    ops_open = backend_open.operator_factory(bg)
+    ops_deep = backend_deep.operator_factory(bg)
+    assert ops_open.metadata["family_conditioned_kernel_law"] == "vih_class_b_bridge_frozen_v5"
+    assert ops_deep.metadata["family_conditioned_kernel_law"] == "vih_class_b_bridge_frozen_v5"
+    assert not np.allclose(
+        np.asarray(ops_open.mass_matrix.diagonal(), dtype=np.float64),
+        np.asarray(ops_deep.mass_matrix.diagonal(), dtype=np.float64),
+    )
+    assert not np.allclose(
+        np.asarray(ops_open.A_mix.toarray(), dtype=np.float64),
+        np.asarray(ops_deep.A_mix.toarray(), dtype=np.float64),
+    )
+    assert not np.allclose(
+        np.asarray(list(backend_open.evaluate_reduced_source_blocks(bg).values()), dtype=np.float64),
+        np.asarray(list(backend_deep.evaluate_reduced_source_blocks(bg).values()), dtype=np.float64),
+    )
 
 
 def test_family_backend_gate_bundle_carries_v5_verification_authority() -> None:

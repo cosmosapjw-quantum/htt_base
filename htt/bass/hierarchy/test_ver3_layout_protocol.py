@@ -12,6 +12,7 @@ from bass.hierarchy import (
     assemble_explicit_block,
     evaluate_reduced_harmonic_rhs,
     evaluate_reduced_local_rhs,
+    evaluate_reduced_source_blocks,
     assemble_implicit_block,
     assemble_mass_matrix,
     assemble_source_vector,
@@ -315,16 +316,19 @@ def test_reduced_harmonic_rhs_can_reconstruct_source_local_block_from_source_tab
         truncation,
         bg["source_tables"],
     )
-    explicit_source_by_mode_label = {
-        str(mu): np.array(
+    explicit_source_by_mode_label = evaluate_reduced_source_blocks(layout, bg, backend)
+    for mu in layout.mode_labels:
+        indices = np.array(
             [
-                source_template[flatten(layout, str(mu), "src", None, None, local_dof)]
+                flatten(layout, str(mu), "src", None, None, local_dof)
                 for local_dof in range(layout.sector_local_dofs["src"])
             ],
-            dtype=np.float64,
+            dtype=np.int64,
         )
-        for mu in layout.mode_labels
-    }
+        np.testing.assert_allclose(
+            explicit_source_by_mode_label[str(mu)],
+            np.asarray(source_template[indices], dtype=np.float64),
+        )
     explicit = evaluate_reduced_harmonic_rhs(
         layout,
         bg,
@@ -349,6 +353,56 @@ def test_reduced_harmonic_rhs_can_reconstruct_source_local_block_from_source_tab
     for sector_explicit, sector_fallback in zip(explicit, fallback, strict=True):
         for mu in layout.mode_labels:
             np.testing.assert_allclose(sector_explicit[str(mu)], sector_fallback[str(mu)])
+
+
+def test_family_conditioned_reduced_harmonic_rhs_varies_with_frozen_vih_bridge() -> None:
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    backend_open = build_backend(get_family_spec("VI_h", h=-0.25), truncation=truncation)
+    backend_deep = build_backend(get_family_spec("VI_h", h=-2.0), truncation=truncation)
+    layout = build_hierarchy_layout(backend_open, truncation)
+    width = (layout.ell_max + 1) ** 2
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {"Gamma_T": 2.5},
+        "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
+        "source_tables": {
+            "visibility_amplitude": 1.25,
+            "polarization_source": 0.4,
+            "reionization_amplitude": 0.2,
+        },
+    }
+    photon_t_by_mode_label = {mu: np.linspace(0.1, 0.9, width, dtype=np.float64) for mu in layout.mode_labels}
+    photon_e_by_mode_label = {mu: np.linspace(0.6, -0.2, width, dtype=np.float64) for mu in layout.mode_labels}
+    photon_b_by_mode_label = {mu: np.linspace(-0.4, 0.4, width, dtype=np.float64) for mu in layout.mode_labels}
+    neutrino_by_mode_label = {mu: np.linspace(0.15, 0.75, width, dtype=np.float64) for mu in layout.mode_labels}
+    baryon_by_mode_label = {
+        mu: np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float64)
+        for mu in layout.mode_labels
+    }
+    open_rhs = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend_open,
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+    )
+    deep_rhs = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend_deep,
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+    )
+    diff = np.linalg.norm(
+        np.asarray(open_rhs[0]["m+2"], dtype=np.float64) - np.asarray(deep_rhs[0]["m+2"], dtype=np.float64)
+    )
+    assert diff > 0.0
 
 
 def test_mode_label_weights_resolve_standard_m_signatures() -> None:

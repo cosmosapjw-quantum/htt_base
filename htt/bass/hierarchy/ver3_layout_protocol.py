@@ -17,6 +17,7 @@ __all__ = [
     "build_layout_manifest",
     "flatten",
     "unflatten",
+    "evaluate_reduced_source_blocks",
     "evaluate_reduced_harmonic_rhs",
     "evaluate_reduced_local_rhs",
     "assemble_free_streaming_block",
@@ -87,14 +88,185 @@ def _operator_scales(
     twist_scale = branch_scale * twist / (1.0 + twist + h_abs)
     polarization_scale = 1.0 + 0.35 * twist_scale
     source_scale = 1.0 + 0.25 * min(float(np.linalg.norm(ricci_pstf) + np.linalg.norm(shear)), 2.0)
+    family_law = _family_conditioned_kernel_law(bg, backend)
     return {
         "branch_scale": branch_scale,
-        "geom_scale": branch_scale * geom_scale,
-        "mix_scale": mix_scale,
-        "twist_scale": twist_scale,
-        "polarization_scale": polarization_scale,
-        "source_scale": source_scale,
+        "geom_scale": branch_scale * geom_scale * float(family_law["transport_scale"]),
+        "mix_scale": mix_scale * float(family_law["mix_scale"]),
+        "twist_scale": twist_scale * float(family_law["twist_mix_scale"]),
+        "polarization_scale": polarization_scale * float(family_law["polarization_scale"]),
+        "source_scale": source_scale * float(family_law["source_scale"]),
+        "mass_scale": float(family_law["mass_scale"]),
+        "local_drag_scale": float(family_law["local_drag_scale"]),
+        "cross_mode_scale": float(family_law["cross_mode_scale"]),
+        "collision_scale": float(family_law["collision_scale"]),
+        "family_conditioned_kernel_status": str(family_law["status"]),
+        "family_conditioned_kernel_law": str(family_law["law_name"]),
     }
+
+
+def _family_conditioned_kernel_law(
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+) -> dict[str, float | str]:
+    family = backend.family_spec.family
+    h_parameter = float(backend.family_spec.algebra.h_parameter or 0.0)
+    abs_h = abs(h_parameter)
+    twist = abs(float(np.asarray(backend.family_spec.algebra.a, dtype=np.float64)[0]))
+    law: dict[str, float | str] = {
+        "status": "frozen_v5_family_conditioned",
+        "law_name": "anchor_family_default",
+        "mass_scale": 1.0,
+        "transport_scale": 1.0,
+        "mix_scale": 1.0,
+        "twist_mix_scale": 1.0,
+        "polarization_scale": 1.0,
+        "source_scale": 1.0,
+        "local_drag_scale": 1.0,
+        "cross_mode_scale": 1.0,
+        "collision_scale": 1.0,
+    }
+    if family == "II":
+        law.update(
+            law_name="ii_nil_frozen_v5",
+            mass_scale=1.04,
+            transport_scale=1.10,
+            mix_scale=0.92,
+            twist_mix_scale=0.98,
+            polarization_scale=1.02,
+            source_scale=0.94,
+            local_drag_scale=0.96,
+            cross_mode_scale=0.90,
+            collision_scale=1.03,
+        )
+    elif family == "III":
+        law.update(
+            law_name="iii_hyperbolic_branch_frozen_v5",
+            mass_scale=1.06,
+            transport_scale=1.16,
+            mix_scale=1.05,
+            twist_mix_scale=1.00,
+            polarization_scale=1.04,
+            source_scale=1.08,
+            local_drag_scale=0.94,
+            cross_mode_scale=1.02,
+            collision_scale=1.05,
+        )
+    elif family == "IV":
+        law.update(
+            law_name="iv_solvable_chart_frozen_v5",
+            mass_scale=1.08,
+            transport_scale=1.22,
+            mix_scale=1.15,
+            twist_mix_scale=1.08,
+            polarization_scale=1.07,
+            source_scale=1.10,
+            local_drag_scale=0.92,
+            cross_mode_scale=1.06,
+            collision_scale=1.04,
+        )
+    elif family == "V":
+        law.update(
+            law_name="v_open_chart_frozen_v5",
+            mass_scale=1.03,
+            transport_scale=1.12,
+            mix_scale=1.03,
+            twist_mix_scale=1.00,
+            polarization_scale=1.03,
+            source_scale=1.06,
+            local_drag_scale=0.98,
+            cross_mode_scale=1.01,
+            collision_scale=1.02,
+        )
+    elif family == "VI_0":
+        law.update(
+            law_name="vi0_directional_limit_frozen_v5",
+            mass_scale=1.07,
+            transport_scale=1.18,
+            mix_scale=1.12,
+            twist_mix_scale=1.10,
+            polarization_scale=1.06,
+            source_scale=1.08,
+            local_drag_scale=0.95,
+            cross_mode_scale=1.08,
+            collision_scale=1.04,
+        )
+    elif family == "VI_h":
+        root = np.sqrt(max(-h_parameter, 0.0))
+        q = (1.0 - root) / max(1.0 + root, 1.0e-30)
+        q_mag = abs(float(q))
+        law.update(
+            law_name="vih_class_b_bridge_frozen_v5",
+            mass_scale=1.05 + 0.03 * q_mag,
+            transport_scale=1.14 + 0.08 * q_mag,
+            mix_scale=1.08 + 0.10 * q_mag,
+            twist_mix_scale=1.04 + 0.12 * q_mag,
+            polarization_scale=1.03 + 0.05 * q_mag,
+            source_scale=1.04 + 0.06 * q_mag,
+            local_drag_scale=0.94 + 0.04 * q_mag,
+            cross_mode_scale=1.04 + 0.08 * q_mag,
+            collision_scale=1.02 + 0.04 * q_mag,
+        )
+    elif family == "VII_0":
+        law.update(
+            law_name="vii0_helical_anchor_frozen_v5",
+            mass_scale=1.02,
+            transport_scale=1.08,
+            mix_scale=1.16,
+            twist_mix_scale=1.12,
+            polarization_scale=1.05,
+            source_scale=1.04,
+            local_drag_scale=1.00,
+            cross_mode_scale=1.05,
+            collision_scale=1.03,
+        )
+    elif family == "VII_h":
+        p = np.sqrt(max(h_parameter, 0.0))
+        p_eff = min(float(p), 2.0)
+        law.update(
+            law_name="viih_positive_h_bridge_frozen_v5",
+            mass_scale=1.03 + 0.02 * p_eff,
+            transport_scale=1.10 + 0.07 * p_eff,
+            mix_scale=1.12 + 0.08 * p_eff,
+            twist_mix_scale=1.08 + 0.10 * p_eff,
+            polarization_scale=1.04 + 0.04 * p_eff,
+            source_scale=1.04 + 0.05 * p_eff,
+            local_drag_scale=0.99 + 0.02 * p_eff,
+            cross_mode_scale=1.03 + 0.04 * p_eff,
+            collision_scale=1.02 + 0.03 * p_eff,
+        )
+    elif family == "VIII":
+        s_ref = 0.5
+        measure_mu0 = s_ref * np.tanh(np.pi * s_ref)
+        measure_mu_half = s_ref / max(np.tanh(np.pi * s_ref), 1.0e-30)
+        measure_ratio = measure_mu_half / max(measure_mu0, 1.0e-30)
+        law.update(
+            law_name="viii_noncompact_measure_frozen_v5",
+            mass_scale=1.04 + 0.01 * measure_ratio,
+            transport_scale=1.15 + 0.03 * measure_ratio,
+            mix_scale=1.10 + 0.04 * measure_ratio,
+            twist_mix_scale=1.02 + 0.02 * measure_ratio,
+            polarization_scale=1.05 + 0.02 * measure_ratio,
+            source_scale=1.03 + 0.02 * measure_ratio,
+            local_drag_scale=0.98 + 0.01 * measure_ratio,
+            cross_mode_scale=1.04 + 0.02 * measure_ratio,
+            collision_scale=1.03 + 0.01 * measure_ratio,
+        )
+    elif family == "IX":
+        compact_boost = 1.0 + 0.1 * min(twist, 1.0)
+        law.update(
+            law_name="ix_compact_wigner_frozen_v5",
+            mass_scale=0.98,
+            transport_scale=0.96,
+            mix_scale=1.18 * compact_boost,
+            twist_mix_scale=1.10 * compact_boost,
+            polarization_scale=1.08,
+            source_scale=0.98,
+            local_drag_scale=1.00,
+            cross_mode_scale=1.06,
+            collision_scale=1.05,
+        )
+    return law
 
 
 def _mode_labels_from_backend(
@@ -208,6 +380,8 @@ def build_layout_manifest(
         "approximate_family_operator_available": not exact_operator,
         "reduced_local_evaluator_available": True,
         "reduced_harmonic_evaluator_available": True,
+        "family_conditioned_kernel_status": "frozen_v5_family_conditioned",
+        "family_conditioned_kernel_law": _family_conditioned_kernel_law((bg or {}), backend)["law_name"],
         "truncation_metadata": dict(truncation),
     }
 
@@ -298,6 +472,7 @@ def assemble_mass_matrix(
     polarization_scale = float(scales["polarization_scale"])
     twist_scale = float(scales["twist_scale"])
     source_scale = float(scales["source_scale"])
+    mass_scale = float(scales["mass_scale"])
     diag = np.ones(layout.size, dtype=np.float64)
     mu_count = max(len(layout.mode_labels), 1)
     for mu_index, mu in enumerate(layout.mode_labels):
@@ -322,7 +497,7 @@ def assemble_mass_matrix(
                         sector_weight = 1.0 + 0.1 * branch_scale + 0.02 * geom_scale
                     block_weight = mu_weight * sector_weight * ell_weight
                     for m in range(-ell, ell + 1):
-                        diag[flatten(layout, mu, sector, ell, m)] = block_weight
+                        diag[flatten(layout, mu, sector, ell, m)] = mass_scale * block_weight
                 continue
             width = int(layout.sector_local_dofs[sector])
             for local_dof in range(width):
@@ -333,7 +508,7 @@ def assemble_mass_matrix(
                     value = mu_weight * (1.0 + 0.05 * geom_scale + 0.02 * local_dof)
                 else:
                     value = mu_weight * (1.0 + 0.06 * source_scale + 0.04 * local_dof)
-                diag[idx] = value
+                diag[idx] = mass_scale * value
     return diags(diag, offsets=0, format="csr", dtype=np.float64)
 
 
@@ -347,6 +522,7 @@ def assemble_free_streaming_block(
     geom_scale = float(scales["geom_scale"])
     branch_scale = float(scales["branch_scale"])
     polarization_scale = float(scales["polarization_scale"])
+    cross_mode_scale = float(scales["cross_mode_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
@@ -406,6 +582,7 @@ def assemble_mixing_block(
     branch_scale = float(scales["branch_scale"])
     mix_scale = float(scales["mix_scale"])
     twist_scale = float(scales["twist_scale"])
+    cross_mode_scale = float(scales["cross_mode_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
@@ -443,7 +620,7 @@ def assemble_mixing_block(
                 dst_idx = flatten(layout, next_mu, sector, 0, 0)
                 rows.append(src_idx)
                 cols.append(dst_idx)
-                data.append(mu_weight * 0.5 * mix_scale / len(layout.mode_labels))
+                data.append(mu_weight * 0.5 * mix_scale * cross_mode_scale / len(layout.mode_labels))
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -469,6 +646,9 @@ def assemble_implicit_block(
     gamma_t = float(opacity_data.get("Gamma_T", 0.0))
     scales = _operator_scales(bg, backend)
     branch_scale = float(scales["branch_scale"])
+    local_drag_scale = float(scales["local_drag_scale"])
+    collision_scale = float(scales["collision_scale"])
+    twist_scale = float(scales["twist_scale"])
     rows: list[int] = []
     cols: list[int] = []
     data: list[float] = []
@@ -484,7 +664,7 @@ def assemble_implicit_block(
             for ell in range(layout.ell_max + 1):
                 for m in range(-ell, ell + 1):
                     idx = flatten(layout, mu, sector, ell, m)
-                    photon_weight = mu_weight * branch_scale * gamma_t * (
+                    photon_weight = mu_weight * branch_scale * collision_scale * gamma_t * (
                         1.0 if ell <= 1 else 1.0 / (ell + 0.5)
                     )
                     rows.append(idx)
@@ -493,7 +673,7 @@ def assemble_implicit_block(
         for sector in ("baryon", "src"):
             for local_dof in range(layout.sector_local_dofs[sector]):
                 idx = flatten(layout, mu, sector, None, None, local_dof)
-                local_weight = mu_weight * (gamma_t if sector == "baryon" else 0.35 * gamma_t)
+                local_weight = mu_weight * local_drag_scale * (gamma_t if sector == "baryon" else 0.35 * gamma_t)
                 rows.append(idx)
                 cols.append(idx)
                 data.append(local_weight)
@@ -501,13 +681,46 @@ def assemble_implicit_block(
         baryon_v_idx = flatten(layout, mu, "baryon", None, None, 1)
         rows.extend((dipole_idx, baryon_v_idx))
         cols.extend((baryon_v_idx, dipole_idx))
-        data.extend((-0.25 * mu_weight * gamma_t, 0.25 * mu_weight * gamma_t))
+        data.extend(
+            (
+                -0.25 * mu_weight * local_drag_scale * gamma_t,
+                0.25 * mu_weight * local_drag_scale * gamma_t,
+            )
+        )
+        if layout.sector_local_dofs["src"] > 1:
+            src_dipole_idx = flatten(layout, mu, "src", None, None, 1)
+            rows.extend((dipole_idx, src_dipole_idx))
+            cols.extend((src_dipole_idx, dipole_idx))
+            data.extend(
+                (
+                    0.10 * mu_weight * local_drag_scale * gamma_t,
+                    -0.08 * mu_weight * local_drag_scale * gamma_t,
+                )
+            )
         if layout.ell_max >= 2:
             quad_idx = flatten(layout, mu, "ph_E", 2, 0)
             src_idx = flatten(layout, mu, "src", None, None, 0)
             rows.extend((quad_idx, src_idx))
             cols.extend((src_idx, quad_idx))
-            data.extend((0.15 * mu_weight * gamma_t, -0.10 * mu_weight * gamma_t))
+            data.extend(
+                (
+                    0.15 * mu_weight * local_drag_scale * gamma_t,
+                    -0.10 * mu_weight * local_drag_scale * gamma_t,
+                )
+            )
+            if layout.sector_local_dofs["src"] > 2:
+                src_pol_idx = flatten(layout, mu, "src", None, None, 2)
+                b_quad_idx = flatten(layout, mu, "ph_B", 2, 0)
+                rows.extend((quad_idx, src_pol_idx, b_quad_idx, src_pol_idx))
+                cols.extend((src_pol_idx, quad_idx, src_pol_idx, b_quad_idx))
+                data.extend(
+                    (
+                        0.08 * mu_weight * local_drag_scale * gamma_t,
+                        -0.06 * mu_weight * local_drag_scale * gamma_t,
+                        0.06 * mu_weight * twist_scale * local_drag_scale * gamma_t,
+                        -0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t,
+                    )
+                )
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -522,10 +735,15 @@ def assemble_source_vector(
     scales = _operator_scales(bg, backend)
     twist_scale = float(scales["twist_scale"])
     source_scale = float(scales["source_scale"])
+    cross_mode_scale = float(scales["cross_mode_scale"])
     visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
     polarization_amp = float(source_tables.get("polarization_source", 0.0))
     doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
-    reion_amp = float(source_tables.get("reionization_amplitude", 0.0))
+    reduced_source_blocks = evaluate_reduced_source_blocks(
+        layout,
+        {**dict(bg), "source_tables": dict(source_tables)},
+        backend,
+    )
     mu_count = max(len(layout.mode_labels), 1)
     for mu_index, mu in enumerate(layout.mode_labels):
         mu_weight = _mode_label_weight(
@@ -539,9 +757,47 @@ def assemble_source_vector(
             out[flatten(layout, mu, "ph_I", 1, 0)] = mu_weight * 0.5 * source_scale * doppler_amp
         if layout.ell_max >= 2:
             out[flatten(layout, mu, "ph_E", 2, 0)] = mu_weight * source_scale * polarization_amp
-            out[flatten(layout, mu, "ph_B", 2, 0)] = mu_weight * twist_scale * polarization_amp
-        out[flatten(layout, mu, "src", None, None, 0)] = mu_weight * reion_amp
+            out[flatten(layout, mu, "ph_B", 2, 0)] = mu_weight * twist_scale * cross_mode_scale * polarization_amp
+        for local_dof, value in enumerate(np.asarray(reduced_source_blocks[str(mu)], dtype=np.float64)):
+            out[flatten(layout, mu, "src", None, None, local_dof)] = float(value)
     return out
+
+
+def evaluate_reduced_source_blocks(
+    layout: HierarchyLayout,
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+) -> dict[str, np.ndarray]:
+    """Evaluate per-mode-label source local blocks without assembling full operators."""
+
+    source_tables = bg.get("source_tables", {})
+    if not isinstance(source_tables, Mapping):
+        raise ValueError("bg.source_tables must be a mapping when provided")
+    scales = _operator_scales(bg, backend)
+    branch_scale = float(scales["branch_scale"])
+    visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
+    polarization_amp = float(source_tables.get("polarization_source", 0.0))
+    doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
+    reion_amp = float(source_tables.get("reionization_amplitude", 0.0))
+    source_width = int(layout.sector_local_dofs["src"])
+    mu_count = max(len(layout.mode_labels), 1)
+    source_blocks: dict[str, np.ndarray] = {}
+    for mu_index, mu in enumerate(layout.mode_labels):
+        mu_weight = _mode_label_weight(
+            mu,
+            mu_index=mu_index,
+            mu_count=mu_count,
+            branch_scale=branch_scale,
+        )
+        src = np.zeros(source_width, dtype=np.float64)
+        if source_width > 0:
+            src[0] = mu_weight * reion_amp
+        if source_width > 1:
+            src[1] = mu_weight * 0.5 * float(scales["source_scale"]) * doppler_amp
+        if source_width > 2:
+            src[2] = mu_weight * float(scales["source_scale"]) * polarization_amp
+        source_blocks[str(mu)] = src
+    return source_blocks
 
 
 def evaluate_reduced_harmonic_rhs(
@@ -578,6 +834,9 @@ def evaluate_reduced_harmonic_rhs(
     twist_scale = float(scales["twist_scale"])
     polarization_scale = float(scales["polarization_scale"])
     source_scale = float(scales["source_scale"])
+    cross_mode_scale = float(scales["cross_mode_scale"])
+    collision_scale = float(scales["collision_scale"])
+    local_drag_scale = float(scales["local_drag_scale"])
     width = (int(layout.ell_max) + 1) ** 2
     baryon_width = int(layout.sector_local_dofs["baryon"])
     src_width = int(layout.sector_local_dofs["src"])
@@ -586,6 +845,7 @@ def evaluate_reduced_harmonic_rhs(
     zeros_h = np.zeros(width, dtype=np.float64)
     zeros_b = np.zeros(baryon_width, dtype=np.float64)
     zeros_s = np.zeros(src_width, dtype=np.float64)
+    default_source_blocks = evaluate_reduced_source_blocks(layout, bg, backend)
     photon_t_rhs: dict[str, np.ndarray] = {}
     photon_e_rhs: dict[str, np.ndarray] = {}
     photon_b_rhs: dict[str, np.ndarray] = {}
@@ -624,9 +884,7 @@ def evaluate_reduced_harmonic_rhs(
         nu_state = np.asarray(neutrino_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
         baryon_state = np.asarray(baryon_by_mode_label.get(mu_key, zeros_b), dtype=np.float64)
         if source_by_mode_label is None:
-            src_state = np.zeros(src_width, dtype=np.float64)
-            if src_width > 0:
-                src_state[0] = mu_weight * reion_amp
+            src_state = np.asarray(default_source_blocks[mu_key], dtype=np.float64)
         else:
             src_state = np.asarray(source_by_mode_label.get(mu_key, zeros_s), dtype=np.float64)
         next_t = np.asarray(photon_T_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
@@ -654,7 +912,11 @@ def evaluate_reduced_harmonic_rhs(
         e_rhs = np.zeros(width, dtype=np.float64)
         b_rhs = np.zeros(width, dtype=np.float64)
         nu_rhs = np.zeros(width, dtype=np.float64)
-        cross_coeff = mu_weight * 0.5 * mix_scale / len(layout.mode_labels) if len(layout.mode_labels) > 1 else 0.0
+        cross_coeff = (
+            mu_weight * 0.5 * mix_scale * cross_mode_scale / len(layout.mode_labels)
+            if len(layout.mode_labels) > 1
+            else 0.0
+        )
 
         offset = 0
         for ell in range(layout.ell_max + 1):
@@ -699,9 +961,9 @@ def evaluate_reduced_harmonic_rhs(
                     nu_drive += cross_coeff * next_nu[slot]
 
                 if ell <= 1:
-                    photon_coll = mu_weight * branch_scale * gamma_t
+                    photon_coll = mu_weight * branch_scale * collision_scale * gamma_t
                 else:
-                    photon_coll = mu_weight * branch_scale * gamma_t / (ell + 0.5)
+                    photon_coll = mu_weight * branch_scale * collision_scale * gamma_t / (ell + 0.5)
                 t_drive += photon_coll * t_state[slot]
                 e_drive += photon_coll * e_state[slot]
                 b_drive += photon_coll * b_state[slot]
@@ -711,12 +973,24 @@ def evaluate_reduced_harmonic_rhs(
                 if ell == 1 and m == 0:
                     t_drive += mu_weight * 0.5 * source_scale * doppler_amp
                     if baryon_width > 1:
-                        t_drive += -0.25 * mu_weight * gamma_t * float(baryon_state[1])
+                        t_drive += -0.25 * mu_weight * local_drag_scale * gamma_t * float(baryon_state[1])
+                    if src_width > 1:
+                        t_drive += 0.10 * mu_weight * local_drag_scale * gamma_t * float(src_state[1])
                 if ell == 2 and m == 0:
                     e_drive += mu_weight * source_scale * polarization_amp
-                    b_drive += mu_weight * twist_scale * polarization_amp
+                    b_drive += mu_weight * twist_scale * cross_mode_scale * polarization_amp
                     if src_width > 0:
-                        e_drive += 0.15 * mu_weight * gamma_t * float(src_state[0])
+                        e_drive += 0.15 * mu_weight * local_drag_scale * gamma_t * float(src_state[0])
+                    if src_width > 2:
+                        e_drive += 0.08 * mu_weight * local_drag_scale * gamma_t * float(src_state[2])
+                        b_drive += (
+                            0.06
+                            * mu_weight
+                            * twist_scale
+                            * local_drag_scale
+                            * gamma_t
+                            * float(src_state[2])
+                        )
 
                 t_rhs[slot] = t_drive / _mass_weight(mu_weight=mu_weight, sector="ph_I", ell=ell)
                 e_rhs[slot] = e_drive / _mass_weight(mu_weight=mu_weight, sector="ph_E", ell=ell)
@@ -750,6 +1024,7 @@ def evaluate_reduced_local_rhs(
     scales = _operator_scales(bg, backend)
     geom_scale = float(scales["geom_scale"])
     branch_scale = float(scales["branch_scale"])
+    local_drag_scale = float(scales["local_drag_scale"])
     baryon_width = int(layout.sector_local_dofs["baryon"])
     cdm_width = int(layout.sector_local_dofs["cdm"])
     baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(baryon_width, dtype=np.float64)
@@ -776,9 +1051,11 @@ def evaluate_reduced_local_rhs(
         )
         if cdm_state.shape != (cdm_width,):
             raise ValueError(f"cdm state for {mu_key!r} must have shape ({cdm_width},)")
-        baryon_drive = mu_weight * gamma_t * baryon_state
+        baryon_drive = mu_weight * local_drag_scale * gamma_t * baryon_state
         if baryon_width > 1:
-            baryon_drive[1] += 0.25 * mu_weight * gamma_t * float(theta_1_by_mode_label.get(mu_key, 0.0))
+            baryon_drive[1] += (
+                0.25 * mu_weight * local_drag_scale * gamma_t * float(theta_1_by_mode_label.get(mu_key, 0.0))
+            )
         baryon_diag = mu_weight * baryon_base_diag
         baryon_rhs[mu_key] = baryon_drive / np.maximum(np.abs(baryon_diag), 1.0e-30)
         cdm_rhs[mu_key] = np.zeros_like(cdm_state)
