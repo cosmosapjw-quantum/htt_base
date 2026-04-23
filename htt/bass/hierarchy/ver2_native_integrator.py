@@ -2993,13 +2993,18 @@ class Ver2TierBIntegrator:
         *,
         reionization_amplitude: float,
     ) -> _RuntimeExecutionTraceBundle:
+        cached_trace = getattr(result, "runtime_execution_trace", None)
+        if isinstance(cached_trace, _RuntimeExecutionTraceBundle):
+            cached_amp = float(cached_trace.metadata.get("reionization_amplitude", reionization_amplitude))
+            if np.isclose(cached_amp, float(reionization_amplitude), atol=0.0, rtol=0.0):
+                return cached_trace
         if self.startup_gate is None or self.seed_projection is None or self.seed_pack is None:
             raise ValueError("runtime execution trace requires initialized startup and seed provenance")
         runtime_trace_products = self.build_runtime_trace_products(
             result,
             reionization_amplitude=float(reionization_amplitude),
         )
-        return _RuntimeExecutionTraceBundle(
+        trace = _RuntimeExecutionTraceBundle(
             background_monitor=self.background_monitor,
             startup_gate=self.startup_gate,
             startup_state=self.startup_state,
@@ -3010,8 +3015,11 @@ class Ver2TierBIntegrator:
             metadata={
                 "owner": "ver2_native_integrator.build_runtime_execution_trace",
                 "runtime_trace_products_owner": str(runtime_trace_products.metadata.get("owner", "")),
+                "reionization_amplitude": float(reionization_amplitude),
             },
         )
+        result.runtime_execution_trace = trace
+        return trace
 
     def _compute_tca_mask(self, etas: np.ndarray) -> np.ndarray:
         mask = np.zeros(len(etas), dtype=bool)
@@ -3540,4 +3548,14 @@ class Ver2TierBIntegrator:
         )
         result.layout_auxiliary_bundle = self.build_layout_auxiliary_history_bundle(result)
         result.solver_info["layout_auxiliary_bundle_cached"] = True
+        reionization_amplitude = (
+            0.0
+            if self.visibility_source.contract.events is None
+            else float(self.visibility_source.contract.events.tau_reion)
+        )
+        result.runtime_execution_trace = self.build_runtime_execution_trace(
+            result,
+            reionization_amplitude=reionization_amplitude,
+        )
+        result.solver_info["runtime_execution_trace_cached"] = True
         return result

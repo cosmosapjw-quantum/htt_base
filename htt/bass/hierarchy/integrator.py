@@ -220,6 +220,7 @@ class IntegrationResult:
     baryon_local_history: np.ndarray | None = field(default=None, repr=False)
     cdm_local_history: np.ndarray | None = field(default=None, repr=False)
     layout_auxiliary_bundle: object | None = field(default=None, repr=False)
+    runtime_execution_trace: object | None = field(default=None, repr=False)
 
     @property
     def L_max(self) -> int:
