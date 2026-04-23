@@ -17,6 +17,7 @@ __all__ = [
     "build_layout_manifest",
     "flatten",
     "unflatten",
+    "evaluate_reduced_harmonic_rhs",
     "evaluate_reduced_local_rhs",
     "assemble_free_streaming_block",
     "assemble_mixing_block",
@@ -539,6 +540,188 @@ def assemble_source_vector(
             out[flatten(layout, mu, "ph_B", 2, 0)] = mu_weight * twist_scale * polarization_amp
         out[flatten(layout, mu, "src", None, None, 0)] = mu_weight * reion_amp
     return out
+
+
+def evaluate_reduced_harmonic_rhs(
+    layout: HierarchyLayout,
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    *,
+    photon_T_by_mode_label: Mapping[str, np.ndarray],
+    photon_E_by_mode_label: Mapping[str, np.ndarray],
+    photon_B_by_mode_label: Mapping[str, np.ndarray],
+    neutrino_by_mode_label: Mapping[str, np.ndarray],
+    baryon_by_mode_label: Mapping[str, np.ndarray],
+    source_by_mode_label: Mapping[str, np.ndarray],
+) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray]]:
+    """Evaluate harmonic-sector rows without assembling full sparse operators."""
+
+    opacity_data = bg.get("opacity_data", {})
+    if not isinstance(opacity_data, Mapping):
+        raise ValueError("bg.opacity_data must be a mapping when provided")
+    source_tables = bg.get("source_tables", {})
+    if not isinstance(source_tables, Mapping):
+        raise ValueError("bg.source_tables must be a mapping when provided")
+
+    gamma_t = float(opacity_data.get("Gamma_T", 0.0))
+    visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
+    polarization_amp = float(source_tables.get("polarization_source", 0.0))
+    doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
+
+    scales = _operator_scales(bg, backend)
+    geom_scale = float(scales["geom_scale"])
+    branch_scale = float(scales["branch_scale"])
+    mix_scale = float(scales["mix_scale"])
+    twist_scale = float(scales["twist_scale"])
+    polarization_scale = float(scales["polarization_scale"])
+    source_scale = float(scales["source_scale"])
+    width = (int(layout.ell_max) + 1) ** 2
+    baryon_width = int(layout.sector_local_dofs["baryon"])
+    src_width = int(layout.sector_local_dofs["src"])
+    mu_count = max(len(layout.mode_labels), 1)
+
+    zeros_h = np.zeros(width, dtype=np.float64)
+    zeros_b = np.zeros(baryon_width, dtype=np.float64)
+    zeros_s = np.zeros(src_width, dtype=np.float64)
+    photon_t_rhs: dict[str, np.ndarray] = {}
+    photon_e_rhs: dict[str, np.ndarray] = {}
+    photon_b_rhs: dict[str, np.ndarray] = {}
+    neutrino_rhs: dict[str, np.ndarray] = {}
+
+    def _mass_weight(*, mu_weight: float, sector: str, ell: int) -> float:
+        ell_weight = 1.0 + 0.04 * ell + 0.015 * geom_scale
+        if sector == "ph_I":
+            sector_weight = branch_scale
+        elif sector == "ph_E":
+            sector_weight = branch_scale * (1.08 * polarization_scale)
+        elif sector == "ph_B":
+            sector_weight = branch_scale * (1.12 + 0.5 * twist_scale) * polarization_scale
+        elif sector == "nu_I":
+            sector_weight = 1.0 + 0.1 * branch_scale + 0.02 * geom_scale
+        else:
+            raise KeyError(f"unsupported harmonic sector {sector!r}")
+        return mu_weight * sector_weight * ell_weight
+
+    def _fs_diag(*, mu_weight: float, sector: str, ell: int, m: int) -> float:
+        spin_weight = polarization_scale if sector in {"ph_E", "ph_B"} else 1.0
+        return -geom_scale * mu_weight * spin_weight * (0.35 * (ell + 1) + 0.08 * abs(m))
+
+    for mu_index, mu in enumerate(layout.mode_labels):
+        mu_key = str(mu)
+        mu_weight = _mode_label_weight(
+            mu_key,
+            mu_index=mu_index,
+            mu_count=mu_count,
+            branch_scale=branch_scale,
+        )
+        next_mu = str(layout.mode_labels[(mu_index + 1) % len(layout.mode_labels)])
+        t_state = np.asarray(photon_T_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
+        e_state = np.asarray(photon_E_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
+        b_state = np.asarray(photon_B_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
+        nu_state = np.asarray(neutrino_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
+        baryon_state = np.asarray(baryon_by_mode_label.get(mu_key, zeros_b), dtype=np.float64)
+        src_state = np.asarray(source_by_mode_label.get(mu_key, zeros_s), dtype=np.float64)
+        next_t = np.asarray(photon_T_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
+        next_e = np.asarray(photon_E_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
+        next_b = np.asarray(photon_B_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
+        next_nu = np.asarray(neutrino_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
+        for name, arr in (
+            ("photon_T", t_state),
+            ("photon_E", e_state),
+            ("photon_B", b_state),
+            ("neutrino", nu_state),
+            ("next_photon_T", next_t),
+            ("next_photon_E", next_e),
+            ("next_photon_B", next_b),
+            ("next_neutrino", next_nu),
+        ):
+            if arr.shape != (width,):
+                raise ValueError(f"{name} state for {mu_key!r} must have shape ({width},)")
+        if baryon_state.shape != (baryon_width,):
+            raise ValueError(f"baryon state for {mu_key!r} must have shape ({baryon_width},)")
+        if src_state.shape != (src_width,):
+            raise ValueError(f"source state for {mu_key!r} must have shape ({src_width},)")
+
+        t_rhs = np.zeros(width, dtype=np.float64)
+        e_rhs = np.zeros(width, dtype=np.float64)
+        b_rhs = np.zeros(width, dtype=np.float64)
+        nu_rhs = np.zeros(width, dtype=np.float64)
+        cross_coeff = mu_weight * 0.5 * mix_scale / len(layout.mode_labels) if len(layout.mode_labels) > 1 else 0.0
+
+        offset = 0
+        for ell in range(layout.ell_max + 1):
+            pstf_weight = np.sqrt(max((ell + 2) * (ell - 1), 0.0)) / max(2 * ell + 1, 1) if ell >= 2 else 0.0
+            for m in range(-ell, ell + 1):
+                slot = offset + (m + ell)
+                t_drive = _fs_diag(mu_weight=mu_weight, sector="ph_I", ell=ell, m=m) * t_state[slot]
+                e_drive = _fs_diag(mu_weight=mu_weight, sector="ph_E", ell=ell, m=m) * e_state[slot]
+                b_drive = _fs_diag(mu_weight=mu_weight, sector="ph_B", ell=ell, m=m) * b_state[slot]
+                nu_drive = _fs_diag(mu_weight=mu_weight, sector="nu_I", ell=ell, m=m) * nu_state[slot]
+
+                if ell > 0:
+                    prev_m = m if abs(m) <= ell - 1 else 0
+                    prev_slot = sum(2 * l + 1 for l in range(ell - 1)) + (prev_m + (ell - 1))
+                    coeff_down = geom_scale * mu_weight * np.sqrt(max(ell * ell - m * m, 0.0)) / max(2 * ell + 1, 1)
+                    t_drive += coeff_down * t_state[prev_slot]
+                    e_drive += coeff_down * polarization_scale * e_state[prev_slot]
+                    b_drive += coeff_down * polarization_scale * b_state[prev_slot]
+                    nu_drive += coeff_down * nu_state[prev_slot]
+                if ell < layout.ell_max:
+                    next_m_same = m if abs(m) <= ell + 1 else 0
+                    next_slot_same = sum(2 * l + 1 for l in range(ell + 1)) + (next_m_same + (ell + 1))
+                    coeff_up = geom_scale * mu_weight * np.sqrt(max((ell + 1) * (ell + 1) - m * m, 0.0)) / max(2 * ell + 1, 1)
+                    t_drive += coeff_up * t_state[next_slot_same]
+                    e_drive += coeff_up * polarization_scale * e_state[next_slot_same]
+                    b_drive += coeff_up * polarization_scale * b_state[next_slot_same]
+                    nu_drive += coeff_up * nu_state[next_slot_same]
+
+                if ell >= 2:
+                    coeff_mix = mu_weight * mix_scale * pstf_weight
+                    t_drive += coeff_mix * e_state[slot]
+                    e_drive += 0.5 * coeff_mix * t_state[slot]
+                    if twist_scale > 0.0:
+                        eb = mu_weight * twist_scale * max(abs(m), 1) / (ell + 1)
+                        e_drive += 0.75 * eb * b_state[slot]
+                        b_drive += (-eb * e_state[slot]) + (0.25 * eb * t_state[slot])
+
+                if ell == 0 and cross_coeff != 0.0:
+                    t_drive += cross_coeff * next_t[slot]
+                    e_drive += cross_coeff * next_e[slot]
+                    b_drive += cross_coeff * next_b[slot]
+                    nu_drive += cross_coeff * next_nu[slot]
+
+                if ell <= 1:
+                    photon_coll = mu_weight * branch_scale * gamma_t
+                else:
+                    photon_coll = mu_weight * branch_scale * gamma_t / (ell + 0.5)
+                t_drive += photon_coll * t_state[slot]
+                e_drive += photon_coll * e_state[slot]
+                b_drive += photon_coll * b_state[slot]
+
+                if ell == 0 and m == 0:
+                    t_drive += mu_weight * source_scale * visibility_amp
+                if ell == 1 and m == 0:
+                    t_drive += mu_weight * 0.5 * source_scale * doppler_amp
+                    if baryon_width > 1:
+                        t_drive += -0.25 * mu_weight * gamma_t * float(baryon_state[1])
+                if ell == 2 and m == 0:
+                    e_drive += mu_weight * source_scale * polarization_amp
+                    b_drive += mu_weight * twist_scale * polarization_amp
+                    if src_width > 0:
+                        e_drive += 0.15 * mu_weight * gamma_t * float(src_state[0])
+
+                t_rhs[slot] = t_drive / _mass_weight(mu_weight=mu_weight, sector="ph_I", ell=ell)
+                e_rhs[slot] = e_drive / _mass_weight(mu_weight=mu_weight, sector="ph_E", ell=ell)
+                b_rhs[slot] = b_drive / _mass_weight(mu_weight=mu_weight, sector="ph_B", ell=ell)
+                nu_rhs[slot] = nu_drive / _mass_weight(mu_weight=mu_weight, sector="nu_I", ell=ell)
+            offset += 2 * ell + 1
+
+        photon_t_rhs[mu_key] = t_rhs
+        photon_e_rhs[mu_key] = e_rhs
+        photon_b_rhs[mu_key] = b_rhs
+        neutrino_rhs[mu_key] = nu_rhs
+
+    return photon_t_rhs, photon_e_rhs, photon_b_rhs, neutrino_rhs
 
 
 def evaluate_reduced_local_rhs(

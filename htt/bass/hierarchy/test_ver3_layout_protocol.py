@@ -10,6 +10,7 @@ from bass.hierarchy import (
     assemble_free_streaming_block,
     assemble_mixing_block,
     assemble_explicit_block,
+    evaluate_reduced_harmonic_rhs,
     evaluate_reduced_local_rhs,
     assemble_implicit_block,
     assemble_mass_matrix,
@@ -178,6 +179,108 @@ def test_reduced_local_rhs_matches_full_operator_subset() -> None:
             reduced_cdm[str(mu)],
             full_drive[cdm_idx] / mass_diag[cdm_idx],
         )
+
+
+def test_reduced_harmonic_rhs_matches_full_operator_subset() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {"Gamma_T": 2.5},
+        "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
+        "source_tables": {
+            "visibility_amplitude": 1.25,
+            "polarization_source": 0.4,
+            "reionization_amplitude": 0.2,
+        },
+    }
+    ops = assemble_hierarchy_ops(bg, backend, truncation, bg["source_tables"])
+    width = (layout.ell_max + 1) ** 2
+    photon_t_by_mode_label = {
+        "m0": np.linspace(0.1, 0.9, width, dtype=np.float64),
+        "m+2": np.linspace(-0.3, 0.5, width, dtype=np.float64),
+        "m-2": np.linspace(0.2, -0.4, width, dtype=np.float64),
+    }
+    photon_e_by_mode_label = {
+        "m0": np.linspace(0.6, -0.2, width, dtype=np.float64),
+        "m+2": np.linspace(0.3, 0.9, width, dtype=np.float64),
+        "m-2": np.linspace(-0.5, 0.1, width, dtype=np.float64),
+    }
+    photon_b_by_mode_label = {
+        "m0": np.linspace(-0.4, 0.4, width, dtype=np.float64),
+        "m+2": np.linspace(0.7, -0.1, width, dtype=np.float64),
+        "m-2": np.linspace(0.05, 0.25, width, dtype=np.float64),
+    }
+    neutrino_by_mode_label = {
+        "m0": np.linspace(0.15, 0.75, width, dtype=np.float64),
+        "m+2": np.linspace(-0.2, 0.6, width, dtype=np.float64),
+        "m-2": np.linspace(0.4, -0.1, width, dtype=np.float64),
+    }
+    baryon_by_mode_label = {
+        "m0": np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float64),
+        "m+2": np.array([0.5, 0.6, 0.7, 0.8], dtype=np.float64),
+        "m-2": np.array([-0.3, -0.2, -0.1, 0.0], dtype=np.float64),
+    }
+    source_by_mode_label = {
+        "m0": np.array([0.2, -0.1, 0.0], dtype=np.float64),
+        "m+2": np.array([0.3, 0.4, -0.2], dtype=np.float64),
+        "m-2": np.array([-0.25, 0.15, 0.05], dtype=np.float64),
+    }
+    state = np.zeros(layout.size, dtype=np.float64)
+    for mu, tower in photon_t_by_mode_label.items():
+        for ell in range(layout.ell_max + 1):
+            offset = sum(2 * level + 1 for level in range(ell))
+            for m in range(-ell, ell + 1):
+                slot = offset + (m + ell)
+                state[flatten(layout, mu, "ph_I", ell, m)] = tower[slot]
+                state[flatten(layout, mu, "ph_E", ell, m)] = photon_e_by_mode_label[mu][slot]
+                state[flatten(layout, mu, "ph_B", ell, m)] = photon_b_by_mode_label[mu][slot]
+                state[flatten(layout, mu, "nu_I", ell, m)] = neutrino_by_mode_label[mu][slot]
+        for local_dof, value in enumerate(baryon_by_mode_label[mu]):
+            state[flatten(layout, mu, "baryon", None, None, local_dof)] = value
+        for local_dof, value in enumerate(source_by_mode_label[mu]):
+            state[flatten(layout, mu, "src", None, None, local_dof)] = value
+    full_drive = np.asarray(
+        (ops.A_fs @ state) + (ops.A_mix @ state) + (ops.A_coll @ state) + np.asarray(ops.source_template, dtype=np.float64),
+        dtype=np.float64,
+    )
+    mass_diag = np.asarray(ops.mass_matrix.diagonal(), dtype=np.float64)
+    reduced_t, reduced_e, reduced_b, reduced_nu = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend,
+        photon_T_by_mode_label=photon_t_by_mode_label,
+        photon_E_by_mode_label=photon_e_by_mode_label,
+        photon_B_by_mode_label=photon_b_by_mode_label,
+        neutrino_by_mode_label=neutrino_by_mode_label,
+        baryon_by_mode_label=baryon_by_mode_label,
+        source_by_mode_label=source_by_mode_label,
+    )
+    for mu in layout.mode_labels:
+        idx_t = np.array(
+            [flatten(layout, mu, "ph_I", ell, m) for ell in range(layout.ell_max + 1) for m in range(-ell, ell + 1)],
+            dtype=np.int64,
+        )
+        idx_e = np.array(
+            [flatten(layout, mu, "ph_E", ell, m) for ell in range(layout.ell_max + 1) for m in range(-ell, ell + 1)],
+            dtype=np.int64,
+        )
+        idx_b = np.array(
+            [flatten(layout, mu, "ph_B", ell, m) for ell in range(layout.ell_max + 1) for m in range(-ell, ell + 1)],
+            dtype=np.int64,
+        )
+        idx_nu = np.array(
+            [flatten(layout, mu, "nu_I", ell, m) for ell in range(layout.ell_max + 1) for m in range(-ell, ell + 1)],
+            dtype=np.int64,
+        )
+        np.testing.assert_allclose(reduced_t[str(mu)], full_drive[idx_t] / mass_diag[idx_t])
+        np.testing.assert_allclose(reduced_e[str(mu)], full_drive[idx_e] / mass_diag[idx_e])
+        np.testing.assert_allclose(reduced_b[str(mu)], full_drive[idx_b] / mass_diag[idx_b])
+        np.testing.assert_allclose(reduced_nu[str(mu)], full_drive[idx_nu] / mass_diag[idx_nu])
 
 
 def test_mode_label_weights_resolve_standard_m_signatures() -> None:
