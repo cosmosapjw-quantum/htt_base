@@ -13,6 +13,8 @@ from typing import Literal
 
 import numpy as np
 
+from bass.statistics import chi_squared, chi_squared_by_mode
+
 _OBSERVER_FRAME_KEYS = frozenset(
     {
         "observer_boost",
@@ -206,7 +208,7 @@ class CosmologicalFrameLikelihood:
             model_sel = model[:n][mask]
             sigma = self.noise_fraction * np.maximum(np.abs(ref_sel), 1.0e-6)
             residual = model_sel - ref_sel
-            logp += -0.5 * float(np.sum((residual / sigma) ** 2))
+            logp += -0.5 * chi_squared_by_mode(residual, sigma)
         return logp
 
     def _harmonic_vector(self, params: Mapping[str, object]) -> np.ndarray:
@@ -235,8 +237,7 @@ class CosmologicalFrameLikelihood:
         )
         model = self._harmonic_vector(params)
         residual = model - reference
-        quad = float(residual @ self._joint_covariance_inv @ residual)
-        return -0.5 * quad
+        return -0.5 * chi_squared(residual, self._joint_covariance_inv)
 
     def log_prob(self, params: Mapping[str, object]) -> float:
         """Evaluate the cosmological-frame log-likelihood."""
