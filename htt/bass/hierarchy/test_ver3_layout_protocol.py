@@ -38,6 +38,16 @@ def test_layout_freezes_sector_order_and_mode_labels() -> None:
     assert layout.mode_labels == ("m0", "m+2", "m-2")
 
 
+def test_layout_defaults_open_multi_label_runtime_for_family_backends() -> None:
+    backend_v = build_backend(get_family_spec("V"), truncation={"ell_max": 2})
+    layout_v = build_hierarchy_layout(backend_v, {"ell_max": 2})
+    assert layout_v.mode_labels == ("mu_open", "mu_open+", "mu_open-")
+
+    backend_viii = build_backend(get_family_spec("VIII"), truncation={"ell_max": 2})
+    layout_viii = build_hierarchy_layout(backend_viii, {"ell_max": 2})
+    assert layout_viii.mode_labels == ("mu_sl2r", "mu_sl2r+", "mu_sl2r-")
+
+
 def test_flatten_unflatten_roundtrip_for_harmonic_slot() -> None:
     layout = build_hierarchy_layout(_backend(), {"ell_max": 4, "mode_labels": ("m0", "m+2", "m-2")})
     idx = flatten(layout, "m+2", "ph_E", 2, -1)

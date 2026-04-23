@@ -954,7 +954,6 @@ def test_execute_tier_b_lowell_solver_is_a_compatibility_alias(monkeypatch: pyte
 
     assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
 
-
 def test_execute_tier_b_solver_injects_seed_even_without_startup_manifold() -> None:
     species = SpeciesBackgroundRegistry.from_planck2018()
     cfg = _integrator_config()

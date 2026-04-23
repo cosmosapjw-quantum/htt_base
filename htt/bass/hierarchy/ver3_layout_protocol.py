@@ -354,10 +354,16 @@ def _mode_labels_from_backend(
     family = backend.family_spec.family
     defaults = {
         "I": ("m0", "m+2", "m-2"),
-        "V": ("mu_open",),
-        "VII_0": ("mu_hel",),
-        "VII_h": ("mu_hel_h",),
-        "IX": ("mu_compact",),
+        "II": ("mu_nil", "mu_nil+", "mu_nil-"),
+        "III": ("mu_hyp", "mu_hyp+", "mu_hyp-"),
+        "IV": ("mu_solv", "mu_solv+", "mu_solv-"),
+        "V": ("mu_open", "mu_open+", "mu_open-"),
+        "VI_0": ("mu_vi0", "mu_vi0+", "mu_vi0-"),
+        "VI_h": ("mu_vih", "mu_vih+", "mu_vih-"),
+        "VII_0": ("mu_hel", "mu_hel+", "mu_hel-"),
+        "VII_h": ("mu_hel_h", "mu_hel_h+", "mu_hel_h-"),
+        "VIII": ("mu_sl2r", "mu_sl2r+", "mu_sl2r-"),
+        "IX": ("mu_compact", "mu_compact+", "mu_compact-"),
     }
     return defaults.get(family, ("mu0",))
 
@@ -399,6 +405,10 @@ def _mode_label_weight(
     if label == "m+2":
         return 1.0 + 0.12 * branch_scale
     if label == "m-2":
+        return 1.0 - 0.08 * branch_scale
+    if label.endswith("+"):
+        return 1.0 + 0.12 * branch_scale
+    if label.endswith("-"):
         return 1.0 - 0.08 * branch_scale
     return 1.0 + 0.03 * (mu_index / max(mu_count, 1))
 
