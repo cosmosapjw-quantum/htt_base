@@ -2829,6 +2829,9 @@ class Ver2TierBIntegrator:
             "layout_source_block_owner": str(
                 canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
             ),
+            "layout_source_history_owner": str(
+                result.solver_info.get("live_source_history_metadata", {}).get("owner", "unavailable")
+            ),
             "layout_source_mode_labels": list(
                 canonical_projection.hierarchy_state.source_history_block.get(
                     "mode_label_blocks",
@@ -2917,6 +2920,12 @@ class Ver2TierBIntegrator:
                     "layout_source_block_norm": float(np.linalg.norm(source_block)),
                     "layout_source_block_owner": str(
                         canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
+                    ),
+                    "layout_source_history_owner": str(
+                        result.solver_info.get("live_source_history_metadata", {}).get(
+                            "owner",
+                            "unavailable",
+                        )
                     ),
                     "layout_source_history_sample_count": int(auxiliary_bundle.source_history.shape[0]),
                     "layout_source_mode_labels": list(

@@ -314,6 +314,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_source_template_channel"] == "canonical_projection.src_block"
     assert run.solver_output.metadata["layout_source_block_norm"] > 0.0
     assert run.solver_output.metadata["layout_source_block_owner"] == "mode_ops_source_template"
+    assert run.solver_output.metadata["layout_source_history_owner"] == (
+        "ver2_native_integrator.mode_ops_source_history"
+    )
     assert run.solver_output.metadata["layout_source_history_sample_count"] == len(
         run.integration_result.eta
     )
@@ -505,6 +508,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     ]
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_block_owner"] == (
         "mode_ops_source_template"
+    )
+    assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_history_owner"] == (
+        "ver2_native_integrator.mode_ops_source_history"
     )
     assert set(
         registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_mode_labels"]

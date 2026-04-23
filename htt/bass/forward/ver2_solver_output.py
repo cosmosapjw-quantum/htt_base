@@ -930,6 +930,9 @@ def build_solver_core_output_from_native_result(
             "layout_source_block_owner": str(
                 result.solver_info.get("layout_source_block_owner", "unconsumed")
             ),
+            "layout_source_history_owner": str(
+                result.solver_info.get("layout_source_history_owner", "unconsumed")
+            ),
             "layout_source_history_sample_count": int(
                 result.solver_info.get("layout_source_history_sample_count", 0)
             ),
