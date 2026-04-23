@@ -539,3 +539,43 @@ def test_project_runtime_native_state_can_preserve_mode_label_resolved_b_history
         np.asarray(projection.hierarchy_state.photon_polarization_block["mode_label_history"]["m+2"], dtype=np.float64),
         history_m2,
     )
+
+
+def test_project_runtime_native_state_can_preserve_mode_label_resolved_harmonic_blocks() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    ops = assemble_hierarchy_ops(
+        {
+            "branch": "orthogonal",
+            "opacity_data": {"Gamma_T": 2.0},
+            "source_tables": {"visibility_amplitude": 1.25},
+        },
+        backend,
+        truncation,
+        {"polarization_source": 0.5},
+    )
+    size = (layout.ell_max + 1) ** 2
+    t_m0 = np.arange(size, dtype=np.float64)
+    t_m2 = 10.0 + np.arange(size, dtype=np.float64)
+    e_m0 = 100.0 + np.arange(size, dtype=np.float64)
+    e_m2 = 200.0 + np.arange(size, dtype=np.float64)
+    nu_m0 = 300.0 + np.arange(size, dtype=np.float64)
+    nu_m2 = 400.0 + np.arange(size, dtype=np.float64)
+    projection = project_runtime_native_state(
+        layout=layout,
+        layout_manifest=ops.layout_metadata,
+        photon_T=t_m0,
+        photon_T_blocks_by_mode_label={"m0": t_m0, "m+2": t_m2},
+        photon_E=e_m0,
+        photon_E_blocks_by_mode_label={"m0": e_m0, "m+2": e_m2},
+        neutrino_tower=nu_m0,
+        neutrino_blocks_by_mode_label={"m0": nu_m0, "m+2": nu_m2},
+        source_template=np.asarray(ops.source_template, dtype=np.float64),
+    )
+    assert projection.state_vector[flatten(layout, "m+2", "ph_I", 2, 1)] == pytest.approx(t_m2[7])
+    assert projection.state_vector[flatten(layout, "m+2", "ph_E", 2, 1)] == pytest.approx(e_m2[7])
+    assert projection.state_vector[flatten(layout, "m+2", "nu_I", 2, 1)] == pytest.approx(nu_m2[7])

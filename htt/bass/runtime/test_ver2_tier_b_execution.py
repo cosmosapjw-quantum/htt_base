@@ -259,9 +259,15 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["seed_factory_owner"] == "family_backend.seed_factory"
     assert run.integration_result.solver_info["seed_factory_mode"] == "flrw_like_regular"
     assert run.integration_result.residual_local_history is not None
+    assert set(run.integration_result.photon_T_history_by_mode_label) == {"m0", "m+2", "m-2"}
+    assert set(run.integration_result.photon_E_history_by_mode_label) == {"m0", "m+2", "m-2"}
+    assert set(run.integration_result.neutrino_history_by_mode_label) == {"m0", "m+2", "m-2"}
     assert set(run.integration_result.photon_B_history_by_mode_label) == {"m0", "m+2", "m-2"}
     assert set(run.integration_result.baryon_local_history_by_mode_label) == {"m0", "m+2", "m-2"}
     assert set(run.integration_result.cdm_local_history_by_mode_label) == {"m0", "m+2", "m-2"}
+    assert run.integration_result.solver_info["live_mode_label_harmonic_history_metadata"]["owner"] == (
+        "ver2_native_integrator.main_state_mode_label_harmonics"
+    )
     assert run.integration_result.solver_info["live_mode_label_local_matter_history_metadata"]["owner"] == (
         "ver2_native_integrator.main_state_mode_label_local_matter"
     )

@@ -201,7 +201,9 @@ def project_runtime_native_state(
     layout: HierarchyLayout,
     layout_manifest: Mapping[str, object],
     photon_T: PSTFHierarchyState | np.ndarray,
+    photon_T_blocks_by_mode_label: Mapping[str, np.ndarray] | None = None,
     photon_E: PolarizationHierarchyState | PSTFHierarchyState | np.ndarray,
+    photon_E_blocks_by_mode_label: Mapping[str, np.ndarray] | None = None,
     photon_B: PSTFHierarchyState | np.ndarray | None = None,
     photon_B_blocks_by_mode_label: Mapping[str, np.ndarray] | None = None,
     photon_B_history_eta: np.ndarray | None = None,
@@ -209,6 +211,7 @@ def project_runtime_native_state(
     photon_B_history_by_mode_label: Mapping[str, np.ndarray] | None = None,
     b_sector_status: str | None = None,
     neutrino_tower: PSTFHierarchyState | np.ndarray,
+    neutrino_blocks_by_mode_label: Mapping[str, np.ndarray] | None = None,
     source_template: np.ndarray,
     baryon_block: np.ndarray | None = None,
     cdm_block: np.ndarray | None = None,
@@ -300,28 +303,34 @@ def project_runtime_native_state(
             vector[flatten(layout, mode_label, "ph_B", ell, m)] = float(tower_B[slot])
             vector[flatten(layout, mode_label, "nu_I", ell, m)] = float(tower_nu[slot])
 
+    for mapping, sector, expected in (
+        (photon_T_blocks_by_mode_label, "ph_I", tower_T),
+        (photon_E_blocks_by_mode_label, "ph_E", tower_E),
+        (photon_B_blocks_by_mode_label, "ph_B", tower_B),
+        (neutrino_blocks_by_mode_label, "nu_I", tower_nu),
+    ):
+        if mapping is None:
+            continue
+        for mu, values in dict(mapping).items():
+            if mu not in layout.mode_labels:
+                raise ValueError(f"{sector} block mapping contains unknown mode label {mu!r}")
+            arr = np.asarray(values, dtype=np.float64)
+            if arr.shape != expected.shape:
+                raise ValueError(
+                    f"{sector} mode-label blocks must have shape {(expected.shape[0],)}"
+                )
+            covered_mode_labels.add(str(mu))
+            slot = 0
+            for ell in range(L + 1):
+                for m in range(-ell, ell + 1):
+                    vector[flatten(layout, str(mu), sector, ell, m)] = float(arr[slot])
+                    slot += 1
+
     polarization_blocks_by_mode_label = _extract_harmonic_sector_by_mode_label(
         layout,
         vector,
         sector="ph_B",
     )
-    if photon_B_blocks_by_mode_label is not None:
-        polarization_blocks_by_mode_label = {}
-        for mu, values in dict(photon_B_blocks_by_mode_label).items():
-            if mu not in layout.mode_labels:
-                raise ValueError(f"photon_B_blocks_by_mode_label contains unknown mode label {mu!r}")
-            arr = np.asarray(values, dtype=np.float64)
-            if arr.shape != tower_B.shape:
-                raise ValueError(
-                    "photon_B_blocks_by_mode_label values must have shape (harmonic_state_size,)"
-                )
-            polarization_blocks_by_mode_label[str(mu)] = arr
-            covered_mode_labels.add(str(mu))
-            slot = 0
-            for ell in range(L + 1):
-                for m in range(-ell, ell + 1):
-                    vector[flatten(layout, str(mu), "ph_B", ell, m)] = float(arr[slot])
-                    slot += 1
     polarization_history_by_mode_label = {}
     if photon_B_history_by_mode_label is not None:
         for mu, values in dict(photon_B_history_by_mode_label).items():
