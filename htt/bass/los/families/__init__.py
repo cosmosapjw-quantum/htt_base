@@ -52,8 +52,11 @@ __all__ = (
     "LegacyDelegationKernel",
     "NotImplementedKernel",
     "KNOWN_FAMILIES",
+    "IMPLEMENTED_FAMILIES",
+    "SKELETON_FAMILIES",
     "family_metadata_from_registry",
     "get_family_kernel",
+    "is_skeleton",
     "register_all_defaults",
     "unregister_all_defaults",
 )
@@ -72,6 +75,20 @@ KNOWN_FAMILIES: Mapping[str, object] = {
     "VIII": type_viii.KERNEL,
     "IX": type_ix.KERNEL,
 }
+
+
+def is_skeleton(family: str) -> bool:
+    """True iff ``family``'s kernel still inherits from ``NotImplementedKernel``."""
+    kernel = KNOWN_FAMILIES.get(family)
+    return isinstance(kernel, NotImplementedKernel)
+
+
+IMPLEMENTED_FAMILIES: tuple[str, ...] = tuple(
+    family for family in KNOWN_FAMILIES if not is_skeleton(family)
+)
+SKELETON_FAMILIES: tuple[str, ...] = tuple(
+    family for family in KNOWN_FAMILIES if is_skeleton(family)
+)
 
 
 def get_family_kernel(family: str) -> object:

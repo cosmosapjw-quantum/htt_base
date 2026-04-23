@@ -15,10 +15,13 @@ from bass.background.bianchi_types import (
     type_i_constants,
 )
 from bass.los.families import (
+    IMPLEMENTED_FAMILIES,
     KNOWN_FAMILIES,
     LegacyDelegationKernel,
     NotImplementedKernel,
+    SKELETON_FAMILIES,
     get_family_kernel,
+    is_skeleton,
     register_all_defaults,
     unregister_all_defaults,
 )
@@ -85,19 +88,27 @@ def test_get_family_kernel_rejects_unknown():
 # ---------------------------------------------------------------------------
 
 
-@pytest.mark.parametrize("family", [f for f in _EXPECTED_FAMILIES if f != "I"])
+@pytest.mark.parametrize("family", SKELETON_FAMILIES)
 def test_skeleton_kernel_raises_when_invoked(family):
     kernel = get_family_kernel(family)
+    assert is_skeleton(family)
     assert isinstance(kernel, NotImplementedKernel)
     with pytest.raises(FamilyBackendNotImplemented, match=f"Family '{family}'"):
         kernel.build_transport_bundle()
 
 
 def test_skeleton_residual_pack_always_fails():
-    kernel = get_family_kernel("III")
+    # Pick whichever family is still a skeleton at this commit.
+    assert SKELETON_FAMILIES, "expected at least one skeleton family to remain"
+    kernel = get_family_kernel(SKELETON_FAMILIES[0])
     pack = kernel.residual_pack()
     assert pack.passed is False
     assert pack.metadata["status"] == "skeleton"
+
+
+def test_implemented_and_skeleton_cover_all_families():
+    assert set(IMPLEMENTED_FAMILIES) | set(SKELETON_FAMILIES) == set(KNOWN_FAMILIES)
+    assert set(IMPLEMENTED_FAMILIES) & set(SKELETON_FAMILIES) == set()
 
 
 # ---------------------------------------------------------------------------
