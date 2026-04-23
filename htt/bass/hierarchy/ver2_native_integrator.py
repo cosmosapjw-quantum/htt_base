@@ -2443,10 +2443,6 @@ class Ver2TierBIntegrator:
         reionization_amplitude = self._reionization_amplitude()
 
         baryon_by_mode_label, _, _ = self._ensure_live_mode_label_local_matter_history(result)
-        _, source_by_mode_label, _ = self._ensure_live_source_history(
-            result,
-            covered_mode_label=covered,
-        )
         b_history, b_history_metadata = self._ensure_live_b_mode_history(result)
 
         projected_t = self._resolve_mode_label_harmonic_history(np.asarray(result.photon_T_tower, dtype=np.float64))
@@ -2540,10 +2536,6 @@ class Ver2TierBIntegrator:
                     mu: np.asarray(baryon_by_mode_label[mu][index], dtype=np.float64)
                     for mu in mode_labels
                 },
-                source_by_mode_label={
-                    mu: np.asarray(source_by_mode_label[mu][index], dtype=np.float64)
-                    for mu in mode_labels
-                },
             )
 
             right_t = {
@@ -2604,10 +2596,6 @@ class Ver2TierBIntegrator:
                 neutrino_by_mode_label=right_nu,
                 baryon_by_mode_label={
                     mu: np.asarray(baryon_by_mode_label[mu][index + 1], dtype=np.float64)
-                    for mu in mode_labels
-                },
-                source_by_mode_label={
-                    mu: np.asarray(source_by_mode_label[mu][index + 1], dtype=np.float64)
                     for mu in mode_labels
                 },
             )

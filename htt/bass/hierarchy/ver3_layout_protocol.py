@@ -552,7 +552,7 @@ def evaluate_reduced_harmonic_rhs(
     photon_B_by_mode_label: Mapping[str, np.ndarray],
     neutrino_by_mode_label: Mapping[str, np.ndarray],
     baryon_by_mode_label: Mapping[str, np.ndarray],
-    source_by_mode_label: Mapping[str, np.ndarray],
+    source_by_mode_label: Mapping[str, np.ndarray] | None = None,
 ) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray]]:
     """Evaluate harmonic-sector rows without assembling full sparse operators."""
 
@@ -567,6 +567,7 @@ def evaluate_reduced_harmonic_rhs(
     visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
     polarization_amp = float(source_tables.get("polarization_source", 0.0))
     doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
+    reion_amp = float(source_tables.get("reionization_amplitude", 0.0))
 
     scales = _operator_scales(bg, backend)
     geom_scale = float(scales["geom_scale"])
@@ -620,7 +621,12 @@ def evaluate_reduced_harmonic_rhs(
         b_state = np.asarray(photon_B_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
         nu_state = np.asarray(neutrino_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
         baryon_state = np.asarray(baryon_by_mode_label.get(mu_key, zeros_b), dtype=np.float64)
-        src_state = np.asarray(source_by_mode_label.get(mu_key, zeros_s), dtype=np.float64)
+        if source_by_mode_label is None:
+            src_state = np.zeros(src_width, dtype=np.float64)
+            if src_width > 0:
+                src_state[0] = mu_weight * reion_amp
+        else:
+            src_state = np.asarray(source_by_mode_label.get(mu_key, zeros_s), dtype=np.float64)
         next_t = np.asarray(photon_T_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
         next_e = np.asarray(photon_E_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)
         next_b = np.asarray(photon_B_by_mode_label.get(next_mu, zeros_h), dtype=np.float64)

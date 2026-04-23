@@ -734,7 +734,7 @@ class FamilyBackend:
         photon_B_by_mode_label: Mapping[str, np.ndarray],
         neutrino_by_mode_label: Mapping[str, np.ndarray],
         baryon_by_mode_label: Mapping[str, np.ndarray],
-        source_by_mode_label: Mapping[str, np.ndarray],
+        source_by_mode_label: Mapping[str, np.ndarray] | None = None,
     ) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray]]:
         from bass.hierarchy.ver3_layout_protocol import (
             build_hierarchy_layout,
