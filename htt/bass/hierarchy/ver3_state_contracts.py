@@ -228,6 +228,7 @@ def project_runtime_native_state(
     source_history_eta: np.ndarray | None = None,
     source_history_samples: np.ndarray | None = None,
     source_history_by_mode_label: Mapping[str, np.ndarray] | None = None,
+    source_sector_status: str | None = None,
     covered_mode_label: str | None = None,
 ) -> CanonicalLayoutProjection:
     """Embed the live Tier-B harmonic towers into the ver3 canonical sector order.
@@ -264,6 +265,11 @@ def project_runtime_native_state(
         str(b_sector_status)
         if b_sector_status is not None
         else "layout_operator_auxiliary_b_mode_history"
+    )
+    resolved_source_sector_status = (
+        str(source_sector_status)
+        if source_sector_status is not None
+        else "mode_ops_source_template"
     )
 
     vector = np.zeros(layout.size, dtype=np.float64)
@@ -552,7 +558,7 @@ def project_runtime_native_state(
                 "nu_I": "live_runtime_projection",
                 "baryon": baryon_sector_status,
                 "cdm": cdm_sector_status,
-                "src": "mode_ops_source_template",
+                "src": resolved_source_sector_status,
             },
         },
     )

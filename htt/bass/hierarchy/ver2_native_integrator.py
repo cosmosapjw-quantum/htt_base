@@ -3964,6 +3964,14 @@ class Ver2TierBIntegrator:
             if b_mode_owner == "ver2_native_integrator.main_state_photon_B"
             else "hierarchy_rhs_direct_b_mode_history"
         )
+        source_history_owner = str(
+            result.solver_info.get("live_source_history_metadata", {}).get("owner", "unavailable")
+        )
+        source_sector_status_resolved = (
+            "main_state_coevolved_source_history"
+            if source_history_owner == "ver2_native_integrator.main_state_source_history"
+            else "mode_ops_source_template"
+        )
         canonical_projection = project_runtime_native_state(
             layout=layout,
             layout_manifest=getattr(mode_ops, "layout_metadata", {}),
@@ -4028,6 +4036,7 @@ class Ver2TierBIntegrator:
                 str(mu): np.asarray(values, dtype=np.float64)
                 for mu, values in auxiliary_bundle.source_history_by_mode_label.items()
             },
+            source_sector_status=source_sector_status_resolved,
             covered_mode_label=covered,
         )
         source_block = np.asarray(
@@ -4051,7 +4060,7 @@ class Ver2TierBIntegrator:
                 canonical_projection.hierarchy_state.metadata["sector_status"]["src"]
             ),
             "layout_source_history_owner": str(
-                result.solver_info.get("live_source_history_metadata", {}).get("owner", "unavailable")
+                source_history_owner
             ),
             "layout_source_mode_labels": list(
                 canonical_projection.hierarchy_state.source_history_block.get(

@@ -294,7 +294,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["layout_source_template_consumed"] is True
     assert run.integration_result.solver_info["layout_source_template_channel"] == "canonical_projection.src_block"
     assert run.integration_result.solver_info["layout_source_block_norm"] > 0.0
-    assert run.integration_result.solver_info["layout_source_block_owner"] == "mode_ops_source_template"
+    assert run.integration_result.solver_info["layout_source_block_owner"] == (
+        "main_state_coevolved_source_history"
+    )
     assert run.integration_result.solver_info["layout_source_history_sample_count"] == len(
         run.integration_result.eta
     )
@@ -343,7 +345,9 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_source_template_consumed"] is True
     assert run.solver_output.metadata["layout_source_template_channel"] == "canonical_projection.src_block"
     assert run.solver_output.metadata["layout_source_block_norm"] > 0.0
-    assert run.solver_output.metadata["layout_source_block_owner"] == "mode_ops_source_template"
+    assert run.solver_output.metadata["layout_source_block_owner"] == (
+        "main_state_coevolved_source_history"
+    )
     assert run.solver_output.metadata["residual_harmonic_orthogonal_bridge"] == "ros2w_lagged_sparse_reduced_joint_block"
     assert run.solver_output.metadata["layout_source_history_owner"] == (
         "ver2_native_integrator.main_state_source_history"
@@ -449,7 +453,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "m-2",
     }
     assert run.solver_output.metadata["canonical_projection_sector_status"]["src"] == (
-        "mode_ops_source_template"
+        "main_state_coevolved_source_history"
     )
     assert run.solver_output.metadata["canonical_projection_b_history_available"] is True
     assert run.solver_output.metadata["canonical_projection_b_history_sample_count"] == len(
@@ -558,7 +562,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "src",
     ]
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_block_owner"] == (
-        "mode_ops_source_template"
+        "main_state_coevolved_source_history"
     )
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_source_history_owner"] == (
         "ver2_native_integrator.main_state_source_history"
