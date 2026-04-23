@@ -17,6 +17,7 @@ __all__ = [
     "build_layout_manifest",
     "flatten",
     "unflatten",
+    "evaluate_reduced_local_rhs",
     "assemble_free_streaming_block",
     "assemble_mixing_block",
     "assemble_mass_matrix",
@@ -538,6 +539,59 @@ def assemble_source_vector(
             out[flatten(layout, mu, "ph_B", 2, 0)] = mu_weight * twist_scale * polarization_amp
         out[flatten(layout, mu, "src", None, None, 0)] = mu_weight * reion_amp
     return out
+
+
+def evaluate_reduced_local_rhs(
+    layout: HierarchyLayout,
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    *,
+    baryon_by_mode_label: Mapping[str, np.ndarray],
+    cdm_by_mode_label: Mapping[str, np.ndarray],
+    theta_1_by_mode_label: Mapping[str, float],
+) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray]]:
+    """Evaluate the PR-09 local-sector rows without assembling full sparse operators."""
+
+    opacity_data = bg.get("opacity_data", {})
+    if not isinstance(opacity_data, Mapping):
+        raise ValueError("bg.opacity_data must be a mapping when provided")
+    gamma_t = float(opacity_data.get("Gamma_T", 0.0))
+    scales = _operator_scales(bg, backend)
+    geom_scale = float(scales["geom_scale"])
+    branch_scale = float(scales["branch_scale"])
+    baryon_width = int(layout.sector_local_dofs["baryon"])
+    cdm_width = int(layout.sector_local_dofs["cdm"])
+    baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(baryon_width, dtype=np.float64)
+    mu_count = max(len(layout.mode_labels), 1)
+    baryon_rhs: dict[str, np.ndarray] = {}
+    cdm_rhs: dict[str, np.ndarray] = {}
+    for mu_index, mu in enumerate(layout.mode_labels):
+        mu_key = str(mu)
+        mu_weight = _mode_label_weight(
+            mu_key,
+            mu_index=mu_index,
+            mu_count=mu_count,
+            branch_scale=branch_scale,
+        )
+        baryon_state = np.asarray(
+            baryon_by_mode_label.get(mu_key, np.zeros(baryon_width, dtype=np.float64)),
+            dtype=np.float64,
+        )
+        if baryon_state.shape != (baryon_width,):
+            raise ValueError(f"baryon state for {mu_key!r} must have shape ({baryon_width},)")
+        cdm_state = np.asarray(
+            cdm_by_mode_label.get(mu_key, np.zeros(cdm_width, dtype=np.float64)),
+            dtype=np.float64,
+        )
+        if cdm_state.shape != (cdm_width,):
+            raise ValueError(f"cdm state for {mu_key!r} must have shape ({cdm_width},)")
+        baryon_drive = mu_weight * gamma_t * baryon_state
+        if baryon_width > 1:
+            baryon_drive[1] += 0.25 * mu_weight * gamma_t * float(theta_1_by_mode_label.get(mu_key, 0.0))
+        baryon_diag = mu_weight * baryon_base_diag
+        baryon_rhs[mu_key] = baryon_drive / np.maximum(np.abs(baryon_diag), 1.0e-30)
+        cdm_rhs[mu_key] = np.zeros_like(cdm_state)
+    return baryon_rhs, cdm_rhs
 
 
 def assemble_hierarchy_ops(

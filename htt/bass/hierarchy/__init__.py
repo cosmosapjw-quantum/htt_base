@@ -116,6 +116,7 @@ from bass.hierarchy.seed_compatibility import (
 from bass.hierarchy.ver3_layout_protocol import (
     SECTOR_ORDER,
     HierarchyLayout,
+    evaluate_reduced_local_rhs,
     assemble_hierarchy_ops,
     assemble_free_streaming_block,
     assemble_mixing_block,
@@ -226,6 +227,7 @@ __all__ = [
     "build_layout_manifest",
     "flatten",
     "unflatten",
+    "evaluate_reduced_local_rhs",
     "assemble_hierarchy_ops",
     "assemble_free_streaming_block",
     "assemble_mixing_block",

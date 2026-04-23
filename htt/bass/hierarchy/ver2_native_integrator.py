@@ -61,7 +61,7 @@ from bass.hierarchy.integrator import (
     _ell2_m0_slot_offset,
 )
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor, pack_hierarchy, unpack_hierarchy, zero_hierarchy
-from bass.hierarchy.ver3_layout_protocol import build_hierarchy_layout, flatten
+from bass.hierarchy.ver3_layout_protocol import build_hierarchy_layout, evaluate_reduced_local_rhs, flatten
 from bass.hierarchy.seed_compatibility import (
     PackedRegularSeedInjection,
     SeedConstraintProjection,
@@ -74,11 +74,13 @@ from bass.perturbation.baryon_fluid import (
     BaryonParameters,
     SymmetryAxis,
     baryon_continuity_rhs,
+    baryon_euler_rhs,
 )
 from bass.perturbation.cdm_fluid import (
     CDMFluidState,
     CDMParameters,
     cdm_continuity_rhs,
+    cdm_euler_rhs,
 )
 from bass.perturbation.regular_adiabatic_ic import (
     make_camb_regular_adiabatic_seed,
@@ -1716,26 +1718,40 @@ class Ver2TierBIntegrator:
             self._layout_covered_mode_label: np.asarray(cdm_local, dtype=np.float64),
             **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in cdm_residual.items()},
         }
-        sample = self._build_auxiliary_operator_sample(
-            eta=float(snapshot.eta),
-            photon_T_row=np.asarray(pack_hierarchy(photon_T), dtype=np.float64),
-            photon_E_row=np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64),
-            reionization_amplitude=self._reionization_amplitude(),
-        )
-        layout_state = np.zeros(self._layout.size, dtype=np.float64)
-        self._fill_layout_state_vector_from_components(
-            out=layout_state,
-            sample=sample,
-            photon_T_row=np.asarray(pack_hierarchy(photon_T), dtype=np.float64),
-            photon_E_row=np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64),
-            photon_B_row=np.asarray(pack_hierarchy(photon_B), dtype=np.float64),
-            neutrino_row=np.asarray(pack_hierarchy(neutrino_tower), dtype=np.float64),
+        theta_1_by_mode_label = {
+            str(mu): 0.0
+            for mu in self._layout.mode_labels
+        }
+        theta_1_by_mode_label[
+            _resolve_projection_mode_label(
+                self._layout.mode_labels,
+                self._layout_covered_mode_label,
+                m=0,
+            )
+        ] = _theta_1_from_temperature_state(photon_T)
+        baryon_rhs_by_mode_label, cdm_rhs_by_mode_label = evaluate_reduced_local_rhs(
+            self._layout,
+            {
+                "branch": str(self.background_monitor.branch),
+                "geometry": self.background_monitor.initial_conditions.geometry,
+                "sigma_tensor": self._sigma_tensor_at_eta(float(snapshot.eta)),
+                "opacity_data": {"Gamma_T": float(snapshot.gamma_t)},
+            },
+            self.backend,
             baryon_by_mode_label=baryon_by_mode_label,
             cdm_by_mode_label=cdm_by_mode_label,
+            theta_1_by_mode_label=theta_1_by_mode_label,
         )
-        drive_rows = sample.drive_subset(layout_state, self._residual_local_layout_rows)
-        mass_diag = np.asarray(sample.mass_diag[self._residual_local_layout_rows], dtype=np.float64)
-        return np.asarray(drive_rows, dtype=np.float64) / np.maximum(np.abs(mass_diag), 1.0e-30)
+        return self._pack_residual_local_state(
+            baryon_by_mode_label={
+                str(mu): np.asarray(baryon_rhs_by_mode_label[str(mu)], dtype=np.float64)
+                for mu in self._residual_mode_labels
+            },
+            cdm_by_mode_label={
+                str(mu): np.asarray(cdm_rhs_by_mode_label[str(mu)], dtype=np.float64)
+                for mu in self._residual_mode_labels
+            },
+        )
 
     def _rhs(
         self,

@@ -487,6 +487,7 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert np.asarray(run.solver_output.alm_T["sphere_directions"], dtype=np.float64).shape == (231, 3)
     assert run.cutoff_campaign is not None
     assert set(run.cutoff_campaign.runtime_seconds) == {4, 6}
+    assert run.cutoff_campaign.runtime_seconds[4] == pytest.approx(0.0)
     assert run.cutoff_campaign.deltas[4][0].relative_delta == 0.0
     registry = run.solver_output.metadata["gate_registry"]
     assert registry["output_split_gate"].gate_name == "output_split_gate"

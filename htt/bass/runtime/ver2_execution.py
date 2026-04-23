@@ -1129,15 +1129,28 @@ def _assemble_tier_b_post_run_bundle(
         )
     cutoff_campaign = None
     if request.cutoff_spec is not None:
+        baseline_cutoff = int(getattr(result, "L_max", request.integrator_config.L_max))
+        baseline_channels = {
+            "temperature": np.asarray(result.photon_T_tower[-1], dtype=np.float64),
+            "polarization_E": np.asarray(result.photon_E_tower[-1], dtype=np.float64),
+            "neutrino_reduced": np.asarray(result.neutrino_reduced[-1], dtype=np.float64),
+        }
+        delegated_runner = _campaign_runner(
+            bianchi_type=request.bianchi_type,
+            base_config=request.integrator_config,
+            species=request.species,
+            seed_k_comoving=prepared.seed_k_comoving,
+            runtime_controls=request.runtime_controls,
+        )
+
+        def runner(cutoff: int) -> tuple[Mapping[str, np.ndarray], float]:
+            if int(cutoff) == baseline_cutoff:
+                return baseline_channels, 0.0
+            return delegated_runner(int(cutoff))
+
         cutoff_campaign = run_executed_cutoff_campaign(
             request.cutoff_spec,
-            runner=_campaign_runner(
-                bianchi_type=request.bianchi_type,
-                base_config=request.integrator_config,
-                species=request.species,
-                seed_k_comoving=prepared.seed_k_comoving,
-                runtime_controls=request.runtime_controls,
-            ),
+            runner=runner,
         )
     result.solver_info.update(dict(runtime_trace.layout_projection.metadata["solver_info_fragment"]))
     gate_registry = _build_gate_registry(

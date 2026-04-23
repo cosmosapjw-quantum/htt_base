@@ -10,6 +10,7 @@ from bass.hierarchy import (
     assemble_free_streaming_block,
     assemble_mixing_block,
     assemble_explicit_block,
+    evaluate_reduced_local_rhs,
     assemble_implicit_block,
     assemble_mass_matrix,
     assemble_source_vector,
@@ -112,6 +113,71 @@ def test_source_vector_injects_visibility_and_polarization_slots() -> None:
     assert source[flatten(layout, "m0", "ph_I", 0, 0)] == pytest.approx(1.5)
     assert source[flatten(layout, "m0", "ph_E", 2, 0)] == pytest.approx(0.3)
     assert source[flatten(layout, "m0", "src", None, None, 0)] == pytest.approx(0.2)
+
+
+def test_reduced_local_rhs_matches_full_operator_subset() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {"Gamma_T": 2.5},
+        "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
+    }
+    ops = assemble_hierarchy_ops(bg, backend, truncation, {})
+    baryon_by_mode_label = {
+        "m0": np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float64),
+        "m+2": np.array([0.5, 0.6, 0.7, 0.8], dtype=np.float64),
+        "m-2": np.array([-0.3, -0.2, -0.1, 0.0], dtype=np.float64),
+    }
+    cdm_by_mode_label = {
+        "m0": np.array([0.9, 1.0], dtype=np.float64),
+        "m+2": np.array([1.1, 1.2], dtype=np.float64),
+        "m-2": np.array([-0.4, 0.2], dtype=np.float64),
+    }
+    theta_1_by_mode_label = {"m0": 0.15, "m+2": -0.25, "m-2": 0.35}
+    state = np.zeros(layout.size, dtype=np.float64)
+    for mu, baryon_row in baryon_by_mode_label.items():
+        for local_dof, value in enumerate(baryon_row):
+            state[flatten(layout, mu, "baryon", None, None, local_dof)] = value
+    for mu, cdm_row in cdm_by_mode_label.items():
+        for local_dof, value in enumerate(cdm_row):
+            state[flatten(layout, mu, "cdm", None, None, local_dof)] = value
+    for mu, theta_1 in theta_1_by_mode_label.items():
+        state[flatten(layout, mu, "ph_I", 1, 0)] = theta_1
+    full_drive = np.asarray(
+        (ops.A_fs @ state) + (ops.A_mix @ state) + (ops.A_coll @ state) + np.asarray(ops.source_template, dtype=np.float64),
+        dtype=np.float64,
+    )
+    mass_diag = np.asarray(ops.mass_matrix.diagonal(), dtype=np.float64)
+    reduced_baryon, reduced_cdm = evaluate_reduced_local_rhs(
+        layout,
+        bg,
+        backend,
+        baryon_by_mode_label=baryon_by_mode_label,
+        cdm_by_mode_label=cdm_by_mode_label,
+        theta_1_by_mode_label=theta_1_by_mode_label,
+    )
+    for mu in layout.mode_labels:
+        baryon_idx = np.array(
+            [flatten(layout, mu, "baryon", None, None, local_dof) for local_dof in range(4)],
+            dtype=np.int64,
+        )
+        cdm_idx = np.array(
+            [flatten(layout, mu, "cdm", None, None, local_dof) for local_dof in range(2)],
+            dtype=np.int64,
+        )
+        np.testing.assert_allclose(
+            reduced_baryon[str(mu)],
+            full_drive[baryon_idx] / mass_diag[baryon_idx],
+        )
+        np.testing.assert_allclose(
+            reduced_cdm[str(mu)],
+            full_drive[cdm_idx] / mass_diag[cdm_idx],
+        )
 
 
 def test_mode_label_weights_resolve_standard_m_signatures() -> None:
