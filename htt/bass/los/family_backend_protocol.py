@@ -644,6 +644,8 @@ class FamilyBackend:
             "operator_payload_status": "geometry_opacity_coupled_sparse_blocks",
             "analytic_normalization_status": template_card.analytic_normalization_status,
             "lookup_resolution_status": template_card.lookup_resolution_status,
+            "reduced_local_evaluator_available": True,
+            "reduced_harmonic_evaluator_available": True,
             "verification_crosscheck_pass": bool(
                 template_card.metadata.get("verification_crosscheck_pass", False)
             ),

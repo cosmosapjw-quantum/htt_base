@@ -40,6 +40,8 @@ def test_live_cosmological_frame_likelihood_binds_to_solver_output(_live_problem
     assert likelihood.htt_decomposition["fitting_ready"] is True
     assert likelihood.htt_decomposition["backend_lookup_resolution_status"] == "frozen_v5_formula_set"
     assert likelihood.htt_decomposition["backend_verification_crosscheck_pass"] is True
+    assert likelihood.htt_decomposition["backend_reduced_local_evaluator_available"] is True
+    assert likelihood.htt_decomposition["backend_reduced_harmonic_evaluator_available"] is True
     assert likelihood.htt_decomposition["b_mode_runtime_available"] is False
     assert likelihood.htt_decomposition["live_mode_label_harmonic_history_owner"] == (
         "ver2_native_integrator.reduced_mode_label_harmonics"

@@ -133,6 +133,8 @@ def test_operator_factory_maps_named_family_to_expected_kernel() -> None:
     assert ops.source_template.shape == (ops.mass_matrix.shape[0],)
     assert ops.layout_metadata["family"] == "IX"
     assert ops.layout_metadata["branch"] == "orthogonal"
+    assert ops.metadata["reduced_local_evaluator_available"] is True
+    assert ops.metadata["reduced_harmonic_evaluator_available"] is True
 
 
 def test_operator_factory_can_return_geometry_ops_with_mode_ops() -> None:

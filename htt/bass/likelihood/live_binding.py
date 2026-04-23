@@ -121,6 +121,12 @@ def _interop_summary(solver_output: SolverCoreOutput) -> dict[str, Any]:
         "backend_verification_crosscheck_pass": bool(
             solver_output.metadata.get("backend_verification_crosscheck_pass", False)
         ),
+        "backend_reduced_local_evaluator_available": bool(
+            solver_output.metadata.get("backend_reduced_local_evaluator_available", False)
+        ),
+        "backend_reduced_harmonic_evaluator_available": bool(
+            solver_output.metadata.get("backend_reduced_harmonic_evaluator_available", False)
+        ),
         "b_mode_runtime_available": bool(
             solver_output.metadata.get("b_mode_runtime_available", False)
         ),

@@ -206,6 +206,8 @@ def build_layout_manifest(
         "mass_matrix_realization": "family_branch_sector_weighted_diagonal",
         "exact_family_operator_available": exact_operator,
         "approximate_family_operator_available": not exact_operator,
+        "reduced_local_evaluator_available": True,
+        "reduced_harmonic_evaluator_available": True,
         "truncation_metadata": dict(truncation),
     }
 

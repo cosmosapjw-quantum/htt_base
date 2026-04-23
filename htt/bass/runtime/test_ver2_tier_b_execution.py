@@ -389,6 +389,8 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     )
     assert run.solver_output.metadata["backend_lookup_resolution_status"] == "frozen_v5_formula_set"
     assert run.solver_output.metadata["backend_verification_crosscheck_pass"] is True
+    assert run.solver_output.metadata["backend_reduced_local_evaluator_available"] is True
+    assert run.solver_output.metadata["backend_reduced_harmonic_evaluator_available"] is True
     assert (
         run.solver_output.metadata["backend_verification_reference"]
         == "docs/bianchi_design_pack_v5/verification/crosscheck_results.json"

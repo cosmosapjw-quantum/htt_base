@@ -385,6 +385,8 @@ def test_layout_manifest_records_backend_metadata() -> None:
     assert manifest["operator_realization"] == "geometry_opacity_coupled_sparse_operator"
     assert manifest["mass_matrix_realization"] == "family_branch_sector_weighted_diagonal"
     assert manifest["exact_family_operator_available"] is True
+    assert manifest["reduced_local_evaluator_available"] is True
+    assert manifest["reduced_harmonic_evaluator_available"] is True
 
 
 def test_assemble_hierarchy_ops_binds_backend_with_source_tables() -> None:
