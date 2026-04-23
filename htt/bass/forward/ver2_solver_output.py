@@ -963,6 +963,12 @@ def build_solver_core_output_from_native_result(
             "layout_auxiliary_coupling_passes": int(
                 result.solver_info.get("layout_auxiliary_coupling_passes", 0)
             ),
+            "layout_auxiliary_integration_scheme": str(
+                result.solver_info.get("layout_auxiliary_integration_scheme", "")
+            ),
+            "layout_auxiliary_reduced_block_size": int(
+                result.solver_info.get("layout_auxiliary_reduced_block_size", 0)
+            ),
             "layout_auxiliary_bundle_owner": str(
                 result.solver_info.get("layout_auxiliary_bundle_owner", "unconsumed")
             ),

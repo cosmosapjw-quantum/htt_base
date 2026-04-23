@@ -557,6 +557,16 @@ class _AuxiliaryOperatorSample:
             + np.asarray(self.source_template, dtype=np.float64)
         )
 
+    def drive_subset(self, state_vector: np.ndarray, rows: np.ndarray) -> np.ndarray:
+        vector = np.asarray(state_vector, dtype=np.float64)
+        row_idx = np.asarray(rows, dtype=np.int64)
+        return (
+            np.asarray(self.mode_ops.A_fs[row_idx, :] @ vector, dtype=np.float64)
+            + np.asarray(self.mode_ops.A_mix[row_idx, :] @ vector, dtype=np.float64)
+            + np.asarray(self.mode_ops.A_coll[row_idx, :] @ vector, dtype=np.float64)
+            + np.asarray(self.source_template[row_idx], dtype=np.float64)
+        )
+
 
 @dataclass(frozen=True)
 class _LayoutProjectionIndexCache:
@@ -568,6 +578,10 @@ class _LayoutProjectionIndexCache:
     src_by_mode_label: dict[str, np.ndarray]
     baryon_by_mode_label: dict[str, np.ndarray]
     cdm_by_mode_label: dict[str, np.ndarray]
+    auxiliary_coupled_rows: np.ndarray
+    auxiliary_photon_B_rows: np.ndarray
+    auxiliary_baryon_rows: dict[str, np.ndarray]
+    auxiliary_cdm_rows: dict[str, np.ndarray]
 
 
 def _resolve_projection_mode_label(
@@ -635,6 +649,21 @@ def _build_layout_projection_index_cache(
         )
         for mu in layout.mode_labels
     }
+    auxiliary_rows: list[int] = [int(value) for value in photon_b]
+    auxiliary_photon_B_rows = np.arange(photon_b.size, dtype=np.int64)
+    auxiliary_baryon_rows: dict[str, np.ndarray] = {}
+    auxiliary_cdm_rows: dict[str, np.ndarray] = {}
+    offset = int(photon_b.size)
+    for mu in layout.mode_labels:
+        indices = baryon_by_mode_label[str(mu)]
+        auxiliary_baryon_rows[str(mu)] = np.arange(offset, offset + indices.size, dtype=np.int64)
+        auxiliary_rows.extend(int(value) for value in indices)
+        offset += int(indices.size)
+    for mu in layout.mode_labels:
+        indices = cdm_by_mode_label[str(mu)]
+        auxiliary_cdm_rows[str(mu)] = np.arange(offset, offset + indices.size, dtype=np.int64)
+        auxiliary_rows.extend(int(value) for value in indices)
+        offset += int(indices.size)
     return _LayoutProjectionIndexCache(
         harmonic_photon_T=photon_t,
         harmonic_photon_E=photon_e,
@@ -647,6 +676,10 @@ def _build_layout_projection_index_cache(
         src_by_mode_label=src_by_mode_label,
         baryon_by_mode_label=baryon_by_mode_label,
         cdm_by_mode_label=cdm_by_mode_label,
+        auxiliary_coupled_rows=np.asarray(auxiliary_rows, dtype=np.int64),
+        auxiliary_photon_B_rows=auxiliary_photon_B_rows,
+        auxiliary_baryon_rows=auxiliary_baryon_rows,
+        auxiliary_cdm_rows=auxiliary_cdm_rows,
     )
 
 
@@ -1859,21 +1892,29 @@ class Ver2TierBIntegrator:
             dt = float(eta_samples[index + 1] - eta_samples[index])
             if dt <= 0.0:
                 raise ValueError("eta grid must be strictly increasing for coupled auxiliary history sampling")
-            drive = current_sample.drive(state_vector)
+            reduced_drive = current_sample.drive_subset(
+                state_vector,
+                projection_index_cache.auxiliary_coupled_rows,
+            )
             mass_diag = np.asarray(current_sample.mass_diag, dtype=np.float64)
             b_indices = projection_index_cache.harmonic_photon_B
+            b_rows_idx = projection_index_cache.auxiliary_photon_B_rows
             b_inv_mass = 1.0 / np.maximum(np.abs(mass_diag[b_indices]), 1.0e-30)
-            b_predict = np.asarray(b_prev, dtype=np.float64) + dt * b_inv_mass * drive[b_indices]
+            b_predict = np.asarray(b_prev, dtype=np.float64) + dt * b_inv_mass * reduced_drive[b_rows_idx]
             baryon_predict_by_mode_label = {}
             cdm_predict_by_mode_label = {}
             for mu, indices in projection_index_cache.baryon_by_mode_label.items():
                 current = np.asarray(baryon_prev_by_mode_label[str(mu)], dtype=np.float64)
                 inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
-                baryon_predict_by_mode_label[str(mu)] = current + dt * inv_mass * drive[indices]
+                baryon_predict_by_mode_label[str(mu)] = current + dt * inv_mass * reduced_drive[
+                    projection_index_cache.auxiliary_baryon_rows[str(mu)]
+                ]
             for mu, indices in projection_index_cache.cdm_by_mode_label.items():
                 current = np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
                 inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
-                cdm_predict_by_mode_label[str(mu)] = current + dt * inv_mass * drive[indices]
+                cdm_predict_by_mode_label[str(mu)] = current + dt * inv_mass * reduced_drive[
+                    projection_index_cache.auxiliary_cdm_rows[str(mu)]
+                ]
 
             next_sample = self._build_auxiliary_operator_sample(
                 eta=float(eta_samples[index + 1]),
@@ -1891,11 +1932,15 @@ class Ver2TierBIntegrator:
                 baryon_by_mode_label=baryon_predict_by_mode_label,
                 cdm_by_mode_label=cdm_predict_by_mode_label,
             )
-            drive_next = next_sample.drive(predictor_state_vector)
+            reduced_drive_next = next_sample.drive_subset(
+                predictor_state_vector,
+                projection_index_cache.auxiliary_coupled_rows,
+            )
             mass_diag_next = np.asarray(next_sample.mass_diag, dtype=np.float64)
             b_inv_mass_next = 1.0 / np.maximum(np.abs(mass_diag_next[b_indices]), 1.0e-30)
             b_next = np.asarray(b_prev, dtype=np.float64) + 0.5 * dt * (
-                b_inv_mass * drive[b_indices] + b_inv_mass_next * drive_next[b_indices]
+                b_inv_mass * reduced_drive[b_rows_idx]
+                + b_inv_mass_next * reduced_drive_next[b_rows_idx]
             )
             baryon_next_by_mode_label = {}
             cdm_next_by_mode_label = {}
@@ -1904,14 +1949,18 @@ class Ver2TierBIntegrator:
                 inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
                 inv_mass_next = 1.0 / np.maximum(np.abs(mass_diag_next[indices]), 1.0e-30)
                 baryon_next_by_mode_label[str(mu)] = current + 0.5 * dt * (
-                    inv_mass * drive[indices] + inv_mass_next * drive_next[indices]
+                    inv_mass * reduced_drive[projection_index_cache.auxiliary_baryon_rows[str(mu)]]
+                    + inv_mass_next
+                    * reduced_drive_next[projection_index_cache.auxiliary_baryon_rows[str(mu)]]
                 )
             for mu, indices in projection_index_cache.cdm_by_mode_label.items():
                 current = np.asarray(cdm_prev_by_mode_label[str(mu)], dtype=np.float64)
                 inv_mass = 1.0 / np.maximum(np.abs(mass_diag[indices]), 1.0e-30)
                 inv_mass_next = 1.0 / np.maximum(np.abs(mass_diag_next[indices]), 1.0e-30)
                 cdm_next_by_mode_label[str(mu)] = current + 0.5 * dt * (
-                    inv_mass * drive[indices] + inv_mass_next * drive_next[indices]
+                    inv_mass * reduced_drive[projection_index_cache.auxiliary_cdm_rows[str(mu)]]
+                    + inv_mass_next
+                    * reduced_drive_next[projection_index_cache.auxiliary_cdm_rows[str(mu)]]
                 )
             b_prev = b_next
             baryon_prev_by_mode_label = baryon_next_by_mode_label
@@ -1964,6 +2013,7 @@ class Ver2TierBIntegrator:
                 "reference_cdm_history": reference_cdm,
                 "coupling_passes": 2,
                 "integration_scheme": "predictor_corrector_trapezoidal",
+                "reduced_block_size": int(projection_index_cache.auxiliary_coupled_rows.size),
                 "coupled_sectors": ("ph_B", "baryon", "cdm"),
             },
         )
@@ -2169,6 +2219,8 @@ class Ver2TierBIntegrator:
                     {},
                 ).keys()
             ),
+            "layout_auxiliary_integration_scheme": str(coupled.metadata.get("integration_scheme", "")),
+            "layout_auxiliary_reduced_block_size": int(coupled.metadata.get("reduced_block_size", 0)),
         }
         return _RuntimeLayoutProjectionBundle(
             mode_ops=mode_ops,
@@ -2263,6 +2315,12 @@ class Ver2TierBIntegrator:
                         ).keys()
                     ),
                     "layout_auxiliary_coupling_passes": int(coupled.metadata["coupling_passes"]),
+                    "layout_auxiliary_integration_scheme": str(
+                        coupled.metadata.get("integration_scheme", "")
+                    ),
+                    "layout_auxiliary_reduced_block_size": int(
+                        coupled.metadata.get("reduced_block_size", 0)
+                    ),
                     "layout_auxiliary_bundle_owner": str(auxiliary_bundle.metadata["owner"]),
                     "layout_state_history_sample_count": int(auxiliary_bundle.layout_state_history.shape[0]),
                     "layout_state_history_size": int(auxiliary_bundle.layout_state_history.shape[1]),

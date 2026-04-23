@@ -316,6 +316,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution"
     )
     assert run.solver_output.metadata["layout_auxiliary_coupling_passes"] == 2
+    assert run.solver_output.metadata["layout_auxiliary_integration_scheme"] == (
+        "predictor_corrector_trapezoidal"
+    )
+    assert run.solver_output.metadata["layout_auxiliary_reduced_block_size"] > 0
     assert run.solver_output.metadata["layout_auxiliary_bundle_owner"] == (
         "ver2_native_integrator.layout_auxiliary_history_bundle"
     )
@@ -497,6 +501,12 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_b_mode_proxy_source"] == (
         "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution"
     )
+    assert registry["hierarchy_layout_gate"].metadata["projection_provenance"][
+        "layout_auxiliary_integration_scheme"
+    ] == "predictor_corrector_trapezoidal"
+    assert registry["hierarchy_layout_gate"].metadata["projection_provenance"][
+        "layout_auxiliary_reduced_block_size"
+    ] > 0
     assert set(run.trace.canonical_projection.covered_mode_labels) == {"m0", "m+2", "m-2"}
     assert run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
     assert run.trace.canonical_projection.sector_status["baryon"] == (
