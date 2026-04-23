@@ -2241,12 +2241,13 @@ class Ver2TierBIntegrator:
         y_left: np.ndarray,
         eta_right: float,
         y_right: np.ndarray,
-    ) -> np.ndarray:
+        affine_left: ReducedHarmonicAffineOperator | None = None,
+    ) -> tuple[np.ndarray, ReducedHarmonicAffineOperator | None]:
         if self._residual_harmonic_dof == 0:
-            return np.asarray(y_right, dtype=np.float64)
+            return np.asarray(y_right, dtype=np.float64), None
         dt = float(eta_right - eta_left)
         if dt == 0.0:
-            return np.asarray(y_right, dtype=np.float64)
+            return np.asarray(y_right, dtype=np.float64), affine_left
         (
             photon_T_left,
             photon_E_left,
@@ -2279,15 +2280,16 @@ class Ver2TierBIntegrator:
         )
         snapshot_left = self._eta_runtime_snapshot(float(eta_left))
         snapshot_right = self._eta_runtime_snapshot(float(eta_right))
-        affine_left = self._build_residual_harmonic_affine_operator(
-            snapshot=snapshot_left,
-            photon_T=photon_T_left,
-            photon_E=photon_E_left,
-            photon_B=photon_B_left,
-            neutrino_tower=neutrino_left,
-            baryon_local=baryon_left,
-            residual_local=residual_local_left,
-        )
+        if affine_left is None:
+            affine_left = self._build_residual_harmonic_affine_operator(
+                snapshot=snapshot_left,
+                photon_T=photon_T_left,
+                photon_E=photon_E_left,
+                photon_B=photon_B_left,
+                neutrino_tower=neutrino_left,
+                baryon_local=baryon_left,
+                residual_local=residual_local_left,
+            )
         system_left = self._residual_harmonic_sparse_identity - (dt * _ROS2_GAMMA) * affine_left.matrix
         lu_left = splu(system_left)
         rhs_left = np.asarray(
@@ -2321,15 +2323,18 @@ class Ver2TierBIntegrator:
             + _ROS2_M1 * k1
             + _ROS2_M2 * k2
         )
-        return _pack_radiation_state(
-            photon_T=photon_T_right,
-            photon_E=photon_E_right,
-            photon_B=photon_B_right,
-            neutrino_tower=neutrino_right,
-            baryon_local=baryon_right,
-            cdm_local=cdm_right,
-            residual_local=residual_local_right,
-            residual_harmonic=next_residual,
+        return (
+            _pack_radiation_state(
+                photon_T=photon_T_right,
+                photon_E=photon_E_right,
+                photon_B=photon_B_right,
+                neutrino_tower=neutrino_right,
+                baryon_local=baryon_right,
+                cdm_local=cdm_right,
+                residual_local=residual_local_right,
+                residual_harmonic=next_residual,
+            ),
+            affine_right,
         )
 
     def _rhs(
@@ -4261,6 +4266,7 @@ class Ver2TierBIntegrator:
         nlu = 0
         message = "The IMEX split executor successfully reached the end of the integration interval."
         y_current = np.asarray(y0, dtype=np.float64)
+        cached_residual_harmonic_affine: ReducedHarmonicAffineOperator | None = None
 
         for left, right in zip(eta_nodes[:-1], eta_nodes[1:]):
             eta_current = float(left)
@@ -4312,11 +4318,12 @@ class Ver2TierBIntegrator:
                         ):
                             trial_h *= 0.5
                             continue
-                        candidate = self._orthogonal_residual_harmonic_ros2_step(
+                        candidate, cached_residual_harmonic_affine = self._orthogonal_residual_harmonic_ros2_step(
                             eta_left=float(eta_left),
                             y_left=y_left,
                             eta_right=float(eta_next),
                             y_right=candidate,
+                            affine_left=cached_residual_harmonic_affine,
                         )
                         y_current = candidate
                         eta_current = float(eta_next)
@@ -4380,9 +4387,11 @@ class Ver2TierBIntegrator:
                         tca_tracker.append(False)
                     y_current = candidate
                     eta_current = float(eta_next)
+                    cached_residual_harmonic_affine = None
                     accepted = True
                     break
                 if not accepted:
+                    cached_residual_harmonic_affine = None
                     if abs(float(self.config.tilt_rapidity)) > 0.0:
                         fallback_sol = solve_ivp(
                             lambda eta, y: self._rhs(eta, y, tca_tracker=None),
@@ -4413,6 +4422,7 @@ class Ver2TierBIntegrator:
                                 tca_tracker.append(False)
                             y_current = np.asarray(fallback_sol.y[:, -1], dtype=np.float64)
                             eta_current = float(eta_target)
+                            cached_residual_harmonic_affine = None
                             accepted = True
                             continue
                     raise RuntimeError(
