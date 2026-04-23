@@ -401,6 +401,10 @@ def test_native_output_promotes_auxiliary_b_mode_runtime_payload() -> None:
                 "B": b_coefficients,
                 "eta": np.array([0.1, 0.2], dtype=np.float64),
                 "B_history": np.vstack([np.zeros(size, dtype=np.float64), b_coefficients]),
+                "mode_label_blocks": {"m0": b_coefficients},
+                "mode_label_history": {
+                    "m0": np.vstack([np.zeros(size, dtype=np.float64), b_coefficients])
+                },
             }
         ),
         sector_status={"ph_B": "layout_operator_auxiliary_b_mode_history"},
@@ -408,6 +412,8 @@ def test_native_output_promotes_auxiliary_b_mode_runtime_payload() -> None:
             "projection_mode": "single_live_mode_label_with_layout_auxiliary_local_matter_blocks",
             "b_history_available": True,
             "b_history_sample_count": 2,
+            "b_mode_labels": ["m0"],
+            "b_history_mode_labels": ["m0"],
             "resolved_sector_order": ("ph_I", "ph_E", "ph_B", "nu_I"),
             "matter_block_labels": {},
         },
@@ -440,6 +446,8 @@ def test_native_output_promotes_auxiliary_b_mode_runtime_payload() -> None:
     assert output.alm_B["available"] is True
     assert output.metadata["canonical_projection_b_history_available"] is True
     assert output.metadata["canonical_projection_b_history_sample_count"] == 2
+    assert output.metadata["canonical_projection_b_mode_labels"] == ["m0"]
+    assert output.metadata["canonical_projection_b_history_mode_labels"] == ["m0"]
 
 
 def test_native_output_blocks_readiness_when_backend_verification_bundle_is_unresolved() -> None:

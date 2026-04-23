@@ -438,6 +438,10 @@ def test_project_runtime_native_state_can_embed_postprocessed_b_mode_proxy() -> 
     assert projection.metadata["resolved_sector_order"] == ("ph_I", "ph_E", "ph_B", "nu_I", "src")
     assert projection.metadata["b_history_available"] is True
     assert projection.metadata["b_history_sample_count"] == 2
+    assert set(projection.metadata["b_mode_labels"]) == {"m0", "m+2"}
+    assert set(projection.metadata["b_history_mode_labels"]) == {"m0", "m+2"}
     assert projection.state_vector[flatten(layout, "m0", "ph_B", 2, 1)] == pytest.approx(0.25)
     assert np.asarray(projection.hierarchy_state.photon_polarization_block["eta"]).shape == (2,)
     assert np.asarray(projection.hierarchy_state.photon_polarization_block["B_history"]).shape == (2, size)
+    assert set(projection.hierarchy_state.photon_polarization_block["mode_label_blocks"]) == {"m0", "m+2"}
+    assert set(projection.hierarchy_state.photon_polarization_block["mode_label_history"]) == {"m0", "m+2"}

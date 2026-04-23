@@ -2057,6 +2057,18 @@ class Ver2TierBIntegrator:
             "layout_b_mode_payload_available": bool(b_mode_payload_available),
             "layout_b_mode_payload_status": b_mode_sector_status,
             "layout_b_mode_proxy_source": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
+            "layout_b_mode_mode_labels": list(
+                canonical_projection.hierarchy_state.photon_polarization_block.get(
+                    "mode_label_blocks",
+                    {},
+                ).keys()
+            ),
+            "layout_b_mode_history_mode_labels": list(
+                canonical_projection.hierarchy_state.photon_polarization_block.get(
+                    "mode_label_history",
+                    {},
+                ).keys()
+            ),
         }
         return _RuntimeLayoutProjectionBundle(
             mode_ops=mode_ops,
@@ -2138,6 +2150,18 @@ class Ver2TierBIntegrator:
                     "layout_b_mode_proxy_norm": float(np.linalg.norm(b_mode_proxy)),
                     "layout_b_mode_proxy_source": "mode_ops.mass_inverse_coupled_auxiliary_sector_evolution",
                     "layout_b_mode_history_sample_count": int(b_history.shape[0]),
+                    "layout_b_mode_mode_labels": list(
+                        canonical_projection.hierarchy_state.photon_polarization_block.get(
+                            "mode_label_blocks",
+                            {},
+                        ).keys()
+                    ),
+                    "layout_b_mode_history_mode_labels": list(
+                        canonical_projection.hierarchy_state.photon_polarization_block.get(
+                            "mode_label_history",
+                            {},
+                        ).keys()
+                    ),
                     "layout_auxiliary_coupling_passes": int(coupled.metadata["coupling_passes"]),
                     "layout_auxiliary_bundle_owner": str(auxiliary_bundle.metadata["owner"]),
                     "layout_projection_owner": "ver2_native_integrator.build_runtime_layout_projection",

@@ -31,10 +31,17 @@ class HierarchyState:
     def __post_init__(self) -> None:
         photon_intensity = np.asarray(self.photon_intensity_block, dtype=np.float64)
         neutrino = np.asarray(self.neutrino_block, dtype=np.float64)
-        polarization = {
-            key: np.asarray(value, dtype=np.float64)
-            for key, value in dict(self.photon_polarization_block).items()
-        }
+        polarization = {}
+        for key, value in dict(self.photon_polarization_block).items():
+            if value is None:
+                polarization[key] = None
+            elif isinstance(value, Mapping):
+                polarization[key] = {
+                    subkey: None if subvalue is None else np.asarray(subvalue, dtype=np.float64)
+                    for subkey, subvalue in dict(value).items()
+                }
+            else:
+                polarization[key] = np.asarray(value, dtype=np.float64)
         object.__setattr__(self, "matter_block", dict(self.matter_block))
         object.__setattr__(self, "photon_intensity_block", photon_intensity)
         object.__setattr__(self, "photon_polarization_block", polarization)
@@ -108,6 +115,63 @@ def _extract_local_sector_by_mode_label(
         str(mu): _extract_local_sector(layout, vector, mu=str(mu), sector=sector)
         for mu in layout.mode_labels
     }
+
+
+def _extract_harmonic_sector(
+    layout: HierarchyLayout,
+    vector: np.ndarray,
+    *,
+    mu: str,
+    sector: str,
+) -> np.ndarray:
+    return np.array(
+        [
+            float(vector[flatten(layout, mu, sector, ell, m)])
+            for ell in range(layout.ell_max + 1)
+            for m in range(-ell, ell + 1)
+        ],
+        dtype=np.float64,
+    )
+
+
+def _extract_harmonic_sector_by_mode_label(
+    layout: HierarchyLayout,
+    vector: np.ndarray,
+    *,
+    sector: str,
+) -> dict[str, np.ndarray]:
+    return {
+        str(mu): _extract_harmonic_sector(layout, vector, mu=str(mu), sector=sector)
+        for mu in layout.mode_labels
+    }
+
+
+def _resolve_harmonic_history_by_mode_label(
+    layout: HierarchyLayout,
+    history_samples: np.ndarray,
+    *,
+    covered: str,
+    sector: str,
+) -> dict[str, np.ndarray]:
+    samples = np.asarray(history_samples, dtype=np.float64)
+    if samples.ndim != 2:
+        raise ValueError("harmonic history samples must be rank-2")
+    expected_width = (layout.ell_max + 1) ** 2
+    if samples.shape[1] != expected_width:
+        raise ValueError("harmonic history samples do not match layout harmonic width")
+    payload = {
+        str(mu): np.zeros_like(samples)
+        for mu in layout.mode_labels
+    }
+    for ell in range(layout.ell_max + 1):
+        offset = sum(2 * l + 1 for l in range(ell))
+        for m in range(-ell, ell + 1):
+            slot = offset + (m + ell)
+            mode_label = _resolve_runtime_mode_label(layout, covered, m=m)
+            idx = flatten(layout, mode_label, sector, ell, m)
+            payload[str(mode_label)][:, slot] = samples[:, slot]
+            _ = idx
+    return payload
 
 
 def _stable_l2_norm(value: np.ndarray) -> float:
@@ -226,6 +290,20 @@ def project_runtime_native_state(
             vector[flatten(layout, mode_label, "ph_E", ell, m)] = float(tower_E[slot])
             vector[flatten(layout, mode_label, "ph_B", ell, m)] = float(tower_B[slot])
             vector[flatten(layout, mode_label, "nu_I", ell, m)] = float(tower_nu[slot])
+
+    polarization_blocks_by_mode_label = _extract_harmonic_sector_by_mode_label(
+        layout,
+        vector,
+        sector="ph_B",
+    )
+    polarization_history_by_mode_label = {}
+    if b_history is not None:
+        polarization_history_by_mode_label = _resolve_harmonic_history_by_mode_label(
+            layout,
+            b_history,
+            covered=covered,
+            sector="ph_B",
+        )
 
     matter_eta = None if matter_history_eta is None else np.asarray(matter_history_eta, dtype=np.float64)
     baryon_history = (
@@ -395,6 +473,8 @@ def project_runtime_native_state(
             "B": tower_B,
             "eta": b_history_eta,
             "B_history": b_history,
+            "mode_label_blocks": polarization_blocks_by_mode_label,
+            "mode_label_history": polarization_history_by_mode_label,
         },
         neutrino_block=tower_nu,
         source_history_block={
@@ -467,6 +547,8 @@ def project_runtime_native_state(
             "source_history_mode_labels": list(source_history_payload.keys()),
             "b_history_available": bool(b_history is not None),
             "b_history_sample_count": 0 if b_history is None else int(b_history.shape[0]),
+            "b_mode_labels": list(polarization_blocks_by_mode_label.keys()),
+            "b_history_mode_labels": list(polarization_history_by_mode_label.keys()),
             "matter_history_available": bool(baryon_history is not None and cdm_history is not None),
             "matter_history_sample_count": 0 if baryon_history is None else int(baryon_history.shape[0]),
             "matter_mode_labels": list(layout.mode_labels),

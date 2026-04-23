@@ -954,6 +954,12 @@ def build_solver_core_output_from_native_result(
             "layout_b_mode_history_sample_count": int(
                 result.solver_info.get("layout_b_mode_history_sample_count", 0)
             ),
+            "layout_b_mode_mode_labels": list(
+                result.solver_info.get("layout_b_mode_mode_labels", [])
+            ),
+            "layout_b_mode_history_mode_labels": list(
+                result.solver_info.get("layout_b_mode_history_mode_labels", [])
+            ),
             "layout_auxiliary_coupling_passes": int(
                 result.solver_info.get("layout_auxiliary_coupling_passes", 0)
             ),
@@ -1068,6 +1074,12 @@ def build_solver_core_output_from_native_result(
             "canonical_projection_b_history_sample_count": 0
             if canonical_projection is None
             else int(getattr(canonical_projection, "metadata", {}).get("b_history_sample_count", 0)),
+            "canonical_projection_b_mode_labels": []
+            if canonical_projection is None
+            else list(getattr(canonical_projection, "metadata", {}).get("b_mode_labels", ())),
+            "canonical_projection_b_history_mode_labels": []
+            if canonical_projection is None
+            else list(getattr(canonical_projection, "metadata", {}).get("b_history_mode_labels", ())),
             "canonical_projection_source_mode_labels": []
             if canonical_projection is None
             else list(getattr(canonical_projection, "metadata", {}).get("source_mode_labels", ())),

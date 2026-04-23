@@ -141,6 +141,12 @@ def _default_alm_features(
         "canonical_projection_covered_mode_labels": list(
             solver_output.metadata.get("canonical_projection_covered_mode_labels", [])
         ),
+        "canonical_projection_b_mode_labels": list(
+            solver_output.metadata.get("canonical_projection_b_mode_labels", [])
+        ),
+        "canonical_projection_b_history_mode_labels": list(
+            solver_output.metadata.get("canonical_projection_b_history_mode_labels", [])
+        ),
         "canonical_projection_source_mode_labels": list(
             solver_output.metadata.get("canonical_projection_source_mode_labels", [])
         ),
