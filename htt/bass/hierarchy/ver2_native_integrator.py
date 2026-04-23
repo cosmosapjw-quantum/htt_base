@@ -2161,6 +2161,43 @@ class Ver2TierBIntegrator:
             dtype=np.float64,
         )
 
+    def _exact_residual_joint_rhs(
+        self,
+        *,
+        snapshot: _EtaRuntimeSnapshot,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        photon_B: PSTFHierarchyState,
+        neutrino_tower: PSTFHierarchyState,
+        baryon_local: np.ndarray,
+        residual_local: np.ndarray,
+        residual_harmonic: np.ndarray,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        affine = self._build_residual_joint_affine_operator(
+            snapshot=snapshot,
+            photon_T=photon_T,
+            photon_E=photon_E,
+            photon_B=photon_B,
+            neutrino_tower=neutrino_tower,
+            baryon_local=baryon_local,
+        )
+        rhs = np.asarray(
+            affine.matrix
+            @ np.concatenate(
+                [
+                    np.asarray(residual_local, dtype=np.float64),
+                    np.asarray(residual_harmonic, dtype=np.float64),
+                ],
+                dtype=np.float64,
+            )
+            + affine.bias,
+            dtype=np.float64,
+        )
+        return (
+            np.asarray(rhs[: self._residual_local_dof], dtype=np.float64),
+            np.asarray(rhs[self._residual_local_dof :], dtype=np.float64),
+        )
+
     def _residual_mode_label_harmonic_rhs(
         self,
         *,
@@ -2633,19 +2670,8 @@ class Ver2TierBIntegrator:
             theta_1=_theta_1_from_temperature_state(photon_T),
             theta_1_dot=float(rhs_T[sum(2 * ell + 1 for ell in range(1)) + 1]) if self.config.L_max >= 1 else 0.0,
         )
-        residual_rhs = self._residual_mode_label_local_rhs(
-            snapshot=snapshot,
-            photon_T=photon_T,
-            photon_E=photon_E,
-            photon_B=photon_B,
-            neutrino_tower=neutrino_tower,
-            baryon_local=baryon_local,
-            cdm_local=cdm_local,
-            residual_local=residual_local,
-            residual_harmonic=residual_harmonic,
-        )
-        residual_harmonic_rhs = (
-            self._exact_residual_harmonic_rhs(
+        if str(self.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+            residual_rhs, residual_harmonic_rhs = self._exact_residual_joint_rhs(
                 snapshot=snapshot,
                 photon_T=photon_T,
                 photon_E=photon_E,
@@ -2655,9 +2681,19 @@ class Ver2TierBIntegrator:
                 residual_local=residual_local,
                 residual_harmonic=residual_harmonic,
             )
-            if str(self.config.solver_method).upper() != "IMEX_MIDPOINT_BDF"
-            else np.zeros(self._residual_harmonic_dof, dtype=np.float64)
-        )
+        else:
+            residual_rhs = self._residual_mode_label_local_rhs(
+                snapshot=snapshot,
+                photon_T=photon_T,
+                photon_E=photon_E,
+                photon_B=photon_B,
+                neutrino_tower=neutrino_tower,
+                baryon_local=baryon_local,
+                cdm_local=cdm_local,
+                residual_local=residual_local,
+                residual_harmonic=residual_harmonic,
+            )
+            residual_harmonic_rhs = np.zeros(self._residual_harmonic_dof, dtype=np.float64)
         return np.concatenate(
             [
                 rhs_T,
