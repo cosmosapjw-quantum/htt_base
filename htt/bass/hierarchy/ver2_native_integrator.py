@@ -3757,6 +3757,55 @@ class Ver2TierBIntegrator:
                 },
                 dict(metadata),
             )
+        cached_rows_only = getattr(result, "source_history", None)
+        residual_source_history = getattr(result, "residual_source_history", None)
+        if cached_rows_only is not None and residual_source_history is not None:
+            covered = (
+                self._layout_covered_mode_label
+                if covered_mode_label is None
+                else str(covered_mode_label)
+            )
+            row_arr = np.asarray(cached_rows_only, dtype=np.float64)
+            residual_arr = np.asarray(residual_source_history, dtype=np.float64)
+            eta_arr = np.asarray(result.eta, dtype=np.float64)
+            source_width = int(self._layout.sector_local_dofs["src"])
+            if (
+                row_arr.ndim == 2
+                and row_arr.shape[0] == eta_arr.size
+                and row_arr.shape[1] == source_width
+                and residual_arr.ndim == 2
+                and residual_arr.shape[0] == eta_arr.size
+            ):
+                source_rows_by_mode_label = {str(covered): np.asarray(row_arr, dtype=np.float64)}
+                offset = 0
+                for mu in self._residual_mode_labels:
+                    source_rows_by_mode_label[str(mu)] = np.asarray(
+                        residual_arr[:, offset : offset + source_width],
+                        dtype=np.float64,
+                    )
+                    offset += source_width
+                metadata_out = {
+                    "owner": "ver2_native_integrator.main_state_source_history",
+                    "covered_owner": "ver2_native_integrator.main_state_covered_source",
+                    "residual_owner": "ver2_native_integrator.main_state_mode_label_source",
+                    "history_sample_count": int(eta_arr.size),
+                    "covered_mode_label": str(covered),
+                    "mode_labels": list(self._layout.mode_labels),
+                    "integration_scheme": "main_state_coevolved",
+                }
+                result.source_history_by_mode_label = {
+                    str(mu): np.asarray(values, dtype=np.float64)
+                    for mu, values in source_rows_by_mode_label.items()
+                }
+                result.solver_info["live_source_history_metadata"] = dict(metadata_out)
+                return (
+                    np.asarray(row_arr, dtype=np.float64),
+                    {
+                        str(mu): np.asarray(values, dtype=np.float64)
+                        for mu, values in result.source_history_by_mode_label.items()
+                    },
+                    metadata_out,
+                )
         source_rows, source_rows_by_mode_label, metadata_out = self._compute_live_source_history_payload(
             eta_samples=np.asarray(result.eta, dtype=np.float64),
             photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
