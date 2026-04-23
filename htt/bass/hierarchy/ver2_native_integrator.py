@@ -2098,6 +2098,32 @@ class Ver2TierBIntegrator:
             baryon_by_mode_label=baryon_by_mode_label,
         )
 
+    def _exact_residual_harmonic_rhs(
+        self,
+        *,
+        snapshot: _EtaRuntimeSnapshot,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        photon_B: PSTFHierarchyState,
+        neutrino_tower: PSTFHierarchyState,
+        baryon_local: np.ndarray,
+        residual_local: np.ndarray,
+        residual_harmonic: np.ndarray,
+    ) -> np.ndarray:
+        affine = self._build_residual_harmonic_affine_operator(
+            snapshot=snapshot,
+            photon_T=photon_T,
+            photon_E=photon_E,
+            photon_B=photon_B,
+            neutrino_tower=neutrino_tower,
+            baryon_local=baryon_local,
+            residual_local=residual_local,
+        )
+        return np.asarray(
+            affine.matrix @ np.asarray(residual_harmonic, dtype=np.float64) + affine.bias,
+            dtype=np.float64,
+        )
+
     def _residual_mode_label_harmonic_rhs(
         self,
         *,
@@ -2395,7 +2421,7 @@ class Ver2TierBIntegrator:
             residual_local=residual_local,
         )
         residual_harmonic_rhs = (
-            self._residual_mode_label_harmonic_rhs(
+            self._exact_residual_harmonic_rhs(
                 snapshot=snapshot,
                 photon_T=photon_T,
                 photon_E=photon_E,
