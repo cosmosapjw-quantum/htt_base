@@ -1014,6 +1014,7 @@ def assemble_implicit_block(
     local_drag_scale = float(scales["local_drag_scale"])
     collision_scale = float(scales["collision_scale"])
     twist_scale = float(scales["twist_scale"])
+    cross_mode_scale = float(scales["cross_mode_scale"])
     mode_plus_scale = float(scales["mode_plus_scale"])
     mode_minus_scale = float(scales["mode_minus_scale"])
     rows: list[int] = []
@@ -1086,10 +1087,49 @@ def assemble_implicit_block(
                     (
                         0.08 * mu_weight * local_drag_scale * gamma_t,
                         -0.06 * mu_weight * local_drag_scale * gamma_t,
-                        0.06 * mu_weight * twist_scale * local_drag_scale * gamma_t,
-                        -0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t,
-                    )
+                    0.06 * mu_weight * twist_scale * local_drag_scale * gamma_t,
+                    -0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t,
                 )
+            )
+        target_labels = _mode_label_coupling_targets(
+            tuple(str(x) for x in layout.mode_labels),
+            str(mu),
+            family=backend.family_spec.family,
+        )
+        if target_labels:
+            target_norm = float(len(target_labels))
+            if layout.sector_local_dofs["src"] > 1:
+                for target_mu in target_labels:
+                    src_dipole_idx = flatten(layout, target_mu, "src", None, None, 1)
+                    rows.append(dipole_idx)
+                    cols.append(src_dipole_idx)
+                    data.append(0.05 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm)
+            if layout.ell_max >= 2:
+                quad_idx = flatten(layout, mu, "ph_E", 2, 0)
+                if layout.sector_local_dofs["src"] > 0:
+                    for target_mu in target_labels:
+                        src_idx = flatten(layout, target_mu, "src", None, None, 0)
+                        rows.append(quad_idx)
+                        cols.append(src_idx)
+                        data.append(0.07 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm)
+                if layout.sector_local_dofs["src"] > 2:
+                    b_quad_idx = flatten(layout, mu, "ph_B", 2, 0)
+                    for target_mu in target_labels:
+                        src_pol_idx = flatten(layout, target_mu, "src", None, None, 2)
+                        rows.extend((quad_idx, b_quad_idx))
+                        cols.extend((src_pol_idx, src_pol_idx))
+                        data.extend(
+                            (
+                                0.04 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm,
+                                0.03
+                                * mu_weight
+                                * twist_scale
+                                * cross_mode_scale
+                                * local_drag_scale
+                                * gamma_t
+                                / target_norm,
+                            )
+                        )
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -1279,6 +1319,17 @@ def evaluate_reduced_harmonic_rhs(
             )
             for target_mu in target_labels
         )
+        target_sources: tuple[np.ndarray, ...] = tuple(
+            np.asarray(
+                (
+                    default_source_blocks[target_mu]
+                    if source_by_mode_label is None
+                    else source_by_mode_label.get(target_mu, default_source_blocks[target_mu])
+                ),
+                dtype=np.float64,
+            )
+            for target_mu in target_labels
+        )
         for name, arr in (
             ("photon_T", t_state),
             ("photon_E", e_state),
@@ -1405,6 +1456,18 @@ def evaluate_reduced_harmonic_rhs(
                         t_drive += -0.25 * mu_weight * local_drag_scale * gamma_t * float(baryon_state[1])
                     if src_width > 1:
                         t_drive += 0.10 * mu_weight * local_drag_scale * gamma_t * float(src_state[1])
+                    if target_sources and src_width > 1:
+                        target_norm = float(len(target_sources))
+                        for target_src in target_sources:
+                            t_drive += (
+                                0.05
+                                * mu_weight
+                                * local_drag_scale
+                                * gamma_t
+                                * cross_mode_scale
+                                * float(target_src[1])
+                                / target_norm
+                            )
                 if ell == 2 and m == 0:
                     e_drive += mu_weight * source_scale * polarization_amp
                     b_drive += mu_weight * twist_scale * cross_mode_scale * polarization_amp
@@ -1420,6 +1483,39 @@ def evaluate_reduced_harmonic_rhs(
                             * gamma_t
                             * float(src_state[2])
                         )
+                    if target_sources:
+                        target_norm = float(len(target_sources))
+                        for target_src in target_sources:
+                            if src_width > 0:
+                                e_drive += (
+                                    0.07
+                                    * mu_weight
+                                    * local_drag_scale
+                                    * gamma_t
+                                    * cross_mode_scale
+                                    * float(target_src[0])
+                                    / target_norm
+                                )
+                            if src_width > 2:
+                                e_drive += (
+                                    0.04
+                                    * mu_weight
+                                    * local_drag_scale
+                                    * gamma_t
+                                    * cross_mode_scale
+                                    * float(target_src[2])
+                                    / target_norm
+                                )
+                                b_drive += (
+                                    0.03
+                                    * mu_weight
+                                    * twist_scale
+                                    * local_drag_scale
+                                    * gamma_t
+                                    * cross_mode_scale
+                                    * float(target_src[2])
+                                    / target_norm
+                                )
 
                 t_rhs[slot] = t_drive / _mass_weight(mu_weight=mu_weight, sector="ph_I", ell=ell)
                 e_rhs[slot] = e_drive / _mass_weight(mu_weight=mu_weight, sector="ph_E", ell=ell)
@@ -1638,10 +1734,48 @@ def build_reduced_harmonic_affine_operator(
                 next_e = np.asarray(photon_E_by_mode_label.get(target_label, zeros_h), dtype=np.float64)
                 next_b = np.asarray(photon_B_by_mode_label.get(target_label, zeros_h), dtype=np.float64)
                 next_nu = np.asarray(neutrino_by_mode_label.get(target_label, zeros_h), dtype=np.float64)
+                next_src = np.asarray(
+                    (
+                        default_source_blocks[target_label]
+                        if source_by_mode_label is None
+                        else source_by_mode_label.get(target_label, default_source_blocks[target_label])
+                    ),
+                    dtype=np.float64,
+                )
                 bias[row_start + t_off : row_start + t_off + width] += (cross_t / target_norm) * next_t
                 bias[row_start + e_off : row_start + e_off + width] += (cross_e / target_norm) * next_e
                 bias[row_start + b_off : row_start + b_off + width] += (cross_b / target_norm) * next_b
                 bias[row_start + nu_off : row_start + nu_off + width] += (cross_nu / target_norm) * next_nu
+                if structure.dipole_slot is not None and src_width > 1:
+                    dipole_slot = structure.dipole_slot
+                    bias[row_start + t_off + dipole_slot] += (
+                        inv_t[dipole_slot]
+                        * (0.05 * local_drag_scale * gamma_t * cross_mode_scale * float(next_src[1]) / target_norm)
+                    )
+                if structure.quadrupole_slot is not None:
+                    quad_slot = structure.quadrupole_slot
+                    if src_width > 0:
+                        bias[row_start + e_off + quad_slot] += (
+                            inv_e[quad_slot]
+                            * (0.07 * local_drag_scale * gamma_t * cross_mode_scale * float(next_src[0]) / target_norm)
+                        )
+                    if src_width > 2:
+                        bias[row_start + e_off + quad_slot] += (
+                            inv_e[quad_slot]
+                            * (0.04 * local_drag_scale * gamma_t * cross_mode_scale * float(next_src[2]) / target_norm)
+                        )
+                        bias[row_start + b_off + quad_slot] += (
+                            inv_b[quad_slot]
+                            * (
+                                0.03
+                                * twist_scale
+                                * local_drag_scale
+                                * gamma_t
+                                * cross_mode_scale
+                                * float(next_src[2])
+                                / target_norm
+                            )
+                        )
 
         bias[row_start + t_off + structure.monopole_slot] += inv_t[structure.monopole_slot] * source_scale * visibility_amp
         if structure.dipole_slot is not None:

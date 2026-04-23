@@ -716,6 +716,59 @@ def test_reduced_joint_affine_operator_matches_direct_local_and_harmonic_evaluat
     np.testing.assert_allclose(applied, direct)
 
 
+def test_reduced_joint_affine_operator_consumes_live_covered_source_state() -> None:
+    backend = build_backend(
+        get_family_spec("I"),
+        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    layout = build_hierarchy_layout(backend, truncation)
+    width = (layout.ell_max + 1) ** 2
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 0.4},
+        "sigma_tensor": np.zeros((3, 3), dtype=np.float64),
+        "source_tables": {},
+    }
+    empty_h = {str(mu): np.zeros(width, dtype=np.float64) for mu in layout.mode_labels}
+    baryon = {str(mu): np.zeros(4, dtype=np.float64) for mu in layout.mode_labels}
+    source_zero = {
+        "m0": np.zeros(3, dtype=np.float64),
+        "m+2": np.zeros(3, dtype=np.float64),
+        "m-2": np.zeros(3, dtype=np.float64),
+    }
+    source_live = {
+        "m0": np.array([0.25, -0.15, 0.35], dtype=np.float64),
+        "m+2": np.zeros(3, dtype=np.float64),
+        "m-2": np.zeros(3, dtype=np.float64),
+    }
+    affine_zero = build_reduced_joint_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=("m+2", "m-2"),
+        photon_T_by_mode_label=empty_h,
+        photon_E_by_mode_label=empty_h,
+        photon_B_by_mode_label=empty_h,
+        neutrino_by_mode_label=empty_h,
+        baryon_by_mode_label=baryon,
+        source_by_mode_label=source_zero,
+    )
+    affine_live = build_reduced_joint_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=("m+2", "m-2"),
+        photon_T_by_mode_label=empty_h,
+        photon_E_by_mode_label=empty_h,
+        photon_B_by_mode_label=empty_h,
+        neutrino_by_mode_label=empty_h,
+        baryon_by_mode_label=baryon,
+        source_by_mode_label=source_live,
+    )
+    assert np.linalg.norm(np.asarray(affine_live.bias - affine_zero.bias, dtype=np.float64)) > 0.0
+
+
 def test_reduced_harmonic_rhs_can_reconstruct_source_local_block_from_source_tables() -> None:
     backend = build_backend(
         get_family_spec("I"),

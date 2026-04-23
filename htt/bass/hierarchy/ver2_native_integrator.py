@@ -2155,6 +2155,7 @@ class Ver2TierBIntegrator:
         photon_B: PSTFHierarchyState,
         neutrino_tower: PSTFHierarchyState,
         baryon_local: np.ndarray,
+        source_local: np.ndarray,
         residual_local: np.ndarray,
         residual_harmonic: np.ndarray,
         residual_source: np.ndarray,
@@ -2166,7 +2167,7 @@ class Ver2TierBIntegrator:
             photon_B=photon_B,
             neutrino_tower=neutrino_tower,
             baryon_local=baryon_local,
-            source_local=None,
+            source_local=source_local,
         )
         rhs = np.asarray(
             affine.matrix
@@ -2516,6 +2517,7 @@ class Ver2TierBIntegrator:
                 photon_B=photon_B,
                 neutrino_tower=neutrino_tower,
                 baryon_local=baryon_local,
+                source_local=source_local,
                 residual_local=residual_local,
                 residual_harmonic=residual_harmonic,
                 residual_source=residual_source,
