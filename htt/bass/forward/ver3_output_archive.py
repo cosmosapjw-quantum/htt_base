@@ -27,6 +27,7 @@ __all__ = [
     "output_split_gate_bundle",
     "resolve_output_gate_registry",
     "write_output_archive",
+    "write_family_residual_archive",
 ]
 
 
@@ -491,3 +492,48 @@ def write_output_archive(
         "alm_stoch.npz": str(stoch_path),
         "alm_boost.npz": str(boost_path),
     }
+
+
+def write_family_residual_archive(
+    family_residual_packs: Mapping[str, Any],
+    outdir: str | Path,
+    *,
+    filename: str = "family_residuals.json",
+) -> str:
+    """Sidecar writer for the v5 PR-08 family-backend_gate evidence.
+
+    Accepts a mapping ``{family: ResidualPack}`` (as returned by
+    ``bass.los.families.residual_report.build_family_residual_packs``)
+    and writes a JSON file next to the other archive outputs. Each
+    pack is serialized via ``ResidualPack.as_payload()``.
+
+    The file is emitted separately from ``write_output_archive`` so that
+    callers with no family-backend surface can skip it without forcing
+    a contract change on ``SolverCoreOutput``.
+
+    Returns
+    -------
+    str
+        Absolute path of the written JSON file.
+    """
+    root = Path(outdir)
+    root.mkdir(parents=True, exist_ok=True)
+    path = root / filename
+    payload = {
+        family: (
+            pack.as_payload() if hasattr(pack, "as_payload") else dict(pack)
+        )
+        for family, pack in family_residual_packs.items()
+    }
+    summary = {
+        "family_count": len(payload),
+        "all_passed": all(
+            bool(entry.get("passed", False)) for entry in payload.values()
+        ),
+        "families": sorted(payload),
+    }
+    path.write_text(
+        json.dumps({"summary": summary, "packs": payload}, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return str(path)

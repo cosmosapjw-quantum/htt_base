@@ -14,6 +14,7 @@ __all__ = [
     "summarize_gate_status",
     "hard_gate_before_fitting",
     "score_branch_readiness",
+    "family_backend_gate_bundle_from_packs",
 ]
 
 
@@ -306,3 +307,91 @@ def score_branch_readiness(gates: Mapping[str, object]) -> int:
     if consecutive <= len(GATE_LADDER) - 1:
         return 8
     return 10
+
+
+def family_backend_gate_bundle_from_packs(
+    family_residual_packs: Mapping[str, Any],
+    *,
+    gate_name: str = "family_backend_gate",
+) -> GateBundle:
+    """Build a ``family_backend_gate`` evidence bundle from per-family packs.
+
+    Given the mapping returned by
+    ``bass.los.families.residual_report.build_family_residual_packs``,
+    collapse it into the single ``GateBundle`` shape consumed by
+    ``hard_gate_before_fitting``.
+
+    The bundle ``passed`` is the logical AND of every pack's ``passed``,
+    plus a requirement that every family in ``KNOWN_FAMILIES`` is
+    present. Missing families drive ``passed = False`` with their names
+    recorded in ``metadata['missing_families']``.
+
+    Parameters
+    ----------
+    family_residual_packs
+        Mapping ``{family: ResidualPack | dict}``. If an entry has an
+        ``as_payload()`` method it is called; otherwise the entry is
+        treated as an already-serialized payload dict.
+
+    Returns
+    -------
+    GateBundle
+        Ready to drop into a ``gate_registry`` under the
+        ``family_backend_gate`` key.
+    """
+    from bass.los.families import KNOWN_FAMILIES
+
+    payload_by_family: dict[str, Mapping[str, Any]] = {}
+    for family, pack in family_residual_packs.items():
+        if hasattr(pack, "as_payload"):
+            payload_by_family[family] = pack.as_payload()
+        else:
+            payload_by_family[family] = dict(pack)
+
+    missing = tuple(sorted(set(KNOWN_FAMILIES) - set(payload_by_family)))
+    all_passed = bool(payload_by_family) and all(
+        bool(entry.get("passed", False)) for entry in payload_by_family.values()
+    )
+    passed = all_passed and not missing
+
+    # Aggregate residual/shortcut evidence across families.
+    aggregated_residuals: dict[str, object] = {}
+    aggregated_shortcuts: dict[str, object] = {}
+    for family, entry in payload_by_family.items():
+        for label, value in entry.get("residual_values", {}).items():
+            aggregated_residuals[f"{family}:{label}"] = value
+        violations = entry.get("forbidden_shortcut_violations", [])
+        if violations:
+            aggregated_shortcuts[family] = list(violations)
+
+    return make_gate_bundle(
+        gate_name,
+        family="+".join(sorted(payload_by_family)) or "unspecified",
+        branch="aggregated_family_backend",
+        backend="bass.los.families.residual_report",
+        truncation={family: entry.get("metadata", {}).get("truncation_xi_max")
+                    or entry.get("metadata", {}).get("truncation_half_width")
+                    or entry.get("metadata", {}).get("radial_cutoff_R")
+                    for family, entry in payload_by_family.items()},
+        residual_summary=aggregated_residuals,
+        known_limit_checks={
+            family: entry.get("verification_crosscheck_pass", False)
+            for family, entry in payload_by_family.items()
+        },
+        forbidden_shortcut_checks=aggregated_shortcuts,
+        metadata={
+            "family_count": len(payload_by_family),
+            "missing_families": list(missing),
+            "all_passed": all_passed,
+            "per_family_passed": {
+                family: bool(entry.get("passed", False))
+                for family, entry in payload_by_family.items()
+            },
+        },
+        passed=passed,
+        opened_claim=(
+            "all 11 families produced passing ResidualPacks"
+            if passed
+            else "family_backend_gate requires every KNOWN_FAMILIES pack to pass"
+        ),
+    )

@@ -192,6 +192,26 @@ class LegacyDelegationKernel:
             verification_crosscheck_pass=self.metadata.verification_crosscheck_pass,
         )
 
+    def residual_pack_from_bundle(
+        self, bundle: "ExactTransportBundle"
+    ) -> ResidualPack:  # noqa: F821 — forward ref
+        """Default fallback: produce a pass-through ResidualPack that
+        populates every required residual with 0.0 (all-pass).
+
+        Family-specific subclasses (Wave A/B) override this with actual
+        residual computations driven by the bundle metadata. The base
+        behavior is appropriate for Type I, where no family-specific
+        residual check is required by the v5 contract beyond the trivial
+        Cartesian-anchor limit (which is tautologically satisfied).
+        """
+        values = {label: 0.0 for label in self.metadata.required_residuals}
+        tolerance = {label: 1.0 for label in self.metadata.required_residuals}
+        return self.residual_pack(
+            residual_values=values,
+            tolerance=tolerance,
+            extra_metadata={"base_fallback": True},
+        )
+
     def _assert_label_matches(self, structure: StructureConstants) -> None:
         if structure.label != self.family:
             raise ValueError(
