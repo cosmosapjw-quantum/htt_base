@@ -46,6 +46,7 @@ class TierBCheckpointRecord:
     baryon_local_prefix: np.ndarray
     cdm_local_prefix: np.ndarray
     residual_local_prefix: np.ndarray
+    residual_harmonic_prefix: np.ndarray
 
     def __post_init__(self) -> None:
         if self.schema_version != _SCHEMA_VERSION:
@@ -85,6 +86,7 @@ class TierBCheckpointRecord:
             ("baryon_local_prefix", self.baryon_local_prefix),
             ("cdm_local_prefix", self.cdm_local_prefix),
             ("residual_local_prefix", self.residual_local_prefix),
+            ("residual_harmonic_prefix", self.residual_harmonic_prefix),
         ):
             arr = np.asarray(value, dtype=np.float64)
             if arr.ndim != 2 or arr.shape[0] != eta_prefix.size:
@@ -103,6 +105,7 @@ class TierBCheckpointRecord:
             baryon_local_prefix=np.asarray(self.baryon_local_prefix, dtype=np.float64),
             cdm_local_prefix=np.asarray(self.cdm_local_prefix, dtype=np.float64),
             residual_local_prefix=np.asarray(self.residual_local_prefix, dtype=np.float64),
+            residual_harmonic_prefix=np.asarray(self.residual_harmonic_prefix, dtype=np.float64),
         )
 
 
@@ -162,6 +165,7 @@ def write_tier_b_restart_checkpoint(
         baryon_local_prefix=np.asarray(restart_state.baryon_local_prefix, dtype=np.float64),
         cdm_local_prefix=np.asarray(restart_state.cdm_local_prefix, dtype=np.float64),
         residual_local_prefix=np.asarray(restart_state.residual_local_prefix, dtype=np.float64),
+        residual_harmonic_prefix=np.asarray(restart_state.residual_harmonic_prefix, dtype=np.float64),
     )
     return out
 
@@ -173,7 +177,12 @@ def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
         tower_size = (l_max + 1) ** 2
         base_state_size = 4 * tower_size + 6
         state_vector = np.asarray(data["state_vector"], dtype=np.float64)
-        residual_width = max(int(state_vector.size) - base_state_size, 0)
+        residual_local_prefix = (
+            np.asarray(data["residual_local_prefix"], dtype=np.float64)
+            if "residual_local_prefix" in data
+            else np.zeros((eta_prefix.shape[0], max(int(state_vector.size) - base_state_size, 0)), dtype=np.float64)
+        )
+        residual_width = max(int(state_vector.size) - base_state_size - int(residual_local_prefix.shape[1]), 0)
         return TierBCheckpointRecord(
             schema_version=str(np.asarray(data["schema_version"]).item()),
             bianchi_type=str(np.asarray(data["bianchi_type"]).item()),
@@ -216,9 +225,10 @@ def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
                 if "cdm_local_prefix" in data
                 else np.zeros((eta_prefix.shape[0], 2), dtype=np.float64)
             ),
-            residual_local_prefix=(
-                np.asarray(data["residual_local_prefix"], dtype=np.float64)
-                if "residual_local_prefix" in data
+            residual_local_prefix=residual_local_prefix,
+            residual_harmonic_prefix=(
+                np.asarray(data["residual_harmonic_prefix"], dtype=np.float64)
+                if "residual_harmonic_prefix" in data
                 else np.zeros((eta_prefix.shape[0], residual_width), dtype=np.float64)
             ),
         )

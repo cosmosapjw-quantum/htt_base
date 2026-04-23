@@ -555,6 +555,7 @@ class NativeTierBRestartState:
     baryon_local_prefix: np.ndarray
     cdm_local_prefix: np.ndarray
     residual_local_prefix: np.ndarray
+    residual_harmonic_prefix: np.ndarray
 
     def __post_init__(self) -> None:
         if self.step_index < 0:
@@ -575,6 +576,7 @@ class NativeTierBRestartState:
             ("baryon_local_prefix", self.baryon_local_prefix),
             ("cdm_local_prefix", self.cdm_local_prefix),
             ("residual_local_prefix", self.residual_local_prefix),
+            ("residual_harmonic_prefix", self.residual_harmonic_prefix),
         ):
             arr = np.asarray(value, dtype=np.float64)
             if arr.ndim != 2 or arr.shape[0] != eta_prefix.size:
@@ -755,6 +757,7 @@ def _pack_radiation_state(
     baryon_local: np.ndarray | None = None,
     cdm_local: np.ndarray | None = None,
     residual_local: np.ndarray | None = None,
+    residual_harmonic: np.ndarray | None = None,
 ) -> np.ndarray:
     b_mode = zero_hierarchy(photon_T.L) if photon_B is None else photon_B
     baryon = (
@@ -772,12 +775,19 @@ def _pack_radiation_state(
         if residual_local is None
         else np.asarray(residual_local, dtype=np.float64)
     )
+    residual_h = (
+        np.zeros(0, dtype=np.float64)
+        if residual_harmonic is None
+        else np.asarray(residual_harmonic, dtype=np.float64)
+    )
     if baryon.shape != (_BARYON_LOCAL_DOF,):
         raise ValueError(f"baryon_local must have shape ({_BARYON_LOCAL_DOF},)")
     if cdm.shape != (_CDM_LOCAL_DOF,):
         raise ValueError(f"cdm_local must have shape ({_CDM_LOCAL_DOF},)")
     if residual.ndim != 1:
         raise ValueError("residual_local must be a 1-D vector when provided")
+    if residual_h.ndim != 1:
+        raise ValueError("residual_harmonic must be a 1-D vector when provided")
     return np.concatenate(
         [
             pack_hierarchy(photon_T),
@@ -787,6 +797,7 @@ def _pack_radiation_state(
             baryon,
             cdm,
             residual,
+            residual_h,
         ]
     )
 
@@ -818,7 +829,11 @@ def _unpack_hierarchy_view(flat: np.ndarray, L: int) -> PSTFHierarchyState:
 
 
 def _unpack_radiation_state(
-    y: np.ndarray, L_max: int, *, residual_local_dof: int = 0
+    y: np.ndarray,
+    L_max: int,
+    *,
+    residual_local_dof: int = 0,
+    residual_harmonic_dof: int = 0,
 ) -> tuple[
     PSTFHierarchyState,
     PolarizationHierarchyState,
@@ -827,10 +842,11 @@ def _unpack_radiation_state(
     np.ndarray,
     np.ndarray,
     np.ndarray,
+    np.ndarray,
 ]:
     arr = np.asarray(y, dtype=np.float64)
     tower_size = _tower_size(L_max)
-    expected = _radiation_state_size(L_max) + int(residual_local_dof)
+    expected = _radiation_state_size(L_max) + int(residual_local_dof) + int(residual_harmonic_dof)
     if arr.shape != (expected,):
         raise ValueError(f"radiation state shape {arr.shape} does not match L_max={L_max}")
     photon_T = _unpack_hierarchy_view(arr[:tower_size], L_max)
@@ -844,7 +860,27 @@ def _unpack_radiation_state(
         arr[local_offset + _LOCAL_MATTER_DOF : local_offset + _LOCAL_MATTER_DOF + int(residual_local_dof)],
         dtype=np.float64,
     )
-    return photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local, residual_local
+    residual_harmonic = np.asarray(
+        arr[
+            local_offset
+            + _LOCAL_MATTER_DOF
+            + int(residual_local_dof) : local_offset
+            + _LOCAL_MATTER_DOF
+            + int(residual_local_dof)
+            + int(residual_harmonic_dof)
+        ],
+        dtype=np.float64,
+    )
+    return (
+        photon_T,
+        photon_E,
+        photon_B,
+        neutrino_tower,
+        baryon_local,
+        cdm_local,
+        residual_local,
+        residual_harmonic,
+    )
 
 
 def _seed_neutrino_tower_from_reduced(
@@ -1023,6 +1059,7 @@ class Ver2TierBIntegrator:
             str(mu) for mu in self._layout.mode_labels if str(mu) != self._layout_covered_mode_label
         )
         self._residual_local_dof = len(self._residual_mode_labels) * (_BARYON_LOCAL_DOF + _CDM_LOCAL_DOF)
+        self._residual_harmonic_dof = len(self._residual_mode_labels) * 4 * _tower_size(self.config.L_max)
         residual_rows: list[int] = []
         for mu in self._residual_mode_labels:
             residual_rows.extend(int(value) for value in self._projection_index_cache.baryon_by_mode_label[mu])
@@ -1111,6 +1148,7 @@ class Ver2TierBIntegrator:
             baryon_local=baryon_local,
             cdm_local=cdm_local,
             residual_local=np.zeros(self._residual_local_dof, dtype=np.float64),
+            residual_harmonic=np.zeros(self._residual_harmonic_dof, dtype=np.float64),
         )
 
     def _reionization_amplitude(self) -> float:
@@ -1157,6 +1195,55 @@ class Ver2TierBIntegrator:
         for mu in self._residual_mode_labels:
             pieces.append(np.asarray(baryon_by_mode_label[str(mu)], dtype=np.float64))
             pieces.append(np.asarray(cdm_by_mode_label[str(mu)], dtype=np.float64))
+        return np.concatenate(pieces, dtype=np.float64)
+
+    def _split_residual_harmonic_state(
+        self,
+        residual_harmonic: np.ndarray,
+    ) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray]]:
+        residual = np.asarray(residual_harmonic, dtype=np.float64)
+        if residual.shape != (self._residual_harmonic_dof,):
+            raise ValueError(
+                f"residual_harmonic must have shape ({self._residual_harmonic_dof},), got {residual.shape}"
+            )
+        width = _tower_size(self.config.L_max)
+        photon_t_by_mode_label: dict[str, np.ndarray] = {}
+        photon_e_by_mode_label: dict[str, np.ndarray] = {}
+        photon_b_by_mode_label: dict[str, np.ndarray] = {}
+        neutrino_by_mode_label: dict[str, np.ndarray] = {}
+        offset = 0
+        for mu in self._residual_mode_labels:
+            photon_t_by_mode_label[str(mu)] = np.asarray(residual[offset : offset + width], dtype=np.float64)
+            offset += width
+            photon_e_by_mode_label[str(mu)] = np.asarray(residual[offset : offset + width], dtype=np.float64)
+            offset += width
+            photon_b_by_mode_label[str(mu)] = np.asarray(residual[offset : offset + width], dtype=np.float64)
+            offset += width
+            neutrino_by_mode_label[str(mu)] = np.asarray(residual[offset : offset + width], dtype=np.float64)
+            offset += width
+        return (
+            photon_t_by_mode_label,
+            photon_e_by_mode_label,
+            photon_b_by_mode_label,
+            neutrino_by_mode_label,
+        )
+
+    def _pack_residual_harmonic_state(
+        self,
+        *,
+        photon_T_by_mode_label: Mapping[str, np.ndarray],
+        photon_E_by_mode_label: Mapping[str, np.ndarray],
+        photon_B_by_mode_label: Mapping[str, np.ndarray],
+        neutrino_by_mode_label: Mapping[str, np.ndarray],
+    ) -> np.ndarray:
+        if self._residual_harmonic_dof == 0:
+            return np.zeros(0, dtype=np.float64)
+        pieces: list[np.ndarray] = []
+        for mu in self._residual_mode_labels:
+            pieces.append(np.asarray(photon_T_by_mode_label[str(mu)], dtype=np.float64))
+            pieces.append(np.asarray(photon_E_by_mode_label[str(mu)], dtype=np.float64))
+            pieces.append(np.asarray(photon_B_by_mode_label[str(mu)], dtype=np.float64))
+            pieces.append(np.asarray(neutrino_by_mode_label[str(mu)], dtype=np.float64))
         return np.concatenate(pieces, dtype=np.float64)
 
     def _fill_layout_state_vector_from_components(
@@ -1754,6 +1841,162 @@ class Ver2TierBIntegrator:
             },
         )
 
+    def _residual_mode_label_harmonic_rhs(
+        self,
+        *,
+        snapshot: _EtaRuntimeSnapshot,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        photon_B: PSTFHierarchyState,
+        neutrino_tower: PSTFHierarchyState,
+        baryon_local: np.ndarray,
+        residual_local: np.ndarray,
+        residual_harmonic: np.ndarray,
+    ) -> np.ndarray:
+        if self._residual_harmonic_dof == 0:
+            return np.zeros(0, dtype=np.float64)
+        baryon_residual, _ = self._split_residual_local_state(residual_local)
+        photon_t_residual, photon_e_residual, photon_b_residual, neutrino_residual = (
+            self._split_residual_harmonic_state(residual_harmonic)
+        )
+        photon_t_by_mode_label: dict[str, np.ndarray] = {
+            self._layout_covered_mode_label: np.asarray(pack_hierarchy(photon_T), dtype=np.float64),
+            **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in photon_t_residual.items()},
+        }
+        photon_e_by_mode_label: dict[str, np.ndarray] = {
+            self._layout_covered_mode_label: np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64),
+            **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in photon_e_residual.items()},
+        }
+        photon_b_by_mode_label: dict[str, np.ndarray] = {
+            self._layout_covered_mode_label: np.asarray(pack_hierarchy(photon_B), dtype=np.float64),
+            **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in photon_b_residual.items()},
+        }
+        neutrino_by_mode_label: dict[str, np.ndarray] = {
+            self._layout_covered_mode_label: np.asarray(pack_hierarchy(neutrino_tower), dtype=np.float64),
+            **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in neutrino_residual.items()},
+        }
+        baryon_by_mode_label: dict[str, np.ndarray] = {
+            self._layout_covered_mode_label: np.asarray(baryon_local, dtype=np.float64),
+            **{str(mu): np.asarray(values, dtype=np.float64) for mu, values in baryon_residual.items()},
+        }
+        rhs_t_by_mode_label, rhs_e_by_mode_label, rhs_b_by_mode_label, rhs_nu_by_mode_label = (
+            self.backend.evaluate_reduced_harmonic_rhs(
+                {
+                    "branch": str(self.background_monitor.branch),
+                    "geometry": self.background_monitor.initial_conditions.geometry,
+                    "sigma_tensor": self._sigma_tensor_at_eta(float(snapshot.eta)),
+                    "opacity_data": {"Gamma_T": float(snapshot.gamma_t)},
+                    "source_tables": {
+                        "reionization_amplitude": float(self._reionization_amplitude()),
+                    },
+                },
+                photon_T_by_mode_label=photon_t_by_mode_label,
+                photon_E_by_mode_label=photon_e_by_mode_label,
+                photon_B_by_mode_label=photon_b_by_mode_label,
+                neutrino_by_mode_label=neutrino_by_mode_label,
+                baryon_by_mode_label=baryon_by_mode_label,
+            )
+        )
+        return self._pack_residual_harmonic_state(
+            photon_T_by_mode_label={
+                str(mu): np.asarray(rhs_t_by_mode_label[str(mu)], dtype=np.float64)
+                for mu in self._residual_mode_labels
+            },
+            photon_E_by_mode_label={
+                str(mu): np.asarray(rhs_e_by_mode_label[str(mu)], dtype=np.float64)
+                for mu in self._residual_mode_labels
+            },
+            photon_B_by_mode_label={
+                str(mu): np.asarray(rhs_b_by_mode_label[str(mu)], dtype=np.float64)
+                for mu in self._residual_mode_labels
+            },
+            neutrino_by_mode_label={
+                str(mu): np.asarray(rhs_nu_by_mode_label[str(mu)], dtype=np.float64)
+                for mu in self._residual_mode_labels
+            },
+        )
+
+    def _advance_residual_mode_label_harmonics_step(
+        self,
+        *,
+        eta_left: float,
+        y_left: np.ndarray,
+        eta_right: float,
+        y_right: np.ndarray,
+    ) -> np.ndarray:
+        if self._residual_harmonic_dof == 0:
+            return np.asarray(y_right, dtype=np.float64)
+        dt = float(eta_right - eta_left)
+        if dt == 0.0:
+            return np.asarray(y_right, dtype=np.float64)
+        (
+            photon_T_left,
+            photon_E_left,
+            photon_B_left,
+            neutrino_left,
+            baryon_left,
+            _cdm_left,
+            residual_local_left,
+            residual_harmonic_left,
+        ) = _unpack_radiation_state(
+            y_left,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+        )
+        rhs_left = self._residual_mode_label_harmonic_rhs(
+            snapshot=self._eta_runtime_snapshot(float(eta_left)),
+            photon_T=photon_T_left,
+            photon_E=photon_E_left,
+            photon_B=photon_B_left,
+            neutrino_tower=neutrino_left,
+            baryon_local=baryon_left,
+            residual_local=residual_local_left,
+            residual_harmonic=residual_harmonic_left,
+        )
+        predicted_residual_harmonic = np.asarray(residual_harmonic_left, dtype=np.float64) + dt * np.asarray(
+            rhs_left,
+            dtype=np.float64,
+        )
+        (
+            photon_T_right,
+            photon_E_right,
+            photon_B_right,
+            neutrino_right,
+            baryon_right,
+            cdm_right,
+            residual_local_right,
+            _residual_harmonic_right,
+        ) = _unpack_radiation_state(
+            y_right,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+        )
+        rhs_right = self._residual_mode_label_harmonic_rhs(
+            snapshot=self._eta_runtime_snapshot(float(eta_right)),
+            photon_T=photon_T_right,
+            photon_E=photon_E_right,
+            photon_B=photon_B_right,
+            neutrino_tower=neutrino_right,
+            baryon_local=baryon_right,
+            residual_local=residual_local_right,
+            residual_harmonic=predicted_residual_harmonic,
+        )
+        corrected_residual_harmonic = np.asarray(residual_harmonic_left, dtype=np.float64) + 0.5 * dt * (
+            np.asarray(rhs_left, dtype=np.float64) + np.asarray(rhs_right, dtype=np.float64)
+        )
+        return _pack_radiation_state(
+            photon_T=photon_T_right,
+            photon_E=photon_E_right,
+            photon_B=photon_B_right,
+            neutrino_tower=neutrino_right,
+            baryon_local=baryon_right,
+            cdm_local=cdm_right,
+            residual_local=residual_local_right,
+            residual_harmonic=corrected_residual_harmonic,
+        )
+
     def _rhs(
         self,
         eta: float,
@@ -1761,10 +2004,20 @@ class Ver2TierBIntegrator:
         *,
         tca_tracker: list[bool] | None = None,
     ) -> np.ndarray:
-        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local, residual_local = _unpack_radiation_state(
+        (
+            photon_T,
+            photon_E,
+            photon_B,
+            neutrino_tower,
+            baryon_local,
+            cdm_local,
+            residual_local,
+            residual_harmonic,
+        ) = _unpack_radiation_state(
             y,
             self.config.L_max,
             residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
         )
         snapshot = self._eta_runtime_snapshot(float(eta))
         _, _, _, rhs_T, rhs_E, rhs_B, rhs_nu = self._rhs_components_from_snapshot(
@@ -1795,13 +2048,34 @@ class Ver2TierBIntegrator:
             cdm_local=cdm_local,
             residual_local=residual_local,
         )
-        return np.concatenate([rhs_T, rhs_E, rhs_B, rhs_nu, baryon_rhs, cdm_rhs, residual_rhs])
+        return np.concatenate(
+            [
+                rhs_T,
+                rhs_E,
+                rhs_B,
+                rhs_nu,
+                baryon_rhs,
+                cdm_rhs,
+                residual_rhs,
+                np.zeros(self._residual_harmonic_dof, dtype=np.float64),
+            ]
+        )
 
     def _explicit_rhs(self, eta: float, y: np.ndarray) -> np.ndarray:
-        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local, residual_local = _unpack_radiation_state(
+        (
+            photon_T,
+            photon_E,
+            photon_B,
+            neutrino_tower,
+            baryon_local,
+            cdm_local,
+            residual_local,
+            residual_harmonic,
+        ) = _unpack_radiation_state(
             y,
             self.config.L_max,
             residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
         )
         snapshot = self._eta_runtime_snapshot(float(eta))
         rhs_T, rhs_E, rhs_B, _, _, _, rhs_nu = self._rhs_components_from_snapshot(
@@ -1825,7 +2099,15 @@ class Ver2TierBIntegrator:
             residual_local=residual_local,
         )
         return np.concatenate(
-            [rhs_T, rhs_E, rhs_B, rhs_nu, np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64), residual_rhs]
+            [
+                rhs_T,
+                rhs_E,
+                rhs_B,
+                rhs_nu,
+                np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64),
+                residual_rhs,
+                np.zeros(self._residual_harmonic_dof, dtype=np.float64),
+            ]
         )
 
     def _implicit_rhs(
@@ -1835,10 +2117,20 @@ class Ver2TierBIntegrator:
         *,
         tca_tracker: list[bool] | None = None,
     ) -> np.ndarray:
-        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local, residual_local = _unpack_radiation_state(
+        (
+            photon_T,
+            photon_E,
+            photon_B,
+            neutrino_tower,
+            baryon_local,
+            cdm_local,
+            residual_local,
+            residual_harmonic,
+        ) = _unpack_radiation_state(
             y,
             self.config.L_max,
             residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
         )
         snapshot = self._eta_runtime_snapshot(float(eta))
         rhs_T_explicit, rhs_E_explicit, rhs_B_explicit, rhs_T_full, rhs_E_full, rhs_B_full, rhs_nu = (
@@ -1861,6 +2153,7 @@ class Ver2TierBIntegrator:
                 np.zeros_like(rhs_nu),
                 np.zeros(_LOCAL_MATTER_DOF, dtype=np.float64),
                 np.zeros(self._residual_local_dof, dtype=np.float64),
+                np.zeros(self._residual_harmonic_dof, dtype=np.float64),
             ]
         )
         tower_size = _tower_size(self.config.L_max)
@@ -1884,10 +2177,20 @@ class Ver2TierBIntegrator:
         dt: float,
         tca_tracker: list[bool],
     ) -> np.ndarray:
-        photon_T, photon_E, photon_B, neutrino_tower, baryon_local, cdm_local, residual_local = _unpack_radiation_state(
+        (
+            photon_T,
+            photon_E,
+            photon_B,
+            neutrino_tower,
+            baryon_local,
+            cdm_local,
+            residual_local,
+            residual_harmonic,
+        ) = _unpack_radiation_state(
             stage,
             self.config.L_max,
             residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
         )
         background = self._background_snapshot(float(eta))
         gamma_t = _resolved_gamma_t(
@@ -2025,6 +2328,7 @@ class Ver2TierBIntegrator:
             baryon_local=baryon_next,
             cdm_local=cdm_next,
             residual_local=residual_local,
+            residual_harmonic=residual_harmonic,
         )
 
     def _solve_tca_scalars(
@@ -2425,7 +2729,10 @@ class Ver2TierBIntegrator:
             and isinstance(cached_b, Mapping)
             and isinstance(cached_nu, Mapping)
             and isinstance(metadata, Mapping)
-            and str(metadata.get("owner", "")) == "ver2_native_integrator.reduced_mode_label_harmonics"
+            and str(metadata.get("owner", "")) in {
+                "ver2_native_integrator.reduced_mode_label_harmonics",
+                "ver2_native_integrator.main_state_mode_label_harmonics",
+            }
         ):
             return (
                 {str(mu): np.asarray(values, dtype=np.float64) for mu, values in cached_t.items()},
@@ -3571,6 +3878,8 @@ class Ver2TierBIntegrator:
             eta_target = float(right)
             while eta_current < eta_target - 1.0e-15:
                 remaining = eta_target - eta_current
+                eta_left = float(eta_current)
+                y_left = np.asarray(y_current, dtype=np.float64)
                 state_scale = max(float(np.linalg.norm(y_current, ord=np.inf)), 1.0)
                 explicit_0 = self._explicit_rhs(eta_current, y_current)
                 nfev += 1
@@ -3614,6 +3923,12 @@ class Ver2TierBIntegrator:
                         ):
                             trial_h *= 0.5
                             continue
+                        candidate = self._advance_residual_mode_label_harmonics_step(
+                            eta_left=float(eta_left),
+                            y_left=y_left,
+                            eta_right=float(eta_next),
+                            y_right=candidate,
+                        )
                         y_current = candidate
                         eta_current = float(eta_next)
                         accepted = True
@@ -3663,6 +3978,12 @@ class Ver2TierBIntegrator:
                     ):
                         trial_h *= 0.5
                         continue
+                    candidate = self._advance_residual_mode_label_harmonics_step(
+                        eta_left=float(eta_left),
+                        y_left=y_left,
+                        eta_right=float(eta_next),
+                        y_right=candidate,
+                    )
                     gamma_t = _resolved_gamma_t(
                         eta=float(eta_next),
                         direction=self._direction,
@@ -3707,7 +4028,12 @@ class Ver2TierBIntegrator:
                                 )
                             else:
                                 tca_tracker.append(False)
-                            y_current = np.asarray(fallback_sol.y[:, -1], dtype=np.float64)
+                            y_current = self._advance_residual_mode_label_harmonics_step(
+                                eta_left=float(eta_left),
+                                y_left=y_left,
+                                eta_right=float(eta_target),
+                                y_right=np.asarray(fallback_sol.y[:, -1], dtype=np.float64),
+                            )
                             eta_current = float(eta_target)
                             accepted = True
                             continue
@@ -3737,6 +4063,7 @@ class Ver2TierBIntegrator:
         baryon_local_history: np.ndarray,
         cdm_local_history: np.ndarray,
         residual_local_history: np.ndarray,
+        residual_harmonic_history: np.ndarray,
         nfev: int,
         njev: int,
         nlu: int,
@@ -3850,12 +4177,71 @@ class Ver2TierBIntegrator:
             "mode_labels": list(self._layout.mode_labels),
             "covered_mode_label": self._layout_covered_mode_label,
         }
+        residual_harmonic_history_arr = np.asarray(residual_harmonic_history, dtype=np.float64)
+        if residual_harmonic_history_arr.ndim != 2 or residual_harmonic_history_arr.shape[0] != eta_arr.size:
+            raise ValueError("residual_harmonic_history must have shape (len(eta), n_residual)")
+        photon_t_history_by_mode_label = {
+            self._layout_covered_mode_label: np.asarray(photon_T_tower, dtype=np.float64)
+        }
+        photon_e_history_by_mode_label = {
+            self._layout_covered_mode_label: np.asarray(photon_E_tower, dtype=np.float64)
+        }
+        photon_b_history_by_mode_label = {
+            self._layout_covered_mode_label: np.asarray(photon_B_tower, dtype=np.float64)
+        }
+        neutrino_history_by_mode_label = {
+            self._layout_covered_mode_label: np.asarray(neutrino_tower, dtype=np.float64)
+        }
+        harmonic_width = _tower_size(self.config.L_max)
+        offset = 0
+        for mu in self._residual_mode_labels:
+            photon_t_history_by_mode_label[str(mu)] = np.asarray(
+                residual_harmonic_history_arr[:, offset : offset + harmonic_width],
+                dtype=np.float64,
+            )
+            offset += harmonic_width
+            photon_e_history_by_mode_label[str(mu)] = np.asarray(
+                residual_harmonic_history_arr[:, offset : offset + harmonic_width],
+                dtype=np.float64,
+            )
+            offset += harmonic_width
+            photon_b_history_by_mode_label[str(mu)] = np.asarray(
+                residual_harmonic_history_arr[:, offset : offset + harmonic_width],
+                dtype=np.float64,
+            )
+            offset += harmonic_width
+            neutrino_history_by_mode_label[str(mu)] = np.asarray(
+                residual_harmonic_history_arr[:, offset : offset + harmonic_width],
+                dtype=np.float64,
+            )
+            offset += harmonic_width
+        solver_info["live_mode_label_harmonic_history_metadata"] = {
+            "owner": "ver2_native_integrator.main_state_mode_label_harmonics",
+            "history_sample_count": int(eta_arr.size),
+            "mode_labels": list(self._layout.mode_labels),
+            "covered_mode_label": self._layout_covered_mode_label,
+            "residual_mode_labels": list(self._residual_mode_labels),
+            "sectors": ("ph_I", "ph_E", "ph_B", "nu_I"),
+            "covered_owner": "ver2_native_integrator.main_state_harmonics",
+            "residual_owner": "ver2_native_integrator.main_state_mode_label_harmonics",
+            "integration_scheme": "main_state_coevolved",
+        }
         solver_info["live_b_mode_history_metadata"] = {
             "owner": "ver2_native_integrator.main_state_photon_B",
             "history_sample_count": int(eta_arr.size),
             "integration_scheme": "main_state_coevolved",
             "radiation_rhs_owner": "hierarchy_rhs_photon_from_state",
             "collision_owner": "projected_thomson_source.polarization_B",
+        }
+        solver_info["live_b_mode_history_by_mode_label_metadata"] = {
+            "owner": "ver2_native_integrator.main_state_mode_label_harmonics",
+            "sector": "ph_B",
+            "history_sample_count": int(eta_arr.size),
+            "mode_labels": list(self._layout.mode_labels),
+            "covered_mode_label": self._layout_covered_mode_label,
+            "residual_mode_labels": list(self._residual_mode_labels),
+            "covered_owner": "ver2_native_integrator.main_state_photon_B",
+            "integration_scheme": "main_state_coevolved",
         }
         result = IntegrationResult(
             eta=eta_arr,
@@ -3869,18 +4255,18 @@ class Ver2TierBIntegrator:
             config=self.config,
             solver_info=solver_info,
             tca_active_mask=tca_mask,
-            photon_T_history_by_mode_label=None,
-            photon_E_history_by_mode_label=None,
+            photon_T_history_by_mode_label=photon_t_history_by_mode_label,
+            photon_E_history_by_mode_label=photon_e_history_by_mode_label,
             neutrino_tower=np.asarray(neutrino_tower, dtype=np.float64),
-            neutrino_history_by_mode_label=None,
+            neutrino_history_by_mode_label=neutrino_history_by_mode_label,
             photon_B_tower=np.asarray(photon_B_tower, dtype=np.float64),
+            photon_B_history_by_mode_label=photon_b_history_by_mode_label,
             baryon_local_history=np.asarray(local_matter_history.baryon_history, dtype=np.float64),
             cdm_local_history=np.asarray(local_matter_history.cdm_history, dtype=np.float64),
             residual_local_history=residual_history_arr,
             baryon_local_history_by_mode_label=baryon_by_mode_label,
             cdm_local_history_by_mode_label=cdm_by_mode_label,
         )
-        self._ensure_live_mode_label_harmonic_histories(result)
         return result
 
     def run(
@@ -3909,6 +4295,7 @@ class Ver2TierBIntegrator:
             baryon_segments: list[np.ndarray] = []
             cdm_segments: list[np.ndarray] = []
             residual_segments: list[np.ndarray] = []
+            residual_harmonic_segments: list[np.ndarray] = []
         else:
             if self.startup_gate is None or self.seed_projection is None:
                 _ = self.initial_state()
@@ -3926,6 +4313,9 @@ class Ver2TierBIntegrator:
             baryon_segments = [np.asarray(restart_state.baryon_local_prefix, dtype=np.float64)]
             cdm_segments = [np.asarray(restart_state.cdm_local_prefix, dtype=np.float64)]
             residual_segments = [np.asarray(restart_state.residual_local_prefix, dtype=np.float64)]
+            residual_harmonic_segments = [
+                np.asarray(restart_state.residual_harmonic_prefix, dtype=np.float64)
+            ]
 
         nfev = 0
         njev = 0
@@ -3976,7 +4366,20 @@ class Ver2TierBIntegrator:
                 )
                 residual_segments.append(
                     np.asarray(
-                        sol.y[4 * tower_size + _LOCAL_MATTER_DOF :].T,
+                        sol.y[
+                            4 * tower_size
+                            + _LOCAL_MATTER_DOF : 4 * tower_size
+                            + _LOCAL_MATTER_DOF
+                            + self._residual_local_dof
+                        ].T,
+                        dtype=np.float64,
+                    )[start_offset:]
+                )
+                residual_harmonic_segments.append(
+                    np.asarray(
+                        sol.y[
+                            4 * tower_size + _LOCAL_MATTER_DOF + self._residual_local_dof :
+                        ].T,
                         dtype=np.float64,
                     )[start_offset:]
                 )
@@ -4010,7 +4413,18 @@ class Ver2TierBIntegrator:
                     dtype=np.float64,
                 )[start_offset:]
                 residual_chunk = np.asarray(
-                    sol.y[4 * tower_size + _LOCAL_MATTER_DOF :].T,
+                    sol.y[
+                        4 * tower_size
+                        + _LOCAL_MATTER_DOF : 4 * tower_size
+                        + _LOCAL_MATTER_DOF
+                        + self._residual_local_dof
+                    ].T,
+                    dtype=np.float64,
+                )[start_offset:]
+                residual_harmonic_chunk = np.asarray(
+                    sol.y[
+                        4 * tower_size + _LOCAL_MATTER_DOF + self._residual_local_dof :
+                    ].T,
                     dtype=np.float64,
                 )[start_offset:]
                 eta_segments.append(eta_chunk)
@@ -4021,6 +4435,7 @@ class Ver2TierBIntegrator:
                 baryon_segments.append(baryon_chunk)
                 cdm_segments.append(cdm_chunk)
                 residual_segments.append(residual_chunk)
+                residual_harmonic_segments.append(residual_harmonic_chunk)
                 y_current = np.asarray(sol.y[:, -1], dtype=np.float64)
                 current_index = next_index
                 if checkpoint_callback is not None and current_index < eta_out.size - 1:
@@ -4038,6 +4453,7 @@ class Ver2TierBIntegrator:
                             baryon_local_prefix=np.vstack(baryon_segments),
                             cdm_local_prefix=np.vstack(cdm_segments),
                             residual_local_prefix=np.vstack(residual_segments),
+                            residual_harmonic_prefix=np.vstack(residual_harmonic_segments),
                         )
                     )
 
@@ -4050,6 +4466,7 @@ class Ver2TierBIntegrator:
             baryon_local_history=np.vstack(baryon_segments),
             cdm_local_history=np.vstack(cdm_segments),
             residual_local_history=np.vstack(residual_segments) if residual_segments else np.zeros((len(np.concatenate(eta_segments, axis=0)), 0), dtype=np.float64),
+            residual_harmonic_history=np.vstack(residual_harmonic_segments) if residual_harmonic_segments else np.zeros((len(np.concatenate(eta_segments, axis=0)), 0), dtype=np.float64),
             nfev=nfev,
             njev=njev,
             nlu=nlu,

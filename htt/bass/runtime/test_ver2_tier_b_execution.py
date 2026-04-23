@@ -266,16 +266,16 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert set(run.integration_result.baryon_local_history_by_mode_label) == {"m0", "m+2", "m-2"}
     assert set(run.integration_result.cdm_local_history_by_mode_label) == {"m0", "m+2", "m-2"}
     assert run.integration_result.solver_info["live_mode_label_harmonic_history_metadata"]["owner"] == (
-        "ver2_native_integrator.reduced_mode_label_harmonics"
+        "ver2_native_integrator.main_state_mode_label_harmonics"
     )
     assert run.integration_result.solver_info["live_mode_label_harmonic_history_metadata"]["integration_scheme"] == (
-        "predictor_corrector_trapezoidal"
+        "main_state_coevolved"
     )
     assert run.integration_result.solver_info["live_mode_label_local_matter_history_metadata"]["owner"] == (
         "ver2_native_integrator.main_state_mode_label_local_matter"
     )
     assert run.integration_result.solver_info["live_b_mode_history_by_mode_label_metadata"]["owner"] == (
-        "ver2_native_integrator.reduced_mode_label_harmonics"
+        "ver2_native_integrator.main_state_mode_label_harmonics"
     )
     assert run.integration_result.solver_info["seed_family"] == "I"
     assert run.integration_result.solver_info["seed_branch"] == "orthogonal"
@@ -340,10 +340,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         run.integration_result.eta
     )
     assert run.solver_output.metadata["live_mode_label_harmonic_history_owner"] == (
-        "ver2_native_integrator.reduced_mode_label_harmonics"
+        "ver2_native_integrator.main_state_mode_label_harmonics"
     )
     assert run.solver_output.metadata["live_mode_label_harmonic_history_integration_scheme"] == (
-        "predictor_corrector_trapezoidal"
+        "main_state_coevolved"
     )
     assert set(run.solver_output.metadata["live_mode_label_harmonic_history_mode_labels"]) == {
         "m0",
@@ -994,6 +994,8 @@ def test_tier_b_checkpoint_resume_reproduces_checkpointed_run(tmp_path) -> None:
     assert checkpoint.solver_method == "IMEX_MIDPOINT_BDF"
     assert checkpoint.residual_local_prefix.shape[0] == checkpoint.eta_prefix.shape[0]
     assert checkpoint.residual_local_prefix.shape[1] >= 0
+    assert checkpoint.residual_harmonic_prefix.shape[0] == checkpoint.eta_prefix.shape[0]
+    assert checkpoint.residual_harmonic_prefix.shape[1] >= 0
     resumed = resume_tier_b_solver_from_checkpoint(
         checkpoint_path=mid_checkpoint,
         **kwargs,
@@ -1015,6 +1017,20 @@ def test_tier_b_checkpoint_resume_reproduces_checkpointed_run(tmp_path) -> None:
         np.asarray(full_run.integration_result.residual_local_history, dtype=np.float64),
         np.asarray(resumed.integration_result.residual_local_history, dtype=np.float64),
     )
+    for attr in (
+        "photon_T_history_by_mode_label",
+        "photon_E_history_by_mode_label",
+        "photon_B_history_by_mode_label",
+        "neutrino_history_by_mode_label",
+    ):
+        full_payload = getattr(full_run.integration_result, attr)
+        resumed_payload = getattr(resumed.integration_result, attr)
+        assert set(full_payload) == set(resumed_payload)
+        for mu in full_payload:
+            np.testing.assert_allclose(
+                np.asarray(full_payload[mu], dtype=np.float64),
+                np.asarray(resumed_payload[mu], dtype=np.float64),
+            )
     np.testing.assert_allclose(
         np.asarray(full_run.solver_output.alm_T["values"], dtype=np.float64),
         np.asarray(resumed.solver_output.alm_T["values"], dtype=np.float64),
