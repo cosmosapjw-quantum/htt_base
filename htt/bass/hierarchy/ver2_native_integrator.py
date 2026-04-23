@@ -16,7 +16,7 @@ but it is no longer the production owner of the VER2 Tier-B route.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from typing import Optional
 
 import numpy as np
@@ -1866,6 +1866,23 @@ class Ver2TierBIntegrator:
             "collision_owner": "projected_thomson_source.polarization_B",
         }
 
+    def _ensure_live_b_mode_history(
+        self,
+        result: IntegrationResult,
+    ) -> tuple[np.ndarray, dict[str, object]]:
+        cached = getattr(result, "photon_B_tower", None)
+        metadata = result.solver_info.get("live_b_mode_history_metadata")
+        if cached is not None and isinstance(metadata, Mapping):
+            return np.asarray(cached, dtype=np.float64), dict(metadata)
+        b_rows, b_metadata = self._integrate_live_b_mode_history(
+            eta=np.asarray(result.eta, dtype=np.float64),
+            photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
+            photon_E_tower=np.asarray(result.photon_E_tower, dtype=np.float64),
+        )
+        result.photon_B_tower = np.asarray(b_rows, dtype=np.float64)
+        result.solver_info["live_b_mode_history_metadata"] = dict(b_metadata)
+        return np.asarray(b_rows, dtype=np.float64), dict(b_metadata)
+
     def build_layout_auxiliary_history_bundle(
         self,
         result: IntegrationResult,
@@ -1891,11 +1908,7 @@ class Ver2TierBIntegrator:
         photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
         photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
         neutrino_arr = np.asarray(neutrino_tower, dtype=np.float64)
-        b_rows, b_metadata = self._integrate_live_b_mode_history(
-            eta=eta_samples,
-            photon_T_tower=photon_T_tower,
-            photon_E_tower=photon_E_tower,
-        )
+        b_rows, b_metadata = self._ensure_live_b_mode_history(result)
         reionization_amplitude = (
             0.0
             if self.visibility_source.contract.events is None
@@ -2219,9 +2232,13 @@ class Ver2TierBIntegrator:
         }
         b_history = np.asarray(coupled.photon_B_history, dtype=np.float64)
         result.photon_B_tower = np.asarray(b_history, dtype=np.float64)
+        b_metadata = dict(result.solver_info.get("live_b_mode_history_metadata", {}))
         b_mode_owner = str(coupled.metadata.get("b_mode_owner", coupled.metadata["owner"]))
         b_mode_integration_scheme = str(
-            coupled.metadata.get("b_mode_integration_scheme", coupled.metadata.get("integration_scheme", ""))
+            b_metadata.get(
+                "integration_scheme",
+                coupled.metadata.get("b_mode_integration_scheme", coupled.metadata.get("integration_scheme", "")),
+            )
         )
         canonical_projection = project_runtime_native_state(
             layout=layout,
@@ -2435,6 +2452,7 @@ class Ver2TierBIntegrator:
         *,
         gamma_t: float,
     ) -> ExactThomsonSource:
+        b_history, _ = self._ensure_live_b_mode_history(result)
         temperature_state = unpack_hierarchy(result.photon_T_tower[-1], result.L_max)
         polarization_state = PolarizationHierarchyState(
             E=unpack_hierarchy(result.photon_E_tower[-1], result.L_max)
@@ -2447,6 +2465,7 @@ class Ver2TierBIntegrator:
             Gamma_T=float(gamma_t),
             direction=np.asarray(self.config.tilt_direction, dtype=np.float64),
             tilted_electron=self._tilted_electron_at(float(result.eta[-1])),
+            b_state=unpack_hierarchy(np.asarray(b_history[-1], dtype=np.float64), result.L_max),
         )
 
     def build_runtime_geodesic_probe(self):
