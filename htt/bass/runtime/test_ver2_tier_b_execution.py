@@ -313,7 +313,10 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_b_mode_payload_available"] is False
     assert run.solver_output.metadata["layout_b_mode_payload_status"] == "zero_filled_not_evolved"
     assert run.solver_output.metadata["layout_b_mode_proxy_source"] == (
-        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution"
+        "hierarchy_rhs.exact_thomson_b_mode_history"
+    )
+    assert run.solver_output.metadata["layout_b_mode_integration_scheme"] == (
+        "predictor_corrector_trapezoidal"
     )
     assert run.solver_output.metadata["layout_auxiliary_coupling_passes"] == 2
     assert run.solver_output.metadata["layout_auxiliary_integration_scheme"] == (
@@ -499,8 +502,11 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "zero_filled_not_evolved"
     )
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"]["layout_b_mode_proxy_source"] == (
-        "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution"
+        "hierarchy_rhs.exact_thomson_b_mode_history"
     )
+    assert registry["hierarchy_layout_gate"].metadata["projection_provenance"][
+        "layout_b_mode_integration_scheme"
+    ] == "predictor_corrector_trapezoidal"
     assert registry["hierarchy_layout_gate"].metadata["projection_provenance"][
         "layout_auxiliary_integration_scheme"
     ] == "predictor_corrector_trapezoidal"
@@ -639,15 +645,26 @@ def test_representative_orthogonal_families_execute_with_expected_propagator_rea
     assert run.solver_output.metadata["global_tilt_contract"] == "orthogonal_branch_zero_global_tilt"
     assert run.execution_plan.runtime_decision.propagation_status == "pending"
     if bianchi_type == "V":
-        assert run.solver_output.metadata["b_mode_runtime_available"] is True
-        assert run.solver_output.metadata["b_mode_payload_status"] == "layout_operator_auxiliary_b_mode_history"
-        assert run.solver_output.metadata["layout_b_mode_payload_available"] is True
-        assert run.solver_output.metadata["layout_b_mode_payload_status"] == (
-            "layout_operator_auxiliary_b_mode_history"
+        assert run.solver_output.metadata["layout_b_mode_proxy_source"] == (
+            "hierarchy_rhs.exact_thomson_b_mode_history"
         )
-        assert run.trace.canonical_projection.sector_status["ph_B"] == (
-            "layout_operator_auxiliary_b_mode_history"
-        )
+        if run.solver_output.metadata["b_mode_runtime_available"]:
+            assert run.solver_output.metadata["b_mode_payload_status"] == (
+                "hierarchy_rhs_direct_b_mode_history"
+            )
+            assert run.solver_output.metadata["layout_b_mode_payload_available"] is True
+            assert run.solver_output.metadata["layout_b_mode_payload_status"] == (
+                "hierarchy_rhs_direct_b_mode_history"
+            )
+            assert run.trace.canonical_projection.sector_status["ph_B"] == (
+                "hierarchy_rhs_direct_b_mode_history"
+            )
+        else:
+            assert run.solver_output.metadata["layout_b_mode_payload_available"] is False
+            assert run.solver_output.metadata["layout_b_mode_payload_status"] == (
+                "zero_filled_not_evolved"
+            )
+            assert run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
     if bianchi_type == "VIII":
         assert run.integration_result.solver_info["seed_factory_mode"] == "collocation_projected"
         assert "family_adapted_intrinsic_seed" in str(

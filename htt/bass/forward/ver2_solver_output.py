@@ -951,6 +951,9 @@ def build_solver_core_output_from_native_result(
             "layout_b_mode_proxy_source": str(
                 result.solver_info.get("layout_b_mode_proxy_source", "disabled")
             ),
+            "layout_b_mode_integration_scheme": str(
+                result.solver_info.get("layout_b_mode_integration_scheme", "")
+            ),
             "layout_b_mode_history_sample_count": int(
                 result.solver_info.get("layout_b_mode_history_sample_count", 0)
             ),

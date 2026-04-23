@@ -205,6 +205,7 @@ def project_runtime_native_state(
     photon_B: PSTFHierarchyState | np.ndarray | None = None,
     photon_B_history_eta: np.ndarray | None = None,
     photon_B_history_samples: np.ndarray | None = None,
+    b_sector_status: str | None = None,
     neutrino_tower: PSTFHierarchyState | np.ndarray,
     source_template: np.ndarray,
     baryon_block: np.ndarray | None = None,
@@ -253,6 +254,12 @@ def project_runtime_native_state(
         )
     history_eta = None if source_history_eta is None else np.asarray(source_history_eta, dtype=np.float64)
     b_history_eta = None if photon_B_history_eta is None else np.asarray(photon_B_history_eta, dtype=np.float64)
+
+    resolved_b_sector_status = (
+        str(b_sector_status)
+        if b_sector_status is not None
+        else "layout_operator_auxiliary_b_mode_history"
+    )
 
     vector = np.zeros(layout.size, dtype=np.float64)
     for mu in layout.mode_labels:
@@ -492,7 +499,7 @@ def project_runtime_native_state(
                 "ph_I": "live_runtime_projection",
                 "ph_E": "live_runtime_projection",
                 "ph_B": (
-                    "layout_operator_auxiliary_b_mode_history"
+                    resolved_b_sector_status
                     if bool(
                         np.any(np.abs(tower_B) > 0.0)
                         or (b_history is not None and np.any(np.abs(b_history) > 0.0))

@@ -335,6 +335,19 @@ class _EProjectedCollision(CollisionOperator):
         return aux.get_source().polarization_E.E.tensors[ell]
 
 
+class _BProjectedCollision(CollisionOperator):
+    def evaluate(
+        self,
+        ell: int,
+        state: PSTFHierarchyState,
+        aux: Optional[object] = None,
+    ) -> PSTFTensor:
+        del state
+        if not isinstance(aux, _ProjectedCollisionAux):
+            raise TypeError("B-mode collision requires _ProjectedCollisionAux")
+        return aux.get_source().polarization_B.tensors[ell]
+
+
 @dataclass(frozen=True)
 class _SeededInitialState:
     photon_T: PSTFHierarchyState
@@ -863,6 +876,7 @@ class Ver2TierBIntegrator:
         )
         self._temperature_collision = _TemperatureProjectedCollision()
         self._e_collision = _EProjectedCollision()
+        self._b_collision = _BProjectedCollision()
         self._zero_b_state = zero_hierarchy(config.L_max)
         self._zero_v_b_real_sph = np.zeros(3, dtype=np.float64)
         self._neutrino_background = self.species[SpeciesLabel.NEUTRINO]
@@ -1207,6 +1221,7 @@ class Ver2TierBIntegrator:
         snapshot: _EtaRuntimeSnapshot,
         photon_T: PSTFHierarchyState,
         photon_E: PolarizationHierarchyState,
+        b_state: PSTFHierarchyState | None = None,
     ) -> _ProjectedCollisionAux:
         return _ProjectedCollisionAux(
             eta=float(snapshot.eta),
@@ -1216,7 +1231,7 @@ class Ver2TierBIntegrator:
             direction=self._direction,
             tilted_electron=snapshot.tilted_electron,
             v_b_real_sph=self._zero_v_b_real_sph,
-            b_state=self._zero_b_state,
+            b_state=self._zero_b_state if b_state is None else b_state,
         )
 
     def _rhs_components_from_snapshot(
@@ -1766,6 +1781,91 @@ class Ver2TierBIntegrator:
             },
         )
 
+    def _integrate_live_b_mode_history(
+        self,
+        *,
+        eta: np.ndarray,
+        photon_T_tower: np.ndarray,
+        photon_E_tower: np.ndarray,
+    ) -> tuple[np.ndarray, dict[str, object]]:
+        eta_arr = np.asarray(eta, dtype=np.float64)
+        photon_T_arr = np.asarray(photon_T_tower, dtype=np.float64)
+        photon_E_arr = np.asarray(photon_E_tower, dtype=np.float64)
+        if eta_arr.ndim != 1 or eta_arr.size == 0:
+            raise ValueError("eta must be a non-empty 1-D array")
+        if photon_T_arr.shape != photon_E_arr.shape:
+            raise ValueError("photon_T_tower and photon_E_tower must share shape")
+        if photon_T_arr.ndim != 2 or photon_T_arr.shape[0] != eta_arr.size:
+            raise ValueError("photon tower arrays must have shape (len(eta), n_state)")
+
+        size = (self.config.L_max + 1) ** 2
+        b_rows = np.zeros((eta_arr.size, size), dtype=np.float64)
+        b_current = np.zeros(size, dtype=np.float64)
+
+        def _rhs_b(
+            *,
+            eta_value: float,
+            photon_T_row: np.ndarray,
+            photon_E_row: np.ndarray,
+            b_row: np.ndarray,
+        ) -> np.ndarray:
+            snapshot = self._eta_runtime_snapshot(float(eta_value))
+            photon_T_state = _unpack_hierarchy_view(np.asarray(photon_T_row, dtype=np.float64), self.config.L_max)
+            photon_E_state = PolarizationHierarchyState(
+                E=_unpack_hierarchy_view(np.asarray(photon_E_row, dtype=np.float64), self.config.L_max)
+            )
+            b_state = _unpack_hierarchy_view(np.asarray(b_row, dtype=np.float64), self.config.L_max)
+            if snapshot.gamma_t <= 0.0:
+                collision = _ZERO_COLLISION
+                collision_aux = None
+            else:
+                collision = self._b_collision
+                collision_aux = self._collision_aux_from_snapshot(
+                    snapshot=snapshot,
+                    photon_T=photon_T_state,
+                    photon_E=photon_E_state,
+                    b_state=b_state,
+                )
+            return hierarchy_rhs_photon_from_state(
+                b_state,
+                background=snapshot.background,
+                closure=self.closure,
+                collision=collision,
+                collision_aux=collision_aux,
+            )
+
+        for index in range(eta_arr.size):
+            b_rows[index, :] = b_current
+            if index == eta_arr.size - 1:
+                break
+            dt = float(eta_arr[index + 1] - eta_arr[index])
+            if dt <= 0.0:
+                raise ValueError("eta grid must be strictly increasing for B-mode history sampling")
+            rhs_now = _rhs_b(
+                eta_value=float(eta_arr[index]),
+                photon_T_row=photon_T_arr[index],
+                photon_E_row=photon_E_arr[index],
+                b_row=b_current,
+            )
+            b_predict = np.asarray(b_current, dtype=np.float64) + dt * np.asarray(rhs_now, dtype=np.float64)
+            rhs_next = _rhs_b(
+                eta_value=float(eta_arr[index + 1]),
+                photon_T_row=photon_T_arr[index + 1],
+                photon_E_row=photon_E_arr[index + 1],
+                b_row=b_predict,
+            )
+            b_current = np.asarray(b_current, dtype=np.float64) + 0.5 * dt * (
+                np.asarray(rhs_now, dtype=np.float64) + np.asarray(rhs_next, dtype=np.float64)
+            )
+
+        return b_rows, {
+            "owner": "hierarchy_rhs.exact_thomson_b_mode_history",
+            "history_sample_count": int(eta_arr.size),
+            "integration_scheme": "predictor_corrector_trapezoidal",
+            "radiation_rhs_owner": "hierarchy_rhs_photon_from_state",
+            "collision_owner": "projected_thomson_source.polarization_B",
+        }
+
     def build_layout_auxiliary_history_bundle(
         self,
         result: IntegrationResult,
@@ -1791,6 +1891,11 @@ class Ver2TierBIntegrator:
         photon_T_tower = np.asarray(result.photon_T_tower, dtype=np.float64)
         photon_E_tower = np.asarray(result.photon_E_tower, dtype=np.float64)
         neutrino_arr = np.asarray(neutrino_tower, dtype=np.float64)
+        b_rows, b_metadata = self._integrate_live_b_mode_history(
+            eta=eta_samples,
+            photon_T_tower=photon_T_tower,
+            photon_E_tower=photon_E_tower,
+        )
         reionization_amplitude = (
             0.0
             if self.visibility_source.contract.events is None
@@ -1803,8 +1908,6 @@ class Ver2TierBIntegrator:
             for mu in layout.mode_labels
         }
         layout_state_rows = np.zeros((eta_samples.size, layout.size), dtype=np.float64)
-        size = (int(layout.ell_max) + 1) ** 2
-        b_rows = np.zeros((eta_samples.size, size), dtype=np.float64)
         baryon_rows = np.zeros_like(np.asarray(reference_history.baryon_history, dtype=np.float64))
         cdm_rows = np.zeros_like(np.asarray(reference_history.cdm_history, dtype=np.float64))
         baryon_rows_by_mode_label = {
@@ -1815,7 +1918,6 @@ class Ver2TierBIntegrator:
             str(mu): np.zeros_like(np.asarray(reference_history.cdm_history, dtype=np.float64))
             for mu in layout.mode_labels
         }
-        b_prev = np.zeros(size, dtype=np.float64)
         baryon_prev_by_mode_label = {
             str(mu): np.zeros(reference_history.baryon_history.shape[1], dtype=np.float64)
             for mu in layout.mode_labels
@@ -1828,7 +1930,6 @@ class Ver2TierBIntegrator:
         cdm_prev_by_mode_label[covered] = np.asarray(reference_history.cdm_history[0], dtype=np.float64)
         baryon_prev = np.asarray(baryon_prev_by_mode_label[covered], dtype=np.float64)
         cdm_prev = np.asarray(cdm_prev_by_mode_label[covered], dtype=np.float64)
-        b_rows[0] = b_prev
         baryon_rows[0] = baryon_prev
         cdm_rows[0] = cdm_prev
         for mu in layout.mode_labels:
@@ -1882,7 +1983,7 @@ class Ver2TierBIntegrator:
                 photon_T_row=photon_T_tower[index],
                 photon_E_row=photon_E_tower[index],
                 neutrino_row=neutrino_arr[index],
-                photon_B_row=b_prev,
+                photon_B_row=b_rows[index],
                 baryon_by_mode_label=baryon_prev_by_mode_label,
                 cdm_by_mode_label=cdm_prev_by_mode_label,
             )
@@ -1897,10 +1998,6 @@ class Ver2TierBIntegrator:
                 projection_index_cache.auxiliary_coupled_rows,
             )
             mass_diag = np.asarray(current_sample.mass_diag, dtype=np.float64)
-            b_indices = projection_index_cache.harmonic_photon_B
-            b_rows_idx = projection_index_cache.auxiliary_photon_B_rows
-            b_inv_mass = 1.0 / np.maximum(np.abs(mass_diag[b_indices]), 1.0e-30)
-            b_predict = np.asarray(b_prev, dtype=np.float64) + dt * b_inv_mass * reduced_drive[b_rows_idx]
             baryon_predict_by_mode_label = {}
             cdm_predict_by_mode_label = {}
             for mu, indices in projection_index_cache.baryon_by_mode_label.items():
@@ -1928,7 +2025,7 @@ class Ver2TierBIntegrator:
                 photon_T_row=photon_T_tower[index + 1],
                 photon_E_row=photon_E_tower[index + 1],
                 neutrino_row=neutrino_arr[index + 1],
-                photon_B_row=b_predict,
+                photon_B_row=b_rows[index + 1],
                 baryon_by_mode_label=baryon_predict_by_mode_label,
                 cdm_by_mode_label=cdm_predict_by_mode_label,
             )
@@ -1937,11 +2034,6 @@ class Ver2TierBIntegrator:
                 projection_index_cache.auxiliary_coupled_rows,
             )
             mass_diag_next = np.asarray(next_sample.mass_diag, dtype=np.float64)
-            b_inv_mass_next = 1.0 / np.maximum(np.abs(mass_diag_next[b_indices]), 1.0e-30)
-            b_next = np.asarray(b_prev, dtype=np.float64) + 0.5 * dt * (
-                b_inv_mass * reduced_drive[b_rows_idx]
-                + b_inv_mass_next * reduced_drive_next[b_rows_idx]
-            )
             baryon_next_by_mode_label = {}
             cdm_next_by_mode_label = {}
             for mu, indices in projection_index_cache.baryon_by_mode_label.items():
@@ -1962,12 +2054,10 @@ class Ver2TierBIntegrator:
                     + inv_mass_next
                     * reduced_drive_next[projection_index_cache.auxiliary_cdm_rows[str(mu)]]
                 )
-            b_prev = b_next
             baryon_prev_by_mode_label = baryon_next_by_mode_label
             cdm_prev_by_mode_label = cdm_next_by_mode_label
             baryon_prev = np.asarray(baryon_prev_by_mode_label[covered], dtype=np.float64)
             cdm_prev = np.asarray(cdm_prev_by_mode_label[covered], dtype=np.float64)
-            b_rows[index + 1] = b_prev
             baryon_rows[index + 1] = baryon_prev
             cdm_rows[index + 1] = cdm_prev
             for mu in layout.mode_labels:
@@ -2005,6 +2095,7 @@ class Ver2TierBIntegrator:
             cdm_labels=tuple(reference_history.cdm_labels),
             metadata={
                 "owner": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution",
+                "b_mode_owner": str(b_metadata["owner"]),
                 "reference_owner": str(reference_history.metadata.get("owner", "unknown")),
                 "history_sample_count": int(eta_samples.size),
                 "reference_sample_count": int(reference_baryon.shape[0]),
@@ -2014,6 +2105,7 @@ class Ver2TierBIntegrator:
                 "coupling_passes": 2,
                 "integration_scheme": "predictor_corrector_trapezoidal",
                 "reduced_block_size": int(projection_index_cache.auxiliary_coupled_rows.size),
+                "b_mode_integration_scheme": str(b_metadata["integration_scheme"]),
                 "coupled_sectors": ("ph_B", "baryon", "cdm"),
             },
         )
@@ -2126,6 +2218,10 @@ class Ver2TierBIntegrator:
             ),
         }
         b_history = np.asarray(coupled.photon_B_history, dtype=np.float64)
+        b_mode_owner = str(coupled.metadata.get("b_mode_owner", coupled.metadata["owner"]))
+        b_mode_integration_scheme = str(
+            coupled.metadata.get("b_mode_integration_scheme", coupled.metadata.get("integration_scheme", ""))
+        )
         canonical_projection = project_runtime_native_state(
             layout=layout,
             layout_manifest=getattr(mode_ops, "layout_metadata", {}),
@@ -2134,6 +2230,7 @@ class Ver2TierBIntegrator:
             photon_B=np.asarray(b_history[-1], dtype=np.float64),
             photon_B_history_eta=np.asarray(auxiliary_bundle.eta, dtype=np.float64),
             photon_B_history_samples=b_history,
+            b_sector_status="hierarchy_rhs_direct_b_mode_history",
             neutrino_tower=np.asarray(neutrino_tower[-1], dtype=np.float64),
             source_template=np.asarray(mode_ops.source_template, dtype=np.float64),
             baryon_block=np.asarray(coupled.baryon_history[-1], dtype=np.float64),
@@ -2206,7 +2303,8 @@ class Ver2TierBIntegrator:
             ),
             "layout_b_mode_payload_available": bool(b_mode_payload_available),
             "layout_b_mode_payload_status": b_mode_sector_status,
-            "layout_b_mode_proxy_source": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution",
+            "layout_b_mode_proxy_source": b_mode_owner,
+            "layout_b_mode_integration_scheme": b_mode_integration_scheme,
             "layout_b_mode_mode_labels": list(
                 canonical_projection.hierarchy_state.photon_polarization_block.get(
                     "mode_label_blocks",
@@ -2300,7 +2398,8 @@ class Ver2TierBIntegrator:
                     "layout_b_mode_payload_status": b_mode_sector_status,
                     "layout_b_mode_proxy_consumed": bool(np.any(np.abs(b_mode_proxy) > 0.0)),
                     "layout_b_mode_proxy_norm": float(np.linalg.norm(b_mode_proxy)),
-                    "layout_b_mode_proxy_source": "mode_ops.mass_inverse_trapezoidal_coupled_auxiliary_sector_evolution",
+                    "layout_b_mode_proxy_source": b_mode_owner,
+                    "layout_b_mode_integration_scheme": b_mode_integration_scheme,
                     "layout_b_mode_history_sample_count": int(b_history.shape[0]),
                     "layout_b_mode_mode_labels": list(
                         canonical_projection.hierarchy_state.photon_polarization_block.get(
