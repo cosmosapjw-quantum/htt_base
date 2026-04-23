@@ -2264,6 +2264,21 @@ class Ver2TierBIntegrator:
         *,
         covered_mode_label: str | None = None,
     ) -> _LayoutAuxiliaryHistoryBundle:
+        cached_bundle = getattr(result, "layout_auxiliary_bundle", None)
+        if isinstance(cached_bundle, _LayoutAuxiliaryHistoryBundle):
+            cached_covered = str(
+                cached_bundle.metadata.get(
+                    "covered_mode_label",
+                    self._layout_covered_mode_label if self._layout_covered_mode_label is not None else "",
+                )
+            )
+            requested_covered = (
+                self._layout_covered_mode_label
+                if covered_mode_label is None
+                else str(covered_mode_label)
+            )
+            if requested_covered is None or cached_covered == str(requested_covered):
+                return cached_bundle
         neutrino_tower = result.neutrino_tower
         if neutrino_tower is None:
             raise ValueError("layout auxiliary history bundle requires result.neutrino_tower")
@@ -2544,7 +2559,7 @@ class Ver2TierBIntegrator:
                 "coupled_sectors": ("ph_B", "baryon", "cdm"),
             },
         )
-        return _LayoutAuxiliaryHistoryBundle(
+        bundle = _LayoutAuxiliaryHistoryBundle(
             eta=eta_samples,
             source_history=source_rows,
             source_history_by_mode_label=source_rows_by_mode_label,
@@ -2561,6 +2576,8 @@ class Ver2TierBIntegrator:
                 "cdm_history_by_mode_label": cdm_rows_by_mode_label,
             },
         )
+        result.layout_auxiliary_bundle = bundle
+        return bundle
 
     def build_coupled_auxiliary_sector_history(
         self,
@@ -3504,7 +3521,7 @@ class Ver2TierBIntegrator:
                         )
                     )
 
-        return self._build_result(
+        result = self._build_result(
             eta=np.concatenate(eta_segments, axis=0),
             photon_T_tower=np.vstack(photon_T_segments),
             photon_E_tower=np.vstack(photon_E_segments),
@@ -3521,3 +3538,6 @@ class Ver2TierBIntegrator:
             checkpoint_write_count=checkpoint_write_count,
             restart_used=(restart_state is not None),
         )
+        result.layout_auxiliary_bundle = self.build_layout_auxiliary_history_bundle(result)
+        result.solver_info["layout_auxiliary_bundle_cached"] = True
+        return result
