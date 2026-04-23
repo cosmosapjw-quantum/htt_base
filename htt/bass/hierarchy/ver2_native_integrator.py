@@ -1306,14 +1306,20 @@ class Ver2TierBIntegrator:
                 reionization_amplitude=float(self._reionization_amplitude()),
             )
         )
-        source_local = np.asarray(source_seed_blocks[str(self._layout_covered_mode_label)], dtype=np.float64)
-        residual_source = np.concatenate(
-            [
-                np.asarray(source_seed_blocks[str(mu)], dtype=np.float64)
-                for mu in self._residual_mode_labels
-            ],
-            dtype=np.float64,
-        ) if self._residual_mode_labels else np.zeros(0, dtype=np.float64)
+        if str(self.config.solver_method).upper() == "IMEX_MIDPOINT_BDF":
+            source_local = np.asarray(source_seed_blocks[str(self._layout_covered_mode_label)], dtype=np.float64)
+        else:
+            source_local = np.zeros(_SOURCE_LOCAL_DOF, dtype=np.float64)
+        startup_snapshot = self._eta_runtime_snapshot(eta_initial)
+        residual_local, residual_harmonic, residual_source = self._solve_startup_residual_joint_state(
+            snapshot=startup_snapshot,
+            photon_T=seeded.photon_T,
+            photon_E=seeded.photon_E,
+            photon_B=zero_hierarchy(self.config.L_max),
+            neutrino_tower=seeded.neutrino_tower,
+            baryon_local=baryon_local,
+            source_local=source_local,
+        )
         return _pack_radiation_state(
             photon_T=seeded.photon_T,
             photon_E=seeded.photon_E,
@@ -1322,8 +1328,8 @@ class Ver2TierBIntegrator:
             baryon_local=baryon_local,
             cdm_local=cdm_local,
             source_local=source_local,
-            residual_local=np.zeros(self._residual_local_dof, dtype=np.float64),
-            residual_harmonic=np.zeros(self._residual_harmonic_dof, dtype=np.float64),
+            residual_local=residual_local,
+            residual_harmonic=residual_harmonic,
             residual_source=residual_source,
         )
 
@@ -2086,9 +2092,12 @@ class Ver2TierBIntegrator:
         photon_B: PSTFHierarchyState,
         neutrino_tower: PSTFHierarchyState,
         baryon_local: np.ndarray,
-        source_local: np.ndarray,
+        source_local: np.ndarray | None,
     ) -> ReducedJointAffineOperator:
         covered = str(self._layout_covered_mode_label)
+        kwargs = {}
+        if source_local is not None:
+            kwargs["source_by_mode_label"] = {covered: np.asarray(source_local, dtype=np.float64)}
         return self.backend.build_reduced_joint_affine_operator(
             self._residual_harmonic_background_state(snapshot=snapshot),
             residual_mode_labels=self._residual_mode_labels,
@@ -2097,7 +2106,7 @@ class Ver2TierBIntegrator:
             photon_B_by_mode_label={covered: np.asarray(pack_hierarchy(photon_B), dtype=np.float64)},
             neutrino_by_mode_label={covered: np.asarray(pack_hierarchy(neutrino_tower), dtype=np.float64)},
             baryon_by_mode_label={covered: np.asarray(baryon_local, dtype=np.float64)},
-            source_by_mode_label={covered: np.asarray(source_local, dtype=np.float64)},
+            **kwargs,
         )
 
     def _build_covered_source_affine_operator(
@@ -2146,7 +2155,6 @@ class Ver2TierBIntegrator:
         photon_B: PSTFHierarchyState,
         neutrino_tower: PSTFHierarchyState,
         baryon_local: np.ndarray,
-        source_local: np.ndarray,
         residual_local: np.ndarray,
         residual_harmonic: np.ndarray,
         residual_source: np.ndarray,
@@ -2158,7 +2166,7 @@ class Ver2TierBIntegrator:
             photon_B=photon_B,
             neutrino_tower=neutrino_tower,
             baryon_local=baryon_local,
-            source_local=source_local,
+            source_local=None,
         )
         rhs = np.asarray(
             affine.matrix
@@ -2182,6 +2190,55 @@ class Ver2TierBIntegrator:
                 dtype=np.float64,
             ),
             np.asarray(rhs[self._residual_local_dof + self._residual_harmonic_dof :], dtype=np.float64),
+        )
+
+    def _solve_startup_residual_joint_state(
+        self,
+        *,
+        snapshot: _EtaRuntimeSnapshot,
+        photon_T: PSTFHierarchyState,
+        photon_E: PolarizationHierarchyState,
+        photon_B: PSTFHierarchyState,
+        neutrino_tower: PSTFHierarchyState,
+        baryon_local: np.ndarray,
+        source_local: np.ndarray,
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        joint_dof = self._residual_local_dof + self._residual_harmonic_dof + self._residual_source_dof
+        if joint_dof == 0 or str(self.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+            return (
+                np.zeros(self._residual_local_dof, dtype=np.float64),
+                np.zeros(self._residual_harmonic_dof, dtype=np.float64),
+                np.zeros(self._residual_source_dof, dtype=np.float64),
+            )
+        affine = self._build_residual_joint_affine_operator(
+            snapshot=snapshot,
+            photon_T=photon_T,
+            photon_E=photon_E,
+            photon_B=photon_B,
+            neutrino_tower=neutrino_tower,
+            baryon_local=baryon_local,
+            source_local=source_local,
+        )
+        total_span = max(float(self.config.eta_final_mpc - self.config.eta_initial_mpc), 1.0e-12)
+        startup_dt = max(
+            total_span / (100000.0 if abs(float(self.config.tilt_rapidity)) > 0.0 else 5000.0),
+            1.0e-8,
+        )
+        system = self._residual_joint_sparse_identity - startup_dt * affine.matrix
+        lu = splu(system)
+        startup_state = np.asarray(
+            lu.solve(startup_dt * np.asarray(affine.bias, dtype=np.float64)),
+            dtype=np.float64,
+        )
+        return (
+            np.asarray(startup_state[: self._residual_local_dof], dtype=np.float64),
+            np.asarray(
+                startup_state[
+                    self._residual_local_dof : self._residual_local_dof + self._residual_harmonic_dof
+                ],
+                dtype=np.float64,
+            ),
+            np.asarray(startup_state[self._residual_local_dof + self._residual_harmonic_dof :], dtype=np.float64),
         )
 
     def _orthogonal_residual_joint_ros2_step(
@@ -2459,7 +2516,6 @@ class Ver2TierBIntegrator:
                 photon_B=photon_B,
                 neutrino_tower=neutrino_tower,
                 baryon_local=baryon_local,
-                source_local=source_local,
                 residual_local=residual_local,
                 residual_harmonic=residual_harmonic,
                 residual_source=residual_source,
@@ -4312,7 +4368,8 @@ class Ver2TierBIntegrator:
             max_step=max_step,
         )
         if not sol.success:
-            raise RuntimeError(f"solve_ivp failed: {sol.message} at η={sol.t[-1]}")
+            eta_fail = float(sol.t[-1]) if len(sol.t) > 0 else float(eta_start)
+            raise RuntimeError(f"solve_ivp failed: {sol.message} at η={eta_fail}")
         if np.any(~np.isfinite(sol.y)):
             raise RuntimeError("solve_ivp produced non-finite entries in VER2 native Tier-B core")
         return sol
