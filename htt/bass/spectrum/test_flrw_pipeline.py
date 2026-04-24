@@ -89,6 +89,29 @@ def test_bias_subtraction_flag_defaults_false() -> None:
     assert cfg.bias_subtraction is False
 
 
+def test_primordial_b_k_sq_fn_callable_override() -> None:
+    """Round-7: callable primordial_b_k_sq_fn takes precedence over
+    scalar primordial_b_k_sq. Resolver returns per-k value."""
+    from bass.spectrum.flrw_pipeline import _resolve_primordial_b_k_sq
+
+    # Scalar-only (fn=None): returns the scalar.
+    cfg_scalar = FLRWPipelineConfig(primordial_b_k_sq=1.7)
+    assert _resolve_primordial_b_k_sq(cfg_scalar, 1.0e-3) == pytest.approx(1.7)
+
+    # Planck-2018 P_ζ(k) callable override.
+    def p_zeta(k: float) -> float:
+        return 2.1e-9 * (k / 0.05) ** (0.9649 - 1.0)
+
+    cfg_callable = FLRWPipelineConfig(primordial_b_k_sq_fn=p_zeta)
+    # Callable takes precedence over the scalar default (1.0).
+    assert _resolve_primordial_b_k_sq(cfg_callable, 0.05) == pytest.approx(2.1e-9, rel=1e-12)
+    # k/k_pivot = 0.02 → (0.02)^(n_s-1) = (0.02)^(-0.0351) ≈ 1.141
+    expected_at_1e_3 = 2.1e-9 * (1.0e-3 / 0.05) ** (-0.0351)
+    assert _resolve_primordial_b_k_sq(cfg_callable, 1.0e-3) == pytest.approx(
+        expected_at_1e_3, rel=1e-10
+    )
+
+
 def test_subtract_transfer_functions_helper() -> None:
     """_subtract_transfer_functions yields elementwise target − bias on
     every Δ field; zero-vs-zero returns zeros."""

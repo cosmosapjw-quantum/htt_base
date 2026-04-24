@@ -92,6 +92,23 @@ __all__ = [
 ]
 
 
+def _resolve_primordial_b_k_sq(
+    cfg: "FLRWPipelineConfig",
+    k_mpc: float,
+) -> float:
+    """Resolve the primordial B_K² amplitude for a given k.
+
+    Precedence: ``primordial_b_k_sq_fn`` (if callable) > the scalar
+    ``primordial_b_k_sq``. Callable is evaluated in the PARENT process
+    so per-k resolution survives ProcessPoolExecutor fork/spawn
+    dispatch (workers only see pre-resolved floats).
+    """
+    fn = cfg.primordial_b_k_sq_fn
+    if fn is not None:
+        return float(fn(float(k_mpc)))
+    return float(cfg.primordial_b_k_sq)
+
+
 @dataclass(frozen=True)
 class FLRWPipelineConfig:
     """Configuration bundle for the end-to-end FLRW D_ℓ pipeline.
@@ -126,6 +143,18 @@ class FLRWPipelineConfig:
     ``A_s × (k_pivot_ref / k_pivot)^(n_s-1)`` (≈ 2.1e-9) gives
     ζ-normalized physical amplitude. Exact B_K → ζ calibration is a
     pending convention audit (V5 follow-up Round-7)."""
+    primordial_b_k_sq_fn: Callable[[float], float] | None = None
+    """V5 step-4b-(a) Round-7 k-dependent override. When set to a
+    callable ``k → b_k_sq``, overrides the scalar ``primordial_b_k_sq``
+    field per k. Standard usage: set to the Planck-2018 P_ζ:
+
+        ``primordial_b_k_sq_fn=lambda k: 2.1e-9 * (k/0.05)**(0.9649-1.0)``
+
+    The callable is evaluated in the PARENT process so per-k values are
+    resolved to concrete floats before dispatch to fork workers
+    (ProcessPoolExecutor-safe). Leaving ``None`` preserves the scalar
+    ``primordial_b_k_sq`` convention.
+    """
     bias_subtraction: bool = False
     """V5 step-4b-(a) Round-6 finding: the solver carries a
     seed-independent visibility-source contribution that produces
@@ -350,7 +379,10 @@ def compute_transfer_function_at_k(
         bianchi_cosmo=BianchiCosmology(structure=get_type(bianchi_type), beta=0.0),
         gamma_T_over_H_threshold=cfg.gamma_T_over_H_threshold,
         adiabatic_mode_seed=cfg.adiabatic_mode_seed,
-        primordial_b_k_sq=cfg.primordial_b_k_sq,
+        # Per-k resolution (Round-7): callable override takes precedence
+        # over the scalar; evaluated HERE in the parent process, so fork
+        # workers only see a resolved float.
+        primordial_b_k_sq=_resolve_primordial_b_k_sq(cfg, k_mpc),
     )
 
     # execute_tier_b_solver requires k_grid_mpc with ≥ 2 entries for the
@@ -500,14 +532,22 @@ def _run_chunk_shared_bg(
         ),
     )
 
-    # Per-k: only rebuild the integrator (with this k's seed_k_comoving)
-    # and re-run the IMEX integration. Everything else is reused.
+    # Per-k: only rebuild the integrator (with this k's seed_k_comoving
+    # and its per-k resolved primordial_b_k_sq) and re-run the IMEX
+    # integration. Background_monitor + visibility_source + backend +
+    # canonical_decision + runtime_decision + execution_plan are reused.
     out: list[BianchiTransferFunctions] = []
     for k_mpc in k_values:
         k_grid_pair = np.array([float(k_mpc), 2.0 * float(k_mpc)], dtype=np.float64)
         seed_k_comoving = float(k_mpc)
+        # Resolve per-k b_k_sq in the PARENT process for ProcessPoolExecutor
+        # safety. Callable overrides pass through unchanged.
+        per_k_b_k_sq = _resolve_primordial_b_k_sq(cfg, float(k_mpc))
+        per_k_runtime_config = _dc_replace(
+            runtime_config, primordial_b_k_sq=per_k_b_k_sq
+        )
         integrator = Ver2TierBIntegrator(
-            runtime_config,
+            per_k_runtime_config,
             species,
             backend=backend_instance,
             background_monitor=background_monitor,
@@ -516,7 +556,7 @@ def _run_chunk_shared_bg(
             seed_k_comoving=seed_k_comoving,
         )
         prepared = _TierBPreparedRuntimeContext(
-            runtime_config=runtime_config,
+            runtime_config=per_k_runtime_config,
             family_realization=family_realization,
             restart_state=None,
             background_monitor=background_monitor,
@@ -820,11 +860,14 @@ def _compute_transfer_function_grid_bias_subtracted(
     """
     global _WORKER_SPECIES, _WORKER_CONFIG, _WORKER_BIANCHI_TYPE
 
-    # Build the (k, b_k_sq) task pairs.
+    # Build the (k, b_k_sq) task pairs. Per-k b_k_sq is resolved in the
+    # parent process (handles callable primordial_b_k_sq_fn correctly
+    # under ProcessPoolExecutor; workers only see floats).
     tasks: list[tuple[float, float]] = []
     for k_mpc in k_array:
-        tasks.append((float(k_mpc), 0.0))
-        tasks.append((float(k_mpc), float(cfg.primordial_b_k_sq)))
+        per_k_target = _resolve_primordial_b_k_sq(cfg, float(k_mpc))
+        tasks.append((float(k_mpc), 0.0))  # bias — seed-independent
+        tasks.append((float(k_mpc), per_k_target))
 
     _WORKER_SPECIES = species
     _WORKER_CONFIG = cfg
