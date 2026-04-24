@@ -7,6 +7,40 @@
 
 ## [Unreleased]
 
+### Tier-D BASS-independent parallel track — R03a + TSC admissibility anchors (2026-04-24)
+
+Fourth layer of the anchor campaign after Tiers A+B+C. Pins the R03a evidence framework (the "active" sibling of the deprecated `evidence_models.py`) and the pure-algebra TSC admissibility layer.
+
+**D#1 — `evidence_models_R03a` + audit anchors** (`htt/tests/test_evidence_models_R03a_anchors.py`, 16 tests):
+
+- **Cross-consistency**: R03a ≡ deprecated `evidence_models.py` on the CLAUDE.md §5 production anchors (lnB, β_mean, F_Bayes) — bit-exact equality of `FLRW.log_evidence()`, `FLRW_tilt.log_evidence_quadrature(n_points=10_000)` lnZ and beta_mean, and the `audit_inactive_parameters()` output structure.
+- **`ALL_MODELS` registry frozen** at 16 entries (FLRW null + FLRW_tilt + 8 orthogonal + 6 tilt Bianchi).
+- **CA-07 / CA-08 identifiability audit output pinned**: `inactive_parameters` (6 models carry inactive params), `duplicate_models` (7 orth/tilt models collapse onto BI_orth / BI_tilt under this likelihood), `equivalence_classes` (`orth_1D`, `tilt_flat` each size > 1).
+- **R03a BASS shear sentinel**: `bass_shear_to_D2(1e-8) = 0.22615 μK²` pinned; `bass_shear_to_D2(1e-9) = 0.02508 μK²` pinned; the ratio ≈ 9.02 (mildly sub-quadratic due to the f₂(x) interpolator at small x) also pinned.
+- **`bass_vs_aniclass_comparison` schema frozen** (7 keys including log10_ratio ≈ 14.20 — a wide calibration gap by design, asserted to catch accidental factor-10 drifts on either side).
+- **`ObsData` defaults pinned** (D₂^obs=225.9, D₃^obs=936.9 μK², CatWISE ε₁, Radio ε₁, CF4 β, Saadeh ω/H upper limit).
+- **R03a T0 = 2.72548 K** — cross-check against the SSoT drift closure.
+
+**D#2 — TSC admissibility anchors** (`htt/tsc/admissibility/test_admissibility_anchors.py`, 38 tests):
+
+- **Cross-package consistency**: `tsc.admissibility.three_bound_hierarchy.{B_sigma, B_omega, B_accel}` (rational arithmetic via Fraction) must equal `htt.core.bounds.{B_sigma, B_omega, B_accel}` (float) bit-exact at S1/S2a/S2c. 9 parametrized tests pin this.
+- **MES ceilings pinned** (uncorrected, Corollary 3.1/3.2/3.3): Σ²_max, W²_max, A²_max at S1.
+- **Design-invariant test**: TSC's uncorrected Σ²_max and HTT's VT-07-corrected `Sig2_max_MES` differ by a `(1 + 2.69 ε₁)²` factor — the 6.6×10⁻³ relative gap at S1 is pinned. Any alias of the two observables fires.
+- **`ThreeBoundReport` output** (13 fields) frozen at S1 inc. `hierarchy_strict=True` and both monotonicity ratios.
+- **`BIANCHI_TYPES` tuple** (9 types: I, II, V, VI0, VII0, VIII, IX, VIIh, III) frozen.
+- **`evaluate_all_bianchi_types` invariance**: at fixed (ε₁, ε₂, ε₃) the bounds are Bianchi-type-independent (only the `type_name` label changes) — asserted across all 9 types.
+- **Realizability verdicts**: `verify_flrw_limit_admissible(xi ∈ {-1, 0, 1}) == True` (3 tests), `verify_small_shear_admissible` across a 3×3 (ξ × Θ₁) grid (9 tests), `verify_large_dipole_breaks_positivity() == True`.
+- **Domain flags**: `check_theta_positive`, `check_be_eta_nonpositive`, `check_weight_simplex` each exercised on accept + reject fixtures.
+- **`HierarchyViolationError` subclass sanity** — ensures clean-catching as `ValueError`.
+
+**Test impact** (isolated):
+
+- `htt/tests/` — 348 → 364 (+16).
+- `tsc/` — 698 → 736 (+38).
+- `mio/tests/`, `workspace/` — unchanged.
+
+**Combined Tier A+B+C+D**: 188 bit-identical regression tests now guard the entire BASS-independent algebraic core (bounds → tilted FLRW → evidence models → TSC admissibility → MIO coherence → observatory cross-check). Drift in any coefficient anywhere in this chain now fires at least one pinned test.
+
 ### SSoT T_CMB drift closed — canonical Fixsen 2009 value across bass/htt/tsc (2026-04-24)
 
 `docs/audits/SSOT_TCMB_DRIFT_2026-04-19.md` recorded two numerically distinct `T_CMB` copies both citing Fixsen (2009). User-approved closure (2026-04-24) aligns every copy to the canonical central value **`T_CMB = 2.72548 K`** (Fixsen 2009 post-WMAP recalibration; PDG 2024 CMB review confirms; Planck 2018 pipelines fix to the same value; no 2024–2026 CMB monopole measurement supersedes it).
