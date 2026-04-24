@@ -355,6 +355,24 @@ What this helper **does not**: change the seed amplitude from the current shear-
 - **i. Primordial amplitude wiring** — replace `amplitude = max(|Σ_±|, 1e-6)` in `_build_seed_projection` with a `P(k)`-derived normalization at `η_initial`. Prerequisite for CAMB low-ℓ comparison.
 - **j. Mode-k scan** — the Tier-B solver is currently single-background. CAMB-comparable `D_ℓ` requires a k-sweep. No existing API; needs design.
 
+### End-to-end smoke validation
+
+`scripts/v5_tier_b_cosmological_smoke.py` chains Blockers 1 + 2 + 3 in a single reproducible script. Result on the Planck-2018 species registry (Bianchi I, β = 0, L_max = 4, 64 output samples):
+
+```
+η_initial = 260.1382 Mpc   (η(z_* = 1089.94) − 20 Mpc margin, via Blocker 3 helper)
+η_final   = 14147.3548 Mpc (species.bg_table.eta_today)
+reached   = 14147.3548 Mpc
+|T|_∞     = 2.93         (physical, order-unity free-streaming multipoles)
+|E|_∞     = 1.67e-4      (polarization suppressed as expected)
+|ν|_∞     = 11.7         (neutrinos dominate free-streaming post-decoupling)
+time      = 43.4 s       (L_max = 4; bce0eb9 used L_max = 8 → 130 s)
+```
+
+Exit status: `✓ PASS: Blocker-1+2+3 integration chain is operational.`
+
+This closes the "is the pipeline runnable from real IC to η_today?" question for the FLRW / Type-I path. The remaining gap to CAMB low-ℓ comparison is items (i) and (j) above — they are NOT blockers, they are implementation completeness items for a physical spectrum extraction.
+
 ### Pre-existing Round-2 collateral failures (unchanged)
 
 The Round-2 Q-7.4 `mix_scale = 0` neutralization eliminated the hand-tuned scalar cross-mode couplings. Six tests in `test_ver3_layout_protocol.py` were pinned against the pre-Round-2 scalar-modifier physics and assert nonzero cross-mode blocks for Type VIII etc. These failed before the Round-3 session started and remain failing; they are expected to re-pass once the Round-3 matrix kernels are wired into the assembly path (follow-up (g) above):

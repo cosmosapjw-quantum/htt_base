@@ -90,6 +90,22 @@ Exposed via `bass.runtime` `__init__.py`. Purely additive — no existing call s
 
 These continue the V5 handoff doc's Option D critical path toward FLRW CMB end-to-end.
 
+**Added** (`scripts/v5_tier_b_cosmological_smoke.py`):
+
+End-to-end diagnostic chaining Blockers 1 + 2 + 3. Reproduces the commit `bce0eb9` manual 130 s validation in a runnable form (L_max = 4 → 43 s). Built around `build_cosmological_integrator_config` so real-physics η anchors are extracted from the species registry. Output on Planck-2018 FLRW:
+
+```
+η_initial = 260.14 Mpc   (η(z_*) − 20 Mpc)
+η_final   = 14147.35 Mpc (species.bg_table.eta_today)
+reached   = 14147.35 Mpc
+|T|_∞ = 2.93  |E|_∞ = 1.67e-4  |ν|_∞ = 11.7
+time = 43.4 s
+```
+
+`✓ PASS: Blocker-1+2+3 integration chain is operational.`
+
+Kept as a diagnostic (not a unit test) — preserves the full cosmological-range validation after each kernel-pack wiring or closure-policy change without bloating CI runtime.
+
 ---
 
 ### V5-RUNTIME Round-4 — q_h / Wigner-3j / Π table closed (dormant, 2026-04-24)
