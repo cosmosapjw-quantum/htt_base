@@ -152,6 +152,50 @@ def test_subtract_transfer_functions_helper() -> None:
     assert np.allclose(diff.delta_T_m_minus2, np.array([0.2, 0.25, 0.3]), atol=1e-14)
 
 
+def test_scale_transfer_function_helper() -> None:
+    """_scale_transfer_function multiplies every Δ field by a scalar."""
+    from bass.spectrum.flrw_pipeline import _scale_transfer_function
+
+    tf = BianchiTransferFunctions(
+        delta_T_m0=np.array([1.0, 2.0, 3.0]),
+        delta_T_m_plus2=np.array([0.1, 0.2, 0.3]),
+        delta_T_m_minus2=np.array([0.4, 0.5, 0.6]),
+        delta_E_m0=np.array([10.0, 20.0, 30.0]),
+        delta_E_m_plus2=np.zeros(3),
+        delta_E_m_minus2=np.zeros(3),
+        delta_B_all_zero=np.zeros(3),
+    )
+    scaled = _scale_transfer_function(tf, 2.5)
+    assert np.allclose(scaled.delta_T_m0, np.array([2.5, 5.0, 7.5]), atol=1e-14)
+    assert np.allclose(scaled.delta_E_m0, np.array([25.0, 50.0, 75.0]), atol=1e-14)
+    assert np.allclose(scaled.delta_T_m_plus2, np.array([0.25, 0.5, 0.75]), atol=1e-14)
+    # Zero passthrough preserved.
+    assert np.array_equal(scaled.delta_B_all_zero, np.zeros(3))
+
+
+def test_d_ell_linear_probe_rejects_invalid_inputs(species) -> None:
+    """Round-9 wrapper validates k_grid + probe amplitude before any
+    expensive solver dispatch (mirrors the single-k linear-probe API)."""
+    from bass.spectrum.flrw_pipeline import compute_flrw_d_ell_linear_probe
+
+    k_grid = np.array([1.0e-3, 1.0e-2])
+
+    with pytest.raises(ValueError, match="k_grid_mpc must be non-empty"):
+        compute_flrw_d_ell_linear_probe(species, k_grid_mpc=np.array([]))
+    with pytest.raises(ValueError, match="must all be positive"):
+        compute_flrw_d_ell_linear_probe(
+            species, k_grid_mpc=np.array([1.0e-3, -1.0e-3])
+        )
+    with pytest.raises(ValueError, match="probe_b_k_sq must be positive"):
+        compute_flrw_d_ell_linear_probe(
+            species, k_grid_mpc=k_grid, probe_b_k_sq=0.0
+        )
+    with pytest.raises(ValueError, match="probe_b_k_sq must be positive"):
+        compute_flrw_d_ell_linear_probe(
+            species, k_grid_mpc=k_grid, probe_b_k_sq=-1.0
+        )
+
+
 def test_pipeline_config_rejects_small_L_max() -> None:
     with pytest.raises(ValueError, match="L_max_tower ≥ 2"):
         FLRWPipelineConfig(L_max_tower=1)
@@ -363,3 +407,93 @@ def test_parallel_matches_sequential_transfer_functions(species) -> None:
         assert np.allclose(par.delta_E_m0, seq.delta_E_m0, atol=0.0, rtol=0.0), (
             "parallel vs sequential Δ_E^m0 differ — fork inheritance may be broken"
         )
+
+
+@pytest.mark.slow
+def test_d_ell_linear_probe_end_to_end_finite(species) -> None:
+    """V5 Round-9 R9-A: ``compute_flrw_d_ell_linear_probe`` chains the
+    bias-subtracted linear probe across N_k k-points and assembles
+    Planck-2018 D_ℓ.
+
+    Runtime budget: ~50 s (2 k × 2 runs / 2 workers). Validates the
+    end-to-end wiring; the absolute calibration of the response to
+    Route-B (~1002 μK²) is the open R9-B/C convention audit. Spec:
+
+      - finite D_ℓ^TT and D_ℓ^EE arrays
+      - shape ``(ell_max+1,)``
+      - α(k) finite for every k
+      - calibration_factor=1.0 default applied (i.e., bundle records it)
+    """
+    from bass.spectrum.flrw_pipeline import compute_flrw_d_ell_linear_probe
+
+    k_grid = np.logspace(-4.0, -3.0, 2)
+    pipeline_cfg = FLRWPipelineConfig(L_max_tower=4, ell_max_transfer=4)
+
+    bundle = compute_flrw_d_ell_linear_probe(
+        species,
+        k_grid_mpc=k_grid,
+        pipeline_config=pipeline_cfg,
+        probe_b_k_sq=1.0,
+        n_workers=2,
+    )
+
+    # Schema
+    assert set(bundle.keys()) >= {
+        "k_grid_mpc",
+        "alpha_transfer_functions",
+        "probe_b_k_sq",
+        "calibration_factor",
+        "cl_tt",
+        "cl_ee",
+        "d_tt",
+        "d_ee",
+        "assembly_config",
+    }
+    assert bundle["probe_b_k_sq"] == 1.0
+    assert bundle["calibration_factor"] == 1.0
+    assert bundle["d_tt"].shape == (5,)
+    assert bundle["d_ee"].shape == (5,)
+    assert np.all(np.isfinite(bundle["d_tt"]))
+    assert np.all(np.isfinite(bundle["d_ee"]))
+    # Spin-2 selection rule: D_ℓ^EE = 0 for ℓ < 2
+    assert float(bundle["d_ee"][0]) == 0.0
+    assert float(bundle["d_ee"][1]) == 0.0
+    # α(k) returned for every k point, finite
+    assert len(bundle["alpha_transfer_functions"]) == len(k_grid)
+    for tf in bundle["alpha_transfer_functions"]:
+        assert np.all(np.isfinite(tf.delta_T_m0))
+        assert np.all(np.isfinite(tf.delta_E_m0))
+
+
+@pytest.mark.slow
+def test_d_ell_linear_probe_calibration_factor_scales_quadratically(species) -> None:
+    """R9-C: applying ``calibration_factor`` scales D_ℓ by its square,
+    since α appears squared in the C_ℓ assembly. This confirms the
+    knob is wired correctly for downstream B_K² ↔ ζ² calibration."""
+    from bass.spectrum.flrw_pipeline import compute_flrw_d_ell_linear_probe
+
+    k_grid = np.logspace(-4.0, -3.0, 2)
+    pipeline_cfg = FLRWPipelineConfig(L_max_tower=4, ell_max_transfer=4)
+
+    bundle_unit = compute_flrw_d_ell_linear_probe(
+        species,
+        k_grid_mpc=k_grid,
+        pipeline_config=pipeline_cfg,
+        calibration_factor=1.0,
+        n_workers=2,
+    )
+    bundle_scaled = compute_flrw_d_ell_linear_probe(
+        species,
+        k_grid_mpc=k_grid,
+        pipeline_config=pipeline_cfg,
+        calibration_factor=2.5,
+        n_workers=2,
+    )
+
+    # D_ℓ ∝ |α|² → calibration_factor enters quadratically
+    expected_ratio = 2.5 ** 2
+    for ell in (2, 3, 4):
+        observed = float(bundle_scaled["d_tt"][ell]) / float(
+            bundle_unit["d_tt"][ell]
+        )
+        assert observed == pytest.approx(expected_ratio, rel=1.0e-10)

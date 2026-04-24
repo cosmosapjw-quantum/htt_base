@@ -7,6 +7,71 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-9 — D_ℓ linear-probe wrapper + B_K² convention audit (2026-04-24)
+
+Adds the multi-k extension of Round-8's single-k linear probe and
+runs a first empirical pass on the open B_K² ↔ ζ² convention question.
+
+**R9-A** — `compute_flrw_d_ell_linear_probe(species, *, k_grid_mpc,
+pipeline_config, assembly_config, probe_b_k_sq=1.0,
+calibration_factor=1.0, n_workers, bianchi_type)` in
+`htt/bass/spectrum/flrw_pipeline.py`. Dispatches `2 × N_k` parallel
+runs (bias `b_k_sq=0` + target `b_k_sq=probe_b_k_sq` per k) via the
+existing bias-subtracted grid path, divides each pair by `probe_b_k_sq`
+to extract α(k), then assembles C_ℓ + D_ℓ through the standard
+Planck-2018 P_R(k) pipeline (`A_s=2.1e-9, n_s=0.9649, k_pivot=0.05`).
+Wall time at N_k=12 with 8 workers: 82 s (24 tasks → 3 rounds × ~28 s).
+
+The wrapper forces `unit_amplitude_normalization=False` because the
+default `True` divides each Δ by `seed_amp = max(|Σ_±|, 1e-6) = 1e-6`
+for FLRW (Σ_± = 0). That floor — unrelated to the primordial amplitude
+— inflates α by ~10^6 and |α|² by 10^12, sending D_2 to ~10^17 even
+after bias subtraction. The explicit `/probe_b_k_sq` division is the
+natural normalization; the seed-amp-floor division is redundant.
+
+**R9-B** — convention audit at probe=1.0 over `k ∈ [1e-4, 1e-1] Mpc⁻¹`:
+
+| N_k | unit_amp_norm | D_2^probe [μK²] | D_2^probe / D_2^Route-B |
+|---|---|---|---|
+| 6  | True (bug) | 1.008e+67 | 1.006e+64 |
+| 4  | False      | 2.934e+07 | 2.928e+04 |
+| 12 | False      | 1.706e+07 | 1.703e+04 |
+
+The unit-amplitude bug accounts for ~10^60 of the raw 10^64 mismatch;
+the residual 10^4 ratio is **not k-independent** (shifts ~0.6× as
+N_k 4 → 12, ~2× across probe 1.0 vs 0.01). Per-k α(k) is dominated by
+super-horizon `k=1e-4` (`α[ℓ=2] ≈ -10`, with sub-horizon Doppler peak
+~`k=0.07` undercovered at this N_k). Convention closure deferred to
+R9-D pending denser audit.
+
+**R9-C** — `calibration_factor=1.0` kwarg multiplies α(k)
+post-extraction (D_ℓ scales as the square — confirmed by
+`test_d_ell_linear_probe_calibration_factor_scales_quadratically`).
+**No default value baked** because the empirical ratio is N_k-dependent
+(would freeze in a quadrature artefact). Downstream callers pass an
+explicit factor once converged.
+
+Tests added (`htt/bass/spectrum/test_flrw_pipeline.py`):
+- `test_scale_transfer_function_helper` (fast)
+- `test_d_ell_linear_probe_rejects_invalid_inputs` (fast)
+- `test_d_ell_linear_probe_end_to_end_finite` (slow, ~50 s)
+- `test_d_ell_linear_probe_calibration_factor_scales_quadratically`
+  (slow, ~110 s)
+
+Files:
+- `htt/bass/spectrum/flrw_pipeline.py` — `+compute_flrw_d_ell_linear_probe`,
+  `+_scale_transfer_function`
+- `htt/bass/spectrum/test_flrw_pipeline.py` — 4 tests
+- `scripts/v5_round9_convention_audit.py` — R9-B audit script
+- `docs/V5_ROUND9_FINDINGS.md` — full audit table + interpretation
+
+Invariants:
+- Fast baseline: **1714 passed, 1 skipped, 5 deselected**
+  (was 1712 + 3; +2 fast tests + 2 slow)
+- D_2 = 1002.086744 μK² Route-B (legacy MB-95 path) bit-identical
+- λ_max < 2e-15 unaffected
+- Linear-probe wrapper opt-in; no default behavior changes
+
 ### Manuscript figures — 14 BASS-independent additions (2026-04-24)
 
 Adds 14 publication-quality figures to `scripts/make_manuscript_figures.py`

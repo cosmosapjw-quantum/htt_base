@@ -89,6 +89,7 @@ __all__ = [
     "compute_linear_probe_transfer_function",
     "compute_flrw_cl_tt",
     "compute_flrw_d_ell",
+    "compute_flrw_d_ell_linear_probe",
     "build_visibility_and_kappa_callables",
 ]
 
@@ -774,6 +775,21 @@ def _subtract_transfer_functions(
     )
 
 
+def _scale_transfer_function(
+    tf: BianchiTransferFunctions, factor: float
+) -> BianchiTransferFunctions:
+    """Multiply every Δ field by a scalar factor."""
+    return BianchiTransferFunctions(
+        delta_T_m0=tf.delta_T_m0 * factor,
+        delta_T_m_plus2=tf.delta_T_m_plus2 * factor,
+        delta_T_m_minus2=tf.delta_T_m_minus2 * factor,
+        delta_E_m0=tf.delta_E_m0 * factor,
+        delta_E_m_plus2=tf.delta_E_m_plus2 * factor,
+        delta_E_m_minus2=tf.delta_E_m_minus2 * factor,
+        delta_B_all_zero=tf.delta_B_all_zero * factor,
+    )
+
+
 def _worker_task_chunk(k_values: Sequence[float]) -> list[BianchiTransferFunctions]:  # pragma: no cover
     """Worker-side chunk entry point — amortizes the ~0.8 s k-independent
     Tier-B setup (background_monitor, visibility_source, backend,
@@ -1115,3 +1131,173 @@ def compute_flrw_d_ell(
     bundle["d_tt"] = compute_dl(bundle["cl_tt"], T_CMB_K=t_cmb_K)
     bundle["d_ee"] = compute_dl(bundle["cl_ee"], T_CMB_K=t_cmb_K)
     return bundle
+
+
+def compute_flrw_d_ell_linear_probe(
+    species: "SpeciesBackgroundRegistry",
+    *,
+    k_grid_mpc: np.ndarray,
+    pipeline_config: FLRWPipelineConfig | None = None,
+    assembly_config: CLAssemblyConfig | None = None,
+    probe_b_k_sq: float = 1.0,
+    calibration_factor: float = 1.0,
+    n_workers: int | None = None,
+    bianchi_type: str = "I",
+) -> dict[str, Any]:
+    """V5 step-4b-(a) Round-9: D_ℓ via N_k parallel linear probes.
+
+    Round-8 established that the Tier-B solver response to
+    ``primordial_b_k_sq`` is clean and linear inside
+    ``b_k_sq ∈ [~1e-3, ~10]`` but is dominated by the visibility-source
+    bias below that range and saturated by the seed formula's quadratic
+    B_K² term above. Physical Planck ζ ≈ 4.6e-5 sits below the noise
+    floor, so direct extraction at the physical amplitude is impossible.
+
+    This wrapper instead runs the linear-probe extraction at every k in
+    ``k_grid_mpc`` (probe amplitude inside the linear regime), recovers
+    the slope α(k) = (Δ_target − Δ_bias) / probe_b_k_sq, and pairs it
+    with the standard Planck-2018 P_R(k) in the C_ℓ assembly. The
+    result is the linearly-extrapolated D_ℓ at any primordial amplitude
+    that the assembly P_R encodes, decoupled from the bias floor.
+
+    Implementation
+    --------------
+    Reuses ``compute_transfer_function_grid(..., bias_subtraction=True)``
+    which dispatches ``2 × N_k`` parallel solver runs (bias + target per
+    k) across ``min(cpu_count, 2·N_k)`` workers. The bias-subtracted
+    transfer functions are then divided by ``probe_b_k_sq`` (so they
+    represent the per-unit-B_K² response) and optionally multiplied by
+    ``calibration_factor`` (R9-C: B_K² → ζ² convention factor; default
+    1.0 assumes the Lowell §13.2 unit-amplitude convention is exact).
+
+    Parameters
+    ----------
+    species
+        Planck-2018 species registry (inherited to workers via fork).
+    k_grid_mpc
+        Array of comoving wavenumbers (Mpc⁻¹).
+    pipeline_config
+        Base ``FLRWPipelineConfig``. Any ``primordial_b_k_sq`` /
+        ``primordial_b_k_sq_fn`` / ``bias_subtraction`` field is
+        overridden internally to set the probe amplitude and force the
+        bias-subtraction path.
+    assembly_config
+        Optional ``CLAssemblyConfig``. Defaults to Planck-2018
+        (``A_s=2.1e-9, n_s=0.9649, k_pivot=0.05 Mpc⁻¹``) with
+        ``ell_max = pipeline_config.ell_max_transfer`` and the
+        pipeline's ``k_grid``.
+    probe_b_k_sq
+        Probe amplitude inside the Round-8 linear regime
+        ``[1e-4, 10]``. Default 1.0.
+    calibration_factor
+        R9-C calibration multiplier for α(k). Default 1.0 (no
+        correction); set to the empirically-measured
+        ``D_2^Route-B / D_2^probe`` square root once R9-B has been run.
+    n_workers
+        Process count; default = ``os.cpu_count()`` capped at ``2·N_k``.
+    bianchi_type
+        Defaults to "I" (FLRW).
+
+    Returns
+    -------
+    dict with keys::
+
+        "k_grid_mpc"               : np.ndarray
+        "alpha_transfer_functions" : list[BianchiTransferFunctions]
+        "probe_b_k_sq"             : float
+        "calibration_factor"       : float
+        "cl_tt"                    : np.ndarray
+        "cl_ee"                    : np.ndarray
+        "d_tt"                     : np.ndarray  (μK²)
+        "d_ee"                     : np.ndarray  (μK²)
+        "assembly_config"          : CLAssemblyConfig
+
+    Notes
+    -----
+    Wall time scales as ``ceil(2·N_k / n_workers) × 45 s``. For
+    N_k = 6 with 8 workers: 12 tasks → 2 rounds → ~90 s.
+    """
+
+    from dataclasses import replace as _dc_replace
+
+    k_array = np.asarray(k_grid_mpc, dtype=np.float64).ravel()
+    if k_array.size == 0:
+        raise ValueError("k_grid_mpc must be non-empty")
+    if np.any(k_array <= 0.0):
+        raise ValueError("k_grid_mpc entries must all be positive")
+    if not (probe_b_k_sq > 0.0):
+        raise ValueError(
+            f"probe_b_k_sq must be positive; got {probe_b_k_sq}"
+        )
+    if not (1.0e-4 <= probe_b_k_sq <= 10.0):
+        import warnings
+
+        warnings.warn(
+            f"probe_b_k_sq={probe_b_k_sq} is outside the Round-8 "
+            f"verified linear regime [1e-4, 10]; α(k) may be "
+            f"contaminated by visibility-source bias (below) or "
+            f"quadratic saturation (above). See the b_k_sq response "
+            f"sweep for context.",
+            stacklevel=2,
+        )
+
+    base_cfg = pipeline_config or FLRWPipelineConfig()
+    # ``unit_amplitude_normalization=True`` divides each run by
+    # ``seed_amp = max(|Σ_±|, 1e-6)`` which for Bianchi I (Σ_±=0) is the
+    # uniform 1e-6 floor — NOT the primordial amplitude. That floor
+    # multiplies α by ~1e+6 (and |α|² by 1e+12) without carrying any
+    # physical content, so the linear-probe path forces it OFF and lets
+    # the explicit ``probe_b_k_sq`` division handle normalization. With
+    # ``primordial_b_k_sq_fn`` cleared the probe runs at a uniform
+    # amplitude across k.
+    probe_cfg = _dc_replace(
+        base_cfg,
+        primordial_b_k_sq=float(probe_b_k_sq),
+        primordial_b_k_sq_fn=None,
+        bias_subtraction=True,
+        unit_amplitude_normalization=False,
+    )
+
+    # 2 × N_k parallel runs via the bias-subtracted grid path. Returns
+    # one bias-subtracted Δ per k; each is the raw seed response at
+    # ``b_k_sq = probe_b_k_sq``.
+    raw_diffs = compute_transfer_function_grid(
+        species,
+        k_array,
+        config=probe_cfg,
+        bianchi_type=bianchi_type,
+        n_workers=n_workers,
+    )
+
+    inv_probe = float(calibration_factor) / float(probe_b_k_sq)
+    alpha_list = [_scale_transfer_function(diff, inv_probe) for diff in raw_diffs]
+
+    if assembly_config is None:
+        assembly_config = CLAssemblyConfig(
+            ell_max=probe_cfg.ell_max_transfer,
+            k_grid=k_array,
+            quadrature="trapezoid",
+        )
+    elif not np.array_equal(
+        np.asarray(assembly_config.k_grid, dtype=np.float64), k_array
+    ):
+        raise ValueError(
+            "assembly_config.k_grid must match k_grid_mpc exactly — "
+            "the transfer-function lookup is keyed on k values"
+        )
+
+    transfer_fn = _transfer_fn_from_grid(k_array, alpha_list)
+    cl_tt = assemble_cl_TT_isotropic(transfer_fn, assembly_config)
+    cl_ee = assemble_cl_EE_isotropic(transfer_fn, assembly_config)
+    t_cmb_K = float(assembly_config.T_CMB_K)
+    return {
+        "k_grid_mpc": k_array,
+        "alpha_transfer_functions": alpha_list,
+        "probe_b_k_sq": float(probe_b_k_sq),
+        "calibration_factor": float(calibration_factor),
+        "cl_tt": cl_tt,
+        "cl_ee": cl_ee,
+        "d_tt": compute_dl(cl_tt, T_CMB_K=t_cmb_K),
+        "d_ee": compute_dl(cl_ee, T_CMB_K=t_cmb_K),
+        "assembly_config": assembly_config,
+    }
