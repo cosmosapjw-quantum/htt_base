@@ -109,6 +109,14 @@ class FLRWPipelineConfig:
     quadrature: str = "trapezoid"
     gamma_T_over_H_threshold: float = 100.0
     random_seed: int = 42
+    unit_amplitude_normalization: bool = True
+    """When True (default), divide Δ_ℓ by the solver's seed amplitude so
+    that the returned transfer function is the physical "unit
+    primordial amplitude" response (C_ℓ = 4π ∫ P(k) |Δ|² dlnk then
+    pairs Δ directly with the primordial P(k) in cl_assembly without
+    double-counting). Set False if callers want the raw solver
+    response scaled by the seed amplitude (e.g. for debugging
+    linearity)."""
 
     def __post_init__(self) -> None:
         if self.L_max_tower < 2:
@@ -309,6 +317,24 @@ def compute_transfer_function_at_k(
     delta_E = project_polarization_transfer(
         float(k_mpc), source_E, eta_for_los, bessel_config
     )
+
+    # V5 step-4b-(i) seed-amplitude normalization.
+    # The Tier-B solver is linear, so Δ_ℓ = seed_amp · transfer_ℓ where
+    # transfer_ℓ is the physical "unit primordial amplitude" response.
+    # cl_assembly.assemble_cl_TT_isotropic pairs transfer_ℓ with the
+    # primordial P(k) as C_ℓ = 4π ∫ P(k) |Δ_ℓ|² dlnk; passing the raw
+    # Δ_ℓ (with seed_amp ≠ 1) would double-count the primordial
+    # amplitude. Divide by the actual seed amplitude recorded in the
+    # solver trace (_build_seed_projection uses max(|Σ_±|, 1e-6)).
+    if cfg.unit_amplitude_normalization:
+        seed_amp = float(run.trace.seed_projection.projected_seed.amplitude)
+        if not (seed_amp > 0.0):
+            raise ValueError(
+                f"seed_amp must be positive for unit-amplitude normalization; "
+                f"got {seed_amp!r}"
+            )
+        delta_T = delta_T / seed_amp
+        delta_E = delta_E / seed_amp
 
     zero_template = np.zeros_like(delta_T)
     return BianchiTransferFunctions(
