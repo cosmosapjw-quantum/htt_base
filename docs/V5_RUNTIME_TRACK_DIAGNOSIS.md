@@ -243,6 +243,83 @@ Pre-session: same integrator failed at `η≈4740 Mpc` with "IMEX split executor
 
 1. **Round-3 source block formulation audit** — patch 8 is pattern-matched. A formal algebraic derivation of the residual-source-propagator ODE (analogous to what Round 2 provided for local + harmonic) is recommended.
 2. **`geom_scale` replacement** — Round-2 Q-7.4 flagged that the current form `sqrt(Σn² + twist² + 0.25·|R| + |R_PSTF|² + |σ|²)` is a placeholder; the physical transport scale should come from the backend mode eigenvalue / v5 §03A. For FLRW this reduces to `max(0, 1) = 1` which is harmless, but non-FLRW families need `geom_scale = q_μ` (mode wavenumber).
-3. **Non-Type-I `_family_conditioned_kernel_law`** — 10 × 10 per-family tuning constants remain. Round-2 Q-7.2 concludes these have no first-principles scalar derivation; the correct family dependence is matrix-valued and must be assembled from structure constants. Out of scope; queued for a separate audit.
+3. **Non-Type-I `_family_conditioned_kernel_law`** — see Round-3 progress below. Matrix-valued API landed; wiring into the assembly path is deferred.
 4. **Blocker 3 — recombination IC injection** — `from_recombination(background_monitor, z_*)` constructor. Now unblocked (operator is stable); previously blocked because any IC would feed the unstable A_right.
 5. **Extended regression suite** — the 4 pre-existing failures in `bass/validation/test_ver2_campaign_evidence.py` and 4 in `bass/runtime/test_ver2_tier_b_execution.py` (tilted + cosmological paths) should now re-pass post-patch. Verification requires the full 42-minute test run; queued as a post-commit background check.
+
+---
+
+## Round-3 progress (2026-04-24) — matrix-valued family kernel API
+
+Round-3 of the algebraic audit (prompt: `docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND3.md`; answer: `v5_residual_harmonic_algebraic_audit_round3.md`) derived the matrix-valued replacement for the Round-2-rejected scalar `_family_conditioned_kernel_law` for five representative non-Type-I families (II, III, V, VII₀, VIII). The answer established:
+
+- **Q-8.1** — taxonomy: 4 objects operator-valued in μ (`transport`, `cross_mode`, `mode_plus/minus`), 3 operator-valued in (μ, ℓ, m) (`mix`, `twist_mix`, `source`), 2 μ-diagonal vectors (`mass`, `local_drag`), 2 true scalars (`collision = 1`, `polarization = 1`).
+- **Q-8.2** — μ-mode cross-coupling matrices for the 5 Tier-A families, assembled from `N_{μμ'} = Π · n · Πᵀ` (class-A) + `|a| · P_a` (class-B). Type I → zero matrix (FLRW anchor preserved).
+- **Q-8.3** — transport eigenvalue per family: `Q_II = |k|·I_3`, `Q_III = I_3`, `Q_V = √(k²+1)·I_3`, `Q_VIII = √(s²+¼)·I_3`, `Q_{VII₀}` requires v5 §03A helical-basis card for the `q_h` partner eigenvalue.
+- **Q-8.4** — twist coupling is the raw `|a|` coefficient (saturation `1/(1+|a|+|h|)` is a numerical placeholder with no physics content). Full Wigner-3j tensor form provided for rank-1 insertion on spin-2 tower; class-A families get identically zero kernel.
+- **Q-8.5** — `local_drag_by_mu = R_μ⁻¹`, `mass_by_mu = 3H + δM_μ`, `collision = 1.0` universally. Class-B μ-dependence enters at O(|a|²) via `ζ_R` and `ζ_M` coefficients that require v5 background tilt closure.
+- **Q-8.6** — concrete patch recipe for a new `FamilyKernelPack` + `_family_conditioned_kernel_operator` with matrix-valued kernels.
+
+### Round-3 landed this session (dormant API, no wiring)
+
+To preserve the 1366/1366 handoff baseline and the bit-identical D_2 = 1002.086744 μK² anchor, Round 3 was landed as **new code only**, not wired into the residual-joint assembly path:
+
+1. `FamilyKernelPack` dataclass (`htt/bass/hierarchy/ver3_layout_protocol.py`): carries `transport`, 4 `mu_mode_coupling_*` matrices, `twist_mix_kernel`, `local_drag_by_mu`, `mass_by_mu`, `collision` with the shapes specified in Q-8.6(a).
+2. `_family_conditioned_kernel_operator(backend, ell_max)`: returns the canonical unit-normalized signature matrices from Q-8.6(b) for Types I/II/III/V/VII₀/VIII. Tier-B families (IV, VI₀, VI_h, VII_h, IX) receive the zero matrix until queued for their own audit round. The existing `_family_conditioned_kernel_law` scalar dispatch remains the active code path.
+3. 11 new unit tests in `htt/bass/hierarchy/test_ver3_layout_protocol.py` pin:
+   - Type I → zero matrix (FLRW invariance guarantee).
+   - Type II → rank-1 nilpotent `diag(1, 0, 0)`.
+   - Type III → `diag(1, 1, -1)` (signature + class-B twist).
+   - Type V → rank-1 along twist axis `diag(1, 0, 0)`.
+   - Type VII₀ → `diag(0, 1, 1)` helical anchor.
+   - Type VIII → full-rank `diag(-1, 1, 1)` semisimple.
+   - Scalar Q-8.5 values, twist-kernel shape, frozen dataclass immutability.
+
+### Round-3 follow-ups (status after Round 4)
+
+The following items from the Round-3 auditor's answer have been revisited in Round 4 (prompt `docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND4.md`; answer `v5_residual_harmonic_algebraic_audit_round4.md`):
+
+| item | Round-4 resolution |
+|---|---|
+| a. `q_h` for Type VII₀ | **RESOLVED (Q-10)** — `q_h = √(k² + 1)`, `q_0 = √k²`. Wired as `_build_transport_matrix(family, k_mag)`. |
+| b. `ζ_R` class-B `R_μ` | **Partially resolved (Q-11)** — structure fully closed as `ζ_R = c_rb · ((v_{b,∥} - 4/3·v_{γ,∥}) / H)²`; `c_rb ∈ {1, 1/2}` still requires v5 class-B real-basis normalization card. Kernel-pack placeholder `local_drag_by_mu = ones` unchanged; runtime formula documented for wiring-patch. |
+| c. `ζ_M` class-B mass correction | **RESOLVED with schema correction (Q-12)** — the `ζ_M · n_{αα}` ansatz was schematic; exact form is `mass_by_mu_rel = 1 + σ_{μμ}/H` (no free coefficient). Kernel-pack placeholder `mass_by_mu = ones` unchanged; runtime formula documented for wiring-patch. |
+| d. Wigner-3j tensor for `twist_mix_kernel` | **RESOLVED (Q-13)** — `_build_twist_mix_kernel_unit(ell_max)` evaluates the closed-form kernel via `sympy.physics.wigner.wigner_3j` and caches by `ell_max`. Class-B families (III, V, VI_h, VII_h) populate the kernel with canonical |a|=1; class-A retains zero. Sanity check `K[2, 0, +1, -1] = +1/√21` verified. |
+| e. Sector similarity `S_{e,b,ν}` | **CONFIRMED identity (Q-14)** — `mu_mode_coupling_{e,b,ν} = mu_mode_coupling_t` in the frozen BASS storage basis. ℓ-dependent PSTF normalization is carried slot-wise, not μ-wise. |
+| f. Π_μ^α projector | **RESOLVED (Q-15)** — `_FAMILY_KERNEL_PI_PERMUTATION` table added. Generic `axis_permutation` field is **not** sufficient: Type III needs Π = I (not the `(1, 0, 2)` class-B default), and VII₀ needs the explicit 0↔1 swap to move the unique zero eigenvalue into the anchor slot. Auditor also pinned the canonical convention for degenerate eigenvalues (`μ_+ ← lower axis index`, `μ_- ← higher`). |
+| g. Assembly wiring | **Still queued** — kernel pack now physically complete except for the runtime-dependent fields (b, c). Wiring requires six-function semantic refactor; Tier-A order II → III → V → VII₀ → VIII. |
+
+### Round-4 landed this session (dormant API, no wiring)
+
+Additional code added in `htt/bass/hierarchy/ver3_layout_protocol.py`:
+
+1. `_FAMILY_KERNEL_PI_PERMUTATION` — per-family 3×3 axis projector table implementing Q-15.
+2. `_build_twist_mix_kernel_unit(ell_max)` — cached sympy-based Wigner-3j evaluator implementing Q-13.
+3. `_build_transport_matrix(family, k_mag, helical_eigenvalue=1.0)` — spectral-parameter-dependent transport matrix for Q-10 + v5 §03B spectral table (II, III, V, VII₀, VIII).
+4. `_family_conditioned_kernel_operator` updated to populate `twist_mix_kernel` with canonical |a|=1 Wigner values for class-B families.
+
+10 new `test_round4_*` unit tests in `htt/bass/hierarchy/test_ver3_layout_protocol.py`:
+
+- Class-B Wigner non-zero / class-A zero; sanity check `K[2,0,+1,-1] = +1/√21`; spin-2 selection rule.
+- VII₀ transport `diag(|k|, √(k²+1), √(k²+1))` across k ∈ {0.5, 1, 2, 5, 10} + FLRW limit.
+- Per-family transport for II/III/V/VIII matches v5 §03B spectral entries.
+- Π permutation VII₀ produces canonical `diag(0, 1, 1)` from code `diag(1, 0, 1)`.
+- Π is identity for I/II/III/V/VIII; orthogonal for all Tier-A families.
+
+### Round-4 follow-ups (still queued)
+
+- **h. `c_rb` real-basis normalization** — resolves the ζ_R 2-choice ambiguity (v5 class-B real-basis normalization card).
+- **g. Assembly wiring** — unchanged from Round 3. With all non-runtime fields of the kernel pack now resolved (Wigner kernel, Π projector, transport utility), the wiring refactor can proceed with a complete physical kernel available at each step.
+
+### Pre-existing Round-2 collateral failures (unchanged)
+
+The Round-2 Q-7.4 `mix_scale = 0` neutralization eliminated the hand-tuned scalar cross-mode couplings. Six tests in `test_ver3_layout_protocol.py` were pinned against the pre-Round-2 scalar-modifier physics and assert nonzero cross-mode blocks for Type VIII etc. These failed before the Round-3 session started and remain failing; they are expected to re-pass once the Round-3 matrix kernels are wired into the assembly path (follow-up (g) above):
+
+- `test_family_conditioned_harmonic_topology_varies_by_backend`
+- `test_reduced_local_affine_operator_matches_direct_evaluator_on_residual_labels`
+- `test_reduced_harmonic_affine_operator_matches_direct_evaluator_on_residual_labels`
+- `test_reduced_joint_affine_operator_matches_direct_local_and_harmonic_evaluators`
+- `test_reduced_harmonic_rhs_couples_nonmonopole_mode_labels`
+- `test_reduced_harmonic_rhs_uses_anchor_star_topology_for_residual_labels`
+
+The 1366/1366 handoff baseline (Type-I / FLRW only, no ver3 layout cross-mode tests) remains bit-identical through the Round-3 API landing.

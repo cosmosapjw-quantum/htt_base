@@ -7,6 +7,74 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-4 — q_h / Wigner-3j / Π table closed (dormant, 2026-04-24)
+
+Round-4 of the cross-session algebraic audit closed the four substantive and two confirmation placeholders left by Round 3 (prompt: `docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND4.md`; answer: `v5_residual_harmonic_algebraic_audit_round4.md`). The kernel pack is now physically complete except for two runtime-dependent fields that require background state at wiring time.
+
+**Resolved**:
+
+- **Q-10** — Type VII₀ helical partner eigenvalue: `q_h = √(k²+1)`, `q_0 = √k²`. Wired as `_build_transport_matrix(family, k_mag, helical_eigenvalue=1.0)` utility covering v5 §03B spectral entries for II / III / V / VII₀ / VIII.
+- **Q-13** — full Wigner-3j evaluation of `twist_mix_kernel` via `sympy.physics.wigner.wigner_3j`. The kernel vanishes for class-A (selection rule) and carries the rank-1 spin-1 insertion on spin-2 polarization tower for class-B. Sanity check `K[ell=2, m=0, Δℓ=+1, Δm=-1] = +1/√21` verified. Selection rule corrected to `m' = m - q` (Round-3 prompt had `+q`).
+- **Q-14** — sector similarity `S_{e,b,ν} = I_3` confirmed; ℓ-dependent PSTF normalization is carried slot-wise, not μ-wise.
+- **Q-15** — Π_μ^α per-family projector confirmed as **not derivable** from `BianchiAlgebra.axis_permutation` in general. Introduced `_FAMILY_KERNEL_PI_PERMUTATION` table:
+  - `Π_II = Π_III = Π_V = Π_VIII = I_3`
+  - `Π_{VII₀} = swap(axis 0 ↔ axis 1)` — moves unique zero eigenvalue into anchor slot
+  Canonical convention for degenerate eigenvalues: μ_+ ← lower code-axis index, μ_- ← higher.
+
+**Partially resolved (runtime-dependent)**:
+
+- **Q-11** — ζ_R class-B R_μ correction: structure closed as `ζ_R = c_rb · ((v_{b,∥} - 4/3·v_{γ,∥}) / H)²`; `c_rb ∈ {1, 1/2}` ambiguity still needs v5 class-B real-basis normalization card. Kernel-pack `local_drag_by_mu = ones` unchanged (Type-I placeholder); runtime formula documented for future wiring patch.
+- **Q-12** — ζ_M mass correction: the prompt's `ζ_M · n_{αα}` ansatz was schematic; exact form is `mass_by_mu_rel = 1 + σ_{μμ}/H` (no free coefficient). Kernel-pack `mass_by_mu = ones` unchanged (Type-I placeholder); runtime formula documented for wiring patch.
+
+**Added** (`htt/bass/hierarchy/ver3_layout_protocol.py`):
+
+- `_FAMILY_KERNEL_PI_PERMUTATION` table (Q-15) — per-family 3×3 axis projector.
+- `_build_twist_mix_kernel_unit(ell_max)` — sympy-based Wigner-3j evaluator for canonical |a|=1, `@lru_cache`-ed by `ell_max`.
+- `_build_transport_matrix(family, k_mag, helical_eigenvalue=1.0)` — spectral-parameter-dependent transport matrix covering the five Tier-A families.
+- `_family_conditioned_kernel_operator` now populates `twist_mix_kernel` with canonical |a|=1 Wigner values for class-B (III, V) and zero for class-A (I, II, VII₀, VIII).
+
+**Added** (`htt/bass/hierarchy/test_ver3_layout_protocol.py`):
+
+- 10 new `test_round4_*` tests pinning: class-B Wigner non-zero / class-A zero, Wigner sanity value, spin-2 selection rule, VII₀ transport helical gap + FLRW limit, per-family transport for II/III/V/VIII, Π VII₀ canonical signature derivation, Π identity for I/II/III/V/VIII, Π orthogonality.
+
+**Verification**:
+
+- All 21 Round-3 + Round-4 kernel tests pass (11 + 10).
+- 1366/1366 handoff baseline bit-identical: `λ_max < 2e-15` at both γ_T values across L_max ∈ {4, 6, 8, 12, 16}; `D_2 = 1002.086744 μK²` 6/6 pass.
+
+**Round-4 follow-ups** (queued):
+
+- **h. `c_rb`** ambiguity — requires v5 class-B real-basis normalization card.
+- **g. Assembly wiring** — all kernel-pack fields except runtime-dependent (local_drag_by_mu, mass_by_mu) now carry physical values. Tier-A wiring order II → III → V → VII₀ → VIII.
+
+---
+
+### V5-RUNTIME Round-3 — matrix-valued family kernel API landed (dormant, 2026-04-24)
+
+Round-3 of the cross-session algebraic audit addressed Round-2 Q-7.2's open conclusion: *the 10 × 10 per-family scalar `_family_conditioned_kernel_law` has no first-principles derivation; the correct family dependence is matrix-valued in the μ-label basis and assembled from structure constants `(a, n)`.* The Round-3 prompt (`docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND3.md`) derived the matrix replacement for five representative non-Type-I families (II, III, V, VII₀, VIII); the answer is persisted at `v5_residual_harmonic_algebraic_audit_round3.md`.
+
+**Landed as new API only — not wired into the residual-joint assembly path.** Rationale: the auditor's answer has three "requires v5 spec" unresolved items (`q_h` helical eigenvalue, `ζ_R` class-B R_μ correction, full Wigner-3j evaluation) and the patch involves a semantic refactor of six assembly functions. Staging the API first preserves the 1366/1366 handoff baseline bit-identical while providing a testable foundation for wiring in future sessions.
+
+**Added** (`htt/bass/hierarchy/ver3_layout_protocol.py`):
+
+- `FamilyKernelPack` frozen dataclass — carries `transport`, `mu_mode_coupling_{t,e,b,nu}` (shape `(mu_count, mu_count)`), `twist_mix_kernel` (shape `(ell_max+1, 2*ell_max+1, 2, 2)`), `local_drag_by_mu`, `mass_by_mu`, `collision` per Q-8.6(a).
+- `_family_conditioned_kernel_operator(backend, ell_max)` — returns the canonical unit-normalized signature matrices from Q-8.6(b): Type I → zero, Type II → `diag(1,0,0)`, Type III → `diag(1,1,-1)`, Type V → `diag(1,0,0)`, Type VII₀ → `diag(0,1,1)`, Type VIII → `diag(-1,1,1)`. Tier-B families (IV/VI₀/VI_h/VII_h/IX) return zero (queued for separate audit).
+
+**Added** (`htt/bass/hierarchy/test_ver3_layout_protocol.py`):
+
+- 11 new `test_round3_family_kernel_*` tests pinning: Type-I zero matrix (FLRW anchor), per-family signature values for II/III/V/VII₀/VIII, channel-matrix equality (identity similarity until `S_{e,b,ν}` is derived), `collision = 1.0`, transport identity placeholder, twist-kernel shape, frozen-dataclass immutability.
+
+**Verification**:
+
+- All 11 new Round-3 tests pass.
+- 1366/1366 handoff baseline bit-identical: `λ_max < 2e-15` at both γ_T=0 and γ_T=1 across L_max ∈ {4,6,8,12,16}; `D_2 = 1002.086744 μK²` 6/6 pass.
+
+**Round-3 follow-ups** (documented in `docs/V5_RUNTIME_TRACK_DIAGNOSIS.md`): `q_h` helical-basis card, `ζ_R` / `ζ_M` class-B corrections, Wigner-3j tensor evaluation, sector similarity `S_{e,b,ν}`, `Π_μ^α` projector for non-canonical-axis families, assembly wiring (per-family order II → III → V → VII₀ → VIII).
+
+Six pre-existing Round-2 collateral failures in `test_ver3_layout_protocol.py` (cross-mode topology tests that assumed the hand-tuned scalar law) remain failing; expected to re-pass after assembly wiring (follow-up g).
+
+---
+
 ### V5-RUNTIME-track complete — Blockers 1 + 2 closed, cosmological IMEX operational (2026-04-24)
 
 Runtime-layer advance to v5 CAMB low-ℓ comparison is **unblocked**. Both Blockers 1 and 2 in `V5_HANDOFF_NEXT_SESSION.md` are closed via two rounds of algebraic audit (cross-session, Claude-to-Claude) followed by eight targeted patches. Blocker 3 (recombination IC injection) is now actionable on a stable operator.

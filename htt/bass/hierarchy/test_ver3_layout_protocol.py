@@ -1451,3 +1451,293 @@ def test_project_runtime_native_state_can_preserve_mode_label_resolved_harmonic_
     assert projection.state_vector[flatten(layout, "m+2", "ph_I", 2, 1)] == pytest.approx(t_m2[7])
     assert projection.state_vector[flatten(layout, "m+2", "ph_E", 2, 1)] == pytest.approx(e_m2[7])
     assert projection.state_vector[flatten(layout, "m+2", "nu_I", 2, 1)] == pytest.approx(nu_m2[7])
+
+
+# -------------------------------------------------------------------------
+# V5 Round-3 audit — FamilyKernelPack + _family_conditioned_kernel_operator
+# -------------------------------------------------------------------------
+#
+# Round 3 introduced a matrix-valued replacement for the Round-2
+# _family_conditioned_kernel_law. The kernel operator is NOT wired into
+# the residual-joint assembly in this session; these tests pin down the
+# Round-3 Q-8.2 / Q-8.5 / Q-8.6(b) matrix values so that a future wiring
+# patch cannot regress them silently.
+
+
+from bass.hierarchy.ver3_layout_protocol import (  # noqa: E402
+    FamilyKernelPack,
+    _family_conditioned_kernel_operator,
+)
+
+
+def _kernel_for(family: str, ell_max: int = 4) -> FamilyKernelPack:
+    backend = build_backend(get_family_spec(family), truncation={"ell_max": ell_max})
+    return _family_conditioned_kernel_operator(backend, ell_max=ell_max)
+
+
+def test_round3_family_kernel_type_i_is_all_zero_matrices() -> None:
+    """Type-I (FLRW) produces zero mu_mode_coupling_* matrices so b_hh ≡ 0
+    and the D_2 = 1002.086744 μK² anchor is algebraically preserved."""
+    pack = _kernel_for("I")
+    zero = np.zeros((3, 3), dtype=np.float64)
+    for channel in ("t", "e", "b", "nu"):
+        matrix = np.asarray(getattr(pack, f"mu_mode_coupling_{channel}"))
+        assert matrix.shape == (3, 3)
+        assert np.array_equal(matrix, zero)
+    assert np.array_equal(pack.twist_mix_kernel, np.zeros((5, 9, 2, 2)))
+
+
+def test_round3_family_kernel_type_ii_rank_1_nilpotent() -> None:
+    """Type II: N = diag(1, 0, 0), a = 0 → rank-1 nilpotent coupling."""
+    pack = _kernel_for("II")
+    expected = np.zeros((3, 3), dtype=np.float64)
+    expected[0, 0] = 1.0
+    assert np.array_equal(pack.mu_mode_coupling_t, expected)
+    assert np.linalg.matrix_rank(pack.mu_mode_coupling_t) == 1
+
+
+def test_round3_family_kernel_type_iii_semisimple_plus_twist() -> None:
+    """Type III: N = diag(0, 1, -1) + |a|·P_a with |a| = 1."""
+    pack = _kernel_for("III")
+    expected = np.array(
+        [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, -1.0]],
+        dtype=np.float64,
+    )
+    assert np.array_equal(pack.mu_mode_coupling_t, expected)
+
+
+def test_round3_family_kernel_type_v_pure_twist() -> None:
+    """Type V: N = 0, a = (1, 0, 0) → rank-1 along twist axis only."""
+    pack = _kernel_for("V")
+    expected = np.zeros((3, 3), dtype=np.float64)
+    expected[0, 0] = 1.0
+    assert np.array_equal(pack.mu_mode_coupling_t, expected)
+    assert np.linalg.matrix_rank(pack.mu_mode_coupling_t) == 1
+
+
+def test_round3_family_kernel_type_vii_0_helical_anchor() -> None:
+    """Type VII_0: N = diag(0, 1, 1), helical partners carry equal weight."""
+    pack = _kernel_for("VII_0")
+    expected = np.array(
+        [[0.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+        dtype=np.float64,
+    )
+    assert np.array_equal(pack.mu_mode_coupling_t, expected)
+
+
+def test_round3_family_kernel_type_viii_semisimple_full_rank() -> None:
+    """Type VIII: N = diag(-1, 1, 1), full-rank SL(2,R)-type."""
+    pack = _kernel_for("VIII")
+    expected = np.array(
+        [[-1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+        dtype=np.float64,
+    )
+    assert np.array_equal(pack.mu_mode_coupling_t, expected)
+    assert np.linalg.matrix_rank(pack.mu_mode_coupling_t) == 3
+
+
+def test_round3_family_kernel_channel_matrices_agree_before_sector_similarity() -> None:
+    """Per Q-8.6(b): until the v5 §03B storage-basis similarity transform
+    S_{e,b,ν} is specified, all four channel matrices share the same
+    μ-space content. This test pins that equality so a future
+    sector-similarity patch is surfaced explicitly."""
+    for family in ("I", "II", "III", "V", "VII_0", "VIII"):
+        pack = _kernel_for(family)
+        for channel in ("e", "b", "nu"):
+            assert np.array_equal(
+                pack.mu_mode_coupling_t,
+                getattr(pack, f"mu_mode_coupling_{channel}"),
+            ), f"channel similarity violated for {family} / {channel}"
+
+
+def test_round3_family_kernel_scalar_fields_match_q_8_5() -> None:
+    """Q-8.5(c): collision_scale = 1.0 universally.
+    Q-8.5(a)(b): local_drag_by_mu and mass_by_mu are Type-I-equivalent
+    (ones vector) until class-B ζ_R / ζ_M are derived from the v5
+    background tilt closure."""
+    for family in ("I", "II", "III", "V", "VII_0", "VIII"):
+        pack = _kernel_for(family)
+        assert pack.collision == 1.0
+        assert pack.local_drag_by_mu.shape == (3,)
+        assert np.array_equal(pack.local_drag_by_mu, np.ones(3))
+        assert np.array_equal(pack.mass_by_mu, np.ones(3))
+
+
+def test_round3_family_kernel_transport_is_identity_placeholder() -> None:
+    """Q-8.3: transport matrix is left as identity; the
+    spectral-parameter-dependent factor (|k| / sqrt(k²+1) / sqrt(s²+¼))
+    must be applied by the future wiring patch. This test pins the
+    placeholder shape."""
+    for family in ("I", "II", "III", "V", "VII_0", "VIII"):
+        pack = _kernel_for(family)
+        assert np.array_equal(pack.transport, np.eye(3))
+
+
+def test_round3_family_kernel_twist_mix_kernel_shape() -> None:
+    """Q-8.6(a): twist_mix_kernel shape is (ell_max+1, 2*ell_max+1, 2, 2).
+    Entries are zero (Wigner-3j evaluation deferred to the wiring
+    session); class-A families get the exact zero kernel."""
+    for ell_max in (2, 4, 8):
+        for family in ("I", "II", "VII_0", "VIII"):
+            pack = _kernel_for(family, ell_max=ell_max)
+            assert pack.twist_mix_kernel.shape == (
+                ell_max + 1,
+                2 * ell_max + 1,
+                2,
+                2,
+            )
+            assert np.all(pack.twist_mix_kernel == 0.0)
+
+
+def test_round3_family_kernel_pack_is_frozen_dataclass() -> None:
+    """FamilyKernelPack is immutable so a downstream caller cannot
+    accidentally mutate the matrices."""
+    pack = _kernel_for("II")
+    with pytest.raises(Exception):  # frozen dataclass raises FrozenInstanceError
+        pack.collision = 2.0  # type: ignore[misc]
+
+
+# -------------------------------------------------------------------------
+# V5 Round-4 audit — Wigner-3j twist_mix_kernel + VII₀ transport + Π projector
+# -------------------------------------------------------------------------
+#
+# Round 4 closed the substantive placeholders in Round 3:
+#   Q-10 → _build_transport_matrix with VII₀ helical gap
+#   Q-13 → _build_twist_mix_kernel_unit (sympy-based Wigner-3j evaluator)
+#   Q-15 → _FAMILY_KERNEL_PI_PERMUTATION per-family axis table
+# These tests pin the numerical values so a future wiring patch cannot
+# silently regress them.
+
+
+from bass.hierarchy.ver3_layout_protocol import (  # noqa: E402
+    _FAMILY_KERNEL_PI_PERMUTATION,
+    _build_transport_matrix,
+    _build_twist_mix_kernel_unit,
+)
+
+
+def test_round4_twist_mix_kernel_class_b_non_zero() -> None:
+    """Q-13: class-B families (III, V) carry a non-zero Wigner-3j
+    twist_mix_kernel under canonical |a|=1 normalization. Class-A
+    families remain identically zero."""
+    for family in ("III", "V"):
+        pack = _kernel_for(family, ell_max=4)
+        assert np.any(pack.twist_mix_kernel != 0.0), (
+            f"twist_mix_kernel should be non-zero for class-B family {family}"
+        )
+    for family in ("I", "II", "VII_0", "VIII"):
+        pack = _kernel_for(family, ell_max=4)
+        assert np.all(pack.twist_mix_kernel == 0.0), (
+            f"twist_mix_kernel should be zero for class-A/FLRW family {family}"
+        )
+
+
+def test_round4_twist_mix_kernel_sanity_ell_2_m_0() -> None:
+    """Q-13 sanity: K[ell=2, m=0, Δℓ=+1, Δm=-1] = +1/sqrt(21) · |a|.
+    Verified against the Round-4 auditor's Condon-Shortley derivation."""
+    ell_max = 4
+    K = _build_twist_mix_kernel_unit(ell_max)
+    # m_offset for m=0: 0 + ell_max = 4
+    # delta_ell_index = 1 → Δℓ = +1
+    # delta_m_index = 0 → Δm = -1
+    value = K[2, ell_max + 0, 1, 0]
+    expected = +1.0 / np.sqrt(21.0)
+    assert value == pytest.approx(expected, rel=1e-12), (
+        f"expected +1/sqrt(21) = {expected}, got {value}"
+    )
+    # Partner sanity: K[2, m=0, Δℓ=+1, Δm=+1] = -1/sqrt(21)
+    assert K[2, ell_max + 0, 1, 1] == pytest.approx(-1.0 / np.sqrt(21.0), rel=1e-12)
+
+
+def test_round4_twist_mix_kernel_shape_independent_of_a_abs() -> None:
+    """Q-13: the kernel's sympy cache is keyed on ell_max only; the
+    physical |a| multiplier is applied by _family_conditioned_kernel_operator.
+    Class-B pack values should equal |a|=1 · unit kernel."""
+    K_unit = _build_twist_mix_kernel_unit(4)
+    pack_iii = _kernel_for("III", ell_max=4)
+    pack_v = _kernel_for("V", ell_max=4)
+    # class-B |a|=1 canonical ⇒ pack kernel == unit kernel
+    assert np.allclose(pack_iii.twist_mix_kernel, K_unit, atol=1e-14)
+    assert np.allclose(pack_v.twist_mix_kernel, K_unit, atol=1e-14)
+
+
+def test_round4_twist_mix_kernel_spin_2_selection_rule() -> None:
+    """Q-13: only ℓ ≥ 2 → ℓ' ≥ 2 entries are non-zero (spin-2 selection
+    rule: wigner_3j(ℓ,1,ℓ';-2,0,2) vanishes for ℓ<2 or ℓ'<2)."""
+    K = _build_twist_mix_kernel_unit(4)
+    for ell in (0, 1):
+        assert np.all(K[ell, :, :, :] == 0.0), f"ell={ell} must vanish (spin-2 rule)"
+    # ell=2 → ell'=1 (Δℓ=-1 at delta_ell_index=0) must also vanish (ℓ'<2)
+    assert np.all(K[2, :, 0, :] == 0.0), "ell=2, Δℓ=-1 → ell'=1 must vanish"
+
+
+def test_round4_transport_VII0_helical_gap() -> None:
+    """Q-10: Type VII₀ transport matrix is diag(|k|, sqrt(k²+h),
+    sqrt(k²+h)) with h=1 canonical helical eigenvalue."""
+    for k in (0.5, 1.0, 2.0, 5.0, 10.0):
+        T = _build_transport_matrix("VII_0", k)
+        assert T.shape == (3, 3)
+        assert T[0, 0] == pytest.approx(k, rel=1e-12)
+        q_h = np.sqrt(k * k + 1.0)
+        assert T[1, 1] == pytest.approx(q_h, rel=1e-12)
+        assert T[2, 2] == pytest.approx(q_h, rel=1e-12)
+        # Off-diagonal entries are strictly zero (diagonal matrix)
+        assert T[0, 1] == 0.0 and T[1, 0] == 0.0
+
+
+def test_round4_transport_VII0_FLRW_limit() -> None:
+    """Q-10.4: when helical_eigenvalue → 0, VII₀ transport reduces to
+    |k|·I_3 (isotropic FLRW), preserving the D_2 anchor."""
+    T = _build_transport_matrix("VII_0", 3.0, helical_eigenvalue=0.0)
+    expected = 3.0 * np.eye(3)
+    assert np.allclose(T, expected, atol=1e-14)
+
+
+def test_round4_transport_per_family_tier_a() -> None:
+    """Q-10 + v5 §03B spectral table: Type II = |k|·I, Type III = I,
+    Type V = sqrt(k²+1)·I, Type VIII = sqrt(k²+¼)·I."""
+    k = 2.0
+    assert np.allclose(_build_transport_matrix("II", k), k * np.eye(3))
+    assert np.allclose(_build_transport_matrix("III", k), np.eye(3))
+    assert np.allclose(
+        _build_transport_matrix("V", k),
+        np.sqrt(k * k + 1.0) * np.eye(3),
+    )
+    assert np.allclose(
+        _build_transport_matrix("VIII", k),
+        np.sqrt(k * k + 0.25) * np.eye(3),
+    )
+
+
+def test_round4_pi_permutation_VII0_produces_canonical_signature() -> None:
+    """Q-15.2: for Type VII₀, Π · diag(n_code) · Π^T must produce the
+    Round-3 canonical N = diag(0, 1, 1). Since n_code for VII₀ is
+    diag(1, 0, 1), the required Π swaps axes 0 ↔ 1."""
+    pi = np.asarray(_FAMILY_KERNEL_PI_PERMUTATION["VII_0"], dtype=np.float64)
+    # canonical VII₀ eigenvalues in code: diag(n_1, n_2, n_3) = (1, 0, 1)
+    n_code = np.diag([1.0, 0.0, 1.0])
+    N_canonical = pi @ n_code @ pi.T
+    expected = np.diag([0.0, 1.0, 1.0])
+    assert np.array_equal(N_canonical, expected), (
+        f"Π·diag(1,0,1)·Π^T should give canonical diag(0,1,1); got {N_canonical}"
+    )
+
+
+def test_round4_pi_permutation_identity_families() -> None:
+    """Q-15: Π is identity for Types I, II, III, V, VIII (only VII₀
+    needs a non-trivial permutation in the Tier-A set)."""
+    identity = np.eye(3)
+    for family in ("I", "II", "III", "V", "VIII"):
+        pi = np.asarray(_FAMILY_KERNEL_PI_PERMUTATION[family], dtype=np.float64)
+        assert np.array_equal(pi, identity), (
+            f"Π_{family} should be identity per Round-4 Q-15; got {pi}"
+        )
+
+
+def test_round4_pi_permutation_is_orthogonal() -> None:
+    """Π is a permutation matrix: Π · Π^T = I_3 for all Tier-A families."""
+    for family in ("I", "II", "III", "V", "VII_0", "VIII"):
+        pi = np.asarray(_FAMILY_KERNEL_PI_PERMUTATION[family], dtype=np.float64)
+        assert np.allclose(pi @ pi.T, np.eye(3), atol=1e-14), (
+            f"Π_{family} must be orthogonal"
+        )

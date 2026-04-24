@@ -373,6 +373,328 @@ def _family_conditioned_kernel_law(
     return law
 
 
+@dataclass(frozen=True)
+class FamilyKernelPack:
+    """Matrix-valued replacement for ``_family_conditioned_kernel_law``.
+
+    Round-3 of the V5 residual-joint algebraic audit (see
+    ``v5_residual_harmonic_algebraic_audit_round3.md``, Q-8.6) concluded
+    that the 10 per-family scalar constants in
+    ``_family_conditioned_kernel_law`` are empirical placeholders with no
+    first-principles derivation. The correct family dependence is
+    matrix-valued in the ``mu``-label basis and assembled from the
+    structure constants ``(a, n)``.
+
+    This pack carries the matrix-valued kernels. It is produced by
+    ``_family_conditioned_kernel_operator`` and is **not yet wired into
+    the assembly path** — the existing scalar ``_family_conditioned_kernel_law``
+    remains the active code path. Wiring is deferred to a future session,
+    staged per family (see ``docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND3.md``).
+
+    Shapes:
+        transport              (mu_count, mu_count)
+        mu_mode_coupling_{t,e,b,nu}  (mu_count, mu_count)
+        twist_mix_kernel       (ell_max + 1, 2*ell_max + 1, 2, 2)
+        local_drag_by_mu       (mu_count,)
+        mass_by_mu             (mu_count,)
+        collision              scalar
+
+    For Type I (a=0, n=0) every ``mu_mode_coupling_*`` and ``twist_mix_kernel``
+    entry is identically zero, which preserves the FLRW invariant
+    manifold ``b_hh ≡ 0`` and the ``D_2 = 1002.086744 μK²`` anchor.
+    """
+
+    family: str
+    mode_labels: tuple[str, ...]
+    transport: np.ndarray
+    mu_mode_coupling_t: np.ndarray
+    mu_mode_coupling_e: np.ndarray
+    mu_mode_coupling_b: np.ndarray
+    mu_mode_coupling_nu: np.ndarray
+    twist_mix_kernel: np.ndarray
+    local_drag_by_mu: np.ndarray
+    mass_by_mu: np.ndarray
+    collision: float
+
+
+# Canonical real-basis structure-constant matrices in the frozen
+# (mu_0, mu_+, mu_-) storage basis, per Round-3 Q-8.2(a)(b).
+# All other families (including Type I) collapse to the zero matrix,
+# which is what preserves the FLRW anchor in the Type-I limit.
+_FAMILY_KERNEL_N_MATRIX: dict[str, tuple[tuple[float, ...], ...]] = {
+    "II":    ((1.0,  0.0,  0.0), (0.0, 0.0, 0.0), (0.0,  0.0,  0.0)),
+    "III":   ((0.0,  0.0,  0.0), (0.0, 1.0, 0.0), (0.0,  0.0, -1.0)),
+    "V":     ((0.0,  0.0,  0.0), (0.0, 0.0, 0.0), (0.0,  0.0,  0.0)),
+    "VII_0": ((0.0,  0.0,  0.0), (0.0, 1.0, 0.0), (0.0,  0.0,  1.0)),
+    "VIII":  ((-1.0, 0.0,  0.0), (0.0, 1.0, 0.0), (0.0,  0.0,  1.0)),
+}
+
+
+# Per-family Π_μ^α axis projector from algebra axes to (μ_0, μ_+, μ_-)
+# storage basis (Round-4 Q-15). The generic ``BianchiAlgebra.axis_permutation``
+# is NOT sufficient for the kernel pack — Round-4 Q-15 showed that the
+# Pontzen-Challinor class-B swap (1, 0, 2) gives the wrong signature for
+# Type III, and Type VII₀ needs the axis 0 ↔ axis 1 swap to move the
+# unique zero eigenvalue into the μ_0 anchor slot.
+#
+# Convention (Round-4 Q-15): μ_0 ← anchor / unique-eigenvalue axis,
+# μ_+ ← lower code-axis index in remaining subspace, μ_- ← higher.
+#
+# For class-A non-twist families we store the 3×3 permutation explicitly
+# to guarantee the canonical N matrix above agrees with Π·diag(n)·Π^T.
+_FAMILY_KERNEL_PI_PERMUTATION: dict[str, tuple[tuple[int, int, int], ...]] = {
+    "I":     ((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+    "II":    ((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+    "III":   ((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+    "V":     ((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+    "VII_0": ((0, 1, 0), (1, 0, 0), (0, 0, 1)),   # Q-15.2: swap axes 0 ↔ 1
+    "VIII":  ((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+}
+
+
+@lru_cache(maxsize=16)
+def _build_twist_mix_kernel_unit(ell_max: int) -> np.ndarray:
+    """Wigner-3j twist-mixing kernel for ``a_abs = 1`` on canonical axis 1.
+
+    Implements Round-4 Q-13: the rank-1 spin-1 insertion on the spin-2
+    polarization tower. The kernel shape is
+    ``(ell_max+1, 2*ell_max+1, 2, 2)`` with axes:
+
+        axis 0: ell          (0 ≤ ell ≤ ell_max)
+        axis 1: m + ell_max  (maps m ∈ [-ell, +ell] into [0, 2*ell])
+        axis 2: delta_ell_index  (0 ↔ Δℓ = -1, 1 ↔ Δℓ = +1)
+        axis 3: delta_m_index    (0 ↔ Δm = -1, 1 ↔ Δm = +1)
+
+    Only ell ≥ 2 entries are non-zero (spin-2 selection rule). The kernel
+    vanishes identically for ``a_abs = 0`` (class-A families); callers
+    should scale the returned array by the physical ``a_abs`` value at
+    assembly time.
+
+    Normalization check (Round-4 Q-13 sanity): ``K[2, ell_max+0, 1, 0]``
+    (ell=2, m=0, Δℓ=+1, Δm=-1) equals ``+1/sqrt(21)``.
+
+    Lru-cached because the sympy evaluation is quadratic in ell_max and
+    backend construction may request the same table many times.
+    """
+
+    from sympy import N as _sympy_N
+    from sympy.physics.wigner import wigner_3j
+
+    K = np.zeros((ell_max + 1, 2 * ell_max + 1, 2, 2), dtype=np.float64)
+
+    # Condon-Shortley spherical components for a^α = 1 · e_x:
+    #   a_0 = 0, a_{+1} = -1/sqrt(2), a_{-1} = +1/sqrt(2)
+    a_plus = -1.0 / float(np.sqrt(2.0))
+    a_minus = +1.0 / float(np.sqrt(2.0))
+
+    for ell in range(2, ell_max + 1):
+        # Second 3-j factor (ℓ, 1, ℓ'; -2, 0, 2) is ℓ-dependent only.
+        w2_plus = float(_sympy_N(wigner_3j(ell, 1, ell + 1, -2, 0, 2)))
+        w2_minus = (
+            float(_sympy_N(wigner_3j(ell, 1, ell - 1, -2, 0, 2)))
+            if ell - 1 >= 2
+            else 0.0
+        )
+
+        for m in range(-ell, ell + 1):
+            m_off = m + ell_max
+
+            for dli, d_ell in enumerate((-1, +1)):
+                ellp = ell + d_ell
+                if ellp < 2:
+                    continue
+                w2 = w2_minus if d_ell == -1 else w2_plus
+                prefac = ((-1.0) ** m) * float(np.sqrt((2 * ell + 1) * (2 * ellp + 1)))
+
+                for dmi, d_m in enumerate((-1, +1)):
+                    # selection rule: m' = m - q so q = -Δm
+                    q = -d_m
+                    mp = m + d_m
+                    if abs(mp) > ellp:
+                        continue
+                    a_q = a_plus if q == +1 else a_minus
+                    w1 = float(_sympy_N(wigner_3j(ell, 1, ellp, -m, q, mp)))
+                    K[ell, m_off, dli, dmi] = a_q * prefac * w1 * w2
+
+    return K
+
+
+def _build_transport_matrix(
+    family: str,
+    k_mag: float,
+    *,
+    helical_eigenvalue: float = 1.0,
+    mu_count: int = 3,
+) -> np.ndarray:
+    """Per-family spectral-parameter-dependent transport matrix.
+
+    Implements Round-4 Q-10 (Type VII₀ helical gap) + v5 §03B mode
+    eigenvalues for the Tier-A families. This is a utility for the
+    wiring session — the ``FamilyKernelPack.transport`` field is left
+    as identity at kernel-build time and multiplied by this matrix at
+    assembly time, when the spectral parameter ``k_mag`` is available.
+
+    Return shape: ``(mu_count, mu_count)`` diagonal matrix.
+
+    Family map (Q-10 + v5 §03B):
+
+        Type I:     diag(|k|, |k|, |k|)                      (isotropic FLRW)
+        Type II:    diag(|k|, |k|, |k|)                      (ν̇_II(k) = |k|)
+        Type III:   diag(1, 1, 1)                            (ν̇_III = 1)
+        Type V:     diag(√(k²+1), √(k²+1), √(k²+1))         (open hyperbolic)
+        Type VII₀:  diag(|k|, √(k²+h), √(k²+h))              (Q-10)
+        Type VIII:  diag(√(k²+¼), √(k²+¼), √(k²+¼))         (principal series)
+
+    where ``h = helical_eigenvalue`` (= 1 in canonical units).
+
+    Type-I limit (Q-10.4): as ``helical_eigenvalue → 0`` the VII₀
+    transport reduces to ``|k|·I_3``, matching the isotropic FLRW case.
+    """
+
+    k2 = float(k_mag) * float(k_mag)
+    if family == "I":
+        diag = (k_mag, k_mag, k_mag)
+    elif family == "II":
+        diag = (k_mag, k_mag, k_mag)
+    elif family == "III":
+        diag = (1.0, 1.0, 1.0)
+    elif family == "V":
+        rad = float(np.sqrt(k2 + 1.0))
+        diag = (rad, rad, rad)
+    elif family == "VII_0":
+        q_h = float(np.sqrt(k2 + float(helical_eigenvalue)))
+        diag = (float(k_mag), q_h, q_h)
+    elif family == "VIII":
+        rad = float(np.sqrt(k2 + 0.25))
+        diag = (rad, rad, rad)
+    else:
+        # Tier-B families return identity-times-|k| as a safe placeholder.
+        diag = tuple(k_mag for _ in range(mu_count))
+    return np.diag(np.asarray(diag, dtype=np.float64)[:mu_count])
+
+
+def _family_conditioned_kernel_operator(
+    backend: FamilyBackend,
+    ell_max: int,
+    *,
+    mode_labels: tuple[str, ...] | None = None,
+) -> FamilyKernelPack:
+    """Return the matrix-valued Round-3/Round-4 kernel pack for ``backend``.
+
+    Round-3 implemented Q-8.2(a)(b) μ-mode signatures and Q-8.5(a)(b)(c)
+    scalar/vector shapes. Round-4 extended:
+
+    - Q-13 Wigner-3j evaluation — ``twist_mix_kernel`` now carries the
+      closed-form rank-1 spin-1 insertion on the spin-2 polarization
+      tower for class-B families (non-zero for III, V, VI_h, VII_h),
+      evaluated with ``sympy.physics.wigner`` and cached by ``ell_max``.
+    - Q-15 Π_μ^α confirmation — the hard-coded canonical N matrices
+      already match ``Π · diag(n_code) · Π^T`` for all five Tier-A
+      families using the per-family Π table above. The BianchiAlgebra
+      generic ``axis_permutation`` field is *not* the correct Π for
+      the kernel pack (see Round-4 answer).
+
+    Still runtime-dependent (kept as Type-I-equivalent placeholders
+    here; to be filled by the wiring-session assembly patch):
+
+    - Q-10 ``transport`` left as identity; the spectral-parameter-
+      dependent matrix ``diag(q_0, q_h, q_h)`` is built at assembly
+      time via ``_build_transport_matrix(family, k_mag)``.
+    - Q-11 ``local_drag_by_mu`` left as ones; class-B O(|a|²) correction
+      ``ζ_R = c_rb · ((v_{b,∥} - 4/3·v_{γ,∥}) / H)²`` requires runtime
+      background state and still has a ``c_rb`` ∈ {1, 1/2} v5 ambiguity.
+    - Q-12 ``mass_by_mu`` left as ones; Round-4 corrected the schema
+      to ``1 + σ_{μμ}/H``. Requires runtime shear eigenvalues.
+    """
+
+    family = str(backend.family_spec.family)
+    algebra = backend.family_spec.algebra
+    labels = (
+        tuple(mode_labels)
+        if mode_labels is not None
+        else _mode_labels_from_backend(backend, {})
+    )
+    mu_count = len(labels)
+    if mu_count <= 0:
+        raise ValueError("FamilyKernelPack requires at least one mode label")
+
+    a_vec = np.asarray(algebra.a, dtype=np.float64)
+    is_class_b = float(np.linalg.norm(a_vec)) > 0.0
+
+    # Structure-constant matrix N in canonical (mu_0, mu_+, mu_-) basis.
+    # These hard-coded signatures already encode Π · diag(n_code) · Π^T
+    # where Π is the per-family axis projector table above (Round-4
+    # Q-15). For Tier-B families outside {II, III, V, VII_0, VIII} and
+    # for Type I, N = 0 (queued for a future audit round).
+    N = np.zeros((mu_count, mu_count), dtype=np.float64)
+    canonical = _FAMILY_KERNEL_N_MATRIX.get(family)
+    if canonical is not None and mu_count >= 3:
+        for i in range(3):
+            for j in range(3):
+                N[i, j] = canonical[i][j]
+
+    # Twist projector P_a = \hat a \hat a^T in canonical basis.
+    # Q-8.6(b) matrices are structural signatures with unit normalization
+    # (|a| = 1 in canonical gauge); the physical amplitude scale comes
+    # from the backend spectral parameter at wiring time. In canonical
+    # VER2 class-B axes a^alpha ∝ (|a|, 0, 0), so P_a is rank-1 on the
+    # first mu basis direction for class-B families and zero for class-A.
+    P_a = np.zeros((mu_count, mu_count), dtype=np.float64)
+    if is_class_b and mu_count >= 1:
+        P_a[0, 0] = 1.0
+
+    mu_mode_coupling = N + P_a
+
+    # transport: Q-10 placeholder. Use _build_transport_matrix(family, k)
+    # at assembly time to obtain the spectral-parameter-dependent matrix.
+    transport = np.eye(mu_count, dtype=np.float64)
+
+    # twist_mix_kernel: Q-13 Wigner-3j evaluation with canonical unit
+    # normalization |a| = 1 for class-B, zero for class-A. The physical
+    # amplitude is applied at assembly time (algebra.a's actual |a|
+    # magnitude, e.g. 0.01 in the code's canonical scale).
+    a_abs_canonical = 1.0 if is_class_b else 0.0
+    if a_abs_canonical > 0.0:
+        twist_mix_kernel = a_abs_canonical * _build_twist_mix_kernel_unit(int(ell_max))
+    else:
+        twist_mix_kernel = np.zeros(
+            (int(ell_max) + 1, 2 * int(ell_max) + 1, 2, 2),
+            dtype=np.float64,
+        )
+
+    # local_drag_by_mu: Q-11 placeholder. Class-B ζ_R requires runtime
+    # (v_b_∥, v_γ_∥, H) from background state; the c_rb ∈ {1, 1/2}
+    # ambiguity also remains. Ones vector is the Type-I-compatible
+    # placeholder; assembly-time patch must replace it with
+    # R^{-1}·(1 + ζ_R·|a|², 1, 1) for class-B families.
+    local_drag_by_mu = np.ones(mu_count, dtype=np.float64)
+
+    # mass_by_mu: Q-12 placeholder. Round-4 corrected the schema to
+    # 1 + σ_{μμ}/H — exact, no free coefficient. Ones vector is the
+    # Type-I-compatible placeholder; assembly-time patch must replace
+    # it with (1 + σ_diag/H) from the runtime background shear.
+    mass_by_mu = np.ones(mu_count, dtype=np.float64)
+
+    # collision: Q-8.5(c). Thomson rate is universal in the Bianchi
+    # family; all 1.03-1.05 placeholders in _family_conditioned_kernel_law
+    # should collapse to 1.0 per Round-3 Q-7.2 + Q-8.5(c).
+    collision = 1.0
+
+    return FamilyKernelPack(
+        family=family,
+        mode_labels=labels,
+        transport=transport,
+        mu_mode_coupling_t=mu_mode_coupling.copy(),
+        mu_mode_coupling_e=mu_mode_coupling.copy(),
+        mu_mode_coupling_b=mu_mode_coupling.copy(),
+        mu_mode_coupling_nu=mu_mode_coupling.copy(),
+        twist_mix_kernel=twist_mix_kernel,
+        local_drag_by_mu=local_drag_by_mu,
+        mass_by_mu=mass_by_mu,
+        collision=collision,
+    )
+
+
 def _mode_labels_from_backend(
     backend: FamilyBackend,
     truncation: Mapping[str, object],
