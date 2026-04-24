@@ -7,6 +7,51 @@
 
 ## [Unreleased]
 
+### Publication-quality manuscript figures (2026-04-24)
+
+Added 14 publication-grade figures matching the bare ``fig_*`` filenames referenced from ``docs/manuscript/`` (`\graphicspath{{./figures/}}` resolves them). Each figure is self-contained — axes carry units, in-figure annotations record literature citations and parameter values, scenario markers are labelled in-place, and no in-plot text references the generation toolchain. Wong 2011 colourblind palette, DejaVu Serif at 300 DPI.
+
+**Driver**: ``scripts/make_manuscript_figures.py`` (~830 L). Reads only BASS-independent infrastructure (`htt.core.{bounds, tilted_flrw, analysis_extended, evidence_models, evidence_models_R03a, ssot}`, `mio.coherence.directional`, and the workdir/obs_bundle datasets).
+
+**14 figures generated** (placed at `figures/fig_*.png` to match the manuscript graphicspath):
+
+| Filename | Manuscript chapter | Caption |
+|---|---|---|
+| `fig_MES_three_bounds.png` | ch04 §4.3 | Three-bound hierarchy B_σ > B_ω > B_u̇ vs ε₁; S1/S2a/S2c scenario markers |
+| `fig_sigma_omega_contour.png` | appx | Σ²–W² constraint contour with MES ceilings |
+| `fig_sigma_accel_contour.png` | appx | Σ²–A² with VT-07 frame-corrected acceleration bound |
+| `fig_vorticity_hierarchy.png` | ch04 | ω/H upper limits (Saadeh+2016, MIGHTEE+LoTSS) vs MES ceiling |
+| `fig_filling_fraction_posterior.png` | ch07 §7.9 | (a) S3 MC posterior, (b) per-scenario, (c) (1+w) enhancement |
+| `fig_growing_mode.png` | ch07 | (a) D₂^shear vs σ/H + detection window, (b) MES budget filling |
+| `fig_filling_z_evolution.png` | ch07 | (a) β(z) for 4 models, (b) F(z), (c) isotropy gap G |
+| `fig_colin_beta.png` | ch07/ch09 | Colin+2019 dipolar-q → β translation with CF4 ±5σ band |
+| `fig_peculiar_jeans.png` | ch10 | λ_J(z) for w ∈ {-1, -2/3, +1/3}; β-sensitivity inset |
+| `fig_q_decomposition.png` | ch10 | (a) q₀^obs(β) at three depths, (b) Δq distance scaling; EXPLORATORY caveat |
+| `fig_anomaly_direction_sky.png` | ch09 | Mollweide of CMB/CatWISE/Radio/CF4/Quaia dipoles |
+| `fig_type_by_type_summary.png` | ch04 | Active kinematic variables per Bianchi type matrix |
+| `fig_evidence_grand_bar.png` | ch07 | 15-model lnB ranking, decisive/negligible/excluded coloured |
+| `fig_scale_hierarchy.png` | ch04 | Kinematic scale hierarchy from MES posteriors to observed dipole |
+
+**Self-containment guarantees**:
+
+- Every figure has axis labels with units, legend with all curves, in-figure scenario tags, and citation hints (e.g. "CF4 (Watkins+2023)", "Saadeh+ 2016 (Planck CMB indirect)").
+- No "Claude", "anchor pinned", "Tier-X", "VER", or generation-toolchain references.
+- Multi-panel figures use (a)/(b)/(c) labels with white bbox to prevent data overlap.
+- Annotations use axes-fraction coordinates where data-coord placement would push the bbox off-screen.
+
+**Visual-inspection fixes applied**:
+
+- `fig_MES_three_bounds`: scenario markers offset to clear the legend; CF4 caption moved to bottom-right corner.
+- `fig_filling_fraction_posterior`: panel labels moved to top-left, legends shifted to center-right to avoid histogram peak overlap.
+- `fig_q_decomposition`: redesigned as 2-panel (q₀^obs vs β at 3 depths + Δq distance scaling); annotations anchored in axes-fraction coords; EXPLORATORY caveat as figure footer.
+- `fig_growing_mode`: header positioned via `fig.text` instead of `suptitle` (which inflated bbox); off-range σ_critical annotation replaced by descriptive in-axes text.
+- `fig_peculiar_jeans`: 3 EoS curves now visibly distinct via H(z; w) scaling; misleading "λ_J^FLRW = 0 Mpc" reference replaced with the actual β_CF4 value; inset moved to middle-right empty area.
+- `fig_filling_z_evolution`: panel labels relocated to top-left (data-free corner); y-limits widened to keep curves in-bounds.
+- `fig_colin_beta`: peak-z annotation moved to bottom-right corner; z_ref marker labels offset per-marker to avoid mutual collision; VER05 star repositioned to z=0.07 to avoid the z=0.05 marker.
+- `fig_sigma_omega_contour` / `fig_sigma_accel_contour`: "excluded by ..." labels switched from off-range data coords to axes-fraction coords with white bbox.
+
+**Compatibility**: the legacy `figures/parallel_track/` (12 plots from commit 7026925) is preserved untouched. The new 14 plots live at `figures/<name>.png` to match the manuscript graphicspath.
+
 ### V5-RUNTIME step 4b — end-to-end FLRW D_ℓ pipeline + parallel k-scan (2026-04-24)
 
 Chains the Round-5 extractor into the LoS projector + C_ℓ assembly + D_ℓ conversion, parallelized over the k-grid via `concurrent.futures.ProcessPoolExecutor`. Replaces the reverted S8/S9 toy SW-plateau pipeline with a real Tier-B-driven path.
