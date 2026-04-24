@@ -125,9 +125,16 @@ class FLRWPipelineConfig:
     Lowell §13.2 seed. Default 1.0 gives unit-B_K transfer functions;
     ``A_s × (k_pivot_ref / k_pivot)^(n_s-1)`` (≈ 2.1e-9) gives
     ζ-normalized physical amplitude. Exact B_K → ζ calibration is a
-    pending convention audit (V5 follow-up Round-6). Solver output is
-    linear in ``sqrt(b_k_sq)``, so the pipeline's
-    ``unit_amplitude_normalization`` divides it back out."""
+    pending convention audit (V5 follow-up Round-7)."""
+    bias_subtraction: bool = False
+    """V5 step-4b-(a) Round-6 finding: the solver carries a
+    seed-independent visibility-source contribution that produces
+    non-zero Δ_ℓ even at ``primordial_b_k_sq → 0``. When
+    ``bias_subtraction=True``, each k triggers TWO parallel solver
+    runs (``b_k_sq = 0`` and ``b_k_sq = primordial_b_k_sq``) and the
+    pipeline returns ``Δ_pure = Δ_target − Δ_bias``. Doubles per-k
+    cost but isolates the pure seed response for transfer-function
+    extraction. Defaults False (legacy single-run path)."""
     """When True (default), divide Δ_ℓ by the solver's seed amplitude so
     that the returned transfer function is the physical "unit
     primordial amplitude" response (C_ℓ = 4π ∫ P(k) |Δ|² dlnk then
@@ -597,6 +604,42 @@ def _worker_task(k_mpc: float) -> BianchiTransferFunctions:  # pragma: no cover
     )
 
 
+def _worker_task_bias_pair(
+    k_and_bk_sq: tuple[float, float],
+) -> BianchiTransferFunctions:  # pragma: no cover
+    """Worker that runs ONE solver at a specified ``b_k_sq``, used by
+    the bias-subtraction pipeline to run the bias + target runs in
+    parallel across the pool."""
+    assert _WORKER_SPECIES is not None, "worker globals not initialized"
+    assert _WORKER_CONFIG is not None, "worker config not initialized"
+    k_mpc, b_k_sq = k_and_bk_sq
+    from dataclasses import replace
+
+    cfg_override = replace(_WORKER_CONFIG, primordial_b_k_sq=float(b_k_sq))
+    return compute_transfer_function_at_k(
+        _WORKER_SPECIES,
+        float(k_mpc),
+        config=cfg_override,
+        bianchi_type=_WORKER_BIANCHI_TYPE,
+    )
+
+
+def _subtract_transfer_functions(
+    target: BianchiTransferFunctions,
+    bias: BianchiTransferFunctions,
+) -> BianchiTransferFunctions:
+    """Return target − bias element-wise for every Δ field."""
+    return BianchiTransferFunctions(
+        delta_T_m0=target.delta_T_m0 - bias.delta_T_m0,
+        delta_T_m_plus2=target.delta_T_m_plus2 - bias.delta_T_m_plus2,
+        delta_T_m_minus2=target.delta_T_m_minus2 - bias.delta_T_m_minus2,
+        delta_E_m0=target.delta_E_m0 - bias.delta_E_m0,
+        delta_E_m_plus2=target.delta_E_m_plus2 - bias.delta_E_m_plus2,
+        delta_E_m_minus2=target.delta_E_m_minus2 - bias.delta_E_m_minus2,
+        delta_B_all_zero=target.delta_B_all_zero - bias.delta_B_all_zero,
+    )
+
+
 def _worker_task_chunk(k_values: Sequence[float]) -> list[BianchiTransferFunctions]:  # pragma: no cover
     """Worker-side chunk entry point — amortizes the ~0.8 s k-independent
     Tier-B setup (background_monitor, visibility_source, backend,
@@ -671,7 +714,23 @@ def compute_transfer_function_grid(
     cfg = config or FLRWPipelineConfig()
 
     max_parallel = n_workers if n_workers is not None else os.cpu_count() or 1
-    effective = max(1, min(int(max_parallel), int(k_array.size)))
+    # Task count = N_k for the standard path, 2·N_k for bias_subtraction
+    # (one bias + one target run per k). Effective worker count saturates
+    # at the task count so small-k runs don't spin up idle workers.
+    task_count = 2 * int(k_array.size) if cfg.bias_subtraction else int(k_array.size)
+    effective = max(1, min(int(max_parallel), task_count))
+
+    # When bias_subtraction is enabled, each k triggers 2 solver runs
+    # (b_k_sq=0 and b_k_sq=primordial_b_k_sq). Dispatched in parallel
+    # across the same worker pool; pairwise subtracted at the end.
+    if cfg.bias_subtraction:
+        return _compute_transfer_function_grid_bias_subtracted(
+            species,
+            k_array,
+            cfg=cfg,
+            bianchi_type=bianchi_type,
+            effective=effective,
+        )
 
     if effective == 1:
         # Single-worker path — run sequentially. Use shared-bg chunk when
@@ -737,6 +796,65 @@ def compute_transfer_function_grid(
 # ------------------------------------------------------------------------
 # C_ℓ / D_ℓ assembly wrappers
 # ------------------------------------------------------------------------
+
+
+def _compute_transfer_function_grid_bias_subtracted(
+    species: "SpeciesBackgroundRegistry",
+    k_array: np.ndarray,
+    *,
+    cfg: FLRWPipelineConfig,
+    bianchi_type: str,
+    effective: int,
+) -> list[BianchiTransferFunctions]:
+    """V5 step-4b-(a) Round-6 bias-subtraction path.
+
+    For each k, dispatches two parallel Tier-B runs:
+      - ``b_k_sq = 0`` → visibility-source-only Δ_bias
+      - ``b_k_sq = cfg.primordial_b_k_sq`` → target Δ_target
+    and returns ``Δ_pure = Δ_target − Δ_bias`` per k.
+
+    Dispatches all ``2 × N_k`` runs across the shared ProcessPoolExecutor
+    pool so wall time is ``max(2·N_k / effective_workers, 1) × 45 s``.
+
+    Used when ``FLRWPipelineConfig.bias_subtraction=True``.
+    """
+    global _WORKER_SPECIES, _WORKER_CONFIG, _WORKER_BIANCHI_TYPE
+
+    # Build the (k, b_k_sq) task pairs.
+    tasks: list[tuple[float, float]] = []
+    for k_mpc in k_array:
+        tasks.append((float(k_mpc), 0.0))
+        tasks.append((float(k_mpc), float(cfg.primordial_b_k_sq)))
+
+    _WORKER_SPECIES = species
+    _WORKER_CONFIG = cfg
+    _WORKER_BIANCHI_TYPE = bianchi_type
+
+    try:
+        if effective == 1:
+            raw_results = [_worker_task_bias_pair(task) for task in tasks]
+        else:
+            import multiprocessing as _mp
+
+            ctx = _mp.get_context("fork")
+            with _cf.ProcessPoolExecutor(
+                max_workers=effective,
+                mp_context=ctx,
+                initializer=_worker_init,
+            ) as exe:
+                raw_results = list(exe.map(_worker_task_bias_pair, tasks))
+    finally:
+        _WORKER_SPECIES = None
+        _WORKER_CONFIG = None
+        _WORKER_BIANCHI_TYPE = "I"
+
+    # Pair up the results: (bias_k, target_k) per k in order.
+    out: list[BianchiTransferFunctions] = []
+    for i in range(len(k_array)):
+        bias_tf = raw_results[2 * i]
+        target_tf = raw_results[2 * i + 1]
+        out.append(_subtract_transfer_functions(target_tf, bias_tf))
+    return out
 
 
 def _transfer_fn_from_grid(

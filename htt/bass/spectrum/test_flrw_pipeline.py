@@ -82,6 +82,43 @@ def test_common_delta_legacy_seed_unchanged() -> None:
     assert seed.theta_common == pytest.approx(1.0e-6 / 3.0, abs=1e-20)
 
 
+def test_bias_subtraction_flag_defaults_false() -> None:
+    """bias_subtraction defaults False (legacy single-run path); opt-in
+    for Round-6 visibility-bias-subtracted transfer extraction."""
+    cfg = FLRWPipelineConfig()
+    assert cfg.bias_subtraction is False
+
+
+def test_subtract_transfer_functions_helper() -> None:
+    """_subtract_transfer_functions yields elementwise target − bias on
+    every Δ field; zero-vs-zero returns zeros."""
+    from bass.spectrum.flrw_pipeline import _subtract_transfer_functions
+
+    target = BianchiTransferFunctions(
+        delta_T_m0=np.array([1.0, 2.0, 3.0]),
+        delta_T_m_plus2=np.array([0.1, 0.2, 0.3]),
+        delta_T_m_minus2=np.array([0.4, 0.5, 0.6]),
+        delta_E_m0=np.array([10.0, 20.0, 30.0]),
+        delta_E_m_plus2=np.zeros(3),
+        delta_E_m_minus2=np.zeros(3),
+        delta_B_all_zero=np.zeros(3),
+    )
+    bias = BianchiTransferFunctions(
+        delta_T_m0=np.array([0.5, 0.8, 1.2]),
+        delta_T_m_plus2=np.array([0.05, 0.1, 0.15]),
+        delta_T_m_minus2=np.array([0.2, 0.25, 0.3]),
+        delta_E_m0=np.array([5.0, 10.0, 15.0]),
+        delta_E_m_plus2=np.zeros(3),
+        delta_E_m_minus2=np.zeros(3),
+        delta_B_all_zero=np.zeros(3),
+    )
+    diff = _subtract_transfer_functions(target, bias)
+    assert np.allclose(diff.delta_T_m0, np.array([0.5, 1.2, 1.8]), atol=1e-14)
+    assert np.allclose(diff.delta_E_m0, np.array([5.0, 10.0, 15.0]), atol=1e-14)
+    assert np.allclose(diff.delta_T_m_plus2, np.array([0.05, 0.1, 0.15]), atol=1e-14)
+    assert np.allclose(diff.delta_T_m_minus2, np.array([0.2, 0.25, 0.3]), atol=1e-14)
+
+
 def test_pipeline_config_rejects_small_L_max() -> None:
     with pytest.raises(ValueError, match="L_max_tower ≥ 2"):
         FLRWPipelineConfig(L_max_tower=1)
