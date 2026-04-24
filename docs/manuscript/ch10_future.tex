@@ -1142,4 +1142,65 @@ persist across redshift shells.}
   an EXPLORATORY quantity subject to the VT-07 frame-attribution caveat.}
 \label{fig:q_decomposition}
 \end{figure}
+
+% === ADDED 2026-04-24: research-plan extensions (F119, F120) ===
+
+\subsection{Forecast Fisher matrix and tension-resolution timeline}
+\label{sec:forecast-fisher-and-timeline}
+
+Section~\ref{sec:forecast-experiments} mapped each Bianchi
+prediction to the earliest decisive experiment.  Two complementary
+visualisations consolidate that information.
+
+Figure~\ref{fig:fisher_ellipses_future_surveys} compares forecast
+Fisher 1$\sigma$ ellipses in the $(\beta, \sigma_*)$ plane, where
+$\sigma_* \equiv \log_{10}(\sqrt{\Sigma^2_{\mathrm{std}}}/H)$ is the
+shear-amplitude proxy used in the Planck-data $\Sigma^{2}$
+posterior.  The ``current'' contour combines Planck~PR3, CatWISE and
+CF4; subsequent contours show the Fisher contraction expected from
+Euclid~DR1 (2027), Simons Observatory (2027), CMB-S4 and Vera~Rubin
+LSST (2030), and LiteBIRD (2032).  The fiducial point is the VER05
+posterior median $(\beta, \sigma_*) = (1.334 \times 10^{-3}, -5.0)$.
+Even the most pessimistic (``current'') ellipse already separates the
+two literature values $\beta_{\mathrm{CF4}} = 1.334 \times 10^{-3}$
+and $\beta_{\mathrm{CMB}} = 1.233 \times 10^{-3}$ at $> 1\sigma$;
+Euclid~DR1 separates them at $\sim 2.4\sigma$, and the CMB-S4
+$+$~Rubin combination at $\sim 5\sigma$.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_fisher_ellipses_future_surveys}
+\caption{Forecast Fisher 1$\sigma$ ellipses in the
+$(\beta \times 10^{3},\ \sigma_* \equiv \log_{10}\sqrt{\Sigma^2}/H)$
+plane for current data and five next-generation surveys.  The grey
+horizontal band marks the CF4 1$\sigma$ band on $\beta$; the black star
+is the VER05 posterior median.  CMB-S4~$+$~Vera Rubin will resolve the
+CMB--CF4 tension at $\sim 5\sigma$.}
+\label{fig:fisher_ellipses_future_surveys}
+\end{figure}
+
+Figure~\ref{fig:tension_resolution_timeline} re-organises the same
+information by texture (alternative explanations of the dipole
+anomaly) rather than by survey.  Each row corresponds to one
+candidate texture (tilt-only, shear, shear$+$vortex, vortex-grow,
+isocurvature defect, Khronon).  Coloured markers indicate the year at
+which each survey is expected to push the relevant Bayes factor
+beyond the decisive threshold $|\ln\mathcal{B}| \ge 5$.  The
+tilt-only texture is already decisive (2024 -- Planck PR4 + CatWISE);
+shear textures become decisive in 2026--2027 with CF4++ and Euclid;
+the vortex-grow and Khronon textures, which both rely on small-$\ell$
+B-mode amplitude, only reach decisive status with LiteBIRD in 2032.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_tension_resolution_timeline}
+\caption{Tension-resolution timeline: expected calendar year of the
+decisive Bayes-factor crossing $|\ln\mathcal{B}| \ge 5$ per
+(texture, survey) pair.  Columns are surveys (Planck PR4 through
+LiteBIRD); rows are candidate textures.  Tilt-only is already
+decisive; shear textures fall in 2026--2027; vortex-grow textures
+require LiteBIRD.}
+\label{fig:tension_resolution_timeline}
+\end{figure}
+
 % === END INLINED ===

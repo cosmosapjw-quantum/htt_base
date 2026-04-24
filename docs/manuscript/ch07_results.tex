@@ -1659,4 +1659,62 @@ amplitude calibration.}
 \label{fig:catwise_sensitivity}
 \end{figure}
 
+% === ADDED 2026-04-24: research-plan extensions (F88, F89) ===
+
+\subsection{Cross-channel evidence coherence and survey-direction alignment}
+\label{sec:channel-coherence-and-alignment}
+
+The decisive Bayes factor $\ln \mathcal{B} = +26.4$ for FLRW$_{\mathrm{tilt}}$ is
+not driven by a single observable.  Figure~\ref{fig:channel_coherence_heatmap}
+quantifies the Pearson cross-coherence between the seven evidence channels
+used in the pipeline (TT, TE, EE, MATTER, DIPOLE, MES, NULL).  Two coherence
+blocks emerge.  The CMB block (TT--TE--EE) is internally tight
+($\rho_{\mathrm{TT,TE}} = 0.78$, $\rho_{\mathrm{TE,EE}} = 0.81$) but couples
+only weakly to the matter sector ($\rho_{\mathrm{TT,MATTER}} = 0.18$).
+The matter block (MATTER--DIPOLE--MES) shows $\rho \in [0.49, 0.74]$,
+consistent with a common kinematic source---the bulk-flow dipole.  The
+NULL channel decouples from all physical channels ($\rho \le 0.09$),
+confirming that the simulated systematics do not leak into evidence.
+The block structure is the statistical fingerprint of the channel
+decomposition reported in Table~\ref{tab:decomposition-results}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_channel_coherence_heatmap}
+\caption{Cross-channel evidence coherence matrix (seven channels).
+The CMB block (TT/TE/EE) and the matter--dipole block
+(MATTER/DIPOLE/MES) are internally coherent ($\rho \gtrsim 0.5$) and
+mutually weakly coupled ($\rho \lesssim 0.2$); the NULL channel decouples
+from both.  The matter block carries the FLRW$_{\mathrm{tilt}}$
+detection, the CMB block contributes the geometric prior on
+$\Sigma^2_{\mathrm{std}}$.}
+\label{fig:channel_coherence_heatmap}
+\end{figure}
+
+The geometric coherence of independent dipole estimators is the
+empirical anchor of the tilt detection.
+Figure~\ref{fig:direction_alignment_matrix} reports the angular
+separation between the apex of the five published dipole measurements
+used in the analysis (Planck~2018 CMB, CatWISE 2025, NVSS 2011, RACS
+2023, CF4 2023).  Pairwise separations are dominated by the
+NVSS--CF4 outlier ($126^{\circ}$, attributable to the residual local
+structure in the radio dipole at $z \lesssim 0.05$).  Excluding NVSS,
+the remaining four estimators agree to $\le 53^{\circ}$, with three of
+the six pairs (CMB--CatWISE, CMB--CF4, CatWISE--RACS) agreeing to
+$\le 39^{\circ}$.  This is the alignment signal that
+$\ln \mathcal{B}_{\mathrm{tilt}} = +26.4$ exploits and that any null
+hypothesis must reproduce.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.7\textwidth]{fig_direction_alignment_matrix}
+\caption{Pairwise angular separation (degrees) between the apex
+directions of the five literature dipole estimators used in this work.
+The CMB--CatWISE--CF4--RACS subset agrees to $\le 53^{\circ}$; the
+NVSS outlier is consistent with residual local-structure contamination
+of the low-redshift radio dipole.  The block of small separations is
+the geometric input that drives the FLRW$_{\mathrm{tilt}}$ evidence.}
+\label{fig:direction_alignment_matrix}
+\end{figure}
+
 % === END INLINED ===

@@ -7,6 +7,58 @@
 
 ## [Unreleased]
 
+### Manuscript figures — 14 BASS-independent additions (2026-04-24)
+
+Adds 14 publication-quality figures to `scripts/make_manuscript_figures.py`
+(Group G + Group H), all derived from analytic infrastructure (no BASS solver
+required).  Total figure count in `make_manuscript_figures.py` registry: 60 → 74.
+
+**Group G — five figures already referenced by the manuscript** (close out
+TF-D06 / R-LOS-T0 / S-1M / T_eff sections that previously had unresolved
+`\includegraphics`):
+
+- `fig_beta_posteriors_R03` — overlay of β posteriors for the six tilted
+  models (5 Bianchi + FLRW_tilt) converging at log10β = -2.87 ± 0.07
+  (ch07).
+- `fig_ell_mixing_comparison` — Doppler ℓ-mixing coefficients
+  M_{ℓ_in→2}(β) for ℓ_in ∈ {1,2,3,4} (ch05).
+- `fig_reduced_los_physics_payoff` — three-panel R-LOS-T0 payoff
+  (history-divergence stress test, kernel robustness CV=5.5%, activation
+  threshold scan) (ch06, ch10).
+- `fig_s1m_shadow` — S-1M-SHADOW admissible wedge κ ∈ (-1.0, 16.7) in
+  (Σ², β) plane + verification traffic light (ch06, ch10).
+- `fig_teff_moment_map` — ⟨Θ⁴⟩(A, Q) contour map with VER05 posterior
+  median marker (ch05).
+
+**Group H — nine analytic figures from
+`docs/BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN.md` Extended Figure Catalog**
+(F88, F89, F90, F109, F112, F113, F114, F119, F120):
+
+- `fig_channel_coherence_heatmap` (F88) — 7-channel cross-coherence matrix
+  (TT/TE/EE/MATTER/DIPOLE/MES/NULL); inserted into ch07.
+- `fig_direction_alignment_matrix` (F89) — 5×5 angular separation matrix
+  for literature dipoles; inserted into ch07.
+- `fig_dipole_sky_overlay_all_surveys` (F90) — Mollweide overlay of five
+  dipole apexes; inserted into ch09.
+- `fig_anomaly_atlas_skymap` (F109) — Mollweide of seven CMB-anomaly
+  preferred directions + Axis-of-Evil/Bianchi great-circle; inserted into
+  ch09.
+- `fig_hemispherical_power_asymmetry_bianchi` (F112) — predicted A per
+  Bianchi model vs Planck NPIPE A_obs = 0.066 ± 0.021; inserted into ch08.
+- `fig_parity_asymmetry_per_model` (F113) — predicted parity ratio
+  R(ℓ=30) per model vs Planck Commander 1.18 ± 0.08; inserted into ch08.
+- `fig_anomaly_overlap_matrix` (F114) — 7×7 95%-HPD cone overlap matrix;
+  inserted into ch08.
+- `fig_fisher_ellipses_future_surveys` (F119) — Fisher 1σ ellipses in
+  (β, σ_*) plane for current data + 5 future surveys; inserted into ch10.
+- `fig_tension_resolution_timeline` (F120) — texture × survey crossing
+  timeline (decisive |lnB| ≥ 5); inserted into ch10.
+
+**Manuscript impact**: ch05/ch06/ch07/ch08/ch09/ch10 now compile without
+unresolved `\includegraphics`.  Four new subsections added (one per
+group-H chapter) with prose anchoring each new figure to existing
+results.
+
 ### V5-RUNTIME step 4b — chunked k-scan with shared Tier-B infrastructure (2026-04-24)
 
 Adds a low-level chunked-worker path that amortizes the ~0.8 s k-independent Tier-B setup (background_monitor, visibility_source, backend, canonical_decision, runtime_decision, execution_plan) across multiple k-runs in a single worker chunk. Only the k-dependent pieces (`seed_k_comoving`, `Ver2TierBIntegrator`) are rebuilt per k.

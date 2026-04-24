@@ -1199,4 +1199,95 @@ separate kinematic from geometric origins---a quantified negative result.}
 \label{fig:source_discrimination}
 \end{figure}
 
+% === ADDED 2026-04-24: research-plan extensions (F112, F113, F114) ===
+
+\subsection{CMB-anomaly cross-checks of the Bianchi model space}
+\label{sec:cmb-anomaly-cross-checks}
+
+The robustness suite also tests whether each model in the 15-element
+ensemble is consistent with the published CMB anomalies that are
+\emph{independent} of the dipole, namely the hemispherical power
+asymmetry $A$ (Planck NPIPE), the parity ratio $R(\ell_{\mathrm{max}})$
+(Commander 2018), and the angular cone overlap of the seven
+preferred-direction anomalies catalogued in
+Section~\ref{sec:channel-coherence-and-alignment}.
+
+Figure~\ref{fig:hemispherical_power_asymmetry_bianchi} compares the
+predicted hemispherical asymmetry $A$ for each Bianchi model against
+the Planck NPIPE measurement $A_{\mathrm{obs}} = 0.066 \pm 0.021$.
+Tilt-only models (FLRW, FLRW$_{\mathrm{tilt}}$, BI orth) predict
+$A \lesssim 0.005$, an order of magnitude below the measurement, while
+the BV (tilt) and BVII$_h$ tilt+grow predictions overlap the
+$1\sigma$--$2\sigma$ band.  The BVII$_h$ orth+grow prediction
+($A = 0.083 \pm 0.017$) is consistent with the measurement at
+$1\sigma$, but the same model is excluded by the channel-decomposition
+Bayes factor at $\ln\mathcal{B} = -18.7$
+(Table~\ref{tab:evidence-grand}).
+The hemispherical asymmetry is therefore \emph{not} a discriminant
+between tilt and growing-vortex hypotheses at current precision; the
+matter-channel evidence remains the dominant lever.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_hemispherical_power_asymmetry_bianchi}
+\caption{Predicted hemispherical power asymmetry $A$ for the 15 Bianchi
+models compared to the Planck NPIPE measurement
+$A_{\mathrm{obs}} = 0.066 \pm 0.021$ (red band).  Bars consistent with
+the band at $1\sigma$ are shown in green; $2\sigma$ in orange; $> 2\sigma$
+discrepant in blue.  Tilt-only models (FLRW, FLRW$_{\mathrm{tilt}}$,
+orthogonal Bianchi) under-predict $A$ by an order of magnitude;
+growing-vortex models match the measurement but are excluded by the
+matter-channel evidence.}
+\label{fig:hemispherical_power_asymmetry_bianchi}
+\end{figure}
+
+The same pattern holds for the parity ratio $R(\ell_{\mathrm{max}}=30)
+= P^+/P^- = 1.18 \pm 0.08$ (Figure~\ref{fig:parity_asymmetry_per_model}):
+no model matches the observation at $1\sigma$; the BVII$_h$ orth+grow
+($R = 1.18$) and BVII$_h$ tilt+grow ($R = 1.14$) come closest, while
+the tilt-only models cluster at $R \approx 1.00$--$1.06$.  As with the
+hemispherical asymmetry, parity is an
+$\mathcal{O}(\Sigma^{2})$ effect that pure-tilt models do not generate;
+its weak measurement-driven exclusion of FLRW$_{\mathrm{tilt}}$
+($\sim 1.5\sigma$) does not survive the matter-channel preference for
+the same model.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_parity_asymmetry_per_model}
+\caption{Even/odd parity ratio $R(\ell_{\mathrm{max}}=30) = P^+/P^-$
+predicted by each Bianchi model versus the Planck Commander 2018
+measurement $R_{\mathrm{obs}} = 1.18 \pm 0.08$ (red band).  Colour code
+matches Figure~\ref{fig:hemispherical_power_asymmetry_bianchi}.  Only
+the BVII$_h$ growing-vortex variants approach the measurement; tilt-only
+models predict $R \le 1.07$.}
+\label{fig:parity_asymmetry_per_model}
+\end{figure}
+
+The geometric overlap of the seven CMB-anomaly preferred directions
+provides an independent cross-check
+(Figure~\ref{fig:anomaly_overlap_matrix}).  The Axis-of-Evil and the
+Bianchi$_{VII_h}$ axis overlap at the 83\% level---these are the two
+strongest $\ell = 2$--$3$ alignment statistics in the literature.
+The parity-odd power axis overlaps both at the 40--77\% level,
+suggesting a single small-$\ell$ preferred direction.  The CF4
+bulk-flow axis shows zero overlap with any other anomaly cone,
+reinforcing the inference of
+Section~\ref{sec:channel-coherence-and-alignment} that the bulk-flow
+direction is geometrically distinct from the $\ell \in \{2, 3\}$
+alignment cluster.  The cold-spot direction is also isolated, with
+only a 30\% overlap with the hemispherical-asymmetry axis.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{fig_anomaly_overlap_matrix}
+\caption{Pairwise area overlap of the 95\% HPD direction cones for the
+seven CMB-anomaly preferred axes.  Two clusters are evident: a
+small-$\ell$ cluster (Axis-of-Evil, Bianchi$_{VII_h}$, parity-odd,
+CatWISE) and an isolated cold-spot/hemispherical-asymmetry pair.  The
+CF4 bulk-flow axis does not overlap any other anomaly cone at the 95\%
+level.}
+\label{fig:anomaly_overlap_matrix}
+\end{figure}
+
 % === END INLINED ===
