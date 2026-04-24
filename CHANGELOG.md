@@ -7,6 +7,39 @@
 
 ## [Unreleased]
 
+### Tier-B BASS-independent parallel track — MIO HJ-02 + HJ-05 anchor pins (2026-04-24)
+
+Continuation of the Tier-A anchor campaign. Two pure-regression packages that pin the currently-mature but previously-unanchored MIO diagnostic modules. Like Tier-A, no BASS outputs required.
+
+**B#1 — HJ-02 directional + z-binned coherence anchors** (`htt/mio/tests/test_coherence_production_anchors.py`, 16 tests):
+
+- `mio.coherence.directional.STANDARD_PROBES` (5-probe literature SSOT: Planck CMB / CatWISE / Radio / CF4pp / BiPoSH) frozen at bit-identical precision:
+  - `(l_best, b_best, R) = (263.777°, 48.122°, 0.99895)` — inverse-variance spherical mean.
+  - `(chi2, dof) = (28.340, 3)` — common-axis χ² test.
+  - Full pairwise-separation CMB row (27.79° / 13.94° / 26.40° / 28.53°).
+- `isotropy_pvalue` seeded-MC anchor: `p_iso(n_mock=5000, seed=42) = 0.0005999`. Determinism verified across repeated calls.
+- `mio.coherence.redshift_binned.DEFAULT_Z_BINS = ((0, 0.1), (0.1, 10), (100, 2000))` frozen.
+- Canonical 5-probe z-distributed fixture (CMB/BiPoSH → recombination bin, CatWISE/Radio → intermediate, CF4pp → low-z). Per-bin resultants and 64.82° total drift pinned.
+- Exact permutation drift p-value at N=5 (5!=120 < 10k ceiling): `p_exact = 0.0667 = 8/120`. Seeded MC drift-p-value pinned at `0.0692 (n_mock=5000, seed=42)` and convergence to p_exact tested at n_mock=20k.
+- G19 structural check: `to_mio_certificate` output carries `reduction_status='diagnostic-only'` and no `'posterior'` token in departure/adequacy/consistency dicts.
+
+**B#2 — HJ-05 predictive-residual atlas builder anchors** (`htt/mio/tests/test_predictive_residuals_anchors.py`, 13 tests):
+
+- Low-level `build_predictive_residual_atlas(slices=…)` entry (BASS-independent; the shared-schema emitter is exercised separately). Pinned on a canonical 2-model × 3-channel × 2-ell-bin fixture.
+- Pinned aggregates: `n_slices=12`, `worst_model=BI_tilt/TT`, `worst_max_abs=60.0`, `mean_rms=10.1667`, reference passthrough for `atlas_ref` + `covariance_ref`.
+- Tiebreak rule pinned against `max(..., key=(abs_max, model_label, channel))`: lexicographically **later** (model, channel) wins on equal max_abs (matches current code behaviour — flipping to `min`/`sorted`-reversed fires immediately).
+- `ResidualChannelSlice` construction invariants (inverted ell range rejected, non-positive `n_modes` rejected).
+- Frozen-dataclass guarantees (`FrozenInstanceError` on mutation, `slices` is a tuple not a list), G19 token scan on field names.
+
+**Test impact** (per-suite, isolated runs):
+
+- `mio/tests/` — 189 → 218 (+29; +16 coherence anchors, +13 predictive-residual anchors).
+- `htt/tests/`, `tsc/`, `workspace/` — unchanged.
+
+The combined-run `bass/statistics.py` shadowing issue documented in Tier-A is unchanged (pre-existing); isolated runs remain green across all suites.
+
+**Rationale**: the MIO HJ-02 + HJ-05 modules ship with full physics (spherical means, permutation tests, residual atlas aggregation) but had no bit-identical anchor — any drift in the 5-probe literature SSOT, the inverse-variance spherical-mean arithmetic, the tiebreak rule of the atlas builder, or the MC plumbing was detectable only downstream. These two packages close that gap alongside the earlier HTT / TSC anchors.
+
 ### Tier-A BASS-independent parallel track — production anchors + MIO↔HTT + TSC↔HTT bridge (2026-04-24)
 
 Three regression packages that harden existing downstream code (HTT / MIO / TSC) while BASS forward-solver work continues. All tests are bit-identical and deterministic; none depend on BASS-produced K_ℓ atlases, LoS outputs, or source grids.
