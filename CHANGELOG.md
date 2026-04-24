@@ -7,6 +7,41 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Blocker 3 — cosmological integrator config helper (2026-04-24)
+
+Blocker 3 (real IC injection from physical recombination state) was declared *actionable* in commit `bce0eb9` once the residual-joint operator became stable. The minimal deliverable is an ergonomic caller-facing constructor that encapsulates the real-physics η anchors: replaces the legacy `eta_initial_mpc = 0.5 Mpc` toy sentinel with `η(z_*) - 20 Mpc` derived from the species registry's HYREC visibility table.
+
+**Added** (`htt/bass/runtime/cosmological_config.py` — new module):
+
+- `PLANCK_2018_Z_STAR = 1089.94` — CLAUDE.md §5 canonical anchor.
+- `DEFAULT_PRE_RECOMBINATION_MARGIN_MPC = 20.0` — matches the `η_initial ≈ 261 Mpc` validation point of commit `bce0eb9`.
+- `cosmological_critical_etas(species, *, z_injection, pre_recombination_margin_mpc)` — returns `{z_injection, eta_star, eta_today, eta_initial_mpc, pre_recombination_margin_mpc}`.
+- `build_cosmological_integrator_config(species, *, z_injection, eta_final_mpc, pre_recombination_margin_mpc, **overrides)` — returns an `IntegratorConfig` with physically meaningful `η ∈ [η_* - 20, η_today]`. Forwards overrides (`L_max`, `rtol`, `atol`, `solver_method`, `bianchi_cosmo`, `Sigma_plus/minus_initial`, …). `eta_initial_mpc` override is rejected (derived).
+
+Exposed via `bass.runtime` `__init__.py`. Purely additive — no existing call site changes, and legacy `eta_initial_mpc = 0.5` fixtures remain untouched.
+
+**Added** (`htt/bass/runtime/test_cosmological_config.py` — 12 unit tests):
+
+- Default `z_* = 1089.94`, margin `= 20 Mpc` matching CLAUDE.md §5 and the commit `bce0eb9` validation.
+- Planck-2018 anchors within physics bands: `η_* ∈ [270, 290] Mpc`, `η_today ∈ [14000, 14300] Mpc`.
+- Redshift / conformal-time direction: lower `z` → later `η_star`.
+- Rejection of unphysical `z_injection` outside `[100, 5000]`, negative / excessive margin, reserved `eta_initial_mpc` override.
+- Override forwarding and custom `eta_final_mpc` support.
+
+**Verification**:
+
+- **1378 passed** (1366 handoff baseline + 12 new), 1 skipped.
+- V5 fast-check `λ_max < 2e-15` and `D_2 = 1002.086744 μK²` anchor bit-identical.
+
+**Blocker-3 follow-ups** (queued):
+
+- **i. Primordial amplitude wiring** — replace shear-anchored seed amplitude `max(|Σ_±|, 1e-6)` with `P(k)`-derived primordial normalization. Prerequisite for CAMB low-ℓ comparison.
+- **j. Mode-k scan API** — Tier-B solver is currently single-background; CAMB-comparable `D_ℓ` requires k-sweep infrastructure.
+
+These continue the V5 handoff doc's Option D critical path toward FLRW CMB end-to-end.
+
+---
+
 ### V5-RUNTIME Round-4 — q_h / Wigner-3j / Π table closed (dormant, 2026-04-24)
 
 Round-4 of the cross-session algebraic audit closed the four substantive and two confirmation placeholders left by Round 3 (prompt: `docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND4.md`; answer: `v5_residual_harmonic_algebraic_audit_round4.md`). The kernel pack is now physically complete except for two runtime-dependent fields that require background state at wiring time.

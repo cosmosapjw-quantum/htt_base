@@ -311,6 +311,50 @@ Additional code added in `htt/bass/hierarchy/ver3_layout_protocol.py`:
 - **h. `c_rb` real-basis normalization** — resolves the ζ_R 2-choice ambiguity (v5 class-B real-basis normalization card).
 - **g. Assembly wiring** — unchanged from Round 3. With all non-runtime fields of the kernel pack now resolved (Wigner kernel, Π projector, transport utility), the wiring refactor can proceed with a complete physical kernel available at each step.
 
+---
+
+## Blocker 3 progress (2026-04-24) — cosmological integrator config helper
+
+Blocker 3 was declared *actionable* at the end of the Round-1/2 session on commit `bce0eb9` (operator is stable). Instead of a full IC-physics rewrite, the minimal deliverable is an ergonomic caller-facing constructor that encapsulates the real-physics conformal-time anchors so every downstream cosmological-range call site stops relying on the `eta_initial_mpc = 0.5` toy sentinel.
+
+### Landed this session
+
+`htt/bass/runtime/cosmological_config.py` — new module exposing:
+
+- `PLANCK_2018_Z_STAR = 1089.94` — CLAUDE.md §5 canonical anchor.
+- `DEFAULT_PRE_RECOMBINATION_MARGIN_MPC = 20.0` — matches the `η_initial ≈ 261 Mpc` validation point of commit `bce0eb9`.
+- `cosmological_critical_etas(species, *, z_injection, pre_recombination_margin_mpc)` — returns `{z_injection, eta_star, eta_today, eta_initial_mpc, pre_recombination_margin_mpc}` extracted from the species registry's HYREC visibility table.
+- `build_cosmological_integrator_config(species, *, z_injection, eta_final_mpc, pre_recombination_margin_mpc, **overrides)` — returns an `IntegratorConfig` with `eta_initial_mpc = η(z_*) - margin` and `eta_final_mpc = η_today`. Forwards all other kwargs (L_max, rtol, atol, solver_method, bianchi_cosmo, Sigma_plus/minus_initial, …) to `IntegratorConfig`.
+
+Exposed via `bass.runtime` package init. Existing call sites (legacy `eta_initial_mpc=0.5` tests, campaign evidence, inference live-binding) are untouched — the helper is additive.
+
+### Verification
+
+12 new unit tests in `htt/bass/runtime/test_cosmological_config.py` pin:
+
+- Default `z_* = 1089.94` matches CLAUDE.md §5.
+- Default margin `= 20 Mpc` matches the `bce0eb9` validation.
+- Planck-2018 anchors fall in expected physics bands: `η_* ∈ [270, 290] Mpc`, `η_today ∈ [14000, 14300] Mpc`, derived `η_initial ≈ η_* - 20`.
+- Lower `z_injection` gives LATER `η_star` (redshift / conformal-time direction consistency).
+- Rejection of unphysical `z_injection ∉ [100, 5000]`, negative margin, excessive margin, and `eta_initial_mpc` override collision.
+- Override forwarding: `L_max`, `rtol`, `atol`, `solver_method` pass through.
+- Custom `eta_final_mpc` accepted for short-range test runs; backwards intervals rejected.
+
+Regression: **1378 passed** (1366 handoff baseline + 12 new), 1 skipped. V5 fast-check and D_2 anchor bit-identical.
+
+### Why this is the whole Blocker-3 deliverable (and what it is not)
+
+The runtime-track issue behind Blocker 3 was that every legacy test initialized with `eta_initial_mpc=0.5` — a pre-physics sentinel where `a(0.5)` lies outside the species table and the IMEX cannot be expected to behave. The cosmological-range stability itself was established in `bce0eb9`: the solver completes `η ∈ [261, 14147] Mpc` in 130 s and was the closure of the Round-1/2 work.
+
+What this helper **does**: provide a single, discoverable API so that future CMB-pipeline work (S8/S9 redo, CAMB low-ℓ comparison, reionization τ-sweep automation) can call `build_cosmological_integrator_config(species)` instead of hard-coding `261.0` and `14147.0`.
+
+What this helper **does not**: change the seed amplitude from the current shear-anchored `max(|Σ|, 1e-6)` placeholder to a physical primordial-power-spectrum amplitude. That is the **primordial normalization** problem — wiring a `P(k) → amplitude at η_initial` transfer function — and is a separate piece of work (the full CAMB-comparison pipeline, per `docs/V5_HANDOFF_NEXT_SESSION.md` Option D's Steps 4-5). It is not what Blocker 3 named, but its physics completion remains queued.
+
+### Blocker-3 follow-ups
+
+- **i. Primordial amplitude wiring** — replace `amplitude = max(|Σ_±|, 1e-6)` in `_build_seed_projection` with a `P(k)`-derived normalization at `η_initial`. Prerequisite for CAMB low-ℓ comparison.
+- **j. Mode-k scan** — the Tier-B solver is currently single-background. CAMB-comparable `D_ℓ` requires a k-sweep. No existing API; needs design.
+
 ### Pre-existing Round-2 collateral failures (unchanged)
 
 The Round-2 Q-7.4 `mix_scale = 0` neutralization eliminated the hand-tuned scalar cross-mode couplings. Six tests in `test_ver3_layout_protocol.py` were pinned against the pre-Round-2 scalar-modifier physics and assert nonzero cross-mode blocks for Type VIII etc. These failed before the Round-3 session started and remain failing; they are expected to re-pass once the Round-3 matrix kernels are wired into the assembly path (follow-up (g) above):

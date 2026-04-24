@@ -12,6 +12,12 @@ from bass.runtime.canonical_decision import (
     make_canonical_decision,
     require_allow_reduction,
 )
+from bass.runtime.cosmological_config import (
+    DEFAULT_PRE_RECOMBINATION_MARGIN_MPC,
+    PLANCK_2018_Z_STAR,
+    build_cosmological_integrator_config,
+    cosmological_critical_etas,
+)
 from bass.runtime.validation_labels import ValidationLabel, derive_labels
 from bass.runtime.ver2_execution import (
     CheckpointPolicy,
@@ -42,6 +48,10 @@ __all__ = [
     "CanonicalDecision",
     "make_canonical_decision",
     "require_allow_reduction",
+    "PLANCK_2018_Z_STAR",
+    "DEFAULT_PRE_RECOMBINATION_MARGIN_MPC",
+    "build_cosmological_integrator_config",
+    "cosmological_critical_etas",
     "ValidationLabel",
     "derive_labels",
     "SolverTier",
