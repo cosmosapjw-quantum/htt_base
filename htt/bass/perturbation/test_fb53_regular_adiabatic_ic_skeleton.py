@@ -222,15 +222,13 @@ def test_fb53_seed_scales_linearly_with_b_k_sq(k_comoving: float) -> None:
     that prevents future amplitude leaks: the bug went undetected
     for so long because no prior test exercised b_k_sq ≠ 1.
 
-    Excluded fields (intentionally non-linear or trivially zero):
-      - ``eta_cov`` carries a documented quadratic ``B_K_sq²`` term
-        from the inner ``(B_K_sq − 10/denom)`` factor of the Lowell
-        §13.2 startup formula (Round-8 saturation observation;
-        auditor #2 separate convention question deferred to
-        Round-12). This field is also metadata-only — not in the
-        integrator state vector.
+    Excluded fields (trivially zero):
       - ``Sigma_plus`` / ``Sigma_minus`` are FLRW background fields,
         identically zero regardless of amplitude.
+
+    History: Round-10 fixed ``π_ν`` and ``G_3``; Round-11 fixed
+    ``eta_cov``'s inner ``B_K_sq → 1.0`` (auditor #2 follow-up). With
+    both fixes in place, all amplitude-dependent fields scale linearly.
     """
 
     obs_unit = seed_observables(
@@ -256,7 +254,7 @@ def test_fb53_seed_scales_linearly_with_b_k_sq(k_comoving: float) -> None:
     amplitude_linear = (
         "delta_gamma", "delta_b", "delta_c", "delta_nu",
         "theta_gamma", "theta_b", "theta_c", "theta_nu",
-        "pi_nu", "G_3", "Z",
+        "pi_nu", "G_3", "Z", "eta_cov",
         "pi_gamma", "E_2",
     )
     for field in amplitude_linear:

@@ -128,8 +128,18 @@ def _seed_formulae(
     denom = 4.0 * R_nu + 15.0
     B_K_sq = float(b_k_sq)
 
+    # V5-RUNTIME Round-11 (R9-D auditor #2 follow-up): the inner factor
+    # was originally `(B_K_sq - 10.0 / denom)` which created a spurious
+    # quadratic ``B_K_sq²`` correction. Replaced with `(1.0 - 10.0 / denom)`
+    # so the whole expression is linear in ``B_K_sq``. Bit-identical to
+    # the pre-fix form at ``b_k_sq = 1.0`` (legacy default), since
+    # ``(1 - 10/denom) == (B_K_sq - 10/denom)`` when ``B_K_sq == 1``.
+    # The "10/denom" inner constant matches the CAMB Notes
+    # χ_0 = -1 unit-normalization convention; once an arbitrary-amplitude
+    # API is exposed via ``b_k_sq``, only the outer ``2 · B_K_sq`` carries
+    # the linear amplitude scaling.
     eta_cov = 2.0 * B_K_sq * (
-        1.0 - (x2 / 12.0) * (B_K_sq - 10.0 / denom)
+        1.0 - (x2 / 12.0) * (1.0 - 10.0 / denom)
     )
     delta_gamma = (
         (B_K_sq / 3.0) * x2

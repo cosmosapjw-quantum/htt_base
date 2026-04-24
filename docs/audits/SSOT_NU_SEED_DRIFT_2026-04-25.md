@@ -150,7 +150,7 @@ the Rust Route-B path does not consume the Python `_seed_formulae`.
 - [x] user approval on Round-10 fix plan (2026-04-25)
 - [x] **fix landed** in this commit
 
-## 8. Out of scope (deferred)
+## 8. Out of scope (deferred at Round-10 commit)
 
 - **Round-11 — residual ~7.6e+02 PSTF convention ratio**. Auditors
   #1 and #5 confirm this is independent of the seed bug; it is the
@@ -170,3 +170,69 @@ the Rust Route-B path does not consume the Python `_seed_formulae`.
   `regular_adiabatic_ic.py` calls `b_k_sq` "primordial amplitude
   squared", which several auditors note is misleading (the variable
   is used linearly on every field). Defer with the naming cleanup.
+
+## 9. Round-11 closure — eta_cov inner-amplitude fix (2026-04-25)
+
+The "Round-12 — eta_cov convention re-check" item from §8 was
+escalated to **Round-11** after the linearity test added in Round-10
+(`test_fb53_seed_scales_linearly_with_b_k_sq`) caught `eta_cov` as
+the only remaining non-linear field at b_k_sq=2 vs 1. Direct
+inspection confirmed auditor #2's diagnosis: the inner factor
+`(B_K_sq − 10/denom)` introduces a spurious quadratic `B_K_sq²` term.
+
+**Fix applied** (1 line):
+
+```diff
+  eta_cov = 2.0 * B_K_sq * (
+-     1.0 - (x2 / 12.0) * (B_K_sq - 10.0 / denom)
++     1.0 - (x2 / 12.0) * (1.0 - 10.0 / denom)
+  )
+```
+
+**Bit-identity at b_k_sq = 1.0** preserved by the algebraic identity
+`(B_K_sq - 10/denom) ≡ (1 - 10/denom)` when `B_K_sq = 1`. Therefore:
+
+- 43 CAMB cross-check tests at `b_k_sq = 1.0`: bit-identical.
+- Route-B Rust `D_2 = 1002.086744 μK²` anchor: bit-identical.
+- Route-B Python golden MM-curve: bit-identical.
+
+**Linearity test** (`test_fb53_seed_scales_linearly_with_b_k_sq`)
+re-enabled `eta_cov` in the strict 2×-scaling check; now passes
+alongside the other 13 amplitude-linear fields.
+
+**Convention audit re-measured** post both fixes
+(`scripts/v5_round9_convention_audit.py --n-k 12 --probe 1.0
+--no-unit-amp-norm`):
+
+```
+D_2^probe       = 7.581144e+05 μK²
+D_2^Route-B     = 1.002087e+03 μK²
+D_2^probe / D_2^Route-B = 7.565357e+02
+conversion_factor = 3.635677e-02
+```
+
+**Exactly** matches auditor #1's trial-fix prediction
+(`ratio = 7.57e+02`, `conv = 3.64e-02`). This confirms:
+
+1. Round-10 + Round-11 seed bugs together accounted for the ~22×
+   ratio improvement (1.7e+04 → 7.6e+02).
+2. The Round-11 `eta_cov` fix did NOT change the ratio further —
+   empirically validating the "metadata-only" claim from Round-9 §5
+   archaeology.
+3. The residual ~760× is **definitively** a downstream convention
+   issue, not a seed bug. Localized (by elimination) to one of:
+   - LoS Bessel projector convention factor (4π or similar)
+   - Source extractor normalization in `tier_b_source_extraction`
+   - B_K_sq ↔ ζ semantic mismatch at the `FLRWPipelineConfig`
+     boundary
+   - Polter / E-mode conversion convention
+   - Sparse-quadrature artefact at residual super-horizon spike
+     (the "1/k² pathology" from Round-9 §5c was the SEED side; the
+     LoS side may have its own k-dependent issue)
+
+**Round-11 closure**:
+- All Round-9 R9-D-flagged seed-formula bugs are now fixed.
+- The 760× residual is no longer attributable to `_seed_formulae`;
+  the next round's investigation should focus on the LoS / source
+  extractor pipeline (`bass.spectrum.tier_b_source_extraction` and
+  `bass.los.flrw_bessel_projector`).

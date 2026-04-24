@@ -7,6 +7,90 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-11 — eta_cov inner-amplitude fix + convention residual narrowed (2026-04-25)
+
+Closes the auditor #2 deferred item from Round-10's SSOT drift doc:
+the regular-adiabatic metric perturbation `eta_cov` in `_seed_formulae`
+carried a spurious quadratic `B_K_sq²` term inside its inner factor.
+
+**One-line fix** — `htt/bass/perturbation/regular_adiabatic_ic.py`:
+
+```diff
+  eta_cov = 2.0 * B_K_sq * (
+-     1.0 - (x2 / 12.0) * (B_K_sq - 10.0 / denom)
++     1.0 - (x2 / 12.0) * (1.0 - 10.0 / denom)
+  )
+```
+
+**Why**: the inner factor `(B_K_sq - 10/denom)` introduced a
+`B_K_sq²` term that violated linearity in the curvature amplitude
+(same class of bug as Round-10's `π_ν` and `G_3`, just inside an
+outer `B_K_sq` rather than missing it entirely). The fix matches the
+CAMB Notes χ_0 = -1 unit-normalization convention: the inner
+constant `1.0` represents the unit-amplitude reference, while the
+outer `2 · B_K_sq` carries the linear amplitude scaling.
+
+**Bit-identity preservation**: `(B_K_sq - 10/denom) ≡ (1 - 10/denom)`
+when `B_K_sq = 1.0` (legacy default). Therefore zero impact on:
+- All CAMB cross-check tests at `b_k_sq = 1.0` (43 tests) — bit-identical.
+- Route-B Rust `D_2 = 1002.086744 μK²` anchor — bit-identical.
+- Route-B Python golden MM-curve — bit-identical.
+
+**Convention audit residual narrowed**: re-ran
+`scripts/v5_round9_convention_audit.py --n-k 12` after both
+Round-10 + Round-11 fixes:
+
+```
+D_2^probe       = 7.581144e+05 μK²
+D_2^Route-B     = 1.002087e+03 μK²
+D_2^probe / D_2^Route-B = 7.565357e+02
+```
+
+**Exactly** matches auditor #1's trial-fix prediction
+(`ratio = 7.57e+02`, `conv_factor = 3.64e-02`), confirming:
+
+1. The Round-10 + Round-11 seed bugs together accounted for the
+   ~22× improvement (1.7e+04 → 7.6e+02).
+2. The Round-11 `eta_cov` fix did NOT change the ratio further
+   (eta_cov is metadata-only per Round-9 §5 archaeology — it does
+   not drive the integrator state vector). This empirically
+   validates the metadata-only claim.
+3. The residual ~760× is **definitively** a downstream convention
+   issue, not a seed bug. Localized (by elimination) to one of:
+   - LoS Bessel projector convention factor
+   - Source extractor normalization (`tier_b_source_extraction`)
+   - B_K_sq ↔ ζ semantic mismatch at the `FLRWPipelineConfig`
+     boundary
+   - Polter / E-mode conversion convention
+   - Sparse-quadrature artefact at residual super-horizon spike
+
+Test changes (`test_fb53_regular_adiabatic_ic_skeleton.py`):
+- `test_fb53_seed_scales_linearly_with_b_k_sq` re-enables `eta_cov`
+  in the strict linearity check (was excluded in Round-10 because
+  of the buggy quadratic term; now passes alongside the other 13
+  amplitude-linear fields).
+
+Test baseline: `1723 passed` (Round-10) → `1723 passed` (Round-11
+unchanged net; the linearity test gained `eta_cov` but the test
+count stayed the same).
+
+SSOT drift document updated:
+`docs/audits/SSOT_NU_SEED_DRIFT_2026-04-25.md` §9 Round-11 closure
+section.
+
+Files:
+- `htt/bass/perturbation/regular_adiabatic_ic.py` — 1-line fix +
+  rationale comment
+- `htt/bass/perturbation/test_fb53_regular_adiabatic_ic_skeleton.py`
+  — re-enable `eta_cov` in linearity test
+- `CHANGELOG.md` — this entry
+- `docs/audits/SSOT_NU_SEED_DRIFT_2026-04-25.md` — Round-11 closure
+
+Open follow-up (Round-12+):
+- Residual ~760× convention factor (downstream, narrowed from
+  Round-10's "could be anywhere" to "post-seed pipeline convention")
+- `B_K_sq` naming cleanup (auditors #2, #6; cosmetic)
+
 ### V5-RUNTIME Round-10 — ν seed-formula bug fix (B_K_sq amplitude factor restored) (2026-04-25)
 
 Fixes the missing `B_K_sq` multiplicative factor on the regular-
