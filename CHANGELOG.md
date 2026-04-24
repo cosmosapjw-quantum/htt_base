@@ -7,6 +7,56 @@
 
 ## [Unreleased]
 
+### Tier-A BASS-independent parallel track — production anchors + MIO↔HTT + TSC↔HTT bridge (2026-04-24)
+
+Three regression packages that harden existing downstream code (HTT / MIO / TSC) while BASS forward-solver work continues. All tests are bit-identical and deterministic; none depend on BASS-produced K_ℓ atlases, LoS outputs, or source grids.
+
+**A#1 — HTT production-anchor regression** (D1, `htt/htt/tests/test_production_anchors.py`, 27 tests):
+
+- Pins the three CLAUDE.md §5 production anchors at bit-identical precision:
+  - `ln B(FLRW_tilt vs FLRW) = 26.3966094015` (semantic anchor: +26.40)
+  - `<beta>_FLRW_tilt = 1.3597868670e-03` (semantic anchor: 1.360e-3)
+  - `median F_Bayes(S3) = 0.0904143077` (semantic anchor: 0.093 ± 0.025)
+- Tight `abs=1e-9 / 1e-12` tolerances on the pinned values catch any drift in the likelihood / MC machinery; loose `±0.10 / rel 5e-3 / ±3σ` semantic cross-checks keep the CLAUDE.md §5 band intact.
+- 15-model reachability smoke (`ALL_MODELS` parametrized): every registered Bianchi model must produce at least one finite log-likelihood sample in 20 prior draws. Protects against `prior_transform` / `predicted_observables` regressions that could silently `-inf`-zero an entire model.
+- 5-scenario F_Bayes pin (S1, S2a, S2b, S2c, S3): median fixed to 4-decimal precision at `N=200_000, seed=42`.
+- Canonical quadrature call: `FLRW_tilt().log_evidence_quadrature(n_points=10_000)` — deterministic.
+
+**A#2 — MIO ↔ HTT cross-check table generator** (D38, new):
+
+- `htt/mio/interface/htt_cross_check.py` (~220 L) — frozen `CrossCheckRow` / `CrossCheckTable` dataclasses; pairs `MioCertificate`s with a `PosteriorExportBundle` and returns structured consistency labels (`consistent` / `divergent` / `incomparable`). No merged scalars anywhere.
+- Rule registry seeded with two concrete rules:
+  - `(evidence_anatomy, htt.core.analysis_extended.evidence_matrix_report_artifact)` — channel sum rule vs `ln_B_total` (fractional tolerance, default 10%).
+  - `(flrw_tension, htt.core.advanced_diagnostics.posterior_predictive_report_artifact)` — PPP alarm sign vs Π exceedance threshold.
+- `register_rule(report_type, compare_to, rule, *, overwrite=False)` extension hook; refuses silent replacement by default.
+- G19 §10.2bis structural guarantees:
+  - No field on `CrossCheckRow` / `CrossCheckTable` containing `combined|merged|total_score`.
+  - Payload contains no field with `'posterior'` substring (enforces naming convention used in `workspace/contracts/tests/test_g19_enforcement.py`).
+  - Input must be a real `PosteriorExportBundle` — duck-typed dicts raise `TypeError` (MIO cannot synthesize posteriors).
+  - Tolerance validation.
+- Exported at `mio.interface` package level.
+- `htt/mio/tests/test_htt_cross_check.py` — 15 tests covering every rule branch, `incomparable` fallback paths, G19 structural lint, `register_rule` overwrite safety, and `table_to_payload` JSON round-trip.
+
+**A#3 — TSC ↔ HTT F_Bayes bridge anchor pin** (D5 closure, `htt/tsc/integration/test_htt_bridge_production_anchors.py`, 21 tests):
+
+- `tsc.integration.htt_bridge` (existing, 379 L; 36 tests) already implements the bridge and keeps both paths inside `PUBLISHED_F_BAYES_BAND = (0.068, 0.118)`. The missing piece was the bit-identical anchor pin — this change adds it.
+- 5 scenarios × 3 anchor values = 15 parametrized pins (`F_Bayes_tsc`, `F_Bayes_htt_mean`, `rel_difference`) at `N=100_000, seed=20260419, w=0.0`.
+- Cross-anchor link: the bridge's S3 htt-median result (N=100k, seed=20260419) must land within CLAUDE.md §5 ±1σ of the HTT-side anchor (N=200k, seed=42) — two independent MC draws of the same posterior.
+- G19 `is_cross_check=True` flag reaffirmed per scenario; `FFCrossCheckReport` linted for merge-like field names.
+- S0 degenerate-null sanity: `F_Bayes(S0) < 0.01` on both paths.
+
+**Test impact** (per-suite, isolated runs):
+
+- `htt/tests/` — 279 → 306 tests (+27)
+- `mio/tests/` — 174 → 189 tests (+15)
+- `tsc/` — 677 → 698 tests (+21)
+- `workspace/` — 55 (unchanged)
+- Total: +63 bit-identical deterministic tests.
+
+The combined-run (`htt/tests + mio/tests + tsc + workspace`) exposes two pre-existing `sys.path` failures (`bass/statistics.py` shadowing Python's `statistics` stdlib when `tsc/` imports interleave with `mio/extraction/hj01_shear.py`) that are unrelated to this change. Each suite passes cleanly in isolation.
+
+**Rationale**: the CLAUDE.md §5 production anchors (ln B, β, F_Bayes) had no direct-pin regression. Any coefficient drift in `htt.core.evidence_models`, `htt.core.analysis_extended.FillingFraction`, `htt.core.bounds.B_sigma_corrected`, or the shared RNG plumbing was detectable only indirectly through artifact tests. These three Tier-A packages close that gap across HTT, MIO, and TSC simultaneously.
+
 ### V5-RUNTIME Blocker 3 — cosmological integrator config helper (2026-04-24)
 
 Blocker 3 (real IC injection from physical recombination state) was declared *actionable* in commit `bce0eb9` once the residual-joint operator became stable. The minimal deliverable is an ergonomic caller-facing constructor that encapsulates the real-physics η anchors: replaces the legacy `eta_initial_mpc = 0.5 Mpc` toy sentinel with `η(z_*) - 20 Mpc` derived from the species registry's HYREC visibility table.
