@@ -1613,6 +1613,7 @@ class Ver2TierBIntegrator:
             eta_initial=float(self.config.eta_initial_mpc),
             a_initial=float(self.background_monitor.a[0]),
             L_max=self.config.L_max,
+            b_k_sq=float(getattr(self.config, "primordial_b_k_sq", 1.0)),
         )
         injection_mode = str(seed_pack.seed_mode)
         if branch == "tilted":

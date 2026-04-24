@@ -152,11 +152,55 @@ def build_flrw_regular_seed(
     *,
     amplitude: float,
     descriptor: RegularSeedDescriptor | None = None,
+    adiabatic: bool = False,
 ) -> RegularSeedState:
-    """Return a symbolic regular adiabatic seed with common-amplitude placeholders."""
+    """Return a symbolic regular-adiabatic seed.
+
+    Two branches controlled by ``adiabatic``:
+
+    - ``adiabatic=False`` (default; legacy): common-amplitude
+      placeholder with ``δ_γ = δ_b = δ_c = δ_ν = amplitude`` and
+      ``θ_common = amplitude/3``. This is the toy-normalization seed
+      used by all pre-V5 runtime tests (e.g. the D_2 = 1002.086744 μK²
+      regression anchor) and MUST remain the default to preserve bit-
+      identity.
+
+    - ``adiabatic=True`` (V5 step-4b-(a) super-horizon IC): physically
+      correct ratios for an adiabatic mode well outside the horizon
+      (``kη ≪ 1``),
+
+          δ_γ : δ_b : δ_c : δ_ν  =  4/3 : 1 : 1 : 4/3,
+          θ_γ = θ_b = θ_c = θ_ν = 0        (synchronous-gauge
+                                            super-horizon).
+
+      Verified against Ma-Bertschinger 1995 eq. 96 and Dodelson §6.3.
+      The ``amplitude`` scalar is the unit "A" shared between
+      baryon/CDM; radiation species carry (4/3)·A via adiabatic
+      entropy perturbation Δ_S = 0.
+
+      For the V5 FLRW pipeline (see ``bass.spectrum.flrw_pipeline``),
+      the outer ``FLRWPipelineConfig.unit_amplitude_normalization``
+      divides Δ_ℓ by ``amplitude`` so the returned transfer function
+      is per-unit primordial A, ready for pairing with the primordial
+      P(k) in ``assemble_cl_TT_isotropic``.
+    """
     if not np.isfinite(amplitude):
         raise ValueError(f"amplitude must be finite, got {amplitude!r}")
     amp = float(amplitude)
+    if adiabatic:
+        # Adiabatic super-horizon ratios (Ma-Bertschinger 1995 eq. 96;
+        # Dodelson §6.3): radiation species carry 4/3 × matter amplitude,
+        # peculiar velocity = 0 in synchronous gauge on super-horizon.
+        four_third_amp = (4.0 / 3.0) * amp
+        return RegularSeedState(
+            amplitude=amp,
+            delta_gamma=four_third_amp,
+            delta_baryon=amp,
+            delta_cdm=amp,
+            delta_nu=four_third_amp,
+            theta_common=0.0,
+            descriptor=descriptor or RegularSeedDescriptor(),
+        )
     return RegularSeedState(
         amplitude=amp,
         delta_gamma=amp,

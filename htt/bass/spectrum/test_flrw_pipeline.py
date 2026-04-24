@@ -35,6 +35,51 @@ def test_pipeline_config_defaults() -> None:
     assert cfg.n_output == 64
     assert cfg.anisotropic_stress is True
     assert cfg.quadrature == "trapezoid"
+    assert cfg.adiabatic_mode_seed is True  # V5 step-4b-(a) default
+
+
+def test_adiabatic_seed_factory_ratios() -> None:
+    """V5 step-4b-(a): adiabatic=True sets δ_γ:δ_b:δ_c:δ_ν = 4/3:1:1:4/3
+    with θ_common = 0 (Ma-Bertschinger super-horizon ratios)."""
+    from bass.hierarchy.seed_compatibility import build_flrw_regular_seed
+
+    seed = build_flrw_regular_seed(amplitude=1.0, adiabatic=True)
+    assert seed.amplitude == 1.0
+    assert seed.delta_baryon == pytest.approx(1.0, abs=1e-14)
+    assert seed.delta_cdm == pytest.approx(1.0, abs=1e-14)
+    assert seed.delta_gamma == pytest.approx(4.0 / 3.0, abs=1e-14)
+    assert seed.delta_nu == pytest.approx(4.0 / 3.0, abs=1e-14)
+    assert seed.theta_common == 0.0
+    # Adiabatic entropy S_γb = δ_γ/4 − δ_b/3 = 1/3 − 1/3 = 0:
+    entropy_gb = seed.delta_gamma / 4.0 - seed.delta_baryon / 3.0
+    assert entropy_gb == pytest.approx(0.0, abs=1e-14)
+
+
+def test_adiabatic_seed_scales_linearly_with_amplitude() -> None:
+    """Adiabatic seed linearity in amplitude: all five entries scale
+    together so the ratio structure is preserved."""
+    from bass.hierarchy.seed_compatibility import build_flrw_regular_seed
+
+    small = build_flrw_regular_seed(amplitude=1.0e-6, adiabatic=True)
+    large = build_flrw_regular_seed(amplitude=2.5e-5, adiabatic=True)
+    scale = 2.5e-5 / 1.0e-6
+    for field in ("delta_baryon", "delta_cdm", "delta_gamma", "delta_nu", "amplitude"):
+        assert getattr(large, field) == pytest.approx(
+            scale * getattr(small, field), rel=1e-14
+        )
+
+
+def test_common_delta_legacy_seed_unchanged() -> None:
+    """adiabatic=False (default) keeps the legacy common-δ placeholder;
+    required for bit-identity of the D_2 = 1002.086744 μK² anchor."""
+    from bass.hierarchy.seed_compatibility import build_flrw_regular_seed
+
+    seed = build_flrw_regular_seed(amplitude=1.0e-6)
+    assert seed.delta_gamma == 1.0e-6
+    assert seed.delta_baryon == 1.0e-6
+    assert seed.delta_cdm == 1.0e-6
+    assert seed.delta_nu == 1.0e-6
+    assert seed.theta_common == pytest.approx(1.0e-6 / 3.0, abs=1e-20)
 
 
 def test_pipeline_config_rejects_small_L_max() -> None:

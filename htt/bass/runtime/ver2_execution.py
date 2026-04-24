@@ -860,7 +860,8 @@ def _build_seed_projection(
         abs(float(config.Sigma_minus_initial)),
         1.0e-6,
     )
-    seed = build_flrw_regular_seed(amplitude=amplitude)
+    adiabatic = bool(getattr(config, "adiabatic_mode_seed", False))
+    seed = build_flrw_regular_seed(amplitude=amplitude, adiabatic=adiabatic)
     if abs(float(config.tilt_rapidity)) > 0.0:
         seed = promote_tilted_seed(
             seed,
@@ -1471,6 +1472,12 @@ def _native_runtime_config(
             gamma_T_over_H_threshold=float(base_config.gamma_T_over_H_threshold),
             solver_method=solver_method,
             gamma_T_override=base_config.gamma_T_override,
+            adiabatic_mode_seed=bool(
+                getattr(base_config, "adiabatic_mode_seed", False)
+            ),
+            primordial_b_k_sq=float(
+                getattr(base_config, "primordial_b_k_sq", 1.0)
+            ),
         ),
         realization,
     )
@@ -1514,6 +1521,12 @@ def _campaign_runner(
             gamma_T_over_H_threshold=float(cutoff_config.gamma_T_over_H_threshold),
             solver_method=cutoff_config.solver_method,
             gamma_T_override=cutoff_config.gamma_T_override,
+            adiabatic_mode_seed=bool(
+                getattr(cutoff_config, "adiabatic_mode_seed", False)
+            ),
+            primordial_b_k_sq=float(
+                getattr(cutoff_config, "primordial_b_k_sq", 1.0)
+            ),
         )
         resolved_background_monitor = background_monitor
         if resolved_background_monitor is None:

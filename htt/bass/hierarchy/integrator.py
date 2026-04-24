@@ -133,6 +133,26 @@ class IntegratorConfig:
     gamma_T_over_H_threshold: float = 100.0
     solver_method: str = "LSODA"
     gamma_T_override: Optional[Callable[[float], float]] = None
+    adiabatic_mode_seed: bool = False
+    """V5 step-4b-(a) super-horizon adiabatic IC switch. When True,
+    ``_build_seed_projection`` calls ``build_flrw_regular_seed(...,
+    adiabatic=True)`` which sets the correct adiabatic ratios
+    (``δ_γ:δ_b:δ_c:δ_ν = 4/3:1:1:4/3``, ``θ = 0``) in the canonical
+    tracking surface. Note: the ACTUAL solver IC is supplied by
+    ``make_camb_regular_adiabatic_seed`` (Lowell §13.2) at each k;
+    this flag only toggles the canonical tracking placeholder. The
+    physics-determining knob is ``primordial_b_k_sq`` below."""
+    primordial_b_k_sq: float = 1.0
+    """V5 step-4b-(a) primordial amplitude squared ``|B_K|²``. Feeds
+    into ``make_camb_regular_adiabatic_seed`` via the Lowell §13.2
+    closed-form startup. The default ``1.0`` (historical) corresponds
+    to unit-B_K transfer functions; a physical ζ-normalized run sets
+    ``A_s × (k/k_pivot)^(n_s-1)`` where ``A_s = 2.1e-9`` (Planck 2018).
+    The exact B_K → ζ calibration is a pending convention audit
+    (V5 follow-up Round-6). All solver outputs scale linearly in
+    ``sqrt(primordial_b_k_sq)`` so the dimensionless transfer
+    function comes out of a subsequent ``/ sqrt(b_k_sq)`` division
+    (see ``FLRWPipelineConfig.unit_amplitude_normalization``)."""
     """Test hook: override the species-layer ``Γ_T(η)`` with a caller-
     supplied callable. Used by tests that need to probe the deep
     tight-coupling regime beyond the HyRec fixture's ``z_max = 8000``

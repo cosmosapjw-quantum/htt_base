@@ -106,8 +106,16 @@ def _seed_formulae(
     k_comoving: float,
     eta_initial: float,
     a_initial: float,
+    b_k_sq: float = 1.0,
 ) -> dict[str, float]:
-    """Leading-order regular-adiabatic startup formulas from Lowell §13.2."""
+    """Leading-order regular-adiabatic startup formulas from Lowell §13.2.
+
+    The ``b_k_sq`` parameter (formerly hardcoded to 1.0) is the primordial
+    amplitude squared at the super-horizon crossing. For unit-ζ
+    convention set 1.0; for Planck-2018 absolute amplitude set
+    ``A_s × (k/k_pivot)^(n_s-1)`` (pending convention audit — see V5
+    step-4b-(a) follow-up).
+    """
     constants = default_constants()
     R_nu = constants.Omega_nu_0 / constants.Omega_r_0
     omega = constants.H0_mpc * constants.Omega_m_0 / np.sqrt(
@@ -118,7 +126,7 @@ def _seed_formulae(
     x2 = x * x
     x3 = x2 * x
     denom = 4.0 * R_nu + 15.0
-    B_K_sq = 1.0
+    B_K_sq = float(b_k_sq)
 
     eta_cov = 2.0 * B_K_sq * (
         1.0 - (x2 / 12.0) * (B_K_sq - 10.0 / denom)
@@ -245,6 +253,7 @@ def make_camb_regular_adiabatic_seed(
     eta_initial: float,
     a_initial: float,
     L_max: int,
+    b_k_sq: float = 1.0,
 ) -> np.ndarray:
     """Build the FB-5.3 regular-adiabatic startup vector.
 
@@ -290,6 +299,7 @@ def make_camb_regular_adiabatic_seed(
         k_comoving=k_val,
         eta_initial=eta_val,
         a_initial=a_val,
+        b_k_sq=float(b_k_sq),
     )
     return pack_regular_adiabatic_seed_from_formulae(
         a_initial=a_val,

@@ -110,6 +110,24 @@ class FLRWPipelineConfig:
     gamma_T_over_H_threshold: float = 100.0
     random_seed: int = 42
     unit_amplitude_normalization: bool = True
+    adiabatic_mode_seed: bool = True
+    """V5 step-4b-(a) super-horizon adiabatic initial condition. When
+    True (default for the V5 pipeline), the seed ratios follow
+    ``δ_γ:δ_b:δ_c:δ_ν = 4/3:1:1:4/3`` with ``θ = 0`` — the physically
+    correct adiabatic mode for a super-horizon k·η_init ≪ 1, which
+    holds for the low-k range that drives D_2 (k < 1/η_init ≈
+    4e-3 Mpc⁻¹ at η_init = 260 Mpc). This only toggles the canonical
+    tracking placeholder; the physics-determining IC at each k comes
+    from the Lowell §13.2 ``make_camb_regular_adiabatic_seed`` (see
+    ``primordial_b_k_sq`` below)."""
+    primordial_b_k_sq: float = 1.0
+    """V5 step-4b-(a) primordial amplitude squared ``|B_K|²`` for the
+    Lowell §13.2 seed. Default 1.0 gives unit-B_K transfer functions;
+    ``A_s × (k_pivot_ref / k_pivot)^(n_s-1)`` (≈ 2.1e-9) gives
+    ζ-normalized physical amplitude. Exact B_K → ζ calibration is a
+    pending convention audit (V5 follow-up Round-6). Solver output is
+    linear in ``sqrt(b_k_sq)``, so the pipeline's
+    ``unit_amplitude_normalization`` divides it back out."""
     """When True (default), divide Δ_ℓ by the solver's seed amplitude so
     that the returned transfer function is the physical "unit
     primordial amplitude" response (C_ℓ = 4π ∫ P(k) |Δ|² dlnk then
@@ -324,6 +342,8 @@ def compute_transfer_function_at_k(
         atol=cfg.atol,
         bianchi_cosmo=BianchiCosmology(structure=get_type(bianchi_type), beta=0.0),
         gamma_T_over_H_threshold=cfg.gamma_T_over_H_threshold,
+        adiabatic_mode_seed=cfg.adiabatic_mode_seed,
+        primordial_b_k_sq=cfg.primordial_b_k_sq,
     )
 
     # execute_tier_b_solver requires k_grid_mpc with ≥ 2 entries for the
@@ -412,6 +432,8 @@ def _run_chunk_shared_bg(
         atol=cfg.atol,
         bianchi_cosmo=BianchiCosmology(structure=get_type(bianchi_type), beta=0.0),
         gamma_T_over_H_threshold=cfg.gamma_T_over_H_threshold,
+        adiabatic_mode_seed=cfg.adiabatic_mode_seed,
+        primordial_b_k_sq=cfg.primordial_b_k_sq,
     )
     template_request = _build_tier_b_runtime_request(
         manifest=_pipeline_manifest("chunked"),
