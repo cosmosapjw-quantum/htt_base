@@ -32,7 +32,7 @@ Planck 2018 Commander low-ℓ TT (arXiv:1807.06205, Table 2):
     D₂ = 201.5 ± 96.6 μK²
     D₃ = 1034 ± 236 μK²
 
-T₀ = 2.7255 K = 2.7255 × 10⁶ μK  (Fixsen ApJ 707, 916, 2009)
+T₀ = 2.72548 K = 2.72548 × 10⁶ μK  (Fixsen ApJ 707, 916, 2009)
 
 Non-goals (deferred to D2)
 --------------------------
@@ -55,10 +55,13 @@ from typing import Optional
 # Section 1 - Constants with provenance
 # ============================================================================
 
-T_CMB_K: float = 2.7255
-"""CMB monopole temperature in K. Fixsen, ApJ 707, 916 (2009)."""
+T_CMB_K: float = 2.72548
+"""CMB monopole temperature in K. Fixsen 2009 (ApJ 707, 916) central value
+(2.72548 ± 0.00057 K; COBE/FIRAS recalibrated with WMAP). PDG 2024 reviews
+and Planck 2018 pipelines fix this as the canonical monopole temperature.
+"""
 
-T_CMB_MICROK: float = 2.7255e6
+T_CMB_MICROK: float = 2.72548e6
 """CMB monopole temperature in μK (unit of Planck D_ell values)."""
 
 

@@ -365,12 +365,12 @@ class TestLBThermalHistory:
         assert ratio == pytest.approx((4.0 / 11.0) ** (1.0 / 3.0), rel=1e-6)
 
     def test_LB_6_13_T_gamma_today(self, species) -> None:
-        """LB-6-13: ``T_γ(z = 0) = 2.7255 K`` to 1e-4.
+        """LB-6-13: ``T_γ(z = 0) = 2.72548 K`` to 1e-4.
 
         Citation: Fixsen 2009 ApJ 707:916 (SSOT default).
         """
         T0 = species.constants.T_gamma_0_K
-        assert T0 == pytest.approx(2.7255, abs=1e-4)
+        assert T0 == pytest.approx(2.72548, abs=1e-4)
 
     def test_LB_6_14_tau_reion(self, species_with_reion) -> None:
         """LB-6-14: integrated ``τ_reion ∈ [0.0514, 0.0574]`` (Planck

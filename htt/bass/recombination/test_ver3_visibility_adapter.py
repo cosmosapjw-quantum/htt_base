@@ -21,7 +21,7 @@ from bass.recombination.reionization import (
 def _test_cosmology() -> CosmologyForRecombination:
     return CosmologyForRecombination(
         h=0.6736,
-        T_cmb=2.7255,
+        T_cmb=2.72548,
         Omega_b=0.0493,
         Y_He=0.245,
         Omega_m=0.315,

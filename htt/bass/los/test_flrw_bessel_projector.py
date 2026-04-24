@@ -66,7 +66,7 @@ ETA_0_DEFAULT = 14116.4  # Mpc, Planck 2018 conformal time today
 @pytest.fixture
 def planck_cosmology():
     return CosmologyForRecombination(
-        h=0.6766, T_cmb=2.7255, Omega_b=0.0493, Y_He=0.245,
+        h=0.6766, T_cmb=2.72548, Omega_b=0.0493, Y_He=0.245,
         Omega_m=0.3111, Omega_r=9.237e-5, Omega_Lambda=0.6889,
     )
 

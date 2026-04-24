@@ -248,7 +248,7 @@ class GrowingMode:
         
         Default threshold: 10 μK² (detectable above cosmic variance).
         """
-        # D₂ = (6/2π)(T₂ σ/H T₀)² = (3/π)(5.5 σ/H × 2.7255e6)²
+        # D₂ = (6/2π)(T₂ σ/H T₀)² = (3/π)(5.5 σ/H × 2.72548e6)²
         # σ/H = √(D₂ × π / (3 × 5.5² × T₀²))
         sigma_min = np.sqrt(D2_threshold * np.pi / (3 * self.T2_GROW**2 * C.T0_uK**2))
         sigma_max = np.sqrt(C.D2_obs * np.pi / (3 * self.T2_GROW**2 * C.T0_uK**2))

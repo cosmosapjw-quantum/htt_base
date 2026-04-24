@@ -29,7 +29,7 @@ Primordial scalar power spectrum (Planck 2018 baseline):
 
 D_ℓ conversion (Planck convention):
 
-    D_ℓ^{XY} = [ℓ(ℓ+1) / (2π)] · C_ℓ^{XY} · T_CMB²,   T_CMB = 2.7255 K.
+    D_ℓ^{XY} = [ℓ(ℓ+1) / (2π)] · C_ℓ^{XY} · T_CMB²,   T_CMB = 2.72548 K.
 
 Route B Michaelis-Menten sentinel
 ---------------------------------
@@ -80,7 +80,7 @@ Seljak, U., & Zaldarriaga, M. (1996). "A line-of-sight integration
 Planck Collaboration (2018). "Planck 2018 results. X. Constraints on
   inflation." A&A 641, A10.  (A_s, n_s baseline)
 Fixsen, D. J. (2009). "The temperature of the cosmic microwave
-  background." ApJ 707, 916.  (T_CMB = 2.7255 K)
+  background." ApJ 707, 916.  (T_CMB = 2.72548 ± 0.00057 K)
 d2_convention.rs (bass_rs SSOT): C_1 = 1.753e7, C_2 = 6.825e5.
 """
 
@@ -150,7 +150,7 @@ class CLAssemblyConfig:
         odd grid length).
     T_CMB_K : float
         CMB monopole temperature; defaults to module-level T_CMB_K =
-        2.7255 K (Fixsen 2009).
+        2.72548 K (Fixsen 2009).
     primordial_pk_fn : Optional[Callable]
         If provided, overrides (A_s, n_s, k_pivot) to use this callable
         for P_R(k). Default None → uses the power-law from A_s, n_s.

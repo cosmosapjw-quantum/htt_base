@@ -102,7 +102,7 @@ ROUTE_B_D2_AT_SIGMA2_1EM8: float = (
 #: does not itself consume T_CMB, but the tsc-side chart scripts
 #: report D_2 in μK^2 so a T_CMB drift would silently rescale any
 #: derived amplitude. Frozen here as the anti-drift anchor.
-T_CMB_K_MIRROR: float = 2.7255
+T_CMB_K_MIRROR: float = 2.72548
 
 #: Schema version for :func:`export_as_json`. Bump only on
 #: schema-breaking changes.

@@ -91,4 +91,35 @@ The `T0_uK` fix and the bass-side `2.7255 → 2.72548` migration are recorded he
 - [x] htt-side constants located and cross-referenced
 - [x] numerical impact quantified
 - [x] htt-side anti-regression guard test drafted (`test_ssot_drift.py`)
-- [ ] user approval on recommendation in §4 (required before any code change to `bass/` or to `htt.core.ssot.C.T0_uK`)
+- [x] user approval on recommendation in §4 (2026-04-24)
+- [x] **drift closure landed (2026-04-24)** — see §7 below.
+
+## 7. Closure log (2026-04-24)
+
+User approved canonical value `T_CMB = 2.72548 K` (Fixsen 2009; PDG 2024 review confirms, Planck 2018 pipelines fix to same value). Changes landed:
+
+**Production files updated** (2.7255 → 2.72548):
+
+- `bass/observational/planck_mes_bounds.py` (lines 35 docstring, 58 `T_CMB_K`, 61 `T_CMB_MICROK` + updated comment)
+- `bass/spectrum/cl_assembly.py` (lines 32, 83, 153 docstrings)
+- `bass/spectrum/off_diagonal_covariance.py` (line 30 `_T_CMB_K`)
+- `tsc/charts/michaelis_menten_export.py` (line 105 `T_CMB_K_MIRROR`)
+- `htt/core/analysis_extended.py` (line 251 comment — derivation stub)
+
+**Paired test / fixture updates** (2.7255 → 2.72548, matched to the new SSOT):
+
+- `bass/observational/test_planck_mes_bounds.py:59` (anchor test)
+- `bass/spectrum/test_cl_assembly.py:450, 465-466` (derived expected + ratio test)
+- `bass/integration/test_lowell_bianchi.py:368, 373` (LB-6-13 T_γ(z=0) anchor)
+- `bass/species/test_neutrino.py:79` (comment)
+- `bass/los/test_flrw_bessel_projector.py:69` (planck_cosmology fixture)
+- `bass/transport/test_visibility_polter_source.py:168` (planck_cosmology fixture)
+- `bass/recombination/test_ver2_history_visibility.py:24` (fixture)
+- `bass/recombination/test_ver3_visibility_adapter.py:24` (fixture)
+- `bass/recombination/test_reionization.py:59, 77, 125, 134, 147` (fixture + strict equality + metadata string)
+- `tsc/charts/test_michaelis_menten_export.py:50` (mirror-constant anchor)
+- `bass/recombination/fixtures/recombination_ref_planck2018.csv:6` (header comment)
+
+**Anti-regression guard extended** (`htt/tests/test_ssot_drift.py`): three new cross-package assertions tie `bass.observational.planck_mes_bounds.T_CMB_K`, `bass.spectrum.off_diagonal_covariance._T_CMB_K`, and `tsc.charts.michaelis_menten_export.T_CMB_K_MIRROR` to `htt.core.ssot.C.T0_K`. Any silent re-introduction of `2.7255` in any of these sites now fails a unit test.
+
+**Numerical impact observed**: Route B sentinel test `D_2(Σ² = 1e-8) ≈ 0.1741 μK²` passes unchanged (tolerance `< 1e-3`); quadratic-T² tests tightened to `abs=1e-14` against the new constant. 370 affected tests all pass post-closure.

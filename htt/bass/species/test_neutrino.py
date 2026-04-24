@@ -76,7 +76,7 @@ def test_massive_neutrino_zero_allowed(bg):
     assert nu.massive_neutrino_supported is False
 
 
-# --- T-23: T_ν(z=0) = (4/11)^{1/3} × 2.7255 K ------------------------------
+# --- T-23: T_ν(z=0) = (4/11)^{1/3} × 2.72548 K -----------------------------
 
 
 def test_T23_T_nu_z0_kelvin(bg, neutrino):

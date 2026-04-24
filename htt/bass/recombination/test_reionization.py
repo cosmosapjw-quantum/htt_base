@@ -56,7 +56,7 @@ REAL_HYREC_CSV = FIXTURE_DIR / "recombination_ref_planck2018.csv"
 def _planck_cosmology() -> CosmologyForRecombination:
     return CosmologyForRecombination(
         h=0.6735837,
-        T_cmb=2.7255,
+        T_cmb=2.72548,
         Omega_b=0.04941,
         Y_He=0.245,
         Omega_m=0.313841,
@@ -74,7 +74,7 @@ class TestCosmologyForRecombination:
     def test_basic_construction(self):
         c = _planck_cosmology()
         assert abs(c.h - 0.6735837) < 1e-10
-        assert abs(c.T_cmb - 2.7255) < 1e-10
+        assert abs(c.T_cmb - 2.72548) < 1e-10
 
     def test_H_0_SI(self):
         c = _planck_cosmology()
@@ -122,7 +122,7 @@ class TestCosmologyFromMetadata:
     def test_basic_extraction(self):
         md = {
             "h": "0.6735837",
-            "t_cmb": "2.7255 K",  # with unit suffix
+            "t_cmb": "2.72548 K",  # with unit suffix
             "omega_b": "0.04941",
             "y_he": "0.245",
             "omega_m_total": "0.313841",
@@ -131,7 +131,7 @@ class TestCosmologyFromMetadata:
         }
         c = cosmology_from_metadata(md)
         assert abs(c.h - 0.6735837) < 1e-10
-        assert abs(c.T_cmb - 2.7255) < 1e-10  # unit suffix stripped
+        assert abs(c.T_cmb - 2.72548) < 1e-10  # unit suffix stripped
         assert abs(c.Omega_b - 0.04941) < 1e-10
 
     def test_missing_key_raises(self):
@@ -144,7 +144,7 @@ class TestCosmologyFromMetadata:
     def test_bad_value_raises(self):
         md = {
             "h": "not_a_number",
-            "t_cmb": "2.7255",
+            "t_cmb": "2.72548",
             "omega_b": "0.04941",
             "y_he": "0.245",
             "omega_m_total": "0.3",

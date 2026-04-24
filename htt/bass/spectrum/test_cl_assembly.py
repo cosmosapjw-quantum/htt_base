@@ -447,7 +447,7 @@ class TestDlConversion:
     def test_unit_cl_gives_exact_Dl(self):
         """For C_ℓ = 1, D_ℓ = ℓ(ℓ+1) T_CMB_μK² / (2π). Check at ℓ=2."""
         dl = compute_dl(np.ones(5))
-        expected_dl2 = 2 * 3 / (2 * np.pi) * (2.7255e6) ** 2
+        expected_dl2 = 2 * 3 / (2 * np.pi) * (2.72548e6) ** 2
         assert abs(dl[2] - expected_dl2) / expected_dl2 < 1e-14
 
     def test_ell_0_and_1_zero_via_prefactor(self):
@@ -462,8 +462,8 @@ class TestDlConversion:
     def test_T_CMB_quadratic_scaling(self):
         """D_ℓ ∝ T_CMB² — double T_CMB should quadruple D_ℓ."""
         cl = np.ones(5)
-        dl_std = compute_dl(cl, T_CMB_K=2.7255)
-        dl_2x = compute_dl(cl, T_CMB_K=2 * 2.7255)
+        dl_std = compute_dl(cl, T_CMB_K=2.72548)
+        dl_2x = compute_dl(cl, T_CMB_K=2 * 2.72548)
         for ell in range(2, 5):
             ratio = dl_2x[ell] / dl_std[ell]
             assert abs(ratio - 4.0) / 4.0 < 1e-14

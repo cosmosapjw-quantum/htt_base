@@ -47,7 +47,7 @@ class TestRouteBLiterals:
         )
 
     def test_T_CMB_is_fixsen(self):
-        assert T_CMB_K_MIRROR == 2.7255
+        assert T_CMB_K_MIRROR == 2.72548
 
     def test_schema_version_is_tag(self):
         assert SCHEMA_VERSION == "TSC-05/v1"

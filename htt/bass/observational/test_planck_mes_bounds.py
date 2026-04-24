@@ -56,7 +56,7 @@ class TestCosmologicalConstants:
     """T₀ and PlanckLowL_Commander data sources."""
 
     def test_T_CMB_fixsen_2009_value(self):
-        assert T_CMB_K == pytest.approx(2.7255, abs=1e-10)
+        assert T_CMB_K == pytest.approx(2.72548, abs=1e-10)
 
     def test_T_CMB_microK_consistency(self):
         assert T_CMB_MICROK == pytest.approx(T_CMB_K * 1e6, rel=1e-14)

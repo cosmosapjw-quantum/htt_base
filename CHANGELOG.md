@@ -7,6 +7,38 @@
 
 ## [Unreleased]
 
+### SSoT T_CMB drift closed — canonical Fixsen 2009 value across bass/htt/tsc (2026-04-24)
+
+`docs/audits/SSOT_TCMB_DRIFT_2026-04-19.md` recorded two numerically distinct `T_CMB` copies both citing Fixsen (2009). User-approved closure (2026-04-24) aligns every copy to the canonical central value **`T_CMB = 2.72548 K`** (Fixsen 2009 post-WMAP recalibration; PDG 2024 CMB review confirms; Planck 2018 pipelines fix to the same value; no 2024–2026 CMB monopole measurement supersedes it).
+
+**Production files updated** (2.7255 → 2.72548):
+
+- `bass/observational/planck_mes_bounds.py` — `T_CMB_K`, `T_CMB_MICROK`, and their docstrings + annotated citation.
+- `bass/spectrum/cl_assembly.py` — docstrings (lines 32, 83, 153) and `CLAssemblyConfig.T_CMB_K` default description.
+- `bass/spectrum/off_diagonal_covariance.py` — `_T_CMB_K`.
+- `tsc/charts/michaelis_menten_export.py` — `T_CMB_K_MIRROR` (anti-drift anchor constant).
+- `htt/core/analysis_extended.py` — derivation-comment stub (consistency).
+
+**Paired test/fixture updates** (also 2.7255 → 2.72548):
+
+- `bass/observational/test_planck_mes_bounds.py:59` — anchor test.
+- `bass/spectrum/test_cl_assembly.py` — expected-value literal used in T²-scaling check + ratio tests.
+- `bass/integration/test_lowell_bianchi.py` — LB-6-13 T_γ(z=0) anchor.
+- `bass/species/test_neutrino.py` — T-23 comment.
+- `bass/los/test_flrw_bessel_projector.py`, `bass/transport/test_visibility_polter_source.py` — `planck_cosmology` fixtures.
+- `bass/recombination/test_ver2_history_visibility.py`, `…/test_ver3_visibility_adapter.py`, `…/test_reionization.py` — cosmology fixtures, strict-equality checks, and metadata string (`"t_cmb": "2.72548 K"`).
+- `tsc/charts/test_michaelis_menten_export.py` — mirror-constant anchor.
+- `bass/recombination/fixtures/recombination_ref_planck2018.csv` — header comment.
+
+**Anti-regression guard extended** (`htt/tests/test_ssot_drift.py`, 2 → 5 tests):
+
+- Existing: `C.T0_K == 2.72548`, `C.T0_uK == C.T0_K * 1e6`.
+- New: `bass.observational.planck_mes_bounds.{T_CMB_K, T_CMB_MICROK}`, `bass.spectrum.off_diagonal_covariance._T_CMB_K`, and `tsc.charts.michaelis_menten_export.T_CMB_K_MIRROR` must all match `C.T0_K` bit-exact. Any silent future re-introduction of `2.7255` in any of these sites now fires a unit test.
+
+**Numerical impact**: relative drift on propagated `D_ℓ ∝ T²` is `≈3.67×10⁻⁵`; far below all existing tolerances. Route B sentinel `D_2(Σ²=1e-8) ≈ 0.1741 μK²` passes unchanged. 370 affected tests pass post-closure (bass/integration, bass/observational, bass/recombination, bass/los, bass/spectrum, bass/species, bass/transport, tsc/charts, htt/tests subsets).
+
+**Audit log sign-off**: `docs/audits/SSOT_TCMB_DRIFT_2026-04-19.md` §6 gates checked; §7 closure log added with file-by-file change list.
+
 ### Tier-C BASS-independent parallel track — bounds + tilted_flrw anchors (2026-04-24)
 
 Third layer of the anchor campaign. Targets the pure-algebra core of the MES three-bound hierarchy (`htt.core.bounds`) and the tilted-FLRW observables dictionary (`htt.core.tilted_flrw`) — the physics that every "data-independent" manuscript figure in §1.3.5 builds on.

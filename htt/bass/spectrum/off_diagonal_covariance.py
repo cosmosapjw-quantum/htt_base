@@ -27,7 +27,7 @@ __all__ = [
 
 _MODE_LABELS = ("m0", "m+2", "m-2")
 _MODE_TO_M = {"m0": 0, "m+2": 2, "m-2": -2}
-_T_CMB_K = 2.7255
+_T_CMB_K = 2.72548
 _SMALL_FLOAT = 1.0e-30
 
 
