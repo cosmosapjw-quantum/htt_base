@@ -1,5 +1,8 @@
 """BASS spectrum and convergence-campaign surfaces."""
 
+from bass.spectrum.tier_b_source_extraction import (
+    extract_flrw_sources_from_tier_b,
+)
 from bass.spectrum.ver2_cutoff_campaign import (
     CutoffCampaignSpec,
     CutoffChannelDelta,
@@ -20,4 +23,5 @@ __all__ = [
     "summarize_multipole_norms",
     "build_cutoff_campaign_stub",
     "run_executed_cutoff_campaign",
+    "extract_flrw_sources_from_tier_b",
 ]

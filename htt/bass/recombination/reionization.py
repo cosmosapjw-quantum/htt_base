@@ -172,6 +172,13 @@ def cosmology_from_metadata(
 
     def _parse(key: str) -> float:
         raw = metadata[key].strip()
+        # Strip any parenthetical provenance suffix (e.g.
+        # "2.72548 K  (Fixsen 2009; SSOT_TCMB drift closure)" →
+        # "2.72548 K"). The SSOT T_CMB drift-closure commit 4cc49b3
+        # embedded such notes in the metadata strings.
+        paren_at = raw.find("(")
+        if paren_at >= 0:
+            raw = raw[:paren_at].strip()
         # Strip trailing unit tokens like "K", "eV"
         for unit in [" K", " eV"]:
             if raw.endswith(unit):

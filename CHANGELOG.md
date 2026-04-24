@@ -7,6 +7,46 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-5 — Tier-B → FLRWSourceTerms extractor (2026-04-24)
+
+Closes the W10+ scalar-mode evolution gap that the reverted S8/S9 pipeline attempted via toy Sachs-Wolfe MD approximation `(Θ_0 + Ψ)_* = -R/5`. Landed per the Round-5 cross-session algebraic audit (prompt: `docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND5.md`; answer: `v5_residual_harmonic_algebraic_audit_round5.md`).
+
+**Added** (`htt/bass/spectrum/tier_b_source_extraction.py` — new module):
+
+- `extract_flrw_sources_from_tier_b(integration_result, species, k, *, anisotropic_stress=True) → FLRWSourceTerms` — approximation-free Newtonian-gauge source extractor consuming the VER2 PSTF tower output.
+- `_slot(ell, m)`, `_fd4_derivative(x, y)` helpers.
+
+Source extraction per Round-5 audit (all corrections honored):
+
+- **Q-16**: FLRW / Bianchi-I orthogonal → `Θ_ℓ^VER2 = Θ_ℓ^MB` directly (1+3 covariant multipoles gauge-invariant around FRW).
+- **Q-17**: Ψ from Newtonian-gauge Einstein constraints (not toy MD), `Ψ = Φ + (12πG·a²/k²)·(ρ+p)·σ_tot`, with per-species ρ from `species[label].rho_rest(eta)`.
+- **Q-17 correction**: anisotropic stress from INTENSITY quadrupoles `Θ_2^γ, Θ_2^ν`, NOT from Π. MB normalization `σ_γ = 2·Θ_2^γ` ⇒ `(ρ+p)·σ_tot = (8/3)·(ρ_γ·Θ_2^γ + ρ_ν·Θ_2^ν)`.
+- **Q-18**: Φ̇ + Ψ̇ via 4th-order centered FD stencil on (Φ + Ψ) grid.
+- **Q-19**: `v_b(η) = baryon_local_history[:, 1]` in MB convention (θ = k·v).
+- **Q-20**: `Π = Θ_2 − √6·E_2` as-written, α_T = 1, α_E = −√6 (no extra PSTF prefactor).
+- **Q-21**: PchipInterpolator with `extrapolate=False` (shape-preserving, NaN outside domain).
+- **BASS units**: Friedmann flat-ΛCDM `(H/H_0)² = ρ_tot_bass` ⇒ `4πG·a² = (3/2)·H_0_mpc²·a²` where `H_0_mpc = species.bg_table.constants.H0_mpc`.
+
+**Added** (`htt/bass/spectrum/test_tier_b_source_extraction.py` — 14 unit tests):
+
+Identity relations (`theta_0`, `pi`, `v_b` match integration_result fields), PchipInterpolator no-extrap (NaN outside domain), anisotropic-stress toggle changes Ψ, Ψ finite + bounded, ISW driver finite + non-zero on toy range, rejection of non-positive `k` and sub-5-point η grids, `_fd4_derivative` exact on quadratic + bulk-exact on quartic.
+
+**Fixed** (`htt/bass/recombination/reionization.py::cosmology_from_metadata::_parse`):
+
+Pre-existing parser regression from commit `4cc49b3` (SSoT T_CMB drift closure). The Fixsen-2009 provenance note `"(Fixsen 2009; ...)"` embedded in the `t_cmb` metadata string broke `float()` parsing. Parser now strips any parenthetical suffix before unit stripping. T_CMB canonical value (2.72548 K) remains correct per user decision.
+
+**Verification**:
+
+- **1391 passed** (1378 previous baseline + 14 Round-5 tests − 1 slow deselected), 1 skipped.
+- V5 fast-check `λ_max < 2e-15` and `D_2 = 1002.086744 μK²` bit-identical.
+
+**Round-5 follow-ups** (queued):
+
+- **k. Full pipeline wiring**: glue extractor → `project_m0_temperature_transfer` → k-sweep → `assemble_cl_TT_isotropic` → `compute_dl` → D_2 verification to 0.1% against Route-B anchor. Next session target.
+- **l. Multi-k solver scan**: Tier-B solver is currently single-k per call (~45 s at L_max=4). CAMB-comparable D_ℓ at ℓ=2..30 needs ~50 k × ~45 s = ~38 min per run; consider k-interpolation after smoothness check (per auditor Q-21.4: no k-rescaling is safe in production).
+
+---
+
 ### Parallel-track figure gallery (2026-04-24)
 
 First materialisation of the `figures/` tree as a dedicated `parallel_track/` subdirectory — 12 BASS-independent plots + README. Single driver: `scripts/make_parallel_track_figures.py` (~500 L, Wong 2011 colourblind palette, 300 DPI). Every anchor referenced in the plots is already pinned by the Tier A/B/C/D regression tests.
