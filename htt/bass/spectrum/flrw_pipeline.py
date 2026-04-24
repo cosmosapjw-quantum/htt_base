@@ -140,17 +140,27 @@ class FLRWPipelineConfig:
     from the Lowell §13.2 ``make_camb_regular_adiabatic_seed`` (see
     ``primordial_b_k_sq`` below)."""
     primordial_b_k_sq: float = 1.0
-    """V5 step-4b-(a) primordial amplitude squared ``|B_K|²`` for the
-    Lowell §13.2 seed. Default 1.0 gives unit-B_K transfer functions;
-    ``A_s × (k_pivot_ref / k_pivot)^(n_s-1)`` (≈ 2.1e-9) gives
-    ζ-normalized physical amplitude. Exact B_K → ζ calibration is a
-    pending convention audit (V5 follow-up Round-7)."""
+    """**Linear primordial curvature amplitude** ``C ≈ ζ`` of the
+    Lowell §13.2 regular-adiabatic seed (Ma-Bertschinger 1995 §7
+    eq. 96; Lewis-Challinor 2002 App. C). Despite the historical
+    name (which dates to a CAMB Notes geometric ``β²`` convention
+    that equals 1 in flat FLRW), every leading-order seed perturbation
+    is **linear** in this parameter — confirmed by 4 independent
+    external audits (V5-RUNTIME Round-12, 2026-04-25). Default 1.0
+    gives unit-amplitude transfer functions for the linear-probe
+    extraction.
+
+    Do NOT pass ``A_s × (k/k_pivot)^(n_s-1)`` here. That value
+    (~2.1e-9) is the *variance* spectrum ``P_R(k) = ⟨ζ²⟩`` and
+    belongs in the C_ℓ assembly, not the seed. The ``compute_flrw_*``
+    pipeline pairs the linear-probe transfer with ``P_R(k)`` exactly
+    once via ``C_ℓ = 4π ∫ d ln k · P_R(k) · |α|²``."""
     primordial_b_k_sq_fn: Callable[[float], float] | None = None
     """V5 step-4b-(a) Round-7 k-dependent override. When set to a
     callable ``k → b_k_sq``, overrides the scalar ``primordial_b_k_sq``
-    field per k. Standard usage: set to the Planck-2018 P_ζ:
-
-        ``primordial_b_k_sq_fn=lambda k: 2.1e-9 * (k/0.05)**(0.9649-1.0)``
+    field per k. Used for diagnostic k-dependent amplitude probes; for
+    the canonical pipeline that pairs a unit-amplitude transfer with
+    ``P_R(k)`` in the assembly, leave ``None`` and use ``b_k_sq = 1.0``.
 
     The callable is evaluated in the PARENT process so per-k values are
     resolved to concrete floats before dispatch to fork workers
@@ -700,11 +710,15 @@ def compute_linear_probe_transfer_function(
 
     Notes
     -----
-    The returned "α" transfer function has units "per unit B_K_sq",
-    not "per unit ζ". The exact B_K ↔ ζ convention is a pending audit;
-    if B_K_sq = ζ², then α(k) is the transfer function per unit ζ² and
-    pairs directly with P_ζ(k) in C_ℓ assembly. If B_K_sq = ζ, an
-    additional √ζ rescaling is needed at assembly time.
+    The returned "α" transfer function has units **"per unit linear
+    curvature amplitude"** (i.e., per unit ``C ≈ ζ``). It pairs
+    directly with ``P_R(k) = ⟨ζ²⟩`` in the canonical C_ℓ assembly
+    ``C_ℓ = 4π ∫ d ln k · P_R(k) · |α|²`` — no additional rescaling.
+
+    The historical "B_K_sq" naming dates to a CAMB Notes geometric
+    ``β²`` convention that equals 1 in flat FLRW. Resolved by 4
+    independent external audits (V5-RUNTIME Round-12, 2026-04-25);
+    see ``docs/audits/SSOT_NU_SEED_DRIFT_2026-04-25.md`` Section 9.
     """
 
     from dataclasses import replace as _dc_replace

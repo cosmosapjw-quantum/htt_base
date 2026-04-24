@@ -7,6 +7,67 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-12 Phase C — `B_K_sq` semantic cleanup (no-op safe, 2026-04-25)
+
+Documentation-and-naming cleanup based on the **unanimous Round-12
+external audit finding** (4/4 auditors REFUTED claim C-a "B_K_sq=ζ²
+double-counts P_R" but all flagged the docstring as misleading).
+
+**Scope** — pure semantic refactor, NO numerical change:
+
+- `htt/bass/perturbation/regular_adiabatic_ic.py::_seed_formulae`:
+  - Renamed internal local variable `B_K_sq` → `amplitude` (semantically
+    accurate; was used linearly throughout despite the misleading name).
+  - Rewrote the function docstring (lines 111-130) to clarify that
+    `b_k_sq` is the **linear primordial curvature amplitude** `C ≈ ζ`
+    (Ma-Bertschinger 1995 §7 eq. 96; Lewis-Challinor 2002 App. C),
+    NOT a variance. Added explicit warning: "Do NOT pass
+    A_s × (k/k_pivot)^(n_s-1) here — that is the variance spectrum."
+  - The legacy `"B_K_sq"` formulas-dict key is preserved for backward
+    compatibility with any external diagnostic that read it; the
+    inline comment now flags it as a "linear amplitude" alias.
+
+- `htt/bass/spectrum/flrw_pipeline.py`:
+  - `FLRWPipelineConfig.primordial_b_k_sq` docstring (lines 142-159):
+    rewrote to remove the "primordial amplitude squared `|B_K|²`"
+    misclaim. Now correctly states "linear primordial curvature
+    amplitude" with citations.
+  - `compute_linear_probe_transfer_function` docstring (lines 702-712):
+    removed the outdated "B_K ↔ ζ convention is a pending audit"
+    language. Now states the resolved convention (α pairs directly
+    with `P_R(k)` per canonical assembly; no rescaling needed).
+
+**Bit-identity preservation** (verified):
+- All 43 CAMB cross-check tests at `b_k_sq=1.0`: bit-identical (pass).
+- All 9 R10/R11 regression tests: bit-identical (pass).
+- All 6 D_2 anchor tests: bit-identical (pass).
+- Full fast baseline: **1723 passed, 1 skipped, 5 deselected**
+  (unchanged from Round-11).
+
+**Public API preserved** — kept unchanged:
+- `b_k_sq` kwarg name in all signatures (would break too many call sites).
+- `FLRWPipelineConfig.primordial_b_k_sq` field name.
+- `IntegratorConfig.primordial_b_k_sq` (8 call sites in `flrw_pipeline.py`).
+- `"B_K_sq"` key in the `regular_adiabatic_formulae` returned dict.
+
+**Out of scope** (Phase C only — Phase A diagnostics next):
+- Round-12 Phase A: per-k Φ dump + constraint-violation probe +
+  k_min sweep + ConstraintProjectionPolicy `every_n_steps` toggle —
+  needed to localize the residual ~760× factor (auditor consensus:
+  source-extractor `1/k²` Einstein-constraint cancellation failure
+  at super-horizon, NOT `B_K_sq` semantics).
+- Public-API rename `primordial_b_k_sq` → `primordial_amplitude` —
+  defer to a coordinated SSOT migration (would shift 8+ call sites).
+- `beta2_geom` split (auditors #1, #6) — defer until Bianchi non-
+  flat use cases require it.
+
+Files:
+- `htt/bass/perturbation/regular_adiabatic_ic.py` — internal rename +
+  docstring rewrite (~50 lines net)
+- `htt/bass/spectrum/flrw_pipeline.py` — 2 docstring rewrites (~30
+  lines net)
+- `CHANGELOG.md` — this entry
+
 ### V5-RUNTIME Round-11 — eta_cov inner-amplitude fix + convention residual narrowed (2026-04-25)
 
 Closes the auditor #2 deferred item from Round-10's SSOT drift doc:

@@ -110,11 +110,28 @@ def _seed_formulae(
 ) -> dict[str, float]:
     """Leading-order regular-adiabatic startup formulas from Lowell §13.2.
 
-    The ``b_k_sq`` parameter (formerly hardcoded to 1.0) is the primordial
-    amplitude squared at the super-horizon crossing. For unit-ζ
-    convention set 1.0; for Planck-2018 absolute amplitude set
-    ``A_s × (k/k_pivot)^(n_s-1)`` (pending convention audit — see V5
-    step-4b-(a) follow-up).
+    The ``b_k_sq`` keyword is the **linear primordial curvature
+    amplitude** ``C ≈ ζ`` of the regular adiabatic mode (Ma-Bertschinger
+    1995 §7 eq. 96; Lewis-Challinor 2002 App. C). Despite the historical
+    name (which dates to the CAMB Notes ``χ_0 = -1`` geometric ``β²``
+    convention), the parameter enters every leading-order seed
+    perturbation **linearly** — confirmed by 4 independent external
+    audits (Round-12, 2026-04-25, see ``docs/V5_ROUND12_FINDINGS.md``
+    if available). The ``_sq`` suffix is misleading nomenclature; the
+    public kwarg name is preserved for backward compatibility.
+
+    Conventions:
+      - ``b_k_sq = 1.0`` (legacy default): unit-amplitude probe; matches
+        the CAMB Notes ``χ_0 = -1`` reference convention.
+      - ``b_k_sq = ζ`` (some primordial curvature value): physical
+        amplitude. The C_ℓ assembly then pairs ``α(k)`` (the per-unit-ζ
+        transfer extracted from this seed) with ``P_R(k) = ⟨ζ²⟩`` per
+        the canonical ``C_ℓ = 4π ∫ d ln k · P_R(k) · |α|²``.
+
+    Do NOT pass ``A_s × (k/k_pivot)^(n_s-1)`` here — that is the
+    *variance* spectrum, not the linear amplitude. Doing so would
+    produce a meaningless seed value that under-runs the linear-
+    extraction probe range by ~10⁹.
     """
     constants = default_constants()
     R_nu = constants.Omega_nu_0 / constants.Omega_r_0
@@ -126,36 +143,40 @@ def _seed_formulae(
     x2 = x * x
     x3 = x2 * x
     denom = 4.0 * R_nu + 15.0
-    B_K_sq = float(b_k_sq)
+    # Internal alias clarifies the linear-amplitude semantics. The
+    # "B_K_sq" formulas-dict key (line ``"B_K_sq": float(amplitude)``
+    # below) is preserved for backward compatibility with any external
+    # diagnostic that read it.
+    amplitude = float(b_k_sq)
 
     # V5-RUNTIME Round-11 (R9-D auditor #2 follow-up): the inner factor
-    # was originally `(B_K_sq - 10.0 / denom)` which created a spurious
-    # quadratic ``B_K_sq²`` correction. Replaced with `(1.0 - 10.0 / denom)`
-    # so the whole expression is linear in ``B_K_sq``. Bit-identical to
+    # was originally `(amplitude - 10.0 / denom)` which created a spurious
+    # quadratic ``amplitude²`` correction. Replaced with `(1.0 - 10.0 / denom)`
+    # so the whole expression is linear in ``amplitude``. Bit-identical to
     # the pre-fix form at ``b_k_sq = 1.0`` (legacy default), since
-    # ``(1 - 10/denom) == (B_K_sq - 10/denom)`` when ``B_K_sq == 1``.
+    # ``(1 - 10/denom) == (amplitude - 10/denom)`` when ``amplitude == 1``.
     # The "10/denom" inner constant matches the CAMB Notes
     # χ_0 = -1 unit-normalization convention; once an arbitrary-amplitude
-    # API is exposed via ``b_k_sq``, only the outer ``2 · B_K_sq`` carries
+    # API is exposed via ``b_k_sq``, only the outer ``2 · amplitude`` carries
     # the linear amplitude scaling.
-    eta_cov = 2.0 * B_K_sq * (
+    eta_cov = 2.0 * amplitude * (
         1.0 - (x2 / 12.0) * (1.0 - 10.0 / denom)
     )
     delta_gamma = (
-        (B_K_sq / 3.0) * x2
-        - (B_K_sq / 15.0) * omega * (k_comoving ** 2) * (eta_initial ** 3)
+        (amplitude / 3.0) * x2
+        - (amplitude / 15.0) * omega * (k_comoving ** 2) * (eta_initial ** 3)
     )
     delta_b = (
-        (B_K_sq / 4.0) * x2
-        - (B_K_sq / 20.0) * omega * (k_comoving ** 2) * (eta_initial ** 3)
+        (amplitude / 4.0) * x2
+        - (amplitude / 20.0) * omega * (k_comoving ** 2) * (eta_initial ** 3)
     )
-    theta_gamma = (B_K_sq / 27.0) * x3
-    theta_nu = (B_K_sq / 27.0) * ((4.0 * R_nu + 23.0) / denom) * x3
-    pi_nu = -B_K_sq * (4.0 / (3.0 * denom)) * x2
-    G_3 = -B_K_sq * (4.0 / (21.0 * denom)) * x3
+    theta_gamma = (amplitude / 27.0) * x3
+    theta_nu = (amplitude / 27.0) * ((4.0 * R_nu + 23.0) / denom) * x3
+    pi_nu = -amplitude * (4.0 / (3.0 * denom)) * x2
+    G_3 = -amplitude * (4.0 / (21.0 * denom)) * x3
     Z = (
-        -(B_K_sq / 2.0) * k_comoving * eta_initial
-        + (3.0 * B_K_sq / 20.0) * omega * k_comoving * (eta_initial ** 2)
+        -(amplitude / 2.0) * k_comoving * eta_initial
+        + (3.0 * amplitude / 20.0) * omega * k_comoving * (eta_initial ** 2)
     )
 
     tau_c = _approx_tau_c(eta_initial, a_initial)
@@ -181,7 +202,9 @@ def _seed_formulae(
         "E_2": float(E_2),
         "R_nu": float(R_nu),
         "omega": float(omega),
-        "B_K_sq": float(B_K_sq),
+        # Legacy key name kept for backward compatibility — reader should
+        # interpret as the linear primordial amplitude (NOT a variance).
+        "B_K_sq": float(amplitude),
         "tau_c": float(tau_c),
     }
 
