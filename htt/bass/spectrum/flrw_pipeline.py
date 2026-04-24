@@ -237,6 +237,66 @@ def build_visibility_and_kappa_callables(
     return g_of_eta, kappa_of_eta
 
 
+def _los_and_wrap(
+    integration_result: Any,
+    species: "SpeciesBackgroundRegistry",
+    k_mpc: float,
+    cfg: FLRWPipelineConfig,
+    seed_amp_for_norm: float | None,
+) -> BianchiTransferFunctions:
+    """Run Round-5 extractor + LoS projectors + optional seed-amp
+    normalization for a single k. Shared helper between the high-level
+    ``compute_transfer_function_at_k`` and the chunked low-level path.
+    """
+
+    sources = extract_flrw_sources_from_tier_b(
+        integration_result,
+        species,
+        k=float(k_mpc),
+        anisotropic_stress=cfg.anisotropic_stress,
+    )
+    g_of_eta, kappa_of_eta = build_visibility_and_kappa_callables(species)
+
+    eta_grid = np.asarray(integration_result.eta, dtype=np.float64)
+    eta_0_mpc = float(species.bg_table.eta_today)
+    eta_for_los = np.clip(eta_grid, 0.0, eta_0_mpc)
+
+    bessel_config = FLRWBesselConfig(
+        ell_max=cfg.ell_max_transfer,
+        eta_0_mpc=eta_0_mpc,
+        quadrature=cfg.quadrature,
+    )
+    source_T = build_temperature_source(eta_for_los, sources, g_of_eta, kappa_of_eta)
+    source_E = build_polarization_source(eta_for_los, sources, g_of_eta)
+
+    delta_T = project_temperature_transfer(
+        float(k_mpc), source_T, eta_for_los, bessel_config
+    )
+    delta_E = project_polarization_transfer(
+        float(k_mpc), source_E, eta_for_los, bessel_config
+    )
+
+    if cfg.unit_amplitude_normalization and seed_amp_for_norm is not None:
+        if not (seed_amp_for_norm > 0.0):
+            raise ValueError(
+                f"seed_amp must be positive for unit-amplitude normalization; "
+                f"got {seed_amp_for_norm!r}"
+            )
+        delta_T = delta_T / seed_amp_for_norm
+        delta_E = delta_E / seed_amp_for_norm
+
+    zero_template = np.zeros_like(delta_T)
+    return BianchiTransferFunctions(
+        delta_T_m0=delta_T,
+        delta_T_m_plus2=zero_template.copy(),
+        delta_T_m_minus2=zero_template.copy(),
+        delta_E_m0=delta_E,
+        delta_E_m_plus2=zero_template.copy(),
+        delta_E_m_minus2=zero_template.copy(),
+        delta_B_all_zero=np.zeros(cfg.ell_max_transfer + 1, dtype=np.float64),
+    )
+
+
 def compute_transfer_function_at_k(
     species: "SpeciesBackgroundRegistry",
     k_mpc: float,
@@ -284,68 +344,198 @@ def compute_transfer_function_at_k(
         k_grid_mpc=k_grid_pair,
     )
 
-    sources = extract_flrw_sources_from_tier_b(
+    seed_amp = (
+        float(run.trace.seed_projection.projected_seed.amplitude)
+        if cfg.unit_amplitude_normalization
+        else None
+    )
+    return _los_and_wrap(
         run.integration_result,
         species,
-        k=float(k_mpc),
-        anisotropic_stress=cfg.anisotropic_stress,
+        float(k_mpc),
+        cfg,
+        seed_amp_for_norm=seed_amp,
     )
 
-    g_of_eta, kappa_of_eta = build_visibility_and_kappa_callables(species)
 
-    eta_grid = np.asarray(run.integration_result.eta, dtype=np.float64)
-    eta_0_mpc = float(species.bg_table.eta_today)
-    # Clip stored eta to within (0, eta_today] for the LoS projector.
-    # The solver may report eta slightly beyond eta_today at the final
-    # sample due to quadrature step overrun; clip defensively.
-    eta_for_los = np.clip(eta_grid, 0.0, eta_0_mpc)
+# ------------------------------------------------------------------------
+# Chunked k-scan: reuse background_monitor + visibility across k's in a
+# chunk to amortize the 0.8 s / k k-independent setup cost.
+# ------------------------------------------------------------------------
 
-    bessel_config = FLRWBesselConfig(
-        ell_max=cfg.ell_max_transfer,
-        eta_0_mpc=eta_0_mpc,
-        quadrature=cfg.quadrature,
+
+def _run_chunk_shared_bg(
+    species: "SpeciesBackgroundRegistry",
+    k_values: Sequence[float],
+    *,
+    cfg: FLRWPipelineConfig,
+    bianchi_type: str,
+) -> list[BianchiTransferFunctions]:
+    """Low-level k-loop that shares background_monitor + visibility_source
+    + backend + canonical_decision + runtime_decision across all k's in
+    ``k_values``. Only the integrator (via ``seed_k_comoving``) is
+    rebuilt per-k.
+
+    Uses the ver2_execution private API directly; profile (see CHANGELOG)
+    shows this saves ~0.8 s per k-run after the first in each chunk.
+    """
+
+    from dataclasses import replace as _dc_replace
+
+    from bass.hierarchy.aux_state import build_integrator_canonical_decision
+    from bass.hierarchy.ver2_native_integrator import Ver2TierBIntegrator
+    from bass.los.family_backend_protocol import build_backend
+    from bass.runtime.ver2_execution import (
+        _build_background_monitor,
+        _build_runtime_decision,
+        _build_tier_b_executable_run,
+        _build_tier_b_runtime_request,
+        _build_visibility_source,
+        _default_validation_matrix,
+        _native_runtime_config,
+        _TierBPreparedRuntimeContext,
+        plan_solver_execution,
     )
 
-    source_T = build_temperature_source(
-        eta_for_los, sources, g_of_eta, kappa_of_eta
-    )
-    source_E = build_polarization_source(eta_for_los, sources, g_of_eta)
+    if len(k_values) == 0:
+        return []
 
-    delta_T = project_temperature_transfer(
-        float(k_mpc), source_T, eta_for_los, bessel_config
+    rc = _pipeline_runtime_controls(cfg)
+    ff = _pipeline_feature_flags()
+
+    # k-independent shared build — done ONCE per chunk, reused across k.
+    template_integrator_config = build_cosmological_integrator_config(
+        species,
+        L_max=cfg.L_max_tower,
+        n_output=cfg.n_output,
+        rtol=cfg.rtol,
+        atol=cfg.atol,
+        bianchi_cosmo=BianchiCosmology(structure=get_type(bianchi_type), beta=0.0),
+        gamma_T_over_H_threshold=cfg.gamma_T_over_H_threshold,
     )
-    delta_E = project_polarization_transfer(
-        float(k_mpc), source_E, eta_for_los, bessel_config
+    template_request = _build_tier_b_runtime_request(
+        manifest=_pipeline_manifest("chunked"),
+        bianchi_type=bianchi_type,
+        species=species,
+        integrator_config=template_integrator_config,
+        runtime_controls=rc,
+        feature_flags=ff,
+        release=_pipeline_release("chunked", cfg.random_seed),
+        k_grid_mpc=np.array([float(k_values[0]), 2.0 * float(k_values[0])]),
+    )
+    runtime_config, family_realization = _native_runtime_config(
+        template_request.bianchi_type,
+        template_request.integrator_config,
+        template_request.runtime_controls,
+    )
+    background_monitor = _build_background_monitor(
+        bianchi_type=template_request.bianchi_type,
+        config=runtime_config,
+        species=species,
+        tilt_background_owner=rc.tilt_background_owner,
+    )
+    visibility_source = _build_visibility_source(
+        species=species,
+        config=runtime_config,
+        background_monitor=background_monitor,
+    )
+    canonical_decision = build_integrator_canonical_decision(
+        beta=float(runtime_config.bianchi_cosmo.beta),
+        sigma_squared=max(
+            0.5 * float(np.sum(background_monitor.sigma_tensor[0] ** 2)),
+            1.0e-12,
+        ),
+    )
+    backend_instance = build_backend(
+        template_request.bianchi_type,
+        truncation={"ell_max": int(rc.multipole_cutoff)},
+        chart_options={},
+    )
+    reionization_amp = (
+        0.0
+        if visibility_source.contract.events is None
+        else float(visibility_source.contract.events.tau_reion)
+    )
+    runtime_decision = _build_runtime_decision(
+        feature_flags=ff,
+        canonical_decision=canonical_decision,
+    )
+    execution_plan = plan_solver_execution(
+        runtime_controls=rc,
+        feature_flags=ff,
+        runtime_decision=runtime_decision,
+        validation_matrix=_default_validation_matrix(
+            bianchi_type=template_request.bianchi_type,
+            integrator_config=runtime_config,
+            suite="tier_b_smoke",
+        ),
     )
 
-    # V5 step-4b-(i) seed-amplitude normalization.
-    # The Tier-B solver is linear, so Δ_ℓ = seed_amp · transfer_ℓ where
-    # transfer_ℓ is the physical "unit primordial amplitude" response.
-    # cl_assembly.assemble_cl_TT_isotropic pairs transfer_ℓ with the
-    # primordial P(k) as C_ℓ = 4π ∫ P(k) |Δ_ℓ|² dlnk; passing the raw
-    # Δ_ℓ (with seed_amp ≠ 1) would double-count the primordial
-    # amplitude. Divide by the actual seed amplitude recorded in the
-    # solver trace (_build_seed_projection uses max(|Σ_±|, 1e-6)).
-    if cfg.unit_amplitude_normalization:
-        seed_amp = float(run.trace.seed_projection.projected_seed.amplitude)
-        if not (seed_amp > 0.0):
-            raise ValueError(
-                f"seed_amp must be positive for unit-amplitude normalization; "
-                f"got {seed_amp!r}"
+    # Per-k: only rebuild the integrator (with this k's seed_k_comoving)
+    # and re-run the IMEX integration. Everything else is reused.
+    out: list[BianchiTransferFunctions] = []
+    for k_mpc in k_values:
+        k_grid_pair = np.array([float(k_mpc), 2.0 * float(k_mpc)], dtype=np.float64)
+        seed_k_comoving = float(k_mpc)
+        integrator = Ver2TierBIntegrator(
+            runtime_config,
+            species,
+            backend=backend_instance,
+            background_monitor=background_monitor,
+            visibility_source=visibility_source,
+            canonical_decision=canonical_decision,
+            seed_k_comoving=seed_k_comoving,
+        )
+        prepared = _TierBPreparedRuntimeContext(
+            runtime_config=runtime_config,
+            family_realization=family_realization,
+            restart_state=None,
+            background_monitor=background_monitor,
+            visibility_source=visibility_source,
+            k_grid_mpc=k_grid_pair,
+            seed_k_comoving=seed_k_comoving,
+            backend=backend_instance,
+            reionization_amplitude=reionization_amp,
+            integrator=integrator,
+            runtime_decision=runtime_decision,
+            execution_plan=execution_plan,
+            checkpoint_callback=None,
+            checkpoint_paths=[],
+            metadata={"owner": "flrw_pipeline._run_chunk_shared_bg"},
+        )
+        # Per-k request carries the k_grid_pair + a fresh manifest/release
+        # so downstream artefact identifiers stay distinct per k.
+        per_k_request = _dc_replace(
+            template_request,
+            manifest=_pipeline_manifest(f"chunked-k{k_mpc:.6e}"),
+            release=_pipeline_release(f"chunked-k{k_mpc:.6e}", cfg.random_seed),
+            k_grid_mpc=k_grid_pair,
+        )
+        result = integrator.run(
+            checkpoint_every_n_steps=None,
+            checkpoint_callback=None,
+            restart_state=None,
+        )
+        run = _build_tier_b_executable_run(
+            request=per_k_request,
+            prepared=prepared,
+            result=result,
+        )
+        seed_amp = (
+            float(run.trace.seed_projection.projected_seed.amplitude)
+            if cfg.unit_amplitude_normalization
+            else None
+        )
+        out.append(
+            _los_and_wrap(
+                run.integration_result,
+                species,
+                float(k_mpc),
+                cfg,
+                seed_amp_for_norm=seed_amp,
             )
-        delta_T = delta_T / seed_amp
-        delta_E = delta_E / seed_amp
-
-    zero_template = np.zeros_like(delta_T)
-    return BianchiTransferFunctions(
-        delta_T_m0=delta_T,
-        delta_T_m_plus2=zero_template.copy(),
-        delta_T_m_minus2=zero_template.copy(),
-        delta_E_m0=delta_E,
-        delta_E_m_plus2=zero_template.copy(),
-        delta_E_m_minus2=zero_template.copy(),
-        delta_B_all_zero=np.zeros(cfg.ell_max_transfer + 1, dtype=np.float64),
-    )
+        )
+    return out
 
 
 # ------------------------------------------------------------------------
@@ -375,16 +565,29 @@ _WORKER_BIANCHI_TYPE: str = "I"
 
 
 def _worker_task(k_mpc: float) -> BianchiTransferFunctions:  # pragma: no cover
-    """Worker-side entry point for the parallel k-sweep.
-
-    Executed in each child process; reads the fork-inherited module
-    globals set by ``compute_transfer_function_grid``.
-    """
+    """Worker-side single-k entry point (per-k full Tier-B setup)."""
     assert _WORKER_SPECIES is not None, "worker globals not initialized"
     return compute_transfer_function_at_k(
         _WORKER_SPECIES,
         float(k_mpc),
         config=_WORKER_CONFIG,
+        bianchi_type=_WORKER_BIANCHI_TYPE,
+    )
+
+
+def _worker_task_chunk(k_values: Sequence[float]) -> list[BianchiTransferFunctions]:  # pragma: no cover
+    """Worker-side chunk entry point — amortizes the ~0.8 s k-independent
+    Tier-B setup (background_monitor, visibility_source, backend,
+    canonical_decision, runtime_decision, execution_plan) across
+    ``len(k_values)`` k-runs by calling the low-level
+    ``_run_chunk_shared_bg`` path.
+    """
+    assert _WORKER_SPECIES is not None, "worker globals not initialized"
+    assert _WORKER_CONFIG is not None, "worker config not initialized"
+    return _run_chunk_shared_bg(
+        _WORKER_SPECIES,
+        list(k_values),
+        cfg=_WORKER_CONFIG,
         bianchi_type=_WORKER_BIANCHI_TYPE,
     )
 
@@ -396,24 +599,34 @@ def compute_transfer_function_grid(
     config: FLRWPipelineConfig | None = None,
     bianchi_type: str = "I",
     n_workers: int | None = None,
+    chunked: bool = True,
 ) -> list[BianchiTransferFunctions]:
-    """Parallel k-sweep: one Tier-B run per k, pooled via fork workers.
+    """Parallel k-sweep with optional shared-background chunking.
 
     Parameters
     ----------
     species
         Planck-2018 species registry (inherited to workers via fork).
     k_grid_mpc
-        Array of comoving wavenumbers (Mpc⁻¹). Each entry triggers one
-        ``execute_tier_b_solver`` run.
+        Array of comoving wavenumbers (Mpc⁻¹).
     config
         ``FLRWPipelineConfig``; defaults chosen for Planck-2018 FLRW.
     bianchi_type
-        Defaults to "I" (FLRW). Non-Type-I families require the
-        Round-3/4 kernel-pack wiring (not yet in the assembly path).
+        Defaults to "I" (FLRW).
     n_workers
         Process count; default = ``os.cpu_count()`` capped at the
         k-grid length.
+    chunked
+        When True (default), each worker processes a chunk of k-values
+        with background_monitor + visibility_source + backend +
+        canonical_decision built ONCE per chunk and reused across k's.
+        Profiled savings: ~0.8 s per k after the first in each chunk
+        (the IMEX integrator itself still dominates at ~42 s / k).
+        Chunking only amortizes setup when ``N_k > n_workers``; when
+        chunk size would be 1 (``N_k ≤ n_workers``) the scheduler
+        automatically falls back to the per-k path to avoid a tiny
+        wrapping overhead. Set explicitly False to force per-k for
+        isolation testing.
 
     Returns
     -------
@@ -421,11 +634,9 @@ def compute_transfer_function_grid(
 
     Notes
     -----
-    Falls back to sequential execution if ``n_workers == 1`` or if the
-    k-grid has only one entry. Uses the default ``fork`` start method
-    on Linux so species is inherited as COW memory; on other platforms
-    a spawn fallback would need to rebuild species inside each worker
-    (not implemented — Linux-only in the current runtime).
+    Falls back to sequential execution if ``n_workers == 1``. Uses the
+    default ``fork`` start method on Linux so species + module state
+    are inherited as COW memory.
     """
 
     global _WORKER_SPECIES, _WORKER_CONFIG, _WORKER_BIANCHI_TYPE
@@ -440,7 +651,13 @@ def compute_transfer_function_grid(
     max_parallel = n_workers if n_workers is not None else os.cpu_count() or 1
     effective = max(1, min(int(max_parallel), int(k_array.size)))
 
-    if effective == 1 or k_array.size == 1:
+    if effective == 1:
+        # Single-worker path — run sequentially. Use shared-bg chunk when
+        # the caller asked for it so the savings still materialize.
+        if chunked and k_array.size >= 2:
+            return _run_chunk_shared_bg(
+                species, k_array.tolist(), cfg=cfg, bianchi_type=bianchi_type
+            )
         return [
             compute_transfer_function_at_k(
                 species, float(k), config=cfg, bianchi_type=bianchi_type
@@ -456,18 +673,41 @@ def compute_transfer_function_grid(
     import multiprocessing as _mp
 
     ctx = _mp.get_context("fork")
-    with _cf.ProcessPoolExecutor(
-        max_workers=effective,
-        mp_context=ctx,
-        initializer=_worker_init,
-    ) as exe:
-        results = list(exe.map(_worker_task, k_array.tolist()))
 
-    # Clear worker globals after pool exits so parent memory doesn't
-    # hold lingering references (small hygiene, no behaviour impact).
-    _WORKER_SPECIES = None
-    _WORKER_CONFIG = None
-    _WORKER_BIANCHI_TYPE = "I"
+    # Auto-disable chunking when chunk size would be 1 (N_k ≤ n_workers)
+    # — no amortization possible and tiny wrapper overhead is strictly
+    # negative.
+    use_chunking = bool(chunked) and (int(k_array.size) > int(effective))
+
+    try:
+        if use_chunking:
+            # Split k-grid into ~even chunks across workers.
+            chunks = [
+                chunk.tolist() for chunk in np.array_split(k_array, effective)
+            ]
+            chunks = [chunk for chunk in chunks if chunk]
+            with _cf.ProcessPoolExecutor(
+                max_workers=effective,
+                mp_context=ctx,
+                initializer=_worker_init,
+            ) as exe:
+                chunk_results = list(exe.map(_worker_task_chunk, chunks))
+            results: list[BianchiTransferFunctions] = []
+            for chunk in chunk_results:
+                results.extend(chunk)
+        else:
+            with _cf.ProcessPoolExecutor(
+                max_workers=effective,
+                mp_context=ctx,
+                initializer=_worker_init,
+            ) as exe:
+                results = list(exe.map(_worker_task, k_array.tolist()))
+    finally:
+        # Always clear worker globals so the parent's memory doesn't
+        # hold lingering references after the pool exits.
+        _WORKER_SPECIES = None
+        _WORKER_CONFIG = None
+        _WORKER_BIANCHI_TYPE = "I"
 
     return results
 

@@ -7,6 +7,59 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME step 4b — chunked k-scan with shared Tier-B infrastructure (2026-04-24)
+
+Adds a low-level chunked-worker path that amortizes the ~0.8 s k-independent Tier-B setup (background_monitor, visibility_source, backend, canonical_decision, runtime_decision, execution_plan) across multiple k-runs in a single worker chunk. Only the k-dependent pieces (`seed_k_comoving`, `Ver2TierBIntegrator`) are rebuilt per k.
+
+**Profile** (single k-run, Planck-2018 L_max=4, cosmological η-range):
+
+```
+Background monitor:   0.68 s
+Seed projection:      0.00 s
+Visibility source:    0.13 s
+→ k-independent setup: ~0.8 s
+IMEX integrator:     ~42.3 s  (98% of total)
+```
+
+**Implementation** (`htt/bass/spectrum/flrw_pipeline.py`):
+
+- `_los_and_wrap` — extracted helper: Round-5 source extraction + LoS projection + seed-amp normalization. Shared by per-k and chunked paths.
+- `_run_chunk_shared_bg(species, k_values, *, cfg, bianchi_type)` — builds Tier-B infra once using `_native_runtime_config`, `_build_background_monitor`, `_build_visibility_source`, `build_integrator_canonical_decision`, `build_backend`; loops over k in the chunk rebuilding only `Ver2TierBIntegrator(..., seed_k_comoving=k)`. Hands the prepared context to `_build_tier_b_executable_run` per k.
+- `_worker_task_chunk` — worker-side entry processing a whole k-chunk in one call.
+- `compute_transfer_function_grid(..., chunked=True)` — default. Auto-disables chunking when chunk size would be 1 (`N_k ≤ n_workers`) since a 1-k chunk has no amortization and tiny wrapping overhead.
+
+**Benchmark** (N_k=4, sequential, single worker):
+
+```
+Per-k (full setup each):  169.91 s
+Chunked (shared setup):   167.12 s
+Chunking saves:             2.79 s (1.6%)
+delta_T match (rtol=1e-10):  4 / 4  ✓
+```
+
+**Benchmark** (N_k=8, parallel, 4 workers, 2 k per chunk):
+
+```
+Chunked:  86.48 s
+Per-k:    87.65 s
+Chunking saves:   1.17 s (1.3%)
+delta_T match:    8 / 8  ✓
+```
+
+Chunking delivers the profiled ~0.8 s/k savings. Correctness verified against per-k at rtol=1e-10 on 12 k-points total. IMEX integrator remains the ~42 s/k dominant cost; the main wall-time win is still the outer parallelization (~7.7× on 4 workers vs serial). For N_k ~ 50+ production sweeps the chunked path amortizes ~34 s of setup across the run.
+
+**Further options not applied**:
+
+- L_max_tower=2 (~3× per-k): blocked by Blocker-1 validation without `diagnostic_l2_override`.
+- Lower IMEX tolerance: risky D_ℓ accuracy regression.
+- Shared-RHS vectorization across k: requires `ver2_native_integrator` deep refactor, out of scope.
+
+**Verification**:
+- **1403 passed** (baseline unchanged; chunked path non-regressive).
+- `D_2 = 1002.086744 μK²` Route-B anchor bit-identical; `λ_max < 2e-15`.
+
+---
+
 ### Publication-quality manuscript figures (2026-04-24)
 
 Added 14 publication-grade figures matching the bare ``fig_*`` filenames referenced from ``docs/manuscript/`` (`\graphicspath{{./figures/}}` resolves them). Each figure is self-contained — axes carry units, in-figure annotations record literature citations and parameter values, scenario markers are labelled in-place, and no in-plot text references the generation toolchain. Wong 2011 colourblind palette, DejaVu Serif at 300 DPI.
