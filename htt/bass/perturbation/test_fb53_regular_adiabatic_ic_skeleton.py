@@ -139,27 +139,19 @@ def test_fb53_regular_seed_matches_camb_superhorizon_fixture(
     assert obs[observable] == pytest.approx(ref[observable], rel=1.0e-4, abs=1.0e-18)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "V5-RUNTIME Round-9 R9-D bug: regular_adiabatic_ic._seed_formulae "
-        "lines 144-145 omit the B_K_sq factor on the ν π_2 and G_3 entries, "
-        "asserting that ν quadrupole/octupole exist at b_k_sq=0 — "
-        "unphysical for an adiabatic mode (Ma-Bertschinger 1995 eq. 96). "
-        "See docs/V5_ROUND9_FINDINGS.md §5d. Fix lands in Round-10 once the "
-        "regression-affecting D_2=1002.086744 anchor shift has SSOT-coordinated "
-        "rollout. Flip this xfail to pass when the formulas are corrected."
-    ),
-)
 @pytest.mark.parametrize("k_comoving", (1.0e-4, 1.0e-3, 1.0e-2))
 def test_fb53_zero_amplitude_seed_has_no_neutrino_perturbation(
     k_comoving: float,
 ) -> None:
-    """Regular adiabatic mode at b_k_sq=0 must yield identically-zero ν
+    """Regular adiabatic mode at b_k_sq=0 yields identically-zero ν
     perturbations: at zero curvature amplitude there is no perturbation
-    of any species (MB-95 §7 adiabatic seed). The ν π_2 and G_3 fields
-    are the only seed observables currently failing this — they encode
-    a hardcoded x²/x³ floor independent of B_K_sq."""
+    of any species (MB-95 §7 adiabatic seed; Lewis-Challinor 2002 §3).
+
+    Round-9 R9-D bug fixed in Round-10: pre-fix, ``π_ν`` and ``G_3``
+    omitted the ``B_K_sq`` amplitude factor and produced an unphysical
+    ``x²``/``x³`` floor at b_k_sq=0. Six independent external auditors
+    (CONFIRMED) traced this against MB-95 eq. 96-99. Post-fix the
+    regular adiabatic mode vanishes at zero amplitude as required."""
 
     seed_zero = make_camb_regular_adiabatic_seed(
         k_comoving=k_comoving,
@@ -170,14 +162,114 @@ def test_fb53_zero_amplitude_seed_has_no_neutrino_perturbation(
     )
     obs_zero = seed_observables(seed_zero, L_max=6)
 
-    # All seed observables must vanish identically at b_k_sq = 0 for a
-    # regular adiabatic mode. Spot-check the two that the R9-D bias-
-    # floor probe identified as carrying the buggy floor.
-    assert obs_zero["pi_nu"] == 0.0, (
-        f"pi_nu = {obs_zero['pi_nu']!r} should be 0 at b_k_sq=0; "
-        f"see V5_ROUND9_FINDINGS §5d"
+    # Every observable that scales with the curvature amplitude must
+    # vanish at b_k_sq=0. Round-9 only tracked pi_nu and G_3 in the
+    # xfail marker (the bug surface). Round-10 widens the assertion to
+    # all 11 amplitude-dependent fields per audit #3 recommendation 1
+    # (full b_k_sq=0 zero check).
+    amplitude_dependent = (
+        "delta_gamma", "delta_b", "delta_c", "delta_nu",
+        "theta_gamma", "theta_b", "theta_c", "theta_nu",
+        "pi_nu", "G_3", "Z", "eta_cov",
+        "pi_gamma", "E_2",
     )
-    assert obs_zero["G_3"] == 0.0, (
-        f"G_3 = {obs_zero['G_3']!r} should be 0 at b_k_sq=0; "
-        f"see V5_ROUND9_FINDINGS §5d"
+    for field in amplitude_dependent:
+        assert obs_zero[field] == 0.0, (
+            f"{field} = {obs_zero[field]!r} must vanish at b_k_sq=0 "
+            f"for the regular adiabatic mode (MB-95 §7)"
+        )
+
+
+@pytest.mark.parametrize("k_comoving", (1.0e-4, 1.0e-3, 1.0e-2))
+def test_fb53_packed_state_zero_at_zero_amplitude(k_comoving: float) -> None:
+    """Audit #3 recommendation 2: the full packed seed vector at
+    b_k_sq=0 must contain zeros in every amplitude-dependent slot.
+    Catches future regressions that bypass seed_observables (e.g. a
+    new field added to pack_regular_adiabatic_seed_from_formulae but
+    forgotten to scale by B_K_sq)."""
+
+    seed_zero = make_camb_regular_adiabatic_seed(
+        k_comoving=k_comoving,
+        eta_initial=261.0,
+        a_initial=1.0e-3,
+        L_max=6,
+        b_k_sq=0.0,
     )
+    # The single non-zero entry permitted is the scale factor a at the
+    # background slot (slot 0 of pack_combined_state). Everything else
+    # — photon_T, photon_E, neutrino_reduced, plus the 6 metric/matter
+    # extras — must be zero.
+    arr = np.asarray(seed_zero, dtype=np.float64)
+    a_value = float(arr[0])
+    assert a_value == pytest.approx(1.0e-3, rel=1e-14), (
+        f"background a_initial slot was overwritten: {a_value}"
+    )
+    perturbation_slots = arr.copy()
+    perturbation_slots[0] = 0.0
+    max_abs = float(np.max(np.abs(perturbation_slots)))
+    assert max_abs == 0.0, (
+        f"packed seed at b_k_sq=0 contains non-zero perturbation "
+        f"(max |entry| = {max_abs}); the regular adiabatic mode must "
+        f"vanish identically at zero amplitude"
+    )
+
+
+@pytest.mark.parametrize("k_comoving", (1.0e-4, 1.0e-3, 1.0e-2))
+def test_fb53_seed_scales_linearly_with_b_k_sq(k_comoving: float) -> None:
+    """Audit #3 recommendation 5: probe a non-unit amplitude
+    (b_k_sq=2) and verify every linear-in-amplitude observable
+    scales by exactly 2× vs b_k_sq=1. This is the key regression
+    that prevents future amplitude leaks: the bug went undetected
+    for so long because no prior test exercised b_k_sq ≠ 1.
+
+    Excluded fields (intentionally non-linear or trivially zero):
+      - ``eta_cov`` carries a documented quadratic ``B_K_sq²`` term
+        from the inner ``(B_K_sq − 10/denom)`` factor of the Lowell
+        §13.2 startup formula (Round-8 saturation observation;
+        auditor #2 separate convention question deferred to
+        Round-12). This field is also metadata-only — not in the
+        integrator state vector.
+      - ``Sigma_plus`` / ``Sigma_minus`` are FLRW background fields,
+        identically zero regardless of amplitude.
+    """
+
+    obs_unit = seed_observables(
+        make_camb_regular_adiabatic_seed(
+            k_comoving=k_comoving,
+            eta_initial=261.0,
+            a_initial=1.0e-3,
+            L_max=6,
+            b_k_sq=1.0,
+        ),
+        L_max=6,
+    )
+    obs_double = seed_observables(
+        make_camb_regular_adiabatic_seed(
+            k_comoving=k_comoving,
+            eta_initial=261.0,
+            a_initial=1.0e-3,
+            L_max=6,
+            b_k_sq=2.0,
+        ),
+        L_max=6,
+    )
+    amplitude_linear = (
+        "delta_gamma", "delta_b", "delta_c", "delta_nu",
+        "theta_gamma", "theta_b", "theta_c", "theta_nu",
+        "pi_nu", "G_3", "Z",
+        "pi_gamma", "E_2",
+    )
+    for field in amplitude_linear:
+        unit_val = obs_unit[field]
+        double_val = obs_double[field]
+        if unit_val == 0.0:
+            assert double_val == 0.0, (
+                f"{field}: unit=0 but double={double_val!r}"
+            )
+            continue
+        ratio = double_val / unit_val
+        assert ratio == pytest.approx(2.0, rel=1.0e-12, abs=1.0e-18), (
+            f"{field} did not scale linearly: "
+            f"obs(b=1)={unit_val!r}, obs(b=2)={double_val!r}, "
+            f"ratio={ratio!r} (expected 2.0)"
+        )

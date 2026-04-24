@@ -141,8 +141,8 @@ def _seed_formulae(
     )
     theta_gamma = (B_K_sq / 27.0) * x3
     theta_nu = (B_K_sq / 27.0) * ((4.0 * R_nu + 23.0) / denom) * x3
-    pi_nu = -(4.0 / (3.0 * denom)) * x2
-    G_3 = -(4.0 / (21.0 * denom)) * x3
+    pi_nu = -B_K_sq * (4.0 / (3.0 * denom)) * x2
+    G_3 = -B_K_sq * (4.0 / (21.0 * denom)) * x3
     Z = (
         -(B_K_sq / 2.0) * k_comoving * eta_initial
         + (3.0 * B_K_sq / 20.0) * omega * k_comoving * (eta_initial ** 2)

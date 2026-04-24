@@ -7,6 +7,90 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-10 — ν seed-formula bug fix (B_K_sq amplitude factor restored) (2026-04-25)
+
+Fixes the missing `B_K_sq` multiplicative factor on the regular-
+adiabatic neutrino quadrupole `π_ν` and octupole `G_3` in
+`htt/bass/perturbation/regular_adiabatic_ic.py::_seed_formulae`
+(lines 144-145). The bug was located in V5-RUNTIME Round-9 R9-D and
+independently CONFIRMED by **6 external auditors** with concordant
+verdicts; differences were limited to scope of follow-up work, not
+the diagnosis itself.
+
+**Two-line fix** — `htt/bass/perturbation/regular_adiabatic_ic.py`:
+
+```diff
+- pi_nu = -(4.0 / (3.0 * denom)) * x2
+- G_3   = -(4.0 / (21.0 * denom)) * x3
++ pi_nu = -B_K_sq * (4.0 / (3.0 * denom)) * x2
++ G_3   = -B_K_sq * (4.0 / (21.0 * denom)) * x3
+```
+
+**Why**: Per Ma-Bertschinger 1995 §7 / eq. 96-99 (and confirmed
+against Lewis-Challinor 2002 §3 + CAMB `equations_ppf.f90` initial-
+conditions block), the regular adiabatic mode is a single-parameter
+family — *every* perturbation at radiation-era startup must be linear
+in the integration constant `C` (which BASS calls `B_K_sq`). The two
+formulas pre-fix carried no `B_K_sq` factor, leaving non-zero
+`x²`/`x³` floors at zero amplitude. The CAMB-Notes printed forms
+look amplitude-free only because they are specialized to the
+unit-normalization `χ_0 = -1`; once an arbitrary-amplitude API is
+exposed (as BASS does via `b_k_sq`), the factor must be restored.
+
+**How to apply** (single-commit landing, this commit):
+
+1. Two-line fix as shown above.
+2. `htt/bass/perturbation/test_fb53_regular_adiabatic_ic_skeleton.py`:
+   - Remove `pytest.mark.xfail(strict=True)` on
+     `test_fb53_zero_amplitude_seed_has_no_neutrino_perturbation`
+     (now passes; was the regression marker).
+   - Widen the zero-amplitude assertion from {`pi_nu`, `G_3`} to all
+     14 amplitude-dependent fields (auditor #3 recommendation 1).
+   - Add `test_fb53_packed_state_zero_at_zero_amplitude` (auditor #3
+     recommendation 2) — guards future fields added to the packer.
+   - Add `test_fb53_seed_scales_linearly_with_b_k_sq` parametrized
+     at `b_k_sq = 2.0` vs `1.0` (auditor #3 recommendation 5) — the
+     key regression: the bug went undetected because no prior test
+     exercised `b_k_sq ≠ 1`.
+
+**D_2 anchor regression analysis** (auditor #1/#5/#6 unanimous,
+verified against `htt/bass/validation/_d2_anchor_golden.json`):
+
+- **Route-B Rust** `D_2 = 1002.086744 μK²` — source: `bass_rs
+  dump_dl_spectrum_sparse` (MB-95 sync_gauge_camb.rs). Predicted
+  shift: **0% — bit-identical** (Rust path independent of Python
+  PSTF; does not consume `_seed_formulae`).
+- **Route-B Python golden** (`route_b_d2_lookup` MM-curve) — source:
+  `bass.spectrum.cl_assembly` constants `(C1, C2)`. Predicted shift:
+  **0% — analytic, no ν seed in path**.
+- **PSTF Python `D_2_probe`** (R9-B convention audit) — source:
+  `compute_flrw_d_ell_linear_probe`. Predicted shift: **~22×
+  reduction** (1.7e+04 → 7.6e+02 ratio at N_k=12; auditors #1, #5
+  trial-fix measurements concordant).
+
+The legacy bit-identical anchor is preserved because the buggy
+formulas are no-ops at `b_k_sq = 1.0` (the historical default), and
+the Rust Route-B path does not consume the Python `_seed_formulae`.
+
+**Out of scope for this commit** (deferred to Round-11+):
+
+- Residual ~7.6e+02 PSTF convention ratio (R9-B/C separate question;
+  auditors #1, #5 explicitly note this is independent of the seed
+  bug).
+- `B_K_sq` naming cleanup → split into `amplitude` + `beta2_geom`
+  (auditors #2, #6 cosmetic recommendation).
+- `eta_cov` convention re-check (auditor #2; metadata-only field).
+
+**SSOT drift document**: `docs/audits/SSOT_NU_SEED_DRIFT_2026-04-25.md`
+(matches `SSOT_TCMB_DRIFT_2026-04-19` template per auditor #5).
+
+**Files**:
+- `htt/bass/perturbation/regular_adiabatic_ic.py` — 2-line fix
+- `htt/bass/perturbation/test_fb53_regular_adiabatic_ic_skeleton.py`
+  — xfail removed; 2 new tests added; 1 widened
+- `docs/audits/SSOT_NU_SEED_DRIFT_2026-04-25.md` — drift document
+- `CHANGELOG.md` — this entry
+
 ### V5-RUNTIME Round-9 — D_ℓ linear-probe wrapper + B_K² convention audit (2026-04-24)
 
 Adds the multi-k extension of Round-8's single-k linear probe and
