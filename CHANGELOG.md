@@ -7,6 +7,46 @@
 
 ## [Unreleased]
 
+### Tier-C BASS-independent parallel track — bounds + tilted_flrw anchors (2026-04-24)
+
+Third layer of the anchor campaign. Targets the pure-algebra core of the MES three-bound hierarchy (`htt.core.bounds`) and the tilted-FLRW observables dictionary (`htt.core.tilted_flrw`) — the physics that every "data-independent" manuscript figure in §1.3.5 builds on.
+
+**Gap closed**: before this commit, `grep -rn "B_sigma|B_omega|B_accel|tilted_H_ratio|Delta_q|peculiar_jeans|..." htt/tests/` returned **zero** direct test references. The three-bound hierarchy and tilted-FLRW primitives were exercised only indirectly through higher-level assemblies (`evidence_models`, `FillingFraction.mc_posterior`, `analysis_extended.ScenarioTable`). A silent coefficient drift in any of those primitives would silently change every affected manuscript figure with no regression firing.
+
+**New**: `htt/htt/tests/test_bounds_and_tilted_flrw_anchors.py`, 42 tests:
+
+- **Part 1 — MES three-bound hierarchy** (15 tests):
+  - `B_sigma, B_omega, B_accel, B_sigma_corrected, Sig2_max_MES` pinned at the three canonical scenarios S1 (ε₁ = 1.233×10⁻³), S2a (1.476×10⁻³), S2c (3.296×10⁻³). Tolerance `abs=1e-15`.
+  - Three-bound strict ordering `B_σ > B_ω > B_u̇` asserted at every scenario (§4.3 D6 anchor).
+  - `W²_max = (3/2) B_ω²` (Corollary 3.2) and `A²_max = (3/2) B_u̇²` (Corollary 3.3) consistency.
+
+- **Part 2 — tilt primitives** (4 tests):
+  - `eps1_from_beta(β_anchor) = 1.4733×10⁻³`, `beta_safe` round-trip, `frame_bias(S1)` pinned.
+
+- **Part 3 — defect variable algebra** (6 tests):
+  - `Omega_tilt(β_anchor) = 5.832×10⁻⁷` pinned.
+  - **bounds.Omega_tilt vs tilted_flrw.Omega_tilt cross-consistency** — two independent implementations of Corollary 2.15 must agree bit-identical across β ∈ {0, β_anchor, 2e-3, 5e-3}.
+  - Master departure identity `x = Σ² − W² + Ω_tilt + Ω_k_aniso` (§1.2) exercised with nonzero components.
+  - `filling_fraction(1e-8, Sig2_max_MES(S1))` pinned, `Sig2_BV(β_anchor, Ω_K=7e-4)` pinned.
+
+- **Part 4 — nonlinear corrections** (2 tests):
+  - `R_σ(σ/H=1e-4)` and `R_ω(ω/H=1e-11, σ/H=1e-4)` both ≈ 1 + O(ε²).
+
+- **Part 5 — tilted-FLRW observables dictionary (D26)** (10 tests):
+  - `tilted_H_ratio(β_anchor)`, `Delta_q(β_anchor, 100 Mpc) = 13.32`, `q_matter() = 0.157650`, `peculiar_jeans(...) = (λ_J=438.82 Mpc, f_J=0.0986)`, `matter_vorticity(...) = 3.42×10⁻²⁰`, `matter_acceleration(...) = 2.14×10⁻⁹`, `velocity_growth(z=0.1, β_anchor, GR_min) = 1.18×10⁻³`. All bit-identical.
+  - `velocity_growth` rejects unknown models with the registered alternatives (`Newtonian | GR_min | GR_full | constant`).
+
+- **Part 6 — Colin et al. β translation (D27)** (4 tests):
+  - `beta_from_colin(z ∈ {0.03, 0.05, 0.10})` pinned at `(6.21, 13.40, 15.90)×10⁻⁴`.
+  - Semantic anchor: `β_SNe(z=0.05) = 1.340×10⁻³` must stay within 5σ of CF4 measurement `β_CF4 = 1.334±0.267×10⁻³` — protects the TF-N02 consistency-diagnostic claim used in manuscript ch09.
+
+**Test impact** (isolated runs):
+
+- `htt/tests/` — 306 → 348 (+42).
+- `mio/tests/`, `tsc/`, `workspace/` — unchanged.
+
+**Combined effect of Tiers A+B+C**: 134 bit-identical regression tests now guard the CLAUDE.md §5 production anchors end-to-end, from the algebraic bounds (Tier C) through the model-dependent posterior (Tier A) to the observatory diagnostic and cross-check surfaces (Tier A/B). Any drift in a single coefficient at any layer now fires at least one pinned test.
+
 ### Tier-B BASS-independent parallel track — MIO HJ-02 + HJ-05 anchor pins (2026-04-24)
 
 Continuation of the Tier-A anchor campaign. Two pure-regression packages that pin the currently-mature but previously-unanchored MIO diagnostic modules. Like Tier-A, no BASS outputs required.
