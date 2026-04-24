@@ -137,3 +137,47 @@ def test_fb53_regular_seed_matches_camb_superhorizon_fixture(
     )
     obs = seed_observables(seed, L_max=6)
     assert obs[observable] == pytest.approx(ref[observable], rel=1.0e-4, abs=1.0e-18)
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason=(
+        "V5-RUNTIME Round-9 R9-D bug: regular_adiabatic_ic._seed_formulae "
+        "lines 144-145 omit the B_K_sq factor on the ν π_2 and G_3 entries, "
+        "asserting that ν quadrupole/octupole exist at b_k_sq=0 — "
+        "unphysical for an adiabatic mode (Ma-Bertschinger 1995 eq. 96). "
+        "See docs/V5_ROUND9_FINDINGS.md §5d. Fix lands in Round-10 once the "
+        "regression-affecting D_2=1002.086744 anchor shift has SSOT-coordinated "
+        "rollout. Flip this xfail to pass when the formulas are corrected."
+    ),
+)
+@pytest.mark.parametrize("k_comoving", (1.0e-4, 1.0e-3, 1.0e-2))
+def test_fb53_zero_amplitude_seed_has_no_neutrino_perturbation(
+    k_comoving: float,
+) -> None:
+    """Regular adiabatic mode at b_k_sq=0 must yield identically-zero ν
+    perturbations: at zero curvature amplitude there is no perturbation
+    of any species (MB-95 §7 adiabatic seed). The ν π_2 and G_3 fields
+    are the only seed observables currently failing this — they encode
+    a hardcoded x²/x³ floor independent of B_K_sq."""
+
+    seed_zero = make_camb_regular_adiabatic_seed(
+        k_comoving=k_comoving,
+        eta_initial=261.0,
+        a_initial=1.0e-3,
+        L_max=6,
+        b_k_sq=0.0,
+    )
+    obs_zero = seed_observables(seed_zero, L_max=6)
+
+    # All seed observables must vanish identically at b_k_sq = 0 for a
+    # regular adiabatic mode. Spot-check the two that the R9-D bias-
+    # floor probe identified as carrying the buggy floor.
+    assert obs_zero["pi_nu"] == 0.0, (
+        f"pi_nu = {obs_zero['pi_nu']!r} should be 0 at b_k_sq=0; "
+        f"see V5_ROUND9_FINDINGS §5d"
+    )
+    assert obs_zero["G_3"] == 0.0, (
+        f"G_3 = {obs_zero['G_3']!r} should be 0 at b_k_sq=0; "
+        f"see V5_ROUND9_FINDINGS §5d"
+    )
