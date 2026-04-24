@@ -7,6 +7,32 @@
 
 ## [Unreleased]
 
+### Parallel-track figure gallery (2026-04-24)
+
+First materialisation of the `figures/` tree as a dedicated `parallel_track/` subdirectory — 12 BASS-independent plots + README. Single driver: `scripts/make_parallel_track_figures.py` (~500 L, Wong 2011 colourblind palette, 300 DPI). Every anchor referenced in the plots is already pinned by the Tier A/B/C/D regression tests.
+
+**Part A — algebra-only (no external data)**:
+
+- `fig_01_mes_three_bounds` — B_σ > B_ω > B_u̇ on log-log ε₁ grid, S1/S2a/S2c scenario markers, B_σ^corr (VT-07) ghost line (Tier-C anchor).
+- `fig_02_tilted_flrw_dictionary` — 6-panel D26 observable dictionary vs β (H tilt, Δq@100 Mpc, Ω_tilt, ω_matter, u̇, v_grow).
+- `fig_03_colin_beta_translation` — Colin+2019 dipolar-q → β(z) with CF4 ±1σ / ±5σ bands and the 3 pinned z_ref anchors (D27).
+- `fig_04_flrw_tilt_posterior` — FLRW_tilt β posterior from `log_evidence_quadrature(n_points=10_000)`; title reports lnB=26.40 (CLAUDE.md §5).
+- `fig_05_filling_fraction_scenarios` — F_Bayes histograms for S1/S2a/S2b/S2c/S3 with CLAUDE.md §5 band 0.093±0.025 overlay.
+- `fig_06_directional_probes_mollweide` — 5-probe STANDARD_PROBES on Mollweide (Galactic); σ-cones + R=0.999 resultant star + χ²/dof=28.34/3 in title (HJ-02a anchor).
+
+**Part B — observational data from `workdir/obs_bundle/` (5.8 GB bundle, 31 datasets)**:
+
+- `fig_07_planck_pr3_tt` — Planck PR3 TT spectrum: unbinned full + binned points + Planck 2018 best-fit ΛCDM.
+- `fig_08_planck_pr3_tt_te_ee` — 3-panel TT/TE/EE overview with theory overlay.
+- `fig_09_planck_lowell_envelope` — low-ℓ TT (ℓ≤40) with D₂/D₃ ΛCDM anchors.
+- `fig_10_cf4_beta_variants` — β across Watkins2009 (canonical) / Watkins2023 MVE / Courtois2025 CF4++ HMC with error bars + FLRW_tilt posterior overlay.
+- `fig_11_dipole_direction_comparison` — Mollweide of CMB / CatWISE / Radio / CF4 probes from `dipole_scalar_observations.json`.
+- `fig_12_planck_act_dr4_combined` — Planck PR3 + ACT DR4 TT high-ℓ extension.
+
+**Workarounds**: the shipped `workdir/obs_bundle/` does not contain the `obs_defaults.{canonical,watkins2023,courtois2025}.json` files the INDEX lists, nor the ACT DR6 NPZ. fig_10 falls back to `dipole_scalar_observations.json` + literature values (INDEX-recorded β/σ for the Watkins2023 and Courtois2025 variants). fig_12 swaps ACT DR6 → ACT DR4 compact CMB-only TT bandpowers (`clcmb__act_dr4_01_D_ell_TT_cmbonly_txt`).
+
+**Reproducibility**: script-driven, deterministic (no RNG in algebra plots; MC histograms use seed=42). All 12 plots land in `figures/parallel_track/` for a combined 2.6 MB. `scripts/figure_env.py`'s `configure_repo_paths()` wires htt/htt/src/workdir-obs-bundle into `sys.path` so the script is portable across environments honouring the `HTT_WORKDIR` / `HTT_OBS_BUNDLE_ROOT` env vars.
+
 ### Tier-D BASS-independent parallel track — R03a + TSC admissibility anchors (2026-04-24)
 
 Fourth layer of the anchor campaign after Tiers A+B+C. Pins the R03a evidence framework (the "active" sibling of the deprecated `evidence_models.py`) and the pure-algebra TSC admissibility layer.
