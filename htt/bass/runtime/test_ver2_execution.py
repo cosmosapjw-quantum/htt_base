@@ -95,6 +95,50 @@ def test_runtime_controls_require_explicit_l2_override() -> None:
         )
 
 
+@pytest.mark.parametrize("L", [4, 6, 8, 12, 16, 20, 30, 40])
+def test_runtime_controls_accept_development_and_cosmological_cutoffs(L: int) -> None:
+    rc = RuntimeControlBlock(
+        tier=SolverTier.TIER_B_PSTF,
+        integrator_family=IntegratorFamily.IMEX_SPLIT,
+        coupling_mode=CouplingMode.BACKGROUND_THEN_RADIATION,
+        multipole_cutoff=L,
+        rtol=1.0e-6,
+        atol=1.0e-9,
+        checkpoint=CheckpointPolicy(enabled=False),
+        constraint_projection=ConstraintProjectionPolicy(enabled=False),
+    )
+    assert rc.multipole_cutoff == L
+
+
+def test_runtime_controls_reject_cutoff_above_ceiling_without_override() -> None:
+    with pytest.raises(ValueError, match="exceeds the certified cosmological ceiling"):
+        RuntimeControlBlock(
+            tier=SolverTier.TIER_B_PSTF,
+            integrator_family=IntegratorFamily.IMEX_SPLIT,
+            coupling_mode=CouplingMode.BACKGROUND_THEN_RADIATION,
+            multipole_cutoff=50,
+            rtol=1.0e-6,
+            atol=1.0e-9,
+            checkpoint=CheckpointPolicy(enabled=False),
+            constraint_projection=ConstraintProjectionPolicy(enabled=False),
+        )
+
+
+def test_runtime_controls_accept_cutoff_above_ceiling_with_override() -> None:
+    rc = RuntimeControlBlock(
+        tier=SolverTier.TIER_B_PSTF,
+        integrator_family=IntegratorFamily.IMEX_SPLIT,
+        coupling_mode=CouplingMode.BACKGROUND_THEN_RADIATION,
+        multipole_cutoff=50,
+        rtol=1.0e-6,
+        atol=1.0e-9,
+        checkpoint=CheckpointPolicy(enabled=False),
+        constraint_projection=ConstraintProjectionPolicy(enabled=False),
+        diagnostic_l2_override=True,
+    )
+    assert rc.multipole_cutoff == 50
+
+
 def test_checkpoint_policy_requires_stride_and_path_when_enabled() -> None:
     with pytest.raises(ValueError, match="path_template"):
         CheckpointPolicy(enabled=True, every_n_steps=10)

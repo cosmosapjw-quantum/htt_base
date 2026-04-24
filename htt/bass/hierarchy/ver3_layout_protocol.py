@@ -156,10 +156,18 @@ def _operator_scales(
     )
     geom_scale = max(geom_scale, 1.0)
     branch_scale = _branch_scale(bg)
-    mix_scale = branch_scale * (0.08 + 0.04 * min(geom_scale, 3.0))
+    # v5 audit Round-2 Q-7.4: hand-tuned scalar physics surrogates are removed
+    # from the physics operator. mix_scale/polarization_scale/source_scale had
+    # no first-principles derivation in the Maartens-Ellis 1+3 kinetic theory
+    # or Ma-Bertschinger hierarchy; they were numerical placeholders whose
+    # FLRW-limit values (0.12, 1.0, 1.0) contribute non-physical positive
+    # modes through cross-mode couplings. twist_scale is kept as-is
+    # (structurally vanishes in FLRW via twist=0), but the saturation form
+    # 1/(1+twist+|h|) should be revisited per v5 §03A for non-Type-I families.
+    mix_scale = 0.0
     twist_scale = branch_scale * twist / (1.0 + twist + h_abs)
-    polarization_scale = 1.0 + 0.35 * twist_scale
-    source_scale = 1.0 + 0.25 * min(float(np.linalg.norm(ricci_pstf) + np.linalg.norm(shear)), 2.0)
+    polarization_scale = 1.0
+    source_scale = 1.0
     family_law = _family_conditioned_kernel_law(bg, backend)
     return {
         "branch_scale": branch_scale,
@@ -515,7 +523,15 @@ def _reduced_harmonic_structure(
             slot_lookup[(ell, m)] = slot
             ell_by_slot[slot] = ell
             abs_m_by_slot[slot] = float(abs(m))
-            diag_base_by_slot[slot] = 0.35 * (ell + 1) + 0.08 * abs(m)
+            # v5 audit Q3: diagonal self-damping is non-physical in the FLRW
+            # limit. The |m|-dependence violates SO(3) isotropy of the FLRW
+            # background (Wigner-Eckart forbids m-dependent scalar operators
+            # on PSTF multipoles), and the (ell+1) coefficient has no
+            # counterpart in Ma-Bertschinger 1995 nor in 1+3 covariant
+            # kinetic theory. Stability of the post-flip operator is
+            # guaranteed by weighted skew-adjointness (audit Q2), not by
+            # this diagonal.
+            diag_base_by_slot[slot] = 0.0
             collision_factor_by_slot[slot] = 1.0 if ell <= 1 else 1.0 / (ell + 0.5)
             if ell >= 2:
                 pstf_weight_by_slot[slot] = pstf_weight
@@ -1619,17 +1635,37 @@ def build_reduced_harmonic_affine_operator(
     next_e_same = inv_e * geom_scale * polarization_scale * structure.next_coeff_by_slot
     next_b_same = inv_b * geom_scale * polarization_scale * structure.next_coeff_by_slot
     next_nu_same = inv_nu * geom_scale * structure.next_coeff_by_slot
+    # v5 audit Option-B test: Thomson term sign flip.
+    # Ma-Bertschinger (1995) eq. 63: Boltzmann hierarchy has -κ̇·Θ_ℓ
+    # (damping) for ℓ ≥ 2, with κ̇ = opacity > 0.  Defining γ_T = κ̇ > 0,
+    # the diagonal contribution must be -γ_T·c_ℓ, i.e. NEGATIVE.
+    # The prior `+ photon_coll` was wrong-signed; after Q3 zeroed the
+    # `-stream_base` compensating term, the wrong Thomson sign was
+    # exposed as a +0.93 growth mode at γ_T = 1 in the fast-check audit.
     photon_coll = branch_scale * collision_scale * gamma_t * structure.collision_factor_by_slot
-    diag_t = inv_t * (-stream_base + photon_coll)
-    diag_e = inv_e * (-stream_base * polarization_scale + photon_coll)
-    diag_b = inv_b * (-stream_base * polarization_scale + photon_coll)
+    diag_t = inv_t * (-stream_base - photon_coll)
+    diag_e = inv_e * (-stream_base * polarization_scale - photon_coll)
+    diag_b = inv_b * (-stream_base * polarization_scale - photon_coll)
     diag_nu = inv_nu * (-stream_base)
-    mix_t = inv_t * mix_scale * structure.pstf_weight_by_slot
-    mix_e = inv_e * (0.5 * mix_scale * structure.pstf_weight_by_slot)
-    eb_base = twist_scale * structure.eb_base_by_slot
-    eb_e = inv_e * (0.75 * eb_base)
-    eb_b = inv_b * (-eb_base)
-    eb_bt = inv_b * (0.25 * eb_base)
+    # v5 audit Round-2 Q-6: Thomson-derived T↔E coupling is quadrupole-only,
+    # γ_T-proportional (Kamionkowski-Kosowsky-Stebbins 1997; Zaldarriaga-Seljak
+    # 1997). The source is Π = Θ_2 − √6·E_2, substituting into ℓ=2 rows:
+    #    Θ̇_2 ⊃ −(9κ̇/10)·Θ_2  − (√6·κ̇/10)·E_2
+    #    Ė_2 ⊃ −(√6·κ̇/10)·Θ_2 − (2κ̇/5)·E_2
+    # T↔B and E↔B Thomson couplings vanish (parity). Geometric/twist-driven
+    # B-mixing belongs in transport, not collision, so eb_* = 0 here.
+    quad_mask = (structure.ell_by_slot == 2)
+    te_weight = np.zeros_like(structure.pstf_weight_by_slot)
+    te_weight[quad_mask] = structure.pstf_weight_by_slot[quad_mask]
+    mix_t = -inv_t * gamma_t * (np.sqrt(6.0) / 10.0) * te_weight
+    mix_e = -inv_e * gamma_t * (np.sqrt(6.0) / 10.0) * te_weight
+    eb_e = np.zeros_like(inv_e)
+    eb_b = np.zeros_like(inv_b)
+    eb_bt = np.zeros_like(inv_b)
+    # Quadrupole Thomson diagonal specialization (Π source):
+    diag_t[quad_mask] = -inv_t[quad_mask] * (9.0 * gamma_t / 10.0)
+    diag_e[quad_mask] = -inv_e[quad_mask] * (2.0 * gamma_t / 5.0)
+    diag_b[quad_mask] = -inv_b[quad_mask] * gamma_t
 
     cross_t = np.zeros(width, dtype=np.float64)
     cross_e = np.zeros(width, dtype=np.float64)
@@ -1670,17 +1706,24 @@ def build_reduced_harmonic_affine_operator(
     self_block[b_off + slots[prev_valid], b_off + structure.prev_slot_by_slot[prev_valid]] += prev_b[prev_valid]
     self_block[nu_off + slots[prev_valid], nu_off + structure.prev_slot_by_slot[prev_valid]] += prev_nu[prev_valid]
 
-    self_block[t_off + slots[next_valid], t_off + structure.next_slot_by_slot[next_valid]] += next_t_same[next_valid]
-    self_block[e_off + slots[next_valid], e_off + structure.next_slot_by_slot[next_valid]] += next_e_same[next_valid]
-    self_block[b_off + slots[next_valid], b_off + structure.next_slot_by_slot[next_valid]] += next_b_same[next_valid]
-    self_block[nu_off + slots[next_valid], nu_off + structure.next_slot_by_slot[next_valid]] += next_nu_same[next_valid]
+    # v5 audit Q1: Ma-Bertschinger (1995) eq. 63 — streaming couplings carry
+    # opposite signs: +ell/(2ell+1) · X_{ell-1} − (ell+1)/(2ell+1) · X_{ell+1}.
+    # The prev_coeff/next_coeff magnitudes are correct (Clebsch-Gordan of
+    # k·Y_ell^m); the missing ingredient is the minus sign on X_{ell+1}.
+    # Post-flip, the block satisfies weighted skew-adjointness
+    # W A + A^T W = 0 with W_ell = (2ell+1)/d_ell (audit Q2), so every
+    # eigenvalue has Re(λ) ≤ 0 — strictly dissipative when diag damping is
+    # present, purely imaginary (free-streaming Liouville) at γ_T = 0.
+    self_block[t_off + slots[next_valid], t_off + structure.next_slot_by_slot[next_valid]] -= next_t_same[next_valid]
+    self_block[e_off + slots[next_valid], e_off + structure.next_slot_by_slot[next_valid]] -= next_e_same[next_valid]
+    self_block[b_off + slots[next_valid], b_off + structure.next_slot_by_slot[next_valid]] -= next_b_same[next_valid]
+    self_block[nu_off + slots[next_valid], nu_off + structure.next_slot_by_slot[next_valid]] -= next_nu_same[next_valid]
 
-    ge2_slots = slots[structure.ge2_mask]
-    self_block[t_off + ge2_slots, e_off + ge2_slots] += mix_t[structure.ge2_mask]
-    self_block[e_off + ge2_slots, t_off + ge2_slots] += mix_e[structure.ge2_mask]
-    self_block[e_off + ge2_slots, b_off + ge2_slots] += eb_e[structure.ge2_mask]
-    self_block[b_off + ge2_slots, e_off + ge2_slots] += eb_b[structure.ge2_mask]
-    self_block[b_off + ge2_slots, t_off + ge2_slots] += eb_bt[structure.ge2_mask]
+    # v5 audit Round-2 Q-6.4: T↔E Thomson coupling restricted to quadrupole.
+    # E↔B / T↔B Thomson couplings zeroed (eb_* ≡ 0).
+    quad_slots = slots[quad_mask]
+    self_block[t_off + quad_slots, e_off + quad_slots] += mix_t[quad_mask]
+    self_block[e_off + quad_slots, t_off + quad_slots] += mix_e[quad_mask]
 
     if mu_count > 1:
         cross_block[t_off + slots, t_off + slots] += cross_t
@@ -2024,11 +2067,17 @@ def build_reduced_joint_affine_operator(
             dtype=np.float64,
         )
 
+    # v5 audit Round-2 Q-5.1d: local ↔ harmonic Thomson coupling.
+    # Ma-Bertschinger (1995) eq 64-66:
+    #   v̇_b = (κ̇/R)·(3·Θ_1 - v_b)     →   A[v_b, Θ_1] = +3·κ̇/R
+    #   Θ̇_1 = -κ̇·(Θ_1 - v_b/3) + ... →   A[Θ_1, v_b] = +κ̇/3  (NO 1/R factor!)
+    # Code convention: local_drag_scale is taken to encode 1/R (v5 §03A ambiguity,
+    # flagged in audit). The photon-dipole row receives κ̇/3 WITHOUT 1/R.
     # local <- harmonic(theta_1) coupling
     baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(baryon_width, dtype=np.float64)
     if baryon_width > 1 and structure.dipole_slot is not None:
         local_theta_coeff = float(
-            0.25 * local_drag_scale * gamma_t / max(abs(float(baryon_base_diag[1])), 1.0e-30)
+            3.0 * local_drag_scale * gamma_t / max(abs(float(baryon_base_diag[1])), 1.0e-30)
         )
         for residual_index in range(len(residual_labels)):
             local_row = residual_index * local_block_size + 1
@@ -2039,7 +2088,7 @@ def build_reduced_joint_affine_operator(
     if baryon_width > 1 and structure.dipole_slot is not None:
         ell_weight = 1.0 + 0.04 * 1.0 + 0.015 * geom_scale
         inv_t_dipole = 1.0 / max(branch_scale * ell_weight, 1.0e-30)
-        harmonic_baryon_coeff = float(inv_t_dipole * (-0.25 * local_drag_scale * gamma_t))
+        harmonic_baryon_coeff = float(inv_t_dipole * (gamma_t / 3.0))
         for residual_index in range(len(residual_labels)):
             harmonic_row = local_dof + residual_index * harmonic_block_size + int(structure.dipole_slot)
             local_col = residual_index * local_block_size + 1
@@ -2068,7 +2117,12 @@ def build_reduced_joint_affine_operator(
         source_row = source_offset + residual_index * src_width
         harmonic_row = local_dof + residual_index * harmonic_block_size
 
-        joint[source_row : source_row + src_width, source_row : source_row + src_width] += np.diag(
+        # v5 audit Round-2 extension: same Thomson-damping sign convention
+        # as ❺❻❼. The prior `+0.35·γ_T` was the +0.32 growth mode that
+        # Q-7.4 did not explicitly touch; eigenvector localization showed
+        # 98.7% weight on the source block. Pattern-matched fix pending
+        # a Round-3 audit of the source-propagator formulation.
+        joint[source_row : source_row + src_width, source_row : source_row + src_width] -= np.diag(
             inv_source * (mu_weight * local_drag_scale * (0.35 * gamma_t))
         )
 
@@ -2178,7 +2232,13 @@ def build_reduced_local_affine_operator(
             minus_scale=mode_minus_scale,
         )
         baryon_diag = mu_weight * baryon_base_diag
-        coeff = np.divide(
+        # v5 audit Option-B (extended): same Thomson-damping sign logic as
+        # the harmonic block. Ma-Bertschinger (1995) baryon velocity eq:
+        # v̇_b = -ℋ·v_b - (κ̇/R)·(v_b − 3·Θ_1).  The diagonal contribution
+        # from κ̇ is NEGATIVE (damping).  The prior `+gamma_t/baryon_diag`
+        # was wrong-signed and was exposed as the +0.93 growth mode when
+        # the fast-check audit set γ_T = 1.
+        coeff = -np.divide(
             mu_weight * local_drag_scale * gamma_t,
             np.maximum(np.abs(baryon_diag), 1.0e-30),
             dtype=np.float64,

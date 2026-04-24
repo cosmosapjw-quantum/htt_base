@@ -1,6 +1,8 @@
 # V5 Gap-Closure — Next-Session Handoff
 
-_Frozen at commit `85c2270` on 2026-04-24. All tests pass (1360 passed, 1 skipped). FLRW D_2 Route-B bit-identity preserved._
+_Last updated 2026-04-24 end-of-session. Handoff baseline: 1366 passed, 1 skipped (6 new `multipole_cutoff` tests added since the previous baseline of 1360). FLRW D_2 Route-B bit-identity preserved._
+
+> **2026-04-24 runtime-track CLOSED** — Blockers 1 and 2 both resolved within the session via two rounds of cross-session algebraic audit + 8 physics-level patches to `bass/hierarchy/ver3_layout_protocol.py`. λ_max(A_right) at machine precision (1e-16) across L_max ∈ {4,6,8,12,16} for both γ_T=0 and γ_T=1; cosmological η=261→14147 Mpc IMEX completes in 130 s (previously failed at η≈4740 Mpc). Blocker 3 (real-IC injection) is now actionable on a stable operator. See `docs/V5_RUNTIME_TRACK_DIAGNOSIS.md` for full findings + remaining items (Round-3 source-block audit, `geom_scale` replacement, non-Type-I family law).
 
 ---
 

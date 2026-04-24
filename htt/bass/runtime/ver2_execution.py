@@ -43,6 +43,11 @@ __all__ = [
 ]
 
 
+_DEVELOPMENT_CUTOFFS: frozenset[int] = frozenset({4, 6, 8})
+_COSMOLOGICAL_CUTOFFS: frozenset[int] = frozenset({12, 16, 20, 30, 40})
+_MAX_COSMOLOGICAL_CUTOFF: int = 40
+
+
 class SolverTier(str, Enum):
     """Explicit tier selection for the VER2 solver."""
 
@@ -150,11 +155,19 @@ class RuntimeControlBlock:
             raise ValueError(
                 "L=2 requires an explicit diagnostic_l2_override in VER2"
             )
-        if self.multipole_cutoff in {4, 6, 8}:
+        if self.multipole_cutoff in _DEVELOPMENT_CUTOFFS:
+            pass
+        elif self.multipole_cutoff in _COSMOLOGICAL_CUTOFFS:
             pass
         elif self.multipole_cutoff < 4 and not self.diagnostic_l2_override:
             raise ValueError(
                 "VER2 development cutoffs are L=4,6,8 unless a diagnostic override is recorded"
+            )
+        elif self.multipole_cutoff > _MAX_COSMOLOGICAL_CUTOFF and not self.diagnostic_l2_override:
+            raise ValueError(
+                f"multipole_cutoff={self.multipole_cutoff} exceeds the certified "
+                f"cosmological ceiling L={_MAX_COSMOLOGICAL_CUTOFF}; set "
+                f"diagnostic_l2_override=True to override"
             )
         if self.rtol <= 0.0 or self.atol <= 0.0:
             raise ValueError("rtol and atol must both be positive")

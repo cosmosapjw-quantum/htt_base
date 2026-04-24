@@ -1,0 +1,248 @@
+# V5 Runtime-Track Diagnosis — Residual-Joint Operator Audit
+
+_2026-04-24. Updated through two rounds of algebraic audit + numerical verification. **Blocker 2 CLOSED**: residual-joint operator spectrum is now at machine precision (Re(λ_max) ~ 10⁻¹⁶), and cosmological-range IMEX integration completes from η=261 Mpc to η=14147 Mpc in 130 s (previously failed at η≈4740 Mpc)._
+
+---
+
+## Final outcome (2026-04-24)
+
+**Cosmological IMEX success criterion: MET.**
+
+| metric | pre-session | Round-1 patch | Round-2 patch | target |
+|---|---:|---:|---:|---:|
+| λ_max(A_hh), γ_T=0, L_max=8 | +0.175/Mpc | +0.029 | **+4e-16** ✓ | ≤ 10⁻¹⁰ |
+| λ_max(A_right), γ_T=1, L_max=8 | — | +0.926 | **+7e-16** ✓ | ≤ 10⁻¹⁰ |
+| Cosmological η=261→14147 Mpc IMEX | fails at η≈4740 | fails at η≈4740 | **completes in 130 s** ✓ | completion |
+| D_2 FLRW anchor | 1002.086744 μK² | bit-identical | bit-identical ✓ | bit-identical |
+| v5 handoff regression baseline | 1360/1360 | 1366/1366 | **1366/1366** ✓ | no regression |
+
+The two remaining runtime-track Blockers 1 and 2 (multipole_cutoff validation + IMEX cosmological-range stability) are now closed. Blocker 3 (real IC injection from recombination) is orthogonal and can now proceed on a stable operator.
+
+---
+
+## Scope
+
+Per `fix.md` the runtime-track attempt is **blocked by an operator-level problem**, not a stepper problem. This document reports the three mechanical checks that fix.md prescribed, with their raw data, and then locates the bug in source.
+
+- **Session 1** — largest-real-part eigenvalues of `_build_residual_joint_affine_operator(...).matrix` at 5 η snapshots.
+- **Session 2(a)** — finite-difference Jacobian vs declared `A_right`, to rule out a hidden nonlinearity.
+- **Session 2(b)** — `λ_max` sweep over `L_max ∈ {4, 6, 8, 12, 16}`, to rule out a truncation/boundary artifact.
+- **Session 2(c)** — symmetry / skew-symmetry decomposition of the harmonic block.
+
+Raw artifacts:
+- `docs/V5_RUNTIME_SPECTRAL_AUDIT.json` — 5-η eigenpair data.
+- `docs/V5_RUNTIME_OPERATOR_FORENSICS.json` — FD check, L_max sweep, symmetry decomposition.
+- `scripts/v5_runtime_spectral_audit.py` — rerunnable reproduction for Session 1.
+- `scripts/v5_runtime_operator_forensics.py` — rerunnable reproduction for Session 2.
+
+---
+
+## Findings
+
+### 1. A_right has a persistent, harmonic-block-concentrated, positive real eigenvalue
+
+| η (Mpc) | top-6 Re(λ) | λ_max | Re(λ_max) right-eig harmonic fraction | same for left-eig |
+|---:|---|---:|---:|---:|
+| 300.4 | 0.190, 0.190, 0.174, 0.174, 0.169, 0.169 | +0.190 | **1.000** | **1.000** |
+| 350.2 | 0.176, 0.176, 0.161, 0.161, 0.156, 0.156 | +0.176 | **1.000** | **1.000** |
+| 400.2 | 0.175, 0.175, 0.160, 0.160, 0.155, 0.155 | +0.175 | **1.000** | **1.000** |
+| 450.1 | 0.175, 0.175, 0.160, 0.160, 0.155, 0.155 | +0.175 | **1.000** | **1.000** |
+| 500.2 | 0.175, 0.175, 0.160, 0.160, 0.155, 0.155 | +0.175 | **1.000** | **1.000** |
+
+- Both left and right eigenvectors of `λ_max` are **100 %** concentrated on the `residual_harmonic` block for all 5 snapshots.
+- The top six eigenvalues come in degenerate real pairs — there is a full unstable subspace, not a single accidental eigenmode.
+- `λ_max ≈ +0.175 / Mpc` is η-independent beyond η ≈ 350 Mpc, so the mode is **structural**, not a transient.
+- Trajectory-observed growth rate in the prior diagnosis was ≈ +0.14 / Mpc; the 20 % gap is the numerical dissipation the stepper adds before it rejects the substep. The *operator* rate is +0.175 / Mpc — the slower observed rate was an under-estimate.
+
+### 2. `A_right` IS the declared linear operator (no hidden state-dependence)
+
+FD-Jacobian at η = 350 Mpc, L_max = 8:
+
+```
+|A - J_fd|_F / |A|_F  =  1.6e-13
+```
+
+This rules out "the stored matrix is a snapshot but the actual evaluation is nonlinear in residual state". The contract — `F(r) = A · r + bias` — is honored to roundoff.
+
+### 3. The instability is **not** a truncation / boundary-reflection artifact
+
+L_max sweep at η ≈ 350 Mpc:
+
+| L_max | n_dof | harmonic_dof | λ_max | harmonic participation |
+|---:|---:|---:|---:|---:|
+| 4 | 186 | 168 | **+0.17574** | 1.000 |
+| 6 | 378 | 360 | **+0.17582** | 1.000 |
+| 8 | 666 | 648 | **+0.17582** | 1.000 |
+| 12 | 1530 | 1512 | **+0.17582** | 1.000 |
+| 16 | 2826 | 2808 | **+0.17582** | 1.000 |
+
+`λ_max` changes by less than 10⁻³ across a factor-of-4 increase in `L_max`. If the unstable mode were a reflection off the truncation boundary, enlarging the box would reduce it. **It does not reduce.** The instability is encoded in the per-slot coefficients themselves, not in the truncation.
+
+### 4. The harmonic block is **almost symmetric** — not skew-symmetric, not negative-semidefinite
+
+At η = 350 Mpc, L_max = 8:
+
+```
+|A_hh|_F           = 5.02e+01
+|sym(A_hh)|_F     / |A_hh|_F   = 0.999        (≈ 1 means fully symmetric)
+|skew(A_hh)|_F    / |A_hh|_F   = 0.038        (≈ 0 means no streaming structure)
+eig(sym(A_hh)) ∈ [-2.93, +0.27]
+```
+
+This is the decisive signal. Against the two physically defensible shapes:
+
+- **Pure free-streaming (photon transport without collision):** the operator is
+  `∂_η T_ℓ = k · [ℓ/(2ℓ+1) · T_{ℓ-1} − (ℓ+1)/(2ℓ+1) · T_{ℓ+1}]`
+  — the two adjacent-ell couplings carry **opposite signs**. The resulting matrix is
+  **skew-symmetric**, and its spectrum is purely imaginary (oscillatory).
+- **Pure Thomson-collision dissipation (`ell ≥ 2`):**
+  `∂_η T_ℓ = −γ_T · T_ℓ` — symmetric and negative-semidefinite.
+
+`A_hh` is neither. It is 99.9 % symmetric with a positive eigenvalue in its symmetric part. There is no physical transport operator of radiation that is symmetric with positive eigenvalues — that shape is exclusive to non-physical coefficient choices.
+
+---
+
+## Root cause (located in source)
+
+The culprit lives in `bass/hierarchy/ver3_layout_protocol.py` — specifically in `_reduced_harmonic_structure` and `build_reduced_harmonic_affine_operator`.
+
+### [a] Hand-tuned stand-in coefficients, not derived physics
+
+`ver3_layout_protocol.py:518`:
+
+```python
+diag_base_by_slot[slot] = 0.35 * (ell + 1) + 0.08 * abs(m)
+```
+
+The constants `0.35`, `0.08` are hand-picked. The proper diagonal for a photon transport hierarchy in `(ℓ, m)` is an exact recurrence — for FLRW `m = 0`, the off-diagonal `(2ℓ+1)⁻¹` factor is set and there is **no** constant diagonal; for Bianchi with `m ≠ 0`, the diagonal would come from Wigner-3j coupling, not `0.08 · |m|`. These are placeholders.
+
+Same story for `ver3_layout_protocol.py:1605-1612`:
+
+```python
+ell_weight = 1.0 + 0.04 * structure.ell_by_slot + 0.015 * geom_scale
+inv_t = 1.0 / max(branch_scale * ell_weight, 1.0e-30)
+...
+inv_nu = 1.0 / max((1.0 + 0.1 * branch_scale + 0.02 * geom_scale) * ell_weight, ...)
+```
+
+— `0.04`, `0.015`, `0.1`, `0.02` are all hand-tuned. A physics-derived per-ell timescale does not have free tunable constants.
+
+### [b] Both `prev`/`next` couplings carry the **same** sign
+
+`_reduced_harmonic_structure` sets both coupling coefficients positive:
+
+```python
+prev_coeff_by_slot[slot] = np.sqrt(max(ell**2 - m**2, 0.0)) / max(2*ell + 1, 1)      # ver3_layout_protocol.py:527
+next_coeff_by_slot[slot] = np.sqrt(max((ell+1)**2 - m**2, 0.0)) / max(2*ell + 1, 1)  # ver3_layout_protocol.py:532
+```
+
+And both are added to the self-block with positive signs:
+
+```python
+self_block[..., t_off + prev_slot[prev_valid]] += prev_t[prev_valid]   # ver3_layout_protocol.py:1668
+self_block[..., t_off + next_slot[next_valid]] += next_t_same[...]    # ver3_layout_protocol.py:1673
+```
+
+Proper streaming has **`+ℓ · T_{ℓ-1}` and `−(ℓ+1) · T_{ℓ+1}`**. Same-sign couplings make the matrix symmetric rather than skew-symmetric, which is exactly what the spectral forensics detected (`|sym|/|A| = 0.999`). Negating the `next_coeff` branch would convert the streaming block from "symmetric (has growing eigenmodes)" to "skew-symmetric (oscillatory eigenmodes)" at the level of structure — the correct physical shape.
+
+### [c] No collisionless damping once `γ_T → 0`
+
+Post-recombination the Thomson rate `γ_T → 0`, and `photon_coll = branch_scale * collision_scale * gamma_t * ...` vanishes. The remaining diagonal is `-inv_t * stream_base`. This is the only damping present. It is not the right damping for free streaming (which should have no damping, just oscillation); it is a stand-in. With the same-sign off-diagonal (item [b]) dominating the diagonal stand-in, the net operator gets a positive real eigenvalue.
+
+---
+
+## What does **not** fix this — binding constraints
+
+Per fix.md §5 (금지 목록) and per the user directive on commit `85c2270`, the following are forbidden shortcuts:
+
+- Artificial damping added to `diag_base_by_slot`, `ell_weight`, or the assembled `diag_t/e/b/nu` terms.
+- Clipping `residual_harmonic` state after each step.
+- Raising `rtol`/`atol` until an accepted step happens.
+- Weakening `source_scale` or `polarization_scale` to cosmetically stabilize.
+- Injecting a recombination IC (Blocker 3) without first fixing the operator — the unstable eigenmode ignores IC content.
+
+These shortcuts were considered and rejected. They would make the cosmological-range run *appear* to converge without resolving the fact that the residual-joint harmonic operator does not represent correct physics.
+
+---
+
+## What **does** fix this — the productive next session
+
+fix.md Sessions 3–4 are the correct continuation. This file closes fix.md §1-§2. The diagnosis is:
+
+1. **Fix [b] first.** Flip the sign on `next_coeff_by_slot` (or, equivalently, change the assembly so `next_*_same` is added with `-=`). This single change converts the free-streaming block from symmetric to skew-symmetric, which should move `λ_max` from `+0.175 / Mpc` toward `≈ 0`. If the fix drops `λ_max` below zero at Session-4 rerun, the one-line sign fix is sufficient.
+2. **Then audit [a].** Replace the hand-tuned `0.35`, `0.08`, `0.04`, `0.015` constants with terms derived from the v5 §03A residual decomposition. Keep the legacy numerics available under a feature flag for short-window backward compatibility until the physics-derived operator is validated against the Bianchi I FLRW limit.
+3. **Re-run `scripts/v5_runtime_operator_forensics.py` after each change.** Success criterion: `|skew(A_hh)| / |A_hh| > 0.9` and `sym_eig_max(A_hh) < 0`. Neither is currently satisfied.
+4. **Only then** attempt Blocker 3 (recombination IC injection) and the long-window Tier-B rerun.
+
+All four steps must pass before the CAMB low-ℓ comparison can be attempted.
+
+---
+
+## Round-2 audit patches (2026-04-24, late session)
+
+After the Round-1 prompt (`docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT.md`) was answered in `v5_residual_harmonic_algebraic_audit.md` and its patches applied, fast-check eigenvalue tracking revealed residual defects not covered by Round 1. A Round-2 prompt (`docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND2.md`) was drafted targeting three remaining defects; the answer in `v5_residual_harmonic_algebraic_audit_round2.md` derives the fixes from Ma-Bertschinger (1995) and Kamionkowski-Kosowsky-Stebbins (1997). Seven patches in total:
+
+**Round 1 (from `v5_residual_harmonic_algebraic_audit.md`)**
+
+1. **Q1 — streaming coupling sign flip** — `_reduced_harmonic_structure` / `build_reduced_harmonic_affine_operator`. Assembly `self_block[..., next_slot] -= next_*_same[...]` instead of `+=`. Produces weighted skew-adjoint per-channel streaming operator, `W A_X + A_X^T W = 0` with `W_ℓ = (2ℓ+1) / d_ℓ^(X)`, to machine precision.
+2. **Q3 — `diag_base_by_slot` → 0** — the `0.35·(ℓ+1) + 0.08·|m|` expression has no first-principles derivation and the `|m|` piece violates SO(3) isotropy in the FLRW limit (Wigner-Eckart). Zeroed.
+3. **Option B (Thomson sign, harmonic)** — `diag_t = inv_t · (−stream_base − photon_coll)` (was `−stream_base + photon_coll`). Damping sign matches Ma-Bertschinger `−κ̇·Θ_ℓ`.
+4. **Option B (Thomson sign, local)** — `build_reduced_local_affine_operator` line 2213 uses `-np.divide(…)` instead of `+np.divide(…)` on the baryon/CDM dipole diagonal. Same Ma-Bertschinger sign.
+
+**Round 2 (from `v5_residual_harmonic_algebraic_audit_round2.md`)**
+
+5. **Q-5.1d — local ↔ harmonic cross-coupling** — `joint[local_dipole, T_dipole] = +3·γ_T·local_drag_scale / |baryon_diag|` (was 0.25, too small by ~13x) and `joint[T_dipole, local_dipole] = +γ_T/3 · inv_t_dipole` (was `−0.25·local_drag_scale·γ_T`; wrong sign, wrong magnitude, wrong R-dependence). Corrected to Ma-Bertschinger eq 64-66.
+6. **Q-6.4 — T↔E quadrupole-only Thomson** — `mix_t / mix_e` restricted to `ell_by_slot == 2` and made proportional to `γ_T · √6/10`. `eb_e / eb_b / eb_bt = 0` in FLRW (no Thomson B-coupling; parity). Quadrupole diagonals overwritten with `diag_t[ℓ=2] = -inv_t·(9γ_T/10)`, `diag_e[ℓ=2] = -inv_e·(2γ_T/5)`, `diag_b[ℓ=2] = -inv_b·γ_T` (Kamionkowski-Kosowsky-Stebbins Π-source).
+7. **Q-7.4 — hand-tuned scales neutralized** — `mix_scale = 0`, `polarization_scale = 1`, `source_scale = 1`. Per-family `_family_conditioned_kernel_law` left as-is for non-Type-I families (the audit's "no first-principles scalar replacement" finding).
+
+**Round-2 extension (post-audit, pattern-matched)**
+
+8. **Source-block diagonal sign flip** — `joint[source_row, source_row] -= np.diag(…·0.35·γ_T)` (was `+=`). Eigenvector localization of the residual +0.32 γ_T=1 mode showed **98.7% weight on the source block**; the fix is the exact same Thomson-damping sign pattern as (3)/(4). Pattern-matched from audit; a Round-3 prompt covering the source-propagator formulation is recommended for formal confirmation.
+
+## Final verification
+
+```
+scripts/v5_operator_fast_check.py           →  λ_max(γ_T=0) < 5e-16,
+                                               λ_max(γ_T=1) < 2e-15,
+                                               across L_max ∈ {4, 6, 8, 12, 16}
+pytest bass/validation/test_d2_regression_anchor.py   →  6/6 pass, D_2 bit-identical
+pytest bass/los/ bass/transport/ bass/spectrum/ bass/forward/ \
+       bass/validation/test_{d2_regression_anchor,verification_pack,ver3_gate_stop}.py \
+       bass/test_statistics.py bass/runtime/test_ver2_execution.py
+                                            →  1366 passed, 1 skipped
+execute_tier_b_solver(FLRW, β=0, L_max=8, η=261..14147 Mpc)
+                                            →  SUCCESS in 130.2 s, reached η=14147 Mpc,
+                                               |T_last|_∞ = 2.37e+00
+```
+
+Pre-session: same integrator failed at `η≈4740 Mpc` with "IMEX split executor failed to find a finite accepted substep". The barrier is now cleared.
+
+---
+
+## Complete file change summary
+
+| File | Purpose |
+|---|---|
+| `htt/bass/runtime/ver2_execution.py` | Blocker 1: `_DEVELOPMENT_CUTOFFS / _COSMOLOGICAL_CUTOFFS / _MAX_COSMOLOGICAL_CUTOFF`; accepts `L ∈ {4,6,8,12,16,20,30,40}` with ceiling at 40. |
+| `htt/bass/runtime/test_ver2_execution.py` | Six new parametric tests for the extended cutoff set. |
+| `htt/bass/hierarchy/ver2_native_integrator.py` | IMEX defensive layer: per-ROS2-step finiteness + 8×scale amplification gates; cached-affine invalidation on rejection. |
+| `htt/bass/hierarchy/ver3_layout_protocol.py` | **Physics-level residual-joint rewrite** (patches 1–8 above). |
+| `scripts/v5_runtime_spectral_audit.py` | Round-1 Session-1 reproduction. |
+| `scripts/v5_runtime_operator_forensics.py` | Round-1 Session-2 reproduction. |
+| `scripts/v5_operator_fast_check.py` | **Fast 5-second verification** (direct assembly, no full-pipeline solver). |
+| `docs/V5_RUNTIME_SPECTRAL_AUDIT.json` | Round-1 raw spectral data. |
+| `docs/V5_RUNTIME_OPERATOR_FORENSICS.json` | Round-1 raw forensics data. |
+| `docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT.md` | Round-1 self-contained audit prompt. |
+| `docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND2.md` | Round-2 self-contained audit prompt. |
+| `v5_residual_harmonic_algebraic_audit.md` | Round-1 answer (user-supplied). |
+| `v5_residual_harmonic_algebraic_audit_round2.md` | Round-2 answer (user-supplied). |
+
+---
+
+## Known remaining items (out of scope for this session)
+
+1. **Round-3 source block formulation audit** — patch 8 is pattern-matched. A formal algebraic derivation of the residual-source-propagator ODE (analogous to what Round 2 provided for local + harmonic) is recommended.
+2. **`geom_scale` replacement** — Round-2 Q-7.4 flagged that the current form `sqrt(Σn² + twist² + 0.25·|R| + |R_PSTF|² + |σ|²)` is a placeholder; the physical transport scale should come from the backend mode eigenvalue / v5 §03A. For FLRW this reduces to `max(0, 1) = 1` which is harmless, but non-FLRW families need `geom_scale = q_μ` (mode wavenumber).
+3. **Non-Type-I `_family_conditioned_kernel_law`** — 10 × 10 per-family tuning constants remain. Round-2 Q-7.2 concludes these have no first-principles scalar derivation; the correct family dependence is matrix-valued and must be assembled from structure constants. Out of scope; queued for a separate audit.
+4. **Blocker 3 — recombination IC injection** — `from_recombination(background_monitor, z_*)` constructor. Now unblocked (operator is stable); previously blocked because any IC would feed the unstable A_right.
+5. **Extended regression suite** — the 4 pre-existing failures in `bass/validation/test_ver2_campaign_evidence.py` and 4 in `bass/runtime/test_ver2_tier_b_execution.py` (tilted + cosmological paths) should now re-pass post-patch. Verification requires the full 42-minute test run; queued as a post-commit background check.

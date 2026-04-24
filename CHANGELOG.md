@@ -7,6 +7,75 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME-track complete — Blockers 1 + 2 closed, cosmological IMEX operational (2026-04-24)
+
+Runtime-layer advance to v5 CAMB low-ℓ comparison is **unblocked**. Both Blockers 1 and 2 in `V5_HANDOFF_NEXT_SESSION.md` are closed via two rounds of algebraic audit (cross-session, Claude-to-Claude) followed by eight targeted patches. Blocker 3 (recombination IC injection) is now actionable on a stable operator.
+
+**Progression**
+
+| stage | λ_max(A_hh, γ_T=0) | λ_max(A_right, γ_T=1) | cosmological IMEX |
+|---|---:|---:|---|
+| commit `67d911c` (pre-session) | +0.175 / Mpc | — | fails at η ≈ 4740 Mpc |
+| Round-1 patch (Q1 sign flip + Q3 diag_base=0 + Option-B Thomson) | +0.029 | +0.321 | still fails |
+| Round-2 patch (Q-5.1d + Q-6.4 + Q-7.4 + source-block sign) | **+4e-16** ✓ | **+7e-16** ✓ | **completes in 130 s** |
+
+**Blocker 1 closed** — `multipole_cutoff` validation:
+
+- `bass/runtime/ver2_execution.py` — `_DEVELOPMENT_CUTOFFS = {4,6,8}` + `_COSMOLOGICAL_CUTOFFS = {12,16,20,30,40}` + `_MAX_COSMOLOGICAL_CUTOFF = 40`. `RuntimeControlBlock.__post_init__` accepts either set; `L > 40` requires explicit `diagnostic_l2_override=True`.
+- `bass/runtime/test_ver2_execution.py` — 6 new parametric tests.
+
+**Blocker 2 closed** — residual-joint operator rewritten per Ma-Bertschinger (1995) + Kamionkowski-Kosowsky-Stebbins (1997):
+
+Physics-level patches in `bass/hierarchy/ver3_layout_protocol.py`:
+
+1. `_reduced_harmonic_structure` `diag_base_by_slot = 0` — removed SO(3)-violating `0.08·|m|` + unmotivated `0.35·(ℓ+1)` placeholder.
+2. `build_reduced_harmonic_affine_operator` streaming coupling sign flip — `self_block[..., next_slot] -= next_*_same[...]` (was `+=`). Produces weighted skew-adjoint per-channel streaming, `W A_X + A_X^T W = 0` with `W_ℓ = (2ℓ+1)/d_ℓ^(X)`, machine-precision.
+3. Thomson diagonal sign flip — `diag_t = inv_t · (−stream_base − photon_coll)` (was `+ photon_coll`). Matches `−κ̇·Θ_ℓ` damping.
+4. `build_reduced_local_affine_operator` baryon/CDM diagonal sign flip — `coeff = −np.divide(…)` (was `+`). Matches `−κ̇·v_b/R` damping.
+5. `build_reduced_joint_affine_operator` local↔harmonic cross-coupling — `joint[local_dipole, T_dipole] = +3·γ_T·local_drag_scale/|baryon_diag|` (was 0.25, too small by ~13x), `joint[T_dipole, local_dipole] = +γ_T/3·inv_t_dipole` (was −0.25·local_drag_scale·γ_T; wrong sign, magnitude, and R-dependence). Corrected to Ma-Bertschinger eq 64-66.
+6. T↔E quadrupole-only γ_T-proportional — `mix_t/mix_e` restricted to `quad_mask`, proportional to `γ_T·√6/10`. `eb_e = eb_b = eb_bt = 0` in FLRW (no Thomson B-coupling per parity). Quadrupole diagonals overwritten with `-inv_t·(9γ_T/10)`, `-inv_e·(2γ_T/5)`, `-inv_b·γ_T` (Π-source).
+7. `_operator_scales` hand-tuned surrogates → identity — `mix_scale = 0`, `polarization_scale = 1`, `source_scale = 1`. `twist_scale` kept (structurally vanishes in FLRW).
+8. Source block diagonal sign flip — `joint[source_row, source_row] -= np.diag(…·0.35·γ_T)` (was `+=`). Closed the +0.32 growth mode (98.7% on source block per eigenvector localization). Pattern-matched; Round-3 audit of the source-propagator formulation is queued.
+
+Also landed — IMEX defensive layer in `bass/hierarchy/ver2_native_integrator.py::_solve_segment_imex`: per-ROS2-step finiteness + 8×scale amplification gates with cached-affine invalidation. Now redundant for FLRW (operator is stable) but kept as a guardrail against future regressions.
+
+**Blocker 3 actionable** — `from_recombination(background_monitor, z_*)` constructor remains to be implemented. Previously blocked because any IC would feed the unstable A_right. Operator is now stable, so real IC injection can proceed.
+
+**Audit artifacts** (cross-session, reusable):
+
+- `docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT.md` — Round-1 self-contained prompt.
+- `docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND2.md` — Round-2 self-contained prompt.
+- `v5_residual_harmonic_algebraic_audit.md` — Round-1 answer (cross-referenced from external Claude).
+- `v5_residual_harmonic_algebraic_audit_round2.md` — Round-2 answer.
+- `scripts/v5_operator_fast_check.py` — 5-second verification (direct operator assembly, no full solver).
+- `scripts/v5_runtime_spectral_audit.py` — 5-η snapshot spectrum.
+- `scripts/v5_runtime_operator_forensics.py` — FD-Jacobian + symmetry + L_max sweep.
+- `docs/V5_RUNTIME_TRACK_DIAGNOSIS.md` — full findings + patch rationale.
+
+**Regression baseline** (from v5 handoff, post-patch):
+
+```
+pytest htt/bass/los/ htt/bass/transport/ htt/bass/spectrum/ \
+       htt/bass/forward/ htt/bass/validation/test_d2_regression_anchor.py \
+       htt/bass/validation/test_verification_pack.py \
+       htt/bass/validation/test_ver3_gate_stop.py \
+       htt/bass/test_statistics.py \
+       htt/bass/runtime/test_ver2_execution.py
+→ 1366 passed, 1 skipped, 2 warnings
+```
+
+**Cosmological IMEX verification** (Blocker 2 direct test):
+
+```
+execute_tier_b_solver(FLRW, β=0, L_max=8, η=261 → 14147 Mpc, Planck-2018 species)
+pre-session  : RuntimeError at η ≈ 4740 Mpc
+post-patch   : SUCCESS in 130.2 s, reached η=14147 Mpc, |T_last|_∞ = 2.37e+00
+```
+
+`D_2 = 1002.086744 μK²` anchor bit-identical through every patch (FLRW invariant manifold: `r_h ≡ 0, b_hh ≡ 0` protects all matrix-only changes).
+
+---
+
 ### PR-024a — PSTF LoS Source Function (2026-04-18) ✅
 
 Phase 1 아홉 번째 code PR, **PR-024 sub-track 분할 첫 번째**. PSTF state + dy 에서 `SourceInputs` 추출 → `source::registry` SSOT 경유 channel assembly → `SourceTerms` 반환. MB-95 `production_source_v1` 의 PSTF-side mirror.

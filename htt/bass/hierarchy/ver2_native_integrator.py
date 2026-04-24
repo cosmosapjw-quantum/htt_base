@@ -4596,20 +4596,50 @@ class Ver2TierBIntegrator:
                         ):
                             trial_h *= 0.5
                             continue
-                        candidate, cached_covered_source_affine = self._orthogonal_covered_source_ros2_step(
-                            eta_left=float(eta_left),
-                            y_left=y_left,
-                            eta_right=float(eta_next),
-                            y_right=candidate,
-                            affine_left=cached_covered_source_affine,
-                        )
-                        candidate, cached_residual_joint_affine = self._orthogonal_residual_joint_ros2_step(
-                            eta_left=float(eta_left),
-                            y_left=y_left,
-                            eta_right=float(eta_next),
-                            y_right=candidate,
-                            affine_left=cached_residual_joint_affine,
-                        )
+                        with np.errstate(over="ignore", invalid="ignore"):
+                            candidate, cached_covered_source_affine = self._orthogonal_covered_source_ros2_step(
+                                eta_left=float(eta_left),
+                                y_left=y_left,
+                                eta_right=float(eta_next),
+                                y_right=candidate,
+                                affine_left=cached_covered_source_affine,
+                            )
+                        if np.any(~np.isfinite(candidate)):
+                            cached_covered_source_affine = None
+                            trial_h *= 0.5
+                            if trial_h < min_step:
+                                break
+                            continue
+                        candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
+                        if (
+                            candidate_scale > max(8.0 * state_scale, 1.0e6)
+                            and trial_h > min_step
+                        ):
+                            cached_covered_source_affine = None
+                            trial_h *= 0.5
+                            continue
+                        with np.errstate(over="ignore", invalid="ignore"):
+                            candidate, cached_residual_joint_affine = self._orthogonal_residual_joint_ros2_step(
+                                eta_left=float(eta_left),
+                                y_left=y_left,
+                                eta_right=float(eta_next),
+                                y_right=candidate,
+                                affine_left=cached_residual_joint_affine,
+                            )
+                        if np.any(~np.isfinite(candidate)):
+                            cached_residual_joint_affine = None
+                            trial_h *= 0.5
+                            if trial_h < min_step:
+                                break
+                            continue
+                        candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
+                        if (
+                            candidate_scale > max(8.0 * state_scale, 1.0e6)
+                            and trial_h > min_step
+                        ):
+                            cached_residual_joint_affine = None
+                            trial_h *= 0.5
+                            continue
                         y_current = candidate
                         eta_current = float(eta_next)
                         accepted = True
