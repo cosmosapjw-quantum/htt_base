@@ -46,6 +46,7 @@ below CAMB-1.6.6 Planck-2018 unlensed FLRW τ=0).
 | Post-fix | 4 | 1.0 | False | 2.934e+07 | 2.928e+04 | 5.84e-03 |
 | Post-fix | 4 | 0.01 | False | 5.618e+07 | 5.606e+04 | 4.22e-03 |
 | Post-fix | 12 | 1.0 | False | 1.706e+07 | 1.703e+04 | 7.66e-03 |
+| Post-fix | 24 | 1.0 | False | 1.358e+07 | 1.356e+04 | 8.59e-03 |
 
 ### Key observations
 
@@ -118,6 +119,81 @@ To close the convention, future work should:
    docstring claims to be "primordial amplitude squared" but the
    formula treats it linearly (eta_cov = 2·B_K_sq); this naming may
    itself be the convention bug.
+
+## 5. R9-D code archaeology (in-session 2026-04-24)
+
+Tracing the seed→integrator wiring in
+`htt/bass/hierarchy/ver2_native_integrator.py::_build_seeded_initial_state`
+(lines 1581-1681) reveals that **the metric perturbation `eta_cov` is
+not part of the integrator state vector** — only `photon_T`,
+`photon_E`, and `neutrino_reduced` are installed into the runtime IC
+(lines 1645-1650). `eta_cov`, `delta_b`, `theta_b`, `delta_c`,
+`theta_c`, `Z` are unpacked into `matter_seed_observables` (metadata
+dict, lines 1671-1680) and not evolved.
+
+So the seed amplitude `B_K_sq` enters the integrator ONLY via the
+photon hierarchy slots set in
+`pack_regular_adiabatic_seed_from_formulae` (lines 211-214 of
+`regular_adiabatic_ic.py`):
+
+- `photon_T[ℓ=0, m=0] = δ_γ/4 = (B_K_sq/12)·x²`
+- `photon_T[ℓ=1, m=0] = θ_γ = (B_K_sq/27)·x³`
+- `photon_T[ℓ=2, m=0] = π_γ ∝ k·τ_c·θ_γ`
+- `photon_E[ℓ=2, m=0] = π_γ/4`
+- `neutrino_reduced[0] = δ_ν = δ_γ`
+- `neutrino_reduced[1] = θ_ν = (B_K_sq/27)·((4R_ν+23)/denom)·x³`
+- `neutrino_reduced[2] = π_ν = -(4/(3·denom))·x²` (B_K_sq INDEPENDENT)
+- `neutrino_reduced[3] = G_3 = -(4/(21·denom))·x³` (B_K_sq INDEPENDENT)
+
+The amplitude-independent neutrino quadrupole + octupole are the
+mathematical origin of the Round-6/8 visibility-source bias floor:
+even at `b_k_sq = 0` the ν tower carries non-zero
+`π_ν = -4·x²/(3·denom)` and `G_3 = -4·x³/(21·denom)`, which propagate
+through the Boltzmann hierarchy and produce a constant
+`Δ_T ≈ -3.34e-3` regardless of seed amplitude. This is by design (the
+Lowell-§13.2 leading-order formulas were derived with these set as
+constants) but it is *the* reason `compute_linear_probe_transfer_function`
+needs the explicit bias subtraction step.
+
+**Convention implication for the missing factor of ~10⁴ in
+`D_2_probe / D_2_RouteB`**: with `B_K_sq = 1.0` the photon δ_γ
+initial value at `(k=1e-4, η_init=261)` is `(1.0/3)·(0.0261)² ≈
+2.27e-4`. The Planck-2018 physical equivalent at `ζ ≈ 4.6e-5` would
+be `(4.6e-5/3)·(0.0261)² ≈ 1.04e-8`. The probe injects perturbations
+that are `~2.18e+4` times larger than the physical seed. Squared,
+this gives `~4.75e+8` — an order of magnitude *larger* than the
+empirical ratio `1.7e+4`. So either (a) the IMEX evolution damps the
+super-horizon mode by ~10² before recombination, or (b) the LoS
+projector / visibility weighting absorbs the rest. Disambiguation is
+beyond what code reading alone can resolve; needs a single-k
+diagnostic that compares Δ at the end of evolution against the
+predicted T(k)·ζ.
+
+## 6. R9-D residuals deferred
+
+The N_k = 24 dense audit (added 2026-04-24) extends the convergence
+trajectory: ratios 2.93e+4 → 1.70e+4 → 1.36e+4 as N_k 4 → 12 → 24,
+with conv factor 5.84e-3 → 7.66e-3 → 8.59e-3. The trajectory is slowly
+decreasing but the ratio has not stabilized — every doubling of N_k
+shifts the answer by ~25-40%. The dominant contribution is the
+super-horizon spike at k = 1e-4 (`α[ℓ=2] ≈ -10.45`, vs |α| ≲ 1.3 at
+sub-horizon k); as more k-points sample around it, the trapezoid
+weight on that spike falls and the ratio compresses.
+
+The above code archaeology (Section 5) resolves the *mechanism* (eta_cov
+is metadata; only photon ℓ≤2 + ν reduced moments matter; ν π/G_3 floor
+explains bias) but does not pin a single calibration factor. True
+closure requires either:
+- a forward derivation of the IMEX → LoS damping factor between seed
+  amplitude and `Δ_T(η_today)`, or
+- a **per-k diagnostic** that compares Δ at the end of evolution
+  against an analytically-predicted T(k)·ζ at a single k, isolated
+  from the sum over k in the C_ℓ assembly. This bypasses the
+  N_k-dependent quadrature artefact entirely.
+
+Both are punted to a follow-up Round-10. The empirical "throw N_k at
+it" path (point 1 in Section 4) appears to converge slowly enough
+that the per-k diagnostic is the more productive next step.
 
 ## 5. Files touched
 
