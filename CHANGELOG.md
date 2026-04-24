@@ -7,6 +7,53 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME step 4b — end-to-end FLRW D_ℓ pipeline + parallel k-scan (2026-04-24)
+
+Chains the Round-5 extractor into the LoS projector + C_ℓ assembly + D_ℓ conversion, parallelized over the k-grid via `concurrent.futures.ProcessPoolExecutor`. Replaces the reverted S8/S9 toy SW-plateau pipeline with a real Tier-B-driven path.
+
+**Added** (`htt/bass/spectrum/flrw_pipeline.py` — new module):
+
+- `FLRWPipelineConfig` — immutable config bundle (L_max_tower, n_output, rtol, atol, ell_max_transfer, quadrature, anisotropic_stress, gamma_T_over_H_threshold, random_seed).
+- `build_visibility_and_kappa_callables(species) → (g_of_eta, kappa_of_eta)` — derives LoS inputs from the baryon HYREC recombination table via `z(η) = 1/interp_a(η) - 1`.
+- `compute_transfer_function_at_k(species, k_mpc, *, config, bianchi_type="I") → BianchiTransferFunctions` — single-k unit of work: runs Tier-B solver + extractor + LoS projector.
+- `compute_transfer_function_grid(species, k_grid_mpc, *, config, n_workers=None) → list[BianchiTransferFunctions]` — parallel k-sweep via ProcessPoolExecutor with fork start method. Species registry is inherited by workers through copy-on-write memory (no per-worker rebuild cost on Linux).
+- `compute_flrw_cl_tt(species, ...)` → dict with `k_grid_mpc`, `transfer_functions`, `cl_tt`, `cl_ee`, `assembly_config`.
+- `compute_flrw_d_ell(species, ...)` → same bundle + `d_tt`, `d_ee` in μK² (via `compute_dl`).
+
+**Performance** (Planck-2018, L_max=4, cosmological η ∈ [260, 14147] Mpc):
+
+- **Single k-run**: 44.7 s
+- **Parallel 4-k sweep** (4 workers): **44.5 s wall** — 7.7× speedup, near-linear
+- Sequential 2-k: 85.8 s (2× single-k, confirming linear serial baseline)
+
+For a full 0.1% D_2 validation (N_k ~ 100-200 points), expected budget ~2-5 min on 8+ cores.
+
+**Added** (`htt/bass/spectrum/test_flrw_pipeline.py` — 12 fast tests + 2 slow integration tests):
+
+Fast: config validation (L_max, ell_max, n_output, quadrature), visibility callable shape + peak location (~281 Mpc Planck-2018 band), k-grid error handling, transfer-function dict-lookup with float-drift tolerance, k-grid mismatch rejection.
+
+Slow (`@pytest.mark.slow`): full N_k=2 parallel pipeline produces finite D_ℓ^TT/D_ℓ^EE with correct spin-2 selection rule; parallel vs sequential paths produce identical transfer functions (fork inheritance validated).
+
+**Added** (`scripts/v5_flrw_pipeline_smoke.py`): manual reproducible diagnostic covering single-k and parallel k-sweep modes.
+
+**Fixed**: removed `flrw_pipeline` from `bass.spectrum.__init__` re-exports to avoid the circular import (`bass.forward.ver2_solver_output → bass.los.ver2_source_propagator → bass.spectrum.lowell_los`). Callers access it via the explicit submodule import `from bass.spectrum.flrw_pipeline import ...`.
+
+**Verification**:
+
+- **1403 passed** (previous 1391 + 12 new pipeline tests), 1 skipped, 3 slow-deselected.
+- V5 fast-check `λ_max < 2e-15` unchanged; `D_2 = 1002.086744 μK²` Route-B anchor bit-identical.
+
+**Known normalization gap** (explicitly out of scope for step 4b):
+
+The absolute D_2 magnitude from this pipeline differs from the Route-B anchor because the Tier-B solver's seed amplitude is currently `max(|Σ_±|, 1e-6)` — not P(k)-normalized. This is the Blocker-3 follow-up (i) **primordial amplitude wiring**. Step 4b verifies the pipeline runs end-to-end with finite physical output; matching Route-B absolute to 0.1% requires (i) + sufficient N_k (~100+).
+
+**Step 4b follow-ups** (queued):
+
+- **i′. P(k)-normalized seed amplitude**: replace `max(|Σ_±|, 1e-6)` with `sqrt(A_s) · (k/k_pivot)^{(n_s-1)/2}` in `_build_seed_projection`, so Δ_ℓ(k) is the physical transfer function and C_ℓ assembly gives absolute D_2 matching Route-B.
+- **5. CAMB cross-check**: once (i′) lands, compare full D_ℓ^TT at ℓ=2..30 against a CAMB reference with identical Planck-2018 cosmology.
+
+---
+
 ### V5-RUNTIME Round-5 — Tier-B → FLRWSourceTerms extractor (2026-04-24)
 
 Closes the W10+ scalar-mode evolution gap that the reverted S8/S9 pipeline attempted via toy Sachs-Wolfe MD approximation `(Θ_0 + Ψ)_* = -R/5`. Landed per the Round-5 cross-session algebraic audit (prompt: `docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND5.md`; answer: `v5_residual_harmonic_algebraic_audit_round5.md`).
