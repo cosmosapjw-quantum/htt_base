@@ -268,6 +268,65 @@ per decade in k. Log-log slope is `-1.83 to -2.00` — i.e., the ratio
    which case linear-probe assembly should restrict its k-grid to
    `k > 3e-4` and use an analytic SW continuation below).
 
+## 5d. R9-D bias-floor probe (added 2026-04-24) — root cause found
+
+`scripts/v5_round9_bias_floor_probe.py` ran
+`compute_transfer_function_at_k` directly at `b_k_sq = 0` across the
+same super-horizon k-grid. Hypothesis 1 from Section 5c is confirmed
+and amplified — the bias is **larger** than the target signal AND
+has **opposite sign** across the entire super-horizon range:
+
+| k [Mpc⁻¹] | Δ_bias(ℓ=2) | Δ_target(ℓ=2) | α(ℓ=2) | \|Δ_b\|/\|Δ_t\| |
+|---|---|---|---|---|
+| 1e-5 | +5.81 | -3.02 | -8.83 | 1.93 |
+| 3e-5 | +7.33 | -3.24 | -10.57 | 2.26 |
+| 1e-4 | +7.89 | -2.56 | -10.45 | **3.08** |
+| 3e-4 | +1.81 | -0.89 | -2.70 | 2.03 |
+| 1e-3 | -0.003 | +0.009 | +0.013 | 0.36 |
+
+`α(k) = (Δ_target − Δ_bias) / probe ≈ -(|Δ_target| + |Δ_bias|) / probe`
+across most of the super-horizon range — the "linear coefficient" we
+extract is dominated by the **bias floor offset**, not by the genuine
+linear seed response. The constant `α(ℓ=2) ≈ -10` for `k = 1e-5 …
+1e-4` is essentially noise wrapped around the bias.
+
+**Root cause located** (`bass/perturbation/regular_adiabatic_ic.py`
+lines 144-145):
+
+```python
+pi_nu = -(4.0 / (3.0 * denom)) * x2      # missing × B_K_sq
+G_3   = -(4.0 / (21.0 * denom)) * x3     # missing × B_K_sq
+```
+
+Per Ma-Bertschinger 1995 eq. 96 (and the `δ_γ`, `θ_γ`, etc. in the
+SAME function), the ν shear in the regular adiabatic mode scales
+linearly with the curvature amplitude `ζ`. The two formulas above are
+missing the `B_K_sq` factor present everywhere else in the function —
+they assert "neutrino quadrupole and octupole exist at b_k_sq=0",
+which is unphysical for an adiabatic mode and explains the
+amplitude-independent floor.
+
+**This is a real seed-formula bug**, not a convention factor. It has
+been present since FB-5.3 was authored; it was masked because:
+- pre-Round-6 runs used `bias_subtraction=False` and the bias
+  contaminated every extraction silently;
+- Round-6 introduced bias subtraction but only spot-tested at
+  `k = 1e-3` where `|Δ_bias|/|Δ_target| ≈ 0.36` (small enough to be
+  ignored);
+- only the Round-9 super-horizon sweep + this direct bias probe
+  surfaced the dominance.
+
+**Round-10 fix proposal**:
+1. Add `B_K_sq *` factor to both `pi_nu` and `G_3` in `_seed_formulae`.
+2. Verify against MB-95 eq. 96 explicit form and Lowell §13.2 master
+   reference.
+3. Treat as a regression-affecting change: the legacy
+   `D_2 = 1002.086744 μK²` bit-identity anchor was computed with the
+   buggy formulas, so it will shift. Coordinate via SSOT drift audit
+   (similar to `SSOT_TCMB_DRIFT_2026-04-19`).
+4. Re-run the convention audit — expect convergence to ~unity once
+   the bias is properly amplitude-scaled.
+
 ## 6. R9-D residuals deferred
 
 The N_k = 24 dense audit (added 2026-04-24) extends the convergence
