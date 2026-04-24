@@ -179,6 +179,8 @@ time = 43.4 s
 
 Kept as a diagnostic (not a unit test) — preserves the full cosmological-range validation after each kernel-pack wiring or closure-policy change without bloating CI runtime.
 
+**Also added** (`htt/bass/runtime/test_cosmological_smoke.py`): pytest mirror of the same smoke gated by `@pytest.mark.slow`. Opt-in via `pytest -m slow`. Asserts Blocker-3 η anchors (260 ≤ η_initial ≤ 270, 14000 ≤ η_final ≤ 14300), Blocker-2 reach-to-eta_final, physically bounded final tower state, and 180 s timing budget. Fast default baseline unchanged (1378 + 1 skipped); running with `-m slow` adds 45 s for this single end-to-end verification.
+
 ---
 
 ### V5-RUNTIME Round-4 — q_h / Wigner-3j / Π table closed (dormant, 2026-04-24)
