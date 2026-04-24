@@ -112,6 +112,16 @@ def test_primordial_b_k_sq_fn_callable_override() -> None:
     )
 
 
+def test_linear_probe_rejects_non_positive_probe_b_k_sq(species) -> None:
+    """Round-8 linear-probe API validates its probe amplitude."""
+    from bass.spectrum.flrw_pipeline import compute_linear_probe_transfer_function
+
+    with pytest.raises(ValueError, match="probe_b_k_sq must be positive"):
+        compute_linear_probe_transfer_function(species, 1.0e-3, probe_b_k_sq=0.0)
+    with pytest.raises(ValueError, match="probe_b_k_sq must be positive"):
+        compute_linear_probe_transfer_function(species, 1.0e-3, probe_b_k_sq=-1.0)
+
+
 def test_subtract_transfer_functions_helper() -> None:
     """_subtract_transfer_functions yields elementwise target − bias on
     every Δ field; zero-vs-zero returns zeros."""

@@ -86,6 +86,7 @@ __all__ = [
     "FLRWPipelineConfig",
     "compute_transfer_function_at_k",
     "compute_transfer_function_grid",
+    "compute_linear_probe_transfer_function",
     "compute_flrw_cl_tt",
     "compute_flrw_d_ell",
     "build_visibility_and_kappa_callables",
@@ -661,6 +662,99 @@ def _worker_task_bias_pair(
         float(k_mpc),
         config=cfg_override,
         bianchi_type=_WORKER_BIANCHI_TYPE,
+    )
+
+
+def compute_linear_probe_transfer_function(
+    species: "SpeciesBackgroundRegistry",
+    k_mpc: float,
+    *,
+    config: FLRWPipelineConfig | None = None,
+    bianchi_type: str = "I",
+    probe_b_k_sq: float = 1.0,
+) -> BianchiTransferFunctions:
+    """V5 step-4b-(a) Round-8 linear-probe transfer extraction.
+
+    Returns the *linear coefficient* α(k) = (Δ(b_k_sq=probe) − Δ(b_k_sq=0)) /
+    probe_b_k_sq — the seed-independent slope of the solver response
+    in the linear regime.
+
+    Background (Round-8 findings):
+      - The solver response to primordial_b_k_sq is LINEAR for
+        ``b_k_sq ∈ [~1e-3, ~10]`` (confirmed by diagnostic sweep).
+      - Below that range the output is dominated by the
+        seed-independent visibility-source bias (~O(1e-3)); seed
+        signal disappears into float precision noise.
+      - Above ~10, the seed formula's ``eta_cov = 2·B_K·(1 - x²/12 ·
+        (B_K - 10/denom))`` picks up a quadratic B_K² term that
+        saturates the response.
+      - Physical Planck ζ (~4.6e-5) is BELOW the bias noise floor, so
+        directly running at physical amplitude gives unreliable
+        output. Instead: probe in the linear regime, extract α(k),
+        then analytically scale to Planck ζ² via C_ℓ assembly.
+
+    This function dispatches TWO solver runs (``b=0`` bias +
+    ``b=probe`` target) in parallel (2 workers) and returns
+    α(k) = (target − bias) / probe_b_k_sq for every Δ field.
+
+    Notes
+    -----
+    The returned "α" transfer function has units "per unit B_K_sq",
+    not "per unit ζ". The exact B_K ↔ ζ convention is a pending audit;
+    if B_K_sq = ζ², then α(k) is the transfer function per unit ζ² and
+    pairs directly with P_ζ(k) in C_ℓ assembly. If B_K_sq = ζ, an
+    additional √ζ rescaling is needed at assembly time.
+    """
+
+    from dataclasses import replace as _dc_replace
+    from concurrent.futures import ProcessPoolExecutor as _PPE
+    import multiprocessing as _mp
+
+    cfg = config or FLRWPipelineConfig()
+    if not (probe_b_k_sq > 0.0):
+        raise ValueError(
+            f"probe_b_k_sq must be positive for linear extrapolation; "
+            f"got {probe_b_k_sq}"
+        )
+    if not (1.0e-4 <= probe_b_k_sq <= 10.0):
+        import warnings
+
+        warnings.warn(
+            f"probe_b_k_sq={probe_b_k_sq} is outside the Round-8 "
+            f"verified linear regime [1e-4, 10]; results may be "
+            f"dominated by bias (below) or quadratic saturation "
+            f"(above). See docs for the b_k_sq response sweep.",
+            stacklevel=2,
+        )
+
+    tasks = [
+        (float(k_mpc), 0.0),
+        (float(k_mpc), float(probe_b_k_sq)),
+    ]
+
+    global _WORKER_SPECIES, _WORKER_CONFIG, _WORKER_BIANCHI_TYPE
+
+    _WORKER_SPECIES = species
+    _WORKER_CONFIG = cfg
+    _WORKER_BIANCHI_TYPE = bianchi_type
+    try:
+        ctx = _mp.get_context("fork")
+        with _PPE(max_workers=2, mp_context=ctx, initializer=_worker_init) as exe:
+            bias_tf, target_tf = list(exe.map(_worker_task_bias_pair, tasks))
+    finally:
+        _WORKER_SPECIES = None
+        _WORKER_CONFIG = None
+        _WORKER_BIANCHI_TYPE = "I"
+
+    inv = 1.0 / float(probe_b_k_sq)
+    return BianchiTransferFunctions(
+        delta_T_m0=(target_tf.delta_T_m0 - bias_tf.delta_T_m0) * inv,
+        delta_T_m_plus2=(target_tf.delta_T_m_plus2 - bias_tf.delta_T_m_plus2) * inv,
+        delta_T_m_minus2=(target_tf.delta_T_m_minus2 - bias_tf.delta_T_m_minus2) * inv,
+        delta_E_m0=(target_tf.delta_E_m0 - bias_tf.delta_E_m0) * inv,
+        delta_E_m_plus2=(target_tf.delta_E_m_plus2 - bias_tf.delta_E_m_plus2) * inv,
+        delta_E_m_minus2=(target_tf.delta_E_m_minus2 - bias_tf.delta_E_m_minus2) * inv,
+        delta_B_all_zero=(target_tf.delta_B_all_zero - bias_tf.delta_B_all_zero) * inv,
     )
 
 
