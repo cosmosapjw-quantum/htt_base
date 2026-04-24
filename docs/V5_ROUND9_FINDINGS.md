@@ -212,6 +212,62 @@ sub-horizon needs a CAMB transfer-function comparison rather than
 the SW analytic — Round-10 should switch reference once it has CAMB
 output at the same Planck-2018 cosmology.
 
+## 5c. R9-D super-horizon k-sweep (added 2026-04-24)
+
+The Round-10 starting-point sweep was actually run within the same
+/loop iteration. Result is **stronger than expected** — the convention
+is *not* a constant in the SW regime either.
+
+| k [Mpc⁻¹] | ℓ=0 | ℓ=1 | ℓ=2 | ℓ=3 | ℓ=4 |
+|---|---|---|---|---|---|
+| 1e-5  | 4.33e+4 | 3.86e+4 | **3.45e+4** | 3.08e+4 | 2.76e+4 |
+| 3e-5  | 5.70e+3 | 5.13e+3 | **4.64e+3** | 4.20e+3 | 3.81e+3 |
+| 1e-4  | 5.92e+2 | 5.21e+2 | **4.69e+2** | 4.25e+2 | 3.86e+2 |
+| 3e-4  | 3.17e+1 | 1.11e+2 | **5.19e+1** | 4.10e+1 | 3.45e+1 |
+| 1e-3  | -0.50   | 24.5    | **0.88**    | -25.9   | 3.26    |
+
+**Per-decade scaling (ℓ=2)**: 34468 → 4636 → 469 → 52 ≈ factor 73-89
+per decade in k. Log-log slope is `-1.83 to -2.00` — i.e., the ratio
+`α_meas / α_SW ∝ k⁻²` (not constant!).
+
+**Physical interpretation**:
+- The pure-SW prediction has `T_SW(ℓ=2, k → 0) ∝ k²`
+  (from `j_2(x) ~ x²/15`).
+- Our `α_meas(ℓ=2, k → 0) ≈ -10` is **constant** across `k = 1e-5 …
+  1e-4`. It does NOT decay as `k²` super-horizon as it should.
+- This is a real **physics/numerical pathology**, not just a
+  convention mismatch. The BASS pipeline (seed → IMEX → LoS Bessel
+  → α extraction) produces a non-decaying constant transfer at
+  super-horizon scales for ℓ=2 — which is unphysical.
+
+**Likely causes** (ranked by mechanism):
+1. **Bias-subtraction floor at small k**: the ν π/G_3 amplitude-
+   independent terms (Section 5) become numerically dominant when
+   the linear seed signal at b_k_sq=1.0 is small (`δ_γ_init = x²/3
+   ≈ 2.3e-6` at k=1e-5). The "linear coefficient" extracted by
+   bias subtraction is a difference of two ~equally-noisy terms.
+2. **LoS Bessel projector**: at very small k, `k(η_0 - η_*) < 1`
+   for the entire LoS integration; the projector may have a
+   numerical regime change at this boundary that doesn't enforce
+   the proper k^ℓ super-horizon suppression.
+3. **Over-aggressive normalization**: even with
+   `unit_amplitude_normalization=False`, some other internal
+   normalization may be dividing by a small quantity at small k.
+
+**Round-10 must**:
+1. Probe the bias floor at small k explicitly: run a bias-only
+   (`b_k_sq=0`) extraction at k ∈ {1e-5, 3e-5, 1e-4, 3e-4, 1e-3}
+   and compare against the linear target. If bias ≈ target at small
+   k, hypothesis 1 is confirmed.
+2. Add an analytic super-horizon prediction with finite ν correction
+   (replace the trivial `T_SW = -j_ℓ/5` with the full early-universe
+   solution including ν anisotropic stress).
+3. Decide whether the super-horizon pathology is a genuine pipeline
+   bug to fix, or an inherent property of the bias-subtraction
+   strategy that makes super-horizon extraction infeasible (in
+   which case linear-probe assembly should restrict its k-grid to
+   `k > 3e-4` and use an analytic SW continuation below).
+
 ## 6. R9-D residuals deferred
 
 The N_k = 24 dense audit (added 2026-04-24) extends the convergence
