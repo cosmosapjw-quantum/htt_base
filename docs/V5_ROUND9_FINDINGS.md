@@ -169,6 +169,49 @@ beyond what code reading alone can resolve; needs a single-k
 diagnostic that compares Δ at the end of evolution against the
 predicted T(k)·ζ.
 
+## 5b. R9-D per-k SW diagnostic (added 2026-04-24)
+
+`scripts/v5_round9_per_k_diagnostic.py` runs single-k linear probes
+and compares `α(k, ℓ)` against the analytic Sachs-Wolfe prediction
+`T_SW(k, ℓ) = -j_ℓ(k·(η_0 − η_*))/5` (probe=1.0, η_0−η_* = 13867 Mpc).
+The ratio `α_meas / α_SW` isolates the convention factor without
+N_k quadrature contamination — the per-k diagnostic identified at
+the end of Section 6.
+
+| k [Mpc⁻¹] | ℓ=0 | ℓ=1 | ℓ=2 | ℓ=3 | ℓ=4 |
+|---|---|---|---|---|---|
+| **1e-4** (super-horizon) | 592 | 521 | 469 | 425 | 386 |
+| 1e-3 (transition)         | -0.50 | 24.5 | 0.88 | -25.9 | 3.26 |
+| 5e-2 (Doppler peak)       | 86.7 | 2660 | 72.9 | 2634 | 53.5 |
+
+**Super-horizon (k = 1e-4)**: ratios cluster at ~470 across ℓ
+(monotonic decrease 592 → 386, ~30% spread). This is the cleanest
+single number Round-9 produced for the convention factor — the
+super-horizon SW formula is exact in the matter-dominated limit
+and the spread reflects the ℓ-dependent finite-η_* corrections
+plus the residual ν π/G_3 floor in the ν tower.
+
+**Sub-horizon (k = 1e-3, 5e-2)**: SW alone is inadequate. At
+intermediate k=1e-3 the ratio has both signs and varies wildly; at
+the Doppler-peak region k=5e-2 the ratios oscillate with ℓ between
+50 and 2700 because the actual CMB transfer function has a complex
+acoustic-peak structure that pure SW misses entirely.
+
+**Implication for the C_2-summed audit**: per-k SW gives `cal ≈
+1/470 ≈ 2.1e-3`. The C_2-summed empirical conv factor `8.59e-3` is
+~4× larger because the C_ℓ assembly weights heavily toward
+sub-horizon k where the "ratio" is much larger than 470 (e.g. ~2700
+at k=5e-2 ℓ=1). The two numbers are consistent — the C_2 sum is
+dominated by k bands where SW under-predicts the true transfer.
+
+**Round-10 starting point**: the super-horizon diagnostic at multiple
+k ∈ [1e-5, 1e-3] should empirically establish whether `~1/470` is
+k-independent in the SW-valid regime (and what the residual ℓ
+dependence actually means physically). Once super-horizon is pinned,
+sub-horizon needs a CAMB transfer-function comparison rather than
+the SW analytic — Round-10 should switch reference once it has CAMB
+output at the same Planck-2018 cosmology.
+
 ## 6. R9-D residuals deferred
 
 The N_k = 24 dense audit (added 2026-04-24) extends the convergence
