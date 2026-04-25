@@ -7,6 +7,74 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-15 P1: PSTF formalization hand-off (2026-04-25)
+
+After Round-15 P0 (commit `cb82a2a`) closed D-1 (LoS grid decoupling),
+P1 was scoped in the session opener as a "D-3 gauge fix, sub-week" that
+prescribed `theta0_g_newtonian = theta0_g_synchronous + h_S_dot/6`. Two
+empirical findings emerged during P1 scoping that require re-scoping:
+
+1. **BASS does not use the synchronous gauge.** The hierarchy RHS
+   (`hierarchy_rhs.py:343` `hierarchy_rhs_photon_from_state`) operates
+   on `PSTFHierarchyState` with T1/T7/T8/T9 covariant operators and
+   carries no `h_S` in `IntegrationResult`. The session opener's
+   `+ h_S_dot/6` cannot be applied as written.
+
+2. **The §10 decisive test oracle breaks at k > 10⁻²**, independently
+   of any BASS code. Even integrating CAMB's own `T_source` (from
+   `get_time_evolution`) over CAMB's full η range with 30k trapezoidal
+   samples gives `LoS / delta_p_l_k = 1.0000` at k = 1e-3, but
+   `−0.2213` at k = 5e-2 and `0.0001` at k = 8e-2. CAMB's exposed
+   `T_source` is not what CAMB integrates internally to produce
+   `delta_p_l_k` (additional RSA / second-order TCA / late-time
+   refinements at sub-horizon). What previously looked like "BASS
+   error at high k" was largely a CAMB-introspection artifact.
+
+   Conversely, at every (k, ℓ) where the §10 oracle is itself valid
+   (k ≤ 10⁻²) and the integrator η_init truncation is lifted to η = 100
+   Mpc, BASS post-D-1 produces ratios within 5% of CAMB direct
+   (k=1e-3 ℓ=2: 0.93; k=1e-3 ℓ=3: 0.98; k=1e-2 ℓ=2: 1.04; k=1e-2 ℓ=3:
+   0.99). The PSTF assembly is structurally correct in the FLRW limit
+   without any gauge-conversion patch.
+
+User decision (2026-04-25): mathematical formalization of the PSTF /
+1+3 covariant / tetrad framework should be done by an external
+research-focused LLM session, not by a coding agent. Bianchi II–IX
+cannot be expressed cleanly in synchronous gauge, so the formalism
+must remain PSTF-native end-to-end (not a stepping stone toward
+Newtonian).
+
+This commit lands the hand-off package
+[docs/V5_ROUND15_P1_EXTERNAL_LLM_BRIEFING.md](docs/V5_ROUND15_P1_EXTERNAL_LLM_BRIEFING.md)
+(~22 KB) with:
+
+- §1 Mission — three deliverables (D1 FLRW PSTF derivation, D2 ℓ = 0
+  monopole convention audit, D3 Bianchi tetrad-frame extension blueprint).
+- §2 Existing-doc inventory — 21 PSTF / 1+3 / tetrad / Bianchi docs
+  already in the repo (`docs/lowell_bianchi_solver_reference.md` 25 KB
+  with 18 sections, the CAMB↔PSTF mapping spec 26 KB,
+  `docs/PHYSICS_REFERENCES.md`, plus implementation files), tiered by
+  read priority. Confirms PSTF formalization is **partial, not absent**.
+- §3 What we tried, where we succeeded, where we failed — including the
+  Round-15 P0 outcome, the post-fix ratio table, and the §10-oracle-
+  breaks-at-high-k diagnostic.
+- §4 Gap analysis — five concrete documentation gaps that the LLM
+  session must close (FLRW derivation, ℓ = 0 convention, Bianchi
+  extension, high-k analytic oracle, code mapping).
+- §5 Prompt list R1–R7 — seven self-contained prompts to paste
+  sequentially into the external session: ground-in / FLRW derive /
+  ℓ = 0 audit / Bianchi extension / analytic oracles / code map /
+  optional second-LLM audit prompt.
+- §6 Acceptance criteria + §7 constraints (PSTF primary, no code
+  change from LLM, anchor invariants, citation requirements).
+
+The deliverable from the LLM session will be docs-only
+(`docs/V5_ROUND15_P1_PSTF_DERIVATION.md`); coding agent picks up code
+follow-ups (analytic-oracle unit tests, any small assembly corrections
+identified by the executive summary) only after user review.
+
+Anchor invariants unchanged: this commit is documentation only.
+
 ### V5-RUNTIME Round-15 P0: D-1 LoS grid decoupling (2026-04-25)
 
 Per the Round-15 session opener, decouple the LoS quadrature η-grid
