@@ -1,0 +1,20 @@
+  ℓ=0  Δ_bias= 0.0000e+00  Δ_target= 7.0042e-03  α= 7.0042e-03  |Δ_bias|/|Δ_target|= 0.0000
+  ℓ=1  Δ_bias= 0.0000e+00  Δ_target= 6.9675e-02  α= 6.9675e-02  |Δ_bias|/|Δ_target|= 0.0000
+  ℓ=2  Δ_bias= 0.0000e+00  Δ_target= 1.2718e-02  α= 1.2718e-02  |Δ_bias|/|Δ_target|= 0.0000
+  ℓ=3  Δ_bias= 0.0000e+00  Δ_target=-6.2016e-02  α=-6.2016e-02  |Δ_bias|/|Δ_target|= 0.0000
+  ℓ=4  Δ_bias= 0.0000e+00  Δ_target=-4.3404e-02  α=-4.3404e-02  |Δ_bias|/|Δ_target|= 0.0000
+
+====================================================================================
+Bias-vs-target dominance map (focus on ℓ=2):
+       k_mpc     Δ_bias(ℓ=2)   Δ_target(ℓ=2)          α(ℓ=2)   |Δ_b|/|Δ_t|
+   1.000e-05      0.0000e+00     -8.8255e+00     -8.8255e+00        0.0000
+   3.000e-05      0.0000e+00     -1.0565e+01     -1.0565e+01        0.0000
+   1.000e-04      0.0000e+00     -1.0454e+01     -1.0454e+01        0.0000
+   3.000e-04      0.0000e+00     -2.6978e+00     -2.6978e+00        0.0000
+   1.000e-03      0.0000e+00      1.2718e-02      1.2718e-02        0.0000
+====================================================================================
+Interpretation:
+  - |Δ_bias|/|Δ_target| ≈ 1: bias DOMINATES; linear extraction
+    is differencing two numerically-equal terms → noise.
+  - |Δ_bias|/|Δ_target| ≪ 1: bias is a small correction;
+    α extraction is reliable.

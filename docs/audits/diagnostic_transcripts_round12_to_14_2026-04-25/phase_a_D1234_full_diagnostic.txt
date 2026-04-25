@@ -1,0 +1,99 @@
+Loading Planck-2018 species registry...
+/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/species/registry.py:265: RuntimeWarning: recombination table z-range [0.0, 8000.0] does not fully cover FLRW η-grid (z ∈ [0.0, 99999999.0]); queries of x_e / T_m / tau_dot outside the table will raise. Use recombination_warning_policy='ignore' for high-volume parameter sweeps or inference loops that already treat the missing early-time region as expected.
+  baryon = BaryonBackground(
+species ready.
+
+
+============================================================================
+D1+D2 — Per-k Φ(η) dump + constraint-violation probe
+============================================================================
+Analytic super-horizon prediction: Φ ≈ (3/5)·b_k_sq = 0.6 (k-indep)
+Clean constraint: |R|/|δρ_tot| should be O(1e-12) or better
+
+--- k = 1.000e-04 Mpc⁻¹, b_k_sq = 1.0 ---
+  solver done in 42.7 s
+  η_init=  260.1 Mpc:  Ψ=-3.3562e-01  Θ_0=+3.4743e-05  v_b=+6.5200e-07  Π=-2.4335e-08
+  η_*    =  260.1 Mpc:  Ψ=-3.3562e-01  Θ_0=+3.4743e-05  SW=(Θ_0+Ψ)=-3.3558e-01
+  η_today=14147.4 Mpc:  Ψ=+7.3904e-03  Θ_0=+2.9290e+00
+  Ψ at η_*  / analytic 0.6 = -5.5936e-01
+  SW at η_* / analytic 0.4 = -8.3896e-01  (unity = clean SW, |large| = source extractor pathology)
+  Ψ(η) along grid:
+    η=    260.14  Ψ=-3.3562e-01  Θ_0=+3.4743e-05
+    η=   3787.05  Ψ=+3.9281e-01  Θ_0=+7.5937e-01
+    η=   7313.96  Ψ=+6.9547e-02  Θ_0=+1.5038e+00
+    η=  10840.87  Ψ=+2.1725e-02  Θ_0=+2.2419e+00
+    η=  14147.35  Ψ=+7.3904e-03  Θ_0=+2.9290e+00
+
+--- k = 3.000e-04 Mpc⁻¹, b_k_sq = 1.0 ---
+  solver done in 42.9 s
+  η_init=  260.1 Mpc:  Ψ=-3.3802e-01  Θ_0=+3.1269e-04  v_b=+1.7604e-05  Π=-1.9711e-06
+  η_*    =  260.1 Mpc:  Ψ=-3.3802e-01  Θ_0=+3.1269e-04  SW=(Θ_0+Ψ)=-3.3771e-01
+  η_today=14147.4 Mpc:  Ψ=+1.0411e-03  Θ_0=+2.9290e+00
+  Ψ at η_*  / analytic 0.6 = -5.6337e-01
+  SW at η_* / analytic 0.4 = -8.4427e-01  (unity = clean SW, |large| = source extractor pathology)
+  Ψ(η) along grid:
+    η=    260.14  Ψ=-3.3802e-01  Θ_0=+3.1269e-04
+    η=   3787.05  Ψ=+4.6946e-02  Θ_0=+7.5920e-01
+    η=   7313.96  Ψ=+8.6788e-03  Θ_0=+1.5038e+00
+    η=  10840.87  Ψ=+2.8442e-03  Θ_0=+2.2419e+00
+    η=  14147.35  Ψ=+1.0411e-03  Θ_0=+2.9290e+00
+
+--- k = 1.000e-03 Mpc⁻¹, b_k_sq = 1.0 ---
+  solver done in 42.7 s
+  η_init=  260.1 Mpc:  Ψ=-3.6537e-01  Θ_0=+3.4743e-03  v_b=+6.5200e-04  Π=-2.4335e-04
+  η_*    =  260.1 Mpc:  Ψ=-3.6537e-01  Θ_0=+3.4743e-03  SW=(Θ_0+Ψ)=-3.6190e-01
+  η_today=14147.4 Mpc:  Ψ=+3.1927e-04  Θ_0=+2.9322e+00
+  Ψ at η_*  / analytic 0.6 = -6.0895e-01
+  SW at η_* / analytic 0.4 = -9.0474e-01  (unity = clean SW, |large| = source extractor pathology)
+  Ψ(η) along grid:
+    η=    260.14  Ψ=-3.6537e-01  Θ_0=+3.4743e-03
+    η=   3787.05  Ψ=+7.6504e-03  Θ_0=+7.6242e-01
+    η=   7313.96  Ψ=+1.7597e-03  Θ_0=+1.5070e+00
+    η=  10840.87  Ψ=+6.9770e-04  Θ_0=+2.2451e+00
+    η=  14147.35  Ψ=+3.1927e-04  Θ_0=+2.9322e+00
+
+============================================================================
+D3 — k_min sweep (12 log-spaced points each)
+============================================================================
+
+--- k_min = 1.000e-05, k_grid = 12 points → [1e-05, 1e-1] ---
+  done in 51.9 s
+  D_2^probe = 3.9645e+06 μK²,  D_2/Route-B = 3.9563e+03,  conv = √(1/ratio) = 1.5899e-02
+
+--- k_min = 3.000e-05, k_grid = 12 points → [3e-05, 1e-1] ---
+  done in 52.1 s
+  D_2^probe = 3.0925e+06 μK²,  D_2/Route-B = 3.0860e+03,  conv = √(1/ratio) = 1.8001e-02
+
+--- k_min = 1.000e-04, k_grid = 12 points → [1e-04, 1e-1] ---
+  done in 51.6 s
+  D_2^probe = 7.5811e+05 μK²,  D_2/Route-B = 7.5654e+02,  conv = √(1/ratio) = 3.6357e-02
+
+--- k_min = 3.000e-04, k_grid = 12 points → [3e-04, 1e-1] ---
+  done in 51.5 s
+  D_2^probe = 9.1720e+04 μK²,  D_2/Route-B = 9.1529e+01,  conv = √(1/ratio) = 1.0453e-01
+
+--- k_min = 1.000e-03, k_grid = 12 points → [1e-03, 1e-1] ---
+  done in 53.8 s
+  D_2^probe = 3.2240e+04 μK²,  D_2/Route-B = 3.2173e+01,  conv = √(1/ratio) = 1.7630e-01
+
+============================================================================
+D4 — ConstraintProjectionPolicy.every_n_steps toggle
+============================================================================
+Default: every_n_steps=4 (status APPROXIMATE)
+Tighter: every_n_steps=1 (constraint enforced every step)
+
+--- Default (every_n_steps=4) baseline ---
+  done in 54.6 s
+  D_2 = 7.5811e+05,  ratio = 7.5654e+02
+
+--- Tighter (every_n_steps=1) ---
+  done in 53.4 s
+  D_2 = 7.5811e+05,  ratio = 7.5654e+02
+
+  |Δ_D2| / D_2_default = 0.0000e+00
+  → if ≪ 1: IMEX projection drift is NOT the root cause
+  → if  ~ 1 or larger: confirms IMEX drift contribution
+
+============================================================================
+ALL DIAGNOSTICS COMPLETE
+============================================================================

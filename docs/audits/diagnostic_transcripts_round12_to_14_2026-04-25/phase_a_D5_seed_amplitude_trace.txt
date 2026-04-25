@@ -1,0 +1,38 @@
+Loading Planck-2018 species registry...
+/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/species/registry.py:265: RuntimeWarning: recombination table z-range [0.0, 8000.0] does not fully cover FLRW η-grid (z ∈ [0.0, 99999999.0]); queries of x_e / T_m / tau_dot outside the table will raise. Use recombination_warning_policy='ignore' for high-volume parameter sweeps or inference loops that already treat the missing early-time region as expected.
+  baryon = BaryonBackground(
+species ready.
+
+
+============================================================================
+D5 — seed_factory amplitude_reference trace (auditor #4 H-5.1)
+============================================================================
+
+--- k = 1.000e-04 Mpc⁻¹, b_k_sq = 1.0 ---
+  solver done in 42.6 s
+  projected_seed.amplitude        = 1.389739e-04
+  seed amplitude / b_k_sq         = 1.389739e-04
+
+--- k = 1.000e-03 Mpc⁻¹, b_k_sq = 1.0 ---
+  solver done in 42.4 s
+  projected_seed.amplitude        = 1.389739e-02
+  seed amplitude / b_k_sq         = 1.389739e-02
+
+============================================================================
+D1+D2 — Per-k Φ(η) dump + constraint-violation probe
+============================================================================
+Analytic super-horizon prediction: Φ ≈ (3/5)·b_k_sq = 0.6 (k-indep)
+Clean constraint: |R|/|δρ_tot| should be O(1e-12) or better
+
+--- k = 1.000e-04 Mpc⁻¹, b_k_sq = 1.0 ---
+  solver done in 42.3 s
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/v5_round12_phase_a_diagnostics.py", line 407, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/v5_round12_phase_a_diagnostics.py", line 398, in main
+    diagnostic_1_and_2(species, diag_ks_full)
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/v5_round12_phase_a_diagnostics.py", line 212, in diagnostic_1_and_2
+    phi = np.asarray(sources.phi, dtype=np.float64)
+                     ^^^^^^^^^^^
+AttributeError: 'FLRWSourceTerms' object has no attribute 'phi'. Did you mean: 'pi'?

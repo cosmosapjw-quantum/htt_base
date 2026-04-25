@@ -7,6 +7,53 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-12 → Round-14 investigation chain (2026-04-25)
+
+**Single-day intensive investigation** of the residual
+`D_2^probe / D_2^Route-B = 7.57e+02` factor remaining after R10/R11
+seed-formula bug fixes. Three audit cycles (10 external auditor
+verdicts), three internal Phase A/B-fix diagnostic stages, and three
+new direct-CAMB-comparison diagnostics localized the residual to
+**three independent architectural defects** (D-1/D-2/D-3) — not a
+single missing convention factor.
+
+**Verdict (4/4 Round-14 auditors)**: HYBRID-RECOMMENDED (use CAMB
+transfer for FLRW limit, BASS PSTF for Bianchi correction).
+
+**User decision**: Hybrid as production architecture **rejected** —
+BASS code must remain self-contained; CAMB allowed as audit oracle
+only. BASS-native fix path will pursue D-1/D-2/D-3 in subsequent
+rounds (calendar-month-scale work).
+
+**No production code changes in this commit** — investigation
+artifacts only. HEAD remains `0536f0e` (R12 Phase C semantic cleanup).
+Anchor invariants preserved: D_2=1002.086744 μK² Route-B Rust, 43 CAMB
+seed cross-check tests, fast baseline 1723 passed.
+
+Files (investigation artefacts only):
+
+- `scripts/v5_round12_phase_a_diagnostics.py` — Phase A 5-diagnostic
+  (had `idx_star = 0` bug; documented in Round-13 audit)
+- `scripts/v5_round13_phase_b_diagnostics.py` — Phase B-fix: D1+D2
+  fixed + 4√2 trial (fortuitous match) + n_output sweep
+- `scripts/v5_round12_camb_comparison.py` — Round-14 direct CAMB
+  per-(k, ℓ) compare
+- `scripts/v5_round12_camb_compare_n_output_sweep.py` — Round-14
+  n_output sweep CAMB compare
+- `scripts/v5_round12_component_ablation.py` — Round-14 SW/ISW/
+  Doppler isolation
+- `docs/audits/diagnostic_transcripts_round12_to_14_2026-04-25/` —
+  9 transcript files (post-R11 baselines + Phase A + Phase B-fix +
+  Round-14 CAMB comparisons)
+- `docs/audits/external_round12_to_14_2026-04-25/` — 7 external
+  audit verdicts (Round-13 × 3, Round-14 × 4)
+- `docs/V5_ROUND12_TO_14_INVESTIGATION_SUMMARY.md` — consolidated
+  summary of all rounds + Round-15 plan
+
+CAMB 1.6.6 used as audit/comparison oracle in 3 of the diagnostic
+scripts; **no CAMB import in any production code path** — production
+preserved as self-contained.
+
 ### V5-RUNTIME Round-12 Phase C — `B_K_sq` semantic cleanup (no-op safe, 2026-04-25)
 
 Documentation-and-naming cleanup based on the **unanimous Round-12

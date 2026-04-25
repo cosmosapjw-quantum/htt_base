@@ -1,0 +1,62 @@
+Loading Planck-2018 species registry...
+/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/species/registry.py:265: RuntimeWarning: recombination table z-range [0.0, 8000.0] does not fully cover FLRW η-grid (z ∈ [0.0, 99999999.0]); queries of x_e / T_m / tau_dot outside the table will raise. Use recombination_warning_policy='ignore' for high-volume parameter sweeps or inference loops that already treat the missing early-time region as expected.
+  baryon = BaryonBackground(
+species ready.
+
+
+============================================================================
+Component ablation: SW+polter / ISW / Doppler / FULL
+============================================================================
+CAMB Δ_T interpolators ready (Planck-2018, tau=1e-5)
+
+--- k = 1.000e-03 Mpc⁻¹ ---
+  solver done in 44.8 s
+  ℓ=2: FULL=+9.3771e-03  SW+polter=+1.8200e-02  ISW=-8.8230e-03  Doppler=+3.8990e-07  |sum-FULL|=1.73e-18
+        CAMB=+4.5390e-02  FULL/CAMB=+0.207  SW/CAMB=+0.401  ISW/CAMB=-0.194  Dop/CAMB=+0.000
+  ℓ=3: FULL=-2.4461e-02  SW+polter=+4.4499e-03  ISW=-2.8911e-02  Doppler=+3.9117e-08  |sum-FULL|=1.04e-17
+        CAMB=+2.6599e-02  FULL/CAMB=-0.920  SW/CAMB=+0.167  ISW/CAMB=-1.087  Dop/CAMB=+0.000
+  ℓ=4: FULL=-1.9407e-02  SW+polter=-1.2050e-02  ISW=-7.3565e-03  Doppler=-3.7021e-07  |sum-FULL|=6.94e-18
+        CAMB=-1.4973e-04  FULL/CAMB=+129.610  SW/CAMB=+80.476  ISW/CAMB=+49.132  Dop/CAMB=+0.002
+
+--- k = 1.000e-02 Mpc⁻¹ ---
+  solver done in 45.3 s
+  ℓ=2: FULL=+2.5315e-02  SW+polter=+1.1693e-02  ISW=+1.3624e-02  Doppler=-1.5340e-06  |sum-FULL|=0.00e+00
+        CAMB=+7.6469e-03  FULL/CAMB=+3.311  SW/CAMB=+1.529  ISW/CAMB=+1.782  Dop/CAMB=-0.000
+  ℓ=3: FULL=-1.1322e-02  SW+polter=-1.4598e-02  ISW=+3.2945e-03  Doppler=-1.8517e-05  |sum-FULL|=6.94e-18
+        CAMB=+7.0677e-03  FULL/CAMB=-1.602  SW/CAMB=-2.065  ISW/CAMB=+0.466  Dop/CAMB=-0.003
+  ℓ=4: FULL=-2.5830e-02  SW+polter=-1.2361e-02  ISW=-1.3470e-02  Doppler=+6.0013e-07  |sum-FULL|=6.94e-18
+        CAMB=+9.4833e-04  FULL/CAMB=-27.238  SW/CAMB=-13.035  ISW/CAMB=-14.204  Dop/CAMB=+0.001
+
+--- k = 3.000e-02 Mpc⁻¹ ---
+  solver done in 44.8 s
+  ℓ=2: FULL=+9.2947e-02  SW+polter=+1.2055e-01  ISW=-2.7938e-02  Doppler=+3.3666e-04  |sum-FULL|=4.16e-17
+        CAMB=+7.6581e-04  FULL/CAMB=+121.371  SW/CAMB=+157.413  ISW/CAMB=-36.481  Dop/CAMB=+0.440
+  ℓ=3: FULL=+4.2758e-02  SW+polter=+4.6324e-02  ISW=-3.6469e-03  Doppler=+8.0309e-05  |sum-FULL|=1.39e-17
+        CAMB=+6.4418e-04  FULL/CAMB=+66.376  SW/CAMB=+71.912  ISW/CAMB=-5.661  Dop/CAMB=+0.125
+  ℓ=4: FULL=-9.2273e-02  SW+polter=-1.1981e-01  ISW=+2.7874e-02  Doppler=-3.3530e-04  |sum-FULL|=0.00e+00
+        CAMB=+5.6317e-04  FULL/CAMB=-163.846  SW/CAMB=-212.746  ISW/CAMB=+49.495  Dop/CAMB=-0.595
+
+--- k = 5.000e-02 Mpc⁻¹ ---
+  solver done in 44.2 s
+  ℓ=2: FULL=+1.6922e-02  SW+polter=-3.4991e-02  ISW=+5.2349e-02  Doppler=-4.3656e-04  |sum-FULL|=1.04e-17
+        CAMB=+2.9601e-04  FULL/CAMB=+57.165  SW/CAMB=-118.208  ISW/CAMB=+176.848  Dop/CAMB=-1.475
+  ℓ=3: FULL=+4.5902e-01  SW+polter=+4.6752e-01  ISW=-9.0418e-03  Doppler=+5.4980e-04  |sum-FULL|=5.55e-17
+        CAMB=+2.5003e-04  FULL/CAMB=+1835.875  SW/CAMB=+1869.839  ISW/CAMB=-36.163  Dop/CAMB=+2.199
+  ℓ=4: FULL=-1.2348e-02  SW+polter=+3.9654e-02  ISW=-5.2443e-02  Doppler=+4.4210e-04  |sum-FULL|=2.26e-17
+        CAMB=+2.1931e-04  FULL/CAMB=-56.303  SW/CAMB=+180.815  ISW/CAMB=-239.134  Dop/CAMB=+2.016
+
+============================================================================
+Per-component dominance map (which component drives FULL?)
+============================================================================
+  k=1e-03 ℓ=2: |SW|= 67.3%  |ISW|= 32.6%  |Dop|=  0.0%   FULL/CAMB=+0.207
+  k=1e-03 ℓ=3: |SW|= 13.3%  |ISW|= 86.7%  |Dop|=  0.0%   FULL/CAMB=-0.920
+  k=1e-03 ℓ=4: |SW|= 62.1%  |ISW|= 37.9%  |Dop|=  0.0%   FULL/CAMB=+129.610
+  k=1e-02 ℓ=2: |SW|= 46.2%  |ISW|= 53.8%  |Dop|=  0.0%   FULL/CAMB=+3.311
+  k=1e-02 ℓ=3: |SW|= 81.5%  |ISW|= 18.4%  |Dop|=  0.1%   FULL/CAMB=-1.602
+  k=1e-02 ℓ=4: |SW|= 47.9%  |ISW|= 52.1%  |Dop|=  0.0%   FULL/CAMB=-27.238
+  k=3e-02 ℓ=2: |SW|= 81.0%  |ISW|= 18.8%  |Dop|=  0.2%   FULL/CAMB=+121.371
+  k=3e-02 ℓ=3: |SW|= 92.6%  |ISW|=  7.3%  |Dop|=  0.2%   FULL/CAMB=+66.376
+  k=3e-02 ℓ=4: |SW|= 80.9%  |ISW|= 18.8%  |Dop|=  0.2%   FULL/CAMB=-163.846
+  k=5e-02 ℓ=2: |SW|= 39.9%  |ISW|= 59.6%  |Dop|=  0.5%   FULL/CAMB=+57.165
+  k=5e-02 ℓ=3: |SW|= 98.0%  |ISW|=  1.9%  |Dop|=  0.1%   FULL/CAMB=+1835.875
+  k=5e-02 ℓ=4: |SW|= 42.9%  |ISW|= 56.7%  |Dop|=  0.5%   FULL/CAMB=-56.303

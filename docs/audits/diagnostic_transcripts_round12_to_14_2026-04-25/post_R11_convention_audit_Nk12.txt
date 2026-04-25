@@ -1,0 +1,20 @@
+
+Per-ℓ output:
+  ℓ= 0  C_ℓ^TT =  5.205767e-06   D_ℓ^TT =  0.000000e+00 μK²
+  ℓ= 1  C_ℓ^TT =  1.259710e-06   D_ℓ^TT =  2.978563e+06 μK²
+  ℓ= 2  C_ℓ^TT =  1.068753e-07   D_ℓ^TT =  7.581144e+05 μK²
+  ℓ= 3  C_ℓ^TT =  1.085306e-07   D_ℓ^TT =  1.539713e+06 μK²
+  ℓ= 4  C_ℓ^TT =  4.385461e-09   D_ℓ^TT =  1.036935e+05 μK²
+
+================================================================
+R9-B convention audit:
+  D_2^probe       = 7.581144e+05 μK²
+  D_2^Route-B     = 1.002087e+03 μK²
+  D_2^probe / D_2^Route-B = 7.565357e+02
+
+Calibration interpretation (B_K² = α(k) · ζ² mapping):
+  conversion_factor = sqrt(1 / ratio) = 3.635677e-02
+  [if ratio ≈ 1: B_K² = ζ², calibration trivial]
+  [if ratio ≫ 1: B_K² is amplified vs ζ²; α(k) needs /sqrt(ratio)]
+  [if ratio ≪ 1: B_K² is suppressed vs ζ²; α(k) needs sqrt(1/ratio)]
+================================================================

@@ -1,0 +1,125 @@
+Loading Planck-2018 species registry...
+/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/species/registry.py:265: RuntimeWarning: recombination table z-range [0.0, 8000.0] does not fully cover FLRW η-grid (z ∈ [0.0, 99999999.0]); queries of x_e / T_m / tau_dot outside the table will raise. Use recombination_warning_policy='ignore' for high-volume parameter sweeps or inference loops that already treat the missing early-time region as expected.
+  baryon = BaryonBackground(
+species ready.
+
+============================================================================
+D1+D2 FIXED — Ψ via PCHIP callable at proper η_*
+============================================================================
+Analytic deep-MD: Ψ ≈ -10/(4·R_ν+15) ≈ -0.601 (CAMB Notes χ_0=-1)
+(Opus correction: previous +0.6 reference was wrong sign)
+
+--- k = 1.000e-04 Mpc⁻¹, b_k_sq = 1.0 ---
+  solver done in 43.9 s, n_output = 64
+     point     η [Mpc]            Ψ(η)          Θ_0(η)        SW=Θ_0+Ψ
+    η_init      260.14   -3.357096e-01   +3.525006e-05   -3.356743e-01
+       η_*      280.14   -1.245045e+00   +5.559596e-03   -1.239485e+00
+    η_*+10      290.14   -1.641079e+00   +8.344350e-03   -1.632735e+00
+    η_*+30      310.14   -2.324682e+00   +1.395801e-02   -2.310724e+00
+    η=1000     1000.00   +5.130301e+00   +1.776625e-01   +5.307964e+00
+    η=5000     5000.00   +1.923528e-01   +1.010458e+00   +1.202811e+00
+   η_today    14147.35   +7.390414e-03   +2.928967e+00   +2.936357e+00
+
+--- k = 1.000e-03 Mpc⁻¹, b_k_sq = 1.0 ---
+  solver done in 43.5 s, n_output = 64
+     point     η [Mpc]            Ψ(η)          Θ_0(η)        SW=Θ_0+Ψ
+    η_init      260.14   -3.653651e-01   +3.474784e-03   -3.618903e-01
+       η_*      280.14   -3.057326e-01   +8.254500e-03   -2.974781e-01
+    η_*+10      290.14   -2.763619e-01   +1.068563e-02   -2.656763e-01
+    η_*+30      310.14   -2.190057e-01   +1.562834e-02   -2.033774e-01
+    η=1000     1000.00   +9.128431e-02   +1.839283e-01   +2.752127e-01
+    η=5000     5000.00   +4.130561e-03   +1.013612e+00   +1.017743e+00
+   η_today    14147.35   +3.192737e-04   +2.932175e+00   +2.932495e+00
+
+============================================================================
+D7 — 4√2 trial calibration (Codex hypothesis)
+============================================================================
+calibration_factor = 1/(4√2) = 0.176777
+D_ℓ scales as calibration² = 1/32 = 0.03125
+If hypothesis correct: ratio should drop by ~32× at sub-horizon-only
+
+--- k_min=1e-03, baseline (cal=1.0), predicted ratio: 32.0 ---
+  done in 53.7 s
+  D_2 = 3.2240e+04 μK²,  ratio = 32.1726,  sqrt(ratio) = 5.6721
+
+--- k_min=1e-03, 4√2 trial (cal=1/4√2), predicted ratio: ≈ 1.0 ---
+  done in 54.6 s
+  D_2 = 1.0075e+03 μK²,  ratio = 1.0054,  sqrt(ratio) = 1.0027
+
+--- k_min=1e-04, full grid baseline (cal=1.0), predicted ratio: 760.0 ---
+  done in 60.1 s
+  D_2 = 7.5811e+05 μK²,  ratio = 756.5357,  sqrt(ratio) = 27.5052
+
+--- k_min=1e-04, 4√2 trial full grid, predicted ratio: ≈ 24.0 ---
+  done in 55.1 s
+  D_2 = 2.3691e+04 μK²,  ratio = 23.6417,  sqrt(ratio) = 4.8623
+
+============================================================================
+D6 — n_output sweep (Opus η-grid hypothesis)
+============================================================================
+Visibility g(η) FWHM ~19 Mpc; n_output=64 gives Δη=220 Mpc
+Required: Δη ≪ 19 Mpc → n_output ≳ 14000/19 ≈ 730
+
+--- n_output = 64, Δη = 220.4 Mpc ---
+  done in 54.8 s
+  D_2 = 7.5811e+05 μK²,  ratio = 756.5357,  conv = sqrt(1/ratio) = 0.0364
+
+--- n_output = 256, Δη = 54.5 Mpc ---
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+  done in 60.1 s
+  D_2 = 1.1389e+05 μK²,  ratio = 113.6484,  conv = sqrt(1/ratio) = 0.0938
+
+--- n_output = 1024, Δη = 13.6 Mpc ---
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/lib/python3.12/site-packages/scipy/interpolate/_cubic.py:325: RuntimeWarning: overflow encountered in divide
+  whmean = (w1/mk[:-1] + w2/mk[1:]) / (w1 + w2)
+  done in 63.5 s
+  D_2 = 1.3358e+05 μK²,  ratio = 133.3049,  conv = sqrt(1/ratio) = 0.0866
+
+============================================================================
+ALL PHASE B-FIX DIAGNOSTICS COMPLETE
+============================================================================
