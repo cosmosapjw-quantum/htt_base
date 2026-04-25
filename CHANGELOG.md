@@ -7,6 +7,50 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-15 §10 decisive test + Round-15 session opener (2026-04-25)
+
+Per Claude Opus R14 audit's recommended decisive test
+(`round14_audit04_opus.md` §10): feed CAMB-computed Newtonian-gauge
+`T_source(η, k)` directly through BASS's existing
+`project_temperature_transfer` on the 64-uniform-linear η-grid;
+compare per-(k, ℓ) against CAMB direct Δ_T.
+
+**Result: CASE D — D-1 (LoS grid) is critical**:
+```
+0/12 cells within 1.0 ± 5%
+4/12 cells sign-flipped
+1/12 cells |ratio| > 100  (k=1e-3, ℓ=4: ratio = +3687)
+median |ratio| = 8.30
+```
+
+Even with PERFECT CAMB sources, BASS LoS projector + 64-uniform-linear
+grid cannot reproduce CAMB Δ_ℓ. The 220 Mpc grid spacing aliases
+high-ℓ Bessel oscillations; the 19 Mpc visibility FWHM has only 1
+grid point inside it.
+
+**Round-15 priority confirmed**:
+- **P0 (1-2 weeks)**: D-1 fix — decouple LoS η-grid from IMEX output.
+  Per-k LoS grid sized for `j_ℓ(k(η₀-η))` resolution + recombination
+  refinement.
+- **P1 (sub-week, after P0)**: D-3 gauge fix — synchronous→Newtonian
+  conversion for Θ_0 in source extractor.
+- **P2 (multi-month, after P0+P1)**: D-2 seed validity — tight-coupling
+  early η_init or matching-asymptotic seed.
+
+D-2 and D-3 fixes are **meaningless until D-1 is resolved** — even
+perfect upstream sources cannot survive the LoS projector pathology.
+
+Files (no production code changes):
+- `scripts/v5_round15_decisive_los_test.py` — §10 test script
+  (CAMB used as audit oracle only; no production runtime dep)
+- `docs/audits/diagnostic_transcripts_round12_to_14_2026-04-25/round15_decisive_los_test.txt`
+  — full transcript with per-(k, ℓ) classification
+- `docs/V5_ROUND15_SESSION_OPENER.md` — self-contained handoff doc
+  for next session (D-1 fix briefing + verbatim prompt)
+
+HEAD remains `0536f0e` (R12 Phase C) for production code; this commit
+is investigation + handoff prep only. Anchor invariants preserved.
+
 ### V5-RUNTIME Round-12 → Round-14 investigation chain (2026-04-25)
 
 **Single-day intensive investigation** of the residual
