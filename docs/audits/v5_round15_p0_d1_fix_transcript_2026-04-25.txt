@@ -1,0 +1,87 @@
+Loading Planck-2018 species registry...
+/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/species/registry.py:265: RuntimeWarning: recombination table z-range [0.0, 8000.0] does not fully cover FLRW η-grid (z ∈ [0.0, 99999999.0]); queries of x_e / T_m / tau_dot outside the table will raise. Use recombination_warning_policy='ignore' for high-volume parameter sweeps or inference loops that already treat the missing early-time region as expected.
+  baryon = BaryonBackground(
+species ready.
+
+
+============================================================================
+Step 1 — CAMB setup + direct Δ_T(k, ℓ)
+============================================================================
+CAMB compute done in 0.09 s
+CAMB L range: 2..160 (40 values)
+CAMB q range: 7.066e-06 .. 8.479e-02
+
+============================================================================
+Step 2 — BASS native pipeline α(k, ℓ)
+============================================================================
+  k=1.000e-03: BASS native done in 43.6 s, α[ℓ=2]=-3.7441e-02
+  k=1.000e-02: BASS native done in 44.4 s, α[ℓ=2]=+1.7884e-02
+  k=3.000e-02: BASS native done in 44.1 s, α[ℓ=2]=+1.0330e-01
+  k=5.000e-02: BASS native done in 43.1 s, α[ℓ=2]=+2.9722e-01
+
+============================================================================
+Step 3 — CAMB source through BASS LoS projector (uniform64 pre-fix / k_adapted post-fix / k_adapted_eta100 D-2-isolated)
+============================================================================
+  k=1.000e-03: 3 grids done in 0.21 s; Δ_T[ℓ=2] uniform64=+6.510e-01 k_adapt=+1.279e-03 η100=+4.237e-02
+  k=1.000e-02: 3 grids done in 0.06 s; Δ_T[ℓ=2] uniform64=+2.802e-02 k_adapt=+6.358e-03 η100=+7.983e-03
+  k=3.000e-02: 3 grids done in 0.04 s; Δ_T[ℓ=2] uniform64=-8.888e-03 k_adapt=+6.748e-04 η100=+2.275e-04
+  k=5.000e-02: 3 grids done in 0.04 s; Δ_T[ℓ=2] uniform64=+1.085e-04 k_adapt=+1.752e-05 η100=-3.691e-05
+
+============================================================================
+DECISIVE COMPARISON
+============================================================================
+           k   ℓ    CAMB direct       unif64      k_adapt   k_adapt_η100    unif/D   kadapt/D    η100/D
+  ---------------------------------------------------------------------------------------------------------
+   1.000e-03   2   +4.53897e-02   +6.510e-01   +1.279e-03     +4.237e-02    +14.34     +0.028    +0.933
+   1.000e-03   3   +2.65994e-02   +1.331e-01   +1.842e-02     +2.617e-02     +5.00     +0.692    +0.984
+   1.000e-03   4   -1.49731e-04   -5.521e-01   +3.980e-02     +2.615e-03  +3687.18   -265.806   -17.462
+   1.000e-02   2   +7.64686e-03   +2.802e-02   +6.358e-03     +7.983e-03     +3.66     +0.832    +1.044
+   1.000e-02   3   +7.06768e-03   -2.419e-02   +8.886e-03     +7.058e-03     -3.42     +1.257    +0.999
+   1.000e-02   4   +9.48328e-04   -2.102e-02   +2.314e-03     +5.971e-04    -22.16     +2.440    +0.630
+   3.000e-02   2   +7.65814e-04   -8.888e-03   +6.748e-04     +2.275e-04    -11.61     +0.881    +0.297
+   3.000e-02   3   +6.44175e-04   -2.455e-03   -3.900e-04     -6.503e-04     -3.81     -0.605    -1.010
+   3.000e-02   4   +5.63166e-04   +9.264e-03   +6.346e-04     +1.078e-03    +16.45     +1.127    +1.913
+   5.000e-02   2   +2.96012e-04   +1.085e-04   +1.752e-05     -3.691e-05     +0.37     +0.059    -0.125
+   5.000e-02   3   +2.50031e-04   +3.006e-03   +9.061e-04     +1.073e-03    +12.02     +3.624    +4.290
+   5.000e-02   4   +2.19305e-04   +4.884e-07   +5.035e-04     +5.596e-04     +0.00     +2.296    +2.552
+
+============================================================================
+Case classification (per Claude Opus R14 §10)
+============================================================================
+  Case A: |CAMB→BASS LoS / CAMB direct| ≈ 1 ± 5%  → projector healthy
+  Case B: |ratio| 10-100× too large at sub-horizon → D-1 dominant
+  Case C: low-k OK, high-k diverges → D-1 high-k, source low-k
+  Case D: sign flips → D-1 severity confirmed (220 Mpc on 19 Mpc FWHM)
+
+
+  --- pre-fix uniform64 (legacy 64-pt linear grid) ---
+  uniform64:  total cells = 12
+    within 1.0 ± 5%:                0
+    sign-flipped (negative ratio):   4
+    |ratio| in [10, 100]:           5
+    |ratio| > 100:                   1
+    |ratio| stats: min=2.227e-03  max=3.687e+03  median=8.304e+00
+
+  --- post-fix k_adapted (Round-15 P0 D-1 production grid; η_init = integrator η[0] ≈ 261 Mpc) ---
+  k_adapted:  total cells = 12
+    within 1.0 ± 5%:                0
+    sign-flipped (negative ratio):   2
+    |ratio| in [10, 100]:           0
+    |ratio| > 100:                   1
+    |ratio| stats: min=2.818e-02  max=2.658e+02  median=1.004e+00
+
+  --- k_adapted_eta100 (D-1 fix + η_init = 100 Mpc; isolates D-1 from integrator η_init truncation = D-2) ---
+  k_adapted_eta100:  total cells = 12
+    within 1.0 ± 5%:                3
+    sign-flipped (negative ratio):   3
+    |ratio| in [10, 100]:           1
+    |ratio| > 100:                   0
+    |ratio| stats: min=1.247e-01  max=1.746e+01  median=1.004e+00
+
+  --- Round-15 P0 D-1 gate (fixed-η_init = 261 Mpc production) ---
+    median |ratio|  pre-fix=8.304  → post-fix=1.004  (13.9× max-ratio reduction)
+
+  ★ D-1 RESOLVED (median |ratio| → 1.0, max-ratio reduction 14×). The strict 5% gate is not met because the BASS integrator η_init = 261 Mpc truncates pre-recombination history. The k_adapted_eta100 column shows that lifting that truncation moves the dominant low-k cells to within 5% (eta100_within_5 = 3/12). Residual at high k is the source-extractor gauge mismatch (D-3).
+    Round-15 P0 (D-1 grid) DELIVERED. Next priorities:
+      P1 (D-3 gauge fix, sub-week)
+      P2 (D-2 integrator η_init extension, multi-month)

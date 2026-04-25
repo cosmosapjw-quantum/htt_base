@@ -54,6 +54,7 @@ from bass.los.flrw_bessel_projector import (
     project_polarization_transfer,
     project_temperature_transfer,
 )
+from bass.los.los_grid_builder import build_los_grid
 from bass.runtime import (
     CheckpointPolicy,
     ConstraintProjectionPolicy,
@@ -323,9 +324,29 @@ def _los_and_wrap(
     )
     g_of_eta, kappa_of_eta = build_visibility_and_kappa_callables(species)
 
-    eta_grid = np.asarray(integration_result.eta, dtype=np.float64)
+    # V5 Round-15 P0 D-1 fix: decouple LoS quadrature grid from the IMEX
+    # integrator output grid. The integrator's 64-point uniform-linear
+    # η-grid (Δη ≈ 220 Mpc) under-resolves both the recombination
+    # visibility (FWHM ≈ 19 Mpc) and the Bessel oscillation period
+    # (2π/k ≈ 125 Mpc at k = 0.05 /Mpc). The §10 decisive test (commit
+    # b2a9736) confirmed this aliases the LoS integral with median
+    # |error| factor 8.30 even when fed CAMB-perfect Newtonian-gauge
+    # sources. Build a per-k composite grid: recombination-refined
+    # zone (Δη ≈ 2.4 Mpc) + k-adapted oscillation zone (Δη ≈ 2π/(8k)).
+    integrator_eta = np.asarray(integration_result.eta, dtype=np.float64)
     eta_0_mpc = float(species.bg_table.eta_today)
-    eta_for_los = np.clip(eta_grid, 0.0, eta_0_mpc)
+    # PCHIP source interpolators use extrapolate=False — clamp the LoS
+    # lower bound to the integrator's first η to avoid NaN evaluation
+    # at the very first sample.
+    eta_init_los = float(np.maximum(integrator_eta[0], 0.0))
+    # Safety: zone 2 upper bound must respect the integrator's last η
+    # so PCHIP sources stay in-domain at the observer end too.
+    eta_today_los = float(np.minimum(integrator_eta[-1], eta_0_mpc))
+    eta_for_los = build_los_grid(
+        k=float(k_mpc),
+        eta_today=eta_today_los,
+        eta_init=eta_init_los,
+    )
 
     bessel_config = FLRWBesselConfig(
         ell_max=cfg.ell_max_transfer,

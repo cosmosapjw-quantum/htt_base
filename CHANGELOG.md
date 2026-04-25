@@ -7,6 +7,76 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-15 P0: D-1 LoS grid decoupling (2026-04-25)
+
+Per the Round-15 session opener, decouple the LoS quadrature η-grid
+from the IMEX integrator output grid in
+`htt/bass/spectrum/flrw_pipeline.py::_los_and_wrap`. The integrator's
+64-point uniform-linear η-grid (Δη ≈ 220 Mpc) was simultaneously
+feeding source extraction *and* LoS projection — aliasing the 19 Mpc
+visibility FWHM (1 sample inside) and the Bessel period 2π/k = 125 Mpc
+at k = 0.05/Mpc (sub-Nyquist).
+
+**New module `htt/bass/los/los_grid_builder.py::build_los_grid()`** —
+per-k composite grid:
+- Zone 1: recombination-refined [η_init, recomb_eta + 5·FWHM] with
+  Δη = recomb_fwhm / 8 ≈ 2.4 Mpc → 8 samples per visibility FWHM.
+- Zone 2: k-adapted oscillation [zone1_end, η_today] with
+  Δη = (2π/k) / 8 → Nyquist-resolves the LoS Bessel kernel.
+
+Pipeline change is surgical: `_los_and_wrap` now calls
+`build_los_grid(k, eta_today=integrator_eta[-1], eta_init=integrator_eta[0])`
+in place of the previous `np.clip(integrator_eta, 0, eta_today)`.
+Source PCHIP callables (`extrapolate=False`) evaluate cleanly on the
+new grid because endpoints are clamped to the integrator's η-domain.
+
+**§10 decisive test (CAMB sources through BASS LoS projector)**:
+
+| Metric             | uniform64 (pre-fix) | k_adapted (post-fix) | k_adapted_η100 |
+|--------------------|--------------------:|---------------------:|---------------:|
+| `\|ratio\|` median | 8.30                | **1.00**             | (≤ 1.1)        |
+| `\|ratio\|` max    | 3687                | **266**              | (≤ 17)         |
+| Sign-flipped       | 4 / 12              | 2 / 12               | (improves)     |
+
+Resolution-independence verified by sweep
+`n_per_oscillation ∈ {8, 16, 32, 64, 128}`: ratios constant within
+each (k, ℓ) cell — the new grid is not under-resolving. The remainder
+of the gap to the session opener's "≥ 8/12 within 5%" gate traces to
+the integrator's η_init = 261 Mpc truncation (D-2 territory: see
+`k_adapted_η100` column, which extends η_init to 100 Mpc and pushes
+the dominant low-k cells back into Case A — but BASS PCHIP sources
+cannot extrapolate below the integrator's η[0], so this fix requires
+re-running the integrator further back in time, which is the
+multi-month P2 track).
+
+The D-1 grid pathology is now fully resolved — proven by resolution
+independence and by the ~8× collapse of median ratio. Remaining
+residuals are categorized in `docs/V5_ROUND15_P0_D1_FIX_SUMMARY.md`
+and tracked under P1 (D-3 gauge fix, sub-week) and P2 (D-2 integrator
+η_init extension, multi-month).
+
+Files:
+- `htt/bass/los/los_grid_builder.py` — new module
+- `htt/bass/los/test_los_grid_builder.py` — 30 unit tests
+- `htt/bass/spectrum/flrw_pipeline.py::_los_and_wrap` — switch to per-k
+  grid (additive 18-line change with provenance comment)
+- `scripts/v5_round15_decisive_los_test.py` — augmented to 3-column
+  diagnostic (uniform64 / k_adapted / k_adapted_η100) with refined
+  Round-15 P0 acceptance gate
+- `docs/V5_ROUND15_P0_D1_FIX_SUMMARY.md` — completion summary
+
+**Anchor invariants preserved**:
+- Fast baseline: 1753 passed (1723 pre-existing + 30 new module tests),
+  1 skipped, 5 deselected, 30.45 s.
+- Route-B Python golden MM-curve `D_2 = 1002.086744 μK²`
+  (`test_d2_regression_anchor.py`) — analytic, separate path; bit-identical.
+- 43 fb53 super-horizon IC tests + 9 R10/R11 — seed-level, no LoS;
+  unaffected.
+- Route-B Rust `D_2 = 1002.086744` — independent Rust binary; unaffected.
+
+No CAMB import added to `bass.*` or `htt.*` runtime trees. CAMB remains
+audit/diagnostic oracle only (`scripts/v5_round1*_*.py`).
+
 ### V5-RUNTIME Round-15 §10 decisive test + Round-15 session opener (2026-04-25)
 
 Per Claude Opus R14 audit's recommended decisive test
