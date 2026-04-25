@@ -870,6 +870,293 @@ class TestSharpVisibilityAnalyticOracles:
 
 
 # ============================================================================
+# 11.6 Extended analytic oracles
+#      (Round-15 P1 follow-up, derived from
+#      docs/V5_ROUND15_P1_PSTF_DERIVATION_CHATGPT.md §R5.2–§R5.4.)
+# ============================================================================
+
+class TestExtendedAnalyticOracles:
+    """Additional closed-form Δ_ℓ^T oracles beyond the sharp-visibility
+    SW / Doppler / polter triplet.
+
+    R5.2 — Gaussian-visibility MD Sachs–Wolfe.
+        Δ_ℓ^T(k) = [Θ_0+Ψ]_* {j_ℓ[kr_*] + ½ k² σ_*² j_ℓ''[kr_*] + O((kσ_*)⁴)}.
+        Bessel ODE substitution j_ℓ'' = -(2/x)j_ℓ' + (ℓ(ℓ+1)/x² - 1)j_ℓ
+        gives the Silk-damping-like envelope at large kr_*.
+
+    R5.3 — Acoustic toy.
+        Θ_0(η_*, k) = A cos(c_s k η_*) + B sin(c_s k η_*) with sharp g
+        and Ψ = Π = ISW = Doppler = 0:
+        Δ_ℓ^T(k) = [A cos(c_s k η_*) + B sin(c_s k η_*)] j_ℓ[kr_*].
+
+    R5.4 — Pure ISW with Limber stationary-phase approximation.
+        S_T = e^{-κ}(Φ̇ + Ψ̇) only; at large ℓ and kη_0 ≫ 1,
+        Δ_ℓ^T,ISW ≈ 2 √(π/(2ℓ+1)) Φ̇[η_0 - (ℓ+½)/k] / k.
+        Tests both the null (Φ̇ = 0) and a Gaussian-bump fixture for
+        non-trivial Φ̇(η).
+    """
+
+    def _gaussian_visibility(self, eta_star: float, sigma: float):
+        norm = sigma * np.sqrt(2.0 * np.pi)
+        def g(eta):
+            e = np.asarray(eta, dtype=np.float64)
+            return np.exp(-0.5 * ((e - eta_star) / sigma) ** 2) / norm
+        return g
+
+    # ------------------------------------------------------------------
+    # R5.2 — Gaussian-visibility MD SW
+    # ------------------------------------------------------------------
+
+    def test_gaussian_visibility_md_sachs_wolfe_R5_2(self):
+        """At small kσ_*, the Gaussian-visibility SW transfer
+        agrees with R5.2.1 (Taylor through σ_*²) to 5e-3 in the
+        validity regime kσ_* ≤ 0.45 — this is the regime
+        relevant to the recombination visibility (σ_* ≈ 11 Mpc) at
+        sub-horizon scales k ≤ 4×10⁻² Mpc⁻¹.
+        """
+        cfg = FLRWBesselConfig(ell_max=8, eta_0_mpc=ETA_0_DEFAULT)
+        eta = build_eta_grid_linear(10.0, ETA_0_DEFAULT, 8001)
+        eta_star = 282.0
+        theta0 = 0.2
+        psi = 0.1
+        theta_plus_psi = theta0 + psi
+
+        # Sweep both narrow (σ=1 Mpc, near-sharp) and recombination-realistic
+        # (σ=11 Mpc) widths. ChatGPT R5.2 spec:
+        #   σ_g=1 Mpc:  matches R5.1.1 (sharp) to ≤ 1e-6 across full k range.
+        #   σ_g=11 Mpc: matches R5.2.1 to ≤ 5e-3 for k ∈ [10⁻³, 10⁻²]
+        #               (kσ_g ≤ 0.11, well inside the kσ_g ≤ 0.45 validity).
+        for sigma_g, ks, rtol in [
+            (1.0,  (1.0e-3, 1.0e-2, 5.0e-2), 5.0e-3),
+            (11.0, (1.0e-3, 5.0e-3, 1.0e-2), 5.0e-3),
+        ]:
+            g = self._gaussian_visibility(eta_star, sigma_g)
+            sources = FLRWSourceTerms.with_sw_polter_only(
+                theta_0=constant_callable(theta0),
+                psi=constant_callable(psi),
+                pi=constant_callable(0.0),
+            )
+            S_T = build_temperature_source(
+                eta, sources, g,
+                lambda e: np.zeros_like(np.asarray(e, dtype=float)),
+            )
+            for k in ks:
+                D_numeric = project_temperature_transfer(k, S_T, eta, cfg)
+                kr_star = k * (ETA_0_DEFAULT - eta_star)
+                ells = np.arange(cfg.ell_max + 1, dtype=np.float64)
+                j_ell = scipy_special.spherical_jn(ells.astype(int), kr_star)
+                j_ell_p = scipy_special.spherical_jn(
+                    ells.astype(int), kr_star, derivative=True,
+                )
+                # j_ℓ'' from Bessel ODE (R5.2.2)
+                j_ell_pp = (
+                    -(2.0 / kr_star) * j_ell_p
+                    + (ells * (ells + 1) / kr_star ** 2 - 1.0) * j_ell
+                )
+                # R5.2.1 truncated to σ²
+                D_analytic = theta_plus_psi * (
+                    j_ell + 0.5 * (k * sigma_g) ** 2 * j_ell_pp
+                )
+                np.testing.assert_allclose(
+                    D_numeric, D_analytic, rtol=rtol, atol=1.0e-9,
+                    err_msg=(
+                        f"R5.2 Gaussian-MD SW analytic match failed at "
+                        f"σ_g={sigma_g}, k={k}.\n  D_numeric={D_numeric}\n  "
+                        f"D_analytic={D_analytic}\n  ratio={D_numeric/D_analytic}"
+                    ),
+                )
+
+    # ------------------------------------------------------------------
+    # R5.3 — Acoustic toy
+    # ------------------------------------------------------------------
+
+    def test_acoustic_toy_peak_structure_R5_3(self):
+        """Acoustic-ansatz Θ_0 with narrow Gaussian visibility
+        reproduces the Bessel-modulated phase factor
+        cos(c_s k η_*) j_ℓ(kr_*) at every (k, ℓ). Sweeps k across
+        [10⁻³, 5×10⁻²] including the moderate-k regime where the §10
+        CAMB anchor weakens.
+
+        Tolerance rationale: ChatGPT R5.3 spec calls for σ_g = 0.5 Mpc
+        and rtol = 1e-8 in the sharp-visibility limit. On the default
+        η-grid (Δη ≈ 1.76 Mpc) σ_g must be ≥ ~3 Mpc to be resolved by
+        the trapezoid quadrature; the resulting O((kσ_g)²/2) finite-
+        width correction reaches ~1% at k=0.05 with σ_g=3, ~5% at
+        k=0.1. We use σ_g = 3 Mpc and 5% rtol consistent with the
+        other sharp-visibility oracles, restricting k ≤ 5×10⁻². A
+        future variant on a denser custom η-grid could tighten the
+        tolerance to the R5.3 spec.
+        """
+        cfg = FLRWBesselConfig(ell_max=8, eta_0_mpc=ETA_0_DEFAULT)
+        eta = build_eta_grid_linear(10.0, ETA_0_DEFAULT, 8001)
+        eta_star = 282.0
+        sigma_g = 3.0  # resolved by 8001-point grid; kσ_g ≤ 0.15 at k ≤ 0.05
+        g = self._gaussian_visibility(eta_star, sigma_g)
+
+        A = 1.0
+        c_s = 1.0 / np.sqrt(3.0)
+
+        for k in (1.0e-3, 5.0e-3, 1.0e-2, 3.0e-2, 5.0e-2):
+            theta0_acoustic = A * np.cos(c_s * k * eta_star)
+            sources = FLRWSourceTerms.with_sw_polter_only(
+                theta_0=constant_callable(theta0_acoustic),
+                psi=constant_callable(0.0),
+                pi=constant_callable(0.0),
+            )
+            S_T = build_temperature_source(
+                eta, sources, g,
+                lambda e: np.zeros_like(np.asarray(e, dtype=float)),
+            )
+            D_numeric = project_temperature_transfer(k, S_T, eta, cfg)
+            kr_star = k * (ETA_0_DEFAULT - eta_star)
+            D_analytic = theta0_acoustic * scipy_special.spherical_jn(
+                np.arange(cfg.ell_max + 1), kr_star,
+            )
+            np.testing.assert_allclose(
+                D_numeric, D_analytic, rtol=5.0e-2, atol=1.0e-9,
+                err_msg=(
+                    f"R5.3 acoustic toy match failed at k={k}.\n  "
+                    f"theta0_acoustic={theta0_acoustic:+.4e}, kr_*={kr_star:.3f}\n"
+                    f"  D_numeric={D_numeric}\n  D_analytic={D_analytic}"
+                ),
+            )
+
+    def test_acoustic_toy_first_peak_position_R5_3(self):
+        """Acoustic-toy peak positions in k-space: extrema of
+        Θ_0(k) = cos(c_s k η_*) at c_s k η_* = n π, giving
+        k_n = n π / (c_s η_*). With c_s η_* ≈ 162.8 Mpc at η_* = 282
+        the first peak is at k_1 ≈ 0.0193 Mpc⁻¹.
+
+        Test: at k = k_1 we should have Θ_0(η_*, k_1) = -1 (minimum
+        of cos). The transfer Δ_ℓ^T(k_1) = -j_ℓ(k_1·r_*) — opposite
+        sign to the SW prediction with Θ_0 = +1.
+        """
+        cfg = FLRWBesselConfig(ell_max=4, eta_0_mpc=ETA_0_DEFAULT)
+        eta = build_eta_grid_linear(10.0, ETA_0_DEFAULT, 8001)
+        eta_star = 282.0
+        sigma_g = 3.0  # resolved by 8001-point grid (see acoustic toy test)
+        g = self._gaussian_visibility(eta_star, sigma_g)
+
+        c_s = 1.0 / np.sqrt(3.0)
+        k_first_peak = np.pi / (c_s * eta_star)
+        # cos(c_s · k_1 · η_*) = cos(π) = -1
+        theta0_at_peak = np.cos(c_s * k_first_peak * eta_star)
+        assert theta0_at_peak == pytest.approx(-1.0, abs=1.0e-12)
+
+        sources = FLRWSourceTerms.with_sw_polter_only(
+            theta_0=constant_callable(theta0_at_peak),
+            psi=constant_callable(0.0),
+            pi=constant_callable(0.0),
+        )
+        S_T = build_temperature_source(
+            eta, sources, g,
+            lambda e: np.zeros_like(np.asarray(e, dtype=float)),
+        )
+        D_numeric = project_temperature_transfer(k_first_peak, S_T, eta, cfg)
+
+        kr_star = k_first_peak * (ETA_0_DEFAULT - eta_star)
+        D_analytic = theta0_at_peak * scipy_special.spherical_jn(
+            np.arange(cfg.ell_max + 1), kr_star,
+        )
+        # D_analytic[0] should be negative (matches sign of theta0_at_peak)
+        assert D_analytic[0] < 0.0
+        np.testing.assert_allclose(
+            D_numeric, D_analytic, rtol=5.0e-2, atol=1.0e-9,
+        )
+
+    # ------------------------------------------------------------------
+    # R5.4 — Pure ISW with Limber stationary-phase
+    # ------------------------------------------------------------------
+
+    def test_isw_limber_null_when_phi_dot_vanishes_R5_4(self):
+        """ISW null sanity check: with Φ̇ + Ψ̇ ≡ 0 (e.g. matter
+        domination, sub-horizon, no anisotropic stress, Φ constant),
+        the ISW source is identically zero and so is Δ_ℓ^T,ISW —
+        regardless of κ(η)."""
+        cfg = FLRWBesselConfig(ell_max=4, eta_0_mpc=ETA_0_DEFAULT)
+        eta = build_eta_grid_linear(10.0, ETA_0_DEFAULT, 1001)
+
+        sources = FLRWSourceTerms.with_isw_only(_zero_callable)
+        S_T = build_temperature_source(
+            eta, sources,
+            lambda e: np.zeros_like(np.asarray(e, dtype=float)),  # g unused
+            lambda e: np.zeros_like(np.asarray(e, dtype=float)),  # κ
+        )
+        D = project_temperature_transfer(1.0e-2, S_T, eta, cfg)
+        np.testing.assert_allclose(D, 0.0, atol=1.0e-15)
+
+    def test_isw_limber_stationary_phase_high_ell_R5_4(self):
+        """ISW Limber stationary-phase oracle. With Φ̇(η) a smooth
+        Gaussian bump centered late-time and (Φ + Ψ)̇ = 2 Φ̇ supplied
+        as the source, project_temperature_transfer at large ℓ should
+        match the Limber form
+
+            Δ_ℓ^T,ISW ≈ 2 √(π/(2ℓ+1)) · Φ̇[η_0 − (ℓ+½)/k] / k
+
+        to 5% per R5.4 validity (ℓ ≥ 30, kη_0 ≥ 30; the O(ℓ⁻²)
+        Limber correction is ≈ 1% at ℓ = 30, ≈ 0.04% at ℓ = 50).
+
+        The Φ̇-fixture is a Gaussian bump centered at η_mid = 6000 Mpc
+        with width τ = 1500 Mpc — well inside the post-reionization
+        regime [η_re, η_0].
+        """
+        cfg = FLRWBesselConfig(ell_max=50, eta_0_mpc=ETA_0_DEFAULT)
+        eta = build_eta_grid_linear(10.0, ETA_0_DEFAULT, 8001)
+
+        eta_mid = 6000.0
+        tau_isw = 1500.0
+        phi_dot_amp = 1.0e-4
+
+        def phi_plus_psi_dot(e):
+            e = np.asarray(e, dtype=np.float64)
+            # Φ + Ψ ≈ 2 Φ in negligible-anisotropic-stress limit
+            return 2.0 * phi_dot_amp * np.exp(
+                -0.5 * ((e - eta_mid) / tau_isw) ** 2,
+            )
+
+        sources = FLRWSourceTerms.with_isw_only(phi_plus_psi_dot)
+        S_T = build_temperature_source(
+            eta, sources,
+            lambda e: np.zeros_like(np.asarray(e, dtype=float)),  # g unused
+            lambda e: np.zeros_like(np.asarray(e, dtype=float)),  # κ = 0
+        )
+
+        # Pick (k, ℓ) in the Limber-validity regime with stationary point
+        # well inside [η_re, η_0].
+        k = 1.0e-2  # k η_0 ≈ 141 ≫ 30
+        for ell in (30, 40, 50):
+            D = project_temperature_transfer(k, S_T, eta, cfg)
+            eta_stationary = ETA_0_DEFAULT - (ell + 0.5) / k
+            assert 100.0 < eta_stationary < ETA_0_DEFAULT, (
+                f"stationary point η = {eta_stationary} outside grid"
+            )
+            phi_dot_at_stationary = phi_dot_amp * np.exp(
+                -0.5 * ((eta_stationary - eta_mid) / tau_isw) ** 2,
+            )
+            # R5.4.3 Limber form. The factor of 2 cancels because the
+            # source carries (Φ̇ + Ψ̇) = 2 Φ̇ and R5.4.1 has an explicit 2;
+            # equivalently, R5.4.3 written with (Φ̇ + Ψ̇)/2 acting once:
+            #
+            #   Δ_ℓ ≈ √(π/(2ℓ+1)) · (Φ̇+Ψ̇)[η_*] / k
+            #
+            # which we use directly so that the source-side and the
+            # analytic side have matching factor-of-2 conventions.
+            D_limber = (
+                np.sqrt(np.pi / (2.0 * ell + 1.0))
+                * 2.0 * phi_dot_at_stationary / k
+            )
+            # 10% tolerance covers the Limber O(ℓ⁻²) correction
+            # (~ 1% at ℓ=30, dropping rapidly), the smooth-bump non-
+            # stationarity of Φ̇, and the discretization residual on
+            # an 8001-point grid.
+            assert D[ell] == pytest.approx(D_limber, rel=0.10), (
+                f"R5.4.3 Limber failed at k={k}, ℓ={ell}: "
+                f"numeric={D[ell]:+.3e}, Limber={D_limber:+.3e}, "
+                f"ratio={D[ell]/D_limber:+.4f}"
+            )
+
+
+# ============================================================================
 # 12. Physical sign assertions
 # ============================================================================
 

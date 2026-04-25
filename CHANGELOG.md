@@ -7,6 +7,64 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-15 P1.γ: extended analytic oracles (2026-04-26)
+
+Adds the three remaining ChatGPT-R5 high-k analytic oracles to
+`htt/bass/los/test_flrw_bessel_projector.py::TestExtendedAnalyticOracles`,
+completing the regression armor that the audits requested for the
+k-regime where the §10 CAMB-anchor is unavailable
+(briefing §3.3, ChatGPT R5 §6 coverage table).
+
+New tests (5):
+
+- `test_gaussian_visibility_md_sachs_wolfe_R5_2` — Δ_ℓ^T(k)
+  = [Θ_0+Ψ]_*·{j_ℓ + ½ k²σ_*² j_ℓ''} via the Bessel-ODE substitution
+  (R5.2.1/R5.2.2). σ_g sweep {1, 11} Mpc covering both sharp-limit
+  agreement and recombination-realistic Silk-damping-like envelope at
+  kσ_g ≤ 0.45.
+- `test_acoustic_toy_peak_structure_R5_3` — Δ_ℓ^T(k)
+  = [A cos(c_s k η_*) + B sin(c_s k η_*)] j_ℓ[kr_*] (R5.3.1) over
+  k ∈ [10⁻³, 5×10⁻²]. The acoustic ringing is what makes BASS's
+  high-k LoS assembly verifiable independent of CAMB introspection.
+- `test_acoustic_toy_first_peak_position_R5_3` — pins the first
+  acoustic peak at k_1 = π/(c_s η_*) ≈ 0.0193 Mpc⁻¹ where Θ_0(η_*) =
+  cos(π) = −1, with sign of Δ_0^T tracking sign of Θ_0.
+- `test_isw_limber_null_when_phi_dot_vanishes_R5_4` — Φ̇ = 0 ⇒ Δ_ℓ^T,ISW
+  = 0 sanity null.
+- `test_isw_limber_stationary_phase_high_ell_R5_4` — Δ_ℓ^T,ISW
+  ≈ 2 √(π/(2ℓ+1)) · (Φ̇+Ψ̇) at η_* = η_0 − (ℓ+½)/k, divided by 2k
+  (R5.4.3) at large ℓ and kη_0 ≫ 1, on a Gaussian-bump Φ̇(η) fixture
+  centered at η_mid = 6000 Mpc.
+
+Tolerance rationale notes for σ_g resolution (Δη_grid ≈ 1.76 Mpc on
+the 8001-point default grid forces σ_g ≥ 3 Mpc for trapezoid
+faithfulness, which then introduces O((kσ_g)²) finite-width
+corrections — captured in the 5% tolerance and documented in each
+test's docstring) are inline in the new class. A future variant on a
+denser custom η-grid in the visibility window could tighten the
+acoustic-toy tolerance toward the R5.3 spec's 1e-8.
+
+Anchor invariants preserved:
+- Fast baseline 1762 passed (1757 → 1762 with the 5 new R5 oracles),
+  1 skipped, 5 deselected, 27.71 s.
+- All Route-B Python golden / Route-B Rust / fb53 / R10/R11 / D_2
+  anchors unaffected — these are test-only additions.
+- Production code unchanged.
+
+Round-15 P1 status (across the three commits a92640e, c23009b, this
+one): the audit-agreed regression armor + monopole diagnostic +
+documentation are complete. The monopole-frame contract closure at
+sub-percent against a normalization-aligned BASS↔CAMB comparison
+remains naturally absorbed into Round-15 P2 (D-2 integrator η_init
+extension, multi-month).
+
+References:
+  docs/V5_ROUND15_P1_PSTF_DERIVATION_CHATGPT.md  R5 §1–§6 oracle
+                                                 catalogue + coverage
+                                                 table
+  docs/V5_ROUND15_P1_PSTF_DERIVATION_OPUS.md     R5 oracle list
+                                                 (overlapping)
+
 ### V5-RUNTIME Round-15 P1: audit-driven follow-ups (2026-04-26)
 
 External-LLM session(s) produced two parallel PSTF / 1+3 covariant /
