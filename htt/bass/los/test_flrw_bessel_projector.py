@@ -676,6 +676,200 @@ class TestTermIsolation:
 
 
 # ============================================================================
+# 11.5 Sharp-visibility analytic regression oracles
+#      (Round-15 P1 follow-up; protect the canonical LoS source forms
+#      against future label-as-type misreadings.)
+# ============================================================================
+
+class TestSharpVisibilityAnalyticOracles:
+    """Closed-form Δ_ℓ^T / Δ_ℓ^E values in the sharp-visibility limit
+    g(η) → δ(η − η_*).
+
+    These tests pin the canonical Lewis–Challinor / Seljak–Zaldarriaga
+    forms used by the BASS LoS projector:
+
+        S_T = g·[Θ_0 + Ψ + Π/4]                    (SW + temperature polter)
+            + e^{−κ}·[Φ̇ + Ψ̇]                    (ISW)
+            + d/dη[g · v_b]                        (Doppler)
+
+        S_E = −(√6/4) · g · Π                       (E-mode polter)
+
+    The Doppler oracle is the explicit regression that protects against
+    a spurious `/k` rewrite of the Doppler term — the false trail
+    captured in `docs/V5_ROUND15_P1_PSTF_DERIVATION_OPUS.md` Appendix X
+    (retracted "AF-1"). The variable BASS calls `v_b` is the
+    dimensionless `θ_b/k` (verified by `seed_compatibility.py:210`
+    where `theta_common = amp/3.0` carries no `k` factor and by the
+    baryon EOM forcing `3·drag·Θ_1` with no `k` in
+    `ver2_native_integrator.py`); therefore `(g v_b)'` is the canonical
+    LoS Doppler form, and any `(g v_b)'/k` rewrite would be wrong by a
+    factor of `1/k` ≈ 1000 at k = 10⁻³ Mpc⁻¹.
+    """
+
+    def _narrow_gaussian_visibility(self, eta_star, sigma):
+        norm = sigma * np.sqrt(2.0 * np.pi)
+        def g(eta):
+            e = np.asarray(eta, dtype=np.float64)
+            return np.exp(-0.5 * ((e - eta_star) / sigma) ** 2) / norm
+        return g
+
+    def test_sharp_visibility_sachs_wolfe_analytic(self):
+        """Sharp-visibility SW limit: with Π = ISW = Doppler = 0 and a
+        narrow visibility centered on η_*, the temperature transfer
+        collapses to (Θ_0 + Ψ)_* · j_ℓ(k(η_0 − η_*)).
+        """
+        cfg = FLRWBesselConfig(ell_max=4, eta_0_mpc=ETA_0_DEFAULT)
+        eta = build_eta_grid_linear(10.0, ETA_0_DEFAULT, 5001)
+        eta_star = 280.0
+        theta0 = 0.2
+        psi = 0.1
+        g = self._narrow_gaussian_visibility(eta_star, sigma=3.0)
+
+        sources = FLRWSourceTerms.with_sw_polter_only(
+            theta_0=constant_callable(theta0),
+            psi=constant_callable(psi),
+            pi=constant_callable(0.0),
+        )
+        S_T = build_temperature_source(
+            eta, sources, g,
+            lambda e: np.zeros_like(np.asarray(e, dtype=float)),  # κ=0
+        )
+        # Tolerance: O((σ k)²) corrections from finite Gaussian width.
+        # σk = 3 · 0.05 = 0.15 → second-order correction ≈ 1% at k = 0.05;
+        # use 5% rtol to absorb that with margin and stay consistent with
+        # the Doppler and polarization oracles below.
+        for k in (1.0e-3, 1.0e-2, 5.0e-2):
+            D = project_temperature_transfer(k, S_T, eta, cfg)
+            D_analytic = sachs_wolfe_analytic_transfer(
+                k=k, eta_star_mpc=eta_star,
+                theta0_plus_psi_at_star=theta0 + psi, config=cfg,
+            )
+            np.testing.assert_allclose(
+                D, D_analytic, rtol=5.0e-2, atol=1.0e-9,
+                err_msg=f"sharp-vis SW analytic mismatch at k={k}",
+            )
+
+    def test_sharp_visibility_doppler_analytic_protects_no_over_k_patch(self):
+        """Sharp-visibility Doppler limit. With a narrow Gaussian
+        visibility centered at η_* and v_b ≈ v_*, the Doppler term
+        ``(g · v_b)'`` integrated against ``j_ℓ(k(η_0 − η))`` reduces
+        (after IBP) to
+
+            Δ_ℓ^Dop(k) = +k · v_* · j'_ℓ(k(η_0 − η_*))
+
+        The explicit factor of `k` in this analytic limit is what
+        distinguishes the canonical Doppler from a (wrong) `/k`-patched
+        version. Concretely:
+          - Correct BASS form `(g v_b)'`           → matches `+k v_* j'_ℓ`.
+          - Spurious `(g v_b)'/k` patch            → would give `v_* j'_ℓ`,
+                                                     i.e. a 1/k ≈ 10³×
+                                                     too-small ratio at
+                                                     k = 10⁻³ Mpc⁻¹.
+
+        This test is the regression that captures the Round-15 P1
+        retracted-AF-1 false trail.
+        """
+        cfg = FLRWBesselConfig(ell_max=4, eta_0_mpc=ETA_0_DEFAULT)
+        eta = build_eta_grid_linear(10.0, ETA_0_DEFAULT, 8001)
+        eta_star = 280.0
+        sigma = 3.0  # FWHM ~ 7 Mpc — much narrower than 2π/k for k ≤ 0.05
+        v_star = 1.0e-3
+        g = self._narrow_gaussian_visibility(eta_star, sigma)
+
+        sources = FLRWSourceTerms.with_doppler_only(constant_callable(v_star))
+        S_T = build_temperature_source(
+            eta, sources, g,
+            lambda e: np.zeros_like(np.asarray(e, dtype=float)),
+        )
+
+        for k in (1.0e-3, 1.0e-2, 5.0e-2):
+            D = project_temperature_transfer(k, S_T, eta, cfg)
+            kr_star = k * (ETA_0_DEFAULT - eta_star)
+            D_analytic = np.array([
+                k * v_star * scipy_special.spherical_jn(
+                    ell, kr_star, derivative=True,
+                )
+                for ell in range(cfg.ell_max + 1)
+            ])
+            # Tolerance: O((σ k)²) corrections from finite Gaussian width.
+            # σk = 3 · 0.05 = 0.15 → ~2% corrections at k = 0.05.
+            np.testing.assert_allclose(
+                D, D_analytic, rtol=5.0e-2, atol=1.0e-12,
+                err_msg=(
+                    f"sharp-vis Doppler analytic match failed at k={k:g}.\n"
+                    f"  D_BASS    = {D}\n"
+                    f"  D_analytic= {D_analytic}\n"
+                    f"  ratio     = {D / np.where(np.abs(D_analytic)>1e-30, D_analytic, np.inf)}\n"
+                    f"  If the ratio is consistently 1/k ≈ {1.0/k:.0f} "
+                    f"too small, a spurious `/k` may have been introduced "
+                    f"into the Doppler line of build_temperature_source."
+                ),
+            )
+
+    def test_sharp_visibility_polarization_polter_analytic(self):
+        """Sharp-visibility E-mode limit. With S_E = −(√6/4) g · Π and
+        Π ≈ Π_* in the visibility window:
+
+            Δ_ℓ^E(k) = −(√6/4) · Π_* · P^E_ℓ(k(η_0 − η_*))
+
+        where P^E_ℓ is the spin-2 projection factor implemented in
+        ``e_mode_projection_factor``. This pins the temperature-side
+        polter convention `g·Π/4` (without spin-2 projection) by
+        contrast — the spin-2 factor lives only in the E-mode branch.
+        """
+        cfg = FLRWBesselConfig(ell_max=4, eta_0_mpc=ETA_0_DEFAULT)
+        eta = build_eta_grid_linear(10.0, ETA_0_DEFAULT, 5001)
+        eta_star = 280.0
+        sigma = 3.0
+        pi_star = 1.0e-2
+        g = self._narrow_gaussian_visibility(eta_star, sigma)
+
+        sources = FLRWSourceTerms.with_sw_polter_only(
+            theta_0=constant_callable(0.0),
+            psi=constant_callable(0.0),
+            pi=constant_callable(pi_star),
+        )
+        S_E = build_polarization_source(eta, sources, g)
+
+        for k in (1.0e-3, 1.0e-2, 5.0e-2):
+            D_E = project_polarization_transfer(k, S_E, eta, cfg)
+            kr_star = k * (ETA_0_DEFAULT - eta_star)
+            # Ground truth: -(√6/4) Π_* · P^E_ℓ(kr_*)
+            D_E_analytic = np.zeros(cfg.ell_max + 1, dtype=np.float64)
+            for ell in range(2, cfg.ell_max + 1):
+                D_E_analytic[ell] = (
+                    -(SQRT6 / 4.0) * pi_star
+                    * e_mode_projection_factor(ell, kr_star)
+                )
+            np.testing.assert_allclose(
+                D_E, D_E_analytic, rtol=5.0e-2, atol=1.0e-12,
+                err_msg=(
+                    f"sharp-vis E-mode polter analytic match failed at "
+                    f"k={k:g}.\n  D_E_BASS = {D_E}\n  "
+                    f"D_E_analytic = {D_E_analytic}\n  "
+                    f"If D_E_BASS is identically zero, the polarization "
+                    f"projector branch may have been disabled."
+                ),
+            )
+
+    def test_sharp_visibility_doppler_zero_when_v_b_zero(self):
+        """Sanity check on the regression oracle: with v_b = 0 the
+        sharp-visibility Doppler limit is identically zero, regardless
+        of g(η)."""
+        cfg = FLRWBesselConfig(ell_max=4, eta_0_mpc=ETA_0_DEFAULT)
+        eta = build_eta_grid_linear(10.0, ETA_0_DEFAULT, 1001)
+        g = self._narrow_gaussian_visibility(280.0, sigma=5.0)
+
+        sources = FLRWSourceTerms.with_doppler_only(_zero_callable)
+        S_T = build_temperature_source(
+            eta, sources, g,
+            lambda e: np.zeros_like(np.asarray(e, dtype=float)),
+        )
+        D = project_temperature_transfer(1.0e-2, S_T, eta, cfg)
+        np.testing.assert_allclose(D, 0.0, atol=1.0e-15)
+
+
+# ============================================================================
 # 12. Physical sign assertions
 # ============================================================================
 
