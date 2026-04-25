@@ -7,6 +7,81 @@
 
 ## [Unreleased]
 
+### V5-RUNTIME Round-15 P1: audit-driven follow-ups (2026-04-26)
+
+External-LLM session(s) produced two parallel PSTF / 1+3 covariant /
+tetrad derivation documents in response to the P1 hand-off briefing
+(commit `f6173d8`):
+
+- `docs/V5_ROUND15_P1_PSTF_DERIVATION_OPUS.md` — R6 verdict, R7-corrected,
+  R8 minor-edit; Appendices X (retracted parallel-cycle errata), Y
+  (salvaged supplementary analytical content).
+- `docs/V5_ROUND15_P1_PSTF_DERIVATION_CHATGPT.md` — R10 + P1.5 integrated
+  SSoT after independent supersession of an earlier R8 final-clean
+  document.
+
+The two documents agreed on most claims (BASS hierarchy is
+PSTF-native; no `h_S'/6` synchronous-gauge patch; Π/4 temperature
+polter canonical; spin-2 projection lives in the E-mode branch only;
+Bianchi all-m machinery required beyond aligned-axisymmetric Bianchi-I)
+but **disagreed on the proposed Doppler `(g v_b)' → (g v_b)/k` patch
+(AF-1)**: ChatGPT R10 prescribed it; Opus R7 explicitly retracted it
+in Appendix X, citing label-as-type misreading by the parallel cycle.
+
+Independent code verification at the seed and EOM sites confirms
+**Opus R7 is correct**:
+
+- `htt/bass/hierarchy/seed_compatibility.py:210` —
+  `theta_common = amp / 3.0` carries no `k` factor.
+- `htt/bass/hierarchy/ver2_native_integrator.py:3047-3052` — baryon EOM
+  forcing is `3 * drag * theta_1` with no explicit `k`.
+
+Both observations are consistent only with the dimensionless
+`v_b ≡ θ_b/k` convention, which makes `(g v_b)'` the canonical
+LoS Doppler form. No production-code Doppler patch is applied.
+
+The audit-agreed follow-up actions land in two test/diagnostic-only
+commits:
+
+- **`a92640e`** (test-only): four sharp-visibility analytic
+  regression oracles in
+  `htt/bass/los/test_flrw_bessel_projector.py::TestSharpVisibilityAnalyticOracles`,
+  pinning the canonical Lewis–Challinor / Seljak–Zaldarriaga forms:
+  - `test_sharp_visibility_sachs_wolfe_analytic` (Δ_ℓ^T → SW limit),
+  - `test_sharp_visibility_doppler_analytic_protects_no_over_k_patch`
+    (Δ_ℓ^Dop → +k · v_* · j'_ℓ — the regression that captures the
+    retracted-AF-1 false trail; manual hypothesis test confirms a
+    `(g v_b)/k` patch would fail this by ~1000× at k = 10⁻³),
+  - `test_sharp_visibility_polarization_polter_analytic` (Δ_ℓ^E
+    spin-2 limit, pins g·Π/4 on the temperature side by contrast),
+  - `test_sharp_visibility_doppler_zero_when_v_b_zero` (sanity).
+  Fast baseline 1757 passed (1753 → 1757 with the new oracles).
+
+- **`<this commit>`** (diagnostic-only): monopole-frame audit script
+  `scripts/v5_round15_p1_monopole_frame_diagnostic.py` plus its first
+  transcript at
+  `docs/audits/v5_round15_p1_monopole_frame_diagnostic_2026-04-26.txt`.
+  Tests the Opus "open contract" / ChatGPT R3.3.3 hypothesis
+  `Θ_0^(BASS) ≈ Θ_0^(N) + [Φ(η) − Φ(η_init)] + O(k·∫Ψ dη')`. Empirical
+  finding: at η = η_init, ratios `Θ_0^(BASS) / CAMB Θ_0^(N) = 0.81,
+  0.85, 0.99` for `k ∈ {1e-3, 5e-3, 1e-2}` — order-of-unity match
+  consistent with the audits' "non-catastrophic" characterization.
+  At η > η_init the comparison is confounded by an explicit
+  normalization mismatch (BASS's `t_tower` and `psi` carry the
+  pipeline's primordial-amplitude convention `Θ_0^(BASS) ~ k²` for
+  this test, while CAMB's `delta_photon` is transfer-function
+  normalized against unit primordial curvature). The monopole
+  contract is therefore **non-catastrophic but not closed at
+  sub-percent** by this diagnostic alone; the LoS-observable Δ_T
+  agreement at the §10 4-cell low-k anchor (median ratio 1.00 with
+  η_init truncation lifted) remains the operative empirical baseline.
+
+No production code is changed by either commit. Anchor invariants
+preserved: Route-B Python golden D_2 = 1002.086744 μK², Route-B Rust
+D_2 = 1002.086744 μK², 43 fb53 + 9 R10/R11 super-horizon IC tests, and
+the D-1 fix's resolution-independence at the LoS projector all
+unaffected — these are test/diagnostic-only additions.
+
 ### V5-RUNTIME Round-15 P1: PSTF formalization hand-off (2026-04-25)
 
 After Round-15 P0 (commit `cb82a2a`) closed D-1 (LoS grid decoupling),
