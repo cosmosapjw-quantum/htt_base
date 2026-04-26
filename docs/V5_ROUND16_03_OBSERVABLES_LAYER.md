@@ -10,14 +10,22 @@ The LoS source S_T(η, k, m) is the same SW + ISW + Doppler structure as FLRW, b
 ```
 S_T(η, k, m) = g(η) [Θ_0,m + Ψ_m + (1/4) Π_m]                  [SW + polter]
               + e^{-κ(η)} [Φ̇_m + Ψ̇_m]                          [ISW]
-              + (1/k) d/dη [g(η) v_b,m(η)]                     [Doppler ← /k corrected]
+              + d/dη [g(η) v_b,m(η)]                            [Doppler — canonical, no /k]
 
 S_E(η, k, m) = -(√6/4) g(η) Π_m                                 [E polter source]
 
 S_B(η, k, m) = post-Thomson tensor source from σ_{ab}(η)        [Path B; §2.5]
 ```
 
-The audit's R8 finding **Doppler `/k` factor missing** (Round-15 P1 §2 R7-corrected) is fixed in Round-16: the LoS source builder writes `(1/k) d/dη[g v_b]`, not `d/dη[g v_b]`. This is a one-line change in `bass/los/flrw_bessel_projector.py:assemble_temperature_source` but **changes D_2** at the 0.5% level — it is the load-bearing fix for PR-S13 (Python-side D_2 closure).
+> **Doppler `/k` mandate RETRACTED 2026-04-26.** An earlier draft of this section (commits up to `607e759`) instructed PR-S13 to apply `(1/k) d/dη[g v_b]` as the "load-bearing" closure for Python-side D_2. That instruction was inherited from `docs/V5_ROUND15_P1_PSTF_DERIVATION_CHATGPT.md:22`, which is part of the parallel-cycle audit explicitly retracted as Appendix X "false trail" in `docs/V5_ROUND15_P1_PSTF_DERIVATION_OPUS.md:9, 15, 17, 405-407, 2218`. The R7-authoritative Opus derivation is unambiguous: BASS's `v_b` slot is the dimensionless `θ_b/k` (verified in code at `htt/bass/hierarchy/seed_compatibility.py:210` and the baryon-EOM forcing in `htt/bass/integration/ver2_native_integrator.py`); therefore `(g v_b)'` is the canonical collapsed `j_ℓ`-only source and any `/k` rewrite would double-divide. Empirical confirmation (this session, Δ measured against the Rust MB-95 anchor `D_2 = 1002.086744 μK²`):
+>
+> | Configuration | D_2 (μK²) | Δ vs anchor |
+> |---|---:|---:|
+> | Current Python PSTF (no /k) | 2.0451 × 10¹⁰ | +2.0451 × 10¹⁰ |
+> | Python PSTF + `/k` patch    | 2.0448 × 10¹⁰ | +2.0448 × 10¹⁰ |
+> | Effect of `/k` patch on D_2 | — | −0.012% (not the spec-claimed 0.5%) |
+>
+> The dominant gap is **primordial-amplitude normalization**, not Doppler. See `docs/V5_ROUND17_PR_S13_REAL_SCOPE.md` for the corrected PR-S13 scope. The regression-armor test [`test_sharp_visibility_doppler_analytic_protects_no_over_k_patch`](../htt/bass/los/test_flrw_bessel_projector.py) (commit `a92640e`) remains in force and must continue to pass at every commit.
 
 ## 2. Family-specific LoS propagators (closes G6)
 
@@ -532,10 +540,16 @@ P4. B-mode pathway probe (cross-cuts §2.5)
    With injected σ_{2,1} ≠ 0:
      transfer_B[ℓ=2..10, m=±1] is non-zero AND has expected parity-odd morphology
 
-P5. Doppler /k correction
-   Re-run FLRW pipeline post-Round-16; D_2(post) - D_2(pre) ≈ -5 μK² (the
-   audit-flagged shift from missing 1/k factor; see V5 R15 P1 §2 R7).
-   Cross-check with CAMB at the same params: |Δ_2^BASS - Δ_2^CAMB| < 1%.
+P5. Doppler convention regression (RETRACTED /k probe)
+   The earlier "/k correction" probe was retracted 2026-04-26 after empirical
+   measurement showed the patch shifts D_2 by only -0.012% (not the
+   spec-predicted 0.5%) and the gap to the Rust MB-95 anchor
+   D_2 = 1002.086744 μK² is dominated by primordial-amplitude normalization
+   (the Python pipeline returns D_2 ≈ 2.0e10 μK², a 7-orders-of-magnitude
+   gap that no Doppler-side patch can close). Replacement probe: assert that
+   `htt/bass/los/test_flrw_bessel_projector.py::TestSharpVisibilityAnalyticOracles::test_sharp_visibility_doppler_analytic_protects_no_over_k_patch`
+   passes — i.e., the canonical (g v_b)' source is preserved. PR-S13 closure
+   work itself is documented in `docs/V5_ROUND17_PR_S13_REAL_SCOPE.md`.
 
 P6. MES no-claim probe
    Build a deliberately rank-deficient response_R; compute_mes_bound returns

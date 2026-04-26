@@ -218,7 +218,7 @@ These are *banned constructs* that must be absent from production. Each carries 
 | `b_mode_output_support="flrw_zero_only"` marketed as "B-mode prediction" | Violates G5 honest envelope | output_split_gate `forbidden_shortcut_checks` enforces | gate 14 |
 | `map_output_support="not_implemented"` with non-None map fields | Violates G10 contract | `SolverCoreOutput.__post_init__` enforces | gate 14 |
 | Synthetic data with `dataset.kind="planck2018"` | Violates G8 data-binding | `bass/inference/__main__.py` whitelist | gate 15 |
-| Doppler source without 1/k factor | Violates corrected R7 finding (Round-15 P1) | grep `d/d.eta.*g.*v_b` and verify `(1/k) *` prefactor | A2, A8 (CAMB) |
+| Doppler source WITH 1/k factor | RETRACTED 2026-04-26 — adding `/k` is the false trail (parallel-cycle Appendix X, see `docs/V5_ROUND15_P1_PSTF_DERIVATION_OPUS.md:9, 17, 405-407, 2218`); BASS's `v_b` is dimensionless `θ_b/k`, so `(g v_b)'` is canonical and `/k` would double-divide. Empirical: `/k` patch shifts D_2 by only -0.012% (vs 7-orders-of-magnitude gap). | grep `gradient.*gvb` and verify NO trailing `/ k`; assert `test_sharp_visibility_doppler_analytic_protects_no_over_k_patch` passes | A2 |
 
 ## 5. Per-PR closure checklist (paste into the PR)
 
@@ -248,7 +248,7 @@ The audit-friendly pattern: every closed gap has (a) a name, (b) a code path tha
 
 | Round-16 Gap | Doc 01 § | Doc 02 § | Doc 03 § | Doc 04 § | Test file |
 |--------------|----------|----------|----------|----------|-----------|
-| G1 (D_2 closure) | — | 1, 2 | 1 (Doppler /k), 2 | 1, 8 | `test_d2_pstf_closure.py` (xfail → xpass at PR-S13) |
+| G1 (D_2 closure) | — | 1, 2 | 1 (canonical `(g v_b)'`; /k retracted), 2 | 1, 8 | `test_d2_pstf_closure.py` (xfail; real scope in `docs/V5_ROUND17_PR_S13_REAL_SCOPE.md`) |
 | G2 (RHS k-mixing) | — | 2 | — | 2 | `test_mode_mixing_blocks.py`; `test_hierarchy_rhs_v16_flrw_limit.py` |
 | G3 (off-axis modes) | 2 | 3 | 2.4 | 2.1, 2.2 | `test_off_axis_modes_per_family.py` |
 | G4 (Codazzi tilt) | 3 | — | — | 9 | `test_background_codazzi_tilt_evolution.py` |

@@ -1,8 +1,24 @@
 # V5 Round-16 — Next-Session Handoff (PR-S13 → PR-S15)
-_Last updated: 2026-04-26. Authority: this doc + V5_ROUND16_00..05._
+_Last updated: 2026-04-26 (post-empirical-resolution session). Authority: this doc + V5_ROUND16_00..05 + `docs/V5_ROUND17_PR_S13_REAL_SCOPE.md`._
+
+> **2026-04-26 RETRACTION BANNER.** The "Doppler /k correction" prescribed
+> as PR-S13's load-bearing fix in §4.1 step 5 + §6 step 3 + §7 Q1 of the
+> earlier draft of this file (commit `607e759`) is **retracted**. Empirical
+> measurement this session (commit `[this commit]`) showed the /k patch
+> shifts D_2 by only **-0.012%**, not the spec-claimed 0.5%, while the
+> actual gap to the Rust MB-95 anchor `D_2 = 1002.086744 μK²` is
+> **+2.04 × 10¹⁰ μK²** (7 orders of magnitude, dominated by primordial
+> amplitude normalization). The /k mandate was inherited from
+> `docs/V5_ROUND15_P1_PSTF_DERIVATION_CHATGPT.md:22`, which is the
+> parallel-cycle audit explicitly retracted as Appendix X "false trail" in
+> the R7-authoritative `docs/V5_ROUND15_P1_PSTF_DERIVATION_OPUS.md:9, 17,
+> 405-407, 2218`. The corrected PR-S13 scope is in
+> **`docs/V5_ROUND17_PR_S13_REAL_SCOPE.md`** — read that, not §6 below,
+> when starting a new session.
 
 A new session can drop in cold and continue Round-16 from this file
-alone. **Read this top-to-bottom, then start at §6.**
+alone. **Read this top-to-bottom, then start at §6 (post-retraction
+procedure).**
 
 ---
 
@@ -178,14 +194,22 @@ PR-S13 must:
    [htt/bass/los/flrw_bessel_projector.py](htt/bass/los/flrw_bessel_projector.py)
    is the FLRW production path. For non-FLRW families, dispatch to
    `bass.los.family_propagators.get_propagator(family)`.
-5. **Apply the Doppler /k correction** (V5_ROUND16_03 §1, "load-bearing
-   fix for PR-S13"): in
-   [htt/bass/los/flrw_bessel_projector.py::assemble_temperature_source](htt/bass/los/flrw_bessel_projector.py)
-   change `d/dη [g v_b]` → `(1/k) d/dη [g v_b]`. **This shifts D_2 at
-   the 0.5% level** and is the single load-bearing one-line change
-   that takes Python D_2 from where it is now to the Rust anchor.
+5. ~~**Apply the Doppler /k correction**~~ **RETRACTED 2026-04-26.**
+   This step instructed `d/dη[g v_b] → (1/k) d/dη[g v_b]` as the
+   load-bearing fix. Empirical measurement disproved this: the /k patch
+   shifts D_2 by only -0.012% (−2.5 × 10⁶ μK² of a +2.04 × 10¹⁰ μK²
+   gap). The actual gap is dominated by primordial-amplitude
+   normalization, not Doppler convention. The R7-authoritative Opus
+   derivation explicitly bans the /k patch and the in-tree
+   regression-armor test
+   `test_sharp_visibility_doppler_analytic_protects_no_over_k_patch`
+   enforces the canonical `(g v_b)'` form. PR-S13 closure work is
+   re-scoped in `docs/V5_ROUND17_PR_S13_REAL_SCOPE.md`.
 6. **Run [htt/bass/spectrum/test_d2_pstf_closure.py](htt/bass/spectrum/test_d2_pstf_closure.py)**;
-   it must xpass at `|Δ| < 1e-9`. Remove the xfail marker.
+   it currently fails at config validation
+   (`L_max_tower=4 < ell_max_transfer=8`) — that latent bug was fixed
+   2026-04-26. The test now actually exercises the pipeline and yields
+   the +2.04 × 10¹⁰ μK² xfail signal, which is the real PR-S13 gap.
 
 ### 4.2 What's *already done* and shouldn't be redone
 
@@ -256,15 +280,21 @@ after each flip, fix or update the assertions, commit per flip.
 **Don't bundle all three flips into one commit** — the cascade is
 messy.
 
-## 6. Start here (PR-S13 procedure)
+## 6. Start here (PR-S13 procedure — post-retraction 2026-04-26)
 
-Execute in this order:
+The earlier procedure in this section instructed a Doppler /k patch as
+the load-bearing fix. That instruction was retracted; see the banner
+at the top of this file and `docs/V5_ROUND17_PR_S13_REAL_SCOPE.md` for
+the corrected scope.
+
+Updated entry procedure for a fresh session:
 
 ```bash
 # 0. Verify clean baseline.
 cd /home/cosmosapjw/Dropbox/bianchi/htt_base
-git log --oneline -1   # should show 070322a or later
+git log --oneline -1   # should show the doc-retraction commit or later
 git status             # should be clean
+
 cd htt
 /home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -m pytest \
   bass/background/test_codazzi_tilt_rhs.py \
@@ -279,45 +309,43 @@ cd htt
   -q --tb=line
 # Expected: 287 passed in ~16 s.
 
-# 1. Read the spec for PR-S13.
-#    docs/V5_ROUND16_00_MASTER_PLAN.md §2 (PR ladder)
-#    docs/V5_ROUND16_03_OBSERVABLES_LAYER.md §1 (Doppler /k correction)
-#    docs/V5_ROUND16_04_NUMERICS_AND_RUNTIME.md §8 (code-port contract)
+# 1. Read the corrected scope.
+#    docs/V5_ROUND17_PR_S13_REAL_SCOPE.md             ← real PR-S13 scope
+#    docs/V5_ROUND15_P1_PSTF_DERIVATION_OPUS.md       ← R7-authoritative
+#                                                       (do not apply /k)
+#    docs/V5_ROUND16_02_SOLVER_LAYER.md §1            ← state-layout migration
+#    CLAUDE.md §3                                     ← Round-15 P2 pointer
+#                                                       on η_init extension /
+#                                                       primordial alignment
 
-# 2. Inspect the existing FLRW pipeline + state-layout layer.
-ls htt/bass/spectrum/
-cat htt/bass/spectrum/test_d2_pstf_closure.py     # xfail marker location
-cat htt/bass/los/flrw_bessel_projector.py | grep -n assemble_temperature_source
-cat htt/bass/hierarchy/pack_unpack.py | head -80  # state layout
+# 2. Decide which PR-S13 sub-track to enter (each is multi-day; do not
+#    enter without explicit user confirmation):
+#    (a) Primordial-amplitude alignment (CLAUDE.md §3 Round-15 P2 lift)
+#    (b) State-layout migration m=0 → m∈{-2..+2} (V5_ROUND16_02 §1)
+#    (c) Real-IC injection at η(z_*) (Blocker 3 from R15 diagnosis)
 
-# 3. Apply the load-bearing Doppler /k fix (single-line change in
-#    flrw_bessel_projector.py); run test_d2_pstf_closure.py and
-#    test_flrw_pipeline.py to see how much D_2 moved.
-
-# 4. If the /k fix alone gets D_2 within 1e-9 of 1002.086744, remove
-#    the xfail marker; commit; STOP — Tier-A is closed.
-
-# 5. If not, proceed with the state-layout migration (multi-PR effort
-#    per V5_ROUND16_02 §1 spec).
+# 3. Forbidden moves (always):
+#    - Do NOT add a Doppler /k factor (re-introduces parallel-cycle false trail).
+#    - Do NOT mark test_d2_pstf_closure.py xpass without verifying the
+#      actual numerical value against the Rust anchor.
+#    - Do NOT enter (a)/(b)/(c) above without explicit user confirmation.
 ```
 
-The Doppler /k fix is the **70%-of-the-fix** intervention per
-V5_ROUND16_03 §1 paragraph "changes D_2 at the 0.5% level". The
-remaining 30% (full state-layout migration) is the harder multi-day
-work.
+Empirical context for the next session: the current Python-side D_2
+on the canonical `(g v_b)'` Doppler form is **2.04 × 10¹⁰ μK²**, vs
+the Rust MB-95 anchor **1002.086744 μK²**. The 7-orders-of-magnitude
+gap is the real PR-S13 closure target.
 
 ## 7. Open questions for the human
 
 These must be raised explicitly with the user before progress on the
 hard parts of PR-S13/S15:
 
-- **Q1 (PR-S13)**: After applying the Doppler /k fix, does the
-  resulting D_2 value match the Rust MB-95 anchor 1002.086744 µK² to
-  1e-9? If not, the user should decide whether to:
-  (a) Accept a documented residual gap and ship Tier-A with explicit
-      "post-/k-fix Python D_2 = X µK²" annotation, or
-  (b) Begin the multi-day state-layout migration to chase the
-      remaining ~0.5% gap.
+- **Q1 (PR-S13)**: ~~After applying the Doppler /k fix~~ **RESOLVED
+  empirically 2026-04-26.** /k patch shifts D_2 by only -0.012% and the
+  gap to the Rust anchor is 7 orders of magnitude (+2.04 × 10¹⁰ μK²).
+  The /k mandate is retracted. Real PR-S13 scope and per-sub-track
+  open questions live in `docs/V5_ROUND17_PR_S13_REAL_SCOPE.md`.
 
 - **Q2 (PR-S15)**: The three default flips break different test sets.
   Should they ship as three separate commits (gradual migration) or

@@ -70,9 +70,10 @@ def test_python_pstf_d2_matches_route_b_anchor(planck2018_species) -> None:
 
     # Use a moderate k-grid; the pipeline parallelizes per-k so this is
     # a few minutes on the 8-worker baseline (matches the existing slow
-    # test budget).
-    k_grid = np.logspace(-4.0, -1.5, 64)
-    pipeline_cfg = FLRWPipelineConfig(L_max_tower=4, ell_max_transfer=8)
+    # test budget). k_grid length is odd so Simpson quadrature accepts it.
+    # L_max_tower must be >= ell_max_transfer (FLRWPipelineConfig __post_init__).
+    k_grid = np.logspace(-4.0, -1.5, 65)
+    pipeline_cfg = FLRWPipelineConfig(L_max_tower=8, ell_max_transfer=8)
     assembly_cfg = CLAssemblyConfig(ell_max=8, k_grid=k_grid, quadrature="simpson")
     bundle = compute_flrw_d_ell(
         planck2018_species,

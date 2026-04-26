@@ -7,6 +7,89 @@
 
 ## [Unreleased]
 
+### V5 Round-16 P2: Doppler `/k` mandate retracted; PR-S13 re-scoped (2026-04-26)
+
+Doc-only retraction PR (no production code change). Triggered by an
+empirical resolution session: the `/k` Doppler patch prescribed as
+PR-S13's load-bearing fix in `V5_ROUND16_03 §1` + `V5_ROUND16_05`
+gate row + `V5_ROUND16_NEXT_SESSION_HANDOFF.md §4.1/§6/§7-Q1` (commit
+`607e759`) was empirically falsified.
+
+**Empirical measurement (this session, 2 × 28 min `compute_flrw_d_ell`
+runs at 65 k-points × 4 workers):**
+
+| Configuration | D_2 (μK²) | Δ vs Rust MB-95 anchor |
+|---|---:|---:|
+| Anchor (Rust `bass_rs dump_dl_spectrum_sparse`) | 1002.086744 | — |
+| Python PSTF, current `main` (no /k) | 2.0451 × 10¹⁰ | +2.0451 × 10¹⁰ |
+| Python PSTF + `/k` Doppler patch (applied + reverted) | 2.0448 × 10¹⁰ | +2.0448 × 10¹⁰ |
+| Effect of `/k` on D_2 | — | **−0.012% (vs spec-claimed 0.5%)** |
+
+The /k patch shifts D_2 by 0.012%, not the spec-claimed 0.5%. The
+actual gap is **7 orders of magnitude** and dominated by primordial-
+amplitude normalization, not Doppler convention.
+
+**Source of the false /k mandate:**
+`docs/V5_ROUND15_P1_PSTF_DERIVATION_CHATGPT.md:22` — part of the
+parallel-cycle audit explicitly retracted as Appendix X "false trail"
+in the R7-authoritative `docs/V5_ROUND15_P1_PSTF_DERIVATION_OPUS.md:9,
+17, 405-407, 2218`. The R7 derivation is unambiguous: BASS's `v_b` slot
+is the dimensionless `θ_b/k` (verified at
+`htt/bass/hierarchy/seed_compatibility.py:210` and the baryon EOM in
+`htt/bass/integration/ver2_native_integrator.py`); therefore
+`(g v_b)'` is the canonical collapsed `j_ℓ`-only source and any `/k`
+rewrite would double-divide. The in-tree regression-armor test
+`htt/bass/los/test_flrw_bessel_projector.py::TestSharpVisibilityAnalyticOracles::test_sharp_visibility_doppler_analytic_protects_no_over_k_patch`
+(commit `a92640e`) enforces this.
+
+**Doc edits:**
+- `docs/V5_ROUND16_03_OBSERVABLES_LAYER.md` §1 — /k retracted with
+  empirical table; §9 P5 probe re-scoped to assert canonical form.
+- `docs/V5_ROUND16_05_SHIP_GATES_AND_ADVERSARIAL_AUDIT.md` line 221
+  forbidden-pattern row inverted (now: "Doppler source WITH 1/k factor"
+  is the forbidden pattern); §7 cross-ref updated.
+- `docs/V5_ROUND16_NEXT_SESSION_HANDOFF.md` — top-level retraction
+  banner; §4.1 step 5 retracted; §6 procedure replaced with post-
+  retraction entry checklist; §7 Q1 marked resolved.
+
+**New ticket:**
+- `docs/V5_ROUND17_PR_S13_REAL_SCOPE.md` documents the corrected
+  PR-S13 closure scope: three independent sub-tracks
+  (a) primordial-amplitude alignment [leading hypothesis, 1-2d],
+  (b) state-layout migration `m=0 → m∈{-2..+2}` [3-5d], and
+  (c) real-IC injection at η(z_*) [1-2d]. Recommended ordering
+  (a) → (c) → (b). Each requires explicit user confirmation before
+  entry.
+
+**Test fix (latent bug exposed by the empirical resolution):**
+`htt/bass/spectrum/test_d2_pstf_closure.py:75` was
+`L_max_tower=4, ell_max_transfer=8`, which fails
+`FLRWPipelineConfig.__post_init__` validation at construction time —
+so the xfail test never actually exercised the pipeline. Fixed to
+`L_max_tower=8, ell_max_transfer=8` and `k_grid` length 64 → 65 (odd,
+Simpson-compatible). The xfail marker remains; the test now fails
+honestly at the pipeline assertion (Δ = +2.04 × 10¹⁰ μK²) rather than
+at config validation.
+
+**Files touched:**
+- `docs/V5_ROUND16_03_OBSERVABLES_LAYER.md`
+- `docs/V5_ROUND16_05_SHIP_GATES_AND_ADVERSARIAL_AUDIT.md`
+- `docs/V5_ROUND16_NEXT_SESSION_HANDOFF.md`
+- `docs/V5_ROUND17_PR_S13_REAL_SCOPE.md` (new)
+- `htt/bass/spectrum/test_d2_pstf_closure.py` (config bug fix only;
+   xfail marker preserved)
+- `CLAUDE.md` (§3 phase status)
+- `CHANGELOG.md` (this entry)
+
+**Verification:** baseline 287 Round-16 primitive tests pass in 15.3 s
+post-edits; sharp-visibility regression-armor test passes; FLRW
+pipeline test suite (25 tests) passes. No production code modified.
+
+**Forbidden-moves catalogue (carried forward):** do not add a Doppler
+`/k` factor; do not mark `test_d2_pstf_closure.py` xpass without
+verifying the actual numerical value against the Rust anchor; do not
+enter PR-S13 sub-tracks without explicit user confirmation.
+
 ### V5 Round-16 PR-S6 + S7: Off-axis modes for class-A/class-B families (2026-04-26)
 
 Closes Round-16 gap **G3** (mode-coverage side: 8/11 families
