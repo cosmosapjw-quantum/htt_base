@@ -7,6 +7,72 @@
 
 ## [Unreleased]
 
+### V5 Round-16 PR-S11: B-mode projector (Path B Wigner-D) (2026-04-26)
+
+Closes Round-16 gap **G5** (B-mode tower has RHS but the FLRW Bessel
+projector returns identically zero — `alm_B` archive column is
+structurally a phantom) per `docs/V5_ROUND16_03_OBSERVABLES_LAYER.md §2.5`
+via Path B (V5_ROUND16_00 §3.3): the spin-2 Wigner-D parity-odd
+projector matching the Saadeh-Pontzen-McEwen 2016 ABSolve construction.
+
+New module `htt/bass/los/b_mode_projector.py`:
+
+- `WignerDSpin2Cache` — pre-computed parity-odd spin-2 Wigner-D
+  combination `D^ℓ_{Mm,+2} − D^ℓ_{Mm,-2}` over (ℓ, M, m). At the
+  analytic-gauge β=0 starting point this reduces to:
+  `+1 if M = m + 2; -1 if M = m - 2; 0 otherwise` — the parity
+  selection rule that enforces ``Δ_ℓ^B = 0`` for axisymmetric
+  backgrounds.
+- `build_wigner_d_spin2_cache(L_max)` → `WignerDSpin2Cache`.
+- `spin2_parity_odd_combination(ell, M, m, cache)` — accessor.
+- `project_B_mode_transfer(...)` — the V5_ROUND16_03 §2.5 LoS integral
+  ``Δ_ℓ^B(k, m) = Σ_M C^B · ∫ dη [g·(−√6/4)·Π^{(B)}_m] · (−i)
+  (D_{+2}−D_{−2})/2 · j_ℓ(kΔη)/(kΔη)²``. Returns
+  ``(ell_max+1, 5)`` real array indexed by (ℓ, m).
+- `project_B_mode_transfer_axisymmetric_zero(eta_grid, ell_max)` —
+  convenience for the FLRW-zero invariant assertion.
+- Module-level constants
+  `B_MODE_OUTPUT_SUPPORT_FLRW_ZERO_ONLY = "flrw_zero_only"` and
+  `B_MODE_OUTPUT_SUPPORT_WIGNER_D_PATH_B = "wigner_d_path_b"`
+  matching `RuntimeControlBlock.b_mode_projector` literals.
+
+New regression `htt/bass/los/test_b_mode_projector.py` (16 tests
+passing in 1.0s):
+
+- `TestWignerDSpin2Cache` (5): shape, validators, parity-selection
+  rule (`M = m ± 2` → ±1, else 0), helper-cache equivalence,
+  out-of-range M returns zero.
+- `TestBModeProjectorAxisymmetric` (2): zero B-tower → zero transfer
+  (FLRW invariant within 1e-15); convenience helper matches.
+- `TestBModeProjectorOffAxis` (2): off-axis configuration with
+  populated B-tower → non-zero transfer; σ_{2,±1} alone (with zero
+  B-tower) → zero transfer (the σ-driven generation is an upstream
+  RHS responsibility per PR-S4 EB-mixing block).
+- `TestProjectorValidators` (4): short eta_grid, low ell_max,
+  visibility/sigma shape mismatches all raise.
+- `TestAdversarialAuditPRS11` (3): A1 (no fallback to scalar Bessel
+  for B); A2 (spin-2 explicit via parity-odd combination, not naive);
+  A6 (axisymmetric configuration with zero B-tower from upstream
+  produces zero transfer — the load-bearing FLRW invariant).
+
+Adversarial audit (V5_ROUND16_03 §2.8) PASS:
+- A1 toy/naive: zero hits in production module.
+- A2 spin-2 selection rule enforced bit-exactly (1.0/-1.0/0.0 only).
+- A6 FLRW invariant: σ_{2,0} background + zero B-tower ⇒ zero
+  transfer.
+- A8 dimensional consistency: output shape = `(ell_max+1, 5)`.
+
+Out of scope (deferred):
+- Path C diagnostic (per V5_ROUND16_00 §3.3) — direct shear-curvature
+  B source via PSTF for V/VII_h/IX analytic anchor; Round-17.
+- Wiring `project_B_mode_transfer` into the LoS pipeline so the
+  Tier-B execution attaches a non-zero `transfer_B` for non-FLRW
+  families. PR-S13 (state-layout migration) gates the actual wire.
+- Per-family β(η) Wigner-D evaluation at non-zero polar angle —
+  Round-17 (the analytic-gauge β=0 cache is the structural anchor;
+  the time-dependent rotation is a small correction subsumed into
+  the LoS quadrature for the four spin components).
+
 ### V5 Round-16 PR-S5: Family IC factories (2026-04-26)
 
 Closes Round-16 gap **G9** (family-specific IC is metadata only — 11/11
