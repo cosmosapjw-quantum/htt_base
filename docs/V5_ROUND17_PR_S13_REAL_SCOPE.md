@@ -76,7 +76,7 @@ The *actual* gap is ~7 orders of magnitude, dominated by **primordial-amplitude 
 
 ## 6. Cross-references
 
-- Empirical retraction record: `CHANGELOG.md` `[Unreleased]` Round-16 P2 entry (commit `06e6f4f`).
+- Empirical retraction record: `CHANGELOG.md` `[Unreleased]` Round-16 P2 entry (commit `224a177`).
 - R7-authoritative derivation: `docs/V5_ROUND15_P1_PSTF_DERIVATION_OPUS.md`.
 - Retracted parallel-cycle source: `docs/V5_ROUND15_P1_PSTF_DERIVATION_CHATGPT.md` (kept for traceability; do not use as authority).
 - Regression-armor test: `htt/bass/los/test_flrw_bessel_projector.py::TestSharpVisibilityAnalyticOracles::test_sharp_visibility_doppler_analytic_protects_no_over_k_patch`.
