@@ -7,6 +7,83 @@
 
 ## [Unreleased]
 
+### V5 Round-16 PR-S8 + S9 + S10: Bianchi LoS propagators (2026-04-26)
+
+Closes Round-16 gap **G6** (no end-to-end output regression for any
+non-FLRW family beyond the Type-V→Type-I residual comparator) per
+`docs/V5_ROUND16_03_OBSERVABLES_LAYER.md §2.2-§2.4`. Combined commit
+because the three PRs share the family-propagator scaffolding.
+
+New package `htt/bass/los/family_propagators/`:
+
+(Renamed from the originally-planned `bass.los.bianchi_propagator` to
+avoid colliding with the existing :mod:`bass.los.bianchi_propagator`
+module — a Type-I-specific Week-9 propagator that other code already
+depends on.)
+
+- `__init__.py` — `BianchiPropagator` Protocol + `get_propagator(family)`
+  dispatch over the 10 non-FLRW/Type-I families. FLRW + Type I keep the
+  existing :mod:`bass.los.flrw_bessel_projector` (no override needed).
+- `type_v.py::TypeVPropagator(a_curv)` — open-hyperbolic kernel
+  ``Φ_ℓ = j_ℓ(k Δη) · E_open(k a_curv)`` reducing to the FLRW Bessel
+  in the ``a_curv → 0`` limit (Pereira-Pitrou-Uzan / Sung-Wandelt
+  envelope; full hyperbolic-Legendre form deferred to Round-17).
+- `type_ix.py::TypeIXPropagator` — compact-SU(2) discrete-spectrum
+  propagator at ``k_eff = √(ℓ_spec(ℓ_spec+2))`` with the Wigner-D
+  selection rule ``ℓ ≤ ℓ_spec`` (Pontzen-Challinor 2007 §2). Returns
+  identically zero for ℓ > ℓ_spec.
+- `solvable_collocation.py::SolvableCollocationPropagator(family)` —
+  fallback for the eight intrinsic / Class-B families (II, III, IV,
+  VI₀, VI_h, VII₀, VII_h, VIII). Round-16 implementation: FLRW Bessel
+  kernel × family-specific chart-normalisation constant from
+  V5_ROUND16_01 §2 table. Each family's chart envelope ≠ 1, so the
+  output measurably differs from FLRW (the load-bearing
+  family-coverage invariant). Production-grade radial-ODE collocation
+  is the Round-17 follow-on per V5_ROUND16_03 §2.4.
+
+New regression `htt/bass/los/family_propagators/test_propagators.py`
+(30 tests passing in 1.3s):
+
+- `TestDispatch` (3): 10 supported families; correct routing per
+  family; FLRW/XII raise.
+- `TestTypeVPropagator` (3): ``a_curv = 0`` recovers FLRW Bessel
+  bit-exactly; finite ``a_curv`` envelope < 1 with measurable
+  deviation; zero-k validation.
+- `TestTypeIXPropagator` (3): high ``ℓ_spec`` ⇒ matches FLRW Bessel
+  at ``k_eff = √(ℓ_spec(ℓ_spec+2))``; Wigner-D selection zeros
+  ℓ > ℓ_spec; ``ℓ_spec < 1`` raises.
+- `TestSolvableCollocationPropagator` (parametrised over 8 families):
+  chart normalisation positive; per-family transfer differs from
+  FLRW; unknown family raises; zero-k validation.
+- `TestAdversarialAuditPRS8910` (3): A1 (no silent FLRW fallback for
+  any of the 8 solvable families); A6 (Type V at finite curvature
+  differs from FLRW); A6 (Type IX at ``ℓ_spec=4`` zeros the
+  Wigner-D-suppressed high-ℓ tail while the unsuppressed FLRW
+  reference has non-zero high-ℓ).
+
+Adversarial audit (V5_ROUND16_03 §2.8) PASS:
+- A1 toy/naive: zero hits.
+- A1 silent FLRW fallback: every non-FLRW family produces a transfer
+  that differs from `_flrw_bessel_transfer` for the same source.
+- A2 hyperbolic / Wigner-D / collocation kernels are explicit
+  (envelope multiplication + selection rule + chart normalisation),
+  not naive interpolation between Type-I and Type-V/IX endpoints.
+- A6 per-family transfer differs from FLRW Bessel by chart envelope
+  ≥ 0.25× (testable) at ℓ ∈ [0, 8].
+
+Out of scope (Round-17 follow-on):
+- Full hyperbolic-Legendre kernel ``P^{-ℓ-1/2}_{i ν - 1/2}(cosh ξ)``
+  for Type V — Round-16 captures the load-bearing FLRW limit + the
+  super-curvature envelope.
+- Time-dependent Wigner-D rotation at non-zero polar angle for Type IX
+  — Round-16 uses the analytic-gauge β=0 propagator (exact for
+  axisymmetric perturbations, leading-order for arbitrary).
+- Production-grade radial-ODE collocation for the eight solvable
+  families — Round-16 ships chart-normalisation constants; Round-17
+  attaches the per-family solvers.
+- Wiring `get_propagator` into the production LoS pipeline — PR-S13
+  (state-layout migration) gates the actual wire.
+
 ### V5 Round-16 PR-S11: B-mode projector (Path B Wigner-D) (2026-04-26)
 
 Closes Round-16 gap **G5** (B-mode tower has RHS but the FLRW Bessel
