@@ -7,6 +7,82 @@
 
 ## [Unreleased]
 
+### V5 Round-16 PR-S3: RHS k-mixing scalar block (2026-04-26)
+
+Closes Round-16 gap **G2** (the hierarchy RHS having no off-diagonal
+ℓ-ℓ' or m-m' coupling) at the *primitives* layer per
+`docs/V5_ROUND16_02_SOLVER_LAYER.md §2.3-2.4`. The wiring of the new
+A_mix block into the production hierarchy RHS is deferred to PR-S13
+(it requires the state-layout extension from m=0 to m∈{-2..+2} which
+breaks every existing call site).
+
+New module `htt/bass/hierarchy/mode_mixing_blocks.py`:
+
+- `wigner_3j(j1,j2,j3,m1,m2,m3)` — cached float Wigner-3j wrapping
+  `sympy.physics.wigner.wigner_3j` (lru_cache size 8192). Used to
+  construct the PSTF Clebsch-Gordan coefficients C_7, C_8, C_9 of
+  Pontzen-Challinor 2007 eq. 23-25.
+- `build_shear_coupling_table(L_max)` → `ShearCouplingTable` with
+  `(3, L_max+1, 5, 5)` array indexed by (kind, ℓ, m+2, M+2). Built
+  once at backend init; family-agnostic (depends only on PSTF
+  normalisation).
+- `shear_5vec_to_quadrupole_components(sigma_5vec)` — converts the
+  PR-S1 / V5_ROUND16_01 §3.2 tetrad-frame shear five-vector
+  `(σ_+, σ_-, σ_×1, σ_×2, σ_×3)` to the PSTF quadrupole spherical
+  components `σ_2M` indexed by M ∈ {-2..+2}.
+- `assemble_A_mix_block(sigma_2M, L_max, …)` → `scipy.sparse.csr_matrix`
+  of shape `(5(L_max−ell_min+1), …)` realising the T7+T8+T9 shear
+  coupling per V5_ROUND16_02 §2.3 with the prefactors from §2.4.
+- `ell_m_to_index` / `index_to_ell_m` for the m-major flat layout.
+
+New regression `htt/bass/hierarchy/test_mode_mixing_blocks.py`
+(29 tests passing in 1.9s):
+
+- `TestWigner3jKnownValues` — closed-form check `(2 2 2; 0 0 0)
+  = -√(2/35)`; selection rules; cyclic-permutation invariance; lru_cache
+  determinism.
+- `TestShearCouplingTable` — shape, validators, deterministic build.
+- `TestIndexHelpers` — round-trip `(ℓ,m) ↔ idx`, uniqueness, validators.
+- `TestShear5VecToQuadrupole` — zero/axisymmetric/off-diagonal
+  conversions, shape validator.
+- `TestAMixZeroShear` — V5_ROUND16_02 §2.6 `test_T7_T9_zero_when_shear_zero`:
+  σ_2M ≡ 0 ⇒ A_mix.nnz == 0 (the FLRW-limit collapse condition).
+- `TestAMixAxisymmetric` — §2.6 `test_shear_coupling_table_diagonal_in_m_when_axisymmetric`:
+  σ_{2,0} alone produces an m-diagonal A_mix with Δℓ ∈ {-2, 0, +2}.
+- `TestAMixParityOdd` — σ_{2,-1} ≠ 0 produces row/col with
+  m_target = m_row + 1 (the structural ingredient for B-mode generation
+  in PR-S4 / PR-S11); full off-axis shear couples all five m-channels.
+- `TestAMixConvergence` — §2.7 A7: extending L_max from 12 to 20
+  bounds ‖A_mix‖_op ratio < 5×.
+- `TestAMixDeterminism` — §2.7 A9 fairness: bit-identical across calls;
+  pre-built table matches on-the-fly assembly.
+- `TestAdversarialAuditPRS3` — A2 (full 5-component σ_2M, not just σ_+),
+  A6 (curvature block delegated to PR-S4, not exported here),
+  A7 (extending L_max preserves the inner block sub-matrix).
+
+The module is **standalone**: it does not yet wire into
+`bass/hierarchy/hierarchy_rhs.py`. Wiring requires expanding the
+existing m=0 photon state vector to m∈{-2..+2}, which breaks every
+existing call site; that surface migration is PR-S13 scope (the load-
+bearing prerequisite for the Python-side D_2 closure).
+
+Adversarial audit (V5_ROUND16_02 §2.7) PASS:
+- A1 toy/naive grep on production module: zero hits.
+- A2 full 5-component σ_2M honoured (verified by
+  `test_A2_uses_full_5_component_sigma_not_just_sigma_plus`).
+- A5 σ_2M is consumed at every call (no caching; A_mix is rebuilt at
+  each invocation per V5_ROUND16_02 §2.7 A5 contract).
+- A6 curvature block delegated (`test_A6_class_b_curvature_block_is_not_this_PR`).
+- A7 convergence in L_max bounded.
+- A9 deterministic table → bit-identity across calls.
+
+Out of scope (deferred):
+- `assemble_A_curv_block` — PR-S4 (Class-B spatial-curvature anisotropy
+  contribution to T1).
+- `assemble_EB_mixing_block` — PR-S4 (parity-odd shear → E↔B
+  cross-coupling).
+- Wiring into `hierarchy_rhs.py` — PR-S13 (state-layout migration).
+
 ### V5 Round-16 PR-S2: IMEX-ARK4 mainline integrator (2026-04-26)
 
 Closes the G1 prerequisite (Python-side D_2 = 1002.086744 PSTF closure)
