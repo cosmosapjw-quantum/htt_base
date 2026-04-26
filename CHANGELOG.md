@@ -7,6 +7,69 @@
 
 ## [Unreleased]
 
+### V5 Round-16 PR-S12: Real-space map producer (2026-04-26)
+
+Closes Round-16 gap **G10** (`map_T/Q/U` typed pass-through has no
+producer) per `docs/V5_ROUND16_03_OBSERVABLES_LAYER.md §3` by
+introducing the inverse-SHT map producer that wraps healpy.
+
+New module `htt/bass/forward/map_producer.py`:
+
+- `infer_lmax(alm)` — utility for the BASS dict-style alm packing.
+- `bass_real_alm_to_healpy_complex(alm, lmax)` — converts the BASS
+  real-spherical-harmonic packing (`ell -> ndarray(2ℓ+1)` with index
+  m+ℓ) to healpy's complex packing
+  (`m*(2*lmax+1-m)//2 + ell` indexing). Implements the standard
+  conversion `a^complex_{ℓ, m} = ((-1)^m / √2) (a^real_{ℓ, m} − i
+  a^real_{ℓ, -m})` for m > 0.
+- `alm_to_map_TQU(alm_T, alm_E, alm_B, nside, lmax)` — inverse SHT
+  via `hp.alm2map` (T) and `hp.alm2map_spin([alm_E, alm_B], spin=2)`
+  (Q, U). Handles the `lmax < 2` case by returning zero polarisation
+  maps (no spin-2 modes exist).
+- `populate_map_outputs(output, nside, lmax)` — wraps a
+  :class:`SolverCoreOutput`, fills `map_T/Q/U`, and flips the
+  `map_output_support` metadata flag from `"not_implemented"` to
+  `"producer_attached"` per the R15-AUDIT-PATCH P-08 honest envelope
+  contract. Idempotency is forbidden (re-attach raises) so the audit
+  catches double-attach failure modes.
+
+New regression `htt/bass/forward/test_map_producer.py` (20 tests,
+2.0s):
+
+- `TestInferLmax` (2): basic + empty rejection.
+- `TestBassRealAlmToHealpyComplex` (5): zero / monopole pass-through
+  / dipole m=0 / dipole m=1 with explicit `(−1)^m / √2` cross-check
+  / inferred lmax default.
+- `TestAlmToMapTQU` (6): zero alm → zero map; pure dipole T → cos(θ)
+  map (spec §3.2); round-trip `map2alm(alm2map(alm)) ≈ alm` to ≤ 1e-3
+  at lmax=8 / nside=32; pure E → non-trivial Q+U with T=0; nside
+  validation (power of 2, ≥ 1).
+- `TestPopulateMapOutputs` (4): producer_attached flag flipped;
+  `__post_init__` consistency holds; idempotent re-attach raises;
+  non-Mapping alm rejected.
+- `TestAdversarialAuditPRS12` (3): A3 (uses healpy not custom
+  approximation); A6 (non-trivial alm yields non-constant map; std
+  > 1e-3); A10 (metadata flag flipped explicitly only by
+  populate_map_outputs).
+
+Adversarial audit (V5_ROUND16_03 §3.3) PASS:
+- A1 toy/naive: zero hits.
+- A3 implementation uses healpy.alm2map and healpy.alm2map_spin
+  (verified by attribute introspection).
+- A6 maps for non-FLRW alm contain ℓ ≥ 1 power (std > 1e-3).
+- A10 `populate_map_outputs` flips the flag only on success;
+  pre-state output is unchanged (immutable dataclass).
+
+Out of scope (deferred):
+- Wiring `populate_map_outputs` into the Tier-B execution pipeline
+  (currently called from `nside > 0` branch in
+  `RuntimeControlBlock.map_output_nside`; PR-S15 production switch
+  will set the default).
+- Mapping the existing observer-frame BASS `alm` dict format
+  (`{representation, sphere_directions, quadrature_rule, values}`)
+  through the new producer — the existing format is for the LoS
+  pipeline, not the spherical-harmonic tower; PR-S13 will reconcile.
+
 ### V5 Round-16 PR-S4: RHS k-mixing tensor + EB parity-odd mixing (2026-04-26)
 
 Extends `bass/hierarchy/mode_mixing_blocks.py` with two new sparse-block
