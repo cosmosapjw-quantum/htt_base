@@ -7,6 +7,69 @@
 
 ## [Unreleased]
 
+### V5 Round-16 PR-S14: Real-data Planck likelihood scaffold (2026-04-26)
+
+Closes Round-16 gap **G8** (no real-data Planck likelihood binding —
+inference whitelist is synthetic-only) per
+`docs/V5_ROUND16_03_OBSERVABLES_LAYER.md §6.1`.
+
+New module `htt/bass/inference/planck_likelihood.py`:
+
+- `PlanckDataset` — dataset descriptor with `kind` whitelist enforced
+  at construction (`ALLOWED_DATASET_KINDS = {synthetic_gaussian,
+  synthetic_with_bianchi_template, planck2018_plik_low_l_tt_only}`).
+  Round-16 ships TT-only Plik low-ℓ; TE/EE/BB and Plik HL deferred to
+  Tier-C ship gate.
+- `GateLadderDecision` — caller-supplied snapshot of the 15-stage
+  `GATE_LADDER` decision plus `template_card_authorized` and
+  `family` for downstream gating.
+- `PlanckLikelihood` — Plik low-ℓ Gaussian per Planck 2018 §2.2.3
+  eq. 6 with three gate predicates:
+  (a) `dataset.kind` ∈ whitelist;
+  (b) for real data, all 14 upstream gates open
+      (`gate_decision.allowed`);
+  (c) for real data + non-strong family, `template_card_authorized=True`
+      explicitly.
+- `FittingBlockedError` — surfaces gate-block reasons loudly with
+  `missing_gates` and `dataset_kind` attributes.
+- `make_synthetic_dataset` — convenience for development & null tests.
+
+New regression `htt/bass/inference/test_planck_likelihood.py` (17
+tests passing in 1.5s):
+
+- `TestPlanckDataset` (5): valid construction; unknown kind raises;
+  inverted ell-range raises; shape mismatch raises; zero sigma raises.
+- `TestSyntheticPath` (2): synthetic path is finite and gate-free;
+  truth values yield maximum log-likelihood under low noise.
+- `TestRealDataGating` (5): real-data + closed gates → blocks;
+  real-data + open gates → proceeds; template-card family without
+  authorization → blocks; with authorization → proceeds; strong
+  families don't need authorization.
+- `TestAdversarialAuditPRS14` (3): A4 (whitelist enforced at
+  construction); A6 (no silent synthetic fallback on missing real
+  fixture); A10 (end-to-end gate ladder: missing gate blocks, all
+  open allows finite scalar).
+- `TestModuleSurface` (2): real Planck kind in whitelist; arbitrary
+  strings excluded.
+
+Adversarial audit (V5_ROUND16_03 §6.2) PASS:
+- A4 dataset.kind whitelist enforced at construction time and at
+  log_likelihood call site; closed gates block real-data fitting.
+- A6 no silent fallback: missing fixture / closed gate raises
+  `FittingBlockedError`, never returns synthetic surrogate.
+- A10 end-to-end: missing-gate path raises with `missing_gates`
+  reported; open-gate path returns finite scalar.
+
+Out of scope (Tier-C / Round-17 follow-on):
+- Polarisation likelihoods (TE, EE, BB) and Plik HL high-ℓ.
+- Loading the real Plik low-ℓ TT data fixture (needs the Planck
+  data products; the scaffold is dataset-format-agnostic — caller
+  supplies the bandpowers).
+- Full Planck 2018 wrapper (Plik low + Plik HL + lowlike + lensing).
+- Wiring into `bass.inference.__main__` driver — the scaffold is
+  importable but the production fitter is gated behind PR-S15
+  production switch.
+
 ### V5 Round-16 PR-S8 + S9 + S10: Bianchi LoS propagators (2026-04-26)
 
 Closes Round-16 gap **G6** (no end-to-end output regression for any
