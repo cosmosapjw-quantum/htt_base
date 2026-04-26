@@ -7,6 +7,93 @@
 
 ## [Unreleased]
 
+### V5 Round-16 PR-S2: IMEX-ARK4 mainline integrator (2026-04-26)
+
+Closes the G1 prerequisite (Python-side D_2 = 1002.086744 PSTF closure)
+by introducing the Kennedy-Carpenter ARK4(3)6L[2]SA additive Runge-Kutta
+mainline integrator specified in `docs/V5_ROUND16_04_NUMERICS_AND_RUNTIME.md §1`.
+
+New module `htt/bass/integration/ark4_tableau.py`:
+
+- Verbatim Kennedy-Carpenter 2003 (NASA/TM-2001-211038) ARK4(3)6L[2]SA
+  Butcher tableau as Python `Fraction` source-of-truth, fetched from the
+  SUNDIALS ARKode reference C definition file
+  (`LLNL/sundials/src/arkode/arkode_butcher_dirk.def` and
+  `arkode_butcher_erk.def`, identifiers `ARK436L2SA_DIRK_6_3_4` and
+  `ARK436L2SA_ERK_6_3_4`).
+- 6-stage, 4th-order, L-stable, stiffly-accurate; ESDIRK diagonal γ=1/4.
+- `ARK4Tableau` frozen dataclass exposing both Fraction (audit) and
+  float64 (runtime) views.
+
+New module `htt/bass/integration/imex_ark4.py`:
+
+- `IMEXARK4Integrator` — additive Runge-Kutta stepper with embedded
+  3rd-order error estimator and adaptive PI-lite controller.
+- Mass-matrix-correct: solves `M(η) Y_i = M U + X_i + γh f^I(η_i, Y_i)`
+  via Newton iteration with predictor `Y_pred = U`, giving
+  `(M − γh J) ΔY = X_i + γh f^I(η_i, U)`. For affine f^I (the BASS
+  Thomson + TCA-relaxation regime) one Newton iteration is exact.
+- Sparse-friendly: handles both `scipy.sparse` and dense `M`/`J`
+  uniformly via `_solve_linear` / `_matvec` helpers.
+- `IMEXARK4StepResult` and `IMEXARK4IntegrationResult` dataclasses
+  expose accept/reject counters and tableau provenance string for
+  V5_ROUND16_04 §1.6 audit.
+
+New regression `htt/bass/integration/test_imex_ark4.py` (22 tests):
+
+- `TestARK4TableauVerbatim` — bit-exact tableau audit (V5_ROUND16_04
+  §1.6 A2): 6 stages, ESDIRK diagonal γ=1/4, c-vector matches the
+  V5_ROUND16_04 §1.1 spec, stiffly-accurate property `b == a_I[5]`,
+  triangularity, Σ b = Σ bhat = 1, and row sums match c_i (DIRK exact,
+  ERK to 1e-12 per Kennedy-Carpenter ERK fitting).
+- `TestProtheroRobinsonConvergence` — parametric stiff scalar problem
+  `y' = -y/ε + cos(t) + ε sin(t)` at ε ∈ {1.0, 1e-2}; solution at t=1
+  matches the exact closed-form to ≤ 1e-5; constant-step halving
+  reduces error by ≥ 4× (4th-order trend); adaptive loop reports
+  step accept/reject counts.
+- `TestMassMatrixSupport` — V5_ROUND16_04 §1.3 + §1.6 audit: identity
+  default and explicit identity match; M = 2I gives a measurably
+  different trajectory (~3.5e-4 absolute at t=0.05 vs y≈0.017),
+  catching the silent-shortcut failure mode.
+- `TestResultContracts` — dataclass field contracts; tableau_id
+  string contains "ARK436L2SA" + "Kennedy" for provenance audit.
+- `TestIntegratorValidation` — rtol/atol/max_step validators reject
+  non-positive inputs.
+
+`bass/integration/__init__.py` updated to declare the new production
+numerics modules under V5 Round-16 (originally a test-only LB-6
+package).
+
+Adversarial audit (V5_ROUND16_04 §1.6):
+- A1 (toy/naive grep on imex_ark4 surface): zero hits.
+- A2 (tableau verbatim match): enforced bit-for-bit by the 10
+  TestARK4TableauVerbatim assertions.
+- A3 (mass matrix from real assembler): identity is the explicit default
+  when `mass_matrix_fn=None`; a real callable is required for non-FLRW.
+- A6 (non-identity mass matrix wired): test_non_identity_diagonal_mass_
+  matrix_rescales_solution catches the silent-shortcut.
+- A7 (rtol convergence): test_constant_step_recovers_4th_order asserts
+  step-halving error ratio ≥ 4×.
+
+Out of scope for this PR (deferred to follow-on):
+- Wiring IMEX-ARK4 as the default in `RuntimeControlBlock.integrator_family`
+  (this is gated behind PR-S15 production switch; current Round-15 default
+  remains `IntegratorFamily.IMPLICIT_BDF` until the BASS hierarchy RHS
+  is plumbed into the (f^E, f^I) split).
+- ARK4 vs Rodas5P bit-identity test on FLRW (V5_ROUND16_04 §1.5
+  `test_ark4_matches_rodas5p_to_1e-10_for_FLRW`): requires PR-S5 +
+  PR-S13 to provide a comparable Python-side D_ℓ pipeline; deferred
+  to PR-S13.
+- Quasi-Newton loop for non-affine f^I; current single-iteration Newton
+  is exact for affine f^I (the BASS Thomson + TCA-relaxation regime).
+  Round-17 will swap if a non-affine implicit pathway is added.
+
+Verbatim coefficient sources (V5_ROUND16_04 §1.6 A2 audit trail):
+- DIRK: SUNDIALS `arkode_butcher_dirk.def::ARK436L2SA_DIRK_6_3_4`.
+- ERK: SUNDIALS `arkode_butcher_erk.def::ARK436L2SA_ERK_6_3_4`.
+- Original publication: Kennedy & Carpenter, NASA/TM-2001-211038 / *Appl.
+  Numer. Math.* 44 (2003) 139-181, eq. 5.16-5.18 + Tables.
+
 ### V5 Round-16 PR-S1: Codazzi-tilt evolution authority surface (2026-04-26)
 
 Closes Round-16 gap **G4** (Globally tilted Bianchi background carries β
