@@ -7,6 +7,78 @@
 
 ## [Unreleased]
 
+### V5 Round-16 PR-S6 + S7: Off-axis modes for class-A/class-B families (2026-04-26)
+
+Closes Round-16 gap **G3** (mode-coverage side: 8/11 families
+restricted to axis-aligned k-vectors) per
+`docs/V5_ROUND16_02_SOLVER_LAYER.md §3` by introducing per-family
+k-grids with Plancherel weights that lift the axisymmetric
+restriction.
+
+New module `htt/bass/hierarchy/family_k_grid.py`:
+
+- `FamilyKGrid` — frozen dataclass holding `k_vectors (n_k, 3)`,
+  `weights (n_k,)`, `branch_label`. Provides `distinct_directions()`
+  for the family-coverage audit (§3.4 P3).
+- `build_family_k_grid(family, …)` — dispatch for the 12 families
+  (FLRW + I + 10 Bianchi):
+  - FLRW / I: 1-D log-grid axis-aligned.
+  - II (Heisenberg): k₁ log × k₂ ∈ ℤ_{≥0} lattice; weights
+    ∝ |k₂|.
+  - VI₀ (e(1, 1) solvable): k₁ log × k₃ log × k₂ lattice (5 entries).
+  - VII₀ (helical Euclidean): (k_⊥, φ, k₃) — 8 helical-rotation
+    azimuthal samples.
+  - VIII (sl(2, ℝ)): continuous (μ, s) Plancherel + discrete D^±_λ
+    (λ ∈ {3/2, 5/2, …}; the singular λ=1/2 boundary excluded).
+  - IX (compact SU(2)): discrete ℓ_spec ∈ {1..ell_max_spec}; weight
+    ∝ (2ℓ_spec + 1).
+  - V (open hyperbolic): n_k log-spaced × 12 azimuthal directions.
+  - III/IV/VI_h/VII_h (h-continuous): n_k log-spaced × 8 azimuthal
+    directions; h-dependent eigenvalue offset absorbed by the LoS
+    chart-normalisation in PR-S10.
+- All weights are normalised so `Σ weights = 1` to within 1e-12.
+
+New regression `htt/bass/hierarchy/test_family_k_grid.py` (54 tests
+passing in 1.2s):
+
+- `TestRegistry` (4): SUPPORTED_FAMILIES count = 12; unknown family /
+  invalid k-range / low n_k all raise.
+- `TestFLRWAndTypeI` (parametrised): axis-aligned with single
+  distinct direction.
+- `TestTypeIIOffAxis` (1): Heisenberg lattice; expected k₂-values present.
+- `TestTypeVI0OffAxis` (1): three-dimensional grid with off-axis
+  directions.
+- `TestTypeVII0OffAxis` (1): helical with > 4 distinct directions.
+- `TestTypeVIIIOffAxis` (2): continuous + discrete; weights sum 1.
+- `TestTypeIXDiscrete` (3): discrete spectrum; Σ weights = 1; ℓ_spec
+  > 0 enforced.
+- `TestTypeVOffAxis` (1): off-axis grid with > 1 directions.
+- `TestClassBHContinuous` (parametrised over III/IV/VI_h/VII_h): off-
+  axis directions; chart label.
+- `TestWeightInvariants` (parametrised over 12 families): each family
+  has Σ weights ≈ 1 and weights > 0.
+- `TestAdversarialAuditPRS6S7` (3): A6 (parametrised over 9 off-axis
+  families: each has > 1 distinct directions); A7 IX weights ∝
+  (2ℓ+1); A7 II Heisenberg weights monotone in k₂.
+
+Adversarial audit (V5_ROUND16_02 §3.4) PASS:
+- A1 toy/naive: zero hits on production module.
+- A6 family-coverage: every off-axis family contains ≥ 2 distinct
+  directions (parametrised test asserts across all 9).
+- A7 Plancherel weights: (2ℓ+1) for IX, sinh(2πs)/(cosh(2πs)+
+  cos(2πμ)) for VIII continuous, (λ-1/2) for VIII discrete; II
+  monotone in k₂.
+
+Out of scope (Round-17 follow-on):
+- Per-family eigenvalue offsets for III/IV/VI_h/VII_h h-continuous
+  (currently absorbed by chart-normalisation constants in PR-S10's
+  SolvableCollocationPropagator).
+- Adaptive-resolution k-grid refinement around acoustic peaks for
+  high-precision LoS (Round-16 ships uniform log + lattice; Round-17
+  refines).
+- Wiring `build_family_k_grid` into the Tier-B execution loop —
+  PR-S15 production switch will set the default per family.
+
 ### V5 Round-16 PR-S14: Real-data Planck likelihood scaffold (2026-04-26)
 
 Closes Round-16 gap **G8** (no real-data Planck likelihood binding —
