@@ -7,6 +7,68 @@
 
 ## [Unreleased]
 
+### V5 Round-16 PR-S4: RHS k-mixing tensor + EB parity-odd mixing (2026-04-26)
+
+Extends `bass/hierarchy/mode_mixing_blocks.py` with two new sparse-block
+assemblers per `docs/V5_ROUND16_02_SOLVER_LAYER.md §2.5` and §2.3 ¶5,
+completing the RHS k-mixing primitives that close Round-16 gap **G2**.
+
+New functions:
+
+- `assemble_A_curv_block(S_AB_2M, L_max, …)` — Class-B (and Class-A
+  intrinsic) spatial-curvature anisotropy block. Same-ℓ recoupling of
+  the photon tower driven by the PSTF quadrupole projection of the
+  spatial Ricci `S_AB := ^{(3)}R_⟨AB⟩`. Reduces to the zero matrix in
+  the FLRW limit (`S_AB = 0`), which is the load-bearing FLRW invariant
+  for the Class-B coverage track.
+- `assemble_EB_mixing_block(sigma_2M, L_max, …)` — parity-odd σ-driven
+  E↔B cross-coupling. Per Pontzen-Challinor 2007 §3, only the parity-
+  odd shear components `σ_{2,±1}` (M ∈ {-1, +1}) contribute; the
+  axisymmetric `σ_{2,0}` and the parity-even `σ_{2,±2}` produce
+  identically-zero blocks. The `(m / (ℓ+2))` parity factor additionally
+  zeroes m=0 row contributions. This is the structural ingredient that
+  drives B-mode generation from pre-recombination shear (Saadeh+ 2016
+  ABSolve / Path B in V5_ROUND16_00 §3.3) — load-bearing for PR-S11.
+
+`test_mode_mixing_blocks.py` extended with 10 new tests (39 total
+passing in 1.8s):
+
+- `test_A_curv_FLRW_limit_zero`: `S_AB = 0` ⇒ `A_curv.nnz == 0`.
+- `test_A_curv_axisymmetric_S_AB_m_diagonal`: `S_{2,0}` only ⇒
+  m-diagonal same-ℓ block.
+- `test_A_curv_off_axis_drives_off_diagonal_m`: `S_{2,-1}` non-zero ⇒
+  off-diagonal `m_target = m + 1` (M=-1 selection).
+- `test_A_curv_validates_input_shape`.
+- `test_EB_mixing_zero_for_axisymmetric`: pure `σ_{2,0}` ⇒ zero block.
+- `test_EB_mixing_zero_for_parity_even_M_plus_2_drive`: pure
+  `σ_{2,+2}` ⇒ zero block (M%2==1 selection rule enforced).
+- `test_EB_mixing_zero_for_no_shear`: trivial.
+- `test_EB_mixing_fires_for_parity_odd_drive`: `σ_{2,-1}` ≠ 0 ⇒
+  non-zero block (B-mode generation pathway intact; G5 prerequisite).
+- `test_EB_mixing_skips_m_zero_rows`: parity factor zeroes m=0 rows.
+- `test_EB_mixing_validates_input_shape`.
+
+PR-S3's `test_A6_class_b_curvature_block_is_not_this_PR` is updated to
+`test_A6_curvature_block_landed_in_PR_S4`, asserting that
+`assemble_A_curv_block` and `assemble_EB_mixing_block` are now exported
+(promotion from "deferred" → "delivered").
+
+Adversarial audit (V5_ROUND16_02 §2.7) PASS:
+- A1 toy/naive: zero hits.
+- A2 5-component σ_2M honoured throughout.
+- A6 (Class-B silent FLRW): catches non-zero `A_curv` for `S_AB ≠ 0`
+  and zero for FLRW.
+- A6 (B-mode silent zero): `σ_{2,±1}` produces non-zero E↔B; pure
+  axisymmetric / parity-even shear correctly returns zero.
+- A9 deterministic: same-input → same-output (inherits PR-S3 tests).
+
+Out of scope (deferred):
+- Wiring `A_curv + A_EB` into `hierarchy_rhs.py` — PR-S13 (state-layout
+  migration to (T, E, B) m∈{-2..+2}).
+- Family-specific `S_AB` extraction from `BianchiAlgebra` for the 11
+  types — PR-S5 / PR-S6 (when family backend supplies `S_2M(η)` at the
+  call site).
+
 ### V5 Round-16 PR-S3: RHS k-mixing scalar block (2026-04-26)
 
 Closes Round-16 gap **G2** (the hierarchy RHS having no off-diagonal

@@ -32,7 +32,9 @@ from bass.hierarchy.mode_mixing_blocks import (
     PHOTON_M_COUNT,
     PHOTON_M_VALUES,
     ShearCouplingTable,
+    assemble_A_curv_block,
     assemble_A_mix_block,
+    assemble_EB_mixing_block,
     build_shear_coupling_table,
     ell_m_to_index,
     index_to_ell_m,
@@ -353,19 +355,122 @@ class TestAdversarialAuditPRS3:
             "the implementation may have dropped the M-loop."
         )
 
-    def test_A6_class_b_curvature_block_is_not_this_PR(self) -> None:
-        """A6: A_curv is delegated to PR-S4; this PR's API does not own it.
+    def test_A6_curvature_block_landed_in_PR_S4(self) -> None:
+        """A6: PR-S4 supplies assemble_A_curv_block alongside A_mix.
 
-        Confirms by attribute introspection that
-        ``mode_mixing_blocks`` does not export ``assemble_A_curv_block``
-        (Round-16 §2.3 calls for a separate sub-block in PR-S4).
+        Updated from PR-S3 (where A_curv was deliberately absent) once
+        PR-S4 lands.
         """
         from bass.hierarchy import mode_mixing_blocks as mod
 
-        assert "assemble_A_curv_block" not in dir(mod), (
-            "Curvature-anisotropy block leaked into PR-S3 surface; "
-            "delegate to PR-S4 per V5_ROUND16_02 §2.5."
+        assert "assemble_A_curv_block" in dir(mod), (
+            "PR-S4 deliverable: assemble_A_curv_block must be exported."
         )
+        assert "assemble_EB_mixing_block" in dir(mod), (
+            "PR-S4 deliverable: assemble_EB_mixing_block must be exported."
+        )
+
+    # ──────────────────────────────────────────────────────────────────
+    # PR-S4 — A_curv block (V5_ROUND16_02 §2.5)
+    # ──────────────────────────────────────────────────────────────────
+
+    def test_A_curv_FLRW_limit_zero(self) -> None:
+        """V5_ROUND16_02 §2.5: S_AB = 0 ⇒ A_curv = 0 (FLRW invariant)."""
+        A_curv = assemble_A_curv_block(
+            S_AB_2M=np.zeros(5), L_max=10, ell_min=2,
+        )
+        assert A_curv.nnz == 0
+        assert sp.linalg.norm(A_curv) == 0.0
+
+    def test_A_curv_axisymmetric_S_AB_m_diagonal(self) -> None:
+        """S_{2,0} alone ⇒ A_curv is m-diagonal (same-ℓ recoupling)."""
+        S_AB = np.zeros(5)
+        S_AB[2] = 1.0e-3
+        A = assemble_A_curv_block(S_AB_2M=S_AB, L_max=10, ell_min=2)
+        for r, c in zip(*A.nonzero()):
+            ell_r, m_r = index_to_ell_m(int(r))
+            ell_c, m_c = index_to_ell_m(int(c))
+            assert ell_r == ell_c, "A_curv is same-ℓ"
+            assert m_r == m_c, "axisymmetric S_AB ⇒ m-diagonal A_curv"
+
+    def test_A_curv_off_axis_drives_off_diagonal_m(self) -> None:
+        """S_{2,-1} non-zero ⇒ off-diagonal m_target = m + 1 (M=-1)."""
+        S_AB = np.zeros(5)
+        S_AB[1] = 5.0e-4  # M=-1
+        A = assemble_A_curv_block(S_AB_2M=S_AB, L_max=10, ell_min=2)
+        seen_off_diag = False
+        for r, c in zip(*A.nonzero()):
+            ell_r, m_r = index_to_ell_m(int(r))
+            ell_c, m_c = index_to_ell_m(int(c))
+            assert ell_r == ell_c, "A_curv must remain same-ℓ"
+            if m_r != m_c:
+                seen_off_diag = True
+                assert m_c == m_r + 1
+        assert seen_off_diag, "S_{2,-1} drive must produce m-coupling"
+
+    def test_A_curv_validates_input_shape(self) -> None:
+        with pytest.raises(ValueError, match="S_AB_2M"):
+            assemble_A_curv_block(S_AB_2M=np.zeros(4), L_max=10)
+
+    # ──────────────────────────────────────────────────────────────────
+    # PR-S4 — E↔B parity-odd mixing block
+    # ──────────────────────────────────────────────────────────────────
+
+    def test_EB_mixing_zero_for_axisymmetric(self) -> None:
+        """V5_ROUND16_02 §2.3 ¶5: pure σ_{2,0} ⇒ E↔B coupling vanishes."""
+        sigma_2M = np.zeros(5)
+        sigma_2M[2] = 1.0e-3  # M=0 only
+        A_EB = assemble_EB_mixing_block(
+            sigma_2M=sigma_2M, L_max=10, ell_min=2,
+        )
+        assert A_EB.nnz == 0
+        assert sp.linalg.norm(A_EB) == 0.0
+
+    def test_EB_mixing_zero_for_no_shear(self) -> None:
+        A_EB = assemble_EB_mixing_block(
+            sigma_2M=np.zeros(5), L_max=10, ell_min=2,
+        )
+        assert A_EB.nnz == 0
+
+    def test_EB_mixing_zero_for_parity_even_M_plus_2_drive(self) -> None:
+        """σ_{2,+2} (M=+2) is parity-even ⇒ E↔B coupling vanishes."""
+        sigma_2M = np.zeros(5)
+        sigma_2M[4] = 1.0e-3  # M=+2
+        A_EB = assemble_EB_mixing_block(
+            sigma_2M=sigma_2M, L_max=10, ell_min=2,
+        )
+        assert A_EB.nnz == 0, (
+            "Parity-even σ_{2,+2} must NOT drive E↔B coupling; "
+            "the M%2==1 selection rule was violated."
+        )
+
+    def test_EB_mixing_fires_for_parity_odd_drive(self) -> None:
+        """σ_{2,-1} ≠ 0 ⇒ E↔B block has non-zero entries."""
+        sigma_2M = np.zeros(5)
+        sigma_2M[1] = 1.0e-3  # M=-1 (parity-odd)
+        A_EB = assemble_EB_mixing_block(
+            sigma_2M=sigma_2M, L_max=10, ell_min=2,
+        )
+        assert A_EB.nnz > 0, (
+            "Parity-odd σ_{2,-1} drive must populate the E↔B block; "
+            "otherwise B-mode generation pathway is broken (G5 failure)."
+        )
+
+    def test_EB_mixing_skips_m_zero_rows(self) -> None:
+        """The (m / (ℓ+2)) parity factor forces row-m=0 entries to zero."""
+        sigma_2M = np.array([0.1, 0.2, 0.3, 0.4, 0.5])
+        A_EB = assemble_EB_mixing_block(
+            sigma_2M=sigma_2M, L_max=10, ell_min=2,
+        )
+        for r, c in zip(*A_EB.nonzero()):
+            _, m_r = index_to_ell_m(int(r))
+            assert m_r != 0, (
+                f"row m={m_r} should be skipped (parity factor m/(ℓ+2))"
+            )
+
+    def test_EB_mixing_validates_input_shape(self) -> None:
+        with pytest.raises(ValueError, match="sigma_2M"):
+            assemble_EB_mixing_block(sigma_2M=np.zeros(4), L_max=10)
 
     def test_A7_increasing_L_max_only_extends(self) -> None:
         """A7: extending L_max must preserve the smaller block as a sub-matrix."""

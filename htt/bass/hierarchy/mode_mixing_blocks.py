@@ -57,6 +57,8 @@ __all__ = [
     "build_shear_coupling_table",
     "shear_5vec_to_quadrupole_components",
     "assemble_A_mix_block",
+    "assemble_A_curv_block",
+    "assemble_EB_mixing_block",
     "ell_m_to_index",
     "index_to_ell_m",
     "PHOTON_M_VALUES",
@@ -370,6 +372,199 @@ def assemble_A_mix_block(
                     if coeff != 0.0:
                         col = ell_m_to_index(ell - 2, m_target, ell_min=ell_min)
                         rows.append(row); cols.append(col); data.append(coeff)
+
+    n = PHOTON_M_COUNT * (L_max - ell_min + 1)
+    return sp.csr_matrix((data, (rows, cols)), shape=(n, n))
+
+
+# ──────────────────────────────────────────────────────────────────────
+# A_curv: spatial-curvature anisotropy coupling (V5_ROUND16_02 §2.5)
+# ──────────────────────────────────────────────────────────────────────
+
+
+def assemble_A_curv_block(
+    *,
+    S_AB_2M: np.ndarray,
+    L_max: int,
+    coupling_table: ShearCouplingTable | None = None,
+    ell_min: int = 2,
+) -> sp.csr_matrix:
+    """Assemble the curvature-anisotropy block ``A_curv(η)``.
+
+    For Class-B Bianchi backgrounds (and the Class-A intrinsics II,
+    VI₀, VII₀, VIII, IX) the spatial Ricci tensor ``^{(3)}R_AB`` has a
+    non-trivial PSTF projection ``S_AB := ^{(3)}R_⟨AB⟩`` whose
+    quadrupole modes ``S_2M`` (M ∈ {-2..+2}) drive a same-ℓ
+    recoupling on the photon tower per V5_ROUND16_02 §2.5:
+
+        (A_curv Π)_{ℓ, m}  ⊃  Σ_M S_2M · κ_curv(ℓ) · C_8(ℓ, m, M) · Π_{ℓ, m−M}
+
+    where ``κ_curv(ℓ) = 1/(2ℓ+3)`` is the prefactor consistent with the
+    free-streaming-correction structure of Pereira-Pitrou-Uzan 2007
+    Appendix A in the PSTF-tower convention.
+
+    For FLRW (S_AB = 0) this matrix is identically zero — the load-
+    bearing FLRW-limit invariant of the Class-B coverage track.
+
+    Parameters
+    ----------
+    S_AB_2M : ndarray, shape (5,)
+        PSTF quadrupole components of the spatial Ricci tensor. For
+        Class-A intrinsic and Class-B backgrounds, computed once at
+        backend init from ``BianchiAlgebra``; constant in η for the
+        orthogonal branch and slowly evolving (with shear) for the
+        tilted branch.
+    L_max : int
+        Maximum ℓ in the photon tower.
+    coupling_table : ShearCouplingTable, optional
+        Pre-computed C_7/C_8/C_9 table; same convention as
+        :func:`assemble_A_mix_block`.
+    ell_min : int, default 2
+        Lowest ℓ in the tower.
+
+    Returns
+    -------
+    scipy.sparse.csr_matrix
+    """
+    s = np.asarray(S_AB_2M, dtype=np.float64)
+    if s.shape != (5,):
+        raise ValueError(
+            f"S_AB_2M must have shape (5,); got {s.shape!r}"
+        )
+    if L_max < ell_min:
+        raise ValueError(
+            f"L_max={L_max!r} must be >= ell_min={ell_min!r}"
+        )
+    if coupling_table is None:
+        coupling_table = build_shear_coupling_table(L_max)
+    table = coupling_table.values
+
+    rows: list[int] = []
+    cols: list[int] = []
+    data: list[float] = []
+
+    for ell in range(ell_min, L_max + 1):
+        kappa_curv = 1.0 / (2 * ell + 3)
+        for m_idx, m in enumerate(PHOTON_M_VALUES):
+            row = ell_m_to_index(ell, m, ell_min=ell_min)
+            for M_idx, M in enumerate(PHOTON_M_VALUES):
+                m_target = m - M
+                if abs(m_target) > 2:
+                    continue
+                S_M = float(s[M_idx])
+                if S_M == 0.0:
+                    continue
+                coeff = (
+                    kappa_curv
+                    * S_M
+                    * float(table[1, ell, m_idx, M_idx])  # C_8 (same-ℓ)
+                )
+                if coeff == 0.0:
+                    continue
+                col = ell_m_to_index(ell, m_target, ell_min=ell_min)
+                rows.append(row); cols.append(col); data.append(coeff)
+
+    n = PHOTON_M_COUNT * (L_max - ell_min + 1)
+    return sp.csr_matrix((data, (rows, cols)), shape=(n, n))
+
+
+# ──────────────────────────────────────────────────────────────────────
+# E-B parity-odd mixing block (V5_ROUND16_02 §2.3 paragraph 5)
+# ──────────────────────────────────────────────────────────────────────
+
+
+def assemble_EB_mixing_block(
+    *,
+    sigma_2M: np.ndarray,
+    L_max: int,
+    coupling_table: ShearCouplingTable | None = None,
+    ell_min: int = 2,
+) -> sp.csr_matrix:
+    """Assemble the parity-odd σ-driven E ↔ B cross-coupling block.
+
+    Per V5_ROUND16_02 §2.3 paragraph 5 ("Equivalent E-mode and B-mode
+    coefficients"), the parity-odd shear modes σ_{2,±1} couple the
+    photon-E and photon-B towers via:
+
+        (A_EB Π_E)_{ℓ, m}  ⊃  (m / (ℓ+2)) Σ_M σ_2M C_8(ℓ, m, M) Π_{ℓ, m−M}^{(B)}
+
+    The factor ``m / (ℓ+2)`` is parity-odd in ``m``, so axisymmetric
+    drives (only σ_{2,0} non-zero) produce an identically-zero E↔B
+    block. For σ_{2,±1} non-zero the block fires and is the structural
+    ingredient that drives B-mode generation from pre-recombination
+    shear (Saadeh+ 2016 ABSolve / Path B in V5_ROUND16_00 §3.3).
+
+    Returns the matrix that maps the B-tower onto the E-tower (same
+    layout convention; the transpose is the E→B map by symmetry of the
+    PSTF normalisation; both are produced with the same coefficients
+    here because the Wigner-3j Clebsch-Gordan structure is symmetric
+    under E↔B swap when the (m / (ℓ+2)) factor is parity-odd).
+
+    Parameters
+    ----------
+    sigma_2M : ndarray, shape (5,)
+        PSTF quadrupole components of the shear at the current η.
+    L_max : int
+        Maximum ℓ in the E and B towers (assumed equal).
+    coupling_table : ShearCouplingTable, optional
+        Pre-computed C-coefficient table.
+    ell_min : int, default 2
+        Lowest ℓ; for E and B towers this is 2 by convention.
+
+    Returns
+    -------
+    scipy.sparse.csr_matrix
+        Square matrix of shape ``(N, N)`` with N = 5 * (L_max − ell_min
+        + 1). Acts on the B-tower to produce a contribution to the
+        E-tower. For axisymmetric shear (only σ_{2,0}) this returns the
+        zero matrix.
+    """
+    s = np.asarray(sigma_2M, dtype=np.float64)
+    if s.shape != (5,):
+        raise ValueError(
+            f"sigma_2M must have shape (5,); got {s.shape!r}"
+        )
+    if L_max < ell_min:
+        raise ValueError(
+            f"L_max={L_max!r} must be >= ell_min={ell_min!r}"
+        )
+    if coupling_table is None:
+        coupling_table = build_shear_coupling_table(L_max)
+    table = coupling_table.values
+
+    rows: list[int] = []
+    cols: list[int] = []
+    data: list[float] = []
+
+    for ell in range(ell_min, L_max + 1):
+        for m_idx, m in enumerate(PHOTON_M_VALUES):
+            if m == 0:
+                # Parity factor (m / (ℓ+2)) zeroes m=0 row contributions.
+                continue
+            parity = m / float(ell + 2)
+            row = ell_m_to_index(ell, m, ell_min=ell_min)
+            for M_idx, M in enumerate(PHOTON_M_VALUES):
+                # E↔B parity selection: only M ∈ {-1, +1} are parity-odd
+                # in the real spherical-harmonic basis (M=0 and M=±2 are
+                # parity-even). Pontzen-Challinor 2007 §3: the spin-2 ↔
+                # spin-(-2) parity-odd combination requires odd M.
+                if M % 2 == 0:
+                    continue
+                m_target = m - M
+                if abs(m_target) > 2:
+                    continue
+                sigma_M = float(s[M_idx])
+                if sigma_M == 0.0:
+                    continue
+                coeff = (
+                    parity
+                    * sigma_M
+                    * float(table[1, ell, m_idx, M_idx])  # C_8
+                )
+                if coeff == 0.0:
+                    continue
+                col = ell_m_to_index(ell, m_target, ell_min=ell_min)
+                rows.append(row); cols.append(col); data.append(coeff)
 
     n = PHOTON_M_COUNT * (L_max - ell_min + 1)
     return sp.csr_matrix((data, (rows, cols)), shape=(n, n))
