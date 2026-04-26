@@ -7,6 +7,88 @@
 
 ## [Unreleased]
 
+### V5 Round-16 PR-S5: Family IC factories (2026-04-26)
+
+Closes Round-16 gap **G9** (family-specific IC is metadata only — 11/11
+families share one FLRW seed in production) per
+`docs/V5_ROUND16_02_SOLVER_LAYER.md §4` by introducing per-family seed
+factories with explicit `ic_provenance_status` ∈ `{"strong", "template-card"}`.
+
+New module `htt/bass/hierarchy/seed_factory.py`:
+
+- `SeedPack` — frozen dataclass per V5_ROUND16_02 §4.3 with required
+  fields: family, branch, chart, seed_mode, variables, normalization,
+  residual_summary, metadata. `__post_init__` validates required keys
+  in normalization (5 fields), residual_summary (`seed_regularity_status`),
+  and metadata (`ic_provenance_status`, `k_vector`).
+- `STRONG_FAMILIES = {"FLRW", "I", "V", "IX"}` — production-grade IC.
+- `TEMPLATE_CARD_FAMILIES = {"II", "III", "IV", "VI_0", "VI_h",
+  "VII_0", "VII_h", "VIII"}` — gated by `allow_template_card=True`.
+- `FlrwAdiabaticSeed` — Ma-Bertschinger 1995 §7 adiabatic regular
+  seed: Θ_0 = -Ψ/2, δ_b = δ_c = -3Ψ/2.
+- `TypeIAdiabaticSeed` — same adiabatic structure (axis-aligned
+  plane-wave, tetrad chart).
+- `TypeVHyperbolicSeed(a_curv)` — open-FLRW with hyperbolic-Legendre
+  amplitude envelope `(1 + (k a_curv)^{-2})^{-1/2}` reducing to Type I
+  at zero curvature (Pereira-Pitrou-Uzan 2007 / Sung-Wandelt 2010).
+- `TypeIXCompactSeed` — compact-SU(2) with discrete spectral index
+  `ℓ_spec = round(k_vec[0])`; rejects ℓ_spec < 1.
+- `TemplateCardSeed(family)` — for each of the 8 intrinsic-anisotropic
+  families, returns a seed carrying `ic_provenance_status="template-card"`,
+  `seed_regularity_status="template_card_pending_frobenius"`, and a
+  `round17_followup` metadata flag pointing at the Frobenius /
+  collocation series deferred to Round-17.
+- `get_seed_factory(family)` — dispatch with cross-family call
+  protection: every factory raises `ValueError` if invoked with a
+  mismatched family label (V5_ROUND16_02 §4.5 A6).
+
+New regression `htt/bass/hierarchy/test_seed_factory.py` (56 tests
+passing in 1.2s):
+
+- `TestDispatch` (4): FLRW + 11 Bianchi types in registry; routing
+  per family; unknown family raises; STRONG and TEMPLATE_CARD disjoint.
+- `TestSeedPackContract` (5): minimal construction, branch validation,
+  required normalization / metadata keys, provenance status enum.
+- `TestFLRWSeed` (4): strong provenance flag; deterministic; Θ_0 =
+  -Ψ/2 (MB-95); cross-family call rejected.
+- `TestTypeIAndTypeVRelationship` (2): Type V at a_curv=0 matches
+  Type I amplitudes bit-exactly; finite a_curv envelope ∈ (0, 1).
+- `TestTypeIXCompactSeed` (3): ℓ_spec ≥ 1 enforced; metadata carries
+  `ell_spec`; normalisation declares `disc_L2_unit`.
+- `TestTemplateCardFamilies` (parametrised over 8 families + chart
+  routing + cross-family rejection).
+- `TestCrossCuttingContracts` (per-family normalisation fields,
+  per-family `seed_regularity_status`, `is not` distinct objects).
+- `TestAdversarialAuditPRS5` (3): A1 (no silent template-card in
+  strong families), A6 (cross-family call rejection wired in
+  FlrwAdiabaticSeed and TypeVHyperbolicSeed), A6 gate
+  (template-card families never silently promoted to strong).
+
+Adversarial audit (V5_ROUND16_02 §4.5) PASS:
+- A1 toy/naive: zero silent template-card downgrades in strong families.
+- A2 Frobenius series: template-card families flagged as
+  `template_card_pending_frobenius` (not silently zero); production
+  Frobenius series deferred to Round-17 with explicit `round17_followup`
+  metadata pointer.
+- A3 each family declares `seed_regularity_status` (parametrised test
+  asserts presence across all 12 entries).
+- A6 no `_flrw_regular_seed` cross-call from non-FLRW factories
+  (`test_A6_non_flrw_does_not_silently_invoke_flrw_factory`).
+- A6 gate hard-stop: template-card families' `ic_provenance_status` is
+  never silently overridden to `"strong"` (would bypass gate 10
+  `ic_provenance_gate` per V5_ROUND16_05 §1).
+
+Out of scope (Round-17 follow-on):
+- Production-grade Frobenius series for II + VIII (Heisenberg + sl(2,ℝ)
+  collocation, V5_ROUND16_02 §4.2). The current template-card seed is a
+  well-defined adiabatic continuation that the gate ladder catches.
+- Production-grade Class-B classB Frobenius series for III, IV, VI_h,
+  VII_h. Same gate-ladder treatment.
+- Helical-Bessel mode-locked phase for VII_0 / VII_h.
+- Wiring `seed_factory` into the production hierarchy IC builder
+  (`bass.hierarchy.ic.build_initial_state` receives the SeedPack via
+  PR-S13 once the m∈{-2..+2} state-layout migration lands).
+
 ### V5 Round-16 PR-S12: Real-space map producer (2026-04-26)
 
 Closes Round-16 gap **G10** (`map_T/Q/U` typed pass-through has no
