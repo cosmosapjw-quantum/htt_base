@@ -49,6 +49,7 @@ def _solver_output(*, with_nan_residual: bool = False) -> SolverCoreOutput:
         "source_propagator_realization": "class_b_open_matrix_approx",
         "seed_injection_mode": "continued_anchor",
         "visibility_tau_reion": np.nan if with_nan_residual else 0.054,
+        "map_output_support": "not_implemented",
     }
     payload = {
         "representation": "ver2_native_pstf_sphere_reconstruction",

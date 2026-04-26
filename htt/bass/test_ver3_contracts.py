@@ -67,6 +67,7 @@ def _solver_output() -> SolverCoreOutput:
             "source_propagator_realization": "class_b_helical_matrix_approx",
             "local_boost_contract": "observer_side_only_not_applied_in_background_or_backend",
             "global_tilt_contract": "model_matter_frame_state",
+            "map_output_support": "not_implemented",
         },
         manifest=_manifest(),
     )

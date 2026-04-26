@@ -393,6 +393,22 @@ def build_solver_core_output(
         "neutrino_background_readiness": "massless_only",
         "massive_neutrino_support": False,
         "massive_neutrino_block_reason": "massive_neutrino_background_not_implemented",
+        # Map-domain output (audit P-08): no production producer yet for
+        # T(n̂)/Q(n̂)/U(n̂); fields are typed pass-throughs and must remain
+        # ``None`` unless a real-space producer is attached upstream.
+        "map_output_support": (
+            "producer_attached"
+            if any(m is not None for m in (map_T, map_Q, map_U))
+            else "not_implemented"
+        ),
+        "map_output_block_reason": "real_space_map_producer_not_attached",
+        # B-mode polarization output (audit P-05): the FLRW Bessel
+        # projector zeros B by construction, so the ``alm_B`` archive
+        # column is identically zero unless a Bianchi tensor projector is
+        # plugged in. Mark the column status explicitly so downstream
+        # gates cannot mistake the zero array for a B-mode prediction.
+        "b_mode_output_support": "flrw_zero_only",
+        "b_mode_block_reason": "flrw_bessel_projector_zeros_b_by_construction",
         **_base_interop_metadata(
             bianchi_type=bianchi_type,
             tilt_enabled=tilt_enabled,

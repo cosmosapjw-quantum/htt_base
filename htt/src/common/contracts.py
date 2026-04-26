@@ -323,6 +323,35 @@ class SolverCoreOutput:
             raise ValueError(
                 f"SolverCoreOutput.metadata missing required keys: {missing}"
             )
+        # Honest map-output contract (audit P-08, 2026-04-26): the
+        # ``map_T/Q/U`` fields are typed pass-throughs that no production
+        # path currently populates. Require an explicit
+        # ``map_output_support`` flag so that callers cannot silently
+        # carry ``None`` while claiming map-level outputs.
+        map_status = self.metadata.get("map_output_support")
+        if map_status is None:
+            raise ValueError(
+                "SolverCoreOutput.metadata must declare 'map_output_support' "
+                "explicitly; allowed values are 'not_implemented' (maps must "
+                "be None) or 'producer_attached' (maps must be non-None)"
+            )
+        if map_status not in {"not_implemented", "producer_attached"}:
+            raise ValueError(
+                f"unknown map_output_support {map_status!r}; "
+                "expected 'not_implemented' or 'producer_attached'"
+            )
+        maps = (self.map_T, self.map_Q, self.map_U)
+        if map_status == "not_implemented" and any(m is not None for m in maps):
+            raise ValueError(
+                "map_output_support='not_implemented' but map_T/Q/U is non-None; "
+                "either populate the producer and switch the flag to "
+                "'producer_attached' or drop the maps to None"
+            )
+        if map_status == "producer_attached" and any(m is None for m in maps):
+            raise ValueError(
+                "map_output_support='producer_attached' but at least one of "
+                "map_T/Q/U is None; populate all three or downgrade the flag"
+            )
 
 
 @dataclass(frozen=True)

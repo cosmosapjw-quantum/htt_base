@@ -93,6 +93,7 @@ def _solver_output(*, owner: str = "BASS") -> SolverCoreOutput:
             "multipole_cutoff": 8,
             "tilt_enabled": True,
             "thomson_mode": "skeleton",
+            "map_output_support": "not_implemented",
         },
         manifest=_manifest(owner),
     )

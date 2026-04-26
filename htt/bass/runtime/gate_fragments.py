@@ -162,7 +162,18 @@ def ic_provenance_gate_bundle(
     backend,
     seed_pack,
     seed_projection,
+    allow_template_card: bool = False,
 ):
+    """Emit the runtime ``ic_provenance_gate`` bundle.
+
+    Audit P-07 (2026-04-26): families with ``ic_provenance_status ==
+    "template-card"`` (II, III, IV, VI_0, VI_h, VIII) ship a single
+    FLRW-rooted seed factory and must not be silently promoted to
+    statistics-grade IC. ``allow_template_card`` is the explicit
+    authorization handle: callers that consciously accept the
+    template-card seed for these families must pass ``True``; otherwise
+    the gate fails closed with a forbidden-shortcut flag.
+    """
     projection_ready = bool(seed_projection is not None and seed_projection.projection_ready)
     residual_after = (
         None
@@ -174,6 +185,10 @@ def ic_provenance_gate_bundle(
         if seed_projection is None
         else float(np.linalg.norm(seed_projection.momentum_residual_before))
     )
+    ic_status = str(getattr(backend.family_spec, "ic_provenance_status", "unknown"))
+    template_card_family = ic_status == "template-card"
+    template_card_authorized = bool(allow_template_card)
+    template_card_clean = (not template_card_family) or template_card_authorized
     return make_gate_bundle(
         "ic_provenance_gate",
         family=bianchi_type,
@@ -194,11 +209,14 @@ def ic_provenance_gate_bundle(
                 seed_pack.family == bianchi_type and seed_pack.branch == branch
             ),
             "projection_reduced_constraint_residual": projection_ready,
+            "ic_provenance_status": ic_status,
+            "template_card_explicit_authorization": template_card_authorized,
         },
         forbidden_shortcut_checks={
             "no_unjustified_anchor_seed_reuse": True,
             "no_unlabeled_branch_choice": True,
             "no_local_boost_folded_into_global_tilt": True,
+            "no_silent_template_card_ic_promotion": bool(template_card_clean),
         },
         metadata={
             "seed_pack": {
@@ -208,10 +226,14 @@ def ic_provenance_gate_bundle(
                 "metadata": dict(seed_pack.metadata),
             },
             "projection_mode": None if seed_projection is None else seed_projection.projection_mode,
+            "ic_provenance_status": ic_status,
+            "template_card_family": template_card_family,
+            "template_card_authorized": template_card_authorized,
         },
         passed=bool(
             seed_pack.seed_mode in backend.template_card().allowed_seed_provenance
             and projection_ready
+            and template_card_clean
         ),
         opened_claim="runtime seed ownership bound to backend seed-factory provenance",
     )

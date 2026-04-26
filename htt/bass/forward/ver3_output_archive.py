@@ -302,6 +302,28 @@ def output_split_gate_bundle(
         alm_B=boost_alm_B,
     )
     boost_metadata = json.loads(str(boost.metadata_json))
+    # P-05 wiring: surface the b_mode_output_support flag on the gate
+    # bundle so downstream consumers cannot mistake the FLRW-zero
+    # ``alm_B`` column for a true B-mode prediction. The flag is
+    # *opt-in*: tests that bypass ``build_solver_core_output`` and
+    # populate ``alm_B`` directly stay unaffected unless they declare
+    # ``b_mode_output_support = "flrw_zero_only"`` explicitly.
+    b_mode_support = str(output.metadata.get("b_mode_output_support", "unknown"))
+    b_mode_block_reason = str(
+        output.metadata.get(
+            "b_mode_block_reason",
+            "flrw_bessel_projector_zeros_b_by_construction",
+        )
+    )
+    det_b_norm = float(np.linalg.norm(det_B))
+    stoch_b_norm = float(np.linalg.norm(stoch_B))
+    boost_b_norm = float(np.linalg.norm(boost.alm_B))
+    b_zero_only = b_mode_support == "flrw_zero_only"
+    # Honest contract: when only the FLRW projector is wired, the deterministic
+    # B column must be identically zero. Stochastic / boost contributions are
+    # output-side and may carry energy.
+    b_mode_zero_consistent = (not b_zero_only) or det_b_norm == 0.0
+    map_support = str(output.metadata.get("map_output_support", "not_implemented"))
     return make_gate_bundle(
         "output_split_gate",
         family=str(output.metadata.get("bianchi_type", "unknown")),
@@ -312,25 +334,39 @@ def output_split_gate_bundle(
             "det_norm": float(np.linalg.norm(np.concatenate([det_T, det_E, det_B]))),
             "stoch_norm": float(np.linalg.norm(np.concatenate([stoch_T, stoch_E, stoch_B]))),
             "boost_norm": float(np.linalg.norm(np.concatenate([boost.alm_T, boost.alm_E, boost.alm_B]))),
+            "det_alm_b_norm": det_b_norm,
+            "stoch_alm_b_norm": stoch_b_norm,
+            "boost_alm_b_norm": boost_b_norm,
         },
         known_limit_checks={
             "det_component_present": True,
             "stoch_component_present": True,
             "boost_component_present": True,
             "boost_metadata_valid": bool(boost_metadata["split_semantics"] == "output_only_local_boost"),
+            "b_mode_zero_consistent_with_support_flag": bool(b_mode_zero_consistent),
         },
         forbidden_shortcut_checks={
             "no_local_boost_merged_into_global_tilt": bool(
                 output.metadata.get("tilt_boost_separation") == "explicit_nonmerged"
             ),
             "observer_neutral_solver_output": bool(output.metadata.get("observer_neutral", False)),
+            "no_flrw_zero_b_marketed_as_prediction": bool(
+                (not b_zero_only) or det_b_norm == 0.0
+            ),
+            "no_unpopulated_map_marketed_as_output": bool(
+                (map_support != "not_implemented")
+                or (output.map_T is None and output.map_Q is None and output.map_U is None)
+            ),
         },
         metadata={
             "global_tilt_present": bool(output.metadata.get("tilt_enabled", False)),
             "boost_applied": bool(boost_metadata["boost_applied"]),
             "component_ordering": ordering,
+            "b_mode_output_support": b_mode_support,
+            "b_mode_block_reason": b_mode_block_reason,
+            "map_output_support": map_support,
         },
-        passed=True,
+        passed=bool(b_mode_zero_consistent),
         opened_claim="output split gate frozen, local boost kept output-only",
     )
 
