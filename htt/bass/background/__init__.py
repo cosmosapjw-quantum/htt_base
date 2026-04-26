@@ -81,6 +81,14 @@ __all__ = [
     "magnetic_weyl_from_curl_sigma",
     "electric_weyl_from_shear_rhs",
     "build_weyl_diagnostics",
+    # V5 Round-16 PR-S1 (Codazzi-tilt evolution authority surface).
+    "CodazziTiltConfig",
+    "CodazziTiltEvolutionResult",
+    "BackgroundEvolved",
+    "evolve_codazzi_tilt_background",
+    "DEFAULT_CODAZZI_RESIDUAL_THRESHOLD",
+    "TILT_EVOLUTION_STATUS_EVOLVED",
+    "TILT_EVOLUTION_STATUS_FROZEN",
 ]
 
 
@@ -156,6 +164,29 @@ _EXPORTS = {
     "magnetic_weyl_from_curl_sigma": ("bass.background.weyl", "magnetic_weyl_from_curl_sigma"),
     "electric_weyl_from_shear_rhs": ("bass.background.weyl", "electric_weyl_from_shear_rhs"),
     "build_weyl_diagnostics": ("bass.background.weyl", "build_weyl_diagnostics"),
+    # V5 Round-16 PR-S1 (Codazzi-tilt evolution authority surface).
+    "CodazziTiltConfig": ("bass.background.codazzi_tilt_rhs", "CodazziTiltConfig"),
+    "CodazziTiltEvolutionResult": (
+        "bass.background.codazzi_tilt_rhs",
+        "CodazziTiltEvolutionResult",
+    ),
+    "BackgroundEvolved": ("bass.background.codazzi_tilt_rhs", "BackgroundEvolved"),
+    "evolve_codazzi_tilt_background": (
+        "bass.background.codazzi_tilt_rhs",
+        "evolve_codazzi_tilt_background",
+    ),
+    "DEFAULT_CODAZZI_RESIDUAL_THRESHOLD": (
+        "bass.background.codazzi_tilt_rhs",
+        "DEFAULT_CODAZZI_RESIDUAL_THRESHOLD",
+    ),
+    "TILT_EVOLUTION_STATUS_EVOLVED": (
+        "bass.background.codazzi_tilt_rhs",
+        "TILT_EVOLUTION_STATUS_EVOLVED",
+    ),
+    "TILT_EVOLUTION_STATUS_FROZEN": (
+        "bass.background.codazzi_tilt_rhs",
+        "TILT_EVOLUTION_STATUS_FROZEN",
+    ),
 }
 
 

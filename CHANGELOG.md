@@ -7,6 +7,103 @@
 
 ## [Unreleased]
 
+### V5 Round-16 PR-S1: Codazzi-tilt evolution authority surface (2026-04-26)
+
+Closes Round-16 gap **G4** (Globally tilted Bianchi background carries β
+as a static parameter) by introducing the unified Codazzi-consistent
+authority surface specified in `docs/V5_ROUND16_01_PHYSICS_LAYER.md §3`.
+
+New module `htt/bass/background/codazzi_tilt_rhs.py`:
+
+- `CodazziTiltConfig` — bundled inputs for the joint
+  ``(Ω_r, Ω_m, Σ², W², β, Ω_k)`` evolution with the Round-16 production
+  defaults: `codazzi_residual_threshold=1e-6` (tightened from the
+  historical 1e-4), `codazzi_projection_cadence="every_step"`,
+  `tilt_freeze=False`.
+- `evolve_codazzi_tilt_background()` — wraps `nonperturbative_tilt.rhs_bianchi`
+  per the V5_ROUND16_00 §3.2 consensus ("the current
+  ``nonperturbative_tilt.py`` 6-variable closure becomes the
+  *implementation* of the merged RHS"). Pre-checks the IC against the
+  Friedmann surface and raises `CodazziProjectionError` *before* the
+  integrator can drift; runtime gate fires per cadence and aborts on
+  threshold breach.
+- `BackgroundEvolved` — Round-16 consumer adapter (V5_ROUND16_01 §4.2)
+  exposing `beta_at(η)`, `sigma_squared_at(η)`, `H_at(η)`, plus full
+  history accessors. Consumed by `tilted_visibility_evolved` (01 §4),
+  `recombination/anisotropic_correction` (01 §5), and the Round-16
+  hierarchy RHS (02 §2.5). The `n_e_history` accessor raises
+  `NotImplementedError` until the recombination layer wires it,
+  surfacing the gap loudly rather than silently zeroing.
+- `tilt_freeze=True` keeps β constant but *retains* the tilt-shear
+  coupling source — V5_ROUND16_01 §3.7 A5 contract: "tilt_freeze drops
+  ONLY the dβ/dN term, not the tilt-induced Σ² coupling".
+
+`bass/runtime/ver2_execution.py::RuntimeControlBlock` extended with
+seven Round-16 fields (V5_ROUND16_04 §9), all with safe defaults that
+preserve the Round-15 production stance:
+
+- `tilt_freeze=False` (Round-16 default: evolved)
+- `codazzi_projection_cadence="every_step"` (literal-validated)
+- `codazzi_residual_threshold=1.0e-6` (Round-16 production threshold)
+- `allow_template_card=False` (gate 10 default)
+- `map_output_nside=0` (no map producer until PR-S12)
+- `b_mode_projector="flrw_zero_only"` (flag-only until PR-S11)
+- `massive_neutrino_quadrature_nq=50` (Lesgourgues-Tram default)
+
+New regression `htt/bass/background/test_codazzi_tilt_rhs.py` (33 tests):
+
+- `TestFLRWLimit` — σ=0, β=0 trajectory recovers Friedmann to 1e-12.
+- `TestTypeIStaticBeta` — `tilt_freeze=True` keeps β bit-constant; metadata
+  flag set to `"frozen_diagnostic"`.
+- `TestTypeIEvolvedBetaDecays` — radiation era keeps β constant
+  (c_s²=1/3); matter era β ≈ β₀·exp(-ΔN) within 5%; monotonic decay.
+- `TestCodazziResidualGate` — surrogate residual is ≤ 1e-6 throughout a
+  benign run; gate raises on Friedmann saturation; cadence knob honoured.
+- `TestClassBCurvature` — Type V Ω_k decays monotonically toward zero
+  in the MD-only orthogonal limit (Friedmann-consistent IC).
+- `TestAdversarialAuditPRS1` — implements §3.7 A2/A3/A5/A6/A7 probes
+  as code-checkable predicates. Notable: `test_A5_tilt_freeze_drops_only_dbeta_dN`
+  catches the silent-FLRW failure mode where freezing β would also drop
+  the Σ²-coupling source.
+- `TestBackgroundEvolvedAdapter` — adapter wires correctly against a
+  faux a→η map; `n_e_history` raises with a "recombination" pointer.
+- `TestRuntimeControlBlockRound16Fields` — round-16 field defaults
+  preserve round-15 behaviour; cadence/projector/nside/threshold/nq
+  validators all reject malformed input.
+- `TestCodazziTiltConfigValidation` — config validators reject
+  unsupported family / inverted a-range / wrong state shape / bad cadence.
+
+Anchor invariants:
+- 433 prior background tests still pass (1 skipped); no existing
+  test fixture or downstream regression touched.
+- The Round-15 `tilt_background_owner` switch remains the production
+  authority path (default `"fixed_velocity_closure"`); flipping the
+  default to `"nonperturbative_tilt_rhs"` is a downstream propagation
+  PR that touches `_build_background_monitor` and the seven existing
+  callsites — deferred so this PR stays focused on the new authority
+  surface and gate machinery. The new module is the *call target* that
+  surface-switching will dispatch to.
+- `runtime.RuntimeControlBlock` constructor signature is
+  backwards-compatible: every new field is keyword-only with a default,
+  so existing call sites (1232, 1537, 1753, 530, 98, etc.) remain valid.
+
+Out of scope for this PR (deferred to follow-ons):
+- Production switch of `tilt_background_owner` default to
+  `nonperturbative_tilt_rhs` and the cascade of metadata updates in
+  `bass/forward/ver2_solver_output.py`.
+- `bass/background/geometry_per_family.py` (V5_ROUND16_01 §2.2) — the
+  per-family `BianchiGeometry.pstf_curvature()` skeleton; the existing
+  `bass/background/geometry.py::TetradGeometry` already provides the
+  `S_AB` projection, and Round-16 PR-S3/S4 will consume it directly.
+- `bass/background/tilted_initial_conditions.py` — the existing
+  `bass/background/initial_conditions.py::build_tilted_initial_conditions`
+  already covers the Codazzi-projected IC path; Round-16 enrichment
+  (per-family seed factories) is PR-S5 scope.
+- Per-axis Codazzi residual integration via `evaluate_background_constraints`
+  — surfaced in the docstring as the natural follow-on; PR-S1 wires
+  the runtime gate on the reduced 6-var surrogate (Friedmann-saturation
+  detector) which is sufficient to catch the prevalent failure mode.
+
 ### V5-RUNTIME Round-15 P1.γ: extended analytic oracles (2026-04-26)
 
 Adds the three remaining ChatGPT-R5 high-k analytic oracles to

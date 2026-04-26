@@ -133,7 +133,15 @@ class SolverFeatureFlags:
 
 @dataclass(frozen=True)
 class RuntimeControlBlock:
-    """Tier, integrator, tolerance, cutoff, and restart controls."""
+    """Tier, integrator, tolerance, cutoff, and restart controls.
+
+    Round-16 (PR-S1, PR-S2, PR-S5, PR-S11, PR-S12) extension fields are
+    appended at the bottom with backwards-compatible defaults. The defaults
+    preserve the Round-15 production stance (fixed-velocity tilt closure,
+    Wigner-D B-mode flagged off until PR-S11 closes, no map producer until
+    PR-S12) so existing tests continue to pass; new call sites opt into the
+    Round-16 production stance by setting the corresponding flag.
+    """
 
     tier: SolverTier
     integrator_family: IntegratorFamily
@@ -147,6 +155,14 @@ class RuntimeControlBlock:
     diagnostic_l2_override: bool = False
     random_seed: int | None = None
     low_resolution_reference: bool = False
+    # ── Round-16 extensions (V5_ROUND16_04 §9) ──────────────────────────
+    tilt_freeze: bool = False
+    codazzi_projection_cadence: str = "every_step"
+    codazzi_residual_threshold: float = 1.0e-6
+    allow_template_card: bool = False
+    map_output_nside: int = 0
+    b_mode_projector: str = "flrw_zero_only"
+    massive_neutrino_quadrature_nq: int = 50
 
     def __post_init__(self) -> None:
         if self.multipole_cutoff < 2:
@@ -181,6 +197,46 @@ class RuntimeControlBlock:
             )
         if self.random_seed is not None and self.random_seed < 0:
             raise ValueError("random_seed must be non-negative when provided")
+        if self.codazzi_projection_cadence not in {
+            "ic_only",
+            "every_step",
+            "every_n_steps",
+        }:
+            raise ValueError(
+                "codazzi_projection_cadence must be one of "
+                "'ic_only', 'every_step', 'every_n_steps' "
+                f"(got {self.codazzi_projection_cadence!r})"
+            )
+        if self.codazzi_residual_threshold <= 0.0:
+            raise ValueError(
+                "codazzi_residual_threshold must be positive "
+                f"(got {self.codazzi_residual_threshold!r})"
+            )
+        if self.tilt_freeze and self.tilt_background_owner == "nonperturbative_tilt_rhs":
+            # Round-16 contract: when the King-Ellis owner is active,
+            # tilt_freeze=True drops the dβ/dN term but keeps the
+            # tilt-shear coupling source (V5_ROUND16_01 §3.7 A5). The two
+            # flags are *not* contradictory; they layer.
+            pass
+        if self.map_output_nside < 0:
+            raise ValueError(
+                "map_output_nside must be >= 0 "
+                f"(0 disables the map producer; got {self.map_output_nside!r})"
+            )
+        if self.b_mode_projector not in {
+            "flrw_zero_only",
+            "wigner_d_path_b",
+        }:
+            raise ValueError(
+                "b_mode_projector must be 'flrw_zero_only' or "
+                "'wigner_d_path_b' "
+                f"(got {self.b_mode_projector!r})"
+            )
+        if self.massive_neutrino_quadrature_nq < 1:
+            raise ValueError(
+                "massive_neutrino_quadrature_nq must be >= 1 "
+                f"(got {self.massive_neutrino_quadrature_nq!r})"
+            )
 
 
 @dataclass(frozen=True)
