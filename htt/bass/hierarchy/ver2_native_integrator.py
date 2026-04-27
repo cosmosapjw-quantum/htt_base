@@ -2200,6 +2200,13 @@ class Ver2TierBIntegrator:
         # ``numpy.ndarray.nonzero`` scan. The pattern is None on the very
         # first call (during cold build) and set thereafter.
         pattern_cache = getattr(self, "_joint_sparsity_cache", None)
+        # Round-17 P3.5 perf Tier 2D (2026-04-28): pass a pre-allocated
+        # dense workspace buffer to the joint builder so it reuses one
+        # ndarray per call instead of allocating np.zeros each time.
+        # The workspace is lazily initialised on the first call (when
+        # we know total_dof from pattern_cache.shape, or by falling back
+        # to fresh allocation on the cold build).
+        out_workspace = getattr(self, "_joint_dense_workspace", None)
         affine = self.backend.build_reduced_joint_affine_operator(
             self._residual_harmonic_background_state(snapshot=snapshot),
             residual_mode_labels=self._residual_mode_labels,
@@ -2209,6 +2216,7 @@ class Ver2TierBIntegrator:
             neutrino_by_mode_label={covered: np.asarray(pack_hierarchy(neutrino_tower), dtype=np.float64)},
             baryon_by_mode_label={covered: np.asarray(baryon_local, dtype=np.float64)},
             pattern_cache=pattern_cache,
+            out_workspace=out_workspace,
             **kwargs,
         )
         # Lazily capture the sparsity pattern from the very first build,
@@ -2229,6 +2237,17 @@ class Ver2TierBIntegrator:
             )
             self._joint_sparsity_cache = joint_sparsity_cache_from_csc(
                 affine.matrix
+            )
+        # Round-17 P3.5 perf Tier 2D: lazily allocate the dense workspace
+        # buffer once we know the joint shape from the cold build's matrix.
+        if (
+            out_workspace is None
+            and getattr(self, "_joint_dense_workspace", None) is None
+            and issparse(affine.matrix)
+            and affine.matrix.shape[0] > 0
+        ):
+            self._joint_dense_workspace = np.zeros(
+                affine.matrix.shape, dtype=np.float64,
             )
         return affine
 

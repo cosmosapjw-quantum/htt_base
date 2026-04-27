@@ -2388,6 +2388,7 @@ def build_reduced_joint_affine_operator(
     baryon_by_mode_label: Mapping[str, np.ndarray],
     source_by_mode_label: Mapping[str, np.ndarray] | None = None,
     pattern_cache: _JointSparsityCache | None = None,
+    out_workspace: np.ndarray | None = None,
 ) -> ReducedJointAffineOperator:
     """Return the exact frozen-snapshot affine operator for local+harmonic+source residual blocks.
 
@@ -2402,6 +2403,17 @@ def build_reduced_joint_affine_operator(
     preserved as long as the cache was captured on an exemplar joint
     that covers all structurally-non-zero positions (i.e. at an η
     where γ_T > 0). Default ``None`` preserves legacy behaviour.
+
+    Round-17 P3.5 perf Tier 2D (2026-04-28): an optional
+    ``out_workspace`` argument lets callers pass in a pre-allocated
+    dense buffer of shape ``(total_dof, total_dof)`` instead of the
+    function allocating ``np.zeros(...)`` per call. Profile of a
+    single FLRW k showed the dense joint allocation was responsible
+    for 3.1 s of the 6.9 s ``numpy.zeros`` tottime (49 µs × 16k calls
+    over the integration). When the workspace is reused across calls
+    the function calls ``out_workspace.fill(0.0)`` to zero it before
+    use; bit-identical to a fresh ``np.zeros``. ``None`` (default)
+    preserves legacy behaviour.
     """
 
     residual_labels = tuple(str(mu) for mu in residual_mode_labels)
@@ -2488,7 +2500,17 @@ def build_reduced_joint_affine_operator(
 
     total_dof = local_dof + harmonic_dof + source_dof
     source_offset = local_dof + harmonic_dof
-    joint = np.zeros((total_dof, total_dof), dtype=np.float64)
+    # Round-17 P3.5 perf Tier 2D: reuse caller-supplied dense workspace
+    # if shape matches, instead of allocating a fresh np.zeros every call.
+    if (
+        out_workspace is not None
+        and out_workspace.shape == (total_dof, total_dof)
+        and out_workspace.dtype == np.float64
+    ):
+        joint = out_workspace
+        joint.fill(0.0)
+    else:
+        joint = np.zeros((total_dof, total_dof), dtype=np.float64)
     if local_dof > 0:
         joint[:local_dof, :local_dof] = np.asarray(local_affine.matrix.toarray(), dtype=np.float64)
     if harmonic_dof > 0:

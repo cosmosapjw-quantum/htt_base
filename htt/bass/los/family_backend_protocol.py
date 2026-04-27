@@ -773,9 +773,11 @@ class FamilyBackend:
         baryon_by_mode_label: Mapping[str, np.ndarray],
         source_by_mode_label: Mapping[str, np.ndarray] | None = None,
         pattern_cache=None,
+        out_workspace=None,
     ):
-        # Round-17 P3.5 perf Tier 1A v2 (2026-04-28): forward optional
-        # pattern_cache to skip the dense → CSC conversion's nonzero scan.
+        # Round-17 P3.5 perf Tier 1A v2 + Tier 2D (2026-04-28): forward
+        # optional pattern_cache (skip dense → CSC nonzero scan) and
+        # out_workspace (reuse pre-allocated dense joint buffer).
         from bass.hierarchy.ver3_layout_protocol import (
             build_hierarchy_layout,
             build_reduced_joint_affine_operator,
@@ -794,6 +796,7 @@ class FamilyBackend:
             baryon_by_mode_label=baryon_by_mode_label,
             source_by_mode_label=source_by_mode_label,
             pattern_cache=pattern_cache,
+            out_workspace=out_workspace,
         )
 
     def build_reduced_source_affine_operator(
