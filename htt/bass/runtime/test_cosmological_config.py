@@ -75,12 +75,66 @@ def test_cosmological_critical_etas_custom_injection_redshift(species) -> None:
     assert later["eta_today"] == pytest.approx(default["eta_today"], abs=1e-9)
 
 
-def test_cosmological_critical_etas_rejects_unphysical_injection_z(species) -> None:
-    """z_injection outside [100, 5000] is rejected to prevent misuse."""
-    with pytest.raises(ValueError, match="z_injection must lie in"):
-        cosmological_critical_etas(species, z_injection=50.0)
-    with pytest.raises(ValueError, match="z_injection must lie in"):
-        cosmological_critical_etas(species, z_injection=10000.0)
+def test_cosmological_critical_etas_rejects_non_positive_z(species) -> None:
+    """z_injection must be strictly positive (z = 0 is the integration endpoint).
+
+    Round-17 P3.5 PR-V0d-pre3 (2026-04-27) lifted the legacy hard guard
+    ``z_injection ∈ [100, 5000]`` in favour of species-table-aware validation.
+    The remaining hard rejections are non-positive z and z outside the
+    species ``bg_table`` coverage.
+    """
+    with pytest.raises(ValueError, match="z_injection must be positive"):
+        cosmological_critical_etas(species, z_injection=0.0)
+    with pytest.raises(ValueError, match="z_injection must be positive"):
+        cosmological_critical_etas(species, z_injection=-100.0)
+
+
+def test_cosmological_critical_etas_rejects_z_outside_bg_table(species) -> None:
+    """z_injection outside the bg_table's actual a/z range is rejected.
+
+    The default ``build_flrw_background_table`` uses ``a_start = 1e-8`` →
+    z up to ~10⁸. A z far above that should be rejected with a clear
+    message pointing at PR-V0d-pre2 (species extension).
+    """
+    very_deep_z = 1.0e10  # well beyond a_start = 1e-8 (z ≈ 1e8)
+    with pytest.raises(
+        ValueError,
+        match="outside the species background table range",
+    ):
+        cosmological_critical_etas(species, z_injection=very_deep_z)
+
+
+def test_cosmological_critical_etas_accepts_z_inside_bg_table_below_legacy_floor(
+    species,
+) -> None:
+    """z_injection = 50 is below the lifted hard floor of 100 but inside
+    the bg_table's a/z range; PR-V0d-pre3 must accept it.
+
+    Pre-PR-V0d-pre3 this raised; post-PR-V0d-pre3 it returns valid anchors.
+    """
+    anchors = cosmological_critical_etas(species, z_injection=50.0)
+    assert anchors["z_injection"] == pytest.approx(50.0, abs=1e-9)
+    # eta_star at z=50 is much later than at z=1089.94 (universe older).
+    default_anchors = cosmological_critical_etas(species)
+    assert anchors["eta_star"] > default_anchors["eta_star"]
+
+
+def test_cosmological_critical_etas_accepts_z_inside_bg_table_above_legacy_ceiling(
+    species,
+) -> None:
+    """z_injection = 10000 is above the lifted hard ceiling of 5000 but
+    well inside the bg_table's a/z range (default a_start=1e-8 → z_max~1e8);
+    PR-V0d-pre3 must accept it.
+
+    Note: the species visibility/Γ_T (HYREC) fixture caps at z ≈ 8000;
+    z = 10000 is between the two limits, so this test specifically covers
+    the bg_table-but-not-HYREC band that PR-V0d-pre3 unblocks.
+    """
+    anchors = cosmological_critical_etas(species, z_injection=10000.0)
+    assert anchors["z_injection"] == pytest.approx(10000.0, abs=1e-9)
+    # eta_star at z=10000 is much earlier than at z=1089.94.
+    default_anchors = cosmological_critical_etas(species)
+    assert anchors["eta_star"] < default_anchors["eta_star"]
 
 
 def test_cosmological_critical_etas_rejects_negative_margin(species) -> None:

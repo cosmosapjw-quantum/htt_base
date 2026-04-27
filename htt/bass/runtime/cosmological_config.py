@@ -76,12 +76,28 @@ def cosmological_critical_etas(
     ``eta_star ≈ 281 Mpc``, ``eta_today ≈ 14147 Mpc``, and
     ``eta_initial_mpc ≈ 261 Mpc`` — matching the commit bce0eb9 success
     criterion.
+
+    **Validation (post Round-17 P3.5 PR-V0d-pre3, 2026-04-27).** The
+    legacy hard guard ``z_injection ∈ [100, 5000]`` was lifted; the
+    helper now queries ``species.bg_table`` for its actual a/z coverage
+    and rejects only z values outside that physical range. The default
+    ``build_flrw_background_table`` uses ``a_start = 1e-8`` → z up to
+    ~10⁸; sufficient to anchor at any pre-recombination redshift the
+    table covers. For deeper z (e.g., z = 10⁹ for D-2 closure δ), the
+    species table itself must be extended (PR-V0d-pre2).
+
+    Note: this helper validates only the **bg_table** range. Downstream
+    species components (visibility ``g(η)``, Thomson rate ``Γ_T``,
+    HYREC recombination history) may have tighter coverage (e.g.,
+    HYREC fixture caps at z ≈ 8000); a deep z_injection that passes
+    bg_table validation may still produce degenerate results from
+    those secondary tables. Pre2 (species-extension) addresses that.
     """
 
-    if not (100.0 <= float(z_injection) <= 5000.0):
+    if not (float(z_injection) > 0.0):
         raise ValueError(
-            f"z_injection must lie in [100, 5000] for a physical CMB "
-            f"injection; got {z_injection}"
+            f"z_injection must be positive (z = 0 corresponds to today, "
+            f"the integration endpoint, not the start); got {z_injection}"
         )
     if float(pre_recombination_margin_mpc) < 0.0:
         raise ValueError(
@@ -91,6 +107,21 @@ def cosmological_critical_etas(
 
     bg_table = species.bg_table
     a_injection = 1.0 / (1.0 + float(z_injection))
+    a_min = float(bg_table.a[0])
+    a_max = float(bg_table.a[-1])
+
+    if a_injection < a_min or a_injection > a_max:
+        z_max_supported = (1.0 / a_min) - 1.0
+        z_min_supported = (1.0 / a_max) - 1.0
+        raise ValueError(
+            f"z_injection={z_injection!r} maps to a={a_injection:.6e}, "
+            f"which lies outside the species background table range "
+            f"a ∈ [{a_min:.6e}, {a_max:.6e}] (z ∈ "
+            f"[{z_min_supported:.3e}, {z_max_supported:.3e}]). "
+            f"Extend the species registry (Round-17 PR-V0d-pre2) for "
+            f"deeper anchors."
+        )
+
     eta_star = float(bg_table.eta_at_a(a_injection))
     eta_today = float(bg_table.eta_today)
 

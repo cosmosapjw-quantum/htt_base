@@ -7,6 +7,58 @@
 
 ## [Unreleased]
 
+### V5 Round-17 P3.5 — PR-V0d-pre3: cosmological_config z_injection guard lifted (2026-04-27)
+
+Second Phase-0.5 deliverable per `V5_ROUND17_AUDIT_VERDICT_AND_REVISED_PLAN §4`.
+Replaces the hard guard ``z_injection ∈ [100, 5000]`` in
+``htt/bass/runtime/cosmological_config.py::cosmological_critical_etas``
+with **species-table-aware validation** that queries the actual
+``bg_table.a[0]`` / ``bg_table.a[-1]`` range.
+
+**Behaviour change:**
+| Input | Pre-pre3 | Post-pre3 |
+|---|---|---|
+| z = 50 (below legacy floor, inside bg_table) | rejected | **accepted** |
+| z = 10000 (above legacy ceiling, inside bg_table) | rejected | **accepted** |
+| z = 10¹⁰ (outside bg_table coverage) | rejected | rejected (clear msg pointing at PR-V0d-pre2) |
+| z ≤ 0 | rejected | rejected ("z=0 is the integration endpoint") |
+
+The default ``build_flrw_background_table`` uses ``a_start = 1e-8`` →
+z up to ~10⁸; pre-pre3 the guard rejected anything outside [100, 5000],
+which is 4+ orders of magnitude tighter than the actual bg_table
+coverage and forced V0d to bypass the helper via monkey-patch.
+
+**Caveat (carried to pre2).** The bg_table coverage (~10⁸) is NOT
+the same as the visibility/Γ_T/HYREC coverage (~8000). Post-pre3 the
+helper accepts z ∈ (0, ~10⁸], but downstream IMEX integration with
+`Γ_T(η)` evaluation will fail or silently degrade at z > 8000 until
+the HYREC fixture is extended (PR-V0d-pre2). This is precisely the
+load-bearing reason V0d post-pre1 still showed PCHIP overflow at
+η_init ∈ {100, 70} Mpc.
+
+**Files touched:**
+- `htt/bass/runtime/cosmological_config.py` (validation lifted; clear
+  error msg for out-of-table z; positivity check)
+- `htt/bass/runtime/test_cosmological_config.py` (1 test replaced
+  with non-positive-z rejection; 3 new tests for the new behaviour)
+- `docs/audits/external_round17_2026-04-27/results/PR_V0d_pre3_zinjection_guard_lift.md`
+  (new)
+
+**Verification:**
+- 287 Round-16 baseline + 304 perturbation + 14 tau_c-override + 15
+  cosmological_config tests = 620 total passing in 18.60 s.
+- 4 new tests in `test_cosmological_config.py` cover the replaced /
+  added validation paths.
+- No production-runtime defaults changed; existing callers using
+  ``z_injection = PLANCK_2018_Z_STAR = 1089.94`` still hit the
+  default-case path.
+
+**Phase 0.5 status:**
+- ✅ PR-V0d-pre1 (committed `125a989`): tau_c plumbing
+- ✅ PR-V0d-pre3 (this commit): cosmological_config z_injection guard lift
+- ⏳ PR-V0d-pre2 (sub-week-to-2w): species registry extension to z = 10⁹
+  — the only remaining Phase-0.5 gate.
+
 ### V5 Round-17 P3.5 — PR-V0d-pre1: tau_c plumbing landed; V0d post-pre1 measured (2026-04-27)
 
 First Phase-0.5 deliverable per `V5_ROUND17_AUDIT_VERDICT_AND_REVISED_PLAN.md §4`.
