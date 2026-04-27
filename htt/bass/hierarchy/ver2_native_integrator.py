@@ -1229,6 +1229,18 @@ class Ver2TierBIntegrator:
             sector="ph_B",
             covered_mode_label=self._layout_covered_mode_label,
         )
+
+        # Round-17 P3.5 perf Tier 2C (2026-04-28): cache _eta_runtime_snapshot
+        # results by η. The snapshot is fully determined by η (self.config and
+        # self.visibility_source are fixed at __init__), so same-η queries
+        # always produce the same snapshot. ROS2 steppers query 6 snapshots
+        # per step at only 2 unique η values (eta_left, eta_right) — caching
+        # cuts ~5-7 s of the 14.6 s cumulative spent in this code path
+        # (96k calls in single-k profile). Bounded growth via FIFO eviction
+        # at 256 entries (small: snapshot is ~100 B; ROS2 reuses adjacent
+        # ηs across steps so a small cache captures most hits).
+        self._eta_snapshot_cache: dict[float, "_EtaRuntimeSnapshot"] = {}
+        self._eta_snapshot_cache_max = 256
         _ = sample_hierarchy_background(
             float(self.background_monitor.eta[0]),
             bg_table=self.bg_table,
@@ -1749,7 +1761,13 @@ class Ver2TierBIntegrator:
 
     def _eta_runtime_snapshot(self, eta: float) -> _EtaRuntimeSnapshot:
         eta_val = float(eta)
-        return _EtaRuntimeSnapshot(
+        # Round-17 P3.5 perf Tier 2C: cache by η. Snapshot is fully
+        # determined by η (config + visibility_source are __init__-fixed).
+        cache = self._eta_snapshot_cache
+        cached = cache.get(eta_val)
+        if cached is not None:
+            return cached
+        snapshot = _EtaRuntimeSnapshot(
             eta=eta_val,
             background=self._background_snapshot(eta_val),
             gamma_t=_resolved_gamma_t(
@@ -1761,6 +1779,14 @@ class Ver2TierBIntegrator:
             h_local=self._h_local_at(eta_val),
             tilted_electron=self._tilted_electron_at(eta_val),
         )
+        # FIFO eviction once cache exceeds the size cap. Python dicts
+        # are insertion-ordered (3.7+), so del-by-key preserves order.
+        if len(cache) >= self._eta_snapshot_cache_max:
+            evict_count = self._eta_snapshot_cache_max // 2
+            for old_key in list(cache)[:evict_count]:
+                del cache[old_key]
+        cache[eta_val] = snapshot
+        return snapshot
 
     def _collision_aux_from_snapshot(
         self,
