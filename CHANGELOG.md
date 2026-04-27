@@ -7,6 +7,120 @@
 
 ## [Unreleased]
 
+### V5 Round-17 P3.5 — Phase B profiling + Tier 1A v1 attempt + revert (2026-04-28)
+
+User-driven follow-on to the perf-iteration ask: invest now in profiling
+and architectural fixes before δ work begins, since slow validation
+cycles will multiply across multi-month δ scope.
+
+**Profiling toolchain installed** (Tier 1 + Tier 2):
+- `py-spy` 0.4.2 — sampling profiler with child-process visibility
+- `line_profiler` 5.0.2 — line-level breakdown
+- `snakeviz` 2.2.2 — interactive cProfile viewer
+- `scalene` 2.2.1 — CPU + memory + Python-vs-native time
+- `radon` 6.0.1 — cyclomatic complexity / static analysis
+
+**Phase B finding 1: production path is NOT LSODA.** The audit
+Reports' "LSODA" finding (`LowellBianchiIntegrator.run` →
+`solve_ivp(method="LSODA")`) was structurally accurate for the
+**legacy compatibility path**, not the production path. cProfile of a
+single-k call shows:
+
+```
+compute_transfer_function_at_k
+  → execute_tier_b_solver (bass/runtime/ver2_execution.py:2017)
+  → ver2_native_integrator.run (bass/hierarchy/ver2_native_integrator.py:5089)
+  → _solve_segment_imex
+  → _orthogonal_residual_joint_ros2_step  ← custom Rosenbrock-2 IMEX
+  → _build_residual_joint_affine_operator
+  → backend.build_reduced_joint_affine_operator
+  → ver3_layout_protocol.build_reduced_joint_affine_operator
+```
+
+`LowellBianchiIntegrator` is a "retained compatibility path outside
+the production route" per the docstring; the actual production is
+the BF-01B-HCORE rewrite using sparse-matrix Rosenbrock-2 IMEX.
+
+**Phase B finding 2: 58 % of the wall time is sparse-matrix
+infrastructure, not physics RHS.** Single-k profile (111 s hot call):
+
+| Bucket | Time | % | Component |
+|---|---:|---:|---|
+| Sparse matrix construction (CSR + COO `__init__`, `prune`, `check_format`, `get_index_dtype`) | 64.6 s | 58 % | per-step rebuild |
+| `numpy.ndarray.nonzero` (inside sparse construction) | 21.3 s | 19 % | 4 × per ROS2 step |
+| `Gamma_T` Python wrapper chain | 10.4 s | 9.4 % | 112,540 calls |
+| `numpy.zeros` allocation | 6.9 s | 6.2 % | 1.15M calls = 72/step |
+| Sparse LU + solve (`gstrf`, `splu`, `solve`) | 5.8 s | 5.2 % | actual numerical work |
+| **`hierarchy_rhs_photon_from_state` (physics RHS)** | **2.5 s** | **2.3 %** | 128,536 calls |
+
+The "JIT the RHS" intuition was wrong for this path. The dominant
+cost is sparse matrix re-construction at every IMEX step (16,069
+ROS2 steps × ~24 sparse matrices per step). Sparsity pattern doesn't
+change across steps — only values do. The current implementation
+rebuilds the entire CSR/COO structure every step.
+
+**Tier 1A v1 attempt: dense-matrix conversion (REVERTED).** Tried
+returning `np.ndarray` instead of `csc_matrix(joint)` from
+`build_reduced_joint_affine_operator`, dispatching the implicit IMEX
+solve to `scipy.linalg.lu_factor`/`lu_solve`. Predicted savings: 21 s
+of `nonzero` + 50 s of sparse `__init__` = ~70 s. Predicted cost:
+slightly more LU work.
+
+**Result: 2× SLOWER (111 s → 229 s)**, not faster.
+Re-profile decomposition revealed `lu_factor` (LAPACK dgetrf) on a
+250×250 dense matrix takes 4 ms × 32,178 calls = **131 s of dense
+LU**, dominating the savings. The 250×250 joint is structurally
+sparse (mostly zeros except diagonal blocks + Thomson cross-couplings),
+so `splu` only does work proportional to nnz (~tens of microseconds
+per call), while `lu_factor` does full O(n³) regardless. Net change:
+−69 s sparse savings + 131 s dense LU = +62 s.
+
+**Lesson**: the inefficiency is the *conversion boundary* between
+dense and sparse, not splu itself. The right Tier 1A is **CSR-pattern
+caching**, not dense conversion.
+
+**Reverted**: `build_reduced_joint_affine_operator` returns
+`csc_matrix(joint)` again (line 2511). The infrastructure (helper
+`_solve_joint_implicit` dispatching dense vs sparse, `lu_factor`/
+`lu_solve` imports, broader type annotation on
+`ReducedJointAffineOperator.matrix`) is preserved for future use.
+
+**Tier 1A v2 plan (queued)**: build CSR (rows/cols/indptr) ONCE at
+integrator init; per-step write only into `.data` array. Estimated
+savings: ~64 s of sparse setup. Single-thread perf 111 s → ~47 s.
+Combined with parallel scaling, single-anchor V0d 18 min → ~8 min.
+See `docs/audits/external_round17_2026-04-27/results/PERF_PROFILING_PHASE_B.md`
+§"Tier 1A v2 plan" for refactor approach.
+
+**Files touched**:
+- `htt/bass/hierarchy/ver2_native_integrator.py` (helper +
+  `lu_factor`/`lu_solve`/`issparse` imports — kept; dispatch dormant
+  for sparse path)
+- `htt/bass/hierarchy/ver3_layout_protocol.py` (return `csc_matrix(joint)`
+  again; broader type annotation kept; docstring updated)
+- `scripts/v5_round17_perf_profile_single_k.py` (new — single-k
+  cProfile harness)
+- `docs/audits/external_round17_2026-04-27/results/PERF_PROFILING_PHASE_B.md`
+  (new — full Phase B finding + Tier 1A v1 retro)
+- `CHANGELOG.md`
+
+**Verification**:
+- 728 baseline unit tests pass post-revert (same as pre-Tier-1A).
+- Single-k cProfile pre-Tier-1A: 111 s (confirms revert correctness).
+- Type annotation `np.ndarray | csc_matrix` is broader than necessary
+  for current behaviour but documents the intended Tier 1A v2
+  flexibility.
+
+**Phase 0.5 + perf status (after this commit)**:
+- ✅ PR-V0d-pre1 (`125a989`): tau_c plumbing
+- ✅ PR-V0d-pre3 (`1ccf33f`): cosmological_config z_injection guard lift
+- 🔄 PR-V0d-pre2 (`9e6e2d0`): default-swap REVERTED; opt-in fixture kept
+- ✅ Hardware harness (`d6c18d4`): n_workers=24 + BLAS=1, 1.7× speedup
+- 🔄 Tier 1A v1 (this commit): dense-LU REVERTED; CSR-pattern v2 queued
+- ⏳ Tier 1A v2 (CSR pattern caching): 1-2 days, estimated 2.4× single-thread
+- ⏳ Tier 2C (Gamma_T inline): ~10 % gain
+- ⏳ Tier 2D (zeros pre-allocation): ~5 % gain
+
 ### V5 Round-17 P3.5 — PR-V0d-pre2 default revert + perf optimization (2026-04-27)
 
 Two-fold response to a smoke-test finding plus the user's perf-iteration

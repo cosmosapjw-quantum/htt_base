@@ -21,7 +21,8 @@ from typing import Optional
 
 import numpy as np
 from scipy.integrate import solve_ivp
-from scipy.sparse import csc_matrix
+from scipy.linalg import lu_factor, lu_solve
+from scipy.sparse import csc_matrix, issparse
 from scipy.sparse.linalg import splu
 
 from bass.background.evolution import BackgroundEvolutionResult
@@ -2117,6 +2118,41 @@ class Ver2TierBIntegrator:
             },
         }
 
+    def _solve_joint_implicit(
+        self,
+        dt_factor: float,
+        A_matrix,
+        rhs: np.ndarray,
+    ) -> np.ndarray:
+        """One-shot solve of ``(I − dt_factor · A) · x = rhs``.
+
+        Round-17 P3.5 perf Tier 1A (2026-04-27): dispatches between
+        dense (LAPACK ``lu_factor``/``lu_solve`` via scipy.linalg) and
+        sparse (SuperLU via scipy.sparse.linalg.splu) based on the
+        ``A_matrix`` storage type. The joint affine operator now returns
+        a dense ``np.ndarray`` by default (see
+        ``ver3_layout_protocol.build_reduced_joint_affine_operator``);
+        sparse storage remains supported for off-axis Bianchi families
+        with genuinely sparse blocks.
+
+        Profile of a single FLRW k showed the per-step sparse-matrix
+        construction overhead (~85 s of 111 s total) was dominated by
+        the unnecessary dense→sparse conversion at the joint-operator
+        boundary; switching the boundary to dense and the IMEX implicit
+        solve to LAPACK eliminates the round-trip.
+        """
+        if issparse(A_matrix):
+            system = self._residual_joint_sparse_identity - dt_factor * A_matrix
+            return np.asarray(splu(system).solve(rhs), dtype=np.float64)
+        system = self._residual_joint_identity - dt_factor * np.asarray(
+            A_matrix, dtype=np.float64
+        )
+        lu_piv = lu_factor(system, check_finite=False)
+        return np.asarray(
+            lu_solve(lu_piv, rhs, check_finite=False),
+            dtype=np.float64,
+        )
+
     def _build_residual_joint_affine_operator(
         self,
         *,
@@ -2259,11 +2295,11 @@ class Ver2TierBIntegrator:
             total_span / (100000.0 if abs(float(self.config.tilt_rapidity)) > 0.0 else 5000.0),
             1.0e-8,
         )
-        system = self._residual_joint_sparse_identity - startup_dt * affine.matrix
-        lu = splu(system)
-        startup_state = np.asarray(
-            lu.solve(startup_dt * np.asarray(affine.bias, dtype=np.float64)),
-            dtype=np.float64,
+        # Round-17 P3.5 perf Tier 1A: dispatch dense/sparse via helper.
+        startup_state = self._solve_joint_implicit(
+            startup_dt,
+            affine.matrix,
+            startup_dt * np.asarray(affine.bias, dtype=np.float64),
         )
         return (
             np.asarray(startup_state[: self._residual_local_dof], dtype=np.float64),
@@ -2347,10 +2383,12 @@ class Ver2TierBIntegrator:
             ],
             dtype=np.float64,
         )
-        system_left = self._residual_joint_sparse_identity - (dt * _ROS2_GAMMA) * affine_left.matrix
-        lu_left = splu(system_left)
+        # Round-17 P3.5 perf Tier 1A: dense LU dispatch when affine.matrix
+        # is the dense ndarray now returned by build_reduced_joint_affine_operator.
         rhs_left = np.asarray(affine_left.matrix @ state_left + affine_left.bias, dtype=np.float64)
-        k1 = np.asarray(lu_left.solve(dt * _ROS2_GAMMA * rhs_left), dtype=np.float64)
+        k1 = self._solve_joint_implicit(
+            dt * _ROS2_GAMMA, affine_left.matrix, dt * _ROS2_GAMMA * rhs_left,
+        )
         stage_state = state_left + _ROS2_A21 * k1
         affine_right = self._build_residual_joint_affine_operator(
             snapshot=snapshot_right,
@@ -2362,11 +2400,11 @@ class Ver2TierBIntegrator:
             source_local=source_right,
         )
         rhs_stage = np.asarray(affine_right.matrix @ stage_state + affine_right.bias, dtype=np.float64)
-        system_right = self._residual_joint_sparse_identity - (dt * _ROS2_GAMMA) * affine_right.matrix
-        lu_right = splu(system_right)
-        k2 = np.asarray(
-            lu_right.solve(dt * _ROS2_GAMMA * rhs_stage + (_ROS2_GAMMA * _ROS2_C21) * k1),
-            dtype=np.float64,
+        # Round-17 P3.5 perf Tier 1A: same dense/sparse dispatch as above.
+        k2 = self._solve_joint_implicit(
+            dt * _ROS2_GAMMA,
+            affine_right.matrix,
+            dt * _ROS2_GAMMA * rhs_stage + (_ROS2_GAMMA * _ROS2_C21) * k1,
         )
         next_state = state_left + _ROS2_M1 * k1 + _ROS2_M2 * k2
         next_local = np.asarray(next_state[: self._residual_local_dof], dtype=np.float64)

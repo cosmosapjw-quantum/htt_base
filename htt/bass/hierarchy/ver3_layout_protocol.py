@@ -81,7 +81,24 @@ class ReducedJointAffineOperator:
     local_dof: int
     harmonic_dof: int
     source_dof: int
-    matrix: csc_matrix
+    matrix: "np.ndarray | csc_matrix"
+    """Joint affine operator. Currently always returned as ``csc_matrix``
+    by ``build_reduced_joint_affine_operator``; the broader type annotation
+    is preserved so a future CSR-pattern-caching variant can return either
+    storage type without breaking callers.
+
+    Round-17 P3.5 perf Tier 1A v1 (2026-04-28, REVERTED) attempted to
+    return ``np.ndarray`` directly to skip the ``csc_matrix(joint)``
+    conversion and its embedded ``numpy.ndarray.nonzero`` scan
+    (21 s/run). The change was empirically 2× slower because LAPACK
+    ``lu_factor`` is O(n³) on the 250×250 dense matrix while ``splu``
+    only does work proportional to the actual nnz. The proper Tier 1A
+    (CSR-pattern caching: build indices/indptr once at integrator init,
+    update ``.data`` per step, keep ``splu``) is queued as future work.
+
+    The ``_solve_joint_implicit`` dispatcher in ``ver2_native_integrator``
+    handles both storage types and is dormant for the dense branch under
+    the current implementation."""
     bias: np.ndarray
 
 
@@ -2491,6 +2508,15 @@ def build_reduced_joint_affine_operator(
                     inv_source[2] * (-0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t)
                 )
 
+    # Round-17 P3.5 perf Tier 1A v1 (REVERTED 2026-04-28): the dense-output
+    # variant was 2× SLOWER, not faster, because LAPACK ``lu_factor`` on a
+    # 250×250 dense matrix is O(n³) regardless of sparsity, while
+    # ``splu`` only does work proportional to the actual NNZ pattern. The
+    # 21 s saved on ``nonzero``-based conversion was overwhelmed by ~131 s
+    # of dense LU factorisation. Keeping ``csc_matrix(joint)`` here and
+    # the sparse splu path on the consumer side. The proper Tier 1A
+    # (CSR-pattern caching: build indices once, update .data per step,
+    # keep splu) is queued as future work.
     return ReducedJointAffineOperator(
         mode_labels=residual_labels,
         local_dof=local_dof,
