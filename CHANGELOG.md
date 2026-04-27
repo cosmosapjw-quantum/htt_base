@@ -7,6 +7,131 @@
 
 ## [Unreleased]
 
+### V5 Round-17 P3: External-audit cycle + Phase-0 doc/discovery + V0e closed (2026-04-27)
+
+External-audit cycle on the `external_round17_2026-04-27` bundle returned two
+independent verdicts (both archived at
+`docs/audits/external_round17_2026-04-27/{report1.md, report2.md}`). Doc +
+diagnostic-script + one-line-docstring PR; no production-runtime behaviour
+change. New in-session findings landed; remaining audit-recommended gates are
+documented and scripted but gated on explicit user decision per their wall-time
+cost.
+
+**Audit verdict synthesis** (full table at
+`docs/V5_ROUND17_AUDIT_VERDICT_AND_REVISED_PLAN.md §1`):
+
+- Q1 D-2 diagnosis: PARTIALLY/CONFIRMED (combined 4.5/5; raised toward 5/5
+  this session by V0e).
+- Q2 closure mechanism: PARTIALLY (3.5/5).
+- Q3 ℓ=2 m=0 pin sufficiency: PARTIALLY (3.5/5).
+- Q4 missed defects: PARTIALLY (3/5).
+- **Q5 sub-track ordering: REFUTED** (4/5). Both auditors require D-3 (sub-week)
+  to precede δ (multi-month).
+
+**V0a — IMEX routing reality check (NEW FINDING).** Both audit reports flagged
+that the bundle's `integrator.py` shows `solve_ivp(method="LSODA")` rather
+than the IMEX ARK4 the docs describe. Direct repo inspection confirms:
+`bass/runtime/ver2_execution.py:1802, 1816` (production FLRW path uses
+`LowellBianchiIntegrator`); `bass/hierarchy/integrator.py:5, 134, 649` (LSODA
+via `solve_ivp`); `bass/integration/imex_ark4.py` (Round-16 PR-S2 primitive,
+imported only by its own unit test and the `__init__.py`, not wired into
+production). Implication: there is no explicit/implicit splitting; the
+DAE-relaxation term `−a·Γ_T·(Π_2 − Π_2_alg)` enters the unified RHS, and
+LSODA handles stiffness via BDF-mode automatically. Audit-recommended
+counter-test V0f (`scripts/v5_round17_lsoda_step_audit.py`) measures whether
+LSODA step-count is tractable across the 12-decade δ range or whether
+`imex_ark4.py` must be wired before δ.
+
+**V0b — "60% x>1" arithmetic correction.** Caught by Report 1 §1. Re-derivation
+on `np.logspace(-4.0, -1.5, 65)` at η_init = 261 Mpc:
+- log₁₀(k_crit) = log₁₀(1/261) ≈ -2.418
+- fraction in `x > 1`: (-1.5 − (-2.418)) / (-1.5 − (-4)) ≈ **37%** (24/65)
+- fraction in `x > 0.3`: ≈ **57%** (37/65)
+Audit-bundle docs (`01_DETAILED_ANALYSIS.md §16`,
+`02_AUDIT_FOCUSED_SUMMARY.md §1, Q1`) corrected.
+
+**V0c — `primordial_b_k_sq` documentation drift fix.** Caught by Report 1 §4
+risk #6. Pre-fix `htt/bass/hierarchy/integrator.py:145-155` carried the
+pre-R12 framing ("amplitude squared `|B_K|²`"; "a physical ζ-normalized run
+sets `A_s × (k/k_pivot)^(n_s-1)`"), directly contradicting the corrected
+linear-amplitude semantics in `htt/bass/perturbation/regular_adiabatic_ic.py:111-135`
+and `htt/bass/spectrum/flrw_pipeline.py:143-158`. Now harmonized to all three
+files describing `b_k_sq` as the linear curvature amplitude with the explicit
+"do NOT pass `A_s × …`" warning.
+
+**V0e — bias-floor reprobe at b_k_sq = 0 (CLOSED).** Audit Report 2 §5.5 noted
+the post-R11 codebase has never been re-measured at the bias-floor probe
+level. Script `scripts/v5_round17_bias_floor_reprobe.py` runs
+`compute_transfer_function_at_k(b_k_sq=0)` at k ∈ {10⁻⁵, 10⁻⁴, 10⁻³, 10⁻²,
+10⁻¹·⁵} and tabulates `|Δ_bias|/|Δ_target|` per (k, ℓ). **Result:
+`Δ_bias = 0` bit-zero across all 25 (k, ℓ) cells; max ratio 0.000e+00.**
+Wall time 7.97 min. The R10/R11 fix is empirically verified for the first
+time on the post-R15-P0 codebase: with `amp = 0` the linear-amplitude `pi_nu`
+and `G_3` formulae return zero, IMEX evolves zero IC to zero state, and the
+3.08 pre-R10/R11 floor at `k = 10⁻⁴, ℓ = 2` (per `V5_ROUND9_FINDINGS.md`) is
+gone. The 6.43× residual is therefore not a floor leak; raises consensus Q1
+verdict toward CONFIRMED 5/5. Result archived at
+`docs/audits/external_round17_2026-04-27/results/V0e_bias_floor_reprobe.md`.
+
+**V0d, V0f — scripts landed, execution gated on user decision.**
+- `scripts/v5_round17_eta_init_sweep.py` (V0d, ~3 h wall time on 4 workers).
+  Sweeps η_init ∈ {261, 200, 150, 100, 70, 50} Mpc; predicts monotone collapse
+  of `D_2 / D_anchor` toward 1 if D-2 dominates. Cheapest GO/NO-GO gate before
+  multi-month δ.
+- `scripts/v5_round17_lsoda_step_audit.py` (V0f, ~1 h wall time, single-worker).
+  Measures `nfev`, `njev`, `nlu` density per η-Mpc at deep-TCA anchors
+  η_init ∈ {261, 100, 30, 10, 3, 1, 0.3, 0.1, 0.03, 0.01, 0.003, 0.001} Mpc.
+  Decides whether δ proceeds on LSODA or requires `imex_ark4.py` wiring first.
+
+**Revised closure plan** (now authoritative; supersedes
+`V5_ROUND17_PR_S13_REAL_SCOPE.md §4 revised` + `V5_ROUND17_NEXT_SESSION_OPENER.md §3 step 2`):
+
+```
+Phase 0  V0a-c done; V0e closed; V0d/V0f gated.
+Phase 1  α (a-switch, 1-2d) → β' (real-IC, 1-2d) → D-3 (sub-week)
+         ★ D-3 inserted before Phase 2 per audit verdict
+Phase 2  δ (D-2 closure, multi-month) on a clean residual baseline
+         γ (state-layout m∈{-2..+2}) parallel branch; not on FLRW critical path
+```
+
+Pre-conditions for δ entry: V0d shows monotone collapse vs η_init; V0f shows
+LSODA path tractable OR `imex_ark4.py` wired; `_approx_tau_c` heuristic at
+`htt/bass/perturbation/regular_adiabatic_ic.py:94-101` replaced by real
+`1/Γ_T(η_init)` from species table.
+
+**Files touched:**
+- `docs/V5_ROUND17_AUDIT_VERDICT_AND_REVISED_PLAN.md` (new)
+- `docs/audits/external_round17_2026-04-27/{report1.md, report2.md}` (audit
+  reports landed by user)
+- `docs/audits/external_round17_2026-04-27/01_DETAILED_ANALYSIS.md` (V0b: §16
+  arithmetic corrected)
+- `docs/audits/external_round17_2026-04-27/02_AUDIT_FOCUSED_SUMMARY.md` (V0b:
+  §1 + Q1 arithmetic corrected)
+- `docs/audits/external_round17_2026-04-27/results/V0e_bias_floor_reprobe.md`
+  (new)
+- `htt/bass/hierarchy/integrator.py` (V0c: docstring at lines 145-155 only;
+  no behaviour change)
+- `scripts/v5_round17_eta_init_sweep.py` (new — V0d)
+- `scripts/v5_round17_bias_floor_reprobe.py` (new — V0e)
+- `scripts/v5_round17_lsoda_step_audit.py` (new — V0f)
+- `CLAUDE.md` (§3 phase status)
+- `CHANGELOG.md` (this entry)
+
+**Verification:** 287 Round-16 primitive baseline tests pass in 14.83 s
+post-edits; V0e diagnostic ran cleanly to completion (7.97 min); no
+production-runtime behaviour modified.
+
+**Forbidden moves carried + new:**
+- Carried: no Doppler `/k`; no `xpass` on `test_d2_pstf_closure.py` without
+  numerical verify; no baked `calibration_factor`; no higher-x corrections to
+  `_seed_formulae`; no TCA pre-phase.
+- New: **No δ entry without V0d/V0e/V0f all passing** — both auditors require
+  these gates be run before multi-month commitment. V0e is closed; V0d and
+  V0f remain.
+- New: **No claim of "IMEX implicit stage handles stiffness"** in production
+  FLRW path documentation until `imex_ark4.py` is actually wired (current
+  path is LSODA via `solve_ivp`).
+
 ### V5 Round-17 P2: PR-S13 (a) confirmed via linear-probe; residual 6.43× = D-2 (2026-04-27)
 
 Doc + diagnostic-script-only PR (no production code change). Confirms

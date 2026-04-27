@@ -143,16 +143,34 @@ class IntegratorConfig:
     this flag only toggles the canonical tracking placeholder. The
     physics-determining knob is ``primordial_b_k_sq`` below."""
     primordial_b_k_sq: float = 1.0
-    """V5 step-4b-(a) primordial amplitude squared ``|B_K|²``. Feeds
-    into ``make_camb_regular_adiabatic_seed`` via the Lowell §13.2
-    closed-form startup. The default ``1.0`` (historical) corresponds
-    to unit-B_K transfer functions; a physical ζ-normalized run sets
-    ``A_s × (k/k_pivot)^(n_s-1)`` where ``A_s = 2.1e-9`` (Planck 2018).
-    The exact B_K → ζ calibration is a pending convention audit
-    (V5 follow-up Round-6). All solver outputs scale linearly in
-    ``sqrt(primordial_b_k_sq)`` so the dimensionless transfer
-    function comes out of a subsequent ``/ sqrt(b_k_sq)`` division
-    (see ``FLRWPipelineConfig.unit_amplitude_normalization``)."""
+    """**Linear primordial curvature amplitude** ``C ≈ ζ`` of the Lowell
+    §13.2 regular-adiabatic seed (Ma-Bertschinger 1995 §7 eq. 96;
+    Lewis-Challinor 2002 App. C). Despite the historical ``_sq`` suffix
+    (which dates to the CAMB Notes ``χ_0 = -1`` geometric ``β² = 1``
+    convention in flat FLRW), every leading-order seed perturbation
+    enters this parameter linearly — confirmed by the V5-RUNTIME Round-12
+    4-cycle external audit (2026-04-25) and Round-17 audit verdict
+    (2026-04-27).
+
+    Conventions:
+      - ``primordial_b_k_sq = 1.0`` (legacy default): unit-amplitude
+        probe; matches the CAMB Notes ``χ_0 = -1`` reference convention.
+        All leading-order seed entries are O(1) at this amplitude.
+      - ``primordial_b_k_sq = ζ`` (some primordial curvature value):
+        physical amplitude. The C_ℓ assembly then pairs ``α(k)`` (the
+        per-unit-ζ transfer extracted from this seed) with
+        ``P_R(k) = ⟨ζ²⟩`` per the canonical
+        ``C_ℓ = 4π ∫ d ln k · P_R(k) · |α|²``.
+
+    Do NOT pass ``A_s × (k/k_pivot)^(n_s-1)`` here. That value
+    (~ 2.1 × 10⁻⁹) is the *variance* spectrum ``P_R(k) = ⟨ζ²⟩``, not the
+    linear amplitude. Doing so would produce a meaningless seed value
+    that under-runs the linear-extraction probe range by ~10⁹.
+
+    See `htt/bass/perturbation/regular_adiabatic_ic.py:111-135` for the
+    same docstring on the parameter at its load-bearing entry point, and
+    `htt/bass/spectrum/flrw_pipeline.py:143-158` for the pipeline-level
+    docstring. All three must remain consistent."""
     """Test hook: override the species-layer ``Γ_T(η)`` with a caller-
     supplied callable. Used by tests that need to probe the deep
     tight-coupling regime beyond the HyRec fixture's ``z_max = 8000``
