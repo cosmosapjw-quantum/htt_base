@@ -107,28 +107,49 @@ The R12 4-cycle convention audit established that `b_k_sq` enters every leading-
 
 ## 4. Revised closure plan (this is now authoritative)
 
+Updated 2026-04-27 (post V0d) to reflect that V0d empirically promoted three
+audit-Report-2-pre-conditions from "soft" to "hard" — they have been lifted
+into a new Phase 0.5 that sits between Phase 0 (gate verification) and the
+substantive work.
+
 ```
-Phase 0 — VERIFICATION (this session + immediate follow-on)
+Phase 0 — GATE VERIFICATION (closed)
   ✓ V0a — IMEX routing reality check               (DONE — finding §2 above)
   ✓ V0b — "60% x>1" arithmetic correction          (DONE — §3.1 above)
   ✓ V0c — primordial_b_k_sq drift fix              (DONE — §3.2 above)
-  ↓ V0d — η_init sweep counter-test                (script landed; ~3 h wall time to run)
-  ↓ V0e — bias-floor probe re-run at b_k_sq=0      (script landed; ~1 h wall time to run)
-  ↓ V0f — LSODA step-count audit at deep TCA       (script landed; ~1 h wall time to run)
+  ✓ V0e — bias-floor reprobe                       (CLOSED — Δ_bias = 0 bit-zero)
+  ✓ V0f — LSODA step-count audit                   (PROVISIONAL TRACTABLE)
+  🟠 V0d — η_init sweep                             (INCONCLUSIVE — surfaced
+                                                    three latent prerequisites
+                                                    via 23-orders-of-magnitude
+                                                    explosion as η_init shrinks)
 
-Phase 1 — TIER-1 LANDABLE (1-2 weeks)
+Phase 0.5 — V0d PREREQUISITES (NEW; was buried inside δ scope)
+  PR-V0d-pre1: replace _approx_tau_c heuristic at
+               regular_adiabatic_ic.py:94-101 with real 1/Γ_T(η_init)
+               from species table                                  [1-2 d]
+  PR-V0d-pre2: extend species registry from_planck2018 to cover
+               z ∈ [0, 10⁹] (HYREC + radiation-era splice;
+               visibility, kappa, Γ_T, baryon, CDM, ν all)         [sub-w to 2 w]
+  PR-V0d-pre3: lift cosmological_config.py:77-148 z_injection
+               ∈ [100, 5000] guard with proper species-table-aware
+               validation                                           [sub-day]
+  V0d re-run on a unit-tested pre1+pre2+pre3 baseline               [3 h wall]
+
+Phase 1 — TIER-1 LANDABLE (~1-2 weeks)
   α  — (a-switch) canonical default → linear-probe path        [1-2 d]
-  β' — (real-IC) BackgroundMonitor.from_recombination(z_*)    [1-2 d]
+  β' — (real-IC) BackgroundMonitor.from_recombination(z_*)     [1-2 d]
   D-3 — sync→Newt source-extractor patch                       [sub-week]
         ★ INSERTED HERE per audit verdict, was parked behind δ
 
-Phase 2 — TIER-2 STRUCTURAL (multi-month)
-  δ  — (D-2 closure) η_init → z≈10⁹ via TCA-enabled startup    [multi-month]
-        Pre-conditions:
-          • V0d sweep shows monotone D_2 collapse vs η_init
-          • V0e bias-floor stays small post-R10/R11 + post-R15-P0
-          • V0f LSODA step-count tractable OR imex_ark4 wired
-          • _approx_tau_c heuristic replaced (regular_adiabatic_ic.py:94)
+Phase 2 — TIER-2 STRUCTURAL (multi-month, but SHRUNK)
+  δ  — (D-2 closure) η_init → z≈10⁹ via TCA-enabled startup
+        Multi-month, but the species-extension + tau_c work is now
+        in Phase 0.5 instead of buried here. Remaining δ scope:
+          • cosmological-range IMEX validation across 12 decades
+          • per-decade conservation-law audit (Codazzi, momentum, energy)
+          • DAE-relaxation switch-smoothness across `Γ_T/H ∼ 10⁹ → 10⁻¹`
+          • bit-identity verification against the Rust anchor
 
   γ  — (state-layout m=0 → m∈{-2..+2})                        [3-5 d]
         ★ DEMOTED from in-line ordering to PARALLEL track

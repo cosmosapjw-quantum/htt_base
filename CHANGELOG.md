@@ -109,11 +109,82 @@ Verdict: **LSODA path is PROVISIONAL TRACTABLE for δ.** Wiring `imex_ark4.py`
 is NOT a hard prerequisite; the species registry extension to z ≈ 10⁹ IS.
 Result document: `docs/audits/external_round17_2026-04-27/results/V0f_lsoda_step_audit.md`.
 
-**V0d — script landed, execution gated on user decision.**
-`scripts/v5_round17_eta_init_sweep.py` (~3 h wall time on 4 workers). Sweeps
-η_init ∈ {261, 200, 150, 100, 70, 50} Mpc; predicts monotone collapse of
-`D_2 / D_anchor` toward 1 if D-2 dominates. Cheapest GO/NO-GO gate before
-multi-month δ. **Now the only Phase-0 gate still pending.**
+**V0d — η_init sweep counter-test (INCONCLUSIVE; surfaces three latent
+prerequisites).** Ran 2026-04-27 in 188.6 min on 4 workers. Result table:
+
+| η_init [Mpc] | x_max | D_2/anchor | PCHIP overflow |
+|---:|---:|---:|:---:|
+| 261 | 8.25 | **7.04** (clean baseline) | no |
+| 200 | 6.33 | **1.26 × 10⁸** | no |
+| 150 | 4.74 | **2.88 × 10²⁴** | no |
+| 100 | 3.16 | 2.72 × 10³⁰ | yes |
+| 70  | 2.21 | 4.84 × 10²⁷ | yes |
+| 50  | 1.58 | 1.36 × 10³⁰ | no (silent NaN-clip?) |
+
+The audit's D-2 prediction (Report 2 §2.3) was monotone collapse from 6.43
+toward 1; V0d shows anti-monotone explosion of 23 orders of magnitude as
+η_init shrinks. This is **not** evidence against D-2; it is evidence that
+three audit-Report-2-flagged-but-not-quantified infrastructure defects
+conflate to make V0d uninterpretable as a pure D-2 diagnostic on the
+current codebase:
+
+1. **`_approx_tau_c` heuristic** at `regular_adiabatic_ic.py:94-101`
+   (`tau_c = 0.15 × η_init / √a_init`) overestimates radiation-era
+   τ_c by 100-1000× and gets worse as η_init shrinks. Photon quadrupole
+   IC `pi_gamma = -(32/45)·k·tau_c·theta_gamma` is wrongly normalized
+   at the IC; IMEX faithfully evolves the wrong IC to over-amplified
+   D_2. (Audit Report 2 §2.2 had flagged this as a "pre-condition to δ,
+   not an alternative diagnosis".)
+2. **Species background table edge at z ≈ 8000** (η ≈ 100 Mpc).
+   `aux_state.H_local_at(η)` returns 0 below the edge → DAE-relaxation
+   silently skips. Visibility/kappa PCHIP callables clip; PCHIP overflow
+   warnings fire at η_init ∈ {100, 70}. (Audit R-2 risk made concrete.)
+3. **`cosmological_config.py::build_cosmological_integrator_config`**
+   has `z_injection ∈ [100, 5000]` validation guard; V0d's monkey-patch
+   bypasses it but the helper's other internal assumptions about
+   recombination-era anchors are also broken at η_init ≪ 261.
+
+Phase-0 verdict landscape:
+
+| Gate | Status |
+|---|---|
+| V0a IMEX routing | ✅ DONE (LSODA confirmed) |
+| V0b "60% x>1" arithmetic | ✅ DONE |
+| V0c primordial_b_k_sq doc | ✅ DONE |
+| V0e bias-floor | ✅ CLOSED (Δ_bias = 0 bit-zero) |
+| V0f LSODA tractability | ✅ PROVISIONAL TRACTABLE |
+| **V0d D-2 diagnosis** | **🟠 INCONCLUSIVE** — requires Phase 0.5 prerequisites |
+
+Result document:
+`docs/audits/external_round17_2026-04-27/results/V0d_eta_init_sweep.md`.
+
+**New Phase 0.5 inserted into the closure plan.** V0d's "inconclusive"
+verdict is a load-bearing finding: it shows that audit Report 2's
+pre-condition list (§2.2 _approx_tau_c, R-2 species extension) is NOT
+soft. The previously-implicit-inside-δ pre-condition work is now
+explicitly Phase 0.5:
+
+```
+Phase 0   ✓ V0a-c, V0e, V0f closed; V0d inconclusive (needs 0.5)
+
+Phase 0.5 (NEW — V0d prerequisites lifted out of implicit-δ-scope)
+  PR-V0d-pre1: replace _approx_tau_c with real 1/Γ_T            [1-2 d]
+  PR-V0d-pre2: extend species registry to z = 10⁹              [sub-w to 2w]
+  PR-V0d-pre3: lift cosmological_config.py z_injection guard   [sub-day]
+  V0d re-run                                                    [3 h]
+
+Phase 1   α (a-switch) → β' (real-IC) → D-3 (sync→Newt)         [unchanged]
+
+Phase 2   δ (D-2 closure)  ← scope SHRUNK; multi-month was inflated
+                            by the now-Phase-0.5 pre-conditions
+          γ (state-layout migration) parallel
+```
+
+The δ multi-month estimate **shrinks** because the prerequisites that
+were buried inside it (species extension + tau_c replacement) move to
+Phase 0.5, taking ~2 weeks. Remaining δ work — integrating across
+12 decades + per-decade conservation audit — is still multi-month
+but a smaller multi-month.
 
 **Revised closure plan** (now authoritative; supersedes
 `V5_ROUND17_PR_S13_REAL_SCOPE.md §4 revised` + `V5_ROUND17_NEXT_SESSION_OPENER.md §3 step 2`):
