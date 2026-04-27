@@ -2268,8 +2268,19 @@ def build_reduced_source_affine_operator(
     photon_T_by_mode_label: Mapping[str, np.ndarray],
     photon_E_by_mode_label: Mapping[str, np.ndarray],
     photon_B_by_mode_label: Mapping[str, np.ndarray],
+    pattern_cache: _JointSparsityCache | None = None,
 ) -> ReducedSourceAffineOperator:
-    """Return the exact frozen-snapshot affine operator for source local blocks."""
+    """Return the exact frozen-snapshot affine operator for source local blocks.
+
+    Round-17 P3.5 perf Tier 1A v3 (2026-04-28): same ``pattern_cache``
+    plumbing as ``build_reduced_joint_affine_operator``. The source
+    operator also goes dense → sparse via ``csc_matrix(matrix)`` at the
+    end (line ~2346); a cached pattern lets us skip the
+    ``numpy.ndarray.nonzero`` scan and construct the CSC directly via
+    fancy indexing into the cached ``(indices, indptr)``. The
+    ``_JointSparsityCache`` dataclass is generic over any
+    dense → CSC conversion site.
+    """
 
     selected_labels = tuple(str(mu) for mu in mode_labels)
     src_width = int(layout.sector_local_dofs["src"])
@@ -2343,8 +2354,20 @@ def build_reduced_source_affine_operator(
                 * (-0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t * float(b_state[quadrupole_slot]))
             )
 
-    matrix_sparse = csc_matrix(matrix)
-    matrix_sparse.eliminate_zeros()
+    # Round-17 P3.5 perf Tier 1A v3 (2026-04-28): if pattern_cache is given,
+    # skip the dense → CSC conversion's nonzero scan via fancy indexing.
+    if pattern_cache is not None and pattern_cache.shape == matrix.shape:
+        data = matrix[pattern_cache.indices, pattern_cache.cols_of_data]
+        matrix_sparse = csc_matrix(
+            (np.asarray(data, dtype=np.float64),
+             pattern_cache.indices,
+             pattern_cache.indptr),
+            shape=pattern_cache.shape,
+            copy=False,
+        )
+    else:
+        matrix_sparse = csc_matrix(matrix)
+        matrix_sparse.eliminate_zeros()
     return ReducedSourceAffineOperator(
         mode_labels=selected_labels,
         matrix=matrix_sparse,

@@ -2215,13 +2215,34 @@ class Ver2TierBIntegrator:
         photon_B: PSTFHierarchyState,
     ):
         covered = str(self._layout_covered_mode_label)
-        return self.backend.build_reduced_source_affine_operator(
+        # Round-17 P3.5 perf Tier 1A v3 (2026-04-28): same lazy capture +
+        # forward as the joint pattern cache. The cold build (first call)
+        # captures the source operator's sparsity pattern; subsequent
+        # calls reuse the captured (indices, indptr) to skip the dense →
+        # CSC nonzero scan.
+        pattern_cache = getattr(self, "_source_sparsity_cache", None)
+        affine = self.backend.build_reduced_source_affine_operator(
             self._residual_harmonic_background_state(snapshot=snapshot),
             mode_labels=(covered,),
             photon_T_by_mode_label={covered: np.asarray(pack_hierarchy(photon_T), dtype=np.float64)},
             photon_E_by_mode_label={covered: np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64)},
             photon_B_by_mode_label={covered: np.asarray(pack_hierarchy(photon_B), dtype=np.float64)},
+            pattern_cache=pattern_cache,
         )
+        if (
+            pattern_cache is None
+            and getattr(self, "_source_sparsity_cache", None) is None
+            and issparse(affine.matrix)
+            and affine.matrix.shape[0] == affine.matrix.shape[1]
+            and affine.matrix.shape[0] > 0
+        ):
+            from bass.hierarchy.ver3_layout_protocol import (
+                joint_sparsity_cache_from_csc,
+            )
+            self._source_sparsity_cache = joint_sparsity_cache_from_csc(
+                affine.matrix
+            )
+        return affine
 
     def _exact_covered_source_rhs(
         self,

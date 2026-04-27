@@ -804,7 +804,11 @@ class FamilyBackend:
         photon_T_by_mode_label: Mapping[str, np.ndarray],
         photon_E_by_mode_label: Mapping[str, np.ndarray],
         photon_B_by_mode_label: Mapping[str, np.ndarray],
+        pattern_cache=None,
     ):
+        # Round-17 P3.5 perf Tier 1A v3 (2026-04-28): forward optional
+        # pattern_cache; same v2-style fancy-indexing avoidance of the
+        # dense → CSC nonzero scan.
         from bass.hierarchy.ver3_layout_protocol import (
             build_hierarchy_layout,
             build_reduced_source_affine_operator,
@@ -819,6 +823,7 @@ class FamilyBackend:
             photon_T_by_mode_label=photon_T_by_mode_label,
             photon_E_by_mode_label=photon_E_by_mode_label,
             photon_B_by_mode_label=photon_B_by_mode_label,
+            pattern_cache=pattern_cache,
         )
 
     def evaluate_reduced_source_blocks(
