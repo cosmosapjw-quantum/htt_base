@@ -92,11 +92,23 @@ def _extra_value(extras: np.ndarray, name: str) -> float:
 
 
 def _approx_tau_c(eta_initial: float, a_initial: float) -> float:
-    """Early-time TCA startup timescale.
+    """Legacy heuristic for the early-time TCA startup timescale.
 
-    This is not a recombination solve; it is a deterministic radiation-
-    era scaling chosen only to populate the small photon quadrupole / E2
-    startup surface in the absence of the full Thomson-rate pipeline.
+    .. deprecated:: V5 Round-17 P3.5 (PR-V0d-pre1, 2026-04-27)
+        This is not a recombination solve; it is a deterministic
+        radiation-era scaling chosen only to populate the small photon
+        quadrupole / E_2 startup surface in the absence of the full
+        Thomson-rate pipeline. Audit Round-17 V0d
+        (`docs/audits/external_round17_2026-04-27/results/V0d_eta_init_sweep.md`)
+        showed this heuristic overestimates radiation-era τ_c by
+        ~100-1000× and produces a 23-orders-of-magnitude D_2 explosion
+        when η_init is shrunk from 261 → 50 Mpc to test the D-2
+        diagnosis. **Production callers must now pass an explicit
+        ``tau_c = 1 / Γ_T(η_init)`` to ``_seed_formulae``** (or the
+        public wrappers ``regular_adiabatic_formulae`` and
+        ``make_camb_regular_adiabatic_seed``); this function is
+        retained only as a legacy fallback for tests that have not
+        yet migrated.
     """
     return 0.15 * eta_initial / np.sqrt(max(a_initial, 1.0e-30))
 
@@ -107,6 +119,7 @@ def _seed_formulae(
     eta_initial: float,
     a_initial: float,
     b_k_sq: float = 1.0,
+    tau_c: float | None = None,
 ) -> dict[str, float]:
     """Leading-order regular-adiabatic startup formulas from Lowell §13.2.
 
@@ -132,6 +145,18 @@ def _seed_formulae(
     *variance* spectrum, not the linear amplitude. Doing so would
     produce a meaningless seed value that under-runs the linear-
     extraction probe range by ~10⁹.
+
+    The ``tau_c`` keyword (Round-17 P3.5 PR-V0d-pre1) is the photon-
+    Thomson scattering time at ``η_initial``: ``tau_c = 1 / Γ_T(η_init)``
+    where ``Γ_T = a · n_e · σ_T``. Production callers SHOULD pass
+    ``tau_c`` from the species background table (see
+    ``ver2_native_integrator.py`` for the canonical pattern: compute
+    ``gamma_t_initial = _resolved_gamma_t(eta=η_initial, …)`` and pass
+    ``tau_c = 1 / max(gamma_t_initial, eps)``). When ``tau_c`` is left
+    as ``None`` (legacy default), the function falls back to the
+    deprecated ``_approx_tau_c`` heuristic, which overestimates
+    radiation-era τ_c by ~100-1000× and is the dominant source of the
+    23-orders-of-magnitude D_2 explosion observed in Round-17 V0d.
     """
     constants = default_constants()
     R_nu = constants.Omega_nu_0 / constants.Omega_r_0
@@ -179,10 +204,19 @@ def _seed_formulae(
         + (3.0 * amplitude / 20.0) * omega * k_comoving * (eta_initial ** 2)
     )
 
-    tau_c = _approx_tau_c(eta_initial, a_initial)
+    if tau_c is None:
+        # Legacy heuristic fallback. Production callers must pass an
+        # explicit `tau_c = 1 / Γ_T(η_init)`; see docstring above.
+        tau_c_used = _approx_tau_c(eta_initial, a_initial)
+    else:
+        tau_c_used = float(tau_c)
+        if not np.isfinite(tau_c_used) or tau_c_used <= 0.0:
+            raise ValueError(
+                f"tau_c must be finite and positive, got {tau_c!r}"
+            )
     # Sign chosen to match the early-time CAMB convention at the same
     # radiation-era startup point.
-    pi_gamma = -(32.0 / 45.0) * k_comoving * tau_c * theta_gamma
+    pi_gamma = -(32.0 / 45.0) * k_comoving * tau_c_used * theta_gamma
     E_2 = 0.25 * pi_gamma
 
     return {
@@ -205,7 +239,7 @@ def _seed_formulae(
         # Legacy key name kept for backward compatibility — reader should
         # interpret as the linear primordial amplitude (NOT a variance).
         "B_K_sq": float(amplitude),
-        "tau_c": float(tau_c),
+        "tau_c": float(tau_c_used),
     }
 
 
@@ -214,12 +248,21 @@ def regular_adiabatic_formulae(
     k_comoving: float,
     eta_initial: float,
     a_initial: float,
+    tau_c: float | None = None,
 ) -> dict[str, float]:
-    """Public Lowell-regular startup formulas used by backend-owned seed builders."""
+    """Public Lowell-regular startup formulas used by backend-owned seed builders.
+
+    The ``tau_c`` keyword (Round-17 P3.5 PR-V0d-pre1) is the photon-Thomson
+    scattering time at ``η_initial``: ``tau_c = 1 / Γ_T(η_init)``. When
+    ``None`` (legacy default), the deprecated ``_approx_tau_c`` heuristic
+    is used internally; production callers should pass an explicit
+    ``tau_c`` from the species background table.
+    """
     return _seed_formulae(
         k_comoving=float(k_comoving),
         eta_initial=float(eta_initial),
         a_initial=float(a_initial),
+        tau_c=tau_c,
     )
 
 
@@ -287,6 +330,7 @@ def make_camb_regular_adiabatic_seed(
     a_initial: float,
     L_max: int,
     b_k_sq: float = 1.0,
+    tau_c: float | None = None,
 ) -> np.ndarray:
     """Build the FB-5.3 regular-adiabatic startup vector.
 
@@ -299,6 +343,14 @@ def make_camb_regular_adiabatic_seed(
     - ``E_2(m=0) = E_2``
 
     Higher moments remain zero.
+
+    The ``tau_c`` keyword (Round-17 P3.5 PR-V0d-pre1) is the photon-Thomson
+    scattering time at ``η_initial``: ``tau_c = 1 / Γ_T(η_init)``. Production
+    callers SHOULD pass an explicit ``tau_c`` from the species background
+    table; ``None`` (legacy default) falls back to the deprecated
+    ``_approx_tau_c`` heuristic which overestimates radiation-era τ_c by
+    ~100-1000× and was shown by Round-17 V0d to produce a 23-orders-of-
+    magnitude D_2 explosion as ``η_init`` shrinks.
     """
     k_val = float(k_comoving)
     eta_val = float(eta_initial)
@@ -333,6 +385,7 @@ def make_camb_regular_adiabatic_seed(
         eta_initial=eta_val,
         a_initial=a_val,
         b_k_sq=float(b_k_sq),
+        tau_c=tau_c,
     )
     return pack_regular_adiabatic_seed_from_formulae(
         a_initial=a_val,

@@ -1503,10 +1503,27 @@ class Ver2TierBIntegrator:
         branch: str,
         seed_pack: SeedPack,
     ) -> _SeededInitialState:
+        # PR-V0d-pre1 (Round-17 P3.5, 2026-04-27): replace the deprecated
+        # _approx_tau_c heuristic with a real 1 / Γ_T(η_init) lookup from
+        # the species visibility source. Audit Round-17 V0d showed the
+        # heuristic overestimates radiation-era τ_c by ~100-1000× and
+        # produces a 23-orders-of-magnitude D_2 explosion as η_init shrinks.
+        gamma_t_initial = _resolved_gamma_t(
+            eta=float(self.config.eta_initial_mpc),
+            direction=self._direction,
+            visibility_source=self.visibility_source,
+            config=self.config,
+        )
+        tau_c_initial = (
+            1.0 / max(float(gamma_t_initial), 1.0e-300)
+            if gamma_t_initial > 0.0
+            else None  # fall back to heuristic if Γ_T undefined / out of table
+        )
         formulas = regular_adiabatic_formulae(
             k_comoving=max(self.seed_k_comoving, 0.0),
             eta_initial=float(self.config.eta_initial_mpc),
             a_initial=float(self.background_monitor.a[0]),
+            tau_c=tau_c_initial,
         )
         seed_state = pack_regular_adiabatic_seed_from_formulae(
             a_initial=float(self.background_monitor.a[0]),
@@ -1608,12 +1625,28 @@ class Ver2TierBIntegrator:
                 branch=branch,
                 seed_pack=seed_pack,
             )
+        # PR-V0d-pre1 (Round-17 P3.5, 2026-04-27): pass real
+        # 1 / Γ_T(η_init) from the species visibility source instead
+        # of the deprecated _approx_tau_c heuristic. See companion edit
+        # in _build_intrinsic_family_seeded_initial_state for context.
+        gamma_t_initial = _resolved_gamma_t(
+            eta=float(self.config.eta_initial_mpc),
+            direction=self._direction,
+            visibility_source=self.visibility_source,
+            config=self.config,
+        )
+        tau_c_initial = (
+            1.0 / max(float(gamma_t_initial), 1.0e-300)
+            if gamma_t_initial > 0.0
+            else None  # fall back to heuristic if Γ_T undefined / out of table
+        )
         seed_state = make_camb_regular_adiabatic_seed(
             k_comoving=max(self.seed_k_comoving, 0.0),
             eta_initial=float(self.config.eta_initial_mpc),
             a_initial=float(self.background_monitor.a[0]),
             L_max=self.config.L_max,
             b_k_sq=float(getattr(self.config, "primordial_b_k_sq", 1.0)),
+            tau_c=tau_c_initial,
         )
         injection_mode = str(seed_pack.seed_mode)
         if branch == "tilted":

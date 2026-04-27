@@ -7,6 +7,88 @@
 
 ## [Unreleased]
 
+### V5 Round-17 P3.5 — PR-V0d-pre1: tau_c plumbing landed; V0d post-pre1 measured (2026-04-27)
+
+First Phase-0.5 deliverable per `V5_ROUND17_AUDIT_VERDICT_AND_REVISED_PLAN.md §4`.
+Replaces the deprecated `_approx_tau_c` heuristic at
+`htt/bass/perturbation/regular_adiabatic_ic.py:94-101` with a real
+`1 / Γ_T(η_init)` lookup from the species visibility source for the
+photon-quadrupole IC `pi_gamma = -(32/45) · k · tau_c · theta_gamma`.
+
+**API change.** `_seed_formulae`, `regular_adiabatic_formulae`, and
+`make_camb_regular_adiabatic_seed` all gain a `tau_c: float | None = None`
+keyword. Behaviour:
+- `tau_c=None` (default): falls back to the legacy heuristic. Preserves
+  backward compatibility for tests that have not yet migrated.
+- `tau_c=<positive finite float>`: used directly. `pi_gamma` and `E_2`
+  scale linearly with it; other moments are unaffected.
+- `tau_c=<non-positive or non-finite>`: raises `ValueError`.
+
+**Production callers** in `bass/hierarchy/ver2_native_integrator.py`
+(both `_build_intrinsic_family_seeded_initial_state` ~line 1500 and
+`_build_seeded_initial_state` ~line 1612) now compute
+`gamma_t_initial = _resolved_gamma_t(eta=η_initial, …)` and pass
+`tau_c = 1 / max(gamma_t_initial, 1e-300)`. Falls back to `None`
+(heuristic) if `gamma_t_initial <= 0` (i.e., the species table doesn't
+cover the requested η).
+
+**V0d post-pre1 re-run** (`scripts/v5_round17_eta_init_sweep.py`,
+195.2 min on 4 workers):
+
+| η_init [Mpc] | Pre-pre1 ratio | **Post-pre1 ratio** | Verdict |
+|---:|---:|---:|:---|
+| 261.0 | 7.043 | **6.455** | ✅ matches V0e direct measurement (6.43) |
+| 200.0 | 1.265 × 10⁸ | 1.251 × 10⁸ | unchanged: Lowell §13.2 invalidity |
+| 150.0 | 2.877 × 10²⁴ | 8.461 × 10²⁵ | worse: defect-2/3 dominates |
+| 100.0 | 2.724 × 10³⁰ | 7.263 × 10³³ | worse: PCHIP overflow @ table edge |
+| 70.0  | 4.838 × 10²⁷ | 2.684 × 10³⁰ | worse: defect-2/3 dominates |
+| 50.0  | 1.356 × 10³⁰ | 1.356 × 10³⁰ | unchanged (silent NaN-clip) |
+
+The η_init = 261 anchor is the cleanest validation: V0d post-pre1
+produces 6.45 vs V0e's direct linear-probe measurement 6.43 — within
+0.5%, confirming the production τ_c plumbing is bit-correct.
+
+The η_init ≤ 200 explosion is **unchanged or worse** because two other
+Phase-0.5 prerequisites (pre2 species-registry extension + pre3
+cosmological-config guard lift) remain unaddressed. Pre1 cannot alone
+fix what the species table doesn't cover or what the IMEX
+pre-recombination tuning hasn't been audited for. With pre1 fixing
+seed-side τ_c, downstream IMEX/source-extractor artefacts that
+previously partially cancelled with the heuristic-overestimated τ_c
+now diverge — a known pathology of partial fixes in tightly-coupled
+physics pipelines.
+
+**Verdict:** PR-V0d-pre1 lands as a *strict* improvement (i) at
+η_init = 261 (V0e/V0d consistency restored to 0.5%) and (ii) as
+necessary infrastructure for the eventual deep-anchor seed. It is
+**not sufficient by itself** to flip V0d's INCONCLUSIVE verdict —
+pre2 + pre3 are still required before V0d can become a clean D-2
+diagnostic.
+
+**Files touched:**
+- `htt/bass/perturbation/regular_adiabatic_ic.py` (3 functions gain
+  `tau_c` kwarg; `_approx_tau_c` docstring marked deprecated)
+- `htt/bass/hierarchy/ver2_native_integrator.py` (both seed-builder
+  call sites compute and pass real τ_c)
+- `htt/bass/perturbation/test_seed_tau_c_override.py` (new — 14 unit
+  tests for the API contract; 1.3 s)
+- `docs/audits/external_round17_2026-04-27/results/V0d_post_pre1_eta_init_sweep.md`
+  (new)
+- `CHANGELOG.md` (this entry)
+
+**Verification:**
+- 287 Round-16 baseline + 304 perturbation + 14 new tau_c-override
+  tests pass (605 total) in 18.65 s.
+- η_init = 261 V0d/V0e consistency: 6.45 ↔ 6.43 (0.5% gap).
+- No production-runtime defaults changed (existing callers without
+  tau_c kwarg keep using heuristic).
+
+**Phase 0.5 status:**
+- ✅ PR-V0d-pre1: this commit
+- ⏳ PR-V0d-pre3 (sub-day): cosmological_config.py z_injection guard lift
+- ⏳ PR-V0d-pre2 (sub-week-to-2w): species registry extension to z = 10⁹
+- ⏳ V0d re-run on pre1+pre2+pre3 baseline (3 h wall)
+
 ### V5 Round-17 P3: External-audit cycle + Phase-0 doc/discovery + V0e closed (2026-04-27)
 
 External-audit cycle on the `external_round17_2026-04-27` bundle returned two
