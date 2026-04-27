@@ -76,6 +76,60 @@ class ReducedSourceAffineOperator:
 
 
 @dataclass(frozen=True)
+class _JointSparsityCache:
+    """Static sparsity pattern of the reduced-joint affine operator.
+
+    Round-17 P3.5 perf Tier 1A v2 (2026-04-28). The joint operator's
+    pattern (which (row, col) pairs are non-zero) is determined by:
+
+      - ``layout.mode_labels`` and ``residual_mode_labels`` (fixed at
+        integrator init).
+      - ``backend.family_spec.family`` (fixed).
+      - ``int(layout.ell_max)`` (fixed).
+      - The Thomson coupling structure (always present, even if values
+        are 0 post-recombination).
+
+    The pattern does NOT depend on η, the state vector, or the
+    background-quantity values — those only multiply existing entries.
+
+    A ``_JointSparsityCache`` is captured once at integrator
+    ``__init__`` via a representative cold build (with γ_T > 0 to
+    ensure all Thomson couplings appear in the captured pattern). It
+    is then passed to subsequent ``build_reduced_joint_affine_operator``
+    calls via the optional ``pattern_cache`` keyword, which skips the
+    ``csc_matrix(joint)`` conversion (and its O(n²) ``nonzero`` scan,
+    measured at ~21 s of the 111 s single-k baseline).
+
+    Profile evidence: pre-Tier-1A-v2 single-k cProfile showed the joint
+    builder consumed 50 s of 111 s; the dense → CSC conversion at the
+    return statement consumed 21 s of nonzero scanning + ~20 s of
+    `_compressed`/`_coo` `__init__` and `prune`/`get_index_dtype`
+    bookkeeping. Pattern caching skips both.
+    """
+    indices: np.ndarray  # CSC row indices (dtype int32 typically)
+    indptr: np.ndarray   # CSC column pointer
+    cols_of_data: np.ndarray  # for each data position k, the column
+    shape: tuple[int, int]
+
+
+def joint_sparsity_cache_from_csc(
+    matrix: csc_matrix,
+) -> _JointSparsityCache:
+    """Capture a static sparsity-pattern cache from an exemplar joint
+    operator. Caller is responsible for ensuring the exemplar covers
+    all structurally-non-zero positions (e.g. by building it at an η
+    where γ_T > 0 so all Thomson couplings have non-zero values)."""
+    n_cols = int(matrix.indptr.size - 1)
+    cols_of_data = np.repeat(np.arange(n_cols), np.diff(matrix.indptr))
+    return _JointSparsityCache(
+        indices=np.asarray(matrix.indices, dtype=np.int32).copy(),
+        indptr=np.asarray(matrix.indptr, dtype=np.int32).copy(),
+        cols_of_data=np.asarray(cols_of_data, dtype=np.int64),
+        shape=tuple(int(d) for d in matrix.shape),
+    )
+
+
+@dataclass(frozen=True)
 class ReducedJointAffineOperator:
     mode_labels: tuple[str, ...]
     local_dof: int
@@ -2310,8 +2364,22 @@ def build_reduced_joint_affine_operator(
     neutrino_by_mode_label: Mapping[str, np.ndarray],
     baryon_by_mode_label: Mapping[str, np.ndarray],
     source_by_mode_label: Mapping[str, np.ndarray] | None = None,
+    pattern_cache: _JointSparsityCache | None = None,
 ) -> ReducedJointAffineOperator:
-    """Return the exact frozen-snapshot affine operator for local+harmonic+source residual blocks."""
+    """Return the exact frozen-snapshot affine operator for local+harmonic+source residual blocks.
+
+    Round-17 P3.5 perf Tier 1A v2 (2026-04-28): an optional
+    ``pattern_cache`` argument lets callers skip the dense → CSC
+    conversion at the return statement. When given, the function
+    extracts only the values at the cached non-zero positions via NumPy
+    fancy indexing and constructs the CSC directly from
+    ``(data, indices, indptr)``. The 21-s ``numpy.ndarray.nonzero``
+    scan and the matching scipy.sparse `_compressed`/`_coo`
+    bookkeeping are skipped. Bit-equality with the cache-less path is
+    preserved as long as the cache was captured on an exemplar joint
+    that covers all structurally-non-zero positions (i.e. at an η
+    where γ_T > 0). Default ``None`` preserves legacy behaviour.
+    """
 
     residual_labels = tuple(str(mu) for mu in residual_mode_labels)
     baryon_width = int(layout.sector_local_dofs["baryon"])
@@ -2508,21 +2576,30 @@ def build_reduced_joint_affine_operator(
                     inv_source[2] * (-0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t)
                 )
 
-    # Round-17 P3.5 perf Tier 1A v1 (REVERTED 2026-04-28): the dense-output
-    # variant was 2× SLOWER, not faster, because LAPACK ``lu_factor`` on a
-    # 250×250 dense matrix is O(n³) regardless of sparsity, while
-    # ``splu`` only does work proportional to the actual NNZ pattern. The
-    # 21 s saved on ``nonzero``-based conversion was overwhelmed by ~131 s
-    # of dense LU factorisation. Keeping ``csc_matrix(joint)`` here and
-    # the sparse splu path on the consumer side. The proper Tier 1A
-    # (CSR-pattern caching: build indices once, update .data per step,
-    # keep splu) is queued as future work.
+    # Round-17 P3.5 perf Tier 1A v2 (2026-04-28): if pattern_cache is given,
+    # skip the ``csc_matrix(joint)`` conversion (which calls
+    # ``numpy.ndarray.nonzero`` for ~21 s/16k-call across an integration)
+    # by directly extracting values at the cached non-zero positions and
+    # constructing the CSC from ``(data, indices, indptr)``. Bit-equal to
+    # the cache-less path when the cache covered all structural NNZ.
+    if pattern_cache is not None and pattern_cache.shape == joint.shape:
+        # Fancy indexing: O(nnz) value extraction.
+        data = joint[pattern_cache.indices, pattern_cache.cols_of_data]
+        joint_csc = csc_matrix(
+            (np.asarray(data, dtype=np.float64),
+             pattern_cache.indices,
+             pattern_cache.indptr),
+            shape=pattern_cache.shape,
+            copy=False,
+        )
+    else:
+        joint_csc = csc_matrix(joint)
     return ReducedJointAffineOperator(
         mode_labels=residual_labels,
         local_dof=local_dof,
         harmonic_dof=harmonic_dof,
         source_dof=source_dof,
-        matrix=csc_matrix(joint),
+        matrix=joint_csc,
         bias=bias,
     )
 

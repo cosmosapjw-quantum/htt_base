@@ -2168,7 +2168,13 @@ class Ver2TierBIntegrator:
         kwargs = {}
         if source_local is not None:
             kwargs["source_by_mode_label"] = {covered: np.asarray(source_local, dtype=np.float64)}
-        return self.backend.build_reduced_joint_affine_operator(
+        # Round-17 P3.5 perf Tier 1A v2 (2026-04-28): pass the integrator's
+        # cached sparsity pattern (captured at __init__ via a cold build at
+        # an η where γ_T > 0) to skip the per-step dense → CSC conversion's
+        # ``numpy.ndarray.nonzero`` scan. The pattern is None on the very
+        # first call (during cold build) and set thereafter.
+        pattern_cache = getattr(self, "_joint_sparsity_cache", None)
+        affine = self.backend.build_reduced_joint_affine_operator(
             self._residual_harmonic_background_state(snapshot=snapshot),
             residual_mode_labels=self._residual_mode_labels,
             photon_T_by_mode_label={covered: np.asarray(pack_hierarchy(photon_T), dtype=np.float64)},
@@ -2176,8 +2182,29 @@ class Ver2TierBIntegrator:
             photon_B_by_mode_label={covered: np.asarray(pack_hierarchy(photon_B), dtype=np.float64)},
             neutrino_by_mode_label={covered: np.asarray(pack_hierarchy(neutrino_tower), dtype=np.float64)},
             baryon_by_mode_label={covered: np.asarray(baryon_local, dtype=np.float64)},
+            pattern_cache=pattern_cache,
             **kwargs,
         )
+        # Lazily capture the sparsity pattern from the very first build,
+        # which is invoked at integrator __init__ before solver enters the
+        # ROS2 inner loop. Only set if not already set, and only when the
+        # captured CSC has the expected joint dof count.
+        if (
+            pattern_cache is None
+            and getattr(self, "_joint_sparsity_cache", None) is None
+            and issparse(affine.matrix)
+            and getattr(self, "_residual_local_dof", 0)
+                + getattr(self, "_residual_harmonic_dof", 0)
+                + getattr(self, "_residual_source_dof", 0)
+                == affine.matrix.shape[0]
+        ):
+            from bass.hierarchy.ver3_layout_protocol import (
+                joint_sparsity_cache_from_csc,
+            )
+            self._joint_sparsity_cache = joint_sparsity_cache_from_csc(
+                affine.matrix
+            )
+        return affine
 
     def _build_covered_source_affine_operator(
         self,

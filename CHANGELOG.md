@@ -7,6 +7,99 @@
 
 ## [Unreleased]
 
+### V5 Round-17 P3.5 — Tier 1A v2: joint-operator sparsity-pattern caching (2026-04-28)
+
+CSR sparsity-pattern caching for the reduced-joint affine operator.
+Captures the static (rows, cols, indptr) at integrator init via a cold
+build at η_init=261 (γ_T > 0 ⇒ all Thomson couplings non-zero); per-step
+``build_reduced_joint_affine_operator`` calls then skip the
+``csc_matrix(joint)`` conversion (and its O(n²) ``numpy.ndarray.nonzero``
+scan) by extracting only the cached non-zero positions via fancy
+indexing.
+
+**Mechanism.** New ``_JointSparsityCache`` dataclass + ``joint_sparsity_cache_from_csc``
+helper in ``ver3_layout_protocol.py``. ``build_reduced_joint_affine_operator``
+gains an optional ``pattern_cache`` keyword: when given, the dense → CSC
+conversion at the return statement uses
+
+```python
+data = joint_dense[cache.indices, cache.cols_of_data]
+csc = csc_matrix((data, cache.indices, cache.indptr), shape=cache.shape, copy=False)
+```
+
+instead of ``csc_matrix(joint_dense)``. Backend wrapper at
+``family_backend_protocol.py:764`` forwards the cache. ``ver2_native_integrator
+._build_residual_joint_affine_operator`` lazily captures the cache from
+the first build (which the integrator's ``run()`` issues at η_init,
+where γ_T is at the recombination peak and the pattern is structurally
+complete) and passes it to subsequent calls.
+
+**Results**:
+
+| Measurement | Pre-Tier-1A-v2 | **Post-Tier-1A-v2** | Δ |
+|---|---:|---:|---:|
+| Single-k cProfile hot wall | 111.07 s | **90.37 s** | **−18.6 % (1.23×)** |
+| `numpy.ndarray.nonzero` (top self) | 21.3 s | (gone) | −21 s |
+| `_compressed.__init__` cumulative | 36.8 s | 14.1 s | −23 s |
+| `build_reduced_joint_affine_operator` cumulative | 50.1 s | 29.9 s | −20 s |
+| `_orthogonal_residual_joint_ros2_step` cumulative | 69.2 s | 49.0 s | −20 s |
+| Smoke V0d single-anchor (24-worker) wall | 18.5 min | **16.45 min** | **−11 % (1.12×)** |
+| D_2 / anchor (correctness check) | 5.850968e+03 | **5.850968e+03** | **bit-identical** |
+| Cumulative speedup (4-worker original baseline) | 1.7× | **1.9×** | improving |
+
+**Bit-identical D_2** confirms pattern-cache correctness: the cache
+captures all structurally non-zero positions during the cold build,
+and per-step extraction at those positions reproduces the cache-less
+result down to the last decimal (`5.850968e+03 μK²` matches exactly).
+
+**Why only 1.23× single-thread vs 2.4× projection.** The pattern
+cache eliminates the joint-level dense → CSC conversion (~21 s of
+``nonzero`` + the matching ~20 s of `_compressed`/`_coo` `__init__`),
+saving the predicted ~40 s. But sub-operators ``local_affine`` and
+``harmonic_affine`` still pay their own sparse-construction cost
+(those builders use rows/cols/data lists already, but the
+`_compressed.__init__` calls within them remain). The remaining
+~14 s of `_compressed.__init__` cumulative comes from those
+sub-builders. Sub-operator caching is queued as Tier 1A v3.
+
+**Why only 1.12× wall vs 1.23× single-thread.** Parallel-scheduling
+overhead (24-worker contention on per-task sparse construction —
+even with pattern cache) caps additional gains. Cumulative parallel
+1.9× vs 4-worker original is consistent with the per-task cost
+dropping while parallel efficiency stays at ~70 %.
+
+**Files touched**:
+- `htt/bass/hierarchy/ver3_layout_protocol.py` (new dataclass +
+  helper; `build_reduced_joint_affine_operator` accepts `pattern_cache`)
+- `htt/bass/los/family_backend_protocol.py` (wrapper forwards
+  `pattern_cache`)
+- `htt/bass/hierarchy/ver2_native_integrator.py`
+  (`_build_residual_joint_affine_operator` lazily captures + passes
+  cache; defensive guards on shape match)
+- `CHANGELOG.md`
+
+**Verification**:
+- 728 baseline unit tests pass post-patch (same as pre-patch).
+- D_2 bit-identical to pre-cache baseline at η_init=261 (5.850968e+03 μK²).
+- Single-k cProfile: 111 s → 90 s.
+- Smoke V0d: 18.5 min → 16.45 min.
+
+**Phase 0.5 + perf status (after this commit)**:
+- ✅ PR-V0d-pre1 (`125a989`): tau_c plumbing
+- ✅ PR-V0d-pre3 (`1ccf33f`): cosmological_config z_injection guard lift
+- 🔄 PR-V0d-pre2 (`9e6e2d0`): default-swap REVERTED; opt-in fixture kept
+- ✅ Hardware harness (`d6c18d4`): n_workers=24 + BLAS=1, 1.7× speedup
+- ✅ **Tier 1A v2 (this commit)**: joint pattern caching, +12 % wall, **1.9× cumulative**
+- ⏳ Tier 1A v3 (sub-operator pattern caching): ~10-15 s additional gain estimated
+- ⏳ Tier 2C (Gamma_T inline): ~10.4 s gain
+- ⏳ Tier 2D (zeros pre-allocation): ~5-7 s gain
+
+**Remaining V0d wall projection (6-anchor full sweep)**:
+- Pre-Tier-1A-v2: 18.5 × 6 = 111 min
+- **Post-Tier-1A-v2: 16.5 × 6 = ~99 min**
+- After Tier 1A v3 + 2C + 2D (estimated): ~75-80 min
+- After all + JIT (Tier 3F, future): plausibly ~30-40 min
+
 ### V5 Round-17 P3.5 — Phase B profiling + Tier 1A v1 attempt + revert (2026-04-28)
 
 User-driven follow-on to the perf-iteration ask: invest now in profiling

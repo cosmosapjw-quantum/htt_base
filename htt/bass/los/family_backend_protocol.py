@@ -772,7 +772,10 @@ class FamilyBackend:
         neutrino_by_mode_label: Mapping[str, np.ndarray],
         baryon_by_mode_label: Mapping[str, np.ndarray],
         source_by_mode_label: Mapping[str, np.ndarray] | None = None,
+        pattern_cache=None,
     ):
+        # Round-17 P3.5 perf Tier 1A v2 (2026-04-28): forward optional
+        # pattern_cache to skip the dense → CSC conversion's nonzero scan.
         from bass.hierarchy.ver3_layout_protocol import (
             build_hierarchy_layout,
             build_reduced_joint_affine_operator,
@@ -790,6 +793,7 @@ class FamilyBackend:
             neutrino_by_mode_label=neutrino_by_mode_label,
             baryon_by_mode_label=baryon_by_mode_label,
             source_by_mode_label=source_by_mode_label,
+            pattern_cache=pattern_cache,
         )
 
     def build_reduced_source_affine_operator(
