@@ -40,11 +40,27 @@ _Number = Union[float, np.ndarray]
 
 
 def _default_recombination_path() -> Path:
-    """Path to the shipped HyRec Planck-2018 fixture."""
+    """Path to the shipped HyRec Planck-2018 fixture.
+
+    Round-17 P3.5 PR-V0d-pre2 (2026-04-27) switched the default from
+    ``recombination_ref_planck2018.csv`` (z_max = 8000) to
+    ``recombination_ref_planck2018_z1e10.csv`` (z_max = 10⁹). The new
+    file appends 121 log-spaced radiation-era extension rows generated
+    by ``scripts/v5_round17_extend_recombination_fixture.py`` from
+    closed-form physics (``x_e ≈ 1.1634`` constant; ``T_m = T_CMB · (1+z)``;
+    ``τ_dot ∝ (1+z)²``; κ via numerically-integrated Friedmann
+    ``|dη/dz| = 1 / H(z)`` with a 0.5 % calibration to the fixture's
+    observed dκ/dz at z = 8000).
+
+    The original z_max = 8000 fixture is preserved alongside for
+    callers that need bit-identical pre-extension behaviour; pass it
+    explicitly to ``load_recombination_table(...)`` to opt out of the
+    extension.
+    """
     return (
         Path(__file__).resolve().parent.parent
         / "recombination" / "fixtures"
-        / "recombination_ref_planck2018.csv"
+        / "recombination_ref_planck2018_z1e10.csv"
     )
 
 
@@ -239,7 +255,20 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
             from bass.species.background_table import (
                 build_flrw_background_table,
             )
-            bg_table = build_flrw_background_table()
+            # Round-17 P3.5 PR-V0d-pre2 (2026-04-27): extend the FLRW
+            # bg_table from a_start=1e-8 (z_max=10⁸) to a_start=1e-10
+            # (z_max=10¹⁰), comfortably covering the audit's δ deep
+            # anchor target z = 10⁹ with one decade of margin to absorb
+            # floating-point edge cases (1.0/(1+1e9) = 9.99e-10 < 1e-9
+            # would fail the strict bg_table.a[0] check otherwise).
+            #
+            # Cost: two extra log-spaced decades in the η-grid, raising
+            # Δlog a from 2e-3 to 2.5e-3 at the default n_eta=4000 —
+            # still much finer than the recombination FWHM. Recombination
+            # fixture has been extended to z=10⁹ (companion change in
+            # this commit); FLRW bg_table extends one decade further
+            # purely as numerical headroom.
+            bg_table = build_flrw_background_table(a_start=1.0e-10)
         c = bg_table.constants
         if Sigma_mnu < 0.0:
             raise ValueError(f"Sigma_mnu must be non-negative, got {Sigma_mnu}")

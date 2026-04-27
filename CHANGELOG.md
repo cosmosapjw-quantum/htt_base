@@ -7,6 +7,67 @@
 
 ## [Unreleased]
 
+### V5 Round-17 P3.5 — PR-V0d-pre2: species registry extended to z = 10⁹ (with one-decade headroom) (2026-04-27)
+
+Third Phase-0.5 deliverable per `V5_ROUND17_AUDIT_VERDICT_AND_REVISED_PLAN §4`.
+Lifts the species background coverage from z ≤ 8000 (HYREC default) to
+z ≤ 10¹⁰, comfortably covering the audit's stated δ deep anchor target
+z = 10⁹ with one decade of floating-point headroom.
+
+**Recombination fixture extension.** New file
+`htt/bass/recombination/fixtures/recombination_ref_planck2018_z1e10.csv`
+(8133 rows, z ∈ [0, 10¹⁰]) appends 132 log-spaced radiation-era
+extension rows to the original `recombination_ref_planck2018.csv`
+(preserved alongside; pass it explicitly to opt out). Closed-form
+physics:
+- `x_e ≈ 1.1634` constant (asymptotic full He++ ionization)
+- `T_m = T_CMB · (1+z)` (tight Compton coupling)
+- `τ_dot ∝ (1+z)²` anchored at z=8000 fixture value
+- `κ` numerically integrated using closed-form Friedmann `|dη/dz| = 1/H(z)`,
+  with a 0.5% calibration to the existing fixture's observed dκ/dz at z=8000
+
+**FLRW bg_table extension.** `SpeciesBackgroundRegistry.from_planck2018()`
+now uses `build_flrw_background_table(a_start=1e-10)` (was default 1e-8),
+extending the FLRW η-grid by two log-decades. Cost: Δlog a ≈ 2.5e-3 at
+n_eta=4000 — still much finer than the recombination FWHM.
+
+**Verdict landscape (Phase 0.5 prerequisites all closed):**
+```
+recombination z-range warning at registry build:    silenced
+cosmological_critical_etas(z = 10⁹):                 η_star ≈ 4.17 × 10⁻⁴ Mpc
+cosmological_critical_etas(z = 10¹²):                rejects with helpful message
+837-test baseline:                                   passes (was 620 pre-pre2)
+```
+
+**Caveats (carried to δ scope, not Phase 0.5).** Defect-2 (IMEX
+pre-recombination tuning) and the DAE-relaxation switch-smoothness
+across `Γ_T/H ~ 10⁹ → 10⁻¹` are NOT addressed by pre2. They are δ
+scope per audit Report 2 R-3, R-4. V0d post-pre1+pre2+pre3 may
+**partially** improve but not fully resolve to monotone collapse;
+remaining gap is δ work, no longer co-conflated with the species edge.
+
+**Files touched:**
+- `scripts/v5_round17_extend_recombination_fixture.py` (new — generator)
+- `htt/bass/recombination/fixtures/recombination_ref_planck2018_z1e10.csv` (new)
+- `htt/bass/species/registry.py` (default fixture path swap; `bg_table a_start=1e-10`)
+- `htt/bass/runtime/test_cosmological_config.py` (2 new deep-z tests)
+- `docs/audits/external_round17_2026-04-27/results/PR_V0d_pre2_species_extension.md` (new)
+- `CHANGELOG.md` (this entry)
+
+**Verification:**
+- Smoke test: registry build emits 0 recombination warnings (was 1 pre-pre2).
+- Smoke test: `cosmological_critical_etas(z=10⁹)` returns η_star ≈ 4.17e-4 Mpc.
+- 837 tests pass: 287 Round-16 + 304 perturbation + 14 tau_c + 17
+  cosmological_config (2 new deep-z) + 215 species/recombination.
+- Pre-existing 5 failures in `test_fb96_docs_gallery_skeleton.py` (PNG existence
+  checks; unrelated to this PR) remain unchanged.
+
+**Phase 0.5 status (after this PR — all three pre-PRs closed):**
+- ✅ PR-V0d-pre1 (`125a989`): tau_c plumbing
+- ✅ PR-V0d-pre3 (`1ccf33f`): cosmological_config z_injection guard lift
+- ✅ PR-V0d-pre2 (this commit): species registry extension
+- ⏳ V0d re-run on pre1+pre2+pre3 baseline (3 h wall) — only remaining gate
+
 ### V5 Round-17 P3.5 — PR-V0d-pre3: cosmological_config z_injection guard lifted (2026-04-27)
 
 Second Phase-0.5 deliverable per `V5_ROUND17_AUDIT_VERDICT_AND_REVISED_PLAN §4`.

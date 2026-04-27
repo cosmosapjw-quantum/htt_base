@@ -123,18 +123,62 @@ def test_cosmological_critical_etas_accepts_z_inside_bg_table_above_legacy_ceili
     species,
 ) -> None:
     """z_injection = 10000 is above the lifted hard ceiling of 5000 but
-    well inside the bg_table's a/z range (default a_start=1e-8 → z_max~1e8);
-    PR-V0d-pre3 must accept it.
+    well inside the bg_table's a/z range; PR-V0d-pre3 must accept it.
 
-    Note: the species visibility/Γ_T (HYREC) fixture caps at z ≈ 8000;
-    z = 10000 is between the two limits, so this test specifically covers
-    the bg_table-but-not-HYREC band that PR-V0d-pre3 unblocks.
+    Post-PR-V0d-pre2 (2026-04-27) the bg_table extends to a_start=1e-10
+    (z_max ≈ 10¹⁰) and the recombination fixture extends to z_max=10¹⁰,
+    so z = 10000 sits comfortably inside both tables.
     """
     anchors = cosmological_critical_etas(species, z_injection=10000.0)
     assert anchors["z_injection"] == pytest.approx(10000.0, abs=1e-9)
     # eta_star at z=10000 is much earlier than at z=1089.94.
     default_anchors = cosmological_critical_etas(species)
     assert anchors["eta_star"] < default_anchors["eta_star"]
+
+
+def test_cosmological_critical_etas_accepts_audit_delta_anchor_z_1e9(
+    species,
+) -> None:
+    """z_injection = 10⁹ is the audit's stated δ deep anchor target.
+
+    PR-V0d-pre2 (2026-04-27) extended both the bg_table (a_start=1e-10)
+    and the recombination fixture (z_max=10¹⁰) so that
+    cosmological_critical_etas accepts z = 10⁹ cleanly with one decade
+    of floating-point headroom on each side.
+
+    Pre-PR-V0d-pre2 this raised at the legacy [100, 5000] guard
+    (pre-pre3) or at the bg_table edge (post-pre3, pre-pre2). Post all
+    three Phase-0.5 PRs it returns valid anchors.
+    """
+    # Use margin=0 because at η_star ~ 4e-4 Mpc the default 20 Mpc
+    # margin would drive eta_initial below zero. δ would set the margin
+    # appropriately for each anchor it tests.
+    anchors = cosmological_critical_etas(
+        species,
+        z_injection=1.0e9,
+        pre_recombination_margin_mpc=0.0,
+    )
+    assert anchors["z_injection"] == pytest.approx(1.0e9, abs=1e-3)
+    # η_star at z = 10⁹ is in the deep radiation era (predicted ~ few × 10⁻⁴ Mpc).
+    assert 1.0e-5 < anchors["eta_star"] < 1.0e-2, (
+        f"eta_star at z=1e9 should be in [1e-5, 1e-2] Mpc but got "
+        f"{anchors['eta_star']}"
+    )
+
+
+def test_cosmological_critical_etas_rejects_beyond_extended_bg_table(
+    species,
+) -> None:
+    """z far beyond the post-PR-V0d-pre2 extended bg_table range
+    (z_max ≈ 10¹⁰) must still be rejected with the clear message
+    pointing at PR-V0d-pre2 (or, for callers seeing this in the future,
+    a hypothetical PR-V0d-pre2-extension)."""
+    very_deep_z = 1.0e12
+    with pytest.raises(
+        ValueError,
+        match="outside the species background table range",
+    ):
+        cosmological_critical_etas(species, z_injection=very_deep_z)
 
 
 def test_cosmological_critical_etas_rejects_negative_margin(species) -> None:
