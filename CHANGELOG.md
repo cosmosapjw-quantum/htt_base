@@ -73,15 +73,47 @@ gone. The 6.43× residual is therefore not a floor leak; raises consensus Q1
 verdict toward CONFIRMED 5/5. Result archived at
 `docs/audits/external_round17_2026-04-27/results/V0e_bias_floor_reprobe.md`.
 
-**V0d, V0f — scripts landed, execution gated on user decision.**
-- `scripts/v5_round17_eta_init_sweep.py` (V0d, ~3 h wall time on 4 workers).
-  Sweeps η_init ∈ {261, 200, 150, 100, 70, 50} Mpc; predicts monotone collapse
-  of `D_2 / D_anchor` toward 1 if D-2 dominates. Cheapest GO/NO-GO gate before
-  multi-month δ.
-- `scripts/v5_round17_lsoda_step_audit.py` (V0f, ~1 h wall time, single-worker).
-  Measures `nfev`, `njev`, `nlu` density per η-Mpc at deep-TCA anchors
-  η_init ∈ {261, 100, 30, 10, 3, 1, 0.3, 0.1, 0.03, 0.01, 0.003, 0.001} Mpc.
-  Decides whether δ proceeds on LSODA or requires `imex_ark4.py` wiring first.
+**V0f — LSODA step-count audit (PROVISIONAL TRACTABLE).** Two iterations of
+script bug-fix landed (eta_final logic for large η_init; physically realistic
+synthetic Γ_T) plus the result run. Final (third) run completed in 6 s wall
+time across all 12 anchors. Result table:
+
+| η_init [Mpc] | nfev | njev | nlu | TCA |
+|---:|---:|---:|---:|:---:|
+| 261       | 1005 | 0 | 0 | N |
+| 100→0.003 | ~1003-1004 | 0 | 0 | N (each) |
+| **0.001** | **1003** | **0** | **0** | **Y** |
+
+`nfev` is essentially constant (~1003) across 5 orders of magnitude in η_init;
+`njev = nlu = 0` everywhere — LSODA stayed in Adams (non-stiff) mode at every
+anchor including η = 0.001 Mpc with synthetic Γ_T ≈ 6.8 × 10¹² / Mpc. The
+script's hard-coded "IMPRACTICAL" verdict (which projects worst-case
+nfev/Δη × full δ range) is misleading: the constant per-window nfev means
+projected δ total ≈ 16 × `n_output = 2000` ≈ 3 × 10⁴, well under the 10⁶
+tractability threshold.
+
+Two independent signals support TRACTABLE: (i) DAE-relaxation algebraically
+absorbs ℓ=2 m=0 stiffness before LSODA sees it (when TCA fires, the slot's
+RHS evaluates ≈ 0 at the algebraic steady state); (ii) at intermediate
+anchors `aux_state.H_local_at(η)` returns 0 (species table covers only
+z ≤ 8000), so the DAE dispatch silently skips and the integrator runs the
+collision RHS without relaxation — LSODA still handles this in Adams mode.
+
+Caveats: short audit windows (50% extension); n_output = 64 forces
+output-driven sub-stepping that may dominate nfev; the species registry
+limitation IS itself a hard δ pre-condition (audit R-2). A rigorous V0f
+re-run with n_output = 2 and a deep-extended species registry would settle
+the question, but that is δ work itself.
+
+Verdict: **LSODA path is PROVISIONAL TRACTABLE for δ.** Wiring `imex_ark4.py`
+is NOT a hard prerequisite; the species registry extension to z ≈ 10⁹ IS.
+Result document: `docs/audits/external_round17_2026-04-27/results/V0f_lsoda_step_audit.md`.
+
+**V0d — script landed, execution gated on user decision.**
+`scripts/v5_round17_eta_init_sweep.py` (~3 h wall time on 4 workers). Sweeps
+η_init ∈ {261, 200, 150, 100, 70, 50} Mpc; predicts monotone collapse of
+`D_2 / D_anchor` toward 1 if D-2 dominates. Cheapest GO/NO-GO gate before
+multi-month δ. **Now the only Phase-0 gate still pending.**
 
 **Revised closure plan** (now authoritative; supersedes
 `V5_ROUND17_PR_S13_REAL_SCOPE.md §4 revised` + `V5_ROUND17_NEXT_SESSION_OPENER.md §3 step 2`):

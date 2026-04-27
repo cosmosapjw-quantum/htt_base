@@ -92,24 +92,33 @@ ETA_INIT_AUDITS_MPC = (
 
 
 def _gamma_t_synthetic(eta_init_mpc: float) -> "callable":
-    """Construct a deep-TCA `Γ_T(η)` synthetic.
+    """Construct a physically-realistic deep-TCA `Γ_T(η)` synthetic.
 
-    Models `Γ_T ∝ a^{-2}` (radiation-era Thomson scaling), normalized
-    so that `Γ_T / H ~ 100` at η_init = 261 Mpc and grows ~1/η²
-    smaller-η-wise. This is the auditing harness; the real production
-    path uses the species registry's `Γ_T(η)`.
+    Models `Γ_T ∝ η^{-2}` (radiation-era Thomson scaling) with a fixed
+    anchor `Γ_T(η = 261 Mpc) ≈ 100 / Mpc` (recombination-era Thomson
+    rate). This is the auditing harness; the real production path uses
+    the species registry's `Γ_T(η)`, which currently does not extend
+    below z ≈ 8000 (η ≈ 100 Mpc).
 
-    The exact normalization isn't load-bearing for a step-count audit —
-    only the order-of-magnitude `Γ_T / H` matters for the
-    `combined_rhs` DAE-relaxation dispatch. We pick a value that puts
-    every audit anchor deep above the threshold.
+    With this scaling:
+      - η = 261 Mpc → Γ_T ≈ 100 / Mpc
+      - η = 100 Mpc → Γ_T ≈ 681 / Mpc
+      - η = 10 Mpc  → Γ_T ≈ 6.8 × 10⁴ / Mpc
+      - η = 1 Mpc   → Γ_T ≈ 6.8 × 10⁶ / Mpc
+      - η = 0.001 Mpc → Γ_T ≈ 6.8 × 10¹² / Mpc  (z ≈ 10⁹ deep TCA)
+
+    The synthetic is independent of `eta_init_mpc` per anchor; only the
+    closure threshold (`Γ_T / H > 100`) needs to fire to trigger the
+    DAE-relaxation dispatch.
     """
-    eta_ref = float(eta_init_mpc)
+    # Note: the eta_init_mpc parameter is preserved for API symmetry but
+    # is not used in the synthetic — Γ_T is a function of η only, with a
+    # fixed normalization.
+    _ = eta_init_mpc
 
     def _gamma_T(eta: float) -> float:
         eta = max(float(eta), 1.0e-300)
-        # Order-of-magnitude deep-TCA: Γ_T scales as 1/η^2 in radiation era.
-        return 1.0e3 * (eta_ref / eta) ** 2
+        return 100.0 * (261.0 / eta) ** 2
 
     return _gamma_T
 
@@ -119,10 +128,12 @@ def _audit_one(species, eta_init_mpc: float) -> dict:
     return solver_info. Uses synthetic deep-TCA `Γ_T` to force the
     DAE-relaxation dispatch active throughout.
     """
-    # Short-range: integrate from η_init to η_init × 1.5 OR up to 50 Mpc,
-    # whichever is smaller. For very deep anchors (η_init = 0.001) the
-    # 50% extension is `0.0005 Mpc` which is ample to measure step density.
-    eta_final = min(eta_init_mpc * 1.5, 50.0)
+    # Short-range: integrate from η_init to η_init × 1.5. The 50 % extension
+    # gives a meaningful step-density window at every anchor without forcing
+    # a full η_today integration. For very deep anchors (η_init = 0.001) the
+    # 50 % extension is 0.0005 Mpc which is small but workable; for larger
+    # anchors (η_init = 261) it gives 130.5 Mpc which keeps the audit short.
+    eta_final = float(eta_init_mpc) * 1.5
 
     cfg = IntegratorConfig(
         L_max=8,
