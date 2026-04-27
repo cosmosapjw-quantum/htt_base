@@ -51,6 +51,15 @@ Usage::
 """
 from __future__ import annotations
 
+import os
+
+# Round-17 P3.5 perf: cap BLAS threads at 1 before numpy import.
+os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("NUMEXPR_NUM_THREADS", "1")
+os.environ.setdefault("VECLIB_MAXIMUM_THREADS", "1")
+
 import sys
 import time
 from pathlib import Path

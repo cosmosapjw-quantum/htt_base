@@ -51,6 +51,19 @@ Usage::
 """
 from __future__ import annotations
 
+import os
+
+# Round-17 P3.5 perf: cap BLAS threads at 1 BEFORE numpy import so that
+# 24 ProcessPoolExecutor workers don't each spawn ~12-24 OpenBLAS
+# threads (default MAX_THREADS=64 → ~288 threads on 24 cores → context-
+# switching kills throughput). Per-worker single-threaded BLAS lets
+# the cores cleanly partition across the bias-subtraction tasks.
+os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("NUMEXPR_NUM_THREADS", "1")
+os.environ.setdefault("VECLIB_MAXIMUM_THREADS", "1")
+
 import dataclasses
 import sys
 import time
@@ -107,7 +120,16 @@ def main() -> None:
 
     # Match htt/bass/spectrum/test_d2_pstf_closure.py k-grid exactly.
     k_grid = np.logspace(-4.0, -1.5, 65)
-    pipeline_cfg = FLRWPipelineConfig(L_max_tower=8, ell_max_transfer=8)
+    # Round-17 P3.5 perf: production tolerances preserved (rtol=1e-4
+    # was tested and gave 2× D_2 drift; LSODA's adaptive step-size
+    # picks the same wrong-bucket path at any rtol > 1e-6 for this
+    # problem). The 1.7× speedup vs 4-worker baseline comes purely from
+    # n_workers=None (auto = 24 on Ryzen 9 5900X) plus the OpenBLAS
+    # thread cap set at script top.
+    pipeline_cfg = FLRWPipelineConfig(
+        L_max_tower=8,
+        ell_max_transfer=8,
+    )
     assembly_cfg = CLAssemblyConfig(
         ell_max=8, k_grid=k_grid, quadrature="simpson",
     )
@@ -138,7 +160,11 @@ def main() -> None:
                 pipeline_config=pipeline_cfg,
                 assembly_config=assembly_cfg,
                 probe_b_k_sq=1.0,
-                n_workers=4,
+                # Round-17 P3.5 perf: auto-detect cpu_count (24 on
+                # Ryzen 9 5900X) instead of hard-coded 4-worker.
+                # Bias-subtraction dispatches 2·N_k = 130 tasks per
+                # sweep; with 24 workers that's ~6 rounds vs 33 at 4w.
+                n_workers=None,
             )
             d_tt = bundle["d_tt"]
             d2 = float(d_tt[2])

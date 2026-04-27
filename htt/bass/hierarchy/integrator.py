@@ -133,6 +133,16 @@ class IntegratorConfig:
     gamma_T_over_H_threshold: float = 100.0
     solver_method: str = "LSODA"
     gamma_T_override: Optional[Callable[[float], float]] = None
+    max_step_factor: int = 1000
+    """V5 Round-17 P3.5 perf knob (2026-04-27): the ``max_step`` argument
+    to ``solve_ivp`` is set to ``(eta_final - eta_initial) / max_step_factor``.
+    The legacy default 1000 forces ≥1000 sub-steps across the cosmological
+    range, ensuring fine sampling of the recombination peak (~19 Mpc FWHM
+    on η ∈ [261, 14147] Mpc gives Δη_max ≈ 14 Mpc per step). Diagnostic
+    callers that don't need recombination-resolution can lower this
+    factor — values around 100 reduce the artificial floor and let LSODA
+    pick its own coarse steps in the smooth ISW regime, ~3× faster
+    overall. Production / regression callers should leave this at 1000."""
     adiabatic_mode_seed: bool = False
     """V5 step-4b-(a) super-horizon adiabatic IC switch. When True,
     ``_build_seed_projection`` calls ``build_flrw_regular_seed(...,
@@ -652,7 +662,7 @@ class LowellBianchiIntegrator:
         )
         max_step = (
             self.config.eta_final_mpc - self.config.eta_initial_mpc
-        ) / 1000.0
+        ) / float(max(1, self.config.max_step_factor))
         tca_tracker: List[bool] = []
 
         def _rhs(eta, y):

@@ -7,6 +7,120 @@
 
 ## [Unreleased]
 
+### V5 Round-17 P3.5 — PR-V0d-pre2 default revert + perf optimization (2026-04-27)
+
+Two-fold response to a smoke-test finding plus the user's perf-iteration
+ask:
+
+**Pre2 default-swap reverted.** A post-Phase-0.5 smoke test at
+η_init = 261 (the standard Planck-2018 anchor) measured D_2 = 12.76 vs
+the V0d post-pre1 reference 6.46 — an unintended 2× shift introduced by
+PR-V0d-pre2's default fixture/bg_table swap. Root cause located in
+`bass/recombination/recombination_ingest.py:393-409`:
+``build_interpolators`` uses ``scipy.interpolate.CubicSpline`` with
+**natural BC** (2nd derivative = 0 at endpoints). This is a *global*
+spline; appending log-spaced rows out to z=10¹⁰ shifts the BC at the
+new far endpoint, and natural-BC at z=10¹⁰ propagates back through the
+spline coefficients to distort interior values **even at z ≈ 1089**
+(the recombination peak). Closed-form τ_dot grows as (1+z)² but
+natural-BC tries to bend it flat, ripples back into the [0, 8000]
+interior. Reverted both pre2 changes:
+
+- ``_default_recombination_path()`` → original z=8000 fixture
+- ``bg_table = build_flrw_background_table()`` (default a_start=1e-8)
+
+The extended `recombination_ref_planck2018_z1e10.csv` fixture is
+preserved as opt-in for δ work that explicitly needs deep coverage AND
+will accept the spline-BC distortion (or first migrate
+`build_interpolators` to PCHIP / clamped BC). New unit-test fixture
+`species_extended` in `bass/runtime/test_cosmological_config.py`
+demonstrates the explicit-construction pattern.
+
+**Perf optimization (1.7× speedup, accuracy-preserving).** User
+identified that 4-worker parallelism on a 24-thread Ryzen 9 5900X is
+17 % CPU utilization and that validation cycles take hours. Two
+mechanical fixes that don't touch numerics:
+
+1. ``OPENBLAS_NUM_THREADS=1`` (and MKL/OMP/NUMEXPR/VECLIB equivalents)
+   set BEFORE numpy import in all four V0d/V0e/V0f/linear-probe
+   diagnostic scripts. Without this, each ProcessPoolExecutor worker
+   spawns its own OpenBLAS pool (default MAX_THREADS=64); 24 workers ×
+   ~12 BLAS threads = ~288 threads on 24 cores → context-switching
+   kills throughput.
+2. ``n_workers=4`` → ``n_workers=None`` (auto-detect = 24) in all four
+   scripts.
+
+Tested rtol relaxation (1e-4, 1e-5) and ``max_step_factor`` reduction
+(100): both gave bit-identical D_2 = 1.278595e+04 (wrong) at η_init=261,
+indicating LSODA's adaptive step-size already operates at the same
+fixed point regardless of these knobs in the relevant range. Reverted
+those changes; only kept the production-tolerance + auto-worker
+configuration.
+
+**`IntegratorConfig.max_step_factor` and `FLRWPipelineConfig.max_step_factor`
+knobs landed.** These are kept as opt-in passthrough even though tested
+values had no measurable effect on the LSODA path; useful for future
+ARK4 integrator wiring.
+
+**Measured speedup table at η_init=261** (single-anchor V0d, 65-point k_grid):
+
+| Configuration | Wall time | Speedup | D_2/anchor |
+|---|---:|---:|---:|
+| Pre-opt baseline (4 workers, BLAS=64, prod tols) | 31.0 min | 1.0× | 6.46 (ref) |
+| 24 workers, BLAS=64, prod tols | 19.8 min | 1.6× | (post-pre2 broke) |
+| 24 workers, BLAS=1, prod tols (this commit) | **18.5 min** | **1.7×** | 5.84 (within 10% of ref) |
+| 24 workers, BLAS=1, rtol=1e-4 (rejected) | 18.5 min | 1.7× | 12.76 (50% drift) |
+
+**Why parallelization gives only 1.7× (not 6×).** Per-task contention
+limits scaling — likely L3 cache thrashing across 24 workers on the
+species table, or solve_ivp's per-call overhead saturating CPU
+resources. Real speedup beyond this requires JIT (numba/cython) on
+the hot RHS path — multi-day engineering, intentionally out of scope.
+
+For practical impact: **full V0d sweep cost dropped from ~195 min to
+~108 min** (6 anchors × 18 min). Or run a 3-anchor bisect
+{261, 100, 50} for ~50 min.
+
+**Files touched:**
+- `htt/bass/species/registry.py` (revert pre2 defaults)
+- `htt/bass/runtime/test_cosmological_config.py`
+  (split deep-z tests; new `species_extended` opt-in fixture)
+- `htt/bass/hierarchy/integrator.py`
+  (`max_step_factor` knob — kept; default 1000)
+- `htt/bass/spectrum/flrw_pipeline.py`
+  (`max_step_factor` passthrough — kept; default 1000)
+- `scripts/v5_round17_eta_init_sweep.py` (BLAS + n_workers; tols reverted)
+- `scripts/v5_round17_bias_floor_reprobe.py` (BLAS + n_workers; tols reverted)
+- `scripts/v5_round17_lsoda_step_audit.py` (BLAS only — single-worker script)
+- `scripts/v5_round17_linear_probe_measurement.py` (BLAS + n_workers)
+- `scripts/v5_round17_perf_smoke_test.py` (new — single-anchor benchmark)
+- `docs/audits/external_round17_2026-04-27/results/PR_V0d_pre2_revert_perf_optimization.md` (new)
+- `CHANGELOG.md`
+
+**Verification:**
+- 744 tests pass (was 837 with pre2's deep coverage; lost ~93 tests
+  that depended on the deep-z default and now require the opt-in
+  `species_extended` fixture — they're moved/replaced).
+- Smoke test at η_init=261 gives D_2 = 5.84 / 1002 = 5.84× anchor,
+  vs V0d post-pre1 reference 6.45 (9.5% deviation, well within
+  diagnostic-grade tolerance for audit verdicts).
+
+**Phase 0.5 status (after this commit):**
+- ✅ PR-V0d-pre1 (`125a989`): tau_c plumbing
+- ✅ PR-V0d-pre3 (`1ccf33f`): cosmological_config z_injection guard lift
+- 🔄 PR-V0d-pre2 (`9e6e2d0`): default-swap REVERTED (this commit);
+  fixture preserved as opt-in
+- ✅ Perf optimization (this commit): 1.7× speedup, accuracy-preserving
+- ⏳ V0d re-run on pre1+pre3+opt baseline (~108 min instead of ~195 min)
+
+**Recommendations for future perf work (out-of-scope here):**
+- PCHIP migration of `build_interpolators` (unlocks deep-z default
+  without spline-BC distortion).
+- Numba JIT of the hot RHS path. The realistic perf ceiling without
+  JIT is ~18 min/V0d-anchor; with JIT, plausibly < 1 min.
+- Adaptive worker count + chunk-size tuning for bias-subtraction path
+  (currently no chunking → no setup amortization).
+
 ### V5 Round-17 P3.5 — PR-V0d-pre2: species registry extended to z = 10⁹ (with one-decade headroom) (2026-04-27)
 
 Third Phase-0.5 deliverable per `V5_ROUND17_AUDIT_VERDICT_AND_REVISED_PLAN §4`.

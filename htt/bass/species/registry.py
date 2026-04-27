@@ -40,27 +40,34 @@ _Number = Union[float, np.ndarray]
 
 
 def _default_recombination_path() -> Path:
-    """Path to the shipped HyRec Planck-2018 fixture.
+    """Path to the shipped HyRec Planck-2018 fixture (z_max = 8000).
 
-    Round-17 P3.5 PR-V0d-pre2 (2026-04-27) switched the default from
-    ``recombination_ref_planck2018.csv`` (z_max = 8000) to
-    ``recombination_ref_planck2018_z1e10.csv`` (z_max = 10⁹). The new
-    file appends 121 log-spaced radiation-era extension rows generated
-    by ``scripts/v5_round17_extend_recombination_fixture.py`` from
-    closed-form physics (``x_e ≈ 1.1634`` constant; ``T_m = T_CMB · (1+z)``;
-    ``τ_dot ∝ (1+z)²``; κ via numerically-integrated Friedmann
-    ``|dη/dz| = 1 / H(z)`` with a 0.5 % calibration to the fixture's
-    observed dκ/dz at z = 8000).
+    Round-17 P3.5 PR-V0d-pre2 (2026-04-27) initially switched the default
+    to the extended z_max=10¹⁰ fixture, but a smoke test on the
+    post-pre2 baseline showed an unintended D_2 doubling at the
+    Planck-2018 anchor η_init=261 (6.46 → 12.76). Root cause:
+    ``build_interpolators`` uses ``CubicSpline`` with **natural BC**
+    (2nd derivative = 0 at endpoints), which is a *global* spline —
+    appending radiation-era extension rows shifts the BC at the far
+    endpoint to z=10¹⁰, and the natural BC at that new endpoint
+    propagates back through the spline and distorts values even at
+    z ≈ 1089 (the recombination peak). The closed-form τ_dot and κ
+    extension grow quadratically with (1+z), but the cubic spline with
+    natural BC at z=10¹⁰ tries to bend them down to satisfy 2nd_deriv=0,
+    which is incompatible with the physics.
 
-    The original z_max = 8000 fixture is preserved alongside for
-    callers that need bit-identical pre-extension behaviour; pass it
-    explicitly to ``load_recombination_table(...)`` to opt out of the
-    extension.
+    Reverted to the original z_max = 8000 fixture as default. The
+    extended fixture remains available at
+    ``recombination_ref_planck2018_z1e10.csv`` for callers that
+    explicitly need deep-z coverage AND will accept the natural-BC
+    distortion (or first switch ``build_interpolators`` to PCHIP /
+    clamped BC). δ deep-anchor work should explicitly select the
+    extended fixture and audit its spline behaviour separately.
     """
     return (
         Path(__file__).resolve().parent.parent
         / "recombination" / "fixtures"
-        / "recombination_ref_planck2018_z1e10.csv"
+        / "recombination_ref_planck2018.csv"
     )
 
 
@@ -255,20 +262,22 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
             from bass.species.background_table import (
                 build_flrw_background_table,
             )
-            # Round-17 P3.5 PR-V0d-pre2 (2026-04-27): extend the FLRW
-            # bg_table from a_start=1e-8 (z_max=10⁸) to a_start=1e-10
-            # (z_max=10¹⁰), comfortably covering the audit's δ deep
-            # anchor target z = 10⁹ with one decade of margin to absorb
-            # floating-point edge cases (1.0/(1+1e9) = 9.99e-10 < 1e-9
-            # would fail the strict bg_table.a[0] check otherwise).
+            # Round-17 P3.5 PR-V0d-pre2 (2026-04-27) initially extended
+            # the FLRW bg_table to a_start=1e-10 (z_max=10¹⁰), but a
+            # smoke test post-pre2 found this gave a 0.3% η-grid shift
+            # (relative integration constant) that compounded with the
+            # recombination-fixture default change to produce an
+            # unintended D_2 doubling at η_init=261 (6.46 → 12.76).
             #
-            # Cost: two extra log-spaced decades in the η-grid, raising
-            # Δlog a from 2e-3 to 2.5e-3 at the default n_eta=4000 —
-            # still much finer than the recombination FWHM. Recombination
-            # fixture has been extended to z=10⁹ (companion change in
-            # this commit); FLRW bg_table extends one decade further
-            # purely as numerical headroom.
-            bg_table = build_flrw_background_table(a_start=1.0e-10)
+            # Reverted to the default a_start=1e-8 (z_max=10⁸) for the
+            # production registry. Callers that need a deeper bg_table
+            # (e.g., δ work at z = 10⁹) should pass an explicit
+            # ``bg_table = build_flrw_background_table(a_start=1e-10)``
+            # to ``from_planck2018`` AND switch to a recombination
+            # fixture / interpolator that can handle the deeper range
+            # without spline-BC distortion (see _default_recombination_path
+            # docstring).
+            bg_table = build_flrw_background_table()
         c = bg_table.constants
         if Sigma_mnu < 0.0:
             raise ValueError(f"Sigma_mnu must be non-negative, got {Sigma_mnu}")

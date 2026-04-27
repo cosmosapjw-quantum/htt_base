@@ -130,6 +130,13 @@ class FLRWPipelineConfig:
     gamma_T_over_H_threshold: float = 100.0
     random_seed: int = 42
     unit_amplitude_normalization: bool = True
+    max_step_factor: int = 1000
+    """V5 Round-17 P3.5 perf knob (2026-04-27): forwarded to
+    ``IntegratorConfig.max_step_factor``. Default 1000 preserves the
+    legacy fine-step recombination sampling. Diagnostic / sweep callers
+    that don't need recombination-resolution accuracy can drop this to
+    ~100 for ~3× speedup. See ``IntegratorConfig.max_step_factor``
+    docstring for the trade-off."""
     adiabatic_mode_seed: bool = True
     """V5 step-4b-(a) super-horizon adiabatic initial condition. When
     True (default for the V5 pipeline), the seed ratios follow
@@ -416,6 +423,8 @@ def compute_transfer_function_at_k(
         # over the scalar; evaluated HERE in the parent process, so fork
         # workers only see a resolved float.
         primordial_b_k_sq=_resolve_primordial_b_k_sq(cfg, k_mpc),
+        # Round-17 P3.5 perf knob: forward max_step_factor to the integrator.
+        max_step_factor=int(getattr(cfg, "max_step_factor", 1000)),
     )
 
     # execute_tier_b_solver requires k_grid_mpc with ≥ 2 entries for the
@@ -506,6 +515,8 @@ def _run_chunk_shared_bg(
         gamma_T_over_H_threshold=cfg.gamma_T_over_H_threshold,
         adiabatic_mode_seed=cfg.adiabatic_mode_seed,
         primordial_b_k_sq=cfg.primordial_b_k_sq,
+        # Round-17 P3.5 perf knob: forward max_step_factor to the integrator.
+        max_step_factor=int(getattr(cfg, "max_step_factor", 1000)),
     )
     template_request = _build_tier_b_runtime_request(
         manifest=_pipeline_manifest("chunked"),

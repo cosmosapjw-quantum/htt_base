@@ -50,6 +50,16 @@ Usage::
 """
 from __future__ import annotations
 
+import os
+
+# Round-17 P3.5 perf: cap BLAS threads at 1 before numpy import. See
+# scripts/v5_round17_eta_init_sweep.py for rationale.
+os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("NUMEXPR_NUM_THREADS", "1")
+os.environ.setdefault("VECLIB_MAXIMUM_THREADS", "1")
+
 import sys
 import time
 from pathlib import Path
@@ -92,7 +102,7 @@ def main() -> None:
 
     elapsed_min = (time.perf_counter() - t_start) / 60.0
     print(f"[t={elapsed_min:.1f} min] launching compute_flrw_d_ell_linear_probe")
-    print(f"               (probe_b_k_sq=1.0, N_k={k_grid.size}, n_workers=4,")
+    print(f"               (probe_b_k_sq=1.0, N_k={k_grid.size}, n_workers=None (auto),")
     print(f"                bias_subtraction forced ON, unit_amplitude_normalization forced OFF)")
     bundle = compute_flrw_d_ell_linear_probe(
         species,
@@ -100,7 +110,10 @@ def main() -> None:
         pipeline_config=pipeline_cfg,
         assembly_config=assembly_cfg,
         probe_b_k_sq=1.0,
-        n_workers=4,
+        # Round-17 P3.5 perf: was n_workers=4, now auto-detect (24 on
+        # the user's Ryzen 9 5900X). Combined with OPENBLAS_NUM_THREADS=1
+        # set at module top, gives ~1.7× speedup at this anchor.
+        n_workers=None,
     )
 
     elapsed_min = (time.perf_counter() - t_start) / 60.0

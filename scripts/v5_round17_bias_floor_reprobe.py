@@ -46,6 +46,16 @@ Usage::
 """
 from __future__ import annotations
 
+import os
+
+# Round-17 P3.5 perf: cap BLAS threads at 1 before numpy import (see
+# v5_round17_eta_init_sweep.py for rationale).
+os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("NUMEXPR_NUM_THREADS", "1")
+os.environ.setdefault("VECLIB_MAXIMUM_THREADS", "1")
+
 import sys
 import time
 from dataclasses import replace as _dc_replace
@@ -90,7 +100,12 @@ def main() -> None:
         recombination_warning_policy="ignore",
     )
 
-    base_cfg = FLRWPipelineConfig(L_max_tower=8, ell_max_transfer=8)
+    # Round-17 P3.5 perf: keep production tolerances (rtol/atol relaxation
+    # introduced 2× D_2 drift in V0d sweep — see v5_round17_perf_smoke_test.py).
+    base_cfg = FLRWPipelineConfig(
+        L_max_tower=8,
+        ell_max_transfer=8,
+    )
 
     # Probe pairs: (b_k_sq=0 → bias) and (b_k_sq=1 → target). Disable
     # `unit_amplitude_normalization` so the raw response is returned

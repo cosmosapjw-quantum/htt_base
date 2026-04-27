@@ -24,8 +24,57 @@ from bass.species.registry import SpeciesBackgroundRegistry
 
 @pytest.fixture(scope="module")
 def species() -> SpeciesBackgroundRegistry:
-    """Planck-2018 species registry shared across tests."""
+    """Planck-2018 species registry shared across tests.
+
+    Uses the production default fixture / bg_table (a_start=1e-8,
+    recombination z_max=8000). Tests of opt-in deep-extension behaviour
+    use the separate ``species_extended`` fixture below.
+    """
     return SpeciesBackgroundRegistry.from_planck2018()
+
+
+@pytest.fixture(scope="module")
+def species_extended() -> SpeciesBackgroundRegistry:
+    """Planck-2018 species registry with opt-in deep-z extension to z=10⁹.
+
+    Round-17 P3.5 PR-V0d-pre2 introduced the deep-extension fixture
+    ``recombination_ref_planck2018_z1e10.csv`` and a deeper bg_table
+    (``a_start=1e-10``). The default registry was reverted to the
+    original z_max=8000 baseline because the natural-BC CubicSpline
+    interpolator distorted recombination-era values when the fixture
+    extended to z=10¹⁰. Callers that explicitly need deep coverage
+    (δ work) opt in here, accepting the spline-BC distortion until
+    a clamped-BC or PCHIP migration of ``build_interpolators`` lands.
+    """
+    from pathlib import Path
+
+    from bass.recombination.recombination_ingest import (
+        build_interpolators,
+        load_recombination_table,
+    )
+    from bass.recombination.reionization import (
+        ReionizationParameters,
+        extend_table_with_reionization,
+    )
+    from bass.species.background_table import build_flrw_background_table
+
+    repo_htt = Path(__file__).resolve().parents[2]
+    extended_path = (
+        repo_htt
+        / "bass" / "recombination" / "fixtures"
+        / "recombination_ref_planck2018_z1e10.csv"
+    )
+    table = load_recombination_table(extended_path)
+    table = extend_table_with_reionization(table, ReionizationParameters())
+    recomb = build_interpolators(table)
+
+    bg_table = build_flrw_background_table(a_start=1.0e-10)
+
+    return SpeciesBackgroundRegistry.from_planck2018(
+        bg_table=bg_table,
+        recombination=recomb,
+        recombination_warning_policy="ignore",
+    )
 
 
 def test_planck2018_z_star_default_matches_claude_md_anchor() -> None:
@@ -136,44 +185,40 @@ def test_cosmological_critical_etas_accepts_z_inside_bg_table_above_legacy_ceili
     assert anchors["eta_star"] < default_anchors["eta_star"]
 
 
-def test_cosmological_critical_etas_accepts_audit_delta_anchor_z_1e9(
-    species,
+def test_cosmological_critical_etas_accepts_z_inside_extended_bg_table_when_opted_in(
+    species_extended,
 ) -> None:
-    """z_injection = 10⁹ is the audit's stated δ deep anchor target.
+    """When the caller explicitly opts into the deep-extended bg_table
+    (a_start=1e-10) AND extended recombination fixture, z = 10⁹ (the
+    audit's δ deep anchor target) is reachable.
 
-    PR-V0d-pre2 (2026-04-27) extended both the bg_table (a_start=1e-10)
-    and the recombination fixture (z_max=10¹⁰) so that
-    cosmological_critical_etas accepts z = 10⁹ cleanly with one decade
-    of floating-point headroom on each side.
-
-    Pre-PR-V0d-pre2 this raised at the legacy [100, 5000] guard
-    (pre-pre3) or at the bg_table edge (post-pre3, pre-pre2). Post all
-    three Phase-0.5 PRs it returns valid anchors.
+    PR-V0d-pre2's default-swap was REVERTED post-smoke-test because the
+    natural-BC CubicSpline interpolator distorted the recombination
+    spline interior values when fixture endpoint moved from z=8000 to
+    z=10¹⁰. Production default remains z_max=8000; opt-in callers
+    (δ work) explicitly provide the extended fixture + bg_table.
     """
-    # Use margin=0 because at η_star ~ 4e-4 Mpc the default 20 Mpc
-    # margin would drive eta_initial below zero. δ would set the margin
-    # appropriately for each anchor it tests.
     anchors = cosmological_critical_etas(
-        species,
+        species_extended,
         z_injection=1.0e9,
         pre_recombination_margin_mpc=0.0,
     )
     assert anchors["z_injection"] == pytest.approx(1.0e9, abs=1e-3)
-    # η_star at z = 10⁹ is in the deep radiation era (predicted ~ few × 10⁻⁴ Mpc).
     assert 1.0e-5 < anchors["eta_star"] < 1.0e-2, (
         f"eta_star at z=1e9 should be in [1e-5, 1e-2] Mpc but got "
         f"{anchors['eta_star']}"
     )
 
 
-def test_cosmological_critical_etas_rejects_beyond_extended_bg_table(
+def test_cosmological_critical_etas_rejects_z_beyond_default_bg_table(
     species,
 ) -> None:
-    """z far beyond the post-PR-V0d-pre2 extended bg_table range
-    (z_max ≈ 10¹⁰) must still be rejected with the clear message
-    pointing at PR-V0d-pre2 (or, for callers seeing this in the future,
-    a hypothetical PR-V0d-pre2-extension)."""
-    very_deep_z = 1.0e12
+    """The production default bg_table (a_start=1e-8 → z_max ≈ 10⁸)
+    rejects z > 10⁸. Callers that need deeper anchors must opt into
+    the extended bg_table explicitly via ``bg_table=
+    build_flrw_background_table(a_start=1e-10)``.
+    """
+    very_deep_z = 1.0e9  # beyond default a_start=1e-8 (z_max ≈ 10⁸)
     with pytest.raises(
         ValueError,
         match="outside the species background table range",
