@@ -2236,6 +2236,23 @@ class Ver2TierBIntegrator:
         # we know total_dof from pattern_cache.shape, or by falling back
         # to fresh allocation on the cold build).
         out_workspace = getattr(self, "_joint_dense_workspace", None)
+        # Round-17 P3.5 perf Tier 1A v3.5 (2026-04-28): forward harmonic
+        # COO → CSC perm cache. Tri-state attribute on the integrator:
+        #   None        → not yet attempted (capture on next cold build)
+        #   False       → attempted; harmonic has duplicate (row, col)
+        #                 entries (COO sums them) → perm cache invalid;
+        #                 don't retry (skip the buffer overhead)
+        #   <cache>     → valid cache; pass to harmonic fast path
+        harmonic_attr = getattr(self, "_harmonic_sparsity_cache", None)
+        if harmonic_attr is None:
+            harmonic_pattern_cache_arg = None
+            harmonic_buffer = {}
+        elif harmonic_attr is False:
+            harmonic_pattern_cache_arg = None
+            harmonic_buffer = None
+        else:
+            harmonic_pattern_cache_arg = harmonic_attr
+            harmonic_buffer = None
         affine = self.backend.build_reduced_joint_affine_operator(
             self._residual_harmonic_background_state(snapshot=snapshot),
             residual_mode_labels=self._residual_mode_labels,
@@ -2246,8 +2263,19 @@ class Ver2TierBIntegrator:
             baryon_by_mode_label={covered: np.asarray(baryon_local, dtype=np.float64)},
             pattern_cache=pattern_cache,
             out_workspace=out_workspace,
+            harmonic_pattern_cache=harmonic_pattern_cache_arg,
+            harmonic_cache_buffer=harmonic_buffer,
             **kwargs,
         )
+        # Capture the harmonic cache once. If the cold build saw
+        # duplicate (row, col) entries, mark as False sentinel so we
+        # don't repeat the buffer-allocation overhead per call.
+        if harmonic_buffer is not None and "cache" in harmonic_buffer:
+            captured = harmonic_buffer["cache"]
+            if captured.has_duplicates:
+                self._harmonic_sparsity_cache = False
+            else:
+                self._harmonic_sparsity_cache = captured
         # Lazily capture the sparsity pattern from the very first build,
         # which is invoked at integrator __init__ before solver enters the
         # ROS2 inner loop. Only set if not already set, and only when the

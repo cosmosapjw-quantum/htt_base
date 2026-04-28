@@ -774,10 +774,13 @@ class FamilyBackend:
         source_by_mode_label: Mapping[str, np.ndarray] | None = None,
         pattern_cache=None,
         out_workspace=None,
+        harmonic_pattern_cache=None,
+        harmonic_cache_buffer=None,
     ):
-        # Round-17 P3.5 perf Tier 1A v2 + Tier 2D (2026-04-28): forward
-        # optional pattern_cache (skip dense → CSC nonzero scan) and
-        # out_workspace (reuse pre-allocated dense joint buffer).
+        # Round-17 P3.5 perf Tier 1A v2 + Tier 2D + Tier 1A v3.5 (2026-04-28):
+        # forward optional pattern_cache (skip joint dense → CSC nonzero scan),
+        # out_workspace (reuse pre-allocated dense joint buffer), and
+        # harmonic pattern cache pair (skip COO → CSC sort in harmonic builder).
         from bass.hierarchy.ver3_layout_protocol import (
             build_hierarchy_layout,
             build_reduced_joint_affine_operator,
@@ -797,6 +800,8 @@ class FamilyBackend:
             source_by_mode_label=source_by_mode_label,
             pattern_cache=pattern_cache,
             out_workspace=out_workspace,
+            harmonic_pattern_cache=harmonic_pattern_cache,
+            harmonic_cache_buffer=harmonic_cache_buffer,
         )
 
     def build_reduced_source_affine_operator(

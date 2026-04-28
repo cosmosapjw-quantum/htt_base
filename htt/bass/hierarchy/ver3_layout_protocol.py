@@ -76,6 +76,79 @@ class ReducedSourceAffineOperator:
 
 
 @dataclass(frozen=True)
+class _HarmonicSparsityCache:
+    """COO → CSC permutation cache for the reduced-harmonic affine operator.
+
+    Round-17 P3.5 perf Tier 1A v3.5 (2026-04-28). The harmonic builder
+    accumulates ``rows/cols/data`` lists in many small blocks then calls
+    ``csc_matrix((data, (rows, cols)), shape=...)``, which performs a
+    COO → CSC conversion (sort + dedup) per call. The sorted CSC
+    structure ``(indices, indptr)`` is fixed across η (depends on
+    layout/structure only); only the data values change.
+
+    Cache fields:
+      - ``indices``, ``indptr``: post-sort CSC structure (captured from
+        cold-build's ``csc.indices``/``indptr``).
+      - ``perm``: permutation such that
+        ``np.concatenate(data_chunks)[perm]`` matches the CSC-sorted
+        data array. Computed via ``np.lexsort((rows, cols))`` on the
+        cold-build's concatenated COO arrays.
+      - ``has_duplicates``: True if the cold-build's (row, col) pairs
+        contain duplicates (which COO would sum). When True, the perm
+        approach is invalid (it would skip the duplicate-summing) so
+        callers fall back to the non-cached path.
+
+    Bit-equality: when ``has_duplicates=False``, the cached path
+    produces identical CSC to the cache-less path. Verified by V0e
+    bias-floor reprobe at b_k_sq=0 (Δ_bias = 0 bit-zero across all 25
+    (k, ℓ) cells) once Tier 3 Day 5 bench validates.
+    """
+    indices: np.ndarray
+    indptr: np.ndarray
+    perm: np.ndarray
+    shape: tuple[int, int]
+    has_duplicates: bool = False
+
+
+def harmonic_sparsity_cache_from_coo(
+    rows: np.ndarray,
+    cols: np.ndarray,
+    csc: csc_matrix,
+) -> _HarmonicSparsityCache:
+    """Build a harmonic sparsity cache from cold-build's (rows, cols)
+    arrays and the resulting csc_matrix.
+
+    Validates uniqueness by comparing csc.nnz vs len(rows). If they
+    differ, COO summed duplicates → cache is unsafe to use.
+    """
+    rows_arr = np.asarray(rows, dtype=np.int64)
+    cols_arr = np.asarray(cols, dtype=np.int64)
+    has_duplicates = bool(int(csc.nnz) != int(rows_arr.size))
+    if has_duplicates:
+        # Cache is invalid; return a sentinel that tells callers to
+        # fall back. perm is empty.
+        return _HarmonicSparsityCache(
+            indices=np.zeros(0, dtype=np.int32),
+            indptr=np.zeros(1, dtype=np.int32),
+            perm=np.zeros(0, dtype=np.int64),
+            shape=tuple(int(d) for d in csc.shape),
+            has_duplicates=True,
+        )
+    # No duplicates: cached path will produce bit-identical CSC.
+    # Permutation: sort COO entries by (col, row), which is the CSC
+    # storage order. data_csc[perm[i]] = data_coo[i]; equivalently
+    # data_csc = data_coo[perm].
+    perm = np.lexsort((rows_arr, cols_arr))
+    return _HarmonicSparsityCache(
+        indices=np.asarray(csc.indices, dtype=np.int32).copy(),
+        indptr=np.asarray(csc.indptr, dtype=np.int32).copy(),
+        perm=np.asarray(perm, dtype=np.int64),
+        shape=tuple(int(d) for d in csc.shape),
+        has_duplicates=False,
+    )
+
+
+@dataclass(frozen=True)
 class _JointSparsityCache:
     """Static sparsity pattern of the reduced-joint affine operator.
 
@@ -1970,6 +2043,8 @@ def build_reduced_harmonic_affine_operator(
     neutrino_by_mode_label: Mapping[str, np.ndarray],
     baryon_by_mode_label: Mapping[str, np.ndarray],
     source_by_mode_label: Mapping[str, np.ndarray] | None = None,
+    pattern_cache: _HarmonicSparsityCache | None = None,
+    cache_buffer: "dict[str, _HarmonicSparsityCache] | None" = None,
 ) -> ReducedHarmonicAffineOperator:
     """Return the exact frozen-snapshot affine operator ``A r + b``.
 
@@ -2259,17 +2334,46 @@ def build_reduced_harmonic_affine_operator(
                     inv_b[quad_slot] * (0.06 * twist_scale * local_drag_scale * gamma_t * float(src_state[2]))
                 )
 
-    matrix_sparse = csc_matrix(
-        (
-            np.concatenate(data_chunks, dtype=np.float64),
+    # Round-17 P3.5 perf Tier 1A v3.5 (2026-04-28): if pattern_cache is
+    # provided AND has_duplicates=False, skip the COO → CSC sort by
+    # using the cached permutation directly. Bit-identical to the
+    # cache-less path when duplicates are absent (validated at cold-build
+    # time via csc.nnz vs len(rows) check in harmonic_sparsity_cache_from_coo).
+    data_concat = np.concatenate(data_chunks, dtype=np.float64)
+    if (
+        pattern_cache is not None
+        and not pattern_cache.has_duplicates
+        and pattern_cache.shape == (structure.n_unknown, structure.n_unknown)
+        and pattern_cache.perm.size == data_concat.size
+    ):
+        # Fast path: data_concat[perm] gives the CSC-sorted data array.
+        # eliminate_zeros() is skipped intentionally — explicit zeros in
+        # data are stored as such; splu/matvec handle them correctly.
+        matrix_sparse = csc_matrix(
             (
-                np.concatenate(row_chunks, dtype=np.int64),
-                np.concatenate(col_chunks, dtype=np.int64),
+                data_concat[pattern_cache.perm],
+                pattern_cache.indices,
+                pattern_cache.indptr,
             ),
-        ),
-        shape=(structure.n_unknown, structure.n_unknown),
-    )
-    matrix_sparse.eliminate_zeros()
+            shape=pattern_cache.shape,
+            copy=False,
+        )
+    else:
+        rows_arr = np.concatenate(row_chunks, dtype=np.int64)
+        cols_arr = np.concatenate(col_chunks, dtype=np.int64)
+        matrix_sparse = csc_matrix(
+            (data_concat, (rows_arr, cols_arr)),
+            shape=(structure.n_unknown, structure.n_unknown),
+        )
+        matrix_sparse.eliminate_zeros()
+        # Round-17 P3.5 perf Tier 1A v3.5 (2026-04-28): if caller supplied
+        # a cache_buffer, populate it with the captured sparsity pattern.
+        # Subsequent calls can pass that cache via pattern_cache to skip
+        # the COO → CSC sort.
+        if cache_buffer is not None and "cache" not in cache_buffer:
+            cache_buffer["cache"] = harmonic_sparsity_cache_from_coo(
+                rows_arr, cols_arr, matrix_sparse,
+            )
     return ReducedHarmonicAffineOperator(
         mode_labels=residual_labels,
         matrix=matrix_sparse,
@@ -2407,6 +2511,8 @@ def build_reduced_joint_affine_operator(
     source_by_mode_label: Mapping[str, np.ndarray] | None = None,
     pattern_cache: _JointSparsityCache | None = None,
     out_workspace: np.ndarray | None = None,
+    harmonic_pattern_cache: _HarmonicSparsityCache | None = None,
+    harmonic_cache_buffer: "dict[str, _HarmonicSparsityCache] | None" = None,
 ) -> ReducedJointAffineOperator:
     """Return the exact frozen-snapshot affine operator for local+harmonic+source residual blocks.
 
@@ -2514,6 +2620,8 @@ def build_reduced_joint_affine_operator(
         neutrino_by_mode_label=neutrino_by_mode_label,
         baryon_by_mode_label=harmonic_baryon_by_mode_label,
         source_by_mode_label=harmonic_source_by_mode_label,
+        pattern_cache=harmonic_pattern_cache,
+        cache_buffer=harmonic_cache_buffer,
     )
 
     total_dof = local_dof + harmonic_dof + source_dof
