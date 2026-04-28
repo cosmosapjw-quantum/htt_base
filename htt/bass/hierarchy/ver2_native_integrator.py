@@ -855,25 +855,54 @@ def _pack_radiation_state(
 
 
 def _make_pstf_tensor_view(ell: int, components: np.ndarray) -> PSTFTensor:
+    # Round-17 P3.5 Tier 3 Day 1 (2026-04-28): hot path called 4M+ times.
+    # Skip np.asarray when components is already an ndarray (no-op path
+    # otherwise). Python int() cast is cheap so left as-is.
     tensor = object.__new__(PSTFTensor)
     tensor.ell = int(ell)
-    tensor.components = np.asarray(components)
+    if isinstance(components, np.ndarray):
+        tensor.components = components
+    else:
+        tensor.components = np.asarray(components)
     return tensor
 
 
+# Precomputed slice offsets per L_max, computed lazily once per L value.
+# Round-17 P3.5 Tier 3 Day 1: avoid the per-call ``offset`` accumulation
+# loop (~9 additions per call × 450k calls = 4M extra ops/run).
+_HIERARCHY_VIEW_SLICE_CACHE: dict[int, list[slice]] = {}
+
+
+def _hierarchy_view_slices_for(L: int) -> list[slice]:
+    cached = _HIERARCHY_VIEW_SLICE_CACHE.get(L)
+    if cached is not None:
+        return cached
+    slices: list[slice] = []
+    offset = 0
+    for ell in range(L + 1):
+        size = 2 * ell + 1
+        slices.append(slice(offset, offset + size))
+        offset += size
+    _HIERARCHY_VIEW_SLICE_CACHE[L] = slices
+    return slices
+
+
 def _unpack_hierarchy_view(flat: np.ndarray, L: int) -> PSTFHierarchyState:
+    # Round-17 P3.5 Tier 3 Day 1: skip duplicate np.asarray when already
+    # ndarray; use precomputed slices to skip per-call offset accumulation.
+    if isinstance(flat, np.ndarray) and flat.dtype == np.float64:
+        arr = flat
+    else:
+        arr = np.asarray(flat, dtype=np.float64)
     expected = (L + 1) ** 2
-    arr = np.asarray(flat, dtype=np.float64)
     if arr.shape != (expected,):
         raise ValueError(
             f"flat shape {arr.shape} != ({expected},) for L={L}"
         )
-    tensors: list[PSTFTensor] = []
-    offset = 0
-    for ell in range(L + 1):
-        size = 2 * ell + 1
-        tensors.append(_make_pstf_tensor_view(ell, arr[offset : offset + size]))
-        offset += size
+    slices = _hierarchy_view_slices_for(int(L))
+    tensors: list[PSTFTensor] = [
+        _make_pstf_tensor_view(ell, arr[s]) for ell, s in enumerate(slices)
+    ]
     state = object.__new__(PSTFHierarchyState)
     state.L = int(L)
     state.tensors = tensors

@@ -204,10 +204,25 @@ def _geometry_contract(
     return build_geometry(backend.family_spec.algebra)
 
 
+# Round-17 P3.5 Tier 3 Day 2 (2026-04-28): "last call" cache for
+# _operator_scales. Profile showed 112k calls / 1.3 s self-time. Within
+# one ROS2 step, the same bg dict is passed to multiple builders (joint
+# + local + harmonic + source = ~6 calls per step). Caching the last
+# result keyed on (id(bg), id(backend)) hits ~5/6 of in-step calls,
+# saving ~83 % × 1.3 s ≈ ~1.1 s. id() is stable within a tight loop;
+# across steps bg gets a new id and cache evicts on miss.
+_OPERATOR_SCALES_LAST_KEY: int = 0
+_OPERATOR_SCALES_LAST_VALUE: "dict[str, float] | None" = None
+
+
 def _operator_scales(
     bg: Mapping[str, object],
     backend: FamilyBackend,
 ) -> dict[str, float]:
+    global _OPERATOR_SCALES_LAST_KEY, _OPERATOR_SCALES_LAST_VALUE
+    key = id(bg) ^ id(backend)
+    if key == _OPERATOR_SCALES_LAST_KEY and _OPERATOR_SCALES_LAST_VALUE is not None:
+        return _OPERATOR_SCALES_LAST_VALUE
     algebra = backend.family_spec.algebra
     geometry = _geometry_contract(bg, backend)
     n_diag = np.diag(np.asarray(algebra.n, dtype=np.float64))
@@ -240,7 +255,7 @@ def _operator_scales(
     polarization_scale = 1.0
     source_scale = 1.0
     family_law = _family_conditioned_kernel_law(bg, backend)
-    return {
+    result = {
         "branch_scale": branch_scale,
         "geom_scale": branch_scale * geom_scale * float(family_law["transport_scale"]),
         "mix_scale": mix_scale * float(family_law["mix_scale"]),
@@ -256,6 +271,9 @@ def _operator_scales(
         "family_conditioned_kernel_status": str(family_law["status"]),
         "family_conditioned_kernel_law": str(family_law["law_name"]),
     }
+    _OPERATOR_SCALES_LAST_KEY = key
+    _OPERATOR_SCALES_LAST_VALUE = result
+    return result
 
 
 def _family_conditioned_kernel_law(
