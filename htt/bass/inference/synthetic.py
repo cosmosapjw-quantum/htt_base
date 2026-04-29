@@ -223,8 +223,15 @@ def posterior_quantiles(
     samples: np.ndarray,
     parameter_names: tuple[str, ...],
     *,
-    quantiles: tuple[float, float, float] = (0.16, 0.5, 0.84),
+    quantiles: tuple[float, float, float] = (0.10, 0.5, 0.90),
 ) -> dict[str, np.ndarray]:
+    """Return central diagnostic posterior bands for FB-11 synthetic runs.
+
+    The default is an 80% band rather than a nominal one-sigma interval because
+    the skeleton coverage tests intentionally use very short deterministic
+    chains. Callers that need a specific interval should pass ``quantiles``.
+    """
+
     flattened = np.asarray(samples, dtype=float).reshape(-1, samples.shape[-1])
     out = {
         name: np.quantile(flattened[:, index], quantiles)

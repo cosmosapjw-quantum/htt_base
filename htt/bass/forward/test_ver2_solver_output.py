@@ -310,6 +310,7 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
         k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
     )
     assert output.metadata["propagator_ready"] is True
+    assert output.metadata["family_backend_status"] == "restricted_subset"
     assert output.metadata["propagator_readiness"] == "approximate_family_kernel"
     assert output.metadata["propagator_exactness"] == "approximate_family_kernel"
     assert output.metadata["covariance_readiness"] == "proxy"
@@ -378,6 +379,10 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["kinematic_params"]["branch"] == "orthogonal"
     assert output.metadata["tilt_params"]["enabled"] is False
     assert output.metadata["gate_registry"]["output_split_gate"].gate_name == "output_split_gate"
+    assert output.metadata["stochastic_channel_status"] == "placeholder"
+    assert output.metadata["stochastic_block_reason"] == (
+        "stochastic_lcdm_realization_injection_not_implemented"
+    )
     assert output.metadata["checkpoint_enabled"] is False
     assert output.metadata["checkpoint_write_count"] == 0
     assert output.metadata["restart_used"] is False
@@ -515,6 +520,7 @@ def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backe
     )
     assert output.metadata["propagator_readiness"] == "exact"
     assert output.metadata["propagator_exactness"] == "exact"
+    assert output.metadata["family_backend_status"] == "full_mode"
     assert output.metadata["source_propagator_status"] == "exact"
     assert output.metadata["source_propagator_requested_status"] == "approximate"
     assert output.metadata["source_propagator_rotation_status"] == "disabled"

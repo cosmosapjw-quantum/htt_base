@@ -718,10 +718,10 @@ def test_reduced_joint_affine_operator_matches_direct_local_and_harmonic_evaluat
 
 def test_reduced_joint_affine_operator_consumes_live_covered_source_state() -> None:
     backend = build_backend(
-        get_family_spec("I"),
-        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+        get_family_spec("VIII"),
+        truncation={"ell_max": 2},
     )
-    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    truncation = {"ell_max": 2}
     layout = build_hierarchy_layout(backend, truncation)
     width = (layout.ell_max + 1) ** 2
     bg = {
@@ -733,20 +733,20 @@ def test_reduced_joint_affine_operator_consumes_live_covered_source_state() -> N
     empty_h = {str(mu): np.zeros(width, dtype=np.float64) for mu in layout.mode_labels}
     baryon = {str(mu): np.zeros(4, dtype=np.float64) for mu in layout.mode_labels}
     source_zero = {
-        "m0": np.zeros(3, dtype=np.float64),
-        "m+2": np.zeros(3, dtype=np.float64),
-        "m-2": np.zeros(3, dtype=np.float64),
+        "mu_sl2r": np.zeros(3, dtype=np.float64),
+        "mu_sl2r+": np.zeros(3, dtype=np.float64),
+        "mu_sl2r-": np.zeros(3, dtype=np.float64),
     }
     source_live = {
-        "m0": np.array([0.25, -0.15, 0.35], dtype=np.float64),
-        "m+2": np.zeros(3, dtype=np.float64),
-        "m-2": np.zeros(3, dtype=np.float64),
+        "mu_sl2r": np.array([0.25, -0.15, 0.35], dtype=np.float64),
+        "mu_sl2r+": np.zeros(3, dtype=np.float64),
+        "mu_sl2r-": np.zeros(3, dtype=np.float64),
     }
     affine_zero = build_reduced_joint_affine_operator(
         layout,
         bg,
         backend,
-        residual_mode_labels=("m+2", "m-2"),
+        residual_mode_labels=("mu_sl2r+", "mu_sl2r-"),
         photon_T_by_mode_label=empty_h,
         photon_E_by_mode_label=empty_h,
         photon_B_by_mode_label=empty_h,
@@ -758,7 +758,7 @@ def test_reduced_joint_affine_operator_consumes_live_covered_source_state() -> N
         layout,
         bg,
         backend,
-        residual_mode_labels=("m+2", "m-2"),
+        residual_mode_labels=("mu_sl2r+", "mu_sl2r-"),
         photon_T_by_mode_label=empty_h,
         photon_E_by_mode_label=empty_h,
         photon_B_by_mode_label=empty_h,
@@ -892,10 +892,10 @@ def test_family_conditioned_reduced_harmonic_rhs_varies_with_frozen_vih_bridge()
 
 def test_reduced_harmonic_rhs_couples_nonmonopole_mode_labels() -> None:
     backend = build_backend(
-        get_family_spec("I"),
-        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2")},
+        get_family_spec("VIII"),
+        truncation={"ell_max": 2},
     )
-    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2")}
+    truncation = {"ell_max": 2}
     layout = build_hierarchy_layout(backend, truncation)
     width = (layout.ell_max + 1) ** 2
     bg = {
@@ -906,14 +906,15 @@ def test_reduced_harmonic_rhs_couples_nonmonopole_mode_labels() -> None:
     }
     empty = np.zeros(width, dtype=np.float64)
     slot_ell2_m0 = sum(2 * ell + 1 for ell in range(2)) + 2
-    photon_t_by_mode_label = {"m0": empty.copy(), "m+2": empty.copy()}
-    photon_e_by_mode_label = {"m0": empty.copy(), "m+2": empty.copy()}
-    photon_b_by_mode_label = {"m0": empty.copy(), "m+2": empty.copy()}
-    neutrino_by_mode_label = {"m0": empty.copy(), "m+2": empty.copy()}
-    photon_t_by_mode_label["m+2"][slot_ell2_m0] = 1.0
+    photon_t_by_mode_label = {"mu_sl2r": empty.copy(), "mu_sl2r+": empty.copy(), "mu_sl2r-": empty.copy()}
+    photon_e_by_mode_label = {"mu_sl2r": empty.copy(), "mu_sl2r+": empty.copy(), "mu_sl2r-": empty.copy()}
+    photon_b_by_mode_label = {"mu_sl2r": empty.copy(), "mu_sl2r+": empty.copy(), "mu_sl2r-": empty.copy()}
+    neutrino_by_mode_label = {"mu_sl2r": empty.copy(), "mu_sl2r+": empty.copy(), "mu_sl2r-": empty.copy()}
+    photon_t_by_mode_label["mu_sl2r+"][slot_ell2_m0] = 1.0
     baryon_by_mode_label = {
-        "m0": np.zeros(4, dtype=np.float64),
-        "m+2": np.zeros(4, dtype=np.float64),
+        "mu_sl2r": np.zeros(4, dtype=np.float64),
+        "mu_sl2r+": np.zeros(4, dtype=np.float64),
+        "mu_sl2r-": np.zeros(4, dtype=np.float64),
     }
     reduced_t, _, _, _ = evaluate_reduced_harmonic_rhs(
         layout,
@@ -925,15 +926,15 @@ def test_reduced_harmonic_rhs_couples_nonmonopole_mode_labels() -> None:
         neutrino_by_mode_label=neutrino_by_mode_label,
         baryon_by_mode_label=baryon_by_mode_label,
     )
-    assert abs(float(reduced_t["m0"][slot_ell2_m0])) > 0.0
+    assert abs(float(reduced_t["mu_sl2r"][slot_ell2_m0])) > 0.0
 
 
 def test_reduced_harmonic_rhs_uses_anchor_star_topology_for_residual_labels() -> None:
     backend = build_backend(
-        get_family_spec("I"),
-        truncation={"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")},
+        get_family_spec("VIII"),
+        truncation={"ell_max": 2},
     )
-    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    truncation = {"ell_max": 2}
     layout = build_hierarchy_layout(backend, truncation)
     width = (layout.ell_max + 1) ** 2
     bg = {
@@ -945,30 +946,30 @@ def test_reduced_harmonic_rhs_uses_anchor_star_topology_for_residual_labels() ->
     empty = np.zeros(width, dtype=np.float64)
     slot_ell2_m0 = sum(2 * ell + 1 for ell in range(2)) + 2
     photon_t_by_mode_label = {
-        "m0": empty.copy(),
-        "m+2": empty.copy(),
-        "m-2": empty.copy(),
+        "mu_sl2r": empty.copy(),
+        "mu_sl2r+": empty.copy(),
+        "mu_sl2r-": empty.copy(),
     }
     photon_e_by_mode_label = {
-        "m0": empty.copy(),
-        "m+2": empty.copy(),
-        "m-2": empty.copy(),
+        "mu_sl2r": empty.copy(),
+        "mu_sl2r+": empty.copy(),
+        "mu_sl2r-": empty.copy(),
     }
     photon_b_by_mode_label = {
-        "m0": empty.copy(),
-        "m+2": empty.copy(),
-        "m-2": empty.copy(),
+        "mu_sl2r": empty.copy(),
+        "mu_sl2r+": empty.copy(),
+        "mu_sl2r-": empty.copy(),
     }
     neutrino_by_mode_label = {
-        "m0": empty.copy(),
-        "m+2": empty.copy(),
-        "m-2": empty.copy(),
+        "mu_sl2r": empty.copy(),
+        "mu_sl2r+": empty.copy(),
+        "mu_sl2r-": empty.copy(),
     }
-    photon_t_by_mode_label["m-2"][slot_ell2_m0] = 1.0
+    photon_t_by_mode_label["mu_sl2r-"][slot_ell2_m0] = 1.0
     baryon_by_mode_label = {
-        "m0": np.zeros(4, dtype=np.float64),
-        "m+2": np.zeros(4, dtype=np.float64),
-        "m-2": np.zeros(4, dtype=np.float64),
+        "mu_sl2r": np.zeros(4, dtype=np.float64),
+        "mu_sl2r+": np.zeros(4, dtype=np.float64),
+        "mu_sl2r-": np.zeros(4, dtype=np.float64),
     }
     reduced_t, _, _, _ = evaluate_reduced_harmonic_rhs(
         layout,
@@ -980,8 +981,8 @@ def test_reduced_harmonic_rhs_uses_anchor_star_topology_for_residual_labels() ->
         neutrino_by_mode_label=neutrino_by_mode_label,
         baryon_by_mode_label=baryon_by_mode_label,
     )
-    assert abs(float(reduced_t["m0"][slot_ell2_m0])) > 0.0
-    assert float(reduced_t["m+2"][slot_ell2_m0]) == pytest.approx(0.0)
+    assert abs(float(reduced_t["mu_sl2r"][slot_ell2_m0])) > 0.0
+    assert abs(float(reduced_t["mu_sl2r+"][slot_ell2_m0])) > 0.0
 
 
 def test_mode_label_weights_resolve_standard_m_signatures() -> None:
@@ -1003,7 +1004,13 @@ def test_mode_label_weights_resolve_standard_m_signatures() -> None:
     plus_diag = A_fs[flatten(layout, "m+2", "ph_E", 2, 0), flatten(layout, "m+2", "ph_E", 2, 0)]
     zero_diag = A_fs[flatten(layout, "m0", "ph_E", 2, 0), flatten(layout, "m0", "ph_E", 2, 0)]
     minus_diag = A_fs[flatten(layout, "m-2", "ph_E", 2, 0), flatten(layout, "m-2", "ph_E", 2, 0)]
-    assert abs(float(plus_diag)) > abs(float(zero_diag)) > abs(float(minus_diag))
+    assert float(plus_diag) == pytest.approx(0.0)
+    assert float(zero_diag) == pytest.approx(0.0)
+    assert float(minus_diag) == pytest.approx(0.0)
+    plus_stream = A_fs[flatten(layout, "m+2", "ph_E", 1, 0), flatten(layout, "m+2", "ph_E", 2, 0)]
+    zero_stream = A_fs[flatten(layout, "m0", "ph_E", 1, 0), flatten(layout, "m0", "ph_E", 2, 0)]
+    minus_stream = A_fs[flatten(layout, "m-2", "ph_E", 1, 0), flatten(layout, "m-2", "ph_E", 2, 0)]
+    assert abs(float(plus_stream)) > abs(float(zero_stream)) > abs(float(minus_stream))
 
 
 def test_layout_manifest_records_backend_metadata() -> None:

@@ -118,6 +118,12 @@ def test_write_output_archive_writes_required_schema(tmp_path: Path) -> None:
     assert summary["ordering"] == DEFAULT_HARMONIC_ORDERING
     assert summary["boost_applied"] is False
     assert summary["global_tilt_present"] is False
+    assert summary["family_backend_status"] is None
+    assert summary["stochastic_channel_status"] == "placeholder"
+    assert summary["b_mode_output_support"] == "unknown"
+    assert summary["production_cutoff_status"] == "production_candidate"
+    assert summary["fitting_allowed"] is True
+    assert summary["diagnostic_only"] is False
     assert summary["gate_status"]["output_split_gate"] == "open"
     assert summary["gate_status"]["fitting_gate"] == "closed"
     assert summary["gate_score"] == 8
@@ -136,7 +142,11 @@ def test_write_output_archive_writes_required_schema(tmp_path: Path) -> None:
     stoch_meta = json.loads(stoch["metadata_json"].item())
     boost_meta = json.loads(boost["metadata_json"].item())
     assert det_meta["component_kind"] == "deterministic"
-    assert stoch_meta["component_status"] == "zero_filled_no_stochastic_component"
+    assert stoch_meta["component_status"] == "placeholder_zero_filled_no_stochastic_component"
+    assert stoch_meta["stochastic_channel_status"] == "placeholder"
+    assert stoch_meta["stochastic_block_reason"] == (
+        "stochastic_lcdm_realization_injection_not_implemented"
+    )
     assert boost_meta["component_kind"] == "boost"
 
 

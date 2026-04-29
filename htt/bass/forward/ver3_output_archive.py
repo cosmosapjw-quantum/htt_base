@@ -110,6 +110,22 @@ def _coerce_component(value: object, *, lmax: int, component: str) -> np.ndarray
     return np.array(arr, copy=True)
 
 
+def _stochastic_channel_status(*components: object | None) -> str:
+    return "implemented" if any(value is not None for value in components) else "placeholder"
+
+
+def _production_cutoff_status(gate_registry: Mapping[str, object]) -> str:
+    bundle = collect_gate_bundles(gate_registry).get("production_cutoff_gate")
+    if bundle is None:
+        return "unavailable"
+    return str(
+        bundle.metadata.get(
+            "production_cutoff_status",
+            "production_candidate" if bundle.passed else "blocked",
+        )
+    )
+
+
 def _base_component_metadata(
     output: SolverCoreOutput,
     *,
@@ -236,6 +252,20 @@ def _solver_summary(
             residual_summary[key] = value
     bundle_gates = collect_gate_bundles(gate_registry)
     gate_status = summarize_gate_status(gate_registry)
+    production_cutoff_status = _production_cutoff_status(gate_registry)
+    output_split_metadata = (
+        {}
+        if "output_split_gate" not in bundle_gates
+        else dict(bundle_gates["output_split_gate"].metadata)
+    )
+    fitting_allowed = bool(
+        gate_status.get("fitting_gate") == "closed"
+        and all(
+            gate_status.get(gate) == "open"
+            for gate in gate_status
+            if gate not in {"fitting_gate"}
+        )
+    )
     summary_metadata = OutputMetadata.from_solver_output(
         output,
         ordering=ordering,
@@ -257,7 +287,19 @@ def _solver_summary(
         "global_tilt_present": bool(summary_metadata.global_tilt_present),
         "propagator_readiness": output.metadata.get("propagator_readiness"),
         "propagator_exactness": output.metadata.get("propagator_exactness"),
+        "family_backend_status": output.metadata.get("family_backend_status"),
         "covariance_readiness": output.metadata.get("covariance_readiness"),
+        "fitting_allowed": fitting_allowed,
+        "diagnostic_only": not fitting_allowed,
+        "production_cutoff_status": production_cutoff_status,
+        "stochastic_channel_status": output_split_metadata.get(
+            "stochastic_channel_status",
+            output.metadata.get("stochastic_channel_status", "unknown"),
+        ),
+        "b_mode_output_support": output_split_metadata.get(
+            "b_mode_output_support",
+            output.metadata.get("b_mode_output_support"),
+        ),
         "tilt_background_owner": output.metadata.get("tilt_background_owner"),
         "requested_integrator_family": output.metadata.get("requested_integrator_family"),
         "resolved_solver_method": output.metadata.get("resolved_solver_method"),
@@ -302,6 +344,11 @@ def output_split_gate_bundle(
         alm_B=boost_alm_B,
     )
     boost_metadata = json.loads(str(boost.metadata_json))
+    stochastic_status = _stochastic_channel_status(
+        stochastic_alm_T,
+        stochastic_alm_E,
+        stochastic_alm_B,
+    )
     # P-05 wiring: surface the b_mode_output_support flag on the gate
     # bundle so downstream consumers cannot mistake the FLRW-zero
     # ``alm_B`` column for a true B-mode prediction. The flag is
@@ -318,7 +365,7 @@ def output_split_gate_bundle(
     det_b_norm = float(np.linalg.norm(det_B))
     stoch_b_norm = float(np.linalg.norm(stoch_B))
     boost_b_norm = float(np.linalg.norm(boost.alm_B))
-    b_zero_only = b_mode_support == "flrw_zero_only"
+    b_zero_only = b_mode_support in {"flrw_zero_only", "known_zero_not_evolved"}
     # Honest contract: when only the FLRW projector is wired, the deterministic
     # B column must be identically zero. Stochastic / boost contributions are
     # output-side and may carry energy.
@@ -344,6 +391,8 @@ def output_split_gate_bundle(
             "boost_component_present": True,
             "boost_metadata_valid": bool(boost_metadata["split_semantics"] == "output_only_local_boost"),
             "b_mode_zero_consistent_with_support_flag": bool(b_mode_zero_consistent),
+            "stochastic_channel_explicitly_classified": True,
+            "stochastic_channel_implemented": stochastic_status == "implemented",
         },
         forbidden_shortcut_checks={
             "no_local_boost_merged_into_global_tilt": bool(
@@ -365,6 +414,10 @@ def output_split_gate_bundle(
             "b_mode_output_support": b_mode_support,
             "b_mode_block_reason": b_mode_block_reason,
             "map_output_support": map_support,
+            "stochastic_channel_status": stochastic_status,
+            "stochastic_block_reason": None
+            if stochastic_status == "implemented"
+            else "stochastic_lcdm_realization_injection_not_implemented",
         },
         passed=bool(b_mode_zero_consistent),
         opened_claim="output split gate frozen, local boost kept output-only",
@@ -423,6 +476,14 @@ def _component_payload(
         boost_applied=boost_applied,
         component_status=component_status,
     )
+    if component_kind == "stochastic":
+        stochastic_status = _stochastic_channel_status(alm_T, alm_E, alm_B)
+        metadata["stochastic_channel_status"] = stochastic_status
+        metadata["stochastic_block_reason"] = (
+            None
+            if stochastic_status == "implemented"
+            else "stochastic_lcdm_realization_injection_not_implemented"
+        )
     return {
         "lmax": lmax,
         "ordering": ordering,
@@ -495,7 +556,7 @@ def write_output_archive(
         alm_E=stochastic_alm_E,
         alm_B=stochastic_alm_B,
         boost_applied=False,
-        component_status="zero_filled_no_stochastic_component"
+        component_status="placeholder_zero_filled_no_stochastic_component"
         if all(v is None for v in (stochastic_alm_T, stochastic_alm_E, stochastic_alm_B))
         else "stochastic_component_present",
     )

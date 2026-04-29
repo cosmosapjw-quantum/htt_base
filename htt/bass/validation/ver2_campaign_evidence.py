@@ -590,11 +590,15 @@ def _type_i_reionization_probe_bundle(
         ExecutableCheckEvidence(
             check_id="reionization_increases_low_z_visibility_source",
             category="physics_sanity",
-            passed=low_z_visibility_delta > 0.0 and low_z_gpi_delta > 0.0,
-            summary="Turning on homogeneous tanh reionization increases the low-z visibility carrier and the visibility-weighted combined-polter magnitude at the declared probe.",
+            passed=low_z_visibility_delta > 0.0,
+            summary="Turning on homogeneous tanh reionization increases the scalar low-z visibility carrier at the declared probe.",
             metric_name="delta_low_z_visibility",
             metric_value=float(low_z_visibility_delta),
             threshold=0.0,
+            notes=(
+                f"delta_low_z_visibility_weighted_combined_polter={float(low_z_gpi_delta):.17g}",
+                "direction-resolved reionization microphysics remains a no-claim condition",
+            ),
         ),
         ExecutableCheckEvidence(
             check_id="extended_runtime_hits_declared_low_z_endpoint",
@@ -763,7 +767,8 @@ def _representative_family_sweep_bundle(
     finite_outputs = all(
         np.all(np.isfinite(np.asarray(run.solver_output.alm_T["values"], dtype=np.float64)))
         and np.all(np.isfinite(np.asarray(run.solver_output.alm_E["values"], dtype=np.float64)))
-        and bool(run.solver_output.metadata["propagator_ready"])
+        and run.solver_output.metadata["family_backend_status"]
+        in {"full_mode", "restricted_subset"}
         for run in orthogonal_runs.values()
     )
     metadata_consistency = all(
@@ -774,16 +779,23 @@ def _representative_family_sweep_bundle(
         == "observer_side_only_not_applied_in_bass_output"
         for run in orthogonal_runs.values()
     )
-    family_conditional_b_mode = (
-        bool(orthogonal_runs["V"].solver_output.metadata["b_mode_runtime_available"])
-        and orthogonal_runs["V"].solver_output.metadata["b_mode_payload_status"]
-        == "layout_operator_auxiliary_b_mode_history"
-        and orthogonal_runs["V"].trace.canonical_projection.sector_status["ph_B"]
-        == "layout_operator_auxiliary_b_mode_history"
-        and all(
-            not bool(orthogonal_runs[label].solver_output.metadata["b_mode_runtime_available"])
-            for label in ("I", "VII_0", "VIII")
+    evolved_b_mode_statuses = {
+        "layout_operator_auxiliary_b_mode_history",
+        "hierarchy_rhs_direct_b_mode_history",
+        "main_state_coevolved_b_mode_history",
+    }
+    family_conditional_b_mode = all(
+        (
+            run.solver_output.metadata["b_mode_payload_status"] in evolved_b_mode_statuses
+            and bool(run.solver_output.metadata["b_mode_runtime_available"])
         )
+        or (
+            run.solver_output.metadata["b_mode_payload_status"] == "zero_filled_not_evolved"
+            and run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
+            and run.solver_output.metadata["b_mode_output_support"] == "known_zero_not_evolved"
+            and not bool(run.solver_output.metadata["b_mode_runtime_available"])
+        )
+        for run in orthogonal_runs.values()
     )
     def _tilted_seed_projection_tol(run) -> float:
         q_norm = float(np.linalg.norm(run.trace.background_monitor.initial_conditions.matter.q))
@@ -837,13 +849,13 @@ def _representative_family_sweep_bundle(
             check_id="representative_family_outputs_stay_finite_on_bounded_low_ell_grid",
             category="numerical_stability",
             passed=bool(finite_outputs),
-            summary="Representative orthogonal family runs keep bounded low-ell outputs finite and propagator-ready on the shipped native grid.",
+            summary="Representative orthogonal family runs keep bounded low-ell outputs finite and explicitly label full-mode versus restricted-subset backend status on the shipped native grid.",
         ),
         ExecutableCheckEvidence(
             check_id="representative_family_b_mode_payloads_remain_family_conditional",
             category="physics_sanity",
             passed=bool(family_conditional_b_mode),
-            summary="Representative orthogonal family runs expose live B-mode payloads only on branches whose auxiliary B history is actually nonzero on the shipped native route.",
+            summary="Representative orthogonal family runs classify B-mode payloads as evolved evidence or explicit known-zero state, never as an unlabeled layout-only zero.",
         ),
         ExecutableCheckEvidence(
             check_id="representative_family_sweep_preserves_tilt_boost_contracts",

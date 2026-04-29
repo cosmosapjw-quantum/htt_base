@@ -15,6 +15,7 @@ from bass.los import (
     SeedRequest,
     build_backend,
     family_backend_gate_bundle,
+    family_backend_status,
 )
 
 
@@ -31,6 +32,9 @@ def test_all_families_build_backend_contract(family: str) -> None:
     assert metadata["release_status"] == "backend-contract-complete"
     assert metadata["preferred_backend"] == get_family_spec(family).preferred_backend
     assert metadata["orthogonal_global_tilt_local_boost_split"] == "frozen"
+    expected_status = "full_mode" if family in {"FLRW", "I", "V", "IX"} else "restricted_subset"
+    assert metadata["family_backend_status"] == expected_status
+    assert family_backend_status(family) == expected_status
 
 
 def test_vi_h_label_translator_roundtrip_preserves_h_and_branch() -> None:
@@ -138,8 +142,16 @@ def test_operator_factory_maps_named_family_to_expected_kernel() -> None:
     assert ops.metadata["reduced_harmonic_evaluator_available"] is True
     assert ops.metadata["reduced_joint_evaluator_available"] is True
     assert ops.metadata["family_conditioned_kernel_status"] == "frozen_v5_family_conditioned"
+    assert ops.metadata["family_backend_status"] == "full_mode"
     assert ops.layout_metadata["family_conditioned_kernel_status"] == "frozen_v5_family_conditioned"
     assert ops.metadata["family_conditioned_kernel_law"] == "ix_compact_wigner_frozen_v5"
+
+
+def test_family_backend_gate_bundle_exposes_restricted_subset_status() -> None:
+    backend = build_backend(get_family_spec("VII_0"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "restricted-subset"})
+    bundle = family_backend_gate_bundle(backend, ops)
+    assert bundle.metadata["family_backend_status"] == "restricted_subset"
 
 
 def test_operator_factory_can_return_geometry_ops_with_mode_ops() -> None:

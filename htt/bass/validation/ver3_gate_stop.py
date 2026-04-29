@@ -109,9 +109,12 @@ class GateDecision(AbcMapping[str, Any]):
         object.__setattr__(self, "metadata", dict(self.metadata))
 
     def as_payload(self) -> dict[str, Any]:
+        diagnostic_only = not bool(self.allowed)
         return {
             "gate_name": self.gate_name,
             "allowed": bool(self.allowed),
+            "fitting_allowed": bool(self.allowed),
+            "diagnostic_only": diagnostic_only,
             "required_gates": tuple(self.required_gates),
             "missing_gates": tuple(self.missing_gates),
             "opened_gates": tuple(self.opened_gates),
@@ -119,6 +122,7 @@ class GateDecision(AbcMapping[str, Any]):
             "bundle_gates": tuple(self.bundle_gates),
             "bundle_payloads": dict(self.bundle_payloads),
             "reason": self.reason,
+            "fitting_block_reason": None if self.allowed else self.reason,
             "residuals": dict(self.residuals),
             "metadata": dict(self.metadata),
         }

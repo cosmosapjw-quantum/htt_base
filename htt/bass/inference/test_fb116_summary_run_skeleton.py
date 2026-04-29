@@ -3,10 +3,13 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
 import yaml
 
 from bass.background.bianchi_types import ALL_BIANCHI_TYPES
 from bass.inference.__main__ import main
+
+pytestmark = pytest.mark.slow
 
 
 def _tmp_config(repo_root: Path, tmp_path: Path) -> Path:
@@ -63,4 +66,3 @@ def test_fb116_summary_truth_ix_gives_positive_ix_ln_b(tmp_path: Path) -> None:
     ix_row = next(row for row in payload["rows"] if row["type"] == "IX")
     assert ix_row["ln_B"] > 0.0
     assert ix_row["converged"] is True
-

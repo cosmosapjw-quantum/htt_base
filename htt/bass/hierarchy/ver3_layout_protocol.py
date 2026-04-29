@@ -783,29 +783,9 @@ def _family_conditioned_kernel_operator(
     a_vec = np.asarray(algebra.a, dtype=np.float64)
     is_class_b = float(np.linalg.norm(a_vec)) > 0.0
 
-    # Structure-constant matrix N in canonical (mu_0, mu_+, mu_-) basis.
-    # These hard-coded signatures already encode Π · diag(n_code) · Π^T
-    # where Π is the per-family axis projector table above (Round-4
-    # Q-15). For Tier-B families outside {II, III, V, VII_0, VIII} and
-    # for Type I, N = 0 (queued for a future audit round).
-    N = np.zeros((mu_count, mu_count), dtype=np.float64)
-    canonical = _FAMILY_KERNEL_N_MATRIX.get(family)
-    if canonical is not None and mu_count >= 3:
-        for i in range(3):
-            for j in range(3):
-                N[i, j] = canonical[i][j]
-
-    # Twist projector P_a = \hat a \hat a^T in canonical basis.
-    # Q-8.6(b) matrices are structural signatures with unit normalization
-    # (|a| = 1 in canonical gauge); the physical amplitude scale comes
-    # from the backend spectral parameter at wiring time. In canonical
-    # VER2 class-B axes a^alpha ∝ (|a|, 0, 0), so P_a is rank-1 on the
-    # first mu basis direction for class-B families and zero for class-A.
-    P_a = np.zeros((mu_count, mu_count), dtype=np.float64)
-    if is_class_b and mu_count >= 1:
-        P_a[0, 0] = 1.0
-
-    mu_mode_coupling = N + P_a
+    # Structure-constant matrix N plus the canonical class-B twist projector
+    # in the frozen (mu_0, mu_+, mu_-) storage basis.
+    mu_mode_coupling = _family_mu_mode_coupling_matrix(backend, labels)
 
     # transport: Q-10 placeholder. Use _build_transport_matrix(family, k)
     # at assembly time to obtain the spectral-parameter-dependent matrix.
@@ -953,6 +933,52 @@ def _harmonic_cross_mode_coeff(
     if sector == "nu_I":
         return 0.12 * base
     raise KeyError(f"unsupported harmonic sector {sector!r}")
+
+
+def _family_mu_mode_coupling_matrix(
+    backend: FamilyBackend,
+    mode_labels: tuple[str, ...],
+) -> np.ndarray:
+    family = str(backend.family_spec.family)
+    algebra = backend.family_spec.algebra
+    labels = tuple(str(mu) for mu in mode_labels)
+    mu_count = len(labels)
+    if mu_count <= 0:
+        raise ValueError("mode_labels must be non-empty")
+
+    matrix = np.zeros((mu_count, mu_count), dtype=np.float64)
+    canonical = _FAMILY_KERNEL_N_MATRIX.get(family)
+    if canonical is not None and mu_count >= 3:
+        for i in range(3):
+            for j in range(3):
+                matrix[i, j] = canonical[i][j]
+
+    a_vec = np.asarray(algebra.a, dtype=np.float64)
+    if float(np.linalg.norm(a_vec)) > 0.0 and mu_count >= 1:
+        matrix[0, 0] += 1.0
+    return matrix
+
+
+def _family_cross_mode_weight(
+    coupling_matrix: np.ndarray,
+    mode_labels: tuple[str, ...],
+    *,
+    source_label: str,
+    target_label: str,
+) -> float:
+    labels = tuple(str(mu) for mu in mode_labels)
+    try:
+        source_index = labels.index(str(source_label))
+        target_index = labels.index(str(target_label))
+    except ValueError:
+        return 0.0
+    direct = float(coupling_matrix[source_index, target_index])
+    if direct != 0.0:
+        return direct
+    # The reduced layout still carries the anchor-star topology used by the
+    # mode-label projector. A non-zero source-channel signature activates that
+    # topology without resurrecting the old scalar mix_scale placeholder.
+    return float(coupling_matrix[source_index, source_index])
 
 
 def _mode_label_coupling_targets(
@@ -1327,8 +1353,9 @@ def assemble_free_streaming_block(
     data: list[float] = []
     mu_count = max(len(layout.mode_labels), 1)
     for mu_index, mu in enumerate(layout.mode_labels):
+        mu_key = str(mu)
         mu_weight = _mode_label_weight(
-            mu,
+            mu_key,
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=branch_scale,
@@ -1342,7 +1369,7 @@ def assemble_free_streaming_block(
                 for m in range(-ell, ell + 1):
                     idx = flatten(layout, mu, sector, ell, m)
                     spin_weight = polarization_scale if sector in {"ph_E", "ph_B"} else 1.0
-                    diag = -geom_scale * mu_weight * spin_weight * (0.35 * (ell + 1) + 0.08 * abs(m))
+                    diag = 0.0
                     rows.append(idx)
                     cols.append(idx)
                     data.append(diag)
@@ -1369,7 +1396,7 @@ def assemble_free_streaming_block(
                         )
                         rows.append(idx)
                         cols.append(nxt)
-                        data.append(coeff_up)
+                        data.append(-coeff_up)
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -1390,9 +1417,12 @@ def assemble_mixing_block(
     cols: list[int] = []
     data: list[float] = []
     mu_count = max(len(layout.mode_labels), 1)
+    mode_labels = tuple(str(x) for x in layout.mode_labels)
+    mu_coupling = _family_mu_mode_coupling_matrix(backend, mode_labels)
     for mu_index, mu in enumerate(layout.mode_labels):
+        mu_key = str(mu)
         mu_weight = _mode_label_weight(
-            mu,
+            mu_key,
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=branch_scale,
@@ -1420,15 +1450,15 @@ def assemble_mixing_block(
                         cols.extend((b_idx, e_idx, i_idx, b_idx))
                         data.extend((eb, -eb, 0.25 * eb, -0.25 * eb))
                 target_labels = _mode_label_coupling_targets(
-                    tuple(str(x) for x in layout.mode_labels),
-                    str(mu),
+                    mode_labels,
+                    mu_key,
                     family=backend.family_spec.family,
                 )
                 if target_labels:
                     target_norm = float(len(target_labels))
                     coeff_i = _harmonic_cross_mode_coeff(
                         mu_weight=mu_weight,
-                        mix_scale=mix_scale,
+                        mix_scale=1.0,
                         cross_mode_scale=cross_mode_scale,
                         twist_scale=twist_scale,
                         sector="ph_I",
@@ -1437,7 +1467,7 @@ def assemble_mixing_block(
                     ) / target_norm
                     coeff_e = _harmonic_cross_mode_coeff(
                         mu_weight=mu_weight,
-                        mix_scale=mix_scale,
+                        mix_scale=1.0,
                         cross_mode_scale=cross_mode_scale,
                         twist_scale=twist_scale,
                         sector="ph_E",
@@ -1446,7 +1476,7 @@ def assemble_mixing_block(
                     ) / target_norm
                     coeff_b = _harmonic_cross_mode_coeff(
                         mu_weight=mu_weight,
-                        mix_scale=mix_scale,
+                        mix_scale=1.0,
                         cross_mode_scale=cross_mode_scale,
                         twist_scale=twist_scale,
                         sector="ph_B",
@@ -1455,7 +1485,7 @@ def assemble_mixing_block(
                     ) / target_norm
                     coeff_nu = _harmonic_cross_mode_coeff(
                         mu_weight=mu_weight,
-                        mix_scale=mix_scale,
+                        mix_scale=1.0,
                         cross_mode_scale=cross_mode_scale,
                         twist_scale=twist_scale,
                         sector="nu_I",
@@ -1463,29 +1493,45 @@ def assemble_mixing_block(
                         mu_count=mu_count,
                     ) / target_norm
                     for target_mu in target_labels:
+                        weight = _family_cross_mode_weight(
+                            mu_coupling,
+                            mode_labels,
+                            source_label=mu_key,
+                            target_label=str(target_mu),
+                        )
+                        if weight == 0.0:
+                            continue
                         next_i_idx = flatten(layout, target_mu, "ph_I", ell, m)
                         next_e_idx = flatten(layout, target_mu, "ph_E", ell, m)
                         next_b_idx = flatten(layout, target_mu, "ph_B", ell, m)
                         next_nu_idx = flatten(layout, target_mu, "nu_I", ell, m)
                         rows.extend((i_idx, e_idx, b_idx, nu_idx))
                         cols.extend((next_i_idx, next_e_idx, next_b_idx, next_nu_idx))
-                        data.extend((coeff_i, coeff_e, coeff_b, coeff_nu))
+                        data.extend((weight * coeff_i, weight * coeff_e, weight * coeff_b, weight * coeff_nu))
         target_labels = _mode_label_coupling_targets(
-            tuple(str(x) for x in layout.mode_labels),
-            str(mu),
+            mode_labels,
+            mu_key,
             family=backend.family_spec.family,
         )
         if target_labels:
-            monopole_coeff = mu_weight * 0.5 * mix_scale * cross_mode_scale / (
+            monopole_coeff = mu_weight * 0.5 * cross_mode_scale / (
                 len(layout.mode_labels) * float(len(target_labels))
             )
             for target_mu in target_labels:
+                weight = _family_cross_mode_weight(
+                    mu_coupling,
+                    mode_labels,
+                    source_label=mu_key,
+                    target_label=str(target_mu),
+                )
+                if weight == 0.0:
+                    continue
                 for sector in ("ph_I", "ph_E", "ph_B", "nu_I"):
                     src_idx = flatten(layout, mu, sector, 0, 0)
                     dst_idx = flatten(layout, target_mu, sector, 0, 0)
                     rows.append(src_idx)
                     cols.append(dst_idx)
-                    data.append(monopole_coeff)
+                    data.append(weight * monopole_coeff)
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
 
@@ -1521,9 +1567,12 @@ def assemble_implicit_block(
     cols: list[int] = []
     data: list[float] = []
     mu_count = max(len(layout.mode_labels), 1)
+    mode_labels = tuple(str(x) for x in layout.mode_labels)
+    mu_coupling = _family_mu_mode_coupling_matrix(backend, mode_labels)
     for mu_index, mu in enumerate(layout.mode_labels):
+        mu_key = str(mu)
         mu_weight = _mode_label_weight(
-            mu,
+            mu_key,
             mu_index=mu_index,
             mu_count=mu_count,
             branch_scale=branch_scale,
@@ -1534,16 +1583,30 @@ def assemble_implicit_block(
             for ell in range(layout.ell_max + 1):
                 for m in range(-ell, ell + 1):
                     idx = flatten(layout, mu, sector, ell, m)
-                    photon_weight = mu_weight * branch_scale * collision_scale * gamma_t * (
+                    photon_weight = -mu_weight * branch_scale * collision_scale * gamma_t * (
                         1.0 if ell <= 1 else 1.0 / (ell + 0.5)
                     )
+                    if ell == 2:
+                        if sector == "ph_I":
+                            photon_weight = -mu_weight * (9.0 * gamma_t / 10.0)
+                        elif sector == "ph_E":
+                            photon_weight = -mu_weight * (2.0 * gamma_t / 5.0)
+                        elif sector == "ph_B":
+                            photon_weight = -mu_weight * gamma_t
                     rows.append(idx)
                     cols.append(idx)
                     data.append(photon_weight)
+                    if ell == 2 and sector in {"ph_I", "ph_E"}:
+                        peer = "ph_E" if sector == "ph_I" else "ph_I"
+                        pstf_weight = np.sqrt(max((ell + 2) * (ell - 1), 0.0)) / max(2 * ell + 1, 1)
+                        peer_idx = flatten(layout, mu, peer, ell, m)
+                        rows.append(idx)
+                        cols.append(peer_idx)
+                        data.append(-mu_weight * gamma_t * (np.sqrt(6.0) / 10.0) * pstf_weight)
         for sector in ("baryon", "src"):
             for local_dof in range(layout.sector_local_dofs[sector]):
                 idx = flatten(layout, mu, sector, None, None, local_dof)
-                local_weight = mu_weight * local_drag_scale * (gamma_t if sector == "baryon" else 0.35 * gamma_t)
+                local_weight = -mu_weight * local_drag_scale * (gamma_t if sector == "baryon" else 0.35 * gamma_t)
                 rows.append(idx)
                 cols.append(idx)
                 data.append(local_weight)
@@ -1553,8 +1616,8 @@ def assemble_implicit_block(
         cols.extend((baryon_v_idx, dipole_idx))
         data.extend(
             (
-                -0.25 * mu_weight * local_drag_scale * gamma_t,
-                0.25 * mu_weight * local_drag_scale * gamma_t,
+                mu_weight * gamma_t / 3.0,
+                3.0 * mu_weight * local_drag_scale * gamma_t,
             )
         )
         if layout.sector_local_dofs["src"] > 1:
@@ -1592,36 +1655,61 @@ def assemble_implicit_block(
                 )
             )
         target_labels = _mode_label_coupling_targets(
-            tuple(str(x) for x in layout.mode_labels),
-            str(mu),
+            mode_labels,
+            mu_key,
             family=backend.family_spec.family,
         )
         if target_labels:
             target_norm = float(len(target_labels))
             if layout.sector_local_dofs["src"] > 1:
                 for target_mu in target_labels:
+                    weight = _family_cross_mode_weight(
+                        mu_coupling,
+                        mode_labels,
+                        source_label=mu_key,
+                        target_label=str(target_mu),
+                    )
+                    if weight == 0.0:
+                        continue
                     src_dipole_idx = flatten(layout, target_mu, "src", None, None, 1)
                     rows.append(dipole_idx)
                     cols.append(src_dipole_idx)
-                    data.append(0.05 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm)
+                    data.append(weight * 0.05 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm)
             if layout.ell_max >= 2:
                 quad_idx = flatten(layout, mu, "ph_E", 2, 0)
                 if layout.sector_local_dofs["src"] > 0:
                     for target_mu in target_labels:
+                        weight = _family_cross_mode_weight(
+                            mu_coupling,
+                            mode_labels,
+                            source_label=mu_key,
+                            target_label=str(target_mu),
+                        )
+                        if weight == 0.0:
+                            continue
                         src_idx = flatten(layout, target_mu, "src", None, None, 0)
                         rows.append(quad_idx)
                         cols.append(src_idx)
-                        data.append(0.07 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm)
+                        data.append(weight * 0.07 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm)
                 if layout.sector_local_dofs["src"] > 2:
                     b_quad_idx = flatten(layout, mu, "ph_B", 2, 0)
                     for target_mu in target_labels:
+                        weight = _family_cross_mode_weight(
+                            mu_coupling,
+                            mode_labels,
+                            source_label=mu_key,
+                            target_label=str(target_mu),
+                        )
+                        if weight == 0.0:
+                            continue
                         src_pol_idx = flatten(layout, target_mu, "src", None, None, 2)
                         rows.extend((quad_idx, b_quad_idx))
                         cols.extend((src_pol_idx, src_pol_idx))
                         data.extend(
                             (
-                                0.04 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm,
-                                0.03
+                                weight * 0.04 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm,
+                                weight
+                                * 0.03
                                 * mu_weight
                                 * twist_scale
                                 * cross_mode_scale
@@ -1758,6 +1846,8 @@ def evaluate_reduced_harmonic_rhs(
     baryon_width = int(layout.sector_local_dofs["baryon"])
     src_width = int(layout.sector_local_dofs["src"])
     mu_count = max(len(layout.mode_labels), 1)
+    mode_labels = tuple(str(x) for x in layout.mode_labels)
+    mu_coupling = _family_mu_mode_coupling_matrix(backend, mode_labels)
 
     zeros_h = np.zeros(width, dtype=np.float64)
     zeros_b = np.zeros(baryon_width, dtype=np.float64)
@@ -1783,8 +1873,7 @@ def evaluate_reduced_harmonic_rhs(
         return mu_weight * sector_weight * ell_weight
 
     def _fs_diag(*, mu_weight: float, sector: str, ell: int, m: int) -> float:
-        spin_weight = polarization_scale if sector in {"ph_E", "ph_B"} else 1.0
-        return -geom_scale * mu_weight * spin_weight * (0.35 * (ell + 1) + 0.08 * abs(m))
+        return 0.0
 
     for mu_index, mu in enumerate(layout.mode_labels):
         mu_key = str(mu)
@@ -1806,7 +1895,7 @@ def evaluate_reduced_harmonic_rhs(
         else:
             src_state = np.asarray(source_by_mode_label.get(mu_key, zeros_s), dtype=np.float64)
         target_labels = _mode_label_coupling_targets(
-            tuple(str(x) for x in layout.mode_labels),
+            mode_labels,
             mu_key,
             family=backend.family_spec.family,
         )
@@ -1848,7 +1937,7 @@ def evaluate_reduced_harmonic_rhs(
         b_rhs = np.zeros(width, dtype=np.float64)
         nu_rhs = np.zeros(width, dtype=np.float64)
         cross_coeff = (
-            mu_weight * 0.5 * mix_scale * cross_mode_scale / len(layout.mode_labels)
+            mu_weight * 0.5 * cross_mode_scale / len(layout.mode_labels)
             if len(layout.mode_labels) > 1
             else 0.0
         )
@@ -1875,10 +1964,10 @@ def evaluate_reduced_harmonic_rhs(
                     next_m_same = m if abs(m) <= ell + 1 else 0
                     next_slot_same = sum(2 * l + 1 for l in range(ell + 1)) + (next_m_same + (ell + 1))
                     coeff_up = geom_scale * mu_weight * np.sqrt(max((ell + 1) * (ell + 1) - m * m, 0.0)) / max(2 * ell + 1, 1)
-                    t_drive += coeff_up * t_state[next_slot_same]
-                    e_drive += coeff_up * polarization_scale * e_state[next_slot_same]
-                    b_drive += coeff_up * polarization_scale * b_state[next_slot_same]
-                    nu_drive += coeff_up * nu_state[next_slot_same]
+                    t_drive -= coeff_up * t_state[next_slot_same]
+                    e_drive -= coeff_up * polarization_scale * e_state[next_slot_same]
+                    b_drive -= coeff_up * polarization_scale * b_state[next_slot_same]
+                    nu_drive -= coeff_up * nu_state[next_slot_same]
 
                 if ell >= 2:
                     coeff_mix = mu_weight * mix_scale * pstf_weight
@@ -1892,7 +1981,7 @@ def evaluate_reduced_harmonic_rhs(
                         target_norm = float(len(target_towers))
                         coeff_i = _harmonic_cross_mode_coeff(
                             mu_weight=mu_weight,
-                            mix_scale=mix_scale,
+                            mix_scale=1.0,
                             cross_mode_scale=cross_mode_scale,
                             twist_scale=twist_scale,
                             sector="ph_I",
@@ -1901,7 +1990,7 @@ def evaluate_reduced_harmonic_rhs(
                         ) / target_norm
                         coeff_e = _harmonic_cross_mode_coeff(
                             mu_weight=mu_weight,
-                            mix_scale=mix_scale,
+                            mix_scale=1.0,
                             cross_mode_scale=cross_mode_scale,
                             twist_scale=twist_scale,
                             sector="ph_E",
@@ -1910,7 +1999,7 @@ def evaluate_reduced_harmonic_rhs(
                         ) / target_norm
                         coeff_b = _harmonic_cross_mode_coeff(
                             mu_weight=mu_weight,
-                            mix_scale=mix_scale,
+                            mix_scale=1.0,
                             cross_mode_scale=cross_mode_scale,
                             twist_scale=twist_scale,
                             sector="ph_B",
@@ -1919,47 +2008,89 @@ def evaluate_reduced_harmonic_rhs(
                         ) / target_norm
                         coeff_nu = _harmonic_cross_mode_coeff(
                             mu_weight=mu_weight,
-                            mix_scale=mix_scale,
+                            mix_scale=1.0,
                             cross_mode_scale=cross_mode_scale,
                             twist_scale=twist_scale,
                             sector="nu_I",
                             ell=ell,
                             mu_count=mu_count,
                         ) / target_norm
-                        for target_t, target_e, target_b, target_nu in target_towers:
-                            t_drive += coeff_i * target_t[slot]
-                            e_drive += coeff_e * target_e[slot]
-                            b_drive += coeff_b * target_b[slot]
-                            nu_drive += coeff_nu * target_nu[slot]
+                        for target_mu, (target_t, target_e, target_b, target_nu) in zip(
+                            target_labels,
+                            target_towers,
+                            strict=True,
+                        ):
+                            weight = _family_cross_mode_weight(
+                                mu_coupling,
+                                mode_labels,
+                                source_label=mu_key,
+                                target_label=str(target_mu),
+                            )
+                            if weight == 0.0:
+                                continue
+                            t_drive += weight * coeff_i * target_t[slot]
+                            e_drive += weight * coeff_e * target_e[slot]
+                            b_drive += weight * coeff_b * target_b[slot]
+                            nu_drive += weight * coeff_nu * target_nu[slot]
 
                 if ell == 0 and cross_coeff != 0.0 and target_towers:
                     monopole_coeff = cross_coeff / float(len(target_towers))
-                    for target_t, target_e, target_b, target_nu in target_towers:
-                        t_drive += monopole_coeff * target_t[slot]
-                        e_drive += monopole_coeff * target_e[slot]
-                        b_drive += monopole_coeff * target_b[slot]
-                        nu_drive += monopole_coeff * target_nu[slot]
+                    for target_mu, (target_t, target_e, target_b, target_nu) in zip(
+                        target_labels,
+                        target_towers,
+                        strict=True,
+                    ):
+                        weight = _family_cross_mode_weight(
+                            mu_coupling,
+                            mode_labels,
+                            source_label=mu_key,
+                            target_label=str(target_mu),
+                        )
+                        if weight == 0.0:
+                            continue
+                        t_drive += weight * monopole_coeff * target_t[slot]
+                        e_drive += weight * monopole_coeff * target_e[slot]
+                        b_drive += weight * monopole_coeff * target_b[slot]
+                        nu_drive += weight * monopole_coeff * target_nu[slot]
 
-                if ell <= 1:
-                    photon_coll = mu_weight * branch_scale * collision_scale * gamma_t
+                if ell == 2:
+                    te = mu_weight * gamma_t * (np.sqrt(6.0) / 10.0) * pstf_weight
+                    t_drive += -(9.0 * mu_weight * gamma_t / 10.0) * t_state[slot]
+                    t_drive += -te * e_state[slot]
+                    e_drive += -te * t_state[slot]
+                    e_drive += -(2.0 * mu_weight * gamma_t / 5.0) * e_state[slot]
+                    b_drive += -mu_weight * gamma_t * b_state[slot]
                 else:
-                    photon_coll = mu_weight * branch_scale * collision_scale * gamma_t / (ell + 0.5)
-                t_drive += photon_coll * t_state[slot]
-                e_drive += photon_coll * e_state[slot]
-                b_drive += photon_coll * b_state[slot]
+                    if ell <= 1:
+                        photon_coll = mu_weight * branch_scale * collision_scale * gamma_t
+                    else:
+                        photon_coll = mu_weight * branch_scale * collision_scale * gamma_t / (ell + 0.5)
+                    t_drive += -photon_coll * t_state[slot]
+                    e_drive += -photon_coll * e_state[slot]
+                    b_drive += -photon_coll * b_state[slot]
 
                 if ell == 0 and m == 0:
                     t_drive += mu_weight * source_scale * visibility_amp
                 if ell == 1 and m == 0:
                     t_drive += mu_weight * 0.5 * source_scale * doppler_amp
                     if baryon_width > 1:
-                        t_drive += -0.25 * mu_weight * local_drag_scale * gamma_t * float(baryon_state[1])
+                        t_drive += (mu_weight * gamma_t / 3.0) * float(baryon_state[1])
                     if src_width > 1:
                         t_drive += 0.10 * mu_weight * local_drag_scale * gamma_t * float(src_state[1])
                     if target_sources and src_width > 1:
                         target_norm = float(len(target_sources))
-                        for target_src in target_sources:
+                        for target_mu, target_src in zip(target_labels, target_sources, strict=True):
+                            weight = _family_cross_mode_weight(
+                                mu_coupling,
+                                mode_labels,
+                                source_label=mu_key,
+                                target_label=str(target_mu),
+                            )
+                            if weight == 0.0:
+                                continue
                             t_drive += (
+                                weight
+                                *
                                 0.05
                                 * mu_weight
                                 * local_drag_scale
@@ -1985,9 +2116,19 @@ def evaluate_reduced_harmonic_rhs(
                         )
                     if target_sources:
                         target_norm = float(len(target_sources))
-                        for target_src in target_sources:
+                        for target_mu, target_src in zip(target_labels, target_sources, strict=True):
+                            weight = _family_cross_mode_weight(
+                                mu_coupling,
+                                mode_labels,
+                                source_label=mu_key,
+                                target_label=str(target_mu),
+                            )
+                            if weight == 0.0:
+                                continue
                             if src_width > 0:
                                 e_drive += (
+                                    weight
+                                    *
                                     0.07
                                     * mu_weight
                                     * local_drag_scale
@@ -1998,6 +2139,8 @@ def evaluate_reduced_harmonic_rhs(
                                 )
                             if src_width > 2:
                                 e_drive += (
+                                    weight
+                                    *
                                     0.04
                                     * mu_weight
                                     * local_drag_scale
@@ -2007,6 +2150,8 @@ def evaluate_reduced_harmonic_rhs(
                                     / target_norm
                                 )
                                 b_drive += (
+                                    weight
+                                    *
                                     0.03
                                     * mu_weight
                                     * twist_scale
@@ -2097,6 +2242,8 @@ def build_reduced_harmonic_affine_operator(
         residual_labels,
         backend.family_spec.family,
     )
+    mode_labels = tuple(str(mu) for mu in layout.mode_labels)
+    mu_coupling = _family_mu_mode_coupling_matrix(backend, mode_labels)
     width = structure.width
     mu_count = max(len(layout.mode_labels), 1)
     zeros_h = np.zeros(width, dtype=np.float64)
@@ -2158,13 +2305,13 @@ def build_reduced_harmonic_affine_operator(
     cross_b = np.zeros(width, dtype=np.float64)
     cross_nu = np.zeros(width, dtype=np.float64)
     if mu_count > 1:
-        base_cross = mix_scale * cross_mode_scale / np.maximum(structure.ell_by_slot + 1, 1)
+        base_cross = cross_mode_scale / np.maximum(structure.ell_by_slot + 1, 1)
         ge2 = structure.ge2_mask
         cross_t[ge2] = inv_t[ge2] * (0.18 * base_cross[ge2] / mu_count)
         cross_e[ge2] = inv_e[ge2] * (0.16 * base_cross[ge2] / mu_count)
         cross_b[ge2] = inv_b[ge2] * (0.16 * (1.0 + 0.5 * twist_scale) * base_cross[ge2] / mu_count)
         cross_nu[ge2] = inv_nu[ge2] * (0.12 * base_cross[ge2] / mu_count)
-        ell0_coeff = 0.5 * mix_scale * cross_mode_scale / mu_count
+        ell0_coeff = 0.5 * cross_mode_scale / mu_count
         ell0 = structure.ell0_mask
         cross_t[ell0] = inv_t[ell0] * ell0_coeff
         cross_e[ell0] = inv_e[ell0] * ell0_coeff
@@ -2233,10 +2380,21 @@ def build_reduced_harmonic_affine_operator(
         row_chunks.append(structure.self_pattern_rows + row_start)
         col_chunks.append(structure.self_pattern_cols + row_start)
         data_chunks.append(self_data)
+        source_label = residual_labels[residual_index]
+        external_targets = structure.cross_external_labels[residual_index]
+        target_norm = float(max(len(residual_targets) + len(external_targets), 1))
         if residual_targets and cross_data.size:
-            target_norm = float(len(residual_targets))
-            scaled_cross = cross_data / target_norm
             for target_residual in residual_targets:
+                target_label = residual_labels[int(target_residual)]
+                weight = _family_cross_mode_weight(
+                    mu_coupling,
+                    mode_labels,
+                    source_label=source_label,
+                    target_label=target_label,
+                )
+                if weight == 0.0:
+                    continue
+                scaled_cross = weight * cross_data / target_norm
                 col_start = int(target_residual) * block_size
                 row_chunks.append(structure.cross_pattern_rows + row_start)
                 col_chunks.append(structure.cross_pattern_cols + col_start)
@@ -2255,10 +2413,17 @@ def build_reduced_harmonic_affine_operator(
             raise ValueError(f"source state for {mu!r} must have shape ({src_width},)")
 
         row_start = residual_index * block_size
-        external_targets = structure.cross_external_labels[residual_index]
         if external_targets and mu_count > 1:
-            target_norm = float(len(external_targets))
+            target_norm = float(max(len(structure.cross_residual_indices[residual_index]) + len(external_targets), 1))
             for target_label in external_targets:
+                weight = _family_cross_mode_weight(
+                    mu_coupling,
+                    mode_labels,
+                    source_label=str(mu),
+                    target_label=str(target_label),
+                )
+                if weight == 0.0:
+                    continue
                 next_t = np.asarray(photon_T_by_mode_label.get(target_label, zeros_h), dtype=np.float64)
                 next_e = np.asarray(photon_E_by_mode_label.get(target_label, zeros_h), dtype=np.float64)
                 next_b = np.asarray(photon_B_by_mode_label.get(target_label, zeros_h), dtype=np.float64)
@@ -2271,31 +2436,57 @@ def build_reduced_harmonic_affine_operator(
                     ),
                     dtype=np.float64,
                 )
-                bias[row_start + t_off : row_start + t_off + width] += (cross_t / target_norm) * next_t
-                bias[row_start + e_off : row_start + e_off + width] += (cross_e / target_norm) * next_e
-                bias[row_start + b_off : row_start + b_off + width] += (cross_b / target_norm) * next_b
-                bias[row_start + nu_off : row_start + nu_off + width] += (cross_nu / target_norm) * next_nu
+                bias[row_start + t_off : row_start + t_off + width] += (weight * cross_t / target_norm) * next_t
+                bias[row_start + e_off : row_start + e_off + width] += (weight * cross_e / target_norm) * next_e
+                bias[row_start + b_off : row_start + b_off + width] += (weight * cross_b / target_norm) * next_b
+                bias[row_start + nu_off : row_start + nu_off + width] += (weight * cross_nu / target_norm) * next_nu
                 if structure.dipole_slot is not None and src_width > 1:
                     dipole_slot = structure.dipole_slot
                     bias[row_start + t_off + dipole_slot] += (
                         inv_t[dipole_slot]
-                        * (0.05 * local_drag_scale * gamma_t * cross_mode_scale * float(next_src[1]) / target_norm)
+                        * (
+                            weight
+                            * 0.05
+                            * local_drag_scale
+                            * gamma_t
+                            * cross_mode_scale
+                            * float(next_src[1])
+                            / target_norm
+                        )
                     )
                 if structure.quadrupole_slot is not None:
                     quad_slot = structure.quadrupole_slot
                     if src_width > 0:
                         bias[row_start + e_off + quad_slot] += (
                             inv_e[quad_slot]
-                            * (0.07 * local_drag_scale * gamma_t * cross_mode_scale * float(next_src[0]) / target_norm)
+                            * (
+                                weight
+                                * 0.07
+                                * local_drag_scale
+                                * gamma_t
+                                * cross_mode_scale
+                                * float(next_src[0])
+                                / target_norm
+                            )
                         )
                     if src_width > 2:
                         bias[row_start + e_off + quad_slot] += (
                             inv_e[quad_slot]
-                            * (0.04 * local_drag_scale * gamma_t * cross_mode_scale * float(next_src[2]) / target_norm)
+                            * (
+                                weight
+                                * 0.04
+                                * local_drag_scale
+                                * gamma_t
+                                * cross_mode_scale
+                                * float(next_src[2])
+                                / target_norm
+                            )
                         )
                         bias[row_start + b_off + quad_slot] += (
                             inv_b[quad_slot]
                             * (
+                                weight
+                                *
                                 0.03
                                 * twist_scale
                                 * local_drag_scale
@@ -2312,7 +2503,7 @@ def build_reduced_harmonic_affine_operator(
             bias[row_start + t_off + dipole_slot] += inv_t[dipole_slot] * (0.5 * source_scale * doppler_amp)
             if baryon_width > 1:
                 bias[row_start + t_off + dipole_slot] += (
-                    inv_t[dipole_slot] * (-0.25 * local_drag_scale * gamma_t * float(baryon_state[1]))
+                    inv_t[dipole_slot] * ((gamma_t / 3.0) * float(baryon_state[1]))
                 )
             if src_width > 1:
                 bias[row_start + t_off + dipole_slot] += (
@@ -2455,7 +2646,7 @@ def build_reduced_source_affine_operator(
         source_mass = mu_weight * (1.0 + 0.06 * source_scale + 0.04 * np.arange(src_width, dtype=np.float64))
         inv_source = 1.0 / np.maximum(source_mass, 1.0e-30)
         row_start = residual_index * src_width
-        matrix[row_start : row_start + src_width, row_start : row_start + src_width] += np.diag(
+        matrix[row_start : row_start + src_width, row_start : row_start + src_width] -= np.diag(
             inv_source * (mu_weight * local_drag_scale * (0.35 * gamma_t))
         )
         bias[row_start : row_start + src_width] = inv_source * np.asarray(forcing_blocks[mu], dtype=np.float64)
@@ -2846,7 +3037,7 @@ def build_reduced_local_affine_operator(
             data.append(float(value))
         if baryon_width > 1:
             bias[row_start + 1] = float(
-                0.25
+                3.0
                 * mu_weight
                 * local_drag_scale
                 * gamma_t
@@ -2913,10 +3104,10 @@ def evaluate_reduced_local_rhs(
         )
         if cdm_state.shape != (cdm_width,):
             raise ValueError(f"cdm state for {mu_key!r} must have shape ({cdm_width},)")
-        baryon_drive = mu_weight * local_drag_scale * gamma_t * baryon_state
+        baryon_drive = -mu_weight * local_drag_scale * gamma_t * baryon_state
         if baryon_width > 1:
             baryon_drive[1] += (
-                0.25 * mu_weight * local_drag_scale * gamma_t * float(theta_1_by_mode_label.get(mu_key, 0.0))
+                3.0 * mu_weight * local_drag_scale * gamma_t * float(theta_1_by_mode_label.get(mu_key, 0.0))
             )
         baryon_diag = mu_weight * baryon_base_diag
         baryon_rhs[mu_key] = baryon_drive / np.maximum(np.abs(baryon_diag), 1.0e-30)

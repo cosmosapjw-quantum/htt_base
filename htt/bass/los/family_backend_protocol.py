@@ -26,6 +26,7 @@ __all__ = [
     "ModeOps",
     "FamilyBackend",
     "family_backend_gate_bundle",
+    "family_backend_status",
     "build_backend",
 ]
 
@@ -226,6 +227,35 @@ _FROZEN_COLLOCATION_DEFAULTS = {
     "bcl": "(-3*f0+4*f1-f2)/(2*h)",
     "bcr": "(3*fN-4*fN1+fN2)/(2*h)",
 }
+
+_FULL_MODE_OUTPUT_FAMILIES: frozenset[str] = frozenset({"FLRW", "I", "V", "IX"})
+_RESTRICTED_SUBSET_FAMILIES: frozenset[str] = frozenset({
+    "II",
+    "III",
+    "IV",
+    "VI_0",
+    "VI_h",
+    "VII_0",
+    "VII_h",
+    "VIII",
+})
+
+
+def family_backend_status(family: str) -> str:
+    """Return the public output-coverage status for a Bianchi family.
+
+    The family registry and background geometry are 11-family surfaces, but
+    output/LoS authority is narrower. Keep that distinction machine-readable
+    so callers cannot promote restricted collocation/template paths as full
+    production family support.
+    """
+
+    family_key = str(family)
+    if family_key in _FULL_MODE_OUTPUT_FAMILIES:
+        return "full_mode"
+    if family_key in _RESTRICTED_SUBSET_FAMILIES:
+        return "restricted_subset"
+    return "unsupported"
 
 _FROZEN_SOLVABLE_LOOKUP = {
     "II": {
@@ -635,6 +665,7 @@ class FamilyBackend:
         metadata = {
             "family": self.family_spec.family,
             "class_label": self.family_spec.class_label,
+            "family_backend_status": family_backend_status(self.family_spec.family),
             "isotropic_anchor": self.family_spec.isotropic_anchor,
             "orthogonal_global_tilt_local_boost_split": self.family_spec.orthogonal_global_tilt_local_boost_split,
             "constraint_policy_required": self.family_spec.algebra.branch_policy.constraint_policy_required,
@@ -1001,6 +1032,7 @@ class FamilyBackend:
         return {
             "chart_model_name": template_card.preferred_chart,
             "native_mode_labels": template_card.label_translator_card.native_label_name,
+            "family_backend_status": family_backend_status(self.family_spec.family),
             "parity_flag": template_card.label_translator_card.parity_flag,
             "helicity_flag": template_card.label_translator_card.helicity_flag,
             "branch_flag": template_card.label_translator_card.branch_flag,
@@ -1068,6 +1100,7 @@ def family_backend_gate_bundle(
             "template_card": template.as_payload(),
             "layout_metadata": dict(ops.layout_metadata),
             "operator_payload_status": ops.metadata.get("operator_payload_status"),
+            "family_backend_status": family_backend_status(backend.family_spec.family),
             "lookup_resolution_status": template.lookup_resolution_status,
             "verification_reference": template.metadata.get("verification_reference"),
         },

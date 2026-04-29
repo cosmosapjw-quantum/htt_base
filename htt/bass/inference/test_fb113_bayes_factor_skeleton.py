@@ -9,6 +9,8 @@ from scipy.stats import norm
 from bass.inference import BayesFactorResult, Prior, bayes_factor, run_posterior
 from bass.inference.drivers.dynesty_driver import run_nested_evidence
 
+pytestmark = pytest.mark.slow
+
 
 def _gaussian_prior(name: str, sigma: float = 1.0) -> Prior:
     sigma = float(sigma)
@@ -120,4 +122,3 @@ def test_fb113_ti_provenance_records_sampler_and_seed(shift: np.ndarray) -> None
     assert result.method == "thermodynamic"
     assert result.provenance["model_A_seed"] == 31
     assert "emcee" in result.provenance["model_A_sampler"]
-

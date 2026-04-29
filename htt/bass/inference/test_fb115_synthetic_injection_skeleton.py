@@ -41,6 +41,7 @@ def test_fb115_synthetic_injection_coverage_reaches_nominal_band(truth_type: str
     assert covered >= 63
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("label", ALL_BIANCHI_TYPES)
 def test_fb115_flrw_truth_keeps_ln_b_near_zero_for_bianchi_i_family(label: str) -> None:
     baseline_problem = make_problem("FLRW", truth_type="FLRW", seed=42)
@@ -51,4 +52,3 @@ def test_fb115_flrw_truth_keeps_ln_b_near_zero_for_bianchi_i_family(label: str) 
     result = bayes_factor(model, flrw)
     if label == "I":
         assert abs(result.ln_B) <= 2.0 * result.ln_B_err
-

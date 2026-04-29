@@ -472,7 +472,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     """
     args = build_parser().parse_args(list(argv) if argv is not None else None)
     config = _load_config(Path(args.config))
-    dataset = _validate_dataset_contract(config)
+    try:
+        dataset = _validate_dataset_contract(config)
+    except SurrogateInferenceDatasetError:
+        return 1
     if str(dataset["kind"]) == "type_i_native_validation":
         _, exit_code = _run_live_type_i_validation(config, seed=int(args.seed))
     else:

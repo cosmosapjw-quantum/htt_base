@@ -307,7 +307,12 @@ def build_live_htt_decomposition_from_solver_output(
         "propagator_readiness": solver_output.metadata.get("propagator_readiness"),
         "propagator_exactness": solver_output.metadata.get("propagator_exactness"),
         "covariance_readiness": _covariance_readiness(solver_output),
-        "fitting_ready": _covariance_readiness(solver_output) == "full",
+        "fitting_ready": False,
+        "fitting_allowed": False,
+        "fitting_block_reason": "direct_likelihood_binding_is_diagnostic_only; use bass.inference.live_binding for hard-gated fitting",
+        "family_backend_status": solver_output.metadata.get("family_backend_status"),
+        "production_cutoff_status": solver_output.metadata.get("production_cutoff_status"),
+        "stochastic_channel_status": solver_output.metadata.get("stochastic_channel_status"),
         "tilt_background_owner": solver_output.metadata.get("tilt_background_owner"),
         "requested_integrator_family": solver_output.metadata.get("requested_integrator_family"),
         "resolved_solver_method": solver_output.metadata.get("resolved_solver_method"),
@@ -316,7 +321,7 @@ def build_live_htt_decomposition_from_solver_output(
         "binding_origin": "solver_core_output",
         "solver_output_ref": solver_output.manifest.artifact_id,
         "live_bass_binding": True,
-        "diagnostic_only": _covariance_readiness(solver_output) != "full",
+        "diagnostic_only": True,
     }
 
 

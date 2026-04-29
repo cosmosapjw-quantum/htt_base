@@ -19,6 +19,7 @@ from bass.hierarchy.pstf_radiation import (
 )
 from bass.hierarchy.pstf_tensor import unpack_hierarchy, zero_hierarchy
 from bass.hierarchy.integrator import IntegrationResult
+from bass.los.family_backend_protocol import family_backend_status
 from bass.los.ver2_source_propagator import (
     ObserverFrameMetadata,
     PropagatorMode,
@@ -266,6 +267,37 @@ def _native_propagator_readiness(
     return "approximate_family_kernel"
 
 
+def _attach_output_gate_metadata(
+    output: SolverCoreOutput,
+    *,
+    gate_registry: Mapping[str, object] | None,
+) -> None:
+    from bass.forward.ver3_output_archive import resolve_output_gate_registry
+
+    resolved = resolve_output_gate_registry(output, gate_registry=gate_registry)
+    output.metadata["gate_registry"] = resolved
+
+    output_split = resolved.get("output_split_gate")
+    output_split_metadata = dict(getattr(output_split, "metadata", {}))
+    if output_split_metadata:
+        output.metadata["stochastic_channel_status"] = output_split_metadata.get(
+            "stochastic_channel_status",
+            output.metadata.get("stochastic_channel_status", "unknown"),
+        )
+        output.metadata["stochastic_block_reason"] = output_split_metadata.get(
+            "stochastic_block_reason",
+            output.metadata.get("stochastic_block_reason"),
+        )
+
+    production_cutoff = resolved.get("production_cutoff_gate")
+    production_cutoff_metadata = dict(getattr(production_cutoff, "metadata", {}))
+    if production_cutoff_metadata:
+        output.metadata["production_cutoff_status"] = production_cutoff_metadata.get(
+            "production_cutoff_status",
+            output.metadata.get("production_cutoff_status", "unknown"),
+        )
+
+
 def _base_covariance_readiness(anisotropic_covariance: object | None) -> str:
     return "proxy" if anisotropic_covariance is not None else "missing"
 
@@ -364,6 +396,7 @@ def build_solver_core_output(
         "executor_realization": executor_realization,
         "coupling_mode": runtime_controls.coupling_mode.value,
         "propagator_mode": propagator.mode.value,
+        "family_backend_status": family_backend_status(bianchi_type),
         "propagator_readiness": propagator_readiness,
         "propagator_exactness": propagator_readiness,
         "covariance_readiness": _base_covariance_readiness(anisotropic_covariance),
@@ -691,7 +724,7 @@ def _build_reconstructed_payloads(
     angular_representation: str,
     b_mode_coefficients: np.ndarray | None = None,
     b_mode_payload_available: bool = False,
-    b_mode_component_status: str = "zero_filled_layout_contract_only",
+    b_mode_component_status: str = "zero_filled_not_evolved",
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     state = _final_slice_radiation_state(result, b_coefficients=b_mode_coefficients)
     directions, weights = _tensor_product_sphere_rule(int(result.L_max))
@@ -847,7 +880,9 @@ def build_solver_core_output_from_native_result(
         limber_eta_sp_sign=limber_eta_sp_sign,
         off_diagonal_strategy=off_diagonal_strategy,
     )
-    b_mode_payload_status = "zero_filled_layout_contract_only"
+    b_mode_payload_status = str(
+        result.solver_info.get("layout_b_mode_payload_status", "zero_filled_not_evolved")
+    )
     b_mode_payload_available = False
     b_mode_runtime_available = False
     b_mode_coefficients = None
@@ -873,6 +908,8 @@ def build_solver_core_output_from_native_result(
             b_mode_payload_status = b_mode_sector_status
             b_mode_payload_available = True
             b_mode_runtime_available = True
+        elif b_mode_sector_status:
+            b_mode_payload_status = b_mode_sector_status
     elif runtime_b_tower is not None:
         b_mode_coefficients = np.asarray(runtime_b_tower[-1], dtype=np.float64)
         if np.any(np.abs(b_mode_coefficients) > 0.0):
@@ -885,6 +922,20 @@ def build_solver_core_output_from_native_result(
             )
             b_mode_payload_available = True
             b_mode_runtime_available = True
+    b_mode_output_support = (
+        "evolved_b_mode_history"
+        if b_mode_runtime_available
+        else "known_zero_not_evolved"
+        if b_mode_payload_status == "zero_filled_not_evolved"
+        else "layout_contract_only"
+    )
+    b_mode_block_reason = (
+        None
+        if b_mode_runtime_available
+        else "b_mode_sector_zero_filled_not_evolved"
+        if b_mode_payload_status == "zero_filled_not_evolved"
+        else "b_mode_layout_contract_without_runtime_evidence"
+    )
     alm_T, alm_E, alm_B = _build_reconstructed_payloads(
         result,
         coefficient_representation="ver2_native_pstf_final_slice",
@@ -1093,6 +1144,8 @@ def build_solver_core_output_from_native_result(
             "axis_aligned_tilt_support": True,
             "off_axis_fallback_applied": False,
             "off_axis_block_reason": None if off_axis_supported else "off_axis_not_closed",
+            "b_mode_output_support": b_mode_output_support,
+            "b_mode_block_reason": b_mode_block_reason,
             "canonical_sector_order_contract": ("ph_I", "ph_E", "ph_B", "nu_I", "baryon", "cdm", "src"),
             "runtime_resolved_sector_order": (
                 ("ph_I", "ph_E", "nu_I")
@@ -1234,12 +1287,7 @@ def build_solver_core_output_from_native_result(
     output.metadata["propagator_readiness"] = readiness
     output.metadata["propagator_exactness"] = readiness
     output.metadata["propagator_ready"] = readiness != "contract_only_unavailable"
-    from bass.forward.ver3_output_archive import resolve_output_gate_registry
-
-    output.metadata["gate_registry"] = resolve_output_gate_registry(
-        output,
-        gate_registry=gate_registry,
-    )
+    _attach_output_gate_metadata(output, gate_registry=gate_registry)
     return output
 
 
@@ -1449,12 +1497,7 @@ def build_solver_core_output_from_lowell_result(
             **source_builder_metadata,
         },
     )
-    from bass.forward.ver3_output_archive import resolve_output_gate_registry
-
-    output.metadata["gate_registry"] = resolve_output_gate_registry(
-        output,
-        gate_registry=gate_registry,
-    )
+    _attach_output_gate_metadata(output, gate_registry=gate_registry)
     return output
 
 

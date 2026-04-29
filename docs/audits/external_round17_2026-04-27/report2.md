@@ -1,289 +1,278 @@
-I'll start by extracting and surveying the bundle, then read the key documents in the order the prompt specifies before forming a verdict.I've now read the audit-focused brief, the R12-14 investigation summary, the seed code, the integrator DAE block, the LoS grid builder, the closure-test config, the linear-probe script, the R15 P0 fix record, the Round-9 findings (where the bias-floor probe lives), the R17 PR-S13 scope, and the relevant sections of the detailed analysis. Producing the audit now.
-
----
-
-# BASS Phase-1 Closure — External Audit, Round-17
-
-**Auditor:** Claude Opus 4.7 (single instance). **Date:** 2026-04-27. **Bundle commit:** `02cb6c0`.
-**Reading scope:** `02_AUDIT_FOCUSED_SUMMARY.md`, `03_AUDIT_PROMPT.md`, `01_DETAILED_ANALYSIS.md` §§5–18, §29, all 7 files in `code/`, all 8 files in `reference_docs/`. ~3,800 LoC in code/ + ~115 KB of reference docs read.
-
----
-
-## 1. Verdicts (one line each)
-
-| # | Question | Verdict | Confidence (1–5) |
-|---|---|---|---|
-| Q1 | D-2 (Lowell seed validity at sub-horizon `x = k·η_init`) is the diagnosis | **CONFIRMED** | **4.5 / 5** |
-| Q2 | Proposed closure (η_init → z ≈ 10⁹ + DAE-relaxation) is the right mechanism | **PARTIALLY CONFIRMED** | **3.5 / 5** |
-| Q3 | DAE-relaxation pinning ℓ = 2 m = 0 only is sufficient through deep TCA | **PARTIALLY CONFIRMED** | **3.5 / 5** |
-| Q4 | No other architectural defects of comparable size are missed | **PARTIALLY CONFIRMED** | **3 / 5** |
-| Q5 | Sub-track ordering α → β → γ → δ (with D-3 parked behind δ) | **REFUTED — D-3 should precede δ** | **4 / 5** |
-
----
-
-## 2. Q1 — D-2 diagnosis: **CONFIRMED**
-
-### 2.1 Reasoning
-
-The diagnosis is two distinct claims, both load-bearing:
-
-(i) *That the seed is the leading-order Taylor expansion in `x = k·η_init`*. This is mathematically inspectable from the code, not a hypothesis. At `code/regular_adiabatic_ic.py:142–186`, every entry of the returned dict is a finite polynomial of degree 2 or 3 in `x`, with one extra `ω·k²·η³` term that is also of bounded order. There is no resummation, no matching, no mode-by-mode adaptation. `delta_gamma = (amp/3)·x²` (line 165–168), `theta_gamma = (amp/27)·x³` (line 173), `pi_nu = -amp · (4/(3·denom)) · x²` (line 175) — these are the textbook Lewis–Challinor 2002 App. C / Lowell §13.2 leading-order forms, valid as a power series in `x`. They are wrong by the standard truncation-error argument once `x ≳ 1`. The code text settles this point.
-
-(ii) *That this analytic shortcoming dominates the residual at η_init = 261 Mpc*. The strongest direct evidence in the bundle is `reference_docs/V5_ROUND15_P0_D1_FIX_SUMMARY.md` Tables at lines 45–58, where the §10 decisive test (CAMB-perfect Newtonian-gauge sources fed through the BASS LoS projector) was re-run at η_init = 100 Mpc as a control. The per-cell ratios collapse precisely as the D-2 hypothesis predicts:
-
-| Cell | LoS-fix only (η_init=261) | LoS-fix + η_init=100 | CAMB direct |
-|---|---:|---:|---:|
-| k=10⁻³, ℓ=2 | 1.28×10⁻³ (×0.03 vs CAMB) | 4.24×10⁻² (×0.93) | 4.54×10⁻² |
-| k=10⁻², ℓ=2 | 6.36×10⁻³ (×0.83) | 7.99×10⁻³ (×1.04) | 7.65×10⁻³ |
-| k=10⁻², ℓ=3 | 8.89×10⁻³ (×1.26) | 7.00×10⁻³ (×0.99) | 7.07×10⁻³ |
-
-This is the right empirical fingerprint: pushing η_init back (without changing anything else) collapses the per-cell ratios toward CAMB. That is what the diagnosis predicts and is incompatible with most rivals (gauge mismatch would not depend on η_init this way; basis-convention errors would not depend on η_init at all).
-
-(iii) *Falsification of single-factor rivals*. R14 finding F1 (per-(k, ℓ) std/|mean| = 108–357 % across all candidate factors, `reference_docs/V5_ROUND12_TO_14_INVESTIGATION_SUMMARY.md:115–117`) eliminates any constant-multiplier hypothesis and is consistent with a per-k-functional error like D-2.
-
-### 2.2 What I'd flag as a limitation, not a refutation
-
-The empirical D-2 fingerprint comes from one control point (η_init = 100 Mpc). That is a 2.6× extension, not the 2.6×10⁵× extension δ proposes. The slope of (residual vs η_init) is established by a single non-anchor data point. The CONFIRMED verdict is on the *direction* and *mechanism*, not on the *quantitative claim* "all of the 6.43× lives in D-2".
-
-There is also a small, separate, mathematically-distinct seed defect that travels under the D-2 banner but is not the Lowell expansion proper: the heuristic `_approx_tau_c(eta_initial, a_initial) = 0.15 · η_init / √a_init` at `code/regular_adiabatic_ic.py:94–101`, which is honestly labelled in its own docstring as "*not* a recombination solve … chosen only to populate the small photon quadrupole / E_2 startup surface". This poisons `pi_gamma` and `E_2` at η_init independently of the x-expansion. At η_init = 261 Mpc its contribution is small (because `theta_gamma ~ x³` is small at x ~ 1), but at the deep anchor (η_init = 10⁻³ Mpc, z ≈ 10⁹) the *actual* `Γ_T` from the species table must replace this heuristic, otherwise δ ships with a different (smaller, but real) seed defect than D-2. Treat this as a pre-condition to δ, not an alternative diagnosis.
-
-### 2.3 Counter-test (the one I'd run before committing to multi-month δ work)
-
-**η_init sweep on the existing pipeline, no integrator changes.** Shrink η_init through the largest range that *doesn't* require radiation-era TCA. The species PCHIP tables already extend to `η ≈ 100 Mpc` per the §10 fix's `k_adapted_η100` column, but the integrator config (`code/flrw_pipeline.py:406–419` calls `build_cosmological_integrator_config(...)`) anchors η_init at `η(z_*) − 20 Mpc ≈ 261 Mpc`. The species tables in `SpeciesBackgroundRegistry.from_planck2018` cover earlier η than the integrator currently requests; the integrator simply doesn't reach back into them.
-
-Concrete script delta — *new file* `scripts/v5_round17_d2_eta_init_sweep.py` (~80 LoC):
-
-```python
-# Sweep η_init ∈ {261, 200, 150, 100, 70, 50} Mpc (no TCA changes; just lower the
-# integrator's start). Use compute_flrw_d_ell_linear_probe at the same N_k=65
-# k_grid as the closure test. Plot D_2/D_2_anchor vs η_init.
-for eta_init in (261.0, 200.0, 150.0, 100.0, 70.0, 50.0):
-    pipeline_cfg = FLRWPipelineConfig(L_max_tower=8, ell_max_transfer=8)
-    # NEW knob: pipeline_cfg.eta_init_mpc_override that threads through to
-    # build_cosmological_integrator_config (one new keyword in
-    # cosmological_config.py, ~5 LoC). Below 50 Mpc the existing IC builders
-    # may need radiation-era seed; that's δ's territory, hence the cap.
-    bundle = compute_flrw_d_ell_linear_probe(
-        species, k_grid_mpc=k_grid, pipeline_config=pipeline_cfg,
-        # ... eta_init_override=eta_init ...
-    )
-    print(eta_init, bundle["d_tt"][2] / 1002.086744)
-```
-
-**Predictions**:
-- D-2 confirmed: monotone collapse of `D_2/D_anchor` from ≈ 6.43 (at η_init=261) toward ≈ 1 (at η_init=50–70 Mpc, where `x = k·η_init < 0.5` for all k_max ≤ 0.0316 Mpc⁻¹). The shape should be a power law because the truncation error in `_seed_formulae` is itself a power of `x = k·η_init`.
-- D-2 refuted: residual sticks near 6.43 across the range, or moves the wrong way. That outcome would force the residual onto a different defect (D-3 or something missed in Q4 below).
-
-This sweep is **at most a few hours of wall time** (six runs × 31 min = 3.1 h on the 4-worker machine, fewer if you parallelize the sweep). Compared to multi-month δ work, this is the cheapest possible go/no-go gate. If I were planning δ I would not enter it without first running this sweep.
-
-A second, smaller counter-test that distinguishes D-2 from "low-k bias-floor still leaking after R10/R11": run `compute_transfer_function_at_k(k=1e-5, b_k_sq=0.0)` directly — i.e., redo the Round-9 §5d bias-floor probe (`reference_docs/V5_ROUND9_FINDINGS.md:271–308`) on the post-R15-P0 codebase. R9-D found `|Δ_bias|/|Δ_target| = 3.08` at k=10⁻⁴ before the fix; it was supposed to drop to ~ 0 after the `pi_nu`, `G_3` linear-amplitude correction. **The bundle does not contain a post-R11 measurement of this ratio.** If it has crept back up because of some other amplitude-independent term in the seed or the IMEX startup, part of the 6.43× could be a stale-bias contribution that survives bias-subtraction, *not* D-2. ~1 hour wall time, a 30-LoC script.
-
----
-
-## 3. Q2 — Closure mechanism (extend η_init + DAE-relaxation): **PARTIALLY CONFIRMED**
-
-The mechanism is the right *kind* of mechanism: it is exactly what CAMB does (early radiation-era IC at deep TCA, evolve forward through TCA to recombination). But three concerns weighing the verdict down from CONFIRMED to PARTIALLY CONFIRMED, in increasing order of severity:
-
-### 3.1 IMEX 12-decade extrapolation (mild concern)
-
-Blocker 2 (`reference_docs/V5_RUNTIME_TRACK_DIAGNOSIS.md:1–219`) is a clean closure: `λ_max(A_right) = +0.175 / Mpc → 4×10⁻¹⁶ / Mpc` after the eight algebraic patches. The operator is now *physically correct* (skew-adjoint streaming + negative-semidefinite Thomson, with Wigner-Eckart-correct cross-couplings derived from MB95 / KKS97). I cannot identify a physical reason this would break across 12 decades. A skew-adjoint streaming block has its eigenvalues on the imaginary axis at *every* η, not just η ∈ [261, 14147].
-
-What I would still ask for, before declaring this risk-free:
-
-- **Per-decade `λ_max(A_right)` snapshot.** Run `scripts/v5_operator_fast_check.py` (referenced at `V5_RUNTIME_TRACK_DIAGNOSIS.md:205–207`) at η ∈ {10⁻³, 10⁻², 10⁻¹, 1, 10, 100, 1000, 14000} Mpc with the actual species background (in particular the actual `Γ_T(η)` at radiation-era values ~10¹² /Mpc-equivalent), not the "γ_T=1" sentinel. If `λ_max` stays ≤ 10⁻¹² across the sweep, this concern is gone. The audit result so far is at γ_T = 1, which is reasonable for the recombination regime but not for `Γ_T/H ~ 10⁹`.
-- **Conservation-law audit per decade.** Codazzi tilt (the audit's constitutive constraint), photon-baryon momentum balance (MB95 eq. 65 in TCA), and energy conservation. Each per-decade audit costs hours, not days.
-
-### 3.2 Stiffness of the implicit step at `relax_rate = a · Γ_T` (real concern)
-
-This is the concern I want most to flag. The DAE is implemented at `code/integrator.py:496–498`:
-
-```python
-relax_rate = a_val * float(Gamma_T)
-rhs_T[slot] = -relax_rate * (current_Pi2 - theta_2_alg)
-rhs_E[slot] = -relax_rate * (current_E2  - E_2_alg)
-```
-
-The relaxation puts a Jacobian eigenvalue at `−a·Γ_T` into the linearization. At z = 10⁹: a ~ 10⁻⁹, Γ_T (in η-prime units, i.e., d/dη conformal-time rate) is roughly `n_e · σ_T · a` evaluated in η-prime, which at full ionization in the radiation era gives `Γ_T ~ 10¹² / Mpc` order-of-magnitude. So `a · Γ_T ~ 10³ / Mpc`. Compared to the explicit dynamics (k_max ~ 0.03 / Mpc), the stiffness ratio is ~10⁵. This is well within the stability domain of any A-stable implicit method (ARK4(3)6L[2]SA is L-stable on the implicit stage), *if the relaxation is in the implicit branch*.
-
-**The bundle does not show me where this term lands in the IMEX split.** ARK4(3)6L[2]SA is an additive RK that requires the user to label which terms are stiff (implicit) vs non-stiff (explicit). The block at lines 434–498 is wired into `combined_rhs` (line ~340 onward) which assembles `out` for the *whole* RHS. Whether the IMEX driver (which I cannot see in the bundle — `LowellBianchiIntegrator.run` referenced at `code/integrator.py:556`) splits this term into the implicit stage is a critical question.
-
-If the relaxation is in the **explicit** branch, step size is bounded by `dt < 2 / |a·Γ_T|`. At z=10⁹ that's `dt < 2·10⁻³ Mpc`, and integrating from 10⁻³ to 14147 Mpc requires ~10⁷ steps. Computationally infeasible.
-
-If it's in the **implicit** branch, no problem.
-
-**Counter-test:** read the IMEX driver to confirm. If the `slot` overwrite at lines 497–498 routes through `combined_rhs` and `combined_rhs` is dispatched as a single explicit-stage callable, this is the failure mode. The fix is to register the relaxation as a linear stiff term (its Jacobian at the slot is exactly `−a·Γ_T·I`), with the algebraic value as the "constant" term to be solved against. ~50 LoC of refactoring.
-
-### 3.3 Switch-smoothness across 6 decades of `Γ_T/H` (moderate concern)
-
-The current threshold `gamma_T_over_H_threshold = 100` (default, `code/integrator.py:594`) governs the on/off transition. `htt/bass/hierarchy/test_tca_switch_smoothness.py` is referenced at `reference_docs/CLAUDE_md_excerpt.md:48` as enforcing the smoothness audit, but the test target is the *recombination* transition where `Γ_T/H` falls from ~10² to 10⁻¹ — i.e., the threshold transition is actually crossed in the recombination test. At z = 10⁹ the system *starts* deep above the threshold (`Γ_T/H ~ 10⁹`) and stays there for many decades before approaching threshold near recombination. The smoothness audit at the recombination transition does *not* verify that integration *inside* deep TCA is well-behaved across many decades.
-
-What's at issue specifically: as the integrator descends from z=10⁹ to z~10⁵, `Γ_T/H` falls from ~10⁹ to ~10⁵ — still deep TCA, no threshold crossing. But the relax_rate `a·Γ_T` evolves smoothly (a grows, Γ_T falls more slowly than H), and the algebraic value `theta_2_alg` from `solve_tca_closure` also evolves smoothly. Nothing in this is *physically* problematic. The risk is purely numerical: that the implicit-stage conditioning of (I − dt · J) deteriorates as `dt · a · Γ_T` becomes very large and the algebraic solution dominates the time step. This is well-understood in the DAE-of-index-1 literature (which is what this is) and the cure is to formulate the slot equation as a *constraint* solved at each step rather than as a stiff-relaxation ODE — but that's an implementation detail of how the IMEX is set up, not a physics question.
-
-### 3.4 What the verdict means
-
-CONFIRMED that pushing η_init back is the correct *direction*. PARTIALLY because (i) implicit-branch routing of the relaxation needs verification, (ii) the conservation-law per-decade audit is genuine multi-month work that the bundle correctly identifies, and (iii) the `tau_c` heuristic in `_seed_formulae` must be replaced before the deep anchor or the seed will carry a *different* error than the one D-2 names.
-
----
-
-## 4. Q3 — DAE-relaxation pinning only ℓ = 2 m = 0: **PARTIALLY CONFIRMED**
-
-### 4.1 Reasoning
-
-This is the right question and CAMB practice is the right benchmark. CAMB's deep-TCA handling (`equations.f90`) actually does more than just "evolve everything except ℓ=2"; it explicitly truncates the photon multipole hierarchy at ℓ=2 during deep TCA, with ℓ ≥ 3 set by analytic TCA-2 expansion (Lewis 2008). What BASS does — pin ℓ=2 algebraically, free-stream ℓ ≥ 3 — is *not* canonical CAMB practice; it's a different choice.
-
-**Whether it's a defensible different choice depends on whether ℓ ≥ 3 stay near zero by themselves in deep TCA.** In the moment hierarchy, the source of `Π_ℓ` is `k · Π_{ℓ−1}`. The damping is `−Γ_T · Π_ℓ` for ℓ ≥ 2. So in steady state:
-
-```
-Π_ℓ ~ (k / Γ_T) · Π_{ℓ−1}    (radiation-era TCA scaling)
-```
-
-With `Γ_T ~ 10¹² / Mpc` and `k ≤ 0.03 / Mpc`, the ladder factor is `k/Γ_T ~ 3·10⁻¹⁴`. Each higher ℓ is suppressed by 14 orders of magnitude relative to its neighbor. So in deep TCA, ℓ ≥ 3 *should* stay essentially at machine precision; pinning them is unnecessary.
-
-The Lowell seed sets `Π_ℓ ≥ 3 = 0` at η_init (only `theta_gamma`, `pi_gamma` are non-zero in the photon T tower; see `code/regular_adiabatic_ic.py:243–246`). So the initial condition is right and the deep-TCA dynamics keep them small.
-
-**However** — what about the E-mode hierarchy? `code/integrator.py:498` pins `E_2`, but in deep TCA `E_3, E_4, …` get sourced through Thomson coupling to `T_2` in a slightly different way (KKS97 polarization tower, source involves `(T_2 − √6 E_2)`). The KKS97 source structure would also drive `E_ℓ ≥ 3 ~ 0` in deep TCA, but I'd want this confirmed empirically rather than asserted.
-
-### 4.2 Counter-test for Q3
-
-**Run a single-k integration from z=10⁹ to recombination at fixed `k = 10⁻²` (or whatever k is feasible inside the validation budget) with the existing DAE-relaxation, and trace `||Π_ℓ|| / ||Π_2_alg||` for ℓ ∈ {3, 4, 5, 6, 7, 8} at η-snapshots through the trajectory.** If all ratios stay below ~10⁻⁶ (well below truncation tolerance), the ℓ-only-2 pinning is sufficient. If any rises above ~10⁻³, BASS's deviation from CAMB practice is observable and would need additional pinning logic.
-
-Concrete script delta: extend `scripts/v5_round15_decisive_los_test.py` (referenced at `V5_RUNTIME_TRACK_DIAGNOSIS.md:230–232`, not in bundle) to also dump `state.photon_T.tensors[ℓ].components[ℓ]` and `state.photon_E.E.tensors[ℓ].components[ℓ]` at every η-snapshot for ℓ ∈ {3..L_max_tower}. This requires the integrator to be willing to start at η < 261 Mpc, which is δ work; so this counter-test is naturally part of the early validation milestone of δ, not a precondition.
-
-### 4.3 The relax-rate stiffness is treated above (§3.2)
-
-It is the same point as Q3's third bullet from the audit prompt and I won't repeat it. The verdict for that sub-question: **not yet verifiable from the bundle alone — depends on the IMEX driver's split classification, which is not in `code/`**. If the relaxation is implicit, fine. If explicit, you need a smoother dispatch (e.g., compute `Π_2 = Π_2_alg` algebraically + project the dynamic state onto the constraint manifold each step) — this is the "DAE-index-reduction" route. Verification step is reading `LowellBianchiIntegrator.run` (~`code/integrator.py:556`+), which is not in the bundle.
-
----
-
-## 5. Q4 — Other architectural defects: **PARTIALLY CONFIRMED**
-
-The bundle's three-defect framing (D-1 closed; D-2 open / multi-month; D-3 open / sub-week) is principled and the auditor cycles converged on it. But it's worth listing what I checked and what I'd want stress-tested before treating "no other architectural defects" as settled.
-
-### 5.1 Source-extractor sign convention at `tier_b_source_extraction.py:225`
-
-This file is **not in the bundle**. The relevant snippet quoted at `reference_docs/V5_ROUND12_TO_14_INVESTIGATION_SUMMARY.md:201–203` is:
-
-```python
-theta0_g = t_tower[:, _slot(0, 0)]   # synchronous-gauge tower output
-```
-
-combined at `flrw_bessel_projector.py:448`:
-
-```python
-sw_polter = g_arr * (theta0_arr + psi_arr + 0.25 * pi_arr)
-```
-
-This is D-3 (sync/Newt mismatch on Θ_0) + the SW source assembly. The sign convention itself I cannot audit without the file, but I note that the assembly form `Θ_0 + Ψ + Π/4` matches MB95 eq. 89 and is internally consistent for a *single* gauge — D-3 is precisely the cross-gauge mismatch claim, not a sign-convention bug per se. **Not a missed defect**, just a re-statement of D-3.
-
-### 5.2 PSTF normalization at the LoS projector (`flrw_bessel_projector.py`)
-
-Also not in the bundle. The 4√2 = √32 PSTF normalization candidate was explicitly tested in Round 13–14 (Codex hypothesis, refuted by F1 — `V5_ROUND12_TO_14_INVESTIGATION_SUMMARY.md:240–241`). If a separate normalization defect existed it would show up the same way (single-multiplier signature) and would have failed F1. **Refuted by prior art.**
-
-### 5.3 Polarization quadrupole basis convention
-
-The audit prompt frames this as `Π_BASS = Θ_2 + E_0 + E_2` vs `polter = 2Θ_2/5 + 3E_2/5`. Per `reference_docs/CLAUDE_md_excerpt.md:41`, those are different objects in BASS: `Π_BASS` is the *Thomson collision primitive* (used inside the collision operator), `polter` is the *LoS source contribution* (used at the projector). E₀ is **unused in the production polter** by explicit policy. So the convention is documented and not internally contradicted.
-
-The claim "not yet directly stress-tested at low-k" in the audit prompt's Q4 is honest. A clean stress test would be to inject `(Θ_2, E_2) = (1, 0)` and `(0, 1)` separately into the LoS source and confirm that the resulting `α(k, ℓ)` matches `2/5` and `3/5` (resp.) of an analytic single-mode reference. **Recommend:** add this as a pair of unit tests in `htt/bass/los/test_flrw_bessel_projector.py` — < 1 day work, would close the open question regardless of whether it's the residual or not.
-
-### 5.4 Background-table interpolation (HYREC visibility)
-
-The Rust path uses the same `SpeciesBackgroundRegistry` background table (`01_DETAILED_ANALYSIS.md:55`); only the *interpolation strategy* differs. The Rust path has its own table interpolation (presumably the standard HYREC tabulation + Akima/cubic spline); the Python path uses PCHIP via `scipy.interpolate.PchipInterpolator` with `extrapolate=False`. R14 finding F2 noted PCHIP overflow warnings at `n_output ≥ 256`; R15 P0's per-k LoS grid bypasses that by re-evaluating PCHIP on a denser grid that respects the visibility FWHM. The post-R15 LoS evaluations should be interpolation-stable.
-
-I would be more concerned if the Rust path used pre-tabulated `j_ℓ(x)` while the Python path uses `scipy.special.spherical_jn` per call (it does, per `01_DETAILED_ANALYSIS.md:56`). Two independent routines for the same Bessel function will not be bit-identical. For Phase-1 bit-identity that's a real concern, but it should produce errors of order machine epsilon × O(integration weight), not 6.43×. **Not a candidate for the residual.**
-
-### 5.5 Candidate the bundle doesn't flag explicitly: residual bias-floor at very-low k after R10/R11
-
-Round-9 §5d (`reference_docs/V5_ROUND9_FINDINGS.md:271–308`) found `|Δ_bias|/|Δ_target| = 3.08` at k = 10⁻⁴ pre-fix. The R10/R11 fix added `B_K_sq` linear factors to `pi_nu` and `G_3`. **The bundle does not contain a post-R11 measurement of this ratio.** It is plausible — but unproven from the materials I have — that some *other* amplitude-independent term (in the IMEX startup, in `eta_cov`, or in the IC consistency surface) still leaks a small bias floor that survives bias-subtraction at very-low k. The R17 P2 measurement was at probe_b_k_sq = 1.0; if the residual bias is k-dependent and contaminates only k ≤ 10⁻³, it would distort the integrated D_2.
-
-This is a single-script counter-test: reproduce R9-D §5d's `compute_transfer_function_at_k(k, b_k_sq=0.0)` probe at k ∈ {10⁻⁵, 10⁻⁴, 10⁻³, 10⁻², 10⁻¹·⁵} on the post-R15-P0 commit and tabulate `|Δ_bias|/|Δ_target|` per (k, ℓ). **One hour of wall time.** If the ratio stays small (≪ 1) across the grid, this concern is closed and the 6.43× is genuinely a forward-modeling residual (i.e. D-2 is even more unambiguously the cause). If it stays elevated at very-low k, that's a parallel, smaller defect that should be closed before declaring "D-2 is everything that's left".
-
-### 5.6 The `tau_c` heuristic in the seed (already noted in §2.2)
-
-Re-flag: at `code/regular_adiabatic_ic.py:94–101`, `tau_c = 0.15·η_init/√a_init` is a placeholder. Its contribution to the residual at η_init = 261 Mpc is small but not zero. At δ's deep anchor, it must be replaced by `1/Γ_T(η_init)` from the species table. **Not a missed defect at the current anchor; but a precondition for δ.**
-
----
-
-## 6. Q5 — Sub-track ordering: **REFUTED — D-3 should precede δ**
-
-### 6.1 Reasoning
-
-The bundle's stated ordering is:
-
-```
-α (a-switch, 1–2 d)  →  β (real-IC, 1–2 d)  →  γ (m∈{−2..+2}, 3–5 d)  →  δ (D-2, multi-month)
-```
-
-with **D-3 (sub-week, sync/Newt gauge mismatch) parked indefinitely behind δ**. The bundle itself acknowledges the risk — `02_AUDIT_FOCUSED_SUMMARY.md:159–162`:
-
-> *"D-3 closure could leak into δ's measurement budget if it's conflated with the seed-validity residual."*
-
-I think this concern is decisive and the bundle isn't taking it seriously enough.
-
-D-3 is *sub-week*. δ is *multi-month* with iterative re-validation cycles (each per-decade conservation audit, each `Γ_T/H` smoothness re-audit, each real-IC adjustment). During δ work, the team will repeatedly want to ask: "*Did the residual just collapse from 6.43 to (some smaller number) because of the η_init push, or is some of that shift unrelated D-3 behaviour?*" Without D-3 closed, that question has no clean answer; it has a "we'll have to back out the D-3 magnitude post-hoc" answer, which is exactly the analysis pathology that produced the 4√2 fortuitous-averaging false positive in R13–R14.
-
-The bundle's argument for the current ordering is implicit at `02_AUDIT_FOCUSED_SUMMARY.md:108–111` — α, β, γ each have unit-of-progress value independent of the residual. That's true and not a counter-argument; α/β/γ should still ship in sub-week order. The question is where D-3 lands.
-
-### 6.2 Recommended ordering
-
-```
-α (a-switch, 1–2 d)
-   → η_init sweep counter-test (Q1.3 above, ~few hours, GO/NO-GO on δ)
-   → β (real-IC, 1–2 d)
-   → D-3 (sync/Newt, sub-week)
-   → γ (m∈{−2..+2}, 3–5 d)
-   → δ (D-2, multi-month) on a clean residual baseline
-```
-
-This adds at most one calendar week (sub-week D-3) before δ entry, and buys clean δ measurement budgets. The cost-benefit is overwhelming: one week of certainty vs. multi-month δ with conflated residuals.
-
-### 6.3 Also: γ and δ should not be sequential in the strong sense
-
-γ (state-layout migration `m=0 → m∈{−2..+2}`) is **independent of the FLRW residual**. The bundle says so explicitly (`02_AUDIT_FOCUSED_SUMMARY.md:110`). γ is on the critical path for off-axis Bianchi, not for FLRW closure. There is no reason γ has to be done before δ; γ and δ can run concurrently in different branches. If the team is one-person, do δ first (the bigger Phase-1 lever); if it has bandwidth for a parallel branch, push γ in parallel since it doesn't touch any δ-relevant code.
-
-### 6.4 What I'd update on
-
-If D-3 magnitude turns out to be very small (say, a 10–20 % effect after a quick spot-test on a single (k, ℓ) cell), the conflation concern is cosmetic and the original ordering is fine. A 1-hour spot test at k = 10⁻³, ℓ = 2 (the cell where the §10 decisive test is most diagnostic) computing the source-extractor output before and after a hypothetical `Θ_0_S → Θ_0_N + h_S′/6` patch would resolve this. The bundle has this on the to-do list (`reference_docs/V5_ROUND12_TO_14_INVESTIGATION_SUMMARY.md:218–229`) but no measured number. Get the number first.
-
----
-
-## 7. Risks specific to δ that should be planned around
-
-In rough order of severity:
-
-**R-1 (high). Stiff implicit routing of the DAE relaxation is unverified.** §3.2. If the IMEX driver does not register `−a·Γ_T` as a stiff-eigenvalue contribution, step size will be capped at `~10⁻³ Mpc` at z=10⁹ and integration is computationally infeasible. This is a 1-day check (read `LowellBianchiIntegrator.run` and follow how `combined_rhs` is dispatched into the ARK4(3)6L[2]SA stages). Do this *before* committing to δ's full scope.
-
-**R-2 (high). Real-IC at z = 10⁹ requires a radiation-era IC builder for all species.** Currently `cosmological_config.py::build_cosmological_integrator_config` defaults to `η_initial = η(z_*) − 20 Mpc`. The Lowell seed itself is fine at z=10⁹ (its leading-order x-expansion is *more* accurate, not less, at smaller η_init), but `_approx_tau_c` (`code/regular_adiabatic_ic.py:94–101`) must be replaced by the actual `1/Γ_T(η_init)` from the species table, and baryon/CDM/neutrino synchronous fluid quantities must be populated correctly at z=10⁹. Plan ~2 weeks of work for this alone.
-
-**R-3 (moderate). Per-decade conservation-law re-audit.** Codazzi-tilt RHS and momentum-balance constraints (per `reference_docs/CLAUDE_md_excerpt.md:48` PSTF lineage) need re-validation across η ∈ {10⁻³, 10⁻², 10⁻¹, …, 10⁴} Mpc. Not hard physics; just calendar time.
-
-**R-4 (moderate). Switch-smoothness across `Γ_T/H ~ 10⁹ → 10⁻¹`.** Existing test (`htt/bass/hierarchy/test_tca_switch_smoothness.py`) covers the recombination transition; the deep-TCA-only regime (no threshold crossing) is structurally different and needs its own audit. Plan ~1 week.
-
-**R-5 (moderate). Numerical conditioning across 12 decades of η.** With `rtol = 1e-6, atol = 1e-9` (`code/flrw_pipeline.py:125–126`), accumulated roundoff over 12 decades may be measurable at the 10⁻⁹ closure tolerance. Consider stepping in `ln η` rather than `η` for the radiation-era portion; this is a standard technique in cosmological Boltzmann solvers (Zhang & Yu 2017 numerical-relativity context, but the principle is generic).
-
-**R-6 (low–moderate). Residual bias-floor at very-low k after R10/R11.** Counter-test in §5.5. If it has crept back, δ's measurement budget will be contaminated by something δ doesn't address.
-
-**R-7 (low). Bessel-function evaluation reproducibility between Rust and Python.** Will surface as a small (10⁻⁶ – 10⁻⁸) per-(k, ℓ) variance once everything else is at the bit-identity scale. Not a δ blocker; a Phase-1 final-mile concern.
-
----
-
-## 8. Confidence summary and what would update each verdict
-
-**Q1 (D-2 diagnosis): 4.5 / 5.** The mathematical structure of the seed code is unambiguous; the η_init=100 control point in the §10 test is a direct empirical signature. I'd move to 5/5 if the η_init sweep counter-test (§2.3) shows monotone collapse of the residual with η_init, which I'm confident it will. I'd move to 3/5 if the post-R11 bias-floor probe (§5.5) shows a substantial residual amplitude-independent floor, which would indicate that part of the 6.43× lives in a different defect than D-2.
-
-**Q2 (closure mechanism): 3.5 / 5.** Right direction; right CAMB-precedent; load-bearing DAE-relaxation is a sensible mechanism. Held back by the unverified implicit-routing question (§3.2), the conservation-audit calendar cost (§3.1), and the `_approx_tau_c` precondition (§2.2). Moves to 4.5/5 once the implicit-routing question is settled and the per-decade `λ_max` snapshots are in. Drops to 2/5 if the relaxation turns out to be in the explicit branch and a deeper refactor is needed.
-
-**Q3 (DAE-relaxation pinning ℓ=2 m=0 only): 3.5 / 5.** The moment-ladder argument (§4.1) makes ℓ ≥ 3 dynamically irrelevant in deep TCA, and the seed sets them to zero. But this is theoretical, not demonstrated; the counter-test in §4.2 would settle it. Moves to 4.5/5 if higher-ℓ ratios stay below 10⁻⁶ in the empirical trace; drops to 2/5 if any ℓ ≥ 3 mode shows non-trivial amplitude in the deep-TCA region.
-
-**Q4 (other defects): 3 / 5.** The three-defect framing is principled and the auditor cycles converged on it, but the bundle has at least two specific stones unturned (§5.3 polarization-basis injection test; §5.5 post-R11 bias-floor probe). Each is sub-day work and would fully close those open questions. Moves to 4/5 with both done; drops to 2/5 if either reveals a non-trivial residual contribution.
-
-**Q5 (sub-track ordering): 4 / 5.** The bundle's own concern ("D-3 closure could leak into δ's measurement budget") is decisive when D-3 is sub-week and δ is multi-month. The only thing holding this back from 5/5 is uncertainty about D-3's magnitude — if it turns out to be very small, the conflation concern is cosmetic. A 1-hour spot test (§6.4) resolves it.
-
----
-
-## 9. One-line summary
-
-The D-2 diagnosis is right; the proposed closure is the right *kind* of closure but has implementation risks the bundle does not yet quantify (chiefly the IMEX implicit-stage routing of the DAE-relaxation); and the most cost-effective change to the plan is to insert sub-week D-3 closure and a few hours of η_init-sweep counter-testing **before** committing to multi-month δ.
-
----
-
-*End of audit. File-line references resolve against the bundle layout at `external_round17_2026-04-27/`. If any cited file is needed at the level of full code (in particular `LowellBianchiIntegrator.run` and `flrw_bessel_projector.py`), recommend including them in the next bundle revision — the §3.2 implicit-routing question cannot be answered from the materials provided.*
+JOURNAL-GRADE AUDIT — BASS Low-ℓ Bianchi Einstein–Boltzmann Solver
+Audit scope: htt/bass/ only. Conclusions follow code, dispatch tables, gates, and tests; documentation claims are treated as hypotheses, not evidence.
+
+1. CLAIM RECONSTRUCTION (PHASE 0)
+#	Reconstructed claim	Provisional tag
+C1	1+3 PSTF / tetrad low-ℓ formulation is the authority path	partially implemented (PSTF tower layout present pack_unpack.py:19, pstf_tensor.py; but Python primary path does not yet match Rust MB-95 anchor — Δ ≈ +2.04×10¹⁰ μK² on D₂; xfail at test_d2_pstf_closure.py)
+C2	All 11 Bianchi families supported	registry/interface only for 8 of 11 (real full-mode coverage only FLRW, I, V, IX; II/III/IV/VI₀/VI_h/VII₀/VII_h/VIII raise NotImplementedError on off-axis modes)
+C3	Background geometry validated for all 11 types (Wainwright–Ellis shear sources)	clearly implemented (shear_sources.py:98-360, registry :368-381, factories einstein_bianchi.py:605-618)
+C4	Orthogonal + globally tilted backgrounds	partially implemented — orthogonal full; global tilt is policy-fixed by default; dynamic-rapidity owner gated behind tilt_background_owner (CLAUDE.md §1)
+C5	Local boost = output-only post-processing, separated from global tilt	clearly implemented (observer/observer_boost.py:24-89, adapters.py:18-73, discriminator.py) — but no runtime guard against in-solver misuse
+C6	Exact electron-frame Thomson collision (non-perturbative (1−v_e·n))	clearly implemented for axisymmetric tilt (collision/electron_frame.py:139-160, 244-292, tilted_visibility.py:201-222); regression-armored against the retracted /k patch
+C7	Low-ℓ projected hierarchy (Tier B) end-to-end	clearly implemented for FLRW limit only (Python pipeline compute_flrw_d_ell runs; Bianchi LoS for II–VIII restricted to axis-aligned subset)
+C8	Family-specific spatial backends (Bessel / hyperbolic / Wigner-D / collocation)	partial — FLRW/I Bessel, V hyperbolic-Legendre, IX Wigner-D dedicated; II/III/IV/VI₀/VI_h/VII₀/VII_h/VIII fall back to SolvableCollocationPropagator on restricted k-subsets (los/family_propagators/init.py:54-86)
+C9	Family-specific IC provenance	weakly evidenced — zero_IC bootstrap shared across families; only Type V has a dedicated tilted-anchor factory; IC-provenance gate is in the ladder but no cross-family discriminating test
+C10	Deterministic / stochastic / boost split in outputs	partially implemented — split structure present in forward/ver3_output_archive.py output_split_gate_bundle(); stochastic component is zero-filled placeholder; deterministic + boost are real
+C11	Harmonic-level outputs (a_lm + T/Q/U maps)	partially implemented — forward/map_producer.py produces a_lm and HEALPix maps via inverse SHT (alm_to_map_TQU), but B-mode is flrw_zero_only sentinel and stochastic injection is absent
+C12	Validation gate before fitting	clearly implemented — 14-stage GATE_LADDER in validation/ver3_gate_stop.py; hard_gate_before_fitting is called from inference/live_binding.py:219 and raises FittingBlockedError from inference/planck_likelihood.py:204,213,225 and inference/__main__.py:393
+C13	Observables/statistics layer with covariance-aware likelihood	partial — dense a_lm Gaussian (statistics.py:51-77, 118-183), per-ℓ Gaussian fallback (:80-91); map-domain χ² absent; only Planck 2018 Plik low-ℓ TT real-data path
+C14	Optimization (joint dense workspace, numba prep) preserves physics	honest but weakly evidenced — workspace pre-alloc (7aff3af) is bit-equal by construction (fill(0.0) ≡ np.zeros); numba is POC-only; no benchmark fairness regression test exists
+What is solver-ready / output-ready / statistics-ready / dev-only / interface-only:
+
+Solver-ready: FLRW limit forward model (Python pipeline runs end-to-end, but D₂ anchor unmet); orthogonal Bianchi I, V, IX backgrounds.
+Output-ready: a_lm + D_ℓ for FLRW, I, V, IX; HEALPix maps for these via map_producer.py.
+Statistics-ready: NONE — test_d2_pstf_closure.py is xfail; the gate ladder will block fitting until the FLRW closure passes (and gate flags are flipped by upstream tests/runners).
+Dev-only: II/III/IV/VI₀/VI_h/VII₀/VII_h/VIII restricted-mode collocation; massive-neutrino branch; reionization-tanh; numba JIT.
+Interface-only: stochastic ΛCDM realization injection; B-mode primordial source; dynamic-rapidity tilt evolution; map-domain likelihood.
+2. EXECUTABLE PIPELINE RECONSTRUCTION (PHASE 1)
+Actual end-to-end FLRW path that runs today:
+
+Config / runtime control — bass.runtime.ver2_execution (cosmological cutoffs {12,16,20,30,40}); tilt_background_owner defaults to policy-fixed.
+Family selection — closure/nabla_dispatch.py resolves (family, k_vec) → operator or raises NotImplementedError("FB-2.x") for off-axis modes.
+Geometry / background init — background/einstein_bianchi.py:605-618 COSMOLOGY_FACTORY; shear_sources.py per family.
+Family-specific backend — los/family_propagators/__init__.py: dedicated for FLRW, I, V, IX; collocation fallback otherwise.
+Perturbation IC — hierarchy/ic.py:48-114 zero_IC; family-specific IC provenance is thin (registry-tagged, not solver-discriminating).
+Hierarchy + transport — hierarchy/integrator.py LSODA, rtol=1e-6/atol=1e-12, max_step_factor=1000; inline TCA DAE-relaxation at ℓ=2 m=0 only.
+Collision (authority path) — collision/electron_frame.py calls ThomsonPSTFCollisionOperator.evaluate_tower() after exact axisymmetric boost-in/boost-out around tilted_visibility.boost_factor.
+Visibility / recombination — recombination/history_visibility.py HyRec table; reionization tanh disabled by default.
+LoS — los/los_grid_builder.build_los_grid (Round-15 P0 closed); family propagators above.
+Spectrum assembly — spectrum/flrw_pipeline.py:1147 compute_flrw_d_ell; D_ℓ in μK² with T_CMB=2.72548K but SSoT drift open (bass_py still 2.7255).
+Output split — forward/ver3_output_archive.py output_split_gate_bundle: deterministic ✓, stochastic = zero-filled, boost ✓.
+Map producer — forward/map_producer.py alm_to_map_TQU (healpy soft dep).
+Likelihood / inference — inference/planck_likelihood.py with whitelisted datasets {synthetic_gaussian, synthetic_with_bianchi_template, planck2018_plik_low_l_tt_only}.
+Fitting gate — validation/ver3_gate_stop.GATE_LADDER (14 gates), called by inference/live_binding.py:219; raises FittingBlockedError.
+Drivers — inference/drivers/{dynesty_driver, emcee_driver}.py.
+Profiling/benchmark — scripts/v5_round17_perf_*.py, no fairness regression test.
+Missing connections / placeholders:
+
+D_2 anchor closure (FLRW Python primary): not closed. The whole gate ladder is therefore dependent on the upstream FLRW closure flipping geometry_diagnostics_gate / production_cutoff_gate to True under genuine bit-identity, which they currently are not.
+Stochastic ΛCDM injection: zero-filled.
+Map-space likelihood: absent.
+Bianchi LoS for non-{I,V,IX} families is collocation-fallback only.
+3. PHYSICS IMPLEMENTATION AUDIT (PHASE 2)
+3.1 Formalism-to-code fidelity
+PSTF tower packing exists (pack_unpack.py:19, pstf_tensor.py) — full (2ℓ+1) slots allocated but only m=0 used in TCA closure (integrator.py:492 _ell2_m0_slot_offset). The m=0 → m∈{-2..+2} migration is openly deferred (CLAUDE.md PR-S13(b)).
+T_CMB drift open: htt.core.ssot.C.T0_uK = 2.7255e6 is inconsistent with T0_K = 2.72548 in the same SSOT file; bass_py/.../planck_mes_bounds.py still uses 2.7255. Anti-regression guard exists; coordinated fix deferred.
+Doppler /k retraction — the regression-armor test test_sharp_visibility_doppler_analytic_protects_no_over_k_patch enforces the canonical (g v_b)' form. Good.
+3.2 Background physics
+All 11 family shear sources implemented and tagged VALIDATED (shear_sources.py:98-360, 368-381). Class A/B Wainwright-Ellis formulas explicit. Type IX has recollapse event dispatch.
+Tilted background: BianchiCosmology carries beta, v_hat_e; dynamic-rapidity owner exists (nonperturbative_tilt_rhs) but is gated; policy-fixed default means tilt does not feed back into the integrator RHS in production.
+Codazzi-consistent tilt — present at construction; not exercised dynamically in default runs.
+3.3 Transport / collision
+Exact electron-frame Thomson: confirmed non-perturbative (electron_frame.py:139-160, tilted_visibility.py); axisymmetric boost-in / collision / boost-out structure (:244-292).
+Polarization basis: E-mode is full PSTF rank-2 hierarchy with proper spin-2 streaming coefficients (polarization.py:74-225, emode_hierarchy.py:1-66); B-mode infrastructure present in tilted electron path (electron_frame.py:270-292); no primordial-GW B source.
+Tilt-dependent Γ_T: only via electron tilt B(η,e) = γ_e(1+v_e·ê) (tilted_visibility.py:224-239). Baryon-bulk-velocity coupling to Γ_T is not present.
+Visibility + reionization: HyRec scalar; reionization disabled by default; extend_table_with_reionization exists but isn't invoked in production.
+3.4 Perturbation / hierarchy
+Low-ℓ Θ_ℓ, E_ℓ towers present; B_ℓ tower exists in tilted-electron branch only; B is zero by construction for FLRW Bessel projector (sentinel b_mode_output_support="flrw_zero_only").
+Neutrino sector: massless homogeneous fluid, Π_ν ≡ 0 (no anisotropic stress); massive branch has phase-space grid but is gated by Sigma_mnu.
+TCA: inline DAE-relaxation, not pre-phase. Smoothness verified at threshold (test_tca_switch_smoothness.py).
+Family-induced mode mixing: present at the propagator level for V (hyperbolic-Legendre) and IX (Wigner-D); for II/III/IV/VI₀/VI_h/VII₀/VII_h/VIII it's the collocation fallback restricted to axis-aligned subsets — mode mixing not exercised for these families.
+IC provenance: weak — cross-family discriminating regression absent.
+3.5 Classification
+Fully implemented: exact Thomson, E-mode PSTF transport, all-11 shear sources, TCA inline relaxation, observer-boost separation, GATE ladder + FittingBlockedError, HyRec visibility, output-archive bundle structure.
+Partially implemented: Bianchi LoS (4 of 11 full); polarization (E full, B per-family thin); tilt (policy-fixed default); cosmological m≠0 closure.
+Weak / absent: stochastic injection; primordial-GW B source; baryon-tilt Γ_T; map-domain likelihood; reionization; massive-ν free-streaming shear.
+Implemented but not validated: D_2 closure on Python primary; family-specific IC provenance; full-azimuthal m∈{-2..+2} closures.
+4. FAMILY / TILT / BOOST COVERAGE AUDIT (PHASE 3)
+4.1 11-family matrix (V = ✓, R = registry-only, X = absent, S = restricted-subset)
+Family	Registry	Background	Backend	IC	Perturbation	Output	Stat-usable
+FLRW	✓	✓	✓ Bessel	✓	✓	✓	✗ (D_2 not closed)
+I	✓	✓	✓ Bessel	✓	✓	✓	✗
+II	✓	✓	S k=(k₁,0,0)	✓	S collocation	S	✗
+III	✓	✓	S k₂=0	✓	S collocation	S	✗
+IV	✓	✓	S k₂=0, no FLRW limit	✓	S collocation	S	✗
+V	✓	✓	✓ hyperbolic-Legendre	✓ (tilted-anchor)	✓	✓	✗
+VI₀	✓	✓	S k₂=0	✓	S	S	✗
+VI_h	✓	✓	S k₂=0	✓	S	S	✗
+VII₀	✓	✓	S n₁=n₃ AND k∥e₂	✓	S	S	✗
+VII_h	✓	✓	S k₂=0	✓	S	S	✗
+VIII	✓	✓	S k=(k₁,0,0) Cartan	✓	S	S	✗
+IX	✓	✓	✓ Wigner-D S³	✓	✓	✓	✗
+Verdict: registry + background-shear are genuinely 11-broad; perturbation/output are 4-broad.
+
+4.2 Orthogonal / global-tilt / local-boost separation
+Background state: BianchiCosmology carries policy-fixed (beta, v_hat_e); orthogonal = beta=0.
+Perturbation state: tilt enters only as parametric coupling through the electron-frame collision factor; not as a dynamical d.o.f. in production.
+Output map / harmonics: deterministic alm produced from forward solver; observer boost applied as a separate kernel apply_observer_boost(Cl_frame, boost, L_max) (observer/adapters.py:18-73) — strictly post-processing.
+Statistics layer: discriminator routes ObserverHypothesis separately from background hypothesis.
+4.3 Forbidden-pattern checks
+❌ No evidence that observer boost is misused as a substitute for global tilt — module dataclasses are explicitly disjoint (observer_boost.py:27-31: "must not subclass, alias, or silently coerce the cosmological tilt surface").
+⚠️ No runtime assertion prevents future misuse; segregation is by discipline, not by guard.
+⚠️ Type IV has no FLRW limit by construction — current registry treats it as a falsifiability probe; safe so long as no auto-FLRW recovery test is asserted on it.
+⚠️ Development cutoffs {4,6,8} and cosmological {12,16,20,30,40} are co-resident; gate production_cutoff_gate exists but the gate flag is set by upstream tests, not enforced at runtime against pipeline calls — this is a soft gate.
+5. OBSERVABLES / STATISTICS READINESS (PHASE 4)
+5.1 Primary outputs
+D_ℓ / C_ℓ for TT/EE/TE: spectrum/cl_assembly.py real.
+a_lm for T/E/B: deterministic via forward solver; archived via output_split_gate_bundle.
+T(n̂), Q(n̂), U(n̂) HEALPix maps: forward/map_producer.alm_to_map_TQU (real, soft dep on healpy).
+5.2 Comparison hierarchy
+Deterministic template sanity: yes (tests in forward/test_map_producer.py, test_ver3_output_archive.py).
+Spectral per-ℓ Gaussian: likelihood/cosmological_frame.py:193 _spectral_log_prob.
+Harmonic dense Gaussian: :228 _harmonic_log_prob — gated by harmonic_gaussian_ready.
+Map-domain χ²: absent.
+Covariance: dense blocks (TT, EE, TE, BB) supported; off-diagonal scaffolding in spectrum/off_diagonal_covariance.py.
+5.3 Fitting gate
+Gate ladder (14 gates) genuinely enforced. Trace: inference/__main__.py:393 catches FittingBlockedError; live_binding.py:81,219,328 raises it; planck_likelihood.py:204,213,225 raises it. This is real enforcement, not theatrical.
+However: gate flags themselves are populated by upstream test/runner outputs. With the FLRW D_2 xfail, no Bianchi run today should be able to flip all 14 gates green. That is the intended posture: the gate ladder is open precisely because the closure isn't done.
+5.4 Overclaim risk
+Manuscript-level claims (docs/manuscript/) reference a Phase-1 anchor of D_2 = 1002.086744 μK²; this is currently the Rust path only. Anything that quotes this number as a Python-PSTF achievement is overclaim until test_d2_pstf_closure.py flips to xpass.
+Honest envelope ("4 families full-mode, 8 families axis-aligned subsets") is documented in CLAUDE.md §1 — must be repeated in any external-facing report, not just in internal notes.
+6. NUMERICAL MATURITY (PHASE 5)
+Integrator: scipy LSODA, rtol=1e-6, atol=1e-12, max_step ≈ 14 Mpc (resolves recombination FWHM ~19 Mpc). Adequate for low-ℓ.
+Stiffness: LSODA auto-switches; TCA inline relaxation supplements at Γ_T/H > threshold (default 100). Smoothness audited.
+Convergence tests: validation/test_production_cutoff_convergence.py exists and exercises compute_flrw_d_ell cutoff stability — narrow but real.
+FLRW recovery: fails Δ ≈ +2.04×10¹⁰ μK² at construction-fixed test (the previously latent test-bug — L_max_tower=4 vs ell_max_transfer=8 — was fixed; the test now fails honestly, which is a maturity gain).
+Round-17 P2 linear-probe diagnostic: D_2(probe=1) = 6.4×10³ μK² vs anchor 1002 → factor ≈6.4 residual after primordial-amplitude flooring is disabled. Triangulated to V5_ROUND12-14 D-2 boundary issue (Lowell §13.2 seed valid only k·η_init ≪ 1; >50% of R17 k-grid violates this).
+Workspace optimization: byte-equivalent (fill(0.0) ≡ np.zeros); 1.80× cumulative parallel speedup reported.
+Maturity verdict: stable in narrow regime (FLRW orthogonal, fixed-tilt, low-ℓ, axis-aligned subsets). NOT publication-grade numerics on the Python primary path until D_2 closure lands.
+7. OPTIMIZATION HONESTY (PHASE 6)
+Optimization	Same eqs?	Same frame?	Same tol?	Same output?	Same fitting gate?	Verdict
+Joint dense workspace pre-alloc (Tier 2D, 7aff3af)	✓	✓	✓	✓ bit-equal	✓	honest, physics-preserving
+_operator_scales last-call cache (25b3731)	✓	✓	✓	bit-equal claim	✓	plausibly honest — no fairness test found
+Python micro-opt + harmonic_affine perm cache (4ef59a2)	✓	✓	✓	FLRW: no-op (claimed)	✓	honest for FLRW, untested off-FLRW
+Numba toolchain prep (f629e9c)	n/a	n/a	n/a	POC bit-equal 1000/1000	n/a	prep only, not deployed
+1.80× cumulative parallel (87d6775)	depends on parts above	—	—	—	—	provisional — no committed cross-tolerance regression test
+Forbidden-pattern probes:
+
+❌ No evidence of mock spectrum tuning.
+❌ No evidence of dev-cutoff masquerading as prod (cutoffs are listed in disjoint tuples).
+❌ No evidence of shortcut frame transformation (the /k patch was retracted with regression armor).
+⚠️ Missing: same-physics A/B regression suite for workspace and cache optimizations. Optimizations are bit-equal by construction, but a committed regression test would harden this.
+8. DOCS / TESTS / RELEASE HONESTY (PHASE 7)
+~3,200 individual def test_* functions across 186 files. 287 Round-16 baseline pass in 15.8 s — mostly unit/smoke.
+End-to-end physics validation: compute_flrw_d_ell driven tests (xfail on D_2), production-cutoff convergence, TCA switch smoothness, Doppler /k regression armor, sharp-visibility analytic oracles. Real, but narrow.
+Family-specific backend regression: present for I, V, IX (dedicated propagator tests); for II/III/IV/VI₀/VI_h/VII₀/VII_h/VIII the test surface is mostly dispatch-validation (does it raise OutOfScope correctly), not output validation.
+Output-level validation: map_producer, ver3_output_archive have direct tests. Solid.
+Statistics gate validation: validation/test_ver3_gate_stop.py exists and verifies the gate blocks when output_split is missing — good.
+Optimization fairness test: absent.
+Docs vs code consistency:
+CLAUDE.md §1 honest envelope is consistent with the dispatch tables. Good.
+docs/manuscript/ cites D_2 = 1002.086744 μK² — fair on the Rust path; would be overclaim if attributed to PSTF primary today.
+Round-17 retraction of /k mandate is documented and code-armored. Good.
+Release honesty stance: today, only "background-ready (11-family) + perturbation/output-ready (FLRW, I, V, IX) + gated statistics-blocked" can be honestly claimed. Anything stronger — Bianchi data fitting, full-azimuthal closure, full-family LoS — is ahead of the code.
+
+9. CoVe + CONTRASTIVE VERIFICATION (PHASE 8)
+9A. CoVe — synthesis-shaking questions and answers
+Does the fitting gate actually run when you invoke a Planck likelihood? — Yes. live_binding.py:219 calls hard_gate_before_fitting; failure raises FittingBlockedError caught by __main__.py:393.
+Is D_2 = 1002.086744 μK² achieved on the Python path? — No. test_d2_pstf_closure.py is xfail; gap ≈ +2.04×10¹⁰ μK².
+Can a user fit Bianchi parameters today? — No — only synthetic-Gaussian and synthetic-with-template (whitelist) and planck2018_plik_low_l_tt_only; and with all 14 gates green, which is not the present state.
+Is global tilt evolved dynamically? — No by default. tilt_background_owner defaults to policy-fixed; dynamic owner exists but is gated.
+Are off-axis Bianchi modes computable for II–VIII? — No. nabla_dispatch.py raises NotImplementedError("FB-2.x"/"FB-5.2").
+Does observer boost touch the integrator? — No. apply_observer_boost operates on Cl arrays post-assembly.
+Is the exact electron-frame Thomson the production default? — Yes in electron_frame.py; non-perturbative; regression-armored.
+Is the m=0→m∈{-2..+2} migration done? — No. Storage allocates 2ℓ+1 slots; physics-critical TCA closure uses m=0.
+Is stochastic ΛCDM injected in the deterministic/stochastic/boost split? — No, zero-filled placeholder.
+Is reionization active? — No (mode default disabled).
+Are neutrinos carrying anisotropic stress? — No. Reduced fluid; Π_ν ≡ 0.
+Is Type IV's missing FLRW limit a bug? — No, it is by construction, used as a falsifiability probe.
+Is the optimization claim "1.80× cumulative parallel" same-physics? — By construction yes, but no committed fairness regression test.
+Are the 11-family shear sources just stubs? — No, they are explicit Wainwright-Ellis formulas with VALIDATED tags and regressions in shear_sources.py.
+CoVe net effect: synthesis stands; tightens C2 (registry/background broad, output narrow), C9 (IC provenance is weak), C14 (workspace is bit-equal but fairness untested).
+
+9B. Contrastive H1 / H2 / H3
+H1 (well-closed, mostly publication-grade): contradicted by D_2 xfail, 8/11 axis-aligned restriction, missing fairness test, scalar reionization, zero-filled stochastic, m=0-only closure.
+H2 (strong exploratory + major revision needed for family/observables/gate honesty/optim honesty): consistent with all evidence.
+H3 (premature, can't be called solver-ready or stat-ready): contradicted by genuine 11-family background validation, real fitting gate enforcement, real exact Thomson, real PSTF E-tower, real dispatch discipline.
+Selected: H2 — strong exploratory solver with disciplined architecture; major revision required before headline statistics claims.
+
+Per-axis verdicts:
+
+Physics implementation: H2 (strong but uneven).
+Family support: closer to H3 (broad registry, narrow solver).
+Tilt/boost separation: H1 (well-closed by design).
+Output/statistics readiness: H2 leaning H3 (gate is real but blocked; B/stochastic absent).
+Numerical maturity: H2 (FLRW Python primary not yet closed; Rust anchor is the only validated source).
+Optimization honesty: H1 leaning H2 (bit-equal by construction, lacks committed fairness test).
+Docs / release honesty: H1 (CLAUDE.md envelope is admirably honest; risk lives in any external-facing summaries that omit it).
+10. RANKED RISK LEDGER (P0 → P3)
+P0 — blocks any data-fitting headline
+
+R1: D_2 = 1002.086744 μK² not achieved on Python primary; xfail at test_d2_pstf_closure.py:45-50. All Bianchi statistical inference is parked behind this.
+R2: Family LoS coverage is 4/11 (FLRW, I, V, IX); fitting any anomaly attributed to II–VIII would silently invoke restricted-mode subsets only.
+P1 — blocks publication of specific subsystems
+
+R3: m=0-only closure in TCA / hierarchy critical paths; full-azimuthal m∈{-2..+2} deferred (integrator.py:492). Off-axis polarization claims are not yet defensible.
+R4: T_CMB SSoT drift open: T0_uK = 2.7255e6 vs T0_K = 2.72548 in same SSOT class; coordinated fix deferred.
+R5: Stochastic ΛCDM injection is zero-filled placeholder — anything claiming "deterministic + stochastic + boost split" must qualify "stochastic = placeholder."
+R6: Tilt is policy-fixed by default; any tilt-evolution claim requires explicit tilt_background_owner=dynamic.
+P2 — blocks numerical-maturity claim hardening
+
+R7: No committed optimization fairness regression test (workspace, scale-cache, harmonic-affine cache). Bit-equality holds by construction but is not test-armored.
+R8: Reionization is disabled by default; tanh model exists but is not wired into the production pipeline.
+R9: IC provenance gate is in the ladder but lacks cross-family discriminating regression — zero_IC is shared; risk of silent IC-content drift across families.
+P3 — soft hygiene
+
+R10: Observer-boost segregation relies on architectural discipline; no runtime guard rejects in-solver application.
+R11: Numba JIT roadmap documented; not yet implemented; any future commit must add a same-physics regression.
+R12: Type IV has no FLRW limit — must remain quarantined as a falsifiability probe in any documentation.
+R13: Massive-neutrino fluid assumes Π_ν=0; sub-percent E-mode work would require free-streaming shear.
+11. TOP-12 LOAD-BEARING RISKS
+D_2 Python primary closure (R1) — single most load-bearing item.
+Family LoS coverage 4/11 (R2) — caps any Bianchi-headline claim.
+m=0-only closure (R3) — caps polarization claims.
+Statistical fitting gate green-flip dependency on D_2 (chain of R1+R2+R3).
+T_CMB drift (R4) — caps any precision-comparison claim.
+Stochastic placeholder (R5) — caps "split" claim.
+Policy-fixed tilt default (R6) — caps tilt-evolution claim.
+No committed optimization fairness test (R7) — caps speedup claims.
+IC-provenance discriminating regression missing (R9) — caps cross-family fairness claim.
+Reionization disabled (R8) — caps recombination-history claim beyond standard.
+Massive-ν / N_eff handling (R13) — caps high-precision claim.
+Observer-boost runtime guard absent (R10) — long-tail correctness risk.
+12. MINIMAL PATCH / OPTIMIZATION PLAN (≤12)
+#	Patch	Failure mode it blocks	Where	Difficulty	Expected gain	Required-before claiming
+P1	Close FLRW D_2 Python primary (Round-17 P2 sub-tracks (a)-switch → (c) → (b) → D-2)	Statistical fitting gate cannot legitimately flip green	spectrum/flrw_pipeline.py, IC seed _seed_formulae	high (multi-week)	unblocks all stat claims	solver-ready, statistics-ready, publication-grade
+P2	Add cross-family IC-provenance discriminating regression	silent IC drift between families	hierarchy/ic.py + new validation/test_ic_provenance_regression.py	medium	tightens IC gate	family-broad solver-ready
+P3	Add committed optimization fairness regression (same physics, same tol, A/B output)	undetected bit-drift from caches/JIT	new runtime/test_opt_fairness.py exercising compute_flrw_d_ell w/ and w/o caches	low-medium	hardens 1.80× claim	optimization-honest
+P4	Resolve T_CMB drift (set both T0_K = 2.72548 and T0_uK consistently)	precision-comparison overclaim	htt/core/ssot.py, bass_py/.../planck_mes_bounds.py	low	closes SSoT inconsistency	publication-grade
+P5	Replace stochastic-zero-fill with explicit NotImplementedStochasticChannel sentinel + gate flag	silent overclaim of "split"	forward/ver3_output_archive.py	low	honesty	output-ready
+P6	Add runtime guard in apply_observer_boost rejecting in-solver metadata tags	future misuse	observer/adapters.py	low	architectural hardening	solver-ready (long-tail)
+P7	Add explicit assertion E_0 == E_1 == 0 in E-mode RHS entry	latent spin-2 violation	collision/polarization.py	low	catches future regressions	output-ready (E)
+P8	Add production_cutoff_gate runtime check at compute_flrw_d_ell entry rejecting L_max ∈ DEV_CUTOFFS	dev-cutoff sneaking into prod	spectrum/flrw_pipeline.py:1147	low	hardens gate	statistics-ready
+P9	Document and test the off-axis NotImplementedError surface (ensure OutOfScopeError raised consistently across II–VIII; tighten to public exception type)	accidental silent fallback to FLRW kernel	closure/nabla_dispatch.py (consolidate error types)	low	clarity	family-broad output-ready
+P10	Add map-domain χ² runner (uses existing alm_to_map_TQU) gated by independent map_likelihood_gate	bottleneck for full Bianchi anomaly fitting	new inference/map_likelihood.py	medium	enables map-level comparison	full statistics-ready
+P11	Land the m=0 → m∈{-2..+2} closure migration (PR-S13(b)) and add azimuthal-mode regression	polarization off-axis correctness	hierarchy/integrator.py:492 family	high (3-5d)	unblocks polarization claims	publication-grade polarization
+P12	Lift the Type IV/VII no-FLRW-limit caveat to a prominent README/manuscript line and add a CI-checked NOTE in bianchi_types.py:641-646	misuse as if it has FLRW recovery	docs + bianchi_types.py	low	clarity	release-ready
+13. FINAL VERDICTS
+A. Physics implementation: strongly implemented with caveats — exact Thomson, PSTF E, all-11 shear sources, TCA-relaxation are real and disciplined; closure breadth is narrow.
+
+B. Family coverage: broad but uneven — 11/11 background, 4/11 full-mode LoS, 8/11 axis-aligned subsets. Closer to "broad registry, narrow solver" than to "genuinely broad support."
+
+C. Observables / statistics: output-ready only, gated stat-ready not yet attained — gate ladder is real and enforced; closure (D_2) blocks legitimate fitting today.
+
+D. Numerical maturity: narrow stable regime — LSODA + TCA-smooth + cutoff convergence is solid in FLRW, low-ℓ, axis-aligned subsets; D_2 Python primary not closed.
+
+E. Optimization honesty: largely physics-preserving, weakly armored — bit-equality holds by construction; no committed fairness regression yet.
+
+F. Overall code verdict: serious low-ℓ solver package with major revision needed before any data-fitting headline. Best-supported hypothesis: H2.
+
+14. HEADLINE CLAIMS — ALLOWED vs NOT ALLOWED
+Allowed (today)
+
+"11 Bianchi families have validated background geometry and shear-source registry."
+"Exact non-perturbative electron-frame Thomson scattering is the production default; the retracted Doppler /k patch is regression-armored."
+"Local-observer boost is structurally separated from cosmological tilt and applied as post-processing."
+"Forward-model outputs are split into deterministic / stochastic / boost archives, with a 14-stage gate ladder enforcing FittingBlockedError before any likelihood evaluation."
+"TCA is implemented as inline DAE-relaxation (no pre-phase), with a switch-smoothness regression."
+"FLRW, I, V, IX have full-mode LoS coverage; II/III/IV/VI₀/VI_h/VII₀/VII_h/VIII are restricted to axis-aligned subsets per FB-2.2 / FB-2.3 (NotImplementedError on off-axis modes)."
+"Recent runtime optimizations (joint workspace, scale cache) are bit-equal by construction; cumulative ~1.80× parallel speedup."
+Not yet allowed
+
+"PSTF primary achieves D_2 = 1002.086744 μK² bit-identically." (Rust path only; Python primary xfails.)
+"Bianchi parameters are fittable to Planck data." (Gate ladder is intentionally blocked.)
+"Full-azimuthal m∈{-2..+2} closure." (Deferred.)
+"Stochastic ΛCDM realizations are injected." (Zero-filled placeholder.)
+"Reionization-included visibility." (Disabled by default.)
+"Dynamic global-tilt evolution in production." (Policy-fixed default.)
+"Map-domain likelihood." (Absent.)
+"B-mode primordial polarization output." (flrw_zero_only sentinel.)
+"1.80× speedup is regression-test-armored for same-physics." (No committed fairness test.)
+Internal/dev-only
+
+Numba JIT plan, m∈{-2..+2} migration, real-time reionization, massive-ν free-streaming shear, off-axis FB-5.2 dispatch.
+Hard-gate before any data fitting
+
+D_2 Python primary closure; 14-gate ladder green; T_CMB SSoT drift fix; explicit stochastic channel (or sentinel); production-cutoff runtime check.
+15. ONE-LINE REASON
+Architecture and discipline are real and admirable; the FLRW Python-primary D_2 closure has not landed and family LoS coverage is 4/11 — so call this a serious low-ℓ Bianchi solver package whose statistics layer is correctly gated shut until that closure and a few honesty patches land.

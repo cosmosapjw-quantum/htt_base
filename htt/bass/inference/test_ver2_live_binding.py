@@ -8,6 +8,7 @@ import yaml
 
 from bass.inference.__main__ import main
 from bass.inference.live_binding import (
+    FittingBlockedError,
     build_type_i_native_validation_problem,
     run_type_i_native_validation_posterior,
 )
@@ -26,27 +27,27 @@ def test_build_type_i_native_validation_problem_is_bound_to_live_bass_outputs() 
     )
     assert problem.dataset_kind == "type_i_native_validation"
     assert problem.covariance_readiness == "full"
-    assert problem.fitting_ready is True
+    assert problem.fitting_ready is False
     assert problem.solver_output.metadata["fitting_gate_enforced"] is True
-    assert problem.solver_output.metadata["fitting_gate_allowed"] is True
-    assert np.isfinite(problem.log_likelihood(np.zeros(3, dtype=float)))
+    assert problem.solver_output.metadata["fitting_gate_allowed"] is False
+    assert problem.solver_output.metadata["fitting_allowed"] is False
+    assert problem.solver_output.metadata["diagnostic_only"] is True
+    assert "production_cutoff_gate" in problem.gate_decision.missing_gates
+    assert problem.solver_output.metadata["production_cutoff_status"] == "development_cutoff"
+    with pytest.raises(FittingBlockedError):
+        problem.log_likelihood(np.zeros(3, dtype=float))
 
 
-def test_run_type_i_native_validation_posterior_executes_once_fitting_gate_opens() -> None:
-    problem, posterior = run_type_i_native_validation_posterior(
-        seed=22,
-        n_walkers=24,
-        n_steps=40,
-        burnin=10,
-        parallel=False,
-    )
-    assert problem.covariance_readiness == "full"
-    assert problem.gate_decision.allowed is True
-    assert posterior.samples.ndim == 3
-    assert posterior.log_prob.ndim == 2
-    assert posterior.samples.shape[0] == 24
-    assert posterior.samples.shape[1] == 40
-    assert posterior.samples.shape[2] == 3
+def test_run_type_i_native_validation_posterior_blocks_on_development_cutoff() -> None:
+    with pytest.raises(FittingBlockedError) as exc:
+        run_type_i_native_validation_posterior(
+            seed=22,
+            n_walkers=24,
+            n_steps=40,
+            burnin=10,
+            parallel=False,
+        )
+    assert "production_cutoff_gate" in exc.value.gate_decision.missing_gates
 
 
 def test_cli_accepts_type_i_native_validation_dataset_kind(tmp_path) -> None:
@@ -72,8 +73,11 @@ def test_cli_accepts_type_i_native_validation_dataset_kind(tmp_path) -> None:
     assert exit_code in {0, 1}
     assert (tmp_path / "bf06_live.json").exists()
     assert (tmp_path / "bf06_live.md").exists()
-    assert (tmp_path / "posteriors" / "type_i_native_validation.npz").exists()
+    assert not (tmp_path / "posteriors" / "type_i_native_validation.npz").exists()
     payload = json.loads((tmp_path / "bf06_live.json").read_text(encoding="utf-8"))
     assert payload["posterior"]["binding_origin"] == "solver_core_output"
     assert payload["dataset"]["kind"] == "type_i_native_validation"
     assert payload["dataset"]["observable_production_status"] == "production_candidate"
+    assert payload["posterior"]["fitting_ready"] is False
+    assert payload["posterior"]["sampler"] == "blocked_by_fitting_gate"
+    assert "production_cutoff_gate" in payload["posterior"]["diagnostics"]["missing_gates"]

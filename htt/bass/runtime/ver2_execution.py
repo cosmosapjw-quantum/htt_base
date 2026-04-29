@@ -1017,17 +1017,31 @@ def _production_cutoff_gate_bundle(
 ):
     from bass.validation import make_gate_bundle
 
+    runtime_cutoff = int(runtime_controls.multipole_cutoff)
+    is_development_cutoff = runtime_cutoff in _DEVELOPMENT_CUTOFFS
     if cutoff_campaign is None:
         return make_gate_bundle(
             "production_cutoff_gate",
             family=bianchi_type,
             branch=branch,
             backend="cutoff_campaign",
-            truncation={"ell_max": int(runtime_controls.multipole_cutoff)},
+            truncation={"ell_max": runtime_cutoff},
             residual_summary={"campaign_ready": False},
-            known_limit_checks={"all_cutoffs_recorded": False},
-            forbidden_shortcut_checks={"no_development_cutoff_promoted": True},
-            metadata={"status": "missing_cutoff_campaign"},
+            known_limit_checks={
+                "all_cutoffs_recorded": False,
+                "runtime_cutoff_is_cosmological": not is_development_cutoff,
+            },
+            forbidden_shortcut_checks={
+                "no_development_cutoff_promoted": not is_development_cutoff,
+            },
+            metadata={
+                "status": "development_cutoff_blocked"
+                if is_development_cutoff
+                else "missing_cutoff_campaign",
+                "production_cutoff_status": "development_cutoff"
+                if is_development_cutoff
+                else "missing_cutoff_campaign",
+            },
             passed=False,
             opened_claim="production cutoff policy validated on an executed campaign",
         )
@@ -1054,21 +1068,26 @@ def _production_cutoff_gate_bundle(
         known_limit_checks={
             "all_cutoffs_recorded": bool(cutoff_campaign.all_cutoffs_recorded),
             "runtime_logged": bool(cutoff_campaign.runtime_logging_required),
+            "runtime_cutoff_is_cosmological": not is_development_cutoff,
             "baseline_cutoff_matches_runtime": int(cutoff_campaign.spec.baseline_cutoff)
             == int(runtime_controls.multipole_cutoff),
         },
         forbidden_shortcut_checks={
-            "no_development_cutoff_promoted": True,
+            "no_development_cutoff_promoted": not is_development_cutoff,
             "no_cutoff_stub_used_as_evidence": True,
         },
         metadata={
             "closure_name": str(cutoff_campaign.spec.closure_name),
+            "production_cutoff_status": "development_cutoff"
+            if is_development_cutoff
+            else "production_candidate",
             "runtime_seconds": {
                 int(key): float(value) for key, value in cutoff_campaign.runtime_seconds.items()
             },
         },
         passed=bool(
-            cutoff_campaign.ready
+            not is_development_cutoff
+            and cutoff_campaign.ready
             and cutoff_campaign.all_cutoffs_recorded
             and int(cutoff_campaign.spec.baseline_cutoff) == int(runtime_controls.multipole_cutoff)
         ),
@@ -1487,9 +1506,11 @@ def _resolve_guarded_solver_override(
     solver_method: str,
     realization: str,
 ) -> tuple[str, str]:
+    # Tilted branches couple the seed surface to stiff frame-mixing terms.
+    # Until the IMEX split has a real error estimator for that path, use the
+    # full RHS BDF executor that already carries the guarded tilted contract.
     if (
         runtime_controls.integrator_family is IntegratorFamily.IMEX_SPLIT
-        and str(bianchi_type) == "VIII"
         and abs(float(beta)) > 0.0
     ):
         return "BDF", "native_guarded_tilted_bdf_full_rhs"

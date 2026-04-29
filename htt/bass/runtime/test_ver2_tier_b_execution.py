@@ -508,7 +508,8 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     )
     assert run.solver_output.metadata["layout_local_matter_reference_delta_norm"] >= 0.0
     assert run.solver_output.metadata["b_mode_runtime_available"] is False
-    assert run.solver_output.metadata["b_mode_payload_status"] == "zero_filled_layout_contract_only"
+    assert run.solver_output.metadata["b_mode_payload_status"] == "zero_filled_not_evolved"
+    assert run.solver_output.metadata["b_mode_output_support"] == "known_zero_not_evolved"
     assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
     assert run.solver_output.metadata["off_axis_support"] is False
     assert run.solver_output.metadata["off_axis_fallback_applied"] is False
@@ -534,7 +535,16 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert registry["family_backend_gate"].passed is True
     assert registry["family_backend_gate"].known_limit_checks["operator_payload_bound"] is True
     assert registry["family_backend_gate"].metadata["lookup_resolution_status"] == "frozen_v5_formula_set"
-    assert registry["production_cutoff_gate"].passed is True
+    assert registry["production_cutoff_gate"].passed is False
+    assert registry["production_cutoff_gate"].metadata["production_cutoff_status"] == (
+        "development_cutoff"
+    )
+    assert registry["production_cutoff_gate"].known_limit_checks[
+        "runtime_cutoff_is_cosmological"
+    ] is False
+    assert registry["production_cutoff_gate"].forbidden_shortcut_checks[
+        "no_development_cutoff_promoted"
+    ] is False
     assert registry["background_core_gate"].known_limit_checks["samples"] > 0
     assert registry["background_core_gate"].metadata["matter_model_tag"] == (
         run.trace.background_monitor.matter_model_tag
@@ -723,7 +733,13 @@ def test_representative_orthogonal_families_execute_with_expected_propagator_rea
     assert run.solver_output.metadata["theory_family"] == f"{bianchi_type}_orthogonal"
     assert run.solver_output.metadata["source_propagator_realization"] == realization
     assert run.solver_output.metadata["source_propagator_status"] == status
-    expected_readiness = "exact" if status == "exact" else "approximate_family_kernel"
+    expected_readiness = (
+        "exact"
+        if status == "exact"
+        else "contract_only_unavailable"
+        if bianchi_type == "VIII"
+        else "approximate_family_kernel"
+    )
     assert run.solver_output.metadata["propagator_readiness"] == expected_readiness
     assert run.solver_output.metadata["propagator_exactness"] == expected_readiness
     assert run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
@@ -831,12 +847,22 @@ def test_representative_tilted_executable_families_execute_with_bounded_runtime_
     assert run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
     assert run.solver_output.metadata["source_propagator_realization"] == realization
     assert run.solver_output.metadata["source_propagator_status"] == "approximate"
-    assert run.solver_output.metadata["propagator_readiness"] == "approximate_family_kernel"
+    expected_readiness = (
+        "contract_only_unavailable"
+        if bianchi_type == "VIII"
+        else "approximate_family_kernel"
+    )
+    assert run.solver_output.metadata["propagator_readiness"] == expected_readiness
     assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
     assert run.trace.seed_projection.projection_ready is True
     assert run.trace.seed_projection.projection_mode == "background_codazzi_project"
     assert np.linalg.norm(run.trace.seed_projection.momentum_residual_after) <= _seed_projection_tol(run)
     assert run.execution_plan.runtime_decision.propagation_status == "pending"
+    assert run.integration_result.solver_info["resolved_solver_method"] == "BDF"
+    assert (
+        run.integration_result.solver_info["executor_realization"]
+        == "native_guarded_tilted_bdf_full_rhs"
+    )
     if bianchi_type == "VIII":
         assert run.integration_result.solver_info["seed_factory_mode"] == "collocation_projected"
         assert "family_adapted_intrinsic_seed" in str(
@@ -845,11 +871,6 @@ def test_representative_tilted_executable_families_execute_with_bounded_runtime_
         assert (
             run.integration_result.solver_info["seed_pack_metadata"]["seed_numeric_bridge"]
             == "family_adapted_lowell_startup_owner"
-        )
-        assert run.integration_result.solver_info["resolved_solver_method"] == "BDF"
-        assert (
-            run.integration_result.solver_info["executor_realization"]
-            == "native_guarded_tilted_bdf_full_rhs"
         )
 
 
@@ -868,6 +889,11 @@ def test_nonperturbative_tilt_owner_is_wired_into_runtime_background_and_collisi
 
     assert run.trace.background_monitor.matter_model_tag == "tilted_species_registry_dynamic_rapidity"
     assert run.solver_output.metadata["tilt_background_owner"] == "nonperturbative_tilt_rhs"
+    assert run.integration_result.solver_info["resolved_solver_method"] == "BDF"
+    assert (
+        run.integration_result.solver_info["executor_realization"]
+        == "native_guarded_tilted_bdf_full_rhs"
+    )
     assert (
         run.solver_output.metadata["tilt_background_owner_status"]
         == "production_dynamic_nonperturbative_rapidity"
@@ -899,8 +925,13 @@ def test_off_axis_tilted_runtime_path_executes_without_fallback() -> None:
     assert run.solver_output.metadata["off_axis_support"] is True
     assert run.solver_output.metadata["off_axis_fallback_applied"] is False
     assert run.solver_output.metadata["off_axis_block_reason"] is None
-    assert str(run.integration_result.solver_info["seed_injection_mode"]).startswith(
-        "offaxis_tilted_regular_adiabatic_seed"
+    assert run.integration_result.solver_info["resolved_solver_method"] == "BDF"
+    assert (
+        run.integration_result.solver_info["executor_realization"]
+        == "native_guarded_tilted_bdf_full_rhs"
+    )
+    assert "offaxis_tilted_regular_adiabatic_seed" in str(
+        run.integration_result.solver_info["seed_injection_mode"]
     )
     assert run.trace.thomson_probe.source_ready is True
     initial_T = unpack_hierarchy(run.integration_result.photon_T_tower[0], run.integration_result.L_max)

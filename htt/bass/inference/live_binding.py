@@ -236,6 +236,17 @@ def _fitting_decision(
     fitting_ready = bool(gate_decision.allowed) and covariance_readiness == "full"
     solver_output.metadata["fitting_gate_enforced"] = True
     solver_output.metadata["fitting_gate_allowed"] = fitting_ready
+    solver_output.metadata["fitting_allowed"] = fitting_ready
+    solver_output.metadata["diagnostic_only"] = not fitting_ready
+    solver_output.metadata["fitting_block_reason"] = (
+        None
+        if fitting_ready
+        else (
+            "covariance_not_full"
+            if gate_decision.allowed
+            else gate_decision.reason
+        )
+    )
     solver_output.metadata["missing_gates"] = gate_decision.missing_gates
     solver_output.metadata["covariance_readiness"] = covariance_readiness
     solver_output.metadata["fitting_gate_decision"] = gate_decision.as_payload()

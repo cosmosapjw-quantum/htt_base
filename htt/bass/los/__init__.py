@@ -12,6 +12,7 @@ from bass.los.family_backend_protocol import (
     SeedRequest,
     build_backend,
     family_backend_gate_bundle,
+    family_backend_status,
 )
 from bass.los.ver2_source_propagator import (
     ObserverFrameMetadata,
@@ -33,6 +34,7 @@ __all__ = [
     "FamilyBackend",
     "build_backend",
     "family_backend_gate_bundle",
+    "family_backend_status",
     "PropagatorMode",
     "ObserverFrameMetadata",
     "SourcePropagatorConfig",

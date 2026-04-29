@@ -44,6 +44,9 @@ def test_hard_gate_before_fitting_blocks_when_output_split_missing() -> None:
         }
     )
     assert report["allowed"] is False
+    assert report["fitting_allowed"] is False
+    assert report["diagnostic_only"] is True
+    assert report["fitting_block_reason"] == report["reason"]
     assert {
         "tilt_boost_separation_gate",
         "ic_provenance_gate",
@@ -57,6 +60,9 @@ def test_hard_gate_before_fitting_blocks_when_output_split_missing() -> None:
 def test_hard_gate_before_fitting_opens_only_after_all_upstream_gates() -> None:
     report = hard_gate_before_fitting({gate: _bundle(gate) for gate in GATE_LADDER[:-1]})
     assert report["allowed"] is True
+    assert report["fitting_allowed"] is True
+    assert report["diagnostic_only"] is False
+    assert report["fitting_block_reason"] is None
     assert report["missing_gates"] == ()
     assert report["bundle_gates"] == GATE_LADDER[:-1]
     assert report["gate_status"]["fitting_gate"] == "closed"
