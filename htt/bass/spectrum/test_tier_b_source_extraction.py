@@ -11,6 +11,8 @@ contract, and the finite-difference ISW-driver stencil.
 """
 from __future__ import annotations
 
+import warnings
+
 import numpy as np
 import pytest
 
@@ -34,6 +36,7 @@ from bass.runtime import (
 )
 from bass.spectrum.tier_b_source_extraction import (
     _fd4_derivative,
+    _scaled_pchip_no_extrapolation,
     _slot,
     extract_flrw_sources_from_tier_b,
 )
@@ -223,6 +226,17 @@ def test_no_extrapolation_outside_domain(tier_b_run, species_registry) -> None:
     ):
         assert np.isnan(float(getter(eta_before))), "should NaN below domain"
         assert np.isnan(float(getter(eta_after))), "should NaN above domain"
+
+
+def test_scaled_pchip_avoids_tiny_slope_overflow_warning() -> None:
+    eta = np.linspace(0.0, 1.0, 16, dtype=np.float64)
+    values = np.linspace(0.0, 1.0e-320, eta.size, dtype=np.float64)
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", RuntimeWarning)
+        interp = _scaled_pchip_no_extrapolation(eta, values)
+        got = np.asarray(interp(eta), dtype=np.float64)
+    assert np.allclose(got, values, atol=0.0, rtol=0.0)
+    assert np.isnan(float(interp(-0.1)))
 
 
 def test_anisotropic_stress_toggle_changes_psi(tier_b_run, species_registry) -> None:

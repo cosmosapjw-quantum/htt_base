@@ -218,6 +218,13 @@ def test_factory_can_silence_recombination_gap_warning():
     assert not caught
 
 
+def test_factory_default_does_not_emit_support_gap_warning():
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        SpeciesBackgroundRegistry.from_planck2018()
+    assert not caught
+
+
 def test_friedmann_residual_with_explicit_H(registry):
     """Passing H_mpc explicitly still produces near-zero residual."""
     bg = registry.bg_table

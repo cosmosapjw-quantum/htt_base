@@ -705,12 +705,12 @@ def test_execute_tier_b_solver_is_deterministic_for_same_inputs() -> None:
 
 @pytest.mark.parametrize(
     ("bianchi_type", "realization", "status"),
-    (
-        ("I", "bianchi_i_matrix_exact", "exact"),
-        ("V", "class_b_open_matrix_approx", "approximate"),
-        ("VII_0", "class_a_helical_matrix_approx", "approximate"),
-        ("VIII", "class_a_semisimple_matrix_approx", "approximate"),
-    ),
+        (
+            ("I", "bianchi_i_matrix_exact", "exact"),
+            ("V", "type_v_open_hyperbolic_projection", "approximate"),
+            ("VII_0", "type_vii0_helical_projection", "approximate"),
+            ("VIII", "type_viii_sl2r_noncompact_projection", "approximate"),
+        ),
 )
 def test_representative_orthogonal_families_execute_with_expected_propagator_realizations(
     bianchi_type: str,
@@ -736,8 +736,6 @@ def test_representative_orthogonal_families_execute_with_expected_propagator_rea
     expected_readiness = (
         "exact"
         if status == "exact"
-        else "contract_only_unavailable"
-        if bianchi_type == "VIII"
         else "approximate_family_kernel"
     )
     assert run.solver_output.metadata["propagator_readiness"] == expected_readiness
@@ -819,9 +817,9 @@ def _seed_projection_tol(run) -> float:
 @pytest.mark.parametrize(
     ("bianchi_type", "realization", "v_hat_e"),
     (
-        ("V", "class_b_open_matrix_approx", (1.0, 0.0, 0.0)),
-        ("VII_0", "class_a_helical_matrix_approx", (1.0, 0.0, 0.0)),
-        ("VIII", "class_a_semisimple_matrix_approx", (0.0, 1.0, 0.0)),
+        ("V", "type_v_open_hyperbolic_projection", (1.0, 0.0, 0.0)),
+        ("VII_0", "type_vii0_helical_projection", (1.0, 0.0, 0.0)),
+        ("VIII", "type_viii_sl2r_noncompact_projection", (0.0, 1.0, 0.0)),
     ),
 )
 def test_representative_tilted_executable_families_execute_with_bounded_runtime_contracts(
@@ -847,11 +845,7 @@ def test_representative_tilted_executable_families_execute_with_bounded_runtime_
     assert run.solver_output.metadata["tilt_boost_separation"] == "explicit_nonmerged"
     assert run.solver_output.metadata["source_propagator_realization"] == realization
     assert run.solver_output.metadata["source_propagator_status"] == "approximate"
-    expected_readiness = (
-        "contract_only_unavailable"
-        if bianchi_type == "VIII"
-        else "approximate_family_kernel"
-    )
+    expected_readiness = "approximate_family_kernel"
     assert run.solver_output.metadata["propagator_readiness"] == expected_readiness
     assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
     assert run.trace.seed_projection.projection_ready is True

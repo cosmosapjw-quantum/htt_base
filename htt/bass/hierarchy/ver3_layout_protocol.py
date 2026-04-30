@@ -57,21 +57,21 @@ class HierarchyLayout:
 @dataclass(frozen=True)
 class ReducedHarmonicAffineOperator:
     mode_labels: tuple[str, ...]
-    matrix: csc_matrix
+    matrix: "np.ndarray | csc_matrix"
     bias: np.ndarray
 
 
 @dataclass(frozen=True)
 class ReducedLocalAffineOperator:
     mode_labels: tuple[str, ...]
-    matrix: csc_matrix
+    matrix: "np.ndarray | csc_matrix"
     bias: np.ndarray
 
 
 @dataclass(frozen=True)
 class ReducedSourceAffineOperator:
     mode_labels: tuple[str, ...]
-    matrix: csc_matrix
+    matrix: "np.ndarray | csc_matrix"
     bias: np.ndarray
 
 
@@ -1734,8 +1734,9 @@ def assemble_source_vector(
     source_scale = float(scales["source_scale"])
     cross_mode_scale = float(scales["cross_mode_scale"])
     visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
+    temperature_amp = float(source_tables.get("temperature_visibility_source", visibility_amp))
     polarization_amp = float(source_tables.get("polarization_source", 0.0))
-    doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
+    doppler_amp = float(source_tables.get("doppler_source", 0.0))
     reduced_source_blocks = evaluate_reduced_source_blocks(
         layout,
         {**dict(bg), "source_tables": dict(source_tables)},
@@ -1751,7 +1752,7 @@ def assemble_source_vector(
             plus_scale=float(scales["mode_plus_scale"]),
             minus_scale=float(scales["mode_minus_scale"]),
         )
-        out[flatten(layout, mu, "ph_I", 0, 0)] = mu_weight * source_scale * visibility_amp
+        out[flatten(layout, mu, "ph_I", 0, 0)] = mu_weight * source_scale * temperature_amp
         if layout.ell_max >= 1:
             out[flatten(layout, mu, "ph_I", 1, 0)] = mu_weight * 0.5 * source_scale * doppler_amp
         if layout.ell_max >= 2:
@@ -1766,6 +1767,8 @@ def evaluate_reduced_source_blocks(
     layout: HierarchyLayout,
     bg: Mapping[str, object],
     backend: FamilyBackend,
+    *,
+    mode_labels: tuple[str, ...] | None = None,
 ) -> dict[str, np.ndarray]:
     """Evaluate per-mode-label source local blocks without assembling full operators."""
 
@@ -1778,15 +1781,26 @@ def evaluate_reduced_source_blocks(
     mode_minus_scale = float(scales["mode_minus_scale"])
     visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
     polarization_amp = float(source_tables.get("polarization_source", 0.0))
-    doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
+    doppler_amp = float(source_tables.get("doppler_source", 0.0))
     reion_amp = float(source_tables.get("reionization_amplitude", 0.0))
     source_width = int(layout.sector_local_dofs["src"])
     mu_count = max(len(layout.mode_labels), 1)
+    selected_labels = (
+        tuple(str(mu) for mu in layout.mode_labels)
+        if mode_labels is None
+        else tuple(str(mu) for mu in mode_labels)
+    )
+    mode_index = {str(mu): idx for idx, mu in enumerate(layout.mode_labels)}
+    invalid = frozenset(selected_labels).difference(mode_index)
+    if invalid:
+        raise ValueError(
+            f"mode_labels must be a subset of layout.mode_labels, got extras {sorted(invalid)!r}"
+        )
     source_blocks: dict[str, np.ndarray] = {}
-    for mu_index, mu in enumerate(layout.mode_labels):
+    for mu in selected_labels:
         mu_weight = _mode_label_weight(
             mu,
-            mu_index=mu_index,
+            mu_index=int(mode_index[mu]),
             mu_count=mu_count,
             branch_scale=branch_scale,
             plus_scale=mode_plus_scale,
@@ -1826,8 +1840,9 @@ def evaluate_reduced_harmonic_rhs(
 
     gamma_t = float(opacity_data.get("Gamma_T", 0.0))
     visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
+    temperature_amp = float(source_tables.get("temperature_visibility_source", visibility_amp))
     polarization_amp = float(source_tables.get("polarization_source", 0.0))
-    doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
+    doppler_amp = float(source_tables.get("doppler_source", 0.0))
     reion_amp = float(source_tables.get("reionization_amplitude", 0.0))
 
     scales = _operator_scales(bg, backend)
@@ -2070,7 +2085,7 @@ def evaluate_reduced_harmonic_rhs(
                     b_drive += -photon_coll * b_state[slot]
 
                 if ell == 0 and m == 0:
-                    t_drive += mu_weight * source_scale * visibility_amp
+                    t_drive += mu_weight * source_scale * temperature_amp
                 if ell == 1 and m == 0:
                     t_drive += mu_weight * 0.5 * source_scale * doppler_amp
                     if baryon_width > 1:
@@ -2190,6 +2205,7 @@ def build_reduced_harmonic_affine_operator(
     source_by_mode_label: Mapping[str, np.ndarray] | None = None,
     pattern_cache: _HarmonicSparsityCache | None = None,
     cache_buffer: "dict[str, _HarmonicSparsityCache] | None" = None,
+    return_dense: bool = False,
 ) -> ReducedHarmonicAffineOperator:
     """Return the exact frozen-snapshot affine operator ``A r + b``.
 
@@ -2220,8 +2236,9 @@ def build_reduced_harmonic_affine_operator(
 
     gamma_t = float(opacity_data.get("Gamma_T", 0.0))
     visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
+    temperature_amp = float(source_tables.get("temperature_visibility_source", visibility_amp))
     polarization_amp = float(source_tables.get("polarization_source", 0.0))
-    doppler_amp = float(source_tables.get("doppler_source", 0.25 * visibility_amp))
+    doppler_amp = float(source_tables.get("doppler_source", 0.0))
 
     scales = _operator_scales(bg, backend)
     geom_scale = float(scales["geom_scale"])
@@ -2497,7 +2514,7 @@ def build_reduced_harmonic_affine_operator(
                             )
                         )
 
-        bias[row_start + t_off + structure.monopole_slot] += inv_t[structure.monopole_slot] * source_scale * visibility_amp
+        bias[row_start + t_off + structure.monopole_slot] += inv_t[structure.monopole_slot] * source_scale * temperature_amp
         if structure.dipole_slot is not None:
             dipole_slot = structure.dipole_slot
             bias[row_start + t_off + dipole_slot] += inv_t[dipole_slot] * (0.5 * source_scale * doppler_amp)
@@ -2524,6 +2541,21 @@ def build_reduced_harmonic_affine_operator(
                 bias[row_start + b_off + quad_slot] += (
                     inv_b[quad_slot] * (0.06 * twist_scale * local_drag_scale * gamma_t * float(src_state[2]))
                 )
+
+    if return_dense:
+        rows_arr = np.concatenate(row_chunks, dtype=np.int64)
+        cols_arr = np.concatenate(col_chunks, dtype=np.int64)
+        data_concat = np.concatenate(data_chunks, dtype=np.float64)
+        matrix_dense = np.zeros(
+            (structure.n_unknown, structure.n_unknown),
+            dtype=np.float64,
+        )
+        np.add.at(matrix_dense, (rows_arr, cols_arr), data_concat)
+        return ReducedHarmonicAffineOperator(
+            mode_labels=residual_labels,
+            matrix=matrix_dense,
+            bias=bias,
+        )
 
     # Round-17 P3.5 perf Tier 1A v3.5 (2026-04-28): if pattern_cache is
     # provided AND has_duplicates=False, skip the COO → CSC sort by
@@ -2582,6 +2614,7 @@ def build_reduced_source_affine_operator(
     photon_E_by_mode_label: Mapping[str, np.ndarray],
     photon_B_by_mode_label: Mapping[str, np.ndarray],
     pattern_cache: _JointSparsityCache | None = None,
+    return_dense: bool = False,
 ) -> ReducedSourceAffineOperator:
     """Return the exact frozen-snapshot affine operator for source local blocks.
 
@@ -2621,7 +2654,12 @@ def build_reduced_source_affine_operator(
     geom_scale = float(scales["geom_scale"])
     mode_plus_scale = float(scales["mode_plus_scale"])
     mode_minus_scale = float(scales["mode_minus_scale"])
-    forcing_blocks = evaluate_reduced_source_blocks(layout, bg, backend)
+    forcing_blocks = evaluate_reduced_source_blocks(
+        layout,
+        bg,
+        backend,
+        mode_labels=selected_labels,
+    )
     width = (int(layout.ell_max) + 1) ** 2
     mu_count = max(len(layout.mode_labels), 1)
     mode_index = {str(mu): idx for idx, mu in enumerate(layout.mode_labels)}
@@ -2630,6 +2668,7 @@ def build_reduced_source_affine_operator(
     total_dof = len(selected_labels) * src_width
     matrix = np.zeros((total_dof, total_dof), dtype=np.float64)
     bias = np.zeros(total_dof, dtype=np.float64)
+    source_diag_offsets = np.arange(src_width, dtype=np.int64)
 
     dipole_slot = sum(2 * ell + 1 for ell in range(1)) + 1 if int(layout.ell_max) >= 1 else None
     quadrupole_slot = sum(2 * ell + 1 for ell in range(2)) + 2 if int(layout.ell_max) >= 2 else None
@@ -2646,7 +2685,8 @@ def build_reduced_source_affine_operator(
         source_mass = mu_weight * (1.0 + 0.06 * source_scale + 0.04 * np.arange(src_width, dtype=np.float64))
         inv_source = 1.0 / np.maximum(source_mass, 1.0e-30)
         row_start = residual_index * src_width
-        matrix[row_start : row_start + src_width, row_start : row_start + src_width] -= np.diag(
+        diag_slots = row_start + source_diag_offsets
+        matrix[diag_slots, diag_slots] -= (
             inv_source * (mu_weight * local_drag_scale * (0.35 * gamma_t))
         )
         bias[row_start : row_start + src_width] = inv_source * np.asarray(forcing_blocks[mu], dtype=np.float64)
@@ -2667,11 +2707,13 @@ def build_reduced_source_affine_operator(
                 * (-0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t * float(b_state[quadrupole_slot]))
             )
 
+    if return_dense:
+        matrix_out = matrix
     # Round-17 P3.5 perf Tier 1A v3 (2026-04-28): if pattern_cache is given,
     # skip the dense → CSC conversion's nonzero scan via fancy indexing.
-    if pattern_cache is not None and pattern_cache.shape == matrix.shape:
+    elif pattern_cache is not None and pattern_cache.shape == matrix.shape:
         data = matrix[pattern_cache.indices, pattern_cache.cols_of_data]
-        matrix_sparse = csc_matrix(
+        matrix_out = csc_matrix(
             (np.asarray(data, dtype=np.float64),
              pattern_cache.indices,
              pattern_cache.indptr),
@@ -2679,11 +2721,11 @@ def build_reduced_source_affine_operator(
             copy=False,
         )
     else:
-        matrix_sparse = csc_matrix(matrix)
-        matrix_sparse.eliminate_zeros()
+        matrix_out = csc_matrix(matrix)
+        matrix_out.eliminate_zeros()
     return ReducedSourceAffineOperator(
         mode_labels=selected_labels,
-        matrix=matrix_sparse,
+        matrix=matrix_out,
         bias=bias,
     )
 
@@ -2778,6 +2820,7 @@ def build_reduced_joint_affine_operator(
         backend,
         residual_mode_labels=residual_labels,
         theta_1_by_mode_label=zero_theta,
+        return_dense=True,
     )
     zeros_b = np.zeros(baryon_width, dtype=np.float64)
     harmonic_baryon_by_mode_label = {
@@ -2813,6 +2856,7 @@ def build_reduced_joint_affine_operator(
         source_by_mode_label=harmonic_source_by_mode_label,
         pattern_cache=harmonic_pattern_cache,
         cache_buffer=harmonic_cache_buffer,
+        return_dense=True,
     )
 
     total_dof = local_dof + harmonic_dof + source_dof
@@ -2829,10 +2873,13 @@ def build_reduced_joint_affine_operator(
     else:
         joint = np.zeros((total_dof, total_dof), dtype=np.float64)
     if local_dof > 0:
-        joint[:local_dof, :local_dof] = np.asarray(local_affine.matrix.toarray(), dtype=np.float64)
+        joint[:local_dof, :local_dof] = np.asarray(
+            local_affine.matrix,
+            dtype=np.float64,
+        )
     if harmonic_dof > 0:
         joint[local_dof : local_dof + harmonic_dof, local_dof : local_dof + harmonic_dof] = np.asarray(
-            harmonic_affine.matrix.toarray(),
+            harmonic_affine.matrix,
             dtype=np.float64,
         )
 
@@ -2871,6 +2918,7 @@ def build_reduced_joint_affine_operator(
         ],
         dtype=np.float64,
     )
+    source_diag_offsets = np.arange(src_width, dtype=np.int64)
     for residual_index, mu in enumerate(residual_labels):
         mu_weight = _mode_label_weight(
             mu,
@@ -2891,7 +2939,8 @@ def build_reduced_joint_affine_operator(
         # Q-7.4 did not explicitly touch; eigenvector localization showed
         # 98.7% weight on the source block. Pattern-matched fix pending
         # a Round-3 audit of the source-propagator formulation.
-        joint[source_row : source_row + src_width, source_row : source_row + src_width] -= np.diag(
+        diag_slots = source_row + source_diag_offsets
+        joint[diag_slots, diag_slots] -= (
             inv_source * (mu_weight * local_drag_scale * (0.35 * gamma_t))
         )
 
@@ -2973,6 +3022,7 @@ def build_reduced_local_affine_operator(
     *,
     residual_mode_labels: tuple[str, ...],
     theta_1_by_mode_label: Mapping[str, float],
+    return_dense: bool = False,
 ) -> ReducedLocalAffineOperator:
     """Return the exact frozen-snapshot affine operator for residual local sectors."""
 
@@ -3045,12 +3095,22 @@ def build_reduced_local_affine_operator(
                 / max(abs(float(baryon_diag[1])), 1.0e-30)
             )
 
+    rows_arr = np.asarray(rows, dtype=np.int64)
+    cols_arr = np.asarray(cols, dtype=np.int64)
+    data_arr = np.asarray(data, dtype=np.float64)
+    shape = (
+        len(residual_labels) * block_size,
+        len(residual_labels) * block_size,
+    )
+    if return_dense:
+        matrix_dense = np.zeros(shape, dtype=np.float64)
+        matrix_dense[rows_arr, cols_arr] = data_arr
+        matrix_out = matrix_dense
+    else:
+        matrix_out = csc_matrix((data_arr, (rows_arr, cols_arr)), shape=shape)
     return ReducedLocalAffineOperator(
         mode_labels=residual_labels,
-        matrix=csc_matrix(
-            (np.asarray(data, dtype=np.float64), (np.asarray(rows, dtype=np.int64), np.asarray(cols, dtype=np.int64))),
-            shape=(len(residual_labels) * block_size, len(residual_labels) * block_size),
-        ),
+        matrix=matrix_out,
         bias=bias,
     )
 

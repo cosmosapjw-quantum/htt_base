@@ -32,9 +32,12 @@ from typing import Any
 
 import numpy as np
 
-from bass.background.bianchi_types import StructureConstants
+from bass.background.bianchi_types import StructureConstants, type_i_constants
 from bass.los.families.base import LegacyDelegationKernel
-from bass.spectrum.lowell_los import build_lowell_line_of_sight_propagator
+from bass.spectrum.lowell_los import (
+    apply_type_ix_compact_su2_transfer_coupling,
+    build_lowell_line_of_sight_propagator,
+)
 from bass.statistics import ResidualPack
 from bass.transport.exact_transport import ExactTransportBundle
 
@@ -136,17 +139,6 @@ class TypeIXKernel(LegacyDelegationKernel):
     ) -> ExactTransportBundle:
         self._assert_label_matches(structure)
 
-        # Primary Type IX transport (legacy path with family structure).
-        legacy_ix = build_lowell_line_of_sight_propagator(
-            structure,
-            eta_grid_mpc=eta_grid_mpc,
-            k_grid_mpc=k_grid_mpc,
-            ell_max=ell_max,
-            visibility_fn=visibility_fn,
-            source_builder=source_builder,
-        )
-        # Type I reference for anchor-limit residual (same observer surface).
-        from bass.background.bianchi_types import type_i_constants
         legacy_i = build_lowell_line_of_sight_propagator(
             type_i_constants(),
             eta_grid_mpc=eta_grid_mpc,
@@ -155,10 +147,21 @@ class TypeIXKernel(LegacyDelegationKernel):
             visibility_fn=visibility_fn,
             source_builder=source_builder,
         )
+        transfer_t, transfer_e, transfer_b, typeix_meta = (
+            apply_type_ix_compact_su2_transfer_coupling(
+                structure,
+                transfer_T=np.asarray(legacy_i["transfer_T"]),
+                transfer_E=np.asarray(legacy_i["transfer_E"]),
+                transfer_B=np.asarray(legacy_i["transfer_B"]),
+                k_grid_mpc=np.asarray(k_grid_mpc, dtype=float),
+                ell=np.arange(int(ell_max) + 1, dtype=float),
+                eta_grid_mpc=np.asarray(eta_grid_mpc, dtype=float),
+            )
+        )
 
         ell = np.arange(int(ell_max) + 1, dtype=int)
         residuals = self._compute_residuals(
-            t_ix=np.asarray(legacy_ix["transfer_T"]),
+            t_ix=np.asarray(transfer_t),
             t_i=np.asarray(legacy_i["transfer_T"]),
         )
 
@@ -181,20 +184,21 @@ class TypeIXKernel(LegacyDelegationKernel):
             "n_isotropic": float(structure.n1),
             "residual_values": residuals,
             "forbidden_shortcut_tracked": list(self.metadata.forbidden_shortcuts),
+            **typeix_meta,
         }
         return ExactTransportBundle(
             family=self.family,
             tier="A",
             dispatch_route=self.dispatch_route,
-            transfer_T=np.asarray(legacy_ix["transfer_T"]),
-            transfer_E=np.asarray(legacy_ix["transfer_E"]),
-            transfer_B=np.asarray(legacy_ix["transfer_B"]),
-            propagator_matrix=np.asarray(legacy_ix["propagator_matrix"]),
+            transfer_T=transfer_t,
+            transfer_E=transfer_e,
+            transfer_B=transfer_b,
+            propagator_matrix=np.asarray(legacy_i["propagator_matrix"]),
             ell=ell,
             k_grid_mpc=np.asarray(k_grid_mpc, dtype=float),
             eta_grid_mpc=np.asarray(eta_grid_mpc, dtype=float),
             metadata=meta,
-            raw_payload=legacy_ix,
+            raw_payload={**legacy_i, **typeix_meta},
         )
 
     # ---------------- residual helpers ----------------
@@ -222,8 +226,8 @@ class TypeIXKernel(LegacyDelegationKernel):
         if t_ix.ndim != 3 or t_ix.shape != t_i.shape or t_ix.shape[-1] != 3:
             anchor_err = math.inf
         else:
-            diff = t_ix[..., 1] - t_i[..., 1]
-            scale = max(float(np.max(np.abs(t_i[..., 1]))), 1.0e-30)
+            diff = t_ix[..., 0] - t_i[..., 0]
+            scale = max(float(np.max(np.abs(t_i[..., 0]))), 1.0e-30)
             anchor_err = float(np.max(np.abs(diff)) / scale)
 
         return {

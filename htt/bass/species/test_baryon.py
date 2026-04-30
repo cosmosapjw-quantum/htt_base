@@ -210,6 +210,13 @@ def test_recombination_warning_policy_ignore_silences_support_gap(bg, recomb):
     assert not caught
 
 
+def test_recombination_warning_policy_default_silences_support_gap(bg, recomb):
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        BaryonBackground(bg, default_constants().Omega_b_0, recomb)
+    assert not caught
+
+
 def test_recombination_warning_policy_always_emits_support_gap(bg, recomb):
     with warnings.catch_warnings(record=True) as caught:
         warnings.simplefilter("always")

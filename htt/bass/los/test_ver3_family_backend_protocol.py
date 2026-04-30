@@ -32,9 +32,8 @@ def test_all_families_build_backend_contract(family: str) -> None:
     assert metadata["release_status"] == "backend-contract-complete"
     assert metadata["preferred_backend"] == get_family_spec(family).preferred_backend
     assert metadata["orthogonal_global_tilt_local_boost_split"] == "frozen"
-    expected_status = "full_mode" if family in {"FLRW", "I", "V", "IX"} else "restricted_subset"
-    assert metadata["family_backend_status"] == expected_status
-    assert family_backend_status(family) == expected_status
+    assert metadata["family_backend_status"] == "full_mode"
+    assert family_backend_status(family) == "full_mode"
 
 
 def test_vi_h_label_translator_roundtrip_preserves_h_and_branch() -> None:
@@ -129,7 +128,7 @@ def test_isotropic_anchor_seed_factory_allows_regular_seed() -> None:
 def test_operator_factory_maps_named_family_to_expected_kernel() -> None:
     backend = build_backend(get_family_spec("IX"), truncation={"ell_max": 6})
     ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "named_branch"})
-    assert ops.operator_kernel_family == "class_a_compact_matrix_approx"
+    assert ops.operator_kernel_family == "type_ix_compact_su2_projection"
     assert ops.backend_name == "wigner_d_compact_backend"
     assert ops.release_status == "backend-operator-bound"
     assert ops.metadata["contract_release_status"] == "backend-contract-complete"
@@ -145,13 +144,105 @@ def test_operator_factory_maps_named_family_to_expected_kernel() -> None:
     assert ops.metadata["family_backend_status"] == "full_mode"
     assert ops.layout_metadata["family_conditioned_kernel_status"] == "frozen_v5_family_conditioned"
     assert ops.metadata["family_conditioned_kernel_law"] == "ix_compact_wigner_frozen_v5"
+    assert "Wigner-D projection" in " ".join(backend.template_card().collocation_policy.notes)
 
 
-def test_family_backend_gate_bundle_exposes_restricted_subset_status() -> None:
-    backend = build_backend(get_family_spec("VII_0"), truncation={"ell_max": 4})
-    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "restricted-subset"})
+@pytest.mark.parametrize("family", ["III", "IV", "VI_h", "VIII"])
+def test_residual_backed_intrinsic_backends_are_full_mode(family: str) -> None:
+    backend = build_backend(get_family_spec(family), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "residual-backed-full-mode"})
     bundle = family_backend_gate_bundle(backend, ops)
-    assert bundle.metadata["family_backend_status"] == "restricted_subset"
+    assert bundle.metadata["family_backend_status"] == "full_mode"
+    assert ops.metadata["family_backend_status"] == "full_mode"
+
+
+def test_type_vii0_backend_gate_bundle_is_full_mode_after_helical_transport() -> None:
+    backend = build_backend(get_family_spec("VII_0"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "helical-vii0"})
+    bundle = family_backend_gate_bundle(backend, ops)
+    assert bundle.metadata["family_backend_status"] == "full_mode"
+    assert ops.operator_kernel_family == "type_vii0_helical_projection"
+    assert "spin-2 basis rotation" in " ".join(backend.template_card().collocation_policy.notes)
+
+
+def test_type_ii_backend_gate_bundle_is_full_mode_after_nilpotent_transport() -> None:
+    backend = build_backend(get_family_spec("II"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "nil-type-ii"})
+    bundle = family_backend_gate_bundle(backend, ops)
+    assert bundle.metadata["family_backend_status"] == "full_mode"
+    assert ops.operator_kernel_family == "type_ii_nilpotent_projection"
+    assert "central shear source coupling" in " ".join(backend.template_card().collocation_policy.notes)
+
+
+def test_type_iii_backend_gate_bundle_is_full_mode_after_hyperbolic_transport() -> None:
+    backend = build_backend(get_family_spec("III"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "hyperbolic-type-iii"})
+    bundle = family_backend_gate_bundle(backend, ops)
+    assert bundle.metadata["family_backend_status"] == "full_mode"
+    assert ops.operator_kernel_family == "type_iii_hyperbolic_projection"
+    assert "h=-1 projection" in " ".join(backend.template_card().collocation_policy.notes)
+
+
+def test_type_iv_backend_gate_bundle_is_full_mode_after_solvable_transport() -> None:
+    backend = build_backend(get_family_spec("IV"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "solvable-type-iv"})
+    bundle = family_backend_gate_bundle(backend, ops)
+    assert bundle.metadata["family_backend_status"] == "full_mode"
+    assert ops.operator_kernel_family == "type_iv_solvable_projection"
+    assert "rank-one solvable projection" in " ".join(
+        backend.template_card().collocation_policy.notes
+    )
+
+
+def test_type_v_backend_gate_bundle_is_full_mode_after_open_transport() -> None:
+    backend = build_backend(get_family_spec("V"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "open-type-v"})
+    bundle = family_backend_gate_bundle(backend, ops)
+    assert bundle.metadata["family_backend_status"] == "full_mode"
+    assert ops.operator_kernel_family == "type_v_open_hyperbolic_projection"
+    assert "no intrinsic m-mixing" in " ".join(
+        backend.template_card().collocation_policy.notes
+    )
+
+
+def test_type_vi0_backend_gate_bundle_is_full_mode_after_directional_transport() -> None:
+    backend = build_backend(get_family_spec("VI_0"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "directional-vi0"})
+    bundle = family_backend_gate_bundle(backend, ops)
+    assert bundle.metadata["family_backend_status"] == "full_mode"
+    assert ops.operator_kernel_family == "type_vi0_directional_projection"
+    assert "parity-even tensor transport" in " ".join(backend.template_card().collocation_policy.notes)
+
+
+def test_type_vih_backend_gate_bundle_is_full_mode_after_negative_h_transport() -> None:
+    backend = build_backend(get_family_spec("VI_h"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "negative-h-vih"})
+    bundle = family_backend_gate_bundle(backend, ops)
+    assert bundle.metadata["family_backend_status"] == "full_mode"
+    assert ops.operator_kernel_family == "type_vih_negative_h_projection"
+    assert "h-scaled twist transport" in " ".join(
+        backend.template_card().collocation_policy.notes
+    )
+
+
+def test_type_viih_backend_gate_bundle_is_full_mode_after_open_helical_transport() -> None:
+    backend = build_backend(get_family_spec("VII_h"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "open-helical-viih"})
+    bundle = family_backend_gate_bundle(backend, ops)
+    assert bundle.metadata["family_backend_status"] == "full_mode"
+    assert ops.operator_kernel_family == "type_viih_open_helical_projection"
+    assert "twist attenuation" in " ".join(backend.template_card().collocation_policy.notes)
+
+
+def test_type_viii_backend_gate_bundle_is_full_mode_after_sl2r_transport() -> None:
+    backend = build_backend(get_family_spec("VIII"), truncation={"ell_max": 4})
+    ops = backend.operator_factory({"branch": "orthogonal", "state_tag": "sl2r-viii"})
+    bundle = family_backend_gate_bundle(backend, ops)
+    assert bundle.metadata["family_backend_status"] == "full_mode"
+    assert ops.operator_kernel_family == "type_viii_sl2r_noncompact_projection"
+    assert "continuous series metadata" in " ".join(
+        backend.template_card().collocation_policy.notes
+    )
 
 
 def test_operator_factory_can_return_geometry_ops_with_mode_ops() -> None:

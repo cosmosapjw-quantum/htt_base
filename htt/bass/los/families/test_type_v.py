@@ -103,6 +103,8 @@ def test_bundle_metadata_records_open_chart():
     md = bundle.metadata
     assert md["chart_metadata"] == "open_chart"
     assert md["chart"] == "hyperbolic_open_chart"
+    assert md["typev_transport_status"] == "type_v_open_hyperbolic_projection"
+    assert md["typev_mode_mixing_norm"] == 0.0
     assert "no_hidden_flrw_import_without_open_chart_metadata" in md["forbidden_shortcut_tracked"]
 
 

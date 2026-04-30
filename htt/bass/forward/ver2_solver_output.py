@@ -19,6 +19,10 @@ from bass.hierarchy.pstf_radiation import (
 )
 from bass.hierarchy.pstf_tensor import unpack_hierarchy, zero_hierarchy
 from bass.hierarchy.integrator import IntegrationResult
+from bass.los.b_mode_projector import (
+    B_MODE_OUTPUT_SUPPORT_WIGNER_D_PATH_B,
+    project_B_mode_transfer,
+)
 from bass.los.family_backend_protocol import family_backend_status
 from bass.los.ver2_source_propagator import (
     ObserverFrameMetadata,
@@ -475,6 +479,29 @@ def _interp_series(eta_grid: np.ndarray, values: np.ndarray, eta: float) -> floa
     return float(np.interp(float(eta), eta_grid, values))
 
 
+def _build_result_a_lookup(result: IntegrationResult):
+    eta_grid = np.asarray(result.eta, dtype=np.float64)
+    a_grid = np.asarray(result.a, dtype=np.float64)
+    if eta_grid.ndim != 1 or a_grid.ndim != 1 or eta_grid.shape != a_grid.shape:
+        raise ValueError(
+            "result.eta and result.a must be 1-D arrays with identical shape "
+            f"for visibility source construction, got {eta_grid.shape} and {a_grid.shape}"
+        )
+    if eta_grid.size < 2:
+        raise ValueError("visibility source construction requires at least two eta samples")
+    if not np.all(np.isfinite(eta_grid)) or not np.all(np.isfinite(a_grid)):
+        raise ValueError("result.eta/result.a contain non-finite values")
+    if not np.all(np.diff(eta_grid) > 0.0):
+        raise ValueError("result.eta must be strictly increasing for visibility interpolation")
+    if np.any(a_grid <= 0.0):
+        raise ValueError("result.a must be strictly positive for recombination visibility lookup")
+
+    def a_lookup(eta: float) -> float:
+        return _interp_series(eta_grid, a_grid, float(eta))
+
+    return a_lookup
+
+
 def _build_visibility_fn_from_a_lookup(species: SpeciesBackgroundRegistry, a_lookup):
     baryon = species[SpeciesLabel.BARYON]
     interp = baryon._recomb  # noqa: SLF001 - stable internal ownership for the current tier-B bridge
@@ -573,6 +600,7 @@ def _build_lowell_source_builder(
     *,
     species: SpeciesBackgroundRegistry,
     visibility_fn: Callable[[float], float],
+    scale_factor_owner: str = "integration_result",
 ):
     eta_grid = np.asarray(result.eta, dtype=np.float64)
     theta_0 = np.asarray(result.pi_ell_m(0, 0), dtype=np.float64)
@@ -595,6 +623,22 @@ def _build_lowell_source_builder(
         name: visibility * polter[name]
         for name in polter
     }
+    baryon_history = getattr(result, "baryon_local_history", None)
+    if baryon_history is None:
+        v_b_m0 = np.zeros_like(eta_grid)
+        doppler_status = "zero_unavailable_missing_baryon_local_history"
+    else:
+        baryon_arr = np.asarray(baryon_history, dtype=np.float64)
+        if baryon_arr.ndim != 2 or baryon_arr.shape[0] != eta_grid.size or baryon_arr.shape[1] < 2:
+            raise ValueError(
+                "result.baryon_local_history must have shape (n_eta, >=2) "
+                "when used for LoS Doppler sourcing"
+            )
+        v_b_m0 = np.asarray(baryon_arr[:, 1], dtype=np.float64)
+        if np.any(~np.isfinite(v_b_m0)):
+            raise ValueError("result.baryon_local_history[:, 1] contains non-finite Doppler velocities")
+        doppler_status = "baryon_local_history_slot1"
+    gvb_m0 = visibility * v_b_m0
 
     def source_builder(eta: float, k: float) -> dict[str, float]:
         del k  # Tier-B low-ell bridge currently uses k-independent source amplitudes.
@@ -609,17 +653,34 @@ def _build_lowell_source_builder(
             "pi_m0": _interp_series(eta_grid, polter["m0"], eta),
             "pi_m_plus2": _interp_series(eta_grid, polter["m_plus2"], eta),
             "pi_m_minus2": _interp_series(eta_grid, polter["m_minus2"], eta),
+            "v_b_m0": _interp_series(eta_grid, v_b_m0, eta),
             "gpi_m0": _interp_series(eta_grid, gpi["m0"], eta),
             "gpi_m_plus2": _interp_series(eta_grid, gpi["m_plus2"], eta),
             "gpi_m_minus2": _interp_series(eta_grid, gpi["m_minus2"], eta),
+            "g_v_b_m0": _interp_series(eta_grid, gvb_m0, eta),
         }
 
-    return source_builder, _build_visibility_source_metadata(
+    metadata = _build_visibility_source_metadata(
         result,
         species=species,
         visibility_fn=visibility_fn,
         gpi_m0=gpi["m0"],
     )
+    a_grid = np.asarray(result.a, dtype=np.float64)
+    z_grid = (1.0 / np.maximum(a_grid, 1.0e-30)) - 1.0
+    metadata.update(
+        {
+            "source_builder_scale_factor_owner": str(scale_factor_owner),
+            "source_builder_runtime_z_min": float(np.min(z_grid)),
+            "source_builder_runtime_z_max": float(np.max(z_grid)),
+            "source_builder_visibility_max": float(np.max(visibility)),
+            "source_builder_visibility_nonzero_sample_count": int(np.count_nonzero(visibility > 0.0)),
+            "source_builder_doppler_status": doppler_status,
+            "source_builder_doppler_max_abs_v_b_m0": float(np.max(np.abs(v_b_m0))),
+            "source_builder_doppler_nonzero_sample_count": int(np.count_nonzero(np.abs(v_b_m0) > 0.0)),
+        }
+    )
+    return source_builder, metadata
 
 
 def _build_template_from_result(
@@ -686,6 +747,128 @@ def _final_slice_radiation_state(
             closure_name="ver2_runtime_final_slice_reconstruction",
         ),
     )
+
+
+def _flat_history_to_l_m5(history: object, *, L: int) -> np.ndarray:
+    """Convert flat ell/m history to the projector's (eta, ell, m=-2..2) view."""
+
+    arr = np.asarray(history, dtype=np.float64)
+    target = (int(L) + 1) ** 2
+    if arr.ndim != 2 or arr.shape[1] != target:
+        raise ValueError(
+            f"flat hierarchy history must have shape (n_eta, {target}), got {arr.shape}"
+        )
+    out = np.zeros((arr.shape[0], int(L) + 1, 5), dtype=np.float64)
+    for ell in range(int(L) + 1):
+        for m in range(max(-2, -ell), min(2, ell) + 1):
+            out[:, ell, m + 2] = arr[:, ell * ell + ell + m]
+    return out
+
+
+def _default_sigma_2m_history(result: IntegrationResult) -> np.ndarray:
+    """Build the minimal shear-quadrupole history used by the B projector."""
+
+    eta = np.asarray(result.eta, dtype=np.float64)
+    sigma = np.zeros((eta.size, 5), dtype=np.float64)
+    sigma[:, 2] = np.asarray(result.Sigma_plus, dtype=np.float64)
+    if np.asarray(result.Sigma_minus, dtype=np.float64).shape == eta.shape:
+        sigma[:, 4] = np.asarray(result.Sigma_minus, dtype=np.float64)
+    return sigma
+
+
+def _b_mode_projector_evidence(
+    result: IntegrationResult,
+    *,
+    visibility_fn: Callable[[float], float],
+    k_grid_mpc: np.ndarray,
+    b_mode_runtime_available: bool,
+    canonical_projection: object | None,
+) -> dict[str, Any]:
+    if not b_mode_runtime_available:
+        return {
+            "b_mode_projector_status": "not_run_no_runtime_b_mode",
+            "b_mode_projector_support": None,
+            "b_mode_projector_norm": 0.0,
+        }
+    if canonical_projection is None:
+        return {
+            "b_mode_projector_status": "not_run_no_canonical_projection",
+            "b_mode_projector_support": None,
+            "b_mode_projector_norm": 0.0,
+        }
+    block = getattr(canonical_projection, "hierarchy_state").photon_polarization_block
+    b_history = block.get("B_history")
+    if b_history is None:
+        return {
+            "b_mode_projector_status": "not_run_no_b_history",
+            "b_mode_projector_support": None,
+            "b_mode_projector_norm": 0.0,
+        }
+    b_hist = np.asarray(b_history, dtype=np.float64)
+    eta = np.asarray(result.eta, dtype=np.float64)
+    if b_hist.ndim != 2 or b_hist.shape[0] != eta.size:
+        return {
+            "b_mode_projector_status": "not_run_b_history_eta_mismatch",
+            "b_mode_projector_support": None,
+            "b_mode_projector_norm": 0.0,
+            "b_mode_projector_b_history_shape": tuple(int(x) for x in b_hist.shape),
+            "b_mode_projector_eta_size": int(eta.size),
+        }
+    L = int(result.L_max)
+    try:
+        transfer = project_B_mode_transfer(
+            photon_B_tower_history=_flat_history_to_l_m5(b_hist, L=L),
+            photon_E_tower_history=_flat_history_to_l_m5(result.photon_E_tower, L=L),
+            sigma_2M_history=_default_sigma_2m_history(result),
+            eta_grid=eta,
+            visibility_history=np.asarray(
+                [float(visibility_fn(float(value))) for value in eta],
+                dtype=np.float64,
+            ),
+            k_norm=float(np.linalg.norm(np.asarray(k_grid_mpc, dtype=np.float64).ravel()[:1])),
+            ell_max=L,
+        )
+    except Exception as exc:
+        return {
+            "b_mode_projector_status": "failed",
+            "b_mode_projector_support": None,
+            "b_mode_projector_norm": 0.0,
+            "b_mode_projector_error": str(exc),
+        }
+    norm = float(np.linalg.norm(transfer))
+    if not np.isfinite(norm):
+        return {
+            "b_mode_projector_status": "failed_nonfinite",
+            "b_mode_projector_support": None,
+            "b_mode_projector_norm": norm,
+        }
+    return {
+        "b_mode_projector_status": "computed_wigner_d_path_b",
+        "b_mode_projector_support": B_MODE_OUTPUT_SUPPORT_WIGNER_D_PATH_B,
+        "b_mode_projector_norm": norm,
+        "b_mode_projector_transfer_shape": tuple(int(x) for x in transfer.shape),
+        "b_mode_projector_nonzero": bool(norm > 0.0),
+    }
+
+
+def _exact_thomson_authority_path(
+    *,
+    thomson_mode: str,
+    gate_registry: Mapping[str, object] | None,
+) -> bool:
+    mode = str(thomson_mode)
+    if mode in {
+        "electron_frame_exact_wrapper",
+        "exact_electron_frame",
+        "electron_frame_tilted_layer_b_exact",
+    }:
+        return True
+    if mode.startswith("electron_frame") and "exact" in mode:
+        return True
+    if gate_registry is None:
+        return False
+    exact_gate = gate_registry.get("exact_thomson_gate")
+    return bool(getattr(exact_gate, "passed", exact_gate))
 
 
 def _build_reconstructed_channel_payload(
@@ -858,11 +1041,7 @@ def build_solver_core_output_from_native_result(
         else propagator
     )
 
-    a_lookup = lambda eta: _interp_series(
-        np.asarray(result.eta, dtype=np.float64),
-        np.asarray(result.a, dtype=np.float64),
-        eta,
-    )
+    a_lookup = _build_result_a_lookup(result)
     visibility_fn = _build_visibility_fn_from_a_lookup(species, a_lookup)
     source_builder, source_builder_metadata = _build_lowell_source_builder(
         result,
@@ -936,6 +1115,20 @@ def build_solver_core_output_from_native_result(
         if b_mode_payload_status == "zero_filled_not_evolved"
         else "b_mode_layout_contract_without_runtime_evidence"
     )
+    b_projector_evidence = _b_mode_projector_evidence(
+        result,
+        visibility_fn=visibility_fn,
+        k_grid_mpc=np.asarray(k_grid_mpc, dtype=np.float64),
+        b_mode_runtime_available=bool(b_mode_runtime_available),
+        canonical_projection=canonical_projection,
+    )
+    if (
+        b_projector_evidence["b_mode_projector_support"]
+        == B_MODE_OUTPUT_SUPPORT_WIGNER_D_PATH_B
+        and bool(b_projector_evidence.get("b_mode_projector_nonzero", False))
+    ):
+        b_mode_output_support = B_MODE_OUTPUT_SUPPORT_WIGNER_D_PATH_B
+        b_mode_block_reason = None
     alm_T, alm_E, alm_B = _build_reconstructed_payloads(
         result,
         coefficient_representation="ver2_native_pstf_final_slice",
@@ -988,6 +1181,239 @@ def build_solver_core_output_from_native_result(
             "source_propagator_requested_status": feature_flags.source_propagator.value,
             "source_propagator_rotation_status": live_propagator.config.polarization_rotation.value,
             "source_propagator_realization": live_propagator.config.kernel_family,
+            "source_propagator_exactness": live_propagator.evidence.get("exactness"),
+            "source_propagator_publication_output_claim_allowed": bool(
+                live_propagator.evidence.get("output_claim_allowed", False)
+            ),
+            "source_propagator_statistics_claim_allowed": bool(
+                live_propagator.evidence.get("statistics_claim_allowed", False)
+            ),
+            "source_propagator_block_reason": live_propagator.evidence.get("block_reason"),
+            "source_propagator_helical_transport_status": live_propagator.transfer_bundle.get(
+                "helical_transport_status"
+            ),
+            "source_propagator_helical_pitch": live_propagator.transfer_bundle.get(
+                "helical_pitch"
+            ),
+            "source_propagator_helical_phase_max": live_propagator.transfer_bundle.get(
+                "helical_phase_max"
+            ),
+            "source_propagator_polarization_basis_transport": live_propagator.transfer_bundle.get(
+                "polarization_basis_transport"
+            ),
+            "source_propagator_helicity_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "helicity_mode_mixing_norm"
+            ),
+            "source_propagator_nil_transport_status": live_propagator.transfer_bundle.get(
+                "nil_transport_status"
+            ),
+            "source_propagator_nil_structure_scale": live_propagator.transfer_bundle.get(
+                "nil_structure_scale"
+            ),
+            "source_propagator_nil_shear_max": live_propagator.transfer_bundle.get(
+                "nil_shear_max"
+            ),
+            "source_propagator_nil_phase_max": live_propagator.transfer_bundle.get(
+                "nil_phase_max"
+            ),
+            "source_propagator_nil_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "nil_mode_mixing_norm"
+            ),
+            "source_propagator_typeiii_transport_status": live_propagator.transfer_bundle.get(
+                "typeiii_transport_status"
+            ),
+            "source_propagator_typeiii_branch_flag": live_propagator.transfer_bundle.get(
+                "typeiii_branch_flag"
+            ),
+            "source_propagator_typeiii_h_parameter": live_propagator.transfer_bundle.get(
+                "typeiii_h_parameter"
+            ),
+            "source_propagator_typeiii_hyperbolic_scale": live_propagator.transfer_bundle.get(
+                "typeiii_hyperbolic_scale"
+            ),
+            "source_propagator_typeiii_twist_scale": live_propagator.transfer_bundle.get(
+                "typeiii_twist_scale"
+            ),
+            "source_propagator_typeiii_open_attenuation_min": live_propagator.transfer_bundle.get(
+                "typeiii_open_attenuation_min"
+            ),
+            "source_propagator_typeiii_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "typeiii_mode_mixing_norm"
+            ),
+            "source_propagator_typeiv_transport_status": live_propagator.transfer_bundle.get(
+                "typeiv_transport_status"
+            ),
+            "source_propagator_typeiv_coordinate_order": live_propagator.transfer_bundle.get(
+                "typeiv_coordinate_order"
+            ),
+            "source_propagator_typeiv_structure_scale": live_propagator.transfer_bundle.get(
+                "typeiv_structure_scale"
+            ),
+            "source_propagator_typeiv_n3_scale": live_propagator.transfer_bundle.get(
+                "typeiv_n3_scale"
+            ),
+            "source_propagator_typeiv_twist_scale": live_propagator.transfer_bundle.get(
+                "typeiv_twist_scale"
+            ),
+            "source_propagator_typeiv_privileged_weight": live_propagator.transfer_bundle.get(
+                "typeiv_privileged_weight"
+            ),
+            "source_propagator_typeiv_edge_attenuation_min": live_propagator.transfer_bundle.get(
+                "typeiv_edge_attenuation_min"
+            ),
+            "source_propagator_typeiv_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "typeiv_mode_mixing_norm"
+            ),
+            "source_propagator_typev_transport_status": live_propagator.transfer_bundle.get(
+                "typev_transport_status"
+            ),
+            "source_propagator_typev_chart_metadata": live_propagator.transfer_bundle.get(
+                "typev_chart_metadata"
+            ),
+            "source_propagator_typev_curvature_scale": live_propagator.transfer_bundle.get(
+                "typev_curvature_scale"
+            ),
+            "source_propagator_typev_open_envelope_min": live_propagator.transfer_bundle.get(
+                "typev_open_envelope_min"
+            ),
+            "source_propagator_typev_open_envelope_max": live_propagator.transfer_bundle.get(
+                "typev_open_envelope_max"
+            ),
+            "source_propagator_typev_open_anchor_deviation_max": live_propagator.transfer_bundle.get(
+                "typev_open_anchor_deviation_max"
+            ),
+            "source_propagator_typev_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "typev_mode_mixing_norm"
+            ),
+            "source_propagator_vi0_transport_status": live_propagator.transfer_bundle.get(
+                "vi0_transport_status"
+            ),
+            "source_propagator_vi0_structure_scale": live_propagator.transfer_bundle.get(
+                "vi0_structure_scale"
+            ),
+            "source_propagator_vi0_directional_imbalance": live_propagator.transfer_bundle.get(
+                "vi0_directional_imbalance"
+            ),
+            "source_propagator_vi0_shear_max": live_propagator.transfer_bundle.get(
+                "vi0_shear_max"
+            ),
+            "source_propagator_vi0_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "vi0_mode_mixing_norm"
+            ),
+            "source_propagator_vih_transport_status": live_propagator.transfer_bundle.get(
+                "vih_transport_status"
+            ),
+            "source_propagator_vih_branch_flag": live_propagator.transfer_bundle.get(
+                "vih_branch_flag"
+            ),
+            "source_propagator_vih_h_parameter": live_propagator.transfer_bundle.get(
+                "vih_h_parameter"
+            ),
+            "source_propagator_vih_structure_scale": live_propagator.transfer_bundle.get(
+                "vih_structure_scale"
+            ),
+            "source_propagator_vih_twist_scale": live_propagator.transfer_bundle.get(
+                "vih_twist_scale"
+            ),
+            "source_propagator_vih_h_twist_scale": live_propagator.transfer_bundle.get(
+                "vih_h_twist_scale"
+            ),
+            "source_propagator_vih_directional_imbalance": live_propagator.transfer_bundle.get(
+                "vih_directional_imbalance"
+            ),
+            "source_propagator_vih_open_attenuation_min": live_propagator.transfer_bundle.get(
+                "vih_open_attenuation_min"
+            ),
+            "source_propagator_vih_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "vih_mode_mixing_norm"
+            ),
+            "source_propagator_viih_transport_status": live_propagator.transfer_bundle.get(
+                "viih_transport_status"
+            ),
+            "source_propagator_viih_helical_pitch": live_propagator.transfer_bundle.get(
+                "viih_helical_pitch"
+            ),
+            "source_propagator_viih_twist_scale": live_propagator.transfer_bundle.get(
+                "viih_twist_scale"
+            ),
+            "source_propagator_viih_h_parameter": live_propagator.transfer_bundle.get(
+                "viih_h_parameter"
+            ),
+            "source_propagator_viih_open_attenuation_min": live_propagator.transfer_bundle.get(
+                "viih_open_attenuation_min"
+            ),
+            "source_propagator_viih_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "viih_mode_mixing_norm"
+            ),
+            "source_propagator_typeviii_transport_status": live_propagator.transfer_bundle.get(
+                "typeviii_transport_status"
+            ),
+            "source_propagator_typeviii_branch_flag": live_propagator.transfer_bundle.get(
+                "typeviii_branch_flag"
+            ),
+            "source_propagator_typeviii_structure_scale": live_propagator.transfer_bundle.get(
+                "typeviii_structure_scale"
+            ),
+            "source_propagator_typeviii_negative_axis_weight": live_propagator.transfer_bundle.get(
+                "typeviii_negative_axis_weight"
+            ),
+            "source_propagator_typeviii_positive_axis_split": live_propagator.transfer_bundle.get(
+                "typeviii_positive_axis_split"
+            ),
+            "source_propagator_typeviii_disc_radius_x_eq_tanh_xi": live_propagator.transfer_bundle.get(
+                "typeviii_disc_radius_x_eq_tanh_xi"
+            ),
+            "source_propagator_typeviii_noncompact_attenuation_min": live_propagator.transfer_bundle.get(
+                "typeviii_noncompact_attenuation_min"
+            ),
+            "source_propagator_typeviii_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "typeviii_mode_mixing_norm"
+            ),
+            "source_propagator_typeviii_series_tags": live_propagator.transfer_bundle.get(
+                "typeviii_series_tags"
+            ),
+            "source_propagator_typeviii_continuous_series_tag": live_propagator.transfer_bundle.get(
+                "typeviii_continuous_series_tag"
+            ),
+            "source_propagator_typeix_transport_status": live_propagator.transfer_bundle.get(
+                "typeix_transport_status"
+            ),
+            "source_propagator_typeix_branch_flag": live_propagator.transfer_bundle.get(
+                "typeix_branch_flag"
+            ),
+            "source_propagator_typeix_curvature_scale": live_propagator.transfer_bundle.get(
+                "typeix_curvature_scale"
+            ),
+            "source_propagator_typeix_positive_axis_anisotropy_split": live_propagator.transfer_bundle.get(
+                "typeix_positive_axis_anisotropy_split"
+            ),
+            "source_propagator_typeix_discrete_j": live_propagator.transfer_bundle.get(
+                "typeix_discrete_j"
+            ),
+            "source_propagator_typeix_spectral_eigenvalue_jj1": live_propagator.transfer_bundle.get(
+                "typeix_spectral_eigenvalue_jj1"
+            ),
+            "source_propagator_typeix_invariant_volume": live_propagator.transfer_bundle.get(
+                "typeix_invariant_volume"
+            ),
+            "source_propagator_typeix_wigner_d_j2_unit_amplitude": live_propagator.transfer_bundle.get(
+                "typeix_wigner_d_j2_unit_amplitude"
+            ),
+            "source_propagator_typeix_compact_phase_max": live_propagator.transfer_bundle.get(
+                "typeix_compact_phase_max"
+            ),
+            "source_propagator_typeix_spectral_envelope_min": live_propagator.transfer_bundle.get(
+                "typeix_spectral_envelope_min"
+            ),
+            "source_propagator_typeix_spectral_envelope_max": live_propagator.transfer_bundle.get(
+                "typeix_spectral_envelope_max"
+            ),
+            "source_propagator_typeix_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "typeix_mode_mixing_norm"
+            ),
+            "source_propagator_typeix_discrete_representation_labels": live_propagator.transfer_bundle.get(
+                "typeix_discrete_representation_labels"
+            ),
             "requested_integrator_family": str(
                 result.solver_info.get(
                     "requested_integrator_family",
@@ -1146,6 +1572,11 @@ def build_solver_core_output_from_native_result(
             "off_axis_block_reason": None if off_axis_supported else "off_axis_not_closed",
             "b_mode_output_support": b_mode_output_support,
             "b_mode_block_reason": b_mode_block_reason,
+            **b_projector_evidence,
+            "exact_thomson_authority_path": _exact_thomson_authority_path(
+                thomson_mode=thomson_mode,
+                gate_registry=gate_registry,
+            ),
             "canonical_sector_order_contract": ("ph_I", "ph_E", "ph_B", "nu_I", "baryon", "cdm", "src"),
             "runtime_resolved_sector_order": (
                 ("ph_I", "ph_E", "nu_I")
@@ -1401,14 +1832,13 @@ def build_solver_core_output_from_lowell_result(
         if propagator is None
         else propagator
     )
-    visibility_fn = _build_visibility_fn_from_a_lookup(
-        species,
-        lambda eta: float(species.bg_table.interp_a(float(eta))),
-    )
+    a_lookup = _build_result_a_lookup(result)
+    visibility_fn = _build_visibility_fn_from_a_lookup(species, a_lookup)
     source_builder, source_builder_metadata = _build_lowell_source_builder(
         result,
         species=species,
         visibility_fn=visibility_fn,
+        scale_factor_owner="integration_result",
     )
     live_propagator = build_source_propagator(
         propagator_config,
@@ -1475,6 +1905,239 @@ def build_solver_core_output_from_lowell_result(
             "source_propagator_requested_status": feature_flags.source_propagator.value,
             "source_propagator_rotation_status": live_propagator.config.polarization_rotation.value,
             "source_propagator_realization": live_propagator.config.kernel_family,
+            "source_propagator_exactness": live_propagator.evidence.get("exactness"),
+            "source_propagator_publication_output_claim_allowed": bool(
+                live_propagator.evidence.get("output_claim_allowed", False)
+            ),
+            "source_propagator_statistics_claim_allowed": bool(
+                live_propagator.evidence.get("statistics_claim_allowed", False)
+            ),
+            "source_propagator_block_reason": live_propagator.evidence.get("block_reason"),
+            "source_propagator_helical_transport_status": live_propagator.transfer_bundle.get(
+                "helical_transport_status"
+            ),
+            "source_propagator_helical_pitch": live_propagator.transfer_bundle.get(
+                "helical_pitch"
+            ),
+            "source_propagator_helical_phase_max": live_propagator.transfer_bundle.get(
+                "helical_phase_max"
+            ),
+            "source_propagator_polarization_basis_transport": live_propagator.transfer_bundle.get(
+                "polarization_basis_transport"
+            ),
+            "source_propagator_helicity_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "helicity_mode_mixing_norm"
+            ),
+            "source_propagator_nil_transport_status": live_propagator.transfer_bundle.get(
+                "nil_transport_status"
+            ),
+            "source_propagator_nil_structure_scale": live_propagator.transfer_bundle.get(
+                "nil_structure_scale"
+            ),
+            "source_propagator_nil_shear_max": live_propagator.transfer_bundle.get(
+                "nil_shear_max"
+            ),
+            "source_propagator_nil_phase_max": live_propagator.transfer_bundle.get(
+                "nil_phase_max"
+            ),
+            "source_propagator_nil_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "nil_mode_mixing_norm"
+            ),
+            "source_propagator_typeiii_transport_status": live_propagator.transfer_bundle.get(
+                "typeiii_transport_status"
+            ),
+            "source_propagator_typeiii_branch_flag": live_propagator.transfer_bundle.get(
+                "typeiii_branch_flag"
+            ),
+            "source_propagator_typeiii_h_parameter": live_propagator.transfer_bundle.get(
+                "typeiii_h_parameter"
+            ),
+            "source_propagator_typeiii_hyperbolic_scale": live_propagator.transfer_bundle.get(
+                "typeiii_hyperbolic_scale"
+            ),
+            "source_propagator_typeiii_twist_scale": live_propagator.transfer_bundle.get(
+                "typeiii_twist_scale"
+            ),
+            "source_propagator_typeiii_open_attenuation_min": live_propagator.transfer_bundle.get(
+                "typeiii_open_attenuation_min"
+            ),
+            "source_propagator_typeiii_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "typeiii_mode_mixing_norm"
+            ),
+            "source_propagator_typeiv_transport_status": live_propagator.transfer_bundle.get(
+                "typeiv_transport_status"
+            ),
+            "source_propagator_typeiv_coordinate_order": live_propagator.transfer_bundle.get(
+                "typeiv_coordinate_order"
+            ),
+            "source_propagator_typeiv_structure_scale": live_propagator.transfer_bundle.get(
+                "typeiv_structure_scale"
+            ),
+            "source_propagator_typeiv_n3_scale": live_propagator.transfer_bundle.get(
+                "typeiv_n3_scale"
+            ),
+            "source_propagator_typeiv_twist_scale": live_propagator.transfer_bundle.get(
+                "typeiv_twist_scale"
+            ),
+            "source_propagator_typeiv_privileged_weight": live_propagator.transfer_bundle.get(
+                "typeiv_privileged_weight"
+            ),
+            "source_propagator_typeiv_edge_attenuation_min": live_propagator.transfer_bundle.get(
+                "typeiv_edge_attenuation_min"
+            ),
+            "source_propagator_typeiv_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "typeiv_mode_mixing_norm"
+            ),
+            "source_propagator_typev_transport_status": live_propagator.transfer_bundle.get(
+                "typev_transport_status"
+            ),
+            "source_propagator_typev_chart_metadata": live_propagator.transfer_bundle.get(
+                "typev_chart_metadata"
+            ),
+            "source_propagator_typev_curvature_scale": live_propagator.transfer_bundle.get(
+                "typev_curvature_scale"
+            ),
+            "source_propagator_typev_open_envelope_min": live_propagator.transfer_bundle.get(
+                "typev_open_envelope_min"
+            ),
+            "source_propagator_typev_open_envelope_max": live_propagator.transfer_bundle.get(
+                "typev_open_envelope_max"
+            ),
+            "source_propagator_typev_open_anchor_deviation_max": live_propagator.transfer_bundle.get(
+                "typev_open_anchor_deviation_max"
+            ),
+            "source_propagator_typev_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "typev_mode_mixing_norm"
+            ),
+            "source_propagator_vi0_transport_status": live_propagator.transfer_bundle.get(
+                "vi0_transport_status"
+            ),
+            "source_propagator_vi0_structure_scale": live_propagator.transfer_bundle.get(
+                "vi0_structure_scale"
+            ),
+            "source_propagator_vi0_directional_imbalance": live_propagator.transfer_bundle.get(
+                "vi0_directional_imbalance"
+            ),
+            "source_propagator_vi0_shear_max": live_propagator.transfer_bundle.get(
+                "vi0_shear_max"
+            ),
+            "source_propagator_vi0_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "vi0_mode_mixing_norm"
+            ),
+            "source_propagator_vih_transport_status": live_propagator.transfer_bundle.get(
+                "vih_transport_status"
+            ),
+            "source_propagator_vih_branch_flag": live_propagator.transfer_bundle.get(
+                "vih_branch_flag"
+            ),
+            "source_propagator_vih_h_parameter": live_propagator.transfer_bundle.get(
+                "vih_h_parameter"
+            ),
+            "source_propagator_vih_structure_scale": live_propagator.transfer_bundle.get(
+                "vih_structure_scale"
+            ),
+            "source_propagator_vih_twist_scale": live_propagator.transfer_bundle.get(
+                "vih_twist_scale"
+            ),
+            "source_propagator_vih_h_twist_scale": live_propagator.transfer_bundle.get(
+                "vih_h_twist_scale"
+            ),
+            "source_propagator_vih_directional_imbalance": live_propagator.transfer_bundle.get(
+                "vih_directional_imbalance"
+            ),
+            "source_propagator_vih_open_attenuation_min": live_propagator.transfer_bundle.get(
+                "vih_open_attenuation_min"
+            ),
+            "source_propagator_vih_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "vih_mode_mixing_norm"
+            ),
+            "source_propagator_viih_transport_status": live_propagator.transfer_bundle.get(
+                "viih_transport_status"
+            ),
+            "source_propagator_viih_helical_pitch": live_propagator.transfer_bundle.get(
+                "viih_helical_pitch"
+            ),
+            "source_propagator_viih_twist_scale": live_propagator.transfer_bundle.get(
+                "viih_twist_scale"
+            ),
+            "source_propagator_viih_h_parameter": live_propagator.transfer_bundle.get(
+                "viih_h_parameter"
+            ),
+            "source_propagator_viih_open_attenuation_min": live_propagator.transfer_bundle.get(
+                "viih_open_attenuation_min"
+            ),
+            "source_propagator_viih_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "viih_mode_mixing_norm"
+            ),
+            "source_propagator_typeviii_transport_status": live_propagator.transfer_bundle.get(
+                "typeviii_transport_status"
+            ),
+            "source_propagator_typeviii_branch_flag": live_propagator.transfer_bundle.get(
+                "typeviii_branch_flag"
+            ),
+            "source_propagator_typeviii_structure_scale": live_propagator.transfer_bundle.get(
+                "typeviii_structure_scale"
+            ),
+            "source_propagator_typeviii_negative_axis_weight": live_propagator.transfer_bundle.get(
+                "typeviii_negative_axis_weight"
+            ),
+            "source_propagator_typeviii_positive_axis_split": live_propagator.transfer_bundle.get(
+                "typeviii_positive_axis_split"
+            ),
+            "source_propagator_typeviii_disc_radius_x_eq_tanh_xi": live_propagator.transfer_bundle.get(
+                "typeviii_disc_radius_x_eq_tanh_xi"
+            ),
+            "source_propagator_typeviii_noncompact_attenuation_min": live_propagator.transfer_bundle.get(
+                "typeviii_noncompact_attenuation_min"
+            ),
+            "source_propagator_typeviii_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "typeviii_mode_mixing_norm"
+            ),
+            "source_propagator_typeviii_series_tags": live_propagator.transfer_bundle.get(
+                "typeviii_series_tags"
+            ),
+            "source_propagator_typeviii_continuous_series_tag": live_propagator.transfer_bundle.get(
+                "typeviii_continuous_series_tag"
+            ),
+            "source_propagator_typeix_transport_status": live_propagator.transfer_bundle.get(
+                "typeix_transport_status"
+            ),
+            "source_propagator_typeix_branch_flag": live_propagator.transfer_bundle.get(
+                "typeix_branch_flag"
+            ),
+            "source_propagator_typeix_curvature_scale": live_propagator.transfer_bundle.get(
+                "typeix_curvature_scale"
+            ),
+            "source_propagator_typeix_positive_axis_anisotropy_split": live_propagator.transfer_bundle.get(
+                "typeix_positive_axis_anisotropy_split"
+            ),
+            "source_propagator_typeix_discrete_j": live_propagator.transfer_bundle.get(
+                "typeix_discrete_j"
+            ),
+            "source_propagator_typeix_spectral_eigenvalue_jj1": live_propagator.transfer_bundle.get(
+                "typeix_spectral_eigenvalue_jj1"
+            ),
+            "source_propagator_typeix_invariant_volume": live_propagator.transfer_bundle.get(
+                "typeix_invariant_volume"
+            ),
+            "source_propagator_typeix_wigner_d_j2_unit_amplitude": live_propagator.transfer_bundle.get(
+                "typeix_wigner_d_j2_unit_amplitude"
+            ),
+            "source_propagator_typeix_compact_phase_max": live_propagator.transfer_bundle.get(
+                "typeix_compact_phase_max"
+            ),
+            "source_propagator_typeix_spectral_envelope_min": live_propagator.transfer_bundle.get(
+                "typeix_spectral_envelope_min"
+            ),
+            "source_propagator_typeix_spectral_envelope_max": live_propagator.transfer_bundle.get(
+                "typeix_spectral_envelope_max"
+            ),
+            "source_propagator_typeix_mode_mixing_norm": live_propagator.transfer_bundle.get(
+                "typeix_mode_mixing_norm"
+            ),
+            "source_propagator_typeix_discrete_representation_labels": live_propagator.transfer_bundle.get(
+                "typeix_discrete_representation_labels"
+            ),
             "solver_method": str(
                 result.solver_info.get("solver_method", result.config.solver_method)
             ),

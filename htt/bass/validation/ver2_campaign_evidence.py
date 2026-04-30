@@ -49,9 +49,9 @@ __all__ = [
 _REPRESENTATIVE_FAMILIES: tuple[str, ...] = ("I", "V", "VII_0", "VIII")
 _REPRESENTATIVE_PROPAGATOR_REALIZATIONS: dict[str, tuple[str, str]] = {
     "I": ("bianchi_i_matrix_exact", "exact"),
-    "V": ("class_b_open_matrix_approx", "approximate"),
-    "VII_0": ("class_a_helical_matrix_approx", "approximate"),
-    "VIII": ("class_a_semisimple_matrix_approx", "approximate"),
+    "V": ("type_v_open_hyperbolic_projection", "approximate"),
+    "VII_0": ("type_vii0_helical_projection", "approximate"),
+    "VIII": ("type_viii_sl2r_noncompact_projection", "approximate"),
 }
 _REPRESENTATIVE_TILTED_EXECUTABLES: tuple[str, ...] = ("V", "VII_0", "VIII")
 _REPRESENTATIVE_TILT_BLOCKERS: dict[str, str] = {

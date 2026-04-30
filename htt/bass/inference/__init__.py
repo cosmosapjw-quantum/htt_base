@@ -15,9 +15,11 @@ from bass.inference.drivers.emcee_driver import PosteriorSample, run_posterior
 from bass.inference.live_binding import (
     FittingBlockedError,
     LiveObserverBoostProblem,
+    StatisticsReadinessDecision,
     build_live_observer_boost_problem,
     build_type_i_native_validation_problem,
     run_type_i_native_validation_posterior,
+    statistics_readiness_decision,
 )
 from bass.inference.priors import (
     Prior,
@@ -39,6 +41,7 @@ __all__ = [
     "R_HAT_THRESHOLD",
     "SUN_CMB_DIPOLE_DIRECTION",
     "LiveObserverBoostProblem",
+    "StatisticsReadinessDecision",
     "bayes_factor",
     "build_live_observer_boost_problem",
     "build_type_i_native_validation_problem",
@@ -53,5 +56,6 @@ __all__ = [
     "r_hat",
     "run_posterior",
     "run_type_i_native_validation_posterior",
+    "statistics_readiness_decision",
     "trace_plot_data",
 ]

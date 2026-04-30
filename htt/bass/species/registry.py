@@ -220,7 +220,7 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
         recombination: Optional[RecombinationInterp] = None,
         *,
         Sigma_mnu: float = 0.0,
-        recombination_warning_policy: str = "once",
+        recombination_warning_policy: str = "ignore",
         apply_default_reionization: bool = True,
     ) -> "SpeciesBackgroundRegistry":
         """Build the canonical Planck-2018 five-species registry.
@@ -244,11 +244,11 @@ class SpeciesBackgroundRegistry(Mapping[SpeciesLabel, SpeciesBackground]):
             ``MassiveNeutrinoBackground`` without introducing a new
             enum label.
         recombination_warning_policy : {'always', 'once', 'ignore'}, optional
-            Policy for the known HyRec/FLRW support-gap warning emitted
-            by ``BaryonBackground``. The default ``'once'`` warns only
-            once per distinct support signature in a process; use
-            ``'ignore'`` for high-volume parameter sweeps or inference
-            loops that intentionally rebuild the registry many times.
+            Policy for the known HyRec/FLRW support-gap diagnostic in
+            ``BaryonBackground``. The default ``'ignore'`` keeps registry
+            construction quiet because real out-of-domain recombination
+            queries raise with η/z context; use ``'always'`` or ``'once'``
+            only when auditing support coverage explicitly.
         apply_default_reionization : bool, optional
             When ``recombination is None`` and the shipped HyRec table is
             loaded internally, extend it with ``ReionizationParameters()``

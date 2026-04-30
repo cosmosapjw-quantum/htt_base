@@ -117,6 +117,14 @@ def test_bundle_metadata_encodes_h_branch():
     assert md["h_branch_tag"] == H_BRANCH_TAG
     assert md["h_parameter"] > 0.0
     assert md["radial_cutoff_R"] == 1.0 + math.sqrt(md["h_parameter"])
+    assert md["operator_kernel"] == "type_viih_open_helical_projection"
+    assert md["viih_transport_status"] == "type_viih_open_helical_source_integrated"
+    assert md["viih_helical_pitch"] > 0.0
+    assert md["viih_twist_scale"] > 0.0
+    assert 0.0 < md["viih_open_attenuation_min"] < 1.0
+    assert md["viih_mode_mixing_norm"] > 0.0
+    assert md["polarization_basis_transport"] == "spin2_open_helical_rotation"
+    assert np.linalg.norm(bundle.transfer_B[..., 1:]) > 0.0
     assert "no_hidden_h_branch_choice" in md["forbidden_shortcut_tracked"]
 
 
@@ -149,6 +157,7 @@ def test_residual_pack_passes():
     assert isinstance(pack, ResidualPack)
     assert pack.passed is True
     assert pack.family == "VII_h"
+    assert pack.metadata["viih_transport_status"] == "type_viih_open_helical_source_integrated"
 
 
 def test_registered_type_vii_h_routes_through_kernel():

@@ -178,6 +178,11 @@ class TypeVII0Kernel(LegacyDelegationKernel):
             "radial_cutoff_R": float(self.default_R),
             "seed_basis": "spherical_jn",
             "h_parameter": 0.0,
+            "helical_transport_status": legacy_vii0.get("helical_transport_status"),
+            "helical_pitch": legacy_vii0.get("helical_pitch"),
+            "helical_phase_max": legacy_vii0.get("helical_phase_max"),
+            "polarization_basis_transport": legacy_vii0.get("polarization_basis_transport"),
+            "helicity_mode_mixing_norm": legacy_vii0.get("helicity_mode_mixing_norm", 0.0),
             "residual_values": residuals,
             "forbidden_shortcut_tracked": list(self.metadata.forbidden_shortcuts),
         }
@@ -215,8 +220,8 @@ class TypeVII0Kernel(LegacyDelegationKernel):
         if t_vii0.ndim != 3 or t_vii0.shape != t_i.shape or t_vii0.shape[-1] != 3:
             anchor_err = math.inf
         else:
-            diff = t_vii0[..., 1] - t_i[..., 1]
-            scale = max(float(np.max(np.abs(t_i[..., 1]))), 1.0e-30)
+            diff = t_vii0[..., 0] - t_i[..., 0]
+            scale = max(float(np.max(np.abs(t_i[..., 0]))), 1.0e-30)
             anchor_err = float(np.max(np.abs(diff)) / scale)
 
         return {
@@ -238,6 +243,11 @@ class TypeVII0Kernel(LegacyDelegationKernel):
             extra_metadata={
                 "radial_cutoff_R": bundle.metadata.get("radial_cutoff_R"),
                 "h_parameter": bundle.metadata.get("h_parameter"),
+                "helical_transport_status": bundle.metadata.get("helical_transport_status"),
+                "helical_pitch": bundle.metadata.get("helical_pitch"),
+                "helical_phase_max": bundle.metadata.get("helical_phase_max"),
+                "polarization_basis_transport": bundle.metadata.get("polarization_basis_transport"),
+                "helicity_mode_mixing_norm": bundle.metadata.get("helicity_mode_mixing_norm"),
             },
         )
 

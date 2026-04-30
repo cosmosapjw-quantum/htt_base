@@ -506,6 +506,20 @@ def test_config_rejects_eta_final_before_initial() -> None:
         IntegratorConfig(eta_initial_mpc=100.0, eta_final_mpc=50.0)
 
 
+def test_config_rejects_non_positive_max_step_factor() -> None:
+    with pytest.raises(ValueError, match="max_step_factor"):
+        IntegratorConfig(max_step_factor=0)
+    with pytest.raises(ValueError, match="max_step_factor"):
+        IntegratorConfig(max_step_factor=-5)
+
+
+def test_config_rejects_non_positive_imex_update_limit() -> None:
+    with pytest.raises(ValueError, match="imex_explicit_update_limit"):
+        IntegratorConfig(imex_explicit_update_limit=0.0)
+    with pytest.raises(ValueError, match="imex_explicit_update_limit"):
+        IntegratorConfig(imex_explicit_update_limit=-0.1)
+
+
 # Silence unused-import warnings on symbols carried for readers.
 _ = TCAClosure
 _ = flrw_cosmology

@@ -1,10 +1,12 @@
-# BASS Phase 1 PSTF Primary Migration — Snapshot 2026-04-18
+# BASS Phase 1 PSTF Primary Migration — Snapshot 2026-04-18 (with R17-P3 honesty patch)
 
 > **Project**: BASS (Boltzmann And Spectrum Solver / Bianchi Anisotropy Solver)
 > **Phase**: 1 — PSTF Primary Migration (FLRW baseline)
 > **Snapshot scope**: PR-020 ~ PR-024b (build-complete, 일부 test 실행 대기)
 > **Progress at snapshot**: **50.8% of Phase 1 complete** (53.3 / 105 weighted score)
-> **Regression anchor**: D_2 = 1002.086744 μK² bit-identical across **14 consecutive commits**
+> **Regression anchor (Rust MB-95 path)**: D_2 = 1002.086744 μK² bit-identical across **14 consecutive commits** — Rust path only; Python PSTF closure is the open Phase-1 target (PR-024c).
+
+> **🔒 Honesty disclaimer (PA-11, 2026-04-29)**: this README's headline-science block (§1.1: `ln B = +26.40`, `β = 1.36×10⁻³`, `F_Bayes = 0.093 ± 0.025`) was found by the R17-P3 adversarial audit to be a research goal that no production code path currently emits. The single source of truth for what is provable today vs. what remains a research target is [`docs/claim_ledger.md`](docs/claim_ledger.md). Inference requests targeting these numbers are now hard-stopped at CLI entry by `bass.inference.envelope.enforce_inference_envelope` unless `envelope.allow_research_goal_only=true` is set explicitly. See also [`htt/bass/spectrum/test_d2_pstf_progressive_closure.py`](htt/bass/spectrum/test_d2_pstf_progressive_closure.py) for the progressive-closure tracker that catches Python-path drift toward (or away from) the Rust anchor.
 
 본 문서는 다세션에 걸친 BASS Phase 1 PSTF Primary Migration 작업의 전체 통합 기록이다. User 의 "코드 최적화가 부족하다" 라는 피드백으로 현 시점에서 작업을 일시 중지하고, 별도의 최적화 작업을 진행하기 전에 **지금까지의 모든 코드와 문서를 단일 zip 으로 packaging** 하기 위해 작성되었다.
 
@@ -20,11 +22,15 @@ Jiwon (Soongsil University OMEG Institute) 의 박사논문 _"Tetrad-Based Depar
 x_C = Σ²_std − W²_std + Ω_tilt + Ω_{k,aniso}
 ```
 
-를 Maartens-Ellis-Stoeger (MES) kinematic bound hierarchy 와 연결하여 9개 Bianchi type 에 대해 CMB T+E+B spectrum 을 계산한다. Production 결과:
+를 Maartens-Ellis-Stoeger (MES) kinematic bound hierarchy 와 연결하여 9개 Bianchi type 에 대해 CMB T+E+B spectrum 을 계산한다.
 
-- **ln B(FLRW_tilt) = +26.40**
-- β = 1.360×10⁻³
-- F_Bayes = 0.093 ± 0.025
+**Research goals (NOT production results — see `docs/claim_ledger.md`):**
+
+- **ln B(FLRW_tilt) = +26.40** _(research_goal; no production code path emits this)_
+- **β = 1.360×10⁻³** _(diagnostic reference; not gated by any test)_
+- **F_Bayes = 0.093 ± 0.025** _(no F_Bayes pipeline in code today)_
+
+These numbers will be promoted to "production" rows in the claim ledger only when (a) Python PSTF closure of D_2 = 1002.086744 μK² lands (PR-024c), (b) a real Planck `clik` likelihood replaces `SurrogatePlanckValidationError`, and (c) the inference posterior pipeline produces them under the existing 14-gate fitting ladder. Until then, the inference envelope guard rejects configs that try to publish them as headline.
 
 Tsagas fast-growth (arXiv:2603.14511) 은 Clarkson–Maartens 가 제거 — khronon field 가 유일한 생존 tilted-Bianchi dipole source.
 

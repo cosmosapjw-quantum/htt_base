@@ -11,8 +11,10 @@ from common.contracts import ArtifactManifest, SolverCoreOutput
 from bass.forward import (
     BoostArchive,
     DEFAULT_HARMONIC_ORDERING,
+    alm_power_by_l,
     observer_boost_output,
     observer_boost_output_from_components,
+    validate_alm_archive,
     write_output_archive,
 )
 from bass.validation import GATE_LADDER, make_gate_bundle
@@ -148,6 +150,46 @@ def test_write_output_archive_writes_required_schema(tmp_path: Path) -> None:
         "stochastic_lcdm_realization_injection_not_implemented"
     )
     assert boost_meta["component_kind"] == "boost"
+
+    validated = validate_alm_archive(tmp_path, require_fitting_ready=True)
+    assert validated["archive_valid"] is True
+    assert validated["lmax"] == 2
+    assert validated["component_kinds"] == {
+        "deterministic": "deterministic",
+        "stochastic": "stochastic",
+        "boost": "boost",
+    }
+    assert validated["fitting_allowed"] is True
+    np.testing.assert_allclose(validated["power_by_l"]["boost_T"], 0.0)
+
+
+def test_alm_power_by_l_uses_ell_m_blocks() -> None:
+    alm = np.arange(9, dtype=np.float64)
+    power = alm_power_by_l(alm, lmax=2)
+    assert power.shape == (3,)
+    assert power[0] == pytest.approx(0.0)
+    assert power[1] == pytest.approx(np.mean(np.array([1.0, 2.0, 3.0]) ** 2))
+    assert power[2] == pytest.approx(np.mean(np.array([4.0, 5.0, 6.0, 7.0, 8.0]) ** 2))
+
+
+def test_validate_alm_archive_rejects_shape_tamper(tmp_path: Path) -> None:
+    write_output_archive(_solver_output(), tmp_path, gate_registry=_gate_registry())
+    np.savez(
+        tmp_path / "alm_boost.npz",
+        lmax=2,
+        ordering=DEFAULT_HARMONIC_ORDERING,
+        alm_T=np.zeros(8),
+        alm_E=np.zeros(8),
+        alm_B=np.zeros(8),
+        metadata_json=json.dumps(
+            {
+                "component_kind": "boost",
+                "split_semantics": "output_only_local_boost",
+            }
+        ),
+    )
+    with pytest.raises(ValueError, match="shape"):
+        validate_alm_archive(tmp_path)
 
 
 def test_component_form_observer_boost_output_returns_boost_archive() -> None:

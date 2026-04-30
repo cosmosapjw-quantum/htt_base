@@ -46,15 +46,17 @@ class BaryonBackground(SpeciesBackground):
     ``RecombinationInterp`` (HyRec-2 fixture + tanh reionization per
     ``bass.recombination``).
 
-    The η-domain is restricted to the intersection of the FLRW table's
-    η range and the z range spanned by ``recombination.table``. A
-    A configurable support-gap warning is available when the FLRW η-grid
-    extends outside the recombination table; physically this means
-    recombination queries at z > recomb.z_max (very early) or
-    z < recomb.z_min are not available, but ``rho_rest`` / ``p_rest`` /
-    ``dot_rho`` remain well-defined on the full η-grid. The default
-    policy is ``'once'`` so parameter sweeps and inference loops do not
-    re-emit the same warning on every registry construction.
+    The recombination-query domain is restricted to the intersection of
+    the FLRW table's η range and the z range spanned by
+    ``recombination.table``. A configurable support-gap warning is
+    available when the FLRW η-grid extends outside the recombination
+    table; physically this means recombination queries at z >
+    recomb.z_max (very early) or z < recomb.z_min are not available,
+    but ``rho_rest`` / ``p_rest`` / ``dot_rho`` remain well-defined on
+    the full η-grid. The default policy is ``'ignore'`` because actual
+    out-of-domain recombination queries raise with η/z context; the
+    construction-time support gap is diagnostic metadata, not an
+    interpolation event.
 
     Reference: Kolb §3.3, §5.4; Baumann §3.10.
     """
@@ -66,7 +68,7 @@ class BaryonBackground(SpeciesBackground):
         Omega_b_0: float,
         recombination: RecombinationInterp,
         *,
-        recombination_warning_policy: _RecombinationWarningPolicy = "once",
+        recombination_warning_policy: _RecombinationWarningPolicy = "ignore",
     ):
         if Omega_b_0 <= 0.0:
             raise ValueError(

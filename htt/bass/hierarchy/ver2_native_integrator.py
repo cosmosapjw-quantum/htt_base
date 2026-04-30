@@ -69,6 +69,7 @@ from bass.hierarchy.ver3_layout_protocol import (
     ReducedLocalAffineOperator,
     build_reduced_joint_affine_operator,
     build_reduced_local_affine_operator,
+    build_reduced_source_affine_operator,
     build_hierarchy_layout,
     flatten,
 )
@@ -278,6 +279,259 @@ def _resolved_gamma_t(
         return float(visibility_source.Gamma_T(float(eta), np.asarray(direction, dtype=np.float64)))
     boost = float(visibility_source.visibility.boost_factor(float(eta), np.asarray(direction, dtype=np.float64)))
     return float(config.gamma_T_override(float(eta))) * boost
+
+
+def _resolved_visibility_g(
+    *,
+    eta: float,
+    direction: np.ndarray,
+    visibility_source,
+    config: IntegratorConfig,
+) -> float:
+    """Resolve the electron-frame visibility source used by backend source tables.
+
+    The reduced source backend consumes a scalar visibility amplitude.
+    That quantity must be the physical visibility ``g = Γ_T exp(-κ)``,
+    including the same direction-dependent electron-frame boost used by
+    ``_resolved_gamma_t``. It must not be inferred from photon moments.
+    """
+    direction_arr = np.asarray(direction, dtype=np.float64)
+    if config.gamma_T_override is None:
+        visibility = float(visibility_source.g(float(eta), direction_arr))
+    else:
+        gamma_t = _resolved_gamma_t(
+            eta=float(eta),
+            direction=direction_arr,
+            visibility_source=visibility_source,
+            config=config,
+        )
+        kappa = float(visibility_source.kappa(float(eta), direction_arr))
+        visibility = float(gamma_t * np.exp(-kappa))
+    if not np.isfinite(visibility) or visibility < 0.0:
+        raise RuntimeError(
+            "resolved electron-frame visibility became non-finite or negative: "
+            f"eta={float(eta):.17g}, visibility={visibility:.17g}"
+        )
+    return visibility
+
+
+def _scalar_visibility_g_from_contract(
+    *,
+    eta: float,
+    bg_table,
+    visibility_source,
+) -> float | None:
+    """Return scalar-history visibility ``g(z(eta))`` when available.
+
+    This is the exact no-tilt limit of the electron-frame visibility
+    source. It deliberately returns zero outside the recombination table
+    support, matching ``TiltedVisibility.Gamma_T``'s out-of-domain
+    fallback, instead of clipping early-time queries to the table edge.
+    """
+    contract = getattr(visibility_source, "contract", None)
+    interp = getattr(contract, "interp", None)
+    table = getattr(interp, "table", None)
+    if interp is None or table is None or not hasattr(bg_table, "interp_a"):
+        return None
+    a = float(bg_table.interp_a(float(eta)))
+    if not np.isfinite(a) or a <= 0.0:
+        raise RuntimeError(
+            f"scalar visibility requires positive finite a(eta), got {a!r}"
+        )
+    z = 1.0 / a - 1.0
+    z_min = float(table.z_min)
+    z_max = float(table.z_max)
+    tol = max(1.0e-12, 1.0e-10 * max(abs(z_min), abs(z_max), 1.0))
+    if z < z_min - tol or z > z_max + tol:
+        return 0.0
+    z_query = float(np.clip(z, z_min, z_max))
+    visibility = float(interp.query_visibility(z_query))
+    if not np.isfinite(visibility) or visibility < 0.0:
+        raise RuntimeError(
+            "scalar-history visibility became non-finite or negative: "
+            f"eta={float(eta):.17g}, z={z_query:.17g}, visibility={visibility:.17g}"
+        )
+    return visibility
+
+
+def _scalar_kappa_from_contract(
+    *,
+    eta: float,
+    bg_table,
+    visibility_source,
+) -> float | None:
+    """Return scalar optical depth ``kappa(z(eta))`` when available."""
+    contract = getattr(visibility_source, "contract", None)
+    interp = getattr(contract, "interp", None)
+    table = getattr(interp, "table", None)
+    if interp is None or table is None or not hasattr(bg_table, "interp_a"):
+        return None
+    a = float(bg_table.interp_a(float(eta)))
+    if not np.isfinite(a) or a <= 0.0:
+        raise RuntimeError(
+            f"scalar kappa requires positive finite a(eta), got {a!r}"
+        )
+    z = 1.0 / a - 1.0
+    z_min = float(table.z_min)
+    z_max = float(table.z_max)
+    tol = max(1.0e-12, 1.0e-10 * max(abs(z_min), abs(z_max), 1.0))
+    if z < z_min - tol:
+        return 0.0
+    z_query = z_max if z > z_max + tol else float(np.clip(z, z_min, z_max))
+    kappa = float(interp.query_kappa(z_query))
+    if not np.isfinite(kappa) or kappa < 0.0:
+        raise RuntimeError(
+            "scalar-history kappa became non-finite or negative: "
+            f"eta={float(eta):.17g}, z={z_query:.17g}, kappa={kappa:.17g}"
+        )
+    return kappa
+
+
+def _baryon_doppler_velocity(baryon_local: np.ndarray) -> float:
+    baryon_arr = np.asarray(baryon_local, dtype=np.float64)
+    if baryon_arr.ndim != 1 or baryon_arr.size <= 1:
+        raise ValueError("baryon local state must expose v_b in slot 1")
+    velocity = float(baryon_arr[1])
+    if not np.isfinite(velocity):
+        raise RuntimeError(f"baryon Doppler velocity became non-finite: {velocity!r}")
+    return velocity
+
+
+def _resolved_doppler_source(
+    *,
+    visibility_amplitude: float,
+    baryon_local: np.ndarray,
+) -> float:
+    """Return the scalar Doppler source carried by backend source tables."""
+    visibility = float(visibility_amplitude)
+    if not np.isfinite(visibility) or visibility < 0.0:
+        raise RuntimeError(
+            "Doppler source requires non-negative finite visibility, "
+            f"got {visibility!r}"
+        )
+    doppler = visibility * _baryon_doppler_velocity(baryon_local)
+    if not np.isfinite(doppler):
+        raise RuntimeError(f"resolved Doppler source became non-finite: {doppler!r}")
+    return float(doppler)
+
+
+_VISIBILITY_SOURCE_FORMALISM = "bass_scalar_visibility_source_components_v1"
+
+
+@dataclass(frozen=True)
+class _VisibilitySourceComponents:
+    theta_0_source: float
+    pi_bass_source: float
+    temperature_visibility_source: float
+    polarization_source: float
+
+
+def _resolved_visibility_source_components(
+    *,
+    visibility_amplitude: float,
+    photon_T_flat: np.ndarray,
+    photon_E_flat: np.ndarray,
+    L_max: int,
+    gravitational_potential: float = 0.0,
+) -> _VisibilitySourceComponents:
+    """Resolve scalar visibility source components from live photon moments.
+
+    BASS's scalar LoS convention uses
+    ``Pi = Theta_2 - sqrt(6) E_2`` and
+    carries the local visibility sources
+    ``S_T = g * (Theta_0 + Psi + Pi / 4)`` and
+    ``S_E = -sqrt(6) * g * Pi / 4``.  This helper is the SSOT for the
+    scalar source-table components; source tables must not reconstruct
+    them from ``abs(E_2)`` or visibility-only surrogates.
+    """
+    visibility = float(visibility_amplitude)
+    if not np.isfinite(visibility) or visibility < 0.0:
+        raise RuntimeError(
+            "visibility source components require non-negative finite visibility, "
+            f"got {visibility!r}"
+        )
+    psi = float(gravitational_potential)
+    if not np.isfinite(psi):
+        raise RuntimeError(f"gravitational_potential must be finite, got {psi!r}")
+    t_flat = np.asarray(photon_T_flat, dtype=np.float64)
+    e_flat = np.asarray(photon_E_flat, dtype=np.float64)
+    if t_flat.ndim != 1 or e_flat.ndim != 1:
+        raise ValueError("photon_T_flat and photon_E_flat must be 1-D arrays")
+    if t_flat.size == 0:
+        raise ValueError("photon_T_flat must include the monopole slot")
+    theta_0 = float(t_flat[0])
+    if not np.isfinite(theta_0):
+        raise RuntimeError(f"temperature monopole became non-finite: {theta_0!r}")
+    pi_bass = 0.0
+    if int(L_max) >= 2:
+        slot = _ell2_m0_slot_offset(int(L_max))
+        if t_flat.size <= slot or e_flat.size <= slot:
+            raise ValueError(
+                "photon source arrays are too short for ell=2,m=0: "
+                f"slot={slot}, T_size={t_flat.size}, E_size={e_flat.size}"
+            )
+        theta_2 = float(t_flat[slot])
+        e_2 = float(e_flat[slot])
+        pi_bass = theta_2 - float(np.sqrt(6.0)) * e_2
+        if not np.isfinite(pi_bass):
+            raise RuntimeError(
+                "resolved Pi_BASS source became non-finite: "
+                f"theta_2={theta_2!r}, E_2={e_2!r}, pi_bass={pi_bass!r}"
+            )
+    temperature_source = visibility * (theta_0 + psi + 0.25 * pi_bass)
+    polarization_source = -float(np.sqrt(6.0)) * visibility * pi_bass / 4.0
+    if not np.isfinite(temperature_source) or not np.isfinite(polarization_source):
+        raise RuntimeError(
+            "resolved visibility source components became non-finite: "
+            f"theta_0={theta_0!r}, pi_bass={pi_bass!r}, "
+            f"temperature_source={temperature_source!r}, "
+            f"polarization_source={polarization_source!r}"
+        )
+    return _VisibilitySourceComponents(
+        theta_0_source=float(theta_0),
+        pi_bass_source=float(pi_bass),
+        temperature_visibility_source=float(temperature_source),
+        polarization_source=float(polarization_source),
+    )
+
+
+def _resolved_polarization_source(
+    *,
+    visibility_amplitude: float,
+    photon_T_flat: np.ndarray,
+    photon_E_flat: np.ndarray,
+    L_max: int,
+) -> float:
+    """Return the scalar E-mode visibility source from the live quadrupole."""
+    return _resolved_visibility_source_components(
+        visibility_amplitude=visibility_amplitude,
+        photon_T_flat=photon_T_flat,
+        photon_E_flat=photon_E_flat,
+        L_max=int(L_max),
+    ).polarization_source
+
+
+def _resolved_temperature_visibility_source(
+    *,
+    visibility_amplitude: float,
+    photon_T_flat: np.ndarray,
+    photon_E_flat: np.ndarray,
+    L_max: int,
+    gravitational_potential: float = 0.0,
+) -> float:
+    """Return the temperature visibility source carried by source tables.
+
+    This is the local visibility piece of the scalar LoS temperature
+    source, ``g * (Theta_0 + Psi + Pi_BASS/4)``.  Doppler and ISW terms
+    remain separately owned by their existing runtime/LoS paths.
+    """
+    return _resolved_visibility_source_components(
+        visibility_amplitude=visibility_amplitude,
+        photon_T_flat=photon_T_flat,
+        photon_E_flat=photon_E_flat,
+        L_max=int(L_max),
+        gravitational_potential=gravitational_potential,
+    ).temperature_visibility_source
 
 
 def _electron_velocity_real_sph_from_baryon_row(row: np.ndarray) -> np.ndarray:
@@ -613,6 +867,30 @@ class _SegmentResult:
 
 
 @dataclass(frozen=True)
+class _ImexStepTuning:
+    split_step: float
+    min_step: float
+    explicit_update_limit: float
+    fixed_point_iters: int = 6
+
+
+@dataclass(frozen=True)
+class _ImexStepCache:
+    residual_joint_affine: ReducedJointAffineOperator | None = None
+    covered_source_affine: object | None = None
+
+
+@dataclass(frozen=True)
+class _ImexStepOutcome:
+    eta_next: float
+    y_next: np.ndarray
+    cache: _ImexStepCache
+    nfev: int
+    njev: int
+    nlu: int
+
+
+@dataclass(frozen=True)
 class _EtaRuntimeSnapshot:
     eta: float
     background: object
@@ -794,8 +1072,8 @@ def _pack_radiation_state(
     residual_local: np.ndarray | None = None,
     residual_harmonic: np.ndarray | None = None,
     residual_source: np.ndarray | None = None,
+    out: np.ndarray | None = None,
 ) -> np.ndarray:
-    b_mode = zero_hierarchy(photon_T.L) if photon_B is None else photon_B
     baryon = (
         np.zeros(_BARYON_LOCAL_DOF, dtype=np.float64)
         if baryon_local is None
@@ -838,20 +1116,53 @@ def _pack_radiation_state(
         raise ValueError("residual_harmonic must be a 1-D vector when provided")
     if residual_s.ndim != 1:
         raise ValueError("residual_source must be a 1-D vector when provided")
-    return np.concatenate(
-        [
-            pack_hierarchy(photon_T),
-            pack_hierarchy(photon_E.E),
-            pack_hierarchy(b_mode),
-            pack_hierarchy(neutrino_tower),
-            baryon,
-            cdm,
-            source,
-            residual,
-            residual_h,
-            residual_s,
-        ]
+    L = int(photon_T.L)
+    tower_size = _tower_size(L)
+    expected = (
+        4 * tower_size
+        + _PRIMARY_LOCAL_DOF
+        + int(residual.size)
+        + int(residual_h.size)
+        + int(residual_s.size)
     )
+    if out is None:
+        packed = np.empty(expected, dtype=np.float64)
+    else:
+        packed = np.asarray(out, dtype=np.float64)
+        if packed.shape != (expected,):
+            raise ValueError(
+                f"radiation state output buffer shape {packed.shape} "
+                f"does not match expected shape ({expected},)"
+            )
+
+    slices = _hierarchy_view_slices_for(L)
+    for ell, slot in enumerate(slices):
+        packed[slot] = np.asarray(photon_T.tensors[ell].components, dtype=np.float64)
+        e_slot = slice(tower_size + slot.start, tower_size + slot.stop)
+        b_slot = slice(2 * tower_size + slot.start, 2 * tower_size + slot.stop)
+        nu_slot = slice(3 * tower_size + slot.start, 3 * tower_size + slot.stop)
+        packed[e_slot] = np.asarray(photon_E.E.tensors[ell].components, dtype=np.float64)
+        if photon_B is None:
+            packed[b_slot] = 0.0
+        else:
+            packed[b_slot] = np.asarray(photon_B.tensors[ell].components, dtype=np.float64)
+        packed[nu_slot] = np.asarray(neutrino_tower.tensors[ell].components, dtype=np.float64)
+
+    local_offset = 4 * tower_size
+    packed[local_offset : local_offset + _BARYON_LOCAL_DOF] = baryon
+    packed[
+        local_offset + _BARYON_LOCAL_DOF : local_offset + _LOCAL_MATTER_DOF
+    ] = cdm
+    packed[
+        local_offset + _LOCAL_MATTER_DOF : local_offset + _PRIMARY_LOCAL_DOF
+    ] = source
+    residual_offset = local_offset + _PRIMARY_LOCAL_DOF
+    packed[residual_offset : residual_offset + residual.size] = residual
+    residual_offset += int(residual.size)
+    packed[residual_offset : residual_offset + residual_h.size] = residual_h
+    residual_offset += int(residual_h.size)
+    packed[residual_offset : residual_offset + residual_s.size] = residual_s
+    return packed
 
 
 def _make_pstf_tensor_view(ell: int, components: np.ndarray) -> PSTFTensor:
@@ -906,7 +1217,20 @@ def _unpack_hierarchy_view(flat: np.ndarray, L: int) -> PSTFHierarchyState:
     state = object.__new__(PSTFHierarchyState)
     state.L = int(L)
     state.tensors = tensors
+    state._flat_view = arr
     return state
+
+
+def _flat_hierarchy_array(state: PSTFHierarchyState) -> np.ndarray:
+    flat_view = getattr(state, "_flat_view", None)
+    expected = _tower_size(int(state.L))
+    if (
+        isinstance(flat_view, np.ndarray)
+        and flat_view.dtype == np.float64
+        and flat_view.shape == (expected,)
+    ):
+        return flat_view
+    return np.asarray(pack_hierarchy(state), dtype=np.float64)
 
 
 def _unpack_radiation_state(
@@ -1130,6 +1454,19 @@ class Ver2TierBIntegrator:
         if not np.any(self._direction):
             self._direction = np.array([1.0, 0.0, 0.0], dtype=np.float64)
         self._direction = self._direction / max(float(np.linalg.norm(self._direction)), 1.0e-30)
+        tilt_velocity = np.asarray(background_monitor.tilt_velocity, dtype=np.float64)
+        max_tilt_speed = (
+            0.0
+            if tilt_velocity.size == 0
+            else float(np.max(np.linalg.norm(np.atleast_2d(tilt_velocity), axis=1)))
+        )
+        self._visibility_scalar_fast_path = (
+            abs(float(config.tilt_rapidity)) <= 1.0e-15
+            and max_tilt_speed <= 1.0e-14
+            and bool(getattr(self.visibility_source, "reduces_to_scalar_when_tilt_zero", False))
+        )
+        self._visibility_g_cache: dict[float, float] = {}
+        self._visibility_g_cache_max = 512
         self.seed_k_comoving = float(seed_k_comoving)
         self.startup_gate: StartupGateDecision | None = None
         self.seed_projection: SeedConstraintProjection | None = None
@@ -1155,6 +1492,7 @@ class Ver2TierBIntegrator:
                 gamma_t_probe=float(gamma_t_initial),
                 visibility_amplitude=0.0,
                 polarization_source=0.0,
+                doppler_source=0.0,
                 reionization_amplitude=reionization_amplitude,
             )
         )
@@ -1174,6 +1512,32 @@ class Ver2TierBIntegrator:
         self._residual_local_dof = len(self._residual_mode_labels) * (_BARYON_LOCAL_DOF + _CDM_LOCAL_DOF)
         self._residual_harmonic_dof = len(self._residual_mode_labels) * 4 * _tower_size(self.config.L_max)
         self._residual_source_dof = len(self._residual_mode_labels) * int(self._layout.sector_local_dofs["src"])
+        self._tower_size = _tower_size(self.config.L_max)
+        self._ell_slices = tuple(_hierarchy_view_slices_for(int(self.config.L_max)))
+        self._theta1_m0_slot = (
+            int(self._ell_slices[1].start) + 1 if int(self.config.L_max) >= 1 else None
+        )
+        self._ell2_m0_slot = (
+            _ell2_m0_slot_offset(int(self.config.L_max))
+            if int(self.config.L_max) >= 2
+            else None
+        )
+        self._state_size = (
+            _radiation_state_size(self.config.L_max)
+            + self._residual_local_dof
+            + self._residual_harmonic_dof
+            + self._residual_source_dof
+        )
+        self._explicit_rhs_left_scratch = np.empty(self._state_size, dtype=np.float64)
+        self._explicit_rhs_mid_scratch = np.empty(self._state_size, dtype=np.float64)
+        self._imex_predictor_scratch = np.empty(self._state_size, dtype=np.float64)
+        self._imex_stage_scratch = np.empty(self._state_size, dtype=np.float64)
+        self._imex_candidate_scratch = np.empty(self._state_size, dtype=np.float64)
+        self._imex_next_candidate_scratch = np.empty(self._state_size, dtype=np.float64)
+        self._imex_delta_scratch = np.empty(self._state_size, dtype=np.float64)
+        self._imex_implicit_rhs_scratch = np.empty(self._state_size, dtype=np.float64)
+        self._orthogonal_implicit_pack_scratch = np.empty(self._state_size, dtype=np.float64)
+        self._source_identity = np.eye(_SOURCE_LOCAL_DOF, dtype=np.float64)
         residual_rows: list[int] = []
         for mu in self._residual_mode_labels:
             residual_rows.extend(int(value) for value in self._projection_index_cache.baryon_by_mode_label[mu])
@@ -1334,16 +1698,27 @@ class Ver2TierBIntegrator:
             visibility_source=self.visibility_source,
             config=self.config,
         )
-        polarization_slot = _ell2_m0_slot_offset(int(self.config.L_max)) if int(self.config.L_max) >= 2 else None
+        visibility_initial = self._visibility_amplitude_at(eta_initial)
+        photon_T_initial = pack_hierarchy(seeded.photon_T)
+        photon_E_initial = pack_hierarchy(seeded.photon_E.E)
+        visibility_sources_initial = _resolved_visibility_source_components(
+            visibility_amplitude=visibility_initial,
+            photon_T_flat=photon_T_initial,
+            photon_E_flat=photon_E_initial,
+            L_max=int(self.config.L_max),
+        )
         source_seed_blocks = self.backend.evaluate_reduced_source_blocks(
             self._live_backend_state_payload(
                 eta=eta_initial,
                 gamma_t_probe=float(gamma_t_initial),
-                visibility_amplitude=abs(float(pack_hierarchy(seeded.photon_T)[0])),
-                polarization_source=(
-                    0.0
-                    if polarization_slot is None
-                    else abs(float(pack_hierarchy(seeded.photon_E.E)[polarization_slot]))
+                visibility_amplitude=visibility_initial,
+                theta_0_source=visibility_sources_initial.theta_0_source,
+                pi_bass_source=visibility_sources_initial.pi_bass_source,
+                temperature_visibility_source=visibility_sources_initial.temperature_visibility_source,
+                polarization_source=visibility_sources_initial.polarization_source,
+                doppler_source=_resolved_doppler_source(
+                    visibility_amplitude=visibility_initial,
+                    baryon_local=baryon_local,
                 ),
                 reionization_amplitude=float(self._reionization_amplitude()),
             )
@@ -1373,6 +1748,7 @@ class Ver2TierBIntegrator:
             residual_local=residual_local,
             residual_harmonic=residual_harmonic,
             residual_source=residual_source,
+            out=self._orthogonal_implicit_pack_scratch,
         )
 
     def _reionization_amplitude(self) -> float:
@@ -1381,6 +1757,51 @@ class Ver2TierBIntegrator:
             if self.visibility_source.contract.events is None
             else float(self.visibility_source.contract.events.tau_reion)
         )
+
+    def _visibility_amplitude_at(self, eta: float) -> float:
+        eta_f = float(eta)
+        if self._visibility_scalar_fast_path:
+            if self.config.gamma_T_override is None:
+                scalar_visibility = _scalar_visibility_g_from_contract(
+                    eta=eta_f,
+                    bg_table=self.bg_table,
+                    visibility_source=self.visibility_source,
+                )
+                if scalar_visibility is not None:
+                    return scalar_visibility
+            else:
+                scalar_kappa = _scalar_kappa_from_contract(
+                    eta=eta_f,
+                    bg_table=self.bg_table,
+                    visibility_source=self.visibility_source,
+                )
+                if scalar_kappa is not None:
+                    gamma_t = _resolved_gamma_t(
+                        eta=eta_f,
+                        direction=self._direction,
+                        visibility_source=self.visibility_source,
+                        config=self.config,
+                    )
+                    visibility = float(gamma_t * np.exp(-scalar_kappa))
+                    if not np.isfinite(visibility) or visibility < 0.0:
+                        raise RuntimeError(
+                            "scalar override visibility became non-finite or negative: "
+                            f"eta={eta_f:.17g}, visibility={visibility:.17g}"
+                        )
+                    return visibility
+        cached = self._visibility_g_cache.get(eta_f)
+        if cached is not None:
+            return cached
+        visibility = _resolved_visibility_g(
+            eta=eta_f,
+            direction=self._direction,
+            visibility_source=self.visibility_source,
+            config=self.config,
+        )
+        if len(self._visibility_g_cache) >= self._visibility_g_cache_max:
+            self._visibility_g_cache.pop(next(iter(self._visibility_g_cache)))
+        self._visibility_g_cache[eta_f] = visibility
+        return visibility
 
     def _split_residual_local_state(
         self,
@@ -1511,13 +1932,10 @@ class Ver2TierBIntegrator:
             sample.source_template[self._projection_index_cache.src_all],
             dtype=np.float64,
         )
-        state[self._covered_harmonic_layout_rows["ph_I"]] = np.asarray(pack_hierarchy(photon_T), dtype=np.float64)
-        state[self._covered_harmonic_layout_rows["ph_E"]] = np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64)
-        state[self._covered_harmonic_layout_rows["ph_B"]] = np.asarray(pack_hierarchy(photon_B), dtype=np.float64)
-        state[self._covered_harmonic_layout_rows["nu_I"]] = np.asarray(
-            pack_hierarchy(neutrino_tower),
-            dtype=np.float64,
-        )
+        state[self._covered_harmonic_layout_rows["ph_I"]] = _flat_hierarchy_array(photon_T)
+        state[self._covered_harmonic_layout_rows["ph_E"]] = _flat_hierarchy_array(photon_E.E)
+        state[self._covered_harmonic_layout_rows["ph_B"]] = _flat_hierarchy_array(photon_B)
+        state[self._covered_harmonic_layout_rows["nu_I"]] = _flat_hierarchy_array(neutrino_tower)
         state[self._covered_baryon_layout_rows] = np.asarray(baryon_local, dtype=np.float64)
         state[self._covered_cdm_layout_rows] = np.asarray(cdm_local, dtype=np.float64)
         if self._residual_local_dof > 0:
@@ -2162,13 +2580,31 @@ class Ver2TierBIntegrator:
         self,
         *,
         snapshot: _EtaRuntimeSnapshot,
+        visibility_amplitude: float = 0.0,
+        polarization_source: float = 0.0,
+        doppler_source: float = 0.0,
+        temperature_visibility_source: float | None = None,
+        theta_0_source: float | None = None,
+        pi_bass_source: float | None = None,
     ) -> dict[str, object]:
+        temperature_source = (
+            float(visibility_amplitude)
+            if temperature_visibility_source is None
+            else float(temperature_visibility_source)
+        )
         return {
             "branch": str(self.background_monitor.branch),
             "geometry": self.background_monitor.initial_conditions.geometry,
             "sigma_tensor": self._sigma_tensor_at_eta(float(snapshot.eta)),
             "opacity_data": {"Gamma_T": float(snapshot.gamma_t)},
             "source_tables": {
+                "visibility_amplitude": float(visibility_amplitude),
+                "source_formalism": _VISIBILITY_SOURCE_FORMALISM,
+                "theta_0_source": 0.0 if theta_0_source is None else float(theta_0_source),
+                "pi_bass_source": 0.0 if pi_bass_source is None else float(pi_bass_source),
+                "temperature_visibility_source": temperature_source,
+                "polarization_source": float(polarization_source),
+                "doppler_source": float(doppler_source),
                 "reionization_amplitude": float(self._reionization_amplitude()),
             },
         }
@@ -2208,6 +2644,31 @@ class Ver2TierBIntegrator:
             dtype=np.float64,
         )
 
+    def _solve_source_implicit(
+        self,
+        dt_factor: float,
+        A_matrix,
+        rhs: np.ndarray,
+    ) -> np.ndarray:
+        """Solve the tiny covered-source implicit system as dense LAPACK.
+
+        The covered source sector is fixed at three local degrees of
+        freedom. Sparse CSC construction and SuperLU setup dominate this
+        solve, so converting the 3x3 operator to dense preserves the
+        equations while removing scheduler overhead.
+        """
+        A_arr = (
+            np.asarray(A_matrix.toarray(), dtype=np.float64)
+            if issparse(A_matrix)
+            else np.asarray(A_matrix, dtype=np.float64)
+        )
+        system = self._source_identity - float(dt_factor) * A_arr
+        lu_piv = lu_factor(system, check_finite=False)
+        return np.asarray(
+            lu_solve(lu_piv, np.asarray(rhs, dtype=np.float64), check_finite=False),
+            dtype=np.float64,
+        )
+
     def _build_residual_joint_affine_operator(
         self,
         *,
@@ -2236,46 +2697,40 @@ class Ver2TierBIntegrator:
         # we know total_dof from pattern_cache.shape, or by falling back
         # to fresh allocation on the cold build).
         out_workspace = getattr(self, "_joint_dense_workspace", None)
-        # Round-17 P3.5 perf Tier 1A v3.5 (2026-04-28): forward harmonic
-        # COO → CSC perm cache. Tri-state attribute on the integrator:
-        #   None        → not yet attempted (capture on next cold build)
-        #   False       → attempted; harmonic has duplicate (row, col)
-        #                 entries (COO sums them) → perm cache invalid;
-        #                 don't retry (skip the buffer overhead)
-        #   <cache>     → valid cache; pass to harmonic fast path
-        harmonic_attr = getattr(self, "_harmonic_sparsity_cache", None)
-        if harmonic_attr is None:
-            harmonic_pattern_cache_arg = None
-            harmonic_buffer = {}
-        elif harmonic_attr is False:
-            harmonic_pattern_cache_arg = None
-            harmonic_buffer = None
-        else:
-            harmonic_pattern_cache_arg = harmonic_attr
-            harmonic_buffer = None
-        affine = self.backend.build_reduced_joint_affine_operator(
-            self._residual_harmonic_background_state(snapshot=snapshot),
+        visibility_amplitude = self._visibility_amplitude_at(float(snapshot.eta))
+        photon_T_flat = _flat_hierarchy_array(photon_T)
+        photon_E_flat = _flat_hierarchy_array(photon_E.E)
+        visibility_sources = _resolved_visibility_source_components(
+            visibility_amplitude=visibility_amplitude,
+            photon_T_flat=photon_T_flat,
+            photon_E_flat=photon_E_flat,
+            L_max=int(self.config.L_max),
+        )
+        affine = build_reduced_joint_affine_operator(
+            self._layout,
+            self._residual_harmonic_background_state(
+                snapshot=snapshot,
+                visibility_amplitude=visibility_amplitude,
+                theta_0_source=visibility_sources.theta_0_source,
+                pi_bass_source=visibility_sources.pi_bass_source,
+                temperature_visibility_source=visibility_sources.temperature_visibility_source,
+                polarization_source=visibility_sources.polarization_source,
+                doppler_source=_resolved_doppler_source(
+                    visibility_amplitude=visibility_amplitude,
+                    baryon_local=baryon_local,
+                ),
+            ),
+            self.backend,
             residual_mode_labels=self._residual_mode_labels,
-            photon_T_by_mode_label={covered: np.asarray(pack_hierarchy(photon_T), dtype=np.float64)},
-            photon_E_by_mode_label={covered: np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64)},
-            photon_B_by_mode_label={covered: np.asarray(pack_hierarchy(photon_B), dtype=np.float64)},
-            neutrino_by_mode_label={covered: np.asarray(pack_hierarchy(neutrino_tower), dtype=np.float64)},
+            photon_T_by_mode_label={covered: _flat_hierarchy_array(photon_T)},
+            photon_E_by_mode_label={covered: _flat_hierarchy_array(photon_E.E)},
+            photon_B_by_mode_label={covered: _flat_hierarchy_array(photon_B)},
+            neutrino_by_mode_label={covered: _flat_hierarchy_array(neutrino_tower)},
             baryon_by_mode_label={covered: np.asarray(baryon_local, dtype=np.float64)},
             pattern_cache=pattern_cache,
             out_workspace=out_workspace,
-            harmonic_pattern_cache=harmonic_pattern_cache_arg,
-            harmonic_cache_buffer=harmonic_buffer,
             **kwargs,
         )
-        # Capture the harmonic cache once. If the cold build saw
-        # duplicate (row, col) entries, mark as False sentinel so we
-        # don't repeat the buffer-allocation overhead per call.
-        if harmonic_buffer is not None and "cache" in harmonic_buffer:
-            captured = harmonic_buffer["cache"]
-            if captured.has_duplicates:
-                self._harmonic_sparsity_cache = False
-            else:
-                self._harmonic_sparsity_cache = captured
         # Lazily capture the sparsity pattern from the very first build,
         # which is invoked at integrator __init__ before solver enters the
         # ROS2 inner loop. Only set if not already set, and only when the
@@ -2315,35 +2770,42 @@ class Ver2TierBIntegrator:
         photon_T: PSTFHierarchyState,
         photon_E: PolarizationHierarchyState,
         photon_B: PSTFHierarchyState,
+        baryon_local: np.ndarray,
     ):
         covered = str(self._layout_covered_mode_label)
-        # Round-17 P3.5 perf Tier 1A v3 (2026-04-28): same lazy capture +
-        # forward as the joint pattern cache. The cold build (first call)
-        # captures the source operator's sparsity pattern; subsequent
-        # calls reuse the captured (indices, indptr) to skip the dense →
-        # CSC nonzero scan.
-        pattern_cache = getattr(self, "_source_sparsity_cache", None)
-        affine = self.backend.build_reduced_source_affine_operator(
-            self._residual_harmonic_background_state(snapshot=snapshot),
-            mode_labels=(covered,),
-            photon_T_by_mode_label={covered: np.asarray(pack_hierarchy(photon_T), dtype=np.float64)},
-            photon_E_by_mode_label={covered: np.asarray(pack_hierarchy(photon_E.E), dtype=np.float64)},
-            photon_B_by_mode_label={covered: np.asarray(pack_hierarchy(photon_B), dtype=np.float64)},
-            pattern_cache=pattern_cache,
+        visibility_amplitude = self._visibility_amplitude_at(float(snapshot.eta))
+        photon_T_flat = _flat_hierarchy_array(photon_T)
+        photon_E_flat = _flat_hierarchy_array(photon_E.E)
+        visibility_sources = _resolved_visibility_source_components(
+            visibility_amplitude=visibility_amplitude,
+            photon_T_flat=photon_T_flat,
+            photon_E_flat=photon_E_flat,
+            L_max=int(self.config.L_max),
         )
-        if (
-            pattern_cache is None
-            and getattr(self, "_source_sparsity_cache", None) is None
-            and issparse(affine.matrix)
-            and affine.matrix.shape[0] == affine.matrix.shape[1]
-            and affine.matrix.shape[0] > 0
-        ):
-            from bass.hierarchy.ver3_layout_protocol import (
-                joint_sparsity_cache_from_csc,
-            )
-            self._source_sparsity_cache = joint_sparsity_cache_from_csc(
-                affine.matrix
-            )
+        # Hot path uses the dense 3x3 source affine directly. The public
+        # backend default remains sparse; this opt-in avoids constructing
+        # CSC/SuperLU objects for a tiny covered-source block.
+        affine = build_reduced_source_affine_operator(
+            self._layout,
+            self._residual_harmonic_background_state(
+                snapshot=snapshot,
+                visibility_amplitude=visibility_amplitude,
+                theta_0_source=visibility_sources.theta_0_source,
+                pi_bass_source=visibility_sources.pi_bass_source,
+                temperature_visibility_source=visibility_sources.temperature_visibility_source,
+                polarization_source=visibility_sources.polarization_source,
+                doppler_source=_resolved_doppler_source(
+                    visibility_amplitude=visibility_amplitude,
+                    baryon_local=baryon_local,
+                ),
+            ),
+            self.backend,
+            mode_labels=(covered,),
+            photon_T_by_mode_label={covered: _flat_hierarchy_array(photon_T)},
+            photon_E_by_mode_label={covered: _flat_hierarchy_array(photon_E.E)},
+            photon_B_by_mode_label={covered: _flat_hierarchy_array(photon_B)},
+            return_dense=True,
+        )
         return affine
 
     def _exact_covered_source_rhs(
@@ -2353,6 +2815,7 @@ class Ver2TierBIntegrator:
         photon_T: PSTFHierarchyState,
         photon_E: PolarizationHierarchyState,
         photon_B: PSTFHierarchyState,
+        baryon_local: np.ndarray,
         source_local: np.ndarray,
     ) -> np.ndarray:
         affine = self._build_covered_source_affine_operator(
@@ -2360,6 +2823,7 @@ class Ver2TierBIntegrator:
             photon_T=photon_T,
             photon_E=photon_E,
             photon_B=photon_B,
+            baryon_local=baryon_local,
         )
         return np.asarray(
             affine.matrix @ np.asarray(source_local, dtype=np.float64) + affine.bias,
@@ -2642,27 +3106,30 @@ class Ver2TierBIntegrator:
                 photon_T=photon_T_left,
                 photon_E=photon_E_left,
                 photon_B=photon_B_left,
+                baryon_local=baryon_left,
             )
-        system_left = csc_matrix(np.eye(_SOURCE_LOCAL_DOF, dtype=np.float64)) - (dt * _ROS2_GAMMA) * affine_left.matrix
-        lu_left = splu(system_left)
         rhs_left = np.asarray(
             affine_left.matrix @ np.asarray(source_left, dtype=np.float64) + affine_left.bias,
             dtype=np.float64,
         )
-        k1 = np.asarray(lu_left.solve(dt * _ROS2_GAMMA * rhs_left), dtype=np.float64)
+        k1 = self._solve_source_implicit(
+            dt * _ROS2_GAMMA,
+            affine_left.matrix,
+            dt * _ROS2_GAMMA * rhs_left,
+        )
         stage_state = np.asarray(source_left, dtype=np.float64) + _ROS2_A21 * k1
         affine_right = self._build_covered_source_affine_operator(
             snapshot=snapshot_right,
             photon_T=photon_T_right,
             photon_E=photon_E_right,
             photon_B=photon_B_right,
+            baryon_local=baryon_right,
         )
         rhs_stage = np.asarray(affine_right.matrix @ stage_state + affine_right.bias, dtype=np.float64)
-        system_right = csc_matrix(np.eye(_SOURCE_LOCAL_DOF, dtype=np.float64)) - (dt * _ROS2_GAMMA) * affine_right.matrix
-        lu_right = splu(system_right)
-        k2 = np.asarray(
-            lu_right.solve(dt * _ROS2_GAMMA * rhs_stage + (_ROS2_GAMMA * _ROS2_C21) * k1),
-            dtype=np.float64,
+        k2 = self._solve_source_implicit(
+            dt * _ROS2_GAMMA,
+            affine_right.matrix,
+            dt * _ROS2_GAMMA * rhs_stage + (_ROS2_GAMMA * _ROS2_C21) * k1,
         )
         next_source = np.asarray(source_left, dtype=np.float64) + _ROS2_M1 * k1 + _ROS2_M2 * k2
         return (
@@ -2723,7 +3190,11 @@ class Ver2TierBIntegrator:
             baryon_local=baryon_local,
             cdm_local=cdm_local,
             theta_1=_theta_1_from_temperature_state(photon_T),
-            theta_1_dot=float(rhs_T[sum(2 * ell + 1 for ell in range(1)) + 1]) if self.config.L_max >= 1 else 0.0,
+            theta_1_dot=(
+                float(rhs_T[int(self._theta1_m0_slot)])
+                if self._theta1_m0_slot is not None
+                else 0.0
+            ),
         )
         if str(self.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
             source_rhs = self._exact_covered_source_rhs(
@@ -2731,6 +3202,7 @@ class Ver2TierBIntegrator:
                 photon_T=photon_T,
                 photon_E=photon_E,
                 photon_B=photon_B,
+                baryon_local=baryon_local,
                 source_local=source_local,
             )
         else:
@@ -2777,7 +3249,13 @@ class Ver2TierBIntegrator:
             ]
         )
 
-    def _explicit_rhs(self, eta: float, y: np.ndarray) -> np.ndarray:
+    def _explicit_rhs(
+        self,
+        eta: float,
+        y: np.ndarray,
+        *,
+        out: np.ndarray | None = None,
+    ) -> np.ndarray:
         (
             photon_T,
             photon_E,
@@ -2807,18 +3285,22 @@ class Ver2TierBIntegrator:
             need_explicit=True,
             need_full=False,
         )
-        return np.concatenate(
-            [
-                rhs_T,
-                rhs_E,
-                rhs_B,
-                rhs_nu,
-                np.zeros(_PRIMARY_LOCAL_DOF, dtype=np.float64),
-                np.zeros(self._residual_local_dof, dtype=np.float64),
-                np.zeros(self._residual_harmonic_dof, dtype=np.float64),
-                np.zeros(self._residual_source_dof, dtype=np.float64),
-            ]
-        )
+        tower_size = self._tower_size
+        if out is None:
+            result = np.zeros(self._state_size, dtype=np.float64)
+        else:
+            result = np.asarray(out, dtype=np.float64)
+            if result.shape != (self._state_size,):
+                raise ValueError(
+                    f"explicit RHS output buffer shape {result.shape} "
+                    f"does not match state size {self._state_size}"
+                )
+            result.fill(0.0)
+        result[:tower_size] = np.asarray(rhs_T, dtype=np.float64)
+        result[tower_size : 2 * tower_size] = np.asarray(rhs_E, dtype=np.float64)
+        result[2 * tower_size : 3 * tower_size] = np.asarray(rhs_B, dtype=np.float64)
+        result[3 * tower_size : 4 * tower_size] = np.asarray(rhs_nu, dtype=np.float64)
+        return result
 
     def _implicit_rhs(
         self,
@@ -2826,6 +3308,7 @@ class Ver2TierBIntegrator:
         y: np.ndarray,
         *,
         tca_tracker: list[bool] | None = None,
+        out: np.ndarray | None = None,
     ) -> np.ndarray:
         (
             photon_T,
@@ -2858,26 +3341,36 @@ class Ver2TierBIntegrator:
             need_full=True,
             tca_tracker=tca_tracker,
         ))
-        implicit = np.concatenate(
-            [
-                np.asarray(rhs_T_full - rhs_T_explicit, dtype=np.float64),
-                np.asarray(rhs_E_full - rhs_E_explicit, dtype=np.float64),
-                np.asarray(rhs_B_full - rhs_B_explicit, dtype=np.float64),
-                np.zeros_like(rhs_nu),
-                np.zeros(_PRIMARY_LOCAL_DOF, dtype=np.float64),
-                np.zeros(self._residual_local_dof, dtype=np.float64),
-                np.zeros(self._residual_harmonic_dof, dtype=np.float64),
-                np.zeros(self._residual_source_dof, dtype=np.float64),
-            ]
+        tower_size = self._tower_size
+        if out is None:
+            implicit = np.zeros(self._state_size, dtype=np.float64)
+        else:
+            implicit = np.asarray(out, dtype=np.float64)
+            if implicit.shape != (self._state_size,):
+                raise ValueError(
+                    f"implicit RHS output buffer shape {implicit.shape} "
+                    f"does not match state size {self._state_size}"
+                )
+            implicit.fill(0.0)
+        implicit[:tower_size] = np.asarray(rhs_T_full - rhs_T_explicit, dtype=np.float64)
+        implicit[tower_size : 2 * tower_size] = np.asarray(
+            rhs_E_full - rhs_E_explicit,
+            dtype=np.float64,
         )
-        tower_size = _tower_size(self.config.L_max)
-        implicit[3 * tower_size :] = 0.0
+        implicit[2 * tower_size : 3 * tower_size] = np.asarray(
+            rhs_B_full - rhs_B_explicit,
+            dtype=np.float64,
+        )
         baryon_rhs, cdm_rhs = self._local_matter_rhs(
             snapshot=snapshot,
             baryon_local=baryon_local,
             cdm_local=cdm_local,
             theta_1=_theta_1_from_temperature_state(photon_T),
-            theta_1_dot=float(rhs_T_full[sum(2 * ell + 1 for ell in range(1)) + 1]) if self.config.L_max >= 1 else 0.0,
+            theta_1_dot=(
+                float(rhs_T_full[int(self._theta1_m0_slot)])
+                if self._theta1_m0_slot is not None
+                else 0.0
+            ),
         )
         implicit[4 * tower_size : 4 * tower_size + _BARYON_LOCAL_DOF] = baryon_rhs
         implicit[4 * tower_size + _BARYON_LOCAL_DOF : 4 * tower_size + _LOCAL_MATTER_DOF] = cdm_rhs
@@ -2936,12 +3429,17 @@ class Ver2TierBIntegrator:
         coll_B_diag = self._coll_B_diag
 
         if self.config.L_max >= 1:
+            dipole_components = photon_T.tensors[1].components
+            out_dipole = out_T.tensors[1].components
             if coll_T_diag is None:
-                dipole_dt = np.full_like(photon_T.tensors[1].components, gamma_dt, dtype=np.float64)
+                dipole_den = 1.0 + gamma_dt
             else:
-                base = sum(2 * l + 1 for l in range(1))
-                dipole_dt = float(dt) * np.asarray(coll_T_diag[base : base + 3], dtype=np.float64)
-            out_T.tensors[1].components = photon_T.tensors[1].components / (1.0 + dipole_dt)
+                dipole_den = 1.0 + float(dt) * np.asarray(
+                    coll_T_diag[self._ell_slices[1]],
+                    dtype=np.float64,
+                )
+            with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+                np.divide(dipole_components, dipole_den, out=out_dipole)
 
         ell2_has_tca_override = False
         if self.config.L_max >= 2:
@@ -2954,14 +3452,22 @@ class Ver2TierBIntegrator:
                 raise RuntimeError("orthogonal implicit ell=2 solve became singular")
             T2_rhs = np.asarray(photon_T.tensors[2].components, dtype=np.float64)
             E2_rhs = np.asarray(photon_E.E.tensors[2].components, dtype=np.float64)
-            out_T.tensors[2].components = (A22 * T2_rhs - A12 * E2_rhs) / det
-            out_E.tensors[2].components = (-A21 * T2_rhs + A11 * E2_rhs) / det
+            with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+                out_T.tensors[2].components = (A22 * T2_rhs - A12 * E2_rhs) / det
+                out_E.tensors[2].components = (-A21 * T2_rhs + A11 * E2_rhs) / det
             if coll_B_diag is None:
-                B2_dt = np.full_like(photon_B.tensors[2].components, gamma_dt, dtype=np.float64)
+                B2_den = 1.0 + gamma_dt
             else:
-                base = sum(2 * l + 1 for l in range(2))
-                B2_dt = float(dt) * np.asarray(coll_B_diag[base : base + 5], dtype=np.float64)
-            out_B.tensors[2].components = photon_B.tensors[2].components / (1.0 + B2_dt)
+                B2_den = 1.0 + float(dt) * np.asarray(
+                    coll_B_diag[self._ell_slices[2]],
+                    dtype=np.float64,
+                )
+            with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+                np.divide(
+                    photon_B.tensors[2].components,
+                    B2_den,
+                    out=out_B.tensors[2].components,
+                )
 
             if tca_active:
                 rhs_T_free, rhs_E_free = self._collisionless_photon_rhs(
@@ -2969,7 +3475,7 @@ class Ver2TierBIntegrator:
                     photon_E=photon_E,
                     background=background,
                 )
-                slot = _ell2_m0_slot_offset(self.config.L_max)
+                slot = int(self._ell2_m0_slot)
                 S_T = float(rhs_T_free[slot]) / background.a_val * (-1.0)
                 S_E = float(rhs_E_free[slot]) / background.a_val * (-1.0)
                 theta_2_alg, e_2_alg = self._solve_tca_scalars(
@@ -2989,23 +3495,44 @@ class Ver2TierBIntegrator:
                 ell2_has_tca_override = True
 
         for ell in range(3, self.config.L_max + 1):
-            base = sum(2 * l + 1 for l in range(ell))
-            width = 2 * ell + 1
+            ell_slice = self._ell_slices[ell]
             if coll_T_diag is None:
-                T_dt = np.full(width, gamma_dt, dtype=np.float64)
+                T_den = 1.0 + gamma_dt
             else:
-                T_dt = float(dt) * np.asarray(coll_T_diag[base : base + width], dtype=np.float64)
+                T_den = 1.0 + float(dt) * np.asarray(
+                    coll_T_diag[ell_slice],
+                    dtype=np.float64,
+                )
             if coll_E_diag is None:
-                E_dt = np.full(width, gamma_dt, dtype=np.float64)
+                E_den = 1.0 + gamma_dt
             else:
-                E_dt = float(dt) * np.asarray(coll_E_diag[base : base + width], dtype=np.float64)
+                E_den = 1.0 + float(dt) * np.asarray(
+                    coll_E_diag[ell_slice],
+                    dtype=np.float64,
+                )
             if coll_B_diag is None:
-                B_dt = np.full(width, gamma_dt, dtype=np.float64)
+                B_den = 1.0 + gamma_dt
             else:
-                B_dt = float(dt) * np.asarray(coll_B_diag[base : base + width], dtype=np.float64)
-            out_T.tensors[ell].components = photon_T.tensors[ell].components / (1.0 + T_dt)
-            out_E.tensors[ell].components = photon_E.E.tensors[ell].components / (1.0 + E_dt)
-            out_B.tensors[ell].components = photon_B.tensors[ell].components / (1.0 + B_dt)
+                B_den = 1.0 + float(dt) * np.asarray(
+                    coll_B_diag[ell_slice],
+                    dtype=np.float64,
+                )
+            with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+                np.divide(
+                    photon_T.tensors[ell].components,
+                    T_den,
+                    out=out_T.tensors[ell].components,
+                )
+                np.divide(
+                    photon_E.E.tensors[ell].components,
+                    E_den,
+                    out=out_E.tensors[ell].components,
+                )
+                np.divide(
+                    photon_B.tensors[ell].components,
+                    B_den,
+                    out=out_B.tensors[ell].components,
+                )
 
         if self.config.L_max >= 2 and ell2_has_tca_override:
             # TCA ownership replaces only the m=0 quadrupole entry; keep the
@@ -3100,8 +3627,17 @@ class Ver2TierBIntegrator:
         gamma_t_probe: float,
         visibility_amplitude: float,
         polarization_source: float,
+        doppler_source: float,
         reionization_amplitude: float,
+        temperature_visibility_source: float | None = None,
+        theta_0_source: float | None = None,
+        pi_bass_source: float | None = None,
     ) -> dict[str, object]:
+        temperature_source = (
+            float(visibility_amplitude)
+            if temperature_visibility_source is None
+            else float(temperature_visibility_source)
+        )
         return {
             "branch": str(self.background_monitor.branch),
             "geometry": self.background_monitor.initial_conditions.geometry,
@@ -3109,7 +3645,12 @@ class Ver2TierBIntegrator:
             "opacity_data": {"Gamma_T": float(gamma_t_probe)},
             "source_tables": {
                 "visibility_amplitude": float(visibility_amplitude),
+                "source_formalism": _VISIBILITY_SOURCE_FORMALISM,
+                "theta_0_source": 0.0 if theta_0_source is None else float(theta_0_source),
+                "pi_bass_source": 0.0 if pi_bass_source is None else float(pi_bass_source),
+                "temperature_visibility_source": temperature_source,
                 "polarization_source": float(polarization_source),
+                "doppler_source": float(doppler_source),
                 "reionization_amplitude": float(reionization_amplitude),
             },
             "state_tag": "ver2_native_integrator_auxiliary_sector_history",
@@ -3129,19 +3670,25 @@ class Ver2TierBIntegrator:
             direction=self._direction,
             config=self.config,
         )
-        visibility_amplitude = abs(float(np.asarray(photon_T_row, dtype=np.float64)[0]))
-        ell2_m0_slot = _ell2_m0_slot_offset(int(self.config.L_max)) if int(self.config.L_max) >= 2 else None
-        polarization_source = (
-            0.0
-            if ell2_m0_slot is None
-            else abs(float(np.asarray(photon_E_row, dtype=np.float64)[ell2_m0_slot]))
+        visibility_amplitude = self._visibility_amplitude_at(float(eta))
+        photon_T_flat = np.asarray(photon_T_row, dtype=np.float64)
+        photon_E_flat = np.asarray(photon_E_row, dtype=np.float64)
+        visibility_sources = _resolved_visibility_source_components(
+            visibility_amplitude=visibility_amplitude,
+            photon_T_flat=photon_T_flat,
+            photon_E_flat=photon_E_flat,
+            L_max=int(self.config.L_max),
         )
         mode_ops = self.backend.operator_factory(
             self._live_backend_state_payload(
                 eta=float(eta),
                 gamma_t_probe=float(gamma_t),
                 visibility_amplitude=visibility_amplitude,
-                polarization_source=polarization_source,
+                theta_0_source=visibility_sources.theta_0_source,
+                pi_bass_source=visibility_sources.pi_bass_source,
+                temperature_visibility_source=visibility_sources.temperature_visibility_source,
+                polarization_source=visibility_sources.polarization_source,
+                doppler_source=0.0,
                 reionization_amplitude=reionization_amplitude,
             )
         )
@@ -3601,12 +4148,14 @@ class Ver2TierBIntegrator:
                 mu: np.asarray(neutrino_histories[mu][index], dtype=np.float64)
                 for mu in mode_labels
             }
-            visibility_left = abs(float(np.asarray(result.photon_T_tower[index], dtype=np.float64)[0]))
-            ell2_m0_slot = _ell2_m0_slot_offset(int(self.config.L_max)) if int(self.config.L_max) >= 2 else None
-            polarization_left = (
-                0.0
-                if ell2_m0_slot is None
-                else abs(float(np.asarray(result.photon_E_tower[index], dtype=np.float64)[ell2_m0_slot]))
+            visibility_left = self._visibility_amplitude_at(float(eta_left))
+            left_covered_t = np.asarray(result.photon_T_tower[index], dtype=np.float64)
+            left_covered_e = np.asarray(result.photon_E_tower[index], dtype=np.float64)
+            visibility_sources_left = _resolved_visibility_source_components(
+                visibility_amplitude=visibility_left,
+                photon_T_flat=left_covered_t,
+                photon_E_flat=left_covered_e,
+                L_max=int(self.config.L_max),
             )
             bg_left = self._live_backend_state_payload(
                 eta=eta_left,
@@ -3617,7 +4166,17 @@ class Ver2TierBIntegrator:
                     config=self.config,
                 ),
                 visibility_amplitude=visibility_left,
-                polarization_source=polarization_left,
+                theta_0_source=visibility_sources_left.theta_0_source,
+                pi_bass_source=visibility_sources_left.pi_bass_source,
+                temperature_visibility_source=visibility_sources_left.temperature_visibility_source,
+                polarization_source=visibility_sources_left.polarization_source,
+                doppler_source=_resolved_doppler_source(
+                    visibility_amplitude=visibility_left,
+                    baryon_local=np.asarray(
+                        baryon_by_mode_label[covered][index],
+                        dtype=np.float64,
+                    ),
+                ),
                 reionization_amplitude=reionization_amplitude,
             )
             source_left = {
@@ -3669,11 +4228,14 @@ class Ver2TierBIntegrator:
                     for mu in residual_mode_labels
                 },
             }
-            visibility_right = abs(float(np.asarray(result.photon_T_tower[index + 1], dtype=np.float64)[0]))
-            polarization_right = (
-                0.0
-                if ell2_m0_slot is None
-                else abs(float(np.asarray(result.photon_E_tower[index + 1], dtype=np.float64)[ell2_m0_slot]))
+            visibility_right = self._visibility_amplitude_at(float(eta_right))
+            right_covered_t = np.asarray(result.photon_T_tower[index + 1], dtype=np.float64)
+            right_covered_e = np.asarray(result.photon_E_tower[index + 1], dtype=np.float64)
+            visibility_sources_right = _resolved_visibility_source_components(
+                visibility_amplitude=visibility_right,
+                photon_T_flat=right_covered_t,
+                photon_E_flat=right_covered_e,
+                L_max=int(self.config.L_max),
             )
             bg_right = self._live_backend_state_payload(
                 eta=eta_right,
@@ -3684,7 +4246,17 @@ class Ver2TierBIntegrator:
                     config=self.config,
                 ),
                 visibility_amplitude=visibility_right,
-                polarization_source=polarization_right,
+                theta_0_source=visibility_sources_right.theta_0_source,
+                pi_bass_source=visibility_sources_right.pi_bass_source,
+                temperature_visibility_source=visibility_sources_right.temperature_visibility_source,
+                polarization_source=visibility_sources_right.polarization_source,
+                doppler_source=_resolved_doppler_source(
+                    visibility_amplitude=visibility_right,
+                    baryon_local=np.asarray(
+                        baryon_by_mode_label[covered][index + 1],
+                        dtype=np.float64,
+                    ),
+                ),
                 reionization_amplitude=reionization_amplitude,
             )
             source_right = {
@@ -3804,6 +4376,7 @@ class Ver2TierBIntegrator:
         eta_samples: np.ndarray,
         photon_T_tower: np.ndarray,
         photon_E_tower: np.ndarray,
+        baryon_rows_by_mode_label: Mapping[str, np.ndarray] | None = None,
         covered_mode_label: str | None = None,
     ) -> tuple[np.ndarray, dict[str, np.ndarray], dict[str, object]]:
         layout = self._layout
@@ -3828,6 +4401,23 @@ class Ver2TierBIntegrator:
             for mu in layout.mode_labels
         }
         for index, eta in enumerate(eta_arr):
+            visibility_amplitude = self._visibility_amplitude_at(float(eta))
+            if baryon_rows_by_mode_label is None:
+                doppler_source = 0.0
+            else:
+                doppler_source = _resolved_doppler_source(
+                    visibility_amplitude=visibility_amplitude,
+                    baryon_local=np.asarray(
+                        baryon_rows_by_mode_label[str(covered)][index],
+                        dtype=np.float64,
+                    ),
+                )
+            visibility_sources = _resolved_visibility_source_components(
+                visibility_amplitude=visibility_amplitude,
+                photon_T_flat=np.asarray(photon_t_arr[index], dtype=np.float64),
+                photon_E_flat=np.asarray(photon_e_arr[index], dtype=np.float64),
+                L_max=int(self.config.L_max),
+            )
             background_state = self._live_backend_state_payload(
                 eta=float(eta),
                 gamma_t_probe=_resolved_gamma_t(
@@ -3836,18 +4426,12 @@ class Ver2TierBIntegrator:
                     direction=self._direction,
                     config=self.config,
                 ),
-                visibility_amplitude=abs(float(np.asarray(photon_t_arr[index], dtype=np.float64)[0])),
-                polarization_source=(
-                    0.0
-                    if int(self.config.L_max) < 2
-                    else abs(
-                        float(
-                            np.asarray(photon_e_arr[index], dtype=np.float64)[
-                                _ell2_m0_slot_offset(int(self.config.L_max))
-                            ]
-                        )
-                    )
-                ),
+                visibility_amplitude=visibility_amplitude,
+                theta_0_source=visibility_sources.theta_0_source,
+                pi_bass_source=visibility_sources.pi_bass_source,
+                temperature_visibility_source=visibility_sources.temperature_visibility_source,
+                polarization_source=visibility_sources.polarization_source,
+                doppler_source=doppler_source,
                 reionization_amplitude=reionization_amplitude,
             )
             reduced_source = self.backend.evaluate_reduced_source_blocks(background_state)
@@ -4038,6 +4622,7 @@ class Ver2TierBIntegrator:
             eta_samples=np.asarray(result.eta, dtype=np.float64),
             photon_T_tower=np.asarray(result.photon_T_tower, dtype=np.float64),
             photon_E_tower=np.asarray(result.photon_E_tower, dtype=np.float64),
+            baryon_rows_by_mode_label=self._ensure_live_mode_label_local_matter_history(result)[0],
             covered_mode_label=covered_mode_label,
         )
         result.source_history = np.asarray(source_rows, dtype=np.float64)
@@ -4219,7 +4804,11 @@ class Ver2TierBIntegrator:
         thomson_probe,
         visibility_amplitude: float,
         polarization_source: float,
+        doppler_source: float,
         reionization_amplitude: float,
+        temperature_visibility_source: float | None = None,
+        theta_0_source: float | None = None,
+        pi_bass_source: float | None = None,
         covered_mode_label: str | None = None,
     ) -> _RuntimeLayoutProjectionBundle:
         from bass.los.family_backend_protocol import family_backend_gate_bundle
@@ -4247,7 +4836,11 @@ class Ver2TierBIntegrator:
                 eta=float(result.eta[-1]),
                 gamma_t_probe=float(gamma_t_probe),
                 visibility_amplitude=float(visibility_amplitude),
+                temperature_visibility_source=temperature_visibility_source,
+                theta_0_source=theta_0_source,
+                pi_bass_source=pi_bass_source,
                 polarization_source=float(polarization_source),
+                doppler_source=float(doppler_source),
                 reionization_amplitude=float(reionization_amplitude),
             )
         )
@@ -4630,11 +5223,30 @@ class Ver2TierBIntegrator:
             result=result,
             gamma_t=float(gamma_t_probe),
         )
+        visibility_final = self._visibility_amplitude_at(float(result.eta[-1]))
+        photon_T_final = np.asarray(result.photon_T_tower[-1], dtype=np.float64)
+        photon_E_final = np.asarray(result.photon_E_tower[-1], dtype=np.float64)
+        visibility_sources_final = _resolved_visibility_source_components(
+            visibility_amplitude=visibility_final,
+            photon_T_flat=photon_T_final,
+            photon_E_flat=photon_E_final,
+            L_max=int(result.L_max),
+        )
         layout_projection = self.build_runtime_layout_projection(
             result,
             thomson_probe=thomson_probe,
-            visibility_amplitude=float(thomson_probe.scalar_monopole_input),
-            polarization_source=float(thomson_probe.polarization_quadrupole_norm),
+            visibility_amplitude=visibility_final,
+            theta_0_source=visibility_sources_final.theta_0_source,
+            pi_bass_source=visibility_sources_final.pi_bass_source,
+            temperature_visibility_source=visibility_sources_final.temperature_visibility_source,
+            polarization_source=visibility_sources_final.polarization_source,
+            doppler_source=_resolved_doppler_source(
+                visibility_amplitude=visibility_final,
+                baryon_local=np.asarray(
+                    self._ensure_live_local_matter_history(result).baryon_history[-1],
+                    dtype=np.float64,
+                ),
+            ),
             reionization_amplitude=float(reionization_amplitude),
         )
         return _RuntimeTraceProducts(
@@ -4715,9 +5327,12 @@ class Ver2TierBIntegrator:
                 eta_eval=eta_eval,
                 tca_tracker=tca_tracker,
             )
-        max_step = (
-            self.config.eta_final_mpc - self.config.eta_initial_mpc
-        ) / 1000.0
+        total_span = max(
+            float(self.config.eta_final_mpc - self.config.eta_initial_mpc),
+            1.0e-12,
+        )
+        max_step_factor = max(float(getattr(self.config, "max_step_factor", 1000)), 1.0)
+        max_step = total_span / max_step_factor
         sol = solve_ivp(
             lambda eta, y: self._rhs(eta, y, tca_tracker=tca_tracker),
             (float(eta_start), float(eta_stop)),
@@ -4734,6 +5349,316 @@ class Ver2TierBIntegrator:
         if np.any(~np.isfinite(sol.y)):
             raise RuntimeError("solve_ivp produced non-finite entries in VER2 native Tier-B core")
         return sol
+
+    def _imex_advance_one_substep(
+        self,
+        *,
+        eta_current: float,
+        eta_target: float,
+        y_current: np.ndarray,
+        tca_tracker: list[bool],
+        tuning: _ImexStepTuning,
+        cache: _ImexStepCache,
+        explicit_0: np.ndarray | None = None,
+        initial_trial_h: float | None = None,
+    ) -> _ImexStepOutcome:
+        """Advance one accepted IMEX substep toward ``eta_target``.
+
+        This is a behavior-preserving extraction of the inner loop from
+        ``_solve_segment_imex``. It intentionally preserves existing
+        tracker/cache side effects on rejected trial steps so the
+        single-k trajectory remains the reference for later batched
+        refactors. Batched schedulers may pass ``explicit_0`` and
+        ``initial_trial_h`` when they already evaluated the left-edge
+        explicit RHS and first trial size for step selection; the
+        equations and rejection sequence are unchanged.
+        """
+
+        remaining = float(eta_target) - float(eta_current)
+        eta_left = float(eta_current)
+        y_left = np.asarray(y_current, dtype=np.float64)
+        state_scale = max(float(np.linalg.norm(y_left, ord=np.inf)), 1.0)
+        if explicit_0 is None:
+            with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+                explicit_left = np.asarray(
+                    self._explicit_rhs(
+                        float(eta_current),
+                        y_left,
+                        out=self._explicit_rhs_left_scratch,
+                    ),
+                    dtype=np.float64,
+                )
+            nfev = 1
+        else:
+            explicit_left = np.asarray(explicit_0, dtype=np.float64)
+            nfev = 0
+        njev = 0
+        nlu = 0
+        if np.any(~np.isfinite(explicit_left)):
+            raise RuntimeError(
+                "IMEX split executor encountered non-finite explicit RHS "
+                f"at η={eta_current}"
+            )
+        if initial_trial_h is None:
+            explicit_scale = float(np.linalg.norm(explicit_left, ord=np.inf)) / state_scale
+            trial_h = min(
+                remaining,
+                float(tuning.split_step),
+                float(tuning.explicit_update_limit) / max(explicit_scale, 1.0e-12),
+            )
+            trial_h = (
+                remaining
+                if remaining <= float(tuning.min_step)
+                else max(min(trial_h, remaining), float(tuning.min_step))
+            )
+        else:
+            trial_h = float(initial_trial_h)
+            if not np.isfinite(trial_h) or trial_h <= 0.0:
+                raise RuntimeError(
+                    "IMEX split executor received invalid initial trial step "
+                    f"at η={eta_current}: h={trial_h}"
+                )
+            trial_h = min(trial_h, remaining)
+            if remaining > float(tuning.min_step):
+                trial_h = max(trial_h, float(tuning.min_step))
+        cached_residual_joint_affine = cache.residual_joint_affine
+        cached_covered_source_affine = cache.covered_source_affine
+        accepted = False
+        for _ in range(20):
+            midpoint = float(eta_current) + 0.5 * trial_h
+            predictor = self._imex_predictor_scratch
+            np.multiply(explicit_left, 0.5 * trial_h, out=predictor)
+            np.add(y_left, predictor, out=predictor)
+            if np.any(~np.isfinite(predictor)):
+                trial_h *= 0.5
+                if trial_h < float(tuning.min_step):
+                    break
+                continue
+            with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+                explicit_mid = np.asarray(
+                    self._explicit_rhs(
+                        midpoint,
+                        predictor,
+                        out=self._explicit_rhs_mid_scratch,
+                    ),
+                    dtype=np.float64,
+                )
+            nfev += 1
+            if np.any(~np.isfinite(explicit_mid)):
+                trial_h *= 0.5
+                if trial_h < float(tuning.min_step):
+                    break
+                continue
+            stage = self._imex_stage_scratch
+            np.multiply(explicit_mid, trial_h, out=stage)
+            np.add(y_left, stage, out=stage)
+            if np.any(~np.isfinite(stage)):
+                trial_h *= 0.5
+                if trial_h < float(tuning.min_step):
+                    break
+                continue
+            eta_next = float(eta_current) + trial_h
+            if abs(float(self.config.tilt_rapidity)) == 0.0:
+                candidate = self._orthogonal_implicit_step(
+                    eta=float(eta_next),
+                    stage=stage,
+                    dt=float(trial_h),
+                    tca_tracker=tca_tracker,
+                )
+                if np.any(~np.isfinite(candidate)):
+                    trial_h *= 0.5
+                    if trial_h < float(tuning.min_step):
+                        break
+                    continue
+                candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
+                if (
+                    candidate_scale > max(8.0 * state_scale, 1.0e6)
+                    and trial_h > float(tuning.min_step)
+                ):
+                    trial_h *= 0.5
+                    continue
+                with np.errstate(over="ignore", invalid="ignore"):
+                    candidate, cached_covered_source_affine = self._orthogonal_covered_source_ros2_step(
+                        eta_left=float(eta_left),
+                        y_left=y_left,
+                        eta_right=float(eta_next),
+                        y_right=candidate,
+                        affine_left=cached_covered_source_affine,
+                    )
+                if np.any(~np.isfinite(candidate)):
+                    cached_covered_source_affine = None
+                    trial_h *= 0.5
+                    if trial_h < float(tuning.min_step):
+                        break
+                    continue
+                candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
+                if (
+                    candidate_scale > max(8.0 * state_scale, 1.0e6)
+                    and trial_h > float(tuning.min_step)
+                ):
+                    cached_covered_source_affine = None
+                    trial_h *= 0.5
+                    continue
+                with np.errstate(over="ignore", invalid="ignore"):
+                    candidate, cached_residual_joint_affine = self._orthogonal_residual_joint_ros2_step(
+                        eta_left=float(eta_left),
+                        y_left=y_left,
+                        eta_right=float(eta_next),
+                        y_right=candidate,
+                        affine_left=cached_residual_joint_affine,
+                    )
+                if np.any(~np.isfinite(candidate)):
+                    cached_residual_joint_affine = None
+                    trial_h *= 0.5
+                    if trial_h < float(tuning.min_step):
+                        break
+                    continue
+                candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
+                if (
+                    candidate_scale > max(8.0 * state_scale, 1.0e6)
+                    and trial_h > float(tuning.min_step)
+                ):
+                    cached_residual_joint_affine = None
+                    trial_h *= 0.5
+                    continue
+                accepted = True
+                return _ImexStepOutcome(
+                    eta_next=float(eta_next),
+                    y_next=np.asarray(candidate, dtype=np.float64),
+                    cache=_ImexStepCache(
+                        residual_joint_affine=cached_residual_joint_affine,
+                        covered_source_affine=cached_covered_source_affine,
+                    ),
+                    nfev=nfev,
+                    njev=njev,
+                    nlu=nlu,
+                )
+
+            candidate = self._imex_candidate_scratch
+            np.copyto(candidate, stage)
+            converged = False
+            fp_tol = float(self.config.atol) + float(self.config.rtol) * max(
+                1.0,
+                float(np.linalg.norm(stage, ord=np.inf)),
+            )
+            for _ in range(int(tuning.fixed_point_iters)):
+                implicit_val = self._implicit_rhs(
+                    eta_next,
+                    candidate,
+                    tca_tracker=None,
+                    out=self._imex_implicit_rhs_scratch,
+                )
+                nfev += 1
+                next_candidate = self._imex_next_candidate_scratch
+                np.multiply(implicit_val, trial_h, out=next_candidate)
+                np.add(stage, next_candidate, out=next_candidate)
+                if np.any(~np.isfinite(next_candidate)):
+                    break
+                np.subtract(next_candidate, candidate, out=self._imex_delta_scratch)
+                delta = float(np.linalg.norm(self._imex_delta_scratch, ord=np.inf))
+                np.copyto(candidate, next_candidate)
+                njev += 1
+                if delta <= fp_tol:
+                    converged = True
+                    break
+            if not converged:
+                implicit_sol = solve_ivp(
+                    lambda eta, y: self._implicit_rhs(eta, y, tca_tracker=None),
+                    (float(eta_current), float(eta_next)),
+                    stage,
+                    t_eval=np.array([eta_next], dtype=np.float64),
+                    method="BDF",
+                    rtol=self.config.rtol,
+                    atol=self.config.atol,
+                    max_step=max(abs(trial_h), 1.0e-12),
+                )
+                nfev += int(implicit_sol.nfev)
+                njev += int(implicit_sol.njev)
+                nlu += int(implicit_sol.nlu)
+                if not implicit_sol.success or np.any(~np.isfinite(implicit_sol.y)):
+                    trial_h *= 0.5
+                    if trial_h < float(tuning.min_step):
+                        break
+                    continue
+                candidate = np.asarray(implicit_sol.y[:, -1], dtype=np.float64)
+            candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
+            if (
+                candidate_scale > max(8.0 * state_scale, 1.0e6)
+                and trial_h > float(tuning.min_step)
+            ):
+                trial_h *= 0.5
+                continue
+            gamma_t = _resolved_gamma_t(
+                eta=float(eta_next),
+                direction=self._direction,
+                visibility_source=self.visibility_source,
+                config=self.config,
+            )
+            H_local = self._h_local_at(float(eta_next))
+            if H_local > 0.0 and gamma_t > 0.0:
+                tca_tracker.append(gamma_t / H_local > self.config.gamma_T_over_H_threshold)
+            else:
+                tca_tracker.append(False)
+            cached_residual_joint_affine = None
+            accepted = True
+            return _ImexStepOutcome(
+                eta_next=float(eta_next),
+                y_next=np.asarray(candidate, dtype=np.float64).copy(),
+                cache=_ImexStepCache(
+                    residual_joint_affine=cached_residual_joint_affine,
+                    covered_source_affine=cached_covered_source_affine,
+                ),
+                nfev=nfev,
+                njev=njev,
+                nlu=nlu,
+            )
+
+        if not accepted:
+            cached_residual_joint_affine = None
+            cached_covered_source_affine = None
+            if abs(float(self.config.tilt_rapidity)) > 0.0:
+                fallback_sol = solve_ivp(
+                    lambda eta, y: self._rhs(eta, y, tca_tracker=None),
+                    (float(eta_current), float(eta_target)),
+                    y_current,
+                    t_eval=np.array([eta_target], dtype=np.float64),
+                    method="BDF",
+                    rtol=self.config.rtol,
+                    atol=self.config.atol,
+                    max_step=max(abs(float(eta_target) - float(eta_current)), 1.0e-12),
+                )
+                nfev += int(fallback_sol.nfev)
+                njev += int(fallback_sol.njev)
+                nlu += int(fallback_sol.nlu)
+                if fallback_sol.success and np.all(np.isfinite(fallback_sol.y)):
+                    gamma_t = _resolved_gamma_t(
+                        eta=float(eta_target),
+                        direction=self._direction,
+                        visibility_source=self.visibility_source,
+                        config=self.config,
+                    )
+                    H_local = self._h_local_at(float(eta_target))
+                    if H_local > 0.0 and gamma_t > 0.0:
+                        tca_tracker.append(
+                            gamma_t / H_local > self.config.gamma_T_over_H_threshold
+                        )
+                    else:
+                        tca_tracker.append(False)
+                    return _ImexStepOutcome(
+                        eta_next=float(eta_target),
+                        y_next=np.asarray(fallback_sol.y[:, -1], dtype=np.float64),
+                        cache=_ImexStepCache(
+                            residual_joint_affine=cached_residual_joint_affine,
+                            covered_source_affine=cached_covered_source_affine,
+                        ),
+                        nfev=nfev,
+                        njev=njev,
+                        nlu=nlu,
+                    )
+        raise RuntimeError(
+            "IMEX split executor failed to find a finite accepted substep "
+            f"before η={eta_target}"
+        )
 
     def _solve_segment_imex(
         self,
@@ -4754,224 +5679,56 @@ class Ver2TierBIntegrator:
 
         total_span = max(float(self.config.eta_final_mpc - self.config.eta_initial_mpc), 1.0e-12)
         nominal_interval = max(float(np.max(np.diff(eta_nodes))), 1.0e-12)
-        split_step = min(0.05, nominal_interval)
-        split_step = max(split_step, total_span / 2000.0)
-        min_step = max(total_span / 50000.0, 1.0e-8)
-        fixed_point_iters = 6
+        max_step_factor = max(float(getattr(self.config, "max_step_factor", 1000)), 1.0)
+        configured_step = total_span / max_step_factor
+        split_step = min(nominal_interval, configured_step)
+        min_step = max(min(configured_step, total_span / 50000.0), 1.0e-8)
+        explicit_update_limit = max(
+            float(getattr(self.config, "imex_explicit_update_limit", 0.05)),
+            1.0e-12,
+        )
+        tuning = _ImexStepTuning(
+            split_step=float(split_step),
+            min_step=float(min_step),
+            explicit_update_limit=float(explicit_update_limit),
+            fixed_point_iters=6,
+        )
 
-        states = [np.asarray(y0, dtype=np.float64)]
+        y_initial = np.asarray(y0, dtype=np.float64)
+        states = np.empty((eta_nodes.size, y_initial.size), dtype=np.float64)
+        states[0, :] = y_initial
         nfev = 0
         njev = 0
         nlu = 0
         message = "The IMEX split executor successfully reached the end of the integration interval."
-        y_current = np.asarray(y0, dtype=np.float64)
-        cached_residual_joint_affine: ReducedJointAffineOperator | None = None
-        cached_covered_source_affine = None
+        y_current = y_initial
+        step_cache = _ImexStepCache()
 
-        for left, right in zip(eta_nodes[:-1], eta_nodes[1:]):
+        for output_index, (left, right) in enumerate(
+            zip(eta_nodes[:-1], eta_nodes[1:]),
+            start=1,
+        ):
             eta_current = float(left)
             eta_target = float(right)
             while eta_current < eta_target - 1.0e-15:
-                remaining = eta_target - eta_current
-                eta_left = float(eta_current)
-                y_left = np.asarray(y_current, dtype=np.float64)
-                state_scale = max(float(np.linalg.norm(y_current, ord=np.inf)), 1.0)
-                explicit_0 = self._explicit_rhs(eta_current, y_current)
-                nfev += 1
-                explicit_scale = float(np.linalg.norm(explicit_0, ord=np.inf)) / state_scale
-                trial_h = min(remaining, split_step, 0.05 / max(explicit_scale, 1.0e-12))
-                trial_h = remaining if remaining <= min_step else max(min(trial_h, remaining), min_step)
-                accepted = False
-                for _ in range(20):
-                    midpoint = eta_current + 0.5 * trial_h
-                    predictor = np.asarray(y_current + 0.5 * trial_h * explicit_0, dtype=np.float64)
-                    if np.any(~np.isfinite(predictor)):
-                        trial_h *= 0.5
-                        if trial_h < min_step:
-                            break
-                        continue
-                    explicit_mid = self._explicit_rhs(midpoint, predictor)
-                    nfev += 1
-                    stage = np.asarray(y_current + trial_h * explicit_mid, dtype=np.float64)
-                    if np.any(~np.isfinite(stage)):
-                        trial_h *= 0.5
-                        if trial_h < min_step:
-                            break
-                        continue
-                    eta_next = eta_current + trial_h
-                    if abs(float(self.config.tilt_rapidity)) == 0.0:
-                        candidate = self._orthogonal_implicit_step(
-                            eta=float(eta_next),
-                            stage=stage,
-                            dt=float(trial_h),
-                            tca_tracker=tca_tracker,
-                        )
-                        if np.any(~np.isfinite(candidate)):
-                            trial_h *= 0.5
-                            if trial_h < min_step:
-                                break
-                            continue
-                        candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
-                        if (
-                            candidate_scale > max(8.0 * state_scale, 1.0e6)
-                            and trial_h > min_step
-                        ):
-                            trial_h *= 0.5
-                            continue
-                        with np.errstate(over="ignore", invalid="ignore"):
-                            candidate, cached_covered_source_affine = self._orthogonal_covered_source_ros2_step(
-                                eta_left=float(eta_left),
-                                y_left=y_left,
-                                eta_right=float(eta_next),
-                                y_right=candidate,
-                                affine_left=cached_covered_source_affine,
-                            )
-                        if np.any(~np.isfinite(candidate)):
-                            cached_covered_source_affine = None
-                            trial_h *= 0.5
-                            if trial_h < min_step:
-                                break
-                            continue
-                        candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
-                        if (
-                            candidate_scale > max(8.0 * state_scale, 1.0e6)
-                            and trial_h > min_step
-                        ):
-                            cached_covered_source_affine = None
-                            trial_h *= 0.5
-                            continue
-                        with np.errstate(over="ignore", invalid="ignore"):
-                            candidate, cached_residual_joint_affine = self._orthogonal_residual_joint_ros2_step(
-                                eta_left=float(eta_left),
-                                y_left=y_left,
-                                eta_right=float(eta_next),
-                                y_right=candidate,
-                                affine_left=cached_residual_joint_affine,
-                            )
-                        if np.any(~np.isfinite(candidate)):
-                            cached_residual_joint_affine = None
-                            trial_h *= 0.5
-                            if trial_h < min_step:
-                                break
-                            continue
-                        candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
-                        if (
-                            candidate_scale > max(8.0 * state_scale, 1.0e6)
-                            and trial_h > min_step
-                        ):
-                            cached_residual_joint_affine = None
-                            trial_h *= 0.5
-                            continue
-                        y_current = candidate
-                        eta_current = float(eta_next)
-                        accepted = True
-                        break
-                    candidate = stage.copy()
-                    converged = False
-                    fp_tol = float(self.config.atol) + float(self.config.rtol) * max(
-                        1.0,
-                        float(np.linalg.norm(stage, ord=np.inf)),
-                    )
-                    for _ in range(fixed_point_iters):
-                        implicit_val = self._implicit_rhs(eta_next, candidate, tca_tracker=None)
-                        nfev += 1
-                        next_candidate = np.asarray(stage + trial_h * implicit_val, dtype=np.float64)
-                        if np.any(~np.isfinite(next_candidate)):
-                            break
-                        delta = float(np.linalg.norm(next_candidate - candidate, ord=np.inf))
-                        candidate = next_candidate
-                        njev += 1
-                        if delta <= fp_tol:
-                            converged = True
-                            break
-                    if not converged:
-                        implicit_sol = solve_ivp(
-                            lambda eta, y: self._implicit_rhs(eta, y, tca_tracker=None),
-                            (eta_current, eta_next),
-                            stage,
-                            t_eval=np.array([eta_next], dtype=np.float64),
-                            method="BDF",
-                            rtol=self.config.rtol,
-                            atol=self.config.atol,
-                            max_step=max(abs(trial_h), 1.0e-12),
-                        )
-                        nfev += int(implicit_sol.nfev)
-                        njev += int(implicit_sol.njev)
-                        nlu += int(implicit_sol.nlu)
-                        if not implicit_sol.success or np.any(~np.isfinite(implicit_sol.y)):
-                            trial_h *= 0.5
-                            if trial_h < min_step:
-                                break
-                            continue
-                        candidate = np.asarray(implicit_sol.y[:, -1], dtype=np.float64)
-                    candidate_scale = float(np.linalg.norm(candidate, ord=np.inf))
-                    if (
-                        candidate_scale > max(8.0 * state_scale, 1.0e6)
-                        and trial_h > min_step
-                    ):
-                        trial_h *= 0.5
-                        continue
-                    gamma_t = _resolved_gamma_t(
-                        eta=float(eta_next),
-                        direction=self._direction,
-                        visibility_source=self.visibility_source,
-                        config=self.config,
-                    )
-                    H_local = self._h_local_at(float(eta_next))
-                    if H_local > 0.0 and gamma_t > 0.0:
-                        tca_tracker.append(gamma_t / H_local > self.config.gamma_T_over_H_threshold)
-                    else:
-                        tca_tracker.append(False)
-                    y_current = candidate
-                    eta_current = float(eta_next)
-                    cached_residual_joint_affine = None
-                    accepted = True
-                    break
-                if not accepted:
-                    cached_residual_joint_affine = None
-                    cached_covered_source_affine = None
-                    if abs(float(self.config.tilt_rapidity)) > 0.0:
-                        fallback_sol = solve_ivp(
-                            lambda eta, y: self._rhs(eta, y, tca_tracker=None),
-                            (eta_current, eta_target),
-                            y_current,
-                            t_eval=np.array([eta_target], dtype=np.float64),
-                            method="BDF",
-                            rtol=self.config.rtol,
-                            atol=self.config.atol,
-                            max_step=max(abs(eta_target - eta_current), 1.0e-12),
-                        )
-                        nfev += int(fallback_sol.nfev)
-                        njev += int(fallback_sol.njev)
-                        nlu += int(fallback_sol.nlu)
-                        if fallback_sol.success and np.all(np.isfinite(fallback_sol.y)):
-                            gamma_t = _resolved_gamma_t(
-                                eta=float(eta_target),
-                                direction=self._direction,
-                                visibility_source=self.visibility_source,
-                                config=self.config,
-                            )
-                            H_local = self._h_local_at(float(eta_target))
-                            if H_local > 0.0 and gamma_t > 0.0:
-                                tca_tracker.append(
-                                    gamma_t / H_local > self.config.gamma_T_over_H_threshold
-                                )
-                            else:
-                                tca_tracker.append(False)
-                            y_current = np.asarray(fallback_sol.y[:, -1], dtype=np.float64)
-                            eta_current = float(eta_target)
-                            cached_residual_joint_affine = None
-                            cached_covered_source_affine = None
-                            accepted = True
-                            continue
-                    raise RuntimeError(
-                        "IMEX split executor failed to find a finite accepted substep "
-                        f"before η={eta_target}"
-                    )
-            states.append(y_current.copy())
+                outcome = self._imex_advance_one_substep(
+                    eta_current=float(eta_current),
+                    eta_target=float(eta_target),
+                    y_current=y_current,
+                    tca_tracker=tca_tracker,
+                    tuning=tuning,
+                    cache=step_cache,
+                )
+                nfev += int(outcome.nfev)
+                njev += int(outcome.njev)
+                nlu += int(outcome.nlu)
+                y_current = np.asarray(outcome.y_next, dtype=np.float64)
+                eta_current = float(outcome.eta_next)
+                step_cache = outcome.cache
+            states[output_index, :] = y_current
         return _SegmentResult(
             t=eta_nodes,
-            y=np.column_stack(states),
+            y=states.T,
             nfev=nfev,
             njev=njev,
             nlu=nlu,
@@ -5025,6 +5782,17 @@ class Ver2TierBIntegrator:
             "status": int(status),
             "message": str(message),
             "solver_method": str(self.config.solver_method),
+            "max_step_factor": int(getattr(self.config, "max_step_factor", 1000)),
+            "configured_max_step_mpc": float(
+                max(
+                    float(self.config.eta_final_mpc - self.config.eta_initial_mpc),
+                    1.0e-12,
+                )
+                / max(float(getattr(self.config, "max_step_factor", 1000)), 1.0)
+            ),
+            "imex_explicit_update_limit": float(
+                getattr(self.config, "imex_explicit_update_limit", 0.05)
+            ),
             "tca_tracker_len": len(tca_tracker),
             "tca_tracker_any_active": any(tca_tracker),
             "tier_b_core_owner": "ver2_s1s2_native",

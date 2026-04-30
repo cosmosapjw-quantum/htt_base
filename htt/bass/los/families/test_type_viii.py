@@ -168,6 +168,10 @@ def test_bundle_metadata_exposes_continuous_series_branch():
     assert md["plancherel_weight_formula"] == "nu * tanh(pi * nu)"
     assert list(md["continuous_series_nu_probes"]) == list(KERNEL.default_continuous_nu_probes)
     assert md["discrete_series_tags"] == list(DISCRETE_SERIES_TAGS)
+    assert md["typeviii_transport_status"] == "type_viii_sl2r_noncompact_projection"
+    assert md["typeviii_branch_flag"] == "noncompact_branch"
+    assert md["typeviii_continuous_series_tag"] == CONTINUOUS_SERIES_TAG
+    assert md["typeviii_mode_mixing_norm"] > 0.0
     assert math.isclose(md["disc_radius_x_eq_tanh_xi"], math.tanh(1.5))
     for shortcut in (
         "no_compact_su2_reuse",

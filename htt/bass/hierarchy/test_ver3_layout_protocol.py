@@ -13,6 +13,7 @@ from bass.hierarchy import (
     build_reduced_harmonic_affine_operator,
     build_reduced_joint_affine_operator,
     build_reduced_local_affine_operator,
+    build_reduced_source_affine_operator,
     evaluate_reduced_harmonic_rhs,
     evaluate_reduced_local_rhs,
     evaluate_reduced_source_blocks,
@@ -26,6 +27,7 @@ from bass.hierarchy import (
     unflatten,
 )
 from bass.los import build_backend
+from scipy.sparse import issparse
 
 
 def _backend():
@@ -105,6 +107,118 @@ def test_family_conditioned_harmonic_topology_varies_by_backend() -> None:
 
     assert np.allclose(cross_v, 0.0)
     assert np.linalg.norm(cross_viii) > 0.0
+
+
+def test_reduced_source_affine_dense_return_matches_sparse_default() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 2, "mode_labels": ("m0",)})
+    layout = build_hierarchy_layout(backend, {"ell_max": 2, "mode_labels": ("m0",)})
+    width = (layout.ell_max + 1) ** 2
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 1.25},
+        "sigma_tensor": np.zeros((3, 3), dtype=np.float64),
+        "source_tables": {},
+    }
+    harmonic = {"m0": np.linspace(0.0, 1.0, width, dtype=np.float64)}
+
+    sparse_affine = build_reduced_source_affine_operator(
+        layout,
+        bg,
+        backend,
+        mode_labels=("m0",),
+        photon_T_by_mode_label=harmonic,
+        photon_E_by_mode_label=harmonic,
+        photon_B_by_mode_label=harmonic,
+    )
+    dense_affine = build_reduced_source_affine_operator(
+        layout,
+        bg,
+        backend,
+        mode_labels=("m0",),
+        photon_T_by_mode_label=harmonic,
+        photon_E_by_mode_label=harmonic,
+        photon_B_by_mode_label=harmonic,
+        return_dense=True,
+    )
+
+    assert issparse(sparse_affine.matrix)
+    assert isinstance(dense_affine.matrix, np.ndarray)
+    np.testing.assert_allclose(dense_affine.matrix, sparse_affine.matrix.toarray())
+    np.testing.assert_allclose(dense_affine.bias, sparse_affine.bias)
+
+
+def test_reduced_local_and_harmonic_dense_returns_match_sparse_defaults() -> None:
+    backend = _backend()
+    layout = build_hierarchy_layout(
+        backend,
+        {"ell_max": 4, "mode_labels": ("m0", "m+2", "m-2")},
+    )
+    width = (layout.ell_max + 1) ** 2
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 1.25},
+        "sigma_tensor": np.zeros((3, 3), dtype=np.float64),
+        "source_tables": {"visibility_amplitude": 0.2, "polarization_source": 0.1},
+    }
+    residual_labels = ("m+2", "m-2")
+    theta_1 = {"m+2": 0.1, "m-2": -0.2}
+    sparse_local = build_reduced_local_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=residual_labels,
+        theta_1_by_mode_label=theta_1,
+    )
+    dense_local = build_reduced_local_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=residual_labels,
+        theta_1_by_mode_label=theta_1,
+        return_dense=True,
+    )
+    assert issparse(sparse_local.matrix)
+    assert isinstance(dense_local.matrix, np.ndarray)
+    np.testing.assert_allclose(dense_local.matrix, sparse_local.matrix.toarray())
+    np.testing.assert_allclose(dense_local.bias, sparse_local.bias)
+
+    harmonic = {
+        "m0": np.linspace(0.0, 1.0, width, dtype=np.float64),
+        "m+2": np.linspace(1.0, 2.0, width, dtype=np.float64),
+        "m-2": np.linspace(-1.0, 0.0, width, dtype=np.float64),
+    }
+    baryon = {
+        "m0": np.zeros(4, dtype=np.float64),
+        "m+2": np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float64),
+        "m-2": np.array([-0.1, -0.2, -0.3, -0.4], dtype=np.float64),
+    }
+    sparse_harmonic = build_reduced_harmonic_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=residual_labels,
+        photon_T_by_mode_label=harmonic,
+        photon_E_by_mode_label=harmonic,
+        photon_B_by_mode_label=harmonic,
+        neutrino_by_mode_label=harmonic,
+        baryon_by_mode_label=baryon,
+    )
+    dense_harmonic = build_reduced_harmonic_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=residual_labels,
+        photon_T_by_mode_label=harmonic,
+        photon_E_by_mode_label=harmonic,
+        photon_B_by_mode_label=harmonic,
+        neutrino_by_mode_label=harmonic,
+        baryon_by_mode_label=baryon,
+        return_dense=True,
+    )
+    assert issparse(sparse_harmonic.matrix)
+    assert isinstance(dense_harmonic.matrix, np.ndarray)
+    np.testing.assert_allclose(dense_harmonic.matrix, sparse_harmonic.matrix.toarray())
+    np.testing.assert_allclose(dense_harmonic.bias, sparse_harmonic.bias)
 
 
 def test_flatten_unflatten_roundtrip_for_harmonic_slot() -> None:

@@ -1,9 +1,10 @@
 """S3 registry tests.
 
 Every Bianchi family must have a kernel registered in
-``KNOWN_FAMILIES``. Today only Type I carries real numerics; the other
-ten raise ``FamilyBackendNotImplemented`` when invoked. Metadata must
-match the frozen v5 registries in ``bass.los.family_backend_protocol``.
+``KNOWN_FAMILIES``. Metadata must match the frozen v5 registries in
+``bass.los.family_backend_protocol``. Placeholder-kernel behavior is
+tested with a synthetic dummy so no registered family can silently fall
+back to ``NotImplementedKernel``.
 """
 from __future__ import annotations
 

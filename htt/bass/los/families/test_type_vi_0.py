@@ -151,6 +151,16 @@ def test_bundle_metadata_records_directional_sectors():
     assert md["directional_sectors"] == {"primary": "n1", "secondary": "n3"}
     assert md["principal_direction_axis"] == "n1"
     assert md["truncation_half_width"] == 1.0
+    assert md["operator_kernel"] == "type_vi0_directional_projection"
+    assert md["vi0_transport_status"] == "type_vi0_directional_source_integrated"
+    assert md["vi0_structure_scale"] == pytest.approx(3.0e-2)
+    assert md["vi0_directional_imbalance"] == pytest.approx(1.0 / 3.0)
+    assert md["vi0_shear_max"] > 0.0
+    assert md["vi0_mode_mixing_norm"] > 0.0
+    assert md["polarization_basis_transport"] == "parity_even_directional_transport"
+    assert np.linalg.norm(bundle.transfer_T[..., 1:]) > 0.0
+    assert np.linalg.norm(bundle.transfer_E[..., 1:]) > 0.0
+    np.testing.assert_allclose(bundle.transfer_B, 0.0, atol=1.0e-15)
     for shortcut in ("no_borrowing_type_i_or_vii_seeds", "no_isotropic_direction_compression"):
         assert shortcut in md["forbidden_shortcut_tracked"]
 
@@ -183,6 +193,7 @@ def test_residual_pack_passes_within_tolerance():
     assert isinstance(pack, ResidualPack)
     assert pack.passed is True
     assert pack.family == "VI_0"
+    assert pack.metadata["vi0_transport_status"] == "type_vi0_directional_source_integrated"
 
 
 def test_residual_pack_fails_when_translator_tolerance_zeroed():

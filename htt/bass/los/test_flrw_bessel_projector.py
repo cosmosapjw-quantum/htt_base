@@ -38,6 +38,7 @@ from bass.los.flrw_bessel_projector import (
     bianchi_m_mixing,
     build_eta_grid_linear,
     build_eta_grid_log_in_z,
+    build_scalar_sources_pair,
     build_polarization_source,
     build_temperature_source,
     compute_c_ell,
@@ -47,6 +48,7 @@ from bass.los.flrw_bessel_projector import (
     full_scalar_mode_evolution,
     project_polarization_transfer,
     project_polarization_transfer_from_pi_callable,
+    project_scalar_transfer_pair,
     project_temperature_transfer,
     sachs_wolfe_analytic_transfer,
     spherical_bessel_at,
@@ -347,6 +349,32 @@ class TestSourceAssembly:
         expected = -(SQRT6 / 4.0) * g(eta) * pi_const
         np.testing.assert_allclose(S_E, expected, rtol=1e-12)
 
+    def test_scalar_sources_pair_matches_separate_builders(self):
+        eta = np.linspace(50.0, 400.0, 501)
+
+        def g(e):
+            return np.exp(-0.5 * ((e - 280.0) / 30.0) ** 2)
+
+        def kappa(e):
+            return 0.1 * np.asarray(e, dtype=float)
+
+        sources = FLRWSourceTerms.with_all(
+            theta_0=lambda e: 0.1 + 0.0 * np.asarray(e, dtype=float),
+            psi=lambda e: 0.2 + 0.0 * np.asarray(e, dtype=float),
+            phi_dot_plus_psi_dot=lambda e: 1.0e-4 * np.asarray(e, dtype=float),
+            v_b=lambda e: 1.0e-3 * np.asarray(e, dtype=float),
+            pi=lambda e: 0.01 + 0.0 * np.asarray(e, dtype=float),
+        )
+
+        source_T_pair, source_E_pair = build_scalar_sources_pair(
+            eta, sources, g, kappa
+        )
+        source_T_ref = build_temperature_source(eta, sources, g, kappa)
+        source_E_ref = build_polarization_source(eta, sources, g)
+
+        np.testing.assert_allclose(source_T_pair, source_T_ref, rtol=0.0, atol=0.0)
+        np.testing.assert_allclose(source_E_pair, source_E_ref, rtol=0.0, atol=0.0)
+
 
 # ============================================================================
 # 6. Temperature transfer projection
@@ -444,6 +472,26 @@ class TestPolarizationTransfer:
             1e-3, S_E, eta, default_config,
         )
         np.testing.assert_allclose(Delta_E_conv, Delta_E_ref, rtol=1e-13)
+
+
+class TestScalarTransferPair:
+    def test_matches_separate_temperature_and_polarization_projectors(self, default_config):
+        eta = build_eta_grid_linear(10.0, ETA_0_DEFAULT, 501)
+        source_T = np.exp(-((eta - 280.0) / 30.0) ** 2)
+        source_E = 1.0e-3 * np.exp(-((eta - 310.0) / 45.0) ** 2)
+
+        delta_T_pair, delta_E_pair = project_scalar_transfer_pair(
+            1.0e-3, source_T, source_E, eta, default_config
+        )
+        delta_T_ref = project_temperature_transfer(
+            1.0e-3, source_T, eta, default_config
+        )
+        delta_E_ref = project_polarization_transfer(
+            1.0e-3, source_E, eta, default_config
+        )
+
+        np.testing.assert_allclose(delta_T_pair, delta_T_ref, rtol=0.0, atol=2.0e-15)
+        np.testing.assert_allclose(delta_E_pair, delta_E_ref, rtol=0.0, atol=2.0e-15)
 
 
 # ============================================================================

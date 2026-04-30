@@ -1549,6 +1549,10 @@ def _native_runtime_config(
             gamma_T_over_H_threshold=float(base_config.gamma_T_over_H_threshold),
             solver_method=solver_method,
             gamma_T_override=base_config.gamma_T_override,
+            max_step_factor=int(getattr(base_config, "max_step_factor", 1000)),
+            imex_explicit_update_limit=float(
+                getattr(base_config, "imex_explicit_update_limit", 0.05)
+            ),
             adiabatic_mode_seed=bool(
                 getattr(base_config, "adiabatic_mode_seed", False)
             ),
@@ -1598,6 +1602,10 @@ def _campaign_runner(
             gamma_T_over_H_threshold=float(cutoff_config.gamma_T_over_H_threshold),
             solver_method=cutoff_config.solver_method,
             gamma_T_override=cutoff_config.gamma_T_override,
+            max_step_factor=int(getattr(cutoff_config, "max_step_factor", 1000)),
+            imex_explicit_update_limit=float(
+                getattr(cutoff_config, "imex_explicit_update_limit", 0.05)
+            ),
             adiabatic_mode_seed=bool(
                 getattr(cutoff_config, "adiabatic_mode_seed", False)
             ),

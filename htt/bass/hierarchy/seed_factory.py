@@ -1,17 +1,16 @@
 """bass/hierarchy/seed_factory.py — Round-16 PR-S5 family IC factories.
 
-Implements V5_ROUND16_02_SOLVER_LAYER.md §4 (closes Round-16 gap **G9**:
-Family-specific IC is metadata only — 11/11 families share one FLRW
-seed in production).
+Implements V5_ROUND16_02_SOLVER_LAYER.md §4 seed ownership. Intrinsic
+families no longer rely on a shared FLRW template-card as the default:
+their registry factories attach family-specific normalization and seed
+residual evidence from the LoS family kernels.
 
 This module provides per-family seed factories that return a
-:class:`SeedPack` with explicit ``ic_provenance_status`` ∈
-``{"strong", "template-card"}``. Per V5_ROUND16_05 §1 (gate 10
-``ic_provenance_gate``), the
-:class:`bass.runtime.RuntimeControlBlock.allow_template_card` flag
-gates downstream fitting on any non-strong family — so the
-``"template-card"`` flag here is the load-bearing gate input that
-Round-16 uses to enforce the honest envelope.
+:class:`SeedPack` with explicit ``ic_provenance_status`` in
+``{"strong", "residual-backed", "template-card"}``. ``template-card`` is
+retained as an explicit development fallback; the default intrinsic
+families use ``residual-backed`` and carry finite chart-specific
+normalization residuals.
 
 Strong (production-grade) IC for Round-16:
 - ``FLRW``        — adiabatic regular seed per Ma-Bertschinger 1995 §7.
@@ -19,19 +18,17 @@ Strong (production-grade) IC for Round-16:
 - ``V``           — open-FLRW adiabatic with hyperbolic-Legendre
   spatial scaling reducing to Type I at zero curvature (Pereira-
   Pitrou-Uzan 2007).
+- ``VII_0``      — helical Euclidean spherical-Bessel seed.
+- ``VII_h``      — helical open positive-h spherical-Bessel seed.
 - ``IX``          — compact-SU(2) adiabatic with discrete spectral
   index ``ℓ_spec`` and L²-norm-1 anchor.
 
-Template-card IC for the eight intrinsic-anisotropic families
-(II, III, IV, VI₀, VI_h, VII₀, VII_h, VIII): the seed metadata declares
-``ic_provenance_status = "template-card"`` so the gate ladder enforces
-``allow_template_card=True`` before any data-fit headline. The
-numerical content is the FLRW adiabatic continuation per
-V5_ROUND16_02 §4.1 ("isotropic_anchor_continuation" mode), which is
-*not* a silent pass-through (the metadata gate catches it) but
-provides a well-defined regular seed for the Round-16 LoS layer to
-operate against. Production-grade Frobenius / collocation series for
-these families is a Round-17 follow-up.
+Residual-backed IC for the six non-anchor intrinsic families
+(II, III, IV, VI₀, VI_h, VIII): chart-specific seed normalization and
+residual formulas are imported from ``bass.los.families.type_*`` and
+serialized into the ``SeedPack``. This is stronger than a template card
+but still distinct from a full covariance likelihood claim; output and
+backend gates remain separate.
 
 References
 ----------
@@ -53,27 +50,38 @@ __all__ = [
     "get_seed_factory",
     "all_supported_families",
     "STRONG_FAMILIES",
+    "RESIDUAL_BACKED_FAMILIES",
     "TEMPLATE_CARD_FAMILIES",
     "FlrwAdiabaticSeed",
     "TypeIAdiabaticSeed",
     "TypeVHyperbolicSeed",
+    "TypeVII0HelicalSeed",
+    "TypeVIIhHelicalSeed",
     "TypeIXCompactSeed",
+    "ResidualBackedFamilySeed",
     "TemplateCardSeed",
 ]
 
 
 #: Families with strong (production-grade) IC factories.
-STRONG_FAMILIES: frozenset[str] = frozenset({"FLRW", "I", "V", "IX"})
-
-#: Families served by template-card seeds (require allow_template_card=True
-#: for any data-fit headline; gate 10 contract).
-TEMPLATE_CARD_FAMILIES: frozenset[str] = frozenset({
-    "II", "III", "IV", "VI_0", "VI_h", "VII_0", "VII_h", "VIII",
+STRONG_FAMILIES: frozenset[str] = frozenset({
+    "FLRW", "I", "V", "VII_0", "VII_h", "IX",
 })
+
+#: Families with chart-specific finite seed residual evidence, but whose
+#: output/backend readiness is still governed by separate family gates.
+RESIDUAL_BACKED_FAMILIES: frozenset[str] = frozenset({
+    "II", "III", "IV", "VI_0", "VI_h", "VIII",
+})
+
+#: Explicit development fallback. No family is routed here by default.
+TEMPLATE_CARD_FAMILIES: frozenset[str] = frozenset()
 
 
 def all_supported_families() -> tuple[str, ...]:
-    return tuple(sorted(STRONG_FAMILIES | TEMPLATE_CARD_FAMILIES))
+    return tuple(sorted(
+        STRONG_FAMILIES | RESIDUAL_BACKED_FAMILIES | TEMPLATE_CARD_FAMILIES
+    ))
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -117,7 +125,7 @@ class SeedPack:
         Optional: "frobenius_truncation_error" for II/VIII.
     metadata : Mapping[str, object]
         Required keys: "ic_provenance_status" ∈
-        {"strong", "template-card"}, "k_vector".
+        {"strong", "residual-backed", "template-card"}, "k_vector".
     """
 
     family: str
@@ -156,11 +164,11 @@ class SeedPack:
                     f"SeedPack.metadata missing required key {k!r}"
                 )
         if self.metadata["ic_provenance_status"] not in {
-            "strong", "template-card",
+            "strong", "residual-backed", "template-card",
         }:
             raise ValueError(
                 f"ic_provenance_status={self.metadata['ic_provenance_status']!r} "
-                f"must be 'strong' or 'template-card'"
+                f"must be 'strong', 'residual-backed', or 'template-card'"
             )
         # Freeze nested dicts as plain dict copies (defensive immutability).
         object.__setattr__(self, "variables", dict(self.variables))
@@ -468,11 +476,157 @@ class TypeIXCompactSeed:
 
 
 # ──────────────────────────────────────────────────────────────────────
-# Template-card seeds for the eight intrinsic-anisotropic families
+# Residual-backed seeds for helical anchors and intrinsic families
 # ──────────────────────────────────────────────────────────────────────
 
 
-_TEMPLATE_CARD_CHART_LABELS: dict[str, str] = {
+class TypeVII0HelicalSeed:
+    """Bianchi VII_0 helical Euclidean seed with spherical-Bessel evidence."""
+
+    family = "VII_0"
+
+    def __call__(
+        self,
+        *,
+        family: str,
+        branch: str,
+        k_vec: np.ndarray,
+        eta_init: float,
+        primordial_amplitude: float = 1.0,
+        L_max: int = 12,
+    ) -> SeedPack:
+        if family != "VII_0":
+            raise ValueError(f"TypeVII0HelicalSeed called for family={family!r}")
+        from bass.los.families.type_vii_0 import (
+            spherical_bessel_seed_amplitude,
+            spherical_bessel_seed_norm_residual,
+        )
+
+        k_norm = float(np.linalg.norm(np.asarray(k_vec, dtype=np.float64)))
+        ell_seed = 2
+        k_seed = max(k_norm, 1.0e-30)
+        cutoff_R = 1.0
+        residual = spherical_bessel_seed_norm_residual(
+            ell_seed,
+            k_seed,
+            cutoff_R,
+            n_samples=128,
+        )
+        variables = _adiabatic_baseline_variables(
+            primordial_amplitude=primordial_amplitude,
+            L_max=L_max,
+            k_norm=k_norm,
+        )
+        return SeedPack(
+            family="VII_0",
+            branch=branch,
+            chart="helical_euclidean",
+            seed_mode="helical_spherical_bessel_regular",
+            variables=variables,
+            normalization={
+                "amp_ref": "spherical_bessel_unit_l2",
+                "mu_ref": "mu_VII0",
+                "inner_product": "L2_radial_ball_r2dr",
+                "norm_rule": "<A j_l(k r), A j_l(k r)> = 1",
+                "phase_rule": "j_l(k r) real at radial anchor",
+            },
+            residual_summary={
+                "seed_regularity_status": "regular_helical",
+                "seed_l2_residual": float(residual),
+                "ell_seed": ell_seed,
+                "radial_cutoff_R": cutoff_R,
+            },
+            metadata={
+                "ic_provenance_status": "strong",
+                "k_vector": tuple(map(float, k_vec)),
+                "eta_init": float(eta_init),
+                "primordial_amplitude": float(primordial_amplitude),
+                "seed_amplitude": spherical_bessel_seed_amplitude(
+                    ell_seed,
+                    k_seed,
+                    cutoff_R,
+                ),
+            },
+        )
+
+
+class TypeVIIhHelicalSeed:
+    """Bianchi VII_h helical positive-h seed with explicit h-cutoff."""
+
+    family = "VII_h"
+
+    def __init__(self, *, h_parameter: float = 1.0) -> None:
+        self.h_parameter = float(h_parameter)
+
+    def __call__(
+        self,
+        *,
+        family: str,
+        branch: str,
+        k_vec: np.ndarray,
+        eta_init: float,
+        primordial_amplitude: float = 1.0,
+        L_max: int = 12,
+    ) -> SeedPack:
+        if family != "VII_h":
+            raise ValueError(f"TypeVIIhHelicalSeed called for family={family!r}")
+        from bass.los.families.type_vii_0 import (
+            spherical_bessel_seed_amplitude,
+            spherical_bessel_seed_norm_residual,
+        )
+        from bass.los.families.type_vii_h import h_dependent_cutoff
+
+        k_norm = float(np.linalg.norm(np.asarray(k_vec, dtype=np.float64)))
+        ell_seed = 2
+        k_seed = max(k_norm, 1.0e-30)
+        cutoff_R = h_dependent_cutoff(self.h_parameter, R_ref=1.0)
+        residual = spherical_bessel_seed_norm_residual(
+            ell_seed,
+            k_seed,
+            cutoff_R,
+            n_samples=128,
+        )
+        variables = _adiabatic_baseline_variables(
+            primordial_amplitude=primordial_amplitude,
+            L_max=L_max,
+            k_norm=k_norm,
+        )
+        return SeedPack(
+            family="VII_h",
+            branch=branch,
+            chart="helical_open_h_continuous",
+            seed_mode="helical_h_spherical_bessel_regular",
+            variables=variables,
+            normalization={
+                "amp_ref": "h_dependent_spherical_bessel_unit_l2",
+                "mu_ref": "mu_VIIh",
+                "inner_product": "L2_h_radial_ball_r2dr",
+                "norm_rule": "<A(h) j_l(k r), A(h) j_l(k r)> = 1",
+                "phase_rule": "j_l(k r) real at radial anchor",
+            },
+            residual_summary={
+                "seed_regularity_status": "regular_helical_h",
+                "seed_l2_residual": float(residual),
+                "ell_seed": ell_seed,
+                "h_parameter": self.h_parameter,
+                "radial_cutoff_R": cutoff_R,
+            },
+            metadata={
+                "ic_provenance_status": "strong",
+                "k_vector": tuple(map(float, k_vec)),
+                "eta_init": float(eta_init),
+                "primordial_amplitude": float(primordial_amplitude),
+                "h_parameter": self.h_parameter,
+                "seed_amplitude": spherical_bessel_seed_amplitude(
+                    ell_seed,
+                    k_seed,
+                    cutoff_R,
+                ),
+            },
+        )
+
+
+_RESIDUAL_BACKED_CHART_LABELS: dict[str, str] = {
     "II": "heisenberg_native",
     "III": "class_b_h_eq_minus_1",
     "IV": "class_b_solvable_rank1",
@@ -484,20 +638,251 @@ _TEMPLATE_CARD_CHART_LABELS: dict[str, str] = {
 }
 
 
+_RESIDUAL_BACKED_SEED_MODES: dict[str, str] = {
+    "II": "nil_bessel_regular",
+    "III": "class_b_hyperbolic_regular",
+    "IV": "solvable_exponential_regular",
+    "VI_0": "directional_piecewise_regular",
+    "VI_h": "h_branch_piecewise_regular",
+    "VIII": "sl2r_noncompact_regular",
+}
+
+
+class ResidualBackedFamilySeed:
+    """Family-specific intrinsic seed backed by finite chart residuals."""
+
+    def __init__(self, family: str) -> None:
+        if family not in RESIDUAL_BACKED_FAMILIES:
+            raise ValueError(
+                f"ResidualBackedFamilySeed called for family={family!r}; "
+                f"allowed: {sorted(RESIDUAL_BACKED_FAMILIES)!r}"
+            )
+        self.family = family
+
+    def __call__(
+        self,
+        *,
+        family: str,
+        branch: str,
+        k_vec: np.ndarray,
+        eta_init: float,
+        primordial_amplitude: float = 1.0,
+        L_max: int = 12,
+    ) -> SeedPack:
+        if family != self.family:
+            raise ValueError(
+                f"ResidualBackedFamilySeed bound to {self.family!r} called for "
+                f"family={family!r}"
+            )
+        k_norm = float(np.linalg.norm(np.asarray(k_vec, dtype=np.float64)))
+        variables = _adiabatic_baseline_variables(
+            primordial_amplitude=primordial_amplitude,
+            L_max=L_max,
+            k_norm=k_norm,
+        )
+        residual_summary, normalization, metadata = _residual_backed_seed_evidence(
+            family,
+            k_vec=k_vec,
+        )
+        metadata.update(
+            {
+                "ic_provenance_status": "residual-backed",
+                "k_vector": tuple(map(float, k_vec)),
+                "eta_init": float(eta_init),
+                "primordial_amplitude": float(primordial_amplitude),
+            }
+        )
+        return SeedPack(
+            family=family,
+            branch=branch,
+            chart=_RESIDUAL_BACKED_CHART_LABELS[family],
+            seed_mode=_RESIDUAL_BACKED_SEED_MODES[family],
+            variables=variables,
+            normalization=normalization,
+            residual_summary=residual_summary,
+            metadata=metadata,
+        )
+
+
+def _residual_backed_seed_evidence(
+    family: str,
+    *,
+    k_vec: np.ndarray,
+) -> tuple[dict[str, object], dict[str, str], dict[str, object]]:
+    if family == "II":
+        from bass.los.families.type_ii import (
+            nil_seed_amplitude,
+            nil_seed_center_residual,
+            nil_seed_norm_residual,
+        )
+
+        half_width = 1.0
+        residual = nil_seed_norm_residual(half_width, n_samples=64)
+        return (
+            {
+                "seed_regularity_status": "regular_nil",
+                "seed_l2_residual": float(residual),
+                "center_residual": float(nil_seed_center_residual(half_width)),
+                "truncation_half_width": half_width,
+            },
+            {
+                "amp_ref": "nil_bessel_unit_l2",
+                "mu_ref": "mu_nil",
+                "inner_product": "L2_disc_2pi_rdr",
+                "norm_rule": "<A J0(j01 r/L), A J0(j01 r/L)> = 1",
+                "phase_rule": "J0(0) in R_{>0}",
+            },
+            {"seed_amplitude": nil_seed_amplitude(half_width)},
+        )
+    if family == "III":
+        from bass.los.families.type_iii import (
+            hyperbolic_cutoff_residual,
+            hyperbolic_seed_amplitude,
+            hyperbolic_seed_norm_residual,
+        )
+
+        xi_max = 1.5
+        residual = hyperbolic_seed_norm_residual(xi_max, n_samples=128)
+        return (
+            {
+                "seed_regularity_status": "regular_hyperbolic_branch",
+                "seed_l2_residual": float(residual),
+                "hyperbolic_cutoff_residual": float(hyperbolic_cutoff_residual(xi_max)),
+                "truncation_xi_max": xi_max,
+            },
+            {
+                "amp_ref": "hyperbolic_legendre_unit_l2",
+                "mu_ref": "mu_hyp",
+                "inner_product": "L2_sinh2xi_dxi",
+                "norm_rule": "<A P2(cosh xi), A P2(cosh xi)> = 1",
+                "phase_rule": "branch_flag_VI_-1_special",
+            },
+            {"seed_amplitude": hyperbolic_seed_amplitude(xi_max)},
+        )
+    if family == "IV":
+        from bass.los.families.type_iv import (
+            edge_anisotropy_residual,
+            solvable_seed_amplitude,
+            solvable_seed_norm_residual,
+        )
+
+        length = 1.0
+        residual = solvable_seed_norm_residual(length, n_samples=256)
+        return (
+            {
+                "seed_regularity_status": "regular_solvable",
+                "seed_l2_residual": float(residual),
+                "edge_anisotropy_residual": float(edge_anisotropy_residual(length)),
+                "seed_length_scale": length,
+            },
+            {
+                "amp_ref": "solvable_exponential_unit_l2",
+                "mu_ref": "mu_solv",
+                "inner_product": "L2_radial_r2dr",
+                "norm_rule": "<A r exp(-r/L), A r exp(-r/L)> = 1",
+                "phase_rule": "positive radial anchor",
+            },
+            {"seed_amplitude": solvable_seed_amplitude(length)},
+        )
+    if family == "VI_0":
+        from bass.los.families.type_vi_0 import seed_piecewise_constant_unit_l2
+
+        half_width = 1.0
+        residual = seed_piecewise_constant_unit_l2(half_width, n_samples=64)
+        return (
+            {
+                "seed_regularity_status": "regular_directional_piecewise",
+                "seed_l2_residual": float(residual),
+                "directional_truncation": float(residual),
+                "truncation_half_width": half_width,
+            },
+            {
+                "amp_ref": "directional_piecewise_unit_l2",
+                "mu_ref": "mu_VI0",
+                "inner_product": "L2_directional_truncation",
+                "norm_rule": "<1/sqrt(2L), 1/sqrt(2L)>[-L,L] = 1",
+                "phase_rule": "principal_direction_positive",
+            },
+            {"seed_amplitude": 1.0 / float(np.sqrt(2.0 * half_width))},
+        )
+    if family == "VI_h":
+        from bass.los.families.type_vi_0 import seed_piecewise_constant_unit_l2
+
+        half_width = 1.0
+        h_parameter = -0.5
+        residual = seed_piecewise_constant_unit_l2(half_width, n_samples=64)
+        return (
+            {
+                "seed_regularity_status": "regular_h_branch_piecewise",
+                "seed_l2_residual": float(residual),
+                "cutoff_refinement": float(residual),
+                "h_parameter": h_parameter,
+                "truncation_half_width": half_width,
+            },
+            {
+                "amp_ref": "h_branch_piecewise_unit_l2",
+                "mu_ref": "mu_VIh",
+                "inner_product": "L2_h_branch_truncation",
+                "norm_rule": "<1/sqrt(2L), 1/sqrt(2L)>[-L,L] = 1",
+                "phase_rule": "negative_h_branch_tagged",
+            },
+            {
+                "seed_amplitude": 1.0 / float(np.sqrt(2.0 * half_width)),
+                "h_parameter": h_parameter,
+            },
+        )
+    if family == "VIII":
+        import math
+
+        from bass.los.families.type_viii import (
+            noncompact_disc_norm_residual,
+            noncompact_disc_seed_amplitude,
+        )
+
+        xi_max = 1.5
+        disc_radius = math.tanh(xi_max)
+        residual = noncompact_disc_norm_residual(disc_radius, n_samples=128)
+        return (
+            {
+                "seed_regularity_status": "regular_sl2r_noncompact",
+                "seed_l2_residual": float(residual),
+                "noncompact_truncation": float(residual),
+                "truncation_xi_max": xi_max,
+                "disc_radius_x_eq_tanh_xi": disc_radius,
+            },
+            {
+                "amp_ref": "sl2r_disc_unit_l2",
+                "mu_ref": "mu_sl2r",
+                "inner_product": "L2_compactified_disc",
+                "norm_rule": "<A P2(x), A P2(x)>[0,tanh(xi_max)] = 1",
+                "phase_rule": "discrete_series_tagged",
+            },
+            {"seed_amplitude": noncompact_disc_seed_amplitude(disc_radius)},
+        )
+    raise KeyError(f"unsupported residual-backed family {family!r}")
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Explicit template-card fallback
+# ──────────────────────────────────────────────────────────────────────
+
+
+_TEMPLATE_CARD_CHART_LABELS: dict[str, str] = {
+    **_RESIDUAL_BACKED_CHART_LABELS,
+    "VII_0": "helical_euclidean",
+    "VII_h": "helical_open_h_continuous",
+}
+
+
 _TEMPLATE_CARD_SEED_MODES: dict[str, str] = {
-    "II": "template_card_family_adapted",
-    "III": "template_card_classB_continuation",
-    "IV": "template_card_classB_continuation",
-    "VI_0": "template_card_family_adapted",
-    "VI_h": "template_card_classB_continuation",
+    **{family: "template_card_family_adapted" for family in RESIDUAL_BACKED_FAMILIES},
     "VII_0": "template_card_family_adapted",
     "VII_h": "template_card_classB_continuation",
-    "VIII": "template_card_family_adapted",
 }
 
 
 class TemplateCardSeed:
-    """Round-16 template-card seed for the eight intrinsic-anisotropic families.
+    """Explicit development fallback template-card seed.
 
     Numerical content is the FLRW adiabatic continuation (per
     V5_ROUND16_02 §4.1 ``"isotropic_anchor_continuation"`` mode for the
@@ -511,10 +896,11 @@ class TemplateCardSeed:
     """
 
     def __init__(self, family: str) -> None:
-        if family not in TEMPLATE_CARD_FAMILIES:
+        allowed = RESIDUAL_BACKED_FAMILIES | {"VII_0", "VII_h"}
+        if family not in allowed:
             raise ValueError(
                 f"TemplateCardSeed called for family={family!r}; "
-                f"allowed: {sorted(TEMPLATE_CARD_FAMILIES)!r}"
+                f"allowed: {sorted(allowed)!r}"
             )
         self.family = family
 
@@ -579,7 +965,13 @@ _FACTORY_REGISTRY: dict[str, SeedFactory] = {
     "FLRW": FlrwAdiabaticSeed(),
     "I": TypeIAdiabaticSeed(),
     "V": TypeVHyperbolicSeed(),
+    "VII_0": TypeVII0HelicalSeed(),
+    "VII_h": TypeVIIhHelicalSeed(),
     "IX": TypeIXCompactSeed(),
+    **{
+        family: ResidualBackedFamilySeed(family)
+        for family in RESIDUAL_BACKED_FAMILIES
+    },
     **{
         family: TemplateCardSeed(family)
         for family in TEMPLATE_CARD_FAMILIES

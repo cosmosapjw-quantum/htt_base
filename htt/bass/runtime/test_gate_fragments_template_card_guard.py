@@ -1,11 +1,10 @@
 """Audit P-07 regression: template-card IC promotion guard.
 
-The audit identified that ``_IC_PROVENANCE_STATUS`` was decorative —
-families flagged as ``template-card`` (II, III, IV, VI_0, VI_h, VIII)
-shared the same FLRW seed factory and could be silently used in
-statistics-grade flows. ``ic_provenance_gate_bundle`` now fails closed
-on template-card families unless the caller passes
-``allow_template_card=True``.
+The audit identified that ``template-card`` IC could be silently used in
+statistics-grade flows. ``ic_provenance_gate_bundle`` fails closed on
+template-card seeds unless the caller passes ``allow_template_card=True``.
+Residual-backed IC is a separate provenance tier and must pass without
+using that template-card authorization handle.
 
 These tests pin the new guard semantics independent of the full
 runtime: they construct a minimal stub backend and seed pack so the
@@ -40,7 +39,11 @@ class _StubBackend:
     truncation: Mapping[str, Any] = field(
         default_factory=lambda: {"ell_max": 4, "mode_basis_dim": 1}
     )
-    _allowed: tuple[str, ...] = ("isotropic_anchor_continuation", "template_card_family_adapted")
+    _allowed: tuple[str, ...] = (
+        "isotropic_anchor_continuation",
+        "template_card_family_adapted",
+        "nil_bessel_regular",
+    )
 
     def template_card(self) -> _StubTemplateCard:
         return _StubTemplateCard(allowed_seed_provenance=self._allowed)
@@ -124,6 +127,23 @@ def test_template_card_family_passes_with_explicit_authorization() -> None:
     assert bundle.passed is True
     assert bundle.forbidden_shortcut_checks["no_silent_template_card_ic_promotion"] is True
     assert bundle.metadata["template_card_authorized"] is True
+
+
+def test_residual_backed_family_passes_without_template_authorization() -> None:
+    backend, seed_pack, projection = _build(
+        "II", "residual-backed", seed_mode="nil_bessel_regular"
+    )
+    bundle = ic_provenance_gate_bundle(
+        bianchi_type="II",
+        branch="orthogonal",
+        backend=backend,
+        seed_pack=seed_pack,
+        seed_projection=projection,
+    )
+    assert bundle.passed is True
+    assert bundle.metadata["ic_provenance_status"] == "residual-backed"
+    assert bundle.metadata["template_card_family"] is False
+    assert bundle.metadata["template_card_authorized"] is False
 
 
 @pytest.mark.parametrize("family", ["II", "III", "IV", "VI_0", "VI_h", "VIII"])

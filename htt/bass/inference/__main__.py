@@ -13,6 +13,11 @@ import yaml
 from bass.background.bianchi_types import ALL_BIANCHI_TYPES
 from bass.inference.bayes import bayes_factor
 from bass.inference.drivers.emcee_driver import PosteriorSample, run_posterior
+from bass.inference.envelope import (
+    EnvelopeError,
+    InferenceEnvelopeRequest,
+    enforce_inference_envelope,
+)
 from bass.inference.live_binding import (
     FittingBlockedError,
     build_type_i_native_validation_problem,
@@ -368,6 +373,7 @@ def _run_live_type_i_validation(config: dict[str, Any], *, seed: int) -> tuple[d
                     "block_reason": baseline_problem.gate_decision.reason,
                     "missing_gates": list(baseline_problem.gate_decision.missing_gates),
                     "covariance_readiness": baseline_problem.covariance_readiness,
+                    "statistics_readiness_decision": baseline_problem.statistics_decision.as_payload(),
                 },
                 "binding_origin": "solver_core_output",
                 "dataset_kind": baseline_problem.dataset_kind,
@@ -421,6 +427,7 @@ def _run_live_type_i_validation(config: dict[str, Any], *, seed: int) -> tuple[d
                         "block_reason": str(exc),
                         "missing_gates": list(exc.gate_decision.missing_gates),
                         "covariance_readiness": exc.covariance_readiness,
+                        "statistics_readiness_decision": baseline_problem.statistics_decision.as_payload(),
                     },
                     "binding_origin": "solver_core_output",
                     "dataset_kind": baseline_problem.dataset_kind,
@@ -455,6 +462,8 @@ def _run_live_type_i_validation(config: dict[str, Any], *, seed: int) -> tuple[d
             "diagnostics": posterior.diagnostics,
             "binding_origin": "solver_core_output",
             "dataset_kind": problem.dataset_kind,
+            "fitting_ready": problem.fitting_ready,
+            "statistics_readiness_decision": problem.statistics_decision.as_payload(),
         },
     }
     _write_json(summary_json, payload)
@@ -469,9 +478,24 @@ def main(argv: Sequence[str] | None = None) -> int:
     writes `figures/paper/fb11_summary_table.json` and
     `figures/paper/fb11_summary_table.md`. Two runs on the same machine
     with `seed=42` are byte-identical.
+
+    PA-12: every dispatch is gated by ``enforce_inference_envelope``,
+    which hard-stops requests outside the supported envelope (target
+    families, headline-science opt-in) before any solver call.
     """
     args = build_parser().parse_args(list(argv) if argv is not None else None)
     config = _load_config(Path(args.config))
+    try:
+        enforce_inference_envelope(config)
+    except EnvelopeError as exc:
+        # Surface the envelope violation as a structured exit-code-1
+        # message so CI logs can grep for it without parsing tracebacks.
+        print(
+            "[bass.inference] EnvelopeError: "
+            f"{exc.reason} | violations={list(exc.violations)!r}",
+            flush=True,
+        )
+        return 1
     try:
         dataset = _validate_dataset_contract(config)
     except SurrogateInferenceDatasetError:

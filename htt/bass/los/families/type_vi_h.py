@@ -36,13 +36,16 @@ from typing import Any
 
 import numpy as np
 
-from bass.background.bianchi_types import StructureConstants
+from bass.background.bianchi_types import StructureConstants, type_i_constants
 from bass.los.families.base import LegacyDelegationKernel
 from bass.los.families.type_vi_0 import (
     directional_sector_for,
     seed_piecewise_constant_unit_l2,
 )
-from bass.spectrum.lowell_los import build_lowell_line_of_sight_propagator
+from bass.spectrum.lowell_los import (
+    apply_type_vih_negative_h_transfer_coupling,
+    build_lowell_line_of_sight_propagator,
+)
 from bass.statistics import ResidualPack
 from bass.transport.exact_transport import ExactTransportBundle
 
@@ -131,12 +134,23 @@ class TypeVIhKernel(LegacyDelegationKernel):
     ) -> ExactTransportBundle:
         self._assert_label_matches(structure)
         legacy = build_lowell_line_of_sight_propagator(
-            structure,
+            type_i_constants(),
             eta_grid_mpc=eta_grid_mpc,
             k_grid_mpc=k_grid_mpc,
             ell_max=ell_max,
             visibility_fn=visibility_fn,
             source_builder=source_builder,
+        )
+        transfer_t, transfer_e, transfer_b, vih_meta = (
+            apply_type_vih_negative_h_transfer_coupling(
+                structure,
+                transfer_T=np.asarray(legacy["transfer_T"]),
+                transfer_E=np.asarray(legacy["transfer_E"]),
+                transfer_B=np.asarray(legacy["transfer_B"]),
+                k_grid_mpc=np.asarray(k_grid_mpc, dtype=float),
+                ell=np.arange(int(ell_max) + 1, dtype=float),
+                eta_grid_mpc=np.asarray(eta_grid_mpc, dtype=float),
+            )
         )
         ell = np.arange(int(ell_max) + 1, dtype=int)
         h_value = float(structure.h_parameter)
@@ -162,20 +176,21 @@ class TypeVIhKernel(LegacyDelegationKernel):
             "truncation_half_width": float(self.default_half_width),
             "residual_values": residuals,
             "forbidden_shortcut_tracked": list(self.metadata.forbidden_shortcuts),
+            **vih_meta,
         }
         return ExactTransportBundle(
             family=self.family,
             tier="A",
             dispatch_route=self.dispatch_route,
-            transfer_T=np.asarray(legacy["transfer_T"]),
-            transfer_E=np.asarray(legacy["transfer_E"]),
-            transfer_B=np.asarray(legacy["transfer_B"]),
+            transfer_T=transfer_t,
+            transfer_E=transfer_e,
+            transfer_B=transfer_b,
             propagator_matrix=np.asarray(legacy["propagator_matrix"]),
             ell=ell,
             k_grid_mpc=np.asarray(k_grid_mpc, dtype=float),
             eta_grid_mpc=np.asarray(eta_grid_mpc, dtype=float),
             metadata=meta,
-            raw_payload=legacy,
+            raw_payload={**legacy, **vih_meta},
         )
 
     def _compute_residuals(self, *, h_value: float) -> dict[str, float]:

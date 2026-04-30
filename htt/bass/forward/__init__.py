@@ -51,9 +51,11 @@ from bass.forward.ver2_solver_output import (
 from bass.forward.ver3_output_archive import (
     BoostArchive,
     DEFAULT_HARMONIC_ORDERING,
+    alm_power_by_l,
     observer_boost_output,
     observer_boost_output_from_components,
     resolve_output_gate_registry,
+    validate_alm_archive,
     write_output_archive,
 )
 from bass.ver3_contracts import OutputMetadata
@@ -88,8 +90,10 @@ __all__ = [
     'OutputMetadata',
     'BoostArchive',
     'DEFAULT_HARMONIC_ORDERING',
+    'alm_power_by_l',
     'observer_boost_output',
     'observer_boost_output_from_components',
     'resolve_output_gate_registry',
+    'validate_alm_archive',
     'write_output_archive',
 ]

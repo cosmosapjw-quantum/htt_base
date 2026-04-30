@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from math import atanh
-from typing import Any
+from typing import Any, Mapping
 
 import numpy as np
 
@@ -39,9 +39,11 @@ from bass.validation import GateDecision, hard_gate_before_fitting
 __all__ = [
     "FittingBlockedError",
     "LiveObserverBoostProblem",
+    "StatisticsReadinessDecision",
     "build_live_observer_boost_problem",
     "build_type_i_native_validation_problem",
     "run_type_i_native_validation_posterior",
+    "statistics_readiness_decision",
 ]
 
 
@@ -64,6 +66,30 @@ class FittingBlockedError(RuntimeError):
 
 
 @dataclass(frozen=True)
+class StatisticsReadinessDecision:
+    """Hard-gated decision for promoting live inference to fitting-ready."""
+
+    allowed: bool
+    gate_decision: GateDecision
+    covariance_readiness: str
+    observable_production_status: str
+    checks: dict[str, bool]
+    blockers: tuple[str, ...]
+
+    def as_payload(self) -> dict[str, Any]:
+        return {
+            "allowed": bool(self.allowed),
+            "fitting_allowed": bool(self.allowed),
+            "diagnostic_only": not bool(self.allowed),
+            "covariance_readiness": self.covariance_readiness,
+            "observable_production_status": self.observable_production_status,
+            "checks": dict(self.checks),
+            "blockers": list(self.blockers),
+            "gate_decision": self.gate_decision.as_payload(),
+        }
+
+
+@dataclass(frozen=True)
 class LiveObserverBoostProblem:
     """Bounded live posterior problem over the observer-boost vector."""
 
@@ -75,6 +101,7 @@ class LiveObserverBoostProblem:
     gate_decision: GateDecision
     covariance_readiness: str
     fitting_ready: bool
+    statistics_decision: StatisticsReadinessDecision
 
     def log_likelihood(self, theta: np.ndarray) -> float:
         if not self.fitting_ready:
@@ -210,11 +237,24 @@ def _gate_registry(solver_output: SolverCoreOutput) -> dict[str, object]:
     return resolve_output_gate_registry(solver_output)
 
 
-def _fitting_decision(
+def _observable_harmonic_gaussian_ready(observable_vector: ObservableVector) -> bool:
+    if bool(observable_vector.alm_features.get("harmonic_gaussian_ready", False)):
+        return True
+    features = observable_vector.covariance_features
+    return bool(
+        features is not None
+        and features.get("supports_harmonic_gaussian", False)
+        and isinstance(features.get("harmonic_gaussian_covariance"), Mapping)
+    )
+
+
+def statistics_readiness_decision(
     *,
     solver_output: SolverCoreOutput,
     observable_vector: ObservableVector,
-) -> tuple[GateDecision, str, bool]:
+) -> StatisticsReadinessDecision:
+    """Return the live-inference fitting decision with all blocking evidence."""
+
     covariance_readiness = _covariance_readiness(observable_vector)
     gate_decision = hard_gate_before_fitting(
         _gate_registry(solver_output),
@@ -233,7 +273,56 @@ def _fitting_decision(
             "observable_production_status": observable_vector.manifest.production_status,
         },
     )
-    fitting_ready = bool(gate_decision.allowed) and covariance_readiness == "full"
+    sky_support = observable_vector.sky_support
+    checks = {
+        "gate_allowed": bool(gate_decision.allowed),
+        "covariance_full": covariance_readiness == "full",
+        "observable_production_candidate": (
+            observable_vector.manifest.production_status == "production_candidate"
+        ),
+        "observable_declares_fitting_ready": bool(
+            observable_vector.alm_features.get("fitting_ready", False)
+        ),
+        "harmonic_gaussian_ready": _observable_harmonic_gaussian_ready(
+            observable_vector
+        ),
+        "sky_support_mock_calibrated": (
+            sky_support.selection_mode == "mock_calibrated"
+            and sky_support.mock_coverage_status == "adequate"
+        ),
+        "local_boost_is_output_only": (
+            observable_vector.alm_features.get("local_boost_contract")
+            == "observer_side_only_not_applied_in_bass_output"
+        ),
+        "tilt_boost_separated": (
+            observable_vector.alm_features.get("tilt_boost_separation")
+            == "explicit_nonmerged"
+        ),
+        "inference_owner_wraps_diagnostic_likelihood": True,
+    }
+    blockers = tuple(key for key, passed in checks.items() if not passed)
+    return StatisticsReadinessDecision(
+        allowed=not blockers,
+        gate_decision=gate_decision,
+        covariance_readiness=covariance_readiness,
+        observable_production_status=observable_vector.manifest.production_status,
+        checks=checks,
+        blockers=blockers,
+    )
+
+
+def _fitting_decision(
+    *,
+    solver_output: SolverCoreOutput,
+    observable_vector: ObservableVector,
+) -> tuple[GateDecision, str, bool, StatisticsReadinessDecision]:
+    statistics_decision = statistics_readiness_decision(
+        solver_output=solver_output,
+        observable_vector=observable_vector,
+    )
+    gate_decision = statistics_decision.gate_decision
+    covariance_readiness = statistics_decision.covariance_readiness
+    fitting_ready = bool(statistics_decision.allowed)
     solver_output.metadata["fitting_gate_enforced"] = True
     solver_output.metadata["fitting_gate_allowed"] = fitting_ready
     solver_output.metadata["fitting_allowed"] = fitting_ready
@@ -242,15 +331,23 @@ def _fitting_decision(
         None
         if fitting_ready
         else (
-            "covariance_not_full"
-            if gate_decision.allowed
+            ";".join(statistics_decision.blockers)
+            if statistics_decision.blockers
             else gate_decision.reason
         )
     )
     solver_output.metadata["missing_gates"] = gate_decision.missing_gates
     solver_output.metadata["covariance_readiness"] = covariance_readiness
     solver_output.metadata["fitting_gate_decision"] = gate_decision.as_payload()
-    return gate_decision, covariance_readiness, fitting_ready
+    solver_output.metadata[
+        "statistics_readiness_decision"
+    ] = statistics_decision.as_payload()
+    solver_output.metadata["statistics_claim_allowed"] = fitting_ready
+    solver_output.metadata["statistics_owner"] = "bass.inference.live_binding"
+    solver_output.metadata[
+        "likelihood_binding_scope"
+    ] = "direct_likelihood_is_diagnostic_wrapped_by_inference_gate"
+    return gate_decision, covariance_readiness, fitting_ready, statistics_decision
 
 
 def build_type_i_native_validation_problem(seed: int) -> LiveObserverBoostProblem:
@@ -279,7 +376,12 @@ def build_type_i_native_validation_problem(seed: int) -> LiveObserverBoostProble
         run.solver_output,
         tier="low_ell",
     )
-    gate_decision, covariance_readiness, fitting_ready = _fitting_decision(
+    (
+        gate_decision,
+        covariance_readiness,
+        fitting_ready,
+        statistics_decision,
+    ) = _fitting_decision(
         solver_output=run.solver_output,
         observable_vector=observable,
     )
@@ -292,6 +394,7 @@ def build_type_i_native_validation_problem(seed: int) -> LiveObserverBoostProble
         gate_decision=gate_decision,
         covariance_readiness=covariance_readiness,
         fitting_ready=fitting_ready,
+        statistics_decision=statistics_decision,
     )
 
 
@@ -309,7 +412,12 @@ def build_live_observer_boost_problem(
             sky_support=_sky_support(),
         )
     )
-    gate_decision, covariance_readiness, fitting_ready = _fitting_decision(
+    (
+        gate_decision,
+        covariance_readiness,
+        fitting_ready,
+        statistics_decision,
+    ) = _fitting_decision(
         solver_output=solver_output,
         observable_vector=observable,
     )
@@ -322,6 +430,7 @@ def build_live_observer_boost_problem(
         gate_decision=gate_decision,
         covariance_readiness=covariance_readiness,
         fitting_ready=fitting_ready,
+        statistics_decision=statistics_decision,
     )
 
 

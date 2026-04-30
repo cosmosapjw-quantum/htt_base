@@ -6,10 +6,10 @@ that produces Planck-2018 FLRW D_ℓ from real Tier-B physics:
     species + k_grid
         → per-k: execute_tier_b_solver (Blockers 1+2+3)
                   → extract_flrw_sources_from_tier_b (Round-5)
-                  → build_temperature_source + build_polarization_source
+                  → build_scalar_sources_pair
                   → project_m_transfer  → Δ_ℓ^T(k), Δ_ℓ^E(k)
         → k-sweep parallelized via ProcessPoolExecutor
-        → assemble_cl_TT_isotropic / assemble_cl_EE_isotropic
+        → assemble_cl_TT_EE_isotropic
         → compute_dl → D_ℓ in μK²
 
 This is the replacement for the reverted S8/S9 toy SW-plateau pipeline
@@ -49,10 +49,8 @@ from bass.forward.ver2_solver_output import BassReleaseMetadata
 from bass.los.bianchi_propagator import BianchiTransferFunctions
 from bass.los.flrw_bessel_projector import (
     FLRWBesselConfig,
-    build_polarization_source,
-    build_temperature_source,
-    project_polarization_transfer,
-    project_temperature_transfer,
+    build_scalar_sources_pair,
+    project_scalar_transfer_pair,
 )
 from bass.los.los_grid_builder import build_los_grid
 from bass.runtime import (
@@ -69,8 +67,7 @@ from bass.runtime import (
 )
 from bass.spectrum.cl_assembly import (
     CLAssemblyConfig,
-    assemble_cl_EE_isotropic,
-    assemble_cl_TT_isotropic,
+    assemble_cl_TT_EE_isotropic_from_grid,
     compute_dl,
 )
 from bass.spectrum.tier_b_source_extraction import (
@@ -112,6 +109,40 @@ def _resolve_primordial_b_k_sq(
     return float(cfg.primordial_b_k_sq)
 
 
+def _split_work_chunks(
+    values: Sequence[Any],
+    *,
+    worker_count: int,
+    chunk_size: int | None,
+) -> list[list[Any]]:
+    """Split work in-order for process-pool dispatch.
+
+    ``chunk_size=None`` preserves the historical even split into at most
+    one chunk per worker. A positive ``chunk_size`` creates fixed-size
+    chunks; ``Executor.map`` keeps output order while allowing workers to
+    pull the next chunk as soon as they finish the previous one.
+    """
+
+    n_values = len(values)
+    if n_values == 0:
+        return []
+    if chunk_size is not None:
+        size = int(chunk_size)
+        if size <= 0:
+            raise ValueError(f"chunk_size must be positive; got {chunk_size}")
+        return [
+            [values[j] for j in range(i, min(i + size, n_values))]
+            for i in range(0, n_values, size)
+        ]
+    n_chunks = max(1, min(int(worker_count), n_values))
+    index_chunks = np.array_split(np.arange(n_values), n_chunks)
+    return [
+        [values[int(i)] for i in idx]
+        for idx in index_chunks
+        if len(idx) > 0
+    ]
+
+
 @dataclass(frozen=True)
 class FLRWPipelineConfig:
     """Configuration bundle for the end-to-end FLRW D_ℓ pipeline.
@@ -137,6 +168,60 @@ class FLRWPipelineConfig:
     that don't need recombination-resolution accuracy can drop this to
     ~100 for ~3× speedup. See ``IntegratorConfig.max_step_factor``
     docstring for the trade-off."""
+    imex_explicit_update_limit: float = 0.05
+    """Forwarded to ``IntegratorConfig.imex_explicit_update_limit``.
+    Default 0.05 preserves the historical VER2 IMEX safety cap.
+    Diagnostic sweeps may raise this only with a same-output fairness
+    comparison against the default cap."""
+    k_solver_batch_mode: str = "shared_background"
+    """k-solver execution mode inside a shared-background chunk.
+
+    ``"shared_background"`` preserves the historical serial per-k solve
+    after amortizing background/visibility/backend construction.
+    ``"threaded"`` runs independent per-k solves concurrently inside
+    the chunk, sharing read-only background/visibility state but using
+    one fresh family backend per thread. ``"joint_imex"`` selects the
+    staged IMEX batch wrapper controlled by ``joint_imex_schedule``:
+    the default independent schedule is parity-first, ``"ragged"``
+    interleaves native per-k substeps without a global common step, and
+    ``"shared_step"`` remains the experimental true shared-step solver.
+    """
+    intra_chunk_threads: int = 1
+    """Maximum thread count for ``k_solver_batch_mode="threaded"``.
+    Defaults to 1 so existing process-level parallelism and bitwise
+    regression behavior are unchanged."""
+    k_chunk_size: int | None = None
+    """Optional fixed k-count per process chunk.
+
+    ``None`` preserves the historical one-chunk-per-worker split. A
+    positive integer creates more, smaller chunks so large k-grids can
+    load-balance across workers when per-k runtimes vary, while still
+    amortizing background/visibility setup inside each chunk.
+    """
+    joint_imex_reference_check: bool = True
+    """Fail-closed guard for ``k_solver_batch_mode="joint_imex"``.
+
+    When enabled, the experimental joint-step batch result is compared
+    against the ordinary independent per-k path before it is returned.
+    This is intentionally expensive; it prevents a scheduler-level
+    optimization from silently changing physical outputs while the
+    joint IMEX path is still being matured.
+    """
+    joint_imex_reference_rtol: float = 1.0e-9
+    joint_imex_reference_atol: float = 1.0e-9
+    joint_imex_schedule: str = "independent"
+    """Scheduler used by ``k_solver_batch_mode="joint_imex"``.
+
+    ``"independent"`` is the parity-first staging path: each k keeps
+    the native per-k IMEX adaptive schedule while the batch wrapper
+    shares setup/result plumbing. ``"ragged"`` advances all k states
+    through the extracted native one-substep primitive, but each k keeps
+    its own accepted step size. ``"grouped"`` keeps the same per-k
+    proposal rule and only buckets members with matching proposed
+    substep targets. ``"shared_step"`` uses one common substep schedule
+    across k and remains guarded experimental until it passes the
+    reference drift check.
+    """
     adiabatic_mode_seed: bool = True
     """V5 step-4b-(a) super-horizon adiabatic initial condition. When
     True (default for the V5 pipeline), the seed ratios follow
@@ -212,6 +297,56 @@ class FLRWPipelineConfig:
             raise ValueError(
                 f"quadrature must be 'trapezoid' or 'simpson'; "
                 f"got {self.quadrature!r}"
+            )
+        if self.max_step_factor <= 0:
+            raise ValueError(
+                f"max_step_factor must be positive; got {self.max_step_factor}"
+            )
+        if self.imex_explicit_update_limit <= 0.0:
+            raise ValueError(
+                "imex_explicit_update_limit must be positive; "
+                f"got {self.imex_explicit_update_limit}"
+            )
+        if self.k_solver_batch_mode not in {
+            "shared_background",
+            "threaded",
+            "joint_imex",
+        }:
+            raise ValueError(
+                "k_solver_batch_mode must be one of "
+                "'shared_background', 'threaded', or 'joint_imex'; "
+                f"got {self.k_solver_batch_mode!r}"
+            )
+        if self.intra_chunk_threads <= 0:
+            raise ValueError(
+                "intra_chunk_threads must be positive; "
+                f"got {self.intra_chunk_threads}"
+            )
+        if self.k_chunk_size is not None and self.k_chunk_size <= 0:
+            raise ValueError(
+                "k_chunk_size must be positive when set; "
+                f"got {self.k_chunk_size}"
+            )
+        if self.joint_imex_reference_rtol < 0.0:
+            raise ValueError(
+                "joint_imex_reference_rtol must be non-negative; "
+                f"got {self.joint_imex_reference_rtol}"
+            )
+        if self.joint_imex_reference_atol < 0.0:
+            raise ValueError(
+                "joint_imex_reference_atol must be non-negative; "
+                f"got {self.joint_imex_reference_atol}"
+            )
+        if self.joint_imex_schedule not in {
+            "independent",
+            "ragged",
+            "grouped",
+            "shared_step",
+        }:
+            raise ValueError(
+                "joint_imex_schedule must be 'independent', 'ragged', "
+                "'grouped', or 'shared_step'; "
+                f"got {self.joint_imex_schedule!r}"
             )
 
 
@@ -317,6 +452,10 @@ def _los_and_wrap(
     k_mpc: float,
     cfg: FLRWPipelineConfig,
     seed_amp_for_norm: float | None,
+    visibility_callables: tuple[
+        Callable[[np.ndarray], np.ndarray],
+        Callable[[np.ndarray], np.ndarray],
+    ] | None = None,
 ) -> BianchiTransferFunctions:
     """Run Round-5 extractor + LoS projectors + optional seed-amp
     normalization for a single k. Shared helper between the high-level
@@ -329,7 +468,10 @@ def _los_and_wrap(
         k=float(k_mpc),
         anisotropic_stress=cfg.anisotropic_stress,
     )
-    g_of_eta, kappa_of_eta = build_visibility_and_kappa_callables(species)
+    if visibility_callables is None:
+        g_of_eta, kappa_of_eta = build_visibility_and_kappa_callables(species)
+    else:
+        g_of_eta, kappa_of_eta = visibility_callables
 
     # V5 Round-15 P0 D-1 fix: decouple LoS quadrature grid from the IMEX
     # integrator output grid. The integrator's 64-point uniform-linear
@@ -360,14 +502,11 @@ def _los_and_wrap(
         eta_0_mpc=eta_0_mpc,
         quadrature=cfg.quadrature,
     )
-    source_T = build_temperature_source(eta_for_los, sources, g_of_eta, kappa_of_eta)
-    source_E = build_polarization_source(eta_for_los, sources, g_of_eta)
-
-    delta_T = project_temperature_transfer(
-        float(k_mpc), source_T, eta_for_los, bessel_config
+    source_T, source_E = build_scalar_sources_pair(
+        eta_for_los, sources, g_of_eta, kappa_of_eta
     )
-    delta_E = project_polarization_transfer(
-        float(k_mpc), source_E, eta_for_los, bessel_config
+    delta_T, delta_E = project_scalar_transfer_pair(
+        float(k_mpc), source_T, source_E, eta_for_los, bessel_config
     )
 
     if cfg.unit_amplitude_normalization and seed_amp_for_norm is not None:
@@ -389,6 +528,877 @@ def _los_and_wrap(
         delta_E_m_minus2=zero_template.copy(),
         delta_B_all_zero=np.zeros(cfg.ell_max_transfer + 1, dtype=np.float64),
     )
+
+
+def _build_results_from_joint_imex_states(
+    integrators: Sequence[Any],
+    eta_out: np.ndarray,
+    states_by_run: Sequence[Sequence[np.ndarray] | np.ndarray],
+    *,
+    nfev: Sequence[int],
+    tca_trackers: Sequence[list[bool]],
+) -> list[Any]:
+    """Reconstruct ``IntegrationResult`` objects from shared-step states.
+
+    This mirrors the no-checkpoint branch of
+    ``Ver2TierBIntegrator.run``. The helper is intentionally private to
+    the FLRW spectrum path because it relies on the VER2 native
+    integrator's private state layout.
+    """
+
+    from bass.hierarchy.ver2_native_integrator import (
+        _BARYON_LOCAL_DOF,
+        _LOCAL_MATTER_DOF,
+        _PRIMARY_LOCAL_DOF,
+    )
+
+    out: list[Any] = []
+    eta_arr = np.asarray(eta_out, dtype=np.float64)
+    for idx, integrator in enumerate(integrators):
+        tower_size = (int(integrator.config.L_max) + 1) ** 2
+        raw_states = states_by_run[idx]
+        if isinstance(raw_states, np.ndarray):
+            state_table = np.asarray(raw_states, dtype=np.float64)
+            if state_table.ndim != 2:
+                raise ValueError(
+                    "joint IMEX state history array must be two-dimensional; "
+                    f"got shape {state_table.shape}"
+                )
+            if state_table.shape[0] == eta_arr.size:
+                states = state_table.T
+            elif state_table.shape[1] == eta_arr.size:
+                states = state_table
+            else:
+                raise ValueError(
+                    "joint IMEX state history array does not match eta grid: "
+                    f"shape={state_table.shape}, eta_size={eta_arr.size}"
+                )
+        else:
+            states = np.asarray(
+                np.column_stack(raw_states),
+                dtype=np.float64,
+            )
+        residual_local_start = 4 * tower_size + _PRIMARY_LOCAL_DOF
+        residual_local_stop = residual_local_start + integrator._residual_local_dof
+        residual_harmonic_stop = (
+            residual_local_stop + integrator._residual_harmonic_dof
+        )
+        result = integrator._build_result(
+            eta=eta_arr,
+            photon_T_tower=np.asarray(states[:tower_size].T, dtype=np.float64),
+            photon_E_tower=np.asarray(
+                states[tower_size : 2 * tower_size].T,
+                dtype=np.float64,
+            ),
+            photon_B_tower=np.asarray(
+                states[2 * tower_size : 3 * tower_size].T,
+                dtype=np.float64,
+            ),
+            neutrino_tower=np.asarray(
+                states[3 * tower_size : 4 * tower_size].T,
+                dtype=np.float64,
+            ),
+            baryon_local_history=np.asarray(
+                states[
+                    4 * tower_size : 4 * tower_size + _BARYON_LOCAL_DOF
+                ].T,
+                dtype=np.float64,
+            ),
+            cdm_local_history=np.asarray(
+                states[
+                    4 * tower_size
+                    + _BARYON_LOCAL_DOF : 4 * tower_size
+                    + _LOCAL_MATTER_DOF
+                ].T,
+                dtype=np.float64,
+            ),
+            source_local_history=np.asarray(
+                states[
+                    4 * tower_size
+                    + _LOCAL_MATTER_DOF : 4 * tower_size
+                    + _PRIMARY_LOCAL_DOF
+                ].T,
+                dtype=np.float64,
+            ),
+            residual_local_history=np.asarray(
+                states[residual_local_start:residual_local_stop].T,
+                dtype=np.float64,
+            ),
+            residual_harmonic_history=np.asarray(
+                states[residual_local_stop:residual_harmonic_stop].T,
+                dtype=np.float64,
+            ),
+            residual_source_history=np.asarray(
+                states[residual_harmonic_stop:].T,
+                dtype=np.float64,
+            ),
+            nfev=int(nfev[idx]),
+            njev=0,
+            nlu=0,
+            status=0,
+            message=(
+                "The joint IMEX k-batch executor successfully reached "
+                "the end of the integration interval."
+            ),
+            tca_tracker=tca_trackers[idx],
+            checkpoint_write_count=0,
+            restart_used=False,
+        )
+        result.layout_auxiliary_bundle = (
+            integrator.build_layout_auxiliary_history_bundle(result)
+        )
+        result.solver_info["layout_auxiliary_bundle_cached"] = True
+        reionization_amplitude = (
+            0.0
+            if integrator.visibility_source.contract.events is None
+            else float(integrator.visibility_source.contract.events.tau_reion)
+        )
+        result.runtime_execution_trace = integrator.build_runtime_execution_trace(
+            result,
+            reionization_amplitude=reionization_amplitude,
+        )
+        result.solver_info["runtime_execution_trace_cached"] = True
+        result.solver_info["k_solver_batch_mode"] = "joint_imex"
+        result.solver_info["k_solver_batch_size"] = int(len(integrators))
+        out.append(result)
+    return out
+
+
+_TRANSFER_FIELDS = (
+    "delta_T_m0",
+    "delta_T_m_plus2",
+    "delta_T_m_minus2",
+    "delta_E_m0",
+    "delta_E_m_plus2",
+    "delta_E_m_minus2",
+    "delta_B_all_zero",
+)
+
+
+_INTEGRATION_HISTORY_FIELDS = (
+    "photon_T_tower",
+    "photon_E_tower",
+    "photon_B_tower",
+    "neutrino_tower",
+    "baryon_local_history",
+    "cdm_local_history",
+    "source_history",
+    "residual_local_history",
+    "residual_harmonic_history",
+    "residual_source_history",
+)
+
+
+def _max_integration_history_reference_drift(
+    reference: Sequence[Any],
+    candidate: Sequence[Any],
+) -> tuple[float, float, str]:
+    if len(reference) != len(candidate):
+        raise ValueError("reference and candidate integration lists have different lengths")
+    max_abs = 0.0
+    max_ref = 0.0
+    max_field = ""
+    for ref_result, cand_result in zip(reference, candidate):
+        for field_name in _INTEGRATION_HISTORY_FIELDS:
+            ref_value = getattr(ref_result, field_name, None)
+            cand_value = getattr(cand_result, field_name, None)
+            if ref_value is None and cand_value is None:
+                continue
+            if ref_value is None or cand_value is None:
+                return float("inf"), max_ref, field_name
+            ref_arr = np.asarray(ref_value, dtype=np.float64)
+            cand_arr = np.asarray(cand_value, dtype=np.float64)
+            if ref_arr.shape != cand_arr.shape:
+                raise ValueError(
+                    f"integration field {field_name} shape mismatch: "
+                    f"{ref_arr.shape} != {cand_arr.shape}"
+                )
+            diff = np.asarray(cand_arr - ref_arr, dtype=np.float64)
+            if np.any(~np.isfinite(diff)):
+                return float("inf"), max_ref, field_name
+            field_abs = float(np.max(np.abs(diff), initial=0.0))
+            field_ref = float(np.max(np.abs(ref_arr), initial=0.0))
+            if field_abs > max_abs:
+                max_abs = field_abs
+                max_field = field_name
+            max_ref = max(max_ref, field_ref)
+    return max_abs, max_ref, max_field
+
+
+def _max_transfer_reference_drift(
+    reference: Sequence[BianchiTransferFunctions],
+    candidate: Sequence[BianchiTransferFunctions],
+) -> tuple[float, float]:
+    if len(reference) != len(candidate):
+        raise ValueError("reference and candidate transfer lists have different lengths")
+    max_abs = 0.0
+    max_ref = 0.0
+    for ref_tf, cand_tf in zip(reference, candidate):
+        for field_name in _TRANSFER_FIELDS:
+            ref_arr = np.asarray(getattr(ref_tf, field_name), dtype=np.float64)
+            cand_arr = np.asarray(getattr(cand_tf, field_name), dtype=np.float64)
+            if ref_arr.shape != cand_arr.shape:
+                raise ValueError(
+                    f"transfer field {field_name} shape mismatch: "
+                    f"{ref_arr.shape} != {cand_arr.shape}"
+                )
+            diff = np.asarray(cand_arr - ref_arr, dtype=np.float64)
+            if np.any(~np.isfinite(diff)):
+                return float("inf"), max_ref
+            max_abs = max(max_abs, float(np.max(np.abs(diff), initial=0.0)))
+            max_ref = max(max_ref, float(np.max(np.abs(ref_arr), initial=0.0)))
+    return max_abs, max_ref
+
+
+def _run_joint_imex_k_batch(integrators: Sequence[Any]) -> list[Any]:
+    """Advance multiple orthogonal IMEX k states with one shared step loop.
+
+    The equations and per-k operators are unchanged: every RHS,
+    collision, source, and residual call still goes through the owning
+    ``Ver2TierBIntegrator``. The batching is at the time-step scheduler
+    level, using the most restrictive explicit-update cap across the k
+    batch. This is deliberately opt-in because shared adaptive steps can
+    change floating-point trajectories relative to fully independent
+    per-k solves.
+    """
+
+    if len(integrators) == 0:
+        return []
+    from bass.hierarchy.ver2_native_integrator import (
+        _ImexStepCache,
+        _ImexStepTuning,
+    )
+
+    first = integrators[0]
+    if str(first.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+        raise ValueError("joint_imex batching requires IMEX_MIDPOINT_BDF")
+    if abs(float(first.config.tilt_rapidity)) > 0.0:
+        raise ValueError("joint_imex batching is orthogonal-only")
+
+    eta_out = np.linspace(
+        float(first.config.eta_initial_mpc),
+        float(first.config.eta_final_mpc),
+        int(first.config.n_output),
+    )
+    for integrator in integrators:
+        if str(integrator.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+            raise ValueError("all joint_imex integrators must use IMEX_MIDPOINT_BDF")
+        if abs(float(integrator.config.tilt_rapidity)) > 0.0:
+            raise ValueError("joint_imex batching is orthogonal-only")
+        if int(integrator.config.L_max) != int(first.config.L_max):
+            raise ValueError("joint_imex batching requires a common L_max")
+        candidate_eta = np.linspace(
+            float(integrator.config.eta_initial_mpc),
+            float(integrator.config.eta_final_mpc),
+            int(integrator.config.n_output),
+        )
+        if not np.allclose(candidate_eta, eta_out, rtol=0.0, atol=1.0e-12):
+            raise ValueError("joint_imex batching requires a common eta output grid")
+
+    y_current = [
+        np.asarray(integrator.initial_state(), dtype=np.float64)
+        for integrator in integrators
+    ]
+    states_by_run = [
+        np.empty((eta_out.size, state.size), dtype=np.float64)
+        for state in y_current
+    ]
+    for idx, state in enumerate(y_current):
+        states_by_run[idx][0, :] = state
+    tca_trackers: list[list[bool]] = [[] for _ in integrators]
+    nfev = [0 for _ in integrators]
+    step_caches = [_ImexStepCache() for _ in integrators]
+    explicit_buffers = [np.empty_like(state, dtype=np.float64) for state in y_current]
+
+    total_span = max(
+        float(first.config.eta_final_mpc - first.config.eta_initial_mpc),
+        1.0e-12,
+    )
+    nominal_interval = max(float(np.max(np.diff(eta_out))), 1.0e-12)
+    max_step_factor = max(float(getattr(first.config, "max_step_factor", 1000)), 1.0)
+    configured_step = total_span / max_step_factor
+    split_step = min(nominal_interval, configured_step)
+    min_step = max(min(configured_step, total_span / 50000.0), 1.0e-8)
+    explicit_update_limit = max(
+        float(getattr(first.config, "imex_explicit_update_limit", 0.05)),
+        1.0e-12,
+    )
+    shared_substeps = 0
+
+    for output_index, (left, right) in enumerate(zip(eta_out[:-1], eta_out[1:]), start=1):
+        eta_current = float(left)
+        eta_target = float(right)
+        while eta_current < eta_target - 1.0e-15:
+            remaining = eta_target - eta_current
+            state_scales = [
+                max(float(np.linalg.norm(state, ord=np.inf)), 1.0)
+                for state in y_current
+            ]
+            explicit_scales: list[float] = []
+            explicit_left_values: list[np.ndarray] = []
+            for idx, integrator in enumerate(integrators):
+                with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+                    rhs = np.asarray(
+                        integrator._explicit_rhs(
+                            eta_current,
+                            y_current[idx],
+                            out=explicit_buffers[idx],
+                        ),
+                        dtype=np.float64,
+                    )
+                nfev[idx] += 1
+                if np.any(~np.isfinite(rhs)):
+                    state_norm = float(np.linalg.norm(y_current[idx], ord=np.inf))
+                    raise RuntimeError(
+                        "joint IMEX k-batch executor encountered non-finite "
+                        "explicit RHS before shared-step proposal: "
+                        f"member={idx}, eta_current={eta_current:.17g}, "
+                        f"state_norm={state_norm:.17g}"
+                    )
+                explicit_left_values.append(rhs)
+                explicit_scales.append(
+                    float(np.linalg.norm(rhs, ord=np.inf)) / state_scales[idx]
+                )
+            common_h = min(
+                remaining,
+                split_step,
+                explicit_update_limit / max(max(explicit_scales), 1.0e-12),
+            )
+            common_h = (
+                remaining
+                if remaining <= min_step
+                else max(min(common_h, remaining), min_step)
+            )
+            accepted = False
+            last_failure_reason = "no trial attempted"
+            last_trial_h = float(common_h)
+            max_explicit_scale = float(max(explicit_scales, default=0.0))
+            for attempt in range(20):
+                target_next = float(eta_current + common_h)
+                last_trial_h = float(common_h)
+                outcomes: list[Any] = []
+                trial_trackers = [list(tracker) for tracker in tca_trackers]
+                for idx, integrator in enumerate(integrators):
+                    try:
+                        outcome = integrator._imex_advance_one_substep(
+                            eta_current=float(eta_current),
+                            eta_target=target_next,
+                            y_current=np.asarray(y_current[idx], dtype=np.float64),
+                            tca_tracker=trial_trackers[idx],
+                            tuning=_ImexStepTuning(
+                                split_step=float(common_h),
+                                min_step=float(min_step),
+                                explicit_update_limit=float(explicit_update_limit),
+                                fixed_point_iters=6,
+                            ),
+                            cache=step_caches[idx],
+                            explicit_0=explicit_left_values[idx],
+                            initial_trial_h=float(common_h),
+                        )
+                    except RuntimeError as exc:
+                        last_failure_reason = (
+                            f"member={idx} failed native substep on attempt={attempt}: {exc}"
+                        )
+                        outcomes = []
+                        break
+                    outcomes.append(outcome)
+                if len(outcomes) != len(integrators):
+                    common_h *= 0.5
+                    if common_h < min_step:
+                        break
+                    continue
+                eta_next_values = [float(outcome.eta_next) for outcome in outcomes]
+                if not all(
+                    np.isclose(eta_next, target_next, rtol=0.0, atol=1.0e-12)
+                    for eta_next in eta_next_values
+                ):
+                    last_failure_reason = (
+                        "native substep returned inconsistent eta_next values: "
+                        f"target_next={target_next:.17g}, "
+                        f"eta_next_values={eta_next_values!r}"
+                    )
+                    common_h *= 0.5
+                    if common_h < min_step:
+                        break
+                    continue
+                for idx, outcome in enumerate(outcomes):
+                    nfev[idx] += int(outcome.nfev)
+                    step_caches[idx] = outcome.cache
+                    y_current[idx] = np.asarray(outcome.y_next, dtype=np.float64)
+                tca_trackers = trial_trackers
+                eta_current = float(target_next)
+                shared_substeps += 1
+                accepted = True
+                break
+            if not accepted:
+                raise RuntimeError(
+                    "joint IMEX k-batch executor failed to find a finite "
+                    "accepted shared substep: "
+                    f"eta_current={eta_current:.17g}, "
+                    f"eta_target={eta_target:.17g}, "
+                    f"last_trial_h={last_trial_h:.17g}, "
+                    f"min_step={min_step:.17g}, "
+                    f"max_explicit_scale={max_explicit_scale:.17g}, "
+                    f"last_failure={last_failure_reason}"
+                )
+        for idx, state in enumerate(y_current):
+            states_by_run[idx][output_index, :] = np.asarray(state, dtype=np.float64)
+
+    results = _build_results_from_joint_imex_states(
+        integrators,
+        eta_out,
+        states_by_run,
+        nfev=nfev,
+        tca_trackers=tca_trackers,
+    )
+    for result in results:
+        result.solver_info["k_solver_batch_schedule"] = "shared_step"
+        result.solver_info["k_solver_batch_shared_substeps"] = int(shared_substeps)
+    return results
+
+
+def _run_ragged_imex_k_batch(integrators: Sequence[Any]) -> list[Any]:
+    """Advance a k batch with per-member native IMEX substep sizes.
+
+    This is the next staging point after ``"independent"``: it uses the
+    extracted native one-substep primitive for every k, but does not force
+    a global common step. That preserves the per-k adaptive schedule while
+    creating a single interleaved batch loop that later vectorized
+    primitive kernels can target.
+    """
+
+    if len(integrators) == 0:
+        return []
+    from bass.hierarchy.ver2_native_integrator import (
+        _ImexStepCache,
+        _ImexStepTuning,
+    )
+
+    first = integrators[0]
+    if str(first.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+        raise ValueError("ragged IMEX batching requires IMEX_MIDPOINT_BDF")
+    if abs(float(first.config.tilt_rapidity)) > 0.0:
+        raise ValueError("ragged IMEX batching is orthogonal-only")
+
+    eta_out = np.linspace(
+        float(first.config.eta_initial_mpc),
+        float(first.config.eta_final_mpc),
+        int(first.config.n_output),
+    )
+    for integrator in integrators:
+        if str(integrator.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+            raise ValueError("all ragged IMEX integrators must use IMEX_MIDPOINT_BDF")
+        if abs(float(integrator.config.tilt_rapidity)) > 0.0:
+            raise ValueError("ragged IMEX batching is orthogonal-only")
+        if int(integrator.config.L_max) != int(first.config.L_max):
+            raise ValueError("ragged IMEX batching requires a common L_max")
+        candidate_eta = np.linspace(
+            float(integrator.config.eta_initial_mpc),
+            float(integrator.config.eta_final_mpc),
+            int(integrator.config.n_output),
+        )
+        if not np.allclose(candidate_eta, eta_out, rtol=0.0, atol=1.0e-12):
+            raise ValueError("ragged IMEX batching requires a common eta output grid")
+
+    y_current = [
+        np.asarray(integrator.initial_state(), dtype=np.float64)
+        for integrator in integrators
+    ]
+    states_by_run = [
+        np.empty((eta_out.size, state.size), dtype=np.float64)
+        for state in y_current
+    ]
+    for idx, state in enumerate(y_current):
+        states_by_run[idx][0, :] = state
+    tca_trackers: list[list[bool]] = [[] for _ in integrators]
+    nfev = [0 for _ in integrators]
+    step_caches = [_ImexStepCache() for _ in integrators]
+    explicit_buffers = [np.empty_like(state, dtype=np.float64) for state in y_current]
+
+    total_span = max(
+        float(first.config.eta_final_mpc - first.config.eta_initial_mpc),
+        1.0e-12,
+    )
+    nominal_interval = max(float(np.max(np.diff(eta_out))), 1.0e-12)
+    max_step_factor = max(float(getattr(first.config, "max_step_factor", 1000)), 1.0)
+    configured_step = total_span / max_step_factor
+    tuning = _ImexStepTuning(
+        split_step=float(min(nominal_interval, configured_step)),
+        min_step=float(max(min(configured_step, total_span / 50000.0), 1.0e-8)),
+        explicit_update_limit=float(
+            max(float(getattr(first.config, "imex_explicit_update_limit", 0.05)), 1.0e-12)
+        ),
+        fixed_point_iters=6,
+    )
+
+    ragged_substeps = 0
+    for output_index, (left, right) in enumerate(zip(eta_out[:-1], eta_out[1:]), start=1):
+        eta_current_by_run = [float(left) for _ in integrators]
+        eta_target = float(right)
+        while True:
+            active = [
+                idx
+                for idx, eta_current in enumerate(eta_current_by_run)
+                if eta_current < eta_target - 1.0e-15
+            ]
+            if not active:
+                break
+            progressed = False
+            for idx in active:
+                eta_current = float(eta_current_by_run[idx])
+                state = np.asarray(y_current[idx], dtype=np.float64)
+                with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+                    explicit_left = np.asarray(
+                        integrators[idx]._explicit_rhs(
+                            eta_current,
+                            state,
+                            out=explicit_buffers[idx],
+                        ),
+                        dtype=np.float64,
+                    )
+                nfev[idx] += 1
+                if np.any(~np.isfinite(explicit_left)):
+                    state_norm = float(np.linalg.norm(state, ord=np.inf))
+                    raise RuntimeError(
+                        "ragged IMEX k-batch executor encountered non-finite "
+                        "explicit RHS before native substep: "
+                        f"member={idx}, eta_current={eta_current:.17g}, "
+                        f"state_norm={state_norm:.17g}"
+                    )
+                state_scale = max(float(np.linalg.norm(state, ord=np.inf)), 1.0)
+                explicit_scale = (
+                    float(np.linalg.norm(explicit_left, ord=np.inf)) / state_scale
+                )
+                remaining = float(eta_target) - eta_current
+                proposed_h = min(
+                    remaining,
+                    float(tuning.split_step),
+                    float(tuning.explicit_update_limit) / max(explicit_scale, 1.0e-12),
+                )
+                proposed_h = (
+                    remaining
+                    if remaining <= float(tuning.min_step)
+                    else max(min(proposed_h, remaining), float(tuning.min_step))
+                )
+                try:
+                    outcome = integrators[idx]._imex_advance_one_substep(
+                        eta_current=eta_current,
+                        eta_target=eta_target,
+                        y_current=state,
+                        tca_tracker=tca_trackers[idx],
+                        tuning=tuning,
+                        cache=step_caches[idx],
+                        explicit_0=explicit_left,
+                        initial_trial_h=float(proposed_h),
+                    )
+                except RuntimeError as exc:
+                    raise RuntimeError(
+                        "ragged IMEX k-batch executor failed native substep: "
+                        f"member={idx}, eta_current={eta_current:.17g}, "
+                        f"eta_target={eta_target:.17g}, error={exc}"
+                    ) from exc
+                eta_next = float(outcome.eta_next)
+                if eta_next <= eta_current + 1.0e-15:
+                    raise RuntimeError(
+                        "ragged IMEX k-batch executor received a non-advancing "
+                        "native substep: "
+                        f"member={idx}, eta_current={eta_current:.17g}, "
+                        f"eta_next={eta_next:.17g}"
+                    )
+                if eta_next > eta_target + 1.0e-10:
+                    raise RuntimeError(
+                        "ragged IMEX k-batch executor received an overshooting "
+                        "native substep: "
+                        f"member={idx}, eta_next={eta_next:.17g}, "
+                        f"eta_target={eta_target:.17g}"
+                    )
+                nfev[idx] += int(outcome.nfev)
+                step_caches[idx] = outcome.cache
+                y_current[idx] = np.asarray(outcome.y_next, dtype=np.float64)
+                eta_current_by_run[idx] = eta_next
+                ragged_substeps += 1
+                progressed = True
+            if not progressed:
+                raise RuntimeError(
+                    "ragged IMEX k-batch executor failed to advance any member "
+                    f"before η={eta_target:.17g}"
+                )
+        for idx, state in enumerate(y_current):
+            states_by_run[idx][output_index, :] = np.asarray(state, dtype=np.float64)
+
+    results = _build_results_from_joint_imex_states(
+        integrators,
+        eta_out,
+        states_by_run,
+        nfev=nfev,
+        tca_trackers=tca_trackers,
+    )
+    for result in results:
+        result.solver_info["k_solver_batch_schedule"] = "ragged"
+        result.solver_info["k_solver_batch_ragged_substeps"] = int(ragged_substeps)
+    return results
+
+
+def _run_grouped_imex_k_batch(integrators: Sequence[Any]) -> list[Any]:
+    """Advance a ragged k batch while bucketing matching proposed targets.
+
+    This keeps the native per-k IMEX proposal rule. It does not force a
+    common step; it only identifies members whose native first trial would
+    land at the same target and advances those members as one bucket. The
+    current implementation still calls the native primitive per member,
+    but the bucket metadata is the compatibility layer for a future
+    vectorized primitive.
+    """
+
+    if len(integrators) == 0:
+        return []
+    from bass.hierarchy.ver2_native_integrator import (
+        _ImexStepCache,
+        _ImexStepTuning,
+    )
+
+    first = integrators[0]
+    if str(first.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+        raise ValueError("grouped IMEX batching requires IMEX_MIDPOINT_BDF")
+    if abs(float(first.config.tilt_rapidity)) > 0.0:
+        raise ValueError("grouped IMEX batching is orthogonal-only")
+
+    eta_out = np.linspace(
+        float(first.config.eta_initial_mpc),
+        float(first.config.eta_final_mpc),
+        int(first.config.n_output),
+    )
+    for integrator in integrators:
+        if str(integrator.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+            raise ValueError("all grouped IMEX integrators must use IMEX_MIDPOINT_BDF")
+        if abs(float(integrator.config.tilt_rapidity)) > 0.0:
+            raise ValueError("grouped IMEX batching is orthogonal-only")
+        if int(integrator.config.L_max) != int(first.config.L_max):
+            raise ValueError("grouped IMEX batching requires a common L_max")
+        candidate_eta = np.linspace(
+            float(integrator.config.eta_initial_mpc),
+            float(integrator.config.eta_final_mpc),
+            int(integrator.config.n_output),
+        )
+        if not np.allclose(candidate_eta, eta_out, rtol=0.0, atol=1.0e-12):
+            raise ValueError("grouped IMEX batching requires a common eta output grid")
+
+    y_current = [
+        np.asarray(integrator.initial_state(), dtype=np.float64)
+        for integrator in integrators
+    ]
+    states_by_run = [
+        np.empty((eta_out.size, state.size), dtype=np.float64)
+        for state in y_current
+    ]
+    for idx, state in enumerate(y_current):
+        states_by_run[idx][0, :] = state
+    tca_trackers: list[list[bool]] = [[] for _ in integrators]
+    nfev = [0 for _ in integrators]
+    step_caches = [_ImexStepCache() for _ in integrators]
+    explicit_buffers = [np.empty_like(state, dtype=np.float64) for state in y_current]
+
+    total_span = max(
+        float(first.config.eta_final_mpc - first.config.eta_initial_mpc),
+        1.0e-12,
+    )
+    nominal_interval = max(float(np.max(np.diff(eta_out))), 1.0e-12)
+    max_step_factor = max(float(getattr(first.config, "max_step_factor", 1000)), 1.0)
+    configured_step = total_span / max_step_factor
+    split_step = float(min(nominal_interval, configured_step))
+    min_step = float(max(min(configured_step, total_span / 50000.0), 1.0e-8))
+    explicit_update_limit = float(
+        max(float(getattr(first.config, "imex_explicit_update_limit", 0.05)), 1.0e-12)
+    )
+    tuning = _ImexStepTuning(
+        split_step=split_step,
+        min_step=min_step,
+        explicit_update_limit=explicit_update_limit,
+        fixed_point_iters=6,
+    )
+
+    grouped_substeps = 0
+    grouped_bucket_count = 0
+    grouped_max_bucket_size = 0
+    bucket_atol = 1.0e-12
+    for output_index, (left, right) in enumerate(zip(eta_out[:-1], eta_out[1:]), start=1):
+        eta_current_by_run = [float(left) for _ in integrators]
+        eta_target = float(right)
+        while True:
+            active = [
+                idx
+                for idx, eta_current in enumerate(eta_current_by_run)
+                if eta_current < eta_target - 1.0e-15
+            ]
+            if not active:
+                break
+            proposals: dict[int, list[tuple[int, float, float, np.ndarray]]] = {}
+            for idx in active:
+                eta_current = float(eta_current_by_run[idx])
+                state = np.asarray(y_current[idx], dtype=np.float64)
+                with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+                    explicit_left = np.asarray(
+                        integrators[idx]._explicit_rhs(
+                            eta_current,
+                            state,
+                            out=explicit_buffers[idx],
+                        ),
+                        dtype=np.float64,
+                    )
+                nfev[idx] += 1
+                if np.any(~np.isfinite(explicit_left)):
+                    state_norm = float(np.linalg.norm(state, ord=np.inf))
+                    raise RuntimeError(
+                        "grouped IMEX k-batch executor encountered non-finite "
+                        "explicit RHS before native substep: "
+                        f"member={idx}, eta_current={eta_current:.17g}, "
+                        f"state_norm={state_norm:.17g}"
+                    )
+                state_scale = max(float(np.linalg.norm(state, ord=np.inf)), 1.0)
+                explicit_scale = (
+                    float(np.linalg.norm(explicit_left, ord=np.inf)) / state_scale
+                )
+                remaining = float(eta_target) - eta_current
+                proposed_h = min(
+                    remaining,
+                    split_step,
+                    explicit_update_limit / max(explicit_scale, 1.0e-12),
+                )
+                proposed_h = (
+                    remaining
+                    if remaining <= min_step
+                    else max(min(proposed_h, remaining), min_step)
+                )
+                proposed_target = float(eta_current + proposed_h)
+                bucket_key = int(np.rint(proposed_target / bucket_atol))
+                proposals.setdefault(bucket_key, []).append(
+                    (idx, float(proposed_h), proposed_target, explicit_left)
+                )
+            if not proposals:
+                raise RuntimeError(
+                    "grouped IMEX k-batch executor failed to propose any member "
+                    f"before η={eta_target:.17g}"
+                )
+            for bucket in proposals.values():
+                grouped_bucket_count += 1
+                grouped_max_bucket_size = max(grouped_max_bucket_size, len(bucket))
+                for idx, proposed_h, proposed_target, explicit_left in bucket:
+                    eta_current = float(eta_current_by_run[idx])
+                    state = np.asarray(y_current[idx], dtype=np.float64)
+                    try:
+                        outcome = integrators[idx]._imex_advance_one_substep(
+                            eta_current=eta_current,
+                            eta_target=float(proposed_target),
+                            y_current=state,
+                            tca_tracker=tca_trackers[idx],
+                            tuning=tuning,
+                            cache=step_caches[idx],
+                            explicit_0=explicit_left,
+                            initial_trial_h=float(proposed_h),
+                        )
+                    except RuntimeError as exc:
+                        raise RuntimeError(
+                            "grouped IMEX k-batch executor failed native substep: "
+                            f"member={idx}, eta_current={eta_current:.17g}, "
+                            f"eta_target={proposed_target:.17g}, error={exc}"
+                        ) from exc
+                    eta_next = float(outcome.eta_next)
+                    if eta_next <= eta_current + 1.0e-15:
+                        raise RuntimeError(
+                            "grouped IMEX k-batch executor received a non-advancing "
+                            "native substep: "
+                            f"member={idx}, eta_current={eta_current:.17g}, "
+                            f"eta_next={eta_next:.17g}"
+                        )
+                    if eta_next > eta_target + 1.0e-10:
+                        raise RuntimeError(
+                            "grouped IMEX k-batch executor received an overshooting "
+                            "native substep: "
+                            f"member={idx}, eta_next={eta_next:.17g}, "
+                            f"eta_target={eta_target:.17g}"
+                        )
+                    nfev[idx] += int(outcome.nfev)
+                    step_caches[idx] = outcome.cache
+                    y_current[idx] = np.asarray(outcome.y_next, dtype=np.float64)
+                    eta_current_by_run[idx] = eta_next
+                    grouped_substeps += 1
+        for idx, state in enumerate(y_current):
+            states_by_run[idx][output_index, :] = np.asarray(state, dtype=np.float64)
+
+    results = _build_results_from_joint_imex_states(
+        integrators,
+        eta_out,
+        states_by_run,
+        nfev=nfev,
+        tca_trackers=tca_trackers,
+    )
+    for result in results:
+        result.solver_info["k_solver_batch_schedule"] = "grouped"
+        result.solver_info["k_solver_batch_grouped_substeps"] = int(grouped_substeps)
+        result.solver_info["k_solver_batch_grouped_bucket_count"] = int(
+            grouped_bucket_count
+        )
+        result.solver_info["k_solver_batch_grouped_max_bucket_size"] = int(
+            grouped_max_bucket_size
+        )
+    return results
+
+
+def _run_independent_imex_k_batch(integrators: Sequence[Any]) -> list[Any]:
+    """Run a batch wrapper while preserving each k's native IMEX schedule.
+
+    This is the parity-first staging path for ``joint_imex`` refactors:
+    every k advances through ``Ver2TierBIntegrator._solve_segment_imex``
+    independently, so state histories should match ``integrator.run``.
+    Later shared-step/vectorized schedulers can be compared against this
+    path before any speed claim is promoted.
+    """
+
+    if len(integrators) == 0:
+        return []
+    first = integrators[0]
+    eta_out = np.linspace(
+        float(first.config.eta_initial_mpc),
+        float(first.config.eta_final_mpc),
+        int(first.config.n_output),
+    )
+    states_by_run: list[np.ndarray] = []
+    nfev: list[int] = []
+    tca_trackers: list[list[bool]] = []
+    for integrator in integrators:
+        if str(integrator.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+            raise ValueError("independent IMEX batching requires IMEX_MIDPOINT_BDF")
+        if abs(float(integrator.config.tilt_rapidity)) > 0.0:
+            raise ValueError("independent IMEX batching is orthogonal-only")
+        candidate_eta = np.linspace(
+            float(integrator.config.eta_initial_mpc),
+            float(integrator.config.eta_final_mpc),
+            int(integrator.config.n_output),
+        )
+        if not np.allclose(candidate_eta, eta_out, rtol=0.0, atol=1.0e-12):
+            raise ValueError("independent IMEX batching requires a common eta grid")
+        tracker: list[bool] = []
+        sol = integrator._solve_segment_imex(
+            eta_start=float(candidate_eta[0]),
+            eta_stop=float(candidate_eta[-1]),
+            y0=np.asarray(integrator.initial_state(), dtype=np.float64),
+            eta_eval=candidate_eta,
+            tca_tracker=tracker,
+        )
+        states_by_run.append(np.asarray(sol.y.T, dtype=np.float64))
+        nfev.append(int(sol.nfev))
+        tca_trackers.append(tracker)
+    results = _build_results_from_joint_imex_states(
+        integrators,
+        eta_out,
+        states_by_run,
+        nfev=nfev,
+        tca_trackers=tca_trackers,
+    )
+    for result in results:
+        result.solver_info["k_solver_batch_schedule"] = "independent"
+        result.solver_info["k_solver_batch_size"] = int(len(integrators))
+    return results
 
 
 def compute_transfer_function_at_k(
@@ -425,6 +1435,9 @@ def compute_transfer_function_at_k(
         primordial_b_k_sq=_resolve_primordial_b_k_sq(cfg, k_mpc),
         # Round-17 P3.5 perf knob: forward max_step_factor to the integrator.
         max_step_factor=int(getattr(cfg, "max_step_factor", 1000)),
+        imex_explicit_update_limit=float(
+            getattr(cfg, "imex_explicit_update_limit", 0.05)
+        ),
     )
 
     # execute_tier_b_solver requires k_grid_mpc with ≥ 2 entries for the
@@ -472,10 +1485,30 @@ def _run_chunk_shared_bg(
     cfg: FLRWPipelineConfig,
     bianchi_type: str,
 ) -> list[BianchiTransferFunctions]:
+    specs = [
+        (float(k_mpc), _resolve_primordial_b_k_sq(cfg, float(k_mpc)))
+        for k_mpc in k_values
+    ]
+    return _run_chunk_shared_bg_for_specs(
+        species,
+        specs,
+        cfg=cfg,
+        bianchi_type=bianchi_type,
+    )
+
+
+def _run_chunk_shared_bg_for_specs(
+    species: "SpeciesBackgroundRegistry",
+    run_specs: Sequence[tuple[float, float]],
+    *,
+    cfg: FLRWPipelineConfig,
+    bianchi_type: str,
+) -> list[BianchiTransferFunctions]:
     """Low-level k-loop that shares background_monitor + visibility_source
     + backend + canonical_decision + runtime_decision across all k's in
-    ``k_values``. Only the integrator (via ``seed_k_comoving``) is
-    rebuilt per-k.
+    ``run_specs``. Each spec is ``(k_mpc, primordial_b_k_sq)``. Only the
+    integrator (via ``seed_k_comoving`` and the per-run seed amplitude)
+    is rebuilt per run.
 
     Uses the ver2_execution private API directly; profile (see CHANGELOG)
     shows this saves ~0.8 s per k-run after the first in each chunk.
@@ -498,8 +1531,9 @@ def _run_chunk_shared_bg(
         plan_solver_execution,
     )
 
-    if len(k_values) == 0:
+    if len(run_specs) == 0:
         return []
+    specs = [(float(k), float(b_k_sq)) for k, b_k_sq in run_specs]
 
     rc = _pipeline_runtime_controls(cfg)
     ff = _pipeline_feature_flags()
@@ -514,9 +1548,12 @@ def _run_chunk_shared_bg(
         bianchi_cosmo=BianchiCosmology(structure=get_type(bianchi_type), beta=0.0),
         gamma_T_over_H_threshold=cfg.gamma_T_over_H_threshold,
         adiabatic_mode_seed=cfg.adiabatic_mode_seed,
-        primordial_b_k_sq=cfg.primordial_b_k_sq,
+        primordial_b_k_sq=float(specs[0][1]),
         # Round-17 P3.5 perf knob: forward max_step_factor to the integrator.
         max_step_factor=int(getattr(cfg, "max_step_factor", 1000)),
+        imex_explicit_update_limit=float(
+            getattr(cfg, "imex_explicit_update_limit", 0.05)
+        ),
     )
     template_request = _build_tier_b_runtime_request(
         manifest=_pipeline_manifest("chunked"),
@@ -526,7 +1563,7 @@ def _run_chunk_shared_bg(
         runtime_controls=rc,
         feature_flags=ff,
         release=_pipeline_release("chunked", cfg.random_seed),
-        k_grid_mpc=np.array([float(k_values[0]), 2.0 * float(k_values[0])]),
+        k_grid_mpc=np.array([float(specs[0][0]), 2.0 * float(specs[0][0])]),
     )
     runtime_config, family_realization = _native_runtime_config(
         template_request.bianchi_type,
@@ -575,25 +1612,24 @@ def _run_chunk_shared_bg(
             suite="tier_b_smoke",
         ),
     )
+    shared_visibility_callables = build_visibility_and_kappa_callables(species)
 
-    # Per-k: only rebuild the integrator (with this k's seed_k_comoving
-    # and its per-k resolved primordial_b_k_sq) and re-run the IMEX
-    # integration. Background_monitor + visibility_source + backend +
-    # canonical_decision + runtime_decision + execution_plan are reused.
-    out: list[BianchiTransferFunctions] = []
-    for k_mpc in k_values:
+    def _build_context_for_spec(
+        k_mpc: float,
+        per_k_b_k_sq: float,
+        *,
+        backend_for_run: Any,
+        owner: str,
+    ):
         k_grid_pair = np.array([float(k_mpc), 2.0 * float(k_mpc)], dtype=np.float64)
         seed_k_comoving = float(k_mpc)
-        # Resolve per-k b_k_sq in the PARENT process for ProcessPoolExecutor
-        # safety. Callable overrides pass through unchanged.
-        per_k_b_k_sq = _resolve_primordial_b_k_sq(cfg, float(k_mpc))
         per_k_runtime_config = _dc_replace(
             runtime_config, primordial_b_k_sq=per_k_b_k_sq
         )
         integrator = Ver2TierBIntegrator(
             per_k_runtime_config,
             species,
-            backend=backend_instance,
+            backend=backend_for_run,
             background_monitor=background_monitor,
             visibility_source=visibility_source,
             canonical_decision=canonical_decision,
@@ -607,14 +1643,14 @@ def _run_chunk_shared_bg(
             visibility_source=visibility_source,
             k_grid_mpc=k_grid_pair,
             seed_k_comoving=seed_k_comoving,
-            backend=backend_instance,
+            backend=backend_for_run,
             reionization_amplitude=reionization_amp,
             integrator=integrator,
             runtime_decision=runtime_decision,
             execution_plan=execution_plan,
             checkpoint_callback=None,
             checkpoint_paths=[],
-            metadata={"owner": "flrw_pipeline._run_chunk_shared_bg"},
+            metadata={"owner": owner},
         )
         # Per-k request carries the k_grid_pair + a fresh manifest/release
         # so downstream artefact identifiers stay distinct per k.
@@ -622,13 +1658,14 @@ def _run_chunk_shared_bg(
             template_request,
             manifest=_pipeline_manifest(f"chunked-k{k_mpc:.6e}"),
             release=_pipeline_release(f"chunked-k{k_mpc:.6e}", cfg.random_seed),
+            integrator_config=per_k_runtime_config,
             k_grid_mpc=k_grid_pair,
         )
-        result = integrator.run(
-            checkpoint_every_n_steps=None,
-            checkpoint_callback=None,
-            restart_state=None,
-        )
+        return float(k_mpc), integrator, prepared, per_k_request
+
+    def _wrap_context_result(context, result) -> BianchiTransferFunctions:
+        k_mpc, integrator, prepared, per_k_request = context
+        del integrator
         run = _build_tier_b_executable_run(
             request=per_k_request,
             prepared=prepared,
@@ -639,15 +1676,167 @@ def _run_chunk_shared_bg(
             if cfg.unit_amplitude_normalization
             else None
         )
-        out.append(
-            _los_and_wrap(
-                run.integration_result,
-                species,
-                float(k_mpc),
-                cfg,
-                seed_amp_for_norm=seed_amp,
-            )
+        return _los_and_wrap(
+            run.integration_result,
+            species,
+            float(k_mpc),
+            cfg,
+            seed_amp_for_norm=seed_amp,
+            visibility_callables=shared_visibility_callables,
         )
+
+    def _run_context(context) -> BianchiTransferFunctions:
+        _k_mpc, integrator, _prepared, _per_k_request = context
+        result = _run_integration_context(context)
+        return _wrap_context_result(context, result)
+
+    def _run_integration_context(context):
+        _k_mpc, integrator, _prepared, _per_k_request = context
+        return integrator.run(
+            checkpoint_every_n_steps=None,
+            checkpoint_callback=None,
+            restart_state=None,
+        )
+
+    batch_mode = str(getattr(cfg, "k_solver_batch_mode", "shared_background"))
+
+    # ``joint_imex`` is staged: default independent scheduling preserves
+    # per-k native IMEX trajectories; ``joint_imex_schedule="ragged"``
+    # interleaves native substeps without a common global step;
+    # ``"grouped"`` only buckets matching native proposed targets; and
+    # ``"shared_step"`` remains guarded experimental.
+    if batch_mode == "joint_imex" and len(specs) >= 2:
+        if str(runtime_config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
+            raise ValueError("joint_imex batching requires IMEX_MIDPOINT_BDF")
+        if abs(float(runtime_config.tilt_rapidity)) > 0.0:
+            raise ValueError("joint_imex batching is orthogonal-only")
+        contexts = [
+            _build_context_for_spec(
+                k_mpc,
+                per_k_b_k_sq,
+                backend_for_run=backend_instance,
+                owner="flrw_pipeline._run_chunk_shared_bg.joint_imex",
+            )
+            for k_mpc, per_k_b_k_sq in specs
+        ]
+        joint_schedule = str(getattr(cfg, "joint_imex_schedule", "independent"))
+        if joint_schedule == "independent":
+            integration_results = _run_independent_imex_k_batch(
+                [context[1] for context in contexts]
+            )
+        elif joint_schedule == "ragged":
+            integration_results = _run_ragged_imex_k_batch(
+                [context[1] for context in contexts]
+            )
+        elif joint_schedule == "grouped":
+            integration_results = _run_grouped_imex_k_batch(
+                [context[1] for context in contexts]
+            )
+        else:
+            integration_results = _run_joint_imex_k_batch(
+                [context[1] for context in contexts]
+            )
+        if bool(getattr(cfg, "joint_imex_reference_check", True)):
+            reference_backend = build_backend(
+                template_request.bianchi_type,
+                truncation={"ell_max": int(rc.multipole_cutoff)},
+                chart_options={},
+            )
+            reference_contexts = [
+                _build_context_for_spec(
+                    k_mpc,
+                    per_k_b_k_sq,
+                    backend_for_run=reference_backend,
+                    owner="flrw_pipeline._run_chunk_shared_bg.joint_imex_reference",
+                )
+                for k_mpc, per_k_b_k_sq in specs
+            ]
+            reference_integration_results = [
+                _run_integration_context(context) for context in reference_contexts
+            ]
+            state_max_abs, state_max_ref, state_field = (
+                _max_integration_history_reference_drift(
+                    reference_integration_results,
+                    integration_results,
+                )
+            )
+            state_tolerance = float(getattr(cfg, "joint_imex_reference_atol", 1.0e-9)) + (
+                float(getattr(cfg, "joint_imex_reference_rtol", 1.0e-9))
+                * state_max_ref
+            )
+            if not (state_max_abs <= state_tolerance):
+                raise RuntimeError(
+                    "joint_imex batch failed same-physics state-history guard: "
+                    f"field={state_field}, max_abs_drift={state_max_abs:.6e} "
+                    f"exceeds tolerance={state_tolerance:.6e} "
+                    f"(max_reference={state_max_ref:.6e})"
+                )
+            max_abs, max_ref = _max_transfer_reference_drift(
+                [
+                    _wrap_context_result(context, result)
+                    for context, result in zip(
+                        reference_contexts,
+                        reference_integration_results,
+                    )
+                ],
+                [
+                    _wrap_context_result(context, result)
+                    for context, result in zip(contexts, integration_results)
+                ],
+            )
+            transfer_tolerance = float(getattr(cfg, "joint_imex_reference_atol", 1.0e-9)) + (
+                float(getattr(cfg, "joint_imex_reference_rtol", 1.0e-9))
+                * max_ref
+            )
+            if not (max_abs <= transfer_tolerance):
+                raise RuntimeError(
+                    "joint_imex batch failed same-physics transfer guard: "
+                    f"max_abs_drift={max_abs:.6e} exceeds tolerance={transfer_tolerance:.6e} "
+                    f"(max_reference={max_ref:.6e})"
+                )
+        batched_transfers = [
+            _wrap_context_result(context, result)
+            for context, result in zip(contexts, integration_results)
+        ]
+        return batched_transfers
+
+    if batch_mode == "threaded" and len(specs) >= 2:
+        thread_count = min(int(getattr(cfg, "intra_chunk_threads", 1)), len(specs))
+        if thread_count >= 2:
+            def _thread_task(spec: tuple[float, float]) -> BianchiTransferFunctions:
+                k_mpc, per_k_b_k_sq = spec
+                # Use a fresh backend per thread. Background/visibility are
+                # read-only after construction; the backend is the only
+                # object likely to carry mutable layout caches.
+                thread_backend = build_backend(
+                    template_request.bianchi_type,
+                    truncation={"ell_max": int(rc.multipole_cutoff)},
+                    chart_options={},
+                )
+                context = _build_context_for_spec(
+                    k_mpc,
+                    per_k_b_k_sq,
+                    backend_for_run=thread_backend,
+                    owner="flrw_pipeline._run_chunk_shared_bg.threaded",
+                )
+                return _run_context(context)
+
+            with _cf.ThreadPoolExecutor(max_workers=thread_count) as exe:
+                return list(exe.map(_thread_task, specs))
+
+    # Per-k: only rebuild the integrator (with this k's seed_k_comoving
+    # and its per-k resolved primordial_b_k_sq) and re-run the IMEX
+    # integration. Background_monitor + visibility_source + backend +
+    # canonical_decision + runtime_decision + execution_plan are reused.
+    out: list[BianchiTransferFunctions] = []
+    for k_mpc, per_k_b_k_sq in specs:
+        context = _build_context_for_spec(
+            k_mpc,
+            per_k_b_k_sq,
+            backend_for_run=backend_instance,
+            owner="flrw_pipeline._run_chunk_shared_bg",
+        )
+        out.append(_run_context(context))
     return out
 
 
@@ -853,6 +2042,32 @@ def _worker_task_chunk(k_values: Sequence[float]) -> list[BianchiTransferFunctio
     )
 
 
+def _worker_task_bias_pair_chunk(
+    k_and_target_values: Sequence[tuple[float, float]],
+) -> list[tuple[BianchiTransferFunctions, BianchiTransferFunctions]]:  # pragma: no cover
+    """Worker-side bias-subtraction chunk.
+
+    Each input pair is ``(k_mpc, target_b_k_sq)``. The worker runs the
+    bias and target solves for each k through one shared-background
+    context, preserving the exact same per-run equations while avoiding
+    duplicate background/visibility/backend construction when workers
+    are the limiting resource.
+    """
+    assert _WORKER_SPECIES is not None, "worker globals not initialized"
+    assert _WORKER_CONFIG is not None, "worker config not initialized"
+    specs: list[tuple[float, float]] = []
+    for k_mpc, target_b_k_sq in k_and_target_values:
+        specs.append((float(k_mpc), 0.0))
+        specs.append((float(k_mpc), float(target_b_k_sq)))
+    raw = _run_chunk_shared_bg_for_specs(
+        _WORKER_SPECIES,
+        specs,
+        cfg=_WORKER_CONFIG,
+        bianchi_type=_WORKER_BIANCHI_TYPE,
+    )
+    return [(raw[2 * i], raw[2 * i + 1]) for i in range(len(k_and_target_values))]
+
+
 def compute_transfer_function_grid(
     species: "SpeciesBackgroundRegistry",
     k_grid_mpc: Sequence[float] | np.ndarray,
@@ -958,9 +2173,16 @@ def compute_transfer_function_grid(
 
     try:
         if use_chunking:
-            # Split k-grid into ~even chunks across workers.
+            # Split k-grid into chunks. The default preserves the
+            # historical one-chunk-per-worker behavior; k_chunk_size lets
+            # large grids use smaller chunks for better load balancing.
             chunks = [
-                chunk.tolist() for chunk in np.array_split(k_array, effective)
+                [float(k) for k in chunk]
+                for chunk in _split_work_chunks(
+                    k_array,
+                    worker_count=effective,
+                    chunk_size=cfg.k_chunk_size,
+                )
             ]
             chunks = [chunk for chunk in chunks if chunk]
             with _cf.ProcessPoolExecutor(
@@ -1016,23 +2238,58 @@ def _compute_transfer_function_grid_bias_subtracted(
     """
     global _WORKER_SPECIES, _WORKER_CONFIG, _WORKER_BIANCHI_TYPE
 
-    # Build the (k, b_k_sq) task pairs. Per-k b_k_sq is resolved in the
-    # parent process (handles callable primordial_b_k_sq_fn correctly
-    # under ProcessPoolExecutor; workers only see floats).
-    tasks: list[tuple[float, float]] = []
+    # Build concrete (k, target_b_k_sq) pairs in the parent process
+    # (handles callable primordial_b_k_sq_fn correctly under
+    # ProcessPoolExecutor; workers only see floats).
+    target_pairs: list[tuple[float, float]] = []
     for k_mpc in k_array:
         per_k_target = _resolve_primordial_b_k_sq(cfg, float(k_mpc))
-        tasks.append((float(k_mpc), 0.0))  # bias — seed-independent
-        tasks.append((float(k_mpc), per_k_target))
+        target_pairs.append((float(k_mpc), per_k_target))
 
     _WORKER_SPECIES = species
     _WORKER_CONFIG = cfg
     _WORKER_BIANCHI_TYPE = bianchi_type
 
     try:
-        if effective == 1:
-            raw_results = [_worker_task_bias_pair(task) for task in tasks]
+        # If workers are the limiting resource, keep each k's bias and
+        # target solve in the same shared-background chunk. If there are
+        # enough workers to run all 2*N solves concurrently, retain the
+        # old per-run dispatch to minimize wall time.
+        use_pair_chunking = int(effective) <= len(target_pairs)
+        if use_pair_chunking:
+            worker_count = max(1, min(int(effective), len(target_pairs)))
+            pair_chunks = [
+                [(float(k), float(target)) for k, target in chunk]
+                for chunk in _split_work_chunks(
+                    target_pairs,
+                    worker_count=worker_count,
+                    chunk_size=cfg.k_chunk_size,
+                )
+            ]
+            pair_chunks = [chunk for chunk in pair_chunks if len(chunk) > 0]
+            worker_count = max(1, min(worker_count, len(pair_chunks)))
+            if effective == 1:
+                pair_results = [
+                    pair
+                    for chunk in pair_chunks
+                    for pair in _worker_task_bias_pair_chunk(chunk)
+                ]
+            else:
+                import multiprocessing as _mp
+
+                ctx = _mp.get_context("fork")
+                with _cf.ProcessPoolExecutor(
+                    max_workers=worker_count,
+                    mp_context=ctx,
+                    initializer=_worker_init,
+                ) as exe:
+                    chunk_results = list(exe.map(_worker_task_bias_pair_chunk, pair_chunks))
+                pair_results = [pair for chunk in chunk_results for pair in chunk]
         else:
+            tasks: list[tuple[float, float]] = []
+            for k_mpc, per_k_target in target_pairs:
+                tasks.append((float(k_mpc), 0.0))
+                tasks.append((float(k_mpc), float(per_k_target)))
             import multiprocessing as _mp
 
             ctx = _mp.get_context("fork")
@@ -1042,16 +2299,17 @@ def _compute_transfer_function_grid_bias_subtracted(
                 initializer=_worker_init,
             ) as exe:
                 raw_results = list(exe.map(_worker_task_bias_pair, tasks))
+            pair_results = [
+                (raw_results[2 * i], raw_results[2 * i + 1])
+                for i in range(len(target_pairs))
+            ]
     finally:
         _WORKER_SPECIES = None
         _WORKER_CONFIG = None
         _WORKER_BIANCHI_TYPE = "I"
 
-    # Pair up the results: (bias_k, target_k) per k in order.
     out: list[BianchiTransferFunctions] = []
-    for i in range(len(k_array)):
-        bias_tf = raw_results[2 * i]
-        target_tf = raw_results[2 * i + 1]
+    for bias_tf, target_tf in pair_results:
         out.append(_subtract_transfer_functions(target_tf, bias_tf))
     return out
 
@@ -1132,9 +2390,9 @@ def compute_flrw_cl_tt(
         bianchi_type=bianchi_type,
         n_workers=n_workers,
     )
-    transfer_fn = _transfer_fn_from_grid(k_array, results)
-    cl_tt = assemble_cl_TT_isotropic(transfer_fn, assembly_config)
-    cl_ee = assemble_cl_EE_isotropic(transfer_fn, assembly_config)
+    cl_tt, cl_ee = assemble_cl_TT_EE_isotropic_from_grid(
+        results, assembly_config
+    )
     return {
         "k_grid_mpc": k_array,
         "transfer_functions": results,
@@ -1332,9 +2590,9 @@ def compute_flrw_d_ell_linear_probe(
             "the transfer-function lookup is keyed on k values"
         )
 
-    transfer_fn = _transfer_fn_from_grid(k_array, alpha_list)
-    cl_tt = assemble_cl_TT_isotropic(transfer_fn, assembly_config)
-    cl_ee = assemble_cl_EE_isotropic(transfer_fn, assembly_config)
+    cl_tt, cl_ee = assemble_cl_TT_EE_isotropic_from_grid(
+        alpha_list, assembly_config
+    )
     t_cmb_K = float(assembly_config.T_CMB_K)
     return {
         "k_grid_mpc": k_array,

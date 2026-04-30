@@ -196,6 +196,12 @@ class TypeIIKernel(LegacyDelegationKernel):
             "seed_amplitude": nil_seed_amplitude(self.default_half_width),
             "truncation_half_width": float(self.default_half_width),
             "boundary_edge": "dirichlet_at_r_equals_L",
+            "nil_transport_status": legacy.get("nil_transport_status"),
+            "nil_structure_scale": legacy.get("nil_structure_scale"),
+            "nil_shear_max": legacy.get("nil_shear_max"),
+            "nil_phase_max": legacy.get("nil_phase_max"),
+            "nil_mode_mixing_norm": legacy.get("nil_mode_mixing_norm", 0.0),
+            "polarization_basis_transport": legacy.get("polarization_basis_transport"),
             "residual_values": residuals,
             "forbidden_shortcut_tracked": list(self.metadata.forbidden_shortcuts),
         }
@@ -251,6 +257,12 @@ class TypeIIKernel(LegacyDelegationKernel):
                 "bessel_first_zero_j0": bundle.metadata.get("bessel_first_zero_j0"),
                 "truncation_half_width": bundle.metadata.get("truncation_half_width"),
                 "boundary_edge": bundle.metadata.get("boundary_edge"),
+                "nil_transport_status": bundle.metadata.get("nil_transport_status"),
+                "nil_structure_scale": bundle.metadata.get("nil_structure_scale"),
+                "nil_shear_max": bundle.metadata.get("nil_shear_max"),
+                "nil_phase_max": bundle.metadata.get("nil_phase_max"),
+                "nil_mode_mixing_norm": bundle.metadata.get("nil_mode_mixing_norm"),
+                "polarization_basis_transport": bundle.metadata.get("polarization_basis_transport"),
             },
         )
 

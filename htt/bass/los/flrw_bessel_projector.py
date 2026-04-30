@@ -472,6 +472,42 @@ def build_polarization_source(
     return -(_SQRT6 / 4.0) * g_arr * pi_arr
 
 
+def build_scalar_sources_pair(
+    eta_grid: np.ndarray,
+    sources: FLRWSourceTerms,
+    visibility_g: EtaCallable,
+    kappa_of_eta: EtaCallable,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """Assemble ``(S_T, S_E)`` together on one η grid.
+
+    This is the paired equivalent of ``build_temperature_source`` plus
+    ``build_polarization_source``. It evaluates the shared visibility
+    and quadrupole source once and then forms both arrays with the same
+    algebra, so the result is identical for pure source callables while
+    avoiding duplicate interpolation in production LoS runs.
+    """
+    eta_grid = np.asarray(eta_grid, dtype=float)
+    if eta_grid.ndim != 1 or eta_grid.size < 2:
+        raise ValueError("eta_grid must be 1-D with >= 2 entries")
+
+    g_arr = np.asarray(visibility_g(eta_grid), dtype=float)
+    kappa_arr = np.asarray(kappa_of_eta(eta_grid), dtype=float)
+    theta0_arr = np.asarray(sources.theta_0(eta_grid), dtype=float)
+    psi_arr = np.asarray(sources.psi(eta_grid), dtype=float)
+    phi_psi_dot_arr = np.asarray(
+        sources.phi_dot_plus_psi_dot(eta_grid), dtype=float,
+    )
+    vb_arr = np.asarray(sources.v_b(eta_grid), dtype=float)
+    pi_arr = np.asarray(sources.pi(eta_grid), dtype=float)
+
+    sw_polter = g_arr * (theta0_arr + psi_arr + 0.25 * pi_arr)
+    isw = np.exp(-kappa_arr) * phi_psi_dot_arr
+    doppler = np.gradient(g_arr * vb_arr, eta_grid, edge_order=2)
+    source_T = sw_polter + isw + doppler
+    source_E = -(_SQRT6 / 4.0) * g_arr * pi_arr
+    return source_T, source_E
+
+
 # ============================================================================
 # Section 6 — Quadrature wrapper
 # ============================================================================
@@ -489,6 +525,32 @@ def _integrate(
                 f"(even-length input: {eta_grid.size})"
             )
         return float(scipy_simpson(integrand, x=eta_grid))
+    raise ValueError(f"unknown quadrature {quadrature!r}")
+
+
+def _integrate_rows(
+    integrand_rows: np.ndarray,
+    eta_grid: np.ndarray,
+    quadrature: str,
+) -> np.ndarray:
+    """Apply the configured η-quadrature to rows shaped ``(n_row, n_eta)``."""
+    rows = np.asarray(integrand_rows, dtype=float)
+    if rows.ndim != 2:
+        raise ValueError("integrand_rows must be 2-D with shape (n_row, n_eta)")
+    if rows.shape[1] != eta_grid.size:
+        raise ValueError(
+            "integrand row width must match eta_grid size "
+            f"({rows.shape[1]} != {eta_grid.size})"
+        )
+    if quadrature == "trapezoid":
+        return np.asarray(np.trapezoid(rows, x=eta_grid, axis=1), dtype=float)
+    if quadrature == "simpson":
+        if eta_grid.size % 2 == 0:
+            raise ValueError(
+                "Simpson's rule requires an odd number of samples "
+                f"(even-length input: {eta_grid.size})"
+            )
+        return np.asarray(scipy_simpson(rows, x=eta_grid, axis=1), dtype=float)
     raise ValueError(f"unknown quadrature {quadrature!r}")
 
 
@@ -579,6 +641,86 @@ def project_polarization_transfer(
         integrand = source_E_array * proj
         Delta_E[ell] = _integrate(integrand, eta_grid, config.quadrature)
     return Delta_E
+
+
+def project_scalar_transfer_pair(
+    k: float,
+    source_T_array: np.ndarray,
+    source_E_array: np.ndarray,
+    eta_grid: np.ndarray,
+    config: FLRWBesselConfig,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Compute scalar Δ_ℓ^T and Δ_ℓ^E together for one k.
+
+    This is a physics-preserving fast path for callers that need both
+    transfer arrays on the same η grid. It validates the shared inputs
+    once, builds ``kr = k(η_0-η)`` once, and reuses each ``j_ℓ(kr)``
+    evaluation for the temperature integral and the large-kr part of
+    the E-mode kernel. The returned arrays use the same quadrature as
+    calling ``project_temperature_transfer`` and
+    ``project_polarization_transfer`` separately; row-vectorized
+    accumulation can differ from the separate path only at double
+    precision round-off.
+    """
+    if k < 0 or not np.isfinite(k):
+        raise ValueError(f"k must be non-negative finite, got {k}")
+    eta_grid = np.asarray(eta_grid, dtype=float)
+    source_T_array = np.asarray(source_T_array, dtype=float)
+    source_E_array = np.asarray(source_E_array, dtype=float)
+    if source_T_array.shape != eta_grid.shape:
+        raise ValueError("source_T_array and eta_grid must have matching shapes")
+    if source_E_array.shape != eta_grid.shape:
+        raise ValueError("source_E_array and eta_grid must have matching shapes")
+    if np.any(eta_grid < 0) or np.any(eta_grid > config.eta_0_mpc):
+        raise ValueError(f"eta_grid must lie in [0, {config.eta_0_mpc}]")
+    if not np.all(np.diff(eta_grid) >= 0):
+        raise ValueError("eta_grid must be monotonically non-decreasing")
+
+    kr_array = k * (config.eta_0_mpc - eta_grid)
+    ell_values = np.arange(config.ell_max + 1, dtype=int)[:, None]
+    jl_table = scipy_special.spherical_jn(ell_values, kr_array[None, :])
+
+    delta_T = np.zeros(config.ell_max + 1, dtype=float)
+    delta_T[:] = _integrate_rows(
+        source_T_array[None, :] * jl_table,
+        eta_grid,
+        config.quadrature,
+    )
+
+    delta_E = np.zeros(config.ell_max + 1, dtype=float)
+    if config.ell_max >= 2:
+        proj = np.zeros_like(jl_table, dtype=float)
+        small_mask = kr_array < config.bessel_kr_small_cutoff
+        large_mask = ~small_mask
+        ell_arr = np.arange(2, config.ell_max + 1, dtype=float)
+        prefactors = np.sqrt(
+            (ell_arr - 1.0) * ell_arr * (ell_arr + 1.0) * (ell_arr + 2.0)
+        )
+        if np.any(large_mask):
+            kr_large = kr_array[large_mask]
+            proj[2:, large_mask] = (
+                prefactors[:, None]
+                * jl_table[2:, large_mask]
+                / (kr_large[None, :] ** 2)
+            )
+        if np.any(small_mask):
+            kr_small = kr_array[small_mask]
+            for ell in range(2, config.ell_max + 1):
+                prefactor = prefactors[ell - 2]
+                denom = _double_factorial_odd(ell)
+                if ell == 2:
+                    proj[ell, small_mask] = prefactor / denom
+                else:
+                    proj[ell, small_mask] = (
+                        prefactor * (kr_small ** (ell - 2)) / denom
+                    )
+        delta_E[2:] = _integrate_rows(
+            source_E_array[None, :] * proj[2:],
+            eta_grid,
+            config.quadrature,
+        )
+
+    return delta_T, delta_E
 
 
 # ============================================================================

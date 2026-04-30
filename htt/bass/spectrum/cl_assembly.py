@@ -87,7 +87,7 @@ d2_convention.rs (bass_rs SSOT): C_1 = 1.753e7, C_2 = 6.825e5.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Callable, Optional, Union
+from typing import Callable, Optional, Sequence, Union
 
 import numpy as np
 from scipy.integrate import simpson
@@ -248,6 +248,31 @@ def _integrate_log_k(
     raise ValueError(f"unknown quadrature: {quadrature!r}")
 
 
+def _integrate_log_k_columns(
+    integrand_on_k_by_ell: np.ndarray,
+    k_grid: np.ndarray,
+    quadrature: str,
+) -> np.ndarray:
+    """Vectorized ``∫ d ln k`` for arrays shaped ``(n_k, n_ell)``."""
+    arr = np.asarray(integrand_on_k_by_ell, dtype=float)
+    k = np.asarray(k_grid, dtype=float)
+    if arr.ndim != 2:
+        raise ValueError(
+            "integrand_on_k_by_ell must be 2-D with shape (n_k, n_ell)"
+        )
+    if arr.shape[0] != k.size:
+        raise ValueError(
+            "integrand first axis must match k_grid size "
+            f"({arr.shape[0]} != {k.size})"
+        )
+    ln_k = np.log(k)
+    if quadrature == "trapezoid":
+        return np.asarray(np.trapezoid(arr, x=ln_k, axis=0), dtype=float)
+    if quadrature == "simpson":
+        return np.asarray(simpson(arr, x=ln_k, axis=0), dtype=float)
+    raise ValueError(f"unknown quadrature: {quadrature!r}")
+
+
 # ============================================================================
 # Section 4 - Isotropic (FLRW) C_ℓ assembly
 # ============================================================================
@@ -282,14 +307,11 @@ def assemble_cl_TT_isotropic(
     # Primordial weighting
     p_k = primordial_power_spectrum(config.k_grid, config)  # shape (n_k,)
 
-    # Assemble per ℓ
-    cl = np.zeros(n_ell)
-    for ell in range(n_ell):
-        integrand = p_k * delta_T_m0[:, ell] ** 2
-        cl[ell] = 4.0 * np.pi * _integrate_log_k(
-            integrand, config.k_grid, config.quadrature,
-        )
-    return cl
+    return 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * delta_T_m0 ** 2,
+        config.k_grid,
+        config.quadrature,
+    )
 
 
 def assemble_cl_EE_isotropic(
@@ -312,13 +334,91 @@ def assemble_cl_EE_isotropic(
 
     p_k = primordial_power_spectrum(config.k_grid, config)
 
-    cl = np.zeros(n_ell)
-    for ell in range(n_ell):
-        integrand = p_k * delta_E_m0[:, ell] ** 2
-        cl[ell] = 4.0 * np.pi * _integrate_log_k(
-            integrand, config.k_grid, config.quadrature,
+    return 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * delta_E_m0 ** 2,
+        config.k_grid,
+        config.quadrature,
+    )
+
+
+def assemble_cl_TT_EE_isotropic(
+    transfer_fn: TransferFunctionAtK,
+    config: CLAssemblyConfig,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Assemble isotropic TT and EE spectra in one k-grid pass.
+
+    This is a physics-preserving paired path for callers that need both
+    spectra. It evaluates ``transfer_fn(k)`` once per k, then applies
+    the same primordial weighting and log-k quadrature used by
+    ``assemble_cl_TT_isotropic`` and ``assemble_cl_EE_isotropic``.
+    """
+    n_ell = config.ell_max + 1
+    n_k = config.k_grid.size
+
+    delta_T_m0 = np.zeros((n_k, n_ell))
+    delta_E_m0 = np.zeros((n_k, n_ell))
+    for ik, k in enumerate(config.k_grid):
+        tf = transfer_fn(float(k))
+        dT = tf.delta_T_m0
+        dE = tf.delta_E_m0
+        delta_T_m0[ik, :min(n_ell, dT.size)] = dT[:n_ell]
+        delta_E_m0[ik, :min(n_ell, dE.size)] = dE[:n_ell]
+
+    p_k = primordial_power_spectrum(config.k_grid, config)
+
+    cl_tt = 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * delta_T_m0 ** 2,
+        config.k_grid,
+        config.quadrature,
+    )
+    cl_ee = 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * delta_E_m0 ** 2,
+        config.k_grid,
+        config.quadrature,
+    )
+    return cl_tt, cl_ee
+
+
+def assemble_cl_TT_EE_isotropic_from_grid(
+    transfer_grid: Sequence[BianchiTransferFunctions],
+    config: CLAssemblyConfig,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Assemble isotropic TT and EE from a precomputed transfer grid.
+
+    ``transfer_grid[i]`` is interpreted as the transfer function at
+    ``config.k_grid[i]``. This avoids the callable/dict lookup layer in
+    pipelines that already ran the k-sweep and hold the transfer table
+    in memory.
+    """
+    n_ell = config.ell_max + 1
+    n_k = config.k_grid.size
+    if len(transfer_grid) != n_k:
+        raise ValueError(
+            "transfer_grid length must match config.k_grid size "
+            f"({len(transfer_grid)} != {n_k})"
         )
-    return cl
+
+    delta_T_m0 = np.zeros((n_k, n_ell))
+    delta_E_m0 = np.zeros((n_k, n_ell))
+    for ik, tf in enumerate(transfer_grid):
+        dT = tf.delta_T_m0
+        dE = tf.delta_E_m0
+        delta_T_m0[ik, :min(n_ell, dT.size)] = dT[:n_ell]
+        delta_E_m0[ik, :min(n_ell, dE.size)] = dE[:n_ell]
+
+    p_k = primordial_power_spectrum(config.k_grid, config)
+
+    cl_tt = 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * delta_T_m0 ** 2,
+        config.k_grid,
+        config.quadrature,
+    )
+    cl_ee = 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * delta_E_m0 ** 2,
+        config.k_grid,
+        config.quadrature,
+    )
+    return cl_tt, cl_ee
 
 
 def assemble_cl_TE_isotropic(
@@ -343,13 +443,11 @@ def assemble_cl_TE_isotropic(
 
     p_k = primordial_power_spectrum(config.k_grid, config)
 
-    cl = np.zeros(n_ell)
-    for ell in range(n_ell):
-        integrand = p_k * delta_T_m0[:, ell] * delta_E_m0[:, ell]
-        cl[ell] = 4.0 * np.pi * _integrate_log_k(
-            integrand, config.k_grid, config.quadrature,
-        )
-    return cl
+    return 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * delta_T_m0 * delta_E_m0,
+        config.k_grid,
+        config.quadrature,
+    )
 
 
 # ============================================================================
@@ -385,17 +483,15 @@ def assemble_cl_TT_bianchi(
 
     p_k = primordial_power_spectrum(config.k_grid, config)
 
-    cl = np.zeros(n_ell)
-    for ell in range(n_ell):
-        integrand = p_k * (
-            delta_T_m0[:, ell] ** 2
-            + delta_T_mp2[:, ell] ** 2
-            + delta_T_mn2[:, ell] ** 2
-        )
-        cl[ell] = 4.0 * np.pi * _integrate_log_k(
-            integrand, config.k_grid, config.quadrature,
-        )
-    return cl
+    return 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * (
+            delta_T_m0 ** 2
+            + delta_T_mp2 ** 2
+            + delta_T_mn2 ** 2
+        ),
+        config.k_grid,
+        config.quadrature,
+    )
 
 
 def assemble_cl_EE_bianchi(
@@ -417,17 +513,15 @@ def assemble_cl_EE_bianchi(
 
     p_k = primordial_power_spectrum(config.k_grid, config)
 
-    cl = np.zeros(n_ell)
-    for ell in range(n_ell):
-        integrand = p_k * (
-            delta_E_m0[:, ell] ** 2
-            + delta_E_mp2[:, ell] ** 2
-            + delta_E_mn2[:, ell] ** 2
-        )
-        cl[ell] = 4.0 * np.pi * _integrate_log_k(
-            integrand, config.k_grid, config.quadrature,
-        )
-    return cl
+    return 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * (
+            delta_E_m0 ** 2
+            + delta_E_mp2 ** 2
+            + delta_E_mn2 ** 2
+        ),
+        config.k_grid,
+        config.quadrature,
+    )
 
 
 def assemble_cl_TE_bianchi(
@@ -459,17 +553,15 @@ def assemble_cl_TE_bianchi(
 
     p_k = primordial_power_spectrum(config.k_grid, config)
 
-    cl = np.zeros(n_ell)
-    for ell in range(n_ell):
-        integrand = p_k * (
-            T_m0[:, ell] * E_m0[:, ell]
-            + T_mp2[:, ell] * E_mp2[:, ell]
-            + T_mn2[:, ell] * E_mn2[:, ell]
-        )
-        cl[ell] = 4.0 * np.pi * _integrate_log_k(
-            integrand, config.k_grid, config.quadrature,
-        )
-    return cl
+    return 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * (
+            T_m0 * E_m0
+            + T_mp2 * E_mp2
+            + T_mn2 * E_mn2
+        ),
+        config.k_grid,
+        config.quadrature,
+    )
 
 
 def assemble_cl_BB_bianchi(

@@ -15,6 +15,7 @@ from bass.forward import (
     solver_core_output_from_payload,
     solver_core_output_to_payload,
 )
+from bass.forward.ver2_solver_output import _build_lowell_source_builder
 from bass.hierarchy.integrator import IntegrationResult, IntegratorConfig
 from bass.los import PropagatorMode, SourcePropagatorConfig
 from bass.runtime import (
@@ -28,6 +29,7 @@ from bass.runtime import (
     SolverTier,
 )
 from bass.species.registry import SpeciesBackgroundRegistry
+from bass.validation.publication_readiness import evaluate_publication_claim
 
 
 def _manifest(**overrides) -> ArtifactManifest:
@@ -310,16 +312,24 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
         k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
     )
     assert output.metadata["propagator_ready"] is True
-    assert output.metadata["family_backend_status"] == "restricted_subset"
+    assert output.metadata["family_backend_status"] == "full_mode"
     assert output.metadata["propagator_readiness"] == "approximate_family_kernel"
     assert output.metadata["propagator_exactness"] == "approximate_family_kernel"
     assert output.metadata["covariance_readiness"] == "proxy"
     assert output.metadata["source_builder_scope"] == "theta0_plus_combined_polter_visibility_lowell_bridge"
     assert output.metadata["propagator_mode"] == "anisotropic_forward"
     assert output.metadata["source_propagator_status"] == "approximate"
-    assert output.metadata["source_propagator_realization"] == "class_b_helical_matrix_approx"
+    assert output.metadata["source_propagator_realization"] == "type_viih_open_helical_projection"
+    assert output.metadata["source_propagator_exactness"] == "algebraic_proxy_family_kernel"
+    assert output.metadata["source_propagator_publication_output_claim_allowed"] is False
+    assert output.metadata["source_propagator_statistics_claim_allowed"] is False
     assert output.metadata["source_builder_combined_polter"] is True
     assert output.metadata["source_builder_visibility_weighted_polter"] is True
+    assert output.metadata["source_builder_scale_factor_owner"] == "integration_result"
+    assert output.metadata["source_builder_runtime_z_min"] == pytest.approx(499.0)
+    assert output.metadata["source_builder_runtime_z_max"] == pytest.approx(999.0)
+    assert output.metadata["source_builder_visibility_max"] > 0.0
+    assert output.metadata["source_builder_visibility_nonzero_sample_count"] > 0
     assert output.metadata["visibility_reionization_mode"] == "tanh"
     assert output.metadata["source_builder_low_z_probe_status"] == "not_covered_by_runtime_domain"
     assert output.metadata["reionization_source_claim_status"] == "unavailable_due_to_runtime_domain"
@@ -330,6 +340,27 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
     assert output.alm_T["quadrature_rule"] == "gauss_legendre_x_uniform_phi_tensor_product"
     assert np.asarray(output.alm_T["sphere_samples"], dtype=np.float64).shape == (435,)
     assert np.asarray(output.alm_T["values"], dtype=np.float64).shape == ((output.alm_T["ell_max"] + 1) ** 2,)
+
+
+def test_lowell_source_builder_exports_baryon_velocity_for_doppler_source() -> None:
+    result = _synthetic_result()
+    v_b = np.linspace(-0.2, 0.1, result.eta.size)
+    result.baryon_local_history = np.column_stack(
+        [np.zeros(result.eta.size, dtype=np.float64), v_b]
+    )
+
+    source_builder, metadata = _build_lowell_source_builder(
+        result,
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        visibility_fn=lambda eta: 2.0,
+    )
+    eta_probe = float(result.eta[3])
+    sample = source_builder(eta_probe, 1.0e-2)
+
+    assert sample["v_b_m0"] == pytest.approx(v_b[3])
+    assert sample["g_v_b_m0"] == pytest.approx(2.0 * v_b[3])
+    assert metadata["source_builder_doppler_status"] == "baryon_local_history_slot1"
+    assert metadata["source_builder_doppler_nonzero_sample_count"] == result.eta.size
 
 
 def test_build_solver_core_output_from_native_result_attaches_native_provenance() -> None:
@@ -368,7 +399,10 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["source_propagator_status"] == "approximate"
     assert output.metadata["source_propagator_requested_status"] == "approximate"
     assert output.metadata["source_propagator_rotation_status"] == "approximate"
-    assert output.metadata["source_propagator_realization"] == "class_b_helical_matrix_approx"
+    assert output.metadata["source_propagator_realization"] == "type_viih_open_helical_projection"
+    assert output.metadata["source_propagator_exactness"] == "algebraic_proxy_family_kernel"
+    assert output.metadata["source_propagator_publication_output_claim_allowed"] is False
+    assert output.metadata["source_propagator_statistics_claim_allowed"] is False
     assert output.metadata["source_builder_combined_polter"] is True
     assert output.metadata["source_builder_visibility_weighted_polter"] is True
     assert output.metadata["bianchi_branch"] == "orthogonal"
@@ -455,6 +489,70 @@ def test_native_output_promotes_auxiliary_b_mode_runtime_payload() -> None:
     assert output.metadata["canonical_projection_b_history_mode_labels"] == ["m0"]
     assert output.metadata["layout_state_history_sample_count"] == 0
     assert output.metadata["layout_state_history_size"] == 0
+    assert output.metadata["b_mode_projector_status"] == "not_run_b_history_eta_mismatch"
+
+
+def test_native_output_with_matching_b_history_opens_polarization_publication_gate() -> None:
+    result = _synthetic_result()
+    size = (_controls().multipole_cutoff + 1) ** 2
+    b_history = np.zeros((result.eta.size, size), dtype=np.float64)
+    b_history[:, 7] = np.linspace(0.0, 2.5e-6, result.eta.size)
+    b_coefficients = b_history[-1].copy()
+    canonical_projection = SimpleNamespace(
+        hierarchy_state=SimpleNamespace(
+            photon_polarization_block={
+                "B": b_coefficients,
+                "eta": np.asarray(result.eta, dtype=np.float64),
+                "B_history": b_history,
+                "mode_label_blocks": {"m0": b_coefficients},
+                "mode_label_history": {"m0": b_history},
+            }
+        ),
+        sector_status={"ph_B": "layout_operator_auxiliary_b_mode_history"},
+        metadata={
+            "projection_mode": "single_live_mode_label_with_layout_auxiliary_local_matter_blocks",
+            "b_history_available": True,
+            "b_history_sample_count": result.eta.size,
+            "b_mode_labels": ["m0"],
+            "b_history_mode_labels": ["m0"],
+            "resolved_sector_order": ("ph_I", "ph_E", "ph_B", "nu_I", "src"),
+            "matter_block_labels": {},
+        },
+        state_vector=np.zeros(size * 7, dtype=np.float64),
+        covered_mode_labels=("m0",),
+        zero_filled_mode_labels=(),
+    )
+    output = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="VII_h",
+        result=result,
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_executable",
+            run_label="tier-b-native-b-projector",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+        canonical_projection=canonical_projection,
+        thomson_mode="electron_frame_exact_wrapper",
+    )
+    assert output.metadata["exact_thomson_authority_path"] is True
+    assert output.metadata["b_mode_runtime_available"] is True
+    assert output.metadata["b_mode_output_support"] == "wigner_d_path_b"
+    assert output.metadata["b_mode_projector_status"] == "computed_wigner_d_path_b"
+    assert output.metadata["b_mode_projector_nonzero"] is True
+    assert output.metadata["b_mode_projector_norm"] > 0.0
+    decision = evaluate_publication_claim(
+        "full_anisotropic_polarization_output",
+        output_metadata=output.metadata,
+    )
+    assert decision.allowed is True
 
 
 def test_native_output_blocks_readiness_when_backend_verification_bundle_is_unresolved() -> None:
@@ -525,6 +623,9 @@ def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backe
     assert output.metadata["source_propagator_requested_status"] == "approximate"
     assert output.metadata["source_propagator_rotation_status"] == "disabled"
     assert output.metadata["source_propagator_realization"] == "bianchi_i_matrix_exact"
+    assert output.metadata["source_propagator_exactness"] == "exact_type_i_matrix"
+    assert output.metadata["source_propagator_publication_output_claim_allowed"] is True
+    assert output.metadata["source_propagator_statistics_claim_allowed"] is False
     assert output.metadata["bianchi_branch"] == "orthogonal"
     assert output.metadata["bianchi_class_label"] == "A"
     assert output.metadata["global_tilt_contract"] == "orthogonal_branch_zero_global_tilt"
@@ -580,9 +681,16 @@ def test_native_output_records_reionization_low_z_source_delta() -> None:
 @pytest.mark.parametrize(
     ("bianchi_type", "expected_realization"),
     [
-        ("V", "class_b_open_matrix_approx"),
-        ("VII_0", "class_a_helical_matrix_approx"),
-        ("VIII", "class_a_semisimple_matrix_approx"),
+        ("II", "type_ii_nilpotent_projection"),
+        ("III", "type_iii_hyperbolic_projection"),
+        ("IV", "type_iv_solvable_projection"),
+        ("V", "type_v_open_hyperbolic_projection"),
+        ("VI_0", "type_vi0_directional_projection"),
+        ("VI_h", "type_vih_negative_h_projection"),
+        ("VII_0", "type_vii0_helical_projection"),
+        ("VII_h", "type_viih_open_helical_projection"),
+        ("VIII", "type_viii_sl2r_noncompact_projection"),
+        ("IX", "type_ix_compact_su2_projection"),
     ],
 )
 def test_native_output_uses_algebra_aware_non_type_i_family(
@@ -608,6 +716,161 @@ def test_native_output_uses_algebra_aware_non_type_i_family(
         k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
     )
     assert output.metadata["source_propagator_realization"] == expected_realization
+    if bianchi_type == "II":
+        assert output.metadata["source_propagator_nil_transport_status"] == (
+            "type_ii_nilpotent_projection"
+        )
+        assert output.metadata["source_propagator_polarization_basis_transport"] == (
+            "spin2_nil_shear_rotation"
+        )
+        assert output.metadata["source_propagator_nil_structure_scale"] > 0.0
+        assert output.metadata["source_propagator_nil_mode_mixing_norm"] > 0.0
+    if bianchi_type == "III":
+        assert output.metadata["source_propagator_typeiii_transport_status"] == (
+            "type_iii_hyperbolic_projection"
+        )
+        assert output.metadata["source_propagator_typeiii_branch_flag"] == "VI_-1_special"
+        assert output.metadata["source_propagator_polarization_basis_transport"] == (
+            "spin2_hyperbolic_branch_rotation"
+        )
+        assert output.metadata["source_propagator_typeiii_h_parameter"] == pytest.approx(-1.0)
+        assert output.metadata["source_propagator_typeiii_hyperbolic_scale"] > 0.0
+        assert output.metadata["source_propagator_typeiii_twist_scale"] > 0.0
+        assert 0.0 < output.metadata["source_propagator_typeiii_open_attenuation_min"] < 1.0
+        assert output.metadata["source_propagator_typeiii_mode_mixing_norm"] > 0.0
+    if bianchi_type == "IV":
+        assert output.metadata["source_propagator_typeiv_transport_status"] == (
+            "type_iv_solvable_projection"
+        )
+        assert output.metadata["source_propagator_typeiv_coordinate_order"] == (
+            "n3_dominated_then_a_twist"
+        )
+        assert output.metadata["source_propagator_polarization_basis_transport"] == (
+            "spin2_solvable_edge_rotation"
+        )
+        assert output.metadata["source_propagator_typeiv_structure_scale"] > 0.0
+        assert output.metadata["source_propagator_typeiv_n3_scale"] > 0.0
+        assert output.metadata["source_propagator_typeiv_twist_scale"] > 0.0
+        assert 0.0 < output.metadata["source_propagator_typeiv_privileged_weight"] < 1.0
+        assert 0.0 < output.metadata["source_propagator_typeiv_edge_attenuation_min"] < 1.0
+        assert output.metadata["source_propagator_typeiv_mode_mixing_norm"] > 0.0
+    if bianchi_type == "V":
+        assert output.metadata["source_propagator_typev_transport_status"] == (
+            "type_v_open_hyperbolic_projection"
+        )
+        assert output.metadata["source_propagator_typev_chart_metadata"] == "open_chart"
+        assert output.metadata["source_propagator_polarization_basis_transport"] == (
+            "open_hyperbolic_parallel_transport"
+        )
+        assert output.metadata["source_propagator_typev_curvature_scale"] > 0.0
+        assert 0.0 < output.metadata["source_propagator_typev_open_envelope_min"] <= 1.0
+        assert 0.0 < output.metadata["source_propagator_typev_open_envelope_max"] <= 1.0
+        assert output.metadata["source_propagator_typev_open_anchor_deviation_max"] > 0.0
+        assert output.metadata["source_propagator_typev_mode_mixing_norm"] == pytest.approx(0.0)
+    if bianchi_type == "VI_0":
+        assert output.metadata["source_propagator_vi0_transport_status"] == (
+            "type_vi0_directional_projection"
+        )
+        assert output.metadata["source_propagator_polarization_basis_transport"] == (
+            "parity_even_directional_transport"
+        )
+        assert output.metadata["source_propagator_vi0_structure_scale"] > 0.0
+        assert output.metadata["source_propagator_vi0_mode_mixing_norm"] > 0.0
+    if bianchi_type == "VI_h":
+        assert output.metadata["source_propagator_vih_transport_status"] == (
+            "type_vih_negative_h_projection"
+        )
+        assert output.metadata["source_propagator_vih_branch_flag"] == "negative_h_branch"
+        assert output.metadata["source_propagator_polarization_basis_transport"] == (
+            "spin2_negative_h_branch_rotation"
+        )
+        assert output.metadata["source_propagator_vih_h_parameter"] < 0.0
+        assert output.metadata["source_propagator_vih_h_parameter"] != pytest.approx(-1.0)
+        assert output.metadata["source_propagator_vih_structure_scale"] > 0.0
+        assert output.metadata["source_propagator_vih_twist_scale"] > 0.0
+        assert 0.0 < output.metadata["source_propagator_vih_h_twist_scale"] < 1.0
+        assert -1.0 < output.metadata["source_propagator_vih_directional_imbalance"] < 1.0
+        assert 0.0 < output.metadata["source_propagator_vih_open_attenuation_min"] < 1.0
+        assert output.metadata["source_propagator_vih_mode_mixing_norm"] > 0.0
+    if bianchi_type == "VII_0":
+        assert output.metadata["source_propagator_helical_transport_status"] == (
+            "type_vii0_helical_projection"
+        )
+        assert output.metadata["source_propagator_polarization_basis_transport"] == (
+            "spin2_helical_rotation"
+        )
+        assert output.metadata["source_propagator_helical_pitch"] > 0.0
+        assert output.metadata["source_propagator_helicity_mode_mixing_norm"] > 0.0
+    if bianchi_type == "VII_h":
+        assert output.metadata["source_propagator_viih_transport_status"] == (
+            "type_viih_open_helical_projection"
+        )
+        assert output.metadata["source_propagator_polarization_basis_transport"] == (
+            "spin2_open_helical_rotation"
+        )
+        assert output.metadata["source_propagator_viih_helical_pitch"] > 0.0
+        assert output.metadata["source_propagator_viih_twist_scale"] > 0.0
+        assert 0.0 < output.metadata["source_propagator_viih_open_attenuation_min"] < 1.0
+        assert output.metadata["source_propagator_viih_mode_mixing_norm"] > 0.0
+    if bianchi_type == "VIII":
+        assert output.metadata["source_propagator_typeviii_transport_status"] == (
+            "type_viii_sl2r_noncompact_projection"
+        )
+        assert output.metadata["source_propagator_typeviii_branch_flag"] == (
+            "noncompact_branch"
+        )
+        assert output.metadata["source_propagator_polarization_basis_transport"] == (
+            "spin2_sl2r_noncompact_rotation"
+        )
+        assert output.metadata["source_propagator_typeviii_structure_scale"] > 0.0
+        assert 0.0 < output.metadata["source_propagator_typeviii_negative_axis_weight"] < 1.0
+        assert -1.0 <= output.metadata["source_propagator_typeviii_positive_axis_split"] <= 1.0
+        assert output.metadata["source_propagator_typeviii_disc_radius_x_eq_tanh_xi"] == pytest.approx(
+            np.tanh(1.5)
+        )
+        assert 0.0 < output.metadata["source_propagator_typeviii_noncompact_attenuation_min"] < 1.0
+        assert output.metadata["source_propagator_typeviii_mode_mixing_norm"] > 0.0
+        assert tuple(output.metadata["source_propagator_typeviii_series_tags"]) == (
+            "trivial",
+            "discrete_positive",
+            "discrete_negative",
+        )
+        assert (
+            output.metadata["source_propagator_typeviii_continuous_series_tag"]
+            == "continuous_principal"
+        )
+    if bianchi_type == "IX":
+        assert output.metadata["source_propagator_typeix_transport_status"] == (
+            "type_ix_compact_su2_projection"
+        )
+        assert output.metadata["source_propagator_typeix_branch_flag"] == "compact_su2_branch"
+        assert output.metadata["source_propagator_polarization_basis_transport"] == (
+            "spin2_compact_su2_rotation"
+        )
+        assert output.metadata["source_propagator_typeix_curvature_scale"] > 0.0
+        assert output.metadata["source_propagator_typeix_positive_axis_anisotropy_split"] == (
+            pytest.approx(0.0)
+        )
+        assert output.metadata["source_propagator_typeix_discrete_j"] == 2
+        assert output.metadata["source_propagator_typeix_spectral_eigenvalue_jj1"] == 6
+        assert output.metadata["source_propagator_typeix_invariant_volume"] == pytest.approx(
+            8.0 * np.pi ** 2
+        )
+        assert output.metadata["source_propagator_typeix_wigner_d_j2_unit_amplitude"] == (
+            pytest.approx(np.sqrt(5.0 / (8.0 * np.pi ** 2)))
+        )
+        assert output.metadata["source_propagator_typeix_compact_phase_max"] > 0.0
+        assert output.metadata["source_propagator_typeix_spectral_envelope_min"] == (
+            pytest.approx(1.0)
+        )
+        assert output.metadata["source_propagator_typeix_spectral_envelope_max"] == (
+            pytest.approx(1.0)
+        )
+        assert tuple(output.metadata["source_propagator_typeix_discrete_representation_labels"]) == (
+            "D^2_-2,0",
+            "D^2_0,0",
+            "D^2_+2,0",
+        )
 
 
 def test_tier_b_exact_source_propagator_requires_explicit_propagator_config() -> None:

@@ -109,6 +109,11 @@ def test_bundle_metadata_records_h_value():
     assert md["h_value"] < 0.0  # VI_h has negative h
     assert md["h_value"] != -1.0  # Type III special case separate
     assert md["h_twist_scale"] == h_twist_scale(md["h_value"])
+    assert md["vih_transport_status"] == "type_vih_negative_h_projection"
+    assert md["vih_branch_flag"] == "negative_h_branch"
+    assert md["vih_h_parameter"] == md["h_value"]
+    assert md["vih_h_twist_scale"] == md["h_twist_scale"]
+    assert md["vih_mode_mixing_norm"] > 0.0
     assert md["directional_sectors"]["primary"] in {"n1", "n3"}
     for shortcut in (
         "no_using_vi0_seed_at_nonzero_h",

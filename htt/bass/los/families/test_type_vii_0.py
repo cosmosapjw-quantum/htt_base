@@ -120,6 +120,12 @@ def test_bundle_metadata_records_helical_specifics():
     assert md["helicity_tags"] == ["0", "+", "-"]
     assert md["h_parameter"] == 0.0
     assert md["seed_basis"] == "spherical_jn"
+    assert md["helical_transport_status"] == "type_vii0_helical_source_integrated"
+    assert md["helical_pitch"] == pytest.approx(1.0e-3)
+    assert md["helical_phase_max"] > 0.0
+    assert md["polarization_basis_transport"] == "spin2_helical_rotation"
+    assert md["helicity_mode_mixing_norm"] > 0.0
+    assert np.linalg.norm(bundle.transfer_B[..., 1:]) > 0.0
     for shortcut in ("no_hidden_branch_choice", "no_local_boost_folded_into_backend"):
         assert shortcut in md["forbidden_shortcut_tracked"]
 
@@ -152,6 +158,7 @@ def test_residual_pack_passes_within_tolerance():
     assert isinstance(pack, ResidualPack)
     assert pack.passed is True
     assert pack.family == "VII_0"
+    assert pack.metadata["helical_transport_status"] == "type_vii0_helical_source_integrated"
 
 
 def test_registered_type_vii_0_routes_through_kernel():

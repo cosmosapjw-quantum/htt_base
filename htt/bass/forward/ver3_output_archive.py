@@ -24,6 +24,8 @@ __all__ = [
     "BoostArchive",
     "observer_boost_output",
     "observer_boost_output_from_components",
+    "alm_power_by_l",
+    "validate_alm_archive",
     "output_split_gate_bundle",
     "resolve_output_gate_registry",
     "write_output_archive",
@@ -504,6 +506,116 @@ def _write_npz(path: Path, payload: Mapping[str, Any]) -> None:
         alm_B=np.asarray(payload["alm_B"], dtype=np.float64),
         metadata_json=str(payload["metadata_json"]),
     )
+
+
+def alm_power_by_l(alm: object, *, lmax: int) -> np.ndarray:
+    """Return per-ell mean square power from lexicographic alm arrays."""
+
+    arr = np.asarray(alm)
+    if arr.ndim != 1:
+        raise ValueError(f"alm must be 1-D, got {arr.shape}")
+    target = _alm_size(int(lmax))
+    if arr.size != target:
+        raise ValueError(f"alm size {arr.size} does not match lmax={lmax}")
+    if not np.all(np.isfinite(arr)):
+        raise ValueError("alm contains NaN/Inf")
+    out = np.zeros(int(lmax) + 1, dtype=np.float64)
+    cursor = 0
+    for ell in range(int(lmax) + 1):
+        width = 2 * ell + 1
+        block = arr[cursor: cursor + width]
+        out[ell] = float(np.mean(np.abs(block) ** 2))
+        cursor += width
+    return out
+
+
+def _load_component_npz(path: Path, *, expected_kind: str) -> dict[str, Any]:
+    if not path.exists():
+        raise FileNotFoundError(str(path))
+    with np.load(path, allow_pickle=False) as data:
+        required = {"lmax", "ordering", "alm_T", "alm_E", "alm_B", "metadata_json"}
+        missing = sorted(required - set(data.files))
+        if missing:
+            raise ValueError(f"{path.name} missing fields {missing}")
+        lmax = int(data["lmax"])
+        ordering = str(data["ordering"])
+        payload = {
+            "lmax": lmax,
+            "ordering": ordering,
+            "alm_T": np.asarray(data["alm_T"], dtype=np.float64),
+            "alm_E": np.asarray(data["alm_E"], dtype=np.float64),
+            "alm_B": np.asarray(data["alm_B"], dtype=np.float64),
+            "metadata": json.loads(str(data["metadata_json"].item())),
+        }
+    if payload["metadata"].get("component_kind") != expected_kind:
+        raise ValueError(
+            f"{path.name} component_kind={payload['metadata'].get('component_kind')!r} "
+            f"does not match expected {expected_kind!r}"
+        )
+    target = _alm_size(lmax)
+    for channel in ("alm_T", "alm_E", "alm_B"):
+        arr = np.asarray(payload[channel], dtype=np.float64)
+        if arr.ndim != 1 or arr.size != target:
+            raise ValueError(
+                f"{path.name}:{channel} shape {arr.shape} does not match lmax={lmax}"
+            )
+        if not np.all(np.isfinite(arr)):
+            raise ValueError(f"{path.name}:{channel} contains NaN/Inf")
+    return payload
+
+
+def validate_alm_archive(
+    outdir: str | Path,
+    *,
+    require_fitting_ready: bool = False,
+) -> dict[str, Any]:
+    """Adversarial validator for the split harmonic archive.
+
+    This checks the actual files produced by :func:`write_output_archive`.
+    Passing this validator means the archive is harmonic-output coherent;
+    it does not by itself promote statistics or publication claims.
+    """
+
+    root = Path(outdir)
+    summary_path = root / "solver_summary.json"
+    if not summary_path.exists():
+        raise FileNotFoundError(str(summary_path))
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    det = _load_component_npz(root / "alm_det.npz", expected_kind="deterministic")
+    stoch = _load_component_npz(root / "alm_stoch.npz", expected_kind="stochastic")
+    boost = _load_component_npz(root / "alm_boost.npz", expected_kind="boost")
+    lmax_values = {det["lmax"], stoch["lmax"], boost["lmax"]}
+    ordering_values = {det["ordering"], stoch["ordering"], boost["ordering"]}
+    if len(lmax_values) != 1:
+        raise ValueError(f"archive lmax mismatch: {sorted(lmax_values)}")
+    if len(ordering_values) != 1:
+        raise ValueError(f"archive ordering mismatch: {sorted(ordering_values)}")
+    if boost["metadata"].get("split_semantics") != "output_only_local_boost":
+        raise ValueError("boost archive is not marked output_only_local_boost")
+    if bool(det["metadata"].get("boost_applied", False)):
+        raise ValueError("deterministic archive must not have boost_applied=true")
+    if require_fitting_ready and not bool(summary.get("fitting_allowed", False)):
+        raise ValueError("archive is not fitting-ready")
+    lmax = int(next(iter(lmax_values)))
+    return {
+        "archive_valid": True,
+        "lmax": lmax,
+        "ordering": next(iter(ordering_values)),
+        "component_kinds": {
+            "deterministic": det["metadata"].get("component_kind"),
+            "stochastic": stoch["metadata"].get("component_kind"),
+            "boost": boost["metadata"].get("component_kind"),
+        },
+        "fitting_allowed": bool(summary.get("fitting_allowed", False)),
+        "diagnostic_only": bool(summary.get("diagnostic_only", True)),
+        "power_by_l": {
+            "det_T": alm_power_by_l(det["alm_T"], lmax=lmax).tolist(),
+            "det_E": alm_power_by_l(det["alm_E"], lmax=lmax).tolist(),
+            "det_B": alm_power_by_l(det["alm_B"], lmax=lmax).tolist(),
+            "stoch_T": alm_power_by_l(stoch["alm_T"], lmax=lmax).tolist(),
+            "boost_T": alm_power_by_l(boost["alm_T"], lmax=lmax).tolist(),
+        },
+    }
 
 
 def write_output_archive(

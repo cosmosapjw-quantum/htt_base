@@ -178,6 +178,13 @@ class TypeVIIhKernel(LegacyDelegationKernel):
             "h_branch_tag": H_BRANCH_TAG,
             "h_parameter": h,
             "radial_cutoff_R": cutoff_R,
+            "viih_transport_status": legacy_viih.get("viih_transport_status"),
+            "viih_helical_pitch": legacy_viih.get("viih_helical_pitch"),
+            "viih_twist_scale": legacy_viih.get("viih_twist_scale"),
+            "viih_phase_max": legacy_viih.get("viih_phase_max"),
+            "viih_open_attenuation_min": legacy_viih.get("viih_open_attenuation_min"),
+            "viih_mode_mixing_norm": legacy_viih.get("viih_mode_mixing_norm", 0.0),
+            "polarization_basis_transport": legacy_viih.get("polarization_basis_transport"),
             "residual_values": residuals,
             "forbidden_shortcut_tracked": list(self.metadata.forbidden_shortcuts),
         }
@@ -215,8 +222,8 @@ class TypeVIIhKernel(LegacyDelegationKernel):
         if t_viih.ndim != 3 or t_viih.shape != t_i.shape or t_viih.shape[-1] != 3:
             anchor_err = math.inf
         else:
-            diff = t_viih[..., 1] - t_i[..., 1]
-            scale = max(float(np.max(np.abs(t_i[..., 1]))), 1.0e-30)
+            diff = t_viih[..., 0] - t_i[..., 0]
+            scale = max(float(np.max(np.abs(t_i[..., 0]))), 1.0e-30)
             anchor_err = float(np.max(np.abs(diff)) / scale)
 
         return {
@@ -239,6 +246,13 @@ class TypeVIIhKernel(LegacyDelegationKernel):
                 "h_branch_tag": bundle.metadata.get("h_branch_tag"),
                 "h_parameter": bundle.metadata.get("h_parameter"),
                 "radial_cutoff_R": bundle.metadata.get("radial_cutoff_R"),
+                "viih_transport_status": bundle.metadata.get("viih_transport_status"),
+                "viih_helical_pitch": bundle.metadata.get("viih_helical_pitch"),
+                "viih_twist_scale": bundle.metadata.get("viih_twist_scale"),
+                "viih_phase_max": bundle.metadata.get("viih_phase_max"),
+                "viih_open_attenuation_min": bundle.metadata.get("viih_open_attenuation_min"),
+                "viih_mode_mixing_norm": bundle.metadata.get("viih_mode_mixing_norm"),
+                "polarization_basis_transport": bundle.metadata.get("polarization_basis_transport"),
             },
         )
 

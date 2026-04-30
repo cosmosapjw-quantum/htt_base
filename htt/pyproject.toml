@@ -13,10 +13,11 @@ dependencies = [
 dev = ["pytest>=7.4"]
 
 [tool.pytest.ini_options]
+addopts = ["-m", "not slow"]
 testpaths = ["bass", "tsc", "src", "mio", "workspace", "."]
 python_files = ["test_*.py"]
 markers = [
-    "slow: marks tests as slow / end-to-end integration (LB-6; deselect with '-m \"not slow\"')",
+    "slow: marks tests as slow / end-to-end integration (LB-6; run explicitly with '-m slow'; run all with '-m \"slow or not slow\"')",
     "anchor: numerical regression anchors (D_2 MM-curve, ROUTE_B constants); must pass every commit",
     "verification: v5 design-pack verification bundle (symbolic/numeric/crosscheck)",
     "ci: fast subset safe to run on every CI push (no subprocess, no external I/O)",

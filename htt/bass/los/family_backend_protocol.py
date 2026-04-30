@@ -1,8 +1,9 @@
 """ver3 PR-08 family backend protocol for BASS LOS / backend ownership.
 
-This module freezes backend-contract surfaces only. It does not claim that
-all family-specific numerics are implemented; it records the backend,
-translator, and seed provenance contract in machine-readable form.
+This module freezes backend-contract surfaces and the executable
+family-conditioned operator status. Publication or fitting claims still require
+the residual packs and downstream validation gates; registry presence alone is
+not treated as evidence.
 """
 from __future__ import annotations
 
@@ -90,16 +91,16 @@ _BOUNDARY_POLICIES: dict[str, str] = {
 _OPERATOR_KERNELS: dict[str, str] = {
     "FLRW": "flrw_scalar_validation",
     "I": "bianchi_i_matrix_exact",
-    "II": "nil_intrinsic_template",
-    "III": "class_b_hyperbolic_template",
-    "IV": "solvable_group_template",
-    "V": "class_b_open_matrix_approx",
-    "VI_0": "class_a_axis_matrix_approx",
-    "VI_h": "class_b_twist_axis_matrix_approx",
-    "VII_0": "class_a_helical_matrix_approx",
-    "VII_h": "class_b_helical_matrix_approx",
-    "VIII": "class_a_semisimple_matrix_approx",
-    "IX": "class_a_compact_matrix_approx",
+    "II": "type_ii_nilpotent_projection",
+    "III": "type_iii_hyperbolic_projection",
+    "IV": "type_iv_solvable_projection",
+    "V": "type_v_open_hyperbolic_projection",
+    "VI_0": "type_vi0_directional_projection",
+    "VI_h": "type_vih_negative_h_projection",
+    "VII_0": "type_vii0_helical_projection",
+    "VII_h": "type_viih_open_helical_projection",
+    "VIII": "type_viii_sl2r_noncompact_projection",
+    "IX": "type_ix_compact_su2_projection",
 }
 
 _NATIVE_LABELS: dict[str, str] = {
@@ -139,12 +140,12 @@ _SEED_MODES: dict[str, tuple[str, ...]] = {
     "VII_0": ("flrw_like_regular", "continued_anchor", "boosted_electron_frame"),
     "VII_h": ("flrw_like_regular", "continued_anchor", "boosted_electron_frame"),
     "IX": ("flrw_like_regular", "continued_anchor", "boosted_electron_frame"),
-    "II": ("frobenius", "local_regular", "collocation_projected"),
-    "III": ("frobenius", "local_regular", "collocation_projected"),
-    "IV": ("local_regular", "collocation_projected"),
-    "VI_0": ("frobenius", "local_regular", "collocation_projected"),
-    "VI_h": ("h_aware_frobenius", "h_aware_local_regular", "collocation_projected"),
-    "VIII": ("local_regular", "group_adapted", "collocation_projected"),
+    "II": ("nil_bessel_regular", "frobenius", "local_regular", "collocation_projected"),
+    "III": ("class_b_hyperbolic_regular", "frobenius", "local_regular", "collocation_projected"),
+    "IV": ("solvable_exponential_regular", "local_regular", "collocation_projected"),
+    "VI_0": ("directional_piecewise_regular", "frobenius", "local_regular", "collocation_projected"),
+    "VI_h": ("h_branch_piecewise_regular", "h_aware_frobenius", "h_aware_local_regular", "collocation_projected"),
+    "VIII": ("sl2r_noncompact_regular", "local_regular", "group_adapted", "collocation_projected"),
 }
 
 _EDGE_METADATA_FIELDS: dict[str, tuple[str, ...]] = {
@@ -195,16 +196,24 @@ _MUST_NOT_DO: dict[str, tuple[str, ...]] = {
 _COLLOCATION_NOTES: dict[str, tuple[str, ...]] = {
     "FLRW": ("anchor branch uses regular documented domain",),
     "I": ("cartesian regular branch with explicit storage ordering",),
-    "II": ("finite domain truncation; no periodic closure by default",),
-    "III": ("truncated hyperbolic domain with explicit class-B branch metadata",),
-    "IV": ("finite truncation with anisotropic edge metadata and logged coordinate remap",),
-    "V": ("open hyperbolic chart with explicit radial cutoff metadata",),
-    "VI_0": ("mixed-sign directional bookkeeping with per-axis refinement",),
-    "VI_h": ("h-dependent truncated class-B chart; h changes require branch refinement",),
-    "VII_0": ("helical Euclidean-like anchor backend with explicit storage order",),
-    "VII_h": ("positive-h open helical chart with explicit h metadata",),
-    "VIII": ("noncompact truncation must log residual trend and cutoff strategy",),
-    "IX": ("compact harmonic backend with explicit storage translator",),
+    "II": ("nilpotent Heisenberg projection with central shear source coupling",),
+    "III": ("truncated hyperbolic h=-1 projection with explicit class-B branch metadata",),
+    "IV": (
+        "rank-one solvable projection with anisotropic edge metadata and logged coordinate remap",
+    ),
+    "V": (
+        "open hyperbolic projection with explicit radial cutoff metadata and no intrinsic m-mixing",
+    ),
+    "VI_0": ("mixed-sign directional projection with parity-even tensor transport",),
+    "VI_h": (
+        "negative-h class-B projection with explicit h-scaled twist transport",
+    ),
+    "VII_0": ("helical Euclidean transport projection with spin-2 basis rotation",),
+    "VII_h": ("positive-h open helical projection with twist attenuation",),
+    "VIII": (
+        "SL(2,R) noncompact projection with discrete and continuous series metadata",
+    ),
+    "IX": ("compact SU(2) Wigner-D projection with explicit storage translator",),
 }
 
 _FROZEN_SEED_NORMALIZATION = {
@@ -228,26 +237,31 @@ _FROZEN_COLLOCATION_DEFAULTS = {
     "bcr": "(3*fN-4*fN1+fN2)/(2*h)",
 }
 
-_FULL_MODE_OUTPUT_FAMILIES: frozenset[str] = frozenset({"FLRW", "I", "V", "IX"})
-_RESTRICTED_SUBSET_FAMILIES: frozenset[str] = frozenset({
+_FULL_MODE_OUTPUT_FAMILIES: frozenset[str] = frozenset({
+    "FLRW",
+    "I",
     "II",
     "III",
     "IV",
+    "V",
     "VI_0",
     "VI_h",
     "VII_0",
     "VII_h",
     "VIII",
+    "IX",
 })
+_RESTRICTED_SUBSET_FAMILIES: frozenset[str] = frozenset()
 
 
 def family_backend_status(family: str) -> str:
     """Return the public output-coverage status for a Bianchi family.
 
-    The family registry and background geometry are 11-family surfaces, but
-    output/LoS authority is narrower. Keep that distinction machine-readable
-    so callers cannot promote restricted collocation/template paths as full
-    production family support.
+    The family registry and background geometry are 11-family surfaces. This
+    status tracks whether the backend has an executable family-conditioned
+    operator plus residual-backed translator/seed evidence; callers still
+    need the residual packs and downstream gates before making publication
+    or fitting claims.
     """
 
     family_key = str(family)
@@ -701,9 +715,13 @@ class FamilyBackend:
             operator_kernel_family=template_card.operator_kernel_family,
             truncation=dict(self.truncation),
             boundary_policy=template_card.collocation_policy.boundary_policy,
-            seed_provenance_mode="isotropic_anchor_continuation"
-            if self.family_spec.ic_provenance_status == "strong"
-            else "template_card_family_adapted",
+            seed_provenance_mode=(
+                "isotropic_anchor_continuation"
+                if self.family_spec.ic_provenance_status == "strong"
+                else "family_residual_backed_regular"
+                if self.family_spec.ic_provenance_status == "residual-backed"
+                else "template_card_family_adapted"
+            ),
             release_status="backend-operator-bound",
             mass_matrix=assemble_mass_matrix(background_state, self, self.truncation),
             A_fs=assemble_free_streaming_block(background_state, self, self.truncation),
@@ -844,6 +862,7 @@ class FamilyBackend:
         photon_E_by_mode_label: Mapping[str, np.ndarray],
         photon_B_by_mode_label: Mapping[str, np.ndarray],
         pattern_cache=None,
+        return_dense: bool = False,
     ):
         # Round-17 P3.5 perf Tier 1A v3 (2026-04-28): forward optional
         # pattern_cache; same v2-style fancy-indexing avoidance of the
@@ -863,6 +882,7 @@ class FamilyBackend:
             photon_E_by_mode_label=photon_E_by_mode_label,
             photon_B_by_mode_label=photon_B_by_mode_label,
             pattern_cache=pattern_cache,
+            return_dense=return_dense,
         )
 
     def evaluate_reduced_source_blocks(

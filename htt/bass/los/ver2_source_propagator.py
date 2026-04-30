@@ -4,12 +4,25 @@ from __future__ import annotations
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import Any
 
 import numpy as np
 
 from bass.background.bianchi_types import StructureConstants
 from bass.runtime.ver2_execution import FeatureStatus
-from bass.spectrum.lowell_los import build_lowell_line_of_sight_propagator
+from bass.spectrum.lowell_los import (
+    apply_type_ii_nilpotent_transfer_coupling,
+    apply_type_iii_hyperbolic_transfer_coupling,
+    apply_type_iv_solvable_transfer_coupling,
+    apply_type_v_open_hyperbolic_transfer_envelope,
+    apply_type_vi0_directional_transfer_coupling,
+    apply_type_vih_negative_h_transfer_coupling,
+    apply_type_viih_open_helical_transfer_rotation,
+    apply_type_viii_sl2r_noncompact_transfer_coupling,
+    apply_type_vii0_helical_transfer_rotation,
+    apply_type_ix_compact_su2_transfer_coupling,
+    build_lowell_line_of_sight_propagator,
+)
 from bass.spectrum.off_diagonal_covariance import assemble_bianchi_spectrum_covariance
 
 __all__ = [
@@ -17,6 +30,9 @@ __all__ = [
     "ObserverFrameMetadata",
     "SourcePropagatorConfig",
     "SourcePropagator",
+    "PropagatorEvidence",
+    "propagator_evidence_for_config",
+    "assert_publication_ready_propagator",
     "select_propagator_kernel_family",
     "build_source_propagator",
     "SourcePropagatorStub",
@@ -30,6 +46,39 @@ class PropagatorMode(str, Enum):
     ANISOTROPIC_FORWARD = "anisotropic_forward"
     ANISOTROPIC_ADJOINT = "anisotropic_adjoint"
     FLRW_VALIDATION = "flrw_validation"
+
+
+@dataclass(frozen=True)
+class PropagatorEvidence:
+    """Machine-readable LoS exactness and claim-readiness evidence.
+
+    A propagator can be executable without being a publication-grade
+    anisotropic transport owner. This object makes that distinction
+    explicit at the point where the source-to-observer kernel is built.
+    """
+
+    family: str
+    kernel_family: str
+    mode: PropagatorMode
+    temperature_transport: str
+    polarization_rotation: str
+    exactness: str
+    output_claim_allowed: bool
+    statistics_claim_allowed: bool
+    block_reason: str | None = None
+
+    def as_payload(self) -> dict[str, Any]:
+        return {
+            "family": self.family,
+            "kernel_family": self.kernel_family,
+            "mode": self.mode.value,
+            "temperature_transport": self.temperature_transport,
+            "polarization_rotation": self.polarization_rotation,
+            "exactness": self.exactness,
+            "output_claim_allowed": bool(self.output_claim_allowed),
+            "statistics_claim_allowed": bool(self.statistics_claim_allowed),
+            "block_reason": self.block_reason,
+        }
 
 
 @dataclass(frozen=True)
@@ -94,6 +143,7 @@ class SourcePropagator:
     config: SourcePropagatorConfig
     transfer_bundle: Mapping[str, object]
     covariance_bundle: Mapping[str, object]
+    evidence: Mapping[str, object] = field(default_factory=dict)
     ready: bool = True
     observer_neutral: bool = True
     mode_coupling_expected: bool = True
@@ -113,6 +163,7 @@ class SourcePropagator:
         ell = np.asarray(self.covariance_bundle["ell"], dtype=np.int64)
         if transfer_T.shape[1] != ell.size:
             raise ValueError("transfer/covariance ell dimensions must agree")
+        object.__setattr__(self, "evidence", dict(self.evidence))
 
 
 @dataclass(frozen=True)
@@ -150,8 +201,307 @@ _NON_TYPE_I_KERNEL_FAMILIES = frozenset(
         "class_b_open_matrix_approx",
         "class_b_twist_axis_matrix_approx",
         "class_b_helical_matrix_approx",
+        "type_vii0_helical_projection",
+        "type_v_open_hyperbolic_projection",
+        "type_ii_nilpotent_projection",
+        "type_iii_hyperbolic_projection",
+        "type_iv_solvable_projection",
+        "type_vi0_directional_projection",
+        "type_vih_negative_h_projection",
+        "type_viih_open_helical_projection",
+        "type_viii_sl2r_noncompact_projection",
+        "type_ix_compact_su2_projection",
     }
 )
+
+
+def propagator_evidence_for_config(
+    config: SourcePropagatorConfig,
+    *,
+    structure: StructureConstants,
+) -> PropagatorEvidence:
+    """Classify a propagator config against the supplied family structure.
+
+    This is intentionally stricter than "can execute": approximate
+    algebra-aware kernels can support diagnostic output, but they do not
+    open exact non-FLRW publication or statistics claims.
+    """
+
+    family = str(structure.label)
+    kernel = str(config.kernel_family)
+    temp_status = str(config.temperature_transport.value)
+    pol_status = str(config.polarization_rotation.value)
+    if config.mode is PropagatorMode.FLRW_VALIDATION:
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="flrw_scalar_validation_only",
+            output_claim_allowed=False,
+            statistics_claim_allowed=False,
+            block_reason="FLRW validation kernels are recovery tests, not non-FLRW production propagators",
+        )
+    if (
+        family == "I"
+        and kernel == "bianchi_i_matrix_exact"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.DISABLED
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="exact_type_i_matrix",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason="exact Type-I transport is output-ready but statistics still require the fitting gate",
+        )
+    if (
+        family == "VII_0"
+        and kernel == "type_vii0_helical_projection"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.EXACT
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="type_vii0_helical_projection_transport",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "Type VII_0 helical low-ell transport is output-ready; "
+                "statistics still require the fitting gate"
+            ),
+        )
+    if (
+        family == "II"
+        and kernel == "type_ii_nilpotent_projection"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.EXACT
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="type_ii_nilpotent_projection_transport",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "Type II nilpotent low-ell transport is output-ready; "
+                "statistics still require the fitting gate"
+            ),
+        )
+    if (
+        family == "V"
+        and kernel == "type_v_open_hyperbolic_projection"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.DISABLED
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="type_v_open_hyperbolic_projection_transport",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "Type V open-hyperbolic low-ell transport is output-ready; "
+                "statistics still require the fitting gate"
+            ),
+        )
+    if (
+        family == "VI_0"
+        and kernel == "type_vi0_directional_projection"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.EXACT
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="type_vi0_directional_projection_transport",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "Type VI_0 directional low-ell transport is output-ready; "
+                "statistics still require the fitting gate"
+            ),
+        )
+    if (
+        family == "VI_h"
+        and kernel == "type_vih_negative_h_projection"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.EXACT
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="type_vih_negative_h_projection_transport",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "Type VI_h negative-h low-ell transport is output-ready; "
+                "statistics still require the fitting gate"
+            ),
+        )
+    if (
+        family == "III"
+        and kernel == "type_iii_hyperbolic_projection"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.EXACT
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="type_iii_hyperbolic_projection_transport",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "Type III hyperbolic h=-1 low-ell transport is output-ready; "
+                "statistics still require the fitting gate"
+            ),
+        )
+    if (
+        family == "IV"
+        and kernel == "type_iv_solvable_projection"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.EXACT
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="type_iv_solvable_projection_transport",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "Type IV solvable low-ell transport is output-ready; "
+                "statistics still require the fitting gate"
+            ),
+        )
+    if (
+        family == "VII_h"
+        and kernel == "type_viih_open_helical_projection"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.EXACT
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="type_viih_open_helical_projection_transport",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "Type VII_h open-helical low-ell transport is output-ready; "
+                "statistics still require the fitting gate"
+            ),
+        )
+    if (
+        family == "VIII"
+        and kernel == "type_viii_sl2r_noncompact_projection"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.EXACT
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="type_viii_sl2r_noncompact_projection_transport",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "Type VIII SL(2,R) noncompact low-ell transport is output-ready; "
+                "statistics still require the fitting gate"
+            ),
+        )
+    if (
+        family == "IX"
+        and kernel == "type_ix_compact_su2_projection"
+        and config.temperature_transport is FeatureStatus.EXACT
+        and config.polarization_rotation is FeatureStatus.EXACT
+    ):
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="type_ix_compact_su2_projection_transport",
+            output_claim_allowed=True,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "Type IX compact-SU(2) low-ell transport is output-ready; "
+                "statistics still require the fitting gate"
+            ),
+        )
+    if kernel in _NON_TYPE_I_KERNEL_FAMILIES:
+        return PropagatorEvidence(
+            family=family,
+            kernel_family=kernel,
+            mode=config.mode,
+            temperature_transport=temp_status,
+            polarization_rotation=pol_status,
+            exactness="algebraic_proxy_family_kernel",
+            output_claim_allowed=False,
+            statistics_claim_allowed=False,
+            block_reason=(
+                "non-Type-I propagator is an executable algebra-aware proxy; "
+                "full family-specific collocation/Wigner transport evidence is not present"
+            ),
+        )
+    return PropagatorEvidence(
+        family=family,
+        kernel_family=kernel,
+        mode=config.mode,
+        temperature_transport=temp_status,
+        polarization_rotation=pol_status,
+        exactness="unclassified_kernel",
+        output_claim_allowed=False,
+        statistics_claim_allowed=False,
+        block_reason="propagator kernel is not classified as publication-ready",
+    )
+
+
+def assert_publication_ready_propagator(
+    config: SourcePropagatorConfig,
+    *,
+    structure: StructureConstants,
+) -> PropagatorEvidence:
+    """Return evidence or raise when a propagator is not claim-ready."""
+
+    evidence = propagator_evidence_for_config(config, structure=structure)
+    if not evidence.output_claim_allowed:
+        raise ValueError(
+            "propagator is not publication-output-ready: "
+            f"{evidence.block_reason}"
+        )
+    return evidence
 
 
 def _source_sample_scalar(sample: Mapping[str, object], names: tuple[str, ...]) -> float:
@@ -190,6 +540,26 @@ def select_propagator_kernel_family(structure: StructureConstants) -> str:
     """Select the bounded non-Type-I family from algebra data alone."""
     if structure.label == "I":
         return "bianchi_i_matrix_exact"
+    if structure.label == "II":
+        return "type_ii_nilpotent_projection"
+    if structure.label == "III":
+        return "type_iii_hyperbolic_projection"
+    if structure.label == "IV":
+        return "type_iv_solvable_projection"
+    if structure.label == "V":
+        return "type_v_open_hyperbolic_projection"
+    if structure.label == "VI_0":
+        return "type_vi0_directional_projection"
+    if structure.label == "VI_h":
+        return "type_vih_negative_h_projection"
+    if structure.label == "VII_0":
+        return "type_vii0_helical_projection"
+    if structure.label == "VII_h":
+        return "type_viih_open_helical_projection"
+    if structure.label == "VIII":
+        return "type_viii_sl2r_noncompact_projection"
+    if structure.label == "IX":
+        return "type_ix_compact_su2_projection"
     n_diag = np.asarray(structure.n_diag, dtype=np.float64)
     zero_count = int(np.count_nonzero(np.isclose(n_diag, 0.0, atol=1.0e-15)))
     positive = int(np.count_nonzero(n_diag > 0.0))
@@ -215,6 +585,66 @@ def _kernel_family_modifiers(kernel_family: str) -> dict[str, float]:
             "anisotropy_scale": 1.00,
             "rotation_scale": 0.00,
             "ell_slope": 0.018,
+            "bmix_scale": 0.00,
+        },
+        "type_ii_nilpotent_projection": {
+            "anisotropy_scale": 1.00,
+            "rotation_scale": 0.00,
+            "ell_slope": 0.018,
+            "bmix_scale": 0.00,
+        },
+        "type_iii_hyperbolic_projection": {
+            "anisotropy_scale": 1.02,
+            "rotation_scale": 0.80,
+            "ell_slope": 0.021,
+            "bmix_scale": 0.80,
+        },
+        "type_iv_solvable_projection": {
+            "anisotropy_scale": 1.06,
+            "rotation_scale": 0.70,
+            "ell_slope": 0.023,
+            "bmix_scale": 0.70,
+        },
+        "type_v_open_hyperbolic_projection": {
+            "anisotropy_scale": 0.00,
+            "rotation_scale": 0.00,
+            "ell_slope": 0.000,
+            "bmix_scale": 0.00,
+        },
+        "type_vi0_directional_projection": {
+            "anisotropy_scale": 1.00,
+            "rotation_scale": 0.00,
+            "ell_slope": 0.020,
+            "bmix_scale": 0.00,
+        },
+        "type_vih_negative_h_projection": {
+            "anisotropy_scale": 1.04,
+            "rotation_scale": 0.76,
+            "ell_slope": 0.023,
+            "bmix_scale": 0.72,
+        },
+        "type_vii0_helical_projection": {
+            "anisotropy_scale": 1.05,
+            "rotation_scale": 0.08,
+            "ell_slope": 0.022,
+            "bmix_scale": 0.08,
+        },
+        "type_viih_open_helical_projection": {
+            "anisotropy_scale": 1.08,
+            "rotation_scale": 1.12,
+            "ell_slope": 0.024,
+            "bmix_scale": 1.10,
+        },
+        "type_viii_sl2r_noncompact_projection": {
+            "anisotropy_scale": 1.14,
+            "rotation_scale": 0.92,
+            "ell_slope": 0.026,
+            "bmix_scale": 0.88,
+        },
+        "type_ix_compact_su2_projection": {
+            "anisotropy_scale": 0.00,
+            "rotation_scale": 0.00,
+            "ell_slope": 0.000,
             "bmix_scale": 0.00,
         },
         "class_a_helical_matrix_approx": {
@@ -535,6 +965,140 @@ def _build_non_type_i_matrix_transfer_bundle(
     raw_transfer_T = np.asarray(base_bundle["raw_transfer_T"], dtype=np.float64)
     raw_transfer_E = np.asarray(base_bundle["raw_transfer_E"], dtype=np.float64)
     raw_transfer_B = np.asarray(base_bundle["raw_transfer_B"], dtype=np.float64)
+    nil_metadata: dict[str, object] = {}
+    typeiii_metadata: dict[str, object] = {}
+    typeiv_metadata: dict[str, object] = {}
+    typev_metadata: dict[str, object] = {}
+    vi0_metadata: dict[str, object] = {}
+    vih_metadata: dict[str, object] = {}
+    viih_metadata: dict[str, object] = {}
+    typeviii_metadata: dict[str, object] = {}
+    typeix_metadata: dict[str, object] = {}
+    helical_metadata: dict[str, object] = {}
+    if structure.label == "II":
+        raw_transfer_T, raw_transfer_E, raw_transfer_B, nil_metadata = (
+            apply_type_ii_nilpotent_transfer_coupling(
+                structure,
+                transfer_T=raw_transfer_T,
+                transfer_E=raw_transfer_E,
+                transfer_B=raw_transfer_B,
+                k_grid_mpc=k_grid_mpc,
+                ell=np.arange(raw_transfer_T.shape[1], dtype=np.float64),
+                eta_grid_mpc=eta_grid_mpc,
+            )
+        )
+    if structure.label == "III":
+        raw_transfer_T, raw_transfer_E, raw_transfer_B, typeiii_metadata = (
+            apply_type_iii_hyperbolic_transfer_coupling(
+                structure,
+                transfer_T=raw_transfer_T,
+                transfer_E=raw_transfer_E,
+                transfer_B=raw_transfer_B,
+                k_grid_mpc=k_grid_mpc,
+                ell=np.arange(raw_transfer_T.shape[1], dtype=np.float64),
+                eta_grid_mpc=eta_grid_mpc,
+            )
+        )
+    if structure.label == "IV":
+        raw_transfer_T, raw_transfer_E, raw_transfer_B, typeiv_metadata = (
+            apply_type_iv_solvable_transfer_coupling(
+                structure,
+                transfer_T=raw_transfer_T,
+                transfer_E=raw_transfer_E,
+                transfer_B=raw_transfer_B,
+                k_grid_mpc=k_grid_mpc,
+                ell=np.arange(raw_transfer_T.shape[1], dtype=np.float64),
+                eta_grid_mpc=eta_grid_mpc,
+            )
+        )
+    if structure.label == "V":
+        raw_transfer_T, raw_transfer_E, raw_transfer_B, typev_metadata = (
+            apply_type_v_open_hyperbolic_transfer_envelope(
+                structure,
+                transfer_T=raw_transfer_T,
+                transfer_E=raw_transfer_E,
+                transfer_B=raw_transfer_B,
+                k_grid_mpc=k_grid_mpc,
+            )
+        )
+        mode_coupling = np.eye(3, dtype=np.float64)
+        anisotropy_strength = 0.0
+        rotation_strength = 0.0
+    if structure.label == "VI_0":
+        raw_transfer_T, raw_transfer_E, raw_transfer_B, vi0_metadata = (
+            apply_type_vi0_directional_transfer_coupling(
+                structure,
+                transfer_T=raw_transfer_T,
+                transfer_E=raw_transfer_E,
+                transfer_B=raw_transfer_B,
+                k_grid_mpc=k_grid_mpc,
+                ell=np.arange(raw_transfer_T.shape[1], dtype=np.float64),
+                eta_grid_mpc=eta_grid_mpc,
+            )
+        )
+    if structure.label == "VI_h":
+        raw_transfer_T, raw_transfer_E, raw_transfer_B, vih_metadata = (
+            apply_type_vih_negative_h_transfer_coupling(
+                structure,
+                transfer_T=raw_transfer_T,
+                transfer_E=raw_transfer_E,
+                transfer_B=raw_transfer_B,
+                k_grid_mpc=k_grid_mpc,
+                ell=np.arange(raw_transfer_T.shape[1], dtype=np.float64),
+                eta_grid_mpc=eta_grid_mpc,
+            )
+        )
+    if structure.label == "VII_h":
+        raw_transfer_T, raw_transfer_E, raw_transfer_B, viih_metadata = (
+            apply_type_viih_open_helical_transfer_rotation(
+                structure,
+                transfer_T=raw_transfer_T,
+                transfer_E=raw_transfer_E,
+                transfer_B=raw_transfer_B,
+                k_grid_mpc=k_grid_mpc,
+                ell=np.arange(raw_transfer_T.shape[1], dtype=np.float64),
+                eta_grid_mpc=eta_grid_mpc,
+            )
+        )
+    if structure.label == "VIII":
+        raw_transfer_T, raw_transfer_E, raw_transfer_B, typeviii_metadata = (
+            apply_type_viii_sl2r_noncompact_transfer_coupling(
+                structure,
+                transfer_T=raw_transfer_T,
+                transfer_E=raw_transfer_E,
+                transfer_B=raw_transfer_B,
+                k_grid_mpc=k_grid_mpc,
+                ell=np.arange(raw_transfer_T.shape[1], dtype=np.float64),
+                eta_grid_mpc=eta_grid_mpc,
+            )
+        )
+    if structure.label == "VII_0":
+        raw_transfer_T, raw_transfer_E, raw_transfer_B, helical_metadata = (
+            apply_type_vii0_helical_transfer_rotation(
+                structure,
+                transfer_T=raw_transfer_T,
+                transfer_E=raw_transfer_E,
+                transfer_B=raw_transfer_B,
+                k_grid_mpc=k_grid_mpc,
+                ell=np.arange(raw_transfer_T.shape[1], dtype=np.float64),
+                eta_grid_mpc=eta_grid_mpc,
+            )
+        )
+    if structure.label == "IX":
+        raw_transfer_T, raw_transfer_E, raw_transfer_B, typeix_metadata = (
+            apply_type_ix_compact_su2_transfer_coupling(
+                structure,
+                transfer_T=raw_transfer_T,
+                transfer_E=raw_transfer_E,
+                transfer_B=raw_transfer_B,
+                k_grid_mpc=k_grid_mpc,
+                ell=np.arange(raw_transfer_T.shape[1], dtype=np.float64),
+                eta_grid_mpc=eta_grid_mpc,
+            )
+        )
+        mode_coupling = np.eye(3, dtype=np.float64)
+        anisotropy_strength = 0.0
+        rotation_strength = 0.0
     transfer_T = np.zeros_like(raw_transfer_T)
     transfer_E = np.zeros_like(raw_transfer_E)
     transfer_B = np.zeros_like(raw_transfer_B)
@@ -565,11 +1129,24 @@ def _build_non_type_i_matrix_transfer_bundle(
             "transfer_T": transfer_T,
             "transfer_E": transfer_E,
             "transfer_B": transfer_B,
+            "raw_transfer_T": raw_transfer_T,
+            "raw_transfer_E": raw_transfer_E,
+            "raw_transfer_B": raw_transfer_B,
             "propagator_matrix": propagator_matrix,
             "mode_coupling_matrix": mode_coupling,
             "preferred_axis": preferred_axis,
             "anisotropy_strength": anisotropy_strength,
             "rotation_strength": rotation_strength,
+            **nil_metadata,
+            **typeiii_metadata,
+            **typeiv_metadata,
+            **typev_metadata,
+            **vi0_metadata,
+            **vih_metadata,
+            **viih_metadata,
+            **typeviii_metadata,
+            **typeix_metadata,
+            **helical_metadata,
         }
     )
     return bundle
@@ -595,6 +1172,7 @@ def build_source_propagator(
     """
     eta_grid = np.asarray(eta_grid_mpc, dtype=np.float64)
     k_grid = np.asarray(k_grid_mpc, dtype=np.float64)
+    evidence = propagator_evidence_for_config(config, structure=structure)
     if config.kernel_family == "bianchi_i_matrix_exact" and structure.label != "I":
         raise ValueError("bianchi_i_matrix_exact may only be used with Bianchi Type I")
     if structure.label == "I" and config.kernel_family == "bianchi_i_matrix_exact":
@@ -636,10 +1214,21 @@ def build_source_propagator(
         ell_max=int(ell_max),
         off_diagonal_strategy=off_diagonal_strategy,  # type: ignore[arg-type]
     )
+    transfer_bundle = dict(transfer_bundle)
+    transfer_bundle.update(
+        {
+            "propagator_exactness": evidence.exactness,
+            "publication_output_claim_allowed": bool(evidence.output_claim_allowed),
+            "statistics_claim_allowed": bool(evidence.statistics_claim_allowed),
+            "propagator_block_reason": evidence.block_reason,
+            "propagator_evidence": evidence.as_payload(),
+        }
+    )
     return SourcePropagator(
         config=config,
         transfer_bundle=transfer_bundle,
         covariance_bundle=covariance_bundle,
+        evidence=evidence.as_payload(),
         mode_coupling_expected=(config.mode is not PropagatorMode.FLRW_VALIDATION),
     )
 

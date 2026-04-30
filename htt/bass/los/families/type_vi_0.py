@@ -186,6 +186,12 @@ class TypeVI0Kernel(LegacyDelegationKernel):
             "principal_direction_axis": sector_map["primary"],
             "secondary_direction_axis": sector_map["secondary"],
             "truncation_half_width": float(self.default_half_width),
+            "vi0_transport_status": legacy.get("vi0_transport_status"),
+            "vi0_structure_scale": legacy.get("vi0_structure_scale"),
+            "vi0_directional_imbalance": legacy.get("vi0_directional_imbalance"),
+            "vi0_shear_max": legacy.get("vi0_shear_max"),
+            "vi0_mode_mixing_norm": legacy.get("vi0_mode_mixing_norm", 0.0),
+            "polarization_basis_transport": legacy.get("polarization_basis_transport"),
             "residual_values": residuals,
             "forbidden_shortcut_tracked": list(self.metadata.forbidden_shortcuts),
         }
@@ -249,6 +255,12 @@ class TypeVI0Kernel(LegacyDelegationKernel):
                 "principal_direction_axis": bundle.metadata.get("principal_direction_axis"),
                 "secondary_direction_axis": bundle.metadata.get("secondary_direction_axis"),
                 "truncation_half_width": bundle.metadata.get("truncation_half_width"),
+                "vi0_transport_status": bundle.metadata.get("vi0_transport_status"),
+                "vi0_structure_scale": bundle.metadata.get("vi0_structure_scale"),
+                "vi0_directional_imbalance": bundle.metadata.get("vi0_directional_imbalance"),
+                "vi0_shear_max": bundle.metadata.get("vi0_shear_max"),
+                "vi0_mode_mixing_norm": bundle.metadata.get("vi0_mode_mixing_norm"),
+                "polarization_basis_transport": bundle.metadata.get("polarization_basis_transport"),
             },
         )
 

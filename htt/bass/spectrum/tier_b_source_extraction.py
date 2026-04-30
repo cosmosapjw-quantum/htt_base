@@ -58,6 +58,7 @@ References:
 """
 from __future__ import annotations
 
+import warnings
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -113,11 +114,78 @@ def _fd4_derivative(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     # 2nd-order centered at indices 1 and N-2 (not enough room for 4th order):
     dydx[1] = (y[2] - y[0]) / (x[2] - x[0])
     dydx[-2] = (y[-1] - y[-3]) / (x[-1] - x[-3])
-    # 4th-order centered in the bulk (non-uniform grid via local h):
-    for i in range(2, n - 2):
-        h = (x[i + 1] - x[i - 1]) / 2.0
-        dydx[i] = (-y[i + 2] + 8.0 * y[i + 1] - 8.0 * y[i - 1] + y[i - 2]) / (12.0 * h)
+    # 4th-order centered in the bulk (non-uniform grid via local h).
+    # Vectorized equivalent of the original i=2..N-3 loop with
+    # h_i = (x[i+1] - x[i-1]) / 2.
+    dydx[2:-2] = (
+        -y[4:]
+        + 8.0 * y[3:-1]
+        - 8.0 * y[1:-3]
+        + y[:-4]
+    ) / (6.0 * (x[3:-1] - x[1:-3]))
     return dydx
+
+
+def _scaled_pchip_no_extrapolation(eta_grid: np.ndarray, values: np.ndarray):
+    """Build a no-extrapolation PCHIP callable after amplitude scaling.
+
+    Some Tier-B probe channels are finite but extremely small. Constructing
+    scipy's PCHIP slopes directly on subnormal-scale values can raise an
+    internal overflow RuntimeWarning in the reciprocal-slope harmonic mean.
+    Scaling to O(1) before construction preserves the interpolated function
+    and avoids treating that numerical conditioning detail as physics failure.
+    """
+
+    eta_arr = np.asarray(eta_grid, dtype=np.float64)
+    values_arr = np.asarray(values, dtype=np.float64)
+    if values_arr.shape != eta_arr.shape:
+        raise ValueError(
+            "PCHIP source interpolation requires values.shape == eta_grid.shape, "
+            f"got values.shape={values_arr.shape}, eta_grid.shape={eta_arr.shape}"
+        )
+    if not np.all(np.isfinite(values_arr)):
+        raise ValueError("PCHIP source interpolation requires finite values")
+    amplitude = float(np.max(np.abs(values_arr)))
+    if amplitude == 0.0:
+        return PchipInterpolator(eta_arr, values_arr, extrapolate=False)
+    scaled = values_arr / amplitude
+    try:
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "error",
+                message="overflow encountered in divide",
+                category=RuntimeWarning,
+            )
+            interp = PchipInterpolator(eta_arr, scaled, extrapolate=False)
+    except RuntimeWarning:
+        return _linear_no_extrapolation(eta_arr, values_arr)
+
+    def _call(query):
+        return amplitude * interp(query)
+
+    return _call
+
+
+def _linear_no_extrapolation(eta_grid: np.ndarray, values: np.ndarray):
+    """Linear no-extrapolation fallback for finite but PCHIP-ill-conditioned data."""
+
+    eta_arr = np.asarray(eta_grid, dtype=np.float64)
+    values_arr = np.asarray(values, dtype=np.float64)
+
+    def _call(query):
+        query_arr = np.asarray(query, dtype=np.float64)
+        out = np.interp(query_arr, eta_arr, values_arr)
+        out = np.asarray(out, dtype=np.float64)
+        out = np.where(
+            (query_arr < eta_arr[0]) | (query_arr > eta_arr[-1]),
+            np.nan,
+            out,
+        )
+        if np.ndim(query_arr) == 0:
+            return float(out)
+        return out
+
+    return _call
 
 
 def extract_flrw_sources_from_tier_b(
@@ -158,7 +226,7 @@ def extract_flrw_sources_from_tier_b(
         v_b(η)    → v_b(η)  (baryon peculiar velocity at this k)
         pi(η)     → Θ_2^γ(η) − √6·E_2^γ(η)  (polarization source)
 
-    All callables are ``PchipInterpolator`` instances with
+    All callables are no-extrapolation PCHIP-based callables with
     ``extrapolate=False``; evaluation outside the integration-result
     η-domain returns NaN.
 
@@ -305,15 +373,10 @@ def extract_flrw_sources_from_tier_b(
     phi_plus_psi = phi + psi
     phi_dot_plus_psi_dot = _fd4_derivative(eta, phi_plus_psi)
 
-    # PchipInterpolator with extrapolate=False — shape-preserving, no
-    # domain overrun. Per auditor Q-21.1 / critical constraint C5.
-    def _interp(eta_grid: np.ndarray, values: np.ndarray) -> PchipInterpolator:
-        return PchipInterpolator(eta_grid, values, extrapolate=False)
-
     return FLRWSourceTerms(
-        theta_0=_interp(eta, theta0_g),
-        psi=_interp(eta, psi),
-        phi_dot_plus_psi_dot=_interp(eta, phi_dot_plus_psi_dot),
-        v_b=_interp(eta, vb),
-        pi=_interp(eta, pi_source),
+        theta_0=_scaled_pchip_no_extrapolation(eta, theta0_g),
+        psi=_scaled_pchip_no_extrapolation(eta, psi),
+        phi_dot_plus_psi_dot=_scaled_pchip_no_extrapolation(eta, phi_dot_plus_psi_dot),
+        v_b=_scaled_pchip_no_extrapolation(eta, vb),
+        pi=_scaled_pchip_no_extrapolation(eta, pi_source),
     )

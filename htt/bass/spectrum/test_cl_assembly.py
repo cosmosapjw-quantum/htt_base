@@ -30,6 +30,8 @@ from bass.spectrum.cl_assembly import (
     # isotropic
     assemble_cl_TT_isotropic,
     assemble_cl_EE_isotropic,
+    assemble_cl_TT_EE_isotropic,
+    assemble_cl_TT_EE_isotropic_from_grid,
     assemble_cl_TE_isotropic,
     # bianchi diagonal
     assemble_cl_TT_bianchi,
@@ -283,6 +285,41 @@ class TestIsotropicEE:
         for ell in range(5):
             if cl1[ell] > 0:
                 assert abs(cl2[ell] - 4.0 * cl1[ell]) / cl2[ell] < 1e-14
+
+
+class TestIsotropicTTEE:
+
+    def test_pair_matches_separate_assemblers(self):
+        cfg = _standard_config(ell_max=8)
+        xf = _mock_constant_transfer(ell_max=8, T_val=1.5, E_val=0.25)
+
+        cl_tt_pair, cl_ee_pair = assemble_cl_TT_EE_isotropic(xf, cfg)
+        cl_tt_ref = assemble_cl_TT_isotropic(xf, cfg)
+        cl_ee_ref = assemble_cl_EE_isotropic(xf, cfg)
+
+        np.testing.assert_allclose(cl_tt_pair, cl_tt_ref, rtol=1.0e-14, atol=0.0)
+        np.testing.assert_allclose(cl_ee_pair, cl_ee_ref, rtol=1.0e-14, atol=0.0)
+
+    def test_grid_pair_matches_callable_pair(self):
+        cfg = _standard_config(ell_max=8)
+        xf = _mock_constant_transfer(ell_max=8, T_val=1.5, E_val=0.25)
+        transfer_grid = [xf(float(k)) for k in cfg.k_grid]
+
+        cl_tt_grid, cl_ee_grid = assemble_cl_TT_EE_isotropic_from_grid(
+            transfer_grid, cfg
+        )
+        cl_tt_pair, cl_ee_pair = assemble_cl_TT_EE_isotropic(xf, cfg)
+
+        np.testing.assert_allclose(cl_tt_grid, cl_tt_pair, rtol=0.0, atol=0.0)
+        np.testing.assert_allclose(cl_ee_grid, cl_ee_pair, rtol=0.0, atol=0.0)
+
+    def test_grid_pair_rejects_length_mismatch(self):
+        cfg = _standard_config(ell_max=2)
+        xf = _mock_constant_transfer(ell_max=2)
+        transfer_grid = [xf(float(k)) for k in cfg.k_grid[:-1]]
+
+        with pytest.raises(ValueError, match="transfer_grid length"):
+            assemble_cl_TT_EE_isotropic_from_grid(transfer_grid, cfg)
 
 
 # ============================================================================

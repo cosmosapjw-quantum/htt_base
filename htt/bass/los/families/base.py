@@ -4,12 +4,12 @@ Two helper base classes:
 
 * ``LegacyDelegationKernel`` — wraps the existing
   ``build_lowell_line_of_sight_propagator`` inside the new
-  ``FamilyTransportKernel`` shape. This is how Type I lands in S3: the
-  math doesn't change, only the wrapping. Other families will override
-  ``build_transport_bundle`` with family-specific numerics in S4/S5.
-* ``NotImplementedKernel`` — raises ``FamilyBackendNotImplemented`` on
-  invocation. S3 ships ten of these (II through IX) so the registry is
-  shape-complete even before any Wave A/B numerics land.
+  ``FamilyTransportKernel`` shape. Concrete family subclasses can layer
+  native label translation, seed normalization, and residual-pack checks
+  around that shared transport payload.
+* ``NotImplementedKernel`` — retained for adversarial tests and future
+  staged families. No current ``KNOWN_FAMILIES`` entry is allowed to pass
+  readiness on this placeholder base.
 
 The registry itself (``KNOWN_FAMILIES``, ``get_family_kernel``) lives in
 ``bass.los.families.__init__`` to keep this file focused on behavior.

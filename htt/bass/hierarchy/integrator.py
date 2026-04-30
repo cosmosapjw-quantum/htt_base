@@ -143,6 +143,15 @@ class IntegratorConfig:
     factor — values around 100 reduce the artificial floor and let LSODA
     pick its own coarse steps in the smooth ISW regime, ~3× faster
     overall. Production / regression callers should leave this at 1000."""
+    imex_explicit_update_limit: float = 0.05
+    """VER2 IMEX safety cap for explicit midpoint substeps.
+
+    The adaptive split executor limits each trial substep so the
+    explicit RHS update is at most this fraction of the current state
+    infinity norm. The default 0.05 preserves the historical validated
+    trajectory. Diagnostic k-sweeps may raise this only with a
+    same-output fairness check against the default cap.
+    """
     adiabatic_mode_seed: bool = False
     """V5 step-4b-(a) super-horizon adiabatic IC switch. When True,
     ``_build_seed_projection`` calls ``build_flrw_regular_seed(...,
@@ -210,6 +219,15 @@ class IntegratorConfig:
             raise ValueError(
                 f"rtol/atol must be positive/non-negative, got "
                 f"rtol={self.rtol}, atol={self.atol}"
+            )
+        if self.max_step_factor <= 0:
+            raise ValueError(
+                f"max_step_factor must be positive, got {self.max_step_factor}"
+            )
+        if self.imex_explicit_update_limit <= 0.0:
+            raise ValueError(
+                "imex_explicit_update_limit must be positive, got "
+                f"{self.imex_explicit_update_limit}"
             )
 
     # ------------------------------------------------------------------

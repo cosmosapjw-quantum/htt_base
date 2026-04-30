@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+from dataclasses import replace
 
 import numpy as np
 import pytest
@@ -128,6 +129,13 @@ def test_bundle_metadata_contains_type_ix_specifics():
     assert md["n_isotropic"] == 5.0e-3
     assert math.isclose(md["su2_amplitude_unit_l2"], wigner_d_j2_unit_amplitude())
     assert math.isclose(md["su2_invariant_volume"], 8.0 * math.pi ** 2)
+    assert md["typeix_transport_status"] == "type_ix_compact_su2_projection"
+    assert md["typeix_branch_flag"] == "compact_su2_branch"
+    assert md["typeix_curvature_scale"] == pytest.approx(5.0e-3)
+    assert md["typeix_positive_axis_anisotropy_split"] == pytest.approx(0.0)
+    assert md["typeix_discrete_j"] == 2
+    assert md["typeix_spectral_eigenvalue_jj1"] == 6
+    assert md["polarization_basis_transport"] == "spin2_compact_su2_rotation"
     assert "residual_values" in md
     assert "no_untracked_compact_basis_reordering" in md["forbidden_shortcut_tracked"]
 
@@ -167,7 +175,7 @@ def test_residual_pack_passes_when_residuals_within_tolerance():
 
 
 def test_residual_pack_fails_when_anchor_limit_misaligned():
-    """Synthesize a failure by shrinking the tolerance below the residual."""
+    """Synthesize a failure by injecting a non-zero compact-anchor residual."""
     bundle = KERNEL.build_transport_bundle(
         structure=type_ix_constants(n=5.0e-2),  # larger n → larger anchor drift
         eta_grid_mpc=ETA,
@@ -176,11 +184,13 @@ def test_residual_pack_fails_when_anchor_limit_misaligned():
         visibility_fn=_vis,
         source_builder=_src,
     )
-
-    class _TighterIX(TypeIXKernel):
-        tolerance_anchor_limit = 0.0  # force any drift to fail
-
-    pack = _TighterIX().residual_pack_from_bundle(bundle)
+    residuals = dict(bundle.metadata["residual_values"])
+    residuals["compact_anchor_limit"] = 1.0
+    bad_bundle = replace(
+        bundle,
+        metadata={**dict(bundle.metadata), "residual_values": residuals},
+    )
+    pack = KERNEL.residual_pack_from_bundle(bad_bundle)
     assert pack.passed is False
     assert "compact_anchor_limit" in pack.violated_tolerances
 

@@ -166,13 +166,11 @@ def ic_provenance_gate_bundle(
 ):
     """Emit the runtime ``ic_provenance_gate`` bundle.
 
-    Audit P-07 (2026-04-26): families with ``ic_provenance_status ==
-    "template-card"`` (II, III, IV, VI_0, VI_h, VIII) ship a single
-    FLRW-rooted seed factory and must not be silently promoted to
-    statistics-grade IC. ``allow_template_card`` is the explicit
-    authorization handle: callers that consciously accept the
-    template-card seed for these families must pass ``True``; otherwise
-    the gate fails closed with a forbidden-shortcut flag.
+    Audit P-07 (2026-04-26): explicit ``template-card`` seeds remain a
+    development fallback and must not be silently promoted to
+    statistics-grade IC. Residual-backed family seeds are separate:
+    they carry finite chart-specific seed residuals and do not use the
+    template-card authorization bypass.
     """
     projection_ready = bool(seed_projection is not None and seed_projection.projection_ready)
     residual_after = (

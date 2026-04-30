@@ -6,6 +6,7 @@ k-sweep is gated behind ``@pytest.mark.slow`` (~45 s per run).
 """
 from __future__ import annotations
 
+from types import SimpleNamespace
 import time
 
 import numpy as np
@@ -35,6 +36,14 @@ def test_pipeline_config_defaults() -> None:
     assert cfg.n_output == 64
     assert cfg.anisotropic_stress is True
     assert cfg.quadrature == "trapezoid"
+    assert cfg.imex_explicit_update_limit == 0.05
+    assert cfg.k_solver_batch_mode == "shared_background"
+    assert cfg.intra_chunk_threads == 1
+    assert cfg.k_chunk_size is None
+    assert cfg.joint_imex_reference_check is True
+    assert cfg.joint_imex_reference_rtol == pytest.approx(1.0e-9)
+    assert cfg.joint_imex_reference_atol == pytest.approx(1.0e-9)
+    assert cfg.joint_imex_schedule == "independent"
     assert cfg.adiabatic_mode_seed is True  # V5 step-4b-(a) default
 
 
@@ -173,6 +182,108 @@ def test_scale_transfer_function_helper() -> None:
     assert np.array_equal(scaled.delta_B_all_zero, np.zeros(3))
 
 
+def test_max_transfer_reference_drift_helper() -> None:
+    from bass.spectrum.flrw_pipeline import _max_transfer_reference_drift
+
+    reference = BianchiTransferFunctions(
+        delta_T_m0=np.array([1.0, 2.0]),
+        delta_T_m_plus2=np.zeros(2),
+        delta_T_m_minus2=np.zeros(2),
+        delta_E_m0=np.array([3.0, 4.0]),
+        delta_E_m_plus2=np.zeros(2),
+        delta_E_m_minus2=np.zeros(2),
+        delta_B_all_zero=np.zeros(2),
+    )
+    candidate = BianchiTransferFunctions(
+        delta_T_m0=np.array([1.25, 2.0]),
+        delta_T_m_plus2=np.zeros(2),
+        delta_T_m_minus2=np.zeros(2),
+        delta_E_m0=np.array([3.0, 4.5]),
+        delta_E_m_plus2=np.zeros(2),
+        delta_E_m_minus2=np.zeros(2),
+        delta_B_all_zero=np.zeros(2),
+    )
+
+    max_abs, max_ref = _max_transfer_reference_drift([reference], [candidate])
+
+    assert max_abs == pytest.approx(0.5)
+    assert max_ref == pytest.approx(4.0)
+
+
+def test_max_integration_history_reference_drift_helper() -> None:
+    from bass.spectrum.flrw_pipeline import _max_integration_history_reference_drift
+
+    reference = SimpleNamespace(
+        photon_T_tower=np.array([[1.0, 2.0], [3.0, 4.0]]),
+        photon_E_tower=np.zeros((2, 2)),
+    )
+    candidate = SimpleNamespace(
+        photon_T_tower=np.array([[1.0, 2.5], [3.0, 4.0]]),
+        photon_E_tower=np.zeros((2, 2)),
+    )
+
+    max_abs, max_ref, field = _max_integration_history_reference_drift(
+        [reference],
+        [candidate],
+    )
+
+    assert max_abs == pytest.approx(0.5)
+    assert max_ref == pytest.approx(4.0)
+    assert field == "photon_T_tower"
+
+
+def test_bias_subtraction_uses_shared_chunk_when_workers_are_limiting(monkeypatch) -> None:
+    """Bias and target solves for the same k should share one chunk when
+    workers are the limiting resource. The fake runner keeps this as a
+    fast dispatch/ordering test without invoking Tier-B."""
+    from bass.spectrum import flrw_pipeline as fp
+
+    calls: list[list[tuple[float, float]]] = []
+
+    def fake_shared_chunk(_species, run_specs, *, cfg, bianchi_type):
+        del _species, cfg, bianchi_type
+        specs = [(float(k), float(b)) for k, b in run_specs]
+        calls.append(specs)
+        out = []
+        for k_mpc, b_k_sq in specs:
+            value = k_mpc + b_k_sq
+            out.append(
+                BianchiTransferFunctions(
+                    delta_T_m0=np.array([value], dtype=np.float64),
+                    delta_T_m_plus2=np.zeros(1),
+                    delta_T_m_minus2=np.zeros(1),
+                    delta_E_m0=np.array([2.0 * value], dtype=np.float64),
+                    delta_E_m_plus2=np.zeros(1),
+                    delta_E_m_minus2=np.zeros(1),
+                    delta_B_all_zero=np.zeros(1),
+                )
+            )
+        return out
+
+    monkeypatch.setattr(fp, "_run_chunk_shared_bg_for_specs", fake_shared_chunk)
+
+    cfg = FLRWPipelineConfig(bias_subtraction=True, primordial_b_k_sq=1.25)
+    k_grid = np.array([1.0e-4, 2.0e-4], dtype=np.float64)
+    results = fp._compute_transfer_function_grid_bias_subtracted(
+        object(),
+        k_grid,
+        cfg=cfg,
+        bianchi_type="I",
+        effective=1,
+    )
+
+    assert calls == [[
+        (float(k_grid[0]), 0.0),
+        (float(k_grid[0]), 1.25),
+        (float(k_grid[1]), 0.0),
+        (float(k_grid[1]), 1.25),
+    ]]
+    assert len(results) == 2
+    for result in results:
+        np.testing.assert_allclose(result.delta_T_m0, np.array([1.25]))
+        np.testing.assert_allclose(result.delta_E_m0, np.array([2.5]))
+
+
 def test_d_ell_linear_probe_rejects_invalid_inputs(species) -> None:
     """Round-9 wrapper validates k_grid + probe amplitude before any
     expensive solver dispatch (mirrors the single-k linear-probe API)."""
@@ -214,6 +325,439 @@ def test_pipeline_config_rejects_small_n_output() -> None:
 def test_pipeline_config_rejects_unknown_quadrature() -> None:
     with pytest.raises(ValueError, match="quadrature"):
         FLRWPipelineConfig(quadrature="gauss")
+
+
+def test_pipeline_config_rejects_non_positive_max_step_factor() -> None:
+    with pytest.raises(ValueError, match="max_step_factor"):
+        FLRWPipelineConfig(max_step_factor=0)
+    with pytest.raises(ValueError, match="max_step_factor"):
+        FLRWPipelineConfig(max_step_factor=-10)
+
+
+def test_pipeline_config_rejects_non_positive_imex_update_limit() -> None:
+    with pytest.raises(ValueError, match="imex_explicit_update_limit"):
+        FLRWPipelineConfig(imex_explicit_update_limit=0.0)
+    with pytest.raises(ValueError, match="imex_explicit_update_limit"):
+        FLRWPipelineConfig(imex_explicit_update_limit=-0.1)
+
+
+def test_pipeline_config_rejects_invalid_k_solver_batch_mode() -> None:
+    with pytest.raises(ValueError, match="k_solver_batch_mode"):
+        FLRWPipelineConfig(k_solver_batch_mode="vectorized_magic")
+
+
+def test_pipeline_config_rejects_non_positive_intra_chunk_threads() -> None:
+    with pytest.raises(ValueError, match="intra_chunk_threads"):
+        FLRWPipelineConfig(intra_chunk_threads=0)
+    with pytest.raises(ValueError, match="intra_chunk_threads"):
+        FLRWPipelineConfig(intra_chunk_threads=-2)
+
+
+def test_pipeline_config_rejects_non_positive_k_chunk_size() -> None:
+    with pytest.raises(ValueError, match="k_chunk_size"):
+        FLRWPipelineConfig(k_chunk_size=0)
+    with pytest.raises(ValueError, match="k_chunk_size"):
+        FLRWPipelineConfig(k_chunk_size=-3)
+
+
+def test_pipeline_config_rejects_negative_joint_imex_reference_tolerances() -> None:
+    with pytest.raises(ValueError, match="joint_imex_reference_rtol"):
+        FLRWPipelineConfig(joint_imex_reference_rtol=-1.0e-9)
+    with pytest.raises(ValueError, match="joint_imex_reference_atol"):
+        FLRWPipelineConfig(joint_imex_reference_atol=-1.0e-9)
+
+
+def test_pipeline_config_rejects_invalid_joint_imex_schedule() -> None:
+    assert FLRWPipelineConfig(joint_imex_schedule="ragged").joint_imex_schedule == "ragged"
+    assert (
+        FLRWPipelineConfig(joint_imex_schedule="grouped").joint_imex_schedule
+        == "grouped"
+    )
+    with pytest.raises(ValueError, match="joint_imex_schedule"):
+        FLRWPipelineConfig(joint_imex_schedule="global_shared_magic")
+
+
+def test_split_work_chunks_default_and_fixed_size() -> None:
+    from bass.spectrum.flrw_pipeline import _split_work_chunks
+
+    values = [0, 1, 2, 3, 4]
+
+    assert _split_work_chunks(values, worker_count=2, chunk_size=None) == [
+        [0, 1, 2],
+        [3, 4],
+    ]
+    assert _split_work_chunks(values, worker_count=8, chunk_size=None) == [
+        [0],
+        [1],
+        [2],
+        [3],
+        [4],
+    ]
+    assert _split_work_chunks(values, worker_count=2, chunk_size=2) == [
+        [0, 1],
+        [2, 3],
+        [4],
+    ]
+
+
+def test_joint_imex_k_batch_advances_fake_integrators_shared_loop() -> None:
+    """Fast scheduler test for the true batched k-solver.
+
+    The fake integrators expose the same private methods the production
+    VER2 integrator uses, but with a constant explicit RHS and identity
+    implicit/source/residual steps. This verifies that the batch loop
+    advances multiple k states through one shared-step schedule and
+    reconstructs per-k results without invoking the expensive physics
+    solver.
+    """
+
+    from bass.spectrum.flrw_pipeline import (
+        _run_grouped_imex_k_batch,
+        _run_independent_imex_k_batch,
+        _run_joint_imex_k_batch,
+        _run_ragged_imex_k_batch,
+    )
+
+    class _FakeVisibility:
+        contract = SimpleNamespace(events=None)
+
+    class _FakeIntegrator:
+        _residual_local_dof = 0
+        _residual_harmonic_dof = 0
+        _residual_source_dof = 0
+
+        def __init__(self, rate: float) -> None:
+            self.rate = float(rate)
+            self.config = SimpleNamespace(
+                solver_method="IMEX_MIDPOINT_BDF",
+                tilt_rapidity=0.0,
+                eta_initial_mpc=1.0,
+                eta_final_mpc=2.0,
+                n_output=3,
+                L_max=2,
+                max_step_factor=2,
+                imex_explicit_update_limit=10.0,
+            )
+            self.visibility_source = _FakeVisibility()
+            self.initial_trial_h_values: list[float | None] = []
+
+        def initial_state(self) -> np.ndarray:
+            tower_size = (self.config.L_max + 1) ** 2
+            return np.zeros(4 * tower_size + 9, dtype=np.float64)
+
+        def _explicit_rhs(
+            self,
+            _eta: float,
+            y: np.ndarray,
+            *,
+            out: np.ndarray | None = None,
+        ) -> np.ndarray:
+            if out is None:
+                return np.full_like(y, self.rate, dtype=np.float64)
+            out.fill(self.rate)
+            return out
+
+        def _imex_advance_one_substep(
+            self,
+            *,
+            eta_current: float,
+            eta_target: float,
+            y_current: np.ndarray,
+            tca_tracker: list[bool],
+            tuning,
+            cache,
+            explicit_0=None,
+            initial_trial_h=None,
+        ):
+            del tuning
+            assert explicit_0 is not None
+            self.initial_trial_h_values.append(initial_trial_h)
+            np.testing.assert_allclose(
+                explicit_0,
+                np.full_like(y_current, self.rate, dtype=np.float64),
+            )
+            tca_tracker.append(False)
+            return SimpleNamespace(
+                eta_next=float(eta_target),
+                y_next=np.asarray(
+                    y_current + self.rate * (float(eta_target) - float(eta_current)),
+                    dtype=np.float64,
+                ),
+                cache=cache,
+                nfev=1,
+                njev=0,
+                nlu=0,
+            )
+
+        def _solve_segment_imex(
+            self,
+            *,
+            eta_start: float,
+            eta_stop: float,
+            y0: np.ndarray,
+            eta_eval: np.ndarray,
+            tca_tracker: list[bool],
+        ):
+            del eta_stop
+            eta_arr = np.asarray(eta_eval, dtype=np.float64)
+            columns = [
+                np.asarray(
+                    y0 + self.rate * (float(eta) - float(eta_start)),
+                    dtype=np.float64,
+                )
+                for eta in eta_arr
+            ]
+            tca_tracker.extend([False] * max(0, eta_arr.size - 1))
+            return SimpleNamespace(
+                t=eta_arr,
+                y=np.column_stack(columns),
+                nfev=int(max(0, eta_arr.size - 1)),
+                njev=0,
+                nlu=0,
+                status=0,
+                message="fake independent IMEX solve",
+            )
+
+        def _orthogonal_implicit_step(
+            self,
+            *,
+            eta: float,
+            stage: np.ndarray,
+            dt: float,
+            tca_tracker: list[bool],
+        ) -> np.ndarray:
+            del eta, dt
+            tca_tracker.append(False)
+            return np.asarray(stage, dtype=np.float64)
+
+        def _orthogonal_covered_source_ros2_step(self, **kwargs):
+            return np.asarray(kwargs["y_right"], dtype=np.float64), kwargs["affine_left"]
+
+        def _orthogonal_residual_joint_ros2_step(self, **kwargs):
+            return np.asarray(kwargs["y_right"], dtype=np.float64), kwargs["affine_left"]
+
+        def _build_result(self, **kwargs):
+            kwargs["solver_info"] = {}
+            return SimpleNamespace(**kwargs)
+
+        def build_layout_auxiliary_history_bundle(self, _result):
+            return {"fake": True}
+
+        def build_runtime_execution_trace(self, _result, *, reionization_amplitude: float):
+            return {"reionization_amplitude": reionization_amplitude}
+
+    results = _run_joint_imex_k_batch([_FakeIntegrator(2.0), _FakeIntegrator(3.0)])
+
+    assert len(results) == 2
+    np.testing.assert_allclose(results[0].eta, np.array([1.0, 1.5, 2.0]))
+    np.testing.assert_allclose(results[0].photon_T_tower[-1, 0], 2.0)
+    np.testing.assert_allclose(results[1].photon_T_tower[-1, 0], 3.0)
+    assert results[0].solver_info["k_solver_batch_mode"] == "joint_imex"
+    assert results[0].solver_info["k_solver_batch_size"] == 2
+
+    independent_results = _run_independent_imex_k_batch(
+        [_FakeIntegrator(2.0), _FakeIntegrator(3.0)]
+    )
+    np.testing.assert_allclose(independent_results[0].eta, np.array([1.0, 1.5, 2.0]))
+    np.testing.assert_allclose(independent_results[0].photon_T_tower[-1, 0], 2.0)
+    np.testing.assert_allclose(independent_results[1].photon_T_tower[-1, 0], 3.0)
+    assert (
+        independent_results[0].solver_info["k_solver_batch_schedule"]
+        == "independent"
+    )
+
+    ragged_results = _run_ragged_imex_k_batch(
+        [_FakeIntegrator(2.0), _FakeIntegrator(3.0)]
+    )
+    np.testing.assert_allclose(ragged_results[0].eta, np.array([1.0, 1.5, 2.0]))
+    np.testing.assert_allclose(ragged_results[0].photon_T_tower[-1, 0], 2.0)
+    np.testing.assert_allclose(ragged_results[1].photon_T_tower[-1, 0], 3.0)
+    assert ragged_results[0].solver_info["k_solver_batch_schedule"] == "ragged"
+    assert ragged_results[0].solver_info["k_solver_batch_ragged_substeps"] == 4
+
+    grouped_integrators = [_FakeIntegrator(2.0), _FakeIntegrator(3.0)]
+    grouped_results = _run_grouped_imex_k_batch(grouped_integrators)
+    np.testing.assert_allclose(grouped_results[0].eta, np.array([1.0, 1.5, 2.0]))
+    np.testing.assert_allclose(grouped_results[0].photon_T_tower[-1, 0], 2.0)
+    np.testing.assert_allclose(grouped_results[1].photon_T_tower[-1, 0], 3.0)
+    assert grouped_results[0].solver_info["k_solver_batch_schedule"] == "grouped"
+    assert grouped_results[0].solver_info["k_solver_batch_grouped_substeps"] == 4
+    assert grouped_results[0].solver_info["k_solver_batch_grouped_bucket_count"] == 2
+    assert grouped_results[0].solver_info["k_solver_batch_grouped_max_bucket_size"] == 2
+    for integrator in grouped_integrators:
+        np.testing.assert_allclose(integrator.initial_trial_h_values, [0.5, 0.5])
+
+
+def test_joint_imex_shared_step_failure_reports_failing_member() -> None:
+    from bass.spectrum.flrw_pipeline import _run_joint_imex_k_batch
+
+    class _FakeIntegrator:
+        def __init__(self, *, fail: bool) -> None:
+            self.fail = bool(fail)
+            self.config = SimpleNamespace(
+                solver_method="IMEX_MIDPOINT_BDF",
+                tilt_rapidity=0.0,
+                eta_initial_mpc=1.0,
+                eta_final_mpc=2.0,
+                n_output=3,
+                L_max=2,
+                max_step_factor=2,
+                imex_explicit_update_limit=10.0,
+            )
+
+        def initial_state(self) -> np.ndarray:
+            tower_size = (self.config.L_max + 1) ** 2
+            return np.zeros(4 * tower_size + 9, dtype=np.float64)
+
+        def _explicit_rhs(
+            self,
+            _eta: float,
+            y: np.ndarray,
+            *,
+            out: np.ndarray | None = None,
+        ) -> np.ndarray:
+            if out is None:
+                return np.ones_like(y, dtype=np.float64)
+            out.fill(1.0)
+            return out
+
+        def _imex_advance_one_substep(
+            self,
+            *,
+            eta_current: float,
+            eta_target: float,
+            y_current: np.ndarray,
+            tca_tracker: list[bool],
+            tuning,
+            cache,
+            explicit_0=None,
+            initial_trial_h=None,
+        ):
+            del eta_current, tca_tracker, tuning, explicit_0, initial_trial_h
+            if self.fail:
+                raise RuntimeError("synthetic finite-substep failure")
+            return SimpleNamespace(
+                eta_next=float(eta_target),
+                y_next=np.asarray(y_current, dtype=np.float64),
+                cache=cache,
+                nfev=1,
+                njev=0,
+                nlu=0,
+            )
+
+    with pytest.raises(RuntimeError) as excinfo:
+        _run_joint_imex_k_batch(
+            [_FakeIntegrator(fail=False), _FakeIntegrator(fail=True)]
+        )
+    message = str(excinfo.value)
+    assert "accepted shared substep" in message
+    assert "member=1" in message
+    assert "synthetic finite-substep failure" in message
+    assert "eta_current=" in message
+    assert "last_trial_h=" in message
+    assert "max_explicit_scale=" in message
+
+
+def test_joint_imex_shared_step_nonfinite_explicit_rhs_fails_closed() -> None:
+    from bass.spectrum.flrw_pipeline import (
+        _run_grouped_imex_k_batch,
+        _run_joint_imex_k_batch,
+        _run_ragged_imex_k_batch,
+    )
+
+    class _FakeIntegrator:
+        def __init__(self, *, nonfinite_rhs: bool) -> None:
+            self.nonfinite_rhs = bool(nonfinite_rhs)
+            self.config = SimpleNamespace(
+                solver_method="IMEX_MIDPOINT_BDF",
+                tilt_rapidity=0.0,
+                eta_initial_mpc=1.0,
+                eta_final_mpc=2.0,
+                n_output=3,
+                L_max=2,
+                max_step_factor=2,
+                imex_explicit_update_limit=10.0,
+            )
+
+        def initial_state(self) -> np.ndarray:
+            tower_size = (self.config.L_max + 1) ** 2
+            return np.zeros(4 * tower_size + 9, dtype=np.float64)
+
+        def _explicit_rhs(
+            self,
+            _eta: float,
+            y: np.ndarray,
+            *,
+            out: np.ndarray | None = None,
+        ) -> np.ndarray:
+            if self.nonfinite_rhs:
+                if out is None:
+                    return np.full_like(y, np.inf, dtype=np.float64)
+                out.fill(np.inf)
+                return out
+            if out is None:
+                return np.ones_like(y, dtype=np.float64)
+            out.fill(1.0)
+            return out
+
+        def _imex_advance_one_substep(
+            self,
+            *,
+            eta_current: float,
+            eta_target: float,
+            y_current: np.ndarray,
+            tca_tracker: list[bool],
+            tuning,
+            cache,
+            explicit_0=None,
+            initial_trial_h=None,
+        ):
+            del eta_current, tca_tracker, tuning, explicit_0, initial_trial_h
+            return SimpleNamespace(
+                eta_next=float(eta_target),
+                y_next=np.asarray(y_current, dtype=np.float64),
+                cache=cache,
+                nfev=1,
+                njev=0,
+                nlu=0,
+            )
+
+    with pytest.raises(RuntimeError) as excinfo:
+        _run_joint_imex_k_batch(
+            [
+                _FakeIntegrator(nonfinite_rhs=False),
+                _FakeIntegrator(nonfinite_rhs=True),
+            ]
+        )
+    message = str(excinfo.value)
+    assert "non-finite explicit RHS" in message
+    assert "member=1" in message
+    assert "eta_current=" in message
+    assert "state_norm=" in message
+
+    with pytest.raises(RuntimeError) as ragged_excinfo:
+        _run_ragged_imex_k_batch(
+            [
+                _FakeIntegrator(nonfinite_rhs=False),
+                _FakeIntegrator(nonfinite_rhs=True),
+            ]
+        )
+    ragged_message = str(ragged_excinfo.value)
+    assert "ragged IMEX" in ragged_message
+    assert "non-finite explicit RHS" in ragged_message
+    assert "member=1" in ragged_message
+
+    with pytest.raises(RuntimeError) as grouped_excinfo:
+        _run_grouped_imex_k_batch(
+            [
+                _FakeIntegrator(nonfinite_rhs=False),
+                _FakeIntegrator(nonfinite_rhs=True),
+            ]
+        )
+    grouped_message = str(grouped_excinfo.value)
+    assert "grouped IMEX" in grouped_message
+    assert "non-finite explicit RHS" in grouped_message
+    assert "member=1" in grouped_message
 
 
 @pytest.fixture(scope="module")

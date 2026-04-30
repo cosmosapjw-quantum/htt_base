@@ -158,7 +158,7 @@ class FamilySpec:
     orthogonal_global_tilt_local_boost_split: Literal["frozen"]
     preferred_backend: str
     generic_fallback: str
-    ic_provenance_status: Literal["strong", "template-card"]
+    ic_provenance_status: Literal["strong", "residual-backed", "template-card"]
     canonical_gauge: str
     release_status: Literal["registry-complete"]
 
@@ -276,15 +276,15 @@ _PREFERRED_BACKEND = {
 _IC_PROVENANCE_STATUS = {
     "FLRW": "strong",
     "I": "strong",
-    "II": "template-card",
-    "III": "template-card",
-    "IV": "template-card",
+    "II": "residual-backed",
+    "III": "residual-backed",
+    "IV": "residual-backed",
     "V": "strong",
-    "VI_0": "template-card",
-    "VI_h": "template-card",
+    "VI_0": "residual-backed",
+    "VI_h": "residual-backed",
     "VII_0": "strong",
     "VII_h": "strong",
-    "VIII": "template-card",
+    "VIII": "residual-backed",
     "IX": "strong",
 }
 

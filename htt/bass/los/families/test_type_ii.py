@@ -148,6 +148,15 @@ def test_bundle_metadata_records_nil_specifics():
     assert md["chart"] == "nil_heisenberg"
     assert md["boundary_edge"] == "dirichlet_at_r_equals_L"
     assert md["bessel_first_zero_j0"] == bessel_first_zero_j0()
+    assert md["operator_kernel"] == "type_ii_nilpotent_projection"
+    assert md["nil_transport_status"] == "type_ii_nilpotent_source_integrated"
+    assert md["nil_structure_scale"] == pytest.approx(1.0e-2)
+    assert md["nil_shear_max"] > 0.0
+    assert md["nil_phase_max"] > 0.0
+    assert md["nil_mode_mixing_norm"] > 0.0
+    assert md["polarization_basis_transport"] == "spin2_nil_shear_rotation"
+    assert np.linalg.norm(bundle.transfer_T[..., 1:]) > 0.0
+    assert np.linalg.norm(bundle.transfer_B[..., 1:]) > 0.0
     for shortcut in ("no_flrw_seed_reuse", "no_implicit_periodic_boundary", "no_unlabeled_branch_choice"):
         assert shortcut in md["forbidden_shortcut_tracked"]
 
@@ -180,6 +189,7 @@ def test_residual_pack_passes_within_tolerance():
     assert isinstance(pack, ResidualPack)
     assert pack.passed is True
     assert pack.family == "II"
+    assert pack.metadata["nil_transport_status"] == "type_ii_nilpotent_source_integrated"
 
 
 def test_registered_type_ii_routes_through_kernel():

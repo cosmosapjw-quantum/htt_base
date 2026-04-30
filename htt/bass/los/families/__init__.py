@@ -1,4 +1,4 @@
-"""Per-family transport kernels (v5 PR-08 body; S3 scaffolding).
+"""Per-family transport kernels.
 
 Import layout:
 
@@ -9,14 +9,15 @@ Import layout:
   ``KERNEL`` instance.
 * ``KNOWN_FAMILIES`` — mapping ``family -> KERNEL``. All 11 Bianchi
   families (excluding FLRW, which the facade early-returns) are
-  represented. Today one (Type I) has real numerics via
-  ``LegacyDelegationKernel``; the other ten raise
-  ``FamilyBackendNotImplemented`` when invoked.
+  represented by concrete kernels that emit family residual packs.
+  Publication/readiness promotion is not inferred from registry presence;
+  it is decided by the validation layer from residual-pack, IC, and output
+  evidence.
 
 Opt-in registration: ``register_all_defaults()`` wires every kernel
 into ``bass.transport.exact_transport._TRANSPORT_DISPATCH``. This is
-**not** called automatically — legacy tests must continue to see the
-legacy fallback path until S6 flips the default.
+**not** called automatically; callers opt into the dispatch surface they
+want to validate.
 """
 from __future__ import annotations
 

@@ -23,11 +23,15 @@ import numpy as np
 import pytest
 
 from bass.hierarchy.seed_factory import (
+    RESIDUAL_BACKED_FAMILIES,
     STRONG_FAMILIES,
     TEMPLATE_CARD_FAMILIES,
     FlrwAdiabaticSeed,
+    ResidualBackedFamilySeed,
     SeedPack,
     TemplateCardSeed,
+    TypeVII0HelicalSeed,
+    TypeVIIhHelicalSeed,
     TypeIAdiabaticSeed,
     TypeIXCompactSeed,
     TypeVHyperbolicSeed,
@@ -58,19 +62,23 @@ class TestDispatch:
         assert isinstance(get_seed_factory("FLRW"), FlrwAdiabaticSeed)
         assert isinstance(get_seed_factory("I"), TypeIAdiabaticSeed)
         assert isinstance(get_seed_factory("V"), TypeVHyperbolicSeed)
+        assert isinstance(get_seed_factory("VII_0"), TypeVII0HelicalSeed)
+        assert isinstance(get_seed_factory("VII_h"), TypeVIIhHelicalSeed)
         assert isinstance(get_seed_factory("IX"), TypeIXCompactSeed)
-        for family in TEMPLATE_CARD_FAMILIES:
-            assert isinstance(get_seed_factory(family), TemplateCardSeed)
+        for family in RESIDUAL_BACKED_FAMILIES:
+            assert isinstance(get_seed_factory(family), ResidualBackedFamilySeed)
 
     def test_get_seed_factory_unknown_family_raises(self) -> None:
         with pytest.raises(KeyError, match="registry"):
             get_seed_factory("XII")
 
-    def test_strong_and_template_card_disjoint(self) -> None:
-        # Sanity: a family is strong xor template-card.
+    def test_seed_provenance_sets_are_disjoint(self) -> None:
+        # Sanity: a family is routed through exactly one default provenance tier.
         assert STRONG_FAMILIES.isdisjoint(TEMPLATE_CARD_FAMILIES)
+        assert STRONG_FAMILIES.isdisjoint(RESIDUAL_BACKED_FAMILIES)
+        assert RESIDUAL_BACKED_FAMILIES.isdisjoint(TEMPLATE_CARD_FAMILIES)
         assert (
-            STRONG_FAMILIES | TEMPLATE_CARD_FAMILIES
+            STRONG_FAMILIES | RESIDUAL_BACKED_FAMILIES | TEMPLATE_CARD_FAMILIES
             == frozenset(all_supported_families())
         )
 
@@ -239,26 +247,24 @@ class TestTypeIXCompactSeed:
 
 
 # ────────────────────────────────────────────────────────────────────────
-# Template-card families (V5_ROUND16_02 §4.5 A6)
+# Residual-backed and explicit template-card families
 # ────────────────────────────────────────────────────────────────────────
 
 
-class TestTemplateCardFamilies:
-    """V5_ROUND16_02 §4.4: template-card status + chart routing."""
+class TestResidualBackedFamilies:
+    """Family-specific residual-backed status + chart routing."""
 
-    @pytest.mark.parametrize("family", sorted(TEMPLATE_CARD_FAMILIES))
-    def test_template_card_status_set(self, family: str) -> None:
+    @pytest.mark.parametrize("family", sorted(RESIDUAL_BACKED_FAMILIES))
+    def test_residual_backed_status_set(self, family: str) -> None:
         seed = get_seed_factory(family)(
             family=family, branch="orthogonal",
             k_vec=np.array([0.05, 0.0, 0.0]),
             eta_init=1.0, primordial_amplitude=1.0e-5,
         )
-        assert seed.metadata["ic_provenance_status"] == "template-card"
-        assert seed.residual_summary["seed_regularity_status"] == (
-            "template_card_pending_frobenius"
-        )
-        # Round-17 follow-up flag must be present.
-        assert "round17_followup" in seed.metadata
+        assert seed.metadata["ic_provenance_status"] == "residual-backed"
+        assert seed.residual_summary["seed_regularity_status"].startswith("regular_")
+        assert np.isfinite(float(seed.residual_summary["seed_l2_residual"]))
+        assert abs(float(seed.residual_summary["seed_l2_residual"])) <= 1.0e-8
 
     def test_chart_label_per_family(self) -> None:
         # Chart labels follow V5_ROUND16_02 §4.1 mapping.
@@ -268,8 +274,6 @@ class TestTemplateCardFamilies:
             "IV": "class_b_solvable_rank1",
             "VI_0": "solvable_e_1_1",
             "VI_h": "solvable_h_continuous",
-            "VII_0": "helical_euclidean",
-            "VII_h": "helical_open_h_continuous",
             "VIII": "sl2r_plancherel",
         }
         for family, chart in expected.items():
@@ -279,6 +283,18 @@ class TestTemplateCardFamilies:
                 eta_init=1.0, primordial_amplitude=1.0e-5,
             )
             assert seed.chart == chart
+
+    def test_explicit_template_card_fallback_remains_development_only(self) -> None:
+        seed = TemplateCardSeed("II")(
+            family="II", branch="orthogonal",
+            k_vec=np.array([0.05, 0.0, 0.0]),
+            eta_init=1.0, primordial_amplitude=1.0e-5,
+        )
+        assert seed.metadata["ic_provenance_status"] == "template-card"
+        assert seed.residual_summary["seed_regularity_status"] == (
+            "template_card_pending_frobenius"
+        )
+        assert "round17_followup" in seed.metadata
 
     def test_template_card_factory_rejects_wrong_family(self) -> None:
         # A6: cross-family call must raise.
@@ -329,7 +345,10 @@ class TestCrossCuttingContracts:
         status = seed.residual_summary["seed_regularity_status"]
         assert status in {
             "regular", "regular_hyperbolic", "regular_compact",
-            "template_card_pending_frobenius",
+            "regular_helical", "regular_helical_h", "regular_nil",
+            "regular_hyperbolic_branch", "regular_solvable",
+            "regular_directional_piecewise", "regular_h_branch_piecewise",
+            "regular_sl2r_noncompact", "template_card_pending_frobenius",
         }
 
     def test_no_two_families_share_seed_pack_object(self) -> None:
@@ -387,17 +406,14 @@ class TestAdversarialAuditPRS5:
                 eta_init=1.0, primordial_amplitude=1.0e-5,
             )
 
-    def test_A6_template_card_families_block_strong_status_in_metadata(
+    def test_A6_residual_backed_families_do_not_claim_strong_status(
         self,
     ) -> None:
-        """A6: template-card families gate the fitting layer."""
-        for family in TEMPLATE_CARD_FAMILIES:
+        """A6: residual-backed families do not silently claim strong status."""
+        for family in RESIDUAL_BACKED_FAMILIES:
             seed = get_seed_factory(family)(
                 family=family, branch="orthogonal",
                 k_vec=np.array([0.05, 0.0, 0.0]),
                 eta_init=1.0, primordial_amplitude=1.0e-5,
             )
-            assert seed.metadata["ic_provenance_status"] != "strong", (
-                f"family {family} silently promoted to strong; "
-                f"gate 10 (ic_provenance_gate) would be bypassed."
-            )
+            assert seed.metadata["ic_provenance_status"] == "residual-backed"
