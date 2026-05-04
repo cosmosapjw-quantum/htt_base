@@ -138,6 +138,8 @@ def _statistics_ready_solver_output(*, drop_gate: str | None = None) -> SolverCo
         "observer_neutral": True,
         "thomson_mode": "electron_frame_exact_wrapper",
         "exact_thomson_authority_path": True,
+        "exact_thomson_gate_passed": True,
+        "exact_thomson_operator_scope": "linear_classical_thomson_boosted_pstf",
         "source_propagator_realization": "type_i_exact_matrix",
         "propagator_readiness": "type_i_exact_matrix",
         "propagator_exactness": "exact_type_i_branch",
@@ -203,9 +205,13 @@ def test_live_binding_opens_statistics_ready_claim_only_with_all_evidence() -> N
     assert observable.alm_features["covariance_readiness"] == "full"
     assert observable.alm_features["harmonic_gaussian_ready"] is True
 
+    stochastic_zero = np.zeros((4 + 1) ** 2, dtype=np.float64)
     problem = build_live_observer_boost_problem(
         solver_output=solver_output,
         observable_vector=observable,
+        stochastic_alm_T=stochastic_zero,
+        stochastic_alm_E=stochastic_zero,
+        stochastic_alm_B=stochastic_zero,
     )
 
     assert problem.fitting_ready is True

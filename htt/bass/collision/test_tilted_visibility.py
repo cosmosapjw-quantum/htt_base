@@ -160,6 +160,22 @@ def test_TV01_gamma_e_is_unity_at_zero_velocity(bg, baryon, zero_v_e):
             assert tv.boost_factor(eta, e) == pytest.approx(1.0, rel=0, abs=1e-15)
 
 
+def test_gamma_t_uses_early_fully_ionized_opacity_fallback(bg, baryon, zero_v_e):
+    """Deep pre-recombination Γ_T is not silently zero when HyRec has
+    no row; it uses the baryon fully-ionized opacity fallback."""
+
+    tv = TiltedVisibility(baryon, zero_v_e)
+    z_early = 15000.0
+    eta_early = bg.eta_at_a(1.0 / (1.0 + z_early))
+    expected = baryon.tau_dot_with_early_fully_ionized_fallback(eta_early)
+
+    assert expected > 0.0
+    assert tv.Gamma_T(eta_early, np.array([0.0, 0.0, 1.0])) == pytest.approx(
+        expected,
+        rel=1.0e-12,
+    )
+
+
 # ════════════════════════════════════════════════════════════════════
 #   TV-02: Forward/back asymmetry at v_e = β ẑ
 # ════════════════════════════════════════════════════════════════════
@@ -195,6 +211,21 @@ def test_TV02_propagation_direction_convention_flips_forward_back_order(
     gamma_side = tv.Gamma_T(eta, np.array([1.0, 0.0, 0.0]))
     gamma_back = tv.Gamma_T(eta, np.array([0.0, 0.0, -1.0]))
     assert gamma_back > gamma_side > gamma_forward
+
+
+def test_TV02b_propagation_kappa_uses_same_sign_as_local_rate(
+    bg, baryon, constant_v_e_z,
+):
+    tv = TiltedVisibility(
+        baryon,
+        constant_v_e_z,
+        direction_convention=PhotonDirectionConvention.PROPAGATION,
+    )
+    eta = 0.4 * bg.eta_today
+    kappa_forward = tv.kappa(eta, np.array([0.0, 0.0, 1.0]))
+    kappa_side = tv.kappa(eta, np.array([1.0, 0.0, 0.0]))
+    kappa_back = tv.kappa(eta, np.array([0.0, 0.0, -1.0]))
+    assert kappa_back > kappa_side > kappa_forward
 
 
 # ════════════════════════════════════════════════════════════════════

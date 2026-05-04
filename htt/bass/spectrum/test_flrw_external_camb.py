@@ -9,9 +9,9 @@ not externally validated.
 
 This harness adds the missing piece: it imports ``camb`` (allowed in
 test files per ``test_external_code_policy.py``), runs CAMB at the
-canonical Planck-2018 cosmology, and compares the C_ℓ^TT spectrum
-against the BASS PSTF pipeline. The CAMB run is the *external golden
-fixture*; tolerance is documented per ℓ-bin.
+canonical Planck-2018 cosmology, and compares the C_ℓ^{TT,EE,TE}
+spectra against the BASS PSTF pipeline. The CAMB run is the *external
+golden fixture*; tolerance is documented per ℓ-bin.
 
 The test is **skipped** if CAMB is not installed, so the suite stays
 green in environments without the optional dependency. When CAMB is
@@ -49,18 +49,22 @@ def camb_planck2018_results():
 
 
 @pytest.fixture(scope="module")
-def camb_d_ell_TT(camb_planck2018_results):
-    """Return CAMB's lensed-scalar D_ℓ^TT in μK² up to ℓ=2500."""
+def camb_d_ell_spectra(camb_planck2018_results):
+    """Return CAMB lensed-scalar D_ℓ spectra in μK² up to ℓ=2500."""
     cl_total = camb_planck2018_results.get_lensed_scalar_cls(
         CMB_unit="muK",
         lmax=2500,
         raw_cl=False,  # raw_cl=False returns ℓ(ℓ+1)C_ℓ/(2π) = D_ℓ
     )
     # CAMB returns shape (lmax+1, 4) in (TT, EE, BB, TE) order.
-    return cl_total[:, 0]
+    return {
+        "TT": cl_total[:, 0],
+        "EE": cl_total[:, 1],
+        "TE": cl_total[:, 3],
+    }
 
 
-def test_camb_planck2018_d2_anchor_known_to_3pct(camb_d_ell_TT) -> None:
+def test_camb_planck2018_d2_anchor_known_to_3pct(camb_d_ell_spectra) -> None:
     """Sanity check: CAMB's D_2 sits in a known band around the anchor.
 
     The Planck-2018 base-ΛCDM CAMB run produces D_2^TT in the
@@ -68,7 +72,7 @@ def test_camb_planck2018_d2_anchor_known_to_3pct(camb_d_ell_TT) -> None:
     very loose sanity check that establishes the CAMB fixture is
     non-degenerate.
     """
-    d2 = float(camb_d_ell_TT[2])
+    d2 = float(camb_d_ell_spectra["TT"][2])
     assert 700.0 < d2 < 1300.0, (
         f"CAMB Planck-2018 D_2 = {d2} μK² is outside the expected "
         f"700–1300 band; check fixture parameters"
@@ -83,13 +87,16 @@ def test_camb_planck2018_d2_anchor_known_to_3pct(camb_d_ell_TT) -> None:
     "per-ℓ tolerance.",
     strict=False,
 )
-def test_bass_pstf_d_ell_matches_camb_within_tolerance(camb_d_ell_TT) -> None:
-    """BASS PSTF Python pipeline must agree with CAMB to ≤ 1% on D_2.
+def test_bass_pstf_d_ell_matches_camb_within_tolerance(
+    camb_d_ell_spectra,
+) -> None:
+    """BASS PSTF Python pipeline must agree with CAMB on TT/EE/TE.
 
     Documented tolerance:
-      - ℓ ∈ [2, 30]:    ≤ 1% (low-ℓ, dominated by SW + ISW)
-      - ℓ ∈ [30, 1000]: ≤ 2% (acoustic peaks)
-      - ℓ > 1000:       advisory (pipeline is low-ℓ-targeted)
+      - TT, ℓ ∈ [2, 30]: ≤ 1% (low-ℓ, dominated by SW + ISW)
+      - EE/TE, ℓ ∈ [2, 30]: ≤ 2% after the polarization-source
+        normalization and sign-convention closure is finished.
+      - ℓ > 30: advisory (pipeline is low-ℓ-targeted).
 
     Until PR-024c closes the absolute-amplitude calibration, this
     regression is xfailed.
@@ -120,16 +127,33 @@ def test_bass_pstf_d_ell_matches_camb_within_tolerance(camb_d_ell_TT) -> None:
         assembly_config=assembly_cfg,
         n_workers=4,
     )
-    bass_d_tt = bundle["d_tt"]
-    # ℓ ∈ [2, 30]: per-ℓ relative tolerance of 1%.
-    for ell in range(2, 30):
-        camb_value = float(camb_d_ell_TT[ell])
-        bass_value = float(bass_d_tt[ell])
-        if camb_value == 0.0:
-            continue
-        rel = abs(bass_value - camb_value) / abs(camb_value)
-        assert rel < 0.01, (
-            f"BASS PSTF disagreed with CAMB at ℓ={ell}: "
-            f"BASS={bass_value:.3f} μK², CAMB={camb_value:.3f} μK², "
-            f"|Δ|/CAMB = {rel*100:.2f}% (tolerance 1%)"
-        )
+    bass_by_channel = {
+        "TT": bundle["d_tt"],
+        "EE": bundle["d_ee"],
+        "TE": bundle["d_te"],
+    }
+    tolerances = {"TT": 0.01, "EE": 0.02, "TE": 0.02}
+
+    # ℓ ∈ [2, 30]: per-ℓ relative tolerance.  TE is signed, so the
+    # denominator is |CAMB| with a tiny absolute zero guard; near a
+    # zero-crossing the asserted condition falls back to absolute
+    # smallness rather than a meaningless relative blow-up.
+    for channel, bass_d_ell in bass_by_channel.items():
+        camb_d_ell = camb_d_ell_spectra[channel]
+        tolerance = tolerances[channel]
+        for ell in range(2, 30):
+            camb_value = float(camb_d_ell[ell])
+            bass_value = float(bass_d_ell[ell])
+            if abs(camb_value) < 1.0e-12:
+                assert abs(bass_value) < 1.0e-12, (
+                    f"BASS PSTF {channel} produced nonzero power at a CAMB "
+                    f"zero-crossing: ℓ={ell}, BASS={bass_value:.3e} μK²"
+                )
+                continue
+            rel = abs(bass_value - camb_value) / abs(camb_value)
+            assert rel < tolerance, (
+                f"BASS PSTF {channel} disagreed with CAMB at ℓ={ell}: "
+                f"BASS={bass_value:.3f} μK², CAMB={camb_value:.3f} μK², "
+                f"|Δ|/|CAMB| = {rel*100:.2f}% "
+                f"(tolerance {tolerance*100:.1f}%)"
+            )

@@ -244,6 +244,12 @@ tests must continue to pass** (all PR-S1 tests, all PR-S5 tests, etc.).
 
 ## 5. Critical context for PR-S15 (production switch)
 
+> Supersession note (2026-05-01): the `tilt_background_owner` portion of this
+> migration has now landed. `RuntimeControlBlock` defaults to
+> `nonperturbative_tilt_rhs`; fixed-velocity tilt survives only as an explicit
+> legacy diagnostic owner. The remaining entries in this section are historical
+> migration guidance unless a later plan reopens them.
+
 PR-S15 flips `RuntimeControlBlock` defaults to the Round-16 production
 stance per V5_ROUND16_04 §9:
 

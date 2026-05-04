@@ -421,6 +421,53 @@ def assemble_cl_TT_EE_isotropic_from_grid(
     return cl_tt, cl_ee
 
 
+def assemble_cl_TT_EE_TE_isotropic_from_grid(
+    transfer_grid: Sequence[BianchiTransferFunctions],
+    config: CLAssemblyConfig,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Assemble isotropic TT, EE, and TE from one precomputed transfer grid.
+
+    This is the paired ``TT/EE`` grid assembler extended to the cross
+    spectrum. It consumes the same evaluated transfer functions and the same
+    primordial weighting, so adding ``TE`` does not introduce a separate
+    physical path or a second interpolation layer.
+    """
+    n_ell = config.ell_max + 1
+    n_k = config.k_grid.size
+    if len(transfer_grid) != n_k:
+        raise ValueError(
+            "transfer_grid length must match config.k_grid size "
+            f"({len(transfer_grid)} != {n_k})"
+        )
+
+    delta_T_m0 = np.zeros((n_k, n_ell))
+    delta_E_m0 = np.zeros((n_k, n_ell))
+    for ik, tf in enumerate(transfer_grid):
+        dT = tf.delta_T_m0
+        dE = tf.delta_E_m0
+        delta_T_m0[ik, :min(n_ell, dT.size)] = dT[:n_ell]
+        delta_E_m0[ik, :min(n_ell, dE.size)] = dE[:n_ell]
+
+    p_k = primordial_power_spectrum(config.k_grid, config)
+
+    cl_tt = 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * delta_T_m0 ** 2,
+        config.k_grid,
+        config.quadrature,
+    )
+    cl_ee = 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * delta_E_m0 ** 2,
+        config.k_grid,
+        config.quadrature,
+    )
+    cl_te = 4.0 * np.pi * _integrate_log_k_columns(
+        p_k[:, None] * delta_T_m0 * delta_E_m0,
+        config.k_grid,
+        config.quadrature,
+    )
+    return cl_tt, cl_ee, cl_te
+
+
 def assemble_cl_TE_isotropic(
     transfer_fn: TransferFunctionAtK,
     config: CLAssemblyConfig,

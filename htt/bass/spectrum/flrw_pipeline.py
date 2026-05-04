@@ -9,7 +9,7 @@ that produces Planck-2018 FLRW D_ℓ from real Tier-B physics:
                   → build_scalar_sources_pair
                   → project_m_transfer  → Δ_ℓ^T(k), Δ_ℓ^E(k)
         → k-sweep parallelized via ProcessPoolExecutor
-        → assemble_cl_TT_EE_isotropic
+        → assemble_cl_TT_EE_TE_isotropic_from_grid
         → compute_dl → D_ℓ in μK²
 
 This is the replacement for the reverted S8/S9 toy SW-plateau pipeline
@@ -53,21 +53,28 @@ from bass.los.flrw_bessel_projector import (
     project_scalar_transfer_pair,
 )
 from bass.los.los_grid_builder import build_los_grid
+from bass.recombination.reionization import (
+    compute_kappa_from_tau_dot,
+    compute_tau_dot_conformal_Mpc,
+)
 from bass.runtime import (
     CheckpointPolicy,
     ConstraintProjectionPolicy,
     CouplingMode,
+    DEFAULT_PRE_RECOMBINATION_MARGIN_MPC,
     FeatureStatus,
     IntegratorFamily,
+    PLANCK_2018_Z_STAR,
     RuntimeControlBlock,
     SolverFeatureFlags,
     SolverTier,
     build_cosmological_integrator_config,
+    cosmological_critical_etas,
     execute_tier_b_solver,
 )
 from bass.spectrum.cl_assembly import (
     CLAssemblyConfig,
-    assemble_cl_TT_EE_isotropic_from_grid,
+    assemble_cl_TT_EE_TE_isotropic_from_grid,
     compute_dl,
 )
 from bass.spectrum.tier_b_source_extraction import (
@@ -82,6 +89,7 @@ if TYPE_CHECKING:
 
 __all__ = [
     "FLRWPipelineConfig",
+    "_resolve_z_injection_for_k",
     "compute_transfer_function_at_k",
     "compute_transfer_function_grid",
     "compute_linear_probe_transfer_function",
@@ -159,6 +167,29 @@ class FLRWPipelineConfig:
     ell_max_transfer: int = 4
     quadrature: str = "trapezoid"
     gamma_T_over_H_threshold: float = 100.0
+    z_injection: float = PLANCK_2018_Z_STAR
+    """Nominal injection redshift used by the cosmological Tier-B run.
+
+    The historical default is the Planck-2018 visibility peak
+    ``z_* = 1089.94``. For transfer-function validation this may be
+    raised explicitly, or automatically via
+    ``superhorizon_x_max_at_start``, so the regular adiabatic seed is
+    applied in a genuine ``k η_init << 1`` regime.
+    """
+    pre_recombination_margin_mpc: float = DEFAULT_PRE_RECOMBINATION_MARGIN_MPC
+    """Conformal-time margin subtracted from ``η(z_injection)``.
+
+    Set to zero for strict ``k η_init`` diagnostics, or keep the default
+    20 Mpc ramp for the historical recombination-start path.
+    """
+    superhorizon_x_max_at_start: float | None = None
+    """Optional per-k start resolver enforcing ``k * η_init <= x_max``.
+
+    When set, each k may receive a different ``z_injection``. Shared
+    background k-chunking is disabled in that mode because the
+    background/visibility/integrator anchors are no longer common across
+    k. This is a physics control, not a speed knob.
+    """
     random_seed: int = 42
     unit_amplitude_normalization: bool = True
     max_step_factor: int = 1000
@@ -173,6 +204,29 @@ class FLRWPipelineConfig:
     Default 0.05 preserves the historical VER2 IMEX safety cap.
     Diagnostic sweeps may raise this only with a same-output fairness
     comparison against the default cap."""
+    co_evolve_scalar_metric: bool = False
+    """Forwarded to ``IntegratorConfig.co_evolve_scalar_metric``.
+
+    When True, Tier-B runs co-evolve MB95 ``(etak, sigma)`` in the native
+    state and runtime dispatch routes the solve to full-RHS BDF until the
+    scalar-metric IMEX block is validated.
+    """
+    co_evolve_scalar_streaming: bool = False
+    """Forwarded to ``IntegratorConfig.co_evolve_scalar_streaming``.
+
+    This enables the MB95 scalar m=0 photon/neutrino intensity
+    free-streaming recursion. It is a real implemented physics path, but
+    remains opt-in because full-range BDF/TCA/cutoff stability is still under
+    validation.
+    """
+    flrw_source_frame: str = "legacy_newtonian_constraint"
+    """Source frame passed to ``extract_flrw_sources_from_tier_b``.
+
+    ``"legacy_newtonian_constraint"`` is the current default. Use
+    ``"mb95_synchronous_effective"`` only with
+    ``co_evolve_scalar_metric=True`` for authority-style scalar-source
+    experiments, or explicitly for post-hoc diagnostics.
+    """
     k_solver_batch_mode: str = "shared_background"
     """k-solver execution mode inside a shared-background chunk.
 
@@ -298,6 +352,23 @@ class FLRWPipelineConfig:
                 f"quadrature must be 'trapezoid' or 'simpson'; "
                 f"got {self.quadrature!r}"
             )
+        if not (float(self.z_injection) > 0.0):
+            raise ValueError(
+                f"z_injection must be positive; got {self.z_injection}"
+            )
+        if float(self.pre_recombination_margin_mpc) < 0.0:
+            raise ValueError(
+                "pre_recombination_margin_mpc must be non-negative; "
+                f"got {self.pre_recombination_margin_mpc}"
+            )
+        if (
+            self.superhorizon_x_max_at_start is not None
+            and not (float(self.superhorizon_x_max_at_start) > 0.0)
+        ):
+            raise ValueError(
+                "superhorizon_x_max_at_start must be positive when set; "
+                f"got {self.superhorizon_x_max_at_start}"
+            )
         if self.max_step_factor <= 0:
             raise ValueError(
                 f"max_step_factor must be positive; got {self.max_step_factor}"
@@ -306,6 +377,14 @@ class FLRWPipelineConfig:
             raise ValueError(
                 "imex_explicit_update_limit must be positive; "
                 f"got {self.imex_explicit_update_limit}"
+            )
+        if self.flrw_source_frame not in {
+            "legacy_newtonian_constraint",
+            "mb95_synchronous_effective",
+        }:
+            raise ValueError(
+                "flrw_source_frame must be 'legacy_newtonian_constraint' or "
+                f"'mb95_synchronous_effective'; got {self.flrw_source_frame!r}"
             )
         if self.k_solver_batch_mode not in {
             "shared_background",
@@ -348,6 +427,65 @@ class FLRWPipelineConfig:
                 "'grouped', or 'shared_step'; "
                 f"got {self.joint_imex_schedule!r}"
             )
+
+
+def _resolve_z_injection_for_k(
+    species: "SpeciesBackgroundRegistry",
+    cfg: FLRWPipelineConfig,
+    k_mpc: float,
+) -> float:
+    """Resolve the injection redshift for one transfer-function k.
+
+    With ``superhorizon_x_max_at_start=None`` this returns the explicit
+    ``cfg.z_injection``. Otherwise it raises ``z_injection`` only when
+    the current start would violate ``k η_init <= x_max``. The returned
+    value is derived from the shared FLRW background table; no CAMB or
+    fitted external timing is used.
+    """
+
+    k = float(k_mpc)
+    if not (k > 0.0):
+        raise ValueError(f"k_mpc must be positive; got {k_mpc}")
+    if cfg.superhorizon_x_max_at_start is None:
+        return float(cfg.z_injection)
+
+    anchors = cosmological_critical_etas(
+        species,
+        z_injection=float(cfg.z_injection),
+        pre_recombination_margin_mpc=float(cfg.pre_recombination_margin_mpc),
+    )
+    current_eta_initial = float(anchors["eta_initial_mpc"])
+    target_eta_initial = min(
+        current_eta_initial,
+        float(cfg.superhorizon_x_max_at_start) / k,
+    )
+    if np.isclose(
+        target_eta_initial,
+        current_eta_initial,
+        rtol=0.0,
+        atol=1.0e-12,
+    ):
+        return float(cfg.z_injection)
+
+    eta_star_target = (
+        target_eta_initial + float(cfg.pre_recombination_margin_mpc)
+    )
+    bg_table = species.bg_table
+    eta_min = float(bg_table.eta[0])
+    eta_today = float(bg_table.eta_today)
+    if eta_star_target < eta_min or eta_star_target >= eta_today:
+        raise ValueError(
+            "superhorizon_x_max_at_start requests an injection anchor "
+            "outside the species background table: "
+            f"k={k:.6e}, eta_star_target={eta_star_target:.6e} Mpc, "
+            f"eta_range=[{eta_min:.6e}, {eta_today:.6e}]"
+        )
+
+    a_target = float(np.asarray(bg_table.interp_a(eta_star_target)))
+    z_target = 1.0 / a_target - 1.0
+    if z_target < float(cfg.z_injection):
+        return float(cfg.z_injection)
+    return float(z_target)
 
 
 def _pipeline_manifest(label: str) -> ArtifactManifest:
@@ -426,6 +564,42 @@ def build_visibility_and_kappa_callables(
     baryon = species[SpeciesLabel.BARYON]
     recomb = baryon._recomb  # noqa: SLF001 — stable internal accessor
     bg_table = species.bg_table
+    cosmo = baryon._cosmology_for_recombination()  # noqa: SLF001
+    z_min = float(recomb.table.z_min)
+    z_max = float(recomb.table.z_max)
+    z_bg_max = float(1.0 / float(bg_table.a[0]) - 1.0)
+
+    if z_bg_max > z_max:
+        z_early_grid = np.geomspace(z_max, z_bg_max, 4096)
+        z_early_grid[0] = z_max
+        x_e_full = np.full_like(
+            z_early_grid,
+            1.0 + 2.0 * cosmo.f_He,
+            dtype=np.float64,
+        )
+        tau_dot_early_grid = np.asarray(
+            compute_tau_dot_conformal_Mpc(z_early_grid, x_e_full, cosmo),
+            dtype=np.float64,
+        )
+        kappa_z_max = float(np.asarray(recomb.query_kappa(z_max)))
+        kappa_early_grid = (
+            kappa_z_max
+            + compute_kappa_from_tau_dot(
+                z_early_grid,
+                tau_dot_early_grid,
+                cosmo,
+            )
+        )
+    else:
+        z_early_grid = np.array([z_max], dtype=np.float64)
+        tau_dot_early_grid = np.array(
+            [float(np.asarray(recomb.query_tau_dot(z_max)))],
+            dtype=np.float64,
+        )
+        kappa_early_grid = np.array(
+            [float(np.asarray(recomb.query_kappa(z_max)))],
+            dtype=np.float64,
+        )
 
     def _z_of_eta(eta: np.ndarray) -> np.ndarray:
         a = np.asarray(bg_table.interp_a(eta), dtype=np.float64)
@@ -433,15 +607,51 @@ def build_visibility_and_kappa_callables(
 
     def g_of_eta(eta: np.ndarray) -> np.ndarray:
         z = _z_of_eta(np.asarray(eta, dtype=np.float64))
-        # Clip to recomb table range to avoid the range-check raise at
-        # η-grid endpoints that graze the table boundary by < 1e-9.
-        z_clipped = np.clip(z, float(recomb.table.z_min), float(recomb.table.z_max))
-        return np.asarray(recomb.query_visibility(z_clipped), dtype=np.float64)
+        scalar = z.ndim == 0
+        z_arr = np.atleast_1d(z).astype(np.float64)
+        out = np.empty_like(z_arr, dtype=np.float64)
+        table_mask = z_arr <= z_max
+        if np.any(table_mask):
+            z_clipped = np.clip(z_arr[table_mask], z_min, z_max)
+            out[table_mask] = np.asarray(
+                recomb.query_visibility(z_clipped),
+                dtype=np.float64,
+            )
+        early_mask = ~table_mask
+        if np.any(early_mask):
+            tau_dot = np.interp(
+                z_arr[early_mask],
+                z_early_grid,
+                tau_dot_early_grid,
+            )
+            kappa = np.interp(
+                z_arr[early_mask],
+                z_early_grid,
+                kappa_early_grid,
+            )
+            out[early_mask] = tau_dot * np.exp(-kappa)
+        return out[0] if scalar else out
 
     def kappa_of_eta(eta: np.ndarray) -> np.ndarray:
         z = _z_of_eta(np.asarray(eta, dtype=np.float64))
-        z_clipped = np.clip(z, float(recomb.table.z_min), float(recomb.table.z_max))
-        return np.asarray(recomb.query_kappa(z_clipped), dtype=np.float64)
+        scalar = z.ndim == 0
+        z_arr = np.atleast_1d(z).astype(np.float64)
+        out = np.empty_like(z_arr, dtype=np.float64)
+        table_mask = z_arr <= z_max
+        if np.any(table_mask):
+            z_clipped = np.clip(z_arr[table_mask], z_min, z_max)
+            out[table_mask] = np.asarray(
+                recomb.query_kappa(z_clipped),
+                dtype=np.float64,
+            )
+        early_mask = ~table_mask
+        if np.any(early_mask):
+            out[early_mask] = np.interp(
+                z_arr[early_mask],
+                z_early_grid,
+                kappa_early_grid,
+            )
+        return out[0] if scalar else out
 
     return g_of_eta, kappa_of_eta
 
@@ -467,6 +677,7 @@ def _los_and_wrap(
         species,
         k=float(k_mpc),
         anisotropic_stress=cfg.anisotropic_stress,
+        source_frame=str(cfg.flrw_source_frame),
     )
     if visibility_callables is None:
         g_of_eta, kappa_of_eta = build_visibility_and_kappa_callables(species)
@@ -1419,9 +1630,12 @@ def compute_transfer_function_at_k(
     if not (float(k_mpc) > 0.0):
         raise ValueError(f"k_mpc must be positive; got {k_mpc}")
     cfg = config or FLRWPipelineConfig()
+    z_injection = _resolve_z_injection_for_k(species, cfg, float(k_mpc))
 
     integrator_config = build_cosmological_integrator_config(
         species,
+        z_injection=z_injection,
+        pre_recombination_margin_mpc=float(cfg.pre_recombination_margin_mpc),
         L_max=cfg.L_max_tower,
         n_output=cfg.n_output,
         rtol=cfg.rtol,
@@ -1437,6 +1651,10 @@ def compute_transfer_function_at_k(
         max_step_factor=int(getattr(cfg, "max_step_factor", 1000)),
         imex_explicit_update_limit=float(
             getattr(cfg, "imex_explicit_update_limit", 0.05)
+        ),
+        co_evolve_scalar_metric=bool(getattr(cfg, "co_evolve_scalar_metric", False)),
+        co_evolve_scalar_streaming=bool(
+            getattr(cfg, "co_evolve_scalar_streaming", False)
         ),
     )
 
@@ -1534,6 +1752,13 @@ def _run_chunk_shared_bg_for_specs(
     if len(run_specs) == 0:
         return []
     specs = [(float(k), float(b_k_sq)) for k, b_k_sq in run_specs]
+    if cfg.superhorizon_x_max_at_start is not None and len(specs) > 1:
+        raise ValueError(
+            "shared-background chunking is incompatible with per-k "
+            "superhorizon_x_max_at_start because each k can require a "
+            "different z_injection"
+        )
+    z_injection = _resolve_z_injection_for_k(species, cfg, float(specs[0][0]))
 
     rc = _pipeline_runtime_controls(cfg)
     ff = _pipeline_feature_flags()
@@ -1541,6 +1766,8 @@ def _run_chunk_shared_bg_for_specs(
     # k-independent shared build — done ONCE per chunk, reused across k.
     template_integrator_config = build_cosmological_integrator_config(
         species,
+        z_injection=z_injection,
+        pre_recombination_margin_mpc=float(cfg.pre_recombination_margin_mpc),
         L_max=cfg.L_max_tower,
         n_output=cfg.n_output,
         rtol=cfg.rtol,
@@ -1553,6 +1780,10 @@ def _run_chunk_shared_bg_for_specs(
         max_step_factor=int(getattr(cfg, "max_step_factor", 1000)),
         imex_explicit_update_limit=float(
             getattr(cfg, "imex_explicit_update_limit", 0.05)
+        ),
+        co_evolve_scalar_metric=bool(getattr(cfg, "co_evolve_scalar_metric", False)),
+        co_evolve_scalar_streaming=bool(
+            getattr(cfg, "co_evolve_scalar_streaming", False)
         ),
     )
     template_request = _build_tier_b_runtime_request(
@@ -2146,7 +2377,11 @@ def compute_transfer_function_grid(
     if effective == 1:
         # Single-worker path — run sequentially. Use shared-bg chunk when
         # the caller asked for it so the savings still materialize.
-        if chunked and k_array.size >= 2:
+        if (
+            chunked
+            and cfg.superhorizon_x_max_at_start is None
+            and k_array.size >= 2
+        ):
             return _run_chunk_shared_bg(
                 species, k_array.tolist(), cfg=cfg, bianchi_type=bianchi_type
             )
@@ -2169,7 +2404,11 @@ def compute_transfer_function_grid(
     # Auto-disable chunking when chunk size would be 1 (N_k ≤ n_workers)
     # — no amortization possible and tiny wrapper overhead is strictly
     # negative.
-    use_chunking = bool(chunked) and (int(k_array.size) > int(effective))
+    use_chunking = (
+        bool(chunked)
+        and cfg.superhorizon_x_max_at_start is None
+        and (int(k_array.size) > int(effective))
+    )
 
     try:
         if use_chunking:
@@ -2255,7 +2494,10 @@ def _compute_transfer_function_grid_bias_subtracted(
         # target solve in the same shared-background chunk. If there are
         # enough workers to run all 2*N solves concurrently, retain the
         # old per-run dispatch to minimize wall time.
-        use_pair_chunking = int(effective) <= len(target_pairs)
+        use_pair_chunking = (
+            cfg.superhorizon_x_max_at_start is None
+            and int(effective) <= len(target_pairs)
+        )
         if use_pair_chunking:
             worker_count = max(1, min(int(effective), len(target_pairs)))
             pair_chunks = [
@@ -2353,7 +2595,7 @@ def compute_flrw_cl_tt(
     n_workers: int | None = None,
     bianchi_type: str = "I",
 ) -> dict[str, Any]:
-    """Compute C_ℓ^TT and C_ℓ^EE from a k-sweep of Tier-B transfer functions.
+    """Compute C_ℓ^TT, C_ℓ^EE, and C_ℓ^TE from a k-sweep of Tier-B transfer functions.
 
     Returns a dict::
 
@@ -2362,6 +2604,7 @@ def compute_flrw_cl_tt(
             "transfer_functions": list[BianchiTransferFunctions],
             "cl_tt": np.ndarray,
             "cl_ee": np.ndarray,
+            "cl_te": np.ndarray,
             "assembly_config": CLAssemblyConfig,
         }
     """
@@ -2390,7 +2633,7 @@ def compute_flrw_cl_tt(
         bianchi_type=bianchi_type,
         n_workers=n_workers,
     )
-    cl_tt, cl_ee = assemble_cl_TT_EE_isotropic_from_grid(
+    cl_tt, cl_ee, cl_te = assemble_cl_TT_EE_TE_isotropic_from_grid(
         results, assembly_config
     )
     return {
@@ -2398,6 +2641,7 @@ def compute_flrw_cl_tt(
         "transfer_functions": results,
         "cl_tt": cl_tt,
         "cl_ee": cl_ee,
+        "cl_te": cl_te,
         "assembly_config": assembly_config,
     }
 
@@ -2417,6 +2661,7 @@ def compute_flrw_d_ell(
 
         "d_tt" : np.ndarray    # D_ℓ^TT in μK²
         "d_ee" : np.ndarray    # D_ℓ^EE in μK²
+        "d_te" : np.ndarray    # D_ℓ^TE in μK²
 
     The Route-B MM-curve anchor reports ``D_2^TT = 1002.086744 μK²`` for
     Planck-2018. For ~50+ k-grid points this extraction path should
@@ -2434,6 +2679,7 @@ def compute_flrw_d_ell(
     t_cmb_K = float(bundle["assembly_config"].T_CMB_K)
     bundle["d_tt"] = compute_dl(bundle["cl_tt"], T_CMB_K=t_cmb_K)
     bundle["d_ee"] = compute_dl(bundle["cl_ee"], T_CMB_K=t_cmb_K)
+    bundle["d_te"] = compute_dl(bundle["cl_te"], T_CMB_K=t_cmb_K)
     return bundle
 
 
@@ -2512,8 +2758,10 @@ def compute_flrw_d_ell_linear_probe(
         "calibration_factor"       : float
         "cl_tt"                    : np.ndarray
         "cl_ee"                    : np.ndarray
+        "cl_te"                    : np.ndarray
         "d_tt"                     : np.ndarray  (μK²)
         "d_ee"                     : np.ndarray  (μK²)
+        "d_te"                     : np.ndarray  (μK²)
         "assembly_config"          : CLAssemblyConfig
 
     Notes
@@ -2590,7 +2838,7 @@ def compute_flrw_d_ell_linear_probe(
             "the transfer-function lookup is keyed on k values"
         )
 
-    cl_tt, cl_ee = assemble_cl_TT_EE_isotropic_from_grid(
+    cl_tt, cl_ee, cl_te = assemble_cl_TT_EE_TE_isotropic_from_grid(
         alpha_list, assembly_config
     )
     t_cmb_K = float(assembly_config.T_CMB_K)
@@ -2601,7 +2849,9 @@ def compute_flrw_d_ell_linear_probe(
         "calibration_factor": float(calibration_factor),
         "cl_tt": cl_tt,
         "cl_ee": cl_ee,
+        "cl_te": cl_te,
         "d_tt": compute_dl(cl_tt, T_CMB_K=t_cmb_K),
         "d_ee": compute_dl(cl_ee, T_CMB_K=t_cmb_K),
+        "d_te": compute_dl(cl_te, T_CMB_K=t_cmb_K),
         "assembly_config": assembly_config,
     }

@@ -272,6 +272,36 @@ def _metadata_bool(metadata: Mapping[str, Any], key: str) -> bool:
     return bool(metadata.get(key, False))
 
 
+def _gate_bundle_field(
+    gate_registry: Mapping[str, object] | None,
+    gate_name: str,
+    field_name: str,
+) -> Mapping[str, object]:
+    if gate_registry is None:
+        return {}
+    gate = gate_registry.get(gate_name)
+    if gate is None:
+        return {}
+    field = getattr(gate, field_name, None)
+    if isinstance(field, Mapping):
+        return dict(field)
+    if isinstance(gate, Mapping) and isinstance(gate.get(field_name), Mapping):
+        return dict(gate[field_name])
+    return {}
+
+
+def _gate_bundle_passed(
+    gate_registry: Mapping[str, object] | None,
+    gate_name: str,
+) -> bool:
+    if gate_registry is None:
+        return False
+    gate = gate_registry.get(gate_name)
+    if gate is None:
+        return False
+    return bool(getattr(gate, "passed", gate.get("passed", False) if isinstance(gate, Mapping) else False))
+
+
 def evaluate_publication_claim(
     claim_id: str,
     *,
@@ -316,27 +346,87 @@ def evaluate_publication_claim(
             },
             blockers=blockers,
         )
+    if claim_id == "full_stokes_thomson_authority":
+        metadata = _gate_bundle_field(gate_registry, "exact_thomson_gate", "metadata")
+        known_limits = _gate_bundle_field(
+            gate_registry,
+            "exact_thomson_gate",
+            "known_limit_checks",
+        )
+        forbidden_shortcuts = _gate_bundle_field(
+            gate_registry,
+            "exact_thomson_gate",
+            "forbidden_shortcut_checks",
+        )
+        checks = {
+            "exact_gate_passed": _gate_bundle_passed(gate_registry, "exact_thomson_gate"),
+            "full_stokes_scope": metadata.get("operator_scope")
+            == "full_electron_frame_stokes",
+            "angular_mueller_source": metadata.get("source_split")
+            == "angular_stokes_mueller_integral",
+            "quadrature_normalized": known_limits.get(
+                "angular_quadrature_weights_normalized"
+            )
+            is True,
+            "screen_basis_orthonormal": known_limits.get("screen_basis_orthonormal")
+            is True,
+            "screen_basis_spin2_rotation": known_limits.get(
+                "screen_basis_rotation_contract_declared"
+            )
+            is True
+            and metadata.get("basis_transport_contract")
+            == "explicit_screen_basis_spin2_rotation",
+            "tilted_branch_authority": known_limits.get("full_tilted_stokes_authority")
+            is True,
+            "electron_frame_owned": forbidden_shortcuts.get("electron_frame_owned")
+            is True,
+            "not_boosted_pstf_wrapper": forbidden_shortcuts.get(
+                "no_boosted_pstf_wrapper_marketed_as_full_tilted_thomson"
+            )
+            is True,
+        }
+        blockers = tuple(key for key, passed in checks.items() if not passed)
+        return PublicationClaimDecision(
+            claim_id=claim_id,
+            allowed=not blockers,
+            evidence=checks,
+            blockers=blockers,
+        )
     if claim_id == "full_anisotropic_polarization_output":
-        thomson_mode = str(metadata.get("thomson_mode", ""))
+        operator_scope = metadata.get("exact_thomson_operator_scope")
+        tilted_branch = bool(metadata.get("tilt_enabled", False))
+        exact_operator_ok = (
+            operator_scope == "full_electron_frame_stokes"
+            if tilted_branch
+            else operator_scope
+            in {"linear_classical_thomson_boosted_pstf", "full_electron_frame_stokes"}
+        )
+        tilted_polarization_rhs_ok = (not tilted_branch) or (
+            metadata.get("collision_polarization_rhs_owner")
+            in {
+                "full_stokes_spin2_angular_polarization",
+                "full_stokes_q_u_projected_rhs",
+            }
+        )
         checks = {
             "exact_thomson": bool(
-                metadata.get("exact_thomson_authority_path", False)
+                metadata.get("exact_thomson_gate_passed", False)
             )
-            or thomson_mode
-            in {
-                "electron_frame_exact_wrapper",
-                "exact_electron_frame",
-                "electron_frame_tilted_layer_b_exact",
-            }
-            or (
-                thomson_mode.startswith("electron_frame")
-                and "exact" in thomson_mode
-            ),
+            and exact_operator_ok,
+            "tilted_polarization_rhs": tilted_polarization_rhs_ok,
             "b_runtime": _metadata_bool(metadata, "b_mode_runtime_available"),
             "b_support": metadata.get("b_mode_output_support")
             in {"wigner_d_path_b", "evolved_b_mode"},
             "tilt_boost_split": metadata.get("tilt_boost_separation")
             == "explicit_nonmerged",
+            "los_sources_fail_closed": (
+                metadata.get("source_propagator_fail_closed_sources") is True
+                and metadata.get("source_propagator_source_completeness_policy")
+                == "explicit_required_fail_closed"
+            ),
+            "source_propagator_output_ready": (
+                metadata.get("source_propagator_publication_output_claim_allowed") is True
+            ),
         }
         blockers = tuple(key for key, passed in checks.items() if not passed)
         return PublicationClaimDecision(
@@ -408,6 +498,10 @@ def evaluate_publication_claim(
                 "optimization_identity_status"
             )
             in {"bit_identical", "within_declared_tolerance"},
+            "no_hidden_full_rhs_fallback": metadata.get(
+                "imex_full_rhs_fallback_used"
+            )
+            is False,
         }
         blockers = tuple(key for key, passed in checks.items() if not passed)
         return PublicationClaimDecision(

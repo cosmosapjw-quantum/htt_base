@@ -44,8 +44,6 @@ from bass.recombination.reionization import compute_reionization_tau
 from bass.species.base import SpeciesLabel
 from bass.species.massive_neutrino import MassiveNeutrinoBackground
 from bass.species.registry import SpeciesBackgroundRegistry
-from bass.validation import summarize_gate_status
-
 __all__ = [
     "BassReleaseMetadata",
     "build_solver_core_output",
@@ -58,6 +56,30 @@ __all__ = [
 
 def _branch_name(*, tilt_enabled: bool) -> str:
     return "tilted" if bool(tilt_enabled) else "orthogonal"
+
+
+def _resolved_tilt_background_owner(
+    *,
+    tilt_enabled: bool,
+    requested_owner: str,
+) -> tuple[str, str, str]:
+    if not bool(tilt_enabled):
+        return (
+            "orthogonal_zero_tilt",
+            "not_applicable_orthogonal_zero_tilt",
+            "not_applicable_orthogonal_zero_tilt",
+        )
+    if requested_owner == "nonperturbative_tilt_rhs":
+        return (
+            "nonperturbative_tilt_rhs",
+            "production_dynamic_nonperturbative_rapidity",
+            "runtime_wired_dynamic_rapidity_owner",
+        )
+    return (
+        "fixed_velocity_closure",
+        "legacy_fixed_velocity_closure",
+        "research_contract_only",
+    )
 
 
 def _mode_label_history_payload_summary(
@@ -229,6 +251,24 @@ def _propagator_readiness(
     return "approximate_family_kernel"
 
 
+def _independent_gate_passed(
+    gate_registry: Mapping[str, object] | None,
+    gate_name: str,
+) -> bool:
+    """Return one gate's own pass bit without fitting-ladder propagation."""
+
+    if gate_registry is None:
+        return False
+    gate = gate_registry.get(gate_name)
+    if gate is None:
+        return False
+    if hasattr(gate, "passed"):
+        return bool(getattr(gate, "passed"))
+    if isinstance(gate, Mapping):
+        return bool(gate.get("passed", False))
+    return bool(gate)
+
+
 def _native_propagator_readiness(
     *,
     propagator: SourcePropagatorConfig,
@@ -240,14 +280,16 @@ def _native_propagator_readiness(
     if mode_ops is None:
         return fallback
     mode_ops_metadata = dict(getattr(mode_ops, "metadata", {}))
-    gate_status = {} if gate_registry is None else summarize_gate_status(gate_registry)
     required_gates = (
         "tilt_boost_separation_gate",
         "ic_provenance_gate",
         "family_backend_gate",
         "hierarchy_layout_gate",
     )
-    if gate_status and any(gate_status.get(gate) != "open" for gate in required_gates):
+    if gate_registry is not None and any(
+        not _independent_gate_passed(gate_registry, gate)
+        for gate in required_gates
+    ):
         return "contract_only_unavailable"
     if (
         mode_ops_metadata.get("lookup_resolution_status") != "frozen_v5_formula_set"
@@ -269,6 +311,38 @@ def _native_propagator_readiness(
     if feature_flags.source_propagator is FeatureStatus.DISABLED:
         return "contract_only_unavailable"
     return "approximate_family_kernel"
+
+
+def _ic_provenance_status_from_runtime(
+    *,
+    seed_pack: object | None,
+    gate_registry: Mapping[str, object] | None,
+    result: IntegrationResult,
+) -> str | None:
+    if seed_pack is not None:
+        seed_metadata = getattr(seed_pack, "metadata", {})
+        if isinstance(seed_metadata, Mapping) and seed_metadata.get(
+            "ic_provenance_status"
+        ):
+            return str(seed_metadata["ic_provenance_status"])
+    if gate_registry is not None:
+        gate = gate_registry.get("ic_provenance_gate")
+        gate_metadata = dict(getattr(gate, "metadata", {}))
+        if gate_metadata.get("ic_provenance_status"):
+            return str(gate_metadata["ic_provenance_status"])
+        seed_payload = gate_metadata.get("seed_pack")
+        if isinstance(seed_payload, Mapping):
+            nested_metadata = seed_payload.get("metadata")
+            if isinstance(nested_metadata, Mapping) and nested_metadata.get(
+                "ic_provenance_status"
+            ):
+                return str(nested_metadata["ic_provenance_status"])
+    solver_seed_metadata = result.solver_info.get("seed_pack_metadata", {})
+    if isinstance(solver_seed_metadata, Mapping) and solver_seed_metadata.get(
+        "ic_provenance_status"
+    ):
+        return str(solver_seed_metadata["ic_provenance_status"])
+    return None
 
 
 def _attach_output_gate_metadata(
@@ -386,6 +460,14 @@ def build_solver_core_output(
         runtime_controls
     )
     propagator_readiness = _propagator_readiness(propagator, feature_flags)
+    (
+        resolved_tilt_owner,
+        tilt_owner_status,
+        nonperturbative_tilt_status,
+    ) = _resolved_tilt_background_owner(
+        tilt_enabled=tilt_enabled,
+        requested_owner=runtime_controls.tilt_background_owner,
+    )
     metadata = {
         "bianchi_type": bianchi_type,
         "harmonic_basis": harmonic_basis,
@@ -409,17 +491,10 @@ def build_solver_core_output(
         "run_label": release.run_label,
         "observer_neutral": True,
         "forbidden_products": ("posterior", "likelihood", "p_value"),
-        "tilt_background_owner": runtime_controls.tilt_background_owner,
-        "tilt_background_owner_status": (
-            "production_dynamic_nonperturbative_rapidity"
-            if runtime_controls.tilt_background_owner == "nonperturbative_tilt_rhs"
-            else "production_policy_fixed_velocity_closure"
-        ),
-        "nonperturbative_tilt_rhs_status": (
-            "runtime_wired_dynamic_rapidity_owner"
-            if runtime_controls.tilt_background_owner == "nonperturbative_tilt_rhs"
-            else "research_contract_only"
-        ),
+        "tilt_background_owner_requested": runtime_controls.tilt_background_owner,
+        "tilt_background_owner": resolved_tilt_owner,
+        "tilt_background_owner_status": tilt_owner_status,
+        "nonperturbative_tilt_rhs_status": nonperturbative_tilt_status,
         "off_axis_support": False,
         "axis_aligned_tilt_support": True,
         "off_axis_fallback_applied": False,
@@ -514,6 +589,22 @@ def _build_visibility_fn_from_a_lookup(species: SpeciesBackgroundRegistry, a_loo
         return float(interp.query_visibility(z_val))
 
     return visibility_fn
+
+
+def _build_kappa_fn_from_a_lookup(species: SpeciesBackgroundRegistry, a_lookup):
+    baryon = species[SpeciesLabel.BARYON]
+    interp = baryon._recomb  # noqa: SLF001 - stable internal ownership for the current tier-B bridge
+    table = interp.table
+
+    def kappa_fn(eta: float) -> float:
+        a_val = float(a_lookup(float(eta)))
+        z_val = (1.0 / max(a_val, 1.0e-30)) - 1.0
+        if z_val < table.z_min:
+            return 0.0
+        z_query = table.z_max if z_val > table.z_max else z_val
+        return float(interp.query_kappa(z_query))
+
+    return kappa_fn
 
 
 def _interp_redshift_series(a_grid: np.ndarray, values: np.ndarray, z: float) -> float | None:
@@ -683,6 +774,135 @@ def _build_lowell_source_builder(
     return source_builder, metadata
 
 
+def _build_tier_b_exact_type_i_source_builder(
+    result: IntegrationResult,
+    *,
+    species: SpeciesBackgroundRegistry,
+    kappa_fn: Callable[[float], float],
+    visibility_fn: Callable[[float], float],
+    source_builder_scope: str = "tier_b_einstein_extracted_type_i_exact",
+    matrix_scope: str = "type_i",
+):
+    """Build explicit exact matrix-LoS ingredients from Tier-B histories.
+
+    This path is used for exact matrix propagators. It fails closed through
+    ``extract_flrw_sources_from_tier_b`` when the Tier-B result lacks
+    neutrino or matter histories, rather than letting the LoS layer
+    interpret missing Ψ/ISW/Doppler ingredients as zeros.
+    """
+
+    from bass.spectrum.tier_b_source_extraction import extract_flrw_sources_from_tier_b
+
+    eta_grid = np.asarray(result.eta, dtype=np.float64)
+    theta_2 = {
+        "m_plus2": np.asarray(result.pi_ell_m(2, 2), dtype=np.float64),
+        "m_minus2": np.asarray(result.pi_ell_m(2, -2), dtype=np.float64),
+    }
+    e_2 = {
+        "m_plus2": np.asarray(result.e_ell_m(2, 2), dtype=np.float64),
+        "m_minus2": np.asarray(result.e_ell_m(2, -2), dtype=np.float64),
+    }
+    pi_spin2 = {
+        name: np.asarray(theta_2[name] - np.sqrt(6.0) * e_2[name], dtype=np.float64)
+        for name in theta_2
+    }
+    visibility = np.asarray([float(visibility_fn(float(eta))) for eta in eta_grid], dtype=np.float64)
+    if np.any(~np.isfinite(visibility)) or np.any(visibility < 0.0):
+        raise ValueError("Type-I exact source builder requires finite non-negative visibility")
+    source_cache: dict[float, object] = {}
+
+    def sources_for_k(k: float):
+        key = float(k)
+        if key not in source_cache:
+            source_cache[key] = extract_flrw_sources_from_tier_b(
+                result,
+                species,
+                key,
+                anisotropic_stress=True,
+            )
+        return source_cache[key]
+
+    def source_builder(eta: float, k: float) -> dict[str, float]:
+        eta_f = float(eta)
+        sources = sources_for_k(float(k))
+        theta_0 = float(sources.theta_0(eta_f))
+        psi = float(sources.psi(eta_f))
+        isw = float(sources.phi_dot_plus_psi_dot(eta_f))
+        v_b = float(sources.v_b(eta_f))
+        pi_m0 = float(sources.pi(eta_f))
+        kappa = float(kappa_fn(eta_f))
+        if not np.all(np.isfinite([theta_0, psi, isw, v_b, pi_m0, kappa])):
+            raise ValueError("Type-I exact LoS source ingredient became non-finite")
+        return {
+            "kappa": kappa,
+            "optical_depth": kappa,
+            "theta_0_m0": theta_0,
+            "psi_m0": psi,
+            "phi_dot_plus_psi_dot_m0": isw,
+            "v_b_m0": v_b,
+            "pi_m0": pi_m0,
+            "theta_0_m_plus2": 0.0,
+            "psi_m_plus2": 0.0,
+            "phi_dot_plus_psi_dot_m_plus2": 0.0,
+            "v_b_m_plus2": 0.0,
+            "pi_m_plus2": _interp_series(eta_grid, pi_spin2["m_plus2"], eta_f),
+            "theta_0_m_minus2": 0.0,
+            "psi_m_minus2": 0.0,
+            "phi_dot_plus_psi_dot_m_minus2": 0.0,
+            "v_b_m_minus2": 0.0,
+            "pi_m_minus2": _interp_series(eta_grid, pi_spin2["m_minus2"], eta_f),
+        }
+
+    metadata = _build_visibility_source_metadata(
+        result,
+        species=species,
+        visibility_fn=visibility_fn,
+        gpi_m0=visibility * np.asarray(
+            [float(sources_for_k(1.0e-2).pi(float(eta))) for eta in eta_grid],
+            dtype=np.float64,
+        ),
+    )
+    metadata.update(
+        {
+            "source_builder_scope": str(source_builder_scope),
+            "source_builder_einstein_source_owner": (
+                "bass.spectrum.tier_b_source_extraction.extract_flrw_sources_from_tier_b"
+            ),
+            "source_builder_exact_type_i_decomposed": matrix_scope == "type_i",
+            "source_builder_exact_matrix_decomposed": True,
+            "source_builder_matrix_scope": str(matrix_scope),
+            "source_builder_explicit_zero_spin2_scalar_terms": True,
+            "source_builder_anisotropic_stress_owner": (
+                "tier_b_source_extraction.photon_neutrino_intensity_quadrupoles"
+            ),
+            "source_builder_neutrino_metric_feedback_owner": str(
+                result.solver_info.get("neutrino_metric_feedback_owner", "unavailable")
+            ),
+            "source_builder_neutrino_metric_feedback_status": str(
+                result.solver_info.get("neutrino_metric_feedback_status", "unavailable")
+            ),
+            "source_builder_neutrino_metric_feedback_evidence_passed": bool(
+                result.solver_info.get("neutrino_metric_feedback_evidence_passed", False)
+            ),
+            "source_builder_kappa_owner": "recombination_table_via_result_a_lookup",
+            "source_builder_visibility_max": float(np.max(visibility)),
+            "source_builder_visibility_nonzero_sample_count": int(np.count_nonzero(visibility > 0.0)),
+        }
+    )
+    return source_builder, metadata
+
+
+def _requires_explicit_decomposed_los_sources(config: SourcePropagatorConfig) -> bool:
+    return (
+        config.mode is PropagatorMode.ANISOTROPIC_FORWARD
+        and config.kernel_family != "flrw_scalar_validation"
+        and (
+            config.temperature_transport is FeatureStatus.EXACT
+            or config.polarization_rotation is FeatureStatus.EXACT
+        )
+    )
+
+
 def _build_template_from_result(
     result: IntegrationResult,
     propagator: SourcePropagator,
@@ -776,6 +996,37 @@ def _default_sigma_2m_history(result: IntegrationResult) -> np.ndarray:
     return sigma
 
 
+def _b_mode_source_projection_evidence(propagator: SourcePropagator) -> dict[str, Any]:
+    transfer = np.asarray(
+        propagator.transfer_bundle.get("transfer_B", np.array([], dtype=np.float64)),
+        dtype=np.float64,
+    )
+    if transfer.size == 0:
+        return {
+            "b_mode_source_projection_status": "missing_transfer_b",
+            "b_mode_source_transfer_b_norm": None,
+            "b_mode_source_projection_known_zero": False,
+            "b_mode_source_projection_exactness": propagator.evidence.get("exactness"),
+        }
+    norm = float(np.linalg.norm(transfer))
+    finite = bool(np.isfinite(norm) and np.all(np.isfinite(transfer)))
+    output_ready = bool(propagator.evidence.get("output_claim_allowed", False))
+    known_zero = bool(finite and output_ready and norm == 0.0)
+    status = (
+        "known_zero_output_ready_transfer"
+        if known_zero
+        else "nonzero_or_not_output_ready_transfer"
+        if finite
+        else "nonfinite_transfer_b"
+    )
+    return {
+        "b_mode_source_projection_status": status,
+        "b_mode_source_transfer_b_norm": norm,
+        "b_mode_source_projection_known_zero": known_zero,
+        "b_mode_source_projection_exactness": propagator.evidence.get("exactness"),
+    }
+
+
 def _b_mode_projector_evidence(
     result: IntegrationResult,
     *,
@@ -815,6 +1066,7 @@ def _b_mode_projector_evidence(
             "b_mode_projector_eta_size": int(eta.size),
         }
     L = int(result.L_max)
+    k_norm = float(np.linalg.norm(np.asarray(k_grid_mpc, dtype=np.float64).ravel()[:1]))
     try:
         transfer = project_B_mode_transfer(
             photon_B_tower_history=_flat_history_to_l_m5(b_hist, L=L),
@@ -825,7 +1077,7 @@ def _b_mode_projector_evidence(
                 [float(visibility_fn(float(value))) for value in eta],
                 dtype=np.float64,
             ),
-            k_norm=float(np.linalg.norm(np.asarray(k_grid_mpc, dtype=np.float64).ravel()[:1])),
+            k_norm=k_norm,
             ell_max=L,
         )
     except Exception as exc:
@@ -833,6 +1085,7 @@ def _b_mode_projector_evidence(
             "b_mode_projector_status": "failed",
             "b_mode_projector_support": None,
             "b_mode_projector_norm": 0.0,
+            "b_mode_projector_k_norm_mpc": k_norm,
             "b_mode_projector_error": str(exc),
         }
     norm = float(np.linalg.norm(transfer))
@@ -848,6 +1101,10 @@ def _b_mode_projector_evidence(
         "b_mode_projector_norm": norm,
         "b_mode_projector_transfer_shape": tuple(int(x) for x in transfer.shape),
         "b_mode_projector_nonzero": bool(norm > 0.0),
+        "b_mode_projector_source_owner": "photon_B_tower_history.ell2",
+        "b_mode_projector_source_combination": "Pi_B_channel=(2/5)*B_2",
+        "b_mode_projector_input_validation": "finite_strict_eta_positive_k_quadrupole_required",
+        "b_mode_projector_k_norm_mpc": k_norm,
     }
 
 
@@ -856,19 +1113,24 @@ def _exact_thomson_authority_path(
     thomson_mode: str,
     gate_registry: Mapping[str, object] | None,
 ) -> bool:
-    mode = str(thomson_mode)
-    if mode in {
-        "electron_frame_exact_wrapper",
-        "exact_electron_frame",
-        "electron_frame_tilted_layer_b_exact",
-    }:
-        return True
-    if mode.startswith("electron_frame") and "exact" in mode:
-        return True
     if gate_registry is None:
         return False
     exact_gate = gate_registry.get("exact_thomson_gate")
     return bool(getattr(exact_gate, "passed", exact_gate))
+
+
+def _exact_thomson_gate_metadata(gate_registry: Mapping[str, object] | None) -> dict[str, object]:
+    if gate_registry is None:
+        return {}
+    exact_gate = gate_registry.get("exact_thomson_gate")
+    if exact_gate is None:
+        return {}
+    metadata = getattr(exact_gate, "metadata", None)
+    if isinstance(metadata, Mapping):
+        return dict(metadata)
+    if isinstance(exact_gate, Mapping) and isinstance(exact_gate.get("metadata"), Mapping):
+        return dict(exact_gate["metadata"])
+    return {}
 
 
 def _build_reconstructed_channel_payload(
@@ -1043,11 +1305,27 @@ def build_solver_core_output_from_native_result(
 
     a_lookup = _build_result_a_lookup(result)
     visibility_fn = _build_visibility_fn_from_a_lookup(species, a_lookup)
-    source_builder, source_builder_metadata = _build_lowell_source_builder(
-        result,
-        species=species,
-        visibility_fn=visibility_fn,
-    )
+    if _requires_explicit_decomposed_los_sources(propagator_config):
+        matrix_scope = "type_i" if structure_constants.label == "I" else "family_matrix"
+        source_scope = (
+            "tier_b_einstein_extracted_type_i_exact"
+            if structure_constants.label == "I"
+            else "tier_b_einstein_extracted_family_matrix_exact"
+        )
+        source_builder, source_builder_metadata = _build_tier_b_exact_type_i_source_builder(
+            result,
+            species=species,
+            kappa_fn=_build_kappa_fn_from_a_lookup(species, a_lookup),
+            visibility_fn=visibility_fn,
+            source_builder_scope=source_scope,
+            matrix_scope=matrix_scope,
+        )
+    else:
+        source_builder, source_builder_metadata = _build_lowell_source_builder(
+            result,
+            species=species,
+            visibility_fn=visibility_fn,
+        )
     live_propagator = build_source_propagator(
         propagator_config,
         structure=structure_constants,
@@ -1101,17 +1379,25 @@ def build_solver_core_output_from_native_result(
             )
             b_mode_payload_available = True
             b_mode_runtime_available = True
+    b_source_projection_evidence = _b_mode_source_projection_evidence(live_propagator)
+    b_source_known_zero = bool(
+        b_source_projection_evidence["b_mode_source_projection_known_zero"]
+    )
     b_mode_output_support = (
         "evolved_b_mode_history"
         if b_mode_runtime_available
-        else "known_zero_not_evolved"
+        else "known_zero_source_projection_not_evolved"
+        if b_mode_payload_status == "zero_filled_not_evolved" and b_source_known_zero
+        else "zero_filled_without_b_mode_evidence"
         if b_mode_payload_status == "zero_filled_not_evolved"
         else "layout_contract_only"
     )
     b_mode_block_reason = (
         None
         if b_mode_runtime_available
-        else "b_mode_sector_zero_filled_not_evolved"
+        else "b_mode_zero_supported_by_exact_source_projection"
+        if b_mode_payload_status == "zero_filled_not_evolved" and b_source_known_zero
+        else "b_mode_zero_filled_without_output_ready_source_projection"
         if b_mode_payload_status == "zero_filled_not_evolved"
         else "b_mode_layout_contract_without_runtime_evidence"
     )
@@ -1141,6 +1427,11 @@ def build_solver_core_output_from_native_result(
     off_axis_supported = bool(
         abs(float(result.config.tilt_rapidity)) > 0.0
         and not is_axis_aligned(tilt_direction)
+    )
+    exact_thomson_gate_metadata = _exact_thomson_gate_metadata(gate_registry)
+    exact_thomson_gate_passed = _exact_thomson_authority_path(
+        thomson_mode=thomson_mode,
+        gate_registry=gate_registry,
     )
     output = build_solver_core_output(
         manifest=manifest,
@@ -1182,6 +1473,16 @@ def build_solver_core_output_from_native_result(
             "source_propagator_rotation_status": live_propagator.config.polarization_rotation.value,
             "source_propagator_realization": live_propagator.config.kernel_family,
             "source_propagator_exactness": live_propagator.evidence.get("exactness"),
+            "source_propagator_source_completeness_policy": live_propagator.transfer_bundle.get(
+                "source_completeness_policy"
+            ),
+            "source_propagator_fail_closed_sources": (
+                live_propagator.transfer_bundle.get("source_completeness_policy")
+                == "explicit_required_fail_closed"
+            ),
+            "source_propagator_temperature_doppler_derivative": live_propagator.transfer_bundle.get(
+                "temperature_source_doppler_derivative"
+            ),
             "source_propagator_publication_output_claim_allowed": bool(
                 live_propagator.evidence.get("output_claim_allowed", False)
             ),
@@ -1442,7 +1743,55 @@ def build_solver_core_output_from_native_result(
             "solver_family_realization": str(
                 result.solver_info.get("solver_family_realization", "runtime_family_direct")
             ),
+            "collision_owner": str(
+                result.solver_info.get("collision_owner", "unavailable")
+            ),
+            "collision_temperature_rhs_owner": str(
+                result.solver_info.get("collision_temperature_rhs_owner", "unavailable")
+            ),
+            "collision_polarization_rhs_owner": str(
+                result.solver_info.get("collision_polarization_rhs_owner", "unavailable")
+            ),
+            "collision_full_stokes_temperature_rhs_active": bool(
+                result.solver_info.get("collision_full_stokes_temperature_rhs_active", False)
+            ),
+            "imex_full_rhs_fallback_steps": int(
+                result.solver_info.get("imex_full_rhs_fallback_steps", 0)
+            ),
+            "imex_full_rhs_fallback_used": bool(
+                result.solver_info.get("imex_full_rhs_fallback_used", False)
+            ),
+            "imex_min_accepted_step_mpc": result.solver_info.get(
+                "imex_min_accepted_step_mpc"
+            ),
+            "imex_max_accepted_step_mpc": result.solver_info.get(
+                "imex_max_accepted_step_mpc"
+            ),
             "neutrino_hierarchy_mode": str(result.solver_info.get("neutrino_hierarchy_mode", "reduced_summary_only")),
+            "neutrino_metric_feedback_owner": str(
+                result.solver_info.get("neutrino_metric_feedback_owner", "unavailable")
+            ),
+            "neutrino_metric_feedback_status": str(
+                result.solver_info.get("neutrino_metric_feedback_status", "unavailable")
+            ),
+            "neutrino_metric_feedback_evidence_passed": bool(
+                result.solver_info.get("neutrino_metric_feedback_evidence_passed", False)
+            ),
+            "neutrino_metric_feedback_R_nu_min": float(
+                result.solver_info.get("neutrino_metric_feedback_R_nu_min", 0.0)
+            ),
+            "neutrino_metric_feedback_R_nu_max": float(
+                result.solver_info.get("neutrino_metric_feedback_R_nu_max", 0.0)
+            ),
+            "neutrino_metric_feedback_quadrupole_max_abs": float(
+                result.solver_info.get("neutrino_metric_feedback_quadrupole_max_abs", 0.0)
+            ),
+            "neutrino_metric_feedback_rhs_max_abs": float(
+                result.solver_info.get("neutrino_metric_feedback_rhs_max_abs", 0.0)
+            ),
+            "neutrino_metric_feedback_sample_count": int(
+                result.solver_info.get("neutrino_metric_feedback_sample_count", 0)
+            ),
             "layout_operator_consumed": bool(result.solver_info.get("layout_operator_consumed", False)),
             "layout_initial_mode_ops_owner": str(
                 result.solver_info.get("layout_initial_mode_ops_owner", "unconsumed")
@@ -1561,6 +1910,45 @@ def build_solver_core_output_from_native_result(
             "seed_branch": result.solver_info.get("seed_branch"),
             "seed_pack_metadata": dict(result.solver_info.get("seed_pack_metadata", {})),
             "seed_pack_normalization": dict(result.solver_info.get("seed_pack_normalization", {})),
+            "scalar_metric_history_metadata": dict(
+                result.solver_info.get("scalar_metric_history_metadata", {})
+            ),
+            "scalar_metric_history_owner": str(
+                dict(result.solver_info.get("scalar_metric_history_metadata", {})).get(
+                    "owner",
+                    "unavailable",
+                )
+            ),
+            "scalar_metric_photon_neutrino_monopole_coupled": bool(
+                dict(result.solver_info.get("scalar_metric_history_metadata", {})).get(
+                    "photon_neutrino_monopole_coupled",
+                    False,
+                )
+            ),
+            "scalar_metric_photon_neutrino_quadrupole_coupled": bool(
+                dict(result.solver_info.get("scalar_metric_history_metadata", {})).get(
+                    "photon_neutrino_quadrupole_coupled",
+                    False,
+                )
+            ),
+            "scalar_metric_photon_neutrino_scalar_streaming_coupled": bool(
+                dict(result.solver_info.get("scalar_metric_history_metadata", {})).get(
+                    "photon_neutrino_scalar_streaming_coupled",
+                    False,
+                )
+            ),
+            "scalar_metric_matter_continuity_coupled": bool(
+                dict(result.solver_info.get("scalar_metric_history_metadata", {})).get(
+                    "matter_continuity_coupled",
+                    False,
+                )
+            ),
+            "scalar_metric_baryon_euler_pressure_coupled": bool(
+                dict(result.solver_info.get("scalar_metric_history_metadata", {})).get(
+                    "baryon_euler_pressure_coupled",
+                    False,
+                )
+            ),
             "startup_manifold_applied": bool(result.solver_info.get("startup_manifold_applied", False)),
             "checkpoint_enabled": bool(result.solver_info.get("checkpoint_enabled", False)),
             "checkpoint_write_count": int(result.solver_info.get("checkpoint_write_count", 0)),
@@ -1572,11 +1960,11 @@ def build_solver_core_output_from_native_result(
             "off_axis_block_reason": None if off_axis_supported else "off_axis_not_closed",
             "b_mode_output_support": b_mode_output_support,
             "b_mode_block_reason": b_mode_block_reason,
+            **b_source_projection_evidence,
             **b_projector_evidence,
-            "exact_thomson_authority_path": _exact_thomson_authority_path(
-                thomson_mode=thomson_mode,
-                gate_registry=gate_registry,
-            ),
+            "exact_thomson_authority_path": exact_thomson_gate_passed,
+            "exact_thomson_gate_passed": exact_thomson_gate_passed,
+            "exact_thomson_operator_scope": exact_thomson_gate_metadata.get("operator_scope"),
             "canonical_sector_order_contract": ("ph_I", "ph_E", "ph_B", "nu_I", "baryon", "cdm", "src"),
             "runtime_resolved_sector_order": (
                 ("ph_I", "ph_E", "nu_I")
@@ -1656,7 +2044,11 @@ def build_solver_core_output_from_native_result(
             else getattr(mode_ops, "metadata", {}).get("contract_release_status"),
             "ic_provenance_status": None
             if seed_pack is None
-            else str(getattr(seed_pack, "seed_mode", "")),
+            else _ic_provenance_status_from_runtime(
+                seed_pack=seed_pack,
+                gate_registry=gate_registry,
+                result=result,
+            ),
             "canonical_projection_available": bool(canonical_projection is not None),
             "canonical_projection_mode": None
             if canonical_projection is None
@@ -1834,12 +2226,28 @@ def build_solver_core_output_from_lowell_result(
     )
     a_lookup = _build_result_a_lookup(result)
     visibility_fn = _build_visibility_fn_from_a_lookup(species, a_lookup)
-    source_builder, source_builder_metadata = _build_lowell_source_builder(
-        result,
-        species=species,
-        visibility_fn=visibility_fn,
-        scale_factor_owner="integration_result",
-    )
+    if _requires_explicit_decomposed_los_sources(propagator_config):
+        matrix_scope = "type_i" if structure_constants.label == "I" else "family_matrix"
+        source_scope = (
+            "tier_b_einstein_extracted_type_i_exact"
+            if structure_constants.label == "I"
+            else "tier_b_einstein_extracted_family_matrix_exact"
+        )
+        source_builder, source_builder_metadata = _build_tier_b_exact_type_i_source_builder(
+            result,
+            species=species,
+            kappa_fn=_build_kappa_fn_from_a_lookup(species, a_lookup),
+            visibility_fn=visibility_fn,
+            source_builder_scope=source_scope,
+            matrix_scope=matrix_scope,
+        )
+    else:
+        source_builder, source_builder_metadata = _build_lowell_source_builder(
+            result,
+            species=species,
+            visibility_fn=visibility_fn,
+            scale_factor_owner="integration_result",
+        )
     live_propagator = build_source_propagator(
         propagator_config,
         structure=structure_constants,
@@ -1850,6 +2258,20 @@ def build_solver_core_output_from_lowell_result(
         source_builder=source_builder,
         limber_eta_sp_sign=limber_eta_sp_sign,
         off_diagonal_strategy=off_diagonal_strategy,
+    )
+    b_source_projection_evidence = _b_mode_source_projection_evidence(live_propagator)
+    b_source_known_zero = bool(
+        b_source_projection_evidence["b_mode_source_projection_known_zero"]
+    )
+    b_mode_output_support = (
+        "known_zero_source_projection_not_evolved"
+        if b_source_known_zero
+        else "zero_filled_without_b_mode_evidence"
+    )
+    b_mode_block_reason = (
+        "b_mode_zero_supported_by_exact_source_projection"
+        if b_source_known_zero
+        else "b_mode_zero_filled_without_output_ready_source_projection"
     )
     coefficient_representation = (
         "lowell_pstf_final_slice"
@@ -1896,6 +2318,11 @@ def build_solver_core_output_from_lowell_result(
             ),
             "propagator_ready": True,
             "validation_reference": runtime_controls.tier is SolverTier.TIER_A_ANGULAR,
+            "b_mode_output_support": b_mode_output_support,
+            "b_mode_block_reason": b_mode_block_reason,
+            "b_mode_payload_status": "zero_filled_not_evolved",
+            "b_mode_runtime_available": False,
+            **b_source_projection_evidence,
             "k_grid_size": int(np.asarray(k_grid_mpc).size),
             "eta_grid_size": int(np.asarray(result.eta).size),
             "off_diagonal_strategy": off_diagonal_strategy,
@@ -1906,6 +2333,16 @@ def build_solver_core_output_from_lowell_result(
             "source_propagator_rotation_status": live_propagator.config.polarization_rotation.value,
             "source_propagator_realization": live_propagator.config.kernel_family,
             "source_propagator_exactness": live_propagator.evidence.get("exactness"),
+            "source_propagator_source_completeness_policy": live_propagator.transfer_bundle.get(
+                "source_completeness_policy"
+            ),
+            "source_propagator_fail_closed_sources": (
+                live_propagator.transfer_bundle.get("source_completeness_policy")
+                == "explicit_required_fail_closed"
+            ),
+            "source_propagator_temperature_doppler_derivative": live_propagator.transfer_bundle.get(
+                "temperature_source_doppler_derivative"
+            ),
             "source_propagator_publication_output_claim_allowed": bool(
                 live_propagator.evidence.get("output_claim_allowed", False)
             ),

@@ -153,6 +153,8 @@ class TestBaryonParameters:
         assert p.R_b == 0.6
         assert p.tau_dot == 1e3
         assert p.H == 30.0
+        assert p.sound_speed_sq == 0.0
+        assert p.k_comoving == 0.0
 
     def test_R_b_must_be_positive(self):
         with pytest.raises(ValueError, match="R_b must be positive"):
@@ -177,6 +179,21 @@ class TestBaryonParameters:
     def test_nan_rejected(self):
         with pytest.raises(ValueError):
             BaryonParameters(R_b=float("nan"), tau_dot=1e3, H=30.0)
+
+    def test_sound_speed_and_k_validation(self):
+        p = BaryonParameters(
+            R_b=0.6,
+            tau_dot=1e3,
+            H=30.0,
+            sound_speed_sq=1.0e-9,
+            k_comoving=0.05,
+        )
+        assert p.sound_speed_sq == 1.0e-9
+        assert p.k_comoving == 0.05
+        with pytest.raises(ValueError, match="sound_speed_sq"):
+            BaryonParameters(R_b=0.6, tau_dot=1e3, H=30.0, sound_speed_sq=-1.0)
+        with pytest.raises(ValueError, match="k_comoving"):
+            BaryonParameters(R_b=0.6, tau_dot=1e3, H=30.0, k_comoving=-0.1)
 
 
 # ============================================================================
@@ -354,6 +371,18 @@ class TestEulerRHS:
             baryon_euler_rhs(
                 s, float("nan"), p, _allowing_decision(),
             )
+
+    def test_scalar_pressure_gradient_matches_mb95_velocity_convention(self):
+        s = BaryonFluidState(delta_b=2.0e-4, v_b=0.0)
+        p = BaryonParameters(
+            R_b=0.6,
+            tau_dot=0.0,
+            H=0.0,
+            sound_speed_sq=1.5e-9,
+            k_comoving=0.05,
+        )
+        result = baryon_euler_rhs(s, 0.0, p, _allowing_decision())
+        assert result == pytest.approx(p.sound_speed_sq * p.k_comoving * s.delta_b)
 
 
 # ============================================================================

@@ -116,6 +116,31 @@ def test_exact_thomson_gate_bundle_preserves_split_metadata() -> None:
     assert bundle.metadata["source_split"] == "scalar_monopole_vs_directional_tensor"
 
 
+def test_exact_thomson_gate_blocks_tilted_branch_without_full_stokes_authority(
+    registry: SpeciesBackgroundRegistry,
+) -> None:
+    tilted_electron = TiltedSpeciesBackground(
+        base=registry[SpeciesLabel.BARYON],
+        beta=0.2,
+        v_hat_e=(0.0, 0.0, 1.0),
+    )
+    source = exact_thomson_source(
+        ElectronFrameThomsonContext(),
+        temperature_state=zero_hierarchy(3),
+        polarization_state=zero_polarization_hierarchy(3),
+        v_b_real_sph=np.zeros(3),
+        Gamma_T=3.0,
+        direction=np.array([0.0, 0.0, 1.0], dtype=np.float64),
+        tilted_electron=tilted_electron,
+    )
+    bundle = exact_thomson_gate_bundle(source, family="I", branch="tilted")
+    assert bundle.passed is False
+    assert bundle.known_limit_checks["full_tilted_stokes_authority"] is False
+    assert bundle.forbidden_shortcut_checks[
+        "no_boosted_pstf_wrapper_marketed_as_full_tilted_thomson"
+    ] is False
+
+
 def test_directional_exact_thomson_source_contract_keeps_isotropic_null_mode() -> None:
     source = exact_thomson_source(
         np.array([0.0, 0.0, 1.0]),

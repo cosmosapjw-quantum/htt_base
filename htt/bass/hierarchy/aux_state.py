@@ -91,9 +91,9 @@ class IntegratorAuxState:
     species' recombination-fixture lookup. Used by LB-5 tests that
     need to probe the deep tight-coupling regime (``Γ_T/H > 100``)
     which sits below the HyRec fixture's ``z_max = 8000`` horizon.
-    ``None`` (the default) dispatches to
-    ``species[SpeciesLabel.BARYON].tau_dot(η)`` with zero-fallback
-    outside the fixture range.
+    ``None`` (the default) dispatches to the baryon species' authority
+    Thomson path: HyRec inside the table and the fully-ionized analytic
+    opacity above the table's z_max when that helper is available.
     """
 
     def __post_init__(self) -> None:
@@ -136,17 +136,21 @@ class IntegratorAuxState:
         """Conformal Thomson rate ``τ̇(η) = a n_e σ_T`` [Mpc⁻¹].
 
         When ``gamma_T_override`` is set, delegates to it. Otherwise
-        delegates to the baryon species' recombination table; outside
-        the fixture z-range the baryon species raises and we trap
-        that and return 0.0 (pre-recomb / post-reion edge) so the
-        caller can still use the value in a finite RHS.
+        delegates to the baryon species authority path. Deep
+        pre-recombination starts use the fully-ionized analytic opacity
+        instead of Γ_T=0, so seed ``tau_c`` and TCA gating stay physical.
         """
         if self.gamma_T_override is not None:
             return float(self.gamma_T_override(float(eta)))
         from bass.species.base import SpeciesLabel
         baryon = self.species[SpeciesLabel.BARYON]
+        query = getattr(
+            baryon,
+            "tau_dot_with_early_fully_ionized_fallback",
+            baryon.tau_dot,
+        )
         try:
-            return float(baryon.tau_dot(eta))
+            return float(query(eta))
         except ValueError:
             return 0.0
 

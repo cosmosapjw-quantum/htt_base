@@ -2,6 +2,44 @@
 
 **BASS = Bianchi Anisotropy System Solver** — low-ℓ (ℓ ≤ 30) special-purpose CMB solver, inverse of the MES kinematic bound hierarchy.
 
+Audit status note (2026-05-03): the active `htt/bass` path distinguishes
+projected PSTF production collision from a separate full angular
+electron-frame Stokes Thomson authority path. Tilted Tier-B runtime traces use
+that full-Stokes authority probe for the exact-Thomson gate, and the tilted
+native hierarchy RHS now consumes projected full-Stokes `I,Q,U` collision
+channels through a spin-weighted harmonic `Q/U <-> E/B` projection kernel.
+This closes the scalarized tilted-collision projection gap but remains a
+restricted-envelope collision/RHS claim, not a statistics-ready polarization
+likelihood claim.
+The FLRW low-ell spectrum path also now returns and can export TT, EE, and TE
+from the same BASS transfer grid, with resumable transfer chunks and a separate
+CAMB residual-report script; external CAMB agreement is still gated by the xfail
+TT/EE/TE comparison harness and is not claimed as statistics-ready.
+Deep pre-recombination starts now use a fully-ionized Thomson opacity fallback
+above the HyRec table ceiling, and `superhorizon_x_max_at_start` can enforce
+per-k `k eta_init <= x_max` without sharing background chunks across different
+injection redshifts. This is startup physics validation, not a promoted CAMB
+agreement claim.
+Tier-B source extraction now preserves regular-seed matter/metric provenance
+and exposes an opt-in MB-95 `etak/sigma` diagnostic reconstruction. A separate
+opt-in `IntegratorConfig.co_evolve_scalar_metric=True` path now co-evolves
+`(etak, sigma)` in the native state and couples the resulting `h_dot` source to
+photon/neutrino monopoles, the MB-95 `h_dot/15 + 2*etak_dot/(5*k)` source to
+photon/neutrino quadrupoles, `-k v - h_dot/2` to baryon/CDM continuity, and
+`c_s,b^2*k*delta_b` to baryon Euler using the HyRec matter-temperature sound
+speed. The sound-speed helper uses the same fully-ionized early fallback as
+the opacity path above the HyRec table ceiling.
+A separate `IntegratorConfig.co_evolve_scalar_streaming=True` development flag
+implements the MB-95 scalar m=0 photon/neutrino intensity free-streaming
+recursion. It is disabled by default because full-range BDF/TCA/cutoff
+stability is not yet validated. The scalar-metric path is routed to full-RHS
+BDF until an IMEX scalar-metric block is validated, and it remains
+restricted-envelope rather than CAMB-agreement or statistics-ready.
+Supported tilted Tier-B background runs
+now default to the dynamic nonperturbative rapidity owner; the fixed-velocity
+tilted closure is an explicit legacy diagnostic path. See `docs/claim_ledger.md`
+for which claims are production, restricted-envelope, or research-goal only.
+
 ## Current status (v0.8.2-w8-02, 2026-04-18)
 
 - **22 bass/ modules**, **35 test files**, **1,637 tests passing**

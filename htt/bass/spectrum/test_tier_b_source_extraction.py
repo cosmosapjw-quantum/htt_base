@@ -39,6 +39,7 @@ from bass.spectrum.tier_b_source_extraction import (
     _scaled_pchip_no_extrapolation,
     _slot,
     extract_flrw_sources_from_tier_b,
+    reconstruct_synchronous_metric_history_from_tier_b,
 )
 from bass.species.registry import SpeciesBackgroundRegistry
 
@@ -194,10 +195,12 @@ def test_pi_identity_theta_minus_sqrt6_e2(tier_b_run, species_registry) -> None:
 
 
 def test_v_b_identity_baryon_slot_1(tier_b_run, species_registry) -> None:
-    """Q-19.1: v_b(η) must equal baryon_local_history[:, 1] (MB convention,
-    slot 1 = v_b per ver2_native_integrator.py line 2973)."""
+    """Legacy Newtonian-constraint mode keeps the raw baryon velocity."""
     sources = extract_flrw_sources_from_tier_b(
-        tier_b_run.integration_result, species_registry, k=1.0e-4
+        tier_b_run.integration_result,
+        species_registry,
+        k=1.0e-4,
+        source_frame="legacy_newtonian_constraint",
     )
     eta = np.asarray(tier_b_run.integration_result.eta, dtype=np.float64)
     expected = np.asarray(
@@ -206,6 +209,90 @@ def test_v_b_identity_baryon_slot_1(tier_b_run, species_registry) -> None:
     )
     got = np.asarray(sources.v_b(eta), dtype=np.float64)
     assert np.allclose(got, expected, atol=1e-14, rtol=0.0)
+
+
+def test_opt_in_source_uses_mb95_synchronous_effective_metric(
+    tier_b_run,
+    species_registry,
+) -> None:
+    """Opt-in diagnostic path uses reconstructed etak/sigma."""
+    result = tier_b_run.integration_result
+    assert "matter_seed_observables" in result.solver_info
+    assert "eta_cov" in result.solver_info["matter_seed_observables"]
+
+    metric = reconstruct_synchronous_metric_history_from_tier_b(
+        result,
+        species_registry,
+        k=1.0e-4,
+    )
+    sources = extract_flrw_sources_from_tier_b(
+        result,
+        species_registry,
+        k=1.0e-4,
+        source_frame="mb95_synchronous_effective",
+    )
+    eta = np.asarray(result.eta, dtype=np.float64)
+
+    np.testing.assert_allclose(
+        sources.psi(eta),
+        metric.psi_effective_sw,
+        rtol=1e-13,
+        atol=1e-13,
+    )
+    np.testing.assert_allclose(
+        sources.v_b(eta),
+        metric.doppler_velocity_effective,
+        rtol=1e-13,
+        atol=1e-13,
+    )
+    np.testing.assert_allclose(
+        sources.phi_dot_plus_psi_dot(eta),
+        metric.isw_driver,
+        rtol=1e-13,
+        atol=1e-13,
+    )
+    assert metric.metadata["source_equivalence"].startswith("FLRWSourceTerms are effective")
+
+
+def test_coevolved_scalar_metric_history_is_authority_for_mb95_source(
+    tier_b_run,
+    species_registry,
+) -> None:
+    from dataclasses import replace
+
+    result = tier_b_run.integration_result
+    posthoc = reconstruct_synchronous_metric_history_from_tier_b(
+        result,
+        species_registry,
+        k=1.0e-4,
+    )
+    solver_info = dict(result.solver_info)
+    solver_info["scalar_metric_history_metadata"] = {
+        "owner": "ver2_native_integrator.main_state_scalar_metric",
+        "labels": ("etak", "sigma"),
+        "integration_scheme": "main_state_coevolved_mb95_synchronous",
+        "photon_neutrino_monopole_coupled": True,
+        "photon_neutrino_quadrupole_coupled": True,
+        "photon_neutrino_scalar_streaming_coupled": False,
+        "matter_continuity_coupled": True,
+        "baryon_euler_pressure_coupled": True,
+    }
+    coevolved = replace(
+        result,
+        scalar_metric_history=np.column_stack([posthoc.etak, posthoc.sigma]),
+        solver_info=solver_info,
+    )
+
+    metric = reconstruct_synchronous_metric_history_from_tier_b(
+        coevolved,
+        species_registry,
+        k=1.0e-4,
+    )
+
+    assert metric.metadata["owner"] == "ver2_native_integrator.main_state_scalar_metric"
+    assert metric.metadata["integration_scheme"] == "main_state_coevolved"
+    np.testing.assert_allclose(metric.etak, posthoc.etak, rtol=0.0, atol=0.0)
+    np.testing.assert_allclose(metric.sigma, posthoc.sigma, rtol=0.0, atol=0.0)
 
 
 def test_no_extrapolation_outside_domain(tier_b_run, species_registry) -> None:
@@ -242,18 +329,21 @@ def test_scaled_pchip_avoids_tiny_slope_overflow_warning() -> None:
 def test_anisotropic_stress_toggle_changes_psi(tier_b_run, species_registry) -> None:
     """Q-21.3: anisotropic_stress=False sets Ψ = Φ (no stress correction);
     the difference from the default must be non-zero when Θ_2^γ or Θ_2^ν
-    are non-zero on the toy grid."""
+    are non-zero on the toy grid. This test belongs to the legacy
+    Newtonian-constraint diagnostic mode."""
     src_on = extract_flrw_sources_from_tier_b(
         tier_b_run.integration_result,
         species_registry,
         k=1.0e-4,
         anisotropic_stress=True,
+        source_frame="legacy_newtonian_constraint",
     )
     src_off = extract_flrw_sources_from_tier_b(
         tier_b_run.integration_result,
         species_registry,
         k=1.0e-4,
         anisotropic_stress=False,
+        source_frame="legacy_newtonian_constraint",
     )
     eta = np.asarray(tier_b_run.integration_result.eta, dtype=np.float64)
     psi_on = np.asarray(src_on.psi(eta), dtype=np.float64)
@@ -294,6 +384,31 @@ def test_isw_driver_matches_fd_of_phi_plus_psi(tier_b_run, species_registry) -> 
     assert np.all(np.isfinite(isw))
     # Not all zero (the background evolves on this range).
     assert float(np.max(np.abs(isw))) > 0.0
+
+
+def test_mb95_source_requires_seed_metric_provenance(
+    tier_b_run,
+    species_registry,
+) -> None:
+    from dataclasses import replace
+
+    result = tier_b_run.integration_result
+    stripped = replace(result, solver_info={})
+    with pytest.raises(ValueError, match="matter_seed_observables"):
+        extract_flrw_sources_from_tier_b(
+            stripped,
+            species_registry,
+            k=1.0e-4,
+            source_frame="mb95_synchronous_effective",
+        )
+
+    legacy = extract_flrw_sources_from_tier_b(
+        stripped,
+        species_registry,
+        k=1.0e-4,
+    )
+    eta = np.asarray(stripped.eta, dtype=np.float64)
+    assert np.all(np.isfinite(np.asarray(legacy.theta_0(eta), dtype=np.float64)))
 
 
 # ---------- rejection tests ---------------------------------------------------

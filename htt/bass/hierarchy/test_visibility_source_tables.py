@@ -6,8 +6,9 @@ import numpy as np
 import pytest
 
 from bass.background import get_family_spec
-from bass.hierarchy import assemble_source_vector, build_hierarchy_layout, flatten
+from bass.hierarchy import assemble_source_vector, build_hierarchy_layout, flatten, zero_hierarchy
 from bass.hierarchy.ver2_native_integrator import (
+    _neutrino_anisotropic_stress_temperature_rhs,
     _resolved_doppler_source,
     _resolved_polarization_source,
     _resolved_temperature_visibility_source,
@@ -85,6 +86,24 @@ def test_source_table_visibility_uses_electron_frame_visibility_g() -> None:
     assert source.boost_calls == 0
 
 
+def test_native_neutrino_metric_source_uses_only_quadrupole_stress() -> None:
+    neutrino = zero_hierarchy(3)
+    neutrino.tensors[2].components[:] = np.arange(1.0, 6.0)
+    neutrino.tensors[3].components[:] = 10.0
+    background = SimpleNamespace(a_val=0.5, Theta=6.0)
+
+    rhs = _neutrino_anisotropic_stress_temperature_rhs(
+        neutrino,
+        background=background,
+        R_nu=0.25,
+    )
+
+    expected_coeff = 0.5 * (6.0 / 3.0) * 0.25 * (2.0 / 5.0)
+    np.testing.assert_allclose(rhs[:4], 0.0, atol=1.0e-15)
+    np.testing.assert_allclose(rhs[4:9], expected_coeff * np.arange(1.0, 6.0))
+    np.testing.assert_allclose(rhs[9:], 0.0, atol=1.0e-15)
+
+
 def test_source_table_visibility_override_keeps_gamma_exp_minus_kappa_form() -> None:
     source = _FakeBoostedVisibility(g_value=0.125, kappa_value=0.25, boost_value=1.5)
     cfg = SimpleNamespace(gamma_T_override=lambda eta: 2.0)
@@ -130,7 +149,7 @@ def test_scalar_visibility_contract_uses_z_of_eta_without_edge_clipping() -> Non
     assert interp.queries[0] == pytest.approx(1100.0)
 
 
-def test_scalar_visibility_contract_returns_zero_outside_table_support() -> None:
+def test_scalar_visibility_contract_defers_early_queries_to_authority_path() -> None:
     interp = _FakeScalarInterp()
     source = SimpleNamespace(contract=SimpleNamespace(interp=interp))
 
@@ -140,11 +159,11 @@ def test_scalar_visibility_contract_returns_zero_outside_table_support() -> None
         visibility_source=source,
     )
 
-    assert visibility == pytest.approx(0.0)
+    assert visibility is None
     assert interp.queries == []
 
 
-def test_scalar_kappa_contract_clamps_early_queries_to_table_ceiling() -> None:
+def test_scalar_kappa_contract_defers_early_queries_to_authority_path() -> None:
     interp = _FakeScalarInterp()
     source = SimpleNamespace(contract=SimpleNamespace(interp=interp))
 
@@ -154,8 +173,8 @@ def test_scalar_kappa_contract_clamps_early_queries_to_table_ceiling() -> None:
         visibility_source=source,
     )
 
-    assert kappa == pytest.approx(0.25 + 0.03)
-    assert interp.kappa_queries == [3000.0]
+    assert kappa is None
+    assert interp.kappa_queries == []
 
 
 def test_doppler_source_is_visibility_times_baryon_velocity() -> None:

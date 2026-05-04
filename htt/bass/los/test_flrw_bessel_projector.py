@@ -296,9 +296,11 @@ class TestSourceAssembly:
     def test_doppler_gradient_contribution(self):
         # Pure Doppler: S_T = d/dη[g·v_b], no SW, no ISW
         eta = np.linspace(50.0, 400.0, 1001)
+        sigma = 30.0
+        eta_star = 280.0
 
         def g(e):
-            return np.exp(-0.5 * ((e - 280.0) / 30.0) ** 2) / (30.0 * np.sqrt(2*np.pi))
+            return np.exp(-0.5 * ((e - eta_star) / sigma) ** 2) / (sigma * np.sqrt(2*np.pi))
 
         def vb(e):
             return np.full_like(np.asarray(e, dtype=float), 1e-3)
@@ -308,8 +310,21 @@ class TestSourceAssembly:
             eta, sources, g, lambda e: np.zeros_like(np.asarray(e)),
         )
         # S_T = d(g·v_b)/dη = v_b · dg/dη (v_b is constant here)
-        expected = 1e-3 * np.gradient(g(eta), eta, edge_order=2)
-        np.testing.assert_allclose(S_T, expected, rtol=1e-10, atol=1e-14)
+        expected = 1e-3 * g(eta) * (-(eta - eta_star) / sigma**2)
+        np.testing.assert_allclose(S_T, expected, rtol=1e-5, atol=1e-12)
+
+    def test_doppler_derivative_is_fourth_order_exact_for_quartic(self):
+        eta = np.linspace(0.0, 4.0, 17)
+        sources = FLRWSourceTerms.with_doppler_only(
+            lambda e: np.asarray(e, dtype=float) ** 4
+        )
+        S_T = build_temperature_source(
+            eta,
+            sources,
+            constant_callable(1.0),
+            lambda e: np.zeros_like(np.asarray(e, dtype=float)),
+        )
+        np.testing.assert_allclose(S_T, 4.0 * eta**3, rtol=1.0e-12, atol=1.0e-12)
 
     def test_isw_exp_damping(self):
         # Pure ISW: S_T = e^{-κ}(Ψ̇+Φ̇), κ = 0 ⇒ full amplitude

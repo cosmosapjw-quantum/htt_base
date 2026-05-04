@@ -109,8 +109,8 @@ def test_gamma_T_override_replaces_recomb_lookup(species) -> None:
 
 def test_gamma_T_without_override_uses_baryon_recomb(species) -> None:
     """With ``gamma_T_override=None`` the default path dispatches to
-    the baryon recombination table and returns 0 outside the fixture
-    z-range (zero-fallback per spec §3.1).
+    the baryon Thomson authority path: HyRec in-table and the physical
+    fully-ionized opacity fallback above the fixture's z_max.
     """
     closure = build_default_closure(L_max=4, strategy_name="hardcut")
     decision = build_integrator_canonical_decision(
@@ -123,9 +123,10 @@ def test_gamma_T_without_override_uses_baryon_recomb(species) -> None:
         closure=closure,
         canonical_decision=decision,
     )
-    # Deep pre-recomb (z >> 8000) — out-of-fixture → zero-fallback.
+    # Deep pre-recomb (z >> 8000) — out-of-fixture but physically
+    # fully ionized, so Γ_T must remain finite and positive.
     gamma_deep = aux.Gamma_T_at(eta=0.01)
-    assert gamma_deep == 0.0
+    assert gamma_deep > 0.0 and np.isfinite(gamma_deep)
     # Mid-recomb (z ≈ 2000, η ≈ 100 Mpc) — finite, positive.
     gamma_mid = aux.Gamma_T_at(eta=100.0)
     assert gamma_mid > 0.0 and np.isfinite(gamma_mid)

@@ -26,6 +26,17 @@ from bass.background.tetrad_state import (
 )
 
 
+def _class_b_connection_expected(sc) -> np.ndarray:
+    n1, n3 = float(sc.n1), float(sc.n3)
+    R00 = -0.5 * (n1 - n3) ** 2
+    R11 = 0.5 * (n1 * n1 - n3 * n3)
+    R22 = 0.5 * (n3 * n3 - n1 * n1)
+    third = (R00 + R11 + R22) / 3.0
+    expected = np.diag([R00 - third, R11 - third, R22 - third])
+    expected[1, 2] = expected[2, 1] = float(sc.a_twist) * (n1 - n3)
+    return expected
+
+
 class TestAxisymmetricSigmaTensor:
     """(Σ_+, Σ_−) → 3×3 tensor is symmetric and trace-free."""
 
@@ -270,18 +281,12 @@ class TestAnisotropic3CurvaturePerType:
         assert np.max(np.abs(eigvals)) > 0.0
 
     def test_class_b_iv_explicit_formula(self):
-        """IV (Class B, only n_3 + a_twist): reduces to N-only formula
-        in PC frame (a_twist isotropic in trace-free part)."""
+        """IV keeps the connection-route N x a off-diagonal curvature."""
         n3, atw = 1.5e-2, 6.0e-3
         sc = type_iv_constants(n3=n3, a_twist=atw)
         tensor, status = anisotropic_3_curvature(sc, 1.0, 0.0, 0.0)
         assert status == 'type_iv_class_b'
-        # Only n_3 ≠ 0; n_1 = n_2 = 0
-        R11 = -0.5 * n3 * n3
-        R22 = -0.5 * n3 * n3
-        R33 = 0.5 * n3 * n3
-        third = (R11 + R22 + R33) / 3.0
-        expected = np.diag([R11 - third, R22 - third, R33 - third])
+        expected = _class_b_connection_expected(sc)
         assert np.allclose(tensor, expected, rtol=1e-12)
 
     def test_class_b_iii_dispatches_to_vih_formula(self):
@@ -306,32 +311,19 @@ class TestAnisotropic3CurvaturePerType:
         assert np.allclose(t_iii, t_vih, rtol=1e-14)
 
     def test_class_b_vih_explicit_formula(self):
-        """VI_h (n_1 > 0, n_3 < 0, n_2 = 0, a_twist > 0): N-only
-        Class-A formula in PC frame."""
+        """VI_h includes canonical-frame diagonal curvature plus N x a."""
         sc = type_vih_constants(n1=1.4e-2, n3=-2.0e-3, a_twist=5.0e-3)
         tensor, status = anisotropic_3_curvature(sc, 1.0, 0.0, 0.0)
         assert status == 'type_vih_class_b'
-        n1, _, n3 = sc.n_diag
-        R11 = 0.5 * (n1 * n1 - n3 * n3)
-        R22 = -0.5 * (n3 - n1) ** 2
-        R33 = 0.5 * (n3 * n3 - n1 * n1)
-        third = (R11 + R22 + R33) / 3.0
-        expected = np.diag([R11 - third, R22 - third, R33 - third])
+        expected = _class_b_connection_expected(sc)
         assert np.allclose(tensor, expected, rtol=1e-12)
 
     def test_class_b_viih_explicit_formula(self):
-        """VII_h (n_1 > 0, n_3 > 0, n_2 = 0, a_twist > 0): same
-        N-only Class-A diagonal form. The Pontzen-Challinor spiral
-        coupling lives in shear_sources, not in ³R_ab^{aniso}."""
+        """VII_h keeps the helical Class-B N x a off-diagonal term."""
         sc = type_viih_constants()
         tensor, status = anisotropic_3_curvature(sc, 1.0, 0.0, 0.0)
         assert status == 'type_viih_class_b'
-        n1, _, n3 = sc.n_diag
-        R11 = 0.5 * (n1 * n1 - n3 * n3)
-        R22 = -0.5 * (n3 - n1) ** 2
-        R33 = 0.5 * (n3 * n3 - n1 * n1)
-        third = (R11 + R22 + R33) / 3.0
-        expected = np.diag([R11 - third, R22 - third, R33 - third])
+        expected = _class_b_connection_expected(sc)
         assert np.allclose(tensor, expected, rtol=1e-12)
 
 

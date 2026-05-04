@@ -12,14 +12,14 @@ Provides:
   (a) ``dataset.kind == "planck2018_plik_low_l_tt_only"``;
   (b) all 14 upstream gates open (caller-supplied
       ``GateLadderDecision``);
-  (c) ``template_card_authorized=True`` for any non-strong family.
+  (c) FLRW-only family scope. Bianchi real-data fitting requires a
+      harmonic/template covariance likelihood, not this C_l-only path.
 - :class:`FittingBlockedError` — surfaces gate-block reasons loudly.
 
 The wrapper intentionally raises rather than silently falling back to a
 synthetic surrogate when:
 - The dataset.kind whitelist forbids real-data fitting.
-- A template-card family is in the inference path without
-  ``allow_template_card=True``.
+- A non-FLRW Bianchi family is routed into the C_l-only Planck path.
 - Any upstream gate of the 15-stage ``GATE_LADDER`` is closed.
 
 Round-16 scope: TT-only Plik low-ℓ Gaussian (the simplest, gauge-
@@ -47,6 +47,7 @@ __all__ = [
     "GateLadderDecision",
     "PlanckLikelihood",
     "FittingBlockedError",
+    "load_planck_low_l_tt_dataset",
 ]
 
 
@@ -118,6 +119,18 @@ class PlanckDataset:
             raise ValueError(
                 f"ell_max={self.ell_max} < ell_min={self.ell_min}"
             )
+        path = None if self.path is None else Path(self.path)
+        if self.kind == PLANCK_2018_LOWL_TT_DATASET_KIND:
+            if path is None:
+                raise ValueError("real Planck low-l TT datasets require a path")
+            if not path.is_file():
+                raise FileNotFoundError(
+                    f"Planck low-l TT dataset file not found: {path}"
+                )
+            if path.stat().st_size <= 0:
+                raise ValueError(
+                    f"Planck low-l TT dataset file is empty: {path}"
+                )
         cls = np.asarray(self.C_l_obs, dtype=np.float64)
         sig = np.asarray(self.sigma, dtype=np.float64)
         n = self.ell_max - self.ell_min + 1
@@ -129,8 +142,57 @@ class PlanckDataset:
             raise ValueError(f"sigma shape {sig.shape!r} != ({n},)")
         if not np.all(sig > 0.0):
             raise ValueError("All sigma entries must be strictly positive.")
+        if not np.all(np.isfinite(cls)):
+            raise ValueError("All C_l_obs entries must be finite.")
+        if not np.all(np.isfinite(sig)):
+            raise ValueError("All sigma entries must be finite.")
         object.__setattr__(self, "C_l_obs", cls)
         object.__setattr__(self, "sigma", sig)
+        object.__setattr__(self, "path", path)
+
+    @classmethod
+    def from_low_l_text(
+        cls,
+        path: Path | str,
+        *,
+        kind: str = PLANCK_2018_LOWL_TT_DATASET_KIND,
+    ) -> "PlanckDataset":
+        """Load a low-l TT table with columns ``ell C_l sigma``.
+
+        This intentionally remains a narrow adapter: it verifies that the
+        multipoles are integer, contiguous, and backed by a real non-empty
+        file, then delegates the same fitting gates as the manual constructor.
+        """
+
+        table_path = Path(path)
+        data = np.loadtxt(table_path, comments="#", ndmin=2)
+        if data.ndim != 2 or data.shape[1] < 3:
+            raise ValueError(
+                "Planck low-l TT text dataset must have columns ell C_l sigma"
+            )
+        ell = np.asarray(data[:, 0], dtype=np.float64)
+        rounded = np.rint(ell).astype(int)
+        if not np.allclose(ell, rounded, atol=0.0, rtol=0.0):
+            raise ValueError("Planck low-l TT ell column must be integer valued")
+        if rounded.size == 0:
+            raise ValueError("Planck low-l TT text dataset is empty")
+        expected = np.arange(int(rounded[0]), int(rounded[-1]) + 1, dtype=int)
+        if rounded.shape != expected.shape or not np.array_equal(rounded, expected):
+            raise ValueError("Planck low-l TT ell column must be contiguous")
+        return cls(
+            kind=kind,
+            path=table_path,
+            ell_min=int(rounded[0]),
+            ell_max=int(rounded[-1]),
+            C_l_obs=np.asarray(data[:, 1], dtype=np.float64),
+            sigma=np.asarray(data[:, 2], dtype=np.float64),
+        )
+
+
+def load_planck_low_l_tt_dataset(path: Path | str) -> PlanckDataset:
+    """Load the audited text-backed Planck low-l TT dataset format."""
+
+    return PlanckDataset.from_low_l_text(path)
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -216,16 +278,13 @@ class PlanckLikelihood:
                     missing_gates=gate_decision.missing_gates,
                     dataset_kind=self.dataset.kind,
                 )
-            # Gate 3: non-strong family requires explicit
-            # template-card authorisation.
             inference_family = family if family is not None else gate_decision.family
-            if inference_family not in {"FLRW", "I", "V", "IX"} and not (
-                gate_decision.template_card_authorized
-            ):
+            if inference_family != "FLRW":
                 raise FittingBlockedError(
-                    f"family={inference_family!r} requires "
-                    f"template_card_authorized=True for real-data fitting",
-                    missing_gates=("template_card_gate",),
+                    "Real-data Planck TT-only C_l likelihood is FLRW-limit "
+                    f"only; family={inference_family!r} requires a harmonic "
+                    "template/covariance likelihood gate",
+                    missing_gates=("harmonic_template_likelihood_gate",),
                     dataset_kind=self.dataset.kind,
                 )
 

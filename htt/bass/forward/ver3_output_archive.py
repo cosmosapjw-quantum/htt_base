@@ -367,12 +367,18 @@ def output_split_gate_bundle(
     det_b_norm = float(np.linalg.norm(det_B))
     stoch_b_norm = float(np.linalg.norm(stoch_B))
     boost_b_norm = float(np.linalg.norm(boost.alm_B))
-    b_zero_only = b_mode_support in {"flrw_zero_only", "known_zero_not_evolved"}
+    b_zero_only = b_mode_support in {
+        "flrw_zero_only",
+        "known_zero_not_evolved",
+        "known_zero_source_projection_not_evolved",
+    }
     # Honest contract: when only the FLRW projector is wired, the deterministic
     # B column must be identically zero. Stochastic / boost contributions are
     # output-side and may carry energy.
     b_mode_zero_consistent = (not b_zero_only) or det_b_norm == 0.0
     map_support = str(output.metadata.get("map_output_support", "not_implemented"))
+    stochastic_implemented = stochastic_status == "implemented"
+    split_ready = bool(b_mode_zero_consistent and stochastic_implemented)
     return make_gate_bundle(
         "output_split_gate",
         family=str(output.metadata.get("bianchi_type", "unknown")),
@@ -394,7 +400,7 @@ def output_split_gate_bundle(
             "boost_metadata_valid": bool(boost_metadata["split_semantics"] == "output_only_local_boost"),
             "b_mode_zero_consistent_with_support_flag": bool(b_mode_zero_consistent),
             "stochastic_channel_explicitly_classified": True,
-            "stochastic_channel_implemented": stochastic_status == "implemented",
+            "stochastic_channel_implemented": stochastic_implemented,
         },
         forbidden_shortcut_checks={
             "no_local_boost_merged_into_global_tilt": bool(
@@ -421,8 +427,11 @@ def output_split_gate_bundle(
             if stochastic_status == "implemented"
             else "stochastic_lcdm_realization_injection_not_implemented",
         },
-        passed=bool(b_mode_zero_consistent),
-        opened_claim="output split gate frozen, local boost kept output-only",
+        passed=split_ready,
+        opened_claim=(
+            "output split gate frozen with explicit stochastic component and "
+            "local boost kept output-only"
+        ),
     )
 
 

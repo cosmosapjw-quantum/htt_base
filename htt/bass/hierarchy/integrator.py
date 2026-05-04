@@ -152,6 +152,27 @@ class IntegratorConfig:
     trajectory. Diagnostic k-sweeps may raise this only with a
     same-output fairness check against the default cap.
     """
+    co_evolve_scalar_metric: bool = False
+    """Opt-in MB95 synchronous scalar-metric coevolution for Tier-B.
+
+    When enabled by the native Tier-B integrator, the packed runtime state
+    carries ``(etak, sigma)`` and uses the MB95 momentum/shear metric
+    equations to feed the photon/neutrino monopole, photon/neutrino
+    quadrupole, matter-continuity, and baryon pressure-gradient equations.
+    Scalar intensity free streaming is controlled by
+    ``co_evolve_scalar_streaming`` below so the metric path can stay finite in
+    the currently validated envelope. The default remains disabled until the
+    FLRW/CAMB closure validation gate is satisfied.
+    """
+    co_evolve_scalar_streaming: bool = False
+    """Opt-in MB95 scalar m=0 photon/neutrino free-streaming recursion.
+
+    This is intentionally separate from ``co_evolve_scalar_metric``. The
+    recursion is implemented and unit-tested, but full-range BDF/TCA/cutoff
+    stability is not yet validated, so production-style scalar-metric runs
+    keep it disabled unless the caller explicitly opts into the development
+    envelope.
+    """
     adiabatic_mode_seed: bool = False
     """V5 step-4b-(a) super-horizon adiabatic IC switch. When True,
     ``_build_seed_projection`` calls ``build_flrw_regular_seed(...,
@@ -292,6 +313,7 @@ class IntegrationResult:
     residual_local_history: np.ndarray | None = field(default=None, repr=False)
     residual_harmonic_history: np.ndarray | None = field(default=None, repr=False)
     residual_source_history: np.ndarray | None = field(default=None, repr=False)
+    scalar_metric_history: np.ndarray | None = field(default=None, repr=False)
     baryon_local_history_by_mode_label: object | None = field(default=None, repr=False)
     cdm_local_history_by_mode_label: object | None = field(default=None, repr=False)
     source_history: np.ndarray | None = field(default=None, repr=False)

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import numpy as np
 import pytest
 
@@ -13,6 +15,10 @@ from bass.forward.ver2_solver_output import (
     solver_core_output_to_payload,
 )
 from bass.hierarchy.integrator import IntegratorConfig
+from bass.hierarchy.ver2_native_integrator import (
+    _mb95_scalar_intensity_streaming_rhs,
+    _mb95_synchronous_quadrupole_metric_source,
+)
 from bass.runtime import (
     CheckpointPolicy,
     ConstraintProjectionPolicy,
@@ -255,9 +261,22 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.integration_result.solver_info["resolved_solver_method"] == "IMEX_MIDPOINT_BDF"
     assert run.integration_result.solver_info["executor_realization"] == "native_imex_midpoint_bdf_split"
     assert run.integration_result.solver_info["solver_family_realization"] == "native_imex_midpoint_bdf_split"
+    assert run.integration_result.solver_info["imex_full_rhs_fallback_steps"] == 0
+    assert run.integration_result.solver_info["imex_full_rhs_fallback_used"] is False
+    assert run.integration_result.solver_info["imex_min_accepted_step_mpc"] is not None
+    assert run.integration_result.solver_info["imex_max_accepted_step_mpc"] is not None
     assert run.integration_result.solver_info["tier_b_core_owner"] == "ver2_s1s2_native"
     assert run.integration_result.solver_info["seed_factory_owner"] == "family_backend.seed_factory"
     assert run.integration_result.solver_info["seed_factory_mode"] == "flrw_like_regular"
+    assert run.integration_result.solver_info["matter_seed_observables"]["eta_cov"] != 0.0
+    assert set(run.integration_result.solver_info["matter_seed_observables"]) == {
+        "delta_b",
+        "theta_b",
+        "delta_c",
+        "theta_c",
+        "eta_cov",
+        "Z",
+    }
     assert run.integration_result.residual_local_history is not None
     assert set(run.integration_result.photon_T_history_by_mode_label) == {"m0", "m+2", "m-2"}
     assert set(run.integration_result.photon_E_history_by_mode_label) == {"m0", "m+2", "m-2"}
@@ -289,6 +308,12 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     )
     assert run.integration_result.solver_info["seed_family"] == "I"
     assert run.integration_result.solver_info["seed_branch"] == "orthogonal"
+    assert run.integration_result.solver_info["neutrino_metric_feedback_owner"] == (
+        "ver2_native_integrator.neutrino_quadrupole_temperature_rhs"
+    )
+    assert run.integration_result.solver_info["neutrino_metric_feedback_evidence_passed"] is True
+    assert run.integration_result.solver_info["neutrino_metric_feedback_R_nu_max"] > 0.0
+    assert np.isfinite(run.integration_result.solver_info["neutrino_metric_feedback_rhs_max_abs"])
     assert run.integration_result.solver_info["layout_operator_consumed"] is True
     assert run.integration_result.solver_info["layout_collision_operator_source"] == "mode_ops.A_coll_diagonal"
     assert run.integration_result.solver_info["layout_source_template_consumed"] is True
@@ -334,8 +359,16 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["requested_integrator_family"] == "imex_split"
     assert run.solver_output.metadata["resolved_solver_method"] == "IMEX_MIDPOINT_BDF"
     assert run.solver_output.metadata["executor_realization"] == "native_imex_midpoint_bdf_split"
+
     assert run.solver_output.metadata["seed_factory_owner"] == "family_backend.seed_factory"
     assert run.solver_output.metadata["seed_factory_mode"] == "flrw_like_regular"
+    assert run.solver_output.metadata["ic_provenance_status"] == "strong"
+    assert run.solver_output.metadata["imex_full_rhs_fallback_used"] is False
+    assert run.solver_output.metadata["neutrino_metric_feedback_owner"] == (
+        "ver2_native_integrator.neutrino_quadrupole_temperature_rhs"
+    )
+    assert run.solver_output.metadata["neutrino_metric_feedback_evidence_passed"] is True
+    assert run.solver_output.metadata["neutrino_metric_feedback_R_nu_max"] > 0.0
     assert run.solver_output.metadata["layout_contract_consumed"] is True
     assert run.solver_output.metadata["layout_operator_consumed"] is True
     assert run.solver_output.metadata["layout_initial_mode_ops_owner"] == (
@@ -509,11 +542,26 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
     assert run.solver_output.metadata["layout_local_matter_reference_delta_norm"] >= 0.0
     assert run.solver_output.metadata["b_mode_runtime_available"] is False
     assert run.solver_output.metadata["b_mode_payload_status"] == "zero_filled_not_evolved"
-    assert run.solver_output.metadata["b_mode_output_support"] == "known_zero_not_evolved"
-    assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
+    assert run.solver_output.metadata["b_mode_output_support"] == (
+        "known_zero_source_projection_not_evolved"
+    )
+    assert run.solver_output.metadata["b_mode_source_projection_known_zero"] is True
+    assert run.solver_output.metadata["b_mode_source_projection_status"] == (
+        "known_zero_output_ready_transfer"
+    )
+    assert run.solver_output.metadata["tilt_background_owner_requested"] == "nonperturbative_tilt_rhs"
+    assert run.solver_output.metadata["tilt_background_owner"] == "orthogonal_zero_tilt"
+    assert (
+        run.solver_output.metadata["tilt_background_owner_status"]
+        == "not_applicable_orthogonal_zero_tilt"
+    )
     assert run.solver_output.metadata["off_axis_support"] is False
     assert run.solver_output.metadata["off_axis_fallback_applied"] is False
-    assert run.solver_output.metadata["source_builder_scope"] == "theta0_plus_combined_polter_visibility_ver2_native"
+    assert run.solver_output.metadata["source_builder_scope"] == "tier_b_einstein_extracted_type_i_exact"
+    assert run.solver_output.metadata["source_builder_einstein_source_owner"] == (
+        "bass.spectrum.tier_b_source_extraction.extract_flrw_sources_from_tier_b"
+    )
+    assert run.solver_output.metadata["source_builder_exact_type_i_decomposed"] is True
     assert run.solver_output.metadata["source_builder_combined_polter"] is True
     assert run.solver_output.metadata["source_builder_visibility_weighted_polter"] is True
     assert run.solver_output.metadata["visibility_reionization_mode"] == "tanh"
@@ -671,6 +719,105 @@ def test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks() -> None:
         "m-2",
     }
     assert run.integration_result.neutrino_tower is not None
+
+
+def test_scalar_metric_coevolution_wires_main_state_metric_sources() -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018()
+    cfg = replace(
+        _integrator_config(),
+        co_evolve_scalar_metric=True,
+        co_evolve_scalar_streaming=True,
+        eta_final_mpc=0.8,
+        n_output=10,
+    )
+    run = execute_tier_b_solver(
+        manifest=_manifest(),
+        bianchi_type="I",
+        species=species,
+        integrator_config=cfg,
+        runtime_controls=_runtime_controls(),
+        feature_flags=_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+        cutoff_spec=CutoffCampaignSpec(
+            cutoffs=(4,),
+            closure_name="tier_b_tca",
+            baseline_cutoff=4,
+        ),
+    )
+
+    metric_history = np.asarray(run.integration_result.scalar_metric_history, dtype=np.float64)
+    assert metric_history.shape == (len(run.integration_result.eta), 2)
+    assert np.all(np.isfinite(metric_history))
+    assert float(np.max(np.abs(metric_history))) > 0.0
+    seed_eta = float(run.integration_result.solver_info["matter_seed_observables"]["eta_cov"])
+    assert metric_history[0, 0] == pytest.approx(-0.5e-4 * seed_eta)
+    metadata = run.integration_result.solver_info["scalar_metric_history_metadata"]
+    assert metadata["owner"] == "ver2_native_integrator.main_state_scalar_metric"
+    assert metadata["photon_neutrino_monopole_coupled"] is True
+    assert metadata["photon_neutrino_quadrupole_coupled"] is True
+    assert metadata["quadrupole_source_equation"] == "Theta2_metric=hdot/15+2*etak_dot/(5*k)"
+    assert metadata["photon_neutrino_scalar_streaming_coupled"] is True
+    assert metadata["scalar_streaming_equation"].startswith("Theta_l_stream=")
+    assert metadata["matter_continuity_coupled"] is True
+    assert metadata["baryon_euler_pressure_coupled"] is True
+    assert run.integration_result.solver_info["live_local_matter_history_metadata"][
+        "baryon_euler_pressure_source"
+    ] == "hyrec_matter_temperature_sound_speed"
+    assert run.integration_result.solver_info["neutrino_metric_feedback_status"] == (
+        "legacy_temperature_rhs_superseded_by_coevolved_scalar_metric"
+    )
+    assert run.integration_result.solver_info["neutrino_metric_feedback_legacy_rhs_applied"] is False
+    assert run.integration_result.solver_info["resolved_solver_method"] == "BDF"
+    assert run.integration_result.solver_info["solver_family_realization"] == (
+        "native_scalar_metric_bdf_full_rhs"
+    )
+    assert run.solver_output.metadata["scalar_metric_history_owner"] == (
+        "ver2_native_integrator.main_state_scalar_metric"
+    )
+    assert run.solver_output.metadata["scalar_metric_photon_neutrino_monopole_coupled"] is True
+    assert run.solver_output.metadata["scalar_metric_photon_neutrino_quadrupole_coupled"] is True
+    assert (
+        run.solver_output.metadata["scalar_metric_photon_neutrino_scalar_streaming_coupled"]
+        is True
+    )
+    assert run.solver_output.metadata["scalar_metric_matter_continuity_coupled"] is True
+    assert run.solver_output.metadata["scalar_metric_baryon_euler_pressure_coupled"] is True
+
+
+def test_mb95_scalar_metric_quadrupole_source_formula() -> None:
+    k = 2.0e-4
+    scalar_metric = np.array([0.0, 3.0e-6], dtype=np.float64)
+    scalar_metric_rhs = np.array([5.0e-10, -7.0e-10], dtype=np.float64)
+
+    hdot = 2.0 * k * scalar_metric[1] - 6.0 * scalar_metric_rhs[0] / k
+    expected = hdot / 15.0 + 2.0 * scalar_metric_rhs[0] / (5.0 * k)
+
+    assert _mb95_synchronous_quadrupole_metric_source(
+        k_value=k,
+        scalar_metric=scalar_metric,
+        scalar_metric_rhs=scalar_metric_rhs,
+    ) == pytest.approx(expected)
+
+
+def test_mb95_scalar_intensity_streaming_formula() -> None:
+    k = 0.05
+    L = 3
+    flat = np.zeros((L + 1) ** 2, dtype=np.float64)
+    flat[0] = 1.0
+    flat[2] = 2.0
+    flat[6] = 3.0
+    flat[12] = 4.0
+
+    rhs = _mb95_scalar_intensity_streaming_rhs(flat, L_max=L, k_value=k)
+
+    assert rhs[0] == pytest.approx(-k * 2.0)
+    assert rhs[2] == pytest.approx(k * (1.0 - 2.0 * 3.0) / 3.0)
+    assert rhs[6] == pytest.approx(k * (2.0 * 2.0 - 3.0 * 4.0) / 5.0)
+    assert rhs[12] == pytest.approx(k * (3.0 * 3.0) / 7.0)
+    non_m0 = np.ones_like(rhs, dtype=bool)
+    non_m0[[0, 2, 6, 12]] = False
+    assert np.all(rhs[non_m0] == 0.0)
 
 
 def test_execute_tier_b_solver_is_deterministic_for_same_inputs() -> None:
@@ -847,7 +994,13 @@ def test_representative_tilted_executable_families_execute_with_bounded_runtime_
     assert run.solver_output.metadata["source_propagator_status"] == "approximate"
     expected_readiness = "approximate_family_kernel"
     assert run.solver_output.metadata["propagator_readiness"] == expected_readiness
-    assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
+    assert run.trace.background_monitor.matter_model_tag == "tilted_species_registry_dynamic_rapidity"
+    assert run.solver_output.metadata["tilt_background_owner_requested"] == "nonperturbative_tilt_rhs"
+    assert run.solver_output.metadata["tilt_background_owner"] == "nonperturbative_tilt_rhs"
+    assert (
+        run.solver_output.metadata["tilt_background_owner_status"]
+        == "production_dynamic_nonperturbative_rapidity"
+    )
     assert run.trace.seed_projection.projection_ready is True
     assert run.trace.seed_projection.projection_mode == "background_codazzi_project"
     assert np.linalg.norm(run.trace.seed_projection.momentum_residual_after) <= _seed_projection_tol(run)
@@ -897,8 +1050,49 @@ def test_nonperturbative_tilt_owner_is_wired_into_runtime_background_and_collisi
         == "runtime_wired_dynamic_rapidity_owner"
     )
     assert run.trace.thomson_probe.opacity_contract == "electron_frame_tilt_modulated"
+    assert run.trace.thomson_probe.operator_scope == "full_electron_frame_stokes"
+    assert run.solver_output.metadata["exact_thomson_gate_passed"] is True
+    assert run.solver_output.metadata["exact_thomson_operator_scope"] == (
+        "full_electron_frame_stokes"
+    )
+    assert (
+        run.integration_result.solver_info["collision_temperature_rhs_owner"]
+        == "full_stokes_temperature_projected_pstf"
+    )
+    assert (
+        run.integration_result.solver_info["collision_polarization_rhs_owner"]
+        == "full_stokes_spin2_angular_polarization"
+    )
+    assert run.solver_output.metadata["collision_full_stokes_temperature_rhs_active"] is True
     assert run.trace.background_monitor.tilt_rapidity[0] > 0.0
     assert run.trace.background_monitor.tilt_rapidity[-1] <= run.trace.background_monitor.tilt_rapidity[0]
+
+
+def test_fixed_velocity_tilt_owner_is_legacy_explicit_path() -> None:
+    species = SpeciesBackgroundRegistry.from_planck2018(recombination_warning_policy="ignore")
+    run = execute_tier_b_solver(
+        manifest=_manifest(),
+        bianchi_type="V",
+        species=species,
+        integrator_config=_family_integrator_config("V", beta=1.0e-6, v_hat_e=(1.0, 0.0, 0.0)),
+        runtime_controls=_runtime_controls_with_owner("fixed_velocity_closure"),
+        feature_flags=_feature_flags(),
+        release=_release(),
+        k_grid_mpc=np.array([1.0e-4, 2.0e-4], dtype=np.float64),
+    )
+
+    assert run.trace.background_monitor.matter_model_tag == "tilted_species_registry_mixture"
+    assert run.solver_output.metadata["tilt_background_owner_requested"] == "fixed_velocity_closure"
+    assert run.solver_output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
+    assert (
+        run.solver_output.metadata["tilt_background_owner_status"]
+        == "legacy_fixed_velocity_closure"
+    )
+    assert run.solver_output.metadata["nonperturbative_tilt_rhs_status"] == "research_contract_only"
+    np.testing.assert_allclose(
+        run.trace.background_monitor.tilt_rapidity,
+        run.trace.background_monitor.tilt_rapidity[0],
+    )
 
 
 def test_off_axis_tilted_runtime_path_executes_without_fallback() -> None:
@@ -928,6 +1122,22 @@ def test_off_axis_tilted_runtime_path_executes_without_fallback() -> None:
         run.integration_result.solver_info["seed_injection_mode"]
     )
     assert run.trace.thomson_probe.source_ready is True
+    assert run.trace.thomson_probe.operator_scope == "full_electron_frame_stokes"
+    assert run.solver_output.metadata["exact_thomson_gate_passed"] is True
+    assert run.solver_output.metadata["exact_thomson_operator_scope"] == (
+        "full_electron_frame_stokes"
+    )
+    assert (
+        run.integration_result.solver_info["collision_temperature_rhs_owner"]
+        == "full_stokes_temperature_projected_pstf"
+    )
+    assert (
+        run.integration_result.solver_info["collision_polarization_rhs_owner"]
+        == "full_stokes_spin2_angular_polarization"
+    )
+    assert run.solver_output.metadata["collision_temperature_rhs_owner"] == (
+        "full_stokes_temperature_projected_pstf"
+    )
     initial_T = unpack_hierarchy(run.integration_result.photon_T_tower[0], run.integration_result.L_max)
     assert np.linalg.norm(np.delete(initial_T.tensors[2].components, 2)) > 0.0
 

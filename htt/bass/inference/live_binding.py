@@ -233,8 +233,25 @@ def _covariance_readiness(observable_vector: ObservableVector) -> str:
     return "proxy"
 
 
-def _gate_registry(solver_output: SolverCoreOutput) -> dict[str, object]:
-    return resolve_output_gate_registry(solver_output)
+def _gate_registry(
+    solver_output: SolverCoreOutput,
+    *,
+    stochastic_alm_T: object | None = None,
+    stochastic_alm_E: object | None = None,
+    stochastic_alm_B: object | None = None,
+    boost_alm_T: object | None = None,
+    boost_alm_E: object | None = None,
+    boost_alm_B: object | None = None,
+) -> dict[str, object]:
+    return resolve_output_gate_registry(
+        solver_output,
+        stochastic_alm_T=stochastic_alm_T,
+        stochastic_alm_E=stochastic_alm_E,
+        stochastic_alm_B=stochastic_alm_B,
+        boost_alm_T=boost_alm_T,
+        boost_alm_E=boost_alm_E,
+        boost_alm_B=boost_alm_B,
+    )
 
 
 def _observable_harmonic_gaussian_ready(observable_vector: ObservableVector) -> bool:
@@ -252,12 +269,32 @@ def statistics_readiness_decision(
     *,
     solver_output: SolverCoreOutput,
     observable_vector: ObservableVector,
+    gate_registry: Mapping[str, object] | None = None,
+    stochastic_alm_T: object | None = None,
+    stochastic_alm_E: object | None = None,
+    stochastic_alm_B: object | None = None,
+    boost_alm_T: object | None = None,
+    boost_alm_E: object | None = None,
+    boost_alm_B: object | None = None,
 ) -> StatisticsReadinessDecision:
     """Return the live-inference fitting decision with all blocking evidence."""
 
     covariance_readiness = _covariance_readiness(observable_vector)
+    resolved_gate_registry = (
+        dict(gate_registry)
+        if gate_registry is not None
+        else _gate_registry(
+            solver_output,
+            stochastic_alm_T=stochastic_alm_T,
+            stochastic_alm_E=stochastic_alm_E,
+            stochastic_alm_B=stochastic_alm_B,
+            boost_alm_T=boost_alm_T,
+            boost_alm_E=boost_alm_E,
+            boost_alm_B=boost_alm_B,
+        )
+    )
     gate_decision = hard_gate_before_fitting(
-        _gate_registry(solver_output),
+        resolved_gate_registry,
         residuals={
             "offdiag_strength": None
             if observable_vector.covariance_features is None
@@ -315,10 +352,26 @@ def _fitting_decision(
     *,
     solver_output: SolverCoreOutput,
     observable_vector: ObservableVector,
+    stochastic_alm_T: object | None = None,
+    stochastic_alm_E: object | None = None,
+    stochastic_alm_B: object | None = None,
+    boost_alm_T: object | None = None,
+    boost_alm_E: object | None = None,
+    boost_alm_B: object | None = None,
 ) -> tuple[GateDecision, str, bool, StatisticsReadinessDecision]:
+    resolved_gate_registry = _gate_registry(
+        solver_output,
+        stochastic_alm_T=stochastic_alm_T,
+        stochastic_alm_E=stochastic_alm_E,
+        stochastic_alm_B=stochastic_alm_B,
+        boost_alm_T=boost_alm_T,
+        boost_alm_E=boost_alm_E,
+        boost_alm_B=boost_alm_B,
+    )
     statistics_decision = statistics_readiness_decision(
         solver_output=solver_output,
         observable_vector=observable_vector,
+        gate_registry=resolved_gate_registry,
     )
     gate_decision = statistics_decision.gate_decision
     covariance_readiness = statistics_decision.covariance_readiness
@@ -338,6 +391,7 @@ def _fitting_decision(
     )
     solver_output.metadata["missing_gates"] = gate_decision.missing_gates
     solver_output.metadata["covariance_readiness"] = covariance_readiness
+    solver_output.metadata["gate_registry"] = resolved_gate_registry
     solver_output.metadata["fitting_gate_decision"] = gate_decision.as_payload()
     solver_output.metadata[
         "statistics_readiness_decision"
@@ -402,6 +456,12 @@ def build_live_observer_boost_problem(
     *,
     solver_output: SolverCoreOutput,
     observable_vector: ObservableVector | None = None,
+    stochastic_alm_T: object | None = None,
+    stochastic_alm_E: object | None = None,
+    stochastic_alm_B: object | None = None,
+    boost_alm_T: object | None = None,
+    boost_alm_E: object | None = None,
+    boost_alm_B: object | None = None,
 ) -> LiveObserverBoostProblem:
     """Wrap an existing live BASS solver output as a posterior problem."""
     observable = (
@@ -420,6 +480,12 @@ def build_live_observer_boost_problem(
     ) = _fitting_decision(
         solver_output=solver_output,
         observable_vector=observable,
+        stochastic_alm_T=stochastic_alm_T,
+        stochastic_alm_E=stochastic_alm_E,
+        stochastic_alm_B=stochastic_alm_B,
+        boost_alm_T=boost_alm_T,
+        boost_alm_E=boost_alm_E,
+        boost_alm_B=boost_alm_B,
     )
     return LiveObserverBoostProblem(
         solver_output=solver_output,

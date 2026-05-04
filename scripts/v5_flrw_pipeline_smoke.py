@@ -106,16 +106,26 @@ def smoke_k_sweep(n_k: int, n_workers: int | None) -> int:
 
     d_tt = bundle["d_tt"]
     d_ee = bundle["d_ee"]
+    d_te = bundle["d_te"]
     _log("D_ℓ^TT (μK²) from full-pipeline extraction:")
     for ell, val in enumerate(d_tt):
         _log(f"  ℓ={ell}: D_TT = {val:+.6e}")
     _log("D_ℓ^EE (μK²):")
     for ell, val in enumerate(d_ee):
         _log(f"  ℓ={ell}: D_EE = {val:+.6e}")
+    _log("D_ℓ^TE (μK²):")
+    for ell, val in enumerate(d_te):
+        _log(f"  ℓ={ell}: D_TE = {val:+.6e}")
 
     ok = True
     if not np.all(np.isfinite(d_tt)):
         _log("  ✗ FAIL: non-finite D_TT")
+        ok = False
+    if not np.all(np.isfinite(d_ee)):
+        _log("  ✗ FAIL: non-finite D_EE")
+        ok = False
+    if not np.all(np.isfinite(d_te)):
+        _log("  ✗ FAIL: non-finite D_TE")
         ok = False
     if len(d_tt) >= 3 and not float(d_tt[2]) > 0.0:
         _log(f"  ✗ FAIL: D_2^TT = {d_tt[2]:.3e} is non-positive")
@@ -133,7 +143,7 @@ def smoke_k_sweep(n_k: int, n_workers: int | None) -> int:
         )
 
     if ok:
-        _log("  ✓ PASS: D_ℓ arrays are finite and positive.")
+        _log("  ✓ PASS: D_ℓ arrays are finite; TT is non-trivial.")
         return 0
     return 1
 

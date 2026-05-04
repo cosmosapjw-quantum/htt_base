@@ -75,7 +75,21 @@ def test_fb86_profile_boost_recovers_best_candidate(boost: ObserverBoost) -> Non
     )
     best_logp, best_boost = adapter.profile_boost({"boost_grid": support})
     assert np.isfinite(best_logp)
-    assert best_boost == boost or boost == ObserverBoost(rapidity=0.0)
+    assert best_boost == ObserverBoost(rapidity=0.0, v_hat=(0.0, 0.0, 1.0))
+
+
+def test_fb86_observer_boost_does_not_inject_cosmological_axis_or_amplitude() -> None:
+    dataset = _dataset(amplitude=1.0e-3)
+    boost = ObserverBoost(rapidity=float(np.arctanh(1.0e-3)), v_hat=(0.0, 0.0, 1.0))
+    adapter = ObserverFrameLikelihood(
+        cosmo_likelihood=dataset.cosmo_likelihood,
+        boost_prior=DeltaObserverBoostPrior(boost),
+    )
+    adapted = adapter._adapt_params({}, boost=boost)
+    assert "axis_vector" not in adapted
+    assert "preferred_axis" not in adapted
+    assert "amplitude" not in adapted
+    assert "anisotropy_amplitude" not in adapted
 
 
 @pytest.mark.parametrize(

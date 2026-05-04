@@ -32,6 +32,7 @@ from bass.spectrum.cl_assembly import (
     assemble_cl_EE_isotropic,
     assemble_cl_TT_EE_isotropic,
     assemble_cl_TT_EE_isotropic_from_grid,
+    assemble_cl_TT_EE_TE_isotropic_from_grid,
     assemble_cl_TE_isotropic,
     # bianchi diagonal
     assemble_cl_TT_bianchi,
@@ -313,6 +314,35 @@ class TestIsotropicTTEE:
         np.testing.assert_allclose(cl_tt_grid, cl_tt_pair, rtol=0.0, atol=0.0)
         np.testing.assert_allclose(cl_ee_grid, cl_ee_pair, rtol=0.0, atol=0.0)
 
+    def test_grid_triplet_matches_separate_assemblers(self):
+        cfg = _standard_config(ell_max=8)
+        xf = _mock_constant_transfer(ell_max=8, T_val=1.5, E_val=-0.25)
+        transfer_grid = [xf(float(k)) for k in cfg.k_grid]
+
+        cl_tt, cl_ee, cl_te = assemble_cl_TT_EE_TE_isotropic_from_grid(
+            transfer_grid, cfg
+        )
+
+        np.testing.assert_allclose(
+            cl_tt,
+            assemble_cl_TT_isotropic(xf, cfg),
+            rtol=0.0,
+            atol=0.0,
+        )
+        np.testing.assert_allclose(
+            cl_ee,
+            assemble_cl_EE_isotropic(xf, cfg),
+            rtol=0.0,
+            atol=0.0,
+        )
+        np.testing.assert_allclose(
+            cl_te,
+            assemble_cl_TE_isotropic(xf, cfg),
+            rtol=0.0,
+            atol=0.0,
+        )
+        assert np.all(cl_te < 0.0)
+
     def test_grid_pair_rejects_length_mismatch(self):
         cfg = _standard_config(ell_max=2)
         xf = _mock_constant_transfer(ell_max=2)
@@ -320,6 +350,9 @@ class TestIsotropicTTEE:
 
         with pytest.raises(ValueError, match="transfer_grid length"):
             assemble_cl_TT_EE_isotropic_from_grid(transfer_grid, cfg)
+
+        with pytest.raises(ValueError, match="transfer_grid length"):
+            assemble_cl_TT_EE_TE_isotropic_from_grid(transfer_grid, cfg)
 
 
 # ============================================================================

@@ -5,6 +5,13 @@ _Last updated: 2026-04-26. Owner: BASS. Authority: this doc + V5_ROUND16_01..05.
 
 This plan replaces (does not duplicate) the prior `bianchi_design_pack_v5/` and `docs/ver3/` series for active development. v5/ver3 remain frozen reference; Round-16 is the live working set.
 
+2026-05-01 status note: G4's default-owner portion is now closed in code.
+`RuntimeControlBlock.tilt_background_owner` defaults to
+`nonperturbative_tilt_rhs`, representative tilted Tier-B contracts use the
+dynamic rapidity closure, and fixed velocity is explicit legacy diagnostic.
+The remaining tilt work is generic off-axis tilted hierarchy transport and
+runtime integration of full angular Stokes collision.
+
 ```
 V5_ROUND16_00_MASTER_PLAN.md            ← (this) gap registry, sequencing, audit protocol
 V5_ROUND16_01_PHYSICS_LAYER.md          ← background + geometry + Codazzi-consistent tilt
@@ -24,7 +31,7 @@ A new session can pick this directory up cold; no other input is required to sta
 | **G1** | P0 | Python-side `D_2 = 1002.086744 μK²` PSTF closure is **not** bit-identical with the Rust MB-95 anchor (PR-024c open). |
 | **G2** | P0 | Hierarchy RHS has **no off-diagonal ℓ-ℓ' or m-m' coupling**; mode mixing only enters at IC and (FLRW) LoS. Without this, no Bianchi-induced spectrum is meaningful. |
 | **G3** | P0 | "11-family support" headline is registry-true but mode-coverage-false: 8/11 (II, III, IV, VI₀, VI_h, VII₀, VII_h, VIII) are restricted to axis-aligned mode subsets. |
-| **G4** | P1 | Globally tilted Bianchi background carries `β` as a static parameter; the King-Ellis exact rapidity ODE in `nonperturbative_tilt.py` is opt-in only, not on the authority path. |
+| **G4** | P1 | Default-owner portion closed 2026-05-01: supported tilted Tier-B background runs now use the King-Ellis dynamic rapidity owner by default. Remaining gap: generic off-axis tilted hierarchy transport and full angular Stokes runtime collision are not closed. |
 | **G5** | P1 | B-mode tower has RHS but the FLRW Bessel projector returns identically zero; the `alm_B` archive column is structurally a phantom. |
 | **G6** | P1 | No end-to-end output regression for any non-FLRW family beyond the Type-V→Type-I residual comparator. |
 | **G7** | P1 | TCA conditional dispatch contradicts the headline "approximation-free truth engine"; the audit accepts the conditional-inline DAE-relaxation but a smoothness audit at the activation threshold was missing (now patched). |
@@ -95,7 +102,7 @@ Three decisions with non-obvious answers were debated by independent agents (R16
 
 **Question.** Should `β` (rapidity) be (a) integrated alongside `(a, σ_+, σ_-)` in a single ODE, (b) integrated separately via the King-Ellis 6-variable system and consumed by the main integrator, or (c) kept static as a parametric input?
 
-**Consensus.** (a) — integrate β as a state variable in the unified background ODE so that Codazzi residuals can be enforced *dynamically*, not only checked post-hoc. The current `nonperturbative_tilt.py` 6-variable closure becomes the *implementation* of the merged RHS: its terms are folded into `bass/background/rhs.py::background_rhs(...)` such that the runtime owner switch `tilt_background_owner = "nonperturbative_tilt_rhs"` becomes the **default** (currently it is `"fixed_velocity_closure"`), and "fixed velocity" survives only as a `runtime_controls.tilt_freeze=True` flag with explicit metadata `tilt_evolution_status="frozen_diagnostic"`.
+**Consensus.** (a) — integrate β as a state variable in the unified background ODE so that Codazzi residuals can be enforced *dynamically*, not only checked post-hoc. The current `nonperturbative_tilt.py` 6-variable closure is now the default Tier-B tilted background owner through `tilt_background_owner = "nonperturbative_tilt_rhs"`, and fixed velocity survives only as an explicit legacy diagnostic owner with metadata marking it as non-production.
 
 **Why (a) over (b)**: Two-ODE solutions risk inconsistent step sizes and Codazzi residual drift between the two integrators. Single ODE keeps `(a, σ_+, σ_-, β)` on the same adaptive controller and lets the gate enforce `||C_{Codazzi}||/H² ≤ 10⁻⁶` per step instead of post-integration.
 

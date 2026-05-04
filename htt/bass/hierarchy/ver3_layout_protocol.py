@@ -43,6 +43,7 @@ __all__ = [
 SECTOR_ORDER = ("ph_I", "ph_E", "ph_B", "nu_I", "baryon", "cdm", "src")
 _HARMONIC_SECTORS = frozenset({"ph_I", "ph_E", "ph_B", "nu_I"})
 _LOCAL_SECTOR_DEFAULTS = {"baryon": 4, "cdm": 2, "src": 3}
+_CLASS_B_FAMILIES = frozenset({"III", "IV", "V", "VI_h", "VII_h"})
 
 
 @dataclass(frozen=True)
@@ -277,6 +278,329 @@ def _geometry_contract(
     return build_geometry(backend.family_spec.algebra)
 
 
+def _mapping_child(container: Mapping[str, object], key: str) -> Mapping[str, object]:
+    child = container.get(key, {})
+    if child is None:
+        return {}
+    if not isinstance(child, Mapping):
+        raise ValueError(f"bg.{key} must be a mapping when provided")
+    return child
+
+
+def _positive_finite_scalar(value: object, *, name: str) -> float:
+    scalar = float(value)
+    if not np.isfinite(scalar) or scalar <= 0.0:
+        raise ValueError(f"{name} must be positive finite, got {value!r}")
+    return scalar
+
+
+def _baryon_loading_R_b(bg: Mapping[str, object]) -> tuple[float | None, str]:
+    """Return baryon loading ``R_b = 3 rho_b / (4 rho_gamma)`` if supplied.
+
+    The layout operator only needs the Thomson baryon-drag prefactor
+    ``1/R_b``.  Search explicit runtime metadata first, then primitive
+    densities.  Absence is allowed for legacy/unit tests and returns
+    ``None`` so callers can preserve the unity anchor.
+    """
+
+    opacity_data = _mapping_child(bg, "opacity_data")
+    source_tables = _mapping_child(bg, "source_tables")
+    for owner, container in (
+        ("bg", bg),
+        ("opacity_data", opacity_data),
+        ("source_tables", source_tables),
+    ):
+        for key in (
+            "R_b",
+            "baryon_loading_R",
+            "baryon_photon_momentum_ratio",
+        ):
+            if key in container:
+                return (
+                    _positive_finite_scalar(
+                        container[key],
+                        name=f"{owner}.{key}",
+                    ),
+                    f"{owner}.{key}",
+                )
+        if "rho_b" in container and "rho_gamma" in container:
+            rho_b = _positive_finite_scalar(
+                container["rho_b"],
+                name=f"{owner}.rho_b",
+            )
+            rho_gamma = _positive_finite_scalar(
+                container["rho_gamma"],
+                name=f"{owner}.rho_gamma",
+            )
+            return 3.0 * rho_b / (4.0 * rho_gamma), f"{owner}.rho_b/rho_gamma"
+    return None, "unity_anchor_no_baryon_loading"
+
+
+def _bounded_fraction_scalar(value: object, *, name: str) -> float:
+    scalar = float(value)
+    if not np.isfinite(scalar) or scalar < 0.0 or scalar > 1.0:
+        raise ValueError(f"{name} must be a finite fraction in [0, 1], got {value!r}")
+    return scalar
+
+
+def _neutrino_fraction_R_nu(bg: Mapping[str, object]) -> tuple[float, str]:
+    """Return ``R_nu = rho_nu / (rho_gamma + rho_nu)`` if evidenced.
+
+    The neutrino quadrupole contributes to the metric anisotropic stress
+    only in proportion to its radiation energy fraction. Absence is allowed
+    for legacy tests and returns a zero source rather than a fake default.
+    """
+
+    opacity_data = _mapping_child(bg, "opacity_data")
+    source_tables = _mapping_child(bg, "source_tables")
+    for owner, container in (
+        ("bg", bg),
+        ("opacity_data", opacity_data),
+        ("source_tables", source_tables),
+    ):
+        for key in ("R_nu", "neutrino_fraction_R_nu", "rho_nu_fraction"):
+            if key in container:
+                return (
+                    _bounded_fraction_scalar(container[key], name=f"{owner}.{key}"),
+                    f"{owner}.{key}",
+                )
+        if "rho_nu" in container and "rho_gamma" in container:
+            rho_nu = float(container["rho_nu"])
+            rho_gamma = float(container["rho_gamma"])
+            if (
+                not np.isfinite(rho_nu)
+                or not np.isfinite(rho_gamma)
+                or rho_nu < 0.0
+                or rho_gamma <= 0.0
+            ):
+                raise ValueError(f"{owner}.rho_nu/rho_gamma must be finite with rho_nu>=0 and rho_gamma>0")
+            return (
+                float(rho_nu / max(rho_nu + rho_gamma, 1.0e-30)),
+                f"{owner}.rho_nu/rho_gamma",
+            )
+    return 0.0, "zero_no_neutrino_density_evidence"
+
+
+def _mode_indexed_vector(
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    *,
+    keys: tuple[str, ...],
+    name: str,
+) -> tuple[np.ndarray | None, str]:
+    opacity_data = _mapping_child(bg, "opacity_data")
+    source_tables = _mapping_child(bg, "source_tables")
+    try:
+        truncation = getattr(backend, "truncation", {})
+        labels = _mode_labels_from_backend(
+            backend,
+            truncation if isinstance(truncation, Mapping) else {},
+        )
+    except Exception:
+        labels = ("mu0", "mu+", "mu-")
+    for owner, container in (
+        ("bg", bg),
+        ("opacity_data", opacity_data),
+        ("source_tables", source_tables),
+    ):
+        for key in keys:
+            if key not in container:
+                continue
+            raw = container[key]
+            if isinstance(raw, Mapping):
+                values = np.zeros(3, dtype=np.float64)
+                for idx, label in enumerate(labels[:3]):
+                    if str(label) in raw:
+                        values[idx] = float(raw[str(label)])
+                    elif idx == 0 and "anchor" in raw:
+                        values[idx] = float(raw["anchor"])
+                if not np.all(np.isfinite(values)):
+                    raise ValueError(f"{owner}.{key} must contain finite {name} values")
+                return values, f"{owner}.{key}"
+            values = np.asarray(raw, dtype=np.float64)
+            if values.ndim != 1 or values.size == 0:
+                raise ValueError(f"{owner}.{key} must be a non-empty 1-D {name} vector")
+            out = np.zeros(3, dtype=np.float64)
+            width = min(int(values.size), 3)
+            out[:width] = values[:width]
+            if not np.all(np.isfinite(out)):
+                raise ValueError(f"{owner}.{key} must contain finite {name} values")
+            return out, f"{owner}.{key}"
+    return None, f"unity_anchor_no_{name}"
+
+
+def _hubble_local(bg: Mapping[str, object]) -> tuple[float | None, str]:
+    opacity_data = _mapping_child(bg, "opacity_data")
+    source_tables = _mapping_child(bg, "source_tables")
+    for owner, container in (
+        ("bg", bg),
+        ("opacity_data", opacity_data),
+        ("source_tables", source_tables),
+    ):
+        for key in ("H_local", "H"):
+            if key in container:
+                return (
+                    _positive_finite_scalar(
+                        container[key],
+                        name=f"{owner}.{key}",
+                    ),
+                    f"{owner}.{key}",
+                )
+    return None, "unity_anchor_no_hubble"
+
+
+def _mass_by_mu_from_shear(
+    bg: Mapping[str, object],
+) -> tuple[np.ndarray, float | None, str]:
+    H_local, owner = _hubble_local(bg)
+    if H_local is None:
+        return np.ones(3, dtype=np.float64), None, owner
+
+    shear = np.asarray(bg.get("sigma_tensor", np.zeros((3, 3))), dtype=np.float64)
+    if shear.shape != (3, 3):
+        raise ValueError(f"bg.sigma_tensor must have shape (3, 3), got {shear.shape!r}")
+    if not np.all(np.isfinite(shear)):
+        raise ValueError("bg.sigma_tensor must contain only finite values")
+    shear_over_H = np.diag(shear) / float(H_local)
+    mass = 1.0 + shear_over_H
+    if not np.all(np.isfinite(mass)) or np.any(mass <= 0.0):
+        if str(bg.get("branch", "orthogonal")).lower() != "tilted":
+            raise ValueError(
+                "mass_by_mu = 1 + diag(sigma_tensor)/H_local must be positive finite"
+            )
+        if not np.all(np.isfinite(shear_over_H)):
+            raise ValueError("mass_by_mu shear/H input must contain only finite values")
+        mass = np.exp(np.clip(shear_over_H, -50.0, 50.0))
+        owner = f"{owner}+tilted_exponential_shear_over_H_positive_map"
+    return np.asarray(mass, dtype=np.float64), float(H_local), owner
+
+
+def _mode_mass_factor(scales: Mapping[str, object], mu_index: int) -> float:
+    values = np.asarray(scales.get("mass_by_mu", np.ones(3)), dtype=np.float64)
+    if values.ndim != 1 or values.size == 0:
+        raise ValueError("operator scale mass_by_mu must be a non-empty 1-D vector")
+    if int(mu_index) >= values.size:
+        return 1.0
+    value = float(values[int(mu_index)])
+    if not np.isfinite(value) or value <= 0.0:
+        raise ValueError(f"mass_by_mu[{int(mu_index)}] must be positive finite")
+    return value
+
+
+def _mode_local_drag_factor(scales: Mapping[str, object], mu_index: int) -> float:
+    values = np.asarray(scales.get("local_drag_by_mu", np.ones(3)), dtype=np.float64)
+    if values.ndim != 1 or values.size == 0:
+        raise ValueError("operator scale local_drag_by_mu must be a non-empty 1-D vector")
+    if int(mu_index) >= values.size:
+        return 1.0
+    value = float(values[int(mu_index)])
+    if not np.isfinite(value) or value <= 0.0:
+        raise ValueError(f"local_drag_by_mu[{int(mu_index)}] must be positive finite")
+    return value
+
+
+def _mode_transport_factor(scales: Mapping[str, object], mu_index: int) -> float:
+    values = np.asarray(scales.get("transport_by_mu", np.ones(3)), dtype=np.float64)
+    if values.ndim != 1 or values.size == 0:
+        raise ValueError("operator scale transport_by_mu must be a non-empty 1-D vector")
+    if int(mu_index) >= values.size:
+        return 1.0
+    value = float(values[int(mu_index)])
+    if not np.isfinite(value) or value <= 0.0:
+        raise ValueError(f"transport_by_mu[{int(mu_index)}] must be positive finite")
+    return value
+
+
+def _local_drag_by_mu_from_class_b_slip(
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+    H_local: float | None,
+) -> tuple[np.ndarray, str, np.ndarray | None]:
+    a_abs = float(np.linalg.norm(np.asarray(backend.family_spec.algebra.a, dtype=np.float64)))
+    if a_abs == 0.0:
+        return (
+            np.ones(3, dtype=np.float64),
+            "class_a_no_directional_baryon_drag",
+            None,
+        )
+    if H_local is None:
+        return (
+            np.ones(3, dtype=np.float64),
+            "unity_anchor_no_hubble_for_class_b_slip",
+            None,
+        )
+    baryon_v, baryon_owner = _mode_indexed_vector(
+        bg,
+        backend,
+        keys=("baryon_velocity_by_mu", "v_b_by_mu", "baryon_velocity_by_mode_label"),
+        name="baryon_velocity",
+    )
+    theta_1, theta_owner = _mode_indexed_vector(
+        bg,
+        backend,
+        keys=("theta_1_by_mu", "photon_theta1_by_mu", "theta_1_by_mode_label"),
+        name="theta_1",
+    )
+    if baryon_v is None or theta_1 is None:
+        return (
+            np.ones(3, dtype=np.float64),
+            "unity_anchor_no_class_b_slip_state",
+            None,
+        )
+    slip = np.asarray(baryon_v, dtype=np.float64) - 3.0 * np.asarray(theta_1, dtype=np.float64)
+    if not np.all(np.isfinite(slip)):
+        raise ValueError("class-B baryon/photon drag slip must be finite")
+    correction = np.ones(3, dtype=np.float64)
+    correction[0] = 1.0 + float(a_abs * a_abs) * float((slip[0] / float(H_local)) ** 2)
+    if not np.all(np.isfinite(correction)) or np.any(correction <= 0.0):
+        raise ValueError("class-B local_drag_by_mu correction must be positive finite")
+    return (
+        correction,
+        f"class_b_anchor_slip:{baryon_owner}:{theta_owner}",
+        slip,
+    )
+
+
+def _spectral_k_mag(bg: Mapping[str, object]) -> tuple[float | None, str]:
+    opacity_data = _mapping_child(bg, "opacity_data")
+    source_tables = _mapping_child(bg, "source_tables")
+    for owner, container in (
+        ("bg", bg),
+        ("opacity_data", opacity_data),
+        ("source_tables", source_tables),
+    ):
+        for key in ("k_mag", "k_norm", "k_comoving", "seed_k_comoving"):
+            if key in container:
+                return (
+                    _positive_finite_scalar(
+                        container[key],
+                        name=f"{owner}.{key}",
+                    ),
+                    f"{owner}.{key}",
+                )
+    return None, "unity_anchor_no_spectral_k"
+
+
+def _transport_scale_from_spectral_matrix(
+    bg: Mapping[str, object],
+    backend: FamilyBackend,
+) -> tuple[float, np.ndarray, float | None, str]:
+    k_mag, owner = _spectral_k_mag(bg)
+    if k_mag is None:
+        return 1.0, np.ones(3, dtype=np.float64), None, owner
+    transport = _build_transport_matrix(
+        str(backend.family_spec.family),
+        float(k_mag),
+        mu_count=3,
+    )
+    diag = np.diag(np.asarray(transport, dtype=np.float64))
+    if diag.ndim != 1 or diag.size == 0:
+        raise ValueError("transport matrix diagonal must be a non-empty vector")
+    if not np.all(np.isfinite(diag)) or np.any(diag <= 0.0):
+        raise ValueError("transport matrix diagonal must be positive finite")
+    return float(np.mean(diag)), np.asarray(diag, dtype=np.float64), float(k_mag), owner
+
+
 # Round-17 P3.5 Tier 3 Day 2 (2026-04-28): "last call" cache for
 # _operator_scales. Profile showed 112k calls / 1.3 s self-time. Within
 # one ROS2 step, the same bg dict is passed to multiple builders (joint
@@ -285,21 +609,61 @@ def _geometry_contract(
 # saving ~83 % × 1.3 s ≈ ~1.1 s. id() is stable within a tight loop;
 # across steps bg gets a new id and cache evicts on miss.
 _OPERATOR_SCALES_LAST_KEY: int = 0
-_OPERATOR_SCALES_LAST_VALUE: "dict[str, float] | None" = None
+_OPERATOR_SCALES_LAST_VALUE: "dict[str, object] | None" = None
 
 
 def _operator_scales(
     bg: Mapping[str, object],
     backend: FamilyBackend,
-) -> dict[str, float]:
+) -> dict[str, object]:
     global _OPERATOR_SCALES_LAST_KEY, _OPERATOR_SCALES_LAST_VALUE
-    key = id(bg) ^ id(backend)
+    baryon_loading_R_b, local_drag_owner = _baryon_loading_R_b(bg)
+    mass_by_mu, H_local, mass_owner = _mass_by_mu_from_shear(bg)
+    local_drag_by_mu, local_drag_by_mu_owner, local_drag_slip_by_mu = (
+        _local_drag_by_mu_from_class_b_slip(bg, backend, H_local)
+    )
+    transport_scale, transport_by_mu, k_mag, transport_owner = (
+        _transport_scale_from_spectral_matrix(bg, backend)
+    )
+    neutrino_fraction_R_nu, neutrino_fraction_owner = _neutrino_fraction_R_nu(bg)
+    baryon_loading_key = (
+        None
+        if baryon_loading_R_b is None
+        else round(float(baryon_loading_R_b), 18)
+    )
+    mass_key = tuple(round(float(value), 18) for value in mass_by_mu)
+    local_drag_by_mu_key = tuple(round(float(value), 18) for value in local_drag_by_mu)
+    local_drag_slip_key = (
+        None
+        if local_drag_slip_by_mu is None
+        else tuple(round(float(value), 18) for value in local_drag_slip_by_mu)
+    )
+    transport_key = tuple(round(float(value), 18) for value in transport_by_mu)
+    key = id(bg) ^ id(backend) ^ hash(
+        (
+            baryon_loading_key,
+            local_drag_owner,
+            mass_key,
+            H_local,
+            mass_owner,
+            local_drag_by_mu_key,
+            local_drag_by_mu_owner,
+            local_drag_slip_key,
+            transport_key,
+            k_mag,
+            transport_owner,
+            round(float(neutrino_fraction_R_nu), 18),
+            neutrino_fraction_owner,
+        )
+    )
     if key == _OPERATOR_SCALES_LAST_KEY and _OPERATOR_SCALES_LAST_VALUE is not None:
         return _OPERATOR_SCALES_LAST_VALUE
     algebra = backend.family_spec.algebra
     geometry = _geometry_contract(bg, backend)
     n_diag = np.diag(np.asarray(algebra.n, dtype=np.float64))
+    a_vec = np.asarray(algebra.a, dtype=np.float64)
     twist = abs(float(algebra.a[0]))
+    twist_kernel_amplitude = float(np.linalg.norm(a_vec))
     h_abs = abs(float(algebra.h_parameter or 0.0))
     ricci_scalar = abs(float(getattr(geometry, "ricci_scalar", 0.0)))
     ricci_pstf = np.asarray(getattr(geometry, "ricci_pstf", np.zeros((3, 3))), dtype=np.float64)
@@ -328,17 +692,58 @@ def _operator_scales(
     polarization_scale = 1.0
     source_scale = 1.0
     family_law = _family_conditioned_kernel_law(bg, backend)
+    local_drag_scale = (
+        1.0
+        if baryon_loading_R_b is None
+        else 1.0 / float(baryon_loading_R_b)
+    )
     result = {
         "branch_scale": branch_scale,
-        "geom_scale": branch_scale * geom_scale * float(family_law["transport_scale"]),
+        "geom_scale": branch_scale * geom_scale,
+        "transport_scale": float(transport_scale),
+        "transport_by_mu": transport_by_mu,
+        "k_mag": k_mag,
+        "transport_scale_owner": transport_owner,
+        "neutrino_fraction_R_nu": float(neutrino_fraction_R_nu),
+        "neutrino_fraction_owner": str(neutrino_fraction_owner),
+        "neutrino_anisotropic_stress_scale": float(
+            branch_scale * geom_scale * neutrino_fraction_R_nu
+        ),
+        "neutrino_anisotropic_stress_owner": str(
+            "massless_neutrino_quadrupole_metric_source"
+            if neutrino_fraction_R_nu > 0.0
+            else neutrino_fraction_owner
+        ),
         "mix_scale": mix_scale * float(family_law["mix_scale"]),
         "twist_scale": twist_scale * float(family_law["twist_mix_scale"]),
+        "twist_kernel_amplitude": (
+            twist_kernel_amplitude
+            if str(backend.family_spec.family) in _CLASS_B_FAMILIES
+            else 0.0
+        ),
+        "twist_kernel_owner": (
+            "wigner3j_spin2_structure_constant_a"
+            if str(backend.family_spec.family) in _CLASS_B_FAMILIES
+            else "zero_class_a"
+        ),
         "polarization_scale": polarization_scale * float(family_law["polarization_scale"]),
         "source_scale": source_scale * float(family_law["source_scale"]),
-        "mass_scale": float(family_law["mass_scale"]),
-        "local_drag_scale": float(family_law["local_drag_scale"]),
+        "mass_scale": 1.0,
+        "mass_by_mu": mass_by_mu,
+        "H_local": H_local,
+        "mass_scale_owner": mass_owner,
+        "local_drag_scale": float(local_drag_scale),
+        "local_drag_by_mu": local_drag_by_mu,
+        "local_drag_by_mu_owner": local_drag_by_mu_owner,
+        "local_drag_slip_by_mu": local_drag_slip_by_mu,
+        "local_drag_class_b_a_abs": twist_kernel_amplitude,
+        "baryon_loading_R_b": baryon_loading_R_b,
+        "local_drag_scale_owner": local_drag_owner,
         "cross_mode_scale": float(family_law["cross_mode_scale"]),
+        "cross_mode_scale_owner": str(family_law["cross_mode_scale_owner"]),
         "collision_scale": float(family_law["collision_scale"]),
+        "polarization_scale_owner": str(family_law["polarization_scale_owner"]),
+        "source_scale_owner": str(family_law["source_scale_owner"]),
         "mode_plus_scale": float(family_law["mode_plus_scale"]),
         "mode_minus_scale": float(family_law["mode_minus_scale"]),
         "family_conditioned_kernel_status": str(family_law["status"]),
@@ -532,6 +937,45 @@ def _family_conditioned_kernel_law(
             mode_plus_scale=1.02 + 0.03 * compact_boost,
             mode_minus_scale=max(0.90, 0.99 - 0.02 * compact_boost),
         )
+    # Thomson opacity is a local electron-frame collision rate. Family
+    # geometry can alter transport and visibility inputs upstream, but the
+    # collision multiplier itself must not be hand-tuned by Bianchi label.
+    law["collision_scale"] = 1.0
+    law["collision_scale_owner"] = "electron_frame_thomson_universal"
+    # Baryon drag is supplied at runtime through R_b.  The family law must
+    # not provide a label-dependent surrogate for the same physical factor.
+    law["local_drag_scale"] = 1.0
+    law["local_drag_scale_owner"] = "runtime_baryon_loading_R_b_or_unity_anchor"
+    # Mode mass factors are supplied by runtime shear/H through
+    # mass_by_mu = 1 + sigma_mumu/H.  The family law must not carry a
+    # label-dependent scalar surrogate for the same diagonal physics.
+    law["mass_scale"] = 1.0
+    law["mass_scale_owner"] = "runtime_shear_over_H_or_unity_anchor"
+    # Transport scale is supplied by the spectral family matrix
+    # _build_transport_matrix(family, k).  The scalar law must not carry
+    # hand-tuned family transport multipliers.
+    law["transport_scale"] = 1.0
+    law["transport_scale_owner"] = "runtime_spectral_transport_matrix_or_unity_anchor"
+    # Plus/minus storage labels must not carry family-specific scalar
+    # fudge factors. Any family split must enter through explicit
+    # transport_by_mu or mass_by_mu evidence.
+    law["mode_plus_scale"] = 1.0
+    law["mode_minus_scale"] = 1.0
+    law["mode_scale_owner"] = "storage_label_neutral_runtime_transport_or_mass"
+    # Polarization normalization is fixed by the electron-frame Thomson
+    # projection and the spin-basis transport.  It must not be family-tuned.
+    law["polarization_scale"] = 1.0
+    law["polarization_scale_owner"] = "electron_frame_thomson_projection_universal"
+    # Visibility/source amplitudes are supplied by source_tables.  Family
+    # geometry can move photons through transport, but it cannot rescale the
+    # scalar visibility source by label.
+    law["source_scale"] = 1.0
+    law["source_scale_owner"] = "source_tables_visibility_amplitudes"
+    # Residual mode coupling is carried by the structure-constant matrix
+    # through _family_mu_mode_coupling_matrix / FamilyKernelPack, not by
+    # empirical per-family scalar multipliers.
+    law["cross_mode_scale"] = 1.0
+    law["cross_mode_scale_owner"] = "structure_constant_mu_mode_coupling_matrix"
     return law
 
 
@@ -547,11 +991,11 @@ class FamilyKernelPack:
     matrix-valued in the ``mu``-label basis and assembled from the
     structure constants ``(a, n)``.
 
-    This pack carries the matrix-valued kernels. It is produced by
-    ``_family_conditioned_kernel_operator`` and is **not yet wired into
-    the assembly path** — the existing scalar ``_family_conditioned_kernel_law``
-    remains the active code path. Wiring is deferred to a future session,
-    staged per family (see ``docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND3.md``).
+    This pack carries the matrix-valued kernels. The spin-2
+    ``twist_mix_kernel`` is wired into the class-B harmonic transport
+    assembly path; the scalar ``_family_conditioned_kernel_law`` remains
+    only for legacy cross-mode/source bookkeeping that has not yet been
+    replaced by first-principles matrices.
 
     Shapes:
         transport              (mu_count, mu_count)
@@ -679,6 +1123,81 @@ def _build_twist_mix_kernel_unit(ell_max: int) -> np.ndarray:
                     K[ell, m_off, dli, dmi] = a_q * prefac * w1 * w2
 
     return K
+
+
+@lru_cache(maxsize=64)
+def _twist_kernel_unit_edges(
+    family: str,
+    ell_max: int,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Return source/target slot edges for the class-B spin-2 twist kernel.
+
+    Each edge maps a source ``(ell, m)`` spin-2 polarization coefficient
+    into a target ``(ell±1, m±1)`` coefficient with the Wigner-3j unit
+    coefficient. Physical amplitudes are applied at assembly time from
+    the actual structure-constant norm ``|a|``.
+    """
+
+    if str(family) not in _CLASS_B_FAMILIES:
+        empty_i = np.zeros(0, dtype=np.int64)
+        empty_f = np.zeros(0, dtype=np.float64)
+        return empty_i, empty_i, empty_f
+
+    ell_max_i = int(ell_max)
+    if ell_max_i < 3:
+        empty_i = np.zeros(0, dtype=np.int64)
+        empty_f = np.zeros(0, dtype=np.float64)
+        return empty_i, empty_i, empty_f
+
+    kernel = _build_twist_mix_kernel_unit(ell_max_i)
+    src_slots: list[int] = []
+    dst_slots: list[int] = []
+    coeffs: list[float] = []
+    for ell in range(2, ell_max_i + 1):
+        for m in range(-ell, ell + 1):
+            src_slot = ell * ell + (m + ell)
+            for dli, d_ell in enumerate((-1, +1)):
+                ell_target = ell + d_ell
+                if ell_target < 2 or ell_target > ell_max_i:
+                    continue
+                for dmi, d_m in enumerate((-1, +1)):
+                    m_target = m + d_m
+                    if abs(m_target) > ell_target:
+                        continue
+                    coeff = float(kernel[ell, m + ell_max_i, dli, dmi])
+                    if coeff == 0.0:
+                        continue
+                    dst_slot = ell_target * ell_target + (m_target + ell_target)
+                    src_slots.append(src_slot)
+                    dst_slots.append(dst_slot)
+                    coeffs.append(coeff)
+    return (
+        np.asarray(src_slots, dtype=np.int64),
+        np.asarray(dst_slots, dtype=np.int64),
+        np.asarray(coeffs, dtype=np.float64),
+    )
+
+
+def _twist_kernel_amplitude(
+    scales: Mapping[str, object],
+    backend: FamilyBackend,
+) -> float:
+    """Physical class-B spin-connection amplitude for E/B transport."""
+
+    if str(backend.family_spec.family) not in _CLASS_B_FAMILIES:
+        return 0.0
+    return float(scales.get(
+        "twist_kernel_amplitude",
+        np.linalg.norm(np.asarray(backend.family_spec.algebra.a, dtype=np.float64)),
+    ))
+
+
+def _ell_m_from_harmonic_slot(slot: int) -> tuple[int, int]:
+    ell = int(np.floor(np.sqrt(int(slot))))
+    m = int(slot) - ell * ell - ell
+    if abs(m) > ell:
+        raise ValueError(f"invalid harmonic slot {slot!r}")
+    return ell, m
 
 
 def _build_transport_matrix(
@@ -1102,9 +1621,14 @@ def _reduced_harmonic_structure(
     ge2_slots = slots[ell_by_slot >= 2]
     self_pattern[t_off + ge2_slots, e_off + ge2_slots] = True
     self_pattern[e_off + ge2_slots, t_off + ge2_slots] = True
-    self_pattern[e_off + ge2_slots, b_off + ge2_slots] = True
-    self_pattern[b_off + ge2_slots, e_off + ge2_slots] = True
-    self_pattern[b_off + ge2_slots, t_off + ge2_slots] = True
+    self_pattern[t_off + ge2_slots, nu_off + ge2_slots] = True
+    twist_src, twist_dst, twist_coeff = _twist_kernel_unit_edges(
+        str(family),
+        int(ell_max),
+    )
+    if twist_coeff.size:
+        self_pattern[e_off + twist_dst, b_off + twist_src] = True
+        self_pattern[b_off + twist_dst, e_off + twist_src] = True
     if len(mode_labels_list) > 1:
         cross_pattern[t_off + slots[ell_by_slot == 0], t_off + slots[ell_by_slot == 0]] = True
         cross_pattern[e_off + slots[ell_by_slot == 0], e_off + slots[ell_by_slot == 0]] = True
@@ -1181,6 +1705,8 @@ def build_layout_manifest(
 ) -> dict[str, object]:
     required_metadata = backend.required_metadata()
     exact_operator = backend.template_card().operator_kernel_family == "bianchi_i_matrix_exact"
+    scales = _operator_scales((bg or {}), backend)
+    local_drag_slip = scales.get("local_drag_slip_by_mu")
     return {
         "family": backend.family_spec.family,
         "branch": str((bg or {}).get("branch", "orthogonal")),
@@ -1201,6 +1727,35 @@ def build_layout_manifest(
         "reduced_source_evaluator_available": True,
         "family_conditioned_kernel_status": "frozen_v5_family_conditioned",
         "family_conditioned_kernel_law": _family_conditioned_kernel_law((bg or {}), backend)["law_name"],
+        "operator_scale_metadata": {
+            "baryon_loading_R_b": scales.get("baryon_loading_R_b"),
+            "local_drag_scale": float(scales["local_drag_scale"]),
+            "local_drag_scale_owner": str(scales["local_drag_scale_owner"]),
+            "local_drag_by_mu": np.asarray(scales["local_drag_by_mu"], dtype=np.float64).tolist(),
+            "local_drag_by_mu_owner": str(scales["local_drag_by_mu_owner"]),
+            "local_drag_slip_by_mu": (
+                None
+                if local_drag_slip is None
+                else np.asarray(local_drag_slip, dtype=np.float64).tolist()
+            ),
+            "mass_by_mu": np.asarray(scales["mass_by_mu"], dtype=np.float64).tolist(),
+            "mass_scale_owner": str(scales["mass_scale_owner"]),
+            "transport_by_mu": np.asarray(scales["transport_by_mu"], dtype=np.float64).tolist(),
+            "transport_scale": float(scales["transport_scale"]),
+            "transport_scale_owner": str(scales["transport_scale_owner"]),
+            "twist_kernel_amplitude": float(scales["twist_kernel_amplitude"]),
+            "twist_kernel_owner": str(scales["twist_kernel_owner"]),
+            "polarization_scale": float(scales["polarization_scale"]),
+            "polarization_scale_owner": str(scales["polarization_scale_owner"]),
+            "source_scale": float(scales["source_scale"]),
+            "source_scale_owner": str(scales["source_scale_owner"]),
+            "cross_mode_scale": float(scales["cross_mode_scale"]),
+            "cross_mode_scale_owner": str(scales["cross_mode_scale_owner"]),
+            "neutrino_fraction_R_nu": float(scales["neutrino_fraction_R_nu"]),
+            "neutrino_fraction_owner": str(scales["neutrino_fraction_owner"]),
+            "neutrino_anisotropic_stress_scale": float(scales["neutrino_anisotropic_stress_scale"]),
+            "neutrino_anisotropic_stress_owner": str(scales["neutrino_anisotropic_stress_owner"]),
+        },
         "truncation_metadata": dict(truncation),
     }
 
@@ -1291,7 +1846,6 @@ def assemble_mass_matrix(
     polarization_scale = float(scales["polarization_scale"])
     twist_scale = float(scales["twist_scale"])
     source_scale = float(scales["source_scale"])
-    mass_scale = float(scales["mass_scale"])
     mode_plus_scale = float(scales["mode_plus_scale"])
     mode_minus_scale = float(scales["mode_minus_scale"])
     diag = np.ones(layout.size, dtype=np.float64)
@@ -1305,6 +1859,7 @@ def assemble_mass_matrix(
             plus_scale=mode_plus_scale,
             minus_scale=mode_minus_scale,
         )
+        mass_factor = _mode_mass_factor(scales, mu_index)
         for sector in layout.sector_order:
             if sector in _HARMONIC_SECTORS:
                 for ell in range(layout.ell_max + 1):
@@ -1320,7 +1875,7 @@ def assemble_mass_matrix(
                         sector_weight = 1.0 + 0.1 * branch_scale + 0.02 * geom_scale
                     block_weight = mu_weight * sector_weight * ell_weight
                     for m in range(-ell, ell + 1):
-                        diag[flatten(layout, mu, sector, ell, m)] = mass_scale * block_weight
+                        diag[flatten(layout, mu, sector, ell, m)] = mass_factor * block_weight
                 continue
             width = int(layout.sector_local_dofs[sector])
             for local_dof in range(width):
@@ -1331,7 +1886,7 @@ def assemble_mass_matrix(
                     value = mu_weight * (1.0 + 0.05 * geom_scale + 0.02 * local_dof)
                 else:
                     value = mu_weight * (1.0 + 0.06 * source_scale + 0.04 * local_dof)
-                diag[idx] = mass_scale * value
+                diag[idx] = mass_factor * value
     return diags(diag, offsets=0, format="csr", dtype=np.float64)
 
 
@@ -1362,6 +1917,7 @@ def assemble_free_streaming_block(
             plus_scale=mode_plus_scale,
             minus_scale=mode_minus_scale,
         )
+        stream_scale = geom_scale * _mode_transport_factor(scales, mu_index)
         for sector in layout.sector_order:
             if sector not in _HARMONIC_SECTORS:
                 continue
@@ -1376,7 +1932,7 @@ def assemble_free_streaming_block(
                     if ell > 0:
                         prv = flatten(layout, mu, sector, ell - 1, m if abs(m) <= ell - 1 else 0)
                         coeff_down = (
-                            geom_scale
+                            stream_scale
                             * mu_weight
                             * spin_weight
                             * np.sqrt(max(ell * ell - m * m, 0.0))
@@ -1388,7 +1944,7 @@ def assemble_free_streaming_block(
                     if ell < layout.ell_max:
                         nxt = flatten(layout, mu, sector, ell + 1, m if abs(m) <= ell + 1 else 0)
                         coeff_up = (
-                            geom_scale
+                            stream_scale
                             * mu_weight
                             * spin_weight
                             * np.sqrt(max((ell + 1) * (ell + 1) - m * m, 0.0))
@@ -1410,6 +1966,8 @@ def assemble_mixing_block(
     branch_scale = float(scales["branch_scale"])
     mix_scale = float(scales["mix_scale"])
     twist_scale = float(scales["twist_scale"])
+    twist_kernel_amplitude = _twist_kernel_amplitude(scales, backend)
+    neutrino_stress_scale = float(scales["neutrino_anisotropic_stress_scale"])
     cross_mode_scale = float(scales["cross_mode_scale"])
     mode_plus_scale = float(scales["mode_plus_scale"])
     mode_minus_scale = float(scales["mode_minus_scale"])
@@ -1419,6 +1977,10 @@ def assemble_mixing_block(
     mu_count = max(len(layout.mode_labels), 1)
     mode_labels = tuple(str(x) for x in layout.mode_labels)
     mu_coupling = _family_mu_mode_coupling_matrix(backend, mode_labels)
+    twist_src_slots, twist_dst_slots, twist_coeffs = _twist_kernel_unit_edges(
+        str(backend.family_spec.family),
+        int(layout.ell_max),
+    )
     for mu_index, mu in enumerate(layout.mode_labels):
         mu_key = str(mu)
         mu_weight = _mode_label_weight(
@@ -1444,11 +2006,10 @@ def assemble_mixing_block(
                         mu_weight * 0.5 * mix_scale * pstf_weight,
                     )
                 )
-                if twist_scale > 0.0:
-                        eb = mu_weight * twist_scale * max(abs(m), 1) / (ell + 1)
-                        rows.extend((e_idx, b_idx, b_idx, e_idx))
-                        cols.extend((b_idx, e_idx, i_idx, b_idx))
-                        data.extend((eb, -eb, 0.25 * eb, -0.25 * eb))
+                if neutrino_stress_scale != 0.0 and ell == 2:
+                    rows.append(i_idx)
+                    cols.append(nu_idx)
+                    data.append(mu_weight * neutrino_stress_scale * pstf_weight)
                 target_labels = _mode_label_coupling_targets(
                     mode_labels,
                     mu_key,
@@ -1508,6 +2069,18 @@ def assemble_mixing_block(
                         rows.extend((i_idx, e_idx, b_idx, nu_idx))
                         cols.extend((next_i_idx, next_e_idx, next_b_idx, next_nu_idx))
                         data.extend((weight * coeff_i, weight * coeff_e, weight * coeff_b, weight * coeff_nu))
+        if twist_kernel_amplitude != 0.0 and twist_coeffs.size:
+            coeff = mu_weight * twist_kernel_amplitude * twist_coeffs
+            for src_slot, dst_slot, value in zip(twist_src_slots, twist_dst_slots, coeff, strict=True):
+                src_ell, src_m = _ell_m_from_harmonic_slot(int(src_slot))
+                dst_ell, dst_m = _ell_m_from_harmonic_slot(int(dst_slot))
+                e_dst = flatten(layout, mu_key, "ph_E", dst_ell, dst_m)
+                b_dst = flatten(layout, mu_key, "ph_B", dst_ell, dst_m)
+                e_src = flatten(layout, mu_key, "ph_E", src_ell, src_m)
+                b_src = flatten(layout, mu_key, "ph_B", src_ell, src_m)
+                rows.extend((e_dst, b_dst))
+                cols.extend((b_src, e_src))
+                data.extend((float(value), -float(value)))
         target_labels = _mode_label_coupling_targets(
             mode_labels,
             mu_key,
@@ -1559,7 +2132,6 @@ def assemble_implicit_block(
     branch_scale = float(scales["branch_scale"])
     local_drag_scale = float(scales["local_drag_scale"])
     collision_scale = float(scales["collision_scale"])
-    twist_scale = float(scales["twist_scale"])
     cross_mode_scale = float(scales["cross_mode_scale"])
     mode_plus_scale = float(scales["mode_plus_scale"])
     mode_minus_scale = float(scales["mode_minus_scale"])
@@ -1579,6 +2151,7 @@ def assemble_implicit_block(
             plus_scale=mode_plus_scale,
             minus_scale=mode_minus_scale,
         )
+        baryon_drag_scale = local_drag_scale * _mode_local_drag_factor(scales, mu_index)
         for sector in ("ph_I", "ph_E", "ph_B"):
             for ell in range(layout.ell_max + 1):
                 for m in range(-ell, ell + 1):
@@ -1606,7 +2179,9 @@ def assemble_implicit_block(
         for sector in ("baryon", "src"):
             for local_dof in range(layout.sector_local_dofs[sector]):
                 idx = flatten(layout, mu, sector, None, None, local_dof)
-                local_weight = -mu_weight * local_drag_scale * (gamma_t if sector == "baryon" else 0.35 * gamma_t)
+                local_weight = -mu_weight * (
+                    baryon_drag_scale if sector == "baryon" else local_drag_scale
+                ) * (gamma_t if sector == "baryon" else 0.35 * gamma_t)
                 rows.append(idx)
                 cols.append(idx)
                 data.append(local_weight)
@@ -1617,7 +2192,7 @@ def assemble_implicit_block(
         data.extend(
             (
                 mu_weight * gamma_t / 3.0,
-                3.0 * mu_weight * local_drag_scale * gamma_t,
+                3.0 * mu_weight * baryon_drag_scale * gamma_t,
             )
         )
         if layout.sector_local_dofs["src"] > 1:
@@ -1643,17 +2218,14 @@ def assemble_implicit_block(
             )
             if layout.sector_local_dofs["src"] > 2:
                 src_pol_idx = flatten(layout, mu, "src", None, None, 2)
-                b_quad_idx = flatten(layout, mu, "ph_B", 2, 0)
-                rows.extend((quad_idx, src_pol_idx, b_quad_idx, src_pol_idx))
-                cols.extend((src_pol_idx, quad_idx, src_pol_idx, b_quad_idx))
+                rows.extend((quad_idx, src_pol_idx))
+                cols.extend((src_pol_idx, quad_idx))
                 data.extend(
                     (
                         0.08 * mu_weight * local_drag_scale * gamma_t,
                         -0.06 * mu_weight * local_drag_scale * gamma_t,
-                    0.06 * mu_weight * twist_scale * local_drag_scale * gamma_t,
-                    -0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t,
+                    )
                 )
-            )
         target_labels = _mode_label_coupling_targets(
             mode_labels,
             mu_key,
@@ -1692,7 +2264,6 @@ def assemble_implicit_block(
                         cols.append(src_idx)
                         data.append(weight * 0.07 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm)
                 if layout.sector_local_dofs["src"] > 2:
-                    b_quad_idx = flatten(layout, mu, "ph_B", 2, 0)
                     for target_mu in target_labels:
                         weight = _family_cross_mode_weight(
                             mu_coupling,
@@ -1703,20 +2274,10 @@ def assemble_implicit_block(
                         if weight == 0.0:
                             continue
                         src_pol_idx = flatten(layout, target_mu, "src", None, None, 2)
-                        rows.extend((quad_idx, b_quad_idx))
-                        cols.extend((src_pol_idx, src_pol_idx))
-                        data.extend(
-                            (
-                                weight * 0.04 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm,
-                                weight
-                                * 0.03
-                                * mu_weight
-                                * twist_scale
-                                * cross_mode_scale
-                                * local_drag_scale
-                                * gamma_t
-                                / target_norm,
-                            )
+                        rows.append(quad_idx)
+                        cols.append(src_pol_idx)
+                        data.append(
+                            weight * 0.04 * mu_weight * cross_mode_scale * local_drag_scale * gamma_t / target_norm
                         )
     return csr_matrix((data, (rows, cols)), shape=(layout.size, layout.size))
 
@@ -1730,9 +2291,7 @@ def assemble_source_vector(
     layout = build_hierarchy_layout(backend, truncation)
     out = np.zeros(layout.size, dtype=np.float64)
     scales = _operator_scales(bg, backend)
-    twist_scale = float(scales["twist_scale"])
     source_scale = float(scales["source_scale"])
-    cross_mode_scale = float(scales["cross_mode_scale"])
     visibility_amp = float(source_tables.get("visibility_amplitude", 0.0))
     temperature_amp = float(source_tables.get("temperature_visibility_source", visibility_amp))
     polarization_amp = float(source_tables.get("polarization_source", 0.0))
@@ -1757,7 +2316,6 @@ def assemble_source_vector(
             out[flatten(layout, mu, "ph_I", 1, 0)] = mu_weight * 0.5 * source_scale * doppler_amp
         if layout.ell_max >= 2:
             out[flatten(layout, mu, "ph_E", 2, 0)] = mu_weight * source_scale * polarization_amp
-            out[flatten(layout, mu, "ph_B", 2, 0)] = mu_weight * twist_scale * cross_mode_scale * polarization_amp
         for local_dof, value in enumerate(np.asarray(reduced_source_blocks[str(mu)], dtype=np.float64)):
             out[flatten(layout, mu, "src", None, None, local_dof)] = float(value)
     return out
@@ -1850,6 +2408,8 @@ def evaluate_reduced_harmonic_rhs(
     branch_scale = float(scales["branch_scale"])
     mix_scale = float(scales["mix_scale"])
     twist_scale = float(scales["twist_scale"])
+    twist_kernel_amplitude = _twist_kernel_amplitude(scales, backend)
+    neutrino_stress_scale = float(scales["neutrino_anisotropic_stress_scale"])
     polarization_scale = float(scales["polarization_scale"])
     source_scale = float(scales["source_scale"])
     cross_mode_scale = float(scales["cross_mode_scale"])
@@ -1863,6 +2423,10 @@ def evaluate_reduced_harmonic_rhs(
     mu_count = max(len(layout.mode_labels), 1)
     mode_labels = tuple(str(x) for x in layout.mode_labels)
     mu_coupling = _family_mu_mode_coupling_matrix(backend, mode_labels)
+    twist_src_slots, twist_dst_slots, twist_coeffs = _twist_kernel_unit_edges(
+        str(backend.family_spec.family),
+        int(layout.ell_max),
+    )
 
     zeros_h = np.zeros(width, dtype=np.float64)
     zeros_b = np.zeros(baryon_width, dtype=np.float64)
@@ -1873,7 +2437,13 @@ def evaluate_reduced_harmonic_rhs(
     photon_b_rhs: dict[str, np.ndarray] = {}
     neutrino_rhs: dict[str, np.ndarray] = {}
 
-    def _mass_weight(*, mu_weight: float, sector: str, ell: int) -> float:
+    def _mass_weight(
+        *,
+        mu_weight: float,
+        mass_factor: float,
+        sector: str,
+        ell: int,
+    ) -> float:
         ell_weight = 1.0 + 0.04 * ell + 0.015 * geom_scale
         if sector == "ph_I":
             sector_weight = branch_scale
@@ -1885,7 +2455,7 @@ def evaluate_reduced_harmonic_rhs(
             sector_weight = 1.0 + 0.1 * branch_scale + 0.02 * geom_scale
         else:
             raise KeyError(f"unsupported harmonic sector {sector!r}")
-        return mu_weight * sector_weight * ell_weight
+        return mass_factor * mu_weight * sector_weight * ell_weight
 
     def _fs_diag(*, mu_weight: float, sector: str, ell: int, m: int) -> float:
         return 0.0
@@ -1900,6 +2470,8 @@ def evaluate_reduced_harmonic_rhs(
             plus_scale=mode_plus_scale,
             minus_scale=mode_minus_scale,
         )
+        mass_factor = _mode_mass_factor(scales, mu_index)
+        stream_scale = geom_scale * _mode_transport_factor(scales, mu_index)
         t_state = np.asarray(photon_T_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
         e_state = np.asarray(photon_E_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
         b_state = np.asarray(photon_B_by_mode_label.get(mu_key, zeros_h), dtype=np.float64)
@@ -1951,6 +2523,12 @@ def evaluate_reduced_harmonic_rhs(
         e_rhs = np.zeros(width, dtype=np.float64)
         b_rhs = np.zeros(width, dtype=np.float64)
         nu_rhs = np.zeros(width, dtype=np.float64)
+        twist_e_drive = np.zeros(width, dtype=np.float64)
+        twist_b_drive = np.zeros(width, dtype=np.float64)
+        if twist_kernel_amplitude != 0.0 and twist_coeffs.size:
+            coeffs = mu_weight * twist_kernel_amplitude * twist_coeffs
+            np.add.at(twist_e_drive, twist_dst_slots, coeffs * b_state[twist_src_slots])
+            np.add.at(twist_b_drive, twist_dst_slots, -coeffs * e_state[twist_src_slots])
         cross_coeff = (
             mu_weight * 0.5 * cross_mode_scale / len(layout.mode_labels)
             if len(layout.mode_labels) > 1
@@ -1970,7 +2548,12 @@ def evaluate_reduced_harmonic_rhs(
                 if ell > 0:
                     prev_m = m if abs(m) <= ell - 1 else 0
                     prev_slot = sum(2 * l + 1 for l in range(ell - 1)) + (prev_m + (ell - 1))
-                    coeff_down = geom_scale * mu_weight * np.sqrt(max(ell * ell - m * m, 0.0)) / max(2 * ell + 1, 1)
+                    coeff_down = (
+                        stream_scale
+                        * mu_weight
+                        * np.sqrt(max(ell * ell - m * m, 0.0))
+                        / max(2 * ell + 1, 1)
+                    )
                     t_drive += coeff_down * t_state[prev_slot]
                     e_drive += coeff_down * polarization_scale * e_state[prev_slot]
                     b_drive += coeff_down * polarization_scale * b_state[prev_slot]
@@ -1978,7 +2561,12 @@ def evaluate_reduced_harmonic_rhs(
                 if ell < layout.ell_max:
                     next_m_same = m if abs(m) <= ell + 1 else 0
                     next_slot_same = sum(2 * l + 1 for l in range(ell + 1)) + (next_m_same + (ell + 1))
-                    coeff_up = geom_scale * mu_weight * np.sqrt(max((ell + 1) * (ell + 1) - m * m, 0.0)) / max(2 * ell + 1, 1)
+                    coeff_up = (
+                        stream_scale
+                        * mu_weight
+                        * np.sqrt(max((ell + 1) * (ell + 1) - m * m, 0.0))
+                        / max(2 * ell + 1, 1)
+                    )
                     t_drive -= coeff_up * t_state[next_slot_same]
                     e_drive -= coeff_up * polarization_scale * e_state[next_slot_same]
                     b_drive -= coeff_up * polarization_scale * b_state[next_slot_same]
@@ -1988,10 +2576,10 @@ def evaluate_reduced_harmonic_rhs(
                     coeff_mix = mu_weight * mix_scale * pstf_weight
                     t_drive += coeff_mix * e_state[slot]
                     e_drive += 0.5 * coeff_mix * t_state[slot]
-                    if twist_scale > 0.0:
-                        eb = mu_weight * twist_scale * max(abs(m), 1) / (ell + 1)
-                        e_drive += 0.75 * eb * b_state[slot]
-                        b_drive += (-eb * e_state[slot]) + (0.25 * eb * t_state[slot])
+                    if ell == 2:
+                        t_drive += mu_weight * neutrino_stress_scale * pstf_weight * nu_state[slot]
+                    e_drive += twist_e_drive[slot]
+                    b_drive += twist_b_drive[slot]
                     if target_towers:
                         target_norm = float(len(target_towers))
                         coeff_i = _harmonic_cross_mode_coeff(
@@ -2116,19 +2704,10 @@ def evaluate_reduced_harmonic_rhs(
                             )
                 if ell == 2 and m == 0:
                     e_drive += mu_weight * source_scale * polarization_amp
-                    b_drive += mu_weight * twist_scale * cross_mode_scale * polarization_amp
                     if src_width > 0:
                         e_drive += 0.15 * mu_weight * local_drag_scale * gamma_t * float(src_state[0])
                     if src_width > 2:
                         e_drive += 0.08 * mu_weight * local_drag_scale * gamma_t * float(src_state[2])
-                        b_drive += (
-                            0.06
-                            * mu_weight
-                            * twist_scale
-                            * local_drag_scale
-                            * gamma_t
-                            * float(src_state[2])
-                        )
                     if target_sources:
                         target_norm = float(len(target_sources))
                         for target_mu, target_src in zip(target_labels, target_sources, strict=True):
@@ -2162,25 +2741,33 @@ def evaluate_reduced_harmonic_rhs(
                                     * gamma_t
                                     * cross_mode_scale
                                     * float(target_src[2])
-                                    / target_norm
-                                )
-                                b_drive += (
-                                    weight
-                                    *
-                                    0.03
-                                    * mu_weight
-                                    * twist_scale
-                                    * local_drag_scale
-                                    * gamma_t
-                                    * cross_mode_scale
-                                    * float(target_src[2])
-                                    / target_norm
+                                        / target_norm
                                 )
 
-                t_rhs[slot] = t_drive / _mass_weight(mu_weight=mu_weight, sector="ph_I", ell=ell)
-                e_rhs[slot] = e_drive / _mass_weight(mu_weight=mu_weight, sector="ph_E", ell=ell)
-                b_rhs[slot] = b_drive / _mass_weight(mu_weight=mu_weight, sector="ph_B", ell=ell)
-                nu_rhs[slot] = nu_drive / _mass_weight(mu_weight=mu_weight, sector="nu_I", ell=ell)
+                t_rhs[slot] = t_drive / _mass_weight(
+                    mu_weight=mu_weight,
+                    mass_factor=mass_factor,
+                    sector="ph_I",
+                    ell=ell,
+                )
+                e_rhs[slot] = e_drive / _mass_weight(
+                    mu_weight=mu_weight,
+                    mass_factor=mass_factor,
+                    sector="ph_E",
+                    ell=ell,
+                )
+                b_rhs[slot] = b_drive / _mass_weight(
+                    mu_weight=mu_weight,
+                    mass_factor=mass_factor,
+                    sector="ph_B",
+                    ell=ell,
+                )
+                nu_rhs[slot] = nu_drive / _mass_weight(
+                    mu_weight=mu_weight,
+                    mass_factor=mass_factor,
+                    sector="nu_I",
+                    ell=ell,
+                )
             offset += 2 * ell + 1
 
         photon_t_rhs[mu_key] = t_rhs
@@ -2245,6 +2832,8 @@ def build_reduced_harmonic_affine_operator(
     branch_scale = float(scales["branch_scale"])
     mix_scale = float(scales["mix_scale"])
     twist_scale = float(scales["twist_scale"])
+    twist_kernel_amplitude = _twist_kernel_amplitude(scales, backend)
+    neutrino_stress_scale = float(scales["neutrino_anisotropic_stress_scale"])
     polarization_scale = float(scales["polarization_scale"])
     source_scale = float(scales["source_scale"])
     cross_mode_scale = float(scales["cross_mode_scale"])
@@ -2260,6 +2849,7 @@ def build_reduced_harmonic_affine_operator(
         backend.family_spec.family,
     )
     mode_labels = tuple(str(mu) for mu in layout.mode_labels)
+    mode_index = {str(mu): idx for idx, mu in enumerate(mode_labels)}
     mu_coupling = _family_mu_mode_coupling_matrix(backend, mode_labels)
     width = structure.width
     mu_count = max(len(layout.mode_labels), 1)
@@ -2276,7 +2866,7 @@ def build_reduced_harmonic_affine_operator(
         1.0e-30,
     )
     inv_nu = 1.0 / np.maximum((1.0 + 0.1 * branch_scale + 0.02 * geom_scale) * ell_weight, 1.0e-30)
-    stream_base = geom_scale * structure.diag_base_by_slot
+    stream_diag = geom_scale * structure.diag_base_by_slot
     prev_t = inv_t * geom_scale * structure.prev_coeff_by_slot
     prev_e = inv_e * geom_scale * polarization_scale * structure.prev_coeff_by_slot
     prev_b = inv_b * geom_scale * polarization_scale * structure.prev_coeff_by_slot
@@ -2293,10 +2883,14 @@ def build_reduced_harmonic_affine_operator(
     # `-stream_base` compensating term, the wrong Thomson sign was
     # exposed as a +0.93 growth mode at γ_T = 1 in the fast-check audit.
     photon_coll = branch_scale * collision_scale * gamma_t * structure.collision_factor_by_slot
-    diag_t = inv_t * (-stream_base - photon_coll)
-    diag_e = inv_e * (-stream_base * polarization_scale - photon_coll)
-    diag_b = inv_b * (-stream_base * polarization_scale - photon_coll)
-    diag_nu = inv_nu * (-stream_base)
+    base_diag_t = inv_t * (-photon_coll)
+    base_diag_e = inv_e * (-photon_coll)
+    base_diag_b = inv_b * (-photon_coll)
+    base_diag_nu = np.zeros_like(inv_nu)
+    stream_diag_t = inv_t * (-stream_diag)
+    stream_diag_e = inv_e * (-stream_diag * polarization_scale)
+    stream_diag_b = inv_b * (-stream_diag * polarization_scale)
+    stream_diag_nu = inv_nu * (-stream_diag)
     # v5 audit Round-2 Q-6: Thomson-derived T↔E coupling is quadrupole-only,
     # γ_T-proportional (Kamionkowski-Kosowsky-Stebbins 1997; Zaldarriaga-Seljak
     # 1997). The source is Π = Θ_2 − √6·E_2, substituting into ℓ=2 rows:
@@ -2313,9 +2907,9 @@ def build_reduced_harmonic_affine_operator(
     eb_b = np.zeros_like(inv_b)
     eb_bt = np.zeros_like(inv_b)
     # Quadrupole Thomson diagonal specialization (Π source):
-    diag_t[quad_mask] = -inv_t[quad_mask] * (9.0 * gamma_t / 10.0)
-    diag_e[quad_mask] = -inv_e[quad_mask] * (2.0 * gamma_t / 5.0)
-    diag_b[quad_mask] = -inv_b[quad_mask] * gamma_t
+    base_diag_t[quad_mask] = -inv_t[quad_mask] * (9.0 * gamma_t / 10.0)
+    base_diag_e[quad_mask] = -inv_e[quad_mask] * (2.0 * gamma_t / 5.0)
+    base_diag_b[quad_mask] = -inv_b[quad_mask] * gamma_t
 
     cross_t = np.zeros(width, dtype=np.float64)
     cross_e = np.zeros(width, dtype=np.float64)
@@ -2343,18 +2937,25 @@ def build_reduced_harmonic_affine_operator(
     b_off = 2 * width
     nu_off = 3 * width
     block_size = structure.block_size
-    self_block = np.zeros((block_size, block_size), dtype=np.float64)
+    base_self_block = np.zeros((block_size, block_size), dtype=np.float64)
+    stream_self_block = np.zeros((block_size, block_size), dtype=np.float64)
     cross_block = np.zeros((block_size, block_size), dtype=np.float64)
+    twist_self_block = np.zeros((block_size, block_size), dtype=np.float64)
 
-    self_block[t_off + slots, t_off + slots] += diag_t
-    self_block[e_off + slots, e_off + slots] += diag_e
-    self_block[b_off + slots, b_off + slots] += diag_b
-    self_block[nu_off + slots, nu_off + slots] += diag_nu
+    base_self_block[t_off + slots, t_off + slots] += base_diag_t
+    base_self_block[e_off + slots, e_off + slots] += base_diag_e
+    base_self_block[b_off + slots, b_off + slots] += base_diag_b
+    base_self_block[nu_off + slots, nu_off + slots] += base_diag_nu
 
-    self_block[t_off + slots[prev_valid], t_off + structure.prev_slot_by_slot[prev_valid]] += prev_t[prev_valid]
-    self_block[e_off + slots[prev_valid], e_off + structure.prev_slot_by_slot[prev_valid]] += prev_e[prev_valid]
-    self_block[b_off + slots[prev_valid], b_off + structure.prev_slot_by_slot[prev_valid]] += prev_b[prev_valid]
-    self_block[nu_off + slots[prev_valid], nu_off + structure.prev_slot_by_slot[prev_valid]] += prev_nu[prev_valid]
+    stream_self_block[t_off + slots, t_off + slots] += stream_diag_t
+    stream_self_block[e_off + slots, e_off + slots] += stream_diag_e
+    stream_self_block[b_off + slots, b_off + slots] += stream_diag_b
+    stream_self_block[nu_off + slots, nu_off + slots] += stream_diag_nu
+
+    stream_self_block[t_off + slots[prev_valid], t_off + structure.prev_slot_by_slot[prev_valid]] += prev_t[prev_valid]
+    stream_self_block[e_off + slots[prev_valid], e_off + structure.prev_slot_by_slot[prev_valid]] += prev_e[prev_valid]
+    stream_self_block[b_off + slots[prev_valid], b_off + structure.prev_slot_by_slot[prev_valid]] += prev_b[prev_valid]
+    stream_self_block[nu_off + slots[prev_valid], nu_off + structure.prev_slot_by_slot[prev_valid]] += prev_nu[prev_valid]
 
     # v5 audit Q1: Ma-Bertschinger (1995) eq. 63 — streaming couplings carry
     # opposite signs: +ell/(2ell+1) · X_{ell-1} − (ell+1)/(2ell+1) · X_{ell+1}.
@@ -2364,16 +2965,37 @@ def build_reduced_harmonic_affine_operator(
     # W A + A^T W = 0 with W_ell = (2ell+1)/d_ell (audit Q2), so every
     # eigenvalue has Re(λ) ≤ 0 — strictly dissipative when diag damping is
     # present, purely imaginary (free-streaming Liouville) at γ_T = 0.
-    self_block[t_off + slots[next_valid], t_off + structure.next_slot_by_slot[next_valid]] -= next_t_same[next_valid]
-    self_block[e_off + slots[next_valid], e_off + structure.next_slot_by_slot[next_valid]] -= next_e_same[next_valid]
-    self_block[b_off + slots[next_valid], b_off + structure.next_slot_by_slot[next_valid]] -= next_b_same[next_valid]
-    self_block[nu_off + slots[next_valid], nu_off + structure.next_slot_by_slot[next_valid]] -= next_nu_same[next_valid]
+    stream_self_block[t_off + slots[next_valid], t_off + structure.next_slot_by_slot[next_valid]] -= next_t_same[next_valid]
+    stream_self_block[e_off + slots[next_valid], e_off + structure.next_slot_by_slot[next_valid]] -= next_e_same[next_valid]
+    stream_self_block[b_off + slots[next_valid], b_off + structure.next_slot_by_slot[next_valid]] -= next_b_same[next_valid]
+    stream_self_block[nu_off + slots[next_valid], nu_off + structure.next_slot_by_slot[next_valid]] -= next_nu_same[next_valid]
 
     # v5 audit Round-2 Q-6.4: T↔E Thomson coupling restricted to quadrupole.
     # E↔B / T↔B Thomson couplings zeroed (eb_* ≡ 0).
     quad_slots = slots[quad_mask]
-    self_block[t_off + quad_slots, e_off + quad_slots] += mix_t[quad_mask]
-    self_block[e_off + quad_slots, t_off + quad_slots] += mix_e[quad_mask]
+    base_self_block[t_off + quad_slots, e_off + quad_slots] += mix_t[quad_mask]
+    base_self_block[e_off + quad_slots, t_off + quad_slots] += mix_e[quad_mask]
+    if neutrino_stress_scale != 0.0:
+        base_self_block[t_off + quad_slots, nu_off + quad_slots] += (
+            inv_t[quad_mask] * neutrino_stress_scale * structure.pstf_weight_by_slot[quad_mask]
+        )
+
+    twist_src_slots, twist_dst_slots, twist_coeffs = _twist_kernel_unit_edges(
+        str(backend.family_spec.family),
+        int(layout.ell_max),
+    )
+    if twist_kernel_amplitude != 0.0 and twist_coeffs.size:
+        twist_coeffs_phys = twist_kernel_amplitude * twist_coeffs
+        np.add.at(
+            twist_self_block,
+            (e_off + twist_dst_slots, b_off + twist_src_slots),
+            inv_e[twist_dst_slots] * twist_coeffs_phys,
+        )
+        np.add.at(
+            twist_self_block,
+            (b_off + twist_dst_slots, e_off + twist_src_slots),
+            -inv_b[twist_dst_slots] * twist_coeffs_phys,
+        )
 
     if mu_count > 1:
         cross_block[t_off + slots, t_off + slots] += cross_t
@@ -2381,8 +3003,16 @@ def build_reduced_harmonic_affine_operator(
         cross_block[b_off + slots, b_off + slots] += cross_b
         cross_block[nu_off + slots, nu_off + slots] += cross_nu
 
-    self_data = np.asarray(
-        self_block[structure.self_pattern_rows, structure.self_pattern_cols],
+    base_self_data = np.asarray(
+        base_self_block[structure.self_pattern_rows, structure.self_pattern_cols],
+        dtype=np.float64,
+    )
+    stream_self_data = np.asarray(
+        stream_self_block[structure.self_pattern_rows, structure.self_pattern_cols],
+        dtype=np.float64,
+    )
+    twist_self_data = np.asarray(
+        twist_self_block[structure.self_pattern_rows, structure.self_pattern_cols],
         dtype=np.float64,
     )
     cross_data = np.asarray(
@@ -2394,10 +3024,22 @@ def build_reduced_harmonic_affine_operator(
     data_chunks: list[np.ndarray] = []
     for residual_index, residual_targets in enumerate(structure.cross_residual_indices):
         row_start = residual_index * block_size
+        source_label = residual_labels[residual_index]
+        row_mass_factor = _mode_mass_factor(
+            scales,
+            int(mode_index.get(source_label, residual_index)),
+        )
+        row_transport_factor = _mode_transport_factor(
+            scales,
+            int(mode_index.get(source_label, residual_index)),
+        )
+        row_mass_inverse = 1.0 / row_mass_factor
         row_chunks.append(structure.self_pattern_rows + row_start)
         col_chunks.append(structure.self_pattern_cols + row_start)
-        data_chunks.append(self_data)
-        source_label = residual_labels[residual_index]
+        data_chunks.append(
+            row_mass_inverse
+            * (base_self_data + row_transport_factor * stream_self_data + twist_self_data)
+        )
         external_targets = structure.cross_external_labels[residual_index]
         target_norm = float(max(len(residual_targets) + len(external_targets), 1))
         if residual_targets and cross_data.size:
@@ -2411,7 +3053,7 @@ def build_reduced_harmonic_affine_operator(
                 )
                 if weight == 0.0:
                     continue
-                scaled_cross = weight * cross_data / target_norm
+                scaled_cross = row_mass_inverse * weight * cross_data / target_norm
                 col_start = int(target_residual) * block_size
                 row_chunks.append(structure.cross_pattern_rows + row_start)
                 col_chunks.append(structure.cross_pattern_cols + col_start)
@@ -2430,6 +3072,12 @@ def build_reduced_harmonic_affine_operator(
             raise ValueError(f"source state for {mu!r} must have shape ({src_width},)")
 
         row_start = residual_index * block_size
+        row_mass_factor = _mode_mass_factor(
+            scales,
+            int(mode_index.get(str(mu), residual_index)),
+        )
+        row_mass_inverse = 1.0 / row_mass_factor
+        external_targets = structure.cross_external_labels[residual_index]
         if external_targets and mu_count > 1:
             target_norm = float(max(len(structure.cross_residual_indices[residual_index]) + len(external_targets), 1))
             for target_label in external_targets:
@@ -2499,20 +3147,6 @@ def build_reduced_harmonic_affine_operator(
                                 / target_norm
                             )
                         )
-                        bias[row_start + b_off + quad_slot] += (
-                            inv_b[quad_slot]
-                            * (
-                                weight
-                                *
-                                0.03
-                                * twist_scale
-                                * local_drag_scale
-                                * gamma_t
-                                * cross_mode_scale
-                                * float(next_src[2])
-                                / target_norm
-                            )
-                        )
 
         bias[row_start + t_off + structure.monopole_slot] += inv_t[structure.monopole_slot] * source_scale * temperature_amp
         if structure.dipole_slot is not None:
@@ -2529,7 +3163,6 @@ def build_reduced_harmonic_affine_operator(
         if structure.quadrupole_slot is not None:
             quad_slot = structure.quadrupole_slot
             bias[row_start + e_off + quad_slot] += inv_e[quad_slot] * (source_scale * polarization_amp)
-            bias[row_start + b_off + quad_slot] += inv_b[quad_slot] * (twist_scale * cross_mode_scale * polarization_amp)
             if src_width > 0:
                 bias[row_start + e_off + quad_slot] += (
                     inv_e[quad_slot] * (0.15 * local_drag_scale * gamma_t * float(src_state[0]))
@@ -2538,9 +3171,8 @@ def build_reduced_harmonic_affine_operator(
                 bias[row_start + e_off + quad_slot] += (
                     inv_e[quad_slot] * (0.08 * local_drag_scale * gamma_t * float(src_state[2]))
                 )
-                bias[row_start + b_off + quad_slot] += (
-                    inv_b[quad_slot] * (0.06 * twist_scale * local_drag_scale * gamma_t * float(src_state[2]))
-                )
+        if row_mass_inverse != 1.0:
+            bias[row_start : row_start + block_size] *= row_mass_inverse
 
     if return_dense:
         rows_arr = np.concatenate(row_chunks, dtype=np.int64)
@@ -2649,8 +3281,6 @@ def build_reduced_source_affine_operator(
     branch_scale = float(scales["branch_scale"])
     local_drag_scale = float(scales["local_drag_scale"])
     source_scale = float(scales["source_scale"])
-    polarization_scale = float(scales["polarization_scale"])
-    twist_scale = float(scales["twist_scale"])
     geom_scale = float(scales["geom_scale"])
     mode_plus_scale = float(scales["mode_plus_scale"])
     mode_minus_scale = float(scales["mode_minus_scale"])
@@ -2702,10 +3332,6 @@ def build_reduced_source_affine_operator(
             bias[row_start + 0] += inv_source[0] * (-0.10 * mu_weight * local_drag_scale * gamma_t * float(e_state[quadrupole_slot]))
         if quadrupole_slot is not None and src_width > 2:
             bias[row_start + 2] += inv_source[2] * (-0.06 * mu_weight * local_drag_scale * gamma_t * float(e_state[quadrupole_slot]))
-            bias[row_start + 2] += (
-                inv_source[2]
-                * (-0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t * float(b_state[quadrupole_slot]))
-            )
 
     if return_dense:
         matrix_out = matrix
@@ -2742,6 +3368,8 @@ def build_reduced_joint_affine_operator(
     neutrino_by_mode_label: Mapping[str, np.ndarray],
     baryon_by_mode_label: Mapping[str, np.ndarray],
     source_by_mode_label: Mapping[str, np.ndarray] | None = None,
+    baryon_velocity_by_mode_label: Mapping[str, float] | None = None,
+    theta_1_by_mode_label: Mapping[str, float] | None = None,
     pattern_cache: _JointSparsityCache | None = None,
     out_workspace: np.ndarray | None = None,
     harmonic_pattern_cache: _HarmonicSparsityCache | None = None,
@@ -2792,13 +3420,25 @@ def build_reduced_joint_affine_operator(
     if not isinstance(opacity_data, Mapping):
         raise ValueError("bg.opacity_data must be a mapping when provided")
     gamma_t = float(opacity_data.get("Gamma_T", 0.0))
-    scales = _operator_scales(bg, backend)
+    freeze_theta_1_by_mode_label = {
+        str(mu): float((theta_1_by_mode_label or {}).get(str(mu), 0.0))
+        for mu in residual_labels
+    }
+    freeze_baryon_velocity_by_mode_label = {
+        str(mu): float((baryon_velocity_by_mode_label or {}).get(str(mu), 0.0))
+        for mu in residual_labels
+    }
+    scale_bg = dict(bg)
+    if freeze_theta_1_by_mode_label:
+        scale_bg["theta_1_by_mode_label"] = freeze_theta_1_by_mode_label
+    if freeze_baryon_velocity_by_mode_label:
+        scale_bg["baryon_velocity_by_mode_label"] = freeze_baryon_velocity_by_mode_label
+    scales = _operator_scales(scale_bg, backend)
     geom_scale = float(scales["geom_scale"])
     branch_scale = float(scales["branch_scale"])
     local_drag_scale = float(scales["local_drag_scale"])
     source_scale = float(scales["source_scale"])
     polarization_scale = float(scales["polarization_scale"])
-    twist_scale = float(scales["twist_scale"])
     mode_plus_scale = float(scales["mode_plus_scale"])
     mode_minus_scale = float(scales["mode_minus_scale"])
     structure = _reduced_harmonic_structure(
@@ -2820,6 +3460,8 @@ def build_reduced_joint_affine_operator(
         backend,
         residual_mode_labels=residual_labels,
         theta_1_by_mode_label=zero_theta,
+        baryon_velocity_by_mode_label=freeze_baryon_velocity_by_mode_label,
+        drag_theta_1_by_mode_label=freeze_theta_1_by_mode_label,
         return_dense=True,
     )
     zeros_b = np.zeros(baryon_width, dtype=np.float64)
@@ -2892,10 +3534,15 @@ def build_reduced_joint_affine_operator(
     # local <- harmonic(theta_1) coupling
     baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(baryon_width, dtype=np.float64)
     if baryon_width > 1 and structure.dipole_slot is not None:
-        local_theta_coeff = float(
-            3.0 * local_drag_scale * gamma_t / max(abs(float(baryon_base_diag[1])), 1.0e-30)
-        )
         for residual_index in range(len(residual_labels)):
+            mu = residual_labels[residual_index]
+            baryon_drag_scale = local_drag_scale * _mode_local_drag_factor(
+                scales,
+                int(mode_index[mu]),
+            )
+            local_theta_coeff = float(
+                3.0 * baryon_drag_scale * gamma_t / max(abs(float(baryon_base_diag[1])), 1.0e-30)
+            )
             local_row = residual_index * local_block_size + 1
             harmonic_col = local_dof + residual_index * harmonic_block_size + int(structure.dipole_slot)
             joint[local_row, harmonic_col] = local_theta_coeff
@@ -2967,24 +3614,11 @@ def build_reduced_joint_affine_operator(
                     inv_source[0] * (-0.10 * mu_weight * local_drag_scale * gamma_t)
                 )
             if src_width > 2:
-                inv_b_quad = 1.0 / max(
-                    branch_scale
-                    * (1.12 + 0.5 * twist_scale)
-                    * polarization_scale
-                    * ell_weight,
-                    1.0e-30,
-                )
                 joint[harmonic_row + structure.width + int(structure.quadrupole_slot), source_row + 2] += (
                     inv_e_quad * (0.08 * local_drag_scale * gamma_t)
                 )
-                joint[harmonic_row + 2 * structure.width + int(structure.quadrupole_slot), source_row + 2] += (
-                    inv_b_quad * (0.06 * twist_scale * local_drag_scale * gamma_t)
-                )
                 joint[source_row + 2, harmonic_row + structure.width + int(structure.quadrupole_slot)] += (
                     inv_source[2] * (-0.06 * mu_weight * local_drag_scale * gamma_t)
-                )
-                joint[source_row + 2, harmonic_row + 2 * structure.width + int(structure.quadrupole_slot)] += (
-                    inv_source[2] * (-0.04 * mu_weight * twist_scale * local_drag_scale * gamma_t)
                 )
 
     # Round-17 P3.5 perf Tier 1A v2 (2026-04-28): if pattern_cache is given,
@@ -3022,6 +3656,8 @@ def build_reduced_local_affine_operator(
     *,
     residual_mode_labels: tuple[str, ...],
     theta_1_by_mode_label: Mapping[str, float],
+    baryon_velocity_by_mode_label: Mapping[str, float] | None = None,
+    drag_theta_1_by_mode_label: Mapping[str, float] | None = None,
     return_dense: bool = False,
 ) -> ReducedLocalAffineOperator:
     """Return the exact frozen-snapshot affine operator for residual local sectors."""
@@ -3045,7 +3681,21 @@ def build_reduced_local_affine_operator(
     if not isinstance(opacity_data, Mapping):
         raise ValueError("bg.opacity_data must be a mapping when provided")
     gamma_t = float(opacity_data.get("Gamma_T", 0.0))
-    scales = _operator_scales(bg, backend)
+    scale_bg = dict(bg)
+    drag_theta = (
+        theta_1_by_mode_label
+        if drag_theta_1_by_mode_label is None
+        else drag_theta_1_by_mode_label
+    )
+    scale_bg["theta_1_by_mode_label"] = {
+        str(key): float(value) for key, value in dict(drag_theta).items()
+    }
+    if baryon_velocity_by_mode_label is not None:
+        scale_bg["baryon_velocity_by_mode_label"] = {
+            str(key): float(value)
+            for key, value in dict(baryon_velocity_by_mode_label).items()
+        }
+    scales = _operator_scales(scale_bg, backend)
     geom_scale = float(scales["geom_scale"])
     branch_scale = float(scales["branch_scale"])
     local_drag_scale = float(scales["local_drag_scale"])
@@ -3068,6 +3718,10 @@ def build_reduced_local_affine_operator(
             plus_scale=mode_plus_scale,
             minus_scale=mode_minus_scale,
         )
+        baryon_drag_scale = local_drag_scale * _mode_local_drag_factor(
+            scales,
+            int(mode_index[mu]),
+        )
         baryon_diag = mu_weight * baryon_base_diag
         # v5 audit Option-B (extended): same Thomson-damping sign logic as
         # the harmonic block. Ma-Bertschinger (1995) baryon velocity eq:
@@ -3076,7 +3730,7 @@ def build_reduced_local_affine_operator(
         # was wrong-signed and was exposed as the +0.93 growth mode when
         # the fast-check audit set γ_T = 1.
         coeff = -np.divide(
-            mu_weight * local_drag_scale * gamma_t,
+            mu_weight * baryon_drag_scale * gamma_t,
             np.maximum(np.abs(baryon_diag), 1.0e-30),
             dtype=np.float64,
         )
@@ -3089,7 +3743,7 @@ def build_reduced_local_affine_operator(
             bias[row_start + 1] = float(
                 3.0
                 * mu_weight
-                * local_drag_scale
+                * baryon_drag_scale
                 * gamma_t
                 * float(theta_1_by_mode_label.get(mu, 0.0))
                 / max(abs(float(baryon_diag[1])), 1.0e-30)
@@ -3130,14 +3784,29 @@ def evaluate_reduced_local_rhs(
     if not isinstance(opacity_data, Mapping):
         raise ValueError("bg.opacity_data must be a mapping when provided")
     gamma_t = float(opacity_data.get("Gamma_T", 0.0))
-    scales = _operator_scales(bg, backend)
+    baryon_width = int(layout.sector_local_dofs["baryon"])
+    cdm_width = int(layout.sector_local_dofs["cdm"])
+    baryon_velocity_by_mode_label: dict[str, float] = {}
+    for mu in layout.mode_labels:
+        mu_key = str(mu)
+        baryon_state = np.asarray(
+            baryon_by_mode_label.get(mu_key, np.zeros(baryon_width, dtype=np.float64)),
+            dtype=np.float64,
+        )
+        if baryon_state.shape != (baryon_width,):
+            raise ValueError(f"baryon state for {mu_key!r} must have shape ({baryon_width},)")
+        baryon_velocity_by_mode_label[mu_key] = float(baryon_state[1]) if baryon_width > 1 else 0.0
+    scale_bg = dict(bg)
+    scale_bg["theta_1_by_mode_label"] = {
+        str(key): float(value) for key, value in dict(theta_1_by_mode_label).items()
+    }
+    scale_bg["baryon_velocity_by_mode_label"] = baryon_velocity_by_mode_label
+    scales = _operator_scales(scale_bg, backend)
     geom_scale = float(scales["geom_scale"])
     branch_scale = float(scales["branch_scale"])
     local_drag_scale = float(scales["local_drag_scale"])
     mode_plus_scale = float(scales["mode_plus_scale"])
     mode_minus_scale = float(scales["mode_minus_scale"])
-    baryon_width = int(layout.sector_local_dofs["baryon"])
-    cdm_width = int(layout.sector_local_dofs["cdm"])
     baryon_base_diag = 1.0 + 0.08 * geom_scale + 0.03 * np.arange(baryon_width, dtype=np.float64)
     mu_count = max(len(layout.mode_labels), 1)
     baryon_rhs: dict[str, np.ndarray] = {}
@@ -3152,6 +3821,7 @@ def evaluate_reduced_local_rhs(
             plus_scale=mode_plus_scale,
             minus_scale=mode_minus_scale,
         )
+        baryon_drag_scale = local_drag_scale * _mode_local_drag_factor(scales, mu_index)
         baryon_state = np.asarray(
             baryon_by_mode_label.get(mu_key, np.zeros(baryon_width, dtype=np.float64)),
             dtype=np.float64,
@@ -3164,10 +3834,10 @@ def evaluate_reduced_local_rhs(
         )
         if cdm_state.shape != (cdm_width,):
             raise ValueError(f"cdm state for {mu_key!r} must have shape ({cdm_width},)")
-        baryon_drive = -mu_weight * local_drag_scale * gamma_t * baryon_state
+        baryon_drive = -mu_weight * baryon_drag_scale * gamma_t * baryon_state
         if baryon_width > 1:
             baryon_drive[1] += (
-                3.0 * mu_weight * local_drag_scale * gamma_t * float(theta_1_by_mode_label.get(mu_key, 0.0))
+                3.0 * mu_weight * baryon_drag_scale * gamma_t * float(theta_1_by_mode_label.get(mu_key, 0.0))
             )
         baryon_diag = mu_weight * baryon_base_diag
         baryon_rhs[mu_key] = baryon_drive / np.maximum(np.abs(baryon_diag), 1.0e-30)

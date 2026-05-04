@@ -50,7 +50,7 @@ def test_layout_defaults_open_multi_label_runtime_for_family_backends() -> None:
     assert layout_viii.mode_labels == ("mu_sl2r", "mu_sl2r+", "mu_sl2r-")
 
 
-def test_family_conditioned_mode_label_weights_vary_by_backend() -> None:
+def test_mode_label_weights_do_not_vary_by_family_without_runtime_evidence() -> None:
     truncation = {"ell_max": 2}
 
     backend_v = build_backend(get_family_spec("V"), truncation=truncation)
@@ -71,7 +71,7 @@ def test_family_conditioned_mode_label_weights_vary_by_backend() -> None:
 
     assert ratio_v > 1.0
     assert ratio_viii > 1.0
-    assert ratio_viii != pytest.approx(ratio_v)
+    assert ratio_viii == pytest.approx(ratio_v)
 
 
 def test_family_conditioned_harmonic_topology_varies_by_backend() -> None:
@@ -441,7 +441,8 @@ def test_reduced_harmonic_rhs_matches_full_operator_subset() -> None:
     layout = build_hierarchy_layout(backend, truncation)
     bg = {
         "branch": "tilted",
-        "opacity_data": {"Gamma_T": 2.5},
+        "H_local": 2.0,
+        "opacity_data": {"Gamma_T": 2.5, "H_local": 2.0},
         "sigma_tensor": np.diag([0.2, -0.1, -0.1]),
         "source_tables": {
             "visibility_amplitude": 1.25,
@@ -954,8 +955,8 @@ def test_reduced_harmonic_rhs_can_reconstruct_source_local_block_from_source_tab
             np.testing.assert_allclose(sector_explicit[str(mu)], sector_fallback[str(mu)])
 
 
-def test_family_conditioned_reduced_harmonic_rhs_varies_with_frozen_vih_bridge() -> None:
-    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+def test_vih_h_parameter_enters_through_twist_kernel_not_frozen_scalar_bridge() -> None:
+    truncation = {"ell_max": 3, "mode_labels": ("m0", "m+2", "m-2")}
     backend_open = build_backend(get_family_spec("VI_h", h=-0.25), truncation=truncation)
     backend_deep = build_backend(get_family_spec("VI_h", h=-2.0), truncation=truncation)
     layout = build_hierarchy_layout(backend_open, truncation)
@@ -999,7 +1000,8 @@ def test_family_conditioned_reduced_harmonic_rhs_varies_with_frozen_vih_bridge()
         baryon_by_mode_label=baryon_by_mode_label,
     )
     diff = np.linalg.norm(
-        np.asarray(open_rhs[0]["m+2"], dtype=np.float64) - np.asarray(deep_rhs[0]["m+2"], dtype=np.float64)
+        np.asarray(open_rhs[1]["m+2"], dtype=np.float64)
+        - np.asarray(deep_rhs[1]["m+2"], dtype=np.float64)
     )
     assert diff > 0.0
 
@@ -1141,6 +1143,32 @@ def test_layout_manifest_records_backend_metadata() -> None:
     assert manifest["exact_family_operator_available"] is True
     assert manifest["reduced_local_evaluator_available"] is True
     assert manifest["reduced_harmonic_evaluator_available"] is True
+    assert manifest["operator_scale_metadata"]["local_drag_by_mu"] == [1.0, 1.0, 1.0]
+    assert manifest["operator_scale_metadata"]["mass_by_mu"] == [1.0, 1.0, 1.0]
+
+
+def test_layout_manifest_records_class_b_runtime_scale_evidence() -> None:
+    backend = build_backend(get_family_spec("V"), truncation={"ell_max": 2})
+    truncation = {"ell_max": 2}
+    layout = build_hierarchy_layout(backend, truncation)
+    manifest = build_layout_manifest(
+        layout,
+        backend,
+        truncation,
+        {
+            "branch": "orthogonal",
+            "H_local": 2.0,
+            "opacity_data": {"R_b": 0.5, "k_mag": 2.0},
+            "baryon_velocity_by_mode_label": {"mu_open": 0.8},
+            "theta_1_by_mode_label": {"mu_open": 0.1},
+        },
+    )
+    scale_meta = manifest["operator_scale_metadata"]
+    assert scale_meta["local_drag_scale"] == pytest.approx(2.0)
+    assert scale_meta["local_drag_by_mu"][0] > 1.0
+    assert scale_meta["local_drag_by_mu"][1:] == [1.0, 1.0]
+    assert scale_meta["local_drag_slip_by_mu"][0] == pytest.approx(0.5)
+    assert scale_meta["transport_scale_owner"] == "opacity_data.k_mag"
 
 
 def test_assemble_hierarchy_ops_binds_backend_with_source_tables() -> None:
@@ -1587,7 +1615,9 @@ def test_project_runtime_native_state_can_preserve_mode_label_resolved_harmonic_
 
 from bass.hierarchy.ver3_layout_protocol import (  # noqa: E402
     FamilyKernelPack,
+    _family_conditioned_kernel_law,
     _family_conditioned_kernel_operator,
+    _operator_scales,
 )
 
 
@@ -1682,6 +1712,804 @@ def test_round3_family_kernel_scalar_fields_match_q_8_5() -> None:
         assert pack.local_drag_by_mu.shape == (3,)
         assert np.array_equal(pack.local_drag_by_mu, np.ones(3))
         assert np.array_equal(pack.mass_by_mu, np.ones(3))
+
+
+def test_active_family_law_keeps_thomson_collision_universal() -> None:
+    """The active scalar law may still carry family transport surrogates,
+    but Thomson opacity must not be multiplied by Bianchi family labels."""
+    for family in (
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI_0",
+        "VI_h",
+        "VII_0",
+        "VII_h",
+        "VIII",
+        "IX",
+    ):
+        backend = build_backend(get_family_spec(family), truncation={"ell_max": 2})
+        law = _family_conditioned_kernel_law({"branch": "tilted"}, backend)
+        assert law["collision_scale"] == 1.0
+        assert law["collision_scale_owner"] == "electron_frame_thomson_universal"
+
+
+def test_active_family_law_does_not_supply_family_baryon_drag_surrogate() -> None:
+    for family in ("I", "V", "VII_0", "VIII"):
+        backend = build_backend(get_family_spec(family), truncation={"ell_max": 2})
+        law = _family_conditioned_kernel_law({"branch": "tilted"}, backend)
+        assert law["local_drag_scale"] == 1.0
+        assert law["local_drag_scale_owner"] == (
+            "runtime_baryon_loading_R_b_or_unity_anchor"
+        )
+
+
+def test_active_family_law_does_not_supply_family_mass_surrogate() -> None:
+    for family in ("I", "V", "VII_0", "VIII"):
+        backend = build_backend(get_family_spec(family), truncation={"ell_max": 2})
+        law = _family_conditioned_kernel_law({"branch": "tilted"}, backend)
+        assert law["mass_scale"] == 1.0
+        assert law["mass_scale_owner"] == "runtime_shear_over_H_or_unity_anchor"
+
+
+def test_active_family_law_does_not_supply_family_transport_surrogate() -> None:
+    for family in ("I", "V", "VII_0", "VIII"):
+        backend = build_backend(get_family_spec(family), truncation={"ell_max": 2})
+        law = _family_conditioned_kernel_law({"branch": "tilted"}, backend)
+        assert law["transport_scale"] == 1.0
+        assert law["transport_scale_owner"] == (
+            "runtime_spectral_transport_matrix_or_unity_anchor"
+        )
+
+
+def test_active_family_law_does_not_supply_family_mode_label_surrogate() -> None:
+    for family in ("I", "V", "VII_0", "VIII"):
+        backend = build_backend(get_family_spec(family), truncation={"ell_max": 2})
+        law = _family_conditioned_kernel_law({"branch": "tilted"}, backend)
+        assert law["mode_plus_scale"] == 1.0
+        assert law["mode_minus_scale"] == 1.0
+        assert law["mode_scale_owner"] == "storage_label_neutral_runtime_transport_or_mass"
+
+
+def test_active_family_law_does_not_supply_source_or_polarization_surrogates() -> None:
+    for family in (
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI_0",
+        "VI_h",
+        "VII_0",
+        "VII_h",
+        "VIII",
+        "IX",
+    ):
+        backend = build_backend(get_family_spec(family), truncation={"ell_max": 2})
+        law = _family_conditioned_kernel_law({"branch": "tilted"}, backend)
+        assert law["polarization_scale"] == 1.0
+        assert law["polarization_scale_owner"] == "electron_frame_thomson_projection_universal"
+        assert law["source_scale"] == 1.0
+        assert law["source_scale_owner"] == "source_tables_visibility_amplitudes"
+        assert law["cross_mode_scale"] == 1.0
+        assert law["cross_mode_scale_owner"] == "structure_constant_mu_mode_coupling_matrix"
+
+
+def test_operator_scales_derive_local_drag_from_baryon_loading_R_b() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 2})
+    scales = _operator_scales(
+        {
+            "branch": "orthogonal",
+            "opacity_data": {"R_b": 0.5},
+            "source_tables": {},
+        },
+        backend,
+    )
+    assert scales["local_drag_scale"] == pytest.approx(2.0)
+    assert scales["baryon_loading_R_b"] == pytest.approx(0.5)
+    assert scales["local_drag_scale_owner"] == "opacity_data.R_b"
+
+
+def test_operator_scales_can_derive_baryon_loading_from_primitive_densities() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 2})
+    scales = _operator_scales(
+        {
+            "branch": "orthogonal",
+            "opacity_data": {},
+            "source_tables": {"rho_b": 0.8, "rho_gamma": 1.0},
+        },
+        backend,
+    )
+    assert scales["baryon_loading_R_b"] == pytest.approx(0.6)
+    assert scales["local_drag_scale"] == pytest.approx(1.0 / 0.6)
+    assert scales["local_drag_scale_owner"] == "source_tables.rho_b/rho_gamma"
+
+
+def test_operator_scales_derive_neutrino_fraction_from_runtime_radiation_densities() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 2})
+    scales = _operator_scales(
+        {
+            "branch": "orthogonal",
+            "opacity_data": {},
+            "source_tables": {"rho_gamma": 3.0, "rho_nu": 2.0},
+        },
+        backend,
+    )
+    assert scales["neutrino_fraction_R_nu"] == pytest.approx(0.4)
+    assert scales["neutrino_fraction_owner"] == "source_tables.rho_nu/rho_gamma"
+    assert scales["neutrino_anisotropic_stress_scale"] == pytest.approx(0.4)
+    assert scales["neutrino_anisotropic_stress_owner"] == "massless_neutrino_quadrupole_metric_source"
+
+
+def test_reduced_local_rhs_uses_runtime_baryon_loading_not_family_label() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 2})
+    layout = build_hierarchy_layout(backend, {"ell_max": 2})
+    baryon = {
+        mu: np.array([0.0, 1.0, 0.0, 0.0], dtype=np.float64)
+        for mu in layout.mode_labels
+    }
+    cdm = {mu: np.zeros(2, dtype=np.float64) for mu in layout.mode_labels}
+    theta_1 = {mu: 0.0 for mu in layout.mode_labels}
+    bg_unit = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 2.0},
+        "source_tables": {},
+    }
+    bg_loaded = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 2.0, "R_b": 0.5},
+        "source_tables": {},
+    }
+    unit_rhs, _ = evaluate_reduced_local_rhs(
+        layout,
+        bg_unit,
+        backend,
+        baryon_by_mode_label=baryon,
+        cdm_by_mode_label=cdm,
+        theta_1_by_mode_label=theta_1,
+    )
+    loaded_rhs, _ = evaluate_reduced_local_rhs(
+        layout,
+        bg_loaded,
+        backend,
+        baryon_by_mode_label=baryon,
+        cdm_by_mode_label=cdm,
+        theta_1_by_mode_label=theta_1,
+    )
+    assert loaded_rhs["m0"][1] == pytest.approx(2.0 * unit_rhs["m0"][1])
+
+
+def test_operator_scales_reject_invalid_baryon_loading() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 2})
+    with pytest.raises(ValueError, match="R_b"):
+        _operator_scales(
+            {
+                "branch": "orthogonal",
+                "opacity_data": {"R_b": 0.0},
+                "source_tables": {},
+            },
+            backend,
+        )
+
+
+def test_operator_scales_cache_tracks_runtime_baryon_loading_changes() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 2})
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"R_b": 1.0},
+        "source_tables": {},
+    }
+    assert _operator_scales(bg, backend)["local_drag_scale"] == pytest.approx(1.0)
+    bg["opacity_data"]["R_b"] = 0.25
+    assert _operator_scales(bg, backend)["local_drag_scale"] == pytest.approx(4.0)
+
+
+def test_operator_scales_derive_class_b_local_drag_from_runtime_slip() -> None:
+    backend = build_backend(get_family_spec("V"), truncation={"ell_max": 2})
+    a_abs = float(np.linalg.norm(np.asarray(backend.family_spec.algebra.a, dtype=np.float64)))
+    scales = _operator_scales(
+        {
+            "branch": "orthogonal",
+            "H_local": 2.0,
+            "opacity_data": {"R_b": 0.5},
+            "baryon_velocity_by_mode_label": {
+                "mu_open": 0.8,
+                "mu_open+": 0.0,
+                "mu_open-": 0.0,
+            },
+            "theta_1_by_mode_label": {
+                "mu_open": 0.1,
+                "mu_open+": 0.0,
+                "mu_open-": 0.0,
+            },
+        },
+        backend,
+    )
+    expected_anchor = 1.0 + a_abs * a_abs * ((0.8 - 3.0 * 0.1) / 2.0) ** 2
+    np.testing.assert_allclose(
+        scales["local_drag_by_mu"],
+        np.array([expected_anchor, 1.0, 1.0], dtype=np.float64),
+    )
+    assert str(scales["local_drag_by_mu_owner"]).startswith("class_b_anchor_slip")
+    np.testing.assert_allclose(
+        scales["local_drag_slip_by_mu"],
+        np.array([0.5, 0.0, 0.0], dtype=np.float64),
+    )
+
+
+def test_reduced_local_rhs_uses_class_b_slip_drag_on_baryon_rows_only() -> None:
+    truncation = {"ell_max": 2}
+    backend = build_backend(get_family_spec("V"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    a_abs = float(np.linalg.norm(np.asarray(backend.family_spec.algebra.a, dtype=np.float64)))
+    baryon = {
+        "mu_open": np.array([0.0, 0.8, 0.0, 0.0], dtype=np.float64),
+        "mu_open+": np.zeros(4, dtype=np.float64),
+        "mu_open-": np.zeros(4, dtype=np.float64),
+    }
+    cdm = {mu: np.zeros(2, dtype=np.float64) for mu in layout.mode_labels}
+    theta_1 = {"mu_open": 0.1, "mu_open+": 0.0, "mu_open-": 0.0}
+    bg_unit = {
+        "branch": "orthogonal",
+        "H_local": 2.0,
+        "opacity_data": {"Gamma_T": 1.5, "R_b": 0.5},
+        "source_tables": {},
+    }
+    rhs, _ = evaluate_reduced_local_rhs(
+        layout,
+        bg_unit,
+        backend,
+        baryon_by_mode_label=baryon,
+        cdm_by_mode_label=cdm,
+        theta_1_by_mode_label=theta_1,
+    )
+    correction = 1.0 + a_abs * a_abs * ((0.8 - 3.0 * 0.1) / 2.0) ** 2
+    baryon_base_diag = 1.0 + 0.08 * _operator_scales(bg_unit, backend)["geom_scale"] + 0.03
+    expected_drive = -(1.0 / 0.5) * correction * 1.5 * 0.8
+    expected_drive += 3.0 * (1.0 / 0.5) * correction * 1.5 * 0.1
+    assert rhs["mu_open"][1] == pytest.approx(expected_drive / baryon_base_diag)
+
+
+def test_reduced_local_affine_operator_accepts_frozen_class_b_slip_drag() -> None:
+    truncation = {"ell_max": 2}
+    backend = build_backend(get_family_spec("V"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "orthogonal",
+        "H_local": 2.0,
+        "opacity_data": {"Gamma_T": 1.5, "R_b": 0.5},
+        "source_tables": {},
+    }
+    affine = build_reduced_local_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=("mu_open",),
+        theta_1_by_mode_label={"mu_open": 0.1},
+        baryon_velocity_by_mode_label={"mu_open": 0.8},
+    )
+    state = np.array([0.0, 0.8, 0.0, 0.0, 0.0, 0.0], dtype=np.float64)
+    applied = np.asarray(affine.matrix @ state + affine.bias, dtype=np.float64)
+    direct, _ = evaluate_reduced_local_rhs(
+        layout,
+        bg,
+        backend,
+        baryon_by_mode_label={"mu_open": state[:4]},
+        cdm_by_mode_label={"mu_open": state[4:]},
+        theta_1_by_mode_label={"mu_open": 0.1},
+    )
+    np.testing.assert_allclose(applied[:4], direct["mu_open"])
+
+
+def test_reduced_joint_affine_operator_freezes_class_b_slip_drag_for_local_block() -> None:
+    truncation = {"ell_max": 2}
+    backend = build_backend(get_family_spec("V"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    width = (layout.ell_max + 1) ** 2
+    dipole_slot = 2
+    bg = {
+        "branch": "orthogonal",
+        "H_local": 2.0,
+        "opacity_data": {"Gamma_T": 1.5, "R_b": 0.5},
+        "source_tables": {},
+    }
+    zeros_h = {mu: np.zeros(width, dtype=np.float64) for mu in layout.mode_labels}
+    photon_t = {mu: np.zeros(width, dtype=np.float64) for mu in layout.mode_labels}
+    photon_t["mu_open"][dipole_slot] = 0.1
+    baryon = {"mu_open": np.array([0.0, 0.8, 0.0, 0.0], dtype=np.float64)}
+    cdm = {"mu_open": np.zeros(2, dtype=np.float64)}
+    affine = build_reduced_joint_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=("mu_open",),
+        photon_T_by_mode_label=photon_t,
+        photon_E_by_mode_label=zeros_h,
+        photon_B_by_mode_label=zeros_h,
+        neutrino_by_mode_label=zeros_h,
+        baryon_by_mode_label=baryon,
+        baryon_velocity_by_mode_label={"mu_open": 0.8},
+        theta_1_by_mode_label={"mu_open": 0.1},
+    )
+    local_state = np.concatenate([baryon["mu_open"], cdm["mu_open"]], dtype=np.float64)
+    harmonic_state = np.concatenate(
+        [
+            photon_t["mu_open"],
+            zeros_h["mu_open"],
+            zeros_h["mu_open"],
+            zeros_h["mu_open"],
+        ],
+        dtype=np.float64,
+    )
+    source_state = np.zeros(layout.sector_local_dofs["src"], dtype=np.float64)
+    applied = np.asarray(
+        affine.matrix @ np.concatenate([local_state, harmonic_state, source_state], dtype=np.float64)
+        + affine.bias,
+        dtype=np.float64,
+    )
+    direct_baryon, direct_cdm = evaluate_reduced_local_rhs(
+        layout,
+        bg,
+        backend,
+        baryon_by_mode_label=baryon,
+        cdm_by_mode_label=cdm,
+        theta_1_by_mode_label={"mu_open": 0.1},
+    )
+    expected_local = np.concatenate([direct_baryon["mu_open"], direct_cdm["mu_open"]], dtype=np.float64)
+    np.testing.assert_allclose(applied[: expected_local.size], expected_local)
+
+
+def test_operator_scales_derive_mass_by_mu_from_runtime_shear_over_hubble() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 2})
+    scales = _operator_scales(
+        {
+            "branch": "orthogonal",
+            "H_local": 2.0,
+            "sigma_tensor": np.diag([0.2, -0.1, 0.0]),
+            "opacity_data": {},
+            "source_tables": {},
+        },
+        backend,
+    )
+    np.testing.assert_allclose(
+        scales["mass_by_mu"],
+        np.array([1.1, 0.95, 1.0], dtype=np.float64),
+    )
+    assert scales["mass_scale"] == 1.0
+    assert scales["H_local"] == pytest.approx(2.0)
+    assert scales["mass_scale_owner"] == "bg.H_local"
+
+
+def test_assemble_mass_matrix_uses_shear_over_hubble_mass_by_mu() -> None:
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    backend = build_backend(get_family_spec("I"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    bg_unit = {
+        "branch": "orthogonal",
+        "H_local": 2.0,
+        "sigma_tensor": np.zeros((3, 3), dtype=np.float64),
+    }
+    bg_shear = {
+        "branch": "orthogonal",
+        "H_local": 2.0,
+        "sigma_tensor": np.diag([0.2, -0.1, 0.0]),
+    }
+    diag_unit = np.asarray(assemble_mass_matrix(bg_unit, backend, truncation).diagonal())
+    diag_shear = np.asarray(assemble_mass_matrix(bg_shear, backend, truncation).diagonal())
+    idx_m0 = flatten(layout, "m0", "ph_I", 0, 0)
+    idx_mp2 = flatten(layout, "m+2", "ph_I", 0, 0)
+    idx_mm2 = flatten(layout, "m-2", "ph_I", 0, 0)
+    assert diag_shear[idx_m0] / diag_unit[idx_m0] == pytest.approx(1.1)
+    assert diag_shear[idx_mp2] / diag_unit[idx_mp2] == pytest.approx(0.95)
+    assert diag_shear[idx_mm2] / diag_unit[idx_mm2] == pytest.approx(1.0)
+
+
+def test_reduced_harmonic_rhs_uses_runtime_mass_by_mu() -> None:
+    truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
+    backend = build_backend(get_family_spec("I"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    width = (layout.ell_max + 1) ** 2
+    zeros = {mu: np.zeros(width, dtype=np.float64) for mu in layout.mode_labels}
+    baryon = {mu: np.zeros(4, dtype=np.float64) for mu in layout.mode_labels}
+    bg_unit = {
+        "branch": "orthogonal",
+        "H_local": 2.0,
+        "sigma_tensor": np.zeros((3, 3), dtype=np.float64),
+        "opacity_data": {"Gamma_T": 0.0},
+        "source_tables": {"temperature_visibility_source": 1.0},
+    }
+    bg_shear = {
+        **bg_unit,
+        "sigma_tensor": np.diag([0.2, -0.1, 0.0]),
+    }
+    rhs_unit, _, _, _ = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg_unit,
+        backend,
+        photon_T_by_mode_label=zeros,
+        photon_E_by_mode_label=zeros,
+        photon_B_by_mode_label=zeros,
+        neutrino_by_mode_label=zeros,
+        baryon_by_mode_label=baryon,
+    )
+    rhs_shear, _, _, _ = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg_shear,
+        backend,
+        photon_T_by_mode_label=zeros,
+        photon_E_by_mode_label=zeros,
+        photon_B_by_mode_label=zeros,
+        neutrino_by_mode_label=zeros,
+        baryon_by_mode_label=baryon,
+    )
+    assert rhs_shear["m0"][0] / rhs_unit["m0"][0] == pytest.approx(1.0 / 1.1)
+    assert rhs_shear["m+2"][0] / rhs_unit["m+2"][0] == pytest.approx(1.0 / 0.95)
+
+
+def test_operator_scales_reject_invalid_mass_by_mu() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 2})
+    with pytest.raises(ValueError, match="mass_by_mu"):
+        _operator_scales(
+            {
+                "branch": "orthogonal",
+                "H_local": 1.0,
+                "sigma_tensor": np.diag([-1.1, 0.0, 0.0]),
+            },
+            backend,
+        )
+
+
+def test_tilted_mass_by_mu_uses_positive_exponential_map_outside_linear_regime() -> None:
+    backend = build_backend(get_family_spec("V"), truncation={"ell_max": 2})
+    scales = _operator_scales(
+        {
+            "branch": "tilted",
+            "H_local": 1.0,
+            "sigma_tensor": np.diag([-1.1, 0.0, 0.2]),
+        },
+        backend,
+    )
+    np.testing.assert_allclose(
+        scales["mass_by_mu"],
+        np.exp(np.array([-1.1, 0.0, 0.2], dtype=np.float64)),
+    )
+    assert scales["mass_scale_owner"] == "bg.H_local+tilted_exponential_shear_over_H_positive_map"
+
+
+def test_operator_scales_derive_transport_scale_from_family_spectral_matrix() -> None:
+    backend_v = build_backend(get_family_spec("V"), truncation={"ell_max": 2})
+    scales_v = _operator_scales(
+        {
+            "branch": "orthogonal",
+            "k_mag": 2.0,
+            "opacity_data": {},
+            "source_tables": {},
+        },
+        backend_v,
+    )
+    assert scales_v["transport_scale"] == pytest.approx(np.sqrt(5.0))
+    np.testing.assert_allclose(
+        scales_v["transport_by_mu"],
+        np.sqrt(5.0) * np.ones(3, dtype=np.float64),
+    )
+    assert scales_v["transport_scale_owner"] == "bg.k_mag"
+
+    backend_vii0 = build_backend(get_family_spec("VII_0"), truncation={"ell_max": 2})
+    scales_vii0 = _operator_scales(
+        {
+            "branch": "orthogonal",
+            "opacity_data": {"k_mag": 2.0},
+            "source_tables": {},
+        },
+        backend_vii0,
+    )
+    q_h = np.sqrt(5.0)
+    assert scales_vii0["transport_scale"] == pytest.approx((2.0 + 2.0 * q_h) / 3.0)
+    np.testing.assert_allclose(
+        scales_vii0["transport_by_mu"],
+        np.array([2.0, q_h, q_h], dtype=np.float64),
+    )
+    assert scales_vii0["transport_scale_owner"] == "opacity_data.k_mag"
+
+
+def test_operator_scales_cache_tracks_runtime_transport_k_changes() -> None:
+    backend = build_backend(get_family_spec("V"), truncation={"ell_max": 2})
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"k_mag": 1.0},
+        "source_tables": {},
+    }
+    assert _operator_scales(bg, backend)["transport_scale"] == pytest.approx(np.sqrt(2.0))
+    bg["opacity_data"]["k_mag"] = 3.0
+    assert _operator_scales(bg, backend)["transport_scale"] == pytest.approx(np.sqrt(10.0))
+
+
+def test_operator_scales_keep_spectral_transport_out_of_geom_scale() -> None:
+    backend = build_backend(get_family_spec("VII_0"), truncation={"ell_max": 2})
+    base_bg = {
+        "branch": "orthogonal",
+        "opacity_data": {},
+        "source_tables": {},
+    }
+    k_bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"k_mag": 2.0},
+        "source_tables": {},
+    }
+    base = _operator_scales(base_bg, backend)
+    with_k = _operator_scales(k_bg, backend)
+    assert with_k["geom_scale"] == pytest.approx(base["geom_scale"])
+    assert with_k["transport_scale"] == pytest.approx((2.0 + 2.0 * np.sqrt(5.0)) / 3.0)
+
+
+def test_free_streaming_block_uses_mode_resolved_spectral_transport() -> None:
+    truncation = {"ell_max": 2}
+    backend = build_backend(get_family_spec("VII_0"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    bg_unit = {"branch": "orthogonal", "opacity_data": {}, "source_tables": {}}
+    bg_k = {"branch": "orthogonal", "opacity_data": {"k_mag": 2.0}, "source_tables": {}}
+    A_unit = assemble_free_streaming_block(bg_unit, backend, truncation)
+    A_k = assemble_free_streaming_block(bg_k, backend, truncation)
+
+    row_anchor = flatten(layout, "mu_hel", "ph_I", 1, 0)
+    col_anchor = flatten(layout, "mu_hel", "ph_I", 0, 0)
+    row_plus = flatten(layout, "mu_hel+", "ph_I", 1, 0)
+    col_plus = flatten(layout, "mu_hel+", "ph_I", 0, 0)
+
+    assert A_k[row_anchor, col_anchor] / A_unit[row_anchor, col_anchor] == pytest.approx(2.0)
+    assert A_k[row_plus, col_plus] / A_unit[row_plus, col_plus] == pytest.approx(np.sqrt(5.0))
+
+
+def test_reduced_harmonic_rhs_uses_mode_resolved_spectral_transport() -> None:
+    truncation = {"ell_max": 2}
+    backend = build_backend(get_family_spec("VII_0"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    width = (layout.ell_max + 1) ** 2
+    photon_t = {mu: np.zeros(width, dtype=np.float64) for mu in layout.mode_labels}
+    for values in photon_t.values():
+        values[0] = 1.0
+    zeros_h = {mu: np.zeros(width, dtype=np.float64) for mu in layout.mode_labels}
+    baryon = {mu: np.zeros(4, dtype=np.float64) for mu in layout.mode_labels}
+    bg_unit = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 0.0},
+        "source_tables": {},
+    }
+    bg_k = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 0.0, "k_mag": 2.0},
+        "source_tables": {},
+    }
+    rhs_unit, _, _, _ = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg_unit,
+        backend,
+        photon_T_by_mode_label=photon_t,
+        photon_E_by_mode_label=zeros_h,
+        photon_B_by_mode_label=zeros_h,
+        neutrino_by_mode_label=zeros_h,
+        baryon_by_mode_label=baryon,
+    )
+    rhs_k, _, _, _ = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg_k,
+        backend,
+        photon_T_by_mode_label=photon_t,
+        photon_E_by_mode_label=zeros_h,
+        photon_B_by_mode_label=zeros_h,
+        neutrino_by_mode_label=zeros_h,
+        baryon_by_mode_label=baryon,
+    )
+    dipole_slot = 2
+    assert rhs_k["mu_hel"][dipole_slot] / rhs_unit["mu_hel"][dipole_slot] == pytest.approx(2.0)
+    assert rhs_k["mu_hel+"][dipole_slot] / rhs_unit["mu_hel+"][dipole_slot] == pytest.approx(np.sqrt(5.0))
+
+
+def test_source_vector_is_not_rescaled_by_family_label() -> None:
+    truncation_v = {"ell_max": 2, "mode_labels": ("mu_open",)}
+    truncation_viii = {"ell_max": 2, "mode_labels": ("mu_sl2r",)}
+    backend_v = build_backend(get_family_spec("V"), truncation=truncation_v)
+    backend_viii = build_backend(get_family_spec("VIII"), truncation=truncation_viii)
+    layout_v = build_hierarchy_layout(backend_v, truncation_v)
+    layout_viii = build_hierarchy_layout(backend_viii, truncation_viii)
+    source_tables = {
+        "temperature_visibility_source": 1.2,
+        "doppler_source": -0.4,
+        "polarization_source": 0.7,
+    }
+    bg = {
+        "branch": "tilted",
+        "opacity_data": {},
+        "source_tables": source_tables,
+    }
+
+    source_v = assemble_source_vector(bg, backend_v, truncation_v, source_tables)
+    source_viii = assemble_source_vector(bg, backend_viii, truncation_viii, source_tables)
+
+    assert source_v[flatten(layout_v, "mu_open", "ph_I", 0, 0)] == pytest.approx(
+        source_viii[flatten(layout_viii, "mu_sl2r", "ph_I", 0, 0)]
+    )
+    assert source_v[flatten(layout_v, "mu_open", "ph_I", 1, 0)] == pytest.approx(
+        source_viii[flatten(layout_viii, "mu_sl2r", "ph_I", 1, 0)]
+    )
+    assert source_v[flatten(layout_v, "mu_open", "ph_E", 2, 0)] == pytest.approx(
+        source_viii[flatten(layout_viii, "mu_sl2r", "ph_E", 2, 0)]
+    )
+
+
+def test_mixing_block_uses_neutrino_quadrupole_anisotropic_stress_source() -> None:
+    truncation = {"ell_max": 2, "mode_labels": ("m0",)}
+    backend = build_backend(get_family_spec("I"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {},
+        "source_tables": {"R_nu": 0.4},
+    }
+    mixing = assemble_mixing_block(bg, backend, truncation)
+    row = flatten(layout, "m0", "ph_I", 2, 0)
+    col = flatten(layout, "m0", "nu_I", 2, 0)
+    pstf_weight = np.sqrt(4.0) / 5.0
+    assert mixing[row, col] == pytest.approx(0.4 * pstf_weight)
+
+
+def test_neutrino_anisotropic_stress_source_is_quadrupole_only() -> None:
+    truncation = {"ell_max": 3, "mode_labels": ("m0",)}
+    backend = build_backend(get_family_spec("I"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {},
+        "source_tables": {"R_nu": 0.4},
+    }
+    mixing = assemble_mixing_block(bg, backend, truncation)
+    row2 = flatten(layout, "m0", "ph_I", 2, 1)
+    col2 = flatten(layout, "m0", "nu_I", 2, 1)
+    row3 = flatten(layout, "m0", "ph_I", 3, 1)
+    col3 = flatten(layout, "m0", "nu_I", 3, 1)
+    assert mixing[row2, col2] != 0.0
+    assert mixing[row3, col3] == pytest.approx(0.0, abs=1.0e-15)
+
+
+def test_reduced_harmonic_affine_operator_matches_direct_with_neutrino_stress_source() -> None:
+    truncation = {"ell_max": 2, "mode_labels": ("m0",)}
+    backend = build_backend(get_family_spec("I"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 0.0},
+        "source_tables": {"R_nu": 0.4},
+    }
+    width = (layout.ell_max + 1) ** 2
+    mu = "m0"
+    zeros = {mu: np.zeros(width, dtype=np.float64)}
+    neutrino = {mu: np.zeros(width, dtype=np.float64)}
+    quad_slot = 6
+    neutrino[mu][quad_slot] = 1.0
+    baryon = {mu: np.zeros(4, dtype=np.float64)}
+    source = {mu: np.zeros(3, dtype=np.float64)}
+    direct_t, direct_e, direct_b, direct_nu = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend,
+        photon_T_by_mode_label=zeros,
+        photon_E_by_mode_label=zeros,
+        photon_B_by_mode_label=zeros,
+        neutrino_by_mode_label=neutrino,
+        baryon_by_mode_label=baryon,
+        source_by_mode_label=source,
+    )
+    affine = build_reduced_harmonic_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=(mu,),
+        photon_T_by_mode_label=zeros,
+        photon_E_by_mode_label=zeros,
+        photon_B_by_mode_label=zeros,
+        neutrino_by_mode_label=neutrino,
+        baryon_by_mode_label=baryon,
+        source_by_mode_label=source,
+    )
+    state = np.concatenate([zeros[mu], zeros[mu], zeros[mu], neutrino[mu]], dtype=np.float64)
+    direct = np.concatenate([direct_t[mu], direct_e[mu], direct_b[mu], direct_nu[mu]], dtype=np.float64)
+    applied = np.asarray(affine.matrix @ state + affine.bias, dtype=np.float64)
+    assert direct_t[mu][quad_slot] > 0.0
+    assert np.linalg.norm(direct_e[mu]) == pytest.approx(0.0, abs=1e-15)
+    assert np.linalg.norm(direct_b[mu]) == pytest.approx(0.0, abs=1e-15)
+    np.testing.assert_allclose(applied, direct)
+
+
+def test_reduced_harmonic_affine_operator_matches_direct_with_mode_transport() -> None:
+    truncation = {"ell_max": 2}
+    backend = build_backend(get_family_spec("VII_0"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    width = (layout.ell_max + 1) ** 2
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 0.0, "k_mag": 2.0},
+        "source_tables": {},
+    }
+    photon_t = {
+        str(mu): np.linspace(0.1 + 0.05 * i, 0.9 + 0.05 * i, width, dtype=np.float64)
+        for i, mu in enumerate(layout.mode_labels)
+    }
+    photon_e = {
+        str(mu): np.linspace(-0.2 + 0.03 * i, 0.4 + 0.03 * i, width, dtype=np.float64)
+        for i, mu in enumerate(layout.mode_labels)
+    }
+    photon_b = {
+        str(mu): np.linspace(0.3 - 0.02 * i, -0.1 - 0.02 * i, width, dtype=np.float64)
+        for i, mu in enumerate(layout.mode_labels)
+    }
+    neutrino = {
+        str(mu): np.linspace(0.15 + 0.04 * i, 0.45 + 0.04 * i, width, dtype=np.float64)
+        for i, mu in enumerate(layout.mode_labels)
+    }
+    baryon = {str(mu): np.zeros(4, dtype=np.float64) for mu in layout.mode_labels}
+    direct_t, direct_e, direct_b, direct_nu = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend,
+        photon_T_by_mode_label=photon_t,
+        photon_E_by_mode_label=photon_e,
+        photon_B_by_mode_label=photon_b,
+        neutrino_by_mode_label=neutrino,
+        baryon_by_mode_label=baryon,
+    )
+    affine = build_reduced_harmonic_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=tuple(str(mu) for mu in layout.mode_labels),
+        photon_T_by_mode_label=photon_t,
+        photon_E_by_mode_label=photon_e,
+        photon_B_by_mode_label=photon_b,
+        neutrino_by_mode_label=neutrino,
+        baryon_by_mode_label=baryon,
+    )
+    residual_state = np.concatenate(
+        [
+            part
+            for mu in layout.mode_labels
+            for part in (
+                photon_t[str(mu)],
+                photon_e[str(mu)],
+                photon_b[str(mu)],
+                neutrino[str(mu)],
+            )
+        ],
+        dtype=np.float64,
+    )
+    direct = np.concatenate(
+        [
+            part
+            for mu in layout.mode_labels
+            for part in (
+                direct_t[str(mu)],
+                direct_e[str(mu)],
+                direct_b[str(mu)],
+                direct_nu[str(mu)],
+            )
+        ],
+        dtype=np.float64,
+    )
+    applied = np.asarray(affine.matrix @ residual_state + affine.bias, dtype=np.float64)
+    np.testing.assert_allclose(applied, direct)
+
+
+def test_operator_scales_reject_invalid_transport_k() -> None:
+    backend = build_backend(get_family_spec("I"), truncation={"ell_max": 2})
+    with pytest.raises(ValueError, match="k_mag"):
+        _operator_scales(
+            {
+                "branch": "orthogonal",
+                "k_mag": 0.0,
+            },
+            backend,
+        )
 
 
 def test_round3_family_kernel_transport_is_identity_placeholder() -> None:
@@ -1790,6 +2618,124 @@ def test_round4_twist_mix_kernel_spin_2_selection_rule() -> None:
         assert np.all(K[ell, :, :, :] == 0.0), f"ell={ell} must vanish (spin-2 rule)"
     # ell=2 → ell'=1 (Δℓ=-1 at delta_ell_index=0) must also vanish (ℓ'<2)
     assert np.all(K[2, :, 0, :] == 0.0), "ell=2, Δℓ=-1 → ell'=1 must vanish"
+
+
+def test_round4_twist_kernel_is_wired_into_class_b_mixing_block() -> None:
+    """Class-B twist transport uses Wigner Δℓ=±1, Δm=±1 E/B edges.
+
+    This rejects the previous same-slot scalar E/B shortcut and the
+    unphysical T→B transport shortcut.
+    """
+
+    truncation = {"ell_max": 3, "mode_labels": ("mu_open",)}
+    backend = build_backend(get_family_spec("V"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 0.0},
+        "sigma_tensor": np.zeros((3, 3), dtype=np.float64),
+        "source_tables": {},
+    }
+
+    mixing = np.asarray(assemble_mixing_block(bg, backend, truncation).todense(), dtype=np.float64)
+    amplitude = float(np.linalg.norm(backend.family_spec.algebra.a))
+    expected = amplitude / np.sqrt(21.0)
+
+    e_target = flatten(layout, "mu_open", "ph_E", 3, -1)
+    b_target = flatten(layout, "mu_open", "ph_B", 3, -1)
+    e_source = flatten(layout, "mu_open", "ph_E", 2, 0)
+    b_source = flatten(layout, "mu_open", "ph_B", 2, 0)
+    t_source = flatten(layout, "mu_open", "ph_I", 2, 0)
+    e_same = flatten(layout, "mu_open", "ph_E", 2, 0)
+    b_same = flatten(layout, "mu_open", "ph_B", 2, 0)
+
+    assert mixing[e_target, b_source] == pytest.approx(expected, rel=1e-12)
+    assert mixing[b_target, e_source] == pytest.approx(-expected, rel=1e-12)
+    assert mixing[e_same, b_same] == pytest.approx(0.0, abs=1e-15)
+    assert mixing[b_same, e_same] == pytest.approx(0.0, abs=1e-15)
+    assert mixing[b_target, t_source] == pytest.approx(0.0, abs=1e-15)
+
+
+def test_reduced_harmonic_affine_operator_matches_direct_with_class_b_twist_kernel() -> None:
+    truncation = {"ell_max": 3, "mode_labels": ("mu_open",)}
+    backend = build_backend(get_family_spec("V"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 0.0},
+        "sigma_tensor": np.zeros((3, 3), dtype=np.float64),
+        "source_tables": {},
+    }
+    width = (layout.ell_max + 1) ** 2
+    mu = "mu_open"
+    photon_t = {mu: np.linspace(0.1, 0.7, width, dtype=np.float64)}
+    photon_e = {mu: np.linspace(-0.4, 0.6, width, dtype=np.float64)}
+    photon_b = {mu: np.linspace(0.8, -0.2, width, dtype=np.float64)}
+    neutrino = {mu: np.linspace(0.3, -0.5, width, dtype=np.float64)}
+    baryon = {mu: np.zeros(4, dtype=np.float64)}
+    source = {mu: np.zeros(3, dtype=np.float64)}
+
+    direct_t, direct_e, direct_b, direct_nu = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend,
+        photon_T_by_mode_label=photon_t,
+        photon_E_by_mode_label=photon_e,
+        photon_B_by_mode_label=photon_b,
+        neutrino_by_mode_label=neutrino,
+        baryon_by_mode_label=baryon,
+        source_by_mode_label=source,
+    )
+    affine = build_reduced_harmonic_affine_operator(
+        layout,
+        bg,
+        backend,
+        residual_mode_labels=(mu,),
+        photon_T_by_mode_label=photon_t,
+        photon_E_by_mode_label=photon_e,
+        photon_B_by_mode_label=photon_b,
+        neutrino_by_mode_label=neutrino,
+        baryon_by_mode_label=baryon,
+        source_by_mode_label=source,
+    )
+    state = np.concatenate([photon_t[mu], photon_e[mu], photon_b[mu], neutrino[mu]], dtype=np.float64)
+    direct = np.concatenate([direct_t[mu], direct_e[mu], direct_b[mu], direct_nu[mu]], dtype=np.float64)
+    applied = np.asarray(affine.matrix @ state + affine.bias, dtype=np.float64)
+    np.testing.assert_allclose(applied, direct)
+
+
+def test_exact_thomson_polarization_source_does_not_directly_source_b_modes() -> None:
+    truncation = {"ell_max": 3, "mode_labels": ("mu_open",)}
+    backend = build_backend(get_family_spec("V"), truncation=truncation)
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {
+        "branch": "orthogonal",
+        "opacity_data": {"Gamma_T": 0.0},
+        "sigma_tensor": np.zeros((3, 3), dtype=np.float64),
+        "source_tables": {"polarization_source": 1.0},
+    }
+    width = (layout.ell_max + 1) ** 2
+    mu = "mu_open"
+    zero_h = {mu: np.zeros(width, dtype=np.float64)}
+    zero_baryon = {mu: np.zeros(4, dtype=np.float64)}
+    zero_source = {mu: np.zeros(3, dtype=np.float64)}
+
+    source_vector = assemble_source_vector(bg, backend, truncation, bg["source_tables"])
+    assert source_vector[flatten(layout, mu, "ph_E", 2, 0)] != 0.0
+    assert source_vector[flatten(layout, mu, "ph_B", 2, 0)] == pytest.approx(0.0, abs=1e-15)
+
+    _, _, direct_b, _ = evaluate_reduced_harmonic_rhs(
+        layout,
+        bg,
+        backend,
+        photon_T_by_mode_label=zero_h,
+        photon_E_by_mode_label=zero_h,
+        photon_B_by_mode_label=zero_h,
+        neutrino_by_mode_label=zero_h,
+        baryon_by_mode_label=zero_baryon,
+        source_by_mode_label=zero_source,
+    )
+    assert np.linalg.norm(direct_b[mu]) == pytest.approx(0.0, abs=1e-15)
 
 
 def test_round4_transport_VII0_helical_gap() -> None:

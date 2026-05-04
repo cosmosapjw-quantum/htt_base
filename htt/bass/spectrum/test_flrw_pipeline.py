@@ -15,13 +15,20 @@ import pytest
 from bass.spectrum.cl_assembly import CLAssemblyConfig
 from bass.spectrum.flrw_pipeline import (
     FLRWPipelineConfig,
+    _resolve_z_injection_for_k,
     _transfer_fn_from_grid,
     build_visibility_and_kappa_callables,
     compute_flrw_d_ell,
     compute_transfer_function_grid,
 )
 from bass.species.registry import SpeciesBackgroundRegistry
+from bass.species.base import SpeciesLabel
 from bass.los.bianchi_propagator import BianchiTransferFunctions
+from bass.runtime import (
+    DEFAULT_PRE_RECOMBINATION_MARGIN_MPC,
+    PLANCK_2018_Z_STAR,
+    cosmological_critical_etas,
+)
 
 
 # -----------------------------------------------------------------------
@@ -37,6 +44,14 @@ def test_pipeline_config_defaults() -> None:
     assert cfg.anisotropic_stress is True
     assert cfg.quadrature == "trapezoid"
     assert cfg.imex_explicit_update_limit == 0.05
+    assert cfg.co_evolve_scalar_metric is False
+    assert cfg.co_evolve_scalar_streaming is False
+    assert cfg.flrw_source_frame == "legacy_newtonian_constraint"
+    assert cfg.z_injection == pytest.approx(PLANCK_2018_Z_STAR)
+    assert cfg.pre_recombination_margin_mpc == pytest.approx(
+        DEFAULT_PRE_RECOMBINATION_MARGIN_MPC
+    )
+    assert cfg.superhorizon_x_max_at_start is None
     assert cfg.k_solver_batch_mode == "shared_background"
     assert cfg.intra_chunk_threads == 1
     assert cfg.k_chunk_size is None
@@ -327,6 +342,38 @@ def test_pipeline_config_rejects_unknown_quadrature() -> None:
         FLRWPipelineConfig(quadrature="gauss")
 
 
+def test_pipeline_config_rejects_invalid_early_start_controls() -> None:
+    with pytest.raises(ValueError, match="z_injection"):
+        FLRWPipelineConfig(z_injection=0.0)
+    with pytest.raises(ValueError, match="z_injection"):
+        FLRWPipelineConfig(z_injection=-1.0)
+    with pytest.raises(ValueError, match="pre_recombination_margin_mpc"):
+        FLRWPipelineConfig(pre_recombination_margin_mpc=-0.1)
+    with pytest.raises(ValueError, match="superhorizon_x_max_at_start"):
+        FLRWPipelineConfig(superhorizon_x_max_at_start=0.0)
+    with pytest.raises(ValueError, match="superhorizon_x_max_at_start"):
+        FLRWPipelineConfig(superhorizon_x_max_at_start=-0.1)
+
+
+def test_superhorizon_start_resolver_moves_high_k_to_earlier_z(species) -> None:
+    cfg = FLRWPipelineConfig(
+        superhorizon_x_max_at_start=0.1,
+        pre_recombination_margin_mpc=0.0,
+    )
+
+    z_low = _resolve_z_injection_for_k(species, cfg, 1.0e-4)
+    z_high = _resolve_z_injection_for_k(species, cfg, 5.0e-2)
+
+    assert z_low == pytest.approx(cfg.z_injection)
+    assert z_high > z_low
+    anchors = cosmological_critical_etas(
+        species,
+        z_injection=z_high,
+        pre_recombination_margin_mpc=0.0,
+    )
+    assert 5.0e-2 * anchors["eta_initial_mpc"] <= 0.1 * (1.0 + 2.0e-3)
+
+
 def test_pipeline_config_rejects_non_positive_max_step_factor() -> None:
     with pytest.raises(ValueError, match="max_step_factor"):
         FLRWPipelineConfig(max_step_factor=0)
@@ -339,6 +386,11 @@ def test_pipeline_config_rejects_non_positive_imex_update_limit() -> None:
         FLRWPipelineConfig(imex_explicit_update_limit=0.0)
     with pytest.raises(ValueError, match="imex_explicit_update_limit"):
         FLRWPipelineConfig(imex_explicit_update_limit=-0.1)
+
+
+def test_pipeline_config_rejects_invalid_flrw_source_frame() -> None:
+    with pytest.raises(ValueError, match="flrw_source_frame"):
+        FLRWPipelineConfig(flrw_source_frame="toy_metric_patch")
 
 
 def test_pipeline_config_rejects_invalid_k_solver_batch_mode() -> None:
@@ -797,6 +849,25 @@ def test_visibility_peak_near_recombination(species) -> None:
     )
 
 
+def test_visibility_callables_use_early_kappa_extension(species) -> None:
+    """Deep pre-recombination visibility must use the fully-ionized
+    optical-depth extension, not a clipped z=z_max table value."""
+
+    g_of_eta, kappa_of_eta = build_visibility_and_kappa_callables(species)
+    baryon = species[SpeciesLabel.BARYON]
+    z_max = float(baryon._recomb.table.z_max)  # noqa: SLF001
+    eta_table_max = species.bg_table.eta_at_a(1.0 / (1.0 + z_max))
+    eta_early = species.bg_table.eta_at_a(1.0 / (1.0 + 15000.0))
+
+    kappa_table_max = float(kappa_of_eta(np.asarray(eta_table_max)))
+    kappa_early = float(kappa_of_eta(np.asarray(eta_early)))
+    g_early = float(g_of_eta(np.asarray(eta_early)))
+
+    assert kappa_early > kappa_table_max
+    assert np.isfinite(g_early)
+    assert g_early >= 0.0
+
+
 def test_compute_transfer_function_grid_rejects_empty_k(species) -> None:
     with pytest.raises(ValueError, match="non-empty"):
         compute_transfer_function_grid(species, np.array([], dtype=np.float64))
@@ -882,7 +953,7 @@ def test_full_pipeline_parallel_k_sweep_produces_finite_D_ell(species) -> None:
     1378-test fast baseline is preserved since this is slow-marked.
 
     Asserts:
-      - pipeline produces finite D_ℓ^TT and D_ℓ^EE arrays;
+      - pipeline produces finite D_ℓ^TT, D_ℓ^EE, and D_ℓ^TE arrays;
       - D_2^TT > 0 (SW plateau contributes positively);
       - D_ℓ^EE[ℓ<2] = 0 (spin-2 selection rule);
       - parallel runtime ≤ 1.5 × single-k cost.
@@ -912,16 +983,22 @@ def test_full_pipeline_parallel_k_sweep_produces_finite_D_ell(species) -> None:
 
     d_tt = bundle["d_tt"]
     d_ee = bundle["d_ee"]
+    d_te = bundle["d_te"]
 
     assert np.all(np.isfinite(d_tt))
     assert np.all(np.isfinite(d_ee))
+    assert np.all(np.isfinite(d_te))
     assert d_tt.shape == (5,)  # ell_max=4 → ell ∈ [0, 4]
+    assert d_ee.shape == (5,)
+    assert d_te.shape == (5,)
     assert float(d_tt[2]) > 0.0, (
         f"D_2^TT = {float(d_tt[2])} is non-positive; check extractor sign"
     )
     # Spin-2 selection rule: D_ℓ^EE is zero for ℓ < 2.
     assert float(d_ee[0]) == 0.0
     assert float(d_ee[1]) == 0.0
+    assert float(d_te[0]) == 0.0
+    assert float(d_te[1]) == 0.0
 
     # Parallel efficiency: 2 k-points on 2 workers should take roughly
     # one single-k cost (~45 s). Budget 120 s accounts for species init
@@ -989,19 +1066,25 @@ def test_d_ell_linear_probe_end_to_end_finite(species) -> None:
         "calibration_factor",
         "cl_tt",
         "cl_ee",
+        "cl_te",
         "d_tt",
         "d_ee",
+        "d_te",
         "assembly_config",
     }
     assert bundle["probe_b_k_sq"] == 1.0
     assert bundle["calibration_factor"] == 1.0
     assert bundle["d_tt"].shape == (5,)
     assert bundle["d_ee"].shape == (5,)
+    assert bundle["d_te"].shape == (5,)
     assert np.all(np.isfinite(bundle["d_tt"]))
     assert np.all(np.isfinite(bundle["d_ee"]))
+    assert np.all(np.isfinite(bundle["d_te"]))
     # Spin-2 selection rule: D_ℓ^EE = 0 for ℓ < 2
     assert float(bundle["d_ee"][0]) == 0.0
     assert float(bundle["d_ee"][1]) == 0.0
+    assert float(bundle["d_te"][0]) == 0.0
+    assert float(bundle["d_te"][1]) == 0.0
     # α(k) returned for every k point, finite
     assert len(bundle["alpha_transfer_functions"]) == len(k_grid)
     for tf in bundle["alpha_transfer_functions"]:
@@ -1041,3 +1124,8 @@ def test_d_ell_linear_probe_calibration_factor_scales_quadratically(species) -> 
             bundle_unit["d_tt"][ell]
         )
         assert observed == pytest.approx(expected_ratio, rel=1.0e-10)
+        if abs(float(bundle_unit["d_te"][ell])) > 1.0e-300:
+            observed_te = float(bundle_scaled["d_te"][ell]) / float(
+                bundle_unit["d_te"][ell]
+            )
+            assert observed_te == pytest.approx(expected_ratio, rel=1.0e-10)

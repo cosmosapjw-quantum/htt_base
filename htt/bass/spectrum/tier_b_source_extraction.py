@@ -1,17 +1,32 @@
 """Tier-B → FLRWSourceTerms extractor (V5 Round-5 audit landing).
 
-Closes the W10+ scalar-mode evolution gap that the reverted S8/S9 pipeline
-attempted via toy Sachs-Wolfe MD approximation ``(Θ_0 + Ψ)_* = -R/5``.
-This module extracts the five Newtonian-gauge callables the LoS projector
-(``bass/los/flrw_bessel_projector.py``) requires, directly from the VER2
-Tier-B PSTF output — no toy closure, no MD analytic, no surrogate.
+This module extracts the five callables consumed by the scalar FLRW LoS
+projector (``bass/los/flrw_bessel_projector.py``) from the VER2 Tier-B
+PSTF output. It deliberately separates two source frames:
+
+* ``legacy_newtonian_constraint`` is the live BASS/PSTF production frame.
+  It reconstructs potentials from the available density, velocity, and
+  intensity-quadrupole histories.
+* ``mb95_synchronous_effective`` is an opt-in frame. If the native result
+  carries metadata-proven ``scalar_metric_history`` from
+  ``IntegratorConfig.co_evolve_scalar_metric=True``, that co-evolved
+  history is the authority. Otherwise this frame falls back to a
+  diagnostic post-process reconstruction for oracle comparison only.
+
+The extractor therefore does not claim to close the external CAMB scalar
+closure gap by itself. It removes toy Sachs-Wolfe closures and makes the
+remaining scalar-source frame choice explicit and testable.
 
 Audit trail:
     - Round-5 prompt:  docs/V5_RUNTIME_TRACK_ALGEBRAIC_PROMPT_ROUND5.md
     - Round-5 answer:  v5_residual_harmonic_algebraic_audit_round5.md
     - Key corrections from the auditor:
-      * Q-16: FLRW / Bianchi-I orthogonal → Θ_ℓ^VER2 = Θ_ℓ^MB directly
-        (no gauge-transformation coefficient).
+      * Q-16/Q-17: the legacy live path treats the m=0 VER2 intensity
+        moments as the PSTF source moments used by the BASS LoS contract.
+        The MB-95 synchronous reconstruction is diagnostic-only unless the
+        metric variables are co-evolved with the photon hierarchy. The
+        co-evolved path is now metadata-gated and routed through BDF until
+        an IMEX scalar-metric block exists.
       * Q-17: Einstein anisotropic stress depends on the INTENSITY
         quadrupoles Θ_2^γ, Θ_2^ν — NOT on Π = Θ_2 - √6·E_2. Π belongs
         to the Thomson source, intensity quadrupoles drive Ψ − Φ.
@@ -19,7 +34,7 @@ Audit trail:
         (ρ+p)·σ_tot = (8/3)·(ρ_γ·Θ_2^γ + ρ_ν·Θ_2^ν).
       * Q-20: Π = Θ_2 − √6·E_2 as written, no extra PSTF prefactor.
 
-Physics:
+Legacy live-frame physics:
     Newtonian-gauge Einstein constraints (conformal time, Ma-Bertschinger
     convention):
 
@@ -39,9 +54,10 @@ Physics:
         ⇒ 4πG·a²/k² = (3/2)·H_0_mpc²·a²/k²  (dimensionless)
 
 ISW driver:
-    Φ̇ + Ψ̇ computed by 4th-order centered finite differences in the bulk,
-    2nd-order one-sided differences at the boundaries. Applied to
-    (Φ + Ψ) sampled on the integration_result.eta grid.
+    In the legacy frame, Φ̇ + Ψ̇ is computed by 4th-order centered finite
+    differences in the bulk, 2nd-order one-sided differences at the
+    boundaries. In the MB-95 diagnostic frame the exported effective ISW
+    driver is ``2 Φdot`` from the reconstructed ``etak/sigma`` history.
 
 Interpolation:
     scipy.interpolate.PchipInterpolator with extrapolate=False — shape-
@@ -59,7 +75,8 @@ References:
 from __future__ import annotations
 
 import warnings
-from typing import TYPE_CHECKING
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 from scipy.interpolate import PchipInterpolator
@@ -72,13 +89,54 @@ if TYPE_CHECKING:
 
 
 __all__ = [
+    "SynchronousMetricHistory",
     "extract_flrw_sources_from_tier_b",
+    "reconstruct_synchronous_metric_history_from_tier_b",
     "_slot",
     "_fd4_derivative",
 ]
 
 
 _SQRT6 = float(np.sqrt(6.0))
+
+SourceFrame = Literal[
+    "mb95_synchronous_effective",
+    "legacy_newtonian_constraint",
+]
+
+
+@dataclass(frozen=True)
+class SynchronousMetricHistory:
+    """Post-processed MB-95 synchronous scalar metric history.
+
+    The VER2 Tier-B state historically evolved photon/neutrino/matter
+    histories without carrying the two scalar metric variables used by
+    CAMB's synchronous-gauge source path.  This object reconstructs the
+    missing ``etak`` and ``sigma`` channels from the live radiation and
+    baryon histories using the same momentum/stress equations as the Rust
+    MB-95/PSTF-primary path:
+
+        etak'  = dgq / 2
+        sigma' = -2 H sigma - dgs / k + etak
+
+    The initial condition uses Lowell/CAMB seed ``eta_cov = -2 eta_s``.
+    The corresponding ``sigma`` seed is not present in the packed Python
+    seed yet, so the current authority bridge uses the regular superhorizon
+    ``sigma(eta_initial)=0`` condition and records that policy explicitly.
+    """
+
+    eta: np.ndarray
+    etak: np.ndarray
+    sigma: np.ndarray
+    etak_dot: np.ndarray
+    sigma_dot: np.ndarray
+    hdot: np.ndarray
+    phi: np.ndarray
+    psi_newtonian_no_stress: np.ndarray
+    psi_effective_sw: np.ndarray
+    isw_driver: np.ndarray
+    doppler_velocity_effective: np.ndarray
+    metadata: dict[str, object]
 
 
 def _slot(ell: int, m: int) -> int:
@@ -188,12 +246,304 @@ def _linear_no_extrapolation(eta_grid: np.ndarray, values: np.ndarray):
     return _call
 
 
+def _required_history_arrays(
+    integration_result: "IntegrationResult",
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Return the Tier-B histories required by scalar source extraction."""
+
+    if integration_result.neutrino_tower is None:
+        raise ValueError(
+            "integration_result.neutrino_tower is required for the "
+            "Tier-B source extractor (neutrino anisotropic stress and density)"
+        )
+    if integration_result.baryon_local_history is None:
+        raise ValueError(
+            "integration_result.baryon_local_history is required "
+            "(slot 1 = v_b in MB convention)"
+        )
+    if integration_result.cdm_local_history is None:
+        raise ValueError(
+            "integration_result.cdm_local_history is required "
+            "(slot 1 = v_c)"
+        )
+
+    return (
+        np.asarray(integration_result.eta, dtype=np.float64),
+        np.asarray(integration_result.photon_T_tower, dtype=np.float64),
+        np.asarray(integration_result.photon_E_tower, dtype=np.float64),
+        np.asarray(integration_result.neutrino_tower, dtype=np.float64),
+        np.asarray(integration_result.baryon_local_history, dtype=np.float64),
+        np.asarray(integration_result.cdm_local_history, dtype=np.float64),
+        np.asarray(integration_result.a, dtype=np.float64),
+    )
+
+
+def _validate_packed_tower_width(t_tower: np.ndarray) -> int:
+    l_max_plus_one_sq = int(t_tower.shape[1])
+    l_max = int(np.sqrt(l_max_plus_one_sq)) - 1
+    if (l_max + 1) ** 2 != l_max_plus_one_sq:
+        raise ValueError(
+            f"photon_T_tower shape {t_tower.shape} is not a (L+1)^2 packing"
+        )
+    if l_max < 2:
+        raise ValueError(
+            f"extract_flrw_sources_from_tier_b needs L_max >= 2 "
+            f"(quadrupoles are required); got {l_max}"
+        )
+    return l_max
+
+
+def _grho_from_species(
+    species: "SpeciesBackgroundRegistry",
+    eta: np.ndarray,
+    a: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Return MB-95 ``grho_i = 8*pi*G*a^2*rho_i`` histories."""
+
+    from bass.species.base import SpeciesLabel
+
+    h0_mpc = float(species.bg_table.constants.H0_mpc)
+    prefactor = 3.0 * (h0_mpc ** 2) * (np.asarray(a, dtype=np.float64) ** 2)
+    rho_g = np.asarray(species[SpeciesLabel.PHOTON].rho_rest(eta), dtype=np.float64)
+    rho_nu = np.asarray(species[SpeciesLabel.NEUTRINO].rho_rest(eta), dtype=np.float64)
+    rho_b = np.asarray(species[SpeciesLabel.BARYON].rho_rest(eta), dtype=np.float64)
+    rho_c = np.asarray(species[SpeciesLabel.CDM].rho_rest(eta), dtype=np.float64)
+    return (
+        prefactor * rho_g,
+        prefactor * rho_nu,
+        prefactor * rho_b,
+        prefactor * rho_c,
+    )
+
+
+def _seed_metric_initial_conditions(
+    integration_result: "IntegrationResult",
+    k: float,
+) -> tuple[float, float, dict[str, object]]:
+    """Map packed Lowell regular seed metric extras to MB-95 variables."""
+
+    seed_obs = dict(integration_result.solver_info.get("matter_seed_observables", {}))
+    if "eta_cov" not in seed_obs:
+        raise ValueError(
+            "mb95_synchronous_effective source extraction requires "
+            "integration_result.solver_info['matter_seed_observables']['eta_cov']; "
+            "rerun the native Tier-B solver after the seed-provenance upgrade "
+            "or request source_frame='legacy_newtonian_constraint' explicitly"
+        )
+    eta_cov = float(seed_obs["eta_cov"])
+    if not np.isfinite(eta_cov):
+        raise ValueError(f"seed eta_cov must be finite, got {eta_cov!r}")
+
+    # Lowell/CAMB seed convention: eta_cov is the MB eta variable
+    # eta_MB = -2 eta_s, while CAMB stores etak = k eta_s.
+    etak0 = -0.5 * float(k) * eta_cov
+    sigma0 = float(seed_obs.get("sigma_sync", 0.0))
+    if not np.isfinite(sigma0):
+        raise ValueError(f"seed sigma_sync must be finite, got {sigma0!r}")
+    return (
+        float(etak0),
+        sigma0,
+        {
+            "eta_cov": eta_cov,
+            "etak_initial": float(etak0),
+            "sigma_initial": sigma0,
+            "sigma_initial_policy": (
+                "seed_sigma_sync"
+                if "sigma_sync" in seed_obs
+                else "zero_regular_superhorizon_bridge"
+            ),
+        },
+    )
+
+
+def reconstruct_synchronous_metric_history_from_tier_b(
+    integration_result: "IntegrationResult",
+    species: "SpeciesBackgroundRegistry",
+    k: float,
+) -> SynchronousMetricHistory:
+    """Reconstruct MB-95 synchronous scalar metric channels on the Tier-B grid."""
+
+    if not (float(k) > 0.0):
+        raise ValueError(f"k must be positive, got {k!r}")
+    eta, t_tower, _e_tower, n_tower, baryon_hist, _cdm_hist, a_result = (
+        _required_history_arrays(integration_result)
+    )
+    if eta.size < 5:
+        raise ValueError(
+            f"reconstruct_synchronous_metric_history_from_tier_b needs >=5 eta "
+            f"samples; got {eta.size}"
+        )
+    if np.any(np.diff(eta) <= 0.0):
+        raise ValueError("eta grid must be strictly increasing")
+    l_max = _validate_packed_tower_width(t_tower)
+    if n_tower.shape[1] != t_tower.shape[1]:
+        raise ValueError(
+            "neutrino_tower must use the same packed width as photon_T_tower"
+        )
+
+    bg_table = species.bg_table
+    a = np.asarray(bg_table.interp_a(eta), dtype=np.float64)
+    if a.shape != eta.shape or not np.all(np.isfinite(a)):
+        a = np.asarray(a_result, dtype=np.float64)
+    calH = np.asarray(bg_table.interp_calH(eta), dtype=np.float64)
+    grho_g, grho_nu, grho_b, _grho_c = _grho_from_species(species, eta, a)
+
+    theta1 = np.asarray(t_tower[:, _slot(1, 0)], dtype=np.float64)
+    theta2 = np.asarray(t_tower[:, _slot(2, 0)], dtype=np.float64)
+    nu1 = np.asarray(n_tower[:, _slot(1, 0)], dtype=np.float64)
+    nu2 = np.asarray(n_tower[:, _slot(2, 0)], dtype=np.float64)
+    vb = np.asarray(baryon_hist[:, 1], dtype=np.float64)
+
+    arrays = (calH, grho_g, grho_nu, grho_b, theta1, theta2, nu1, nu2, vb)
+    if any(arr.shape != eta.shape for arr in arrays):
+        raise ValueError("metric reconstruction inputs must match eta shape")
+    if any(not np.all(np.isfinite(arr)) for arr in arrays):
+        raise ValueError("metric reconstruction inputs must be finite")
+
+    interp = {
+        "calH": _scaled_pchip_no_extrapolation(eta, calH),
+        "grho_g": _scaled_pchip_no_extrapolation(eta, grho_g),
+        "grho_nu": _scaled_pchip_no_extrapolation(eta, grho_nu),
+        "grho_b": _scaled_pchip_no_extrapolation(eta, grho_b),
+        "theta1": _scaled_pchip_no_extrapolation(eta, theta1),
+        "theta2": _scaled_pchip_no_extrapolation(eta, theta2),
+        "nu1": _scaled_pchip_no_extrapolation(eta, nu1),
+        "nu2": _scaled_pchip_no_extrapolation(eta, nu2),
+        "vb": _scaled_pchip_no_extrapolation(eta, vb),
+    }
+
+    def _rhs(eta_value: float, y: np.ndarray) -> np.ndarray:
+        etak_val = float(y[0])
+        sigma_val = float(y[1])
+        h_val = float(interp["calH"](eta_value))
+        rg = float(interp["grho_g"](eta_value))
+        rn = float(interp["grho_nu"](eta_value))
+        rb = float(interp["grho_b"](eta_value))
+        th1 = float(interp["theta1"](eta_value))
+        th2 = float(interp["theta2"](eta_value))
+        n1 = float(interp["nu1"](eta_value))
+        n2 = float(interp["nu2"](eta_value))
+        vb_val = float(interp["vb"](eta_value))
+        dgq = (16.0 / 3.0) * (rg * th1 + rn * n1) + rb * vb_val
+        dgs = 4.0 * (rg * th2 + rn * n2)
+        etak_dot_val = 0.5 * dgq
+        sigma_dot_val = -2.0 * h_val * sigma_val - dgs / float(k) + etak_val
+        return np.array([etak_dot_val, sigma_dot_val], dtype=np.float64)
+
+    scalar_metric_history = getattr(integration_result, "scalar_metric_history", None)
+    scalar_metric_metadata = dict(
+        integration_result.solver_info.get("scalar_metric_history_metadata", {})
+    )
+    use_coevolved_metric = bool(
+        scalar_metric_history is not None
+        and scalar_metric_metadata.get("owner") == "ver2_native_integrator.main_state_scalar_metric"
+        and scalar_metric_metadata.get("photon_neutrino_monopole_coupled") is True
+        and scalar_metric_metadata.get("photon_neutrino_quadrupole_coupled") is True
+        and scalar_metric_metadata.get("matter_continuity_coupled") is True
+        and scalar_metric_metadata.get("baryon_euler_pressure_coupled") is True
+    )
+    if use_coevolved_metric:
+        scalar_arr = np.asarray(scalar_metric_history, dtype=np.float64)
+        if scalar_arr.shape != (eta.size, 2):
+            raise ValueError("scalar_metric_history must have shape (len(eta), 2)")
+        if not np.all(np.isfinite(scalar_arr)):
+            raise ValueError("scalar_metric_history must be finite")
+        etak = np.asarray(scalar_arr[:, 0], dtype=np.float64)
+        sigma = np.asarray(scalar_arr[:, 1], dtype=np.float64)
+        seed_meta = {
+            "co_evolved_metric_source": "integration_result.scalar_metric_history",
+            "co_evolved_metric_metadata": scalar_metric_metadata,
+        }
+        integration_scheme = "main_state_coevolved"
+        owner = "ver2_native_integrator.main_state_scalar_metric"
+    else:
+        etak0, sigma0, seed_meta = _seed_metric_initial_conditions(
+            integration_result, float(k)
+        )
+        y = np.array([etak0, sigma0], dtype=np.float64)
+        etak = np.empty_like(eta)
+        sigma = np.empty_like(eta)
+        etak[0] = y[0]
+        sigma[0] = y[1]
+        for idx in range(eta.size - 1):
+            left = float(eta[idx])
+            right = float(eta[idx + 1])
+            h_step = right - left
+            if h_step <= 0.0:
+                raise ValueError("eta grid must be strictly increasing")
+            k1 = _rhs(left, y)
+            k2 = _rhs(left + 0.5 * h_step, y + 0.5 * h_step * k1)
+            k3 = _rhs(left + 0.5 * h_step, y + 0.5 * h_step * k2)
+            k4 = _rhs(right, y + h_step * k3)
+            y = y + (h_step / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4)
+            if not np.all(np.isfinite(y)):
+                raise RuntimeError(
+                    f"synchronous metric reconstruction became non-finite at step {idx}"
+                )
+            etak[idx + 1] = y[0]
+            sigma[idx + 1] = y[1]
+        integration_scheme = "output_grid_rk4"
+        owner = "tier_b_source_extraction.mb95_synchronous_metric_postprocessor"
+    rhs_vals = np.asarray([_rhs(float(x), np.array([e, s])) for x, e, s in zip(eta, etak, sigma)])
+    etak_dot = rhs_vals[:, 0]
+    sigma_dot = rhs_vals[:, 1]
+    hdot = 2.0 * float(k) * sigma - 6.0 * etak_dot / float(k)
+    phi = etak / float(k) - calH * sigma / float(k)
+    eta_mb = -2.0 * etak / float(k)
+    psi_effective_sw = 2.0 * phi + 0.5 * eta_mb
+    isw_driver = 2.0 * _fd4_derivative(eta, phi)
+    doppler_velocity_effective = (sigma + vb) / float(k)
+
+    if not all(
+        np.all(np.isfinite(arr))
+        for arr in (
+            etak,
+            sigma,
+            etak_dot,
+            sigma_dot,
+            hdot,
+            phi,
+            psi_effective_sw,
+            isw_driver,
+            doppler_velocity_effective,
+        )
+    ):
+        raise RuntimeError("synchronous metric reconstruction produced non-finite values")
+
+    return SynchronousMetricHistory(
+        eta=eta,
+        etak=etak,
+        sigma=sigma,
+        etak_dot=etak_dot,
+        sigma_dot=sigma_dot,
+        hdot=hdot,
+        phi=phi,
+        psi_newtonian_no_stress=-phi,
+        psi_effective_sw=psi_effective_sw,
+        isw_driver=isw_driver,
+        doppler_velocity_effective=doppler_velocity_effective,
+        metadata={
+            "owner": owner,
+            "integration_scheme": integration_scheme,
+            "metric_equations": "etak_dot=dgq/2; sigma_dot=-2Hsigma-dgs/k+etak",
+            "source_equivalence": (
+                "FLRWSourceTerms are effective: theta0+psi reproduces "
+                "MB95 SW term and v_b reproduces d[g(sigma+vb)/k]/deta"
+            ),
+            "l_max": int(l_max),
+            "k_mpc": float(k),
+            **seed_meta,
+        },
+    )
+
+
 def extract_flrw_sources_from_tier_b(
     integration_result: "IntegrationResult",
     species: "SpeciesBackgroundRegistry",
     k: float,
     *,
     anisotropic_stress: bool = True,
+    source_frame: SourceFrame = "legacy_newtonian_constraint",
 ) -> FLRWSourceTerms:
     """Build Newtonian-gauge ``FLRWSourceTerms`` from a Tier-B solver output.
 
@@ -215,7 +565,18 @@ def extract_flrw_sources_from_tier_b(
     anisotropic_stress
         If True (default), include the intensity-quadrupole stress
         correction ``Ψ − Φ = (12πG·a²/k²)·(ρ+p)·σ_tot``. If False,
-        set ``Ψ = Φ`` (no-stress limit).
+        set ``Ψ = Φ`` (no-stress limit). This option applies only to
+        ``source_frame='legacy_newtonian_constraint'``.
+    source_frame
+        ``'legacy_newtonian_constraint'`` (default) preserves the
+        PSTF-native algebraic Poisson reconstruction used by the live
+        BASS FLRW pipeline. ``'mb95_synchronous_effective'`` reconstructs
+        or consumes co-evolved CAMB synchronous metric variables ``etak``
+        and ``sigma`` and returns effective ``FLRWSourceTerms``. It is
+        intentionally opt-in because only results with active
+        ``scalar_metric_history`` metadata have a co-evolved MB-95
+        monopole, quadrupole, scalar free-streaming, matter-continuity, and
+        baryon-pressure source; otherwise the metric history is post-processed.
 
     Returns
     -------
@@ -240,32 +601,24 @@ def extract_flrw_sources_from_tier_b(
         L_max.
     """
 
-    from bass.species.base import SpeciesLabel
-
     if not (float(k) > 0.0):
         raise ValueError(f"k must be positive, got {k!r}")
-    if integration_result.neutrino_tower is None:
+    if source_frame not in ("mb95_synchronous_effective", "legacy_newtonian_constraint"):
         raise ValueError(
-            "integration_result.neutrino_tower is required for the "
-            "Round-5 extractor (neutrino anisotropic stress and density)"
-        )
-    if integration_result.baryon_local_history is None:
-        raise ValueError(
-            "integration_result.baryon_local_history is required "
-            "(slot 1 = v_b in MB convention)"
-        )
-    if integration_result.cdm_local_history is None:
-        raise ValueError(
-            "integration_result.cdm_local_history is required "
-            "(slot 1 = v_c)"
+            "source_frame must be 'mb95_synchronous_effective' or "
+            f"'legacy_newtonian_constraint', got {source_frame!r}"
         )
 
-    eta = np.asarray(integration_result.eta, dtype=np.float64)
+    eta, t_tower, e_tower, n_tower, baryon_history, cdm_history, _a_result = (
+        _required_history_arrays(integration_result)
+    )
     if eta.size < 5:
         raise ValueError(
             f"extract_flrw_sources_from_tier_b needs ≥5 η samples for "
             f"the 4th-order ISW finite-difference stencil; got {eta.size}"
         )
+    if np.any(np.diff(eta) <= 0.0):
+        raise ValueError("eta grid must be strictly increasing")
 
     # Background a(η) and conformal Hubble ℋ(η) in 1/Mpc from the species
     # registry's frozen bg_table (unit-consistent with k_mpc).
@@ -274,21 +627,9 @@ def extract_flrw_sources_from_tier_b(
     calH = np.asarray(bg_table.interp_calH(eta), dtype=np.float64)
 
     # Q-16 / Q-17.1 PSTF → Newtonian-gauge scalar multipoles (m = 0):
-    t_tower = np.asarray(integration_result.photon_T_tower, dtype=np.float64)
-    e_tower = np.asarray(integration_result.photon_E_tower, dtype=np.float64)
-    n_tower = np.asarray(integration_result.neutrino_tower, dtype=np.float64)
-
-    l_max_plus_one_sq = t_tower.shape[1]
-    l_max = int(np.sqrt(l_max_plus_one_sq)) - 1
-    if (l_max + 1) ** 2 != l_max_plus_one_sq:
-        raise ValueError(
-            f"photon_T_tower shape {t_tower.shape} is not a (L+1)² packing"
-        )
-    if l_max < 2:
-        raise ValueError(
-            f"extract_flrw_sources_from_tier_b needs L_max ≥ 2 (quadrupoles "
-            f"are required for the anisotropic-stress correction); got {l_max}"
-        )
+    l_max = _validate_packed_tower_width(t_tower)
+    if e_tower.shape != t_tower.shape or n_tower.shape != t_tower.shape:
+        raise ValueError("photon_E_tower and neutrino_tower must match photon_T_tower shape")
 
     theta0_g = t_tower[:, _slot(0, 0)]
     theta1_g = t_tower[:, _slot(1, 0)]
@@ -303,21 +644,33 @@ def extract_flrw_sources_from_tier_b(
     pi_source = theta0_g.copy()  # allocate correct dtype/shape
     pi_source[:] = theta2_g - _SQRT6 * e2_g
 
+    if source_frame == "mb95_synchronous_effective":
+        metric = reconstruct_synchronous_metric_history_from_tier_b(
+            integration_result,
+            species,
+            float(k),
+        )
+        return FLRWSourceTerms(
+            theta_0=_scaled_pchip_no_extrapolation(eta, theta0_g),
+            psi=_scaled_pchip_no_extrapolation(eta, metric.psi_effective_sw),
+            phi_dot_plus_psi_dot=_scaled_pchip_no_extrapolation(
+                eta, metric.isw_driver,
+            ),
+            v_b=_scaled_pchip_no_extrapolation(
+                eta, metric.doppler_velocity_effective,
+            ),
+            pi=_scaled_pchip_no_extrapolation(eta, pi_source),
+        )
+
+    from bass.species.base import SpeciesLabel
+
     # Q-19: baryon_local_history slot dictionary (verified via
     # ver2_native_integrator.py line 2973 and cross-checked against
     # Round-2 Q-5.1 Thomson coupling using slot 1 = v_b).
-    delta_b = np.asarray(
-        integration_result.baryon_local_history[:, 0], dtype=np.float64
-    )
-    vb = np.asarray(
-        integration_result.baryon_local_history[:, 1], dtype=np.float64
-    )
-    delta_c = np.asarray(
-        integration_result.cdm_local_history[:, 0], dtype=np.float64
-    )
-    vc = np.asarray(
-        integration_result.cdm_local_history[:, 1], dtype=np.float64
-    )
+    delta_b = np.asarray(baryon_history[:, 0], dtype=np.float64)
+    vb = np.asarray(baryon_history[:, 1], dtype=np.float64)
+    delta_c = np.asarray(cdm_history[:, 0], dtype=np.float64)
+    vc = np.asarray(cdm_history[:, 1], dtype=np.float64)
 
     # Q-17.1: radiation density contrasts δ_r = 4·Θ_0, velocities v_r = 3·Θ_1
     # (MB convention θ_r = 3·k·Θ_1, v = θ/k).

@@ -111,6 +111,54 @@ def constant_callable(value: float) -> EtaCallable:
     return _const
 
 
+def _eta_derivative(values: np.ndarray, eta_grid: np.ndarray) -> np.ndarray:
+    """Differentiate a sampled η-series.
+
+    Uniform grids use the fourth-order five-point stencil, including
+    one-sided fourth-order boundary rows. Non-uniform or very short grids
+    retain NumPy's stable variable-spacing finite difference.
+    """
+
+    eta = np.asarray(eta_grid, dtype=float)
+    arr = np.asarray(values, dtype=float)
+    if eta.ndim != 1 or arr.shape != eta.shape:
+        raise ValueError("values and eta_grid must be matching 1-D arrays")
+    if eta.size < 2:
+        raise ValueError("eta_grid must contain at least two samples")
+    if np.any(~np.isfinite(eta)) or np.any(~np.isfinite(arr)):
+        raise ValueError("cannot differentiate non-finite η/source samples")
+    spacing = np.diff(eta)
+    if np.any(spacing <= 0.0):
+        raise ValueError("eta_grid must be strictly increasing")
+
+    h = float(spacing[0])
+    uniform = bool(np.allclose(spacing, h, rtol=1.0e-10, atol=1.0e-14))
+    if (not uniform) or eta.size < 5:
+        return np.gradient(arr, eta, edge_order=2 if eta.size >= 3 else 1)
+
+    deriv = np.empty_like(arr)
+    deriv[0] = (
+        -25.0 * arr[0] + 48.0 * arr[1] - 36.0 * arr[2]
+        + 16.0 * arr[3] - 3.0 * arr[4]
+    ) / (12.0 * h)
+    deriv[1] = (
+        -3.0 * arr[0] - 10.0 * arr[1] + 18.0 * arr[2]
+        - 6.0 * arr[3] + arr[4]
+    ) / (12.0 * h)
+    deriv[2:-2] = (
+        arr[:-4] - 8.0 * arr[1:-3] + 8.0 * arr[3:-1] - arr[4:]
+    ) / (12.0 * h)
+    deriv[-2] = (
+        3.0 * arr[-1] + 10.0 * arr[-2] - 18.0 * arr[-3]
+        + 6.0 * arr[-4] - arr[-5]
+    ) / (12.0 * h)
+    deriv[-1] = (
+        25.0 * arr[-1] - 48.0 * arr[-2] + 36.0 * arr[-3]
+        - 16.0 * arr[-4] + 3.0 * arr[-5]
+    ) / (12.0 * h)
+    return deriv
+
+
 # ============================================================================
 # Section 1 — Configuration
 # ============================================================================
@@ -425,10 +473,9 @@ def build_temperature_source(
              + e^{−κ} · [Ψ̇ + Φ̇]     (ISW)
              + d/dη [g · v_b]         (Doppler)
 
-    Doppler derivative is computed with `np.gradient` (2nd-order
-    central difference). A spline-based derivative is a future
-    refinement; the gradient method suffices for the O(h²) baseline
-    convergence target.
+    Doppler derivative uses a fourth-order five-point finite difference on
+    uniform η grids, with a variable-spacing finite-difference fallback for
+    short or non-uniform grids.
     """
     eta_grid = np.asarray(eta_grid, dtype=float)
     if eta_grid.ndim != 1 or eta_grid.size < 2:
@@ -450,7 +497,7 @@ def build_temperature_source(
     isw = np.exp(-kappa_arr) * phi_psi_dot_arr
     # Doppler: numerical derivative of g·v_b
     gvb = g_arr * vb_arr
-    doppler = np.gradient(gvb, eta_grid, edge_order=2)
+    doppler = _eta_derivative(gvb, eta_grid)
 
     return sw_polter + isw + doppler
 
@@ -502,7 +549,7 @@ def build_scalar_sources_pair(
 
     sw_polter = g_arr * (theta0_arr + psi_arr + 0.25 * pi_arr)
     isw = np.exp(-kappa_arr) * phi_psi_dot_arr
-    doppler = np.gradient(g_arr * vb_arr, eta_grid, edge_order=2)
+    doppler = _eta_derivative(g_arr * vb_arr, eta_grid)
     source_T = sw_polter + isw + doppler
     source_E = -(_SQRT6 / 4.0) * g_arr * pi_arr
     return source_T, source_E

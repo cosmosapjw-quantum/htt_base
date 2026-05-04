@@ -15,7 +15,13 @@ from bass.forward import (
     solver_core_output_from_payload,
     solver_core_output_to_payload,
 )
-from bass.forward.ver2_solver_output import _build_lowell_source_builder
+from bass.forward.ver2_solver_output import (
+    _build_kappa_fn_from_a_lookup,
+    _build_lowell_source_builder,
+    _build_result_a_lookup,
+    _build_tier_b_exact_type_i_source_builder,
+    _build_visibility_fn_from_a_lookup,
+)
 from bass.hierarchy.integrator import IntegrationResult, IntegratorConfig
 from bass.los import PropagatorMode, SourcePropagatorConfig
 from bass.runtime import (
@@ -29,6 +35,7 @@ from bass.runtime import (
     SolverTier,
 )
 from bass.species.registry import SpeciesBackgroundRegistry
+from bass.validation import make_gate_bundle
 from bass.validation.publication_readiness import evaluate_publication_claim
 
 
@@ -87,6 +94,27 @@ def _live_flags() -> SolverFeatureFlags:
     )
 
 
+def _gate(
+    name: str,
+    *,
+    family: str = "V",
+    branch: str = "tilted",
+    passed: bool = True,
+):
+    return make_gate_bundle(
+        name,
+        family=family,
+        branch=branch,
+        backend="test-backend",
+        truncation={},
+        residual_summary={},
+        known_limit_checks={},
+        forbidden_shortcut_checks={},
+        metadata={},
+        passed=passed,
+    )
+
+
 def _synthetic_result() -> IntegrationResult:
     eta = np.linspace(10.0, 20.0, 10)
     l_max = 6
@@ -102,6 +130,21 @@ def _synthetic_result() -> IntegrationResult:
     e_tower[:, 4] = np.linspace(0.5e-6, 0.8e-6, eta.size)
     e_tower[:, 6] = np.linspace(0.8e-6, 1.1e-6, eta.size)
     e_tower[:, 8] = np.linspace(0.6e-6, 0.9e-6, eta.size)
+    n_tower = np.zeros_like(t_tower)
+    n_tower[:, 0] = np.linspace(0.8e-5, 2.0e-5, eta.size)
+    n_tower[:, 6] = np.linspace(0.5e-6, 1.0e-6, eta.size)
+    baryon_history = np.column_stack(
+        [
+            np.linspace(2.0e-5, 4.0e-5, eta.size),
+            np.linspace(-1.0e-4, 2.0e-4, eta.size),
+        ]
+    )
+    cdm_history = np.column_stack(
+        [
+            np.linspace(1.5e-5, 2.5e-5, eta.size),
+            np.linspace(0.5e-4, -1.0e-4, eta.size),
+        ]
+    )
     return IntegrationResult(
         eta=eta,
         a=np.linspace(1.0e-3, 2.0e-3, eta.size),
@@ -119,6 +162,9 @@ def _synthetic_result() -> IntegrationResult:
         ),
         solver_info={"status": 0, "message": "synthetic"},
         tca_active_mask=np.array([True, True, False, False, False], dtype=bool),
+        neutrino_tower=n_tower,
+        baryon_local_history=baryon_history,
+        cdm_local_history=cdm_history,
     )
 
 
@@ -222,7 +268,12 @@ def test_solver_core_output_builder_attaches_required_metadata() -> None:
     assert output.metadata["requested_integrator_family"] == "imex_split"
     assert output.metadata["resolved_solver_method"] == "IMEX_MIDPOINT_BDF"
     assert output.metadata["executor_realization"] == "native_imex_midpoint_bdf_split"
-    assert output.metadata["tilt_background_owner"] == "fixed_velocity_closure"
+    assert output.metadata["tilt_background_owner_requested"] == "nonperturbative_tilt_rhs"
+    assert output.metadata["tilt_background_owner"] == "nonperturbative_tilt_rhs"
+    assert (
+        output.metadata["tilt_background_owner_status"]
+        == "production_dynamic_nonperturbative_rapidity"
+    )
     assert output.metadata["off_axis_support"] is False
     assert output.metadata["covariance_readiness"] == "missing"
     assert output.metadata["neutrino_background_readiness"] == "massless_only"
@@ -323,6 +374,11 @@ def test_build_solver_core_output_from_lowell_result_attaches_live_covariance() 
     assert output.metadata["source_propagator_exactness"] == "algebraic_proxy_family_kernel"
     assert output.metadata["source_propagator_publication_output_claim_allowed"] is False
     assert output.metadata["source_propagator_statistics_claim_allowed"] is False
+    assert output.metadata["b_mode_output_support"] == "zero_filled_without_b_mode_evidence"
+    assert output.metadata["b_mode_source_projection_known_zero"] is False
+    assert output.metadata["b_mode_source_projection_status"] == (
+        "nonzero_or_not_output_ready_transfer"
+    )
     assert output.metadata["source_builder_combined_polter"] is True
     assert output.metadata["source_builder_visibility_weighted_polter"] is True
     assert output.metadata["source_builder_scale_factor_owner"] == "integration_result"
@@ -361,6 +417,46 @@ def test_lowell_source_builder_exports_baryon_velocity_for_doppler_source() -> N
     assert sample["g_v_b_m0"] == pytest.approx(2.0 * v_b[3])
     assert metadata["source_builder_doppler_status"] == "baryon_local_history_slot1"
     assert metadata["source_builder_doppler_nonzero_sample_count"] == result.eta.size
+
+
+def test_type_i_exact_source_builder_uses_tier_b_einstein_source_extractor() -> None:
+    from bass.spectrum.tier_b_source_extraction import extract_flrw_sources_from_tier_b
+
+    result = _synthetic_result()
+    species = SpeciesBackgroundRegistry.from_planck2018()
+    a_lookup = _build_result_a_lookup(result)
+    visibility_fn = _build_visibility_fn_from_a_lookup(species, a_lookup)
+    kappa_fn = _build_kappa_fn_from_a_lookup(species, a_lookup)
+    source_builder, metadata = _build_tier_b_exact_type_i_source_builder(
+        result,
+        species=species,
+        kappa_fn=kappa_fn,
+        visibility_fn=visibility_fn,
+    )
+    eta_probe = float(result.eta[4])
+    k_probe = 1.0e-2
+    sample = source_builder(eta_probe, k_probe)
+    reference = extract_flrw_sources_from_tier_b(result, species, k_probe)
+
+    assert metadata["source_builder_scope"] == "tier_b_einstein_extracted_type_i_exact"
+    assert metadata["source_builder_exact_type_i_decomposed"] is True
+    assert metadata["source_builder_exact_matrix_decomposed"] is True
+    assert metadata["source_builder_matrix_scope"] == "type_i"
+    assert sample["theta_0_m0"] == pytest.approx(float(reference.theta_0(eta_probe)))
+    assert sample["psi_m0"] == pytest.approx(float(reference.psi(eta_probe)))
+    assert sample["phi_dot_plus_psi_dot_m0"] == pytest.approx(
+        float(reference.phi_dot_plus_psi_dot(eta_probe))
+    )
+    assert sample["v_b_m0"] == pytest.approx(float(reference.v_b(eta_probe)))
+    assert sample["pi_m0"] == pytest.approx(float(reference.pi(eta_probe)))
+    assert sample["kappa"] == pytest.approx(kappa_fn(eta_probe))
+    assert sample["theta_0_m_plus2"] == pytest.approx(0.0)
+    assert sample["psi_m_plus2"] == pytest.approx(0.0)
+    assert sample["phi_dot_plus_psi_dot_m_plus2"] == pytest.approx(0.0)
+    assert sample["v_b_m_plus2"] == pytest.approx(0.0)
+    assert sample["pi_m_plus2"] == pytest.approx(
+        result.pi_ell_m(2, 2)[4] - np.sqrt(6.0) * result.e_ell_m(2, 2)[4]
+    )
 
 
 def test_build_solver_core_output_from_native_result_attaches_native_provenance() -> None:
@@ -403,6 +499,11 @@ def test_build_solver_core_output_from_native_result_attaches_native_provenance(
     assert output.metadata["source_propagator_exactness"] == "algebraic_proxy_family_kernel"
     assert output.metadata["source_propagator_publication_output_claim_allowed"] is False
     assert output.metadata["source_propagator_statistics_claim_allowed"] is False
+    assert output.metadata["b_mode_output_support"] == "zero_filled_without_b_mode_evidence"
+    assert output.metadata["b_mode_source_projection_known_zero"] is False
+    assert output.metadata["b_mode_source_projection_status"] == (
+        "nonzero_or_not_output_ready_transfer"
+    )
     assert output.metadata["source_builder_combined_polter"] is True
     assert output.metadata["source_builder_visibility_weighted_polter"] is True
     assert output.metadata["bianchi_branch"] == "orthogonal"
@@ -541,18 +642,110 @@ def test_native_output_with_matching_b_history_opens_polarization_publication_ga
         k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
         canonical_projection=canonical_projection,
         thomson_mode="electron_frame_exact_wrapper",
+        propagator=SourcePropagatorConfig(
+            mode=PropagatorMode.ANISOTROPIC_FORWARD,
+            temperature_transport=FeatureStatus.EXACT,
+            polarization_rotation=FeatureStatus.EXACT,
+            kernel_family="type_viih_open_helical_projection",
+        ),
+        gate_registry={
+            "exact_thomson_gate": make_gate_bundle(
+                "exact_thomson_gate",
+                family="VII_h",
+                branch="orthogonal",
+                backend="electron_frame_tilt_modulated",
+                truncation={},
+                residual_summary={},
+                known_limit_checks={},
+                forbidden_shortcut_checks={},
+                metadata={"operator_scope": "linear_classical_thomson_boosted_pstf"},
+            )
+        },
     )
     assert output.metadata["exact_thomson_authority_path"] is True
+    assert output.metadata["exact_thomson_gate_passed"] is True
+    assert output.metadata["source_propagator_fail_closed_sources"] is True
+    assert output.metadata["source_propagator_publication_output_claim_allowed"] is True
     assert output.metadata["b_mode_runtime_available"] is True
     assert output.metadata["b_mode_output_support"] == "wigner_d_path_b"
     assert output.metadata["b_mode_projector_status"] == "computed_wigner_d_path_b"
     assert output.metadata["b_mode_projector_nonzero"] is True
     assert output.metadata["b_mode_projector_norm"] > 0.0
+    assert output.metadata["b_mode_projector_source_owner"] == (
+        "photon_B_tower_history.ell2"
+    )
+    assert output.metadata["b_mode_projector_source_combination"] == (
+        "Pi_B_channel=(2/5)*B_2"
+    )
+    assert output.metadata["b_mode_projector_input_validation"] == (
+        "finite_strict_eta_positive_k_quadrupole_required"
+    )
     decision = evaluate_publication_claim(
         "full_anisotropic_polarization_output",
         output_metadata=output.metadata,
     )
     assert decision.allowed is True
+
+
+def test_native_output_propagates_neutrino_metric_feedback_evidence() -> None:
+    result = _synthetic_result()
+    result.solver_info.update(
+        {
+            "neutrino_metric_feedback_owner": (
+                "ver2_native_integrator.neutrino_quadrupole_temperature_rhs"
+            ),
+            "neutrino_metric_feedback_status": "active_nonzero_quadrupole_temperature_rhs",
+            "neutrino_metric_feedback_evidence_passed": True,
+            "neutrino_metric_feedback_R_nu_min": 0.405,
+            "neutrino_metric_feedback_R_nu_max": 0.409,
+            "neutrino_metric_feedback_quadrupole_max_abs": 1.0e-6,
+            "neutrino_metric_feedback_rhs_max_abs": 2.0e-12,
+            "neutrino_metric_feedback_sample_count": result.eta.size,
+        }
+    )
+
+    output = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="I",
+        result=result,
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_executable",
+            run_label="tier-b-native-neutrino-feedback",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+        thomson_mode="electron_frame_exact_wrapper",
+        propagator=SourcePropagatorConfig(
+            mode=PropagatorMode.ANISOTROPIC_FORWARD,
+            temperature_transport=FeatureStatus.EXACT,
+            polarization_rotation=FeatureStatus.EXACT,
+            kernel_family="type_i_exact_matrix",
+        ),
+    )
+
+    assert output.metadata["neutrino_metric_feedback_owner"] == (
+        "ver2_native_integrator.neutrino_quadrupole_temperature_rhs"
+    )
+    assert output.metadata["neutrino_metric_feedback_status"] == (
+        "active_nonzero_quadrupole_temperature_rhs"
+    )
+    assert output.metadata["neutrino_metric_feedback_evidence_passed"] is True
+    assert output.metadata["neutrino_metric_feedback_R_nu_max"] == pytest.approx(0.409)
+    assert output.metadata["neutrino_metric_feedback_rhs_max_abs"] == pytest.approx(2.0e-12)
+    assert output.metadata["source_builder_anisotropic_stress_owner"] == (
+        "tier_b_source_extraction.photon_neutrino_intensity_quadrupoles"
+    )
+    assert output.metadata["source_builder_neutrino_metric_feedback_owner"] == (
+        "ver2_native_integrator.neutrino_quadrupole_temperature_rhs"
+    )
+    assert output.metadata["source_builder_neutrino_metric_feedback_evidence_passed"] is True
 
 
 def test_native_output_blocks_readiness_when_backend_verification_bundle_is_unresolved() -> None:
@@ -597,6 +790,51 @@ def test_native_output_blocks_readiness_when_backend_verification_bundle_is_unre
     assert output.metadata["propagator_ready"] is False
 
 
+def test_native_propagator_readiness_uses_independent_operator_gates_not_fitting_ladder() -> None:
+    mode_ops = SimpleNamespace(
+        metadata={
+            "lookup_resolution_status": "frozen_v5_formula_set",
+            "verification_crosscheck_pass": True,
+            "reduced_local_evaluator_available": True,
+            "reduced_harmonic_evaluator_available": True,
+            "reduced_source_evaluator_available": True,
+        },
+        operator_kernel_family="type_v_open_hyperbolic_projection",
+        layout_metadata={"exact_family_operator_available": False},
+        seed_provenance_mode="template_card_family_adapted",
+    )
+    output = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="V",
+        result=_synthetic_result(),
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_executable",
+            run_label="tier-b-native-independent-propagator-gates",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+        mode_ops=mode_ops,
+        gate_registry={
+            "exact_thomson_gate": _gate("exact_thomson_gate", passed=False),
+            "tilt_boost_separation_gate": _gate("tilt_boost_separation_gate"),
+            "ic_provenance_gate": _gate("ic_provenance_gate"),
+            "family_backend_gate": _gate("family_backend_gate"),
+            "hierarchy_layout_gate": _gate("hierarchy_layout_gate"),
+        },
+    )
+
+    assert output.metadata["exact_thomson_gate_passed"] is False
+    assert output.metadata["propagator_readiness"] == "approximate_family_kernel"
+    assert output.metadata["propagator_ready"] is True
+
+
 def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backend() -> None:
     output = build_solver_core_output_from_native_result(
         manifest=_manifest(),
@@ -624,14 +862,78 @@ def test_build_solver_core_output_from_native_result_promotes_type_i_exact_backe
     assert output.metadata["source_propagator_rotation_status"] == "disabled"
     assert output.metadata["source_propagator_realization"] == "bianchi_i_matrix_exact"
     assert output.metadata["source_propagator_exactness"] == "exact_type_i_matrix"
+    assert output.metadata["source_propagator_source_completeness_policy"] == (
+        "explicit_required_fail_closed"
+    )
+    assert output.metadata["source_propagator_fail_closed_sources"] is True
+    assert output.metadata["source_propagator_temperature_doppler_derivative"] == (
+        "fourth_order_uniform_eta_finite_difference_with_variable_grid_gradient_fallback"
+    )
     assert output.metadata["source_propagator_publication_output_claim_allowed"] is True
     assert output.metadata["source_propagator_statistics_claim_allowed"] is False
+    assert output.metadata["source_builder_exact_matrix_decomposed"] is True
+    assert output.metadata["b_mode_output_support"] == (
+        "known_zero_source_projection_not_evolved"
+    )
+    assert output.metadata["b_mode_block_reason"] == (
+        "b_mode_zero_supported_by_exact_source_projection"
+    )
+    assert output.metadata["b_mode_source_projection_known_zero"] is True
+    assert output.metadata["b_mode_source_transfer_b_norm"] == pytest.approx(0.0)
     assert output.metadata["bianchi_branch"] == "orthogonal"
     assert output.metadata["bianchi_class_label"] == "A"
     assert output.metadata["global_tilt_contract"] == "orthogonal_branch_zero_global_tilt"
     assert output.metadata["theory_family"] == "I_orthogonal"
     assert output.alm_T["representation"] == "ver2_native_pstf_sphere_reconstruction"
     assert output.alm_T["coefficient_representation"] == "ver2_native_pstf_final_slice"
+
+
+def test_explicit_exact_family_matrix_source_propagator_uses_decomposed_sources() -> None:
+    output = build_solver_core_output_from_native_result(
+        manifest=_manifest(),
+        bianchi_type="VII_0",
+        result=_synthetic_result(),
+        species=SpeciesBackgroundRegistry.from_planck2018(),
+        runtime_controls=_controls(),
+        feature_flags=_live_flags(),
+        release=BassReleaseMetadata(
+            release_stage="research_executable",
+            run_label="tier-b-native-vii0-exact",
+            config_hash="cfg-hash",
+            code_version="0.0-test",
+            schema_version="ver2-v0",
+            git_commit="deadbeef",
+            random_seed=42,
+        ),
+        k_grid_mpc=np.geomspace(1.0e-3, 2.0e-2, 5),
+        propagator=SourcePropagatorConfig(
+            mode=PropagatorMode.ANISOTROPIC_FORWARD,
+            temperature_transport=FeatureStatus.EXACT,
+            polarization_rotation=FeatureStatus.EXACT,
+            kernel_family="type_vii0_helical_projection",
+        ),
+    )
+    assert output.metadata["source_builder_scope"] == (
+        "tier_b_einstein_extracted_family_matrix_exact"
+    )
+    assert output.metadata["source_builder_exact_type_i_decomposed"] is False
+    assert output.metadata["source_builder_exact_matrix_decomposed"] is True
+    assert output.metadata["source_builder_matrix_scope"] == "family_matrix"
+    assert output.metadata["source_propagator_realization"] == "type_vii0_helical_projection"
+    assert output.metadata["source_propagator_exactness"] == (
+        "type_vii0_helical_projection_transport"
+    )
+    assert output.metadata["source_propagator_source_completeness_policy"] == (
+        "explicit_required_fail_closed"
+    )
+    assert output.metadata["source_propagator_fail_closed_sources"] is True
+    assert output.metadata["source_propagator_temperature_doppler_derivative"] == (
+        "fourth_order_uniform_eta_finite_difference_with_variable_grid_gradient_fallback"
+    )
+    assert output.metadata["source_propagator_publication_output_claim_allowed"] is True
+    assert output.metadata["b_mode_output_support"] == "zero_filled_without_b_mode_evidence"
+    assert output.metadata["b_mode_source_projection_known_zero"] is False
+    assert output.metadata["b_mode_source_transfer_b_norm"] > 0.0
 
 
 def test_native_output_records_reionization_low_z_source_delta() -> None:

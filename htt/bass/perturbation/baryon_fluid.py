@@ -4,7 +4,9 @@ bass/perturbation/baryon_fluid.py  (Week 6-01)
 
 First-order baryon fluid perturbations on an orthogonal Bianchi background.
 State: (δ_b, v_b). Continuity + Euler equations with Thomson drag coupling
-to the photon dipole.
+to the photon dipole. Scalar k-mode callers may also provide the
+perturbative baryon sound speed and comoving wavenumber, which activates
+the Ma-Bertschinger pressure-gradient term.
 
 Scope
 -----
@@ -17,7 +19,12 @@ Scope
 Equations (homogeneous Bianchi limit, scalar amplitudes on shear axis)
 ----------------------------------------------------------------------
     δ̇_b = −3 Φ̇                                          [continuity]
-    v̇_b + H v_b = +(τ̇ / R_b)(3 Θ_1^γ − v_b)              [Euler]
+    v̇_b + H v_b = c_s,b² k δ_b +(τ̇ / R_b)(3 Θ_1^γ − v_b) [Euler]
+
+For the homogeneous Bianchi limit used by older callers, set
+``c_s,b² = 0`` or ``k = 0``. That preserves the original no-gradient
+equation exactly while letting the FLRW scalar limit carry the physical
+baryon pressure source.
 
 Sign convention for the Thomson drag: PLUS sign drives v_b TOWARD 3 Θ_1^γ
 (Ma-Bertschinger 1995 Eq. 29; CAMB notes §7.3). If v_b < 3 Θ_1^γ, the
@@ -147,6 +154,12 @@ class BaryonParameters:
         equations become free (no drag).
     H : float
         Conformal Hubble rate. Must be non-negative.
+    sound_speed_sq : float
+        Perturbative baryon sound speed squared in units of c². Defaults
+        to zero for the homogeneous Bianchi limit.
+    k_comoving : float
+        Scalar-mode comoving wavenumber [Mpc⁻¹]. Defaults to zero for
+        the homogeneous Bianchi limit.
 
     Notes
     -----
@@ -158,6 +171,8 @@ class BaryonParameters:
     R_b: float
     tau_dot: float
     H: float
+    sound_speed_sq: float = 0.0
+    k_comoving: float = 0.0
 
     def __post_init__(self) -> None:
         if not np.isfinite(self.R_b) or self.R_b <= 0:
@@ -170,6 +185,15 @@ class BaryonParameters:
             raise ValueError(
                 f"H must be non-negative finite, got {self.H}"
             )
+        if not np.isfinite(self.sound_speed_sq) or self.sound_speed_sq < 0:
+            raise ValueError(
+                "sound_speed_sq must be non-negative finite, "
+                f"got {self.sound_speed_sq}"
+            )
+        if not np.isfinite(self.k_comoving) or self.k_comoving < 0:
+            raise ValueError(
+                f"k_comoving must be non-negative finite, got {self.k_comoving}"
+            )
 
 
 def make_baryon_parameters(
@@ -179,6 +203,8 @@ def make_baryon_parameters(
     scale_factor: float,
     H_conformal: float,
     decision: CanonicalDecision,
+    sound_speed_sq: float = 0.0,
+    k_comoving: float = 0.0,
 ) -> BaryonParameters:
     """Factory: derive (R_b, τ̇, H) from primitive quantities.
 
@@ -207,7 +233,13 @@ def make_baryon_parameters(
         )
     R_b = 3.0 * rho_b / (4.0 * rho_gamma)
     tau_dot = scale_factor * n_e_sigma_T
-    return BaryonParameters(R_b=R_b, tau_dot=tau_dot, H=H_conformal)
+    return BaryonParameters(
+        R_b=R_b,
+        tau_dot=tau_dot,
+        H=H_conformal,
+        sound_speed_sq=sound_speed_sq,
+        k_comoving=k_comoving,
+    )
 
 
 # ============================================================================
@@ -255,7 +287,13 @@ def baryon_euler_rhs(
     params: BaryonParameters,
     decision: CanonicalDecision,
 ) -> float:
-    """Homogeneous-Bianchi Euler: v̇_b + H v_b = +(τ̇/R_b)(3 Θ_1^γ − v_b).
+    """Baryon Euler RHS with optional scalar pressure gradient.
+
+    Homogeneous-Bianchi callers use ``sound_speed_sq = k_comoving = 0``,
+    giving the legacy equation
+    ``v̇_b + H v_b = +(τ̇/R_b)(3 Θ_1^γ − v_b)``. FLRW scalar k-mode
+    callers supply nonzero values and recover the MB-95 term
+    ``+ c_s,b² k δ_b`` in the velocity variable ``v_b = θ_b/k``.
 
     Returns v̇_b (the time derivative of the baryon velocity).
 
@@ -277,12 +315,13 @@ def baryon_euler_rhs(
         raise ValueError(
             f"theta_1_photon must be finite, got {theta_1_photon}"
         )
+    pressure = params.sound_speed_sq * params.k_comoving * state.delta_b
     # Thomson drag drives v_b → 3 Θ_1^γ; the lock residual (3Θ − v_b)
     # times (+τ̇/R_b) gives positive v̇_b when v_b lags photons.
     drag = (params.tau_dot / params.R_b) * (
         3.0 * theta_1_photon - state.v_b
     )
-    return -params.H * state.v_b + drag
+    return -params.H * state.v_b + pressure + drag
 
 
 # ============================================================================

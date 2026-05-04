@@ -5,8 +5,8 @@ Composes (i) the scalar HyRec-based Thomson rate
 ``Γ_T(η) = a n_e x_e σ_T`` from ``bass.species.baryon.BaryonBackground``
 with (ii) a **non-perturbative** Lorentz-boost factor
 
-    B(η, e) = cosh β_e(η) + sinh β_e(η) (ê · v̂_e(η))
-            ≡ γ_e(η) (1 + v_e(η) · ê)                  (exact)
+    B(η, n_sky) = cosh β_e(η) + sinh β_e(η) (n̂ · v̂_e(η))
+                ≡ γ_e(η) (1 + v_e(η) · n̂)              (exact)
 
 to produce the direction-resolved
 
@@ -15,9 +15,11 @@ to produce the direction-resolved
     g̃(η, e)   = Γ̃_T(η, e) × exp(−κ̃(η, e))               [Mpc⁻¹]
 
 **No ``1 + v_e · e`` linearisation anywhere** (Layer A hard constraint):
-the code uses ``γ × (1 + v_e · ê)`` which is the *exact* rearrangement
-of ``cosh β + sinh β (ê·v̂_e)``; both forms agree to machine precision
-at every β and the identity is enforced by test TV-04.
+the sky-direction convention uses ``γ × (1 + v_e · n̂)`` and the
+propagation-direction convention uses ``γ × (1 - v_e · ê)``. Both are
+the same physical law with ``n̂ = -ê`` and are routed through
+``boost_factor`` so the local rate and integrated optical depth cannot
+drift in sign.
 
 Scope
 -----
@@ -137,19 +139,15 @@ class TiltedVisibility:
             raise ValueError(
                 "BaryonBackground.bg.eta must be a 1-D grid with ≥ 2 points"
             )
-        # Evaluate τ̇(η) on the grid with graceful zero-fallback for
-        # grid points outside the recombination table's z-range.  The
-        # FLRW table typically extends to pre-recombination z ≈ 10⁸
-        # while the HyRec fixture starts at z = 8000; we set τ̇ = 0
-        # there as a Layer A simplification (this predates any photon
-        # decoupling physics so the integrated κ̃ contribution is
-        # negligible compared to the recombination peak).
+        # Evaluate τ̇(η) on the grid with the baryon authority helper.
+        # Inside HyRec support this is the table value; above the HyRec
+        # z_max it is the fully-ionized analytic opacity. Late-time
+        # out-of-table points remain zero here because the constructor's
+        # cache spans the full FLRW table while late visibility is
+        # handled by reionization-extended baryon fixtures when needed.
         tau_dot_grid = np.zeros_like(self._eta_grid)
         for i, eta_i in enumerate(self._eta_grid):
-            try:
-                tau_dot_grid[i] = float(baryon.tau_dot(float(eta_i)))
-            except ValueError:
-                tau_dot_grid[i] = 0.0
+            tau_dot_grid[i] = self._scalar_tau_dot(float(eta_i))
         self._tau_dot_grid = tau_dot_grid
 
     # --- internal helpers -----------------------------------------------
@@ -168,6 +166,25 @@ class TiltedVisibility:
                 f"non-finite tilt"
             )
         return v
+
+    def _scalar_tau_dot(self, eta: float) -> float:
+        """Scalar Thomson opacity used consistently by Γ_T and κ grid.
+
+        Prefer the baryon helper with an early fully-ionized fallback
+        when available.  This preserves HyRec as the authority inside
+        its support while preventing deep pre-recombination starts from
+        accidentally seeing Γ_T = 0.
+        """
+
+        query = getattr(
+            self._baryon,
+            "tau_dot_with_early_fully_ionized_fallback",
+            self._baryon.tau_dot,
+        )
+        try:
+            return _as_scalar_float(query(float(eta)))
+        except ValueError:
+            return 0.0
 
     @staticmethod
     def _validate_direction(e: np.ndarray) -> np.ndarray:
@@ -224,18 +241,14 @@ class TiltedVisibility:
     def Gamma_T(self, eta: _Number, e: np.ndarray) -> float:
         """``Γ̃_T(η, e) = Γ_T(η) × B(η, e)`` [Mpc⁻¹].
 
-        Scalar ``Γ_T(η)`` is delegated to ``baryon.tau_dot`` (LB-1 HyRec
-        fixture); the direction dependence is injected only through
-        ``B(η, e)``.  Returns ``0`` when ``η`` maps to a redshift outside
-        the recombination-table domain (matches the grid-cache
-        fallback in ``__init__``).
+        Scalar ``Γ_T(η)`` is delegated to the baryon authority path:
+        HyRec inside its tabulated support and a fully-ionized analytic
+        opacity at earlier redshifts. The direction dependence is
+        injected only through ``B(η, e)``.
 
         Reference: lowell §11.3 eq (11.3.1).
         """
-        try:
-            tau_dot = _as_scalar_float(self._baryon.tau_dot(float(eta)))
-        except ValueError:
-            tau_dot = 0.0
+        tau_dot = self._scalar_tau_dot(float(eta))
         return tau_dot * self.boost_factor(eta, e)
 
     def kappa(self, eta: _Number, e: np.ndarray) -> float:
@@ -284,10 +297,7 @@ class TiltedVisibility:
             eta_sub[j] = eta_k
             # Reuse the cached tau_dot grid to skip the query.
             tau_dot_k = float(self._tau_dot_grid[k])
-            v = self._v_at(eta_k)
-            v_sq = float(np.dot(v, v))
-            gamma = 1.0 / float(np.sqrt(1.0 - v_sq))
-            boost_k = gamma * (1.0 + float(np.dot(v, e_hat)))
+            boost_k = self.boost_factor(eta_k, e_hat)
             gtilde_sub[j] = tau_dot_k * boost_k
 
         return float(np.trapezoid(gtilde_sub, eta_sub))

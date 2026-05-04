@@ -226,6 +226,47 @@ class TestProjectorValidators:
         with pytest.raises(ValueError, match="sigma_2M_history"):
             project_B_mode_transfer(**kwargs)
 
+    def test_nonmonotone_eta_grid_raises(self) -> None:
+        kwargs = self._trivial_inputs()
+        eta = np.asarray(kwargs["eta_grid"], dtype=np.float64).copy()
+        eta[3] = eta[2]
+        kwargs["eta_grid"] = eta
+        with pytest.raises(ValueError, match="strictly increasing"):
+            project_B_mode_transfer(**kwargs)
+
+    def test_nonfinite_source_history_raises(self) -> None:
+        kwargs = self._trivial_inputs()
+        B = np.asarray(kwargs["photon_B_tower_history"], dtype=np.float64).copy()
+        B[2, 2, 1] = np.nan
+        kwargs["photon_B_tower_history"] = B
+        with pytest.raises(ValueError, match="finite"):
+            project_B_mode_transfer(**kwargs)
+
+    def test_missing_quadrupole_source_plane_raises(self) -> None:
+        kwargs = self._trivial_inputs()
+        kwargs["photon_B_tower_history"] = np.zeros((64, 2, 5), dtype=np.float64)
+        with pytest.raises(ValueError, match="ell=2"):
+            project_B_mode_transfer(**kwargs)
+
+    def test_nonpositive_k_norm_raises(self) -> None:
+        kwargs = self._trivial_inputs()
+        kwargs["k_norm"] = 0.0
+        with pytest.raises(ValueError, match="k_norm"):
+            project_B_mode_transfer(**kwargs)
+
+    def test_cache_below_ell_max_raises(self) -> None:
+        kwargs = self._trivial_inputs()
+        kwargs["cache"] = build_wigner_d_spin2_cache(L_max=4)
+        kwargs["ell_max"] = 8
+        with pytest.raises(ValueError, match="cache.L_max"):
+            project_B_mode_transfer(**kwargs)
+
+    def test_axisymmetric_zero_helper_validates_eta_grid(self) -> None:
+        with pytest.raises(ValueError, match="strictly increasing"):
+            project_B_mode_transfer_axisymmetric_zero(
+                eta_grid=np.array([1.0, 1.0]), ell_max=8,
+            )
+
 
 # ────────────────────────────────────────────────────────────────────────
 # Adversarial audit (V5_ROUND16_03 §2.8)

@@ -17,6 +17,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from collections.abc import Callable, Mapping
+from functools import lru_cache
 from typing import Optional
 
 import numpy as np
@@ -27,10 +28,16 @@ from scipy.sparse.linalg import splu
 
 from bass.background.evolution import BackgroundEvolutionResult
 from bass.collision.electron_frame import (
+    AngularStokesThomsonSource,
     ExactThomsonSource,
     ElectronFrameThomsonContext,
     ProjectedThomsonSource,
+    build_full_stokes_mueller_kernel,
+    build_full_stokes_temperature_kernel,
     exact_thomson_source,
+    full_stokes_mueller_collision,
+    full_stokes_temperature_collision,
+    full_stokes_thomson_source,
     project_thomson_source,
 )
 from bass.collision.polarization import (
@@ -64,6 +71,17 @@ from bass.hierarchy.integrator import (
     _ell2_m0_slot_offset,
 )
 from bass.hierarchy.pstf_tensor import PSTFHierarchyState, PSTFTensor, pack_hierarchy, unpack_hierarchy, zero_hierarchy
+from bass.hierarchy.pstf_radiation import (
+    RadiationPSTFState,
+    TruncationMetadata,
+    project_from_angular_samples,
+    reconstruct_on_sphere,
+)
+from bass.hierarchy.spin2_projection import (
+    build_spin2_projection_kernel,
+    project_spin2_qu_to_eb_with_kernel,
+    reconstruct_spin2_qu_from_eb_with_kernel,
+)
 from bass.hierarchy.ver3_layout_protocol import (
     ReducedJointAffineOperator,
     ReducedLocalAffineOperator,
@@ -120,6 +138,8 @@ _CDM_LOCAL_DOF = 2
 _LOCAL_MATTER_DOF = _BARYON_LOCAL_DOF + _CDM_LOCAL_DOF
 _SOURCE_LOCAL_DOF = 3
 _PRIMARY_LOCAL_DOF = _LOCAL_MATTER_DOF + _SOURCE_LOCAL_DOF
+_SCALAR_METRIC_DOF = 2
+_SCALAR_METRIC_LABELS = ("etak", "sigma")
 _ROS2_GAMMA = 1.0 + 1.0 / np.sqrt(2.0)
 _ROS2_A21 = 1.0 / _ROS2_GAMMA
 _ROS2_C21 = -2.0 / _ROS2_GAMMA
@@ -324,9 +344,11 @@ def _scalar_visibility_g_from_contract(
     """Return scalar-history visibility ``g(z(eta))`` when available.
 
     This is the exact no-tilt limit of the electron-frame visibility
-    source. It deliberately returns zero outside the recombination table
-    support, matching ``TiltedVisibility.Gamma_T``'s out-of-domain
-    fallback, instead of clipping early-time queries to the table edge.
+    source inside the scalar table support. For redshifts above the
+    table ceiling it returns ``None`` so callers fall back to the
+    authority electron-frame visibility path, which carries the
+    fully-ionized opacity extension. Late out-of-table queries below
+    z_min still return zero.
     """
     contract = getattr(visibility_source, "contract", None)
     interp = getattr(contract, "interp", None)
@@ -342,8 +364,10 @@ def _scalar_visibility_g_from_contract(
     z_min = float(table.z_min)
     z_max = float(table.z_max)
     tol = max(1.0e-12, 1.0e-10 * max(abs(z_min), abs(z_max), 1.0))
-    if z < z_min - tol or z > z_max + tol:
+    if z < z_min - tol:
         return 0.0
+    if z > z_max + tol:
+        return None
     z_query = float(np.clip(z, z_min, z_max))
     visibility = float(interp.query_visibility(z_query))
     if not np.isfinite(visibility) or visibility < 0.0:
@@ -377,7 +401,9 @@ def _scalar_kappa_from_contract(
     tol = max(1.0e-12, 1.0e-10 * max(abs(z_min), abs(z_max), 1.0))
     if z < z_min - tol:
         return 0.0
-    z_query = z_max if z > z_max + tol else float(np.clip(z, z_min, z_max))
+    if z > z_max + tol:
+        return None
+    z_query = float(np.clip(z, z_min, z_max))
     kappa = float(interp.query_kappa(z_query))
     if not np.isfinite(kappa) or kappa < 0.0:
         raise RuntimeError(
@@ -395,6 +421,31 @@ def _baryon_doppler_velocity(baryon_local: np.ndarray) -> float:
     if not np.isfinite(velocity):
         raise RuntimeError(f"baryon Doppler velocity became non-finite: {velocity!r}")
     return velocity
+
+
+def _class_b_local_drag_correction(
+    *,
+    backend: FamilyBackend,
+    H_local: float,
+    baryon_velocity: float,
+    theta_1: float,
+) -> float:
+    a_abs = float(np.linalg.norm(np.asarray(backend.family_spec.algebra.a, dtype=np.float64)))
+    if a_abs == 0.0:
+        return 1.0
+    H = float(H_local)
+    if H <= 0.0 or not np.isfinite(H):
+        return 1.0
+    slip = float(baryon_velocity) - 3.0 * float(theta_1)
+    if not np.isfinite(slip):
+        raise RuntimeError(f"class-B baryon/photon drag slip became non-finite: {slip!r}")
+    correction = 1.0 + a_abs * a_abs * (slip / H) ** 2
+    if not np.isfinite(correction) or correction <= 0.0:
+        raise RuntimeError(
+            "class-B local baryon-drag correction became non-positive or non-finite: "
+            f"{correction!r}"
+        )
+    return float(correction)
 
 
 def _resolved_doppler_source(
@@ -560,6 +611,151 @@ def _theta_1_from_temperature_state(state: PSTFHierarchyState) -> float:
     return float(state.tensors[1].components[1])
 
 
+def _mb95_synchronous_hdot_from_scalar_metric(
+    *,
+    k_value: float,
+    scalar_metric: np.ndarray,
+    scalar_metric_rhs: np.ndarray,
+) -> float:
+    k_val = float(k_value)
+    if k_val <= 0.0 or not np.isfinite(k_val):
+        raise RuntimeError(f"metric hdot requires finite positive k, got {k_val}")
+    metric = np.asarray(scalar_metric, dtype=np.float64)
+    rhs = np.asarray(scalar_metric_rhs, dtype=np.float64)
+    if metric.shape != (_SCALAR_METRIC_DOF,):
+        raise ValueError(f"scalar_metric must have shape ({_SCALAR_METRIC_DOF},)")
+    if rhs.shape != (_SCALAR_METRIC_DOF,):
+        raise ValueError(f"scalar_metric_rhs must have shape ({_SCALAR_METRIC_DOF},)")
+    sigma_val = float(metric[1])
+    etak_dot = float(rhs[0])
+    return float(2.0 * k_val * sigma_val - 6.0 * etak_dot / k_val)
+
+
+def _mb95_synchronous_quadrupole_metric_source(
+    *,
+    k_value: float,
+    scalar_metric: np.ndarray,
+    scalar_metric_rhs: np.ndarray,
+) -> float:
+    k_val = float(k_value)
+    if k_val <= 0.0 or not np.isfinite(k_val):
+        raise RuntimeError(f"metric quadrupole source requires finite positive k, got {k_val}")
+    rhs = np.asarray(scalar_metric_rhs, dtype=np.float64)
+    if rhs.shape != (_SCALAR_METRIC_DOF,):
+        raise ValueError(f"scalar_metric_rhs must have shape ({_SCALAR_METRIC_DOF},)")
+    hdot = _mb95_synchronous_hdot_from_scalar_metric(
+        k_value=k_val,
+        scalar_metric=np.asarray(scalar_metric, dtype=np.float64),
+        scalar_metric_rhs=rhs,
+    )
+    etak_dot = float(rhs[0])
+    return float(hdot / 15.0 + 2.0 * etak_dot / (5.0 * k_val))
+
+
+def _scalar_m0_slot(ell: int) -> int:
+    ell_int = int(ell)
+    if ell_int < 0:
+        raise ValueError(f"ell must be non-negative, got {ell}")
+    return ell_int * ell_int + ell_int
+
+
+def _mb95_scalar_intensity_streaming_rhs(
+    flat_state: np.ndarray,
+    *,
+    L_max: int,
+    k_value: float,
+) -> np.ndarray:
+    """Scalar m=0 free-streaming RHS for MB95 temperature-like moments.
+
+    The convention is ``v = theta/k = 3*Theta_1`` and packed real-SH
+    slots ``ell^2 + ell`` for ``m=0``. The recursion is
+
+        Theta_0' = -k Theta_1
+        Theta_l' = k/(2l+1) [l Theta_{l-1} - (l+1) Theta_{l+1}]
+
+    with zero ``Theta_{L+1}`` at the current finite cutoff. This helper is
+    used only by the opt-in MB95 scalar coevolution path; full cutoff
+    convergence remains a separate validation gate.
+    """
+
+    L = int(L_max)
+    if L < 0:
+        raise ValueError(f"L_max must be non-negative, got {L_max}")
+    k_val = float(k_value)
+    if k_val <= 0.0 or not np.isfinite(k_val):
+        raise RuntimeError(f"scalar streaming requires finite positive k, got {k_val}")
+    arr = np.asarray(flat_state, dtype=np.float64)
+    expected = (L + 1) ** 2
+    if arr.shape != (expected,):
+        raise ValueError(f"flat_state must have shape ({expected},), got {arr.shape}")
+    rhs = np.zeros_like(arr, dtype=np.float64)
+    for ell in range(L + 1):
+        slot = _scalar_m0_slot(ell)
+        if ell == 0:
+            next_val = float(arr[_scalar_m0_slot(1)]) if L >= 1 else 0.0
+            rhs[slot] = -k_val * next_val
+            continue
+        prev_val = float(arr[_scalar_m0_slot(ell - 1)])
+        next_val = float(arr[_scalar_m0_slot(ell + 1)]) if ell + 1 <= L else 0.0
+        rhs[slot] = k_val * (
+            ell * prev_val - (ell + 1) * next_val
+        ) / float(2 * ell + 1)
+    return rhs
+
+
+def _tensor_product_sphere_rule(L: int) -> tuple[np.ndarray, np.ndarray]:
+    """Gauss-Legendre x uniform-phi rule used for runtime Stokes probes."""
+
+    ell_max = int(L)
+    mu, mu_weights = np.polynomial.legendre.leggauss(2 * ell_max + 3)
+    n_phi = 4 * ell_max + 5
+    phi = np.linspace(0.0, 2.0 * np.pi, n_phi, endpoint=False, dtype=np.float64)
+    directions: list[list[float]] = []
+    weights: list[float] = []
+    for mu_i, w_i in zip(mu, mu_weights):
+        sin_theta = float(np.sqrt(max(0.0, 1.0 - float(mu_i) * float(mu_i))))
+        for phi_j in phi:
+            directions.append(
+                [
+                    sin_theta * float(np.cos(phi_j)),
+                    sin_theta * float(np.sin(phi_j)),
+                    float(mu_i),
+                ]
+            )
+            weights.append(float(w_i) * (2.0 * np.pi / float(n_phi)))
+    return np.asarray(directions, dtype=np.float64), np.asarray(weights, dtype=np.float64)
+
+
+@lru_cache(maxsize=16)
+def _runtime_full_stokes_temperature_kernel(L: int):
+    directions, weights = _tensor_product_sphere_rule(int(L))
+    return build_full_stokes_temperature_kernel(
+        directions=directions,
+        weights=weights,
+    )
+
+
+@lru_cache(maxsize=16)
+def _runtime_full_stokes_mueller_kernel(L: int):
+    directions, weights = _tensor_product_sphere_rule(int(L))
+    return build_full_stokes_mueller_kernel(
+        directions=directions,
+        weights=weights,
+    )
+
+
+@lru_cache(maxsize=16)
+def _runtime_full_stokes_spin2_projection_kernel(L: int):
+    mueller = _runtime_full_stokes_mueller_kernel(int(L))
+    return build_spin2_projection_kernel(
+        mueller.directions,
+        mueller.weights,
+        L=int(L),
+        basis_u=mueller.basis_u,
+        basis_v=mueller.basis_v,
+    )
+
+
 def _tilted_electron(
     *,
     species: SpeciesBackgroundRegistry,
@@ -589,7 +785,7 @@ class _ProjectedCollisionAux:
 
     def get_source(self) -> ProjectedThomsonSource:
         if self.projected_source is None:
-            self.projected_source = project_thomson_source(
+            baseline_projected = project_thomson_source(
                 ElectronFrameThomsonContext(),
                 temperature_state=self.temperature_state,
                 polarization_state=self.polarization_state,
@@ -599,6 +795,65 @@ class _ProjectedCollisionAux:
                 tilted_electron=self.tilted_electron,
                 b_state=self.b_state,
             )
+            if self.tilted_electron is None or float(self.tilted_electron.beta) == 0.0:
+                self.projected_source = baseline_projected
+            else:
+                L = int(self.temperature_state.L)
+                truncation = TruncationMetadata(
+                    L=L,
+                    allow_L2_override=(L == 2),
+                    closure_name="runtime_full_stokes_temperature_collision_projection",
+                )
+                radiation_state = RadiationPSTFState(
+                    I=self.temperature_state,
+                    E=self.polarization_state,
+                    B=self.b_state,
+                    truncation=truncation,
+                )
+                kernel = _runtime_full_stokes_mueller_kernel(L)
+                spin2_kernel = _runtime_full_stokes_spin2_projection_kernel(L)
+                directions = kernel.directions
+                weights = kernel.weights
+                intensity_samples = reconstruct_on_sphere(radiation_state, directions)
+                polarization_samples = reconstruct_spin2_qu_from_eb_with_kernel(
+                    self.polarization_state,
+                    self.b_state,
+                    spin2_kernel,
+                )
+                angular_source = full_stokes_mueller_collision(
+                    kernel=kernel,
+                    I=np.asarray(intensity_samples["I"], dtype=np.float64),
+                    Q=np.asarray(polarization_samples["Q"], dtype=np.float64),
+                    U=np.asarray(polarization_samples["U"], dtype=np.float64),
+                    Gamma_T=float(self.Gamma_T),
+                    tilted_electron=self.tilted_electron,
+                )
+                projected_temperature_source = project_from_angular_samples(
+                    {"I": angular_source.collision_I},
+                    directions,
+                    weights,
+                    L=L,
+                    truncation=truncation,
+                )
+                projected_polarization_source = project_spin2_qu_to_eb_with_kernel(
+                    angular_source.collision_Q,
+                    angular_source.collision_U,
+                    spin2_kernel,
+                )
+                self.projected_source = ProjectedThomsonSource(
+                    temperature=projected_temperature_source.I,
+                    polarization_E=projected_polarization_source.E,
+                    polarization_B=projected_polarization_source.B,
+                    effective_rate=baseline_projected.effective_rate,
+                    frame_metadata=baseline_projected.frame_metadata,
+                    source_ready=baseline_projected.source_ready,
+                    linearity_required=baseline_projected.linearity_required,
+                    isotropic_null_mode_required=baseline_projected.isotropic_null_mode_required,
+                    pure_quadrupole_response_required=(
+                        baseline_projected.pure_quadrupole_response_required
+                    ),
+                    operator_scope="full_stokes_spin2_angular_polarization",
+                )
         return self.projected_source
 
     def get_exact_source(self) -> ExactThomsonSource:
@@ -826,6 +1081,7 @@ class NativeTierBRestartState:
     residual_local_prefix: np.ndarray
     residual_harmonic_prefix: np.ndarray
     residual_source_prefix: np.ndarray
+    scalar_metric_prefix: np.ndarray | None = None
 
     def __post_init__(self) -> None:
         if self.step_index < 0:
@@ -853,6 +1109,13 @@ class NativeTierBRestartState:
             arr = np.asarray(value, dtype=np.float64)
             if arr.ndim != 2 or arr.shape[0] != eta_prefix.size:
                 raise ValueError(f"{name} must have shape (len(eta_prefix), n_state)")
+        if self.scalar_metric_prefix is not None:
+            scalar = np.asarray(self.scalar_metric_prefix, dtype=np.float64)
+            if scalar.shape != (eta_prefix.size, _SCALAR_METRIC_DOF):
+                raise ValueError(
+                    f"scalar_metric_prefix must have shape "
+                    f"(len(eta_prefix), {_SCALAR_METRIC_DOF})"
+                )
 
 
 @dataclass(frozen=True)
@@ -864,6 +1127,9 @@ class _SegmentResult:
     nlu: int
     status: int
     message: str
+    imex_full_rhs_fallback_steps: int = 0
+    imex_min_accepted_step: float | None = None
+    imex_max_accepted_step: float | None = None
 
 
 @dataclass(frozen=True)
@@ -888,6 +1154,7 @@ class _ImexStepOutcome:
     nfev: int
     njev: int
     nlu: int
+    fallback_full_rhs_used: bool = False
 
 
 @dataclass(frozen=True)
@@ -1072,6 +1339,7 @@ def _pack_radiation_state(
     residual_local: np.ndarray | None = None,
     residual_harmonic: np.ndarray | None = None,
     residual_source: np.ndarray | None = None,
+    scalar_metric: np.ndarray | None = None,
     out: np.ndarray | None = None,
 ) -> np.ndarray:
     baryon = (
@@ -1104,6 +1372,9 @@ def _pack_radiation_state(
         if residual_source is None
         else np.asarray(residual_source, dtype=np.float64)
     )
+    scalar = (
+        None if scalar_metric is None else np.asarray(scalar_metric, dtype=np.float64)
+    )
     if baryon.shape != (_BARYON_LOCAL_DOF,):
         raise ValueError(f"baryon_local must have shape ({_BARYON_LOCAL_DOF},)")
     if cdm.shape != (_CDM_LOCAL_DOF,):
@@ -1116,15 +1387,22 @@ def _pack_radiation_state(
         raise ValueError("residual_harmonic must be a 1-D vector when provided")
     if residual_s.ndim != 1:
         raise ValueError("residual_source must be a 1-D vector when provided")
+    if scalar is not None and scalar.shape != (_SCALAR_METRIC_DOF,):
+        raise ValueError(f"scalar_metric must have shape ({_SCALAR_METRIC_DOF},)")
     L = int(photon_T.L)
     tower_size = _tower_size(L)
-    expected = (
+    expected_without_scalar = (
         4 * tower_size
         + _PRIMARY_LOCAL_DOF
         + int(residual.size)
         + int(residual_h.size)
         + int(residual_s.size)
     )
+    if scalar is None and out is not None:
+        out_arr = np.asarray(out, dtype=np.float64)
+        if out_arr.shape == (expected_without_scalar + _SCALAR_METRIC_DOF,):
+            scalar = np.zeros(_SCALAR_METRIC_DOF, dtype=np.float64)
+    expected = expected_without_scalar + (0 if scalar is None else _SCALAR_METRIC_DOF)
     if out is None:
         packed = np.empty(expected, dtype=np.float64)
     else:
@@ -1162,6 +1440,9 @@ def _pack_radiation_state(
     packed[residual_offset : residual_offset + residual_h.size] = residual_h
     residual_offset += int(residual_h.size)
     packed[residual_offset : residual_offset + residual_s.size] = residual_s
+    residual_offset += int(residual_s.size)
+    if scalar is not None:
+        packed[residual_offset : residual_offset + _SCALAR_METRIC_DOF] = scalar
     return packed
 
 
@@ -1233,6 +1514,110 @@ def _flat_hierarchy_array(state: PSTFHierarchyState) -> np.ndarray:
     return np.asarray(pack_hierarchy(state), dtype=np.float64)
 
 
+def _neutrino_anisotropic_stress_temperature_rhs(
+    neutrino_tower: PSTFHierarchyState,
+    *,
+    background,
+    R_nu: float,
+) -> np.ndarray:
+    """Conformal-time photon-temperature drive from neutrino quadrupole stress.
+
+    The massless-neutrino anisotropic stress entering the low-ell metric source
+    is the rank-2 PSTF quadrupole, not the full free-streaming tower. This
+    helper keeps that ownership explicit for the native path and returns a flat
+    photon-temperature RHS block in the same packed PSTF layout.
+    """
+    L = int(neutrino_tower.L)
+    rhs = np.zeros(_tower_size(L), dtype=np.float64)
+    if L < 2:
+        return rhs
+    R_val = float(R_nu)
+    if not np.isfinite(R_val):
+        raise RuntimeError("nonfinite neutrino radiation fraction in metric source")
+    if R_val <= 0.0:
+        return rhs
+    a_val = float(background.a_val)
+    theta_val = float(background.Theta)
+    if not np.isfinite(a_val) or a_val <= 0.0:
+        raise RuntimeError("nonfinite or nonpositive scale factor in neutrino metric source")
+    if not np.isfinite(theta_val):
+        raise RuntimeError("nonfinite expansion scalar in neutrino metric source")
+    ell = 2
+    slot = _hierarchy_view_slices_for(L)[ell]
+    pstf_weight = np.sqrt((ell + 2.0) * (ell - 1.0)) / (2.0 * ell + 1.0)
+    conformal_rate = a_val * (theta_val / 3.0)
+    rhs[slot] = conformal_rate * R_val * pstf_weight * np.asarray(
+        neutrino_tower.tensors[ell].components,
+        dtype=np.float64,
+    )
+    return rhs
+
+
+def _neutrino_metric_feedback_summary(
+    *,
+    eta: np.ndarray,
+    neutrino_tower: np.ndarray,
+    L_max: int,
+    background_at_eta: Callable[[float], object],
+    R_nu_at_eta: Callable[[float], tuple[float, float]],
+) -> dict[str, object]:
+    eta_arr = np.asarray(eta, dtype=np.float64)
+    tower_arr = np.asarray(neutrino_tower, dtype=np.float64)
+    if tower_arr.ndim != 2 or tower_arr.shape[0] != eta_arr.size:
+        raise ValueError("neutrino_tower must have shape (len(eta), tower_size)")
+    R_values: list[float] = []
+    rhs_max_values: list[float] = []
+    quadrupole_max_values: list[float] = []
+    for eta_value, row in zip(eta_arr, tower_arr):
+        state = _unpack_hierarchy_view(np.asarray(row, dtype=np.float64), int(L_max))
+        _rho_nu, R_nu = R_nu_at_eta(float(eta_value))
+        rhs = _neutrino_anisotropic_stress_temperature_rhs(
+            state,
+            background=background_at_eta(float(eta_value)),
+            R_nu=float(R_nu),
+        )
+        R_values.append(float(R_nu))
+        rhs_max_values.append(float(np.max(np.abs(rhs))) if rhs.size else 0.0)
+        if int(L_max) >= 2:
+            quadrupole_max_values.append(
+                float(np.max(np.abs(np.asarray(state.tensors[2].components, dtype=np.float64))))
+            )
+        else:
+            quadrupole_max_values.append(0.0)
+    R_arr = np.asarray(R_values, dtype=np.float64)
+    rhs_arr = np.asarray(rhs_max_values, dtype=np.float64)
+    quad_arr = np.asarray(quadrupole_max_values, dtype=np.float64)
+    if (
+        not np.all(np.isfinite(R_arr))
+        or not np.all(np.isfinite(rhs_arr))
+        or not np.all(np.isfinite(quad_arr))
+    ):
+        raise RuntimeError("neutrino metric feedback summary encountered non-finite evidence")
+    max_R = float(np.max(R_arr)) if R_arr.size else 0.0
+    max_rhs = float(np.max(rhs_arr)) if rhs_arr.size else 0.0
+    max_quad = float(np.max(quad_arr)) if quad_arr.size else 0.0
+    if max_R <= 0.0:
+        status = "zero_no_neutrino_density_evidence"
+    elif max_quad <= 0.0:
+        status = "wired_zero_quadrupole"
+    elif max_rhs <= 0.0:
+        status = "wired_zero_metric_rhs"
+    else:
+        status = "active_nonzero_quadrupole_temperature_rhs"
+    return {
+        "neutrino_metric_feedback_owner": (
+            "ver2_native_integrator.neutrino_quadrupole_temperature_rhs"
+        ),
+        "neutrino_metric_feedback_status": status,
+        "neutrino_metric_feedback_evidence_passed": bool(max_R > 0.0),
+        "neutrino_metric_feedback_R_nu_min": float(np.min(R_arr)) if R_arr.size else 0.0,
+        "neutrino_metric_feedback_R_nu_max": max_R,
+        "neutrino_metric_feedback_quadrupole_max_abs": max_quad,
+        "neutrino_metric_feedback_rhs_max_abs": max_rhs,
+        "neutrino_metric_feedback_sample_count": int(eta_arr.size),
+    }
+
+
 def _unpack_radiation_state(
     y: np.ndarray,
     L_max: int,
@@ -1254,8 +1639,16 @@ def _unpack_radiation_state(
 ]:
     arr = np.asarray(y, dtype=np.float64)
     tower_size = _tower_size(L_max)
-    expected = _radiation_state_size(L_max) + int(residual_local_dof) + int(residual_harmonic_dof) + int(residual_source_dof)
-    if arr.shape != (expected,):
+    expected = (
+        _radiation_state_size(L_max)
+        + int(residual_local_dof)
+        + int(residual_harmonic_dof)
+        + int(residual_source_dof)
+    )
+    if arr.shape not in (
+        (expected,),
+        (expected + _SCALAR_METRIC_DOF,),
+    ):
         raise ValueError(f"radiation state shape {arr.shape} does not match L_max={L_max}")
     photon_T = _unpack_hierarchy_view(arr[:tower_size], L_max)
     photon_E = PolarizationHierarchyState(E=_unpack_hierarchy_view(arr[tower_size : 2 * tower_size], L_max))
@@ -1308,6 +1701,28 @@ def _unpack_radiation_state(
         residual_harmonic,
         residual_source,
     )
+
+
+def _scalar_metric_tail_from_state(
+    y: np.ndarray,
+    L_max: int,
+    *,
+    residual_local_dof: int = 0,
+    residual_harmonic_dof: int = 0,
+    residual_source_dof: int = 0,
+) -> np.ndarray:
+    arr = np.asarray(y, dtype=np.float64)
+    base_size = (
+        _radiation_state_size(L_max)
+        + int(residual_local_dof)
+        + int(residual_harmonic_dof)
+        + int(residual_source_dof)
+    )
+    if arr.shape == (base_size,):
+        return np.zeros(_SCALAR_METRIC_DOF, dtype=np.float64)
+    if arr.shape == (base_size + _SCALAR_METRIC_DOF,):
+        return np.asarray(arr[base_size : base_size + _SCALAR_METRIC_DOF], dtype=np.float64)
+    raise ValueError(f"radiation state shape {arr.shape} does not match L_max={L_max}")
 
 
 def _seed_neutrino_tower_from_reduced(
@@ -1527,6 +1942,7 @@ class Ver2TierBIntegrator:
             + self._residual_local_dof
             + self._residual_harmonic_dof
             + self._residual_source_dof
+            + _SCALAR_METRIC_DOF
         )
         self._explicit_rhs_left_scratch = np.empty(self._state_size, dtype=np.float64)
         self._explicit_rhs_mid_scratch = np.empty(self._state_size, dtype=np.float64)
@@ -1737,6 +2153,7 @@ class Ver2TierBIntegrator:
             baryon_local=baryon_local,
             source_local=source_local,
         )
+        scalar_metric = self._initial_scalar_metric_state()
         return _pack_radiation_state(
             photon_T=seeded.photon_T,
             photon_E=seeded.photon_E,
@@ -1748,8 +2165,23 @@ class Ver2TierBIntegrator:
             residual_local=residual_local,
             residual_harmonic=residual_harmonic,
             residual_source=residual_source,
+            scalar_metric=scalar_metric,
             out=self._orthogonal_implicit_pack_scratch,
         )
+
+    def _initial_scalar_metric_state(self) -> np.ndarray:
+        if not bool(getattr(self.config, "co_evolve_scalar_metric", False)):
+            return np.zeros(_SCALAR_METRIC_DOF, dtype=np.float64)
+        if self._matter_seed_observables is None:
+            raise RuntimeError("scalar metric coevolution requires matter seed observables")
+        eta_cov = float(self._matter_seed_observables.get("eta_cov", np.nan))
+        if not np.isfinite(eta_cov):
+            raise RuntimeError("scalar metric coevolution requires finite seed eta_cov")
+        sigma_sync = float(self._matter_seed_observables.get("sigma_sync", 0.0))
+        if not np.isfinite(sigma_sync):
+            raise RuntimeError("scalar metric coevolution requires finite seed sigma_sync")
+        etak0 = -0.5 * float(self.seed_k_comoving) * eta_cov
+        return np.array([float(etak0), sigma_sync], dtype=np.float64)
 
     def _reionization_amplitude(self) -> float:
         return (
@@ -2274,6 +2706,7 @@ class Ver2TierBIntegrator:
         snapshot: _EtaRuntimeSnapshot,
         need_explicit: bool,
         need_full: bool,
+        scalar_metric: np.ndarray | None = None,
         tca_tracker: list[bool] | None = None,
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         tca_active = bool(
@@ -2330,6 +2763,59 @@ class Ver2TierBIntegrator:
             rhs_E_full = np.asarray(rhs_E_explicit, dtype=np.float64)
             rhs_B_full = np.asarray(rhs_B_explicit, dtype=np.float64)
 
+        scalar_photon_streaming_rhs: np.ndarray | None = None
+        scalar_metric_active = bool(
+            getattr(self.config, "co_evolve_scalar_metric", False)
+            and scalar_metric is not None
+            and baryon_local is not None
+        )
+        scalar_streaming_active = bool(
+            scalar_metric_active
+            and getattr(self.config, "co_evolve_scalar_streaming", False)
+        )
+        if scalar_streaming_active:
+            scalar_photon_streaming_rhs = _mb95_scalar_intensity_streaming_rhs(
+                _flat_hierarchy_array(photon_T),
+                L_max=int(self.config.L_max),
+                k_value=float(self.seed_k_comoving),
+            )
+            neutrino_streaming_rhs = _mb95_scalar_intensity_streaming_rhs(
+                _flat_hierarchy_array(neutrino_tower),
+                L_max=int(self.config.L_max),
+                k_value=float(self.seed_k_comoving),
+            )
+            rhs_nu = np.asarray(rhs_nu, dtype=np.float64).copy()
+            rhs_nu += neutrino_streaming_rhs
+
+        if scalar_metric_active:
+            scalar_metric_arr = np.asarray(scalar_metric, dtype=np.float64)
+            metric_rhs = self._scalar_metric_rhs_from_state(
+                snapshot=snapshot,
+                photon_T=photon_T,
+                neutrino_tower=neutrino_tower,
+                baryon_local=np.asarray(baryon_local, dtype=np.float64),
+                scalar_metric=scalar_metric_arr,
+            )
+            monopole_source = self._scalar_metric_monopole_source(
+                scalar_metric=scalar_metric_arr,
+                scalar_metric_rhs=metric_rhs,
+            )
+            monopole_slot = int(self._ell_slices[0].start)
+            if rhs_T_explicit is not None:
+                rhs_T_explicit[monopole_slot] += monopole_source
+            rhs_T_full[monopole_slot] += monopole_source
+            rhs_nu[monopole_slot] += monopole_source
+            if int(self.config.L_max) >= 2:
+                quadrupole_source = self._scalar_metric_quadrupole_source(
+                    scalar_metric=scalar_metric_arr,
+                    scalar_metric_rhs=metric_rhs,
+                )
+                quadrupole_slot = _ell2_m0_slot_offset(int(self.config.L_max))
+                if rhs_T_explicit is not None:
+                    rhs_T_explicit[quadrupole_slot] += quadrupole_source
+                rhs_T_full[quadrupole_slot] += quadrupole_source
+                rhs_nu[quadrupole_slot] += quadrupole_source
+
         if tca_active:
             assert rhs_T_explicit is not None and rhs_E_explicit is not None
             slot = _ell2_m0_slot_offset(self.config.L_max)
@@ -2348,6 +2834,13 @@ class Ver2TierBIntegrator:
             rhs_E_full = np.asarray(rhs_E_full, dtype=np.float64).copy()
             rhs_T_full[slot] = -relax_rate * (current_pi2 - theta_2_alg)
             rhs_E_full[slot] = -relax_rate * (current_e2 - e_2_alg)
+
+        if scalar_photon_streaming_rhs is not None:
+            if rhs_T_explicit is not None:
+                rhs_T_explicit = np.asarray(rhs_T_explicit, dtype=np.float64).copy()
+                rhs_T_explicit += scalar_photon_streaming_rhs
+            rhs_T_full = np.asarray(rhs_T_full, dtype=np.float64).copy()
+            rhs_T_full += scalar_photon_streaming_rhs
 
         if tca_tracker is not None:
             tca_tracker.append(bool(tca_active))
@@ -2434,7 +2927,122 @@ class Ver2TierBIntegrator:
             closure=self.closure,
             neutrino_background=self._neutrino_background,
         )
+        if not bool(getattr(self.config, "co_evolve_scalar_metric", False)):
+            _rho_nu, R_nu = self._neutrino_radiation_fraction_at_eta(float(background.eta))
+            neutrino_metric_rhs = _neutrino_anisotropic_stress_temperature_rhs(
+                neutrino_tower,
+                background=background,
+                R_nu=R_nu,
+            )
+            if np.any(neutrino_metric_rhs):
+                rhs_T = np.asarray(rhs_T, dtype=np.float64).copy()
+                rhs_T += neutrino_metric_rhs
         return rhs_T, rhs_E, rhs_B, rhs_nu
+
+    def _grho_sources_at_snapshot(self, snapshot: _EtaRuntimeSnapshot) -> tuple[float, float, float]:
+        eta_value = float(snapshot.eta)
+        a_value = float(snapshot.background.a_val)
+        h0_mpc = float(self.species.bg_table.constants.H0_mpc)
+        prefactor = 3.0 * h0_mpc * h0_mpc * a_value * a_value
+        rho_g = float(self.species[SpeciesLabel.PHOTON].rho_rest(eta_value))
+        rho_nu = float(self.species[SpeciesLabel.NEUTRINO].rho_rest(eta_value))
+        rho_b = float(self.species[SpeciesLabel.BARYON].rho_rest(eta_value))
+        return prefactor * rho_g, prefactor * rho_nu, prefactor * rho_b
+
+    def _baryon_sound_speed_sq_at_eta(self, eta: float) -> float:
+        baryon = self.species[SpeciesLabel.BARYON]
+        sound_speed = getattr(baryon, "sound_speed_sq", None)
+        if sound_speed is None:
+            return 0.0
+        value = float(sound_speed(float(eta)))
+        if not np.isfinite(value) or value < 0.0:
+            raise RuntimeError(
+                f"baryon sound_speed_sq became non-finite or negative: {value!r}"
+            )
+        return value
+
+    def _scalar_metric_rhs_from_state(
+        self,
+        *,
+        snapshot: _EtaRuntimeSnapshot,
+        photon_T: PSTFHierarchyState,
+        neutrino_tower: PSTFHierarchyState,
+        baryon_local: np.ndarray,
+        scalar_metric: np.ndarray,
+    ) -> np.ndarray:
+        if not bool(getattr(self.config, "co_evolve_scalar_metric", False)):
+            return np.zeros(_SCALAR_METRIC_DOF, dtype=np.float64)
+        k_value = float(self.seed_k_comoving)
+        if k_value <= 0.0 or not np.isfinite(k_value):
+            raise RuntimeError(f"scalar metric coevolution requires finite positive k, got {k_value}")
+        metric = np.asarray(scalar_metric, dtype=np.float64)
+        if metric.shape != (_SCALAR_METRIC_DOF,):
+            raise ValueError(f"scalar_metric must have shape ({_SCALAR_METRIC_DOF},)")
+        etak_val = float(metric[0])
+        sigma_val = float(metric[1])
+        grho_g, grho_nu, grho_b = self._grho_sources_at_snapshot(snapshot)
+        theta1 = float(_theta_1_from_temperature_state(photon_T))
+        theta2 = (
+            float(photon_T.tensors[2].components[2])
+            if int(self.config.L_max) >= 2
+            else 0.0
+        )
+        nu1 = (
+            float(neutrino_tower.tensors[1].components[1])
+            if int(self.config.L_max) >= 1
+            else 0.0
+        )
+        nu2 = (
+            float(neutrino_tower.tensors[2].components[2])
+            if int(self.config.L_max) >= 2
+            else 0.0
+        )
+        vb = float(np.asarray(baryon_local, dtype=np.float64)[1])
+        dgq = (16.0 / 3.0) * (grho_g * theta1 + grho_nu * nu1) + grho_b * vb
+        dgs = 4.0 * (grho_g * theta2 + grho_nu * nu2)
+        etak_dot = 0.5 * dgq
+        sigma_dot = -2.0 * float(snapshot.h_local) * sigma_val - dgs / k_value + etak_val
+        rhs = np.array([etak_dot, sigma_dot], dtype=np.float64)
+        return rhs
+
+    def _metric_hdot_from_scalar_rhs(
+        self,
+        *,
+        scalar_metric: np.ndarray,
+        scalar_metric_rhs: np.ndarray,
+    ) -> float:
+        return _mb95_synchronous_hdot_from_scalar_metric(
+            k_value=float(self.seed_k_comoving),
+            scalar_metric=np.asarray(scalar_metric, dtype=np.float64),
+            scalar_metric_rhs=np.asarray(scalar_metric_rhs, dtype=np.float64),
+        )
+
+    def _scalar_metric_monopole_source(
+        self,
+        *,
+        scalar_metric: np.ndarray,
+        scalar_metric_rhs: np.ndarray,
+    ) -> float:
+        if not bool(getattr(self.config, "co_evolve_scalar_metric", False)):
+            return 0.0
+        return -(1.0 / 6.0) * self._metric_hdot_from_scalar_rhs(
+            scalar_metric=scalar_metric,
+            scalar_metric_rhs=scalar_metric_rhs,
+        )
+
+    def _scalar_metric_quadrupole_source(
+        self,
+        *,
+        scalar_metric: np.ndarray,
+        scalar_metric_rhs: np.ndarray,
+    ) -> float:
+        if not bool(getattr(self.config, "co_evolve_scalar_metric", False)):
+            return 0.0
+        return _mb95_synchronous_quadrupole_metric_source(
+            k_value=float(self.seed_k_comoving),
+            scalar_metric=np.asarray(scalar_metric, dtype=np.float64),
+            scalar_metric_rhs=np.asarray(scalar_metric_rhs, dtype=np.float64),
+        )
 
     def _local_matter_rhs(
         self,
@@ -2444,6 +3052,8 @@ class Ver2TierBIntegrator:
         cdm_local: np.ndarray,
         theta_1: float,
         theta_1_dot: float,
+        scalar_metric: np.ndarray | None = None,
+        scalar_metric_rhs: np.ndarray | None = None,
     ) -> tuple[np.ndarray, np.ndarray]:
         baryon_row = np.asarray(baryon_local, dtype=np.float64)
         cdm_row = np.asarray(cdm_local, dtype=np.float64)
@@ -2466,26 +3076,61 @@ class Ver2TierBIntegrator:
         baryon = self.species[SpeciesLabel.BARYON]
         rho_b = max(float(baryon.rho_rest(float(snapshot.eta))), 1.0e-30)
         rho_gamma = max(float(photon.rho_rest(float(snapshot.eta))), 1.0e-30)
+        scalar_metric_active = bool(
+            getattr(self.config, "co_evolve_scalar_metric", False)
+            and scalar_metric is not None
+            and scalar_metric_rhs is not None
+        )
+        baryon_sound_speed_sq = (
+            self._baryon_sound_speed_sq_at_eta(float(snapshot.eta))
+            if scalar_metric_active
+            else 0.0
+        )
+        baryon_k_comoving = float(self.seed_k_comoving) if scalar_metric_active else 0.0
         baryon_params = BaryonParameters(
             R_b=max(3.0 * rho_b / (4.0 * rho_gamma), 1.0e-30),
             tau_dot=max(float(snapshot.gamma_t), 0.0),
             H=max(float(snapshot.h_local), 0.0),
+            sound_speed_sq=baryon_sound_speed_sq,
+            k_comoving=max(baryon_k_comoving, 0.0),
         )
+        drag_correction = _class_b_local_drag_correction(
+            backend=self.backend,
+            H_local=float(snapshot.h_local),
+            baryon_velocity=float(baryon_state.v_b),
+            theta_1=float(theta_1),
+        )
+        if drag_correction != 1.0:
+            baryon_params = BaryonParameters(
+                R_b=max(float(baryon_params.R_b) / drag_correction, 1.0e-30),
+                tau_dot=float(baryon_params.tau_dot),
+                H=float(baryon_params.H),
+                sound_speed_sq=float(baryon_params.sound_speed_sq),
+                k_comoving=float(baryon_params.k_comoving),
+            )
         cdm_params = CDMParameters(H=max(float(snapshot.h_local), 0.0))
-        delta_b_dot = baryon_continuity_rhs(
-            baryon_state,
-            0.0,
-            self.canonical_decision,
-        )
+        if scalar_metric_active:
+            hdot = self._metric_hdot_from_scalar_rhs(
+                scalar_metric=np.asarray(scalar_metric, dtype=np.float64),
+                scalar_metric_rhs=np.asarray(scalar_metric_rhs, dtype=np.float64),
+            )
+            delta_b_dot = -float(self.seed_k_comoving) * float(baryon_state.v_b) - 0.5 * hdot
+            delta_c_dot = -float(self.seed_k_comoving) * float(cdm_state.v_c) - 0.5 * hdot
+        else:
+            delta_b_dot = baryon_continuity_rhs(
+                baryon_state,
+                0.0,
+                self.canonical_decision,
+            )
+            delta_c_dot = cdm_continuity_rhs(
+                cdm_state,
+                0.0,
+                self.canonical_decision,
+            )
         v_b_dot = baryon_euler_rhs(
             baryon_state,
             float(theta_1),
             baryon_params,
-            self.canonical_decision,
-        )
-        delta_c_dot = cdm_continuity_rhs(
-            cdm_state,
-            0.0,
             self.canonical_decision,
         )
         v_c_dot = cdm_euler_rhs(
@@ -2526,6 +3171,7 @@ class Ver2TierBIntegrator:
         affine = self._build_residual_local_affine_operator(
             snapshot=snapshot,
             photon_T=photon_T,
+            residual_local=residual_local,
             residual_harmonic=residual_harmonic,
         )
         return np.asarray(
@@ -2557,13 +3203,16 @@ class Ver2TierBIntegrator:
         *,
         snapshot: _EtaRuntimeSnapshot,
         photon_T: PSTFHierarchyState,
+        residual_local: np.ndarray,
         residual_harmonic: np.ndarray,
     ) -> ReducedLocalAffineOperator:
-        background_state = {
-            "branch": str(self.background_monitor.branch),
-            "geometry": self.background_monitor.initial_conditions.geometry,
-            "sigma_tensor": self._sigma_tensor_at_eta(float(snapshot.eta)),
-            "opacity_data": {"Gamma_T": float(snapshot.gamma_t)},
+        background_state = self._residual_harmonic_background_state(
+            snapshot=snapshot,
+        )
+        residual_baryon, _residual_cdm = self._split_residual_local_state(residual_local)
+        baryon_velocity_by_mode_label = {
+            str(mu): float(np.asarray(row, dtype=np.float64)[1])
+            for mu, row in residual_baryon.items()
         }
         return build_reduced_local_affine_operator(
             self._layout,
@@ -2574,6 +3223,7 @@ class Ver2TierBIntegrator:
                 photon_T=photon_T,
                 residual_harmonic=residual_harmonic,
             ),
+            baryon_velocity_by_mode_label=baryon_velocity_by_mode_label,
         )
 
     def _residual_harmonic_background_state(
@@ -2592,14 +3242,42 @@ class Ver2TierBIntegrator:
             if temperature_visibility_source is None
             else float(temperature_visibility_source)
         )
+        R_b, rho_b, rho_gamma = self._baryon_loading_at_eta(float(snapshot.eta))
+        rho_nu, R_nu = self._neutrino_radiation_fraction_at_eta(float(snapshot.eta))
         return {
             "branch": str(self.background_monitor.branch),
             "geometry": self.background_monitor.initial_conditions.geometry,
             "sigma_tensor": self._sigma_tensor_at_eta(float(snapshot.eta)),
-            "opacity_data": {"Gamma_T": float(snapshot.gamma_t)},
+            "H_local": float(snapshot.h_local),
+            "k_mag": float(self.seed_k_comoving),
+            "opacity_data": {
+                "Gamma_T": float(snapshot.gamma_t),
+                "R_b": R_b,
+                "H_local": float(snapshot.h_local),
+                "k_mag": float(self.seed_k_comoving),
+            },
             "source_tables": {
                 "visibility_amplitude": float(visibility_amplitude),
                 "source_formalism": _VISIBILITY_SOURCE_FORMALISM,
+                "rho_b": rho_b,
+                "rho_gamma": rho_gamma,
+                "rho_nu": rho_nu,
+                "R_nu": R_nu,
+                "neutrino_anisotropic_stress_owner": "species_registry_rho_nu_over_radiation",
+                "neutrino_metric_feedback_owner": (
+                    "ver2_native_integrator.main_state_scalar_metric"
+                    if bool(getattr(self.config, "co_evolve_scalar_metric", False))
+                    else "ver2_native_integrator.neutrino_quadrupole_temperature_rhs"
+                ),
+                "neutrino_metric_feedback_status": (
+                    "legacy_temperature_rhs_superseded_by_coevolved_scalar_metric"
+                    if bool(getattr(self.config, "co_evolve_scalar_metric", False))
+                    else (
+                        "quadrupole_temperature_rhs_active"
+                        if R_nu > 0.0
+                        else "zero_no_neutrino_density_evidence"
+                    )
+                ),
                 "theta_0_source": 0.0 if theta_0_source is None else float(theta_0_source),
                 "pi_bass_source": 0.0 if pi_bass_source is None else float(pi_bass_source),
                 "temperature_visibility_source": temperature_source,
@@ -2679,11 +3357,49 @@ class Ver2TierBIntegrator:
         neutrino_tower: PSTFHierarchyState,
         baryon_local: np.ndarray,
         source_local: np.ndarray | None,
+        residual_local: np.ndarray | None = None,
+        residual_harmonic: np.ndarray | None = None,
     ) -> ReducedJointAffineOperator:
         covered = str(self._layout_covered_mode_label)
         kwargs = {}
         if source_local is not None:
             kwargs["source_by_mode_label"] = {covered: np.asarray(source_local, dtype=np.float64)}
+        residual_local_state = (
+            np.zeros(self._residual_local_dof, dtype=np.float64)
+            if residual_local is None
+            else np.asarray(residual_local, dtype=np.float64)
+        )
+        residual_harmonic_state = (
+            np.zeros(self._residual_harmonic_dof, dtype=np.float64)
+            if residual_harmonic is None
+            else np.asarray(residual_harmonic, dtype=np.float64)
+        )
+        if residual_local_state.shape != (self._residual_local_dof,):
+            raise ValueError(
+                "residual_local freeze state must have shape "
+                f"({self._residual_local_dof},), got {residual_local_state.shape}"
+            )
+        if residual_harmonic_state.shape != (self._residual_harmonic_dof,):
+            raise ValueError(
+                "residual_harmonic freeze state must have shape "
+                f"({self._residual_harmonic_dof},), got {residual_harmonic_state.shape}"
+            )
+        residual_baryon, _residual_cdm = self._split_residual_local_state(
+            residual_local_state
+        )
+        baryon_velocity_by_mode_label = {
+            covered: _baryon_doppler_velocity(np.asarray(baryon_local, dtype=np.float64))
+        }
+        baryon_velocity_by_mode_label.update(
+            {
+                str(mu): float(np.asarray(row, dtype=np.float64)[1])
+                for mu, row in residual_baryon.items()
+            }
+        )
+        theta_1_by_mode_label = self._residual_local_theta_1_by_mode_label(
+            photon_T=photon_T,
+            residual_harmonic=residual_harmonic_state,
+        )
         # Round-17 P3.5 perf Tier 1A v2 (2026-04-28): pass the integrator's
         # cached sparsity pattern (captured at __init__ via a cold build at
         # an η where γ_T > 0) to skip the per-step dense → CSC conversion's
@@ -2727,6 +3443,8 @@ class Ver2TierBIntegrator:
             photon_B_by_mode_label={covered: _flat_hierarchy_array(photon_B)},
             neutrino_by_mode_label={covered: _flat_hierarchy_array(neutrino_tower)},
             baryon_by_mode_label={covered: np.asarray(baryon_local, dtype=np.float64)},
+            baryon_velocity_by_mode_label=baryon_velocity_by_mode_label,
+            theta_1_by_mode_label=theta_1_by_mode_label,
             pattern_cache=pattern_cache,
             out_workspace=out_workspace,
             **kwargs,
@@ -2852,6 +3570,8 @@ class Ver2TierBIntegrator:
             neutrino_tower=neutrino_tower,
             baryon_local=baryon_local,
             source_local=source_local,
+            residual_local=residual_local,
+            residual_harmonic=residual_harmonic,
         )
         rhs = np.asarray(
             affine.matrix
@@ -2941,6 +3661,16 @@ class Ver2TierBIntegrator:
         dt = float(eta_right - eta_left)
         if dt == 0.0:
             return np.asarray(y_right, dtype=np.float64), affine_left
+        class_b_live_drag_freeze = bool(
+            self._residual_local_dof > 0
+            and np.linalg.norm(np.asarray(self.backend.family_spec.algebra.a, dtype=np.float64)) > 0.0
+        )
+        if class_b_live_drag_freeze:
+            # The class-B baryon-drag coefficient is frozen from the current
+            # residual baryon/photon slip. A right-end affine from the
+            # previous step was frozen at that previous stage state, so it is
+            # not a valid left-end affine for the new step.
+            affine_left = None
         (
             photon_T_left,
             photon_E_left,
@@ -2977,6 +3707,13 @@ class Ver2TierBIntegrator:
             residual_harmonic_dof=self._residual_harmonic_dof,
             residual_source_dof=self._residual_source_dof,
         )
+        scalar_metric_right = _scalar_metric_tail_from_state(
+            y_right,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+            residual_source_dof=self._residual_source_dof,
+        )
         snapshot_left = self._eta_runtime_snapshot(float(eta_left))
         snapshot_right = self._eta_runtime_snapshot(float(eta_right))
         if affine_left is None:
@@ -2988,6 +3725,8 @@ class Ver2TierBIntegrator:
                 neutrino_tower=neutrino_left,
                 baryon_local=baryon_left,
                 source_local=source_left,
+                residual_local=residual_local_left,
+                residual_harmonic=residual_harmonic_left,
             )
         state_left = np.concatenate(
             [
@@ -3004,6 +3743,13 @@ class Ver2TierBIntegrator:
             dt * _ROS2_GAMMA, affine_left.matrix, dt * _ROS2_GAMMA * rhs_left,
         )
         stage_state = state_left + _ROS2_A21 * k1
+        stage_local = np.asarray(stage_state[: self._residual_local_dof], dtype=np.float64)
+        stage_harmonic = np.asarray(
+            stage_state[
+                self._residual_local_dof : self._residual_local_dof + self._residual_harmonic_dof
+            ],
+            dtype=np.float64,
+        )
         affine_right = self._build_residual_joint_affine_operator(
             snapshot=snapshot_right,
             photon_T=photon_T_right,
@@ -3012,6 +3758,8 @@ class Ver2TierBIntegrator:
             neutrino_tower=neutrino_right,
             baryon_local=baryon_right,
             source_local=source_right,
+            residual_local=stage_local,
+            residual_harmonic=stage_harmonic,
         )
         rhs_stage = np.asarray(affine_right.matrix @ stage_state + affine_right.bias, dtype=np.float64)
         # Round-17 P3.5 perf Tier 1A: same dense/sparse dispatch as above.
@@ -3044,8 +3792,9 @@ class Ver2TierBIntegrator:
                 residual_local=next_local,
                 residual_harmonic=next_harmonic,
                 residual_source=next_source,
+                scalar_metric=scalar_metric_right,
             ),
-            affine_right,
+            None if class_b_live_drag_freeze else affine_right,
         )
 
     def _orthogonal_covered_source_ros2_step(
@@ -3098,6 +3847,13 @@ class Ver2TierBIntegrator:
             residual_harmonic_dof=self._residual_harmonic_dof,
             residual_source_dof=self._residual_source_dof,
         )
+        scalar_metric_right = _scalar_metric_tail_from_state(
+            y_right,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+            residual_source_dof=self._residual_source_dof,
+        )
         snapshot_left = self._eta_runtime_snapshot(float(eta_left))
         snapshot_right = self._eta_runtime_snapshot(float(eta_right))
         if affine_left is None:
@@ -3144,6 +3900,7 @@ class Ver2TierBIntegrator:
                 residual_local=residual_local_right,
                 residual_harmonic=residual_harmonic_right,
                 residual_source=residual_source_right,
+                scalar_metric=scalar_metric_right,
             ),
             affine_right,
         )
@@ -3173,6 +3930,13 @@ class Ver2TierBIntegrator:
             residual_harmonic_dof=self._residual_harmonic_dof,
             residual_source_dof=self._residual_source_dof,
         )
+        scalar_metric = _scalar_metric_tail_from_state(
+            y,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+            residual_source_dof=self._residual_source_dof,
+        )
         snapshot = self._eta_runtime_snapshot(float(eta))
         _, _, _, rhs_T, rhs_E, rhs_B, rhs_nu = self._rhs_components_from_snapshot(
             photon_T=photon_T,
@@ -3183,7 +3947,15 @@ class Ver2TierBIntegrator:
             snapshot=snapshot,
             need_explicit=False,
             need_full=True,
+            scalar_metric=scalar_metric,
             tca_tracker=tca_tracker,
+        )
+        scalar_metric_rhs = self._scalar_metric_rhs_from_state(
+            snapshot=snapshot,
+            photon_T=photon_T,
+            neutrino_tower=neutrino_tower,
+            baryon_local=baryon_local,
+            scalar_metric=scalar_metric,
         )
         baryon_rhs, cdm_rhs = self._local_matter_rhs(
             snapshot=snapshot,
@@ -3195,6 +3967,8 @@ class Ver2TierBIntegrator:
                 if self._theta1_m0_slot is not None
                 else 0.0
             ),
+            scalar_metric=scalar_metric,
+            scalar_metric_rhs=scalar_metric_rhs,
         )
         if str(self.config.solver_method).upper() != "IMEX_MIDPOINT_BDF":
             source_rhs = self._exact_covered_source_rhs(
@@ -3246,6 +4020,7 @@ class Ver2TierBIntegrator:
                 residual_rhs,
                 residual_harmonic_rhs,
                 residual_source_rhs,
+                scalar_metric_rhs,
             ]
         )
 
@@ -3274,6 +4049,13 @@ class Ver2TierBIntegrator:
             residual_harmonic_dof=self._residual_harmonic_dof,
             residual_source_dof=self._residual_source_dof,
         )
+        scalar_metric = _scalar_metric_tail_from_state(
+            y,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+            residual_source_dof=self._residual_source_dof,
+        )
         snapshot = self._eta_runtime_snapshot(float(eta))
         rhs_T, rhs_E, rhs_B, _, _, _, rhs_nu = self._rhs_components_from_snapshot(
             photon_T=photon_T,
@@ -3284,6 +4066,14 @@ class Ver2TierBIntegrator:
             snapshot=snapshot,
             need_explicit=True,
             need_full=False,
+            scalar_metric=scalar_metric,
+        )
+        scalar_metric_rhs = self._scalar_metric_rhs_from_state(
+            snapshot=snapshot,
+            photon_T=photon_T,
+            neutrino_tower=neutrino_tower,
+            baryon_local=baryon_local,
+            scalar_metric=scalar_metric,
         )
         tower_size = self._tower_size
         if out is None:
@@ -3300,6 +4090,16 @@ class Ver2TierBIntegrator:
         result[tower_size : 2 * tower_size] = np.asarray(rhs_E, dtype=np.float64)
         result[2 * tower_size : 3 * tower_size] = np.asarray(rhs_B, dtype=np.float64)
         result[3 * tower_size : 4 * tower_size] = np.asarray(rhs_nu, dtype=np.float64)
+        if bool(getattr(self.config, "co_evolve_scalar_metric", False)):
+            hdot = self._metric_hdot_from_scalar_rhs(
+                scalar_metric=scalar_metric,
+                scalar_metric_rhs=scalar_metric_rhs,
+            )
+            result[4 * tower_size] = -float(self.seed_k_comoving) * float(baryon_local[1]) - 0.5 * hdot
+            result[4 * tower_size + _BARYON_LOCAL_DOF] = (
+                -float(self.seed_k_comoving) * float(cdm_local[1]) - 0.5 * hdot
+            )
+            result[-_SCALAR_METRIC_DOF:] = scalar_metric_rhs
         return result
 
     def _implicit_rhs(
@@ -3328,6 +4128,13 @@ class Ver2TierBIntegrator:
             residual_harmonic_dof=self._residual_harmonic_dof,
             residual_source_dof=self._residual_source_dof,
         )
+        scalar_metric = _scalar_metric_tail_from_state(
+            y,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+            residual_source_dof=self._residual_source_dof,
+        )
         snapshot = self._eta_runtime_snapshot(float(eta))
         rhs_T_explicit, rhs_E_explicit, rhs_B_explicit, rhs_T_full, rhs_E_full, rhs_B_full, rhs_nu = (
             self._rhs_components_from_snapshot(
@@ -3339,6 +4146,7 @@ class Ver2TierBIntegrator:
             snapshot=snapshot,
             need_explicit=True,
             need_full=True,
+            scalar_metric=scalar_metric,
             tca_tracker=tca_tracker,
         ))
         tower_size = self._tower_size
@@ -3372,6 +4180,11 @@ class Ver2TierBIntegrator:
                 else 0.0
             ),
         )
+        if bool(getattr(self.config, "co_evolve_scalar_metric", False)):
+            baryon_rhs = np.asarray(baryon_rhs, dtype=np.float64).copy()
+            cdm_rhs = np.asarray(cdm_rhs, dtype=np.float64).copy()
+            baryon_rhs[0] = 0.0
+            cdm_rhs[0] = 0.0
         implicit[4 * tower_size : 4 * tower_size + _BARYON_LOCAL_DOF] = baryon_rhs
         implicit[4 * tower_size + _BARYON_LOCAL_DOF : 4 * tower_size + _LOCAL_MATTER_DOF] = cdm_rhs
         return implicit
@@ -3396,6 +4209,13 @@ class Ver2TierBIntegrator:
             residual_harmonic,
             residual_source,
         ) = _unpack_radiation_state(
+            stage,
+            self.config.L_max,
+            residual_local_dof=self._residual_local_dof,
+            residual_harmonic_dof=self._residual_harmonic_dof,
+            residual_source_dof=self._residual_source_dof,
+        )
+        scalar_metric = _scalar_metric_tail_from_state(
             stage,
             self.config.L_max,
             residual_local_dof=self._residual_local_dof,
@@ -3548,6 +4368,12 @@ class Ver2TierBIntegrator:
         rho_b = max(float(baryon.rho_rest(float(eta))), 1.0e-30)
         rho_gamma = max(float(photon.rho_rest(float(eta))), 1.0e-30)
         drag = max(float(gamma_t), 0.0) / max(3.0 * rho_b / (4.0 * rho_gamma), 1.0e-30)
+        drag *= _class_b_local_drag_correction(
+            backend=self.backend,
+            H_local=float(H_local),
+            baryon_velocity=float(baryon_local[1]),
+            theta_1=float(theta_right),
+        )
         lambda_b = max(float(H_local), 0.0) + drag
         forcing_left = 3.0 * drag * theta_left
         forcing_right = 3.0 * drag * theta_right
@@ -3575,6 +4401,7 @@ class Ver2TierBIntegrator:
             residual_local=residual_local,
             residual_harmonic=residual_harmonic,
             residual_source=residual_source,
+            scalar_metric=scalar_metric,
         )
 
     def _solve_tca_scalars(
@@ -3620,6 +4447,20 @@ class Ver2TierBIntegrator:
             float(eta),
         )
 
+    def _baryon_loading_at_eta(self, eta: float) -> tuple[float, float, float]:
+        photon = self.species[SpeciesLabel.PHOTON]
+        baryon = self.species[SpeciesLabel.BARYON]
+        rho_b = max(float(baryon.rho_rest(float(eta))), 1.0e-30)
+        rho_gamma = max(float(photon.rho_rest(float(eta))), 1.0e-30)
+        return max(3.0 * rho_b / (4.0 * rho_gamma), 1.0e-30), rho_b, rho_gamma
+
+    def _neutrino_radiation_fraction_at_eta(self, eta: float) -> tuple[float, float]:
+        photon = self.species[SpeciesLabel.PHOTON]
+        neutrino = self.species[SpeciesLabel.NEUTRINO]
+        rho_gamma = max(float(photon.rho_rest(float(eta))), 1.0e-30)
+        rho_nu = max(float(neutrino.rho_rest(float(eta))), 0.0)
+        return rho_nu, float(rho_nu / max(rho_gamma + rho_nu, 1.0e-30))
+
     def _live_backend_state_payload(
         self,
         *,
@@ -3638,14 +4479,43 @@ class Ver2TierBIntegrator:
             if temperature_visibility_source is None
             else float(temperature_visibility_source)
         )
+        R_b, rho_b, rho_gamma = self._baryon_loading_at_eta(float(eta))
+        rho_nu, R_nu = self._neutrino_radiation_fraction_at_eta(float(eta))
+        H_local = self._h_local_at(float(eta))
         return {
             "branch": str(self.background_monitor.branch),
             "geometry": self.background_monitor.initial_conditions.geometry,
             "sigma_tensor": self._sigma_tensor_at_eta(float(eta)),
-            "opacity_data": {"Gamma_T": float(gamma_t_probe)},
+            "H_local": float(H_local),
+            "k_mag": float(self.seed_k_comoving),
+            "opacity_data": {
+                "Gamma_T": float(gamma_t_probe),
+                "R_b": R_b,
+                "H_local": float(H_local),
+                "k_mag": float(self.seed_k_comoving),
+            },
             "source_tables": {
                 "visibility_amplitude": float(visibility_amplitude),
                 "source_formalism": _VISIBILITY_SOURCE_FORMALISM,
+                "rho_b": rho_b,
+                "rho_gamma": rho_gamma,
+                "rho_nu": rho_nu,
+                "R_nu": R_nu,
+                "neutrino_anisotropic_stress_owner": "species_registry_rho_nu_over_radiation",
+                "neutrino_metric_feedback_owner": (
+                    "ver2_native_integrator.main_state_scalar_metric"
+                    if bool(getattr(self.config, "co_evolve_scalar_metric", False))
+                    else "ver2_native_integrator.neutrino_quadrupole_temperature_rhs"
+                ),
+                "neutrino_metric_feedback_status": (
+                    "legacy_temperature_rhs_superseded_by_coevolved_scalar_metric"
+                    if bool(getattr(self.config, "co_evolve_scalar_metric", False))
+                    else (
+                        "quadrupole_temperature_rhs_active"
+                        if R_nu > 0.0
+                        else "zero_no_neutrino_density_evidence"
+                    )
+                ),
                 "theta_0_source": 0.0 if theta_0_source is None else float(theta_0_source),
                 "pi_bass_source": 0.0 if pi_bass_source is None else float(pi_bass_source),
                 "temperature_visibility_source": temperature_source,
@@ -5162,13 +6032,37 @@ class Ver2TierBIntegrator:
         result: IntegrationResult,
         *,
         gamma_t: float,
-    ) -> ExactThomsonSource:
+    ) -> ExactThomsonSource | AngularStokesThomsonSource:
         b_history, _ = self._ensure_live_b_mode_history(result)
         local_matter_history = self._ensure_live_local_matter_history(result)
         temperature_state = unpack_hierarchy(result.photon_T_tower[-1], result.L_max)
         polarization_state = PolarizationHierarchyState(
             E=unpack_hierarchy(result.photon_E_tower[-1], result.L_max)
         )
+        b_state = unpack_hierarchy(np.asarray(b_history[-1], dtype=np.float64), result.L_max)
+        tilted_electron = self._tilted_electron_at(float(result.eta[-1]))
+        if tilted_electron is not None:
+            directions, weights = _tensor_product_sphere_rule(result.L_max)
+            radiation_state = RadiationPSTFState(
+                I=temperature_state,
+                E=polarization_state,
+                B=b_state,
+                truncation=TruncationMetadata(
+                    L=int(result.L_max),
+                    allow_L2_override=(int(result.L_max) == 2),
+                    closure_name="runtime_full_stokes_thomson_probe",
+                ),
+            )
+            samples = reconstruct_on_sphere(radiation_state, directions)
+            return full_stokes_thomson_source(
+                directions=directions,
+                weights=weights,
+                I=np.asarray(samples["I"], dtype=np.float64),
+                Q=np.asarray(samples["E"], dtype=np.float64),
+                U=np.asarray(samples["B"], dtype=np.float64),
+                Gamma_T=float(gamma_t),
+                tilted_electron=tilted_electron,
+            )
         return exact_thomson_source(
             ElectronFrameThomsonContext(),
             temperature_state=temperature_state,
@@ -5178,8 +6072,8 @@ class Ver2TierBIntegrator:
             ),
             Gamma_T=float(gamma_t),
             direction=np.asarray(self.config.tilt_direction, dtype=np.float64),
-            tilted_electron=self._tilted_electron_at(float(result.eta[-1])),
-            b_state=unpack_hierarchy(np.asarray(b_history[-1], dtype=np.float64), result.L_max),
+            tilted_electron=None,
+            b_state=b_state,
         )
 
     def build_runtime_geodesic_probe(self):
@@ -5532,6 +6426,7 @@ class Ver2TierBIntegrator:
                     nfev=nfev,
                     njev=njev,
                     nlu=nlu,
+                    fallback_full_rhs_used=False,
                 )
 
             candidate = self._imex_candidate_scratch
@@ -5611,6 +6506,7 @@ class Ver2TierBIntegrator:
                 nfev=nfev,
                 njev=njev,
                 nlu=nlu,
+                fallback_full_rhs_used=False,
             )
 
         if not accepted:
@@ -5654,6 +6550,7 @@ class Ver2TierBIntegrator:
                         nfev=nfev,
                         njev=njev,
                         nlu=nlu,
+                        fallback_full_rhs_used=True,
                     )
         raise RuntimeError(
             "IMEX split executor failed to find a finite accepted substep "
@@ -5703,6 +6600,9 @@ class Ver2TierBIntegrator:
         message = "The IMEX split executor successfully reached the end of the integration interval."
         y_current = y_initial
         step_cache = _ImexStepCache()
+        fallback_full_rhs_steps = 0
+        min_accepted_step = float("inf")
+        max_accepted_step = 0.0
 
         for output_index, (left, right) in enumerate(
             zip(eta_nodes[:-1], eta_nodes[1:]),
@@ -5723,7 +6623,14 @@ class Ver2TierBIntegrator:
                 njev += int(outcome.njev)
                 nlu += int(outcome.nlu)
                 y_current = np.asarray(outcome.y_next, dtype=np.float64)
+                previous_eta = float(eta_current)
                 eta_current = float(outcome.eta_next)
+                accepted_step = float(eta_current - previous_eta)
+                if accepted_step > 0.0 and np.isfinite(accepted_step):
+                    min_accepted_step = min(min_accepted_step, accepted_step)
+                    max_accepted_step = max(max_accepted_step, accepted_step)
+                if bool(outcome.fallback_full_rhs_used):
+                    fallback_full_rhs_steps += 1
                 step_cache = outcome.cache
             states[output_index, :] = y_current
         return _SegmentResult(
@@ -5734,6 +6641,13 @@ class Ver2TierBIntegrator:
             nlu=nlu,
             status=0,
             message=message,
+            imex_full_rhs_fallback_steps=int(fallback_full_rhs_steps),
+            imex_min_accepted_step=(
+                None if not np.isfinite(min_accepted_step) else float(min_accepted_step)
+            ),
+            imex_max_accepted_step=(
+                None if max_accepted_step <= 0.0 else float(max_accepted_step)
+            ),
         )
 
     def _build_result(
@@ -5750,6 +6664,7 @@ class Ver2TierBIntegrator:
         residual_local_history: np.ndarray,
         residual_harmonic_history: np.ndarray,
         residual_source_history: np.ndarray,
+        scalar_metric_history: np.ndarray,
         nfev: int,
         njev: int,
         nlu: int,
@@ -5775,6 +6690,41 @@ class Ver2TierBIntegrator:
         from bass.hierarchy.event_detection import detect_critical_events
 
         events = detect_critical_events(self.species, self.species.bg_table)
+        neutrino_metric_feedback = _neutrino_metric_feedback_summary(
+            eta=eta_arr,
+            neutrino_tower=np.asarray(neutrino_tower, dtype=np.float64),
+            L_max=int(self.config.L_max),
+            background_at_eta=self._background_snapshot,
+            R_nu_at_eta=self._neutrino_radiation_fraction_at_eta,
+        )
+        scalar_metric_active = bool(getattr(self.config, "co_evolve_scalar_metric", False))
+        if scalar_metric_active:
+            neutrino_metric_feedback = {
+                **neutrino_metric_feedback,
+                "neutrino_metric_feedback_owner": (
+                    "ver2_native_integrator.main_state_scalar_metric"
+                ),
+                "neutrino_metric_feedback_status": (
+                    "legacy_temperature_rhs_superseded_by_coevolved_scalar_metric"
+                ),
+                "neutrino_metric_feedback_legacy_rhs_applied": False,
+            }
+        else:
+            neutrino_metric_feedback = {
+                **neutrino_metric_feedback,
+                "neutrino_metric_feedback_legacy_rhs_applied": True,
+            }
+        tilted_collision_rhs_active = abs(float(self.config.tilt_rapidity)) > 0.0
+        collision_temperature_rhs_owner = (
+            "full_stokes_temperature_projected_pstf"
+            if tilted_collision_rhs_active
+            else "projected_pstf_thomson_temperature"
+        )
+        collision_polarization_rhs_owner = (
+            "full_stokes_spin2_angular_polarization"
+            if tilted_collision_rhs_active
+            else "projected_pstf_thomson_polarization"
+        )
         solver_info = {
             "nfev": int(nfev),
             "njev": int(njev),
@@ -5807,9 +6757,18 @@ class Ver2TierBIntegrator:
             "seed_branch": None if self.seed_pack is None else str(self.seed_pack.branch),
             "seed_pack_metadata": {} if self.seed_pack is None else dict(self.seed_pack.metadata),
             "seed_pack_normalization": {} if self.seed_pack is None else dict(self.seed_pack.normalization),
+            "matter_seed_observables": (
+                {}
+                if self._matter_seed_observables is None
+                else {
+                    str(key): float(value)
+                    for key, value in self._matter_seed_observables.items()
+                }
+            ),
             "startup_manifold_applied": bool(self.startup_state is not None),
             "startup_gate_selected": bool(self.startup_gate.startup_selected if self.startup_gate is not None else False),
             "neutrino_hierarchy_mode": "full_pstf_with_reduced_summary_export",
+            **neutrino_metric_feedback,
             "layout_operator_consumed": bool(self.mode_ops is not None),
             "layout_collision_operator_source": (
                 "mode_ops.A_coll_diagonal"
@@ -5823,7 +6782,16 @@ class Ver2TierBIntegrator:
             ),
             "checkpoint_write_count": int(checkpoint_write_count),
             "restart_used": bool(restart_used),
-            "collision_owner": "exact_thomson_wrapper",
+            "collision_owner": (
+                "full_stokes_spin2_angular_polarization_pstf_rhs"
+                if tilted_collision_rhs_active
+                else "projected_thomson_rhs"
+            ),
+            "collision_temperature_rhs_owner": collision_temperature_rhs_owner,
+            "collision_polarization_rhs_owner": collision_polarization_rhs_owner,
+            "collision_full_stokes_temperature_rhs_active": bool(
+                tilted_collision_rhs_active
+            ),
             "residual_harmonic_orthogonal_bridge": (
                 "ros2w_sparse_reduced_joint_block"
                 if self._residual_harmonic_dof > 0 and str(self.config.solver_method).upper() == "IMEX_MIDPOINT_BDF"
@@ -5838,9 +6806,18 @@ class Ver2TierBIntegrator:
             cdm_labels=("delta_c", "v_c"),
             metadata={
                 "owner": "ver2_native_integrator.main_state_local_matter",
-                "phi_dot_source": "unavailable_assumed_zero_homogeneous_limit",
+                "phi_dot_source": (
+                    "mb95_synchronous_hdot_from_main_state_scalar_metric"
+                    if bool(getattr(self.config, "co_evolve_scalar_metric", False))
+                    else "unavailable_assumed_zero_homogeneous_limit"
+                ),
                 "photon_dipole_source": "live_runtime_ph_I_ell1_m0",
                 "gamma_t_source": "resolved_visibility_gamma_t",
+                "baryon_euler_pressure_source": (
+                    "hyrec_matter_temperature_sound_speed"
+                    if bool(getattr(self.config, "co_evolve_scalar_metric", False))
+                    else "disabled_homogeneous_bianchi_limit"
+                ),
                 "integration_scheme": "main_state_coevolved",
                 "history_sample_count": int(eta_arr.size),
             },
@@ -5851,6 +6828,53 @@ class Ver2TierBIntegrator:
                 "baryon": tuple(local_matter_history.baryon_labels),
                 "cdm": tuple(local_matter_history.cdm_labels),
             },
+        }
+        scalar_metric_history_arr = np.asarray(scalar_metric_history, dtype=np.float64)
+        if scalar_metric_history_arr.shape != (eta_arr.size, _SCALAR_METRIC_DOF):
+            raise ValueError(
+                f"scalar_metric_history must have shape "
+                f"(len(eta), {_SCALAR_METRIC_DOF})"
+            )
+        solver_info["scalar_metric_history_metadata"] = {
+            "owner": (
+                "ver2_native_integrator.main_state_scalar_metric"
+                if scalar_metric_active
+                else "disabled_zero_tail"
+            ),
+            "labels": tuple(_SCALAR_METRIC_LABELS),
+            "integration_scheme": (
+                "main_state_coevolved_mb95_synchronous"
+                if scalar_metric_active
+                else "zero_tail_not_physics_active"
+            ),
+            "metric_equations": (
+                "etak_dot=dgq/2; sigma_dot=-2Hsigma-dgs/k+etak"
+                if scalar_metric_active
+                else "disabled"
+            ),
+            "photon_neutrino_monopole_coupled": bool(scalar_metric_active),
+            "photon_neutrino_quadrupole_coupled": bool(
+                scalar_metric_active and int(self.config.L_max) >= 2
+            ),
+            "quadrupole_source_equation": (
+                "Theta2_metric=hdot/15+2*etak_dot/(5*k)"
+                if scalar_metric_active and int(self.config.L_max) >= 2
+                else "disabled"
+            ),
+            "photon_neutrino_scalar_streaming_coupled": bool(
+                scalar_metric_active
+                and getattr(self.config, "co_evolve_scalar_streaming", False)
+            ),
+            "scalar_streaming_equation": (
+                "Theta_l_stream=k/(2l+1)*(l*Theta_{l-1}-(l+1)*Theta_{l+1}); "
+                "Theta0_stream=-k*Theta1"
+                if scalar_metric_active
+                and getattr(self.config, "co_evolve_scalar_streaming", False)
+                else "disabled"
+            ),
+            "matter_continuity_coupled": bool(scalar_metric_active),
+            "baryon_euler_pressure_coupled": bool(scalar_metric_active),
+            "history_sample_count": int(eta_arr.size),
         }
         baryon_by_mode_label = {
             self._layout_covered_mode_label: np.asarray(local_matter_history.baryon_history, dtype=np.float64)
@@ -5994,6 +7018,7 @@ class Ver2TierBIntegrator:
             residual_local_history=residual_history_arr,
             residual_harmonic_history=residual_harmonic_history_arr,
             residual_source_history=residual_source_history_arr,
+            scalar_metric_history=scalar_metric_history_arr,
             baryon_local_history_by_mode_label=baryon_by_mode_label,
             cdm_local_history_by_mode_label=cdm_by_mode_label,
             source_history=np.asarray(covered_source_history, dtype=np.float64),
@@ -6033,6 +7058,7 @@ class Ver2TierBIntegrator:
             residual_segments: list[np.ndarray] = []
             residual_harmonic_segments: list[np.ndarray] = []
             residual_source_segments: list[np.ndarray] = []
+            scalar_metric_segments: list[np.ndarray] = []
         else:
             if self.startup_gate is None or self.seed_projection is None:
                 _ = self.initial_state()
@@ -6057,6 +7083,14 @@ class Ver2TierBIntegrator:
             residual_source_segments = [
                 np.asarray(restart_state.residual_source_prefix, dtype=np.float64)
             ]
+            if restart_state.scalar_metric_prefix is None:
+                scalar_metric_segments = [
+                    np.zeros((np.asarray(restart_state.eta_prefix, dtype=np.float64).size, _SCALAR_METRIC_DOF), dtype=np.float64)
+                ]
+            else:
+                scalar_metric_segments = [
+                    np.asarray(restart_state.scalar_metric_prefix, dtype=np.float64)
+                ]
 
         nfev = 0
         njev = 0
@@ -6064,6 +7098,9 @@ class Ver2TierBIntegrator:
         status = 0
         message = "The solver successfully reached the end of the integration interval."
         checkpoint_write_count = 0
+        imex_full_rhs_fallback_steps = 0
+        imex_min_accepted_step = float("inf")
+        imex_max_accepted_step = 0.0
 
         if checkpoint_every_n_steps is None or checkpoint_every_n_steps <= 0:
             if current_index < eta_out.size - 1:
@@ -6077,6 +7114,21 @@ class Ver2TierBIntegrator:
                 nfev += int(sol.nfev)
                 njev += int(sol.njev)
                 nlu += int(sol.nlu)
+                imex_full_rhs_fallback_steps += int(
+                    getattr(sol, "imex_full_rhs_fallback_steps", 0)
+                )
+                segment_min_step = getattr(sol, "imex_min_accepted_step", None)
+                segment_max_step = getattr(sol, "imex_max_accepted_step", None)
+                if segment_min_step is not None:
+                    imex_min_accepted_step = min(
+                        imex_min_accepted_step,
+                        float(segment_min_step),
+                    )
+                if segment_max_step is not None:
+                    imex_max_accepted_step = max(
+                        imex_max_accepted_step,
+                        float(segment_max_step),
+                    )
                 status = int(sol.status)
                 message = str(sol.message)
                 start_offset = 0 if len(eta_segments) == 0 else 1
@@ -6143,8 +7195,25 @@ class Ver2TierBIntegrator:
                             4 * tower_size
                             + _PRIMARY_LOCAL_DOF
                             + self._residual_local_dof
-                            + self._residual_harmonic_dof :
+                            + self._residual_harmonic_dof : 4 * tower_size
+                            + _PRIMARY_LOCAL_DOF
+                            + self._residual_local_dof
+                            + self._residual_harmonic_dof
+                            + self._residual_source_dof
                         ].T,
+                        dtype=np.float64,
+                    )[start_offset:]
+                )
+                scalar_offset = (
+                    4 * tower_size
+                    + _PRIMARY_LOCAL_DOF
+                    + self._residual_local_dof
+                    + self._residual_harmonic_dof
+                    + self._residual_source_dof
+                )
+                scalar_metric_segments.append(
+                    np.asarray(
+                        sol.y[scalar_offset : scalar_offset + _SCALAR_METRIC_DOF].T,
                         dtype=np.float64,
                     )[start_offset:]
                 )
@@ -6161,6 +7230,21 @@ class Ver2TierBIntegrator:
                 nfev += int(sol.nfev)
                 njev += int(sol.njev)
                 nlu += int(sol.nlu)
+                imex_full_rhs_fallback_steps += int(
+                    getattr(sol, "imex_full_rhs_fallback_steps", 0)
+                )
+                segment_min_step = getattr(sol, "imex_min_accepted_step", None)
+                segment_max_step = getattr(sol, "imex_max_accepted_step", None)
+                if segment_min_step is not None:
+                    imex_min_accepted_step = min(
+                        imex_min_accepted_step,
+                        float(segment_min_step),
+                    )
+                if segment_max_step is not None:
+                    imex_max_accepted_step = max(
+                        imex_max_accepted_step,
+                        float(segment_max_step),
+                    )
                 status = int(sol.status)
                 message = str(sol.message)
                 start_offset = 0 if len(eta_segments) == 0 else 1
@@ -6206,8 +7290,23 @@ class Ver2TierBIntegrator:
                         4 * tower_size
                         + _PRIMARY_LOCAL_DOF
                         + self._residual_local_dof
-                        + self._residual_harmonic_dof :
+                        + self._residual_harmonic_dof : 4 * tower_size
+                        + _PRIMARY_LOCAL_DOF
+                        + self._residual_local_dof
+                        + self._residual_harmonic_dof
+                        + self._residual_source_dof
                     ].T,
+                    dtype=np.float64,
+                )[start_offset:]
+                scalar_offset = (
+                    4 * tower_size
+                    + _PRIMARY_LOCAL_DOF
+                    + self._residual_local_dof
+                    + self._residual_harmonic_dof
+                    + self._residual_source_dof
+                )
+                scalar_metric_chunk = np.asarray(
+                    sol.y[scalar_offset : scalar_offset + _SCALAR_METRIC_DOF].T,
                     dtype=np.float64,
                 )[start_offset:]
                 eta_segments.append(eta_chunk)
@@ -6221,6 +7320,7 @@ class Ver2TierBIntegrator:
                 residual_segments.append(residual_chunk)
                 residual_harmonic_segments.append(residual_harmonic_chunk)
                 residual_source_segments.append(residual_source_chunk)
+                scalar_metric_segments.append(scalar_metric_chunk)
                 y_current = np.asarray(sol.y[:, -1], dtype=np.float64)
                 current_index = next_index
                 if checkpoint_callback is not None and current_index < eta_out.size - 1:
@@ -6241,6 +7341,7 @@ class Ver2TierBIntegrator:
                             residual_local_prefix=np.vstack(residual_segments),
                             residual_harmonic_prefix=np.vstack(residual_harmonic_segments),
                             residual_source_prefix=np.vstack(residual_source_segments),
+                            scalar_metric_prefix=np.vstack(scalar_metric_segments),
                         )
                     )
 
@@ -6256,6 +7357,11 @@ class Ver2TierBIntegrator:
             residual_local_history=np.vstack(residual_segments) if residual_segments else np.zeros((len(np.concatenate(eta_segments, axis=0)), 0), dtype=np.float64),
             residual_harmonic_history=np.vstack(residual_harmonic_segments) if residual_harmonic_segments else np.zeros((len(np.concatenate(eta_segments, axis=0)), 0), dtype=np.float64),
             residual_source_history=np.vstack(residual_source_segments) if residual_source_segments else np.zeros((len(np.concatenate(eta_segments, axis=0)), 0), dtype=np.float64),
+            scalar_metric_history=(
+                np.vstack(scalar_metric_segments)
+                if scalar_metric_segments
+                else np.zeros((len(np.concatenate(eta_segments, axis=0)), _SCALAR_METRIC_DOF), dtype=np.float64)
+            ),
             nfev=nfev,
             njev=njev,
             nlu=nlu,
@@ -6267,6 +7373,20 @@ class Ver2TierBIntegrator:
         )
         result.layout_auxiliary_bundle = self.build_layout_auxiliary_history_bundle(result)
         result.solver_info["layout_auxiliary_bundle_cached"] = True
+        result.solver_info["imex_full_rhs_fallback_steps"] = int(
+            imex_full_rhs_fallback_steps
+        )
+        result.solver_info["imex_full_rhs_fallback_used"] = (
+            int(imex_full_rhs_fallback_steps) > 0
+        )
+        result.solver_info["imex_min_accepted_step_mpc"] = (
+            None
+            if not np.isfinite(imex_min_accepted_step)
+            else float(imex_min_accepted_step)
+        )
+        result.solver_info["imex_max_accepted_step_mpc"] = (
+            None if imex_max_accepted_step <= 0.0 else float(imex_max_accepted_step)
+        )
         reionization_amplitude = (
             0.0
             if self.visibility_source.contract.events is None

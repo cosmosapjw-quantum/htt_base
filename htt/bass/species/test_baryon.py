@@ -29,13 +29,16 @@ from bass.recombination.recombination_ingest import (
     build_interpolators, load_recombination_table,
 )
 from bass.recombination.reionization import (
+    CosmologyForRecombination,
+    M_H,
     ReionizationParameters,
     cosmology_from_metadata,
+    compute_tau_dot_conformal_Mpc,
     extend_table_with_reionization,
 )
 from bass.species.background_table import build_flrw_background_table
 from bass.species.baryon import BaryonBackground
-from bass.species.constants import default_constants
+from bass.species.constants import C_LIGHT_SI, K_B_SI, default_constants
 
 
 FIXTURE_PATH = (
@@ -133,6 +136,45 @@ def test_T11_tau_dot_passthrough(bg, baryon, recomb):
     assert tau_dot_wrapper == pytest.approx(tau_dot_nominal, rel=1e-2)
 
 
+def test_T11b_early_fully_ionized_tau_dot_fallback_is_physical(bg, baryon):
+    """Early z above the HyRec fixture uses the fully-ionized opacity,
+    while the strict ``tau_dot`` table wrapper still raises."""
+
+    z_early = 15000.0
+    eta_early = bg.eta_at_a(1.0 / (1.0 + z_early))
+    with pytest.raises(ValueError, match="out of recomb table range"):
+        baryon.tau_dot(eta_early)
+
+    c = bg.constants
+    cosmo = CosmologyForRecombination(
+        h=float(c.h),
+        T_cmb=float(c.T_gamma_0_K),
+        Omega_b=float(c.Omega_b_0),
+        Y_He=float(c.Y_He),
+        Omega_m=float(c.Omega_m_0),
+        Omega_r=float(c.Omega_r_0),
+        Omega_Lambda=float(c.Omega_Lambda_0),
+    )
+    z_actual = float(np.asarray(baryon._z_of_eta(eta_early)))  # noqa: SLF001
+    expected = float(
+        compute_tau_dot_conformal_Mpc(
+            np.array([z_actual], dtype=np.float64),
+            np.array([1.0 + 2.0 * cosmo.f_He], dtype=np.float64),
+            cosmo,
+        )[0]
+    )
+
+    fallback = baryon.tau_dot_with_early_fully_ionized_fallback(eta_early)
+    assert fallback == pytest.approx(expected, rel=1.0e-12)
+    assert fallback > 0.0
+
+    eta_table = bg.eta_at_a(1.0 / (1.0 + 1000.0))
+    assert baryon.tau_dot_with_early_fully_ionized_fallback(eta_table) == pytest.approx(
+        baryon.tau_dot(eta_table),
+        rel=1.0e-12,
+    )
+
+
 # --- T-12: reionization wrapper matches extended table --------------------
 
 
@@ -186,6 +228,41 @@ def test_T24_T_m_tracks_T_gamma_at_z800(bg, baryon):
     T_m = baryon.temperature(eta_target)
     T_gamma = c.T_gamma_0_K * (1.0 + z_target)
     assert T_m == pytest.approx(T_gamma, rel=1.0e-2)
+
+
+def test_baryon_sound_speed_early_fallback_matches_coupled_gas(bg, baryon):
+    z_early = 15000.0
+    eta_early = bg.eta_at_a(1.0 / (1.0 + z_early))
+    c = default_constants()
+    cosmo = CosmologyForRecombination(
+        h=float(c.h),
+        T_cmb=float(c.T_gamma_0_K),
+        Omega_b=float(c.Omega_b_0),
+        Y_He=float(c.Y_He),
+        Omega_m=float(c.Omega_m_0),
+        Omega_r=float(c.Omega_r_0),
+        Omega_Lambda=float(c.Omega_Lambda_0),
+    )
+    z_actual = float(np.asarray(baryon._z_of_eta(eta_early)))  # noqa: SLF001
+    f_he = float(cosmo.f_He)
+    x_e = 1.0 + 2.0 * f_he
+    particle_factor = (1.0 + f_he + x_e) / (1.0 + 4.0 * f_he)
+    expected = (
+        K_B_SI
+        * float(cosmo.T_cmb)
+        * (1.0 + z_actual)
+        / (M_H * C_LIGHT_SI * C_LIGHT_SI)
+        * particle_factor
+        * (4.0 / 3.0)
+    )
+
+    assert baryon.sound_speed_sq(eta_early) == pytest.approx(expected, rel=1.0e-12)
+
+
+def test_baryon_sound_speed_table_value_is_positive_and_subrelativistic(bg, baryon):
+    eta_target = bg.eta_at_a(1.0 / (1.0 + 800.0))
+    cs2 = float(baryon.sound_speed_sq(eta_target))
+    assert 0.0 < cs2 < 1.0e-7
 
 
 # --- Construction guard + edge cases ---------------------------------------

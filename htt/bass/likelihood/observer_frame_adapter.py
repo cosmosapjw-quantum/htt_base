@@ -302,14 +302,6 @@ class ObserverFrameLikelihood:
                     for key, value in adapted_alms.items()
                 }
             forwarded.update(adapted_alms)
-        if boost.velocity > 0.0 and "axis_vector" not in forwarded and "preferred_axis" not in forwarded:
-            forwarded["axis_vector"] = np.asarray(boost.v_hat, dtype=float)
-        if (
-            boost.velocity > 0.0
-            and "amplitude" not in forwarded
-            and "anisotropy_amplitude" not in forwarded
-        ):
-            forwarded["amplitude"] = boost.velocity
         return forwarded
 
     def log_prob(self, params: dict[str, object]) -> float:
@@ -344,14 +336,6 @@ class ObserverFrameLikelihood:
         for boost in support:
             trial = dict(local)
             trial["observer_boost"] = boost
-            if "amplitude" not in trial and "anisotropy_amplitude" not in trial:
-                trial["amplitude"] = boost.velocity
-            if (
-                boost.velocity > 0.0
-                and "axis_vector" not in trial
-                and "preferred_axis" not in trial
-            ):
-                trial["axis_vector"] = np.asarray(boost.v_hat, dtype=float)
             score = self.log_prob(trial)
             if score > best_logp:
                 best_logp = score

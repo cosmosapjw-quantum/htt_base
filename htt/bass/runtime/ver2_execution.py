@@ -137,10 +137,11 @@ class RuntimeControlBlock:
 
     Round-16 (PR-S1, PR-S2, PR-S5, PR-S11, PR-S12) extension fields are
     appended at the bottom with backwards-compatible defaults. The defaults
-    preserve the Round-15 production stance (fixed-velocity tilt closure,
-    Wigner-D B-mode flagged off until PR-S11 closes, no map producer until
-    PR-S12) so existing tests continue to pass; new call sites opt into the
-    Round-16 production stance by setting the corresponding flag.
+    preserve the observer-neutral Round-15 stance while promoting the
+    Round-16 tilted-background owner to the nonperturbative King-Ellis
+    rapidity RHS. Orthogonal runs remain zero-tilt regardless of this owner;
+    tilted runs use dynamic rapidity unless a caller explicitly selects the
+    legacy fixed-velocity closure.
     """
 
     tier: SolverTier
@@ -151,7 +152,7 @@ class RuntimeControlBlock:
     atol: float
     checkpoint: CheckpointPolicy
     constraint_projection: ConstraintProjectionPolicy
-    tilt_background_owner: str = "fixed_velocity_closure"
+    tilt_background_owner: str = "nonperturbative_tilt_rhs"
     diagnostic_l2_override: bool = False
     random_seed: int | None = None
     low_resolution_reference: bool = False
@@ -163,6 +164,7 @@ class RuntimeControlBlock:
     map_output_nside: int = 0
     b_mode_projector: str = "flrw_zero_only"
     massive_neutrino_quadrature_nq: int = 50
+    cutoff_delta_tolerance: float = 7.5e-1
 
     def __post_init__(self) -> None:
         if self.multipole_cutoff < 2:
@@ -237,6 +239,11 @@ class RuntimeControlBlock:
                 "massive_neutrino_quadrature_nq must be >= 1 "
                 f"(got {self.massive_neutrino_quadrature_nq!r})"
             )
+        if self.cutoff_delta_tolerance <= 0.0 or not np.isfinite(self.cutoff_delta_tolerance):
+            raise ValueError(
+                "cutoff_delta_tolerance must be positive and finite "
+                f"(got {self.cutoff_delta_tolerance!r})"
+            )
 
 
 @dataclass(frozen=True)
@@ -292,7 +299,7 @@ class TierBExecutionTrace:
     startup_state: "QuadrupoleStartupState | None"
     seed_projection: "SeedConstraintProjection"
     geodesic_probe: "PhotonGeodesicRhs"
-    thomson_probe: "ExactThomsonSource"
+    thomson_probe: "ExactThomsonSource | AngularStokesThomsonSource"
     visibility_source: "TiltedVisibilitySource"
     canonical_projection: "CanonicalLayoutProjection"
 
@@ -1050,6 +1057,15 @@ def _production_cutoff_gate_bundle(
         for deltas in cutoff_campaign.deltas.values()
         for delta in deltas
     ]
+    max_relative_delta = max(delta_values, default=0.0)
+    cutoff_delta_tolerance = float(runtime_controls.cutoff_delta_tolerance)
+    cutoff_delta_within_tolerance = max_relative_delta <= cutoff_delta_tolerance
+    if is_development_cutoff:
+        production_cutoff_status = "development_cutoff"
+    elif cutoff_delta_within_tolerance:
+        production_cutoff_status = "production_candidate"
+    else:
+        production_cutoff_status = "cutoff_delta_exceeds_tolerance"
     return make_gate_bundle(
         "production_cutoff_gate",
         family=bianchi_type,
@@ -1061,7 +1077,8 @@ def _production_cutoff_gate_bundle(
             "baseline_cutoff": int(cutoff_campaign.spec.baseline_cutoff),
         },
         residual_summary={
-            "max_relative_delta": max(delta_values, default=0.0),
+            "max_relative_delta": max_relative_delta,
+            "cutoff_delta_tolerance": cutoff_delta_tolerance,
             "campaign_ready": bool(cutoff_campaign.ready),
             "campaign_runtime_count": float(len(cutoff_campaign.runtime_seconds)),
         },
@@ -1071,6 +1088,7 @@ def _production_cutoff_gate_bundle(
             "runtime_cutoff_is_cosmological": not is_development_cutoff,
             "baseline_cutoff_matches_runtime": int(cutoff_campaign.spec.baseline_cutoff)
             == int(runtime_controls.multipole_cutoff),
+            "cutoff_delta_within_tolerance": bool(cutoff_delta_within_tolerance),
         },
         forbidden_shortcut_checks={
             "no_development_cutoff_promoted": not is_development_cutoff,
@@ -1078,9 +1096,9 @@ def _production_cutoff_gate_bundle(
         },
         metadata={
             "closure_name": str(cutoff_campaign.spec.closure_name),
-            "production_cutoff_status": "development_cutoff"
-            if is_development_cutoff
-            else "production_candidate",
+            "production_cutoff_status": production_cutoff_status,
+            "cutoff_delta_tolerance": cutoff_delta_tolerance,
+            "max_relative_delta": max_relative_delta,
             "runtime_seconds": {
                 int(key): float(value) for key, value in cutoff_campaign.runtime_seconds.items()
             },
@@ -1090,6 +1108,7 @@ def _production_cutoff_gate_bundle(
             and cutoff_campaign.ready
             and cutoff_campaign.all_cutoffs_recorded
             and int(cutoff_campaign.spec.baseline_cutoff) == int(runtime_controls.multipole_cutoff)
+            and cutoff_delta_within_tolerance
         ),
         opened_claim="runtime cutoff policy backed by an executed convergence campaign",
     )
@@ -1532,6 +1551,17 @@ def _native_runtime_config(
         solver_method=solver_method,
         realization=realization,
     )
+    if (
+        bool(getattr(base_config, "co_evolve_scalar_metric", False))
+        and solver_method == "IMEX_MIDPOINT_BDF"
+    ):
+        # The scalar metric subsystem is explicitly coupled to monopole,
+        # quadrupole, matter-continuity, and baryon-pressure equations and is
+        # stiff near the high-z injection surface. Use the already audited
+        # full-RHS BDF path until the IMEX split has a scalar-metric implicit
+        # block and error estimator.
+        solver_method = "BDF"
+        realization = "native_scalar_metric_bdf_full_rhs"
     return (
         IntegratorConfig(
             L_max=int(base_config.L_max),
@@ -1552,6 +1582,12 @@ def _native_runtime_config(
             max_step_factor=int(getattr(base_config, "max_step_factor", 1000)),
             imex_explicit_update_limit=float(
                 getattr(base_config, "imex_explicit_update_limit", 0.05)
+            ),
+            co_evolve_scalar_metric=bool(
+                getattr(base_config, "co_evolve_scalar_metric", False)
+            ),
+            co_evolve_scalar_streaming=bool(
+                getattr(base_config, "co_evolve_scalar_streaming", False)
             ),
             adiabatic_mode_seed=bool(
                 getattr(base_config, "adiabatic_mode_seed", False)

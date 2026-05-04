@@ -1,6 +1,13 @@
 JOURNAL-GRADE AUDIT — BASS Low-ℓ Bianchi Einstein–Boltzmann Solver
 Audit scope: htt/bass/ only. Conclusions follow code, dispatch tables, gates, and tests; documentation claims are treated as hypotheses, not evidence.
 
+Supersession note (2026-05-01): this historical audit predates the dynamic
+tilt-owner promotion. Current Tier-B runtime controls default
+`tilt_background_owner` to `nonperturbative_tilt_rhs`; supported tilted runtime
+contracts use dynamic rapidity by default, while fixed velocity is explicit
+legacy diagnostic. Other unresolved findings in this historical report remain
+auditable against the current claim ledger.
+
 1. CLAIM RECONSTRUCTION (PHASE 0)
 #	Reconstructed claim	Provisional tag
 C1	1+3 PSTF / tetrad low-ℓ formulation is the authority path	partially implemented (PSTF tower layout present pack_unpack.py:19, pstf_tensor.py; but Python primary path does not yet match Rust MB-95 anchor — Δ ≈ +2.04×10¹⁰ μK² on D₂; xfail at test_d2_pstf_closure.py)

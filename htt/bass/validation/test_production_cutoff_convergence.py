@@ -89,6 +89,68 @@ def test_production_cutoff_gate_bundle_records_lmax_threshold() -> None:
     assert "cutoff_campaign" in sig.parameters
 
 
+def test_production_cutoff_gate_hard_blocks_large_relative_delta() -> None:
+    from bass.runtime.ver2_execution import (
+        CheckpointPolicy,
+        ConstraintProjectionPolicy,
+        CouplingMode,
+        FeatureStatus,
+        IntegratorFamily,
+        RuntimeControlBlock,
+        SolverTier,
+        _production_cutoff_gate_bundle,
+    )
+    from bass.spectrum.ver2_cutoff_campaign import (
+        CutoffCampaignSpec,
+        ExecutedCutoffCampaign,
+        CutoffChannelDelta,
+        MultipoleNormSummary,
+    )
+
+    controls = RuntimeControlBlock(
+        tier=SolverTier.TIER_B_PSTF,
+        integrator_family=IntegratorFamily.IMEX_SPLIT,
+        coupling_mode=CouplingMode.BACKGROUND_THEN_RADIATION,
+        multipole_cutoff=12,
+        rtol=1.0e-7,
+        atol=1.0e-10,
+        checkpoint=CheckpointPolicy(enabled=False),
+        constraint_projection=ConstraintProjectionPolicy(
+            enabled=True,
+            every_n_steps=4,
+            status=FeatureStatus.APPROXIMATE,
+        ),
+        cutoff_delta_tolerance=1.0e-3,
+    )
+    spec = CutoffCampaignSpec(
+        cutoffs=(10, 12),
+        baseline_cutoff=12,
+        closure_name="audit_delta_lock",
+    )
+    campaign = ExecutedCutoffCampaign(
+        spec=spec,
+        summaries=(
+            MultipoleNormSummary(10, {"TT": 2.0}, "audit_delta_lock"),
+            MultipoleNormSummary(12, {"TT": 1.0}, "audit_delta_lock"),
+        ),
+        deltas={
+            10: (CutoffChannelDelta("TT", 1.0, 2.0, 1.0),),
+            12: (CutoffChannelDelta("TT", 1.0, 1.0, 0.0),),
+        },
+        runtime_seconds={10: 0.1, 12: 0.2},
+    )
+
+    gate = _production_cutoff_gate_bundle(
+        bianchi_type="I",
+        branch="orthogonal",
+        runtime_controls=controls,
+        cutoff_campaign=campaign,
+    )
+    assert gate.passed is False
+    assert gate.known_limit_checks["cutoff_delta_within_tolerance"] is False
+    assert gate.metadata["production_cutoff_status"] == "cutoff_delta_exceeds_tolerance"
+
+
 @pytest.mark.slow
 @pytest.mark.xfail(
     reason=(

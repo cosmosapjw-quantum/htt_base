@@ -49,6 +49,7 @@ class TierBCheckpointRecord:
     residual_local_prefix: np.ndarray
     residual_harmonic_prefix: np.ndarray
     residual_source_prefix: np.ndarray
+    scalar_metric_prefix: np.ndarray | None = None
 
     def __post_init__(self) -> None:
         if self.schema_version != _SCHEMA_VERSION:
@@ -95,6 +96,10 @@ class TierBCheckpointRecord:
             arr = np.asarray(value, dtype=np.float64)
             if arr.ndim != 2 or arr.shape[0] != eta_prefix.size:
                 raise ValueError(f"{name} must have shape (len(eta_prefix), n_state)")
+        if self.scalar_metric_prefix is not None:
+            scalar = np.asarray(self.scalar_metric_prefix, dtype=np.float64)
+            if scalar.shape != (eta_prefix.size, 2):
+                raise ValueError("scalar_metric_prefix must have shape (len(eta_prefix), 2)")
 
     def to_restart_state(self) -> NativeTierBRestartState:
         return NativeTierBRestartState(
@@ -112,6 +117,11 @@ class TierBCheckpointRecord:
             residual_local_prefix=np.asarray(self.residual_local_prefix, dtype=np.float64),
             residual_harmonic_prefix=np.asarray(self.residual_harmonic_prefix, dtype=np.float64),
             residual_source_prefix=np.asarray(self.residual_source_prefix, dtype=np.float64),
+            scalar_metric_prefix=(
+                None
+                if self.scalar_metric_prefix is None
+                else np.asarray(self.scalar_metric_prefix, dtype=np.float64)
+            ),
         )
 
 
@@ -174,6 +184,14 @@ def write_tier_b_restart_checkpoint(
         residual_local_prefix=np.asarray(restart_state.residual_local_prefix, dtype=np.float64),
         residual_harmonic_prefix=np.asarray(restart_state.residual_harmonic_prefix, dtype=np.float64),
         residual_source_prefix=np.asarray(restart_state.residual_source_prefix, dtype=np.float64),
+        scalar_metric_prefix=(
+            np.asarray(restart_state.scalar_metric_prefix, dtype=np.float64)
+            if restart_state.scalar_metric_prefix is not None
+            else np.zeros(
+                (np.asarray(restart_state.eta_prefix, dtype=np.float64).size, 2),
+                dtype=np.float64,
+            )
+        ),
     )
     return out
 
@@ -256,5 +274,10 @@ def load_tier_b_restart_checkpoint(path: str | Path) -> TierBCheckpointRecord:
                 np.asarray(data["residual_source_prefix"], dtype=np.float64)
                 if "residual_source_prefix" in data
                 else np.zeros((eta_prefix.shape[0], residual_source_width), dtype=np.float64)
+            ),
+            scalar_metric_prefix=(
+                np.asarray(data["scalar_metric_prefix"], dtype=np.float64)
+                if "scalar_metric_prefix" in data
+                else None
             ),
         )

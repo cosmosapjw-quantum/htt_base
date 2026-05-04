@@ -504,13 +504,29 @@ def assert_publication_ready_propagator(
     return evidence
 
 
-def _source_sample_scalar(sample: Mapping[str, object], names: tuple[str, ...]) -> float:
+def _source_sample_scalar(
+    sample: Mapping[str, object],
+    names: tuple[str, ...],
+    *,
+    required: bool = False,
+    ingredient: str | None = None,
+) -> float:
     for name in names:
         if name in sample:
             value = np.asarray(sample[name], dtype=float)
             if value.ndim != 0:
                 raise ValueError(f"source_builder key {name!r} must map to a scalar")
-            return float(value)
+            scalar = float(value)
+            if not np.isfinite(scalar):
+                raise ValueError(f"source_builder key {name!r} returned a non-finite scalar")
+            return scalar
+    if required:
+        label = str(ingredient) if ingredient is not None else "|".join(names)
+        raise ValueError(
+            "missing decomposed LOS source ingredient "
+            f"{label!r}; exact matrix transport requires explicit scalar "
+            "values, including explicit zero for physically absent terms"
+        )
     return 0.0
 
 
@@ -786,6 +802,7 @@ def _build_type_i_matrix_transfer_bundle(
     ell_max: int,
     visibility_fn: Callable[[float], float],
     source_builder: Callable[[float, float], Mapping[str, object]],
+    require_complete_sources: bool = False,
 ) -> dict[str, object]:
     from bass.los.bianchi_propagator import (
         BianchiProjectorConfig,
@@ -833,7 +850,12 @@ def _build_type_i_matrix_transfer_bundle(
 
         kappa = np.asarray(
             [
-                _source_sample_scalar(sample, ("kappa", "optical_depth"))
+                _source_sample_scalar(
+                    sample,
+                    ("kappa", "optical_depth"),
+                    required=require_complete_sources,
+                    ingredient="kappa",
+                )
                 for sample in samples
             ],
             dtype=np.float64,
@@ -844,21 +866,36 @@ def _build_type_i_matrix_transfer_bundle(
             include_generic = mode != "m0"
             theta_0 = np.asarray(
                 [
-                    _source_sample_scalar(sample, _source_mode_aliases("theta_0", mode, include_generic=include_generic))
+                    _source_sample_scalar(
+                        sample,
+                        _source_mode_aliases("theta_0", mode, include_generic=include_generic),
+                        required=require_complete_sources,
+                        ingredient=f"theta_0[{mode}]",
+                    )
                     for sample in samples
                 ],
                 dtype=np.float64,
             )
             psi = np.asarray(
                 [
-                    _source_sample_scalar(sample, _source_mode_aliases("psi", mode, include_generic=include_generic))
+                    _source_sample_scalar(
+                        sample,
+                        _source_mode_aliases("psi", mode, include_generic=include_generic),
+                        required=require_complete_sources,
+                        ingredient=f"psi[{mode}]",
+                    )
                     for sample in samples
                 ],
                 dtype=np.float64,
             )
             pi = np.asarray(
                 [
-                    _source_sample_scalar(sample, _source_mode_aliases("pi", mode, include_generic=include_generic))
+                    _source_sample_scalar(
+                        sample,
+                        _source_mode_aliases("pi", mode, include_generic=include_generic),
+                        required=require_complete_sources,
+                        ingredient=f"pi[{mode}]",
+                    )
                     for sample in samples
                 ],
                 dtype=np.float64,
@@ -868,6 +905,8 @@ def _build_type_i_matrix_transfer_bundle(
                     _source_sample_scalar(
                         sample,
                         _source_mode_aliases("phi_dot_plus_psi_dot", mode, include_generic=include_generic),
+                        required=require_complete_sources,
+                        ingredient=f"phi_dot_plus_psi_dot[{mode}]",
                     )
                     for sample in samples
                 ],
@@ -875,7 +914,12 @@ def _build_type_i_matrix_transfer_bundle(
             )
             v_b = np.asarray(
                 [
-                    _source_sample_scalar(sample, _source_mode_aliases("v_b", mode, include_generic=include_generic))
+                    _source_sample_scalar(
+                        sample,
+                        _source_mode_aliases("v_b", mode, include_generic=include_generic),
+                        required=require_complete_sources,
+                        ingredient=f"v_b[{mode}]",
+                    )
                     for sample in samples
                 ],
                 dtype=np.float64,
@@ -931,6 +975,15 @@ def _build_type_i_matrix_transfer_bundle(
         "preferred_axis": np.array([0.0, 0.0, 1.0], dtype=np.float64),
         "anisotropy_strength": 0.0,
         "rotation_strength": 0.0,
+        "temperature_source_doppler_derivative": (
+            "fourth_order_uniform_eta_finite_difference"
+            "_with_variable_grid_gradient_fallback"
+        ),
+        "source_completeness_policy": (
+            "explicit_required_fail_closed"
+            if require_complete_sources
+            else "legacy_missing_components_zero"
+        ),
     }
 
 
@@ -943,6 +996,7 @@ def _build_non_type_i_matrix_transfer_bundle(
     ell_max: int,
     visibility_fn: Callable[[float], float],
     source_builder: Callable[[float, float], Mapping[str, object]],
+    require_complete_sources: bool = False,
 ) -> dict[str, object]:
     base_bundle = _build_type_i_matrix_transfer_bundle(
         structure,
@@ -951,6 +1005,7 @@ def _build_non_type_i_matrix_transfer_bundle(
         ell_max=ell_max,
         visibility_fn=visibility_fn,
         source_builder=source_builder,
+        require_complete_sources=require_complete_sources,
     )
     features = _structure_features(structure, kernel_family=kernel_family)
     modifiers = _kernel_family_modifiers(kernel_family)
@@ -1175,6 +1230,10 @@ def build_source_propagator(
     evidence = propagator_evidence_for_config(config, structure=structure)
     if config.kernel_family == "bianchi_i_matrix_exact" and structure.label != "I":
         raise ValueError("bianchi_i_matrix_exact may only be used with Bianchi Type I")
+    require_complete_sources = (
+        config.temperature_transport is FeatureStatus.EXACT
+        or config.polarization_rotation is FeatureStatus.EXACT
+    )
     if structure.label == "I" and config.kernel_family == "bianchi_i_matrix_exact":
         transfer_bundle = _build_type_i_matrix_transfer_bundle(
             structure,
@@ -1183,6 +1242,7 @@ def build_source_propagator(
             ell_max=int(ell_max),
             visibility_fn=visibility_fn,
             source_builder=source_builder,
+            require_complete_sources=require_complete_sources,
         )
     elif config.kernel_family in _NON_TYPE_I_KERNEL_FAMILIES:
         if structure.label == "I":
@@ -1197,6 +1257,7 @@ def build_source_propagator(
             ell_max=int(ell_max),
             visibility_fn=visibility_fn,
             source_builder=source_builder,
+            require_complete_sources=require_complete_sources,
         )
     else:
         transfer_bundle = build_lowell_line_of_sight_propagator(

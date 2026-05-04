@@ -310,12 +310,28 @@ class TestBuildInterpolators:
     def test_splines_exact_at_grid_points(self):
         tab = make_synthetic_tanh_table()
         interp = build_interpolators(tab)
-        # At grid points, cubic spline interp should be exact
+        # At grid points, the shape-preserving interpolator should be exact
         test_z = tab.z[50]
         assert abs(interp.query_x_e(test_z) - tab.x_e[50]) < 1e-12
         assert abs(interp.query_T_m(test_z) - tab.T_m[50]) < 1e-10
         assert abs(interp.query_tau_dot(test_z) - tab.tau_dot[50]) < 1e-12
         assert abs(interp.query_kappa(test_z) - tab.kappa[50]) < 1e-12
+
+    def test_interpolators_preserve_positive_opacity_and_monotone_kappa(self):
+        z = np.array([1.0, 4.0, 6.0, 20.0, 100.0], dtype=float)
+        tab = RecombinationTable(
+            z=z,
+            x_e=np.array([0.001, 0.01, 0.05, 0.2, 1.0], dtype=float),
+            T_m=2.725 * (1.0 + z),
+            tau_dot=np.array([0.0, 1.0e-8, 1.0e-4, 2.0e-4, 3.0e-4]),
+            kappa=np.array([0.0, 1.0e-7, 2.0e-3, 8.0e-3, 1.0e-1]),
+        )
+        interp = build_interpolators(tab)
+        z_query = np.linspace(tab.z_min, tab.z_max, 512)
+        tau_dot = interp.query_tau_dot(z_query)
+        kappa = interp.query_kappa(z_query)
+        assert np.all(tau_dot >= -1.0e-15)
+        assert np.all(np.diff(kappa) >= -1.0e-15)
 
 
 # ============================================================================

@@ -26,10 +26,16 @@ from typing import Literal, Optional, Union
 import numpy as np
 
 from bass.recombination.recombination_ingest import RecombinationInterp
+from bass.recombination.reionization import (
+    CosmologyForRecombination,
+    M_H,
+    compute_tau_dot_conformal_Mpc,
+)
 from bass.species.base import (
     SpeciesBackground, SpeciesLabel, _as_1d, _squeeze_if_scalar,
 )
 from bass.species.background_table import FLRWBackgroundTable
+from bass.species.constants import C_LIGHT_SI, K_B_SI
 
 
 _Number = Union[float, np.ndarray]
@@ -173,6 +179,75 @@ class BaryonBackground(SpeciesBackground):
         """
         return self._query_with_eta_context(eta, self._recomb.query_T_m, "T_m")
 
+    def sound_speed_sq(self, eta: _Number) -> _Number:
+        """Perturbative baryon sound speed squared ``c_s,b²`` in units of ``c²``.
+
+        The background remains pressureless, but scalar perturbations need the
+        MB/CAMB baryon pressure-gradient source. We use the standard ideal-gas
+        form
+
+            c_s,b² = (k_B T_m / m_H c²)
+                     * (1 + f_He + x_e) / (1 + 4 f_He)
+                     * (1 - d ln T_m / 3 d ln a)
+
+        where ``x_e`` is free electrons per hydrogen nucleus and
+        ``f_He = n_He/n_H``. Inside the HyRec table, ``T_m`` and ``x_e`` come
+        from the table. Above the table ceiling, the physically coupled
+        radiation-era fallback is ``T_m = T_gamma`` and
+        ``x_e = 1 + 2 f_He``, giving ``d ln T_m / d ln a = -1``.
+
+        Reference: Ma & Bertschinger 1995 Eq. 68 and CAMB baryon sound-speed
+        convention.
+        """
+
+        arr_eta, scalar = _as_1d(eta)
+        z = np.asarray(self._z_of_eta(arr_eta), dtype=np.float64)
+        z_min = float(self._recomb.table.z_min)
+        z_max = float(self._recomb.table.z_max)
+        early_mask = z > z_max
+        table_mask = (z >= z_min) & (z <= z_max)
+        unsupported_mask = ~(early_mask | table_mask)
+        if np.any(unsupported_mask):
+            # Preserve the strict HyRec diagnostic for late unsupported queries.
+            self.temperature(arr_eta[unsupported_mask])
+
+        cosmo = self._cosmology_for_recombination()
+        f_he = float(cosmo.f_He)
+        T_m = np.empty_like(z, dtype=np.float64)
+        x_e = np.empty_like(z, dtype=np.float64)
+        dlnT_dlnA = np.empty_like(z, dtype=np.float64)
+
+        if np.any(table_mask):
+            z_table = z[table_mask]
+            T_m[table_mask] = np.asarray(
+                self._recomb.query_T_m(z_table),
+                dtype=np.float64,
+            )
+            x_e[table_mask] = np.asarray(
+                self._recomb.query_x_e(z_table),
+                dtype=np.float64,
+            )
+            dlnT_dlnA[table_mask] = self._dln_temperature_dln_scale_factor(z_table)
+
+        if np.any(early_mask):
+            z_early = z[early_mask]
+            T_m[early_mask] = float(cosmo.T_cmb) * (1.0 + z_early)
+            x_e[early_mask] = 1.0 + 2.0 * f_he
+            dlnT_dlnA[early_mask] = -1.0
+
+        particle_factor = (1.0 + f_he + x_e) / (1.0 + 4.0 * f_he)
+        derivative_factor = 1.0 - dlnT_dlnA / 3.0
+        cs2 = (
+            K_B_SI
+            * T_m
+            / (M_H * C_LIGHT_SI * C_LIGHT_SI)
+            * particle_factor
+            * derivative_factor
+        )
+        if not np.all(np.isfinite(cs2)) or np.any(cs2 < 0.0):
+            raise RuntimeError("baryon sound_speed_sq became non-finite or negative")
+        return _squeeze_if_scalar(cs2, scalar)
+
     # --- Extra helpers (not part of the abstract interface) ----------------
 
     def x_e(self, eta: _Number) -> _Number:
@@ -196,6 +271,72 @@ class BaryonBackground(SpeciesBackground):
         return self._query_with_eta_context(
             eta, self._recomb.query_tau_dot, "tau_dot",
         )
+
+    def tau_dot_fully_ionized(self, eta: _Number) -> _Number:
+        """Fully-ionized high-z conformal Thomson opacity [Mpc⁻¹].
+
+        This is the analytic early-time opacity
+
+            τ̇ = a n_H,0 (1 + 2 f_He) (1 + z)^3 σ_T c
+
+        evaluated from the same Planck-2018 species constants as the
+        recombination fixture. It is intentionally separate from
+        ``tau_dot``: the HyRec table remains the authority inside its
+        support, while this helper supplies the physical asymptotic
+        opacity for deep pre-recombination starts where the table has no
+        rows.
+        """
+
+        arr_eta, scalar = _as_1d(eta)
+        z = np.asarray(self._z_of_eta(arr_eta), dtype=np.float64)
+        cosmo = self._cosmology_for_recombination()
+        x_e_full = np.full_like(z, 1.0 + 2.0 * cosmo.f_He, dtype=np.float64)
+        out = np.asarray(
+            compute_tau_dot_conformal_Mpc(z, x_e_full, cosmo),
+            dtype=np.float64,
+        )
+        return _squeeze_if_scalar(out, scalar)
+
+    def tau_dot_with_early_fully_ionized_fallback(self, eta: _Number) -> _Number:
+        """HyRec τ̇ with a physical fully-ionized fallback above z_max.
+
+        Inside the recombination table support this returns exactly the
+        same values as ``tau_dot``. For earlier times
+        ``z > recombination.table.z_max`` it uses the fully-ionized
+        analytic opacity instead of silently returning zero. Late-time
+        requests below the table's z_min still raise through the normal
+        ``tau_dot`` path because no late extrapolation is justified.
+        """
+
+        arr_eta, scalar = _as_1d(eta)
+        z = np.asarray(self._z_of_eta(arr_eta), dtype=np.float64)
+        z_min = float(self._recomb.table.z_min)
+        z_max = float(self._recomb.table.z_max)
+        early_mask = z > z_max
+        table_mask = (z >= z_min) & (z <= z_max)
+        unsupported_mask = ~(early_mask | table_mask)
+        if np.any(unsupported_mask):
+            # Re-enter the strict wrapper to preserve its η/z diagnostic.
+            return self.tau_dot(eta)
+
+        out = np.empty_like(z, dtype=np.float64)
+        if np.any(table_mask):
+            out[table_mask] = np.asarray(
+                self._recomb.query_tau_dot(z[table_mask]),
+                dtype=np.float64,
+            )
+        if np.any(early_mask):
+            cosmo = self._cosmology_for_recombination()
+            x_e_full = np.full(
+                int(np.count_nonzero(early_mask)),
+                1.0 + 2.0 * cosmo.f_He,
+                dtype=np.float64,
+            )
+            out[early_mask] = np.asarray(
+                compute_tau_dot_conformal_Mpc(z[early_mask], x_e_full, cosmo),
+                dtype=np.float64,
+            )
+        return _squeeze_if_scalar(out, scalar)
 
     def kappa(self, eta: _Number) -> _Number:
         """Cumulative optical depth κ(η) from today's observer (Kolb §5.4).
@@ -279,6 +420,51 @@ class BaryonBackground(SpeciesBackground):
         """η → z via the shared FLRW table."""
         a = np.asarray(self._bg.interp_a(eta), dtype=np.float64)
         return 1.0 / a - 1.0
+
+    def _dln_temperature_dln_scale_factor(self, z: np.ndarray) -> np.ndarray:
+        """Finite-difference ``d ln T_m / d ln a`` inside the HyRec table."""
+
+        z_arr = np.asarray(z, dtype=np.float64)
+        z_min = float(self._recomb.table.z_min)
+        z_max = float(self._recomb.table.z_max)
+        eps = 1.0e-3
+        out = np.empty_like(z_arr, dtype=np.float64)
+        for index, z_value in np.ndenumerate(z_arr):
+            a_mid = 1.0 / (1.0 + float(z_value))
+            a_left = a_mid * np.exp(-eps)
+            a_right = a_mid * np.exp(eps)
+            z_left = 1.0 / a_left - 1.0
+            z_right = 1.0 / a_right - 1.0
+            if z_left <= z_max and z_right >= z_min:
+                z0, z1 = z_left, z_right
+            elif z_left > z_max:
+                z0, z1 = float(z_value), max(z_right, z_min)
+            else:
+                z0, z1 = min(z_left, z_max), float(z_value)
+            a0 = 1.0 / (1.0 + z0)
+            a1 = 1.0 / (1.0 + z1)
+            T0 = float(np.asarray(self._recomb.query_T_m(z0)))
+            T1 = float(np.asarray(self._recomb.query_T_m(z1)))
+            if T0 <= 0.0 or T1 <= 0.0:
+                raise RuntimeError(
+                    f"matter temperature must stay positive, got {T0!r}, {T1!r}"
+                )
+            out[index] = (np.log(T1) - np.log(T0)) / (np.log(a1) - np.log(a0))
+        return out
+
+    def _cosmology_for_recombination(self) -> CosmologyForRecombination:
+        """Build the recombination microphysics cosmology from species SSOT."""
+
+        c = self._bg.constants
+        return CosmologyForRecombination(
+            h=float(c.h),
+            T_cmb=float(c.T_gamma_0_K),
+            Omega_b=float(c.Omega_b_0),
+            Y_He=float(c.Y_He),
+            Omega_m=float(c.Omega_m_0),
+            Omega_r=float(c.Omega_r_0),
+            Omega_Lambda=float(c.Omega_Lambda_0),
+        )
 
     def _query_with_eta_context(
         self,

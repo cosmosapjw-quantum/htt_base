@@ -792,7 +792,9 @@ def _representative_family_sweep_bundle(
         or (
             run.solver_output.metadata["b_mode_payload_status"] == "zero_filled_not_evolved"
             and run.trace.canonical_projection.sector_status["ph_B"] == "zero_filled_not_evolved"
-            and run.solver_output.metadata["b_mode_output_support"] == "known_zero_not_evolved"
+            and run.solver_output.metadata["b_mode_output_support"]
+            == "known_zero_source_projection_not_evolved"
+            and bool(run.solver_output.metadata["b_mode_source_projection_known_zero"])
             and not bool(run.solver_output.metadata["b_mode_runtime_available"])
         )
         for run in orthogonal_runs.values()

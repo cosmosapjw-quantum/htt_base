@@ -124,10 +124,10 @@ def test_write_output_archive_writes_required_schema(tmp_path: Path) -> None:
     assert summary["stochastic_channel_status"] == "placeholder"
     assert summary["b_mode_output_support"] == "unknown"
     assert summary["production_cutoff_status"] == "production_candidate"
-    assert summary["fitting_allowed"] is True
-    assert summary["diagnostic_only"] is False
-    assert summary["gate_status"]["output_split_gate"] == "open"
-    assert summary["gate_status"]["fitting_gate"] == "closed"
+    assert summary["fitting_allowed"] is False
+    assert summary["diagnostic_only"] is True
+    assert summary["gate_status"]["output_split_gate"] == "closed"
+    assert summary["gate_status"]["fitting_gate"] == "unavailable"
     assert summary["gate_score"] == 8
     assert "output_split_gate" in summary["bundle_gates"]
 
@@ -151,7 +151,9 @@ def test_write_output_archive_writes_required_schema(tmp_path: Path) -> None:
     )
     assert boost_meta["component_kind"] == "boost"
 
-    validated = validate_alm_archive(tmp_path, require_fitting_ready=True)
+    with pytest.raises(ValueError, match="not fitting-ready"):
+        validate_alm_archive(tmp_path, require_fitting_ready=True)
+    validated = validate_alm_archive(tmp_path)
     assert validated["archive_valid"] is True
     assert validated["lmax"] == 2
     assert validated["component_kinds"] == {
@@ -159,8 +161,29 @@ def test_write_output_archive_writes_required_schema(tmp_path: Path) -> None:
         "stochastic": "stochastic",
         "boost": "boost",
     }
-    assert validated["fitting_allowed"] is True
+    assert validated["fitting_allowed"] is False
     np.testing.assert_allclose(validated["power_by_l"]["boost_T"], 0.0)
+
+
+def test_write_output_archive_opens_fitting_only_with_explicit_stochastic_component(
+    tmp_path: Path,
+) -> None:
+    output = _solver_output()
+    lmax = int(output.metadata["multipole_cutoff"])
+    size = (lmax + 1) ** 2
+    write_output_archive(
+        output,
+        tmp_path,
+        gate_registry=_gate_registry(),
+        stochastic_alm_T=np.zeros(size, dtype=np.float64),
+        stochastic_alm_E=np.zeros(size, dtype=np.float64),
+        stochastic_alm_B=np.zeros(size, dtype=np.float64),
+    )
+    summary = json.loads((tmp_path / "solver_summary.json").read_text(encoding="utf-8"))
+    assert summary["stochastic_channel_status"] == "implemented"
+    assert summary["gate_status"]["output_split_gate"] == "open"
+    assert summary["fitting_allowed"] is True
+    assert validate_alm_archive(tmp_path, require_fitting_ready=True)["fitting_allowed"] is True
 
 
 def test_alm_power_by_l_uses_ell_m_blocks() -> None:
@@ -235,5 +258,5 @@ def test_write_output_archive_uses_embedded_upstream_gate_registry(tmp_path: Pat
     write_output_archive(output, tmp_path)
     summary = json.loads((tmp_path / "solver_summary.json").read_text(encoding="utf-8"))
     assert summary["gate_status"]["authority_freeze"] == "open"
-    assert summary["gate_status"]["output_split_gate"] == "open"
+    assert summary["gate_status"]["output_split_gate"] == "closed"
     assert "authority_freeze" in summary["bundle_gates"]

@@ -16,6 +16,38 @@ from bass.los.ver2_source_propagator import build_source_propagator_stub
 from bass.runtime import FeatureStatus
 
 
+def _complete_los_source(
+    *,
+    theta_0: float,
+    pi_m0: float,
+    kappa: float = 0.0,
+    psi_m0: float = 0.0,
+    isw_m0: float = 0.0,
+    v_b_m0: float = 0.0,
+    pi_m_plus2: float = 0.0,
+    pi_m_minus2: float = 0.0,
+) -> dict[str, float]:
+    return {
+        "kappa": float(kappa),
+        "optical_depth": float(kappa),
+        "theta_0_m0": float(theta_0),
+        "psi_m0": float(psi_m0),
+        "phi_dot_plus_psi_dot_m0": float(isw_m0),
+        "v_b_m0": float(v_b_m0),
+        "pi_m0": float(pi_m0),
+        "theta_0_m_plus2": 0.0,
+        "psi_m_plus2": 0.0,
+        "phi_dot_plus_psi_dot_m_plus2": 0.0,
+        "v_b_m_plus2": 0.0,
+        "pi_m_plus2": float(pi_m_plus2),
+        "theta_0_m_minus2": 0.0,
+        "psi_m_minus2": 0.0,
+        "phi_dot_plus_psi_dot_m_minus2": 0.0,
+        "v_b_m_minus2": 0.0,
+        "pi_m_minus2": float(pi_m_minus2),
+    }
+
+
 def test_flrw_validation_mode_requires_explicit_validation_flag() -> None:
     with pytest.raises(ValueError, match="flrw_validation_only"):
         SourcePropagatorConfig(
@@ -115,22 +147,68 @@ def test_type_i_exact_builder_uses_matrix_backend_and_zero_b_modes() -> None:
         k_grid_mpc=np.geomspace(1.0e-3, 1.0e-2, 4),
         ell_max=3,
         visibility_fn=lambda eta: float(np.exp(-0.5 * (eta - 2.0) ** 2)),
-        source_builder=lambda eta, k: {
-            "theta_0": float(np.exp(-0.25 * (eta - 2.0) ** 2) * np.cos(0.1 * k)),
-            "pi_m0": float(0.1 * np.cos(0.1 * k)),
-            "pi_m_plus2": float(0.03 * np.exp(-0.25 * (eta - 2.0) ** 2)),
-            "pi_m_minus2": float(0.03 * np.exp(-0.25 * (eta - 2.0) ** 2)),
-        },
+        source_builder=lambda eta, k: _complete_los_source(
+            theta_0=float(np.exp(-0.25 * (eta - 2.0) ** 2) * np.cos(0.1 * k)),
+            pi_m0=float(0.1 * np.cos(0.1 * k)),
+            pi_m_plus2=float(0.03 * np.exp(-0.25 * (eta - 2.0) ** 2)),
+            pi_m_minus2=float(0.03 * np.exp(-0.25 * (eta - 2.0) ** 2)),
+        ),
     )
     assert propagator.config.kernel_family == "bianchi_i_matrix_exact"
     assert propagator.transfer_bundle["structure_label"] == "I"
     assert propagator.transfer_bundle["propagator_exactness"] == "exact_type_i_matrix"
+    assert propagator.transfer_bundle["source_completeness_policy"] == "explicit_required_fail_closed"
+    assert propagator.transfer_bundle["temperature_source_doppler_derivative"] == (
+        "fourth_order_uniform_eta_finite_difference_with_variable_grid_gradient_fallback"
+    )
     assert propagator.transfer_bundle["publication_output_claim_allowed"] is True
     assert propagator.evidence["output_claim_allowed"] is True
     np.testing.assert_allclose(
         np.asarray(propagator.transfer_bundle["transfer_B"], dtype=np.float64),
         0.0,
     )
+
+
+def test_exact_matrix_transport_rejects_missing_decomposed_los_sources() -> None:
+    with pytest.raises(ValueError, match="missing decomposed LOS source ingredient"):
+        build_source_propagator(
+            SourcePropagatorConfig(
+                mode=PropagatorMode.ANISOTROPIC_FORWARD,
+                temperature_transport=FeatureStatus.EXACT,
+                polarization_rotation=FeatureStatus.DISABLED,
+                kernel_family="bianchi_i_matrix_exact",
+            ),
+            structure=get_type("I"),
+            eta_grid_mpc=np.linspace(0.0, 4.0, 5),
+            k_grid_mpc=np.geomspace(1.0e-3, 1.0e-2, 4),
+            ell_max=3,
+            visibility_fn=lambda eta: float(np.exp(-0.5 * (eta - 2.0) ** 2)),
+            source_builder=lambda eta, k: {
+                "theta_0": float(np.exp(-0.25 * (eta - 2.0) ** 2)),
+                "pi_m0": 0.1,
+            },
+        )
+
+
+def test_exact_matrix_transport_rejects_nonfinite_decomposed_los_sources() -> None:
+    with pytest.raises(ValueError, match="non-finite scalar"):
+        build_source_propagator(
+            SourcePropagatorConfig(
+                mode=PropagatorMode.ANISOTROPIC_FORWARD,
+                temperature_transport=FeatureStatus.EXACT,
+                polarization_rotation=FeatureStatus.DISABLED,
+                kernel_family="bianchi_i_matrix_exact",
+            ),
+            structure=get_type("I"),
+            eta_grid_mpc=np.linspace(0.0, 4.0, 5),
+            k_grid_mpc=np.geomspace(1.0e-3, 1.0e-2, 4),
+            ell_max=3,
+            visibility_fn=lambda eta: float(np.exp(-0.5 * (eta - 2.0) ** 2)),
+            source_builder=lambda eta, k: _complete_los_source(
+                theta_0=np.nan,
+                pi_m0=0.1,
+            ),
+        )
 
 
 def test_publication_ready_assertion_accepts_only_exact_type_i_path() -> None:
@@ -230,10 +308,10 @@ def test_type_v_matrix_path_applies_open_hyperbolic_envelope() -> None:
 
     def source(eta: float, k: float) -> dict[str, float]:
         env = float(np.exp(-0.5 * (eta - 3.0) ** 2))
-        return {
-            "theta_0": env * float(np.cos(0.1 * k)),
-            "pi_m0": 0.1 * env,
-        }
+        return _complete_los_source(
+            theta_0=env * float(np.cos(0.1 * k)),
+            pi_m0=0.1 * env,
+        )
 
     type_v = build_source_propagator(
         SourcePropagatorConfig(
@@ -316,10 +394,10 @@ def test_type_iii_matrix_path_applies_hyperbolic_branch_transport() -> None:
 
     def source(eta: float, k: float) -> dict[str, float]:
         env = float(np.exp(-0.5 * (eta - 3.0) ** 2))
-        return {
-            "theta_0": env * float(np.cos(0.1 * k)),
-            "pi_m0": 0.1 * env,
-        }
+        return _complete_los_source(
+            theta_0=env * float(np.cos(0.1 * k)),
+            pi_m0=0.1 * env,
+        )
 
     type_iii = build_source_propagator(
         SourcePropagatorConfig(
@@ -378,10 +456,10 @@ def test_type_iv_matrix_path_applies_solvable_edge_transport() -> None:
 
     def source(eta: float, k: float) -> dict[str, float]:
         env = float(np.exp(-0.5 * (eta - 3.0) ** 2))
-        return {
-            "theta_0": env * float(np.cos(0.1 * k)),
-            "pi_m0": 0.1 * env,
-        }
+        return _complete_los_source(
+            theta_0=env * float(np.cos(0.1 * k)),
+            pi_m0=0.1 * env,
+        )
 
     type_iv = build_source_propagator(
         SourcePropagatorConfig(
@@ -441,12 +519,12 @@ def test_type_vii0_matrix_path_applies_helical_spin2_transport() -> None:
 
     def source(eta: float, k: float) -> dict[str, float]:
         env = float(np.exp(-0.5 * (eta - 3.0) ** 2))
-        return {
-            "theta_0": env * float(np.cos(0.1 * k)),
-            "pi_m0": 0.1 * env,
-            "pi_m_plus2": 0.04 * env,
-            "pi_m_minus2": -0.03 * env,
-        }
+        return _complete_los_source(
+            theta_0=env * float(np.cos(0.1 * k)),
+            pi_m0=0.1 * env,
+            pi_m_plus2=0.04 * env,
+            pi_m_minus2=-0.03 * env,
+        )
 
     vii0 = build_source_propagator(
         SourcePropagatorConfig(
@@ -500,12 +578,12 @@ def test_type_viih_matrix_path_applies_open_helical_spin2_transport() -> None:
 
     def source(eta: float, k: float) -> dict[str, float]:
         env = float(np.exp(-0.5 * (eta - 3.0) ** 2))
-        return {
-            "theta_0": env * float(np.cos(0.1 * k)),
-            "pi_m0": 0.1 * env,
-            "pi_m_plus2": 0.04 * env,
-            "pi_m_minus2": -0.03 * env,
-        }
+        return _complete_los_source(
+            theta_0=env * float(np.cos(0.1 * k)),
+            pi_m0=0.1 * env,
+            pi_m_plus2=0.04 * env,
+            pi_m_minus2=-0.03 * env,
+        )
 
     viih = build_source_propagator(
         SourcePropagatorConfig(
@@ -561,10 +639,10 @@ def test_type_ii_matrix_path_applies_nilpotent_scalar_to_tensor_transport() -> N
 
     def source(eta: float, k: float) -> dict[str, float]:
         env = float(np.exp(-0.5 * (eta - 3.0) ** 2))
-        return {
-            "theta_0": env * float(np.cos(0.1 * k)),
-            "pi_m0": 0.1 * env,
-        }
+        return _complete_los_source(
+            theta_0=env * float(np.cos(0.1 * k)),
+            pi_m0=0.1 * env,
+        )
 
     type_ii = build_source_propagator(
         SourcePropagatorConfig(
@@ -619,10 +697,10 @@ def test_type_vi0_matrix_path_applies_directional_even_tensor_transport() -> Non
 
     def source(eta: float, k: float) -> dict[str, float]:
         env = float(np.exp(-0.5 * (eta - 3.0) ** 2))
-        return {
-            "theta_0": env * float(np.cos(0.1 * k)),
-            "pi_m0": 0.1 * env,
-        }
+        return _complete_los_source(
+            theta_0=env * float(np.cos(0.1 * k)),
+            pi_m0=0.1 * env,
+        )
 
     vi0 = build_source_propagator(
         SourcePropagatorConfig(
@@ -682,10 +760,10 @@ def test_type_vih_matrix_path_applies_negative_h_branch_transport() -> None:
 
     def source(eta: float, k: float) -> dict[str, float]:
         env = float(np.exp(-0.5 * (eta - 3.0) ** 2))
-        return {
-            "theta_0": env * float(np.cos(0.1 * k)),
-            "pi_m0": 0.1 * env,
-        }
+        return _complete_los_source(
+            theta_0=env * float(np.cos(0.1 * k)),
+            pi_m0=0.1 * env,
+        )
 
     vih = build_source_propagator(
         SourcePropagatorConfig(
@@ -746,10 +824,10 @@ def test_type_viii_matrix_path_applies_sl2r_noncompact_transport() -> None:
 
     def source(eta: float, k: float) -> dict[str, float]:
         env = float(np.exp(-0.5 * (eta - 3.0) ** 2))
-        return {
-            "theta_0": env * float(np.cos(0.1 * k)),
-            "pi_m0": 0.1 * env,
-        }
+        return _complete_los_source(
+            theta_0=env * float(np.cos(0.1 * k)),
+            pi_m0=0.1 * env,
+        )
 
     viii = build_source_propagator(
         SourcePropagatorConfig(
@@ -815,12 +893,12 @@ def test_type_ix_matrix_path_applies_compact_su2_transport() -> None:
 
     def source(eta: float, k: float) -> dict[str, float]:
         env = float(np.exp(-0.5 * (eta - 3.0) ** 2))
-        return {
-            "theta_0": env * float(np.cos(0.1 * k)),
-            "pi_m0": 0.1 * env,
-            "pi_m_plus2": 0.04 * env,
-            "pi_m_minus2": -0.03 * env,
-        }
+        return _complete_los_source(
+            theta_0=env * float(np.cos(0.1 * k)),
+            pi_m0=0.1 * env,
+            pi_m_plus2=0.04 * env,
+            pi_m_minus2=-0.03 * env,
+        )
 
     ix = build_source_propagator(
         SourcePropagatorConfig(

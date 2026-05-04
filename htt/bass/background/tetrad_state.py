@@ -67,10 +67,16 @@ from typing import Optional
 
 import numpy as np
 
-from bass.background.bianchi_types import StructureConstants
+from bass.background.bianchi_types import (
+    BianchiAlgebra,
+    StructureConstants,
+    build_bianchi_algebra,
+    build_structure_tensor,
+)
 from bass.background.einstein_bianchi import (
     BianchiBackgroundState, BianchiCosmology, solve_bianchi_background,
 )
+from bass.background.geometry import spatial_ricci_from_connection
 
 
 __all__ = [
@@ -136,6 +142,39 @@ _STATUS_DISPATCH = {
 }
 
 
+def _algebra_from_structure(structure: StructureConstants) -> BianchiAlgebra:
+    """Build the canonical connection algebra from legacy constants."""
+
+    template = build_bianchi_algebra(structure.label)
+    if structure.is_class_a:
+        a_vec = np.zeros(3, dtype=np.float64)
+        n_mat = np.diag([structure.n1, structure.n2, structure.n3]).astype(np.float64)
+    else:
+        # Legacy StructureConstants store the Pontzen-Challinor class-B
+        # frame with a_alpha on the second axis. The VER2 geometry
+        # connection route uses the canonical axis with a_alpha on the
+        # first axis, matching build_bianchi_algebra.
+        a_vec = np.array([structure.a_twist, 0.0, 0.0], dtype=np.float64)
+        n_mat = np.diag([0.0, structure.n1, structure.n3]).astype(np.float64)
+    C = build_structure_tensor(a_vec, n_mat)
+    h_parameter = (
+        None
+        if structure.label in {"FLRW", "I", "II", "IV", "V", "VI_0", "VII_0", "VIII", "IX"}
+        else structure.h_parameter
+    )
+    return BianchiAlgebra(
+        type_name=structure.label,
+        a=a_vec,
+        n=n_mat,
+        C=C,
+        h_parameter=h_parameter,
+        class_label="A" if structure.is_class_a else "B",
+        h_convention=template.h_convention,
+        axis_permutation=template.axis_permutation,
+        branch_policy=template.branch_policy,
+    )
+
+
 def anisotropic_3_curvature(
     structure: StructureConstants,
     a: float,
@@ -153,25 +192,11 @@ def anisotropic_3_curvature(
     enters the perturbation hierarchy couplings (§6, §9 of the
     lowell reference).
 
-    FB-1.4 (Phase FB-1 exit) consolidates the per-type dispatch onto
-    the canonical Class-A orthonormal-frame expression
-    (Ellis-MacCallum 1969 §4, eqs (4.19)–(4.21); Wainwright-Ellis 1997
-    §1.4.4; Ellis-Maartens-MacCallum 2012 §14.3):
-
-        ³R_ii = (1/2) [n_i² − (n_j − n_k)²]      (cyclic i → j → k)
-        ³R_ab^{aniso}_ii = ³R_ii − (1/3) Σ_k ³R_kk
-
-    For Class B in the Pontzen-Challinor frame
-    (a_α = (0, a_twist, 0), n_2 = 0 by Jacobi), the twist sector
-    contributes −2 a_twist² δ_ab to the diagonal-aligned tetrad ³R_ab,
-    which is purely isotropic and therefore drops out of the
-    trace-free part. The mixed N × a_twist contribution that produces
-    the W-E ``A²/(1+|h|)`` piece in ``S^{WE}_+`` is intentionally
-    deferred to **FB-2.2** alongside the hierarchy T1/T2 spatial-Ricci
-    wire-up calibration; the FB-1.4 deliverable is the dominant
-    N-tensor contribution, which is sufficient for the Phase FB-1 exit
-    contract (non-None tensor, symmetric trace-free, finite, FLRW limit
-    → 0; see ``test_tetrad_state.py::TestAnisotropic3Curvature``).
+    The authority path is now the same anholonomic Levi-Civita
+    connection route used by ``bass.background.geometry``. This keeps
+    Class-B mixed ``N × a`` off-diagonal curvature terms in the tensor
+    handed to the hierarchy instead of silently dropping them through
+    the older diagonal compact formula.
 
     Parameters
     ----------
@@ -191,11 +216,9 @@ def anisotropic_3_curvature(
     -------
     tensor : (3, 3) ndarray
         Symmetric trace-free anisotropic ³R_ab^{aniso} in the
-        orthonormal tetrad-aligned frame, with units matching n_i × n_j
-        (i.e., [length]⁻²). Diagonal in the aligned-eigenvector basis
-        for every registered Bianchi type. **Always non-None** after
-        FB-1.4 (the Phase FB-1 exit contract); historical 'unavailable'
-        return for unrecognised labels is retained as a safety net only.
+        canonical VER2 orthonormal frame, with units matching the
+        structure constants squared. The tensor is generally
+        off-diagonal for Class-B families.
     status : str
         Per-type classification, one of
         {'type_i_flat', 'type_v_isotropic', 'type_ii_heisenberg',
@@ -228,17 +251,9 @@ def anisotropic_3_curvature(
     # canonical orthonormal frame.
     del a, sigma_plus, sigma_minus
 
-    n1, n2, n3 = structure.n_diag
-    R11 = 0.5 * (n1 * n1 - (n2 - n3) ** 2)
-    R22 = 0.5 * (n2 * n2 - (n3 - n1) ** 2)
-    R33 = 0.5 * (n3 * n3 - (n1 - n2) ** 2)
-    one_third_trace = (R11 + R22 + R33) / 3.0
-
-    tensor = np.zeros((3, 3), dtype=np.float64)
-    tensor[0, 0] = R11 - one_third_trace
-    tensor[1, 1] = R22 - one_third_trace
-    tensor[2, 2] = R33 - one_third_trace
-    return tensor, status
+    algebra = _algebra_from_structure(structure)
+    _, _, tensor = spatial_ricci_from_connection(algebra.C)
+    return np.asarray(tensor, dtype=np.float64), status
 
 
 # ════════════════════════════════════════════════════════════════════

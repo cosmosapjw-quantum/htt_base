@@ -12,6 +12,7 @@ from bass.collision import (
 )
 from bass.collision.tilted_eb_mixing import evaluate_tilted_polarization_eb_collision
 from bass.collision.tilted_thomson_layer_b import evaluate_tilted_thomson_pstf_collision
+from bass.collision._tilted_layer_b_common import apply_axisymmetric_boost_to_tower
 from bass.collision.polarization import zero_polarization_hierarchy
 from bass.species.base import SpeciesBackground, SpeciesLabel, _as_1d, _squeeze_if_scalar
 from bass.species.tilted import TiltedSpeciesBackground
@@ -172,6 +173,12 @@ def test_projected_tilted_thomson_source_matches_per_ell_layer_b_helpers() -> No
         b_state=b_state,
     )
     effective_gamma = 2.1 * source.effective_rate.factor
+    boosted_temperature = apply_axisymmetric_boost_to_tower(
+        temperature,
+        beta=tilt.beta,
+        v_hat_e=tilt.v_hat_e,
+    )
+    pi_2_e_frame = np.asarray(boosted_temperature.tensors[2].components, dtype=np.float64)
     for ell in range(temperature.L + 1):
         expected_t = evaluate_tilted_thomson_pstf_collision(
             ell=ell,
@@ -186,7 +193,7 @@ def test_projected_tilted_thomson_source_matches_per_ell_layer_b_helpers() -> No
             ell=ell,
             e_state=polarization,
             eta=0.0,
-            Pi_2_packed=np.asarray(temperature.tensors[2].components, dtype=np.float64),
+            Pi_2_packed=pi_2_e_frame,
             Gamma_T=effective_gamma,
             b_state=b_state,
             tilted_electron=tilt,
@@ -194,3 +201,31 @@ def test_projected_tilted_thomson_source_matches_per_ell_layer_b_helpers() -> No
         np.testing.assert_allclose(source.temperature.tensors[ell].components, expected_t.components)
         np.testing.assert_allclose(source.polarization_E.E.tensors[ell].components, expected_e.components)
         np.testing.assert_allclose(source.polarization_B.tensors[ell].components, expected_b.components)
+
+
+def test_tilted_e_source_uses_electron_frame_temperature_quadrupole() -> None:
+    temperature = zero_hierarchy(4)
+    temperature.tensors[3].components[3] = 1.0
+    polarization = zero_polarization_hierarchy(4)
+    tilt = _tilted_species(0.2, (0.0, 0.0, 1.0))
+
+    source = project_thomson_source(
+        ElectronFrameThomsonContext(),
+        temperature_state=temperature,
+        polarization_state=polarization,
+        v_b_real_sph=np.zeros(3),
+        Gamma_T=1.0,
+        direction=np.array([0.0, 0.0, 1.0], dtype=np.float64),
+        tilted_electron=tilt,
+    )
+
+    boosted_temperature = apply_axisymmetric_boost_to_tower(
+        temperature,
+        beta=tilt.beta,
+        v_hat_e=tilt.v_hat_e,
+    )
+    assert not np.allclose(
+        boosted_temperature.tensors[2].components,
+        temperature.tensors[2].components,
+    )
+    assert np.linalg.norm(source.polarization_E.E.tensors[2].components) > 0.0

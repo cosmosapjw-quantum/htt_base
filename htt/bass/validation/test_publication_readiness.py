@@ -6,7 +6,11 @@ import pytest
 from common.contracts import ArtifactManifest, SolverCoreOutput
 
 from bass.forward import write_output_archive
+from bass.collision import exact_thomson_gate_bundle, full_stokes_thomson_source
 from bass.los.families.residual_report import default_family_residual_report
+from bass.species.base import SpeciesLabel
+from bass.species.registry import SpeciesBackgroundRegistry
+from bass.species.tilted import TiltedSpeciesBackground
 from bass.validation import GATE_LADDER
 from bass.validation.publication_readiness import (
     assert_publication_claim_allowed,
@@ -143,6 +147,60 @@ def test_family_backend_residual_evidence_claim_requires_all_packs() -> None:
     assert any(blocker.startswith("II:") for blocker in blocked.blockers)
 
 
+def test_full_stokes_thomson_authority_claim_requires_angular_gate() -> None:
+    directions = np.array(
+        [
+            [1.0, 0.0, 0.0],
+            [-1.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [0.0, -1.0, 0.0],
+            [0.0, 0.0, 1.0],
+            [0.0, 0.0, -1.0],
+        ],
+        dtype=np.float64,
+    )
+    weights = np.full(6, 4.0 * np.pi / 6.0, dtype=np.float64)
+    registry = SpeciesBackgroundRegistry.from_planck2018(recombination_warning_policy="ignore")
+    tilted_electron = TiltedSpeciesBackground(
+        base=registry[SpeciesLabel.BARYON],
+        beta=0.1,
+        v_hat_e=(0.0, 0.0, 1.0),
+    )
+    source = full_stokes_thomson_source(
+        directions=directions,
+        weights=weights,
+        I=np.ones(6),
+        Q=np.zeros(6),
+        U=np.zeros(6),
+        Gamma_T=1.0,
+        tilted_electron=tilted_electron,
+    )
+    gate = exact_thomson_gate_bundle(source, branch="tilted")
+    decision = evaluate_publication_claim(
+        "full_stokes_thomson_authority",
+        gate_registry={"exact_thomson_gate": gate},
+    )
+    assert decision.allowed is True
+    assert decision.blockers == ()
+
+    blocked = evaluate_publication_claim(
+        "full_stokes_thomson_authority",
+        gate_registry={},
+    )
+    assert blocked.allowed is False
+    assert set(blocked.blockers) == {
+        "exact_gate_passed",
+        "full_stokes_scope",
+        "angular_mueller_source",
+        "quadrature_normalized",
+        "screen_basis_orthonormal",
+        "screen_basis_spin2_rotation",
+        "tilted_branch_authority",
+        "electron_frame_owned",
+        "not_boosted_pstf_wrapper",
+    }
+
+
 def test_full_anisotropic_polarization_requires_b_runtime_and_support() -> None:
     blocked = evaluate_publication_claim(
         "full_anisotropic_polarization_output",
@@ -151,22 +209,85 @@ def test_full_anisotropic_polarization_requires_b_runtime_and_support() -> None:
             "b_mode_runtime_available": False,
             "b_mode_output_support": "flrw_zero_only",
             "tilt_boost_separation": "explicit_nonmerged",
+            "source_propagator_fail_closed_sources": False,
+            "source_propagator_source_completeness_policy": "legacy_missing_components_zero",
+            "source_propagator_publication_output_claim_allowed": False,
         },
     )
     assert blocked.allowed is False
     assert "b_runtime" in blocked.blockers
     assert "b_support" in blocked.blockers
+    assert "los_sources_fail_closed" in blocked.blockers
+    assert "source_propagator_output_ready" in blocked.blockers
 
     opened = evaluate_publication_claim(
         "full_anisotropic_polarization_output",
         output_metadata={
             "thomson_mode": "electron_frame_exact_wrapper",
+            "tilt_enabled": False,
+            "exact_thomson_gate_passed": True,
+            "exact_thomson_operator_scope": "linear_classical_thomson_boosted_pstf",
             "b_mode_runtime_available": True,
             "b_mode_output_support": "wigner_d_path_b",
             "tilt_boost_separation": "explicit_nonmerged",
+            "source_propagator_fail_closed_sources": True,
+            "source_propagator_source_completeness_policy": "explicit_required_fail_closed",
+            "source_propagator_publication_output_claim_allowed": True,
         },
     )
     assert opened.allowed is True
+
+    tilted_without_full_stokes = evaluate_publication_claim(
+        "full_anisotropic_polarization_output",
+        output_metadata={
+            "tilt_enabled": True,
+            "exact_thomson_gate_passed": True,
+            "exact_thomson_operator_scope": "linear_classical_thomson_boosted_pstf",
+            "b_mode_runtime_available": True,
+            "b_mode_output_support": "wigner_d_path_b",
+            "tilt_boost_separation": "explicit_nonmerged",
+            "source_propagator_fail_closed_sources": True,
+            "source_propagator_source_completeness_policy": "explicit_required_fail_closed",
+            "source_propagator_publication_output_claim_allowed": True,
+        },
+    )
+    assert tilted_without_full_stokes.allowed is False
+    assert "exact_thomson" in tilted_without_full_stokes.blockers
+
+    tilted_scalarized_q_u_full_stokes = evaluate_publication_claim(
+        "full_anisotropic_polarization_output",
+        output_metadata={
+            "tilt_enabled": True,
+            "exact_thomson_gate_passed": True,
+            "exact_thomson_operator_scope": "full_electron_frame_stokes",
+            "collision_polarization_rhs_owner": "full_stokes_scalarized_q_u_projected_rhs",
+            "b_mode_runtime_available": True,
+            "b_mode_output_support": "wigner_d_path_b",
+            "tilt_boost_separation": "explicit_nonmerged",
+            "source_propagator_fail_closed_sources": True,
+            "source_propagator_source_completeness_policy": "explicit_required_fail_closed",
+            "source_propagator_publication_output_claim_allowed": True,
+        },
+    )
+    assert tilted_scalarized_q_u_full_stokes.allowed is False
+    assert "tilted_polarization_rhs" in tilted_scalarized_q_u_full_stokes.blockers
+
+    tilted_with_full_spin2_stokes = evaluate_publication_claim(
+        "full_anisotropic_polarization_output",
+        output_metadata={
+            "tilt_enabled": True,
+            "exact_thomson_gate_passed": True,
+            "exact_thomson_operator_scope": "full_electron_frame_stokes",
+            "collision_polarization_rhs_owner": "full_stokes_spin2_angular_polarization",
+            "b_mode_runtime_available": True,
+            "b_mode_output_support": "wigner_d_path_b",
+            "tilt_boost_separation": "explicit_nonmerged",
+            "source_propagator_fail_closed_sources": True,
+            "source_propagator_source_completeness_policy": "explicit_required_fail_closed",
+            "source_propagator_publication_output_claim_allowed": True,
+        },
+    )
+    assert tilted_with_full_spin2_stokes.allowed is True
 
 
 def test_statistics_ready_likelihood_requires_gate_and_metadata() -> None:
@@ -223,10 +344,25 @@ def test_optimization_same_physics_requires_all_axes() -> None:
             "optimization_same_cutoff": False,
             "optimization_same_observable": True,
             "optimization_identity_status": "within_declared_tolerance",
+            "imex_full_rhs_fallback_used": False,
         },
     )
     assert blocked.allowed is False
     assert blocked.blockers == ("same_cutoff",)
+
+    hidden_fallback = evaluate_publication_claim(
+        "optimization_same_physics",
+        output_metadata={
+            "optimization_same_equations": True,
+            "optimization_same_tolerance": True,
+            "optimization_same_cutoff": True,
+            "optimization_same_observable": True,
+            "optimization_identity_status": "within_declared_tolerance",
+            "imex_full_rhs_fallback_used": True,
+        },
+    )
+    assert hidden_fallback.allowed is False
+    assert hidden_fallback.blockers == ("no_hidden_full_rhs_fallback",)
 
     opened = evaluate_publication_claim(
         "optimization_same_physics",
@@ -236,6 +372,7 @@ def test_optimization_same_physics_requires_all_axes() -> None:
             "optimization_same_cutoff": True,
             "optimization_same_observable": True,
             "optimization_identity_status": "bit_identical",
+            "imex_full_rhs_fallback_used": False,
         },
     )
     assert opened.allowed is True

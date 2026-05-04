@@ -172,12 +172,7 @@ def spin2_parity_odd_combination(
 # ──────────────────────────────────────────────────────────────────────
 
 
-def _polter_B_channel(
-    *,
-    Theta_2: np.ndarray,
-    E_2: np.ndarray,
-    B_2: np.ndarray,
-) -> np.ndarray:
+def _polter_B_channel(*, B_2: np.ndarray) -> np.ndarray:
     """B-channel polter combination per V5_ROUND16_03 §2.5.
 
     The B-mode source from the Thomson collision is the parity-odd
@@ -192,6 +187,13 @@ def _polter_B_channel(
     pre-recombination evolution.
     """
     return (2.0 / 5.0) * np.asarray(B_2, dtype=np.float64)
+
+
+def _require_finite_array(name: str, value: np.ndarray) -> np.ndarray:
+    arr = np.asarray(value, dtype=np.float64)
+    if not np.all(np.isfinite(arr)):
+        raise ValueError(f"{name} must contain only finite values")
+    return arr
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -263,30 +265,43 @@ def project_B_mode_transfer(
         real-valued transfer (consistent with real-spherical-harmonic
         outputs).
     """
-    eta_grid = np.asarray(eta_grid, dtype=np.float64)
+    eta_grid = _require_finite_array("eta_grid", eta_grid)
     n_eta = eta_grid.size
     if n_eta < 2:
         raise ValueError(
             f"eta_grid must have at least 2 points; got {n_eta}"
         )
-    B_hist = np.asarray(photon_B_tower_history, dtype=np.float64)
+    if np.any(np.diff(eta_grid) <= 0.0):
+        raise ValueError("eta_grid must be strictly increasing")
+    if not np.isfinite(k_norm) or float(k_norm) <= 0.0:
+        raise ValueError(f"k_norm must be finite and > 0; got {k_norm!r}")
+
+    B_hist = _require_finite_array("photon_B_tower_history", photon_B_tower_history)
     if B_hist.shape[0] != n_eta or B_hist.shape[2] != 5:
         raise ValueError(
             f"photon_B_tower_history shape {B_hist.shape!r} inconsistent "
             f"with (n_eta={n_eta}, L_B+1, 5)"
         )
-    E_hist = np.asarray(photon_E_tower_history, dtype=np.float64)
+    if B_hist.shape[1] <= 2:
+        raise ValueError(
+            "photon_B_tower_history must include the ell=2 source plane"
+        )
+    E_hist = _require_finite_array("photon_E_tower_history", photon_E_tower_history)
     if E_hist.shape[0] != n_eta or E_hist.shape[2] != 5:
         raise ValueError(
             f"photon_E_tower_history shape {E_hist.shape!r} inconsistent "
             f"with (n_eta={n_eta}, L_E+1, 5)"
         )
-    sigma_hist = np.asarray(sigma_2M_history, dtype=np.float64)
+    if E_hist.shape[1] <= 2:
+        raise ValueError(
+            "photon_E_tower_history must include the ell=2 source plane"
+        )
+    sigma_hist = _require_finite_array("sigma_2M_history", sigma_2M_history)
     if sigma_hist.shape != (n_eta, 5):
         raise ValueError(
             f"sigma_2M_history shape {sigma_hist.shape!r} != ({n_eta}, 5)"
         )
-    g_hist = np.asarray(visibility_history, dtype=np.float64)
+    g_hist = _require_finite_array("visibility_history", visibility_history)
     if g_hist.shape != (n_eta,):
         raise ValueError(
             f"visibility_history shape {g_hist.shape!r} != ({n_eta},)"
@@ -297,6 +312,10 @@ def project_B_mode_transfer(
         )
     if cache is None:
         cache = build_wigner_d_spin2_cache(L_max=ell_max)
+    if cache.L_max < ell_max:
+        raise ValueError(
+            f"cache.L_max={cache.L_max!r} is smaller than ell_max={ell_max!r}"
+        )
 
     eta_obs = float(eta_grid[-1])
     Delta_eta = eta_obs - eta_grid  # (n_eta,), Δη ≥ 0
@@ -317,11 +336,7 @@ def project_B_mode_transfer(
 
         for m_idx, m in enumerate(range(-2, 3)):
             # Source: g(η) · (−√6/4) · Π^{(B)}_m(η)
-            polter_B_m = _polter_B_channel(
-                Theta_2=B_hist[:, 2, m_idx],  # placeholder for spec
-                E_2=E_hist[:, 2, m_idx],
-                B_2=B_hist[:, 2, m_idx],
-            )
+            polter_B_m = _polter_B_channel(B_2=B_hist[:, 2, m_idx])
             source_m = g_hist * (-sqrt6_over_4) * polter_B_m
 
             integrand_per_M = 0.0
@@ -355,4 +370,11 @@ def project_B_mode_transfer_axisymmetric_zero(
     constructing any tower history. Returns ``(ell_max+1, 5)`` zero
     array of float64.
     """
+    eta = _require_finite_array("eta_grid", eta_grid)
+    if eta.ndim != 1 or eta.size < 2:
+        raise ValueError("eta_grid must be a 1-D array with at least 2 points")
+    if np.any(np.diff(eta) <= 0.0):
+        raise ValueError("eta_grid must be strictly increasing")
+    if ell_max < 2:
+        raise ValueError(f"ell_max must be >= 2 (spin-2 sector); got {ell_max!r}")
     return np.zeros((ell_max + 1, 5), dtype=np.float64)

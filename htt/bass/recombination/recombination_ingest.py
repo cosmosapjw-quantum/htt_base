@@ -10,7 +10,7 @@ Scope
 - Input: CSV file with 5 columns (z, x_e, T_m, tau_dot, kappa) plus
   optional `# key = value` header metadata lines
 - Output: RecombinationTable (frozen container) and RecombinationInterp
-  (callable cubic-spline interpolators)
+  (callable shape-preserving interpolators)
 - Visibility function: g(z) = τ̇(z) × exp(−κ(z))
 - Physical validation: x_e ∈ [0, 1.2], κ monotonically non-decreasing
   with z, τ̇ non-negative, z ascending
@@ -38,8 +38,9 @@ Design notes
 - CSV header supports arbitrary `# key = value` lines. Keys and values
   are stripped and stored in a metadata dict. Non-conforming comment
   lines are ignored (stored as raw) to accept hand-written headers.
-- Cubic spline interpolation via scipy.interpolate.CubicSpline with
-  natural boundary conditions (second derivatives zero at endpoints).
+- PCHIP interpolation via scipy.interpolate.PchipInterpolator. This
+  preserves monotone optical-depth tables and avoids nonphysical
+  negative opacity/visibility overshoot.
 - Out-of-range z queries raise ValueError — no silent extrapolation
   to avoid downstream numerical silent failures.
 """
@@ -50,7 +51,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
 
 import numpy as np
-from scipy.interpolate import CubicSpline
+from scipy.interpolate import PchipInterpolator
 
 
 # ============================================================================
@@ -328,22 +329,22 @@ def validate_recombination_table(
 
 
 # ============================================================================
-# Section 5 - Cubic-spline interpolators
+# Section 5 - Shape-preserving interpolators
 # ============================================================================
 
 @dataclass(frozen=True)
 class RecombinationInterp:
-    """Cubic-spline interpolators for all 4 derived quantities.
+    """Shape-preserving interpolators for all 4 derived quantities.
 
     Queries outside [z_min, z_max] raise ValueError (no silent
     extrapolation). Use `query_*` methods to access values; each method
     accepts scalar or array z and returns matching shape.
     """
     table: RecombinationTable
-    _spline_x_e: CubicSpline
-    _spline_T_m: CubicSpline
-    _spline_tau_dot: CubicSpline
-    _spline_kappa: CubicSpline
+    _spline_x_e: PchipInterpolator
+    _spline_T_m: PchipInterpolator
+    _spline_tau_dot: PchipInterpolator
+    _spline_kappa: PchipInterpolator
 
     def _check_in_range(self, z: np.ndarray) -> None:
         if np.any(z < self.table.z_min) or np.any(z > self.table.z_max):
@@ -393,19 +394,18 @@ class RecombinationInterp:
 def build_interpolators(
     table: RecombinationTable,
 ) -> RecombinationInterp:
-    """Construct cubic-spline interpolators from a RecombinationTable.
+    """Construct monotone-safe interpolators from a RecombinationTable.
 
-    Uses scipy.interpolate.CubicSpline with natural boundary conditions
-    (second derivatives = 0 at endpoints) for stability.
+    Uses scipy.interpolate.PchipInterpolator so positive opacity and
+    monotone optical-depth tables do not acquire spline overshoot between
+    grid points.
     """
-    # Natural BC = 2nd derivative zero
-    bc = ((2, 0.0), (2, 0.0))
     return RecombinationInterp(
         table=table,
-        _spline_x_e=CubicSpline(table.z, table.x_e, bc_type=bc),
-        _spline_T_m=CubicSpline(table.z, table.T_m, bc_type=bc),
-        _spline_tau_dot=CubicSpline(table.z, table.tau_dot, bc_type=bc),
-        _spline_kappa=CubicSpline(table.z, table.kappa, bc_type=bc),
+        _spline_x_e=PchipInterpolator(table.z, table.x_e),
+        _spline_T_m=PchipInterpolator(table.z, table.T_m),
+        _spline_tau_dot=PchipInterpolator(table.z, table.tau_dot),
+        _spline_kappa=PchipInterpolator(table.z, table.kappa),
     )
 
 

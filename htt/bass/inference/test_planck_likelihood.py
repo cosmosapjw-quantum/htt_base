@@ -20,6 +20,7 @@ from bass.inference.planck_likelihood import (
     PLANCK_2018_LOWL_TT_DATASET_KIND,
     PlanckDataset,
     PlanckLikelihood,
+    load_planck_low_l_tt_dataset,
     make_synthetic_dataset,
 )
 
@@ -107,18 +108,41 @@ class TestSyntheticPath:
 
 
 class TestRealDataGating:
-    def _real_dataset(self):
-        return PlanckDataset(
-            kind=PLANCK_2018_LOWL_TT_DATASET_KIND,
-            path=Path("/dev/null"),
-            ell_min=2,
-            ell_max=4,
-            C_l_obs=np.array([1.0, 2.0, 3.0]),
-            sigma=np.array([0.1, 0.2, 0.3]),
+    def _real_dataset(self, tmp_path: Path) -> PlanckDataset:
+        path = tmp_path / "planck2018_plik_low_l_tt_fixture.txt"
+        path.write_text(
+            "# ell C_l sigma\n"
+            "2 1.0 0.1\n"
+            "3 2.0 0.2\n"
+            "4 3.0 0.3\n",
+            encoding="utf-8",
         )
+        return load_planck_low_l_tt_dataset(path)
 
-    def test_real_data_blocks_when_gates_closed(self) -> None:
-        lk = PlanckLikelihood(dataset=self._real_dataset())
+    def test_real_dataset_requires_nonempty_regular_path(self, tmp_path: Path) -> None:
+        empty = tmp_path / "empty.txt"
+        empty.write_text("", encoding="utf-8")
+        with pytest.raises(ValueError, match="empty"):
+            PlanckDataset(
+                kind=PLANCK_2018_LOWL_TT_DATASET_KIND,
+                path=empty,
+                ell_min=2,
+                ell_max=2,
+                C_l_obs=np.array([1.0]),
+                sigma=np.array([0.1]),
+            )
+        with pytest.raises(FileNotFoundError, match="Planck low-l TT"):
+            PlanckDataset(
+                kind=PLANCK_2018_LOWL_TT_DATASET_KIND,
+                path=tmp_path / "missing.txt",
+                ell_min=2,
+                ell_max=2,
+                C_l_obs=np.array([1.0]),
+                sigma=np.array([0.1]),
+            )
+
+    def test_real_data_blocks_when_gates_closed(self, tmp_path: Path) -> None:
+        lk = PlanckLikelihood(dataset=self._real_dataset(tmp_path))
         decision = GateLadderDecision(
             allowed=False, missing_gates=("ic_provenance_gate",)
         )
@@ -130,8 +154,8 @@ class TestRealDataGating:
         assert exc.value.missing_gates == ("ic_provenance_gate",)
         assert exc.value.dataset_kind == PLANCK_2018_LOWL_TT_DATASET_KIND
 
-    def test_real_data_proceeds_when_all_gates_open(self) -> None:
-        lk = PlanckLikelihood(dataset=self._real_dataset())
+    def test_real_data_proceeds_when_all_gates_open(self, tmp_path: Path) -> None:
+        lk = PlanckLikelihood(dataset=self._real_dataset(tmp_path))
         decision = GateLadderDecision(
             allowed=True, template_card_authorized=False, family="FLRW"
         )
@@ -141,42 +165,46 @@ class TestRealDataGating:
         )
         assert log_l == pytest.approx(0.0, abs=1e-15)
 
-    def test_real_data_blocks_template_card_family_without_authorization(
-        self,
+    def test_real_data_blocks_bianchi_family_even_with_open_gates(
+        self, tmp_path: Path,
     ) -> None:
-        lk = PlanckLikelihood(dataset=self._real_dataset())
+        lk = PlanckLikelihood(dataset=self._real_dataset(tmp_path))
         decision = GateLadderDecision(
             allowed=True, template_card_authorized=False, family="II"
         )
-        with pytest.raises(FittingBlockedError, match="template_card_authorized"):
+        with pytest.raises(FittingBlockedError, match="harmonic template"):
             lk.log_likelihood(
                 np.zeros(10), gate_decision=decision, family="II"
             )
 
-    def test_real_data_proceeds_for_template_card_with_authorization(
-        self,
+    def test_template_authorization_does_not_promote_cl_only_bianchi_fit(
+        self, tmp_path: Path,
     ) -> None:
-        lk = PlanckLikelihood(dataset=self._real_dataset())
+        lk = PlanckLikelihood(dataset=self._real_dataset(tmp_path))
         decision = GateLadderDecision(
             allowed=True, template_card_authorized=True, family="II"
         )
-        log_l = lk.log_likelihood(
-            np.array([0.0, 0.0, 1.0, 2.0, 3.0]),
-            gate_decision=decision, family="II",
-        )
-        assert log_l == pytest.approx(0.0, abs=1e-15)
+        with pytest.raises(FittingBlockedError, match="C_l likelihood is FLRW"):
+            lk.log_likelihood(
+                np.array([0.0, 0.0, 1.0, 2.0, 3.0]),
+                gate_decision=decision,
+                family="II",
+            )
 
-    def test_strong_family_with_open_gates_proceeds(self) -> None:
-        """Strong families (FLRW/I/V/IX) don't need template-card auth."""
-        lk = PlanckLikelihood(dataset=self._real_dataset())
+    def test_strong_bianchi_family_still_blocks_on_cl_only_path(
+        self, tmp_path: Path
+    ) -> None:
+        """Even strong Bianchi families need harmonic-level data comparison."""
+        lk = PlanckLikelihood(dataset=self._real_dataset(tmp_path))
         decision = GateLadderDecision(
             allowed=True, template_card_authorized=False, family="V"
         )
-        log_l = lk.log_likelihood(
-            np.array([0.0, 0.0, 1.0, 2.0, 3.0]),
-            gate_decision=decision, family="V",
-        )
-        assert np.isfinite(log_l)
+        with pytest.raises(FittingBlockedError, match="harmonic"):
+            lk.log_likelihood(
+                np.array([0.0, 0.0, 1.0, 2.0, 3.0]),
+                gate_decision=decision,
+                family="V",
+            )
 
 
 # ────────────────────────────────────────────────────────────────────────
@@ -201,30 +229,30 @@ class TestAdversarialAuditPRS14:
         the call must raise FittingBlockedError, not return a synthetic
         log-likelihood value.
         """
-        ds = PlanckDataset(
-            kind=PLANCK_2018_LOWL_TT_DATASET_KIND,
-            path=Path("/nonexistent/fixture"),
-            ell_min=2, ell_max=4,
-            C_l_obs=np.array([1.0, 2.0, 3.0]),
-            sigma=np.array([0.1, 0.2, 0.3]),
-        )
-        lk = PlanckLikelihood(dataset=ds)
-        with pytest.raises(FittingBlockedError):
-            lk.log_likelihood(
-                np.zeros(10),
-                gate_decision=GateLadderDecision(allowed=False),
-                family="FLRW",
+        with pytest.raises(FileNotFoundError, match="Planck low-l TT"):
+            PlanckDataset(
+                kind=PLANCK_2018_LOWL_TT_DATASET_KIND,
+                path=Path("/nonexistent/fixture"),
+                ell_min=2, ell_max=4,
+                C_l_obs=np.array([1.0, 2.0, 3.0]),
+                sigma=np.array([0.1, 0.2, 0.3]),
             )
 
-    def test_A10_end_to_end_gate_ladder(self) -> None:
+    def test_A10_end_to_end_gate_ladder(self, tmp_path: Path) -> None:
         """A10: with one missing gate, blocked; with all open, finite scalar."""
-        ds = PlanckDataset(
-            kind=PLANCK_2018_LOWL_TT_DATASET_KIND,
-            path=Path("/dev/null"),
-            ell_min=2, ell_max=2,
-            C_l_obs=np.array([1.0]),
-            sigma=np.array([0.1]),
-        )
+        path = tmp_path / "single_low_l_tt.txt"
+        path.write_text("# ell C_l sigma\n2 1.0 0.1\n", encoding="utf-8")
+        ds = load_planck_low_l_tt_dataset(path)
+        assert ds.path == path
+
+        with pytest.raises(ValueError, match="contiguous"):
+            bad_path = tmp_path / "noncontiguous_low_l_tt.txt"
+            bad_path.write_text(
+                "# ell C_l sigma\n2 1.0 0.1\n4 2.0 0.2\n",
+                encoding="utf-8",
+            )
+            load_planck_low_l_tt_dataset(bad_path)
+
         lk = PlanckLikelihood(dataset=ds)
         # Missing gate ⇒ blocked.
         with pytest.raises(FittingBlockedError):

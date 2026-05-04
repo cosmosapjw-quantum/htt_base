@@ -56,6 +56,7 @@ else:
 
 __all__ = [
     "BASS_ALM_REPRESENTATION_KEY",
+    "coerce_bass_alm_mapping",
     "infer_lmax",
     "bass_real_alm_to_healpy_complex",
     "alm_to_map_TQU",
@@ -80,23 +81,106 @@ def _require_healpy() -> None:
 # alm format helpers
 # ──────────────────────────────────────────────────────────────────────
 
+def _alm_size(lmax: int) -> int:
+    return (int(lmax) + 1) ** 2
 
-def infer_lmax(alm: Mapping[int, np.ndarray]) -> int:
-    """Return ``max(alm.keys())``; raises if alm is empty.
+
+def _infer_lmax_from_flat_size(size: int) -> int:
+    root = int(round(np.sqrt(int(size))))
+    if root * root != int(size):
+        raise ValueError(
+            f"flat alm size {size} is not a square (expected (lmax+1)^2)"
+        )
+    return root - 1
+
+
+def _split_flat_alm(
+    values: object,
+    *,
+    lmax: int | None,
+    component: str,
+) -> dict[int, np.ndarray]:
+    arr = np.asarray(values, dtype=np.float64)
+    if arr.ndim != 1:
+        raise ValueError(f"{component} flat alm must be 1-D, got {arr.shape}")
+    resolved_lmax = _infer_lmax_from_flat_size(arr.size) if lmax is None else int(lmax)
+    target = _alm_size(resolved_lmax)
+    if arr.size != target:
+        raise ValueError(
+            f"{component} flat alm size {arr.size} does not match "
+            f"lmax={resolved_lmax} target {target}"
+        )
+    out: dict[int, np.ndarray] = {}
+    cursor = 0
+    for ell in range(resolved_lmax + 1):
+        width = 2 * ell + 1
+        out[ell] = np.array(arr[cursor: cursor + width], copy=True)
+        cursor += width
+    return out
+
+
+def coerce_bass_alm_mapping(
+    alm: object,
+    *,
+    lmax: int | None = None,
+    component: str = "alm",
+) -> dict[int, np.ndarray]:
+    """Return canonical ``ell -> real a_lm`` mapping.
+
+    Accepted inputs are the historic per-ell mapping, the native solver
+    payload ``{"values": flat, "ell_max": L}``, or a flat lexicographic
+    archive array. The flat ordering is the archive/runtime convention
+    ``ell=0`` block, then ``ell=1``, etc., each block ordered
+    ``m=-ell..+ell``.
+    """
+    if isinstance(alm, Mapping) and "values" in alm:
+        payload_lmax = alm.get("ell_max", lmax)
+        return _split_flat_alm(
+            alm["values"],
+            lmax=None if payload_lmax is None else int(payload_lmax),
+            component=component,
+        )
+    if isinstance(alm, Mapping):
+        if not alm:
+            raise ValueError(f"{component} mapping is empty")
+        out: dict[int, np.ndarray] = {}
+        for raw_ell, raw_values in alm.items():
+            if isinstance(raw_ell, str):
+                if not raw_ell.isdigit():
+                    raise ValueError(
+                        f"{component} mapping key {raw_ell!r} is not an ell integer"
+                    )
+                ell = int(raw_ell)
+            else:
+                ell = int(raw_ell)
+            if ell < 0:
+                raise ValueError(f"{component} ell keys must be non-negative")
+            arr = np.asarray(raw_values, dtype=np.float64)
+            if arr.shape != (2 * ell + 1,):
+                raise ValueError(
+                    f"{component}[{ell}] must have shape ({2 * ell + 1},); "
+                    f"got {arr.shape!r}"
+                )
+            out[ell] = np.array(arr, copy=True)
+        return out
+    return _split_flat_alm(alm, lmax=lmax, component=component)
+
+
+def infer_lmax(alm: object) -> int:
+    """Return the maximum multipole after canonical alm coercion.
 
     Parameters
     ----------
-    alm : Mapping[int, ndarray]
-        BASS real-spherical-harmonic alm packing
-        (``ell → ndarray(2ℓ+1)``).
+    alm : object
+        Per-ell mapping, native ``{"values": ...}`` payload, or flat
+        lexicographic alm array.
     """
-    if not alm:
-        raise ValueError("infer_lmax called on empty alm mapping")
-    return int(max(alm.keys()))
+    mapping = coerce_bass_alm_mapping(alm)
+    return int(max(mapping.keys()))
 
 
 def bass_real_alm_to_healpy_complex(
-    alm: Mapping[int, np.ndarray],
+    alm: object,
     *,
     lmax: int | None = None,
 ) -> np.ndarray:
@@ -121,12 +205,13 @@ def bass_real_alm_to_healpy_complex(
     -------
     ndarray, shape ((lmax+1)*(lmax+2)//2,), complex128
     """
+    alm_map = coerce_bass_alm_mapping(alm, lmax=lmax)
     if lmax is None:
-        lmax = infer_lmax(alm) if alm else 0
+        lmax = infer_lmax(alm_map)
     sqrt2 = float(np.sqrt(2.0))
     n = (lmax + 1) * (lmax + 2) // 2
     out = np.zeros(n, dtype=np.complex128)
-    for ell, real_array in alm.items():
+    for ell, real_array in alm_map.items():
         if ell > lmax:
             continue
         arr = np.asarray(real_array, dtype=np.float64)
@@ -154,9 +239,9 @@ def bass_real_alm_to_healpy_complex(
 
 def alm_to_map_TQU(
     *,
-    alm_T: Mapping[int, np.ndarray],
-    alm_E: Mapping[int, np.ndarray],
-    alm_B: Mapping[int, np.ndarray],
+    alm_T: object,
+    alm_E: object,
+    alm_B: object,
     nside: int,
     lmax: int | None = None,
 ) -> dict[str, np.ndarray]:
@@ -190,16 +275,14 @@ def alm_to_map_TQU(
         raise ValueError(f"nside must be a power of 2; got {nside!r}")
 
     if lmax is None:
-        candidates = [
-            infer_lmax(a) for a in (alm_T, alm_E, alm_B) if a
-        ]
-        if not candidates:
-            raise ValueError("all alm inputs are empty; cannot infer lmax")
-        lmax = max(candidates)
+        lmax = max(infer_lmax(a) for a in (alm_T, alm_E, alm_B))
+    alm_T_map = coerce_bass_alm_mapping(alm_T, lmax=lmax, component="alm_T")
+    alm_E_map = coerce_bass_alm_mapping(alm_E, lmax=lmax, component="alm_E")
+    alm_B_map = coerce_bass_alm_mapping(alm_B, lmax=lmax, component="alm_B")
 
-    alm_T_hp = bass_real_alm_to_healpy_complex(alm_T, lmax=lmax)
-    alm_E_hp = bass_real_alm_to_healpy_complex(alm_E, lmax=lmax)
-    alm_B_hp = bass_real_alm_to_healpy_complex(alm_B, lmax=lmax)
+    alm_T_hp = bass_real_alm_to_healpy_complex(alm_T_map, lmax=lmax)
+    alm_E_hp = bass_real_alm_to_healpy_complex(alm_E_map, lmax=lmax)
+    alm_B_hp = bass_real_alm_to_healpy_complex(alm_B_map, lmax=lmax)
 
     map_T = hp.alm2map(alm_T_hp, nside, lmax=lmax)
     # Spin-2 alm2map requires lmax ≥ 2 (no spin-2 modes for ℓ < 2). When
@@ -251,21 +334,9 @@ def populate_map_outputs(
         :class:`SolverCoreOutput.__post_init__` contract would reject
         the resulting bundle.
     """
-    if not isinstance(output.alm_T, Mapping):
-        raise ValueError(
-            "populate_map_outputs requires alm_T to be a Mapping[int, ndarray]; "
-            f"got {type(output.alm_T).__name__}"
-        )
-    if not isinstance(output.alm_E, Mapping):
-        raise ValueError(
-            "populate_map_outputs requires alm_E to be a Mapping[int, ndarray]; "
-            f"got {type(output.alm_E).__name__}"
-        )
-    if not isinstance(output.alm_B, Mapping):
-        raise ValueError(
-            "populate_map_outputs requires alm_B to be a Mapping[int, ndarray]; "
-            f"got {type(output.alm_B).__name__}"
-        )
+    alm_T = coerce_bass_alm_mapping(output.alm_T, lmax=lmax, component="alm_T")
+    alm_E = coerce_bass_alm_mapping(output.alm_E, lmax=lmax, component="alm_E")
+    alm_B = coerce_bass_alm_mapping(output.alm_B, lmax=lmax, component="alm_B")
     pre_status = output.metadata.get("map_output_support")
     if pre_status == "producer_attached":
         # Idempotent: returning a copy with the same maps would silently
@@ -282,9 +353,9 @@ def populate_map_outputs(
         )
 
     maps = alm_to_map_TQU(
-        alm_T=output.alm_T,
-        alm_E=output.alm_E,
-        alm_B=output.alm_B,
+        alm_T=alm_T,
+        alm_E=alm_E,
+        alm_B=alm_B,
         nside=int(nside),
         lmax=lmax,
     )
@@ -293,11 +364,10 @@ def populate_map_outputs(
     new_metadata["map_producer_nside"] = int(nside)
     new_metadata["map_producer_lmax"] = (
         int(lmax) if lmax is not None
-        else int(max(infer_lmax(output.alm_T),
-                     infer_lmax(output.alm_E),
-                     infer_lmax(output.alm_B)))
+        else int(max(infer_lmax(alm_T), infer_lmax(alm_E), infer_lmax(alm_B)))
     )
     new_metadata["map_producer_path"] = "bass.forward.map_producer.alm_to_map_TQU"
+    new_metadata["map_producer_alm_schema"] = "canonical_ell_m_mapping_from_native_or_archive_payload"
     return dataclasses.replace(
         output,
         map_T=maps["map_T"],

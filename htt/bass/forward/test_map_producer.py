@@ -26,6 +26,7 @@ import pytest
 from bass.forward.map_producer import (
     alm_to_map_TQU,
     bass_real_alm_to_healpy_complex,
+    coerce_bass_alm_mapping,
     infer_lmax,
     populate_map_outputs,
 )
@@ -90,6 +91,13 @@ class TestInferLmax:
     def test_raises_on_empty(self) -> None:
         with pytest.raises(ValueError, match="empty"):
             infer_lmax({})
+
+    def test_native_flat_payload_returns_declared_lmax(self) -> None:
+        payload = {"ell_max": 2, "values": np.arange(9, dtype=np.float64)}
+        assert infer_lmax(payload) == 2
+        mapping = coerce_bass_alm_mapping(payload)
+        assert sorted(mapping) == [0, 1, 2]
+        np.testing.assert_array_equal(mapping[2], np.arange(4, 9, dtype=np.float64))
 
 
 # ────────────────────────────────────────────────────────────────────────
@@ -262,8 +270,29 @@ class TestPopulateMapOutputs:
             alm_T=np.zeros(10),  # wrong type
             alm_E=self._alm(), alm_B=self._alm(),
         )
-        with pytest.raises(ValueError, match="alm_T"):
+        with pytest.raises(ValueError, match="flat alm size"):
             populate_map_outputs(out, nside=8)
+
+    def test_accepts_native_solver_flat_payload(self) -> None:
+        lmax = 4
+        size = (lmax + 1) ** 2
+        payload = {
+            "representation": "ver2_native_pstf_sphere_reconstruction",
+            "coefficient_representation": "ver2_native_pstf_final_slice",
+            "ell_max": lmax,
+            "values": np.linspace(0.0, 1.0, size),
+        }
+        zero_payload = {**payload, "values": np.zeros(size, dtype=np.float64)}
+        out = _make_dummy_solver_output(
+            alm_T=payload,
+            alm_E=zero_payload,
+            alm_B=zero_payload,
+        )
+        attached = populate_map_outputs(out, nside=8)
+        assert attached.map_T is not None
+        assert attached.metadata["map_producer_alm_schema"] == (
+            "canonical_ell_m_mapping_from_native_or_archive_payload"
+        )
 
 
 # ────────────────────────────────────────────────────────────────────────
