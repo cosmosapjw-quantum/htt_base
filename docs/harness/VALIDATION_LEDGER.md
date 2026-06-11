@@ -321,3 +321,38 @@ records current disk state: 96 existing figure/PDF assets are quarantined for
 missing manifests, 0 are manifest-ready through this checker, and 0 sidecar
 manifest issues were found. This is not solver, transfer, posterior, MIO,
 null/mock/covariance, sky-support, morphology, or family-ID evidence.
+
+## PR-013 - MIO/HTT posterior-certificate type firewall
+
+Date: 2026-06-12
+
+Changed files: `htt/workspace/contracts/htt_posterior.py`,
+`htt/workspace/contracts/mio_certificate.py`,
+`htt/workspace/contracts/__init__.py`,
+`tests/contracts/test_mio_htt_no_merge.py`, status and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/contracts/test_mio_htt_no_merge.py -q` before implementation | repo root | FAIL | Red phase: missing `workspace.contracts.htt_posterior`. |
+| `venv/bin/python -m pytest tests/contracts/test_mio_htt_no_merge.py -q` | repo root | PASS | `14 passed`; covers direct certificate, owner, metadata, dict payload, manifest-owner, valid bundle, nested certificate, and real-root static scan checks. |
+| `venv/bin/python -m py_compile htt/workspace/contracts/htt_posterior.py htt/workspace/contracts/mio_certificate.py htt/workspace/contracts/__init__.py tests/contracts/test_mio_htt_no_merge.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python -m pytest tests/contracts/test_ownership_firewall.py htt/workspace/contracts/tests/test_mio_certificate.py htt/workspace/contracts/tests/test_htt_to_mio_roundtrip.py htt/workspace/contracts/tests/test_g19_enforcement.py htt/mio/tests/test_htt_cross_check.py -q` | repo root | PASS | `41 passed`; existing ownership, MIO, HTT-to-MIO, G19, and cross-check contracts preserved. |
+| `venv/bin/python -m pytest htt/htt/tests/test_ver2_likelihood_scope_guard.py htt/htt/tests/test_ver2_directional_shell.py -q` | repo root | PASS | `21 passed`; HTT likelihood-scope and directional shell guards preserved. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json` | repo root | PASS | After marking PR-013 complete: `11/62 = 17.74%`; dependency-weighted `21.54%`; critical path `4/21 = 19.05%`; checkpoint not due. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml; printf 'status_cmp=%s\n' "$?"` | repo root | PASS | `status_cmp=0`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`; packaging import smoke remains green. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 6877 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6824/6883 tests collected (59 deselected)`. |
+| `venv/bin/python -m pytest tests/contracts -q` | repo root | PASS | `47 passed`; top-level contract suite remains green. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-013 files>` | repo root | PASS | No forbidden claim patterns detected after scanner-safe test/doc wording. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-013 docs>` | repo root | PASS | No unmarked strong claims detected. |
+| `git diff --cached --check` | repo root | PASS | Staged PR-013 diff has no whitespace errors. |
+
+Numerical/scientific impact: none; type-contract and guard logic only.
+
+Artifact/claim-tier impact: COMMON/HTT L2 contract metadata. PR-013 makes the
+MIO/HTT separation executable for the new posterior bundle path and preserves
+existing cross-check-only exports. It does not add solver outputs, transfer
+calibration, null/mock/covariance evidence, sky-support evidence, morphology
+compatibility evidence, or family-ID evidence.

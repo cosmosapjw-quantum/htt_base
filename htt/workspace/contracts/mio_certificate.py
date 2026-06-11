@@ -64,3 +64,20 @@ class MioCertificate:
             "MioCertificate is a diagnostic report, not a posterior. "
             "Use HTT's PosteriorExportBundle for posterior operations."
         )
+
+    @property
+    def is_diagnostic_only(self) -> bool:
+        """Whether this certificate is explicitly marked diagnostic-only."""
+        return self.reduction_status == "diagnostic-only"
+
+    @property
+    def is_truth_claim(self) -> bool:
+        """These reports never assert model or geometry correctness."""
+        return False
+
+    def as_likelihood_term(self):
+        """MIO diagnostics cannot be converted into HTT likelihood terms."""
+        raise TypeError(
+            "MioCertificate is diagnostic-only and cannot be used as an HTT "
+            "likelihood term."
+        )

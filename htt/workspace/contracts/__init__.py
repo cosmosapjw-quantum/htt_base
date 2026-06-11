@@ -18,6 +18,11 @@ from .atlas_entry_lite import AtlasEntryLite
 from .departure_report import DepartureReport
 from .full_cov_mes_report import FullCovMESReport
 from .htt_forward_output import HttForwardOutput
+from .htt_posterior import (
+    HTTPosteriorBundle,
+    HttLikelihoodTerm,
+    reject_mio_likelihood_inputs,
+)
 from .htt_to_mio import PosteriorExportBundle
 from .mio_certificate import MioCertificate
 from .observable_vector import ObservableVector
@@ -53,7 +58,9 @@ __all__ = [
     "DepartureReport",
     "FullCovMESReport",
     "HostileAuditRunbook",
+    "HTTPosteriorBundle",
     "HttForwardOutput",
+    "HttLikelihoodTerm",
     "InjectionCampaignManifest",
     "MioCertificate",
     "NullEnsembleManifest",
@@ -77,4 +84,5 @@ __all__ = [
     "load_exported_tsc_overlay",
     "load_exported_tsc_policy_ledger",
     "load_preliminary_result_pack",
+    "reject_mio_likelihood_inputs",
 ]

@@ -14,3 +14,17 @@ Record accepted, rejected, and deferred design decisions.
   downstream evidence.
 - Deferred: full generated result-pack/table manifest validation remains for
   downstream artifact-ledger/status-snapshot PRs.
+
+## 2026-06-12 - PR-013 MIO/HTT type boundary
+
+- Accepted: `workspace.contracts.htt_posterior.HTTPosteriorBundle` is the
+  canonical new HTT posterior contract path for PR-013; it accepts only
+  `HttLikelihoodTerm` entries and an HTT-owned manifest.
+- Accepted: `MioCertificate` remains diagnostic-only. It exposes explicit
+  diagnostic query properties and raises if converted to an HTT likelihood
+  term or posterior bundle.
+- Accepted: recursive guards reject direct certificates, MIO-shaped dict
+  payloads, MIO cross-check row/table objects, and MIO diagnostic scalar keys
+  in likelihood-input paths.
+- Deferred: migrating every legacy HTT inference entry point to the new
+  `HTTPosteriorBundle` constructor remains downstream HTT inference work.
