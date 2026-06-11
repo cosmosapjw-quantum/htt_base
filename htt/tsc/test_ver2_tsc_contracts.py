@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from common.contracts import ArtifactManifest, TscAdequacyOverlay, TscDomainReport
+from common.contracts import ArtifactManifest, Owner, TscAdequacyOverlay, TscDomainReport
 from tsc.adapters.bass_runtime import SourceAdequacySuggestion
 from tsc.audit.no_overclaim import FORBIDDEN_PHRASE_REGISTRY
 from tsc.contracts import (
@@ -118,7 +118,7 @@ def test_new_tsc_service_modules_do_not_import_runtime_or_evidence_writers():
         assert not offenders, f"{module.name} imports forbidden authority paths: {sorted(offenders)}"
 
 
-def test_tsc_overlay_manifest_owner_is_tsc():
+def test_tsc_overlay_manifest_owner_is_tsc_legacy():
     man = _manifest()
     overlay = TscAdequacyOverlay(
         domain_report=TscDomainReport(
@@ -165,4 +165,4 @@ def test_tsc_overlay_manifest_owner_is_tsc():
         public_caveat_snippet="diagnostic-only",
         manifest=man,
     )
-    assert overlay.manifest.owner == "TSC"
+    assert overlay.manifest.owner is Owner.TSC_LEGACY

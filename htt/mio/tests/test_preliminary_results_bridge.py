@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 
+from common.contracts import Owner
 import mio.bridges as bridges
 import mio.bridges.preliminary_results as preliminary_results
 from mio.bridges.preliminary_results import build_preliminary_mio_handoff
@@ -22,7 +23,7 @@ def test_preliminary_mio_handoff_loads_certificate_and_overlay() -> None:
     assert handoff.production_status == "production_candidate"
     assert handoff.certificate.manifest is not None
     assert handoff.certificate.manifest.owner == "MIO"
-    assert handoff.overlay.manifest.owner == "TSC"
+    assert handoff.overlay.manifest.owner is Owner.TSC_LEGACY
     assert handoff.certificate.tsc_overlay_ref == handoff.overlay.manifest.artifact_id
     assert handoff.certificate.manifest.artifact_id in handoff.artifact_ids
     assert handoff.overlay.manifest.artifact_id in handoff.artifact_ids

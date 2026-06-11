@@ -1,7 +1,7 @@
 """Tests for the TSC overlay builder skeleton."""
 from __future__ import annotations
 
-from common.contracts import ArtifactManifest
+from common.contracts import ArtifactManifest, Owner
 from tsc.admissibility.domain import build_domain_report
 from tsc.budget.source_to_channel import build_channel_budgets, build_channel_budgets_from_reports
 from tsc.control.upgrade_advisor import recommend_chart_transition
@@ -69,7 +69,7 @@ def test_overlay_builder_propagation_pending_snippet_and_flags():
     )
     assert "propagation validation is still pending" in overlay.public_caveat_snippet
     assert overlay.no_overclaim_flags["full_polarization"]
-    assert overlay.manifest.owner == "TSC"
+    assert overlay.manifest.owner is Owner.TSC_LEGACY
 
 
 def test_overlay_builder_quarantines_forbidden_phrase():

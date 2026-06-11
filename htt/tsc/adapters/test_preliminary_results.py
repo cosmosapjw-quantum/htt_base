@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from common.contracts import Owner
 from tsc.adapters import build_preliminary_tsc_handoff
 
 
@@ -12,7 +13,7 @@ def test_preliminary_tsc_handoff_exposes_overlay_and_downstream_views() -> None:
     assert handoff.pack_summary_lines["D"]
     assert "tsc.ver2.export.active_service_bundle" in handoff.pack_artifact_ids["D"]
     assert "tsc.ver2.export.policy_ledger" in handoff.pack_artifact_ids["D"]
-    assert handoff.overlay.manifest.owner == "TSC"
+    assert handoff.overlay.manifest.owner is Owner.TSC_LEGACY
     assert handoff.active_service_bundle.overlay_ref == handoff.overlay.manifest.artifact_id
     assert handoff.policy_ledger.overlay_ref == handoff.overlay.manifest.artifact_id
     assert (

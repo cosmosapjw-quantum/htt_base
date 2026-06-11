@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from common.contracts import Owner
 from workspace.contracts.preliminary_results import (
     REPRESENTATIVE_FAMILY_SWEEP_ARTIFACT_ID,
     TSC_ACTIVE_SERVICE_BUNDLE_ARTIFACT_ID,
@@ -43,7 +44,7 @@ def test_exported_discrimination_matrix_recovers_pair_level_state() -> None:
 
 def test_exported_tsc_overlay_reconstructs_overlay_contract() -> None:
     overlay = load_exported_tsc_overlay()
-    assert overlay.manifest.owner == "TSC"
+    assert overlay.manifest.owner is Owner.TSC_LEGACY
     assert overlay.public_caveat_snippet
     assert overlay.channel_budgets
 

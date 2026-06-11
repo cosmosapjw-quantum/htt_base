@@ -7,6 +7,13 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
+from common.contracts import (
+    ImplementationScope,
+    Owner,
+    normalize_implementation_scope,
+    normalize_owner,
+)
+
 
 ValidationStatus = Literal["pass", "warn", "fail"]
 ValidationCategory = Literal[
@@ -25,18 +32,30 @@ REQUIRED_VALIDATION_CATEGORIES: tuple[ValidationCategory, ...] = (
     "regression",
 )
 
-_ALLOWED_OWNERS = {"BASS", "HTT", "MIO", "TSC", "COMMON"}
-_ALLOWED_SCOPES = {
-    "bass_py",
-    "bass_rs",
-    "canonical_BASS",
-    "htt",
-    "mio",
-    "tsc",
-    "common",
-}
+_ALLOWED_OWNERS = {owner.value for owner in Owner}
+_ALLOWED_SCOPES = {scope.value for scope in ImplementationScope}
 _ALLOWED_STATUSES = {"pass", "warn", "fail"}
 _ALLOWED_CATEGORIES = set(REQUIRED_VALIDATION_CATEGORIES)
+
+
+def _set_canonical_owner(instance: object) -> str:
+    raw_owner = getattr(instance, "owner")
+    try:
+        owner = normalize_owner(raw_owner).value
+    except ValueError as exc:
+        raise ValueError(f"Unknown owner {raw_owner!r}") from exc
+    object.__setattr__(instance, "owner", owner)
+    return owner
+
+
+def _set_canonical_implementation_scope(instance: object) -> str:
+    raw_scope = getattr(instance, "implementation_scope")
+    try:
+        scope = normalize_implementation_scope(raw_scope).value
+    except ValueError as exc:
+        raise ValueError(f"Unknown implementation_scope {raw_scope!r}") from exc
+    object.__setattr__(instance, "implementation_scope", scope)
+    return scope
 
 
 @dataclass(frozen=True)
@@ -79,12 +98,8 @@ class TheoremToTestEntry:
             raise ValueError("TheoremToTestEntry.theorem_id must be non-empty")
         if not self.theorem_label:
             raise ValueError("TheoremToTestEntry.theorem_label must be non-empty")
-        if self.owner not in _ALLOWED_OWNERS:
-            raise ValueError(f"Unknown owner {self.owner!r}")
-        if self.implementation_scope not in _ALLOWED_SCOPES:
-            raise ValueError(
-                f"Unknown implementation_scope {self.implementation_scope!r}"
-            )
+        _set_canonical_owner(self)
+        _set_canonical_implementation_scope(self)
         if not self.claim_guard:
             raise ValueError("TheoremToTestEntry.claim_guard must be non-empty")
         if not self.source_docs:
@@ -124,12 +139,8 @@ class ValidationCampaign:
             raise ValueError("ValidationCampaign.campaign_id must be non-empty")
         if not self.title:
             raise ValueError("ValidationCampaign.title must be non-empty")
-        if self.owner not in _ALLOWED_OWNERS:
-            raise ValueError(f"Unknown owner {self.owner!r}")
-        if self.implementation_scope not in _ALLOWED_SCOPES:
-            raise ValueError(
-                f"Unknown implementation_scope {self.implementation_scope!r}"
-            )
+        _set_canonical_owner(self)
+        _set_canonical_implementation_scope(self)
         if self.status not in _ALLOWED_STATUSES:
             raise ValueError(f"Unknown validation status {self.status!r}")
         if not self.theorem_refs:
@@ -283,12 +294,8 @@ class HostileAuditRunbook:
             raise ValueError("HostileAuditRunbook.runbook_id must be non-empty")
         if not self.title:
             raise ValueError("HostileAuditRunbook.title must be non-empty")
-        if self.owner not in _ALLOWED_OWNERS:
-            raise ValueError(f"Unknown owner {self.owner!r}")
-        if self.implementation_scope not in _ALLOWED_SCOPES:
-            raise ValueError(
-                f"Unknown implementation_scope {self.implementation_scope!r}"
-            )
+        _set_canonical_owner(self)
+        _set_canonical_implementation_scope(self)
         if not self.theorem_refs:
             raise ValueError("HostileAuditRunbook.theorem_refs must be non-empty")
         if not self.campaign_refs:
@@ -676,8 +683,8 @@ def build_default_theorem_to_test_map() -> tuple[TheoremToTestEntry, ...]:
         TheoremToTestEntry(
             theorem_id="V8_tsc_no_overclaim",
             theorem_label="TSC caveat overlays do not promote posterior or runtime ownership",
-            owner="TSC",
-            implementation_scope="tsc",
+            owner="TSC_LEGACY",
+            implementation_scope="tsc_legacy",
             claim_guard="TSC remains advisory and quarantines overclaim rather than emitting truth labels",
             source_docs=(
                 "docs/ver2_upgrade/TSC_active_service_SDD_WBS_PR_plan.md",

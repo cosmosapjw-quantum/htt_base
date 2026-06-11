@@ -18,21 +18,99 @@ The VER2 rule is:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from enum import StrEnum
 from typing import Any, Mapping, Optional, Literal
 
 import numpy as np
 
 
-_ALLOWED_OWNERS = {"BASS", "HTT", "MIO", "TSC", "COMMON"}
-_ALLOWED_CLAIM_TIERS = {"exploratory", "conditional", "validated", "blocked"}
-_ALLOWED_IMPLEMENTATION_SCOPES = {
-    "bass_py",
-    "bass_rs",
-    "canonical_BASS",
-    "htt",
-    "mio",
-    "tsc",
-    "common",
+class Owner(StrEnum):
+    """Canonical owner vocabulary for new COMMON/HTT/MIO/BASS contracts."""
+
+    COMMON = "COMMON"
+    HTT = "HTT"
+    MIO = "MIO"
+    BASS = "BASS"
+    OBSSTAT = "OBSSTAT"
+    TSC_LEGACY = "TSC_LEGACY"
+
+
+class ClaimTier(StrEnum):
+    """Machine-checkable claim tier vocabulary.
+
+    The lower-case values preserve compatibility with existing VER2 artifacts.
+    """
+
+    EXPLORATORY = "exploratory"
+    CONDITIONAL = "conditional"
+    DIAGNOSTIC_ONLY = "diagnostic_only"
+    VALIDATED = "validated"
+    BLOCKED = "blocked"
+
+
+class ImplementationScope(StrEnum):
+    """Machine-checkable implementation-scope vocabulary."""
+
+    BASS_PY = "bass_py"
+    BASS_RS = "bass_rs"
+    BASS_NATIVE = "canonical_BASS"
+    HTT = "htt"
+    MIO = "mio"
+    OBSSTAT = "obsstat"
+    COMMON = "common"
+    TSC_LEGACY = "tsc_legacy"
+
+
+class BundleKind(StrEnum):
+    """Role-sensitive bundle classes for owner/firewall checks."""
+
+    POSTERIOR = "posterior"
+    DIAGNOSTIC_CERTIFICATE = "diagnostic_certificate"
+    TRANSFER_ATLAS = "transfer_atlas"
+    OBSERVABLE_FEATURES = "observable_features"
+    COMMON_CONTRACT = "common_contract"
+    LEGACY_REPRODUCTION = "legacy_reproduction"
+
+
+def _enum_value(value: str | StrEnum) -> str:
+    return value.value if isinstance(value, StrEnum) else str(value)
+
+
+def normalize_owner(owner: str | Owner) -> Owner:
+    """Return the canonical owner enum, mapping legacy TSC strings explicitly."""
+
+    if owner == "TSC":
+        return Owner.TSC_LEGACY
+    return Owner(_enum_value(owner))
+
+
+def normalize_claim_tier(claim_tier: str | ClaimTier) -> ClaimTier:
+    return ClaimTier(_enum_value(claim_tier))
+
+
+def normalize_implementation_scope(
+    implementation_scope: str | ImplementationScope,
+) -> ImplementationScope:
+    value = _enum_value(implementation_scope)
+    if value == "tsc":
+        return ImplementationScope.TSC_LEGACY
+    return ImplementationScope(value)
+
+
+def normalize_bundle_kind(bundle_kind: str | BundleKind) -> BundleKind:
+    return BundleKind(_enum_value(bundle_kind))
+
+
+_ALLOWED_OWNERS = {owner.value for owner in Owner}
+_ALLOWED_CLAIM_TIERS = {claim_tier.value for claim_tier in ClaimTier}
+_ALLOWED_IMPLEMENTATION_SCOPES = {scope.value for scope in ImplementationScope}
+_ALLOWED_BUNDLES_BY_OWNER = {
+    Owner.COMMON: {BundleKind.COMMON_CONTRACT},
+    Owner.HTT: {BundleKind.POSTERIOR},
+    Owner.MIO: {BundleKind.DIAGNOSTIC_CERTIFICATE},
+    Owner.BASS: {BundleKind.TRANSFER_ATLAS},
+    Owner.OBSSTAT: {BundleKind.OBSERVABLE_FEATURES},
+    Owner.TSC_LEGACY: {BundleKind.LEGACY_REPRODUCTION},
 }
 _ALLOWED_PRODUCTION_STATUSES = {
     "diagnostic_only",
@@ -84,17 +162,6 @@ _ALLOWED_SELECTION_MODES = {
 }
 
 
-Owner = Literal["BASS", "HTT", "MIO", "TSC", "COMMON"]
-ClaimTier = Literal["exploratory", "conditional", "validated", "blocked"]
-ImplementationScope = Literal[
-    "bass_py",
-    "bass_rs",
-    "canonical_BASS",
-    "htt",
-    "mio",
-    "tsc",
-    "common",
-]
 ProductionStatus = Literal[
     "diagnostic_only",
     "production_candidate",
@@ -124,6 +191,75 @@ PropagationStatus = Literal["pending", "validated", "blocked"]
 Channel = Literal["TT", "TE", "EE", "BB", "TB", "EB", "BiPoSH", "template", "scalar_summary"]
 QuadrupoleConvention = Literal["mu2_minus_one_third", "legendre_P2"]
 QuadrupoleParameterName = Literal["Q_mu", "q"]
+
+
+def owner_can_emit_bundle(
+    owner: str | Owner,
+    bundle_kind: str | BundleKind,
+) -> bool:
+    canonical_owner = normalize_owner(owner)
+    canonical_kind = normalize_bundle_kind(bundle_kind)
+    return canonical_kind in _ALLOWED_BUNDLES_BY_OWNER[canonical_owner]
+
+
+def assert_owner_can_emit_bundle(
+    owner: str | Owner,
+    bundle_kind: str | BundleKind,
+) -> None:
+    canonical_owner = normalize_owner(owner)
+    canonical_kind = normalize_bundle_kind(bundle_kind)
+    if not owner_can_emit_bundle(canonical_owner, canonical_kind):
+        raise ValueError(
+            f"{canonical_owner.value} cannot own {canonical_kind.value} bundle"
+        )
+
+
+def _set_canonical_owner(instance: object, field_name: str = "owner") -> Owner:
+    raw_owner = getattr(instance, field_name)
+    try:
+        owner = normalize_owner(raw_owner)
+    except ValueError as exc:
+        raise ValueError(f"Unknown {field_name} {raw_owner!r}") from exc
+    object.__setattr__(instance, field_name, owner)
+    return owner
+
+
+def _set_canonical_claim_tier(
+    instance: object,
+    field_name: str = "claim_tier",
+) -> ClaimTier:
+    raw_claim_tier = getattr(instance, field_name)
+    try:
+        claim_tier = normalize_claim_tier(raw_claim_tier)
+    except ValueError as exc:
+        raise ValueError(f"Unknown {field_name} {raw_claim_tier!r}") from exc
+    object.__setattr__(instance, field_name, claim_tier)
+    return claim_tier
+
+
+def _set_canonical_implementation_scope(
+    instance: object,
+    field_name: str = "implementation_scope",
+) -> ImplementationScope:
+    raw_scope = getattr(instance, field_name)
+    try:
+        scope = normalize_implementation_scope(raw_scope)
+    except ValueError as exc:
+        raise ValueError(f"Unknown {field_name} {raw_scope!r}") from exc
+    object.__setattr__(instance, field_name, scope)
+    return scope
+
+
+def _require_manifest_owner(
+    manifest: "ArtifactManifest",
+    owner: Owner,
+    context: str,
+) -> None:
+    if normalize_owner(manifest.owner) is not owner:
+        raise ValueError(
+            f"{context}.manifest.owner must be {owner.value!r} "
+            f"(got {manifest.owner!r})"
+        )
 
 
 @dataclass(frozen=True)
@@ -157,14 +293,9 @@ class ArtifactManifest:
             raise ValueError("ArtifactManifest.artifact_id must be non-empty")
         if not self.artifact_path:
             raise ValueError("ArtifactManifest.artifact_path must be non-empty")
-        if self.owner not in _ALLOWED_OWNERS:
-            raise ValueError(f"Unknown owner {self.owner!r}")
-        if self.implementation_scope not in _ALLOWED_IMPLEMENTATION_SCOPES:
-            raise ValueError(
-                f"Unknown implementation_scope {self.implementation_scope!r}"
-            )
-        if self.claim_tier not in _ALLOWED_CLAIM_TIERS:
-            raise ValueError(f"Unknown claim_tier {self.claim_tier!r}")
+        _set_canonical_owner(self)
+        _set_canonical_implementation_scope(self)
+        _set_canonical_claim_tier(self)
         if self.production_status not in _ALLOWED_PRODUCTION_STATUSES:
             raise ValueError(
                 f"Unknown production_status {self.production_status!r}"
@@ -215,14 +346,9 @@ class StatusSnapshotEntry:
     source_commit: str
 
     def __post_init__(self) -> None:
-        if self.owner not in _ALLOWED_OWNERS:
-            raise ValueError(f"Unknown owner {self.owner!r}")
-        if self.implementation_scope not in _ALLOWED_IMPLEMENTATION_SCOPES:
-            raise ValueError(
-                f"Unknown implementation_scope {self.implementation_scope!r}"
-            )
-        if self.claim_tier not in _ALLOWED_CLAIM_TIERS:
-            raise ValueError(f"Unknown claim_tier {self.claim_tier!r}")
+        _set_canonical_owner(self)
+        _set_canonical_implementation_scope(self)
+        _set_canonical_claim_tier(self)
         if not self.artifact_id:
             raise ValueError("StatusSnapshotEntry.artifact_id must be non-empty")
         if not self.source_commit:
@@ -250,10 +376,8 @@ class ClaimLedgerEntry:
     def __post_init__(self) -> None:
         if not self.artifact_id:
             raise ValueError("ClaimLedgerEntry.artifact_id must be non-empty")
-        if self.owner not in _ALLOWED_OWNERS:
-            raise ValueError(f"Unknown owner {self.owner!r}")
-        if self.claim_tier not in _ALLOWED_CLAIM_TIERS:
-            raise ValueError(f"Unknown claim_tier {self.claim_tier!r}")
+        _set_canonical_owner(self)
+        _set_canonical_claim_tier(self)
         if not self.source_commit:
             raise ValueError("ClaimLedgerEntry.source_commit must be non-empty")
         if not self.allowed_claims and not self.forbidden_claims:
@@ -277,7 +401,8 @@ class RuntimeReductionDecision:
     claim_tier: ClaimTier = "conditional"
 
     def __post_init__(self) -> None:
-        if self.owner != "BASS":
+        owner = _set_canonical_owner(self)
+        if owner is not Owner.BASS:
             raise ValueError(
                 "RuntimeReductionDecision.owner must be 'BASS' "
                 f"(got {self.owner!r})"
@@ -288,8 +413,7 @@ class RuntimeReductionDecision:
             raise ValueError(
                 f"Unknown propagation_status {self.propagation_status!r}"
             )
-        if self.claim_tier not in _ALLOWED_CLAIM_TIERS:
-            raise ValueError(f"Unknown claim_tier {self.claim_tier!r}")
+        _set_canonical_claim_tier(self)
         if not self.reason:
             raise ValueError("RuntimeReductionDecision.reason must be non-empty")
 
@@ -397,11 +521,7 @@ class AtlasEntryLite:
             raise ValueError("AtlasEntryLite.atlas_id must be non-empty")
         if not self.theory_family:
             raise ValueError("AtlasEntryLite.theory_family must be non-empty")
-        if self.manifest.owner != "BASS":
-            raise ValueError(
-                "AtlasEntryLite.manifest.owner must be 'BASS' "
-                f"(got {self.manifest.owner!r})"
-            )
+        _require_manifest_owner(self.manifest, Owner.BASS, "AtlasEntryLite")
 
 
 @dataclass(frozen=True)
@@ -446,7 +566,8 @@ class DiscriminationMatrix:
         if len(self.hypotheses) < 2:
             raise ValueError("DiscriminationMatrix requires at least two hypotheses")
         invalid = sorted(
-            set(self.claim_tier_by_pair.values()) - _ALLOWED_CLAIM_TIERS
+            {_enum_value(value) for value in self.claim_tier_by_pair.values()}
+            - _ALLOWED_CLAIM_TIERS
         )
         if invalid:
             raise ValueError(f"Unknown claim tiers in DiscriminationMatrix: {invalid}")
@@ -472,11 +593,7 @@ class TscDomainReport:
             raise ValueError(f"Unknown TSC chart {self.chart!r}")
         if self.status not in _ALLOWED_TSC_CHART_STATUSES:
             raise ValueError(f"Unknown TSC chart status {self.status!r}")
-        if self.manifest.owner != "TSC":
-            raise ValueError(
-                "TscDomainReport.manifest.owner must be 'TSC' "
-                f"(got {self.manifest.owner!r})"
-            )
+        _require_manifest_owner(self.manifest, Owner.TSC_LEGACY, "TscDomainReport")
 
 
 @dataclass(frozen=True)
@@ -500,11 +617,7 @@ class TscResidualReport:
     def __post_init__(self) -> None:
         if self.chart not in _ALLOWED_TSC_CHARTS:
             raise ValueError(f"Unknown TSC chart {self.chart!r}")
-        if self.manifest.owner != "TSC":
-            raise ValueError(
-                "TscResidualReport.manifest.owner must be 'TSC' "
-                f"(got {self.manifest.owner!r})"
-            )
+        _require_manifest_owner(self.manifest, Owner.TSC_LEGACY, "TscResidualReport")
 
 
 @dataclass(frozen=True)
@@ -541,11 +654,7 @@ class TscSourceBridgeReport:
             )
         if self.source_status not in _ALLOWED_SOURCE_STATUSES:
             raise ValueError(f"Unknown source_status {self.source_status!r}")
-        if self.manifest.owner != "TSC":
-            raise ValueError(
-                "TscSourceBridgeReport.manifest.owner must be 'TSC' "
-                f"(got {self.manifest.owner!r})"
-            )
+        _require_manifest_owner(self.manifest, Owner.TSC_LEGACY, "TscSourceBridgeReport")
 
 
 @dataclass(frozen=True)
@@ -574,13 +683,9 @@ class TscChannelAdequacyBudget:
             raise ValueError(
                 f"Unknown propagation_status {self.propagation_status!r}"
             )
-        if self.claim_ceiling not in _ALLOWED_CLAIM_TIERS:
+        if _enum_value(self.claim_ceiling) not in _ALLOWED_CLAIM_TIERS:
             raise ValueError(f"Unknown claim_ceiling {self.claim_ceiling!r}")
-        if self.manifest.owner != "TSC":
-            raise ValueError(
-                "TscChannelAdequacyBudget.manifest.owner must be 'TSC' "
-                f"(got {self.manifest.owner!r})"
-            )
+        _require_manifest_owner(self.manifest, Owner.TSC_LEGACY, "TscChannelAdequacyBudget")
 
 
 @dataclass(frozen=True)
@@ -614,11 +719,7 @@ class TscUpgradeRecommendation:
             )
         if self.severity not in {"info", "warn", "block"}:
             raise ValueError(f"Unknown severity {self.severity!r}")
-        if self.manifest.owner != "TSC":
-            raise ValueError(
-                "TscUpgradeRecommendation.manifest.owner must be 'TSC' "
-                f"(got {self.manifest.owner!r})"
-            )
+        _require_manifest_owner(self.manifest, Owner.TSC_LEGACY, "TscUpgradeRecommendation")
 
 
 @dataclass(frozen=True)
@@ -636,11 +737,7 @@ class TscAdequacyOverlay:
     manifest: ArtifactManifest
 
     def __post_init__(self) -> None:
-        if self.manifest.owner != "TSC":
-            raise ValueError(
-                "TscAdequacyOverlay.manifest.owner must be 'TSC' "
-                f"(got {self.manifest.owner!r})"
-            )
+        _require_manifest_owner(self.manifest, Owner.TSC_LEGACY, "TscAdequacyOverlay")
         if not self.public_caveat_snippet:
             raise ValueError(
                 "TscAdequacyOverlay.public_caveat_snippet must be non-empty"

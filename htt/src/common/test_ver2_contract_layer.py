@@ -9,6 +9,7 @@ from common.contracts import (
     AtlasEntryLite,
     ClaimLedgerEntry,
     FullCovMESReport,
+    Owner,
     TscAdequacyOverlay,
     TscChannelAdequacyBudget,
     TscDomainReport,
@@ -167,7 +168,7 @@ def test_tsc_overlay_stack_requires_tsc_owner():
         public_caveat_snippet="diagnostic-only",
         manifest=man,
     )
-    assert overlay.manifest.owner == "TSC"
+    assert overlay.manifest.owner is Owner.TSC_LEGACY
 
 
 def test_tsc_overlay_hook_fields_exist_on_cross_package_reports():

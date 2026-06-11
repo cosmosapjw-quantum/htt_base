@@ -9,19 +9,27 @@ Pre-read:
 - `AGENTS.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-020-harness-runner.md`
+- `docs/PR_DELTAS/pr-010-ownership-firewall.md`
 - `.agents/skills/htt-dag-orchestrator/SKILL.md`
 
 Current state:
 
-- PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, and PR-020 are complete.
+- PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, and PR-010
+  are complete.
 - Generated five-PR checkpoint artifact:
   `docs/generated/progress_checkpoints/checkpoint_005.md`.
 - Checkpoint 005: 5/62 = 8.06% complete, dependency-weighted 7.69%,
   critical-path 14.29%, no blockers, no replan required.
 - PR-020 added deterministic collect/smoke/fast/package runner commands in
   `scripts/codex_harness/run_subset.py`.
-- Next policy-ordered PR is PR-010. PR-021 is also unblocked.
+- PR-010 added canonical owner/claim-tier/scope enums and HTT/MIO
+  bundle-role firewall checks. Canonical contract rows now normalize legacy
+  `TSC`/`tsc` inputs to `TSC_LEGACY` / `tsc_legacy`.
+- Progress after PR-010: 8/62 = 12.90%; dependency-weighted 14.87%;
+  critical-path 4/21 = 19.05%; checkpoint not due until 10 completed PRs.
+- Unblocked next candidates from the live progress report: `PR-021`, `PR-011`,
+  `PR-013`, and `PR-014`. Topological next is `PR-021`; `PR-014` is on the
+  current critical path.
 
 Rules:
 
@@ -37,4 +45,5 @@ Immediate commands:
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
 python scripts/codex_harness/run_subset.py --list
+venv/bin/python -m pytest tests/contracts/test_ownership_firewall.py -q
 ```

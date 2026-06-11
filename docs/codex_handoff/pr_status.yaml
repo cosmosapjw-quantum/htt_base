@@ -7,6 +7,7 @@ completed:
 - PR-004
 - PR-005
 - PR-020
+- PR-010
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -20,4 +21,6 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   artifact and no-progress replan detection; checkpoint percentages are DAG bookkeeping
   only, not scientific readiness evidence. PR-020 implements the deterministic Codex
   pytest subset runner for collect/smoke/fast/package commands; this is COMMON L1
-  harness dispatch and failure-propagation evidence only.
+  harness dispatch and failure-propagation evidence only. PR-010 adds canonical
+  owner, claim-tier, implementation-scope, and bundle-role firewall contracts;
+  legacy TSC inputs are accepted only through explicit TSC_LEGACY normalization.
