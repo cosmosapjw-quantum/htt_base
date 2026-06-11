@@ -29,3 +29,33 @@ Numerical/scientific impact: none; packaging/import infrastructure only.
 Artifact/claim-tier impact: L0 infrastructure. No result artifact, transfer
 output, posterior/evidence bundle, MIO diagnostic certificate, null calibration,
 or family-identification claim was generated.
+
+## PR-003 - PR DAG machine-readable manifest and progress engine
+
+Date: 2026-06-12
+
+Changed files: `scripts/codex_harness/validate_pr_dag.py`,
+`scripts/codex_harness/progress_report.py`,
+`scripts/codex_harness/test_pr_dag_harness.py`,
+`docs/codex_handoff/pr_dag.mmd`, `docs/codex_handoff/pr_status.yaml`,
+`machine_readable/pr_status.yaml`, `docs/PR_DELTAS/pr-003-dag-progress.md`,
+`docs/harness/VALIDATION_LEDGER.md`.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest scripts/codex_harness/test_pr_dag_harness.py -q` before implementation | repo root | FAIL | Red phase: four expected harness failures. |
+| `venv/bin/python -m pytest scripts/codex_harness/test_pr_dag_harness.py -q` after reviewer edge-case tests | repo root | FAIL | Red phase: two expected harness failures. |
+| `venv/bin/python -m pytest scripts/codex_harness/test_pr_dag_harness.py -q` | repo root | PASS | `6 passed`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --write-mermaid docs/codex_handoff/pr_dag.mmd` | repo root | PASS | Generated Mermaid graph from validated DAG. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml` | repo root | PASS | `Completed 3/62 = 4.84%`; checkpoint not due. |
+| `python scripts/codex_harness/progress_report.py machine_readable/pr_backlog.yaml machine_readable/pr_status.yaml --json` | repo root | PASS | Same metrics as docs status. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml; echo status_cmp=$?` | repo root | PASS | `status_cmp=0`. |
+| `venv/bin/python -m pytest --collect-only -q` | repo root | PASS | `6813 tests collected`; existing unknown marker warnings remain for PR-002 taxonomy. |
+| Scoped forbidden-claim `rg` over PR-003 files | repo root | PASS | No forbidden-risk phrases in changed PR-003 files. |
+
+Numerical/scientific impact: none; DAG/progress harness only.
+
+Artifact/claim-tier impact: COMMON L0 bookkeeping. Percent complete counts DAG
+cards only and is not solver, transfer, inference, MIO, null, morphology, or
+family-identification evidence.
