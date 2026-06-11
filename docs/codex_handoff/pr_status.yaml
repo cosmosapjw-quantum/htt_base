@@ -1,6 +1,9 @@
-generated_on: '2026-06-11'
-completed: []
+generated_on: '2026-06-12'
+completed:
+- PR-000
 blocked: []
 in_progress: null
-notes: Initialize by running scripts/codex_harness/init_status.py or editing with
-  completed PR ids after each PR merge.
+notes: 'PR-000 closed as inventory-only baseline. Literal system-Python collect-only
+  command fails because /usr/bin/python lacks pytest; venv/bin/python collect-only
+  succeeds with 1541 tests. Non-harness implementation PRs remain gated until PR-001
+  or equivalent packaging/import stabilization.'
