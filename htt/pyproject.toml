@@ -1,6 +1,6 @@
 [project]
 name = "bass-py"
-version = "0.8.2-w8-02"
+version = "0.8.2+w8.2"
 description = "BASS-py — Bianchi Anisotropy System Solver (Python side, low-ℓ special-purpose solver)"
 requires-python = ">=3.10"
 dependencies = [
@@ -10,7 +10,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7.4"]
+dev = [
+    "pytest>=7.4",
+    "matplotlib>=3.8",
+    "PyYAML>=6.0",
+]
 
 [tool.pytest.ini_options]
 addopts = ["-m", "not slow"]
@@ -29,4 +33,4 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = [".", "src"]
-include = ["bass*", "tsc*", "common*", "mio*", "workspace*"]
+include = ["bass*", "tsc*", "common*", "mio*", "workspace*", "htt*"]

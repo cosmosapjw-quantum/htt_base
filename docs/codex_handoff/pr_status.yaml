@@ -1,9 +1,10 @@
 generated_on: '2026-06-12'
 completed:
 - PR-000
+- PR-001
 blocked: []
 in_progress: null
-notes: 'PR-000 closed as inventory-only baseline. Literal system-Python collect-only
-  command fails because /usr/bin/python lacks pytest; venv/bin/python collect-only
-  succeeds with 1541 tests. Non-harness implementation PRs remain gated until PR-001
-  or equivalent packaging/import stabilization.'
+notes: 'PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
+  and import discovery when python points to an active virtual environment; the host
+  default /usr/bin/python remains PEP 668 externally managed and must not be forced
+  without an explicit user/system policy decision.'
