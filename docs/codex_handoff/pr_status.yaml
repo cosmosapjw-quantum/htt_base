@@ -9,6 +9,7 @@ completed:
 - PR-020
 - PR-010
 - PR-021
+- PR-011
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -26,4 +27,7 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   owner, claim-tier, implementation-scope, and bundle-role firewall contracts;
   legacy TSC inputs are accepted only through explicit TSC_LEGACY normalization.
   PR-021 records optional dependency availability and skip/blocker attribution
-  as COMMON L1 diagnostic harness provenance only.
+  as COMMON L1 diagnostic harness provenance only. PR-011 adds COMMON artifact
+  manifest validation helpers and a generated diagnostic-only quarantine
+  inventory for unmanifested figure/PDF assets; it does not regenerate or
+  reinterpret figures.

@@ -25,3 +25,30 @@ Date: 2026-06-12
 - Scope caveat: checkpoint percentages are DAG bookkeeping only, not scientific
   readiness, transfer calibration, HTT posterior/evidence, MIO diagnostic,
   null calibration, morphology compatibility, or family-identification evidence.
+
+## Checkpoint 010 materialized by PR-011
+
+Date: 2026-06-12
+
+- Completed PRs: 10/62 = 16.13%.
+- Dependency-weighted completion: 19.49%.
+- Critical-path completion: 4/21 = 19.05%.
+- Artifact: `docs/generated/progress_checkpoints/checkpoint_010.md`.
+- Blocked PRs: none.
+- Unblocked next: PR-013, PR-014, PR-040, PR-012, PR-022, PR-070.
+- Tests/checks recorded: PR-011 artifact manifest contract tests, checker
+  dry-run/write commands, common ownership regressions, VER2 figure-scanner
+  regressions, package/smoke/collect subsets, DAG validation, status mirror
+  comparison, explicit claim scans, and scoped whitespace check.
+- Claim-tier drift findings: no forbidden claim patterns or unmarked strong
+  claims in PR-011 files. Quarantined figure/PDF assets remain
+  diagnostic-only and non-claim-bearing until valid manifest provenance exists.
+- Replan decision: generated checkpoint reports progress advanced; no replan
+  PR needed at checkpoint 010.
+- Subagents used and closed: code cartographer, harness engineer,
+  physics/statistics auditor, claim-gate reviewer, regression tester, plus
+  post-implementation harness and claim reviewers.
+- Scope caveat: checkpoint percentages and quarantine counts are DAG/report
+  bookkeeping only, not scientific readiness, transfer calibration, HTT
+  posterior/evidence, MIO diagnostic, null calibration, morphology
+  compatibility, or family-ID evidence.
