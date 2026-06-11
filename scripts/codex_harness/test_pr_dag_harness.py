@@ -143,3 +143,151 @@ def test_progress_report_handles_empty_backlog(tmp_path: Path) -> None:
     assert payload["percent_complete"] == 0.0
     assert payload["critical_path"] == []
     assert payload["critical_path_percent_complete"] == 0.0
+
+
+def _linear_backlog(count: int) -> dict:
+    ids = [f"PR-{index:03d}" for index in range(count)]
+    return {
+        "policy": {"topological_order": ids},
+        "prs": [
+            {
+                "id": pr_id,
+                "wave": 0,
+                "title": f"Step {index}",
+                "owner": "COMMON",
+                "depends": [] if index == 0 else [ids[index - 1]],
+            }
+            for index, pr_id in enumerate(ids)
+        ],
+    }
+
+
+def test_progress_report_writes_checkpoint_artifact_when_due(tmp_path: Path) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    checkpoint_dir = tmp_path / "checkpoints"
+    _write_yaml(backlog, _linear_backlog(5))
+    _write_yaml(status, {"completed": [f"PR-{index:03d}" for index in range(5)], "blocked": []})
+
+    completed = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        str(checkpoint_dir),
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    checkpoint = checkpoint_dir / "checkpoint_005.md"
+    assert checkpoint.exists()
+    rendered = checkpoint.read_text(encoding="utf-8")
+    assert "Completed PRs: 5/5 = 100.0%" in rendered
+    assert "Replan required: no" in rendered
+    assert "not scientific readiness evidence" in rendered
+
+
+def test_progress_report_checkpoint_detects_no_progress_since_previous_checkpoint(
+    tmp_path: Path,
+) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    checkpoint_dir = tmp_path / "checkpoints"
+    checkpoint_dir.mkdir()
+    _write_yaml(backlog, _linear_backlog(5))
+    _write_yaml(status, {"completed": [f"PR-{index:03d}" for index in range(5)], "blocked": []})
+    (checkpoint_dir / "checkpoint_004.md").write_text(
+        '<!-- checkpoint_meta {"completed": 5, "percent_complete": 100.0} -->\n',
+        encoding="utf-8",
+    )
+
+    completed = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        str(checkpoint_dir),
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    rendered = (checkpoint_dir / "checkpoint_005.md").read_text(encoding="utf-8")
+    assert "Replan required: yes" in rendered
+    assert "Adversarial replan entry" in rendered
+
+
+def test_progress_report_does_not_write_checkpoint_when_not_due(tmp_path: Path) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    checkpoint_dir = tmp_path / "checkpoints"
+    _write_yaml(backlog, _linear_backlog(5))
+    _write_yaml(status, {"completed": [f"PR-{index:03d}" for index in range(4)], "blocked": []})
+
+    completed = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        str(checkpoint_dir),
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert "Checkpoint due: False" in completed.stdout
+    assert not checkpoint_dir.exists()
+
+
+def test_progress_report_json_stays_valid_when_writing_checkpoint(tmp_path: Path) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    checkpoint_dir = tmp_path / "checkpoints"
+    _write_yaml(backlog, _linear_backlog(5))
+    _write_yaml(status, {"completed": [f"PR-{index:03d}" for index in range(5)], "blocked": []})
+
+    completed = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        str(checkpoint_dir),
+        "--json",
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    payload = json.loads(completed.stdout)
+    assert payload["checkpoint_due"] is True
+    assert payload["checkpoint_artifact"].endswith("checkpoint_005.md")
+    assert payload["replan_required"] is False
+
+
+def test_progress_report_rejects_malformed_previous_checkpoint_metadata(
+    tmp_path: Path,
+) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    checkpoint_dir = tmp_path / "checkpoints"
+    checkpoint_dir.mkdir()
+    _write_yaml(backlog, _linear_backlog(5))
+    _write_yaml(status, {"completed": [f"PR-{index:03d}" for index in range(5)], "blocked": []})
+    (checkpoint_dir / "checkpoint_004.md").write_text(
+        "<!-- checkpoint_meta not-json -->\n",
+        encoding="utf-8",
+    )
+
+    completed = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        str(checkpoint_dir),
+    )
+
+    assert completed.returncode != 0
+    assert "malformed checkpoint metadata" in completed.stderr

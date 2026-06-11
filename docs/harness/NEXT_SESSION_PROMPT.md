@@ -9,15 +9,17 @@ Pre-read:
 - `AGENTS.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-004-codex-assets.md`
+- `docs/PR_DELTAS/pr-005-checkpoint-protocol.md`
 - `.agents/skills/htt-dag-orchestrator/SKILL.md`
 
 Current state:
 
-- PR-000, PR-001, PR-002, PR-003, and PR-004 are complete.
-- Five-PR checkpoint after PR-004: 5/62 = 8.06% complete,
-  dependency-weighted 7.69%, critical-path 14.29%, no blockers.
-- Next policy-ordered PR is PR-005.
+- PR-000, PR-001, PR-002, PR-003, PR-004, and PR-005 are complete.
+- Generated five-PR checkpoint artifact:
+  `docs/generated/progress_checkpoints/checkpoint_005.md`.
+- Checkpoint 005: 5/62 = 8.06% complete, dependency-weighted 7.69%,
+  critical-path 14.29%, no blockers, no replan required.
+- Next policy-ordered PR is PR-020. PR-010 is also unblocked.
 
 Rules:
 
@@ -31,5 +33,5 @@ Immediate commands:
 
 ```bash
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
-python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5
+python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
 ```

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -123,6 +124,7 @@ def build_report(info: DagInfo, completed: set[str], blocked: set[str], checkpoi
     critical_done = sum(1 for pr_id in critical_path if pr_id in completed)
     next_checkpoint = ((len(completed) // checkpoint_every) + 1) * checkpoint_every
 
+    checkpoint_due = len(completed) > 0 and len(completed) % checkpoint_every == 0
     return {
         "total": len(info.ids),
         "completed": len(completed),
@@ -136,9 +138,134 @@ def build_report(info: DagInfo, completed: set[str], blocked: set[str], checkpoi
         if critical_path
         else 0.0,
         "unblocked_next": unblocked[:10],
+        "current_checkpoint_at": len(completed) if checkpoint_due else None,
         "next_checkpoint_at": next_checkpoint,
-        "checkpoint_due": len(completed) > 0 and len(completed) % checkpoint_every == 0,
+        "checkpoint_due": checkpoint_due,
+        "checkpoint_artifact": None,
+        "previous_checkpoint_completed": None,
+        "progress_delta_completed": None,
+        "replan_required": False,
+        "replan_reason": "checkpoint not due",
     }
+
+
+def _checkpoint_metadata(path: Path) -> dict[str, Any] | None:
+    if not path.exists():
+        return None
+    first_line = path.read_text(encoding="utf-8", errors="ignore").splitlines()[:1]
+    if not first_line:
+        return None
+    match = re.match(r"<!-- checkpoint_meta (.*?) -->", first_line[0])
+    if not match:
+        return None
+    try:
+        metadata = json.loads(match.group(1))
+    except json.JSONDecodeError:
+        return None
+    if not isinstance(metadata, dict):
+        return None
+    return metadata
+
+
+def _latest_checkpoint_metadata(checkpoint_dir: Path, current_completed: int) -> dict[str, Any] | None:
+    candidates: list[tuple[int, dict[str, Any]]] = []
+    for path in checkpoint_dir.glob("checkpoint_*.md"):
+        match = re.fullmatch(r"checkpoint_(\d+)\.md", path.name)
+        if not match:
+            continue
+        checkpoint_number = int(match.group(1))
+        if checkpoint_number >= current_completed:
+            continue
+        metadata = _checkpoint_metadata(path)
+        if metadata is None:
+            raise ValueError(f"malformed checkpoint metadata: {path}")
+        candidates.append((checkpoint_number, metadata))
+    if not candidates:
+        return None
+    return sorted(candidates, key=lambda item: item[0])[-1][1]
+
+
+def _checkpoint_state(report: dict[str, Any], previous: dict[str, Any] | None) -> dict[str, Any]:
+    previous_completed = int(previous.get("completed", -1)) if previous else -1
+    previous_percent = float(previous.get("percent_complete", -1.0)) if previous else -1.0
+    progress_stalled = (
+        previous is not None
+        and report["completed"] <= previous_completed
+        and report["percent_complete"] <= previous_percent
+    )
+    replan_required = progress_stalled
+    replan_reason = (
+        "progress did not advance since the previous checkpoint"
+        if progress_stalled
+        else "progress advanced; no replan required"
+    )
+    return {
+        "previous_checkpoint_completed": previous_completed if previous else None,
+        "progress_delta_completed": report["completed"] - previous_completed
+        if previous
+        else None,
+        "replan_required": progress_stalled,
+        "replan_reason": replan_reason,
+    }
+
+
+def _checkpoint_markdown(report: dict[str, Any], state: dict[str, Any]) -> str:
+    metadata = {
+        "completed": report["completed"],
+        "total": report["total"],
+        "percent_complete": report["percent_complete"],
+        "dependency_weighted_percent_complete": report["dependency_weighted_percent_complete"],
+        "critical_path_percent_complete": report["critical_path_percent_complete"],
+        "replan_required": state["replan_required"],
+    }
+    blocked = ", ".join(report["blocked"]) or "none"
+    unblocked_next = ", ".join(report["unblocked_next"]) or "none"
+    critical_path = " -> ".join(report["critical_path"]) or "none"
+    replan_text = "yes" if state["replan_required"] else "no"
+    lines = [
+        f"<!-- checkpoint_meta {json.dumps(metadata, sort_keys=True)} -->",
+        f"# Progress checkpoint {report['completed']:03d}",
+        "",
+        f"- Completed PRs: {report['completed']}/{report['total']} = {report['percent_complete']}%",
+        f"- Dependency-weighted completion: {report['dependency_weighted_percent_complete']}%",
+        (
+            f"- Critical path completion: {report['critical_path_completed']}/"
+            f"{report['critical_path_total']} = {report['critical_path_percent_complete']}%"
+        ),
+        f"- Critical path: {critical_path}",
+        f"- Blocked PRs: {blocked}",
+        f"- Unblocked next: {unblocked_next}",
+        f"- Replan required: {replan_text}",
+        f"- Replan reason: {state['replan_reason']}",
+        "",
+        "Progress percentages count DAG bookkeeping only and are not scientific readiness evidence.",
+        "They do not validate native solver behavior, transfer calibration, HTT posterior/evidence, MIO diagnostics, null calibration, morphology compatibility, or Bianchi family identification.",
+    ]
+    if state["replan_required"]:
+        lines.extend(
+            [
+                "",
+                "## Adversarial replan entry",
+                "",
+                "- Step-back: the same completed count and percent recurred at a checkpoint.",
+                "- Required action: open a small replan PR before further feature work.",
+            ]
+        )
+    return "\n".join(lines) + "\n"
+
+
+def write_checkpoint(report: dict[str, Any], checkpoint_dir: str | Path) -> Path | None:
+    if not report["checkpoint_due"]:
+        return None
+    output_dir = Path(checkpoint_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    previous = _latest_checkpoint_metadata(output_dir, report["completed"])
+    state = _checkpoint_state(report, previous)
+    report.update(state)
+    checkpoint_path = output_dir / f"checkpoint_{report['completed']:03d}.md"
+    checkpoint_path.write_text(_checkpoint_markdown(report, state), encoding="utf-8")
+    report["checkpoint_artifact"] = str(checkpoint_path)
+    return checkpoint_path
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -146,6 +273,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("backlog")
     parser.add_argument("status")
     parser.add_argument("--checkpoint-every", type=int, default=5)
+    parser.add_argument("--write-checkpoint-dir")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)
 
@@ -156,6 +284,14 @@ def main(argv: list[str] | None = None) -> int:
     except Exception as exc:
         print(str(exc), file=sys.stderr)
         return 1
+
+    checkpoint_path = None
+    if args.write_checkpoint_dir:
+        try:
+            checkpoint_path = write_checkpoint(report, args.write_checkpoint_dir)
+        except Exception as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
 
     if args.json:
         print(json.dumps(report, indent=2))
@@ -175,6 +311,8 @@ def main(argv: list[str] | None = None) -> int:
         )
         print("Unblocked next:", ", ".join(report["unblocked_next"]) or "none")
         print("Checkpoint due:", report["checkpoint_due"])
+        if checkpoint_path is not None:
+            print(f"Checkpoint artifact: {checkpoint_path}")
     return 0
 
 
