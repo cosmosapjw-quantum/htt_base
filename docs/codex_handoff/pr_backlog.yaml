@@ -1,0 +1,1375 @@
+generated_on: '2026-06-11'
+scope: htt_base_pre_native_lowell_solver_codex_dag_v2
+policy:
+  topological_order:
+  - PR-000
+  - PR-001
+  - PR-003
+  - PR-002
+  - PR-004
+  - PR-005
+  - PR-020
+  - PR-010
+  - PR-021
+  - PR-011
+  - PR-013
+  - PR-014
+  - PR-040
+  - PR-012
+  - PR-022
+  - PR-070
+  - PR-015
+  - PR-050
+  - PR-041
+  - PR-023
+  - PR-071
+  - PR-080
+  - PR-030
+  - PR-113
+  - PR-051
+  - PR-042
+  - PR-072
+  - PR-081
+  - PR-031
+  - PR-052
+  - PR-043
+  - PR-073
+  - PR-082
+  - PR-032
+  - PR-053
+  - PR-074
+  - PR-083
+  - PR-054
+  - PR-075
+  - PR-055
+  - PR-076
+  - PR-056
+  - PR-060
+  - PR-090
+  - PR-100
+  - PR-084
+  - PR-061
+  - PR-091
+  - PR-101
+  - PR-102
+  - PR-062
+  - PR-092
+  - PR-063
+  - PR-110
+  - PR-064
+  - PR-065
+  - PR-066
+  - PR-103
+  - PR-111
+  - PR-112
+  - PR-114
+  - PR-115
+  checkpoint_every_completed_prs: 5
+  no_native_lowell_solver_implementation: true
+  family_identification_claims_blocked_until_native_morphology_atlas: true
+  mio_htt_merge_forbidden: true
+  treat_external_transfer_as_transfer_conditional: true
+waves:
+- wave: 0
+  title: Intake, packaging, DAG harness, and no-science preflight
+- wave: 1
+  title: Common SSoT contracts and semantic firewall
+- wave: 2
+  title: Test harness, optional dependencies, and CI-like local runners
+- wave: 3
+  title: Teff/TSC deprecation, legacy quarantine, and generic semantic guards
+- wave: 4
+  title: Sky support, ZoA, axis gates, and mock calibration
+- wave: 5
+  title: MIO x/Q/Pi/F/G formalism and diagnostic reports
+- wave: 6
+  title: HTT local/global inference, null competition, and adequacy diagnostics
+- wave: 7
+  title: Observer/statistics interface and morphology features
+- wave: 8
+  title: Transfer provenance, external AniCLASS adapter, and future native solver
+    bridge
+- wave: 9
+  title: Full-covariance MES synthetic programme
+- wave: 10
+  title: MIO certificate suite and cross-check outputs
+- wave: 11
+  title: Result packs, manuscript/figure integration, and external audit freeze
+prs:
+- id: PR-000
+  wave: 0
+  title: Codex intake, repo snapshot, and immutable baseline inventory
+  owner: COMMON
+  depends: []
+  files:
+  - docs/PR_DELTAS/pr-000-intake.md
+  - docs/generated/repo_inventory.json
+  - docs/generated/test_command_matrix.md
+  tests:
+  - python -m pytest --collect-only htt/htt/tests htt/src htt/tsc htt/workspace htt/mio
+    -q
+  dod:
+  - Repo roots, import paths, optional dependency failures, generated artifacts, and
+    stale figures are inventoried
+  - No scientific behavior changes
+  kill: If collect-only cannot run, record exact import failure and stop all non-harness
+    PRs.
+  level: L0
+  scope: pre-solver
+  risk: low
+- id: PR-001
+  wave: 0
+  title: Editable install and import-path stabilization
+  owner: COMMON
+  depends:
+  - PR-000
+  files:
+  - htt/pyproject.toml
+  - htt/conftest.py
+  - htt/__init__.py
+  - docs/PR_DELTAS/pr-001-packaging.md
+  tests:
+  - python -m pip install -e ./htt[dev]
+  - python -m pytest --collect-only htt/htt/tests htt/src htt/tsc htt/workspace htt/mio
+    -q
+  dod:
+  - Repo-root and temp-dir imports work without ad hoc PYTHONPATH
+  - Nested htt package behavior is documented and tested
+  kill: Do not rename public packages without compatibility aliases and migration
+    tests.
+  level: L0
+  scope: pre-solver
+  risk: medium
+- id: PR-002
+  wave: 0
+  title: Test markers, optional dependency skips, and smoke suite taxonomy
+  owner: COMMON
+  depends:
+  - PR-001
+  files:
+  - htt/pytest.ini
+  - htt/conftest.py
+  - docs/PR_DELTAS/pr-002-test-taxonomy.md
+  tests:
+  - python -m pytest -m smoke -q
+  - python -m pytest --collect-only -q
+  dod:
+  - smoke/fast/slow/requires_healpy/requires_dynesty markers exist
+  - Missing optional dependencies skip with explicit reason, not collection failure
+  kill: Never skip silently; every skip must name the missing dependency or slow marker.
+  level: L0
+  scope: pre-solver
+  risk: medium
+- id: PR-003
+  wave: 0
+  title: PR DAG machine-readable manifest and progress engine
+  owner: COMMON
+  depends:
+  - PR-000
+  files:
+  - docs/codex_handoff/pr_backlog.yaml
+  - docs/codex_handoff/pr_dag.mmd
+  - scripts/codex_harness/validate_pr_dag.py
+  - scripts/codex_harness/progress_report.py
+  tests:
+  - python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml
+    docs/codex_handoff/pr_status.yaml
+  dod:
+  - DAG has no cycles
+  - Every PR dependency exists
+  - Progress percent can be computed reproducibly
+  kill: If the graph is cyclic or has missing dependency ids, no implementation PR
+    may start.
+  level: L0
+  scope: pre-solver
+  risk: low
+- id: PR-004
+  wave: 0
+  title: AGENTS.md, repo-scoped skills, custom subagents, and rules install
+  owner: COMMON
+  depends:
+  - PR-003
+  files:
+  - AGENTS.md
+  - .agents/skills/**/SKILL.md
+  - .codex/agents/*.toml
+  - .codex/rules/default.rules
+  - docs/codex_handoff/INSTALL.md
+  tests:
+  - codex execpolicy check --pretty --rules .codex/rules/default.rules -- python -m
+    pytest -q
+  - python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Repo instruction, skills, agents, and rules load from documented paths
+  - Install instructions are tested as file operations
+  kill: If AGENTS.md exceeds 32 KiB, split details into skills and keep root instructions
+    terse.
+  level: L0
+  scope: pre-solver
+  risk: low
+- id: PR-005
+  wave: 0
+  title: Five-PR checkpoint and adaptive replan protocol
+  owner: COMMON
+  depends:
+  - PR-003
+  files:
+  - scripts/codex_harness/progress_report.py
+  - docs/codex_handoff/checkpoint_protocol.md
+  - docs/generated/progress_checkpoints/README.md
+  tests:
+  - python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml
+    docs/codex_handoff/pr_status.yaml --checkpoint-every 5
+  dod:
+  - Progress percentage is numeric and reproducible
+  - No-progress detection triggers adversarial replan entry
+  kill: If progress is not measurable, downstream automation cannot claim completion.
+  level: L1
+  scope: pre-solver
+  risk: low
+- id: PR-010
+  wave: 1
+  title: Canonical owner, claim-tier, scope, and bundle contracts
+  owner: COMMON
+  depends:
+  - PR-003
+  - PR-004
+  files:
+  - htt/src/common/contracts.py
+  - htt/workspace/contracts/ownership.py
+  - tests/contracts/test_ownership_firewall.py
+  tests:
+  - python -m pytest tests/contracts/test_ownership_firewall.py -q
+  dod:
+  - Owner enum separates COMMON, HTT, MIO, BASS, OBSSTAT, TSC_LEGACY
+  - ClaimTier and ImplementationScope are machine-checkable
+  kill: Reject if MIO can be typed as posterior owner or HTT can be typed as certificate
+    owner.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-011
+  wave: 1
+  title: ArtifactManifest schema and artifact-first figure quarantine
+  owner: COMMON
+  depends:
+  - PR-010
+  files:
+  - htt/src/common/artifact_manifest.py
+  - scripts/check_artifact_manifests.py
+  - docs/generated/quarantined_figures.md
+  - tests/contracts/test_artifact_manifest.py
+  tests:
+  - python -m pytest tests/contracts/test_artifact_manifest.py -q
+  - python scripts/check_artifact_manifests.py --dry-run
+  dod:
+  - Every result artifact has owner, scope, claim tier, config hash, input hashes,
+    and caveats
+  - Figures without manifest are quarantined
+  kill: Do not regenerate or reinterpret figures in this PR.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-012
+  wave: 1
+  title: StatusSnapshot and generated claim ledger pipeline
+  owner: COMMON
+  depends:
+  - PR-010
+  - PR-011
+  files:
+  - htt/src/common/status_snapshot.py
+  - docs/generated/status_snapshot.json
+  - docs/generated/claim_ledger.json
+  - docs/generated/status_matrix.md
+  - tests/contracts/test_status_snapshot.py
+  tests:
+  - python -m pytest tests/contracts/test_status_snapshot.py -q
+  - python -m common.status_snapshot --write docs/generated/status_snapshot.json
+  dod:
+  - Manual test/module/status counts are prohibited in manuscript-facing docs
+  - Snapshot is canonical for public status
+  kill: If generated and manuscript counts disagree, manuscript output is blocked.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-013
+  wave: 1
+  title: MIO/HTT posterior-certificate type firewall
+  owner: COMMON
+  depends:
+  - PR-010
+  files:
+  - htt/workspace/contracts/htt_posterior.py
+  - htt/workspace/contracts/mio_certificate.py
+  - tests/contracts/test_mio_htt_no_merge.py
+  tests:
+  - python -m pytest tests/contracts/test_mio_htt_no_merge.py -q
+  dod:
+  - MioCertificate is not a posterior and not a truth certificate
+  - HTTPosteriorBundle cannot consume MioCertificate as a likelihood term
+  kill: Reject if any helper adds MIO p-values to HTT evidence.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-014
+  wave: 1
+  title: TransferFunctionSpec and transfer-provenance contract
+  owner: COMMON
+  depends:
+  - PR-010
+  files:
+  - htt/src/common/transfer_registry.py
+  - htt/workspace/contracts/transfer.py
+  - tests/contracts/test_transfer_registry.py
+  tests:
+  - python -m pytest tests/contracts/test_transfer_registry.py -q
+  dod:
+  - Every transfer-dependent result records source, family, valid range, observable
+    kind, normalization, calibration status, caveats
+  - External and future native transfers can coexist
+  kill: Reject if AniCLASS/external transfer can claim native BASS validation.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-015
+  wave: 1
+  title: Claim-language and banned-vocabulary linter
+  owner: COMMON
+  depends:
+  - PR-010
+  - PR-013
+  - PR-014
+  files:
+  - htt/src/common/semantic_guards/no_overclaim.py
+  - scripts/check_claim_language.py
+  - tests/contracts/test_claim_language_lint.py
+  tests:
+  - python -m pytest tests/contracts/test_claim_language_lint.py -q
+  - python scripts/check_claim_language.py docs manuscripts --dry-run
+  dod:
+  - Blocks scalar-only geometry/family-identification language
+  - Blocks TSC/Teff full-solver or full-polarisation language
+  kill: Reject if linter only warns for forbidden production claims; production claims
+    must fail.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-020
+  wave: 2
+  title: Harness runner for collect/smoke/fast/package subsets
+  owner: COMMON
+  depends:
+  - PR-002
+  - PR-003
+  files:
+  - scripts/codex_harness/run_subset.py
+  - docs/codex_handoff/test_harness.md
+  - tests/contracts/test_harness_runner.py
+  tests:
+  - python scripts/codex_harness/run_subset.py --list
+  - python scripts/codex_harness/run_subset.py smoke --dry-run
+  dod:
+  - Codex can run deterministic test subsets by name
+  - Commands are documented and do not require hidden PYTHONPATH
+  kill: If runner masks failures by default, reject.
+  level: L1
+  scope: pre-solver
+  risk: medium
+- id: PR-021
+  wave: 2
+  title: Optional dependency registry and skip-audit report
+  owner: COMMON
+  depends:
+  - PR-002
+  - PR-020
+  files:
+  - htt/src/common/optional_dependencies.py
+  - scripts/codex_harness/optional_dep_report.py
+  - docs/generated/optional_dependency_status.md
+  - tests/contracts/test_optional_dependencies.py
+  tests:
+  - python -m pytest tests/contracts/test_optional_dependencies.py -q
+  - python scripts/codex_harness/optional_dep_report.py
+  dod:
+  - healpy/dynesty/astropy/etc. status is explicit
+  - Skipped tests are attributable
+  kill: Reject if missing dependency appears as import error instead of skip or documented
+    blocker.
+  level: L1
+  scope: pre-solver
+  risk: medium
+- id: PR-022
+  wave: 2
+  title: PR delta template and review artifact generator
+  owner: COMMON
+  depends:
+  - PR-011
+  - PR-020
+  files:
+  - scripts/codex_harness/new_pr_delta.py
+  - docs/PR_DELTAS/TEMPLATE.md
+  - tests/contracts/test_pr_delta_template.py
+  tests:
+  - python scripts/codex_harness/new_pr_delta.py PR-000 --dry-run
+  - python -m pytest tests/contracts/test_pr_delta_template.py -q
+  dod:
+  - Every PR can emit design delta, tests run, changed files, claim impact, risk log
+  - Review artifacts are standardised
+  kill: Reject PRs that change science code without PR_DELTA.
+  level: L1
+  scope: pre-solver
+  risk: low
+- id: PR-023
+  wave: 2
+  title: Progress scoreboard and stagnation-triggered replanning
+  owner: COMMON
+  depends:
+  - PR-005
+  - PR-022
+  files:
+  - docs/codex_handoff/pr_status.yaml
+  - scripts/codex_harness/progress_report.py
+  - docs/generated/progress_checkpoints/
+  tests:
+  - python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml
+    docs/codex_handoff/pr_status.yaml --json
+  dod:
+  - At least every 5 completed PRs, percent progress and blockers are generated
+  - Stagnation triggers written replan, not silent continuation
+  kill: Reject if percent progress can be gamed by marking skipped PRs complete.
+  level: L1
+  scope: pre-solver
+  risk: medium
+- id: PR-030
+  wave: 3
+  title: Deprecate TSC as active science owner and preserve legacy imports
+  owner: COMMON
+  depends:
+  - PR-015
+  files:
+  - htt/tsc_legacy/README.md
+  - htt/tsc/__init__.py
+  - docs/deprecation/tsc_legacy.md
+  - tests/tsc/test_tsc_legacy_boundary.py
+  tests:
+  - python -m pytest tests/tsc/test_tsc_legacy_boundary.py -q
+  dod:
+  - TSC legacy remains import-compatible where needed
+  - New artifacts cannot set owner=TSC except legacy reproduction
+  kill: Reject if active MIO/HTT/BASS modules import TSC for new scientific claims.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-031
+  wave: 3
+  title: Generic semantic guards extracted from TSC legacy
+  owner: COMMON
+  depends:
+  - PR-030
+  files:
+  - htt/src/common/semantic_guards/admissibility_status.py
+  - htt/src/common/semantic_guards/source_propagation_status.py
+  - tests/contracts/test_semantic_guards.py
+  tests:
+  - python -m pytest tests/contracts/test_semantic_guards.py -q
+  dod:
+  - source adequacy, propagation adequacy, and observable adequacy are separate statuses
+  - Trace/source caveats can attach to artifacts without TSC ownership
+  kill: Reject if source adequate automatically implies observable adequate.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-032
+  wave: 3
+  title: Legacy theorem-to-test map retained for audit only
+  owner: COMMON
+  depends:
+  - PR-030
+  - PR-031
+  files:
+  - docs/generated/theorem_to_test_map_legacy_tsc.json
+  - docs/deprecation/theorem_to_test_map.md
+  - tests/contracts/test_theorem_to_test_map.py
+  tests:
+  - python -m pytest tests/contracts/test_theorem_to_test_map.py -q
+  dod:
+  - Legacy proofs map to validation obligations, not production claims
+  - Can surface why Teff was deprecated without losing audit trail
+  kill: Reject if legacy theorem status promotes new observation/family claims.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-040
+  wave: 4
+  title: SkySupport, mask hash, and coordinate-frame contracts
+  owner: COMMON
+  depends:
+  - PR-010
+  - PR-021
+  files:
+  - htt/src/common/sky_support.py
+  - htt/src/common/sky_geometry.py
+  - tests/htt/test_sky_support_contract.py
+  tests:
+  - python -m pytest tests/htt/test_sky_support_contract.py -q
+  dod:
+  - Every sky-facing artifact records coordinate frame, mask hash, sky fraction, completeness
+    status
+  - Spherical means use unit vectors, never raw mean(l),mean(b)
+  kill: Reject if raw longitude/latitude means survive in production summaries.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-041
+  wave: 4
+  title: ZoA ladder and selection-aware support modes
+  owner: HTT
+  depends:
+  - PR-040
+  files:
+  - htt/src/htt/zoa/selection_ladder.py
+  - htt/src/common/healpix_selection.py
+  - tests/htt/test_zoa_selection_ladder.py
+  tests:
+  - python -m pytest tests/htt/test_zoa_selection_ladder.py -q
+  dod:
+  - raw, masked, selection-aware, mock-calibrated summaries are separate modes
+  - Uniform fallback forbidden in production mode
+  kill: Reject if diagnostic ZoA output can become default production axis.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-042
+  wave: 4
+  title: PreferredAxis production gate and downstream synthesis lock
+  owner: HTT
+  depends:
+  - PR-040
+  - PR-041
+  files:
+  - htt/src/htt/direction/preferred_axis.py
+  - htt/src/htt/zoa/axis_promotion.py
+  - tests/htt/test_preferred_axis_gate.py
+  tests:
+  - python -m pytest tests/htt/test_preferred_axis_gate.py -q
+  dod:
+  - PreferredAxis.production_allowed defaults False
+  - Axis promotion requires SkySupport + mask + mock coverage
+  kill: Reject if diagnostic axis can rotate a_lm or a_2m.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-043
+  wave: 4
+  title: Mock calibration harness for axis and direction claims
+  owner: HTT
+  depends:
+  - PR-041
+  - PR-042
+  files:
+  - htt/src/common/mock_calibration.py
+  - htt/src/htt/nulls/axis_nulls.py
+  - tests/htt/test_mock_calibration_gate.py
+  tests:
+  - python -m pytest tests/htt/test_mock_calibration_gate.py -q
+  dod:
+  - Directional claims record retention, bias, coverage, FPR
+  - Mock coverage gates production axis
+  kill: Reject if mock coverage is missing but claim tier exceeds diagnostic.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-050
+  wave: 5
+  title: DepartureBundle and comparator/frame metadata
+  owner: MIO
+  depends:
+  - PR-010
+  - PR-014
+  files:
+  - htt/mio/formalism/departure_bundle.py
+  - htt/mio/formalism/component_breakdown.py
+  - tests/mio/test_departure_bundle.py
+  tests:
+  - python -m pytest tests/mio/test_departure_bundle.py -q
+  dod:
+  - B_C components, comparator C, frame, units, and cancellation index are explicit
+  - x_C is a signed projection, not anisotropy norm
+  kill: Reject if x_C is exported without comparator/frame metadata.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-051
+  wave: 5
+  title: BudgetSpec and denominator-policy sensitivity
+  owner: MIO
+  depends:
+  - PR-050
+  - PR-014
+  files:
+  - htt/mio/formalism/budget_spec.py
+  - tests/mio/test_budget_spec.py
+  tests:
+  - python -m pytest tests/mio/test_budget_spec.py -q
+  dod:
+  - MES_linear, external_transfer, atlas_quantile, observational budget policies are
+    distinct
+  - Sensitivity hooks exist
+  kill: Reject if denominator policy is implicit.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-052
+  wave: 5
+  title: Q normalized score implementation
+  owner: MIO
+  depends:
+  - PR-050
+  - PR-051
+  files:
+  - htt/mio/formalism/normalized_score.py
+  - tests/mio/test_normalized_score.py
+  tests:
+  - python -m pytest tests/mio/test_normalized_score.py -q
+  dod:
+  - Q carries numerator policy and denominator policy
+  - Q cannot use filling/occupancy language unless certified F also exists
+  kill: Reject if Q is named filling fraction in artifact metadata.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-053
+  wave: 5
+  title: F certified filling fraction implementation
+  owner: MIO
+  depends:
+  - PR-051
+  - PR-052
+  files:
+  - htt/mio/formalism/filling_fraction.py
+  - tests/mio/test_filling_fraction.py
+  tests:
+  - python -m pytest tests/mio/test_filling_fraction.py -q
+  dod:
+  - F requires sign-clean sector, U>0, 0<=F<=1, sample-wise pushforward
+  - F_Bayes is sample mean, not ratio of means
+  kill: Reject if invalid F exports as physical occupancy.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-054
+  wave: 5
+  title: Pi exceedance curve and threshold discipline
+  owner: MIO
+  depends:
+  - PR-052
+  - PR-053
+  files:
+  - htt/mio/formalism/exceedance.py
+  - tests/mio/test_exceedance.py
+  tests:
+  - python -m pytest tests/mio/test_exceedance.py -q
+  dod:
+  - Pi is an exceedance curve, not truth probability
+  - Threshold choice is metadata/pre-registered or curve-only
+  kill: Reject if Pi is described as probability that anisotropy is true.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-055
+  wave: 5
+  title: G_F depth gap and log-gap robustness
+  owner: MIO
+  depends:
+  - PR-053
+  - PR-054
+  - PR-040
+  files:
+  - htt/mio/formalism/isotropy_gap.py
+  - tests/mio/test_isotropy_gap.py
+  tests:
+  - python -m pytest tests/mio/test_isotropy_gap.py -q
+  dod:
+  - G_F and log g_F handle floors, bin covariance metadata, denominator evolution
+    split
+  - G cannot be exported without depth-bin metadata
+  kill: Reject if G_F alone triggers global tilt claim.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-056
+  wave: 5
+  title: MIO report-card generator for x/Q/Pi/F/G
+  owner: MIO
+  depends:
+  - PR-050
+  - PR-051
+  - PR-052
+  - PR-053
+  - PR-054
+  - PR-055
+  - PR-011
+  files:
+  - htt/mio/reports/departure_report.py
+  - tests/mio/test_departure_report.py
+  tests:
+  - python -m pytest tests/mio/test_departure_report.py -q
+  dod:
+  - DepartureReport emits manifest, claim tier, caveats, transfer provenance, F status,
+    G status
+  - HTT and MIO outputs remain separate
+  kill: Reject if report card collapses all scores into one headline number.
+  level: L3
+  scope: pre-solver
+  risk: medium
+- id: PR-060
+  wave: 6
+  title: Response-overlap and rank audit for local/global discrimination
+  owner: HTT
+  depends:
+  - PR-014
+  - PR-040
+  - PR-055
+  files:
+  - htt/src/htt/departure/response_overlap.py
+  - tests/htt/test_response_overlap.py
+  tests:
+  - python -m pytest tests/htt/test_response_overlap.py -q
+  dod:
+  - Computes rho_LB_GT and nuisance-projected rank
+  - Rank deficiency yields no-claim status
+  kill: Reject if posterior/evidence runs when rank audit says no identifiable direction.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-061
+  wave: 6
+  title: Local boost and local-structure null models
+  owner: HTT
+  depends:
+  - PR-043
+  - PR-060
+  files:
+  - htt/src/htt/nulls/local_boost_depth_null.py
+  - htt/src/htt/nulls/clustering_dipole_depth.py
+  - tests/htt/test_local_boost_nulls.py
+  tests:
+  - python -m pytest tests/htt/test_local_boost_nulls.py -q
+  dod:
+  - Local boost-only mocks produce G_F/direction distributions
+  - Null FPR is available before global-tilt claim
+  kill: Reject if global tilt claim lacks local-boost null FPR.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-062
+  wave: 6
+  title: Survey-axis and selection-response null models
+  owner: HTT
+  depends:
+  - PR-043
+  - PR-061
+  files:
+  - htt/src/htt/nulls/selection_response_depth.py
+  - htt/src/htt/nulls/survey_axis_coherence.py
+  - tests/htt/test_survey_nulls.py
+  tests:
+  - python -m pytest tests/htt/test_survey_nulls.py -q
+  dod:
+  - Survey/systematic nulls can mimic direction/depth signals in calibration
+  - Selection metadata is carried through
+  kill: Reject if survey nulls are only narrative and not runnable mocks.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-063
+  wave: 6
+  title: Local/global mixture likelihood skeleton
+  owner: HTT
+  depends:
+  - PR-060
+  - PR-061
+  - PR-062
+  files:
+  - htt/src/htt/departure/local_global_mixture.py
+  - tests/htt/test_local_global_mixture.py
+  tests:
+  - python -m pytest tests/htt/test_local_global_mixture.py -q
+  dod:
+  - Mixture model separates LB, GT, systematics, noise blocks
+  - F/G are generated functionals, not primitive parameters
+  kill: Reject if local and global tilt share a single beta field.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-064
+  wave: 6
+  title: Matched-complexity null competition harness
+  owner: HTT
+  depends:
+  - PR-063
+  files:
+  - htt/src/htt/infer/matched_complexity.py
+  - htt/src/htt/infer/null_competition.py
+  - tests/htt/test_matched_nulls.py
+  tests:
+  - python -m pytest tests/htt/test_matched_nulls.py -q
+  dod:
+  - Alternative and null flexibility are reported
+  - Evidence claims require matched null status
+  kill: Reject Bayes factor headline without matched-complexity report.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-065
+  wave: 6
+  title: Prior sweep, PPC, and LOOCV gates for HTT claims
+  owner: HTT
+  depends:
+  - PR-063
+  - PR-064
+  files:
+  - htt/src/htt/infer/prior_sweep.py
+  - htt/src/htt/infer/posterior_predictive.py
+  - htt/src/htt/infer/loocv.py
+  - tests/htt/test_inference_adequacy_gates.py
+  tests:
+  - python -m pytest tests/htt/test_inference_adequacy_gates.py -q
+  dod:
+  - HTT evidence bundles carry prior-sensitivity, PPC, LOOCV status
+  - Failure downgrades claim tier
+  kill: Reject decisive evidence language without PPC/LOOCV/prior-sweep status.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-066
+  wave: 6
+  title: Posterior pushforward for Q/F/Pi/G without MIO leakage
+  owner: HTT
+  depends:
+  - PR-056
+  - PR-063
+  - PR-065
+  files:
+  - htt/src/htt/departure/posterior_pushforward.py
+  - tests/htt/test_posterior_pushforward.py
+  tests:
+  - python -m pytest tests/htt/test_posterior_pushforward.py -q
+  dod:
+  - HTT posterior samples push forward to Q/F/Pi/G with transfer provenance
+  - MIO certificate is not an input
+  kill: Reject if posterior pushforward consumes MIO certificate outputs.
+  level: L3
+  scope: pre-solver
+  risk: medium
+- id: PR-070
+  wave: 7
+  title: Create obsstat package and ObservableVector contract
+  owner: OBSSTAT
+  depends:
+  - PR-010
+  - PR-011
+  files:
+  - htt/obsstat/__init__.py
+  - htt/obsstat/observable_vector.py
+  - tests/obsstat/test_observable_vector.py
+  tests:
+  - python -m pytest tests/obsstat/test_observable_vector.py -q
+  dod:
+  - obsstat owns feature extraction, not inference
+  - ObservableVector can hold alm, templates, covariance, scalar/morphology/null features
+  kill: Reject if obsstat imports HTT likelihood or MIO certificate.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-071
+  wave: 7
+  title: Harmonic and spin convention registry
+  owner: OBSSTAT
+  depends:
+  - PR-070
+  files:
+  - htt/obsstat/alm_conventions.py
+  - tests/obsstat/test_alm_conventions.py
+  tests:
+  - python -m pytest tests/obsstat/test_alm_conventions.py -q
+  dod:
+  - Reality condition, spin convention, coordinate frame, normalization metadata enforced
+  - Invalid metadata blocks feature export
+  kill: Reject if harmonic coefficients are accepted without convention metadata.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-072
+  wave: 7
+  title: Low-ell scalar summaries as features, not evidence
+  owner: OBSSTAT
+  depends:
+  - PR-071
+  files:
+  - htt/obsstat/scalar_lowell.py
+  - tests/obsstat/test_scalar_lowell.py
+  tests:
+  - python -m pytest tests/obsstat/test_scalar_lowell.py -q
+  dod:
+  - C_l, S_1/2, parity, planarity computed with explicit definitions
+  - Stats are tagged feature_only unless null-calibrated
+  kill: Reject if low-ell feature triggers geometry claim.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-073
+  wave: 7
+  title: Morphology axes and alignment features
+  owner: OBSSTAT
+  depends:
+  - PR-071
+  - PR-042
+  files:
+  - htt/obsstat/morphology.py
+  - tests/obsstat/test_morphology.py
+  tests:
+  - python -m pytest tests/obsstat/test_morphology.py -q
+  dod:
+  - Alignment and planarity features separate diagnostic axis from production axis
+  - Look-elsewhere metadata supported
+  kill: Reject if morphology axis bypasses PreferredAxis gate.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-074
+  wave: 7
+  title: Template-fit diagnostics with orientation scan metadata
+  owner: OBSSTAT
+  depends:
+  - PR-071
+  - PR-073
+  files:
+  - htt/obsstat/template_fit.py
+  - tests/obsstat/test_template_fit.py
+  tests:
+  - python -m pytest tests/obsstat/test_template_fit.py -q
+  dod:
+  - Template fit emits amplitude, DeltaChi2, orientation scan volume, covariance assumption
+  - Template mean branch is distinct from covariance branch
+  kill: Reject if deterministic template and covariance anomaly are collapsed into
+    one statistic.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-075
+  wave: 7
+  title: BiPoSH/sparse covariance feature extraction
+  owner: OBSSTAT
+  depends:
+  - PR-071
+  - PR-074
+  files:
+  - htt/obsstat/biposh_features.py
+  - tests/obsstat/test_biposh_features.py
+  tests:
+  - python -m pytest tests/obsstat/test_biposh_features.py -q
+  dod:
+  - BiPoSH norms are rotation-aware and convention-tagged
+  - Mask/beam/systematic caveat hooks exist
+  kill: Reject if nonzero BiPoSH directly maps to Bianchi geometry claim.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-076
+  wave: 7
+  title: Null ensembles and look-elsewhere bookkeeping
+  owner: OBSSTAT
+  depends:
+  - PR-072
+  - PR-073
+  - PR-074
+  - PR-075
+  files:
+  - htt/obsstat/null_ensembles.py
+  - tests/obsstat/test_null_ensembles.py
+  tests:
+  - python -m pytest tests/obsstat/test_null_ensembles.py -q
+  dod:
+  - FLRW+mask+noise, local/systematic, and injected-template nulls can be represented
+  - Look-elsewhere metadata attaches to feature vectors
+  kill: Reject if p-values are produced without null ensemble provenance.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-080
+  wave: 8
+  title: External transfer registry wrapper for current AniCLASS-calibrated path
+  owner: BASS_PY
+  depends:
+  - PR-014
+  - PR-070
+  files:
+  - htt/src/bass/transfer/aniclass_adapter.py
+  - htt/src/bass/transfer/registry.py
+  - tests/bass/test_external_transfer_registry.py
+  tests:
+  - python -m pytest tests/bass/test_external_transfer_registry.py -q
+  dod:
+  - Current transfer-dependent paths record AniCLASS_external or empirical_proxy status
+  - Claim tier is transfer-conditional
+  kill: Reject if external transfer output is labeled native.
+  level: L2
+  scope: pre-solver
+  risk: high
+- id: PR-081
+  wave: 8
+  title: Future native low-ell adapter stubs with no fake solver implementation
+  owner: BASS_PY
+  depends:
+  - PR-080
+  files:
+  - htt/src/bass/transfer/native_adapter.py
+  - htt/src/bass/transfer/native_schema.py
+  - tests/bass/test_native_adapter_stub.py
+  tests:
+  - python -m pytest tests/bass/test_native_adapter_stub.py -q
+  dod:
+  - Native adapter schema is ready for future solver output
+  - No synthetic/native numbers are generated silently
+  kill: Reject if stub returns fake native science values.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-082
+  wave: 8
+  title: AtlasEntryLite and transfer side-by-side comparison schema
+  owner: BASS_PY
+  depends:
+  - PR-080
+  - PR-081
+  - PR-070
+  files:
+  - htt/src/bass/atlas/atlas_entry.py
+  - tests/bass/test_atlas_entry_lite.py
+  tests:
+  - python -m pytest tests/bass/test_atlas_entry_lite.py -q
+  dod:
+  - External and future native AtlasEntryLite objects can coexist
+  - Atlas membership is not empirical data or posterior
+  kill: Reject if AtlasEntry is consumed as observed data.
+  level: L2
+  scope: pre-solver
+  risk: medium
+- id: PR-083
+  wave: 8
+  title: Budget ceiling optimizer policy interface
+  owner: BASS_PY
+  depends:
+  - PR-051
+  - PR-082
+  files:
+  - htt/src/bass/atlas/budget_ceiling_optimizer.py
+  - tests/bass/test_budget_ceiling_optimizer.py
+  tests:
+  - python -m pytest tests/bass/test_budget_ceiling_optimizer.py -q
+  dod:
+  - Ceiling policies output U_C with provenance and valid range
+  - MIO F/G can reference ceiling policy explicitly
+  kill: Reject if ceiling policy hides transfer source or prior/admissible set.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-084
+  wave: 8
+  title: Transfer sensitivity report for current results
+  owner: COMMON
+  depends:
+  - PR-080
+  - PR-082
+  - PR-083
+  - PR-056
+  files:
+  - scripts/generate_transfer_sensitivity_report.py
+  - docs/generated/transfer_sensitivity_report.md
+  - tests/contracts/test_transfer_sensitivity_report.py
+  tests:
+  - python -m pytest tests/contracts/test_transfer_sensitivity_report.py -q
+  - python scripts/generate_transfer_sensitivity_report.py --dry-run
+  dod:
+  - Reports which claims depend on external transfer
+  - Downstream result cards show transfer-conditional status
+  kill: Reject if external-transfer sensitivity is absent from public report.
+  level: L3
+  scope: pre-solver
+  risk: medium
+- id: PR-090
+  wave: 9
+  title: Full-covariance MES template branch synthetic harness
+  owner: COMMON
+  depends:
+  - PR-074
+  - PR-076
+  - PR-082
+  files:
+  - htt/src/htt/statistics/mes_template_bound.py
+  - tests/htt/test_mes_template_bound.py
+  tests:
+  - python -m pytest tests/htt/test_mes_template_bound.py -q
+  dod:
+  - Template-mean branch computes synthetic bound and no-claim gates
+  - Does not replace diagonal MES theorem
+  kill: Reject if template branch is called universal MES.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-091
+  wave: 9
+  title: Full-covariance MES covariance/BiPoSH branch synthetic harness
+  owner: COMMON
+  depends:
+  - PR-075
+  - PR-076
+  - PR-090
+  files:
+  - htt/src/htt/statistics/mes_cov_bound.py
+  - tests/htt/test_mes_cov_bound.py
+  tests:
+  - python -m pytest tests/htt/test_mes_cov_bound.py -q
+  dod:
+  - Covariance branch uses response rank/singular values and nuisance projection
+  - Rank deficiency emits no-claim
+  kill: Reject if rank-deficient response yields finite physical bound.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-092
+  wave: 9
+  title: Morphological information gain report
+  owner: COMMON
+  depends:
+  - PR-090
+  - PR-091
+  - PR-011
+  files:
+  - htt/src/htt/statistics/mes_information_gain.py
+  - tests/htt/test_mes_information_gain.py
+  tests:
+  - python -m pytest tests/htt/test_mes_information_gain.py -q
+  dod:
+  - I_morph = B_diag/B_final is computed only when both bounds valid
+  - Report distinguishes diag/template/cov/dyn branches
+  kill: Reject if no-gain or invalid bounds are plotted as improvements.
+  level: L3
+  scope: pre-solver
+  risk: medium
+- id: PR-100
+  wave: 10
+  title: MIO directional coherence certificate with covariance status
+  owner: MIO
+  depends:
+  - PR-013
+  - PR-040
+  - PR-076
+  files:
+  - htt/mio/coherence/directional.py
+  - htt/mio/interface/mio_certificate.py
+  - tests/mio/test_directional_coherence_certificate.py
+  tests:
+  - python -m pytest tests/mio/test_directional_coherence_certificate.py -q
+  dod:
+  - MIO coherence certificate records covariance/sky support/null status
+  - Diagnostic-only status if covariance incomplete
+  kill: Reject if certificate claims truth or posterior odds.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-101
+  wave: 10
+  title: Redshift-binned coherence and G_F certificate bridge
+  owner: MIO
+  depends:
+  - PR-055
+  - PR-100
+  files:
+  - htt/mio/coherence/redshift_binned.py
+  - tests/mio/test_redshift_binned_coherence.py
+  tests:
+  - python -m pytest tests/mio/test_redshift_binned_coherence.py -q
+  dod:
+  - Depth-bin covariance and selection metadata required for production-grade G/coherence
+  - Descriptive fallback is explicit
+  kill: Reject if binned coherence ignores bin covariance.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-102
+  wave: 10
+  title: FLRW tension diagnostic with null predictive distribution gate
+  owner: MIO
+  depends:
+  - PR-076
+  - PR-100
+  files:
+  - htt/mio/tension/flrw_tension.py
+  - tests/mio/test_flrw_tension_gate.py
+  tests:
+  - python -m pytest tests/mio/test_flrw_tension_gate.py -q
+  dod:
+  - PPP/tension metrics require calibrated null predictive distribution
+  - No PPP claim without null mocks
+  kill: Reject if a raw anomaly p-value is exported as FLRW tension.
+  level: L3
+  scope: pre-solver
+  risk: high
+- id: PR-103
+  wave: 10
+  title: Predictive residual atlas and evidence anatomy without merge
+  owner: MIO
+  depends:
+  - PR-013
+  - PR-065
+  - PR-100
+  files:
+  - htt/mio/diagnostics/predictive_residuals.py
+  - htt/mio/decomposition/evidence_anatomy.py
+  - tests/mio/test_mio_evidence_anatomy_no_merge.py
+  tests:
+  - python -m pytest tests/mio/test_mio_evidence_anatomy_no_merge.py -q
+  dod:
+  - MIO can summarize residuals and decompose HTT evidence trace narratively
+  - No single combined MIO+HTT score
+  kill: Reject if MIO evidence anatomy modifies HTT evidence.
+  level: L3
+  scope: pre-solver
+  risk: medium
+- id: PR-110
+  wave: 11
+  title: 'Result Pack A: scalar-to-morphology upgrade report'
+  owner: COMMON
+  depends:
+  - PR-056
+  - PR-076
+  - PR-092
+  files:
+  - scripts/result_packs/generate_pack_A_scalar_to_morphology.py
+  - docs/generated/result_pack_A.md
+  - tests/result_packs/test_pack_A.py
+  tests:
+  - python -m pytest tests/result_packs/test_pack_A.py -q
+  - python scripts/result_packs/generate_pack_A_scalar_to_morphology.py --dry-run
+  dod:
+  - Report compares scalar Q/F/Pi with morphology/MES features under caveats
+  - No geometry detection claim
+  kill: Reject if report states Bianchi geometry detection.
+  level: L4
+  scope: pre-solver
+  risk: medium
+- id: PR-111
+  wave: 11
+  title: 'Result Pack B: local/global discrimination report'
+  owner: COMMON
+  depends:
+  - PR-066
+  - PR-100
+  - PR-101
+  files:
+  - scripts/result_packs/generate_pack_B_local_global.py
+  - docs/generated/result_pack_B.md
+  - tests/result_packs/test_pack_B.py
+  tests:
+  - python -m pytest tests/result_packs/test_pack_B.py -q
+  - python scripts/result_packs/generate_pack_B_local_global.py --dry-run
+  dod:
+  - Report includes rank audit, local/systematic null FPR, depth gap, directional
+    coherence
+  - Global tilt claim tier is conditional at most
+  kill: Reject if rank-deficient cases produce global-tilt candidate language.
+  level: L4
+  scope: pre-solver
+  risk: high
+- id: PR-112
+  wave: 11
+  title: 'Result Pack C: MIO observatory certificates'
+  owner: COMMON
+  depends:
+  - PR-100
+  - PR-101
+  - PR-102
+  - PR-103
+  files:
+  - scripts/result_packs/generate_pack_C_mio_certificates.py
+  - docs/generated/result_pack_C.md
+  - tests/result_packs/test_pack_C.py
+  tests:
+  - python -m pytest tests/result_packs/test_pack_C.py -q
+  - python scripts/result_packs/generate_pack_C_mio_certificates.py --dry-run
+  dod:
+  - MIO certificates are gathered with statuses and caveats
+  - Diagnostic-only vs production-grade is explicit
+  kill: Reject if certificates are ranked as model posterior odds.
+  level: L4
+  scope: pre-solver
+  risk: medium
+- id: PR-113
+  wave: 11
+  title: Manuscript/figure provenance inventory and quarantine updates
+  owner: MANUSCRIPT
+  depends:
+  - PR-011
+  - PR-012
+  - PR-015
+  files:
+  - scripts/audit_manuscript_figures.py
+  - docs/generated/manuscript_figure_inventory.md
+  - docs/generated/missing_figure_references.md
+  tests:
+  - python scripts/audit_manuscript_figures.py --dry-run
+  dod:
+  - Every includegraphics path is classified resolved/missing/quarantined
+  - Manual status numbers and forbidden phrases are found
+  kill: Reject final manuscript freeze while missing figure references remain unexplained.
+  level: L3
+  scope: pre-solver
+  risk: medium
+- id: PR-114
+  wave: 11
+  title: External audit package generator
+  owner: COMMON
+  depends:
+  - PR-110
+  - PR-111
+  - PR-112
+  - PR-113
+  files:
+  - scripts/build_external_audit_package.py
+  - docs/audit_prompts/
+  - tests/contracts/test_audit_package_generator.py
+  tests:
+  - python -m pytest tests/contracts/test_audit_package_generator.py -q
+  - python scripts/build_external_audit_package.py --dry-run
+  dod:
+  - Audit zip includes code snapshot, reports, manifests, figures inventory, PR status,
+    prompts
+  - Auditors can verify local/global, framework, manuscript, and future solver interfaces
+  kill: Reject if audit package omits claim ledger or transfer provenance.
+  level: L4
+  scope: pre-solver
+  risk: medium
+- id: PR-115
+  wave: 11
+  title: Publication claim freeze and final hostile review loop
+  owner: COMMON
+  depends:
+  - PR-114
+  files:
+  - docs/generated/publication_claim_freeze.md
+  - docs/generated/hostile_review_response_matrix.md
+  - scripts/check_publication_claim_freeze.py
+  tests:
+  - python scripts/check_publication_claim_freeze.py --dry-run
+  dod:
+  - Every public claim maps to artifact, manifest, tests, caveats, and owner
+  - Forbidden claims are blocked before submission
+  kill: Reject if any C5/C6 family-identification claim appears before native low-ell
+    solver morphology atlas.
+  level: L4
+  scope: pre-solver
+  risk: high
