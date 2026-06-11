@@ -12,13 +12,15 @@ Evaluate whether low-ell Bianchi solver design documents are implementation-read
 
 ## Mandatory exclusions
 
-Do not evaluate:
+Do not require this repo to implement or validate:
 
 - completed solver code existence;
 - runtime benchmarks;
 - Planck/data fitting;
-- observational posterior/evidence;
-- conservative downclaiming of anisotropy goals.
+- observational posterior/evidence.
+
+Do evaluate whether solver-handoff text keeps posterior/evidence, anisotropy,
+and solver-readiness claims downclaimed to design/spec status.
 
 ## Required audit roles
 

@@ -9,6 +9,8 @@ description: Use whenever a PR, report, figure, likelihood, or manuscript text m
 ## Purpose
 
 Make family identification hard in the right way. The project may explore family compatibility before the native low-ell solver, but must not claim identification without morphology and null gates.
+FORBIDDEN before C6 gates: family identification, geometry detection, or family
+ranking from scalar, directional, or external-transfer-only evidence.
 
 ## Claim ladder
 
@@ -18,13 +20,19 @@ Make family identification hard in the right way. The project may explore family
 - C3 depth/direction diagnostic.
 - C4 global-tilt candidate.
 - C5 background-anisotropy morphology compatible.
-- C6 Bianchi geometry/family identification.
+- C6 post-native-atlas, externally-gated Bianchi geometry/family-identification claim.
 
 Before external/native low-ell solver outputs enter, PRs may at most target C3/C4 unless they are purely synthetic/methodological demonstrations.
 
 ## Required gates for C5/C6
 
-1. Native or explicitly external transfer provenance.
+External-transfer morphology compatibility may reach C5 only when explicitly
+transfer-conditional. C6 Bianchi geometry/family identification requires a
+native low-ell morphology atlas plus null/mask/covariance/equivalence/rank/PPC
+gates.
+
+1. Native transfer provenance for C6; explicitly transfer-conditional external
+   transfer provenance for C5 morphology compatibility only.
 2. `a_lm` template or anisotropic covariance/BiPoSH support.
 3. TE/EE/BB compatibility status, or explicit channel limitation.
 4. local boost/systematics nulls.
@@ -54,7 +62,7 @@ Before external/native low-ell solver outputs enter, PRs may at most target C3/C
 
 ## Hard prohibitions
 
-- Largest Bayes factor is not family identification.
-- Scalar `D_l`, `x,Q,Pi,F,G`, or direction coherence alone cannot identify a Bianchi family.
-- External AniCLASS transfer cannot be silently described as native solver evidence.
-- A diagnostic MIO certificate cannot upgrade HTT posterior odds.
+- FORBIDDEN: Largest Bayes factor is not family identification.
+- FORBIDDEN: Scalar `D_l`, `x,Q,Pi,F,G`, or direction coherence alone cannot identify a Bianchi family.
+- FORBIDDEN: External AniCLASS transfer cannot be silently described as native solver evidence.
+- FORBIDDEN: A diagnostic MIO certificate cannot upgrade HTT posterior odds.

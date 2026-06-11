@@ -18,7 +18,8 @@ Each PR must use distinct viewpoints:
 - `claim_gate_reviewer`: enforce claim-tier and no-overclaim language.
 - `regression_tester`: run or design failure-reproduction tests.
 
-For large PRs add `docs_citation_auditor` and `security_dependency_auditor`.
+For large PRs add `docs_citation_auditor`. Add `security_dependency_auditor`
+only if its project-local agent profile exists.
 
 ## Web/documentation policy
 

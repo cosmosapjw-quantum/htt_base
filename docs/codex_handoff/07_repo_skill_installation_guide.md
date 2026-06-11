@@ -14,10 +14,9 @@ The `SKILL.md` file must include `name` and `description` frontmatter. Optional 
 
 From outside the repo:
 
-```bash
-unzip codex_handoff_htt_presolver_v3_skillset_augmented_2026-06-11.zip
-bash codex_handoff_htt_presolver_v3_skillset_augmented_2026-06-11/scripts/install_codex_handoff.sh /path/to/htt_base
-```
+Use `docs/codex_handoff/INSTALL.md` as the current install guide. The older
+archive commands below are retained only as provenance for the v3 handoff
+package and should not be used for a fresh install.
 
 Manual installation:
 
@@ -45,7 +44,13 @@ python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.ya
 
 ## Optional Codex config
 
-The package includes `.codex/config.toml`, `.codex/agents`, and `.codex/rules`. Trust the project `.codex` layer before relying on project-local rules. Keep `AGENTS.md` as the canonical instruction file; `agent.md` is a compatibility copy only.
+The current repository intentionally does not install project-local
+`.codex/config.toml`. Codex config schemas differ across releases, and stale
+`[agents]` scalar settings can trigger `AgentRoleToml` parse failures. Keep
+`.codex/agents/*.toml` and `.codex/rules/default.rules` as the versioned
+project-local Codex assets. Trust the project `.codex` layer before relying on
+project-local rules. Keep `AGENTS.md` as the canonical instruction file;
+`agent.md` is a compatibility copy only.
 
 ## Skill invocation examples
 

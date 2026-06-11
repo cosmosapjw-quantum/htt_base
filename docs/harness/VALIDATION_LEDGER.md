@@ -92,3 +92,40 @@ collection behavior only.
 Artifact/claim-tier impact: COMMON L0 harness metadata. Smoke and collect-only
 evidence is not solver, transfer, posterior/evidence, MIO diagnostic, null,
 morphology, or family-identification evidence.
+
+## PR-004 - Repo-scoped Codex assets and install checks
+
+Date: 2026-06-12
+
+Changed files: `.gitignore`, `.codex/agents/*.toml`,
+`.codex/rules/default.rules`, `.agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py`,
+`.agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py`,
+`.agents/skills/htt-family-identification-gate/SKILL.md`,
+`.agents/skills/htt-solver-handoff-readiness-audit/SKILL.md`,
+`docs/codex_handoff/00_Codex_global_rules.md`,
+`docs/codex_handoff/07_repo_skill_installation_guide.md`,
+`docs/codex_handoff/08_skill_trigger_matrix.md`,
+`docs/codex_handoff/INSTALL.md`, `scripts/codex_harness/test_codex_assets.py`,
+`scripts/codex_harness/validate_codex_config_shape.py`,
+`scripts/install_codex_handoff.sh`, status and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest scripts/codex_harness/test_codex_assets.py -q` before implementation | repo root | FAIL | Red phase: broken execpolicy examples and missing install doc. |
+| `venv/bin/python -m pytest scripts/codex_harness/test_codex_assets.py -q` | repo root | PASS | `10 passed`. |
+| `codex execpolicy check --pretty --rules .codex/rules/default.rules -- python -m pytest -q` | repo root | PASS | Decision `allow`; check does not execute pytest. |
+| `codex execpolicy check --pretty --rules .codex/rules/default.rules -- python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | Decision `allow`. |
+| `codex execpolicy check --pretty --rules .codex/rules/default.rules -- rm -rf /tmp/foo` | repo root | PASS | Decision `forbidden`. |
+| `python scripts/codex_harness/verify_skill_layout.py .` | repo root | PASS | `18 skills OK`. |
+| `python scripts/codex_harness/validate_codex_config_shape.py .` | repo root | PASS | No project-local `.codex/config.toml`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| Explicit PR-004 `check_forbidden_claims.py` scan over claim-sensitive asset/docs paths | repo root | PASS | No forbidden claim patterns detected. |
+| Explicit PR-004 `check_claim_status.py` scan over claim-sensitive asset/docs paths | repo root | PASS | No unmarked strong claims detected. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5` | repo root | PASS | `Completed 5/62 = 8.06%`; checkpoint due. |
+
+Numerical/scientific impact: none; Codex orchestration, install, rule, skill,
+and claim-scanner guardrails only.
+
+Artifact/claim-tier impact: COMMON L0. No native solver, transfer calibration,
+HTT posterior/evidence, MIO diagnostic certificate, null calibration,
+morphology compatibility, or family-identification evidence was generated.
