@@ -16,7 +16,13 @@ from bass.perturbation.regular_adiabatic_ic import (
 
 @pytest.fixture(scope="module")
 def camb_ic_reference():
-    camb = pytest.importorskip("camb")
+    camb = pytest.importorskip(
+        "camb",
+        reason=(
+            "optional dependency 'camb' not installed; install via "
+            "`pip install camb` to activate CAMB regular-adiabatic seed checks"
+        ),
+    )
     pars = camb.CAMBparams()
     pars.set_cosmology(
         H0=67.36,

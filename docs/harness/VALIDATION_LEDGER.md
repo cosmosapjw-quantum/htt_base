@@ -59,3 +59,36 @@ Numerical/scientific impact: none; DAG/progress harness only.
 Artifact/claim-tier impact: COMMON L0 bookkeeping. Percent complete counts DAG
 cards only and is not solver, transfer, inference, MIO, null, morphology, or
 family-identification evidence.
+
+## PR-002 - pytest taxonomy and optional dependency skip gates
+
+Date: 2026-06-12
+
+Changed files: `pytest.ini`, `htt/pytest.ini`, `htt/pyproject.toml`,
+`htt/conftest.py`, `htt/bass/validation/test_d2_regression_anchor.py`,
+`htt/bass/forward/test_map_producer.py`,
+`htt/bass/inference/test_fb113_bayes_factor_skeleton.py`,
+`htt/bass/perturbation/test_fb53_regular_adiabatic_ic_skeleton.py`,
+`scripts/codex_harness/test_pytest_taxonomy.py`,
+`docs/PR_DELTAS/pr-002-test-taxonomy.md`,
+`docs/codex_handoff/pr_status.yaml`, `machine_readable/pr_status.yaml`,
+`docs/harness/VALIDATION_LEDGER.md`.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest scripts/codex_harness/test_pytest_taxonomy.py -q` before implementation | repo root | FAIL | Red phase: five expected marker/config/optional-gate failures. |
+| `venv/bin/python -m pytest scripts/codex_harness/test_pytest_taxonomy.py -q` | repo root | PASS | `8 passed`; direct hook test covers monkeypatched missing optional deps. |
+| `venv/bin/python -m pytest -m smoke -q` | repo root | PASS | `6 passed, 6815 deselected`; L0 reachability only. |
+| `venv/bin/python -m pytest --collect-only -q` | repo root | PASS | `6762/6821 tests collected (59 deselected)` under default `not slow` addopts. |
+| `venv/bin/python -m pytest -m "fast and not slow" -q` | repo root | PASS | `6 passed, 6815 deselected`. |
+| `venv/bin/python -m pytest -m "requires_healpy or requires_dynesty" --collect-only -q` | repo root | PASS | `23/6821 tests collected (6798 deselected)`. |
+| `cd htt && ../venv/bin/python -m pytest -m smoke -q` | `htt/` | PASS | `6 passed, 6781 deselected`. |
+| `python -m pytest -m smoke -q` | repo root | FAIL | `/usr/bin/python: No module named pytest`; host interpreter lacks pytest. |
+| `python -m pytest --collect-only -q` | repo root | FAIL | `/usr/bin/python: No module named pytest`; host interpreter lacks pytest. |
+
+Numerical/scientific impact: none; test taxonomy and optional dependency
+collection behavior only.
+
+Artifact/claim-tier impact: COMMON L0 harness metadata. Smoke and collect-only
+evidence is not solver, transfer, posterior/evidence, MIO diagnostic, null,
+morphology, or family-identification evidence.

@@ -28,6 +28,7 @@ from bass.spectrum.cl_assembly import (
 )
 
 _GOLDEN_PATH = Path(__file__).resolve().parent / "_d2_anchor_golden.json"
+pytestmark = [pytest.mark.fast, pytest.mark.smoke]
 
 
 @pytest.fixture(scope="module")

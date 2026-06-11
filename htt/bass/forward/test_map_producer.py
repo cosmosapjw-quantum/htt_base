@@ -19,9 +19,15 @@ from __future__ import annotations
 import math
 from typing import Any
 
-import healpy as hp
 import numpy as np
 import pytest
+
+hp = pytest.importorskip("healpy",
+    reason=(
+        "optional dependency 'healpy' not installed; install via "
+        "`pip install healpy` to activate BASS map-producer tests"
+    ),
+)
 
 from bass.forward.map_producer import (
     alm_to_map_TQU,
@@ -30,6 +36,8 @@ from bass.forward.map_producer import (
     infer_lmax,
     populate_map_outputs,
 )
+
+pytestmark = pytest.mark.requires_healpy
 
 
 # ────────────────────────────────────────────────────────────────────────

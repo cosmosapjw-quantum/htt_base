@@ -19,12 +19,16 @@ dev = [
 [tool.pytest.ini_options]
 addopts = ["-m", "not slow"]
 testpaths = ["bass", "tsc", "src", "mio", "workspace", "."]
-python_files = ["test_*.py"]
+python_files = ["test_*.py", "*_test.py"]
 markers = [
-    "slow: marks tests as slow / end-to-end integration (LB-6; run explicitly with '-m slow'; run all with '-m \"slow or not slow\"')",
-    "anchor: numerical regression anchors (D_2 MM-curve, ROUTE_B constants); must pass every commit",
-    "verification: v5 design-pack verification bundle (symbolic/numeric/crosscheck)",
-    "ci: fast subset safe to run on every CI push (no subprocess, no external I/O)",
+    "smoke: small deterministic harness and package reachability checks; not scientific validation",
+    "fast: quick tests suitable for local pre-commit subsets",
+    "slow: marks tests as slow / end-to-end integration; run explicitly with '-m slow'",
+    "requires_healpy: tests requiring optional dependency healpy; skip must name healpy when unavailable",
+    "requires_dynesty: tests requiring optional dependency dynesty; skip must name dynesty when unavailable",
+    "anchor: numerical regression anchors; does not by itself certify production readiness",
+    "verification: v5 design-pack verification bundle checks",
+    "ci: fast subset safe to run on every CI push",
 ]
 
 [build-system]

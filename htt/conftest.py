@@ -17,8 +17,11 @@ import PosteriorExportBundle` resolves from htt/mio production paths.
 """
 from __future__ import annotations
 
+import importlib.util
 import sys
 from pathlib import Path
+
+import pytest
 
 _ROOT = Path(__file__).resolve().parent
 _SRC = _ROOT / "src"
@@ -27,3 +30,28 @@ if _SRC.is_dir() and str(_SRC) not in sys.path:
 
 if (_ROOT / "workspace").is_dir() and str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
+
+_OPTIONAL_DEPENDENCY_MARKERS = {
+    "requires_healpy": "healpy",
+    "requires_dynesty": "dynesty",
+}
+
+
+def _dependency_available(module_name: str) -> bool:
+    return importlib.util.find_spec(module_name) is not None
+
+
+def pytest_collection_modifyitems(config, items):
+    """Skip marked optional-dependency tests with explicit dependency reasons."""
+    for marker_name, module_name in _OPTIONAL_DEPENDENCY_MARKERS.items():
+        if _dependency_available(module_name):
+            continue
+        skip_marker = pytest.mark.skip(
+            reason=(
+                f"optional dependency '{module_name}' not installed; "
+                f"install it to run tests marked {marker_name}"
+            )
+        )
+        for item in items:
+            if item.get_closest_marker(marker_name):
+                item.add_marker(skip_marker)

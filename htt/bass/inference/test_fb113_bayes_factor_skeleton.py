@@ -95,7 +95,14 @@ def test_fb113_analytic_vs_thermodynamic_agree_within_point_one_log_units() -> N
     assert abs(result.ln_B - analytic_ln_b) < 0.1
 
 
+@pytest.mark.requires_dynesty
 def test_fb113_analytic_vs_dynesty_agree_within_two_sigma() -> None:
+    pytest.importorskip("dynesty",
+        reason=(
+            "optional dependency 'dynesty' not installed; install via "
+            "`pip install dynesty` to activate nested-evidence cross-checks"
+        ),
+    )
     sigma_prior = 1.0
     sigma_like = 0.35
     data = np.array([0.1, -0.2], dtype=float)
