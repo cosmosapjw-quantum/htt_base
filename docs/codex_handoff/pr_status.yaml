@@ -6,6 +6,7 @@ completed:
 - PR-003
 - PR-004
 - PR-005
+- PR-020
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -17,4 +18,6 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   installer operations, and claim-scanner guardrails; this remains orchestration evidence,
   not scientific readiness. PR-005 materializes the first generated five-PR checkpoint
   artifact and no-progress replan detection; checkpoint percentages are DAG bookkeeping
-  only, not scientific readiness evidence.
+  only, not scientific readiness evidence. PR-020 implements the deterministic Codex
+  pytest subset runner for collect/smoke/fast/package commands; this is COMMON L1
+  harness dispatch and failure-propagation evidence only.
