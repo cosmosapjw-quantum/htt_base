@@ -17,7 +17,6 @@ import PosteriorExportBundle` resolves from htt/mio production paths.
 """
 from __future__ import annotations
 
-import importlib.util
 import sys
 from pathlib import Path
 
@@ -31,14 +30,18 @@ if _SRC.is_dir() and str(_SRC) not in sys.path:
 if (_ROOT / "workspace").is_dir() and str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
-_OPTIONAL_DEPENDENCY_MARKERS = {
-    "requires_healpy": "healpy",
-    "requires_dynesty": "dynesty",
-}
+from common.optional_dependencies import (  # noqa: E402
+    OPTIONAL_DEPENDENCY_MARKERS as COMMON_OPTIONAL_DEPENDENCY_MARKERS,
+    dependency_statuses,
+)
+
+_OPTIONAL_DEPENDENCY_MARKERS = COMMON_OPTIONAL_DEPENDENCY_MARKERS
 
 
 def _dependency_available(module_name: str) -> bool:
-    return importlib.util.find_spec(module_name) is not None
+    statuses = dependency_statuses()
+    by_import_name = {status.import_name: status for status in statuses}
+    return by_import_name[module_name].available
 
 
 def pytest_collection_modifyitems(config, items):

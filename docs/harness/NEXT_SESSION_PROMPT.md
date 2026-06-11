@@ -14,7 +14,7 @@ Pre-read:
 
 Current state:
 
-- PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, and PR-010
+- PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, PR-010, and PR-021
   are complete.
 - Generated five-PR checkpoint artifact:
   `docs/generated/progress_checkpoints/checkpoint_005.md`.
@@ -25,10 +25,13 @@ Current state:
 - PR-010 added canonical owner/claim-tier/scope enums and HTT/MIO
   bundle-role firewall checks. Canonical contract rows now normalize legacy
   `TSC`/`tsc` inputs to `TSC_LEGACY` / `tsc_legacy`.
-- Progress after PR-010: 8/62 = 12.90%; dependency-weighted 14.87%;
+- PR-021 added a COMMON optional dependency registry and generated
+  `docs/generated/optional_dependency_status.md` for machine-local
+  skip/blocker attribution. This is diagnostic harness provenance only.
+- Progress after PR-021: 9/62 = 14.52%; dependency-weighted 15.90%;
   critical-path 4/21 = 19.05%; checkpoint not due until 10 completed PRs.
-- Unblocked next candidates from the live progress report: `PR-021`, `PR-011`,
-  `PR-013`, and `PR-014`. Topological next is `PR-021`; `PR-014` is on the
+- Unblocked next candidates from the live progress report: `PR-011`, `PR-013`,
+  `PR-014`, and `PR-040`. Topological next is `PR-011`; `PR-014` is on the
   current critical path.
 
 Rules:
@@ -46,4 +49,5 @@ python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.ya
 python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
 python scripts/codex_harness/run_subset.py --list
 venv/bin/python -m pytest tests/contracts/test_ownership_firewall.py -q
+venv/bin/python -m pytest tests/contracts/test_optional_dependencies.py -q
 ```
