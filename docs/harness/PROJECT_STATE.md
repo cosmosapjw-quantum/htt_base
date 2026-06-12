@@ -1,12 +1,13 @@
 # Project State
 
-Current DAG position: PR-051 complete after commits PR-000, PR-001, PR-002,
-PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, and
-PR-014, PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041,
-PR-023, PR-071, PR-080, PR-030, PR-113, and PR-051.
+Current DAG position: PR-032 complete after commits PR-000, PR-001, PR-002,
+PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, PR-014,
+PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041, PR-023, PR-071,
+PR-080, PR-030, PR-113, PR-051, PR-042, PR-072, PR-081, PR-031, PR-052,
+PR-043, PR-073, PR-082, and PR-032.
 
-Progress after PR-051: 25/62 complete = 40.32%; dependency-weighted
-completion = 47.18%; critical-path completion = 7/21 = 33.33%.
+Progress after PR-032: 34/62 complete = 54.84%; dependency-weighted
+completion = 59.49%; critical-path completion = 8/21 = 38.1%.
 
 Current framework status: L0 orchestration and harness bootstrap. The repo has
 inventory, editable install/import stabilization, pytest taxonomy, DAG/progress
@@ -117,11 +118,26 @@ Scientific boundaries remain active:
 - Bianchi family identification is blocked until native low-ell morphology
   atlas plus null/mask/covariance/equivalence/rank/PPC gates.
 
-Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_025.md`.
+Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_030.md`.
 Latest progress scoreboard: `docs/generated/progress_checkpoints/progress_scoreboard.md`.
-Next checkpoint is due at 30 completed PRs.
+Next checkpoint is due at 35 completed PRs.
 
-Next topological PR: PR-042. Other unblocked candidates after PR-051 are
-PR-072, PR-081, PR-031, and PR-052. PR-052 is the next MIO x/Q/Pi/F/G
-critical-path successor after PR-051; PR-042 remains earliest topological
-unless DAG policy justifies staying on the critical path.
+Next topological PR: PR-053. Other unblocked candidates after PR-032 are
+PR-074 and PR-083.
+
+## PR-032 update
+
+PR-032 adds `scripts/codex_harness/generate_theorem_to_test_map.py`,
+`docs/generated/theorem_to_test_map_legacy_tsc.json`,
+`docs/deprecation/theorem_to_test_map.md`, and
+`tests/contracts/test_theorem_to_test_map.py`. The generated map is
+COMMON-owned, diagnostic-only audit metadata derived from
+`tsc.validation.theorem_map` with `TSC_LEGACY` provenance. It records legacy
+theorem labels, validation obligations, and live witness pytest node paths, but
+does not provide production validation, HTT evidence, a MIO certificate,
+transfer/native validation, morphology compatibility, or
+geometry/family-identification evidence.
+
+Latest unblocked candidates after PR-032 are PR-053, PR-074, and PR-083. The
+next topological PR is PR-053. The next five-PR checkpoint is due after one
+more completed PR, at 35/62.

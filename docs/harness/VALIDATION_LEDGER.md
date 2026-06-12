@@ -1314,3 +1314,48 @@ diagnostic-only, and not observed data, not posterior/evidence, not MIO
 certificate content, not native solver output, and not family-identification
 evidence. Embedded external/proxy transfer metadata remains conditional;
 embedded future native schema metadata remains schema-only and non-consumable.
+
+## PR-032 - Legacy theorem-to-test audit map
+
+Date: 2026-06-13
+
+Changed files: `scripts/codex_harness/generate_theorem_to_test_map.py`,
+`docs/generated/theorem_to_test_map_legacy_tsc.json`,
+`docs/deprecation/theorem_to_test_map.md`,
+`tests/contracts/test_theorem_to_test_map.py`, `docs/PR_DELTAS/pr-032.md`,
+status files, PR-012 generated status sidecars, the progress scoreboard, and
+handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_theorem_to_test_map.py -q` before implementation | repo root | FAIL | Red phase: target file did not exist. |
+| `venv/bin/python scripts/codex_harness/generate_theorem_to_test_map.py --write docs/generated/theorem_to_test_map_legacy_tsc.json` | repo root | PASS | Generated PR-032 audit map. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_theorem_to_test_map.py -q` initial implementation | repo root | FAIL | Import/export mismatch for `render_issues`, then doc phrase mismatch; both fixed. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_theorem_to_test_map.py -q` | repo root | PASS | `7 passed`; includes source-row equality, per-witness equality, witness-node collection, metadata gates, generator reproducibility, and claim-language scan. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/tsc/validation/test_theorem_map.py tests/tsc/test_tsc_legacy_boundary.py tests/contracts/test_semantic_guards.py -q` | repo root | PASS | `26 passed`; legacy TSC and COMMON semantic guard boundaries remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_claim_language_lint.py tests/contracts/test_artifact_manifest.py tests/contracts/test_status_snapshot.py -q` | repo root | PASS | `31 passed`; adjacent claim, manifest, and generated-status contracts remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_theorem_to_test_map.py tests/contracts/test_semantic_guards.py tests/contracts/test_claim_language_lint.py tests/tsc/test_tsc_legacy_boundary.py -q` | repo root | PASS | `45 passed`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_theorem_to_test_map.py htt/tsc/validation/test_theorem_map.py -q` | repo root | PASS | `9 passed`; source and generated audit map stay synchronized. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_artifact_manifest.py tests/contracts/test_ownership_firewall.py -q` | repo root | PASS | `22 passed`; artifact and ownership boundaries remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile scripts/codex_harness/generate_theorem_to_test_map.py tests/contracts/test_theorem_to_test_map.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python scripts/check_claim_language.py docs/generated/theorem_to_test_map_legacy_tsc.json docs/deprecation/theorem_to_test_map.md tests/contracts/test_theorem_to_test_map.py scripts/codex_harness/generate_theorem_to_test_map.py --dry-run --include-archives` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py docs/generated/theorem_to_test_map_legacy_tsc.json docs/deprecation/theorem_to_test_map.md tests/contracts/test_theorem_to_test_map.py scripts/codex_harness/generate_theorem_to_test_map.py` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py docs/deprecation/theorem_to_test_map.md docs/PR_DELTAS/pr-031.md docs/PR_DELTAS/pr-030.md` | repo root | PASS | No unmarked strong claims detected. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider --collect-only -q` | repo root | PASS | `7049/7108 tests collected (59 deselected)`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider -m smoke -q` | repo root | PASS | `6 passed, 7102 deselected`. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 34 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `34/62 = 54.84%`; dependency-weighted `59.49%`; critical path `8/21 = 38.1%`; checkpoint not due until 35. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+
+Numerical/scientific impact: no solver execution, transfer calculation,
+posterior evidence, MIO certificate, OBSSTAT feature extraction, native
+morphology atlas, or family-label output was added.
+
+Artifact/claim-tier impact: generated status artifacts are DAG bookkeeping
+only. The new theorem-to-test map is COMMON-owned diagnostic-only audit
+metadata with `transfer_source=none`, `TSC_LEGACY` provenance, live witness
+pytest node references, config/input hashes, caveats, and explicit
+non-consumption gates for production observation claims, HTT evidence, MIO
+certificates, transfer/native validation, morphology compatibility, and
+geometry/family-identification use.

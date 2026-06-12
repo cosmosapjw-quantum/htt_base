@@ -33,6 +33,7 @@ completed:
 - PR-043
 - PR-073
 - PR-082
+- PR-032
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -220,4 +221,11 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   no-values, and non-consumable. PR-082 does not run a solver, generate native
   values, validate native transfer, create HTT evidence, create MIO certificate
   content, or support morphology compatibility or geometry/family-identification
-  claims.
+  claims. PR-032 adds a COMMON generated legacy theorem-to-test audit map for
+  TSC_LEGACY provenance. The map derives rows from `tsc.validation.theorem_map`,
+  records per-witness validation obligations and live pytest node paths, carries
+  config/input hashes and generation command metadata, and explicitly blocks
+  production observation claims, HTT evidence, MIO certificates, transfer/native
+  validation, morphology compatibility, and geometry/family-identification use.
+  It preserves why TSC/Teff theorem labels were deprecated as active science
+  ownership while retaining audit traceability only.
