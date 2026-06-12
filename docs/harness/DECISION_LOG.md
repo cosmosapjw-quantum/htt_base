@@ -141,3 +141,26 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: this is not a complete natural-language classifier. Future PRs
   should add focused rules from real claim-drift findings instead of turning
   the linter into a broad word blacklist.
+
+## 2026-06-12 - PR-050 MIO signed-departure formalism boundary
+
+- Accepted: the stricter PR-050 `DepartureBundle` lives under
+  `mio.formalism`; the older `common.departure_contracts.DepartureBundle`
+  remains stable for existing BASS plumbing until a separate migration PR.
+- Accepted: canonical `B_C` component order is `Sigma2_std`, `W2_std`,
+  `Omega_tilt`, `Omega_k_aniso`; canonical projection signs are
+  `+1, -1, +1, +1`.
+- Accepted: `x_C` is a signed comparator projection that may be negative or
+  cancel to zero. It is not an anisotropy norm, and no positive-part export is
+  included in this bundle.
+- Accepted: exporting `x_C` requires non-empty comparator, frame, units,
+  config hash, input hashes, caveats, and complete finite canonical components.
+- Accepted: `cancellation_index` is algebraic bookkeeping:
+  `1 - abs(x_C) / sum(abs(component_values))`, with zero component mass mapped
+  to zero cancellation rather than division by zero.
+- Accepted: transfer-derived bundles require PR-014-compatible transfer
+  metadata and use the COMMON transfer guard to block external/native
+  provenance drift.
+- Deferred: component calibration, frame transforms, covariance/null
+  calibration, response-rank metadata, and certificate generation remain
+  downstream MIO/HTT/obsstat PRs.

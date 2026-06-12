@@ -597,3 +597,47 @@ into posterior/evidence language, and external-transfer/native conflation. It
 does not provide solver validation, transfer validation, posterior evidence,
 MIO diagnostic certificate evidence, morphology compatibility, or family-ID
 evidence.
+
+## PR-050 - DepartureBundle and comparator/frame metadata
+
+Date: 2026-06-12
+
+Changed files: `htt/mio/formalism/__init__.py`,
+`htt/mio/formalism/component_breakdown.py`,
+`htt/mio/formalism/departure_bundle.py`, `htt/mio/__init__.py`,
+`htt/mio/tests/test_boot.py`, `tests/mio/test_departure_bundle.py`,
+`docs/PR_DELTAS/pr-050.md`, status files, PR-012 generated status sidecars,
+and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/mio/test_departure_bundle.py -q` before implementation | repo root | FAIL | Red phase: `mio.formalism` package did not exist. |
+| `venv/bin/python -m pytest tests/mio/test_departure_bundle.py -q` before input-hash fix | repo root | FAIL | Empty `input_hashes` did not raise. |
+| `venv/bin/python -m pytest tests/mio/test_departure_bundle.py -q` | repo root | PASS | `11 passed`; covers signed projection, metadata, component validation, cancellation, transfer provenance, package exports, and diagnostic-only boundary. |
+| `venv/bin/python -m pytest tests/mio/test_departure_bundle.py htt/mio/tests/test_boot.py -q` | repo root | PASS | `14 passed`; MIO boot imports `mio.formalism`. |
+| `venv/bin/python -m py_compile htt/mio/__init__.py htt/mio/tests/test_boot.py htt/mio/formalism/__init__.py htt/mio/formalism/component_breakdown.py htt/mio/formalism/departure_bundle.py tests/mio/test_departure_bundle.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python -m pytest tests/mio/test_departure_bundle.py htt/mio/tests/test_boot.py htt/mio/tests/test_tension.py tests/contracts/test_transfer_registry.py tests/contracts/test_claim_language_lint.py tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_ownership_firewall.py htt/bass/observational/test_ver2_mes_departure.py -q` | repo root | PASS | `74 passed`; adjacent MIO, transfer, claim, ownership, and BASS departure tests remain green. |
+| import smoke for `mio.formalism`, COMMON transfer/contracts, and workspace MIO/HTT contracts | repo root | PASS | All requested modules imported. |
+| `python scripts/check_claim_language.py <PR-050 files> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-050 files>` | repo root | PASS | No forbidden claim patterns detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-050 files>` | repo root | PASS | No unmarked strong claims detected. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 6942 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6889/6948 tests collected (59 deselected)`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --json` | repo root | PASS | After status update: `18/62 = 29.03%`; dependency-weighted `35.38%`; critical path `6/21 = 28.57%`; checkpoint not due until 20. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status sidecars at 18 completed PRs. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml && echo 'status mirrors match'` | repo root | PASS | Status mirrors match. |
+| `python -m pytest tests/mio/test_departure_bundle.py -q` | repo root | FAIL | Host interpreter lacks pytest: `/usr/bin/python: No module named pytest`; venv pytest is the authoritative run. |
+
+Numerical/scientific impact: MIO algebraic metadata only. PR-050 implements
+the signed comparator projection `x_C = Sigma2_std - W2_std + Omega_tilt +
+Omega_k_aniso`, preserves negative values, exposes cancellation diagnostics,
+and requires comparator/frame/units/config/input metadata.
+
+Artifact/claim-tier impact: MIO L2 diagnostic-only formalism contract. It
+validates PR-014 transfer metadata for transfer-derived bundles and rejects
+external-transfer/native conflation through the COMMON transfer guard. It does
+not provide native solver validation, transfer validation, HTT inference
+evidence, MIO certificate evidence, morphology compatibility, or geometry/family
+claims.

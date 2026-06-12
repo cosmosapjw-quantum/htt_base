@@ -27,6 +27,9 @@ _SUBPACKAGES = (
     "mio.interface",
     "mio.interface.mio_certificate",
     "mio.bridges",
+    "mio.formalism",
+    "mio.formalism.component_breakdown",
+    "mio.formalism.departure_bundle",
 )
 
 

@@ -20,6 +20,7 @@ Subpackages (Week 6+):
   interface/       — HJ-06 MioCertificate generator API (Week 6 Day 2)
   bridges/         — HJ-07 re-exports of htt modules that are MIO-owned
                       (PR13AM re-export lands Week 6 Day 6)
+  formalism/       — signed x_C departure-coordinate metadata (PR-050)
 
 Not a MIO deliverable: posterior operations. Route those via htt.
 """

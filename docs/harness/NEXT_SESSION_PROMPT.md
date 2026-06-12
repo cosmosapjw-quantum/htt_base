@@ -6,83 +6,58 @@ Pre-read:
 
 - `AGENTS.md`
 - `.agents/skills/htt-dag-orchestrator/SKILL.md`
-- `.agents/skills/htt-transfer-provenance/SKILL.md`
+- `.agents/skills/htt-xqpi-fg-formalism/SKILL.md`
 - `.agents/skills/htt-claim-firewall/SKILL.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-015.md`
+- `docs/PR_DELTAS/pr-050.md`
 - `docs/generated/progress_checkpoints/checkpoint_015.md`
 - `docs/generated/status_snapshot.json`
 
 Current state:
 
 - PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, PR-010,
-  PR-021, PR-011, PR-013, PR-014, PR-040, PR-012, PR-022, PR-070, and
-  PR-015 are complete.
+  PR-021, PR-011, PR-013, PR-014, PR-040, PR-012, PR-022, PR-070,
+  PR-015, and PR-050 are complete.
 - Generated checkpoint artifacts:
   `docs/generated/progress_checkpoints/checkpoint_005.md`,
   `docs/generated/progress_checkpoints/checkpoint_010.md`, and
   `docs/generated/progress_checkpoints/checkpoint_015.md`.
-- Checkpoint 010: 10/62 = 16.13% complete, dependency-weighted 19.49%,
-  critical-path 4/21 = 19.05%, no blockers, no replan required.
-- Checkpoint 015: 15/62 = 24.19% complete, dependency-weighted 29.74%,
-  critical-path 5/21 = 23.81%, no blockers, no replan required.
-- Progress after PR-015: 17/62 = 27.42% complete, dependency-weighted
-  33.33%, critical-path 5/21 = 23.81%, no blockers, no checkpoint due until
+- Progress after PR-050: 18/62 = 29.03% complete, dependency-weighted
+  35.38%, critical-path 6/21 = 28.57%, no blockers, no checkpoint due until
   20 completed PRs.
 - PR-010 added canonical owner/claim-tier/scope enums and HTT/MIO
-  bundle-role firewall checks. Canonical contract rows normalize legacy
-  `TSC`/`tsc` inputs to `TSC_LEGACY` / `tsc_legacy`.
-- PR-021 added a COMMON optional dependency registry and generated
-  `docs/generated/optional_dependency_status.md` for machine-local
-  skip/blocker attribution.
+  bundle-role firewall checks.
 - PR-011 added `common.artifact_manifest`, `scripts/check_artifact_manifests.py`,
-  and `docs/generated/quarantined_figures.md`. The quarantine report records
-  96 existing figure/PDF assets without valid sidecar manifests, 0 manifested
-  figures through the PR-011 checker, and 0 sidecar manifest issues.
-- PR-013 added `workspace.contracts.htt_posterior`, exported the new
-  `HTTPosteriorBundle` and `HttLikelihoodTerm`, and extended `MioCertificate`
-  with diagnostic-only query/raise helpers. The PR-013 guard rejects direct
-  certificates, MIO-shaped payloads, MIO cross-check reports, and MIO
-  diagnostic scalar keys as HTT likelihood inputs.
-- PR-014 added `common.transfer_registry.TransferFunctionSpec`,
-  `TransferRegistry`, and `workspace.contracts.transfer`. Transfer-dependent
-  results now have a canonical metadata shape for source, family, valid range,
-  observable kind, normalization, calibration status, caveats, and validation
-  gates. External/AniCLASS paths cannot claim native validation.
-- PR-040 added `common.sky_support`, richer `common.contracts.SkySupport`
-  fields, sky-facing manifest validation, deterministic mask hashes, sky
-  fractions, completeness status, and an AST guard against raw
-  longitude/latitude arithmetic means in production summaries.
+  and `docs/generated/quarantined_figures.md`.
 - PR-012 added `common.status_snapshot`, generated
   `docs/generated/status_snapshot.json`, `docs/generated/claim_ledger.json`,
-  and `docs/generated/status_matrix.md`, and converted old manual
-  `docs/status_matrix.md` / `docs/claim_ledger.md` surfaces into
-  generated-authority indexes. The generated rows are diagnostic-only DAG
-  bookkeeping and keep `production_validated` false.
-- PR-022 added `scripts/codex_harness/new_pr_delta.py`,
-  `docs/PR_DELTAS/TEMPLATE.md`, and `tests/contracts/test_pr_delta_template.py`
-  so PR_DELTA/review artifacts are generated from active DAG cards with
-  overwrite protection, owner normalization, web-check status, and structured
-  safe-default claim metadata.
-- PR-070 added `htt.obsstat` as the OBSSTAT facade over the canonical COMMON
-  `ObservableVector`. It packages alm/scalar/morphology/null/template/
-  covariance/BiPoSH feature blocks, requires OBSSTAT diagnostic-only manifests,
-  recursively rejects HTT inference/evidence keys, MIO certificate semantics,
-  and premature family-identification/ranking keys or values, requires
-  non-empty null/look-elsewhere provenance for p-value features, and requires
-  COMMON transfer metadata for transfer-derived blocks across all feature
-  groups. The installed `htt` wrapper aliases the top-level `obsstat` package
-  as `htt.obsstat`; keep package-smoke coverage for temp-CWD imports.
+  and `docs/generated/status_matrix.md`, and converted old manual status
+  surfaces into generated-authority indexes.
+- PR-013 added the new HTT posterior bundle ingress guard and rejects MIO
+  diagnostic payloads as HTT likelihood inputs.
+- PR-014 added `common.transfer_registry.TransferFunctionSpec` and related
+  validation for transfer-dependent results.
 - PR-015 added `common.semantic_guards.no_overclaim` and
-  `scripts/check_claim_language.py` as a COMMON active claim-language hard-fail
-  guard. It returns exit 1 for forbidden production wording, supports
-  text/JSON output, skips archive/provenance paths by default, allows explicit
-  negative guardrails, handles missing paths deterministically, and scans JSON
-  string metadata.
-- Unblocked next candidates from the live progress report: `PR-050`,
-  `PR-041`, `PR-023`, `PR-071`, `PR-080`, `PR-030`, and `PR-113`.
-  Topological next is `PR-050`, and it is on the current critical path.
+  `scripts/check_claim_language.py` as a COMMON hard-fail claim-language
+  guard for active docs/manuscripts/reports.
+- PR-022 added `scripts/codex_harness/new_pr_delta.py`,
+  `docs/PR_DELTAS/TEMPLATE.md`, and `tests/contracts/test_pr_delta_template.py`.
+- PR-040 added COMMON sky-support metadata, deterministic mask hashes, sky
+  fractions, completeness status, sky-facing manifest validation, and
+  spherical-mean direction guards.
+- PR-070 added `htt.obsstat` as the OBSSTAT facade over the canonical COMMON
+  `ObservableVector`.
+- PR-050 added `mio.formalism` with `DepartureComponent`,
+  `ComponentBreakdown`, and `DepartureBundle`. It validates signed `x_C`
+  comparator projections from canonical `B_C` components using signs
+  `(+1, -1, +1, +1)`, requires comparator/frame/units/config/input/caveat
+  metadata, preserves negative values, exposes cancellation index, and requires
+  PR-014 transfer metadata for transfer-derived bundles.
+- Unblocked next candidates from the live progress report: `PR-041`,
+  `PR-023`, `PR-071`, `PR-080`, `PR-030`, `PR-113`, and `PR-051`.
+  Topological next is `PR-041`; `PR-051` is the current critical-path successor
+  after PR-050.
 
 Rules:
 
@@ -91,34 +66,20 @@ Rules:
 - Do not merge MIO diagnostics with HTT posterior/evidence semantics.
 - Do not make Bianchi family-ID claims before native low-ell morphology atlas
   plus null/mask/covariance/equivalence/rank/PPC gates.
-- Do not promote quarantined figure/PDF assets without valid sidecar manifests.
-- Reuse `reject_mio_likelihood_inputs` for downstream HTT likelihood ingress
-  rather than creating parallel MIO/HTT merge guards.
-- Reuse `TransferFunctionSpec` for downstream transfer-dependent producers
-  rather than creating local transfer metadata dictionaries.
-- Reuse `common.sky_support.validate_sky_facing_artifact_metadata` for
-  directional artifact metadata and `common.sky_geometry.spherical_mean` for
-  directional summaries.
-- Reuse `common.status_snapshot` for public DAG status counts; do not restore
-  manual status or claim-ledger SSoTs.
-- Reuse `scripts/codex_harness/new_pr_delta.py` and
-  `docs/PR_DELTAS/TEMPLATE.md` for future PR_DELTA scaffolds; do not restore
-  ad hoc PR-delta formats.
-- Reuse `htt.obsstat.build_observable_vector` for OBSSTAT-owned observable
-  feature packaging, keep implementation files under `htt/obsstat`, and keep
-  `ObservableVector` schema authority in `common.contracts`.
+- Reuse `TransferFunctionSpec` for transfer-dependent producers.
 - Reuse `common.semantic_guards.no_overclaim` and
-  `scripts/check_claim_language.py` for active claim-language scans; add
-  targeted new rules from real drift findings rather than broad word
-  blacklists.
+  `scripts/check_claim_language.py` for active claim-language scans.
+- Keep `mio.formalism.DepartureBundle` diagnostic-only: signed projection,
+  not norm, positive-part score, inference surface, or geometry classifier.
 
 Immediate commands:
 
 ```bash
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
-python scripts/codex_harness/new_pr_delta.py PR-050 --dry-run
+python scripts/codex_harness/new_pr_delta.py PR-041 --dry-run
 python scripts/check_claim_language.py docs docs/manuscript --dry-run
+venv/bin/python -m pytest tests/mio/test_departure_bundle.py -q
 venv/bin/python scripts/codex_harness/run_subset.py package
 venv/bin/python scripts/codex_harness/run_subset.py smoke
 ```
