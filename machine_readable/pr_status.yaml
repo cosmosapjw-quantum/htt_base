@@ -16,6 +16,7 @@ completed:
 - PR-012
 - PR-022
 - PR-070
+- PR-015
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -57,4 +58,9 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   inference, MIO-certificate, premature family-identification, null p-value
   provenance, and transfer-derived metadata; it is diagnostic feature packaging
   only, not HTT likelihood evidence, MIO certification, transfer validation, or
-  Bianchi family identification.
+  Bianchi family identification. PR-015 adds a COMMON semantic claim-language
+  linter and CLI that hard-fails forbidden production claims involving
+  scalar-only promotion into blocked geometry/family language, TSC/Teff full-solver or
+  full-polarisation language, MIO diagnostic promotion into posterior/evidence, and
+  external-transfer-as-native wording while allowing explicit negative
+  guardrails and skipping archived historical planning surfaces by default.

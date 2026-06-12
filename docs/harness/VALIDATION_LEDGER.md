@@ -553,3 +553,47 @@ HTT/MIO/family-identification semantics, requires null provenance for p-value
 features, and requires COMMON transfer provenance metadata for
 transfer-derived blocks. It does not provide native solver validation,
 transfer validation, morphology compatibility, or family-ID evidence.
+
+## PR-015 - Claim-language and banned-vocabulary linter
+
+Date: 2026-06-12
+
+Changed files: `htt/src/common/semantic_guards/__init__.py`,
+`htt/src/common/semantic_guards/no_overclaim.py`,
+`scripts/check_claim_language.py`,
+`tests/contracts/test_claim_language_lint.py`, `docs/PR_DELTAS/pr-015.md`,
+status files, PR-012 generated status sidecars, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/contracts/test_claim_language_lint.py -q` before implementation | repo root | FAIL | Red phase: `common.semantic_guards` did not exist. |
+| `venv/bin/python -m pytest tests/contracts/test_claim_language_lint.py -q` during review | repo root | FAIL | Initial rule set missed hostile direction-coherence, Teff full E/B, AniCLASS/native, and JSON MIO/HTT evidence-merging cases. |
+| `venv/bin/python -m pytest tests/contracts/test_claim_language_lint.py -q` | repo root | PASS | `14 passed`; module and CLI tests cover hard-fail findings, archive handling, JSON output, missing roots, and no-write dry-run behavior. |
+| `python scripts/check_claim_language.py docs manuscripts --dry-run` | repo root | PASS | Exact PR-card command; absent `manuscripts` root is reported to stderr and skipped because `docs` exists. |
+| `python scripts/check_claim_language.py docs docs/manuscript --dry-run` | repo root | PASS | Real manuscript tree plus docs scan found no forbidden claim language. |
+| `venv/bin/python -m py_compile htt/src/common/semantic_guards/__init__.py htt/src/common/semantic_guards/no_overclaim.py scripts/check_claim_language.py tests/contracts/test_claim_language_lint.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python -m pytest tests/contracts/test_claim_language_lint.py tests/contracts/test_ownership_firewall.py tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_transfer_registry.py tests/obsstat/test_observable_vector.py htt/tsc/audit/test_no_overclaim.py -q` | repo root | PASS | `61 passed`; adjacent claim, ownership, transfer, obsstat, and TSC audit tests remain green. |
+| `venv/bin/python -m pytest htt/src/common -q` | repo root | PASS | `164 passed, 1 skipped`; COMMON package tests remain green. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 6931 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6878/6937 tests collected (59 deselected)`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`; topological next after PR-015 is PR-050. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --json` | repo root | PASS | `17/62 = 27.42%`; dependency-weighted `33.33%`; critical path `5/21 = 23.81%`; checkpoint not due until 20. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status sidecars at 17 completed PRs. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml && echo 'status mirrors match'` | repo root | PASS | Status mirrors match. |
+| `python -m pytest tests/contracts/test_claim_language_lint.py -q` | repo root | FAIL | Host interpreter lacks pytest: `/usr/bin/python: No module named pytest`; venv pytest is the authoritative run. |
+| static `rg` import firewall scan over `htt/src/common/semantic_guards` | repo root | PASS | No imports from HTT, MIO, BASS, TSC, or OBSSTAT packages. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-015 docs>` | repo root | PASS | No forbidden claim patterns detected after rewording guardrail summaries away from exact unsafe examples. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-015 docs>` | repo root | PASS | No unmarked strong claims detected. |
+| `git diff --check -- <PR-015 files>` | repo root | PASS | Scoped diff has no whitespace errors. |
+
+Numerical/scientific impact: none. PR-015 is a COMMON semantic guard and CLI
+for active text/artifact claim hygiene.
+
+Artifact/claim-tier impact: COMMON L2 diagnostic-only lint infrastructure. It
+hard-fails forbidden production wording for pre-native scalar/family overclaims,
+TSC/Teff full-solver or full-polarisation overclaims, MIO diagnostic promotion
+into posterior/evidence language, and external-transfer/native conflation. It
+does not provide solver validation, transfer validation, posterior evidence,
+MIO diagnostic certificate evidence, morphology compatibility, or family-ID
+evidence.

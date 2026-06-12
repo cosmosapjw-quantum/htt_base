@@ -118,3 +118,26 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: shape validation, harmonic-convention validation, null ensemble
   construction, and richer morphology feature validation remain downstream
   obsstat PRs.
+
+## 2026-06-12 - PR-015 COMMON semantic claim-language boundary
+
+- Accepted: `common.semantic_guards.no_overclaim` is the active COMMON
+  implementation point for claim-language blocking; it does not import HTT,
+  MIO, BASS, TSC, or OBSSTAT packages.
+- Accepted: `scripts/check_claim_language.py` is the deterministic CLI for
+  active docs/manuscript/report scans. It supports stable text/JSON output,
+  reports missing paths, returns 1 on findings, and returns 2 only when all
+  requested roots are missing.
+- Accepted: explicit negative/governance text is allowed by guardrail-context
+  suppression so AGENTS, skills, PR deltas, and decision logs can state what is
+  blocked without failing their own linter.
+- Accepted: archived/generated/provenance paths are skipped by default to keep
+  active production scans actionable; `--include-archives` is available for
+  historical audits.
+- Accepted: the first rule set targets pre-native overclaim families: scalar or
+  low-ell surrogate wording used for blocked geometry/family claims, TSC/Teff
+  full-solver or full-polarisation wording, MIO diagnostic promotion into
+  posterior/evidence wording, and external-transfer/native conflation.
+- Deferred: this is not a complete natural-language classifier. Future PRs
+  should add focused rules from real claim-drift findings instead of turning
+  the linter into a broad word blacklist.

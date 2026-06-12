@@ -4,9 +4,10 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-12
 
-No active PR blockers after PR-070. Progress report shows unblocked next
-candidates `PR-015`, `PR-050`, `PR-041`, `PR-023`, `PR-071`, and `PR-080`;
-use DAG ordering and policy priorities before selecting the next node.
+No active PR blockers after PR-015. Progress report shows unblocked next
+candidates `PR-050`, `PR-041`, `PR-023`, `PR-071`, `PR-080`, `PR-030`, and
+`PR-113`; use DAG ordering and policy priorities before selecting the next
+node.
 
 Residual non-blocking risk: `docs/generated/quarantined_figures.md` lists 96
 existing figure/PDF assets without valid sidecar manifests. They are
@@ -46,3 +47,9 @@ canonical COMMON `ObservableVector`, but payload values remain descriptive
 mappings. Later obsstat PRs should add richer harmonic-convention, shape, and
 feature-family validation without importing HTT inference or MIO certificate
 surfaces.
+
+Residual non-blocking risk: PR-015 adds focused semantic regexes and CLI
+enforcement, but it is not a complete natural-language classifier. Later claim
+firewall PRs should add targeted rules from concrete drift findings and avoid
+turning the active linter into a noisy word blacklist. Archive/provenance paths
+are skipped by default; use `--include-archives` for historical audits.

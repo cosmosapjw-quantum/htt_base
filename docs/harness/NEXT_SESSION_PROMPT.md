@@ -5,26 +5,30 @@ Continue from `/home/cosmosapjw/Dropbox/bianchi/htt_base`.
 Pre-read:
 
 - `AGENTS.md`
+- `.agents/skills/htt-dag-orchestrator/SKILL.md`
+- `.agents/skills/htt-transfer-provenance/SKILL.md`
+- `.agents/skills/htt-claim-firewall/SKILL.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-070.md`
+- `docs/PR_DELTAS/pr-015.md`
 - `docs/generated/progress_checkpoints/checkpoint_015.md`
 - `docs/generated/status_snapshot.json`
-- `.agents/skills/htt-dag-orchestrator/SKILL.md`
 
 Current state:
 
 - PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, PR-010,
-  PR-021, PR-011, PR-013, PR-014, PR-040, PR-012, PR-022, and PR-070 are
-  complete.
+  PR-021, PR-011, PR-013, PR-014, PR-040, PR-012, PR-022, PR-070, and
+  PR-015 are complete.
 - Generated checkpoint artifacts:
-  `docs/generated/progress_checkpoints/checkpoint_005.md` and
-  `docs/generated/progress_checkpoints/checkpoint_010.md` and
+  `docs/generated/progress_checkpoints/checkpoint_005.md`,
+  `docs/generated/progress_checkpoints/checkpoint_010.md`, and
   `docs/generated/progress_checkpoints/checkpoint_015.md`.
 - Checkpoint 010: 10/62 = 16.13% complete, dependency-weighted 19.49%,
   critical-path 4/21 = 19.05%, no blockers, no replan required.
-- Progress after PR-070: 16/62 = 25.81% complete, dependency-weighted
-  31.79%, critical-path 5/21 = 23.81%, no blockers, no checkpoint due until
+- Checkpoint 015: 15/62 = 24.19% complete, dependency-weighted 29.74%,
+  critical-path 5/21 = 23.81%, no blockers, no replan required.
+- Progress after PR-015: 17/62 = 27.42% complete, dependency-weighted
+  33.33%, critical-path 5/21 = 23.81%, no blockers, no checkpoint due until
   20 completed PRs.
 - PR-010 added canonical owner/claim-tier/scope enums and HTT/MIO
   bundle-role firewall checks. Canonical contract rows normalize legacy
@@ -70,9 +74,15 @@ Current state:
   COMMON transfer metadata for transfer-derived blocks across all feature
   groups. The installed `htt` wrapper aliases the top-level `obsstat` package
   as `htt.obsstat`; keep package-smoke coverage for temp-CWD imports.
-- Unblocked next candidates from the live progress report: `PR-015`,
-  `PR-050`, `PR-041`, `PR-023`, `PR-071`, and `PR-080`. Topological next is
-  `PR-015`; `PR-050` is on the current critical path.
+- PR-015 added `common.semantic_guards.no_overclaim` and
+  `scripts/check_claim_language.py` as a COMMON active claim-language hard-fail
+  guard. It returns exit 1 for forbidden production wording, supports
+  text/JSON output, skips archive/provenance paths by default, allows explicit
+  negative guardrails, handles missing paths deterministically, and scans JSON
+  string metadata.
+- Unblocked next candidates from the live progress report: `PR-050`,
+  `PR-041`, `PR-023`, `PR-071`, `PR-080`, `PR-030`, and `PR-113`.
+  Topological next is `PR-050`, and it is on the current critical path.
 
 Rules:
 
@@ -97,14 +107,18 @@ Rules:
 - Reuse `htt.obsstat.build_observable_vector` for OBSSTAT-owned observable
   feature packaging, keep implementation files under `htt/obsstat`, and keep
   `ObservableVector` schema authority in `common.contracts`.
+- Reuse `common.semantic_guards.no_overclaim` and
+  `scripts/check_claim_language.py` for active claim-language scans; add
+  targeted new rules from real drift findings rather than broad word
+  blacklists.
 
 Immediate commands:
 
 ```bash
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
-python scripts/codex_harness/new_pr_delta.py PR-015 --dry-run
-venv/bin/python -m pytest tests/obsstat/test_observable_vector.py -q
-venv/bin/python -m pytest htt/test_packaging_imports.py -q
+python scripts/codex_harness/new_pr_delta.py PR-050 --dry-run
+python scripts/check_claim_language.py docs docs/manuscript --dry-run
+venv/bin/python scripts/codex_harness/run_subset.py package
 venv/bin/python scripts/codex_harness/run_subset.py smoke
 ```
