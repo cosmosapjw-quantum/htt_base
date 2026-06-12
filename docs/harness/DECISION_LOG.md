@@ -78,3 +78,17 @@ Record accepted, rejected, and deferred design decisions.
   surfaces are generated-authority indexes, not independent SSoTs.
 - Deferred: migrating older VER2 manuscript generated snippets to consume the
   new DAG-status sidecars remains downstream manuscript/export work.
+
+## 2026-06-12 - PR-022 PR delta generator boundary
+
+- Accepted: `scripts/codex_harness/new_pr_delta.py` renders PR deltas from the
+  active DAG backlog and `docs/PR_DELTAS/TEMPLATE.md`.
+- Accepted: default output names are lowercase `pr-xxx.md`, and existing
+  outputs are not overwritten unless `--force` is supplied.
+- Accepted: PR delta scaffolds include structured safe defaults for owner,
+  implementation scope, claim tier, transfer source, sky support, null/mock
+  status, covariance status, PPC status, and LOOCV status.
+- Accepted: generator-boundary owner aliases normalize `TSC` to `TSC_LEGACY`,
+  `BASS_PY` to `BASS`, and `MANUSCRIPT` to `COMMON`.
+- Deferred: a separate machine-readable review JSON artifact remains
+  unnecessary until a downstream harness consumes it.

@@ -474,3 +474,36 @@ inputs. It does not add solver outputs, transfer calibration,
 HTT posterior/evidence validation, MIO diagnostic certification,
 null/mock/covariance adequacy, sky-support adequacy, morphology
 compatibility, or family-ID evidence.
+
+## PR-022 - PR delta template and review artifact generator
+
+Date: 2026-06-12
+
+Changed files: `scripts/codex_harness/new_pr_delta.py`,
+`docs/PR_DELTAS/TEMPLATE.md`, `tests/contracts/test_pr_delta_template.py`,
+`docs/PR_DELTAS/pr-022.md`, status files, PR-012 generated status sidecars,
+and `docs/generated/progress_checkpoints/checkpoint_015.md`.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/contracts/test_pr_delta_template.py -q` before implementation | repo root | FAIL | Red phase: missing `TEMPLATE.md`, missing public API, and missing CLI flags. |
+| `venv/bin/python -m pytest tests/contracts/test_pr_delta_template.py -q` | repo root | PASS | `8 passed`; covers template, PR-card rendering, owner normalization, dry-run, invalid web status, overwrite guard, and unknown PR rejection. |
+| `python scripts/codex_harness/new_pr_delta.py PR-000 --dry-run` | repo root | PASS | Exact PR-card command; prints lowercase target and rendered Markdown without writing. |
+| `python -m pytest tests/contracts/test_pr_delta_template.py -q` | repo root | FAIL | `/usr/bin/python: No module named pytest`; host interpreter lacks pytest. |
+| `venv/bin/python -m pytest tests/contracts/test_pr_delta_template.py tests/contracts/test_harness_runner.py scripts/codex_harness/test_pr_dag_harness.py -q` | repo root | PASS | `27 passed`; adjacent harness/DAG tests remain green. |
+| `venv/bin/python -m py_compile scripts/codex_harness/new_pr_delta.py tests/contracts/test_pr_delta_template.py` | repo root | PASS | Touched Python files compile. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-checkpoint-dir docs/generated/progress_checkpoints` | repo root | PASS | Generated `checkpoint_015.md`; `15/62 = 24.19%`; dependency-weighted `29.74%`; critical path `5/21 = 23.81%`; no replan needed. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status sidecars at 15 completed PRs. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml; printf 'status_cmp=%s\n' "$?"` | repo root | PASS | `status_cmp=0`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`; package import smoke remains green. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 6908 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6855/6914 tests collected (59 deselected)`. |
+
+Numerical/scientific impact: none; COMMON review-artifact harness only.
+
+Artifact/claim-tier impact: COMMON L1 diagnostic review metadata. PR-022
+standardizes PR_DELTA scaffolding and safe claim-status defaults. It does not
+add solver outputs, transfer calibration, HTT posterior/evidence validation,
+MIO diagnostic certificate evidence, null/mock/covariance adequacy, sky-support
+adequacy, morphology compatibility, or family-ID evidence.

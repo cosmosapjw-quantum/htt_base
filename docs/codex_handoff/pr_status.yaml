@@ -14,6 +14,7 @@ completed:
 - PR-014
 - PR-040
 - PR-012
+- PR-022
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -46,4 +47,7 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   not enough for sky-facing artifacts. PR-012 adds the generated COMMON status
   snapshot and claim-ledger pipeline for DAG bookkeeping, with all public counts
   derived from `pr_backlog.yaml` and `pr_status.yaml`; this is diagnostic-only
-  project status and not scientific readiness evidence.
+  project status and not scientific readiness evidence. PR-022 standardizes the
+  PR_DELTA/review-artifact scaffold generator, using active DAG cards to
+  prefill owner, dependencies, files, tests, DoD, kill switch, claim impact,
+  and risk-log sections; this is COMMON L1 review metadata only.

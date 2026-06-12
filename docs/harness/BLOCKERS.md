@@ -4,8 +4,8 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-12
 
-No active PR blockers after PR-012. Progress report shows unblocked next
-candidates `PR-022`, `PR-070`, `PR-015`, `PR-050`, and `PR-041`; use DAG
+No active PR blockers after PR-022. Progress report shows unblocked next
+candidates `PR-070`, `PR-015`, `PR-050`, `PR-041`, and `PR-023`; use DAG
 ordering and policy priorities before selecting the next node.
 
 Residual non-blocking risk: `docs/generated/quarantined_figures.md` lists 96
@@ -35,3 +35,8 @@ status authority, but older VER2 manuscript generated snippets are still owned
 by `scripts/ver2_artifact_export.py`. Downstream manuscript/export PRs should
 consume or cross-check the PR-012 sidecars rather than reintroducing manual
 status counts.
+
+Residual non-blocking risk: PR-022 standardizes PR_DELTA scaffolds, but it
+cannot force future agents to complete every section truthfully. Downstream PRs
+still need claim scans, tests, generated artifacts, and reviewer loops before
+commit.
