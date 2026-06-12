@@ -304,3 +304,27 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: strict release gating for freeze, manifest-backed figure
   regeneration, stale generated VER2 status replacement, and manuscript text
   edits remain downstream manuscript/export PR work.
+
+## 2026-06-13 - PR-051 BudgetSpec denominator-policy boundary
+
+- Accepted: `mio.formalism.budget_spec` is the MIO-owned diagnostic
+  denominator-policy contract for PR-051. It records explicit
+  `MES_linear`, `external_transfer`, `atlas_quantile`, and `observational`
+  policies, positive finite denominator values, owner/scope/claim metadata,
+  config/input hashes, assumptions, caveats, and policy-specific provenance.
+- Accepted: `external_transfer` budgets and sensitivity points require PR-014
+  transfer metadata and cannot claim native validation or certified filling.
+- Accepted: `atlas_quantile` remains pre-solver schema scaffolding only and
+  accepts only controlled pre-solver-safe atlas status values.
+- Accepted: observational budgets require explicit sky-support, covariance,
+  and null/mock status metadata.
+- Accepted: the legacy COMMON/BASS descriptive departure bridge is restricted
+  to explicit `MES_linear`/`linear_MES`; it must not relabel legacy budgets as
+  external-transfer, atlas, or observational policies without the MIO contract.
+- Rejected: implicit denominator policy, generic `atlas_or_mes_ceiling`,
+  non-positive denominator values, transfer metadata loss in sensitivity
+  points, external/native conflation, atlas-quantile classifier semantics,
+  and any MIO posterior/evidence/certification semantics.
+- Deferred: Q normalized score, certified F, Pi exceedance, G_F depth-gap,
+  richer migration of legacy COMMON `BudgetSpec`, and full VER2 artifact
+  export runtime validation remain downstream work.

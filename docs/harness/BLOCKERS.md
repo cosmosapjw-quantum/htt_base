@@ -2,10 +2,10 @@
 
 Open blockers, owner, required resolution, and PR dependency impact.
 
-## 2026-06-12
+## 2026-06-13
 
-No active DAG blockers after PR-113. Progress report shows unblocked next
-candidates `PR-051`, `PR-042`, `PR-072`, `PR-081`, and `PR-031`; use DAG
+No active DAG blockers after PR-051. Progress report shows unblocked next
+candidates `PR-042`, `PR-072`, `PR-081`, `PR-031`, and `PR-052`; use DAG
 ordering and policy priorities before selecting the next node.
 
 Manuscript-freeze blocker: `docs/generated/missing_figure_references.md`
@@ -106,3 +106,10 @@ manuscript claims, or prove LaTeX buildability. Later manuscript/export PRs
 must consume `docs/generated/manuscript_figure_inventory.md` and
 `docs/generated/missing_figure_references.md` before promoting any figure or
 status number into a publication-facing surface.
+
+Residual non-blocking risk: PR-051 defines strict MIO `BudgetSpec`
+denominator-policy and sensitivity metadata, but the older COMMON
+`BudgetSpec` still exists as a weaker compatibility contract. The BASS legacy
+bridge is restricted to explicit `MES_linear` only. PR-052 and later Q/F/Pi/G
+work must consume the MIO contract directly rather than relabeling legacy
+COMMON budgets as external-transfer, atlas, or observational policies.

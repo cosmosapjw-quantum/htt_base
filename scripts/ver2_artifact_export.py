@@ -588,6 +588,7 @@ def _build_export_records() -> dict[str, ArtifactRecord]:
         ),
         claim_gate_passed=False,
         occupancy_certified=False,
+        denominator_policy="MES_linear",
         g_values={"morphology": 0.32, "ceiling": 0.18},
     )
     departure_report = replace(

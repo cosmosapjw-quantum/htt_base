@@ -895,3 +895,46 @@ inventories. They record 94 includegraphics refs, 0 manifest-backed resolved
 refs, 72 quarantined refs, 22 missing refs, and 23 text audit findings. They do
 not compile the manuscript, promote figures, validate transfer, provide HTT
 evidence, provide MIO certificates, or support family-ID claims.
+
+## PR-051 - BudgetSpec and denominator-policy sensitivity
+
+Date: 2026-06-13
+
+Changed files: `htt/mio/formalism/budget_spec.py`,
+`tests/mio/test_budget_spec.py`, `htt/mio/formalism/__init__.py`,
+`htt/mio/tests/test_boot.py`,
+`htt/bass/observational/departure_report_plumbing.py`,
+`htt/bass/observational/test_ver2_mes_departure.py`,
+`scripts/ver2_artifact_export.py`, `docs/PR_DELTAS/pr-051.md`, status files,
+PR-012 generated status sidecars, checkpoint artifacts, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/mio/test_budget_spec.py -q` before implementation | repo root | FAIL | Red phase: missing `mio.formalism.budget_spec`. |
+| `venv/bin/python -m pytest tests/mio/test_budget_spec.py htt/bass/observational/test_ver2_mes_departure.py -q` | repo root | PASS | `23 passed`; covers policy distinction, explicit denominator policy, positive finite denominators, transfer metadata, atlas status, observational support metadata, sensitivity provenance, and BASS legacy bridge guards. |
+| `venv/bin/python -m pytest tests/mio/test_budget_spec.py -q` | repo root | PASS | `15 passed`. |
+| `venv/bin/python -m pytest htt/mio/tests/test_boot.py htt/bass/observational/test_ver2_mes_departure.py -q` | repo root | PASS | `11 passed`. |
+| `venv/bin/python -m pytest tests/mio/test_departure_bundle.py tests/contracts/test_transfer_registry.py tests/contracts/test_claim_language_lint.py tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_ownership_firewall.py -q` | repo root | PASS | `59 passed`; adjacent MIO/transfer/claim/ownership/firewall suites remain green. |
+| `venv/bin/python -m py_compile htt/mio/formalism/budget_spec.py htt/mio/formalism/__init__.py htt/mio/tests/test_boot.py tests/mio/test_budget_spec.py htt/bass/observational/departure_report_plumbing.py htt/bass/observational/test_ver2_mes_departure.py scripts/ver2_artifact_export.py` | repo root | PASS | Touched Python files compile. |
+| `python -m pytest tests/mio/test_budget_spec.py -q` | repo root | FAIL | Host Python has no pytest; venv pytest is authoritative. |
+| `venv/bin/python -m pytest scripts/test_ver2_artifact_export.py -q` | repo root | NOT COMPLETED | Interrupted after about seven minutes with only one dot; not counted as passing evidence. |
+| Targeted compile/AST export smoke for `scripts/ver2_artifact_export.py` | repo root | PASS | Confirmed the changed `build_descriptive_departure_report` caller passes literal `denominator_policy="MES_linear"`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7002 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6949/7008 tests collected (59 deselected)`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status sidecars at 25 completed PRs. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-checkpoint-dir docs/generated/progress_checkpoints --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `25/62 = 40.32%`; dependency-weighted `47.18%`; critical path `7/21 = 33.33%`; wrote checkpoint 025; no replan required. |
+| `python scripts/check_claim_language.py <PR-051 files> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-051 files>` | repo root | PASS | No forbidden claim patterns detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-051 files>` | repo root | PASS | No unmarked strong claims detected. |
+
+Numerical/scientific impact: no new solver or inference computation.
+PR-051 is a MIO diagnostic denominator-policy/provenance contract and a
+fail-closed legacy BASS compatibility guard.
+
+Artifact/claim-tier impact: generated checkpoint/status artifacts are DAG
+bookkeeping only. The new `BudgetSpec` and sensitivity points are
+diagnostic-only metadata; they do not implement Q/F/Pi/G_F, HTT
+posterior/evidence, MIO certificates, transfer validation, native solver
+validation, morphology compatibility, or family-ID claims.

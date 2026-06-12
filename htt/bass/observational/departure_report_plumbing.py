@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Mapping
 
 from common.departure_contracts import BudgetSpec, DepartureBundle, DepartureReport
@@ -10,6 +11,10 @@ from common.contracts import ObservableVector
 from bass.observational._manifest import derive_manifest, sky_support_metadata
 
 __all__ = ["DepartureBuildResult", "build_descriptive_departure_report"]
+
+
+_LEGACY_COMMON_BUDGET_POLICY = "MES_linear"
+_LEGACY_COMMON_BUDGET_KIND = "linear_MES"
 
 
 @dataclass(frozen=True)
@@ -38,13 +43,30 @@ def _local_global_status(observable_vector: ObservableVector) -> str | None:
     return str(status) if status is not None else None
 
 
+def _validate_legacy_common_budget_policy(
+    budget: BudgetSpec,
+    denominator_policy: str,
+) -> None:
+    if denominator_policy != _LEGACY_COMMON_BUDGET_POLICY:
+        raise ValueError(
+            "legacy COMMON BudgetSpec supports only MES_linear denominator_policy; "
+            "use the MIO BudgetSpec contract for transfer, atlas, or observational "
+            "budget policies"
+        )
+    if str(budget.kind) != _LEGACY_COMMON_BUDGET_KIND:
+        raise ValueError(
+            "legacy COMMON BudgetSpec.kind must be linear_MES when "
+            "denominator_policy is MES_linear"
+        )
+
+
 def build_descriptive_departure_report(
     observable_vector: ObservableVector,
     *,
     bundle: DepartureBundle,
     budget: BudgetSpec,
     numerator_policy: str = "positive_part",
-    denominator_policy: str = "atlas_or_mes_ceiling",
+    denominator_policy: str | None = None,
     claim_gate_passed: bool = False,
     occupancy_certified: bool = False,
     pi_curve_ref: str | None = None,
@@ -56,6 +78,10 @@ def build_descriptive_departure_report(
     """Build a descriptive xQPiFG shell without merging semantics."""
     if observable_vector.manifest.owner != "BASS":
         raise ValueError("Departure report plumbing expects a BASS observable vector")
+    if denominator_policy is None or not str(denominator_policy).strip():
+        raise ValueError("denominator_policy must be explicit")
+    denominator_policy = str(denominator_policy).strip()
+    _validate_legacy_common_budget_policy(budget, denominator_policy)
     blocked_reasons: list[str] = []
     if bundle.x_signed < 0.0:
         blocked_reasons.append("negative_sector")
@@ -68,6 +94,8 @@ def build_descriptive_departure_report(
 
     x_value = float(bundle.x_signed)
     U_value = float(budget.value)
+    if not math.isfinite(U_value) or U_value <= 0.0:
+        raise ValueError("BudgetSpec.value must be positive finite")
     q_value = _numerator(bundle, numerator_policy) / U_value
     caveats = ["report_is_descriptive_until_claim_gates_pass"]
     local_global_status = _local_global_status(observable_vector)

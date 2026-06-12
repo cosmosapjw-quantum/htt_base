@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from common.contracts import ArtifactManifest, ObservableVector, SkySupport
 from common.departure_contracts import BudgetSpec, DepartureBundle
 
@@ -137,6 +139,7 @@ def test_departure_report_stays_descriptive_without_claim_gate():
         _observable(),
         bundle=bundle,
         budget=budget,
+        denominator_policy="MES_linear",
         claim_gate_passed=False,
         occupancy_certified=False,
     )
@@ -146,6 +149,141 @@ def test_departure_report_stays_descriptive_without_claim_gate():
     assert "report_is_descriptive_until_claim_gates_pass" in result.report.caveats
     assert "local_global_degeneracy_unresolved" in result.report.caveats
     assert "observer_reconstruction_bridge_pending" in result.report.caveats
+
+
+def test_departure_report_requires_explicit_denominator_policy():
+    bundle = DepartureBundle(
+        comparator="matched",
+        Sigma2_std=0.1,
+        W2_std=0.4,
+        Omega_tilt=0.0,
+        Omega_k_aniso=0.0,
+        covariance=None,
+        frame_convention="normal_frame",
+        sector="full",
+        provenance={},
+    )
+    budget = BudgetSpec(
+        kind="linear_MES",
+        value=1.0,
+        uncertainty=None,
+        family_id=None,
+        channel="TT",
+        redshift=None,
+        confidence_level=None,
+        assumptions=tuple(),
+        is_admissible_ceiling=True,
+    )
+    with pytest.raises(ValueError, match="denominator_policy"):
+        build_descriptive_departure_report(
+            _observable(),
+            bundle=bundle,
+            budget=budget,
+            claim_gate_passed=False,
+            occupancy_certified=False,
+        )
+
+
+def test_departure_report_rejects_external_label_for_legacy_budget():
+    bundle = DepartureBundle(
+        comparator="matched",
+        Sigma2_std=0.4,
+        W2_std=0.1,
+        Omega_tilt=0.2,
+        Omega_k_aniso=0.1,
+        covariance=None,
+        frame_convention="normal_frame",
+        sector="full",
+        provenance={},
+    )
+    budget = BudgetSpec(
+        kind="linear_MES",
+        value=1.0,
+        uncertainty=None,
+        family_id=None,
+        channel="TT",
+        redshift=None,
+        confidence_level=None,
+        assumptions=tuple(),
+        is_admissible_ceiling=True,
+    )
+    with pytest.raises(ValueError, match="legacy COMMON BudgetSpec"):
+        build_descriptive_departure_report(
+            _observable(),
+            bundle=bundle,
+            budget=budget,
+            denominator_policy="external_transfer",
+            claim_gate_passed=False,
+            occupancy_certified=False,
+        )
+
+
+def test_departure_report_rejects_legacy_budget_kind_policy_mismatch():
+    bundle = DepartureBundle(
+        comparator="matched",
+        Sigma2_std=0.4,
+        W2_std=0.1,
+        Omega_tilt=0.2,
+        Omega_k_aniso=0.1,
+        covariance=None,
+        frame_convention="normal_frame",
+        sector="full",
+        provenance={},
+    )
+    budget = BudgetSpec(
+        kind="atlas_envelope",
+        value=1.0,
+        uncertainty=None,
+        family_id=None,
+        channel="TT",
+        redshift=None,
+        confidence_level=None,
+        assumptions=tuple(),
+        is_admissible_ceiling=True,
+    )
+    with pytest.raises(ValueError, match="BudgetSpec.kind"):
+        build_descriptive_departure_report(
+            _observable(),
+            bundle=bundle,
+            budget=budget,
+            denominator_policy="MES_linear",
+            claim_gate_passed=False,
+            occupancy_certified=False,
+        )
+
+
+def test_departure_report_rejects_non_positive_budget_denominator():
+    bundle = DepartureBundle(
+        comparator="matched",
+        Sigma2_std=0.4,
+        W2_std=0.1,
+        Omega_tilt=0.2,
+        Omega_k_aniso=0.1,
+        covariance=None,
+        frame_convention="normal_frame",
+        sector="full",
+        provenance={},
+    )
+    budget = BudgetSpec(
+        kind="linear_MES",
+        value=0.0,
+        uncertainty=None,
+        family_id=None,
+        channel="TT",
+        redshift=None,
+        confidence_level=None,
+        assumptions=tuple(),
+        is_admissible_ceiling=True,
+    )
+    with pytest.raises(ValueError, match="positive finite"):
+        build_descriptive_departure_report(
+            _observable(),
+            bundle=bundle,
+            budget=budget,
+            denominator_policy="MES_linear",
+            claim_gate_passed=False,
+            occupancy_certified=False,
+        )
 
 
 def test_departure_report_blocks_negative_sector_certified_filling():
@@ -175,6 +313,7 @@ def test_departure_report_blocks_negative_sector_certified_filling():
         _observable(),
         bundle=bundle,
         budget=budget,
+        denominator_policy="MES_linear",
         claim_gate_passed=True,
         occupancy_certified=True,
     )

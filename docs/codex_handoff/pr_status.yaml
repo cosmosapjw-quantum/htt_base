@@ -24,6 +24,7 @@ completed:
 - PR-080
 - PR-030
 - PR-113
+- PR-051
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -121,4 +122,17 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   quarantine gate only. They do not compile the manuscript, promote figures,
   validate native or external transfer, provide HTT evidence, provide MIO
   certificates, or permit final manuscript freeze while missing or quarantined
-  references remain unexplained.
+  references remain unexplained. PR-051 adds a MIO diagnostic-only
+  `BudgetSpec` denominator-policy contract with explicit `MES_linear`,
+  `external_transfer`, `atlas_quantile`, and `observational` policies,
+  positive finite denominator validation, policy-specific provenance gates,
+  pre-solver-safe atlas status vocabulary, observational sky/covariance/null
+  support metadata, and provenance-preserving sensitivity points. External
+  transfer budgets and sensitivity points require PR-014 transfer metadata and
+  cannot claim native validation. The legacy COMMON/BASS descriptive departure
+  bridge now rejects implicit denominator policy, non-positive denominator
+  values, policy/kind mismatches, and any attempt to label a legacy COMMON
+  budget as external-transfer/atlas/observational without the MIO contract.
+  PR-051 is not Q/F/Pi/G inference, not HTT evidence, not a posterior, not a
+  MIO certificate, not native solver validation, and not morphology or
+  geometry/family identification evidence.
