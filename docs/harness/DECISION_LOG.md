@@ -205,3 +205,26 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: the harness cannot prove a manually edited completed PR was truly
   reviewed. That remains enforced by the per-PR delta, tests, claim scans, and
   commit loop.
+
+## 2026-06-12 - PR-071 OBSSTAT harmonic/spin convention boundary
+
+- Accepted: `htt.obsstat.alm_conventions` is the OBSSTAT-owned convention
+  registry for harmonic feature export. COMMON keeps the canonical
+  `ObservableVector` schema, and OBSSTAT owns this feature-extraction policy.
+- Accepted: scalar alm metadata records `scipy.special.sph_harm_y` evaluator
+  provenance, colatitude/longitude angle ordering, Condon-Shortley phase,
+  orthonormal normalization, coordinate frame, healpy-style m-major storage,
+  scalar reality condition, and `lmax/mmax`.
+- Accepted: spin-2 metadata records Q-then-U paired-map order and
+  `healpy_map2alm_spin` transform provenance, but records no E/B sign export
+  because the checked healpy API documentation does not specify enough
+  semantics for PR-071 to assert that claim.
+- Accepted: OBSSTAT alm export now requires channel-local
+  `convention_metadata`; parent/root metadata does not satisfy child harmonic
+  payloads because mixed scalar/spin blocks would otherwise be ambiguous.
+- Accepted: convention metadata rejects unknown fields, coordinate-frame
+  mismatches against `SkySupport`, and healpy-storage coefficient vectors with
+  the wrong shape.
+- Deferred: computing alms, validating map transforms, transfer provenance,
+  null/mask/covariance calibration, morphology compatibility, and geometry or
+  family claims remain downstream work.

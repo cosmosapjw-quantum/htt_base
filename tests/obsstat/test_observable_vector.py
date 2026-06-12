@@ -100,13 +100,22 @@ def test_obsstat_manifest_helper_is_diagnostic_only_and_copies_inputs() -> None:
 
 
 def test_build_observable_vector_holds_required_feature_blocks() -> None:
+    from htt.obsstat.alm_conventions import (
+        build_alm_feature,
+        canonical_temperature_alm_convention,
+    )
     from htt.obsstat.observable_vector import build_observable_vector
 
+    alm_feature = build_alm_feature(
+        channel="T",
+        coefficients=[0.0] * 15,
+        convention=canonical_temperature_alm_convention(lmax=4),
+    )
     vector = build_observable_vector(
         ell_max=4,
         channels=("TT", "TE", "EE", "BiPoSH"),
         cl={"TT": [1.0, 0.5]},
-        alm_features={"T": {"lmax": 4, "convention": "complex_alm"}},
+        alm_features={"T": alm_feature},
         template_features={"global_tilt_template": {"norm": 0.2}},
         covariance_features={"diag_cl": {"rank": 5}},
         scalar_features={"x": 0.1, "Q": 0.2},
@@ -126,7 +135,10 @@ def test_build_observable_vector_holds_required_feature_blocks() -> None:
     assert vector.manifest.owner is Owner.OBSSTAT
     assert vector.manifest.implementation_scope is ImplementationScope.OBSSTAT
     assert vector.manifest.claim_tier is ClaimTier.DIAGNOSTIC_ONLY
-    assert vector.alm_features["alm"]["T"]["convention"] == "complex_alm"
+    assert (
+        vector.alm_features["alm"]["T"]["convention_metadata"]["basis"]
+        == "complex_spherical_harmonic"
+    )
     assert vector.alm_features["scalar_features"]["x"] == 0.1
     assert vector.alm_features["morphology_features"]["axis_coherence"] == 0.3
     assert vector.alm_features["null_features"]["null_ensemble_ref"] == "mock://nulls"

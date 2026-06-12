@@ -10,7 +10,7 @@ Pre-read:
 - `.agents/skills/htt-claim-firewall/SKILL.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-023.md`
+- `docs/PR_DELTAS/pr-071.md`
 - `docs/generated/progress_checkpoints/checkpoint_020.md`
 - `docs/generated/progress_checkpoints/progress_scoreboard.md`
 - `docs/generated/status_snapshot.json`
@@ -19,14 +19,14 @@ Current state:
 
 - PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, PR-010,
   PR-021, PR-011, PR-013, PR-014, PR-040, PR-012, PR-022, PR-070,
-  PR-015, PR-050, PR-041, and PR-023 are complete.
+  PR-015, PR-050, PR-041, PR-023, and PR-071 are complete.
 - Generated checkpoint artifacts:
   `docs/generated/progress_checkpoints/checkpoint_005.md`,
   `checkpoint_010.md`, `checkpoint_015.md`, and `checkpoint_020.md`.
 - Latest progress scoreboard:
   `docs/generated/progress_checkpoints/progress_scoreboard.md`.
-- Progress after PR-023: 20/62 = 32.26% complete, dependency-weighted
-  37.44%, critical-path 6/21 = 28.57%, no blockers, no checkpoint due until
+- Progress after PR-071: 21/62 = 33.87% complete, dependency-weighted
+  40.0%, critical-path 6/21 = 28.57%, no blockers, no checkpoint due until
   25 completed PRs.
 - PR-010 added canonical owner/claim-tier/scope enums and HTT/MIO
   bundle-role firewall checks.
@@ -51,6 +51,10 @@ Current state:
   from dependency satisfaction and `unblocked_next`, `--write-scoreboard`, and
   checkpoint markdown that lists skipped PRs. Checkpoint 020 was generated and
   no replan is required because progress advanced by 5 since checkpoint 015.
+- PR-071 added `htt.obsstat.alm_conventions` with scalar and spin-2 harmonic
+  convention metadata, channel-local OBSSTAT alm export gates, coordinate-frame
+  matching against `SkySupport`, healpy-style coefficient-shape checks,
+  deterministic NumPy-aware coefficient hashing, and no E/B sign export claim.
 - PR-040 added COMMON sky-support metadata, deterministic mask hashes, sky
   fractions, completeness status, sky-facing manifest validation, and
   spherical-mean direction guards.
@@ -61,9 +65,9 @@ Current state:
 - PR-041 added `htt.zoa.selection_ladder` and
   `common.healpix_selection.source_mask_from_pixel_mask`, with diagnostic-only
   raw, ZoA-masked, angular-completeness, and mock-calibrated support summaries.
-- Unblocked next candidates from the live progress report: `PR-071`,
-  `PR-080`, `PR-030`, `PR-113`, `PR-051`, and `PR-042`.
-  Topological next is `PR-071`; `PR-051` is the current critical-path successor
+- Unblocked next candidates from the live progress report: `PR-080`,
+  `PR-030`, `PR-113`, `PR-051`, `PR-042`, and `PR-072`.
+  Topological next is `PR-080`; `PR-051` is the current critical-path successor
   after PR-050.
 
 Rules:
@@ -84,9 +88,9 @@ Immediate commands:
 ```bash
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
-python scripts/codex_harness/new_pr_delta.py PR-071 --dry-run
+python scripts/codex_harness/new_pr_delta.py PR-080 --dry-run
 python scripts/check_claim_language.py docs docs/manuscript --dry-run
-venv/bin/python -m pytest scripts/codex_harness/test_pr_dag_harness.py -q
+venv/bin/python -m pytest tests/obsstat/test_alm_conventions.py tests/obsstat/test_observable_vector.py -q
 venv/bin/python scripts/codex_harness/run_subset.py package
 venv/bin/python scripts/codex_harness/run_subset.py smoke
 ```

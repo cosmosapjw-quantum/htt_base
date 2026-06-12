@@ -4,8 +4,8 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-12
 
-No active PR blockers after PR-023. Progress report shows unblocked next
-candidates `PR-071`, `PR-080`, `PR-030`, `PR-113`, `PR-051`, and `PR-042`;
+No active PR blockers after PR-071. Progress report shows unblocked next
+candidates `PR-080`, `PR-030`, `PR-113`, `PR-051`, `PR-042`, and `PR-072`;
 use DAG ordering and policy priorities before selecting the next node.
 
 Residual non-blocking risk: `docs/generated/quarantined_figures.md` lists 96
@@ -72,3 +72,10 @@ completion percentages or satisfying dependencies, but it cannot prove that a
 manually marked completed PR was genuinely reviewed. Continue enforcing the
 per-PR loop: PR_DELTA, tests, claim scans, generated artifacts, self-review,
 and commit evidence.
+
+Residual non-blocking risk: PR-071 records harmonic/spin convention metadata
+and blocks OBSSTAT alm exports without channel-local metadata, but it does not
+compute alms, validate maps, assert E/B sign export, or provide transfer
+provenance. Downstream obsstat/transfer PRs must keep convention provenance
+separate from PR-014 transfer metadata and from any future native solver atlas
+validation.

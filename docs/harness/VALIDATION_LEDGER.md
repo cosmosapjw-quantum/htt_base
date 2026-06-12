@@ -204,6 +204,44 @@ validate native solver behavior, transfer calibration, HTT posterior/evidence,
 MIO diagnostics, null/mask/covariance adequacy, morphology compatibility, rank
 sufficiency, equivalence-class separation, or family-identification evidence.
 
+## PR-071 - Harmonic and spin convention registry
+
+Date: 2026-06-12
+
+Changed files: `htt/obsstat/alm_conventions.py`,
+`htt/obsstat/observable_vector.py`, `htt/obsstat/__init__.py`,
+`tests/obsstat/test_alm_conventions.py`,
+`tests/obsstat/test_observable_vector.py`, `docs/PR_DELTAS/pr-071.md`,
+status mirrors, generated status sidecars, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/obsstat/test_alm_conventions.py -q` before test file | repo root | FAIL | Red phase: target file did not exist. |
+| `venv/bin/python -m pytest tests/obsstat/test_alm_conventions.py -q` after red tests | repo root | FAIL | `7 failed`; module missing and raw alm payload accepted. |
+| `venv/bin/python -m pytest tests/obsstat/test_alm_conventions.py -q` after first implementation | repo root | PASS | `7 passed`. |
+| `venv/bin/python -m pytest tests/obsstat/test_alm_conventions.py tests/obsstat/test_observable_vector.py -q` after physics-audit fixes | repo root | PASS | `18 passed`. |
+| `venv/bin/python -m pytest tests/obsstat/test_observable_vector.py htt/test_packaging_imports.py tests/obsstat/test_alm_conventions.py -q` | repo root | PASS | `23 passed`. |
+| `python -m pytest tests/obsstat/test_alm_conventions.py -q` | repo root | FAIL | `/usr/bin/python: No module named pytest`; host interpreter lacks pytest. |
+| `venv/bin/python -m pytest htt/test_packaging_imports.py tests/obsstat/test_alm_conventions.py --collect-only -q` | repo root | PASS | `14 tests collected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --json` before status update | repo root | PASS | `20/62 = 32.26%`; checkpoint due only because PR-071 was not yet marked complete. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` before YAML note fix | repo root | FAIL | YAML parser rejected a colon in the new plain-scalar status note. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated `status_snapshot.json`, `claim_ledger.json`, and `status_matrix.md`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --json` after status update | repo root | PASS | `21/62 = 33.87%`; dependency-weighted `40.0%`; critical path `6/21 = 28.57%`; no checkpoint due. |
+| `venv/bin/python -m pytest -m smoke -q` | repo root | PASS | `6 passed, 6961 deselected`. |
+| `venv/bin/python -m pytest --collect-only -q` | repo root | PASS | `6908/6967 tests collected (59 deselected)`. |
+| `venv/bin/python -m pytest tests/contracts/test_claim_language_lint.py tests/contracts/test_transfer_registry.py -q` | repo root | PASS | `25 passed`. |
+
+Numerical/scientific impact: OBSSTAT metadata and export gating only. The PR
+does not compute alms, transfer functions, likelihoods, posteriors, MIO
+certificates, native solver outputs, or morphology atlas comparisons.
+
+Artifact/claim-tier impact: diagnostic-only convention provenance. Convention
+metadata is not transfer provenance, native validation, HTT evidence, MIO
+certification, null calibration, morphology compatibility, or
+family-identification evidence.
+
 ## PR-010 - Canonical ownership and role firewall
 
 Date: 2026-06-12

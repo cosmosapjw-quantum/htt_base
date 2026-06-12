@@ -1,12 +1,12 @@
 # Project State
 
-Current DAG position: PR-023 complete after commits PR-000, PR-001, PR-002,
+Current DAG position: PR-071 complete after commits PR-000, PR-001, PR-002,
 PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, and
-PR-014, PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041, and
-PR-023.
+PR-014, PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041,
+PR-023, and PR-071.
 
-Progress after PR-023: 20/62 complete = 32.26%; dependency-weighted
-completion = 37.44%; critical-path completion = 6/21 = 28.57%.
+Progress after PR-071: 21/62 complete = 33.87%; dependency-weighted
+completion = 40.0%; critical-path completion = 6/21 = 28.57%.
 
 Current framework status: L0 orchestration and harness bootstrap. The repo has
 inventory, editable install/import stabilization, pytest taxonomy, DAG/progress
@@ -65,7 +65,14 @@ mock-calibration weights without promoting support metadata to posterior
 evidence. PR-023 extends the COMMON progress harness with explicit skipped-PR
 accounting, deterministic scoreboard output, checkpoint markdown that lists
 blocked/skipped/unblocked-next/replan state, and hard failures when skipped PRs
-overlap completed/blocked/in-progress states.
+overlap completed/blocked/in-progress states. PR-071 adds
+`htt.obsstat.alm_conventions` as an OBSSTAT diagnostic convention registry for
+harmonic feature export. It requires channel-local convention metadata for
+alm-like payloads, records `scipy.special.sph_harm_y` evaluator provenance,
+healpy m-major storage, coordinate frame, scalar/spin reality metadata,
+Q-then-U spin-2 input order, no E/B sign export, and coefficient-shape checks,
+and rejects unknown convention fields or coordinate-frame mismatches against
+`SkySupport`.
 
 Scientific boundaries remain active:
 
@@ -80,6 +87,6 @@ Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_020.
 Latest progress scoreboard: `docs/generated/progress_checkpoints/progress_scoreboard.md`.
 Next checkpoint is due at 25 completed PRs.
 
-Next topological PR: PR-071. Other unblocked candidates after PR-023 are
-PR-080, PR-030, PR-113, PR-051, and PR-042. PR-051 remains the next
-critical-path successor after PR-050, while PR-042 remains unblocked by PR-041.
+Next topological PR: PR-080. Other unblocked candidates after PR-071 are
+PR-030, PR-113, PR-051, PR-042, and PR-072. PR-051 remains the next
+critical-path successor after PR-050, while PR-072 is now unblocked by PR-071.

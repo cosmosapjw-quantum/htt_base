@@ -20,6 +20,7 @@ completed:
 - PR-050
 - PR-041
 - PR-023
+- PR-071
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -82,3 +83,11 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   deterministic progress scoreboard output, and checkpoint markdown that lists
   blocked, skipped, unblocked-next, critical-path, and replan state without
   letting skipped PRs inflate completion percentages or satisfy dependencies.
+  PR-071 adds an OBSSTAT harmonic/spin convention registry and export gate for
+  alm feature payloads, requiring channel-local convention metadata for basis,
+  normalization, phase, theta/phi evaluator provenance, coordinate frame,
+  healpy-style storage, reality condition, spin transform, paired-map order,
+  output-pair semantics, and coefficient shape. This is diagnostic feature
+  provenance only; convention metadata is not transfer provenance, HTT evidence,
+  MIO certification, native solver validation, morphology compatibility, or
+  geometry/family evidence.

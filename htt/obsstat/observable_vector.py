@@ -22,6 +22,8 @@ from common.contracts import (
 )
 from common.transfer_registry import TransferSource, validate_transfer_dependent_result
 
+from .alm_conventions import validate_alm_feature_conventions
+
 _FORBIDDEN_FEATURE_KEY_PARTS = (
     "posterior",
     "likelihood",
@@ -141,6 +143,8 @@ def build_observable_vector(
         "morphology_features": dict(morphology_features or {}),
         "null_features": dict(null_features or {}),
     }
+    alm_convention_metadata = validate_alm_feature_conventions(blocks["alm"])
+    _require_alm_coordinate_frame_match(alm_convention_metadata, sky_support)
     _reject_forbidden_feature_keys(blocks)
     template_payload = dict(template_features or {})
     covariance_payload = dict(covariance_features or {})
@@ -344,6 +348,20 @@ def _raise_native_transfer_without_gate(path: str) -> None:
 def _require_channel_names(channels: tuple[str, ...]) -> None:
     if any(not isinstance(channel, str) or not channel for channel in channels):
         raise ValueError("ObservableVector channels must be non-empty strings")
+
+
+def _require_alm_coordinate_frame_match(
+    convention_metadata: tuple[dict[str, Any], ...],
+    sky_support: SkySupport,
+) -> None:
+    sky_frame = str(sky_support.coordinate_frame).strip().lower()
+    for metadata in convention_metadata:
+        alm_frame = str(metadata["coordinate_frame"]).strip().lower()
+        if alm_frame != sky_frame:
+            raise ValueError(
+                "alm convention coordinate_frame must match SkySupport.coordinate_frame "
+                f"({alm_frame!r} != {sky_frame!r})"
+            )
 
 
 def _walk_keys(payload: Mapping[str, Any], prefix: str = "") -> tuple[str, ...]:
