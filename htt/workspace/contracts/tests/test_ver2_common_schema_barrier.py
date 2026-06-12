@@ -18,6 +18,7 @@ MODULES = [
     ROOT / "htt_forward_output.py",
     ROOT / "mio_certificate.py",
     ROOT / "observable_vector.py",
+    ROOT / "transfer.py",
     ROOT / "tsc_overlay.py",
     ROOT / "validation_registry.py",
 ]

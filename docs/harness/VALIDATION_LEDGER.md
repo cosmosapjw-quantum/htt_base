@@ -356,3 +356,39 @@ MIO/HTT separation executable for the new posterior bundle path and preserves
 existing cross-check-only exports. It does not add solver outputs, transfer
 calibration, null/mock/covariance evidence, sky-support evidence, morphology
 compatibility evidence, or family-ID evidence.
+
+## PR-014 - Transfer-provenance contract
+
+Date: 2026-06-12
+
+Changed files: `htt/src/common/transfer_registry.py`,
+`htt/workspace/contracts/transfer.py`, `htt/workspace/contracts/__init__.py`,
+`htt/workspace/contracts/tests/test_ver2_common_schema_barrier.py`,
+`tests/contracts/test_transfer_registry.py`, status and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/contracts/test_transfer_registry.py -q` before implementation | repo root | FAIL | Red phase: missing `common.transfer_registry`. |
+| `venv/bin/python -m pytest tests/contracts/test_transfer_registry.py -q` | repo root | PASS | `11 passed`; covers metadata, invalid domains, external/native kill switches, registry coexistence, duplicate IDs, raw result metadata, caveat shape, and workspace aliasing. |
+| `venv/bin/python -m pytest tests/contracts/test_ownership_firewall.py tests/contracts/test_artifact_manifest.py htt/workspace/contracts/tests/test_ver2_common_schema_barrier.py htt/src/common/test_ver2_contract_layer.py -q` | repo root | PASS | `32 passed`; ownership, manifest/native-transfer gates, workspace schema barrier, and common contract layer preserved. |
+| `venv/bin/python -m py_compile htt/src/common/transfer_registry.py htt/workspace/contracts/transfer.py htt/workspace/contracts/__init__.py tests/contracts/test_transfer_registry.py htt/workspace/contracts/tests/test_ver2_common_schema_barrier.py` | repo root | PASS | Touched Python files compile. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json` | repo root | PASS | After marking PR-014 complete: `12/62 = 19.35%`; dependency-weighted `24.62%`; critical path `5/21 = 23.81%`; checkpoint not due. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml; printf 'status_cmp=%s\n' "$?"` | repo root | PASS | `status_cmp=0`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`; package import smoke remains green. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 6888 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6835/6894 tests collected (59 deselected)`. |
+| `venv/bin/python -m pytest tests/contracts -q` | repo root | PASS | `58 passed`; top-level contract suite remains green. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-014 files>` | repo root | PASS | No forbidden claim patterns detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-014 docs>` | repo root | PASS | No unmarked strong claims detected. |
+| `git diff --cached --check` | repo root | PASS | Staged PR-014 diff has no whitespace errors. |
+
+Numerical/scientific impact: none; metadata/contract plumbing only.
+
+Artifact/claim-tier impact: COMMON L2 transfer-provenance contract metadata.
+PR-014 records transfer source, family, valid range, observable kind,
+normalization, calibration status, caveats, and validation gates for later
+result consumers. It does not add solver outputs, native transfer validation,
+AniCLASS-native calibration, HTT posterior/evidence validation, MIO diagnostic
+certification, null/mock/covariance evidence, sky-support evidence, morphology
+compatibility evidence, or family-ID evidence.

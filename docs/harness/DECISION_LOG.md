@@ -28,3 +28,18 @@ Record accepted, rejected, and deferred design decisions.
   in likelihood-input paths.
 - Deferred: migrating every legacy HTT inference entry point to the new
   `HTTPosteriorBundle` constructor remains downstream HTT inference work.
+
+## 2026-06-12 - PR-014 transfer provenance boundary
+
+- Accepted: `common.transfer_registry.TransferFunctionSpec` is the canonical
+  transfer-provenance record. `workspace.contracts.transfer` is a thin alias
+  only.
+- Accepted: every transfer-dependent result path must be able to carry source,
+  family, valid range, observable kind, normalization, calibration status,
+  caveats, and validation gates.
+- Accepted: external/AniCLASS and empirical-proxy transfer sources cannot use
+  native calibration status or native validation gates.
+- Accepted: future native gate-passed transfer specs require an explicit native
+  transfer or native solver validation gate.
+- Deferred: migrating existing BASS/HTT/MIO producers to emit
+  `TransferFunctionSpec` is downstream adapter and transfer-registry work.
