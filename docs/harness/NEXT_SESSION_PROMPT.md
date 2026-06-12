@@ -7,21 +7,22 @@ Pre-read:
 - `AGENTS.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-040-sky-support-contract.md`
+- `docs/PR_DELTAS/pr-012-status-snapshot.md`
 - `docs/generated/progress_checkpoints/checkpoint_010.md`
+- `docs/generated/status_snapshot.json`
 - `.agents/skills/htt-dag-orchestrator/SKILL.md`
 
 Current state:
 
 - PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, PR-010,
-  PR-021, PR-011, PR-013, PR-014, and PR-040 are complete.
+  PR-021, PR-011, PR-013, PR-014, PR-040, and PR-012 are complete.
 - Generated checkpoint artifacts:
   `docs/generated/progress_checkpoints/checkpoint_005.md` and
   `docs/generated/progress_checkpoints/checkpoint_010.md`.
 - Checkpoint 010: 10/62 = 16.13% complete, dependency-weighted 19.49%,
   critical-path 4/21 = 19.05%, no blockers, no replan required.
-- Progress after PR-040: 13/62 = 20.97% complete, dependency-weighted
-  27.69%, critical-path 5/21 = 23.81%, no blockers, no checkpoint due until
+- Progress after PR-012: 14/62 = 22.58% complete, dependency-weighted
+  28.72%, critical-path 5/21 = 23.81%, no blockers, no checkpoint due until
   15 completed PRs.
 - PR-010 added canonical owner/claim-tier/scope enums and HTT/MIO
   bundle-role firewall checks. Canonical contract rows normalize legacy
@@ -47,9 +48,15 @@ Current state:
   fields, sky-facing manifest validation, deterministic mask hashes, sky
   fractions, completeness status, and an AST guard against raw
   longitude/latitude arithmetic means in production summaries.
-- Unblocked next candidates from the live progress report: `PR-012`,
-  `PR-022`, `PR-070`, `PR-015`, `PR-050`, and `PR-041`. Topological next is
-  `PR-012`; `PR-050` is on the current critical path.
+- PR-012 added `common.status_snapshot`, generated
+  `docs/generated/status_snapshot.json`, `docs/generated/claim_ledger.json`,
+  and `docs/generated/status_matrix.md`, and converted old manual
+  `docs/status_matrix.md` / `docs/claim_ledger.md` surfaces into
+  generated-authority indexes. The generated rows are diagnostic-only DAG
+  bookkeeping and keep `production_validated` false.
+- Unblocked next candidates from the live progress report: `PR-022`,
+  `PR-070`, `PR-015`, `PR-050`, and `PR-041`. Topological next is `PR-022`;
+  `PR-050` is on the current critical path.
 
 Rules:
 
@@ -66,13 +73,15 @@ Rules:
 - Reuse `common.sky_support.validate_sky_facing_artifact_metadata` for
   directional artifact metadata and `common.sky_geometry.spherical_mean` for
   directional summaries.
+- Reuse `common.status_snapshot` for public DAG status counts; do not restore
+  manual status or claim-ledger SSoTs.
 
 Immediate commands:
 
 ```bash
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
-venv/bin/python -m pytest tests/htt/test_sky_support_contract.py -q
-venv/bin/python -m pytest tests/contracts/test_artifact_manifest.py htt/src/common/test_sky_geometry.py -q
+venv/bin/python -m pytest tests/contracts/test_status_snapshot.py -q
+PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json
 venv/bin/python scripts/codex_harness/run_subset.py smoke
 ```

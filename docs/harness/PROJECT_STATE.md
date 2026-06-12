@@ -1,11 +1,11 @@
 # Project State
 
-Current DAG position: PR-040 complete after commits PR-000, PR-001, PR-002,
+Current DAG position: PR-012 complete after commits PR-000, PR-001, PR-002,
 PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, and
-PR-014, and PR-040.
+PR-014, PR-040, and PR-012.
 
-Progress after PR-040: 13/62 complete = 20.97%; dependency-weighted
-completion = 27.69%; critical-path completion = 5/21 = 23.81%.
+Progress after PR-012: 14/62 complete = 22.58%; dependency-weighted
+completion = 28.72%; critical-path completion = 5/21 = 23.81%.
 
 Current framework status: L0 orchestration and harness bootstrap. The repo has
 inventory, editable install/import stabilization, pytest taxonomy, DAG/progress
@@ -27,7 +27,11 @@ observable kind, normalization, calibration status, caveats, and validation
 gates. PR-040 adds COMMON sky-support metadata and geometry guards for
 coordinate frame, deterministic mask hash, sky fraction, completeness status,
 sky-facing manifest validation, and unit-vector spherical means. This is not
-scientific readiness evidence.
+scientific readiness evidence. PR-012 adds the generated COMMON DAG status
+snapshot, claim ledger, and status matrix under `docs/generated/*`, and turns
+the old manual `docs/status_matrix.md` and `docs/claim_ledger.md` surfaces into
+generated-authority indexes. These rows are diagnostic project bookkeeping
+only, with `production_validated` false for every PR-DAG row.
 
 Scientific boundaries remain active:
 
@@ -41,6 +45,5 @@ Scientific boundaries remain active:
 Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_010.md`.
 Next checkpoint is due at 15 completed PRs.
 
-Next topological PR: PR-012. Other unblocked candidates after PR-040 are
-PR-022, PR-070, PR-015, PR-050, and PR-041; PR-050 is on the current critical
-path.
+Next topological PR: PR-022. Other unblocked candidates after PR-012 are
+PR-070, PR-015, PR-050, and PR-041; PR-050 is on the current critical path.

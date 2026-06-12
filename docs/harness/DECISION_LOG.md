@@ -60,3 +60,21 @@ Record accepted, rejected, and deferred design decisions.
   spherical means, not raw longitude/latitude arithmetic means.
 - Deferred: migrating every artifact producer and summary writer to call the
   PR-040 validators remains downstream HTT/MIO/BASS integration work.
+
+## 2026-06-12 - PR-012 generated status authority
+
+- Accepted: `common.status_snapshot` is the canonical generator for public
+  PR-DAG status sidecars under `docs/generated/*`.
+- Accepted: `docs/generated/status_snapshot.json`,
+  `docs/generated/claim_ledger.json`, and `docs/generated/status_matrix.md`
+  are generated together from `pr_backlog.yaml` and `pr_status.yaml`.
+- Accepted: generated PR-DAG rows are diagnostic-only bookkeeping and always
+  keep `production_validated` false until explicit scientific validation gates
+  exist outside DAG-status accounting.
+- Accepted: PR-card owner aliases are normalized at the generator boundary:
+  `BASS_PY` becomes canonical `BASS`/`bass_py`, `MANUSCRIPT` becomes
+  `COMMON`, and legacy `TSC` becomes `TSC_LEGACY`/`tsc_legacy`.
+- Accepted: old manual `docs/status_matrix.md` and `docs/claim_ledger.md`
+  surfaces are generated-authority indexes, not independent SSoTs.
+- Deferred: migrating older VER2 manuscript generated snippets to consume the
+  new DAG-status sidecars remains downstream manuscript/export work.

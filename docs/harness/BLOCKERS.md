@@ -4,9 +4,9 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-12
 
-No active PR blockers after PR-040. Progress report shows unblocked next
-candidates `PR-012`, `PR-022`, `PR-070`, `PR-015`, `PR-050`, and `PR-041`;
-use DAG ordering and policy priorities before selecting the next node.
+No active PR blockers after PR-012. Progress report shows unblocked next
+candidates `PR-022`, `PR-070`, `PR-015`, `PR-050`, and `PR-041`; use DAG
+ordering and policy priorities before selecting the next node.
 
 Residual non-blocking risk: `docs/generated/quarantined_figures.md` lists 96
 existing figure/PDF assets without valid sidecar manifests. They are
@@ -29,3 +29,9 @@ sky-facing artifact through `validate_sky_facing_artifact_metadata`. Legacy
 generated VER2 artifacts still load through backward-compatible
 `SkySupport` defaults until migration PRs attach explicit coordinate-frame,
 mask-hash, sky-fraction, and completeness payloads.
+
+Residual non-blocking risk: PR-012 makes `docs/generated/*` the generated DAG
+status authority, but older VER2 manuscript generated snippets are still owned
+by `scripts/ver2_artifact_export.py`. Downstream manuscript/export PRs should
+consume or cross-check the PR-012 sidecars rather than reintroducing manual
+status counts.

@@ -1,97 +1,21 @@
 # Claim Ledger
 
-**Status**: maintained by hand; updated whenever a claim's tier changes (PA-11).
-**Last updated**: 2026-05-03 (spin-2 full-Stokes tilted RHS + FLRW TT/EE/TE export + early-opacity startup + scalar-source provenance + scalar-metric coevolution patch cycle).
+**Status**: generated-authority index.
 
-This is the single source of truth for *what is currently provable from the code* vs *what is documented*. Every headline claim in `README.md` / `CLAUDE.md` / `docs/manuscript/` must map to a row here, and every row must cite either a passing test (file:line) or the explicit gate that blocks it.
+The canonical DAG claim ledger is generated at
+`docs/generated/claim_ledger.json` from the same `pr_backlog.yaml` and
+`pr_status.yaml` inputs as `docs/generated/status_snapshot.json`. Do not
+hand-maintain claim-tier counts or public status rows in this file.
 
-A claim is **allowed** only if its row is `gate_status: open` AND the `evidence_path` resolves to a passing assertion.
+Regenerate the public status sidecars with:
 
----
+```bash
+PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json
+```
 
-## Schema
-
-| Field | Meaning |
-|---|---|
-| `claim_id` | Stable handle (e.g. `D2_ANCHOR_RUST`). |
-| `claim_text` | One-line claim as it appears in headline docs. |
-| `tier` | `production` / `research_goal` / `interface_only` / `restricted_envelope`. |
-| `path` | `python_pstf` / `rust_mb95` / `dual_track`. |
-| `gate_status` | `open` / `closed_xfail` / `closed_envelope`. |
-| `evidence_path` | File path + assertion that locks the claim (or the explicit gate that blocks it). |
-| `notes` | Provenance, related PR, audit reference. |
-
----
-
-## Solver-readiness claims
-
-| claim_id | claim_text | tier | path | gate_status | evidence_path | notes |
-|---|---|---|---|:---:|---|---|
-| `PSTF_TETRAD_LOWELL` | "1+3 covariant PSTF / tetrad low-ℓ E-B solver, ver2 native integrator is the production owner" | production | python_pstf | open | `htt/bass/hierarchy/ver2_native_integrator.py:1-15` + `test_integrator.py` | T1 + T7-9 + collision K wired; T2/T3 (gradient ∇̃) and T4/T5/T6 (accel/vorticity) default-off (`hierarchy_rhs.py:377-380`). Mode-mixing A_mix unit-tested but not in production RHS. |
-| `EXACT_THOMSON_PROD` | "orthogonal / linear PSTF electron-frame Thomson scattering on the production code path" | restricted_envelope | python_pstf | open | `htt/bass/collision/electron_frame.py` + `test_ver3_exact_thomson.py` | Orthogonal production hierarchy collision remains projected PSTF. Tilted runtime collision now uses a cached full-Stokes angular Mueller kernel and projects `I,Q,U` collision channels into the low-ell PSTF RHS. The tilted polarization projection is now spin-2 harmonic `Q/U -> E/B`, not scalarized, but the claim remains restricted-envelope until broader cutoff/family/source-propagation validation is closed. |
-| `FULL_STOKES_THOMSON_AUTHORITY` | "full angular electron-frame Stokes Thomson/Rayleigh Mueller authority path for collision validation" | restricted_envelope | python_pstf | open | `htt/bass/collision/electron_frame.py` + `htt/bass/collision/test_full_stokes_thomson.py` + `validation/test_publication_readiness.py::test_full_stokes_thomson_authority_claim_requires_angular_gate` | Opens a gate-auditable authority path with angular quadrature, explicit screen-basis spin-2 Stokes rotation, tilted opacity, Rayleigh 90-degree polarization, isotropic null, linearity, PSTF quadrupole cross-validation, and a cached Mueller kernel proven equal to the full Stokes source. Tilted Tier-B runtime traces use the full-Stokes source as the exact-Thomson authority probe/gate input, and the tilted native RHS consumes full-Stokes angular `I,Q,U` collision channels through a spin-2 harmonic E/B projection. |
-| `SPIN2_QU_EB_PROJECTION` | "tilted full-Stokes polarization RHS uses spin-2 harmonic Q/U <-> E/B projection" | restricted_envelope | python_pstf | open | `htt/bass/hierarchy/spin2_projection.py` + `htt/bass/hierarchy/test_spin2_projection.py` + `htt/bass/collision/test_full_stokes_thomson.py::test_tilted_runtime_collision_aux_uses_full_stokes_spin2_qu_rhs` + `htt/bass/runtime/test_ver2_tier_b_execution.py::test_nonperturbative_tilt_owner_is_wired_into_runtime_background_and_collision` | Implements Goldberg spin-weighted harmonics, screen-basis rotation into the spherical basis, band-limited E/B roundtrip, pure-E leakage check, rotation covariance, cached same-physics projection kernel, and tilted runtime owner metadata `full_stokes_spin2_angular_polarization`. This is collision/projection readiness, not yet a full statistics-ready polarization likelihood claim. |
-| `TILT_BOOST_SEPARATION` | "type-level separation of orthogonal / globally-tilted / observer-boost layers" | production | dual_track | open | `htt/bass/observer/composition.py:22-31,72-76` + `test_codazzi_tilt_rhs.py:TestFLRWLimit` + `test_beta_to_orthogonal_continuity.py` | `GlobalTiltState` ≠ `ObserverBoost`; `TypeError` on cross-coercion; β→0 continuity pinned by PA-4. |
-| `DYNAMIC_TILT_BACKGROUND_OWNER` | "supported tilted Tier-B background runs use dynamic nonperturbative rapidity by default" | restricted_envelope | python_pstf | open | `htt/bass/runtime/ver2_execution.py::RuntimeControlBlock` + `htt/bass/runtime/test_ver2_tier_b_execution.py::test_representative_tilted_executable_families_execute_with_bounded_runtime_contracts` + `test_nonperturbative_tilt_owner_is_wired_into_runtime_background_and_collision` + `test_fixed_velocity_tilt_owner_is_legacy_explicit_path` | Default owner is `nonperturbative_tilt_rhs`; tilted V/VII_0/VIII runtime contracts report `production_dynamic_nonperturbative_rapidity`; zero-tilt runs resolve to `orthogonal_zero_tilt`; fixed velocity remains explicit legacy diagnostic. This does not claim generic off-axis tilted hierarchy closure. |
-| `INFERENCE_ENVELOPE` | "inference layer hard-stops requests outside the supported envelope before any solver call" | production | python_pstf | open | `htt/bass/inference/envelope.py:enforce_inference_envelope` + `test_envelope.py` (35 tests) | PA-12: `EnvelopeError` raised at CLI entry; covers dataset-kind, target families, headline-science opt-in, surrogate opt-in. |
-| `FITTING_GATE_LADDER` | "validation gate enforces FittingBlockedError before any posterior call" | production | python_pstf | open | `htt/bass/validation/ver3_gate_stop.py:21-37,264-294` + `inference/live_binding.py:48-63,213-236` | 14 gates required; surrogate Planck likelihood currently keeps the ladder closed. |
-| `OUTPUT_SPLIT_NON_LEAKAGE` | "deterministic / stochastic / boost archive components are non-leakable" | production | python_pstf | open | `htt/bass/forward/test_output_split_non_leakage.py` (7 tests) | PA-10: per-component metadata-kind locked; cross-channel non-leakage pinned at byte-equality. |
-| `RUNTIME_CONSTRAINT_REPORTER` | "Codazzi / Gauss / Bianchi residuals reported per η-checkpoint with threshold flags" | production | python_pstf | open | `htt/bass/background/runtime_constraint_reporter.py` + `test_runtime_constraint_reporter.py` (11 tests) | PA-6: non-destructive observer; sidecar JSON for archive. |
-| `OPTIMIZATION_FAIRNESS_PROD_CUTOFF` | "parallel/sequential bit-identity at production cutoff L_max=8" | production | python_pstf | open | `htt/bass/runtime/test_optimization_fairness.py::test_parallel_matches_sequential_at_production_cutoff` | PA-7: tightened from L_max=4 to L_max=8 with rtol=1e-12. |
-| `LMAX_CONVERGENCE_PYTHON` | "Python PSTF pipeline shows monotone L_max convergence at L ∈ {4,6,8}" | production | python_pstf | open | `htt/bass/runtime/test_optimization_fairness.py::test_python_pipeline_lmax_convergence` | PA-3: locks the convergence pattern; does not lock the absolute D_2 value. |
-
-## Family coverage claims
-
-| claim_id | claim_text | tier | path | gate_status | evidence_path | notes |
-|---|---|---|---|:---:|---|---|
-| `FAMILIES_REGISTRY_11` | "all 11 Bianchi types registered; shear sources validated for all 11" | production | python_pstf | open | `htt/bass/background/bianchi_types.py:508-729` + `test_bianchi_types.py` + `transport/shear_sources.py` | `STRONG_FAMILIES` and `TEMPLATE_CARD_FAMILIES` are disjoint; full union of 11. |
-| `FAMILIES_FULL_MODE_4` | "full-mode end-to-end LoS coverage for FLRW, I, V, IX" | production | python_pstf | open | `htt/bass/los/family_propagators/` + `los/families/` + `integration/test_full_bianchi_coverage.py` | `STRONG_FAMILIES = {FLRW, I, V, IX}` (`hierarchy/seed_factory.py:66`). |
-| `FAMILIES_RESTRICTED_8` | "II, III, IV, VI₀, VI_h, VII₀, VII_h, VIII restricted to axis-aligned mode subsets" | restricted_envelope | python_pstf | closed_envelope | `htt/bass/hierarchy/nabla_dispatch.py` raises `NotImplementedError('FB-5.2')` off-axis; `inference/envelope.py` requires `allow_template_card=True` | These families have template-card IC only; off-axis modes are deferred research. |
-
-## Numerical-maturity claims
-
-| claim_id | claim_text | tier | path | gate_status | evidence_path | notes |
-|---|---|---|---|:---:|---|---|
-| `LSODA_COSMOLOGICAL_RANGE` | "LSODA stable across η ∈ [261, 14147] Mpc" | production | python_pstf | open | `htt/bass/runtime/test_cosmological_config.py:80-102` + `runtime/test_end_to_end_wiring.py:55-88` | Round-15 P0 + 8-patch IMEX algebraic audit. |
-| `TCA_SWITCH_SMOOTH` | "TCA on/off switch is smooth; Γ_T·Θ_2 invariant" | production | python_pstf | open | `htt/bass/hierarchy/test_tca_switch_smoothness.py:78-154` (rtol=1e-12) | Inline DAE relaxation, not a pre-phase. |
-| `EARLY_THOMSON_OPACITY_STARTUP` | "deep pre-recombination FLRW/Tier-B starts use physical fully-ionized Thomson opacity, not Γ_T=0" | restricted_envelope | python_pstf | open | `htt/bass/species/test_baryon.py::test_T11b_early_fully_ionized_tau_dot_fallback_is_physical` + `htt/bass/collision/test_tilted_visibility.py::test_gamma_t_uses_early_fully_ionized_opacity_fallback` + `htt/bass/hierarchy/test_aux_state.py::test_gamma_T_without_override_uses_baryon_recomb` + `htt/bass/hierarchy/test_visibility_source_tables.py::test_scalar_visibility_contract_defers_early_queries_to_authority_path` | HyRec remains the authority inside its support. For z above the table ceiling, baryon opacity uses `x_e=1+2f_He` and the same recombination microphysics constants; tilted visibility, seed `tau_c`, TCA `Gamma_T_at`, and runtime scalar fast paths now route to the authority path instead of zero/clip fallbacks. |
-| `PER_K_SUPERHORIZON_START_RESOLVER` | "FLRW transfer runs can enforce per-k kη_init <= x_max without shared-background aliasing" | restricted_envelope | python_pstf | open | `htt/bass/spectrum/test_flrw_pipeline.py::test_superhorizon_start_resolver_moves_high_k_to_earlier_z` + direct smoke `k=0.05,L=4,n_output=12` finite transfer | `FLRWPipelineConfig.superhorizon_x_max_at_start` raises per-k `z_injection` from the species background table and disables shared-background chunking because each k can require a different start. This is a startup/IC validity control, not a CAMB-agreement claim. |
-| `LOS_GRID_DECOUPLED` | "LoS quadrature grid decoupled from IMEX η-grid" | production | python_pstf | open | `htt/bass/los/los_grid_builder.py:55-80` + `test_los_grid_builder.py` | Round-15 P0 fix; median ratio 8.3 → 1.0, max 3687 → 266. |
-| `FLRW_LIMIT_BIT_EXACT` | "σ → 0 limit recovers FLRW propagator bit-exactly" | production | python_pstf | open | `htt/bass/los/test_bianchi_propagator.py::TestFLRWRecovery::test_recovery_at_sigma_zero_bit_exact` (T_rel == 0.0, E_rel == 0.0) | Existing armor; PA-4 supplements with β→0 continuity. |
-| `BETA_TO_ORTHOGONAL_CONTINUITY` | "tilted-branch trajectory converges smoothly to orthogonal as β → 0" | production | python_pstf | open | `htt/bass/background/test_beta_to_orthogonal_continuity.py` (10 tests) | PA-4: Σ²(η) gap shrinks; Ω_tilt ∝ β² scaling; Friedmann budget bounded. |
-
-## D_2 anchor claim
-
-| claim_id | claim_text | tier | path | gate_status | evidence_path | notes |
-|---|---|---|---|:---:|---|---|
-| `D2_ANCHOR_RUST` | "D_2 = 1002.086744 μK² bit-identical for the FLRW limit" | production | rust_mb95 | open | `bass_rs dump_dl_spectrum_sparse` (Rust binary) + `htt/bass/validation/_d2_anchor_golden.json` | Rust MB-95 path; 14-commit anchor. **NOT** the Python PSTF path. |
-| `D2_PYTHON_PSTF` | "Python PSTF FLRW pipeline reproduces D_2 = 1002.086744 μK² bit-identically" | research_goal | python_pstf | closed_xfail | `htt/bass/spectrum/test_d2_pstf_closure.py` (`xfail("PR-024c open")`) + progressive-closure tracker | Currently in `ten_orders` closure tier (rel_gap ≈ 6.4×10⁹). PA-1: progressive-closure tracker (`test_d2_pstf_progressive_closure.py`) catches drift even before strict closure. |
-| `FLRW_LOWELL_TT_EE_TE_EXPORT` | "Python PSTF FLRW low-ell pipeline exports TT, EE, and TE spectra on one transfer grid" | restricted_envelope | python_pstf | open | `htt/bass/spectrum/flrw_pipeline.py::compute_flrw_d_ell` + `compute_flrw_d_ell_linear_probe`; `htt/bass/spectrum/test_flrw_pipeline.py::test_full_pipeline_parallel_k_sweep_produces_finite_D_ell`; `htt/bass/spectrum/test_flrw_external_camb.py` keeps the TT/EE/TE CAMB closure as xfail | Output-ready schema for `ell`, `cl_tt`, `cl_ee`, `cl_te`, `d_tt`, `d_ee`, `d_te`; `scripts/export_flrw_lowell_pstf_spectrum.py` writes full archives or resumable transfer chunks and exposes `--z-injection`, `--pre-recombination-margin-mpc`, and `--superhorizon-x-max-at-start` for real startup diagnostics; `scripts/compare_flrw_lowell_pstf_to_camb.py` writes channel residual JSON, and `scripts/plot_flrw_lowell_camb_comparison.py` overlays the result. This is not a CAMB-agreement or statistics-ready claim until the external CAMB xfail is strict and passing. |
-| `SCALAR_SOURCE_PROVENANCE_GATE` | "Tier-B FLRW source extraction records seed metric provenance and refuses to promote post-hoc MB-95 reconstruction as production physics" | restricted_envelope | python_pstf | open | `htt/bass/runtime/test_ver2_tier_b_execution.py::test_execute_tier_b_solver_consumes_live_s1_s2_s3_hooks` + `htt/bass/spectrum/test_tier_b_source_extraction.py::test_opt_in_source_uses_mb95_synchronous_effective_metric` + `test_mb95_source_requires_seed_metric_provenance` | Native Tier-B `solver_info` exports the regular-seed `matter_seed_observables` (`delta_b`, `theta_b`, `delta_c`, `theta_c`, `eta_cov`, `Z`). The extractor can still reconstruct MB-95 `etak/sigma` through the same momentum/stress ODE as a diagnostic, but that post-hoc source frame remains opt-in and non-production because it was not co-evolved with the photon monopole. |
-| `SCALAR_METRIC_COEVOLUTION_BDF` | "Tier-B can opt into main-state MB-95 synchronous scalar-metric coevolution coupled to photon/neutrino monopoles, quadrupoles, matter continuity, and baryon pressure" | restricted_envelope | python_pstf | open | `htt/bass/runtime/test_ver2_tier_b_execution.py::test_scalar_metric_coevolution_wires_main_state_metric_sources` + `htt/bass/runtime/test_ver2_tier_b_execution.py::test_mb95_scalar_metric_quadrupole_source_formula` + `htt/bass/perturbation/test_baryon_fluid.py::TestEulerRHS::test_scalar_pressure_gradient_matches_mb95_velocity_convention` + `htt/bass/species/test_baryon.py::test_baryon_sound_speed_early_fallback_matches_coupled_gas` + `htt/bass/spectrum/test_tier_b_source_extraction.py::test_coevolved_scalar_metric_history_is_authority_for_mb95_source` | `IntegratorConfig.co_evolve_scalar_metric=True` appends `(etak, sigma)` to the native state, initializes from seed `eta_cov`, evolves `etak_dot=dgq/2; sigma_dot=-2Hsigma-dgs/k+etak`, injects `-h_dot/6` into photon/neutrino monopoles, injects `h_dot/15 + 2*etak_dot/(5*k)` into photon/neutrino quadrupoles, uses `-k v - h_dot/2` for baryon/CDM continuity, and adds the MB-95 baryon Euler pressure-gradient term `c_s,b^2*k*delta_b`. The baryon sound speed is derived from HyRec `T_m`/`x_e`, with the same fully-ionized early fallback used by the opacity path. Runtime requests that ask for IMEX are automatically routed to full-RHS BDF (`native_scalar_metric_bdf_full_rhs`) until an IMEX scalar-metric implicit block is validated. The older neutrino-quadrupole temperature-feedback helper is not applied on this coevolved path to avoid duplicate metric sourcing. This is a real physics path, but still restricted-envelope: no CAMB TT/EE/TE closure or statistics-ready claim is opened by this row. |
-| `SCALAR_INTENSITY_STREAMING_DEV` | "Tier-B can opt into MB-95 scalar m=0 photon/neutrino intensity free-streaming recursion" | restricted_envelope | python_pstf | closed_runtime_stability | `htt/bass/runtime/test_ver2_tier_b_execution.py::test_mb95_scalar_intensity_streaming_formula` + `htt/bass/runtime/test_ver2_tier_b_execution.py::test_scalar_metric_coevolution_wires_main_state_metric_sources` | `IntegratorConfig.co_evolve_scalar_streaming=True` adds the MB-95 scalar recursion `Theta0_stream=-k*Theta1` and `Theta_l_stream=k/(2l+1)*(l*Theta_{l-1}-(l+1)*Theta_{l+1})` for photon and neutrino m=0 intensity towers. The implementation is real and separately unit-tested, but full-range FLRW runs exposed BDF/TCA/cutoff instability, so the flag defaults to `False` and this row must not be used as output-ready, statistics-ready, or optimization-ready evidence until runtime stability and CAMB TT/EE/TE closure gates pass. |
-| `ROUTE_B_MM_CURVE` | "Route-B Michaelis-Menten curve constants frozen" | production | python_pstf | open | `htt/bass/validation/test_d2_regression_anchor.py` (5 anchor tests) | C1, C2, sentinel constant bit-identical to golden JSON. |
-| `CAMB_CROSS_CHECK` | "BASS Rust D_2 agrees with CAMB(τ=0) to within 1 %" | production | rust_mb95 | open | `htt/bass/validation/test_d2_regression_anchor.py::test_rust_flrw_reference_metadata_present` | Sanity band only; not a tolerance pin. |
-
-## Headline-science claims (research goals)
-
-| claim_id | claim_text | tier | path | gate_status | evidence_path | notes |
-|---|---|---|---|:---:|---|---|
-| `LN_B_FLRW_TILT_PLUS_26_40` | "ln B(FLRW_tilt) = +26.40" | research_goal | dual_track | closed_envelope | `inference/envelope.py:HEADLINE_SCIENCE_FORBIDDEN_KEYS` blocks unless `allow_research_goal_only=True` | No production code path emits this number. README.md will be updated. |
-| `BETA_1P36_EM3` | "β = 1.360×10⁻³" | research_goal | dual_track | closed_envelope | same | Diagnostic value only; no fitting gate. |
-| `F_BAYES_0P093` | "F_Bayes = 0.093 ± 0.025" | research_goal | dual_track | closed_envelope | same | No F_Bayes pipeline in code. |
-| `PLANCK_2018_LOWL_TT_FLRW` | "file-backed Planck 2018 low-ell TT Gaussian likelihood for FLRW-limit checks" | restricted_envelope | python_pstf | open | `htt/bass/inference/planck_likelihood.py` + `test_planck_likelihood.py` | Real-data path requires a non-empty regular file and all gates open; non-FLRW Bianchi families are blocked because C_l-only comparison is not harmonic/template-level evidence. |
-| `PLANCK_2018_FIT` | "fits Planck 2018 data with Bianchi anisotropic templates" | research_goal | python_pstf | closed_envelope | `htt/bass/inference/planck_likelihood.py` blocks non-FLRW real-data requests with `harmonic_template_likelihood_gate` | No real `clik` wrapper or harmonic/template covariance likelihood yet; surrogate validator remains opt-in only. |
-
-## Optimization claims
-
-| claim_id | claim_text | tier | path | gate_status | evidence_path | notes |
-|---|---|---|---|:---:|---|---|
-| `PATTERN_CACHE_BIT_IDENTICAL` | "Tier 1A v2 pattern-cache preserves D_2 bit-identically" | production | rust_mb95+python_pstf | open | `CHANGELOG.md` "V5 Round-17 P3.5 Tier 1A v2"; smoke V0d D_2 = 5.850968e+03 pre/post | Bit-identical at smoke V0d only; production-cutoff bit-identity now also enforced by `test_optimization_fairness.py::test_parallel_matches_sequential_at_production_cutoff` (PA-7). |
-| `PARALLEL_19X_SPEEDUP` | "1.9× cumulative parallel speedup at the 4-worker baseline" | production | python_pstf | open | CHANGELOG.md + `test_optimization_fairness.py::test_parallel_matches_sequential_*` | Same-physics fairness pinned at L_max=4 and L_max=8. |
-
----
-
-## Audit metadata
-
-The H2 verdict from the R17-P3 adversarial audit (`/home/cosmosapjw/Dropbox/bianchi/htt_base` cycle 2026-04-29) classifies the codebase as "strong exploratory solver / serious low-ℓ package with major revision needed". The PA-1 / PA-3..7 / PA-10..12 patches (this cycle) close the *enforcement* and *regression armor* gap. The remaining research-level work — Python D_2 closure (PR-024c), real Planck `clik` wrapper, off-axis Bianchi modes, full PSTF nine-term hierarchy — is tracked in CLAUDE.md §3 and is intentionally outside this cycle's scope.
+The generated DAG ledger is diagnostic-only project bookkeeping. It is not
+solver validation, transfer validation, posterior evidence, MIO certification,
+morphology compatibility, or family-ID evidence. Artifact/result claims still
+need their own manifests, transfer provenance, null/mock status, sky-support
+metadata when directional, caveats, and validation evidence before use in
+reports or manuscripts.

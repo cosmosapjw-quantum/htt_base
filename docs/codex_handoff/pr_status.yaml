@@ -13,6 +13,7 @@ completed:
 - PR-013
 - PR-014
 - PR-040
+- PR-012
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -42,4 +43,7 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   COMMON sky-support contracts for coordinate frame, deterministic mask hash,
   sky fraction, completeness status, and unit-vector spherical means, and
   tightens directional manifest validation so `sky_support_status` alone is
-  not enough for sky-facing artifacts.
+  not enough for sky-facing artifacts. PR-012 adds the generated COMMON status
+  snapshot and claim-ledger pipeline for DAG bookkeeping, with all public counts
+  derived from `pr_backlog.yaml` and `pr_status.yaml`; this is diagnostic-only
+  project status and not scientific readiness evidence.

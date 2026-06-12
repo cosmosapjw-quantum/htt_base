@@ -437,3 +437,40 @@ completeness status for sky-facing metadata validation and records
 unit-vector spherical means. It does not add solver outputs, transfer
 calibration, null/mock/covariance evidence, HTT posterior/evidence, MIO
 diagnostic certification, morphology compatibility, or family-ID evidence.
+
+## PR-012 - Status snapshot and generated claim ledger pipeline
+
+Date: 2026-06-12
+
+Changed files: `htt/src/common/status_snapshot.py`,
+`tests/contracts/test_status_snapshot.py`,
+`docs/generated/status_snapshot.json`,
+`docs/generated/claim_ledger.json`, `docs/generated/status_matrix.md`,
+`docs/status_matrix.md`, `docs/claim_ledger.md`, status and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/contracts/test_status_snapshot.py -q` before implementation | repo root | FAIL | Red phase: missing `build_status_bundle` and related public API. |
+| `venv/bin/python -m pytest tests/contracts/test_status_snapshot.py -q` | repo root | PASS | `4 passed`; covers generated DAG status bundle, companion writes, canonical owner normalization, Markdown count drift, and CLI writes. |
+| `venv/bin/python -m pytest tests/contracts/test_status_snapshot.py tests/contracts/test_ownership_firewall.py tests/contracts/test_artifact_manifest.py -q` | repo root | PASS | `26 passed`; adjacent ownership and manifest contracts preserved. |
+| `venv/bin/python -m py_compile htt/src/common/status_snapshot.py htt/src/common/claim_ledger.py tests/contracts/test_status_snapshot.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Wrote `status_snapshot.json`, `claim_ledger.json`, and `status_matrix.md`. |
+| `python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | FAIL | `/usr/bin/python` cannot import the src-layout package in this checkout: `No module named common`. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Exact module CLI path works when the source-layout package path is supplied. |
+| Generated sidecar inspection via `json.load` and `rg` | repo root | PASS | 62 rows, 14 completed after PR-012 status update, no raw `TSC` owner/scope rows, and no `production_validated=True` rows. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json` | repo root | PASS | `14/62 = 22.58%`; dependency-weighted `28.72%`; critical path `5/21 = 23.81%`; checkpoint not due. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml; printf 'status_cmp=%s\n' "$?"` | repo root | PASS | `status_cmp=0`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`; package import smoke remains green. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 6900 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6847/6906 tests collected (59 deselected)`. |
+
+Numerical/scientific impact: none; COMMON generated status tooling only.
+
+Artifact/claim-tier impact: COMMON L2 diagnostic bookkeeping. PR-012 makes
+`docs/generated/status_snapshot.json` the canonical public DAG status surface
+and generates a companion claim ledger and Markdown matrix from the same
+inputs. It does not add solver outputs, transfer calibration,
+HTT posterior/evidence validation, MIO diagnostic certification,
+null/mock/covariance adequacy, sky-support adequacy, morphology
+compatibility, or family-ID evidence.
