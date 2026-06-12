@@ -18,6 +18,10 @@ from .budget_spec import (
     compare_denominator_policies,
 )
 from .departure_bundle import DepartureBundle, build_departure_bundle
+from .filling_fraction import (
+    CertifiedFillingFraction,
+    build_certified_filling_fraction,
+)
 from .normalized_score import (
     NormalizedScore,
     NumeratorPolicy,
@@ -31,6 +35,7 @@ __all__ = [
     "BudgetUse",
     "CANONICAL_COMPONENT_ORDER",
     "CANONICAL_COMPONENT_SIGNS",
+    "CertifiedFillingFraction",
     "ComponentBreakdown",
     "DepartureBundle",
     "DepartureComponent",
@@ -38,6 +43,7 @@ __all__ = [
     "NormalizedScore",
     "NumeratorPolicy",
     "build_budget_spec",
+    "build_certified_filling_fraction",
     "build_departure_bundle",
     "build_normalized_score",
     "compare_denominator_policies",

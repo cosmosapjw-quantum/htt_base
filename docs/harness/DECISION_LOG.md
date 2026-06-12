@@ -328,3 +328,23 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: Q normalized score, certified F, Pi exceedance, G_F depth-gap,
   richer migration of legacy COMMON `BudgetSpec`, and full VER2 artifact
   export runtime validation remain downstream work.
+
+## 2026-06-13 - PR-053 certified F boundary
+
+- Accepted: `mio.formalism.CertifiedFillingFraction` is the MIO-owned
+  diagnostic-only F contract. It computes F sample-wise as signed sign-clean
+  `x_C / U` under a PR-051 admissible certified ceiling.
+- Accepted: `F_Bayes` is the arithmetic mean of sample-wise F values and the
+  payload records `ratio_of_means_used=false`.
+- Accepted: invalid negative sectors, non-positive or non-finite ceilings,
+  and values outside `0<=F<=1` are rejected rather than clipped or serialized
+  as physical occupancy.
+- Accepted: F payloads require owner, scope, claim tier, config/input hashes,
+  generating command, git or worktree provenance, transfer provenance, and
+  sky/covariance/null status metadata.
+- Rejected: deriving F from Q, `abs(x_C)`, positive-part clipping, ratio of
+  means, legacy BASS proxy filling paths, external/native conflation, HTT
+  evidence/posterior semantics, diagnostic truth-attestation semantics, or
+  geometry/family-identification language.
+- Deferred: Pi exceedance, G_F depth-gap, calibrated F null ensembles,
+  PPC/LOOCV, and any native morphology atlas integration remain downstream.

@@ -1359,3 +1359,45 @@ pytest node references, config/input hashes, caveats, and explicit
 non-consumption gates for production observation claims, HTT evidence, MIO
 certificates, transfer/native validation, morphology compatibility, and
 geometry/family-identification use.
+
+## PR-053 - F certified filling fraction implementation
+
+Date: 2026-06-13
+
+Changed files: `htt/mio/formalism/filling_fraction.py`,
+`htt/mio/formalism/__init__.py`, `htt/mio/tests/test_boot.py`,
+`tests/mio/test_filling_fraction.py`, `docs/PR_DELTAS/pr-053.md`, status
+files, PR-012 generated status sidecars, progress checkpoint 035, and handoff
+docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_filling_fraction.py -q` before implementation | repo root | FAIL | Red phase: target file did not exist. |
+| `python -m pytest tests/mio/test_filling_fraction.py -q` | repo root | FAIL | Host `/usr/bin/python` lacks pytest; venv pytest is authoritative. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_filling_fraction.py -q` | repo root | PASS | `21 passed`; sample-wise F, F_Bayes sample mean, sign-clean rejection, ceiling gates, no clipping, provenance, transfer, and overclaim tests. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/mio/formalism/filling_fraction.py tests/mio/test_filling_fraction.py htt/mio/formalism/__init__.py htt/mio/tests/test_boot.py` | repo root | PASS | Touched Python files compile. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_filling_fraction.py tests/mio/test_budget_spec.py tests/mio/test_normalized_score.py tests/mio/test_departure_bundle.py htt/mio/tests/test_boot.py -q` | repo root | PASS | `61 passed`; adjacent MIO formalism and boot coverage remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_ownership_firewall.py tests/contracts/test_claim_language_lint.py tests/contracts/test_transfer_registry.py -q` | repo root | PASS | `49 passed`; firewall contracts remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider --collect-only -q tests/mio htt/mio/tests/test_package_root_exports.py` | repo root | PASS | `62 tests collected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/mio/tests/test_package_root_exports.py -q` | repo root | PASS | `4 passed`. |
+| `venv/bin/python scripts/check_claim_language.py htt/mio/formalism/filling_fraction.py tests/mio/test_filling_fraction.py --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py htt/mio/formalism/filling_fraction.py tests/mio/test_filling_fraction.py` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py htt/mio/formalism/filling_fraction.py tests/mio/test_filling_fraction.py` | repo root | PASS | No unmarked strong claims detected. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `9 passed`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider -m smoke -q` | repo root | PASS | `6 passed, 7123 deselected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider --collect-only -q` | repo root | PASS | `7070/7129 tests collected (59 deselected)`. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 35 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-checkpoint-dir docs/generated/progress_checkpoints --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `35/62 = 56.45%`; dependency-weighted `61.54%`; critical path `9/21 = 42.86%`; checkpoint 035 written; replan not required. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+
+Numerical/scientific impact: no solver execution, transfer validation, native
+value generation, posterior evidence, MIO certificate, native morphology atlas,
+or family-label output was added. PR-053 adds a MIO diagnostic-only
+sample-wise F contract under strict sign-clean and certified-ceiling gates.
+
+Artifact/claim-tier impact: generated status artifacts remain DAG bookkeeping
+only. F payloads require owner/scope/claim tier, config and input hashes,
+generating command, git or worktree provenance, transfer provenance, and
+sky/covariance/null status metadata. Invalid F samples are rejected rather than
+serialized as physical occupancy.

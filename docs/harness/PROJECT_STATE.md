@@ -118,12 +118,12 @@ Scientific boundaries remain active:
 - Bianchi family identification is blocked until native low-ell morphology
   atlas plus null/mask/covariance/equivalence/rank/PPC gates.
 
-Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_030.md`.
 Latest progress scoreboard: `docs/generated/progress_checkpoints/progress_scoreboard.md`.
-Next checkpoint is due at 35 completed PRs.
+Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_035.md`.
+Next checkpoint is due at 40 completed PRs.
 
-Next topological PR: PR-053. Other unblocked candidates after PR-032 are
-PR-074 and PR-083.
+Next topological PR: PR-074. Other unblocked candidates after PR-053 are
+PR-083 and PR-054.
 
 ## PR-032 update
 
@@ -141,3 +141,22 @@ geometry/family-identification evidence.
 Latest unblocked candidates after PR-032 are PR-053, PR-074, and PR-083. The
 next topological PR is PR-053. The next five-PR checkpoint is due after one
 more completed PR, at 35/62.
+
+## PR-053 update
+
+PR-053 adds `mio.formalism.CertifiedFillingFraction` and
+`tests/mio/test_filling_fraction.py`. F is a MIO diagnostic-only certified
+filling fraction computed sample-wise as signed sign-clean `x_C / U` under a
+PR-051 admissible certified ceiling. Invalid negative sectors, non-positive or
+non-finite ceilings, and values outside `0<=F<=1` fail closed without
+clipping. `F_Bayes` is the arithmetic mean of sample-wise F values, not a
+ratio of means. F payloads require owner/scope/claim tier, config/input
+hashes, generating command, git or worktree provenance, transfer provenance,
+and sky/covariance/null status metadata.
+
+Checkpoint 035 was written after PR-053. Progress is 35/62 = 56.45%;
+dependency-weighted completion is 61.54%; critical path is 9/21 = 42.86%;
+no blocker or replan was reported. Latest unblocked candidates are PR-074,
+PR-083, and PR-054. PR-053 does not create HTT evidence or posterior content,
+a MIO certificate, native solver validation, transfer validation, morphology
+compatibility, or geometry/family-identification evidence.

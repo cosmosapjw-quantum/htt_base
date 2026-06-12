@@ -34,6 +34,7 @@ completed:
 - PR-073
 - PR-082
 - PR-032
+- PR-053
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -228,4 +229,14 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   production observation claims, HTT evidence, MIO certificates, transfer/native
   validation, morphology compatibility, and geometry/family-identification use.
   It preserves why TSC/Teff theorem labels were deprecated as active science
-  ownership while retaining audit traceability only.
+  ownership while retaining audit traceability only. PR-053 adds a MIO
+  diagnostic-only certified F filling-fraction contract. F is computed as
+  sample-wise signed sign-clean `x_C / U` under a PR-051 admissible certified
+  ceiling, rejects negative sectors, non-positive or non-finite ceilings, and
+  values outside `0<=F<=1` without clipping, and defines `F_Bayes` as the mean
+  of sample-wise F values rather than a ratio of means. Payloads carry
+  owner/scope/claim tier, config and input hashes, generating command, git or
+  worktree provenance, transfer provenance, and sky/covariance/null status
+  metadata. PR-053 does not create HTT evidence or posterior content, a MIO
+  certificate, native solver validation, transfer validation, morphology
+  compatibility, or geometry/family-identification evidence.

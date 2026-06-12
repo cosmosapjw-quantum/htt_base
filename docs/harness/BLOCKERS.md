@@ -113,3 +113,10 @@ denominator-policy and sensitivity metadata, but the older COMMON
 bridge is restricted to explicit `MES_linear` only. PR-052 and later Q/F/Pi/G
 work must consume the MIO contract directly rather than relabeling legacy
 COMMON budgets as external-transfer, atlas, or observational policies.
+
+Residual non-blocking risk: PR-053 adds a strict MIO certified F contract, but
+it remains diagnostic bookkeeping. It does not calibrate F statistically,
+provide PPC/LOOCV/null support, validate native transfer, or connect to a
+native morphology atlas. Legacy BASS descriptive report code still has an old
+proxy/clipping path; downstream PRs must use `mio.formalism.CertifiedFillingFraction`
+for certified F semantics rather than the legacy report shell.
