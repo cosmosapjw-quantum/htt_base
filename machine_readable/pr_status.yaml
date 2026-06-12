@@ -32,6 +32,7 @@ completed:
 - PR-052
 - PR-043
 - PR-073
+- PR-082
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -208,4 +209,15 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   morphology axis remains non-production and cannot seed HTT harmonic synthesis
   without PR-042/PR-043 gates. PR-073 does not add HTT posterior evidence, MIO
   certificates, native solver validation, transfer validation, morphology
-  compatibility, or geometry/family-identification evidence.
+  compatibility, or geometry/family-identification evidence. PR-082 adds
+  BASS_PY metadata-only AtlasEntryLite side-by-side transfer comparison
+  records under `htt/bass/atlas`. The comparison requires current
+  external/proxy transfer metadata and future native schema-only transfer
+  metadata to coexist while preserving separate transfer IDs/sources, config
+  and input hashes, caveats, generating command, and worktree state. Atlas
+  entries remain diagnostic-only metadata, reject observed-data/posterior/
+  evidence conversion, and keep future native entries schema-only,
+  no-values, and non-consumable. PR-082 does not run a solver, generate native
+  values, validate native transfer, create HTT evidence, create MIO certificate
+  content, or support morphology compatibility or geometry/family-identification
+  claims.

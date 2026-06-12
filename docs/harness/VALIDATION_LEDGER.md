@@ -1271,3 +1271,46 @@ feature-only unless null metadata is supplied, `transfer_source=none`, not
 model input, not MIO output, and not a production axis. Its diagnostic
 PreferredAxis adapter is fail-closed and remains blocked by PR-042/PR-043
 harmonic-synthesis gates.
+
+## PR-082 - AtlasEntryLite and transfer side-by-side comparison schema
+
+Date: 2026-06-13
+
+Changed files: `htt/bass/atlas/__init__.py`,
+`htt/bass/atlas/atlas_entry.py`, `tests/bass/test_atlas_entry_lite.py`,
+`htt/test_packaging_imports.py`, `docs/PR_DELTAS/pr-082.md`, status files,
+PR-012 generated status sidecars, the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_atlas_entry_lite.py -q` before implementation | repo root | FAIL | Red phase: target file did not exist. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_atlas_entry_lite.py -q` first implementation | repo root | FAIL | Export miss: `entries_from_transfer_registry` was not exported from `bass.atlas`; fixed before closeout. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/bass/atlas/atlas_entry.py htt/bass/atlas/__init__.py tests/bass/test_atlas_entry_lite.py htt/test_packaging_imports.py` | repo root | PASS | Touched Python files compile. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_atlas_entry_lite.py -q` | repo root | PASS | `12 passed`; side-by-side coexistence, external conditional metadata, native schema-only non-consumption, fake-native rejection, observed-data/posterior/evidence rejection, external status override rejection, native validation spoof rejection, family/morphology claim phrase rejection, top-level metadata tamper rejection, and value-bearing native metadata rejection. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_atlas_entry_lite.py tests/bass/test_external_transfer_registry.py tests/bass/test_native_adapter_stub.py tests/contracts/test_transfer_registry.py htt/test_packaging_imports.py -q` | repo root | PASS | `52 passed`; PR-080, PR-081, common transfer, and package surfaces remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_artifact_manifest.py tests/contracts/test_claim_language_lint.py tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_ownership_firewall.py -q` | repo root | PASS | `50 passed`; artifact, claim, MIO/HTT, and ownership firewalls remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass --collect-only -q` | repo root | PASS | `31 tests collected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/htt/tests/test_ver2_likelihood_scope_guard.py htt/htt/tests/test_ver2_local_global_discrimination.py htt/htt/tests/test_integration.py -q` | repo root | PASS | `36 passed`; HTT consumer guard paths remain green. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 33 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `33/62 = 53.23%`; dependency-weighted `58.97%`; critical path `8/21 = 38.1%`; checkpoint not due until 35. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | Package subset passed. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7095 deselected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `7042/7101 tests collected (59 deselected)`. |
+| `venv/bin/python scripts/check_claim_language.py <PR-082 code, tests, delta, and handoff docs> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-082 code, tests, delta, and handoff docs>` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-082 code, tests, delta, and handoff docs>` | repo root | PASS | No unmarked strong claims detected. |
+| `git diff --check` | repo root | PASS | No whitespace errors. |
+
+Numerical/scientific impact: no solver execution, external transfer
+evaluation, native value generation, transfer validation, posterior evidence,
+MIO certificate, native morphology atlas, or family-label output was added.
+PR-082 adds BASS-owned side-by-side transfer provenance metadata only.
+
+Artifact/claim-tier impact: generated status artifacts are DAG bookkeeping
+only. The new AtlasEntryLite comparison metadata is BASS-owned,
+diagnostic-only, and not observed data, not posterior/evidence, not MIO
+certificate content, not native solver output, and not family-identification
+evidence. Embedded external/proxy transfer metadata remains conditional;
+embedded future native schema metadata remains schema-only and non-consumable.
