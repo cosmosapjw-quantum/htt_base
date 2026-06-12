@@ -49,6 +49,7 @@ for name in [
     "htt.direction",
     "htt.obsstat",
     "htt.obsstat.observable_vector",
+    "htt.obsstat.scalar_lowell",
     "htt.zoa",
     "htt.zoa.axis_promotion",
     "bass",
@@ -86,6 +87,7 @@ for name in [
     "htt.nulls",
     "htt.obsstat",
     "htt.obsstat.observable_vector",
+    "htt.obsstat.scalar_lowell",
     "htt.zoa",
     "htt.zoa.axis_promotion",
     "htt.integration.to_mio",
@@ -155,3 +157,34 @@ import htt.zoa.axis_promotion
     )
 
     assert completed.returncode == 0, completed.stderr
+
+
+def test_obsstat_top_level_and_htt_alias_share_scalar_lowell_identity() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    codes = [
+        """
+import obsstat.scalar_lowell as top_level
+import htt.obsstat.scalar_lowell as htt_level
+assert top_level is htt_level
+assert top_level.LowEllScalarSummary is htt_level.LowEllScalarSummary
+""",
+        """
+import htt.obsstat.scalar_lowell as htt_level
+import obsstat.scalar_lowell as top_level
+assert top_level is htt_level
+assert top_level.LowEllScalarSummary is htt_level.LowEllScalarSummary
+""",
+    ]
+
+    for code in codes:
+        completed = subprocess.run(
+            [sys.executable, "-c", code],
+            cwd=REPO_ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        assert completed.returncode == 0, completed.stderr

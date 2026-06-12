@@ -7,11 +7,12 @@ Pre-read:
 - `AGENTS.md`
 - `.agents/skills/htt-dag-orchestrator/SKILL.md`
 - `.agents/skills/htt-claim-firewall/SKILL.md`
-- `.agents/skills/htt-xqpi-fg-formalism/SKILL.md`
+- `.agents/skills/htt-transfer-provenance/SKILL.md`
+- `.agents/skills/htt-observable-statistics/SKILL.md`
 - `.agents/skills/htt-scientific-code-validation/SKILL.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-042.md`
+- `docs/PR_DELTAS/pr-072.md`
 - `docs/generated/progress_checkpoints/checkpoint_025.md`
 - `docs/generated/progress_checkpoints/progress_scoreboard.md`
 - `docs/generated/status_snapshot.json`
@@ -20,36 +21,31 @@ Current state:
 
 - Completed PRs: PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020,
   PR-010, PR-021, PR-011, PR-013, PR-014, PR-040, PR-012, PR-022, PR-070,
-  PR-015, PR-050, PR-041, PR-023, PR-071, PR-080, PR-030, PR-113, PR-051, and
-  PR-042.
-- Latest progress after PR-042: 26/62 = 41.94% complete;
-  dependency-weighted completion = 48.72%; critical path = 7/21 = 33.33%.
+  PR-015, PR-050, PR-041, PR-023, PR-071, PR-080, PR-030, PR-113, PR-051,
+  PR-042, and PR-072.
+- Latest progress after PR-072: 27/62 = 43.55% complete;
+  dependency-weighted completion = 49.74%; critical path = 7/21 = 33.33%.
 - Checkpoint 025 remains the latest checkpoint; the next checkpoint is due at
   30 completed PRs.
-- Latest unblocked candidates: `PR-072`, `PR-081`, `PR-031`, `PR-052`,
-  `PR-043`, and `PR-073`.
+- Latest unblocked candidates: `PR-081`, `PR-031`, `PR-052`, `PR-043`, and
+  `PR-073`.
 
-Important PR-042 boundary:
+Important PR-072 boundary:
 
-- `common.contracts.PreferredAxis` remains canonical and defaults
-  `production_allowed=False`.
-- `htt.direction.preferred_axis` is only an HTT helper over the COMMON axis
-  contract; do not create `htt/src/htt` as a second HTT package root.
-- `htt.zoa.axis_promotion` is the downstream harmonic synthesis lock. It wraps
-  the existing basic axis gate and additionally requires finite coordinates,
-  stable axis provenance, explicit PR-040 `SkySupport`, sha256
-  sky-support/mask/scan-volume hashes, adequate mock coverage, and a matching
-  `AxisPromotionRecord` with `lineage_status="self_attested_pre_solver"`.
-- `restore_full_a2m` now requires that lock before reaching its rotation stub;
-  diagnostic ZoA axes and hand-flipped production flags cannot rotate
-  `a_lm`/`a_2m`.
-- `AxisPromotionRecord` only matches axis/sky/mask/mock metadata in PR-042.
-  Posterior/config/input hashes are carried forward for future upstream bundle
-  wiring and are not proof of native or publication-grade lineage.
-- PR-042 is gate metadata only. It does not create a production axis, native
-  solver result, transfer validation, HTT posterior evidence, MIO certificate,
-  blocked morphology-compatibility claim, or blocked geometry/family
-  identification evidence.
+- `htt.obsstat.scalar_lowell` is OBSSTAT feature extraction only. It computes
+  `C_l`, `S_1/2`, parity, and input-frame planarity with explicit definitions.
+- `a_lm` inputs must use dense full storage with every `m=-l..l` mode present.
+  Packed real-map or healpy-style positive-`m` storage needs a future explicit
+  adapter and must not be silently interpreted here.
+- Supplying both `C_l` and `a_lm` requires matching overlapping `C_l` values.
+- Low-ell scalar payloads are `feature_only` unless an explicit
+  `LowEllNullCalibration` is attached. Null-calibrated p-values require null
+  ensemble, look-elsewhere, tail, mask, covariance, scan-volume, and mock-count
+  metadata.
+- Top-level `obsstat.scalar_lowell` and `htt.obsstat.scalar_lowell` are aliased
+  to the same module object to preserve class identity.
+- PR-072 does not create HTT model inputs, MIO outputs, native solver outputs,
+  transfer outputs, morphology outputs, geometry claims, or family-ID support.
 
 Rules:
 

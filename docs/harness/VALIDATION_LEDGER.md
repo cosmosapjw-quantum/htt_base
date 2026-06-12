@@ -985,3 +985,50 @@ diagnostic-only/pre-solver gate metadata with
 `lineage_status="self_attested_pre_solver"`; they do not create a production
 axis, native solver result, transfer validation, HTT posterior evidence, MIO
 certificate, morphology-compatibility claim, or geometry/family-ID claim.
+
+## PR-072 - Low-ell scalar summaries as OBSSTAT features
+
+Date: 2026-06-13
+
+Changed files: `htt/obsstat/scalar_lowell.py`, `htt/obsstat/__init__.py`,
+`tests/obsstat/test_scalar_lowell.py`, `htt/test_packaging_imports.py`,
+`docs/PR_DELTAS/pr-072.md`, status files, PR-012 generated status sidecars,
+the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_scalar_lowell.py -q` before test file | repo root | FAIL | Red phase: target file did not exist. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_scalar_lowell.py -q` after red tests | repo root | FAIL | Red phase: missing `htt.obsstat.scalar_lowell`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_scalar_lowell.py -q` first implementation | repo root | FAIL | Payload used inference-shaped keys and uncalibrated p-value-like metadata. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_scalar_lowell.py -q` after reviewer fixes | repo root | PASS | `11 passed`; covers formulas, dense full alm `C_l`, mixed-source consistency, ell-zero planarity, payload keys, null metadata, export surface, claim rejection, and constructor invariants. |
+| `python -m pytest tests/obsstat/test_scalar_lowell.py -q` | repo root | FAIL | Ambient `/usr/bin/python` lacks pytest; venv-backed command is the authoritative local PR-card validation. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_alm_conventions.py tests/obsstat/test_observable_vector.py -q` | repo root | PASS | `18 passed`; adjacent OBSSTAT convention/vector contracts remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat -q` | repo root | PASS | `29 passed`; OBSSTAT directory remains green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/test_packaging_imports.py -q` | repo root | PASS | `8 passed`; includes scalar import and top-level alias identity. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_scalar_lowell.py htt/test_packaging_imports.py --collect-only -q` | repo root | PASS | `19 tests collected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/obsstat/scalar_lowell.py htt/obsstat/__init__.py tests/obsstat/test_scalar_lowell.py htt/test_packaging_imports.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python scripts/check_claim_language.py htt/obsstat/scalar_lowell.py htt/obsstat/__init__.py tests/obsstat/test_scalar_lowell.py htt/test_packaging_imports.py --dry-run` before term-table fix | repo root | FAIL | Internal forbidden-phrase table contained an exact forbidden phrase literal. |
+| `venv/bin/python scripts/check_claim_language.py htt/obsstat/scalar_lowell.py htt/obsstat/__init__.py tests/obsstat/test_scalar_lowell.py htt/test_packaging_imports.py --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py htt/obsstat/scalar_lowell.py htt/obsstat/__init__.py tests/obsstat/test_scalar_lowell.py htt/test_packaging_imports.py` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py htt/obsstat/scalar_lowell.py htt/obsstat/__init__.py tests/obsstat/test_scalar_lowell.py htt/test_packaging_imports.py` | repo root | PASS | No unmarked strong claims detected. |
+| `venv/bin/python scripts/check_claim_language.py <PR-072 code, tests, delta, status, and handoff docs> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-072 code, tests, delta, status, and handoff docs>` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-072 code, tests, delta, status, and handoff docs>` | repo root | PASS | No unmarked strong claims detected. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 27 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `27/62 = 43.55%`; dependency-weighted `49.74%`; critical path `7/21 = 33.33%`; checkpoint not due until 30. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `8 passed`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7029 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6976/7035 tests collected (59 deselected)`. |
+| `git diff --check` | repo root | PASS | No whitespace errors. |
+
+Numerical/scientific impact: PR-072 adds deterministic OBSSTAT scalar feature
+extraction with explicit formulas and strict alm/null metadata gates. It adds
+no native solver, transfer calculation, HTT model-input surface, MIO output, or
+null ensemble generator.
+
+Artifact/claim-tier impact: generated status artifacts are DAG bookkeeping
+only. The scalar summaries are diagnostic-only OBSSTAT features with
+`transfer_source="none"` and `model_role="not_model_input"`. They do not
+support morphology, geometry, or family-ID claims.

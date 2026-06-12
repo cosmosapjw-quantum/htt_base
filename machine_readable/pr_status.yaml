@@ -26,6 +26,7 @@ completed:
 - PR-113
 - PR-051
 - PR-042
+- PR-072
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -148,4 +149,11 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   rotate `a_lm`/`a_2m`. PR-042 is gate metadata only; it does not create a
   production axis, native solver result, transfer validation, HTT posterior
   evidence, MIO certificate, morphology compatibility claim, or geometry/family
-  identification evidence.
+  identification evidence. PR-072 adds OBSSTAT low-ell scalar feature summaries
+  for C_l, S_1/2, parity, and input-frame planarity with explicit definitions,
+  dense-full alm storage requirements, mixed C_l and alm consistency checks,
+  recursive JSON payload key normalization, stricter null-calibration metadata,
+  and stable top-level obsstat import identity. The summaries remain
+  feature_only unless null-calibrated, diagnostic_only, transfer_source none,
+  not model input, not MIO output, not native solver output, and not
+  morphology, geometry, or family-identification evidence.
