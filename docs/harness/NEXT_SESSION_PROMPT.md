@@ -7,21 +7,21 @@ Pre-read:
 - `AGENTS.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-014-transfer-provenance-contract.md`
+- `docs/PR_DELTAS/pr-040-sky-support-contract.md`
 - `docs/generated/progress_checkpoints/checkpoint_010.md`
 - `.agents/skills/htt-dag-orchestrator/SKILL.md`
 
 Current state:
 
 - PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, PR-010,
-  PR-021, PR-011, PR-013, and PR-014 are complete.
+  PR-021, PR-011, PR-013, PR-014, and PR-040 are complete.
 - Generated checkpoint artifacts:
   `docs/generated/progress_checkpoints/checkpoint_005.md` and
   `docs/generated/progress_checkpoints/checkpoint_010.md`.
 - Checkpoint 010: 10/62 = 16.13% complete, dependency-weighted 19.49%,
   critical-path 4/21 = 19.05%, no blockers, no replan required.
-- Progress after PR-014: 12/62 = 19.35% complete, dependency-weighted
-  24.62%, critical-path 5/21 = 23.81%, no blockers, no checkpoint due until
+- Progress after PR-040: 13/62 = 20.97% complete, dependency-weighted
+  27.69%, critical-path 5/21 = 23.81%, no blockers, no checkpoint due until
   15 completed PRs.
 - PR-010 added canonical owner/claim-tier/scope enums and HTT/MIO
   bundle-role firewall checks. Canonical contract rows normalize legacy
@@ -43,9 +43,13 @@ Current state:
   results now have a canonical metadata shape for source, family, valid range,
   observable kind, normalization, calibration status, caveats, and validation
   gates. External/AniCLASS paths cannot claim native validation.
-- Unblocked next candidates from the live progress report: `PR-040`,
-  `PR-012`, `PR-022`, `PR-070`, `PR-015`, and `PR-050`. Topological next is
-  `PR-040`; `PR-050` is on the current critical path.
+- PR-040 added `common.sky_support`, richer `common.contracts.SkySupport`
+  fields, sky-facing manifest validation, deterministic mask hashes, sky
+  fractions, completeness status, and an AST guard against raw
+  longitude/latitude arithmetic means in production summaries.
+- Unblocked next candidates from the live progress report: `PR-012`,
+  `PR-022`, `PR-070`, `PR-015`, `PR-050`, and `PR-041`. Topological next is
+  `PR-012`; `PR-050` is on the current critical path.
 
 Rules:
 
@@ -59,13 +63,16 @@ Rules:
   rather than creating parallel MIO/HTT merge guards.
 - Reuse `TransferFunctionSpec` for downstream transfer-dependent producers
   rather than creating local transfer metadata dictionaries.
+- Reuse `common.sky_support.validate_sky_facing_artifact_metadata` for
+  directional artifact metadata and `common.sky_geometry.spherical_mean` for
+  directional summaries.
 
 Immediate commands:
 
 ```bash
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
-venv/bin/python -m pytest tests/contracts/test_transfer_registry.py -q
-venv/bin/python -m pytest tests/contracts/test_ownership_firewall.py htt/workspace/contracts/tests/test_ver2_common_schema_barrier.py -q
+venv/bin/python -m pytest tests/htt/test_sky_support_contract.py -q
+venv/bin/python -m pytest tests/contracts/test_artifact_manifest.py htt/src/common/test_sky_geometry.py -q
 venv/bin/python scripts/codex_harness/run_subset.py smoke
 ```

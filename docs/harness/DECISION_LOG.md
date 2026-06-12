@@ -43,3 +43,20 @@ Record accepted, rejected, and deferred design decisions.
   transfer or native solver validation gate.
 - Deferred: migrating existing BASS/HTT/MIO producers to emit
   `TransferFunctionSpec` is downstream adapter and transfer-registry work.
+
+## 2026-06-12 - PR-040 sky-support boundary
+
+- Accepted: `common.contracts.SkySupport` remains the canonical sky-support
+  dataclass; `common.sky_support` supplies construction, hashing, and
+  validation helpers without redefining the schema.
+- Accepted: deterministic mask hashes are SHA-256 payload hashes over mask
+  bits plus coordinate frame, pixelization, and optional `nside`.
+- Accepted: sky-facing manifest validation requires coordinate frame,
+  mask hash, sky-support hash, sky fraction, and completeness status; a
+  status string alone is insufficient.
+- Accepted: sky-facing `sky_support_status` uses a bounded support-status
+  vocabulary; over-strong tokens such as `production_validated` are rejected.
+- Accepted: production-facing directional summaries must use unit-vector
+  spherical means, not raw longitude/latitude arithmetic means.
+- Deferred: migrating every artifact producer and summary writer to call the
+  PR-040 validators remains downstream HTT/MIO/BASS integration work.

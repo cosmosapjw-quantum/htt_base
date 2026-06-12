@@ -12,6 +12,7 @@ completed:
 - PR-011
 - PR-013
 - PR-014
+- PR-040
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -37,4 +38,8 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   likelihood/evidence inputs. PR-014 adds COMMON transfer-provenance contracts
   and a registry so transfer-dependent results carry source, family, valid
   range, observable kind, normalization, calibration status, and caveats
-  without allowing external transfers to claim native validation.
+  without allowing external transfers to claim native validation. PR-040 adds
+  COMMON sky-support contracts for coordinate frame, deterministic mask hash,
+  sky fraction, completeness status, and unit-vector spherical means, and
+  tightens directional manifest validation so `sky_support_status` alone is
+  not enough for sky-facing artifacts.

@@ -312,13 +312,18 @@ class ArtifactManifest:
 
 @dataclass(frozen=True)
 class SkySupport:
-    """Minimal sky-support metadata for production directional surfaces."""
+    """Canonical sky-support metadata shared by sky-facing surfaces."""
 
     selection_mode: str
     sky_support_hash: str
     mask_hash: str
     mock_coverage_status: str
     scan_volume_hash: str = ""
+    coordinate_frame: str = "legacy_unspecified"
+    sky_fraction: float | None = None
+    completeness_status: str = "legacy_unspecified"
+    pixelization: str = "legacy_unspecified"
+    nside: int | None = None
 
     def __post_init__(self) -> None:
         if not self.selection_mode:
@@ -329,6 +334,39 @@ class SkySupport:
             raise ValueError("SkySupport.mask_hash must be non-empty")
         if not self.mock_coverage_status:
             raise ValueError("SkySupport.mock_coverage_status must be non-empty")
+        if not self.coordinate_frame:
+            raise ValueError("SkySupport.coordinate_frame must be non-empty")
+        if self.sky_fraction is not None:
+            sky_fraction = float(self.sky_fraction)
+            if not np.isfinite(sky_fraction) or not (0.0 <= sky_fraction <= 1.0):
+                raise ValueError(
+                    "SkySupport.sky_fraction must be finite and in [0, 1]"
+                )
+            object.__setattr__(self, "sky_fraction", sky_fraction)
+        if not self.completeness_status:
+            raise ValueError("SkySupport.completeness_status must be non-empty")
+        if not self.pixelization:
+            raise ValueError("SkySupport.pixelization must be non-empty")
+        if self.nside is not None and int(self.nside) <= 0:
+            raise ValueError("SkySupport.nside must be positive when provided")
+        if self.nside is not None:
+            object.__setattr__(self, "nside", int(self.nside))
+
+    def to_metadata(self) -> dict[str, object]:
+        """Return a JSON-compatible sky-support metadata payload."""
+
+        return {
+            "selection_mode": self.selection_mode,
+            "sky_support_hash": self.sky_support_hash,
+            "mask_hash": self.mask_hash,
+            "mock_coverage_status": self.mock_coverage_status,
+            "scan_volume_hash": self.scan_volume_hash,
+            "coordinate_frame": self.coordinate_frame,
+            "sky_fraction": self.sky_fraction,
+            "completeness_status": self.completeness_status,
+            "pixelization": self.pixelization,
+            "nside": self.nside,
+        }
 
 
 @dataclass(frozen=True)

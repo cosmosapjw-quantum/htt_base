@@ -14,6 +14,7 @@ import subprocess
 from typing import Any, Iterable, Mapping
 
 from common.contracts import ArtifactManifest
+from common.sky_support import validate_sky_facing_artifact_metadata
 
 
 REQUIRED_ARTIFACT_FIELDS = (
@@ -90,8 +91,23 @@ def _as_manifest_payload(payload: Mapping[str, Any]) -> dict[str, Any]:
         for key in REQUIRED_PROVENANCE_FIELDS:
             if key not in combined and key in payload:
                 combined[key] = payload[key]
+        if "sky_support" not in combined and "sky_support" in payload:
+            combined["sky_support"] = payload["sky_support"]
         return combined
     return dict(payload)
+
+
+def _is_sky_facing_status(status: object) -> bool:
+    value = str(status or "").strip()
+    if not value:
+        return False
+    return value not in {
+        "not_directional",
+        "not_applicable",
+        "not_applicable_to_repo_inventory",
+        "not_applicable_to_command_matrix",
+        "pending_or_unknown_for_existing_directional_artifacts",
+    }
 
 
 def validate_manifest_payload(
@@ -177,6 +193,18 @@ def validate_manifest_payload(
                 ),
             )
         )
+
+    if _is_sky_facing_status(manifest_payload.get("sky_support_status")):
+        try:
+            validate_sky_facing_artifact_metadata(manifest_payload)
+        except ValueError as exc:
+            issues.append(
+                ManifestIssue(
+                    path=path_text,
+                    code="invalid_sky_support_metadata",
+                    detail=str(exc),
+                )
+            )
 
     return tuple(issues)
 

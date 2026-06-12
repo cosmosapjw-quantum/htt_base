@@ -12,6 +12,7 @@ from common.artifact_manifest import (
     render_quarantine_markdown,
     validate_manifest_payload,
 )
+from common.sky_support import build_sky_support_from_mask
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -116,6 +117,41 @@ def test_morphology_atlas_gate_does_not_validate_native_transfer() -> None:
     )
 
     assert [issue.code for issue in issues] == ["native_transfer_without_gate"]
+
+
+def test_directional_manifest_requires_sky_support_metadata() -> None:
+    issues = validate_manifest_payload(
+        _manifest_payload(
+            "figures/directional.png",
+            sky_support_status="directional",
+        ),
+        manifest_path=Path("directional.manifest.json"),
+    )
+
+    assert [issue.code for issue in issues] == ["invalid_sky_support_metadata"]
+    assert "sky_support" in issues[0].detail
+
+
+def test_directional_manifest_accepts_pr040_sky_support_metadata() -> None:
+    support = build_sky_support_from_mask(
+        [True, False, True, True],
+        coordinate_frame="galactic",
+        completeness_status="partial_sky",
+        selection_mode="zoa_hard_cut",
+        mock_coverage_status="not_mocked",
+        pixelization="equal_area_ring",
+        nside=2,
+    )
+    issues = validate_manifest_payload(
+        _manifest_payload(
+            "figures/directional.png",
+            sky_support_status="directional",
+            sky_support=support.to_metadata(),
+        ),
+        manifest_path=Path("directional.manifest.json"),
+    )
+
+    assert issues == ()
 
 
 def test_quarantine_report_separates_manifested_and_unmanifested_figures(

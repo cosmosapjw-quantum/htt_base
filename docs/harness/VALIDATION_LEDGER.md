@@ -392,3 +392,48 @@ result consumers. It does not add solver outputs, native transfer validation,
 AniCLASS-native calibration, HTT posterior/evidence validation, MIO diagnostic
 certification, null/mock/covariance evidence, sky-support evidence, morphology
 compatibility evidence, or family-ID evidence.
+
+## PR-040 - Sky-support and coordinate-frame contracts
+
+Date: 2026-06-12
+
+Changed files: `htt/src/common/sky_support.py`,
+`htt/src/common/sky_geometry.py`, `htt/src/common/contracts.py`,
+`htt/src/common/artifact_manifest.py`,
+`tests/htt/test_sky_support_contract.py`,
+`tests/contracts/test_artifact_manifest.py`, status and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/htt/test_sky_support_contract.py -q` before implementation | repo root | FAIL | Red phase: missing `assert_no_raw_lonlat_mean_source` and `common.sky_support`. |
+| `venv/bin/python -m pytest tests/htt/test_sky_support_contract.py -q` | repo root | PASS | `6 passed`; covers deterministic frame-bound mask hashes, equal-area sky fraction, support metadata, sky-facing metadata validation, unit-vector mean tagging, and raw lon/lat mean guard. |
+| `venv/bin/python -m pytest tests/htt/test_sky_support_contract.py tests/contracts/test_artifact_manifest.py -q` | repo root | PASS | `19 passed`; PR-040 sky support and tightened manifest validation pass together. |
+| `venv/bin/python -m pytest -q tests/contracts/test_artifact_manifest.py htt/src/common/test_sky_geometry.py htt/src/common/test_contracts.py htt/mio/tests/test_masked_sky_caveats.py htt/mio/tests/test_ver2_manifest_status.py htt/htt/tests/test_ver2_directional_shell.py` | repo root | PASS | `89 passed`; adjacent manifest, common, MIO masked-sky, MIO status, and HTT directional shell behavior preserved. |
+| `venv/bin/python -m pytest htt/src/common -q` | repo root | PASS | `164 passed, 1 skipped`; full common package tests remain green. |
+| `venv/bin/python -m pytest tests/contracts -q` | repo root | PASS | `60 passed`; top-level contract suite remains green. |
+| `venv/bin/python -m py_compile htt/src/common/sky_support.py htt/src/common/sky_geometry.py htt/src/common/contracts.py htt/src/common/artifact_manifest.py tests/htt/test_sky_support_contract.py tests/contracts/test_artifact_manifest.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`; package import smoke remains green. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 6896 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6843/6902 tests collected (59 deselected)`. |
+| `venv/bin/python scripts/check_artifact_manifests.py --dry-run` | repo root | PASS | Exit 0; still reports 96 quarantined figures, 0 manifested figures, 0 manifest issues. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json` | repo root | PASS | After marking PR-040 complete: `13/62 = 20.97%`; dependency-weighted `27.69%`; critical path `5/21 = 23.81%`; checkpoint not due. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml; printf 'status_cmp=%s\n' "$?"` | repo root | PASS | `status_cmp=0`. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-040 files>` | repo root | PASS | No forbidden claim patterns detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-040 docs>` before wording fix | repo root | FAIL | Flagged one full family-ID phrase without nearby status marker. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-040 docs>` after wording fix | repo root | PASS | No unmarked strong claims detected. |
+| `git diff --check -- <PR-040 files>` | repo root | PASS | Scoped PR-040 diff has no whitespace errors. |
+| `venv/bin/python -m pytest tests/htt/test_sky_support_contract.py tests/contracts/test_artifact_manifest.py -q` after reviewer fixes | repo root | PASS | `19 passed`; verifies bounded sky-facing status vocabulary and manifest compatibility. |
+| `venv/bin/python -m pytest htt/src/common -q` after reviewer fixes | repo root | PASS | `164 passed, 1 skipped`; full common package tests remain green. |
+| `venv/bin/python -m pytest tests/contracts -q` after reviewer fixes | repo root | PASS | `60 passed`; top-level contract suite remains green. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` after reviewer fixes | repo root | PASS | `6 passed, 6896 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` after reviewer fixes | repo root | PASS | `6843/6902 tests collected (59 deselected)`. |
+
+Numerical/scientific impact: none; COMMON metadata and geometry guards only.
+
+Artifact/claim-tier impact: COMMON L2 contract/checker metadata. PR-040
+requires coordinate frame, deterministic mask hash, sky fraction, and
+completeness status for sky-facing metadata validation and records
+unit-vector spherical means. It does not add solver outputs, transfer
+calibration, null/mock/covariance evidence, HTT posterior/evidence, MIO
+diagnostic certification, morphology compatibility, or family-ID evidence.

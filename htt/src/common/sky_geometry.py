@@ -13,7 +13,25 @@ unit-vector mean is the standard sphere-correct replacement.
 """
 from __future__ import annotations
 
+import ast
+import re
+
 import numpy as np
+
+__all__ = [
+    "lb_to_unitvec",
+    "unitvec_to_lb",
+    "spherical_mean",
+    "angular_separation_matrix",
+    "galactic_plane_mask",
+    "normalize_weights",
+    "assert_no_raw_lonlat_mean_source",
+]
+
+_DIRECTION_NAME_RE = re.compile(
+    r"(^|_)(l|b|lon|long|longitude|lat|latitude)(_|$)",
+    flags=re.IGNORECASE,
+)
 
 
 def lb_to_unitvec(l_deg: np.ndarray, b_deg: np.ndarray) -> np.ndarray:
@@ -76,9 +94,19 @@ def spherical_mean(
     wbar = (w[..., None] * vec).sum(axis=0) / wsum
     R = float(np.linalg.norm(wbar))
     if R < 1e-12:
-        return {"l_deg": float("nan"), "b_deg": float("nan"), "resultant_R": 0.0}
+        return {
+            "l_deg": float("nan"),
+            "b_deg": float("nan"),
+            "resultant_R": 0.0,
+            "mean_method": "unit_vector_resultant",
+        }
     l_mean, b_mean = unitvec_to_lb(wbar / R)
-    return {"l_deg": float(l_mean), "b_deg": float(b_mean), "resultant_R": R}
+    return {
+        "l_deg": float(l_mean),
+        "b_deg": float(b_mean),
+        "resultant_R": R,
+        "mean_method": "unit_vector_resultant",
+    }
 
 
 def angular_separation_matrix(l_deg: np.ndarray, b_deg: np.ndarray) -> np.ndarray:
@@ -123,3 +151,47 @@ def normalize_weights(
     if s <= 0:
         raise ValueError(f"Non-positive weight sum: {s}")
     return w / s, "native_weights"
+
+
+def _contains_direction_name(node: ast.AST) -> bool:
+    for child in ast.walk(node):
+        if isinstance(child, ast.Name) and _DIRECTION_NAME_RE.search(child.id):
+            return True
+        if isinstance(child, ast.Attribute) and _DIRECTION_NAME_RE.search(child.attr):
+            return True
+    return False
+
+
+def assert_no_raw_lonlat_mean_source(source: str, *, path: str = "<source>") -> None:
+    """Reject raw longitude/latitude arithmetic means in production summaries.
+
+    Use :func:`spherical_mean` instead. This is an AST guard intended for
+    production-facing summary modules, not for exploratory notebooks or tests
+    that intentionally demonstrate the failure mode.
+    """
+
+    tree = ast.parse(source, filename=path)
+    offenders: list[tuple[int, str]] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        is_mean_call = False
+        target_nodes: list[ast.AST] = []
+        if isinstance(node.func, ast.Attribute) and node.func.attr == "mean":
+            is_mean_call = True
+            target_nodes.append(node.func.value)
+        elif isinstance(node.func, ast.Name) and node.func.id == "mean":
+            is_mean_call = True
+        if not is_mean_call:
+            continue
+        target_nodes.extend(node.args)
+        if any(_contains_direction_name(target) for target in target_nodes):
+            offenders.append((getattr(node, "lineno", 0), ast.unparse(node)))
+    if offenders:
+        details = ", ".join(
+            f"{path}:{line}:{expr}" for line, expr in offenders
+        )
+        raise ValueError(
+            "raw longitude/latitude mean is forbidden for production "
+            f"summaries; use spherical_mean instead ({details})"
+        )
