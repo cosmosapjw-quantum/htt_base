@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from common.contracts import TscAdequacyOverlay
+from common.contracts import Owner, TscAdequacyOverlay, normalize_owner
 from tsc.adapters.mio_certificate import MioTscAdequacyFields, overlay_to_mio_fields
 from workspace.contracts.mio_certificate import MioCertificate
 from workspace.contracts.preliminary_results import (
@@ -128,7 +128,7 @@ def _require_pack_artifact(
 ):
     for artifact in pack.artifacts:
         if artifact.artifact_id == artifact_id:
-            if artifact.owner != owner:
+            if normalize_owner(artifact.owner) is not normalize_owner(owner):
                 raise ValueError(
                     f"pack {pack.pack_id} artifact {artifact_id!r} must be owned by "
                     f"{owner!r} (got {artifact.owner!r})"
@@ -182,7 +182,7 @@ def build_preliminary_mio_handoff(
     overlay_ref = _require_pack_artifact(
         pack_d,
         artifact_id=TSC_OVERLAY_ARTIFACT_ID,
-        owner="TSC",
+        owner=Owner.TSC_LEGACY.value,
     )
     certificate = load_exported_mio_certificate(
         artifact_id_or_path=certificate_ref.artifact_id,

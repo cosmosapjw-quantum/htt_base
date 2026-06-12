@@ -10,7 +10,7 @@ Pre-read:
 - `.agents/skills/htt-harness-engineering/SKILL.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-080.md`
+- `docs/PR_DELTAS/pr-030.md`
 - `docs/generated/progress_checkpoints/checkpoint_020.md`
 - `docs/generated/progress_checkpoints/progress_scoreboard.md`
 - `docs/generated/status_snapshot.json`
@@ -19,14 +19,14 @@ Current state:
 
 - PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, PR-010,
   PR-021, PR-011, PR-013, PR-014, PR-040, PR-012, PR-022, PR-070,
-  PR-015, PR-050, PR-041, PR-023, PR-071, and PR-080 are complete.
+  PR-015, PR-050, PR-041, PR-023, PR-071, PR-080, and PR-030 are complete.
 - Generated checkpoint artifacts:
   `docs/generated/progress_checkpoints/checkpoint_005.md`,
   `checkpoint_010.md`, `checkpoint_015.md`, and `checkpoint_020.md`.
 - Latest progress scoreboard:
   `docs/generated/progress_checkpoints/progress_scoreboard.md`.
-- Progress after PR-080: 22/62 = 35.48% complete, dependency-weighted
-  42.05%, critical-path 6/21 = 28.57%, no blockers, no checkpoint due until
+- Progress after PR-030: 23/62 = 37.10% complete, dependency-weighted
+  43.59%, critical-path 6/21 = 28.57%, no blockers, no checkpoint due until
   25 completed PRs.
 - PR-010 added canonical owner/claim-tier/scope enums and HTT/MIO
   bundle-role firewall checks.
@@ -60,6 +60,11 @@ Current state:
   callables with PR-014 metadata, callable provenance, callable input domains,
   `claim_tier="conditional"`, `production_status="diagnostic_only"`,
   `transfer_conditional=True`, and `native_solver_result=False`.
+- PR-030 added `tsc_legacy` as the canonical TSC/Teff legacy-boundary metadata
+  package, kept `import tsc` quiet and import-compatible, required
+  `TSC_LEGACY`/`tsc_legacy` legacy-reproduction manifests for new artifacts,
+  normalized old raw `owner="TSC"` pack refs in bridge loaders, and pinned
+  current production `tsc.*` imports to an advisory/caveat-only allowlist.
 - PR-040 added COMMON sky-support metadata, deterministic mask hashes, sky
   fractions, completeness status, sky-facing manifest validation, and
   spherical-mean direction guards.
@@ -70,10 +75,10 @@ Current state:
 - PR-041 added `htt.zoa.selection_ladder` and
   `common.healpix_selection.source_mask_from_pixel_mask`, with diagnostic-only
   raw, ZoA-masked, angular-completeness, and mock-calibrated support summaries.
-- Unblocked next candidates from the live progress report: `PR-030`,
-  `PR-113`, `PR-051`, `PR-042`, `PR-072`, and `PR-081`.
-  Topological next is `PR-030`; `PR-051` is the current critical-path successor
-  after PR-050.
+- Unblocked next candidates from the live progress report: `PR-113`,
+  `PR-051`, `PR-042`, `PR-072`, `PR-081`, and `PR-031`.
+  Topological next is `PR-113`; `PR-051` is the current critical-path successor
+  after PR-050, and `PR-031` is newly unblocked by PR-030.
 
 Rules:
 
@@ -93,9 +98,8 @@ Immediate commands:
 ```bash
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
-python scripts/codex_harness/new_pr_delta.py PR-030 --dry-run
+python scripts/codex_harness/new_pr_delta.py PR-113 --dry-run
 python scripts/check_claim_language.py docs docs/manuscript --dry-run
-venv/bin/python -m pytest tests/tsc/test_tsc_legacy_boundary.py -q
 venv/bin/python scripts/codex_harness/run_subset.py package
 venv/bin/python scripts/codex_harness/run_subset.py smoke
 ```

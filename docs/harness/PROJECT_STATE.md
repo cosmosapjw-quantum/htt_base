@@ -1,12 +1,12 @@
 # Project State
 
-Current DAG position: PR-080 complete after commits PR-000, PR-001, PR-002,
+Current DAG position: PR-030 complete after commits PR-000, PR-001, PR-002,
 PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, and
 PR-014, PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041,
-PR-023, PR-071, and PR-080.
+PR-023, PR-071, PR-080, and PR-030.
 
-Progress after PR-080: 22/62 complete = 35.48%; dependency-weighted
-completion = 42.05%; critical-path completion = 6/21 = 28.57%.
+Progress after PR-030: 23/62 complete = 37.10%; dependency-weighted
+completion = 43.59%; critical-path completion = 6/21 = 28.57%.
 
 Current framework status: L0 orchestration and harness bootstrap. The repo has
 inventory, editable install/import stabilization, pytest taxonomy, DAG/progress
@@ -80,7 +80,13 @@ and records callable path, callable input domain, PR-014 transfer metadata,
 canonical `conditional` claim tier, `diagnostic_only` production status,
 `transfer_conditional=True`, and `native_solver_result=False`. The PR card
 path `htt/src/bass/transfer/...` is stale for this checkout; the live BASS
-package root is `htt/bass`.
+package root is `htt/bass`. PR-030 freezes TSC/Teff as `TSC_LEGACY`
+legacy-reproduction and import-compatibility surface only. It adds the
+`tsc_legacy` metadata package and manifest helper, keeps `import tsc` quiet for
+warning-as-error harnesses, updates TSC deprecation docs,
+normalizes old raw `owner="TSC"` pack refs to canonical `TSC_LEGACY` manifests
+in bridge loaders, adds package-discovery checks, and pins current production
+`tsc.*` imports to an advisory/caveat-only allowlist.
 
 Scientific boundaries remain active:
 
@@ -95,6 +101,6 @@ Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_020.
 Latest progress scoreboard: `docs/generated/progress_checkpoints/progress_scoreboard.md`.
 Next checkpoint is due at 25 completed PRs.
 
-Next topological PR: PR-030. Other unblocked candidates after PR-080 are
-PR-113, PR-051, PR-042, PR-072, and PR-081. PR-051 remains the next
-critical-path successor after PR-050, while PR-081 is now unblocked by PR-080.
+Next topological PR: PR-113. Other unblocked candidates after PR-030 are
+PR-051, PR-042, PR-072, PR-081, and PR-031. PR-051 remains the next
+critical-path successor after PR-050; PR-031 is newly unblocked by PR-030.

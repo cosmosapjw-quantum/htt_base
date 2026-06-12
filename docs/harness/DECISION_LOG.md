@@ -253,3 +253,25 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: migrating downstream HTT inference producers, MIO diagnostics, or
   OBSSTAT feature producers to consume the registry remains downstream DAG
   work.
+
+## 2026-06-12 - PR-030 TSC legacy boundary
+
+- Accepted: `tsc` remains import-compatible and does not emit import-time
+  deprecation warnings, because strict warning harnesses must still be able to
+  import legacy overlays and tests.
+- Accepted: `tsc_legacy` is the canonical metadata surface for the frozen
+  TSC/Teff boundary. It records `TSC_LEGACY`, `tsc_legacy`, legacy
+  reproduction bundle authority, and a conditional or diagnostic-only claim
+  ceiling.
+- Accepted: raw legacy pack refs with `owner="TSC"` may remain in generated
+  VER2 provenance fixtures only when bridge loaders normalize them to canonical
+  `TSC_LEGACY` manifests.
+- Accepted: current production `tsc.*` imports in MIO/HTT/BASS are pinned by a
+  static allowlist and are advisory/caveat-only. New production imports require
+  explicit claim-gate review.
+- Rejected: no new active TSC owner role, no HTT evidence/posterior ownership,
+  no MIO certificate ownership, no BASS transfer/native validation ownership,
+  no OBSSTAT feature ownership, no runtime gate ownership, and no family-claim
+  path are introduced by PR-030.
+- Deferred: extracting generic source/propagation/observable semantic guards
+  from legacy TSC language remains PR-031.

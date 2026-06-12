@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from common.contracts import TscAdequacyOverlay
+from common.contracts import Owner, TscAdequacyOverlay, normalize_owner
 from tsc.adapters.bass_runtime import SourceAdequacySuggestion, overlay_to_bass_suggestion
 from tsc.adapters.htt_inference import HttTscCaveatBundle, overlay_to_htt_caveats
 from workspace.contracts.preliminary_results import (
@@ -75,7 +75,7 @@ def _require_pack_artifact(
     for artifact in pack.artifacts:
         if artifact.artifact_id != artifact_id:
             continue
-        if artifact.owner != owner:
+        if normalize_owner(artifact.owner) is not normalize_owner(owner):
             raise ValueError(
                 f"pack {pack.pack_id} artifact {artifact_id!r} must be owned by "
                 f"{owner!r} (got {artifact.owner!r})"
@@ -94,16 +94,20 @@ def _validate_preliminary_tsc_handoff(
     policy_ledger: ExportedTscPolicyLedger,
 ) -> None:
     overlay_id = overlay.manifest.artifact_id
-    _require_pack_artifact(pack_d, artifact_id=TSC_OVERLAY_ARTIFACT_ID, owner="TSC")
+    _require_pack_artifact(
+        pack_d,
+        artifact_id=TSC_OVERLAY_ARTIFACT_ID,
+        owner=Owner.TSC_LEGACY.value,
+    )
     _require_pack_artifact(
         pack_d,
         artifact_id=TSC_ACTIVE_SERVICE_BUNDLE_ARTIFACT_ID,
-        owner="TSC",
+        owner=Owner.TSC_LEGACY.value,
     )
     _require_pack_artifact(
         pack_d,
         artifact_id=TSC_POLICY_LEDGER_ARTIFACT_ID,
-        owner="TSC",
+        owner=Owner.TSC_LEGACY.value,
     )
     if active_service_bundle.overlay_ref != overlay_id:
         raise ValueError(

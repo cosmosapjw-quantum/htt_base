@@ -24,6 +24,10 @@ def test_preliminary_mio_handoff_loads_certificate_and_overlay() -> None:
     assert handoff.certificate.manifest is not None
     assert handoff.certificate.manifest.owner == "MIO"
     assert handoff.overlay.manifest.owner is Owner.TSC_LEGACY
+    assert (
+        handoff.artifact_index[preliminary_results.TSC_OVERLAY_ARTIFACT_ID].owner
+        == "TSC"
+    )
     assert handoff.certificate.tsc_overlay_ref == handoff.overlay.manifest.artifact_id
     assert handoff.certificate.manifest.artifact_id in handoff.artifact_ids
     assert handoff.overlay.manifest.artifact_id in handoff.artifact_ids

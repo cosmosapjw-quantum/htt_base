@@ -26,6 +26,7 @@ def test_editable_package_set_includes_legacy_htt_package() -> None:
 
     assert "htt*" in include
     assert "obsstat*" in include
+    assert "tsc_legacy*" in include
 
 
 def test_dev_extra_covers_collection_time_imports() -> None:
@@ -51,6 +52,7 @@ for name in [
     "common",
     "mio",
     "tsc",
+    "tsc_legacy",
     "workspace",
 ]:
     importlib.import_module(name)
@@ -85,6 +87,7 @@ for name in [
     "common",
     "mio",
     "tsc",
+    "tsc_legacy",
     "workspace",
 ]:
     importlib.import_module(name)

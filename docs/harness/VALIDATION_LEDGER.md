@@ -287,6 +287,52 @@ registered paths are `AniCLASS_external` or `empirical_proxy`, diagnostic-only
 for production status, and explicitly `native_solver_result=False`. They do
 not validate external transfer as native or provide morphology/family evidence.
 
+## PR-030 - TSC legacy boundary
+
+Date: 2026-06-12
+
+Changed files: `htt/tsc_legacy/__init__.py`, `htt/tsc_legacy/README.md`,
+`htt/tsc/__init__.py`,
+`docs/deprecation/tsc_legacy.md`,
+`tests/tsc/test_tsc_legacy_boundary.py`, package/bridge compatibility files,
+`docs/PR_DELTAS/pr-030.md`, status mirrors, generated status sidecars,
+progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/tsc/test_tsc_legacy_boundary.py -q` before implementation | repo root | FAIL | Red phase: target file did not exist. |
+| `venv/bin/python -m pytest tests/tsc/test_tsc_legacy_boundary.py -q` after red tests | repo root | FAIL | Expected red: missing `tsc_legacy`, docs, metadata, and helper behavior. |
+| `venv/bin/python -m pytest tests/tsc/test_tsc_legacy_boundary.py -q` before editable reinstall | repo root | FAIL | `ModuleNotFoundError: tsc_legacy`; package discovery needed explicit include and editable refresh. |
+| `venv/bin/python -m pip install -e './htt[dev]'` | repo root | PASS | Refreshed editable package discovery after adding `tsc_legacy*`. |
+| `venv/bin/python -m pytest tests/tsc/test_tsc_legacy_boundary.py -q` after static import scan | repo root | FAIL | Static scan initially included test helper imports; fixed to skip test paths. |
+| `venv/bin/python -m pytest tests/tsc/test_tsc_legacy_boundary.py -q` | repo root | PASS | `8 passed`; PR target with venv interpreter. |
+| `python -m pytest tests/tsc/test_tsc_legacy_boundary.py -q` | repo root | FAIL | `/usr/bin/python: No module named pytest`; host interpreter lacks pytest. |
+| `venv/bin/python -m pytest htt/test_packaging_imports.py -q` | repo root | PASS | `5 passed`; package discovery and temp-CWD imports include `tsc_legacy`. |
+| `venv/bin/python -m pytest htt/tsc/adapters/test_preliminary_results.py htt/mio/tests/test_preliminary_results_bridge.py -q` | repo root | PASS | `6 passed`; legacy raw `TSC` pack refs load through canonical normalized manifests. |
+| `venv/bin/python -m pytest tests/contracts/test_ownership_firewall.py tests/contracts/test_claim_language_lint.py tests/contracts/test_artifact_manifest.py -q` | repo root | PASS | `36 passed`; ownership, claim-language, and manifest contracts remain compatible. |
+| `venv/bin/python -m pytest htt/mio/tests/test_preliminary_results_bridge.py htt/bass/runtime/test_canonical_decision.py -q` | repo root | PASS | `31 passed`; MIO bridge and BASS canonical decision behavior remain compatible. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --json` before status update | repo root | PASS | `22/62 = 35.48%`; PR-030 was next topological node. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `23/62 = 37.10%`; dependency-weighted `43.59%`; critical path `6/21 = 28.57%`; no checkpoint due. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml; printf 'status_cmp=%s\n' "$?"` | repo root | PASS | `status_cmp=0`. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-030 production files>` | repo root | PASS | No forbidden claim patterns detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-030 docs>` | repo root | PASS | No unmarked strong claims detected. |
+| `python scripts/check_claim_language.py <PR-030 production files> --dry-run` | repo root | PASS | TSC boundary source/doc scan passed. |
+| `venv/bin/python -m pytest -m smoke -q` | repo root | PASS | `6 passed, 6982 deselected`. |
+| `venv/bin/python -m pytest --collect-only -q` | repo root | PASS | `6929/6988 tests collected (59 deselected)`. |
+| `venv/bin/python -m py_compile htt/tsc_legacy/__init__.py htt/tsc/__init__.py htt/mio/bridges/preliminary_results.py htt/tsc/adapters/preliminary_results.py tests/tsc/test_tsc_legacy_boundary.py htt/test_packaging_imports.py` | repo root | PASS | Touched Python files compile. |
+
+Numerical/scientific impact: none. PR-030 is a COMMON/TSC_LEGACY ownership,
+deprecation, import-compatibility, and package-boundary PR.
+
+Artifact/claim-tier impact: TSC/Teff is frozen as legacy reproduction and
+advisory chart diagnostics only. New TSC-facing artifacts must normalize to
+`TSC_LEGACY`/`tsc_legacy`, stay conditional or diagnostic-only, and use
+legacy-reproduction bundle authority. PR-030 does not add HTT evidence,
+MIO certificates, transfer/native validation, OBSSTAT features, runtime gates,
+or family claims.
+
 ## PR-010 - Canonical ownership and role firewall
 
 Date: 2026-06-12

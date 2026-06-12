@@ -22,6 +22,7 @@ completed:
 - PR-023
 - PR-071
 - PR-080
+- PR-030
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -99,3 +100,11 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   source provenance, callable input domains, and native_solver_result false.
   They are not native solver outputs, transfer validation, HTT evidence, MIO
   certificates, morphology compatibility evidence, or geometry/family evidence.
+  PR-030 freezes TSC/Teff as `TSC_LEGACY` legacy-reproduction and
+  import-compatibility surface only, adds explicit `tsc_legacy` metadata and
+  manifest checks, keeps `import tsc` quiet for warning-as-error harnesses,
+  normalizes old raw `owner="TSC"` pack refs to canonical `TSC_LEGACY`
+  manifests, and pins current production `tsc.*` imports to an advisory/caveat
+  allowlist. TSC remains not an active science owner, HTT evidence/posterior
+  layer, MIO certificate layer, transfer/native validation path, OBSSTAT
+  feature owner, runtime gate, or family-claim path.

@@ -8,17 +8,17 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Metric | Value |
 | --- | ---: |
 | Total PRs | 62 |
-| Completed PRs | 22 |
+| Completed PRs | 23 |
 | Blocked PRs | 0 |
 | In progress | 0 |
-| Pending PRs | 40 |
+| Pending PRs | 39 |
 
 | Metadata | Value |
 | --- | --- |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `a923730a4c0ee9e6774cbfce9630b482fe6eda19fdc46dbe8f07a21604cfbbaf` |
-| Source commit | `81a6df1+dirty` |
+| Config hash | `a352d2f31f895b7eec5e7618d651f958a878331e2cebf14504871517688c17b3` |
+| Source commit | `086ddd2+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
@@ -31,7 +31,7 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | State | Rows |
 | --- | ---: |
-| `completed` | 22 |
-| `not_completed` | 40 |
+| `completed` | 23 |
+| `not_completed` | 39 |
 
 This matrix is a diagnostic-only DAG rendering. It does not certify solver validation, posterior evidence, native transfer validation, or family-ID evidence.

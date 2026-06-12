@@ -14,6 +14,11 @@ def test_preliminary_tsc_handoff_exposes_overlay_and_downstream_views() -> None:
     assert "tsc.ver2.export.active_service_bundle" in handoff.pack_artifact_ids["D"]
     assert "tsc.ver2.export.policy_ledger" in handoff.pack_artifact_ids["D"]
     assert handoff.overlay.manifest.owner is Owner.TSC_LEGACY
+    assert {
+        artifact.owner
+        for artifact in handoff.pack_index["D"].artifacts
+        if artifact.artifact_id.startswith("tsc.ver2.export.")
+    } == {"TSC"}
     assert handoff.active_service_bundle.overlay_ref == handoff.overlay.manifest.artifact_id
     assert handoff.policy_ledger.overlay_ref == handoff.overlay.manifest.artifact_id
     assert (
