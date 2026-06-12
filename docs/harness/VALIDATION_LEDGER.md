@@ -1077,3 +1077,49 @@ only. Native schema metadata is diagnostic-only, schema-only, no-values, and
 non-consumable as result provenance. It does not validate native transfer,
 produce HTT evidence, produce MIO output, or support morphology, geometry, or
 family-ID claims.
+
+## PR-031 - Generic semantic guards extracted from TSC legacy
+
+Date: 2026-06-13
+
+Changed files: `htt/src/common/semantic_guards/admissibility_status.py`,
+`htt/src/common/semantic_guards/source_propagation_status.py`,
+`htt/src/common/semantic_guards/__init__.py`,
+`htt/src/common/semantic_guards/no_overclaim.py`,
+`tests/contracts/test_semantic_guards.py`, `htt/test_packaging_imports.py`,
+`docs/PR_DELTAS/pr-031.md`, status files, PR-012 generated status sidecars,
+the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_semantic_guards.py -q` before implementation | repo root | FAIL | Red phase: missing `common.semantic_guards.admissibility_status`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_semantic_guards.py -q` initial implementation | repo root | PASS | `7 passed`; first source/propagation/observable split contract. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_semantic_guards.py -q` after reviewer fixes | repo root | PASS | `16 passed`; covers explicit status separation, no auto-promotion, owner/scope preservation, stronger-tier rejection, diagnostic-only/block ceilings, scanner variants, and import hygiene. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_claim_language_lint.py htt/test_packaging_imports.py -q` | repo root | PASS | `22 passed`; claim lint and import smoke remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_claim_language_lint.py tests/contracts/test_ownership_firewall.py tests/contracts/test_artifact_manifest.py tests/tsc/test_tsc_legacy_boundary.py htt/tsc/audit/test_no_overclaim.py -q` | repo root | PASS | `48 passed`; ownership/firewall and TSC legacy boundary coverage remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/tsc/budget/test_source_to_channel.py htt/tsc/adapters/test_bass_runtime.py htt/tsc/adapters/test_htt_inference.py htt/tsc/adapters/test_mio_certificate.py htt/tsc/reports/test_overlay_builder.py htt/tsc/reports/test_json_export.py -q` | repo root | PASS | `24 passed`; legacy TSC budget/adapter/report behavior remains compatible. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/test_packaging_imports.py -q` | repo root | PASS | `8 passed`; new COMMON guard modules import from repo root and temp cwd. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/src/common/semantic_guards/admissibility_status.py htt/src/common/semantic_guards/source_propagation_status.py htt/src/common/semantic_guards/no_overclaim.py htt/src/common/semantic_guards/__init__.py tests/contracts/test_semantic_guards.py htt/test_packaging_imports.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python scripts/check_claim_language.py <PR-031 code and tests> --dry-run` | repo root | PASS | No forbidden claim language detected after scanner-fixture rewrite. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-031 code and tests>` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-031 code and tests>` | repo root | PASS | No unmarked strong claims detected. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 29 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `29/62 = 46.77%`; dependency-weighted `51.79%`; critical path `7/21 = 33.33%`; checkpoint not due until 30. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `8 passed`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7052 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6999/7058 tests collected (59 deselected)`. |
+
+Numerical/scientific impact: no solver, transfer calculation, posterior
+evidence, MIO certificate, OBSSTAT feature, null ensemble, rank audit, or
+native morphology atlas output was added. PR-031 adds COMMON semantic guard
+metadata only.
+
+Artifact/claim-tier impact: generated status artifacts are DAG bookkeeping
+only. The new semantic guard records preserve source, propagation, and
+observable status separation and can append caveats while preserving artifact
+owner/scope. They are capped at diagnostic-only or blocked status and do not
+support statistical observable validation, native solver validation, HTT
+evidence, MIO certification, morphology compatibility, or geometry/family
+claims.

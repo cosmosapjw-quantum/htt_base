@@ -1,4 +1,4 @@
-generated_on: '2026-06-12'
+generated_on: '2026-06-13'
 completed:
 - PR-000
 - PR-001
@@ -28,6 +28,7 @@ completed:
 - PR-042
 - PR-072
 - PR-081
+- PR-031
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -168,4 +169,13 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   schema-only/non-consumable metadata as result provenance. PR-081 does not run
   a solver, load a solver artifact, generate synthetic native transfer values,
   validate native transfer, create HTT evidence, create MIO output, or support
-  morphology, geometry, or family-identification claims.
+  morphology, geometry, or family-identification claims. PR-031 extracts
+  COMMON semantic guard records for source, propagation, and observable status
+  from legacy TSC semantics without TSC ownership. The guards preserve
+  source/propagation/observable separation, block source-to-observable
+  overclaim language, attach caveats while preserving artifact owner/scope,
+  and cap these records at diagnostic-only or blocked status. They do not
+  provide statistical observable validation, rank/null/mask/covariance support,
+  transfer provenance, native solver validation, HTT evidence, MIO
+  certificates, morphology compatibility, or geometry/family-identification
+  evidence.

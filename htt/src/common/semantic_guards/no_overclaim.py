@@ -59,6 +59,15 @@ GUARDRAIL_MARKERS = (
     "차단",
 )
 
+SOURCE_OBSERVABLE_CONFLATION_PATTERN = re.compile(
+    r"\b(?:source\s+(?:is\s+)?adequate|adequate\s+source|source\s+adequacy)"
+    r".{0,100}\b(?:automatically\s+implies|implies?|therefore|hence|means|"
+    r"proves?|is\s+sufficient\s+for|suffices\s+for|is\s+enough\s+for)"
+    r".{0,100}\b(?:observable\s+(?:is\s+)?adequate|"
+    r"the\s+observable\s+is\s+adequate|observable\s+adequacy)",
+    re.IGNORECASE,
+)
+
 
 @dataclass(frozen=True)
 class ClaimLanguageRule:
@@ -82,11 +91,11 @@ RULES: tuple[ClaimLanguageRule, ...] = (
         rule_id="geometry_detected",
         pattern=re.compile(
             r"\b("
-            r"Bianchi geometry detected|"
-            r"global Bianchi anisotropy detected|"
-            r"Bianchi family identified|"
-            r"identified Bianchi family|"
-            r"family identified as"
+            r"Bianchi geometry detected|"  # forbidden-rule literal
+            r"global Bianchi anisotropy detected|"  # forbidden-rule literal
+            r"Bianchi family identified|"  # forbidden-rule literal
+            r"identified Bianchi family|"  # forbidden-rule literal
+            r"family identified as"  # forbidden-rule literal
             r")\b",
             re.IGNORECASE,
         ),
@@ -132,7 +141,7 @@ RULES: tuple[ClaimLanguageRule, ...] = (
         ),
     ),
     ClaimLanguageRule(
-        rule_id="mio_truth_or_posterior",
+        rule_id="mio_truth_or_posterior",  # forbidden-rule id
         pattern=re.compile(
             r"\bMIO\b.{0,140}\b("
             r"truth certificate|certif(?:y|ies|ied).{0,60}truth|"
@@ -148,7 +157,7 @@ RULES: tuple[ClaimLanguageRule, ...] = (
         ),
     ),
     ClaimLanguageRule(
-        rule_id="mio_truth_or_posterior",
+        rule_id="mio_truth_or_posterior",  # forbidden-rule id
         pattern=re.compile(r"\bcombined\s+MIO\+HTT\s+score\b", re.IGNORECASE),
         message=(
             "MIO diagnostics and HTT evidence must not be collapsed into a "
@@ -165,6 +174,14 @@ RULES: tuple[ClaimLanguageRule, ...] = (
             re.IGNORECASE,
         ),
         message="External/AniCLASS transfer outputs cannot be labeled native.",
+    ),
+    ClaimLanguageRule(
+        rule_id="source_observable_conflation",
+        pattern=SOURCE_OBSERVABLE_CONFLATION_PATTERN,
+        message=(
+            "Source adequacy, propagation adequacy, and observable adequacy "
+            "must remain separate semantic statuses."
+        ),
     ),
 )
 
@@ -198,6 +215,50 @@ def scan_text(text: str, *, path: Path = Path("<text>")) -> tuple[ClaimLanguageI
                         text=line.strip(),
                     )
                 )
+    issues.extend(_scan_source_observable_windows(lines, path=path))
+    return tuple(issues)
+
+
+def _scan_source_observable_windows(
+    lines: Sequence[str],
+    *,
+    path: Path,
+) -> tuple[ClaimLanguageIssue, ...]:
+    """Catch source/observable conflations split across adjacent lines."""
+
+    issues: list[ClaimLanguageIssue] = []
+    in_fence = False
+    candidate_lines: list[tuple[int, str]] = []
+    for index, line in enumerate(lines, 1):
+        stripped = line.strip()
+        if stripped.startswith("```") or stripped.startswith("~~~"):
+            in_fence = not in_fence
+            continue
+        if in_fence or not stripped:
+            continue
+        candidate_lines.append((index, stripped))
+
+    for offset, (line_number, first) in enumerate(candidate_lines[:-1]):
+        if _is_guardrail_context(lines, line_number - 1):
+            continue
+        second_number, second = candidate_lines[offset + 1]
+        if _is_guardrail_context(lines, second_number - 1):
+            continue
+        window = f"{first} {second}"
+        if SOURCE_OBSERVABLE_CONFLATION_PATTERN.search(window):
+            issues.append(
+                ClaimLanguageIssue(
+                    path=path,
+                    line=line_number,
+                    rule_id="source_observable_conflation",
+                    severity="error",
+                    message=(
+                        "Source adequacy, propagation adequacy, and observable "
+                        "adequacy must remain separate semantic statuses."
+                    ),
+                    text=window.strip(),
+                )
+            )
     return tuple(issues)
 
 
