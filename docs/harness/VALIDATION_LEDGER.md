@@ -507,3 +507,49 @@ standardizes PR_DELTA scaffolding and safe claim-status defaults. It does not
 add solver outputs, transfer calibration, HTT posterior/evidence validation,
 MIO diagnostic certificate evidence, null/mock/covariance adequacy, sky-support
 adequacy, morphology compatibility, or family-ID evidence.
+
+## PR-070 - Create obsstat package and ObservableVector contract
+
+Date: 2026-06-12
+
+Changed files: `htt/obsstat/__init__.py`,
+`htt/obsstat/observable_vector.py`, `htt/htt/__init__.py`,
+`htt/pyproject.toml`, `htt/test_packaging_imports.py`,
+`tests/obsstat/test_observable_vector.py`, `docs/PR_DELTAS/pr-070.md`, status
+files, PR-012 generated status sidecars, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/obsstat/test_observable_vector.py -q` before implementation | repo root | FAIL | Red phase: `htt.obsstat` package and builder did not exist. |
+| `venv/bin/python -m pytest tests/obsstat/test_observable_vector.py -q` during review | repo root | FAIL | `identified_family` and `family_rank` were not rejected by the first implementation. |
+| `venv/bin/python -m pytest tests/obsstat/test_observable_vector.py -q` after package/gate fixes | repo root | PASS | `9 passed`; covers facade identity, manifest helper, feature block packaging, recursive p-value provenance, forbidden inference/family keys and values, all-block transfer metadata, manifest ownership, static imports, and import side effects. |
+| `venv/bin/python -m pip install -e './htt[dev]'` | repo root | PASS | Refreshed editable metadata after adding `obsstat*` package discovery. |
+| temp-CWD import probe for `htt.obsstat` with `PYTHONPATH` removed | repo root | PASS | Prints `temp-cwd htt.obsstat import ok`; fixes the package-smoke blocker. |
+| `venv/bin/python -m pytest htt/test_packaging_imports.py -q` | repo root | PASS | `5 passed`; package smoke now covers temp-CWD `htt.obsstat` and `htt.obsstat.observable_vector`. |
+| `venv/bin/python -m pytest tests/obsstat/test_observable_vector.py htt/test_packaging_imports.py -q` | repo root | PASS | `14 passed`; combines focused obsstat contract and packaging regression coverage. |
+| `venv/bin/python -m py_compile htt/obsstat/__init__.py htt/obsstat/observable_vector.py htt/htt/__init__.py htt/test_packaging_imports.py tests/obsstat/test_observable_vector.py` | repo root | PASS | Touched Python files compile. |
+| static `rg` import firewall scan over `htt/obsstat` | repo root | PASS | No HTT likelihood/evidence, MIO certificate, or MIO package imports found. |
+| `venv/bin/python -m pytest tests/obsstat/test_observable_vector.py tests/contracts/test_ownership_firewall.py tests/contracts/test_mio_htt_no_merge.py htt/test_packaging_imports.py htt/workspace/contracts/tests/test_ver2_common_schema_barrier.py htt/src/common/test_contracts.py tests/contracts/test_transfer_registry.py -q` | repo root | PASS | `74 passed`; adjacent ownership, MIO/HTT separation, schema barrier, transfer registry, and package checks remain green. |
+| `python -m pytest tests/obsstat/test_observable_vector.py -q` | repo root | FAIL | `/usr/bin/python: No module named pytest`; host interpreter lacks pytest. |
+| `venv/bin/python - <<'PY' ... import htt.obsstat ... PY` | repo root | PASS | Import smoke prints `obsstat import ok ObservableVector True True`. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status sidecars at 16 completed PRs. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --json` | repo root | PASS | `16/62 = 25.81%`; dependency-weighted `31.79%`; critical path `5/21 = 23.81%`; checkpoint not due. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml && echo 'status mirrors match'` | repo root | PASS | Status mirrors match. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`; package import smoke remains green. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 6917 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6864/6923 tests collected (59 deselected)`. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-070 files>` | repo root | PASS | No forbidden claim patterns detected after removing an internal guard-list literal that matched the scanner. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-070 files>` | repo root | PASS | No unmarked strong claims detected. |
+| `git diff --check -- <PR-070 files>` | repo root | PASS | Scoped diff has no whitespace errors. |
+
+Numerical/scientific impact: OBSSTAT diagnostic feature packaging only. PR-070
+does not compute transfer functions, run a native solver, produce posterior
+evidence, or certify MIO diagnostics.
+
+Artifact/claim-tier impact: OBSSTAT L2 diagnostic-only observable contract.
+The new facade requires OBSSTAT manifests and canonical sky support, rejects
+HTT/MIO/family-identification semantics, requires null provenance for p-value
+features, and requires COMMON transfer provenance metadata for
+transfer-derived blocks. It does not provide native solver validation,
+transfer validation, morphology compatibility, or family-ID evidence.

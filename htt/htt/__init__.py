@@ -18,6 +18,7 @@ if _INNER.is_dir():
 _EAGER = ['core', 'infer', 'bridge', 'figures', 'tilt', 'nulls']
 # Optional subpackages: alias lazily to avoid file I/O on import
 _LAZY = ['catalogs', 'integration']
+_TOP_LEVEL_ALIASES = ['obsstat']
 
 for _s in _EAGER:
     _outer = f'htt.{_s}'
@@ -26,6 +27,16 @@ for _s in _EAGER:
             _mod = _il.import_module(_outer)
             _sys.modules[_outer] = _mod
             _sys.modules.setdefault(f'htt.htt.{_s}', _mod)
+            globals()[_s] = _mod
+        except ImportError:
+            pass
+
+for _s in _TOP_LEVEL_ALIASES:
+    _outer = f'htt.{_s}'
+    if _outer not in _sys.modules:
+        try:
+            _mod = _il.import_module(_s)
+            _sys.modules[_outer] = _mod
             globals()[_s] = _mod
         except ImportError:
             pass

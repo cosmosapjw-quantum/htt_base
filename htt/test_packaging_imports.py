@@ -25,6 +25,7 @@ def test_editable_package_set_includes_legacy_htt_package() -> None:
     include = metadata["tool"]["setuptools"]["packages"]["find"]["include"]
 
     assert "htt*" in include
+    assert "obsstat*" in include
 
 
 def test_dev_extra_covers_collection_time_imports() -> None:
@@ -40,7 +41,18 @@ def test_repo_root_import_surface_without_pythonpath() -> None:
     env.pop("PYTHONPATH", None)
     code = """
 import importlib
-for name in ["htt", "htt.infer", "htt.core", "bass", "common", "mio", "tsc", "workspace"]:
+for name in [
+    "htt",
+    "htt.infer",
+    "htt.core",
+    "htt.obsstat",
+    "htt.obsstat.observable_vector",
+    "bass",
+    "common",
+    "mio",
+    "tsc",
+    "workspace",
+]:
     importlib.import_module(name)
 """
 
@@ -66,6 +78,8 @@ for name in [
     "htt.core",
     "htt.infer",
     "htt.nulls",
+    "htt.obsstat",
+    "htt.obsstat.observable_vector",
     "htt.integration.to_mio",
     "bass",
     "common",

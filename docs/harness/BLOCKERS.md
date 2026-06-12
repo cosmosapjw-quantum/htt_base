@@ -4,9 +4,9 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-12
 
-No active PR blockers after PR-022. Progress report shows unblocked next
-candidates `PR-070`, `PR-015`, `PR-050`, `PR-041`, and `PR-023`; use DAG
-ordering and policy priorities before selecting the next node.
+No active PR blockers after PR-070. Progress report shows unblocked next
+candidates `PR-015`, `PR-050`, `PR-041`, `PR-023`, `PR-071`, and `PR-080`;
+use DAG ordering and policy priorities before selecting the next node.
 
 Residual non-blocking risk: `docs/generated/quarantined_figures.md` lists 96
 existing figure/PDF assets without valid sidecar manifests. They are
@@ -40,3 +40,9 @@ Residual non-blocking risk: PR-022 standardizes PR_DELTA scaffolds, but it
 cannot force future agents to complete every section truthfully. Downstream PRs
 still need claim scans, tests, generated artifacts, and reviewer loops before
 commit.
+
+Residual non-blocking risk: PR-070 packages OBSSTAT observable features in the
+canonical COMMON `ObservableVector`, but payload values remain descriptive
+mappings. Later obsstat PRs should add richer harmonic-convention, shape, and
+feature-family validation without importing HTT inference or MIO certificate
+surfaces.

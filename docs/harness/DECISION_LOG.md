@@ -92,3 +92,29 @@ Record accepted, rejected, and deferred design decisions.
   `BASS_PY` to `BASS`, and `MANUSCRIPT` to `COMMON`.
 - Deferred: a separate machine-readable review JSON artifact remains
   unnecessary until a downstream harness consumes it.
+
+## 2026-06-12 - PR-070 OBSSTAT ObservableVector facade boundary
+
+- Accepted: `common.contracts.ObservableVector` remains the single observable
+  vector schema authority.
+- Accepted: `htt.obsstat` is an OBSSTAT facade for diagnostic observable
+  feature packaging, not a new schema layer and not an inference owner.
+- Accepted: implementation files live in the top-level `obsstat` package under
+  `htt/obsstat`, and the installed `htt` wrapper aliases that package as
+  `htt.obsstat`; package discovery must include `obsstat*`.
+- Accepted: OBSSTAT feature payloads may hold alm, scalar, morphology, null,
+  template, covariance, and BiPoSH feature dictionaries when accompanied by an
+  OBSSTAT-owned diagnostic-only manifest and canonical `SkySupport`.
+- Accepted: p-value features require a non-empty null ensemble reference and
+  tracked/corrected look-elsewhere provenance, even when nested inside
+  non-null feature blocks.
+- Accepted: transfer-derived feature blocks require COMMON transfer metadata
+  and cannot claim native transfer status without explicit native validation
+  gates; this applies to every OBSSTAT feature block, not just template or
+  covariance branches.
+- Accepted: OBSSTAT rejects HTT likelihood/evidence/posterior keys,
+  MIO-certificate semantics, and premature Bianchi family-identification,
+  geometry-detection, or family-ranking keys/phrases.
+- Deferred: shape validation, harmonic-convention validation, null ensemble
+  construction, and richer morphology feature validation remain downstream
+  obsstat PRs.
