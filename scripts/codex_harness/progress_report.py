@@ -33,9 +33,13 @@ def load_status(path: str | Path) -> dict[str, Any]:
     return status
 
 
-def validate_status(status: dict[str, Any], info: DagInfo) -> tuple[set[str], set[str]]:
+def validate_status(
+    status: dict[str, Any],
+    info: DagInfo,
+) -> tuple[set[str], set[str], set[str]]:
     completed_list = _as_id_list(status, "completed")
     blocked_list = _as_id_list(status, "blocked")
+    skipped_list = _as_id_list(status, "skipped")
     idset = set(info.ids)
 
     unknown_completed = sorted(set(completed_list) - idset)
@@ -46,11 +50,24 @@ def validate_status(status: dict[str, Any], info: DagInfo) -> tuple[set[str], se
     if unknown_blocked:
         raise ValueError(f"unknown blocked PR ids: {unknown_blocked}")
 
+    unknown_skipped = sorted(set(skipped_list) - idset)
+    if unknown_skipped:
+        raise ValueError(f"unknown skipped PR ids: {unknown_skipped}")
+
     completed = set(completed_list)
     blocked = set(blocked_list)
+    skipped = set(skipped_list)
     overlap = sorted(completed & blocked)
     if overlap:
         raise ValueError(f"PR ids cannot be both completed and blocked: {overlap}")
+    completed_skipped = sorted(completed & skipped)
+    if completed_skipped:
+        raise ValueError(
+            f"PR ids cannot be both completed and skipped: {completed_skipped}"
+        )
+    blocked_skipped = sorted(blocked & skipped)
+    if blocked_skipped:
+        raise ValueError(f"PR ids cannot be both blocked and skipped: {blocked_skipped}")
 
     incomplete_dependencies = [
         f"{dep}->{pr_id}"
@@ -71,12 +88,13 @@ def validate_status(status: dict[str, Any], info: DagInfo) -> tuple[set[str], se
             raise ValueError("status in_progress must be a PR id or null")
         if in_progress not in idset:
             raise ValueError(f"unknown in_progress PR id: {in_progress}")
-        if in_progress in completed or in_progress in blocked:
+        if in_progress in completed or in_progress in blocked or in_progress in skipped:
             raise ValueError(
-                f"in_progress PR id cannot be completed or blocked: {in_progress}"
+                "in_progress PR id cannot be completed, blocked, or skipped: "
+                f"{in_progress}"
             )
 
-    return completed, blocked
+    return completed, blocked, skipped
 
 
 def longest_critical_path(info: DagInfo) -> list[str]:
@@ -109,7 +127,13 @@ def dependency_weighted_percent(info: DagInfo, completed: set[str]) -> float:
     return round(100 * completed_weight / total_weight, 2)
 
 
-def build_report(info: DagInfo, completed: set[str], blocked: set[str], checkpoint_every: int) -> dict[str, Any]:
+def build_report(
+    info: DagInfo,
+    completed: set[str],
+    blocked: set[str],
+    skipped: set[str],
+    checkpoint_every: int,
+) -> dict[str, Any]:
     if checkpoint_every <= 0:
         raise ValueError("--checkpoint-every must be positive")
 
@@ -118,6 +142,7 @@ def build_report(info: DagInfo, completed: set[str], blocked: set[str], checkpoi
         for pr_id in info.order
         if pr_id not in completed
         and pr_id not in blocked
+        and pr_id not in skipped
         and all(dep in completed for dep in info.prereqs[pr_id])
     ]
     critical_path = longest_critical_path(info)
@@ -125,10 +150,17 @@ def build_report(info: DagInfo, completed: set[str], blocked: set[str], checkpoi
     next_checkpoint = ((len(completed) // checkpoint_every) + 1) * checkpoint_every
 
     checkpoint_due = len(completed) > 0 and len(completed) % checkpoint_every == 0
+    default_replan_reason = (
+        "checkpoint due; rerun with --write-checkpoint-dir to evaluate replan state"
+        if checkpoint_due
+        else "checkpoint not due"
+    )
     return {
         "total": len(info.ids),
         "completed": len(completed),
         "blocked": [pr_id for pr_id in info.order if pr_id in blocked],
+        "skipped": [pr_id for pr_id in info.order if pr_id in skipped],
+        "skipped_count": len(skipped),
         "percent_complete": round(100 * len(completed) / len(info.ids), 2) if info.ids else 0.0,
         "dependency_weighted_percent_complete": dependency_weighted_percent(info, completed),
         "critical_path": critical_path,
@@ -145,7 +177,7 @@ def build_report(info: DagInfo, completed: set[str], blocked: set[str], checkpoi
         "previous_checkpoint_completed": None,
         "progress_delta_completed": None,
         "replan_required": False,
-        "replan_reason": "checkpoint not due",
+        "replan_reason": default_replan_reason,
     }
 
 
@@ -219,6 +251,7 @@ def _checkpoint_markdown(report: dict[str, Any], state: dict[str, Any]) -> str:
         "replan_required": state["replan_required"],
     }
     blocked = ", ".join(report["blocked"]) or "none"
+    skipped = ", ".join(report["skipped"]) or "none"
     unblocked_next = ", ".join(report["unblocked_next"]) or "none"
     critical_path = " -> ".join(report["critical_path"]) or "none"
     replan_text = "yes" if state["replan_required"] else "no"
@@ -234,6 +267,7 @@ def _checkpoint_markdown(report: dict[str, Any], state: dict[str, Any]) -> str:
         ),
         f"- Critical path: {critical_path}",
         f"- Blocked PRs: {blocked}",
+        f"- Skipped PRs: {skipped}",
         f"- Unblocked next: {unblocked_next}",
         f"- Replan required: {replan_text}",
         f"- Replan reason: {state['replan_reason']}",
@@ -254,6 +288,37 @@ def _checkpoint_markdown(report: dict[str, Any], state: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _scoreboard_markdown(report: dict[str, Any]) -> str:
+    blocked = ", ".join(report["blocked"]) or "none"
+    skipped = ", ".join(report["skipped"]) or "none"
+    unblocked_next = ", ".join(report["unblocked_next"]) or "none"
+    critical_path = " -> ".join(report["critical_path"]) or "none"
+    checkpoint_due = "yes" if report["checkpoint_due"] else "no"
+    replan_required = "yes" if report["replan_required"] else "no"
+    lines = [
+        "# Progress scoreboard",
+        "",
+        f"- Completed PRs: {report['completed']}/{report['total']} = {report['percent_complete']}%",
+        f"- Dependency-weighted completion: {report['dependency_weighted_percent_complete']}%",
+        (
+            f"- Critical path completion: {report['critical_path_completed']}/"
+            f"{report['critical_path_total']} = {report['critical_path_percent_complete']}%"
+        ),
+        f"- Critical path: {critical_path}",
+        f"- Blocked PRs: {blocked}",
+        f"- Skipped PRs: {skipped}",
+        f"- Unblocked next: {unblocked_next}",
+        f"- Checkpoint due: {checkpoint_due}",
+        f"- Next checkpoint at: {report['next_checkpoint_at']}",
+        f"- Replan required: {replan_required}",
+        f"- Replan reason: {report['replan_reason']}",
+        "",
+        "Progress percentages count DAG bookkeeping only and are not scientific readiness evidence.",
+        "They do not validate native solver behavior, transfer calibration, HTT posterior/evidence, MIO diagnostics, null calibration, morphology compatibility, or Bianchi family identification.",
+    ]
+    return "\n".join(lines) + "\n"
+
+
 def write_checkpoint(report: dict[str, Any], checkpoint_dir: str | Path) -> Path | None:
     if not report["checkpoint_due"]:
         return None
@@ -268,19 +333,27 @@ def write_checkpoint(report: dict[str, Any], checkpoint_dir: str | Path) -> Path
     return checkpoint_path
 
 
+def write_scoreboard(report: dict[str, Any], output_path: str | Path) -> Path:
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(_scoreboard_markdown(report), encoding="utf-8")
+    return path
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("backlog")
     parser.add_argument("status")
     parser.add_argument("--checkpoint-every", type=int, default=5)
     parser.add_argument("--write-checkpoint-dir")
+    parser.add_argument("--write-scoreboard")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)
 
     try:
         info = validate_backlog(load_yaml(args.backlog))
-        completed, blocked = validate_status(load_status(args.status), info)
-        report = build_report(info, completed, blocked, args.checkpoint_every)
+        completed, blocked, skipped = validate_status(load_status(args.status), info)
+        report = build_report(info, completed, blocked, skipped, args.checkpoint_every)
     except Exception as exc:
         print(str(exc), file=sys.stderr)
         return 1
@@ -289,6 +362,13 @@ def main(argv: list[str] | None = None) -> int:
     if args.write_checkpoint_dir:
         try:
             checkpoint_path = write_checkpoint(report, args.write_checkpoint_dir)
+        except Exception as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
+
+    if args.write_scoreboard:
+        try:
+            write_scoreboard(report, args.write_scoreboard)
         except Exception as exc:
             print(str(exc), file=sys.stderr)
             return 1
@@ -310,6 +390,7 @@ def main(argv: list[str] | None = None) -> int:
             f"({report['critical_path_percent_complete']}%)",
         )
         print("Unblocked next:", ", ".join(report["unblocked_next"]) or "none")
+        print("Skipped:", ", ".join(report["skipped"]) or "none")
         print("Checkpoint due:", report["checkpoint_due"])
         if checkpoint_path is not None:
             print(f"Checkpoint artifact: {checkpoint_path}")

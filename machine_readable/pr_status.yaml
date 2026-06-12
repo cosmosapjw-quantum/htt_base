@@ -19,6 +19,7 @@ completed:
 - PR-015
 - PR-050
 - PR-041
+- PR-023
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -76,4 +77,8 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   support summaries, COMMON sky-support metadata, config/input hashes,
   explicit no-production uniform-fallback behavior, and a fail-closed
   diagnostic-axis adapter. It does not produce posterior evidence, native
-  solver validation, transfer validation, or geometry/family claims.
+  solver validation, transfer validation, or geometry/family claims. PR-023
+  extends the COMMON progress harness with explicit skipped-PR accounting,
+  deterministic progress scoreboard output, and checkpoint markdown that lists
+  blocked, skipped, unblocked-next, critical-path, and replan state without
+  letting skipped PRs inflate completion percentages or satisfy dependencies.

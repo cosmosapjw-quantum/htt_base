@@ -129,6 +129,37 @@ def test_progress_report_rejects_unknown_status_ids(tmp_path: Path) -> None:
     assert "unknown completed PR ids" in completed.stderr
 
 
+def test_progress_report_rejects_completed_skipped_overlap(tmp_path: Path) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    _write_yaml(backlog, _backlog_with_policy(["PR-000", "PR-001", "PR-003", "PR-002"]))
+    _write_yaml(status, {"completed": ["PR-000"], "skipped": ["PR-000"], "blocked": []})
+
+    completed = _run(str(PROGRESS), str(backlog), str(status), "--json")
+
+    assert completed.returncode != 0
+    assert "both completed and skipped" in completed.stderr
+
+
+def test_progress_report_tracks_skipped_without_counting_completion(
+    tmp_path: Path,
+) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    _write_yaml(backlog, _backlog_with_policy(["PR-000", "PR-001", "PR-003", "PR-002"]))
+    _write_yaml(status, {"completed": ["PR-000"], "skipped": ["PR-001"], "blocked": []})
+
+    completed = _run(str(PROGRESS), str(backlog), str(status), "--json")
+
+    assert completed.returncode == 0, completed.stderr
+    payload = json.loads(completed.stdout)
+    assert payload["completed"] == 1
+    assert payload["skipped"] == ["PR-001"]
+    assert payload["skipped_count"] == 1
+    assert "PR-001" not in payload["unblocked_next"]
+    assert "PR-002" not in payload["unblocked_next"]
+
+
 def test_progress_report_handles_empty_backlog(tmp_path: Path) -> None:
     backlog = tmp_path / "backlog.yaml"
     status = tmp_path / "status.yaml"
@@ -143,6 +174,40 @@ def test_progress_report_handles_empty_backlog(tmp_path: Path) -> None:
     assert payload["percent_complete"] == 0.0
     assert payload["critical_path"] == []
     assert payload["critical_path_percent_complete"] == 0.0
+
+
+def test_progress_report_writes_scoreboard_when_checkpoint_not_due(
+    tmp_path: Path,
+) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    scoreboard = tmp_path / "progress_scoreboard.md"
+    _write_yaml(backlog, _linear_backlog(5))
+    _write_yaml(
+        status,
+        {
+            "completed": [f"PR-{index:03d}" for index in range(4)],
+            "skipped": ["PR-004"],
+            "blocked": [],
+        },
+    )
+
+    completed = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-scoreboard",
+        str(scoreboard),
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    rendered = scoreboard.read_text(encoding="utf-8")
+    assert "Completed PRs: 4/5 = 80.0%" in rendered
+    assert "Skipped PRs: PR-004" in rendered
+    assert "Checkpoint due: no" in rendered
+    assert "not scientific readiness evidence" in rendered
 
 
 def _linear_backlog(count: int) -> dict:
@@ -263,6 +328,30 @@ def test_progress_report_json_stays_valid_when_writing_checkpoint(tmp_path: Path
     assert payload["checkpoint_due"] is True
     assert payload["checkpoint_artifact"].endswith("checkpoint_005.md")
     assert payload["replan_required"] is False
+
+
+def test_progress_report_json_marks_due_checkpoint_without_write_dir(
+    tmp_path: Path,
+) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    _write_yaml(backlog, _linear_backlog(5))
+    _write_yaml(status, {"completed": [f"PR-{index:03d}" for index in range(5)], "blocked": []})
+
+    completed = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--json",
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    payload = json.loads(completed.stdout)
+    assert payload["checkpoint_due"] is True
+    assert payload["checkpoint_artifact"] is None
+    assert "rerun with --write-checkpoint-dir" in payload["replan_reason"]
 
 
 def test_progress_report_rejects_malformed_previous_checkpoint_metadata(

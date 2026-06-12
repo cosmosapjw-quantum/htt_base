@@ -186,3 +186,22 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: posterior-derived axis promotion, statistical mock-coverage
   calibration, null/FPR accounting, and downstream `a_lm`/`a_2m` synthesis
   locks remain PR-042/PR-043 work.
+
+## 2026-06-12 - PR-023 COMMON progress scoreboard boundary
+
+- Accepted: `skipped` is an explicit status list parsed by
+  `scripts/codex_harness/progress_report.py`; skipped PRs are neither
+  completed nor blocked.
+- Accepted: skipped PRs do not count toward percent completion, do not satisfy
+  dependencies, and are excluded from `unblocked_next`.
+- Accepted: status overlap among `completed`, `blocked`, `skipped`, and
+  `in_progress` is a hard progress-report failure.
+- Accepted: `--write-scoreboard` emits deterministic current progress markdown
+  under `docs/generated/progress_checkpoints/progress_scoreboard.md`, including
+  blocked, skipped, unblocked-next, checkpoint, and replan state.
+- Accepted: checkpoint 020 is the five-PR checkpoint for PR-015, PR-050,
+  PR-041, and PR-023 plus the already-completed PR count since checkpoint 015;
+  progress advanced by 5, so no replan PR is required.
+- Deferred: the harness cannot prove a manually edited completed PR was truly
+  reviewed. That remains enforced by the per-PR delta, tests, claim scans, and
+  commit loop.

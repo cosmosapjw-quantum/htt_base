@@ -686,3 +686,42 @@ Uniform fallback is forbidden in production-mode strictness and marked
 diagnostic-only when explicitly allowed outside production. The ladder does not
 provide native solver validation, transfer validation, HTT posterior evidence,
 MIO certificate evidence, morphology compatibility, or geometry/family claims.
+
+## PR-023 - Progress scoreboard and stagnation-triggered replanning
+
+Date: 2026-06-12
+
+Changed files: `scripts/codex_harness/progress_report.py`,
+`scripts/codex_harness/test_pr_dag_harness.py`,
+`docs/codex_handoff/checkpoint_protocol.md`, `docs/checkpoint_protocol.md`,
+`docs/generated/progress_checkpoints/checkpoint_020.md`,
+`docs/generated/progress_checkpoints/progress_scoreboard.md`,
+`docs/PR_DELTAS/pr-023.md`, status files, PR-012 generated status sidecars,
+and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest scripts/codex_harness/test_pr_dag_harness.py -q` before implementation | repo root | FAIL | Red phase: skipped overlap was accepted, skipped fields were absent, and `--write-scoreboard` was unknown. |
+| `venv/bin/python -m pytest scripts/codex_harness/test_pr_dag_harness.py -q` | repo root | PASS | `15 passed`; covers skipped overlap rejection, skipped exclusion from completion/unblocked-next, checkpoint-due JSON honesty, checkpoint behavior, malformed checkpoint metadata, and scoreboard output. |
+| `venv/bin/python -m py_compile scripts/codex_harness/progress_report.py scripts/codex_harness/test_pr_dag_harness.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python -m pytest scripts/codex_harness/test_pr_dag_harness.py tests/contracts/test_harness_runner.py tests/contracts/test_status_snapshot.py -q` | repo root | PASS | `27 passed`; adjacent harness/status tests remain green. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --json` | repo root | PASS | Exact PR-card command before status update: `19/62 = 30.65%`, skipped `[]`, next checkpoint 20. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard /tmp/htt_pr023_scoreboard.md` | repo root | PASS | Wrote deterministic current scoreboard before status update; listed skipped `none` and checkpoint due `no`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json` | repo root | PASS | After status update without checkpoint dir: reports `checkpoint_due=true` and explicitly says to rerun with `--write-checkpoint-dir` to evaluate replan state. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-checkpoint-dir docs/generated/progress_checkpoints --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | After status update: `20/62 = 32.26%`; dependency-weighted `37.44%`; critical path `6/21 = 28.57%`; wrote `checkpoint_020.md`; replan not required because progress advanced by 5 since checkpoint 015. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status sidecars at 20 completed PRs. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml && echo 'status mirrors match'` | repo root | PASS | Status mirrors match. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 6952 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6899/6958 tests collected (59 deselected)`. |
+| `python scripts/check_claim_language.py <PR-023 files> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `python scripts/check_claim_language.py docs docs/manuscript --dry-run` | repo root | PASS | Active docs/manuscript scan found no forbidden claim language. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-023 docs>` | repo root | PASS | No forbidden claim patterns detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-023 docs>` | repo root | PASS | No unmarked strong claims detected. |
+
+Numerical/scientific impact: none. PR-023 is COMMON L1 harness bookkeeping.
+
+Artifact/claim-tier impact: generated checkpoint and scoreboard metrics are
+DAG bookkeeping only. They do not validate native solver behavior, transfer
+calibration, HTT posterior/evidence, MIO diagnostics, null calibration,
+morphology compatibility, or family-ID evidence.

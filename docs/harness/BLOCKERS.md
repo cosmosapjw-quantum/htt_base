@@ -4,10 +4,9 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-12
 
-No active PR blockers after PR-041. Progress report shows unblocked next
-candidates `PR-023`, `PR-071`, `PR-080`, `PR-030`, `PR-113`, `PR-051`, and
-`PR-042`; use DAG ordering and policy priorities before selecting the next
-node.
+No active PR blockers after PR-023. Progress report shows unblocked next
+candidates `PR-071`, `PR-080`, `PR-030`, `PR-113`, `PR-051`, and `PR-042`;
+use DAG ordering and policy priorities before selecting the next node.
 
 Residual non-blocking risk: `docs/generated/quarantined_figures.md` lists 96
 existing figure/PDF assets without valid sidecar manifests. They are
@@ -67,3 +66,9 @@ calibrate directional bias/coverage/FPR, or produce a posterior-derived
 production axis. PR-042/PR-043 must preserve the fail-closed axis gate and add
 statistical mock-coverage evidence before any production directional claim can
 move beyond diagnostic support.
+
+Residual non-blocking risk: PR-023 prevents explicit skipped PRs from inflating
+completion percentages or satisfying dependencies, but it cannot prove that a
+manually marked completed PR was genuinely reviewed. Continue enforcing the
+per-PR loop: PR_DELTA, tests, claim scans, generated artifacts, self-review,
+and commit evidence.
