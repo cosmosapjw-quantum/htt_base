@@ -20,6 +20,10 @@ from common.contracts import (
     normalize_implementation_scope,
     normalize_owner,
 )
+from common.mock_calibration import (
+    AxisMockCalibrationReport,
+    evaluate_directional_claim_mock_gate,
+)
 from htt.direction.preferred_axis import (
     axis_coordinate_blockers,
     axis_provenance_is_stable,
@@ -109,8 +113,15 @@ class AxisPromotionRecord:
             raise ValueError(
                 "AxisPromotionRecord.null_mock_status must be non-empty"
             )
-        if not str(self.transfer_source).strip():
+        transfer_source = str(self.transfer_source).strip()
+        if not transfer_source:
             raise ValueError("AxisPromotionRecord.transfer_source must be non-empty")
+        if transfer_source != "none":
+            raise ValueError(
+                "AxisPromotionRecord.transfer_source must be 'none' until a "
+                "real transfer registry gate is wired"
+            )
+        object.__setattr__(self, "transfer_source", transfer_source)
         if self.lineage_status != "self_attested_pre_solver":
             raise ValueError(
                 "AxisPromotionRecord.lineage_status must be "
@@ -155,6 +166,7 @@ class AxisPromotionDecision:
     sky_support: SkySupport | None
     target: str
     promotion_record: AxisPromotionRecord | None = None
+    mock_calibration_report: AxisMockCalibrationReport | None = None
     carry_forward: tuple[str, ...] = ()
 
     @property
@@ -190,6 +202,11 @@ class AxisPromotionDecision:
                 if self.promotion_record is not None
                 else None
             ),
+            "mock_calibration_report": (
+                self.mock_calibration_report.to_metadata()
+                if self.mock_calibration_report is not None
+                else None
+            ),
         }
 
 
@@ -198,6 +215,7 @@ def evaluate_axis_promotion(
     *,
     sky_support: SkySupport | None,
     promotion_record: AxisPromotionRecord | None = None,
+    mock_calibration_report: AxisMockCalibrationReport | None = None,
     target: str = "directional_synthesis",
 ) -> AxisPromotionDecision:
     """Evaluate whether an axis may seed downstream HTT synthesis."""
@@ -213,6 +231,7 @@ def evaluate_axis_promotion(
         "SkySupport.coordinate_frame/completeness/pixelization are explicit",
         "SkySupport.sky_fraction is finite and in (0,1]",
         "AxisPromotionRecord matches axis/sky/mask/mock provenance",
+        "Directional mock calibration report passes retention/bias/coverage/FPR gates",
     )
     blocked: list[str] = list(base_decision.blocked_reasons)
     blocked.extend(axis_coordinate_blockers(axis))
@@ -223,7 +242,26 @@ def evaluate_axis_promotion(
     if promotion_record is None:
         blocked.append("axis_promotion_record_missing")
     else:
-        blocked.extend(_record_mismatch_blockers(axis, sky_support, promotion_record))
+        blocked.extend(
+            _record_mismatch_blockers(
+                axis,
+                sky_support,
+                promotion_record,
+                mock_calibration_report,
+            )
+        )
+    mock_decision = evaluate_directional_claim_mock_gate(
+        mock_calibration_report,
+        requested_claim_tier=ClaimTier.CONDITIONAL,
+        sky_support_hash=(
+            sky_support.sky_support_hash if sky_support is not None else None
+        ),
+        mask_hash=sky_support.mask_hash if sky_support is not None else None,
+        scan_volume_hash=(
+            sky_support.scan_volume_hash if sky_support is not None else None
+        ),
+    )
+    blocked.extend(mock_decision.blocked_reasons)
     if _is_harmonic_target(target_text) and _is_diagnostic_axis(axis):
         blocked.append(f"diagnostic_axis_cannot_rotate_{_target_reason(target_text)}")
 
@@ -235,6 +273,7 @@ def evaluate_axis_promotion(
         sky_support=sky_support,
         target=target_text,
         promotion_record=promotion_record,
+        mock_calibration_report=mock_calibration_report,
         carry_forward=base_decision.carry_forward,
     )
 
@@ -244,6 +283,7 @@ def require_axis_promotion(
     *,
     sky_support: SkySupport | None,
     promotion_record: AxisPromotionRecord | None = None,
+    mock_calibration_report: AxisMockCalibrationReport | None = None,
     target: str = "directional_synthesis",
 ) -> PreferredAxis:
     """Return ``axis`` only when the full promotion lock passes."""
@@ -252,6 +292,7 @@ def require_axis_promotion(
         axis,
         sky_support=sky_support,
         promotion_record=promotion_record,
+        mock_calibration_report=mock_calibration_report,
         target=target,
     )
     if not decision.allowed:
@@ -267,6 +308,7 @@ def require_axis_for_harmonic_synthesis(
     *,
     sky_support: SkySupport | None,
     promotion_record: AxisPromotionRecord | None = None,
+    mock_calibration_report: AxisMockCalibrationReport | None = None,
     target: str,
 ) -> PreferredAxis:
     """Fail closed before any ``a_lm``/``a_2m`` rotation or synthesis path."""
@@ -280,6 +322,7 @@ def require_axis_for_harmonic_synthesis(
         axis,
         sky_support=sky_support,
         promotion_record=promotion_record,
+        mock_calibration_report=mock_calibration_report,
         target=target,
     )
 
@@ -311,10 +354,16 @@ def _record_mismatch_blockers(
     axis: PreferredAxis,
     sky_support: SkySupport | None,
     record: AxisPromotionRecord,
+    mock_calibration_report: AxisMockCalibrationReport | None,
 ) -> tuple[str, ...]:
     blocked: list[str] = []
     if record.axis_provenance_hash != axis.provenance_hash:
         blocked.append("promotion_record_axis_hash_mismatch")
+    if mock_calibration_report is not None:
+        if record.mock_calibration_hash != mock_calibration_report.calibration_hash:
+            blocked.append("promotion_record_mock_calibration_hash_mismatch")
+        if record.null_mock_status != mock_calibration_report.null_mock_status:
+            blocked.append("promotion_record_null_mock_status_mismatch")
     if sky_support is None:
         return tuple(blocked)
     if record.sky_support_hash != sky_support.sky_support_hash:

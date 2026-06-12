@@ -15,8 +15,10 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import hashlib
 import json
+import math
 import platform
-from typing import Any, Callable, Mapping
+import re
+from typing import Any, Callable, Mapping, Sequence
 
 import numpy as np
 
@@ -25,7 +27,16 @@ from common.bulkflow_estimator import (
     BulkFlowFit,
     wls_bulk_flow,
 )
-from common.contracts import MockCalibrationReport, SkySelectionConfig
+from common.contracts import (
+    ClaimTier,
+    ImplementationScope,
+    MockCalibrationReport,
+    Owner,
+    SkySelectionConfig,
+    normalize_claim_tier,
+    normalize_implementation_scope,
+    normalize_owner,
+)
 from common.healpix_selection import (
     build_angular_completeness,
     build_zoa_mask,
@@ -35,7 +46,12 @@ from common.healpix_selection import (
 from common.sky_geometry import lb_to_unitvec, unitvec_to_lb
 
 __all__ = [
+    "AxisMockCalibrationGateDecision",
+    "AxisMockCalibrationReport",
+    "AxisMockCalibrationThresholds",
     "InjectedMockReport",
+    "build_axis_mock_calibration_report",
+    "evaluate_directional_claim_mock_gate",
     "generate_isotropic_mock",
     "generate_injected_dipole_mock",
     "apply_same_mask",
@@ -51,6 +67,38 @@ EstimatorFn = Callable[
     [np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray],
     tuple[np.ndarray, np.ndarray],
 ]
+
+_SHA256_RE = re.compile(r"^sha256:[0-9a-fA-F]{64}$")
+_SAFE_CLAIM_TARGETS = {
+    "diagnostic_direction",
+    "production_axis_candidate",
+    "harmonic_synthesis_gate",
+}
+_PASSING_COVARIANCE_STATUSES = {
+    "directional_mock_covariance_available",
+    "directional_mock_covariance_calibrated",
+}
+_FORBIDDEN_AXIS_REPORT_PHRASES = (
+    "family identified",
+    "family identification",
+    "geometry detected",
+    "geometry detection",
+    "posterior odds",
+    "bayes factor",
+    "mio evidence",
+    "mio posterior",
+    "native solver result",
+    "validated as native",
+    "bass_native",
+    "truth certificate",
+)
+_CLAIM_TIER_RANK = {
+    ClaimTier.BLOCKED: -1,
+    ClaimTier.DIAGNOSTIC_ONLY: 0,
+    ClaimTier.EXPLORATORY: 0,
+    ClaimTier.CONDITIONAL: 1,
+    ClaimTier.VALIDATED: 2,
+}
 
 
 def _jsonify(obj: Any) -> Any:
@@ -73,6 +121,764 @@ def _config_hash(payload: Mapping[str, Any]) -> str:
     """Stable SHA256 hash for artifact configuration payloads."""
     blob = json.dumps(_jsonify(payload), sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def _hash_payload(payload: Mapping[str, Any]) -> str:
+    blob = json.dumps(_jsonify(payload), sort_keys=True, separators=(",", ":"))
+    return "sha256:" + hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def _is_sha256(value: str) -> bool:
+    return _SHA256_RE.fullmatch(str(value).strip()) is not None
+
+
+def _require_sha256(value: str, field_name: str) -> str:
+    text = str(value).strip()
+    if not _is_sha256(text):
+        raise ValueError(f"{field_name} must be sha256:<64 hex chars>")
+    return text
+
+
+def _require_sha256_sequence(
+    values: Sequence[str],
+    field_name: str,
+) -> tuple[str, ...]:
+    if not values:
+        raise ValueError(f"{field_name} must be non-empty")
+    return tuple(_require_sha256(value, field_name) for value in values)
+
+
+def _finite_float(value: float, field_name: str) -> float:
+    out = float(value)
+    if not math.isfinite(out):
+        raise ValueError(f"{field_name} must be finite")
+    return out
+
+
+def _unit_interval(value: float, field_name: str) -> float:
+    out = _finite_float(value, field_name)
+    if not 0.0 <= out <= 1.0:
+        raise ValueError(f"{field_name} must be in [0, 1]")
+    return out
+
+
+def _wilson_interval(k: int, n: int, *, z: float = 1.0) -> tuple[float, float]:
+    """Wilson score interval for a binomial proportion.
+
+    ``z=1`` gives the one-sigma scale used by the mock-calibration metadata.
+    """
+
+    if n <= 0:
+        raise ValueError("Wilson interval requires n > 0")
+    if k < 0 or k > n:
+        raise ValueError("Wilson interval requires 0 <= k <= n")
+    p_hat = k / n
+    z2 = z * z
+    denom = 1.0 + z2 / n
+    center = (p_hat + z2 / (2.0 * n)) / denom
+    half_width = z / denom * math.sqrt(
+        (p_hat * (1.0 - p_hat) / n) + (z2 / (4.0 * n * n))
+    )
+    return max(0.0, center - half_width), min(1.0, center + half_width)
+
+
+def _proportion_count(value: float, n: int) -> int:
+    return max(0, min(n, int(round(float(value) * n))))
+
+
+def _event_count(value: int | None, rate: float, n: int, field_name: str) -> int:
+    if value is None:
+        raise ValueError(f"{field_name} is required")
+    out = int(value)
+    if out < 0 or out > n:
+        raise ValueError(f"{field_name} must satisfy 0 <= {field_name} <= n")
+    rate_from_count = out / n if n > 0 else 0.0
+    tolerance = 0.5 / n if n > 0 else 0.0
+    if abs(rate_from_count - float(rate)) > tolerance + 1.0e-12:
+        raise ValueError(
+            f"{field_name} is inconsistent with rate {rate!r} for n={n}"
+        )
+    return out
+
+
+def _tier_exceeds(requested: ClaimTier, ceiling: ClaimTier) -> bool:
+    return _CLAIM_TIER_RANK[requested] > _CLAIM_TIER_RANK[ceiling]
+
+
+def _dedupe(values: Sequence[str]) -> tuple[str, ...]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for value in values:
+        if value not in seen:
+            seen.add(value)
+            out.append(value)
+    return tuple(out)
+
+
+def _reject_axis_report_reserved_language(payload: Mapping[str, Any]) -> None:
+    text = json.dumps(_jsonify(payload), sort_keys=True).lower().replace("_", " ")
+    for phrase in _FORBIDDEN_AXIS_REPORT_PHRASES:
+        if phrase in text:
+            raise ValueError(
+                "AxisMockCalibrationReport metadata contains reserved claim "
+                f"language: {phrase!r}"
+            )
+
+
+def _validate_sky_support_metadata(
+    metadata: Mapping[str, Any],
+    *,
+    sky_support_hash: str,
+    mask_hash: str,
+    scan_volume_hash: str,
+) -> None:
+    required = {
+        "selection_mode",
+        "sky_support_hash",
+        "mask_hash",
+        "mock_coverage_status",
+        "scan_volume_hash",
+        "coordinate_frame",
+        "sky_fraction",
+        "completeness_status",
+        "pixelization",
+        "nside",
+    }
+    missing = sorted(key for key in required if key not in metadata)
+    if missing:
+        raise ValueError(
+            "sky_support_metadata missing required fields: " + ", ".join(missing)
+        )
+    if metadata["sky_support_hash"] != sky_support_hash:
+        raise ValueError("sky_support_metadata.sky_support_hash mismatch")
+    if metadata["mask_hash"] != mask_hash:
+        raise ValueError("sky_support_metadata.mask_hash mismatch")
+    if metadata["scan_volume_hash"] != scan_volume_hash:
+        raise ValueError("sky_support_metadata.scan_volume_hash mismatch")
+    for field_name in (
+        "selection_mode",
+        "mock_coverage_status",
+        "coordinate_frame",
+        "completeness_status",
+        "pixelization",
+    ):
+        if not str(metadata[field_name]).strip():
+            raise ValueError(f"sky_support_metadata.{field_name} must be non-empty")
+    sky_fraction = _finite_float(
+        float(metadata["sky_fraction"]),
+        "sky_support_metadata.sky_fraction",
+    )
+    if not 0.0 < sky_fraction <= 1.0:
+        raise ValueError("sky_support_metadata.sky_fraction must be in (0, 1]")
+    if int(metadata["nside"]) <= 0:
+        raise ValueError("sky_support_metadata.nside must be positive")
+
+
+@dataclass(frozen=True)
+class AxisMockCalibrationThresholds:
+    """Threshold bundle for directional mock-calibration gates."""
+
+    min_retention_fraction: float = 0.90
+    max_bias_direction_deg: float = 5.0
+    coverage_68_window: tuple[float, float] = (0.60, 0.76)
+    max_false_positive_rate: float = 0.05
+    min_n_mock: int = 100
+    min_response_rank: int = 3
+    min_effective_rank: float = 2.0
+    max_condition_number: float = 1.0e8
+    max_null_space_dimension: int = 0
+
+    def __post_init__(self) -> None:
+        object.__setattr__(
+            self,
+            "min_retention_fraction",
+            _unit_interval(self.min_retention_fraction, "min_retention_fraction"),
+        )
+        object.__setattr__(
+            self,
+            "max_bias_direction_deg",
+            _finite_float(self.max_bias_direction_deg, "max_bias_direction_deg"),
+        )
+        lower, upper = self.coverage_68_window
+        lower = _unit_interval(lower, "coverage_68_window[0]")
+        upper = _unit_interval(upper, "coverage_68_window[1]")
+        if lower > upper:
+            raise ValueError("coverage_68_window must satisfy lower <= upper")
+        object.__setattr__(self, "coverage_68_window", (lower, upper))
+        object.__setattr__(
+            self,
+            "max_false_positive_rate",
+            _unit_interval(self.max_false_positive_rate, "max_false_positive_rate"),
+        )
+        if int(self.min_n_mock) <= 0:
+            raise ValueError("min_n_mock must be positive")
+        object.__setattr__(self, "min_n_mock", int(self.min_n_mock))
+        if int(self.min_response_rank) <= 0:
+            raise ValueError("min_response_rank must be positive")
+        object.__setattr__(self, "min_response_rank", int(self.min_response_rank))
+        object.__setattr__(
+            self,
+            "min_effective_rank",
+            _finite_float(self.min_effective_rank, "min_effective_rank"),
+        )
+        object.__setattr__(
+            self,
+            "max_condition_number",
+            _finite_float(self.max_condition_number, "max_condition_number"),
+        )
+        if self.max_condition_number <= 0.0:
+            raise ValueError("max_condition_number must be positive")
+        if int(self.max_null_space_dimension) < 0:
+            raise ValueError("max_null_space_dimension must be non-negative")
+        object.__setattr__(
+            self,
+            "max_null_space_dimension",
+            int(self.max_null_space_dimension),
+        )
+
+    def to_metadata(self) -> dict[str, object]:
+        return {
+            "min_retention_fraction": self.min_retention_fraction,
+            "max_bias_direction_deg": self.max_bias_direction_deg,
+            "coverage_68_window": list(self.coverage_68_window),
+            "max_false_positive_rate": self.max_false_positive_rate,
+            "min_n_mock": self.min_n_mock,
+            "min_response_rank": self.min_response_rank,
+            "min_effective_rank": self.min_effective_rank,
+            "max_condition_number": self.max_condition_number,
+            "max_null_space_dimension": self.max_null_space_dimension,
+        }
+
+
+@dataclass(frozen=True)
+class AxisMockCalibrationReport:
+    """HTT-owned directional mock-calibration report for axis claim gates."""
+
+    claim_target: str
+    n_mock_requested: int
+    n_mock_succeeded: int
+    bias_direction_deg: float
+    coverage_68: float
+    false_positive_rate: float
+    null_ensemble: str
+    detection_rule: str
+    look_elsewhere_trials: int
+    scan_trial_count: int
+    scan_trial_hash: str
+    response_rank: int
+    effective_rank: float
+    null_space_dimension: int
+    condition_number: float
+    sky_support_hash: str
+    mask_hash: str
+    scan_volume_hash: str
+    config_hash: str
+    input_hashes: tuple[str, ...]
+    covariance_status: str
+    generating_command: str
+    git_commit: str | None
+    worktree_state: str
+    sky_support_status: str = "pr040_sky_support_attached"
+    sky_support_metadata: Mapping[str, Any] | None = None
+    coverage_68_count: int | None = None
+    false_positive_count: int | None = None
+    bias_direction_p95_deg: float | None = None
+    thresholds: AxisMockCalibrationThresholds = field(
+        default_factory=AxisMockCalibrationThresholds
+    )
+    owner: Owner | str = Owner.HTT
+    implementation_scope: ImplementationScope | str = ImplementationScope.HTT
+    claim_tier: ClaimTier | str = ClaimTier.DIAGNOSTIC_ONLY
+    transfer_source: str = "none"
+    random_seeds: tuple[int, ...] = ()
+    caveats: tuple[str, ...] = (
+        "pre_solver_directional_mock_calibration_only",
+        "not_a_native_solver_validation",
+        "does_not_identify_bianchi_family",
+    )
+
+    def __post_init__(self) -> None:
+        owner = normalize_owner(self.owner)
+        scope = normalize_implementation_scope(self.implementation_scope)
+        claim_tier = normalize_claim_tier(self.claim_tier)
+        object.__setattr__(self, "owner", owner)
+        object.__setattr__(self, "implementation_scope", scope)
+        object.__setattr__(self, "claim_tier", claim_tier)
+        if owner is not Owner.HTT:
+            raise ValueError("AxisMockCalibrationReport.owner must be HTT")
+        if scope is not ImplementationScope.HTT:
+            raise ValueError(
+                "AxisMockCalibrationReport.implementation_scope must be htt"
+            )
+        if claim_tier is not ClaimTier.DIAGNOSTIC_ONLY:
+            raise ValueError(
+                "AxisMockCalibrationReport is gate metadata; claim_tier must be "
+                "diagnostic_only"
+            )
+        if self.claim_target not in _SAFE_CLAIM_TARGETS:
+            raise ValueError(
+                "claim_target must be one of "
+                f"{sorted(_SAFE_CLAIM_TARGETS)}"
+            )
+        if int(self.n_mock_requested) <= 0:
+            raise ValueError("n_mock_requested must be positive")
+        if int(self.n_mock_succeeded) < 0:
+            raise ValueError("n_mock_succeeded must be non-negative")
+        if int(self.n_mock_succeeded) > int(self.n_mock_requested):
+            raise ValueError("n_mock_succeeded cannot exceed n_mock_requested")
+        object.__setattr__(self, "n_mock_requested", int(self.n_mock_requested))
+        object.__setattr__(self, "n_mock_succeeded", int(self.n_mock_succeeded))
+        object.__setattr__(
+            self,
+            "bias_direction_deg",
+            _finite_float(self.bias_direction_deg, "bias_direction_deg"),
+        )
+        if self.bias_direction_deg < 0.0:
+            raise ValueError("bias_direction_deg must be non-negative")
+        object.__setattr__(
+            self,
+            "coverage_68",
+            _unit_interval(self.coverage_68, "coverage_68"),
+        )
+        object.__setattr__(
+            self,
+            "false_positive_rate",
+            _unit_interval(self.false_positive_rate, "false_positive_rate"),
+        )
+        if not str(self.null_ensemble).strip():
+            raise ValueError("null_ensemble must be non-empty")
+        if not str(self.detection_rule).strip():
+            raise ValueError("detection_rule must be non-empty")
+        if int(self.look_elsewhere_trials) <= 0:
+            raise ValueError("look_elsewhere_trials must be positive")
+        object.__setattr__(
+            self, "look_elsewhere_trials", int(self.look_elsewhere_trials)
+        )
+        if int(self.scan_trial_count) <= 0:
+            raise ValueError("scan_trial_count must be positive")
+        object.__setattr__(self, "scan_trial_count", int(self.scan_trial_count))
+        object.__setattr__(
+            self,
+            "scan_trial_hash",
+            _require_sha256(self.scan_trial_hash, "scan_trial_hash"),
+        )
+        if int(self.response_rank) < 0:
+            raise ValueError("response_rank must be non-negative")
+        object.__setattr__(self, "response_rank", int(self.response_rank))
+        object.__setattr__(
+            self,
+            "effective_rank",
+            _finite_float(self.effective_rank, "effective_rank"),
+        )
+        if int(self.null_space_dimension) < 0:
+            raise ValueError("null_space_dimension must be non-negative")
+        object.__setattr__(
+            self, "null_space_dimension", int(self.null_space_dimension)
+        )
+        object.__setattr__(
+            self,
+            "condition_number",
+            _finite_float(self.condition_number, "condition_number"),
+        )
+        if self.condition_number <= 0.0:
+            raise ValueError("condition_number must be positive")
+        object.__setattr__(
+            self,
+            "sky_support_hash",
+            _require_sha256(self.sky_support_hash, "sky_support_hash"),
+        )
+        object.__setattr__(
+            self,
+            "mask_hash",
+            _require_sha256(self.mask_hash, "mask_hash"),
+        )
+        object.__setattr__(
+            self,
+            "scan_volume_hash",
+            _require_sha256(self.scan_volume_hash, "scan_volume_hash"),
+        )
+        object.__setattr__(
+            self,
+            "config_hash",
+            _require_sha256(self.config_hash, "config_hash"),
+        )
+        object.__setattr__(
+            self,
+            "input_hashes",
+            _require_sha256_sequence(self.input_hashes, "input_hashes"),
+        )
+        if not str(self.covariance_status).strip():
+            raise ValueError("covariance_status must be non-empty")
+        if not str(self.generating_command).strip():
+            raise ValueError("generating_command must be non-empty")
+        if not str(self.worktree_state).strip():
+            raise ValueError("worktree_state must be non-empty")
+        transfer_source = str(self.transfer_source).strip()
+        if not transfer_source:
+            raise ValueError("transfer_source must be non-empty")
+        if transfer_source != "none":
+            raise ValueError(
+                "AxisMockCalibrationReport.transfer_source must be 'none' "
+                "until a real transfer registry gate is wired"
+            )
+        object.__setattr__(self, "transfer_source", transfer_source)
+        if not str(self.sky_support_status).strip():
+            raise ValueError("sky_support_status must be non-empty")
+        object.__setattr__(
+            self,
+            "sky_support_status",
+            str(self.sky_support_status).strip(),
+        )
+        if self.sky_support_metadata is None:
+            object.__setattr__(self, "sky_support_metadata", None)
+        else:
+            sky_support_metadata = dict(self.sky_support_metadata)
+            _validate_sky_support_metadata(
+                sky_support_metadata,
+                sky_support_hash=self.sky_support_hash,
+                mask_hash=self.mask_hash,
+                scan_volume_hash=self.scan_volume_hash,
+            )
+            object.__setattr__(self, "sky_support_metadata", sky_support_metadata)
+        object.__setattr__(
+            self,
+            "random_seeds",
+            tuple(int(seed) for seed in self.random_seeds),
+        )
+        object.__setattr__(
+            self,
+            "coverage_68_count",
+            _event_count(
+                self.coverage_68_count,
+                self.coverage_68,
+                self.n_mock_succeeded,
+                "coverage_68_count",
+            ),
+        )
+        object.__setattr__(
+            self,
+            "false_positive_count",
+            _event_count(
+                self.false_positive_count,
+                self.false_positive_rate,
+                self.n_mock_succeeded,
+                "false_positive_count",
+            ),
+        )
+        if self.bias_direction_p95_deg is None:
+            raise ValueError("bias_direction_p95_deg is required")
+        object.__setattr__(
+            self,
+            "bias_direction_p95_deg",
+            _finite_float(
+                self.bias_direction_p95_deg,
+                "bias_direction_p95_deg",
+            ),
+        )
+        if self.bias_direction_p95_deg < self.bias_direction_deg:
+            raise ValueError(
+                "bias_direction_p95_deg must be >= bias_direction_deg"
+            )
+        object.__setattr__(
+            self,
+            "caveats",
+            tuple(str(item) for item in self.caveats),
+        )
+        if not self.caveats:
+            raise ValueError("caveats must be non-empty")
+        _reject_axis_report_reserved_language(
+            {
+                "claim_target": self.claim_target,
+                "null_ensemble": self.null_ensemble,
+                "detection_rule": self.detection_rule,
+                "covariance_status": self.covariance_status,
+                "transfer_source": self.transfer_source,
+                "sky_support_status": self.sky_support_status,
+                "caveats": self.caveats,
+            }
+        )
+
+    @property
+    def retention_fraction(self) -> float:
+        return self.n_mock_succeeded / self.n_mock_requested
+
+    @property
+    def false_positive_rate_adjusted(self) -> float:
+        return min(1.0, self.false_positive_rate * self.look_elsewhere_trials)
+
+    @property
+    def false_positive_rate_interval_adjusted(self) -> tuple[float, float]:
+        if self.n_mock_succeeded <= 0:
+            return 0.0, 1.0
+        lower, upper = _wilson_interval(
+            int(self.false_positive_count or 0),
+            self.n_mock_succeeded,
+        )
+        return (
+            min(1.0, lower * self.look_elsewhere_trials),
+            min(1.0, upper * self.look_elsewhere_trials),
+        )
+
+    @property
+    def coverage_68_interval(self) -> tuple[float, float]:
+        if self.n_mock_succeeded <= 0:
+            return 0.0, 1.0
+        return _wilson_interval(
+            int(self.coverage_68_count or 0),
+            self.n_mock_succeeded,
+        )
+
+    @property
+    def blocked_reasons(self) -> tuple[str, ...]:
+        thresholds = self.thresholds
+        lower, upper = thresholds.coverage_68_window
+        blocked: list[str] = []
+        if self.n_mock_succeeded < thresholds.min_n_mock:
+            blocked.append("n_mock_below_threshold")
+        if self.retention_fraction < thresholds.min_retention_fraction:
+            blocked.append("retention_fraction_below_threshold")
+        if self.bias_direction_deg > thresholds.max_bias_direction_deg:
+            blocked.append("direction_bias_exceeds_threshold")
+        if (
+            self.bias_direction_p95_deg is not None
+            and self.bias_direction_p95_deg > thresholds.max_bias_direction_deg
+        ):
+            blocked.append("direction_bias_tail_exceeds_threshold")
+        coverage_lower, coverage_upper = self.coverage_68_interval
+        if not lower <= self.coverage_68 <= upper:
+            blocked.append("coverage_68_outside_window")
+        if not (lower <= coverage_lower and coverage_upper <= upper):
+            blocked.append("coverage_68_interval_outside_window")
+        _, fpr_upper = self.false_positive_rate_interval_adjusted
+        if (
+            self.false_positive_rate_adjusted > thresholds.max_false_positive_rate
+            or fpr_upper > thresholds.max_false_positive_rate
+        ):
+            blocked.append("false_positive_rate_exceeds_threshold")
+        if self.response_rank < thresholds.min_response_rank:
+            blocked.append("response_rank_below_threshold")
+        if self.effective_rank < thresholds.min_effective_rank:
+            blocked.append("effective_rank_below_threshold")
+        if self.null_space_dimension > 0:
+            blocked.append("null_space_dimension_nonzero")
+        if self.null_space_dimension > thresholds.max_null_space_dimension:
+            blocked.append("null_space_dimension_exceeds_threshold")
+        if self.condition_number > thresholds.max_condition_number:
+            blocked.append("condition_number_exceeds_threshold")
+        if self.look_elsewhere_trials != self.scan_trial_count:
+            blocked.append("look_elsewhere_trials_scan_count_mismatch")
+        if self.sky_support_status != "pr040_sky_support_attached":
+            blocked.append("sky_support_status_not_attached")
+        if self.sky_support_metadata is None:
+            blocked.append("sky_support_metadata_missing")
+        if (
+            str(self.covariance_status).strip().lower()
+            not in _PASSING_COVARIANCE_STATUSES
+        ):
+            blocked.append("covariance_status_not_calibrated")
+        return _dedupe(blocked)
+
+    @property
+    def allowed_claim_tier(self) -> ClaimTier:
+        if self.blocked_reasons:
+            return ClaimTier.DIAGNOSTIC_ONLY
+        return ClaimTier.CONDITIONAL
+
+    @property
+    def null_mock_status(self) -> str:
+        if self.blocked_reasons:
+            return "directional_null_mock_failed"
+        return "directional_null_mock_passed"
+
+    @property
+    def calibration_hash(self) -> str:
+        return _hash_payload(self._hash_payload())
+
+    def _hash_payload(self) -> dict[str, object]:
+        return {
+            "schema": "axis_mock_calibration_report_v1",
+            "claim_target": self.claim_target,
+            "n_mock_requested": self.n_mock_requested,
+            "n_mock_succeeded": self.n_mock_succeeded,
+            "bias_direction_deg": self.bias_direction_deg,
+            "coverage_68": self.coverage_68,
+            "false_positive_rate": self.false_positive_rate,
+            "null_ensemble": self.null_ensemble,
+            "detection_rule": self.detection_rule,
+            "look_elsewhere_trials": self.look_elsewhere_trials,
+            "scan_trial_count": self.scan_trial_count,
+            "scan_trial_hash": self.scan_trial_hash,
+            "response_rank": self.response_rank,
+            "effective_rank": self.effective_rank,
+            "null_space_dimension": self.null_space_dimension,
+            "condition_number": self.condition_number,
+            "sky_support_hash": self.sky_support_hash,
+            "mask_hash": self.mask_hash,
+            "scan_volume_hash": self.scan_volume_hash,
+            "config_hash": self.config_hash,
+            "input_hashes": list(self.input_hashes),
+            "covariance_status": self.covariance_status,
+            "generating_command": self.generating_command,
+            "git_commit": self.git_commit,
+            "worktree_state": self.worktree_state,
+            "sky_support_status": self.sky_support_status,
+            "sky_support_metadata": dict(self.sky_support_metadata or {}),
+            "thresholds": self.thresholds.to_metadata(),
+            "owner": self.owner.value,
+            "implementation_scope": self.implementation_scope.value,
+            "claim_tier": self.claim_tier.value,
+            "transfer_source": self.transfer_source,
+            "random_seeds": list(self.random_seeds),
+            "coverage_68_count": self.coverage_68_count,
+            "false_positive_count": self.false_positive_count,
+            "bias_direction_p95_deg": self.bias_direction_p95_deg,
+            "caveats": list(self.caveats),
+        }
+
+    def to_metadata(self) -> dict[str, object]:
+        coverage_ci = self.coverage_68_interval
+        fpr_ci = self.false_positive_rate_interval_adjusted
+        return {
+            "artifact_name": "axis_mock_calibration_report_v1",
+            "owner": self.owner.value,
+            "implementation_scope": self.implementation_scope.value,
+            "claim_tier": self.claim_tier.value,
+            "allowed_claim_tier": self.allowed_claim_tier.value,
+            "transfer_source": self.transfer_source,
+            "claim_target": self.claim_target,
+            "mock_calibration_hash": self.calibration_hash,
+            "config_hash": self.config_hash,
+            "input_hashes": list(self.input_hashes),
+            "sky_support_hash": self.sky_support_hash,
+            "sky_support_status": self.sky_support_status,
+            "sky_support": dict(self.sky_support_metadata or {}),
+            "mask_hash": self.mask_hash,
+            "scan_volume_hash": self.scan_volume_hash,
+            "retention": {
+                "n_mock_requested": self.n_mock_requested,
+                "n_mock_succeeded": self.n_mock_succeeded,
+                "retention_fraction": self.retention_fraction,
+                "min_retention_fraction": self.thresholds.min_retention_fraction,
+            },
+            "bias": {
+                "bias_direction_deg": self.bias_direction_deg,
+                "bias_direction_p95_deg": self.bias_direction_p95_deg,
+                "max_bias_direction_deg": self.thresholds.max_bias_direction_deg,
+            },
+            "coverage": {
+                "coverage_68": self.coverage_68,
+                "coverage_68_count": self.coverage_68_count,
+                "coverage_68_denominator": self.n_mock_succeeded,
+                "coverage_68_interval": list(coverage_ci),
+                "coverage_68_window": list(self.thresholds.coverage_68_window),
+                "spherical_convention": "galactic_lon_lat_degrees",
+            },
+            "false_positive_rate": {
+                "raw": self.false_positive_rate,
+                "false_positive_count": self.false_positive_count,
+                "false_positive_denominator": self.n_mock_succeeded,
+                "adjusted": self.false_positive_rate_adjusted,
+                "adjusted_interval": list(fpr_ci),
+                "max_false_positive_rate": self.thresholds.max_false_positive_rate,
+                "look_elsewhere_trials": self.look_elsewhere_trials,
+                "scan_trial_count": self.scan_trial_count,
+                "scan_trial_hash": self.scan_trial_hash,
+                "null_ensemble": self.null_ensemble,
+                "detection_rule": self.detection_rule,
+            },
+            "rank_status": {
+                "response_rank": self.response_rank,
+                "effective_rank": self.effective_rank,
+                "null_space_dimension": self.null_space_dimension,
+                "condition_number": self.condition_number,
+            },
+            "covariance_status": self.covariance_status,
+            "null_mock_status": self.null_mock_status,
+            "blocked_reasons": list(self.blocked_reasons),
+            "thresholds": self.thresholds.to_metadata(),
+            "random_seeds": list(self.random_seeds),
+            "caveats": list(self.caveats),
+            "generating_command": self.generating_command,
+            "git_commit": self.git_commit,
+            "worktree_state": self.worktree_state,
+        }
+
+
+@dataclass(frozen=True)
+class AxisMockCalibrationGateDecision:
+    """Claim-tier decision for an axis mock-calibration report."""
+
+    allowed: bool
+    requested_claim_tier: ClaimTier
+    allowed_claim_tier: ClaimTier
+    blocked_reasons: tuple[str, ...]
+    report: AxisMockCalibrationReport | None = None
+
+    def to_metadata(self) -> dict[str, object]:
+        return {
+            "allowed": self.allowed,
+            "requested_claim_tier": self.requested_claim_tier.value,
+            "allowed_claim_tier": self.allowed_claim_tier.value,
+            "blocked_reasons": list(self.blocked_reasons),
+            "report": self.report.to_metadata() if self.report is not None else None,
+        }
+
+
+def build_axis_mock_calibration_report(**kwargs: Any) -> AxisMockCalibrationReport:
+    """Build a directional mock-calibration report with stable provenance hash."""
+
+    return AxisMockCalibrationReport(**kwargs)
+
+
+def evaluate_directional_claim_mock_gate(
+    report: AxisMockCalibrationReport | None,
+    *,
+    requested_claim_tier: ClaimTier | str = ClaimTier.CONDITIONAL,
+    sky_support_hash: str | None = None,
+    mask_hash: str | None = None,
+    scan_volume_hash: str | None = None,
+    calibration_hash: str | None = None,
+) -> AxisMockCalibrationGateDecision:
+    """Fail closed when directional claims exceed available mock calibration."""
+
+    requested = normalize_claim_tier(requested_claim_tier)
+    if report is None:
+        ceiling = ClaimTier.DIAGNOSTIC_ONLY
+        blocked: list[str] = []
+        if _tier_exceeds(requested, ceiling):
+            blocked.extend(
+                [
+                    "axis_mock_calibration_report_missing",
+                    "requested_claim_tier_exceeds_mock_calibration_ceiling",
+                ]
+            )
+        return AxisMockCalibrationGateDecision(
+            allowed=not blocked,
+            requested_claim_tier=requested,
+            allowed_claim_tier=ceiling,
+            blocked_reasons=tuple(blocked),
+            report=None,
+        )
+
+    ceiling = report.allowed_claim_tier
+    blocked = list(report.blocked_reasons)
+    if sky_support_hash is not None and report.sky_support_hash != sky_support_hash:
+        blocked.append("mock_calibration_sky_support_hash_mismatch")
+    if mask_hash is not None and report.mask_hash != mask_hash:
+        blocked.append("mock_calibration_mask_hash_mismatch")
+    if scan_volume_hash is not None and report.scan_volume_hash != scan_volume_hash:
+        blocked.append("mock_calibration_scan_volume_hash_mismatch")
+    if calibration_hash is not None and report.calibration_hash != calibration_hash:
+        blocked.append("mock_calibration_hash_mismatch")
+    if _tier_exceeds(requested, ceiling):
+        blocked.append("requested_claim_tier_exceeds_mock_calibration_ceiling")
+    return AxisMockCalibrationGateDecision(
+        allowed=not blocked,
+        requested_claim_tier=requested,
+        allowed_claim_tier=ceiling,
+        blocked_reasons=_dedupe(blocked),
+        report=report,
+    )
 
 
 # ---------------------------------------------------------------------------

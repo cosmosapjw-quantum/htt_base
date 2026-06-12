@@ -30,6 +30,7 @@ completed:
 - PR-081
 - PR-031
 - PR-052
+- PR-043
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -187,4 +188,14 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   and separate departure/budget transfer provenance. Q remains a
   policy-normalized diagnostic score only; it is not certified F, not HTT
   inference, not native solver validation, not morphology compatibility, and
-  not geometry/family-identification evidence.
+  not geometry/family-identification evidence. PR-043 adds an HTT
+  directional mock-calibration harness for production-axis claim gates. The
+  report records retention, directional bias, coverage, look-elsewhere adjusted
+  FPR, Wilson intervals, rank status, null provenance, sky and mask and scan
+  hashes, config and input hashes, caveats, and generating command as
+  diagnostic-only metadata. HTT axis promotion now requires a hash-matched
+  AxisMockCalibrationReport before an otherwise production axis can seed
+  harmonic synthesis. Missing or inadequate mock calibration caps directional
+  claims at diagnostic_only. PR-043 does not create posterior evidence, MIO
+  certificates, native solver validation, transfer validation, morphology
+  compatibility, or geometry/family-identification evidence.

@@ -1168,3 +1168,51 @@ only. The new Q payload is MIO-owned, diagnostic-only, transfer-conditional
 when its inputs are transfer-derived, and separated from certified F, HTT
 inference, native solver validation, morphology compatibility, and
 geometry/family claims.
+
+## PR-043 - Mock calibration harness for axis and direction claims
+
+Date: 2026-06-13
+
+Changed files: `htt/src/common/mock_calibration.py`,
+`htt/htt/htt/nulls/axis_nulls.py`, `htt/htt/htt/nulls/__init__.py`,
+`htt/htt/htt/zoa/axis_promotion.py`,
+`htt/htt/htt/PR13AJ_full_a2m_restoration.py`,
+`tests/htt/test_mock_calibration_gate.py`,
+`tests/htt/test_preferred_axis_gate.py`, `htt/htt/tests/test_PR13AJ_gate.py`,
+`docs/PR_DELTAS/pr-043.md`, status files, PR-012 generated status sidecars,
+the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_mock_calibration_gate.py -q` before implementation | repo root | FAIL | Red phase: missing `htt.nulls.axis_nulls`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_mock_calibration_gate.py -q` after implementation | repo root | PASS | `6 passed`; covered report metadata, missing report, inadequate metrics, hash mismatch, bad FPR, and sky-support mismatch. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_mock_calibration_gate.py tests/htt/test_preferred_axis_gate.py htt/htt/tests/test_PR13AJ_gate.py -q` after zero-success fix | repo root | PASS | `25 passed`; PR-043 gate plus adjacent production-axis and PR13AJ synthesis locks. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_mock_calibration_gate.py tests/htt/test_preferred_axis_gate.py htt/htt/tests/test_PR13AJ_gate.py -q` after reviewer hardening | repo root | PASS | `31 passed`; adds coverage-interval, covariance-status, transfer-source, scan-trial, exact-count, bias-tail, mask-mismatch, and scan-mismatch regressions. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_zoa_selection_ladder.py htt/src/common/test_mock_calibration.py htt/htt/tests/test_nulls.py -q` | repo root | PASS | `41 passed`; adjacent ZoA, COMMON mock, and HTT null-registry tests remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/src/common/mock_calibration.py htt/htt/htt/nulls/axis_nulls.py htt/htt/htt/nulls/__init__.py htt/htt/htt/zoa/axis_promotion.py htt/htt/htt/PR13AJ_full_a2m_restoration.py tests/htt/test_mock_calibration_gate.py tests/htt/test_preferred_axis_gate.py htt/htt/tests/test_PR13AJ_gate.py` | repo root | PASS | Touched Python files compile. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `8 passed`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7076 deselected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `7023/7082 tests collected (59 deselected)`. |
+| `venv/bin/python -m pytest tests/htt/test_mock_calibration_gate.py -q` | repo root | PASS | Exact PR-card command via repo venv: `13 passed`. |
+| `venv/bin/python -m pytest tests/contracts/test_claim_language_lint.py tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_ownership_firewall.py tests/contracts/test_transfer_registry.py -q` | repo root | PASS | `49 passed`; claim, MIO/HTT, ownership, and transfer firewalls remain green. |
+| `python scripts/check_claim_language.py <PR-043 code/tests> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-043 code/tests>` | repo root | PASS | No forbidden claim patterns detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-043 code/tests>` | repo root | PASS | No unmarked strong claims detected. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 31 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `31/62 = 50.0%`; dependency-weighted `55.38%`; critical path `8/21 = 38.1%`; checkpoint not due until 35. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `git diff --check` | repo root | PASS | No whitespace errors. |
+
+Numerical/scientific impact: no solver execution, transfer calculation,
+posterior evidence, MIO certificate, OBSSTAT feature extraction, or native
+morphology atlas output was added. PR-043 adds report-backed directional mock
+calibration gate metadata only.
+
+Artifact/claim-tier impact: generated status artifacts are DAG bookkeeping
+only. The new axis mock-calibration report is HTT-owned, diagnostic-only,
+pre-solver gate metadata with explicit PR-040 sky-support metadata,
+sky/mask/scan hashes, exact event counts, bias-tail metadata, scan-trial
+provenance, calibrated covariance status, and null mock status. Missing or
+inadequate mock calibration caps directional claims at diagnostic-only and
+blocks production-axis promotion.

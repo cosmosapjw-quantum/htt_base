@@ -17,6 +17,7 @@ from __future__ import annotations
 from typing import Dict
 
 from common.contracts import PreferredAxis, SkySupport
+from common.mock_calibration import AxisMockCalibrationReport
 from htt.zoa.axis_promotion import AxisPromotionRecord, require_axis_for_harmonic_synthesis
 
 __all__ = ["PreferredAxis", "restore_full_a2m"]
@@ -28,6 +29,7 @@ def restore_full_a2m(
     *,
     sky_support: SkySupport | None = None,
     promotion_record: AxisPromotionRecord | None = None,
+    mock_calibration_report: AxisMockCalibrationReport | None = None,
 ) -> Dict[int, complex]:
     """Rotate a20 into the full {a_{2m}} tuple under the given axis.
 
@@ -54,6 +56,7 @@ def restore_full_a2m(
         axis,
         sky_support=sky_support,
         promotion_record=promotion_record,
+        mock_calibration_report=mock_calibration_report,
         target="a_2m",
     )
     raise NotImplementedError(

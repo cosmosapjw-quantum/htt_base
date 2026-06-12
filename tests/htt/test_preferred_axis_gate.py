@@ -7,6 +7,7 @@ from common.contracts import PreferredAxis, SkySupport
 from common.posterior_summary import axis_from_posterior
 from htt.PR13AJ_full_a2m_restoration import restore_full_a2m
 from htt.direction.preferred_axis import build_preferred_axis
+from htt.nulls.axis_nulls import build_axis_mock_calibration_report
 from htt.zoa.axis_promotion import (
     AxisPromotionRecord,
     evaluate_axis_promotion,
@@ -52,20 +53,60 @@ def _posterior_axis() -> PreferredAxis:
 def _promotion_record(
     axis: PreferredAxis,
     sky_support: SkySupport,
+    report=None,
     **overrides: object,
 ) -> AxisPromotionRecord:
+    if report is None:
+        report = _axis_mock_report(sky_support)
     base = dict(
         axis_provenance_hash=axis.provenance_hash,
         sky_support_hash=sky_support.sky_support_hash,
         mask_hash=sky_support.mask_hash,
         mock_coverage_status=sky_support.mock_coverage_status,
-        mock_calibration_hash="sha256:" + "4" * 64,
+        mock_calibration_hash=report.calibration_hash,
         posterior_bundle_hash="sha256:" + "5" * 64,
         config_hash="sha256:" + "6" * 64,
         input_hashes=("sha256:" + "7" * 64,),
+        null_mock_status=report.null_mock_status,
     )
     base.update(overrides)
     return AxisPromotionRecord(**base)  # type: ignore[arg-type]
+
+
+def _axis_mock_report(sky_support: SkySupport, **overrides: object):
+    base = dict(
+        claim_target="production_axis_candidate",
+        n_mock_requested=240,
+        n_mock_succeeded=230,
+        bias_direction_deg=2.0,
+        coverage_68=0.68,
+        false_positive_rate=0.01,
+        null_ensemble="axis_direction_isotropic",
+        detection_rule="max_cone_scan_threshold",
+        look_elsewhere_trials=2,
+        scan_trial_count=2,
+        scan_trial_hash="sha256:" + "b" * 64,
+        response_rank=3,
+        effective_rank=2.8,
+        null_space_dimension=0,
+        condition_number=12.0,
+        sky_support_hash=sky_support.sky_support_hash,
+        mask_hash=sky_support.mask_hash,
+        scan_volume_hash=sky_support.scan_volume_hash,
+        config_hash="sha256:" + "8" * 64,
+        input_hashes=("sha256:" + "9" * 64,),
+        covariance_status="directional_mock_covariance_available",
+        generating_command="tests.htt.test_preferred_axis_gate",
+        git_commit="test-commit",
+        worktree_state="test-clean",
+        sky_support_status="pr040_sky_support_attached",
+        sky_support_metadata=sky_support.to_metadata(),
+        coverage_68_count=156,
+        false_positive_count=2,
+        bias_direction_p95_deg=3.0,
+    )
+    base.update(overrides)
+    return build_axis_mock_calibration_report(**base)
 
 
 def test_preferred_axis_default_is_diagnostic_only() -> None:
@@ -240,12 +281,14 @@ def test_manual_production_flag_without_record_still_fails_closed() -> None:
 def test_posterior_axis_with_rich_support_and_record_passes_lock() -> None:
     axis = _posterior_axis()
     sky_support = _rich_sky_support()
-    record = _promotion_record(axis, sky_support)
+    report = _axis_mock_report(sky_support)
+    record = _promotion_record(axis, sky_support, report)
 
     decision = evaluate_axis_promotion(
         axis,
         sky_support=sky_support,
         promotion_record=record,
+        mock_calibration_report=report,
         target="a_lm",
     )
     assert decision.allowed is True
@@ -253,6 +296,7 @@ def test_posterior_axis_with_rich_support_and_record_passes_lock() -> None:
         axis,
         sky_support=sky_support,
         promotion_record=record,
+        mock_calibration_report=report,
         target="a_lm",
     ) is axis
 
@@ -262,6 +306,7 @@ def test_posterior_axis_with_rich_support_and_record_passes_lock() -> None:
             a20_seed=complex(1.0, 0.0),
             sky_support=sky_support,
             promotion_record=record,
+            mock_calibration_report=report,
         )
 
 
