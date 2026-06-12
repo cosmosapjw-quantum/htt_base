@@ -243,6 +243,12 @@ class TransferRegistry:
 def validate_transfer_dependent_result(metadata: Mapping[str, object]) -> None:
     """Validate required PR-014 transfer metadata on a dependent result."""
 
+    if metadata.get("schema_status") == "schema_only_no_solver_output":
+        raise ValueError("schema-only transfer metadata is not a consumable result")
+    if metadata.get("consumable_as_result") is False:
+        raise ValueError("transfer metadata is marked non-consumable as a result")
+    if metadata.get("returns_values") is False:
+        raise ValueError("transfer metadata does not carry output values")
     missing = sorted(
         field for field in _REQUIRED_METADATA_FIELDS if field not in metadata
     )

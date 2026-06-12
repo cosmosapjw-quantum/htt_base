@@ -1032,3 +1032,48 @@ Artifact/claim-tier impact: generated status artifacts are DAG bookkeeping
 only. The scalar summaries are diagnostic-only OBSSTAT features with
 `transfer_source="none"` and `model_role="not_model_input"`. They do not
 support morphology, geometry, or family-ID claims.
+
+## PR-081 - Future native low-ell adapter stubs without fake solver output
+
+Date: 2026-06-13
+
+Changed files: `htt/bass/transfer/native_schema.py`,
+`htt/bass/transfer/native_adapter.py`, `htt/bass/transfer/__init__.py`,
+`htt/src/common/transfer_registry.py`, `tests/bass/test_native_adapter_stub.py`,
+`tests/contracts/test_transfer_registry.py`, `htt/test_packaging_imports.py`,
+`docs/PR_DELTAS/pr-081.md`, BASS backlog path mirrors, status files, PR-012
+generated status sidecars, the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_native_adapter_stub.py -q` before implementation | repo root | FAIL | Red phase: target file initially absent, then missing `bass.transfer.native_schema` and `native_adapter`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_native_adapter_stub.py -q` | repo root | PASS | `6 passed`; schema-only metadata, non-consumable transfer metadata, import/export surface, and fail-closed execution methods covered. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_transfer_registry.py -q` | repo root | PASS | `12 passed`; schema-only/non-consumable/no-value transfer metadata is rejected as result provenance. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_external_transfer_registry.py -q` | repo root | PASS | `13 passed`; PR-080 external/proxy transfer behavior remains green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_native_adapter_stub.py tests/bass/test_external_transfer_registry.py tests/contracts/test_transfer_registry.py htt/test_packaging_imports.py -q` | repo root | PASS | `39 passed`; native stub, external transfer, common transfer, and package import surfaces are green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/src/common/transfer_registry.py htt/bass/transfer/native_schema.py htt/bass/transfer/native_adapter.py htt/bass/transfer/__init__.py tests/bass/test_native_adapter_stub.py tests/contracts/test_transfer_registry.py htt/test_packaging_imports.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python scripts/check_claim_language.py htt/src/common/transfer_registry.py htt/bass/transfer tests/bass/test_native_adapter_stub.py tests/contracts/test_transfer_registry.py htt/test_packaging_imports.py --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py htt/src/common/transfer_registry.py htt/bass/transfer tests/bass/test_native_adapter_stub.py tests/contracts/test_transfer_registry.py htt/test_packaging_imports.py` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py htt/src/common/transfer_registry.py htt/bass/transfer tests/bass/test_native_adapter_stub.py tests/contracts/test_transfer_registry.py htt/test_packaging_imports.py` | repo root | PASS | No unmarked strong claims detected. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 28 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `28/62 = 45.16%`; dependency-weighted `50.77%`; critical path `7/21 = 33.33%`; checkpoint not due until 30. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `venv/bin/python scripts/check_claim_language.py <PR-081 code, tests, delta, status, and handoff docs> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-081 code, tests, delta, status, and handoff docs>` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-081 code, tests, delta, status, and handoff docs>` | repo root | PASS | No unmarked strong claims detected. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `8 passed`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7036 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6983/7042 tests collected (59 deselected)`. |
+| `git diff --check` | repo root | PASS | No whitespace errors. |
+
+Numerical/scientific impact: no solver execution, no solver artifact loading,
+no synthetic native values, and no result-producing native transfer path.
+PR-081 adds schema-only BASS_PY handoff metadata and fail-closed adapter
+methods.
+
+Artifact/claim-tier impact: generated status artifacts are DAG bookkeeping
+only. Native schema metadata is diagnostic-only, schema-only, no-values, and
+non-consumable as result provenance. It does not validate native transfer,
+produce HTT evidence, produce MIO output, or support morphology, geometry, or
+family-ID claims.

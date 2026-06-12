@@ -142,6 +142,26 @@ def test_transfer_dependent_result_requires_metadata_fields() -> None:
     validate_transfer_dependent_result(_external_spec().to_metadata())
 
 
+def test_transfer_dependent_result_rejects_schema_only_non_consumable_metadata() -> None:
+    metadata = _native_spec().to_metadata()
+    metadata["schema_status"] = "schema_only_no_solver_output"
+    metadata["consumable_as_result"] = False
+    metadata["returns_values"] = False
+
+    with pytest.raises(ValueError, match="schema-only"):
+        validate_transfer_dependent_result(metadata)
+
+    metadata = _native_spec().to_metadata()
+    metadata["consumable_as_result"] = False
+    with pytest.raises(ValueError, match="non-consumable"):
+        validate_transfer_dependent_result(metadata)
+
+    metadata = _native_spec().to_metadata()
+    metadata["returns_values"] = False
+    with pytest.raises(ValueError, match="does not carry output values"):
+        validate_transfer_dependent_result(metadata)
+
+
 def test_transfer_dependent_result_requires_valid_range_shape() -> None:
     metadata = _external_spec().to_metadata()
     metadata["valid_range"] = {"k_min": 1.0e-5, "k_max": 0.2}

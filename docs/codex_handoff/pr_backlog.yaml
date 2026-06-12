@@ -1007,8 +1007,8 @@ prs:
   - PR-014
   - PR-070
   files:
-  - htt/src/bass/transfer/aniclass_adapter.py
-  - htt/src/bass/transfer/registry.py
+  - htt/bass/transfer/aniclass_adapter.py
+  - htt/bass/transfer/registry.py
   - tests/bass/test_external_transfer_registry.py
   tests:
   - python -m pytest tests/bass/test_external_transfer_registry.py -q
@@ -1026,8 +1026,8 @@ prs:
   depends:
   - PR-080
   files:
-  - htt/src/bass/transfer/native_adapter.py
-  - htt/src/bass/transfer/native_schema.py
+  - htt/bass/transfer/native_adapter.py
+  - htt/bass/transfer/native_schema.py
   - tests/bass/test_native_adapter_stub.py
   tests:
   - python -m pytest tests/bass/test_native_adapter_stub.py -q
@@ -1047,7 +1047,7 @@ prs:
   - PR-081
   - PR-070
   files:
-  - htt/src/bass/atlas/atlas_entry.py
+  - htt/bass/atlas/atlas_entry.py
   - tests/bass/test_atlas_entry_lite.py
   tests:
   - python -m pytest tests/bass/test_atlas_entry_lite.py -q
@@ -1066,7 +1066,7 @@ prs:
   - PR-051
   - PR-082
   files:
-  - htt/src/bass/atlas/budget_ceiling_optimizer.py
+  - htt/bass/atlas/budget_ceiling_optimizer.py
   - tests/bass/test_budget_ceiling_optimizer.py
   tests:
   - python -m pytest tests/bass/test_budget_ceiling_optimizer.py -q

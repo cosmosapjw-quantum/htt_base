@@ -744,8 +744,8 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L2
 - **Risk:** high
 - **Primary files:**
-  - `htt/src/bass/transfer/aniclass_adapter.py`
-  - `htt/src/bass/transfer/registry.py`
+  - `htt/bass/transfer/aniclass_adapter.py`
+  - `htt/bass/transfer/registry.py`
   - `tests/bass/test_external_transfer_registry.py`
 - **Tests / commands:**
   - `python -m pytest tests/bass/test_external_transfer_registry.py -q`
@@ -760,8 +760,8 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L2
 - **Risk:** medium
 - **Primary files:**
-  - `htt/src/bass/transfer/native_adapter.py`
-  - `htt/src/bass/transfer/native_schema.py`
+  - `htt/bass/transfer/native_adapter.py`
+  - `htt/bass/transfer/native_schema.py`
   - `tests/bass/test_native_adapter_stub.py`
 - **Tests / commands:**
   - `python -m pytest tests/bass/test_native_adapter_stub.py -q`
@@ -776,7 +776,7 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L2
 - **Risk:** medium
 - **Primary files:**
-  - `htt/src/bass/atlas/atlas_entry.py`
+  - `htt/bass/atlas/atlas_entry.py`
   - `tests/bass/test_atlas_entry_lite.py`
 - **Tests / commands:**
   - `python -m pytest tests/bass/test_atlas_entry_lite.py -q`
@@ -791,7 +791,7 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L3
 - **Risk:** high
 - **Primary files:**
-  - `htt/src/bass/atlas/budget_ceiling_optimizer.py`
+  - `htt/bass/atlas/budget_ceiling_optimizer.py`
   - `tests/bass/test_budget_ceiling_optimizer.py`
 - **Tests / commands:**
   - `python -m pytest tests/bass/test_budget_ceiling_optimizer.py -q`

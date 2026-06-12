@@ -27,6 +27,7 @@ completed:
 - PR-051
 - PR-042
 - PR-072
+- PR-081
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -156,4 +157,15 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   and stable top-level obsstat import identity. The summaries remain
   feature_only unless null-calibrated, diagnostic_only, transfer_source none,
   not model input, not MIO output, not native solver output, and not
-  morphology, geometry, or family-identification evidence.
+  morphology, geometry, or family-identification evidence. PR-081 adds BASS_PY
+  schema-only future low-ell adapter contracts under the live `htt/bass/transfer`
+  root and corrects stale BASS backlog paths away from `htt/src/bass`.
+  The native schema reserves future `alm_T/E/B` split, gate, residual,
+  morphology-gate, and artifact-manifest fields without values. The adapter
+  stub fails closed for execution-shaped methods, metadata carries
+  `native_solver_result=false`, `returns_values=false`,
+  `consumable_as_result=false`, and COMMON transfer validation now rejects
+  schema-only/non-consumable metadata as result provenance. PR-081 does not run
+  a solver, load a solver artifact, generate synthetic native transfer values,
+  validate native transfer, create HTT evidence, create MIO output, or support
+  morphology, geometry, or family-identification claims.
