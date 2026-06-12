@@ -29,6 +29,7 @@ completed:
 - PR-072
 - PR-081
 - PR-031
+- PR-052
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -178,4 +179,12 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   provide statistical observable validation, rank/null/mask/covariance support,
   transfer provenance, native solver validation, HTT evidence, MIO
   certificates, morphology compatibility, or geometry/family-identification
-  evidence.
+  evidence. PR-052 adds a MIO diagnostic-only Q normalized-score contract that
+  composes PR-050 `DepartureBundle` signed `x_C` outputs with PR-051
+  `BudgetSpec` denominator policies. The Q payload records explicit numerator
+  policy, denominator policy, denominator use, comparator/frame/units,
+  config/input hashes, sky/covariance/null status inherited from the budget,
+  and separate departure/budget transfer provenance. Q remains a
+  policy-normalized diagnostic score only; it is not certified F, not HTT
+  inference, not native solver validation, not morphology compatibility, and
+  not geometry/family-identification evidence.

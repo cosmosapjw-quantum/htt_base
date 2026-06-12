@@ -1,4 +1,5 @@
-# Progress scoreboard
+<!-- checkpoint_meta {"completed": 30, "critical_path_percent_complete": 38.1, "dependency_weighted_percent_complete": 53.85, "percent_complete": 48.39, "replan_required": false, "total": 62} -->
+# Progress checkpoint 030
 
 - Completed PRs: 30/62 = 48.39%
 - Dependency-weighted completion: 53.85%
@@ -7,8 +8,6 @@
 - Blocked PRs: none
 - Skipped PRs: none
 - Unblocked next: PR-043, PR-073, PR-082, PR-032, PR-053
-- Checkpoint due: yes
-- Next checkpoint at: 35
 - Replan required: no
 - Replan reason: progress advanced; no replan required
 
