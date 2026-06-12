@@ -18,6 +18,12 @@ from .alm_conventions import (
     validate_alm_convention_metadata,
     validate_alm_feature_conventions,
 )
+from .morphology import (
+    DiagnosticMorphologyAxis,
+    MorphologyAxisSummary,
+    MorphologyNullCalibration,
+    summarize_morphology_axes,
+)
 from .observable_vector import (
     ObservableVector,
     build_observable_vector,
@@ -30,7 +36,12 @@ from .scalar_lowell import (
     summarize_lowell_scalars,
 )
 
-for _submodule in ("alm_conventions", "observable_vector", "scalar_lowell"):
+for _submodule in (
+    "alm_conventions",
+    "morphology",
+    "observable_vector",
+    "scalar_lowell",
+):
     _loaded = _sys.modules.get(f"{__name__}.{_submodule}")
     if _loaded is not None:
         for _alias in _PACKAGE_ALIASES:
@@ -38,8 +49,11 @@ for _submodule in ("alm_conventions", "observable_vector", "scalar_lowell"):
 
 __all__ = [
     "AlmConvention",
+    "DiagnosticMorphologyAxis",
     "LowEllNullCalibration",
     "LowEllScalarSummary",
+    "MorphologyAxisSummary",
+    "MorphologyNullCalibration",
     "ObservableVector",
     "build_alm_feature",
     "build_observable_vector",
@@ -47,6 +61,7 @@ __all__ = [
     "canonical_spin2_alm_convention",
     "canonical_temperature_alm_convention",
     "obsstat_manifest",
+    "summarize_morphology_axes",
     "summarize_lowell_scalars",
     "validate_alm_convention_metadata",
     "validate_alm_feature_conventions",

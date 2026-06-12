@@ -1216,3 +1216,58 @@ sky/mask/scan hashes, exact event counts, bias-tail metadata, scan-trial
 provenance, calibrated covariance status, and null mock status. Missing or
 inadequate mock calibration caps directional claims at diagnostic-only and
 blocks production-axis promotion.
+
+## PR-073 - Morphology axes and alignment features
+
+Date: 2026-06-13
+
+Changed files: `htt/obsstat/morphology.py`, `htt/obsstat/__init__.py`,
+`tests/obsstat/test_morphology.py`, `htt/test_packaging_imports.py`,
+`docs/PR_DELTAS/pr-073.md`, status files, PR-012 generated status sidecars,
+the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_morphology.py -q` before test file | repo root | FAIL | Red phase: target file did not exist. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_morphology.py -q` after red tests | repo root | FAIL | Red phase: missing `htt.obsstat.morphology`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_morphology.py -q` first implementation | repo root | FAIL | Constructor and caveat wording issues fixed before closeout. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_morphology.py -q` | repo root | PASS | `6 passed`; tensor axes, antipodal alignment, null/look-elsewhere metadata, degeneracy, claim guards, import firewall. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_morphology.py tests/obsstat/test_observable_vector.py tests/obsstat/test_scalar_lowell.py tests/obsstat/test_alm_conventions.py -q` | repo root | PASS | `35 passed`; adjacent OBSSTAT feature surfaces remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_preferred_axis_gate.py htt/test_packaging_imports.py -q` | repo root | PASS | `18 passed`; PR-042 PreferredAxis lock and package imports remain green before alias-loop cleanup. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat --collect-only -q` | repo root | PASS | `35 tests collected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/obsstat/morphology.py htt/obsstat/__init__.py tests/obsstat/test_morphology.py htt/test_packaging_imports.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python scripts/check_claim_language.py htt/obsstat/morphology.py htt/obsstat/__init__.py tests/obsstat/test_morphology.py htt/test_packaging_imports.py --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py htt/obsstat/morphology.py htt/obsstat/__init__.py tests/obsstat/test_morphology.py htt/test_packaging_imports.py` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py htt/obsstat/morphology.py htt/obsstat/__init__.py tests/obsstat/test_morphology.py htt/test_packaging_imports.py` | repo root | PASS | No unmarked strong claims detected. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/test_packaging_imports.py -q` | repo root | PASS | `9 passed`; scalar and morphology aliases check both import orders. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 32 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `32/62 = 51.61%`; dependency-weighted `56.92%`; critical path `8/21 = 38.1%`; checkpoint not due until 35. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | `status_cmp=0`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `9 passed`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7083 deselected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `7030/7089 tests collected (59 deselected)`. |
+| `venv/bin/python scripts/check_claim_language.py <PR-073 code, tests, delta, and handoff docs> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-073 code, tests, delta, and handoff docs>` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-073 code, tests, delta, and handoff docs>` | repo root | PASS | No unmarked strong claims detected. |
+| `git diff --check` | repo root | PASS | No whitespace errors. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_morphology.py -q` after reviewer hardening | repo root | PASS | `6 passed`; degenerate alignments are suppressed, rank metadata is split, null metadata is stricter, and public diagnostic-axis source fields are locked. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_morphology.py tests/obsstat/test_observable_vector.py tests/obsstat/test_scalar_lowell.py tests/obsstat/test_alm_conventions.py -q` after reviewer hardening | repo root | PASS | `35 passed`; adjacent OBSSTAT feature surfaces remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_preferred_axis_gate.py htt/test_packaging_imports.py -q` after reviewer hardening | repo root | PASS | `18 passed`; PreferredAxis lock and packaging remain green. |
+| `venv/bin/python scripts/check_claim_language.py <PR-073 code, tests, delta, and handoff docs> --dry-run` after reviewer hardening | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-073 code, tests, delta, and handoff docs>` after reviewer hardening | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-073 code, tests, delta, and handoff docs>` after reviewer hardening | repo root | PASS | No unmarked strong claims detected. |
+
+Numerical/scientific impact: no solver execution, transfer calculation,
+posterior evidence, MIO certificate, native morphology atlas, or family-label
+output was added. PR-073 extracts diagnostic morphology axes from a
+caller-supplied symmetric tensor, records tensor rank and axis-identifiability
+metadata, suppresses alignments for degenerate axes, separates axiality from
+planarity, and uses antipodal alignment definitions.
+
+Artifact/claim-tier impact: generated status artifacts are DAG bookkeeping
+only. The new morphology payload is OBSSTAT-owned, diagnostic-only,
+feature-only unless null metadata is supplied, `transfer_source=none`, not
+model input, not MIO output, and not a production axis. Its diagnostic
+PreferredAxis adapter is fail-closed and remains blocked by PR-042/PR-043
+harmonic-synthesis gates.
