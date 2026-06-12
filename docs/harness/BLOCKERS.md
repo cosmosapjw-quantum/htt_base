@@ -4,8 +4,8 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-12
 
-No active PR blockers after PR-071. Progress report shows unblocked next
-candidates `PR-080`, `PR-030`, `PR-113`, `PR-051`, `PR-042`, and `PR-072`;
+No active PR blockers after PR-080. Progress report shows unblocked next
+candidates `PR-030`, `PR-113`, `PR-051`, `PR-042`, `PR-072`, and `PR-081`;
 use DAG ordering and policy priorities before selecting the next node.
 
 Residual non-blocking risk: `docs/generated/quarantined_figures.md` lists 96
@@ -79,3 +79,9 @@ compute alms, validate maps, assert E/B sign export, or provide transfer
 provenance. Downstream obsstat/transfer PRs must keep convention provenance
 separate from PR-014 transfer metadata and from any future native solver atlas
 validation.
+
+Residual non-blocking risk: PR-080 wraps existing legacy transfer-dependent
+scalar callables with PR-014 metadata, but it does not rederive or recalibrate
+the AniCLASS external calibration, execute CLASS/AniCLASS, validate a native
+transfer solver, or migrate downstream HTT/MIO producers. Later PRs must
+consume the registry without relabeling external/proxy outputs as native.

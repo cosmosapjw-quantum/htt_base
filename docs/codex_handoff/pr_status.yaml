@@ -21,6 +21,7 @@ completed:
 - PR-041
 - PR-023
 - PR-071
+- PR-080
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -90,4 +91,11 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   output-pair semantics, and coefficient shape. This is diagnostic feature
   provenance only; convention metadata is not transfer provenance, HTT evidence,
   MIO certification, native solver validation, morphology compatibility, or
-  geometry/family evidence.
+  geometry/family evidence. PR-080 adds BASS_PY external-transfer adapter and
+  registry wrappers for current AniCLASS-calibrated and empirical-proxy legacy
+  transfer callables under the live `htt/bass/transfer` package root. The
+  wrapped paths carry canonical conditional claim tier, diagnostic_only
+  production status, explicit transfer_conditional metadata, PR-014 transfer
+  source provenance, callable input domains, and native_solver_result false.
+  They are not native solver outputs, transfer validation, HTT evidence, MIO
+  certificates, morphology compatibility evidence, or geometry/family evidence.

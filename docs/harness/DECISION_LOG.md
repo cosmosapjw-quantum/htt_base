@@ -228,3 +228,28 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: computing alms, validating map transforms, transfer provenance,
   null/mask/covariance calibration, morphology compatibility, and geometry or
   family claims remain downstream work.
+
+## 2026-06-12 - PR-080 BASS external transfer adapter boundary
+
+- Accepted: the PR-card path `htt/src/bass/transfer/...` is stale for this
+  checkout. New BASS transfer adapter code lives under the active package root
+  `htt/bass/transfer`.
+- Accepted: `bass.transfer.registry.default_external_transfer_registry()`
+  returns a pure PR-014 `TransferRegistry`, while
+  `default_external_transfer_adapter_registry()` returns lazy wrappers that can
+  evaluate legacy callables with attached provenance.
+- Accepted: current AniCLASS-calibrated legacy callables are registered as
+  `AniCLASS_external`; the BASS power-law comparison callable is registered as
+  `empirical_proxy`.
+- Accepted: PR-014 `TransferValidRange.k_min/k_max` remains present for schema
+  compatibility, but scalar legacy callable domains are separately recorded
+  and enforced as `callable_input_domain` over `x_h` or `Sigma2`.
+- Accepted: adapter metadata uses canonical `claim_tier="conditional"`,
+  `production_status="diagnostic_only"`, `transfer_conditional=True`, and
+  `native_solver_result=False`.
+- Rejected: no live CLASS/AniCLASS execution, no native low-ell solver stub
+  returning values, no external-as-native validation label, and no HTT/MIO
+  evidence or certificate merge is introduced by PR-080.
+- Deferred: migrating downstream HTT inference producers, MIO diagnostics, or
+  OBSSTAT feature producers to consume the registry remains downstream DAG
+  work.

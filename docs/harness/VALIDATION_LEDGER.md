@@ -242,6 +242,51 @@ metadata is not transfer provenance, native validation, HTT evidence, MIO
 certification, null calibration, morphology compatibility, or
 family-identification evidence.
 
+## PR-080 - External transfer registry wrapper
+
+Date: 2026-06-12
+
+Changed files: `htt/bass/transfer/__init__.py`,
+`htt/bass/transfer/aniclass_adapter.py`, `htt/bass/transfer/registry.py`,
+`tests/bass/test_external_transfer_registry.py`, `docs/PR_DELTAS/pr-080.md`,
+status mirrors, generated status sidecars, progress scoreboard, and handoff
+docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/bass/test_external_transfer_registry.py -q` before implementation | repo root | FAIL | Red phase: target file did not exist. |
+| `venv/bin/python -m pytest tests/bass/test_external_transfer_registry.py -q` after first tests | repo root | FAIL | Expected red: `ModuleNotFoundError` for `bass.transfer`. |
+| `venv/bin/python -m pytest tests/bass/test_external_transfer_registry.py -q` after initial implementation | repo root | PASS | `8 passed`. |
+| `venv/bin/python -m pytest tests/bass/test_external_transfer_registry.py -q` after reviewer tests | repo root | FAIL | One native-spec fixture used malformed data instead of `TransferValidRange`. |
+| `venv/bin/python -m pytest tests/bass/test_external_transfer_registry.py -q` after physics/claim fixes | repo root | PASS | `11 passed`. |
+| `venv/bin/python -m pytest tests/bass/test_external_transfer_registry.py -q` after one-sided domain hardening | repo root | PASS | `13 passed`. |
+| `venv/bin/python -m pytest tests/contracts/test_transfer_registry.py htt/htt/tests/test_bass_d2_transfer.py -q` | repo root | PASS | `25 passed`. |
+| `venv/bin/python -m pytest tests/mio/test_departure_bundle.py::test_transfer_derived_bundle_requires_pr014_metadata tests/mio/test_departure_bundle.py::test_external_transfer_metadata_cannot_claim_native_validation tests/obsstat/test_observable_vector.py::test_transfer_derived_features_require_transfer_source_metadata tests/contracts/test_artifact_manifest.py::test_validate_manifest_payload_rejects_external_transfer_marked_native tests/contracts/test_claim_language_lint.py::test_mio_truth_and_external_native_overclaims_are_blocked -q` | repo root | PASS | `5 passed`; the `mio_truth` node name is a negative guard test, not a claim. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`. |
+| `python -m pytest tests/bass/test_external_transfer_registry.py -q` | repo root | FAIL | `/usr/bin/python: No module named pytest`; host interpreter lacks pytest. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --json` before status update | repo root | PASS | `21/62 = 33.87%`; PR-080 was next topological node. |
+| `venv/bin/python -m py_compile htt/bass/transfer/__init__.py htt/bass/transfer/aniclass_adapter.py htt/bass/transfer/registry.py tests/bass/test_external_transfer_registry.py` | repo root | PASS | Touched Python files compile. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `22/62 = 35.48%`; dependency-weighted `42.05%`; critical path `6/21 = 28.57%`; no checkpoint due. |
+| `venv/bin/python -m pytest -m smoke -q` | repo root | PASS | `6 passed, 6974 deselected`. |
+| `venv/bin/python -m pytest --collect-only -q` | repo root | PASS | `6921/6980 tests collected (59 deselected)`. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-080 production files>` | repo root | PASS | No forbidden claim patterns detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-080 docs>` | repo root | PASS | No unmarked strong claims detected. |
+| `python scripts/check_claim_language.py <PR-080 production files> --dry-run` | repo root | PASS | Production-surface claim-language scan passed. |
+| `git diff --check -- <PR-080 files>` | repo root | PASS | Scoped diff has no whitespace errors. |
+
+Numerical/scientific impact: BASS_PY provenance wrapping for existing legacy
+external/proxy transfer-dependent scalar callables only. The PR does not run
+CLASS/AniCLASS, compute transfer functions, implement a native solver, create
+likelihoods/posteriors, create MIO certificates, or compare morphology atlas
+features.
+
+Artifact/claim-tier impact: conditional transfer-provenance metadata. The
+registered paths are `AniCLASS_external` or `empirical_proxy`, diagnostic-only
+for production status, and explicitly `native_solver_result=False`. They do
+not validate external transfer as native or provide morphology/family evidence.
+
 ## PR-010 - Canonical ownership and role firewall
 
 Date: 2026-06-12
