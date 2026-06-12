@@ -1,11 +1,11 @@
 # Project State
 
-Current DAG position: PR-050 complete after commits PR-000, PR-001, PR-002,
+Current DAG position: PR-041 complete after commits PR-000, PR-001, PR-002,
 PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, and
-PR-014, PR-040, PR-012, PR-022, PR-070, PR-015, and PR-050.
+PR-014, PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, and PR-041.
 
-Progress after PR-050: 18/62 complete = 29.03%; dependency-weighted
-completion = 35.38%; critical-path completion = 6/21 = 28.57%.
+Progress after PR-041: 19/62 complete = 30.65%; dependency-weighted
+completion = 36.92%; critical-path completion = 6/21 = 28.57%.
 
 Current framework status: L0 orchestration and harness bootstrap. The repo has
 inventory, editable install/import stabilization, pytest taxonomy, DAG/progress
@@ -55,7 +55,13 @@ complete finite `B_C` components, signs, comparator, frame, units,
 cancellation index, config/input hashes, caveats, and PR-014 transfer metadata
 validation for transfer-derived bundles. It preserves negative `x_C` values and
 does not expose a norm, positive-part score, inference field, native solver
-validation, or geometry/family claim.
+validation, or geometry/family claim. PR-041 adds `htt.zoa.selection_ladder`
+as an HTT diagnostic support ladder with separate raw, ZoA-masked,
+angular-completeness, and mock-calibrated summaries, COMMON sky-support
+metadata, config/input hashes, caveats, fail-closed diagnostic-axis export, and
+production-mode strictness that forbids uniform fallback and requires adequate
+mock-calibration weights without promoting support metadata to posterior
+evidence.
 
 Scientific boundaries remain active:
 
@@ -69,6 +75,6 @@ Scientific boundaries remain active:
 Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_015.md`.
 Next checkpoint is due at 20 completed PRs.
 
-Next topological PR: PR-041. Other unblocked candidates after PR-050 are
-PR-023, PR-071, PR-080, PR-030, PR-113, and PR-051. PR-051 is the next
-critical-path successor after PR-050, but DAG ordering places PR-041 first.
+Next topological PR: PR-023. Other unblocked candidates after PR-041 are
+PR-071, PR-080, PR-030, PR-113, PR-051, and PR-042. PR-051 remains the next
+critical-path successor after PR-050, while PR-042 is now unblocked by PR-041.

@@ -164,3 +164,25 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: component calibration, frame transforms, covariance/null
   calibration, response-rank metadata, and certificate generation remain
   downstream MIO/HTT/obsstat PRs.
+
+## 2026-06-12 - PR-041 HTT ZoA support-mode ladder boundary
+
+- Accepted: the new ZoA ladder lives at the importable HTT package path
+  `htt/htt/htt/zoa/selection_ladder.py`; the PR-card path
+  `htt/src/htt/zoa/selection_ladder.py` is not a live package root in this
+  checkout.
+- Accepted: COMMON retains the pixelization primitive. PR-041 only adds
+  `common.healpix_selection.source_mask_from_pixel_mask()` so HTT can map
+  sky-support masks to source masks without duplicating pixel math.
+- Accepted: `htt.zoa.selection_ladder` separates raw, ZoA-masked,
+  angular-completeness, and mock-calibrated support summaries and can export
+  the existing COMMON `DirectionalSummary` four-channel wrapper.
+- Accepted: every PR-041 ladder summary remains diagnostic support metadata
+  with `production_allowed=False`; even adequate mock-calibration support does
+  not become a posterior-derived production axis.
+- Accepted: `production_mode=True` is a strictness flag, not a promotion flag.
+  It forbids uniform fallback through `SkySelectionConfig` and requires
+  explicit adequate mock-calibration weights.
+- Deferred: posterior-derived axis promotion, statistical mock-coverage
+  calibration, null/FPR accounting, and downstream `a_lm`/`a_2m` synthesis
+  locks remain PR-042/PR-043 work.

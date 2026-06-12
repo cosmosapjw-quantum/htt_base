@@ -42,6 +42,7 @@ __all__ = [
     "pixel_solid_angle",
     "lb_to_pix",
     "build_zoa_mask",
+    "source_mask_from_pixel_mask",
     "build_occupancy_map",
     "build_angular_completeness",
     "compute_selection_weights",
@@ -158,6 +159,31 @@ def build_zoa_mask(
         )
     _, b_centers = pixel_centers(nside)
     return np.abs(b_centers) >= float(bcut_deg)
+
+
+def source_mask_from_pixel_mask(
+    l_deg: np.ndarray,
+    b_deg: np.ndarray,
+    mask_pix: np.ndarray,
+) -> np.ndarray:
+    """Map a per-pixel sky mask to a per-source keep mask.
+
+    The returned boolean array has the same shape as ``l_deg``/``b_deg`` and is
+    ``True`` where the source falls in a kept pixel. This is deliberately a
+    geometry helper only; callers still own the production-mode fallback policy.
+    """
+
+    l, b = _check_lb_shapes(l_deg, b_deg)
+    mask_arr = np.asarray(mask_pix, dtype=bool)
+    if mask_arr.ndim != 1 or mask_arr.size == 0:
+        raise ValueError("mask_pix must be a non-empty 1-D boolean array")
+    nside = int(np.sqrt(mask_arr.size // 2))
+    if nside_to_npix(nside) != mask_arr.size:
+        raise ValueError(
+            f"mask_pix length {mask_arr.size} is not a valid "
+            "(2 * nside**2) count"
+        )
+    return mask_arr[lb_to_pix(l, b, nside)]
 
 
 def build_occupancy_map(

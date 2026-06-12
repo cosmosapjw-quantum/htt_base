@@ -6,11 +6,11 @@ Pre-read:
 
 - `AGENTS.md`
 - `.agents/skills/htt-dag-orchestrator/SKILL.md`
-- `.agents/skills/htt-xqpi-fg-formalism/SKILL.md`
+- `.agents/skills/htt-harness-engineering/SKILL.md`
 - `.agents/skills/htt-claim-firewall/SKILL.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-050.md`
+- `docs/PR_DELTAS/pr-041.md`
 - `docs/generated/progress_checkpoints/checkpoint_015.md`
 - `docs/generated/status_snapshot.json`
 
@@ -18,13 +18,13 @@ Current state:
 
 - PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, PR-010,
   PR-021, PR-011, PR-013, PR-014, PR-040, PR-012, PR-022, PR-070,
-  PR-015, and PR-050 are complete.
+  PR-015, PR-050, and PR-041 are complete.
 - Generated checkpoint artifacts:
   `docs/generated/progress_checkpoints/checkpoint_005.md`,
   `docs/generated/progress_checkpoints/checkpoint_010.md`, and
   `docs/generated/progress_checkpoints/checkpoint_015.md`.
-- Progress after PR-050: 18/62 = 29.03% complete, dependency-weighted
-  35.38%, critical-path 6/21 = 28.57%, no blockers, no checkpoint due until
+- Progress after PR-041: 19/62 = 30.65% complete, dependency-weighted
+  36.92%, critical-path 6/21 = 28.57%, no blockers, no checkpoint due until
   20 completed PRs.
 - PR-010 added canonical owner/claim-tier/scope enums and HTT/MIO
   bundle-role firewall checks.
@@ -54,10 +54,18 @@ Current state:
   `(+1, -1, +1, +1)`, requires comparator/frame/units/config/input/caveat
   metadata, preserves negative values, exposes cancellation index, and requires
   PR-014 transfer metadata for transfer-derived bundles.
-- Unblocked next candidates from the live progress report: `PR-041`,
-  `PR-023`, `PR-071`, `PR-080`, `PR-030`, `PR-113`, and `PR-051`.
-  Topological next is `PR-041`; `PR-051` is the current critical-path successor
-  after PR-050.
+- PR-041 added `htt.zoa.selection_ladder` and
+  `common.healpix_selection.source_mask_from_pixel_mask`. The ladder separates
+  raw, ZoA-masked, angular-completeness, and mock-calibrated support summaries,
+  records COMMON sky-support metadata, config/input hashes, caveats, and keeps
+  all exported axes diagnostic/fail-closed with `production_allowed=False`.
+  `production_mode=True` forbids uniform fallback and requires adequate
+  mock-calibration weights, but it does not promote support to posterior
+  evidence.
+- Unblocked next candidates from the live progress report: `PR-023`,
+  `PR-071`, `PR-080`, `PR-030`, `PR-113`, `PR-051`, and `PR-042`.
+  Topological next is `PR-023`; `PR-051` is the current critical-path successor
+  after PR-050, and `PR-042` is now unblocked by PR-041.
 
 Rules:
 
@@ -69,17 +77,18 @@ Rules:
 - Reuse `TransferFunctionSpec` for transfer-dependent producers.
 - Reuse `common.semantic_guards.no_overclaim` and
   `scripts/check_claim_language.py` for active claim-language scans.
-- Keep `mio.formalism.DepartureBundle` diagnostic-only: signed projection,
-  not norm, positive-part score, inference surface, or geometry classifier.
+- Keep `htt.zoa.selection_ladder` support summaries diagnostic-only until a
+  later posterior-derived axis promotion gate exists with its own recorded
+  tests and claim-tier review.
 
 Immediate commands:
 
 ```bash
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
-python scripts/codex_harness/new_pr_delta.py PR-041 --dry-run
+python scripts/codex_harness/new_pr_delta.py PR-023 --dry-run
 python scripts/check_claim_language.py docs docs/manuscript --dry-run
-venv/bin/python -m pytest tests/mio/test_departure_bundle.py -q
+venv/bin/python -m pytest tests/htt/test_zoa_selection_ladder.py -q
 venv/bin/python scripts/codex_harness/run_subset.py package
 venv/bin/python scripts/codex_harness/run_subset.py smoke
 ```

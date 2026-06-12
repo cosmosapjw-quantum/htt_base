@@ -641,3 +641,48 @@ external-transfer/native conflation through the COMMON transfer guard. It does
 not provide native solver validation, transfer validation, HTT inference
 evidence, MIO certificate evidence, morphology compatibility, or geometry/family
 claims.
+
+## PR-041 - ZoA ladder and selection-aware support modes
+
+Date: 2026-06-12
+
+Changed files: `htt/src/common/healpix_selection.py`,
+`htt/htt/htt/zoa/__init__.py`, `htt/htt/htt/zoa/selection_ladder.py`,
+`htt/htt/htt/__init__.py`, `htt/htt/__init__.py`,
+`tests/htt/test_zoa_selection_ladder.py`, `docs/PR_DELTAS/pr-041.md`,
+status files, PR-012 generated status sidecars, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `venv/bin/python -m pytest tests/htt/test_zoa_selection_ladder.py -q` before implementation | repo root | FAIL | Red phase: target test file was missing. |
+| `venv/bin/python -m pytest tests/htt/test_zoa_selection_ladder.py -q` | repo root | PASS | `6 passed`; covers support-mode separation, metadata, no production-axis promotion, production fallback rejection, diagnostic fallback marking, and mock-calibration strictness. |
+| `venv/bin/python -m py_compile htt/src/common/healpix_selection.py htt/htt/htt/zoa/__init__.py htt/htt/htt/zoa/selection_ladder.py htt/htt/htt/__init__.py htt/htt/__init__.py tests/htt/test_zoa_selection_ladder.py` | repo root | PASS | Touched Python files compile. |
+| `venv/bin/python -m pytest tests/htt/test_zoa_selection_ladder.py tests/htt/test_sky_support_contract.py htt/src/common/test_healpix_selection.py htt/htt/tests/test_ver2_axis_gate.py -q` | repo root | PASS | `39 passed`; adjacent sky-support, selection, and axis-gate contracts remain green. |
+| `venv/bin/python -m pytest htt/src/common/test_bulkflow_estimator.py htt/htt/tests/test_fig_zoa_ladder_mode0_data.py -q` | repo root | PASS | `23 passed`; older diagnostic bulk-flow ZoA ladder artifacts remain green. |
+| `venv/bin/python -m pytest htt/htt/tests tests/htt -q` | repo root | PASS | `379 passed, 5 warnings`; warnings are existing dynesty weight-renormalization warnings in figure smoke tests. |
+| import smoke for `common.healpix_selection`, `htt.zoa.selection_ladder`, and wrapper `htt.zoa` | repo root | PASS | New helper and HTT package alias import correctly. |
+| `python scripts/check_claim_language.py <PR-041 files> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `python scripts/check_claim_language.py docs docs/manuscript --dry-run` | repo root | PASS | Active docs/manuscript scan found no forbidden claim language. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-041 files>` | repo root | PASS | No forbidden claim patterns detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-041 files>` | repo root | PASS | No unmarked strong claims detected. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 6948 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6895/6954 tests collected (59 deselected)`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json` | repo root | PASS | After status update: `19/62 = 30.65%`; dependency-weighted `36.92%`; critical path `6/21 = 28.57%`; checkpoint not due until 20. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status sidecars at 19 completed PRs. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml && echo 'status mirrors match'` | repo root | PASS | Status mirrors match. |
+| final `venv/bin/python -m pytest tests/htt/test_zoa_selection_ladder.py -q` | repo root | PASS | `6 passed`; rerun after handoff doc updates. |
+| `python -m pytest tests/htt/test_zoa_selection_ladder.py -q` | repo root | FAIL | Host interpreter lacks pytest: `/usr/bin/python: No module named pytest`; venv pytest is the authoritative run. |
+
+Numerical/scientific impact: HTT support-mode metadata only. PR-041 separates
+raw, ZoA-masked, angular-completeness, and mock-calibrated sky support
+summaries and records deterministic sky-support metadata, config/input hashes,
+and caveats. It does not compute cosmological transfer functions or produce
+posterior evidence.
+
+Artifact/claim-tier impact: HTT L2 diagnostic-only selection support ladder.
+Uniform fallback is forbidden in production-mode strictness and marked
+diagnostic-only when explicitly allowed outside production. The ladder does not
+provide native solver validation, transfer validation, HTT posterior evidence,
+MIO certificate evidence, morphology compatibility, or geometry/family claims.

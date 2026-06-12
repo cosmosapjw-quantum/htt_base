@@ -4,9 +4,9 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-12
 
-No active PR blockers after PR-050. Progress report shows unblocked next
-candidates `PR-041`, `PR-023`, `PR-071`, `PR-080`, `PR-030`, `PR-113`, and
-`PR-051`; use DAG ordering and policy priorities before selecting the next
+No active PR blockers after PR-041. Progress report shows unblocked next
+candidates `PR-023`, `PR-071`, `PR-080`, `PR-030`, `PR-113`, `PR-051`, and
+`PR-042`; use DAG ordering and policy priorities before selecting the next
 node.
 
 Residual non-blocking risk: `docs/generated/quarantined_figures.md` lists 96
@@ -60,3 +60,10 @@ not calibrate component physics, implement frame transforms, provide
 covariance/null calibration, build certificates, or validate any native solver
 output. Later MIO/obsstat/HTT PRs must attach those gates before stronger
 statistical or morphology language is allowed.
+
+Residual non-blocking risk: PR-041 separates ZoA support modes and records
+mock-calibrated support metadata, but it does not validate a mock ensemble,
+calibrate directional bias/coverage/FPR, or produce a posterior-derived
+production axis. PR-042/PR-043 must preserve the fail-closed axis gate and add
+statistical mock-coverage evidence before any production directional claim can
+move beyond diagnostic support.
