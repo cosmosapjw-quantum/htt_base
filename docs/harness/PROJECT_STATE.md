@@ -1,12 +1,12 @@
 # Project State
 
-Current DAG position: PR-030 complete after commits PR-000, PR-001, PR-002,
+Current DAG position: PR-113 complete after commits PR-000, PR-001, PR-002,
 PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, and
 PR-014, PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041,
-PR-023, PR-071, PR-080, and PR-030.
+PR-023, PR-071, PR-080, PR-030, and PR-113.
 
-Progress after PR-030: 23/62 complete = 37.10%; dependency-weighted
-completion = 43.59%; critical-path completion = 6/21 = 28.57%.
+Progress after PR-113: 24/62 complete = 38.71%; dependency-weighted
+completion = 44.62%; critical-path completion = 6/21 = 28.57%.
 
 Current framework status: L0 orchestration and harness bootstrap. The repo has
 inventory, editable install/import stabilization, pytest taxonomy, DAG/progress
@@ -86,7 +86,17 @@ legacy-reproduction and import-compatibility surface only. It adds the
 warning-as-error harnesses, updates TSC deprecation docs,
 normalizes old raw `owner="TSC"` pack refs to canonical `TSC_LEGACY` manifests
 in bridge loaders, adds package-discovery checks, and pins current production
-`tsc.*` imports to an advisory/caveat-only allowlist.
+`tsc.*` imports to an advisory/caveat-only allowlist. PR-113 adds
+`scripts/audit_manuscript_figures.py` as a COMMON/MANUSCRIPT diagnostic-only
+inventory tool. It parses manuscript `\includegraphics` and `\graphicspath`
+usage, joins current PR-011 figure quarantine state, scans text through the
+COMMON claim guard plus manuscript-specific manual-status and claim-risk
+patterns, and writes `docs/generated/manuscript_figure_inventory.md` and
+`docs/generated/missing_figure_references.md`. The current inventory records
+94 includegraphics refs, 0 manifest-backed resolved refs, 72 quarantined refs,
+22 missing refs, and 23 text audit findings. It is not a LaTeX build proof, not
+a figure promotion path, not transfer validation, not HTT evidence, not a MIO
+certificate, and not a family-identification claim.
 
 Scientific boundaries remain active:
 
@@ -101,6 +111,6 @@ Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_020.
 Latest progress scoreboard: `docs/generated/progress_checkpoints/progress_scoreboard.md`.
 Next checkpoint is due at 25 completed PRs.
 
-Next topological PR: PR-113. Other unblocked candidates after PR-030 are
-PR-051, PR-042, PR-072, PR-081, and PR-031. PR-051 remains the next
-critical-path successor after PR-050; PR-031 is newly unblocked by PR-030.
+Next topological PR: PR-051. Other unblocked candidates after PR-113 are
+PR-042, PR-072, PR-081, and PR-031. PR-051 remains the next critical-path
+successor after PR-050; PR-031 remains newly unblocked by PR-030.

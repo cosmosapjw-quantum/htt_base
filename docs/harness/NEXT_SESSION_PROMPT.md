@@ -10,7 +10,9 @@ Pre-read:
 - `.agents/skills/htt-harness-engineering/SKILL.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-030.md`
+- `docs/PR_DELTAS/pr-113.md`
+- `docs/generated/manuscript_figure_inventory.md`
+- `docs/generated/missing_figure_references.md`
 - `docs/generated/progress_checkpoints/checkpoint_020.md`
 - `docs/generated/progress_checkpoints/progress_scoreboard.md`
 - `docs/generated/status_snapshot.json`
@@ -19,15 +21,16 @@ Current state:
 
 - PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020, PR-010,
   PR-021, PR-011, PR-013, PR-014, PR-040, PR-012, PR-022, PR-070,
-  PR-015, PR-050, PR-041, PR-023, PR-071, PR-080, and PR-030 are complete.
+  PR-015, PR-050, PR-041, PR-023, PR-071, PR-080, PR-030, and PR-113
+  are complete.
 - Generated checkpoint artifacts:
   `docs/generated/progress_checkpoints/checkpoint_005.md`,
   `checkpoint_010.md`, `checkpoint_015.md`, and `checkpoint_020.md`.
 - Latest progress scoreboard:
   `docs/generated/progress_checkpoints/progress_scoreboard.md`.
-- Progress after PR-030: 23/62 = 37.10% complete, dependency-weighted
-  43.59%, critical-path 6/21 = 28.57%, no blockers, no checkpoint due until
-  25 completed PRs.
+- Progress after PR-113: 24/62 = 38.71% complete, dependency-weighted
+  44.62%, critical-path 6/21 = 28.57%, no DAG blockers, no checkpoint due
+  until 25 completed PRs.
 - PR-010 added canonical owner/claim-tier/scope enums and HTT/MIO
   bundle-role firewall checks.
 - PR-011 added `common.artifact_manifest`, `scripts/check_artifact_manifests.py`,
@@ -65,6 +68,14 @@ Current state:
   `TSC_LEGACY`/`tsc_legacy` legacy-reproduction manifests for new artifacts,
   normalized old raw `owner="TSC"` pack refs in bridge loaders, and pinned
   current production `tsc.*` imports to an advisory/caveat-only allowlist.
+- PR-113 added `scripts/audit_manuscript_figures.py` plus
+  `docs/generated/manuscript_figure_inventory.md` and
+  `docs/generated/missing_figure_references.md`. The report currently records
+  94 manuscript includegraphics refs, 0 manifest-backed resolved refs,
+  72 quarantined refs, 22 missing refs, and 23 text audit findings. It is
+  diagnostic-only inventory and a manuscript-freeze gate, not a LaTeX build
+  proof, figure promotion, transfer check, HTT evidence surface, MIO
+  certificate, or family-ID claim.
 - PR-040 added COMMON sky-support metadata, deterministic mask hashes, sky
   fractions, completeness status, sky-facing manifest validation, and
   spherical-mean direction guards.
@@ -75,10 +86,10 @@ Current state:
 - PR-041 added `htt.zoa.selection_ladder` and
   `common.healpix_selection.source_mask_from_pixel_mask`, with diagnostic-only
   raw, ZoA-masked, angular-completeness, and mock-calibrated support summaries.
-- Unblocked next candidates from the live progress report: `PR-113`,
-  `PR-051`, `PR-042`, `PR-072`, `PR-081`, and `PR-031`.
-  Topological next is `PR-113`; `PR-051` is the current critical-path successor
-  after PR-050, and `PR-031` is newly unblocked by PR-030.
+- Unblocked next candidates from the live progress report: `PR-051`,
+  `PR-042`, `PR-072`, `PR-081`, and `PR-031`. Topological next is `PR-051`,
+  which is also the current critical-path successor after PR-050. PR-031
+  remains newly unblocked by PR-030.
 
 Rules:
 
@@ -98,7 +109,7 @@ Immediate commands:
 ```bash
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
-python scripts/codex_harness/new_pr_delta.py PR-113 --dry-run
+python scripts/codex_harness/new_pr_delta.py PR-051 --dry-run
 python scripts/check_claim_language.py docs docs/manuscript --dry-run
 venv/bin/python scripts/codex_harness/run_subset.py package
 venv/bin/python scripts/codex_harness/run_subset.py smoke

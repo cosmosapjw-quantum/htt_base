@@ -275,3 +275,32 @@ Record accepted, rejected, and deferred design decisions.
   path are introduced by PR-030.
 - Deferred: extracting generic source/propagation/observable semantic guards
   from legacy TSC language remains PR-031.
+
+## 2026-06-12 - PR-113 manuscript figure inventory boundary
+
+- Accepted: `scripts/audit_manuscript_figures.py` is a COMMON/MANUSCRIPT
+  diagnostic inventory tool. It parses TeX `\includegraphics` and
+  `\graphicspath` usage, resolves extensionless graphics paths, and joins
+  current PR-011 quarantine state from `common.artifact_manifest`.
+- Accepted: the generated reports live at
+  `docs/generated/manuscript_figure_inventory.md` and
+  `docs/generated/missing_figure_references.md` with owner, scope, claim tier,
+  transfer source, config hash, input hashes, caveats, generating command, git
+  commit, and worktree state.
+- Accepted: PR-113 text checks compose with
+  `common.semantic_guards.no_overclaim.scan_text` and add narrow
+  manuscript-specific risk findings for manual status numbers,
+  solver-validation wording, overstrong validation wording, production-value
+  wording, and pre-native family-identification language. Explicit negative
+  wording such as family identification not being established is allowed.
+- Accepted: `--dry-run` remains non-mutating and exits zero so the PR-card
+  command can be used for inventory generation and review. Final manuscript
+  freeze is blocked by the report contents, not by changing the PR-113 dry-run
+  command into a strict release gate.
+- Rejected: no figure regeneration, no manifest promotion, no LaTeX
+  buildability claim, no native solver validation, no external-transfer-as-native
+  validation, no HTT evidence, no MIO certificate, and no family-identification
+  claim are introduced by PR-113.
+- Deferred: strict release gating for freeze, manifest-backed figure
+  regeneration, stale generated VER2 status replacement, and manuscript text
+  edits remain downstream manuscript/export PR work.

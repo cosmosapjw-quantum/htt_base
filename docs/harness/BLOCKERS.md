@@ -4,9 +4,16 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-12
 
-No active PR blockers after PR-030. Progress report shows unblocked next
-candidates `PR-113`, `PR-051`, `PR-042`, `PR-072`, `PR-081`, and `PR-031`;
-use DAG ordering and policy priorities before selecting the next node.
+No active DAG blockers after PR-113. Progress report shows unblocked next
+candidates `PR-051`, `PR-042`, `PR-072`, `PR-081`, and `PR-031`; use DAG
+ordering and policy priorities before selecting the next node.
+
+Manuscript-freeze blocker: `docs/generated/missing_figure_references.md`
+records 22 missing manuscript figure references, 72 path-resolved but
+quarantined references, and 23 text audit findings. Final manuscript freeze
+remains rejected until each missing/quarantined reference and stale/manual
+status or claim-risk finding is explained, regenerated with manifests, or
+removed.
 
 Residual non-blocking risk: `docs/generated/quarantined_figures.md` lists 96
 existing figure/PDF assets without valid sidecar manifests. They are
@@ -92,3 +99,10 @@ current MIO/HTT/BASS production modules still have a small static allowlist of
 legacy `tsc.*` imports. The allowlist is tested and must not expand without
 explicit claim-gate review; PR-031 should extract generic semantic guards so
 future framework code does not grow new TSC ownership.
+
+Residual non-blocking risk: PR-113 inventories manuscript figure references
+and text risks, but it does not regenerate figures, add manifests, edit
+manuscript claims, or prove LaTeX buildability. Later manuscript/export PRs
+must consume `docs/generated/manuscript_figure_inventory.md` and
+`docs/generated/missing_figure_references.md` before promoting any figure or
+status number into a publication-facing surface.

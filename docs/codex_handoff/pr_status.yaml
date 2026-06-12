@@ -23,6 +23,7 @@ completed:
 - PR-071
 - PR-080
 - PR-030
+- PR-113
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -107,4 +108,17 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   manifests, and pins current production `tsc.*` imports to an advisory/caveat
   allowlist. TSC remains not an active science owner, HTT evidence/posterior
   layer, MIO certificate layer, transfer/native validation path, OBSSTAT
-  feature owner, runtime gate, or family-claim path.
+  feature owner, runtime gate, or family-claim path. PR-113 adds a COMMON
+  diagnostic-only manuscript figure audit that parses includegraphics and
+  graphicspath usage, joins PR-011 quarantine state, and emits
+  `docs/generated/manuscript_figure_inventory.md` plus
+  `docs/generated/missing_figure_references.md`. The current inventory records
+  94 includegraphics refs, 0 manifest-backed resolved refs, 72 quarantined
+  refs, 22 missing refs, and 23 text audit findings including manual status
+  numbers, solver-validation wording, overstrong validation wording,
+  production-value wording, and a pre-native family-identification risk. These
+  artifacts are an inventory and
+  quarantine gate only. They do not compile the manuscript, promote figures,
+  validate native or external transfer, provide HTT evidence, provide MIO
+  certificates, or permit final manuscript freeze while missing or quarantined
+  references remain unexplained.

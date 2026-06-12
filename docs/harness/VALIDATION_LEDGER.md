@@ -854,3 +854,44 @@ Artifact/claim-tier impact: generated checkpoint and scoreboard metrics are
 DAG bookkeeping only. They do not validate native solver behavior, transfer
 calibration, HTT posterior/evidence, MIO diagnostics, null calibration,
 morphology compatibility, or family-ID evidence.
+
+## PR-113 - Manuscript figure inventory and quarantine audit
+
+Date: 2026-06-12
+
+Changed files: `scripts/audit_manuscript_figures.py`,
+`tests/contracts/test_manuscript_figure_audit.py`,
+`docs/generated/manuscript_figure_inventory.md`,
+`docs/generated/missing_figure_references.md`, `docs/PR_DELTAS/pr-113.md`,
+status files, PR-012 generated status sidecars, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `python scripts/audit_manuscript_figures.py --dry-run` before implementation | repo root | FAIL | Red phase from read-only regression tester: script absent. |
+| `python scripts/audit_manuscript_figures.py` | repo root | PASS | Wrote both PR-113 generated reports; summary `includegraphics=94 resolved=0 quarantined=72 missing=22 text_findings=23`. |
+| `python scripts/audit_manuscript_figures.py --dry-run` | repo root | PASS | Exact PR-card command; same counts, no writes. |
+| `venv/bin/python -m pytest tests/contracts/test_manuscript_figure_audit.py -q` | repo root | PASS | `4 passed`; covers resolved/quarantined/missing classification, metadata, no-write dry-run, and report writes. |
+| `venv/bin/python -m pytest tests/contracts/test_artifact_manifest.py tests/contracts/test_status_snapshot.py tests/contracts/test_claim_language_lint.py tests/contracts/test_manuscript_figure_audit.py -q` | repo root | PASS | `35 passed`; adjacent artifact, status, claim, and manuscript audit contracts remain green. |
+| `venv/bin/python -m py_compile scripts/audit_manuscript_figures.py tests/contracts/test_manuscript_figure_audit.py` | repo root | PASS | Touched Python files compile. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --json` before status update | repo root | PASS | `23/62 = 37.10%`; PR-113 was topological next. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 24 completed PRs. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `24/62 = 38.71%`; dependency-weighted `44.62%`; critical path `6/21 = 28.57%`; checkpoint not due until 25. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `python scripts/check_claim_language.py docs/manuscript docs/manuscript/generated docs/generated --dry-run` | repo root | PASS | Active manuscript/generated scan found no forbidden claim language after generated text rows were stored as digests. |
+| `python scripts/check_claim_language.py <PR-113 changed files> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-113 changed files>` | repo root | PASS | No forbidden claim patterns detected after report/test sanitization. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-113 generated and handoff docs>` | repo root | PASS | No unmarked strong claims detected. |
+| `venv/bin/python scripts/check_artifact_manifests.py --dry-run` | repo root | PASS | Still reports 96 quarantined assets, 0 manifested figures, and 0 manifest issues. |
+| `venv/bin/python -m pytest -m smoke -q` | repo root | PASS | `6 passed, 6986 deselected`. |
+| `venv/bin/python -m pytest --collect-only -q` | repo root | PASS | `6933/6992 tests collected (59 deselected)`. |
+
+Numerical/scientific impact: none. PR-113 is COMMON/MANUSCRIPT diagnostic
+inventory and freeze-gate tooling.
+
+Artifact/claim-tier impact: `docs/generated/manuscript_figure_inventory.md`
+and `docs/generated/missing_figure_references.md` are diagnostic-only
+inventories. They record 94 includegraphics refs, 0 manifest-backed resolved
+refs, 72 quarantined refs, 22 missing refs, and 23 text audit findings. They do
+not compile the manuscript, promote figures, validate transfer, provide HTT
+evidence, provide MIO certificates, or support family-ID claims.
