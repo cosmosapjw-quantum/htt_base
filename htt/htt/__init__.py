@@ -15,10 +15,11 @@ if _INNER.is_dir():
         __path__.append(_inner_path)
 
 # Core subpackages: alias eagerly (no side effects at import)
-_EAGER = ['core', 'infer', 'bridge', 'figures', 'tilt', 'nulls', 'zoa']
+_EAGER = ['core', 'infer', 'bridge', 'figures', 'tilt', 'nulls', 'zoa', 'direction']
 # Optional subpackages: alias lazily to avoid file I/O on import
 _LAZY = ['catalogs', 'integration']
 _TOP_LEVEL_ALIASES = ['obsstat']
+__all__ = [*_EAGER, *_LAZY, *_TOP_LEVEL_ALIASES]
 
 for _s in _EAGER:
     _outer = f'htt.{_s}'

@@ -46,8 +46,11 @@ for name in [
     "htt",
     "htt.infer",
     "htt.core",
+    "htt.direction",
     "htt.obsstat",
     "htt.obsstat.observable_vector",
+    "htt.zoa",
+    "htt.zoa.axis_promotion",
     "bass",
     "common",
     "mio",
@@ -78,10 +81,13 @@ import importlib
 for name in [
     "htt",
     "htt.core",
+    "htt.direction",
     "htt.infer",
     "htt.nulls",
     "htt.obsstat",
     "htt.obsstat.observable_vector",
+    "htt.zoa",
+    "htt.zoa.axis_promotion",
     "htt.integration.to_mio",
     "bass",
     "common",
@@ -102,5 +108,50 @@ for name in [
             capture_output=True,
             check=False,
         )
+
+    assert completed.returncode == 0, completed.stderr
+
+
+def test_nested_htt_cwd_imports_direction_without_pythonpath() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    code = """
+import importlib
+for name in ["htt.direction", "htt.zoa.axis_promotion", "common.contracts"]:
+    importlib.import_module(name)
+"""
+
+    completed = subprocess.run(
+        [sys.executable, "-c", code],
+        cwd=REPO_ROOT / "htt" / "htt",
+        env=env,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+
+
+def test_star_import_exposes_pr042_direction_surface() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    code = """
+namespace = {}
+exec("from htt import *", namespace)
+assert "direction" in namespace
+assert "zoa" in namespace
+import htt.direction
+import htt.zoa.axis_promotion
+"""
+
+    completed = subprocess.run(
+        [sys.executable, "-c", code],
+        cwd=REPO_ROOT,
+        env=env,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
 
     assert completed.returncode == 0, completed.stderr

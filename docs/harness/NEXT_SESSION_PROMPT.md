@@ -11,7 +11,7 @@ Pre-read:
 - `.agents/skills/htt-scientific-code-validation/SKILL.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-051.md`
+- `docs/PR_DELTAS/pr-042.md`
 - `docs/generated/progress_checkpoints/checkpoint_025.md`
 - `docs/generated/progress_checkpoints/progress_scoreboard.md`
 - `docs/generated/status_snapshot.json`
@@ -20,26 +20,36 @@ Current state:
 
 - Completed PRs: PR-000, PR-001, PR-002, PR-003, PR-004, PR-005, PR-020,
   PR-010, PR-021, PR-011, PR-013, PR-014, PR-040, PR-012, PR-022, PR-070,
-  PR-015, PR-050, PR-041, PR-023, PR-071, PR-080, PR-030, PR-113, and PR-051.
-- Latest progress after PR-051: 25/62 = 40.32% complete;
-  dependency-weighted completion = 47.18%; critical path = 7/21 = 33.33%.
-- Checkpoint 025 was generated and no replan is required because progress
-  advanced by 5 since checkpoint 020.
-- Latest unblocked candidates: `PR-042`, `PR-072`, `PR-081`, `PR-031`, and
-  `PR-052`.
+  PR-015, PR-050, PR-041, PR-023, PR-071, PR-080, PR-030, PR-113, PR-051, and
+  PR-042.
+- Latest progress after PR-042: 26/62 = 41.94% complete;
+  dependency-weighted completion = 48.72%; critical path = 7/21 = 33.33%.
+- Checkpoint 025 remains the latest checkpoint; the next checkpoint is due at
+  30 completed PRs.
+- Latest unblocked candidates: `PR-072`, `PR-081`, `PR-031`, `PR-052`,
+  `PR-043`, and `PR-073`.
 
-Important PR-051 boundary:
+Important PR-042 boundary:
 
-- `mio.formalism.BudgetSpec` is the strict MIO denominator-policy contract.
-- It separates `MES_linear`, `external_transfer`, `atlas_quantile`, and
-  `observational` policies.
-- `external_transfer` budgets and sensitivity points require PR-014 metadata
-  and are transfer-conditional only.
-- `atlas_quantile` is pre-solver schema scaffolding only and does not identify
-  a Bianchi family.
-- The legacy COMMON/BASS departure report bridge is restricted to explicit
-  `MES_linear`/`linear_MES`; do not relabel legacy budgets as external transfer
-  or atlas/observational policies.
+- `common.contracts.PreferredAxis` remains canonical and defaults
+  `production_allowed=False`.
+- `htt.direction.preferred_axis` is only an HTT helper over the COMMON axis
+  contract; do not create `htt/src/htt` as a second HTT package root.
+- `htt.zoa.axis_promotion` is the downstream harmonic synthesis lock. It wraps
+  the existing basic axis gate and additionally requires finite coordinates,
+  stable axis provenance, explicit PR-040 `SkySupport`, sha256
+  sky-support/mask/scan-volume hashes, adequate mock coverage, and a matching
+  `AxisPromotionRecord` with `lineage_status="self_attested_pre_solver"`.
+- `restore_full_a2m` now requires that lock before reaching its rotation stub;
+  diagnostic ZoA axes and hand-flipped production flags cannot rotate
+  `a_lm`/`a_2m`.
+- `AxisPromotionRecord` only matches axis/sky/mask/mock metadata in PR-042.
+  Posterior/config/input hashes are carried forward for future upstream bundle
+  wiring and are not proof of native or publication-grade lineage.
+- PR-042 is gate metadata only. It does not create a production axis, native
+  solver result, transfer validation, HTT posterior evidence, MIO certificate,
+  blocked morphology-compatibility claim, or blocked geometry/family
+  identification evidence.
 
 Rules:
 

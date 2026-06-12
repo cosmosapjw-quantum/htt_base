@@ -938,3 +938,50 @@ bookkeeping only. The new `BudgetSpec` and sensitivity points are
 diagnostic-only metadata; they do not implement Q/F/Pi/G_F, HTT
 posterior/evidence, MIO certificates, transfer validation, native solver
 validation, morphology compatibility, or family-ID claims.
+
+## PR-042 - PreferredAxis production gate and downstream synthesis lock
+
+Date: 2026-06-13
+
+Changed files: `htt/htt/htt/direction/__init__.py`,
+`htt/htt/htt/direction/preferred_axis.py`,
+`htt/htt/htt/zoa/axis_promotion.py`, `htt/htt/htt/zoa/__init__.py`,
+`htt/htt/htt/__init__.py`, `htt/htt/__init__.py`, `htt/__init__.py`,
+`htt/htt/htt/PR13AJ_full_a2m_restoration.py`, `htt/test_packaging_imports.py`,
+`tests/htt/test_preferred_axis_gate.py`, `htt/htt/tests/test_PR13AJ_gate.py`,
+`docs/PR_DELTAS/pr-042.md`, DAG backlog mirrors, status files, PR-012
+generated status sidecars, the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_preferred_axis_gate.py -q` before implementation | repo root | FAIL | Red phase: `ModuleNotFoundError: No module named 'htt.direction'`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_preferred_axis_gate.py -q` | repo root | PASS | `6 passed`; covers default diagnostic axis, ZoA diagnostic lockout, rich sky-support requirements, promotion-record requirement/mismatch, positive posterior-axis lock, and `restore_full_a2m` lock. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_preferred_axis_gate.py htt/htt/tests/test_PR13AJ_gate.py -q` | repo root | PASS | `18 passed`; adjacent PR13AJ gate updated to require strict lock metadata, malformed hashes, forged axis provenance, and self-attested lineage status. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_zoa_selection_ladder.py htt/htt/tests/test_ver2_axis_gate.py tests/htt/test_sky_support_contract.py htt/src/common/test_healpix_selection.py -q` | repo root | PASS | `39 passed`; ZoA, basic axis-gate, sky-support, and pixel-selection contracts remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/htt/tests/test_ver2_directional_shell.py htt/htt/tests/test_ver2_likelihood_scope_guard.py htt/src/common/test_posterior_summary.py -q` | repo root | PASS | `43 passed`; directional-shell, MIO/TSC scope, and posterior-axis constructor regressions remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/test_packaging_imports.py -q` | repo root | PASS | `7 passed`; `htt.direction`, `htt.zoa.axis_promotion`, nested-cwd import, and `from htt import *` expose the PR-042 surface. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/htt/htt/direction/__init__.py htt/htt/htt/direction/preferred_axis.py htt/htt/htt/zoa/axis_promotion.py htt/htt/htt/zoa/__init__.py htt/htt/htt/PR13AJ_full_a2m_restoration.py tests/htt/test_preferred_axis_gate.py htt/htt/tests/test_PR13AJ_gate.py` | repo root | PASS | Touched Python files compile. |
+| `python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `26/62 = 41.94%`; dependency-weighted `48.72%`; critical path `7/21 = 33.33%`; next checkpoint at 30. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 26 completed PRs. |
+| `python scripts/check_claim_language.py <PR-042 files> --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-042 files>` | repo root | PASS | No forbidden claim patterns detected. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-042 files>` before handoff wording fix | repo root | FAIL | Flagged one handoff line mentioning morphology compatibility without a nearby blocker marker. |
+| `python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-042 files>` | repo root | PASS | No unmarked strong claims detected after wording fix. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `5 passed`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7017 deselected`. |
+| `venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `6964/7023 tests collected (59 deselected)`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` after backlog path correction | repo root | PASS | `OK: 62 PRs, DAG valid`; PR-042 backlog paths now use live `htt/htt/htt` files. |
+| `PYTHONPATH=htt/src python -m common.status_snapshot --write docs/generated/status_snapshot.json` after backlog path correction | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix after DAG metadata edits. |
+
+Numerical/scientific impact: no new solver, transfer calculation, posterior
+evidence, or null ensemble computation. PR-042 adds HTT gate metadata and a
+downstream harmonic synthesis lock only.
+
+Artifact/claim-tier impact: generated status artifacts are DAG bookkeeping
+only. The new `AxisPromotionRecord` and decision metadata are
+diagnostic-only/pre-solver gate metadata with
+`lineage_status="self_attested_pre_solver"`; they do not create a production
+axis, native solver result, transfer validation, HTT posterior evidence, MIO
+certificate, morphology-compatibility claim, or geometry/family-ID claim.

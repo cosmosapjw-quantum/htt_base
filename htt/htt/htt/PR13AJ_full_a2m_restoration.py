@@ -16,18 +16,25 @@ from __future__ import annotations
 
 from typing import Dict
 
-from common.contracts import PreferredAxis
+from common.contracts import PreferredAxis, SkySupport
+from htt.zoa.axis_promotion import AxisPromotionRecord, require_axis_for_harmonic_synthesis
 
 __all__ = ["PreferredAxis", "restore_full_a2m"]
 
 
-def restore_full_a2m(axis: PreferredAxis, a20_seed: complex) -> Dict[int, complex]:
+def restore_full_a2m(
+    axis: PreferredAxis,
+    a20_seed: complex,
+    *,
+    sky_support: SkySupport | None = None,
+    promotion_record: AxisPromotionRecord | None = None,
+) -> Dict[int, complex]:
     """Rotate a20 into the full {a_{2m}} tuple under the given axis.
 
     Parameters
     ----------
     axis : PreferredAxis
-        Must satisfy ``axis.production_allowed is True``.
+        Must pass the HTT harmonic synthesis promotion lock.
     a20_seed : complex
         Seed a_{20} in the axis-aligned frame.
 
@@ -38,17 +45,17 @@ def restore_full_a2m(axis: PreferredAxis, a20_seed: complex) -> Dict[int, comple
     Raises
     ------
     RuntimeError
-        If ``axis.production_allowed`` is False. This blocks diagnostic axes
-        (raw/ZoA-masked/selection-aware-only) from leaking into the a_{ℓm}
-        restoration path, which was the root defect in the legacy code.
+        If the axis, sky support, or promotion provenance does not pass the
+        PR-042 harmonic synthesis lock. This blocks diagnostic axes
+        (raw/ZoA-masked/selection-aware-only) and hand-flipped production flags
+        from leaking into the a_{ℓm} restoration path.
     """
-    if not axis.production_allowed:
-        raise RuntimeError(
-            "PreferredAxis "
-            f"(source={axis.source}, selection_mode={axis.selection_mode}, "
-            f"weight_mode={axis.weight_mode}) "
-            "is diagnostic-only. a20 → full a2m restoration forbidden."
-        )
+    require_axis_for_harmonic_synthesis(
+        axis,
+        sky_support=sky_support,
+        promotion_record=promotion_record,
+        target="a_2m",
+    )
     raise NotImplementedError(
         "Rotation body pending; HTT-P0-AJ only lands the production gate."
     )

@@ -25,6 +25,7 @@ completed:
 - PR-030
 - PR-113
 - PR-051
+- PR-042
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -135,4 +136,16 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   budget as external-transfer/atlas/observational without the MIO contract.
   PR-051 is not Q/F/Pi/G inference, not HTT evidence, not a posterior, not a
   MIO certificate, not native solver validation, and not morphology or
-  geometry/family identification evidence.
+  geometry/family identification evidence. PR-042 adds an HTT pre-solver
+  preferred-axis promotion/synthesis lock at the live `htt/htt/htt` package
+  root. The canonical COMMON `PreferredAxis` still defaults
+  `production_allowed=False`; downstream harmonic use now requires posterior
+  axis provenance, finite axis coordinates, explicit PR-040 `SkySupport`,
+  sha256 sky-support/mask/scan-volume hashes, adequate mock coverage, and a
+  matching `AxisPromotionRecord` with self-attested pre-solver lineage status.
+  The existing `restore_full_a2m` entry point now calls this lock before the
+  rotation stub, so diagnostic ZoA axes and hand-flipped production flags cannot
+  rotate `a_lm`/`a_2m`. PR-042 is gate metadata only; it does not create a
+  production axis, native solver result, transfer validation, HTT posterior
+  evidence, MIO certificate, morphology compatibility claim, or geometry/family
+  identification evidence.

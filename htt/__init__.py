@@ -27,4 +27,13 @@ if _NESTED_HTT.is_dir():
         __path__.append(_nested_str)
 
 __version__ = "0.1.0"
-__all__ = ["core", "nulls", "infer", "bridge", "figures", "integration"]
+__all__ = [
+    "core",
+    "nulls",
+    "infer",
+    "bridge",
+    "figures",
+    "integration",
+    "zoa",
+    "direction",
+]

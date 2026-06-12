@@ -382,8 +382,8 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L2
 - **Risk:** high
 - **Primary files:**
-  - `htt/src/htt/direction/preferred_axis.py`
-  - `htt/src/htt/zoa/axis_promotion.py`
+  - `htt/htt/htt/direction/preferred_axis.py`
+  - `htt/htt/htt/zoa/axis_promotion.py`
   - `tests/htt/test_preferred_axis_gate.py`
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_preferred_axis_gate.py -q`
@@ -1029,4 +1029,3 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
   - Every public claim maps to artifact, manifest, tests, caveats, and owner
   - Forbidden claims are blocked before submission
 - **Kill / rollback:** Reject if any C5/C6 family-identification claim appears before native low-ell solver morphology atlas.
-
