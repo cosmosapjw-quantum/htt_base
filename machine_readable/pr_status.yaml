@@ -49,6 +49,7 @@ completed:
 - PR-061
 - PR-091
 - PR-101
+- PR-102
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -420,4 +421,13 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   the certificate reduction status remains diagnostic-only. PR-101 does not
   compute a new G_F from redshift drift, create HTT evidence/posterior content,
   create truth certificates, validate transfer or native solver output,
+  establish morphology compatibility, or support geometry/family claims.
+  PR-102 adds a MIO diagnostic-only FLRW null-predictive tail gate. It
+  consumes PR-076 OBSSTAT null-feature provenance, requires exact matched
+  covariance/null/mask/noise/sky support statuses, binds certificate manifest
+  hashes to the null-predictive payload, and treats the legacy null-mock
+  boolean as insufficient. Raw empirical tail probabilities remain descriptive
+  statistic rows only; certificate readiness and HTT cross-checks use corrected
+  null-predictive tail fields. PR-102 does not generate FLRW mocks, create HTT
+  model-dependent inference outputs, validate transfer or native solver output,
   establish morphology compatibility, or support geometry/family claims.

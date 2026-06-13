@@ -2,7 +2,7 @@
 
 The research plan splits HJ-03 into two public surfaces:
 
-* ``flrw_tension`` — posterior-predictive p-values against FLRW mocks
+* ``flrw_tension`` — null-predictive empirical tail checks against FLRW mocks
 * ``xc_estimator`` — direct ``x_C`` estimate from data-side ingredients
 
 This package intentionally does **not** generate FLRW mocks or HTT

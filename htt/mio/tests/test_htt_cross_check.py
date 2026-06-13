@@ -28,6 +28,15 @@ from mio.interface.htt_cross_check import (
     register_rule,
     table_to_payload,
 )
+from mio.tension.flrw_tension import (
+    evaluate_flrw_tension,
+    to_mio_certificate as flrw_to_mio_certificate,
+)
+from obsstat.null_ensembles import (
+    LookElsewhereBookkeeping,
+    NullEnsembleSpec,
+    build_null_ensemble_feature_payload,
+)
 from workspace.contracts.htt_to_mio import PosteriorExportBundle
 from workspace.contracts.mio_certificate import MioCertificate
 
@@ -55,7 +64,10 @@ def _evidence_anatomy_cert(total_delta_lnB: float) -> MioCertificate:
         input_data_hashes=[],
         htt_cross_check_suggested={
             "compare_to": "htt.core.analysis_extended.evidence_matrix_report_artifact",
-            "expected_relation": "channel contributions should reconstruct the HTT total evidence within tolerance",
+            "expected_relation": (
+                "channel contributions should reconstruct the HTT total evidence "
+                "within tolerance"
+            ),
         },
     )
 
@@ -88,6 +100,55 @@ def _flrw_tension_cert(ppp_alarm: bool, ppp_pvalue: float = 0.02) -> MioCertific
             "compare_to": "htt.core.advanced_diagnostics.posterior_predictive_report_artifact",
             "expected_relation": "MIO PPP and HTT predictive residual alarms should agree in sign",
         },
+    )
+
+
+def _new_flrw_null_payload() -> dict[str, object]:
+    spec = NullEnsembleSpec(
+        null_ensemble_ref="mock://obsstat/flrw-mask-noise/cross-check",
+        null_family="flrw_mask_noise",
+        mock_count=4,
+        feature_targets=("flrw_null_predictive_check",),
+        statistic_keys=("T_directional",),
+        sky_support_status="complete",
+        mask_status="matched_mask_hash",
+        noise_model_status="matched_noise_model",
+        covariance_status="matched_covariance_calibrated",
+        null_mock_status="matched_null_mocks_calibrated",
+        random_seed_policy="fixed_seed_manifest:cross-check",
+        config_hash="sha256:cross-check-config",
+        input_hashes=("sha256:cross-check-input",),
+        generating_command="python -m pytest htt/mio/tests/test_htt_cross_check.py -q",
+        worktree_state="test-clean",
+    )
+    look = LookElsewhereBookkeeping(
+        look_elsewhere_status="global_corrected",
+        trial_count=1,
+        scan_volume={
+            "feature_targets": ["flrw_null_predictive_check"],
+            "statistic_keys": ["T_directional"],
+            "trial_count": 1,
+            "global_local_status": "global_corrected",
+        },
+        correction_method="empirical_global_tail",
+        pre_registration_status="pre_registered",
+        tail_definitions={"T_directional": "upper_tail"},
+    )
+    return build_null_ensemble_feature_payload(
+        null_ensemble=spec,
+        look_elsewhere=look,
+        p_values={"T_directional": 0.2},
+    )
+
+
+def _new_flrw_tension_cert() -> MioCertificate:
+    report = evaluate_flrw_tension(
+        {"T_directional": 2.5},
+        {"T_directional": [0.2, 0.4, 0.5, 0.7]},
+    )
+    return flrw_to_mio_certificate(
+        report,
+        null_predictive_payload=_new_flrw_null_payload(),
     )
 
 
@@ -166,6 +227,20 @@ def test_flrw_tension_alarms_disagree():
     assert "disagreement" in row.note
 
 
+def test_flrw_tension_rule_accepts_pr102_tail_probability_certificate():
+    cert = _new_flrw_tension_cert()
+    tbl = build_cross_check_table(
+        [cert],
+        _bundle(Pi_median=0.02),
+        tolerance=0.05,
+    )
+    row = tbl.rows[0]
+    assert row.status == STATUS_CONSISTENT
+    assert row.mio_value == pytest.approx(0.2)
+    assert row.htt_value == pytest.approx(0.02)
+    assert "incomparable" not in row.note.lower()
+
+
 def test_flrw_tension_missing_indicator_is_incomparable():
     base = _flrw_tension_cert(ppp_alarm=True)
     cert = dataclasses.replace(
@@ -178,7 +253,7 @@ def test_flrw_tension_missing_indicator_is_incomparable():
     tbl = build_cross_check_table([cert], _bundle(), tolerance=0.05)
     row = tbl.rows[0]
     assert row.status == STATUS_INCOMPARABLE
-    assert "ppp_corrected_p_lt_0p05" in row.note
+    assert "corrected tail probability alarm" in row.note
 
 
 # ─── Default fallback + unregistered rules ────────────────────────────

@@ -293,6 +293,14 @@ def _claim_ledger_notes(*, pr: Mapping[str, object], state: str) -> tuple[str, .
             "selection_status=redshift_bin_selection_metadata_required",
             "g_f_bridge_status=diagnostic_bridge_metadata_recorded",
         )
+    if _is_flrw_tension_null_predictive_gate_pr(pr_id=pr_id, pr=pr):
+        return base + (
+            "null_mock_status=flrw_null_predictive_gate_recorded",
+            "covariance_status=flrw_null_predictive_gate_recorded",
+            "sky_support_status=flrw_null_predictive_gate_recorded",
+            "look_elsewhere_status=flrw_null_predictive_gate_recorded",
+            "tail_probability_status=descriptive_until_null_gate_passes",
+        )
     return base + (
         "null_mock_status=not_statistical",
         "sky_support_status=not_directional",
@@ -339,6 +347,31 @@ def _is_redshift_binned_coherence_certificate_pr(
     return (
         "Depth-bin covariance and selection metadata required" in dod_items
         and "Descriptive fallback is explicit" in dod_items
+    )
+
+
+def _is_flrw_tension_null_predictive_gate_pr(
+    *,
+    pr_id: str,
+    pr: Mapping[str, object],
+) -> bool:
+    """Return whether a PR card is the FLRW null-predictive MIO gate."""
+
+    if pr_id != "PR-102":
+        return False
+    owner = str(pr.get("owner", "")).strip().upper()
+    if owner != Owner.MIO.value:
+        return False
+    files = {str(path) for path in pr.get("files", ()) or ()}
+    if "htt/mio/tension/flrw_tension.py" not in files:
+        return False
+    if "tests/mio/test_flrw_tension_gate.py" not in files:
+        return False
+    dod_items = " ".join(str(item) for item in pr.get("dod", ()) or ())
+    return (
+        "PPP/tension metrics require calibrated null predictive distribution"
+        in dod_items
+        and "No PPP claim without null mocks" in dod_items
     )
 
 

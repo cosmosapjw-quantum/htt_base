@@ -124,25 +124,26 @@ def _rule_flrw_tension(
     bundle: PosteriorExportBundle,
     tolerance: float,
 ) -> _RuleResult:
-    """FLRW tension: MIO PPP alarm vs HTT Π exceedance alarm (sign comparison).
+    """FLRW tension: MIO tail alarm vs HTT Π exceedance alarm.
 
     Emitted by ``mio.tension.flrw_tension.to_mio_certificate``. The MIO
-    certificate carries a corrected PPP p-value with a boolean alarm
-    ``ppp_corrected_p_lt_0p05``; the HTT bundle carries the Layer-3
-    exceedance posterior median ``Pi_median``. We compare the *signs* of
-    the two alarms (``mio_alarm`` vs ``htt_alarm = Pi_median > tolerance``)
-    and declare the comparison ``divergent`` if they disagree.
+    certificate carries a corrected null-predictive tail alarm. The HTT bundle
+    carries the Layer-3 exceedance posterior median ``Pi_median``. We compare
+    the signs of the two alarms and declare the comparison ``divergent`` if
+    they disagree.
 
     No scalars are combined — both are projected to booleans first.
     """
-    mio_alarm = cert.adequacy_indicators.get("ppp_corrected_p_lt_0p05")
+    mio_alarm = cert.adequacy_indicators.get("corrected_tail_probability_lt_0p05")
+    if mio_alarm is None:
+        mio_alarm = cert.adequacy_indicators.get("ppp_corrected_p_lt_0p05")
     if mio_alarm is None:
         return (
             None,
             float(bundle.Pi_median),
             None,
             STATUS_INCOMPARABLE,
-            "MIO certificate missing 'ppp_corrected_p_lt_0p05' indicator",
+            "MIO certificate missing corrected tail probability alarm",
         )
     mio_alarm = bool(mio_alarm)
     htt_alarm = float(bundle.Pi_median) > tolerance
@@ -152,7 +153,11 @@ def _rule_flrw_tension(
         if status == STATUS_CONSISTENT
         else f"alarm sign disagreement: mio={mio_alarm} vs htt={htt_alarm}"
     )
-    mio_pval = cert.departure_variables.get("min_corrected_ppp_pvalue")
+    mio_pval = cert.consistency_metrics.get("minimum_corrected_tail_probability")
+    if mio_pval is None:
+        mio_pval = cert.departure_variables.get("minimum_corrected_tail_probability")
+    if mio_pval is None:
+        mio_pval = cert.departure_variables.get("min_corrected_ppp_pvalue")
     return (
         float(mio_pval) if mio_pval is not None else None,
         float(bundle.Pi_median),

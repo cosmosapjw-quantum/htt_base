@@ -267,6 +267,86 @@ def test_redshift_certificate_notes_do_not_match_title_only(tmp_path: Path) -> N
     assert "sky_support_status=not_directional" in notes
 
 
+def test_flrw_tension_gate_pr_notes_preserve_null_predictive_statuses(
+    tmp_path: Path,
+) -> None:
+    backlog = {
+        "prs": [
+            {
+                "id": "PR-102",
+                "title": "FLRW tension diagnostic with null predictive distribution gate",
+                "owner": "MIO",
+                "depends": ["PR-076", "PR-100"],
+                "scope": "pre-solver",
+                "files": [
+                    "htt/mio/tension/flrw_tension.py",
+                    "tests/mio/test_flrw_tension_gate.py",
+                ],
+                "dod": [
+                    "PPP/tension metrics require calibrated null predictive distribution",
+                    "No PPP claim without null mocks",
+                ],
+            }
+        ],
+    }
+    status = {"completed": ["PR-102"], "blocked": [], "in_progress": None}
+    backlog_path = tmp_path / "pr_backlog.yaml"
+    status_path = tmp_path / "pr_status.yaml"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+
+    notes = bundle.claim_rows[0]["notes"]
+    assert "null_mock_status=flrw_null_predictive_gate_recorded" in notes
+    assert "covariance_status=flrw_null_predictive_gate_recorded" in notes
+    assert "sky_support_status=flrw_null_predictive_gate_recorded" in notes
+    assert "look_elsewhere_status=flrw_null_predictive_gate_recorded" in notes
+    assert "tail_probability_status=descriptive_until_null_gate_passes" in notes
+    assert "null_mock_status=not_statistical" not in notes
+    assert "sky_support_status=not_directional" not in notes
+
+
+def test_flrw_tension_gate_notes_do_not_match_title_only(tmp_path: Path) -> None:
+    backlog = {
+        "prs": [
+            {
+                "id": "PR-999",
+                "title": "FLRW tension diagnostic with null predictive distribution gate",
+                "owner": "MIO",
+                "depends": [],
+                "scope": "pre-solver",
+                "files": ["docs/not-the-flrw-gate.md"],
+                "dod": [
+                    "PPP/tension metrics require calibrated null predictive distribution",
+                    "No PPP claim without null mocks",
+                ],
+            }
+        ],
+    }
+    status = {"completed": ["PR-999"], "blocked": [], "in_progress": None}
+    backlog_path = tmp_path / "pr_backlog.yaml"
+    status_path = tmp_path / "pr_status.yaml"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+
+    notes = bundle.claim_rows[0]["notes"]
+    assert "null_mock_status=flrw_null_predictive_gate_recorded" not in notes
+    assert "tail_probability_status=descriptive_until_null_gate_passes" not in notes
+    assert "null_mock_status=not_statistical" in notes
+    assert "sky_support_status=not_directional" in notes
+
+
 def test_write_status_artifacts_writes_json_and_markdown(tmp_path: Path) -> None:
     backlog_path, status_path = _write_fixture(tmp_path)
     output = tmp_path / "generated" / "status_snapshot.json"
