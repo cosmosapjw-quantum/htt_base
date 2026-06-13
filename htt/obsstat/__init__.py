@@ -18,6 +18,12 @@ from .alm_conventions import (
     validate_alm_convention_metadata,
     validate_alm_feature_conventions,
 )
+from .biposh_features import (
+    BiPoSHConventionMetadata,
+    BiPoSHFeatureSummary,
+    SparseBiPoSHCoefficient,
+    build_biposh_feature_payload,
+)
 from .morphology import (
     DiagnosticMorphologyAxis,
     MorphologyAxisSummary,
@@ -44,6 +50,7 @@ from .template_fit import (
 
 for _submodule in (
     "alm_conventions",
+    "biposh_features",
     "morphology",
     "observable_vector",
     "scalar_lowell",
@@ -56,6 +63,8 @@ for _submodule in (
 
 __all__ = [
     "AlmConvention",
+    "BiPoSHConventionMetadata",
+    "BiPoSHFeatureSummary",
     "CovarianceAssumption",
     "DiagnosticMorphologyAxis",
     "LowEllNullCalibration",
@@ -64,8 +73,10 @@ __all__ = [
     "MorphologyNullCalibration",
     "ObservableVector",
     "OrientationScanMetadata",
+    "SparseBiPoSHCoefficient",
     "TemplateFitDiagnostic",
     "build_alm_feature",
+    "build_biposh_feature_payload",
     "build_observable_vector",
     "compute_cl_from_alm",
     "canonical_spin2_alm_convention",

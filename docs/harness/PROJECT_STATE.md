@@ -1,13 +1,13 @@
 # Project State
 
-Current DAG position: PR-054 complete after commits PR-000, PR-001, PR-002,
+Current DAG position: PR-075 complete after commits PR-000, PR-001, PR-002,
 PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, PR-014,
 PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041, PR-023, PR-071,
 PR-080, PR-030, PR-113, PR-051, PR-042, PR-072, PR-081, PR-031, PR-052,
-PR-043, PR-073, PR-082, PR-032, PR-053, PR-074, PR-083, and PR-054.
+PR-043, PR-073, PR-082, PR-032, PR-053, PR-074, PR-083, PR-054, and PR-075.
 
-Progress after PR-054: 38/62 complete = 61.29%; dependency-weighted
-completion = 66.15%; critical-path completion = 10/21 = 47.62%.
+Progress after PR-075: 39/62 complete = 62.90%; dependency-weighted
+completion = 67.69%; critical-path completion = 10/21 = 47.62%.
 
 Current framework status: L0 orchestration and harness bootstrap. The repo has
 inventory, editable install/import stabilization, pytest taxonomy, DAG/progress
@@ -120,9 +120,9 @@ Scientific boundaries remain active:
 
 Latest progress scoreboard: `docs/generated/progress_checkpoints/progress_scoreboard.md`.
 Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_035.md`.
-Next checkpoint is due at 40 completed PRs.
+Next checkpoint is due after the next completed PR, at 40 completed PRs.
 
-Next topological PR: PR-075. Other unblocked candidate after PR-054 is PR-055.
+Next topological PR: PR-055. Other unblocked candidate after PR-075 is PR-076.
 
 ## PR-032 update
 
@@ -231,3 +231,29 @@ Latest unblocked candidates are PR-075 and PR-055. PR-054 does not create
 truth probabilities, HTT posterior/evidence content, MIO certificates,
 p-values/FPR claims, native solver validation, transfer validation, morphology
 compatibility, or geometry/family-identification evidence.
+
+## PR-075 update
+
+PR-075 adds `htt.obsstat.biposh_features` with
+`BiPoSHConventionMetadata`, `SparseBiPoSHCoefficient`,
+`BiPoSHFeatureSummary`, and `build_biposh_feature_payload()`. The payload is
+OBSSTAT-owned, diagnostic-only, and pre-solver. It summarizes caller-supplied
+sparse BiPoSH/off-diagonal covariance coefficients with PR-071 harmonic
+convention metadata, required rotation metadata, deterministic canonical
+sparse-entry hashes, explicit duplicate-key rejection, threshold
+retained/discarded accounting, per-L and per-(L,ell1,ell2) rotation-aware
+norms, support statuses, caveats, config/input hashes, generating command, and
+git or worktree provenance.
+
+Reviewer hardening made the API scan both metadata keys and string values for
+overclaim patterns, and negative test text is constructed at runtime so the
+production claim-language scanner remains clean. Optional transfer-derived
+payloads require PR-014 transfer metadata and remain transfer-conditional.
+
+Progress after PR-075 is 39/62 = 62.90%; dependency-weighted completion is
+67.69%; critical path is 10/21 = 47.62%; no blocker or replan was reported.
+Latest unblocked candidates are PR-055 and PR-076. The next completed PR will
+trigger the 40-PR checkpoint. PR-075 does not estimate coefficients from maps,
+run or fake a native solver, calibrate null tails, create HTT posterior/evidence
+content, create MIO certificate content, validate transfer, provide morphology
+compatibility, or support geometry/family evidence.

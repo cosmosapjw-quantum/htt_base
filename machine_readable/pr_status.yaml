@@ -38,6 +38,7 @@ completed:
 - PR-074
 - PR-083
 - PR-054
+- PR-075
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -281,3 +282,16 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   does not create truth probabilities, HTT evidence/posterior content, MIO
   certificates, native solver validation, p-values/FPR claims, morphology
   compatibility, or geometry/family-identification evidence.
+  PR-075 adds an OBSSTAT diagnostic-only BiPoSH/sparse covariance feature
+  payload for caller-supplied sparse coefficients. Payloads carry PR-071 alm
+  convention metadata plus required rotation metadata, deterministic
+  canonicalized sparse entries and entry hashes, duplicate-key rejection,
+  threshold retained/discarded accounting, per-L and per-(L,ell1,ell2)
+  rotation-aware norms, required sky/mask/beam/systematic/covariance/null
+  statuses, config/input hashes, generating command, git/worktree provenance,
+  and optional PR-014 transfer metadata validation for transfer-derived
+  features. PR-075 does not estimate BiPoSH coefficients from maps, run or
+  fake a native solver, calibrate a null tail probability, create HTT
+  evidence/posterior content, create MIO certificate content, validate
+  transfer, provide morphology compatibility, or support geometry/family
+  claims.

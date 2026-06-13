@@ -48,6 +48,7 @@ for name in [
     "htt.core",
     "htt.direction",
     "htt.obsstat",
+    "htt.obsstat.biposh_features",
     "htt.obsstat.morphology",
     "htt.obsstat.observable_vector",
     "htt.obsstat.scalar_lowell",
@@ -95,6 +96,7 @@ for name in [
     "htt.infer",
     "htt.nulls",
     "htt.obsstat",
+    "htt.obsstat.biposh_features",
     "htt.obsstat.morphology",
     "htt.obsstat.observable_vector",
     "htt.obsstat.scalar_lowell",
@@ -251,6 +253,35 @@ import htt.obsstat.template_fit as htt_level
 import obsstat.template_fit as top_level
 assert top_level is htt_level
 assert top_level.TemplateFitDiagnostic is htt_level.TemplateFitDiagnostic
+""",
+    ]
+    for code in codes:
+        completed = subprocess.run(
+            [sys.executable, "-c", code],
+            cwd=REPO_ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert completed.returncode == 0, completed.stderr
+
+
+def test_obsstat_top_level_and_htt_alias_share_biposh_feature_identity() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    codes = [
+        """
+import obsstat.biposh_features as top_level
+import htt.obsstat.biposh_features as htt_level
+assert top_level is htt_level
+assert top_level.BiPoSHFeatureSummary is htt_level.BiPoSHFeatureSummary
+""",
+        """
+import htt.obsstat.biposh_features as htt_level
+import obsstat.biposh_features as top_level
+assert top_level is htt_level
+assert top_level.BiPoSHFeatureSummary is htt_level.BiPoSHFeatureSummary
 """,
     ]
     for code in codes:

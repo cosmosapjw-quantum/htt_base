@@ -1539,3 +1539,58 @@ sample counts, source provenance, PR-014 transfer metadata when applicable,
 support status metadata, config/input hashes, generating command, and git or
 worktree provenance. Pi remains diagnostic-only and is not a p-value/FPR,
 truth probability, posterior/evidence quantity, or native/family result.
+
+## PR-075 - BiPoSH/sparse covariance feature extraction
+
+Date: 2026-06-13
+
+Changed files: `htt/obsstat/biposh_features.py`, `htt/obsstat/__init__.py`,
+`htt/test_packaging_imports.py`, `tests/obsstat/test_biposh_features.py`,
+`docs/PR_DELTAS/pr-075.md`, status files, PR-012 generated status sidecars,
+the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_biposh_features.py -q` before test file | repo root | FAIL | Red phase: target file did not exist. |
+| Import probe for `htt.obsstat.biposh_features` and `obsstat.biposh_features` | repo root | FAIL | Red phase: both modules missing. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_biposh_features.py -q` after red tests | repo root | FAIL | Expected red: module and exports missing. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_biposh_features.py -q` first implementation | repo root | FAIL | Overclaim guard scanned values but not risky metadata keys; fixed before closeout. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_biposh_features.py -q` | repo root | PASS | `12 passed`; BiPoSH metadata, norms, ordering, duplicate/invalid indices, triangle validity, threshold accounting, caveat hooks, transfer provenance, ObservableVector integration, protected transfer metadata, runtime caveat guards, and exports. |
+| `python -m pytest tests/obsstat/test_biposh_features.py -q` | repo root | FAIL | Host interpreter lacks pytest: `/usr/bin/python: No module named pytest`; the venv command is the authoritative run. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/obsstat/biposh_features.py htt/obsstat/__init__.py tests/obsstat/test_biposh_features.py htt/test_packaging_imports.py` | repo root | PASS | Touched Python files compile. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_biposh_features.py tests/obsstat/test_observable_vector.py tests/obsstat/test_alm_conventions.py tests/obsstat/test_template_fit.py -q` | repo root | PASS | `38 passed`; adjacent OBSSTAT surfaces remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/test_packaging_imports.py -q` | repo root | PASS | `11 passed`; package aliases include BiPoSH features. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat -q` | repo root | PASS | `55 passed`; OBSSTAT suite remains green. |
+| `venv/bin/python scripts/check_claim_language.py htt/obsstat/biposh_features.py htt/obsstat/__init__.py tests/obsstat/test_biposh_features.py htt/test_packaging_imports.py --dry-run` before fixture rewrite | repo root | FAIL | Static negative-test phrase tripped the production claim-language scanner; fixed by runtime construction. |
+| `venv/bin/python scripts/check_claim_language.py htt/obsstat/biposh_features.py htt/obsstat/__init__.py tests/obsstat/test_biposh_features.py htt/test_packaging_imports.py --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py htt/obsstat/biposh_features.py htt/obsstat/__init__.py tests/obsstat/test_biposh_features.py htt/test_packaging_imports.py` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py htt/obsstat/biposh_features.py htt/obsstat/__init__.py tests/obsstat/test_biposh_features.py htt/test_packaging_imports.py` | repo root | PASS | No unmarked strong claims detected. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 39 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `39/62 = 62.90%`; dependency-weighted `67.69%`; critical path `10/21 = 47.62%`; checkpoint not due until 40. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `git diff --check` | repo root | PASS | No whitespace errors. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `11 passed`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7178 deselected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_claim_language_lint.py tests/contracts/test_ownership_firewall.py tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_transfer_registry.py -q` | repo root | PASS | `49 passed`; claim, ownership, MIO/HTT, and transfer firewalls remain green. |
+| `venv/bin/python scripts/check_claim_language.py <PR-075 code, tests, delta, and handoff docs> --dry-run` | repo root | PASS | No forbidden claim language detected after final handoff updates. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-075 code, tests, delta, and handoff docs>` | repo root | PASS | No forbidden claim patterns detected after final handoff updates. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-075 code, tests, delta, and handoff docs>` | repo root | PASS | No unmarked strong claims detected after final handoff updates. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `7125/7184 tests collected (59 deselected)`. |
+
+Numerical/scientific impact: no solver execution, transfer calculation, null
+calibration, posterior evidence, MIO certificate, native morphology atlas, or
+family-label output was added. PR-075 summarizes caller-supplied sparse
+BiPoSH/off-diagonal covariance coefficients only.
+
+Artifact/claim-tier impact: generated status artifacts remain DAG bookkeeping
+only. BiPoSH payloads require OBSSTAT ownership, diagnostic-only claim tier,
+convention and rotation metadata, config/input hashes, generating command,
+git or worktree provenance, support statuses, caveats, and optional PR-014
+transfer provenance for transfer-derived features.
+
+Review closeout: reviewer blockers were fixed before commit. The final patch
+rejects protected transfer metadata overwrites, scans transfer caveats and
+nested list metadata keys, enforces sparse-key triangle validity, requires
+non-empty allowlisted rotation metadata, separates channel-pair norm buckets,
+and records threshold-discarded coefficient identities and power.

@@ -4,8 +4,8 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-13
 
-No active DAG blockers after PR-054. Progress report shows unblocked next
-candidates `PR-075` and `PR-055`; use DAG ordering and policy priorities
+No active DAG blockers after PR-075. Progress report shows unblocked next
+candidates `PR-055` and `PR-076`; use DAG ordering and policy priorities
 before selecting the next node.
 
 Manuscript-freeze blocker: `docs/generated/missing_figure_references.md`
@@ -145,3 +145,11 @@ report-card and posterior-pushforward PRs must preserve the explicit
 null/mock support gates, and must not promote Pi into truth probability,
 posterior/evidence, native validation, morphology compatibility, or
 geometry/family-identification language.
+
+Residual non-blocking risk: PR-075 adds OBSSTAT BiPoSH/sparse covariance
+feature payloads for caller-supplied coefficients, but it does not estimate
+coefficients from maps, calibrate matched null ensembles, validate native
+solver output, provide HTT likelihood/evidence, create MIO certificates, or
+establish morphology compatibility. Downstream PRs must preserve convention,
+rotation, mask, beam, systematic, covariance, null, transfer, and sparse-index
+provenance before using these features in any higher-level framework surface.

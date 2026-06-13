@@ -370,3 +370,22 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: calibrated p-values/FPR, PPC/LOOCV, report-card integration,
   posterior-pushforward boundaries, G_F depth-gap, and native morphology atlas
   integration remain downstream.
+
+## 2026-06-13 - PR-075 BiPoSH feature boundary
+
+- Accepted: `htt.obsstat.biposh_features` is the OBSSTAT-owned
+  diagnostic-only feature surface for caller-supplied sparse BiPoSH or
+  off-diagonal covariance coefficients.
+- Accepted: payloads must carry PR-071 harmonic convention metadata, required
+  rotation metadata, deterministic canonical sparse-entry hashes, duplicate
+  rejection, threshold retained/discarded accounting, support statuses, caveats,
+  config/input hashes, generating command, and git or worktree provenance.
+- Accepted: transfer-derived BiPoSH features require PR-014 transfer metadata
+  and remain transfer-conditional.
+- Rejected: deriving BiPoSH from BASS/native transfer in this PR, relying on
+  sparse duplicate summation, adding p-values without matched null metadata,
+  collapsing deterministic template-fit and covariance-feature branches, or
+  promoting a nonzero BiPoSH feature to geometry/family evidence.
+- Deferred: map-to-BiPoSH estimators, matched null ensembles, full covariance
+  calibration, HTT model likelihoods, MIO report-card use, native morphology
+  atlas comparison, and family-equivalence gates remain downstream.
