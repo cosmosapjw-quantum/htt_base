@@ -45,6 +45,9 @@ import importlib
 for name in [
     "htt",
     "htt.infer",
+    "htt.nulls",
+    "htt.nulls.selection_response_depth",
+    "htt.nulls.survey_axis_coherence",
     "htt.core",
     "htt.departure",
     "htt.departure.response_overlap",
@@ -108,6 +111,8 @@ for name in [
     "htt.nulls",
     "htt.nulls.clustering_dipole_depth",
     "htt.nulls.local_boost_depth_null",
+    "htt.nulls.selection_response_depth",
+    "htt.nulls.survey_axis_coherence",
     "htt.obsstat",
     "htt.obsstat.biposh_features",
     "htt.obsstat.morphology",
@@ -164,6 +169,8 @@ for name in [
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_template_bound",
     "htt.nulls.local_boost_depth_null",
+    "htt.nulls.selection_response_depth",
+    "htt.nulls.survey_axis_coherence",
     "htt.zoa.axis_promotion",
     "common.contracts",
 ]:

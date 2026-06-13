@@ -555,8 +555,8 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L3
 - **Risk:** high
 - **Primary files:**
-  - `htt/src/htt/nulls/selection_response_depth.py`
-  - `htt/src/htt/nulls/survey_axis_coherence.py`
+  - `htt/htt/htt/nulls/selection_response_depth.py`
+  - `htt/htt/htt/nulls/survey_axis_coherence.py`
   - `tests/htt/test_survey_nulls.py`
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_survey_nulls.py -q`

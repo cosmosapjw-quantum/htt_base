@@ -9,10 +9,12 @@ mask_leakage      : Spurious dipole from Galactic mask leakage
 clustering        : Three nulls: ClusteringDipoleNull, SelectionResponseNull, SurveyAxisNull
 local_boost_depth_null : Depth-resolved local-boost null-bank FPR gate
 clustering_dipole_depth : Depth-resolved local-structure clustering null bank
+selection_response_depth : Depth-resolved selection-response systematic null bank
+survey_axis_coherence : Depth-resolved survey-axis coherence null bank
 
 The legacy ``NULL_REGISTRY`` intentionally remains the original five scalar
 null families from three implementation files. Depth-null gates are exported as
-separate PR-061 APIs and are not inserted into that registry.
+separate PR-061/PR-062 APIs and are not inserted into that registry.
 """
 
 from htt.nulls.axis_nulls import (
@@ -38,6 +40,17 @@ from htt.nulls.local_boost_depth_null import (
     build_local_boost_null_fpr_report,
     evaluate_global_tilt_local_null_gate,
 )
+from htt.nulls.selection_response_depth import (
+    SelectionResponseDepthNull,
+    SelectionResponseMetadata,
+    SurveyAxisMetadata,
+    SurveySystematicNullFprReport,
+    SurveySystematicNullGateDecision,
+    SurveySystematicNullMockBank,
+    build_survey_systematic_null_fpr_report,
+    evaluate_survey_systematic_null_gate,
+)
+from htt.nulls.survey_axis_coherence import SurveyAxisCoherenceNull
 
 NULL_REGISTRY = {
     'scanning_law': ScanningLawNull,
@@ -59,10 +72,19 @@ __all__ = [
     'LocalBoostDepthNull',
     'LocalBoostNullConfig',
     'LocalBoostNullFprReport',
+    'SelectionResponseDepthNull',
+    'SelectionResponseMetadata',
+    'SurveyAxisCoherenceNull',
+    'SurveyAxisMetadata',
+    'SurveySystematicNullFprReport',
+    'SurveySystematicNullGateDecision',
+    'SurveySystematicNullMockBank',
     'NullFamily', 'NullDataset', 'NullFamilyResult', 'FalsePositiveRates',
     'build_local_boost_null_fpr_report',
+    'build_survey_systematic_null_fpr_report',
     'build_axis_mock_calibration_report', 'evaluate_axis_mock_gate',
     'evaluate_global_tilt_local_null_gate',
+    'evaluate_survey_systematic_null_gate',
     'ScanningLawNull', 'MaskLeakageNull',
     'ClusteringDipoleNull', 'SelectionResponseNull', 'SurveyAxisNull',
     'NULL_REGISTRY',

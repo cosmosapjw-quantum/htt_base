@@ -17,6 +17,11 @@ from htt.nulls.local_boost_depth_null import (
     LocalBoostNullFprReport,
     evaluate_global_tilt_local_null_gate,
 )
+from htt.nulls.selection_response_depth import (
+    SurveySystematicNullFprReport,
+    SurveySystematicNullGateDecision,
+    evaluate_survey_systematic_null_gate,
+)
 
 __all__ = [
     "HypothesisResponseTemplate",
@@ -247,12 +252,18 @@ def _pair_claim_tier(
     overlap: float,
     support: Mapping[str, float],
     local_null_gate: GlobalTiltLocalNullGateDecision | None = None,
+    survey_systematic_null_gate: SurveySystematicNullGateDecision | None = None,
 ) -> str:
     if not np.isfinite(overlap):
         return "blocked"
     ordered = tuple(sorted(pair))
     if ordered == ("global_tilt", "local_boost"):
         if local_null_gate is None or not local_null_gate.allowed:
+            return "exploratory"
+        if (
+            survey_systematic_null_gate is None
+            or not survey_systematic_null_gate.allowed
+        ):
             return "exploratory"
         if (
             support.get("depth", 0.0) >= 0.95
@@ -298,6 +309,7 @@ def _calibrated_manifest(
     recommendations: Mapping[str, str],
     claim_tier_by_pair: Mapping[str, str],
     local_null_gate: GlobalTiltLocalNullGateDecision | None,
+    survey_systematic_null_gate: SurveySystematicNullGateDecision | None,
 ) -> ArtifactManifest:
     input_hashes = [observable_vector.manifest.artifact_id]
     if morphology_atlas_ref:
@@ -340,8 +352,20 @@ def _calibrated_manifest(
             "pair_recommended_next_observable": dict(sorted(recommendations.items())),
             "conditional_pairs": list(conditional_pairs),
             "blocked_pairs": list(blocked_pairs),
+            "transfer_source": "none",
+            "null_mock_status": "local_and_survey_systematic_fpr_prerequisite_metadata",
+            "ppc_status": "not_applicable",
+            "loocv_status": "not_applicable",
+            "authorization_scope": "local_global_discrimination_candidate_only",
+            "claim_boundary": "survey_systematic_fpr_is_prerequisite_not_posterior_evidence",
+            "native_morphology_atlas_status": "not_available_pre_native_solver",
             "local_null_fpr_gate": (
                 None if local_null_gate is None else local_null_gate.to_metadata()
+            ),
+            "survey_systematic_null_fpr_gate": (
+                None
+                if survey_systematic_null_gate is None
+                else survey_systematic_null_gate.to_metadata()
             ),
         },
     )
@@ -353,8 +377,15 @@ def build_discrimination_matrix(
     atlas_entry: AtlasEntryLite | None = None,
     morphology_atlas_ref: str | None = None,
     local_null_fpr_report: LocalBoostNullFprReport | None = None,
+    survey_systematic_null_fpr_report: SurveySystematicNullFprReport | None = None,
     local_null_report_hash: str | None = None,
+    survey_systematic_null_config_hash: str | None = None,
+    survey_systematic_null_input_hashes: tuple[str, ...] | None = None,
+    survey_systematic_null_report_hash: str | None = None,
     response_overlap_config_hash: str | None = None,
+    survey_response_overlap_config_hash: str | None = None,
+    selection_metadata_hash: str | None = None,
+    survey_axis_hash: str | None = None,
     hypotheses: tuple[str, ...] = ("local_boost", "global_tilt"),
 ) -> DiscriminationMatrix:
     """Build an observable-aware HTT discrimination matrix."""
@@ -399,6 +430,16 @@ def build_discrimination_matrix(
         report_hash=local_null_report_hash,
         response_overlap_config_hash=response_overlap_config_hash,
     )
+    survey_systematic_null_gate = evaluate_survey_systematic_null_gate(
+        survey_systematic_null_fpr_report,
+        config_hash=survey_systematic_null_config_hash,
+        input_hashes=survey_systematic_null_input_hashes,
+        report_hash=survey_systematic_null_report_hash,
+        response_overlap_config_hash=survey_response_overlap_config_hash,
+        selection_metadata_hash=selection_metadata_hash,
+        survey_axis_hash=survey_axis_hash,
+        require_external_bindings=True,
+    )
 
     for i, left in enumerate(hypotheses):
         for j, right in enumerate(hypotheses):
@@ -419,6 +460,7 @@ def build_discrimination_matrix(
                 overlap=rho,
                 support=support,
                 local_null_gate=local_null_gate,
+                survey_systematic_null_gate=survey_systematic_null_gate,
             )
             claim_tier_by_pair[pair] = claim_tier
             degeneracy_flags[pair] = (not np.isfinite(rho)) or (
@@ -431,7 +473,13 @@ def build_discrimination_matrix(
             )
 
     conditional_pair = claim_tier_by_pair.get("global_tilt|local_boost") == "conditional"
-    caveats = ["pre_inference_only", "not_posterior_odds"]
+    caveats = [
+        "pre_inference_only",
+        "not_posterior_odds",
+        "diagnostic_only_pre_native_solver",
+        "survey_systematic_fpr_prerequisite_not_evidence",
+        "native_morphology_atlas_not_available",
+    ]
     if not conditional_pair:
         caveats.append("local_global_degeneracy_summary")
     if (
@@ -444,6 +492,16 @@ def build_discrimination_matrix(
             f"local_null_gate_blocked:{reason}"
             for reason in local_null_gate.blocked_reasons
         )
+    if (
+        "global_tilt" in hypotheses
+        and "local_boost" in hypotheses
+        and not survey_systematic_null_gate.allowed
+    ):
+        caveats.append("survey_systematic_null_fpr_gate_not_satisfied")
+        caveats.extend(
+            f"survey_systematic_null_gate_blocked:{reason}"
+            for reason in survey_systematic_null_gate.blocked_reasons
+        )
     if support.get("template", 0.0) < 0.75:
         caveats.append("morphology_atlas_missing_or_weak")
     if support.get("BiPoSH", 0.0) < 0.75:
@@ -452,7 +510,7 @@ def build_discrimination_matrix(
         caveats.append("mock_calibration_incomplete")
 
     claim_tier = "conditional" if conditional_pair else "exploratory"
-    production_status = "production_candidate" if conditional_pair else "diagnostic_only"
+    production_status = "diagnostic_only"
     manifest = _calibrated_manifest(
         observable_vector,
         claim_tier=claim_tier,
@@ -465,6 +523,7 @@ def build_discrimination_matrix(
         recommendations=recommendations,
         claim_tier_by_pair=claim_tier_by_pair,
         local_null_gate=local_null_gate,
+        survey_systematic_null_gate=survey_systematic_null_gate,
     )
     return DiscriminationMatrix(
         hypotheses=hypotheses,

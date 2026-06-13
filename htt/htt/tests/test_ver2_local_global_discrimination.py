@@ -13,7 +13,11 @@ from htt.nulls import (
     DepthBinSpec,
     LocalBoostDepthNull,
     LocalBoostNullConfig,
+    SelectionResponseMetadata,
+    SurveyAxisCoherenceNull,
+    SurveyAxisMetadata,
     build_local_boost_null_fpr_report,
+    build_survey_systematic_null_fpr_report,
 )
 
 
@@ -112,6 +116,74 @@ def _local_null_fpr_report():
     )
 
 
+def _survey_systematic_null_fpr_report():
+    from htt.departure.response_overlap import build_response_overlap_audit
+
+    config = LocalBoostNullConfig(
+        n_mocks=32,
+        seed=62062,
+        depth_bins=(
+            DepthBinSpec("near", 0.0, 0.025, 0.0, 100.0, response_weight=1.0),
+            DepthBinSpec("mid", 0.025, 0.075, 100.0, 300.0, response_weight=0.5),
+            DepthBinSpec("far", 0.075, 0.15, 300.0, 650.0, response_weight=0.2),
+        ),
+        target_direction=(1.0, 0.0, 0.0),
+        gf_threshold=10.0,
+        direction_threshold_deg=30.0,
+        look_elsewhere_trials=1,
+        max_false_positive_rate=0.1,
+        sky_support_hash=_sha("1"),
+        mask_hash=_sha("2"),
+        scan_volume_hash=_sha("3"),
+        config_hash=_sha("4"),
+        input_hashes=(_sha("5"),),
+        covariance_status="diagnostic_covariance_supplied",
+        sky_support_status="pr040_sky_support_attached",
+        generating_command="python -m pytest htt/htt/tests/test_ver2_local_global_discrimination.py -q",
+        worktree_state="test-worktree",
+    )
+    audit = build_response_overlap_audit(
+        local_boost_response=(1.0, 0.0),
+        global_tilt_response=(0.0, 1.0),
+        covariance=np.eye(2),
+        observable_labels=("depth_coherence", "survey_axis_template"),
+        artifact_id="htt-response-overlap-survey-systematic-fixture",
+        artifact_path="memory://htt-response-overlap-survey-systematic-fixture.json",
+        input_hashes=(_sha("a"),),
+        generating_command=config.generating_command,
+        worktree_state=config.worktree_state,
+        sky_support_status="pr040_sky_support_attached",
+        mask_status="mask_hash_recorded",
+        covariance_status="diagnostic_covariance_supplied",
+        null_mock_status="rank_audit_without_null_fpr",
+    )
+    bank = SurveyAxisCoherenceNull(
+        config,
+        selection_metadata=SelectionResponseMetadata(
+            selection_function_id="catwise_depth_completeness_v1",
+            selection_function_hash=_sha("6"),
+            selection_metadata_hash=_sha("7"),
+            depth_response_hash=_sha("8"),
+            source_catalog="calibration_fixture",
+            completeness_status="depth_dependent_selection_metadata_attached",
+            completeness_axis=(1.0, 0.0, 0.0),
+            depth_response_label="near_to_far_monotone_completeness_gradient",
+        ),
+        survey_axis_metadata=SurveyAxisMetadata(
+            survey_axis_id="shared_ecliptic_scan_axis_v1",
+            survey_axis_hash=_sha("9"),
+            survey_axis=(1.0, 0.0, 0.0),
+            axis_origin="survey_window_calibration_fixture",
+            coordinate_frame="galactic_cartesian_unit_vector",
+            coherence_status="survey_axis_coherence_calibration_attached",
+        ),
+    ).generate()
+    return build_survey_systematic_null_fpr_report(
+        bank,
+        response_overlap_audit=audit,
+    )
+
+
 def test_local_boost_and_global_tilt_are_not_merged():
     lib = default_response_library()
     assert lib["local_boost"].physical_side == "observer_side"
@@ -179,7 +251,7 @@ def test_build_discrimination_matrix_does_not_promote_without_local_null_fpr():
     assert stats["support_profile"]["template"] >= 0.75
 
 
-def test_build_discrimination_matrix_promotes_with_matching_local_null_fpr():
+def test_build_discrimination_matrix_stays_exploratory_with_only_local_null_fpr():
     matrix = build_discrimination_matrix(
         _observable(
             channels=("TT", "TE", "EE", "BB", "BiPoSH", "template"),
@@ -197,13 +269,129 @@ def test_build_discrimination_matrix_promotes_with_matching_local_null_fpr():
         local_null_fpr_report=_local_null_fpr_report(),
     )
     pair = "global_tilt|local_boost"
-    assert matrix.manifest.production_status == "production_candidate"
+    assert matrix.manifest.production_status == "diagnostic_only"
+    assert matrix.manifest.claim_tier == "exploratory"
+    assert matrix.claim_tier_by_pair[pair] == "exploratory"
+    stats = matrix.manifest.statistics_definitions
+    assert stats["pair_claim_tier"][pair] == "exploratory"
+    assert stats["local_null_fpr_gate"]["allowed"] is True
+    assert stats["survey_systematic_null_fpr_gate"]["allowed"] is False
+    assert "survey_systematic_null_fpr_missing" in (
+        stats["survey_systematic_null_fpr_gate"]["blocked_reasons"]
+    )
+    assert pair not in stats["conditional_pairs"]
+
+
+def test_build_discrimination_matrix_promotes_with_local_and_survey_null_fprs():
+    survey_report = _survey_systematic_null_fpr_report()
+    matrix = build_discrimination_matrix(
+        _observable(
+            channels=("TT", "TE", "EE", "BB", "BiPoSH", "template"),
+            template_fit={"atlas_ref": "atlas-v1.json"},
+            covariance_features={
+                "representation": "low_ell_harmonic_sparse_basis",
+                "basis_reduction_status": "low_ell_harmonic_sparse_basis",
+                "local_global_degeneracy": {
+                    "represented": True,
+                    "status": "observer_source_discrimination_pending",
+                    "distinguishing_observables": ("BiPoSH", "BB", "template"),
+                },
+            },
+        ),
+        local_null_fpr_report=_local_null_fpr_report(),
+        survey_systematic_null_fpr_report=survey_report,
+        survey_systematic_null_config_hash=survey_report.bank.config.config_hash,
+        survey_systematic_null_input_hashes=survey_report.bank.input_hashes,
+        survey_systematic_null_report_hash=survey_report.report_hash,
+        survey_response_overlap_config_hash=(
+            survey_report.response_overlap_audit.manifest.config_hash
+        ),
+        selection_metadata_hash=survey_report.bank.selection_metadata.selection_metadata_hash,
+        survey_axis_hash=survey_report.bank.survey_axis_metadata.survey_axis_hash,
+    )
+    pair = "global_tilt|local_boost"
+    assert matrix.manifest.production_status == "diagnostic_only"
     assert matrix.manifest.claim_tier == "conditional"
     assert matrix.claim_tier_by_pair[pair] == "conditional"
     stats = matrix.manifest.statistics_definitions
     assert stats["pair_claim_tier"][pair] == "conditional"
+    assert stats["authorization_scope"] == "local_global_discrimination_candidate_only"
+    assert stats["claim_boundary"] == (
+        "survey_systematic_fpr_is_prerequisite_not_posterior_evidence"
+    )
+    assert stats["native_morphology_atlas_status"] == "not_available_pre_native_solver"
     assert stats["local_null_fpr_gate"]["allowed"] is True
+    assert stats["survey_systematic_null_fpr_gate"]["allowed"] is True
     assert pair in stats["conditional_pairs"]
+
+
+def test_build_discrimination_matrix_requires_bound_survey_null_hashes():
+    survey_report = _survey_systematic_null_fpr_report()
+
+    missing = build_discrimination_matrix(
+        _observable(
+            channels=("TT", "TE", "EE", "BB", "BiPoSH", "template"),
+            template_fit={"atlas_ref": "atlas-v1.json"},
+            covariance_features={
+                "representation": "low_ell_harmonic_sparse_basis",
+                "basis_reduction_status": "low_ell_harmonic_sparse_basis",
+                "local_global_degeneracy": {
+                    "represented": True,
+                    "status": "observer_source_discrimination_pending",
+                    "distinguishing_observables": ("BiPoSH", "BB", "template"),
+                },
+            },
+        ),
+        local_null_fpr_report=_local_null_fpr_report(),
+        survey_systematic_null_fpr_report=survey_report,
+    )
+    pair = "global_tilt|local_boost"
+    missing_gate = missing.manifest.statistics_definitions[
+        "survey_systematic_null_fpr_gate"
+    ]
+    assert missing.claim_tier_by_pair[pair] == "exploratory"
+    assert missing_gate["allowed"] is False
+    assert "selection_metadata_hash_required" in missing_gate["blocked_reasons"]
+    assert "survey_axis_hash_required" in missing_gate["blocked_reasons"]
+    assert "survey_systematic_null_report_hash_required" in (
+        missing_gate["blocked_reasons"]
+    )
+    assert "response_overlap_config_hash_required" in missing_gate["blocked_reasons"]
+
+    stale = build_discrimination_matrix(
+        _observable(
+            channels=("TT", "TE", "EE", "BB", "BiPoSH", "template"),
+            template_fit={"atlas_ref": "atlas-v1.json"},
+            covariance_features={
+                "representation": "low_ell_harmonic_sparse_basis",
+                "basis_reduction_status": "low_ell_harmonic_sparse_basis",
+                "local_global_degeneracy": {
+                    "represented": True,
+                    "status": "observer_source_discrimination_pending",
+                    "distinguishing_observables": ("BiPoSH", "BB", "template"),
+                },
+            },
+        ),
+        local_null_fpr_report=_local_null_fpr_report(),
+        survey_systematic_null_fpr_report=survey_report,
+        survey_systematic_null_config_hash=survey_report.bank.config.config_hash,
+        survey_systematic_null_input_hashes=survey_report.bank.input_hashes,
+        survey_systematic_null_report_hash=_sha("c"),
+        survey_response_overlap_config_hash=_sha("d"),
+        selection_metadata_hash=_sha("e"),
+        survey_axis_hash=_sha("f"),
+    )
+    stale_gate = stale.manifest.statistics_definitions[
+        "survey_systematic_null_fpr_gate"
+    ]
+    assert stale.claim_tier_by_pair[pair] == "exploratory"
+    assert stale_gate["allowed"] is False
+    assert "selection_metadata_hash_mismatch" in stale_gate["blocked_reasons"]
+    assert "survey_axis_hash_mismatch" in stale_gate["blocked_reasons"]
+    assert "survey_systematic_null_report_hash_mismatch" in (
+        stale_gate["blocked_reasons"]
+    )
+    assert "response_overlap_config_hash_mismatch" in stale_gate["blocked_reasons"]
 
 
 def test_build_discrimination_matrix_blocks_geometry_pair_without_morphology_support():

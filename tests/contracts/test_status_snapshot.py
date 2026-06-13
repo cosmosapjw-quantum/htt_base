@@ -231,6 +231,50 @@ def test_redshift_certificate_pr_notes_preserve_bridge_statuses(tmp_path: Path) 
     assert "sky_support_status=not_directional" not in notes
 
 
+def test_survey_systematic_null_pr_notes_preserve_gate_statuses(tmp_path: Path) -> None:
+    backlog = {
+        "prs": [
+            {
+                "id": "PR-062",
+                "title": "Survey-axis and selection-response null models",
+                "owner": "HTT",
+                "depends": ["PR-043", "PR-061"],
+                "scope": "pre-solver",
+                "files": [
+                    "htt/htt/htt/nulls/selection_response_depth.py",
+                    "htt/htt/htt/nulls/survey_axis_coherence.py",
+                    "tests/htt/test_survey_nulls.py",
+                ],
+                "dod": [
+                    "Survey/systematic nulls can mimic direction/depth signals in calibration",
+                    "Selection metadata is carried through",
+                ],
+            }
+        ],
+    }
+    status = {"completed": ["PR-062"], "blocked": [], "in_progress": None}
+    backlog_path = tmp_path / "pr_backlog.yaml"
+    status_path = tmp_path / "pr_status.yaml"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+
+    notes = bundle.claim_rows[0]["notes"]
+    assert "null_mock_status=survey_systematic_null_fpr_recorded" in notes
+    assert "covariance_status=survey_systematic_null_fpr_recorded" in notes
+    assert "sky_support_status=survey_systematic_null_fpr_recorded" in notes
+    assert "selection_status=selection_metadata_hash_required" in notes
+    assert "survey_axis_status=survey_axis_hash_required_when_present" in notes
+    assert "claim_scope=dag_row_not_artifact_payload" in notes
+    assert "null_mock_status=not_statistical" not in notes
+    assert "sky_support_status=not_directional" not in notes
+
+
 def test_redshift_certificate_notes_do_not_match_title_only(tmp_path: Path) -> None:
     backlog = {
         "prs": [

@@ -50,6 +50,7 @@ completed:
 - PR-091
 - PR-101
 - PR-102
+- PR-062
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -431,3 +432,21 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   null-predictive tail fields. PR-102 does not generate FLRW mocks, create HTT
   model-dependent inference outputs, validate transfer or native solver output,
   establish morphology compatibility, or support geometry/family claims.
+  PR-062 adds HTT diagnostic-only survey-axis and selection-response depth-null
+  banks under the live `htt/htt/htt/nulls` package root. The null banks emit
+  deterministic runnable mocks with explicit selection metadata hashes,
+  optional survey-axis metadata hashes, normalized direction samples,
+  G_F/log_G_F diagnostic distributions, depth-bin coverage, sky/mask/scan
+  hashes, covariance/null statuses, config/input hashes, random seeds, and
+  generating-command/worktree provenance. The survey/systematic FPR report
+  binds PR-060 response-overlap rank metadata, Wilson intervals, look-elsewhere
+  adjustment, selection metadata hashes, and optional survey-axis hashes; the
+  HTT discrimination matrix now requires both PR-061 local-null FPR and PR-062
+  survey/systematic FPR before `global_tilt|local_boost` can become a
+  conditional local/global discrimination candidate, while the matrix remains
+  diagnostic-only pre-native and requires explicit external binding hashes for
+  survey config/input/report/selection/survey-axis/response-overlap metadata.
+  PR-062 does not create
+  HTT posterior evidence, create MIO certificate content, validate transfer or
+  native solver output, establish morphology compatibility, or support
+  geometry/family claims.

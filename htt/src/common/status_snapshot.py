@@ -301,6 +301,15 @@ def _claim_ledger_notes(*, pr: Mapping[str, object], state: str) -> tuple[str, .
             "look_elsewhere_status=flrw_null_predictive_gate_recorded",
             "tail_probability_status=descriptive_until_null_gate_passes",
         )
+    if _is_survey_systematic_null_pr(pr_id=pr_id, pr=pr):
+        return base + (
+            "null_mock_status=survey_systematic_null_fpr_recorded",
+            "covariance_status=survey_systematic_null_fpr_recorded",
+            "sky_support_status=survey_systematic_null_fpr_recorded",
+            "selection_status=selection_metadata_hash_required",
+            "survey_axis_status=survey_axis_hash_required_when_present",
+            "claim_scope=dag_row_not_artifact_payload",
+        )
     return base + (
         "null_mock_status=not_statistical",
         "sky_support_status=not_directional",
@@ -372,6 +381,33 @@ def _is_flrw_tension_null_predictive_gate_pr(
         "PPP/tension metrics require calibrated null predictive distribution"
         in dod_items
         and "No PPP claim without null mocks" in dod_items
+    )
+
+
+def _is_survey_systematic_null_pr(
+    *,
+    pr_id: str,
+    pr: Mapping[str, object],
+) -> bool:
+    """Return whether a PR card is the HTT survey/systematic null gate."""
+
+    if pr_id != "PR-062":
+        return False
+    owner = str(pr.get("owner", "")).strip().upper()
+    if owner != Owner.HTT.value:
+        return False
+    files = {str(path) for path in pr.get("files", ()) or ()}
+    if "htt/htt/htt/nulls/selection_response_depth.py" not in files:
+        return False
+    if "htt/htt/htt/nulls/survey_axis_coherence.py" not in files:
+        return False
+    if "tests/htt/test_survey_nulls.py" not in files:
+        return False
+    dod_items = " ".join(str(item) for item in pr.get("dod", ()) or ())
+    return (
+        "Survey/systematic nulls can mimic direction/depth signals in calibration"
+        in dod_items
+        and "Selection metadata is carried through" in dod_items
     )
 
 
