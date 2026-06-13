@@ -3,6 +3,10 @@ from __future__ import annotations
 import mio.coherence as coherence
 import mio.coherence.directional as directional
 import mio.coherence.redshift_binned as redshift_binned
+import mio.decomposition as decomposition
+import mio.decomposition.evidence_anatomy as evidence_anatomy
+import mio.diagnostics as diagnostics
+import mio.diagnostics.predictive_residuals as predictive_residuals
 import mio.interface as interface
 import mio.interface.manifest as manifest
 import mio.interface.mio_certificate as mio_certificate
@@ -87,3 +91,17 @@ def test_interface_root_exports_registry_and_sigma_cone_helpers() -> None:
     )
     assert "REGISTERED_PROBE_IDS" in interface.__all__
     assert "is_sigma_cone_promoted" in interface.__all__
+
+
+def test_pr103_roots_export_no_merge_helpers() -> None:
+    assert decomposition.HttEvidenceTrace is evidence_anatomy.HttEvidenceTrace
+    assert (
+        decomposition.build_evidence_anatomy_narrative_report
+        is evidence_anatomy.build_evidence_anatomy_narrative_report
+    )
+    assert (
+        diagnostics.predictive_residual_atlas_payload
+        is predictive_residuals.predictive_residual_atlas_payload
+    )
+    assert "HttEvidenceTrace" in decomposition.__all__
+    assert "predictive_residual_atlas_payload" in diagnostics.__all__

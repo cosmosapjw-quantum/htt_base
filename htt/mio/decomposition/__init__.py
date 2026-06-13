@@ -7,14 +7,19 @@ The minimal non-BASS surface exposes two pure-python report builders:
 
 These helpers consume externally produced HTT evidence deltas and emit
 diagnostic artifacts / `MioCertificate`s without redefining evidence as
-an MIO truth score.
+MIO adjudication output.
 """
 from __future__ import annotations
 
 from .evidence_anatomy import (  # noqa: F401
     ARTEFACT_FILENAME,
     EvidenceAnatomyContribution,
+    EvidenceAnatomyNarrativeReport,
     EvidenceAnatomyReport,
+    HttEvidenceTrace,
+    HttEvidenceTraceTerm,
+    build_evidence_anatomy_narrative_report,
+    build_htt_evidence_trace_from_payload,
     emit_evidence_anatomy_artefact,
     summarize_evidence_anatomy,
     to_mio_certificate,
@@ -32,9 +37,14 @@ __all__ = [
     "ARTEFACT_FILENAME",
     "REDSHIFT_ARTEFACT_FILENAME",
     "EvidenceAnatomyContribution",
+    "EvidenceAnatomyNarrativeReport",
     "EvidenceAnatomyReport",
+    "HttEvidenceTrace",
+    "HttEvidenceTraceTerm",
     "RedshiftEvidenceSlice",
     "RedshiftTomographyReport",
+    "build_evidence_anatomy_narrative_report",
+    "build_htt_evidence_trace_from_payload",
     "emit_evidence_anatomy_artefact",
     "emit_redshift_tomography_artefact",
     "summarize_evidence_anatomy",

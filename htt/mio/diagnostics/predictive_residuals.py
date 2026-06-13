@@ -33,7 +33,11 @@ from workspace.contracts.mio_certificate import MioCertificate
 DEFAULT_DOMAIN_CAVEAT = (
     "Predictive residual atlas is a diagnostic model/data comparison "
     "surface; it must not be merged with HTT posterior evidence or "
-    "reinterpreted as a truth certificate."
+    "reinterpreted as truth-certification output."
+)
+RAW_RESIDUAL_CAVEAT = (
+    "Residual amplitudes are descriptive raw prediction-minus-observation "
+    "summaries unless covariance, null, mask, and rank metadata are supplied."
 )
 SHARED_SCHEMA_DOMAIN_CAVEAT = (
     "Shared prediction/data schema is consumed for residual comparison "
@@ -55,10 +59,18 @@ class ResidualChannelSlice:
     n_modes: int
 
     def __post_init__(self) -> None:
+        rms_residual = float(self.rms_residual)
+        max_abs_residual = float(self.max_abs_residual)
         if self.ell_max < self.ell_min:
             raise ValueError("ell_max must be >= ell_min")
         if self.n_modes <= 0:
             raise ValueError("n_modes must be positive")
+        if not np.isfinite(rms_residual) or rms_residual < 0.0:
+            raise ValueError("rms_residual must be finite and nonnegative")
+        if not np.isfinite(max_abs_residual) or max_abs_residual < 0.0:
+            raise ValueError("max_abs_residual must be finite and nonnegative")
+        object.__setattr__(self, "rms_residual", rms_residual)
+        object.__setattr__(self, "max_abs_residual", max_abs_residual)
 
 
 @dataclass(frozen=True)
@@ -233,6 +245,76 @@ def build_predictive_residual_atlas_from_shared_schema(
         atlas_ref=resolved_atlas_ref,
         covariance_ref=covariance_ref,
     )
+
+
+def predictive_residual_atlas_payload(
+    atlas: PredictiveResidualAtlas,
+    *,
+    transfer_source: str = "none",
+    config_hash: str = "not_applicable_predictive_residual_atlas_payload",
+    input_hashes: Sequence[str] = ("caller_supplied_residual_slices",),
+    generating_command: str = "in_memory_predictive_residual_atlas_payload",
+    git_commit_or_worktree_state: str = "unknown",
+    sky_support_status: str = "not_directional",
+    null_mock_status: str = "not_statistical",
+    covariance_status: str | None = None,
+    rank_status: str = "not_rank_audited",
+    mask_status: str = "not_supplied",
+    native_atlas_status: str = "not_native_morphology_atlas",
+) -> dict[str, object]:
+    """Return a claim-firewalled residual atlas payload.
+
+    This is descriptive MIO context only. It intentionally does not create an
+    HTT evidence term or combine residual amplitudes with evidence anatomy.
+    """
+
+    if not isinstance(atlas, PredictiveResidualAtlas):
+        raise TypeError("atlas must be PredictiveResidualAtlas")
+    resolved_covariance_status = (
+        covariance_status
+        if covariance_status is not None
+        else (
+            "covariance_ref_attached" if atlas.covariance_ref else "missing_covariance"
+        )
+    )
+    caveats = (
+        DEFAULT_DOMAIN_CAVEAT,
+        RAW_RESIDUAL_CAVEAT,
+        "not_htt_evidence",
+        "not_native_solver_output",
+        "not_family_identification_evidence",
+    )
+    return {
+        "owner": "MIO",
+        "implementation_scope": "mio",
+        "claim_tier": "diagnostic_only",
+        "production_status": "diagnostic_only",
+        "transfer_source": str(transfer_source),
+        "config_hash": str(config_hash),
+        "input_hashes": [str(item) for item in input_hashes],
+        "sky_support_status": str(sky_support_status),
+        "null_mock_status": str(null_mock_status),
+        "covariance_status": str(resolved_covariance_status),
+        "rank_status": str(rank_status),
+        "mask_status": str(mask_status),
+        "native_atlas_status": str(native_atlas_status),
+        "generating_command": str(generating_command),
+        "git_commit_or_worktree_state": str(git_commit_or_worktree_state),
+        "caveats": list(caveats),
+        "mio_role": "residual_context_only",
+        "not_htt_evidence": True,
+        "not_truth_certificate": True,
+        "single_score_status": "forbidden_no_owner_merge",
+        "residual_convention": "prediction_minus_observation",
+        "residual_units": "caller_supplied",
+        "atlas_ref": atlas.atlas_ref,
+        "covariance_ref": atlas.covariance_ref,
+        "worst_model_label": atlas.worst_model_label,
+        "worst_channel": atlas.worst_channel,
+        "worst_max_abs_residual": atlas.worst_max_abs_residual,
+        "mean_rms_residual": atlas.mean_rms_residual,
+        "slices": [asdict(item) for item in atlas.slices],
+    }
 
 
 def _shared_schema_input_refs(
@@ -461,12 +543,14 @@ __all__ = [
     "ARTEFACT_FILENAME",
     "DEFAULT_DOMAIN_CAVEAT",
     "PredictiveResidualAtlas",
+    "RAW_RESIDUAL_CAVEAT",
     "ResidualChannelSlice",
     "build_predictive_residual_atlas",
     "build_predictive_residual_atlas_from_shared_schema",
     "build_residual_slices_from_shared_schema",
     "emit_predictive_residuals_artefact",
     "emit_predictive_residuals_shared_schema_artefact",
+    "predictive_residual_atlas_payload",
     "SHARED_SCHEMA_DOMAIN_CAVEAT",
     "SUPPORTED_SPECTRUM_CHANNELS",
     "to_mio_certificate",
