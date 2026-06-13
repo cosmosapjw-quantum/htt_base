@@ -22,8 +22,10 @@ from htt.infer.matched_complexity import (
     matched_complexity_report_artifact,
 )
 from htt.infer.null_competition import (
+    MatchedNullCompetitionReport,
     NullCompetitionHook,
     NullCompetitionResult,
+    build_matched_null_competition_report,
     build_null_competition_hook,
 )
 from htt.infer.estimators import BridgeResult, tilt_velocity, delta_q, lambda_J_pec, delta_H
@@ -72,7 +74,8 @@ __all__ = [
     'MatchedComplexityReport', 'MatchedComplexityHook',
     'enforce_matched_complexity', 'build_matched_complexity_hook',
     'matched_complexity_report_artifact', 'NullCompetitionHook',
-    'NullCompetitionResult', 'build_null_competition_hook',
+    'NullCompetitionResult', 'MatchedNullCompetitionReport',
+    'build_matched_null_competition_report', 'build_null_competition_hook',
     'BridgeResult', 'tilt_velocity', 'delta_q', 'lambda_J_pec', 'delta_H',
     'AxisGateDecision', 'build_diagnostic_axis', 'evaluate_axis_gate',
     'require_production_axis', 'DirectionalLikelihoodInput',

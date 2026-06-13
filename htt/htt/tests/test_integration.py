@@ -156,7 +156,7 @@ class TestNullCompetition:
         assert result.family_name == 'scanning_law'
         assert result.n_realizations == 5
         assert 0 <= result.fpr <= 1
-        assert result.status == 'INFERENTIAL'
+        assert result.status == 'diagnostic_only'
 
     def test_run_all_families(self):
         from htt.infer.null_competition import NullCompetitionEngine

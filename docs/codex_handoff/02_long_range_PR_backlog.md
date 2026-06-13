@@ -586,8 +586,8 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L3
 - **Risk:** high
 - **Primary files:**
-  - `htt/src/htt/infer/matched_complexity.py`
-  - `htt/src/htt/infer/null_competition.py`
+  - `htt/htt/htt/infer/matched_complexity.py`
+  - `htt/htt/htt/infer/null_competition.py`
   - `tests/htt/test_matched_nulls.py`
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_matched_nulls.py -q`

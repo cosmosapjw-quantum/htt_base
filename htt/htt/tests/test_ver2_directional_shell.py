@@ -15,6 +15,22 @@ from common.contracts import (
 from htt.infer.null_competition import NullCompetitionHook
 
 
+_MATCHED_NULL_REPORT_HASH = "sha256:" + "n" * 64
+
+
+def _ready_null_hook() -> NullCompetitionHook:
+    return NullCompetitionHook(
+        required_families=("registered_nulls",),
+        fpr_threshold=0.10,
+        ready_for_inference=True,
+        worst_family="mask_leakage",
+        worst_fpr=0.01,
+        matched_complexity_ready=True,
+        matched_null_report_hash=_MATCHED_NULL_REPORT_HASH,
+        matched_null_status="matched_null_ready",
+    )
+
+
 def _manifest(
     owner: str = "BASS",
     *,
@@ -388,13 +404,7 @@ def test_directional_output_manifest_reaches_production_candidate_with_live_hook
         observable_vector=_observable_vector(),
         preferred_axis=_preferred_axis(),
         solver_core_output=_solver_output(),
-        null_competition=NullCompetitionHook(
-            required_families=("registered_nulls",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition=_ready_null_hook(),
         posterior_predictive_ready=True,
         loocv_ready=True,
         response_overlap_audit=_response_overlap_audit(),
@@ -420,13 +430,7 @@ def test_directional_output_manifest_blocks_without_response_overlap_audit():
         observable_vector=_observable_vector(),
         preferred_axis=_preferred_axis(),
         solver_core_output=_solver_output(),
-        null_competition=NullCompetitionHook(
-            required_families=("registered_nulls",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition=_ready_null_hook(),
         posterior_predictive_ready=True,
         loocv_ready=True,
         manifest=_manifest("HTT"),
@@ -448,13 +452,7 @@ def test_directional_output_manifest_blocks_rank_deficient_response_overlap_audi
         observable_vector=_observable_vector(),
         preferred_axis=_preferred_axis(),
         solver_core_output=_solver_output(),
-        null_competition=NullCompetitionHook(
-            required_families=("registered_nulls",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition=_ready_null_hook(),
         posterior_predictive_ready=True,
         loocv_ready=True,
         response_overlap_audit=_response_overlap_audit(
@@ -515,13 +513,7 @@ def test_build_posterior_bundle_auto_materializes_htt_manifest(tmp_path):
         _observable_vector(),
         _preferred_axis(),
         solver_core_output=_solver_output(),
-        null_competition=NullCompetitionHook(
-            required_families=("registered_nulls",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition=_ready_null_hook(),
         posterior_predictive_ready=True,
         loocv_ready=True,
         response_overlap_audit=_response_overlap_audit(),
@@ -566,13 +558,7 @@ def test_build_posterior_bundle_blocks_rank_deficient_directional_inputs(tmp_pat
         _observable_vector(),
         _preferred_axis(),
         solver_core_output=_solver_output(),
-        null_competition=NullCompetitionHook(
-            required_families=("registered_nulls",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition=_ready_null_hook(),
         posterior_predictive_ready=True,
         loocv_ready=True,
         response_overlap_audit=_response_overlap_audit(
@@ -598,13 +584,7 @@ def test_emit_directional_posterior_artifact_writes_dedicated_htt_summary(tmp_pa
         _observable_vector(),
         _preferred_axis(),
         solver_core_output=_solver_output(),
-        null_competition=NullCompetitionHook(
-            required_families=("registered_nulls",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition=_ready_null_hook(),
         posterior_predictive_ready=True,
         loocv_ready=True,
         response_overlap_audit=_response_overlap_audit(),
@@ -658,13 +638,7 @@ def test_emit_directional_posterior_artifact_blocks_missing_response_overlap_aud
         _observable_vector(),
         _preferred_axis(),
         solver_core_output=_solver_output(),
-        null_competition=NullCompetitionHook(
-            required_families=("registered_nulls",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition=_ready_null_hook(),
         posterior_predictive_ready=True,
         loocv_ready=True,
     )
@@ -737,13 +711,7 @@ def test_emit_directional_posterior_artifact_blocks_no_claim_response_overlap_au
         _observable_vector(),
         _preferred_axis(),
         solver_core_output=_solver_output(),
-        null_competition=NullCompetitionHook(
-            required_families=("registered_nulls",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition=_ready_null_hook(),
         posterior_predictive_ready=True,
         loocv_ready=True,
         response_overlap_audit=_response_overlap_audit(
@@ -785,13 +753,7 @@ def test_emit_directional_posterior_artifact_rejects_override_manifest_without_r
         _observable_vector(),
         _preferred_axis(),
         solver_core_output=_solver_output(),
-        null_competition=NullCompetitionHook(
-            required_families=("registered_nulls",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition=_ready_null_hook(),
         posterior_predictive_ready=True,
         loocv_ready=True,
         response_overlap_audit=_response_overlap_audit(),
@@ -830,13 +792,7 @@ def test_build_posterior_bundle_reads_dedicated_htt_artifact(tmp_path):
         _observable_vector(),
         _preferred_axis(),
         solver_core_output=_solver_output(),
-        null_competition=NullCompetitionHook(
-            required_families=("registered_nulls",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition=_ready_null_hook(),
         posterior_predictive_ready=True,
         loocv_ready=True,
         response_overlap_audit=_response_overlap_audit(),

@@ -107,6 +107,7 @@ def ingest_ver2_directional_inputs(
     scalar_only_geometry: bool = False,
     matched_complexity_ready: bool = False,
     null_competition_ready: bool = False,
+    matched_null_report_hash: str | None = None,
 ) -> DirectionalLikelihoodInput:
     """Build the SK-06H scope-guard bundle from canonical common contracts."""
 
@@ -120,6 +121,11 @@ def ingest_ver2_directional_inputs(
             overall_pass=True,
             violations=tuple(),
         )
+    matched_null_ready = bool(
+        matched_hook.overall_pass
+        and matched_hook.controls_required
+        and matched_null_report_hash
+    )
     if null_competition_ready:
         null_hook = NullCompetitionHook(
             required_families=("registered_nulls",),
@@ -127,6 +133,13 @@ def ingest_ver2_directional_inputs(
             ready_for_inference=True,
             worst_family=None,
             worst_fpr=None,
+            matched_complexity_ready=matched_null_ready,
+            matched_null_report_hash=matched_null_report_hash,
+            matched_null_status=(
+                "matched_null_ready"
+                if matched_null_ready
+                else "blocked_matched_null_prerequisites"
+            ),
         )
     else:
         null_hook = build_null_competition_hook()

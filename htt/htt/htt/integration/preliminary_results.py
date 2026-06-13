@@ -138,6 +138,7 @@ def build_preliminary_directional_handoff(
     scalar_only_geometry: bool = False,
     matched_complexity_ready: bool = False,
     null_competition_ready: bool = False,
+    matched_null_report_hash: str | None = None,
 ) -> PreliminaryDirectionalHandoff:
     pack_a = load_preliminary_result_pack("A", generated_root=generated_root)
     pack_b = load_preliminary_result_pack("B", generated_root=generated_root)
@@ -158,6 +159,7 @@ def build_preliminary_directional_handoff(
         scalar_only_geometry=scalar_only_geometry,
         matched_complexity_ready=matched_complexity_ready,
         null_competition_ready=null_competition_ready,
+        matched_null_report_hash=matched_null_report_hash,
     )
     return PreliminaryDirectionalHandoff(
         likelihood_input=likelihood_input,

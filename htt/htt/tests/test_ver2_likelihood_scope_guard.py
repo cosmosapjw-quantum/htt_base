@@ -20,6 +20,22 @@ from htt.infer.null_competition import NullCompetitionHook
 from workspace.contracts.mio_certificate import MioCertificate
 
 
+_MATCHED_NULL_REPORT_HASH = "sha256:" + "n" * 64
+
+
+def _ready_null_hook() -> NullCompetitionHook:
+    return NullCompetitionHook(
+        required_families=("mask_leakage",),
+        fpr_threshold=0.10,
+        ready_for_inference=True,
+        worst_family="mask_leakage",
+        worst_fpr=0.01,
+        matched_complexity_ready=True,
+        matched_null_report_hash=_MATCHED_NULL_REPORT_HASH,
+        matched_null_status="matched_null_ready",
+    )
+
+
 def _manifest(owner: str, scope: str) -> ArtifactManifest:
     return ArtifactManifest(
         artifact_id=f"{owner.lower()}.artifact",
@@ -242,13 +258,7 @@ def test_matched_complexity_failure_is_a_hard_block():
             overall_pass=False,
             violations=("prior_width_mismatch",),
         ),
-        null_competition_hook=NullCompetitionHook(
-            required_families=("mask_leakage",),
-            fpr_threshold=0.10,
-            ready_for_inference=True,
-            worst_family="mask_leakage",
-            worst_fpr=0.01,
-        ),
+        null_competition_hook=_ready_null_hook(),
     )
     decision = evaluate_likelihood_scope(bundle)
     assert decision.allowed is False

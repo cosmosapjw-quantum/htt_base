@@ -15,19 +15,131 @@ This is the adversarial complement to shared_cause.py: the null families
 try to mimic the signal, and the competition engine measures how often
 they succeed.
 """
-import numpy as np
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from __future__ import annotations
 
+import hashlib
+import json
+import math
+import numpy as np
+from dataclasses import asdict, dataclass, field
+from typing import Any, Dict, List, Mapping, Optional
+
+from common.contracts import (
+    ArtifactManifest,
+    ClaimTier,
+    ImplementationScope,
+    Owner,
+)
+from htt.infer.matched_complexity import MatchedComplexityHook
 from htt.nulls import NULL_REGISTRY
 from htt.nulls.common_interface import NullFamily
 from htt.infer.shared_cause import run_shared_cause_test, SharedCauseResult
 
 __all__ = [
     'NullCompetitionResult', 'FamilyCompetitionResult',
-    'NullCompetitionHook',
+    'NullCompetitionHook', 'MatchedNullCompetitionReport',
+    'build_matched_null_competition_report',
     'NullCompetitionEngine', 'build_null_competition_hook', 'run_null_competition',
 ]
+
+
+SCHEMA_VERSION = "htt.infer.matched_null_competition.v1"
+_CREATED_BY = "htt.infer.null_competition.build_matched_null_competition_report"
+_DEFAULT_ARTIFACT_PATH = "memory://htt/infer/matched_null_competition.json"
+_DEFAULT_CAVEATS = (
+    "diagnostic_only_pre_solver_null_competition",
+    "matched_complexity_required_before_evidence_language",
+    "structured_null_fpr_is_gate_metadata_not_model_weight",
+    "decisive_evidence_language_blocked_until_pr065_prior_ppc_loocv",
+    "no_native_solver_or_family_claim",
+)
+
+
+def _json_ready(value: object) -> Any:
+    if isinstance(value, np.ndarray):
+        return [_json_ready(item) for item in value.tolist()]
+    if isinstance(value, np.generic):
+        return _json_ready(value.item())
+    if isinstance(value, Mapping):
+        return {str(key): _json_ready(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_ready(item) for item in value]
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise TypeError("payload floats must be finite")
+        return value
+    return value
+
+
+def _stable_hash(payload: Mapping[str, object]) -> str:
+    encoded = json.dumps(
+        _json_ready(payload),
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    )
+    return "sha256:" + hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+
+
+def _manifest_payload(manifest: ArtifactManifest) -> dict[str, Any]:
+    payload = _json_ready(asdict(manifest))
+    if not isinstance(payload, dict):
+        raise TypeError("manifest payload must be a mapping")
+    return payload
+
+
+def _non_empty(value: object, field_name: str) -> str:
+    text = str(value).strip()
+    if not text:
+        raise ValueError(f"{field_name} must be non-empty")
+    return text
+
+
+def _input_hashes(values: tuple[object, ...] | list[object], field_name: str) -> tuple[str, ...]:
+    if isinstance(values, (str, bytes)) or not values:
+        raise ValueError(f"{field_name} must be a non-empty sequence")
+    return tuple(_non_empty(value, field_name) for value in values)
+
+
+def _fpr_threshold(value: object) -> float:
+    threshold = float(value)
+    if not math.isfinite(threshold) or threshold <= 0.0 or threshold > 1.0:
+        raise ValueError("fpr_threshold must be finite and in (0, 1]")
+    return threshold
+
+
+def _finite_optional(value: object | None, field_name: str) -> float | None:
+    if value is None:
+        return None
+    out = float(value)
+    if not math.isfinite(out):
+        raise ValueError(f"{field_name} must be finite when provided")
+    return out
+
+
+def _complexity_score(value: object, field_name: str) -> int:
+    if isinstance(value, bool):
+        raise ValueError(f"{field_name} must be an integer complexity score")
+    try:
+        numeric = float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{field_name} must be an integer complexity score") from exc
+    if not math.isfinite(numeric) or not numeric.is_integer():
+        raise ValueError(f"{field_name} must be an integer complexity score")
+    score = int(numeric)
+    if score < 0:
+        raise ValueError(f"{field_name} must be non-negative")
+    return score
+
+
+def _dedupe(values: tuple[str, ...] | list[str]) -> tuple[str, ...]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for value in values:
+        if value not in seen:
+            seen.add(value)
+            out.append(value)
+    return tuple(out)
 
 
 @dataclass(frozen=True)
@@ -40,7 +152,28 @@ class FamilyCompetitionResult:
     mean_lnB_null: float        # mean ln B(shared-cause vs null) on null data
     std_lnB_null: float
     robust: bool                # True if fpr < threshold
-    status: str = 'INFERENTIAL'
+    status: str = 'diagnostic_only'
+
+    def __post_init__(self) -> None:
+        if not self.family_name:
+            raise ValueError("family_name must be non-empty")
+        if self.status != "diagnostic_only":
+            raise ValueError("family competition status must be diagnostic_only")
+        if int(self.n_realizations) <= 0:
+            raise ValueError("n_realizations must be positive")
+        if int(self.n_false_positives) < 0:
+            raise ValueError("n_false_positives must be non-negative")
+        if int(self.n_false_positives) > int(self.n_realizations):
+            raise ValueError("n_false_positives cannot exceed n_realizations")
+        for field_name in ("fpr", "mean_lnB_null", "std_lnB_null"):
+            value = float(getattr(self, field_name))
+            if not math.isfinite(value):
+                raise ValueError(f"{field_name} must be finite")
+        if not (0.0 <= float(self.fpr) <= 1.0):
+            raise ValueError("fpr must be in [0, 1]")
+        implied = int(self.n_false_positives) / int(self.n_realizations)
+        if not math.isclose(float(self.fpr), implied, rel_tol=0.0, abs_tol=1.0e-12):
+            raise ValueError("fpr must match n_false_positives / n_realizations")
 
 
 @dataclass(frozen=True)
@@ -53,7 +186,47 @@ class NullCompetitionResult:
     worst_fpr: float
     overall_robust: bool        # True if ALL families are robust
     family_results: Dict[str, FamilyCompetitionResult] = field(default_factory=dict)
-    status: str = 'INFERENTIAL'
+    status: str = 'diagnostic_only'
+
+    def __post_init__(self) -> None:
+        if self.status != "diagnostic_only":
+            raise ValueError("null competition status must be diagnostic_only")
+        if int(self.families_tested) <= 0:
+            raise ValueError("families_tested must be positive")
+        if int(self.families_robust) < 0 or int(self.families_vulnerable) < 0:
+            raise ValueError("family counts must be non-negative")
+        if int(self.families_robust) + int(self.families_vulnerable) != int(self.families_tested):
+            raise ValueError("family robust/vulnerable counts must sum to families_tested")
+        if not self.worst_family:
+            raise ValueError("worst_family must be non-empty")
+        if not math.isfinite(float(self.worst_fpr)) or not (0.0 <= float(self.worst_fpr) <= 1.0):
+            raise ValueError("worst_fpr must be finite and in [0, 1]")
+        if not self.family_results:
+            raise ValueError("family_results must be non-empty")
+        if len(self.family_results) != int(self.families_tested):
+            raise ValueError("family_results length must match families_tested")
+        for family_name, family_result in self.family_results.items():
+            if not isinstance(family_result, FamilyCompetitionResult):
+                raise TypeError("family_results values must be FamilyCompetitionResult")
+            if family_name != family_result.family_name:
+                raise ValueError("family_results keys must match family_name")
+        robust_count = sum(1 for result in self.family_results.values() if result.robust)
+        if robust_count != int(self.families_robust):
+            raise ValueError("families_robust must match family_results")
+        if int(self.families_tested) - robust_count != int(self.families_vulnerable):
+            raise ValueError("families_vulnerable must match family_results")
+        if self.worst_family not in self.family_results:
+            raise ValueError("worst_family must be present in family_results")
+        worst_result = self.family_results[self.worst_family]
+        if not math.isclose(
+            float(self.worst_fpr),
+            float(worst_result.fpr),
+            rel_tol=0.0,
+            abs_tol=1.0e-12,
+        ):
+            raise ValueError("worst_fpr must match worst_family result")
+        if bool(self.overall_robust) != (int(self.families_vulnerable) == 0):
+            raise ValueError("overall_robust must match family vulnerability counts")
 
 
 @dataclass(frozen=True)
@@ -66,6 +239,455 @@ class NullCompetitionHook:
     worst_family: str | None
     worst_fpr: float | None
     scope: str = 'pre_posterior'
+    matched_complexity_ready: bool = False
+    matched_null_report_hash: str | None = None
+    matched_null_status: str = "pending"
+    blocked_reasons: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        threshold = _fpr_threshold(self.fpr_threshold)
+        object.__setattr__(self, "fpr_threshold", threshold)
+        object.__setattr__(self, "required_families", tuple(self.required_families))
+        if not self.required_families:
+            object.__setattr__(self, "ready_for_inference", False)
+            object.__setattr__(
+                self,
+                "blocked_reasons",
+                _dedupe((*self.blocked_reasons, "null_family_set_empty")),
+            )
+        if self.worst_fpr is not None:
+            worst_fpr = float(self.worst_fpr)
+            if not math.isfinite(worst_fpr) or not (0.0 <= worst_fpr <= 1.0):
+                raise ValueError("worst_fpr must be finite and in [0, 1]")
+            object.__setattr__(self, "worst_fpr", worst_fpr)
+        if self.ready_for_inference and not self.matched_complexity_ready:
+            object.__setattr__(self, "ready_for_inference", False)
+            object.__setattr__(
+                self,
+                "blocked_reasons",
+                _dedupe((*self.blocked_reasons, "matched_complexity_report_missing")),
+            )
+            object.__setattr__(self, "matched_null_status", "blocked_missing_matched_complexity")
+        if self.ready_for_inference and not self.matched_null_report_hash:
+            object.__setattr__(self, "ready_for_inference", False)
+            object.__setattr__(
+                self,
+                "blocked_reasons",
+                _dedupe((*self.blocked_reasons, "matched_null_report_hash_missing")),
+            )
+            object.__setattr__(self, "matched_null_status", "blocked_missing_report_hash")
+        if self.ready_for_inference:
+            object.__setattr__(self, "matched_null_status", "matched_null_ready")
+        elif self.matched_null_status == "matched_null_ready":
+            object.__setattr__(self, "matched_null_status", "blocked_matched_null_prerequisites")
+            object.__setattr__(
+                self,
+                "blocked_reasons",
+                _dedupe((*self.blocked_reasons, "matched_null_not_ready")),
+            )
+
+
+@dataclass(frozen=True)
+class MatchedNullCompetitionReport:
+    """Manifest-backed PR-064 matched-complexity null competition report."""
+
+    manifest: ArtifactManifest
+    null_result: NullCompetitionResult
+    matched_complexity_hook: MatchedComplexityHook | None
+    alternative_complexity_score: int
+    null_flexibility_scores: Mapping[str, int]
+    report_hash: str
+    matched_null_status: str
+    blocked_reasons: tuple[str, ...]
+    candidate_log_bayes_factor: float | None
+    headline_requested: bool
+    headline_bayes_factor_allowed: bool
+    fpr_threshold: float
+    generating_command: str
+    worktree_state: str | None
+    git_commit: str | None
+    transfer_source: str = "none"
+
+    def as_payload(self) -> dict[str, Any]:
+        family_payloads: dict[str, dict[str, object]] = {}
+        for family_name, result in sorted(self.null_result.family_results.items()):
+            score = self.null_flexibility_scores.get(family_name)
+            family_payloads[family_name] = {
+                "family_name": family_name,
+                "n_realizations": int(result.n_realizations),
+                "n_false_positives": int(result.n_false_positives),
+                "fpr": float(result.fpr),
+                "fpr_threshold": self.fpr_threshold,
+                "mean_lnB_null": float(result.mean_lnB_null),
+                "std_lnB_null": float(result.std_lnB_null),
+                "robust": bool(result.robust),
+                "status": result.status,
+                "null_flexibility": {
+                    "complexity_score": None if score is None else int(score),
+                    "matched_to_alternative": (
+                        False
+                        if score is None
+                        else int(score) == self.alternative_complexity_score
+                    ),
+                },
+                "matched_complexity_gap": (
+                    None if score is None else int(score - self.alternative_complexity_score)
+                ),
+            }
+        return _json_ready(
+            {
+                "owner": Owner.HTT.value,
+                "implementation_scope": ImplementationScope.HTT.value,
+                "claim_tier": self.manifest.claim_tier.value,
+                "production_status": self.manifest.production_status,
+                "schema_version": SCHEMA_VERSION,
+                "manifest": _manifest_payload(self.manifest),
+                "transfer_source": self.transfer_source,
+                "config_hash": self.manifest.config_hash,
+                "input_hashes": list(self.manifest.input_hashes),
+                "sky_support_status": "not_directional",
+                "null_mock_status": (
+                    "matched_complexity_null_competition_recorded"
+                    if self.evidence_claim_prerequisite_met
+                    else "matched_complexity_null_competition_blocked"
+                ),
+                "generating_command": self.generating_command,
+                "git_commit_or_worktree_state": self.git_commit or self.worktree_state or "unknown",
+                "git_commit": self.git_commit,
+                "worktree_state": self.worktree_state,
+                "report_hash": self.report_hash,
+                "matched_null_status": self.matched_null_status,
+                "evidence_claim_prerequisite_met": self.evidence_claim_prerequisite_met,
+                "headline_bayes_factor_allowed": self.headline_bayes_factor_allowed,
+                "matched_null_headline_gate_passed": bool(
+                    self.evidence_claim_prerequisite_met and self.headline_requested
+                ),
+                "candidate_log_bayes_factor": self.candidate_log_bayes_factor,
+                "decisive_evidence_status": "blocked_until_pr065_prior_ppc_loocv",
+                "alternative_flexibility": {
+                    "complexity_score": int(self.alternative_complexity_score),
+                    "source": "matched_complexity_hook",
+                    "matched_complexity_ready": bool(
+                        self.matched_complexity_hook
+                        and self.matched_complexity_hook.overall_pass
+                    ),
+                },
+                "matched_complexity": {
+                    "present": self.matched_complexity_hook is not None,
+                    "overall_pass": bool(
+                        self.matched_complexity_hook
+                        and self.matched_complexity_hook.overall_pass
+                    ),
+                    "controls_required": (
+                        []
+                        if self.matched_complexity_hook is None
+                        else list(self.matched_complexity_hook.controls_required)
+                    ),
+                    "violations": (
+                        ["matched_complexity_report_missing"]
+                        if self.matched_complexity_hook is None
+                        else list(self.matched_complexity_hook.violations)
+                    ),
+                    "scope": (
+                        None
+                        if self.matched_complexity_hook is None
+                        else self.matched_complexity_hook.scope
+                    ),
+                },
+                "null_competition": {
+                    "families_tested": int(self.null_result.families_tested),
+                    "families_robust": int(self.null_result.families_robust),
+                    "families_vulnerable": int(self.null_result.families_vulnerable),
+                    "worst_family": self.null_result.worst_family,
+                    "worst_fpr": float(self.null_result.worst_fpr),
+                    "overall_robust": bool(self.null_result.overall_robust),
+                    "status": self.null_result.status,
+                },
+                "family_results": family_payloads,
+                "blocked_reasons": list(self.blocked_reasons),
+                "caveats": list(self.manifest.caveats),
+                "claim_status": {
+                    "owner": "HTT",
+                    "surface": "matched_complexity_null_competition",
+                    "mio_status": "not_mio_output",
+                    "native_solver_status": "not_native_solver_output",
+                    "family_status": "blocked_pre_native_atlas",
+                    "posterior_status": "not_authorized_until_pr065",
+                },
+            }
+        )
+
+    @property
+    def evidence_claim_prerequisite_met(self) -> bool:
+        return self.matched_null_status == "matched_null_ready"
+
+
+def _family_payload(result: FamilyCompetitionResult) -> dict[str, object]:
+    return {
+        "family_name": result.family_name,
+        "n_realizations": int(result.n_realizations),
+        "n_false_positives": int(result.n_false_positives),
+        "fpr": float(result.fpr),
+        "mean_lnB_null": float(result.mean_lnB_null),
+        "std_lnB_null": float(result.std_lnB_null),
+        "robust": bool(result.robust),
+        "status": result.status,
+    }
+
+
+def _matched_hook_payload(hook: MatchedComplexityHook | None) -> dict[str, object]:
+    if hook is None:
+        return {
+            "present": False,
+            "overall_pass": False,
+            "controls_required": [],
+            "violations": ["matched_complexity_report_missing"],
+            "scope": None,
+        }
+    return {
+        "present": True,
+        "overall_pass": bool(hook.overall_pass),
+        "controls_required": list(hook.controls_required),
+        "violations": list(hook.violations),
+        "scope": hook.scope,
+    }
+
+
+def _report_hash_payload(
+    *,
+    null_result: NullCompetitionResult,
+    matched_complexity_hook: MatchedComplexityHook | None,
+    alternative_complexity_score: int,
+    null_flexibility_scores: Mapping[str, int],
+    fpr_threshold: float,
+    candidate_log_bayes_factor: float | None,
+    config_hash: str,
+    input_hashes: tuple[str, ...],
+) -> dict[str, object]:
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "null_result": {
+            "families_tested": int(null_result.families_tested),
+            "families_robust": int(null_result.families_robust),
+            "families_vulnerable": int(null_result.families_vulnerable),
+            "worst_family": null_result.worst_family,
+            "worst_fpr": float(null_result.worst_fpr),
+            "overall_robust": bool(null_result.overall_robust),
+            "family_results": {
+                family_name: _family_payload(result)
+                for family_name, result in sorted(null_result.family_results.items())
+            },
+            "status": null_result.status,
+        },
+        "matched_complexity_hook": _matched_hook_payload(matched_complexity_hook),
+        "alternative_complexity_score": int(alternative_complexity_score),
+        "null_flexibility_scores": {
+            str(name): int(score)
+            for name, score in sorted(null_flexibility_scores.items())
+        },
+        "fpr_threshold": fpr_threshold,
+        "candidate_log_bayes_factor": candidate_log_bayes_factor,
+        "config_hash": config_hash,
+        "input_hashes": list(input_hashes),
+    }
+
+
+def _matched_null_blockers(
+    *,
+    null_result: NullCompetitionResult,
+    matched_complexity_hook: MatchedComplexityHook | None,
+    alternative_complexity_score: int,
+    null_flexibility_scores: Mapping[str, int],
+) -> tuple[str, ...]:
+    blockers: list[str] = []
+    if matched_complexity_hook is None:
+        blockers.append("matched_complexity_report_missing")
+    elif not matched_complexity_hook.overall_pass:
+        blockers.append("matched_complexity_failed")
+        blockers.extend(
+            f"matched_complexity_violation:{violation}"
+            for violation in matched_complexity_hook.violations
+        )
+    elif not matched_complexity_hook.controls_required:
+        blockers.append("matched_complexity_controls_missing")
+    if not null_result.overall_robust:
+        blockers.append("structured_nulls_not_robust")
+    missing_scores = sorted(
+        set(null_result.family_results) - set(null_flexibility_scores)
+    )
+    if missing_scores:
+        blockers.append("null_flexibility_scores_missing:" + ",".join(missing_scores))
+    for family_name, score in sorted(null_flexibility_scores.items()):
+        if family_name not in null_result.family_results:
+            blockers.append(f"null_flexibility_unknown_family:{family_name}")
+        if int(score) != int(alternative_complexity_score):
+            blockers.append(f"matched_complexity_gap:{family_name}")
+    return _dedupe(blockers)
+
+
+def build_matched_null_competition_report(
+    *,
+    null_result: NullCompetitionResult,
+    matched_complexity_hook: MatchedComplexityHook | None,
+    alternative_complexity_score: int,
+    null_flexibility_scores: Mapping[str, int],
+    artifact_id: object,
+    config_hash: object,
+    input_hashes: tuple[object, ...] | list[object],
+    generating_command: object,
+    fpr_threshold: object = 0.10,
+    candidate_log_bayes_factor: object | None = None,
+    headline_requested: bool = False,
+    artifact_path: object = _DEFAULT_ARTIFACT_PATH,
+    worktree_state: object | None = None,
+    git_commit: object | None = None,
+    transfer_source: object = "none",
+    caveats: tuple[object, ...] | list[object] = _DEFAULT_CAVEATS,
+) -> MatchedNullCompetitionReport:
+    """Build a manifest-backed PR-064 matched-null competition report.
+
+    The report is a gate artifact. It records null FPR and flexibility
+    comparisons, but it does not authorize decisive evidence wording; PR-065
+    still owns prior-sweep, PPC, and LOOCV gates.
+    """
+
+    if not isinstance(null_result, NullCompetitionResult):
+        raise TypeError("null_result must be a NullCompetitionResult")
+    if (
+        matched_complexity_hook is not None
+        and not isinstance(matched_complexity_hook, MatchedComplexityHook)
+    ):
+        raise TypeError("matched_complexity_hook must be a MatchedComplexityHook")
+    threshold = _fpr_threshold(fpr_threshold)
+    artifact_id_text = _non_empty(artifact_id, "artifact_id")
+    artifact_path_text = _non_empty(artifact_path, "artifact_path")
+    config_hash_text = _non_empty(config_hash, "config_hash")
+    input_hash_tuple = _input_hashes(input_hashes, "input_hashes")
+    command_text = _non_empty(generating_command, "generating_command")
+    worktree_text = None if worktree_state is None else _non_empty(worktree_state, "worktree_state")
+    git_commit_text = None if git_commit is None else _non_empty(git_commit, "git_commit")
+    if worktree_text is None and git_commit_text is None:
+        raise ValueError("git_commit or worktree_state is required")
+    transfer_source_text = _non_empty(transfer_source, "transfer_source")
+    if transfer_source_text != "none":
+        raise ValueError("PR-064 matched null report only supports transfer_source='none'")
+    caveat_tuple = tuple(_non_empty(item, "caveat") for item in caveats)
+    if not caveat_tuple:
+        raise ValueError("caveats must be non-empty")
+    candidate_ln_b = _finite_optional(
+        candidate_log_bayes_factor,
+        "candidate_log_bayes_factor",
+    )
+    if headline_requested and candidate_ln_b is not None and matched_complexity_hook is None:
+        raise ValueError(
+            "headline evidence language requires a matched-complexity report"
+        )
+
+    alt_score = _complexity_score(
+        alternative_complexity_score,
+        "alternative_complexity_score",
+    )
+    null_scores = {
+        str(name): _complexity_score(score, f"null_flexibility_scores[{name}]")
+        for name, score in null_flexibility_scores.items()
+    }
+    blockers = _matched_null_blockers(
+        null_result=null_result,
+        matched_complexity_hook=matched_complexity_hook,
+        alternative_complexity_score=alt_score,
+        null_flexibility_scores=null_scores,
+    )
+    ready = not blockers
+    status = "matched_null_ready" if ready else (
+        "blocked_missing_matched_complexity"
+        if "matched_complexity_report_missing" in blockers
+        else "blocked_matched_null_prerequisites"
+    )
+    report_hash = _stable_hash(
+        _report_hash_payload(
+            null_result=null_result,
+            matched_complexity_hook=matched_complexity_hook,
+            alternative_complexity_score=alt_score,
+            null_flexibility_scores=null_scores,
+            fpr_threshold=threshold,
+            candidate_log_bayes_factor=candidate_ln_b,
+            config_hash=config_hash_text,
+            input_hashes=input_hash_tuple,
+        )
+    )
+    claim_tier = ClaimTier.CONDITIONAL if ready else ClaimTier.BLOCKED
+    production_status = "diagnostic_only" if ready else "blocked_provenance_mismatch"
+    passed_gates = [
+        "manifest_metadata_present",
+        "headline_evidence_blocked_until_pr065",
+    ]
+    if ready:
+        passed_gates.extend(["matched_complexity_ready", "structured_nulls_robust"])
+    failed_gates = list(blockers)
+    manifest = ArtifactManifest(
+        artifact_id=artifact_id_text,
+        artifact_path=artifact_path_text,
+        owner=Owner.HTT,
+        implementation_scope=ImplementationScope.HTT,
+        claim_tier=claim_tier,
+        production_status=production_status,  # type: ignore[arg-type]
+        created_by=_CREATED_BY,
+        git_commit=git_commit_text,
+        config_hash=_stable_hash(
+            {
+                "schema_version": SCHEMA_VERSION,
+                "artifact_id": artifact_id_text,
+                "config_hash": config_hash_text,
+                "fpr_threshold": threshold,
+                "families": sorted(null_result.family_results),
+                "alternative_complexity_score": alt_score,
+                "null_flexibility_scores": null_scores,
+            }
+        ),
+        input_hashes=list(dict.fromkeys([*input_hash_tuple, report_hash])),
+        code_version=git_commit_text or worktree_text or "unknown",
+        schema_version=SCHEMA_VERSION,
+        caveats=list(caveat_tuple),
+        required_gates=[
+            "matched_complexity_ready",
+            "structured_nulls_robust",
+            "alternative_null_flexibility_matched",
+            "headline_evidence_blocked_until_pr065",
+            "manifest_metadata_present",
+        ],
+        passed_gates=passed_gates,
+        failed_gates=failed_gates,
+        statistics_definitions={
+            "surface": "MatchedNullCompetitionReport",
+            "matched_null_status": status,
+            "fpr_threshold": threshold,
+            "candidate_log_bayes_factor_status": (
+                "diagnostic_input_only" if candidate_ln_b is not None else "not_supplied"
+            ),
+            "decisive_evidence_status": "blocked_until_pr065_prior_ppc_loocv",
+            "null_family_count": int(null_result.families_tested),
+            "worst_family": null_result.worst_family,
+            "worst_fpr": float(null_result.worst_fpr),
+        },
+    )
+    return MatchedNullCompetitionReport(
+        manifest=manifest,
+        null_result=null_result,
+        matched_complexity_hook=matched_complexity_hook,
+        alternative_complexity_score=alt_score,
+        null_flexibility_scores=null_scores,
+        report_hash=report_hash,
+        matched_null_status=status,
+        blocked_reasons=blockers,
+        candidate_log_bayes_factor=candidate_ln_b,
+        headline_requested=bool(headline_requested),
+        headline_bayes_factor_allowed=False,
+        fpr_threshold=threshold,
+        generating_command=command_text,
+        worktree_state=worktree_text,
+        git_commit=git_commit_text,
+        transfer_source=transfer_source_text,
+    )
 
 
 class NullCompetitionEngine:
@@ -207,14 +829,61 @@ def build_null_competition_hook(
     result: NullCompetitionResult | None = None,
     *,
     required_families: List[str] | None = None,
-    fpr_threshold: float = 0.10
+    fpr_threshold: float = 0.10,
+    matched_complexity_hook: MatchedComplexityHook | None = None,
+    matched_null_report: MatchedNullCompetitionReport | None = None,
+    matched_null_report_hash: str | None = None,
 ) -> NullCompetitionHook:
-    families = tuple(required_families or list(NULL_REGISTRY))
-    ready = bool(result.overall_robust) if result is not None else False
+    if matched_null_report is not None:
+        result = matched_null_report.null_result
+        matched_complexity_hook = matched_null_report.matched_complexity_hook
+        matched_null_report_hash = matched_null_report.report_hash
+    families = tuple(
+        required_families
+        or (
+            list(result.family_results)
+            if result is not None and result.family_results
+            else list(NULL_REGISTRY)
+        )
+    )
+    matched_ready = bool(
+        matched_complexity_hook is not None
+        and matched_complexity_hook.overall_pass
+        and matched_complexity_hook.controls_required
+    )
+    report_hash = (
+        matched_null_report_hash
+        if matched_null_report_hash is not None
+        else (matched_null_report.report_hash if matched_null_report is not None else None)
+    )
+    ready = bool(result and result.overall_robust and matched_ready and report_hash)
+    blocked: list[str] = []
+    if result is None:
+        blocked.append("null_competition_result_missing")
+    elif not result.overall_robust:
+        blocked.append("structured_nulls_not_robust")
+    if matched_complexity_hook is None:
+        blocked.append("matched_complexity_report_missing")
+    elif not matched_complexity_hook.overall_pass:
+        blocked.append("matched_complexity_failed")
+        blocked.extend(
+            f"matched_complexity_violation:{violation}"
+            for violation in matched_complexity_hook.violations
+        )
+    elif not matched_complexity_hook.controls_required:
+        blocked.append("matched_complexity_controls_missing")
+    if result is not None and matched_ready and not report_hash:
+        blocked.append("matched_null_report_hash_missing")
     return NullCompetitionHook(
         required_families=families,
         fpr_threshold=float(fpr_threshold),
         ready_for_inference=ready,
         worst_family=None if result is None else result.worst_family,
         worst_fpr=None if result is None else float(result.worst_fpr),
+        matched_complexity_ready=matched_ready,
+        matched_null_report_hash=report_hash,
+        matched_null_status=(
+            "matched_null_ready" if ready else "blocked_matched_null_prerequisites"
+        ),
+        blocked_reasons=_dedupe(blocked),
     )
