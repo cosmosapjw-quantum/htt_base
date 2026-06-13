@@ -45,6 +45,7 @@ completed:
 - PR-060
 - PR-090
 - PR-100
+- PR-084
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -367,3 +368,12 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   the payload does not expose posterior odds, likelihood/evidence terms, truth
   certificates, native solver validation, morphology compatibility, or
   geometry/family-identification claims.
+  PR-084 adds a COMMON diagnostic-only transfer-sensitivity report generator
+  and generated public report for current result surfaces. The report inventories
+  the seven PR-080 AniCLASS/external and empirical-proxy transfer paths, records
+  their conditional/non-native provenance, and lists downstream result-card
+  surfaces that must expose transfer-conditional status. PR-084 does not
+  evaluate transfer callables, create HTT evidence/posterior content, create MIO
+  certificate content, validate transfer or native solver output, treat future
+  native schema rows as values, establish morphology compatibility, or support
+  geometry/family claims.
