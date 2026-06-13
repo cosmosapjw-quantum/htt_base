@@ -50,6 +50,7 @@ for name in [
     "htt.nulls.survey_axis_coherence",
     "htt.core",
     "htt.departure",
+    "htt.departure.local_global_mixture",
     "htt.departure.response_overlap",
     "htt.direction",
     "htt.obsstat",
@@ -106,6 +107,7 @@ for name in [
     "htt",
     "htt.core",
     "htt.departure",
+    "htt.departure.local_global_mixture",
     "htt.departure.response_overlap",
     "htt.direction",
     "htt.infer",
@@ -167,6 +169,7 @@ def test_nested_htt_cwd_imports_direction_without_pythonpath() -> None:
 import importlib
 for name in [
     "htt.departure.response_overlap",
+    "htt.departure.local_global_mixture",
     "htt.direction",
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
@@ -203,6 +206,7 @@ assert "departure" in namespace
 assert "statistics" in namespace
 assert "zoa" in namespace
 import htt.departure.response_overlap
+import htt.departure.local_global_mixture
 import htt.direction
 import htt.statistics.mes_cov_bound
 import htt.statistics.mes_information_gain

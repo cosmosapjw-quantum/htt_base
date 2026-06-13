@@ -52,6 +52,7 @@ completed:
 - PR-102
 - PR-062
 - PR-092
+- PR-063
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -462,3 +463,16 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   evidence, create MIO certificate content, validate transfer or native solver
   output, establish morphology compatibility, or support geometry/family
   claims.
+  PR-063 adds an HTT pre-solver local/global mixture-likelihood skeleton under
+  the live `htt/htt/htt/departure` package root. The skeleton requires separate
+  local-boost, global-tilt, survey/systematic, and noise blocks with distinct
+  primitive parameters and field IDs, rejects primitive F/G/G_F inputs, consumes
+  PR-060 response-overlap rank readiness plus PR-061 local-null and PR-062
+  survey/systematic FPR prerequisite gates, verifies that audit local/global
+  responses match the mixture blocks, blocks rank-deficient or ill-conditioned
+  full local/global/survey designs, and emits only noncanonical generated
+  diagnostic fit scores after those gates pass. Passing PR-063 gates yields at
+  most a conditional local/global discrimination candidate while the artifact
+  production status remains diagnostic-only pre-native. PR-063 does not create
+  MIO certificate content, validate transfer or native solver output, establish
+  morphology compatibility, or support geometry/family claims.

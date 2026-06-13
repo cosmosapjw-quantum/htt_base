@@ -571,7 +571,7 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L3
 - **Risk:** high
 - **Primary files:**
-  - `htt/src/htt/departure/local_global_mixture.py`
+  - `htt/htt/htt/departure/local_global_mixture.py`
   - `tests/htt/test_local_global_mixture.py`
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_local_global_mixture.py -q`
