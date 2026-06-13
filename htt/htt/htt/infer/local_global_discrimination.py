@@ -12,6 +12,11 @@ from common.contracts import (
     DiscriminationMatrix,
     ObservableVector,
 )
+from htt.nulls.local_boost_depth_null import (
+    GlobalTiltLocalNullGateDecision,
+    LocalBoostNullFprReport,
+    evaluate_global_tilt_local_null_gate,
+)
 
 __all__ = [
     "HypothesisResponseTemplate",
@@ -241,11 +246,14 @@ def _pair_claim_tier(
     *,
     overlap: float,
     support: Mapping[str, float],
+    local_null_gate: GlobalTiltLocalNullGateDecision | None = None,
 ) -> str:
     if not np.isfinite(overlap):
         return "blocked"
     ordered = tuple(sorted(pair))
     if ordered == ("global_tilt", "local_boost"):
+        if local_null_gate is None or not local_null_gate.allowed:
+            return "exploratory"
         if (
             support.get("depth", 0.0) >= 0.95
             and support.get("template", 0.0) >= 0.75
@@ -289,6 +297,7 @@ def _calibrated_manifest(
     degeneracy_flags: Mapping[str, bool],
     recommendations: Mapping[str, str],
     claim_tier_by_pair: Mapping[str, str],
+    local_null_gate: GlobalTiltLocalNullGateDecision | None,
 ) -> ArtifactManifest:
     input_hashes = [observable_vector.manifest.artifact_id]
     if morphology_atlas_ref:
@@ -331,6 +340,9 @@ def _calibrated_manifest(
             "pair_recommended_next_observable": dict(sorted(recommendations.items())),
             "conditional_pairs": list(conditional_pairs),
             "blocked_pairs": list(blocked_pairs),
+            "local_null_fpr_gate": (
+                None if local_null_gate is None else local_null_gate.to_metadata()
+            ),
         },
     )
 
@@ -340,6 +352,9 @@ def build_discrimination_matrix(
     *,
     atlas_entry: AtlasEntryLite | None = None,
     morphology_atlas_ref: str | None = None,
+    local_null_fpr_report: LocalBoostNullFprReport | None = None,
+    local_null_report_hash: str | None = None,
+    response_overlap_config_hash: str | None = None,
     hypotheses: tuple[str, ...] = ("local_boost", "global_tilt"),
 ) -> DiscriminationMatrix:
     """Build an observable-aware HTT discrimination matrix."""
@@ -369,6 +384,21 @@ def build_discrimination_matrix(
     degeneracy_flags: dict[str, bool] = {}
     recommendations: dict[str, str] = {}
     claim_tier_by_pair: dict[str, str] = {}
+    local_null_gate = evaluate_global_tilt_local_null_gate(
+        local_null_fpr_report,
+        config_hash=(
+            None
+            if local_null_fpr_report is None
+            else local_null_fpr_report.bank.config.config_hash
+        ),
+        input_hashes=(
+            None
+            if local_null_fpr_report is None
+            else local_null_fpr_report.bank.config.input_hashes
+        ),
+        report_hash=local_null_report_hash,
+        response_overlap_config_hash=response_overlap_config_hash,
+    )
 
     for i, left in enumerate(hypotheses):
         for j, right in enumerate(hypotheses):
@@ -388,6 +418,7 @@ def build_discrimination_matrix(
                 (left, right),
                 overlap=rho,
                 support=support,
+                local_null_gate=local_null_gate,
             )
             claim_tier_by_pair[pair] = claim_tier
             degeneracy_flags[pair] = (not np.isfinite(rho)) or (
@@ -403,6 +434,16 @@ def build_discrimination_matrix(
     caveats = ["pre_inference_only", "not_posterior_odds"]
     if not conditional_pair:
         caveats.append("local_global_degeneracy_summary")
+    if (
+        "global_tilt" in hypotheses
+        and "local_boost" in hypotheses
+        and not local_null_gate.allowed
+    ):
+        caveats.append("local_boost_null_fpr_gate_not_satisfied")
+        caveats.extend(
+            f"local_null_gate_blocked:{reason}"
+            for reason in local_null_gate.blocked_reasons
+        )
     if support.get("template", 0.0) < 0.75:
         caveats.append("morphology_atlas_missing_or_weak")
     if support.get("BiPoSH", 0.0) < 0.75:
@@ -423,6 +464,7 @@ def build_discrimination_matrix(
         degeneracy_flags=degeneracy_flags,
         recommendations=recommendations,
         claim_tier_by_pair=claim_tier_by_pair,
+        local_null_gate=local_null_gate,
     )
     return DiscriminationMatrix(
         hypotheses=hypotheses,

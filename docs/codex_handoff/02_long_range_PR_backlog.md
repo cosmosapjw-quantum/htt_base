@@ -539,8 +539,8 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L3
 - **Risk:** high
 - **Primary files:**
-  - `htt/src/htt/nulls/local_boost_depth_null.py`
-  - `htt/src/htt/nulls/clustering_dipole_depth.py`
+  - `htt/htt/htt/nulls/local_boost_depth_null.py`
+  - `htt/htt/htt/nulls/clustering_dipole_depth.py`
   - `tests/htt/test_local_boost_nulls.py`
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_local_boost_nulls.py -q`

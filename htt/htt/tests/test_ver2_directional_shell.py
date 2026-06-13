@@ -256,7 +256,7 @@ def test_build_ver2_directional_inputs_carries_solver_forward():
     assert any("SK-01S1 -> SK-03S3" in note for note in shell.carry_forward)
 
 
-def test_build_ver2_directional_inputs_uses_calibrated_local_global_matrix():
+def test_build_ver2_directional_inputs_requires_local_null_fpr_for_conditional_pair():
     from htt.integration.from_bass import build_ver2_directional_inputs
 
     observable = _observable_vector()
@@ -284,12 +284,14 @@ def test_build_ver2_directional_inputs_uses_calibrated_local_global_matrix():
         manifest=_manifest("HTT"),
     )
     pair = "global_tilt|local_boost"
-    assert shell.discrimination_matrix.claim_tier_by_pair[pair] == "conditional"
-    assert shell.discrimination_matrix.manifest.production_status == "production_candidate"
+    assert shell.discrimination_matrix.claim_tier_by_pair[pair] == "exploratory"
+    assert shell.discrimination_matrix.manifest.production_status == "diagnostic_only"
     stats = shell.discrimination_matrix.manifest.statistics_definitions
-    assert stats["pair_claim_tier"][pair] == "conditional"
+    assert stats["pair_claim_tier"][pair] == "exploratory"
     assert stats["pair_degeneracy_flags"][pair] is False
-    assert pair in stats["conditional_pairs"]
+    assert pair not in stats["conditional_pairs"]
+    assert stats["local_null_fpr_gate"]["allowed"] is False
+    assert "local_boost_null_fpr_missing" in stats["local_null_fpr_gate"]["blocked_reasons"]
 
 
 def test_build_posterior_bundle_preserves_htt_manifest(tmp_path):

@@ -46,6 +46,7 @@ completed:
 - PR-090
 - PR-100
 - PR-084
+- PR-061
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -377,3 +378,17 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   certificate content, validate transfer or native solver output, treat future
   native schema rows as values, establish morphology compatibility, or support
   geometry/family claims.
+  PR-061 adds HTT diagnostic-only depth-resolved local-boost and
+  local-structure null-bank contracts under the live `htt/htt/htt/nulls`
+  package root. The null banks emit explicit depth-bin metadata, normalized
+  direction samples, G_F/log_G_F diagnostic distributions, sky/mask/scan
+  hashes, covariance/null statuses, config/input hashes, random seeds, and a
+  response-overlap-bound local-null FPR report with Wilson intervals and
+  look-elsewhere adjustment. The global-tilt local-null gate fails closed when
+  the FPR report is missing, mismatched, rank-deficient, or above threshold.
+  The live HTT discrimination-matrix builder now keeps the
+  `global_tilt|local_boost` pair exploratory/diagnostic unless a matching
+  PR-061 local-null FPR report satisfies the prerequisite gate.
+  PR-061 does not create HTT posterior evidence, create MIO certificate
+  content, validate transfer or native solver output, establish morphology
+  compatibility, or support geometry/family claims.

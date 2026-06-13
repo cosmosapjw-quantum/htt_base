@@ -105,6 +105,8 @@ for name in [
     "htt.direction",
     "htt.infer",
     "htt.nulls",
+    "htt.nulls.clustering_dipole_depth",
+    "htt.nulls.local_boost_depth_null",
     "htt.obsstat",
     "htt.obsstat.biposh_features",
     "htt.obsstat.morphology",
@@ -158,6 +160,7 @@ for name in [
     "htt.departure.response_overlap",
     "htt.direction",
     "htt.statistics.mes_template_bound",
+    "htt.nulls.local_boost_depth_null",
     "htt.zoa.axis_promotion",
     "common.contracts",
 ]:
