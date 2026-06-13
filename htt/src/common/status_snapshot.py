@@ -285,6 +285,14 @@ def _claim_ledger_notes(*, pr: Mapping[str, object], state: str) -> tuple[str, .
             "null_mock_status=certificate_readiness_recorded",
             "sky_support_status=directional_certificate_readiness_recorded",
         )
+    if _is_redshift_binned_coherence_certificate_pr(pr_id=pr_id, pr=pr):
+        return base + (
+            "covariance_status=redshift_bin_certificate_readiness_recorded",
+            "null_mock_status=redshift_bin_certificate_readiness_recorded",
+            "sky_support_status=redshift_bin_certificate_readiness_recorded",
+            "selection_status=redshift_bin_selection_metadata_required",
+            "g_f_bridge_status=diagnostic_bridge_metadata_recorded",
+        )
     return base + (
         "null_mock_status=not_statistical",
         "sky_support_status=not_directional",
@@ -308,6 +316,30 @@ def _is_directional_coherence_certificate_pr(
         return False
     dod_items = " ".join(str(item) for item in pr.get("dod", ()) or ())
     return "covariance/sky support/null status" in dod_items
+
+
+def _is_redshift_binned_coherence_certificate_pr(
+    *,
+    pr_id: str,
+    pr: Mapping[str, object],
+) -> bool:
+    """Return whether a PR card is the redshift-binned certificate bridge."""
+
+    if pr_id != "PR-101":
+        return False
+    owner = str(pr.get("owner", "")).strip().upper()
+    if owner != Owner.MIO.value:
+        return False
+    files = {str(path) for path in pr.get("files", ()) or ()}
+    if "htt/mio/coherence/redshift_binned.py" not in files:
+        return False
+    if "tests/mio/test_redshift_binned_coherence.py" not in files:
+        return False
+    dod_items = " ".join(str(item) for item in pr.get("dod", ()) or ())
+    return (
+        "Depth-bin covariance and selection metadata required" in dod_items
+        and "Descriptive fallback is explicit" in dod_items
+    )
 
 
 def validate_status_matrix_matches_snapshot(

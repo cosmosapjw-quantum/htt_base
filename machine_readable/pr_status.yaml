@@ -48,6 +48,7 @@ completed:
 - PR-084
 - PR-061
 - PR-091
+- PR-101
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -407,3 +408,16 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   generate null mocks, create HTT evidence/posterior content, create MIO
   certificate content, validate transfer or native solver output, establish
   morphology compatibility, or support geometry/family claims.
+  PR-101 adds a MIO diagnostic-only redshift-binned coherence certificate
+  bridge. It introduces validated per-redshift-bin metadata for selection,
+  assignment, covariance, null/mock calibration, sky/mask support, sample
+  counts, and G_F bridge references, records those statuses under manifest
+  `certificate_status_metadata`, and makes generic covariance/null booleans
+  insufficient for production-candidate readiness. Missing depth-bin metadata
+  or missing G_F bridge provenance is an explicit descriptive fallback;
+  matched-calibrated per-bin covariance/null metadata plus complete per-bin
+  sky/mask support can satisfy the existing operational readiness path while
+  the certificate reduction status remains diagnostic-only. PR-101 does not
+  compute a new G_F from redshift drift, create HTT evidence/posterior content,
+  create truth certificates, validate transfer or native solver output,
+  establish morphology compatibility, or support geometry/family claims.

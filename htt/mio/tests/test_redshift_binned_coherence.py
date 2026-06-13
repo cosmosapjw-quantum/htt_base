@@ -5,8 +5,8 @@ Plan v1.3 §20 Week 11 Day 3-4 gate: 12 tests covering
   * z-bin assignment (inclusive/exclusive edges + empty bins)
   * per-bin resultant (weighted spherical mean) matches HJ-02a algebra
   * total-drift statistic is 0 when all probes share one axis
-  * permutation p-value is high when there is no real z-drift
-  * permutation p-value is low when an explicit z-drift is injected
+  * permutation p-value is high when directions are exchangeable across z labels
+  * permutation p-value is low for an explicit synthetic z-label contrast
   * MioCertificate has `reduction_status='diagnostic-only'` and no posterior field
   * emit_redshift_coherence_artefact rejects non-`mio_` filenames (REG-02)
   * artefact payload schema is stable
@@ -148,7 +148,7 @@ def test_total_drift_deg_zero_when_all_bins_share_axis():
 
 def test_drift_pvalue_high_when_directions_are_random_wrt_z():
     # All probes isotropic but with random z_eff labels: permutation
-    # distribution should look like the observed (non-detection).
+    # distribution should look like the observed descriptive tail fraction.
     rng = np.random.default_rng(seed=20260419)
     u = rng.uniform(-1.0, 1.0, size=9)
     phi = rng.uniform(0.0, 2 * np.pi, size=9)
@@ -164,7 +164,7 @@ def test_drift_pvalue_high_when_directions_are_random_wrt_z():
     # Custom two-bin split inside the populated range.
     bins = ((0.0, 0.5), (0.5, 2.0))
     p = drift_pvalue(probes, bins=bins, n_mock=2000, rng=np.random.default_rng(seed=11))
-    assert p > 0.05, f"no-drift null falsely flagged: p={p:.4f}"
+    assert p > 0.05, f"exchangeability tail fraction too small: p={p:.4f}"
 
 
 def test_drift_pvalue_low_when_z_is_perfectly_correlated_with_direction():
@@ -191,7 +191,7 @@ def test_drift_pvalue_low_when_z_is_perfectly_correlated_with_direction():
         low_probes + mid_probes + high_probes,
         bins=bins, n_mock=1000, rng=np.random.default_rng(seed=22),
     )
-    assert p < 0.05, f"strong z-drift not flagged: p={p:.4f}"
+    assert p < 0.05, f"synthetic z-label contrast not separated: p={p:.4f}"
 
 
 def test_drift_pvalue_single_probe_returns_one():

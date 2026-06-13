@@ -189,6 +189,84 @@ def test_directional_certificate_notes_do_not_match_title_only(tmp_path: Path) -
     assert "sky_support_status=not_directional" in notes
 
 
+def test_redshift_certificate_pr_notes_preserve_bridge_statuses(tmp_path: Path) -> None:
+    backlog = {
+        "prs": [
+            {
+                "id": "PR-101",
+                "title": "Redshift-binned coherence and G_F certificate bridge",
+                "owner": "MIO",
+                "depends": ["PR-055", "PR-100"],
+                "scope": "pre-solver",
+                "files": [
+                    "htt/mio/coherence/redshift_binned.py",
+                    "tests/mio/test_redshift_binned_coherence.py",
+                ],
+                "dod": [
+                    "Depth-bin covariance and selection metadata required for production-grade G/coherence",
+                    "Descriptive fallback is explicit",
+                ],
+            }
+        ],
+    }
+    status = {"completed": ["PR-101"], "blocked": [], "in_progress": None}
+    backlog_path = tmp_path / "pr_backlog.yaml"
+    status_path = tmp_path / "pr_status.yaml"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+
+    notes = bundle.claim_rows[0]["notes"]
+    assert "covariance_status=redshift_bin_certificate_readiness_recorded" in notes
+    assert "null_mock_status=redshift_bin_certificate_readiness_recorded" in notes
+    assert "sky_support_status=redshift_bin_certificate_readiness_recorded" in notes
+    assert "selection_status=redshift_bin_selection_metadata_required" in notes
+    assert "g_f_bridge_status=diagnostic_bridge_metadata_recorded" in notes
+    assert "null_mock_status=not_statistical" not in notes
+    assert "sky_support_status=not_directional" not in notes
+
+
+def test_redshift_certificate_notes_do_not_match_title_only(tmp_path: Path) -> None:
+    backlog = {
+        "prs": [
+            {
+                "id": "PR-999",
+                "title": "Redshift-binned coherence and G_F certificate bridge",
+                "owner": "MIO",
+                "depends": [],
+                "scope": "pre-solver",
+                "files": ["docs/not-the-certificate.md"],
+                "dod": [
+                    "Depth-bin covariance and selection metadata required for production-grade G/coherence",
+                    "Descriptive fallback is explicit",
+                ],
+            }
+        ],
+    }
+    status = {"completed": ["PR-999"], "blocked": [], "in_progress": None}
+    backlog_path = tmp_path / "pr_backlog.yaml"
+    status_path = tmp_path / "pr_status.yaml"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+
+    notes = bundle.claim_rows[0]["notes"]
+    assert "covariance_status=redshift_bin_certificate_readiness_recorded" not in notes
+    assert "g_f_bridge_status=diagnostic_bridge_metadata_recorded" not in notes
+    assert "null_mock_status=not_statistical" in notes
+    assert "sky_support_status=not_directional" in notes
+
+
 def test_write_status_artifacts_writes_json_and_markdown(tmp_path: Path) -> None:
     backlog_path, status_path = _write_fixture(tmp_path)
     output = tmp_path / "generated" / "status_snapshot.json"
