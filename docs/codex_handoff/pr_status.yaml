@@ -59,6 +59,7 @@ completed:
 - PR-066
 - PR-103
 - PR-111
+- PR-112
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -542,4 +543,13 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   rows. PR-111 does not recompute inference, merge MIO diagnostics into HTT
   evidence, promote VER2 production-candidate status, validate transfer or
   native solver output, establish morphology compatibility, or support
-  geometry/family claims.
+  geometry/family claims. PR-112 adds a COMMON diagnostic-only Result Pack C
+  generator and generated `docs/generated/result_pack_C.md` report. The pack
+  gathers existing MIO certificate/status surfaces from PR-100, PR-101, PR-102,
+  and PR-103 with status rows, caveats, manifest metadata, config/input hashes,
+  dependency status, production-grade readiness labels, and legacy VER2 Pack D
+  as hashed prior context only. PR-112 makes diagnostic-only vs production-grade
+  status explicit and leaves all certificate rank/odds semantics forbidden; it
+  does not recompute MIO diagnostics, modify HTT-owned likelihood/evidence
+  traces, promote legacy rows, validate transfer/native output, establish
+  morphology compatibility, or support geometry/family claims.
