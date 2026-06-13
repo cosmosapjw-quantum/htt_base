@@ -524,7 +524,7 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L3
 - **Risk:** high
 - **Primary files:**
-  - `htt/src/htt/departure/response_overlap.py`
+  - `htt/htt/htt/departure/response_overlap.py`
   - `tests/htt/test_response_overlap.py`
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_response_overlap.py -q`

@@ -15,6 +15,7 @@ from common.contracts import (
     TscAdequacyOverlay,
 )
 
+from htt.departure.response_overlap import ResponseOverlapAudit
 from htt.infer.matched_complexity import (
     MatchedComplexityHook,
     build_matched_complexity_hook,
@@ -73,6 +74,7 @@ def build_ver2_directional_inputs(
     null_competition: NullCompetitionHook | None = None,
     posterior_predictive_ready: bool = False,
     loocv_ready: bool = False,
+    response_overlap_audit: ResponseOverlapAudit | None = None,
     tsc_overlay_ref: str | None = None,
 ) -> DirectionalLikelihoodInputs:
     """Build the solver-independent SK-06H directional shell from BASS inputs."""
@@ -90,6 +92,7 @@ def build_ver2_directional_inputs(
         null_competition=null_competition,
         posterior_predictive_ready=posterior_predictive_ready,
         loocv_ready=loocv_ready,
+        response_overlap_audit=response_overlap_audit,
         tsc_overlay_ref=tsc_overlay_ref,
     )
 

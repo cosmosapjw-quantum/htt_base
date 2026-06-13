@@ -31,6 +31,7 @@ __all__ = [
     "core",
     "nulls",
     "infer",
+    "departure",
     "bridge",
     "figures",
     "integration",

@@ -117,6 +117,61 @@ def _preferred_axis(
     )
 
 
+def _response_overlap_audit(
+    *,
+    local_boost_response=(1.0, 0.0),
+    global_tilt_response=(0.0, 1.0),
+    observable_vector: ObservableVector | None = None,
+    artifact_metadata_overrides: dict[str, object] | None = None,
+):
+    from htt.departure.response_overlap import build_response_overlap_audit
+    from htt.infer.local_global_discrimination import build_discrimination_matrix
+
+    observable = observable_vector or _observable_vector()
+    discrimination_matrix = build_discrimination_matrix(
+        observable,
+        morphology_atlas_ref="template_morphology_atlas_v1.json",
+    )
+    artifact_metadata: dict[str, object] = {
+        "response_overlap_binding_version": "pr060-response-overlap-binding-v1",
+        "observable_manifest_ref": observable.manifest.artifact_id,
+        "observable_config_hash": observable.manifest.config_hash,
+        "sky_support_hash": observable.sky_support.sky_support_hash,
+        "mask_hash": observable.sky_support.mask_hash,
+        "discrimination_matrix_ref": discrimination_matrix.manifest.artifact_id,
+        "discrimination_matrix_config_hash": discrimination_matrix.manifest.config_hash,
+    }
+    if artifact_metadata_overrides:
+        artifact_metadata.update(artifact_metadata_overrides)
+
+    return build_response_overlap_audit(
+        local_boost_response=local_boost_response,
+        global_tilt_response=global_tilt_response,
+        covariance=((1.0, 0.0), (0.0, 1.0)),
+        observable_labels=("dipole", "depth"),
+        artifact_id="htt.response_overlap.test",
+        artifact_path="memory://htt.response_overlap.test.json",
+        input_hashes=(
+            "sha256:" + "b" * 64,
+            observable.manifest.artifact_id,
+            observable.manifest.config_hash,
+            observable.sky_support.sky_support_hash,
+            observable.sky_support.mask_hash,
+            discrimination_matrix.manifest.artifact_id,
+            discrimination_matrix.manifest.config_hash,
+        ),
+        generating_command=(
+            "python -m pytest htt/htt/tests/test_ver2_directional_shell.py -q"
+        ),
+        worktree_state="test-worktree",
+        sky_support_status="mock_calibrated",
+        mask_status="mask_hash_recorded",
+        covariance_status="diagnostic_covariance_supplied",
+        null_mock_status="registered_nulls_ready",
+        artifact_metadata=artifact_metadata,
+    )
+
+
 def test_axis_gate_blocks_diagnostic_axis():
     from htt.infer.ver2_directional_shell import evaluate_production_axis_gate
 
@@ -314,6 +369,7 @@ def test_directional_output_manifest_blocks_without_null_mocks_once_other_gates_
         solver_core_output=_solver_output(),
         posterior_predictive_ready=True,
         loocv_ready=True,
+        response_overlap_audit=_response_overlap_audit(),
     )
     readiness = assess_directional_readiness(shell)
     assert readiness.production_status == "blocked_missing_null_mocks"
@@ -339,6 +395,7 @@ def test_directional_output_manifest_reaches_production_candidate_with_live_hook
         ),
         posterior_predictive_ready=True,
         loocv_ready=True,
+        response_overlap_audit=_response_overlap_audit(),
         manifest=_manifest("HTT"),
     )
     readiness = assess_directional_readiness(shell)
@@ -348,6 +405,84 @@ def test_directional_output_manifest_reaches_production_candidate_with_live_hook
     assert "solver_payload_ready" in readiness.passed_gates
     assert "posterior_predictive_ready" in readiness.passed_gates
     assert "loocv_ready" in readiness.passed_gates
+    assert "response_overlap_rank_ready" in readiness.passed_gates
+
+
+def test_directional_output_manifest_blocks_without_response_overlap_audit():
+    from htt.infer.ver2_directional_shell import (
+        assess_directional_readiness,
+        build_directional_likelihood_inputs,
+    )
+
+    shell = build_directional_likelihood_inputs(
+        observable_vector=_observable_vector(),
+        preferred_axis=_preferred_axis(),
+        solver_core_output=_solver_output(),
+        null_competition=NullCompetitionHook(
+            required_families=("registered_nulls",),
+            fpr_threshold=0.10,
+            ready_for_inference=True,
+            worst_family="mask_leakage",
+            worst_fpr=0.01,
+        ),
+        posterior_predictive_ready=True,
+        loocv_ready=True,
+        manifest=_manifest("HTT"),
+    )
+    readiness = assess_directional_readiness(shell)
+
+    assert readiness.production_status == "diagnostic_only"
+    assert "response_overlap_rank_ready" in readiness.failed_gates
+    assert "response_overlap_rank_audit_missing" in readiness.caveats
+
+
+def test_directional_output_manifest_blocks_rank_deficient_response_overlap_audit():
+    from htt.infer.ver2_directional_shell import (
+        assess_directional_readiness,
+        build_directional_likelihood_inputs,
+    )
+
+    shell = build_directional_likelihood_inputs(
+        observable_vector=_observable_vector(),
+        preferred_axis=_preferred_axis(),
+        solver_core_output=_solver_output(),
+        null_competition=NullCompetitionHook(
+            required_families=("registered_nulls",),
+            fpr_threshold=0.10,
+            ready_for_inference=True,
+            worst_family="mask_leakage",
+            worst_fpr=0.01,
+        ),
+        posterior_predictive_ready=True,
+        loocv_ready=True,
+        response_overlap_audit=_response_overlap_audit(
+            local_boost_response=(1.0, 0.0),
+            global_tilt_response=(2.0, 0.0),
+        ),
+        manifest=_manifest("HTT"),
+    )
+    readiness = assess_directional_readiness(shell)
+
+    assert readiness.production_status == "diagnostic_only"
+    assert "response_overlap_rank_ready" in readiness.failed_gates
+    assert "response_overlap_no_claim:rank_deficient" in readiness.caveats
+
+
+def test_directional_inputs_reject_stale_response_overlap_audit_binding():
+    from htt.infer.ver2_directional_shell import build_directional_likelihood_inputs
+
+    with pytest.raises(ValueError, match="response_overlap_audit artifact metadata"):
+        build_directional_likelihood_inputs(
+            observable_vector=_observable_vector(),
+            preferred_axis=_preferred_axis(),
+            solver_core_output=_solver_output(),
+            response_overlap_audit=_response_overlap_audit(
+                artifact_metadata_overrides={
+                    "observable_config_hash": "stale-config-hash",
+                },
+            ),
+            manifest=_manifest("HTT"),
+        )
 
 
 def test_build_posterior_bundle_auto_materializes_htt_manifest(tmp_path):
@@ -387,6 +522,7 @@ def test_build_posterior_bundle_auto_materializes_htt_manifest(tmp_path):
         ),
         posterior_predictive_ready=True,
         loocv_ready=True,
+        response_overlap_audit=_response_overlap_audit(),
     )
     bundle = build_posterior_bundle(
         results_path=str(results_path),
@@ -399,6 +535,56 @@ def test_build_posterior_bundle_auto_materializes_htt_manifest(tmp_path):
     assert bundle.manifest.statistics_definitions["cross_check_only"] is True
     assert "mio_cross_check_only_export" in bundle.manifest.caveats
     assert bundle.is_cross_check_only is True
+
+
+def test_build_posterior_bundle_blocks_rank_deficient_directional_inputs(tmp_path):
+    from htt.integration.to_mio import build_posterior_bundle
+    from htt.integration.from_bass import build_ver2_directional_inputs
+
+    results_path = tmp_path / "integrated_pipeline_results.json"
+    results_path.write_text(
+        json.dumps(
+            {
+                "departure": {
+                    "FLRW_tilt": {
+                        "layer_1_departure": {
+                            "x": {"median": 0.2, "hpd_68": [0.1, 0.3], "hpd_95": [0.05, 0.35]}
+                        },
+                        "layer_2_occupancy": {"Q": {"median": 0.4, "hpd_68": [0.2, 0.5]}},
+                        "layer_3_exceedance": {"Pi": {"0.05": 0.1, "0.1": 0.2, "0.01": 0.05}},
+                    }
+                },
+                "evidence": {"FLRW_tilt": {"lnB": 5.0, "neff": 128}, "FLRW": {"lnB": 0.0}},
+                "filling_fraction": {"F_S3_mc_median": 0.07, "F_S3_mc_68": [0.05, 0.09]},
+            }
+        ),
+        encoding="utf-8",
+    )
+    shell = build_ver2_directional_inputs(
+        _observable_vector(),
+        _preferred_axis(),
+        solver_core_output=_solver_output(),
+        null_competition=NullCompetitionHook(
+            required_families=("registered_nulls",),
+            fpr_threshold=0.10,
+            ready_for_inference=True,
+            worst_family="mask_leakage",
+            worst_fpr=0.01,
+        ),
+        posterior_predictive_ready=True,
+        loocv_ready=True,
+        response_overlap_audit=_response_overlap_audit(
+            local_boost_response=(1.0, 0.0),
+            global_tilt_response=(2.0, 0.0),
+        ),
+    )
+
+    with pytest.raises(RuntimeError, match="rank audit blocks model run"):
+        build_posterior_bundle(
+            results_path=str(results_path),
+            model="FLRW_tilt",
+            directional_inputs=shell,
+        )
 
 
 def test_emit_directional_posterior_artifact_writes_dedicated_htt_summary(tmp_path):
@@ -419,6 +605,7 @@ def test_emit_directional_posterior_artifact_writes_dedicated_htt_summary(tmp_pa
         ),
         posterior_predictive_ready=True,
         loocv_ready=True,
+        response_overlap_audit=_response_overlap_audit(),
     )
     payload = emit_directional_posterior_artifact(
         out_path,
@@ -445,6 +632,190 @@ def test_emit_directional_posterior_artifact_writes_dedicated_htt_summary(tmp_pa
     assert manifest["owner"] == "HTT"
     assert manifest["statistics_definitions"]["surface"] == "directional_posterior_summary"
     assert manifest["statistics_definitions"]["cross_check_only"] is False
+    assert manifest["statistics_definitions"]["response_overlap_rank_ready"] is True
+    audit = shell.response_overlap_audit
+    assert audit is not None
+    assert manifest["statistics_definitions"]["response_overlap_audit_ref"] == (
+        audit.manifest.artifact_id
+    )
+    assert manifest["statistics_definitions"]["response_overlap_audit_config_hash"] == (
+        audit.manifest.config_hash
+    )
+    assert audit.manifest.artifact_id in manifest["input_hashes"]
+    assert audit.manifest.config_hash in manifest["input_hashes"]
+
+
+def test_emit_directional_posterior_artifact_blocks_missing_response_overlap_audit(
+    tmp_path,
+):
+    from htt.integration import emit_directional_posterior_artifact
+    from htt.integration.from_bass import build_ver2_directional_inputs
+
+    out_path = tmp_path / "htt_directional_posterior_summary.json"
+    shell = build_ver2_directional_inputs(
+        _observable_vector(),
+        _preferred_axis(),
+        solver_core_output=_solver_output(),
+        null_competition=NullCompetitionHook(
+            required_families=("registered_nulls",),
+            fpr_threshold=0.10,
+            ready_for_inference=True,
+            worst_family="mask_leakage",
+            worst_fpr=0.01,
+        ),
+        posterior_predictive_ready=True,
+        loocv_ready=True,
+    )
+    with pytest.raises(RuntimeError, match="response_overlap_rank_audit_missing"):
+        emit_directional_posterior_artifact(
+            out_path,
+            model="FLRW_tilt",
+            x_median=0.2,
+            x_hpd68=(0.1, 0.3),
+            x_hpd95=(0.05, 0.35),
+            Q_median=0.4,
+            Q_hpd68=(0.2, 0.5),
+            Pi_median=0.1,
+            Pi_hpd68=(0.05, 0.2),
+            ln_B_total=5.0,
+            model_evidences={"FLRW_tilt": 5.0, "FLRW": 0.0},
+            F_median=0.07,
+            F_hpd68=(0.05, 0.09),
+            n_live=128,
+            directional_inputs=shell,
+            posterior_ref="results.json#departure/FLRW_tilt",
+            evidence_ref="results.json#evidence/FLRW_tilt",
+        )
+    assert not out_path.exists()
+
+
+def test_emit_directional_posterior_artifact_blocks_incomplete_readiness_even_with_rank_audit(
+    tmp_path,
+):
+    from htt.integration import emit_directional_posterior_artifact
+    from htt.integration.from_bass import build_ver2_directional_inputs
+
+    out_path = tmp_path / "htt_directional_posterior_summary.json"
+    shell = build_ver2_directional_inputs(
+        _observable_vector(),
+        _preferred_axis(),
+        response_overlap_audit=_response_overlap_audit(),
+    )
+    with pytest.raises(RuntimeError, match="directional model output gates"):
+        emit_directional_posterior_artifact(
+            out_path,
+            model="FLRW_tilt",
+            x_median=0.2,
+            x_hpd68=(0.1, 0.3),
+            x_hpd95=(0.05, 0.35),
+            Q_median=0.4,
+            Q_hpd68=(0.2, 0.5),
+            Pi_median=0.1,
+            Pi_hpd68=(0.05, 0.2),
+            ln_B_total=5.0,
+            model_evidences={"FLRW_tilt": 5.0, "FLRW": 0.0},
+            F_median=0.07,
+            F_hpd68=(0.05, 0.09),
+            n_live=128,
+            directional_inputs=shell,
+            posterior_ref="results.json#departure/FLRW_tilt",
+            evidence_ref="results.json#evidence/FLRW_tilt",
+        )
+    assert not out_path.exists()
+
+
+def test_emit_directional_posterior_artifact_blocks_no_claim_response_overlap_audit(
+    tmp_path,
+):
+    from htt.integration import emit_directional_posterior_artifact
+    from htt.integration.from_bass import build_ver2_directional_inputs
+
+    out_path = tmp_path / "htt_directional_posterior_summary.json"
+    shell = build_ver2_directional_inputs(
+        _observable_vector(),
+        _preferred_axis(),
+        solver_core_output=_solver_output(),
+        null_competition=NullCompetitionHook(
+            required_families=("registered_nulls",),
+            fpr_threshold=0.10,
+            ready_for_inference=True,
+            worst_family="mask_leakage",
+            worst_fpr=0.01,
+        ),
+        posterior_predictive_ready=True,
+        loocv_ready=True,
+        response_overlap_audit=_response_overlap_audit(
+            local_boost_response=(1.0, 0.0),
+            global_tilt_response=(2.0, 0.0),
+        ),
+    )
+    with pytest.raises(RuntimeError, match="rank audit blocks model run"):
+        emit_directional_posterior_artifact(
+            out_path,
+            model="FLRW_tilt",
+            x_median=0.2,
+            x_hpd68=(0.1, 0.3),
+            x_hpd95=(0.05, 0.35),
+            Q_median=0.4,
+            Q_hpd68=(0.2, 0.5),
+            Pi_median=0.1,
+            Pi_hpd68=(0.05, 0.2),
+            ln_B_total=5.0,
+            model_evidences={"FLRW_tilt": 5.0, "FLRW": 0.0},
+            F_median=0.07,
+            F_hpd68=(0.05, 0.09),
+            n_live=128,
+            directional_inputs=shell,
+            posterior_ref="results.json#departure/FLRW_tilt",
+            evidence_ref="results.json#evidence/FLRW_tilt",
+        )
+    assert not out_path.exists()
+
+
+def test_emit_directional_posterior_artifact_rejects_override_manifest_without_rank_audit(
+    tmp_path,
+):
+    from htt.integration import emit_directional_posterior_artifact
+    from htt.integration.from_bass import build_ver2_directional_inputs
+
+    out_path = tmp_path / "htt_directional_posterior_summary.json"
+    shell = build_ver2_directional_inputs(
+        _observable_vector(),
+        _preferred_axis(),
+        solver_core_output=_solver_output(),
+        null_competition=NullCompetitionHook(
+            required_families=("registered_nulls",),
+            fpr_threshold=0.10,
+            ready_for_inference=True,
+            worst_family="mask_leakage",
+            worst_fpr=0.01,
+        ),
+        posterior_predictive_ready=True,
+        loocv_ready=True,
+        response_overlap_audit=_response_overlap_audit(),
+    )
+    with pytest.raises(ValueError, match="response-overlap audit provenance"):
+        emit_directional_posterior_artifact(
+            out_path,
+            model="FLRW_tilt",
+            x_median=0.2,
+            x_hpd68=(0.1, 0.3),
+            x_hpd95=(0.05, 0.35),
+            Q_median=0.4,
+            Q_hpd68=(0.2, 0.5),
+            Pi_median=0.1,
+            Pi_hpd68=(0.05, 0.2),
+            ln_B_total=5.0,
+            model_evidences={"FLRW_tilt": 5.0, "FLRW": 0.0},
+            F_median=0.07,
+            F_hpd68=(0.05, 0.09),
+            n_live=128,
+            directional_inputs=shell,
+            posterior_ref="results.json#departure/FLRW_tilt",
+            evidence_ref="results.json#evidence/FLRW_tilt",
+            manifest=_manifest("HTT"),
+        )
+    assert not out_path.exists()
 
 
 def test_build_posterior_bundle_reads_dedicated_htt_artifact(tmp_path):
@@ -466,6 +837,7 @@ def test_build_posterior_bundle_reads_dedicated_htt_artifact(tmp_path):
         ),
         posterior_predictive_ready=True,
         loocv_ready=True,
+        response_overlap_audit=_response_overlap_audit(),
     )
     emit_directional_posterior_artifact(
         out_path,

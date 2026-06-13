@@ -42,6 +42,7 @@ completed:
 - PR-055
 - PR-076
 - PR-056
+- PR-060
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -330,3 +331,15 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   scalar, create HTT evidence/posterior content, create MIO certificate content,
   validate transfer or native solver output, establish morphology compatibility,
   or support geometry/family claims.
+  PR-060 adds an HTT pre-inference response-overlap and rank audit for
+  local-boost/global-tilt discrimination. The audit computes a whitened,
+  nuisance-projected response matrix, reports rho_LB_GT, SVD ranks, singular
+  values, condition number, rank threshold, transfer provenance, sky/mask/null
+  metadata, and an explicit rank-precondition gate. Directional readiness, the
+  dedicated HTT directional posterior artifact writer, and the directional
+  HTT-to-MIO export path now fail closed when the response audit is missing,
+  no-claim, stale relative to the directional inputs, missing from manifest
+  provenance, or when full directional readiness gates fail. PR-060 does not
+  create HTT posterior evidence, validate transfer or native solver output,
+  create MIO certificate content, establish morphology compatibility, or
+  support geometry/family claims.

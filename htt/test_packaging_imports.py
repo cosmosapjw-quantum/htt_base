@@ -46,6 +46,8 @@ for name in [
     "htt",
     "htt.infer",
     "htt.core",
+    "htt.departure",
+    "htt.departure.response_overlap",
     "htt.direction",
     "htt.obsstat",
     "htt.obsstat.biposh_features",
@@ -96,6 +98,8 @@ import importlib
 for name in [
     "htt",
     "htt.core",
+    "htt.departure",
+    "htt.departure.response_overlap",
     "htt.direction",
     "htt.infer",
     "htt.nulls",
@@ -146,7 +150,12 @@ def test_nested_htt_cwd_imports_direction_without_pythonpath() -> None:
     env.pop("PYTHONPATH", None)
     code = """
 import importlib
-for name in ["htt.direction", "htt.zoa.axis_promotion", "common.contracts"]:
+for name in [
+    "htt.departure.response_overlap",
+    "htt.direction",
+    "htt.zoa.axis_promotion",
+    "common.contracts",
+]:
     importlib.import_module(name)
 """
 
@@ -169,7 +178,9 @@ def test_star_import_exposes_pr042_direction_surface() -> None:
 namespace = {}
 exec("from htt import *", namespace)
 assert "direction" in namespace
+assert "departure" in namespace
 assert "zoa" in namespace
+import htt.departure.response_overlap
 import htt.direction
 import htt.zoa.axis_promotion
 """

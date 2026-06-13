@@ -19,6 +19,10 @@ from common.contracts import (
     SkySupport,
     SolverCoreOutput,
 )
+from htt.departure.response_overlap import (
+    ResponseOverlapAudit,
+    require_rank_audit_for_model_run,
+)
 from htt.infer.local_global_discrimination import build_discrimination_matrix_stub
 from htt.infer.local_global_discrimination import build_discrimination_matrix
 from htt.infer.matched_complexity import (
@@ -41,6 +45,7 @@ __all__ = [
     "DEFAULT_DIRECTIONAL_RESPONSE_LIBRARY",
     "assess_directional_readiness",
     "build_directional_output_manifest",
+    "require_directional_model_outputs_ready",
     "evaluate_production_axis_gate",
     "build_directional_likelihood_inputs",
 ]
@@ -64,6 +69,90 @@ _DEFAULT_DISCRIMINATION_AXES = (
     "directional_coherence",
     "off_diagonal_morphology",
 )
+_RESPONSE_AUDIT_BINDING_VERSION = "pr060-response-overlap-binding-v1"
+
+
+def _response_overlap_expected_binding_metadata(
+    *,
+    observable_vector: ObservableVector,
+    discrimination_matrix: DiscriminationMatrix,
+) -> dict[str, str]:
+    return {
+        "response_overlap_binding_version": _RESPONSE_AUDIT_BINDING_VERSION,
+        "observable_manifest_ref": observable_vector.manifest.artifact_id,
+        "observable_config_hash": observable_vector.manifest.config_hash,
+        "sky_support_hash": observable_vector.sky_support.sky_support_hash,
+        "mask_hash": observable_vector.sky_support.mask_hash,
+        "discrimination_matrix_ref": discrimination_matrix.manifest.artifact_id,
+        "discrimination_matrix_config_hash": discrimination_matrix.manifest.config_hash,
+    }
+
+
+def _validate_response_overlap_audit_binding(
+    *,
+    audit: ResponseOverlapAudit,
+    observable_vector: ObservableVector,
+    discrimination_matrix: DiscriminationMatrix,
+) -> None:
+    metadata = dict(audit.artifact_metadata)
+    expected = _response_overlap_expected_binding_metadata(
+        observable_vector=observable_vector,
+        discrimination_matrix=discrimination_matrix,
+    )
+    mismatches = [
+        f"{key} expected {value!r} got {metadata.get(key)!r}"
+        for key, value in expected.items()
+        if metadata.get(key) != value
+    ]
+    if mismatches:
+        raise ValueError(
+            "response_overlap_audit artifact metadata does not match "
+            "directional inputs: "
+            + "; ".join(mismatches)
+        )
+
+
+def _response_overlap_audit_input_refs(
+    audit: ResponseOverlapAudit | None,
+) -> tuple[str, ...]:
+    if audit is None:
+        return ()
+    refs: list[str] = [
+        audit.manifest.artifact_id,
+        audit.manifest.config_hash,
+        *audit.input_hashes,
+    ]
+    if audit.transfer_spec_id is not None:
+        refs.append(audit.transfer_spec_id)
+    return tuple(dict.fromkeys(str(ref) for ref in refs if str(ref)))
+
+
+def _response_overlap_audit_stats(
+    audit: ResponseOverlapAudit | None,
+) -> dict[str, object]:
+    if audit is None:
+        return {
+            "response_overlap_rank_ready": False,
+            "response_overlap_audit_ref": None,
+            "response_overlap_audit_config_hash": None,
+            "response_overlap_transfer_source": None,
+            "response_overlap_transfer_spec_id": None,
+        }
+    try:
+        require_rank_audit_for_model_run(audit)
+        rank_ready = True
+    except RuntimeError:
+        rank_ready = False
+    return {
+        "response_overlap_rank_ready": rank_ready,
+        "response_overlap_audit_ref": audit.manifest.artifact_id,
+        "response_overlap_audit_config_hash": audit.manifest.config_hash,
+        "response_overlap_transfer_source": audit.transfer_source,
+        "response_overlap_transfer_spec_id": audit.transfer_spec_id,
+        "response_overlap_rank_status": audit.rank_status,
+        "response_overlap_claim_status": audit.claim_status,
+        "response_overlap_rho_LB_GT": audit.rho_LB_GT,
+    }
 
 
 @dataclass(frozen=True)
@@ -215,6 +304,7 @@ class DirectionalLikelihoodInputs:
     policy: DirectionalInferencePolicy = field(
         default_factory=DirectionalInferencePolicy
     )
+    response_overlap_audit: ResponseOverlapAudit | None = None
     solver_core_output: SolverCoreOutput | None = None
     manifest: ArtifactManifest | None = None
     carry_forward: tuple[str, ...] = ()
@@ -241,6 +331,17 @@ class DirectionalLikelihoodInputs:
         if self.manifest is not None and self.manifest.owner != "HTT":
             raise ValueError(
                 "DirectionalLikelihoodInputs.manifest.owner must be 'HTT'"
+            )
+        if self.response_overlap_audit is not None:
+            if not isinstance(self.response_overlap_audit, ResponseOverlapAudit):
+                raise TypeError(
+                    "DirectionalLikelihoodInputs.response_overlap_audit must be "
+                    "ResponseOverlapAudit"
+                )
+            _validate_response_overlap_audit_binding(
+                audit=self.response_overlap_audit,
+                observable_vector=self.observable_vector,
+                discrimination_matrix=self.discrimination_matrix,
             )
 
 
@@ -375,6 +476,7 @@ def build_directional_likelihood_inputs(
     null_competition: NullCompetitionHook | None = None,
     posterior_predictive_ready: bool = False,
     loocv_ready: bool = False,
+    response_overlap_audit: ResponseOverlapAudit | None = None,
     tsc_overlay_ref: str | None = None,
 ) -> DirectionalLikelihoodInputs:
     """Create the SK-06H directional shell from canonical common contracts."""
@@ -392,6 +494,11 @@ def build_directional_likelihood_inputs(
         carry_forward.append(
             "Template morphology atlas remains optional/diagnostic until PR-HTT-11 wiring is implemented."
         )
+
+    discrimination_matrix = build_discrimination_matrix(
+        observable_vector,
+        morphology_atlas_ref=morphology_atlas_ref,
+    )
 
     return DirectionalLikelihoodInputs(
         observable_vector=observable_vector,
@@ -413,10 +520,8 @@ def build_directional_likelihood_inputs(
             posterior_predictive_ready=posterior_predictive_ready,
             loocv_ready=loocv_ready,
         ),
-        discrimination_matrix=build_discrimination_matrix(
-            observable_vector,
-            morphology_atlas_ref=morphology_atlas_ref,
-        ),
+        discrimination_matrix=discrimination_matrix,
+        response_overlap_audit=response_overlap_audit,
         solver_core_output=solver_core_output,
         manifest=manifest,
         carry_forward=tuple(carry_forward),
@@ -516,6 +621,45 @@ def assess_directional_readiness(
     if inputs.evidence_hooks.matched_complexity.scope != "pre_inference_only":
         caveats.append("matched_complexity_scope_unexpected")
 
+    rank_ok = False
+    rank_blocked_reasons: tuple[str, ...] = ()
+    if inputs.response_overlap_audit is not None:
+        try:
+            require_rank_audit_for_model_run(inputs.response_overlap_audit)
+            rank_ok = True
+        except RuntimeError as exc:
+            rank_blocked_reasons = (str(exc),)
+    _append_gate(
+        gate_name="response_overlap_rank_ready",
+        passed_gate=rank_ok,
+        required=required,
+        passed=passed,
+        failed=failed,
+    )
+    if inputs.response_overlap_audit is None:
+        caveats.append("response_overlap_rank_audit_missing")
+    else:
+        caveats.append(
+            f"response_overlap_rank_status={inputs.response_overlap_audit.rank_status}"
+        )
+        caveats.append(
+            f"response_overlap_claim_status={inputs.response_overlap_audit.claim_status}"
+        )
+        caveats.append(
+            f"response_overlap_transfer_source={inputs.response_overlap_audit.transfer_source}"
+        )
+        if inputs.response_overlap_audit.transfer_spec_id is not None:
+            caveats.append(
+                "response_overlap_transfer_spec_id="
+                f"{inputs.response_overlap_audit.transfer_spec_id}"
+            )
+        for audit_caveat in inputs.response_overlap_audit.caveats:
+            caveats.append(f"response_overlap_audit_caveat:{audit_caveat}")
+        for reason in inputs.response_overlap_audit.no_claim_reasons:
+            caveats.append(f"response_overlap_no_claim:{reason}")
+        for reason in rank_blocked_reasons:
+            caveats.append(f"response_overlap_rank_blocked:{reason}")
+
     null_ok = inputs.evidence_hooks.null_competition.ready_for_inference
     _append_gate(
         gate_name="null_competition_ready",
@@ -590,7 +734,7 @@ def assess_directional_readiness(
         caveats.append(f"tsc_overlay_ref={inputs.tsc_overlay_ref}")
         caveats.append("tsc_overlay_caveat_only")
 
-    base_ready = axis_ok and matched_ok and solver_ok and ppc_ok and loocv_ok
+    base_ready = axis_ok and matched_ok and rank_ok and solver_ok and ppc_ok and loocv_ok
     all_required_pass = len(failed) == 0
 
     if base_ready and morphology_required and not morphology_ok:
@@ -681,6 +825,7 @@ def build_directional_output_manifest(
         if inputs.solver_core_output is None
         else inputs.solver_core_output.manifest.artifact_id,
         inputs.discrimination_matrix.manifest.artifact_id,
+        *_response_overlap_audit_input_refs(inputs.response_overlap_audit),
         inputs.evidence_hooks.matched_complexity_ref,
         inputs.evidence_hooks.null_competition_ref,
         inputs.evidence_hooks.morphology_atlas_ref,
@@ -719,6 +864,7 @@ def build_directional_output_manifest(
                 spec.hypothesis_id for spec in inputs.response_library.hypotheses
             ],
             "discrimination_matrix_ref": inputs.discrimination_matrix.manifest.artifact_id,
+            **_response_overlap_audit_stats(inputs.response_overlap_audit),
         }
     )
     if statistics_definitions is not None:
@@ -757,3 +903,22 @@ def build_directional_output_manifest(
         failed_gates=list(readiness.failed_gates),
         statistics_definitions=merged_stats,
     )
+
+
+def require_directional_model_outputs_ready(
+    inputs: DirectionalLikelihoodInputs,
+) -> DirectionalReadiness:
+    """Require all HTT gates before directional posterior/evidence emission."""
+
+    require_rank_audit_for_model_run(inputs.response_overlap_audit)
+    readiness = assess_directional_readiness(inputs)
+    if readiness.production_status not in {
+        "production_candidate",
+        "production_validated",
+    }:
+        failed = ", ".join(readiness.failed_gates) or readiness.production_status
+        raise RuntimeError(
+            "directional model output gates block artifact emission: "
+            f"{failed}"
+        )
+    return readiness

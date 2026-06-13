@@ -7,9 +7,11 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from common.contracts import ArtifactManifest
+from htt.departure.response_overlap import ResponseOverlapAudit
 from htt.infer.ver2_directional_shell import (
     DirectionalLikelihoodInputs,
     build_directional_output_manifest,
+    require_directional_model_outputs_ready,
 )
 
 __all__ = [
@@ -21,6 +23,59 @@ __all__ = [
 ]
 
 HTT_DIRECTIONAL_POSTERIOR_ARTIFACT_KIND = "htt_directional_posterior_summary_v1"
+
+
+def _require_manifest_response_overlap_provenance(
+    manifest: ArtifactManifest,
+    audit: ResponseOverlapAudit,
+) -> None:
+    stats = manifest.statistics_definitions
+    expected = {
+        "response_overlap_rank_ready": True,
+        "response_overlap_audit_ref": audit.manifest.artifact_id,
+        "response_overlap_audit_config_hash": audit.manifest.config_hash,
+        "response_overlap_transfer_source": audit.transfer_source,
+        "response_overlap_transfer_spec_id": audit.transfer_spec_id,
+    }
+    mismatches = [
+        f"{key} expected {value!r} got {stats.get(key)!r}"
+        for key, value in expected.items()
+        if stats.get(key) != value
+    ]
+    input_refs = set(str(ref) for ref in manifest.input_hashes)
+    required_input_refs = {
+        audit.manifest.artifact_id,
+        audit.manifest.config_hash,
+        *audit.input_hashes,
+    }
+    if audit.transfer_spec_id is not None:
+        required_input_refs.add(audit.transfer_spec_id)
+    missing_refs = sorted(
+        str(ref) for ref in required_input_refs if str(ref) not in input_refs
+    )
+    if manifest.production_status not in {
+        "production_candidate",
+        "production_validated",
+    }:
+        mismatches.append(
+            "production_status expected production_candidate/production_validated "
+            f"got {manifest.production_status!r}"
+        )
+    if mismatches or missing_refs:
+        detail = "; ".join(mismatches)
+        if missing_refs:
+            detail = "; ".join(
+                part
+                for part in (
+                    detail,
+                    "missing input refs: " + ", ".join(missing_refs),
+                )
+                if part
+            )
+        raise ValueError(
+            "Directional posterior manifest missing response-overlap audit "
+            f"provenance: {detail}"
+        )
 
 
 def _interval(values: Sequence[float], *, field_name: str) -> tuple[float, float]:
@@ -137,6 +192,11 @@ def emit_directional_posterior_artifact(
 ) -> dict[str, object]:
     """Write a dedicated HTT-owned posterior/evidence summary artifact."""
 
+    require_directional_model_outputs_ready(directional_inputs)
+    response_overlap_audit = directional_inputs.response_overlap_audit
+    if response_overlap_audit is None:
+        raise RuntimeError("rank audit blocks model run: response_overlap_rank_audit_missing")
+
     out = Path(out_path)
     resolved_manifest = manifest or build_directional_output_manifest(
         inputs=directional_inputs,
@@ -152,6 +212,10 @@ def emit_directional_posterior_artifact(
         statistics_definitions={
             "artifact_kind": HTT_DIRECTIONAL_POSTERIOR_ARTIFACT_KIND,
         },
+    )
+    _require_manifest_response_overlap_provenance(
+        resolved_manifest,
+        response_overlap_audit,
     )
     artifact = DirectionalPosteriorArtifact(
         model=str(model),

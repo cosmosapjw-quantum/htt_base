@@ -22,6 +22,7 @@ from htt.integration.posterior_artifact import (
 from htt.infer.ver2_directional_shell import (
     DirectionalLikelihoodInputs,
     build_directional_output_manifest,
+    require_directional_model_outputs_ready,
 )
 from workspace.contracts.htt_to_mio import PosteriorExportBundle
 
@@ -143,6 +144,8 @@ def build_posterior_bundle(results_path: str = None,
 
     n_live = ev_model.get('neff', 500) if isinstance(ev_model, dict) else 500
     resolved_manifest = manifest
+    if directional_inputs is not None:
+        require_directional_model_outputs_ready(directional_inputs)
     if resolved_manifest is None and directional_inputs is not None:
         results_ref = str(results_path)
         resolved_manifest = build_directional_output_manifest(
