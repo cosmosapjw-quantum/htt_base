@@ -158,14 +158,7 @@ def build_status_bundle(
                         _display_path(resolved_status),
                     ),
                     source_commit=source,
-                    notes=(
-                        f"title={str(pr.get('title', '')).strip()}",
-                        f"state={state}",
-                        f"depends={','.join(str(dep) for dep in pr.get('depends', []) or []) or 'none'}",
-                        "transfer_source=none",
-                        "null_mock_status=not_statistical",
-                        "sky_support_status=not_directional",
-                    ),
+                    notes=_claim_ledger_notes(pr=pr, state=state),
                 )
             )
         )
@@ -265,6 +258,56 @@ def render_status_matrix(bundle: StatusBundle) -> str:
             "This matrix is a diagnostic-only DAG rendering. It does not certify solver validation, posterior evidence, native transfer validation, or family-ID evidence.",
         )
     ) + "\n"
+
+
+def _claim_ledger_notes(*, pr: Mapping[str, object], state: str) -> tuple[str, ...]:
+    """Return generated claim-ledger notes for one DAG row.
+
+    Most DAG rows are project bookkeeping artifacts, so their support notes use
+    generic non-statistical placeholders. Some PR cards define a concrete
+    generated scientific surface; for those, preserve the card-level support
+    semantics so regenerated ledgers do not overwrite directional/statistical
+    status with generic placeholders.
+    """
+
+    pr_id = str(pr.get("id", "")).strip()
+    title = str(pr.get("title", "")).strip()
+    deps = ",".join(str(dep) for dep in pr.get("depends", []) or []) or "none"
+    base = (
+        f"title={title}",
+        f"state={state}",
+        f"depends={deps}",
+        "transfer_source=none",
+    )
+    if _is_directional_coherence_certificate_pr(pr_id=pr_id, pr=pr):
+        return base + (
+            "covariance_status=certificate_readiness_recorded",
+            "null_mock_status=certificate_readiness_recorded",
+            "sky_support_status=directional_certificate_readiness_recorded",
+        )
+    return base + (
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional",
+    )
+
+
+def _is_directional_coherence_certificate_pr(
+    *,
+    pr_id: str,
+    pr: Mapping[str, object],
+) -> bool:
+    """Return whether a PR card is the directional-certificate status surface."""
+
+    if pr_id != "PR-100":
+        return False
+    owner = str(pr.get("owner", "")).strip().upper()
+    if owner != Owner.MIO.value:
+        return False
+    files = {str(path) for path in pr.get("files", ()) or ()}
+    if "htt/mio/coherence/directional.py" not in files:
+        return False
+    dod_items = " ".join(str(item) for item in pr.get("dod", ()) or ())
+    return "covariance/sky support/null status" in dod_items
 
 
 def validate_status_matrix_matches_snapshot(

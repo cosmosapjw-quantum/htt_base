@@ -44,6 +44,7 @@ completed:
 - PR-056
 - PR-060
 - PR-090
+- PR-100
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -356,3 +357,13 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   content, validate transfer or native solver output, evaluate covariance
   anomaly/BiPoSH branches, establish morphology compatibility, or support
   geometry/family claims.
+  PR-100 adds machine-readable covariance, null-mock, sky-support, transfer,
+  direction-convention, weighting-convention, and null-calibration status
+  metadata to the MIO directional coherence certificate manifest statistics
+  definitions and allows the directional JSON emitter to receive explicit
+  covariance/null/sky readiness flags. Missing covariance or null mocks remain
+  fail-closed through manifest readiness gates; incomplete sky support remains
+  diagnostic-only. The certificate reduction status stays diagnostic-only and
+  the payload does not expose posterior odds, likelihood/evidence terms, truth
+  certificates, native solver validation, morphology compatibility, or
+  geometry/family-identification claims.

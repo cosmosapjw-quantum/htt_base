@@ -114,6 +114,81 @@ def test_status_bundle_is_generated_from_dag_status_files(tmp_path: Path) -> Non
     assert "common.status_snapshot" in bundle.metadata["generating_command"]
 
 
+def test_directional_certificate_pr_notes_preserve_support_statuses(tmp_path: Path) -> None:
+    backlog = {
+        "prs": [
+            {
+                "id": "PR-100",
+                "title": "MIO directional coherence certificate with covariance status",
+                "owner": "MIO",
+                "depends": ["PR-013", "PR-040", "PR-076"],
+                "scope": "pre-solver",
+                "files": [
+                    "htt/mio/coherence/directional.py",
+                    "htt/mio/interface/mio_certificate.py",
+                    "tests/mio/test_directional_coherence_certificate.py",
+                ],
+                "dod": [
+                    "MIO coherence certificate records covariance/sky support/null status",
+                    "Diagnostic-only status if covariance incomplete",
+                ],
+            }
+        ],
+    }
+    status = {"completed": ["PR-100"], "blocked": [], "in_progress": None}
+    backlog_path = tmp_path / "pr_backlog.yaml"
+    status_path = tmp_path / "pr_status.yaml"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+
+    notes = bundle.claim_rows[0]["notes"]
+    assert "covariance_status=certificate_readiness_recorded" in notes
+    assert "null_mock_status=certificate_readiness_recorded" in notes
+    assert (
+        "sky_support_status=directional_certificate_readiness_recorded" in notes
+    )
+    assert "null_mock_status=not_statistical" not in notes
+    assert "sky_support_status=not_directional" not in notes
+
+
+def test_directional_certificate_notes_do_not_match_title_only(tmp_path: Path) -> None:
+    backlog = {
+        "prs": [
+            {
+                "id": "PR-999",
+                "title": "MIO directional coherence certificate with covariance status",
+                "owner": "MIO",
+                "depends": [],
+                "scope": "pre-solver",
+                "files": ["docs/not-the-certificate.md"],
+                "dod": ["Title text should not control generated status notes"],
+            }
+        ],
+    }
+    status = {"completed": ["PR-999"], "blocked": [], "in_progress": None}
+    backlog_path = tmp_path / "pr_backlog.yaml"
+    status_path = tmp_path / "pr_status.yaml"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+
+    notes = bundle.claim_rows[0]["notes"]
+    assert "covariance_status=certificate_readiness_recorded" not in notes
+    assert "null_mock_status=not_statistical" in notes
+    assert "sky_support_status=not_directional" in notes
+
+
 def test_write_status_artifacts_writes_json_and_markdown(tmp_path: Path) -> None:
     backlog_path, status_path = _write_fixture(tmp_path)
     output = tmp_path / "generated" / "status_snapshot.json"

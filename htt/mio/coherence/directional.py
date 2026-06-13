@@ -260,6 +260,9 @@ def to_mio_certificate(
     adequacy = {
         "isotropy_p_lt_0p01": bool(p_iso < 0.01),
         "isotropy_p_lt_0p05": bool(p_iso < 0.05),
+        "covariance_ready": bool(has_covariance),
+        "null_mocks_ready": bool(has_null_mocks),
+        "sky_support_complete": bool(sky_support_status == "complete"),
     }
     consistency = {
         "isotropy_pvalue": float(p_iso),
@@ -282,6 +285,29 @@ def to_mio_certificate(
             eligible_for_production=True,
         )
     )
+    status_metadata = {
+        "covariance_status": "available" if has_covariance else "missing",
+        "null_mock_status": "available" if has_null_mocks else "missing",
+        "sky_support_status": sky_support_status,
+        "transfer_source": "none",
+        "direction_convention": "oriented_unit_direction",
+        "weighting_convention": "diagonal_sigma_cone_inverse_variance",
+        "cross_probe_covariance_status": (
+            "available" if has_covariance else "not_attached"
+        ),
+        "null_calibration_status": (
+            "matched_null_mocks_available"
+            if has_null_mocks
+            else "toy_isotropy_mc_unmatched"
+        ),
+        "claim_scope": "diagnostic_only_directional_coherence",
+        "required_gates": list(readiness.required_gates),
+        "passed_gates": list(readiness.passed_gates),
+        "failed_gates": list(readiness.failed_gates),
+        "production_status": readiness.production_status,
+        "claim_tier": readiness.claim_tier,
+        "public_grade_label": readiness.public_grade_label,
+    }
 
     return build_mio_certificate(
         report_type="directional_coherence",
@@ -305,6 +331,7 @@ def to_mio_certificate(
         statistics_definitions={
             "report_type": "directional_coherence",
             "channel": "dipole",
+            "certificate_status_metadata": status_metadata,
         },
     )
 
@@ -322,6 +349,9 @@ def emit_directional_coherence_artefact(
     *,
     n_mock: int = 10_000,
     rng: Optional[np.random.Generator] = None,
+    has_covariance: bool = False,
+    has_null_mocks: bool = False,
+    sky_support_status: SkySupportStatus = "partial",
     tsc_overlay: TscAdequacyOverlay | None = None,
     tsc_overlay_ref: str | None = None,
 ) -> dict:
@@ -349,6 +379,9 @@ def emit_directional_coherence_artefact(
         p_iso=p_iso,
         resultant=resultant,
         chi2_stat=chi2_stat,
+        has_covariance=has_covariance,
+        has_null_mocks=has_null_mocks,
+        sky_support_status=sky_support_status,
         artifact_path=str(out_path),
         tsc_overlay=tsc_overlay,
         tsc_overlay_ref=tsc_overlay_ref,
