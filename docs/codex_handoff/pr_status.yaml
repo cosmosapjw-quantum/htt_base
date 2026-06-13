@@ -41,6 +41,7 @@ completed:
 - PR-075
 - PR-055
 - PR-076
+- PR-056
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -318,4 +319,14 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   typed null_features payload. PR-076 does not generate null mocks, calibrate
   native solver output, validate transfer, create HTT evidence/posterior
   content, create MIO certificate content, establish morphology compatibility,
+  or support geometry/family claims.
+  PR-056 adds a MIO diagnostic-only `DepartureReport` report-card package for
+  x_C, Q, Pi, F, and G_F diagnostics. The report preserves each section as a
+  separate typed payload, emits an ArtifactManifest with owner/scope/claim tier,
+  config/input hashes, caveats, generating command, git/worktree provenance,
+  F and G_F status summaries, and per-section transfer provenance, and rejects
+  report-level headline/combined-score, HTT inference, native-validation, and
+  geometry/family-ranking fields. PR-056 does not collapse x/Q/Pi/F/G_F into one
+  scalar, create HTT evidence/posterior content, create MIO certificate content,
+  validate transfer or native solver output, establish morphology compatibility,
   or support geometry/family claims.

@@ -24,6 +24,8 @@ _SUBPACKAGES = (
     "mio.diagnostics",
     "mio.reporting",
     "mio.reporting.identified_vs_reporting",
+    "mio.reports",
+    "mio.reports.departure_report",
     "mio.interface",
     "mio.interface.mio_certificate",
     "mio.bridges",
