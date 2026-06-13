@@ -50,6 +50,7 @@ for name in [
     "htt.obsstat",
     "htt.obsstat.biposh_features",
     "htt.obsstat.morphology",
+    "htt.obsstat.null_ensembles",
     "htt.obsstat.observable_vector",
     "htt.obsstat.scalar_lowell",
     "htt.obsstat.template_fit",
@@ -100,6 +101,7 @@ for name in [
     "htt.obsstat",
     "htt.obsstat.biposh_features",
     "htt.obsstat.morphology",
+    "htt.obsstat.null_ensembles",
     "htt.obsstat.observable_vector",
     "htt.obsstat.scalar_lowell",
     "htt.obsstat.template_fit",
@@ -285,6 +287,35 @@ import htt.obsstat.biposh_features as htt_level
 import obsstat.biposh_features as top_level
 assert top_level is htt_level
 assert top_level.BiPoSHFeatureSummary is htt_level.BiPoSHFeatureSummary
+""",
+    ]
+    for code in codes:
+        completed = subprocess.run(
+            [sys.executable, "-c", code],
+            cwd=REPO_ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert completed.returncode == 0, completed.stderr
+
+
+def test_obsstat_top_level_and_htt_alias_share_null_ensemble_identity() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    codes = [
+        """
+import obsstat.null_ensembles as top_level
+import htt.obsstat.null_ensembles as htt_level
+assert top_level is htt_level
+assert top_level.NullEnsembleSpec is htt_level.NullEnsembleSpec
+""",
+        """
+import htt.obsstat.null_ensembles as htt_level
+import obsstat.null_ensembles as top_level
+assert top_level is htt_level
+assert top_level.NullEnsembleSpec is htt_level.NullEnsembleSpec
 """,
     ]
     for code in codes:

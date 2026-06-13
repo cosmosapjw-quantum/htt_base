@@ -46,6 +46,50 @@ def _sky_support() -> SkySupport:
     )
 
 
+def _morphology_null_payload() -> dict[str, object]:
+    from htt.obsstat.null_ensembles import (
+        LookElsewhereBookkeeping,
+        NullEnsembleSpec,
+        build_null_ensemble_feature_payload,
+    )
+
+    spec = NullEnsembleSpec(
+        null_ensemble_ref="mock://morphology-axis-nulls",
+        null_family="local_systematic",
+        mock_count=256,
+        feature_targets=("morphology_axes",),
+        statistic_keys=("alignment_to_reference",),
+        sky_support_status="full_sky_synthetic",
+        mask_status="full_sky_synthetic",
+        noise_model_status="noise_not_injected_synthetic",
+        covariance_status="directional_mock_covariance_available",
+        null_mock_status="mock_bank_available",
+        random_seed_policy="fixed_seed_manifest:morphology",
+        config_hash="sha256:null-config",
+        input_hashes=("sha256:null-input",),
+        generating_command="python -m pytest tests/obsstat/test_morphology.py -q",
+        worktree_state="test-clean",
+    )
+    look_elsewhere = LookElsewhereBookkeeping(
+        look_elsewhere_status="tracked_not_corrected",
+        trial_count=3,
+        scan_volume={
+            "feature_targets": ["morphology_axes"],
+            "statistic_keys": ["alignment_to_reference"],
+            "trial_count": 3,
+            "global_local_status": "tracked_not_corrected",
+        },
+        correction_method="tracked_local_tail_no_global_correction",
+        pre_registration_status="tracked_after_feature_scan",
+        tail_definitions={"alignment_to_reference": "lower_tail"},
+    )
+    return build_null_ensemble_feature_payload(
+        null_ensemble=spec,
+        look_elsewhere=look_elsewhere,
+        p_values={"alignment_to_reference": 0.04},
+    )
+
+
 def test_tensor_morphology_extracts_diagnostic_axes_and_alignment_features() -> None:
     from htt.obsstat.morphology import summarize_morphology_axes
     from htt.obsstat.observable_vector import build_observable_vector
@@ -86,6 +130,7 @@ def test_tensor_morphology_extracts_diagnostic_axes_and_alignment_features() -> 
         ell_max=4,
         channels=("TT",),
         morphology_features={"tensor_morphology": payload},
+        null_features=_morphology_null_payload(),
         manifest=_manifest(),
         sky_support=_sky_support(),
     )
@@ -227,6 +272,7 @@ def test_look_elsewhere_null_metadata_is_required_for_morphology_pvalues() -> No
         ell_max=4,
         channels=("TT",),
         morphology_features={"tensor_morphology": payload},
+        null_features=_morphology_null_payload(),
         manifest=_manifest(),
         sky_support=_sky_support(),
     )

@@ -44,6 +44,50 @@ def _sky_support() -> SkySupport:
     )
 
 
+def _scalar_null_payload() -> dict[str, object]:
+    from htt.obsstat.null_ensembles import (
+        LookElsewhereBookkeeping,
+        NullEnsembleSpec,
+        build_null_ensemble_feature_payload,
+    )
+
+    spec = NullEnsembleSpec(
+        null_ensemble_ref="mock://lowell",
+        null_family="flrw_mask_noise",
+        mock_count=128,
+        feature_targets=("scalar_lowell",),
+        statistic_keys=("s_one_half",),
+        sky_support_status="full_sky_synthetic",
+        mask_status="full_sky_synthetic",
+        noise_model_status="noise_not_injected_synthetic",
+        covariance_status="diagonal_mock_covariance",
+        null_mock_status="mock_bank_available",
+        random_seed_policy="fixed_seed_manifest:lowell",
+        config_hash="sha256:null-config",
+        input_hashes=("sha256:null-input",),
+        generating_command="python -m pytest tests/obsstat/test_scalar_lowell.py -q",
+        worktree_state="test-clean",
+    )
+    look_elsewhere = LookElsewhereBookkeeping(
+        look_elsewhere_status="tracked_not_corrected",
+        trial_count=1,
+        scan_volume={
+            "feature_targets": ["scalar_lowell"],
+            "statistic_keys": ["s_one_half"],
+            "trial_count": 1,
+            "global_local_status": "tracked_not_corrected",
+        },
+        correction_method="not_corrected_single_feature",
+        pre_registration_status="pre_registered",
+        tail_definitions={"s_one_half": "lower_tail"},
+    )
+    return build_null_ensemble_feature_payload(
+        null_ensemble=spec,
+        look_elsewhere=look_elsewhere,
+        p_values={"s_one_half": 0.2},
+    )
+
+
 def _flatten_keys(value: object, prefix: str = "") -> tuple[str, ...]:
     if not isinstance(value, dict):
         return ()
@@ -282,10 +326,7 @@ def test_null_calibrated_payload_requires_null_metadata_without_becoming_evidenc
         ell_max=3,
         channels=("TT",),
         scalar_features={"lowell_scalar": payload},
-        null_features={
-            "null_ensemble_ref": "mock://lowell",
-            "look_elsewhere_status": "tracked",
-        },
+        null_features=_scalar_null_payload(),
         sky_support=_sky_support(),
         manifest=_manifest(),
     )

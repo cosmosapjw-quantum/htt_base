@@ -65,6 +65,54 @@ def _external_transfer_metadata() -> dict[str, object]:
     }
 
 
+def _null_payload(
+    *,
+    statistic_key: str = "p_value",
+    p_value: float = 0.8,
+) -> dict[str, object]:
+    from htt.obsstat.null_ensembles import (
+        LookElsewhereBookkeeping,
+        NullEnsembleSpec,
+        build_null_ensemble_feature_payload,
+    )
+
+    spec = NullEnsembleSpec(
+        null_ensemble_ref="mock://obsstat-vector-nulls",
+        null_family="flrw_mask_noise",
+        mock_count=256,
+        feature_targets=("observable_vector",),
+        statistic_keys=(statistic_key,),
+        sky_support_status="full_sky_synthetic",
+        mask_status="unmasked_synthetic",
+        noise_model_status="noise_not_injected_synthetic",
+        covariance_status="mock_covariance_recorded",
+        null_mock_status="mock_bank_available",
+        random_seed_policy="fixed_seed_manifest:1234",
+        config_hash="sha256:null-config",
+        input_hashes=("sha256:null-input",),
+        generating_command="python -m pytest tests/obsstat/test_observable_vector.py -q",
+        worktree_state="test-clean",
+    )
+    look = LookElsewhereBookkeeping(
+        look_elsewhere_status="global_corrected",
+        trial_count=1,
+        scan_volume={
+            "feature_targets": ["observable_vector"],
+            "statistic_keys": [statistic_key],
+            "trial_count": 1,
+            "global_local_status": "global_corrected",
+        },
+        correction_method="empirical_global_tail",
+        pre_registration_status="pre_registered",
+        tail_definitions={statistic_key: "upper_tail"},
+    )
+    return build_null_ensemble_feature_payload(
+        null_ensemble=spec,
+        look_elsewhere=look,
+        p_values={statistic_key: p_value},
+    )
+
+
 def test_obsstat_reexports_canonical_observable_vector_contract() -> None:
     from htt.obsstat import ObservableVector
     from htt.obsstat.observable_vector import ObservableVector as ModuleVector
@@ -120,11 +168,7 @@ def test_build_observable_vector_holds_required_feature_blocks() -> None:
         covariance_features={"diag_cl": {"rank": 5}},
         scalar_features={"x": 0.1, "Q": 0.2},
         morphology_features={"axis_coherence": 0.3},
-        null_features={
-            "p_value": 0.8,
-            "null_ensemble_ref": "mock://nulls",
-            "look_elsewhere_status": "tracked",
-        },
+        null_features=_null_payload(),
         biposh_features={"A_20": 0.01},
         scan_volume={"ell_range": [2, 4]},
         sky_support=_sky_support(),
@@ -141,7 +185,9 @@ def test_build_observable_vector_holds_required_feature_blocks() -> None:
     )
     assert vector.alm_features["scalar_features"]["x"] == 0.1
     assert vector.alm_features["morphology_features"]["axis_coherence"] == 0.3
-    assert vector.alm_features["null_features"]["null_ensemble_ref"] == "mock://nulls"
+    assert vector.alm_features["null_features"]["null_ensemble_ref"] == (
+        "mock://obsstat-vector-nulls"
+    )
     assert vector.template_fit["global_tilt_template"]["norm"] == 0.2
     assert vector.covariance_features["diag_cl"]["rank"] == 5
     assert vector.biposh["A_20"] == 0.01
@@ -150,7 +196,7 @@ def test_build_observable_vector_holds_required_feature_blocks() -> None:
 def test_null_pvalues_require_null_and_look_elsewhere_provenance() -> None:
     from htt.obsstat.observable_vector import build_observable_vector
 
-    with pytest.raises(ValueError, match="null_ensemble_ref"):
+    with pytest.raises(ValueError, match="metadata_schema"):
         build_observable_vector(
             ell_max=2,
             channels=("TT",),
@@ -159,7 +205,7 @@ def test_null_pvalues_require_null_and_look_elsewhere_provenance() -> None:
             sky_support=_sky_support(),
         )
 
-    with pytest.raises(ValueError, match="null_ensemble_ref"):
+    with pytest.raises(ValueError, match="typed null_features"):
         build_observable_vector(
             ell_max=2,
             channels=("TT",),
@@ -168,7 +214,16 @@ def test_null_pvalues_require_null_and_look_elsewhere_provenance() -> None:
             sky_support=_sky_support(),
         )
 
-    with pytest.raises(ValueError, match="null_ensemble_ref"):
+    with pytest.raises(ValueError, match="typed null_features"):
+        build_observable_vector(
+            ell_max=2,
+            channels=("TT",),
+            scalar_features={"scan": [{"pvalue_tail": 0.03}]},
+            manifest=_manifest(),
+            sky_support=_sky_support(),
+        )
+
+    with pytest.raises(ValueError, match="metadata_schema"):
         build_observable_vector(
             ell_max=2,
             channels=("TT",),
@@ -181,7 +236,7 @@ def test_null_pvalues_require_null_and_look_elsewhere_provenance() -> None:
             sky_support=_sky_support(),
         )
 
-    with pytest.raises(ValueError, match="look_elsewhere_status"):
+    with pytest.raises(ValueError, match="metadata_schema"):
         build_observable_vector(
             ell_max=2,
             channels=("TT",),
@@ -198,15 +253,32 @@ def test_null_pvalues_require_null_and_look_elsewhere_provenance() -> None:
         ell_max=2,
         channels=("TT",),
         scalar_features={"nested": {"pvalue_tail": 0.03}},
-        null_features={
-            "null_ensemble_ref": "mock://obsstat-nulls",
-            "look_elsewhere_status": "tracked",
-        },
+        null_features=_null_payload(statistic_key="pvalue_tail", p_value=0.03),
         manifest=_manifest(),
         sky_support=_sky_support(),
     )
 
     assert vector.alm_features["scalar_features"]["nested"]["pvalue_tail"] == 0.03
+
+    with pytest.raises(ValueError, match="statistic_keys covering"):
+        build_observable_vector(
+            ell_max=2,
+            channels=("TT",),
+            scalar_features={"rogue_pvalue": 0.02},
+            null_features=_null_payload(statistic_key="pvalue_tail", p_value=0.03),
+            manifest=_manifest(),
+            sky_support=_sky_support(),
+        )
+
+    with pytest.raises(ValueError, match="statistic_keys covering"):
+        build_observable_vector(
+            ell_max=2,
+            channels=("TT",),
+            scalar_features={"scan": [{"rogue_pvalue": 0.02}]},
+            null_features=_null_payload(statistic_key="pvalue_tail", p_value=0.03),
+            manifest=_manifest(),
+            sky_support=_sky_support(),
+        )
 
 
 def test_obsstat_rejects_inference_or_family_identification_payload_keys() -> None:
@@ -248,12 +320,13 @@ def test_obsstat_rejects_inference_or_family_identification_payload_keys() -> No
             sky_support=_sky_support(),
         )
 
+    family_claim = " ".join(("Bianchi", "family", "identified", "as", "VII_h"))
     with pytest.raises(ValueError, match="family identification"):
         build_observable_vector(
             ell_max=2,
             channels=("TT",),
             morphology_features={
-                "summary": "Bianchi family identified as VII_h"
+                "summary": family_claim
             },
             manifest=_manifest(),
             sky_support=_sky_support(),
@@ -295,6 +368,15 @@ def test_transfer_derived_features_require_transfer_source_metadata() -> None:
             ell_max=2,
             channels=("TT",),
             scalar_features={"branch": {"transfer_derived": True}},
+            manifest=_manifest(),
+            sky_support=_sky_support(),
+        )
+
+    with pytest.raises(ValueError, match="transfer_source"):
+        build_observable_vector(
+            ell_max=2,
+            channels=("TT",),
+            scalar_features={"branches": [{"transfer_derived": True}]},
             manifest=_manifest(),
             sky_support=_sky_support(),
         )

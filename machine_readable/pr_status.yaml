@@ -40,6 +40,7 @@ completed:
 - PR-054
 - PR-075
 - PR-055
+- PR-076
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -307,3 +308,14 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   content, create MIO certificate content, validate transfer or native solver
   output, establish morphology compatibility, or support global-tilt,
   geometry, or family claims.
+  PR-076 adds OBSSTAT diagnostic-only null-ensemble and look-elsewhere
+  bookkeeping for feature p-values. Payloads require typed null-family
+  provenance for FLRW+mask+noise, local/systematic, or injected-template
+  nulls; mock counts; feature/statistic keys; tail definitions; scan-volume
+  hashes; covariance, sky, mask, noise, and null/mock statuses; config/input
+  hashes; generating command; and git or worktree provenance. `ObservableVector`
+  now rejects p-value-shaped feature keys unless the vector carries a validated
+  typed null_features payload. PR-076 does not generate null mocks, calibrate
+  native solver output, validate transfer, create HTT evidence/posterior
+  content, create MIO certificate content, establish morphology compatibility,
+  or support geometry/family claims.

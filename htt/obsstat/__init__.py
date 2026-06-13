@@ -30,6 +30,13 @@ from .morphology import (
     MorphologyNullCalibration,
     summarize_morphology_axes,
 )
+from .null_ensembles import (
+    LookElsewhereBookkeeping,
+    NullCalibratedFeature,
+    NullEnsembleSpec,
+    build_null_ensemble_feature_payload,
+    validate_null_feature_payload,
+)
 from .observable_vector import (
     ObservableVector,
     build_observable_vector,
@@ -52,6 +59,7 @@ for _submodule in (
     "alm_conventions",
     "biposh_features",
     "morphology",
+    "null_ensembles",
     "observable_vector",
     "scalar_lowell",
     "template_fit",
@@ -69,14 +77,18 @@ __all__ = [
     "DiagnosticMorphologyAxis",
     "LowEllNullCalibration",
     "LowEllScalarSummary",
+    "LookElsewhereBookkeeping",
     "MorphologyAxisSummary",
     "MorphologyNullCalibration",
+    "NullCalibratedFeature",
+    "NullEnsembleSpec",
     "ObservableVector",
     "OrientationScanMetadata",
     "SparseBiPoSHCoefficient",
     "TemplateFitDiagnostic",
     "build_alm_feature",
     "build_biposh_feature_payload",
+    "build_null_ensemble_feature_payload",
     "build_observable_vector",
     "compute_cl_from_alm",
     "canonical_spin2_alm_convention",
@@ -87,4 +99,5 @@ __all__ = [
     "summarize_lowell_scalars",
     "validate_alm_convention_metadata",
     "validate_alm_feature_conventions",
+    "validate_null_feature_payload",
 ]

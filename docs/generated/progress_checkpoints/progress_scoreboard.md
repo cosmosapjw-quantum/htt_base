@@ -1,16 +1,16 @@
 # Progress scoreboard
 
-- Completed PRs: 40/62 = 64.52%
-- Dependency-weighted completion: 69.74%
+- Completed PRs: 41/62 = 66.13%
+- Dependency-weighted completion: 72.82%
 - Critical path completion: 11/21 = 52.38%
 - Critical path: PR-000 -> PR-003 -> PR-004 -> PR-010 -> PR-014 -> PR-050 -> PR-051 -> PR-052 -> PR-053 -> PR-054 -> PR-055 -> PR-060 -> PR-061 -> PR-062 -> PR-063 -> PR-064 -> PR-065 -> PR-066 -> PR-111 -> PR-114 -> PR-115
 - Blocked PRs: none
 - Skipped PRs: none
-- Unblocked next: PR-076, PR-056, PR-060
-- Checkpoint due: yes; satisfied by docs/generated/progress_checkpoints/checkpoint_040.md
+- Unblocked next: PR-056, PR-060, PR-090, PR-100
+- Checkpoint due: no
 - Next checkpoint at: 45
 - Replan required: no
-- Replan reason: progress advanced; no replan required
+- Replan reason: checkpoint not due
 
 Progress percentages count DAG bookkeeping only and are not scientific readiness evidence.
 They do not validate native solver behavior, transfer calibration, HTT posterior/evidence, MIO diagnostics, null calibration, morphology compatibility, or Bianchi family identification.

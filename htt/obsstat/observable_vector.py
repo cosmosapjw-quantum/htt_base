@@ -8,7 +8,7 @@ identification.
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 from common.contracts import (
@@ -23,6 +23,7 @@ from common.contracts import (
 from common.transfer_registry import TransferSource, validate_transfer_dependent_result
 
 from .alm_conventions import validate_alm_feature_conventions
+from .null_ensembles import validate_null_feature_payload
 
 _FORBIDDEN_FEATURE_KEY_PARTS = (
     "posterior",
@@ -53,6 +54,7 @@ _FAMILY_ID_KEY_PARTS = (
 _FAMILY_ID_CONTEXT_PARTS = ("identification", "identified", "detect", "rank")
 _CLAIM_GEOMETRY_KEY_PARTS = ("geometry", "bianchi")
 _NULL_PVALUE_KEY_PARTS = ("p_value", "pvalue")
+_NULL_PVALUE_CONTAINER_KEYS = {"p_values", "pvalues"}
 _NULL_METADATA_FIELDS = ("null_ensemble_ref", "look_elsewhere_status")
 _LOOK_ELSEWHERE_ALLOWED_STATUSES = {
     "tracked",
@@ -60,6 +62,8 @@ _LOOK_ELSEWHERE_ALLOWED_STATUSES = {
     "corrected",
     "look_elsewhere_corrected",
     "global_corrected",
+    "tracked_not_corrected",
+    "local_unadjusted_with_trials",
     "documented",
 }
 _TRANSFER_METADATA_FIELDS = (
@@ -233,13 +237,20 @@ def _is_forbidden_inference_key(lower_path: str) -> bool:
 
 
 def _require_null_provenance(payload: Mapping[str, Any]) -> None:
-    pvalue_paths = tuple(
-        path
-        for path in _walk_keys(payload)
-        if any(part in path.lower() for part in _NULL_PVALUE_KEY_PARTS)
-    )
-    if not pvalue_paths:
+    null_features = payload.get("null_features")
+    if isinstance(null_features, Mapping) and null_features:
+        validate_null_feature_payload(null_features)
+    pvalue_statistics = _walk_pvalue_statistics(payload)
+    if not pvalue_statistics:
         return
+    if not isinstance(null_features, Mapping) or not null_features:
+        raise ValueError(
+            "p-value features require typed null_features provenance"
+        )
+    _require_null_features_cover_pvalue_statistics(
+        null_features,
+        pvalue_statistics,
+    )
     null_ref = _payload_value_for_key(payload, "null_ensemble_ref")
     if not null_ref:
         raise ValueError("null p-value features require null_ensemble_ref")
@@ -262,11 +273,22 @@ def _require_transfer_metadata(features: Mapping[str, Any]) -> None:
 
 
 def _require_transfer_metadata_recursive(
-    features: Mapping[str, Any],
+    features: Any,
     *,
     inherited: Mapping[str, Any],
     path: str,
 ) -> None:
+    if _is_non_string_sequence(features):
+        for index, value in enumerate(features):
+            if isinstance(value, Mapping) or _is_non_string_sequence(value):
+                _require_transfer_metadata_recursive(
+                    value,
+                    inherited=inherited,
+                    path=f"{path}[{index}]",
+                )
+        return
+    if not isinstance(features, Mapping):
+        return
     metadata = _merge_transfer_metadata(inherited, features)
     if features.get("transfer_derived"):
         if "transfer_source" not in metadata:
@@ -275,7 +297,7 @@ def _require_transfer_metadata_recursive(
             )
         _validate_transfer_metadata(metadata, path)
     for key, value in features.items():
-        if isinstance(value, Mapping):
+        if isinstance(value, Mapping) or _is_non_string_sequence(value):
             child_path = f"{path}.{key}"
             _require_transfer_metadata_recursive(
                 value,
@@ -364,36 +386,116 @@ def _require_alm_coordinate_frame_match(
             )
 
 
-def _walk_keys(payload: Mapping[str, Any], prefix: str = "") -> tuple[str, ...]:
+def _is_non_string_sequence(value: Any) -> bool:
+    return isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray))
+
+
+def _walk_keys(payload: Any, prefix: str = "") -> tuple[str, ...]:
     keys: list[str] = []
+    if not isinstance(payload, Mapping):
+        if _is_non_string_sequence(payload):
+            for index, value in enumerate(payload):
+                path = f"{prefix}[{index}]" if prefix else f"[{index}]"
+                keys.extend(_walk_keys(value, path))
+        return tuple(keys)
     for key, value in payload.items():
         path = f"{prefix}.{key}" if prefix else str(key)
         keys.append(path)
-        if isinstance(value, Mapping):
+        if isinstance(value, Mapping) or _is_non_string_sequence(value):
             keys.extend(_walk_keys(value, path))
     return tuple(keys)
 
 
 def _walk_string_values(
-    payload: Mapping[str, Any],
+    payload: Any,
     prefix: str = "",
 ) -> tuple[tuple[str, str], ...]:
     values: list[tuple[str, str]] = []
+    if not isinstance(payload, Mapping):
+        if _is_non_string_sequence(payload):
+            for index, value in enumerate(payload):
+                path = f"{prefix}[{index}]" if prefix else f"[{index}]"
+                if isinstance(value, str):
+                    values.append((path, value))
+                elif isinstance(value, Mapping) or _is_non_string_sequence(value):
+                    values.extend(_walk_string_values(value, path))
+        return tuple(values)
     for key, value in payload.items():
         path = f"{prefix}.{key}" if prefix else str(key)
-        if isinstance(value, Mapping):
+        if isinstance(value, Mapping) or _is_non_string_sequence(value):
             values.extend(_walk_string_values(value, path))
         elif isinstance(value, str):
             values.append((path, value))
     return tuple(values)
 
 
-def _payload_value_for_key(payload: Mapping[str, Any], wanted: str) -> Any | None:
+def _walk_pvalue_statistics(payload: Any, prefix: str = "") -> tuple[tuple[str, str], ...]:
+    statistics: list[tuple[str, str]] = []
+    if _is_non_string_sequence(payload):
+        for index, value in enumerate(payload):
+            path = f"{prefix}[{index}]" if prefix else f"[{index}]"
+            statistics.extend(_walk_pvalue_statistics(value, path))
+        return tuple(statistics)
+    if not isinstance(payload, Mapping):
+        return tuple(statistics)
+    for key, value in payload.items():
+        key_text = str(key)
+        path = f"{prefix}.{key_text}" if prefix else key_text
+        if not prefix and key_text == "null_features":
+            continue
+        lower_key = key_text.lower()
+        if any(part in lower_key for part in _NULL_PVALUE_KEY_PARTS):
+            if lower_key in _NULL_PVALUE_CONTAINER_KEYS and isinstance(value, Mapping):
+                statistics.extend(
+                    (f"{path}.{child_key}", str(child_key))
+                    for child_key in value
+                )
+            else:
+                statistics.append((path, key_text))
+        if isinstance(value, Mapping) or _is_non_string_sequence(value):
+            statistics.extend(_walk_pvalue_statistics(value, path))
+    return tuple(dict.fromkeys(statistics))
+
+
+def _require_null_features_cover_pvalue_statistics(
+    null_features: Mapping[str, Any],
+    pvalue_statistics: tuple[tuple[str, str], ...],
+) -> None:
+    statistic_keys = {
+        str(key)
+        for key in null_features.get("statistic_keys", ())
+    }
+    p_values = null_features.get("p_values", {})
+    if isinstance(p_values, Mapping):
+        statistic_keys.update(str(key) for key in p_values)
+    missing = sorted(
+        {
+            statistic
+            for _path, statistic in pvalue_statistics
+            if statistic not in statistic_keys
+        }
+    )
+    if missing:
+        raise ValueError(
+            "p-value features require null_features statistic_keys covering: "
+            + ", ".join(missing)
+        )
+
+
+def _payload_value_for_key(payload: Any, wanted: str) -> Any | None:
     wanted_lower = wanted.lower()
+    if _is_non_string_sequence(payload):
+        for value in payload:
+            nested = _payload_value_for_key(value, wanted)
+            if nested is not None:
+                return nested
+        return None
+    if not isinstance(payload, Mapping):
+        return None
     for key, value in payload.items():
         if str(key).lower() == wanted_lower:
             return value
-        if isinstance(value, Mapping):
+        if isinstance(value, Mapping) or _is_non_string_sequence(value):
             nested = _payload_value_for_key(value, wanted)
             if nested is not None:
                 return nested
