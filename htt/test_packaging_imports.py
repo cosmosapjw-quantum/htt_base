@@ -56,6 +56,8 @@ for name in [
     "htt.obsstat.observable_vector",
     "htt.obsstat.scalar_lowell",
     "htt.obsstat.template_fit",
+    "htt.statistics",
+    "htt.statistics.mes_template_bound",
     "htt.zoa",
     "htt.zoa.axis_promotion",
     "htt.mio.formalism.isotropy_gap",
@@ -110,6 +112,8 @@ for name in [
     "htt.obsstat.observable_vector",
     "htt.obsstat.scalar_lowell",
     "htt.obsstat.template_fit",
+    "htt.statistics",
+    "htt.statistics.mes_template_bound",
     "htt.zoa",
     "htt.zoa.axis_promotion",
     "htt.integration.to_mio",
@@ -153,6 +157,7 @@ import importlib
 for name in [
     "htt.departure.response_overlap",
     "htt.direction",
+    "htt.statistics.mes_template_bound",
     "htt.zoa.axis_promotion",
     "common.contracts",
 ]:
@@ -179,9 +184,11 @@ namespace = {}
 exec("from htt import *", namespace)
 assert "direction" in namespace
 assert "departure" in namespace
+assert "statistics" in namespace
 assert "zoa" in namespace
 import htt.departure.response_overlap
 import htt.direction
+import htt.statistics.mes_template_bound
 import htt.zoa.axis_promotion
 """
 

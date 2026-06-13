@@ -26,4 +26,5 @@ __all__ = [
     "integration",
     "zoa",
     "direction",
+    "statistics",
 ]

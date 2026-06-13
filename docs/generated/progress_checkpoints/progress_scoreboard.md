@@ -1,12 +1,12 @@
 # Progress scoreboard
 
-- Completed PRs: 41/62 = 66.13%
-- Dependency-weighted completion: 72.82%
-- Critical path completion: 11/21 = 52.38%
+- Completed PRs: 44/62 = 70.97%
+- Dependency-weighted completion: 77.95%
+- Critical path completion: 12/21 = 57.14%
 - Critical path: PR-000 -> PR-003 -> PR-004 -> PR-010 -> PR-014 -> PR-050 -> PR-051 -> PR-052 -> PR-053 -> PR-054 -> PR-055 -> PR-060 -> PR-061 -> PR-062 -> PR-063 -> PR-064 -> PR-065 -> PR-066 -> PR-111 -> PR-114 -> PR-115
 - Blocked PRs: none
 - Skipped PRs: none
-- Unblocked next: PR-056, PR-060, PR-090, PR-100
+- Unblocked next: PR-100, PR-084, PR-061, PR-091
 - Checkpoint due: no
 - Next checkpoint at: 45
 - Replan required: no
