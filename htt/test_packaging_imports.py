@@ -51,6 +51,7 @@ for name in [
     "htt.obsstat.morphology",
     "htt.obsstat.observable_vector",
     "htt.obsstat.scalar_lowell",
+    "htt.obsstat.template_fit",
     "htt.zoa",
     "htt.zoa.axis_promotion",
     "bass",
@@ -96,6 +97,7 @@ for name in [
     "htt.obsstat.morphology",
     "htt.obsstat.observable_vector",
     "htt.obsstat.scalar_lowell",
+    "htt.obsstat.template_fit",
     "htt.zoa",
     "htt.zoa.axis_promotion",
     "htt.integration.to_mio",
@@ -218,6 +220,35 @@ import htt.obsstat.morphology as htt_level
 import obsstat.morphology as top_level
 assert top_level is htt_level
 assert top_level.MorphologyAxisSummary is htt_level.MorphologyAxisSummary
+""",
+    ]
+    for code in codes:
+        completed = subprocess.run(
+            [sys.executable, "-c", code],
+            cwd=REPO_ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert completed.returncode == 0, completed.stderr
+
+
+def test_obsstat_top_level_and_htt_alias_share_template_fit_identity() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    codes = [
+        """
+import obsstat.template_fit as top_level
+import htt.obsstat.template_fit as htt_level
+assert top_level is htt_level
+assert top_level.TemplateFitDiagnostic is htt_level.TemplateFitDiagnostic
+""",
+        """
+import htt.obsstat.template_fit as htt_level
+import obsstat.template_fit as top_level
+assert top_level is htt_level
+assert top_level.TemplateFitDiagnostic is htt_level.TemplateFitDiagnostic
 """,
     ]
     for code in codes:

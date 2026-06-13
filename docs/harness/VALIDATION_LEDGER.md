@@ -1401,3 +1401,49 @@ only. F payloads require owner/scope/claim tier, config and input hashes,
 generating command, git or worktree provenance, transfer provenance, and
 sky/covariance/null status metadata. Invalid F samples are rejected rather than
 serialized as physical occupancy.
+
+## PR-074 - Template-fit diagnostics with orientation scan metadata
+
+Date: 2026-06-13
+
+Changed files: `htt/obsstat/template_fit.py`, `htt/obsstat/__init__.py`,
+`tests/obsstat/test_template_fit.py`, `htt/test_packaging_imports.py`,
+`docs/PR_DELTAS/pr-074.md`, status files, PR-012 generated status sidecars,
+the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_template_fit.py -q` before test file | repo root | FAIL | Red phase: target file did not exist. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_template_fit.py -q` after red tests | repo root | FAIL | Red phase: missing `htt.obsstat.template_fit`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_template_fit.py -q` first implementation | repo root | FAIL | Dataclass field/method collision on `diagonal_inverse_variance`; fixed before closeout. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_template_fit.py::test_public_diagnostic_constructor_rejects_inconsistent_chi2_fields -q` before constructor hardening | repo root | FAIL | Red phase: public constructor accepted inconsistent DeltaChi2 metadata. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_template_fit.py::test_public_diagnostic_constructor_rejects_inconsistent_chi2_fields -q` before alias hardening | repo root | FAIL | Red phase: public constructor accepted inconsistent chi-square alias fields. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_template_fit.py -q` | repo root | PASS | `8 passed`; amplitude, DeltaChi2, covariance assumptions, off-diagonal full covariance, scan metadata, kill switch, constructor invariants, exports. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/obsstat/template_fit.py htt/obsstat/__init__.py tests/obsstat/test_template_fit.py htt/test_packaging_imports.py` | repo root | PASS | Touched Python files compile. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat -q` | repo root | PASS | `43 passed`; adjacent OBSSTAT feature surfaces remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/test_packaging_imports.py -q` | repo root | PASS | `10 passed`; package/import aliases include template-fit. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_template_fit.py htt/test_packaging_imports.py -q` | repo root | PASS | `18 passed`; focused package and PR-card surface. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/htt/test_preferred_axis_gate.py tests/htt/test_mock_calibration_gate.py -q` | repo root | PASS | `22 passed`; orientation/directional gate neighborhood remains green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_ownership_firewall.py tests/contracts/test_claim_language_lint.py tests/contracts/test_transfer_registry.py -q` | repo root | PASS | `49 passed`; MIO/HTT, ownership, claim, and transfer firewalls remain green. |
+| `venv/bin/python scripts/check_claim_language.py htt/obsstat/template_fit.py htt/obsstat/__init__.py tests/obsstat/test_template_fit.py htt/test_packaging_imports.py --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py htt/obsstat/template_fit.py htt/obsstat/__init__.py tests/obsstat/test_template_fit.py htt/test_packaging_imports.py` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py htt/obsstat/template_fit.py htt/obsstat/__init__.py tests/obsstat/test_template_fit.py htt/test_packaging_imports.py` | repo root | PASS | No unmarked strong claims detected. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `7079/7138 tests collected (59 deselected)`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7132 deselected`. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 36 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-checkpoint-dir docs/generated/progress_checkpoints --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `36/62 = 58.06%`; dependency-weighted `63.59%`; critical path `9/21 = 42.86%`; checkpoint not due until 40. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `git diff --check` | repo root | PASS | No whitespace errors. |
+
+Numerical/scientific impact: no solver execution, transfer calculation,
+posterior evidence, MIO certificate, native morphology atlas, or family-label
+output was added. PR-074 adds an OBSSTAT diagnostic-only matched-template
+feature contract for caller-supplied vectors.
+
+Artifact/claim-tier impact: generated status artifacts remain DAG bookkeeping
+only. Template-fit payloads require owner/scope/claim tier, config and input
+hashes, generating command, git or worktree provenance, orientation scan
+volume and hash, sky/mask status, and explicit covariance weighting metadata.
+The covariance branch is weighting metadata only; covariance anomaly features
+remain separate and are not emitted by this PR.

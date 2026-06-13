@@ -4,9 +4,9 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-13
 
-No active DAG blockers after PR-051. Progress report shows unblocked next
-candidates `PR-042`, `PR-072`, `PR-081`, `PR-031`, and `PR-052`; use DAG
-ordering and policy priorities before selecting the next node.
+No active DAG blockers after PR-074. Progress report shows unblocked next
+candidates `PR-083`, `PR-054`, and `PR-075`; use DAG ordering and policy
+priorities before selecting the next node.
 
 Manuscript-freeze blocker: `docs/generated/missing_figure_references.md`
 records 22 missing manuscript figure references, 72 path-resolved but
@@ -120,3 +120,11 @@ provide PPC/LOOCV/null support, validate native transfer, or connect to a
 native morphology atlas. Legacy BASS descriptive report code still has an old
 proxy/clipping path; downstream PRs must use `mio.formalism.CertifiedFillingFraction`
 for certified F semantics rather than the legacy report shell.
+
+Residual non-blocking risk: PR-074 adds an OBSSTAT template-fit diagnostic with
+orientation-scan and covariance-weighting metadata, but it does not provide a
+matched-null tail probability, look-elsewhere correction, HTT posterior or
+evidence semantics, MIO report content, transfer validation, native solver
+output, morphology compatibility, or geometry/family-identification evidence.
+Downstream template/null PRs must keep deterministic template-mean fits
+separate from covariance anomaly statistics and matched-null calibration.

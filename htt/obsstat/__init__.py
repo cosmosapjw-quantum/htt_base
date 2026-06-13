@@ -35,12 +35,19 @@ from .scalar_lowell import (
     compute_cl_from_alm,
     summarize_lowell_scalars,
 )
+from .template_fit import (
+    CovarianceAssumption,
+    OrientationScanMetadata,
+    TemplateFitDiagnostic,
+    fit_template_diagnostic,
+)
 
 for _submodule in (
     "alm_conventions",
     "morphology",
     "observable_vector",
     "scalar_lowell",
+    "template_fit",
 ):
     _loaded = _sys.modules.get(f"{__name__}.{_submodule}")
     if _loaded is not None:
@@ -49,17 +56,21 @@ for _submodule in (
 
 __all__ = [
     "AlmConvention",
+    "CovarianceAssumption",
     "DiagnosticMorphologyAxis",
     "LowEllNullCalibration",
     "LowEllScalarSummary",
     "MorphologyAxisSummary",
     "MorphologyNullCalibration",
     "ObservableVector",
+    "OrientationScanMetadata",
+    "TemplateFitDiagnostic",
     "build_alm_feature",
     "build_observable_vector",
     "compute_cl_from_alm",
     "canonical_spin2_alm_convention",
     "canonical_temperature_alm_convention",
+    "fit_template_diagnostic",
     "obsstat_manifest",
     "summarize_morphology_axes",
     "summarize_lowell_scalars",

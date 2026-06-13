@@ -1,13 +1,13 @@
 # Project State
 
-Current DAG position: PR-032 complete after commits PR-000, PR-001, PR-002,
+Current DAG position: PR-074 complete after commits PR-000, PR-001, PR-002,
 PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, PR-014,
 PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041, PR-023, PR-071,
 PR-080, PR-030, PR-113, PR-051, PR-042, PR-072, PR-081, PR-031, PR-052,
-PR-043, PR-073, PR-082, and PR-032.
+PR-043, PR-073, PR-082, PR-032, PR-053, and PR-074.
 
-Progress after PR-032: 34/62 complete = 54.84%; dependency-weighted
-completion = 59.49%; critical-path completion = 8/21 = 38.1%.
+Progress after PR-074: 36/62 complete = 58.06%; dependency-weighted
+completion = 63.59%; critical-path completion = 9/21 = 42.86%.
 
 Current framework status: L0 orchestration and harness bootstrap. The repo has
 inventory, editable install/import stabilization, pytest taxonomy, DAG/progress
@@ -122,8 +122,8 @@ Latest progress scoreboard: `docs/generated/progress_checkpoints/progress_scoreb
 Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_035.md`.
 Next checkpoint is due at 40 completed PRs.
 
-Next topological PR: PR-074. Other unblocked candidates after PR-053 are
-PR-083 and PR-054.
+Next topological PR: PR-083. Other unblocked candidates after PR-074 are
+PR-054 and PR-075.
 
 ## PR-032 update
 
@@ -160,3 +160,22 @@ no blocker or replan was reported. Latest unblocked candidates are PR-074,
 PR-083, and PR-054. PR-053 does not create HTT evidence or posterior content,
 a MIO certificate, native solver validation, transfer validation, morphology
 compatibility, or geometry/family-identification evidence.
+
+## PR-074 update
+
+PR-074 adds `obsstat.template_fit` with `OrientationScanMetadata`,
+`CovarianceAssumption`, `TemplateFitDiagnostic`, and
+`fit_template_diagnostic()`. The fit is an OBSSTAT diagnostic-only
+matched-template feature for caller-supplied observed/template vectors. It
+reports amplitude, DeltaChi2, orientation scan volume and hash, covariance
+weighting metadata, and separate template-mean and covariance branches. The
+public constructor rejects inconsistent chi-square/norm aliases, invalid
+vectors, non-positive weights, non-positive-definite full covariance, missing
+scan metadata, covariance anomaly collapse, and overclaim text.
+
+Progress after PR-074 is 36/62 = 58.06%; dependency-weighted completion is
+63.59%; critical path remains 9/21 = 42.86%; no blocker or replan was
+reported. Latest unblocked candidates are PR-083, PR-054, and PR-075. PR-074
+does not create HTT posterior/evidence content, MIO diagnostic reports,
+transfer validation, native solver output, morphology compatibility, or
+geometry/family-identification evidence.

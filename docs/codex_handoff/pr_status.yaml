@@ -35,6 +35,7 @@ completed:
 - PR-082
 - PR-032
 - PR-053
+- PR-074
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -239,4 +240,14 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   worktree provenance, transfer provenance, and sky/covariance/null status
   metadata. PR-053 does not create HTT evidence or posterior content, a MIO
   certificate, native solver validation, transfer validation, morphology
-  compatibility, or geometry/family-identification evidence.
+  compatibility, or geometry/family-identification evidence. PR-074 adds an
+  OBSSTAT diagnostic-only template-fit feature contract for caller-supplied
+  observed/template vectors. The fit reports amplitude, DeltaChi2,
+  orientation scan volume and hash, declared covariance weighting assumption,
+  and separate template-mean and covariance metadata branches. Public payload
+  construction rejects inconsistent chi-square/norm aliases, invalid vectors,
+  non-positive diagonal weights, non-positive-definite full covariance
+  matrices, missing scan metadata, covariance anomaly collapse, and overclaim
+  text. PR-074 does not create HTT posterior/evidence content, MIO diagnostic
+  reports, transfer validation, native solver output, morphology compatibility,
+  or geometry/family-identification evidence.
