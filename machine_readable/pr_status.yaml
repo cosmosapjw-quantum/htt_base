@@ -39,6 +39,7 @@ completed:
 - PR-083
 - PR-054
 - PR-075
+- PR-055
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -295,3 +296,14 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   evidence/posterior content, create MIO certificate content, validate
   transfer, provide morphology compatibility, or support geometry/family
   claims.
+  PR-055 adds a MIO diagnostic-only G_F/log_g_F depth-gap contract over
+  certified-F depth-bin summaries. Payloads require explicit depth-bin
+  metadata, non-default covariance and null/mock metadata, PR-040 sky/mask
+  support fields, BudgetUse.DEPTH_GAP_REFERENCE denominator eligibility,
+  floor value/label/reason with floor-activation reporting, denominator
+  evolution split fields, config/input hashes, generating command, git or
+  worktree provenance, and matching transfer provenance across compared bins.
+  PR-055 does not calibrate p-values/FPR, create HTT evidence/posterior
+  content, create MIO certificate content, validate transfer or native solver
+  output, establish morphology compatibility, or support global-tilt,
+  geometry, or family claims.

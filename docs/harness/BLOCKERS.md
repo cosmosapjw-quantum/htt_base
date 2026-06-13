@@ -4,9 +4,10 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-13
 
-No active DAG blockers after PR-075. Progress report shows unblocked next
-candidates `PR-055` and `PR-076`; use DAG ordering and policy priorities
-before selecting the next node.
+No active DAG blockers after PR-055. Progress report shows unblocked next
+candidates `PR-076`, `PR-056`, and `PR-060`; use DAG ordering and policy
+priorities before selecting the next node. Checkpoint 040 was generated and no
+replan was required.
 
 Manuscript-freeze blocker: `docs/generated/missing_figure_references.md`
 records 22 missing manuscript figure references, 72 path-resolved but
@@ -153,3 +154,12 @@ solver output, provide HTT likelihood/evidence, create MIO certificates, or
 establish morphology compatibility. Downstream PRs must preserve convention,
 rotation, mask, beam, systematic, covariance, null, transfer, and sparse-index
 provenance before using these features in any higher-level framework surface.
+
+Residual non-blocking risk: PR-055 adds a MIO diagnostic-only G_F/log_g_F
+depth-gap contract with explicit floor and depth-bin metadata, but it does not
+calibrate p-values/FPR, local-boost nulls, survey/systematic nulls, PPC/LOOCV,
+HTT posterior/evidence, MIO certificate content, transfer/native validation, or
+native morphology atlas comparison. Downstream report-card and local/global
+discrimination PRs must keep G_F as one diagnostic block and preserve
+controlled covariance/null status, sample-wise denominator-evolution
+provenance, support, and canonical transfer metadata comparability.

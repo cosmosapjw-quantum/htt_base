@@ -33,6 +33,7 @@ _SUBPACKAGES = (
     "mio.formalism.departure_bundle",
     "mio.formalism.exceedance",
     "mio.formalism.filling_fraction",
+    "mio.formalism.isotropy_gap",
     "mio.formalism.normalized_score",
 )
 

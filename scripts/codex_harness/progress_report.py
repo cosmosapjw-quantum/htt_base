@@ -293,7 +293,12 @@ def _scoreboard_markdown(report: dict[str, Any]) -> str:
     skipped = ", ".join(report["skipped"]) or "none"
     unblocked_next = ", ".join(report["unblocked_next"]) or "none"
     critical_path = " -> ".join(report["critical_path"]) or "none"
-    checkpoint_due = "yes" if report["checkpoint_due"] else "no"
+    if report["checkpoint_due"] and report.get("checkpoint_artifact"):
+        checkpoint_due = f"yes; satisfied by {report['checkpoint_artifact']}"
+    elif report["checkpoint_due"]:
+        checkpoint_due = "yes; rerun with --write-checkpoint-dir to satisfy"
+    else:
+        checkpoint_due = "no"
     replan_required = "yes" if report["replan_required"] else "no"
     lines = [
         "# Progress scoreboard",

@@ -1594,3 +1594,59 @@ rejects protected transfer metadata overwrites, scans transfer caveats and
 nested list metadata keys, enforces sparse-key triangle validity, requires
 non-empty allowlisted rotation metadata, separates channel-pair norm buckets,
 and records threshold-discarded coefficient identities and power.
+
+## PR-055 - G_F depth gap and log-gap robustness
+
+Date: 2026-06-13
+
+Changed files: `htt/mio/formalism/isotropy_gap.py`,
+`htt/mio/formalism/__init__.py`, `htt/mio/tests/test_boot.py`,
+`htt/test_packaging_imports.py`, `tests/mio/test_isotropy_gap.py`,
+`scripts/codex_harness/progress_report.py`,
+`scripts/codex_harness/test_pr_dag_harness.py`,
+`docs/PR_DELTAS/pr-055.md`, status files, generated status sidecars, the
+checkpoint 040 artifacts, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_isotropy_gap.py -q` before test file | repo root | FAIL | Red phase: target file did not exist. |
+| `python -m pytest tests/mio/test_isotropy_gap.py -q` | repo root | FAIL | Host interpreter lacks pytest: `/usr/bin/python: No module named pytest`; the venv command is the authoritative run. |
+| Import probe for `mio.formalism.isotropy_gap` and `htt.mio.formalism.isotropy_gap` | repo root | FAIL | Red phase: module missing. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_isotropy_gap.py -q` after red tests | repo root | FAIL | Expected red: missing `mio.formalism.isotropy_gap`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_isotropy_gap.py -q` first implementation | repo root | FAIL | Fixed empty-metadata fixture defaulting and caveat error-label precision. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_isotropy_gap.py -q` after reviewer fixes | repo root | PASS | `22 passed`; includes transfer-metadata equality, sample-wise denominator provenance, controlled calibration statuses, hyphenated overclaim guards, missing-bin guards, mixed-transfer-source guard, and floor `>1` coverage. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/mio/formalism/isotropy_gap.py tests/mio/test_isotropy_gap.py htt/test_packaging_imports.py scripts/codex_harness/progress_report.py scripts/codex_harness/test_pr_dag_harness.py` | repo root | PASS | Touched Python files compile. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_isotropy_gap.py tests/mio/test_filling_fraction.py tests/mio/test_exceedance.py tests/mio/test_budget_spec.py tests/mio/test_normalized_score.py tests/mio/test_departure_bundle.py htt/mio/tests/test_boot.py htt/mio/tests/test_package_root_exports.py -q` | repo root | PASS | `104 passed`; adjacent MIO formalism and package exports remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider scripts/codex_harness/test_pr_dag_harness.py -q` | repo root | PASS | `16 passed`; scoreboard distinguishes checkpoint due from checkpoint artifact satisfied. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio -q` | repo root | PASS | `97 passed`; full top-level MIO test suite remains green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/test_packaging_imports.py -q` with `htt.mio.formalism.isotropy_gap` also added to temp-CWD imports | repo root | FAIL | `ModuleNotFoundError: No module named 'htt.mio'`; root cause was treating a repo-root source-tree alias as an installed temp-CWD namespace. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/test_packaging_imports.py -q` after scoped alias fix | repo root | PASS | `11 passed`; package import smoke includes `mio.formalism.isotropy_gap` everywhere and `htt.mio.formalism.isotropy_gap` from repo root. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_claim_language_lint.py tests/contracts/test_ownership_firewall.py tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_transfer_registry.py -q` | repo root | PASS | `49 passed`; claim, ownership, MIO/HTT, and transfer firewalls remain green. |
+| `venv/bin/python scripts/check_claim_language.py htt/mio/formalism/isotropy_gap.py htt/mio/formalism/__init__.py htt/mio/tests/test_boot.py htt/test_packaging_imports.py tests/mio/test_isotropy_gap.py scripts/codex_harness/progress_report.py scripts/codex_harness/test_pr_dag_harness.py --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py htt/mio/formalism/isotropy_gap.py htt/mio/formalism/__init__.py htt/mio/tests/test_boot.py htt/test_packaging_imports.py tests/mio/test_isotropy_gap.py scripts/codex_harness/progress_report.py scripts/codex_harness/test_pr_dag_harness.py` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py htt/mio/formalism/isotropy_gap.py htt/mio/formalism/__init__.py htt/mio/tests/test_boot.py htt/test_packaging_imports.py tests/mio/test_isotropy_gap.py scripts/codex_harness/progress_report.py scripts/codex_harness/test_pr_dag_harness.py` | repo root | PASS | No unmarked strong claims detected. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 40 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-checkpoint-dir docs/generated/progress_checkpoints --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `40/62 = 64.52%`; dependency-weighted `69.74%`; critical path `11/21 = 52.38%`; checkpoint `docs/generated/progress_checkpoints/checkpoint_040.md`; scoreboard says the checkpoint is due and satisfied; no replan required. |
+| `venv/bin/python scripts/check_claim_language.py <PR-055 code, tests, delta, and handoff docs> --dry-run` | repo root | PASS | No forbidden claim language detected after final handoff updates. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-055 code, tests, delta, and handoff docs>` | repo root | PASS | No forbidden claim patterns detected after final handoff updates. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-055 code, tests, delta, and handoff docs>` | repo root | PASS | No unmarked strong claims detected after final handoff updates. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `11 passed`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7201 deselected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `7148/7207 tests collected (59 deselected)`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`; next topological PR is PR-076. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `git diff --check` | repo root | PASS | No whitespace errors. |
+
+Numerical/scientific impact: no solver execution, transfer calculation,
+native value generation, HTT posterior evidence, MIO certificate, native
+morphology atlas, p-value/FPR calibration, or family-label output was added.
+PR-055 adds a MIO diagnostic-only floor-stabilized depth-bin contrast over
+certified-F summaries.
+
+Artifact/claim-tier impact: generated status artifacts remain DAG bookkeeping
+only. G_F payloads require explicit floor policy, depth-bin metadata,
+controlled covariance and null/mock metadata, denominator-evolution split with
+sample-wise x_C/denominator/F provenance, support metadata, config/input
+hashes, generating command, git or worktree provenance, and matching PR-014
+transfer source/spec IDs plus canonical transfer metadata when
+transfer-derived.

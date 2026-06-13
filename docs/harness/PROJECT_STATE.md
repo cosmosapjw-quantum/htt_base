@@ -257,3 +257,32 @@ trigger the 40-PR checkpoint. PR-075 does not estimate coefficients from maps,
 run or fake a native solver, calibrate null tails, create HTT posterior/evidence
 content, create MIO certificate content, validate transfer, provide morphology
 compatibility, or support geometry/family evidence.
+
+## PR-055 update
+
+PR-055 adds `mio.formalism.isotropy_gap` with `DepthBinMetadata`,
+`DepthBinFRecord`, `IsotropyGap`, `build_depth_bin_f_record()`, and
+`build_isotropy_gap()`. The contract is MIO-owned, diagnostic-only, and
+pre-solver. It computes a floor-stabilized depth-bin contrast over
+certified-F summaries and serializes raw F, effective F, floor activation,
+`log_g_F`, `G_F`, depth-bin metadata, covariance/null metadata, PR-040
+sky/mask support fields, denominator-evolution split fields, config/input
+hashes, generating command, and git or worktree provenance.
+
+PR-055 requires every source budget to admit `BudgetUse.DEPTH_GAP_REFERENCE`.
+Depth-bin records fail closed without controlled covariance and null/mock
+status metadata. Transfer-derived records require PR-014 metadata, matching
+transfer source/spec IDs, and matching canonical transfer metadata hashes
+across compared bins. Denominator-evolution split payloads expose sample-wise
+x_C, denominator, and F arrays and mark mean summaries as
+non-decompositional.
+
+Progress after PR-055 is 40/62 = 64.52%; dependency-weighted completion is
+69.74%; critical path is 11/21 = 52.38%. Checkpoint 040 was generated at
+`docs/generated/progress_checkpoints/checkpoint_040.md`; progress advanced by
+five PRs since checkpoint 035, so no replan was required. Latest unblocked
+candidates are PR-076, PR-056, and PR-060. The next topological PR is PR-076.
+PR-055 does not calibrate p-values/FPR, create HTT posterior/evidence content,
+create MIO certificate content, validate transfer or native solver output,
+establish morphology compatibility, or support global-tilt, geometry, or
+family claims.

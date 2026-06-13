@@ -253,6 +253,34 @@ def test_progress_report_writes_checkpoint_artifact_when_due(tmp_path: Path) -> 
     assert "not scientific readiness evidence" in rendered
 
 
+def test_progress_report_scoreboard_records_satisfied_checkpoint(
+    tmp_path: Path,
+) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    checkpoint_dir = tmp_path / "checkpoints"
+    scoreboard = tmp_path / "progress_scoreboard.md"
+    _write_yaml(backlog, _linear_backlog(5))
+    _write_yaml(status, {"completed": [f"PR-{index:03d}" for index in range(5)], "blocked": []})
+
+    completed = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        str(checkpoint_dir),
+        "--write-scoreboard",
+        str(scoreboard),
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    rendered = scoreboard.read_text(encoding="utf-8")
+    assert "Checkpoint due: yes; satisfied by " in rendered
+    assert "checkpoint_005.md" in rendered
+
+
 def test_progress_report_checkpoint_detects_no_progress_since_previous_checkpoint(
     tmp_path: Path,
 ) -> None:

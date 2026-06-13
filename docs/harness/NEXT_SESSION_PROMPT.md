@@ -17,49 +17,48 @@ Pre-read:
 - `.agents/skills/htt-ssot-handoff-maintainer/SKILL.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-075.md`
-- `docs/generated/progress_checkpoints/checkpoint_035.md`
+- `docs/PR_DELTAS/pr-055.md`
+- `docs/generated/progress_checkpoints/checkpoint_040.md`
 - `docs/generated/progress_checkpoints/progress_scoreboard.md`
 - `docs/generated/status_snapshot.json`
 
 Current state:
 
-- Completed PRs: 39/62 = 62.90%.
-- Dependency-weighted completion: 67.69%.
-- Critical path completion: 10/21 = 47.62%.
-- Checkpoint 035 is current; the next completed PR triggers checkpoint 040.
-- Latest unblocked candidates: `PR-055` and `PR-076`.
-- The next topological node is `PR-055`.
+- Completed PRs: 40/62 = 64.52%.
+- Dependency-weighted completion: 69.74%.
+- Critical path completion: 11/21 = 52.38%.
+- Checkpoint 040 is current; the next checkpoint is due at 45 completed PRs.
+- Latest unblocked candidates: `PR-076`, `PR-056`, and `PR-060`.
+- The next topological node is `PR-076`.
 - The progress harness reported no blockers and no replan requirement.
 
-Important PR-075 boundary:
+Important PR-055 boundary:
 
-- `htt.obsstat.biposh_features` is OBSSTAT-owned, diagnostic-only, and
-  pre-solver.
-- BiPoSH/sparse covariance payloads summarize caller-supplied sparse
-  coefficients only.
-- Payloads require harmonic convention metadata, rotation metadata,
-  deterministic sparse hashes, duplicate-key rejection, threshold accounting,
-  sky/mask/beam/systematic/covariance/null statuses, config/input hashes,
+- `mio.formalism.isotropy_gap` is MIO-owned, diagnostic-only, and pre-solver.
+- `log_g_F = log(max(F_comparison,floor))-log(max(F_reference,floor))`, and
+  `G_F = exp(log_g_F)`.
+- Payloads require explicit depth-bin metadata, covariance/null metadata,
+  PR-040 sky/mask support fields, BudgetUse.DEPTH_GAP_REFERENCE, floor policy,
+  sample-wise denominator-evolution split fields, config/input hashes,
   generating command, and git/worktree provenance.
-- Optional transfer-derived payloads require PR-014 metadata and remain
-  transfer-conditional.
-- PR-075 does not estimate coefficients from maps, run or fake a native
-  solver, calibrate null tails, create HTT posterior/evidence content, create
-  MIO certificate content, validate transfer, provide morphology compatibility,
-  or support geometry/family evidence.
+- Optional transfer-derived records require PR-014 metadata, matching transfer
+  source/spec IDs, and matching canonical transfer metadata hashes across
+  compared bins.
+- PR-055 does not calibrate p-values/FPR, create HTT posterior/evidence
+  content, create MIO certificate content, validate transfer or native solver
+  output, establish morphology compatibility, or support global-tilt,
+  geometry, or family claims.
 
-Immediate PR-055 target:
+Immediate PR-076 target:
 
-- Title: G_F depth gap and log-gap robustness.
-- Owner: MIO.
-- Depends: `PR-053`, `PR-054`, `PR-040`.
-- Files: `htt/mio/formalism/isotropy_gap.py`,
-  `tests/mio/test_isotropy_gap.py`.
-- DoD: `G_F` and `log g_F` handle floors, bin covariance metadata, and
-  denominator-evolution split; `G` cannot be exported without depth-bin
-  metadata.
-- Kill switch: reject any path where `G_F` alone triggers a global tilt claim.
+- Title: Null ensembles and look-elsewhere bookkeeping.
+- Owner: OBSSTAT.
+- Depends: `PR-072`, `PR-073`, `PR-074`, `PR-075`.
+- Files: `htt/obsstat/null_ensembles.py`,
+  `tests/obsstat/test_null_ensembles.py`.
+- DoD: FLRW+mask+noise, local/systematic, and injected-template nulls can be
+  represented; look-elsewhere metadata attaches to feature vectors.
+- Kill switch: reject any p-value path without null ensemble provenance.
 
 Rules:
 
@@ -70,16 +69,14 @@ Rules:
   plus null/mask/covariance/equivalence/rank/PPC gates.
 - Continue the per-PR loop with web/doc verification, role divergence,
   implementation, tests, adversarial review, status updates, and commit.
-- After PR-055, run the required 40-PR checkpoint command and update checkpoint
-  artifacts.
 
 Immediate commands:
 
 ```bash
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
-PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_isotropy_gap.py -q
-PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_exceedance.py tests/mio/test_filling_fraction.py tests/mio/test_budget_spec.py tests/mio/test_normalized_score.py -q
+PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_null_ensembles.py -q
+PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_biposh_features.py tests/obsstat/test_template_fit.py tests/obsstat/test_morphology.py tests/obsstat/test_scalar_lowell.py -q
 PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py package
 PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py smoke
 ```

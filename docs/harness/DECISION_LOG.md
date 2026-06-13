@@ -389,3 +389,33 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: map-to-BiPoSH estimators, matched null ensembles, full covariance
   calibration, HTT model likelihoods, MIO report-card use, native morphology
   atlas comparison, and family-equivalence gates remain downstream.
+
+## 2026-06-13 - PR-055 G_F depth-gap boundary
+
+- Accepted: `mio.formalism.IsotropyGap` is the MIO-owned diagnostic-only
+  `G_F` / `log_g_F` depth-gap contract. It compares certified-F depth-bin
+  summaries with an explicit positive finite floor.
+- Accepted: `log_g_F` is defined as
+  `log(max(F_comparison,floor))-log(max(F_reference,floor))`, and `G_F` is
+  `exp(log_g_F)`. Raw F, effective F, and floor activation are serialized.
+- Accepted: depth-bin export requires bin interval/convention, selection and
+  assignment hashes, sky/mask support status, non-default covariance and
+  null/mock status plus metadata, denominator-evolution status, and sample
+  count.
+- Accepted: covariance/null metadata use controlled status vocabularies and
+  reject uncalibrated labels rather than treating arbitrary status strings as
+  sufficient calibration.
+- Accepted: G_F records denominator-evolution split fields with sample-wise
+  x_C, denominator, and F arrays. Mean x_C and denominator deltas are marked
+  non-decompositional because `F_Bayes` is the mean of sample-wise ratios.
+- Accepted: transfer-derived F records remain transfer-conditional and must
+  have matching transfer source/spec IDs and canonical transfer metadata hashes
+  across compared bins.
+- Rejected: raw unstabilized ratios, hidden floor clipping, missing depth-bin
+  metadata, default covariance/null statuses, mixed transfer comparisons,
+  HTT posterior/evidence semantics, MIO certificate semantics, native solver
+  validation, p-value/FPR claims, morphology compatibility, geometry claims,
+  family claims, or global-tilt claims from G_F alone.
+- Deferred: calibrated local/global null ensembles, response-rank audits,
+  MIO report cards, PPC/LOOCV, and native morphology atlas integration remain
+  downstream.
