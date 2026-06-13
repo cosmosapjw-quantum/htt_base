@@ -1447,3 +1447,49 @@ hashes, generating command, git or worktree provenance, orientation scan
 volume and hash, sky/mask status, and explicit covariance weighting metadata.
 The covariance branch is weighting metadata only; covariance anomaly features
 remain separate and are not emitted by this PR.
+
+## PR-083 - Budget ceiling optimizer policy interface
+
+Date: 2026-06-13
+
+Changed files: `htt/bass/atlas/budget_ceiling_optimizer.py`,
+`htt/bass/atlas/__init__.py`, `tests/bass/test_budget_ceiling_optimizer.py`,
+`htt/test_packaging_imports.py`, `docs/PR_DELTAS/pr-083.md`, status files,
+PR-012 generated status sidecars, the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_budget_ceiling_optimizer.py -q` before test file | repo root | FAIL | Red phase: target file did not exist. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_budget_ceiling_optimizer.py -q` first implementation | repo root | FAIL | Fixture used incomplete canonical MIO components; fixed before closeout. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_budget_ceiling_optimizer.py -q` after reviewer fixes | repo root | PASS | `16 passed`; provenance, range, rank, rejected-candidate, MIO reference, and claim-guard regressions. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/bass/atlas/budget_ceiling_optimizer.py htt/bass/atlas/__init__.py tests/bass/test_budget_ceiling_optimizer.py htt/test_packaging_imports.py` | repo root | PASS | Touched Python files compile. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/bass/test_budget_ceiling_optimizer.py tests/bass/test_atlas_entry_lite.py tests/mio/test_budget_spec.py tests/mio/test_normalized_score.py tests/mio/test_filling_fraction.py -q` | repo root | PASS | `75 passed`; BASS atlas and MIO budget/Q/F boundaries remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider htt/test_packaging_imports.py htt/mio/tests/test_package_root_exports.py -q` | repo root | PASS | `14 passed`; package/import exports remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_transfer_registry.py tests/contracts/test_claim_language_lint.py tests/contracts/test_semantic_guards.py tests/contracts/test_ownership_firewall.py tests/contracts/test_mio_htt_no_merge.py htt/tsc/audit/test_no_overclaim.py -q` | repo root | PASS | `69 passed`; transfer, claim, ownership, MIO/HTT, and legacy overclaim firewalls remain green. |
+| `venv/bin/python scripts/check_claim_language.py htt/bass/atlas/budget_ceiling_optimizer.py htt/bass/atlas/__init__.py tests/bass/test_budget_ceiling_optimizer.py htt/test_packaging_imports.py --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py htt/bass/atlas/budget_ceiling_optimizer.py htt/bass/atlas/__init__.py tests/bass/test_budget_ceiling_optimizer.py htt/test_packaging_imports.py` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py htt/bass/atlas/budget_ceiling_optimizer.py htt/bass/atlas/__init__.py tests/bass/test_budget_ceiling_optimizer.py htt/test_packaging_imports.py` | repo root | PASS | No unmarked strong claims detected. |
+| `venv/bin/python scripts/check_claim_language.py <PR-083 code, tests, delta, and handoff docs> --dry-run` | repo root | PASS | No forbidden claim language detected after final handoff updates. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-083 code, tests, delta, and handoff docs>` | repo root | PASS | No forbidden claim patterns detected after final handoff updates. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-083 code, tests, delta, and handoff docs>` | repo root | PASS | No unmarked strong claims detected after final handoff updates. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `10 passed`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7148 deselected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `7095/7154 tests collected (59 deselected)`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 37 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-checkpoint-dir docs/generated/progress_checkpoints --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `37/62 = 59.68%`; dependency-weighted `64.62%`; critical path `9/21 = 42.86%`; checkpoint not due until 40. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `git diff --check` | repo root | PASS | No whitespace errors. |
+
+Numerical/scientific impact: no solver execution, transfer calculation,
+native transfer validation, HTT posterior evidence, MIO certificate, native
+morphology atlas, or family-label output was added. PR-083 adds a BASS-owned
+diagnostic-only ceiling-policy interface and a MIO denominator reference bridge
+under explicit provenance and rank gates.
+
+Artifact/claim-tier impact: generated status artifacts remain DAG bookkeeping
+only. Ceiling policy payloads require owner/scope/claim tier, config and input
+hashes, generating command, git or worktree provenance, transfer source/spec,
+prior, admissible set, valid range, rank metadata, rejected-candidate
+provenance, and depth-gap metadata where applicable. External/proxy ceilings
+remain transfer-conditional and do not certify native solver behavior.

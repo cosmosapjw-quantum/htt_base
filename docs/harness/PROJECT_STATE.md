@@ -1,13 +1,13 @@
 # Project State
 
-Current DAG position: PR-074 complete after commits PR-000, PR-001, PR-002,
+Current DAG position: PR-083 complete after commits PR-000, PR-001, PR-002,
 PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, PR-014,
 PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041, PR-023, PR-071,
 PR-080, PR-030, PR-113, PR-051, PR-042, PR-072, PR-081, PR-031, PR-052,
-PR-043, PR-073, PR-082, PR-032, PR-053, and PR-074.
+PR-043, PR-073, PR-082, PR-032, PR-053, PR-074, and PR-083.
 
-Progress after PR-074: 36/62 complete = 58.06%; dependency-weighted
-completion = 63.59%; critical-path completion = 9/21 = 42.86%.
+Progress after PR-083: 37/62 complete = 59.68%; dependency-weighted
+completion = 64.62%; critical-path completion = 9/21 = 42.86%.
 
 Current framework status: L0 orchestration and harness bootstrap. The repo has
 inventory, editable install/import stabilization, pytest taxonomy, DAG/progress
@@ -122,8 +122,7 @@ Latest progress scoreboard: `docs/generated/progress_checkpoints/progress_scoreb
 Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_035.md`.
 Next checkpoint is due at 40 completed PRs.
 
-Next topological PR: PR-083. Other unblocked candidates after PR-074 are
-PR-054 and PR-075.
+Next topological PR: PR-054. Other unblocked candidate after PR-083 is PR-075.
 
 ## PR-032 update
 
@@ -179,3 +178,29 @@ reported. Latest unblocked candidates are PR-083, PR-054, and PR-075. PR-074
 does not create HTT posterior/evidence content, MIO diagnostic reports,
 transfer validation, native solver output, morphology compatibility, or
 geometry/family-identification evidence.
+
+## PR-083 update
+
+PR-083 adds `bass.atlas.budget_ceiling_optimizer` with `CeilingPrior`,
+`AdmissibleSetMetadata`, `BudgetCeilingCandidate`,
+`BudgetCeilingPolicyResult`, and `optimize_budget_ceiling()`. The optimizer is
+BASS-owned, diagnostic-only, and pre-solver. It selects positive finite `U_C`
+ceilings only from compatible candidate sets and carries transfer source/spec,
+valid range, prior, admissible set, rank metadata, rejected-candidate
+provenance, depth-gap metadata, config/input hashes, generating command, and
+worktree state. It rejects hidden priors, hidden admissible sets, mixed
+transfer sources, malformed ranges, schema-only future-native numeric use, and
+claim-risky payload keys or phrases.
+
+MIO can reference the policy explicitly through compact reference payloads and
+PR-051 `BudgetSpec` conversion. External/proxy ceilings remain
+transfer-conditional and non-certifying for F; non-sensitivity references
+require rank adequacy or an explicit certified-MES rank exemption. Depth-gap
+references require bin, covariance, null, and denominator-evolution metadata.
+
+Progress after PR-083 is 37/62 = 59.68%; dependency-weighted completion is
+64.62%; critical path remains 9/21 = 42.86%; no blocker or replan was
+reported. Latest unblocked candidates are PR-054 and PR-075. PR-083 does not
+run or fake a native solver, validate external transfer as native, create HTT
+posterior/evidence content, create a MIO certificate, provide morphology
+compatibility, or provide geometry/family-identification evidence.

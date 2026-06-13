@@ -36,6 +36,7 @@ completed:
 - PR-032
 - PR-053
 - PR-074
+- PR-083
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -250,4 +251,18 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   matrices, missing scan metadata, covariance anomaly collapse, and overclaim
   text. PR-074 does not create HTT posterior/evidence content, MIO diagnostic
   reports, transfer validation, native solver output, morphology compatibility,
-  or geometry/family-identification evidence.
+  or geometry/family-identification evidence. PR-083 adds a BASS_PY
+  diagnostic-only budget ceiling policy interface for explicit U_C ceiling
+  candidates with transfer, valid-range, prior, admissible-set, rank,
+  rejected-candidate, config/input, command, and worktree provenance. It
+  exports MIO BudgetSpec and compact MIO reference helpers while preserving
+  PR-051 certified-F gates, blocking external/proxy ceilings from certifying F
+  before native validation gates, requiring depth-gap bin/null/covariance
+  metadata for G_F references, rejecting schema-only future-native atlas
+  entries as numeric ceilings, and failing closed on hidden transfer source,
+  hidden prior/admissible-set state, malformed valid ranges, mixed transfer
+  candidate sets, inference/certificate keys, native-validation wording, or
+  family-identification language. PR-083 does not run or fake a native solver,
+  validate external transfer as native, create HTT evidence/posterior content,
+  create MIO certificates, or support morphology compatibility or
+  geometry/family-identification evidence.

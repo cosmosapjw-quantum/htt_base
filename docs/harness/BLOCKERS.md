@@ -4,9 +4,9 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-13
 
-No active DAG blockers after PR-074. Progress report shows unblocked next
-candidates `PR-083`, `PR-054`, and `PR-075`; use DAG ordering and policy
-priorities before selecting the next node.
+No active DAG blockers after PR-083. Progress report shows unblocked next
+candidates `PR-054` and `PR-075`; use DAG ordering and policy priorities
+before selecting the next node.
 
 Manuscript-freeze blocker: `docs/generated/missing_figure_references.md`
 records 22 missing manuscript figure references, 72 path-resolved but
@@ -128,3 +128,11 @@ evidence semantics, MIO report content, transfer validation, native solver
 output, morphology compatibility, or geometry/family-identification evidence.
 Downstream template/null PRs must keep deterministic template-mean fits
 separate from covariance anomaly statistics and matched-null calibration.
+
+Residual non-blocking risk: PR-083 adds a BASS budget ceiling policy interface
+and MIO reference bridge, but it does not compute downstream Pi/G_F report
+cards, validate native solver output, validate external transfer as native, or
+provide a native morphology atlas. Downstream MIO PRs must keep `U_C`
+selection provenance visible, preserve rank/depth-gap gates, and reject any
+threshold language that turns diagnostic exceedance or filling-fraction
+bookkeeping into a truth probability or geometry/family-identification claim.
