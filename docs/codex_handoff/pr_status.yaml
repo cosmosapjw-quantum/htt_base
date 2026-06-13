@@ -53,6 +53,7 @@ completed:
 - PR-062
 - PR-092
 - PR-063
+- PR-110
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -476,3 +477,12 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   production status remains diagnostic-only pre-native. PR-063 does not create
   MIO certificate content, validate transfer or native solver output, establish
   morphology compatibility, or support geometry/family claims.
+  PR-110 adds a COMMON diagnostic-only Result Pack A generator and generated
+  `docs/generated/result_pack_A.md` report. The pack compares MIO Q/F/Pi
+  diagnostic rows with OBSSTAT morphology/null-feature rows and COMMON MES
+  `I_morph` status as side-by-side, manifest-backed diagnostics only. It
+  records config/input hashes, status-snapshot dependency evidence, null and
+  sky-support status summaries, caveats, and generation provenance. PR-110
+  does not create HTT posterior/evidence content, merge MIO output into COMMON
+  scores, validate transfer or native solver output, establish morphology
+  compatibility, or support geometry/family claims.
