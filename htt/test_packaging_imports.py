@@ -57,6 +57,7 @@ for name in [
     "htt.obsstat.scalar_lowell",
     "htt.obsstat.template_fit",
     "htt.statistics",
+    "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_template_bound",
     "htt.zoa",
     "htt.zoa.axis_promotion",
@@ -115,6 +116,7 @@ for name in [
     "htt.obsstat.scalar_lowell",
     "htt.obsstat.template_fit",
     "htt.statistics",
+    "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_template_bound",
     "htt.zoa",
     "htt.zoa.axis_promotion",
@@ -159,6 +161,7 @@ import importlib
 for name in [
     "htt.departure.response_overlap",
     "htt.direction",
+    "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_template_bound",
     "htt.nulls.local_boost_depth_null",
     "htt.zoa.axis_promotion",
@@ -191,6 +194,7 @@ assert "statistics" in namespace
 assert "zoa" in namespace
 import htt.departure.response_overlap
 import htt.direction
+import htt.statistics.mes_cov_bound
 import htt.statistics.mes_template_bound
 import htt.zoa.axis_promotion
 """

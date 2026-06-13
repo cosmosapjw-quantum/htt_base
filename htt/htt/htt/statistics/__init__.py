@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+from .mes_cov_bound import MesCovarianceBoundResult, build_mes_covariance_bound
 from .mes_template_bound import MesTemplateBoundResult, build_mes_template_bound
 
 __all__ = [
+    "MesCovarianceBoundResult",
     "MesTemplateBoundResult",
+    "build_mes_covariance_bound",
     "build_mes_template_bound",
 ]

@@ -119,6 +119,8 @@ _ALLOWED_PRODUCTION_STATUSES = {
     "blocked_missing_covariance",
     "blocked_missing_null_mocks",
     "blocked_missing_atlas",
+    "blocked_provenance_mismatch",
+    "blocked_rank_deficient",
     "blocked_owner_violation",
 }
 _ALLOWED_OBSERVABLE_MODES = {
@@ -169,6 +171,8 @@ ProductionStatus = Literal[
     "blocked_missing_covariance",
     "blocked_missing_null_mocks",
     "blocked_missing_atlas",
+    "blocked_provenance_mismatch",
+    "blocked_rank_deficient",
     "blocked_owner_violation",
 ]
 ObservableMode = Literal[

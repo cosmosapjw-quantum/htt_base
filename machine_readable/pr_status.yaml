@@ -47,6 +47,7 @@ completed:
 - PR-100
 - PR-084
 - PR-061
+- PR-091
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -392,3 +393,17 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   PR-061 does not create HTT posterior evidence, create MIO certificate
   content, validate transfer or native solver output, establish morphology
   compatibility, or support geometry/family claims.
+  PR-091 adds a COMMON diagnostic-only synthetic covariance/BiPoSH branch for
+  `FullCovMESReport` under the live `htt/htt/htt/statistics` package root. The
+  branch consumes caller-supplied OBSSTAT BiPoSH/sparse-covariance feature
+  metadata and typed PR-076 null provenance, whitens responses with the supplied
+  full positive-definite covariance, projects nuisance columns in whitened
+  space, records SVD rank, singular values, rank threshold, projected norms,
+  nuisance rank, and manifest gates, and emits a finite covariance-bound
+  candidate only when rank/null/covariance/provenance gates pass. Rank-deficient,
+  near-singular, nuisance-erased, missing-covariance, or mismatched-null cases
+  are no-claim states with `covariance_bound=None`, diagonal fallback, and
+  information gain 1. PR-091 does not estimate BiPoSH coefficients from maps,
+  generate null mocks, create HTT evidence/posterior content, create MIO
+  certificate content, validate transfer or native solver output, establish
+  morphology compatibility, or support geometry/family claims.
