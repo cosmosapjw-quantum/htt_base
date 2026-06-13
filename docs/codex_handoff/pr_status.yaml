@@ -55,6 +55,7 @@ completed:
 - PR-063
 - PR-110
 - PR-064
+- PR-065
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -497,3 +498,13 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   matched-complexity controls, and a matched-null report hash. PR-064 does not
   create MIO certificate content, validate transfer or native solver output,
   establish morphology compatibility, or support geometry/family claims.
+  PR-065 adds HTT-owned diagnostic adequacy gates for prior sensitivity,
+  posterior-predictive checks, LOOCV, and their composite inference-adequacy
+  status under the live `htt/htt/htt/infer` package root. The reports carry
+  manifest metadata, config/input hashes, generating-command/worktree
+  provenance, matched-null linkage, blocker lists, and explicit prior/PPC/LOOCV
+  statuses. Missing or failed adequacy gates downgrade claim tier to blocked;
+  passing gates yield at most a conditional pre-solver HTT adequacy status
+  with diagnostic-only production status. PR-065 does not merge MIO
+  certificate content, validate transfer or native solver output, establish
+  morphology compatibility, or support geometry/family claims.

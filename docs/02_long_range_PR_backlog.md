@@ -602,9 +602,9 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L3
 - **Risk:** high
 - **Primary files:**
-  - `htt/src/htt/infer/prior_sweep.py`
-  - `htt/src/htt/infer/posterior_predictive.py`
-  - `htt/src/htt/infer/loocv.py`
+  - `htt/htt/htt/infer/prior_sweep.py`
+  - `htt/htt/htt/infer/posterior_predictive.py`
+  - `htt/htt/htt/infer/loocv.py`
   - `tests/htt/test_inference_adequacy_gates.py`
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_inference_adequacy_gates.py -q`
