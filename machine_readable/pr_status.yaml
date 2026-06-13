@@ -51,6 +51,7 @@ completed:
 - PR-101
 - PR-102
 - PR-062
+- PR-092
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -450,3 +451,14 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   HTT posterior evidence, create MIO certificate content, validate transfer or
   native solver output, establish morphology compatibility, or support
   geometry/family claims.
+  PR-092 adds a COMMON diagnostic-only MES information-gain compositor under
+  the live `htt/htt/htt/statistics` package root. The report consumes already
+  gated PR-090 template-mean and PR-091 covariance/BiPoSH branch results,
+  recomputes no branch physics, revalidates positive finite diagonal and branch
+  bounds before exposing `I_morph = B_diag/B_final`, and records separate
+  diag/template/cov/dyn rows so invalid, blocked, or no-gain branches are not
+  plotted or labeled as improvements. Dynamical bounds remain auxiliary and do
+  not define morphology-branch gain. PR-092 does not create HTT posterior
+  evidence, create MIO certificate content, validate transfer or native solver
+  output, establish morphology compatibility, or support geometry/family
+  claims.

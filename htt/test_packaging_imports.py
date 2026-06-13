@@ -61,6 +61,7 @@ for name in [
     "htt.obsstat.template_fit",
     "htt.statistics",
     "htt.statistics.mes_cov_bound",
+    "htt.statistics.mes_information_gain",
     "htt.statistics.mes_template_bound",
     "htt.zoa",
     "htt.zoa.axis_promotion",
@@ -122,6 +123,7 @@ for name in [
     "htt.obsstat.template_fit",
     "htt.statistics",
     "htt.statistics.mes_cov_bound",
+    "htt.statistics.mes_information_gain",
     "htt.statistics.mes_template_bound",
     "htt.zoa",
     "htt.zoa.axis_promotion",
@@ -167,6 +169,7 @@ for name in [
     "htt.departure.response_overlap",
     "htt.direction",
     "htt.statistics.mes_cov_bound",
+    "htt.statistics.mes_information_gain",
     "htt.statistics.mes_template_bound",
     "htt.nulls.local_boost_depth_null",
     "htt.nulls.selection_response_depth",
@@ -202,6 +205,7 @@ assert "zoa" in namespace
 import htt.departure.response_overlap
 import htt.direction
 import htt.statistics.mes_cov_bound
+import htt.statistics.mes_information_gain
 import htt.statistics.mes_template_bound
 import htt.zoa.axis_promotion
 """

@@ -855,7 +855,7 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L3
 - **Risk:** medium
 - **Primary files:**
-  - `htt/src/htt/statistics/mes_information_gain.py`
+  - `htt/htt/htt/statistics/mes_information_gain.py`
   - `tests/htt/test_mes_information_gain.py`
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_mes_information_gain.py -q`
