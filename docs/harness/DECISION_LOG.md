@@ -348,3 +348,25 @@ Record accepted, rejected, and deferred design decisions.
   geometry/family-identification language.
 - Deferred: Pi exceedance, G_F depth-gap, calibrated F null ensembles,
   PPC/LOOCV, and any native morphology atlas integration remain downstream.
+
+## 2026-06-13 - PR-054 Pi exceedance boundary
+
+- Accepted: `mio.formalism.ExceedanceCurve` is the MIO-owned diagnostic-only
+  Pi contract. It records strict `sample_value > threshold` exceedance curves
+  over explicit Q or certified-F diagnostic samples.
+- Accepted: every Pi payload requires explicit `measure_kind`, threshold grid,
+  threshold-policy metadata, sample counts, source metadata, config/input
+  hashes, generating command, and git or worktree provenance.
+- Accepted: selected-threshold summaries require pre-registered metadata.
+  Otherwise Pi artifacts remain curve-only.
+- Accepted: null/mock measures require non-default covariance and null/mock
+  support status metadata.
+- Accepted: transfer-labelled direct or bridged Pi sources require PR-014
+  consumable transfer metadata and remain transfer-conditional.
+- Rejected: implicit measure defaults, hidden selected-threshold metadata,
+  post-hoc threshold selection, direct native transfer labels, signed-Q bridge
+  inputs, non-JSON metadata, truth probability, posterior/evidence semantics,
+  p-value/FPR claims without matched calibration, and geometry/family language.
+- Deferred: calibrated p-values/FPR, PPC/LOOCV, report-card integration,
+  posterior-pushforward boundaries, G_F depth-gap, and native morphology atlas
+  integration remain downstream.

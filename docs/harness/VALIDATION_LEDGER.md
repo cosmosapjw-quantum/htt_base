@@ -1493,3 +1493,49 @@ hashes, generating command, git or worktree provenance, transfer source/spec,
 prior, admissible set, valid range, rank metadata, rejected-candidate
 provenance, and depth-gap metadata where applicable. External/proxy ceilings
 remain transfer-conditional and do not certify native solver behavior.
+
+## PR-054 - Pi exceedance curve and threshold discipline
+
+Date: 2026-06-13
+
+Changed files: `htt/mio/formalism/exceedance.py`,
+`htt/mio/formalism/__init__.py`, `htt/mio/tests/test_boot.py`,
+`tests/mio/test_exceedance.py`, `docs/PR_DELTAS/pr-054.md`, status files,
+PR-012 generated status sidecars, the progress scoreboard, and handoff docs.
+
+| Command | CWD | Result | Notes |
+|---|---|---:|---|
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_exceedance.py -q` before test file | repo root | FAIL | Red phase: target file did not exist. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_exceedance.py -q` after red tests | repo root | FAIL | Red phase: missing `mio.formalism.exceedance`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_exceedance.py -q` first implementation | repo root | FAIL | Fixed local assertion and constructor validation issues before closeout. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_exceedance.py -q` after reviewer hardening | repo root | PASS | `17 passed`; strict threshold, explicit measure, pre-registration, transfer, JSON, claim, and package-export regressions. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m py_compile htt/mio/formalism/exceedance.py htt/mio/formalism/__init__.py htt/mio/tests/test_boot.py tests/mio/test_exceedance.py` | repo root | PASS | Touched Python files compile. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/mio/test_exceedance.py tests/mio/test_budget_spec.py tests/mio/test_normalized_score.py tests/mio/test_filling_fraction.py tests/mio/test_departure_bundle.py htt/mio/tests/test_boot.py htt/mio/tests/test_package_root_exports.py -q` | repo root | PASS | `82 passed`; adjacent MIO formalism and package exports remain green. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_claim_language_lint.py tests/contracts/test_ownership_firewall.py tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_transfer_registry.py -q` | repo root | PASS | `49 passed`; claim, ownership, MIO/HTT, and transfer firewalls remain green. |
+| `venv/bin/python scripts/check_claim_language.py htt/mio/formalism/exceedance.py tests/mio/test_exceedance.py htt/mio/formalism/__init__.py htt/mio/tests/test_boot.py --dry-run` | repo root | PASS | No forbidden claim language detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py htt/mio/formalism/exceedance.py tests/mio/test_exceedance.py htt/mio/formalism/__init__.py htt/mio/tests/test_boot.py` | repo root | PASS | No forbidden claim patterns detected. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py htt/mio/formalism/exceedance.py tests/mio/test_exceedance.py htt/mio/formalism/__init__.py htt/mio/tests/test_boot.py` | repo root | PASS | No unmarked strong claims detected. |
+| `venv/bin/python scripts/check_claim_language.py <PR-054 code, tests, delta, and handoff docs> --dry-run` | repo root | PASS | No forbidden claim language detected after final handoff updates. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py <PR-054 code, tests, delta, and handoff docs>` | repo root | PASS | No forbidden claim patterns detected after final handoff updates. |
+| `venv/bin/python .agents/skills/htt-claim-provenance-ledger/scripts/check_claim_status.py <PR-054 code, tests, delta, and handoff docs>` | repo root | PASS | No unmarked strong claims detected after final handoff updates. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py package` | repo root | PASS | `10 passed`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py smoke` | repo root | PASS | `6 passed, 7165 deselected`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py collect` | repo root | PASS | `7112/7171 tests collected (59 deselected)`. |
+| `python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | `OK: 62 PRs, DAG valid`. |
+| `PYTHONPATH=htt/src venv/bin/python -m common.status_snapshot --write docs/generated/status_snapshot.json` | repo root | PASS | Regenerated status snapshot, claim ledger, and status matrix at 38 completed PRs. |
+| `venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-checkpoint-dir docs/generated/progress_checkpoints --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json` | repo root | PASS | `38/62 = 61.29%`; dependency-weighted `66.15%`; critical path `10/21 = 47.62%`; checkpoint not due until 40. |
+| `cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml` | repo root | PASS | Status mirrors match. |
+| `git diff --check` | repo root | PASS | No whitespace errors. |
+
+Numerical/scientific impact: no solver execution, transfer calculation,
+native value generation, HTT posterior evidence, MIO certificate, native
+morphology atlas, or family-label output was added. PR-054 adds a MIO
+diagnostic-only exceedance-curve contract over explicit Q or certified-F
+diagnostic samples.
+
+Artifact/claim-tier impact: generated status artifacts remain DAG bookkeeping
+only. Pi payloads require explicit measure, threshold grid, threshold policy,
+sample counts, source provenance, PR-014 transfer metadata when applicable,
+support status metadata, config/input hashes, generating command, and git or
+worktree provenance. Pi remains diagnostic-only and is not a p-value/FPR,
+truth probability, posterior/evidence quantity, or native/family result.

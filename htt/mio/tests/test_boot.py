@@ -31,6 +31,7 @@ _SUBPACKAGES = (
     "mio.formalism.budget_spec",
     "mio.formalism.component_breakdown",
     "mio.formalism.departure_bundle",
+    "mio.formalism.exceedance",
     "mio.formalism.filling_fraction",
     "mio.formalism.normalized_score",
 )

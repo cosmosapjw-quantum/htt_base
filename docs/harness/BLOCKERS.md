@@ -4,8 +4,8 @@ Open blockers, owner, required resolution, and PR dependency impact.
 
 ## 2026-06-13
 
-No active DAG blockers after PR-083. Progress report shows unblocked next
-candidates `PR-054` and `PR-075`; use DAG ordering and policy priorities
+No active DAG blockers after PR-054. Progress report shows unblocked next
+candidates `PR-075` and `PR-055`; use DAG ordering and policy priorities
 before selecting the next node.
 
 Manuscript-freeze blocker: `docs/generated/missing_figure_references.md`
@@ -136,3 +136,12 @@ provide a native morphology atlas. Downstream MIO PRs must keep `U_C`
 selection provenance visible, preserve rank/depth-gap gates, and reject any
 threshold language that turns diagnostic exceedance or filling-fraction
 bookkeeping into a truth probability or geometry/family-identification claim.
+
+Residual non-blocking risk: PR-054 adds a MIO diagnostic Pi exceedance-curve
+contract, but it does not calibrate p-values/FPR, perform PPC/LOOCV, validate
+native transfer, or connect to a native morphology atlas. Downstream MIO/HTT
+report-card and posterior-pushforward PRs must preserve the explicit
+`measure_kind`, threshold-policy metadata, PR-014 transfer provenance, and
+null/mock support gates, and must not promote Pi into truth probability,
+posterior/evidence, native validation, morphology compatibility, or
+geometry/family-identification language.

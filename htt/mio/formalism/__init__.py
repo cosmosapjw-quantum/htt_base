@@ -18,6 +18,14 @@ from .budget_spec import (
     compare_denominator_policies,
 )
 from .departure_bundle import DepartureBundle, build_departure_bundle
+from .exceedance import (
+    ExceedanceCurve,
+    MeasureKind,
+    ThresholdPolicy,
+    build_exceedance_curve,
+    build_exceedance_curve_from_filling_fraction,
+    build_exceedance_curve_from_normalized_scores,
+)
 from .filling_fraction import (
     CertifiedFillingFraction,
     build_certified_filling_fraction,
@@ -39,12 +47,18 @@ __all__ = [
     "ComponentBreakdown",
     "DepartureBundle",
     "DepartureComponent",
+    "ExceedanceCurve",
+    "MeasureKind",
     "NativeMorphologyAtlasStatus",
     "NormalizedScore",
     "NumeratorPolicy",
+    "ThresholdPolicy",
     "build_budget_spec",
     "build_certified_filling_fraction",
     "build_departure_bundle",
+    "build_exceedance_curve",
+    "build_exceedance_curve_from_filling_fraction",
+    "build_exceedance_curve_from_normalized_scores",
     "build_normalized_score",
     "compare_denominator_policies",
     "signed_component_projection",

@@ -1,13 +1,13 @@
 # Project State
 
-Current DAG position: PR-083 complete after commits PR-000, PR-001, PR-002,
+Current DAG position: PR-054 complete after commits PR-000, PR-001, PR-002,
 PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, PR-014,
 PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041, PR-023, PR-071,
 PR-080, PR-030, PR-113, PR-051, PR-042, PR-072, PR-081, PR-031, PR-052,
-PR-043, PR-073, PR-082, PR-032, PR-053, PR-074, and PR-083.
+PR-043, PR-073, PR-082, PR-032, PR-053, PR-074, PR-083, and PR-054.
 
-Progress after PR-083: 37/62 complete = 59.68%; dependency-weighted
-completion = 64.62%; critical-path completion = 9/21 = 42.86%.
+Progress after PR-054: 38/62 complete = 61.29%; dependency-weighted
+completion = 66.15%; critical-path completion = 10/21 = 47.62%.
 
 Current framework status: L0 orchestration and harness bootstrap. The repo has
 inventory, editable install/import stabilization, pytest taxonomy, DAG/progress
@@ -122,7 +122,7 @@ Latest progress scoreboard: `docs/generated/progress_checkpoints/progress_scoreb
 Latest checkpoint artifact: `docs/generated/progress_checkpoints/checkpoint_035.md`.
 Next checkpoint is due at 40 completed PRs.
 
-Next topological PR: PR-054. Other unblocked candidate after PR-083 is PR-075.
+Next topological PR: PR-075. Other unblocked candidate after PR-054 is PR-055.
 
 ## PR-032 update
 
@@ -204,3 +204,30 @@ reported. Latest unblocked candidates are PR-054 and PR-075. PR-083 does not
 run or fake a native solver, validate external transfer as native, create HTT
 posterior/evidence content, create a MIO certificate, provide morphology
 compatibility, or provide geometry/family-identification evidence.
+
+## PR-054 update
+
+PR-054 adds `mio.formalism.ExceedanceCurve`, `MeasureKind`,
+`ThresholdPolicy`, `build_exceedance_curve()`,
+`build_exceedance_curve_from_normalized_scores()`, and
+`build_exceedance_curve_from_filling_fraction()`. Pi is a MIO-owned,
+diagnostic-only exceedance curve over explicit Q or certified-F diagnostic
+samples. It uses a strict `sample_value > threshold` rule, requires explicit
+measure kind, serializes threshold grids and `pi_grid`, and keeps selected
+thresholds legal only under pre-registered metadata.
+
+Reviewer hardening made the API fail closed on implicit measures,
+mock/null measures without non-default covariance and null/mock status,
+post-hoc or selected-result threshold metadata, curve-only scalar smuggling,
+reserved source-kind/metadata wording, non-JSON metadata, native-transfer
+labels, direct external-transfer labels without PR-014 metadata, and signed-Q
+bridge inputs. Q/F bridge helpers preserve source config/input hashes,
+numerator/denominator policy, certified-F sample provenance, transfer
+metadata, and sky/covariance/null statuses.
+
+Progress after PR-054 is 38/62 = 61.29%; dependency-weighted completion is
+66.15%; critical path is 10/21 = 47.62%; no blocker or replan was reported.
+Latest unblocked candidates are PR-075 and PR-055. PR-054 does not create
+truth probabilities, HTT posterior/evidence content, MIO certificates,
+p-values/FPR claims, native solver validation, transfer validation, morphology
+compatibility, or geometry/family-identification evidence.
