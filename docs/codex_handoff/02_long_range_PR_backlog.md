@@ -619,7 +619,7 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Verification level:** L3
 - **Risk:** medium
 - **Primary files:**
-  - `htt/src/htt/departure/posterior_pushforward.py`
+  - `htt/htt/htt/departure/posterior_pushforward.py`
   - `tests/htt/test_posterior_pushforward.py`
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_posterior_pushforward.py -q`

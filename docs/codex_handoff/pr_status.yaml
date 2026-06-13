@@ -56,6 +56,7 @@ completed:
 - PR-110
 - PR-064
 - PR-065
+- PR-066
 blocked: []
 in_progress: null
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
@@ -507,4 +508,14 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   passing gates yield at most a conditional pre-solver HTT adequacy status
   with diagnostic-only production status. PR-065 does not merge MIO
   certificate content, validate transfer or native solver output, establish
+  morphology compatibility, or support geometry/family claims.
+  PR-066 adds an HTT-owned posterior-pushforward artifact under the live
+  `htt/htt/htt/departure` package root. It maps HTT posterior samples onto
+  Q/F/Pi/G_F diagnostic scalar functionals with explicit transfer provenance,
+  manifest metadata, PR-063 local/global and PR-065 adequacy references, and
+  fail-closed blocker lists. The pushforward rejects MIO certificate/report
+  outputs as inputs and stays transfer-conditional and pre-solver. Passing
+  gates yield at most conditional HTT diagnostic pushforward status with
+  diagnostic-only production status; failed prerequisites downgrade to blocked.
+  PR-066 does not validate transfer or native solver output, establish
   morphology compatibility, or support geometry/family claims.
