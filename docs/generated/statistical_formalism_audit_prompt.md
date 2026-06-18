@@ -80,6 +80,6 @@ Return exactly these sections:
 Reject if any current claim says or implies:
 - Bianchi geometry detected.
 - Bianchi family identified.
-- external transfer validated as native.
-- MIO posterior/evidence/truth certificate.
+- external-transfer output is described as native-validated.
+- diagnostic-only MIO material is promoted into model-probability, evidence-like, or truth-status language.
 - scalar formalism values alone imply geometry, family, or native-solver validation.

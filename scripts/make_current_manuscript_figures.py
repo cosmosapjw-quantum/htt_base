@@ -37,6 +37,7 @@ from mio.formalism.budget_spec import (  # noqa: E402
     build_budget_spec,
     compare_denominator_policies,
 )
+from mio.formalism.departure_bundle import build_departure_bundle  # noqa: E402
 from htt.nulls.local_boost_depth_null import (  # noqa: E402
     DepthBinSpec,
     LocalBoostDepthNull,
@@ -277,6 +278,22 @@ def _budget_specs() -> tuple[object, ...]:
 
 def _build_transfer_budget_payload() -> dict[str, object]:
     x_reference = 0.064
+    reference_departure = build_departure_bundle(
+        {
+            "Sigma2_std": 0.052,
+            "W2_std": 0.009,
+            "Omega_tilt": 0.018,
+            "Omega_k_aniso": 0.003,
+        },
+        comparator="CMB_FLRW_reference",
+        frame="normal_frame",
+        units="dimensionless_hubble_normalized",
+        config_hash="current-code-diagnostic-x-reference-v1",
+        input_hashes=("scripts/make_current_manuscript_figures.py:x_reference",),
+        caveats=(
+            "deterministic current-code sector decomposition for display metadata only",
+        ),
+    )
     points = compare_denominator_policies(
         _budget_specs(),
         relative_shifts=(-0.2, 0.0, 0.2),
@@ -301,6 +318,8 @@ def _build_transfer_budget_payload() -> dict[str, object]:
         rows.append(payload)
     return {
         "x_reference": x_reference,
+        "x_reference_sector_profile": reference_departure.sector_profile,
+        "x_reference_display_metadata": reference_departure.display_metadata,
         "relative_shifts": [-0.2, 0.0, 0.2],
         "points": rows,
         "contract": "MIO BudgetSpec/compare_denominator_policies",
@@ -503,6 +522,86 @@ def _build_semantic_and_vector_payload(
         rank_payload["response_overlap"]["singular_values"],
         dtype=float,
     )
+    x_sector_profile = transfer_payload["x_reference_sector_profile"]
+    assert isinstance(x_sector_profile, dict)
+    x_display_metadata = {
+        "requires_sector_profile": True,
+        "requires_absolute_component_total": True,
+        "requires_cancellation_index": True,
+        "requires_magnitude_companion_M": True,
+        "sector_profile_ref": "/transfer_sensitivity/x_reference_sector_profile",
+        "M_sector_magnitude": float(x_sector_profile["absolute_component_total"]),
+        "interpretation": (
+            "x_C is a signed comparator projection; near-zero x_C can reflect "
+            "inter-sector cancellation, not isotropy."
+        ),
+        "blocked_use_codes": [
+            "isotropy_certificate",
+            "scalar_classification",
+            "htt_inference_consumption",
+            "solver_validation",
+            "material_occupancy",
+        ],
+    }
+    departure_display_contract = {
+        "required_for_symbols": ["x", "F"],
+        "requires_sector_profile": True,
+        "requires_absolute_component_total": True,
+        "requires_cancellation_index": True,
+        "requires_magnitude_companion_M": True,
+        "scope": (
+            "Every displayed x_C or F summary must expose a signed sector "
+            "profile, unsigned sector magnitude M, and cancellation metadata."
+        ),
+        "F_definition": (
+            "F is x_C divided by an admissible sign-clean ceiling U; no "
+            "clipping or volume-occupancy interpretation is permitted."
+        ),
+        "x_C_interpretation": (
+            "x_C is a signed comparator projection; x_C near zero can reflect "
+            "cancellation, not isotropy."
+        ),
+        "blocked_use_codes": [
+            "isotropy_certificate",
+            "scalar_classification",
+            "htt_inference_consumption",
+            "solver_validation",
+            "material_occupancy",
+        ],
+    }
+    cancellation_bundle = build_departure_bundle(
+        {
+            "Sigma2_std": 0.004,
+            "W2_std": 0.004,
+            "Omega_tilt": 0.0,
+            "Omega_k_aniso": 0.0,
+        },
+        comparator="CMB_FLRW_reference",
+        frame="normal_frame",
+        units="dimensionless_hubble_normalized",
+        config_hash="current-code-cancellation-counterexample-v1",
+        input_hashes=(
+            "scripts/make_current_manuscript_figures.py:cancellation_counterexample",
+        ),
+        caveats=(
+            "worked formalism counterexample for display metadata only",
+        ),
+    )
+    cancellation_counterexample = {
+        "components": cancellation_bundle.component_breakdown.component_values,
+        "signed_component_vector": (
+            cancellation_bundle.component_breakdown.signed_contributions
+        ),
+        "sector_profile": cancellation_bundle.sector_profile,
+        "x_C": cancellation_bundle.x_C,
+        "absolute_component_total": cancellation_bundle.absolute_component_total,
+        "M_sector_magnitude": cancellation_bundle.sector_magnitude_companion,
+        "cancellation_index": cancellation_bundle.cancellation_index,
+        "interpretation": (
+            "This worked x_C=0 profile has nonzero sector magnitude; the "
+            "near-zero scalar is cancellation-compatible and not isotropy."
+        ),
+    }
     semantic = [
         {
             "symbol": "x",
@@ -510,6 +609,7 @@ def _build_semantic_and_vector_payload(
             "owner": "MIO",
             "display_value": float(transfer_payload["x_reference"]),
             "definition": "raw diagnostic departure scalar in the stress payload",
+            "display_metadata": x_display_metadata,
         },
         {
             "symbol": "Q",
@@ -571,9 +671,12 @@ def _build_semantic_and_vector_payload(
         "semantic_split": semantic,
         "diagnostic_vectors": vectors,
         "depth_p95": {"local_null": local_depth, "survey_systematic": survey_depth},
+        "departure_display_contract": departure_display_contract,
+        "cancellation_counterexample": cancellation_counterexample,
         "interpretation": (
             "normalized display values; x and Q keep canonical MIO meanings, "
-            "while Q-spread, 1-FPR, and G-envelope are noncanonical current-code proxies"
+            "x displays require sector/cancellation/M metadata, and Q-spread, "
+            "1-FPR, and G-envelope are noncanonical current-code proxies"
         ),
     }
 
@@ -598,6 +701,9 @@ def _write_current_science_payload(command: str) -> dict[str, object]:
                 "payload_version": "current-science-plot-payload-v1",
                 "inputs": [
                     "htt.mio.formalism.budget_spec",
+                    "htt.mio.formalism.component_breakdown",
+                    "htt.mio.formalism.departure_bundle",
+                    "htt.mio.formalism.filling_fraction",
                     "htt.departure.response_overlap",
                     "htt.nulls.local_boost_depth_null",
                     "htt.nulls.selection_response_depth",
@@ -608,6 +714,9 @@ def _write_current_science_payload(command: str) -> dict[str, object]:
             (
                 "scripts/make_current_manuscript_figures.py",
                 "htt/mio/formalism/budget_spec.py",
+                "htt/mio/formalism/component_breakdown.py",
+                "htt/mio/formalism/departure_bundle.py",
+                "htt/mio/formalism/filling_fraction.py",
                 "htt/htt/htt/departure/response_overlap.py",
                 "htt/htt/htt/nulls/local_boost_depth_null.py",
                 "htt/htt/htt/nulls/selection_response_depth.py",
@@ -1248,12 +1357,19 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
                 "docs/generated/result_pack_A.md",
                 "htt/src/common/departure_contracts.py",
                 "htt/mio/formalism/budget_spec.py",
+                "htt/mio/formalism/component_breakdown.py",
+                "htt/mio/formalism/departure_bundle.py",
+                "htt/mio/formalism/filling_fraction.py",
             ),
             caption=(
                 "Current $x$, $Q$, and noncanonical proxy-lane semantic split. The bars are normalized "
                 "display values from the deterministic current-code diagnostic "
-                "payload; they show ownership and semantic separation, not a "
-                "single interchangeable statistic, not formal $\\Pi$, $F$, or $G_F$ "
+                "payload; displayed $x_C$ is a signed comparator projection "
+                "with sector profile, cancellation index, and unsigned $M$ "
+                "companion metadata, so near-zero $x_C$ or $F$ would be "
+                "cancellation-compatible rather than an isotropy statement. "
+                "The bars show ownership and semantic separation, not a single "
+                "interchangeable statistic, not formal $\\Pi$, $F$, or $G_F$ "
                 "diagnostics, and not a family-ID signal."
             ),
             label="fig:current-qfpi-gf-semantic-split",
@@ -1269,6 +1385,9 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
                 "must_state_diagnostic_only",
                 "must_state_no_family_identification",
                 "must_state_no_native_low_ell_solver_output",
+                "must_show_sector_profile_for_x_or_f",
+                "must_state_x_f_near_zero_not_isotropy",
+                "must_state_f_requires_magnitude_companion",
             ),
             promotion_blockers=(
                 "native_solver_validation_absent",
@@ -1278,6 +1397,7 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
             caveats=(
                 "Generated from current repo-local code and deterministic diagnostic payload.",
                 "Normalized display only; proxy bars are not canonical Pi, F, or G_F diagnostics.",
+                "x_C/F display metadata must include sector profile, cancellation index, and M companion.",
                 "No Bianchi family-ID or geometry-detection claim is made.",
             ),
         ),

@@ -14,7 +14,8 @@ from .component_breakdown import ComponentBreakdown, build_component_breakdown
 
 DEFAULT_CAVEAT = (
     "x_C is a signed comparator projection and not an anisotropy norm, "
-    "posterior, evidence term, or geometry classifier."
+    "HTT inference quantity, model ranking, or scalar classifier; x_C near zero can "
+    "reflect inter-sector cancellation rather than isotropy."
 )
 
 
@@ -121,6 +122,43 @@ class DepartureBundle:
     def cancellation_index(self) -> float:
         return self.component_breakdown.cancellation_index
 
+    @property
+    def absolute_component_total(self) -> float:
+        return self.component_breakdown.absolute_component_total
+
+    @property
+    def sector_magnitude_companion(self) -> float:
+        return self.component_breakdown.sector_magnitude_companion
+
+    @property
+    def total_anisotropy_magnitude(self) -> float:
+        return self.sector_magnitude_companion
+
+    @property
+    def sector_profile(self) -> dict[str, object]:
+        return self.component_breakdown.sector_profile
+
+    @property
+    def display_metadata(self) -> dict[str, object]:
+        return {
+            "requires_sector_profile": True,
+            "requires_absolute_component_total": True,
+            "requires_cancellation_index": True,
+            "requires_magnitude_companion_M": True,
+            "requires_comparator": True,
+            "M_key": "sector_magnitude_companion",
+            "x_C_interpretation": (
+                "signed comparator projection; near-zero x_C is not isotropy "
+                "without the sector profile"
+            ),
+            "blocked_use_codes": [
+                "isotropy_certificate",
+                "scalar_classification",
+                "htt_inference_consumption",
+                "solver_validation",
+            ],
+        }
+
     def as_payload(self) -> dict[str, object]:
         return {
             "owner": self.owner,
@@ -131,6 +169,10 @@ class DepartureBundle:
             "units": self.units,
             "x_C": self.x_C,
             "cancellation_index": self.cancellation_index,
+            "absolute_component_total": self.absolute_component_total,
+            "sector_magnitude_companion": self.sector_magnitude_companion,
+            "sector_profile": self.sector_profile,
+            "display_metadata": self.display_metadata,
             "component_breakdown": self.component_breakdown.as_payload(),
             "transfer_source": self.transfer_source,
             "transfer_spec_id": self.transfer_spec_id,

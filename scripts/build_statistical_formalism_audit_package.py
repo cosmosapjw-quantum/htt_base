@@ -85,6 +85,7 @@ FORMALISM_CODE_FILES = (
     "htt/htt/htt/departure/response_overlap.py",
     "htt/htt/htt/nulls/local_boost_depth_null.py",
     "htt/htt/htt/nulls/selection_response_depth.py",
+    "scripts/verify_formalism_figure_labels.py",
 )
 
 FORMALISM_TEST_FILES = (
@@ -95,6 +96,7 @@ FORMALISM_TEST_FILES = (
     "tests/mio/test_filling_fraction.py",
     "tests/mio/test_isotropy_gap.py",
     "tests/mio/test_normalized_score.py",
+    "tests/contracts/test_formalism_figure_labels.py",
     "tests/htt/test_posterior_pushforward.py",
 )
 
@@ -444,8 +446,8 @@ Return exactly these sections:
 Reject if any current claim says or implies:
 - Bianchi geometry detected.
 - Bianchi family identified.
-- external transfer validated as native.
-- MIO posterior/evidence/truth certificate.
+- external-transfer output is described as native-validated.
+- diagnostic-only MIO material is promoted into model-probability, evidence-like, or truth-status language.
 - scalar formalism values alone imply geometry, family, or native-solver validation.
 """
 

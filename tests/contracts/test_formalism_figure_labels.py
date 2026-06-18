@@ -6,6 +6,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -22,11 +24,19 @@ def _load_script(name: str):
 
 def test_canonical_formalism_rows_pass_registry():
     module = _load_script("verify_formalism_figure_labels")
+    display_metadata = {
+        "requires_sector_profile": True,
+        "requires_absolute_component_total": True,
+        "requires_cancellation_index": True,
+        "requires_magnitude_companion_M": True,
+        "interpretation": "near-zero x_C can reflect cancellation, not isotropy",
+    }
     rows = [
         {
             "symbol": "x",
             "owner": "MIO",
             "definition": "raw diagnostic departure scalar in the stress payload",
+            "display_metadata": display_metadata,
         },
         {
             "symbol": "Q",
@@ -42,6 +52,7 @@ def test_canonical_formalism_rows_pass_registry():
             "symbol": "F",
             "owner": "MIO",
             "definition": "certified filling fraction under sign-clean admissible ceiling",
+            "display_metadata": display_metadata,
         },
         {
             "symbol": "G_F",
@@ -56,6 +67,37 @@ def test_canonical_formalism_rows_pass_registry():
     ]
 
     assert module.validate_rows(rows) == []
+
+
+def test_x_and_f_rows_require_cancellation_display_metadata():
+    module = _load_script("verify_formalism_figure_labels")
+
+    rows = [
+        {
+            "symbol": "x",
+            "owner": "MIO",
+            "definition": "raw diagnostic departure scalar",
+        },
+        {
+            "symbol": "F",
+            "owner": "MIO",
+            "definition": "certified filling fraction under sign-clean admissible ceiling",
+            "display_metadata": {
+                "requires_sector_profile": True,
+                "requires_absolute_component_total": True,
+                "requires_cancellation_index": True,
+                "interpretation": "signed projection fraction",
+            },
+        },
+    ]
+
+    issue_keys = {
+        (issue.symbol, issue.issue_type) for issue in module.validate_rows(rows)
+    }
+
+    assert ("x", "missing_cancellation_display_metadata") in issue_keys
+    assert ("F", "missing_magnitude_companion_metadata") in issue_keys
+    assert ("F", "unsafe_cancellation_interpretation") in issue_keys
 
 
 def test_current_audit_failure_rows_are_rejected():
@@ -137,3 +179,25 @@ def test_checked_in_current_science_payload_has_no_canonical_label_mismatch():
     )
 
     assert module.validate_payload(payload) == []
+
+
+def test_current_payload_has_r066_departure_display_contract():
+    payload = json.loads(
+        (REPO_ROOT / "docs" / "generated" / "current_science_plot_payload.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    contract = payload["semantic_and_vectors"]["departure_display_contract"]
+    assert contract["required_for_symbols"] == ["x", "F"]
+    assert contract["requires_sector_profile"] is True
+    assert contract["requires_absolute_component_total"] is True
+    assert contract["requires_cancellation_index"] is True
+    assert contract["requires_magnitude_companion_M"] is True
+
+    counter = payload["semantic_and_vectors"]["cancellation_counterexample"]
+    assert counter["x_C"] == pytest.approx(0.0)
+    assert counter["absolute_component_total"] > 0.0
+    assert counter["cancellation_index"] == pytest.approx(1.0)
+    assert counter["M_sector_magnitude"] > 0.0
+    assert "not isotropy" in counter["interpretation"]

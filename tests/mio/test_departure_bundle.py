@@ -78,6 +78,14 @@ def test_departure_bundle_exports_xc_with_required_metadata() -> None:
     assert payload["component_breakdown"]["signed_contributions"]["W2_std"] == pytest.approx(
         -0.15
     )
+    assert payload["absolute_component_total"] == pytest.approx(0.59)
+    assert payload["sector_magnitude_companion"] == pytest.approx(0.59)
+    assert payload["sector_profile"]["signed_component_vector"]["W2_std"] == pytest.approx(
+        -0.15
+    )
+    assert payload["display_metadata"]["requires_sector_profile"] is True
+    assert payload["display_metadata"]["requires_cancellation_index"] is True
+    assert payload["display_metadata"]["requires_magnitude_companion_M"] is True
 
 
 def test_component_metadata_must_match_export_metadata() -> None:
@@ -228,6 +236,32 @@ def test_cancellation_index_handles_exact_cancellation_and_zero_total() -> None:
     assert exact.cancellation_index == pytest.approx(1.0)
     assert zero.x_C == pytest.approx(0.0)
     assert zero.cancellation_index == pytest.approx(0.0)
+
+
+def test_xc_zero_counterexample_exports_large_sector_profile() -> None:
+    bundle = build_departure_bundle(
+        {
+            "Sigma2_std": 0.35,
+            "W2_std": 0.35,
+            "Omega_tilt": 0.20,
+            "Omega_k_aniso": -0.20,
+        },
+        comparator="CMB_FLRW_reference",
+        frame="normal_frame",
+        units="dimensionless_hubble_normalized",
+        config_hash="cfg-counterexample",
+        input_hashes=("input",),
+    )
+
+    payload = bundle.as_payload()
+
+    assert bundle.x_C == pytest.approx(0.0)
+    assert bundle.absolute_component_total == pytest.approx(1.10)
+    assert bundle.sector_magnitude_companion == pytest.approx(1.10)
+    assert bundle.cancellation_index == pytest.approx(1.0)
+    assert payload["sector_profile"]["absolute_component_total"] == pytest.approx(1.10)
+    assert payload["sector_profile"]["sector_magnitude_companion"] == pytest.approx(1.10)
+    assert "not isotropy" in payload["sector_profile"]["interpretation"]
 
 
 def test_bundle_requires_non_empty_input_hashes() -> None:

@@ -154,6 +154,39 @@ class ComponentBreakdown:
             return 0.0
         return float(1.0 - min(abs(self.x_C) / total, 1.0))
 
+    @property
+    def sector_magnitude_companion(self) -> float:
+        """Unsigned sector-component companion for the signed ``x_C`` scalar."""
+
+        return self.absolute_component_total
+
+    @property
+    def total_anisotropy_magnitude(self) -> float:
+        """Compatibility alias for the sector-magnitude companion."""
+
+        return self.sector_magnitude_companion
+
+    @property
+    def sector_profile(self) -> dict[str, object]:
+        """Canonical display unit for ``x_C`` cancellation-aware reporting."""
+
+        return {
+            "component_order": list(CANONICAL_COMPONENT_ORDER),
+            "signed_component_vector": self.signed_contributions,
+            "component_values": self.component_values,
+            "x_C": self.x_C,
+            "absolute_component_total": self.absolute_component_total,
+            "sector_magnitude_companion": self.sector_magnitude_companion,
+            "cancellation_index": self.cancellation_index,
+            "comparator": self.comparator,
+            "frame": self.frame,
+            "units": self.units,
+            "interpretation": (
+                "x_C is a signed comparator projection; x_C near zero can "
+                "reflect inter-sector cancellation, not isotropy."
+            ),
+        }
+
     def as_payload(self) -> dict[str, object]:
         return {
             "comparator": self.comparator,
@@ -166,7 +199,9 @@ class ComponentBreakdown:
             "signed_contributions": self.signed_contributions,
             "x_C": self.x_C,
             "absolute_component_total": self.absolute_component_total,
+            "sector_magnitude_companion": self.sector_magnitude_companion,
             "cancellation_index": self.cancellation_index,
+            "sector_profile": self.sector_profile,
         }
 
 

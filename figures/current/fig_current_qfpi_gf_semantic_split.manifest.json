@@ -7,27 +7,34 @@
     "must_state_distinct_semantics",
     "must_state_diagnostic_only",
     "must_state_no_family_identification",
-    "must_state_no_native_low_ell_solver_output"
+    "must_state_no_native_low_ell_solver_output",
+    "must_show_sector_profile_for_x_or_f",
+    "must_state_x_f_near_zero_not_isotropy",
+    "must_state_f_requires_magnitude_companion"
   ],
   "caveats": [
     "Generated from current repo-local code and deterministic diagnostic payload.",
     "Normalized display only; proxy bars are not canonical Pi, F, or G_F diagnostics.",
+    "x_C/F display metadata must include sector profile, cancellation index, and M companion.",
     "No Bianchi family-ID or geometry-detection claim is made."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "031e180+dirty",
-  "config_hash": "sha256:90dfae4ba9567f0071f79da6e8f97e732b35b6dace38e125071086c28082a82d",
+  "code_version": "fec3495+dirty",
+  "config_hash": "sha256:91c102c546d2e5d54708cfedc6100abf678b40983cd4df9f07d974fcaec62b08",
   "created_by": "scripts/make_current_manuscript_figures.py",
   "failed_gates": [],
   "generating_command": "python scripts/make_current_manuscript_figures.py",
-  "git_commit": "031e180",
-  "git_commit_or_worktree_state": "031e180+dirty",
+  "git_commit": "fec3495",
+  "git_commit_or_worktree_state": "fec3495+dirty",
   "implementation_scope": "common",
   "input_hashes": [
-    "docs/generated/current_science_plot_payload.json:sha256:8e708f627a55622f89f6d2333f0507838b4a479a845052e2b5b878f4baa67924",
+    "docs/generated/current_science_plot_payload.json:sha256:610f6c27d0a5f9cd8d508844bbfd30cee141ca508e781e5f6ce3722adf354c76",
     "docs/generated/result_pack_A.md:sha256:676f2150c2fe24503ab37ba52b0e3826a39c0bce6cf346c75e28b13336c07c7b",
     "htt/src/common/departure_contracts.py:sha256:84682381cfb7b0356a69e74f3df1a6fbbc7be75ad84f937970485e7605d2f4d4",
-    "htt/mio/formalism/budget_spec.py:sha256:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a"
+    "htt/mio/formalism/budget_spec.py:sha256:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a",
+    "htt/mio/formalism/component_breakdown.py:sha256:9653e5b3dc63ebe740a78f7517e0df9f079b9a9bfd7a683c44f681ca2a06178b",
+    "htt/mio/formalism/departure_bundle.py:sha256:f04d692646c0d2232373701fb29088d60bb2549106232ff05d2dff644291b80d",
+    "htt/mio/formalism/filling_fraction.py:sha256:69cb198e205690816295e0e13b77cb6e673a88f000e9d7632c6650d08cbdbb70"
   ],
   "null_mock_status": "current_code_diagnostic_null_banks_generated",
   "owner": "COMMON",
@@ -56,7 +63,10 @@
       "docs/generated/current_science_plot_payload.json",
       "docs/generated/result_pack_A.md",
       "htt/src/common/departure_contracts.py",
-      "htt/mio/formalism/budget_spec.py"
+      "htt/mio/formalism/budget_spec.py",
+      "htt/mio/formalism/component_breakdown.py",
+      "htt/mio/formalism/departure_bundle.py",
+      "htt/mio/formalism/filling_fraction.py"
     ]
   },
   "transfer_source": "mixed_none_and_external_transfer_conditioned"

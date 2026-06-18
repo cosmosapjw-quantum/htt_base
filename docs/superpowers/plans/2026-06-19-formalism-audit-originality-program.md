@@ -252,7 +252,7 @@ Validation:
 
 ```bash
 venv/bin/python -m pytest tests/mio/test_departure_bundle.py tests/mio/test_filling_fraction.py -q
-venv/bin/python scripts/audit_manuscript_figures.py --check
+venv/bin/python scripts/audit_manuscript_figures.py --dry-run
 ```
 
 Commit:
@@ -423,7 +423,7 @@ Validation:
 ```bash
 latexmk -pdf -interaction=nonstopmode -halt-on-error docs/manuscript/main.tex
 venv/bin/python scripts/pdf_claim_lint.py --check
-venv/bin/python scripts/audit_manuscript_figures.py --check
+venv/bin/python scripts/audit_manuscript_figures.py --dry-run
 ```
 
 Commit:
@@ -478,7 +478,7 @@ venv/bin/python -m pytest tests/mio tests/htt/test_posterior_pushforward.py test
 venv/bin/python -m pytest -m smoke -q
 venv/bin/python -m pytest --collect-only -q
 venv/bin/python scripts/check_publication_claim_freeze.py --check
-venv/bin/python scripts/audit_manuscript_figures.py --check
+venv/bin/python scripts/audit_manuscript_figures.py --dry-run
 venv/bin/python scripts/pdf_claim_lint.py --check
 venv/bin/python scripts/build_statistical_formalism_audit_package.py --check
 ```

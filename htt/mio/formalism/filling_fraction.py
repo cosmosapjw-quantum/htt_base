@@ -13,8 +13,10 @@ from .departure_bundle import DepartureBundle
 
 DEFAULT_F_CAVEAT = (
     "F is a MIO diagnostic certified filling fraction for a sign-clean sector "
-    "under an admissible positive ceiling; it is not HTT inference, model "
-    "selection, solver validation, or classification."
+    "under an admissible positive ceiling; report it with the unsigned "
+    "sector-magnitude companion M and the sector profile. It is not an HTT "
+    "inference quantity, model-selection statistic, solver-validation output, "
+    "material-occupancy claim, or classification."
 )
 
 _FORBIDDEN_F_METADATA_TERMS = (
@@ -371,8 +373,41 @@ class CertifiedFillingFraction:
         )
 
     @property
+    def absolute_component_total_samples(self) -> tuple[float, ...]:
+        return tuple(
+            bundle.absolute_component_total for bundle in self.departure_bundles
+        )
+
+    @property
+    def cancellation_index_samples(self) -> tuple[float, ...]:
+        return tuple(bundle.cancellation_index for bundle in self.departure_bundles)
+
+    @property
+    def sector_magnitude_companion_samples(self) -> tuple[float, ...]:
+        return tuple(
+            bundle.absolute_component_total / budget.denominator_value
+            for bundle, budget in zip(
+                self.departure_bundles,
+                self.budget_specs,
+                strict=True,
+            )
+        )
+
+    @property
+    def total_anisotropy_magnitude_samples(self) -> tuple[float, ...]:
+        return self.sector_magnitude_companion_samples
+
+    @property
     def F_Bayes(self) -> float:
         return math.fsum(self.f_samples) / self.sample_count
+
+    @property
+    def M_sector_magnitude(self) -> float:
+        return math.fsum(self.sector_magnitude_companion_samples) / self.sample_count
+
+    @property
+    def M_total_anisotropy(self) -> float:
+        return self.M_sector_magnitude
 
     @property
     def denominator_policy(self) -> str:
@@ -387,6 +422,7 @@ class CertifiedFillingFraction:
 
     def as_payload(self) -> dict[str, object]:
         f_samples = self.f_samples
+        m_samples = self.sector_magnitude_companion_samples
         budget = self.budget_specs[0]
         bundle = self.departure_bundles[0]
         return {
@@ -407,9 +443,26 @@ class CertifiedFillingFraction:
             "x_C_samples": list(self.x_C_samples),
             "U_samples": list(self.U_samples),
             "f_samples": list(f_samples),
+            "absolute_component_total_samples": list(
+                self.absolute_component_total_samples
+            ),
+            "cancellation_index_samples": list(self.cancellation_index_samples),
+            "M_samples": list(m_samples),
+            "M_sector_magnitude": self.M_sector_magnitude,
+            "M_kind": "unsigned_component_total_over_admissible_ceiling",
+            "M_definition": (
+                "M = absolute_component_total / U, reported as the unsigned "
+                "sector-magnitude companion to signed F"
+            ),
+            "F_definition": (
+                "F = x_C / U for sign-clean samples under an admissible "
+                "MES-linear ceiling; no clipping is applied"
+            ),
             "F_Bayes": self.F_Bayes,
             "f_min": min(f_samples),
             "f_max": max(f_samples),
+            "m_min": min(m_samples),
+            "m_max": max(m_samples),
             "sample_count": self.sample_count,
             "valid_sample_count": self.sample_count,
             "invalid_sample_count": 0,
@@ -437,6 +490,29 @@ class CertifiedFillingFraction:
             "departure_transfer_metadata": [
                 bundle.transfer_metadata for bundle in self.departure_bundles
             ],
+            "sector_profiles": [
+                bundle.sector_profile for bundle in self.departure_bundles
+            ],
+            "display_metadata": {
+                "requires_sector_profile": True,
+                "requires_absolute_component_total": True,
+                "requires_cancellation_index": True,
+                "requires_magnitude_companion_M": True,
+                "F_interpretation": (
+                    "signed projection fraction of an admissible ceiling; "
+                    "not a material-occupancy or volume-readout claim"
+                ),
+                "M_interpretation": (
+                    "unsigned sector-magnitude companion; can "
+                    "diverge from F under cancellation"
+                ),
+                "blocked_use_codes": [
+                    "material_occupancy",
+                    "inference_probability",
+                    "scalar_classification",
+                    "solver_validation",
+                ],
+            },
             "budget_transfer_sources": [
                 budget.transfer_source for budget in self.budget_specs
             ],

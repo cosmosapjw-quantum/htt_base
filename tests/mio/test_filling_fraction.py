@@ -96,6 +96,8 @@ def test_f_valid_certified_samplewise_pushforward() -> None:
     assert dataclasses.is_dataclass(f)
     assert f.f_samples == pytest.approx((0.2, 0.5))
     assert f.F_Bayes == pytest.approx(0.35)
+    assert f.sector_magnitude_companion_samples == pytest.approx((0.2, 0.5))
+    assert f.M_sector_magnitude == pytest.approx(0.35)
     assert payload["score_label"] == "F"
     assert payload["score_kind"] == "certified_filling_fraction"
     assert payload["sample_pushforward"] == "sample_wise"
@@ -112,6 +114,9 @@ def test_f_valid_certified_samplewise_pushforward() -> None:
     assert payload["sample_count"] == 2
     assert payload["valid_sample_count"] == 2
     assert payload["invalid_sample_count"] == 0
+    assert payload["M_samples"] == pytest.approx([0.2, 0.5])
+    assert payload["M_sector_magnitude"] == pytest.approx(0.35)
+    assert payload["display_metadata"]["requires_magnitude_companion_M"] is True
     assert payload["input_hashes"] == [
         "x-input-0.2",
         "x-input-0.6",
@@ -134,6 +139,37 @@ def test_f_bayes_is_sample_mean_not_ratio_of_means() -> None:
     assert f.F_Bayes == pytest.approx(0.3)
     assert f.F_Bayes != pytest.approx(ratio_of_means)
     assert f.as_payload()["ratio_of_means_used"] is False
+
+
+def test_f_reports_magnitude_companion_for_cancellation_case() -> None:
+    cancelling_bundle = _bundle(
+        0.0,
+        components={
+            "Sigma2_std": 0.4,
+            "W2_std": 0.4,
+            "Omega_tilt": 0.2,
+            "Omega_k_aniso": -0.2,
+        },
+        config_hash="cfg-cancelling",
+        input_hashes=("x-input-cancelling",),
+    )
+
+    payload = build_certified_filling_fraction(
+        (cancelling_bundle,),
+        (_budget(2.0),),
+        generating_command=_GENERATING_COMMAND,
+        worktree_state=_WORKTREE_STATE,
+    ).as_payload()
+
+    assert payload["x_C_samples"] == pytest.approx([0.0])
+    assert payload["f_samples"] == pytest.approx([0.0])
+    assert payload["absolute_component_total_samples"] == pytest.approx([1.2])
+    assert payload["cancellation_index_samples"] == pytest.approx([1.0])
+    assert payload["M_samples"] == pytest.approx([0.6])
+    assert payload["M_sector_magnitude"] == pytest.approx(0.6)
+    assert payload["display_metadata"]["requires_magnitude_companion_M"] is True
+    assert payload["sector_profiles"][0]["absolute_component_total"] == pytest.approx(1.2)
+    assert "not isotropy" in payload["sector_profiles"][0]["interpretation"]
 
 
 def test_f_requires_sign_clean_nonnegative_sector() -> None:

@@ -16,7 +16,7 @@ input_hashes:
 - docs/generated/claim_ledger.json:sha256:b49828ebc36e0542bd1162a6b2b90e0320883fc7e964d72a38424910ecfb68e2
 - docs/generated/manuscript_figure_inventory.md:sha256:23413b2a7586a753559efde96a5ad82b3c5ebe3170e3f2b3f318a7a785477cf0
 - docs/generated/missing_figure_references.md:sha256:98e16241d496e8eed05b1781f6ecbee83eef9f8c5a5b9ff403e52dd3b07fc0b1
-- docs/generated/pdf_claim_lint_report.md:sha256:10546277369de28f9a02e951056d903879bbdd14b47ed051ccb1e9d0978ef369
+- docs/generated/pdf_claim_lint_report.md:sha256:6bd3b3ea12b536a41ee33302c72f2f0d92268e0daddbc8cf47801fa5c29d1cf0
 - docs/generated/result_pack_A.md:sha256:676f2150c2fe24503ab37ba52b0e3826a39c0bce6cf346c75e28b13336c07c7b
 - docs/generated/result_pack_B.md:sha256:57c2ae21d774acf3c87fe51d6562dbb62c1ccced9f367a2b6cbfbb12a82181d1
 - docs/generated/result_pack_C.md:sha256:2b37198072126ce63fc76376c84741bcb154c5c75e9544cfbf36061a8fb30c77
@@ -32,7 +32,7 @@ caveats:
 - Native morphology atlas support is absent in this repository state.
 - Missing or quarantined manuscript figures block final submission freeze.
 generating_command: python scripts/check_publication_claim_freeze.py
-git_commit_or_worktree_state: 0b8ea17+dirty
+git_commit_or_worktree_state: fec3495+dirty
 artifact_path: docs/generated/hostile_review_response_matrix.md
 
 ## Verdict
