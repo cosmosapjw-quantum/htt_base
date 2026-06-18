@@ -39,8 +39,9 @@ def test_conditional_pack_caption_includes_caveats() -> None:
     _, packs = exporter.build_export_bundle()
     pack = next(pack for pack in packs if pack.pack_id == "A")
     caption = exporter._caption_text(pack)
-    assert "Claim tier: conditional." in caption
+    assert "Claim tier: diagnostic_only." in caption
     assert "Caveats:" in caption
+    assert "manuscript use is diagnostic only" in caption
     assert "Caveats: none." not in caption
 
 
@@ -68,6 +69,8 @@ def test_result_pack_summary_tex_tracks_conditional_local_global_pack() -> None:
         in summary_tex
     )
     assert "appendix-only diagnostic on local-vs-global degeneracy; not posterior odds" not in summary_tex
+    assert "Manuscript lane" in summary_tex
+    assert "production\\_candidate" not in summary_tex
 
 
 def test_validation_pack_carries_representative_family_sweep_evidence() -> None:
@@ -81,6 +84,26 @@ def test_validation_pack_carries_representative_family_sweep_evidence() -> None:
     assert any(record.key == "family_sweep" for record in pack.artifacts)
 
 
+def test_default_export_uses_cached_representative_family_sweep(monkeypatch) -> None:
+    exporter = _load_export_module()
+
+    def fail_live_refresh():
+        raise AssertionError("live representative sweep must be opt-in")
+
+    monkeypatch.setattr(
+        exporter,
+        "build_representative_family_sweep_evidence",
+        fail_live_refresh,
+    )
+
+    records, _ = exporter.build_export_bundle()
+
+    assert (
+        records["family_sweep"].payload["evidence"]["campaign_id"]
+        == "validation.bass_representative_family_sweep"
+    )
+
+
 def test_mio_pack_carries_active_service_bundle_and_policy_ledger() -> None:
     exporter = _load_export_module()
     records, packs = exporter.build_export_bundle()
@@ -91,7 +114,7 @@ def test_mio_pack_carries_active_service_bundle_and_policy_ledger() -> None:
     assert active_service.manifest.artifact_id == "tsc.ver2.export.active_service_bundle"
     assert policy_ledger.manifest.artifact_id == "tsc.ver2.export.policy_ledger"
     assert active_service.payload["overlay_ref"] == "tsc.ver2.export.overlay"
-    assert active_service.payload["bundle"]["required_channels"] == ("TT", "TE", "EE")
+    assert tuple(active_service.payload["bundle"]["required_channels"]) == ("TT", "TE", "EE")
     assert (
         active_service.payload["bundle"]["overlay_policy_ledger"]["publication_blockers"]
         == policy_ledger.payload["ledger"]["publication_blockers"]
@@ -166,11 +189,44 @@ def test_stale_generated_figure_assets_detects_changed_bytes(tmp_path: Path) -> 
     assert stale == [str((actual / "fig.caption.txt").as_posix())]
 
 
+def test_stale_generated_figure_assets_ignores_manifest_self_reference_fields(
+    tmp_path: Path,
+) -> None:
+    exporter = _load_export_module()
+    expected = tmp_path / "expected"
+    actual = tmp_path / "actual"
+    expected.mkdir()
+    actual.mkdir()
+
+    base_payload = {
+        "artifact_id": "common.test.figure",
+        "claim_tier": "diagnostic_only",
+        "git_commit": "expected-head",
+        "git_commit_or_worktree_state": "expected-head+dirty",
+    }
+    expected_payload = dict(base_payload)
+    actual_payload = dict(base_payload)
+    actual_payload["git_commit"] = "committed-head"
+    actual_payload["git_commit_or_worktree_state"] = "committed-head"
+
+    (expected / "fig.manifest.json").write_text(
+        json.dumps(expected_payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    (actual / "fig.manifest.json").write_text(
+        json.dumps(actual_payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
+    assert exporter._stale_generated_figure_assets(expected, actual) == []
+
+
 def test_render_outputs_stays_inside_im10d_man_scope(tmp_path: Path) -> None:
     exporter = _load_export_module()
     records, packs = exporter.build_export_bundle()
     generated = tmp_path / "ver2_generated"
     exporter._generate_pack_figures(packs, figure_dir=generated)
+    assert not list(generated.glob("*.pdf"))
     figures = exporter._scan_figures(exporter.FIGURE_ROOT, generated_root=generated)
     outputs = exporter._render_outputs(records, packs, figures)
 

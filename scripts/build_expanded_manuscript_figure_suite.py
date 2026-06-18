@@ -251,7 +251,7 @@ def _plot_ver2_pack(item: dict[str, object], payload: dict[str, Any], output: Pa
 
     title = str(payload.get("title", item["base"]))
     pack = str(payload.get("pack_id", item["pack"]))
-    production = str(payload.get("production_status", "unknown"))
+    production = "diagnostic_only"
     claim = str(payload.get("claim_tier", "unknown"))
     fig.suptitle(f"VER2 pack {pack}: {title}", x=0.02, ha="left", fontweight="bold")
     fig.text(
@@ -272,29 +272,21 @@ def _ver2_manifest_payload(item: dict[str, object], payload: dict[str, Any]) -> 
     figure_path = _ver2_figure_path(str(item["base"]))
     pack_path = _pack_json_path(item)
     commit, worktree_state = _git_state()
-    claim_tier = str(payload.get("claim_tier", "diagnostic_only"))
-    if claim_tier not in {"exploratory", "conditional", "diagnostic_only", "validated", "blocked"}:
-        claim_tier = "diagnostic_only"
-    production = str(payload.get("production_status", "diagnostic_only"))
-    if production not in {
-        "diagnostic_only",
-        "production_candidate",
-        "production_validated",
-        "blocked_missing_covariance",
-        "blocked_missing_null_mocks",
-        "blocked_missing_atlas",
-        "blocked_provenance_mismatch",
-        "blocked_rank_deficient",
-        "blocked_owner_violation",
-    }:
-        production = "diagnostic_only"
+    claim_tier = "diagnostic_only"
+    production = "diagnostic_only"
     caveats = payload.get("caveats", [])
-    caveat_list = [str(caveat) for caveat in caveats] if isinstance(caveats, list) else []
+    raw_caveats = [str(caveat) for caveat in caveats] if isinstance(caveats, list) else []
+    caveat_list = [
+        caveat
+        for caveat in raw_caveats
+        if not caveat.lower().startswith(("public_grade=", "production_status="))
+    ]
     caveat_list.extend(
         [
             "Figure is generated from current VER2 pack JSON artifacts, not from a native low-ell solver.",
             "No Bianchi family-ID or geometry-detection claim is made.",
-            "Pack-level labels are provenance and validation-coverage labels only.",
+            "Source-pack readiness labels are provenance only and are not promoted into the manuscript figure lane.",
+            "Manuscript figure lane is diagnostic-only regardless of source-pack readiness vocabulary.",
         ]
     )
     return {

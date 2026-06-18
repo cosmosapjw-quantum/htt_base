@@ -1,6 +1,9 @@
 {
-  "artifact_id": "common.manuscript.ver2_pack_figure.fig_ver2a_scalar_to_morphology_summary",
+  "allowed_use": "internal_only",
+  "artifact_id": "common.ver2.figure.a",
+  "artifact_mode": "governance_diagnostic",
   "artifact_path": "figures/paper/ver2_generated/fig_ver2a_scalar_to_morphology_summary.png",
+  "caption_policy": [],
   "caveats": [
     "diagonal_cl_not_sufficient_for_directional_claims",
     "no_posterior_or_evidence_semantics",
@@ -10,39 +13,45 @@
     "local_global_degeneracy_requires_htt_discrimination",
     "rank_failure_returns_no_claim_not_weak_evidence",
     "covariance_upgrade_is_descriptive_until_validation_packet",
-    "Figure is generated from current VER2 pack JSON artifacts, not from a native low-ell solver.",
-    "No Bianchi family-ID or geometry-detection claim is made.",
-    "Pack-level labels are provenance and validation-coverage labels only."
+    "Source-pack readiness labels are provenance only and are not promoted into the manuscript figure lane.",
+    "Manuscript figure lane is diagnostic-only regardless of source-pack readiness vocabulary."
   ],
-  "claim_tier": "conditional",
-  "code_version": "ver2-pack-figure-v1",
-  "config_hash": "sha256:749c1afcdc33141d271b480a666179e2458e65ab0ae54b64e57a45af5d596366",
-  "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
+  "claim_tier": "diagnostic_only",
+  "code_version": "ver2-d1",
+  "config_hash": "828e28cd63cbf1cf",
+  "created_by": "scripts.ver2_artifact_export.py",
   "failed_gates": [],
-  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase conservative",
-  "git_commit": "6649e04",
-  "git_commit_or_worktree_state": "6649e04+dirty",
+  "generating_command": "python scripts/ver2_artifact_export.py",
+  "git_commit": "30684e52ffae85f59505e6b7e817ae01ba08db6e",
+  "git_commit_or_worktree_state": "30684e5+dirty",
   "implementation_scope": "common",
   "input_hashes": [
-    "docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:8286e96901af508b56b6cbd8e7e8748914d7ab8ee996b22a6bcf74da123da7e2",
-    "scripts/build_expanded_manuscript_figure_suite.py:sha256:7fb41e2bfb1e7d1f31a5bc4bab7c54d1aac2b2b1fa9e1e4be6b37fe8aee904c0"
+    "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+    "bass.ver2.export.solver_core_output_tier_b.atlas_lite",
+    "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
   ],
   "null_mock_status": "pack_declared_or_not_refreshed",
+  "numeric_payload_path": "",
   "owner": "COMMON",
-  "passed_gates": [
-    "ver2_pack_json_loaded",
-    "figure_manifest_validated"
-  ],
-  "production_status": "production_candidate",
-  "required_gates": [
-    "manifest_sidecar_before_manuscript_use"
-  ],
-  "schema_version": "artifact-manifest-v2",
+  "passed_gates": [],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [],
+  "publication_gates": {},
+  "report_generation_gates": {},
+  "required_gates": [],
+  "schema_version": "ver2-v9",
+  "science_promotion_gates": {},
   "sky_support_status": "pending_or_unknown_for_existing_directional_artifacts",
   "statistics_definitions": {
-    "manuscript_role": "current_code_diagnostic",
-    "pack_id": "A",
-    "source_pack_json": "docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json"
+    "result_pack_id": "A",
+    "source_artifact_ids": [
+      "bass.ver2.export.solver_core_output_tier_b.observable_vector",
+      "bass.ver2.export.solver_core_output_tier_b.atlas_lite",
+      "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy"
+    ],
+    "source_pack_claim_tier": "conditional",
+    "surface": "PaperFigureExport",
+    "topic": "scalar_to_morphology"
   },
   "transfer_source": "VER2_pack_export_context_external_or_schema_bound"
 }

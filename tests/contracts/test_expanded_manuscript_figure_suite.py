@@ -77,3 +77,18 @@ def test_generated_ver2_and_conditioned_manifests_are_valid():
         assert payload["owner"] == "COMMON"
         assert payload["implementation_scope"] == "common"
         assert "native_solver" not in str(payload["transfer_source"])
+
+
+def test_ver2_figure_manifests_are_diagnostic_lane_only():
+    manifest_paths = sorted(
+        (REPO_ROOT / "figures" / "paper" / "ver2_generated").glob("*.manifest.json")
+    )
+
+    assert manifest_paths
+    for manifest_path in manifest_paths:
+        payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest_text = json.dumps(payload, sort_keys=True)
+        assert payload["claim_tier"] in {"diagnostic_only", "exploratory"}
+        assert payload["production_status"] == "diagnostic_only"
+        assert "production_candidate" not in manifest_text
+        assert "production-grade" not in manifest_text

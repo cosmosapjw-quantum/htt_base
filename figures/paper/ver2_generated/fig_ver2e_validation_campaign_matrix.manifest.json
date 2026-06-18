@@ -1,6 +1,9 @@
 {
-  "artifact_id": "common.manuscript.ver2_pack_figure.fig_ver2e_validation_campaign_matrix",
+  "allowed_use": "internal_only",
+  "artifact_id": "common.ver2.figure.e",
+  "artifact_mode": "governance_diagnostic",
   "artifact_path": "figures/paper/ver2_generated/fig_ver2e_validation_campaign_matrix.png",
+  "caption_policy": [],
   "caveats": [
     "warn_campaigns_do_not_validate_claims",
     "warn_campaigns_remain_no_claim",
@@ -9,39 +12,43 @@
     "non_type_i_exact_propagator_missing",
     "late_time_reionization_window_missing",
     "direction_resolved_reionization_microphysics_missing",
-    "Figure is generated from current VER2 pack JSON artifacts, not from a native low-ell solver.",
-    "No Bianchi family-ID or geometry-detection claim is made.",
-    "Pack-level labels are provenance and validation-coverage labels only."
+    "Source-pack readiness labels are provenance only and are not promoted into the manuscript figure lane.",
+    "Manuscript figure lane is diagnostic-only regardless of source-pack readiness vocabulary."
   ],
-  "claim_tier": "exploratory",
-  "code_version": "ver2-pack-figure-v1",
-  "config_hash": "sha256:164c734bf6c463c105bf9ef1e09d2de31d516aabc22dcb0586021c4e76c1c94b",
-  "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
+  "claim_tier": "diagnostic_only",
+  "code_version": "ver2-d1",
+  "config_hash": "1fec243bbb91f4bb",
+  "created_by": "scripts.ver2_artifact_export.py",
   "failed_gates": [],
-  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase conservative",
-  "git_commit": "6649e04",
-  "git_commit_or_worktree_state": "6649e04+dirty",
+  "generating_command": "python scripts/ver2_artifact_export.py",
+  "git_commit": "30684e52ffae85f59505e6b7e817ae01ba08db6e",
+  "git_commit_or_worktree_state": "30684e5+dirty",
   "implementation_scope": "common",
   "input_hashes": [
-    "docs/ver2_upgrade/generated/result_pack_E_equivalence_classes.json:sha256:dc1c1155aa70ffdfa4c65a8fc5426ddb45030a75cf6298f1dd524eae0030123b",
-    "scripts/build_expanded_manuscript_figure_suite.py:sha256:7fb41e2bfb1e7d1f31a5bc4bab7c54d1aac2b2b1fa9e1e4be6b37fe8aee904c0"
+    "common.ver2.validation_registry_summary",
+    "bass.ver2.export.representative_family_sweep"
   ],
   "null_mock_status": "pack_declared_or_not_refreshed",
+  "numeric_payload_path": "",
   "owner": "COMMON",
-  "passed_gates": [
-    "ver2_pack_json_loaded",
-    "figure_manifest_validated"
-  ],
+  "passed_gates": [],
   "production_status": "diagnostic_only",
-  "required_gates": [
-    "manifest_sidecar_before_manuscript_use"
-  ],
-  "schema_version": "artifact-manifest-v2",
+  "promotion_blockers": [],
+  "publication_gates": {},
+  "report_generation_gates": {},
+  "required_gates": [],
+  "schema_version": "ver2-v9",
+  "science_promotion_gates": {},
   "sky_support_status": "pending_or_unknown_for_existing_directional_artifacts",
   "statistics_definitions": {
-    "manuscript_role": "current_code_diagnostic",
-    "pack_id": "E",
-    "source_pack_json": "docs/ver2_upgrade/generated/result_pack_E_equivalence_classes.json"
+    "result_pack_id": "E",
+    "source_artifact_ids": [
+      "common.ver2.validation_registry_summary",
+      "bass.ver2.export.representative_family_sweep"
+    ],
+    "source_pack_claim_tier": "exploratory",
+    "surface": "PaperFigureExport",
+    "topic": "equivalence_classes"
   },
   "transfer_source": "VER2_pack_export_context_external_or_schema_bound"
 }

@@ -13,4 +13,4 @@
 | Artifact | Owner | Claim tier | Production status | Summary |
 | --- | --- | --- | --- | --- |
 | `bass.ver2.export.solver_core_output_tier_b.observable_vector.departure_report` | `COMMON` | `exploratory` | `diagnostic_only` | x/Q/Pi/F/G card remains descriptive because claim gates are intentionally not passed. |
-| `tsc.ver2.export.overlay` | `TSC` | `conditional` | `production_candidate` | TSC overlay remains advisory and records pending propagation explicitly. |
+| `tsc.ver2.export.overlay` | `TSC_LEGACY` | `conditional` | `production_candidate` | TSC overlay remains advisory and records pending propagation explicitly. |

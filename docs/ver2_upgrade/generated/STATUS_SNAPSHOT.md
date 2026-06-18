@@ -17,4 +17,4 @@ Semantic source: `htt/src/common/contracts.py::StatusSnapshotEntry`
 | `COMMON` | 2 |
 | `HTT` | 1 |
 | `MIO` | 1 |
-| `TSC` | 3 |
+| `TSC_LEGACY` | 3 |

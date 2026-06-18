@@ -47,7 +47,9 @@ def test_research_only_package_manifest_includes_revision_program_files():
         expected_artifact_path="docs/generated/research_only_external_audit_package.zip",
     ) == ()
     assert payload["required_assertions"]["revision_program_files_included"] is True
+    assert payload["required_assertions"]["compiled_pdf_excluded"] is True
     archive_paths = {entry["archive_path"] for entry in payload["archive_entries"]}
+    assert not any(path.lower().endswith(".pdf") for path in archive_paths)
     for rel_path in REVISION_PROGRAM_REL_PATHS:
         assert f"research_audit_source/{rel_path}" in archive_paths
 

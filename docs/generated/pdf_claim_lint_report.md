@@ -8,19 +8,19 @@ sky_support_status: not_directional
 null_mock_status: not_statistical
 config_hash: `sha256:22098db1b168d0b60541c71e785a8373ae1c406391bdd1ffde9c8fa6f440d65d`
 input_hashes:
-- docs/generated/manuscript_pdf/htt_base_research_report.pdf:sha256:871e9e17cfa28394843d5f0bdfc519c394e66d39f6f1409e9c04559056805b6d
+- docs/generated/manuscript_pdf/htt_base_research_report.pdf:sha256:da54b2b63a373e27d059c3a89815f7a7fa784669704623bb48bed94eeefcbb3c
 caveats:
 - PDF text extraction is used as a final prose-surface lint.
 - lnB numeric mentions are warnings unless paired with high-strength claim language.
 - Legacy or conditioned pages must carry explicit context markers.
 generating_command: python scripts/pdf_claim_lint.py
-git_commit_or_worktree_state: 9d520cc+dirty
+git_commit_or_worktree_state: e40baf5+dirty
 artifact_path: docs/generated/pdf_claim_lint_report.md
 
 ## Summary
 
 - PDF: `docs/generated/manuscript_pdf/htt_base_research_report.pdf`
-- PDF SHA256: `sha256:871e9e17cfa28394843d5f0bdfc519c394e66d39f6f1409e9c04559056805b6d`
+- PDF SHA256: `sha256:da54b2b63a373e27d059c3a89815f7a7fa784669704623bb48bed94eeefcbb3c`
 - Pages scanned: `348`
 - Failed findings: `0`
 - Warning findings: `9`

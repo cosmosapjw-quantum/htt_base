@@ -1,9 +1,10 @@
 {
-  "artifact_id": "common.manuscript.ver2_pack_figure.fig_ver2d_mio_predictive_residuals",
+  "allowed_use": "internal_only",
+  "artifact_id": "common.ver2.figure.d",
+  "artifact_mode": "governance_diagnostic",
   "artifact_path": "figures/paper/ver2_generated/fig_ver2d_mio_predictive_residuals.png",
+  "caption_policy": [],
   "caveats": [
-    "public_grade=production-grade",
-    "production_status=production_candidate",
     "Predictive residual atlas is a diagnostic model/data comparison surface; it must not be merged with HTT posterior evidence or reinterpreted as a truth certificate.",
     "tsc_domain_status=valid_one_field",
     "tsc_trace_source_adequacy=adequate",
@@ -15,39 +16,47 @@
     "no_runtime_decision_ownership",
     "propagation_pending:EE,TE,TT",
     "claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory",
-    "Figure is generated from current VER2 pack JSON artifacts, not from a native low-ell solver.",
-    "No Bianchi family-ID or geometry-detection claim is made.",
-    "Pack-level labels are provenance and validation-coverage labels only."
+    "Source-pack readiness labels are provenance only and are not promoted into the manuscript figure lane.",
+    "Manuscript figure lane is diagnostic-only regardless of source-pack readiness vocabulary."
   ],
-  "claim_tier": "conditional",
-  "code_version": "ver2-pack-figure-v1",
-  "config_hash": "sha256:167228c348c1651943cb618829c008627521110cc484ace2d957158b8b4234af",
-  "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
+  "claim_tier": "diagnostic_only",
+  "code_version": "ver2-d1",
+  "config_hash": "c0da1a4cfd575613",
+  "created_by": "scripts.ver2_artifact_export.py",
   "failed_gates": [],
-  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase conservative",
-  "git_commit": "6649e04",
-  "git_commit_or_worktree_state": "6649e04+dirty",
+  "generating_command": "python scripts/ver2_artifact_export.py",
+  "git_commit": "30684e52ffae85f59505e6b7e817ae01ba08db6e",
+  "git_commit_or_worktree_state": "30684e5+dirty",
   "implementation_scope": "common",
   "input_hashes": [
-    "docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json:sha256:c2ce199a4aaa5bc30a1dff747c665db53ab8a7c26b175f6470d04b1840ee464f",
-    "scripts/build_expanded_manuscript_figure_suite.py:sha256:7fb41e2bfb1e7d1f31a5bc4bab7c54d1aac2b2b1fa9e1e4be6b37fe8aee904c0"
+    "mio.predictive_residuals.certificate",
+    "tsc.ver2.export.overlay",
+    "tsc.ver2.export.active_service_bundle",
+    "tsc.ver2.export.policy_ledger"
   ],
   "null_mock_status": "pack_declared_or_not_refreshed",
+  "numeric_payload_path": "",
   "owner": "COMMON",
-  "passed_gates": [
-    "ver2_pack_json_loaded",
-    "figure_manifest_validated"
-  ],
-  "production_status": "production_candidate",
-  "required_gates": [
-    "manifest_sidecar_before_manuscript_use"
-  ],
-  "schema_version": "artifact-manifest-v2",
+  "passed_gates": [],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [],
+  "publication_gates": {},
+  "report_generation_gates": {},
+  "required_gates": [],
+  "schema_version": "ver2-v9",
+  "science_promotion_gates": {},
   "sky_support_status": "pending_or_unknown_for_existing_directional_artifacts",
   "statistics_definitions": {
-    "manuscript_role": "current_code_diagnostic",
-    "pack_id": "D",
-    "source_pack_json": "docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json"
+    "result_pack_id": "D",
+    "source_artifact_ids": [
+      "mio.predictive_residuals.certificate",
+      "tsc.ver2.export.overlay",
+      "tsc.ver2.export.active_service_bundle",
+      "tsc.ver2.export.policy_ledger"
+    ],
+    "source_pack_claim_tier": "conditional",
+    "surface": "PaperFigureExport",
+    "topic": "mio_residual_atlas"
   },
   "transfer_source": "VER2_pack_export_context_external_or_schema_bound"
 }

@@ -14,6 +14,7 @@ artifacts produced from the current VER2 code surface. It emits:
 Usage:
     venv/bin/python scripts/ver2_artifact_export.py
     venv/bin/python scripts/ver2_artifact_export.py --check
+    venv/bin/python scripts/ver2_artifact_export.py --refresh-runtime-evidence
 """
 from __future__ import annotations
 
@@ -67,7 +68,11 @@ from bass.runtime import (  # noqa: E402
 )
 from bass.spectrum import CutoffCampaignSpec  # noqa: E402
 from bass.species.registry import SpeciesBackgroundRegistry  # noqa: E402
-from bass.validation import build_representative_family_sweep_evidence  # noqa: E402
+from bass.validation import (  # noqa: E402
+    ExecutableCampaignEvidence,
+    ExecutableCheckEvidence,
+    build_representative_family_sweep_evidence,
+)
 from common.claim_ledger import claim_entry_to_dict  # noqa: E402
 from common.contracts import (  # noqa: E402
     ArtifactManifest,
@@ -112,11 +117,26 @@ MANUSCRIPT_GEN = REPO_ROOT / "docs" / "manuscript" / "generated"
 FIGURE_ROOT = REPO_ROOT / "figures" / "paper"
 FIGURE_GEN = FIGURE_ROOT / "ver2_generated"
 ARTIFACT_GEN = VER2_GEN / "artifacts"
+FAMILY_SWEEP_ARTIFACT = ARTIFACT_GEN / "bass_ver2_export_representative_family_sweep.json"
 STATUS_JSON = VER2_GEN / "status_snapshot.json"
 CLAIM_JSON = VER2_GEN / "claim_ledger.json"
 TOPIC_MAP_JSON = VER2_GEN / "FIGURE_GALLERY_TOPIC_MAP.json"
 TOPIC_MAP_MD = VER2_GEN / "FIGURE_GALLERY_TOPIC_MAP.md"
 FIGURE_GEN_INDEX = FIGURE_GEN / "INDEX.md"
+
+CACHED_ARTIFACT_RECORDS = {
+    "observable": ("A", "bass_ver2_export_observable_vector.json"),
+    "atlas": ("A", "bass_ver2_export_atlas_entry_lite.json"),
+    "mes": ("A", "bass_ver2_export_full_cov_mes_report.json"),
+    "departure": ("C", "common_ver2_export_departure_report.json"),
+    "discrimination": ("B", "htt_ver2_export_discrimination_matrix.json"),
+    "overlay": ("D", "tsc_ver2_export_overlay.json"),
+    "active_service": ("D", "tsc_ver2_export_active_service_bundle.json"),
+    "policy_ledger": ("D", "tsc_ver2_export_policy_ledger.json"),
+    "mio": ("D", "mio_predictive_residuals_certificate.json"),
+    "validation_registry": ("E", "common_ver2_validation_registry_summary.json"),
+    "family_sweep": ("E", "bass_ver2_export_representative_family_sweep.json"),
+}
 
 CLAIM_TIER_ORDER = {
     "blocked": 0,
@@ -154,6 +174,8 @@ MANUSCRIPT_ROLE_BY_PACK = {
     "D": "main-text conditional residual-atlas check; not truth certification or posterior evidence",
     "E": "appendix-only validation coverage matrix; warn campaigns remain no-claim gates",
 }
+FIGURE_MANUSCRIPT_CLAIM_TIER = "diagnostic_only"
+FIGURE_MANUSCRIPT_PRODUCTION_STATUS = "diagnostic_only"
 
 
 @dataclass(frozen=True)
@@ -199,7 +221,34 @@ def _resolve_git_commit() -> str:
     return result.stdout.strip() or "unknown"
 
 
+def _resolve_worktree_state() -> str:
+    try:
+        short = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=REPO_ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        ).stdout.strip()
+        status = subprocess.run(
+            ["git", "status", "--short"],
+            cwd=REPO_ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        ).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return "unknown"
+    if not short:
+        return "unknown"
+    return f"{short}+dirty" if status else short
+
+
 CURRENT_COMMIT = _resolve_git_commit()
+CURRENT_WORKTREE_STATE = _resolve_worktree_state()
+SELF_REFERENTIAL_MANIFEST_FIELDS = ("git_commit", "git_commit_or_worktree_state")
 
 
 def _field_names(contract: type[object]) -> list[str]:
@@ -242,6 +291,128 @@ def _json_ready(value: object) -> object:
     if isinstance(value, (list, tuple)):
         return [_json_ready(item) for item in value]
     return value
+
+
+def _tuple_of_str(payload: dict[str, object], key: str) -> tuple[str, ...]:
+    value = payload.get(key)
+    if not isinstance(value, list):
+        raise ValueError(f"cached representative family sweep has invalid {key!r}")
+    return tuple(str(item) for item in value)
+
+
+def _campaign_evidence_from_payload(
+    payload: dict[str, object],
+) -> ExecutableCampaignEvidence:
+    checks_payload = payload.get("checks")
+    if not isinstance(checks_payload, list):
+        raise ValueError("cached representative family sweep has invalid checks")
+    checks = tuple(
+        ExecutableCheckEvidence(
+            check_id=str(row["check_id"]),
+            category=str(row["category"]),
+            passed=bool(row["passed"]),
+            summary=str(row["summary"]),
+            metric_name=None
+            if row.get("metric_name") is None
+            else str(row["metric_name"]),
+            metric_value=None
+            if row.get("metric_value") is None
+            else float(row["metric_value"]),
+            threshold=None if row.get("threshold") is None else float(row["threshold"]),
+            notes=tuple(str(item) for item in row.get("notes", [])),
+        )
+        for row in checks_payload
+        if isinstance(row, dict)
+    )
+    return ExecutableCampaignEvidence(
+        campaign_id=str(payload["campaign_id"]),
+        status=str(payload["status"]),  # type: ignore[arg-type]
+        bianchi_type=str(payload["bianchi_type"]),
+        cutoffs=tuple(int(item) for item in payload["cutoffs"]),  # type: ignore[index]
+        theorem_refs=_tuple_of_str(payload, "theorem_refs"),
+        null_manifest_refs=_tuple_of_str(payload, "null_manifest_refs"),
+        injection_manifest_refs=_tuple_of_str(payload, "injection_manifest_refs"),
+        runbook_refs=_tuple_of_str(payload, "runbook_refs"),
+        no_claim_conditions=_tuple_of_str(payload, "no_claim_conditions"),
+        checks=checks,
+        artifact_refs=_tuple_of_str(payload, "artifact_refs"),
+        preferred_axis_delta_deg=float(payload["preferred_axis_delta_deg"]),
+        tier_a_tier_b_max_relative_l2=float(payload["tier_a_tier_b_max_relative_l2"]),
+        cutoff_max_relative_delta=float(payload["cutoff_max_relative_delta"]),
+        notes=_tuple_of_str(payload, "notes"),
+    )
+
+
+def _load_representative_family_sweep_evidence_cache() -> ExecutableCampaignEvidence:
+    try:
+        artifact_payload = json.loads(FAMILY_SWEEP_ARTIFACT.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise RuntimeError(
+            "representative family sweep cache is missing; rerun with "
+            "--refresh-runtime-evidence after accepting the runtime cost"
+        ) from exc
+    if not isinstance(artifact_payload, dict):
+        raise ValueError("representative family sweep cache is not a JSON object")
+    payload = artifact_payload.get("payload")
+    if not isinstance(payload, dict) or not isinstance(payload.get("evidence"), dict):
+        raise ValueError("representative family sweep cache has no payload.evidence object")
+    return _campaign_evidence_from_payload(payload["evidence"])
+
+
+def _manifest_from_payload(payload: object, *, source_path: Path) -> ArtifactManifest:
+    if not isinstance(payload, dict):
+        raise ValueError(f"{source_path} has no manifest object")
+    allowed = {field.name for field in fields(ArtifactManifest)}
+    manifest_kwargs = {name: payload[name] for name in allowed if name in payload}
+    try:
+        return ArtifactManifest(**manifest_kwargs)  # type: ignore[arg-type]
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{source_path} has an invalid manifest payload") from exc
+
+
+def _artifact_record_from_cache(
+    *,
+    key: str,
+    pack_id: str,
+    source_path: Path,
+) -> ArtifactRecord:
+    try:
+        payload = json.loads(source_path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise RuntimeError(
+            f"cached VER2 artifact {source_path.relative_to(REPO_ROOT)} is missing; "
+            "rerun with --refresh-runtime-evidence after accepting the runtime cost"
+        ) from exc
+    if not isinstance(payload, dict):
+        raise ValueError(f"{source_path} is not a JSON object")
+    manifest = _manifest_from_payload(payload.get("manifest"), source_path=source_path)
+    artifact_payload = payload.get("payload")
+    if not isinstance(artifact_payload, dict):
+        raise ValueError(f"{source_path} has no payload object")
+    return ArtifactRecord(
+        key=key,
+        title=str(payload["title"]),
+        topic=str(payload["topic"]),
+        pack_id=pack_id,
+        manifest=manifest,
+        payload=artifact_payload,
+        summary=str(payload["summary"]),
+        allowed_claims=tuple(str(item) for item in payload.get("allowed_claims", [])),
+        forbidden_claims=tuple(str(item) for item in payload.get("forbidden_claims", [])),
+        evidence_refs=tuple(str(item) for item in payload.get("evidence_refs", [])),
+        notes=tuple(str(item) for item in payload.get("notes", [])),
+    )
+
+
+def _build_cached_export_records() -> dict[str, ArtifactRecord]:
+    return {
+        key: _artifact_record_from_cache(
+            key=key,
+            pack_id=pack_id,
+            source_path=ARTIFACT_GEN / filename,
+        )
+        for key, (pack_id, filename) in CACHED_ARTIFACT_RECORDS.items()
+    }
 
 
 def _dump_json(path: Path, payload: object) -> str:
@@ -541,7 +712,10 @@ def _forward_output_from_solver_output(
     )
 
 
-def _build_export_records() -> dict[str, ArtifactRecord]:
+def _build_export_records(
+    *,
+    refresh_runtime_evidence: bool = False,
+) -> dict[str, ArtifactRecord]:
     tier_b_run, tier_a_run = _build_live_runtime_runs()
     solver_output = tier_b_run.solver_output
     observable, atlas = _observable_and_atlas(solver_output)
@@ -762,7 +936,10 @@ def _build_export_records() -> dict[str, ArtifactRecord]:
             "theorem_count": len(registry_payload["theorem_map"]),
         },
     )
-    family_sweep_evidence = build_representative_family_sweep_evidence()
+    if refresh_runtime_evidence:
+        family_sweep_evidence = build_representative_family_sweep_evidence()
+    else:
+        family_sweep_evidence = _load_representative_family_sweep_evidence_cache()
     family_sweep_manifest = _make_manifest(
         artifact_id="bass.ver2.export.representative_family_sweep",
         artifact_path=_artifact_path("bass_ver2_export_representative_family_sweep"),
@@ -1415,7 +1592,7 @@ def _render_result_pack_summary_tex(packs: tuple[PackRecord, ...]) -> str:
         (
             f"{_escape_tex(pack.pack_id)} & {_escape_tex(pack.title)} & "
             f"\\texttt{{{_escape_tex(pack.claim_tier)}}} & "
-            f"\\texttt{{{_escape_tex(pack.production_status)}}} & "
+            "\\texttt{diagnostic\\_only} & "
             f"{_escape_tex(_manuscript_role(pack))} \\\\"
         )
         for pack in packs
@@ -1430,7 +1607,7 @@ The current crosswalk is:
 \\begin{{center}}
 \\begin{{tabular}}{{lp{{3.1cm}}p{{2.2cm}}p{{2.7cm}}p{{6.4cm}}}}
 \\hline
-Pack & Title & Claim tier & Production status & Manuscript use \\\\
+Pack & Title & Source claim tier & Manuscript lane & Manuscript use \\\\
 \\hline
 {rows}
 \\hline
@@ -1455,10 +1632,12 @@ def _render_figure_manifest_status_tex(
 % Generated by scripts/ver2_artifact_export.py
 \\paragraph{{VER2 figure-promotion status.}}
 The shared manifest audit currently reports {len(ready)} manifest-ready VER2 figure
-bases and {blocked} blocked legacy bases. The promoted conditional figures are
-{conditional_text}. Exploratory appendix-only figures are {exploratory_text}. All
-remaining legacy paper figures stay blocked until a canonical manifest and a
-caption-tier check are present.
+bases and {blocked} blocked legacy bases. Source-conditional figures are
+{conditional_text}, but the manuscript lane remains diagnostic-only unless
+native, null, covariance, and claim-tier promotion gates are separately closed.
+Exploratory appendix-only figures are {exploratory_text}. All remaining legacy
+paper figures stay blocked until a canonical manifest and a caption-tier check
+are present.
 """
     ).strip() + "\n"
 
@@ -1597,7 +1776,7 @@ def _render_figure_index(packs: tuple[PackRecord, ...]) -> str:
     rows = "\n".join(
         (
             f"| `{pack.figure_base}` | `{pack.pack_id}` | {pack.title} | "
-            f"`{pack.claim_tier}` | `{pack.production_status}` |"
+            f"`{pack.claim_tier}` | `{FIGURE_MANUSCRIPT_PRODUCTION_STATUS}` |"
         )
         for pack in packs
     )
@@ -1609,7 +1788,7 @@ def _render_figure_index(packs: tuple[PackRecord, ...]) -> str:
             "This directory contains manifest-backed D-lane figures emitted directly",
             "from current VER2 artifacts.",
             "",
-            "| Figure base | Pack | Title | Claim tier | Production status |",
+            "| Figure base | Pack | Title | Source claim tier | Manuscript lane |",
             "| --- | --- | --- | --- | --- |",
             rows,
         )
@@ -1617,15 +1796,14 @@ def _render_figure_index(packs: tuple[PackRecord, ...]) -> str:
 
 
 def _caption_text(pack: PackRecord) -> str:
-    caveat_text = ", ".join(pack.caveats[:4]) if pack.caveats else "none"
     artifacts = ", ".join(record.manifest.artifact_id for record in pack.artifacts)
     return "\n".join(
         (
-            f"Claim tier: {pack.claim_tier}.",
+            f"Claim tier: {FIGURE_MANUSCRIPT_CLAIM_TIER}.",
             f"Result Pack {pack.pack_id}: {pack.title}.",
             "This figure is generated only from manifest-backed VER2 artifacts.",
             f"Source artifacts: {artifacts}.",
-            f"Caveats: {caveat_text}.",
+            "Caveats: see sidecar manifest; manuscript use is diagnostic only.",
         )
     ) + "\n"
 
@@ -1635,6 +1813,7 @@ def _caption_claim_violation(caption: str, claim_tier: str) -> str | None:
     if f"claim tier: {claim_tier}." not in lowered:
         return "missing_claim_tier_tag"
     stronger_tokens = {
+        "diagnostic_only": ("exploratory", "conditional", "validated", "confirmed", "detected"),
         "blocked": ("exploratory", "conditional", "validated", "confirmed", "detected"),
         "exploratory": ("conditional", "validated", "confirmed", "detected"),
         "conditional": ("validated", "confirmed", "detected"),
@@ -1646,25 +1825,28 @@ def _caption_claim_violation(caption: str, claim_tier: str) -> str | None:
 
 
 def _pack_figure_manifest(pack: PackRecord) -> ArtifactManifest:
-    source_manifests = tuple(record.manifest for record in pack.artifacts)
-    claim_tier = pack.claim_tier
-    production_status = _derive_export_production_status(
-        source_manifests,
-        claim_tier=claim_tier,
+    caveats = tuple(
+        caveat
+        for caveat in pack.caveats
+        if not caveat.lower().startswith(("public_grade=", "production_status="))
+    ) + (
+        "Source-pack readiness labels are provenance only and are not promoted into the manuscript figure lane.",
+        "Manuscript figure lane is diagnostic-only regardless of source-pack readiness vocabulary.",
     )
     return _make_manifest(
         artifact_id=f"common.ver2.figure.{pack.pack_id.lower()}",
         artifact_path=_figure_manifest_path(pack.figure_base),
         owner="COMMON",
         implementation_scope="common",
-        claim_tier=claim_tier,
-        production_status=production_status,
+        claim_tier=FIGURE_MANUSCRIPT_CLAIM_TIER,
+        production_status=FIGURE_MANUSCRIPT_PRODUCTION_STATUS,
         input_hashes=tuple(record.manifest.artifact_id for record in pack.artifacts),
-        caveats=pack.caveats,
+        caveats=caveats,
         statistics_definitions={
             "surface": "PaperFigureExport",
             "result_pack_id": pack.pack_id,
             "topic": pack.topic,
+            "source_pack_claim_tier": pack.claim_tier,
             "source_artifact_ids": [record.manifest.artifact_id for record in pack.artifacts],
         },
     )
@@ -1784,15 +1966,26 @@ def _plot_pack_figure(pack: PackRecord, base_path: Path) -> tuple[str, dict[str,
     png_path = base_path.with_suffix(".png")
     pdf_path = base_path.with_suffix(".pdf")
     fig.savefig(png_path, dpi=300)
-    fig.savefig(pdf_path)
+    if pdf_path.exists():
+        pdf_path.unlink()
     plt.close(fig)
     caption = _caption_text(pack)
     manifest = _pack_figure_manifest(pack)
+    manifest_payload = asdict(manifest)
+    manifest_payload.update(
+        {
+            "transfer_source": "VER2_pack_export_context_external_or_schema_bound",
+            "sky_support_status": "pending_or_unknown_for_existing_directional_artifacts",
+            "null_mock_status": "pack_declared_or_not_refreshed",
+            "generating_command": "python scripts/ver2_artifact_export.py",
+            "git_commit_or_worktree_state": CURRENT_WORKTREE_STATE,
+        }
+    )
     caption_path = base_path.with_suffix(".caption.txt")
     manifest_path = base_path.with_name(base_path.name + ".manifest.json")
     caption_path.write_text(caption, encoding="utf-8")
-    manifest_path.write_text(_dump_json(manifest_path, asdict(manifest)), encoding="utf-8")
-    return caption, asdict(manifest)
+    manifest_path.write_text(_dump_json(manifest_path, manifest_payload), encoding="utf-8")
+    return caption, manifest_payload
 
 
 def _generate_pack_figures(
@@ -1905,7 +2098,7 @@ def _scan_figures(root: Path, *, generated_root: Path | None = None) -> list[dic
         if row["has_caption"]:
             assets.append("caption")
         row["assets"] = ", ".join(assets) or "none"
-        if not (row["has_png"] and row["has_pdf"] and row["has_caption"]):
+        if not (row["has_png"] and row["has_caption"]):
             row["export_status"] = "blocked_incomplete_assets"
             continue
         if not row["has_manifest"]:
@@ -2033,6 +2226,20 @@ def _write_outputs(outputs: dict[Path, str]) -> None:
         path.write_text(content.rstrip() + "\n", encoding="utf-8")
 
 
+def _normalised_generated_manifest_bytes(path: Path) -> bytes:
+    data = path.read_bytes()
+    try:
+        payload = json.loads(data.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return data
+    if not isinstance(payload, dict):
+        return data
+    for field in SELF_REFERENTIAL_MANIFEST_FIELDS:
+        if field in payload:
+            payload[field] = "<self-referential>"
+    return _dump_json(path, payload).encode("utf-8")
+
+
 def _generated_figure_file_bytes(root: Path) -> dict[str, bytes]:
     if not root.exists():
         return {}
@@ -2040,10 +2247,10 @@ def _generated_figure_file_bytes(root: Path) -> dict[str, bytes]:
     for path in sorted(root.rglob("*")):
         if not path.is_file():
             continue
-        if path.suffix == ".png" or path.name.endswith(".caption.txt") or path.name.endswith(
-            ".manifest.json"
-        ):
+        if path.suffix == ".png" or path.name.endswith(".caption.txt"):
             payload[path.relative_to(root).as_posix()] = path.read_bytes()
+        elif path.name.endswith(".manifest.json"):
+            payload[path.relative_to(root).as_posix()] = _normalised_generated_manifest_bytes(path)
         elif path.suffix == ".pdf":
             payload[path.relative_to(root).as_posix()] = b"present"
     return payload
@@ -2086,8 +2293,15 @@ def _check_outputs(
     return 0
 
 
-def build_export_bundle() -> tuple[dict[str, ArtifactRecord], tuple[PackRecord, ...]]:
-    records = _build_export_records()
+def build_export_bundle(
+    *,
+    refresh_runtime_evidence: bool = False,
+) -> tuple[dict[str, ArtifactRecord], tuple[PackRecord, ...]]:
+    records = (
+        _build_export_records(refresh_runtime_evidence=True)
+        if refresh_runtime_evidence
+        else _build_cached_export_records()
+    )
     packs = _build_pack_records(records)
     return records, packs
 
@@ -2099,9 +2313,19 @@ def main() -> int:
         action="store_true",
         help="fail if generated export surfaces are missing or stale",
     )
+    parser.add_argument(
+        "--refresh-runtime-evidence",
+        action="store_true",
+        help=(
+            "recompute live runtime-backed export evidence instead of consuming "
+            "the existing manifest-backed cache"
+        ),
+    )
     args = parser.parse_args()
 
-    records, packs = build_export_bundle()
+    records, packs = build_export_bundle(
+        refresh_runtime_evidence=args.refresh_runtime_evidence,
+    )
     if args.check:
         with tempfile.TemporaryDirectory() as temp_dir:
             generated_root = Path(temp_dir)

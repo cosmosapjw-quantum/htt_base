@@ -10,8 +10,11 @@
     "posterior_claim"
   ],
   "manifest": {
+    "allowed_use": "internal_only",
     "artifact_id": "mio.predictive_residuals.certificate",
+    "artifact_mode": "governance_diagnostic",
     "artifact_path": "docs/ver2_upgrade/generated/artifacts/mio_predictive_residuals_certificate.json",
+    "caption_policy": [],
     "caveats": [
       "public_grade=production-grade",
       "production_status=production_candidate"
@@ -29,17 +32,22 @@
       "bass.ver2.export.forward.tier_a_validation",
       "bass.ver2.export.forward.tier_b_runtime"
     ],
+    "numeric_payload_path": "",
     "owner": "MIO",
     "passed_gates": [
       "atlas_ready",
       "covariance_ready"
     ],
     "production_status": "production_candidate",
+    "promotion_blockers": [],
+    "publication_gates": {},
+    "report_generation_gates": {},
     "required_gates": [
       "atlas_ready",
       "covariance_ready"
     ],
     "schema_version": "ver2-v7",
+    "science_promotion_gates": {},
     "statistics_definitions": {
       "channel": "predictive_residuals",
       "report_type": "residual_atlas"

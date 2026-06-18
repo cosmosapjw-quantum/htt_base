@@ -13,6 +13,6 @@
 | Artifact | Owner | Claim tier | Production status | Summary |
 | --- | --- | --- | --- | --- |
 | `mio.predictive_residuals.certificate` | `MIO` | `conditional` | `production_candidate` | MIO residual atlas stays diagnostic and owner-separated from HTT posterior semantics. |
-| `tsc.ver2.export.overlay` | `TSC` | `conditional` | `production_candidate` | TSC overlay remains advisory and records pending propagation explicitly. |
-| `tsc.ver2.export.active_service_bundle` | `TSC` | `conditional` | `production_candidate` | TSC active-service bundle keeps residual/source/projection caveats machine-readable for downstream HTT/MIO/BASS handoffs. |
-| `tsc.ver2.export.policy_ledger` | `TSC` | `conditional` | `production_candidate` | TSC policy ledger exposes failed no-overclaim flags, claim-limited channels, and publication blockers as a separate advisory surface. |
+| `tsc.ver2.export.overlay` | `TSC_LEGACY` | `conditional` | `production_candidate` | TSC overlay remains advisory and records pending propagation explicitly. |
+| `tsc.ver2.export.active_service_bundle` | `TSC_LEGACY` | `conditional` | `production_candidate` | TSC active-service bundle keeps residual/source/projection caveats machine-readable for downstream HTT/MIO/BASS handoffs. |
+| `tsc.ver2.export.policy_ledger` | `TSC_LEGACY` | `conditional` | `production_candidate` | TSC policy ledger exposes failed no-overclaim flags, claim-limited channels, and publication blockers as a separate advisory surface. |
