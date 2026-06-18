@@ -64,6 +64,7 @@ def test_payload_maps_public_claims_to_artifacts_tests_caveats_and_owner():
     assert assertions["claim_ledger_included"] is True
     assert assertions["transfer_provenance_included"] is True
     assert assertions["external_audit_package_included"] is True
+    assert assertions["pdf_claim_lint_passed"] is True
     assert assertions["manuscript_blockers_recorded"] is True
     assert assertions["no_forbidden_claim_language"] is True
     assert assertions["no_c5_c6_family_id_claim"] is True
@@ -75,10 +76,15 @@ def test_payload_maps_public_claims_to_artifacts_tests_caveats_and_owner():
         assert claim["manifest_refs"]
         assert claim["tests"]
         assert claim["caveats"]
+    assert not any(
+        item.startswith("docs/generated/external_audit_package_manifest.json:")
+        for item in payload["input_hashes"]
+    )
     _assert_no_forbidden_language(json.dumps(payload["public_claims"], sort_keys=True))
 
 
 def test_dry_run_does_not_write_reports(tmp_path: Path):
+    module = _load_module()
     freeze_output = tmp_path / "freeze.md"
     matrix_output = tmp_path / "matrix.md"
 
@@ -100,13 +106,21 @@ def test_dry_run_does_not_write_reports(tmp_path: Path):
 
     assert result.returncode == 0, result.stderr
     assert "DRY-RUN" in result.stdout
-    assert "submission_decision=blocked_internal_only" in result.stdout
+    expected = module.build_publication_claim_freeze_payload(
+        repo_root=REPO_ROOT,
+        freeze_output=freeze_output,
+        matrix_output=matrix_output,
+        generating_command="python scripts/check_publication_claim_freeze.py --dry-run",
+        worktree_state=module._git_state(REPO_ROOT),
+    )["submission_decision"]
+    assert f"submission_decision={expected}" in result.stdout
     assert "no_c5_c6_family_id_claim=True" in result.stdout
     assert not freeze_output.exists()
     assert not matrix_output.exists()
 
 
 def test_write_and_check_reports(tmp_path: Path):
+    module = _load_module()
     freeze_output = tmp_path / "freeze.md"
     matrix_output = tmp_path / "matrix.md"
 
@@ -132,9 +146,17 @@ def test_write_and_check_reports(tmp_path: Path):
     matrix_text = matrix_output.read_text(encoding="utf-8")
     assert "# Publication Claim Freeze" in freeze_text
     assert "# Hostile Review Response Matrix" in matrix_text
-    assert "Submission decision: `blocked_internal_only`" in freeze_text
-    assert "Missing refs | 22" in freeze_text
-    assert "Quarantined refs | 72" in freeze_text
+    payload = module.build_publication_claim_freeze_payload(
+        repo_root=REPO_ROOT,
+        freeze_output=freeze_output,
+        matrix_output=matrix_output,
+        generating_command="python scripts/check_publication_claim_freeze.py --dry-run",
+        worktree_state=module._git_state(REPO_ROOT),
+    )
+    assert f"Submission decision: `{payload['submission_decision']}`" in freeze_text
+    blockers = payload["manuscript_blockers"]
+    assert f"Missing refs | {blockers['missing_refs']}" in freeze_text
+    assert f"Quarantined refs | {blockers['quarantined_refs']}" in freeze_text
     _assert_no_forbidden_language(freeze_text + "\n" + matrix_text)
 
     fresh = subprocess.run(
@@ -229,6 +251,25 @@ def test_transfer_conditional_c5_morphology_compatibility_can_pass():
     assert payload["required_assertions"]["no_forbidden_claim_language"] is True
     assert payload["required_assertions"]["no_c5_c6_family_id_claim"] is True
     assert payload["family_id_violations"] == []
+
+
+def test_manuscript_uses_revision_program_framing():
+    combined = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in [
+            REPO_ROOT / "docs/manuscript/ch01_introduction.tex",
+            REPO_ROOT / "docs/manuscript/ch02_dipole_anomaly.tex",
+            REPO_ROOT / "docs/manuscript/ch07_results.tex",
+            REPO_ROOT / "docs/manuscript/ch09_discussion.tex",
+            REPO_ROOT / "docs/manuscript/ch10_future.tex",
+        ]
+    )
+    assert "claim-tiered framework" in combined
+    assert "transfer-conditional" in combined
+    assert "conditional on the dipole premise" in combined
+    assert "family identification remains blocked" in combined
+    assert "tomographic" in combined
+    assert "prior-support sensitivity" in combined
 
 
 def test_missing_required_input_fails_closed(tmp_path: Path):

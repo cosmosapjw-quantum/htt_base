@@ -22,6 +22,8 @@ import yaml
 
 from common.claim_ledger import claim_entry_to_dict
 from common.contracts import (
+    AllowedUse,
+    ArtifactMode,
     ClaimLedgerEntry,
     ClaimTier,
     ImplementationScope,
@@ -32,6 +34,7 @@ from common.contracts import (
 
 DEFAULT_BACKLOG_PATH = Path("docs/codex_handoff/pr_backlog.yaml")
 DEFAULT_STATUS_PATH = Path("docs/codex_handoff/pr_status.yaml")
+DEFAULT_GATE_OUTPUTS_NAME = "artifact_gate_outputs.yaml"
 
 _OWNER_SCOPE = {
     Owner.COMMON: ImplementationScope.COMMON,
@@ -91,6 +94,7 @@ def build_status_bundle(
     *,
     backlog_path: str | Path = DEFAULT_BACKLOG_PATH,
     status_path: str | Path = DEFAULT_STATUS_PATH,
+    gate_outputs_path: str | Path | None = None,
     source_commit: str | None = None,
     generated_on: str | None = None,
     generating_command: str | None = None,
@@ -99,8 +103,13 @@ def build_status_bundle(
 
     resolved_backlog = Path(backlog_path)
     resolved_status = Path(status_path)
+    resolved_gate_outputs = _resolve_gate_outputs_path(
+        resolved_backlog,
+        gate_outputs_path=gate_outputs_path,
+    )
     backlog = _load_yaml_mapping(resolved_backlog)
     status = _load_yaml_mapping(resolved_status)
+    gate_outputs = _load_gate_outputs(resolved_gate_outputs)
     prs = _ordered_prs(backlog)
     completed = _status_set(status.get("completed"))
     blocked = _status_set(status.get("blocked"))
@@ -122,7 +131,12 @@ def build_status_bundle(
             blocked=blocked,
             in_progress=in_progress,
         )
-        claim_tier = ClaimTier.BLOCKED if state == "blocked" else ClaimTier.DIAGNOSTIC_ONLY
+        promotion = _promotion_profile(
+            pr_id=pr_id,
+            state=state,
+            gate_outputs=gate_outputs,
+        )
+        claim_tier = promotion["claim_tier"]
         implemented = state == "completed"
         status_rows.append(
             snapshot_entry_to_dict(
@@ -133,9 +147,17 @@ def build_status_bundle(
                     claim_tier=claim_tier,
                     implemented=implemented,
                     smoke_tested=implemented,
-                    production_validated=False,
-                    manuscript_used=False,
+                    production_validated=bool(promotion["production_validated"]),
+                    manuscript_used=bool(promotion["manuscript_used"]),
                     source_commit=source,
+                    artifact_readiness=str(promotion["artifact_readiness"]),
+                    artifact_mode=ArtifactMode(str(promotion["artifact_mode"])),
+                    allowed_use=AllowedUse(str(promotion["allowed_use"])),
+                    caption_policy=tuple(promotion["caption_policy"]),
+                    promotion_blockers=tuple(promotion["promotion_blockers"]),
+                    report_generation_gates=dict(promotion["report_generation_gates"]),
+                    science_promotion_gates=dict(promotion["science_promotion_gates"]),
+                    publication_gates=dict(promotion["publication_gates"]),
                 )
             )
         )
@@ -163,11 +185,19 @@ def build_status_bundle(
             )
         )
 
-    input_hashes = _input_hashes((resolved_backlog, resolved_status))
+    input_paths = [resolved_backlog, resolved_status]
+    if resolved_gate_outputs is not None:
+        input_paths.append(resolved_gate_outputs)
+    input_hashes = _input_hashes(input_paths)
     config_hash = _config_hash(
         {
             "backlog": _display_path(resolved_backlog),
             "status": _display_path(resolved_status),
+            "gate_outputs": (
+                _display_path(resolved_gate_outputs)
+                if resolved_gate_outputs is not None
+                else "not_present"
+            ),
             "input_hashes": input_hashes,
             "total_prs": len(prs),
             "completed_prs": len(completed),
@@ -197,7 +227,8 @@ def build_status_bundle(
         "caveats": [
             "DAG completion is project bookkeeping only and is not scientific readiness.",
             "Rows never promote external-transfer outputs to native solver validation.",
-            "production_validated remains false until explicit native/null/mask/covariance gates exist.",
+            "DAG completion, artifact readiness, allowed use, and production validation are separate axes.",
+            "production_validated remains false unless an explicit artifact gate output says otherwise.",
         ],
         "generating_command": command,
         "source_commit": source,
@@ -216,6 +247,10 @@ def render_status_matrix(bundle: StatusBundle) -> str:
     metadata = bundle.metadata
     by_owner = Counter(str(row["owner"]) for row in bundle.status_rows)
     by_state = Counter(_state_from_row(row) for row in bundle.status_rows)
+    by_claim_tier = Counter(str(row["claim_tier"]) for row in bundle.status_rows)
+    by_readiness = Counter(str(row["artifact_readiness"]) for row in bundle.status_rows)
+    by_allowed_use = Counter(str(row["allowed_use"]) for row in bundle.status_rows)
+    by_artifact_mode = Counter(str(row["artifact_mode"]) for row in bundle.status_rows)
     owner_lines = "\n".join(
         f"| `{owner}` | {count} |" for owner, count in sorted(by_owner.items())
     )
@@ -255,9 +290,31 @@ def render_status_matrix(bundle: StatusBundle) -> str:
             "| --- | ---: |",
             state_lines,
             "",
+            "| Claim Tier | Rows |",
+            "| --- | ---: |",
+            _counter_table_lines(by_claim_tier),
+            "",
+            "| Artifact Readiness | Rows |",
+            "| --- | ---: |",
+            _counter_table_lines(by_readiness),
+            "",
+            "| Allowed Use | Rows |",
+            "| --- | ---: |",
+            _counter_table_lines(by_allowed_use),
+            "",
+            "| Artifact Mode | Rows |",
+            "| --- | ---: |",
+            _counter_table_lines(by_artifact_mode),
+            "",
             "This matrix is a diagnostic-only DAG rendering. It does not certify solver validation, posterior evidence, native transfer validation, or family-ID evidence.",
         )
     ) + "\n"
+
+
+def _counter_table_lines(counter: Counter[str]) -> str:
+    return "\n".join(
+        f"| `{key}` | {value} |" for key, value in sorted(counter.items())
+    )
 
 
 def _claim_ledger_notes(*, pr: Mapping[str, object], state: str) -> tuple[str, ...]:
@@ -439,11 +496,152 @@ def validate_status_matrix_matches_snapshot(
         )
 
 
+def _resolve_gate_outputs_path(
+    backlog_path: Path,
+    *,
+    gate_outputs_path: str | Path | None,
+) -> Path | None:
+    if gate_outputs_path is not None:
+        path = Path(gate_outputs_path)
+        return path if path.exists() else None
+    candidate = backlog_path.with_name(DEFAULT_GATE_OUTPUTS_NAME)
+    return candidate if candidate.exists() else None
+
+
+def _load_gate_outputs(path: Path | None) -> Mapping[str, object]:
+    if path is None:
+        return {}
+    return _load_yaml_mapping(path)
+
+
+def _promotion_profile(
+    *,
+    pr_id: str,
+    state: str,
+    gate_outputs: Mapping[str, object],
+) -> dict[str, object]:
+    defaults_by_state = {
+        "completed": {
+            "claim_tier": ClaimTier.DIAGNOSTIC_ONLY.value,
+            "artifact_readiness": "generated",
+            "artifact_mode": ArtifactMode.GOVERNANCE_DIAGNOSTIC.value,
+            "allowed_use": AllowedUse.EXTERNAL_AUDIT.value,
+            "production_validated": False,
+            "manuscript_used": False,
+            "caption_policy": ("must_state_dag_row_not_science_readiness",),
+            "promotion_blockers": ("native_solver_validation_absent",),
+            "report_generation_gates": {"dag_status_row_generated": "pass"},
+            "science_promotion_gates": {"native_solver_validation": "not_applicable"},
+            "publication_gates": {"dag_completion_not_publication_readiness": "pass"},
+        },
+        "blocked": {
+            "claim_tier": ClaimTier.BLOCKED.value,
+            "artifact_readiness": "blocked",
+            "artifact_mode": ArtifactMode.GOVERNANCE_DIAGNOSTIC.value,
+            "allowed_use": AllowedUse.INTERNAL_ONLY.value,
+            "production_validated": False,
+            "manuscript_used": False,
+            "caption_policy": ("must_state_blocker",),
+            "promotion_blockers": ("dag_status_blocked",),
+            "report_generation_gates": {"dag_status_row_generated": "pass"},
+            "science_promotion_gates": {"blocked": "fail"},
+            "publication_gates": {"blocked": "fail"},
+        },
+        "not_completed": {
+            "claim_tier": ClaimTier.DIAGNOSTIC_ONLY.value,
+            "artifact_readiness": "missing",
+            "artifact_mode": ArtifactMode.GOVERNANCE_DIAGNOSTIC.value,
+            "allowed_use": AllowedUse.INTERNAL_ONLY.value,
+            "production_validated": False,
+            "manuscript_used": False,
+            "caption_policy": ("must_state_not_completed",),
+            "promotion_blockers": ("dag_status_not_completed",),
+            "report_generation_gates": {"dag_status_row_generated": "pass"},
+            "science_promotion_gates": {"implementation_complete": "fail"},
+            "publication_gates": {"implementation_complete": "fail"},
+        },
+    }
+    base_key = (
+        "completed"
+        if state == "completed"
+        else "blocked"
+        if state == "blocked"
+        else "not_completed"
+    )
+    profile = dict(defaults_by_state[base_key])
+    defaults = gate_outputs.get("defaults")
+    if isinstance(defaults, Mapping):
+        profile.update(_profile_subset(defaults))
+    state_defaults = gate_outputs.get("state_defaults")
+    if isinstance(state_defaults, Mapping):
+        maybe_state = state_defaults.get(base_key)
+        if isinstance(maybe_state, Mapping):
+            profile.update(_profile_subset(maybe_state))
+    overrides = gate_outputs.get("pr_overrides")
+    if isinstance(overrides, Mapping):
+        maybe_override = overrides.get(pr_id)
+        if isinstance(maybe_override, Mapping):
+            profile.update(_profile_subset(maybe_override))
+    return _normalize_promotion_profile(profile)
+
+
+def _profile_subset(raw: Mapping[str, object]) -> dict[str, object]:
+    allowed = {
+        "claim_tier",
+        "artifact_readiness",
+        "artifact_mode",
+        "allowed_use",
+        "production_validated",
+        "manuscript_used",
+        "caption_policy",
+        "promotion_blockers",
+        "report_generation_gates",
+        "science_promotion_gates",
+        "publication_gates",
+    }
+    return {key: value for key, value in raw.items() if key in allowed}
+
+
+def _string_tuple(value: object) -> tuple[str, ...]:
+    if value is None:
+        return ()
+    if isinstance(value, str):
+        return (value,)
+    if isinstance(value, Sequence) and not isinstance(value, (bytes, bytearray)):
+        return tuple(str(item) for item in value)
+    raise ValueError("promotion profile list fields must be strings or lists")
+
+
+def _string_map(value: object) -> dict[str, str]:
+    if value is None:
+        return {}
+    if not isinstance(value, Mapping):
+        raise ValueError("promotion gate fields must be mappings")
+    return {str(key): str(item) for key, item in value.items()}
+
+
+def _normalize_promotion_profile(profile: Mapping[str, object]) -> dict[str, object]:
+    return {
+        "claim_tier": ClaimTier(str(profile["claim_tier"])).value,
+        "artifact_readiness": str(profile["artifact_readiness"]),
+        "artifact_mode": ArtifactMode(str(profile["artifact_mode"])).value,
+        "allowed_use": AllowedUse(str(profile["allowed_use"])).value,
+        "production_validated": bool(profile["production_validated"]),
+        "manuscript_used": bool(profile["manuscript_used"]),
+        "caption_policy": _string_tuple(profile.get("caption_policy")),
+        "promotion_blockers": _string_tuple(profile.get("promotion_blockers")),
+        "report_generation_gates": _string_map(profile.get("report_generation_gates")),
+        "science_promotion_gates": _string_map(profile.get("science_promotion_gates")),
+        "publication_gates": _string_map(profile.get("publication_gates")),
+    }
+
+
 def write_status_artifacts(
     output_path: str | Path,
     *,
     backlog_path: str | Path = DEFAULT_BACKLOG_PATH,
     status_path: str | Path = DEFAULT_STATUS_PATH,
+    gate_outputs_path: str | Path | None = None,
     source_commit: str | None = None,
     generating_command: str | None = None,
 ) -> StatusArtifactPaths:
@@ -455,6 +653,7 @@ def write_status_artifacts(
     bundle = build_status_bundle(
         backlog_path=backlog_path,
         status_path=status_path,
+        gate_outputs_path=gate_outputs_path,
         source_commit=source_commit,
         generating_command=generating_command,
     )
@@ -498,6 +697,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="Override source commit recorded in generated rows.",
     )
     parser.add_argument(
+        "--gate-outputs",
+        type=Path,
+        default=None,
+        help="Optional artifact promotion/readiness gate-output YAML.",
+    )
+    parser.add_argument(
         "--write",
         type=Path,
         required=True,
@@ -509,6 +714,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         args.write,
         backlog_path=args.backlog,
         status_path=args.status,
+        gate_outputs_path=args.gate_outputs,
         source_commit=args.source_commit,
         generating_command=command,
     )
@@ -693,7 +899,7 @@ def _json_ready(value: Any) -> Any:
         return [_json_ready(item) for item in value]
     if isinstance(value, list):
         return [_json_ready(item) for item in value]
-    if isinstance(value, (Owner, ImplementationScope, ClaimTier)):
+    if isinstance(value, (Owner, ImplementationScope, ClaimTier, ArtifactMode, AllowedUse)):
         return value.value
     if isinstance(value, Path):
         return value.as_posix()

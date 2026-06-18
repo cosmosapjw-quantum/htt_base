@@ -37,6 +37,10 @@ FIGURE_DIR = REPO_ROOT / "figures" / "current"
 GENERATED_DIR = REPO_ROOT / "docs" / "generated"
 ASSET_JSON = GENERATED_DIR / "revision_experiment_assets.json"
 ASSET_MD = GENERATED_DIR / "revision_experiment_assets.md"
+MANUSCRIPT_SNIPPET_DIR = REPO_ROOT / "docs" / "manuscript" / "generated"
+MAIN_SNIPPET = MANUSCRIPT_SNIPPET_DIR / "revision_diagnostic_main_figure.tex"
+APPENDIX_SNIPPET = MANUSCRIPT_SNIPPET_DIR / "revision_diagnostic_appendix_figures.tex"
+EXTERNAL_AUDIT_SNIPPET = GENERATED_DIR / "revision_diagnostic_external_audit_figures.tex"
 INPUT_PATHS = (
     "docs/generated/observational_data_inventory.json",
     "docs/generated/observed_longrun_analysis.json",
@@ -68,6 +72,56 @@ PROMOTION_BLOCKERS = (
     "native_morphology_atlas_not_available",
     "matched_nulls_and_full_covariance_not_bound_for_public_claims",
 )
+ASSET_ORDER = (
+    "E1_prior_support_surface",
+    "E2_sigma_beta_band",
+    "FPR_rule_of_three",
+    "E3_per_channel_occupancy",
+    "E5_tomographic_forecast",
+)
+ASSET_LABELS = {
+    "E1_prior_support_surface": "fig:revision-prior-support-surface",
+    "E2_sigma_beta_band": "fig:revision-sigma-beta-band",
+    "FPR_rule_of_three": "fig:revision-rule-of-three-fpr",
+    "E3_per_channel_occupancy": "fig:revision-per-channel-occupancy",
+    "E5_tomographic_forecast": "fig:revision-tomographic-forecast",
+}
+ASSET_CAPTIONS = {
+    "E1_prior_support_surface": (
+        "Revision appendix diagnostic prior-support surface. The plotted proxy "
+        "exposes support sensitivity under the manifested prior-floor and "
+        "prior-ceiling scan; it is appendix-only, diagnostic-only, not an "
+        "evidence-grade Bayes factor, not native low-ell transfer output, and "
+        "not a Bianchi family-ID claim."
+    ),
+    "E2_sigma_beta_band": (
+        "Revision appendix diagnostic sigma-beta band. The panel records "
+        "bulk-flow uncertainty sensitivity and display-only look-elsewhere "
+        "bookkeeping under the current manifest; it is appendix-only, not "
+        "evidence-grade support, not native-transfer validation, and not a "
+        "geometry or family claim."
+    ),
+    "FPR_rule_of_three": (
+        "Revision external-audit-only rule-of-three false-positive-rate ceiling. "
+        "The finite-null interval is an upper-bound diagnostic and must be read "
+        "together with the observed nonzero false positives; it is not a "
+        "zero-FPR claim, not HTT evidence, and not derived from native low-ell "
+        "transfer."
+    ),
+    "E3_per_channel_occupancy": (
+        "Revision appendix diagnostic per-channel occupancy. The bars use "
+        "channel-matched proxy denominators to expose occupancy bookkeeping; "
+        "scalar $Q$ remains blocked for channel mismatch and the plot does not "
+        "support geometry detection or Bianchi family-ID."
+    ),
+    "E5_tomographic_forecast": (
+        "Revision paper-main candidate tomographic forecast. The manifest "
+        "records a forecast-only local/global template-rank design with "
+        "jackknife/bootstrap diagnostic status; the figure is diagnostic-only "
+        "and remains conditioned on blocked native-atlas status, matched "
+        "covariance, and external null gates."
+    ),
+}
 
 
 @dataclass(frozen=True)
@@ -561,7 +615,7 @@ def _asset_specs() -> tuple[AssetSpec, ...]:
             null_mock_status="not_statistical",
             caveats=(
                 "bulk-flow uncertainty diagnostic only",
-                "not verified decisive evidence",
+                "not a verified evidence claim",
                 "look-elsewhere correction is display-only",
             ),
             source_paths=(INPUT_PATHS[2],),
@@ -744,6 +798,87 @@ def _write_markdown(payload: dict[str, Any]) -> None:
     ASSET_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def _latex_include_path(figure_path: str) -> str:
+    path = Path(figure_path).with_suffix("")
+    parts = path.parts
+    if parts and parts[0] == "figures":
+        return Path(*parts[1:]).as_posix()
+    return path.as_posix()
+
+
+def _latex_asset_figure(asset_id: str, asset: dict[str, Any]) -> str:
+    include_path = _latex_include_path(str(asset["figure_path"]))
+    caption = ASSET_CAPTIONS[asset_id]
+    label = ASSET_LABELS[asset_id]
+    return "\n".join(
+        [
+            "\\begin{figure}[htbp]",
+            "\\centering",
+            f"\\includegraphics[width=0.92\\textwidth]{{{include_path}}}",
+            f"\\caption{{{caption}}}",
+            f"\\label{{{label}}}",
+            "\\end{figure}",
+            "",
+        ]
+    )
+
+
+def _render_latex_snippet(
+    payload: dict[str, Any],
+    *,
+    title: str,
+    note: str,
+    allowed_use: str,
+) -> str:
+    assets = payload["assets"]
+    assert isinstance(assets, dict)
+    asset_ids = [
+        asset_id
+        for asset_id in ASSET_ORDER
+        if isinstance(assets.get(asset_id), dict)
+        and assets[asset_id].get("allowed_use") == allowed_use
+    ]
+    lines = [
+        "% Generated by scripts/generate_revision_experiment_assets.py.",
+        "% Do not edit figure paths by hand; regenerate instead.",
+        f"% {title}",
+        f"% {note}",
+        "",
+    ]
+    for asset_id in asset_ids:
+        lines.append(_latex_asset_figure(asset_id, assets[asset_id]))
+    return "\n".join(lines)
+
+
+def _render_latex_snippets(payload: dict[str, Any]) -> dict[Path, str]:
+    return {
+        MAIN_SNIPPET: _render_latex_snippet(
+            payload,
+            title="Revision diagnostic paper-main candidate figure",
+            note="Contains only assets whose manifest allowed_use is paper_main.",
+            allowed_use="paper_main",
+        ),
+        APPENDIX_SNIPPET: _render_latex_snippet(
+            payload,
+            title="Revision diagnostic appendix figures",
+            note="Contains only assets whose manifest allowed_use is paper_appendix.",
+            allowed_use="paper_appendix",
+        ),
+        EXTERNAL_AUDIT_SNIPPET: _render_latex_snippet(
+            payload,
+            title="Revision diagnostic external-audit figures",
+            note="Contains only assets whose manifest allowed_use is external_audit; not input by the manuscript.",
+            allowed_use="external_audit",
+        ),
+    }
+
+
+def _write_latex_snippets(payload: dict[str, Any]) -> None:
+    MANUSCRIPT_SNIPPET_DIR.mkdir(parents=True, exist_ok=True)
+    for path, text in _render_latex_snippets(payload).items():
+        path.write_text(text, encoding="utf-8")
+
+
 def _build_payload(inputs: RepoInputs, *, write_figures: bool) -> dict[str, Any]:
     FIGURE_DIR.mkdir(parents=True, exist_ok=True)
     assets: dict[str, Any] = {}
@@ -834,11 +969,12 @@ def write_assets() -> None:
     payload = _build_payload(inputs, write_figures=True)
     _write_json(ASSET_JSON, payload)
     _write_markdown(payload)
+    _write_latex_snippets(payload)
 
 
 def check_assets() -> list[str]:
     errors: list[str] = []
-    required_paths = [ASSET_JSON, ASSET_MD]
+    required_paths = [ASSET_JSON, ASSET_MD, MAIN_SNIPPET, APPENDIX_SNIPPET, EXTERNAL_AUDIT_SNIPPET]
     for spec in _asset_specs():
         figure_path = FIGURE_DIR / spec.figure_name
         required_paths.extend(
@@ -894,6 +1030,23 @@ def check_assets() -> list[str]:
         for phrase in forbidden:
             if phrase in caveat_text:
                 errors.append(f"{_repo_relative(manifest_path)} contains forbidden phrase {phrase!r}")
+
+    for snippet_path, expected_text in _render_latex_snippets(payload).items():
+        if not snippet_path.exists():
+            continue
+        actual_text = snippet_path.read_text(encoding="utf-8")
+        if actual_text != expected_text:
+            errors.append(f"stale revision LaTeX snippet: {_repo_relative(snippet_path)}")
+
+    main_text = MAIN_SNIPPET.read_text(encoding="utf-8") if MAIN_SNIPPET.exists() else ""
+    if "fig_revision_prior_support_surface" in main_text:
+        errors.append("paper_appendix prior-support figure leaked into main revision snippet")
+    if "fig_revision_sigma_beta_band" in main_text:
+        errors.append("paper_appendix sigma-beta figure leaked into main revision snippet")
+    if "fig_revision_per_channel_occupancy" in main_text:
+        errors.append("paper_appendix occupancy figure leaked into main revision snippet")
+    if "fig_revision_rule_of_three_fpr" in main_text:
+        errors.append("external-audit FPR figure leaked into main revision snippet")
 
     assets = payload.get("assets", {})
     if isinstance(assets, dict):

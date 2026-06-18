@@ -24,6 +24,16 @@ picture of large-scale vorticity requires a more extended
 discussion that honestly delineates what is established, what is
 model-dependent, and what remains speculative.
 
+The revised interpretation is therefore deliberately narrower than a
+detection narrative.  The analysis is conditional on the dipole premise:
+the framework
+maps which diagnostic and HTT likelihood surfaces move under current
+matter-dipole inputs; it does not promote those surfaces to native
+solver results, Bianchi geometry detection, or Bianchi family
+identification.  The rule is explicit: family identification remains blocked
+until a native low-ell morphology atlas, matched masks, covariance/null
+controls, and family-equivalence tests exist.
+
 One concrete methodological result now sits upstream of this
 discussion.  Section~\ref{sec:dipole-discriminator} of
 Chapter~\ref{ch:dipole} introduces an observer-frame
@@ -69,13 +79,15 @@ but the \emph{channel decomposition}: the matter dipole
 channels (b+c) alone yield $\ln\mathcal{B} \approx +29$ for
 all five surviving tilted models, while the CMB-only channels
 (a, d, e, f, h) return $\ln\mathcal{B} < 0$ for every model
-tested.  The entire case for anisotropy rests on the matter
-dipole.
+tested.  The positive preference is therefore conditional on the
+matter-dipole premise rather than an independent anisotropic-geometry
+claim.
 
 The conservative reading holds that this dichotomy exposes a
 vulnerability: if the CatWISE and radio dipole excesses are
 eventually attributed to unidentified survey systematics, the
-evidence for anisotropy vanishes entirely.  The 2025
+legacy transfer-conditional preference for a tilt-like degree of
+freedom should be retired.  The 2025
 simulation-based reassessment of
 CatWISE~\cite{Bashir2025}---which reduced the
 CatWISE-specific significance from $4.9\sigma$ to
@@ -84,7 +96,7 @@ law and photometric systematics---illustrates precisely this
 pathway.  The data do not establish anisotropy independently of
 the anomaly.  The legacy transfer-conditional evidence summary is conditional on the anomaly
 being substantially physical, and is one survey generation away
-from confirmation or refutation.
+from confirmation, down-weighting, or refutation.
 
 The progressive reading holds that the dichotomy is
 consistent with what the Tsagas mechanism predicts: a tilt
@@ -464,15 +476,15 @@ conclusions.\bigskip
 % ============================================================
 
 
-\section{Species-resolved solver validation}
+\section{Species-resolved legacy transfer validation context}
 \label{sec:disc-solver}
 
-The Phase~1.0 Bianchi Boltzmann solver
-(Chapter~\ref{ch:results}) provides the first
-species-resolved decomposition of the CMB quadrupole power
-$D_2$ within the departure parameter framework.  We now discuss the
-principal results and their implications for the departure
-parameter pipeline.
+The legacy transfer layer (Chapter~\ref{ch:results}) provides a
+species-resolved decomposition of the CMB quadrupole power $D_2$
+within the departure parameter framework.  We retain this material as
+external/proxy transfer provenance and validation context, not as
+native low-ell solver validation.  We now discuss the principal results
+and their implications for the departure parameter pipeline.
 
 
 \subsection{Neutrino dominance of the quadrupole}
@@ -511,7 +523,7 @@ Boltzmann dynamics.  Third, the neutrino dominance is
 robust against the choice of $\ell_{\rm max}$, the
 recombination model, and the reionisation optical depth:
 the ratio $N_2/F_2$ varies by less than $3\%$ across the
-parameter ranges tested by the solver.
+parameter ranges tested by the legacy transfer path.
 
 
 \subsection{Oracle deviation budget}
@@ -530,16 +542,17 @@ anisotropic stress feedback on the gravitational potential
 accounts for the remaining $\sim\!3\%$.
 
 The oracle is a toy model, not a production tool.  Its
-role is to provide a closed-form baseline against which
-the Bianchi solver can be tested in the FLRW limit.  The
-AniCLASS code~\cite{VicentePereiraPitrou2026}, compiled
-from source and validated against $15$ grid points across
-Bianchi types VII$_h$ and IX, serves as the primary
-external validator.  At the tested grid points, the
-solver and AniCLASS agree on the type-dependent transfer
-$D_2(\Sigma^2)$ to within $5\%$ for BVIIh and to within
-the numerical noise floor for BIX.  The AniCLASS
-comparison also confirms the BVIIh cascade effect:
+role is to provide a closed-form FLRW-limit baseline for
+legacy transfer bookkeeping.  The AniCLASS
+code~\cite{VicentePereiraPitrou2026}, compiled from source
+and compared against $15$ historical grid points across
+Bianchi types VII$_h$ and IX, is retained here as an
+external/proxy comparison record.  It is not native low-ell
+solver validation.  At the tested grid points, the legacy
+transfer path and AniCLASS agree on the type-dependent
+transfer $D_2(\Sigma^2)$ to within $5\%$ for BVIIh and to
+within the numerical noise floor for BIX.  The AniCLASS
+comparison also records the BVIIh cascade effect:
 $D_2(\mathrm{BVIIh}) < D_2(\mathrm{BI})$ at fixed
 $\Sigma^2$, because the curvature coupling leaks power
 from $\ell = 2$ to higher multipoles

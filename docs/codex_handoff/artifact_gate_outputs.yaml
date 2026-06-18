@@ -1,0 +1,257 @@
+schema_version: common.artifact_gate_outputs.v1
+purpose: >
+  Separate DAG completion bookkeeping from artifact readiness, allowed use,
+  and science/publication promotion gates. A completed PR can generate a useful
+  audit artifact without becoming production-validated science.
+
+state_defaults:
+  completed:
+    claim_tier: diagnostic_only
+    artifact_readiness: generated
+    artifact_mode: governance_diagnostic
+    allowed_use: external_audit
+    production_validated: false
+    manuscript_used: false
+    caption_policy:
+      - must_state_dag_row_not_science_readiness
+      - must_state_no_native_solver_validation
+    promotion_blockers:
+      - native_solver_validation_absent
+    report_generation_gates:
+      dag_status_row_generated: pass
+    science_promotion_gates:
+      native_solver_validation: not_applicable
+    publication_gates:
+      dag_completion_not_publication_readiness: pass
+  blocked:
+    claim_tier: blocked
+    artifact_readiness: blocked
+    artifact_mode: governance_diagnostic
+    allowed_use: internal_only
+    production_validated: false
+    manuscript_used: false
+    caption_policy:
+      - must_state_blocker
+    promotion_blockers:
+      - dag_status_blocked
+    report_generation_gates:
+      dag_status_row_generated: pass
+    science_promotion_gates:
+      blocked: fail
+    publication_gates:
+      blocked: fail
+  not_completed:
+    claim_tier: diagnostic_only
+    artifact_readiness: missing
+    artifact_mode: governance_diagnostic
+    allowed_use: internal_only
+    production_validated: false
+    manuscript_used: false
+    caption_policy:
+      - must_state_not_completed
+    promotion_blockers:
+      - dag_status_not_completed
+    report_generation_gates:
+      dag_status_row_generated: pass
+    science_promotion_gates:
+      implementation_complete: fail
+    publication_gates:
+      implementation_complete: fail
+
+pr_overrides:
+  PR-080:
+    artifact_mode: external_audit_conditioned
+    allowed_use: external_audit
+    artifact_readiness: smoke_tested
+    claim_tier: conditional
+    caption_policy:
+      - must_state_external_transfer_path
+      - must_state_not_native_solver_result
+    promotion_blockers:
+      - native_transfer_validation_absent
+    science_promotion_gates:
+      transfer_registry_contract: pass
+      native_transfer_validation: fail
+    publication_gates:
+      native_solver_validation: fail
+  PR-082:
+    artifact_mode: external_audit_conditioned
+    allowed_use: external_audit
+    artifact_readiness: smoke_tested
+    claim_tier: conditional
+    caption_policy:
+      - must_state_atlas_metadata_only
+      - must_state_no_family_identification
+    promotion_blockers:
+      - native_morphology_atlas_absent
+    science_promotion_gates:
+      atlas_entry_schema: pass
+      native_morphology_atlas: fail
+    publication_gates:
+      family_equivalence_gate: fail
+  PR-083:
+    artifact_mode: governance_diagnostic
+    allowed_use: external_audit
+    artifact_readiness: smoke_tested
+    claim_tier: conditional
+    caption_policy:
+      - must_state_schema_only
+      - must_state_adapter_stub_no_science_values
+    promotion_blockers:
+      - native_solver_outputs_absent
+    science_promotion_gates:
+      native_schema_contract: pass
+      native_solver_execution: fail
+    publication_gates:
+      native_solver_validation: fail
+  PR-100:
+    artifact_mode: external_audit_conditioned
+    allowed_use: external_audit
+    artifact_readiness: validation_candidate
+    claim_tier: diagnostic_only
+    caption_policy:
+      - must_state_diagnostic_only_certificate
+      - must_state_not_posterior_or_truth
+    promotion_blockers:
+      - covariance_null_status_incomplete_for_public_claim
+    science_promotion_gates:
+      mio_certificate_generated: pass
+      posterior_evidence_merge: fail
+    publication_gates:
+      diagnostic_only_wording_required: pass
+  PR-101:
+    artifact_mode: external_audit_conditioned
+    allowed_use: external_audit
+    artifact_readiness: validation_candidate
+    claim_tier: diagnostic_only
+    caption_policy:
+      - must_state_depth_coherence_diagnostic_only
+    promotion_blockers:
+      - depth_null_calibration_incomplete_for_public_claim
+    science_promotion_gates:
+      redshift_coherence_certificate_generated: pass
+      production_depth_inference: fail
+    publication_gates:
+      diagnostic_only_wording_required: pass
+  PR-102:
+    artifact_mode: external_audit_conditioned
+    allowed_use: external_audit
+    artifact_readiness: validation_candidate
+    claim_tier: diagnostic_only
+    caption_policy:
+      - must_state_flrw_tension_diagnostic_only
+    promotion_blockers:
+      - null_predictive_distribution_not_publication_grade
+    science_promotion_gates:
+      flrw_tension_gate_generated: pass
+      public_tail_probability_claim: fail
+    publication_gates:
+      diagnostic_only_wording_required: pass
+  PR-110:
+    artifact_mode: paper_appendix_conditioned
+    allowed_use: paper_appendix
+    artifact_readiness: validation_candidate
+    claim_tier: conditional
+    manuscript_used: true
+    caption_policy:
+      - must_state_scalar_scores_do_not_identify_geometry
+      - must_state_native_morphology_atlas_absent
+    promotion_blockers:
+      - native_morphology_atlas_absent
+      - family_equivalence_gate_absent
+    science_promotion_gates:
+      scalar_morphology_boundary: pass
+      native_morphology_atlas: fail
+    publication_gates:
+      no_family_identification_wording: pass
+      native_solver_validation: fail
+  PR-111:
+    artifact_mode: external_audit_conditioned
+    allowed_use: external_audit
+    artifact_readiness: validation_candidate
+    claim_tier: conditional
+    manuscript_used: true
+    caption_policy:
+      - must_state_local_global_candidate
+      - must_state_rank_fpr_ppc_loocv_gates
+    promotion_blockers:
+      - matched_null_ppc_loocv_not_publication_grade
+      - survey_systematic_fpr_gate_incomplete
+    science_promotion_gates:
+      local_global_gate_surface: pass
+      production_inference: fail
+    publication_gates:
+      candidate_wording_only: pass
+      posterior_claim: fail
+  PR-112:
+    artifact_mode: paper_appendix_conditioned
+    allowed_use: paper_appendix
+    artifact_readiness: validation_candidate
+    claim_tier: diagnostic_only
+    manuscript_used: true
+    caption_policy:
+      - must_state_mio_diagnostic_only
+      - must_state_not_htt_evidence
+    promotion_blockers:
+      - mio_is_not_posterior
+    science_promotion_gates:
+      certificate_status_surface: pass
+      truth_certificate_claim: fail
+    publication_gates:
+      diagnostic_only_wording_required: pass
+  PR-113:
+    artifact_mode: governance_diagnostic
+    allowed_use: external_audit
+    artifact_readiness: generated
+    claim_tier: diagnostic_only
+    manuscript_used: true
+    caption_policy:
+      - must_state_figure_inventory_not_content_audit
+    promotion_blockers:
+      - figure_pixel_audit_not_claimed
+    report_generation_gates:
+      figure_reference_integrity: pass
+      figure_archive_inclusion: delegated_to_external_package
+    science_promotion_gates:
+      figure_content_science_audit: not_applicable
+    publication_gates:
+      figure_claim_caption_audit: pass
+  PR-114:
+    artifact_mode: external_audit_conditioned
+    allowed_use: external_audit
+    artifact_readiness: generated
+    claim_tier: diagnostic_only
+    manuscript_used: true
+    caption_policy:
+      - must_state_disclosure_package_not_publication_readiness
+      - must_state_transfer_conditional
+    promotion_blockers:
+      - native_solver_validation_absent
+      - pdf_claim_lint_required
+    report_generation_gates:
+      archive_build: pass
+      figure_payload_inclusion: pass
+    science_promotion_gates:
+      native_solver_validation: fail
+      production_science_validation: fail
+    publication_gates:
+      publication_readiness: fail
+  PR-115:
+    artifact_mode: governance_diagnostic
+    allowed_use: external_audit
+    artifact_readiness: generated
+    claim_tier: diagnostic_only
+    manuscript_used: true
+    caption_policy:
+      - must_state_claim_freeze_not_submission_approval
+    promotion_blockers:
+      - native_solver_validation_absent
+      - public_claims_capped
+    report_generation_gates:
+      claim_freeze_generation: pass
+      pdf_claim_lint: pass
+    science_promotion_gates:
+      native_morphology_atlas: fail
+      null_mask_covariance_family_equivalence_stack: fail
+    publication_gates:
+      submission_approval: fail

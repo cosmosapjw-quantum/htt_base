@@ -6,19 +6,19 @@ claim_tier: diagnostic_only
 transfer_source: none
 sky_support_status: not_directional
 null_mock_status: not_statistical
-config_hash: `c00fb8c8890bd4e3937afddbd77ed8f1b3c1132189f5518332b380b69ec3ac78`
+config_hash: `b7d1a63b63f0b172ede3e6d5d244cd6638c8981b76ab25da207f8d2814a4e690`
 input_hashes:
-- docs/manuscript/appendices.tex: `aa73795f125332cda27e624c8af6c96393253a35cf47b08664f9dd7c5f96dad7`
-- docs/manuscript/ch01_introduction.tex: `4d35ab4527fb2082f5bfd90bfdc4867309833c249675294b3617e833780a5d68`
-- docs/manuscript/ch02_dipole_anomaly.tex: `d93dce82d3fd2f50aa114079c1d90609c4626d2fe8da981b5c67fdc83e947abe`
-- docs/manuscript/ch03_framework.tex: `194b0cdfb7f586ec2a439f6f4c4a26d8c4769589d0a11e89217e960811e828b9`
+- docs/manuscript/appendices.tex: `f1e8cb8334f8fbdd58538823a9636d9afb8766f244c84d44dc6fada8d1ce60f5`
+- docs/manuscript/ch01_introduction.tex: `26068b79dd152e0bd3723bb45af32dc92d9e77e1a4ee0db55393e5ce2bc6a800`
+- docs/manuscript/ch02_dipole_anomaly.tex: `75c9655d03b3a33063c8f06f2c0c8ce2dda2f4dd948e1c4c3ffcd70392760f75`
+- docs/manuscript/ch03_framework.tex: `1a7d6d30e85f7afe0500c0a769137870c0a0921eb361e775ceafe29d78f220c1`
 - docs/manuscript/ch04_bianchi_bounds.tex: `3741a8145e9372fc8d39dcaebaa1e8ad72769729a05cb4ad750535be2c590109`
 - docs/manuscript/ch05_teff_corrections.tex: `496689f4677e61d15d9925ec5ad5a130e12329b598d764bb5a48037d77b743ad`
 - docs/manuscript/ch06_pipeline.tex: `b7b50ba5d0bf9d3fa0916fed36be5e377ccaf410fc067f5280816c24ed4b3012`
-- docs/manuscript/ch07_results.tex: `a55792b2d2136daf0ebfd99acc4e30eef4bccfd437b8e2ee0502c1f99a6422e1`
-- docs/manuscript/ch08_robustness.tex: `8340e736fcb944d9f49489302b03b243c9ff6f88cef250482fba8398311708e3`
-- docs/manuscript/ch09_discussion.tex: `2b3742085ae4d24ebe04f5f68580927f9804927a6349d25dad2c344bd64d173e`
-- docs/manuscript/ch10_future.tex: `91c05153af626c8bd8858a062da574e9a1d4a74645beaa1ac76e34d0b44e2ab1`
+- docs/manuscript/ch07_results.tex: `ac39641983b6b6d3b0ea31bc4f9abb0f84b3007d1ad0c2f8921a0b18da1c48a6`
+- docs/manuscript/ch08_robustness.tex: `cddbad6bdb8db53ced9cf5078cf0ad8903065485a52c047ced8d9a8f2e86ce41`
+- docs/manuscript/ch09_discussion.tex: `2d2a1e9ba3acf3dfe32e7ff0597c366ef45c36c62d6ffd4702f46f20a4d5c096`
+- docs/manuscript/ch10_future.tex: `f198313df7a96ff28aa86b76c39291d996631d33808742eef3ed68e9f39244a6`
 - docs/manuscript/ch11_error_hierarchy.tex: `5016cb571b519a6dcd84f9ae078027e108d5f25a53d45c525b13fe4c71f7ce4d`
 - docs/manuscript/generated/conditioned_legacy_figure_gallery.tex: `002b0d0a1d4c817e825e7fcf11584bf2eda611768f5dee495901c7738dd5d33b`
 - docs/manuscript/generated/current_figures_framework.tex: `9c960a9ba56ccbcf5e8365e3f3399d9a80df9781547fd925b4443bc289ca1bcf`
@@ -28,6 +28,8 @@ input_hashes:
 - docs/manuscript/generated/current_figures_ver2_exports.tex: `c63f1348b3762a812cfd391fe96ba1c20e5092f354818d6079c21a3216e140de`
 - docs/manuscript/generated/observed_figures_pipeline.tex: `b2b1579f259b14df683c913aaf7171721a8477e93a23aff55a07bad5aaddad93`
 - docs/manuscript/generated/observed_figures_results.tex: `23c45f3e2b05992b79ab1f9e0e695e01fbc7ca72815ae8c1b0155838729b169a`
+- docs/manuscript/generated/revision_diagnostic_appendix_figures.tex: `1eed5e4552d727d39863dff7924241ef9dbe73162c96724e2caab5fbc9f42610`
+- docs/manuscript/generated/revision_diagnostic_main_figure.tex: `c13e8248e6868ae1ec52a4b0c9043e03b8d7913803bd45da63dcef67f56c14e5`
 - docs/manuscript/generated/ver2_artifact_export_policy.tex: `6cef67bdb8fea2e4166c6a7be1fd0c036c3f2f06010ce9f787ce4aefcf688150`
 - docs/manuscript/generated/ver2_channel_responsibility.tex: `0a1c264f31035558a31a2b1f487cca8ab6a69f7a7f08e4c5469a371425f8d4ae`
 - docs/manuscript/generated/ver2_claim_ledger.tex: `c5ab0fc11fb5884c86268af3eacd473b840e9f3b983d788342568821c732b907`
@@ -45,7 +47,7 @@ caveats:
 - Missing or quarantined figure references block final manuscript freeze until explained.
 - Text audit findings are audit findings, not scientific results.
 generating_command: python scripts/audit_manuscript_figures.py
-git_commit: 367039e
+git_commit: 9d520cc
 worktree_state: dirty
 output_path: docs/generated/missing_figure_references.md
 
@@ -73,7 +75,7 @@ output_path: docs/generated/missing_figure_references.md
 
 | Source | Type | Rule | Text SHA256 |
 | --- | --- | --- | --- |
-| `docs/manuscript/ch01_introduction.tex:213` | `manual_status_number` | `test_count` | `e32a6d21ae06c5b615a551513563e6090472c86841809725d82acf67dc7433ea` |
+| `docs/manuscript/ch01_introduction.tex:221` | `manual_status_number` | `test_count` | `66a928be0da102da5bd6f1d8b5b228ba3b6e636abe8b24aec2960e7c6e853c5a` |
 | `docs/manuscript/ch07_results.tex:374` | `manual_status_number` | `pytest_count` | `601ed839ce5d071ab204402b8f39b977a73d97431ab47a688eefac2c7d99874d` |
 | `docs/manuscript/ch07_results.tex:375` | `manual_status_number` | `pytest_count` | `98cf9b71fef68526360f8ba79f335ada0528bcbdb985400a057673962f8f6d59` |
 | `docs/manuscript/generated/ver2_artifact_export_policy.tex:10` | `manual_status_number` | `manifest_ready_count` | `f74def9b1a8fce0337c980c9c3822ba1ebba16f3ef2199281982474ff0a7ffd5` |

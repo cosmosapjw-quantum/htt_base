@@ -7,6 +7,9 @@ from common.artifact_manifest import validate_manifest_payload
 
 ROOT = Path(__file__).resolve().parents[2]
 ASSET_JSON = ROOT / "docs/generated/revision_experiment_assets.json"
+MAIN_SNIPPET = ROOT / "docs/manuscript/generated/revision_diagnostic_main_figure.tex"
+APPENDIX_SNIPPET = ROOT / "docs/manuscript/generated/revision_diagnostic_appendix_figures.tex"
+EXTERNAL_AUDIT_SNIPPET = ROOT / "docs/generated/revision_diagnostic_external_audit_figures.tex"
 
 
 def test_revision_experiment_assets_check_mode_passes():
@@ -134,3 +137,23 @@ def test_revision_experiment_assets_are_lane_limited():
     assert all(0.0 <= row["occupancy"] <= 1.0 for row in channels)
     assert all(row["denominator_policy"] == "channel_matched_proxy_budget" for row in channels)
     assert occupancy["negative_components_allowed"] is False
+
+
+def test_revision_latex_snippets_respect_manifest_lanes():
+    main = MAIN_SNIPPET.read_text(encoding="utf-8")
+    appendix = APPENDIX_SNIPPET.read_text(encoding="utf-8")
+    external = EXTERNAL_AUDIT_SNIPPET.read_text(encoding="utf-8")
+
+    assert "fig_revision_tomographic_forecast" in main
+    assert "fig_revision_prior_support_surface" not in main
+    assert "fig_revision_sigma_beta_band" not in main
+    assert "fig_revision_per_channel_occupancy" not in main
+    assert "fig_revision_rule_of_three_fpr" not in main
+
+    assert "fig_revision_prior_support_surface" in appendix
+    assert "fig_revision_sigma_beta_band" in appendix
+    assert "fig_revision_per_channel_occupancy" in appendix
+    assert "fig_revision_rule_of_three_fpr" not in appendix
+
+    assert "fig_revision_rule_of_three_fpr" in external
+    assert "not input by the manuscript" in external

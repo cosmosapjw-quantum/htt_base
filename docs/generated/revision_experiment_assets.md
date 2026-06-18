@@ -8,7 +8,7 @@ sky_support_status: not_directional
 null_mock_status: mixed_not_statistical_current_null_bank_and_jackknife_bootstrap_diagnostic
 config_hash: `sha256:cc6e2520973432a222fead2c0006a370fac2ebed531348e4511cdd55f9d45ae0`
 generating_command: `venv/bin/python scripts/generate_revision_experiment_assets.py --write`
-git_commit_or_worktree_state: `10da0c8+dirty`
+git_commit_or_worktree_state: `9d520cc+dirty`
 input_hashes:
 - docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513
 - docs/generated/observed_longrun_analysis.json:sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047

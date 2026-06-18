@@ -5,18 +5,20 @@
     "caveats": [
       "DAG completion is project bookkeeping only and is not scientific readiness.",
       "Rows never promote external-transfer outputs to native solver validation.",
-      "production_validated remains false until explicit native/null/mask/covariance gates exist."
+      "DAG completion, artifact readiness, allowed use, and production validation are separate axes.",
+      "production_validated remains false unless an explicit artifact gate output says otherwise."
     ],
     "claim_tier": "diagnostic_only",
     "completed_prs": 62,
-    "config_hash": "cfd666a788101682fcffebff5ce809d762a0af1a32420af5c2e7a3d8b551de08",
-    "generated_on": "2026-06-13T15:17:57+00:00",
+    "config_hash": "22b63c43da2158a5428e8a69b848b8fee70eda4e1c887864626e7f87b937fdd3",
+    "generated_on": "2026-06-14T20:55:59+00:00",
     "generating_command": "python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --write docs/generated/status_snapshot.json",
     "implementation_scope": "common",
     "in_progress_prs": 0,
     "input_hashes": [
       "docs/codex_handoff/pr_backlog.yaml:767c978d69408bc58264991b67ad07b5435566184b136a2e36b285e7ce38b8ae",
-      "docs/codex_handoff/pr_status.yaml:67cbf046bd1cb45831f5a508d1f935855324d469aea87bedacace03837b0cbc8"
+      "docs/codex_handoff/pr_status.yaml:67cbf046bd1cb45831f5a508d1f935855324d469aea87bedacace03837b0cbc8",
+      "docs/codex_handoff/artifact_gate_outputs.yaml:66fe6f798fe4e02b7240e7916dced3ab3116b68081775fe96e79c81490674836"
     ],
     "null_mock_status": "not_statistical",
     "owner": "COMMON",
@@ -24,7 +26,7 @@
     "semantic_source": "common.contracts.StatusSnapshotEntry",
     "sky_support_status": "not_directional",
     "source": "common.status_snapshot",
-    "source_commit": "b5753e2+dirty",
+    "source_commit": "367039e+dirty",
     "status_path": "docs/codex_handoff/pr_status.yaml",
     "total_prs": 62,
     "transfer_source": "none",
@@ -32,686 +34,1880 @@
   },
   "rows": [
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-000",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-001",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-003",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-002",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-004",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-005",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-020",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-010",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-021",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-011",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-013",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-014",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-040",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-012",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-022",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-070",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
       "owner": "OBSSTAT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-015",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-050",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-041",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
       "owner": "HTT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-023",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-071",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
       "owner": "OBSSTAT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-080",
-      "claim_tier": "diagnostic_only",
+      "artifact_mode": "external_audit_conditioned",
+      "artifact_readiness": "smoke_tested",
+      "caption_policy": [
+        "must_state_external_transfer_path",
+        "must_state_not_native_solver_result"
+      ],
+      "claim_tier": "conditional",
       "implementation_scope": "bass_py",
       "implemented": true,
       "manuscript_used": false,
       "owner": "BASS",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_transfer_validation_absent"
+      ],
+      "publication_gates": {
+        "native_solver_validation": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_transfer_validation": "fail",
+        "transfer_registry_contract": "pass"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-030",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-113",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_figure_inventory_not_content_audit"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
-      "manuscript_used": false,
+      "manuscript_used": true,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "figure_pixel_audit_not_claimed"
+      ],
+      "publication_gates": {
+        "figure_claim_caption_audit": "pass"
+      },
+      "report_generation_gates": {
+        "figure_archive_inclusion": "delegated_to_external_package",
+        "figure_reference_integrity": "pass"
+      },
+      "science_promotion_gates": {
+        "figure_content_science_audit": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-051",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-042",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
       "owner": "HTT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-072",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
       "owner": "OBSSTAT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-081",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "bass_py",
       "implemented": true,
       "manuscript_used": false,
       "owner": "BASS",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-031",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-052",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-043",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
       "owner": "HTT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-073",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
       "owner": "OBSSTAT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-082",
-      "claim_tier": "diagnostic_only",
+      "artifact_mode": "external_audit_conditioned",
+      "artifact_readiness": "smoke_tested",
+      "caption_policy": [
+        "must_state_atlas_metadata_only",
+        "must_state_no_family_identification"
+      ],
+      "claim_tier": "conditional",
       "implementation_scope": "bass_py",
       "implemented": true,
       "manuscript_used": false,
       "owner": "BASS",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_morphology_atlas_absent"
+      ],
+      "publication_gates": {
+        "family_equivalence_gate": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "atlas_entry_schema": "pass",
+        "native_morphology_atlas": "fail"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-032",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-053",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-074",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
       "owner": "OBSSTAT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-083",
-      "claim_tier": "diagnostic_only",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "smoke_tested",
+      "caption_policy": [
+        "must_state_schema_only",
+        "must_state_adapter_stub_no_science_values"
+      ],
+      "claim_tier": "conditional",
       "implementation_scope": "bass_py",
       "implemented": true,
       "manuscript_used": false,
       "owner": "BASS",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_outputs_absent"
+      ],
+      "publication_gates": {
+        "native_solver_validation": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_schema_contract": "pass",
+        "native_solver_execution": "fail"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-054",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-075",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
       "owner": "OBSSTAT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-055",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-076",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
       "owner": "OBSSTAT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-056",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-060",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
       "owner": "HTT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-090",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-100",
+      "artifact_mode": "external_audit_conditioned",
+      "artifact_readiness": "validation_candidate",
+      "caption_policy": [
+        "must_state_diagnostic_only_certificate",
+        "must_state_not_posterior_or_truth"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "covariance_null_status_incomplete_for_public_claim"
+      ],
+      "publication_gates": {
+        "diagnostic_only_wording_required": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "mio_certificate_generated": "pass",
+        "posterior_evidence_merge": "fail"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-084",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-061",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
       "owner": "HTT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-091",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-101",
+      "artifact_mode": "external_audit_conditioned",
+      "artifact_readiness": "validation_candidate",
+      "caption_policy": [
+        "must_state_depth_coherence_diagnostic_only"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "depth_null_calibration_incomplete_for_public_claim"
+      ],
+      "publication_gates": {
+        "diagnostic_only_wording_required": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "production_depth_inference": "fail",
+        "redshift_coherence_certificate_generated": "pass"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-102",
+      "artifact_mode": "external_audit_conditioned",
+      "artifact_readiness": "validation_candidate",
+      "caption_policy": [
+        "must_state_flrw_tension_diagnostic_only"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "null_predictive_distribution_not_publication_grade"
+      ],
+      "publication_gates": {
+        "diagnostic_only_wording_required": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "flrw_tension_gate_generated": "pass",
+        "public_tail_probability_claim": "fail"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-062",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
       "owner": "HTT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-092",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-063",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
       "owner": "HTT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "paper_appendix",
       "artifact_id": "codex_dag.PR-110",
-      "claim_tier": "diagnostic_only",
+      "artifact_mode": "paper_appendix_conditioned",
+      "artifact_readiness": "validation_candidate",
+      "caption_policy": [
+        "must_state_scalar_scores_do_not_identify_geometry",
+        "must_state_native_morphology_atlas_absent"
+      ],
+      "claim_tier": "conditional",
       "implementation_scope": "common",
       "implemented": true,
-      "manuscript_used": false,
+      "manuscript_used": true,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_morphology_atlas_absent",
+        "family_equivalence_gate_absent"
+      ],
+      "publication_gates": {
+        "native_solver_validation": "fail",
+        "no_family_identification_wording": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_morphology_atlas": "fail",
+        "scalar_morphology_boundary": "pass"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-064",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
       "owner": "HTT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-065",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
       "owner": "HTT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-066",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
       "owner": "HTT",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-103",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
       "owner": "MIO",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-111",
-      "claim_tier": "diagnostic_only",
+      "artifact_mode": "external_audit_conditioned",
+      "artifact_readiness": "validation_candidate",
+      "caption_policy": [
+        "must_state_local_global_candidate",
+        "must_state_rank_fpr_ppc_loocv_gates"
+      ],
+      "claim_tier": "conditional",
       "implementation_scope": "common",
       "implemented": true,
-      "manuscript_used": false,
+      "manuscript_used": true,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "matched_null_ppc_loocv_not_publication_grade",
+        "survey_systematic_fpr_gate_incomplete"
+      ],
+      "publication_gates": {
+        "candidate_wording_only": "pass",
+        "posterior_claim": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "local_global_gate_surface": "pass",
+        "production_inference": "fail"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "paper_appendix",
       "artifact_id": "codex_dag.PR-112",
+      "artifact_mode": "paper_appendix_conditioned",
+      "artifact_readiness": "validation_candidate",
+      "caption_policy": [
+        "must_state_mio_diagnostic_only",
+        "must_state_not_htt_evidence"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
-      "manuscript_used": false,
+      "manuscript_used": true,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "mio_is_not_posterior"
+      ],
+      "publication_gates": {
+        "diagnostic_only_wording_required": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "certificate_status_surface": "pass",
+        "truth_certificate_claim": "fail"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-114",
+      "artifact_mode": "external_audit_conditioned",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_disclosure_package_not_publication_readiness",
+        "must_state_transfer_conditional"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
-      "manuscript_used": false,
+      "manuscript_used": true,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent",
+        "pdf_claim_lint_required"
+      ],
+      "publication_gates": {
+        "publication_readiness": "fail"
+      },
+      "report_generation_gates": {
+        "archive_build": "pass",
+        "figure_payload_inclusion": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "fail",
+        "production_science_validation": "fail"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
+      "allowed_use": "external_audit",
       "artifact_id": "codex_dag.PR-115",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_claim_freeze_not_submission_approval"
+      ],
       "claim_tier": "diagnostic_only",
       "implementation_scope": "common",
       "implemented": true,
-      "manuscript_used": false,
+      "manuscript_used": true,
       "owner": "COMMON",
       "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent",
+        "public_claims_capped"
+      ],
+      "publication_gates": {
+        "submission_approval": "fail"
+      },
+      "report_generation_gates": {
+        "claim_freeze_generation": "pass",
+        "pdf_claim_lint": "pass"
+      },
+      "science_promotion_gates": {
+        "native_morphology_atlas": "fail",
+        "null_mask_covariance_family_equivalence_stack": "fail"
+      },
       "smoke_tested": true,
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     }
   ]
 }

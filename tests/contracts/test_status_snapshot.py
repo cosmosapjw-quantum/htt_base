@@ -101,6 +101,8 @@ def test_status_bundle_is_generated_from_dag_status_files(tmp_path: Path) -> Non
     assert bundle.status_rows[0]["implemented"] is True
     assert bundle.status_rows[2]["implemented"] is False
     assert all(row["production_validated"] is False for row in bundle.status_rows)
+    assert all(row["artifact_readiness"] in {"generated", "missing"} for row in bundle.status_rows)
+    assert all("allowed_use" in row for row in bundle.status_rows)
     assert bundle.status_rows[3]["owner"] == "BASS"
     assert bundle.status_rows[3]["implementation_scope"] == "bass_py"
     assert bundle.status_rows[4]["owner"] == "TSC_LEGACY"
@@ -112,6 +114,57 @@ def test_status_bundle_is_generated_from_dag_status_files(tmp_path: Path) -> Non
     assert bundle.metadata["input_hashes"]
     assert bundle.metadata["caveats"]
     assert "common.status_snapshot" in bundle.metadata["generating_command"]
+
+
+def test_status_bundle_uses_gate_outputs_for_artifact_promotion_axes(
+    tmp_path: Path,
+) -> None:
+    backlog_path, status_path = _write_fixture(tmp_path)
+    gate_outputs_path = tmp_path / "artifact_gate_outputs.yaml"
+    gate_outputs_path.write_text(
+        yaml.safe_dump(
+            {
+                "pr_overrides": {
+                    "PR-010": {
+                        "claim_tier": "conditional",
+                        "artifact_readiness": "validation_candidate",
+                        "artifact_mode": "external_audit_conditioned",
+                        "allowed_use": "paper_appendix",
+                        "manuscript_used": True,
+                        "caption_policy": ["must_state_transfer_conditional"],
+                        "promotion_blockers": ["native_solver_validation_absent"],
+                        "science_promotion_gates": {
+                            "native_solver_validation": "fail",
+                        },
+                        "publication_gates": {
+                            "paper_main": "fail",
+                        },
+                    }
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        gate_outputs_path=gate_outputs_path,
+        source_commit="abc123",
+    )
+
+    row = next(row for row in bundle.status_rows if row["artifact_id"] == "codex_dag.PR-010")
+    assert row["claim_tier"] == "conditional"
+    assert row["artifact_readiness"] == "validation_candidate"
+    assert row["artifact_mode"] == "external_audit_conditioned"
+    assert row["allowed_use"] == "paper_appendix"
+    assert row["manuscript_used"] is True
+    assert row["production_validated"] is False
+    assert row["caption_policy"] == ["must_state_transfer_conditional"]
+    assert row["promotion_blockers"] == ["native_solver_validation_absent"]
+    assert row["science_promotion_gates"] == {"native_solver_validation": "fail"}
+    assert row["publication_gates"] == {"paper_main": "fail"}
+    assert any("artifact_gate_outputs.yaml" in item for item in bundle.metadata["input_hashes"])
 
 
 def test_directional_certificate_pr_notes_preserve_support_statuses(tmp_path: Path) -> None:

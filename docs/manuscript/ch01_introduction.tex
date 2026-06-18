@@ -41,6 +41,17 @@ statistical isotropy.
 The question that motivates this work is: \emph{how large is
 the departure from FLRW, and what does it constrain?}
 
+This report is a claim-tiered framework paper, not a native-solver
+detection paper.  It introduces a signed comparator coordinate for
+FLRW departure, separates MIO diagnostics from HTT likelihoods,
+and uses current matter-dipole inputs only as a transfer-conditional
+and dipole-conditional demonstration layer.  Because almost-isotropic
+CMB temperature fields do not by themselves close every matter-sector
+departure loophole~\cite{Nilsson1999AlmostIsotropic}, the framework is
+designed to state what current data can quantify, what remains
+conditional, and what future tomographic or native-morphology
+information would be needed to promote a claim.
+
 To answer this question, we need a framework that quantifies
 FLRW departure in a covariant, assumption-explicit manner.
 The Maartens--Ellis--Stoeger (MES) kinematic bound
@@ -141,17 +152,14 @@ fraction---the posterior-mean fraction of the MES bound
 occupied by the data---is
 $\mathcal{F}_{\rm Bayes} = 0.093 \pm 0.025$.
 
-The Phase~1.0 Bianchi Boltzmann solver
-(Chapter~\ref{ch:results}) provides the first
-species-resolved decomposition of the CMB quadrupole
-power $D_2$ within the departure parameter framework,
-discovering that neutrinos
-contribute $98.4\%$ of $D_2$ through the
-Thomson-suppression asymmetry between free-streaming
-neutrinos and collision-damped photons.  The massive neutrino
-sector is then revisited as an explicit systematic, rather
-than a fixed massless idealisation, in
-Section~\ref{sec:massive-neutrino-systematic} of
+The legacy transfer layer
+(Chapter~\ref{ch:results}) provides a species-resolved diagnostic
+decomposition of the CMB quadrupole power $D_2$ within the
+departure-parameter framework.  This decomposition is retained as
+transfer-conditional provenance and systematic bookkeeping rather than
+as native low-ell solver validation.  The massive neutrino sector is
+then revisited as an explicit systematic, rather than a fixed massless
+idealisation, in Section~\ref{sec:massive-neutrino-systematic} of
 Chapter~\ref{ch:error-hierarchy}.
 
 We emphasise at the outset that the framework quantifies
@@ -209,10 +217,11 @@ The original contributions of this work are:
   connecting the cosmological closure to the invariant
   manifold theory of kinetic equations.
 
-\item A Phase~1.0 Bianchi Boltzmann solver with 18
-  legacy implementation modules, 331 automated tests, and
-  AniCLASS cross-validation at 15 grid points
-  (Chapter~\ref{ch:results}).
+\item A legacy transfer/provenance layer with 18
+  implementation modules, 331 automated tests, and
+  external AniCLASS comparison records at 15 grid points
+  (Chapter~\ref{ch:results}), retained as reproducibility
+  evidence rather than native low-ell solver validation.
 
 \item A legacy transfer-conditional Bayes-factor summary
   $\ln \mathcal{B}_{\rm tilt} = +25.29 \pm 0.07$ for

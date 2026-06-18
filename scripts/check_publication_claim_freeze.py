@@ -48,7 +48,7 @@ DEFAULT_REQUIRED_INPUTS: tuple[str, ...] = (
     "docs/generated/transfer_sensitivity_report.md",
     "docs/generated/manuscript_figure_inventory.md",
     "docs/generated/missing_figure_references.md",
-    "docs/generated/external_audit_package_manifest.json",
+    "docs/generated/pdf_claim_lint_report.md",
     "docs/audit_prompts/claim_firewall_review.md",
     "docs/audit_prompts/local_global_review.md",
     "docs/audit_prompts/manuscript_figure_review.md",
@@ -346,14 +346,31 @@ def _extract_summary_count(text: str, label: str) -> int | None:
 def _manuscript_blockers(repo_root: Path) -> dict[str, int | str]:
     inventory = (repo_root / "docs/generated/manuscript_figure_inventory.md").read_text(encoding="utf-8")
     missing = (repo_root / "docs/generated/missing_figure_references.md").read_text(encoding="utf-8")
+    def count_or_unknown(text: str, label: str) -> int | str:
+        count = _extract_summary_count(text, label)
+        return "unknown" if count is None else count
+
     return {
-        "includegraphics_refs": _extract_summary_count(inventory, "Includegraphics refs") or "unknown",
-        "resolved_refs": _extract_summary_count(inventory, "Resolved refs") or "unknown",
-        "missing_refs": _extract_summary_count(inventory, "Missing refs") or "unknown",
-        "quarantined_refs": _extract_summary_count(inventory, "Quarantined refs") or "unknown",
-        "text_audit_findings": _extract_summary_count(inventory, "Text audit findings") or "unknown",
-        "claim_risk_findings": _extract_summary_count(missing, "Claim-risk findings") or "unknown",
+        "includegraphics_refs": count_or_unknown(inventory, "Includegraphics refs"),
+        "resolved_refs": count_or_unknown(inventory, "Resolved refs"),
+        "missing_refs": count_or_unknown(inventory, "Missing refs"),
+        "quarantined_refs": count_or_unknown(inventory, "Quarantined refs"),
+        "text_audit_findings": count_or_unknown(inventory, "Text audit findings"),
+        "claim_risk_findings": count_or_unknown(missing, "Claim-risk findings"),
     }
+
+
+def _pdf_claim_lint_passed(repo_root: Path) -> bool:
+    report_path = repo_root / "docs/generated/pdf_claim_lint_report.md"
+    pdf_path = repo_root / "docs/generated/manuscript_pdf/htt_base_research_report.pdf"
+    if not report_path.is_file() or not pdf_path.is_file():
+        return False
+    text = report_path.read_text(encoding="utf-8")
+    current_hash = _sha256_file(pdf_path)
+    return (
+        f"- Failed findings: `0`" in text
+        and f"- PDF SHA256: `{current_hash}`" in text
+    )
 
 
 def _claim_language_issues(claims: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -446,6 +463,7 @@ def build_publication_claim_freeze_payload(
         "claim_ledger_included": (root / "docs/generated/claim_ledger.json").is_file(),
         "transfer_provenance_included": (root / "docs/generated/transfer_sensitivity_report.md").is_file(),
         "external_audit_package_included": (root / "docs/generated/external_audit_package_manifest.json").is_file(),
+        "pdf_claim_lint_passed": _pdf_claim_lint_passed(root),
         "manuscript_blockers_recorded": isinstance(blockers.get("missing_refs"), int)
         and isinstance(blockers.get("quarantined_refs"), int),
         "no_forbidden_claim_language": not claim_issues,
@@ -700,6 +718,16 @@ def _check_outputs(repo_root: Path, payload: dict[str, Any], freeze_output: Path
     return 0
 
 
+def _existing_freeze_git_state(repo_root: Path, freeze_output: Path) -> str | None:
+    freeze_path = freeze_output if freeze_output.is_absolute() else repo_root / freeze_output
+    if not freeze_path.exists():
+        return None
+    for line in freeze_path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("git_commit_or_worktree_state: "):
+            return line.split(": ", 1)[1].strip()
+    return None
+
+
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo-root", type=Path, default=REPO_ROOT)
@@ -714,11 +742,17 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
     repo_root = args.repo_root.resolve()
+    worktree_state = (
+        _existing_freeze_git_state(repo_root, args.freeze_output)
+        if args.check
+        else None
+    )
     payload = build_publication_claim_freeze_payload(
         repo_root=repo_root,
         freeze_output=args.freeze_output,
         matrix_output=args.matrix_output,
         generating_command=_command_from_args(argv),
+        worktree_state=worktree_state,
     )
     if payload["failed_gates"]:
         print("publication claim freeze failed required gates: " + ", ".join(payload["failed_gates"]))

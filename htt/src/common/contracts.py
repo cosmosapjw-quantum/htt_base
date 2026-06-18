@@ -61,6 +61,26 @@ class ImplementationScope(StrEnum):
     TSC_LEGACY = "tsc_legacy"
 
 
+class ArtifactMode(StrEnum):
+    """Artifact intent vocabulary independent of publication claim strength."""
+
+    GOVERNANCE_DIAGNOSTIC = "governance_diagnostic"
+    INTERNAL_EXPLORATORY = "internal_exploratory"
+    EXTERNAL_AUDIT_CONDITIONED = "external_audit_conditioned"
+    PAPER_APPENDIX_CONDITIONED = "paper_appendix_conditioned"
+    PAPER_MAIN_CANDIDATE = "paper_main_candidate"
+    PAPER_MAIN_VALIDATED = "paper_main_validated"
+
+
+class AllowedUse(StrEnum):
+    """Allowed-use vocabulary for generated artifacts and plots."""
+
+    INTERNAL_ONLY = "internal_only"
+    EXTERNAL_AUDIT = "external_audit"
+    PAPER_APPENDIX = "paper_appendix"
+    PAPER_MAIN = "paper_main"
+
+
 class BundleKind(StrEnum):
     """Role-sensitive bundle classes for owner/firewall checks."""
 
@@ -123,6 +143,16 @@ _ALLOWED_PRODUCTION_STATUSES = {
     "blocked_rank_deficient",
     "blocked_owner_violation",
 }
+_ALLOWED_ARTIFACT_READINESS = {
+    "missing",
+    "generated",
+    "smoke_tested",
+    "validation_candidate",
+    "production_validated",
+    "blocked",
+}
+_ALLOWED_ARTIFACT_MODES = {mode.value for mode in ArtifactMode}
+_ALLOWED_ALLOWED_USES = {use.value for use in AllowedUse}
 _ALLOWED_OBSERVABLE_MODES = {
     "isotropic_compressed",
     "deterministic_template",
@@ -174,6 +204,14 @@ ProductionStatus = Literal[
     "blocked_provenance_mismatch",
     "blocked_rank_deficient",
     "blocked_owner_violation",
+]
+ArtifactReadiness = Literal[
+    "missing",
+    "generated",
+    "smoke_tested",
+    "validation_candidate",
+    "production_validated",
+    "blocked",
 ]
 ObservableMode = Literal[
     "isotropic_compressed",
@@ -291,6 +329,14 @@ class ArtifactManifest:
     passed_gates: list[str] = field(default_factory=list)
     failed_gates: list[str] = field(default_factory=list)
     statistics_definitions: dict[str, Any] = field(default_factory=dict)
+    artifact_mode: ArtifactMode = ArtifactMode.GOVERNANCE_DIAGNOSTIC
+    allowed_use: AllowedUse = AllowedUse.INTERNAL_ONLY
+    caption_policy: list[str] = field(default_factory=list)
+    numeric_payload_path: str = ""
+    promotion_blockers: list[str] = field(default_factory=list)
+    report_generation_gates: dict[str, str] = field(default_factory=dict)
+    science_promotion_gates: dict[str, str] = field(default_factory=dict)
+    publication_gates: dict[str, str] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if not self.artifact_id:
@@ -300,6 +346,10 @@ class ArtifactManifest:
         _set_canonical_owner(self)
         _set_canonical_implementation_scope(self)
         _set_canonical_claim_tier(self)
+        if not isinstance(self.artifact_mode, ArtifactMode):
+            object.__setattr__(self, "artifact_mode", ArtifactMode(str(self.artifact_mode)))
+        if not isinstance(self.allowed_use, AllowedUse):
+            object.__setattr__(self, "allowed_use", AllowedUse(str(self.allowed_use)))
         if self.production_status not in _ALLOWED_PRODUCTION_STATUSES:
             raise ValueError(
                 f"Unknown production_status {self.production_status!r}"
@@ -386,11 +436,27 @@ class StatusSnapshotEntry:
     production_validated: bool
     manuscript_used: bool
     source_commit: str
+    artifact_readiness: ArtifactReadiness = "missing"
+    artifact_mode: ArtifactMode = ArtifactMode.GOVERNANCE_DIAGNOSTIC
+    allowed_use: AllowedUse = AllowedUse.INTERNAL_ONLY
+    caption_policy: tuple[str, ...] = ()
+    promotion_blockers: tuple[str, ...] = ()
+    report_generation_gates: dict[str, str] = field(default_factory=dict)
+    science_promotion_gates: dict[str, str] = field(default_factory=dict)
+    publication_gates: dict[str, str] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         _set_canonical_owner(self)
         _set_canonical_implementation_scope(self)
         _set_canonical_claim_tier(self)
+        if self.artifact_readiness not in _ALLOWED_ARTIFACT_READINESS:
+            raise ValueError(
+                f"Unknown artifact_readiness {self.artifact_readiness!r}"
+            )
+        if not isinstance(self.artifact_mode, ArtifactMode):
+            object.__setattr__(self, "artifact_mode", ArtifactMode(str(self.artifact_mode)))
+        if not isinstance(self.allowed_use, AllowedUse):
+            object.__setattr__(self, "allowed_use", AllowedUse(str(self.allowed_use)))
         if not self.artifact_id:
             raise ValueError("StatusSnapshotEntry.artifact_id must be non-empty")
         if not self.source_commit:

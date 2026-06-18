@@ -17,8 +17,8 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | --- | --- |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `cfd666a788101682fcffebff5ce809d762a0af1a32420af5c2e7a3d8b551de08` |
-| Source commit | `b5753e2+dirty` |
+| Config hash | `22b63c43da2158a5428e8a69b848b8fee70eda4e1c887864626e7f87b937fdd3` |
+| Source commit | `367039e+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
@@ -32,5 +32,27 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | State | Rows |
 | --- | ---: |
 | `completed` | 62 |
+
+| Claim Tier | Rows |
+| --- | ---: |
+| `conditional` | 5 |
+| `diagnostic_only` | 57 |
+
+| Artifact Readiness | Rows |
+| --- | ---: |
+| `generated` | 53 |
+| `smoke_tested` | 3 |
+| `validation_candidate` | 6 |
+
+| Allowed Use | Rows |
+| --- | ---: |
+| `external_audit` | 60 |
+| `paper_appendix` | 2 |
+
+| Artifact Mode | Rows |
+| --- | ---: |
+| `external_audit_conditioned` | 7 |
+| `governance_diagnostic` | 53 |
+| `paper_appendix_conditioned` | 2 |
 
 This matrix is a diagnostic-only DAG rendering. It does not certify solver validation, posterior evidence, native transfer validation, or family-ID evidence.
