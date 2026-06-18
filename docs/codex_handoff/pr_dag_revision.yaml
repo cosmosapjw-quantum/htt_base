@@ -1,0 +1,130 @@
+schema_version: htt.pr_dag_revision.v1
+owner: COMMON
+implementation_scope: common
+claim_tier: diagnostic_only
+transfer_source: none
+sky_support_status: not_directional
+null_mock_status: not_statistical
+status_surface: proposed_only
+does_not_overwrite: docs/codex_handoff/pr_status.yaml
+caveats:
+  - "external/proxy transfer is not native transfer"
+  - "family identification remains blocked until native morphology atlas support exists"
+  - "scaffold package outputs are not publication evidence"
+prs:
+  - id: "PR-R000"
+    title: "Promotion-model audit over existing ArtifactMode and AllowedUse"
+    depends: []
+    status: "proposed"
+  - id: "PR-R001"
+    title: "Status snapshot lane propagation"
+    depends: ["PR-R000"]
+    status: "proposed"
+  - id: "PR-R002"
+    title: "Figure manifest lane and forbidden-use fields"
+    depends: ["PR-R000"]
+    status: "proposed"
+  - id: "PR-R003"
+    title: "PDF-level claim lint integration"
+    depends: ["PR-R001"]
+    status: "proposed"
+  - id: "PR-R004"
+    title: "Revision claim freeze rows for safe framework wording"
+    depends: ["PR-R001", "PR-R003"]
+    status: "proposed"
+  - id: "PR-R010"
+    title: "Prior support sensitivity surface"
+    depends: ["PR-R002"]
+    status: "proposed"
+  - id: "PR-R011"
+    title: "Bulk-flow uncertainty propagation band"
+    depends: ["PR-R002"]
+    status: "proposed"
+  - id: "PR-R012"
+    title: "Rule-of-three FPR intervals"
+    depends: ["PR-R002"]
+    status: "proposed"
+  - id: "PR-R013"
+    title: "MES algebraic ceiling versus observational-bound calibration"
+    depends: ["PR-R002"]
+    status: "proposed"
+  - id: "PR-R020"
+    title: "Per-channel occupancy vector"
+    depends: ["PR-R000"]
+    status: "proposed"
+  - id: "PR-R021"
+    title: "Certified filling status and invalid-sector handling"
+    depends: ["PR-R020"]
+    status: "proposed"
+  - id: "PR-R022"
+    title: "Depth-gap G_F epsilon floor and uncertainty kind"
+    depends: ["PR-R021"]
+    status: "proposed"
+  - id: "PR-R023"
+    title: "Component filling anatomy"
+    depends: ["PR-R021"]
+    status: "proposed"
+  - id: "PR-R030"
+    title: "Local/global response-rank audit"
+    depends: ["PR-R002"]
+    status: "proposed"
+  - id: "PR-R031"
+    title: "Local boost-only G_F null"
+    depends: ["PR-R022", "PR-R030"]
+    status: "proposed"
+  - id: "PR-R032"
+    title: "Global-tilt injection recovery"
+    depends: ["PR-R022", "PR-R030"]
+    status: "proposed"
+  - id: "PR-R033"
+    title: "Survey-axis and selection-response nulls"
+    depends: ["PR-R031"]
+    status: "proposed"
+  - id: "PR-R034"
+    title: "Cross-survey covariance model"
+    depends: ["PR-R033"]
+    status: "proposed"
+  - id: "PR-R040"
+    title: "Deterministic-template likelihood branch"
+    depends: ["PR-R002"]
+    status: "proposed"
+  - id: "PR-R041"
+    title: "Stochastic covariance likelihood branch"
+    depends: ["PR-R002"]
+    status: "proposed"
+  - id: "PR-R042"
+    title: "Template-versus-covariance sensitivity report"
+    depends: ["PR-R040", "PR-R041"]
+    status: "proposed"
+  - id: "PR-R043"
+    title: "Scalar equivalence-class graph with family identification blocked"
+    depends: ["PR-R020", "PR-R042"]
+    status: "proposed"
+  - id: "PR-R050"
+    title: "Posterior-predictive checks"
+    depends: ["PR-R034", "PR-R042"]
+    status: "proposed"
+  - id: "PR-R051"
+    title: "LOOCV held-out probe test"
+    depends: ["PR-R034"]
+    status: "proposed"
+  - id: "PR-R052"
+    title: "Prior covariance null sensitivity dashboard"
+    depends: ["PR-R010", "PR-R011", "PR-R012", "PR-R034"]
+    status: "proposed"
+  - id: "PR-R053"
+    title: "Manuscript strong-evidence wording replacement"
+    depends: ["PR-R003", "PR-R052"]
+    status: "proposed"
+  - id: "PR-R060"
+    title: "Regenerate figure suite with manifests and source JSON"
+    depends: ["PR-R052", "PR-R053"]
+    status: "proposed"
+  - id: "PR-R061"
+    title: "Build reviewer packet"
+    depends: ["PR-R060"]
+    status: "proposed"
+  - id: "PR-R062"
+    title: "Independent CoVe run and final response table"
+    depends: ["PR-R061"]
+    status: "proposed"
