@@ -519,21 +519,21 @@ def _build_semantic_and_vector_payload(
             "definition": "x divided by explicit denominator policy",
         },
         {
-            "symbol": "Pi",
+            "symbol": "Q-spread",
             "label": "policy spread",
             "owner": "MIO",
             "display_value": q_spread,
             "definition": "inter-policy spread across current denominator policies",
         },
         {
-            "symbol": "F",
+            "symbol": "1-FPR",
             "label": "local-null survival",
             "owner": "HTT",
             "display_value": 1.0 - float(local_fpr["adjusted"]),
-            "definition": "one minus look-elsewhere adjusted local-null FPR",
+            "definition": "one minus look-elsewhere adjusted local-null false-positive rate",
         },
         {
-            "symbol": "G_F",
+            "symbol": "G-envelope",
             "label": "depth response",
             "owner": "HTT",
             "display_value": min(1.0, float(np.log1p(max(survey_depth.values()))) / 4.0),
@@ -571,7 +571,10 @@ def _build_semantic_and_vector_payload(
         "semantic_split": semantic,
         "diagnostic_vectors": vectors,
         "depth_p95": {"local_null": local_depth, "survey_systematic": survey_depth},
-        "interpretation": "normalized display values; x,Q,Pi,F,G_F have distinct semantics",
+        "interpretation": (
+            "normalized display values; x and Q keep canonical MIO meanings, "
+            "while Q-spread, 1-FPR, and G-envelope are noncanonical current-code proxies"
+        ),
     }
 
 
@@ -950,7 +953,7 @@ def _plot_qfpi_gf_semantic_split(output: Path) -> None:
     ax.bar(np.arange(len(rows)), values, color=colors)
     ax.set_xticks(np.arange(len(rows)), labels)
     ax.set_ylabel("normalized display value")
-    ax.set_title("Semantic split: x, Q, Pi, F, and G_F", loc="left", fontweight="bold")
+    ax.set_title("Semantic split: x, Q, and current proxy lanes", loc="left", fontweight="bold")
     _style_axes(ax)
     ax.grid(axis="y", color="#cbd5e1", linewidth=0.7)
     ax.grid(axis="x", visible=False)
@@ -965,11 +968,11 @@ def _plot_qfpi_gf_semantic_split(output: Path) -> None:
             color=COLORS["common"],
         )
     ax.text(
-        0.99,
-        0.94,
-        "display scale only: symbols are not interchangeable statistics",
+        0.01,
+        0.96,
+        "proxy lanes are not canonical Pi/F/G_F diagnostics",
         transform=ax.transAxes,
-        ha="right",
+        ha="left",
         va="top",
         fontsize=8.5,
         color=COLORS["common"],
@@ -1238,7 +1241,7 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
         FigureSpec(
             artifact_id="common.current_figures.qfpi_gf_semantic_split",
             file_name="fig_current_qfpi_gf_semantic_split.png",
-            title="x/Q/Pi/F/G_F semantic split",
+            title="x/Q/proxy semantic split",
             flow_slot="Results and robustness",
             source_paths=(
                 "docs/generated/current_science_plot_payload.json",
@@ -1247,10 +1250,11 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
                 "htt/mio/formalism/budget_spec.py",
             ),
             caption=(
-                "Current $x$, $Q$, $\\Pi$, $F$, and $G_F$ semantic split. The bars are normalized "
+                "Current $x$, $Q$, and noncanonical proxy-lane semantic split. The bars are normalized "
                 "display values from the deterministic current-code diagnostic "
                 "payload; they show ownership and semantic separation, not a "
-                "single interchangeable statistic and not a family-ID signal."
+                "single interchangeable statistic, not formal $\\Pi$, $F$, or $G_F$ "
+                "diagnostics, and not a family-ID signal."
             ),
             label="fig:current-qfpi-gf-semantic-split",
             snippet="current_figures_results.tex",
@@ -1273,7 +1277,7 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
             ),
             caveats=(
                 "Generated from current repo-local code and deterministic diagnostic payload.",
-                "Normalized display only; x, Q, Pi, F, and G_F are not interchangeable.",
+                "Normalized display only; proxy bars are not canonical Pi, F, or G_F diagnostics.",
                 "No Bianchi family-ID or geometry-detection claim is made.",
             ),
         ),

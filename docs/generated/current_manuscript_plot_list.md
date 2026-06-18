@@ -8,10 +8,10 @@ sky_support_status: mixed_not_directional_and_diagnostic_sky_support
 null_mock_status: mixed_not_statistical_and_current_code_diagnostic_null_banks
 config_hash: `sha256:5d5f382530a84f273563e05faeb31150abc406e06c58e319ca27891b6b1c8d73`
 input_hashes:
-- `scripts/make_current_manuscript_figures.py:sha256:9eb4fff06ba16b3fb8563c97e047f6b66add31a07b063b2fc8ce5951361d2976`
+- `scripts/make_current_manuscript_figures.py:sha256:26b433c5ee6d54aa65f64d03e4bba70ab702d711578c64285b2e9898a921a280`
 - `docs/generated/current_manuscript_figure_curation.json:sha256:1bff29c98803b711203a90c988ecdbabdf241d2daf13666a314faa7673ec49f8`
-- `docs/generated/current_science_plot_payload.json:sha256:4cd77a839f275f54c39a73d44184179163c498747b5db8beb6c411aacb996d03`
-- `docs/generated/publication_claim_freeze.md:sha256:2029de72088d69ebf08703060904d76b741bfabd528aadb3d7f6604ff0d060e3`
+- `docs/generated/current_science_plot_payload.json:sha256:8e708f627a55622f89f6d2333f0507838b4a479a845052e2b5b878f4baa67924`
+- `docs/generated/publication_claim_freeze.md:sha256:8c475e259b03e54a2fd925c0bb28a78a62faf8b21d0cc00f3756d4069d59b0a3`
 - `docs/generated/result_pack_A.md:sha256:676f2150c2fe24503ab37ba52b0e3826a39c0bce6cf346c75e28b13336c07c7b`
 - `docs/generated/result_pack_B.md:sha256:57c2ae21d774acf3c87fe51d6562dbb62c1ccced9f367a2b6cbfbb12a82181d1`
 - `docs/generated/result_pack_C.md:sha256:2b37198072126ce63fc76376c84741bcb154c5c75e9544cfbf36061a8fb30c77`
@@ -27,7 +27,7 @@ caveats:
 - Current figures include governance summaries and conditioned current-code physics diagnostics.
 - No figure claims native low-ell output, geometry-detection status, or Bianchi family-ID.
 generating_command: `python scripts/make_current_manuscript_figures.py`
-git_commit_or_worktree_state: `6649e04+dirty`
+git_commit_or_worktree_state: `031e180+dirty`
 artifact_path: docs/generated/current_manuscript_plot_list.md
 
 ## Excluded Legacy Plot References
@@ -50,7 +50,7 @@ artifact_path: docs/generated/current_manuscript_plot_list.md
 | Results and robustness | `figures/current/fig_current_local_global_gates.png` | `docs/generated/result_pack_B.md` | diagnostic_only | `governance_diagnostic` | `external_audit` | Diagnostic-only figure; not externally validated native low-ell output. |
 | Results and robustness | `figures/current/fig_current_local_global_rank_fpr.png` | `docs/generated/current_science_plot_payload.json`<br>`htt/htt/htt/departure/response_overlap.py`<br>`htt/htt/htt/nulls/local_boost_depth_null.py`<br>`htt/htt/htt/nulls/selection_response_depth.py` | diagnostic_only | `paper_appendix_conditioned` | `paper_appendix` | Deterministic gate stress payload; not an observed-data production result. |
 | Results and robustness | `figures/current/fig_current_mio_certificate_status.png` | `docs/generated/result_pack_C.md` | diagnostic_only | `governance_diagnostic` | `external_audit` | Diagnostic-only figure; not externally validated native low-ell output. |
-| Results and robustness | `figures/current/fig_current_qfpi_gf_semantic_split.png` | `docs/generated/current_science_plot_payload.json`<br>`docs/generated/result_pack_A.md`<br>`htt/src/common/departure_contracts.py`<br>`htt/mio/formalism/budget_spec.py` | diagnostic_only | `paper_appendix_conditioned` | `paper_appendix` | Normalized display only; x, Q, Pi, F, and G_F are not interchangeable. |
+| Results and robustness | `figures/current/fig_current_qfpi_gf_semantic_split.png` | `docs/generated/current_science_plot_payload.json`<br>`docs/generated/result_pack_A.md`<br>`htt/src/common/departure_contracts.py`<br>`htt/mio/formalism/budget_spec.py` | diagnostic_only | `paper_appendix_conditioned` | `paper_appendix` | Normalized display only; proxy bars are not canonical Pi, F, or G_F diagnostics. |
 | Results and robustness | `figures/current/fig_current_mio_depth_residual_vectors.png` | `docs/generated/current_science_plot_payload.json`<br>`docs/generated/result_pack_C.md`<br>`htt/htt/htt/nulls/local_boost_depth_null.py`<br>`htt/htt/htt/nulls/selection_response_depth.py` | diagnostic_only | `paper_appendix_conditioned` | `paper_appendix` | Diagnostic readiness plot; not a production certificate. |
 | Governance and submission boundary | `figures/current/fig_current_public_claim_freeze.png` | `docs/generated/publication_claim_freeze.md` | diagnostic_only | `governance_diagnostic` | `external_audit` | Diagnostic-only figure; not externally validated native low-ell output. |
 
