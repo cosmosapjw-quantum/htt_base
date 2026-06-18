@@ -31,3 +31,7 @@ python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.ya
 ```
 
 both pass.
+
+## v4 hotfix: no project-local `.codex/config.toml`
+
+The v3 package placed scalar settings under `[agents]` in `.codex/config.toml`. Some Codex releases parse that table as a map of agent-role structures and reject scalar values, causing startup failure. v4 removes project-local config entirely. Skills and custom agents are still installed via `.agents/skills` and `.codex/agents`.
