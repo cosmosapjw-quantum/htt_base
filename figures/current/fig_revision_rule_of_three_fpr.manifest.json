@@ -1,0 +1,72 @@
+{
+  "allowed_use": "external_audit",
+  "artifact_id": "FPR_rule_of_three",
+  "artifact_mode": "external_audit_conditioned",
+  "artifact_path": "figures/current/fig_revision_rule_of_three_fpr.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_state_no_native_low_ell_solver_output",
+    "must_state_no_family_identification"
+  ],
+  "caveats": [
+    "not native transfer",
+    "not family identification",
+    "does not promote geometry or family claims",
+    "paper-main use requires the lane recorded in this manifest",
+    "finite-null interval only",
+    "0/N is an upper bound and not zero false-positive rate",
+    "observed nonzero false positives remain blocker diagnostics"
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "10da0c8+dirty",
+  "config_hash": "sha256:2cd2a01798a2ebd035d340c8b59fc0da22ebee41dee0232a4f83e07318708caa",
+  "created_by": "scripts/generate_revision_experiment_assets.py",
+  "failed_gates": [
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available",
+    "publication_grade_covariance_not_bound"
+  ],
+  "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
+  "git_commit": "10da0c8",
+  "git_commit_or_worktree_state": "10da0c8+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/current_science_plot_payload.json:sha256:4cd77a839f275f54c39a73d44184179163c498747b5db8beb6c411aacb996d03"
+  ],
+  "null_mock_status": "current_code_diagnostic_null_bank_generated",
+  "owner": "COMMON",
+  "passed_gates": [
+    "repo_input_or_analytic_scaffold_declared",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_low_ell_solver_not_available",
+    "native_morphology_atlas_not_available",
+    "matched_nulls_and_full_covariance_not_bound_for_public_claims"
+  ],
+  "required_gates": [
+    "repo_input_or_analytic_scaffold_declared",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "common.revision_experiment_asset.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "asset_title": "Rule-of-three FPR ceiling",
+    "input_mode": "repo_observed_input",
+    "interpretation": "rule_of_three_is_a_zero-event_upper_bound; observed nonzero false positives must be reported separately",
+    "look_elsewhere_trials": 3,
+    "max_false_positive_rate": 0.15,
+    "observed_adjusted_fpr": 0.28125,
+    "observed_false_positive_count": 18,
+    "observed_n_mocks": 192,
+    "observed_raw_fpr": 0.09375,
+    "rule_of_three_at_observed_n": 0.015625,
+    "source_artifacts": [
+      "docs/generated/current_science_plot_payload.json"
+    ]
+  },
+  "transfer_source": "none"
+}

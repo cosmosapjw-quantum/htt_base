@@ -1,0 +1,75 @@
+{
+  "allowed_use": "paper_main",
+  "artifact_id": "E5_tomographic_forecast",
+  "artifact_mode": "paper_main_candidate",
+  "artifact_path": "figures/current/fig_revision_tomographic_forecast.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_state_no_native_low_ell_solver_output",
+    "must_state_no_family_identification"
+  ],
+  "caveats": [
+    "not native transfer",
+    "not family identification",
+    "does not promote geometry or family claims",
+    "paper-main use requires the lane recorded in this manifest",
+    "forecast only",
+    "not current local/global discrimination proof",
+    "paper-main use requires explicit forecast caption and blocked native-atlas status"
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "10da0c8+dirty",
+  "config_hash": "sha256:efd68912b926a26f5fba5841ae6fae6bda16a43ef39e56bd3e968cfa1730e65b",
+  "created_by": "scripts/generate_revision_experiment_assets.py",
+  "failed_gates": [
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available",
+    "publication_grade_covariance_not_bound"
+  ],
+  "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
+  "git_commit": "10da0c8",
+  "git_commit_or_worktree_state": "10da0c8+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/observed_longrun_analysis.json:sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047"
+  ],
+  "null_mock_status": "jackknife_bootstrap_diagnostic_only",
+  "owner": "COMMON",
+  "passed_gates": [
+    "repo_input_or_analytic_scaffold_declared",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_low_ell_solver_not_available",
+    "native_morphology_atlas_not_available",
+    "matched_nulls_and_full_covariance_not_bound_for_public_claims"
+  ],
+  "required_gates": [
+    "repo_input_or_analytic_scaffold_declared",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "common.revision_experiment_asset.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "asset_title": "Tomographic forecast",
+    "cf4_radius_bins": 10,
+    "desi_amplitude_max": 0.8461594375743775,
+    "desi_amplitude_min": 0.6996417386315337,
+    "desi_depth_bins": 36,
+    "forecast_definition": "SVD rank and template-correlation diagnostic for local-boost, global-tilt, and nuisance depth templates",
+    "forecast_design_columns": 3,
+    "forecast_design_condition_number": 38.74441419255036,
+    "forecast_design_rank": 3,
+    "forecast_rank_status": "full_rank_diagnostic",
+    "input_mode": "repo_observed_input",
+    "local_global_separation_score": 0.038171834509130975,
+    "local_global_template_correlation": -0.961828165490869,
+    "source_artifacts": [
+      "docs/generated/observed_longrun_analysis.json"
+    ]
+  },
+  "transfer_source": "empirical_proxy"
+}

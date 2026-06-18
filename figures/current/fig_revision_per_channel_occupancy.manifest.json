@@ -1,0 +1,96 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "E3_per_channel_occupancy",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/current/fig_revision_per_channel_occupancy.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_state_no_native_low_ell_solver_output",
+    "must_state_no_family_identification"
+  ],
+  "caveats": [
+    "not native transfer",
+    "not family identification",
+    "does not promote geometry or family claims",
+    "paper-main use requires the lane recorded in this manifest",
+    "denominator diagnostic only",
+    "scalar Q blocked for channel mismatch",
+    "no geometry or family claim"
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "10da0c8+dirty",
+  "config_hash": "sha256:74424c754f1fb2135a0da4eb10dbc01c3212354faa4b874e64b8e077d659cbcc",
+  "created_by": "scripts/generate_revision_experiment_assets.py",
+  "failed_gates": [
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available",
+    "publication_grade_covariance_not_bound"
+  ],
+  "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
+  "git_commit": "10da0c8",
+  "git_commit_or_worktree_state": "10da0c8+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "COMMON",
+  "passed_gates": [
+    "repo_input_or_analytic_scaffold_declared",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_low_ell_solver_not_available",
+    "native_morphology_atlas_not_available",
+    "matched_nulls_and_full_covariance_not_bound_for_public_claims"
+  ],
+  "required_gates": [
+    "repo_input_or_analytic_scaffold_declared",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "common.revision_experiment_asset.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "asset_title": "Per-channel occupancy",
+    "channel_occupancy": [
+      {
+        "channel": "shear",
+        "denominator_policy": "channel_matched_proxy_budget",
+        "denominator_proxy": 0.5515384615384615,
+        "numerator_proxy": 0.21074224021592444,
+        "occupancy": 0.3820989013677849
+      },
+      {
+        "channel": "vorticity",
+        "denominator_policy": "channel_matched_proxy_budget",
+        "denominator_proxy": 0.3860769230769231,
+        "numerator_proxy": 0.11854251012145749,
+        "occupancy": 0.30704376002768424
+      },
+      {
+        "channel": "tilt",
+        "denominator_policy": "channel_matched_proxy_budget",
+        "denominator_proxy": 0.5055769230769231,
+        "numerator_proxy": 0.17781376518218625,
+        "occupancy": 0.3517046705771656
+      },
+      {
+        "channel": "anisotropic curvature",
+        "denominator_policy": "channel_matched_proxy_budget",
+        "denominator_proxy": 0.47800000000000004,
+        "numerator_proxy": 0.1514709851551957,
+        "occupancy": 0.31688490618241777
+      }
+    ],
+    "input_mode": "repo_observed_input",
+    "inventory_coverage": 0.7692307692307693,
+    "negative_components_allowed": false,
+    "source_artifacts": [
+      "docs/generated/observational_data_inventory.json"
+    ]
+  },
+  "transfer_source": "none"
+}

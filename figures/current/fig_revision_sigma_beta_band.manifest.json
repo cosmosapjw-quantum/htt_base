@@ -1,0 +1,73 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "E2_sigma_beta_band",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/current/fig_revision_sigma_beta_band.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_state_no_native_low_ell_solver_output",
+    "must_state_no_family_identification"
+  ],
+  "caveats": [
+    "not native transfer",
+    "not family identification",
+    "does not promote geometry or family claims",
+    "paper-main use requires the lane recorded in this manifest",
+    "bulk-flow uncertainty diagnostic only",
+    "not verified decisive evidence",
+    "look-elsewhere correction is display-only"
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "10da0c8+dirty",
+  "config_hash": "sha256:bca795f334c7d91fdc3a741b7d8553f1549d27cc90d6c665557ec94fd4c8337c",
+  "created_by": "scripts/generate_revision_experiment_assets.py",
+  "failed_gates": [
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available",
+    "publication_grade_covariance_not_bound"
+  ],
+  "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
+  "git_commit": "10da0c8",
+  "git_commit_or_worktree_state": "10da0c8+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/current_science_plot_payload.json:sha256:4cd77a839f275f54c39a73d44184179163c498747b5db8beb6c411aacb996d03"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "COMMON",
+  "passed_gates": [
+    "repo_input_or_analytic_scaffold_declared",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_low_ell_solver_not_available",
+    "native_morphology_atlas_not_available",
+    "matched_nulls_and_full_covariance_not_bound_for_public_claims"
+  ],
+  "required_gates": [
+    "repo_input_or_analytic_scaffold_declared",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "common.revision_experiment_asset.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "asset_title": "Sigma-beta band",
+    "beta_max": 0.003,
+    "beta_min": 0.0004,
+    "input_mode": "repo_observed_input",
+    "look_elsewhere_trials": 3,
+    "proxy_lnb_definition": "0.5*(beta/sigma_beta)^2 - log(delta_beta_prior/sigma_beta) - log(look_elsewhere_trials) + log(median_Q); diagnostic proxy only",
+    "proxy_lnb_max": 33.00542343513561,
+    "proxy_lnb_min": -3.095019347877436,
+    "q_center": 0.6585695006747638,
+    "sigma_beta_max": 0.0016,
+    "sigma_beta_min": 0.00035,
+    "source_artifacts": [
+      "docs/generated/current_science_plot_payload.json"
+    ]
+  },
+  "transfer_source": "empirical_proxy"
+}
