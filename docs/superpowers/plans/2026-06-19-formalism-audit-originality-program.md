@@ -271,9 +271,9 @@ Files:
 
 Steps:
 
-- [ ] Port the proposal fuzzer to the production contracts rather than the dependency-free
+- [x] Port the proposal fuzzer to the production contracts rather than the dependency-free
   reference module.
-- [ ] Cover attacks:
+- [x] Cover attacks:
   - reserved language smuggling.
   - figure label owner/definition mismatch.
   - sign-dirty or super-ceiling `F`.
@@ -281,7 +281,9 @@ Steps:
   - post-hoc `Pi` threshold selection.
   - `G_F` "global tilt" language.
   - MIO diagnostic to HTT evidence/posterior leakage.
-- [ ] Require zero successful smuggles and zero leakage paths.
+  - rank/null/covariance prerequisite bypasses.
+  - external-transfer-to-native transfer laundering.
+- [x] Require zero successful smuggles and zero leakage paths.
 
 Validation:
 

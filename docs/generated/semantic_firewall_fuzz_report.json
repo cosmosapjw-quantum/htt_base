@@ -1,0 +1,216 @@
+{
+  "all_cases_blocked": true,
+  "artifact_id": "semantic_firewall_fuzz_report",
+  "artifact_path": "docs/generated/semantic_firewall_fuzz_report.md",
+  "attack_count": 15,
+  "blocked_count": 15,
+  "cases": [
+    {
+      "attack_family": "reserved_language",
+      "blocked": true,
+      "blocker": "scan_text",
+      "case_id": "reserved_public_claim_prose",
+      "modules_exercised": [
+        "common.semantic_guards.no_overclaim"
+      ],
+      "surface": "common.semantic_guards.no_overclaim.scan_text"
+    },
+    {
+      "attack_family": "figure_label",
+      "blocked": true,
+      "blocker": "label_registry",
+      "case_id": "figure_label_owner_definition_mismatch",
+      "modules_exercised": [
+        "scripts.verify_formalism_figure_labels"
+      ],
+      "surface": "scripts.verify_formalism_figure_labels.validate_rows"
+    },
+    {
+      "attack_family": "q_metadata",
+      "blocked": true,
+      "blocker": "ValueError",
+      "case_id": "q_family_metadata",
+      "modules_exercised": [
+        "mio.formalism.normalized_score"
+      ],
+      "surface": "mio.formalism.normalized_score.build_normalized_score"
+    },
+    {
+      "attack_family": "f_semantics",
+      "blocked": true,
+      "blocker": "ValueError",
+      "case_id": "f_sign_dirty_sample",
+      "modules_exercised": [
+        "mio.formalism.filling_fraction"
+      ],
+      "surface": "mio.formalism.filling_fraction.build_certified_filling_fraction"
+    },
+    {
+      "attack_family": "f_semantics",
+      "blocked": true,
+      "blocker": "ValueError",
+      "case_id": "f_super_ceiling_no_clipping",
+      "modules_exercised": [
+        "mio.formalism.filling_fraction"
+      ],
+      "surface": "mio.formalism.filling_fraction.build_certified_filling_fraction"
+    },
+    {
+      "attack_family": "f_semantics",
+      "blocked": true,
+      "blocker": "ValueError",
+      "case_id": "f_external_ceiling_not_certified",
+      "modules_exercised": [
+        "mio.formalism.budget_spec"
+      ],
+      "surface": "mio.formalism.budget_spec.BudgetSpec"
+    },
+    {
+      "attack_family": "f_semantics",
+      "blocked": true,
+      "blocker": "ValueError",
+      "case_id": "f_observational_ceiling_not_certified",
+      "modules_exercised": [
+        "mio.formalism.budget_spec"
+      ],
+      "surface": "mio.formalism.budget_spec.BudgetSpec"
+    },
+    {
+      "attack_family": "pi_semantics",
+      "blocked": true,
+      "blocker": "ValueError",
+      "case_id": "pi_curve_only_selected_threshold_smuggle",
+      "modules_exercised": [
+        "mio.formalism.exceedance"
+      ],
+      "surface": "mio.formalism.exceedance.build_exceedance_curve"
+    },
+    {
+      "attack_family": "pi_semantics",
+      "blocked": true,
+      "blocker": "ValueError",
+      "case_id": "pi_post_hoc_threshold_selection",
+      "modules_exercised": [
+        "mio.formalism.exceedance"
+      ],
+      "surface": "mio.formalism.exceedance.build_exceedance_curve"
+    },
+    {
+      "attack_family": "g_f_semantics",
+      "blocked": true,
+      "blocker": "ValueError",
+      "case_id": "g_f_reserved_claim_metadata",
+      "modules_exercised": [
+        "mio.formalism.isotropy_gap"
+      ],
+      "surface": "mio.formalism.isotropy_gap.build_isotropy_gap"
+    },
+    {
+      "attack_family": "rank_null_covariance",
+      "blocked": true,
+      "blocker": "ValueError",
+      "case_id": "g_f_missing_covariance_status",
+      "modules_exercised": [
+        "mio.formalism.isotropy_gap"
+      ],
+      "surface": "mio.formalism.isotropy_gap.DepthBinMetadata"
+    },
+    {
+      "attack_family": "mio_htt_leakage",
+      "blocked": true,
+      "blocker": "TypeError",
+      "case_id": "htt_likelihood_rejects_mio_payload",
+      "modules_exercised": [
+        "workspace.contracts.htt_posterior"
+      ],
+      "surface": "workspace.contracts.htt_posterior.reject_mio_likelihood_inputs"
+    },
+    {
+      "attack_family": "mio_htt_leakage",
+      "blocked": true,
+      "blocker": "TypeError",
+      "case_id": "htt_pushforward_rejects_mio_payload",
+      "modules_exercised": [
+        "htt.departure.posterior_pushforward"
+      ],
+      "surface": "htt.departure.posterior_pushforward.reject_mio_pushforward_inputs"
+    },
+    {
+      "attack_family": "rank_null_covariance",
+      "blocked": true,
+      "blocker": "RuntimeError",
+      "case_id": "response_rank_deficiency_blocks_model_run",
+      "modules_exercised": [
+        "htt.departure.response_overlap"
+      ],
+      "surface": "htt.departure.response_overlap.require_rank_audit_for_model_run"
+    },
+    {
+      "attack_family": "transfer_provenance",
+      "blocked": true,
+      "blocker": "ValueError",
+      "case_id": "atlas_entry_rejects_external_as_native",
+      "modules_exercised": [
+        "bass.atlas",
+        "bass.transfer.registry"
+      ],
+      "surface": "bass.atlas.AtlasEntryLite"
+    }
+  ],
+  "caveats": [
+    "This artifact tests hostile semantic paths against production guard surfaces.",
+    "The report is diagnostic-only firewall coverage; not scientific validation.",
+    "It does not validate a native low-ell solver, transfer calibration, or morphology atlas.",
+    "It records sanitized case ids only; hostile prose payloads and exception text are intentionally omitted."
+  ],
+  "claim_tier": "diagnostic_only",
+  "config_hash": "sha256:ec8b875a573eecde46b3498b44c790045ca46d88ee433112cbe594e1816202b8",
+  "covariance_status": "mixed_diagnostic_covariance_and_constructor_controls",
+  "created_by": "scripts/generate_semantic_firewall_fuzz_report.py",
+  "generating_command": "python scripts/generate_semantic_firewall_fuzz_report.py",
+  "git_commit_or_worktree_state": "64a47c7+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "scripts/generate_semantic_firewall_fuzz_report.py:sha256:1052b702291afa19b8254c44eb73e98b2b7b68ddadceaca09b55d3344c01f355",
+    "tests/contracts/test_semantic_firewall_fuzz.py:sha256:51621a25141cfd86cdc785d3d9d092dd2ed27588e625e9d78ef3f25a496e582c",
+    "scripts/verify_formalism_figure_labels.py:sha256:a73ae14d7315123867cb5e435aea323f4cc7b21c3322b30dd7f935c929beb064",
+    "htt/src/common/semantic_guards/no_overclaim.py:sha256:2ee032097adc3c78a9556414c260c1294469a382e7192b784bb6d9d5acda7491",
+    "htt/src/common/transfer_registry.py:sha256:d22beea71bc0e9ffe308c2ae1c9424017c2274aedc7c791d8b432042f5175554",
+    "htt/workspace/contracts/htt_posterior.py:sha256:1a79553bdf0d602cac2d6515810da89377e6bd47b81b05aca0028807436a2f3d",
+    "htt/htt/htt/departure/posterior_pushforward.py:sha256:e2385b5ad836957a61f78cdf26eb6c9f7991549188bd4ce951b83141fd2f5a5b",
+    "htt/htt/htt/departure/response_overlap.py:sha256:2ea56655e8b8c419239459bdbe4d79c755d00115ce4bd6e6e00b447d51c1f139",
+    "htt/mio/formalism/budget_spec.py:sha256:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a",
+    "htt/mio/formalism/departure_bundle.py:sha256:f04d692646c0d2232373701fb29088d60bb2549106232ff05d2dff644291b80d",
+    "htt/mio/formalism/exceedance.py:sha256:b4fe0040ff2fc0ab6385a9fc6e81d526f900e9d95673d1ae88863db84dc3a9bd",
+    "htt/mio/formalism/filling_fraction.py:sha256:69cb198e205690816295e0e13b77cb6e673a88f000e9d7632c6650d08cbdbb70",
+    "htt/mio/formalism/isotropy_gap.py:sha256:a98bd229360d4f928f33b45524401643ef8c5fd3d780f027515891b93ed40f5a",
+    "htt/mio/formalism/normalized_score.py:sha256:d2fa8605ba70c6265b8680427c0f99c71121dbdf83eddc8d9a06de374c82cd42",
+    "htt/bass/atlas/atlas_entry.py:sha256:07164104137bcc008548c254d179841661de14226ff449ee641537809ab93cc4",
+    "htt/bass/transfer/registry.py:sha256:3891053f5d9c91de3cc37a228817c1d98a0aebb3a5cff3d726318f1271621415"
+  ],
+  "json_artifact_path": "docs/generated/semantic_firewall_fuzz_report.json",
+  "leakage_path_count": 0,
+  "modules_exercised": [
+    "bass.atlas",
+    "bass.transfer.registry",
+    "common.semantic_guards.no_overclaim",
+    "htt.departure.posterior_pushforward",
+    "htt.departure.response_overlap",
+    "mio.formalism.budget_spec",
+    "mio.formalism.exceedance",
+    "mio.formalism.filling_fraction",
+    "mio.formalism.isotropy_gap",
+    "mio.formalism.normalized_score",
+    "scripts.verify_formalism_figure_labels",
+    "workspace.contracts.htt_posterior"
+  ],
+  "null_mock_status": "mixed_diagnostic_null_and_constructor_controls",
+  "owner": "COMMON",
+  "production_status": "diagnostic_only",
+  "publication_ready": false,
+  "schema_version": "common.semantic_firewall_fuzz_report.v1",
+  "science_claim_ceiling": "diagnostic-only firewall coverage; not scientific validation",
+  "sky_support_status": "mixed_not_directional_and_masked_controls",
+  "smuggle_count": 0,
+  "transfer_source": "mixed_none_and_external_transfer_controls"
+}

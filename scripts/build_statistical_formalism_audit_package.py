@@ -59,6 +59,8 @@ FORMALISM_METADATA_FILES = (
     "docs/generated/publication_claim_freeze.md",
     "docs/generated/pdf_claim_lint_report.md",
     "docs/generated/revision_claim_lanes.md",
+    "docs/generated/semantic_firewall_fuzz_report.json",
+    "docs/generated/semantic_firewall_fuzz_report.md",
     "docs/ver2_upgrade/generated/claim_ledger.json",
     "docs/ver2_upgrade/generated/status_snapshot.json",
     "docs/ver2_upgrade/generated/result_pack_C_departure_cards.json",
@@ -72,6 +74,11 @@ FORMALISM_METADATA_FILES = (
 
 FORMALISM_CODE_FILES = (
     "htt/src/common/departure_contracts.py",
+    "htt/src/common/semantic_guards/no_overclaim.py",
+    "htt/src/common/transfer_registry.py",
+    "htt/workspace/contracts/htt_posterior.py",
+    "htt/bass/atlas/atlas_entry.py",
+    "htt/bass/transfer/registry.py",
     "htt/mio/formalism/__init__.py",
     "htt/mio/formalism/budget_spec.py",
     "htt/mio/formalism/component_breakdown.py",
@@ -85,6 +92,7 @@ FORMALISM_CODE_FILES = (
     "htt/htt/htt/departure/response_overlap.py",
     "htt/htt/htt/nulls/local_boost_depth_null.py",
     "htt/htt/htt/nulls/selection_response_depth.py",
+    "scripts/generate_semantic_firewall_fuzz_report.py",
     "scripts/verify_formalism_figure_labels.py",
 )
 
@@ -97,6 +105,7 @@ FORMALISM_TEST_FILES = (
     "tests/mio/test_isotropy_gap.py",
     "tests/mio/test_normalized_score.py",
     "tests/contracts/test_formalism_figure_labels.py",
+    "tests/contracts/test_semantic_firewall_fuzz.py",
     "tests/htt/test_posterior_pushforward.py",
 )
 

@@ -97,6 +97,22 @@
       "source_path": "docs/generated/revision_claim_lanes.md"
     },
     {
+      "archive_path": "statistical_formalism_audit/docs/generated/semantic_firewall_fuzz_report.json",
+      "description": "generated result packs, ledgers, and payloads for formalism audit",
+      "group": "formalism_metadata",
+      "sha256": "sha256:9baa2f795ba6cd2aa7b7debf9a49504a66fe75d0ce1dac55f3f03244596812ec",
+      "size_bytes": 8655,
+      "source_path": "docs/generated/semantic_firewall_fuzz_report.json"
+    },
+    {
+      "archive_path": "statistical_formalism_audit/docs/generated/semantic_firewall_fuzz_report.md",
+      "description": "generated result packs, ledgers, and payloads for formalism audit",
+      "group": "formalism_metadata",
+      "sha256": "sha256:5a5a19965d5bf6c51c68faefda1ecf3803cbc45904abf5937d72a9f50a338b59",
+      "size_bytes": 3723,
+      "source_path": "docs/generated/semantic_firewall_fuzz_report.md"
+    },
+    {
       "archive_path": "statistical_formalism_audit/docs/generated/transfer_sensitivity_report.md",
       "description": "generated result packs, ledgers, and payloads for formalism audit",
       "group": "formalism_metadata",
@@ -465,6 +481,22 @@
       "source_path": "figures/paper/ver2_generated/fig_ver2d_mio_predictive_residuals.png"
     },
     {
+      "archive_path": "statistical_formalism_audit/htt/bass/atlas/atlas_entry.py",
+      "description": "minimal formalism code required to audit definitions",
+      "group": "formalism_code",
+      "sha256": "sha256:07164104137bcc008548c254d179841661de14226ff449ee641537809ab93cc4",
+      "size_bytes": 29913,
+      "source_path": "htt/bass/atlas/atlas_entry.py"
+    },
+    {
+      "archive_path": "statistical_formalism_audit/htt/bass/transfer/registry.py",
+      "description": "minimal formalism code required to audit definitions",
+      "group": "formalism_code",
+      "sha256": "sha256:3891053f5d9c91de3cc37a228817c1d98a0aebb3a5cff3d726318f1271621415",
+      "size_bytes": 6693,
+      "source_path": "htt/bass/transfer/registry.py"
+    },
+    {
       "archive_path": "statistical_formalism_audit/htt/htt/htt/departure/posterior_pushforward.py",
       "description": "minimal formalism code required to audit definitions",
       "group": "formalism_code",
@@ -577,6 +609,38 @@
       "source_path": "htt/src/common/departure_contracts.py"
     },
     {
+      "archive_path": "statistical_formalism_audit/htt/src/common/semantic_guards/no_overclaim.py",
+      "description": "minimal formalism code required to audit definitions",
+      "group": "formalism_code",
+      "sha256": "sha256:2ee032097adc3c78a9556414c260c1294469a382e7192b784bb6d9d5acda7491",
+      "size_bytes": 11627,
+      "source_path": "htt/src/common/semantic_guards/no_overclaim.py"
+    },
+    {
+      "archive_path": "statistical_formalism_audit/htt/src/common/transfer_registry.py",
+      "description": "minimal formalism code required to audit definitions",
+      "group": "formalism_code",
+      "sha256": "sha256:d22beea71bc0e9ffe308c2ae1c9424017c2274aedc7c791d8b432042f5175554",
+      "size_bytes": 10759,
+      "source_path": "htt/src/common/transfer_registry.py"
+    },
+    {
+      "archive_path": "statistical_formalism_audit/htt/workspace/contracts/htt_posterior.py",
+      "description": "minimal formalism code required to audit definitions",
+      "group": "formalism_code",
+      "sha256": "sha256:1a79553bdf0d602cac2d6515810da89377e6bd47b81b05aca0028807436a2f3d",
+      "size_bytes": 8265,
+      "source_path": "htt/workspace/contracts/htt_posterior.py"
+    },
+    {
+      "archive_path": "statistical_formalism_audit/scripts/generate_semantic_firewall_fuzz_report.py",
+      "description": "minimal formalism code required to audit definitions",
+      "group": "formalism_code",
+      "sha256": "sha256:1052b702291afa19b8254c44eb73e98b2b7b68ddadceaca09b55d3344c01f355",
+      "size_bytes": 31809,
+      "source_path": "scripts/generate_semantic_firewall_fuzz_report.py"
+    },
+    {
       "archive_path": "statistical_formalism_audit/scripts/verify_formalism_figure_labels.py",
       "description": "minimal formalism code required to audit definitions",
       "group": "formalism_code",
@@ -591,6 +655,14 @@
       "sha256": "sha256:2234958d449c0eabf9a27fabe429785fbc5440bcf14dc2b56598b9060d70004e",
       "size_bytes": 6590,
       "source_path": "tests/contracts/test_formalism_figure_labels.py"
+    },
+    {
+      "archive_path": "statistical_formalism_audit/tests/contracts/test_semantic_firewall_fuzz.py",
+      "description": "formalism tests documenting constraints and forbidden semantics",
+      "group": "formalism_test",
+      "sha256": "sha256:51621a25141cfd86cdc785d3d9d092dd2ed27588e625e9d78ef3f25a496e582c",
+      "size_bytes": 5479,
+      "source_path": "tests/contracts/test_semantic_firewall_fuzz.py"
     },
     {
       "archive_path": "statistical_formalism_audit/tests/htt/test_posterior_pushforward.py",
@@ -657,7 +729,7 @@
       "source_path": "tests/mio/test_normalized_score.py"
     }
   ],
-  "archive_entry_count": 82,
+  "archive_entry_count": 91,
   "artifact_id": "statistical_formalism_audit_package",
   "artifact_path": "docs/generated/statistical_formalism_audit_package.zip",
   "caveats": [
@@ -668,8 +740,8 @@
     "Current transfer-dependent and conditioned legacy material remains transfer-conditional."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "fec3495+dirty",
-  "config_hash": "sha256:d591325ae181844492f1effbb390840a76130f460da3dcc576614ad4c32a6f41",
+  "code_version": "64a47c7+dirty",
+  "config_hash": "sha256:28ad3f016b108f2eb605e1db0ca414cea304c8e67ac60f45246834aff3bb3fcb",
   "created_by": "scripts/build_statistical_formalism_audit_package.py",
   "failed_gates": [],
   "formalism_focus": {
@@ -680,8 +752,8 @@
     "x_C": "signed comparator coordinate"
   },
   "generating_command": "python scripts/build_statistical_formalism_audit_package.py",
-  "git_commit": "fec3495",
-  "git_commit_or_worktree_state": "fec3495+dirty",
+  "git_commit": "64a47c7",
+  "git_commit_or_worktree_state": "64a47c7+dirty",
   "implementation_scope": "common",
   "input_hashes": [
     "virtual:AUDIT_PROMPT_STATISTICAL_FORMALISM.md:sha256:3f1542ab998b346b6417ecfc04b0d15fc18bacdd371300c37e24830518633341",
@@ -696,6 +768,8 @@
     "docs/generated/result_pack_B.md:sha256:57c2ae21d774acf3c87fe51d6562dbb62c1ccced9f367a2b6cbfbb12a82181d1",
     "docs/generated/result_pack_C.md:sha256:2b37198072126ce63fc76376c84741bcb154c5c75e9544cfbf36061a8fb30c77",
     "docs/generated/revision_claim_lanes.md:sha256:68d42e62ae116ff6c0828e67758410885e16a8ab52a648fca7adaf59e253d701",
+    "docs/generated/semantic_firewall_fuzz_report.json:sha256:9baa2f795ba6cd2aa7b7debf9a49504a66fe75d0ce1dac55f3f03244596812ec",
+    "docs/generated/semantic_firewall_fuzz_report.md:sha256:5a5a19965d5bf6c51c68faefda1ecf3803cbc45904abf5937d72a9f50a338b59",
     "docs/generated/transfer_sensitivity_report.md:sha256:b2634c82ef783687cc2d304c50bb64487fa4556833bcc1a55464f7cae136903c",
     "docs/manuscript/generated/current_figures_pipeline.tex:sha256:195f8ae9ec189206325edb2ca0411f6031b8985b0f0ef6b981c05d5cd93750b8",
     "docs/manuscript/generated/current_figures_results.tex:sha256:9102be84b04caf3d90955bdcc9f825aa9d261508e914ae377085d2c4f84d95d1",
@@ -742,6 +816,8 @@
     "figures/paper/ver2_generated/fig_ver2d_mio_predictive_residuals.caption.txt:sha256:6fdfe2ba70a91578f6a56e5085d0215f7ed792f2a17536c9e60368315887b445",
     "figures/paper/ver2_generated/fig_ver2d_mio_predictive_residuals.manifest.json:sha256:adcbe4b872a24696a5df286137d5496a56c9243bf431a8be7255b1431878962a",
     "figures/paper/ver2_generated/fig_ver2d_mio_predictive_residuals.png:sha256:7b3b466828b875cbf28bcc8465263ec6f44a1229b0c685a8f40a4e6e3768fba6",
+    "htt/bass/atlas/atlas_entry.py:sha256:07164104137bcc008548c254d179841661de14226ff449ee641537809ab93cc4",
+    "htt/bass/transfer/registry.py:sha256:3891053f5d9c91de3cc37a228817c1d98a0aebb3a5cff3d726318f1271621415",
     "htt/htt/htt/departure/posterior_pushforward.py:sha256:e2385b5ad836957a61f78cdf26eb6c9f7991549188bd4ce951b83141fd2f5a5b",
     "htt/htt/htt/departure/response_overlap.py:sha256:2ea56655e8b8c419239459bdbe4d79c755d00115ce4bd6e6e00b447d51c1f139",
     "htt/htt/htt/nulls/local_boost_depth_null.py:sha256:b0d5d0b6a4b3fe534d1eefc630b9954a33d82555520f644f779dd6725e25609c",
@@ -756,8 +832,13 @@
     "htt/mio/formalism/normalized_score.py:sha256:d2fa8605ba70c6265b8680427c0f99c71121dbdf83eddc8d9a06de374c82cd42",
     "htt/mio/reports/departure_report.py:sha256:2e28a9523f06d4c05966d2819e3823eeb8f4449c5e4934509bee8fdffcbe982a",
     "htt/src/common/departure_contracts.py:sha256:84682381cfb7b0356a69e74f3df1a6fbbc7be75ad84f937970485e7605d2f4d4",
+    "htt/src/common/semantic_guards/no_overclaim.py:sha256:2ee032097adc3c78a9556414c260c1294469a382e7192b784bb6d9d5acda7491",
+    "htt/src/common/transfer_registry.py:sha256:d22beea71bc0e9ffe308c2ae1c9424017c2274aedc7c791d8b432042f5175554",
+    "htt/workspace/contracts/htt_posterior.py:sha256:1a79553bdf0d602cac2d6515810da89377e6bd47b81b05aca0028807436a2f3d",
+    "scripts/generate_semantic_firewall_fuzz_report.py:sha256:1052b702291afa19b8254c44eb73e98b2b7b68ddadceaca09b55d3344c01f355",
     "scripts/verify_formalism_figure_labels.py:sha256:a73ae14d7315123867cb5e435aea323f4cc7b21c3322b30dd7f935c929beb064",
     "tests/contracts/test_formalism_figure_labels.py:sha256:2234958d449c0eabf9a27fabe429785fbc5440bcf14dc2b56598b9060d70004e",
+    "tests/contracts/test_semantic_firewall_fuzz.py:sha256:51621a25141cfd86cdc785d3d9d092dd2ed27588e625e9d78ef3f25a496e582c",
     "tests/htt/test_posterior_pushforward.py:sha256:b826720167b5cb4e81c875676c2676a2094cb488ab8020f33799774720795465",
     "tests/mio/test_budget_spec.py:sha256:bc2d6d6801c9f86abeac911b2ee7085b02f294d1a836bc6acd10b93757592b20",
     "tests/mio/test_departure_bundle.py:sha256:05c77b8b599ca605e2b655fe10d1e42305b4af177f7855227913f890bb91f964",
