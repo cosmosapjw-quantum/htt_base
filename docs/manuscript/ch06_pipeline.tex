@@ -197,8 +197,9 @@ sensitivity variant in Chapter~\ref{ch:robustness}.
 The earlier CF4 value attributed to
 Watkins et~al.~\cite{Watkins2023} in versions prior to this
 revision was in fact from WFH2009; this attribution error is
-documented and corrected.  All three versions give decisive tilt
-evidence (Table~\ref{tab:cf4-triple} of
+documented and corrected.  All three versions remain above the
+legacy transfer-conditional diagnostic threshold for the tilt
+parameter (Table~\ref{tab:cf4-triple} of
 Chapter~\ref{ch:robustness}).
 
 
@@ -448,7 +449,7 @@ Nested sampling with \textsc{dynesty} over three parameters
 $(\beta, l, b)$ recovers the tilt amplitude and direction
 jointly.
 
-The catalog pipeline was validated via injection-recovery across
+The catalog pipeline was checked via injection-recovery across
 eight independent catalog realisations (Section~\ref{sec:cross-pipeline}
 of Chapter~\ref{ch:results}).  Two root causes of a prior 21\%
 upward bias were diagnosed and corrected: a redshift-inversion
@@ -500,7 +501,8 @@ conservative rather than overconfident.
 Additionally, the null recovery pipeline
 (Section~\ref{sec:null-pipeline} of Chapter~\ref{ch:results})
 runs 100 summary-statistic and 20 catalog null realisations,
-verifying zero false-positive rate at all departure thresholds.
+recording no threshold triggers in those finite isotropic-null
+checks.
 The posterior predictive check
 (Section~\ref{sec:ppc} of Chapter~\ref{ch:results}) tests
 the observable-level fit quality on four data channels.
@@ -686,7 +688,7 @@ and curvature coupling.
 \label{sec:solver-validation}
 % ============================================================
 
-The solver is validated through five independent tests that
+The solver is benchmarked through five independent tests that
 cover the full range from trivial limits to external
 cross-checks.
 
@@ -800,7 +802,7 @@ $D_2$ by $0.006\%$, well below any statistical threshold.
 % (neutrino free-streaming) is exactly captured by the $\Teff$
 % closure, and the photon correction is sub-percent.  The VER06
 % production evidence $\ln \mathcal{B}_{\rm tilt} = +25.29 \pm 0.07$
-% is therefore validated by the solver at its current precision.
+% is therefore checked by the solver at its current precision.
 
 
 % ============================================================

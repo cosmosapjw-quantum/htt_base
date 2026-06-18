@@ -31,8 +31,29 @@ FAIL_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("production modules", re.compile(r"\bproduction modules\b", re.IGNORECASE)),
 )
 LNB_NUMERIC_PATTERN = re.compile(
-    r"\bln\s*B(?:\s*(?:=|≈|>|<|∈|\\in)|[A-Za-z_]*\s*(?:=|≈))",
+    r"\bln\s*B\|?(?:\s*(?:=|≈|>|<|∈|\\in)|[A-Za-z_]*\s*(?:=|≈))",
     re.IGNORECASE,
+)
+LNB_HIGH_STRENGTH_PATTERN = re.compile(
+    r"\b("
+    r"detection|detections|detected|detects|"
+    r"decisive|decisively|"
+    r"survive|survives|survived|"
+    r"establish|establishes|established"
+    r")\b",
+    re.IGNORECASE,
+)
+LNB_SAFE_DIAGNOSTIC_MARKERS = (
+    "diagnostic preference",
+    "diagnostic-preference",
+    "conditional diagnostic",
+    "direction-marginalized",
+    "direction-marginalised",
+    "model-comparison summary",
+    "not established",
+    "jeffreys scale",
+    "qualitative interpretation",
+    "not worth more than a bare mention",
 )
 FAMILY_ID_PATTERN = re.compile(r"\bBianchi family identification\b", re.IGNORECASE)
 CONTEXT_MARKERS = (
@@ -113,13 +134,25 @@ def _normalise_context(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-def _has_context_marker(page_text: str) -> bool:
-    lowered = _normalise_context(page_text).lower()
+def _has_context_marker(text: str) -> bool:
+    lowered = _normalise_context(text).lower()
     return any(marker in lowered for marker in CONTEXT_MARKERS)
 
 
 def _context(text: str, start: int, end: int, *, radius: int = 180) -> str:
     return _normalise_context(text[max(0, start - radius) : min(len(text), end + radius)])
+
+
+def _lnb_high_strength_claim_context(context: str) -> bool:
+    lowered = context.lower()
+    has_high_strength = LNB_HIGH_STRENGTH_PATTERN.search(context) is not None
+    if not has_high_strength:
+        return False
+    if "detection" not in lowered and any(
+        marker in lowered for marker in LNB_SAFE_DIAGNOSTIC_MARKERS
+    ):
+        return False
+    return True
 
 
 def _family_id_is_negative_context(text: str, start: int, end: int) -> bool:
@@ -130,17 +163,17 @@ def _family_id_is_negative_context(text: str, start: int, end: int) -> bool:
 def lint_pages(pages: Iterable[str]) -> list[PdfClaimFinding]:
     findings: list[PdfClaimFinding] = []
     for page_number, page_text in enumerate(pages, start=1):
-        marked_context = _has_context_marker(page_text)
         for pattern_name, pattern in FAIL_PATTERNS:
             for match in pattern.finditer(page_text):
-                if marked_context:
+                context = _context(page_text, match.start(), match.end())
+                if _has_context_marker(context):
                     continue
                 findings.append(
                     PdfClaimFinding(
                         severity="fail",
                         page=page_number,
                         pattern=pattern_name,
-                        context=_context(page_text, match.start(), match.end()),
+                        context=context,
                     )
                 )
         for match in FAMILY_ID_PATTERN.finditer(page_text):
@@ -155,14 +188,23 @@ def lint_pages(pages: Iterable[str]) -> list[PdfClaimFinding]:
                 )
             )
         for match in LNB_NUMERIC_PATTERN.finditer(page_text):
-            if marked_context:
+            context = _context(page_text, match.start(), match.end(), radius=160)
+            if _lnb_high_strength_claim_context(context):
+                findings.append(
+                    PdfClaimFinding(
+                        severity="fail",
+                        page=page_number,
+                        pattern="lnB numeric with high-strength claim language",
+                        context=context,
+                    )
+                )
                 continue
             findings.append(
                 PdfClaimFinding(
                     severity="warn",
                     page=page_number,
                     pattern="lnB numeric or threshold",
-                    context=_context(page_text, match.start(), match.end(), radius=120),
+                    context=context,
                 )
             )
     return findings
@@ -195,6 +237,8 @@ def build_report_payload(
                 {
                     "fail_patterns": [name for name, _ in FAIL_PATTERNS],
                     "lnb_numeric_pattern": LNB_NUMERIC_PATTERN.pattern,
+                    "lnb_high_strength_pattern": LNB_HIGH_STRENGTH_PATTERN.pattern,
+                    "lnb_safe_diagnostic_markers": LNB_SAFE_DIAGNOSTIC_MARKERS,
                     "context_markers": CONTEXT_MARKERS,
                 },
                 sort_keys=True,
@@ -213,6 +257,7 @@ def build_report_payload(
         "caveats": [
             "PDF text extraction is used as a final prose-surface lint.",
             "lnB numeric mentions are warnings unless paired with high-strength claim language.",
+            "Direction-marginalized diagnostic-preference language is allowed as a warning-only technical Bayes-factor mention.",
             "Legacy or conditioned pages must carry explicit context markers.",
         ],
     }

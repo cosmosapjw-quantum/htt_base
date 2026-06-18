@@ -31,7 +31,7 @@ maps which diagnostic and HTT likelihood surfaces move under current
 matter-dipole inputs; it does not promote those surfaces to native
 solver results, Bianchi geometry detection, or Bianchi family
 identification.  The rule is explicit: family identification remains blocked
-until a native low-ell morphology atlas, matched masks, covariance/null
+at C6 until a native low-ell morphology atlas, matched masks, covariance/null
 controls, and family-equivalence tests exist.
 
 One concrete methodological result now sits upstream of this
@@ -144,17 +144,18 @@ indistinguishable likelihoods.
 The evidence decomposition confirms that a pure-tilt model
 (FLRW$_{\mathrm{tilt}}$, with $\Sigma^2 = 0$) captures the
 entire signal, while anisotropic shear alone is mildly
-disfavoured.  The ``Bianchi evidence'' is therefore evidence
-for a non-zero dipole anomaly/tilt, not for anisotropic
-spatial geometry.
+disfavoured.  The legacy headline label is therefore only a
+transfer-conditional preference for a non-zero dipole anomaly/tilt,
+not support for anisotropic spatial geometry.
 
 The sensitivity to the CF4 data version is substantial:
 the CF4++ value (Courtois et~al.~\cite{Courtois2025})
 gives $\ln\mathcal{B} \approx +44$ (sensitivity run; see
 Table~\ref{tab:cf4-triple}), while
 Watkins et~al.~\cite{Watkins2023} gives
-$\ln\mathcal{B} \approx +106$ (smallest $\sigma_\beta$).  All three are
-decisive.  The attribution error that assigned
+$\ln\mathcal{B} \approx +106$ (smallest $\sigma_\beta$).  All three
+remain above the historical high-support diagnostic threshold.
+The attribution error that assigned
 $\beta = 1.334 \times 10^{-3}$ to Watkins+2023 (corrected
 in this revision) does not affect the qualitative conclusion
 but shifts the headline number by $\sim 18$ nats.
@@ -169,7 +170,7 @@ independently of CatWISE~\cite{Boehme2025}.
 \subsection{Bianchi~V: corrected result $\ln\mathcal{B} = +24.8$ (VER06)}
 
 The VER04 pipeline reported BV~(tilt) at $\ln\mathcal{B} = -24.5$,
-appearing to exclude the model decisively.  That result was
+appearing to reject the model under the historical Jeffreys label.  That result was
 a code artifact: the transfer-function formula incorrectly
 included a factor of $T_0 = 2.726 \times 10^6\;\mu\mathrm{K}$
 when $T_2$ was already in $\mu\mathrm{K}/(\sigma/H)$ units,
@@ -456,10 +457,11 @@ Hubble correction $\Delta H/H$---operate in the perturbative
 tilted-observer regime at $d \ll \lambda_H$ and require
 additional assumptions (survey selection function, calibrator
 angular distribution, single-stream flow validity) that have not
-been validated against observational data.  The pushforward
+yet been confronted with a matched observational validation set.
+The pushforward
 posterior $\hat{q}_0 = 207$ with $95\%$ HPD $[154, 260]$ at
 $d = 40$ Mpc ($\hat{q}_0 \approx 1.15$ at $d = 200$ Mpc;
-the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}) is exact given
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}) follows algebraically given
 $\beta$, but the physical interpretation---that this apparent
 deceleration ``explains'' measured local-versus-global tension in
 $q_0$---requires survey-level verification.  We present these
@@ -669,7 +671,7 @@ behaviour that naturally explains why the matter dipole
 For the departure framework, the Krishnan tilt instability
 provides a viable dynamical mechanism that is independent
 of the Tsagas programme and compatible with the
-phenomenological detection.  The tilt instability does not
+phenomenological tilt-preference signal.  The tilt instability does not
 by itself predict the amplitude $\beta \sim 10^{-3}$:
 that requires specifying initial conditions at decoupling,
 which is a free parameter in the exact Bianchi~V system.
@@ -704,18 +706,19 @@ density) and adiabatic initial conditions with
 $\delta_K \sim 5 \times 10^{-6}$, set by the CMB
 quadrupole shear bound.
 
-This result does not invalidate the departure parameter
-detection; it constrains the interpretation.  The Bayes
-factor $\ln \mathcal{B}_{\rm tilt} = +25.29$ measures the
-phenomenological signal for nonzero tilt across seven
-data channels.  The Mart{\'i}n--Skordis analysis narrows
-the physical mechanism that could produce this signal.
-Detection and mechanism attribution are separable
-questions: the pipeline establishes the former; the
-theoretical analysis constrains the latter.
+This result does not invalidate the departure-parameter
+diagnostic; it constrains the interpretation.  The Bayes
+factor $\ln \mathcal{B}_{\rm tilt} = +25.29$ is a
+direction-marginalized, transfer-conditional model-comparison
+summary for nonzero tilt across seven data channels.  The
+Mart{\'i}n--Skordis analysis narrows the physical mechanism
+that could produce this signal.  Diagnostic preference and
+mechanism attribution are separable questions: the pipeline
+summarises the former; the theoretical analysis constrains
+the latter.
 
-\begin{remark}[Detection versus mechanism]
-\label{rem:detection-mechanism}
+\begin{remark}[Diagnostic preference versus mechanism]
+\label{rem:diagnostic-preference-mechanism}
 The departure parameter framework is mechanism-agnostic
 by construction: the master identity
 (Eq.~\ref{eq:master-identity}) is an algebraic
@@ -724,8 +727,8 @@ the Bayesian evidence computation does not assume a
 specific tilt source.  The Mart{\'i}n--Skordis result
 that only the khronon field achieves $\beta \sim
 10^{-3}$ under standard ancillary constraints narrows
-the interpretation of the detection but does not
-weaken the detection itself.
+the mechanism interpretation without turning the current
+direction-marginalized Bayes factor into a detection claim.
 \end{remark}
 
 
@@ -734,7 +737,7 @@ weaken the detection itself.
 
 The three developments---Clarkson--Maartens killing Tsagas,
 Krishnan surviving independently, and Mart{\'i}n--Skordis
-narrowing the source to the khronon---establish a clean
+narrowing the source to the khronon---provide a clean
 separation between three levels of the analysis:
 \emph{(i)}~the legacy transfer-conditional statistical preference
 for nonzero tilt
@@ -1076,7 +1079,7 @@ below the reported threshold but order-of-magnitude consistent.
 Does the dipolar deceleration provide a new evidence channel?
 The corrected Fisher information comparison (TF-N02) gives
 $I_i/I_c \approx 0.6$ at $z = 0.05$---\emph{comparable} to the
-CF4 channel, not subdominant.  The decisive factor is the high
+CF4 channel, not subdominant.  The controlling factor is the high
 physical correlation: both channels probe the same $\beta$ at
 similar depths, giving $\rho_{ci} \gtrsim 0.8$ and
 $\Delta\ln\mathcal{B} < 0.1$.  We therefore do not add
@@ -1735,14 +1738,15 @@ The $K$-identifiability audit
 provides a sharp answer to the question ``what does the current
 analysis establish?''
 
-\emph{Established (C1--C2).}\quad
+\emph{Conditioned diagnostic summary (C1--C2).}\quad
 The data constrain the tilt rapidity
 $\beta = (1.37 \pm 0.12) \times 10^{-3}$, conditional on the
 matter-dipole anomaly being physical.  The departure is
 tilt-dominated: $\Otilt$ contributes $>99\%$ of $x$; shear
 contributes $<10^{-12}$.  Non-zero departure ($\ln\mathcal{B}
-= +26.4$) is robust to LOCO ablation, prior variation, and
-correlation sweeps.
+= +26.4$) remains a direction-marginalised conditional
+model-comparison summary across LOCO ablation, prior variation,
+and correlation sweeps.
 
 \emph{Conditional (C3).}\quad
 Equivalence-class preference (Tflat over O1D) is conditional on
@@ -1813,9 +1817,9 @@ a Bayes factor.
 Result Pack~C is a descriptive $x/Q/F/G$ card whose filling language is
 still downgraded to a proxy score until the propagation claim gates are
 closed.
-Result Pack~E is a validation-coverage matrix, but every executable
+Result Pack~E is a coverage matrix, but every executable
 campaign in that registry still carries a \texttt{warn} status and
-therefore functions as a no-claim gate rather than a validated science
+therefore functions as a no-claim gate rather than a science
 promotion.
 This separation matters because the headline evidence statements of
 Chapter~\ref{ch:results} are still owned by the explicitly typed

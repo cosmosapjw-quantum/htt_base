@@ -247,7 +247,7 @@ The $\Teff$ approach takes a fundamentally different strategy.
 We do \emph{not} close the hierarchy algebraically.  Instead,
 we parameterise the full angular temperature field by a
 finite-dimensional manifold of shapes and \emph{monitor
-tangency}: we check whether the exact solution remains tangent
+tangency}: we check whether the reference solution remains tangent
 to the parameterised manifold within controlled error bounds.
 The distinction is between truncation (which discards
 information) and representation (which projects the full
@@ -793,7 +793,7 @@ channel.
 
 The small-$\beta$ approximation
 $\sinh^2\!\beta \approx \beta^2$ used throughout the analysis
-is validated by the exact computation.  At the S3 scenario
+is checked by direct computation.  At the S3 scenario
 ($\beta = 1.36 \times 10^{-3}$), the fractional error
 $(\sinh^2\!\beta - \beta^2)/\beta^2 \approx 2 \times 10^{-6}$
 is five orders of magnitude below the nonlinear $\Teff$
@@ -997,7 +997,7 @@ repository.
 \textbf{Scope.}\quad
 The $\Teff$ formalism and the BASS-lite hierarchy are
 \emph{calibrated surrogates}, not full Boltzmann proofs.
-They are validated against AniCLASS at the $O(\varepsilon)$
+They are calibrated against AniCLASS at the $O(\varepsilon)$
 level in the posterior-relevant parameter strip.  For
 precision better than $1\%$ or for direction-inclusive
 analyses requiring full $a_{\ell m}$, the AniCLASS solver
@@ -1342,7 +1342,7 @@ Eq.~\ref{eq:Gram-matrix}).
 \label{prop:FLRW-adiabatic}
 For a collisionless massless species ($R_s = 0$,
 $S_{E,s} = 0$), the system~\eqref{eq:FLRW-2x2}
-has the exact solution
+has the analytic solution
 \begin{equation}\label{eq:adiabatic-solution}
 T_{0,s}(t) \propto a(t)^{-1}\,,
 \qquad
@@ -1771,11 +1771,15 @@ This hierarchy---neutrinos dominate the constraint,
 photons provide a correction, ISW is
 negligible---is the species-resolved refinement of
 the single-fluid transfer function used in the VER06
-legacy pipeline.  It does not change the
-evidence value ($\ln \mathcal{B} = +26.40$) but it
+legacy pipeline.  It does not change the legacy
+transfer-conditioned $\ln \mathcal{B}$ summary
+($+26.40$) but it
 does provide the physical interpretation: the
-departure parameter measures, to $98\%$ accuracy,
-the neutrino response to the background shear.
+departure-parameter proxy is a transfer-conditional
+summary whose sector decomposition assigns about
+$98\%$ of this quadrupole response to the neutrino
+channel under the legacy external/proxy transfer
+calibration.
 
 Before closing this section, we note that the
 multi-species reduction developed here, combined

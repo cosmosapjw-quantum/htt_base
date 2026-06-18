@@ -12,19 +12,19 @@ input_hashes:
 - docs/manuscript/ch01_introduction.tex: `26068b79dd152e0bd3723bb45af32dc92d9e77e1a4ee0db55393e5ce2bc6a800`
 - docs/manuscript/ch02_dipole_anomaly.tex: `75c9655d03b3a33063c8f06f2c0c8ce2dda2f4dd948e1c4c3ffcd70392760f75`
 - docs/manuscript/ch03_framework.tex: `1a7d6d30e85f7afe0500c0a769137870c0a0921eb361e775ceafe29d78f220c1`
-- docs/manuscript/ch04_bianchi_bounds.tex: `3741a8145e9372fc8d39dcaebaa1e8ad72769729a05cb4ad750535be2c590109`
-- docs/manuscript/ch05_teff_corrections.tex: `496689f4677e61d15d9925ec5ad5a130e12329b598d764bb5a48037d77b743ad`
-- docs/manuscript/ch06_pipeline.tex: `b7b50ba5d0bf9d3fa0916fed36be5e377ccaf410fc067f5280816c24ed4b3012`
-- docs/manuscript/ch07_results.tex: `ac39641983b6b6d3b0ea31bc4f9abb0f84b3007d1ad0c2f8921a0b18da1c48a6`
-- docs/manuscript/ch08_robustness.tex: `cddbad6bdb8db53ced9cf5078cf0ad8903065485a52c047ced8d9a8f2e86ce41`
-- docs/manuscript/ch09_discussion.tex: `2d2a1e9ba3acf3dfe32e7ff0597c366ef45c36c62d6ffd4702f46f20a4d5c096`
-- docs/manuscript/ch10_future.tex: `f198313df7a96ff28aa86b76c39291d996631d33808742eef3ed68e9f39244a6`
+- docs/manuscript/ch04_bianchi_bounds.tex: `7f290a8320d5e1037b3d1fdc4f2ce1436c65bd7c254dbd6cac5cd5b287751649`
+- docs/manuscript/ch05_teff_corrections.tex: `bb42899e06f50e705064634f28775d6b135644241573486efdad27efeab52ace`
+- docs/manuscript/ch06_pipeline.tex: `bca64474b0baff484e526abea8b31f0ebe4b8821a46b3f2edc2cd54a8ab0aebe`
+- docs/manuscript/ch07_results.tex: `7d946a95701464d9a54b817cc96594e5a0cbf6905500b08c1fcc870a95ac0c83`
+- docs/manuscript/ch08_robustness.tex: `018d279407572bd4e523769751dbb067bb50d693f42eb0203250185e52b0cc14`
+- docs/manuscript/ch09_discussion.tex: `67bb3c6947205ab080d05a55901a385daa2379d2a369dca19076aa91f9ba266c`
+- docs/manuscript/ch10_future.tex: `8722063449f049b2cbbcd18f2a7b43a6d14f1390f12ca57ebefc99d64c45deb4`
 - docs/manuscript/ch11_error_hierarchy.tex: `5016cb571b519a6dcd84f9ae078027e108d5f25a53d45c525b13fe4c71f7ce4d`
 - docs/manuscript/generated/conditioned_legacy_figure_gallery.tex: `002b0d0a1d4c817e825e7fcf11584bf2eda611768f5dee495901c7738dd5d33b`
 - docs/manuscript/generated/current_figures_framework.tex: `9c960a9ba56ccbcf5e8365e3f3399d9a80df9781547fd925b4443bc289ca1bcf`
 - docs/manuscript/generated/current_figures_governance.tex: `ad89fd0c612fb355039b312db057be1ccb6b25c2edeba51f80ece2266591bd29`
 - docs/manuscript/generated/current_figures_pipeline.tex: `195f8ae9ec189206325edb2ca0411f6031b8985b0f0ef6b981c05d5cd93750b8`
-- docs/manuscript/generated/current_figures_results.tex: `839c04959f0f8d9a6836893dc45a2d7857a78991ad9153c54fa355de51f6dbae`
+- docs/manuscript/generated/current_figures_results.tex: `0cab2ac6a03d54cb7b36173cb1d9f14c48239eda11ab4a54ddb4307255d3f9ea`
 - docs/manuscript/generated/current_figures_ver2_exports.tex: `c63f1348b3762a812cfd391fe96ba1c20e5092f354818d6079c21a3216e140de`
 - docs/manuscript/generated/observed_figures_pipeline.tex: `b2b1579f259b14df683c913aaf7171721a8477e93a23aff55a07bad5aaddad93`
 - docs/manuscript/generated/observed_figures_results.tex: `23c45f3e2b05992b79ab1f9e0e695e01fbc7ca72815ae8c1b0155838729b169a`
@@ -47,7 +47,7 @@ caveats:
 - Missing or quarantined figure references block final manuscript freeze until explained.
 - Text audit findings are audit findings, not scientific results.
 generating_command: python scripts/audit_manuscript_figures.py
-git_commit: e40baf5
+git_commit: 0b8ea17
 worktree_state: dirty
 output_path: docs/generated/manuscript_figure_inventory.md
 
