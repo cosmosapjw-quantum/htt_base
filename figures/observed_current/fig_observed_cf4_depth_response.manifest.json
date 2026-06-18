@@ -1,0 +1,79 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "obsstat.observed.cf4_depth_response",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/observed_current/fig_observed_cf4_depth_response.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_not_use_for_family_identification_or_family_selection",
+    "must_state_no_native_low_ell_solver_output"
+  ],
+  "caveats": [
+    "Observed-data diagnostic figure; not inference evidence.",
+    "No native low-ell solver output is used.",
+    "No Bianchi family-ID or geometry-detection claim is made."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "6649e04+dirty",
+  "config_hash": "sha256:bf9f8f25925529804fe978a0ae6e024c6c989e90c3d6ac39cdcada9ffe9993de",
+  "created_by": "scripts/make_observed_data_manuscript_figures.py",
+  "failed_gates": [
+    "matched_nulls_not_bound",
+    "full_covariance_not_bound",
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available"
+  ],
+  "generating_command": "scripts/make_observed_data_manuscript_figures.py",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513",
+    "workdir/compact_products/cf4/query_batch.npz:sha256:5fb994ca076235fb30db644d3d1a3672d092ed31f8ef4737bcabe2da87491909"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "OBSSTAT",
+  "passed_gates": [
+    "repo_local_observed_data_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "matched_nulls_not_bound",
+    "full_covariance_not_bound",
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent",
+    "family_identification_blocked_pre_native_atlas"
+  ],
+  "publication_gates": {
+    "evidence_or_pvalue_claim": "fail_not_calibrated",
+    "paper_main_claim": "fail_diagnostic_only"
+  },
+  "required_gates": [
+    "repo_local_observed_data_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "obsstat.observed_current_figure.v2",
+  "science_promotion_gates": {
+    "family_morphology_atlas": "fail_not_available",
+    "full_covariance": "fail_not_bound",
+    "matched_nulls": "fail_not_bound",
+    "native_low_ell_solver": "fail_not_available"
+  },
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "coordinate_frame": "supergalactic_cartesian",
+    "flow_slot": "Observed peculiar-velocity reconstruction",
+    "n_radius_bins": 13,
+    "quantity": "CF4 radius-binned median and percentile response",
+    "scan_volume_hash": "sha256:480d4bfcbdd9ac2f192c994020f442d8e7f3e28272a779e199fc64ca11356f93",
+    "selection_mode": "cf4_supergalactic_radius_bins",
+    "source_artifacts": [
+      "docs/generated/observational_data_inventory.json",
+      "workdir/compact_products/cf4/query_batch.npz"
+    ]
+  },
+  "transfer_source": "none"
+}

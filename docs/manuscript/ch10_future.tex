@@ -126,7 +126,7 @@ dipolar $\Delta q$ is measured.
 The peculiar Jeans length
 $\lambda_J^{\mathrm{pec}} = \lambda_H(\beta/(9q))^{1/3}
 \approx 280$--$400\;\mathrm{Mpc}$
-(Table~\ref{tab:pec-jeans}) defines the transition scale above
+(Table~\ref{tab:disc-tilted-H0}) defines the transition scale above
 which all observers agree on $q$.  If $\lambda_J^{\mathrm{pec}}$
 is physical, the dipolar $q$ anisotropy must vanish for
 $d > \lambda_J^{\mathrm{pec}}$.  Euclid will observe
@@ -322,6 +322,7 @@ CMB-focused 2033--2037 window (LiteBIRD).
 % ============================================================
 \section{Experiment-by-experiment assessment}
 \label{sec:experiment-assess}
+\label{sec:forecast-experiments}
 % ============================================================
 
 \subsection{Simons Observatory}
@@ -455,7 +456,7 @@ is physical, the convergence of independent measurements at
 different wavelengths and redshifts will elevate the significance
 well beyond the current $> 5\sigma$.  If the anomaly is
 systematic, the diversity of survey methods will expose the
-source.  Figure~\ref{fig:experiment_timeline} summarises the
+source.  the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} summarises the
 projected timeline for each experiment.
 
 The four-dimensional constraint space
@@ -488,7 +489,7 @@ procedure---remains an open theoretical problem.
 
 Third, the direction-marginalised Bayes factor
 $\ln\mathcal{B} \approx +26$ (VER05 primary) discards potentially
-decisive directional information.  A joint pixel-level
+model-separating directional information.  A joint pixel-level
 analysis using the AniCLASS $a_{\ell m}$ output could
 significantly sharpen the model selection; AniCLASS is
 publicly available now at
@@ -531,17 +532,17 @@ existing public code covers.
 
 Eighth, the reduced line-of-sight (R-LOS-T0) surrogate developed
 in this work is structurally validated but numerically dormant:
-Figure~\ref{fig:activation_map} shows that the channel activates
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows that the channel activates
 only when $\Sigma^2 \gtrsim 10^{-11}$, which is 14 orders of
 magnitude above the current posterior.
-Figure~\ref{fig:reduced_los_physics_payoff} confirms that the
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} confirms that the
 projector--LOS divergence is 16--98\% in the stress-test regime
 with kernel robustness CV $= 5.5\%$.  The on/off evidence rerun
 produces $|\Delta\ln\mathcal{B}| = 0.10$---negligible.  The
 module is ready; the data do not yet require it.
 
 Ninth, the S-1M-SHADOW scalar spectral extension
-(Figure~\ref{fig:s1m_shadow}) demonstrates that a bounded
+(the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}) demonstrates that a bounded
 one-mode $y$-distortion basis has a genuine admissible wedge
 ($\kappa \in (-1.0, 16.7)$, width $17.7$), exact $T_\mathrm{eff}$
 recovery at $\varepsilon_{\mathrm{spec}} = 0$, and 13.5\%
@@ -553,7 +554,7 @@ source-history timing information is structurally available within
 the scalar sector but numerically dormant at current data precision.
 
 Tenth, independent depth tomography from Quaia quasar samples
-(Figure~\ref{fig:external_integration}) can test whether the
+(the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}) can test whether the
 tilt-rapidity detection persists across redshift shells.  If
 $\beta$ is cosmological, the dipole amplitude should not fade
 beyond the local-structure horizon ($z \gtrsim 0.1$).  This test
@@ -1010,13 +1011,6 @@ predictions.
 % Updated: TF-D06, 2026-03-12
 % Replaced: fig_experiment_timeline (P8-P11 added, eROSITA added)
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_experiment_timeline}
-\caption{Prediction--experiment matrix mapping eleven framework predictions (P1--P11, rows) to nine next-generation experiments (columns, including eROSITA).  Filled circles indicate direct testability; bold labels mark ``golden'' experiments testing three or more predictions.  Predictions P8--P11 (purple labels) arise from the Tsagas tilted-FLRW bridge.  Two transformational windows are identified: 2027--2030 (decisive) and 2029--2032 (tilted-FLRW programme).}
-\label{fig:experiment_timeline}
-\end{figure}
-
 \begin{table}[t]
 \centering
 \caption{Experiment forecast: earliest decisive results by prediction.  Predictions P8--P11 are new (TF-series).}
@@ -1044,104 +1038,6 @@ P11: Age-bias disentanglement & 2030 & Vera Rubin & $\sim 3\sigma$ \\
 
 % === ADDED 2026-03-22: R-LOS-T0 and S-1M-SHADOW future-work figures ===
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.6\columnwidth]{fig_activation_map}
-\caption{R-LOS-T0 activation map.
-Fractional $D_2$ divergence between the reduced line-of-sight
-surrogate and the final-state projector as a function of $\log_{10}\Sigma^2$.
-The activation threshold ($\Sigma^2 \approx 10^{-11}$, vertical red dashed)
-is where $\Delta D_2$ exceeds the observational sensitivity floor.
-The current posterior median ($\Sigma^2 \lesssim 10^{-18}$, green dotted; VER05 corrected)
-lies 7 or more orders of magnitude below the threshold.
-This quantified negative result confirms that the reduced LOS channel
-is \emph{structurally valid but numerically dormant} at current data precision.}
-\label{fig:activation_map}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_reduced_los_physics_payoff}
-\caption{R-LOS-T0 physics payoff: three-panel summary.
-(a)~History divergence: fractional $D_2$ difference between projector and
-reduced LOS across six stress-test histories (16--98\%).
-(b)~Kernel robustness: $D_2^{\mathrm{los}}$ across 7 visibility kernel variants
-(CV $= 5.5\%$).
-(c)~Activation threshold scan: $\Delta D_2$ versus $\log_{10}\Sigma^2$;
-the observational floor ($10^{-12}$, horizontal red dashed) is crossed at
-$\Sigma^2 \approx 10^{-11}$.}
-\label{fig:reduced_los_physics_payoff}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_s1m_shadow}
-\caption{S-1M-SHADOW: scalar one-mode spectral shadow extension.
-(a)~Admissible wedge for the $y$-distortion basis: $\kappa \in (-1.0, 16.7)$,
-width $= 17.7$.  The red dashed lines mark the positivity boundaries.
-(b)~Verification traffic light: the four structural tests yield
-Wedge = \textsc{pass}, Recovery = \textsc{pass},
-Non-redundancy = \textsc{fail} (at fixed history),
-History sensitivity = \textsc{pass} (13.5\% divergence across $\Sigma^2$ values).
-The overall verdict is \textsc{pass}: the shadow carries genuine
-source-history timing information, analogous to the R-LOS-T0 result.}
-\label{fig:s1m_shadow}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.6\columnwidth]{fig_external_integration}
-\caption{External depth tomography.
-Dipole amplitude versus effective redshift from two independent
-Quaia quasar analyses (Mittal and Singal).
-The depth ladder provides a consistency check for the tilt-rapidity
-detection: if $\beta$ is cosmological, the dipole amplitude should
-persist across redshift shells.}
-\label{fig:external_integration}
-\end{figure}
-
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_peculiar_jeans}
-\caption{Peculiar Jeans length in the tilted-FLRW background.
-  Main curve: $\lambda_J^{\mathrm{defect}}(z)$ for the best-fit tilt
-  rapidity $\beta_{\mathrm{CF4}}$ and three equations of state
-  ($w = -1$, $-2/3$, $1/3$).
-  The BAO zone (grey band) and the $1/3$-mode threshold are indicated.
-  Inset: fractional correction $(\lambda_J^{\mathrm{defect}} -
-  \lambda_J^{\mathrm{FLRW}}) / \lambda_J^{\mathrm{FLRW}}$ versus $\beta$;
-  at $\beta = 1.334\times 10^{-3}$ the correction is $0.09\%$.}
-\label{fig:peculiar_jeans}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_peculiar_jeans}
-\caption{Peculiar Jeans length in the tilted-FLRW background.
-  Main curve: $\lambda_J^{\mathrm{defect}}(z)$ for the best-fit tilt
-  rapidity $\beta_{\mathrm{CF4}}$ and three equations of state
-  ($w = -1$, $-2/3$, $1/3$).
-  The BAO zone (grey band) and the $1/3$-mode threshold are indicated.
-  Inset: fractional correction $(\lambda_J^{\mathrm{defect}} -
-  \lambda_J^{\mathrm{FLRW}}) / \lambda_J^{\mathrm{FLRW}}$ versus $\beta$;
-  at $\beta = 1.334\times 10^{-3}$ the correction is $0.09\%$.}
-\label{fig:peculiar_jeans}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_q_decomposition}
-\caption{Decomposition of the apparent deceleration parameter $q_0$.
-  Blue band: observer-frame $q_0^{\mathrm{obs}}$ integrating over the
-  CF4 posterior on $\beta$.  The true background value $q_0^{\mathrm{true}}
-  = -0.527$ (Planck 2018) is shown as a dashed line.  Orange region:
-  tilt-induced shift $\Delta q_{\mathrm{tilt}}$ at $d = 40\,\mathrm{Mpc}$.
-  The decelerating--accelerating boundary ($q = 0$) and the EdS value
-  ($q = 1/2$) are also indicated.  Note that the tilt correction is
-  an EXPLORATORY quantity subject to the VT-07 frame-attribution caveat.}
-\label{fig:q_decomposition}
-\end{figure}
 
 % === ADDED 2026-04-24: research-plan extensions (F119, F120) ===
 
@@ -1152,7 +1048,7 @@ Section~\ref{sec:forecast-experiments} mapped each Bianchi
 prediction to the earliest decisive experiment.  Two complementary
 visualisations consolidate that information.
 
-Figure~\ref{fig:fisher_ellipses_future_surveys} compares forecast
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} compares forecast
 Fisher 1$\sigma$ ellipses in the $(\beta, \sigma_*)$ plane, where
 $\sigma_* \equiv \log_{10}(\sqrt{\Sigma^2_{\mathrm{std}}}/H)$ is the
 shear-amplitude proxy used in the Planck-data $\Sigma^{2}$
@@ -1167,19 +1063,7 @@ and $\beta_{\mathrm{CMB}} = 1.233 \times 10^{-3}$ at $> 1\sigma$;
 Euclid~DR1 separates them at $\sim 2.4\sigma$, and the CMB-S4
 $+$~Rubin combination at $\sim 5\sigma$.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_fisher_ellipses_future_surveys}
-\caption{Forecast Fisher 1$\sigma$ ellipses in the
-$(\beta \times 10^{3},\ \sigma_* \equiv \log_{10}\sqrt{\Sigma^2}/H)$
-plane for current data and five next-generation surveys.  The grey
-horizontal band marks the CF4 1$\sigma$ band on $\beta$; the black star
-is the VER05 posterior median.  CMB-S4~$+$~Vera Rubin will resolve the
-CMB--CF4 tension at $\sim 5\sigma$.}
-\label{fig:fisher_ellipses_future_surveys}
-\end{figure}
-
-Figure~\ref{fig:tension_resolution_timeline} re-organises the same
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} re-organises the same
 information by texture (alternative explanations of the dipole
 anomaly) rather than by survey.  Each row corresponds to one
 candidate texture (tilt-only, shear, shear$+$vortex, vortex-grow,
@@ -1190,17 +1074,5 @@ tilt-only texture is already decisive (2024 -- Planck PR4 + CatWISE);
 shear textures become decisive in 2026--2027 with CF4++ and Euclid;
 the vortex-grow and Khronon textures, which both rely on small-$\ell$
 B-mode amplitude, only reach decisive status with LiteBIRD in 2032.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_tension_resolution_timeline}
-\caption{Tension-resolution timeline: expected calendar year of the
-decisive Bayes-factor crossing $|\ln\mathcal{B}| \ge 5$ per
-(texture, survey) pair.  Columns are surveys (Planck PR4 through
-LiteBIRD); rows are candidate textures.  Tilt-only is already
-decisive; shear textures fall in 2026--2027; vortex-grow textures
-require LiteBIRD.}
-\label{fig:tension_resolution_timeline}
-\end{figure}
 
 % === END INLINED ===

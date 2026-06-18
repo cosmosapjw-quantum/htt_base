@@ -1,0 +1,63 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "common.current_figures.qfpi_gf_semantic_split",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/current/fig_current_qfpi_gf_semantic_split.png",
+  "caption_policy": [
+    "must_state_distinct_semantics",
+    "must_state_diagnostic_only",
+    "must_state_no_family_identification",
+    "must_state_no_native_low_ell_solver_output"
+  ],
+  "caveats": [
+    "Generated from current repo-local code and deterministic diagnostic payload.",
+    "Normalized display only; x, Q, Pi, F, and G_F are not interchangeable.",
+    "No Bianchi family-ID or geometry-detection claim is made."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "6649e04+dirty",
+  "config_hash": "sha256:973ebc2be29eccb36fc65d6fe3b2ec6e9dd74e904399a5bdcddbc97aa87eae89",
+  "created_by": "scripts/make_current_manuscript_figures.py",
+  "failed_gates": [],
+  "generating_command": "python scripts/make_current_manuscript_figures.py",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/current_science_plot_payload.json:sha256:4cd77a839f275f54c39a73d44184179163c498747b5db8beb6c411aacb996d03",
+    "docs/generated/result_pack_A.md:sha256:676f2150c2fe24503ab37ba52b0e3826a39c0bce6cf346c75e28b13336c07c7b",
+    "htt/src/common/departure_contracts.py:sha256:84682381cfb7b0356a69e74f3df1a6fbbc7be75ad84f937970485e7605d2f4d4",
+    "htt/mio/formalism/budget_spec.py:sha256:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a"
+  ],
+  "null_mock_status": "current_code_diagnostic_null_banks_generated",
+  "owner": "COMMON",
+  "passed_gates": [
+    "current_generated_input_only",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent",
+    "observed_departure_bundle_payload_absent"
+  ],
+  "required_gates": [
+    "current_generated_input_only",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "common.current_manuscript_figure.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "figure_kind": "conditioned_physics_diagnostic_plot",
+    "flow_slot": "Results and robustness",
+    "source_artifacts": [
+      "docs/generated/current_science_plot_payload.json",
+      "docs/generated/result_pack_A.md",
+      "htt/src/common/departure_contracts.py",
+      "htt/mio/formalism/budget_spec.py"
+    ]
+  },
+  "transfer_source": "mixed_none_and_external_transfer_conditioned"
+}

@@ -220,7 +220,7 @@ The leading-order coefficients for each mixing channel are:
 The acceleration coupling is sharply localised to $\ell = 0
 \leftrightarrow 1$ (it appears only in the dipole equation),
 while the vorticity coupling extends to all $\ell$.
-Figure~\ref{fig:ell_mixing_comparison} plots the leading-order
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} plots the leading-order
 boost mixing coefficients as functions of $\beta$, confirming that
 the $\ell = 2 \to 1$ channel dominates at $O(\beta)$ while the
 $\ell = 2 \to 0$ channel enters only at $O(\beta^2)$.
@@ -393,7 +393,7 @@ $d_{\geq 2} < 2 \times 10^{-3}$ at all dipole-anomaly
 scenarios.  The $\Teff$ manifold remains tangent to the exact
 Boltzmann solution within this bound, and the representation
 error is quadratic in $d_{\geq 2}$---of order $10^{-6}$.
-Figure~\ref{fig:teff_moment_map} shows the contour map of
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the contour map of
 $\langle\Theta^4\rangle - 1$ in the $(A, Q)$ plane, confirming
 the quadratic structure and the dominance of the dipole term.
 
@@ -702,7 +702,7 @@ radio-dipole amplitude ($\eps_1 = 3.296 \times 10^{-3}$);
 and the hierarchy $\Rom > \Rsig > \Rud$ is preserved across all
 scenarios.
 
-\begin{table}[h]
+\begin{table}[ht]
 \caption{Nonlinear $\Teff$ corrections by scenario.  $\Rsig$,
 $\Rom$, $\Rud$ are the correction factors for shear, vorticity,
 and acceleration bounds; $\delta\Sigstd/\Sigstd = \Rsig^2 - 1$
@@ -722,10 +722,10 @@ S2c & $3.296\times10^{-3}$ & 1.008893 & 1.013155 & 1.006595 & 1.786 \\
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:nonlinear_corrections} plots $\Rsig$, $\Rom$, and
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} plots $\Rsig$, $\Rom$, and
 $\Rud$ as functions of $\eps_1$, confirming the hierarchy
 $\Rom > \Rsig > \Rud$ and the linear growth of corrections with
-$\eps_1$.  Figure~\ref{fig:NL_heatmap} shows the two-dimensional
+$\eps_1$.  the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the two-dimensional
 correction landscape in the $(\eps_1, \omega/\Theta)$ plane: the
 $\Delta_\omega \equiv 0$ panel is the visual centrepiece, reflecting
 the exact azimuthal orthogonality result of
@@ -762,7 +762,7 @@ compared to the VT-07 frame correction.
 Table~\ref{tab:defect-prop} shows the defect bounds with and
 without nonlinear corrections for types~I and~V.
 
-\begin{table}[h]
+\begin{table}[ht]
 \caption{Defect bounds with nonlinear corrections.
 $\delta x/x$ is the fractional change from the linearised bound.
 $\xV/\xI$ is the tilt fraction.}
@@ -955,6 +955,7 @@ observationally indistinguishable.
 \end{proposition}
 
 \subsection{Type-dependent cascade structure}
+\label{sec:bviih-cascade}
 
 The $\zeta^m_\ell$ coefficients determine whether the
 anisotropic signal cascades across multipoles or remains
@@ -972,7 +973,7 @@ TAM basis.
 
 % ============================================================
 \subsection{AniCLASS oracle validation protocol}
-\label{sec:aniclass-validation}
+\label{sec:aniclass-validation-protocol}
 % ============================================================
 
 We validate the $\Teff$ surrogate against the AniCLASS solver
@@ -1025,9 +1026,9 @@ is $0.7\%$ of the dipole amplitude---well below the
 statistical uncertainties of any current survey.  The oracle
 validation on the BI$_{\mathrm{orth}}$ and BV$_{\mathrm{orth}}$
 analytical limits confirms zero deviation at the tested
-grid points.  The $\Teff$ surrogate is therefore validated for
-the scalar-amplitude evidence computation reported in
-Chapter~\ref{ch:results}.
+grid points.  The $\Teff$ surrogate is therefore retained as a
+legacy scalar-amplitude approximation for the transfer-conditional
+diagnostics reported in Chapter~\ref{ch:results}.
 
 \subsection{Future BASS extension: AniCLASS required}
 
@@ -1037,9 +1038,11 @@ formalism integrates over frequency and angular direction,
 discarding the type-dependent cascade structure encoded in the
 $\zeta^m_\ell$ coefficients (Section~\ref{sec:TAM-vs-Teff}).
 To break the equivalence classes identified in
-Chapter~\ref{ch:robustness}---and thereby enable Bianchi
-family identification---pixel-level template fitting using the
-AniCLASS $a_{\ell m}$ is the identified path forward.
+Chapter~\ref{ch:robustness}, pixel-level template fitting using
+the AniCLASS $a_{\ell m}$ is only a preparatory path toward
+morphology-compatibility tests.  Bianchi family-ID remains blocked
+until a native low-ell morphology atlas and its null/mask/covariance
+gates exist.
 
 \subsection{Hybrid recommendation}
 
@@ -1201,7 +1204,7 @@ background geometry ($a, \sigma_{ab}$: 1 + 5 = 6
 components), the full system has
 $61 + 4 + 4 + 1 + 6 = 76$ independent components at
 the minimal truncation $(L_\Theta, L_\eta) = (2, 1)$.
-The Phase~1.0 production solver uses a higher truncation
+The Phase~1.0 legacy solver uses a higher truncation
 with an absorbing boundary layer, giving a total of $98$
 degrees of freedom
 (Section~\ref{sec:solver-hierarchy}).  This number grows with
@@ -1491,6 +1494,7 @@ quadrupole evolves under free-streaming alone:
 % ============================================================
 \subsection{Neutrino dominance of $D_2$}
 \label{sec:nu-dominance}
+\label{sec:sp03-result}
 % ============================================================
 
 The Phase~1.0 solver discovers a striking result:
@@ -1650,6 +1654,7 @@ momentum conservation
 
 
 \paragraph{Tight coupling limit.}
+\label{sec:tight-coupling}
 
 Before recombination, $\dot{\tau} \gg H$ drives
 $\Theta^{(\gamma)}_a \to v_{b,a}$: the photon and
@@ -1677,6 +1682,7 @@ derived in Proposition~\ref{prop:nu-dominance}.
 % ============================================================
 \subsection{Species-resolved $D_2$ and the transfer function}
 \label{sec:species-D2}
+\label{sec:ISW-contribution}
 % ============================================================
 
 The total CMB quadrupole power $D_2$ receives
@@ -1696,8 +1702,8 @@ $D_{2,\rm ISW}$ is the integrated Sachs--Wolfe
 contribution from the late-time evolution of the
 gravitational potential.
 
-The Phase~1.0 solver computes each term independently.
-The production values at
+The legacy Phase~1.0 register computes each term independently.
+The recorded numerical values at
 $\Sigma^2 = 10^{-8}$ for Bianchi~I are:
 \begin{equation}\label{eq:D2-production}
 \begin{aligned}
@@ -1765,7 +1771,7 @@ This hierarchy---neutrinos dominate the constraint,
 photons provide a correction, ISW is
 negligible---is the species-resolved refinement of
 the single-fluid transfer function used in the VER06
-production pipeline.  It does not change the
+legacy pipeline.  It does not change the
 evidence value ($\ln \mathcal{B} = +26.40$) but it
 does provide the physical interpretation: the
 departure parameter measures, to $98\%$ accuracy,
@@ -2180,18 +2186,10 @@ the inverse boost back to the transport frame.  Equation
 (\ref{eq:fb41-boost}) is the concrete Layer-B realisation of the
 statement that frame changes mix neighbouring multipoles.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.82\linewidth]{figures/physics_gallery/10_collision_and_visibility/04_thomson_beta_sweep_Dl.png}
-\caption{FB-4.1 gallery plot: Layer-B Thomson TT proxy ratio for
-$\beta_e \in \{0,0.1,0.3\}$ on the shared PSTF seed tower.}
-\label{fig:fb41-gallery}
-\end{figure}
-
 Numerically, the seeded Layer-B TT proxy remains close to the
 orthogonal kernel, with the largest departures at the lowest
 multipoles and percent-level excursions over
-$2 \le \ell \le 30$ in Figure~\ref{fig:fb41-gallery}.  The
+$2 \le \ell \le 30$ in the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}.  The
 non-negotiable invariant is the exact $\beta_e = 0$ reduction to
 the LB-4 operator, which is checked with
 \texttt{np.array\_equal} in
@@ -2218,16 +2216,7 @@ counterpart of the frame-change discussion in
 \cite{Challinor2000} and of the Bianchi-polarisation morphology
 analysed by Pontzen \& Challinor~\cite{Pontzen2011}.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.82\linewidth]{figures/physics_gallery/10_collision_and_visibility/05_bb_from_tilted_lens_e.png}
-\caption{FB-4.2 gallery plot: Layer-B $|B|/|E|$ ratio on the
-tilted collision seed over $0 \le \beta_e \le 0.3$ and
-$2 \le \ell \le 30$.}
-\label{fig:fb42-gallery}
-\end{figure}
-
-Figure~\ref{fig:fb42-gallery} shows that the generated $B$ power
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows that the generated $B$ power
 is concentrated in the lowest multipoles and grows monotonically
 with $\beta_e$, while the exact $\beta_e = 0$ floor remains zero.
 The numerical regression in
@@ -2254,18 +2243,9 @@ Layer-B boost, vanishes identically at $\beta_e = 0$, and
 recovers the expected $\beta_e^2 + O(\beta_e^4)$ scaling for
 small tilt.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.82\linewidth]{figures/physics_gallery/10_collision_and_visibility/06_doppler_second_order_residual.png}
-\caption{FB-4.3 gallery plot: fractional quadratic Doppler
-residual $(\mathrm{full}-\mathrm{linear})/\mathrm{full}$ at
-$\beta_e = 0.1$.}
-\label{fig:fb43-gallery}
-\end{figure}
-
 The resulting residual is nearly flat across the plotted multipole
 range, staying close to $10^{-2}$ at $\beta_e = 0.1$ in
-Figure~\ref{fig:fb43-gallery}.  This makes the quadratic term
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}.  This makes the quadratic term
 small but explicit, and the corresponding regression file
 \texttt{htt/bass/collision/test\_fb43\_second\_order\_doppler\_skeleton.py}
 checks both the exact zero-tilt limit and the closed-form
@@ -2553,53 +2533,5 @@ Section~\ref{sec:seven-predictions}.
 % === INLINED: figures_ch05.tex ===
 % Figures for Chapter 5: The Effective Temperature Formalism
 % VER05 — all figures real
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_NL_heatmap}
-\caption{Nonlinear correction heatmaps in the $(\varepsilon_1, \omega/\Theta)$
-  parameter plane.
-  Left: shear correction factor $R_\sigma - 1$ (colour scale).
-  Right: vorticity correction factor $R_\omega - 1$.
-  Both corrections are below $3\%$ across the entire observational parameter
-  space, confirming that the linearised MES framework is valid to better than
-  $2\%$ for all scenarios considered (Section~\ref{ch:teff}).}
-\label{fig:NL_heatmap}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_nonlinear_corrections}
-\caption{Individual nonlinear correction factors $R_\sigma$, $R_\omega$, and
-  $R_{\dot{u}}$ as functions of $\varepsilon_1$.  Shear corrections reach
-  $\sim1\%$ at $\varepsilon_1 = 10^{-3}$; vorticity and acceleration
-  corrections are negligible ($\lesssim 3\times 10^{-4}$) throughout the
-  observational regime.  The dashed line at $\varepsilon_1 = 1.233\times10^{-3}$
-  marks the CF4 inference point.}
-\label{fig:nonlinear_corrections}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_ell_mixing_comparison}
-\caption{Doppler-boost $\ell$-mixing coefficients for $\ell_{\mathrm{out}} = 2$
-  as a function of tilt rapidity $\beta$.  The dominant terms are the
-  $\ell_{\mathrm{in}} = 1\to2$ and $\ell_{\mathrm{in}} = 3\to2$ couplings.
-  The vertical dashed line marks $\beta_{\mathrm{CF4}} = 1.334\times10^{-3}$.
-  At this value the $\ell$-mixing contamination of the quadrupole is
-  $|\delta D_2| \lesssim 5\,\mu\mathrm{K}^2$.}
-\label{fig:ell_mixing_comparison}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_teff_moment_map}
-\caption{Effective temperature moment map: contours of $\langle\Theta^4\rangle$
-  in the $(A, Q)$ plane, where $A$ is the anisotropy amplitude and $Q$ the
-  departure occupancy.  The star marks the VER05 posterior median.  Contours
-  are equally spaced in $\log_{10}\langle\Theta^4\rangle$; the grey region
-  lies below the detection threshold of the pipeline.}
-\label{fig:teff_moment_map}
-\end{figure}
 
 % === END INLINED ===

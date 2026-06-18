@@ -81,15 +81,17 @@ MIO & Epistemic control &
 
 \noindent
 \textbf{BASS} (Bianchi Anisotropy Solver Suite) owns the
-forward-model physics: the low-order Boltzmann hierarchy
-(Section~\ref{sec:TAM-vs-Teff}), the AniCLASS
-wrapper~\cite{Vicente2026} for oracle validation, and the
-family registry (8 active families across 4 Bianchi types
-in orthogonal and tilted sectors).  AniCLASS serves as the
-BASS backend solver through a modified \texttt{classy} Python
-interface; the wrapper maps
-$(\Sigstd, \beta, \Omega_K, x_h, w, \Omega_m)$ to full
-$a_{\ell m}$ output for $\ell \leq 100$.
+transfer and solver-interface contracts for forward-model physics:
+the low-order Boltzmann hierarchy
+(Section~\ref{sec:TAM-vs-Teff}), the future native-solver adapter
+surface, and the family registry metadata.  In the current pre-native
+repository state, AniCLASS~\cite{Vicente2026} is an external/proxy
+compatibility path, not a native low-\(\ell\) solver or morphology
+atlas.  Existing AniCLASS-conditioned wrappers map
+$(\Sigstd, \beta, \Omega_K, x_h, w, \Omega_m)$ to reported
+$a_{\ell m}$ products only under their original external-transfer
+assumptions; they do not certify native morphology, Bianchi family
+identification, or family-equivalence ranking.
 
 \textbf{HTT} (Hubble Tilt Tracker) owns the inference
 layer: the seven-channel evidence models, departure
@@ -330,15 +332,6 @@ into observable harmonic transfer functions on the same low-$\ell$
 band used by the perturbation-sector validation and the Planck-2018
 cross-checks \cite{LewisChallinor2006,Planck2018V,Planck2018VI}.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.82\linewidth]{figures/physics_gallery/19_htt_likelihood/plot_19_01_los_propagator_heatmap.png}
-\caption{FB-7.1 gallery diagnostic for the line-of-sight propagator:
-the Frobenius-norm drift of the Type~VII$_h$ propagator matrix away
-from the identity across the shared $(k,\ell)$ grid.}
-\label{fig:fb7_los_propagator}
-\end{figure}
-
 
 % ============================================================
 \section{Direction-dependent likelihood}
@@ -368,19 +361,9 @@ reserved for the dedicated observer-frame adapter of FB-8.  This
 division keeps the Planck-2018 power-spectrum likelihood
 \cite{Planck2018V} and the cosmological-parameter anchor
 \cite{Planck2018VI} cleanly separated from later frame-composition
-choices.  Figure~\ref{fig:fb7_direction_surface} shows the resulting
+choices.  the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the resulting
 cosmological-frame directional surface for the implemented
 Type~VII$_h$ reference row.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.82\linewidth]{figures/physics_gallery/19_htt_likelihood/plot_19_04_direction_likelihood_contours.png}
-\caption{FB-7.4 cosmological-frame directional likelihood surface over
-Bianchi-axis longitude and latitude.  The marked point is the resolved
-HTT axis; observer-motion marginalisation is intentionally absent at
-this stage and deferred to FB-8.}
-\label{fig:fb7_direction_surface}
-\end{figure}
 
 
 % ============================================================
@@ -509,7 +492,7 @@ consistency, and the null recovery of $\beta = 0$ under
 isotropic mock data.
 
 We verify posterior calibration through simulation-based calibration
-(SBC; Figure~\ref{fig:coverage_sbc}).  The 68\% and 95\% credible
+(SBC; the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}).  The 68\% and 95\% credible
 intervals for $\beta$ achieve 93\% and 100\% observed coverage,
 respectively, confirming that the nested sampling posteriors are
 conservative rather than overconfident.
@@ -559,6 +542,8 @@ Section~\ref{sec:solver-programme-ch9}.
 
 \subsection{Cached infrastructure}
 \label{sec:solver-cached}
+\label{sec:solver-performance}
+\label{sec:recombination}
 
 The solver separates cosmology-dependent quantities, which are
 computed once per parameter set, from shear-dependent quantities,
@@ -571,7 +556,7 @@ $\mathcal{H}(\eta)$, and the species energy densities
 $\rho_s(\eta)$ on a grid of $10{,}000$ conformal time points
 spanning $\eta \in [0.1, 14{,}175]$~Mpc.  Log-log cubic
 interpolation provides sub-permille accuracy at arbitrary
-$\eta$.  The production values $\eta_0 = 14{,}174.6$~Mpc and
+$\eta$.  The legacy numerical values $\eta_0 = 14{,}174.6$~Mpc and
 $z_{\rm eq} = 3403.1$ match the Planck~2018 fiducial cosmology
 to four significant figures.
 
@@ -604,6 +589,7 @@ CPU core.
 
 \subsection{Species-resolved hierarchy}
 \label{sec:solver-hierarchy}
+\label{sec:absorbing-bc}
 
 The solver evolves four species simultaneously: photons
 ($\gamma$), baryons ($b$), cold dark matter ($c$), and
@@ -736,6 +722,7 @@ onset of saturation at $\Sigma^2 \gtrsim 10^{-5}$.
 
 \subsection{FLRW oracle comparison}
 \label{sec:oracle-comparison}
+\label{sec:flrw-oracle}
 
 The solver's $D_2$ is compared against the independent FLRW
 oracle (Section~\ref{sec:flrw-oracle}), which computes
@@ -775,6 +762,7 @@ physics.
 
 \subsection{Reionisation and polarisation consistency}
 \label{sec:reion-pol-check}
+\label{sec:reionisation-invariance}
 
 The reionisation correction $\exp(-2\tau_{\rm reio})$ and the
 polarisation feedback are tested independently.  The Bayes factor
@@ -795,8 +783,8 @@ $D_2$ by $0.006\%$, well below any statistical threshold.
 % at the end of Section "Three-layer departure results" or as a
 % new short subsection.
 
-% \subsection{Solver-validated transfer function}
-% \label{sec:solver-validated-T2}
+% \subsection{Transfer-conditional transfer function}
+% \label{sec:transfer-conditional-T2}
 %
 % The species-resolved Bianchi Boltzmann solver of
 % Section~\ref{sec:solver-arch} provides an independent validation
@@ -825,8 +813,8 @@ $D_2$ by $0.006\%$, well below any statistical threshold.
 % ch07b_robustness.tex at the end of the "Transfer function and
 % reference value sensitivity" section.
 
-% The solver-validated transfer function
-% (Section~\ref{sec:solver-validated-T2}) provides an independent
+% The transfer-conditional transfer function
+% (Section~\ref{sec:transfer-conditional-T2}) provides an independent
 % robustness check of the Route~B calibration.  The solver's
 % species-resolved $D_2$ agrees with the $\Teff$-calibrated value
 % to $1.6\%$ (the photon-sector correction), and the
@@ -847,72 +835,21 @@ $D_2$ by $0.006\%$, well below any statistical threshold.
 % Figures for Chapter 6: Inference Pipeline
 % VER05 — all figures real
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_experiment_timeline}
-\caption{Historical and projected experiment timeline for tilt-rapidity
-  and anisotropy measurements.  Past experiments (solid) include the CMB
-  dipole, CatWISE, NVSS/SUMSS, and CF4.  Future facilities (dashed)
-  include Rubin/LSST, Euclid~DR1, Simons~Observatory, and CMB-S4.
-  The horizontal band marks the current $1\sigma$ range for $\beta$.}
-\label{fig:experiment_timeline}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_activation_map}
-\caption{R-LOS-T0 activation map: fractional divergence between the
-  projected LOS estimator and the full three-dimensional estimator as a
-  function of $\log_{10}\Sigstd$.  The activation threshold (vertical
-  dashed line) marks the onset of the reduced-LOS regime where the
-  projector approximation is insufficient.  Blue: activation curve;
-  orange: posterior $p(\Sigstd|\mathrm{data})$.}
-\label{fig:activation_map}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_reduced_los_physics_payoff}
-\caption{Three-panel physics payoff of the R-LOS-T0 projector.
-  Left: history of the non-trivial regime (fraction of posterior weight
-  requiring the projector correction).
-  Centre: radial kernel $K(r)$ for the reduced LOS integrand.
-  Right: detection threshold $\Sigma^2_{\mathrm{std,thresh}}$ as a function
-  of survey depth.  The cross-validated coefficient of variation is $5.5\%$.}
-\label{fig:reduced_los_physics_payoff}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_s1m_shadow}
-\caption{S-1M shadow wedge.  The admissible region (grey wedge, $w=17.7$)
-  in the $(\Sigstd, \beta)$ plane satisfies the one-mode admissibility
-  condition.  Coloured points show 500 posterior samples; the star marks
-  the VER05 posterior median.  The verification summary (right panel)
-  shows pass/fail for the non-redundancy and history conditions.}
-\label{fig:s1m_shadow}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_coverage_sbc}
-\caption{Simulation-based calibration (SBC) coverage diagnostic for the
-  tilt-rapidity $\beta$.  Circles show observed coverage at the $68\%$
-  (blue) and $95\%$ (orange) nominal levels.  The dashed diagonal indicates
-  perfect calibration.  Observed coverages are $68.6\%$ and $93.4\%$,
-  confirming calibration grade GOOD ($\mathrm{KS}\,p = 0.19$).}
-\label{fig:coverage_sbc}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_external_integration}
-\caption{External depth-tomography ladder using the Quaia quasar catalogue.
-  The solid curve shows the radial amplitude $\beta(z)$ inferred from Quaia
-  photometric redshifts; the shaded band is the $68\%$ credible interval.
-  Horizontal dashed lines mark the CF4 and NVSS/SUMSS constraints.
-  The convergence at $z > 0.3$ is consistent with the tilted-FLRW prediction.}
-\label{fig:external_integration}
-\end{figure}
-
 % === END INLINED ===
+
+% BEGIN observed-data generated figure deck
+The observed-data diagnostic deck below is generated directly from the
+repo-local observation bundle and compact products.  It fixes the data
+surface used by the current manuscript before any native low-\(\ell\)
+solver arrives: spectra, maps, masks, high-\(\ell\) likelihood products, and
+DESI compact catalog summaries are displayed with sidecar manifests and
+claim ceilings.  These figures are data-availability and pipeline diagnostics;
+they do not constitute HTT evidence, MIO certificates, native transfer
+validation, or Bianchi family-ID.
+
+\input{generated/observed_figures_pipeline}
+% END observed-data generated figure deck
+
+% BEGIN current-code generated figure deck
+\input{generated/current_figures_pipeline}
+% END current-code generated figure deck

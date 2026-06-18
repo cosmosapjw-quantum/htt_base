@@ -5,18 +5,20 @@
     "caveats": [
       "DAG completion is project bookkeeping only and is not scientific readiness.",
       "Rows never promote external-transfer outputs to native solver validation.",
-      "production_validated remains false until explicit native/null/mask/covariance gates exist."
+      "DAG completion, artifact readiness, allowed use, and production validation are separate axes.",
+      "production_validated remains false unless an explicit artifact gate output says otherwise."
     ],
     "claim_tier": "diagnostic_only",
     "completed_prs": 62,
-    "config_hash": "cfd666a788101682fcffebff5ce809d762a0af1a32420af5c2e7a3d8b551de08",
-    "generated_on": "2026-06-13T15:17:57+00:00",
+    "config_hash": "22b63c43da2158a5428e8a69b848b8fee70eda4e1c887864626e7f87b937fdd3",
+    "generated_on": "2026-06-14T20:55:59+00:00",
     "generating_command": "python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --write docs/generated/status_snapshot.json",
     "implementation_scope": "common",
     "in_progress_prs": 0,
     "input_hashes": [
       "docs/codex_handoff/pr_backlog.yaml:767c978d69408bc58264991b67ad07b5435566184b136a2e36b285e7ce38b8ae",
-      "docs/codex_handoff/pr_status.yaml:67cbf046bd1cb45831f5a508d1f935855324d469aea87bedacace03837b0cbc8"
+      "docs/codex_handoff/pr_status.yaml:67cbf046bd1cb45831f5a508d1f935855324d469aea87bedacace03837b0cbc8",
+      "docs/codex_handoff/artifact_gate_outputs.yaml:66fe6f798fe4e02b7240e7916dced3ab3116b68081775fe96e79c81490674836"
     ],
     "null_mock_status": "not_statistical",
     "owner": "COMMON",
@@ -24,7 +26,7 @@
     "semantic_source": "common.contracts.ClaimLedgerEntry",
     "sky_support_status": "not_directional",
     "source": "common.status_snapshot.claim_ledger",
-    "source_commit": "b5753e2+dirty",
+    "source_commit": "367039e+dirty",
     "status_path": "docs/codex_handoff/pr_status.yaml",
     "total_prs": 62,
     "transfer_source": "none",
@@ -53,7 +55,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -77,7 +79,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -101,7 +103,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -125,7 +127,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -149,7 +151,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -173,7 +175,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -197,7 +199,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -221,7 +223,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -245,7 +247,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -269,7 +271,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -293,7 +295,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -317,7 +319,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -341,7 +343,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -365,7 +367,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -389,7 +391,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -413,7 +415,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -437,7 +439,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -461,7 +463,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -485,7 +487,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -509,7 +511,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -533,14 +535,14 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
         "PR-080 is marked completed in the Codex DAG status snapshot."
       ],
       "artifact_id": "codex_dag.PR-080",
-      "claim_tier": "diagnostic_only",
+      "claim_tier": "conditional",
       "evidence_refs": [
         "docs/codex_handoff/pr_backlog.yaml",
         "docs/codex_handoff/pr_status.yaml"
@@ -557,7 +559,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -581,7 +583,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -605,7 +607,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -629,7 +631,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -653,7 +655,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -677,7 +679,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -701,7 +703,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -725,7 +727,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -749,7 +751,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -773,7 +775,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -797,14 +799,14 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
         "PR-082 is marked completed in the Codex DAG status snapshot."
       ],
       "artifact_id": "codex_dag.PR-082",
-      "claim_tier": "diagnostic_only",
+      "claim_tier": "conditional",
       "evidence_refs": [
         "docs/codex_handoff/pr_backlog.yaml",
         "docs/codex_handoff/pr_status.yaml"
@@ -821,7 +823,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -845,7 +847,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -869,7 +871,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -893,14 +895,14 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
         "PR-083 is marked completed in the Codex DAG status snapshot."
       ],
       "artifact_id": "codex_dag.PR-083",
-      "claim_tier": "diagnostic_only",
+      "claim_tier": "conditional",
       "evidence_refs": [
         "docs/codex_handoff/pr_backlog.yaml",
         "docs/codex_handoff/pr_status.yaml"
@@ -917,7 +919,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -941,7 +943,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -965,7 +967,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -989,7 +991,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1013,7 +1015,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1037,7 +1039,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1061,7 +1063,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1085,7 +1087,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1110,7 +1112,7 @@
         "sky_support_status=directional_certificate_readiness_recorded"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1134,7 +1136,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1158,7 +1160,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1182,7 +1184,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1209,7 +1211,7 @@
         "g_f_bridge_status=diagnostic_bridge_metadata_recorded"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1236,7 +1238,7 @@
         "tail_probability_status=descriptive_until_null_gate_passes"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1264,7 +1266,7 @@
         "claim_scope=dag_row_not_artifact_payload"
       ],
       "owner": "HTT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1288,7 +1290,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1312,14 +1314,14 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
         "PR-110 is marked completed in the Codex DAG status snapshot."
       ],
       "artifact_id": "codex_dag.PR-110",
-      "claim_tier": "diagnostic_only",
+      "claim_tier": "conditional",
       "evidence_refs": [
         "docs/codex_handoff/pr_backlog.yaml",
         "docs/codex_handoff/pr_status.yaml"
@@ -1336,7 +1338,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1360,7 +1362,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1384,7 +1386,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1408,7 +1410,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1432,14 +1434,14 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
         "PR-111 is marked completed in the Codex DAG status snapshot."
       ],
       "artifact_id": "codex_dag.PR-111",
-      "claim_tier": "diagnostic_only",
+      "claim_tier": "conditional",
       "evidence_refs": [
         "docs/codex_handoff/pr_backlog.yaml",
         "docs/codex_handoff/pr_status.yaml"
@@ -1456,7 +1458,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1480,7 +1482,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1504,7 +1506,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     },
     {
       "allowed_claims": [
@@ -1528,7 +1530,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "b5753e2+dirty"
+      "source_commit": "367039e+dirty"
     }
   ]
 }

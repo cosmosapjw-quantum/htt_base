@@ -1,0 +1,55 @@
+{
+  "allowed_use": "external_audit",
+  "artifact_id": "common.current_figures.mio_certificate_status",
+  "artifact_mode": "governance_diagnostic",
+  "artifact_path": "figures/current/fig_current_mio_certificate_status.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_state_no_native_low_ell_solver_output",
+    "must_state_no_family_identification"
+  ],
+  "caveats": [
+    "Generated from current repo-local metadata only.",
+    "Diagnostic-only figure; not externally validated native low-ell output.",
+    "No Bianchi family-ID or geometry-detection claim is made."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "6649e04+dirty",
+  "config_hash": "sha256:b4989d21653d44cce796da3fb7e78854b74144f91a9a2cd4dfd14a62bd8e9ef9",
+  "created_by": "scripts/make_current_manuscript_figures.py",
+  "failed_gates": [],
+  "generating_command": "python scripts/make_current_manuscript_figures.py",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/result_pack_C.md:sha256:2b37198072126ce63fc76376c84741bcb154c5c75e9544cfbf36061a8fb30c77"
+  ],
+  "null_mock_status": "summarized_from_mio_certificate_status_metadata",
+  "owner": "COMMON",
+  "passed_gates": [
+    "current_generated_input_only",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent"
+  ],
+  "required_gates": [
+    "current_generated_input_only",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "common.current_manuscript_figure.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "figure_kind": "diagnostic_manuscript_plot",
+    "flow_slot": "Results and robustness",
+    "source_artifacts": [
+      "docs/generated/result_pack_C.md"
+    ]
+  },
+  "transfer_source": "none"
+}

@@ -1,0 +1,41 @@
+{
+  "artifact_id": "common.conditioned_legacy_figure.parallel-track__fig_07_planck_pr3_tt",
+  "artifact_path": "figures/conditioned_legacy/parallel-track__fig_07_planck_pr3_tt.png",
+  "caveats": [
+    "Conditionally included legacy figure; not a refreshed current-code production result.",
+    "shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result.",
+    "No native low-ell solver output is represented.",
+    "No Bianchi family-ID or geometry-detection claim is made.",
+    "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
+  ],
+  "claim_tier": "exploratory",
+  "code_version": "conditioned-legacy-gallery-v1",
+  "config_hash": "sha256:009e87520c3a6a5b3e496d3a5a0cf5353049f2ec65a80ea386d1a2f7d74d7910",
+  "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
+  "failed_gates": [],
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "figures/parallel_track/fig_07_planck_pr3_tt.png:sha256:317cdf325428ed6cba93d742d2b6cf52109042184a7193e387128757279e8253",
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:7fb41e2bfb1e7d1f31a5bc4bab7c54d1aac2b2b1fa9e1e4be6b37fe8aee904c0"
+  ],
+  "null_mock_status": "not_statistical_or_legacy_context",
+  "owner": "COMMON",
+  "passed_gates": [
+    "conditioned_legacy_manifest_sidecar"
+  ],
+  "production_status": "diagnostic_only",
+  "required_gates": [
+    "native_low_ell_morphology_atlas_before_family_id",
+    "manifest_sidecar_before_manuscript_use"
+  ],
+  "schema_version": "artifact-manifest-v2",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "legacy_source_path": "figures/parallel_track/fig_07_planck_pr3_tt.png",
+    "manuscript_role": "appendix_only_conditioned_diagnostic"
+  },
+  "transfer_source": "external_or_legacy_transfer_context"
+}

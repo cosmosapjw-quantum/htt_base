@@ -69,7 +69,7 @@ $x \sim 6 \times 10^{-7}$---negligible contamination from the
 log-uniform $\beta$ prior's support at $\beta > 0$.
 
 We extend this test to 50 realisations across all seven Bianchi
-families in Figure~\ref{fig:null_competition_production}.
+families in the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}.
 Every family falls below the 5\% false-positive threshold,
 confirming that the evidence pipeline does not spuriously favour
 any anisotropic geometry when the underlying universe is FLRW.
@@ -79,7 +79,7 @@ any anisotropic geometry when the underlying universe is FLRW.
 \section{Channel ablation}\label{sec:ablation}
 % ============================================================
 
-Figure~\ref{fig:channel_ablation_heatmap} and
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} and
 Table~\ref{tab:ablation} report the FLRW$_\mathrm{tilt}$
 evidence and departure posteriors under seven channel
 combinations.  Three structural results emerge.
@@ -104,7 +104,7 @@ and $Q = 0$---the CMB carries zero tilt information.  This
 confirms the Saadeh~et~al.\ null: CMB data alone prefer
 isotropy.
 
-Figure~\ref{fig:leave_one_out} presents the leave-one-out
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} presents the leave-one-out
 evidence contributions, confirming the above decomposition:
 removal of the CatWISE+Radio channels produces the largest
 evidence loss, while the CMB channels contribute negligibly.
@@ -119,7 +119,7 @@ The bivariate Gaussian likelihood on channel~(b) assumes a
 correlation coefficient $\rho$ between the CatWISE and Radio
 dipole measurements.  The fiducial value $\rho = 0.1$ reflects
 the minimal overlap between infrared and radio source
-populations.  Figure~\ref{fig:rho_sweep} shows the impact of
+populations.  the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the impact of
 varying $\rho$ from $0$ (independent surveys) to $0.95$ (nearly
 identical surveys).
 
@@ -288,7 +288,7 @@ These equivalences are a limitation of the scalar-amplitude
 likelihood, which discards the directional information needed
 to distinguish the Bianchi template patterns.  The evidence
 ranking in Table~\ref{tab:evidence-grand} and
-Figure~\ref{fig:evidence_grand_bar} annotates duplicate models
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} annotates duplicate models
 and inactive parameters.  We emphasise that the tilt detection
 is unaffected: every model in the \emph{tilt\_flat} class
 yields the same $\tilde{\beta}$, $\tilde{Q}$, and $\Pi$.
@@ -438,7 +438,7 @@ The apparent deceleration $\hat{q}_0(d) = q_{0,\mathrm{true}}
 posterior through $\Delta q = (\beta/9)(\lambda_H/d)^3$.  At
 $d = 40$ Mpc, the posterior median is $\hat{q}_0 = 207$ with
 95\% HPD $[154, 260]$
-(Figure~\ref{fig:q0_pushforward}).  The fractional uncertainty
+(the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}).  The fractional uncertainty
 is $\sigma_{\hat{q}_0}/\hat{q}_0 \approx 25\%$, set entirely
 by the $\beta$ posterior width.
 
@@ -529,7 +529,7 @@ $1.5\%$.  The channel independence assumption is not load-bearing
 at the level of the qualitative conclusion.
 
 A related caveat applies to the orientation diagnostics
-(Figure~\ref{fig:orientation_diagnostics}), which test three
+(the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}), which test three
 signatures---quadrupole--octupole alignment, planarity, and
 $m$-mode concentration---against kinematic and geometric
 predictions.  The combined vote is geometric 3\,:\,kinematic 0 at
@@ -625,7 +625,7 @@ $95/100$ realisations yield $\ln\mathcal{B} > 5$
 
 This result quantitatively confirms that the pipeline
 \emph{cannot distinguish a physical tilt from a survey artifact}
-at the CatWISE/Radio amplitude.  The decisive evidence is
+at the CatWISE/Radio amplitude.  The legacy transfer-conditional evidence summary is
 driven entirely by the matter-dipole channels
 (Section~\ref{sec:disc-constraints} of
 Chapter~\ref{ch:discussion}), and those channels carry no
@@ -661,14 +661,14 @@ for eliminating the signal is $\rho \gtrsim 0.9$ \emph{and}
 invalidation of the CF4 Tully--Fisher distances.
 
 We quantify the source-discrimination power directly through
-injection-recovery tests (Figure~\ref{fig:injection_recovery}).
+injection-recovery tests (the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}).
 The confusion matrix across three source classes (kinematic,
 geometric, systematic) yields a geometry false-positive rate of
 22\%---the pipeline cannot cleanly separate source types at
 $\theta_* = 0$ where no directional information is available.
-Figure~\ref{fig:source_decomposition} compares four source
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} compares four source
 models by AIC and BIC; neither information criterion selects the
-kinematic-only model.  Figure~\ref{fig:source_discrimination}
+kinematic-only model.  the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}
 shows the $\Delta$AIC ranking explicitly.  We regard this as a
 quantified negative result: source discrimination requires either
 directional information ($\theta_* > 0$) or at least five
@@ -750,7 +750,8 @@ and catalog).
 The largest vulnerability is the CatWISE--Radio correlation
 assumption.  At the fiducial $\rho = 0.1$, the evidence is
 $+26.4$; at a pessimistic $\rho = 0.3$, it drops to $+22.3$
-but remains decisive.  To reduce the evidence below the
+but remains above the legacy high-support threshold.  To reduce
+the evidence below the
 ``substantial'' threshold ($\ln\mathcal{B} < 2.5$) requires
 $\rho > 0.9$, which is astrophysically implausible given the
 distinct wavelengths and selection functions.
@@ -819,7 +820,7 @@ Watkins+2023 & $1.318 \pm 0.097$ & $+105.8^{*}$ & Decisive \\
 \end{table}
 
 \noindent
-All three versions give decisive evidence for a non-zero tilt
+All three versions give a legacy transfer-conditional evidence summary for a non-zero tilt
 DOF.  The WFH2009 value was previously misattributed to
 Watkins et~al.~\cite{Watkins2023}; this error is corrected in
 the present revision.  The large difference
@@ -925,21 +926,17 @@ level is not excluded.
 % SESSION: S17
 % ============================================================
 
-The solver-validated transfer function
-(Section~\ref{sec:solver-validated-T2}) provides an independent
-robustness check of the Route~B calibration.  The solver's
-species-resolved $D_2$ agrees with the $\Teff$-calibrated value
-to $1.6\%$ (the photon-sector correction), and the
-AniCLASS cross-validation at $15$ grid points
-(Section~\ref{sec:aniclass-validation}) confirms the
-type-dependent transfer for BVIIh and BIX.  The neutrino
+The transfer-conditional Route~B consistency check
+(Section~\ref{sec:transfer-conditional-T2}) provides a bounded
+robustness check of the calibration path.  The current repository
+records species-resolved bookkeeping and AniCLASS-calibrated context, but
+does not validate those outputs as native BASS morphology.  The neutrino
 dominance result ($f_\nu = 0.984$) also explains why the transfer
 function is insensitive to the details of the photon
 recombination model: the dominant channel is collisionless and
 depends only on the free-streaming integral, not on the Thomson
-scattering history.  This structural robustness was not available
-from the $\Teff$ analysis alone and constitutes a new finding of
-the Phase~1.0 solver.
+scattering history.  This is retained as a transfer-provenance
+consistency argument until native morphology atlas support is available.
 
 % === END INLINED ===
 
@@ -951,90 +948,6 @@ the Phase~1.0 solver.
 % ============================================================
 %  IS-series figures (referenced in ch07_results and ch07b_robustness)
 % ============================================================
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_departure_summary}
-\caption{Three-layer departure summary for four irrotational tilted
-  models (FLRW$_{\mathrm{tilt}}$, BI~tilt, VII$_h$~tilt,
-  VII$_h$~tilt~grow).
-  (a)~Pushforward posterior of $x$ (Layer~1).
-  (b)~Occupancy ratio $Q = x/x_{\max}$ (Layer~2).
-  (c)~Exceedance curves $\Pi(q_\star)$ (Layer~3); all four
-  models overlap within line width.
-  (d)~Evidence decomposition: shear ($-0.9$), tilt ($+26.4$),
-  interaction ($+0.03$), combined ($+25.6$).  The annotation
-  confirms that $\Otilt$ contributes $103\%$ of the total
-  Bayes factor.}
-\label{fig:departure_summary}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_q0_pushforward}
-\caption{Apparent deceleration pushforward.
-  (a)~Posterior density of $\hat{q}_0$ at $d = 40$ Mpc
-  (median $= 207$, 95\% HPD shaded); the true FLRW value
-  $q_{0,\mathrm{true}} = -0.53$ is off-scale.
-  (b)~$\hat{q}_0$ versus scenario (symlog axis): S0/S1 at
-  $-0.53$, S2a/S3 at $\sim 204$, S2c at $\sim 466$.
-  (c)~Tilt-induced $\Delta q$ versus $\beta$ at $d = 40$ Mpc
-  with posterior $95\%$ band.}
-\label{fig:q0_pushforward}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_rho_sweep}
-\caption{CatWISE--Radio correlation sensitivity.
-  (a)~$\ln\mathcal{B}$ versus $\rho$: decisive ($>5$) until
-  $\rho \approx 0.85$.
-  (b)~Posterior median $\tilde{\beta}$; the CF4 value is shown
-  as a dashed line.
-  (c)~Occupancy $\tilde{Q}$.
-  (d)~Exceedance $\Pi(q_\star = 0.1)$.
-  The fiducial $\rho = 0.1$ is marked.}
-\label{fig:rho_sweep}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_channel_ablation_heatmap}
-\caption{Channel ablation heatmap.  Rows: seven channel
-  combinations.  Columns: $\ln\mathcal{B}$, $\tilde{\beta}$,
-  $\tilde{Q}$, $\Pi(0.1)$, $\hat{q}_0$.  The ``No CF4'' row
-  (orange dashed border) is the fair comparison target for the
-  catalog cross-check.  Colour scale: fraction of the
-  full-channel value (blue = high, red = low).}
-\label{fig:channel_ablation_heatmap}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_direction_posterior}
-\caption{Directional posterior from the catalog pipeline
-  (IS-06, seed~42, 5716 samples).  Mollweide projection in
-  Galactic coordinates.  The $68\%$ credible cone ($11^\circ$
-  radius) and $95\%$ cone ($19^\circ$) are shown as contours.
-  Reference directions: CMB kinematic dipole (star), CatWISE
-  quasar dipole (diamond), CF4 bulk flow (square), injected
-  truth (cross).  The injected direction falls inside the
-  $95\%$ contour.}
-\label{fig:direction_posterior}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_v_pushforward}
-\caption{Cross-pipeline consistency.
-  (a)~Tilt velocity $v_{\mathrm{tilt}}$ posterior:
-  summary-statistic (blue) versus catalog (orange);
-  Hellinger distance $H = 0.10$.
-  (b)~$\Otilt$ posterior comparison.
-  (c)~$\beta$ posterior comparison (SS versus catalog,
-  CF4-ablated).}
-\label{fig:v_pushforward}
-\end{figure}
 
 
 % ============================================================
@@ -1120,85 +1033,6 @@ Minimal (ef)     & $-0.2$  & ---    & $0.000$ & $0.08$ & $48$  \\
 
 % === ADDED 2026-03-22: Pipeline diagnostic figures ===
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.7\columnwidth]{fig_injection_recovery}
-\caption{Injection-recovery confusion matrix.
-Rows: injected source class (kinematic, geometric, systematic);
-columns: recovered class.
-Off-diagonal entries measure misclassification rates.
-The geometry false positive rate (FPR) is 22\%, reflecting the
-limited discrimination power of the current
-scalar-only observable set at $\theta_* = 0$
-(Section~\ref{sec:source_discrimination_limits}).
-This is a design limitation, not a pipeline failure.}
-\label{fig:injection_recovery}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_leave_one_out}
-\caption{Leave-one-out evidence contributions.
-Each bar shows $\Delta\ln\mathcal{B}$ when a single data channel
-is removed from the FLRW$_{\mathrm{tilt}}$ evidence budget.
-Removal of CatWISE+Radio (the number-count dipole channels) produces
-the largest evidence loss, confirming that the dipole amplitude
-is the primary evidence driver.
-The CF4 bulk-flow constraint contributes the second-largest share.}
-\label{fig:leave_one_out}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.6\columnwidth]{fig_null_competition_production}
-\caption{Null competition: false positive rate per Bianchi family.
-Production run with 50 realisations and 7 families.
-All families fall below the 5\% threshold (dashed line),
-confirming that the evidence pipeline does not spuriously
-favour anisotropic models when the underlying universe is FLRW.}
-\label{fig:null_competition_production}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_orientation_diagnostics}
-\caption{Orientation diagnostic triad.
-(a)~Quadrupole--octupole (QO) alignment angle: observed vs kinematic prediction.
-(b)~Planarity: observed value against the isotropic expectation (dashed).
-(c)~$m$-mode concentration $C_{m=0}$: dominance of the axisymmetric $m=0$
-component, again compared with the isotropic floor (dashed).
-The combined vote is geometric~3\,:\,kinematic~0, but we emphasise the
-same-data caveat (Section~\ref{sec:orientation_caveat}):
-these three diagnostics share the same quadrupole+octupole data and are
-therefore \emph{not} independent tests.}
-\label{fig:orientation_diagnostics}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_source_decomposition}
-\caption{Source decomposition: information-criterion comparison.
-AIC (blue) and BIC (orange) for four source models: kinematic (tilt only),
-geometric (shear only), systematic, and mixed.
-Neither the AIC-best model nor the BIC-best model is kinematic-only,
-reinforcing the conclusion that source discrimination remains an
-open problem (Section~\ref{sec:source_decomposition}).
-A minimum of five independent surveys is required before the
-decomposition becomes identifiable.}
-\label{fig:source_decomposition}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.6\columnwidth]{fig_source_discrimination}
-\caption{Source discrimination: $\Delta$AIC relative to the best-fitting model
-for each source class.
-Green bars indicate the preferred model; orange bars show disfavoured alternatives.
-At $\theta_* = 0$ (no directional information), the pipeline cannot cleanly
-separate kinematic from geometric origins---a quantified negative result.}
-\label{fig:source_discrimination}
-\end{figure}
-
 % === ADDED 2026-04-24: research-plan extensions (F112, F113, F114) ===
 
 \subsection{CMB-anomaly cross-checks of the Bianchi model space}
@@ -1212,7 +1046,7 @@ asymmetry $A$ (Planck NPIPE), the parity ratio $R(\ell_{\mathrm{max}})$
 preferred-direction anomalies catalogued in
 Section~\ref{sec:channel-coherence-and-alignment}.
 
-Figure~\ref{fig:hemispherical_power_asymmetry_bianchi} compares the
+the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} compares the
 predicted hemispherical asymmetry $A$ for each Bianchi model against
 the Planck NPIPE measurement $A_{\mathrm{obs}} = 0.066 \pm 0.021$.
 Tilt-only models (FLRW, FLRW$_{\mathrm{tilt}}$, BI orth) predict
@@ -1227,22 +1061,8 @@ The hemispherical asymmetry is therefore \emph{not} a discriminant
 between tilt and growing-vortex hypotheses at current precision; the
 matter-channel evidence remains the dominant lever.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_hemispherical_power_asymmetry_bianchi}
-\caption{Predicted hemispherical power asymmetry $A$ for the 15 Bianchi
-models compared to the Planck NPIPE measurement
-$A_{\mathrm{obs}} = 0.066 \pm 0.021$ (red band).  Bars consistent with
-the band at $1\sigma$ are shown in green; $2\sigma$ in orange; $> 2\sigma$
-discrepant in blue.  Tilt-only models (FLRW, FLRW$_{\mathrm{tilt}}$,
-orthogonal Bianchi) under-predict $A$ by an order of magnitude;
-growing-vortex models match the measurement but are excluded by the
-matter-channel evidence.}
-\label{fig:hemispherical_power_asymmetry_bianchi}
-\end{figure}
-
 The same pattern holds for the parity ratio $R(\ell_{\mathrm{max}}=30)
-= P^+/P^- = 1.18 \pm 0.08$ (Figure~\ref{fig:parity_asymmetry_per_model}):
+= P^+/P^- = 1.18 \pm 0.08$ (the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}):
 no model matches the observation at $1\sigma$; the BVII$_h$ orth+grow
 ($R = 1.18$) and BVII$_h$ tilt+grow ($R = 1.14$) come closest, while
 the tilt-only models cluster at $R \approx 1.00$--$1.06$.  As with the
@@ -1252,21 +1072,9 @@ its weak measurement-driven exclusion of FLRW$_{\mathrm{tilt}}$
 ($\sim 1.5\sigma$) does not survive the matter-channel preference for
 the same model.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_parity_asymmetry_per_model}
-\caption{Even/odd parity ratio $R(\ell_{\mathrm{max}}=30) = P^+/P^-$
-predicted by each Bianchi model versus the Planck Commander 2018
-measurement $R_{\mathrm{obs}} = 1.18 \pm 0.08$ (red band).  Colour code
-matches Figure~\ref{fig:hemispherical_power_asymmetry_bianchi}.  Only
-the BVII$_h$ growing-vortex variants approach the measurement; tilt-only
-models predict $R \le 1.07$.}
-\label{fig:parity_asymmetry_per_model}
-\end{figure}
-
 The geometric overlap of the seven CMB-anomaly preferred directions
 provides an independent cross-check
-(Figure~\ref{fig:anomaly_overlap_matrix}).  The Axis-of-Evil and the
+(the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}).  The Axis-of-Evil and the
 Bianchi$_{VII_h}$ axis overlap at the 83\% level---these are the two
 strongest $\ell = 2$--$3$ alignment statistics in the literature.
 The parity-odd power axis overlaps both at the 40--77\% level,
@@ -1277,17 +1085,5 @@ Section~\ref{sec:channel-coherence-and-alignment} that the bulk-flow
 direction is geometrically distinct from the $\ell \in \{2, 3\}$
 alignment cluster.  The cold-spot direction is also isolated, with
 only a 30\% overlap with the hemispherical-asymmetry axis.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_anomaly_overlap_matrix}
-\caption{Pairwise area overlap of the 95\% HPD direction cones for the
-seven CMB-anomaly preferred axes.  Two clusters are evident: a
-small-$\ell$ cluster (Axis-of-Evil, Bianchi$_{VII_h}$, parity-odd,
-CatWISE) and an isolated cold-spot/hemispherical-asymmetry pair.  The
-CF4 bulk-flow axis does not overlap any other anomaly cone at the 95\%
-level.}
-\label{fig:anomaly_overlap_matrix}
-\end{figure}
 
 % === END INLINED ===

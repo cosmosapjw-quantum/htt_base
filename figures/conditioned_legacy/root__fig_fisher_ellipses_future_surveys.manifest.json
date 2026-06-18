@@ -1,0 +1,41 @@
+{
+  "artifact_id": "common.conditioned_legacy_figure.root__fig_fisher_ellipses_future_surveys",
+  "artifact_path": "figures/conditioned_legacy/root__fig_fisher_ellipses_future_surveys.png",
+  "caveats": [
+    "Conditionally included legacy figure; not a refreshed current-code production result.",
+    "shown only as a legacy manuscript-generator diagnostic under its original assumptions, with current claim ceilings made explicit.",
+    "No native low-ell solver output is represented.",
+    "No Bianchi family-ID or geometry-detection claim is made.",
+    "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
+  ],
+  "claim_tier": "exploratory",
+  "code_version": "conditioned-legacy-gallery-v1",
+  "config_hash": "sha256:64aa3d1bceff15db4e8fdb6c8936e43942e33552d8d2d3cd67aa1235527c4367",
+  "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
+  "failed_gates": [],
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "figures/fig_fisher_ellipses_future_surveys.png:sha256:1c70814931aae08b1ee1e900883c72ee830d9a18c0bcf8a59ca39656274b2963",
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:7fb41e2bfb1e7d1f31a5bc4bab7c54d1aac2b2b1fa9e1e4be6b37fe8aee904c0"
+  ],
+  "null_mock_status": "not_statistical_or_legacy_context",
+  "owner": "COMMON",
+  "passed_gates": [
+    "conditioned_legacy_manifest_sidecar"
+  ],
+  "production_status": "diagnostic_only",
+  "required_gates": [
+    "native_low_ell_morphology_atlas_before_family_id",
+    "manifest_sidecar_before_manuscript_use"
+  ],
+  "schema_version": "artifact-manifest-v2",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "legacy_source_path": "figures/fig_fisher_ellipses_future_surveys.png",
+    "manuscript_role": "appendix_only_conditioned_diagnostic"
+  },
+  "transfer_source": "legacy_analytic_or_proxy_context"
+}

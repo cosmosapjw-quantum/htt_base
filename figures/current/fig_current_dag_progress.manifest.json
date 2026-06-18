@@ -1,0 +1,55 @@
+{
+  "allowed_use": "external_audit",
+  "artifact_id": "common.current_figures.dag_progress",
+  "artifact_mode": "governance_diagnostic",
+  "artifact_path": "figures/current/fig_current_dag_progress.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_state_no_native_low_ell_solver_output",
+    "must_state_no_family_identification"
+  ],
+  "caveats": [
+    "Generated from current repo-local metadata only.",
+    "Diagnostic-only figure; not externally validated native low-ell output.",
+    "No Bianchi family-ID or geometry-detection claim is made."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "6649e04+dirty",
+  "config_hash": "sha256:25be624b0475d19e2bc2106ac2b6c9811a5e6f6e767036d8f8981949f44d6422",
+  "created_by": "scripts/make_current_manuscript_figures.py",
+  "failed_gates": [],
+  "generating_command": "python scripts/make_current_manuscript_figures.py",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d"
+  ],
+  "null_mock_status": "not_statistical_status_snapshot",
+  "owner": "COMMON",
+  "passed_gates": [
+    "current_generated_input_only",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent"
+  ],
+  "required_gates": [
+    "current_generated_input_only",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "common.current_manuscript_figure.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "figure_kind": "diagnostic_manuscript_plot",
+    "flow_slot": "Framework and repository status",
+    "source_artifacts": [
+      "docs/generated/status_snapshot.json"
+    ]
+  },
+  "transfer_source": "none"
+}

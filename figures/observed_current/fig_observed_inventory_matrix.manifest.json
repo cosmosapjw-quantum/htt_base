@@ -1,0 +1,75 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "obsstat.observed.inventory_matrix",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/observed_current/fig_observed_inventory_matrix.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_not_use_for_family_identification_or_family_selection",
+    "must_state_no_native_low_ell_solver_output"
+  ],
+  "caveats": [
+    "Observed-data diagnostic figure; not inference evidence.",
+    "No native low-ell solver output is used.",
+    "No Bianchi family-ID or geometry-detection claim is made."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "6649e04+dirty",
+  "config_hash": "sha256:bd1a3513b37f512c7ed6e63c79a8320fbc4eb24f54908f2e145f13edf3750a46",
+  "created_by": "scripts/make_observed_data_manuscript_figures.py",
+  "failed_gates": [
+    "matched_nulls_not_bound",
+    "full_covariance_not_bound",
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available"
+  ],
+  "generating_command": "scripts/make_observed_data_manuscript_figures.py",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "OBSSTAT",
+  "passed_gates": [
+    "repo_local_observed_data_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "matched_nulls_not_bound",
+    "full_covariance_not_bound",
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent",
+    "family_identification_blocked_pre_native_atlas"
+  ],
+  "publication_gates": {
+    "evidence_or_pvalue_claim": "fail_not_calibrated",
+    "paper_main_claim": "fail_diagnostic_only"
+  },
+  "required_gates": [
+    "repo_local_observed_data_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "obsstat.observed_current_figure.v2",
+  "science_promotion_gates": {
+    "family_morphology_atlas": "fail_not_available",
+    "full_covariance": "fail_not_bound",
+    "matched_nulls": "fail_not_bound",
+    "native_low_ell_solver": "fail_not_available"
+  },
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "flow_slot": "Observed-data pipeline",
+    "missing": 12,
+    "present": 40,
+    "quantity": "dataset availability counts by collection",
+    "source_artifacts": [
+      "docs/generated/observational_data_inventory.json"
+    ]
+  },
+  "transfer_source": "none"
+}

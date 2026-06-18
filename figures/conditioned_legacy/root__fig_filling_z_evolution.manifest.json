@@ -1,0 +1,41 @@
+{
+  "artifact_id": "common.conditioned_legacy_figure.root__fig_filling_z_evolution",
+  "artifact_path": "figures/conditioned_legacy/root__fig_filling_z_evolution.png",
+  "caveats": [
+    "Conditionally included legacy figure; not a refreshed current-code production result.",
+    "shown only as a legacy manuscript-generator diagnostic under its original assumptions, with current claim ceilings made explicit.",
+    "No native low-ell solver output is represented.",
+    "No Bianchi family-ID or geometry-detection claim is made.",
+    "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
+  ],
+  "claim_tier": "exploratory",
+  "code_version": "conditioned-legacy-gallery-v1",
+  "config_hash": "sha256:d6d85925036415d6d702bf08ebfe36ac26b3af1d4fb0982eda6185fa100f25aa",
+  "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
+  "failed_gates": [],
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "figures/fig_filling_z_evolution.png:sha256:41dc08d1a6bbbb89ceb52f77d641ed9679f2d280956f32f93e42aaf08bbc58ff",
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:7fb41e2bfb1e7d1f31a5bc4bab7c54d1aac2b2b1fa9e1e4be6b37fe8aee904c0"
+  ],
+  "null_mock_status": "not_statistical_or_legacy_context",
+  "owner": "COMMON",
+  "passed_gates": [
+    "conditioned_legacy_manifest_sidecar"
+  ],
+  "production_status": "diagnostic_only",
+  "required_gates": [
+    "native_low_ell_morphology_atlas_before_family_id",
+    "manifest_sidecar_before_manuscript_use"
+  ],
+  "schema_version": "artifact-manifest-v2",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "legacy_source_path": "figures/fig_filling_z_evolution.png",
+    "manuscript_role": "appendix_only_conditioned_diagnostic"
+  },
+  "transfer_source": "legacy_analytic_or_proxy_context"
+}

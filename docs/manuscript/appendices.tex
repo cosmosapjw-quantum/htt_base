@@ -172,7 +172,7 @@ tilted-fluid regimes (Section~\ref{sec:differentiation}).
 \label{app:ssot}
 % ============================================================
 
-We reproduce the production values of the Phase~1.0 solver
+We reproduce the legacy numerical values of the Phase~1.0 solver
 numerical register.  All constants derive from the SSOT
 module (\texttt{ssot.py} + \texttt{obs\_defaults.json})
 and are validated by \texttt{\_validate\_ssot()} at pipeline
@@ -219,7 +219,7 @@ AniCLASS $D_2$ (FLRW)
 BianchiSolver speed
   & $420$~ms/eval & PR-01 \\[2pt]
 \hline
-\multicolumn{3}{l}{\emph{VER06 production values}} \\[2pt]
+\multicolumn{3}{l}{\emph{VER06 legacy numerical values}} \\[2pt]
 $\ln \mathcal{B}$(FLRW$_{\rm tilt}$)
   & $+26.40$ (exact) & VER06 \\[2pt]
 $\ln \mathcal{B}_{\rm tilt}$ (Route~B)
@@ -334,40 +334,13 @@ between generated artifacts, figure promotion, and claim-tiered prose.
 \input{generated/ver2_validation_status}
 
 The main text promotes only the two conditional figures
-(Figure~\ref{fig:ver2_conditional_exports}) because those are the only
+(the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}) because those are the only
 current packs that can carry a bounded scientific statement without
 crossing the claim-tier ceiling.  The three figures below are retained
 as appendix-only diagnostics.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.72\textwidth]{paper/ver2_generated/fig_ver2b_local_global_discrimination_matrix}
-\caption{Result Pack~B local-versus-global discrimination matrix.
-  Claim tier \texttt{exploratory}.  The surface documents observer-side
-  versus source-side degeneracy structure only; it is not a posterior-odds
-  or model-selection result.}
-\label{fig:ver2_pack_b}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.72\textwidth]{paper/ver2_generated/fig_ver2c_departure_card_summary}
-\caption{Result Pack~C departure-card summary. Claim tier
-  \texttt{exploratory}.  The exported $x/Q/F/G$ card remains descriptive;
-  certified filling and validated geometry language stay blocked until the
-  propagation claim gates are discharged.}
-\label{fig:ver2_pack_c}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.78\textwidth]{paper/ver2_generated/fig_ver2e_validation_campaign_matrix}
-\caption{Result Pack~E validation-coverage matrix. Claim tier
-  \texttt{exploratory}.  The registry documents executable coverage and
-  hostile-audit provenance, but all campaigns remain \texttt{warn}
-  and therefore do not validate any scientific claim by themselves.}
-\label{fig:ver2_pack_e}
-\end{figure}
+\clearpage
+\input{generated/conditioned_legacy_figure_gallery}
 
 
 % ============================================================
@@ -377,45 +350,3 @@ as appendix-only diagnostics.
 
 This appendix collects supplementary figures referenced in
 the main text but not displayed inline.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_equiv_class_evidence}
-\caption{Evidence ranking collapsed by equivalence class.
-  Six classes are ordered by $\ln\mathcal{B}$ relative to
-  FLRW.  The tilt\_null (FLRW$_{\rm tilt}$) and tilt\_flat
-  classes achieve $\ln\mathcal{B} \approx 26.3$, while the
-  orth\_1D class is indistinguishable from FLRW.
-  See Section~\ref{sec:equivalence}.}
-\label{fig:equiv_class_evidence}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{fig_cf4pp_sensitivity}
-\caption{CF4 peculiar-velocity posterior sensitivity.
-  (a)~Tilt rapidity $\beta$ posterior vs.\ prior width.
-  (b)~$\ln\mathcal{B}$ vs.\ the CF4 likelihood
-  normalisation scenario.  The evidence is stable across
-  both scenarios.}
-\label{fig:cf4pp_sensitivity}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_sigma_omega_contour}
-\caption{Joint $\Sigstd$--$\Wstd$ constraint contour.
-  Posterior samples from BI$_{\rm tilt}$ cluster at
-  $\Sigstd \lesssim 10^{-18}$, well below both MES
-  ceilings.}
-\label{fig:sigma_omega_contour}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_sigma_accel_contour}
-\caption{Joint $\Sigstd$--$A^2_{\rm std}$ constraint
-  contour with the VT-07 corrected four-acceleration
-  bound.}
-\label{fig:sigma_accel_contour}
-\end{figure}

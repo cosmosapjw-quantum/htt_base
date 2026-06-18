@@ -1,0 +1,41 @@
+{
+  "artifact_id": "common.conditioned_legacy_figure.root__fig_triangle_BI_R03",
+  "artifact_path": "figures/conditioned_legacy/root__fig_triangle_BI_R03.png",
+  "caveats": [
+    "Conditionally included legacy figure; not a refreshed current-code production result.",
+    "shown only under the legacy statistical assumptions encoded by the original manuscript generator; no current null/PPC/LOOCV refresh is implied.",
+    "No native low-ell solver output is represented.",
+    "No Bianchi family-ID or geometry-detection claim is made.",
+    "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
+  ],
+  "claim_tier": "exploratory",
+  "code_version": "conditioned-legacy-gallery-v1",
+  "config_hash": "sha256:2084e7d03cef2eb5f6ffca61f6158f46cffc7c891dbdfbc682d848f654c4f095",
+  "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
+  "failed_gates": [],
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "figures/fig_triangle_BI_R03.png:sha256:aadf23931c6e07b7f398cae401843aba3f29ed90314fb07fa1aca5ad1b114879",
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:7fb41e2bfb1e7d1f31a5bc4bab7c54d1aac2b2b1fa9e1e4be6b37fe8aee904c0"
+  ],
+  "null_mock_status": "legacy_statistical_context_no_current_null_refresh",
+  "owner": "COMMON",
+  "passed_gates": [
+    "conditioned_legacy_manifest_sidecar"
+  ],
+  "production_status": "diagnostic_only",
+  "required_gates": [
+    "native_low_ell_morphology_atlas_before_family_id",
+    "manifest_sidecar_before_manuscript_use"
+  ],
+  "schema_version": "artifact-manifest-v2",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "legacy_source_path": "figures/fig_triangle_BI_R03.png",
+    "manuscript_role": "appendix_only_conditioned_diagnostic"
+  },
+  "transfer_source": "legacy_analytic_or_proxy_context"
+}

@@ -1,0 +1,62 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "common.current_figures.transfer_sensitivity_tornado",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/current/fig_current_transfer_sensitivity_tornado.png",
+  "caption_policy": [
+    "must_state_transfer_conditional",
+    "must_state_no_native_low_ell_solver_output",
+    "must_not_use_for_family_identification_or_family_selection",
+    "must_state_denominator_sensitivity_only"
+  ],
+  "caveats": [
+    "Generated from current repo-local code and deterministic diagnostic payload.",
+    "Conditioned physics diagnostic; not an observed-data production result.",
+    "External-transfer rows are not native low-ell solver output.",
+    "No Bianchi family-ID or geometry-detection claim is made."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "6649e04+dirty",
+  "config_hash": "sha256:0e1231d659b0655a1244ec8e244576445c213eb17dfc19f933a6c234ce04364f",
+  "created_by": "scripts/make_current_manuscript_figures.py",
+  "failed_gates": [],
+  "generating_command": "python scripts/make_current_manuscript_figures.py",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/current_science_plot_payload.json:sha256:4cd77a839f275f54c39a73d44184179163c498747b5db8beb6c411aacb996d03",
+    "docs/generated/transfer_sensitivity_report.md:sha256:b2634c82ef783687cc2d304c50bb64487fa4556833bcc1a55464f7cae136903c",
+    "htt/mio/formalism/budget_spec.py:sha256:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a"
+  ],
+  "null_mock_status": "not_statistical_denominator_sensitivity",
+  "owner": "COMMON",
+  "passed_gates": [
+    "current_generated_input_only",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent",
+    "observed_transfer_sensitivity_payload_absent"
+  ],
+  "required_gates": [
+    "current_generated_input_only",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "common.current_manuscript_figure.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "figure_kind": "conditioned_physics_diagnostic_plot",
+    "flow_slot": "Observational pipeline",
+    "source_artifacts": [
+      "docs/generated/current_science_plot_payload.json",
+      "docs/generated/transfer_sensitivity_report.md",
+      "htt/mio/formalism/budget_spec.py"
+    ]
+  },
+  "transfer_source": "mixed_none_and_external_transfer_conditioned"
+}

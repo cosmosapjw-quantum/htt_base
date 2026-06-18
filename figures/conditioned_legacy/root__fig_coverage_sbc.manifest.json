@@ -1,0 +1,41 @@
+{
+  "artifact_id": "common.conditioned_legacy_figure.root__fig_coverage_sbc",
+  "artifact_path": "figures/conditioned_legacy/root__fig_coverage_sbc.png",
+  "caveats": [
+    "Conditionally included legacy figure; not a refreshed current-code production result.",
+    "shown only as a legacy manuscript-generator diagnostic under its original assumptions, with current claim ceilings made explicit.",
+    "No native low-ell solver output is represented.",
+    "No Bianchi family-ID or geometry-detection claim is made.",
+    "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
+  ],
+  "claim_tier": "exploratory",
+  "code_version": "conditioned-legacy-gallery-v1",
+  "config_hash": "sha256:42b2e5daefed78557109579d12b67cf297570edee130cb48cd0356211e51f114",
+  "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
+  "failed_gates": [],
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "figures/fig_coverage_sbc.png:sha256:86cba04a978b83fdf19b6bd3a2b64ce056b82b00cbe58a85e00e8e5a3e0463c6",
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:7fb41e2bfb1e7d1f31a5bc4bab7c54d1aac2b2b1fa9e1e4be6b37fe8aee904c0"
+  ],
+  "null_mock_status": "legacy_mock_or_validation_context",
+  "owner": "COMMON",
+  "passed_gates": [
+    "conditioned_legacy_manifest_sidecar"
+  ],
+  "production_status": "diagnostic_only",
+  "required_gates": [
+    "native_low_ell_morphology_atlas_before_family_id",
+    "manifest_sidecar_before_manuscript_use"
+  ],
+  "schema_version": "artifact-manifest-v2",
+  "sky_support_status": "pending_or_unknown_for_existing_directional_artifacts",
+  "statistics_definitions": {
+    "legacy_source_path": "figures/fig_coverage_sbc.png",
+    "manuscript_role": "appendix_only_conditioned_diagnostic"
+  },
+  "transfer_source": "legacy_analytic_or_proxy_context"
+}

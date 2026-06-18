@@ -1,0 +1,90 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "obsstat.observed.longrun_jackknife_bootstrap",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/observed_current/fig_observed_longrun_jackknife_bootstrap.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_not_use_for_family_identification_or_family_selection",
+    "must_state_no_native_low_ell_solver_output"
+  ],
+  "caveats": [
+    "Observed-data diagnostic figure; not inference evidence.",
+    "No native low-ell solver output is used.",
+    "No Bianchi family-ID or geometry-detection claim is made."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "6649e04+dirty",
+  "config_hash": "sha256:6deedb4e92baabc6e47724bd1f229dbb6795682950341a6ca991f321a4065192",
+  "created_by": "scripts/make_observed_data_manuscript_figures.py",
+  "failed_gates": [
+    "matched_nulls_not_bound",
+    "full_covariance_not_bound",
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available"
+  ],
+  "generating_command": "scripts/make_observed_data_manuscript_figures.py",
+  "git_commit": "6649e04",
+  "git_commit_or_worktree_state": "6649e04+dirty",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513",
+    "docs/generated/observed_longrun_analysis.json:sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047"
+  ],
+  "null_mock_status": "jackknife_bootstrap_diagnostic_no_pvalue",
+  "owner": "OBSSTAT",
+  "passed_gates": [
+    "repo_local_observed_data_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "matched_nulls_not_bound",
+    "full_covariance_not_bound",
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent",
+    "family_identification_blocked_pre_native_atlas"
+  ],
+  "publication_gates": {
+    "evidence_or_pvalue_claim": "fail_not_calibrated",
+    "paper_main_claim": "fail_diagnostic_only"
+  },
+  "required_gates": [
+    "repo_local_observed_data_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "obsstat.observed_current_figure.v2",
+  "science_promotion_gates": {
+    "family_morphology_atlas": "fail_not_available",
+    "full_covariance": "fail_not_bound",
+    "matched_nulls": "fail_not_bound",
+    "native_low_ell_solver": "fail_not_available"
+  },
+  "sky_support": {
+    "completeness_status": "occupied_pixel_diagnostic_from_compact_catalogs",
+    "coordinate_frame": "equatorial_icrs",
+    "mask_hash": "sha256:4d737e4a3b78d7fee910fa3c4ec63f43ab55c631dd1c30d218f22f26a3fea3f3",
+    "mock_coverage_status": "not_mocked",
+    "nside": 32,
+    "pixelization": "healpix_ring",
+    "scan_volume_hash": "",
+    "selection_mode": "angular_occupancy",
+    "sky_fraction": 0.350341796875,
+    "sky_support_hash": "sha256:3a205f0871e79668dbe10ec3a4c7618a344d20cf3ed5093c7e630d45fb20308d"
+  },
+  "sky_support_status": "sky_support_recorded",
+  "statistics_definitions": {
+    "cf4_rows": 10,
+    "desi_rows": 36,
+    "flow_slot": "Observed long-run diagnostics",
+    "no_pvalue": true,
+    "quantity": "DESI depth-bin jackknife and CF4 bootstrap summaries",
+    "source_artifacts": [
+      "docs/generated/observational_data_inventory.json",
+      "docs/generated/observed_longrun_analysis.json"
+    ]
+  },
+  "transfer_source": "none"
+}
