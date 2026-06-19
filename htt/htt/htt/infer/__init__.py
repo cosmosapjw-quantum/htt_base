@@ -22,9 +22,11 @@ from htt.infer.matched_complexity import (
     matched_complexity_report_artifact,
 )
 from htt.infer.null_competition import (
+    GFMatchedNullForecastReport,
     MatchedNullCompetitionReport,
     NullCompetitionHook,
     NullCompetitionResult,
+    build_gf_matched_null_forecast_report,
     build_matched_null_competition_report,
     build_null_competition_hook,
 )
@@ -86,6 +88,8 @@ __all__ = [
     'enforce_matched_complexity', 'build_matched_complexity_hook',
     'matched_complexity_report_artifact', 'NullCompetitionHook',
     'NullCompetitionResult', 'MatchedNullCompetitionReport',
+    'GFMatchedNullForecastReport',
+    'build_gf_matched_null_forecast_report',
     'build_matched_null_competition_report', 'build_null_competition_hook',
     'PriorSweepReport', 'InferenceAdequacyReport',
     'build_prior_sweep_report', 'build_inference_adequacy_report',

@@ -84,6 +84,22 @@ def test_pack_b_payload_includes_required_surfaces_and_manifest():
     assert payload["claim_boundaries"]["native_solver_status"] == (
         "not_native_solver_output"
     )
+    depth_gap = next(
+        row for row in payload["gate_summary"] if row["category"] == "depth_gap"
+    )
+    assert depth_gap["G_F_floor_report_ref"].endswith(
+        "#/semantic_and_vectors/g_f_display_contract"
+    )
+    assert depth_gap["denominator_evolution_split_ref"].endswith(
+        "#/semantic_and_vectors/g_f_display_contract/denominator_evolution_split"
+    )
+    assert depth_gap["matched_null_forecast_report_ref"] == (
+        "docs/generated/gf_matched_null_forecast_report.json"
+    )
+    assert depth_gap["matched_null_forecast_status"] == "forecast_matched_null_blocked"
+    assert depth_gap["local_global_separation_status"] == (
+        "blocked_existing_null_bank_insufficient"
+    )
     _assert_no_forbidden_language(json.dumps(payload, sort_keys=True))
 
 
@@ -252,3 +268,35 @@ def test_pack_b_cli_check_detects_missing_and_stale_without_writing(tmp_path):
     )
     assert stale_result.returncode == 1
     assert "stale result pack" in stale_result.stdout
+
+
+def test_pack_b_cli_check_reuses_existing_worktree_state(tmp_path):
+    module = _load_module()
+    output = tmp_path / "result_pack_B.md"
+    command = (
+        "python scripts/result_packs/generate_pack_B_local_global.py "
+        f"--output {output}"
+    )
+    payload = module.build_result_pack_payload(
+        repo_root=REPO_ROOT,
+        generating_command=command,
+        worktree_state="stored-head+dirty",
+    )
+    output.write_text(module.render_markdown(payload), encoding="utf-8")
+
+    result = subprocess.run(
+        [
+            str(REPO_ROOT / "venv/bin/python"),
+            str(SCRIPT_PATH),
+            "--check",
+            "--output",
+            str(output),
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "up-to-date" in result.stdout

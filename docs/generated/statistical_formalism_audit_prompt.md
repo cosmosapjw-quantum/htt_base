@@ -62,7 +62,8 @@ Return exactly these sections:
 - Reject claims that external-transfer denominators certify native filling.
 
 ### G_F
-- Verify depth-bin metadata, reference/comparison bins, denominator split, null status, and calibration caveats.
+- Verify depth-bin metadata, reference/comparison bins, floor-applied-by-bin reporting, raw/effective `F`, denominator split, null status, and calibration caveats.
+- Treat matched-null `G_F` reports as forecast-only unless observed matched nulls, PPC, LOOCV, prior sweeps, covariance, and native morphology-atlas gates are all explicitly bound.
 - Reject `G_F` as global-tilt evidence unless local/systematic null competition and matched calibration are present.
 
 ### MIO/HTT separation

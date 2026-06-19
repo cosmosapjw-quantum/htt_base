@@ -67,6 +67,7 @@ class ArtifactMode(StrEnum):
     GOVERNANCE_DIAGNOSTIC = "governance_diagnostic"
     INTERNAL_EXPLORATORY = "internal_exploratory"
     EXTERNAL_AUDIT_CONDITIONED = "external_audit_conditioned"
+    FORECAST_ONLY = "forecast_only"
     PAPER_APPENDIX_CONDITIONED = "paper_appendix_conditioned"
     PAPER_MAIN_CANDIDATE = "paper_main_candidate"
     PAPER_MAIN_VALIDATED = "paper_main_validated"

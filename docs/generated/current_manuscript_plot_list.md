@@ -8,12 +8,13 @@ sky_support_status: mixed_not_directional_and_diagnostic_sky_support
 null_mock_status: mixed_not_statistical_and_current_code_diagnostic_null_banks
 config_hash: `sha256:5d5f382530a84f273563e05faeb31150abc406e06c58e319ca27891b6b1c8d73`
 input_hashes:
-- `scripts/make_current_manuscript_figures.py:sha256:59d015017fa8a54b48aa17e866a18f9729e403c614c1d2d51bd4092bb0d08534`
+- `scripts/make_current_manuscript_figures.py:sha256:b5cd2e59a8a30c400f880d12b6c8a72d3e5a43e4cd6efc1f7ef8b980cdfb4341`
 - `docs/generated/current_manuscript_figure_curation.json:sha256:1bff29c98803b711203a90c988ecdbabdf241d2daf13666a314faa7673ec49f8`
-- `docs/generated/current_science_plot_payload.json:sha256:4717fb7618a6db133d7d22921bc4c0fb066aea7126fe9e16557ea74498439128`
-- `docs/generated/publication_claim_freeze.md:sha256:107ca3167555035449dc2a96ac5ea87073320f19bbb71010cdac2fd437160ea2`
+- `docs/generated/current_science_plot_payload.json:sha256:b1cd56a06a9a51b57130a8d5889f971f608e09acdc9b83a4f5a1a57e379ea121`
+- `docs/generated/gf_matched_null_forecast_report.json:sha256:bd46e9ab8b7892815c16ba3e150e9e1daade4438df55aebb99ff9cdf6d9fc2c5`
+- `docs/generated/publication_claim_freeze.md:sha256:d4198ea398a9a7a2ff8084b67af5ad306fd08b0d479a44c1ea4f723b0c9458a3`
 - `docs/generated/result_pack_A.md:sha256:676f2150c2fe24503ab37ba52b0e3826a39c0bce6cf346c75e28b13336c07c7b`
-- `docs/generated/result_pack_B.md:sha256:57c2ae21d774acf3c87fe51d6562dbb62c1ccced9f367a2b6cbfbb12a82181d1`
+- `docs/generated/result_pack_B.md:sha256:8c6318165910c72f1fcf9859cd29980107d0372889853023018c722129ec377a`
 - `docs/generated/result_pack_C.md:sha256:2b37198072126ce63fc76376c84741bcb154c5c75e9544cfbf36061a8fb30c77`
 - `docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d`
 - `docs/generated/transfer_sensitivity_report.md:sha256:b2634c82ef783687cc2d304c50bb64487fa4556833bcc1a55464f7cae136903c`
@@ -25,6 +26,7 @@ input_hashes:
 - `htt/mio/formalism/departure_bundle.py:sha256:f04d692646c0d2232373701fb29088d60bb2549106232ff05d2dff644291b80d`
 - `htt/mio/formalism/exceedance.py:sha256:4f85f86c8ca9568fe163244dba95e872aceb839030268160cf15913589b9a5d2`
 - `htt/mio/formalism/filling_fraction.py:sha256:69cb198e205690816295e0e13b77cb6e673a88f000e9d7632c6650d08cbdbb70`
+- `htt/mio/formalism/isotropy_gap.py:sha256:a98bd229360d4f928f33b45524401643ef8c5fd3d780f027515891b93ed40f5a`
 - `htt/mio/formalism/normalized_score.py:sha256:5e44adfd1dbfdfa572e610e726fb78cae6a5996e82f52c910274608f3d66ec9b`
 - `htt/src/common/departure_contracts.py:sha256:84682381cfb7b0356a69e74f3df1a6fbbc7be75ad84f937970485e7605d2f4d4`
 caveats:
@@ -32,7 +34,7 @@ caveats:
 - Current figures include governance summaries and conditioned current-code physics diagnostics.
 - No figure claims native low-ell output, geometry-detection status, or Bianchi family-ID.
 generating_command: `python scripts/make_current_manuscript_figures.py`
-git_commit_or_worktree_state: `2e80c8c+dirty`
+git_commit_or_worktree_state: `b5383f9+dirty`
 artifact_path: docs/generated/current_manuscript_plot_list.md
 
 ## Excluded Legacy Plot References
@@ -56,7 +58,7 @@ artifact_path: docs/generated/current_manuscript_plot_list.md
 | Results and robustness | `figures/current/fig_current_local_global_rank_fpr.png` | `docs/generated/current_science_plot_payload.json`<br>`htt/htt/htt/departure/response_overlap.py`<br>`htt/htt/htt/nulls/local_boost_depth_null.py`<br>`htt/htt/htt/nulls/selection_response_depth.py` | diagnostic_only | `paper_appendix_conditioned` | `paper_appendix` | Deterministic gate stress payload; not an observed-data production result. |
 | Results and robustness | `figures/current/fig_current_mio_certificate_status.png` | `docs/generated/result_pack_C.md` | diagnostic_only | `governance_diagnostic` | `external_audit` | Diagnostic-only figure; not externally validated native low-ell output. |
 | Results and robustness | `figures/current/fig_current_qfpi_gf_semantic_split.png` | `docs/generated/current_science_plot_payload.json`<br>`docs/generated/result_pack_A.md`<br>`htt/src/common/departure_contracts.py`<br>`htt/mio/formalism/budget_spec.py`<br>`htt/mio/formalism/component_breakdown.py`<br>`htt/mio/formalism/departure_bundle.py`<br>`htt/mio/formalism/exceedance.py`<br>`htt/mio/formalism/filling_fraction.py`<br>`htt/mio/formalism/normalized_score.py` | diagnostic_only | `paper_appendix_conditioned` | `paper_appendix` | Normalized display only; proxy bars are not canonical Pi, F, or G_F diagnostics. |
-| Results and robustness | `figures/current/fig_current_mio_depth_residual_vectors.png` | `docs/generated/current_science_plot_payload.json`<br>`docs/generated/result_pack_C.md`<br>`htt/htt/htt/nulls/local_boost_depth_null.py`<br>`htt/htt/htt/nulls/selection_response_depth.py` | diagnostic_only | `paper_appendix_conditioned` | `paper_appendix` | Diagnostic readiness plot; not a production certificate. |
+| Results and robustness | `figures/current/fig_current_mio_depth_residual_vectors.png` | `docs/generated/current_science_plot_payload.json`<br>`docs/generated/gf_matched_null_forecast_report.json`<br>`docs/generated/result_pack_C.md`<br>`htt/htt/htt/nulls/local_boost_depth_null.py`<br>`htt/htt/htt/nulls/selection_response_depth.py`<br>`htt/mio/formalism/isotropy_gap.py` | diagnostic_only | `paper_appendix_conditioned` | `paper_appendix` | Diagnostic readiness plot; not a production certificate. |
 | Governance and submission boundary | `figures/current/fig_current_public_claim_freeze.png` | `docs/generated/publication_claim_freeze.md` | diagnostic_only | `governance_diagnostic` | `external_audit` | Diagnostic-only figure; not externally validated native low-ell output. |
 
 ## Claim Boundary

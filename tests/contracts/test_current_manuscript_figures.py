@@ -77,10 +77,60 @@ def test_current_figure_specs_are_repo_local_and_claim_gated():
     assert all(spec.allowed_use for spec in specs)
     assert all(spec.caption_policy for spec in specs)
     assert all(spec.promotion_blockers for spec in specs)
+    depth_spec = next(
+        spec
+        for spec in specs
+        if spec.file_name == "fig_current_mio_depth_residual_vectors.png"
+    )
+    assert "docs/generated/gf_matched_null_forecast_report.json" in depth_spec.source_paths
+    assert "docs/generated/current_science_plot_payload.json" in depth_spec.source_paths
+    assert "matched_null_forecast_report_required" in depth_spec.caption_policy
     for spec in specs:
         for rel_path in spec.source_paths:
             assert (REPO_ROOT / rel_path).exists(), rel_path
         assert spec.snippet.startswith("current_figures_")
+
+
+def test_current_payload_exposes_gf_floor_split_and_forecast_report():
+    payload = json.loads(
+        (REPO_ROOT / "docs" / "generated" / "current_science_plot_payload.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    semantic = payload["semantic_and_vectors"]
+    contract = semantic["g_f_display_contract"]
+    forecast = semantic["g_f_matched_null_forecast"]
+
+    assert contract["summary_label"] == "G_F_display_contract"
+    assert contract["owner"] == "MIO"
+    assert contract["implementation_scope"] == "mio"
+    assert contract["claim_tier"] == "diagnostic_only"
+    assert contract["forecast_only"] is True
+    assert contract["observed_data_evidence"] is False
+    assert contract["global_tilt_wording_allowed"] is False
+    assert contract["matched_null_forecast_status"] == "forecast_matched_null_blocked"
+    assert contract["local_global_separation_status"] == (
+        "blocked_existing_null_bank_insufficient"
+    )
+    assert contract["floor_value"] > 0.0
+    assert contract["floor_label"]
+    assert contract["floor_reason"]
+    assert isinstance(contract["floor_applied_by_bin"], dict)
+    assert isinstance(contract["raw_F_by_bin"], dict)
+    assert isinstance(contract["effective_F_by_bin"], dict)
+    assert isinstance(contract["denominator_evolution_split"], dict)
+    assert contract["denominator_evolution_split"]["mean_summary_is_decompositional"] is False
+    assert contract["g_f_payload_ref"] == "/semantic_and_vectors/g_f_display_contract/g_f_payload"
+    assert contract["floor_applied_by_bin_ref"] == (
+        "/semantic_and_vectors/g_f_display_contract/floor_applied_by_bin"
+    )
+    assert forecast["artifact_path"] == "docs/generated/gf_matched_null_forecast_report.json"
+    assert forecast["artifact_mode"] == "forecast_only"
+    assert forecast["allowed_use"] == "external_audit"
+    assert forecast["forecast_source_kind"] == "deterministic_current_code_fixture"
+    assert forecast["matched_null_status"] == "forecast_matched_null_blocked"
+    assert forecast["retuning_after_failure"] is False
+    assert forecast["global_tilt_wording_allowed"] is False
 
 
 def test_current_manuscript_figure_generator_check_mode_is_current():

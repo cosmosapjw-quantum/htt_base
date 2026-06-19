@@ -52,6 +52,8 @@ FORMALISM_METADATA_FILES = (
     "docs/generated/current_manuscript_plot_list.md",
     "docs/generated/expanded_manuscript_plot_list.md",
     "docs/generated/current_science_plot_payload.json",
+    "docs/generated/gf_matched_null_forecast_report.json",
+    "docs/generated/gf_matched_null_forecast_report.md",
     "docs/generated/result_pack_A.md",
     "docs/generated/result_pack_B.md",
     "docs/generated/result_pack_C.md",
@@ -90,6 +92,8 @@ FORMALISM_CODE_FILES = (
     "htt/mio/reports/departure_report.py",
     "htt/htt/htt/departure/posterior_pushforward.py",
     "htt/htt/htt/departure/response_overlap.py",
+    "htt/htt/htt/infer/matched_complexity.py",
+    "htt/htt/htt/infer/null_competition.py",
     "htt/htt/htt/nulls/local_boost_depth_null.py",
     "htt/htt/htt/nulls/selection_response_depth.py",
     "scripts/generate_semantic_firewall_fuzz_report.py",
@@ -106,6 +110,7 @@ FORMALISM_TEST_FILES = (
     "tests/mio/test_normalized_score.py",
     "tests/contracts/test_formalism_figure_labels.py",
     "tests/contracts/test_semantic_firewall_fuzz.py",
+    "tests/htt/test_matched_nulls.py",
     "tests/htt/test_posterior_pushforward.py",
 )
 
@@ -437,7 +442,8 @@ Return exactly these sections:
 - Reject claims that external-transfer denominators certify native filling.
 
 ### G_F
-- Verify depth-bin metadata, reference/comparison bins, denominator split, null status, and calibration caveats.
+- Verify depth-bin metadata, reference/comparison bins, floor-applied-by-bin reporting, raw/effective `F`, denominator split, null status, and calibration caveats.
+- Treat matched-null `G_F` reports as forecast-only unless observed matched nulls, PPC, LOOCV, prior sweeps, covariance, and native morphology-atlas gates are all explicitly bound.
 - Reject `G_F` as global-tilt evidence unless local/systematic null competition and matched calibration are present.
 
 ### MIO/HTT separation

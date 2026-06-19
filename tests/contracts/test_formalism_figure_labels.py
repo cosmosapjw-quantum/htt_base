@@ -74,6 +74,28 @@ def test_canonical_formalism_rows_pass_registry():
             "scalar_classification",
         ],
     }
+    gf_display_metadata = {
+        "requires_floor_applied_by_bin": True,
+        "requires_raw_effective_f_by_bin": True,
+        "requires_denominator_evolution_split": True,
+        "requires_depth_bin_metadata": True,
+        "floor_applied_by_bin_ref": "/semantic_and_vectors/g_f_display_contract/floor_applied_by_bin",
+        "denominator_evolution_split_ref": "/semantic_and_vectors/g_f_display_contract/denominator_evolution_split",
+        "depth_bin_metadata_ref": "/semantic_and_vectors/g_f_display_contract/depth_bins",
+        "matched_null_forecast_status": "forecast_matched_null_blocked",
+        "local_global_separation_status": "blocked_existing_null_bank_insufficient",
+        "forecast_only": True,
+        "observed_data_evidence": False,
+        "global_tilt_wording_allowed": False,
+        "blocked_use_codes": [
+            "htt_evidence",
+            "posterior_claim",
+            "global_tilt_claim",
+            "family_identification",
+            "native_solver_validation",
+            "geometry_detection",
+        ],
+    }
     rows = [
         {
             "symbol": "x",
@@ -103,6 +125,7 @@ def test_canonical_formalism_rows_pass_registry():
             "symbol": "G_F",
             "owner": "MIO",
             "definition": "depth-gap diagnostic with depth-bin metadata and null calibration",
+            "display_metadata": gf_display_metadata,
         },
         {
             "symbol": "Q-spread",
@@ -282,6 +305,34 @@ def test_pi_rows_require_measure_kind_threshold_and_look_elsewhere_metadata():
     assert ("Pi", "missing_pi_blocked_use_codes") in issue_keys
 
 
+def test_gf_rows_require_floor_split_and_forecast_block_metadata():
+    module = _load_script("verify_formalism_figure_labels")
+
+    rows = [
+        {
+            "symbol": "G_F",
+            "owner": "MIO",
+            "definition": "depth-gap diagnostic with depth-bin metadata and null calibration",
+            "display_metadata": {
+                "forecast_only": False,
+                "matched_null_forecast_status": "matched_null_ready",
+            },
+        }
+    ]
+
+    issue_keys = {
+        (issue.symbol, issue.issue_type) for issue in module.validate_rows(rows)
+    }
+
+    assert ("G_F", "missing_gf_floor_display_metadata") in issue_keys
+    assert ("G_F", "missing_gf_denominator_split_metadata") in issue_keys
+    assert ("G_F", "missing_gf_depth_bin_metadata") in issue_keys
+    assert ("G_F", "bad_gf_forecast_only_status") in issue_keys
+    assert ("G_F", "bad_gf_observed_data_status") in issue_keys
+    assert ("G_F", "bad_gf_global_tilt_wording_status") in issue_keys
+    assert ("G_F", "missing_gf_blocked_use_codes") in issue_keys
+
+
 def test_current_audit_failure_rows_are_rejected():
     module = _load_script("verify_formalism_figure_labels")
     rows = [
@@ -416,3 +467,45 @@ def test_checked_in_current_payload_reports_q_comparator_multiverse_and_pi_polic
     assert rows_by_symbol["Q"]["display_metadata"]["comparator_multiverse_ref"] == (
         "/transfer_sensitivity/q_comparator_multiverse"
     )
+
+
+def test_checked_in_current_payload_reports_gf_floor_split_and_forecast_block():
+    payload = json.loads(
+        (REPO_ROOT / "docs" / "generated" / "current_science_plot_payload.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    contract = payload["semantic_and_vectors"]["g_f_display_contract"]
+    forecast = payload["semantic_and_vectors"]["g_f_matched_null_forecast"]
+
+    assert contract["summary_label"] == "G_F_display_contract"
+    assert contract["owner"] == "MIO"
+    assert contract["claim_tier"] == "diagnostic_only"
+    assert contract["forecast_only"] is True
+    assert contract["observed_data_evidence"] is False
+    assert contract["global_tilt_wording_allowed"] is False
+    assert contract["matched_null_forecast_status"] == "forecast_matched_null_blocked"
+    assert contract["local_global_separation_status"] == (
+        "blocked_existing_null_bank_insufficient"
+    )
+    assert contract["floor_value"] > 0.0
+    assert contract["floor_label"]
+    assert isinstance(contract["floor_applied_by_bin"], dict)
+    assert isinstance(contract["raw_F_by_bin"], dict)
+    assert isinstance(contract["effective_F_by_bin"], dict)
+    assert isinstance(contract["denominator_evolution_split"], dict)
+    assert contract["denominator_evolution_split"]["mean_summary_is_decompositional"] is False
+    assert contract["floor_applied_by_bin_ref"] == (
+        "/semantic_and_vectors/g_f_display_contract/floor_applied_by_bin"
+    )
+    assert contract["denominator_evolution_split_ref"] == (
+        "/semantic_and_vectors/g_f_display_contract/denominator_evolution_split"
+    )
+    assert "htt_evidence" in contract["blocked_use_codes"]
+    assert forecast["artifact_path"] == "docs/generated/gf_matched_null_forecast_report.json"
+    assert forecast["artifact_mode"] == "forecast_only"
+    assert forecast["allowed_use"] == "external_audit"
+    assert forecast["forecast_source_kind"] == "deterministic_current_code_fixture"
+    assert forecast["matched_null_status"] == contract["matched_null_forecast_status"]
+    assert forecast["observed_data_evidence"] is False

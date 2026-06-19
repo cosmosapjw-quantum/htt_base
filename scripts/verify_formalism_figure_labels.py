@@ -20,6 +20,7 @@ CANCELLATION_COUNTEREXAMPLE_POINTER = (
 Q_MULTIVERSE_POINTER = "/transfer_sensitivity/q_comparator_multiverse"
 PI_POLICY_POINTER = "/transfer_sensitivity/pi_policy_summary"
 PI_DISPLAY_CONTRACT_POINTER = "/semantic_and_vectors/pi_display_contract"
+GF_DISPLAY_CONTRACT_POINTER = "/semantic_and_vectors/g_f_display_contract"
 REQUIRED_PI_BLOCKED_USE_CODES = frozenset(
     {
         "p_value_claim",
@@ -28,6 +29,16 @@ REQUIRED_PI_BLOCKED_USE_CODES = frozenset(
         "model_selection",
         "solver_validation",
         "scalar_classification",
+    }
+)
+REQUIRED_GF_BLOCKED_USE_CODES = frozenset(
+    {
+        "htt_evidence",
+        "posterior_claim",
+        "global_tilt_claim",
+        "family_identification",
+        "native_solver_validation",
+        "geometry_detection",
     }
 )
 
@@ -455,6 +466,141 @@ def _pi_display_issues(
     return issues
 
 
+def _gf_display_issues(
+    row: Mapping[str, Any],
+    *,
+    row_index: int,
+) -> list[LabelIssue]:
+    metadata = row.get("display_metadata")
+    if not isinstance(metadata, Mapping):
+        return [
+            _issue(
+                row_index=row_index,
+                symbol="G_F",
+                issue_type="missing_gf_display_metadata",
+                expected="display_metadata object with floor/split/forecast gates",
+                actual=type(metadata).__name__,
+            )
+        ]
+
+    issues: list[LabelIssue] = []
+    floor_ok = (
+        metadata.get("requires_floor_applied_by_bin") is True
+        and metadata.get("requires_raw_effective_f_by_bin") is True
+        and _has_non_empty_text(metadata, "floor_applied_by_bin_ref")
+    )
+    if not floor_ok:
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="G_F",
+                issue_type="missing_gf_floor_display_metadata",
+                expected=(
+                    "requires_floor_applied_by_bin=true, "
+                    "requires_raw_effective_f_by_bin=true, and floor ref"
+                ),
+                actual=metadata,
+            )
+        )
+    if (
+        metadata.get("requires_denominator_evolution_split") is not True
+        or not _has_non_empty_text(metadata, "denominator_evolution_split_ref")
+    ):
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="G_F",
+                issue_type="missing_gf_denominator_split_metadata",
+                expected=(
+                    "requires_denominator_evolution_split=true and "
+                    "denominator_evolution_split_ref"
+                ),
+                actual=metadata,
+            )
+        )
+    if (
+        metadata.get("requires_depth_bin_metadata") is not True
+        or not _has_non_empty_text(metadata, "depth_bin_metadata_ref")
+    ):
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="G_F",
+                issue_type="missing_gf_depth_bin_metadata",
+                expected="requires_depth_bin_metadata=true and depth_bin_metadata_ref",
+                actual=metadata,
+            )
+        )
+    if metadata.get("forecast_only") is not True:
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="G_F",
+                issue_type="bad_gf_forecast_only_status",
+                expected="forecast_only=true",
+                actual=metadata.get("forecast_only"),
+            )
+        )
+    if metadata.get("observed_data_evidence") is not False:
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="G_F",
+                issue_type="bad_gf_observed_data_status",
+                expected="observed_data_evidence=false",
+                actual=metadata.get("observed_data_evidence"),
+            )
+        )
+    if metadata.get("global_tilt_wording_allowed") is not False:
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="G_F",
+                issue_type="bad_gf_global_tilt_wording_status",
+                expected="global_tilt_wording_allowed=false",
+                actual=metadata.get("global_tilt_wording_allowed"),
+            )
+        )
+    if metadata.get("matched_null_forecast_status") not in {
+        "forecast_matched_null_blocked",
+        "forecast_matched_null_passed",
+    }:
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="G_F",
+                issue_type="bad_gf_matched_null_forecast_status",
+                expected="forecast_matched_null_blocked or forecast_matched_null_passed",
+                actual=metadata.get("matched_null_forecast_status"),
+            )
+        )
+    if metadata.get("local_global_separation_status") != (
+        "blocked_existing_null_bank_insufficient"
+    ):
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="G_F",
+                issue_type="bad_gf_local_global_status",
+                expected="blocked_existing_null_bank_insufficient",
+                actual=metadata.get("local_global_separation_status"),
+            )
+        )
+    blocked = metadata.get("blocked_use_codes")
+    blocked_set = {str(item) for item in blocked} if isinstance(blocked, list) else set()
+    if not REQUIRED_GF_BLOCKED_USE_CODES <= blocked_set:
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="G_F",
+                issue_type="missing_gf_blocked_use_codes",
+                expected="blocked_use_codes includes all forbidden G_F interpretations",
+                actual=blocked,
+            )
+        )
+    return issues
+
+
 def validate_rows(rows: Iterable[Any]) -> list[LabelIssue]:
     issues: list[LabelIssue] = []
     for row_index, row in enumerate(rows):
@@ -509,6 +655,8 @@ def validate_rows(rows: Iterable[Any]) -> list[LabelIssue]:
             )
         if symbol == "Pi":
             issues.extend(_pi_display_issues(row, row_index=row_index))
+        if symbol == "G_F":
+            issues.extend(_gf_display_issues(row, row_index=row_index))
     return issues
 
 
@@ -921,6 +1069,175 @@ def _validate_pi_policy_summary(
     return issues
 
 
+def _validate_gf_display_contract(
+    semantic_and_vectors: Mapping[str, Any],
+) -> list[LabelIssue]:
+    contract = semantic_and_vectors.get("g_f_display_contract")
+    if not isinstance(contract, Mapping):
+        return [
+            _issue(
+                row_index=-1,
+                symbol="G_F",
+                issue_type="missing_gf_display_contract",
+                expected="semantic_and_vectors.g_f_display_contract object",
+                actual=type(contract).__name__,
+                pointer=GF_DISPLAY_CONTRACT_POINTER,
+            )
+        ]
+
+    issues: list[LabelIssue] = []
+    if contract.get("summary_label") != "G_F_display_contract":
+        issues.append(
+            _issue(
+                row_index=-1,
+                symbol="G_F",
+                issue_type="bad_gf_display_contract",
+                expected="summary_label=G_F_display_contract",
+                actual=contract.get("summary_label"),
+                pointer=GF_DISPLAY_CONTRACT_POINTER,
+            )
+        )
+    for field, expected in (
+        ("owner", "MIO"),
+        ("implementation_scope", "mio"),
+        ("claim_tier", "diagnostic_only"),
+    ):
+        if contract.get(field) != expected:
+            issues.append(
+                _issue(
+                    row_index=-1,
+                    symbol="G_F",
+                    issue_type="bad_gf_display_contract",
+                    expected=f"{field}={expected}",
+                    actual=contract.get(field),
+                    pointer=GF_DISPLAY_CONTRACT_POINTER,
+                )
+            )
+
+    row_issues = _gf_display_issues(
+        {"display_metadata": contract},
+        row_index=-1,
+    )
+    issues.extend(
+        LabelIssue(
+            row_index=-1,
+            symbol=issue.symbol,
+            issue_type=issue.issue_type,
+            expected=issue.expected,
+            actual=issue.actual,
+            pointer=GF_DISPLAY_CONTRACT_POINTER,
+        )
+        for issue in row_issues
+    )
+
+    for field in ("floor_label", "floor_reason", "g_f_payload_ref"):
+        if not _has_non_empty_text(contract, field):
+            issues.append(
+                _issue(
+                    row_index=-1,
+                    symbol="G_F",
+                    issue_type="bad_gf_display_contract",
+                    expected=f"non-empty {field}",
+                    actual=contract.get(field),
+                    pointer=GF_DISPLAY_CONTRACT_POINTER,
+                )
+            )
+    try:
+        floor_value = float(contract.get("floor_value"))
+    except (TypeError, ValueError):
+        floor_value = -1.0
+    if floor_value <= 0.0:
+        issues.append(
+            _issue(
+                row_index=-1,
+                symbol="G_F",
+                issue_type="bad_gf_display_contract",
+                expected="floor_value > 0",
+                actual=contract.get("floor_value"),
+                pointer=GF_DISPLAY_CONTRACT_POINTER,
+            )
+        )
+    for field in (
+        "floor_applied_by_bin",
+        "raw_F_by_bin",
+        "effective_F_by_bin",
+        "denominator_evolution_split",
+        "g_f_payload",
+    ):
+        if not isinstance(contract.get(field), Mapping):
+            issues.append(
+                _issue(
+                    row_index=-1,
+                    symbol="G_F",
+                    issue_type="bad_gf_display_contract",
+                    expected=f"{field} object",
+                    actual=type(contract.get(field)).__name__,
+                    pointer=GF_DISPLAY_CONTRACT_POINTER,
+                )
+            )
+    depth_bins = contract.get("depth_bins")
+    if not isinstance(depth_bins, list) or not depth_bins:
+        issues.append(
+            _issue(
+                row_index=-1,
+                symbol="G_F",
+                issue_type="bad_gf_display_contract",
+                expected="non-empty depth_bins list",
+                actual=depth_bins,
+                pointer=GF_DISPLAY_CONTRACT_POINTER,
+            )
+        )
+    split = contract.get("denominator_evolution_split")
+    if isinstance(split, Mapping) and split.get("mean_summary_is_decompositional") is not False:
+        issues.append(
+            _issue(
+                row_index=-1,
+                symbol="G_F",
+                issue_type="bad_gf_denominator_split_metadata",
+                expected="mean_summary_is_decompositional=false",
+                actual=split.get("mean_summary_is_decompositional"),
+                pointer=GF_DISPLAY_CONTRACT_POINTER,
+            )
+        )
+
+    forecast = semantic_and_vectors.get("g_f_matched_null_forecast")
+    if not isinstance(forecast, Mapping):
+        issues.append(
+            _issue(
+                row_index=-1,
+                symbol="G_F",
+                issue_type="missing_gf_matched_null_forecast",
+                expected="semantic_and_vectors.g_f_matched_null_forecast object",
+                actual=type(forecast).__name__,
+                pointer="/semantic_and_vectors/g_f_matched_null_forecast",
+            )
+        )
+    else:
+        if forecast.get("observed_data_evidence") is not False:
+            issues.append(
+                _issue(
+                    row_index=-1,
+                    symbol="G_F",
+                    issue_type="bad_gf_observed_data_status",
+                    expected="observed_data_evidence=false",
+                    actual=forecast.get("observed_data_evidence"),
+                    pointer="/semantic_and_vectors/g_f_matched_null_forecast",
+                )
+            )
+        if forecast.get("matched_null_status") != contract.get("matched_null_forecast_status"):
+            issues.append(
+                _issue(
+                    row_index=-1,
+                    symbol="G_F",
+                    issue_type="bad_gf_matched_null_forecast_status",
+                    expected="forecast status matches g_f_display_contract",
+                    actual=forecast.get("matched_null_status"),
+                    pointer="/semantic_and_vectors/g_f_matched_null_forecast",
+                )
+            )
+    return issues
+
+
 def validate_payload(payload: Mapping[str, Any]) -> list[LabelIssue]:
     semantic_and_vectors = payload.get("semantic_and_vectors")
     if not isinstance(semantic_and_vectors, Mapping):
@@ -937,6 +1254,7 @@ def validate_payload(payload: Mapping[str, Any]) -> list[LabelIssue]:
         issues.extend(_validate_cancellation_counterexample(semantic_and_vectors))
     issues.extend(_validate_q_summary(payload, rows))
     issues.extend(_validate_pi_policy_summary(payload, semantic_and_vectors))
+    issues.extend(_validate_gf_display_contract(semantic_and_vectors))
     return issues
 
 

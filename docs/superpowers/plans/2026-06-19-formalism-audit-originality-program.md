@@ -340,14 +340,14 @@ Files:
 
 Steps:
 
-- [ ] Surface `floor_applied_by_bin` wherever `G_F` is shown.
-- [ ] Surface numerator-vs-denominator-evolution split wherever `G_F` is shown.
-- [ ] Preserve current finding: existing null banks do not license local/global separation.
-- [ ] Add a matched-null forecast experiment based on production mocks or clearly marked
+- [x] Surface `floor_applied_by_bin` wherever `G_F` is shown.
+- [x] Surface numerator-vs-denominator-evolution split wherever `G_F` is shown.
+- [x] Preserve current finding: existing null banks do not license local/global separation.
+- [x] Add a matched-null forecast experiment based on production mocks or clearly marked
   synthetic demonstration; do not promote it to observed-data evidence.
-- [ ] If matched nulls do not drive FPR below threshold, report "blocked" rather than
+- [x] If matched nulls do not drive FPR below threshold, report "blocked" rather than
   tuning until pass.
-- [ ] If matched nulls pass in a forecast, label as forecast and keep global-tilt wording blocked.
+- [x] If matched nulls pass in a forecast, label as forecast and keep global-tilt wording blocked.
 
 Validation:
 

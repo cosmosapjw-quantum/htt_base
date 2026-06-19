@@ -8,7 +8,9 @@
     "must_state_no_model_ranking",
     "must_state_no_htt_evidence",
     "must_state_no_native_low_ell_solver_output",
-    "must_not_use_for_family_identification_or_family_selection"
+    "must_not_use_for_family_identification_or_family_selection",
+    "matched_null_forecast_report_required",
+    "must_expose_gf_floor_and_denominator_split"
   ],
   "caveats": [
     "Generated from current repo-local null-bank and diagnostic-vector payloads.",
@@ -16,19 +18,21 @@
     "No MIO posterior, model ranking, or HTT evidence is made."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "2e80c8c+dirty",
-  "config_hash": "sha256:5e8f86bdf834b169f7026e41fea2f53e0562a3689f039da3f55657c415c2bd99",
+  "code_version": "b5383f9+dirty",
+  "config_hash": "sha256:a0be53abb30950a6d25c88d19ebb2e7f29ac26413f57ea302357d3c652bdc35d",
   "created_by": "scripts/make_current_manuscript_figures.py",
   "failed_gates": [],
   "generating_command": "python scripts/make_current_manuscript_figures.py",
-  "git_commit": "2e80c8c",
-  "git_commit_or_worktree_state": "2e80c8c+dirty",
+  "git_commit": "b5383f9",
+  "git_commit_or_worktree_state": "b5383f9+dirty",
   "implementation_scope": "common",
   "input_hashes": [
-    "docs/generated/current_science_plot_payload.json:sha256:4717fb7618a6db133d7d22921bc4c0fb066aea7126fe9e16557ea74498439128",
+    "docs/generated/current_science_plot_payload.json:sha256:b1cd56a06a9a51b57130a8d5889f971f608e09acdc9b83a4f5a1a57e379ea121",
+    "docs/generated/gf_matched_null_forecast_report.json:sha256:bd46e9ab8b7892815c16ba3e150e9e1daade4438df55aebb99ff9cdf6d9fc2c5",
     "docs/generated/result_pack_C.md:sha256:2b37198072126ce63fc76376c84741bcb154c5c75e9544cfbf36061a8fb30c77",
     "htt/htt/htt/nulls/local_boost_depth_null.py:sha256:b0d5d0b6a4b3fe534d1eefc630b9954a33d82555520f644f779dd6725e25609c",
-    "htt/htt/htt/nulls/selection_response_depth.py:sha256:cac8f08d6618519e95147acde5ae0f567035206d14c595b3b917bf548a2a3cd3"
+    "htt/htt/htt/nulls/selection_response_depth.py:sha256:cac8f08d6618519e95147acde5ae0f567035206d14c595b3b917bf548a2a3cd3",
+    "htt/mio/formalism/isotropy_gap.py:sha256:a98bd229360d4f928f33b45524401643ef8c5fd3d780f027515891b93ed40f5a"
   ],
   "null_mock_status": "current_code_diagnostic_local_and_survey_null_banks",
   "owner": "COMMON",
@@ -54,9 +58,11 @@
     "flow_slot": "Results and robustness",
     "source_artifacts": [
       "docs/generated/current_science_plot_payload.json",
+      "docs/generated/gf_matched_null_forecast_report.json",
       "docs/generated/result_pack_C.md",
       "htt/htt/htt/nulls/local_boost_depth_null.py",
-      "htt/htt/htt/nulls/selection_response_depth.py"
+      "htt/htt/htt/nulls/selection_response_depth.py",
+      "htt/mio/formalism/isotropy_gap.py"
     ]
   },
   "transfer_source": "none"

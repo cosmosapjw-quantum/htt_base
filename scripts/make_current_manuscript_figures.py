@@ -43,9 +43,21 @@ from mio.formalism.exceedance import (  # noqa: E402
     MeasureKind,
     build_exceedance_curve_from_normalized_scores,
 )
+from mio.formalism.filling_fraction import build_certified_filling_fraction  # noqa: E402
+from mio.formalism.isotropy_gap import (  # noqa: E402
+    DepthBinMetadata,
+    build_depth_bin_f_record,
+    build_isotropy_gap,
+)
 from mio.formalism.normalized_score import (  # noqa: E402
     build_comparator_multiverse_summary,
     build_normalized_score,
+)
+from htt.infer.matched_complexity import MatchedComplexityHook  # noqa: E402
+from htt.infer.null_competition import (  # noqa: E402
+    FamilyCompetitionResult,
+    NullCompetitionResult,
+    build_gf_matched_null_forecast_report,
 )
 from htt.nulls.local_boost_depth_null import (  # noqa: E402
     DepthBinSpec,
@@ -65,6 +77,8 @@ SNIPPET_DIR = REPO_ROOT / "docs" / "manuscript" / "generated"
 PLOT_LIST = REPO_ROOT / "docs" / "generated" / "current_manuscript_plot_list.md"
 CURATION_REPORT = REPO_ROOT / "docs" / "generated" / "current_manuscript_figure_curation.json"
 SCIENCE_PAYLOAD = REPO_ROOT / "docs" / "generated" / "current_science_plot_payload.json"
+GF_FORECAST_REPORT_JSON = REPO_ROOT / "docs" / "generated" / "gf_matched_null_forecast_report.json"
+GF_FORECAST_REPORT_MD = REPO_ROOT / "docs" / "generated" / "gf_matched_null_forecast_report.md"
 
 COLORS = {
     "common": "#334155",
@@ -408,6 +422,287 @@ def _pi_policy_display_summary(curve_payload: dict[str, object]) -> dict[str, ob
     }
 
 
+def _gf_budget(
+    *,
+    bin_id: str,
+    sample_index: int,
+    denominator_value: float,
+) -> object:
+    return build_budget_spec(
+        policy="MES_linear",
+        denominator_value=denominator_value,
+        denominator_label=f"MES depth-gap denominator {bin_id} sample {sample_index}",
+        comparator="CMB_FLRW_reference",
+        frame="normal_frame",
+        units="dimensionless_hubble_normalized",
+        config_hash=_sha_label(f"current-gf-budget-{bin_id}-{sample_index}"),
+        input_hashes=(_sha_label(f"current-gf-budget-input-{bin_id}-{sample_index}"),),
+        assumptions=(
+            "deterministic current-code G_F display contract fixture",
+            "samplewise denominator-evolution provenance only",
+        ),
+        admissible_uses=(
+            BudgetUse.DENOMINATOR_SENSITIVITY,
+            BudgetUse.SIGNED_PROJECTION_NORMALIZATION,
+            BudgetUse.CERTIFIED_FILLING_CEILING,
+            BudgetUse.EXCEEDANCE_THRESHOLD,
+            BudgetUse.DEPTH_GAP_REFERENCE,
+        ),
+        is_admissible_ceiling=True,
+        source_description="MIO G_F display-contract denominator sample",
+        native_morphology_atlas_status="not_available_pre_solver",
+    )
+
+
+def _gf_filling_fraction(
+    *,
+    bin_id: str,
+    x_samples: tuple[float, ...],
+    denominator_samples: tuple[float, ...],
+    command: str,
+    git_commit: str | None,
+    worktree: str,
+) -> object:
+    bundles = []
+    budgets = []
+    for sample_index, (x_c, denominator) in enumerate(
+        zip(x_samples, denominator_samples, strict=True)
+    ):
+        bundles.append(
+            build_departure_bundle(
+                {
+                    "Sigma2_std": x_c,
+                    "W2_std": 0.0,
+                    "Omega_tilt": 0.0,
+                    "Omega_k_aniso": 0.0,
+                },
+                comparator="CMB_FLRW_reference",
+                frame="normal_frame",
+                units="dimensionless_hubble_normalized",
+                config_hash=_sha_label(f"current-gf-bundle-{bin_id}-{sample_index}"),
+                input_hashes=(
+                    _sha_label(f"current-gf-bundle-input-{bin_id}-{sample_index}"),
+                ),
+                caveats=(
+                    "deterministic current-code G_F display contract sample",
+                ),
+            )
+        )
+        budgets.append(
+            _gf_budget(
+                bin_id=bin_id,
+                sample_index=sample_index,
+                denominator_value=denominator,
+            )
+        )
+    return build_certified_filling_fraction(
+        tuple(bundles),
+        tuple(budgets),
+        generating_command=command,
+        git_commit=git_commit,
+        worktree_state=worktree,
+        artifact_metadata={"report_role": "G_F display contract F sample"},
+    )
+
+
+def _gf_depth_bin(bin_id: str, start: float, stop: float) -> DepthBinMetadata:
+    return DepthBinMetadata(
+        bin_id=bin_id,
+        depth_min=start,
+        depth_max=stop,
+        depth_unit="redshift",
+        depth_convention="z_cmb_bin_edges_left_closed_right_open",
+        selection_rule="pre-registered current-code G_F display depth bin",
+        selection_hash=_sha_label(f"current-gf-selection-{bin_id}"),
+        bin_assignment_hash=_sha_label(f"current-gf-assignment-{bin_id}"),
+        sky_support_status="mask_weighted_directional_support",
+        mask_status="masked_with_hash",
+        covariance_status="diagnostic_unmatched_covariance",
+        covariance_metadata={
+            "covariance_hash": _sha_label(f"current-gf-covariance-{bin_id}"),
+            "shape": [2, 2],
+            "estimator": "current_code_diagnostic_fixture",
+            "off_diagonal_policy": "included",
+            "calibration_status": "diagnostic_unmatched",
+        },
+        null_mock_status="diagnostic_unmatched_null",
+        null_metadata={
+            "mock_bank_hash": _sha_label(f"current-gf-null-bank-{bin_id}"),
+            "calibration_status": "diagnostic_unmatched",
+        },
+        denominator_evolution_status="samplewise_denominator_values_recorded",
+        sample_count=2,
+    )
+
+
+def _build_gf_payload(command: str, git_commit: str | None, worktree: str) -> dict[str, object]:
+    near = build_depth_bin_f_record(
+        _gf_filling_fraction(
+            bin_id="near",
+            x_samples=(0.010, 0.018),
+            denominator_samples=(1.0, 0.9),
+            command=command,
+            git_commit=git_commit,
+            worktree=worktree,
+        ),
+        depth_bin=_gf_depth_bin("near", 0.0, 0.08),
+        source_metadata={"source_role": "current_code_gf_display_contract_near"},
+    )
+    far = build_depth_bin_f_record(
+        _gf_filling_fraction(
+            bin_id="far",
+            x_samples=(0.180, 0.240),
+            denominator_samples=(0.72, 0.60),
+            command=command,
+            git_commit=git_commit,
+            worktree=worktree,
+        ),
+        depth_bin=_gf_depth_bin("far", 0.08, 0.30),
+        source_metadata={"source_role": "current_code_gf_display_contract_far"},
+    )
+    return build_isotropy_gap(
+        (near, far),
+        reference_bin_id="near",
+        comparison_bin_id="far",
+        floor_value=0.05,
+        floor_label="pre_registered_positive_F_floor",
+        floor_reason=(
+            "floor chosen before displaying G_F to keep log depth-gap finite "
+            "without altering raw F values"
+        ),
+        generating_command=command,
+        git_commit=git_commit,
+        worktree_state=worktree,
+        artifact_metadata={"report_role": "current G_F display contract"},
+        caveats=(
+            "Current-code G_F display contract fixture only.",
+            "Mean numerator and denominator deltas are provenance summaries only.",
+            "Does not authorize local/global separation or model ranking.",
+        ),
+    ).as_payload()
+
+
+def _forecast_null_result() -> NullCompetitionResult:
+    families = {
+        "local_boost_depth_bank": FamilyCompetitionResult(
+            family_name="local_boost_depth_bank",
+            n_realizations=192,
+            n_false_positives=54,
+            fpr=54 / 192,
+            mean_lnB_null=0.16,
+            std_lnB_null=0.05,
+            robust=False,
+        ),
+        "survey_selection_depth_bank": FamilyCompetitionResult(
+            family_name="survey_selection_depth_bank",
+            n_realizations=192,
+            n_false_positives=91,
+            fpr=91 / 192,
+            mean_lnB_null=0.31,
+            std_lnB_null=0.09,
+            robust=False,
+        ),
+    }
+    worst = max(families.values(), key=lambda item: item.fpr)
+    robust = sum(1 for item in families.values() if item.robust)
+    return NullCompetitionResult(
+        families_tested=len(families),
+        families_robust=robust,
+        families_vulnerable=len(families) - robust,
+        worst_family=worst.family_name,
+        worst_fpr=worst.fpr,
+        overall_robust=False,
+        family_results=families,
+    )
+
+
+def _build_gf_matched_null_forecast_payload(
+    command: str,
+    git_commit: str | None,
+    worktree: str,
+) -> dict[str, object]:
+    report = build_gf_matched_null_forecast_report(
+        null_result=_forecast_null_result(),
+        matched_complexity_hook=MatchedComplexityHook(
+            controls_required=("local_boost_depth_bank", "survey_selection_depth_bank"),
+            overall_pass=True,
+            violations=tuple(),
+        ),
+        alternative_complexity_score=6,
+        null_flexibility_scores={
+            "local_boost_depth_bank": 6,
+            "survey_selection_depth_bank": 6,
+        },
+        artifact_id="htt.rev069.gf_matched_null_forecast",
+        config_hash=_sha_label("rev069-gf-matched-null-forecast-config"),
+        input_hashes=(
+            _sha_label("rev069-gf-matched-null-local-bank"),
+            _sha_label("rev069-gf-matched-null-survey-bank"),
+        ),
+        generating_command=command,
+        worktree_state=worktree,
+        git_commit=git_commit,
+        threshold_config_hash=_sha_label("rev069-gf-threshold-policy"),
+        threshold_selection_rationale=(
+            "pre-registered REV-R069 forecast threshold; failures are reported "
+            "as blocked rather than retuned"
+        ),
+    )
+    return report.as_payload()
+
+
+def _render_gf_forecast_report(payload: dict[str, object]) -> str:
+    statement = payload["false_positive_rate_statement"]
+    assert isinstance(statement, dict)
+    return "\n".join(
+        [
+            "# G_F Matched-Null Forecast Report",
+            "",
+            "owner: HTT",
+            "implementation_scope: htt",
+            f"claim_tier: {payload['claim_tier']}",
+            "artifact_mode: forecast_only",
+            "allowed_use: external_audit",
+            "transfer_source: none",
+            "sky_support_status: not_directional",
+            f"null_mock_status: {payload['null_mock_status']}",
+            f"config_hash: {payload['config_hash']}",
+            "input_hashes:",
+            *[f"- {item}" for item in payload["input_hashes"]],
+            "caveats:",
+            "- Forecast-only matched-null diagnostic.",
+            "- Does not promote observed-data evidence, global-tilt wording, native solver validation, geometry detection, or family identification.",
+            f"generating_command: {payload['generating_command']}",
+            f"git_commit_or_worktree_state: {payload['git_commit_or_worktree_state']}",
+            "artifact_path: docs/generated/gf_matched_null_forecast_report.json",
+            "",
+            "## Status",
+            "",
+            f"- matched_null_status: `{payload['matched_null_status']}`",
+            f"- local_global_separation_status: `{payload['local_global_separation_status']}`",
+            f"- observed_data_evidence: `{payload['observed_data_evidence']}`",
+            f"- global_tilt_wording_allowed: `{payload['global_tilt_wording_allowed']}`",
+            f"- retuning_after_failure: `{payload['retuning_after_failure']}`",
+            f"- forecast_source_kind: `{payload['forecast_source_kind']}`",
+            f"- forecast_source_description: {payload['forecast_source_description']}",
+            f"- FPR statement: {statement['wording']}",
+            "",
+        ]
+    )
+
+
+def _write_gf_forecast_report(payload: dict[str, object]) -> None:
+    GF_FORECAST_REPORT_JSON.parent.mkdir(parents=True, exist_ok=True)
+    GF_FORECAST_REPORT_JSON.write_text(
+        json.dumps(payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    GF_FORECAST_REPORT_MD.write_text(
+        _render_gf_forecast_report(payload),
+        encoding="utf-8",
+    )
+
+
 def _build_transfer_budget_payload(
     command: str,
     git_commit: str | None,
@@ -662,6 +957,8 @@ def _depth_p95_by_label(bank_payload: dict[str, object]) -> dict[str, float]:
 def _build_semantic_and_vector_payload(
     transfer_payload: dict[str, object],
     rank_payload: dict[str, object],
+    gf_payload: dict[str, object],
+    gf_forecast_payload: dict[str, object],
 ) -> dict[str, object]:
     points = [
         point
@@ -861,6 +1158,66 @@ def _build_semantic_and_vector_payload(
             "missing_prerequisites": ["matched_observed_depth_residual_absent"],
         },
     ]
+    gf_display_contract = {
+        "summary_label": "G_F_display_contract",
+        "owner": "MIO",
+        "implementation_scope": "mio",
+        "claim_tier": "diagnostic_only",
+        "score_label": "G_F",
+        "score_kind": gf_payload["score_kind"],
+        "G_F": gf_payload["G_F"],
+        "log_g_F": gf_payload["log_g_F"],
+        "reference_bin_id": gf_payload["reference_bin_id"],
+        "comparison_bin_id": gf_payload["comparison_bin_id"],
+        "floor_value": gf_payload["floor_value"],
+        "floor_label": gf_payload["floor_label"],
+        "floor_reason": gf_payload["floor_reason"],
+        "floor_applied_by_bin": gf_payload["floor_applied_by_bin"],
+        "raw_F_by_bin": gf_payload["raw_F_by_bin"],
+        "effective_F_by_bin": gf_payload["effective_F_by_bin"],
+        "depth_bins": gf_payload["depth_bins"],
+        "denominator_evolution_split": gf_payload[
+            "denominator_evolution_split"
+        ],
+        "g_f_payload": gf_payload,
+        "g_f_payload_ref": "/semantic_and_vectors/g_f_display_contract/g_f_payload",
+        "floor_applied_by_bin_ref": (
+            "/semantic_and_vectors/g_f_display_contract/floor_applied_by_bin"
+        ),
+        "denominator_evolution_split_ref": (
+            "/semantic_and_vectors/g_f_display_contract/denominator_evolution_split"
+        ),
+        "depth_bin_metadata_ref": (
+            "/semantic_and_vectors/g_f_display_contract/depth_bins"
+        ),
+        "requires_floor_applied_by_bin": True,
+        "requires_raw_effective_f_by_bin": True,
+        "requires_denominator_evolution_split": True,
+        "requires_depth_bin_metadata": True,
+        "forecast_only": True,
+        "observed_data_evidence": False,
+        "matched_null_forecast_status": gf_forecast_payload[
+            "matched_null_status"
+        ],
+        "local_global_separation_status": (
+            "blocked_existing_null_bank_insufficient"
+        ),
+        "global_tilt_wording_allowed": False,
+        "forecast_report_ref": "docs/generated/gf_matched_null_forecast_report.json",
+        "interpretation": (
+            "G_F is computed from floor-stabilized per-bin F summaries. "
+            "Mean numerator and denominator deltas are provenance summaries "
+            "only; they do not decompose the reported G_F."
+        ),
+        "blocked_use_codes": [
+            "htt_evidence",
+            "posterior_claim",
+            "global_tilt_claim",
+            "family_identification",
+            "native_solver_validation",
+            "geometry_detection",
+        ],
+    }
     return {
         "semantic_split": semantic,
         "diagnostic_vectors": vectors,
@@ -868,11 +1225,14 @@ def _build_semantic_and_vector_payload(
         "departure_display_contract": departure_display_contract,
         "cancellation_counterexample": cancellation_counterexample,
         "pi_display_contract": dict(pi_policy_summary["display_metadata"]),
+        "g_f_display_contract": gf_display_contract,
+        "g_f_matched_null_forecast": gf_forecast_payload,
         "interpretation": (
             "normalized display values; x and Q keep canonical MIO meanings, "
             "x displays require sector/cancellation/M metadata, Q displays "
-            "carry comparator-multiverse specification-curve metadata, and "
-            "1-FPR and G-envelope are noncanonical current-code proxies"
+            "carry comparator-multiverse specification-curve metadata, G_F "
+            "display metadata exposes floor/split provenance, and 1-FPR plus "
+            "G-envelope remain noncanonical current-code proxies"
         ),
     }
 
@@ -881,7 +1241,19 @@ def _write_current_science_payload(command: str) -> dict[str, object]:
     git_commit, worktree = _git_state()
     transfer_payload = _build_transfer_budget_payload(command, git_commit, worktree)
     rank_payload = _build_rank_null_payload(command, git_commit, worktree)
-    semantic_payload = _build_semantic_and_vector_payload(transfer_payload, rank_payload)
+    gf_payload = _build_gf_payload(command, git_commit, worktree)
+    gf_forecast_payload = _build_gf_matched_null_forecast_payload(
+        command,
+        git_commit,
+        worktree,
+    )
+    semantic_payload = _build_semantic_and_vector_payload(
+        transfer_payload,
+        rank_payload,
+        gf_payload,
+        gf_forecast_payload,
+    )
+    _write_gf_forecast_report(gf_forecast_payload)
     payload = {
         "owner": "COMMON",
         "implementation_scope": "common",
@@ -901,8 +1273,10 @@ def _write_current_science_payload(command: str) -> dict[str, object]:
                     "htt.mio.formalism.departure_bundle",
                     "htt.mio.formalism.exceedance",
                     "htt.mio.formalism.filling_fraction",
+                    "htt.mio.formalism.isotropy_gap",
                     "htt.mio.formalism.normalized_score",
                     "htt.departure.response_overlap",
+                    "htt.infer.null_competition",
                     "htt.nulls.local_boost_depth_null",
                     "htt.nulls.selection_response_depth",
                 ],
@@ -916,7 +1290,9 @@ def _write_current_science_payload(command: str) -> dict[str, object]:
                 "htt/mio/formalism/departure_bundle.py",
                 "htt/mio/formalism/exceedance.py",
                 "htt/mio/formalism/filling_fraction.py",
+                "htt/mio/formalism/isotropy_gap.py",
                 "htt/mio/formalism/normalized_score.py",
+                "htt/htt/htt/infer/null_competition.py",
                 "htt/htt/htt/departure/response_overlap.py",
                 "htt/htt/htt/nulls/local_boost_depth_null.py",
                 "htt/htt/htt/nulls/selection_response_depth.py",
@@ -1618,17 +1994,22 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
             flow_slot="Results and robustness",
             source_paths=(
                 "docs/generated/current_science_plot_payload.json",
+                "docs/generated/gf_matched_null_forecast_report.json",
                 "docs/generated/result_pack_C.md",
                 "htt/htt/htt/nulls/local_boost_depth_null.py",
                 "htt/htt/htt/nulls/selection_response_depth.py",
+                "htt/mio/formalism/isotropy_gap.py",
             ),
             caption=(
                 "Current MIO/HTT diagnostic vector and depth-response summary. "
                 "The left panel shows normalized readiness/vector magnitudes "
                 "and missing prerequisites; the right panel shows $G_F$ depth "
                 "response envelopes from current-code local and survey null "
-                "banks. MIO rows remain diagnostic certificates, not model "
-                "rankings or HTT evidence."
+                "banks, while the payload exposes the canonical MIO $G_F$ "
+                "floor-applied-by-bin and denominator-evolution split contract. "
+                "The matched-null path is forecast-only and blocked from "
+                "observed-data local/global wording. MIO rows remain diagnostic "
+                "certificates, not model rankings or HTT evidence."
             ),
             label="fig:current-mio-depth-residual-vectors",
             snippet="current_figures_results.tex",
@@ -1643,6 +2024,8 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
                 "must_state_no_htt_evidence",
                 "must_state_no_native_low_ell_solver_output",
                 "must_not_use_for_family_identification_or_family_selection",
+                "matched_null_forecast_report_required",
+                "must_expose_gf_floor_and_denominator_split",
             ),
             promotion_blockers=(
                 "matched_observed_depth_residual_absent",
@@ -1862,7 +2245,7 @@ def _generated_paths(
     skip_snippets: bool,
     skip_plot_list: bool,
 ) -> tuple[Path, ...]:
-    paths: list[Path] = [SCIENCE_PAYLOAD]
+    paths: list[Path] = [SCIENCE_PAYLOAD, GF_FORECAST_REPORT_JSON, GF_FORECAST_REPORT_MD]
     for spec in specs:
         figure_path = FIGURE_DIR / spec.file_name
         paths.extend((figure_path, _sidecar_path(figure_path)))

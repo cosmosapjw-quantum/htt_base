@@ -240,3 +240,117 @@ def test_blocked_report_survives_missing_null_flexibility_payload():
         "complexity_score"
     ] is None
     assert payload["family_results"]["survey_axis"]["matched_complexity_gap"] is None
+
+
+def test_gf_matched_null_forecast_blocks_failed_fpr_without_retuning():
+    from htt.infer.null_competition import build_gf_matched_null_forecast_report
+
+    report = build_gf_matched_null_forecast_report(
+        null_result=_null_result(robust=False),
+        matched_complexity_hook=_matched_hook(),
+        alternative_complexity_score=6,
+        null_flexibility_scores={
+            "selection_response": 6,
+            "survey_axis": 6,
+        },
+        artifact_id="htt.rev069.gf_matched_null_forecast",
+        config_hash=_sha("f"),
+        input_hashes=(_sha("g"),),
+        generating_command=_COMMAND,
+        worktree_state=_WORKTREE,
+        threshold_config_hash=_sha("t"),
+        threshold_selection_rationale="pre-registered REV-R069 forecast threshold",
+    )
+    payload = report.as_payload()
+
+    assert payload["owner"] == "HTT"
+    assert payload["implementation_scope"] == "htt"
+    assert payload["claim_tier"] == "blocked"
+    assert payload["artifact_mode"] == "forecast_only"
+    assert payload["forecast_only"] is True
+    assert payload["observed_data_evidence"] is False
+    assert payload["matched_null_status"] == "forecast_matched_null_blocked"
+    assert payload["local_global_separation_status"] == (
+        "blocked_existing_null_bank_insufficient"
+    )
+    assert payload["authorization_scope"] == "design_sensitivity_only"
+    assert payload["global_tilt_wording_allowed"] is False
+    assert payload["threshold_pre_registered"] is True
+    assert payload["threshold_config_hash"] == _sha("t")
+    assert payload["retuning_after_failure"] is False
+    assert "structured_nulls_not_robust" in payload["blocked_reasons"]
+    assert "forecast_matched_null_fpr_threshold_not_met" in payload["blocked_reasons"]
+    assert payload["false_positive_rate_statement"]["kind"] == (
+        "count_with_wilson_upper_bound"
+    )
+    assert "FPR=0" not in json.dumps(payload, sort_keys=True)
+    assert "global tilt detected" not in json.dumps(payload, sort_keys=True).lower()
+
+
+def test_gf_matched_null_forecast_pass_still_blocks_observed_claims():
+    from htt.infer.null_competition import build_gf_matched_null_forecast_report
+
+    report = build_gf_matched_null_forecast_report(
+        null_result=_null_result(robust=True),
+        matched_complexity_hook=_matched_hook(),
+        alternative_complexity_score=6,
+        null_flexibility_scores={
+            "selection_response": 6,
+            "survey_axis": 6,
+        },
+        artifact_id="htt.rev069.gf_matched_null_forecast",
+        config_hash=_sha("f"),
+        input_hashes=(_sha("g"),),
+        generating_command=_COMMAND,
+        worktree_state=_WORKTREE,
+        threshold_config_hash=_sha("t"),
+        threshold_selection_rationale="pre-registered REV-R069 forecast threshold",
+    )
+    payload = report.as_payload()
+
+    assert payload["claim_tier"] == "diagnostic_only"
+    assert payload["matched_null_status"] == "forecast_matched_null_passed"
+    assert payload["observed_data_evidence"] is False
+    assert payload["global_tilt_wording_allowed"] is False
+    assert payload["decisive_evidence_status"] == (
+        "blocked_forecast_only_not_observed_evidence"
+    )
+
+
+def test_gf_matched_null_forecast_labels_fixture_source_and_dirty_worktree():
+    from htt.infer.null_competition import build_gf_matched_null_forecast_report
+
+    report = build_gf_matched_null_forecast_report(
+        null_result=_null_result(robust=False),
+        matched_complexity_hook=_matched_hook(),
+        alternative_complexity_score=6,
+        null_flexibility_scores={
+            "selection_response": 6,
+            "survey_axis": 6,
+        },
+        artifact_id="htt.rev069.gf_matched_null_forecast",
+        config_hash=_sha("f"),
+        input_hashes=(_sha("g"),),
+        generating_command=_COMMAND,
+        git_commit="abc1234",
+        worktree_state="abc1234+dirty",
+        threshold_config_hash=_sha("t"),
+        threshold_selection_rationale="pre-registered REV-R069 forecast threshold",
+    )
+    payload = report.as_payload()
+
+    assert payload["forecast_source_kind"] == "deterministic_current_code_fixture"
+    assert payload["forecast_source_description"].startswith(
+        "Deterministic current-code"
+    )
+    assert payload["false_positive_rate_statement"]["source_kind"] == (
+        "deterministic_current_code_fixture"
+    )
+    assert payload["git_commit_or_worktree_state"] == "abc1234+dirty"
+    assert payload["manifest"]["code_version"] == "abc1234+dirty"
+    assert payload["matched_null_report"]["git_commit_or_worktree_state"] == (
+        "abc1234+dirty"
+    )
+    assert payload["matched_null_report"]["manifest"]["code_version"] == (
+        "abc1234+dirty"
+    )

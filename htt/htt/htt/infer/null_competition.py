@@ -25,7 +25,9 @@ from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, List, Mapping, Optional
 
 from common.contracts import (
+    AllowedUse,
     ArtifactManifest,
+    ArtifactMode,
     ClaimTier,
     ImplementationScope,
     Owner,
@@ -38,7 +40,9 @@ from htt.infer.shared_cause import run_shared_cause_test, SharedCauseResult
 __all__ = [
     'NullCompetitionResult', 'FamilyCompetitionResult',
     'NullCompetitionHook', 'MatchedNullCompetitionReport',
+    'GFMatchedNullForecastReport',
     'build_matched_null_competition_report',
+    'build_gf_matched_null_forecast_report',
     'NullCompetitionEngine', 'build_null_competition_hook', 'run_null_competition',
 ]
 
@@ -52,6 +56,13 @@ _DEFAULT_CAVEATS = (
     "structured_null_fpr_is_gate_metadata_not_model_weight",
     "decisive_evidence_language_blocked_until_pr065_prior_ppc_loocv",
     "no_native_solver_or_family_claim",
+)
+_DEFAULT_GF_FORECAST_CAVEATS = (
+    "forecast_only_matched_null_design_sensitivity",
+    "not_observed_data_evidence",
+    "does_not_authorize_global_tilt_wording",
+    "does_not_authorize_native_solver_validation",
+    "does_not_authorize_family_identification",
 )
 
 
@@ -140,6 +151,34 @@ def _dedupe(values: tuple[str, ...] | list[str]) -> tuple[str, ...]:
             seen.add(value)
             out.append(value)
     return tuple(out)
+
+
+def _primary_provenance_state(
+    *,
+    git_commit: str | None,
+    worktree_state: str | None,
+) -> str:
+    if worktree_state and (git_commit is None or worktree_state != git_commit):
+        return worktree_state
+    return git_commit or worktree_state or "unknown"
+
+
+def _wilson_interval(k: int, n: int, *, z: float) -> tuple[float, float]:
+    if n <= 0:
+        raise ValueError("Wilson interval requires n > 0")
+    if k < 0 or k > n:
+        raise ValueError("Wilson interval requires 0 <= k <= n")
+    if not math.isfinite(float(z)) or float(z) <= 0.0:
+        raise ValueError("Wilson z must be positive finite")
+    z_value = float(z)
+    p_hat = k / n
+    z2 = z_value * z_value
+    denom = 1.0 + z2 / n
+    center = (p_hat + z2 / (2.0 * n)) / denom
+    half_width = z_value / denom * math.sqrt(
+        (p_hat * (1.0 - p_hat) / n) + (z2 / (4.0 * n * n))
+    )
+    return max(0.0, center - half_width), min(1.0, center + half_width)
 
 
 @dataclass(frozen=True)
@@ -352,7 +391,10 @@ class MatchedNullCompetitionReport:
                     else "matched_complexity_null_competition_blocked"
                 ),
                 "generating_command": self.generating_command,
-                "git_commit_or_worktree_state": self.git_commit or self.worktree_state or "unknown",
+                "git_commit_or_worktree_state": _primary_provenance_state(
+                    git_commit=self.git_commit,
+                    worktree_state=self.worktree_state,
+                ),
                 "git_commit": self.git_commit,
                 "worktree_state": self.worktree_state,
                 "report_hash": self.report_hash,
@@ -420,6 +462,131 @@ class MatchedNullCompetitionReport:
     @property
     def evidence_claim_prerequisite_met(self) -> bool:
         return self.matched_null_status == "matched_null_ready"
+
+
+@dataclass(frozen=True)
+class GFMatchedNullForecastReport:
+    """Forecast-only wrapper for future G_F matched-null discrimination tests."""
+
+    manifest: ArtifactManifest
+    matched_null_report: MatchedNullCompetitionReport
+    threshold_config_hash: str
+    threshold_selection_rationale: str
+    confidence_z: float
+    report_hash: str
+    matched_null_status: str
+    blocked_reasons: tuple[str, ...]
+    generating_command: str
+    worktree_state: str | None
+    git_commit: str | None
+    forecast_source_kind: str = "deterministic_current_code_fixture"
+    forecast_source_description: str = (
+        "Deterministic current-code synthetic demonstration fixture; not "
+        "production mocks and not observed-data evidence."
+    )
+    threshold_pre_registered: bool = True
+    retuning_after_failure: bool = False
+    forecast_only: bool = True
+    observed_data_evidence: bool = False
+    authorization_scope: str = "design_sensitivity_only"
+    local_global_separation_status: str = "blocked_existing_null_bank_insufficient"
+    global_tilt_wording_allowed: bool = False
+
+    @property
+    def claim_tier(self) -> str:
+        return self.manifest.claim_tier.value
+
+    @property
+    def production_status(self) -> str:
+        return str(self.manifest.production_status)
+
+    @property
+    def false_positive_rate_statement(self) -> dict[str, object]:
+        result = self.matched_null_report.null_result.family_results[
+            self.matched_null_report.null_result.worst_family
+        ]
+        lower, upper = _wilson_interval(
+            int(result.n_false_positives),
+            int(result.n_realizations),
+            z=self.confidence_z,
+        )
+        return {
+            "kind": "count_with_wilson_upper_bound",
+            "family_name": result.family_name,
+            "false_positive_count": int(result.n_false_positives),
+            "false_positive_denominator": int(result.n_realizations),
+            "point_estimate": float(result.fpr),
+            "wilson_interval": [lower, upper],
+            "wilson_upper_bound": upper,
+            "confidence_z": self.confidence_z,
+            "source_kind": self.forecast_source_kind,
+            "source_description": self.forecast_source_description,
+            "wording": (
+                f"{int(result.n_false_positives)}/{int(result.n_realizations)} "
+                "forecast false-positive crossings; Wilson upper bound "
+                f"{upper:.6g} at z={self.confidence_z:g}."
+            ),
+        }
+
+    def as_payload(self) -> dict[str, Any]:
+        manifest_payload = _manifest_payload(self.manifest)
+        return _json_ready(
+            {
+                "owner": Owner.HTT.value,
+                "implementation_scope": ImplementationScope.HTT.value,
+                "claim_tier": self.claim_tier,
+                "production_status": self.production_status,
+                "artifact_mode": ArtifactMode.FORECAST_ONLY.value,
+                "allowed_use": AllowedUse.EXTERNAL_AUDIT.value,
+                "schema_version": "htt.infer.gf_matched_null_forecast.v1",
+                "manifest": manifest_payload,
+                "artifact_id": self.manifest.artifact_id,
+                "artifact_path": self.manifest.artifact_path,
+                "transfer_source": "none",
+                "sky_support_status": "not_directional",
+                "null_mock_status": self.matched_null_status,
+                "config_hash": self.manifest.config_hash,
+                "input_hashes": list(self.manifest.input_hashes),
+                "generating_command": self.generating_command,
+                "git_commit_or_worktree_state": _primary_provenance_state(
+                    git_commit=self.git_commit,
+                    worktree_state=self.worktree_state,
+                ),
+                "git_commit": self.git_commit,
+                "worktree_state": self.worktree_state,
+                "report_hash": self.report_hash,
+                "forecast_source_kind": self.forecast_source_kind,
+                "forecast_source_description": self.forecast_source_description,
+                "forecast_only": self.forecast_only,
+                "observed_data_evidence": self.observed_data_evidence,
+                "authorization_scope": self.authorization_scope,
+                "matched_null_status": self.matched_null_status,
+                "matched_null_report_hash": self.matched_null_report.report_hash,
+                "matched_null_report": self.matched_null_report.as_payload(),
+                "local_global_separation_status": self.local_global_separation_status,
+                "global_tilt_wording_allowed": self.global_tilt_wording_allowed,
+                "decisive_evidence_status": (
+                    "blocked_forecast_only_not_observed_evidence"
+                ),
+                "threshold_pre_registered": self.threshold_pre_registered,
+                "threshold_config_hash": self.threshold_config_hash,
+                "threshold_selection_rationale": self.threshold_selection_rationale,
+                "retuning_after_failure": self.retuning_after_failure,
+                "false_positive_rate_statement": self.false_positive_rate_statement,
+                "blocked_reasons": list(self.blocked_reasons),
+                "claim_status": {
+                    "owner": "HTT",
+                    "surface": "G_F_matched_null_forecast",
+                    "mio_status": "not_mio_output",
+                    "observed_data_status": "not_observed_evidence",
+                    "native_solver_status": "not_native_solver_output",
+                    "family_status": "blocked_pre_native_atlas",
+                    "posterior_status": "not_authorized",
+                    "global_tilt_wording_status": "blocked_forecast_only",
+                },
+                "caveats": list(self.manifest.caveats),
+            }
+        )
 
 
 def _family_payload(result: FamilyCompetitionResult) -> dict[str, object]:
@@ -645,7 +812,10 @@ def build_matched_null_competition_report(
             }
         ),
         input_hashes=list(dict.fromkeys([*input_hash_tuple, report_hash])),
-        code_version=git_commit_text or worktree_text or "unknown",
+        code_version=_primary_provenance_state(
+            git_commit=git_commit_text,
+            worktree_state=worktree_text,
+        ),
         schema_version=SCHEMA_VERSION,
         caveats=list(caveat_tuple),
         required_gates=[
@@ -687,6 +857,172 @@ def build_matched_null_competition_report(
         worktree_state=worktree_text,
         git_commit=git_commit_text,
         transfer_source=transfer_source_text,
+    )
+
+
+def build_gf_matched_null_forecast_report(
+    *,
+    null_result: NullCompetitionResult,
+    matched_complexity_hook: MatchedComplexityHook | None,
+    alternative_complexity_score: int,
+    null_flexibility_scores: Mapping[str, int],
+    artifact_id: object,
+    config_hash: object,
+    input_hashes: tuple[object, ...] | list[object],
+    generating_command: object,
+    threshold_config_hash: object,
+    threshold_selection_rationale: object,
+    fpr_threshold: object = 0.10,
+    artifact_path: object = "docs/generated/gf_matched_null_forecast_report.json",
+    worktree_state: object | None = None,
+    git_commit: object | None = None,
+    confidence_z: object = 1.0,
+    caveats: tuple[object, ...] | list[object] = _DEFAULT_GF_FORECAST_CAVEATS,
+) -> GFMatchedNullForecastReport:
+    """Build a forecast-only G_F matched-null report.
+
+    This wrapper is deliberately weaker than
+    :func:`build_matched_null_competition_report`: even a passing forecast
+    remains design-sensitivity metadata and does not authorize observed-data
+    local/global wording.
+    """
+
+    threshold_hash = _non_empty(
+        threshold_config_hash,
+        "threshold_config_hash",
+    )
+    threshold_rationale = _non_empty(
+        threshold_selection_rationale,
+        "threshold_selection_rationale",
+    )
+    z_value = float(confidence_z)
+    if not math.isfinite(z_value) or z_value <= 0.0:
+        raise ValueError("confidence_z must be positive finite")
+    caveat_tuple = tuple(_non_empty(item, "caveat") for item in caveats)
+    for required_caveat in _DEFAULT_GF_FORECAST_CAVEATS:
+        if required_caveat not in caveat_tuple:
+            caveat_tuple = (*caveat_tuple, required_caveat)
+
+    base_report = build_matched_null_competition_report(
+        null_result=null_result,
+        matched_complexity_hook=matched_complexity_hook,
+        alternative_complexity_score=alternative_complexity_score,
+        null_flexibility_scores=null_flexibility_scores,
+        artifact_id=f"{_non_empty(artifact_id, 'artifact_id')}.matched_null_gate",
+        config_hash=config_hash,
+        input_hashes=input_hashes,
+        generating_command=generating_command,
+        fpr_threshold=fpr_threshold,
+        artifact_path="memory://htt/infer/gf_matched_null_forecast_gate.json",
+        worktree_state=worktree_state,
+        git_commit=git_commit,
+        caveats=_DEFAULT_CAVEATS,
+    )
+    passed = base_report.evidence_claim_prerequisite_met
+    status = (
+        "forecast_matched_null_passed"
+        if passed
+        else "forecast_matched_null_blocked"
+    )
+    blocked = list(base_report.blocked_reasons)
+    if not passed:
+        blocked.append("forecast_matched_null_fpr_threshold_not_met")
+    # This forecast never authorizes observed-data separation language.
+    blocked.append("forecast_only_not_observed_evidence")
+    blocked.append("global_tilt_wording_blocked")
+    blocked_reasons = _dedupe(blocked)
+    artifact_id_text = _non_empty(artifact_id, "artifact_id")
+    artifact_path_text = _non_empty(artifact_path, "artifact_path")
+    config_hash_text = _non_empty(config_hash, "config_hash")
+    input_hash_tuple = _input_hashes(input_hashes, "input_hashes")
+    command_text = _non_empty(generating_command, "generating_command")
+    worktree_text = None if worktree_state is None else _non_empty(worktree_state, "worktree_state")
+    git_commit_text = None if git_commit is None else _non_empty(git_commit, "git_commit")
+    if worktree_text is None and git_commit_text is None:
+        raise ValueError("git_commit or worktree_state is required")
+    report_hash = _stable_hash(
+        {
+            "schema_version": "htt.infer.gf_matched_null_forecast.v1",
+            "matched_null_report_hash": base_report.report_hash,
+            "threshold_config_hash": threshold_hash,
+            "threshold_selection_rationale": threshold_rationale,
+            "confidence_z": z_value,
+            "status": status,
+            "blocked_reasons": blocked_reasons,
+        }
+    )
+    claim_tier = ClaimTier.DIAGNOSTIC_ONLY if passed else ClaimTier.BLOCKED
+    production_status = "diagnostic_only" if passed else "blocked_provenance_mismatch"
+    required_gates = [
+        "threshold_pre_registered",
+        "matched_complexity_ready",
+        "structured_nulls_robust",
+        "forecast_only_not_observed_evidence",
+        "global_tilt_wording_blocked",
+    ]
+    passed_gates = [
+        "threshold_pre_registered",
+        "forecast_only_not_observed_evidence",
+        "global_tilt_wording_blocked",
+    ]
+    if passed:
+        passed_gates.extend(["matched_complexity_ready", "structured_nulls_robust"])
+    manifest = ArtifactManifest(
+        artifact_id=artifact_id_text,
+        artifact_path=artifact_path_text,
+        owner=Owner.HTT,
+        implementation_scope=ImplementationScope.HTT,
+        claim_tier=claim_tier,
+        production_status=production_status,  # type: ignore[arg-type]
+        created_by="htt.infer.null_competition.build_gf_matched_null_forecast_report",
+        git_commit=git_commit_text,
+        config_hash=report_hash,
+        input_hashes=list(dict.fromkeys([*input_hash_tuple, report_hash])),
+        code_version=_primary_provenance_state(
+            git_commit=git_commit_text,
+            worktree_state=worktree_text,
+        ),
+        schema_version="htt.infer.gf_matched_null_forecast.v1",
+        caveats=list(caveat_tuple),
+        required_gates=required_gates,
+        passed_gates=passed_gates,
+        failed_gates=[] if passed else list(blocked_reasons),
+        statistics_definitions={
+            "G_F": "forecast-only matched-null discrimination input label",
+            "matched_null_status": status,
+            "false_positive_rate_statement": (
+                "count plus Wilson upper bound; never rendered as zero-rate shorthand"
+            ),
+        },
+        artifact_mode=ArtifactMode.FORECAST_ONLY,
+        allowed_use=AllowedUse.EXTERNAL_AUDIT,
+        caption_policy=[
+            "must_state_forecast_only",
+            "must_state_not_observed_evidence",
+            "must_state_no_global_tilt_wording",
+            "must_state_no_native_low_ell_solver_output",
+            "must_state_no_family_identification",
+        ],
+        numeric_payload_path=artifact_path_text,
+        promotion_blockers=[
+            "observed_matched_null_stack_absent",
+            "native_morphology_atlas_absent",
+            "prior_ppc_loocv_not_bound",
+            "forecast_only_not_observed_evidence",
+        ],
+    )
+    return GFMatchedNullForecastReport(
+        manifest=manifest,
+        matched_null_report=base_report,
+        threshold_config_hash=threshold_hash,
+        threshold_selection_rationale=threshold_rationale,
+        confidence_z=z_value,
+        report_hash=report_hash,
+        matched_null_status=status,
+        blocked_reasons=blocked_reasons,
+        generating_command=command_text,
+        worktree_state=worktree_text,
+        git_commit=git_commit_text,
     )
 
 

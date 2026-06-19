@@ -28,7 +28,9 @@ INPUT_FILES = (
     "docs/PR_DELTAS/pr-066.md",
     "docs/PR_DELTAS/pr-100.md",
     "docs/PR_DELTAS/pr-101.md",
+    "docs/generated/gf_matched_null_forecast_report.json",
     "htt/htt/htt/departure/response_overlap.py",
+    "htt/htt/htt/infer/null_competition.py",
     "htt/htt/htt/nulls/local_boost_depth_null.py",
     "htt/htt/htt/nulls/selection_response_depth.py",
     "htt/htt/htt/departure/local_global_mixture.py",
@@ -250,12 +252,30 @@ def _gate_summary() -> list[dict[str, Any]]:
             "required_status": "redshift_bin_metadata_and_g_f_bridge_refs_recorded",
             "reported_quantities": [
                 "G_F_bridge_ref",
+                "G_F_floor_report_ref",
+                "denominator_evolution_split_ref",
+                "matched_null_forecast_status",
                 "depth_bin_covariance_status",
                 "depth_bin_null_mock_status",
                 "sky_mask_support_status",
             ],
             "blocked_policy": "missing_bridge_or_matched_null_remains_descriptive",
             "claim_role": "diagnostic_depth_bridge_not_htt_evidence",
+            "G_F_floor_report_ref": (
+                "docs/generated/current_science_plot_payload.json"
+                "#/semantic_and_vectors/g_f_display_contract"
+            ),
+            "denominator_evolution_split_ref": (
+                "docs/generated/current_science_plot_payload.json"
+                "#/semantic_and_vectors/g_f_display_contract/denominator_evolution_split"
+            ),
+            "matched_null_forecast_report_ref": (
+                "docs/generated/gf_matched_null_forecast_report.json"
+            ),
+            "matched_null_forecast_status": "forecast_matched_null_blocked",
+            "local_global_separation_status": (
+                "blocked_existing_null_bank_insufficient"
+            ),
         },
     ]
 
@@ -621,6 +641,15 @@ def render_markdown(payload: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _existing_pack_worktree_state(path: Path) -> str | None:
+    if not path.exists():
+        return None
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("git_commit_or_worktree_state: `") and line.endswith("`"):
+            return line.removeprefix("git_commit_or_worktree_state: `").removesuffix("`")
+    return None
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
@@ -638,16 +667,18 @@ def main() -> int:
         command += " --dry-run"
     if args.output != DEFAULT_OUTPUT:
         command += f" --output {args.output}"
+    output = args.repo_root / args.output
+    worktree_state = _existing_pack_worktree_state(output) if args.check else None
     payload = build_result_pack_payload(
         repo_root=args.repo_root,
         generating_command=command,
+        worktree_state=worktree_state,
     )
     markdown = render_markdown(payload)
     if args.dry_run:
         print("DRY-RUN: not writing result pack")
         print(markdown)
         return 0
-    output = args.repo_root / args.output
     if args.check:
         if not output.exists():
             print(f"missing result pack: {output}")
