@@ -150,11 +150,17 @@ not support for anisotropic spatial geometry.
 
 The sensitivity to the CF4 data version is substantial:
 the CF4++ value (Courtois et~al.~\cite{Courtois2025})
-gives $\ln\mathcal{B} \approx +44$ (sensitivity run; see
-Table~\ref{tab:cf4-triple}), while
-Watkins et~al.~\cite{Watkins2023} gives
-$\ln\mathcal{B} \approx +106$ (smallest $\sigma_\beta$).  All three
-remain above the historical high-support diagnostic threshold.
+has a quarantined sensitivity value near
+$\ln\mathcal{B} \approx +44$ that is not canonical and remains
+pending a dedicated rerun from traceable inputs
+(Table~\ref{tab:cf4-triple}), while
+Watkins et~al.~\cite{Watkins2023} has a likewise quarantined
+sensitivity value near $\ln\mathcal{B} \approx +106$
+(smallest $\sigma_\beta$), also pending a dedicated rerun from
+traceable inputs.  The sensitivity rows are therefore not
+interpreted as threshold-crossing evidence in this revision;
+only the WFH2009 primary value is used as the canonical legacy
+headline in this manuscript.
 The attribution error that assigned
 $\beta = 1.334 \times 10^{-3}$ to Watkins+2023 (corrected
 in this revision) does not affect the qualitative conclusion
@@ -493,10 +499,10 @@ and their implications for the departure parameter pipeline.
 \subsection{Neutrino dominance of the quadrupole}
 \label{sec:disc-nu-dom}
 
-The most consequential result of the solver is the
-discovery that neutrinos contribute $98.4\%$ of the total
-$D_2$ at recombination, with a neutrino-to-photon
-quadrupole ratio $N_2/F_2 = 28$
+The legacy transfer decomposition indicates that neutrinos account
+for about $98\%$ of the modelled $D_2$ contribution at
+recombination, with a neutrino-to-photon quadrupole ratio
+$N_2/F_2 = 28$
 (Section~\ref{sec:nu-dominance}).  The physical mechanism
 is the asymmetry between Thomson-suppressed photons and
 free-streaming neutrinos under a common shear source
@@ -510,8 +516,10 @@ damping.
 This result has three implications for the departure
 framework.  First, the calibrated transfer function $T_2$
 that maps $\Sigstd$ to $D_2$ is dominated by the neutrino
-channel: $T_2 \approx T_{2,\nu}$ to $98\%$ accuracy,
-and the photon contribution is a $1.6\%$ correction.
+channel: in the modelled transfer,
+$T_2 \approx T_{2,\nu}$ with the photon contribution retained
+explicitly as a $1.6\%$ correction.  This statement is
+transfer-conditional and is not a native-solver validation claim.
 The VER06 transfer-conditional legacy value
 $\ln \mathcal{B}_{\rm tilt} = +25.29 \pm 0.07$ therefore
 tracks primarily the neutrino anisotropic stress proxy
@@ -565,17 +573,18 @@ from $\ell = 2$ to higher multipoles
 \subsection{Linearity and the FLRW recovery}
 \label{sec:disc-linearity}
 
-The solver validates the linearity $D_2 \propto \Sigma^2$
-over four decades in $\Sigma^2$ ($10^{-12}$ to $10^{-6}$)
-with a relative spread below $0.1\%$
+The legacy external/proxy transfer path records the linearity
+$D_2 \propto \Sigma^2$ over four decades in $\Sigma^2$
+($10^{-12}$ to $10^{-6}$) with a relative spread below $0.1\%$
 (Section~\ref{sec:solver-linearity}).  The FLRW limit is
 recovered exactly: at $\Sigma^2 = 0$, all five
 observables ($D_2$, $E_2$, $F_\ell$, $N_\ell$, $E_\ell$)
 vanish to machine precision
-(Section~\ref{sec:flrw-recovery}).  These two properties
-together confirm that the solver introduces no spurious
-anisotropy and that the transfer function $T_2 = D_2 /
-\Sigma^2$ is a well-defined constant in the linear regime.
+(Section~\ref{sec:flrw-recovery}).  These two properties are
+retained as legacy consistency checks that the proxy transfer
+record has no internal spurious-anisotropy signal and that the
+transfer function $T_2 = D_2 / \Sigma^2$ is a well-defined
+constant in the linear regime.
 
 The reionisation correction $\exp(-2\tau_{\rm reio})$
 with $\tau_{\rm reio} = 0.050$ applies uniformly to the

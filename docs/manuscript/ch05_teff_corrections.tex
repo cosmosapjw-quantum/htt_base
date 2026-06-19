@@ -1107,8 +1107,9 @@ are the species-resolved quadrupole evolution
 (Eq.~\ref{eq:Q-species}), the FLRW monopole system
 (Eq.~\ref{eq:FLRW-2x2}), and the neutrino dominance
 theorem (Proposition~\ref{prop:nu-dominance}) that
-explains the $N_2/F_2 = 28$ ratio discovered by the
-solver.
+explains why the legacy external/proxy transfer path produces
+a large neutrino-to-photon quadrupole ratio
+($N_2/F_2 \simeq 28$ in the archived example).
 
 
 % ============================================================
@@ -1497,11 +1498,13 @@ quadrupole evolves under free-streaming alone:
 \label{sec:sp03-result}
 % ============================================================
 
-The Phase~1.0 solver discovers a striking result:
-at recombination ($\eta = \eta_*$), the neutrino
-quadrupole is $28$ times larger than the photon
-quadrupole ($N_2/F_2 = 28$), and neutrinos contribute
-$98.4\%$ of the total CMB quadrupole power $D_2$.
+The legacy external/proxy transfer path indicates a striking
+species split: at recombination ($\eta = \eta_*$), the neutrino
+quadrupole is $28$ times larger than the photon quadrupole
+($N_2/F_2 = 28$), and neutrinos account for about $98\%$ of the
+modelled CMB quadrupole power $D_2$.  This is a
+transfer-conditional contribution fraction, not native-solver
+validation or measured accuracy.
 We now derive the physical origin of this dominance
 directly from the species-resolved hierarchy.
 
@@ -1550,8 +1553,8 @@ where we have used $\Sigma^{(\nu)}_2 \approx
 are nearly equal for ultra-relativistic species) and
 $\Gamma^{(\nu)}_2 \sim H$.  At recombination,
 $\dot{\tau}/H \sim 40$--$50$, giving
-$N_2/F_2 \sim 30$, consistent with the solver
-result of $28$.
+$N_2/F_2 \sim 30$, consistent with the legacy external/proxy
+transfer-path value of $28$.
 \end{proof}
 
 The physical picture is transparent.  Thomson
@@ -1581,7 +1584,9 @@ $\rho_\nu/\rho_\gamma = (7/8)(4/11)^{4/3}
 $N_{\rm eff} = 3.044$ effective species, the
 neutrino contribution overwhelms the photon
 contribution: $f_\nu \simeq 0.984$, matching the
-solver result to within $0.1\%$.
+legacy external/proxy transfer-path value to within
+the recorded rounding tolerance.  This remains
+transfer-conditional bookkeeping, not solver validation.
 
 
 \paragraph{Implications for the departure parameter.}
@@ -1721,8 +1726,8 @@ departure parameter pipeline is
 T_2(\Sigma^2) := \frac{D_2}{\Sigma^2}\,,
 \end{equation}
 which is constant in the linear regime
-($\Sigma^2 \lesssim 10^{-6}$; established by the
-solver over four decades in $\Sigma^2$ with spread
+($\Sigma^2 \lesssim 10^{-6}$; recorded by the
+legacy external/proxy transfer path over four decades in $\Sigma^2$ with spread
 $< 0.1\%$, Section~\ref{sec:solver-linearity}).
 The Route~B calibration of the BASS pipeline uses the
 functional form
@@ -1730,9 +1735,9 @@ $D_2 = C_1 \Sigma^2/(1 + C_2 \Sigma^2)$, with
 $C_1 = 1.753 \times 10^7$ and
 $C_2 = 6.825 \times 10^5$, to extend into the mildly
 nonlinear regime (Section~\ref{sec:route-b}).  The
-Phase~1.0 solver validates this parameterisation and
-provides the species-resolved breakdown that was
-previously unavailable.
+legacy external/proxy transfer path records a consistency check
+for this parameterisation and provides the species-resolved
+breakdown that was previously unavailable.
 
 
 % ============================================================
@@ -2311,8 +2316,8 @@ $\Sigstd \lesssim 10^{-3}$, beyond which the
 nonlinear corrections (Section~\ref{sec:comprehensive})
 exceed $1\%$ and the linearised hierarchy
 (Section~\ref{sec:bianchi-quad}) loses accuracy.  The
-Phase~1.0 solver validates linearity ($D_2 \propto
-\Sigma^2$ with spread $< 0.1\%$) over four decades
+legacy external/proxy transfer path records linearity
+($D_2 \propto \Sigma^2$ with spread $< 0.1\%$) over four decades
 from $\Sigma^2 = 10^{-12}$ to $10^{-6}$
 (Section~\ref{sec:solver-linearity}).  For the
 observationally relevant range

@@ -1102,8 +1102,12 @@ $x_{\max} = \frac{3}{2}\Bsig^2 = 6.47 \times 10^{-6}$
 (Chapter~\ref{ch:bianchi-bounds},
 Table~\ref{tab:bounds}).
 
-The occupancy $Q$ is a ratio of two model-dependent
-quantities, and it inherits the sign of $x$: for models with
+The HTT posterior use of $Q$ is a ratio of two model-dependent
+quantities evaluated under a declared transfer path, comparator,
+and denominator policy.  MIO may report the same algebraic ratio
+as a diagnostic coordinate, but the MIO diagnostic $Q$ has no
+posterior, occupancy, or evidence semantics.  In both lanes
+$Q$ inherits the sign of $x$: for models with
 $x < 0$ (such as Bianchi~IX with dominant negative $\Okaniso$),
 $Q < 0$.
 
@@ -1111,29 +1115,35 @@ For the FLRW$_{\mathrm{tilt}}$ model under the flat comparator,
 the posterior mean occupancy is $\bar{Q} = 0.092$, with a 95\%
 highest posterior density interval
 $[0.035,\, 0.19]$.  That is, the data place the defect at
-roughly $9\%$ of the algebraic ceiling---detectable, but far
-from saturation.
+roughly $9\%$ of the algebraic ceiling in this conditioned HTT
+posterior pushforward---resolved within the legacy diagnostic,
+but far from saturation.
 
 
-\subsection{Layer~3: The exceedance probability}
+\subsection{Layer~3: The HTT posterior exceedance}
 \label{sec:layer3}
 
 The occupancy ratio $Q$ records how a signed projection compares
 with a declared denominator policy.  To make threshold use
-auditable, we define the registered \emph{exceedance curve}
+auditable, we define the registered HTT \emph{posterior
+exceedance curve}
 \begin{equation}\label{eq:Pi-def}
-\Pi(q_\star) := P(Q > q_\star \,|\, D)\,,
+\Pi_{\rm HTT}(q_\star) := P(Q > q_\star \,|\, D)\,,
 \end{equation}
 where $q_\star$ is a chosen threshold.  For the
-FLRW$_{\mathrm{tilt}}$ model: $\Pi(0.01) = 1.000$
+FLRW$_{\mathrm{tilt}}$ model: $\Pi_{\rm HTT}(0.01) = 1.000$
 (the posterior unambiguously exceeds $1\%$ of the ceiling),
-$\Pi(0.05) = 0.974$,
-$\Pi(0.1) = 0.352$, and
-$\Pi(0.5) = 0.000$.  This legacy conditioned example exceeds
+$\Pi_{\rm HTT}(0.05) = 0.974$,
+$\Pi_{\rm HTT}(0.1) = 0.352$, and
+$\Pi_{\rm HTT}(0.5) = 0.000$.  This legacy conditioned example exceeds
 the $1$--$5\%$ thresholds under its recorded inputs, is
 indeterminate at $10\%$, and does not exceed $50\%$.  The curve
 is not a truth probability, p-value, or geometry-detection
 probability.
+It is an HTT posterior exceedance probability for this legacy
+conditioned run, distinct from the MIO diagnostic exceedance curve
+$\Pi_{\rm MIO}$, which is an empirical exceedance fraction with
+no posterior, occupancy, or evidence semantics.
 
 \begin{remark}[Interpretation guide]\label{rem:Pi-interpretation}
 The three layers form a chain of increasing interpretive

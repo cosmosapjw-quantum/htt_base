@@ -827,7 +827,8 @@ Table~\ref{tab:cf4-triple} reports the evidence under each.
   data version.
   The WFH2009 primary is from the canonical VER05 JSON;
   CF4++ and Watkins+2023 values are from separate sensitivity
-  runs and should be independently verified before publication.}
+  runs, are not canonical headline values, and should be
+  independently verified before publication.}
 \label{tab:cf4-triple}
 \centering\footnotesize
 \begin{tabular}{llcc}
@@ -836,22 +837,26 @@ Version & $\beta \;(\times 10^{-3})$ &
   $\ln\mathcal{B}$ (FLRW$_{\mathrm{tilt}}$) & Verdict \\
 \hline
 WFH2009 (primary) & $1.334 \pm 0.267$ & $+26.3$ & legacy high-support \\
-CF4++ & $1.051 \pm 0.133$ & $+44.0^{*}$ & sensitivity high-support \\
-Watkins+2023 & $1.318 \pm 0.097$ & $+105.8^{*}$ & sensitivity high-support \\
+CF4++ & $1.051 \pm 0.133$ & $+44.0^{*}$ & quarantined sensitivity \\
+Watkins+2023 & $1.318 \pm 0.097$ & $+105.8^{*}$ & quarantined sensitivity \\
 \hline\hline
-\multicolumn{4}{l}{\scriptsize $^{*}$Sensitivity run; not in canonical VER05 JSON.}
+\multicolumn{4}{l}{\scriptsize $^{*}$Sensitivity run; not in canonical VER05 JSON; pending dedicated rerun before publication use.}
 \end{tabular}
 \end{table}
 
 \noindent
-All three versions give a legacy transfer-conditional evidence summary for a non-zero tilt
-DOF.  The WFH2009 value was previously misattributed to
+The WFH2009 version gives the canonical legacy transfer-conditional
+evidence summary for a non-zero tilt DOF; the CF4++ and Watkins+2023
+rows are sensitivity-only and remain quarantined pending a rerun with
+bound config and input hashes.  The WFH2009 value was previously misattributed to
 Watkins et~al.~\cite{Watkins2023}; this error is corrected in
 the present revision.  The large difference
-($\ln\mathcal{B}$ from $+26$ to $+106$) reflects the different
-$\sigma_\beta$: the Watkins+2023 value has the smallest
-uncertainty ($\sigma = 0.097 \times 10^{-3}$), yielding the
-highest significance per unit amplitude.  All departure
+($\ln\mathcal{B}$ from $+26$ to a quarantined sensitivity value
+near $+106$) reflects the different $\sigma_\beta$: the
+Watkins+2023 value has the smallest uncertainty
+($\sigma = 0.097 \times 10^{-3}$).  The sensitivity rows are
+therefore not interpreted as threshold-crossing evidence in this
+revision.  All departure
 quantities ($x$, $Q$, $\Pi$) are qualitatively unchanged
 across the three versions.
 

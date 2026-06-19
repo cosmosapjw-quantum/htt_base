@@ -558,15 +558,15 @@ honestly rather than silently treated as FLRW-limit comparisons.}
 Type & $\ln B_{\rm type,FLRW}$ & code status & scope note \\
 \hline
 I         & $0.000$                  & \texttt{PASS} & FLRW-limit row \\
-II        & $-14.03$                 & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
-III       & $-190.79$                & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
-IV        & $-1.86 \times 10^{8}$    & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+II        & \multicolumn{1}{c}{N/A (no FLRW limit)} & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+III       & \multicolumn{1}{c}{N/A (no FLRW limit)} & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+IV        & \multicolumn{1}{c}{N/A (no FLRW limit)} & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
 V         & $0.000$                  & \texttt{PASS} & FLRW-limit row \\
-VI$_0$    & $-59.60$                 & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
-VI$_h$    & $-1.53 \times 10^{8}$    & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+VI$_0$    & \multicolumn{1}{c}{N/A (no FLRW limit)} & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+VI$_h$    & \multicolumn{1}{c}{N/A (no FLRW limit)} & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
 VII$_0$   & $0.000$                  & \texttt{PASS} & FLRW-limit row \\
 VII$_h$   & $-9.12 \times 10^{5}$    & \texttt{PASS} & finite curved reference row \\
-VIII      & $-1.59 \times 10^{8}$    & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
+VIII      & \multicolumn{1}{c}{N/A (no FLRW limit)} & \texttt{NO\_FLRW\_LIMIT\_EXPLICIT} & explicit no limit \\
 IX        & $-1.59 \times 10^{6}$    & \texttt{PASS} & finite curved reference row \\
 \hline\hline
 \end{tabular}
@@ -663,7 +663,7 @@ that grows rather than decays with cosmic expansion
 Chapter~\ref{ch:bianchi-bounds}).  Its transfer function
 $T_2^{\mathrm{grow}} = 1.05$ ($\pm 20\%$ calibration
 uncertainty) produces a CMB quadrupole at moderate shear
-amplitudes detectable against the cosmic-variance floor.
+amplitudes in a sensitivity band near the cosmic-variance floor.
 
 \subsection{Sensitivity window}
 
@@ -681,7 +681,7 @@ $2 \times 10^{-7} \lesssim (\sigma/H)_0 \lesssim 10^{-6}$.
 \subsection{Vorticity exclusion}
 
 The Frobenius coupling $\Wstd = R_{\mathrm{WS}}^2\Sigstd$
-implies that any growing-mode shear within the detection window
+implies that any growing-mode shear within the sensitivity window
 is accompanied by a vorticity
 $\Wstd \sim R_{\mathrm{WS}}^2 \times (\sigma/H)^2/6
 \sim 10^{-13}$, exceeding the Saadeh bound
@@ -747,12 +747,12 @@ a tilt-like diagnostic degree of freedom
 established: observational equivalence classes collapse 14 models into
 7 distinct classes, of which 3 tilted classes are degenerate in scalar
 amplitude.  This is a tilt-only contraction (Phase~2 result), not a
-Bianchi-geometry claim, not a native-solver result, and not current
-observed-data evidence.  A sensitivity analysis
-using the CF4++ bulk flow (Courtois et~al.~2025) raises the conditional
-legacy headline to $\ln\mathcal{B} \approx +44$
-(Section~\ref{sec:cf4-sensitivity}); this does not promote the result
-to native solver validation or family-ID.}}
+  Bianchi-geometry claim, not a native-solver result, and not current
+  observed-data evidence.  Observer-frame marginalization is pending for
+  all legacy rest-frame numbers.  The CF4++ sensitivity value is
+  quarantined pending a dedicated rerun from canonical inputs
+  (Section~\ref{sec:cf4-sensitivity}); this does not promote the result
+  to native solver validation or family-ID.}}
 \end{center}
 
 \subsection{Equivalence-class-collapsed evidence}
@@ -1148,20 +1148,28 @@ premise, the conditioned posterior mass lies away from $Q = 0$
 (zero departure) while also concentrating below $Q > 0.2$
 (more than $20\%$ ceiling occupancy).  The allowed diagnostic
 band is narrow; it is not truth-certification authority or a detection claim.
+This is an HTT posterior pushforward statement.  The corresponding
+MIO diagnostic $Q$ is the same declared ratio only as a
+model-family-independent diagnostic coordinate and carries no
+posterior, occupancy, or evidence semantics.
 
 
-\subsection{Layer~3: Exceedance probabilities}
+\subsection{Layer~3: HTT posterior exceedance}
 \label{sec:layer3-results}
 
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the exceedance curves
-$\Pi(q_\star)$ for the four irrotational tilted models.  The
-curves overlap almost perfectly, confirming that $\Pi$ is
+$\Pi_{\rm HTT}(q_\star)$ for the four irrotational tilted models.  The
+curves overlap almost perfectly, confirming that $\Pi_{\rm HTT}$ is
 identical across models within this equivalence class.
+Here $\Pi_{\rm HTT}$ is the HTT posterior exceedance curve for the
+legacy conditioned posterior.  It is distinct from a MIO
+diagnostic exceedance curve $\Pi_{\rm MIO}$, which is an empirical threshold
+summary with no posterior, occupancy, or evidence semantics.
 
-At $q_\star = 0.01$: $\Pi = 1.000$ for all tilted models.
-At $q_\star = 0.05$: $\Pi = 0.974$.
-At $q_\star = 0.1$: $\Pi = 0.35$.
-At $q_\star = 0.5$: $\Pi = 0.000$.
+At $q_\star = 0.01$: $\Pi_{\rm HTT} = 1.000$ for all tilted models.
+At $q_\star = 0.05$: $\Pi_{\rm HTT} = 0.974$.
+At $q_\star = 0.1$: $\Pi_{\rm HTT} = 0.35$.
+At $q_\star = 0.5$: $\Pi_{\rm HTT} = 0.000$.
 
 The crossover from a strong conditioned-diagnostic label to an
 indeterminate label occurs at $q_\star \approx 0.08$; the historical
@@ -1215,10 +1223,10 @@ and interaction $= -0.07$.
 The tilt component contributes $103\% (INFERENTIAL --- from channel ablation)$ of the total---the
 shear component is mildly negative.  Under the CF4++ sensitivity
 variant (Section~\ref{sec:cf4-sensitivity}), the decomposition
-structure is identical (tilt $103\%$) at the higher evidence
-level ($\ln\mathcal{B} \approx +44$, untraceable from the
-canonical VER05 JSON; a dedicated rerun is recommended before
-publication).
+structure is identical (tilt $103\%$), but the numerical
+evidence level is quarantined because it is untraceable from the
+canonical VER05 JSON; a dedicated rerun is required before any
+publication use.
 
 This decomposition is the central quantitative result of the
 departure framework.  It means that the entire Bayesian
