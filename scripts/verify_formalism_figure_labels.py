@@ -31,6 +31,20 @@ REQUIRED_PI_BLOCKED_USE_CODES = frozenset(
         "scalar_classification",
     }
 )
+ALLOWED_MIO_PI_MEASURE_KINDS = frozenset(
+    {
+        "sample_distribution",
+        "bootstrap_mock_distribution",
+        "null_ensemble",
+        "cross_check_pushforward",
+    }
+)
+FORBIDDEN_MIO_PI_SOURCE_KIND_TERMS = (
+    "htt_posterior_pushforward",
+    "htt posterior pushforward",
+    "posterior_pushforward_distribution",
+    "posterior pushforward distribution",
+)
 REQUIRED_GF_BLOCKED_USE_CODES = frozenset(
     {
         "htt_evidence",
@@ -213,6 +227,16 @@ def _has_non_empty_text(metadata: Mapping[str, Any], field: str) -> bool:
 def _has_non_empty_list(metadata: Mapping[str, Any], field: str) -> bool:
     value = metadata.get(field)
     return isinstance(value, list) and bool(value)
+
+
+def _has_forbidden_pi_source_kind(value: object) -> bool:
+    if not isinstance(value, str):
+        return False
+    lowered = value.lower().replace("_", " ")
+    return any(
+        term.replace("_", " ") in lowered
+        for term in FORBIDDEN_MIO_PI_SOURCE_KIND_TERMS
+    )
 
 
 def _positive_int(value: object) -> bool:
@@ -419,6 +443,32 @@ def _pi_display_issues(
                 issue_type="missing_threshold_grid",
                 expected="non-empty display_metadata.threshold_grid",
                 actual=metadata.get("threshold_grid"),
+            )
+        )
+    measure_kind = metadata.get("measure_kind")
+    if (
+        isinstance(measure_kind, str)
+        and measure_kind
+        and measure_kind not in ALLOWED_MIO_PI_MEASURE_KINDS
+    ):
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="Pi",
+                issue_type="bad_pi_measure_kind",
+                expected="MIO Pi empirical/mock/null/cross-check measure kind",
+                actual=measure_kind,
+            )
+        )
+    source_kind = metadata.get("source_kind")
+    if _has_forbidden_pi_source_kind(source_kind):
+        issues.append(
+            _issue(
+                row_index=row_index,
+                symbol="Pi",
+                issue_type="bad_pi_source_kind",
+                expected="MIO Pi empirical/mock/null/cross-check source kind",
+                actual=source_kind,
             )
         )
     if not _positive_int(metadata.get("look_elsewhere_trials")):

@@ -5,8 +5,8 @@ C-16 deliverable. Constructs a PosteriorExportBundle from HTT outputs.
 
 Reads the integrated_pipeline_results.json structure:
   departure[model]['layer_1_departure']['x'] → x posterior
-  departure[model]['layer_2_occupancy']['Q'] → Q posterior
-  departure[model]['layer_3_exceedance']['Pi'] → Pi exceedance
+  departure[model]['layer_2_occupancy']['Q'] → legacy HTT Q cross-check
+  departure[model]['layer_3_exceedance']['Pi'] → legacy HTT P_post cross-check
   evidence[model]['lnB'] → Bayes factor
   filling_fraction → F summary
 """
@@ -117,12 +117,12 @@ def build_posterior_bundle(results_path: str = None,
     x_68 = tuple(x_data.get('hpd_68', [0.0, 0.0])) if isinstance(x_data, dict) else (0.0, 0.0)
     x_95 = tuple(x_data.get('hpd_95', [0.0, 0.0])) if isinstance(x_data, dict) else (0.0, 0.0)
 
-    # Layer 2: Q
+    # Layer 2: legacy HTT policy-normalized Q cross-check.
     Q_data = _get_nested(dep, 'layer_2_occupancy', 'Q', default={})
     Q_med = Q_data.get('median', 0.0) if isinstance(Q_data, dict) else 0.0
     Q_68 = tuple(Q_data.get('hpd_68', [0.0, 0.0])) if isinstance(Q_data, dict) else (0.0, 0.0)
 
-    # Layer 3: Pi (exceedance at threshold q*=0.05)
+    # Layer 3: legacy HTT posterior exceedance cross-check at q*=0.05.
     Pi_data = _get_nested(dep, 'layer_3_exceedance', 'Pi', default={})
     if isinstance(Pi_data, dict):
         Pi_med = Pi_data.get('0.05', 0.0)

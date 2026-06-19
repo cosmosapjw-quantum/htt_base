@@ -2667,7 +2667,7 @@ def fig_departure_summary() -> None:
     ax.set_xlim(1e-10, 1e-5)
     _label_in_corner(ax, "(a)", corner="tr")
 
-    # Panel (b) — Q = |x| / B_sigma_corrected occupancy
+    # Panel (b) — Q = |x| / B_sigma_corrected policy-normalized score
     from htt.core.bounds import B_sigma_corrected
     Bs = B_sigma_corrected(SSOT_C.eps1_kin)
     Q_vals = np.abs(x_vals) / Bs
@@ -2677,15 +2677,15 @@ def fig_departure_summary() -> None:
     ax.axvline(1.0, color=WONG["red"], ls="--", lw=1.0,
                label="MES ceiling $Q = 1$")
     ax.set_xscale("log")
-    ax.set_xlabel(r"occupancy $Q = |x|/B_\sigma^{\rm corr}$")
+    ax.set_xlabel(r"policy-normalized diagnostic score $Q = |x|/B_\sigma^{\rm corr}$")
     ax.set_ylabel("posterior density")
-    ax.set_title(r"(b) Layer 2: occupancy $Q$")
+    ax.set_title(r"(b) Layer 2: policy-normalized $Q$")
     ax.legend(loc="upper right", fontsize=8)
     _label_in_corner(ax, "(b)", corner="tl")
 
-    # Panel (c) — Π = exceedance above threshold q*
+    # Panel (c) — Pi_HTT = posterior exceedance above threshold q*
     q_star = np.linspace(0.01, 1.0, 200)
-    # Π(q*) = P(Q > q*)
+    # Pi_HTT(q*) = P_post(Q > q*)
     # Approximate via CDF of posterior on Q
     Q_sorted_idx = np.argsort(Q_vals)
     Q_sorted = Q_vals[Q_sorted_idx]
@@ -2695,12 +2695,12 @@ def fig_departure_summary() -> None:
                         for qs in q_star])
     ax = axes[2]
     ax.plot(q_star, Pi_vals, color=WONG["green"], lw=1.8,
-            label=r"$\Pi(q^*)$")
+            label=r"$\Pi_{\rm HTT}(q^*)$")
     ax.axvline(0.05, color=WONG["red"], ls="--", lw=1.0,
                label=r"$q^* = 0.05$")
     ax.set_xlabel(r"threshold $q^*$")
-    ax.set_ylabel(r"exceedance $\Pi(q^*) = P(Q > q^*)$")
-    ax.set_title(r"(c) Layer 3: exceedance $\Pi$")
+    ax.set_ylabel(r"HTT posterior exceedance $\Pi_{\rm HTT}(q^*) = P_{\rm post}(Q > q^*)$")
+    ax.set_title(r"(c) Layer 3: HTT posterior exceedance")
     ax.legend(loc="upper right", fontsize=8)
     _label_in_corner(ax, "(c)", corner="tl")
 
@@ -3213,7 +3213,7 @@ def fig_teff_moment_map() -> None:
     """Effective-temperature moment <Θ⁴>(A,Q) contour map.
 
     The 4-th SO(3) moment of the temperature field as a function of the
-    anisotropy amplitude A (≡ √Σ²/H) and the departure occupancy Q
+    anisotropy amplitude A (≡ √Σ²/H) and the policy-normalized diagnostic score Q
     (fraction of the MES filling-fraction ceiling)."""
     A = np.logspace(-7, -3, 250)            # anisotropy amplitude
     Q = np.linspace(0.0, 1.0, 250)          # filling-fraction occupancy
@@ -3264,7 +3264,7 @@ def fig_teff_moment_map() -> None:
     cb.set_label(r"$\log_{10}\langle\Theta^{4}\rangle$  [$(\mu\mathrm{K})^{4}$]")
 
     ax.set_xlabel(r"$\log_{10}A$   $A \equiv \sqrt{\Sigma^{2}_{\rm std}}/H$")
-    ax.set_ylabel(r"departure occupancy  $Q = \mathcal{F}/\mathcal{F}_{\rm MES}$")
+    ax.set_ylabel(r"policy-normalized score  $Q = \mathcal{F}/\mathcal{F}_{\rm MES}$")
     ax.set_title(r"Effective-temperature moment map  $\langle\Theta^{4}\rangle(A,Q)$")
     fig.tight_layout()
     _save(fig, "fig_teff_moment_map.png")

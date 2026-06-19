@@ -41,9 +41,15 @@ $\Otilt$: tilt contribution to the departure parameter.
 $\Okaniso$: anisotropic curvature contribution.
 $x_C = \Sigstd - \Wstd + \Otilt + \Okaniso$:
 master departure parameter.
-$Q_C = |x_C|/x_{\max,C}$: occupancy ratio (Layer~2).
-$\Pi_C(q_\star)$: exceedance probability (Layer~3).
-$\mathcal{F}_{\rm Bayes}$: Bayesian filling fraction.
+$Q_C = |x_C|/x_{\max,C}$: policy-normalized diagnostic score
+(Layer~2).
+$\Pi_{\rm MIO}(q_\star)$: MIO empirical diagnostic exceedance
+curve over registered thresholds.
+$\Pi_{\rm HTT}(q_\star)$ or $P_{\rm post}(Q>q_\star)$: HTT
+model-conditional posterior exceedance, distinct from
+$\Pi_{\rm MIO}$.
+$\mathcal{F}_{\rm Bayes}$: legacy HTT posterior pushforward
+summary; not a MIO diagnostic $F$ certificate.
 
 \paragraph{Species-resolved quantities.}
 $s \in \mathcal{K}$: kinetic species ($\gamma$, $\nu_e$,

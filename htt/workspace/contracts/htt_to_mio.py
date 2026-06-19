@@ -11,8 +11,8 @@ Field set (reverse-traced from `bass_py/htt/htt/integration/to_mio.py`
 `is_cross_check_only` guard):
 
     x_median, x_hpd68, x_hpd95        — Layer-1 departure posterior
-    Q_median, Q_hpd68                 — Layer-2 occupancy posterior
-    Pi_median, Pi_hpd68               — Layer-3 exceedance posterior
+    Q_median, Q_hpd68                 — Layer-2 policy-normalized HTT posterior score
+    Pi_median, Pi_hpd68               — HTT posterior exceedance cross-check
     ln_B_total                        — global Bayes factor
     model_evidences                   — per-model ln-evidence map
     F_median, F_hpd68                 — filling fraction summary

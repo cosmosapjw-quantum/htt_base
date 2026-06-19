@@ -182,6 +182,48 @@ def test_pi_curve_only_payload_is_exceedance_not_truth_probability() -> None:
         assert forbidden not in payload_text
 
 
+def test_mio_pi_rejects_posterior_probability_language() -> None:
+    with pytest.raises(ValueError, match="posterior|probability"):
+        build_exceedance_curve(
+            (0.1, 0.2),
+            source_score_label="Q",
+            input_hashes=("samples-input",),
+            measure_kind=MeasureKind.SAMPLE_DISTRIBUTION,
+            thresholds=(0.15,),
+            generating_command=_GENERATING_COMMAND,
+            worktree_state=_WORKTREE_STATE,
+            artifact_metadata={
+                "definition": "posterior probability P(Q>q|D)",
+            },
+        )
+
+    with pytest.raises(ValueError, match="probability"):
+        build_exceedance_curve(
+            (0.1, 0.2),
+            source_score_label="Q",
+            input_hashes=("samples-input",),
+            measure_kind=MeasureKind.SAMPLE_DISTRIBUTION,
+            thresholds=(0.15,),
+            generating_command=_GENERATING_COMMAND,
+            worktree_state=_WORKTREE_STATE,
+            caveats=("Pi is a probability of anisotropy",),
+        )
+
+
+def test_mio_pi_rejects_htt_posterior_pushforward_source_kind() -> None:
+    with pytest.raises(ValueError, match="HTT posterior"):
+        build_exceedance_curve(
+            (0.1, 0.2),
+            source_score_label="Q",
+            input_hashes=("samples-input",),
+            measure_kind=MeasureKind.SAMPLE_DISTRIBUTION,
+            thresholds=(0.15,),
+            generating_command=_GENERATING_COMMAND,
+            worktree_state=_WORKTREE_STATE,
+            source_kind="htt_posterior_pushforward_distribution",
+        )
+
+
 def test_pi_display_metadata_reports_look_elsewhere_trials() -> None:
     curve = build_exceedance_curve(
         (0.1, 0.4, 0.9),

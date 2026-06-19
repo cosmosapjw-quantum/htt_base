@@ -107,6 +107,12 @@ _EXTERNAL_TRANSFER_SOURCE_VALUES = {
     "external_transfer",
     "empirical_proxy",
 }
+_FORBIDDEN_SOURCE_KIND_TERMS = (
+    "htt_posterior_pushforward",
+    "htt posterior pushforward",
+    "posterior_pushforward_distribution",
+    "posterior pushforward distribution",
+)
 
 
 def _non_empty(value: object, name: str) -> str:
@@ -338,6 +344,16 @@ def _scan_reserved_language(value: object, name: str) -> None:
             _scan_reserved_language(item, name)
 
 
+def _reject_htt_posterior_source_kind(value: str) -> None:
+    text = value.lower().replace("_", " ")
+    for term in _FORBIDDEN_SOURCE_KIND_TERMS:
+        if term.replace("_", " ") in text:
+            raise ValueError(
+                "MIO Pi source_kind cannot use HTT posterior pushforward "
+                "distribution semantics"
+            )
+
+
 def _scan_curve_only_metadata(value: object, name: str) -> None:
     if isinstance(value, Mapping):
         for key, item in value.items():
@@ -487,6 +503,7 @@ class ExceedanceCurve:
             allowed = ", ".join(sorted(_ALLOWED_SOURCE_LABELS))
             raise ValueError(f"source_score_label must be one of: {allowed}")
         source_kind = _non_empty(self.source_kind, "source_kind")
+        _reject_htt_posterior_source_kind(source_kind)
         _scan_reserved_language(source_kind, "source_kind")
         measure_kind = _canonical_measure_kind(self.measure_kind)
         score_label = _non_empty(self.score_label, "score_label")

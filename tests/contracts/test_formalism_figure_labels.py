@@ -305,6 +305,88 @@ def test_pi_rows_require_measure_kind_threshold_and_look_elsewhere_metadata():
     assert ("Pi", "missing_pi_blocked_use_codes") in issue_keys
 
 
+def test_pi_rows_reject_htt_posterior_pushforward_measure_kind():
+    module = _load_script("verify_formalism_figure_labels")
+
+    rows = [
+        {
+            "symbol": "Pi",
+            "owner": "MIO",
+            "definition": "exceedance curve over explicit threshold grid for Q samples",
+            "display_metadata": {
+                "requires_measure_kind": True,
+                "source_score_label": "Q",
+                "source_kind": "diagnostic_samples",
+                "measure_kind": "htt_posterior_pushforward_distribution",
+                "threshold_policy": "curve_only",
+                "threshold_registration_status": "curve_only_no_selected_threshold",
+                "exceedance_rule": "sample_value > threshold",
+                "threshold_grid": [0.25, 0.75],
+                "look_elsewhere_trials": 1,
+                "p_value_interpretation_status": "blocked_exceedance_not_p_value",
+                "calibration_status": "raw_exceedance_only_uncalibrated_no_p_value",
+                "covariance_status": "not_statistical",
+                "null_mock_status": "not_statistical",
+                "blocked_use_codes": [
+                    "p_value_claim",
+                    "truth_probability",
+                    "htt_inference_consumption",
+                    "model_selection",
+                    "solver_validation",
+                    "scalar_classification",
+                ],
+            },
+        }
+    ]
+
+    issue_keys = {
+        (issue.symbol, issue.issue_type) for issue in module.validate_rows(rows)
+    }
+
+    assert ("Pi", "bad_pi_measure_kind") in issue_keys
+
+
+def test_pi_rows_reject_htt_posterior_pushforward_source_kind():
+    module = _load_script("verify_formalism_figure_labels")
+
+    rows = [
+        {
+            "symbol": "Pi",
+            "owner": "MIO",
+            "definition": "exceedance curve over explicit threshold grid for Q samples",
+            "display_metadata": {
+                "requires_measure_kind": True,
+                "source_score_label": "Q",
+                "source_kind": "htt_posterior_pushforward_distribution",
+                "measure_kind": "sample_distribution",
+                "threshold_policy": "curve_only",
+                "threshold_registration_status": "curve_only_no_selected_threshold",
+                "exceedance_rule": "sample_value > threshold",
+                "threshold_grid": [0.25, 0.75],
+                "look_elsewhere_trials": 1,
+                "p_value_interpretation_status": "blocked_exceedance_not_p_value",
+                "calibration_status": "raw_exceedance_only_uncalibrated_no_p_value",
+                "covariance_status": "not_statistical",
+                "null_mock_status": "not_statistical",
+                "blocked_use_codes": [
+                    "p_value_claim",
+                    "truth_probability",
+                    "htt_inference_consumption",
+                    "model_selection",
+                    "solver_validation",
+                    "scalar_classification",
+                ],
+            },
+        }
+    ]
+
+    issue_keys = {
+        (issue.symbol, issue.issue_type) for issue in module.validate_rows(rows)
+    }
+
+    assert ("Pi", "bad_pi_source_kind") in issue_keys
+
+
 def test_gf_rows_require_floor_split_and_forecast_block_metadata():
     module = _load_script("verify_formalism_figure_labels")
 

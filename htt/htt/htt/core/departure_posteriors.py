@@ -6,14 +6,16 @@ Post-processes dynesty posterior samples into the departure-variable
 framework:
 
   Layer 1  x  — comparator-conditioned algebraic departure
-  Layer 2  Q  — occupancy ratio (ceiling-normalised)
-  Layer 3  Π  — posterior exceedance probability
+  Layer 2  Q  — policy-normalized HTT posterior score (ceiling-normalised)
+  Layer 3  Π_HTT / P_post — model-conditional posterior exceedance
 
 Plus derived physical observables: q₀ (apparent deceleration),
 v_tilt (tilt velocity), Ω_tilt (tilt density parameter).
 
-This module sits DOWNSTREAM of evidence_models_R03a.py and does NOT
-modify any likelihood.  It only transforms posterior samples.
+This module is a legacy HTT posterior diagnostic export.  It sits DOWNSTREAM
+of evidence_models_R03a.py and does NOT modify any likelihood.  It only
+transforms posterior samples.  Its posterior exceedance outputs are not MIO Pi
+and are not report-card sources.
 
 Depends on: ssot.py, bounds.py, tilted_flrw.py
 Convention: VA-02 (Σ²_std = σ_{ab}σ^{ab}/(6H²))
@@ -235,14 +237,14 @@ class DeparturePosterior:
         else:  # flat
             return self.Omega_K.copy()
 
-    # ─── Layer 2: Occupancy ratio Q ───────────────────────────
+    # ─── Layer 2: policy-normalized HTT posterior score Q ─────
 
     # Known inactive parameters that feed into x but are not
     # constrained by the likelihood (prior-driven artifacts).
     _X_FEEDING_PARAMS = {'Omega_k', 'Omega_K', 'W2'}
 
     def compute_Q(self, eps1_ceiling=None):
-        """Occupancy ratio Q = x / x_max, with physical guards.
+        """Policy-normalized HTT posterior score Q = x / x_max.
 
         The ceiling x_max is the MES algebraic ceiling evaluated at a
         reference ε₁.  This is an *adopted* ceiling, not a proven
@@ -256,7 +258,8 @@ class DeparturePosterior:
 
         When Q_status is not 'identified', Q values are still computed
         (they are mathematically well-defined) but the status flag warns
-        that they should NOT be interpreted as data-constrained occupancy.
+        that they should NOT be interpreted as data-constrained filling,
+        model evidence, or MIO diagnostic certification.
 
         Parameters
         ----------
@@ -267,7 +270,7 @@ class DeparturePosterior:
         Returns
         -------
         ndarray
-            Occupancy ratio Q for each sample.
+            Policy-normalized HTT posterior score Q for each sample.
         """
         if not hasattr(self, 'x'):
             self.compute_x()
@@ -320,12 +323,13 @@ class DeparturePosterior:
             return 'super_ceiling'
         return 'identified'
 
-    # ─── Layer 3: Posterior exceedance Π ──────────────────────
+    # ─── Layer 3: HTT posterior exceedance Π_HTT / P_post ─────
 
     def compute_Pi(self, q_stars=(0.01, 0.05, 0.1, 0.5)):
-        """Posterior exceedance probabilities.
+        """HTT model-conditional posterior exceedance probabilities.
 
-        Π(q*) = Σ_i w_i 𝟙[Q_i > q*]
+        Π_HTT(q*) = P_post(Q > q*) = Σ_i w_i 𝟙[Q_i > q*].
+        This is not MIO Pi, which is an empirical diagnostic exceedance curve.
 
         Parameters
         ----------
@@ -335,7 +339,7 @@ class DeparturePosterior:
         Returns
         -------
         dict
-            {q_star: Π(q_star)} mapping.
+            {q_star: Π_HTT(q_star)} mapping.
         """
         if not hasattr(self, 'Q'):
             self.compute_Q()
@@ -456,16 +460,31 @@ class DeparturePosterior:
                     'Omega_k_aniso': self.weighted_summary(self.Omega_k_aniso),
                 },
             },
-            'layer_2_occupancy': {
+            'layer_2_policy_normalized_score': {
                 'Q': self.weighted_summary(self.Q),
                 'Q_status': self.Q_status,
                 'x_max': float(self.x_max),
                 'eps1_ceiling': float(self.eps1_ceiling),
                 'ceiling_status': 'adopted_MES_algebraic',
             },
+            # Backward-compatible aliases remain for legacy consumers. They are
+            # HTT posterior summaries, not MIO diagnostic report-card fields.
+            'layer_2_occupancy': {
+                'Q': self.weighted_summary(self.Q),
+                'Q_status': self.Q_status,
+                'semantic_alias': 'layer_2_policy_normalized_score',
+                'mio_diagnostic_compatible': False,
+            },
+            'layer_3_htt_posterior_exceedance': {
+                'Pi_HTT': {str(k): v for k, v in self.Pi.items()},
+                'P_post': {str(k): v for k, v in self.Pi.items()},
+                'mio_pi_compatible': False,
+                'q_stars': list(q_stars),
+            },
             'layer_3_exceedance': {
                 'Pi': {str(k): v for k, v in self.Pi.items()},
-                'q_stars': list(q_stars),
+                'semantic_alias': 'layer_3_htt_posterior_exceedance',
+                'mio_pi_compatible': False,
             },
             'derived_observables': {
                 'q0_apparent': self.weighted_summary(self.q0_apparent),

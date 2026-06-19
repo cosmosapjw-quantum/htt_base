@@ -40,6 +40,7 @@ from htt.infer.posterior_predictive import (
     PosteriorPredictiveReport,
     build_posterior_predictive_report,
 )
+from htt.infer.posterior_exceedance import posterior_exceedance_summary
 from htt.infer.loocv import LoocvReport, build_loocv_report
 from htt.infer.estimators import BridgeResult, tilt_velocity, delta_q, lambda_J_pec, delta_H
 from htt.infer.axis_gate import (
@@ -94,6 +95,7 @@ __all__ = [
     'PriorSweepReport', 'InferenceAdequacyReport',
     'build_prior_sweep_report', 'build_inference_adequacy_report',
     'PosteriorPredictiveReport', 'build_posterior_predictive_report',
+    'posterior_exceedance_summary',
     'LoocvReport', 'build_loocv_report',
     'BridgeResult', 'tilt_velocity', 'delta_q', 'lambda_J_pec', 'delta_H',
     'AxisGateDecision', 'build_diagnostic_axis', 'evaluate_axis_gate',
