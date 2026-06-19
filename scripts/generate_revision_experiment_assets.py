@@ -31,6 +31,14 @@ for import_root in (COMMON_ROOT, HTT_ROOT):
         sys.path.insert(0, str(import_root))
 
 from common.artifact_manifest import validate_manifest_payload  # noqa: E402
+from htt.infer.finite_mock import zero_trigger_upper_bound  # noqa: E402
+from htt.infer.fisher_compression import (  # noqa: E402
+    gaussian_covariance_fisher_full_and_diag,
+)
+from htt.infer.nuisance_rank import nuisance_projected_rank  # noqa: E402
+from mio.formalism.channel_occupancy_vector import (  # noqa: E402
+    channel_matched_occupancy,
+)
 
 
 FIGURE_DIR = REPO_ROOT / "figures" / "current"
@@ -102,11 +110,11 @@ ASSET_CAPTIONS = {
         "geometry or family claim."
     ),
     "FPR_rule_of_three": (
-        "Revision external-audit-only rule-of-three false-positive-rate ceiling. "
-        "The finite-null interval is an upper-bound diagnostic and must be read "
-        "together with the observed nonzero false positives; it is not a "
-        "zero-FPR claim, not HTT evidence, and not derived from native low-ell "
-        "transfer."
+        "Revision external-audit-only exact finite-mock false-positive-rate "
+        "ceiling. The zero-trigger interval is an upper-bound diagnostic and "
+        "must be read together with the observed nonzero false positives and "
+        "the rule-of-three reference; it is not a zero-FPR claim, not HTT "
+        "evidence, and not derived from native low-ell transfer."
     ),
     "E3_per_channel_occupancy": (
         "Revision appendix diagnostic per-channel occupancy. The bars use "
@@ -268,8 +276,17 @@ def _transfer_points(science_payload: dict[str, Any] | None) -> list[dict[str, A
 
 def _q_center(science_payload: dict[str, Any] | None) -> float:
     points = _transfer_points(science_payload)
-    q_values = [float(point.get("Q_diagnostic", 0.6)) for point in points]
-    return float(np.clip(np.median(q_values), 0.15, 1.5))
+    q_values = [
+        float(point.get("Q_diagnostic", 0.6))
+        for point in points
+        if np.isfinite(float(point.get("Q_diagnostic", 0.6)))
+    ]
+    if not q_values:
+        return 0.6
+    q_center = float(np.median(q_values))
+    if q_center <= 0.0:
+        raise ValueError("Q_diagnostic median must be positive for proxy displays")
+    return q_center
 
 
 def _local_null_config(science_payload: dict[str, Any] | None) -> dict[str, Any]:
@@ -402,13 +419,30 @@ def _plot_rule_of_three_fpr(inputs: RepoInputs, path: Path) -> dict[str, Any]:
         )
     )
     n_mocks = np.asarray(sorted({24, 48, 96, 192, 384, observed_n}))
-    upper = 3.0 / n_mocks
+    confidence = 0.95
+    exact_upper = np.asarray(
+        [zero_trigger_upper_bound(int(count), confidence) for count in n_mocks]
+    )
+    rule_of_three = 3.0 / n_mocks
     trials = max(int(config.get("look_elsewhere_trials", 1)), 1)
-    look_elsewhere = np.minimum(1.0, upper * trials)
+    look_elsewhere = np.minimum(1.0, exact_upper * trials)
     threshold = float(config.get("max_false_positive_rate", 0.15))
 
     fig, ax = plt.subplots(figsize=(6.8, 4.2))
-    ax.plot(n_mocks, upper, marker="o", color=COLORS["teal"], label="single-look 3/N")
+    ax.plot(
+        n_mocks,
+        exact_upper,
+        marker="o",
+        color=COLORS["teal"],
+        label="exact zero-trigger 95% bound",
+    )
+    ax.plot(
+        n_mocks,
+        rule_of_three,
+        color=COLORS["muted"],
+        linestyle=":",
+        label="3/N reference",
+    )
     ax.plot(
         n_mocks,
         look_elsewhere,
@@ -433,6 +467,10 @@ def _plot_rule_of_three_fpr(inputs: RepoInputs, path: Path) -> dict[str, Any]:
             "observed_n_mocks": observed_n,
             "look_elsewhere_trials": trials,
             "max_false_positive_rate": threshold,
+            "finite_mock_confidence": confidence,
+            "exact_zero_trigger_upper_bound_at_observed_n": zero_trigger_upper_bound(
+                observed_n, confidence
+            ),
             "rule_of_three_at_observed_n": 3.0 / max(observed_n, 1),
             "observed_false_positive_count": false_positive_count,
             "observed_raw_fpr": raw_fpr,
@@ -456,9 +494,22 @@ def _plot_per_channel_occupancy(inputs: RepoInputs, path: Path) -> dict[str, Any
         ("anisotropic curvature", 0.23 * q_center, 0.52),
     )
     labels = [channel[0] for channel in channels]
-    numerators = np.asarray([max(channel[1], 0.0) for channel in channels])
-    denominators = np.asarray([channel[2] * (0.65 + 0.35 * coverage) for channel in channels])
-    occupancy = np.clip(numerators / np.maximum(denominators, 1.0e-12), 0.0, 1.0)
+    numerators = np.asarray([channel[1] for channel in channels], dtype=float)
+    denominators = np.asarray(
+        [channel[2] * (0.85 + 0.35 * coverage) for channel in channels]
+    )
+    occupancy_report = channel_matched_occupancy(
+        [
+            {"channel": label, "numerator": float(num), "denominator": float(den)}
+            for label, num, den in zip(labels, numerators, denominators)
+        ],
+        generating_command=GENERATING_COMMAND,
+        worktree_state="generator_pre_manifest",
+        input_hashes=_input_hashes((INPUT_PATHS[0],)),
+    )
+    occupancy = np.asarray(
+        [float(row["occupancy"]) for row in occupancy_report["rows"]]
+    )
     residual = 1.0 - occupancy
     y = np.arange(len(labels))
 
@@ -477,18 +528,17 @@ def _plot_per_channel_occupancy(inputs: RepoInputs, path: Path) -> dict[str, Any
         "statistics": {
             "channel_occupancy": [
                 {
-                    "channel": label,
-                    "numerator_proxy": float(num),
-                    "denominator_proxy": float(den),
-                    "occupancy": float(value),
-                    "denominator_policy": "channel_matched_proxy_budget",
+                    **row,
+                    "numerator_proxy": row["numerator"],
+                    "denominator_proxy": row["denominator"],
                 }
-                for label, num, den, value in zip(
-                    labels, numerators, denominators, occupancy
-                )
+                for row in occupancy_report["rows"]
             ],
             "inventory_coverage": coverage,
             "negative_components_allowed": False,
+            "posterior_compatible": occupancy_report["posterior_compatible"],
+            "evidence_compatible": occupancy_report["evidence_compatible"],
+            "truth_certificate": occupancy_report["truth_certificate"],
         },
     }
 
@@ -519,11 +569,26 @@ def _plot_tomographic_forecast(inputs: RepoInputs, path: Path) -> dict[str, Any]
     local_boost_template = np.exp(-2.2 * z_norm)
     global_tilt_template = 0.35 + 0.65 * z_norm
     nuisance_template = np.ones_like(z_norm)
-    design = np.column_stack([local_boost_template, global_tilt_template, nuisance_template])
-    singular_values = np.linalg.svd(design, compute_uv=False)
-    rank = int(np.linalg.matrix_rank(design))
-    condition_number = float(singular_values[0] / max(singular_values[-1], 1.0e-12))
-    rank_status = "full_rank_diagnostic" if rank == design.shape[1] else "rank_deficient_diagnostic"
+    covariance = np.diag(np.maximum(jackknife, 1.0e-3) ** 2)
+    rank_audit = nuisance_projected_rank(
+        target_response=np.column_stack([local_boost_template, global_tilt_template]),
+        nuisance_response=nuisance_template,
+        covariance=covariance,
+    )
+    rank = int(rank_audit.projected_rank)
+    condition_number = float(rank_audit.condition_number)
+    rank_status = "full_rank_diagnostic" if rank_audit.full_rank else "rank_deficient_diagnostic"
+    promotion_blockers = [
+        "native_low_ell_solver_not_available",
+        "native_morphology_atlas_not_available",
+        "matched_publication_grade_nulls_not_bound",
+        "publication_grade_covariance_not_bound",
+        "held_out_validation_not_bound",
+    ]
+    forecast_no_claim_reasons = [
+        *rank_audit.no_claim_reasons,
+        *promotion_blockers,
+    ]
     template_correlation = float(
         np.corrcoef(local_boost_template, global_tilt_template)[0, 1]
     )
@@ -575,14 +640,163 @@ def _plot_tomographic_forecast(inputs: RepoInputs, path: Path) -> dict[str, Any]
             "local_global_template_correlation": template_correlation,
             "local_global_separation_score": separation_score,
             "forecast_design_rank": rank,
-            "forecast_design_columns": int(design.shape[1]),
+            "forecast_design_columns": int(rank_audit.target_dimension),
             "forecast_design_condition_number": condition_number,
+            "forecast_projected_singular_values": list(rank_audit.singular_values),
+            "forecast_rank_no_claim_reasons": list(rank_audit.no_claim_reasons),
+            "forecast_promotion_blockers": promotion_blockers,
+            "forecast_no_claim_reasons": forecast_no_claim_reasons,
             "forecast_rank_status": rank_status,
             "forecast_definition": (
-                "SVD rank and template-correlation diagnostic for local-boost, "
-                "global-tilt, and nuisance depth templates"
+                "Nuisance-projected SVD rank and template-correlation diagnostic "
+                "for local-boost and global-tilt depth templates"
             ),
         },
+    }
+
+
+def _method_diagnostics(
+    inputs: RepoInputs,
+    assets: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    fpr_stats = assets["FPR_rule_of_three"]["statistics"]
+    occupancy_stats = assets["E3_per_channel_occupancy"]["statistics"]
+    forecast_stats = assets["E5_tomographic_forecast"]["statistics"]
+    fisher = gaussian_covariance_fisher_full_and_diag(
+        [np.asarray([[0.0, 1.0], [1.0, 0.0]])]
+    )
+    method_input_hashes = _input_hashes(INPUT_PATHS)
+    _, worktree = _git_state()
+
+    def metadata(
+        *,
+        owner: str,
+        implementation_scope: str,
+        transfer_source: str,
+        null_mock_status: str,
+        config_seed: str,
+        caveats: list[str],
+    ) -> dict[str, Any]:
+        return {
+            "owner": owner,
+            "implementation_scope": implementation_scope,
+            "claim_tier": "diagnostic_only",
+            "transfer_source": transfer_source,
+            "config_hash": _stable_hash(
+                {
+                    "method_diagnostic": config_seed,
+                    "input_hashes": method_input_hashes,
+                    "version": "revision-method-diagnostics-v1",
+                }
+            ),
+            "input_hashes": method_input_hashes,
+            "sky_support_status": "not_directional",
+            "null_mock_status": null_mock_status,
+            "generating_command": GENERATING_COMMAND,
+            "git_commit_or_worktree_state": worktree,
+            "caveats": caveats,
+        }
+
+    evidence_stability_status = metadata(
+        owner="BASS",
+        implementation_scope="bass_py",
+        transfer_source="external_or_proxy_transfer",
+        null_mock_status="not_statistical",
+        config_seed="bass_evidence_stability_not_evaluated",
+        caveats=[
+            "transfer-conditional diagnostic only",
+            "not native solver validation",
+            "not HTT evidence",
+            "not MIO evidence",
+            "not family or geometry evidence",
+            "bound not evaluated because no max_loglike_delta input is present",
+        ],
+    )
+    evidence_stability_status.update(
+        {
+            "transfer_conditional": True,
+            "native_solver_result": False,
+            "bound_status": "not_evaluated_missing_loglike_delta",
+            "required_input_kind": "max_loglike_delta",
+            "rejected_proxy_input_kind": "denominator_relative_shift",
+            "evidence_shift_upper_bound": None,
+            "definition": "|Delta log Z| <= sup |Delta log L| under shared prior support",
+        }
+    )
+    return {
+        "finite_mock": {
+            **metadata(
+                owner="HTT",
+                implementation_scope="htt",
+                transfer_source="none",
+                null_mock_status="current_code_diagnostic_null_bank_generated",
+                config_seed="finite_mock_zero_trigger_upper_bound",
+                caveats=[
+                    "finite-mock upper bound only",
+                    "not zero false-positive rate",
+                    "not evidence",
+                ],
+            ),
+            "exact_zero_trigger_upper_bound_at_observed_n": fpr_stats[
+                "exact_zero_trigger_upper_bound_at_observed_n"
+            ],
+            "confidence": fpr_stats["finite_mock_confidence"],
+            "observed_n_mocks": fpr_stats["observed_n_mocks"],
+        },
+        "nuisance_rank": {
+            **metadata(
+                owner="HTT",
+                implementation_scope="htt",
+                transfer_source="none",
+                null_mock_status="not_statistical",
+                config_seed="nuisance_projected_rank_forecast_design",
+                caveats=[
+                    "diagnostic rank precondition only",
+                    "not evidence",
+                    "not local/global discrimination proof",
+                ],
+            ),
+            "projected_rank": forecast_stats["forecast_design_rank"],
+            "target_dimension": forecast_stats["forecast_design_columns"],
+            "condition_number": forecast_stats["forecast_design_condition_number"],
+            "singular_values": forecast_stats["forecast_projected_singular_values"],
+            "no_claim_reasons": forecast_stats["forecast_no_claim_reasons"],
+        },
+        "fisher_compression": {
+            **metadata(
+                owner="HTT",
+                implementation_scope="htt",
+                transfer_source="none",
+                null_mock_status="not_statistical",
+                config_seed="covariance_fisher_full_vs_diagonal",
+                caveats=[
+                    "diagnostic covariance-compression audit only",
+                    "not evidence",
+                    "not covariance model validation",
+                ],
+            ),
+            **fisher.as_payload(),
+        },
+        "channel_occupancy": {
+            **metadata(
+                owner="MIO",
+                implementation_scope="mio",
+                transfer_source="none",
+                null_mock_status="not_statistical",
+                config_seed="channel_matched_occupancy_vector",
+                caveats=[
+                    "MIO diagnostic occupancy only",
+                    "not posterior odds",
+                    "not evidence",
+                    "not a truth certificate",
+                ],
+            ),
+            "rows": occupancy_stats["channel_occupancy"],
+            "posterior_compatible": occupancy_stats["posterior_compatible"],
+            "evidence_compatible": occupancy_stats["evidence_compatible"],
+            "truth_certificate": occupancy_stats["truth_certificate"],
+        },
+        "evidence_stability": evidence_stability_status,
     }
 
 
@@ -718,7 +932,7 @@ def _manifest_for_asset(
         ],
         "failed_gates": [
             "native_low_ell_solver_not_available",
-            "family_morphology_atlas_not_available",
+            "native_morphology_atlas_not_available",
             "publication_grade_covariance_not_bound",
         ],
         "statistics_definitions": {
@@ -961,6 +1175,7 @@ def _build_payload(inputs: RepoInputs, *, write_figures: bool) -> dict[str, Any]
         "git_commit_or_worktree_state": worktree,
         "caveats": list(BASE_CAVEATS),
         "assets": assets,
+        "method_diagnostics": _method_diagnostics(inputs, assets),
     }
 
 

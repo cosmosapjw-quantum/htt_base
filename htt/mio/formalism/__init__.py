@@ -30,6 +30,7 @@ from .filling_fraction import (
     CertifiedFillingFraction,
     build_certified_filling_fraction,
 )
+from .channel_occupancy_vector import channel_matched_occupancy
 from .isotropy_gap import (
     DepthBinFRecord,
     DepthBinMetadata,
@@ -68,6 +69,7 @@ __all__ = [
     "ThresholdPolicy",
     "build_budget_spec",
     "build_certified_filling_fraction",
+    "channel_matched_occupancy",
     "build_depth_bin_f_record",
     "build_departure_bundle",
     "build_comparator_multiverse_summary",

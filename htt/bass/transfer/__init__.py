@@ -20,6 +20,7 @@ from .native_schema import (
     NativeLowEllSchema,
     default_native_lowell_schema,
 )
+from .evidence_stability import evidence_shift_bound
 
 __all__ = [
     "ExternalTransferAdapter",
@@ -32,4 +33,5 @@ __all__ = [
     "default_external_transfer_registry",
     "default_native_lowell_adapter_stub",
     "default_native_lowell_schema",
+    "evidence_shift_bound",
 ]

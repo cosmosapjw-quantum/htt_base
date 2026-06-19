@@ -18,12 +18,12 @@
         "not evidence-grade Bayes factor"
       ],
       "claim_tier": "diagnostic_only",
-      "config_hash": "sha256:edd3045f361201e9d584035e897fd0e29fe5a880e5931e18e29525ad9867973b",
+      "config_hash": "sha256:8dbd10167b5420acb50aa4c94d820ac29434c107e691a533e2ccadc5d04233a9",
       "figure_path": "figures/current/fig_revision_prior_support_surface.png",
       "implementation_scope": "common",
       "input_hashes": [
         "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513",
-        "docs/generated/current_science_plot_payload.json:sha256:610f6c27d0a5f9cd8d508844bbfd30cee141ca508e781e5f6ce3722adf354c76"
+        "docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f"
       ],
       "input_mode": "repo_observed_input",
       "manifest_path": "figures/current/fig_revision_prior_support_surface.manifest.json",
@@ -44,9 +44,9 @@
         "prior_floor_max": 0.02,
         "prior_floor_min": 0.0001,
         "proxy_lnb_definition": "coverage*(median_Q/0.65)^2 - log(log(prior_ceiling/prior_floor)); diagnostic proxy only",
-        "proxy_lnb_max": 1.1561602345898716,
-        "proxy_lnb_min": -1.430679492359639,
-        "q_center": 0.6585695006747638
+        "proxy_lnb_max": 1.3517741131193453,
+        "proxy_lnb_min": -1.2350656138301654,
+        "q_center": 0.7356321839080461
       },
       "title": "Prior support surface",
       "transfer_source": "empirical_proxy"
@@ -64,11 +64,11 @@
         "look-elsewhere correction is display-only"
       ],
       "claim_tier": "diagnostic_only",
-      "config_hash": "sha256:e3e432539751e20e89fef1e73a1fe24a50be3bcb62da1ad2981955e35daf87bb",
+      "config_hash": "sha256:c125bc6d6af383ac3a373497e4c18d8403593e0e6a0a0664518be8a19ed657b6",
       "figure_path": "figures/current/fig_revision_sigma_beta_band.png",
       "implementation_scope": "common",
       "input_hashes": [
-        "docs/generated/current_science_plot_payload.json:sha256:610f6c27d0a5f9cd8d508844bbfd30cee141ca508e781e5f6ce3722adf354c76"
+        "docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f"
       ],
       "input_mode": "repo_observed_input",
       "manifest_path": "figures/current/fig_revision_sigma_beta_band.manifest.json",
@@ -85,9 +85,9 @@
         "beta_min": 0.0004,
         "look_elsewhere_trials": 3,
         "proxy_lnb_definition": "0.5*(beta/sigma_beta)^2 - log(delta_beta_prior/sigma_beta) - log(look_elsewhere_trials) + log(median_Q); diagnostic proxy only",
-        "proxy_lnb_max": 33.00542343513561,
-        "proxy_lnb_min": -3.095019347877436,
-        "q_center": 0.6585695006747638,
+        "proxy_lnb_max": 33.116083619283636,
+        "proxy_lnb_min": -2.984359163729408,
+        "q_center": 0.7356321839080461,
         "sigma_beta_max": 0.0016,
         "sigma_beta_min": 0.00035
       },
@@ -127,35 +127,50 @@
         "channel_occupancy": [
           {
             "channel": "shear",
-            "denominator_policy": "channel_matched_proxy_budget",
-            "denominator_proxy": 0.5515384615384615,
-            "numerator_proxy": 0.21074224021592444,
-            "occupancy": 0.3820989013677849
+            "denominator": 0.6715384615384615,
+            "denominator_channel": "shear",
+            "denominator_policy": "channel_matched",
+            "denominator_proxy": 0.6715384615384615,
+            "numerator": 0.23540229885057476,
+            "numerator_proxy": 0.23540229885057476,
+            "occupancy": 0.3505417966847047
           },
           {
             "channel": "vorticity",
-            "denominator_policy": "channel_matched_proxy_budget",
-            "denominator_proxy": 0.3860769230769231,
-            "numerator_proxy": 0.11854251012145749,
-            "occupancy": 0.30704376002768424
+            "denominator": 0.47007692307692306,
+            "denominator_channel": "vorticity",
+            "denominator_policy": "channel_matched",
+            "denominator_proxy": 0.47007692307692306,
+            "numerator": 0.13241379310344828,
+            "numerator_proxy": 0.13241379310344828,
+            "occupancy": 0.2816853723359234
           },
           {
             "channel": "tilt",
-            "denominator_policy": "channel_matched_proxy_budget",
-            "denominator_proxy": 0.5055769230769231,
-            "numerator_proxy": 0.17781376518218625,
-            "occupancy": 0.3517046705771656
+            "denominator": 0.6155769230769231,
+            "denominator_channel": "tilt",
+            "denominator_policy": "channel_matched",
+            "denominator_proxy": 0.6155769230769231,
+            "numerator": 0.19862068965517246,
+            "numerator_proxy": 0.19862068965517246,
+            "occupancy": 0.32265779013023954
           },
           {
             "channel": "anisotropic curvature",
-            "denominator_policy": "channel_matched_proxy_budget",
-            "denominator_proxy": 0.47800000000000004,
-            "numerator_proxy": 0.1514709851551957,
-            "occupancy": 0.31688490618241777
+            "denominator": 0.5820000000000001,
+            "denominator_channel": "anisotropic curvature",
+            "denominator_policy": "channel_matched",
+            "denominator_proxy": 0.5820000000000001,
+            "numerator": 0.1691954022988506,
+            "numerator_proxy": 0.1691954022988506,
+            "occupancy": 0.29071374965438246
           }
         ],
+        "evidence_compatible": false,
         "inventory_coverage": 0.7692307692307693,
-        "negative_components_allowed": false
+        "negative_components_allowed": false,
+        "posterior_compatible": false,
+        "truth_certificate": false
       },
       "title": "Per-channel occupancy",
       "transfer_source": "none"
@@ -194,10 +209,29 @@
         "desi_amplitude_max": 0.8461594375743775,
         "desi_amplitude_min": 0.6996417386315337,
         "desi_depth_bins": 36,
-        "forecast_definition": "SVD rank and template-correlation diagnostic for local-boost, global-tilt, and nuisance depth templates",
-        "forecast_design_columns": 3,
-        "forecast_design_condition_number": 38.74441419255036,
-        "forecast_design_rank": 3,
+        "forecast_definition": "Nuisance-projected SVD rank and template-correlation diagnostic for local-boost and global-tilt depth templates",
+        "forecast_design_columns": 2,
+        "forecast_design_condition_number": 7.737448579880522,
+        "forecast_design_rank": 2,
+        "forecast_no_claim_reasons": [
+          "native_low_ell_solver_not_available",
+          "native_morphology_atlas_not_available",
+          "matched_publication_grade_nulls_not_bound",
+          "publication_grade_covariance_not_bound",
+          "held_out_validation_not_bound"
+        ],
+        "forecast_projected_singular_values": [
+          25.545947788848984,
+          3.301598391913766
+        ],
+        "forecast_promotion_blockers": [
+          "native_low_ell_solver_not_available",
+          "native_morphology_atlas_not_available",
+          "matched_publication_grade_nulls_not_bound",
+          "publication_grade_covariance_not_bound",
+          "held_out_validation_not_bound"
+        ],
+        "forecast_rank_no_claim_reasons": [],
         "forecast_rank_status": "full_rank_diagnostic",
         "local_global_separation_score": 0.038171834509130975,
         "local_global_template_correlation": -0.961828165490869
@@ -218,11 +252,11 @@
         "observed nonzero false positives remain blocker diagnostics"
       ],
       "claim_tier": "diagnostic_only",
-      "config_hash": "sha256:ae7dc14250f0cd1c36064d4ca9d451e59432e5c0eee22aade6d87730a5315d4b",
+      "config_hash": "sha256:77e73a93ee5a7166d70682b5ed34eb07bf3014c54d4964ef88c1f2ef0dcf8266",
       "figure_path": "figures/current/fig_revision_rule_of_three_fpr.png",
       "implementation_scope": "common",
       "input_hashes": [
-        "docs/generated/current_science_plot_payload.json:sha256:610f6c27d0a5f9cd8d508844bbfd30cee141ca508e781e5f6ce3722adf354c76"
+        "docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f"
       ],
       "input_mode": "repo_observed_input",
       "manifest_path": "figures/current/fig_revision_rule_of_three_fpr.manifest.json",
@@ -235,6 +269,8 @@
       ],
       "sky_support_status": "not_directional",
       "statistics": {
+        "exact_zero_trigger_upper_bound_at_observed_n": 0.015481679618674082,
+        "finite_mock_confidence": 0.95,
         "interpretation": "rule_of_three_is_a_zero-event_upper_bound; observed nonzero false positives must be reported separately",
         "look_elsewhere_trials": 3,
         "max_false_positive_rate": 0.15,
@@ -257,14 +293,213 @@
   "claim_tier": "diagnostic_only",
   "config_hash": "sha256:cc6e2520973432a222fead2c0006a370fac2ebed531348e4511cdd55f9d45ae0",
   "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
-  "git_commit": "fec3495",
-  "git_commit_or_worktree_state": "fec3495+dirty",
+  "git_commit": "c1bb2b1",
+  "git_commit_or_worktree_state": "c1bb2b1+dirty",
   "implementation_scope": "common",
   "input_hashes": [
     "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513",
     "docs/generated/observed_longrun_analysis.json:sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047",
-    "docs/generated/current_science_plot_payload.json:sha256:65dbe586bbc6ab41f9158615e3a172acbbbccaf8815bf733057f1593eae8f17a"
+    "docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f"
   ],
+  "method_diagnostics": {
+    "channel_occupancy": {
+      "caveats": [
+        "MIO diagnostic occupancy only",
+        "not posterior odds",
+        "not evidence",
+        "not a truth certificate"
+      ],
+      "claim_tier": "diagnostic_only",
+      "config_hash": "sha256:81c46657c2f14c0cdbabf7a770ef2c2c019687d7859263c1721692e9a9be614f",
+      "evidence_compatible": false,
+      "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
+      "git_commit_or_worktree_state": "c1bb2b1+dirty",
+      "implementation_scope": "mio",
+      "input_hashes": [
+        "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513",
+        "docs/generated/observed_longrun_analysis.json:sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047",
+        "docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f"
+      ],
+      "null_mock_status": "not_statistical",
+      "owner": "MIO",
+      "posterior_compatible": false,
+      "rows": [
+        {
+          "channel": "shear",
+          "denominator": 0.6715384615384615,
+          "denominator_channel": "shear",
+          "denominator_policy": "channel_matched",
+          "denominator_proxy": 0.6715384615384615,
+          "numerator": 0.23540229885057476,
+          "numerator_proxy": 0.23540229885057476,
+          "occupancy": 0.3505417966847047
+        },
+        {
+          "channel": "vorticity",
+          "denominator": 0.47007692307692306,
+          "denominator_channel": "vorticity",
+          "denominator_policy": "channel_matched",
+          "denominator_proxy": 0.47007692307692306,
+          "numerator": 0.13241379310344828,
+          "numerator_proxy": 0.13241379310344828,
+          "occupancy": 0.2816853723359234
+        },
+        {
+          "channel": "tilt",
+          "denominator": 0.6155769230769231,
+          "denominator_channel": "tilt",
+          "denominator_policy": "channel_matched",
+          "denominator_proxy": 0.6155769230769231,
+          "numerator": 0.19862068965517246,
+          "numerator_proxy": 0.19862068965517246,
+          "occupancy": 0.32265779013023954
+        },
+        {
+          "channel": "anisotropic curvature",
+          "denominator": 0.5820000000000001,
+          "denominator_channel": "anisotropic curvature",
+          "denominator_policy": "channel_matched",
+          "denominator_proxy": 0.5820000000000001,
+          "numerator": 0.1691954022988506,
+          "numerator_proxy": 0.1691954022988506,
+          "occupancy": 0.29071374965438246
+        }
+      ],
+      "sky_support_status": "not_directional",
+      "transfer_source": "none",
+      "truth_certificate": false
+    },
+    "evidence_stability": {
+      "bound_status": "not_evaluated_missing_loglike_delta",
+      "caveats": [
+        "transfer-conditional diagnostic only",
+        "not native solver validation",
+        "not HTT evidence",
+        "not MIO evidence",
+        "not family or geometry evidence",
+        "bound not evaluated because no max_loglike_delta input is present"
+      ],
+      "claim_tier": "diagnostic_only",
+      "config_hash": "sha256:e06bd0586bff87179b3d517db761a1372f1d0663e9b87edc4d3ca2349c46ad26",
+      "definition": "|Delta log Z| <= sup |Delta log L| under shared prior support",
+      "evidence_shift_upper_bound": null,
+      "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
+      "git_commit_or_worktree_state": "c1bb2b1+dirty",
+      "implementation_scope": "bass_py",
+      "input_hashes": [
+        "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513",
+        "docs/generated/observed_longrun_analysis.json:sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047",
+        "docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f"
+      ],
+      "native_solver_result": false,
+      "null_mock_status": "not_statistical",
+      "owner": "BASS",
+      "rejected_proxy_input_kind": "denominator_relative_shift",
+      "required_input_kind": "max_loglike_delta",
+      "sky_support_status": "not_directional",
+      "transfer_conditional": true,
+      "transfer_source": "external_or_proxy_transfer"
+    },
+    "finite_mock": {
+      "caveats": [
+        "finite-mock upper bound only",
+        "not zero false-positive rate",
+        "not evidence"
+      ],
+      "claim_tier": "diagnostic_only",
+      "confidence": 0.95,
+      "config_hash": "sha256:e3cfc7000140869080cc1e60d61629749ef9727e6c206d69aeb54c54105c60b0",
+      "exact_zero_trigger_upper_bound_at_observed_n": 0.015481679618674082,
+      "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
+      "git_commit_or_worktree_state": "c1bb2b1+dirty",
+      "implementation_scope": "htt",
+      "input_hashes": [
+        "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513",
+        "docs/generated/observed_longrun_analysis.json:sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047",
+        "docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f"
+      ],
+      "null_mock_status": "current_code_diagnostic_null_bank_generated",
+      "observed_n_mocks": 192,
+      "owner": "HTT",
+      "sky_support_status": "not_directional",
+      "transfer_source": "none"
+    },
+    "fisher_compression": {
+      "caveats": [
+        "diagnostic covariance-compression audit only",
+        "not evidence",
+        "not native solver validation",
+        "not family or geometry evidence"
+      ],
+      "claim_tier": "diagnostic_only",
+      "config_hash": "sha256:35467fd7dd9bc75963ac2dcd8db81bebb380ba0eb67d08153065e2bc27dd1131",
+      "definition": "F_ij = 1/2 Tr(D_i D_j) at C=I",
+      "diagonal_compression_loses_information": true,
+      "diagonal_fisher": [
+        [
+          0.0
+        ]
+      ],
+      "full_fisher": [
+        [
+          1.0
+        ]
+      ],
+      "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
+      "git_commit_or_worktree_state": "c1bb2b1+dirty",
+      "implementation_scope": "htt",
+      "information_loss": [
+        [
+          1.0
+        ]
+      ],
+      "input_hashes": [
+        "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513",
+        "docs/generated/observed_longrun_analysis.json:sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047",
+        "docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f"
+      ],
+      "native_solver_result": false,
+      "null_mock_status": "not_statistical",
+      "owner": "HTT",
+      "sky_support_status": "not_directional",
+      "transfer_source": "none"
+    },
+    "nuisance_rank": {
+      "caveats": [
+        "diagnostic rank precondition only",
+        "not evidence",
+        "not local/global discrimination proof"
+      ],
+      "claim_tier": "diagnostic_only",
+      "condition_number": 7.737448579880522,
+      "config_hash": "sha256:996e3692713a3016bdfe67e7c7cb4422e0bc0d3428a22cd349fb373d8f70032f",
+      "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
+      "git_commit_or_worktree_state": "c1bb2b1+dirty",
+      "implementation_scope": "htt",
+      "input_hashes": [
+        "docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513",
+        "docs/generated/observed_longrun_analysis.json:sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047",
+        "docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f"
+      ],
+      "no_claim_reasons": [
+        "native_low_ell_solver_not_available",
+        "native_morphology_atlas_not_available",
+        "matched_publication_grade_nulls_not_bound",
+        "publication_grade_covariance_not_bound",
+        "held_out_validation_not_bound"
+      ],
+      "null_mock_status": "not_statistical",
+      "owner": "HTT",
+      "projected_rank": 2,
+      "singular_values": [
+        25.545947788848984,
+        3.301598391913766
+      ],
+      "sky_support_status": "not_directional",
+      "target_dimension": 2,
+      "transfer_source": "none"
+    }
+  },
   "null_mock_status": "mixed_not_statistical_current_null_bank_and_jackknife_bootstrap_diagnostic",
   "owner": "COMMON",
   "schema_version": "htt.revision_experiment_assets.v1",

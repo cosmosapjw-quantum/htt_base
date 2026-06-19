@@ -18,20 +18,20 @@
     "observed nonzero false positives remain blocker diagnostics"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "fec3495+dirty",
-  "config_hash": "sha256:ae7dc14250f0cd1c36064d4ca9d451e59432e5c0eee22aade6d87730a5315d4b",
+  "code_version": "c1bb2b1+dirty",
+  "config_hash": "sha256:77e73a93ee5a7166d70682b5ed34eb07bf3014c54d4964ef88c1f2ef0dcf8266",
   "created_by": "scripts/generate_revision_experiment_assets.py",
   "failed_gates": [
     "native_low_ell_solver_not_available",
-    "family_morphology_atlas_not_available",
+    "native_morphology_atlas_not_available",
     "publication_grade_covariance_not_bound"
   ],
   "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
-  "git_commit": "fec3495",
-  "git_commit_or_worktree_state": "fec3495+dirty",
+  "git_commit": "c1bb2b1",
+  "git_commit_or_worktree_state": "c1bb2b1+dirty",
   "implementation_scope": "common",
   "input_hashes": [
-    "docs/generated/current_science_plot_payload.json:sha256:610f6c27d0a5f9cd8d508844bbfd30cee141ca508e781e5f6ce3722adf354c76"
+    "docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f"
   ],
   "null_mock_status": "current_code_diagnostic_null_bank_generated",
   "owner": "COMMON",
@@ -55,6 +55,8 @@
   "sky_support_status": "not_directional",
   "statistics_definitions": {
     "asset_title": "Rule-of-three FPR ceiling",
+    "exact_zero_trigger_upper_bound_at_observed_n": 0.015481679618674082,
+    "finite_mock_confidence": 0.95,
     "input_mode": "repo_observed_input",
     "interpretation": "rule_of_three_is_a_zero-event_upper_bound; observed nonzero false positives must be reported separately",
     "look_elsewhere_trials": 3,

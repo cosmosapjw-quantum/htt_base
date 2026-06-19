@@ -41,6 +41,15 @@ from htt.infer.posterior_predictive import (
     build_posterior_predictive_report,
 )
 from htt.infer.posterior_exceedance import posterior_exceedance_summary
+from htt.infer.finite_mock import zero_trigger_upper_bound
+from htt.infer.nuisance_rank import (
+    NuisanceProjectedRankAudit,
+    nuisance_projected_rank,
+)
+from htt.infer.fisher_compression import (
+    FisherCompressionAudit,
+    gaussian_covariance_fisher_full_and_diag,
+)
 from htt.infer.loocv import LoocvReport, build_loocv_report
 from htt.infer.estimators import BridgeResult, tilt_velocity, delta_q, lambda_J_pec, delta_H
 from htt.infer.axis_gate import (
@@ -92,6 +101,9 @@ __all__ = [
     'GFMatchedNullForecastReport',
     'build_gf_matched_null_forecast_report',
     'build_matched_null_competition_report', 'build_null_competition_hook',
+    'zero_trigger_upper_bound', 'NuisanceProjectedRankAudit',
+    'nuisance_projected_rank', 'FisherCompressionAudit',
+    'gaussian_covariance_fisher_full_and_diag',
     'PriorSweepReport', 'InferenceAdequacyReport',
     'build_prior_sweep_report', 'build_inference_adequacy_report',
     'PosteriorPredictiveReport', 'build_posterior_predictive_report',
