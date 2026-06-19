@@ -23,6 +23,9 @@ null_mock_status: mixed_formalism_tests_and_diagnostic_null_context
 | Manifest self-reference caused post-commit stale loops | addressed | VER2 and package check-mode preserve/normalise self-referential git fields | generated manifests still record worktree state as provenance |
 | LaTeX byproducts polluted worktree/package risk | addressed | byproducts ignored and package tests exclude logs/aux files | local scratch files may exist after future latexmk runs |
 | Native solver/family-ID overclaim risk | guarded | claim-lint, figure audit, package manifests keep native/family gates failed | stronger claims still require native morphology atlas and matched null/mask/covariance gates |
+| Manuscript result framing did not foreground method-level contribution | addressed | `docs/manuscript/generated/formalism_methods_claim_ladder.tex` and chapter sources are included for audit | still not an observed-data discovery claim |
+| Formalism-audit response matrix absent from narrow re-audit bundle | addressed | `docs/generated/formalism_audit_originality_response_matrix.md` is packaged | matrix is a response target, not proof of correctness |
+| Figure-label linter output absent from narrow re-audit bundle | addressed | `FIGURE_LABEL_LINTER_REPORT.md` is generated and required to pass | linter checks labels, not physical validity |
 
 ## Validation Commands To Re-Run
 
@@ -41,4 +44,4 @@ null_mock_status: mixed_formalism_tests_and_diagnostic_null_context
 - `F`: certified filling fraction only under sign-clean samples and admissible ceiling.
 - `G_F`: depth-gap diagnostic requiring bin metadata and null/calibration status.
 - MIO formalism remains diagnostic; HTT evidence/posterior surfaces are separate.
-- Scalar formalism values cannot imply geometry detection or Bianchi family identification.
+- Scalar formalism values cannot imply geometry detection or Bianchi family-ID.

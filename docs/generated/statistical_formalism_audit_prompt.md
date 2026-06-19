@@ -7,14 +7,17 @@ You are an external hostile reviewer. Audit only the statistical and physical fo
 Read in this order:
 1. `READINESS_CHECKLIST.md`
 2. `statistical_formalism_audit/docs/manuscript/main.tex`
-3. generated LaTeX snippets under `statistical_formalism_audit/docs/manuscript/generated/`
-4. `statistical_formalism_audit/docs/generated/current_science_plot_payload.json`
-5. `statistical_formalism_audit/docs/generated/result_pack_A.md`
-6. `statistical_formalism_audit/docs/generated/result_pack_B.md`
-7. `statistical_formalism_audit/docs/generated/result_pack_C.md`
-8. VER2 departure/MIO generated reports under `statistical_formalism_audit/docs/ver2_upgrade/generated/`
-9. figure manifests under `statistical_formalism_audit/figures/`
-10. formalism code/tests only when prose or manifests are insufficient.
+3. manuscript chapters `ch01_introduction.tex`, `ch03_framework.tex`, `ch07_results.tex`, and `ch09_discussion.tex`
+4. generated LaTeX snippets under `statistical_formalism_audit/docs/manuscript/generated/`, especially `formalism_methods_claim_ladder.tex`
+5. `statistical_formalism_audit/docs/generated/formalism_audit_originality_response_matrix.md`
+6. `FIGURE_LABEL_LINTER_REPORT.md`
+7. `statistical_formalism_audit/docs/generated/current_science_plot_payload.json`
+8. `statistical_formalism_audit/docs/generated/result_pack_A.md`
+9. `statistical_formalism_audit/docs/generated/result_pack_B.md`
+10. `statistical_formalism_audit/docs/generated/result_pack_C.md`
+11. VER2 departure/MIO generated reports under `statistical_formalism_audit/docs/ver2_upgrade/generated/`
+12. figure manifests under `statistical_formalism_audit/figures/`
+13. formalism code/tests only when prose or manifests are insufficient.
 
 ## Hard Boundaries
 
@@ -41,10 +44,21 @@ Return exactly these sections:
 
 ## Attack Checklist
 
+### Novelty and substance
+- Decide whether the manuscript states a genuine methods contribution or merely renames existing diagnostics.
+- Check whether the semantic-firewall machinery has operational consequences: forbidden label tests, figure-label linter gates, manifest lanes, and MIO/HTT ownership separation.
+- Reject originality claims that are not backed by explicit package evidence, equations, tests, or generated manifests.
+
 ### x_C
 - Verify sign convention in `x_C = Sigma^2 - W^2 + Omega_tilt + Omega_k_aniso`.
 - Check whether `x_C` is ever described as invariant magnitude or geometry evidence.
 - Check FLRW, no-tilt, local-boost-only, global-tilt-only, and negative-coordinate limits.
+- Require signed sector components and absolute-magnitude summaries wherever cancellation can hide large terms.
+
+### Cancellation and magnitude reporting
+- Check all figures and prose that aggregate `x_C`, `Q`, `F`, or `G_F` for cancellation artifacts.
+- Require explicit signed sector components, total magnitude, cancellation ratio, or a stated reason why the quantity is not cancellation-sensitive.
+- Reject claims that a small signed aggregate is physically small without a companion magnitude diagnostic.
 
 ### Q
 - Verify numerator and denominator policy are explicit.
@@ -70,6 +84,12 @@ Return exactly these sections:
 - Check MIO report cards do not create evidence, posterior odds, model ranking, or truth certificates.
 - Check HTT posterior pushforward does not merge MIO certificates as evidence.
 - Check result packs keep diagnostic status distinct from production readiness labels.
+- Check whether semantic-firewall machinery blocks leakage across these lanes in generated outputs, not just in prose.
+
+### Legacy lnB leakage
+- Identify any `lnB`, Bayes-factor, evidence-like, or production-readiness language inherited from legacy or VER2 files.
+- Accept legacy tokens only when they are explicitly archival, not used as current scientific evidence, and do not enter MIO diagnostic claims.
+- Reject any hidden promotion of diagnostic reports into observed-data evidence via legacy readiness language.
 
 ### Figures
 - For each included figure, inspect its manifest before judging the caption.
@@ -79,8 +99,8 @@ Return exactly these sections:
 ## Rejection Triggers
 
 Reject if any current claim says or implies:
-- Bianchi geometry detected.
-- Bianchi family identified.
+- a detected Bianchi geometry.
+- an identified Bianchi family.
 - external-transfer output is described as native-validated.
 - diagnostic-only MIO material is promoted into model-probability, evidence-like, or truth-status language.
 - scalar formalism values alone imply geometry, family, or native-solver validation.

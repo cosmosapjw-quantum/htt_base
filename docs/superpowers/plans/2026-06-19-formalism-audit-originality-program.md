@@ -445,13 +445,13 @@ Files:
 
 Steps:
 
-- [ ] Include the response matrix, firewall fuzzer report, figure-label linter report,
+- [x] Include the response matrix, firewall fuzzer report, figure-label linter report,
   cancellation/magnitude artifacts, comparator-multiverse summaries, `Pi` policy summaries,
   `G_F` floor/split/null status, and revised manuscript source.
-- [ ] Exclude PDFs unless explicitly requested.
-- [ ] Keep code sampling minimal: include only production files needed to understand
+- [x] Exclude PDFs unless explicitly requested.
+- [x] Keep code sampling minimal: include only production files needed to understand
   figures and formalism claims.
-- [ ] Make the new prompt focus on:
+- [x] Make the new prompt focus on:
   - whether the methods contribution is genuinely novel.
   - whether the semantic firewall is more than prose disclaimers.
   - whether cancellation and magnitude reporting prevent scalar overread.

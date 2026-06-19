@@ -40,12 +40,25 @@ FIXED_ZIP_DATE = (1980, 1, 1, 0, 0, 0)
 LATEX_SOURCE_FILES = (
     "docs/manuscript/main.tex",
     "docs/manuscript/references.bib",
+    "docs/manuscript/ch01_introduction.tex",
+    "docs/manuscript/ch02_dipole_anomaly.tex",
+    "docs/manuscript/ch03_framework.tex",
+    "docs/manuscript/ch04_bianchi_bounds.tex",
+    "docs/manuscript/ch05_teff_corrections.tex",
+    "docs/manuscript/ch06_pipeline.tex",
+    "docs/manuscript/ch07_results.tex",
+    "docs/manuscript/ch08_robustness.tex",
+    "docs/manuscript/ch09_discussion.tex",
+    "docs/manuscript/ch10_future.tex",
+    "docs/manuscript/ch11_error_hierarchy.tex",
+    "docs/manuscript/appendices.tex",
     "docs/manuscript/generated/current_figures_pipeline.tex",
     "docs/manuscript/generated/current_figures_results.tex",
     "docs/manuscript/generated/current_figures_ver2_exports.tex",
     "docs/manuscript/generated/ver2_result_pack_summary.tex",
     "docs/manuscript/generated/ver2_artifact_export_policy.tex",
     "docs/manuscript/generated/ver2_figure_manifest_status.tex",
+    "docs/manuscript/generated/formalism_methods_claim_ladder.tex",
 )
 
 FORMALISM_METADATA_FILES = (
@@ -61,6 +74,8 @@ FORMALISM_METADATA_FILES = (
     "docs/generated/publication_claim_freeze.md",
     "docs/generated/pdf_claim_lint_report.md",
     "docs/generated/revision_claim_lanes.md",
+    "docs/generated/formalism_audit_originality_response_matrix.md",
+    "docs/generated/hostile_review_response_matrix.md",
     "docs/generated/semantic_firewall_fuzz_report.json",
     "docs/generated/semantic_firewall_fuzz_report.md",
     "docs/ver2_upgrade/generated/claim_ledger.json",
@@ -161,6 +176,10 @@ class PackageEntry:
 
 def _sha256_bytes(data: bytes) -> str:
     return "sha256:" + hashlib.sha256(data).hexdigest()
+
+
+def _sha256_file(path: Path) -> str:
+    return _sha256_bytes(path.read_bytes())
 
 
 def _stable_hash(payload: Any) -> str:
@@ -317,6 +336,7 @@ def _required_assertions(repo_root: Path, rows: Sequence[dict[str, Any]]) -> dic
         "latex_source_included": f"{ARCHIVE_ROOT}/docs/manuscript/main.tex" in archive_paths,
         "statistical_prompt_included": "AUDIT_PROMPT_STATISTICAL_FORMALISM.md" in archive_paths,
         "readiness_checklist_included": "READINESS_CHECKLIST.md" in archive_paths,
+        "figure_label_linter_report_included": "FIGURE_LABEL_LINTER_REPORT.md" in archive_paths,
         "formalism_code_included": all(f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_CODE_FILES),
         "formalism_tests_included": all(f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_TEST_FILES),
         "formalism_metadata_included": all(f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_METADATA_FILES),
@@ -354,6 +374,9 @@ def render_readiness_checklist() -> str:
         "| Manifest self-reference caused post-commit stale loops | addressed | VER2 and package check-mode preserve/normalise self-referential git fields | generated manifests still record worktree state as provenance |",
         "| LaTeX byproducts polluted worktree/package risk | addressed | byproducts ignored and package tests exclude logs/aux files | local scratch files may exist after future latexmk runs |",
         "| Native solver/family-ID overclaim risk | guarded | claim-lint, figure audit, package manifests keep native/family gates failed | stronger claims still require native morphology atlas and matched null/mask/covariance gates |",
+        "| Manuscript result framing did not foreground method-level contribution | addressed | `docs/manuscript/generated/formalism_methods_claim_ladder.tex` and chapter sources are included for audit | still not an observed-data discovery claim |",
+        "| Formalism-audit response matrix absent from narrow re-audit bundle | addressed | `docs/generated/formalism_audit_originality_response_matrix.md` is packaged | matrix is a response target, not proof of correctness |",
+        "| Figure-label linter output absent from narrow re-audit bundle | addressed | `FIGURE_LABEL_LINTER_REPORT.md` is generated and required to pass | linter checks labels, not physical validity |",
         "",
         "## Validation Commands To Re-Run",
         "",
@@ -370,11 +393,60 @@ def render_readiness_checklist() -> str:
             "- `F`: certified filling fraction only under sign-clean samples and admissible ceiling.",
             "- `G_F`: depth-gap diagnostic requiring bin metadata and null/calibration status.",
             "- MIO formalism remains diagnostic; HTT evidence/posterior surfaces are separate.",
-            "- Scalar formalism values cannot imply geometry detection or Bianchi family identification.",
+            "- Scalar formalism values cannot imply geometry detection or Bianchi family-ID.",
             "",
         ]
     )
     return "\n".join(lines)
+
+
+def render_figure_label_linter_report(repo_root: Path) -> tuple[str, bool]:
+    payload = repo_root / "docs/generated/current_science_plot_payload.json"
+    script = repo_root / "scripts/verify_formalism_figure_labels.py"
+    completed = subprocess.run(
+        [sys.executable, script.as_posix(), payload.as_posix()],
+        cwd=repo_root,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    status = "pass" if completed.returncode == 0 else "fail"
+    lines = [
+        "# Formalism Figure Label Linter Report",
+        "",
+        "owner: COMMON",
+        "implementation_scope: formalism_figure_label_lint",
+        "claim_tier: diagnostic_only",
+        "transfer_source: mixed_none_external_and_conditioned_legacy",
+        "sky_support_status: not_directional_for_label_lint",
+        "null_mock_status: not_statistical",
+        "input_hashes:",
+        f"- docs/generated/current_science_plot_payload.json:{_sha256_file(payload)}",
+        f"- scripts/verify_formalism_figure_labels.py:{_sha256_file(script)}",
+        "caveats:",
+        "- This report checks current generated formalism figure labels only.",
+        "- Passing this linter does not validate native transfer, observed-data evidence, or family-ID.",
+        "generating_command: venv/bin/python scripts/verify_formalism_figure_labels.py docs/generated/current_science_plot_payload.json",
+        "",
+        "## Summary",
+        "",
+        f"- Exit code: `{completed.returncode}`",
+        f"- Status: `{status}`",
+        "",
+        "## Stdout",
+        "",
+        "```text",
+        completed.stdout.strip() or "<empty>",
+        "```",
+        "",
+        "## Stderr",
+        "",
+        "```text",
+        completed.stderr.strip() or "<empty>",
+        "```",
+        "",
+    ]
+    return "\n".join(lines), completed.returncode == 0
 
 
 def render_prompt() -> str:
@@ -387,14 +459,17 @@ You are an external hostile reviewer. Audit only the statistical and physical fo
 Read in this order:
 1. `READINESS_CHECKLIST.md`
 2. `statistical_formalism_audit/docs/manuscript/main.tex`
-3. generated LaTeX snippets under `statistical_formalism_audit/docs/manuscript/generated/`
-4. `statistical_formalism_audit/docs/generated/current_science_plot_payload.json`
-5. `statistical_formalism_audit/docs/generated/result_pack_A.md`
-6. `statistical_formalism_audit/docs/generated/result_pack_B.md`
-7. `statistical_formalism_audit/docs/generated/result_pack_C.md`
-8. VER2 departure/MIO generated reports under `statistical_formalism_audit/docs/ver2_upgrade/generated/`
-9. figure manifests under `statistical_formalism_audit/figures/`
-10. formalism code/tests only when prose or manifests are insufficient.
+3. manuscript chapters `ch01_introduction.tex`, `ch03_framework.tex`, `ch07_results.tex`, and `ch09_discussion.tex`
+4. generated LaTeX snippets under `statistical_formalism_audit/docs/manuscript/generated/`, especially `formalism_methods_claim_ladder.tex`
+5. `statistical_formalism_audit/docs/generated/formalism_audit_originality_response_matrix.md`
+6. `FIGURE_LABEL_LINTER_REPORT.md`
+7. `statistical_formalism_audit/docs/generated/current_science_plot_payload.json`
+8. `statistical_formalism_audit/docs/generated/result_pack_A.md`
+9. `statistical_formalism_audit/docs/generated/result_pack_B.md`
+10. `statistical_formalism_audit/docs/generated/result_pack_C.md`
+11. VER2 departure/MIO generated reports under `statistical_formalism_audit/docs/ver2_upgrade/generated/`
+12. figure manifests under `statistical_formalism_audit/figures/`
+13. formalism code/tests only when prose or manifests are insufficient.
 
 ## Hard Boundaries
 
@@ -421,10 +496,21 @@ Return exactly these sections:
 
 ## Attack Checklist
 
+### Novelty and substance
+- Decide whether the manuscript states a genuine methods contribution or merely renames existing diagnostics.
+- Check whether the semantic-firewall machinery has operational consequences: forbidden label tests, figure-label linter gates, manifest lanes, and MIO/HTT ownership separation.
+- Reject originality claims that are not backed by explicit package evidence, equations, tests, or generated manifests.
+
 ### x_C
 - Verify sign convention in `x_C = Sigma^2 - W^2 + Omega_tilt + Omega_k_aniso`.
 - Check whether `x_C` is ever described as invariant magnitude or geometry evidence.
 - Check FLRW, no-tilt, local-boost-only, global-tilt-only, and negative-coordinate limits.
+- Require signed sector components and absolute-magnitude summaries wherever cancellation can hide large terms.
+
+### Cancellation and magnitude reporting
+- Check all figures and prose that aggregate `x_C`, `Q`, `F`, or `G_F` for cancellation artifacts.
+- Require explicit signed sector components, total magnitude, cancellation ratio, or a stated reason why the quantity is not cancellation-sensitive.
+- Reject claims that a small signed aggregate is physically small without a companion magnitude diagnostic.
 
 ### Q
 - Verify numerator and denominator policy are explicit.
@@ -450,6 +536,12 @@ Return exactly these sections:
 - Check MIO report cards do not create evidence, posterior odds, model ranking, or truth certificates.
 - Check HTT posterior pushforward does not merge MIO certificates as evidence.
 - Check result packs keep diagnostic status distinct from production readiness labels.
+- Check whether semantic-firewall machinery blocks leakage across these lanes in generated outputs, not just in prose.
+
+### Legacy lnB leakage
+- Identify any `lnB`, Bayes-factor, evidence-like, or production-readiness language inherited from legacy or VER2 files.
+- Accept legacy tokens only when they are explicitly archival, not used as current scientific evidence, and do not enter MIO diagnostic claims.
+- Reject any hidden promotion of diagnostic reports into observed-data evidence via legacy readiness language.
 
 ### Figures
 - For each included figure, inspect its manifest before judging the caption.
@@ -459,8 +551,8 @@ Return exactly these sections:
 ## Rejection Triggers
 
 Reject if any current claim says or implies:
-- Bianchi geometry detected.
-- Bianchi family identified.
+- a detected Bianchi geometry.
+- an identified Bianchi family.
 - external-transfer output is described as native-validated.
 - diagnostic-only MIO material is promoted into model-probability, evidence-like, or truth-status language.
 - scalar formalism values alone imply geometry, family, or native-solver validation.
@@ -478,7 +570,7 @@ formalism code, and formalism tests are included only where needed to interpret
 the statistical definitions and manuscript figures.
 
 This package is diagnostic-only.  It is not native solver validation, not a
-geometry detection claim, and not a Bianchi family-identification claim.
+geometry detection claim, and not a Bianchi family-ID claim.
 Historical status ledgers may preserve archived readiness vocabulary as
 provenance; current result packs use diagnostic-only public readiness and
 legacy-not-current caveats.
@@ -497,10 +589,12 @@ def build_payload(
     worktree_state: str | None = None,
 ) -> tuple[dict[str, Any], Sequence[PackageEntry]]:
     root = Path(repo_root).resolve()
+    linter_report, linter_passed = render_figure_label_linter_report(root)
     entries: list[PackageEntry] = [
         _virtual_entry("README.md", "package_readme", "statistical formalism audit package guide", render_readme()),
         _virtual_entry("AUDIT_PROMPT_STATISTICAL_FORMALISM.md", "statistical_prompt", "adversarial statistical formalism audit prompt", render_prompt()),
         _virtual_entry("READINESS_CHECKLIST.md", "readiness_checklist", "pre re-audit finding/fix checklist", render_readiness_checklist()),
+        _virtual_entry("FIGURE_LABEL_LINTER_REPORT.md", "figure_label_linter_report", "generated formalism figure-label linter report", linter_report),
         *_file_entries(root, LATEX_SOURCE_FILES, group="latex_source", description="LaTeX source and generated snippets needed to locate formalism claims"),
         *_file_entries(root, FORMALISM_METADATA_FILES, group="formalism_metadata", description="generated result packs, ledgers, and payloads for formalism audit"),
         *_file_entries(root, FORMALISM_CODE_FILES, group="formalism_code", description="minimal formalism code required to audit definitions"),
@@ -509,6 +603,7 @@ def build_payload(
     ]
     rows = _entry_rows(root, entries)
     assertions = _required_assertions(root, rows)
+    assertions["figure_label_linter_passed"] = linter_passed
     failed_gates = [name for name, ok in assertions.items() if not ok]
     archive_paths = [row["archive_path"] for row in rows]
     config = {
@@ -574,7 +669,7 @@ def build_payload(
             "The package is for external physics/statistics/formalism audit only.",
             "The compiled PDF is excluded to reduce size; selected LaTeX source is included.",
             "Formalism code/tests are included only to clarify definitions and gates.",
-            "Scalar formalism quantities do not support Bianchi geometry detection or family identification.",
+            "Scalar formalism quantities do not support Bianchi geometry detection or family-ID.",
             "Current transfer-dependent and conditioned legacy material remains transfer-conditional.",
         ],
     }

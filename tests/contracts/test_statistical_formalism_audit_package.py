@@ -46,6 +46,8 @@ def test_statistical_formalism_package_includes_focused_sources():
         "latex_source_included",
         "statistical_prompt_included",
         "readiness_checklist_included",
+        "figure_label_linter_report_included",
+        "figure_label_linter_passed",
         "formalism_code_included",
         "formalism_tests_included",
         "formalism_metadata_included",
@@ -58,11 +60,26 @@ def test_statistical_formalism_package_includes_focused_sources():
     archive_paths = {row["archive_path"] for row in payload["archive_entries"]}
     assert "AUDIT_PROMPT_STATISTICAL_FORMALISM.md" in archive_paths
     assert "READINESS_CHECKLIST.md" in archive_paths
+    assert "FIGURE_LABEL_LINTER_REPORT.md" in archive_paths
+    assert "statistical_formalism_audit/docs/manuscript/ch01_introduction.tex" in archive_paths
+    assert "statistical_formalism_audit/docs/manuscript/ch03_framework.tex" in archive_paths
+    assert "statistical_formalism_audit/docs/manuscript/ch07_results.tex" in archive_paths
+    assert "statistical_formalism_audit/docs/manuscript/ch09_discussion.tex" in archive_paths
+    assert "statistical_formalism_audit/docs/manuscript/generated/formalism_methods_claim_ladder.tex" in archive_paths
+    assert "statistical_formalism_audit/docs/generated/formalism_audit_originality_response_matrix.md" in archive_paths
+    assert "statistical_formalism_audit/docs/generated/hostile_review_response_matrix.md" in archive_paths
     assert "statistical_formalism_audit/htt/mio/formalism/normalized_score.py" in archive_paths
     assert "statistical_formalism_audit/htt/mio/formalism/filling_fraction.py" in archive_paths
     assert "statistical_formalism_audit/tests/mio/test_isotropy_gap.py" in archive_paths
     assert "statistical_formalism_audit/figures/current/fig_current_qfpi_gf_semantic_split.png" in archive_paths
     assert not any(path.lower().endswith(".pdf") for path in archive_paths)
+
+    prompt = next(entry for entry in _entries if entry.archive_path == "AUDIT_PROMPT_STATISTICAL_FORMALISM.md").bytes(REPO_ROOT).decode("utf-8")
+    assert "Novelty and substance" in prompt
+    assert "Cancellation and magnitude reporting" in prompt
+    assert "signed sector components" in prompt
+    assert "Legacy lnB leakage" in prompt
+    assert "semantic-firewall machinery" in prompt
 
 
 def test_statistical_formalism_package_self_reference_reuse(tmp_path: Path):
