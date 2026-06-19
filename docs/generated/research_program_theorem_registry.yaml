@@ -1,0 +1,121 @@
+schema_version: htt.research_program_theorem_registry.v1
+owner: COMMON
+implementation_scope: research_program_proposal
+claim_tier: diagnostic_only
+transfer_source: none
+config_hash: sha256:9c12d87ccba0afb5b876ad74b5dc7fe20e7e124cab4240d0499dc1d96e7208b2
+input_hashes:
+  - path: docs/codex_handoff/pr_dag_research_program.yaml
+    sha256: 63dd73215f0e0eb9e60bac3dff70a5177db74c3d9cef936d6ad90ef64e557aeb
+  - path: docs/audits/external_research_inputs_2026-06-20/egs_theorem_program.zip
+    sha256: ea0ed4a05bbefff546f21a65df80474f254999bf854100d16e523fd9d384fed3
+  - path: docs/audits/external_research_inputs_2026-06-20/htt_beyond_mes_egs_theorem_program_2026-06-19.zip
+    sha256: 4c3c61a2ff3f98d1cdcf758476ea7ed6ec1499edb3b236d94b54c98be195037b
+  - path: docs/generated/external_research_input_response_matrix.md
+    sha256: d0b5860d8f7657ba7bbb4e498c1821a1e3de0584d1249a9d7c9286c0258cb8ac
+sky_support_status: not_directional
+null_mock_status: not_statistical
+status_surface: proposal_registry_only
+generating_command: manual REV-R078 theorem registry from external theorem program inputs
+git_commit_or_worktree_state: pending_rev_r078_commit
+caveats:
+  - "registry only; not proof completion evidence"
+  - "scalar x/Q/Pi/F/G statements do not identify geometry or family"
+  - "native morphology atlas gates remain unavailable in the current repo"
+  - "MIO diagnostics do not become HTT evidence"
+theorem_tracks:
+  - id: T1
+    title: Signed comparator coordinate and cancellation-safe scalar display
+    owner: MIO
+    pr_ids: [PR-N04, PR-N40]
+    status: specified
+    required_inputs:
+      - component_sign_profile
+      - comparator_denominator_policy
+      - cancellation_index
+    allowed_claim_tier: diagnostic_only
+    blocked_claims:
+      - scalar_feature_family_identification
+      - cancellation_as_isotropy
+  - id: T2
+    title: Channel-matched occupancy denominator theorem
+    owner: MIO
+    pr_ids: [PR-N04, PR-N22, PR-N40]
+    status: proposed
+    required_inputs:
+      - channel_denominator_policy
+      - admissible_channel_set
+      - transfer_stability_summary
+    allowed_claim_tier: diagnostic_only
+    blocked_claims:
+      - mio_posterior
+      - mio_evidence
+      - truth_certificate
+  - id: T3
+    title: Finite-mock calibration and rule-of-three bound
+    owner: HTT
+    pr_ids: [PR-N02, PR-N21, PR-N22]
+    status: proposed
+    required_inputs:
+      - finite_mock_count
+      - threshold_policy
+      - matched_null_definition
+    allowed_claim_tier: diagnostic_only
+    blocked_claims:
+      - calibrated_zero_false_positive_rate_from_finite_mocks
+      - headline_evidence_without_nulls
+  - id: T4
+    title: Local/global response-rank identifiability condition
+    owner: HTT
+    pr_ids: [PR-N03, PR-N11, PR-N13, PR-N20, PR-N21]
+    status: proposed
+    required_inputs:
+      - nuisance_projector
+      - local_response_basis
+      - global_response_basis
+      - matched_null_bank
+      - cf4_covariance
+      - spectroscopic_mock_calibration
+    allowed_claim_tier: diagnostic_only
+    blocked_claims:
+      - global_tilt_claim_without_matched_nulls
+      - local_global_discrimination_without_rank_audit
+  - id: T5
+    title: Full-covariance MES and BiPoSH residual summary
+    owner: OBSSTAT_HTT
+    pr_ids: [PR-N30, PR-N31, PR-N32, PR-N40]
+    status: proposed
+    required_inputs:
+      - boost_subtracted_lowell_features
+      - biposh_residual_covariance
+      - covariance_mes_report
+      - exact_mask_noise_simulations
+      - response_rank_audit
+      - nuisance_projection
+    allowed_claim_tier: diagnostic_only
+    blocked_claims:
+      - morphology_compatibility_without_atlas
+      - geometry_detection
+  - id: T6
+    title: Future native atlas adapter soundness boundary
+    owner: BASS_COMMON
+    pr_ids: [PR-N50, PR-N51]
+    status: blocked_until_native_solver
+    required_inputs:
+      - native_lowell_solver_output_schema
+      - morphology_atlas_entries
+      - family_equivalence_class_tests
+      - mask_covariance_null_gates
+      - native_convergence_report
+      - external_cross_check
+      - response_rank_audit
+      - nuisance_projection
+      - matched_complexity_alternatives
+      - prior_stability
+      - ppc_and_held_out_morphology_prediction
+      - orientation_look_elsewhere_correction
+    allowed_claim_tier: blocked
+    blocked_claims:
+      - native_solver_execution
+      - family_identification
+      - external_transfer_native_promotion

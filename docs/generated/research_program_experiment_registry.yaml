@@ -1,0 +1,157 @@
+schema_version: htt.research_program_experiment_registry.v1
+owner: COMMON
+implementation_scope: research_program_proposal
+claim_tier: diagnostic_only
+transfer_source: none
+config_hash: sha256:a6f13a10ae81e9edf3b1cef53a7b6f7332b73dac62e677dbc4fe488329787393
+input_hashes:
+  - path: docs/codex_handoff/pr_dag_research_program.yaml
+    sha256: 63dd73215f0e0eb9e60bac3dff70a5177db74c3d9cef936d6ad90ef64e557aeb
+  - path: docs/audits/external_research_inputs_2026-06-20/RESEARCH_AUDIT_REPORT.md
+    sha256: c2e57931109cdbdeb40c2a469db50a64626bb85d05c266f53fad369494d0a065
+  - path: docs/audits/external_research_inputs_2026-06-20/htt_publishable_novel_analysis_program_2026-06-19.zip
+    sha256: bb66be05bc94b1441519a5db7be31ec62eb501f463a9bea5c81bf555ef081393
+  - path: docs/audits/external_research_inputs_2026-06-20/publishable_data_analysis_program.zip
+    sha256: e2590f1ca79b63feecd77151de2f7f00b583f4f7f4b828d6e0d7642b00dba038
+  - path: docs/generated/external_research_input_response_matrix.md
+    sha256: d0b5860d8f7657ba7bbb4e498c1821a1e3de0584d1249a9d7c9286c0258cb8ac
+sky_support_status: not_directional
+null_mock_status: not_statistical
+status_surface: proposal_registry_only
+generating_command: manual REV-R078 registry from external research program inputs
+git_commit_or_worktree_state: pending_rev_r078_commit
+caveats:
+  - "registry only; not experiment execution evidence"
+  - "external/proxy transfer remains transfer-conditional and non-native"
+  - "no CF4++ headline value is accepted without bound config/input hashes"
+  - "family identification remains blocked until native morphology atlas support exists"
+experiments:
+  - id: E0
+    title: Contract, manifest, and proposal-lane setup
+    owner: COMMON
+    pr_ids: [PR-N00, PR-N01]
+    allowed_use: design
+    status: proposed
+    required_artifacts:
+      - research_program_dag
+      - experiment_registry
+      - theorem_registry
+      - proposal_lane_contract_tests
+    blocked_claims:
+      - native_solver_result
+      - family_identification
+      - publication_evidence_without_manifest
+  - id: E1
+    title: Prior-support and finite-mock calibration
+    owner: HTT
+    pr_ids: [PR-N02, PR-N21, PR-N22]
+    allowed_use: diagnostic
+    status: proposed
+    required_artifacts:
+      - finite_mock_coverage_report
+      - prior_support_surface
+      - null_threshold_summary
+    blocked_claims:
+      - headline_bayes_factor_without_prior_sensitivity
+      - calibrated_zero_false_positive_rate_from_finite_mocks
+  - id: E2
+    title: Bulk-flow uncertainty and look-elsewhere bookkeeping
+    owner: HTT
+    pr_ids: [PR-N02, PR-N10, PR-N11, PR-N22]
+    allowed_use: diagnostic
+    status: proposed
+    required_artifacts:
+      - sigma_beta_sensitivity_band
+      - bulk_flow_compilation_registry
+      - look_elsewhere_over_compilations
+      - cf4_depth_bin_covariance
+      - local_flow_mock_bank
+    blocked_claims:
+      - cf4_headline_without_bound_inputs
+      - external_transfer_native_promotion
+  - id: E3
+    title: Channel-matched occupancy vector
+    owner: MIO
+    pr_ids: [PR-N04, PR-N40]
+    allowed_use: diagnostic
+    status: proposed
+    required_artifacts:
+      - per_channel_denominator_policy
+      - diagnostic_occupancy_vector
+      - transfer_stability_summary
+    blocked_claims:
+      - mio_posterior
+      - mio_evidence
+      - truth_certificate
+  - id: E4
+    title: Nuisance-projected rank and Fisher compression
+    owner: HTT
+    pr_ids: [PR-N03, PR-N20]
+    allowed_use: diagnostic
+    status: proposed
+    required_artifacts:
+      - nuisance_projected_rank_report
+      - fisher_compression_summary
+      - degeneracy_direction_audit
+    blocked_claims:
+      - rank_claim_without_nuisance_projection
+      - local_global_discrimination_without_nulls
+  - id: E5
+    title: CF4 forward distance likelihood and rest-frame hierarchy
+    owner: OBSSTAT_HTT
+    pr_ids: [PR-N10, PR-N11, PR-N20, PR-N21]
+    allowed_use: diagnostic
+    status: proposed
+    required_artifacts:
+      - cf4_raw_group_manifest
+      - distance_variable_likelihood_contract
+      - depth_bin_covariance
+      - local_flow_mock_bank
+      - ppc_and_heldout_validation
+    blocked_claims:
+      - cf4_headline_without_bound_inputs
+      - adequacy_claim_without_ppc_loocv
+  - id: E6
+    title: Spectroscopic data-random dipole estimator
+    owner: OBSSTAT
+    pr_ids: [PR-N12, PR-N13, PR-N20, PR-N21]
+    allowed_use: diagnostic
+    status: proposed
+    required_artifacts:
+      - survey_random_manifest
+      - mask_weighted_dipole_estimator
+      - matched_mock_catalogs
+      - full_covariance
+      - random_catalog_null_bank
+      - look_elsewhere_registration
+    blocked_claims:
+      - dipole_detection_without_mask_randoms_covariance
+      - global_tilt_claim_without_matched_nulls
+      - jackknife_as_matched_null
+  - id: E7
+    title: Planck boost and BiPoSH/covariance residual summaries
+    owner: OBSSTAT_HTT
+    pr_ids: [PR-N30, PR-N31, PR-N32, PR-N40]
+    allowed_use: diagnostic
+    status: proposed
+    required_artifacts:
+      - boost_adapter_contract
+      - mask_noise_simulation_calibration
+      - biposh_residual_summary
+      - covariance_mes_report
+    blocked_claims:
+      - boost_subtraction_as_global_tilt_proof
+      - morphology_compatibility_without_atlas
+  - id: E8
+    title: External audit and claim-freeze packaging
+    owner: COMMON
+    pr_ids: [PR-N40, PR-N41]
+    allowed_use: external_audit
+    status: proposed
+    required_artifacts:
+      - claim_freeze_matrix
+      - audit_response_matrix
+      - research_only_audit_package
+    blocked_claims:
+      - publication_claim_without_claim_freeze
+      - post_audit_promotion_without_response_matrix
