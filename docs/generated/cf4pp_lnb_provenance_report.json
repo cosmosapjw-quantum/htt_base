@@ -1,0 +1,338 @@
+{
+  "acceptance_requirements": [
+    "cf4pp_identity",
+    "target_lnb_value",
+    "bound_config_hash",
+    "nonempty_input_hashes",
+    "generating_command",
+    "allowed_claim_tier",
+    "allowed_transfer_source"
+  ],
+  "accepted_source": null,
+  "allowed_bound_claim_tiers": [
+    "diagnostic_only",
+    "transfer_conditional"
+  ],
+  "allowed_bound_transfer_sources": [
+    "AniCLASS_external",
+    "empirical_proxy",
+    "external_transfer",
+    "legacy_external_proxy",
+    "legacy_external_transfer_or_unbound"
+  ],
+  "bound_result_config_hash": null,
+  "bound_result_input_hashes": [],
+  "caveats": [
+    "not used in manuscript headline",
+    "dedicated rerun required",
+    "canonical JSON search did not bind the CF4++ lnB value",
+    "not native transfer",
+    "not a family or geometry claim"
+  ],
+  "claim_tier": "blocked",
+  "config_hash": "sha256:ea620301c9d09abb037b223fd13eda638df9528b8ef623040a452e813d28b9a3",
+  "covariance_status": "not_bound_for_cf4pp_legacy_sensitivity",
+  "external_context": [
+    "https://academic.oup.com/mnras/article/527/2/3788/7419869",
+    "https://academic.oup.com/mnras/article/526/2/3051/7296158",
+    "https://edd.ifa.hawaii.edu/describe_columns.php?table=kcf4allvel"
+  ],
+  "generating_command": "venv/bin/python scripts/reproduce_cf4pp_lnb.py --write",
+  "git_commit_or_worktree_state": "pending_rev_r077_commit",
+  "implementation_scope": "cf4pp_lnb_provenance_gate",
+  "input_hashes": [
+    "dl_pipeline/assets/obs_meta/INDEX.json=sha256:97d3c8d69b77552ff6592fc1a46132043c89774ccc185a7824612b1425eb3198",
+    "docs/audits/external_research_inputs_2026-06-20/input_inventory.json=sha256:640ac04449c73b405c8703a6b6ecee68e8d072d588531d485a688681bd3af0dc",
+    "docs/generated/current_manuscript_figure_curation.json=sha256:1bff29c98803b711203a90c988ecdbabdf241d2daf13666a314faa7673ec49f8",
+    "docs/generated/current_science_plot_payload.json=sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f",
+    "docs/generated/expanded_manuscript_figure_suite.json=sha256:f35e4a37b9d209a2e4492c06b8d8a3745da12743103427b7ad1397cbce5fee18",
+    "docs/generated/observational_data_inventory.json=sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513",
+    "docs/generated/observed_longrun_analysis.json=sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047",
+    "docs/generated/revision_experiment_assets.json=sha256:3fa8780926068d45211ef4ea0607502b8a63122899a1e8d597c34de0912f02e7",
+    "figures/conditioned_legacy/root__fig_cf4pp_sensitivity.manifest.json=sha256:1efd7b8a65f0c7d8b1747e146b25609dbc624e5a82b6d8fe3dcbd4e7fedbe62d",
+    "htt/workspace/data/obs_defaults.json=sha256:c305be5b42ea3c0a9f8d919f0314ac6befc5155424d6b8a00d92f4f9349ac1df",
+    "htt/workspace/results/integrated_pipeline_results.json=sha256:f8a86e3b527af99eb2f5ef8f7ae2efb9485e7b55b24d74cc43766b3d8b13af5d",
+    "htt/workspace/results/mio_directional_coherence.json=sha256:3f41a2bdf2b6f056c271d892d8ddfbb60734dd78dd74aceef60e0628376bc6c9"
+  ],
+  "lnB_cf4pp": null,
+  "null_mock_status": "not_bound",
+  "owner": "HTT",
+  "rejected_candidates": [
+    {
+      "claim_tier": null,
+      "config_hash": null,
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/scalars/obs_defaults.courtois2025",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "missing_transfer_source"
+      ],
+      "source_path": "dl_pipeline/assets/obs_meta/INDEX.json",
+      "transfer_source": null
+    },
+    {
+      "claim_tier": null,
+      "config_hash": null,
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/response_actions/2",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "missing_transfer_source"
+      ],
+      "source_path": "docs/audits/external_research_inputs_2026-06-20/input_inventory.json",
+      "transfer_source": null
+    },
+    {
+      "claim_tier": null,
+      "config_hash": null,
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/aggressive/figures/12",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "unsupported_transfer_source"
+      ],
+      "source_path": "docs/generated/expanded_manuscript_figure_suite.json",
+      "transfer_source": "legacy_analytic_or_proxy_context"
+    },
+    {
+      "claim_tier": "exploratory",
+      "config_hash": "sha256:c85768fd1f9179269493e55b3df029b6a2e6af031b7f4a2a8804cfb568bae712",
+      "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+      "has_bound_provenance": false,
+      "input_hashes": [
+        "figures/fig_cf4pp_sensitivity.png:sha256:bf53d3c8b178fb99e62f428f09af2aa17e955350dbadd36fa4e0792ab52c2b87",
+        "scripts/build_expanded_manuscript_figure_suite.py:sha256:e4fd73c4c4d5fcbfaf4769788067c0730639c7768fbdf299218a8947590c38ac"
+      ],
+      "lnB_values": [],
+      "pointer": "/",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "unsupported_claim_tier",
+        "unsupported_transfer_source"
+      ],
+      "source_path": "figures/conditioned_legacy/root__fig_cf4pp_sensitivity.manifest.json",
+      "transfer_source": "legacy_analytic_or_proxy_context"
+    },
+    {
+      "claim_tier": null,
+      "config_hash": null,
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/statistics_definitions",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "missing_transfer_source"
+      ],
+      "source_path": "figures/conditioned_legacy/root__fig_cf4pp_sensitivity.manifest.json",
+      "transfer_source": null
+    },
+    {
+      "claim_tier": null,
+      "config_hash": "fafcde0ceea849cd",
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/certificate",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "missing_transfer_source"
+      ],
+      "source_path": "htt/workspace/results/mio_directional_coherence.json",
+      "transfer_source": null
+    },
+    {
+      "claim_tier": null,
+      "config_hash": null,
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/probes/3",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "missing_transfer_source"
+      ],
+      "source_path": "htt/workspace/results/mio_directional_coherence.json",
+      "transfer_source": null
+    }
+  ],
+  "schema_version": "htt.cf4pp_lnb_provenance.v1",
+  "sky_support_status": "not_directional",
+  "source_file_count": 12,
+  "source_json": [
+    "dl_pipeline/assets/obs_meta/INDEX.json",
+    "docs/audits/external_research_inputs_2026-06-20/input_inventory.json",
+    "docs/generated/current_manuscript_figure_curation.json",
+    "docs/generated/current_science_plot_payload.json",
+    "docs/generated/expanded_manuscript_figure_suite.json",
+    "docs/generated/observational_data_inventory.json",
+    "docs/generated/observed_longrun_analysis.json",
+    "docs/generated/revision_experiment_assets.json",
+    "figures/conditioned_legacy/root__fig_cf4pp_sensitivity.manifest.json",
+    "htt/workspace/data/obs_defaults.json",
+    "htt/workspace/results/integrated_pipeline_results.json",
+    "htt/workspace/results/mio_directional_coherence.json"
+  ],
+  "source_search": [
+    {
+      "claim_tier": null,
+      "config_hash": null,
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/scalars/obs_defaults.courtois2025",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "missing_transfer_source"
+      ],
+      "source_path": "dl_pipeline/assets/obs_meta/INDEX.json",
+      "transfer_source": null
+    },
+    {
+      "claim_tier": null,
+      "config_hash": null,
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/response_actions/2",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "missing_transfer_source"
+      ],
+      "source_path": "docs/audits/external_research_inputs_2026-06-20/input_inventory.json",
+      "transfer_source": null
+    },
+    {
+      "claim_tier": null,
+      "config_hash": null,
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/aggressive/figures/12",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "unsupported_transfer_source"
+      ],
+      "source_path": "docs/generated/expanded_manuscript_figure_suite.json",
+      "transfer_source": "legacy_analytic_or_proxy_context"
+    },
+    {
+      "claim_tier": "exploratory",
+      "config_hash": "sha256:c85768fd1f9179269493e55b3df029b6a2e6af031b7f4a2a8804cfb568bae712",
+      "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+      "has_bound_provenance": false,
+      "input_hashes": [
+        "figures/fig_cf4pp_sensitivity.png:sha256:bf53d3c8b178fb99e62f428f09af2aa17e955350dbadd36fa4e0792ab52c2b87",
+        "scripts/build_expanded_manuscript_figure_suite.py:sha256:e4fd73c4c4d5fcbfaf4769788067c0730639c7768fbdf299218a8947590c38ac"
+      ],
+      "lnB_values": [],
+      "pointer": "/",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "unsupported_claim_tier",
+        "unsupported_transfer_source"
+      ],
+      "source_path": "figures/conditioned_legacy/root__fig_cf4pp_sensitivity.manifest.json",
+      "transfer_source": "legacy_analytic_or_proxy_context"
+    },
+    {
+      "claim_tier": null,
+      "config_hash": null,
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/statistics_definitions",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "missing_transfer_source"
+      ],
+      "source_path": "figures/conditioned_legacy/root__fig_cf4pp_sensitivity.manifest.json",
+      "transfer_source": null
+    },
+    {
+      "claim_tier": null,
+      "config_hash": "fafcde0ceea849cd",
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/certificate",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "missing_transfer_source"
+      ],
+      "source_path": "htt/workspace/results/mio_directional_coherence.json",
+      "transfer_source": null
+    },
+    {
+      "claim_tier": null,
+      "config_hash": null,
+      "generating_command": null,
+      "has_bound_provenance": false,
+      "input_hashes": [],
+      "lnB_values": [],
+      "pointer": "/probes/3",
+      "rejection_reasons": [
+        "target_lnb_absent",
+        "missing_bound_config_or_input_hashes",
+        "missing_generating_command",
+        "missing_claim_tier",
+        "missing_transfer_source"
+      ],
+      "source_path": "htt/workspace/results/mio_directional_coherence.json",
+      "transfer_source": null
+    }
+  ],
+  "status": "quarantined_untraceable",
+  "target": "CF4++ legacy lnB sensitivity value",
+  "transfer_source": "legacy_external_transfer_or_unbound"
+}

@@ -820,7 +820,9 @@ untracked model omission.
 Three bulk-flow compilations are available, each giving a
 different tilt rapidity (Section~\ref{sec:cf4-versions} of
 Chapter~\ref{ch:pipeline}).
-Table~\ref{tab:cf4-triple} reports the evidence under each.
+Table~\ref{tab:cf4-triple} reports the WFH2009 legacy evidence
+summary and the provenance status for the CF4++ and Watkins+2023
+sensitivity variants.
 
 \begin{table}[t]
 \caption{Legacy transfer-conditional diagnostic-threshold sensitivity to CF4
@@ -834,11 +836,11 @@ Table~\ref{tab:cf4-triple} reports the evidence under each.
 \begin{tabular}{llcc}
 \hline\hline
 Version & $\beta \;(\times 10^{-3})$ &
-  $\ln\mathcal{B}$ (FLRW$_{\mathrm{tilt}}$) & Verdict \\
+  $\ln\mathcal{B}$ provenance & Verdict \\
 \hline
 WFH2009 (primary) & $1.334 \pm 0.267$ & $+26.3$ & legacy high-support \\
-CF4++ & $1.051 \pm 0.133$ & $+44.0^{*}$ & quarantined sensitivity \\
-Watkins+2023 & $1.318 \pm 0.097$ & $+105.8^{*}$ & quarantined sensitivity \\
+CF4++ & $1.051 \pm 0.133$ & unbound$^{*}$ & quarantined sensitivity \\
+Watkins+2023 & $1.318 \pm 0.097$ & unbound$^{*}$ & quarantined sensitivity \\
 \hline\hline
 \multicolumn{4}{l}{\scriptsize $^{*}$Sensitivity run; not in canonical VER05 JSON; pending dedicated rerun before publication use.}
 \end{tabular}
@@ -850,13 +852,13 @@ evidence summary for a non-zero tilt DOF; the CF4++ and Watkins+2023
 rows are sensitivity-only and remain quarantined pending a rerun with
 bound config and input hashes.  The WFH2009 value was previously misattributed to
 Watkins et~al.~\cite{Watkins2023}; this error is corrected in
-the present revision.  The large difference
-($\ln\mathcal{B}$ from $+26$ to a quarantined sensitivity value
-near $+106$) reflects the different $\sigma_\beta$: the
-Watkins+2023 value has the smallest uncertainty
-($\sigma = 0.097 \times 10^{-3}$).  The sensitivity rows are
-therefore not interpreted as threshold-crossing evidence in this
-revision.  All departure
+the present revision.  The unbound sensitivity inputs differ mainly
+through $\sigma_\beta$: the Watkins+2023 value has the smallest
+uncertainty ($\sigma = 0.097 \times 10^{-3}$).  The sensitivity rows
+are therefore not interpreted as result evidence in this revision and are
+not result-table numbers until a dedicated rerun binds
+the config hash, input hashes, likelihood settings, sampler settings,
+and output manifest.  All departure
 quantities ($x$, $Q$, $\Pi$) are qualitatively unchanged
 across the three versions.
 
