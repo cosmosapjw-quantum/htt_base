@@ -34,10 +34,19 @@ for import_root in (COMMON_ROOT, HTT_ROOT):
 from common.artifact_manifest import validate_manifest_payload  # noqa: E402
 from htt.departure.response_overlap import build_response_overlap_audit  # noqa: E402
 from mio.formalism.budget_spec import (  # noqa: E402
+    BudgetUse,
     build_budget_spec,
     compare_denominator_policies,
 )
 from mio.formalism.departure_bundle import build_departure_bundle  # noqa: E402
+from mio.formalism.exceedance import (  # noqa: E402
+    MeasureKind,
+    build_exceedance_curve_from_normalized_scores,
+)
+from mio.formalism.normalized_score import (  # noqa: E402
+    build_comparator_multiverse_summary,
+    build_normalized_score,
+)
 from htt.nulls.local_boost_depth_null import (  # noqa: E402
     DepthBinSpec,
     LocalBoostDepthNull,
@@ -69,6 +78,7 @@ COLORS = {
     "muted": "#64748b",
     "panel": "#f8fafc",
 }
+_GIT_STATE_OVERRIDE: tuple[str | None, str] | None = None
 
 
 @dataclass(frozen=True)
@@ -132,6 +142,8 @@ def _read_text(rel_path: str) -> str:
 
 
 def _git_state(repo_root: Path = REPO_ROOT) -> tuple[str | None, str]:
+    if _GIT_STATE_OVERRIDE is not None:
+        return _GIT_STATE_OVERRIDE
     try:
         commit = subprocess.check_output(
             ["git", "rev-parse", "--short", "HEAD"],
@@ -255,15 +267,6 @@ def _budget_specs() -> tuple[object, ...]:
         ),
         build_budget_spec(
             **base,
-            policy="atlas_quantile",
-            denominator_value=0.132,
-            denominator_label="atlas schema quantile",
-            quantile=0.9,
-            source_description="schema-only native morphology atlas placeholder; no values consumed",
-            native_morphology_atlas_status="schema_only",
-        ),
-        build_budget_spec(
-            **base,
             policy="observational",
             denominator_value=0.076,
             denominator_label="directional mock envelope",
@@ -276,7 +279,140 @@ def _budget_specs() -> tuple[object, ...]:
     )
 
 
-def _build_transfer_budget_payload() -> dict[str, object]:
+def _q_comparator_scores() -> tuple[object, ...]:
+    samples = (
+        (
+            "CMB_FLRW_reference",
+            {
+                "Sigma2_std": 0.052,
+                "W2_std": 0.009,
+                "Omega_tilt": 0.018,
+                "Omega_k_aniso": 0.003,
+            },
+            0.087,
+            "current-code CMB FLRW comparator denominator",
+            ("q-cmb-comparator-x",),
+            ("q-cmb-comparator-budget",),
+        ),
+        (
+            "observer_frame_reference",
+            {
+                "Sigma2_std": 0.047,
+                "W2_std": 0.012,
+                "Omega_tilt": 0.015,
+                "Omega_k_aniso": 0.004,
+            },
+            0.096,
+            "current-code observer-frame comparator denominator",
+            ("q-observer-comparator-x",),
+            ("q-observer-comparator-budget",),
+        ),
+        (
+            "stress_payload_reference",
+            {
+                "Sigma2_std": 0.058,
+                "W2_std": 0.006,
+                "Omega_tilt": 0.021,
+                "Omega_k_aniso": 0.002,
+            },
+            0.078,
+            "current-code stress-payload comparator denominator",
+            ("q-stress-comparator-x",),
+            ("q-stress-comparator-budget",),
+        ),
+    )
+    scores = []
+    for comparator, components, denominator, label, x_hashes, budget_hashes in samples:
+        bundle = build_departure_bundle(
+            components,
+            comparator=comparator,
+            frame="normal_frame",
+            units="dimensionless_hubble_normalized",
+            config_hash=_sha_label(f"{comparator}:q-comparator-bundle"),
+            input_hashes=x_hashes,
+            caveats=(
+                "deterministic current-code comparator sample for display metadata only",
+            ),
+        )
+        budget = build_budget_spec(
+            policy="MES_linear",
+            denominator_value=denominator,
+            denominator_label=label,
+            comparator=comparator,
+            frame="normal_frame",
+            units="dimensionless_hubble_normalized",
+            config_hash=_sha_label(f"{comparator}:q-comparator-budget"),
+            input_hashes=budget_hashes,
+            assumptions=(
+                "deterministic current-code comparator sensitivity sample",
+            ),
+            admissible_uses=(
+                BudgetUse.DENOMINATOR_SENSITIVITY,
+                BudgetUse.SIGNED_PROJECTION_NORMALIZATION,
+                BudgetUse.EXCEEDANCE_THRESHOLD,
+            ),
+            source_description="MIO comparator sensitivity denominator sample",
+            native_morphology_atlas_status="not_available_pre_solver",
+        )
+        scores.append(
+            build_normalized_score(
+                bundle,
+                budget,
+                numerator_policy="absolute",
+                artifact_metadata={"report_role": "Q comparator sensitivity"},
+            )
+        )
+    return tuple(scores)
+
+
+def _pi_policy_display_summary(curve_payload: dict[str, object]) -> dict[str, object]:
+    display_metadata = dict(curve_payload["display_metadata"])
+    display_metadata["calibration_status"] = "raw_exceedance_only_uncalibrated_no_p_value"
+    return {
+        "owner": "MIO",
+        "implementation_scope": "mio",
+        "claim_tier": "diagnostic_only",
+        "summary_label": "Pi_policy_display_contract",
+        "summary_kind": "noncanonical_pi_policy_metadata_summary",
+        "source_score_label": curve_payload["source_score_label"],
+        "source_kind": curve_payload["source_kind"],
+        "measure_kind": curve_payload["measure_kind"],
+        "threshold_policy": curve_payload["threshold_policy"],
+        "threshold_registration_status": curve_payload[
+            "threshold_registration_status"
+        ],
+        "threshold_grid": curve_payload["threshold_grid"],
+        "look_elsewhere_trials": curve_payload["look_elsewhere_trials"],
+        "exceedance_rule": curve_payload["exceedance_rule"],
+        "sample_count": curve_payload["sample_count"],
+        "calibration_status": "raw_exceedance_only_uncalibrated_no_p_value",
+        "covariance_status": curve_payload["covariance_status"],
+        "null_mock_status": curve_payload["null_mock_status"],
+        "sky_support_status": curve_payload["sky_support_status"],
+        "source_curve_config_hash": curve_payload["config_hash"],
+        "source_config_hashes": curve_payload["source_config_hashes"],
+        "input_hashes": curve_payload["input_hashes"],
+        "source_metadata": curve_payload["source_metadata"],
+        "display_metadata": display_metadata,
+        "artifact_metadata": {
+            "report_role": "Pi display policy metadata summary",
+            "canonical_pi_curve_payload": "not_exported_in_current_semantic_split",
+        },
+        "caveats": [
+            "Policy summary only; current semantic split does not plot a canonical Pi row.",
+            "Raw exceedance metadata is uncalibrated and must not be read as a p-value.",
+        ],
+        "generating_command": curve_payload["generating_command"],
+        "git_commit": curve_payload["git_commit"],
+        "worktree_state": curve_payload["worktree_state"],
+    }
+
+
+def _build_transfer_budget_payload(
+    command: str,
+    git_commit: str | None,
+    worktree: str,
+) -> dict[str, object]:
     x_reference = 0.064
     reference_departure = build_departure_bundle(
         {
@@ -316,10 +452,35 @@ def _build_transfer_budget_payload() -> dict[str, object]:
             }
         )
         rows.append(payload)
+    q_scores = _q_comparator_scores()
+    q_summary = build_comparator_multiverse_summary(
+        q_scores,
+        baseline_comparator="CMB_FLRW_reference",
+        generating_command=command,
+        git_commit=git_commit,
+        worktree_state=worktree,
+        artifact_metadata={"report_role": "Q comparator specification sensitivity"},
+    )
+    pi_policy_curve = build_exceedance_curve_from_normalized_scores(
+        q_scores,
+        thresholds=(0.65, 0.75, 0.85),
+        measure_kind=MeasureKind.SAMPLE_DISTRIBUTION,
+        look_elsewhere_trials=1,
+        generating_command=command,
+        git_commit=git_commit,
+        worktree_state=worktree,
+        artifact_metadata={"report_role": "Pi policy metadata summary"},
+    )
+    pi_policy_summary = _pi_policy_display_summary(pi_policy_curve.as_payload())
     return {
         "x_reference": x_reference,
+        "x_reference_comparator": reference_departure.comparator,
+        "x_reference_frame": reference_departure.frame,
+        "x_reference_units": reference_departure.units,
         "x_reference_sector_profile": reference_departure.sector_profile,
         "x_reference_display_metadata": reference_departure.display_metadata,
+        "q_comparator_multiverse": q_summary.as_payload(),
+        "pi_policy_summary": pi_policy_summary,
         "relative_shifts": [-0.2, 0.0, 0.2],
         "points": rows,
         "contract": "MIO BudgetSpec/compare_denominator_policies",
@@ -507,7 +668,16 @@ def _build_semantic_and_vector_payload(
         for point in transfer_payload["points"]
         if isinstance(point, dict) and float(point["relative_shift"]) == 0.0
     ]
-    q_values = np.asarray([float(point["Q_diagnostic"]) for point in points], dtype=float)
+    q_summary = transfer_payload["q_comparator_multiverse"]
+    assert isinstance(q_summary, dict)
+    pi_policy_summary = transfer_payload["pi_policy_summary"]
+    assert isinstance(pi_policy_summary, dict)
+    q_by_comparator = q_summary["q_by_comparator"]
+    assert isinstance(q_by_comparator, dict)
+    q_values = np.asarray(
+        [float(value) for value in q_by_comparator.values()],
+        dtype=float,
+    )
     local_fpr = rank_payload["local_null_fpr"]["false_positive_rate"]
     survey_fpr = rank_payload["survey_systematic_fpr"]["false_positive_rate"]
     assert isinstance(local_fpr, dict)
@@ -529,6 +699,10 @@ def _build_semantic_and_vector_payload(
         "requires_absolute_component_total": True,
         "requires_cancellation_index": True,
         "requires_magnitude_companion_M": True,
+        "requires_comparator_label": True,
+        "comparator": transfer_payload["x_reference_comparator"],
+        "frame": transfer_payload["x_reference_frame"],
+        "units": transfer_payload["x_reference_units"],
         "sector_profile_ref": "/transfer_sensitivity/x_reference_sector_profile",
         "M_sector_magnitude": float(x_sector_profile["absolute_component_total"]),
         "interpretation": (
@@ -543,6 +717,22 @@ def _build_semantic_and_vector_payload(
             "material_occupancy",
         ],
     }
+    q_display_metadata = dict(q_summary["display_metadata"])
+    q_display_metadata.update(
+        {
+            "requires_comparator_label": True,
+            "comparator": q_summary["baseline_comparator"],
+            "comparator_multiverse_ref": (
+                "/transfer_sensitivity/q_comparator_multiverse"
+            ),
+            "q_spread_absolute": q_summary["q_spread_absolute"],
+            "q_spread_relative_to_baseline": (
+                q_summary["q_spread_relative_to_baseline"]
+            ),
+            "config_hash": q_summary["config_hash"],
+            "input_hashes": q_summary["input_hashes"],
+        }
+    )
     departure_display_contract = {
         "required_for_symbols": ["x", "F"],
         "requires_sector_profile": True,
@@ -615,15 +805,19 @@ def _build_semantic_and_vector_payload(
             "symbol": "Q",
             "label": "budget-normalized score",
             "owner": "MIO",
-            "display_value": float(np.median(q_values)),
+            "display_value": float(q_summary["baseline_q"]),
             "definition": "x divided by explicit denominator policy",
+            "display_metadata": q_display_metadata,
         },
         {
             "symbol": "Q-spread",
-            "label": "policy spread",
+            "label": "comparator spread",
             "owner": "MIO",
-            "display_value": q_spread,
-            "definition": "inter-policy spread across current denominator policies",
+            "display_value": float(q_summary["q_spread_absolute"]),
+            "definition": (
+                "specification-curve spread across explicit Q comparators"
+            ),
+            "display_metadata": dict(q_summary["display_metadata"]),
         },
         {
             "symbol": "1-FPR",
@@ -673,17 +867,19 @@ def _build_semantic_and_vector_payload(
         "depth_p95": {"local_null": local_depth, "survey_systematic": survey_depth},
         "departure_display_contract": departure_display_contract,
         "cancellation_counterexample": cancellation_counterexample,
+        "pi_display_contract": dict(pi_policy_summary["display_metadata"]),
         "interpretation": (
             "normalized display values; x and Q keep canonical MIO meanings, "
-            "x displays require sector/cancellation/M metadata, and Q-spread, "
-            "1-FPR, and G-envelope are noncanonical current-code proxies"
+            "x displays require sector/cancellation/M metadata, Q displays "
+            "carry comparator-multiverse specification-curve metadata, and "
+            "1-FPR and G-envelope are noncanonical current-code proxies"
         ),
     }
 
 
 def _write_current_science_payload(command: str) -> dict[str, object]:
     git_commit, worktree = _git_state()
-    transfer_payload = _build_transfer_budget_payload()
+    transfer_payload = _build_transfer_budget_payload(command, git_commit, worktree)
     rank_payload = _build_rank_null_payload(command, git_commit, worktree)
     semantic_payload = _build_semantic_and_vector_payload(transfer_payload, rank_payload)
     payload = {
@@ -703,7 +899,9 @@ def _write_current_science_payload(command: str) -> dict[str, object]:
                     "htt.mio.formalism.budget_spec",
                     "htt.mio.formalism.component_breakdown",
                     "htt.mio.formalism.departure_bundle",
+                    "htt.mio.formalism.exceedance",
                     "htt.mio.formalism.filling_fraction",
+                    "htt.mio.formalism.normalized_score",
                     "htt.departure.response_overlap",
                     "htt.nulls.local_boost_depth_null",
                     "htt.nulls.selection_response_depth",
@@ -716,7 +914,9 @@ def _write_current_science_payload(command: str) -> dict[str, object]:
                 "htt/mio/formalism/budget_spec.py",
                 "htt/mio/formalism/component_breakdown.py",
                 "htt/mio/formalism/departure_bundle.py",
+                "htt/mio/formalism/exceedance.py",
                 "htt/mio/formalism/filling_fraction.py",
+                "htt/mio/formalism/normalized_score.py",
                 "htt/htt/htt/departure/response_overlap.py",
                 "htt/htt/htt/nulls/local_boost_depth_null.py",
                 "htt/htt/htt/nulls/selection_response_depth.py",
@@ -1359,7 +1559,9 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
                 "htt/mio/formalism/budget_spec.py",
                 "htt/mio/formalism/component_breakdown.py",
                 "htt/mio/formalism/departure_bundle.py",
+                "htt/mio/formalism/exceedance.py",
                 "htt/mio/formalism/filling_fraction.py",
+                "htt/mio/formalism/normalized_score.py",
             ),
             caption=(
                 "Current $x$, $Q$, and noncanonical proxy-lane semantic split. The bars are normalized "
@@ -1368,6 +1570,10 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
                 "with sector profile, cancellation index, and unsigned $M$ "
                 "companion metadata, so near-zero $x_C$ or $F$ would be "
                 "cancellation-compatible rather than an isotropy statement. "
+                "Displayed $Q$ carries explicit comparator labels and an "
+                "across-comparator specification-curve sensitivity; the "
+                "$\\Pi$ policy summary records measure kind, threshold policy, "
+                "and look-elsewhere trial metadata for the source $Q$ samples. "
                 "The bars show ownership and semantic separation, not a single "
                 "interchangeable statistic, not formal $\\Pi$, $F$, or $G_F$ "
                 "diagnostics, and not a family-ID signal."
@@ -1388,6 +1594,8 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
                 "must_show_sector_profile_for_x_or_f",
                 "must_state_x_f_near_zero_not_isotropy",
                 "must_state_f_requires_magnitude_companion",
+                "must_show_q_comparator_multiverse",
+                "must_state_pi_policy_metadata_when_pi_is_shown",
             ),
             promotion_blockers=(
                 "native_solver_validation_absent",
@@ -1398,6 +1606,8 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
                 "Generated from current repo-local code and deterministic diagnostic payload.",
                 "Normalized display only; proxy bars are not canonical Pi, F, or G_F diagnostics.",
                 "x_C/F display metadata must include sector profile, cancellation index, and M companion.",
+                "Q display metadata must include comparator labels and specification-curve spread.",
+                "Pi policy metadata blocks calibrated-tail interpretation unless future matched-null gates exist.",
                 "No Bianchi family-ID or geometry-detection claim is made.",
             ),
         ),
@@ -1503,7 +1713,6 @@ def _manifest_for_spec(spec: FigureSpec, figure_path: Path, command: str) -> dic
         "passed_gates": [
             "current_generated_input_only",
             "manifest_metadata_present",
-            "claim_firewall_caption_review",
         ],
         "failed_gates": [],
         "statistics_definitions": {
@@ -1636,29 +1845,142 @@ def _command(argv: list[str] | None) -> str:
     return shlex.join(["python", "scripts/make_current_manuscript_figures.py", *args])
 
 
-def run(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Generate current manifest-backed manuscript figures."
-    )
-    parser.add_argument("--skip-snippets", action="store_true")
-    parser.add_argument("--skip-plot-list", action="store_true")
-    args = parser.parse_args(argv)
+def _generation_args(argv: list[str] | None) -> list[str]:
+    args = list(sys.argv[1:] if argv is None else argv)
+    return [arg for arg in args if arg != "--check"]
 
-    command = _command(argv)
+
+def _sidecar_path(figure_path: Path) -> Path:
+    return figure_path.with_suffix("").with_name(
+        figure_path.stem + ".manifest.json"
+    )
+
+
+def _generated_paths(
+    specs: tuple[FigureSpec, ...],
+    *,
+    skip_snippets: bool,
+    skip_plot_list: bool,
+) -> tuple[Path, ...]:
+    paths: list[Path] = [SCIENCE_PAYLOAD]
+    for spec in specs:
+        figure_path = FIGURE_DIR / spec.file_name
+        paths.extend((figure_path, _sidecar_path(figure_path)))
+    if not skip_snippets:
+        paths.extend(
+            SNIPPET_DIR / snippet
+            for snippet in sorted({spec.snippet for spec in specs})
+        )
+    if not skip_plot_list:
+        paths.append(PLOT_LIST)
+    return tuple(dict.fromkeys(paths))
+
+
+def _snapshot(paths: tuple[Path, ...]) -> dict[Path, bytes | None]:
+    return {path: path.read_bytes() if path.exists() else None for path in paths}
+
+
+def _restore(snapshot: dict[Path, bytes | None]) -> None:
+    for path, content in snapshot.items():
+        if content is None:
+            if path.exists():
+                path.unlink()
+            continue
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(content)
+
+
+def _stored_git_state_for_check() -> tuple[str | None, str] | None:
+    if not SCIENCE_PAYLOAD.exists():
+        return None
+    try:
+        payload = json.loads(SCIENCE_PAYLOAD.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(payload, dict):
+        return None
+    commit = payload.get("git_commit")
+    worktree = payload.get("git_commit_or_worktree_state")
+    if not isinstance(worktree, str) or not worktree.strip():
+        return None
+    return (commit if isinstance(commit, str) and commit.strip() else None, worktree)
+
+
+def _write_outputs(
+    *,
+    command: str,
+    specs: tuple[FigureSpec, ...],
+    skip_snippets: bool,
+    skip_plot_list: bool,
+    quiet: bool,
+) -> None:
     _write_current_science_payload(command)
-    print(f"wrote {_repo_relative(SCIENCE_PAYLOAD)}")
-    specs = _figure_specs()
+    if not quiet:
+        print(f"wrote {_repo_relative(SCIENCE_PAYLOAD)}")
     for spec in specs:
         output = FIGURE_DIR / spec.file_name
         spec.builder(output)
         _write_sidecar(spec, output, command)
-        print(f"wrote {_repo_relative(output)}")
-    if not args.skip_snippets:
+        if not quiet:
+            print(f"wrote {_repo_relative(output)}")
+    if not skip_snippets:
         _write_snippets(specs)
-        print(f"wrote {_repo_relative(SNIPPET_DIR)} current figure snippets")
-    if not args.skip_plot_list:
+        if not quiet:
+            print(f"wrote {_repo_relative(SNIPPET_DIR)} current figure snippets")
+    if not skip_plot_list:
         _write_plot_list(specs, command)
-        print(f"wrote {_repo_relative(PLOT_LIST)}")
+        if not quiet:
+            print(f"wrote {_repo_relative(PLOT_LIST)}")
+
+
+def run(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Generate current manifest-backed manuscript figures."
+    )
+    parser.add_argument("--check", action="store_true")
+    parser.add_argument("--skip-snippets", action="store_true")
+    parser.add_argument("--skip-plot-list", action="store_true")
+    args = parser.parse_args(argv)
+
+    command = _command(_generation_args(argv))
+    specs = _figure_specs()
+    if args.check:
+        paths = _generated_paths(
+            specs,
+            skip_snippets=args.skip_snippets,
+            skip_plot_list=args.skip_plot_list,
+        )
+        before = _snapshot(paths)
+        global _GIT_STATE_OVERRIDE
+        _GIT_STATE_OVERRIDE = _stored_git_state_for_check()
+        try:
+            _write_outputs(
+                command=command,
+                specs=specs,
+                skip_snippets=args.skip_snippets,
+                skip_plot_list=args.skip_plot_list,
+                quiet=True,
+            )
+        finally:
+            _GIT_STATE_OVERRIDE = None
+        after = _snapshot(paths)
+        changed = [path for path in paths if before.get(path) != after.get(path)]
+        if changed:
+            _restore(before)
+            print("stale current manuscript figure artifacts:", file=sys.stderr)
+            for path in changed:
+                print(f"- {_repo_relative(path)}", file=sys.stderr)
+            return 1
+        print("current manuscript figure artifacts are current")
+        return 0
+
+    _write_outputs(
+        command=command,
+        specs=specs,
+        skip_snippets=args.skip_snippets,
+        skip_plot_list=args.skip_plot_list,
+        quiet=False,
+    )
     return 0
 
 

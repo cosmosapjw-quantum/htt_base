@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -80,6 +81,22 @@ def test_current_figure_specs_are_repo_local_and_claim_gated():
         for rel_path in spec.source_paths:
             assert (REPO_ROOT / rel_path).exists(), rel_path
         assert spec.snippet.startswith("current_figures_")
+
+
+def test_current_manuscript_figure_generator_check_mode_is_current():
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / "scripts" / "make_current_manuscript_figures.py"),
+            "--check",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_current_and_observed_manifests_carry_claim_lane_policy():

@@ -38,8 +38,10 @@ from .isotropy_gap import (
     build_isotropy_gap,
 )
 from .normalized_score import (
+    ComparatorMultiverseSummary,
     NormalizedScore,
     NumeratorPolicy,
+    build_comparator_multiverse_summary,
     build_normalized_score,
 )
 
@@ -50,6 +52,7 @@ __all__ = [
     "BudgetUse",
     "CANONICAL_COMPONENT_ORDER",
     "CANONICAL_COMPONENT_SIGNS",
+    "ComparatorMultiverseSummary",
     "CertifiedFillingFraction",
     "ComponentBreakdown",
     "DepthBinFRecord",
@@ -67,6 +70,7 @@ __all__ = [
     "build_certified_filling_fraction",
     "build_depth_bin_f_record",
     "build_departure_bundle",
+    "build_comparator_multiverse_summary",
     "build_exceedance_curve",
     "build_exceedance_curve_from_filling_fraction",
     "build_exceedance_curve_from_normalized_scores",

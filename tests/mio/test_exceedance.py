@@ -139,6 +139,25 @@ def test_pi_curve_only_payload_is_exceedance_not_truth_probability() -> None:
     assert payload["selected_threshold"] is None
     assert payload["threshold_values"] == [0.0, 0.5, 1.0]
     assert payload["threshold_grid"] == [0.0, 0.5, 1.0]
+    assert payload["look_elsewhere_trials"] == 1
+    assert payload["display_metadata"]["requires_measure_kind"] is True
+    assert payload["display_metadata"]["measure_kind"] == "sample_distribution"
+    assert payload["display_metadata"]["threshold_policy"] == "curve_only"
+    assert payload["display_metadata"]["threshold_registration_status"] == (
+        "curve_only_no_selected_threshold"
+    )
+    assert payload["display_metadata"]["look_elsewhere_trials"] == 1
+    assert payload["display_metadata"]["calibration_status"] == (
+        "raw_exceedance_only_uncalibrated_no_p_value"
+    )
+    assert payload["display_metadata"]["covariance_status"] == "not_statistical"
+    assert payload["display_metadata"]["null_mock_status"] == "not_statistical"
+    assert payload["display_metadata"]["p_value_interpretation_status"] == (
+        "blocked_exceedance_not_p_value"
+    )
+    assert payload["calibration_status"] == (
+        "raw_exceedance_only_uncalibrated_no_p_value"
+    )
     assert payload["exceedance_counts"] == [3, 1, 0]
     assert payload["exceedance_fractions"] == pytest.approx([1.0, 1 / 3, 0.0])
     assert payload["pi_grid"] == pytest.approx([1.0, 1 / 3, 0.0])
@@ -161,6 +180,38 @@ def test_pi_curve_only_payload_is_exceedance_not_truth_probability() -> None:
         "probability_anisotropy_true",
     ):
         assert forbidden not in payload_text
+
+
+def test_pi_display_metadata_reports_look_elsewhere_trials() -> None:
+    curve = build_exceedance_curve(
+        (0.1, 0.4, 0.9),
+        source_score_label="Q",
+        input_hashes=("samples-input",),
+        measure_kind=MeasureKind.SAMPLE_DISTRIBUTION,
+        thresholds=(0.25, 0.75),
+        look_elsewhere_trials=4,
+        generating_command=_GENERATING_COMMAND,
+        worktree_state=_WORKTREE_STATE,
+    )
+    payload = curve.as_payload()
+
+    assert payload["look_elsewhere_trials"] == 4
+    assert payload["display_metadata"]["look_elsewhere_trials"] == 4
+    assert payload["display_metadata"]["threshold_grid"] == [0.25, 0.75]
+    assert payload["display_metadata"]["source_score_label"] == "Q"
+    assert payload["display_metadata"]["source_kind"] == "diagnostic_samples"
+    assert "p_value_claim" in payload["display_metadata"]["blocked_use_codes"]
+
+    with pytest.raises(ValueError, match="look_elsewhere_trials"):
+        build_exceedance_curve(
+            (0.1, 0.4),
+            source_score_label="Q",
+            input_hashes=("samples-input",),
+            measure_kind=MeasureKind.SAMPLE_DISTRIBUTION,
+            look_elsewhere_trials=0,
+            generating_command=_GENERATING_COMMAND,
+            worktree_state=_WORKTREE_STATE,
+        )
 
 
 def test_pi_threshold_selection_requires_pre_registration_metadata() -> None:
@@ -284,6 +335,17 @@ def test_pi_rejects_truth_probability_language() -> None:
             generating_command=_GENERATING_COMMAND,
             worktree_state=_WORKTREE_STATE,
             caveats=("Pi provides HTT evidence",),
+        )
+
+    with pytest.raises(ValueError, match="artifact_metadata"):
+        build_exceedance_curve(
+            (0.1, 0.4),
+            source_score_label="Q",
+            input_hashes=("samples-input",),
+            measure_kind=MeasureKind.SAMPLE_DISTRIBUTION,
+            generating_command=_GENERATING_COMMAND,
+            worktree_state=_WORKTREE_STATE,
+            artifact_metadata={"caption": "Pi " + "p-" + "value display"},
         )
 
 
@@ -468,6 +530,7 @@ def test_pi_from_q_scores_preserves_q_provenance() -> None:
         (_q_score(0.1), _q_score(0.4), _q_score(0.9)),
         thresholds=(0.25, 0.75),
         measure_kind=MeasureKind.SAMPLE_DISTRIBUTION,
+        look_elsewhere_trials=3,
         generating_command=_GENERATING_COMMAND,
         worktree_state=_WORKTREE_STATE,
     )
@@ -483,6 +546,8 @@ def test_pi_from_q_scores_preserves_q_provenance() -> None:
     assert len(payload["source_config_hashes"]) == 3
     assert payload["source_metadata"][0]["numerator_policy"] == "absolute"
     assert payload["source_metadata"][0]["denominator_use"] == "exceedance_threshold"
+    assert payload["look_elsewhere_trials"] == 3
+    assert payload["display_metadata"]["look_elsewhere_trials"] == 3
     assert "x-input-0.1" in payload["input_hashes"]
     assert "budget-input-1.0" in payload["input_hashes"]
 

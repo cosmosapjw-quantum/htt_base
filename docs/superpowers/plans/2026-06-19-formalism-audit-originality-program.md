@@ -308,12 +308,12 @@ Files:
 
 Steps:
 
-- [ ] Require comparator labels on every `x_C`/`Q` figure/table row.
-- [ ] Generate comparator-multiverse summaries for admissible comparators.
-- [ ] Display across-comparator spread as an explicit specification-curve sensitivity.
-- [ ] Require `Pi.measure_kind`, threshold policy, registration hash status, and
+- [x] Require comparator labels on every `x_C`/`Q` figure/table row.
+- [x] Generate comparator-multiverse summaries for admissible comparators.
+- [x] Display across-comparator spread as an explicit specification-curve sensitivity.
+- [x] Require `Pi.measure_kind`, threshold policy, registration hash status, and
   look-elsewhere trials whenever `Pi` is shown.
-- [ ] Block any caption implying `Pi` is a p-value unless matched null/covariance status
+- [x] Block any caption implying `Pi` is a p-value unless matched null/covariance status
   explicitly supports that interpretation.
 
 Validation:

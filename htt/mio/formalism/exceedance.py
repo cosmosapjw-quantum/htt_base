@@ -22,6 +22,7 @@ DEFAULT_PI_CAVEAT = (
     "and explicit threshold policy metadata; it is not HTT inference, model "
     "selection, solver validation, or classification."
 )
+RAW_PI_CALIBRATION_STATUS = "raw_exceedance_only_uncalibrated_no_p_value"
 
 
 class ThresholdPolicy(StrEnum):
@@ -42,6 +43,10 @@ class MeasureKind(StrEnum):
 
 _ALLOWED_SOURCE_LABELS = {"Q", "F"}
 _FORBIDDEN_PI_METADATA_TERMS = (
+    "p-value",
+    "p value",
+    "pvalue",
+    "significance",
     "probability",
     "probability_anisotropy_true",
     "anisotropy is true",
@@ -70,6 +75,14 @@ _FORBIDDEN_PI_METADATA_TERMS = (
     "validated as native",
     "native_validated",
     "combined mio" + "+htt score",
+)
+PI_DISPLAY_BLOCKED_USE_CODES = (
+    "p_value_claim",
+    "truth_probability",
+    "htt_inference_consumption",
+    "model_selection",
+    "solver_validation",
+    "scalar_classification",
 )
 _CURVE_ONLY_SELECTED_KEYS = {
     "pi_value",
@@ -134,6 +147,18 @@ def _finite_nonnegative(value: object, name: str) -> float:
         raise ValueError(f"{name} must be finite nonnegative") from exc
     if not math.isfinite(number) or number < 0.0:
         raise ValueError(f"{name} must be finite nonnegative")
+    return number
+
+
+def _positive_int(value: object, name: str) -> int:
+    if isinstance(value, bool):
+        raise ValueError(f"{name} must be a positive integer")
+    try:
+        number = int(value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{name} must be a positive integer") from exc
+    if number < 1 or number != value:
+        raise ValueError(f"{name} must be a positive integer")
     return number
 
 
@@ -367,6 +392,7 @@ def _derive_config_hash(
     measure_kind: MeasureKind,
     threshold_policy: ThresholdPolicy,
     selected_threshold: float | None,
+    look_elsewhere_trials: int,
     source_config_hashes: tuple[str, ...],
 ) -> str:
     payload = {
@@ -378,6 +404,7 @@ def _derive_config_hash(
         "measure_kind": measure_kind.value,
         "threshold_policy": threshold_policy.value,
         "thresholds": thresholds,
+        "look_elsewhere_trials": look_elsewhere_trials,
     }
     encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode(
         "utf-8"
@@ -430,6 +457,7 @@ class ExceedanceCurve:
     threshold_policy: ThresholdPolicy | str = ThresholdPolicy.CURVE_ONLY
     threshold_metadata: Mapping[str, object] | None = None
     selected_threshold: float | None = None
+    look_elsewhere_trials: int = 1
     source_kind: str = "diagnostic_samples"
     measure_kind: MeasureKind | str | None = None
     source_config_hashes: tuple[str, ...] = ()
@@ -471,6 +499,10 @@ class ExceedanceCurve:
             None
             if self.selected_threshold is None
             else _finite_nonnegative(self.selected_threshold, "selected_threshold")
+        )
+        look_elsewhere_trials = _positive_int(
+            self.look_elsewhere_trials,
+            "look_elsewhere_trials",
         )
         if threshold_policy is ThresholdPolicy.CURVE_ONLY:
             if selected_threshold is not None:
@@ -584,6 +616,7 @@ class ExceedanceCurve:
                 measure_kind=measure_kind,
                 threshold_policy=threshold_policy,
                 selected_threshold=selected_threshold,
+                look_elsewhere_trials=look_elsewhere_trials,
                 source_config_hashes=source_config_hashes,
             )
         )
@@ -594,6 +627,7 @@ class ExceedanceCurve:
         object.__setattr__(self, "threshold_policy", threshold_policy)
         object.__setattr__(self, "threshold_metadata", threshold_metadata)
         object.__setattr__(self, "selected_threshold", selected_threshold)
+        object.__setattr__(self, "look_elsewhere_trials", look_elsewhere_trials)
         object.__setattr__(self, "source_score_label", source_score_label)
         object.__setattr__(self, "source_kind", source_kind)
         object.__setattr__(self, "measure_kind", measure_kind)
@@ -649,6 +683,39 @@ class ExceedanceCurve:
     def null_mock_status(self) -> str:
         return _uniform_or_mixed(self.null_mock_statuses)
 
+    @property
+    def threshold_registration_status(self) -> str:
+        return (
+            "curve_only_no_selected_threshold"
+            if self.threshold_policy is ThresholdPolicy.CURVE_ONLY
+            else "pre_registered"
+        )
+
+    @property
+    def display_metadata(self) -> dict[str, object]:
+        registration_hash = None
+        if self.threshold_policy is ThresholdPolicy.PRE_REGISTERED:
+            registration_hash = self.threshold_metadata.get("registration_hash")
+        return {
+            "requires_measure_kind": True,
+            "source_score_label": self.source_score_label,
+            "source_kind": self.source_kind,
+            "measure_kind": self.measure_kind.value,
+            "threshold_policy": self.threshold_policy.value,
+            "threshold_registration_status": self.threshold_registration_status,
+            "registration_hash": registration_hash,
+            "threshold_grid": list(self.thresholds),
+            "selected_threshold": self.selected_threshold,
+            "look_elsewhere_trials": self.look_elsewhere_trials,
+            "exceedance_rule": "sample_value > threshold",
+            "calibration_status": RAW_PI_CALIBRATION_STATUS,
+            "covariance_status": self.covariance_status,
+            "null_mock_status": self.null_mock_status,
+            "sky_support_status": self.sky_support_status,
+            "p_value_interpretation_status": "blocked_exceedance_not_p_value",
+            "blocked_use_codes": list(PI_DISPLAY_BLOCKED_USE_CODES),
+        }
+
     def as_payload(self) -> dict[str, object]:
         payload = {
             "owner": self.owner,
@@ -669,15 +736,13 @@ class ExceedanceCurve:
             "threshold_values": list(self.thresholds),
             "threshold_grid": list(self.thresholds),
             "threshold_metadata": dict(self.threshold_metadata),
-            "threshold_registration_status": (
-                "curve_only_no_selected_threshold"
-                if self.threshold_policy is ThresholdPolicy.CURVE_ONLY
-                else "pre_registered"
-            ),
+            "threshold_registration_status": self.threshold_registration_status,
             "threshold_labels": [f"threshold:{index}" for index, _ in enumerate(self.thresholds)],
             "selected_threshold": self.selected_threshold,
             "selected_exceedance_fraction": self.selected_exceedance_fraction,
+            "look_elsewhere_trials": self.look_elsewhere_trials,
             "exceedance_rule": "sample_value > threshold",
+            "calibration_status": RAW_PI_CALIBRATION_STATUS,
             "exceedance_counts": list(self.exceedance_counts),
             "exceedance_fractions": list(self.exceedance_fractions),
             "pi_grid": list(self.exceedance_fractions),
@@ -698,6 +763,7 @@ class ExceedanceCurve:
             "source_config_hashes": list(self.source_config_hashes),
             "source_metadata": [dict(metadata) for metadata in self.source_metadata],
             "input_hashes": list(self.input_hashes),
+            "display_metadata": self.display_metadata,
             "artifact_metadata": dict(self.artifact_metadata),
             "caveats": list(self.caveats),
         }
@@ -714,6 +780,7 @@ def build_exceedance_curve(
     threshold_policy: ThresholdPolicy | str = ThresholdPolicy.CURVE_ONLY,
     threshold_metadata: Mapping[str, object] | None = None,
     selected_threshold: float | None = None,
+    look_elsewhere_trials: int = 1,
     measure_kind: MeasureKind | str,
     source_kind: str = "diagnostic_samples",
     source_config_hashes: Sequence[object] = (),
@@ -741,6 +808,7 @@ def build_exceedance_curve(
         threshold_policy=threshold_policy,
         threshold_metadata=threshold_metadata,
         selected_threshold=selected_threshold,
+        look_elsewhere_trials=look_elsewhere_trials,
         source_kind=source_kind,
         measure_kind=measure_kind,
         source_config_hashes=_tuple_of_str(
@@ -781,6 +849,7 @@ def build_exceedance_curve_from_normalized_scores(
     threshold_policy: ThresholdPolicy | str = ThresholdPolicy.CURVE_ONLY,
     threshold_metadata: Mapping[str, object] | None = None,
     selected_threshold: float | None = None,
+    look_elsewhere_trials: int = 1,
     measure_kind: MeasureKind | str,
     generating_command: str,
     git_commit: str | None = None,
@@ -813,6 +882,7 @@ def build_exceedance_curve_from_normalized_scores(
         threshold_policy=threshold_policy,
         threshold_metadata=threshold_metadata,
         selected_threshold=selected_threshold,
+        look_elsewhere_trials=look_elsewhere_trials,
         measure_kind=measure_kind,
         generating_command=generating_command,
         git_commit=git_commit,
@@ -861,6 +931,7 @@ def build_exceedance_curve_from_filling_fraction(
     threshold_policy: ThresholdPolicy | str = ThresholdPolicy.CURVE_ONLY,
     threshold_metadata: Mapping[str, object] | None = None,
     selected_threshold: float | None = None,
+    look_elsewhere_trials: int = 1,
     measure_kind: MeasureKind | str,
     generating_command: str,
     git_commit: str | None = None,
@@ -901,6 +972,7 @@ def build_exceedance_curve_from_filling_fraction(
         threshold_policy=threshold_policy,
         threshold_metadata=threshold_metadata,
         selected_threshold=selected_threshold,
+        look_elsewhere_trials=look_elsewhere_trials,
         measure_kind=measure_kind,
         generating_command=generating_command,
         git_commit=git_commit,

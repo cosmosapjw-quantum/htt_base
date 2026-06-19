@@ -9,8 +9,10 @@ from common.transfer_registry import TransferFunctionSpec, TransferValidRange
 from mio.formalism.budget_spec import BudgetPolicy, BudgetSpec, BudgetUse
 from mio.formalism.departure_bundle import build_departure_bundle
 from mio.formalism.normalized_score import (
+    ComparatorMultiverseSummary,
     NumeratorPolicy,
     NormalizedScore,
+    build_comparator_multiverse_summary,
     build_normalized_score,
 )
 
@@ -96,6 +98,124 @@ def test_q_preserves_explicit_numerator_and_denominator_policy() -> None:
     assert payload["config_hash"]
     assert payload["input_hashes"] == ["x-input", "budget-input"]
     assert dataclasses.is_dataclass(score)
+
+
+def test_q_payload_exposes_display_comparator_metadata() -> None:
+    score = build_normalized_score(
+        _bundle(),
+        _budget(),
+        numerator_policy=NumeratorPolicy.ABSOLUTE,
+    )
+
+    metadata = score.as_payload()["display_metadata"]
+
+    assert metadata["requires_comparator_label"] is True
+    assert metadata["comparator"] == "CMB_FLRW_reference"
+    assert metadata["frame"] == "normal_frame"
+    assert metadata["units"] == "dimensionless_hubble_normalized"
+    assert metadata["numerator_policy"] == "absolute"
+    assert metadata["denominator_policy"] == "MES_linear"
+    assert metadata["denominator_use"] == "signed_projection_normalization"
+    assert metadata["blocked_use_codes"] == [
+        "htt_inference_consumption",
+        "model_selection",
+        "solver_validation",
+        "scalar_classification",
+    ]
+
+
+def test_q_comparator_multiverse_reports_specification_curve_sensitivity() -> None:
+    scores = (
+        build_normalized_score(
+            _bundle(comparator="CMB_FLRW_reference", input_hashes=("x-cmb",)),
+            _budget(comparator="CMB_FLRW_reference", input_hashes=("budget-cmb",)),
+            numerator_policy="absolute",
+        ),
+        build_normalized_score(
+            _bundle(
+                comparator="observer_frame_reference",
+                input_hashes=("x-observer",),
+            ),
+            _budget(
+                comparator="observer_frame_reference",
+                denominator_value=0.3,
+                input_hashes=("budget-observer",),
+            ),
+            numerator_policy="absolute",
+        ),
+    )
+
+    summary = build_comparator_multiverse_summary(
+        scores,
+        baseline_comparator="CMB_FLRW_reference",
+        generating_command="pytest tests/mio/test_normalized_score.py",
+        worktree_state="test-fixture",
+    )
+    payload = summary.as_payload()
+
+    assert dataclasses.is_dataclass(summary)
+    assert isinstance(summary, ComparatorMultiverseSummary)
+    assert payload["summary_label"] == "Q_comparator_multiverse"
+    assert payload["owner"] == "MIO"
+    assert payload["claim_tier"] == "diagnostic_only"
+    assert payload["comparator_labels"] == [
+        "CMB_FLRW_reference",
+        "observer_frame_reference",
+    ]
+    assert payload["q_by_comparator"]["CMB_FLRW_reference"] == pytest.approx(1.5)
+    assert payload["q_by_comparator"]["observer_frame_reference"] == pytest.approx(1.0)
+    assert payload["q_spread_absolute"] == pytest.approx(0.5)
+    assert payload["q_spread_relative_to_baseline"] == pytest.approx(1 / 3)
+    assert payload["display_metadata"]["spread_role"] == (
+        "specification_curve_sensitivity_only"
+    )
+    assert payload["display_metadata"]["comparator_axis_status"] == (
+        "registered_current_code_display_axis"
+    )
+    assert payload["display_metadata"]["admissible_set_status"] == (
+        "explicit_display_set_not_exhaustive"
+    )
+    assert payload["display_metadata"]["rank_equivalence_status"] == (
+        "not_evaluated_no_equivalence_or_morphology_claim"
+    )
+    assert payload["display_metadata"]["requires_comparator_labels"] is True
+    assert payload["worktree_state"] == "test-fixture"
+
+
+def test_q_comparator_multiverse_rejects_implicit_or_incompatible_comparators() -> None:
+    first = build_normalized_score(_bundle(), _budget(), numerator_policy="absolute")
+    duplicate = build_normalized_score(
+        _bundle(input_hashes=("x-duplicate",)),
+        _budget(denominator_value=0.3, input_hashes=("budget-duplicate",)),
+        numerator_policy="absolute",
+    )
+    signed = build_normalized_score(
+        _bundle(
+            comparator="observer_frame_reference",
+            input_hashes=("x-observer",),
+        ),
+        _budget(
+            comparator="observer_frame_reference",
+            input_hashes=("budget-observer",),
+        ),
+        numerator_policy="signed",
+    )
+
+    with pytest.raises(ValueError, match="unique comparator"):
+        build_comparator_multiverse_summary(
+            (first, duplicate),
+            baseline_comparator="CMB_FLRW_reference",
+            generating_command="pytest tests/mio/test_normalized_score.py",
+            worktree_state="test-fixture",
+        )
+
+    with pytest.raises(ValueError, match="numerator_policy"):
+        build_comparator_multiverse_summary(
+            (first, signed),
+            baseline_comparator="CMB_FLRW_reference",
+            generating_command="pytest tests/mio/test_normalized_score.py",
+            worktree_state="test-fixture",
+        )
 
 
 def test_numerator_policies_do_not_silently_hide_sign() -> None:
@@ -299,6 +419,8 @@ def test_transfer_derived_bundle_and_budget_must_match_when_both_present() -> No
 def test_formalism_package_exports_normalized_score_contract() -> None:
     import mio.formalism as formalism
 
+    assert formalism.ComparatorMultiverseSummary is ComparatorMultiverseSummary
     assert formalism.NormalizedScore is NormalizedScore
     assert formalism.NumeratorPolicy.SIGNED.value == "signed"
+    assert formalism.build_comparator_multiverse_summary is build_comparator_multiverse_summary
     assert formalism.build_normalized_score is build_normalized_score

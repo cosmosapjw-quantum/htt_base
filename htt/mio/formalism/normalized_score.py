@@ -17,6 +17,17 @@ DEFAULT_Q_CAVEAT = (
     "denominator policy; it is diagnostic-only and not an HTT inference "
     "quantity, model-selection statistic, solver validation, or classification."
 )
+DEFAULT_COMPARATOR_MULTIVERSE_CAVEAT = (
+    "Q comparator multiverse is a MIO diagnostic specification-curve "
+    "sensitivity over explicit comparator labels; it is not an HTT inference "
+    "quantity, model-selection statistic, solver validation, or classification."
+)
+Q_DISPLAY_BLOCKED_USE_CODES = (
+    "htt_inference_consumption",
+    "model_selection",
+    "solver_validation",
+    "scalar_classification",
+)
 
 
 class NumeratorPolicy(StrEnum):
@@ -175,6 +186,32 @@ def _combined_transfer_source(
     return non_none[0]
 
 
+def _uniform_or_mixed(values: Sequence[str]) -> str:
+    if not values:
+        return "not_applicable"
+    unique = set(values)
+    if len(unique) == 1:
+        return next(iter(unique))
+    return "mixed"
+
+
+def _derive_multiverse_config_hash(
+    *,
+    scores: tuple["NormalizedScore", ...],
+    baseline_comparator: str,
+    summary_label: str,
+) -> str:
+    payload = {
+        "baseline_comparator": baseline_comparator,
+        "score_config_hashes": [score.config_hash for score in scores],
+        "summary_label": summary_label,
+    }
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode(
+        "utf-8"
+    )
+    return hashlib.sha256(encoded).hexdigest()
+
+
 @dataclass(frozen=True)
 class NormalizedScore:
     """MIO diagnostic ``Q`` as numerator-policy(``x_C``) over a BudgetSpec."""
@@ -285,6 +322,21 @@ class NormalizedScore:
     def transfer_source(self) -> str:
         return _combined_transfer_source(self.departure_bundle, self.budget_spec)
 
+    @property
+    def display_metadata(self) -> dict[str, object]:
+        return {
+            "requires_comparator_label": True,
+            "comparator": self.departure_bundle.comparator,
+            "frame": self.departure_bundle.frame,
+            "units": self.departure_bundle.units,
+            "numerator_policy": self.numerator_policy.value,
+            "denominator_policy": self.denominator_policy,
+            "denominator_use": BudgetUse.SIGNED_PROJECTION_NORMALIZATION.value,
+            "denominator_label": self.budget_spec.denominator_label,
+            "denominator_value": self.budget_spec.denominator_value,
+            "blocked_use_codes": list(Q_DISPLAY_BLOCKED_USE_CODES),
+        }
+
     def as_payload(self) -> dict[str, object]:
         return {
             "owner": self.owner,
@@ -319,8 +371,260 @@ class NormalizedScore:
             "budget_config_hash": self.budget_spec.config_hash,
             "input_hashes": list(self.input_hashes),
             "denominator_assumptions": list(self.budget_spec.assumptions),
+            "display_metadata": self.display_metadata,
             "artifact_metadata": dict(self.artifact_metadata),
             "caveats": list(self.caveats),
+        }
+
+
+@dataclass(frozen=True)
+class ComparatorMultiverseSummary:
+    """Diagnostic spread of Q over explicit comparator choices."""
+
+    scores: tuple[NormalizedScore, ...]
+    baseline_comparator: str | None = None
+    summary_label: str = "Q_comparator_multiverse"
+    comparator_axis_id: str = "explicit_current_code_comparator_axis"
+    comparator_axis_status: str = "registered_current_code_display_axis"
+    admissible_set_status: str = "explicit_display_set_not_exhaustive"
+    rank_equivalence_status: str = "not_evaluated_no_equivalence_or_morphology_claim"
+    generating_command: str = ""
+    git_commit: str | None = None
+    worktree_state: str | None = None
+    config_hash: str | None = None
+    input_hashes: tuple[str, ...] | None = None
+    artifact_metadata: Mapping[str, object] | None = None
+    caveats: tuple[str, ...] = field(
+        default_factory=lambda: (DEFAULT_COMPARATOR_MULTIVERSE_CAVEAT,)
+    )
+    claim_tier: str = "diagnostic_only"
+    owner: str = "MIO"
+    implementation_scope: str = "mio"
+
+    def __post_init__(self) -> None:
+        if isinstance(self.scores, (str, bytes)):
+            raise ValueError("scores must be a sequence of NormalizedScore samples")
+        scores = tuple(self.scores)
+        if len(scores) < 2:
+            raise ValueError("scores must contain at least two comparator samples")
+        if any(not isinstance(score, NormalizedScore) for score in scores):
+            raise TypeError("scores must contain NormalizedScore samples")
+        comparator_labels = tuple(score.departure_bundle.comparator for score in scores)
+        if len(set(comparator_labels)) != len(comparator_labels):
+            raise ValueError("scores must use unique comparator labels")
+
+        baseline_comparator = (
+            _non_empty(self.baseline_comparator, "baseline_comparator")
+            if self.baseline_comparator is not None
+            else comparator_labels[0]
+        )
+        if baseline_comparator not in comparator_labels:
+            raise ValueError("baseline_comparator must appear in comparator labels")
+
+        first = scores[0]
+        for score in scores[1:]:
+            if score.numerator_policy != first.numerator_policy:
+                raise ValueError("all scores must share numerator_policy")
+            if score.denominator_policy != first.denominator_policy:
+                raise ValueError("all scores must share denominator_policy")
+            if score.departure_bundle.frame != first.departure_bundle.frame:
+                raise ValueError("all scores must share frame")
+            if score.departure_bundle.units != first.departure_bundle.units:
+                raise ValueError("all scores must share units")
+        transfer_sources = {score.transfer_source for score in scores}
+        if len(transfer_sources) != 1:
+            raise ValueError("Q comparator multiverse requires uniform transfer_source")
+
+        summary_label = _non_empty(self.summary_label, "summary_label")
+        if summary_label != "Q_comparator_multiverse":
+            raise ValueError("summary_label must be 'Q_comparator_multiverse'")
+        comparator_axis_id = _non_empty(self.comparator_axis_id, "comparator_axis_id")
+        comparator_axis_status = _non_empty(
+            self.comparator_axis_status,
+            "comparator_axis_status",
+        )
+        admissible_set_status = _non_empty(
+            self.admissible_set_status,
+            "admissible_set_status",
+        )
+        rank_equivalence_status = _non_empty(
+            self.rank_equivalence_status,
+            "rank_equivalence_status",
+        )
+        generating_command = _non_empty(
+            self.generating_command,
+            "generating_command",
+        )
+        git_commit = (
+            _non_empty(self.git_commit, "git_commit")
+            if self.git_commit is not None
+            else None
+        )
+        worktree_state = (
+            _non_empty(self.worktree_state, "worktree_state")
+            if self.worktree_state is not None
+            else None
+        )
+        if git_commit is None and worktree_state is None:
+            raise ValueError(
+                "Q comparator multiverse requires git_commit or worktree_state"
+            )
+        if self.owner != "MIO":
+            raise ValueError("ComparatorMultiverseSummary owner must be 'MIO'")
+        if self.claim_tier != "diagnostic_only":
+            raise ValueError(
+                "ComparatorMultiverseSummary claim_tier must be 'diagnostic_only'"
+            )
+        if self.implementation_scope != "mio":
+            raise ValueError(
+                "ComparatorMultiverseSummary implementation_scope must be 'mio'"
+            )
+
+        input_hashes = (
+            _tuple_of_str(self.input_hashes, "input_hashes", require_non_empty=True)
+            if self.input_hashes is not None
+            else tuple(
+                dict.fromkeys(
+                    item for score in scores for item in score.input_hashes
+                )
+            )
+        )
+        artifact_metadata = (
+            {}
+            if self.artifact_metadata is None
+            else _plain_metadata(dict(self.artifact_metadata))
+        )
+        caveats = tuple(dict.fromkeys(_tuple_of_str(self.caveats, "caveats")))
+        if DEFAULT_COMPARATOR_MULTIVERSE_CAVEAT not in caveats:
+            caveats = (DEFAULT_COMPARATOR_MULTIVERSE_CAVEAT, *caveats)
+        _scan_reserved_language(artifact_metadata, "artifact_metadata")
+        _scan_reserved_language(caveats, "caveats")
+        config_hash = (
+            _non_empty(self.config_hash, "config_hash")
+            if self.config_hash is not None
+            else _derive_multiverse_config_hash(
+                scores=scores,
+                baseline_comparator=baseline_comparator,
+                summary_label=summary_label,
+            )
+        )
+
+        object.__setattr__(self, "scores", scores)
+        object.__setattr__(self, "baseline_comparator", baseline_comparator)
+        object.__setattr__(self, "summary_label", summary_label)
+        object.__setattr__(self, "comparator_axis_id", comparator_axis_id)
+        object.__setattr__(self, "comparator_axis_status", comparator_axis_status)
+        object.__setattr__(self, "admissible_set_status", admissible_set_status)
+        object.__setattr__(self, "rank_equivalence_status", rank_equivalence_status)
+        object.__setattr__(self, "generating_command", generating_command)
+        object.__setattr__(self, "git_commit", git_commit)
+        object.__setattr__(self, "worktree_state", worktree_state)
+        object.__setattr__(self, "input_hashes", input_hashes)
+        object.__setattr__(self, "artifact_metadata", artifact_metadata)
+        object.__setattr__(self, "caveats", caveats)
+        object.__setattr__(self, "config_hash", config_hash)
+
+    @property
+    def comparator_labels(self) -> tuple[str, ...]:
+        return tuple(score.departure_bundle.comparator for score in self.scores)
+
+    @property
+    def q_by_comparator(self) -> dict[str, float]:
+        return {
+            score.departure_bundle.comparator: score.q_value for score in self.scores
+        }
+
+    @property
+    def baseline_q(self) -> float:
+        return self.q_by_comparator[str(self.baseline_comparator)]
+
+    @property
+    def q_spread_absolute(self) -> float:
+        values = tuple(self.q_by_comparator.values())
+        return max(values) - min(values)
+
+    @property
+    def q_spread_relative_to_baseline(self) -> float | None:
+        baseline = abs(self.baseline_q)
+        if baseline == 0.0:
+            return None
+        return self.q_spread_absolute / baseline
+
+    @property
+    def transfer_source(self) -> str:
+        return self.scores[0].transfer_source
+
+    @property
+    def transfer_source_by_comparator(self) -> dict[str, str]:
+        return {
+            score.departure_bundle.comparator: score.transfer_source
+            for score in self.scores
+        }
+
+    @property
+    def transfer_spec_id_by_comparator(self) -> dict[str, str | None]:
+        return {
+            score.departure_bundle.comparator: (
+                score.departure_bundle.transfer_spec_id
+                or score.budget_spec.transfer_spec_id
+            )
+            for score in self.scores
+        }
+
+    @property
+    def display_metadata(self) -> dict[str, object]:
+        first = self.scores[0]
+        return {
+            "requires_comparator_labels": True,
+            "baseline_comparator": self.baseline_comparator,
+            "comparator_labels": list(self.comparator_labels),
+            "comparator_axis_id": self.comparator_axis_id,
+            "comparator_axis_status": self.comparator_axis_status,
+            "admissible_set_status": self.admissible_set_status,
+            "rank_equivalence_status": self.rank_equivalence_status,
+            "spread_role": "specification_curve_sensitivity_only",
+            "q_spread_absolute": self.q_spread_absolute,
+            "q_spread_relative_to_baseline": self.q_spread_relative_to_baseline,
+            "numerator_policy": first.numerator_policy.value,
+            "denominator_policy": first.denominator_policy,
+            "denominator_use": BudgetUse.SIGNED_PROJECTION_NORMALIZATION.value,
+            "frame": first.departure_bundle.frame,
+            "units": first.departure_bundle.units,
+            "transfer_source_by_comparator": self.transfer_source_by_comparator,
+            "transfer_spec_id_by_comparator": self.transfer_spec_id_by_comparator,
+            "blocked_use_codes": list(Q_DISPLAY_BLOCKED_USE_CODES),
+        }
+
+    def as_payload(self) -> dict[str, object]:
+        return {
+            "owner": self.owner,
+            "implementation_scope": self.implementation_scope,
+            "claim_tier": self.claim_tier,
+            "summary_label": self.summary_label,
+            "summary_kind": "comparator_specification_curve_sensitivity",
+            "comparator_axis_id": self.comparator_axis_id,
+            "comparator_axis_status": self.comparator_axis_status,
+            "admissible_set_status": self.admissible_set_status,
+            "rank_equivalence_status": self.rank_equivalence_status,
+            "baseline_comparator": self.baseline_comparator,
+            "comparator_labels": list(self.comparator_labels),
+            "q_by_comparator": self.q_by_comparator,
+            "baseline_q": self.baseline_q,
+            "q_spread_absolute": self.q_spread_absolute,
+            "q_spread_relative_to_baseline": self.q_spread_relative_to_baseline,
+            "score_payloads": [score.as_payload() for score in self.scores],
+            "transfer_source": self.transfer_source,
+            "transfer_source_by_comparator": self.transfer_source_by_comparator,
+            "transfer_spec_id_by_comparator": self.transfer_spec_id_by_comparator,
+            "config_hash": self.config_hash,
+            "score_config_hashes": [score.config_hash for score in self.scores],
+            "input_hashes": list(self.input_hashes),
+            "display_metadata": self.display_metadata,
+            "artifact_metadata": dict(self.artifact_metadata),
+            "caveats": list(self.caveats),
+            "generating_command": self.generating_command,
+            "git_commit": self.git_commit,
+            "worktree_state": self.worktree_state,
         }
 
 
@@ -351,9 +655,45 @@ def build_normalized_score(
     )
 
 
+def build_comparator_multiverse_summary(
+    scores: Sequence[NormalizedScore],
+    *,
+    baseline_comparator: str | None = None,
+    generating_command: str,
+    git_commit: str | None = None,
+    worktree_state: str | None = None,
+    config_hash: str | None = None,
+    input_hashes: Sequence[object] | None = None,
+    artifact_metadata: Mapping[str, object] | None = None,
+    caveats: Sequence[object] | None = None,
+) -> ComparatorMultiverseSummary:
+    """Build a diagnostic Q comparator specification-curve summary."""
+
+    return ComparatorMultiverseSummary(
+        scores=tuple(scores),
+        baseline_comparator=baseline_comparator,
+        generating_command=generating_command,
+        git_commit=git_commit,
+        worktree_state=worktree_state,
+        config_hash=config_hash,
+        input_hashes=(
+            None if input_hashes is None else tuple(str(value) for value in input_hashes)
+        ),
+        artifact_metadata=artifact_metadata,
+        caveats=(
+            (DEFAULT_COMPARATOR_MULTIVERSE_CAVEAT,)
+            if caveats is None
+            else tuple(caveats)
+        ),
+    )
+
+
 __all__ = [
+    "ComparatorMultiverseSummary",
+    "DEFAULT_COMPARATOR_MULTIVERSE_CAVEAT",
     "DEFAULT_Q_CAVEAT",
     "NormalizedScore",
     "NumeratorPolicy",
+    "build_comparator_multiverse_summary",
     "build_normalized_score",
 ]

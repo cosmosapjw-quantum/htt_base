@@ -10,38 +10,43 @@
     "must_state_no_native_low_ell_solver_output",
     "must_show_sector_profile_for_x_or_f",
     "must_state_x_f_near_zero_not_isotropy",
-    "must_state_f_requires_magnitude_companion"
+    "must_state_f_requires_magnitude_companion",
+    "must_show_q_comparator_multiverse",
+    "must_state_pi_policy_metadata_when_pi_is_shown"
   ],
   "caveats": [
     "Generated from current repo-local code and deterministic diagnostic payload.",
     "Normalized display only; proxy bars are not canonical Pi, F, or G_F diagnostics.",
     "x_C/F display metadata must include sector profile, cancellation index, and M companion.",
+    "Q display metadata must include comparator labels and specification-curve spread.",
+    "Pi policy metadata blocks calibrated-tail interpretation unless future matched-null gates exist.",
     "No Bianchi family-ID or geometry-detection claim is made."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "fec3495+dirty",
-  "config_hash": "sha256:91c102c546d2e5d54708cfedc6100abf678b40983cd4df9f07d974fcaec62b08",
+  "code_version": "2e80c8c+dirty",
+  "config_hash": "sha256:994ad09b5b77a220010812ab617388c389baafd42fd75248cefce2ed3b0a4ada",
   "created_by": "scripts/make_current_manuscript_figures.py",
   "failed_gates": [],
   "generating_command": "python scripts/make_current_manuscript_figures.py",
-  "git_commit": "fec3495",
-  "git_commit_or_worktree_state": "fec3495+dirty",
+  "git_commit": "2e80c8c",
+  "git_commit_or_worktree_state": "2e80c8c+dirty",
   "implementation_scope": "common",
   "input_hashes": [
-    "docs/generated/current_science_plot_payload.json:sha256:610f6c27d0a5f9cd8d508844bbfd30cee141ca508e781e5f6ce3722adf354c76",
+    "docs/generated/current_science_plot_payload.json:sha256:4717fb7618a6db133d7d22921bc4c0fb066aea7126fe9e16557ea74498439128",
     "docs/generated/result_pack_A.md:sha256:676f2150c2fe24503ab37ba52b0e3826a39c0bce6cf346c75e28b13336c07c7b",
     "htt/src/common/departure_contracts.py:sha256:84682381cfb7b0356a69e74f3df1a6fbbc7be75ad84f937970485e7605d2f4d4",
     "htt/mio/formalism/budget_spec.py:sha256:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a",
     "htt/mio/formalism/component_breakdown.py:sha256:9653e5b3dc63ebe740a78f7517e0df9f079b9a9bfd7a683c44f681ca2a06178b",
     "htt/mio/formalism/departure_bundle.py:sha256:f04d692646c0d2232373701fb29088d60bb2549106232ff05d2dff644291b80d",
-    "htt/mio/formalism/filling_fraction.py:sha256:69cb198e205690816295e0e13b77cb6e673a88f000e9d7632c6650d08cbdbb70"
+    "htt/mio/formalism/exceedance.py:sha256:4f85f86c8ca9568fe163244dba95e872aceb839030268160cf15913589b9a5d2",
+    "htt/mio/formalism/filling_fraction.py:sha256:69cb198e205690816295e0e13b77cb6e673a88f000e9d7632c6650d08cbdbb70",
+    "htt/mio/formalism/normalized_score.py:sha256:5e44adfd1dbfdfa572e610e726fb78cae6a5996e82f52c910274608f3d66ec9b"
   ],
   "null_mock_status": "current_code_diagnostic_null_banks_generated",
   "owner": "COMMON",
   "passed_gates": [
     "current_generated_input_only",
-    "manifest_metadata_present",
-    "claim_firewall_caption_review"
+    "manifest_metadata_present"
   ],
   "production_status": "diagnostic_only",
   "promotion_blockers": [
@@ -66,7 +71,9 @@
       "htt/mio/formalism/budget_spec.py",
       "htt/mio/formalism/component_breakdown.py",
       "htt/mio/formalism/departure_bundle.py",
-      "htt/mio/formalism/filling_fraction.py"
+      "htt/mio/formalism/exceedance.py",
+      "htt/mio/formalism/filling_fraction.py",
+      "htt/mio/formalism/normalized_score.py"
     ]
   },
   "transfer_source": "mixed_none_and_external_transfer_conditioned"

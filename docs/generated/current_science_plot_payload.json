@@ -7,17 +7,19 @@
     "No Bianchi family-ID or geometry-detection claim is made."
   ],
   "claim_tier": "diagnostic_only",
-  "config_hash": "sha256:76104ce446933c321876bcf0336deac4a5966cbe339b0eea84f203627c20602d",
+  "config_hash": "sha256:cd481890c1a838281cfeadc3d7f7b68ade01a8bce07dcbb3f184b7baadbf3014",
   "generating_command": "python scripts/make_current_manuscript_figures.py",
-  "git_commit": "fec3495",
-  "git_commit_or_worktree_state": "fec3495+dirty",
+  "git_commit": "2e80c8c",
+  "git_commit_or_worktree_state": "2e80c8c+dirty",
   "implementation_scope": "common",
   "input_hashes": [
-    "scripts/make_current_manuscript_figures.py:sha256:18af25ebb23b8ccb81a144a0dfab16b2396892bacc548e65c8d4461e7c78922d",
+    "scripts/make_current_manuscript_figures.py:sha256:59d015017fa8a54b48aa17e866a18f9729e403c614c1d2d51bd4092bb0d08534",
     "htt/mio/formalism/budget_spec.py:sha256:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a",
     "htt/mio/formalism/component_breakdown.py:sha256:9653e5b3dc63ebe740a78f7517e0df9f079b9a9bfd7a683c44f681ca2a06178b",
     "htt/mio/formalism/departure_bundle.py:sha256:f04d692646c0d2232373701fb29088d60bb2549106232ff05d2dff644291b80d",
+    "htt/mio/formalism/exceedance.py:sha256:4f85f86c8ca9568fe163244dba95e872aceb839030268160cf15913589b9a5d2",
     "htt/mio/formalism/filling_fraction.py:sha256:69cb198e205690816295e0e13b77cb6e673a88f000e9d7632c6650d08cbdbb70",
+    "htt/mio/formalism/normalized_score.py:sha256:5e44adfd1dbfdfa572e610e726fb78cae6a5996e82f52c910274608f3d66ec9b",
     "htt/htt/htt/departure/response_overlap.py:sha256:2ea56655e8b8c419239459bdbe4d79c755d00115ce4bd6e6e00b447d51c1f139",
     "htt/htt/htt/nulls/local_boost_depth_null.py:sha256:b0d5d0b6a4b3fe534d1eefc630b9954a33d82555520f644f779dd6725e25609c",
     "htt/htt/htt/nulls/selection_response_depth.py:sha256:cac8f08d6618519e95147acde5ae0f567035206d14c595b3b917bf548a2a3cd3",
@@ -30,7 +32,7 @@
   "owner": "COMMON",
   "rank_and_null_fpr": {
     "local_null_bank": {
-      "bank_hash": "sha256:44d333afb039e32c579101ab8f032189f698ca258fec0f00e31760bc333fc8b8",
+      "bank_hash": "sha256:9ff010921bdf429c7e000c19506e448ef83132b8fb924f12f221ac5b25c9d1fa",
       "claim_tier": "diagnostic_only",
       "config": {
         "config_hash": "sha256:c67ec3856ca1de9bdc25385235ab16b01bac390c2068c1ee33adbdbccecd01dc",
@@ -85,7 +87,7 @@
         "direction_threshold_deg": 25.0,
         "generating_command": "python scripts/make_current_manuscript_figures.py",
         "gf_threshold": 2.2,
-        "git_commit": "fec3495",
+        "git_commit": "2e80c8c",
         "input_hashes": [
           "sha256:03474361acaeb54cbf6eb41891913d96707a8535a1b58ae7fc914c2bb32a2adf"
         ],
@@ -103,7 +105,7 @@
           -0.6654650388849338,
           0.7431448254773942
         ],
-        "worktree_state": "fec3495+dirty"
+        "worktree_state": "2e80c8c+dirty"
       },
       "depth_bins": [
         {
@@ -228,11 +230,11 @@
           "no_native_solver_values"
         ],
         "claim_tier": "diagnostic_only",
-        "code_version": "fec3495",
+        "code_version": "2e80c8c",
         "config_hash": "sha256:c67ec3856ca1de9bdc25385235ab16b01bac390c2068c1ee33adbdbccecd01dc",
         "created_by": "htt.nulls.local_boost_only",
         "failed_gates": [],
-        "git_commit": "fec3495",
+        "git_commit": "2e80c8c",
         "implementation_scope": "htt",
         "input_hashes": [
           "sha256:03474361acaeb54cbf6eb41891913d96707a8535a1b58ae7fc914c2bb32a2adf"
@@ -14316,7 +14318,7 @@
     "local_null_fpr": {
       "allowed_claim_tier": "diagnostic_only",
       "artifact_name": "local_boost_null_fpr_report_v1",
-      "bank_hash": "sha256:44d333afb039e32c579101ab8f032189f698ca258fec0f00e31760bc333fc8b8",
+      "bank_hash": "sha256:9ff010921bdf429c7e000c19506e448ef83132b8fb924f12f221ac5b25c9d1fa",
       "blocked_reasons": [
         "local_boost_null_fpr_exceeds_threshold"
       ],
@@ -14347,7 +14349,7 @@
         "raw": 0.09375
       },
       "generating_command": "python scripts/make_current_manuscript_figures.py",
-      "git_commit": "fec3495",
+      "git_commit": "2e80c8c",
       "implementation_scope": "htt",
       "input_hashes": [
         "sha256:03474361acaeb54cbf6eb41891913d96707a8535a1b58ae7fc914c2bb32a2adf"
@@ -14365,13 +14367,13 @@
           "no_native_solver_values"
         ],
         "claim_tier": "diagnostic_only",
-        "code_version": "fec3495",
-        "config_hash": "sha256:fa1882d4a761ba1f8fdf7fb92f4ad5b2de1e72a0292f24c031b6f3c5348e9c24",
+        "code_version": "2e80c8c",
+        "config_hash": "sha256:08612d898cb760b8cc250c1300542227011ea6fe066409aaed745d6d941b4866",
         "created_by": "htt.nulls.local_boost_depth_null",
         "failed_gates": [
           "local_boost_null_fpr_exceeds_threshold"
         ],
-        "git_commit": "fec3495",
+        "git_commit": "2e80c8c",
         "implementation_scope": "htt",
         "input_hashes": [
           "sha256:03474361acaeb54cbf6eb41891913d96707a8535a1b58ae7fc914c2bb32a2adf",
@@ -14614,13 +14616,13 @@
         ],
         "rho_LB_GT": 0.4553587332746267
       },
-      "report_hash": "sha256:fa1882d4a761ba1f8fdf7fb92f4ad5b2de1e72a0292f24c031b6f3c5348e9c24",
+      "report_hash": "sha256:08612d898cb760b8cc250c1300542227011ea6fe066409aaed745d6d941b4866",
       "scan_volume_hash": "sha256:3fe358a2be8c0c8a7b8c89464321eb39e0501d152a64ccde52fc79d42f231030",
       "schema_version": "htt.local_boost_depth_null.v1",
       "sky_support_hash": "sha256:2969d8c285f7d7a0e190a0d074cc87130876c6e3985c9b3a89642b4f10e4f75a",
       "sky_support_status": "pr040_sky_support_attached",
       "transfer_source": "none",
-      "worktree_state": "fec3495+dirty"
+      "worktree_state": "2e80c8c+dirty"
     },
     "response_overlap": {
       "artifact_metadata": {},
@@ -14670,7 +14672,7 @@
       ],
       "covariance_status": "diagnostic_covariance_supplied",
       "generating_command": "python scripts/make_current_manuscript_figures.py",
-      "git_commit": "fec3495",
+      "git_commit": "2e80c8c",
       "global_tilt_response": [
         0.31,
         0.84,
@@ -14700,11 +14702,11 @@
           "ResponseOverlapAudit is a pre-inference HTT diagnostic rank audit; it does not authorize model-dependent inference runs."
         ],
         "claim_tier": "diagnostic_only",
-        "code_version": "fec3495",
+        "code_version": "2e80c8c",
         "config_hash": "sha256:d5232ae707d9d2ab8529f71182e94734ebd5f9141ea9fe0252688a26adb3b445",
         "created_by": "htt.departure.response_overlap",
         "failed_gates": [],
-        "git_commit": "fec3495",
+        "git_commit": "2e80c8c",
         "implementation_scope": "htt",
         "input_hashes": [
           "htt/htt/htt/departure/response_overlap.py:sha256:2ea56655e8b8c419239459bdbe4d79c755d00115ce4bd6e6e00b447d51c1f139",
@@ -14792,10 +14794,10 @@
       "transfer_metadata": null,
       "transfer_source": "none",
       "transfer_spec_id": null,
-      "worktree_state": "fec3495+dirty"
+      "worktree_state": "2e80c8c+dirty"
     },
     "survey_systematic_bank": {
-      "bank_hash": "sha256:9491871c2b76b6657ff2488bd1a9e53c9cce837a931f7647eb64a3f38ae5e9da",
+      "bank_hash": "sha256:7a87b95668bbe2d2e13a8c3f7aa5e57d38aa36d575ccfbc1fc8c863be64035c7",
       "claim_tier": "diagnostic_only",
       "config": {
         "config_hash": "sha256:7e16b0c8ce8939bef1e033a6dce51c5c9749101aa53dc9ee4c0615452ec94e50",
@@ -14850,7 +14852,7 @@
         "direction_threshold_deg": 25.0,
         "generating_command": "python scripts/make_current_manuscript_figures.py",
         "gf_threshold": 2.2,
-        "git_commit": "fec3495",
+        "git_commit": "2e80c8c",
         "input_hashes": [
           "sha256:4487bbccdfdb5ec49ec71ca72f96e75dc105d9b13e84dbb3e33d38a5e72dfecb"
         ],
@@ -14868,7 +14870,7 @@
           -0.6654650388849338,
           0.7431448254773942
         ],
-        "worktree_state": "fec3495+dirty"
+        "worktree_state": "2e80c8c+dirty"
       },
       "depth_bins": [
         {
@@ -14993,11 +14995,11 @@
           "no_native_solver_values"
         ],
         "claim_tier": "diagnostic_only",
-        "code_version": "fec3495",
+        "code_version": "2e80c8c",
         "config_hash": "sha256:7e16b0c8ce8939bef1e033a6dce51c5c9749101aa53dc9ee4c0615452ec94e50",
         "created_by": "htt.nulls.selection_response_depth",
         "failed_gates": [],
-        "git_commit": "fec3495",
+        "git_commit": "2e80c8c",
         "implementation_scope": "htt",
         "input_hashes": [
           "sha256:4487bbccdfdb5ec49ec71ca72f96e75dc105d9b13e84dbb3e33d38a5e72dfecb",
@@ -29100,7 +29102,7 @@
     "survey_systematic_fpr": {
       "allowed_claim_tier": "diagnostic_only",
       "artifact_name": "survey_systematic_null_fpr_report_v1",
-      "bank_hash": "sha256:9491871c2b76b6657ff2488bd1a9e53c9cce837a931f7647eb64a3f38ae5e9da",
+      "bank_hash": "sha256:7a87b95668bbe2d2e13a8c3f7aa5e57d38aa36d575ccfbc1fc8c863be64035c7",
       "blocked_reasons": [
         "survey_systematic_null_fpr_exceeds_threshold"
       ],
@@ -29131,7 +29133,7 @@
         "raw": 0.9375
       },
       "generating_command": "python scripts/make_current_manuscript_figures.py",
-      "git_commit": "fec3495",
+      "git_commit": "2e80c8c",
       "implementation_scope": "htt",
       "input_hashes": [
         "sha256:4487bbccdfdb5ec49ec71ca72f96e75dc105d9b13e84dbb3e33d38a5e72dfecb",
@@ -29153,13 +29155,13 @@
           "no_native_solver_values"
         ],
         "claim_tier": "diagnostic_only",
-        "code_version": "fec3495",
-        "config_hash": "sha256:1ca63ab3cb5cab6ffdbe85da8d69aa02708a0bf106a6da42cece5ca2ddb2d1eb",
+        "code_version": "2e80c8c",
+        "config_hash": "sha256:ebbd64c466399d830c124261fbd9df6843d8a36b6f445d05edabc344816dbf28",
         "created_by": "htt.nulls.selection_response_depth",
         "failed_gates": [
           "survey_systematic_null_fpr_exceeds_threshold"
         ],
-        "git_commit": "fec3495",
+        "git_commit": "2e80c8c",
         "implementation_scope": "htt",
         "input_hashes": [
           "sha256:4487bbccdfdb5ec49ec71ca72f96e75dc105d9b13e84dbb3e33d38a5e72dfecb",
@@ -29405,7 +29407,7 @@
         ],
         "rho_LB_GT": 0.4553587332746267
       },
-      "report_hash": "sha256:1ca63ab3cb5cab6ffdbe85da8d69aa02708a0bf106a6da42cece5ca2ddb2d1eb",
+      "report_hash": "sha256:ebbd64c466399d830c124261fbd9df6843d8a36b6f445d05edabc344816dbf28",
       "scan_volume_hash": "sha256:c9ef043446cf670cb6756d314486c9eefd0e5d888244fc425a7a9ca35ca695ad",
       "schema_version": "htt.survey_systematic_nulls.v1",
       "selection_response": {
@@ -29427,7 +29429,7 @@
       "sky_support_status": "pr040_sky_support_attached",
       "survey_axis": null,
       "transfer_source": "none",
-      "worktree_state": "fec3495+dirty"
+      "worktree_state": "2e80c8c+dirty"
     }
   },
   "schema_version": "common.current_science_plot_payload.v1",
@@ -29520,7 +29522,7 @@
         "name": "response rank separation"
       },
       {
-        "magnitude": 0.321705396841513,
+        "magnitude": 0.35913461538461555,
         "missing_prerequisites": [
           "native_morphology_atlas_absent"
         ],
@@ -29546,7 +29548,37 @@
         "name": "depth G_F spread"
       }
     ],
-    "interpretation": "normalized display values; x and Q keep canonical MIO meanings, x displays require sector/cancellation/M metadata, and Q-spread, 1-FPR, and G-envelope are noncanonical current-code proxies",
+    "interpretation": "normalized display values; x and Q keep canonical MIO meanings, x displays require sector/cancellation/M metadata, Q displays carry comparator-multiverse specification-curve metadata, and 1-FPR and G-envelope are noncanonical current-code proxies",
+    "pi_display_contract": {
+      "blocked_use_codes": [
+        "p_value_claim",
+        "truth_probability",
+        "htt_inference_consumption",
+        "model_selection",
+        "solver_validation",
+        "scalar_classification"
+      ],
+      "calibration_status": "raw_exceedance_only_uncalibrated_no_p_value",
+      "covariance_status": "not_statistical",
+      "exceedance_rule": "sample_value > threshold",
+      "look_elsewhere_trials": 1,
+      "measure_kind": "sample_distribution",
+      "null_mock_status": "not_statistical",
+      "p_value_interpretation_status": "blocked_exceedance_not_p_value",
+      "registration_hash": null,
+      "requires_measure_kind": true,
+      "selected_threshold": null,
+      "sky_support_status": "not_directional",
+      "source_kind": "normalized_score.q_value",
+      "source_score_label": "Q",
+      "threshold_grid": [
+        0.65,
+        0.75,
+        0.85
+      ],
+      "threshold_policy": "curve_only",
+      "threshold_registration_status": "curve_only_no_selected_threshold"
+    },
     "semantic_split": [
       {
         "definition": "raw diagnostic departure scalar in the stress payload",
@@ -29559,12 +29591,16 @@
             "solver_validation",
             "material_occupancy"
           ],
+          "comparator": "CMB_FLRW_reference",
+          "frame": "normal_frame",
           "interpretation": "x_C is a signed comparator projection; near-zero x_C can reflect inter-sector cancellation, not isotropy.",
           "requires_absolute_component_total": true,
           "requires_cancellation_index": true,
+          "requires_comparator_label": true,
           "requires_magnitude_companion_M": true,
           "requires_sector_profile": true,
-          "sector_profile_ref": "/transfer_sensitivity/x_reference_sector_profile"
+          "sector_profile_ref": "/transfer_sensitivity/x_reference_sector_profile",
+          "units": "dimensionless_hubble_normalized"
         },
         "display_value": 0.064,
         "label": "departure size",
@@ -29573,15 +29609,101 @@
       },
       {
         "definition": "x divided by explicit denominator policy",
-        "display_value": 0.6755083996463307,
+        "display_metadata": {
+          "admissible_set_status": "explicit_display_set_not_exhaustive",
+          "baseline_comparator": "CMB_FLRW_reference",
+          "blocked_use_codes": [
+            "htt_inference_consumption",
+            "model_selection",
+            "solver_validation",
+            "scalar_classification"
+          ],
+          "comparator": "CMB_FLRW_reference",
+          "comparator_axis_id": "explicit_current_code_comparator_axis",
+          "comparator_axis_status": "registered_current_code_display_axis",
+          "comparator_labels": [
+            "CMB_FLRW_reference",
+            "observer_frame_reference",
+            "stress_payload_reference"
+          ],
+          "comparator_multiverse_ref": "/transfer_sensitivity/q_comparator_multiverse",
+          "config_hash": "2f777df54ace5ca1751d696d552ddc4c47a10f5c6fc89c6efca4fd0f3f79e5f8",
+          "denominator_policy": "MES_linear",
+          "denominator_use": "signed_projection_normalization",
+          "frame": "normal_frame",
+          "input_hashes": [
+            "q-cmb-comparator-x",
+            "q-cmb-comparator-budget",
+            "q-observer-comparator-x",
+            "q-observer-comparator-budget",
+            "q-stress-comparator-x",
+            "q-stress-comparator-budget"
+          ],
+          "numerator_policy": "absolute",
+          "q_spread_absolute": 0.3990384615384617,
+          "q_spread_relative_to_baseline": 0.5424429086538463,
+          "rank_equivalence_status": "not_evaluated_no_equivalence_or_morphology_claim",
+          "requires_comparator_label": true,
+          "requires_comparator_labels": true,
+          "spread_role": "specification_curve_sensitivity_only",
+          "transfer_source_by_comparator": {
+            "CMB_FLRW_reference": "none",
+            "observer_frame_reference": "none",
+            "stress_payload_reference": "none"
+          },
+          "transfer_spec_id_by_comparator": {
+            "CMB_FLRW_reference": null,
+            "observer_frame_reference": null,
+            "stress_payload_reference": null
+          },
+          "units": "dimensionless_hubble_normalized"
+        },
+        "display_value": 0.7356321839080461,
         "label": "budget-normalized score",
         "owner": "MIO",
         "symbol": "Q"
       },
       {
-        "definition": "inter-policy spread across current denominator policies",
-        "display_value": 0.321705396841513,
-        "label": "policy spread",
+        "definition": "specification-curve spread across explicit Q comparators",
+        "display_metadata": {
+          "admissible_set_status": "explicit_display_set_not_exhaustive",
+          "baseline_comparator": "CMB_FLRW_reference",
+          "blocked_use_codes": [
+            "htt_inference_consumption",
+            "model_selection",
+            "solver_validation",
+            "scalar_classification"
+          ],
+          "comparator_axis_id": "explicit_current_code_comparator_axis",
+          "comparator_axis_status": "registered_current_code_display_axis",
+          "comparator_labels": [
+            "CMB_FLRW_reference",
+            "observer_frame_reference",
+            "stress_payload_reference"
+          ],
+          "denominator_policy": "MES_linear",
+          "denominator_use": "signed_projection_normalization",
+          "frame": "normal_frame",
+          "numerator_policy": "absolute",
+          "q_spread_absolute": 0.3990384615384617,
+          "q_spread_relative_to_baseline": 0.5424429086538463,
+          "rank_equivalence_status": "not_evaluated_no_equivalence_or_morphology_claim",
+          "requires_comparator_labels": true,
+          "spread_role": "specification_curve_sensitivity_only",
+          "transfer_source_by_comparator": {
+            "CMB_FLRW_reference": "none",
+            "observer_frame_reference": "none",
+            "stress_payload_reference": "none"
+          },
+          "transfer_spec_id_by_comparator": {
+            "CMB_FLRW_reference": null,
+            "observer_frame_reference": null,
+            "stress_payload_reference": null
+          },
+          "units": "dimensionless_hubble_normalized"
+        },
+        "display_value": 0.3990384615384617,
+        "label": "comparator spread",
         "owner": "MIO",
         "symbol": "Q-spread"
       },
@@ -29605,6 +29727,111 @@
   "transfer_sensitivity": {
     "contract": "MIO BudgetSpec/compare_denominator_policies",
     "interpretation": "denominator-policy sensitivity only; not a model likelihood",
+    "pi_policy_summary": {
+      "artifact_metadata": {
+        "canonical_pi_curve_payload": "not_exported_in_current_semantic_split",
+        "report_role": "Pi display policy metadata summary"
+      },
+      "calibration_status": "raw_exceedance_only_uncalibrated_no_p_value",
+      "caveats": [
+        "Policy summary only; current semantic split does not plot a canonical Pi row.",
+        "Raw exceedance metadata is uncalibrated and must not be read as a p-value."
+      ],
+      "claim_tier": "diagnostic_only",
+      "covariance_status": "not_statistical",
+      "display_metadata": {
+        "blocked_use_codes": [
+          "p_value_claim",
+          "truth_probability",
+          "htt_inference_consumption",
+          "model_selection",
+          "solver_validation",
+          "scalar_classification"
+        ],
+        "calibration_status": "raw_exceedance_only_uncalibrated_no_p_value",
+        "covariance_status": "not_statistical",
+        "exceedance_rule": "sample_value > threshold",
+        "look_elsewhere_trials": 1,
+        "measure_kind": "sample_distribution",
+        "null_mock_status": "not_statistical",
+        "p_value_interpretation_status": "blocked_exceedance_not_p_value",
+        "registration_hash": null,
+        "requires_measure_kind": true,
+        "selected_threshold": null,
+        "sky_support_status": "not_directional",
+        "source_kind": "normalized_score.q_value",
+        "source_score_label": "Q",
+        "threshold_grid": [
+          0.65,
+          0.75,
+          0.85
+        ],
+        "threshold_policy": "curve_only",
+        "threshold_registration_status": "curve_only_no_selected_threshold"
+      },
+      "exceedance_rule": "sample_value > threshold",
+      "generating_command": "python scripts/make_current_manuscript_figures.py",
+      "git_commit": "2e80c8c",
+      "implementation_scope": "mio",
+      "input_hashes": [
+        "q-cmb-comparator-x",
+        "q-cmb-comparator-budget",
+        "q-observer-comparator-x",
+        "q-observer-comparator-budget",
+        "q-stress-comparator-x",
+        "q-stress-comparator-budget"
+      ],
+      "look_elsewhere_trials": 1,
+      "measure_kind": "sample_distribution",
+      "null_mock_status": "not_statistical",
+      "owner": "MIO",
+      "sample_count": 3,
+      "sky_support_status": "not_directional",
+      "source_config_hashes": [
+        "f3c9690d7905bd1032c8a5fea26256474737b810394284a11dccc44cc4ec38d2",
+        "1970f059c39a13dac13ac485bbaf93ebdcd1c8588b798dc1190e3c2205c0a36d",
+        "01e0d601341070cef66c962233fc1f7e19a24972292a5b9ff0cfabe0cc3538af"
+      ],
+      "source_curve_config_hash": "a71c42d407f50b601d2b2e94004c3afa3710f7f66463df94e0770de0ddbaaa91",
+      "source_kind": "normalized_score.q_value",
+      "source_metadata": [
+        {
+          "comparator": "CMB_FLRW_reference",
+          "denominator_policy": "MES_linear",
+          "denominator_use": "exceedance_threshold",
+          "frame": "normal_frame",
+          "numerator_policy": "absolute",
+          "units": "dimensionless_hubble_normalized"
+        },
+        {
+          "comparator": "observer_frame_reference",
+          "denominator_policy": "MES_linear",
+          "denominator_use": "exceedance_threshold",
+          "frame": "normal_frame",
+          "numerator_policy": "absolute",
+          "units": "dimensionless_hubble_normalized"
+        },
+        {
+          "comparator": "stress_payload_reference",
+          "denominator_policy": "MES_linear",
+          "denominator_use": "exceedance_threshold",
+          "frame": "normal_frame",
+          "numerator_policy": "absolute",
+          "units": "dimensionless_hubble_normalized"
+        }
+      ],
+      "source_score_label": "Q",
+      "summary_kind": "noncanonical_pi_policy_metadata_summary",
+      "summary_label": "Pi_policy_display_contract",
+      "threshold_grid": [
+        0.65,
+        0.75,
+        0.85
+      ],
+      "threshold_policy": "curve_only",
+      "threshold_registration_status": "curve_only_no_selected_threshold",
+      "worktree_state": "2e80c8c+dirty"
+    },
     "points": [
       {
         "Q_diagnostic": 0.9195402298850576,
@@ -29868,105 +30095,6 @@
         "x_reference": 0.064
       },
       {
-        "Q_diagnostic": 0.606060606060606,
-        "assumptions": [
-          "deterministic_current_code_plot_payload",
-          "diagnostic_denominator_sensitivity_only"
-        ],
-        "baseline_denominator_value": 0.132,
-        "caveats": [
-          "BudgetSpec records a MIO diagnostic denominator policy only; it is not HTT likelihood, posterior, evidence, native solver validation, or a geometry/family claim."
-        ],
-        "claim_tier": "diagnostic_only",
-        "config_hash": "sha256:f93653063904c407fcead63c0df3768c4571f9c3faddd46c62e928d6bf6f6d39",
-        "covariance_status": "not_statistical",
-        "denominator_label": "atlas schema quantile",
-        "denominator_policy": "atlas_quantile",
-        "denominator_value": 0.10560000000000001,
-        "implementation_scope": "mio",
-        "input_hashes": [
-          "sha256:96498801ecd3f82dff6722e600cf7db7b2669b9d32553bf5c37ae3fca21c5013"
-        ],
-        "native_morphology_atlas_status": "schema_only",
-        "null_mock_status": "not_statistical",
-        "owner": "MIO",
-        "relative_Q_vs_policy_baseline": 0.24999999999999978,
-        "relative_shift": -0.2,
-        "sky_support_status": "not_directional",
-        "source_description": "schema-only native morphology atlas placeholder; no values consumed",
-        "transfer_metadata": null,
-        "transfer_source": "none",
-        "transfer_spec_id": null,
-        "units": "dimensionless",
-        "x_reference": 0.064
-      },
-      {
-        "Q_diagnostic": 0.48484848484848486,
-        "assumptions": [
-          "deterministic_current_code_plot_payload",
-          "diagnostic_denominator_sensitivity_only"
-        ],
-        "baseline_denominator_value": 0.132,
-        "caveats": [
-          "BudgetSpec records a MIO diagnostic denominator policy only; it is not HTT likelihood, posterior, evidence, native solver validation, or a geometry/family claim."
-        ],
-        "claim_tier": "diagnostic_only",
-        "config_hash": "sha256:f93653063904c407fcead63c0df3768c4571f9c3faddd46c62e928d6bf6f6d39",
-        "covariance_status": "not_statistical",
-        "denominator_label": "atlas schema quantile",
-        "denominator_policy": "atlas_quantile",
-        "denominator_value": 0.132,
-        "implementation_scope": "mio",
-        "input_hashes": [
-          "sha256:96498801ecd3f82dff6722e600cf7db7b2669b9d32553bf5c37ae3fca21c5013"
-        ],
-        "native_morphology_atlas_status": "schema_only",
-        "null_mock_status": "not_statistical",
-        "owner": "MIO",
-        "relative_Q_vs_policy_baseline": 0.0,
-        "relative_shift": 0.0,
-        "sky_support_status": "not_directional",
-        "source_description": "schema-only native morphology atlas placeholder; no values consumed",
-        "transfer_metadata": null,
-        "transfer_source": "none",
-        "transfer_spec_id": null,
-        "units": "dimensionless",
-        "x_reference": 0.064
-      },
-      {
-        "Q_diagnostic": 0.40404040404040403,
-        "assumptions": [
-          "deterministic_current_code_plot_payload",
-          "diagnostic_denominator_sensitivity_only"
-        ],
-        "baseline_denominator_value": 0.132,
-        "caveats": [
-          "BudgetSpec records a MIO diagnostic denominator policy only; it is not HTT likelihood, posterior, evidence, native solver validation, or a geometry/family claim."
-        ],
-        "claim_tier": "diagnostic_only",
-        "config_hash": "sha256:f93653063904c407fcead63c0df3768c4571f9c3faddd46c62e928d6bf6f6d39",
-        "covariance_status": "not_statistical",
-        "denominator_label": "atlas schema quantile",
-        "denominator_policy": "atlas_quantile",
-        "denominator_value": 0.1584,
-        "implementation_scope": "mio",
-        "input_hashes": [
-          "sha256:96498801ecd3f82dff6722e600cf7db7b2669b9d32553bf5c37ae3fca21c5013"
-        ],
-        "native_morphology_atlas_status": "schema_only",
-        "null_mock_status": "not_statistical",
-        "owner": "MIO",
-        "relative_Q_vs_policy_baseline": -0.16666666666666674,
-        "relative_shift": 0.2,
-        "sky_support_status": "not_directional",
-        "source_description": "schema-only native morphology atlas placeholder; no values consumed",
-        "transfer_metadata": null,
-        "transfer_source": "none",
-        "transfer_spec_id": null,
-        "units": "dimensionless",
-        "x_reference": 0.064
-      },
-      {
         "Q_diagnostic": 1.0526315789473684,
         "assumptions": [
           "deterministic_current_code_plot_payload",
@@ -30066,12 +30194,297 @@
         "x_reference": 0.064
       }
     ],
+    "q_comparator_multiverse": {
+      "admissible_set_status": "explicit_display_set_not_exhaustive",
+      "artifact_metadata": {
+        "report_role": "Q comparator specification sensitivity"
+      },
+      "baseline_comparator": "CMB_FLRW_reference",
+      "baseline_q": 0.7356321839080461,
+      "caveats": [
+        "Q comparator multiverse is a MIO diagnostic specification-curve sensitivity over explicit comparator labels; it is not an HTT inference quantity, model-selection statistic, solver validation, or classification."
+      ],
+      "claim_tier": "diagnostic_only",
+      "comparator_axis_id": "explicit_current_code_comparator_axis",
+      "comparator_axis_status": "registered_current_code_display_axis",
+      "comparator_labels": [
+        "CMB_FLRW_reference",
+        "observer_frame_reference",
+        "stress_payload_reference"
+      ],
+      "config_hash": "2f777df54ace5ca1751d696d552ddc4c47a10f5c6fc89c6efca4fd0f3f79e5f8",
+      "display_metadata": {
+        "admissible_set_status": "explicit_display_set_not_exhaustive",
+        "baseline_comparator": "CMB_FLRW_reference",
+        "blocked_use_codes": [
+          "htt_inference_consumption",
+          "model_selection",
+          "solver_validation",
+          "scalar_classification"
+        ],
+        "comparator_axis_id": "explicit_current_code_comparator_axis",
+        "comparator_axis_status": "registered_current_code_display_axis",
+        "comparator_labels": [
+          "CMB_FLRW_reference",
+          "observer_frame_reference",
+          "stress_payload_reference"
+        ],
+        "denominator_policy": "MES_linear",
+        "denominator_use": "signed_projection_normalization",
+        "frame": "normal_frame",
+        "numerator_policy": "absolute",
+        "q_spread_absolute": 0.3990384615384617,
+        "q_spread_relative_to_baseline": 0.5424429086538463,
+        "rank_equivalence_status": "not_evaluated_no_equivalence_or_morphology_claim",
+        "requires_comparator_labels": true,
+        "spread_role": "specification_curve_sensitivity_only",
+        "transfer_source_by_comparator": {
+          "CMB_FLRW_reference": "none",
+          "observer_frame_reference": "none",
+          "stress_payload_reference": "none"
+        },
+        "transfer_spec_id_by_comparator": {
+          "CMB_FLRW_reference": null,
+          "observer_frame_reference": null,
+          "stress_payload_reference": null
+        },
+        "units": "dimensionless_hubble_normalized"
+      },
+      "generating_command": "python scripts/make_current_manuscript_figures.py",
+      "git_commit": "2e80c8c",
+      "implementation_scope": "mio",
+      "input_hashes": [
+        "q-cmb-comparator-x",
+        "q-cmb-comparator-budget",
+        "q-observer-comparator-x",
+        "q-observer-comparator-budget",
+        "q-stress-comparator-x",
+        "q-stress-comparator-budget"
+      ],
+      "owner": "MIO",
+      "q_by_comparator": {
+        "CMB_FLRW_reference": 0.7356321839080461,
+        "observer_frame_reference": 0.5625,
+        "stress_payload_reference": 0.9615384615384617
+      },
+      "q_spread_absolute": 0.3990384615384617,
+      "q_spread_relative_to_baseline": 0.5424429086538463,
+      "rank_equivalence_status": "not_evaluated_no_equivalence_or_morphology_claim",
+      "score_config_hashes": [
+        "f3c9690d7905bd1032c8a5fea26256474737b810394284a11dccc44cc4ec38d2",
+        "1970f059c39a13dac13ac485bbaf93ebdcd1c8588b798dc1190e3c2205c0a36d",
+        "01e0d601341070cef66c962233fc1f7e19a24972292a5b9ff0cfabe0cc3538af"
+      ],
+      "score_payloads": [
+        {
+          "artifact_metadata": {
+            "report_role": "Q comparator sensitivity"
+          },
+          "budget_config_hash": "sha256:29dc22785e4ed66a0a664767fe67abe274e24cdda286cf5bbc22c06683ed5705",
+          "budget_transfer_metadata": null,
+          "budget_transfer_source": "none",
+          "budget_transfer_spec_id": null,
+          "caveats": [
+            "Q is a MIO policy-normalized diagnostic score over x_C and an explicit denominator policy; it is diagnostic-only and not an HTT inference quantity, model-selection statistic, solver validation, or classification."
+          ],
+          "claim_tier": "diagnostic_only",
+          "comparator": "CMB_FLRW_reference",
+          "config_hash": "f3c9690d7905bd1032c8a5fea26256474737b810394284a11dccc44cc4ec38d2",
+          "covariance_status": "not_statistical",
+          "denominator_assumptions": [
+            "deterministic current-code comparator sensitivity sample"
+          ],
+          "denominator_label": "current-code CMB FLRW comparator denominator",
+          "denominator_policy": "MES_linear",
+          "denominator_use": "signed_projection_normalization",
+          "denominator_value": 0.087,
+          "departure_config_hash": "sha256:786632f1a212bbec0dccefface9efc21c37e89d03ab408468672938723d38e42",
+          "departure_transfer_metadata": null,
+          "departure_transfer_source": "none",
+          "departure_transfer_spec_id": null,
+          "display_metadata": {
+            "blocked_use_codes": [
+              "htt_inference_consumption",
+              "model_selection",
+              "solver_validation",
+              "scalar_classification"
+            ],
+            "comparator": "CMB_FLRW_reference",
+            "denominator_label": "current-code CMB FLRW comparator denominator",
+            "denominator_policy": "MES_linear",
+            "denominator_use": "signed_projection_normalization",
+            "denominator_value": 0.087,
+            "frame": "normal_frame",
+            "numerator_policy": "absolute",
+            "requires_comparator_label": true,
+            "units": "dimensionless_hubble_normalized"
+          },
+          "frame": "normal_frame",
+          "implementation_scope": "mio",
+          "input_hashes": [
+            "q-cmb-comparator-x",
+            "q-cmb-comparator-budget"
+          ],
+          "null_mock_status": "not_statistical",
+          "numerator_policy": "absolute",
+          "numerator_source": "x_C",
+          "numerator_value": 0.064,
+          "owner": "MIO",
+          "q_value": 0.7356321839080461,
+          "score_kind": "policy_normalized_score",
+          "score_label": "Q",
+          "sky_support_status": "not_directional",
+          "transfer_source": "none",
+          "units": "dimensionless_hubble_normalized",
+          "x_C": 0.064
+        },
+        {
+          "artifact_metadata": {
+            "report_role": "Q comparator sensitivity"
+          },
+          "budget_config_hash": "sha256:f81c6b35a70bd1117dcc32e3b78d57be1022f074b95a166f900b72a02fc8bc0d",
+          "budget_transfer_metadata": null,
+          "budget_transfer_source": "none",
+          "budget_transfer_spec_id": null,
+          "caveats": [
+            "Q is a MIO policy-normalized diagnostic score over x_C and an explicit denominator policy; it is diagnostic-only and not an HTT inference quantity, model-selection statistic, solver validation, or classification."
+          ],
+          "claim_tier": "diagnostic_only",
+          "comparator": "observer_frame_reference",
+          "config_hash": "1970f059c39a13dac13ac485bbaf93ebdcd1c8588b798dc1190e3c2205c0a36d",
+          "covariance_status": "not_statistical",
+          "denominator_assumptions": [
+            "deterministic current-code comparator sensitivity sample"
+          ],
+          "denominator_label": "current-code observer-frame comparator denominator",
+          "denominator_policy": "MES_linear",
+          "denominator_use": "signed_projection_normalization",
+          "denominator_value": 0.096,
+          "departure_config_hash": "sha256:7d255c7fe86574825cfa7199db91379abc96d9927452c924af54affd88afd9bb",
+          "departure_transfer_metadata": null,
+          "departure_transfer_source": "none",
+          "departure_transfer_spec_id": null,
+          "display_metadata": {
+            "blocked_use_codes": [
+              "htt_inference_consumption",
+              "model_selection",
+              "solver_validation",
+              "scalar_classification"
+            ],
+            "comparator": "observer_frame_reference",
+            "denominator_label": "current-code observer-frame comparator denominator",
+            "denominator_policy": "MES_linear",
+            "denominator_use": "signed_projection_normalization",
+            "denominator_value": 0.096,
+            "frame": "normal_frame",
+            "numerator_policy": "absolute",
+            "requires_comparator_label": true,
+            "units": "dimensionless_hubble_normalized"
+          },
+          "frame": "normal_frame",
+          "implementation_scope": "mio",
+          "input_hashes": [
+            "q-observer-comparator-x",
+            "q-observer-comparator-budget"
+          ],
+          "null_mock_status": "not_statistical",
+          "numerator_policy": "absolute",
+          "numerator_source": "x_C",
+          "numerator_value": 0.054,
+          "owner": "MIO",
+          "q_value": 0.5625,
+          "score_kind": "policy_normalized_score",
+          "score_label": "Q",
+          "sky_support_status": "not_directional",
+          "transfer_source": "none",
+          "units": "dimensionless_hubble_normalized",
+          "x_C": 0.054
+        },
+        {
+          "artifact_metadata": {
+            "report_role": "Q comparator sensitivity"
+          },
+          "budget_config_hash": "sha256:f39fe4a938aa94c9e0f191ababb670da2fc753fbec6e7e416712482e7dccc411",
+          "budget_transfer_metadata": null,
+          "budget_transfer_source": "none",
+          "budget_transfer_spec_id": null,
+          "caveats": [
+            "Q is a MIO policy-normalized diagnostic score over x_C and an explicit denominator policy; it is diagnostic-only and not an HTT inference quantity, model-selection statistic, solver validation, or classification."
+          ],
+          "claim_tier": "diagnostic_only",
+          "comparator": "stress_payload_reference",
+          "config_hash": "01e0d601341070cef66c962233fc1f7e19a24972292a5b9ff0cfabe0cc3538af",
+          "covariance_status": "not_statistical",
+          "denominator_assumptions": [
+            "deterministic current-code comparator sensitivity sample"
+          ],
+          "denominator_label": "current-code stress-payload comparator denominator",
+          "denominator_policy": "MES_linear",
+          "denominator_use": "signed_projection_normalization",
+          "denominator_value": 0.078,
+          "departure_config_hash": "sha256:81900a348fb32939895b68b2ce868ea48425cdffd9cdc332bdc53aed2db4bc56",
+          "departure_transfer_metadata": null,
+          "departure_transfer_source": "none",
+          "departure_transfer_spec_id": null,
+          "display_metadata": {
+            "blocked_use_codes": [
+              "htt_inference_consumption",
+              "model_selection",
+              "solver_validation",
+              "scalar_classification"
+            ],
+            "comparator": "stress_payload_reference",
+            "denominator_label": "current-code stress-payload comparator denominator",
+            "denominator_policy": "MES_linear",
+            "denominator_use": "signed_projection_normalization",
+            "denominator_value": 0.078,
+            "frame": "normal_frame",
+            "numerator_policy": "absolute",
+            "requires_comparator_label": true,
+            "units": "dimensionless_hubble_normalized"
+          },
+          "frame": "normal_frame",
+          "implementation_scope": "mio",
+          "input_hashes": [
+            "q-stress-comparator-x",
+            "q-stress-comparator-budget"
+          ],
+          "null_mock_status": "not_statistical",
+          "numerator_policy": "absolute",
+          "numerator_source": "x_C",
+          "numerator_value": 0.07500000000000001,
+          "owner": "MIO",
+          "q_value": 0.9615384615384617,
+          "score_kind": "policy_normalized_score",
+          "score_label": "Q",
+          "sky_support_status": "not_directional",
+          "transfer_source": "none",
+          "units": "dimensionless_hubble_normalized",
+          "x_C": 0.07500000000000001
+        }
+      ],
+      "summary_kind": "comparator_specification_curve_sensitivity",
+      "summary_label": "Q_comparator_multiverse",
+      "transfer_source": "none",
+      "transfer_source_by_comparator": {
+        "CMB_FLRW_reference": "none",
+        "observer_frame_reference": "none",
+        "stress_payload_reference": "none"
+      },
+      "transfer_spec_id_by_comparator": {
+        "CMB_FLRW_reference": null,
+        "observer_frame_reference": null,
+        "stress_payload_reference": null
+      },
+      "worktree_state": "2e80c8c+dirty"
+    },
     "relative_shifts": [
       -0.2,
       0.0,
       0.2
     ],
     "x_reference": 0.064,
+    "x_reference_comparator": "CMB_FLRW_reference",
     "x_reference_display_metadata": {
       "M_key": "sector_magnitude_companion",
       "blocked_use_codes": [
@@ -30087,6 +30500,7 @@
       "requires_sector_profile": true,
       "x_C_interpretation": "signed comparator projection; near-zero x_C is not isotropy without the sector profile"
     },
+    "x_reference_frame": "normal_frame",
     "x_reference_sector_profile": {
       "absolute_component_total": 0.08199999999999999,
       "cancellation_index": 0.21951219512195108,
@@ -30114,7 +30528,8 @@
       },
       "units": "dimensionless_hubble_normalized",
       "x_C": 0.064
-    }
+    },
+    "x_reference_units": "dimensionless_hubble_normalized"
   },
   "transfer_source": "mixed_none_and_external_transfer_conditioned"
 }
