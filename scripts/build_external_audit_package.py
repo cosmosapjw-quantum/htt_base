@@ -752,6 +752,7 @@ def render_readme(payload: dict[str, Any]) -> str:
             "- `reports/`: Result Packs A/B/C and transfer provenance report.",
             "- `manuscript/`: manuscript figure inventory, plot lists, PDF, PDF manifest, and blockers.",
             "- `code_snapshot/`: scoped source files for reproducing the audit surfaces.",
+            "- Archived `pr_deltas/` and `status/` entries may preserve historical readiness vocabulary as provenance; current reports use diagnostic-only public readiness and legacy-not-current caveats.",
             "",
             "## Caveats",
             "",

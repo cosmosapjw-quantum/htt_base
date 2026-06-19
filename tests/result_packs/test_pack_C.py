@@ -85,14 +85,17 @@ def test_pack_c_status_scenarios_make_diagnostic_and_production_grade_explicit()
     payload = _payload()
     scenarios = {row["scenario_id"]: row for row in payload["status_scenarios"]}
 
-    assert scenarios["complete_mio_metadata"]["public_grade_label"] == (
-        "production-grade"
+    assert scenarios["complete_mio_metadata"]["public_readiness_label"] == (
+        "diagnostic-only"
+    )
+    assert scenarios["complete_mio_metadata"]["legacy_readiness_status"] == (
+        "legacy_not_current"
     )
     assert scenarios["complete_mio_metadata"]["claim_tier_ceiling"] == "conditional"
     assert scenarios["complete_mio_metadata"]["model_ranking_status"] == (
         "forbidden_not_ranked"
     )
-    assert scenarios["missing_covariance_or_null"]["public_grade_label"] == (
+    assert scenarios["missing_covariance_or_null"]["public_readiness_label"] == (
         "diagnostic-only"
     )
     assert scenarios["missing_covariance_or_null"]["claim_tier_ceiling"] == "blocked"
@@ -114,13 +117,16 @@ def test_pack_c_markdown_lists_statuses_caveats_and_no_ranking():
     assert "# Result Pack C - MIO Observatory Certificates" in markdown
     assert "owner: COMMON" in markdown
     assert "claim_tier: diagnostic_only" in markdown
-    assert "Diagnostic-only vs production-grade status is explicit" in markdown
+    assert "Diagnostic-only public readiness is explicit" in markdown
     assert "directional coherence certificate" in markdown
     assert "redshift binned coherence certificate" in markdown
     assert "FLRW null predictive certificate" in markdown
     assert "evidence anatomy narrative" in markdown
     assert "forbidden_not_ranked" in markdown
     assert "legacy_context_only_not_promoted" in markdown
+    assert "legacy_not_current" in markdown
+    assert "production_candidate" not in markdown
+    assert "production-grade" not in markdown
     _assert_no_forbidden_language(markdown)
 
 

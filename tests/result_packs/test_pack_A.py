@@ -62,8 +62,26 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
     assert payload["legacy_ver2_context"]["pr110_use"] == (
         "legacy_context_only_not_promoted"
     )
+    assert payload["legacy_ver2_context"]["current_public_production_status"] == (
+        "diagnostic_only"
+    )
+    assert payload["legacy_ver2_context"]["legacy_readiness_status"] == (
+        "legacy_not_current"
+    )
+    assert all(
+        item["current_public_production_status"] == "diagnostic_only"
+        for item in payload["legacy_ver2_context"]["artifacts"]
+    )
+    assert all(
+        item["legacy_readiness_status"] == "legacy_not_current"
+        for item in payload["legacy_ver2_context"]["artifacts"]
+    )
 
     text = json.dumps(payload, sort_keys=True).lower()
+    assert "production_candidate" not in text
+    assert "production-grade" not in text
+    assert "atlas_ready" not in text
+    assert "atlas_available" not in text
     assert ("posterior " + "odds") not in text
     assert ("native " + "solver result") not in text
     assert "family identified" not in text
@@ -88,6 +106,9 @@ def test_pack_a_markdown_has_manifest_and_caveated_comparison():
     assert "| MES I_morph | COMMON |" in markdown
     assert "bass.ver2.export.solver_core_output_tier_b.atlas_lite" in markdown
     assert "prior_context_only" in markdown
+    assert "legacy_not_current" in markdown
+    assert "production_candidate" not in markdown
+    assert "production-grade" not in markdown
     assert "diagnostic-only comparison" in markdown
     assert "native morphology atlas support remains absent" in markdown
     lowered = markdown.lower()

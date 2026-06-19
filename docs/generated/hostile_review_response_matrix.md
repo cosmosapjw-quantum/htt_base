@@ -17,9 +17,9 @@ input_hashes:
 - docs/generated/manuscript_figure_inventory.md:sha256:23413b2a7586a753559efde96a5ad82b3c5ebe3170e3f2b3f318a7a785477cf0
 - docs/generated/missing_figure_references.md:sha256:98e16241d496e8eed05b1781f6ecbee83eef9f8c5a5b9ff403e52dd3b07fc0b1
 - docs/generated/pdf_claim_lint_report.md:sha256:6bd3b3ea12b536a41ee33302c72f2f0d92268e0daddbc8cf47801fa5c29d1cf0
-- docs/generated/result_pack_A.md:sha256:676f2150c2fe24503ab37ba52b0e3826a39c0bce6cf346c75e28b13336c07c7b
-- docs/generated/result_pack_B.md:sha256:8c6318165910c72f1fcf9859cd29980107d0372889853023018c722129ec377a
-- docs/generated/result_pack_C.md:sha256:2b37198072126ce63fc76376c84741bcb154c5c75e9544cfbf36061a8fb30c77
+- docs/generated/result_pack_A.md:sha256:ff6616ee58976624cfd89692dfc117da435fde9b6f5a79f8cd5ab4d0b94081c2
+- docs/generated/result_pack_B.md:sha256:d793426d0860aa60c68915fee09dcf3b4fcf70ea64c97f00af8caebb435dac93
+- docs/generated/result_pack_C.md:sha256:1c84109b23f81f6d49894b8406723a9e072de1eba8abe1f447473441c1a623c7
 - docs/generated/status_matrix.md:sha256:515dc625f1260ab6c8921dd93e611163cfd349059e8e687b51f3cf2dc18b212b
 - docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d
 - docs/generated/transfer_sensitivity_report.md:sha256:b2634c82ef783687cc2d304c50bb64487fa4556833bcc1a55464f7cae136903c
@@ -32,7 +32,7 @@ caveats:
 - Native morphology atlas support is absent in this repository state.
 - Missing or quarantined manuscript figures block final submission freeze.
 generating_command: python scripts/check_publication_claim_freeze.py
-git_commit_or_worktree_state: b5383f9+dirty
+git_commit_or_worktree_state: 3225e56+dirty
 artifact_path: docs/generated/hostile_review_response_matrix.md
 
 ## Verdict

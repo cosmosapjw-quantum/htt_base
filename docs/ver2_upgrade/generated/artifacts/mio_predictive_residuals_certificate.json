@@ -16,12 +16,13 @@
     "artifact_path": "docs/ver2_upgrade/generated/artifacts/mio_predictive_residuals_certificate.json",
     "caption_policy": [],
     "caveats": [
-      "public_grade=production-grade",
-      "production_status=production_candidate"
+      "public_readiness_label=diagnostic-only",
+      "production_status=legacy_not_current",
+      "legacy_ver2_readiness_labels_are_provenance_only_not_current_public_readiness"
     ],
     "claim_tier": "conditional",
     "code_version": "ver2-sk07m",
-    "config_hash": "d61c4d60e718c7cc",
+    "config_hash": "3eae6fedc1ecf392",
     "created_by": "mio.diagnostics.predictive_residuals v0.2",
     "failed_gates": [],
     "git_commit": "e6385f885166c5dc94100aced8bdb089d1db41c3",
@@ -35,15 +36,15 @@
     "numeric_payload_path": "",
     "owner": "MIO",
     "passed_gates": [
-      "atlas_ready",
+      "legacy_atlas_not_current",
       "covariance_ready"
     ],
-    "production_status": "production_candidate",
+    "production_status": "diagnostic_only",
     "promotion_blockers": [],
     "publication_gates": {},
     "report_generation_gates": {},
     "required_gates": [
-      "atlas_ready",
+      "legacy_atlas_not_current",
       "covariance_ready"
     ],
     "schema_version": "ver2-v7",
@@ -55,19 +56,20 @@
   },
   "notes": [
     "Predictive residual atlas is a diagnostic model/data comparison surface; it must not be merged with HTT posterior evidence or reinterpreted as a truth certificate.",
-    "public_grade=production-grade",
-    "production_status=production_candidate",
+    "public_readiness_label=diagnostic-only",
+    "production_status=legacy_not_current",
     "tsc_domain_status=valid_one_field",
     "tsc_trace_source_adequacy=adequate",
     "tsc_upgrade_hint=stable_no_upgrade",
     "tsc_overlay_diagnostic_only",
     "tsc_publication_blocker=propagation_pending:EE,TE,TT",
-    "tsc_publication_blocker=claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory"
+    "tsc_publication_blocker=claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory",
+    "readiness labels are provenance only; not current production readiness"
   ],
   "payload": {
     "adequacy_indicators": {
-      "atlas_ready": true,
       "covariance_ready": true,
+      "legacy_atlas_status": "legacy_atlas_not_current",
       "tsc_overlay_attached": true,
       "tsc_overlay_diagnostic_only": true
     },
@@ -108,6 +110,8 @@
       "slice_5_n_modes": 5.0,
       "slice_5_rms": 0.0
     },
+    "current_public_production_status": "diagnostic_only",
+    "current_public_readiness": "diagnostic_only",
     "departure_variables": {
       "mean_rms_residual": 0.0,
       "n_slices": 6.0,
@@ -115,8 +119,8 @@
     },
     "domain_caveats": [
       "Predictive residual atlas is a diagnostic model/data comparison surface; it must not be merged with HTT posterior evidence or reinterpreted as a truth certificate.",
-      "public_grade=production-grade",
-      "production_status=production_candidate",
+      "public_readiness_label=diagnostic-only",
+      "production_status=legacy_not_current",
       "tsc_domain_status=valid_one_field",
       "tsc_trace_source_adequacy=adequate",
       "tsc_upgrade_hint=stable_no_upgrade",
@@ -136,12 +140,13 @@
       "bass.ver2.export.forward.tier_a_validation",
       "bass.ver2.export.forward.tier_b_runtime"
     ],
+    "legacy_readiness_status": "legacy_not_current",
     "manifest": {
       "artifact_id": "mio.predictive_residuals.certificate",
       "artifact_path": "docs/ver2_upgrade/generated/artifacts/mio_predictive_residuals_certificate.json",
       "caveats": [
-        "public_grade=production-grade",
-        "production_status=production_candidate"
+        "public_readiness_label=diagnostic-only",
+        "production_status=legacy_not_current"
       ],
       "claim_tier": "conditional",
       "code_version": "ver2-sk07m",
@@ -158,12 +163,12 @@
       ],
       "owner": "MIO",
       "passed_gates": [
-        "atlas_ready",
+        "legacy_atlas_not_current",
         "covariance_ready"
       ],
-      "production_status": "production_candidate",
+      "production_status": "diagnostic_only",
       "required_gates": [
-        "atlas_ready",
+        "legacy_atlas_not_current",
         "covariance_ready"
       ],
       "schema_version": "ver2-v7",
@@ -172,7 +177,9 @@
         "report_type": "residual_atlas"
       }
     },
+    "native_morphology_atlas_status": "unavailable_pre_native_solver",
     "probe_name": "model_agnostic",
+    "readiness_caveat": "readiness labels are provenance only; not current production readiness",
     "reduction_status": "diagnostic-only",
     "report_type": "residual_atlas",
     "tsc_overlay_ref": "tsc.ver2.export.overlay"

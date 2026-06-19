@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: mixed_none_external_and_conditioned_legacy
 sky_support_status: not_directional
 null_mock_status: mixed_diagnostic_unmatched_and_not_applicable
-config_hash: none_manual_REV_R068_response_matrix_update
+config_hash: none_manual_REV_R070_response_matrix_update
 input_hashes:
 - `formalism_originality_program.zip`: `57c00c1f3868fe0e62270b9625d5e97386c57925363a9bfb21137d9d8348bbc9`
 - `statistical_formalism_audit_report.zip`: `bdfb44061817bf01ca543356daaf3110cff70878edd14d3d4c5cc27cc4f34377`
@@ -17,8 +17,8 @@ caveats:
 - This matrix is a response and scheduling artifact, not a scientific validation artifact.
 - Open findings remain open or blocking until code, generated payloads, prose, and tests are changed in later REV items; resolved rows are diagnostic-only implementation evidence, not validation evidence.
 - MIO quantities remain diagnostic-only; HTT inference remains separate; scalar formalism values do not support geometry or family claims before native morphology atlas gates.
-generating_command: manual REV-R068 update after payload regeneration, formalism label verification, claim-language scan, and audit-package regeneration
-git_commit_or_worktree_state: `8706cdd+dirty` before REV-R068 commit
+generating_command: manual REV-R070 update after legacy readiness normalization and generated-surface scan
+git_commit_or_worktree_state: `REV-R070 dirty worktree before commit`
 
 ## Sources Archived
 
@@ -47,7 +47,7 @@ git_commit_or_worktree_state: `8706cdd+dirty` before REV-R068 commit
 | A3 | Medium | "98 percent accuracy" wording can be read as unsupported measurement accuracy. | Archived audit flags prior page/report wording; current REV-R063 does not edit manuscript prose. | Replace with transfer-conditional contribution-fraction wording and cite provenance. | manuscript/transfer provenance | REV-R065 | Open/blocking |
 | A4 | Medium | `F` naming and legacy `*_posterior` filename exposure risk physical-occupancy or posterior interpretation. | Archived audit flags the certified filling-fraction name and `root__fig_filling_fraction_posterior`. | Define `F` as the signed projection fraction of the admissible MES-linear ceiling; retire legacy posterior-named figure filename from manuscript-facing surfaces. | MIO/manuscript | REV-R066 plus figure cleanup | Open/blocking |
 | A5 | Medium | `x_C`/`F` cancellation caveat is missing from displays. | Current payload carries `departure_display_contract`, `cancellation_counterexample`, and `x` row sector/cancellation/M display metadata. | Keep signed component breakdown, absolute component total, and cancellation index required next to every `x_C`/`F` display. | MIO/obsstat display | REV-R066 | Implemented/test-covered for current displays; future canonical `F` rows must satisfy the same contract |
-| A6 | Medium | Legacy VER2 atlas/production labels can surface stale readiness claims. | Archived audit flags `atlas_available`, `atlas_ready`, and production-candidate/production-grade labels in legacy payloads. | Over-stamp legacy internal promotion fields to `legacy_not_current`; keep them quarantined as prior context only. | COMMON/legacy quarantine | later cleanup or REV-R065/R066 split | Open/blocking |
+| A6 | Medium | Legacy VER2 atlas/readiness labels can surface stale readiness claims. | Current generated VER2 and Pack A/B/C public surfaces now expose only `diagnostic_only`, `legacy_not_current`, `native_morphology_atlas_status`, and provenance caveats. | Keep legacy readiness fields over-stamped to `legacy_not_current`; keep them quarantined as prior context only. | COMMON/legacy quarantine | REV-R070 | Implemented/test-covered |
 | A7 | Low | Comparator labels must appear on every `x_C`/`Q` display. | `NormalizedScore.display_metadata`, `ComparatorMultiverseSummary`, current payload `x/Q` rows, and `scripts/verify_formalism_figure_labels.py` require comparator/frame/units plus Q multiverse metadata. | Keep comparator labels mandatory for every displayed `x_C`/`Q`; keep spread language restricted to specification-curve sensitivity. | MIO/display | REV-R068 | Implemented/test-covered |
 | A8 | Low | `G_F` floor reporting must be visible. | Audit notes floor stabilization can censor real gap values when a floor is applied. | Surface `floor_applied_by_bin` wherever `G_F` is reported. | MIO/display | REV-R066 | Open |
 

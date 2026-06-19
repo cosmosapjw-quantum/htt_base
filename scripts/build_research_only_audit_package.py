@@ -464,6 +464,7 @@ Known boundaries:
 - Current transfer-dependent rows are transfer-conditional.
 - MIO certificates are diagnostic-only and are not HTT evidence terms.
 - Scalar x/Q/Pi/F/G, direction coherence, or low-ell features do not identify a Bianchi family.
+- Historical status ledgers may preserve archived readiness vocabulary as provenance; current result packs use diagnostic-only public readiness and legacy-not-current caveats.
 """
 
 

@@ -17,11 +17,12 @@
     "caption_policy": [],
     "caveats": [
       "advisory_only",
-      "no_runtime_decision_ownership"
+      "no_runtime_decision_ownership",
+      "legacy_ver2_readiness_labels_are_provenance_only_not_current_public_readiness"
     ],
     "claim_tier": "conditional",
     "code_version": "ver2-d1",
-    "config_hash": "0463053ef82f54eb",
+    "config_hash": "d11d8d5c1e6a6381",
     "created_by": "scripts.ver2_artifact_export.py",
     "failed_gates": [],
     "git_commit": "e6385f885166c5dc94100aced8bdb089d1db41c3",
@@ -32,7 +33,7 @@
     "numeric_payload_path": "",
     "owner": "TSC_LEGACY",
     "passed_gates": [],
-    "production_status": "production_candidate",
+    "production_status": "diagnostic_only",
     "promotion_blockers": [],
     "publication_gates": {},
     "report_generation_gates": {},
@@ -51,7 +52,8 @@
   },
   "notes": [
     "propagation_pending:EE,TE,TT",
-    "claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory"
+    "claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory",
+    "readiness labels are provenance only; not current production readiness"
   ],
   "payload": {
     "bundle": {
@@ -149,7 +151,7 @@
               ],
               "owner": "TSC",
               "passed_gates": [],
-              "production_status": "production_candidate",
+              "production_status": "diagnostic_only",
               "required_gates": [],
               "schema_version": "ver2-v9",
               "statistics_definitions": {
@@ -192,7 +194,7 @@
               ],
               "owner": "TSC",
               "passed_gates": [],
-              "production_status": "production_candidate",
+              "production_status": "diagnostic_only",
               "required_gates": [],
               "schema_version": "ver2-v9",
               "statistics_definitions": {
@@ -236,7 +238,7 @@
               ],
               "owner": "TSC",
               "passed_gates": [],
-              "production_status": "production_candidate",
+              "production_status": "diagnostic_only",
               "required_gates": [],
               "schema_version": "ver2-v9",
               "statistics_definitions": {
@@ -278,7 +280,7 @@
               ],
               "owner": "TSC",
               "passed_gates": [],
-              "production_status": "production_candidate",
+              "production_status": "diagnostic_only",
               "required_gates": [],
               "schema_version": "ver2-v9",
               "statistics_definitions": {
@@ -327,7 +329,7 @@
             ],
             "owner": "TSC",
             "passed_gates": [],
-            "production_status": "production_candidate",
+            "production_status": "diagnostic_only",
             "required_gates": [],
             "schema_version": "ver2-v9",
             "statistics_definitions": {
@@ -358,7 +360,7 @@
           ],
           "owner": "TSC",
           "passed_gates": [],
-          "production_status": "production_candidate",
+          "production_status": "diagnostic_only",
           "required_gates": [],
           "schema_version": "ver2-v9",
           "statistics_definitions": {
@@ -411,7 +413,7 @@
             ],
             "owner": "TSC",
             "passed_gates": [],
-            "production_status": "production_candidate",
+            "production_status": "diagnostic_only",
             "required_gates": [],
             "schema_version": "ver2-v9",
             "statistics_definitions": {
@@ -454,7 +456,7 @@
             ],
             "owner": "TSC",
             "passed_gates": [],
-            "production_status": "production_candidate",
+            "production_status": "diagnostic_only",
             "required_gates": [],
             "schema_version": "ver2-v9",
             "statistics_definitions": {
@@ -499,7 +501,7 @@
             ],
             "owner": "TSC",
             "passed_gates": [],
-            "production_status": "production_candidate",
+            "production_status": "diagnostic_only",
             "required_gates": [],
             "schema_version": "ver2-v9",
             "statistics_definitions": {
@@ -583,6 +585,9 @@
       "upgrade_reason": "stable_no_upgrade",
       "upgrade_severity": "info"
     },
+    "current_public_production_status": "diagnostic_only",
+    "current_public_readiness": "diagnostic_only",
+    "legacy_readiness_status": "legacy_not_current",
     "manifest": {
       "artifact_id": "tsc.ver2.export.active_service_bundle",
       "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_active_service_bundle.json",
@@ -602,7 +607,7 @@
       ],
       "owner": "TSC",
       "passed_gates": [],
-      "production_status": "production_candidate",
+      "production_status": "diagnostic_only",
       "required_gates": [],
       "schema_version": "ver2-v9",
       "statistics_definitions": {
@@ -615,7 +620,9 @@
         "surface": "TscActiveServiceBundleExport"
       }
     },
-    "overlay_ref": "tsc.ver2.export.overlay"
+    "native_morphology_atlas_status": "unavailable_pre_native_solver",
+    "overlay_ref": "tsc.ver2.export.overlay",
+    "readiness_caveat": "readiness labels are provenance only; not current production readiness"
   },
   "summary": "TSC active-service bundle keeps residual/source/projection caveats machine-readable for downstream HTT/MIO/BASS handoffs.",
   "title": "TSC active-service bundle",

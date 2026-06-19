@@ -65,8 +65,19 @@ def test_pack_b_payload_includes_required_surfaces_and_manifest():
     assert payload["legacy_ver2_context"]["pr111_use"] == (
         "legacy_context_only_not_promoted"
     )
-    assert payload["legacy_ver2_context"]["source_production_status"] == (
-        "production_candidate"
+    assert payload["legacy_ver2_context"]["current_public_production_status"] == (
+        "diagnostic_only"
+    )
+    assert payload["legacy_ver2_context"]["legacy_readiness_status"] == (
+        "legacy_not_current"
+    )
+    assert all(
+        item["current_public_production_status"] == "diagnostic_only"
+        for item in payload["legacy_ver2_context"]["artifacts"]
+    )
+    assert all(
+        item["legacy_readiness_status"] == "legacy_not_current"
+        for item in payload["legacy_ver2_context"]["artifacts"]
     )
 
     categories = {row["category"] for row in payload["gate_summary"]}
@@ -119,6 +130,9 @@ def test_pack_b_markdown_is_conditional_at_most_and_caveated():
     assert "directional coherence" in markdown
     assert "diagnostic cross-check, not HTT evidence" in markdown
     assert "legacy_context_only_not_promoted" in markdown
+    assert "legacy_not_current" in markdown
+    assert "production_candidate" not in markdown
+    assert "production-grade" not in markdown
     _assert_no_forbidden_language(markdown)
 
 

@@ -6,8 +6,8 @@ claim_tier: diagnostic_only
 transfer_source: none
 config_hash: `sha256:525bd5a24375f05b2699af773dafe0ecebe4a0b7fd29a3f8180597e37d0dea2e`
 input_hashes:
-- scripts/result_packs/generate_pack_C_mio_certificates.py:sha256:dc8e5f46f1d222ab47ae1380c6c555e1f8730de7fdd55fc884fca8640aa41b50
-- docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json:sha256:c2ce199a4aaa5bc30a1dff747c665db53ab8a7c26b175f6470d04b1840ee464f
+- scripts/result_packs/generate_pack_C_mio_certificates.py:sha256:130ed8f8e804a5dd0ea6a02818ea5f4fe8bc13697024b9b9e0a0f8d97e5a9609
+- docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json:sha256:7526f2572f8d50c8d551d4da0312f2655001c8abe29fb559a173e9d01002ead3
 - docs/PR_DELTAS/pr-100.md:sha256:28b2f1bfa5e8a438a194946cd39eeaf5886afeb537ec58c7aec4f938beb72f69
 - docs/PR_DELTAS/pr-101.md:sha256:d6e78b134d34f3bc88a8ac384afe38e6be968f514c592fec1af50d97f5ba690a
 - docs/PR_DELTAS/pr-102.md:sha256:1d626ab33fda6ef258339e6e1d5480ca65bf9d4be06822d7609e4ae85cdb1da2
@@ -19,36 +19,36 @@ input_hashes:
 - htt/mio/decomposition/evidence_anatomy.py:sha256:0a7abccf5961ec642d0054ab0fe96bc6ea393bfcda0ffdb52b60f8ecb73911d8
 - htt/mio/interface/mio_certificate.py:sha256:075dbda8151e31433c91953af9113c3eeee493671b44e1d4792c681cbc8d01ff
 - htt/workspace/contracts/mio_certificate.py:sha256:ddb47db32c21b1aac91d6fe9b5708f3620bd797b3067b0fb4c4cc4736631b673
-- docs/generated/status_snapshot.json:sha256:6dec627c33b3e807019fe2867bdf949f7c1684ca69b572385ae89cc1b1c4c7ba
+- docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d
 sky_support_status: not_directional
 null_mock_status: summarized_from_mio_certificate_status_metadata
 generating_command: `python scripts/result_packs/generate_pack_C_mio_certificates.py`
-git_commit_or_worktree_state: `da4e242+dirty`
+git_commit_or_worktree_state: `3225e56+dirty`
 
 ## Scope
 
 This COMMON diagnostic-only pack gathers MIO observatory certificate/status surfaces by reference. It does not rank models, does not modify HTT-owned evidence traces, and does not promote legacy VER2 certificate rows.
 
-Diagnostic-only vs production-grade status is explicit.
+Diagnostic-only public readiness is explicit.
 
 ## Certificate Rows
 
-| Name | Owner | Source PR | Surface | Diagnostic Statuses | Production-Grade Statuses | Ranking |
+| Name | Owner | Source PR | Surface | Diagnostic Statuses | Legacy Readiness Statuses | Ranking |
 | --- | --- | --- | --- | --- | --- | --- |
-| directional coherence certificate | MIO | PR-100 | mio.coherence.directional.to_mio_certificate | blocked_missing_covariance, blocked_missing_null_mocks, diagnostic_only | production_candidate | forbidden_not_ranked |
-| redshift binned coherence certificate | MIO | PR-101 | mio.coherence.redshift_binned.to_mio_certificate | blocked_missing_covariance, diagnostic_only, descriptive_fallback | production_candidate | forbidden_not_ranked |
-| FLRW null predictive certificate | MIO | PR-102 | mio.tension.flrw_tension.to_mio_certificate | blocked_missing_null_mocks, blocked_missing_covariance, descriptive_only_blocked | production_candidate | forbidden_not_ranked |
+| directional coherence certificate | MIO | PR-100 | mio.coherence.directional.to_mio_certificate | blocked_missing_covariance, blocked_missing_null_mocks, diagnostic_only | legacy_not_current | forbidden_not_ranked |
+| redshift binned coherence certificate | MIO | PR-101 | mio.coherence.redshift_binned.to_mio_certificate | blocked_missing_covariance, diagnostic_only, descriptive_fallback | legacy_not_current | forbidden_not_ranked |
+| FLRW null predictive certificate | MIO | PR-102 | mio.tension.flrw_tension.to_mio_certificate | blocked_missing_null_mocks, blocked_missing_covariance, descriptive_only_blocked | legacy_not_current | forbidden_not_ranked |
 | predictive residual context | MIO | PR-103 | mio.diagnostics.predictive_residuals | diagnostic_only, residual_context_only | none | forbidden_not_ranked |
 | evidence anatomy narrative | MIO | PR-103 | mio.decomposition.evidence_anatomy | diagnostic_only, blocked_provenance_mismatch | none | forbidden_not_ranked |
 
 ## Status Scenarios
 
-| Scenario | Public Grade Label | Claim Tier Ceiling | Certificate Use | Ranking |
-| --- | --- | --- | --- | --- |
-| complete_mio_metadata | production-grade | conditional | diagnostic_certificate_with_complete_metadata | forbidden_not_ranked |
-| missing_covariance_or_null | diagnostic-only | blocked | blocked_or_diagnostic_no_claim | forbidden_not_ranked |
-| descriptive_tail_only | diagnostic-only | blocked | diagnostic_only_descriptive | forbidden_not_ranked |
-| htt_evidence_trace_narrative | diagnostic-only | diagnostic_only | read_only_context_not_mio_evidence | forbidden_not_ranked |
+| Scenario | Public Readiness Label | Legacy Readiness | Claim Tier Ceiling | Certificate Use | Ranking |
+| --- | --- | --- | --- | --- | --- |
+| complete_mio_metadata | diagnostic-only | legacy_not_current | conditional | diagnostic_certificate_with_complete_metadata | forbidden_not_ranked |
+| missing_covariance_or_null | diagnostic-only | legacy_not_current | blocked | blocked_or_diagnostic_no_claim | forbidden_not_ranked |
+| descriptive_tail_only | diagnostic-only | legacy_not_current | blocked | diagnostic_only_descriptive | forbidden_not_ranked |
+| htt_evidence_trace_narrative | diagnostic-only | legacy_not_current | diagnostic_only | read_only_context_not_mio_evidence | forbidden_not_ranked |
 
 ## Dependency Status
 
@@ -61,14 +61,14 @@ Diagnostic-only vs production-grade status is explicit.
 
 ## Legacy VER2 Context
 
-Source `docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json` is hashed as prior context. Legacy pack `D` status under PR-112: `legacy_context_only_not_promoted`.
+Source `docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json` is hashed as prior context. Legacy pack `D` status under PR-112: `legacy_context_only_not_promoted`. The readiness labels are provenance only.
 
-| Artifact | Owner | Source Tier | Source Gate | PR-112 Status |
-| --- | --- | --- | --- | --- |
-| mio.predictive_residuals.certificate | MIO | conditional | production_candidate | prior_context_only |
-| tsc.ver2.export.overlay | TSC | conditional | production_candidate | prior_context_only |
-| tsc.ver2.export.active_service_bundle | TSC | conditional | production_candidate | prior_context_only |
-| tsc.ver2.export.policy_ledger | TSC | conditional | production_candidate | prior_context_only |
+| Artifact | Owner | Source Tier | Current Public Status | Legacy Readiness | PR-112 Status |
+| --- | --- | --- | --- | --- | --- |
+| mio.predictive_residuals.certificate | MIO | conditional | diagnostic_only | legacy_not_current | prior_context_only |
+| tsc.ver2.export.overlay | TSC_LEGACY | conditional | diagnostic_only | legacy_not_current | prior_context_only |
+| tsc.ver2.export.active_service_bundle | TSC_LEGACY | conditional | diagnostic_only | legacy_not_current | prior_context_only |
+| tsc.ver2.export.policy_ledger | TSC_LEGACY | conditional | diagnostic_only | legacy_not_current | prior_context_only |
 
 ## Claim Boundaries
 
@@ -83,11 +83,12 @@ Source `docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json` is hash
 
 - common_diagnostic_only_report_over_existing_mio_surfaces
 - mio_certificates_are_diagnostic_reports_not_model_rankings
-- production_grade_labels_are_readiness_labels_not_detection_claims
+- legacy_readiness_labels_are_not_current_public_production
 - blocked_or_descriptive_certificate_rows_remain_no_claim
 - htt_evidence_trace_context_is_read_only_and_not_mio_evidence
 - legacy_ver2_mio_certificate_pack_is_prior_context_only_not_promoted
 - native_morphology_atlas_support_remains_absent
+- readiness labels are provenance only; not current production readiness
 
 ## Manifest
 
@@ -98,22 +99,23 @@ Source `docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json` is hash
   "caveats": [
     "common_diagnostic_only_report_over_existing_mio_surfaces",
     "mio_certificates_are_diagnostic_reports_not_model_rankings",
-    "production_grade_labels_are_readiness_labels_not_detection_claims",
+    "legacy_readiness_labels_are_not_current_public_production",
     "blocked_or_descriptive_certificate_rows_remain_no_claim",
     "htt_evidence_trace_context_is_read_only_and_not_mio_evidence",
     "legacy_ver2_mio_certificate_pack_is_prior_context_only_not_promoted",
-    "native_morphology_atlas_support_remains_absent"
+    "native_morphology_atlas_support_remains_absent",
+    "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "da4e242+dirty",
+  "code_version": "3225e56+dirty",
   "config_hash": "sha256:525bd5a24375f05b2699af773dafe0ecebe4a0b7fd29a3f8180597e37d0dea2e",
   "created_by": "scripts/result_packs/generate_pack_C_mio_certificates.py",
   "failed_gates": [],
   "git_commit": null,
   "implementation_scope": "common",
   "input_hashes": [
-    "scripts/result_packs/generate_pack_C_mio_certificates.py:sha256:dc8e5f46f1d222ab47ae1380c6c555e1f8730de7fdd55fc884fca8640aa41b50",
-    "docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json:sha256:c2ce199a4aaa5bc30a1dff747c665db53ab8a7c26b175f6470d04b1840ee464f",
+    "scripts/result_packs/generate_pack_C_mio_certificates.py:sha256:130ed8f8e804a5dd0ea6a02818ea5f4fe8bc13697024b9b9e0a0f8d97e5a9609",
+    "docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json:sha256:7526f2572f8d50c8d551d4da0312f2655001c8abe29fb559a173e9d01002ead3",
     "docs/PR_DELTAS/pr-100.md:sha256:28b2f1bfa5e8a438a194946cd39eeaf5886afeb537ec58c7aec4f938beb72f69",
     "docs/PR_DELTAS/pr-101.md:sha256:d6e78b134d34f3bc88a8ac384afe38e6be968f514c592fec1af50d97f5ba690a",
     "docs/PR_DELTAS/pr-102.md:sha256:1d626ab33fda6ef258339e6e1d5480ca65bf9d4be06822d7609e4ae85cdb1da2",
@@ -125,12 +127,12 @@ Source `docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json` is hash
     "htt/mio/decomposition/evidence_anatomy.py:sha256:0a7abccf5961ec642d0054ab0fe96bc6ea393bfcda0ffdb52b60f8ecb73911d8",
     "htt/mio/interface/mio_certificate.py:sha256:075dbda8151e31433c91953af9113c3eeee493671b44e1d4792c681cbc8d01ff",
     "htt/workspace/contracts/mio_certificate.py:sha256:ddb47db32c21b1aac91d6fe9b5708f3620bd797b3067b0fb4c4cc4736631b673",
-    "docs/generated/status_snapshot.json:sha256:6dec627c33b3e807019fe2867bdf949f7c1684ca69b572385ae89cc1b1c4c7ba"
+    "docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d"
   ],
   "owner": "COMMON",
   "passed_gates": [
     "mio_certificate_statuses_gathered",
-    "diagnostic_vs_production_grade_explicit",
+    "diagnostic_public_readiness_explicit",
     "certificate_ranking_forbidden",
     "manifest_metadata_present"
   ],
@@ -138,7 +140,7 @@ Source `docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json` is hash
   "required_gates": [
     "dependencies_implemented",
     "mio_certificate_statuses_gathered",
-    "diagnostic_vs_production_grade_explicit",
+    "diagnostic_public_readiness_explicit",
     "certificate_ranking_forbidden",
     "manifest_metadata_present"
   ],
@@ -147,7 +149,7 @@ Source `docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json` is hash
     "certificate_section": "MIO certificate/status rows",
     "legacy_ver2_context": "hashed_prior_context_only",
     "ranking_status": "forbidden_not_ranked",
-    "status_section": "Diagnostic-only vs production-grade labels",
+    "status_section": "Diagnostic-only public readiness labels",
     "surface": "Result Pack C"
   }
 }

@@ -19,11 +19,12 @@
     "caveats": [
       "diagonal_cl_not_sufficient_for_directional_claims",
       "no_posterior_or_evidence_semantics",
-      "basis_reduced_covariance_not_full_biposh"
+      "basis_reduced_covariance_not_full_biposh",
+      "legacy_ver2_readiness_labels_are_provenance_only_not_current_public_readiness"
     ],
     "claim_tier": "conditional",
     "code_version": "ver2-d1",
-    "config_hash": "c44f0739b60c70de",
+    "config_hash": "f48fa99269c04efd",
     "created_by": "scripts.ver2_artifact_export.py",
     "failed_gates": [],
     "git_commit": "e6385f885166c5dc94100aced8bdb089d1db41c3",
@@ -41,7 +42,7 @@
       "covariance_symmetry_guard",
       "covariance_invariant_guard"
     ],
-    "production_status": "production_candidate",
+    "production_status": "diagnostic_only",
     "promotion_blockers": [],
     "publication_gates": {},
     "report_generation_gates": {},
@@ -92,7 +93,8 @@
   "notes": [
     "diagonal_cl_not_sufficient_for_directional_claims",
     "no_posterior_or_evidence_semantics",
-    "basis_reduced_covariance_not_full_biposh"
+    "basis_reduced_covariance_not_full_biposh",
+    "readiness labels are provenance only; not current production readiness"
   ],
   "payload": {
     "channels": [
@@ -172,7 +174,10 @@
         "tt_max_asymmetry": 0.0
       }
     },
+    "current_public_production_status": "diagnostic_only",
+    "current_public_readiness": "diagnostic_only",
     "ell_max": 4,
+    "legacy_readiness_status": "legacy_not_current",
     "manifest": {
       "artifact_id": "bass.ver2.export.solver_core_output_tier_b.observable_vector",
       "artifact_path": "docs/ver2_upgrade/generated/artifacts/bass_ver2_export_observable_vector.json",
@@ -200,7 +205,7 @@
         "covariance_symmetry_guard",
         "covariance_invariant_guard"
       ],
-      "production_status": "production_candidate",
+      "production_status": "diagnostic_only",
       "required_gates": [
         "covariance_features_present",
         "sky_support_mock_calibrated",
@@ -244,7 +249,9 @@
         "surface": "ObservableVector"
       }
     },
+    "native_morphology_atlas_status": "unavailable_pre_native_solver",
     "null_proxy_status": "consistent_with_isotropic_null",
+    "readiness_caveat": "readiness labels are provenance only; not current production readiness",
     "unique_index_count": 0
   },
   "summary": "BASS low-ell observable substrate with explicit sparse covariance proxy semantics.",

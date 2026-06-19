@@ -17,11 +17,12 @@
     "caption_policy": [],
     "caveats": [
       "pre_inference_only",
-      "not_posterior_odds"
+      "not_posterior_odds",
+      "legacy_ver2_readiness_labels_are_provenance_only_not_current_public_readiness"
     ],
     "claim_tier": "conditional",
     "code_version": "ver2-d1",
-    "config_hash": "d6dd4b4669ca01fb",
+    "config_hash": "b9b39387e2b494f5",
     "created_by": "htt.infer.local_global_discrimination.build_discrimination_matrix",
     "failed_gates": [],
     "git_commit": "e6385f885166c5dc94100aced8bdb089d1db41c3",
@@ -33,7 +34,7 @@
     "numeric_payload_path": "",
     "owner": "HTT",
     "passed_gates": [],
-    "production_status": "production_candidate",
+    "production_status": "diagnostic_only",
     "promotion_blockers": [],
     "publication_gates": {},
     "report_generation_gates": {},
@@ -41,7 +42,7 @@
     "schema_version": "ver2-v9",
     "science_promotion_gates": {},
     "statistics_definitions": {
-      "atlas_available": true,
+      "atlas_current_status": "legacy_not_current",
       "blocked_pairs": [],
       "conditional_pairs": [
         "global_tilt|local_boost"
@@ -72,16 +73,20 @@
   },
   "notes": [
     "pre_inference_only",
-    "not_posterior_odds"
+    "not_posterior_odds",
+    "readiness labels are provenance only; not current production readiness"
   ],
   "payload": {
     "claim_tier_by_pair": {
       "global_tilt|local_boost": "conditional"
     },
+    "current_public_production_status": "diagnostic_only",
+    "current_public_readiness": "diagnostic_only",
     "hypotheses": [
       "local_boost",
       "global_tilt"
     ],
+    "legacy_readiness_status": "legacy_not_current",
     "manifest": {
       "artifact_id": "htt.ver2.export.discrimination_matrix",
       "artifact_path": "docs/ver2_upgrade/generated/artifacts/htt_ver2_export_discrimination_matrix.json",
@@ -102,11 +107,11 @@
       ],
       "owner": "HTT",
       "passed_gates": [],
-      "production_status": "production_candidate",
+      "production_status": "diagnostic_only",
       "required_gates": [],
       "schema_version": "ver2-v9",
       "statistics_definitions": {
-        "atlas_available": true,
+        "atlas_current_status": "legacy_not_current",
         "blocked_pairs": [],
         "conditional_pairs": [
           "global_tilt|local_boost"
@@ -135,6 +140,7 @@
         "surface": "DiscriminationMatrix"
       }
     },
+    "native_morphology_atlas_status": "unavailable_pre_native_solver",
     "overlap_matrix": [
       [
         1.0,
@@ -145,6 +151,7 @@
         1.0
       ]
     ],
+    "readiness_caveat": "readiness labels are provenance only; not current production readiness",
     "recommended_next_observable": {
       "global_tilt|local_boost": "depth_direction_coherence"
     }

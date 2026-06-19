@@ -6,8 +6,8 @@ claim_tier: diagnostic_only
 transfer_source: none
 config_hash: `sha256:e90dfe8d4a6bdb91671d90d8a3081bb00f3e31358e26d90193fc45e383cba5bf`
 input_hashes:
-- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:0e8d08d46ed72d7f63862e87b34c9dcfe4659e257043b01e27a6fcc52ffae9a7
-- docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:8286e96901af508b56b6cbd8e7e8748914d7ab8ee996b22a6bcf74da123da7e2
+- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:c9c8a622a33cedd1232d3ab11f22c822f40b0e15d81c0e78b31f1db452485316
+- docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca
 - docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207
 - docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a
 - docs/PR_DELTAS/pr-092.md:sha256:01f50c7a4cf69ec2c02d02be60c2373f7eb24167da25123464153a720340104c
@@ -16,11 +16,11 @@ input_hashes:
 - htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108
 - htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c
 - htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1
-- docs/generated/status_snapshot.json:sha256:efe766bb7dd7672db202b1c6fa6e3396766eeb76efc693f508e6927c4401678c
+- docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d
 sky_support_status: not_directional
 null_mock_status: summarized_from_dependency_surfaces
 generating_command: `python scripts/result_packs/generate_pack_A_scalar_to_morphology.py`
-git_commit_or_worktree_state: `6f1576a+dirty`
+git_commit_or_worktree_state: `3225e56+dirty`
 
 ## Scope
 
@@ -58,13 +58,13 @@ This is a diagnostic-only comparison pack. It compares scalar MIO Q/F/Pi report 
 
 ## Legacy VER2 Context
 
-Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is hashed as prior context. This PR records those source rows without promoting their source tier or source gate status.
+Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is hashed as prior context. This PR records those source rows without promoting their source tier or source readiness labels. The readiness labels are provenance only.
 
-| Artifact | Owner | Source Tier | Source Gate | PR-110 Status |
-| --- | --- | --- | --- | --- |
-| bass.ver2.export.solver_core_output_tier_b.observable_vector | BASS | conditional | production_candidate | prior_context_only |
-| bass.ver2.export.solver_core_output_tier_b.atlas_lite | BASS | conditional | production_candidate | prior_context_only |
-| bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy | BASS | conditional | production_candidate | prior_context_only |
+| Artifact | Owner | Source Tier | Current Public Status | Legacy Readiness | PR-110 Status |
+| --- | --- | --- | --- | --- | --- |
+| bass.ver2.export.solver_core_output_tier_b.observable_vector | BASS | conditional | diagnostic_only | legacy_not_current | prior_context_only |
+| bass.ver2.export.solver_core_output_tier_b.atlas_lite | BASS | conditional | diagnostic_only | legacy_not_current | prior_context_only |
+| bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy | BASS | conditional | diagnostic_only | legacy_not_current | prior_context_only |
 
 ## Dependency Status
 
@@ -81,6 +81,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
 - morphology and MES features are observer/statistics diagnostics, not native atlas support
 - native morphology atlas support remains absent
 - no HTT evidence, MIO output, or native solver output is merged
+- readiness labels are provenance only; not current production readiness
 
 ## Manifest
 
@@ -93,18 +94,19 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "scalar Q/F/Pi values do not identify geometry or a Bianchi family",
     "morphology and MES features are observer/statistics diagnostics, not native atlas support",
     "native morphology atlas support remains absent",
-    "no HTT evidence, MIO output, or native solver output is merged"
+    "no HTT evidence, MIO output, or native solver output is merged",
+    "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "6f1576a+dirty",
+  "code_version": "3225e56+dirty",
   "config_hash": "sha256:e90dfe8d4a6bdb91671d90d8a3081bb00f3e31358e26d90193fc45e383cba5bf",
   "created_by": "scripts/result_packs/generate_pack_A_scalar_to_morphology.py",
   "failed_gates": [],
   "git_commit": null,
   "implementation_scope": "common",
   "input_hashes": [
-    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:0e8d08d46ed72d7f63862e87b34c9dcfe4659e257043b01e27a6fcc52ffae9a7",
-    "docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:8286e96901af508b56b6cbd8e7e8748914d7ab8ee996b22a6bcf74da123da7e2",
+    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:c9c8a622a33cedd1232d3ab11f22c822f40b0e15d81c0e78b31f1db452485316",
+    "docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca",
     "docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207",
     "docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a",
     "docs/PR_DELTAS/pr-092.md:sha256:01f50c7a4cf69ec2c02d02be60c2373f7eb24167da25123464153a720340104c",
@@ -113,7 +115,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108",
     "htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c",
     "htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1",
-    "docs/generated/status_snapshot.json:sha256:efe766bb7dd7672db202b1c6fa6e3396766eeb76efc693f508e6927c4401678c"
+    "docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d"
   ],
   "owner": "COMMON",
   "passed_gates": [

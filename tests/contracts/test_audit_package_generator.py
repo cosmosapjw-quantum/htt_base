@@ -268,6 +268,67 @@ def test_packaged_figure_manifests_do_not_promote_claim_lanes():
         assert "production-grade" not in text
 
 
+def test_packaged_result_reports_do_not_surface_legacy_readiness_tokens():
+    module = _load_module()
+    payload = _payload()
+    archive_bytes = module.build_zip_bytes(REPO_ROOT, payload)
+    forbidden = (
+        "production_candidate",
+        "production_validated",
+        "production-grade",
+        "production grade",
+        "public_grade=production-grade",
+        "atlas_ready",
+        "atlas_available",
+    )
+
+    with zipfile.ZipFile(BytesIO(archive_bytes)) as archive:
+        for name in (
+            "reports/result_pack_A.md",
+            "reports/result_pack_B.md",
+            "reports/result_pack_C.md",
+        ):
+            text = archive.read(name).decode("utf-8")
+            offenders = [token for token in forbidden if token in text]
+            assert offenders == [], name
+            assert "legacy_not_current" in text
+
+
+def test_full_audit_package_legacy_readiness_tokens_are_archival_only():
+    module = _load_module()
+    payload = _payload()
+    archive_bytes = module.build_zip_bytes(REPO_ROOT, payload)
+    tokens = (
+        "production_candidate",
+        "production_validated",
+        "production-grade",
+        "production grade",
+        "public_grade=production-grade",
+        "atlas_ready",
+        "atlas_available",
+    )
+
+    def allowed(name: str, token: str) -> bool:
+        if name.startswith("pr_deltas/"):
+            return True
+        if name in {"status/pr_backlog.yaml", "status/pr_status.yaml"}:
+            return True
+        if name in {"status/claim_ledger.json", "status/status_snapshot.json"}:
+            return token == "production_validated"
+        return False
+
+    offenders: list[tuple[str, str]] = []
+    with zipfile.ZipFile(BytesIO(archive_bytes)) as archive:
+        for name in archive.namelist():
+            if not name.endswith((".md", ".tex", ".json", ".yaml", ".yml")):
+                continue
+            text = archive.read(name).decode("utf-8", errors="ignore")
+            for token in tokens:
+                if token in text and not allowed(name, token):
+                    offenders.append((name, token))
+    assert offenders == []
+
+
 def test_zip_bytes_are_deterministic_sorted_and_path_safe():
     module = _load_module()
     payload = _payload()

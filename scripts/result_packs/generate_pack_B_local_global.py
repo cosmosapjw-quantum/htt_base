@@ -48,6 +48,13 @@ DEFAULT_CAVEATS = (
     "legacy_ver2_pack_b_is_prior_context_only_not_promoted",
     "native_morphology_atlas_support_remains_absent",
     "no_htt_evidence_mio_certificate_or_native_solver_output_is_merged",
+    "readiness labels are provenance only; not current production readiness",
+)
+CURRENT_PUBLIC_PRODUCTION_STATUS = "diagnostic_only"
+LEGACY_READINESS_STATUS = "legacy_not_current"
+NATIVE_MORPHOLOGY_ATLAS_STATUS = "unavailable_pre_native_solver"
+READINESS_CAVEAT = (
+    "readiness labels are provenance only; not current production readiness"
 )
 
 
@@ -110,17 +117,19 @@ def _load_legacy_ver2_pack(repo_root: Path) -> dict[str, Any]:
         "source_title": source.get("title", "unknown"),
         "source_topic": source.get("topic", "unknown"),
         "source_claim_tier": source.get("claim_tier", "unknown"),
-        "source_production_status": source.get("production_status", "unknown"),
+        "current_public_production_status": CURRENT_PUBLIC_PRODUCTION_STATUS,
+        "legacy_readiness_status": LEGACY_READINESS_STATUS,
+        "native_morphology_atlas_status": NATIVE_MORPHOLOGY_ATLAS_STATUS,
+        "readiness_caveat": READINESS_CAVEAT,
         "pr111_use": "legacy_context_only_not_promoted",
         "artifacts": [
             {
                 "artifact_id": item.get("artifact_id", "unknown"),
                 "owner": item.get("owner", "unknown"),
                 "source_claim_tier": item.get("claim_tier", "unknown"),
-                "source_production_status": item.get(
-                    "production_status",
-                    "unknown",
-                ),
+                "current_public_production_status": CURRENT_PUBLIC_PRODUCTION_STATUS,
+                "legacy_readiness_status": LEGACY_READINESS_STATUS,
+                "native_morphology_atlas_status": NATIVE_MORPHOLOGY_ATLAS_STATUS,
                 "pr111_status": "prior_context_only",
             }
             for item in source.get("artifacts", [])
@@ -594,7 +603,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
         [
             (
                 f"Source `{legacy['source_path']}` is hashed as prior context. "
-                f"PR-111 status: `{legacy['pr111_use']}`."
+                f"PR-111 status: `{legacy['pr111_use']}`. The readiness labels are provenance only."
             ),
             "",
         ]
@@ -605,7 +614,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
                 "Artifact",
                 "Owner",
                 "Source Tier",
-                "Source Gate",
+                "Current Public Status",
+                "Legacy Readiness",
                 "PR-111 Status",
             ),
             [
@@ -613,7 +623,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
                     item["artifact_id"],
                     item["owner"],
                     item["source_claim_tier"],
-                    item["source_production_status"],
+                    item["current_public_production_status"],
+                    item["legacy_readiness_status"],
                     item["pr111_status"],
                 )
                 for item in legacy["artifacts"]

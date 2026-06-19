@@ -16,11 +16,12 @@
     "caption_policy": [],
     "caveats": [
       "rank_failure_returns_no_claim_not_weak_evidence",
-      "covariance_upgrade_is_descriptive_until_validation_packet"
+      "covariance_upgrade_is_descriptive_until_validation_packet",
+      "legacy_ver2_readiness_labels_are_provenance_only_not_current_public_readiness"
     ],
     "claim_tier": "conditional",
     "code_version": "ver2-d1",
-    "config_hash": "c44f0739b60c70de",
+    "config_hash": "6614cc74ce3f56b7",
     "created_by": "scripts.ver2_artifact_export.py",
     "failed_gates": [],
     "git_commit": "e6385f885166c5dc94100aced8bdb089d1db41c3",
@@ -36,7 +37,7 @@
     "passed_gates": [
       "response_rank_sufficient"
     ],
-    "production_status": "production_candidate",
+    "production_status": "diagnostic_only",
     "promotion_blockers": [],
     "publication_gates": {},
     "report_generation_gates": {},
@@ -82,13 +83,17 @@
   },
   "notes": [
     "rank_failure_returns_no_claim_not_weak_evidence",
-    "covariance_upgrade_is_descriptive_until_validation_packet"
+    "covariance_upgrade_is_descriptive_until_validation_packet",
+    "readiness labels are provenance only; not current production readiness"
   ],
   "payload": {
     "covariance_bound": 1.0,
+    "current_public_production_status": "diagnostic_only",
+    "current_public_readiness": "diagnostic_only",
     "diagonal_bound": 2.0,
     "final_bound": 1.0,
     "information_gain": 2.0,
+    "legacy_readiness_status": "legacy_not_current",
     "manifest": {
       "artifact_id": "bass.ver2.export.solver_core_output_tier_b.atlas_lite.mes.R_sigma_proxy",
       "artifact_path": "docs/ver2_upgrade/generated/artifacts/bass_ver2_export_full_cov_mes_report.json",
@@ -113,7 +118,7 @@
       "passed_gates": [
         "response_rank_sufficient"
       ],
-      "production_status": "production_candidate",
+      "production_status": "diagnostic_only",
       "required_gates": [
         "response_rank_sufficient"
       ],
@@ -153,7 +158,9 @@
         "surface": "FullCovMESReport"
       }
     },
+    "native_morphology_atlas_status": "unavailable_pre_native_solver",
     "parameter_block": "R_sigma_proxy",
+    "readiness_caveat": "readiness labels are provenance only; not current production readiness",
     "response_rank": 2,
     "tsc_overlay_ref": "tsc.ver2.export.overlay"
   },

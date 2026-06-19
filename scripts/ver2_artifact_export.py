@@ -176,6 +176,17 @@ MANUSCRIPT_ROLE_BY_PACK = {
 }
 FIGURE_MANUSCRIPT_CLAIM_TIER = "diagnostic_only"
 FIGURE_MANUSCRIPT_PRODUCTION_STATUS = "diagnostic_only"
+CURRENT_PUBLIC_READINESS = "diagnostic_only"
+LEGACY_READINESS_STATUS = "legacy_not_current"
+LEGACY_ATLAS_STATUS = "legacy_atlas_not_current"
+NATIVE_MORPHOLOGY_ATLAS_STATUS = "unavailable_pre_native_solver"
+READINESS_CAVEAT = (
+    "readiness labels are provenance only; not current production readiness"
+)
+READINESS_CAVEAT_ID = (
+    "legacy_ver2_readiness_labels_are_provenance_only_not_current_public_readiness"
+)
+RAW_LEGACY_READINESS_LABELS = {"production_candidate", "production_validated"}
 
 
 @dataclass(frozen=True)
@@ -291,6 +302,122 @@ def _json_ready(value: object) -> object:
     if isinstance(value, (list, tuple)):
         return [_json_ready(item) for item in value]
     return value
+
+
+def _sanitize_public_readiness_text(value: str) -> str:
+    replacements = (
+        ("public_grade=production-grade", "public_readiness_label=diagnostic-only"),
+        ("production-grade", "diagnostic-only"),
+        ("production grade", "diagnostic-only"),
+        ("production\\_candidate", "legacy\\_not\\_current"),
+        ("production\\_validated", "legacy\\_not\\_current"),
+        ("production_candidate", LEGACY_READINESS_STATUS),
+        ("production_validated", LEGACY_READINESS_STATUS),
+        ("atlas_ready", LEGACY_ATLAS_STATUS),
+        ("atlas_available", "atlas_current_status"),
+    )
+    text = value
+    for old, new in replacements:
+        text = text.replace(old, new)
+    return text
+
+
+def _sanitize_public_readiness(value: object) -> object:
+    if isinstance(value, str):
+        return _sanitize_public_readiness_text(value)
+    if isinstance(value, dict):
+        sanitized: dict[str, object] = {}
+        for key, item in value.items():
+            key_text = str(key)
+            if key_text == "atlas_available":
+                sanitized["atlas_current_status"] = (
+                    LEGACY_READINESS_STATUS if bool(item) else "not_available"
+                )
+                continue
+            if key_text == "atlas_ready":
+                sanitized["legacy_atlas_status"] = LEGACY_ATLAS_STATUS
+                continue
+            if key_text == "public_grade_label":
+                sanitized["public_readiness_label"] = (
+                    "diagnostic-only"
+                    if str(item) == "production-grade"
+                    else _sanitize_public_readiness(item)
+                )
+                continue
+            if key_text == "production_status" and str(item) in RAW_LEGACY_READINESS_LABELS:
+                sanitized[key_text] = CURRENT_PUBLIC_READINESS
+                continue
+            sanitized[_sanitize_public_readiness_text(key_text)] = (
+                _sanitize_public_readiness(item)
+            )
+        return sanitized
+    if isinstance(value, (list, tuple)):
+        return [_sanitize_public_readiness(item) for item in value]
+    return value
+
+
+def _normalized_manifest_for_public_surface(manifest: ArtifactManifest) -> ArtifactManifest:
+    payload = _sanitize_public_readiness(asdict(manifest))
+    if not isinstance(payload, dict):
+        raise TypeError("sanitized manifest payload must be a mapping")
+    already_normalized = (
+        manifest.production_status == CURRENT_PUBLIC_READINESS
+        and READINESS_CAVEAT_ID in manifest.caveats
+    )
+    payload["production_status"] = CURRENT_PUBLIC_READINESS
+    caveats = [
+        _sanitize_public_readiness_text(str(item))
+        for item in payload.get("caveats", [])
+        if str(item)
+    ]
+    caveats.append(READINESS_CAVEAT_ID)
+    payload["caveats"] = list(dict.fromkeys(caveats))
+    if not already_normalized:
+        payload["config_hash"] = _stable_hash(
+            manifest.artifact_id,
+            "public_readiness_normalized",
+            manifest.config_hash,
+            CURRENT_PUBLIC_READINESS,
+            LEGACY_READINESS_STATUS,
+        )
+    allowed = {field.name for field in fields(ArtifactManifest)}
+    return ArtifactManifest(**{name: payload[name] for name in allowed if name in payload})
+
+
+def _public_readiness_context() -> dict[str, str]:
+    return {
+        "current_public_production_status": CURRENT_PUBLIC_READINESS,
+        "current_public_readiness": CURRENT_PUBLIC_READINESS,
+        "legacy_readiness_status": LEGACY_READINESS_STATUS,
+        "native_morphology_atlas_status": NATIVE_MORPHOLOGY_ATLAS_STATUS,
+        "readiness_caveat": READINESS_CAVEAT,
+    }
+
+
+def _record_for_public_surface(record: ArtifactRecord) -> ArtifactRecord:
+    payload = _sanitize_public_readiness(record.payload)
+    if not isinstance(payload, dict):
+        raise TypeError("sanitized artifact payload must be a mapping")
+    payload.update(_public_readiness_context())
+    notes = tuple(
+        dict.fromkeys(
+            tuple(_sanitize_public_readiness_text(str(item)) for item in record.notes)
+            + (READINESS_CAVEAT,)
+        )
+    )
+    return replace(
+        record,
+        manifest=_normalized_manifest_for_public_surface(record.manifest),
+        payload=payload,
+        summary=_sanitize_public_readiness_text(record.summary),
+        allowed_claims=tuple(
+            _sanitize_public_readiness_text(item) for item in record.allowed_claims
+        ),
+        forbidden_claims=tuple(
+            _sanitize_public_readiness_text(item) for item in record.forbidden_claims
+        ),
+        notes=notes,
+    )
 
 
 def _tuple_of_str(payload: dict[str, object], key: str) -> tuple[str, ...]:
@@ -1358,6 +1485,10 @@ def _pack_payload(pack: PackRecord) -> dict[str, object]:
         "figure_base": pack.figure_base,
         "claim_tier": pack.claim_tier,
         "production_status": pack.production_status,
+        "current_public_readiness": CURRENT_PUBLIC_READINESS,
+        "legacy_readiness_status": LEGACY_READINESS_STATUS,
+        "native_morphology_atlas_status": NATIVE_MORPHOLOGY_ATLAS_STATUS,
+        "readiness_caveat": READINESS_CAVEAT,
         "caveats": list(pack.caveats),
         "summary_lines": list(pack.summary_lines),
         "artifacts": [
@@ -1367,6 +1498,9 @@ def _pack_payload(pack: PackRecord) -> dict[str, object]:
                 "owner": record.manifest.owner,
                 "claim_tier": record.manifest.claim_tier,
                 "production_status": record.manifest.production_status,
+                "current_public_production_status": CURRENT_PUBLIC_READINESS,
+                "legacy_readiness_status": LEGACY_READINESS_STATUS,
+                "native_morphology_atlas_status": NATIVE_MORPHOLOGY_ATLAS_STATUS,
                 "summary": record.summary,
                 "evidence_refs": list(record.evidence_refs),
             }
@@ -1445,8 +1579,9 @@ def _render_result_pack_index(packs: tuple[PackRecord, ...]) -> str:
             "# VER2 Result-Pack Index",
             "",
             "Manifest-backed result-pack registry for `PR-MAN-15`.",
+            "Current public readiness is diagnostic-only; readiness labels are provenance only.",
             "",
-            "| Pack | Title | Claim tier | Production status | Figure base | Source artifacts |",
+            "| Pack | Title | Claim tier | Current public readiness | Figure base | Source artifacts |",
             "| --- | --- | --- | --- | --- | ---: |",
             rows,
         )
@@ -1694,13 +1829,16 @@ def _render_pack_markdown(pack: PackRecord) -> str:
             "",
             f"- topic: `{pack.topic}`",
             f"- claim tier: `{pack.claim_tier}`",
-            f"- production status: `{pack.production_status}`",
+            f"- current public readiness: `{CURRENT_PUBLIC_READINESS}`",
+            f"- legacy readiness status: `{LEGACY_READINESS_STATUS}`",
+            f"- native morphology atlas status: `{NATIVE_MORPHOLOGY_ATLAS_STATUS}`",
+            f"- readiness caveat: {READINESS_CAVEAT}",
             f"- figure base: `{pack.figure_base}`",
             f"- caveats: {caveat_text}",
             "",
             summary_text,
             "",
-            "| Artifact | Owner | Claim tier | Production status | Summary |",
+            "| Artifact | Owner | Claim tier | Current public readiness | Summary |",
             "| --- | --- | --- | --- | --- |",
             rows,
         )
@@ -1721,13 +1859,14 @@ def _render_pack_tex(pack: PackRecord) -> str:
         f"""
 % Generated by scripts/ver2_artifact_export.py
 \\paragraph{{Result Pack {pack.pack_id}: {_escape_tex(pack.title)}}}
-Claim tier: \\texttt{{{_escape_tex(pack.claim_tier)}}}. Production status:
-\\texttt{{{_escape_tex(pack.production_status)}}}. Caveats: {caveat_text}.
+Claim tier: \\texttt{{{_escape_tex(pack.claim_tier)}}}. Current public readiness:
+\\texttt{{{_escape_tex(CURRENT_PUBLIC_READINESS)}}}. Readiness labels are
+provenance only. Caveats: {caveat_text}.
 
 \\begin{{center}}
 \\begin{{tabular}}{{llll}}
 \\hline
-Artifact & Owner & Claim tier & Production status \\\\
+Artifact & Owner & Claim tier & Current public readiness \\\\
 \\hline
 {rows}
 \\hline
@@ -1746,7 +1885,9 @@ def _gallery_topic_map(packs: tuple[PackRecord, ...]) -> tuple[list[dict[str, ob
             "title": pack.title,
             "topic": pack.topic,
             "claim_tier": pack.claim_tier,
-            "production_status": pack.production_status,
+            "current_public_readiness": CURRENT_PUBLIC_READINESS,
+            "legacy_readiness_status": LEGACY_READINESS_STATUS,
+            "native_morphology_atlas_status": NATIVE_MORPHOLOGY_ATLAS_STATUS,
             "source_artifact_ids": [record.manifest.artifact_id for record in pack.artifacts],
         }
         for pack in packs
@@ -1754,7 +1895,7 @@ def _gallery_topic_map(packs: tuple[PackRecord, ...]) -> tuple[list[dict[str, ob
     md_rows = "\n".join(
         (
             f"| `{row['figure_base']}` | `{row['pack_id']}` | {row['title']} | "
-            f"`{row['claim_tier']}` | `{row['production_status']}` | "
+            f"`{row['claim_tier']}` | `{row['current_public_readiness']}` | "
             f"{', '.join(f'`{ref}`' for ref in row['source_artifact_ids'])} |"
         )
         for row in rows
@@ -1764,7 +1905,9 @@ def _gallery_topic_map(packs: tuple[PackRecord, ...]) -> tuple[list[dict[str, ob
             "<!-- Generated by scripts/ver2_artifact_export.py -->",
             "# VER2 Figure Gallery Topic Map",
             "",
-            "| Figure base | Pack | Title | Claim tier | Production status | Source artifacts |",
+            "Current public readiness is diagnostic-only; readiness labels are provenance only.",
+            "",
+            "| Figure base | Pack | Title | Claim tier | Current public readiness | Source artifacts |",
             "| --- | --- | --- | --- | --- | --- |",
             md_rows,
         )
@@ -2302,6 +2445,7 @@ def build_export_bundle(
         if refresh_runtime_evidence
         else _build_cached_export_records()
     )
+    records = {key: _record_for_public_surface(record) for key, record in records.items()}
     packs = _build_pack_records(records)
     return records, packs
 

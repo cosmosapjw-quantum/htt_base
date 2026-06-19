@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import importlib.util
+from io import BytesIO
 from pathlib import Path
 import sys
+import zipfile
 
 from common.artifact_manifest import validate_manifest_payload
 
@@ -106,3 +108,84 @@ def test_statistical_formalism_package_missing_inputs_fail_closed(tmp_path: Path
         assert "docs/manuscript/main.tex" in str(exc)
     else:
         raise AssertionError("missing statistical-formalism input should fail closed")
+
+
+def test_statistical_formalism_package_reports_normalize_legacy_readiness():
+    module = _load_module()
+    payload, entries = module.build_payload(
+        repo_root=REPO_ROOT,
+        output_zip=Path("docs/generated/statistical_formalism_audit_package.zip"),
+        output_manifest=Path("docs/generated/statistical_formalism_audit_package_manifest.json"),
+        output_prompt=Path("docs/generated/statistical_formalism_audit_prompt.md"),
+        output_readiness=Path("docs/generated/statistical_formalism_reaudit_readiness.md"),
+        generating_command="python scripts/build_statistical_formalism_audit_package.py --dry-run",
+        git_commit="test-commit",
+        worktree_state="test-worktree",
+    )
+    archive_bytes = module._build_zip_bytes(REPO_ROOT, payload, entries)
+    forbidden = (
+        "production_candidate",
+        "production_validated",
+        "production-grade",
+        "production grade",
+        "public_grade=production-grade",
+        "atlas_ready",
+        "atlas_available",
+    )
+
+    with zipfile.ZipFile(BytesIO(archive_bytes)) as archive:
+        report_names = [
+            name
+            for name in archive.namelist()
+            if name.endswith((".md", ".tex", ".json"))
+            and (
+                name.startswith("statistical_formalism_audit/docs/generated/result_pack_")
+                or name.startswith("statistical_formalism_audit/docs/ver2_upgrade/generated/result_pack_")
+            )
+        ]
+        assert report_names
+        for name in report_names:
+            text = archive.read(name).decode("utf-8")
+            offenders = [token for token in forbidden if token in text]
+            assert offenders == [], name
+
+
+def test_statistical_formalism_legacy_readiness_tokens_are_archival_only():
+    module = _load_module()
+    payload, entries = module.build_payload(
+        repo_root=REPO_ROOT,
+        output_zip=Path("docs/generated/statistical_formalism_audit_package.zip"),
+        output_manifest=Path("docs/generated/statistical_formalism_audit_package_manifest.json"),
+        output_prompt=Path("docs/generated/statistical_formalism_audit_prompt.md"),
+        output_readiness=Path("docs/generated/statistical_formalism_reaudit_readiness.md"),
+        generating_command="python scripts/build_statistical_formalism_audit_package.py --dry-run",
+        git_commit="test-commit",
+        worktree_state="test-worktree",
+    )
+    archive_bytes = module._build_zip_bytes(REPO_ROOT, payload, entries)
+    tokens = (
+        "production_candidate",
+        "production_validated",
+        "production-grade",
+        "production grade",
+        "public_grade=production-grade",
+        "atlas_ready",
+        "atlas_available",
+    )
+    allowed = {
+        (
+            "statistical_formalism_audit/docs/ver2_upgrade/generated/status_snapshot.json",
+            "production_validated",
+        )
+    }
+
+    offenders: list[tuple[str, str]] = []
+    with zipfile.ZipFile(BytesIO(archive_bytes)) as archive:
+        for name in archive.namelist():
+            if not name.endswith((".md", ".tex", ".json", ".yaml", ".yml")):
+                continue
+            text = archive.read(name).decode("utf-8", errors="ignore")
+            for token in tokens:
+                if token in text and (name, token) not in allowed:
+                    offenders.append((name, token))
+    assert offenders == []

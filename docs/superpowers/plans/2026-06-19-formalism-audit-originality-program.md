@@ -372,12 +372,12 @@ Files:
 
 Steps:
 
-- [ ] Over-stamp current-use legacy payload fields:
+- [x] Over-stamp current-use legacy payload fields:
   - `atlas_available: true` -> `legacy_not_current` surface or explicit `false` plus caveat.
   - `atlas_ready` -> `legacy_not_current`.
   - `production_candidate` / `production-grade` -> no-current-production label for public packages.
-- [ ] Preserve historical raw values only under an archived/prior-context namespace.
-- [ ] Ensure audit packages and manuscript generators never surface stale promotion fields.
+- [x] Preserve historical raw values only under an archived/prior-context namespace.
+- [x] Ensure audit packages and manuscript generators never surface stale promotion fields.
 
 Validation:
 

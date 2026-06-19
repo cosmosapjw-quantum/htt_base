@@ -17,11 +17,12 @@
     "caption_policy": [],
     "caveats": [
       "advisory_only",
-      "no_runtime_decision_ownership"
+      "no_runtime_decision_ownership",
+      "legacy_ver2_readiness_labels_are_provenance_only_not_current_public_readiness"
     ],
     "claim_tier": "conditional",
     "code_version": "ver2-d1",
-    "config_hash": "94380356613adfeb",
+    "config_hash": "388b905805808b03",
     "created_by": "scripts.ver2_artifact_export.py",
     "failed_gates": [],
     "git_commit": "e6385f885166c5dc94100aced8bdb089d1db41c3",
@@ -32,7 +33,7 @@
     "numeric_payload_path": "",
     "owner": "TSC_LEGACY",
     "passed_gates": [],
-    "production_status": "production_candidate",
+    "production_status": "diagnostic_only",
     "promotion_blockers": [],
     "publication_gates": {},
     "report_generation_gates": {},
@@ -51,9 +52,12 @@
   },
   "notes": [
     "propagation_pending:EE,TE,TT",
-    "claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory"
+    "claim_ceiling_insufficient:EE=exploratory,TE=exploratory,TT=exploratory",
+    "readiness labels are provenance only; not current production readiness"
   ],
   "payload": {
+    "current_public_production_status": "diagnostic_only",
+    "current_public_readiness": "diagnostic_only",
     "ledger": {
       "advisory_only": true,
       "artifact_id": "tsc.ver2.export.overlay",
@@ -111,6 +115,7 @@
         "EE"
       ]
     },
+    "legacy_readiness_status": "legacy_not_current",
     "manifest": {
       "artifact_id": "tsc.ver2.export.policy_ledger",
       "artifact_path": "docs/ver2_upgrade/generated/artifacts/tsc_ver2_export_policy_ledger.json",
@@ -130,7 +135,7 @@
       ],
       "owner": "TSC",
       "passed_gates": [],
-      "production_status": "production_candidate",
+      "production_status": "diagnostic_only",
       "required_gates": [],
       "schema_version": "ver2-v9",
       "statistics_definitions": {
@@ -143,7 +148,9 @@
         "surface": "TscPolicyLedgerExport"
       }
     },
-    "overlay_ref": "tsc.ver2.export.overlay"
+    "native_morphology_atlas_status": "unavailable_pre_native_solver",
+    "overlay_ref": "tsc.ver2.export.overlay",
+    "readiness_caveat": "readiness labels are provenance only; not current production readiness"
   },
   "summary": "TSC policy ledger exposes failed no-overclaim flags, claim-limited channels, and publication blockers as a separate advisory surface.",
   "title": "TSC no-overclaim policy ledger",

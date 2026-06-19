@@ -479,6 +479,9 @@ the statistical definitions and manuscript figures.
 
 This package is diagnostic-only.  It is not native solver validation, not a
 geometry detection claim, and not a Bianchi family-identification claim.
+Historical status ledgers may preserve archived readiness vocabulary as
+provenance; current result packs use diagnostic-only public readiness and
+legacy-not-current caveats.
 """
 
 

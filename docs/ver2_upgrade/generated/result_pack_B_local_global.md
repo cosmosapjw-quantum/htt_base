@@ -3,13 +3,16 @@
 
 - topic: `local_global_discrimination`
 - claim tier: `conditional`
-- production status: `production_candidate`
+- current public readiness: `diagnostic_only`
+- legacy readiness status: `legacy_not_current`
+- native morphology atlas status: `unavailable_pre_native_solver`
+- readiness caveat: readiness labels are provenance only; not current production readiness
 - figure base: `fig_ver2b_local_global_discrimination_matrix`
-- caveats: pre_inference_only, not_posterior_odds
+- caveats: pre_inference_only, not_posterior_odds, legacy_ver2_readiness_labels_are_provenance_only_not_current_public_readiness, readiness labels are provenance only; not current production readiness
 
 - The HTT discrimination matrix is a bounded conditional pre-inference audit that keeps local boost distinct from global tilt.
 - No posterior odds or source-side confirmation are exported here.
 
-| Artifact | Owner | Claim tier | Production status | Summary |
+| Artifact | Owner | Claim tier | Current public readiness | Summary |
 | --- | --- | --- | --- | --- |
-| `htt.ver2.export.discrimination_matrix` | `HTT` | `conditional` | `production_candidate` | HTT discrimination matrix provides a bounded pre-inference local-vs-global separation audit. |
+| `htt.ver2.export.discrimination_matrix` | `HTT` | `conditional` | `diagnostic_only` | HTT discrimination matrix provides a bounded pre-inference local-vs-global separation audit. |

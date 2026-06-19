@@ -51,9 +51,11 @@ def test_local_global_pack_reflects_calibrated_conditional_discrimination() -> N
     record = records["discrimination"]
     pack = next(pack for pack in packs if pack.pack_id == "B")
     assert record.manifest.claim_tier == "conditional"
-    assert record.manifest.production_status == "production_candidate"
+    assert record.manifest.production_status == "diagnostic_only"
+    assert record.payload["current_public_production_status"] == "diagnostic_only"
+    assert record.payload["legacy_readiness_status"] == "legacy_not_current"
     assert pack.claim_tier == "conditional"
-    assert pack.production_status == "production_candidate"
+    assert pack.production_status == "diagnostic_only"
     assert pack.summary_lines[0].startswith(
         "The HTT discrimination matrix is a bounded conditional pre-inference audit"
     )
@@ -71,6 +73,72 @@ def test_result_pack_summary_tex_tracks_conditional_local_global_pack() -> None:
     assert "appendix-only diagnostic on local-vs-global degeneracy; not posterior odds" not in summary_tex
     assert "Manuscript lane" in summary_tex
     assert "production\\_candidate" not in summary_tex
+
+
+def test_public_ver2_text_outputs_normalize_legacy_readiness_labels(
+    tmp_path: Path,
+) -> None:
+    exporter = _load_export_module()
+    records, packs = exporter.build_export_bundle()
+    generated = tmp_path / "ver2_generated"
+    exporter._generate_pack_figures(packs, figure_dir=generated)
+    figures = exporter._scan_figures(exporter.FIGURE_ROOT, generated_root=generated)
+    outputs = exporter._render_outputs(records, packs, figures)
+
+    forbidden = (
+        "production_candidate",
+        "production_validated",
+        "production-grade",
+        "production grade",
+        "public_grade=production-grade",
+        "atlas_ready",
+        "atlas_available",
+        r"production\_candidate",
+        r"production\_validated",
+    )
+    public_outputs = {
+        path.relative_to(exporter.REPO_ROOT).as_posix(): text
+        for path, text in outputs.items()
+        if path.suffix in {".md", ".tex"}
+        and (
+            path.is_relative_to(exporter.VER2_GEN)
+            or path.is_relative_to(exporter.MANUSCRIPT_GEN)
+            or path == exporter.FIGURE_GEN_INDEX
+        )
+    }
+
+    offenders = {
+        name: [token for token in forbidden if token in text]
+        for name, text in public_outputs.items()
+        if any(token in text for token in forbidden)
+    }
+    assert offenders == {}
+    assert any(
+        "readiness labels are provenance only" in text
+        for text in public_outputs.values()
+    )
+
+
+def test_ver2_pack_payload_carries_legacy_not_current_readiness() -> None:
+    exporter = _load_export_module()
+    _, packs = exporter.build_export_bundle()
+    pack = next(pack for pack in packs if pack.pack_id == "D")
+    payload = exporter._pack_payload(pack)
+
+    assert payload["production_status"] == "diagnostic_only"
+    assert payload["current_public_readiness"] == "diagnostic_only"
+    assert payload["legacy_readiness_status"] == "legacy_not_current"
+    assert payload["native_morphology_atlas_status"] == (
+        "unavailable_pre_native_solver"
+    )
+    assert all(
+        row["current_public_production_status"] == "diagnostic_only"
+        for row in payload["artifacts"]
+    )
+    assert all(
+        row["legacy_readiness_status"] == "legacy_not_current"
+        for row in payload["artifacts"]
+    )
 
 
 def test_validation_pack_carries_representative_family_sweep_evidence() -> None:

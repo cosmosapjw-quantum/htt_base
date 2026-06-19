@@ -10,12 +10,12 @@ config_hash: `sha256:5d5f382530a84f273563e05faeb31150abc406e06c58e319ca27891b6b1
 input_hashes:
 - `scripts/make_current_manuscript_figures.py:sha256:b5cd2e59a8a30c400f880d12b6c8a72d3e5a43e4cd6efc1f7ef8b980cdfb4341`
 - `docs/generated/current_manuscript_figure_curation.json:sha256:1bff29c98803b711203a90c988ecdbabdf241d2daf13666a314faa7673ec49f8`
-- `docs/generated/current_science_plot_payload.json:sha256:b1cd56a06a9a51b57130a8d5889f971f608e09acdc9b83a4f5a1a57e379ea121`
-- `docs/generated/gf_matched_null_forecast_report.json:sha256:bd46e9ab8b7892815c16ba3e150e9e1daade4438df55aebb99ff9cdf6d9fc2c5`
-- `docs/generated/publication_claim_freeze.md:sha256:d4198ea398a9a7a2ff8084b67af5ad306fd08b0d479a44c1ea4f723b0c9458a3`
-- `docs/generated/result_pack_A.md:sha256:676f2150c2fe24503ab37ba52b0e3826a39c0bce6cf346c75e28b13336c07c7b`
-- `docs/generated/result_pack_B.md:sha256:8c6318165910c72f1fcf9859cd29980107d0372889853023018c722129ec377a`
-- `docs/generated/result_pack_C.md:sha256:2b37198072126ce63fc76376c84741bcb154c5c75e9544cfbf36061a8fb30c77`
+- `docs/generated/current_science_plot_payload.json:sha256:6df68539ca0d750fa4b8b63864456f1c1c418562f595083982f6e90e1a9cbb4e`
+- `docs/generated/gf_matched_null_forecast_report.json:sha256:9f3bca3cba1fb613f1ec7c151e495413edde004c74a69d547665fb13956dc2e3`
+- `docs/generated/publication_claim_freeze.md:sha256:314085e608181ec096c0829453ac30c66d19238442ccaaea7bcf3ce9873daa17`
+- `docs/generated/result_pack_A.md:sha256:ff6616ee58976624cfd89692dfc117da435fde9b6f5a79f8cd5ab4d0b94081c2`
+- `docs/generated/result_pack_B.md:sha256:d793426d0860aa60c68915fee09dcf3b4fcf70ea64c97f00af8caebb435dac93`
+- `docs/generated/result_pack_C.md:sha256:1c84109b23f81f6d49894b8406723a9e072de1eba8abe1f447473441c1a623c7`
 - `docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d`
 - `docs/generated/transfer_sensitivity_report.md:sha256:b2634c82ef783687cc2d304c50bb64487fa4556833bcc1a55464f7cae136903c`
 - `htt/htt/htt/departure/response_overlap.py:sha256:2ea56655e8b8c419239459bdbe4d79c755d00115ce4bd6e6e00b447d51c1f139`
@@ -34,7 +34,7 @@ caveats:
 - Current figures include governance summaries and conditioned current-code physics diagnostics.
 - No figure claims native low-ell output, geometry-detection status, or Bianchi family-ID.
 generating_command: `python scripts/make_current_manuscript_figures.py`
-git_commit_or_worktree_state: `b5383f9+dirty`
+git_commit_or_worktree_state: `3225e56+dirty`
 artifact_path: docs/generated/current_manuscript_plot_list.md
 
 ## Excluded Legacy Plot References

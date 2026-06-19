@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import importlib.util
+from io import BytesIO
 import sys
 from pathlib import Path
+import zipfile
 
 from common.artifact_manifest import validate_manifest_payload
 
@@ -81,3 +83,39 @@ def test_research_only_revision_program_inputs_fail_closed_when_missing(tmp_path
         assert "docs/audits/revision_program_2026-06-18/package_inventory.json" in str(exc)
     else:
         raise AssertionError("missing revision program input should fail closed")
+
+
+def test_research_only_package_legacy_readiness_tokens_are_archival_only():
+    module = _load_module()
+    payload, entries = module.build_payload(
+        repo_root=REPO_ROOT,
+        output_zip=Path("docs/generated/research_only_external_audit_package.zip"),
+        output_manifest=Path("docs/generated/research_only_external_audit_package_manifest.json"),
+        output_prompt=Path("docs/generated/research_only_external_audit_prompt.md"),
+        generating_command="python scripts/build_research_only_audit_package.py --dry-run",
+        worktree_state="test-worktree",
+    )
+    archive_bytes = module._build_zip_bytes(REPO_ROOT, payload, entries)
+    tokens = (
+        "production_candidate",
+        "production_validated",
+        "production-grade",
+        "production grade",
+        "public_grade=production-grade",
+        "atlas_ready",
+        "atlas_available",
+    )
+    allowed = {
+        ("research_audit_source/docs/generated/claim_ledger.json", "production_validated")
+    }
+
+    offenders: list[tuple[str, str]] = []
+    with zipfile.ZipFile(BytesIO(archive_bytes)) as archive:
+        for name in archive.namelist():
+            if not name.endswith((".md", ".tex", ".json", ".yaml", ".yml")):
+                continue
+            text = archive.read(name).decode("utf-8", errors="ignore")
+            for token in tokens:
+                if token in text and (name, token) not in allowed:
+                    offenders.append((name, token))
+    assert offenders == []

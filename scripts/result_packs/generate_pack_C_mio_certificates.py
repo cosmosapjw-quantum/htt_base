@@ -35,11 +35,18 @@ INPUT_FILES = (
 DEFAULT_CAVEATS = (
     "common_diagnostic_only_report_over_existing_mio_surfaces",
     "mio_certificates_are_diagnostic_reports_not_model_rankings",
-    "production_grade_labels_are_readiness_labels_not_detection_claims",
+    "legacy_readiness_labels_are_not_current_public_production",
     "blocked_or_descriptive_certificate_rows_remain_no_claim",
     "htt_evidence_trace_context_is_read_only_and_not_mio_evidence",
     "legacy_ver2_mio_certificate_pack_is_prior_context_only_not_promoted",
     "native_morphology_atlas_support_remains_absent",
+    "readiness labels are provenance only; not current production readiness",
+)
+CURRENT_PUBLIC_PRODUCTION_STATUS = "diagnostic_only"
+LEGACY_READINESS_STATUS = "legacy_not_current"
+NATIVE_MORPHOLOGY_ATLAS_STATUS = "unavailable_pre_native_solver"
+READINESS_CAVEAT = (
+    "readiness labels are provenance only; not current production readiness"
 )
 
 
@@ -102,7 +109,10 @@ def _load_legacy_ver2_pack(repo_root: Path) -> dict[str, Any]:
         "source_title": source.get("title", "unknown"),
         "source_topic": source.get("topic", "unknown"),
         "source_claim_tier": source.get("claim_tier", "unknown"),
-        "source_production_status": source.get("production_status", "unknown"),
+        "current_public_production_status": CURRENT_PUBLIC_PRODUCTION_STATUS,
+        "legacy_readiness_status": LEGACY_READINESS_STATUS,
+        "native_morphology_atlas_status": NATIVE_MORPHOLOGY_ATLAS_STATUS,
+        "readiness_caveat": READINESS_CAVEAT,
         "pr112_use": "legacy_context_only_not_promoted",
         "legacy_pack_id": source.get("pack_id", "unknown"),
         "artifacts": [
@@ -110,10 +120,9 @@ def _load_legacy_ver2_pack(repo_root: Path) -> dict[str, Any]:
                 "artifact_id": item.get("artifact_id", "unknown"),
                 "owner": item.get("owner", "unknown"),
                 "source_claim_tier": item.get("claim_tier", "unknown"),
-                "source_production_status": item.get(
-                    "production_status",
-                    "unknown",
-                ),
+                "current_public_production_status": CURRENT_PUBLIC_PRODUCTION_STATUS,
+                "legacy_readiness_status": LEGACY_READINESS_STATUS,
+                "native_morphology_atlas_status": NATIVE_MORPHOLOGY_ATLAS_STATUS,
                 "pr112_status": "prior_context_only",
             }
             for item in source.get("artifacts", [])
@@ -156,7 +165,7 @@ def _certificate_rows() -> list[dict[str, Any]]:
                 "blocked_missing_null_mocks",
                 "diagnostic_only",
             ],
-            "production_grade_statuses": ["production_candidate"],
+            "legacy_readiness_statuses": [LEGACY_READINESS_STATUS],
             "required_metadata": [
                 "covariance_status",
                 "null_mock_status",
@@ -181,7 +190,7 @@ def _certificate_rows() -> list[dict[str, Any]]:
                 "diagnostic_only",
                 "descriptive_fallback",
             ],
-            "production_grade_statuses": ["production_candidate"],
+            "legacy_readiness_statuses": [LEGACY_READINESS_STATUS],
             "required_metadata": [
                 "depth_bin_selection_status",
                 "depth_bin_covariance_status",
@@ -206,7 +215,7 @@ def _certificate_rows() -> list[dict[str, Any]]:
                 "blocked_missing_covariance",
                 "descriptive_only_blocked",
             ],
-            "production_grade_statuses": ["production_candidate"],
+            "legacy_readiness_statuses": [LEGACY_READINESS_STATUS],
             "required_metadata": [
                 "null_predictive_distribution_status",
                 "look_elsewhere_status",
@@ -225,7 +234,7 @@ def _certificate_rows() -> list[dict[str, Any]]:
             "surface": "mio.diagnostics.predictive_residuals",
             "status_metadata_surface": "predictive_residual_atlas_payload",
             "diagnostic_statuses": ["diagnostic_only", "residual_context_only"],
-            "production_grade_statuses": [],
+            "legacy_readiness_statuses": [],
             "required_metadata": [
                 "covariance_status",
                 "rank_status",
@@ -247,7 +256,7 @@ def _certificate_rows() -> list[dict[str, Any]]:
                 "diagnostic_only",
                 "blocked_provenance_mismatch",
             ],
-            "production_grade_statuses": [],
+            "legacy_readiness_statuses": [],
             "required_metadata": [
                 "trace_source_owner",
                 "htt_evidence_modification_status",
@@ -267,7 +276,8 @@ def _status_scenarios() -> list[dict[str, Any]]:
     return [
         {
             "scenario_id": "complete_mio_metadata",
-            "public_grade_label": "production-grade",
+            "public_readiness_label": "diagnostic-only",
+            "legacy_readiness_status": LEGACY_READINESS_STATUS,
             "claim_tier_ceiling": "conditional",
             "certificate_use": "diagnostic_certificate_with_complete_metadata",
             "model_ranking_status": "forbidden_not_ranked",
@@ -278,12 +288,13 @@ def _status_scenarios() -> list[dict[str, Any]]:
                 "complete_status_metadata",
             ],
             "caveats": [
-                "production_grade_is_readiness_label_not_detection_claim",
+                "legacy_readiness_is_not_current_public_production",
             ],
         },
         {
             "scenario_id": "missing_covariance_or_null",
-            "public_grade_label": "diagnostic-only",
+            "public_readiness_label": "diagnostic-only",
+            "legacy_readiness_status": LEGACY_READINESS_STATUS,
             "claim_tier_ceiling": "blocked",
             "certificate_use": "blocked_or_diagnostic_no_claim",
             "model_ranking_status": "forbidden_not_ranked",
@@ -292,12 +303,13 @@ def _status_scenarios() -> list[dict[str, Any]]:
                 "attach_matched_null_metadata",
             ],
             "caveats": [
-                "incomplete_covariance_or_null_blocks_public_grade_status",
+                "incomplete_covariance_or_null_blocks_current_readiness",
             ],
         },
         {
             "scenario_id": "descriptive_tail_only",
-            "public_grade_label": "diagnostic-only",
+            "public_readiness_label": "diagnostic-only",
+            "legacy_readiness_status": LEGACY_READINESS_STATUS,
             "claim_tier_ceiling": "blocked",
             "certificate_use": "diagnostic_only_descriptive",
             "model_ranking_status": "forbidden_not_ranked",
@@ -312,7 +324,8 @@ def _status_scenarios() -> list[dict[str, Any]]:
         },
         {
             "scenario_id": "htt_evidence_trace_narrative",
-            "public_grade_label": "diagnostic-only",
+            "public_readiness_label": "diagnostic-only",
+            "legacy_readiness_status": LEGACY_READINESS_STATUS,
             "claim_tier_ceiling": "diagnostic_only",
             "certificate_use": "read_only_context_not_mio_evidence",
             "model_ranking_status": "forbidden_not_ranked",
@@ -396,13 +409,13 @@ def build_result_pack_payload(
             "required_gates": [
                 "dependencies_implemented",
                 "mio_certificate_statuses_gathered",
-                "diagnostic_vs_production_grade_explicit",
+                "diagnostic_public_readiness_explicit",
                 "certificate_ranking_forbidden",
                 "manifest_metadata_present",
             ],
             "passed_gates": [
                 "mio_certificate_statuses_gathered",
-                "diagnostic_vs_production_grade_explicit",
+                "diagnostic_public_readiness_explicit",
                 "certificate_ranking_forbidden",
                 "manifest_metadata_present",
             ],
@@ -414,7 +427,7 @@ def build_result_pack_payload(
             "statistics_definitions": {
                 "surface": "Result Pack C",
                 "certificate_section": "MIO certificate/status rows",
-                "status_section": "Diagnostic-only vs production-grade labels",
+                "status_section": "Diagnostic-only public readiness labels",
                 "legacy_ver2_context": "hashed_prior_context_only",
                 "ranking_status": "forbidden_not_ranked",
             },
@@ -461,7 +474,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
                 "not promote legacy VER2 certificate rows."
             ),
             "",
-            "Diagnostic-only vs production-grade status is explicit.",
+            "Diagnostic-only public readiness is explicit.",
             "",
             "## Certificate Rows",
             "",
@@ -475,7 +488,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
                 "Source PR",
                 "Surface",
                 "Diagnostic Statuses",
-                "Production-Grade Statuses",
+                "Legacy Readiness Statuses",
                 "Ranking",
             ),
             [
@@ -485,7 +498,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
                     row["source_pr"],
                     row["surface"],
                     ", ".join(row["diagnostic_statuses"]),
-                    ", ".join(row["production_grade_statuses"]) or "none",
+                    ", ".join(row["legacy_readiness_statuses"]) or "none",
                     row["model_ranking_status"],
                 )
                 for row in payload["certificate_rows"]
@@ -497,7 +510,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
         _table(
             (
                 "Scenario",
-                "Public Grade Label",
+                "Public Readiness Label",
+                "Legacy Readiness",
                 "Claim Tier Ceiling",
                 "Certificate Use",
                 "Ranking",
@@ -505,7 +519,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
             [
                 (
                     row["scenario_id"],
-                    row["public_grade_label"],
+                    row["public_readiness_label"],
+                    row["legacy_readiness_status"],
                     row["claim_tier_ceiling"],
                     row["certificate_use"],
                     row["model_ranking_status"],
@@ -537,7 +552,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
             (
                 f"Source `{legacy['source_path']}` is hashed as prior context. "
                 f"Legacy pack `{legacy['legacy_pack_id']}` status under PR-112: "
-                f"`{legacy['pr112_use']}`."
+                f"`{legacy['pr112_use']}`. The readiness labels are provenance only."
             ),
             "",
         ]
@@ -548,7 +563,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
                 "Artifact",
                 "Owner",
                 "Source Tier",
-                "Source Gate",
+                "Current Public Status",
+                "Legacy Readiness",
                 "PR-112 Status",
             ),
             [
@@ -556,7 +572,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
                     item["artifact_id"],
                     item["owner"],
                     item["source_claim_tier"],
-                    item["source_production_status"],
+                    item["current_public_production_status"],
+                    item["legacy_readiness_status"],
                     item["pr112_status"],
                 )
                 for item in legacy["artifacts"]
