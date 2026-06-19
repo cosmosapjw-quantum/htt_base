@@ -56,6 +56,22 @@ def test_research_only_package_manifest_includes_revision_program_files():
         assert f"research_audit_source/{rel_path}" in archive_paths
 
 
+def test_research_only_prompt_uses_indirect_rejection_examples():
+    module = _load_module()
+    prompt = module.render_prompt()
+    forbidden_exact_strings = (
+        "Bianchi family " + "identified.",
+        "Bianchi geometry " + "detected.",
+        "External transfer " + "validated as native.",
+        "MIO posterior/evidence/" + "truth certificate.",
+    )
+
+    for phrase in forbidden_exact_strings:
+        assert phrase not in prompt
+    assert "an identified Bianchi family" in prompt
+    assert "a detected Bianchi geometry" in prompt
+
+
 def test_research_only_package_check_can_reuse_stored_git_metadata():
     module = _load_module()
     payload, _entries = module.build_payload(

@@ -91,9 +91,9 @@ Use exactly these sections:
 ## Rejection Triggers
 
 Reject or mark not ready if any of these are used as current results:
-- Bianchi family identified.
-- Bianchi geometry detected.
-- External transfer validated as native.
-- MIO posterior/evidence/truth certificate.
+- an identified Bianchi family.
+- a detected Bianchi geometry.
+- native validation claimed for external-transfer output.
+- MIO diagnostics promoted into posterior, evidence, or truth-certificate status.
 - Scalar diagnostics alone used as geometry/family evidence.
 - Evidence claim lacking required null/covariance/prior/PPC/LOOCV support.
