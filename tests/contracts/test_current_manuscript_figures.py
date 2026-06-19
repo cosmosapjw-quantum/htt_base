@@ -91,6 +91,24 @@ def test_current_figure_specs_are_repo_local_and_claim_gated():
         assert spec.snippet.startswith("current_figures_")
 
 
+def test_formalism_methods_claim_ladder_snippet_is_claim_safe():
+    snippet = (
+        REPO_ROOT / "docs" / "manuscript" / "generated" / "formalism_methods_claim_ladder.tex"
+    )
+    assert snippet.exists()
+    text = snippet.read_text(encoding="utf-8")
+    normalised = " ".join(text.split())
+    assert "Claim ladder and methods contribution" in text
+    assert "Methodology framing only" in text
+    assert "MIO does not own posterior odds" in text
+    assert "forecast-only" in text
+    assert "native low-ell solver output" in text
+    assert "Bianchi family-ID are forbidden current claims" in normalised
+    lowered = text.lower()
+    assert "geometry detected" not in lowered
+    assert "family identified" not in lowered
+
+
 def test_current_payload_exposes_gf_floor_split_and_forecast_report():
     payload = json.loads(
         (REPO_ROOT / "docs" / "generated" / "current_science_plot_payload.json").read_text(

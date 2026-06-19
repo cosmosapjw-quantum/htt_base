@@ -1029,17 +1029,20 @@ models, the \GMframe\ character is irreducible.
 
 
 % ============================================================
-\section{The three-layer inference framework}
+\section{The three-layer diagnostic pushforward framework}
 \label{sec:three-layer}
 % ============================================================
 
 Our goal in this section is to connect the exact algebraic
-identity~\eqref{eq:master-identity} to Bayesian inference.  The
-departure parameter $x$ is not directly observable: it is a
-function of the model parameters $\theta$ through the master
-identity.  What enters the statistical analysis is the
-\emph{pushforward posterior}---the probability distribution of
-$x$ induced by propagating $p(\theta | D)$ through the identity.
+identity~\eqref{eq:master-identity} to a registered diagnostic
+pushforward.  In HTT-owned likelihood contexts the same objects
+may be evaluated on posterior samples, but MIO reports only
+diagnostic certificates and registered curves.  The departure
+parameter $x$ is not directly observable: it is a function of
+the model parameters $\theta$ through the master identity.  What
+enters the statistical analysis is the typed pushforward
+distribution of $x$ induced by propagating the declared input
+measure through the identity.
 We organise this into three layers, each providing a distinct
 level of interpretive resolution.
 
@@ -1054,9 +1057,9 @@ x_i = \Sigstd(\theta_i) - \Wstd(\theta_i)
       + \Otilt(\theta_i) + \Okaniso(\theta_i)
 \end{equation}
 for each sample, inheriting the posterior weights $w_i$.  The
-resulting weighted collection $\{x_i, w_i\}$ is the pushforward
-posterior of $x$---exact, not approximate, since the identity
-holds for every $\theta$.
+resulting weighted collection $\{x_i, w_i\}$ is the declared
+pushforward sample for $x$---exact with respect to the stated
+input samples, since the identity holds for every $\theta$.
 
 The component-wise decomposition is retained: each sample
 carries all four contributions, enabling statements such as
@@ -1068,7 +1071,7 @@ $\tilde{\Sigstd} \lesssim 10^{-18}$''
 Table~\ref{tab:departure_summary}).  The shear is negligible by
 nineteen orders of magnitude: the entire defect is tilt-driven.
 
-\begin{definition}[Pushforward summary statistics]
+\begin{definition}[Pushforward diagnostic summaries]
 \label{def:x-summaries}
 We report:
 the posterior median $\tilde{x}$,
@@ -1115,10 +1118,9 @@ from saturation.
 \subsection{Layer~3: The exceedance probability}
 \label{sec:layer3}
 
-The occupancy ratio $Q$ quantifies how much of the allowed
-anisotropy budget is filled.  To translate this into a
-decision-theoretic statement, we define the \emph{exceedance
-probability}
+The occupancy ratio $Q$ records how a signed projection compares
+with a declared denominator policy.  To make threshold use
+auditable, we define the registered \emph{exceedance curve}
 \begin{equation}\label{eq:Pi-def}
 \Pi(q_\star) := P(Q > q_\star \,|\, D)\,,
 \end{equation}
@@ -1127,17 +1129,20 @@ FLRW$_{\mathrm{tilt}}$ model: $\Pi(0.01) = 1.000$
 (the posterior unambiguously exceeds $1\%$ of the ceiling),
 $\Pi(0.05) = 0.974$,
 $\Pi(0.1) = 0.352$, and
-$\Pi(0.5) = 0.000$.  The data
-strongly support nonzero departure at the $1$--$5\%$
-threshold but are indeterminate at $10\%$ and exclude $50\%$.
+$\Pi(0.5) = 0.000$.  This legacy conditioned example exceeds
+the $1$--$5\%$ thresholds under its recorded inputs, is
+indeterminate at $10\%$, and does not exceed $50\%$.  The curve
+is not a truth probability, p-value, or geometry-detection
+probability.
 
 \begin{remark}[Interpretation guide]\label{rem:Pi-interpretation}
 The three layers form a chain of increasing interpretive
 commitment.  Layer~1 ($x$) is exact algebra---no choice is made
 beyond the comparator.  Layer~2 ($Q$) introduces the MES
 ceiling, coupling the result to the adopted observational bound.
-Layer~3 ($\Pi$) introduces a threshold $q_\star$, the choice of
-which is a matter of scientific judgement, not of the framework.
+Layer~3 ($\Pi$) introduces a threshold $q_\star$, whose choice
+must be registered before interpretation and accompanied by
+look-elsewhere and null-status metadata.
 A referee who objects to the ceiling choice can read $x$ alone;
 a referee who accepts the ceiling but disputes the threshold
 can read $Q$ alone.  This stratification makes the
@@ -2202,7 +2207,10 @@ of the collision source is misattributed to higher
 energy-shape modes.  For Fermi--Dirac species at moderate
 degeneracy, this false-alarm fraction can reach
 ${\sim}\,98\%$ of the total
-$D_{s,\geq 2}$ [CITATION NEEDED: Teff Paper~III].
+$D_{s,\geq 2}$ in the legacy internal stress calculation.
+Until a citable dedicated $\Teff$ closure paper or generated
+source table is attached, this number is treated as an internal
+diagnostic example rather than a public claim.
 \end{remark}
 
 
@@ -2938,8 +2946,9 @@ Fisher information metric on the $\Teff$ manifold, the
 Hessian of the entropy functional restricted to the
 manifold, and the kernel of the orthogonal projection
 onto $V_s$.  The triple identification is a structural
-result of the effective-temperature formalism
-[CITATION NEEDED: Teff Paper~III].
+specified structural result of the effective-temperature
+formalism; its publication-facing status remains conditional on
+the generated closure notes and current artifact manifests.
 
 
 \paragraph{Gram matrix.}
@@ -3311,8 +3320,8 @@ field through the dipole:
 \end{equation}
 This truncation is the covariant lift of the $(E_0, E_1, E_2, N_0,
 N_1)$ minimal observable set identified in the
-slab-symmetric analysis [CITATION NEEDED: Teff
-Paper~II]: the energy sector alone ($E_0, E_1, E_2$)
+slab-symmetric internal analysis: the energy sector alone
+($E_0, E_1, E_2$)
 cannot determine $\eta_{0,s}$ or $\eta^{(s)}_a$, and
 omitting the number moments $N_0$ and $N_1$ renders the
 fugacity sector unidentifiable.  The total number of

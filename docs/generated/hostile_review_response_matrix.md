@@ -16,7 +16,7 @@ input_hashes:
 - docs/generated/claim_ledger.json:sha256:b49828ebc36e0542bd1162a6b2b90e0320883fc7e964d72a38424910ecfb68e2
 - docs/generated/manuscript_figure_inventory.md:sha256:23413b2a7586a753559efde96a5ad82b3c5ebe3170e3f2b3f318a7a785477cf0
 - docs/generated/missing_figure_references.md:sha256:98e16241d496e8eed05b1781f6ecbee83eef9f8c5a5b9ff403e52dd3b07fc0b1
-- docs/generated/pdf_claim_lint_report.md:sha256:6bd3b3ea12b536a41ee33302c72f2f0d92268e0daddbc8cf47801fa5c29d1cf0
+- docs/generated/pdf_claim_lint_report.md:sha256:7c866f477b78f6d5d2cb042590733afc17575e59757d0e372e9bc76f5d3fa6fc
 - docs/generated/result_pack_A.md:sha256:ff6616ee58976624cfd89692dfc117da435fde9b6f5a79f8cd5ab4d0b94081c2
 - docs/generated/result_pack_B.md:sha256:d793426d0860aa60c68915fee09dcf3b4fcf70ea64c97f00af8caebb435dac93
 - docs/generated/result_pack_C.md:sha256:1c84109b23f81f6d49894b8406723a9e072de1eba8abe1f447473441c1a623c7
@@ -24,7 +24,7 @@ input_hashes:
 - docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d
 - docs/generated/transfer_sensitivity_report.md:sha256:b2634c82ef783687cc2d304c50bb64487fa4556833bcc1a55464f7cae136903c
 - scripts/check_publication_claim_freeze.py:sha256:3dae9096d4b7241b65fd1649c37e27aeb9e25459768a48d576debeb8c1f9580a
-- tests/contracts/test_publication_claim_freeze.py:sha256:ecc6f44ef087438a411e2e6fdaadd128510d11a2eb0e5aec6ea091de07e81537
+- tests/contracts/test_publication_claim_freeze.py:sha256:83832af256359e68d3340795a9c8728c53ff9676c19059d340583a4b31984cac
 caveats:
 - Publication claim freeze controls public wording; it is not submission approval.
 - Current transfer-dependent outputs remain transfer-conditional.
@@ -32,7 +32,7 @@ caveats:
 - Native morphology atlas support is absent in this repository state.
 - Missing or quarantined manuscript figures block final submission freeze.
 generating_command: python scripts/check_publication_claim_freeze.py
-git_commit_or_worktree_state: 3225e56+dirty
+git_commit_or_worktree_state: e49a18a+dirty
 artifact_path: docs/generated/hostile_review_response_matrix.md
 
 ## Verdict

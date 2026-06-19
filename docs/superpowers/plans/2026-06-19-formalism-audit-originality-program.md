@@ -404,8 +404,8 @@ Files:
 
 Steps:
 
-- [ ] Reframe headline from anomaly detection to diagnostic-algebra methodology.
-- [ ] Add claim ladder:
+- [x] Reframe headline from anomaly detection to diagnostic-algebra methodology.
+- [x] Add claim ladder:
   - exact signed comparator projection.
   - exact cancellation caveat.
   - MIO diagnostic-only owner/tier.
@@ -414,10 +414,10 @@ Steps:
   - supported denominator-split `G_F`.
   - forbidden detection/evidence/native/family claims.
   - forecast-only matched-null local/global discrimination.
-- [ ] Add contribution paragraph covering F1-F9, with F1 semantic firewall as flagship.
-- [ ] Add limitations section: no current detection, `G_F` FPR blocked under current nulls,
+- [x] Add contribution paragraph covering F1-F9, with F1 semantic firewall as flagship.
+- [x] Add limitations section: no current detection, `G_F` FPR blocked under current nulls,
   transfer-conditional, no native solver, no family-ID.
-- [ ] Re-verify and cite DES blinding, multiverse analysis, and garden-of-forking-paths
+- [x] Re-verify and cite DES blinding, multiverse analysis, and garden-of-forking-paths
   prior art from primary/official sources.
 
 Validation:

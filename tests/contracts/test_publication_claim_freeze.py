@@ -267,7 +267,7 @@ def test_manuscript_uses_revision_program_framing():
     assert "claim-tiered framework" in combined
     assert "transfer-conditional" in combined
     assert "conditional on the dipole premise" in combined
-    assert "family identification remains blocked" in combined
+    assert "family-ID remains blocked" in combined
     assert "tomographic" in combined
     assert "prior-support sensitivity" in combined
 

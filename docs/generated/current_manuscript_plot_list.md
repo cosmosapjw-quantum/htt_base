@@ -8,11 +8,11 @@ sky_support_status: mixed_not_directional_and_diagnostic_sky_support
 null_mock_status: mixed_not_statistical_and_current_code_diagnostic_null_banks
 config_hash: `sha256:5d5f382530a84f273563e05faeb31150abc406e06c58e319ca27891b6b1c8d73`
 input_hashes:
-- `scripts/make_current_manuscript_figures.py:sha256:b5cd2e59a8a30c400f880d12b6c8a72d3e5a43e4cd6efc1f7ef8b980cdfb4341`
+- `scripts/make_current_manuscript_figures.py:sha256:7e324969490c399949dda2b1cf51a03eb6405578ff8fc6b053a0d9fc10ff7ed7`
 - `docs/generated/current_manuscript_figure_curation.json:sha256:1bff29c98803b711203a90c988ecdbabdf241d2daf13666a314faa7673ec49f8`
-- `docs/generated/current_science_plot_payload.json:sha256:6df68539ca0d750fa4b8b63864456f1c1c418562f595083982f6e90e1a9cbb4e`
-- `docs/generated/gf_matched_null_forecast_report.json:sha256:9f3bca3cba1fb613f1ec7c151e495413edde004c74a69d547665fb13956dc2e3`
-- `docs/generated/publication_claim_freeze.md:sha256:314085e608181ec096c0829453ac30c66d19238442ccaaea7bcf3ce9873daa17`
+- `docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f`
+- `docs/generated/gf_matched_null_forecast_report.json:sha256:e1cf5c334f240e75cdaa1c6b55a3e0a40e77c8067a006fb95c87cb8770f15fe5`
+- `docs/generated/publication_claim_freeze.md:sha256:1ba0877a820632d98f7baa1d6bb80bb40ce38bc9f7d2dc5f4777ffec2a837309`
 - `docs/generated/result_pack_A.md:sha256:ff6616ee58976624cfd89692dfc117da435fde9b6f5a79f8cd5ab4d0b94081c2`
 - `docs/generated/result_pack_B.md:sha256:d793426d0860aa60c68915fee09dcf3b4fcf70ea64c97f00af8caebb435dac93`
 - `docs/generated/result_pack_C.md:sha256:1c84109b23f81f6d49894b8406723a9e072de1eba8abe1f447473441c1a623c7`
@@ -34,7 +34,7 @@ caveats:
 - Current figures include governance summaries and conditioned current-code physics diagnostics.
 - No figure claims native low-ell output, geometry-detection status, or Bianchi family-ID.
 generating_command: `python scripts/make_current_manuscript_figures.py`
-git_commit_or_worktree_state: `3225e56+dirty`
+git_commit_or_worktree_state: `e49a18a+dirty`
 artifact_path: docs/generated/current_manuscript_plot_list.md
 
 ## Excluded Legacy Plot References
