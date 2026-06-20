@@ -1,0 +1,49 @@
+{
+  "boundary_mass_status": "not_computed_placeholder",
+  "caveats": [
+    "prior/error sensitivity gate, not an evidence run",
+    "a sign flip across the grid blocks any single Jeffreys label",
+    "boundary-mass and KL diagnostics are placeholders, not computed",
+    "no native low-ell solver output is introduced"
+  ],
+  "claim_tier": "blocked",
+  "config_hash": "sha256:fa1284f724c798ec70612aaf12bc00ac7ba4d9a0bc088fad460cf63519e963e2",
+  "generating_command": "venv/bin/python -m htt.infer.prior_error_sensitivity",
+  "implementation_scope": "htt",
+  "input_hashes": [
+    "docs/generated/current_science_plot_payload.json:prior_support_proxy"
+  ],
+  "kl_divergence_status": "not_computed_placeholder",
+  "lnB_robust_range": {
+    "max": 26.4,
+    "min": -39.1,
+    "spread": 65.5
+  },
+  "n_rows": 3,
+  "owner": "HTT",
+  "rows": [
+    {
+      "ceiling": 1.0,
+      "lnB": 26.4,
+      "prior_floor": 1e-12,
+      "sigma_beta": 0.00027
+    },
+    {
+      "ceiling": 1.0,
+      "lnB": -39.1,
+      "prior_floor": 1e-06,
+      "sigma_beta": 0.00027
+    },
+    {
+      "ceiling": 1.0,
+      "lnB": 3.2,
+      "prior_floor": 1e-09,
+      "sigma_beta": 0.00054
+    }
+  ],
+  "rows_are_marginal_likelihoods": false,
+  "schema_version": "htt.prior_error_sensitivity.v1",
+  "sign_flip_detected": true,
+  "single_jeffreys_label_allowed": false,
+  "worktree_state": "prior_error_sensitivity_fixture"
+}

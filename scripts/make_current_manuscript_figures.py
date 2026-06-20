@@ -38,6 +38,9 @@ from mio.formalism.budget_spec import (  # noqa: E402
     build_budget_spec,
     compare_denominator_policies,
 )
+from htt.infer.prior_error_sensitivity import (  # noqa: E402
+    summarize_prior_error_grid,
+)
 from mio.formalism.channel_occupancy_vector import (  # noqa: E402
     classify_occupancy_language,
 )
@@ -1057,6 +1060,17 @@ def _build_semantic_and_vector_payload(
             denominator_channel="shear",
             requested_phrase="physical occupancy",
         ),
+        "prior_error_sensitivity": summarize_prior_error_grid(
+            rows=[
+                {"prior_floor": 1e-12, "ceiling": 1.0, "sigma_beta": 2.7e-4, "lnB": 26.40},
+                {"prior_floor": 1e-6, "ceiling": 1.0, "sigma_beta": 2.7e-4, "lnB": -39.1},
+                {"prior_floor": 1e-9, "ceiling": 1.0, "sigma_beta": 5.4e-4, "lnB": 3.2},
+            ],
+            config_hash="sha256:current_prior_error_grid",
+            input_hashes=("docs/generated/prior_error_sensitivity_report.json",),
+            generating_command="make_current_manuscript_figures",
+            worktree_state="current",
+        ).as_payload(),
         "blocked_use_codes": [
             "isotropy_certificate",
             "scalar_classification",

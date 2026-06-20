@@ -816,6 +816,9 @@ def _asset_specs() -> tuple[AssetSpec, ...]:
             caveats=(
                 "prior/support sensitivity only",
                 "not evidence-grade Bayes factor",
+                "display-only prior/error sensitivity schematic; the prior/error "
+                "gate (docs/generated/prior_error_sensitivity_report.json) shows a "
+                "sign flip that blocks any single Jeffreys evidence label",
             ),
             source_paths=(INPUT_PATHS[0], INPUT_PATHS[2]),
             builder=_plot_prior_support_surface,
@@ -833,6 +836,8 @@ def _asset_specs() -> tuple[AssetSpec, ...]:
                 "bulk-flow uncertainty diagnostic only",
                 "not a verified evidence claim",
                 "look-elsewhere correction is display-only",
+                "display-only error-budget schematic; see the prior/error gate "
+                "(docs/generated/prior_error_sensitivity_report.json)",
             ),
             source_paths=(INPUT_PATHS[2],),
             builder=_plot_sigma_beta_band,

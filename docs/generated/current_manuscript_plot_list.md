@@ -8,13 +8,13 @@ sky_support_status: mixed_not_directional_and_diagnostic_sky_support
 null_mock_status: mixed_not_statistical_and_current_code_diagnostic_null_banks
 config_hash: `sha256:5d5f382530a84f273563e05faeb31150abc406e06c58e319ca27891b6b1c8d73`
 input_hashes:
-- `scripts/make_current_manuscript_figures.py:sha256:c9b96da469c2c8ba008748c20c6bc28344fbe41143176879bf7df96ea8068efa`
+- `scripts/make_current_manuscript_figures.py:sha256:08b7d0e550f1eab6f30e99101980a5ed62379d4fa0484896b73231b6874a3cf1`
 - `docs/generated/current_manuscript_figure_curation.json:sha256:1bff29c98803b711203a90c988ecdbabdf241d2daf13666a314faa7673ec49f8`
-- `docs/generated/current_science_plot_payload.json:sha256:f189db49aec48195d005a4382927f243538af267cec0c6264e5f177cee0466b5`
-- `docs/generated/gf_matched_null_forecast_report.json:sha256:b933094897220c7ca5e1483c6cc4fe3dd9947dc6234ba8aa73fa227c6c35e3fd`
+- `docs/generated/current_science_plot_payload.json:sha256:1204b955a23caafd66eb867194f0a9bc57a52c5e5e7dc23db35163d3c23ada1c`
+- `docs/generated/gf_matched_null_forecast_report.json:sha256:04826fe264e30f45eada67759b930120f2f51df533b78dd0166ac9ef160686fc`
 - `docs/generated/publication_claim_freeze.md:sha256:1ba0877a820632d98f7baa1d6bb80bb40ce38bc9f7d2dc5f4777ffec2a837309`
 - `docs/generated/result_pack_A.md:sha256:ff6616ee58976624cfd89692dfc117da435fde9b6f5a79f8cd5ab4d0b94081c2`
-- `docs/generated/result_pack_B.md:sha256:7d55ded6678510deedf62eaeacad89e94b7d0d9481632fb19b9a5178cbea7413`
+- `docs/generated/result_pack_B.md:sha256:f70dc4893b79b63822a6c803918cf42f2d9677a623a1b15f22a44ac517aa060c`
 - `docs/generated/result_pack_C.md:sha256:a8335933b110bae061ff527f91aef424996311396cc52881eec05e583577e2fe`
 - `docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d`
 - `docs/generated/transfer_sensitivity_report.md:sha256:b2634c82ef783687cc2d304c50bb64487fa4556833bcc1a55464f7cae136903c`
@@ -34,7 +34,7 @@ caveats:
 - Current figures include governance summaries and conditioned current-code physics diagnostics.
 - No figure claims native low-ell output, geometry-detection status, or Bianchi family-ID.
 generating_command: `python scripts/make_current_manuscript_figures.py`
-git_commit_or_worktree_state: `f9a56f7+dirty`
+git_commit_or_worktree_state: `6cc5518+dirty`
 artifact_path: docs/generated/current_manuscript_plot_list.md
 
 ## Excluded Legacy Plot References
