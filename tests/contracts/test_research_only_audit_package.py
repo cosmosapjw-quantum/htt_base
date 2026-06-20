@@ -198,3 +198,20 @@ def test_research_only_package_legacy_readiness_tokens_are_archival_only():
                 if token in text and (name, token) not in allowed:
                     offenders.append((name, token))
     assert offenders == []
+
+
+def test_research_only_package_includes_line_stable_tex_and_reaudit_matrix():
+    module = _load_module()
+    payload, _entries = module.build_payload(
+        repo_root=REPO_ROOT,
+        output_zip=Path("docs/generated/research_only_external_audit_package.zip"),
+        output_manifest=Path("docs/generated/research_only_external_audit_package_manifest.json"),
+        output_prompt=Path("docs/generated/research_only_external_audit_prompt.md"),
+        generating_command="pytest",
+        worktree_state="test",
+    )
+    paths = {entry["archive_path"] for entry in payload["archive_entries"]}
+    assert "research_audit_source/docs/manuscript/main.tex" in paths
+    assert "research_audit_source/docs/generated/audit_ver2_response_matrix.md" in paths
+    assert "research_audit_source/docs/generated/audit_ver2_completion_report.md" in paths
+    assert not any(path.lower().endswith(".pdf") for path in paths)

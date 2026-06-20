@@ -61,6 +61,8 @@ METADATA_FILES = (
     "docs/generated/observed_longrun_analysis.json",
     "docs/generated/observed_longrun_analysis.md",
     "docs/generated/external_research_input_response_matrix.md",
+    "docs/generated/audit_ver2_response_matrix.md",
+    "docs/generated/audit_ver2_completion_report.md",
     "docs/generated/revision_experiment_assets.md",
     "docs/generated/revision_experiment_assets.json",
     "docs/generated/research_program_experiment_registry.yaml",
@@ -547,13 +549,20 @@ Use this archive only. The compiled PDF is intentionally absent.
 Read in this order:
 1. `research_audit_source/docs/manuscript/main.tex`
 2. chapter files included by `main.tex`
-3. `research_audit_source/docs/generated/manuscript_plot_list_index.md`
-4. `research_audit_source/docs/generated/result_pack_A.md`
-5. `research_audit_source/docs/generated/result_pack_B.md`
-6. `research_audit_source/docs/generated/result_pack_C.md`
-7. `research_audit_source/docs/generated/transfer_sensitivity_report.md`
-8. figure manifests for figures you cite
-9. code samples only if manifests/prose are insufficient to understand a figure
+3. `research_audit_source/docs/generated/audit_ver2_response_matrix.md`
+4. `research_audit_source/docs/generated/audit_ver2_completion_report.md`
+5. `research_audit_source/docs/generated/manuscript_plot_list_index.md`
+6. `research_audit_source/docs/generated/result_pack_A.md`
+7. `research_audit_source/docs/generated/result_pack_B.md`
+8. `research_audit_source/docs/generated/result_pack_C.md`
+9. `research_audit_source/docs/generated/transfer_sensitivity_report.md`
+10. figure manifests for figures you cite
+11. code samples only if manifests/prose are insufficient to understand a figure
+
+The strict `audit_ver2` reaudit disposition (F1-F4 fatal blockers and the
+REV-R088..REV-R101 closures) is summarized in the response matrix and completion
+report above; treat those strict-audit blocks as still in force unless the named
+gate bundle is demonstrably open.
 
 ## Hard Boundaries
 

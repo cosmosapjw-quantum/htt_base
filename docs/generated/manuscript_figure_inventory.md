@@ -6,19 +6,19 @@ claim_tier: diagnostic_only
 transfer_source: none
 sky_support_status: not_directional
 null_mock_status: not_statistical
-config_hash: `c5c391901ea5f2ba409c6b7ef3fb0fae9eb364cb51005d91210f69dbfcfeba9d`
+config_hash: `fbad8b3c9fa1aaf9bb43d2b5b5389748b83cf7de54e004d9c3877012124ee635`
 input_hashes:
 - docs/manuscript/appendices.tex: `3aaa77c82432e553cc6cb86285477f1eef788eefe2349391dc3a4da86d2bfa38`
 - docs/manuscript/ch01_introduction.tex: `8dd31c56485d21ae8cddf32974cce08d096127b8c9380df3284fbb57ce55e73c`
 - docs/manuscript/ch02_dipole_anomaly.tex: `a3fc0f9ab720ab8e26aa85e7b8db1db18f3df5599f008f7af6bd0e0e857bfb8b`
-- docs/manuscript/ch03_framework.tex: `6535bcfa1dc28b44faeac3685d6d8dad1a0d2951b418f3692e25c985ba3e472f`
-- docs/manuscript/ch04_bianchi_bounds.tex: `a02e8b8388cdd3753aff860931601f4deaf1cc7b1938f339396abbb96326c1d0`
+- docs/manuscript/ch03_framework.tex: `8422fdd3018cf20019d76d77d116298abebf9f15e4659c91c09c6fe7cb947f54`
+- docs/manuscript/ch04_bianchi_bounds.tex: `8eec1ab114c26f2e0ff0cc829de57b32dd3bcacce8ff25409a3575dff155a565`
 - docs/manuscript/ch05_teff_corrections.tex: `f31c4d7fceb59a36be0843366e8e25abae8c9ed277180d355945b4c9a73b7812`
 - docs/manuscript/ch06_pipeline.tex: `459a0ef64cb927a54214c60d045a0542a3652c528d81f248b23c6f31374c45e6`
-- docs/manuscript/ch07_results.tex: `b377baf2aebd55f17731a49ce615fe43d92ae8f4eb485557b40726ee9b3e230d`
-- docs/manuscript/ch08_robustness.tex: `66b9a9f8c59548960d7679b7310d0f1a030288823e803b97f4b86fea754cd044`
-- docs/manuscript/ch09_discussion.tex: `0cbe90d9b1f4463246e792c7498df3d533f0669819885495e8a8bc37c668a718`
-- docs/manuscript/ch10_future.tex: `3c86823f4ef8c61830d785d8c53c9c288be62a7f50a59e22d82f09cca19e54aa`
+- docs/manuscript/ch07_results.tex: `ccf34920eae7cc3df6a0df4ceeb2a61c2ded26c4db3f9b69fcf0ffe3079beded`
+- docs/manuscript/ch08_robustness.tex: `89edc4f3e598d5286a17390bfa2b6850b2de68edd9075e05a62843fba3b66374`
+- docs/manuscript/ch09_discussion.tex: `4e8f50a76019dc5f95f0f7c2d2842aeb2dd50318817bf5ae7b8040f4bd83d2d9`
+- docs/manuscript/ch10_future.tex: `5c9142072e3e3df6ff315f8e13c15b9681298ffb7ff14192d152a3bd3673af8b`
 - docs/manuscript/ch11_error_hierarchy.tex: `d15e5e5196794d6c6b603e9eeac908330394cc0d517fb80345348d7cb1971766`
 - docs/manuscript/generated/conditioned_legacy_figure_gallery.tex: `002b0d0a1d4c817e825e7fcf11584bf2eda611768f5dee495901c7738dd5d33b`
 - docs/manuscript/generated/current_figures_framework.tex: `9c960a9ba56ccbcf5e8365e3f3399d9a80df9781547fd925b4443bc289ca1bcf`
@@ -26,11 +26,11 @@ input_hashes:
 - docs/manuscript/generated/current_figures_pipeline.tex: `195f8ae9ec189206325edb2ca0411f6031b8985b0f0ef6b981c05d5cd93750b8`
 - docs/manuscript/generated/current_figures_results.tex: `fcca5f8d502b884d26c1f9f3fd6914e42f088b7f73aeff5025960b397dc7334e`
 - docs/manuscript/generated/current_figures_ver2_exports.tex: `c63f1348b3762a812cfd391fe96ba1c20e5092f354818d6079c21a3216e140de`
-- docs/manuscript/generated/formalism_methods_claim_ladder.tex: `a309d34c513ce4acb86dd1b63fd0098a8a1b111057b317d47e09919389679094`
+- docs/manuscript/generated/formalism_methods_claim_ladder.tex: `d218d2a81f3f722a7a70f9ba21884f94095056c29ad37426d6f0d3aa8bdabeb1`
 - docs/manuscript/generated/observed_figures_pipeline.tex: `b2b1579f259b14df683c913aaf7171721a8477e93a23aff55a07bad5aaddad93`
 - docs/manuscript/generated/observed_figures_results.tex: `23c45f3e2b05992b79ab1f9e0e695e01fbc7ca72815ae8c1b0155838729b169a`
-- docs/manuscript/generated/revision_diagnostic_appendix_figures.tex: `1eed5e4552d727d39863dff7924241ef9dbe73162c96724e2caab5fbc9f42610`
-- docs/manuscript/generated/revision_diagnostic_main_figure.tex: `c13e8248e6868ae1ec52a4b0c9043e03b8d7913803bd45da63dcef67f56c14e5`
+- docs/manuscript/generated/revision_diagnostic_appendix_figures.tex: `b29fb56097f5c4dbbb49acf7281a1237be4983e92b96df27af4eeb45b2e323f3`
+- docs/manuscript/generated/revision_diagnostic_main_figure.tex: `dc35622e73de6beb9b22e23be482897ccc4877e62a2e0b6f8f824e34b69fc6f3`
 - docs/manuscript/generated/theorem_extension_appendix_figures.tex: `308ac808adce7e89de15b075e89a22adf7ad0b1d1fc570db2d42901fd10501f2`
 - docs/manuscript/generated/ver2_artifact_export_policy.tex: `a5a3363b0720ee95f42f7ef4419a9ef8329cf5600fb09c7aaf9e737f1ac78ca3`
 - docs/manuscript/generated/ver2_channel_responsibility.tex: `0a1c264f31035558a31a2b1f487cca8ab6a69f7a7f08e4c5469a371425f8d4ae`
@@ -49,7 +49,7 @@ caveats:
 - Missing or quarantined figure references block final manuscript freeze until explained.
 - Text audit findings are audit findings, not scientific results.
 generating_command: python scripts/audit_manuscript_figures.py
-git_commit: 4b1ff91
+git_commit: 1e2c330
 worktree_state: dirty
 output_path: docs/generated/manuscript_figure_inventory.md
 
@@ -185,7 +185,7 @@ output_path: docs/generated/manuscript_figure_inventory.md
 | `docs/manuscript/generated/revision_diagnostic_appendix_figures.tex:8` | `current/fig_revision_prior_support_surface` | `resolved` | `figures/current/fig_revision_prior_support_surface.png` | `figures/current/fig_revision_prior_support_surface.manifest.json` | `valid_manifest` |
 | `docs/manuscript/generated/revision_diagnostic_appendix_figures.tex:15` | `current/fig_revision_sigma_beta_band` | `resolved` | `figures/current/fig_revision_sigma_beta_band.png` | `figures/current/fig_revision_sigma_beta_band.manifest.json` | `valid_manifest` |
 | `docs/manuscript/generated/revision_diagnostic_appendix_figures.tex:22` | `current/fig_revision_per_channel_occupancy` | `resolved` | `figures/current/fig_revision_per_channel_occupancy.png` | `figures/current/fig_revision_per_channel_occupancy.manifest.json` | `valid_manifest` |
-| `docs/manuscript/generated/revision_diagnostic_main_figure.tex:8` | `current/fig_revision_tomographic_forecast` | `resolved` | `figures/current/fig_revision_tomographic_forecast.png` | `figures/current/fig_revision_tomographic_forecast.manifest.json` | `valid_manifest` |
+| `docs/manuscript/generated/revision_diagnostic_appendix_figures.tex:29` | `current/fig_revision_tomographic_forecast` | `resolved` | `figures/current/fig_revision_tomographic_forecast.png` | `figures/current/fig_revision_tomographic_forecast.manifest.json` | `valid_manifest` |
 | `docs/manuscript/generated/theorem_extension_appendix_figures.tex:8` | `current/fig_theorem_angular_kl_bound` | `resolved` | `figures/current/fig_theorem_angular_kl_bound.png` | `figures/current/fig_theorem_angular_kl_bound.manifest.json` | `valid_manifest` |
 | `docs/manuscript/generated/theorem_extension_appendix_figures.tex:15` | `current/fig_theorem_dynamic_budget_barrier` | `resolved` | `figures/current/fig_theorem_dynamic_budget_barrier.png` | `figures/current/fig_theorem_dynamic_budget_barrier.manifest.json` | `valid_manifest` |
 | `docs/manuscript/generated/theorem_extension_appendix_figures.tex:22` | `current/fig_theorem_boosted_radiation_orbit` | `resolved` | `figures/current/fig_theorem_boosted_radiation_orbit.png` | `figures/current/fig_theorem_boosted_radiation_orbit.manifest.json` | `valid_manifest` |
