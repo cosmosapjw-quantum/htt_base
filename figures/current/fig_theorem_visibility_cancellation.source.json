@@ -1,0 +1,229 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "common.theorem_appendix.fig_theorem_visibility_cancellation",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/current/fig_theorem_visibility_cancellation.png",
+  "caption": "Appendix-only synthetic visibility-cancellation gate. The bars show manufactured fail-closed source upper-bound conditions; it is not HTT evidence, not a MIO certificate, not native solver validation, and not geometry or family identification.",
+  "caption_policy": [
+    "must_state_appendix_only",
+    "must_state_synthetic_manufactured_inputs",
+    "must_state_diagnostic_only",
+    "must_state_no_htt_evidence",
+    "must_state_no_mio_certificate",
+    "must_state_no_native_solver_validation",
+    "must_state_no_geometry_or_family_identification"
+  ],
+  "caveats": [
+    "synthetic/manufactured input mode only",
+    "appendix-only diagnostic figure",
+    "not HTT evidence",
+    "not a MIO certificate",
+    "not native solver validation",
+    "not geometry or family identification"
+  ],
+  "claim_status": "diagnostic_observational_use_blocked",
+  "claim_tier": "diagnostic_only",
+  "config_hash": "6bc82597fc0d02de6233383c60515a5f55a26eeb84253ddf667a18d1b697f26b",
+  "consumable_as_family_identification": false,
+  "consumable_as_htt_evidence": false,
+  "consumable_as_mio_certificate": false,
+  "covariance_status": "synthetic_manufactured_only",
+  "failed_gates": [
+    "collision_gap_nonpositive_blocks_exponential_forgetting_language",
+    "source_rank_near_zero_blocks_inverse_source_claim",
+    "line_of_sight_sign_phase_incoherence_blocks_source_upper_bound",
+    "visibility_gap_kernel_mask_not_bound_blocks_source_upper_bound"
+  ],
+  "family_identification": false,
+  "forbidden_use": [
+    "inverse source claim",
+    "observed line-of-sight upper bound",
+    "native solver validation",
+    "geometry or family identification"
+  ],
+  "generated_on": "2026-06-20T02:50:07+00:00",
+  "generating_command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python scripts/generate_theorem_extension_assets.py --write",
+  "git_commit_or_worktree_state": "7b3ded5+dirty",
+  "implementation_scope": "common",
+  "implementation_test_status": "synthetic_manufactured_only",
+  "input_hashes": [
+    "scripts/generate_theorem_extension_assets.py:8832af75b29bc8f9a5a0b0ea4ba8a49ad743610d75ffa0f9a558d09798095be4",
+    "htt/src/common/theorem_registry.py:a83a86c952fe2bf4bda78a8fb0868231b6c302a76f3e7a4679b3bdd4fdc2e43d",
+    "htt/mio/formalism/dynamic_budget.py:11132baea55ce3d879a03ded84a11cce42252a893f51bcf2d5a346c82ea168e4",
+    "htt/mio/formalism/bound_pushforward.py:250da9000a61bb1210b6aa63662988612a40304f960e55f21bb53f2703a9a76a",
+    "htt/bass/kinetic/boltzmann_memory.py:65900d82579773ba3935dd222e9db9191ffe357f988e9b7ac1149342a2874ce1",
+    "htt/bass/kinetic/tight_coupling_bounds.py:b70879061d9d0f748121ca5e9c0816d43b0e19e6391e16cd75271e59f3ae99f4",
+    "htt/bass/kinetic/visibility_rigidity.py:f33eb3f0ef0e02e1b43168008486433f261802dc1986039837db3e8ff9a0475a",
+    "htt/bass/geometry/egs_rigidity.py:65ed1bbc7bd1813755c21fb84e8f7decaa9988e52e81607e8c82286e5651c5b0",
+    "tests/contracts/test_theorem_registry.py:45265116be36217e387dd59d0e120fc63163e03d5b394d343b1058216019492b",
+    "tests/mio/test_dynamic_budget.py:cda433d79e86e4217e360ee89010e0bb9d017fd76e788dbfb02c7cc3e5cbd5b9",
+    "tests/bass/test_boltzmann_memory_bounds.py:b57b3bb7a98991aa92427f787046c5a2037afceed09ff4f4de1c6c93dc95832f",
+    "tests/bass/test_egs_rigidity_theorems.py:ca16d0a03cebf4d870a95b936f4b7d77f037744d0f947d16c6d48f02aac0e424",
+    "tests/contracts/test_theorem_extension_assets.py:ba0c54f5677b2aa7e64476d8bf5f793ec9d69bebdfa23c18eb11c8fe53696943"
+  ],
+  "kill_switches": [
+    "collision_gap_nonpositive_blocks_exponential_forgetting_language",
+    "source_rank_near_zero_blocks_inverse_source_claim",
+    "line_of_sight_sign_phase_incoherence_blocks_source_upper_bound",
+    "visibility_gap_kernel_mask_not_bound_blocks_source_upper_bound"
+  ],
+  "label": "fig:theorem-visibility-cancellation",
+  "manifest_path": "figures/current/fig_theorem_visibility_cancellation.manifest.json",
+  "matplotlib_savefig_reference": "https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html",
+  "native_solver_result": false,
+  "null_mock_status": "synthetic_manufactured_only",
+  "observation_claim_allowed": false,
+  "owner": "COMMON",
+  "passed_gates": [
+    "theorem_registry_entry_present",
+    "source_json_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "plotted_value_key": "source_upper_bound_allowed",
+  "production_claim_allowed": false,
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "collision_gap_nonpositive_blocks_exponential_forgetting_language",
+    "source_rank_near_zero_blocks_inverse_source_claim",
+    "line_of_sight_sign_phase_incoherence_blocks_source_upper_bound",
+    "visibility_gap_kernel_mask_not_bound_blocks_source_upper_bound"
+  ],
+  "proof_status": "convention_conditional",
+  "registry_assumptions": [
+    "positive kernel fixture",
+    "sign/phase coherent source",
+    "positive collision gap"
+  ],
+  "required_gates": [
+    "theorem_registry_entry_present",
+    "source_json_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "rows": [
+    {
+      "case": "all_provenance_bound",
+      "caveats": [
+        "Synthetic BASS visibility diagnostic only; observed line-of-sight source bounds require sign/phase, rank, mask, and kernel-floor provenance."
+      ],
+      "claim_tier": "diagnostic_only",
+      "collision_gap_status": "positive_bound",
+      "family_identification": false,
+      "implementation_scope": "bass_py",
+      "kernel_floor_status": "positive_bound",
+      "kill_switches": [],
+      "line_of_sight_phase_coherent": true,
+      "mask_support_status": "bound",
+      "native_solver_result": false,
+      "no_go_status": "synthetic_visibility_cancellation_no_go",
+      "owner": "BASS",
+      "production_claim_allowed": false,
+      "source_rank": 2,
+      "source_upper_bound_allowed": true,
+      "theorem_id": "B4",
+      "transfer_source": "none",
+      "visibility_width": 0.04
+    },
+    {
+      "case": "missing_gap_kernel_mask",
+      "caveats": [
+        "Synthetic BASS visibility diagnostic only; observed line-of-sight source bounds require sign/phase, rank, mask, and kernel-floor provenance."
+      ],
+      "claim_tier": "diagnostic_only",
+      "collision_gap_status": "not_bound",
+      "family_identification": false,
+      "implementation_scope": "bass_py",
+      "kernel_floor_status": "not_bound",
+      "kill_switches": [
+        "visibility_gap_kernel_mask_not_bound_blocks_source_upper_bound"
+      ],
+      "line_of_sight_phase_coherent": true,
+      "mask_support_status": "not_bound",
+      "native_solver_result": false,
+      "no_go_status": "blocked_visibility_provenance_not_bound",
+      "owner": "BASS",
+      "production_claim_allowed": false,
+      "source_rank": 2,
+      "source_upper_bound_allowed": false,
+      "theorem_id": "B4",
+      "transfer_source": "none",
+      "visibility_width": 0.04
+    },
+    {
+      "case": "phase_incoherent",
+      "caveats": [
+        "Synthetic BASS visibility diagnostic only; observed line-of-sight source bounds require sign/phase, rank, mask, and kernel-floor provenance."
+      ],
+      "claim_tier": "diagnostic_only",
+      "collision_gap_status": "not_bound",
+      "family_identification": false,
+      "implementation_scope": "bass_py",
+      "kernel_floor_status": "not_bound",
+      "kill_switches": [
+        "line_of_sight_sign_phase_incoherence_blocks_source_upper_bound"
+      ],
+      "line_of_sight_phase_coherent": false,
+      "mask_support_status": "not_bound",
+      "native_solver_result": false,
+      "no_go_status": "blocked_line_of_sight_sign_phase_incoherence",
+      "owner": "BASS",
+      "production_claim_allowed": false,
+      "source_rank": 2,
+      "source_upper_bound_allowed": false,
+      "theorem_id": "B4",
+      "transfer_source": "none",
+      "visibility_width": 0.04
+    },
+    {
+      "case": "rank_lost",
+      "caveats": [
+        "Synthetic BASS visibility diagnostic only; observed line-of-sight source bounds require sign/phase, rank, mask, and kernel-floor provenance."
+      ],
+      "claim_tier": "diagnostic_only",
+      "collision_gap_status": "not_bound",
+      "family_identification": false,
+      "implementation_scope": "bass_py",
+      "kernel_floor_status": "not_bound",
+      "kill_switches": [
+        "source_rank_near_zero_blocks_inverse_source_claim"
+      ],
+      "line_of_sight_phase_coherent": true,
+      "mask_support_status": "not_bound",
+      "native_solver_result": false,
+      "no_go_status": "blocked_source_rank_near_zero",
+      "owner": "BASS",
+      "production_claim_allowed": false,
+      "source_rank": 0,
+      "source_upper_bound_allowed": false,
+      "theorem_id": "B4",
+      "transfer_source": "none",
+      "visibility_width": 0.04
+    }
+  ],
+  "schema_version": "rev-r085.theorem_appendix_figure_source.v1",
+  "sky_support_status": "not_directional",
+  "source_input_mode": "synthetic_manufactured",
+  "source_json_path": "figures/current/fig_theorem_visibility_cancellation.source.json",
+  "source_paths": [
+    "scripts/generate_theorem_extension_assets.py",
+    "htt/src/common/theorem_registry.py",
+    "htt/mio/formalism/dynamic_budget.py",
+    "htt/mio/formalism/bound_pushforward.py",
+    "htt/bass/kinetic/boltzmann_memory.py",
+    "htt/bass/kinetic/tight_coupling_bounds.py",
+    "htt/bass/kinetic/visibility_rigidity.py",
+    "htt/bass/geometry/egs_rigidity.py",
+    "tests/contracts/test_theorem_registry.py",
+    "tests/mio/test_dynamic_budget.py",
+    "tests/bass/test_boltzmann_memory_bounds.py",
+    "tests/bass/test_egs_rigidity_theorems.py",
+    "tests/contracts/test_theorem_extension_assets.py"
+  ],
+  "theorem_helper_owner": "BASS",
+  "theorem_helper_scope": "bass_py",
+  "theorem_id": "B4",
+  "theorem_status": "convention_conditional",
+  "theorem_title": "Visibility cancellation no-go",
+  "transfer_source": "none"
+}

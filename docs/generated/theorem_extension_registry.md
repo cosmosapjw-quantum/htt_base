@@ -9,10 +9,10 @@ covariance_status: synthetic_only
 null_mock_status: synthetic_only
 native_solver_result: false
 family_identification: false
-config_hash: `89ee66075b730891126741eb2215e54fefd8a476797b795860a7744d0f0c4e4a`
-generated_on: `2026-06-20T02:40:38+00:00`
+config_hash: `c617a51f5028461257e8a60ee3abbae504b0cb3825dd4c2f04907fc5f80a8a46`
+generated_on: `2026-06-20T02:50:07+00:00`
 generating_command: `/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python scripts/generate_theorem_extension_assets.py --write`
-git_commit_or_worktree_state: `430926a+dirty`
+git_commit_or_worktree_state: `7b3ded5+dirty`
 source_paths:
 - `scripts/generate_theorem_extension_assets.py`
 - `htt/src/common/theorem_registry.py`
@@ -27,7 +27,7 @@ source_paths:
 - `tests/bass/test_boltzmann_memory_bounds.py`
 - `tests/bass/test_egs_rigidity_theorems.py`
 input_hashes:
-- `scripts/generate_theorem_extension_assets.py:b9203657f8b5e66c99e25af60860428d1b07eac87e7e2815a82e487001f86e75`
+- `scripts/generate_theorem_extension_assets.py:8832af75b29bc8f9a5a0b0ea4ba8a49ad743610d75ffa0f9a558d09798095be4`
 - `htt/src/common/theorem_registry.py:a83a86c952fe2bf4bda78a8fb0868231b6c302a76f3e7a4679b3bdd4fdc2e43d`
 - `htt/mio/formalism/dynamic_budget.py:11132baea55ce3d879a03ded84a11cce42252a893f51bcf2d5a346c82ea168e4`
 - `htt/mio/formalism/bound_pushforward.py:250da9000a61bb1210b6aa63662988612a40304f960e55f21bb53f2703a9a76a`
