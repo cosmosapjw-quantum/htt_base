@@ -16,16 +16,36 @@ from .cf4 import (
     build_cf4_catalog_from_mapping,
     load_cf4_catalog_npz,
 )
+from .redshift_selection import (
+    RedshiftSelectionCorrectionSpec,
+    apply_redshift_selection_correction,
+)
+from .spectroscopic_dipole import (
+    SpectroscopicCatalog,
+    SpectroscopicCatalogMetadata,
+    SpectroscopicDipoleFeature,
+    build_spectroscopic_catalog_from_mapping,
+    estimate_data_random_dipole,
+    first_moment,
+)
 
-_loaded = _sys.modules.get(f"{__name__}.cf4")
-if _loaded is not None:
-    for _alias in _PACKAGE_ALIASES:
-        _sys.modules.setdefault(f"{_alias}.cf4", _loaded)
+for _submodule in ("cf4", "redshift_selection", "spectroscopic_dipole"):
+    _loaded = _sys.modules.get(f"{__name__}.{_submodule}")
+    if _loaded is not None:
+        for _alias in _PACKAGE_ALIASES:
+            _sys.modules.setdefault(f"{_alias}.{_submodule}", _loaded)
 
 __all__ = [
     "Cf4Catalog",
     "Cf4CatalogMetadata",
+    "RedshiftSelectionCorrectionSpec",
+    "SpectroscopicCatalog",
+    "SpectroscopicCatalogMetadata",
+    "SpectroscopicDipoleFeature",
+    "apply_redshift_selection_correction",
     "build_cf4_catalog_from_mapping",
+    "build_spectroscopic_catalog_from_mapping",
+    "estimate_data_random_dipole",
+    "first_moment",
     "load_cf4_catalog_npz",
 ]
-
