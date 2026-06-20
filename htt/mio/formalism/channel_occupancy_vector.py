@@ -113,4 +113,69 @@ def channel_matched_occupancy(
     }
 
 
-__all__ = ["channel_matched_occupancy"]
+_OCCUPANCY_LANGUAGE_TOKENS = (
+    "occupancy",
+    "physical occupancy",
+    "filling",
+    "filled",
+)
+
+
+def classify_occupancy_language(
+    *,
+    numerator_channel: str,
+    denominator_channel: str,
+    requested_phrase: str,
+    joint_admissible_ceiling_proof: str | None = None,
+) -> dict[str, Any]:
+    """Classify whether occupancy language is admissible for a scalar Q/F row.
+
+    Occupancy language (e.g. "physical occupancy") is only admissible when the
+    numerator and denominator live in the same channel (a channel-matched
+    occupancy), or when a joint admissible-ceiling proof is attached. Otherwise
+    a scalar Q/F row is a proxy score only and must not use occupancy language.
+    """
+
+    numerator = _non_empty(numerator_channel, "numerator_channel")
+    denominator = _non_empty(denominator_channel, "denominator_channel")
+    phrase = str(requested_phrase or "").strip().lower()
+    channels_match = numerator == denominator
+    has_ceiling_proof = bool(str(joint_admissible_ceiling_proof or "").strip())
+    uses_occupancy_language = any(token in phrase for token in _OCCUPANCY_LANGUAGE_TOKENS)
+    allowed = channels_match or has_ceiling_proof
+
+    blocked_reasons: list[str] = []
+    if not allowed:
+        if not channels_match:
+            blocked_reasons.append("channel_mismatch")
+        if uses_occupancy_language:
+            blocked_reasons.append(
+                "occupancy_language_requires_channel_match_or_ceiling_proof"
+            )
+
+    if channels_match:
+        status = "channel_matched_occupancy"
+    elif has_ceiling_proof:
+        status = "joint_admissible_ceiling"
+    else:
+        status = "proxy_score_only"
+
+    return {
+        "owner": "MIO",
+        "implementation_scope": "mio",
+        "claim_tier": "diagnostic_only",
+        "numerator_channel": numerator,
+        "denominator_channel": denominator,
+        "requested_phrase": requested_phrase,
+        "uses_occupancy_language": uses_occupancy_language,
+        "channels_match": channels_match,
+        "joint_admissible_ceiling_proof": (
+            str(joint_admissible_ceiling_proof) if has_ceiling_proof else None
+        ),
+        "allowed": allowed,
+        "status": status,
+        "blocked_reasons": blocked_reasons,
+    }
+
+
+__all__ = ["channel_matched_occupancy", "classify_occupancy_language"]

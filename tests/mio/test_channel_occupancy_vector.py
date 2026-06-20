@@ -46,3 +46,42 @@ def test_channel_occupancy_rejects_clipping_cases():
             worktree_state="test",
             input_hashes=["sha256:test"],
         )
+
+
+def test_scalar_proxy_rows_cannot_use_occupancy_language():
+    from mio.formalism.channel_occupancy_vector import classify_occupancy_language
+
+    result = classify_occupancy_language(
+        numerator_channel="tilt",
+        denominator_channel="shear",
+        requested_phrase="physical occupancy",
+    )
+    assert result["allowed"] is False
+    assert result["status"] == "proxy_score_only"
+    assert "channel_mismatch" in result["blocked_reasons"]
+
+
+def test_channel_matched_rows_allow_occupancy_language():
+    from mio.formalism.channel_occupancy_vector import classify_occupancy_language
+
+    result = classify_occupancy_language(
+        numerator_channel="shear",
+        denominator_channel="shear",
+        requested_phrase="physical occupancy",
+    )
+    assert result["allowed"] is True
+    assert result["status"] == "channel_matched_occupancy"
+    assert result["blocked_reasons"] == []
+
+
+def test_joint_admissible_ceiling_proof_unblocks_proxy_language():
+    from mio.formalism.channel_occupancy_vector import classify_occupancy_language
+
+    result = classify_occupancy_language(
+        numerator_channel="tilt",
+        denominator_channel="shear",
+        requested_phrase="occupancy",
+        joint_admissible_ceiling_proof="sha256:" + "a" * 64,
+    )
+    assert result["allowed"] is True
+    assert result["status"] == "joint_admissible_ceiling"

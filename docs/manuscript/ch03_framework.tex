@@ -1120,6 +1120,17 @@ $x_{\max} = \frac{3}{2}\Bsig^2 = 6.47 \times 10^{-6}$
 (Chapter~\ref{ch:bianchi-bounds},
 Table~\ref{tab:bounds}).
 
+Because the numerator $x$ is a departure (tilt-sector dominated)
+projection while the denominator $x_{\max}$ is a shear-sector
+ceiling, the scalar $Q$ is a \emph{channel-mismatched proxy score
+only}, not a channel-matched physical occupancy.  Channel-matched
+occupancy is reserved for the MIO channel-matched occupancy vector,
+whose numerator and denominator share a sector; the classifier
+\texttt{classify\_occupancy\_language} blocks ``physical occupancy''
+wording for scalar $Q/F$ rows unless the channels match or a joint
+admissible-ceiling proof is attached (see
+\texttt{docs/generated/channel\_occupancy\_repair\_report.md}).
+
 The HTT posterior use of $Q$ is a ratio of two model-dependent
 quantities evaluated under a declared transfer path, comparator,
 and denominator policy.  MIO may report the same algebraic ratio

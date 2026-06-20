@@ -58,3 +58,9 @@ def test_neutrino_result_is_derived_not_discovered():
     assert "discovery that neutrinos" not in lowered
     assert "derived result" in lowered
     assert "transfer-conditional" in lowered
+
+
+def test_scalar_occupancy_language_is_proxy_gated():
+    lowered = _normalised_lower()
+    assert "channel-mismatched proxy score" in lowered
+    assert "channel-matched occupancy" in lowered

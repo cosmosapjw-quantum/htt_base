@@ -38,6 +38,9 @@ from mio.formalism.budget_spec import (  # noqa: E402
     build_budget_spec,
     compare_denominator_policies,
 )
+from mio.formalism.channel_occupancy_vector import (  # noqa: E402
+    classify_occupancy_language,
+)
 from mio.formalism.departure_bundle import build_departure_bundle  # noqa: E402
 from mio.formalism.exceedance import (  # noqa: E402
     MeasureKind,
@@ -1048,6 +1051,11 @@ def _build_semantic_and_vector_payload(
         "x_C_interpretation": (
             "x_C is a signed comparator projection; x_C near zero can reflect "
             "cancellation, not isotropy."
+        ),
+        "scalar_q_f_occupancy_language": classify_occupancy_language(
+            numerator_channel="tilt",
+            denominator_channel="shear",
+            requested_phrase="physical occupancy",
         ),
         "blocked_use_codes": [
             "isotropy_certificate",
