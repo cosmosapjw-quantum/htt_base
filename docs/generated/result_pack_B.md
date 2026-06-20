@@ -4,9 +4,9 @@ owner: COMMON
 implementation_scope: common
 claim_tier: diagnostic_only
 transfer_source: none
-config_hash: `sha256:4ceae135c2ad5a7c79d597f3be2b8400ff34ed59acc70c6df0a4b4d2680b5d37`
+config_hash: `sha256:29ee25b13af028dde5daea9634a47d0c0abe405e1c0efc0ef0698340ba1daa46`
 input_hashes:
-- scripts/result_packs/generate_pack_B_local_global.py:sha256:3df404ff173bd1b51aa8a1874ea06470cd6d787a74cdb114dfb77562b174d3f2
+- scripts/result_packs/generate_pack_B_local_global.py:sha256:40241807de3d70a4fb84a6c378ab9f1b9b442540358c5f3f56f9ddabf153231b
 - docs/ver2_upgrade/generated/result_pack_B_local_global.json:sha256:b3117f1758d8774d76f7ed874d8a9ce90c3c5ee937dcc48bbc5ded7d4d69da69
 - docs/PR_DELTAS/pr-060.md:sha256:5aaa5d40a13e045ef11d48ac6cb931575cff014015122a620985605138aaf1b1
 - docs/PR_DELTAS/pr-061.md:sha256:d0d92499aad9c78a6c4a7a268d2efaaca8a1c44c701e1f407697fbfee4666839
@@ -17,7 +17,8 @@ input_hashes:
 - docs/PR_DELTAS/pr-066.md:sha256:724f3ae5b429ff8853c3757fc6dd73048d5fe72e0fdf99c5d47ef2a105f0c070
 - docs/PR_DELTAS/pr-100.md:sha256:28b2f1bfa5e8a438a194946cd39eeaf5886afeb537ec58c7aec4f938beb72f69
 - docs/PR_DELTAS/pr-101.md:sha256:d6e78b134d34f3bc88a8ac384afe38e6be968f514c592fec1af50d97f5ba690a
-- docs/generated/gf_matched_null_forecast_report.json:sha256:e1cf5c334f240e75cdaa1c6b55a3e0a40e77c8067a006fb95c87cb8770f15fe5
+- docs/generated/gf_matched_null_forecast_report.json:sha256:b933094897220c7ca5e1483c6cc4fe3dd9947dc6234ba8aa73fa227c6c35e3fd
+- docs/generated/amplitude_matched_contamination_report.json:sha256:d649f0bbf97db0f77e2f53e9dd4e2fde2032386f228bd7ee5d38685aae98b164
 - htt/htt/htt/departure/response_overlap.py:sha256:2ea56655e8b8c419239459bdbe4d79c755d00115ce4bd6e6e00b447d51c1f139
 - htt/htt/htt/infer/null_competition.py:sha256:e78ca59318c6d6ed51ca06e347e091ca96530c6c9ff6154bc6439ec7182b32bd
 - htt/htt/htt/nulls/local_boost_depth_null.py:sha256:b0d5d0b6a4b3fe534d1eefc630b9954a33d82555520f644f779dd6725e25609c
@@ -30,7 +31,7 @@ input_hashes:
 sky_support_status: not_directional
 null_mock_status: summarized_from_local_and_survey_systematic_fpr_gates
 generating_command: `python scripts/result_packs/generate_pack_B_local_global.py`
-git_commit_or_worktree_state: `33fcfba+dirty`
+git_commit_or_worktree_state: `ecb389e+dirty`
 
 ## Scope
 
@@ -39,6 +40,10 @@ This COMMON diagnostic-only pack summarizes existing HTT and MIO gate surfaces f
 Observed inference status: blocked_observed_inference
 Global tilt claim tier ceiling: blocked
 Synthetic design ceiling: conditional
+
+## Amplitude-matched contamination null
+
+Source identification status: failed (trigger lnB_gt_5, raw FPR 0.95). A high false-positive rate on contamination-only mocks blocks source identification; no positive headline Bayes factor may be drawn. See `docs/generated/amplitude_matched_contamination_report.json`.
 
 ## Gate Summary
 
@@ -120,14 +125,14 @@ Source `docs/ver2_upgrade/generated/result_pack_B_local_global.json` is hashed a
     "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "33fcfba+dirty",
-  "config_hash": "sha256:4ceae135c2ad5a7c79d597f3be2b8400ff34ed59acc70c6df0a4b4d2680b5d37",
+  "code_version": "ecb389e+dirty",
+  "config_hash": "sha256:29ee25b13af028dde5daea9634a47d0c0abe405e1c0efc0ef0698340ba1daa46",
   "created_by": "scripts/result_packs/generate_pack_B_local_global.py",
   "failed_gates": [],
   "git_commit": null,
   "implementation_scope": "common",
   "input_hashes": [
-    "scripts/result_packs/generate_pack_B_local_global.py:sha256:3df404ff173bd1b51aa8a1874ea06470cd6d787a74cdb114dfb77562b174d3f2",
+    "scripts/result_packs/generate_pack_B_local_global.py:sha256:40241807de3d70a4fb84a6c378ab9f1b9b442540358c5f3f56f9ddabf153231b",
     "docs/ver2_upgrade/generated/result_pack_B_local_global.json:sha256:b3117f1758d8774d76f7ed874d8a9ce90c3c5ee937dcc48bbc5ded7d4d69da69",
     "docs/PR_DELTAS/pr-060.md:sha256:5aaa5d40a13e045ef11d48ac6cb931575cff014015122a620985605138aaf1b1",
     "docs/PR_DELTAS/pr-061.md:sha256:d0d92499aad9c78a6c4a7a268d2efaaca8a1c44c701e1f407697fbfee4666839",
@@ -138,7 +143,8 @@ Source `docs/ver2_upgrade/generated/result_pack_B_local_global.json` is hashed a
     "docs/PR_DELTAS/pr-066.md:sha256:724f3ae5b429ff8853c3757fc6dd73048d5fe72e0fdf99c5d47ef2a105f0c070",
     "docs/PR_DELTAS/pr-100.md:sha256:28b2f1bfa5e8a438a194946cd39eeaf5886afeb537ec58c7aec4f938beb72f69",
     "docs/PR_DELTAS/pr-101.md:sha256:d6e78b134d34f3bc88a8ac384afe38e6be968f514c592fec1af50d97f5ba690a",
-    "docs/generated/gf_matched_null_forecast_report.json:sha256:e1cf5c334f240e75cdaa1c6b55a3e0a40e77c8067a006fb95c87cb8770f15fe5",
+    "docs/generated/gf_matched_null_forecast_report.json:sha256:b933094897220c7ca5e1483c6cc4fe3dd9947dc6234ba8aa73fa227c6c35e3fd",
+    "docs/generated/amplitude_matched_contamination_report.json:sha256:d649f0bbf97db0f77e2f53e9dd4e2fde2032386f228bd7ee5d38685aae98b164",
     "htt/htt/htt/departure/response_overlap.py:sha256:2ea56655e8b8c419239459bdbe4d79c755d00115ce4bd6e6e00b447d51c1f139",
     "htt/htt/htt/infer/null_competition.py:sha256:e78ca59318c6d6ed51ca06e347e091ca96530c6c9ff6154bc6439ec7182b32bd",
     "htt/htt/htt/nulls/local_boost_depth_null.py:sha256:b0d5d0b6a4b3fe534d1eefc630b9954a33d82555520f644f779dd6725e25609c",

@@ -29,6 +29,7 @@ INPUT_FILES = (
     "docs/PR_DELTAS/pr-100.md",
     "docs/PR_DELTAS/pr-101.md",
     "docs/generated/gf_matched_null_forecast_report.json",
+    "docs/generated/amplitude_matched_contamination_report.json",
     "htt/htt/htt/departure/response_overlap.py",
     "htt/htt/htt/infer/null_competition.py",
     "htt/htt/htt/nulls/local_boost_depth_null.py",
@@ -377,6 +378,53 @@ def _rank_scenarios() -> list[dict[str, Any]]:
     ]
 
 
+def _load_contamination_null(root: Path) -> dict[str, Any]:
+    """Bind the audited amplitude-matched contamination null (REV-R095).
+
+    A high false-positive rate on contamination-only mocks blocks source
+    identification. Pack B consumes the stable analysis fields only.
+    """
+
+    path = root / "docs" / "generated" / "amplitude_matched_contamination_report.json"
+    summary: dict[str, Any] = {
+        "report_ref": "docs/generated/amplitude_matched_contamination_report.json",
+        "source_identification_status": "not_bound",
+        "claim_tier": "blocked",
+        "trigger": None,
+        "n_trials": None,
+        "n_false_positive": None,
+        "false_positive_rate_raw": None,
+        "false_positive_rate_wilson_95": None,
+        "headline_bayes_factor_allowed": False,
+    }
+    if not path.exists():
+        return summary
+    try:
+        report = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return summary
+    fpr = report.get("false_positive_rate", {}) if isinstance(report, dict) else {}
+    summary.update(
+        {
+            "source_identification_status": str(
+                report.get("source_identification_status", "not_bound")
+            ),
+            "claim_tier": str(report.get("claim_tier", "blocked")),
+            "trigger": report.get("trigger"),
+            "n_trials": report.get("n_trials"),
+            "n_false_positive": report.get("n_false_positive"),
+            "false_positive_rate_raw": fpr.get("raw") if isinstance(fpr, dict) else None,
+            "false_positive_rate_wilson_95": (
+                fpr.get("wilson_95") if isinstance(fpr, dict) else None
+            ),
+            "headline_bayes_factor_allowed": bool(
+                report.get("headline_bayes_factor_allowed", False)
+            ),
+        }
+    )
+    return summary
+
+
 def build_result_pack_payload(
     *,
     repo_root: Path | str = Path("."),
@@ -398,6 +446,7 @@ def build_result_pack_payload(
     config_hash = _stable_hash(config)
     gate_summary = _gate_summary()
     rank_scenarios = _rank_scenarios()
+    contamination = _load_contamination_null(root)
     payload = {
         "artifact_id": ARTIFACT_ID,
         "artifact_path": ARTIFACT_PATH,
@@ -420,6 +469,8 @@ def build_result_pack_payload(
         "observed_inference_status": "blocked_observed_inference",
         "global_tilt_claim_tier_ceiling": "blocked",
         "synthetic_design_ceiling": "conditional",
+        "source_identification_status": contamination["source_identification_status"],
+        "amplitude_matched_contamination": contamination,
         "observed_inference_unblock_requirements": [
             "observed_cross_probe_covariance_bound",
             "observed_amplitude_matched_null_bound",
@@ -532,6 +583,19 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"Observed inference status: {payload['observed_inference_status']}",
             f"Global tilt claim tier ceiling: {payload['global_tilt_claim_tier_ceiling']}",
             f"Synthetic design ceiling: {payload['synthetic_design_ceiling']}",
+            "",
+            "## Amplitude-matched contamination null",
+            "",
+            (
+                "Source identification status: "
+                f"{payload['amplitude_matched_contamination']['source_identification_status']}"
+                f" (trigger {payload['amplitude_matched_contamination']['trigger']}, "
+                f"raw FPR {payload['amplitude_matched_contamination']['false_positive_rate_raw']}). "
+                "A high false-positive rate on contamination-only mocks blocks "
+                "source identification; no positive headline Bayes factor may be "
+                "drawn. See "
+                f"`{payload['amplitude_matched_contamination']['report_ref']}`."
+            ),
             "",
             "## Gate Summary",
             "",

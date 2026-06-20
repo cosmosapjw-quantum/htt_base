@@ -326,3 +326,13 @@ def test_pack_b_cli_check_reuses_existing_worktree_state(tmp_path):
 
     assert result.returncode == 0, result.stderr
     assert "up-to-date" in result.stdout
+
+
+def test_pack_b_binds_amplitude_matched_contamination_null():
+    payload = _payload()
+    contamination = payload["amplitude_matched_contamination"]
+    assert contamination["source_identification_status"] == "failed"
+    assert contamination["claim_tier"] == "blocked"
+    assert contamination["false_positive_rate_raw"] == 0.95
+    assert contamination["headline_bayes_factor_allowed"] is False
+    assert payload["source_identification_status"] == "failed"

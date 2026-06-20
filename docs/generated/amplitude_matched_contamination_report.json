@@ -1,0 +1,32 @@
+{
+  "caveats": [
+    "amplitude-matched contamination null is a negative result",
+    "a high false-positive rate blocks source identification",
+    "no positive Bayes-factor headline may be drawn while blocked",
+    "no native low-ell solver output is introduced"
+  ],
+  "claim_tier": "blocked",
+  "config_hash": "sha256:26837bcc31cc2f281414fbf67f5bfa2e5ca7f549ced6bf0be6bd32490d3c90e5",
+  "false_positive_rate": {
+    "interval_method": "wilson_score_z_1.96",
+    "raw": 0.95,
+    "wilson_95": [
+      0.8882495307680808,
+      0.9784563208456319
+    ]
+  },
+  "fpr_ceiling": 0.05,
+  "generating_command": "venv/bin/python -m htt.infer.amplitude_matched_contamination",
+  "headline_bayes_factor_allowed": false,
+  "implementation_scope": "htt",
+  "input_hashes": [
+    "audit_ver2.md:externally_audited_amplitude_matched_contamination"
+  ],
+  "n_false_positive": 95,
+  "n_trials": 100,
+  "owner": "HTT",
+  "schema_version": "htt.amplitude_matched_contamination.v1",
+  "source_identification_status": "failed",
+  "trigger": "lnB_gt_5",
+  "worktree_state": "externally_audited_fixture"
+}
