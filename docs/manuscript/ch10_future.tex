@@ -19,7 +19,7 @@ catalog-release timeline pending), Vera Rubin, and the
 Simons Observatory---will simultaneously constrain the intrinsic
 dipole, the filling fraction, and the preferred-axis alignment.
 
-The conditional structure of the evidence
+The conditional structure of the configured likelihood ratio
 (Section~\ref{sec:reframing}) generates two distinct experimental
 programmes depending on the outcome.  If the anomaly is confirmed
 by independent surveys at $\geq 5\sigma$, the predictions below
@@ -78,11 +78,11 @@ No funded experiment can test this prediction decisively before
 $\sim$2040.
 
 \emph{P3 (Filling fraction).}
-$\FF \geq 5$--$30\%$: the tilt occupies a non-negligible
-fraction of the MES-allowed anisotropy budget, with $\FF(z)$
-evolving under the DCP dynamics.  Six large-scale structure
-surveys will constrain $\FF$ through redshift-binned dipole
-measurements.
+$\FF \geq 5$--$30\%$: the class-conditioned filling diagnostic
+would remain non-negligible relative to the adopted MES-derived
+scale, with $\FF(z)$ evolving under the DCP dynamics.  Six
+large-scale structure surveys would constrain this diagnostic
+through redshift-binned dipole measurements.
 
 \emph{P4 (Low-$\ell$ B-mode).}
 The tilt generates a B-mode polarisation signal at $\ell < 10$
@@ -174,9 +174,9 @@ a complementary radio-selected $H_0$ map at $z < 0.1$ with
 independent systematics.
 
 This prediction faces a mixed observational landscape.
-Stiskalek, Desmond \& Lavaux~\cite{Stiskalek2026} find a
+Stiskalek, Desmond \& Lavaux~\cite{Stiskalek2026} report a
 zero-point dipole of $4.1 \pm 0.9\%$ in the CF4~W1 sample
-($877{:}1$ Bayesian odds favouring anisotropy), but show
+with a large anisotropy-vs-null likelihood ratio, but show
 that a radially varying velocity dipole accounts for the
 signal---attributing it to local flow features rather than a
 cosmological $H_0$ anisotropy.  This interpretation is
@@ -190,7 +190,7 @@ general-relativistic effect of the local bulk flow.  The
 parameter space is therefore tightening from the
 cosmological-anisotropy side (constant dipole disfavoured)
 while remaining open---and potentially
-supportive---on the local-flow side ($d^{-1}$ decay
+compatible---on the local-flow side ($d^{-1}$ decay
 consistent with tilt).
 We classify P10 as \emph{parameter space refined}: the
 predicted scaling ($d^{-1}$ decay) is the critical
@@ -554,7 +554,7 @@ only when $\Sigma^2 \gtrsim 10^{-11}$, which is 14 orders of
 magnitude above the current posterior.
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} confirms that the
 projector--LOS divergence is 16--98\% in the stress-test regime
-with kernel robustness CV $= 5.5\%$.  The on/off evidence rerun
+with kernel robustness CV $= 5.5\%$.  The on/off likelihood-ratio rerun
 produces $|\Delta\ln\mathcal{B}| = 0.10$---negligible.  The
 module is ready; the data do not yet require it.
 
@@ -677,7 +677,7 @@ enabling direct tests of the gravitational-wave
 background predicted by anisotropic expansion.
 Third, a nested sampling end-to-end integration test
 couples the BianchiSolver to the dynesty sampler,
-verifying that the evidence computation
+verifying that the likelihood-ratio computation
 $\ln \mathcal{B}$ is numerically stable under the
 self-consistent potential.
 
@@ -1087,9 +1087,10 @@ anomaly) rather than by survey.  Each row corresponds to one
 candidate texture (tilt-only, shear, shear$+$vortex, vortex-grow,
 isocurvature defect, Khronon).  Coloured markers indicate the year at
 which each survey is expected to push the relevant Bayes factor
-beyond the historical Jeffreys high-support threshold
+beyond the historical Jeffreys diagnostic threshold
 $|\ln\mathcal{B}| \ge 5$.  The tilt-only texture has already crossed
-that forecast threshold (2024 -- Planck PR4 + CatWISE); shear textures
+that forecast threshold in the conditioned legacy scenario
+(2024 -- Planck PR4 + CatWISE); shear textures
 cross it in 2026--2027 with CF4++ and Euclid; the vortex-grow and
 Khronon textures, which both rely on small-$\ell$ B-mode amplitude,
 only cross it with LiteBIRD in 2032.

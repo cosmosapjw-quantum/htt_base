@@ -95,14 +95,14 @@ for current observed data.
 
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} and
 Table~\ref{tab:ablation} report the FLRW$_\mathrm{tilt}$
-evidence and departure posteriors under seven channel
+configured likelihood-ratio values and departure posteriors under seven channel
 combinations.  Three structural results emerge.
 
 First, the matter-dipole channels (a,\,b) alone yield
 $\ln\mathcal{B} = +14.2$---above the legacy high-support
 diagnostic bin without CF4.  The CF4
 channel (c) alone yields $+9.1$---above the same diagnostic bin without CatWISE or
-Radio.  These two evidence contributions are approximately
+Radio.  These two configured likelihood-ratio contributions are approximately
 additive: $14.2 + 9.1 = 23.3$, close to the full $+26.4$ (the
 $3.1$-unit excess reflects the positive interaction from joint
 constraining power on $\beta$).
@@ -115,12 +115,13 @@ median ($\tilde{\beta} = 1.38 \times 10^{-3}$ vs $1.36 \times
 posterior spreads more weight into the high-$Q$ tail.
 
 Third, CMB-only channels (d,e,f,h) yield $\ln\mathcal{B} = -0.2$
-and $Q = 0$---the CMB carries zero tilt information.  This
-confirms the Saadeh~et~al.\ null: CMB data alone prefer
-isotropy.
+and $Q = 0$---the configured scalar $D_2/D_3$ likelihood gives
+no positive support for the shared beta-like parameter.  This is
+consistent with the Saadeh~et~al.\ isotropy result for CMB-only
+inputs.
 
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} presents the leave-one-out
-evidence contributions, confirming the above decomposition:
+likelihood-ratio contributions, confirming the above decomposition:
 removal of the CatWISE+Radio channels produces the largest
 evidence loss, while the CMB channels contribute negligibly.
 
@@ -139,23 +140,23 @@ varying $\rho$ from $0$ (independent surveys) to $0.95$ (nearly
 identical surveys).
 
 The Bayes factor degrades monotonically from $+28.9$ at $\rho = 0$
-to $+1.9$ at $\rho = 0.95$.  The historical high-support threshold
+to $+1.9$ at $\rho = 0.95$.  The historical diagnostic threshold
 ($\ln\mathcal{B} = 5$) is crossed at $\rho \approx 0.85$.
-The occupancy tracks the evidence: $\tilde{Q}$ falls from
+The occupancy tracks the configured likelihood-ratio value: $\tilde{Q}$ falls from
 $0.094$ to $0.005$, and $\Pi(0.1)$ from $0.40$ to $0.00$.
 
-At the fiducial $\rho = 0.1$, the evidence is $+26.4$ and
+At the fiducial $\rho = 0.1$, the configured likelihood-ratio value is $+26.4$ and
 $\tilde{Q} = 0.090$---above the legacy high-support diagnostic
 bin.  To
 eliminate the signal entirely ($\ln\mathcal{B} < 1$) requires
 $\rho > 0.95$, which would mean the CatWISE quasar catalog and
 the NVSS/RACS radio catalog are sampling the same underlying
 source population with nearly identical systematics---a
-scenario not supported by the surveys' distinct wavelengths,
+scenario not assumed under the surveys' distinct wavelengths,
 selection functions, and redshift distributions.
 
 We regard $\rho = 0.1$ as conservative and $\rho = 0.3$ as
-a pessimistic upper bound.  At $\rho = 0.3$, the evidence is
+a pessimistic upper bound.  At $\rho = 0.3$, the configured likelihood-ratio value is
 still $+22.3$ and $\tilde{Q} = 0.081$---above the legacy
 high-support diagnostic bin.
 
@@ -175,7 +176,7 @@ The Bayes factor drops from $+26.4$ at $\sigma_{\mathrm{sys}} = 0$
 to $+10.3$ at $\sigma_{\mathrm{sys}} = 10^{-3}$ and saturates at
 $+7.4$ for $\sigma_{\mathrm{sys}} \geq 3 \times 10^{-3}$.  The
 saturation occurs because, at large $\sigma_{\mathrm{sys}}$, the
-dipole channels lose constraining power and the evidence is
+dipole channels lose constraining power and the configured likelihood-ratio value is
 sustained by the CF4 channel alone ($+9.1$; the residual
 difference reflects the prior-volume ratio).
 
@@ -270,10 +271,11 @@ reflecting the factor-of-two discrepancy between
 $\eps_1^{\mathrm{CW}} = 1.48 \times 10^{-3}$ and
 $\eps_1^{\mathrm{rad}} = 3.30 \times 10^{-3}$---an internal
 data tension that no single $\beta$ can simultaneously resolve.
-This tension is a property of the data, not a model failure; the
-$\rho$ sweep (Section~\ref{sec:rho-sweep}) shows that increasing
-$\rho$ absorbs part of this tension at the cost of reduced
-evidence.
+This tension means the single-$\beta$ likelihood or covariance
+model fails the registered predictive-adequacy gate for that
+channel; the $\rho$ sweep (Section~\ref{sec:rho-sweep}) shows
+that increasing $\rho$ absorbs part of this tension at the cost
+of a reduced configured likelihood ratio.
 
 The BI~(tilt) PPC is statistically identical to
 FLRW$_\mathrm{tilt}$, confirming once more that adding $\Sigstd$
@@ -311,8 +313,8 @@ depend on $(\Sigstd, \beta)$ but not on $\Omega_K$.
 
 These equivalences are a limitation of the scalar-amplitude
 likelihood, which discards the directional information needed
-to distinguish the Bianchi template patterns.  The evidence
-ranking in Table~\ref{tab:evidence-grand} and
+to distinguish the Bianchi template patterns.  The configured
+likelihood-ratio ranking in Table~\ref{tab:evidence-grand} and
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} annotates duplicate models
 and inactive parameters.  We emphasise that detection wording
 is not used here: every model in the \emph{tilt\_flat} class
@@ -358,8 +360,8 @@ its different sampling structure despite producing the same
 observables as BI.  For the tilt\_flat class, the BIII and BIX
 penalties ($-0.27$ and $-0.30$ nats) arise from the
 $\Omega_K$ parameter, which is sampled but never enters the
-forward model.  These penalties confirm that the evidence
-ranking within equivalence classes carries no physical content.
+forward model.  These penalties confirm that the configured
+likelihood-ratio ranking within equivalence classes carries no physical content.
 
 
 % ============================================================
@@ -435,11 +437,10 @@ $\Pi(0.01) = 0$; under the matched comparator, $\Okaniso = 0$
 and $\Pi(0.01) = 1$.  The qualitative conclusion depends on the
 comparator choice.
 
-We use the flat comparator throughout, consistent with the Planck
-constraint $|\Omega_K| < 0.005$ at $2\sigma$.  The flat
-comparator is the most conservative choice for assessing
-departure, since it does not absorb curvature into the
-reference.
+We use the flat comparator throughout as the fiducial comparator,
+consistent with the Planck constraint $|\Omega_K| < 0.005$ at
+$2\sigma$.  The comparator envelope, not the flat comparator
+alone, is the reported robustness object for assessing departure.
 
 For curvature-bearing models we report the comparator envelope
 $[\phi]_{\mathrm{env}} := [\min_C \phi, \max_C \phi]$ over
@@ -515,8 +516,8 @@ $\Delta\Otilt = -1.3\%$,
 $\Delta v_{\mathrm{tilt}} = -0.7\%$,
 $\Delta Q = -1.3\%$.
 The catalog pipeline thus serves as an independent cross-check
-confirming that the tilt signal is robust to the choice of
-data representation.
+showing that the tilt-amplitude summary is stable to the choice of
+data representation in this conditioned setup.
 
 
 % ============================================================
@@ -524,12 +525,13 @@ data representation.
 % ============================================================
 
 The seven-channel likelihood treats all channels as
-independent conditional on the model parameters $\theta$.
-For most channel pairs, this is justified by construction:
-the CMB multipole channels (d,~e,~f,~h) measure properties
-of the $z \approx 1089$ surface, while the matter-dipole
-channels (a,~b) and bulk-flow channel~(c) measure
-low-redshift properties.  The two groups share no common data.
+independent conditional on the model parameters $\theta$ as a
+configured diagnostic assumption.  The CMB multipole channels
+(d,~e,~f,~h) measure properties of the $z \approx 1089$
+surface, while the matter-dipole channels (a,~b) and bulk-flow
+channel~(c) measure low-redshift properties, but a shared-source
+inference requires an explicit cross-probe covariance and
+selection model.
 
 Within the matter-dipole group, the CatWISE quasar catalog
 and the NVSS/RACS radio catalog sample different source
@@ -547,11 +549,13 @@ CatWISE ($z_{\mathrm{med}} \approx 1.2$) or Radio
 correlation is thus physical (both respond to the same
 tilt $\beta$) rather than observational.
 
-We tested the most aggressive dependence scenario: removing
-CF4 entirely.  The evidence drops from $+26.4$ to $+14.2$---still
-above the legacy high-support diagnostic bin---and the posterior $\tilde{\beta}$ shifts by only
-$1.5\%$.  The channel independence assumption is not load-bearing
-at the level of the qualitative conclusion.
+We tested one diagnostic dependence scenario: removing CF4
+entirely.  The configured likelihood ratio drops from $+26.4$
+to $+14.2$ and the posterior $\tilde{\beta}$ shifts by only
+$1.5\%$.  This sensitivity record does not license shared-source
+inference; cross-survey covariance, selection masks, calibration
+nuisance, and held-out prediction remain required before
+combining CatWISE, radio, and CF4 as a physical hierarchy.
 
 A related caveat applies to the orientation diagnostics
 (the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}), which test three
@@ -586,7 +590,7 @@ The reference values $D_2^{\Lambda\mathrm{CDM}} = 1150$ and
 $D_3^{\Lambda\mathrm{CDM}} = 1000\;\mu\mathrm{K}^2$ are
 standard Planck 2018 best-fit values; replacing them with the
 Sachs--Wolfe plateau approximation changes the $\chi^2$ channel
-contribution by $< 0.2$ nats.  The evidence is insensitive to
+contribution by $< 0.2$ nats.  The configured likelihood-ratio value is insensitive to
 these choices at the level that matters.
 
 
@@ -607,8 +611,9 @@ The frame-correction invariance of $\FF$
 (Section~\ref{sec:filling} of
 Chapter~\ref{ch:results}) means that the
 $\etaud$ perturbation drops out of the ratio.  The qualitative
-conclusion ($\FF \ll 1$: overwhelmingly FLRW, with a small but
-non-zero tilt occupancy) is robust across all tested scenarios.
+conclusion ($\FF \ll 1$: overwhelmingly FLRW, with a small
+non-zero class-conditioned filling diagnostic) is robust across
+all tested scenarios.
 
 
 % ============================================================
@@ -632,9 +637,9 @@ ecliptic-latitude trends, declination offsets, and
 distance-dependent selection biases into the seven-channel
 likelihood and verifying that the recovered $\beta$ remains
 consistent with zero---is deferred to future work.  Until such tests
-are performed, the evidence should be interpreted as conditional
-on the absence of correlated survey systematics at the level of
-the dipole signal.
+are performed, the likelihood-ratio outputs should be interpreted
+as conditional on the absence of correlated survey systematics at
+the level of the dipole signal.
 
 Equivalently, the manuscript's quantitative preference statements are
 conditional on the dipole premise: they ask what the HTT likelihood
@@ -655,14 +660,14 @@ $95/100$ realisations yield $\ln\mathcal{B} > 5$
 
 This result quantitatively confirms that the pipeline
 \emph{cannot distinguish a physical tilt from a survey artifact}
-at the CatWISE/Radio amplitude.  The legacy transfer-conditional evidence summary is
+at the CatWISE/Radio amplitude.  The legacy transfer-conditional likelihood-ratio summary is
 driven entirely by the matter-dipole channels
 (Section~\ref{sec:disc-constraints} of
 Chapter~\ref{ch:discussion}), and those channels carry no
 intrinsic diagnostic of dipole origin.  The contaminated-null
 false-positive rate of $95\%$ should be contrasted with the
 isotropic-null rate of $0/500$ (Section~\ref{sec:null-cat}):
-the pipeline is robust against noise fluctuations but
+the pipeline is robust against idealized noise fluctuations but
 transparent to amplitude-matched systematics.
 
 This test is the quantitative basis for the \textsc{Conditional}
@@ -683,7 +688,7 @@ systematics floor saturates at $+7.4$
 ($\ln\mathcal{B} < 5$) requires $\rho > 0.90$ in the
 CatWISE--Radio correlation (Section~\ref{sec:rho-sweep}), which
 demands that $>90\%$ of the dipole excess in both surveys arise
-from shared systematics---a scenario not supported by the
+from shared systematics---a scenario not assumed under the
 distinct wavelengths and redshift distributions of the two
 catalogs.  Even at $\rho = 0.95$ ($\ln\mathcal{B} = +1.9$), the
 CF4 channel alone provides $+9.1$ nats, so the joint condition
@@ -718,7 +723,7 @@ law and photometric systematics.  We quantify the impact on the
 evidence by inflating the CatWISE statistical uncertainty
 $\sigma_{\mathrm{CW}}$ from $3.0 \times 10^{-4}$ (original) to
 $4.2 \times 10^{-4}$ (matching $3.5\sigma$) and re-running the
-FLRW$_{\mathrm{tilt}}$ evidence computation.
+FLRW$_{\mathrm{tilt}}$ likelihood-ratio computation.
 
 The Bayes factor drops from $+26.4$ (baseline) to $+21.4$
 (SBI-inflated), a shift of $\Delta\ln\mathcal{B} = -5.0$.  The
@@ -774,24 +779,24 @@ The direction-marginalized diagnostic preference
 threshold for all tested perturbations except CMB-only and the
 extreme $\rho > 0.85$ limit.
 The departure quantities ($Q$, $\Pi$, $v_{\mathrm{tilt}}$,
-$\hat{q}_0$) track the evidence monotonically with no nonlinear
+$\hat{q}_0$) track the configured likelihood-ratio value monotonically with no nonlinear
 surprises.  The tested isotropic-null suite records no threshold
 triggers in its finite mock set, and the summary-statistic and
 catalog implementations produce consistent conditional summaries.
 
 The largest vulnerability is the CatWISE--Radio correlation
-assumption.  At the fiducial $\rho = 0.1$, the evidence is
+assumption.  At the fiducial $\rho = 0.1$, the configured likelihood-ratio value is
 $+26.4$; at a pessimistic $\rho = 0.3$, it drops to $+22.3$
-but remains above the legacy high-support threshold.  To reduce
-the evidence below the
+but remains above the legacy diagnostic threshold.  To reduce
+the configured likelihood-ratio value below the
 ``substantial'' threshold ($\ln\mathcal{B} < 2.5$) requires
 $\rho > 0.9$, which is astrophysically implausible given the
 distinct wavelengths and selection functions.
 
 The second vulnerability is the systematics floor.  Adding
-$\sigma_{\mathrm{sys}} = 3 \times 10^{-3}$ drops the evidence to
+$\sigma_{\mathrm{sys}} = 3 \times 10^{-3}$ drops the configured likelihood-ratio value to
 $+7.7$ but does not affect the posterior $\tilde{\beta}$ or the
-departure quantities.  The evidence reduction reflects reduced
+departure quantities.  The likelihood-ratio reduction reflects reduced
 constraining power, not a shift in the signal.
 
 An additional robustness axis is topological continuity.  The FB-6
@@ -857,7 +862,7 @@ Watkins+2023 & $1.318 \pm 0.097$ & unbound$^{*}$ & quarantined sensitivity \\
 
 \noindent
 The WFH2009 version gives the canonical legacy transfer-conditional
-evidence summary for a non-zero tilt DOF; the CF4++ and Watkins+2023
+likelihood-ratio summary for a non-zero tilt DOF; the CF4++ and Watkins+2023
 rows are sensitivity-only and remain quarantined pending a rerun with
 bound config and input hashes.  The WFH2009 value was previously misattributed to
 Watkins et~al.~\cite{Watkins2023}; this error is corrected in
@@ -1101,7 +1106,7 @@ Bayes factor at $\ln\mathcal{B} = -18.7$
 (Table~\ref{tab:evidence-grand}).
 The hemispherical asymmetry is therefore \emph{not} a discriminant
 between tilt and growing-vortex hypotheses at current precision; the
-matter-channel evidence remains the dominant lever.
+matter-channel likelihood-ratio response remains the dominant lever.
 
 The same pattern holds for the parity ratio $R(\ell_{\mathrm{max}}=30)
 = P^+/P^- = 1.18 \pm 0.08$ (the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}):

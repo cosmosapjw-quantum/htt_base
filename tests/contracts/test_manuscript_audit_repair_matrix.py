@@ -30,7 +30,7 @@ def test_manuscript_audit_repair_matrix_exists_and_closes_findings():
         "sensitivity window wording",
         "observer-frame marginalization pending",
         "not native transfer",
-        "no family identification",
+        "no morphology-family naming or selection claim",
         "no geometry-detection claim",
     ]:
         assert token in text

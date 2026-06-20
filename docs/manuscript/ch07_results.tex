@@ -348,9 +348,11 @@ of relative magnitude $\Delta\FF/\FF \sim 8 \times 10^{-6}$
 precision.}
   At the S3 scenario,
 $\FF \approx 6.3\%$ (using $\Omega_{\mathrm{tilt}} =
-\Omega_m\sinh^2\!\beta$, $w = 0$): the tilt occupies
-approximately one-sixteenth of the MES-allowed anisotropy
-budget.  the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} plots
+\Omega_m\sinh^2\!\beta$, $w = 0$): this is a
+class-conditioned filling diagnostic and legacy
+budget-normalised score relative to the adopted linear MES
+ceiling, not a physical occupancy certificate for the full
+anisotropy budget.  the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} plots
 the frame-corrected shear bound $\Bsig^{\mathrm{corr}}$
 across the five equation-of-state scenarios, confirming the
 monotonic dependence on the adopted $w$.
@@ -626,8 +628,10 @@ The filling fraction is defined as
 \end{equation}
 where the numerator is the tilt defect at the observed
 $\beta$ and the denominator is the MES algebraic ceiling.  The
-filling fraction measures the fraction of the available
-anisotropy budget that is observationally occupied.
+filling fraction measures a class-conditioned ratio to the
+adopted MES algebraic ceiling; until a channel-matched or joint
+admissible ceiling is supplied it is not an occupancy certificate
+for the full anisotropy budget.
 
 The $\FF$ inherits uncertainties from the observational inputs
 $\eps_1$, $\eps_2$, $\eps_3$, and $\beta$.  We propagate these
@@ -654,7 +658,7 @@ transfer-conditional calculation.  This is a dipole-premise-conditional
 tilt-compatible preference, not native-transfer evidence, not a
 geometry detection, and not Bianchi family-ID.
 
-We emphasise that this legacy transfer-conditional evidence summary is a restatement of the
+We emphasise that this legacy transfer-conditional likelihood-ratio summary is a restatement of the
 $> 5\sigma$ dipole anomaly in the language of departure variables,
 not an independent discovery.  Its value lies in providing a
 dimensionless measure of FLRW departure that is invariant under
@@ -700,9 +704,9 @@ $\Wstd \sim R_{\mathrm{WS}}^2 \times (\sigma/H)^2/6
 The orthogonal growing mode is therefore excluded in the legacy
 transfer-conditional ranking by
 the vorticity constraint, with $\ln\mathcal{B} = -18.7$ in the
-evidence analysis (Section~\ref{sec:evidence-ranking}).  The
+configured likelihood-ratio analysis (Section~\ref{sec:evidence-ranking}).  The
 tilted growing mode evades this exclusion because the tilt
-contribution to the evidence is independent of the vorticity.
+contribution to the configured likelihood-ratio value is independent of the vorticity.
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the shear evolution and
 the resulting $D_2^{\mathrm{shear}}$ for this mode.
 
@@ -826,9 +830,10 @@ the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-fi
 of fourteen models (FLRW baseline, the pure-tilt
 FLRW$_{\mathrm{tilt}}$, and twelve Bianchi types) by Bayes
 factor.  Three
-tiers emerge with sharp boundaries; the evidence
-decomposition (the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}) confirms
-that the entire signal resides in the tilt degree of freedom.
+legacy diagnostic bins emerge with sharp boundaries; the configured
+likelihood-ratio decomposition (the conditioned legacy figure gallery
+in Appendix~\ref{app:conditioned-legacy-figure-gallery}) shows
+that the fitted scalar response resides in the tilt degree of freedom.
 
 \emph{Tier~1: legacy high-support tilted models
 ($\ln\mathcal{B} \in [+24.8, +26.4]$).}
@@ -846,7 +851,7 @@ from the Frobenius coupling.  BV~(tilt) enters at $+24.8$
 \emph{Tier~2: negligible orthogonal models
 ($\ln\mathcal{B} \in [-0.8, -1.1]$).}
 Seven orthogonal models cluster in a narrow band, their
-evidence dominated by the quadrupole channel~(e) since
+configured likelihood-ratio value dominated by the quadrupole channel~(e) since
 $\eps_1 = \beta = 0$ renders channels~(a)--(c) identical to
 FLRW.
 
@@ -857,9 +862,10 @@ $\ln\mathcal{B} = -18.7$ by the Saadeh vorticity constraint.
 BV~(tilt) is no longer excluded; its VER04 exclusion was a code
 artifact corrected in VER05 (Section~\ref{sec:BV-excl}).
 
-The legacy transfer-conditional evidence summary for tilted models ($\sim 10^{11}:1$
-odds), conditional on the matter-dipole anomaly being
-physical, should be interpreted in the context of the channel
+The legacy transfer-conditional likelihood-ratio scale for tilted
+models, conditional on the matter-dipole anomaly being physical,
+should be interpreted as a premise-conditioned amplitude fit in
+the context of the channel
 decomposition (Section~\ref{sec:decomp}), which shows that the
 signal is driven entirely by the non-CMB matter dipole channels.
 
@@ -893,7 +899,7 @@ differences between these models are prior-volume artefacts.
 We emphasise that this is a limitation of the scalar-amplitude
 likelihood, not of the Bianchi classification.  A direction-
 inclusive analysis would break these degeneracies by exploiting
-the distinct template geometries.  The evidence ranking in
+the distinct template geometries.  The likelihood-ratio ranking in
 Table~\ref{tab:evidence-grand} and
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} annotates duplicate models
 and inactive parameters explicitly.
@@ -907,9 +913,9 @@ for five representative models across six data combinations:
 MATTER~(b+c), DIPOLE~(a+b+c), NO\_$D_2$~(abcdf),
 FULL~(abcdefh), CMB~(adefh), and $D_2{+}D_3$~(efh).
 
-The waterfall analysis reveals the evidence buildup.  The
+The waterfall analysis reveals the configured likelihood-ratio buildup.  The
 matter dipole alone yields $\ln\mathcal{B} \approx +29$ for
-all tilted models---the dominant evidence driver.  Adding the
+all tilted models---the dominant configured-likelihood driver.  Adding the
 Ferreira \& Quartin constraint~(a) penalises by $\sim 2.5$
 nats, because the predicted
 $\eps_1 = (1+\etaud)\beta \approx 1.44 \times 10^{-3}$
@@ -920,14 +926,14 @@ contribute $-0.3$ to $-0.9$ (mild Occam cost from the
 shear-induced quadrupole).
 
 For BV~(tilt), the matter channels yield $+27.9$, but the
-quadrupole channel catastrophically reverses the evidence:
+quadrupole channel catastrophically reverses the configured likelihood ratio:
 In the pre-fix (VER04) pipeline, a $T_2$ unit error inflated
 $D_2^{\mathrm{shear}}$ by $2\times10^{14}$, producing
 NO\_$D_2$ $= +25.4 \to$ FULL $= -24.5$ (a 50-unit swing).
 The VER05 corrected pipeline gives FULL $= +24.8$
 (Section~\ref{sec:BV-excl}).
 
-The CMB-only evidence is negative for all fifteen models
+The CMB-only configured likelihood ratio is negative for all fifteen models
 ($\ln\mathcal{B}_{\mathrm{CMB}} < 0$), confirming that CMB
 data alone prefer isotropy---consistent with the
 Saadeh~et~al.~\cite{Saadeh2016b} null result.  The legacy
@@ -999,15 +1005,15 @@ analysis for BI~(tilt) and BVIIh~(tilt) under four prior
 variants.
 
 Widening the $\Sigstd$ range to $[10^{-30}, 10^{-2}]$ changes
-the evidence by $|\Delta\ln\mathcal{B}| \leq 0.14$ in that
+the configured likelihood-ratio value by $|\Delta\ln\mathcal{B}| \leq 0.14$ in that
 direction, but the result remains prior-support dependent under
 narrowing.  Narrowing to $[10^{-12}, 10^{-8}]$ destroys
-the evidence ($-39.1$ for BI, $-12.9$ for BVIIh) because the
+the configured likelihood-ratio value ($-39.1$ for BI, $-12.9$ for BVIIh) because the
 prior excludes the posterior mode.
 
-Widening $\beta$ to $[10^{-6}, 10^{-1}]$ changes the evidence
+Widening $\beta$ to $[10^{-6}, 10^{-1}]$ changes the configured likelihood-ratio value
 by $\leq 0.42$ (data-dominated).  Narrowing to
-$[10^{-4}, 10^{-2}]$ increases the evidence by $+1.2$ (BI)
+$[10^{-4}, 10^{-2}]$ increases the configured likelihood-ratio value by $+1.2$ (BI)
 and $+1.4$ (BVIIh)---an Occam gain from concentrating the
 prior around the data.
 
@@ -1040,8 +1046,8 @@ $\log_{10}\beta = -2.87 \pm 0.07$ across all five models, in
 precise agreement with the CF4 bulk flow
 ($\beta_{\mathrm{CF4}}/\beta_{\mathrm{median}} = 0.98$).
 Second, $\Sigstd$ is unconstrained, filling the prior from
-$10^{-30}$ to $\sim 10^{-18}$.  The evidence thus refers to the
-\emph{tilt} degree of freedom, not the shear: the data constrain
+$10^{-30}$ to $\sim 10^{-18}$.  The configured likelihood-ratio
+label thus refers to the \emph{tilt} degree of freedom, not the shear: the data constrain
 the boost rapidity but provide no information about the
 primordial anisotropic shear.
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the $\beta$ posterior
@@ -1221,10 +1227,10 @@ $q_{0,\mathrm{true}} = -0.53$
 (the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}).
 
 
-\subsection{Evidence decomposition and the tilt--shear split}
+\subsection{Likelihood-ratio decomposition and the tilt--shear split}
 \label{sec:tilt-shear-split}
 
-The evidence decomposition
+The configured likelihood-ratio decomposition
 (the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery}) reveals, for the WFH2009
 legacy configuration, that the $\ln\mathcal{B} = +26.3$ of
 BI~(tilt) splits as:
@@ -1235,7 +1241,7 @@ The tilt component contributes $103\% (INFERENTIAL --- from channel ablation)$ o
 shear component is mildly negative.  Under the CF4++ sensitivity
 variant (Section~\ref{sec:cf4-sensitivity}), the decomposition
 structure is identical (tilt $103\%$), but the numerical
-evidence level is quarantined because it is untraceable from the
+likelihood-ratio level is quarantined because it is untraceable from the
 canonical VER05 JSON; a dedicated rerun is required before any
 publication use.
 
@@ -1319,7 +1325,10 @@ $95\%$ upper limit reaching the CF4 value.
 The prior-induced floor on $x$ is $\sim 2 \times 10^{-9}$,
 which is $0.3\%$ of the signal level $x \sim 6 \times 10^{-7}$.
 The pipeline passes this tested isotropic-null recovery check:
-it returns null when fed these isotropic null data.
+it returns null when fed these isotropic null data.  This does
+not certify source identification, because the amplitude-matched
+contamination null remains a negative result for the same scalar
+likelihood family.
 
 
 \subsection{Posterior predictive checks}
@@ -1341,9 +1350,10 @@ internal tension between the CatWISE dipole
 ($\eps_1 = 1.48 \times 10^{-3}$) and the Radio dipole
 ($\eps_1 = 3.30 \times 10^{-3}$)---a factor-of-two discrepancy
 that no single $\beta$ can simultaneously match.  This tension
-is a property of the data, not a model failure; the $\rho$ sweep
-(Section~\ref{sec:rho-sweep} of Chapter~\ref{ch:discussion})
-quantifies its impact on the evidence.
+means the single-$\beta$ likelihood or covariance model fails the
+registered predictive-adequacy gate for that channel; the $\rho$
+sweep (Section~\ref{sec:rho-sweep} of Chapter~\ref{ch:discussion})
+quantifies how the configured likelihood responds to that tension.
 
 The combined PPC $p = 0.08$ is consistent, pulled low by
 channel~(b) alone.  The BI~(tilt) PPC is statistically
@@ -1366,7 +1376,7 @@ analyses.
 Second, the observational scope: the CMB-only channels of the
 present analysis yield $\ln\mathcal{B}_{\mathrm{CMB}} < 0$ for
 all models, consistent with the Saadeh~et~al.\ isotropy
-preference.  The legacy transfer-conditional evidence summary arises from the non-CMB
+preference.  The legacy transfer-conditional likelihood-ratio summary arises from the non-CMB
 channels.
 
 Third, the transfer function: the quadrupole fraction

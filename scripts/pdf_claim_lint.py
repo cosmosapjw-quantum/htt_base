@@ -26,18 +26,61 @@ FAIL_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("decisive evidence", re.compile(r"\bdecisive evidence\b", re.IGNORECASE)),
     ("decisively preferred", re.compile(r"\bdecisively preferred\b", re.IGNORECASE)),
     ("decisively excluded", re.compile(r"\bdecisively excluded\b", re.IGNORECASE)),
+    ("odds exceeding", re.compile(r"\bodds exceeding\b", re.IGNORECASE)),
+    (
+        "combined significance now exceeds",
+        re.compile(r"\bcombined significance now exceeds\b", re.IGNORECASE),
+    ),
+    (
+        "property of the data, not a model failure",
+        re.compile(
+            r"\bproperty of the data,\s*not a model failure\b", re.IGNORECASE
+        ),
+    ),
+    (
+        "most conservative choice",
+        re.compile(r"\bmost conservative choice\b", re.IGNORECASE),
+    ),
+    (
+        "one-sixteenth of the MES-allowed anisotropy budget",
+        re.compile(
+            r"\bone[-\s]+sixteenth of the MES[-\s]+allowed anisotropy budget\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "data support a tilt-like degree of freedom",
+        re.compile(r"\bdata support a tilt-like degree of freedom\b", re.IGNORECASE),
+    ),
+    (
+        "conditional evidence for global tilt",
+        re.compile(r"\bconditional evidence for global tilt\b", re.IGNORECASE),
+    ),
     ("production solver", re.compile(r"\bproduction solver\b", re.IGNORECASE)),
     ("production pipeline", re.compile(r"\bproduction pipeline\b", re.IGNORECASE)),
     ("production modules", re.compile(r"\bproduction modules\b", re.IGNORECASE)),
 )
+STRICT_FAIL_PATTERN_NAMES = {
+    "odds exceeding",
+    "combined significance now exceeds",
+    "property of the data, not a model failure",
+    "most conservative choice",
+    "one-sixteenth of the MES-allowed anisotropy budget",
+    "data support a tilt-like degree of freedom",
+    "conditional evidence for global tilt",
+}
 LNB_NUMERIC_PATTERN = re.compile(
     r"\bln\s*B\|?(?:\s*(?:=|≈|>|<|∈|\\in)|[A-Za-z_]*\s*(?:=|≈))",
     re.IGNORECASE,
 )
 LNB_HIGH_STRENGTH_PATTERN = re.compile(
     r"\b("
+    r"global\s+tilt|"
     r"detection|detections|detected|detects|"
     r"decisive|decisively|"
+    r"evidence|"
+    r"odds|"
+    r"support|supports|supported|"
     r"survive|survives|survived|"
     r"establish|establishes|established"
     r")\b",
@@ -54,6 +97,32 @@ LNB_SAFE_DIAGNOSTIC_MARKERS = (
     "jeffreys scale",
     "qualitative interpretation",
     "not worth more than a bare mention",
+)
+LNB_DOWNCLAIM_MARKERS = (
+    "premise-conditioned amplitude fit",
+    "admitted-amplitude",
+    "admitted amplitude",
+    "admitted dipole-amplitude premise",
+    "configured likelihood-ratio",
+    "configured likelihood ratio",
+    "legacy transfer-conditional ranking",
+    "transfer-conditional ranking",
+    "legacy high-support diagnostic bin",
+    "legacy high-support rejection bin",
+    "historical high-support threshold",
+    "conditioned legacy run",
+    "not a source-identification claim",
+    "not source-identification",
+    "source origin is not established",
+    "source-identification is blocked",
+    "not support for anisotropic spatial geometry",
+    "not a geometry or family claim",
+    "not native-transfer evidence",
+    "not an independent discovery",
+    "not promoted here",
+    "conditional on the matter-dipole premise",
+    "no positive support",
+    "prior- and error-budget-sensitive",
 )
 FAMILY_ID_PATTERN = re.compile(r"\bBianchi family identification\b", re.IGNORECASE)
 CONTEXT_MARKERS = (
@@ -148,6 +217,12 @@ def _lnb_high_strength_claim_context(context: str) -> bool:
     has_high_strength = LNB_HIGH_STRENGTH_PATTERN.search(context) is not None
     if not has_high_strength:
         return False
+    if "detection" in lowered or "detected" in lowered:
+        return True
+    if "jeffreys scale" in lowered or "qualitative interpretation" in lowered:
+        return False
+    if any(marker in lowered for marker in LNB_DOWNCLAIM_MARKERS):
+        return False
     if "detection" not in lowered and any(
         marker in lowered for marker in LNB_SAFE_DIAGNOSTIC_MARKERS
     ):
@@ -166,7 +241,10 @@ def lint_pages(pages: Iterable[str]) -> list[PdfClaimFinding]:
         for pattern_name, pattern in FAIL_PATTERNS:
             for match in pattern.finditer(page_text):
                 context = _context(page_text, match.start(), match.end())
-                if _has_context_marker(context):
+                if (
+                    pattern_name not in STRICT_FAIL_PATTERN_NAMES
+                    and _has_context_marker(context)
+                ):
                     continue
                 findings.append(
                     PdfClaimFinding(
