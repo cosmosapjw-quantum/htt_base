@@ -43,6 +43,7 @@ METADATA_FILES = (
     "docs/generated/observed_current_plot_list.md",
     "docs/generated/expanded_manuscript_plot_list.md",
     "docs/generated/manuscript_figure_inventory.md",
+    "docs/generated/manuscript_audit_repair_matrix.md",
     "docs/generated/missing_figure_references.md",
     "docs/generated/quarantined_figures.md",
     "docs/generated/pdf_claim_lint_report.md",
@@ -59,6 +60,18 @@ METADATA_FILES = (
     "docs/generated/observational_data_inventory.md",
     "docs/generated/observed_longrun_analysis.json",
     "docs/generated/observed_longrun_analysis.md",
+    "docs/generated/external_research_input_response_matrix.md",
+    "docs/generated/revision_experiment_assets.md",
+    "docs/generated/revision_experiment_assets.json",
+    "docs/generated/research_program_experiment_registry.yaml",
+    "docs/generated/qfpi_semantic_reconciliation.md",
+    "docs/generated/cf4pp_lnb_provenance_report.md",
+    "docs/generated/cf4pp_lnb_provenance_report.json",
+    "docs/generated/research_program_theorem_registry.yaml",
+    "docs/generated/theorem_extension_registry.md",
+    "docs/generated/theorem_extension_registry.json",
+    "docs/generated/manuscript_rearchitecture_report.md",
+    "docs/generated/progress_checkpoints/revision_checkpoint_rev_r086.md",
 )
 
 REVISION_PROGRAM_FILES = (
@@ -69,6 +82,7 @@ REVISION_PROGRAM_FILES = (
     "docs/generated/revision_claim_lanes.md",
     "docs/generated/revision_literature_crag.md",
     "docs/generated/revision_defense_dossier.md",
+    "docs/codex_handoff/pr_dag_research_program.yaml",
     "docs/codex_handoff/pr_dag_revision.yaml",
 )
 
@@ -77,6 +91,25 @@ CODE_SAMPLE_FILES = (
     "scripts/make_observed_data_manuscript_figures.py",
     "scripts/build_expanded_manuscript_figure_suite.py",
     "scripts/curate_current_manuscript_figures.py",
+    "scripts/generate_revision_experiment_assets.py",
+    "scripts/generate_theorem_extension_assets.py",
+)
+
+REV_R087_RESEARCH_CONTEXT_FILES = (
+    "docs/generated/manuscript_audit_repair_matrix.md",
+    "docs/generated/qfpi_semantic_reconciliation.md",
+    "docs/generated/cf4pp_lnb_provenance_report.md",
+    "docs/generated/cf4pp_lnb_provenance_report.json",
+    "docs/generated/external_research_input_response_matrix.md",
+    "docs/generated/revision_experiment_assets.md",
+    "docs/generated/revision_experiment_assets.json",
+    "docs/generated/research_program_experiment_registry.yaml",
+    "docs/generated/research_program_theorem_registry.yaml",
+    "docs/generated/theorem_extension_registry.md",
+    "docs/generated/theorem_extension_registry.json",
+    "docs/generated/manuscript_rearchitecture_report.md",
+    "docs/generated/progress_checkpoints/revision_checkpoint_rev_r086.md",
+    "docs/codex_handoff/pr_dag_research_program.yaml",
 )
 
 
@@ -202,7 +235,11 @@ def _figure_entries(repo_root: Path) -> list[PackageEntry]:
         if record.status != "resolved" or record.resolved_path is None or record.manifest_path is None:
             missing.append(f"{record.tex_path}:{record.line}:{record.include_path}:{record.status}")
             continue
-        for rel in (record.resolved_path, record.manifest_path):
+        candidate_paths = [record.resolved_path, record.manifest_path]
+        source_json = Path(record.resolved_path).with_name(Path(record.resolved_path).stem + ".source.json")
+        if (repo_root / source_json).is_file():
+            candidate_paths.append(source_json.as_posix())
+        for rel in candidate_paths:
             if rel in seen:
                 continue
             seen.add(rel)
@@ -210,8 +247,12 @@ def _figure_entries(repo_root: Path) -> list[PackageEntry]:
                 _entry(
                     rel,
                     rel,
-                    "manuscript_figure_payload" if rel.endswith(".png") else "manuscript_figure_manifest",
-                    "manuscript figure payload or sidecar manifest referenced by LaTeX",
+                    "manuscript_figure_payload"
+                    if rel.endswith(".png")
+                    else "manuscript_figure_source_json"
+                    if rel.endswith(".source.json")
+                    else "manuscript_figure_manifest",
+                    "manuscript figure payload, source JSON, or sidecar manifest referenced by LaTeX",
                 )
             )
     if missing:
@@ -316,12 +357,18 @@ def _required_assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
         for path in archive_paths
         if path.startswith(f"{ARCHIVE_ROOT}/figures/") and path.endswith(".manifest.json")
     }
+    figure_source_json = {
+        path[: -len(".source.json")]
+        for path in archive_paths
+        if path.startswith(f"{ARCHIVE_ROOT}/figures/") and path.endswith(".source.json")
+    }
     return {
         "compiled_pdf_excluded": not any(path.lower().endswith(".pdf") for path in archive_paths),
         "latex_source_included": f"{ARCHIVE_ROOT}/docs/manuscript/main.tex" in archive_paths
         and f"{ARCHIVE_ROOT}/docs/manuscript/references.bib" in archive_paths,
         "generated_tex_snippets_included": any(path.startswith(f"{ARCHIVE_ROOT}/docs/manuscript/generated/") and path.endswith(".tex") for path in archive_paths),
         "all_manuscript_figures_have_payload_and_manifest": bool(figure_png) and figure_png == figure_manifest,
+        "available_figure_source_json_included": bool(figure_source_json) and figure_source_json <= figure_png,
         "plot_lists_included": f"{ARCHIVE_ROOT}/docs/generated/manuscript_plot_list_index.md" in archive_paths
         and f"{ARCHIVE_ROOT}/docs/generated/observed_current_plot_list.md" in archive_paths
         and f"{ARCHIVE_ROOT}/docs/generated/current_manuscript_plot_list.md" in archive_paths
@@ -339,6 +386,15 @@ def _required_assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
         "revision_program_files_included": all(
             f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in REVISION_PROGRAM_FILES
         ),
+        "rev_r087_research_context_included": all(
+            f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in REV_R087_RESEARCH_CONTEXT_FILES
+        ),
+        "theorem_registry_assets_included": f"{ARCHIVE_ROOT}/docs/generated/theorem_extension_registry.md"
+        in archive_paths
+        and f"{ARCHIVE_ROOT}/docs/generated/theorem_extension_registry.json" in archive_paths
+        and f"{ARCHIVE_ROOT}/docs/generated/research_program_theorem_registry.yaml" in archive_paths,
+        "rev_r086_checkpoint_included": f"{ARCHIVE_ROOT}/docs/generated/progress_checkpoints/revision_checkpoint_rev_r086.md"
+        in archive_paths,
     }
 
 
@@ -449,7 +505,7 @@ Scope:
 - Review physics, mathematics, statistics, inference design, claim tiers, and figure/result interpretation.
 - Do not review software engineering, packaging, test style, code quality, or repo architecture.
 - The compiled PDF is excluded. Use `research_audit_source/docs/manuscript/main.tex`.
-- All manuscript `\\includegraphics` payloads and sidecar manifests are included under `research_audit_source/figures/`.
+- All manuscript `\\includegraphics` payloads, available source JSON files, and sidecar manifests are included under `research_audit_source/figures/`.
 - Code samples under `research_audit_source/code_samples/` are included only to clarify plot construction.
 
 Recommended reading order:
@@ -576,7 +632,7 @@ Reject or mark not ready if any of these are used as current results:
 - an identified Bianchi family.
 - a detected Bianchi geometry.
 - native validation claimed for external-transfer output.
-- MIO diagnostics promoted into posterior, evidence, or truth-certificate status.
+- MIO diagnostics promoted into model-weight, likelihood-ratio, or adjudication status.
 - Scalar diagnostics alone used as geometry/family evidence.
 - Evidence claim lacking required null/covariance/prior/PPC/LOOCV support.
 """

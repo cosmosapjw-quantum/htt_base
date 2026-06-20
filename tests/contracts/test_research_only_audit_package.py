@@ -21,6 +21,26 @@ REVISION_PROGRAM_REL_PATHS = (
     "docs/generated/revision_defense_dossier.md",
     "docs/codex_handoff/pr_dag_revision.yaml",
 )
+REV_R087_REQUIRED_RESEARCH_REL_PATHS = (
+    "docs/generated/manuscript_audit_repair_matrix.md",
+    "docs/generated/qfpi_semantic_reconciliation.md",
+    "docs/generated/cf4pp_lnb_provenance_report.md",
+    "docs/generated/cf4pp_lnb_provenance_report.json",
+    "docs/generated/external_research_input_response_matrix.md",
+    "docs/generated/revision_experiment_assets.md",
+    "docs/generated/revision_experiment_assets.json",
+    "docs/generated/research_program_experiment_registry.yaml",
+    "docs/generated/research_program_theorem_registry.yaml",
+    "docs/generated/theorem_extension_registry.md",
+    "docs/generated/theorem_extension_registry.json",
+    "docs/generated/manuscript_rearchitecture_report.md",
+    "docs/generated/progress_checkpoints/revision_checkpoint_rev_r086.md",
+    "docs/codex_handoff/pr_dag_research_program.yaml",
+)
+REV_R087_REQUIRED_CODE_SAMPLE_NAMES = (
+    "generate_theorem_extension_assets.py",
+    "generate_revision_experiment_assets.py",
+)
 
 
 def _load_module():
@@ -56,20 +76,63 @@ def test_research_only_package_manifest_includes_revision_program_files():
         assert f"research_audit_source/{rel_path}" in archive_paths
 
 
+def test_research_only_package_includes_revision_research_context():
+    module = _load_module()
+    payload, _entries = module.build_payload(
+        repo_root=REPO_ROOT,
+        output_zip=Path("docs/generated/research_only_external_audit_package.zip"),
+        output_manifest=Path("docs/generated/research_only_external_audit_package_manifest.json"),
+        output_prompt=Path("docs/generated/research_only_external_audit_prompt.md"),
+        generating_command="python scripts/build_research_only_audit_package.py --dry-run",
+        worktree_state="test-worktree",
+    )
+
+    archive_paths = {entry["archive_path"] for entry in payload["archive_entries"]}
+    for rel_path in REV_R087_REQUIRED_RESEARCH_REL_PATHS:
+        assert f"research_audit_source/{rel_path}" in archive_paths
+    for name in REV_R087_REQUIRED_CODE_SAMPLE_NAMES:
+        assert f"research_audit_source/code_samples/{name}" in archive_paths
+
+
+def test_research_only_package_includes_available_figure_source_json():
+    module = _load_module()
+    payload, _entries = module.build_payload(
+        repo_root=REPO_ROOT,
+        output_zip=Path("docs/generated/research_only_external_audit_package.zip"),
+        output_manifest=Path("docs/generated/research_only_external_audit_package_manifest.json"),
+        output_prompt=Path("docs/generated/research_only_external_audit_prompt.md"),
+        generating_command="python scripts/build_research_only_audit_package.py --dry-run",
+        worktree_state="test-worktree",
+    )
+
+    archive_paths = {entry["archive_path"] for entry in payload["archive_entries"]}
+    source_paths = {
+        path
+        for path in (REPO_ROOT / "figures").rglob("*.source.json")
+        if f"research_audit_source/{path.with_name(path.name.removesuffix('.source.json') + '.png').relative_to(REPO_ROOT).as_posix()}"
+        in archive_paths
+    }
+    assert source_paths
+    for path in source_paths:
+        assert f"research_audit_source/{path.relative_to(REPO_ROOT).as_posix()}" in archive_paths
+    assert payload["required_assertions"]["available_figure_source_json_included"] is True
+
+
 def test_research_only_prompt_uses_indirect_rejection_examples():
     module = _load_module()
     prompt = module.render_prompt()
     forbidden_exact_strings = (
         "Bianchi family " + "identified.",
         "Bianchi geometry " + "detected.",
-        "External transfer " + "validated as native.",
-        "MIO posterior/evidence/" + "truth certificate.",
+        "External transfer validated " + "as native.",
     )
 
     for phrase in forbidden_exact_strings:
         assert phrase not in prompt
     assert "an identified Bianchi family" in prompt
     assert "a detected Bianchi geometry" in prompt
+    assert "native validation claimed for external-transfer output" in prompt
+    assert "model-weight, likelihood-ratio, or adjudication status" in prompt
 
 
 def test_research_only_package_check_can_reuse_stored_git_metadata():

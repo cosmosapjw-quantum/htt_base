@@ -94,6 +94,6 @@ Reject or mark not ready if any of these are used as current results:
 - an identified Bianchi family.
 - a detected Bianchi geometry.
 - native validation claimed for external-transfer output.
-- MIO diagnostics promoted into posterior, evidence, or truth-certificate status.
+- MIO diagnostics promoted into model-weight, likelihood-ratio, or adjudication status.
 - Scalar diagnostics alone used as geometry/family evidence.
 - Evidence claim lacking required null/covariance/prior/PPC/LOOCV support.
