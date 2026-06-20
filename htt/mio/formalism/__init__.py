@@ -18,6 +18,16 @@ from .budget_spec import (
     compare_denominator_policies,
 )
 from .departure_bundle import DepartureBundle, build_departure_bundle
+from .bound_pushforward import (
+    BoundToPiDominationResult,
+    FiniteCoverUnionBoundResult,
+    bound_to_pi_domination,
+    finite_cover_union_bound,
+)
+from .dynamic_budget import (
+    DynamicBudgetBarrierResult,
+    dynamic_comparison_budget_barrier,
+)
 from .exceedance import (
     ExceedanceCurve,
     MeasureKind,
@@ -51,6 +61,7 @@ __all__ = [
     "BudgetSensitivityPoint",
     "BudgetSpec",
     "BudgetUse",
+    "BoundToPiDominationResult",
     "CANONICAL_COMPONENT_ORDER",
     "CANONICAL_COMPONENT_SIGNS",
     "ComparatorMultiverseSummary",
@@ -60,7 +71,9 @@ __all__ = [
     "DepthBinMetadata",
     "DepartureBundle",
     "DepartureComponent",
+    "DynamicBudgetBarrierResult",
     "ExceedanceCurve",
+    "FiniteCoverUnionBoundResult",
     "IsotropyGap",
     "MeasureKind",
     "NativeMorphologyAtlasStatus",
@@ -69,6 +82,7 @@ __all__ = [
     "ThresholdPolicy",
     "build_budget_spec",
     "build_certified_filling_fraction",
+    "bound_to_pi_domination",
     "channel_matched_occupancy",
     "build_depth_bin_f_record",
     "build_departure_bundle",
@@ -79,5 +93,7 @@ __all__ = [
     "build_isotropy_gap",
     "build_normalized_score",
     "compare_denominator_policies",
+    "dynamic_comparison_budget_barrier",
+    "finite_cover_union_bound",
     "signed_component_projection",
 ]
