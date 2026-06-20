@@ -198,13 +198,27 @@ V      & $\checkmark$ & --- & ---
   & $\checkmark$ & C & $\Sigma^2 \propto \beta^2/\Omega_K$ \\
 VII$_0$& $\checkmark$ & --- & $\checkmark$
   & $\checkmark$ & F & Generic vorticity \\
-VII$_h$& $\checkmark$ & $\checkmark$ & $\checkmark$
-  & $\checkmark$ & F & Frobenius: $\Wstd = R^2\Sigstd$ \\
+VII$_h$& $\checkmark$ & ---$^{\dagger}$ & $\checkmark$
+  & $\checkmark$ & F & Threading-frame $\Wstd=R^2\Sigstd$ (blocked)$^{\dagger}$ \\
 IX     & $\checkmark$ & --- & $\checkmark$
   & $\checkmark$ & F & Generic vorticity \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\paragraph{Frame caveat on Bianchi~VII$_h$ vorticity.}
+The $\dagger$-marked Bianchi~VII$_h$ entry records a
+\emph{threading/matter-frame} Frobenius decomposition
+$\Wstd = R^2\Sigstd$, \emph{not} a hypersurface-normal result.  In the
+group-orbit normal frame every orthogonal-sector type has
+$\omega_{ab}^{(G)} = 0$ ($\Wstd = 0$), consistent with the
+$\omega$~(orth.) column.  The threading-frame decomposition is therefore
+carried here as a \emph{blocked current result}: it is admissible only once the
+full boost, energy-flux, anisotropic-stress, and momentum-constraint terms are
+bound, as machine-gated by the normal-frame versus threading split in
+\texttt{FrameIdentityScope.threading\_candidate}.  See the frame-vorticity
+repair note (\texttt{docs/generated/frame\_vorticity\_repair\_note.md}) for the
+contract and the blocking conditions.
 
 
 % ============================================================

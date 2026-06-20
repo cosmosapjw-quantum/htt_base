@@ -2,11 +2,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import TYPE_CHECKING
 
 import numpy as np
 
 from bass.background.bianchi_types import BianchiAlgebra
 from bass.background.geometry import TetradGeometry, div_pstf2, pstf_rank2
+
+if TYPE_CHECKING:  # avoid a runtime cycle through bass.hierarchy/bass.species
+    from bass.hierarchy.frame_contracts import FrameIdentityScope
 
 __all__ = [
     "MatterNormalFrameState",
@@ -15,7 +19,32 @@ __all__ = [
     "codazzi_constraint_residual",
     "background_constraint_residuals",
     "evaluate_background_constraints",
+    "assert_vorticity_consistent_with_frame",
 ]
+
+
+def assert_vorticity_consistent_with_frame(
+    scope: FrameIdentityScope,
+    *,
+    vorticity_norm: float,
+    tol: float = 0.0,
+) -> None:
+    """Guard that a nonzero vorticity term is only carried in an allowed frame.
+
+    Under hypersurface-normal Bianchi slicing the group-orbit congruence has
+    ``W_std = 0`` by construction, so a nonzero vorticity term is inadmissible.
+    A nonzero term is only allowed in a threading frame whose full boost, flux,
+    anisotropic-stress, and constraint terms are bound
+    (``FrameIdentityScope.threading_candidate``).
+    """
+
+    if not scope.vorticity_term_allowed and abs(float(vorticity_norm)) > float(tol):
+        raise ValueError(
+            "hypersurface-normal Bianchi slicing carries W_std=0; a nonzero "
+            "vorticity term requires a threading frame with bound full-boost, "
+            "flux, anisotropic-stress, and constraint terms "
+            f"(frame_kind={scope.frame_kind!r}, claim_tier={scope.claim_tier!r})"
+        )
 
 
 @dataclass(frozen=True)

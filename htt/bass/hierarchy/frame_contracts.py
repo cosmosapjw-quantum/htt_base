@@ -9,6 +9,7 @@ __all__ = [
     "PolarizationPhaseConvention",
     "BoostOrder",
     "FrameSplitMetadata",
+    "FrameIdentityScope",
 ]
 
 
@@ -31,6 +32,68 @@ class BoostOrder(str, Enum):
 
     LINEAR = "linear"
     EXACT_ANGULAR = "exact_angular"
+
+
+@dataclass(frozen=True)
+class FrameIdentityScope:
+    """Immutable contract separating the two admissible vorticity identities.
+
+    REV-R093 closes the strict-audit finding that a Bianchi~VII$_h$ vorticity
+    decomposition was advertised as a current result without declaring its
+    frame. Two scopes are distinguished:
+
+    - ``normal_frame_slicing``: the hypersurface-normal (group-orbit normal)
+      Bianchi slicing. Intrinsic group-orbit Ricci substitution is allowed and
+      the vorticity sector is absent by construction (``W_std = 0``); a nonzero
+      vorticity term is forbidden here.
+    - ``threading_candidate``: the matter/threading frame. Vorticity may be
+      discussed only if the full boost, energy-flux, anisotropic-stress, and
+      momentum-constraint terms are bound; otherwise the scope is ``blocked``
+      and records the missing terms.
+    """
+
+    frame_kind: str
+    vorticity_term_allowed: bool
+    geometry_ricci_substitution_allowed: bool
+    claim_tier: str
+    blocked_reasons: tuple[str, ...] = ()
+
+    @classmethod
+    def normal_frame_slicing(cls) -> "FrameIdentityScope":
+        return cls(
+            frame_kind="hypersurface_normal_slicing",
+            vorticity_term_allowed=False,
+            geometry_ricci_substitution_allowed=True,
+            claim_tier="conditional",
+            blocked_reasons=(),
+        )
+
+    @classmethod
+    def threading_candidate(
+        cls,
+        *,
+        full_boost_terms_bound: bool,
+        flux_terms_bound: bool = False,
+        anisotropic_stress_terms_bound: bool = False,
+        constraint_terms_bound: bool = False,
+    ) -> "FrameIdentityScope":
+        blocked_reasons: list[str] = []
+        if not full_boost_terms_bound:
+            blocked_reasons.append("full_boost_terms_missing")
+        if not flux_terms_bound:
+            blocked_reasons.append("flux_terms_missing")
+        if not anisotropic_stress_terms_bound:
+            blocked_reasons.append("anisotropic_stress_terms_missing")
+        if not constraint_terms_bound:
+            blocked_reasons.append("constraint_terms_missing")
+        is_blocked = bool(blocked_reasons)
+        return cls(
+            frame_kind="matter_threading_candidate",
+            vorticity_term_allowed=not is_blocked,
+            geometry_ricci_substitution_allowed=False,
+            claim_tier="blocked" if is_blocked else "conditional",
+            blocked_reasons=tuple(blocked_reasons),
+        )
 
 
 @dataclass(frozen=True)
