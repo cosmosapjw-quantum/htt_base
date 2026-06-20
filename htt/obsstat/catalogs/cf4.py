@@ -22,7 +22,37 @@ __all__ = [
     "Cf4CatalogMetadata",
     "build_cf4_catalog_from_mapping",
     "load_cf4_catalog_npz",
+    "joint_survey_combination_status",
 ]
+
+# Required-field names for the joint multi-survey hierarchy contract
+# (htt.infer.joint_survey_hierarchy). Listed by name only to avoid an
+# obsstat -> infer import dependency.
+_JOINT_SURVEY_HIERARCHY_REQUIRED = (
+    "cross_probe_covariance",
+    "mask_selection_metadata",
+    "survey_calibration_nuisance",
+    "shared_lss_covariance",
+    "heldout_predictive",
+)
+
+
+def joint_survey_combination_status() -> dict[str, Any]:
+    """CF4 amplitudes are not combinable across surveys without the contract.
+
+    The CF4 catalog is a single-probe diagnostic surface. Its dipole/bulk-flow
+    amplitude may not be multiplied or compared with CatWISE/radio amplitudes as
+    a shared source model until the joint multi-survey hierarchy contract in
+    ``htt.infer.joint_survey_hierarchy`` is satisfied.
+    """
+
+    return {
+        "probe": "CF4",
+        "combinable_with_other_probes": False,
+        "reason": "joint_survey_hierarchy_contract_not_satisfied",
+        "contract_module": "htt.infer.joint_survey_hierarchy",
+        "required_fields": list(_JOINT_SURVEY_HIERARCHY_REQUIRED),
+    }
 
 
 _CHECKSUM_RE = re.compile(r"^sha256:[0-9a-f]{64}$")

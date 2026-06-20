@@ -21,7 +21,37 @@ __all__ = [
     "build_spectroscopic_catalog_from_mapping",
     "estimate_data_random_dipole",
     "first_moment",
+    "joint_survey_combination_status",
 ]
+
+# Required-field names for the joint multi-survey hierarchy contract
+# (htt.infer.joint_survey_hierarchy). Listed by name only to avoid an
+# obsstat -> infer import dependency.
+_JOINT_SURVEY_HIERARCHY_REQUIRED = (
+    "cross_probe_covariance",
+    "mask_selection_metadata",
+    "survey_calibration_nuisance",
+    "shared_lss_covariance",
+    "heldout_predictive",
+)
+
+
+def joint_survey_combination_status() -> dict[str, Any]:
+    """Spectroscopic dipole amplitudes are not combinable without the contract.
+
+    The data-random spectroscopic dipole is a single-probe diagnostic feature.
+    Its amplitude may not be multiplied or compared with CatWISE/radio/CF4
+    amplitudes as a shared source model until the joint multi-survey hierarchy
+    contract in ``htt.infer.joint_survey_hierarchy`` is satisfied.
+    """
+
+    return {
+        "probe": "spectroscopic_dipole",
+        "combinable_with_other_probes": False,
+        "reason": "joint_survey_hierarchy_contract_not_satisfied",
+        "contract_module": "htt.infer.joint_survey_hierarchy",
+        "required_fields": list(_JOINT_SURVEY_HIERARCHY_REQUIRED),
+    }
 
 
 _SHA256_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
