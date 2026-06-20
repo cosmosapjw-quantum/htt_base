@@ -68,6 +68,9 @@ class ArtifactMode(StrEnum):
     INTERNAL_EXPLORATORY = "internal_exploratory"
     EXTERNAL_AUDIT_CONDITIONED = "external_audit_conditioned"
     FORECAST_ONLY = "forecast_only"
+    DISPLAY_ONLY_PRIOR_SENSITIVITY_SCHEMATIC = "display_only_prior_sensitivity_schematic"
+    DISPLAY_ONLY_ERROR_BUDGET_SCHEMATIC = "display_only_error_budget_schematic"
+    METHODS_NEGATIVE_RESULT = "methods_negative_result"
     PAPER_APPENDIX_CONDITIONED = "paper_appendix_conditioned"
     PAPER_MAIN_CANDIDATE = "paper_main_candidate"
     PAPER_MAIN_VALIDATED = "paper_main_validated"
@@ -79,6 +82,7 @@ class AllowedUse(StrEnum):
     INTERNAL_ONLY = "internal_only"
     EXTERNAL_AUDIT = "external_audit"
     PAPER_APPENDIX = "paper_appendix"
+    PAPER_APPENDIX_BLOCKED_DEGENERACY = "paper_appendix_blocked_degeneracy"
     PAPER_MAIN = "paper_main"
 
 

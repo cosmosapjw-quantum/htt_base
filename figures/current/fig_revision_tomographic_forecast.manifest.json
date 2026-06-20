@@ -1,7 +1,7 @@
 {
-  "allowed_use": "paper_main",
+  "allowed_use": "paper_appendix_blocked_degeneracy",
   "artifact_id": "E5_tomographic_forecast",
-  "artifact_mode": "paper_main_candidate",
+  "artifact_mode": "methods_negative_result",
   "artifact_path": "figures/current/fig_revision_tomographic_forecast.png",
   "caption_policy": [
     "must_state_diagnostic_only",
@@ -15,11 +15,12 @@
     "paper-main use requires the lane recorded in this manifest",
     "forecast only",
     "not current local/global discrimination proof",
-    "paper-main use requires explicit forecast caption and blocked native-atlas status"
+    "near_degeneracy: local-boost and global-tilt depth templates are near-degenerate, so the forecast is a blocked-degeneracy negative result, not a paper-main candidate",
+    "appendix blocked-degeneracy lane only; not paper-main"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "765fd97+dirty",
-  "config_hash": "sha256:6ed0f4d1ba012545600a83697aa08d78f9e5c14b8da7b3be8c56153ad8a07510",
+  "code_version": "43f202e+dirty",
+  "config_hash": "sha256:1f839b3e80d4bc45f426b183b5a324867b33e656a8aea0acefea21cde668adf0",
   "created_by": "scripts/generate_revision_experiment_assets.py",
   "failed_gates": [
     "native_low_ell_solver_not_available",
@@ -27,8 +28,8 @@
     "publication_grade_covariance_not_bound"
   ],
   "generating_command": "venv/bin/python scripts/generate_revision_experiment_assets.py --write",
-  "git_commit": "765fd97",
-  "git_commit_or_worktree_state": "765fd97+dirty",
+  "git_commit": "43f202e",
+  "git_commit_or_worktree_state": "43f202e+dirty",
   "implementation_scope": "common",
   "input_hashes": [
     "docs/generated/observed_longrun_analysis.json:sha256:deb1cd2f10a49f9d4803b57c8c2414c03d04e7baf5939c48a8c9251295a2e5ec"

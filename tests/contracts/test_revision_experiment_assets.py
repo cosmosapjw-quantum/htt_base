@@ -44,12 +44,12 @@ def test_revision_experiment_assets_are_lane_limited():
     assert set(payload["assets"]) == expected
     expected_lanes = {
         "E1_prior_support_surface": (
-            "paper_appendix_conditioned",
+            "display_only_prior_sensitivity_schematic",
             "paper_appendix",
             "empirical_proxy",
         ),
         "E2_sigma_beta_band": (
-            "paper_appendix_conditioned",
+            "display_only_error_budget_schematic",
             "paper_appendix",
             "empirical_proxy",
         ),
@@ -64,8 +64,8 @@ def test_revision_experiment_assets_are_lane_limited():
             "none",
         ),
         "E5_tomographic_forecast": (
-            "paper_main_candidate",
-            "paper_main",
+            "methods_negative_result",
+            "paper_appendix_blocked_degeneracy",
             "empirical_proxy",
         ),
     }
@@ -214,12 +214,15 @@ def test_revision_latex_snippets_respect_manifest_lanes():
     appendix = APPENDIX_SNIPPET.read_text(encoding="utf-8")
     external = EXTERNAL_AUDIT_SNIPPET.read_text(encoding="utf-8")
 
-    assert "fig_revision_tomographic_forecast" in main
+    # The tomographic forecast was downgraded out of the paper-main lane into the
+    # appendix blocked-degeneracy lane, so the paper-main snippet no longer cites it.
+    assert "fig_revision_tomographic_forecast" not in main
     assert "fig_revision_prior_support_surface" not in main
     assert "fig_revision_sigma_beta_band" not in main
     assert "fig_revision_per_channel_occupancy" not in main
     assert "fig_revision_rule_of_three_fpr" not in main
 
+    assert "fig_revision_tomographic_forecast" in appendix
     assert "fig_revision_prior_support_surface" in appendix
     assert "fig_revision_sigma_beta_band" in appendix
     assert "fig_revision_per_channel_occupancy" in appendix

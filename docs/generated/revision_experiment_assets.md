@@ -8,11 +8,11 @@ sky_support_status: not_directional
 null_mock_status: mixed_not_statistical_current_null_bank_and_jackknife_bootstrap_diagnostic
 config_hash: `sha256:cc6e2520973432a222fead2c0006a370fac2ebed531348e4511cdd55f9d45ae0`
 generating_command: `venv/bin/python scripts/generate_revision_experiment_assets.py --write`
-git_commit_or_worktree_state: `765fd97+dirty`
+git_commit_or_worktree_state: `43f202e+dirty`
 input_hashes:
 - docs/generated/observational_data_inventory.json:sha256:025b666eb5813b3397eef285f9feef68283d54bc328b7756ada03f62f462e328
 - docs/generated/observed_longrun_analysis.json:sha256:deb1cd2f10a49f9d4803b57c8c2414c03d04e7baf5939c48a8c9251295a2e5ec
-- docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f
+- docs/generated/current_science_plot_payload.json:sha256:0834ff99bff0b630dfb3545974863bdbdc8d5a66d6447bd30e9552c23b5adbee
 
 These generated assets are diagnostic-only and conditioned on repo-local inputs or deterministic scaffolds.
 They are not native transfer outputs and do not support geometry or family claims.
@@ -21,11 +21,11 @@ They are not native transfer outputs and do not support geometry or family claim
 
 | Asset | Input mode | Lane | Figure | Manifest |
 |---|---|---|---|---|
-| `E1_prior_support_surface` | `repo_observed_input` | `paper_appendix_conditioned` / `paper_appendix` | `figures/current/fig_revision_prior_support_surface.png` | `figures/current/fig_revision_prior_support_surface.manifest.json` |
-| `E2_sigma_beta_band` | `repo_observed_input` | `paper_appendix_conditioned` / `paper_appendix` | `figures/current/fig_revision_sigma_beta_band.png` | `figures/current/fig_revision_sigma_beta_band.manifest.json` |
+| `E1_prior_support_surface` | `repo_observed_input` | `display_only_prior_sensitivity_schematic` / `paper_appendix` | `figures/current/fig_revision_prior_support_surface.png` | `figures/current/fig_revision_prior_support_surface.manifest.json` |
+| `E2_sigma_beta_band` | `repo_observed_input` | `display_only_error_budget_schematic` / `paper_appendix` | `figures/current/fig_revision_sigma_beta_band.png` | `figures/current/fig_revision_sigma_beta_band.manifest.json` |
 | `FPR_rule_of_three` | `repo_observed_input` | `external_audit_conditioned` / `external_audit` | `figures/current/fig_revision_rule_of_three_fpr.png` | `figures/current/fig_revision_rule_of_three_fpr.manifest.json` |
 | `E3_per_channel_occupancy` | `repo_observed_input` | `paper_appendix_conditioned` / `paper_appendix` | `figures/current/fig_revision_per_channel_occupancy.png` | `figures/current/fig_revision_per_channel_occupancy.manifest.json` |
-| `E5_tomographic_forecast` | `repo_observed_input` | `paper_main_candidate` / `paper_main` | `figures/current/fig_revision_tomographic_forecast.png` | `figures/current/fig_revision_tomographic_forecast.manifest.json` |
+| `E5_tomographic_forecast` | `repo_observed_input` | `methods_negative_result` / `paper_appendix_blocked_degeneracy` | `figures/current/fig_revision_tomographic_forecast.png` | `figures/current/fig_revision_tomographic_forecast.manifest.json` |
 
 ## Caveats
 

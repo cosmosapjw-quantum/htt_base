@@ -167,6 +167,32 @@ def test_current_manuscript_figure_generator_check_mode_is_current():
     assert result.returncode == 0, result.stdout + result.stderr
 
 
+def test_audit_ver2_figure_lane_downgrades():
+    manifests = {
+        path.name: json.loads(path.read_text(encoding="utf-8"))
+        for path in (REPO_ROOT / "figures" / "current").glob("*.manifest.json")
+    }
+    tomographic = manifests["fig_revision_tomographic_forecast.manifest.json"]
+    assert tomographic["allowed_use"] in {
+        "paper_appendix_blocked_degeneracy",
+        "methods_negative_result",
+    }
+    assert "near_degeneracy" in " ".join(tomographic["caveats"]).lower()
+    assert (
+        manifests["fig_revision_prior_support_surface.manifest.json"]["artifact_mode"]
+        == "display_only_prior_sensitivity_schematic"
+    )
+    assert (
+        manifests["fig_revision_sigma_beta_band.manifest.json"]["artifact_mode"]
+        == "display_only_error_budget_schematic"
+    )
+    assert (
+        manifests["fig_revision_per_channel_occupancy.manifest.json"]["allowed_use"]
+        != "paper_main"
+    )
+    assert "physical occupancy" not in json.dumps(manifests).lower()
+
+
 def test_current_and_observed_manifests_carry_claim_lane_policy():
     manifest_paths = [
         *sorted((REPO_ROOT / "figures" / "current").glob("*.manifest.json")),

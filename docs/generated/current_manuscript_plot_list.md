@@ -10,12 +10,12 @@ config_hash: `sha256:5d5f382530a84f273563e05faeb31150abc406e06c58e319ca27891b6b1
 input_hashes:
 - `scripts/make_current_manuscript_figures.py:sha256:7e324969490c399949dda2b1cf51a03eb6405578ff8fc6b053a0d9fc10ff7ed7`
 - `docs/generated/current_manuscript_figure_curation.json:sha256:1bff29c98803b711203a90c988ecdbabdf241d2daf13666a314faa7673ec49f8`
-- `docs/generated/current_science_plot_payload.json:sha256:e347ed2997e2fc21101dcb4e692ec57f485c8f03c8dd3d971ff471ff8f9fe88f`
-- `docs/generated/gf_matched_null_forecast_report.json:sha256:e1cf5c334f240e75cdaa1c6b55a3e0a40e77c8067a006fb95c87cb8770f15fe5`
+- `docs/generated/current_science_plot_payload.json:sha256:0834ff99bff0b630dfb3545974863bdbdc8d5a66d6447bd30e9552c23b5adbee`
+- `docs/generated/gf_matched_null_forecast_report.json:sha256:adb17948a9f5bd3fa1e9b87c0cc4e9bdf26c6c09a9b294b868777c59b19f7e7d`
 - `docs/generated/publication_claim_freeze.md:sha256:1ba0877a820632d98f7baa1d6bb80bb40ce38bc9f7d2dc5f4777ffec2a837309`
 - `docs/generated/result_pack_A.md:sha256:ff6616ee58976624cfd89692dfc117da435fde9b6f5a79f8cd5ab4d0b94081c2`
-- `docs/generated/result_pack_B.md:sha256:d793426d0860aa60c68915fee09dcf3b4fcf70ea64c97f00af8caebb435dac93`
-- `docs/generated/result_pack_C.md:sha256:1c84109b23f81f6d49894b8406723a9e072de1eba8abe1f447473441c1a623c7`
+- `docs/generated/result_pack_B.md:sha256:7d55ded6678510deedf62eaeacad89e94b7d0d9481632fb19b9a5178cbea7413`
+- `docs/generated/result_pack_C.md:sha256:a8335933b110bae061ff527f91aef424996311396cc52881eec05e583577e2fe`
 - `docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d`
 - `docs/generated/transfer_sensitivity_report.md:sha256:b2634c82ef783687cc2d304c50bb64487fa4556833bcc1a55464f7cae136903c`
 - `htt/htt/htt/departure/response_overlap.py:sha256:2ea56655e8b8c419239459bdbe4d79c755d00115ce4bd6e6e00b447d51c1f139`
@@ -24,7 +24,7 @@ input_hashes:
 - `htt/mio/formalism/budget_spec.py:sha256:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a`
 - `htt/mio/formalism/component_breakdown.py:sha256:9653e5b3dc63ebe740a78f7517e0df9f079b9a9bfd7a683c44f681ca2a06178b`
 - `htt/mio/formalism/departure_bundle.py:sha256:f04d692646c0d2232373701fb29088d60bb2549106232ff05d2dff644291b80d`
-- `htt/mio/formalism/exceedance.py:sha256:4f85f86c8ca9568fe163244dba95e872aceb839030268160cf15913589b9a5d2`
+- `htt/mio/formalism/exceedance.py:sha256:f2e8d0ef0f4c660f3d035e7daeb2829d48559321bbe0d27ce5e65d5a51c1283d`
 - `htt/mio/formalism/filling_fraction.py:sha256:69cb198e205690816295e0e13b77cb6e673a88f000e9d7632c6650d08cbdbb70`
 - `htt/mio/formalism/isotropy_gap.py:sha256:a98bd229360d4f928f33b45524401643ef8c5fd3d780f027515891b93ed40f5a`
 - `htt/mio/formalism/normalized_score.py:sha256:5e44adfd1dbfdfa572e610e726fb78cae6a5996e82f52c910274608f3d66ec9b`
@@ -34,7 +34,7 @@ caveats:
 - Current figures include governance summaries and conditioned current-code physics diagnostics.
 - No figure claims native low-ell output, geometry-detection status, or Bianchi family-ID.
 generating_command: `python scripts/make_current_manuscript_figures.py`
-git_commit_or_worktree_state: `e49a18a+dirty`
+git_commit_or_worktree_state: `43f202e+dirty`
 artifact_path: docs/generated/current_manuscript_plot_list.md
 
 ## Excluded Legacy Plot References
