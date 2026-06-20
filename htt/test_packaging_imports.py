@@ -82,6 +82,7 @@ for name in [
     "bass.transfer.evidence_stability",
     "bass.transfer.native_schema",
     "common",
+    "common.data_contracts",
     "common.semantic_guards.admissibility_status",
     "common.semantic_guards.source_propagation_status",
     "mio",
@@ -154,6 +155,7 @@ for name in [
     "bass.transfer.evidence_stability",
     "bass.transfer.native_schema",
     "common",
+    "common.data_contracts",
     "common.semantic_guards.admissibility_status",
     "common.semantic_guards.source_propagation_status",
     "mio",
@@ -201,6 +203,7 @@ for name in [
     "htt.nulls.survey_axis_coherence",
     "htt.zoa.axis_promotion",
     "common.contracts",
+    "common.data_contracts",
     "bass.transfer.evidence_stability",
     "mio.formalism.channel_occupancy_vector",
 ]:

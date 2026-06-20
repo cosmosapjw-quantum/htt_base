@@ -8,16 +8,16 @@ sky_support_status: mixed_not_directional_and_recorded_sky_support
 null_mock_status: mixed_not_statistical_jackknife_bootstrap_and_legacy_conditioned
 config_hash: `sha256:cedbdfc6311d0fcfa95f5f2f181f7bda35a21f16ae61a7e84ca3cb844c7eb05e`
 input_hashes:
-- `docs/generated/current_manuscript_plot_list.md:sha256:f8ec3a8b30b22d2441bf93d961c575a3fb00dcb9e70b2691f0df17e17d0fc6a8`
-- `docs/generated/observed_current_plot_list.md:sha256:bf92b7cfbaeec044a575889c43d1fdfd519b24a2f5b509817a226e9a1096d1f6`
-- `docs/generated/expanded_manuscript_plot_list.md:sha256:f2b25fca25ac67801f688b3464bfd1f528c1aacf0578acb478219a21322c8fae`
+- `docs/generated/current_manuscript_plot_list.md:sha256:3837ed474f7d0f44b00a93166aca174da8db164546b2db6df03bb6b54c828f0d`
+- `docs/generated/observed_current_plot_list.md:sha256:940927ce616ae28c60f36daba3a9b54760bae398367dc80aaf3c204a3aea994d`
+- `docs/generated/expanded_manuscript_plot_list.md:sha256:66f9bc9b063d521d25555329ea904e439fcd681b416a860b237db59ce17899c4`
 caveats:
 - This is an index over generated plot-list documents, not a new science result.
 - Observed-data entries are descriptive or diagnostic-only unless matched-null status is explicit.
 - Conditioned legacy entries remain appendix-only and assumption-conditioned.
 - No entry claims native low-ell solver output, geometry detection, or Bianchi family-ID.
 generating_command: `scripts/make_observed_data_manuscript_figures.py`
-git_commit_or_worktree_state: `6649e04+dirty`
+git_commit_or_worktree_state: `765fd97+dirty`
 artifact_path: docs/generated/manuscript_plot_list_index.md
 
 ## Summary
@@ -58,4 +58,4 @@ artifact_path: docs/generated/manuscript_plot_list_index.md
 - MIO certificates and HTT evidence are not merged into this observed-data deck.
 - External or conditioned transfer products are not labeled native.
 - Scalar, depth, and direction summaries do not assign a Bianchi family.
-git_commit: `6649e04`
+git_commit: `765fd97`

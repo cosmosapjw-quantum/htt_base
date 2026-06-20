@@ -9,8 +9,8 @@ null_mock_status: mixed_not_statistical_and_jackknife_bootstrap_diagnostic
 config_hash: `sha256:d08a270ee70c39346dcd894ea7b7aee36de4cc16619caaefe821be8d6282092a`
 input_hashes:
 - `data/camb_ref_planck2018.npz:sha256:6a51719d224dad50a3e85aa79ec126dab03ea4fbb8996699b11a8d8d4c91c942`
-- `docs/generated/observational_data_inventory.json:sha256:39b0ccb29b293cc19b5f61f726dad70c8b4917e1241a912f9c6ea5f3bc8ab513`
-- `docs/generated/observed_longrun_analysis.json:sha256:98596af03a7130bba55b007a122677eb25adc755bb454133cfe3597a423b6047`
+- `docs/generated/observational_data_inventory.json:sha256:025b666eb5813b3397eef285f9feef68283d54bc328b7756ada03f62f462e328`
+- `docs/generated/observed_longrun_analysis.json:sha256:deb1cd2f10a49f9d4803b57c8c2414c03d04e7baf5939c48a8c9251295a2e5ec`
 - `workdir/compact_products/cf4/query_batch.npz:sha256:5fb994ca076235fb30db644d3d1a3672d092ed31f8ef4737bcabe2da87491909`
 - `workdir/compact_products/desi/BGS_ANY_NGC_clustering_extended.npz:sha256:ea52cb7e0bbfa3ef69db396dab4a68ee95b409d8e237451d74a924e4e3cca21d`
 - `workdir/compact_products/desi/BGS_ANY_SGC_clustering_extended.npz:sha256:e6c858efb2b3fc22ce36443f1393772f62d2e714efbfefde76c1404386ffc05d`
@@ -34,7 +34,7 @@ caveats:
 - No plot claims native low-ell solver output, geometry detection, or Bianchi family-ID.
 - Packed upstream likelihood products are displayed only as provenance diagnostics.
 generating_command: `scripts/make_observed_data_manuscript_figures.py`
-git_commit_or_worktree_state: `6649e04+dirty`
+git_commit_or_worktree_state: `765fd97+dirty`
 artifact_path: docs/generated/observed_current_plot_list.md
 
 ## Current Observed-Data Plot Sequence
@@ -62,4 +62,4 @@ artifact_path: docs/generated/observed_current_plot_list.md
 - Directional and sky-support plots record masks or coordinate frames but do not establish a global anisotropy cause.
 - DESI and CF4 diagnostics remain separate from HTT posterior/evidence and MIO certificates.
 - Scalar, depth, and direction summaries do not identify a Bianchi family.
-git_commit: `6649e04`
+git_commit: `765fd97`

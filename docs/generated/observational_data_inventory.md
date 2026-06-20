@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: mixed_none_and_external_reference
 sky_support_status: not_directional
 null_mock_status: not_statistical
-config_hash: `sha256:73ed383cfb326ada1a8b363cb1337bc5a8e566ba5a3709f6b69244ce6da3ab61`
+config_hash: `sha256:68848e33466617d73386e6abe514b1f24ebb0c68fc5e33d8bf9c0f04d8af53f7`
 input_hashes:
 - `workdir/obs_bundle/cmb/powerspectra/planck_pr3_tt_full.npz:sha256:a3ba1178d2afc915d12dd2bf79dc4027aa48e5e263dc1f3bfe8e3a6762e13421`
 - `workdir/obs_bundle/cmb/powerspectra/planck_pr3_tt_binned.npz:sha256:ff4f93998b88f8e91047643ac3d7ddecca0ca87d03a8d5d0b562727bbe06f635`
@@ -64,8 +64,10 @@ caveats:
 - Inventory records repo-local data availability only.
 - It does not create inference evidence or native solver validation.
 - Missing indexed datasets remain blocked until the source file is present.
-generating_command: `scripts/make_observed_data_manuscript_figures.py`
-git_commit_or_worktree_state: `6649e04+dirty`
+- Present data does not imply spectroscopic dipole production readiness.
+- D0/D1 data-readiness rows are diagnostic-only unless matched randoms, covariance, and null/mock support are bound downstream.
+generating_command: `venv/bin/python scripts/inventory_observational_data.py --write`
+git_commit_or_worktree_state: `765fd97+dirty`
 artifact_path: docs/generated/observational_data_inventory.json
 
 ## Summary
@@ -73,67 +75,79 @@ artifact_path: docs/generated/observational_data_inventory.json
 - Dataset candidates: `52`
 - Present: `40`
 - Missing: `12`
+- Rows with binding gaps: `23`
+- Spectroscopic dipole blocked rows: `12`
 - Claim boundary: diagnostic inventory only; no native low-ell solver output or family identification.
+- Present does not imply inference readiness.
+
+## Readiness Counts
+
+| Readiness | Count |
+| --- | ---: |
+| `D0` | `15` |
+| `D1` | `25` |
+| `blocked` | `12` |
 
 ## Candidate Rows
 
-| Dataset | Collection | Present | Role | Path | Claim ceiling | Sky support | Null/mock | Shape hint |
-| --- | --- | ---: | --- | --- | --- | --- | --- | --- |
-| `planck.pr3.tt_full` | `cmb.powerspectra` | `yes` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/planck_pr3_tt_full.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[2507]` |
-| `planck.pr3.tt_binned` | `cmb.powerspectra` | `yes` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/planck_pr3_tt_binned.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[83]` |
-| `planck.pr3.te_full` | `cmb.powerspectra` | `yes` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/planck_pr3_te_full.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[1995]` |
-| `planck.pr3.ee_full` | `cmb.powerspectra` | `yes` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/planck_pr3_ee_full.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[1995]` |
-| `planck.pr3.bb_lowl` | `cmb.powerspectra` | `yes` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/planck_pr3_bb_lowl.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[28]` |
-| `planck.pr3.eb_lowl` | `cmb.powerspectra` | `yes` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/planck_pr3_eb_lowl.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[28]` |
-| `act.dr6.tt` | `cmb.powerspectra` | `no` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/act_dr6_tt.npz` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `act.dr6.te` | `cmb.powerspectra` | `no` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/act_dr6_te.npz` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `act.dr6.ee` | `cmb.powerspectra` | `no` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/act_dr6_ee.npz` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `act.dr4.compact` | `cmb.powerspectra` | `yes` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/act_dr4.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[52, 3]` |
-| `spt.3g.y1` | `cmb.powerspectra` | `yes` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/spt3g_y1.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[1, 18]` |
-| `bicep_keck.2018.bb` | `cmb.powerspectra` | `yes` | `external_observation` | `workdir/obs_bundle/cmb/powerspectra/bicep_keck_2018_bb.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[999, 254]` |
-| `planck.pr3.bestfit` | `cmb.theory` | `yes` | `external_reference_theory` | `workdir/obs_bundle/cmb/theory/planck_pr3_bestfit.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[2507]` |
-| `camb.planck2018.lensing_refs` | `cmb.theory` | `yes` | `external_reference_theory` | `workdir/obs_bundle/cmb/theory/camb_planck2018_lensing_refs.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[4101]` |
-| `planck.pr3.lensing` | `cmb.lensing` | `yes` | `external_observation` | `workdir/obs_bundle/cmb/lensing/planck_pr3_lensing.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[]` |
-| `planck.commander.nside16` | `cmb.maps` | `yes` | `external_observation_map` | `workdir/obs_bundle/cmb/maps/commander_nside16.npz` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `[3072]` |
-| `planck.smica.nside16` | `cmb.maps` | `yes` | `external_observation_map` | `workdir/obs_bundle/cmb/maps/smica_nside16.npz` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `[3072]` |
-| `planck.temp_mask.nside16` | `cmb.masks` | `yes` | `external_observation_mask` | `workdir/obs_bundle/cmb/masks/temp_nside16.npz` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `[]` |
-| `planck.pol_mask.nside16` | `cmb.masks` | `yes` | `external_observation_mask` | `workdir/obs_bundle/cmb/masks/pol_nside16.npz` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `[]` |
-| `desi.bgs.ngc` | `lss.desi_y1` | `no` | `external_observation` | `workdir/obs_bundle/lss/desi_y1/bgs_ngc.npz` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `desi.bgs.sgc` | `lss.desi_y1` | `no` | `external_observation` | `workdir/obs_bundle/lss/desi_y1/bgs_sgc.npz` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `desi.lrg.ngc` | `lss.desi_y1` | `no` | `external_observation` | `workdir/obs_bundle/lss/desi_y1/lrg_ngc.npz` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `desi.lrg.sgc` | `lss.desi_y1` | `no` | `external_observation` | `workdir/obs_bundle/lss/desi_y1/lrg_sgc.npz` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `desi.qso.ngc` | `lss.desi_y1` | `no` | `external_observation` | `workdir/obs_bundle/lss/desi_y1/qso_ngc.npz` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `desi.qso.sgc` | `lss.desi_y1` | `no` | `external_observation` | `workdir/obs_bundle/lss/desi_y1/qso_sgc.npz` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `cf4.query_single` | `pecvel.cf4` | `yes` | `external_observation` | `workdir/obs_bundle/pecvel/cf4/query_single.json` | `diagnostic_only` | `not_directional` | `not_statistical` | `` |
-| `cf4.query_batch` | `pecvel.cf4` | `yes` | `external_observation` | `workdir/obs_bundle/pecvel/cf4/query_batch.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[163760]` |
-| `obs_defaults.canonical` | `scalars` | `no` | `compiled_observational_scalar` | `workdir/obs_bundle/scalars/obs_defaults.json` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `obs_defaults.watkins2023` | `scalars` | `no` | `compiled_observational_scalar` | `workdir/obs_bundle/scalars/obs_defaults_watkins2023.json` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `obs_defaults.courtois2025` | `scalars` | `no` | `compiled_observational_scalar` | `workdir/obs_bundle/scalars/obs_defaults_courtois2025.json` | `blocked` | `blocked_missing_data` | `not_statistical` | `` |
-| `dipole_scalar_observations.consolidated` | `scalars` | `yes` | `compiled_observational_scalar` | `workdir/obs_bundle/scalars/dipole_scalar_observations.json` | `diagnostic_only` | `not_directional` | `not_statistical` | `` |
-| `compact.desi.bgs_any_ngc` | `compact_products.desi` | `yes` | `external_observation_catalog` | `workdir/compact_products/desi/BGS_ANY_NGC_clustering_extended.npz` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `[4081227]` |
-| `compact.desi.bgs_any_sgc` | `compact_products.desi` | `yes` | `external_observation_catalog` | `workdir/compact_products/desi/BGS_ANY_SGC_clustering_extended.npz` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `[1441126]` |
-| `compact.desi.lrg_ngc` | `compact_products.desi` | `yes` | `external_observation_catalog` | `workdir/compact_products/desi/LRG_NGC_clustering_extended.npz` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `[1476135]` |
-| `compact.desi.lrg_sgc` | `compact_products.desi` | `yes` | `external_observation_catalog` | `workdir/compact_products/desi/LRG_SGC_clustering_extended.npz` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `[662492]` |
-| `compact.desi.qso_ngc` | `compact_products.desi` | `yes` | `external_observation_catalog` | `workdir/compact_products/desi/QSO_NGC_clustering_extended.npz` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `[793219]` |
-| `compact.desi.qso_sgc` | `compact_products.desi` | `yes` | `external_observation_catalog` | `workdir/compact_products/desi/QSO_SGC_clustering_extended.npz` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `[430172]` |
-| `compact.cf4.query_batch` | `compact_products.cf4` | `yes` | `external_peculiar_velocity_reconstruction` | `workdir/compact_products/cf4/query_batch.npz` | `diagnostic_only` | `coordinate_frame_annotated` | `not_statistical` | `[163760]` |
-| `compact.cf4.query_single` | `compact_products.cf4` | `yes` | `external_peculiar_velocity_metadata` | `workdir/compact_products/cf4/query_single.json` | `diagnostic_only` | `not_directional` | `not_statistical` | `` |
-| `compact.cf4.targets_cf4_from_desi_bgs_auto.report` | `compact_products.cf4` | `yes` | `external_peculiar_velocity_metadata` | `workdir/compact_products/cf4/targets_cf4_from_desi_bgs_auto.report.json` | `diagnostic_only` | `not_directional` | `not_statistical` | `` |
-| `compact.act_dr4_compact` | `compact_products` | `yes` | `external_observation` | `workdir/compact_products/act_dr4_compact.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[52, 3]` |
-| `compact.spt3g_y1_compact` | `compact_products` | `yes` | `external_observation` | `workdir/compact_products/spt3g_y1_compact.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[1, 18]` |
-| `compact.camb_planck2018_lensing_refs` | `compact_products` | `yes` | `external_reference_theory` | `workdir/compact_products/camb_planck2018_lensing_refs.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[4101]` |
-| `compact.dipole_scalar_observations` | `compact_products` | `yes` | `compiled_observational_scalar` | `workdir/compact_products/dipole_scalar_observations.json` | `diagnostic_only` | `not_directional` | `not_statistical` | `` |
-| `reference.camb_ref_planck2018` | `repo_reference_fixtures` | `yes` | `external_reference_or_validation_fixture` | `data/camb_ref_planck2018.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[]` |
-| `reference.0.06` | `repo_reference_fixtures` | `yes` | `external_reference_or_validation_fixture` | `data/class_massive_neutrino_fixtures/0.06.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[4000]` |
-| `reference.0.12` | `repo_reference_fixtures` | `yes` | `external_reference_or_validation_fixture` | `data/class_massive_neutrino_fixtures/0.12.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[4000]` |
-| `reference.0.24` | `repo_reference_fixtures` | `yes` | `external_reference_or_validation_fixture` | `data/class_massive_neutrino_fixtures/0.24.npz` | `diagnostic_only` | `not_directional` | `not_statistical` | `[4000]` |
-| `reference.recombination_ref_planck2018` | `repo_reference_fixtures` | `yes` | `external_reference_or_validation_fixture` | `htt/bass/recombination/fixtures/recombination_ref_planck2018.csv` | `diagnostic_only` | `not_directional` | `not_statistical` | `8018 lines` |
-| `reference.recombination_ref_planck2018_z1e10` | `repo_reference_fixtures` | `yes` | `external_reference_or_validation_fixture` | `htt/bass/recombination/fixtures/recombination_ref_planck2018_z1e10.csv` | `diagnostic_only` | `not_directional` | `not_statistical` | `8151 lines` |
-| `cobaya.bicep_keck_2018` | `cobaya_packages.data` | `yes` | `external_likelihood_data_install` | `workdir/cobaya_packages/data/bicep_keck_2018` | `diagnostic_only` | `not_directional` | `not_statistical` | `83 files` |
-| `cobaya.planck_supp_data_and_covmats` | `cobaya_packages.data` | `yes` | `external_likelihood_data_install` | `workdir/cobaya_packages/data/planck_supp_data_and_covmats` | `diagnostic_only` | `not_directional` | `not_statistical` | `960 files` |
+| Dataset | Collection | Present | Role | Legacy role | Readiness | Allowed use | Claim ceiling | Sky support | Null/mock | Gaps | Shape hint |
+| --- | --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `planck.pr3.tt_full` | `cmb.powerspectra` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[2507]` |
+| `planck.pr3.tt_binned` | `cmb.powerspectra` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[83]` |
+| `planck.pr3.te_full` | `cmb.powerspectra` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[1995]` |
+| `planck.pr3.ee_full` | `cmb.powerspectra` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[1995]` |
+| `planck.pr3.bb_lowl` | `cmb.powerspectra` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[28]` |
+| `planck.pr3.eb_lowl` | `cmb.powerspectra` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[28]` |
+| `act.dr6.tt` | `cmb.powerspectra` | `no` | `harmonic_product` | `external_observation` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked` | `` |
+| `act.dr6.te` | `cmb.powerspectra` | `no` | `harmonic_product` | `external_observation` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked` | `` |
+| `act.dr6.ee` | `cmb.powerspectra` | `no` | `harmonic_product` | `external_observation` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked` | `` |
+| `act.dr4.compact` | `cmb.powerspectra` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[52, 3]` |
+| `spt.3g.y1` | `cmb.powerspectra` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[1, 18]` |
+| `bicep_keck.2018.bb` | `cmb.powerspectra` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[999, 254]` |
+| `planck.pr3.bestfit` | `cmb.theory` | `yes` | `harmonic_product` | `external_reference_theory` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[2507]` |
+| `camb.planck2018.lensing_refs` | `cmb.theory` | `yes` | `harmonic_product` | `external_reference_theory` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[4101]` |
+| `planck.pr3.lensing` | `cmb.lensing` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[]` |
+| `planck.commander.nside16` | `cmb.maps` | `yes` | `map` | `external_observation_map` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `` | `[3072]` |
+| `planck.smica.nside16` | `cmb.maps` | `yes` | `map` | `external_observation_map` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `` | `[3072]` |
+| `planck.temp_mask.nside16` | `cmb.masks` | `yes` | `mask` | `external_observation_mask` | `D0` | `schema_check_only` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `` | `[]` |
+| `planck.pol_mask.nside16` | `cmb.masks` | `yes` | `mask` | `external_observation_mask` | `D0` | `schema_check_only` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `` | `[]` |
+| `desi.bgs.ngc` | `lss.desi_y1` | `no` | `raw_catalog` | `external_observation` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked,random_or_mask_catalog_required_for_spectroscopic_dipole` | `` |
+| `desi.bgs.sgc` | `lss.desi_y1` | `no` | `raw_catalog` | `external_observation` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked,random_or_mask_catalog_required_for_spectroscopic_dipole` | `` |
+| `desi.lrg.ngc` | `lss.desi_y1` | `no` | `raw_catalog` | `external_observation` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked,random_or_mask_catalog_required_for_spectroscopic_dipole` | `` |
+| `desi.lrg.sgc` | `lss.desi_y1` | `no` | `raw_catalog` | `external_observation` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked,random_or_mask_catalog_required_for_spectroscopic_dipole` | `` |
+| `desi.qso.ngc` | `lss.desi_y1` | `no` | `raw_catalog` | `external_observation` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked,random_or_mask_catalog_required_for_spectroscopic_dipole` | `` |
+| `desi.qso.sgc` | `lss.desi_y1` | `no` | `raw_catalog` | `external_observation` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked,random_or_mask_catalog_required_for_spectroscopic_dipole` | `` |
+| `cf4.query_single` | `pecvel.cf4` | `yes` | `raw_catalog` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `matched_random_or_mask_required,matched_random_or_mask_checksum_required,support_parity_verification_required` | `` |
+| `cf4.query_batch` | `pecvel.cf4` | `yes` | `raw_catalog` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `matched_random_or_mask_required,matched_random_or_mask_checksum_required,support_parity_verification_required` | `[163760]` |
+| `obs_defaults.canonical` | `scalars` | `no` | `harmonic_product` | `compiled_observational_scalar` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked` | `` |
+| `obs_defaults.watkins2023` | `scalars` | `no` | `harmonic_product` | `compiled_observational_scalar` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked` | `` |
+| `obs_defaults.courtois2025` | `scalars` | `no` | `harmonic_product` | `compiled_observational_scalar` | `blocked` | `blocked_for_inference` | `blocked` | `blocked_missing_data` | `not_statistical` | `data_checksum_missing,data_binding_blocked` | `` |
+| `dipole_scalar_observations.consolidated` | `scalars` | `yes` | `harmonic_product` | `compiled_observational_scalar` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `` |
+| `compact.desi.bgs_any_ngc` | `compact_products.desi` | `yes` | `raw_catalog` | `external_observation_catalog` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `random_or_mask_catalog_required_for_spectroscopic_dipole,selection_weight_certification_required_for_spectroscopic_dipole,matched_random_or_mask_required` | `[4081227]` |
+| `compact.desi.bgs_any_sgc` | `compact_products.desi` | `yes` | `raw_catalog` | `external_observation_catalog` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `random_or_mask_catalog_required_for_spectroscopic_dipole,selection_weight_certification_required_for_spectroscopic_dipole,matched_random_or_mask_required` | `[1441126]` |
+| `compact.desi.lrg_ngc` | `compact_products.desi` | `yes` | `raw_catalog` | `external_observation_catalog` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `random_or_mask_catalog_required_for_spectroscopic_dipole,selection_weight_certification_required_for_spectroscopic_dipole,matched_random_or_mask_required` | `[1476135]` |
+| `compact.desi.lrg_sgc` | `compact_products.desi` | `yes` | `raw_catalog` | `external_observation_catalog` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `random_or_mask_catalog_required_for_spectroscopic_dipole,selection_weight_certification_required_for_spectroscopic_dipole,matched_random_or_mask_required` | `[662492]` |
+| `compact.desi.qso_ngc` | `compact_products.desi` | `yes` | `raw_catalog` | `external_observation_catalog` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `random_or_mask_catalog_required_for_spectroscopic_dipole,selection_weight_certification_required_for_spectroscopic_dipole,matched_random_or_mask_required` | `[793219]` |
+| `compact.desi.qso_sgc` | `compact_products.desi` | `yes` | `raw_catalog` | `external_observation_catalog` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `sky_support_recorded` | `not_statistical` | `random_or_mask_catalog_required_for_spectroscopic_dipole,selection_weight_certification_required_for_spectroscopic_dipole,matched_random_or_mask_required` | `[430172]` |
+| `compact.cf4.query_batch` | `compact_products.cf4` | `yes` | `raw_catalog` | `external_peculiar_velocity_reconstruction` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `coordinate_frame_annotated` | `not_statistical` | `matched_random_or_mask_required,matched_random_or_mask_checksum_required,support_parity_verification_required` | `[163760]` |
+| `compact.cf4.query_single` | `compact_products.cf4` | `yes` | `harmonic_product` | `external_peculiar_velocity_metadata` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `` |
+| `compact.cf4.targets_cf4_from_desi_bgs_auto.report` | `compact_products.cf4` | `yes` | `harmonic_product` | `external_peculiar_velocity_metadata` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `` |
+| `compact.act_dr4_compact` | `compact_products` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[52, 3]` |
+| `compact.spt3g_y1_compact` | `compact_products` | `yes` | `harmonic_product` | `external_observation` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[1, 18]` |
+| `compact.camb_planck2018_lensing_refs` | `compact_products` | `yes` | `harmonic_product` | `external_reference_theory` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[4101]` |
+| `compact.dipole_scalar_observations` | `compact_products` | `yes` | `harmonic_product` | `compiled_observational_scalar` | `D1` | `diagnostic_plot_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `` |
+| `reference.camb_ref_planck2018` | `repo_reference_fixtures` | `yes` | `harmonic_product` | `external_reference_or_validation_fixture` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[]` |
+| `reference.0.06` | `repo_reference_fixtures` | `yes` | `harmonic_product` | `external_reference_or_validation_fixture` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[4000]` |
+| `reference.0.12` | `repo_reference_fixtures` | `yes` | `harmonic_product` | `external_reference_or_validation_fixture` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[4000]` |
+| `reference.0.24` | `repo_reference_fixtures` | `yes` | `harmonic_product` | `external_reference_or_validation_fixture` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `[4000]` |
+| `reference.recombination_ref_planck2018` | `repo_reference_fixtures` | `yes` | `harmonic_product` | `external_reference_or_validation_fixture` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `8018 lines` |
+| `reference.recombination_ref_planck2018_z1e10` | `repo_reference_fixtures` | `yes` | `harmonic_product` | `external_reference_or_validation_fixture` | `D0` | `schema_check_only` | `diagnostic_only` | `not_directional` | `not_statistical` | `` | `8151 lines` |
+| `cobaya.bicep_keck_2018` | `cobaya_packages.data` | `yes` | `harmonic_product` | `external_likelihood_data_install` | `D0` | `blocked_for_inference` | `blocked` | `not_directional` | `not_statistical` | `data_checksum_missing` | `83 files` |
+| `cobaya.planck_supp_data_and_covmats` | `cobaya_packages.data` | `yes` | `covariance` | `external_likelihood_data_install` | `D0` | `blocked_for_inference` | `blocked` | `not_directional` | `not_statistical` | `data_checksum_missing` | `960 files` |
 
 ## Plot Planning Boundary
 
 - Present observation datasets may support diagnostic and publication-candidate figures only after sidecar manifests are generated.
 - Missing indexed datasets are excluded from generated plot lists until present.
+- D0/D1 rows remain diagnostic-only and are blocked from spectroscopic dipole production unless matched randoms or masks, covariance status, and null/mock support are explicitly present.
 - Covariance, null, PPC, LOOCV, or look-elsewhere language must be tied to explicit generated artifacts.

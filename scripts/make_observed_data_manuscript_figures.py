@@ -31,7 +31,9 @@ if str(COMMON_ROOT) not in sys.path:
 from common.artifact_manifest import validate_manifest_payload  # noqa: E402
 from common.sky_support import build_sky_support_from_mask  # noqa: E402
 from inventory_observational_data import (  # noqa: E402
+    GENERATING_COMMAND as INVENTORY_GENERATING_COMMAND,
     build_inventory,
+    render_gap_report as render_inventory_gap_report,
     render_markdown as render_inventory_markdown,
 )
 
@@ -40,6 +42,7 @@ FIGURE_DIR = REPO_ROOT / "figures" / "observed_current"
 SNIPPET_DIR = REPO_ROOT / "docs" / "manuscript" / "generated"
 INVENTORY_JSON = REPO_ROOT / "docs" / "generated" / "observational_data_inventory.json"
 INVENTORY_MD = REPO_ROOT / "docs" / "generated" / "observational_data_inventory.md"
+INVENTORY_GAP_MD = REPO_ROOT / "docs" / "generated" / "data_binding_gap_report.md"
 LONGRUN_JSON = REPO_ROOT / "docs" / "generated" / "observed_longrun_analysis.json"
 LONGRUN_MD = REPO_ROOT / "docs" / "generated" / "observed_longrun_analysis.md"
 PLOT_LIST = REPO_ROOT / "docs" / "generated" / "observed_current_plot_list.md"
@@ -254,13 +257,25 @@ def _desi_occupancy_sky_support() -> dict[str, Any]:
 
 
 def _write_inventory(command: str) -> dict[str, Any]:
-    payload = build_inventory(REPO_ROOT, command=command)
+    del command
+    payload = build_inventory(
+        REPO_ROOT,
+        command=INVENTORY_GENERATING_COMMAND,
+        artifact_path=_repo_relative(INVENTORY_JSON),
+    )
     INVENTORY_JSON.parent.mkdir(parents=True, exist_ok=True)
     INVENTORY_JSON.write_text(
         json.dumps(payload, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
     INVENTORY_MD.write_text(render_inventory_markdown(payload), encoding="utf-8")
+    INVENTORY_GAP_MD.write_text(
+        render_inventory_gap_report(
+            payload,
+            artifact_path=_repo_relative(INVENTORY_GAP_MD),
+        ),
+        encoding="utf-8",
+    )
     return payload
 
 

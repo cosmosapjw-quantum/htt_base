@@ -29,10 +29,40 @@ def test_observational_inventory_finds_obs_bundle_and_compact_desi() -> None:
     assert rows["planck.pr3.tt_full"]["claim_ceiling"] == "diagnostic_only"
     assert "compact.desi.bgs_any_ngc" in rows
     assert rows["compact.desi.bgs_any_ngc"]["schema"]["row_count_hint"] == 4081227
+    assert rows["compact.desi.bgs_any_ngc"]["data_role"] == "raw_catalog"
+    assert rows["compact.desi.bgs_any_ngc"]["data_readiness_level"] == "D1"
+    assert rows["compact.desi.bgs_any_ngc"]["allowed_use"] == "diagnostic_plot_only"
+    assert "random_or_mask_catalog_required_for_spectroscopic_dipole" in rows[
+        "compact.desi.bgs_any_ngc"
+    ]["spectroscopic_dipole_blockers"]
+    assert {"covariance_required", "matched_null_mocks_required"} <= set(
+        rows["compact.desi.bgs_any_ngc"]["matched_mock_promotion_blockers"]
+    )
     assert "compact.cf4.query_batch" in rows
+    assert rows["compact.cf4.query_batch"]["data_role"] == "raw_catalog"
     assert rows["compact.cf4.query_batch"]["schema"]["row_count_hint"] == 163760
     assert rows["act.dr6.tt"]["present"] is False
+    assert rows["act.dr6.tt"]["data_readiness_level"] == "blocked"
+    assert rows["act.dr6.tt"]["allowed_use"] == "blocked_for_inference"
     assert rows["act.dr6.tt"]["claim_ceiling"] == "blocked"
+    assert rows["planck.temp_mask.nside16"]["data_role"] == "mask"
+    assert rows["planck.temp_mask.nside16"]["data_readiness_level"] == "D0"
+
+
+def test_data_binding_gap_report_is_claim_firewalled() -> None:
+    module = _load_script("inventory_observational_data")
+    report = module.render_gap_report(module.build_inventory(REPO_ROOT, command="test"))
+
+    assert "Rows with D0/D1 readiness remain diagnostic-only" in report
+    assert "random_or_mask_catalog_required_for_spectroscopic_dipole" in report
+    for phrase in [
+        "Bianchi geometry " + "detected",
+        "Bianchi family " + "identified",
+        "model-independent truth " + "certificate",
+        "MIO " + "posterior",
+        "external transfer validated as " + "native",
+    ]:
+        assert phrase not in report
 
 
 def test_observed_figure_specs_are_claim_gated_and_repo_local() -> None:
@@ -46,11 +76,11 @@ def test_observed_figure_specs_are_claim_gated_and_repo_local() -> None:
     assert "fig_observed_longrun_jackknife_bootstrap.png" in names
     captions = "\n".join(spec.caption for spec in specs).lower()
     forbidden = [
-        "family identified",
-        "geometry detected",
-        "external transfer validated as native",
-        "mio posterior",
-        "truth certificate",
+        "family " + "identified",
+        "geometry " + "detected",
+        "external transfer validated as " + "native",
+        "mio " + "posterior",
+        "truth " + "certificate",
         "native low-ell solver output is used",
     ]
     for phrase in forbidden:

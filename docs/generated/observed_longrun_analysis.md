@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: none
 sky_support_status: sky_support_recorded
 null_mock_status: jackknife_bootstrap_diagnostic_no_pvalue
-config_hash: `sha256:fa096803d5b02e1f9e2d795b10ae358deaaa0863a7aa61acd1aa398b5fe3c170`
+config_hash: `sha256:6ef7c2e16c1aaedb43d54abe87ed3a762af06c2b95bdde76edde88d2ae79b683`
 input_hashes:
 - `workdir/compact_products/desi/BGS_ANY_NGC_clustering_extended.npz:sha256:ea52cb7e0bbfa3ef69db396dab4a68ee95b409d8e237451d74a924e4e3cca21d`
 - `workdir/compact_products/desi/BGS_ANY_SGC_clustering_extended.npz:sha256:e6c858efb2b3fc22ce36443f1393772f62d2e714efbfefde76c1404386ffc05d`
@@ -21,7 +21,7 @@ caveats:
 - DESI directional support is recorded from compact catalog occupancy; CF4 support is volume-coordinate diagnostic.
 - DESI survey selection and CF4 reconstruction systematics remain diagnostic unless matched nulls and covariance are explicitly bound.
 generating_command: `scripts/make_observed_data_manuscript_figures.py`
-git_commit_or_worktree_state: `6649e04+dirty`
+git_commit_or_worktree_state: `765fd97+dirty`
 artifact_path: docs/generated/observed_longrun_analysis.json
 
 ## Summary
