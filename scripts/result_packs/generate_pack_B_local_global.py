@@ -417,7 +417,16 @@ def build_result_pack_payload(
         "git_commit_or_worktree_state": worktree_state or _git_state(root),
         "dependencies": list(DEPENDENCIES),
         "dependency_status": dependency_status,
-        "global_tilt_claim_tier_ceiling": "conditional",
+        "observed_inference_status": "blocked_observed_inference",
+        "global_tilt_claim_tier_ceiling": "blocked",
+        "synthetic_design_ceiling": "conditional",
+        "observed_inference_unblock_requirements": [
+            "observed_cross_probe_covariance_bound",
+            "observed_amplitude_matched_null_bound",
+            "observed_response_rank_audit_bound",
+            "observed_ppc_passed",
+            "observed_loocv_run",
+        ],
         "gate_summary": gate_summary,
         "rank_scenarios": rank_scenarios,
         "legacy_ver2_context": legacy_ver2_context,
@@ -471,7 +480,7 @@ def build_result_pack_payload(
                 "directional_section": "PR-100 MIO directional coherence metadata",
                 "pushforward_section": "PR-066 HTT pushforward context",
                 "legacy_ver2_context": "hashed_prior_context_only",
-                "claim_tier_ceiling": "conditional",
+                "claim_tier_ceiling": "blocked_observed_conditional_synthetic",
             },
         },
     }
@@ -514,10 +523,15 @@ def render_markdown(payload: dict[str, Any]) -> str:
                 "gate surfaces for local/global discrimination. It composes report "
                 "metadata only. MIO directional and depth diagnostics are a "
                 "diagnostic cross-check, not HTT evidence, and legacy VER2 Pack B "
-                "rows remain prior context."
+                "rows remain prior context. Local/global wording is admissible only "
+                "for the synthetic design ceiling; observed inference is blocked "
+                "until cross-probe covariance, amplitude-matched null, response "
+                "rank, PPC, and LOOCV payloads are bound."
             ),
             "",
+            f"Observed inference status: {payload['observed_inference_status']}",
             f"Global tilt claim tier ceiling: {payload['global_tilt_claim_tier_ceiling']}",
+            f"Synthetic design ceiling: {payload['synthetic_design_ceiling']}",
             "",
             "## Gate Summary",
             "",

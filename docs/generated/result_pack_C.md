@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: none
 config_hash: `sha256:525bd5a24375f05b2699af773dafe0ecebe4a0b7fd29a3f8180597e37d0dea2e`
 input_hashes:
-- scripts/result_packs/generate_pack_C_mio_certificates.py:sha256:130ed8f8e804a5dd0ea6a02818ea5f4fe8bc13697024b9b9e0a0f8d97e5a9609
+- scripts/result_packs/generate_pack_C_mio_certificates.py:sha256:1e1c7d4dc420978eb9b829cc93257fea671fc1363a36aa3725211c851db6818f
 - docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json:sha256:7526f2572f8d50c8d551d4da0312f2655001c8abe29fb559a173e9d01002ead3
 - docs/PR_DELTAS/pr-100.md:sha256:28b2f1bfa5e8a438a194946cd39eeaf5886afeb537ec58c7aec4f938beb72f69
 - docs/PR_DELTAS/pr-101.md:sha256:d6e78b134d34f3bc88a8ac384afe38e6be968f514c592fec1af50d97f5ba690a
@@ -23,13 +23,34 @@ input_hashes:
 sky_support_status: not_directional
 null_mock_status: summarized_from_mio_certificate_status_metadata
 generating_command: `python scripts/result_packs/generate_pack_C_mio_certificates.py`
-git_commit_or_worktree_state: `3225e56+dirty`
+git_commit_or_worktree_state: `33fcfba+dirty`
 
 ## Scope
 
 This COMMON diagnostic-only pack gathers MIO observatory certificate/status surfaces by reference. It does not rank models, does not modify HTT-owned evidence traces, and does not promote legacy VER2 certificate rows.
 
 Diagnostic-only public readiness is explicit.
+
+## Gate Separation
+
+report_gates describe report-generation only; a clean report render does not imply any science gate is met.
+
+| Report Gate | Status |
+| --- | --- |
+| markdown rendered | pass |
+| manifest metadata present | pass |
+| mio certificate statuses gathered | pass |
+| dependencies gathered | pass |
+
+Science gates remain separate from report gates:
+
+| Science Gate | Status |
+| --- | --- |
+| covariance null complete | not_bound |
+| model ranking allowed | forbidden |
+| native morphology atlas bound | not_bound |
+| predictive adequacy ppc | not_bound |
+| loocv status | not_run |
 
 ## Certificate Rows
 
@@ -107,14 +128,14 @@ Source `docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json` is hash
     "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "3225e56+dirty",
+  "code_version": "33fcfba+dirty",
   "config_hash": "sha256:525bd5a24375f05b2699af773dafe0ecebe4a0b7fd29a3f8180597e37d0dea2e",
   "created_by": "scripts/result_packs/generate_pack_C_mio_certificates.py",
   "failed_gates": [],
   "git_commit": null,
   "implementation_scope": "common",
   "input_hashes": [
-    "scripts/result_packs/generate_pack_C_mio_certificates.py:sha256:130ed8f8e804a5dd0ea6a02818ea5f4fe8bc13697024b9b9e0a0f8d97e5a9609",
+    "scripts/result_packs/generate_pack_C_mio_certificates.py:sha256:1e1c7d4dc420978eb9b829cc93257fea671fc1363a36aa3725211c851db6818f",
     "docs/ver2_upgrade/generated/result_pack_D_mio_certificates.json:sha256:7526f2572f8d50c8d551d4da0312f2655001c8abe29fb559a173e9d01002ead3",
     "docs/PR_DELTAS/pr-100.md:sha256:28b2f1bfa5e8a438a194946cd39eeaf5886afeb537ec58c7aec4f938beb72f69",
     "docs/PR_DELTAS/pr-101.md:sha256:d6e78b134d34f3bc88a8ac384afe38e6be968f514c592fec1af50d97f5ba690a",

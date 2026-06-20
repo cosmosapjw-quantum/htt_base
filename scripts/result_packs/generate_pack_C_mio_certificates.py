@@ -383,6 +383,27 @@ def build_result_pack_payload(
         "dependency_status": dependency_status,
         "certificate_rows": certificate_rows,
         "status_scenarios": status_scenarios,
+        "report_gates": {
+            "markdown_rendered": "pass",
+            "manifest_metadata_present": "pass",
+            "mio_certificate_statuses_gathered": "pass",
+            "dependencies_gathered": (
+                "pass"
+                if all(item["implemented"] for item in dependency_status.values())
+                else "fail"
+            ),
+        },
+        "science_gates": {
+            "covariance_null_complete": "not_bound",
+            "model_ranking_allowed": "forbidden",
+            "native_morphology_atlas_bound": "not_bound",
+            "predictive_adequacy_ppc": "not_bound",
+            "loocv_status": "not_run",
+        },
+        "gate_separation_note": (
+            "report_gates describe report-generation only; a clean report render "
+            "does not imply any science gate is met."
+        ),
         "legacy_ver2_context": legacy_ver2_context,
         "claim_boundaries": {
             "certificate_ranking_status": "forbidden_not_ranked",
@@ -475,6 +496,28 @@ def render_markdown(payload: dict[str, Any]) -> str:
             ),
             "",
             "Diagnostic-only public readiness is explicit.",
+            "",
+            "## Gate Separation",
+            "",
+            payload["gate_separation_note"],
+            "",
+        ]
+    )
+    lines.extend(
+        _table(
+            ("Report Gate", "Status"),
+            [(name.replace("_", " "), status) for name, status in payload["report_gates"].items()],
+        )
+    )
+    lines.extend(["", "Science gates remain separate from report gates:", ""])
+    lines.extend(
+        _table(
+            ("Science Gate", "Status"),
+            [(name.replace("_", " "), status) for name, status in payload["science_gates"].items()],
+        )
+    )
+    lines.extend(
+        [
             "",
             "## Certificate Rows",
             "",

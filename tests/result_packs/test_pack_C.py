@@ -81,6 +81,14 @@ def test_pack_c_payload_gathers_mio_surfaces_with_manifest():
     _assert_no_forbidden_language(json.dumps(payload, sort_keys=True))
 
 
+def test_pack_c_separates_report_and_science_gates():
+    payload = _payload()
+
+    assert payload["report_gates"]["markdown_rendered"] == "pass"
+    assert payload["science_gates"]["covariance_null_complete"] in {"fail", "not_bound"}
+    assert payload["science_gates"]["model_ranking_allowed"] == "forbidden"
+
+
 def test_pack_c_status_scenarios_make_diagnostic_and_production_grade_explicit():
     payload = _payload()
     scenarios = {row["scenario_id"]: row for row in payload["status_scenarios"]}

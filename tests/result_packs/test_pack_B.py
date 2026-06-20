@@ -58,7 +58,9 @@ def test_pack_b_payload_includes_required_surfaces_and_manifest():
         manifest_path="memory://result_pack_B.md",
     ) == ()
 
-    assert payload["global_tilt_claim_tier_ceiling"] == "conditional"
+    assert payload["global_tilt_claim_tier_ceiling"] == "blocked"
+    assert payload["observed_inference_status"] == "blocked_observed_inference"
+    assert payload["synthetic_design_ceiling"] == "conditional"
     assert payload["dependency_status"]["PR-066"]["implemented"] is True
     assert payload["dependency_status"]["PR-100"]["implemented"] is True
     assert payload["dependency_status"]["PR-101"]["implemented"] is True
@@ -123,7 +125,9 @@ def test_pack_b_markdown_is_conditional_at_most_and_caveated():
     assert "# Result Pack B - Local Global Discrimination" in markdown
     assert "owner: COMMON" in markdown
     assert "claim_tier: diagnostic_only" in markdown
-    assert "Global tilt claim tier ceiling: conditional" in markdown
+    assert "Observed inference status: blocked_observed_inference" in markdown
+    assert "Global tilt claim tier ceiling: blocked" in markdown
+    assert "Synthetic design ceiling: conditional" in markdown
     assert "rank audit" in markdown
     assert "local/systematic null FPR" in markdown
     assert "G_F depth gap" in markdown
@@ -134,6 +138,14 @@ def test_pack_b_markdown_is_conditional_at_most_and_caveated():
     assert "production_candidate" not in markdown
     assert "production-grade" not in markdown
     _assert_no_forbidden_language(markdown)
+
+
+def test_pack_b_observed_inference_is_blocked_until_observed_payloads_exist():
+    payload = _payload()
+
+    assert payload["observed_inference_status"] == "blocked_observed_inference"
+    assert payload["global_tilt_claim_tier_ceiling"] == "blocked"
+    assert payload["synthetic_design_ceiling"] == "conditional"
 
 
 def test_pack_b_rank_deficient_scenarios_block_candidate_language():
