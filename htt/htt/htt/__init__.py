@@ -15,6 +15,8 @@ if _SRC.is_dir():
     if _src_str not in sys.path:
         sys.path.insert(0, _src_str)
 
+from . import rest_frame
+
 __version__ = "0.1.0"
 __all__ = [
     "core",
@@ -27,4 +29,5 @@ __all__ = [
     "zoa",
     "direction",
     "statistics",
+    "rest_frame",
 ]

@@ -62,6 +62,7 @@ for name in [
     "htt.direction",
     "htt.obsstat",
     "htt.obsstat.biposh_features",
+    "htt.obsstat.catalogs.cf4",
     "htt.obsstat.morphology",
     "htt.obsstat.null_ensembles",
     "htt.obsstat.observable_vector",
@@ -71,6 +72,8 @@ for name in [
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
     "htt.statistics.mes_template_bound",
+    "htt.rest_frame",
+    "htt.rest_frame.cf4_likelihood",
     "htt.zoa",
     "htt.zoa.axis_promotion",
     "htt.mio.formalism.isotropy_gap",
@@ -135,6 +138,7 @@ for name in [
     "htt.nulls.survey_axis_coherence",
     "htt.obsstat",
     "htt.obsstat.biposh_features",
+    "htt.obsstat.catalogs.cf4",
     "htt.obsstat.morphology",
     "htt.obsstat.null_ensembles",
     "htt.obsstat.observable_vector",
@@ -144,6 +148,8 @@ for name in [
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
     "htt.statistics.mes_template_bound",
+    "htt.rest_frame",
+    "htt.rest_frame.cf4_likelihood",
     "htt.zoa",
     "htt.zoa.axis_promotion",
     "htt.integration.to_mio",
@@ -198,6 +204,7 @@ for name in [
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
     "htt.statistics.mes_template_bound",
+    "htt.rest_frame.cf4_likelihood",
     "htt.nulls.local_boost_depth_null",
     "htt.nulls.selection_response_depth",
     "htt.nulls.survey_axis_coherence",
@@ -232,6 +239,7 @@ assert "direction" in namespace
 assert "departure" in namespace
 assert "statistics" in namespace
 assert "zoa" in namespace
+assert "rest_frame" in namespace
 import htt.departure.response_overlap
 import htt.departure.local_global_mixture
 import htt.departure.posterior_pushforward
@@ -239,6 +247,7 @@ import htt.direction
 import htt.statistics.mes_cov_bound
 import htt.statistics.mes_information_gain
 import htt.statistics.mes_template_bound
+import htt.rest_frame.cf4_likelihood
 import htt.zoa.axis_promotion
 """
 

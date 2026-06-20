@@ -9,6 +9,7 @@ nested public ``htt`` package.
 from __future__ import annotations
 
 import sys
+import importlib as _importlib
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parent
@@ -38,4 +39,14 @@ __all__ = [
     "zoa",
     "direction",
     "statistics",
+    "rest_frame",
 ]
+
+
+def __getattr__(name: str):
+    """Lazy compatibility export for nested HTT subpackages."""
+    if name in __all__:
+        module = _importlib.import_module(f"{__name__}.{name}")
+        globals()[name] = module
+        return module
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

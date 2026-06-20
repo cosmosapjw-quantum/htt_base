@@ -54,10 +54,18 @@ from .template_fit import (
     TemplateFitDiagnostic,
     fit_template_diagnostic,
 )
+from .catalogs.cf4 import (
+    Cf4Catalog,
+    Cf4CatalogMetadata,
+    build_cf4_catalog_from_mapping,
+    load_cf4_catalog_npz,
+)
 
 for _submodule in (
     "alm_conventions",
     "biposh_features",
+    "catalogs",
+    "catalogs.cf4",
     "morphology",
     "null_ensembles",
     "observable_vector",
@@ -73,6 +81,8 @@ __all__ = [
     "AlmConvention",
     "BiPoSHConventionMetadata",
     "BiPoSHFeatureSummary",
+    "Cf4Catalog",
+    "Cf4CatalogMetadata",
     "CovarianceAssumption",
     "DiagnosticMorphologyAxis",
     "LowEllNullCalibration",
@@ -88,12 +98,14 @@ __all__ = [
     "TemplateFitDiagnostic",
     "build_alm_feature",
     "build_biposh_feature_payload",
+    "build_cf4_catalog_from_mapping",
     "build_null_ensemble_feature_payload",
     "build_observable_vector",
     "compute_cl_from_alm",
     "canonical_spin2_alm_convention",
     "canonical_temperature_alm_convention",
     "fit_template_diagnostic",
+    "load_cf4_catalog_npz",
     "obsstat_manifest",
     "summarize_morphology_axes",
     "summarize_lowell_scalars",
