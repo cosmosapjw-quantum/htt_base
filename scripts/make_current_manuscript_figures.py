@@ -54,6 +54,7 @@ from mio.formalism.isotropy_gap import (  # noqa: E402
     DepthBinMetadata,
     build_depth_bin_f_record,
     build_isotropy_gap,
+    classify_gf_evolution_model,
 )
 from mio.formalism.normalized_score import (  # noqa: E402
     build_comparator_multiverse_summary,
@@ -655,7 +656,13 @@ def _build_gf_matched_null_forecast_payload(
             "as blocked rather than retuned"
         ),
     )
-    return report.as_payload()
+    payload = report.as_payload()
+    payload["gf_evolution_model"] = classify_gf_evolution_model(
+        model_kind="toy_beta_z_law",
+        selection_covariance_status="not_bound",
+        boltzmann_or_gr_status="not_bound",
+    )
+    return payload
 
 
 def _render_gf_forecast_report(payload: dict[str, object]) -> str:
@@ -693,6 +700,19 @@ def _render_gf_forecast_report(payload: dict[str, object]) -> str:
             f"- forecast_source_kind: `{payload['forecast_source_kind']}`",
             f"- forecast_source_description: {payload['forecast_source_description']}",
             f"- FPR statement: {statement['wording']}",
+            "",
+            "## G_F evolution model gate",
+            "",
+            f"- model_kind: `{payload['gf_evolution_model']['model_kind']}`",
+            f"- claim_tier: `{payload['gf_evolution_model']['claim_tier']}`",
+            (
+                "- local_global_discriminator_allowed: "
+                f"`{payload['gf_evolution_model']['local_global_discriminator_allowed']}`"
+            ),
+            (
+                "- blocked_reasons: "
+                f"{', '.join(payload['gf_evolution_model']['blocked_reasons']) or 'none'}"
+            ),
             "",
         ]
     )

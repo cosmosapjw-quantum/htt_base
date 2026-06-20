@@ -17,7 +17,7 @@ caveats:
 - Forecast-only matched-null diagnostic.
 - Does not promote observed-data evidence, global-tilt wording, native solver validation, geometry detection, or family identification.
 generating_command: python scripts/make_current_manuscript_figures.py
-git_commit_or_worktree_state: 6cc5518+dirty
+git_commit_or_worktree_state: 76873f0+dirty
 artifact_path: docs/generated/gf_matched_null_forecast_report.json
 
 ## Status
@@ -30,3 +30,10 @@ artifact_path: docs/generated/gf_matched_null_forecast_report.json
 - forecast_source_kind: `deterministic_current_code_fixture`
 - forecast_source_description: Deterministic current-code synthetic demonstration fixture; not production mocks and not observed-data evidence.
 - FPR statement: 91/192 forecast false-positive crossings; Wilson upper bound 0.510035 at z=1.
+
+## G_F evolution model gate
+
+- model_kind: `toy_beta_z_law`
+- claim_tier: `blocked`
+- local_global_discriminator_allowed: `False`
+- blocked_reasons: toy_evolution_law, evolution_equation_not_bound, redshift_bin_covariance_or_selection_not_bound

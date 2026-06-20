@@ -966,6 +966,55 @@ def build_isotropy_gap(
     )
 
 
+_GF_EVOLUTION_BOUND_TOKENS = frozenset({"bound", "explicit"})
+
+
+def classify_gf_evolution_model(
+    *,
+    model_kind: str,
+    selection_covariance_status: str,
+    boltzmann_or_gr_status: str,
+) -> dict[str, Any]:
+    """Classify a G_F evolution curve as a registered model or a blocked toy.
+
+    A G_F evolution curve may be shown as a registered phenomenological model
+    only if its evolution equation, redshift-bin covariance, and selection
+    transfer status are explicit. A toy beta(z) law, or any unbound evolution or
+    selection status, remains a blocked toy curve and is not a local/global
+    discriminator.
+    """
+
+    kind = str(model_kind).strip().lower()
+    selection = str(selection_covariance_status).strip().lower()
+    boltzmann = str(boltzmann_or_gr_status).strip().lower()
+
+    blocked_reasons: list[str] = []
+    if "toy" in kind:
+        blocked_reasons.append("toy_evolution_law")
+    if boltzmann not in _GF_EVOLUTION_BOUND_TOKENS:
+        blocked_reasons.append("evolution_equation_not_bound")
+    if selection not in _GF_EVOLUTION_BOUND_TOKENS:
+        blocked_reasons.append("redshift_bin_covariance_or_selection_not_bound")
+
+    allowed = not blocked_reasons
+    return {
+        "owner": "MIO",
+        "implementation_scope": "mio",
+        "model_kind": model_kind,
+        "selection_covariance_status": selection_covariance_status,
+        "boltzmann_or_gr_status": boltzmann_or_gr_status,
+        "claim_tier": "blocked" if blocked_reasons else "registered_phenomenological",
+        "local_global_discriminator_allowed": allowed,
+        "blocked_reasons": blocked_reasons,
+        "caveats": [
+            "G_F evolution is a blocked toy curve unless registered",
+            "a registered model requires explicit evolution equation, "
+            "redshift-bin covariance, and selection transfer status",
+            "G_F evolution is not a local/global discriminator while blocked",
+        ],
+    }
+
+
 __all__ = [
     "DEFAULT_DEPTH_BIN_CAVEAT",
     "DEFAULT_G_CAVEAT",
@@ -974,4 +1023,5 @@ __all__ = [
     "IsotropyGap",
     "build_depth_bin_f_record",
     "build_isotropy_gap",
+    "classify_gf_evolution_model",
 ]
