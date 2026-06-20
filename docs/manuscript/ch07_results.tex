@@ -1354,6 +1354,13 @@ means the single-$\beta$ likelihood or covariance model fails the
 registered predictive-adequacy gate for that channel; the $\rho$
 sweep (Section~\ref{sec:rho-sweep} of Chapter~\ref{ch:discussion})
 quantifies how the configured likelihood responds to that tension.
+Because channel~(b) fails the registered PPC criterion and the
+leave-one-out cross-validation has not been run, no channel~(b)
+evidence claim is admissible until a later model comparison fixes
+it; the required next models are a single-$\beta$ fit,
+survey-specific amplitudes, a mixture/outlier model, and a
+systematic-response model.  This gate is recorded in
+\texttt{docs/generated/predictive\_adequacy\_report.json}.
 
 The combined PPC $p = 0.08$ is consistent, pulled low by
 channel~(b) alone.  The BI~(tilt) PPC is statistically

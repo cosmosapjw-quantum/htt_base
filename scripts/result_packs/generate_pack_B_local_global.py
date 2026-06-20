@@ -30,6 +30,7 @@ INPUT_FILES = (
     "docs/PR_DELTAS/pr-101.md",
     "docs/generated/gf_matched_null_forecast_report.json",
     "docs/generated/amplitude_matched_contamination_report.json",
+    "docs/generated/predictive_adequacy_report.json",
     "htt/htt/htt/departure/response_overlap.py",
     "htt/htt/htt/infer/null_competition.py",
     "htt/htt/htt/nulls/local_boost_depth_null.py",
@@ -425,6 +426,44 @@ def _load_contamination_null(root: Path) -> dict[str, Any]:
     return summary
 
 
+def _load_predictive_adequacy(root: Path) -> dict[str, Any]:
+    """Bind the channel-(b) predictive adequacy gate (REV-R098).
+
+    A failed PPC or unrun LOOCV blocks any channel evidence claim. Pack B
+    consumes the stable analysis fields only.
+    """
+
+    path = root / "docs" / "generated" / "predictive_adequacy_report.json"
+    summary: dict[str, Any] = {
+        "report_ref": "docs/generated/predictive_adequacy_report.json",
+        "adequacy_status": "not_bound",
+        "evidence_claim_allowed": False,
+        "ppc_failed": None,
+        "loocv_status": None,
+        "blocked_reasons": [],
+        "required_next_models": [],
+    }
+    if not path.exists():
+        return summary
+    try:
+        report = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return summary
+    if not isinstance(report, dict):
+        return summary
+    summary.update(
+        {
+            "adequacy_status": str(report.get("adequacy_status", "not_bound")),
+            "evidence_claim_allowed": bool(report.get("evidence_claim_allowed", False)),
+            "ppc_failed": report.get("ppc_failed"),
+            "loocv_status": report.get("loocv_status"),
+            "blocked_reasons": list(report.get("blocked_reasons", [])),
+            "required_next_models": list(report.get("required_next_models", [])),
+        }
+    )
+    return summary
+
+
 def build_result_pack_payload(
     *,
     repo_root: Path | str = Path("."),
@@ -447,6 +486,7 @@ def build_result_pack_payload(
     gate_summary = _gate_summary()
     rank_scenarios = _rank_scenarios()
     contamination = _load_contamination_null(root)
+    predictive_adequacy = _load_predictive_adequacy(root)
     payload = {
         "artifact_id": ARTIFACT_ID,
         "artifact_path": ARTIFACT_PATH,
@@ -471,6 +511,8 @@ def build_result_pack_payload(
         "synthetic_design_ceiling": "conditional",
         "source_identification_status": contamination["source_identification_status"],
         "amplitude_matched_contamination": contamination,
+        "predictive_adequacy_status": predictive_adequacy["adequacy_status"],
+        "predictive_adequacy": predictive_adequacy,
         "observed_inference_unblock_requirements": [
             "observed_cross_probe_covariance_bound",
             "observed_amplitude_matched_null_bound",
@@ -595,6 +637,19 @@ def render_markdown(payload: dict[str, Any]) -> str:
                 "source identification; no positive headline Bayes factor may be "
                 "drawn. See "
                 f"`{payload['amplitude_matched_contamination']['report_ref']}`."
+            ),
+            "",
+            "## Predictive adequacy (channel b)",
+            "",
+            (
+                "Adequacy status: "
+                f"{payload['predictive_adequacy']['adequacy_status']}"
+                f" (blocked reasons: {', '.join(payload['predictive_adequacy']['blocked_reasons']) or 'none'}). "
+                "Channel (b) fails the registered PPC criterion and LOOCV has not "
+                "run, so no channel evidence claim is allowed until a later model "
+                "comparison fixes it. Required next models: "
+                f"{', '.join(payload['predictive_adequacy']['required_next_models']) or 'none'}. "
+                f"See `{payload['predictive_adequacy']['report_ref']}`."
             ),
             "",
             "## Gate Summary",

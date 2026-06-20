@@ -1,0 +1,33 @@
+{
+  "adequacy_status": "failed",
+  "blocked_reasons": [
+    "ppc_failure",
+    "loocv_not_run"
+  ],
+  "caveats": [
+    "a failed PPC or unrun LOOCV blocks any channel evidence claim",
+    "blocked status holds until a later model comparison fixes it",
+    "no native low-ell solver output is introduced"
+  ],
+  "claim_tier": "blocked",
+  "config_hash": "sha256:55e61191cf6687981bf5e797a660890dbc00831f8993e21a454c6ccc22551cc3",
+  "evidence_claim_allowed": false,
+  "generating_command": "venv/bin/python -m htt.infer.predictive_adequacy",
+  "implementation_scope": "htt",
+  "input_hashes": [
+    "docs/generated/result_pack_B.md:channel_b_ppc"
+  ],
+  "loocv_status": "not_run",
+  "owner": "HTT",
+  "ppc_failed": true,
+  "ppc_p_value": 0.012,
+  "ppc_threshold": 0.05,
+  "required_next_models": [
+    "single_beta",
+    "survey_specific_amplitudes",
+    "mixture_outlier",
+    "systematic_response"
+  ],
+  "schema_version": "htt.predictive_adequacy.v1",
+  "worktree_state": "predictive_adequacy_fixture"
+}
