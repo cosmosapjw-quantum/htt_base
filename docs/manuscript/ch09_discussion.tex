@@ -583,6 +583,18 @@ $\Sigma^2$, because the curvature coupling leaks power
 from $\ell = 2$ to higher multipoles
 (Section~\ref{sec:bviih-cascade}).
 
+The scalar $D_2$/$D_3$ likelihoods used above are central scalar
+features and cannot, on their own, test a Bianchi signal.  A
+genuine low-$\ell$ test must take one of two branches: a
+mean-template branch (deterministic harmonic-space template with
+orientation marginalization or a noncentral statistic) or a
+covariance/BiPoSH branch (full anisotropic covariance).  The
+branch classifier
+\texttt{obsstat.lowell\_likelihood\_branches.classify\_lowell\_likelihood}
+blocks a central scalar $\chi^2$ from standing in for either, and
+the native low-$\ell$ atlas remains the prerequisite for closing
+both branches.
+
 
 \subsection{Linearity and the FLRW recovery}
 \label{sec:disc-linearity}

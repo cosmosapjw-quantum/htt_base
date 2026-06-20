@@ -311,6 +311,20 @@ $x_h \sim 0.2$ for the VII$_h$ spiral mode.  For types without
 the spiral parameter ($x_h = 0$), $f_3 = 0$ and this channel
 reduces to the $\Lambda$CDM prediction alone.
 
+\paragraph{Low-$\ell$ likelihood branch caveat.}
+The $D_2$/$D_3$ scalar $\chi^2$ statistics above are central
+scalar features, which are not sufficient on their own to test a
+Bianchi signal.  Two distinct likelihood branches are admissible:
+a \emph{mean-template} branch, in which Bianchi enters as a
+deterministic harmonic-space template and requires either
+orientation marginalization or a noncentral statistic; and a
+\emph{covariance/BiPoSH} branch, in which Bianchi enters as a
+stochastic anisotropic covariance and requires the full anisotropic
+covariance.  A central scalar $\chi^2$ alone closes neither branch,
+as enforced by
+\texttt{obsstat.lowell\_likelihood\_branches.classify\_lowell\_likelihood}
+(see the low-$\ell$ likelihood branch report).
+
 
 % ============================================================
 \section{Scenario-dependent bounds}
