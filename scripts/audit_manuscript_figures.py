@@ -96,6 +96,17 @@ FAMILY_IDENTIFICATION_NEGATIONS = (
     "family identification is blocked",
     "no family identification",
 )
+# A file that records the generated source it was derived from (with a content
+# hash) carries generated counts, not hand-typed manual status numbers, so it is
+# exempt from the manual-status-number scan. The marker must name a source and a
+# sha256 digest on the same line, which a hand-written prose count cannot fake.
+GENERATED_SOURCE_PROVENANCE_RE = re.compile(
+    r"generated from\b[^\n]*sha256:", re.IGNORECASE
+)
+
+
+def _has_generated_source_provenance(text: str) -> bool:
+    return bool(GENERATED_SOURCE_PROVENANCE_RE.search(text))
 
 
 @dataclass(frozen=True)
@@ -246,9 +257,12 @@ def _resolve_candidates(
 
 
 def _manual_status_issues(tex_file: Path, repo_root: Path) -> tuple[ManuscriptTextIssue, ...]:
+    text = tex_file.read_text(encoding="utf-8", errors="ignore")
+    if _has_generated_source_provenance(text):
+        return ()
     issues: list[ManuscriptTextIssue] = []
     for line_number, line in enumerate(
-        tex_file.read_text(encoding="utf-8", errors="ignore").splitlines(),
+        text.splitlines(),
         1,
     ):
         stripped = _strip_tex_comment(line).strip()
