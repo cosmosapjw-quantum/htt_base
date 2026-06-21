@@ -384,3 +384,113 @@ native-transfer outputs, and not geometry or family-identification
 support.
 
 \input{generated/theorem_extension_appendix_figures}
+
+\subsection{EGS-type low-$\ell$ diagnostic theorems (NT-A1, NT-A3,
+NT-B3)}\label{sec:egs-lowell-theorems}
+
+The following three conditional theorems carry the
+Ehlers--Geren--Sachs (EGS) chain onto the report's diagnostic
+variables $F$, $Q$, $\Pi$, and the depth gap $G_F$.  Each is a
+structural or limiting statement under explicitly stated
+hypotheses---not a detection---and each algebraic step, limit, and
+variance propagation was verified symbolically with the Wolfram
+Engine; the machine-checked proof record is
+\texttt{docs/generated/egs\_lowell\_theorem\_proofs.json}.  We write
+the temperature-quadrupole magnitude $a_2$, the shear scalar
+$\Sigma$, the quadrupole power $D_2\propto a_2^2$, the algebraic
+ceiling $x_{\max}$, and the shear filling $F_{\rm shear} =
+\Sigma^2/x_{\max}$.
+
+\begin{theorem}[Quadrupole--filling EGS identity]\label{thm:nt-a1}
+Assume the free-streaming linear $\ell=2$ closure $a_2 = \kappa\,
+\Sigma$ with $\kappa>0$ constant (the Ehlers--Treciokas--Matravers
+coefficient $\kappa = 4/21$), $F_{\rm shear} = \Sigma^2/x_{\max}$,
+and $D_2 = c_D\,a_2^2$ with $c_D>0$, and that the tilt rapidity
+enters the dipole $a_1$ only.  Then
+\begin{equation}
+F_{\rm shear} = \frac{a_2^2}{\kappa^2\,x_{\max}}
+  = \frac{D_2}{c_D\,\kappa^2\,x_{\max}} \;\propto\; D_2,
+\end{equation}
+so $F_{\rm shear}\to 0$ as $D_2\to 0$ (the EGS limit: an isotropic
+CMB forces zero shear-filling), and $\partial F_{\rm shear}/\partial
+\beta = 0$ (the tilt sector is invisible to the shear-filling).
+\end{theorem}
+
+\noindent\emph{Proof.} Substitute $\Sigma = a_2/\kappa$ into $F_{\rm
+shear}=\Sigma^2/x_{\max}$ and $a_2=\sqrt{D_2/c_D}$; the limit and
+the $\beta$-derivative are immediate.  The $\ell=2$ projection that
+licenses the closure rests on the sphere averages $\langle
+n_a n_b\rangle = \tfrac13\delta_{ab}$ (Wolfram-verified).
+Conditional on the free-streaming linear closure. $\square$
+
+\begin{theorem}[Cosmic-variance Cram\'er--Rao floor on
+$F_{\rm shear}$]\label{thm:nt-a3}
+Under Theorem~\ref{thm:nt-a1}, $F_{\rm shear}$ is linear in the
+quadrupole power $C_2$.  With the single-sky cosmic variance
+$\mathrm{Var}(C_2) = 2\,C_2^2/(2\ell+1)$ ($\chi^2$ with $2\ell+1$
+degrees of freedom),
+\begin{equation}
+\frac{\sigma(F_{\rm shear})}{F_{\rm shear}}
+  \;\ge\; \sqrt{\frac{2}{2\ell+1}}
+  \;\xrightarrow{\ \ell=2\ }\; \sqrt{\tfrac{2}{5}} \approx 0.632 .
+\end{equation}
+Hence the shear-filling fraction cannot be measured to better than
+$\sim 63\%$ fractional precision from a single-sky quadrupole.
+\end{theorem}
+
+\noindent\emph{Proof.} Error propagation $\mathrm{Var}(F_{\rm
+shear}) = (\partial F_{\rm shear}/\partial C_2)^2\,\mathrm{Var}(C_2)
+= \tfrac{2}{2\ell+1}\,F_{\rm shear}^2$; take the square root and set
+$\ell=2$ (Wolfram-verified). $\square$
+
+\begin{theorem}[Depth-transport EGS limit for
+$G_F$]\label{thm:nt-b3}
+Write the depth-resolved filling additively, $F(z) = F_{\rm
+shear}(z) + F_{\rm tilt}(z)$, and the depth gap $G_F(z) =
+F(z)/F(z_{\rm ref})$.  For a depth-steady shear with no tilt,
+$G_F(z)\equiv 1$ (the EGS depth limit: no depth gap); a
+depth-evolving tilt imprints a nonzero $\mathrm{d}G_F/\mathrm{d}z$.
+\end{theorem}
+
+\noindent\emph{Proof.} With $F_{\rm tilt}\equiv 0$ and $F_{\rm
+shear}$ constant in $z$, $G_F = F_{\rm shear}/F_{\rm shear} = 1$ and
+$\mathrm{d}G_F/\mathrm{d}z = 0$; a power-law tilt $F_{\rm tilt} = c\,
+z^{q}$ gives $\mathrm{d}G_F/\mathrm{d}z = c\,q\,z^{q-1}/(F_{\rm
+shear} + c\,z_{\rm ref}^{q}) \neq 0$ (Wolfram-verified).
+Conditional on the additive decomposition. $\square$
+
+These statements are diagnostic-only program theorems: they do not
+constitute HTT evidence, MIO certificates, native low-$\ell$ solver
+output, geometry-detection, or Bianchi family-ID, and the closure
+coefficient $\kappa$ and the observational mapping to the measured
+Planck $D_2$ remain the stated conditioning.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.78\textwidth]{current/fig_theorem_nt_a1_quadrupole_filling}
+\caption{Theorem~\ref{thm:nt-a1} (NT-A1): the shear filling fraction
+is linear in the CMB quadrupole power $D_2$ and vanishes in the EGS
+limit $D_2\to 0$.  Diagnostic-only analytic illustration; not a
+detection.}
+\label{fig:theorem-nt-a1-quadrupole-filling}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.78\textwidth]{current/fig_theorem_nt_a3_cosmic_variance_floor}
+\caption{Theorem~\ref{thm:nt-a3} (NT-A3): the cosmic-variance
+fractional floor $\sqrt{2/(2\ell+1)}$ on $F_{\rm shear}$, equal to
+$\sqrt{2/5}\approx 0.632$ at the quadrupole.  Diagnostic-only;
+not a detection.}
+\label{fig:theorem-nt-a3-cosmic-variance-floor}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.78\textwidth]{current/fig_theorem_nt_b3_gf_transport}
+\caption{Theorem~\ref{thm:nt-b3} (NT-B3): the depth gap $G_F(z)$ is
+flat at unity for a depth-steady shear (EGS depth limit) and rises
+when a depth-evolving tilt is present.  Diagnostic-only; not a
+detection.}
+\label{fig:theorem-nt-b3-gf-transport}
+\end{figure}

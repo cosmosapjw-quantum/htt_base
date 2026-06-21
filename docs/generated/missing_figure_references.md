@@ -6,9 +6,9 @@ claim_tier: diagnostic_only
 transfer_source: none
 sky_support_status: not_directional
 null_mock_status: not_statistical
-config_hash: `fbad8b3c9fa1aaf9bb43d2b5b5389748b83cf7de54e004d9c3877012124ee635`
+config_hash: `9b06946425b4d54a9b53f0e0239744f6cffb2e3cabb565d02ce33fbc66405ecc`
 input_hashes:
-- docs/manuscript/appendices.tex: `3aaa77c82432e553cc6cb86285477f1eef788eefe2349391dc3a4da86d2bfa38`
+- docs/manuscript/appendices.tex: `b646a97ed3a502a9b65f4908851d4b899c44c16b943a7f973d241ab87a86e12f`
 - docs/manuscript/ch01_introduction.tex: `8dd31c56485d21ae8cddf32974cce08d096127b8c9380df3284fbb57ce55e73c`
 - docs/manuscript/ch02_dipole_anomaly.tex: `a3fc0f9ab720ab8e26aa85e7b8db1db18f3df5599f008f7af6bd0e0e857bfb8b`
 - docs/manuscript/ch03_framework.tex: `8422fdd3018cf20019d76d77d116298abebf9f15e4659c91c09c6fe7cb947f54`
@@ -49,7 +49,7 @@ caveats:
 - Missing or quarantined figure references block final manuscript freeze until explained.
 - Text audit findings are audit findings, not scientific results.
 generating_command: python scripts/audit_manuscript_figures.py
-git_commit: 1e2c330
+git_commit: a7d1785
 worktree_state: dirty
 output_path: docs/generated/missing_figure_references.md
 

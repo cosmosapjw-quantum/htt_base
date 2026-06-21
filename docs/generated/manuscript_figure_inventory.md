@@ -6,9 +6,9 @@ claim_tier: diagnostic_only
 transfer_source: none
 sky_support_status: not_directional
 null_mock_status: not_statistical
-config_hash: `fbad8b3c9fa1aaf9bb43d2b5b5389748b83cf7de54e004d9c3877012124ee635`
+config_hash: `9b06946425b4d54a9b53f0e0239744f6cffb2e3cabb565d02ce33fbc66405ecc`
 input_hashes:
-- docs/manuscript/appendices.tex: `3aaa77c82432e553cc6cb86285477f1eef788eefe2349391dc3a4da86d2bfa38`
+- docs/manuscript/appendices.tex: `b646a97ed3a502a9b65f4908851d4b899c44c16b943a7f973d241ab87a86e12f`
 - docs/manuscript/ch01_introduction.tex: `8dd31c56485d21ae8cddf32974cce08d096127b8c9380df3284fbb57ce55e73c`
 - docs/manuscript/ch02_dipole_anomaly.tex: `a3fc0f9ab720ab8e26aa85e7b8db1db18f3df5599f008f7af6bd0e0e857bfb8b`
 - docs/manuscript/ch03_framework.tex: `8422fdd3018cf20019d76d77d116298abebf9f15e4659c91c09c6fe7cb947f54`
@@ -49,7 +49,7 @@ caveats:
 - Missing or quarantined figure references block final manuscript freeze until explained.
 - Text audit findings are audit findings, not scientific results.
 generating_command: python scripts/audit_manuscript_figures.py
-git_commit: 1e2c330
+git_commit: a7d1785
 worktree_state: dirty
 output_path: docs/generated/manuscript_figure_inventory.md
 
@@ -57,8 +57,8 @@ output_path: docs/generated/manuscript_figure_inventory.md
 
 - Manuscript root: `docs/manuscript`
 - TeX inputs scanned: 35
-- Includegraphics refs: 123
-- Resolved refs: 123
+- Includegraphics refs: 126
+- Resolved refs: 126
 - Quarantined refs: 0
 - Missing refs: 0
 - Text audit findings: 5
@@ -68,6 +68,9 @@ output_path: docs/generated/manuscript_figure_inventory.md
 
 | Source | Include | Status | Resolved path | Manifest | Reason |
 | --- | --- | --- | --- | --- | --- |
+| `docs/manuscript/appendices.tex:470` | `current/fig_theorem_nt_a1_quadrupole_filling` | `resolved` | `figures/current/fig_theorem_nt_a1_quadrupole_filling.png` | `figures/current/fig_theorem_nt_a1_quadrupole_filling.manifest.json` | `valid_manifest` |
+| `docs/manuscript/appendices.tex:480` | `current/fig_theorem_nt_a3_cosmic_variance_floor` | `resolved` | `figures/current/fig_theorem_nt_a3_cosmic_variance_floor.png` | `figures/current/fig_theorem_nt_a3_cosmic_variance_floor.manifest.json` | `valid_manifest` |
+| `docs/manuscript/appendices.tex:490` | `current/fig_theorem_nt_b3_gf_transport` | `resolved` | `figures/current/fig_theorem_nt_b3_gf_transport.png` | `figures/current/fig_theorem_nt_b3_gf_transport.manifest.json` | `valid_manifest` |
 | `docs/manuscript/generated/conditioned_legacy_figure_gallery.tex:12` | `conditioned_legacy/root__fig_3D_constraint_volume` | `resolved` | `figures/conditioned_legacy/root__fig_3D_constraint_volume.png` | `figures/conditioned_legacy/root__fig_3D_constraint_volume.manifest.json` | `valid_manifest` |
 | `docs/manuscript/generated/conditioned_legacy_figure_gallery.tex:20` | `conditioned_legacy/root__fig_4D_projection_atlas` | `resolved` | `figures/conditioned_legacy/root__fig_4D_projection_atlas.png` | `figures/conditioned_legacy/root__fig_4D_projection_atlas.manifest.json` | `valid_manifest` |
 | `docs/manuscript/generated/conditioned_legacy_figure_gallery.tex:28` | `conditioned_legacy/root__fig_BV_exclusion_restyled` | `resolved` | `figures/conditioned_legacy/root__fig_BV_exclusion_restyled.png` | `figures/conditioned_legacy/root__fig_BV_exclusion_restyled.manifest.json` | `valid_manifest` |
