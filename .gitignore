@@ -151,6 +151,17 @@ hyperfine-*.md
 /docs/manuscript/*.out
 /docs/manuscript/*.toc
 /docs/manuscript/main.pdf
+# Final-results report: track main.tex + main.pdf (it is the deliverable), drop
+# latexmk scratch and the transient claim-lint check file.
+/docs/final_report/*.aux
+/docs/final_report/*.bbl
+/docs/final_report/*.blg
+/docs/final_report/*.fdb_latexmk
+/docs/final_report/*.fls
+/docs/final_report/*.log
+/docs/final_report/*.out
+/docs/final_report/*.toc
+/docs/final_report/.claim_lint_check.md
 
 # External audit/revision input drops are preserved locally but are not source
 # artifacts. Curated outputs live under docs/generated/ and docs/audits/.
