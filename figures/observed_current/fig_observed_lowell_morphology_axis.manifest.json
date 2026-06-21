@@ -1,0 +1,61 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "obsstat.observed.fig_observed_lowell_morphology_axis",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/observed_current/fig_observed_lowell_morphology_axis.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_not_use_for_family_identification_or_family_selection",
+    "must_state_no_native_low_ell_solver_output"
+  ],
+  "caveats": [
+    "Model-independent low-ell feature; not Bianchi evidence.",
+    "No native low-ell solver output or morphology atlas is used.",
+    "No Bianchi family-ID or geometry-detection claim is made.",
+    "Axis is antipodal; descriptor only, no family label."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "23070eb+dirty",
+  "config_hash": "sha256:20b745f9e2be82822d9959b2bc5a46502e3894a4a4f2961f3aad1f635c8c0102",
+  "created_by": "scripts/make_lowell_morphology_real_map.py",
+  "failed_gates": [
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available",
+    "full_pixel_covariance_not_bound"
+  ],
+  "git_commit": "23070eb",
+  "git_commit_or_worktree_state": "23070eb+dirty",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "sha256:90780c4c42c6c4d371ea17d98de3db01d104a016bae2af58e8d9a6c304f88867",
+    "sha256:6a51719d224dad50a3e85aa79ec126dab03ea4fbb8996699b11a8d8d4c91c942",
+    "sha256:3217b51b4c6d88a6df71375c98b3922e1a175f657aece8f67d673b0bd4146e6a"
+  ],
+  "null_mock_status": "null_calibrated_isotropic_lcdm_ensemble",
+  "owner": "OBSSTAT",
+  "passed_gates": [
+    "repo_local_observed_data_present",
+    "null_calibration_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent",
+    "family_identification_blocked_pre_native_atlas"
+  ],
+  "publication_gates": {
+    "bianchi_evidence_claim": "fail_diagnostic_only",
+    "family_identification_claim": "fail_blocked_pre_native_atlas"
+  },
+  "required_gates": [
+    "repo_local_observed_data_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "obsstat.lowell_morphology_figure.v1",
+  "sky_support_status": "full_sky_cleaned_map",
+  "title": "Low-ell preferred axis",
+  "transfer_source": "none"
+}
