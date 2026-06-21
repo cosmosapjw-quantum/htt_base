@@ -1,0 +1,151 @@
+{
+  "caveats": [
+    "model-independent kinematic descriptor; not evidence for any Bianchi model and not a cosmological-frame-violation claim",
+    "bulk flow is the volume-averaged CF4 reconstruction velocity per shell",
+    "bootstrap is over correlated reconstruction cells; a lower bound on the true direction uncertainty, not a full covariance",
+    "no native low-ell solver output or Bianchi family identification"
+  ],
+  "claim_tier": "diagnostic_only",
+  "cmb_dipole_apex_galactic_lb_deg": [
+    264.021,
+    48.253
+  ],
+  "config": {
+    "n_boot": 512,
+    "seed": 20260620,
+    "shell_edges_mpch": [
+      90.0,
+      150.0,
+      200.0,
+      250.0,
+      300.0,
+      350.0,
+      400.0,
+      450.0
+    ]
+  },
+  "config_hash": "sha256:c0dc4ac51378f4780aaf783e21246a3466a032182c6fb90f1e903e4994943edb",
+  "full_sample_apex_galactic_lb_deg": [
+    121.56587438396139,
+    70.8365845567966
+  ],
+  "full_sample_bulk_magnitude_kms": 133.37601563846482,
+  "generating_command": "python scripts/make_cf4_bulkflow_apex_depth.py",
+  "git_commit_or_worktree_state": "7888011+dirty",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "sha256:5fb994ca076235fb30db644d3d1a3672d092ed31f8ef4737bcabe2da87491909"
+  ],
+  "null_mock_status": "bootstrap_over_correlated_reconstruction_cells",
+  "owner": "OBSSTAT",
+  "schema_version": "obsstat.cf4_bulkflow_apex_depth.v1",
+  "shells": [
+    {
+      "apex_angle_to_cmb_dipole_deg": 36.89960455225525,
+      "apex_angular_dispersion_deg_median": 1.0023211666319995,
+      "apex_angular_dispersion_deg_p84": 1.692827015413559,
+      "apex_drift_from_full_sample_deg": 84.81998441151671,
+      "apex_galactic_b_deg": 24.335176434437837,
+      "apex_galactic_l_deg": 299.79108024509986,
+      "bulk_magnitude_kms": 377.69891735623713,
+      "bulk_magnitude_p16_kms": 372.22774613425713,
+      "bulk_magnitude_p84_kms": 383.6223402998315,
+      "n_cells": 6749,
+      "r_hi_mpch": 150.0,
+      "r_lo_mpch": 90.0,
+      "r_mean_mpch": 122.99850360601685
+    },
+    {
+      "apex_angle_to_cmb_dipole_deg": 25.300386404133395,
+      "apex_angular_dispersion_deg_median": 0.5393762733416962,
+      "apex_angular_dispersion_deg_p84": 0.9266976465578287,
+      "apex_drift_from_full_sample_deg": 45.79769086548918,
+      "apex_galactic_b_deg": 63.365681783841744,
+      "apex_galactic_l_deg": 301.4113139880641,
+      "bulk_magnitude_kms": 531.3764378695861,
+      "bulk_magnitude_p16_kms": 527.5344053598685,
+      "bulk_magnitude_p84_kms": 535.3829161274906,
+      "n_cells": 10254,
+      "r_hi_mpch": 200.0,
+      "r_lo_mpch": 150.0,
+      "r_mean_mpch": 177.22240852818447
+    },
+    {
+      "apex_angle_to_cmb_dipole_deg": 39.932982304134,
+      "apex_angular_dispersion_deg_median": 0.3340034060194801,
+      "apex_angular_dispersion_deg_p84": 0.5586636483399917,
+      "apex_drift_from_full_sample_deg": 20.172141721249265,
+      "apex_galactic_b_deg": 87.99538177059237,
+      "apex_galactic_l_deg": 239.32030722559952,
+      "bulk_magnitude_kms": 584.417414404514,
+      "bulk_magnitude_p16_kms": 580.0164117019084,
+      "bulk_magnitude_p84_kms": 588.6970324647484,
+      "n_cells": 16091,
+      "r_hi_mpch": 250.0,
+      "r_lo_mpch": 200.0,
+      "r_mean_mpch": 226.6061826559033
+    },
+    {
+      "apex_angle_to_cmb_dipole_deg": 52.458270654188624,
+      "apex_angular_dispersion_deg_median": 0.34950189760339856,
+      "apex_angular_dispersion_deg_p84": 0.589601997566654,
+      "apex_drift_from_full_sample_deg": 5.462723496619576,
+      "apex_galactic_b_deg": 75.07128744679531,
+      "apex_galactic_l_deg": 133.44672088165163,
+      "bulk_magnitude_kms": 587.9828628001329,
+      "bulk_magnitude_p16_kms": 584.065253852749,
+      "bulk_magnitude_p84_kms": 591.7102641383296,
+      "n_cells": 21788,
+      "r_hi_mpch": 300.0,
+      "r_lo_mpch": 250.0,
+      "r_mean_mpch": 276.08226249475143
+    },
+    {
+      "apex_angle_to_cmb_dipole_deg": 80.37487882734706,
+      "apex_angular_dispersion_deg_median": 0.6257510279155465,
+      "apex_angular_dispersion_deg_p84": 1.0735635933032492,
+      "apex_drift_from_full_sample_deg": 23.132144826041092,
+      "apex_galactic_b_deg": 48.01642108077888,
+      "apex_galactic_l_deg": 113.58740425585249,
+      "bulk_magnitude_kms": 221.89228442640763,
+      "bulk_magnitude_p16_kms": 219.87327909926938,
+      "bulk_magnitude_p84_kms": 224.12987231304638,
+      "n_cells": 27890,
+      "r_hi_mpch": 350.0,
+      "r_lo_mpch": 300.0,
+      "r_mean_mpch": 326.2537676552856
+    },
+    {
+      "apex_angle_to_cmb_dipole_deg": 160.6025240812586,
+      "apex_angular_dispersion_deg_median": 0.7664331604943725,
+      "apex_angular_dispersion_deg_p84": 1.2321116095169868,
+      "apex_drift_from_full_sample_deg": 119.90895196910468,
+      "apex_galactic_b_deg": -48.932021606757885,
+      "apex_galactic_l_deg": 113.51632961684844,
+      "bulk_magnitude_kms": 128.4136427802586,
+      "bulk_magnitude_p16_kms": 126.78854027609214,
+      "bulk_magnitude_p84_kms": 129.8084316410924,
+      "n_cells": 35806,
+      "r_hi_mpch": 400.0,
+      "r_lo_mpch": 350.0,
+      "r_mean_mpch": 375.9173627291049
+    },
+    {
+      "apex_angle_to_cmb_dipole_deg": 147.46430492261024,
+      "apex_angular_dispersion_deg_median": 0.4688388984198844,
+      "apex_angular_dispersion_deg_p84": 0.7502066922417446,
+      "apex_drift_from_full_sample_deg": 148.6764255669504,
+      "apex_galactic_b_deg": -77.83651216383983,
+      "apex_galactic_l_deg": 119.87250602534674,
+      "bulk_magnitude_kms": 185.6878418904324,
+      "bulk_magnitude_p16_kms": 184.81315310730142,
+      "bulk_magnitude_p84_kms": 186.6326385548016,
+      "n_cells": 45179,
+      "r_hi_mpch": 450.0,
+      "r_lo_mpch": 400.0,
+      "r_mean_mpch": 426.41114638026517
+    }
+  ],
+  "sky_support_status": "cf4_reconstruction_grid",
+  "transfer_source": "none"
+}
