@@ -71,6 +71,8 @@ MEASUREMENT_REPORTS = (
     "docs/generated/pr07_k1_global_synthetic.json",
     "docs/generated/pr07_k5_hierarchical_synthetic.json",
     "docs/generated/pr07_k6_affine_ensemble_synthetic.json",
+    # EGS2 extension experiment evidence (NT2-* + blocker discharges).
+    "docs/generated/egs2_experiments.json",
 )
 
 # Theorem implementations (PR04 overlay) + OBSSTAT estimators + PR07 modules.
@@ -89,6 +91,11 @@ SOURCE_FILES = (
     "htt/obsstat/affine_flow.py",
     "htt/obsstat/bulkflow_mle.py",
     "htt/obsstat/lowell_global_calibration.py",
+    # EGS2 extension theorem modules + blocker-discharge mechanics.
+    "htt/obsstat/egs2_fisher.py",
+    "htt/obsstat/egs2_shear_bracket.py",
+    "htt/obsstat/egs2_transport.py",
+    "htt/obsstat/constrained_realizations.py",
 )
 
 DRIVER_SCRIPTS = (
@@ -108,6 +115,8 @@ DRIVER_SCRIPTS = (
     "wolfram/pr07_symbolic_core.wls",
     "wolfram/pr07_xact_abstract.wls",
     "wolfram/pr07_bianchi_i_coordinates.wls",
+    # EGS2 extension driver.
+    "scripts/run_egs2_experiments.py",
 )
 
 GOVERNANCE_FILES = (
@@ -133,6 +142,15 @@ GOVERNANCE_FILES = (
     "docs/research_program/pr07/tickets/PR08-004.yaml",
     "docs/research_program/pr07/tickets/PR08-006.yaml",
     "docs/research_program/pr07/tickets/PR10-solver.yaml",
+    # EGS2 extension programme surface.
+    "docs/research_program/egs2/README.md",
+    "docs/research_program/egs2/THEOREM_MAP.md",
+    "docs/research_program/egs2/BLOCKER_DISCHARGES.md",
+    "docs/research_program/egs2/PRIOR_ART.md",
+    "docs/research_program/egs2/CLAIM_LEDGER.yaml",
+    "docs/research_program/egs2/NEXT_DAG.yaml",
+    "docs/research_program/egs2/tickets/K5_release_matched_mocks.yaml",
+    "docs/research_program/egs2/tickets/semi_native_shear_to_quadrupole.yaml",
 )
 
 FIGURE_STEMS = (
@@ -194,7 +212,7 @@ def _virtual(archive: str, group: str, text: str) -> Entry:
 def _pr_deltas(repo_root: Path) -> list[str]:
     return sorted(
         p.relative_to(repo_root).as_posix()
-        for n in range(108, 118)
+        for n in range(108, 121)
         for p in [repo_root / f"docs/PR_DELTAS/rev-r{n}.md"]
         if p.is_file()
     )
@@ -202,10 +220,12 @@ def _pr_deltas(repo_root: Path) -> list[str]:
 
 def _gate_tests(repo_root: Path) -> list[str]:
     out: list[str] = []
-    for rel in ("research_gates/pr04/tests", "research_gates/pr07/tests"):
+    for rel, pat in (("research_gates/pr04/tests", "test_pr0*_*.py"),
+                     ("research_gates/pr07/tests", "test_pr0*_*.py"),
+                     ("research_gates/egs2/tests", "test_egs2_*.py")):
         d = repo_root / rel
         if d.is_dir():
-            out += [p.relative_to(repo_root).as_posix() for p in d.glob("test_pr0*_*.py")]
+            out += [p.relative_to(repo_root).as_posix() for p in d.glob(pat)]
     return sorted(out)
 
 

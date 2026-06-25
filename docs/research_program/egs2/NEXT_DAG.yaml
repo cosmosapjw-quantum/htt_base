@@ -1,0 +1,43 @@
+schema: htt_base.next_research_dag.v1
+scope: publishable_next_without_native_lowell_solver
+nodes:
+  PR08-001:
+    title: K1 PR4/NPIPE E2E max-scan calibration
+    owner: OBSSTAT
+    status: blocked_external_input
+    blocker: BLOCKED_MISSING_PR4_E2E_ACCESS
+    executable_local_gate: synthetic_max_scan_mechanics
+    exit_gate: global_rank_pvalue_with_matched_pipeline_manifest
+  PR08-003:
+    title: K5 CF4 release-matched forward mocks
+    owner: OBSSTAT
+    status: blocked_external_input
+    blocker: BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP
+    depends_on: [PR08-002]
+    executable_local_gate: hierarchical_bulkflow_coverage_mechanics
+    exit_gate: component_amplitude_coverage_bias_cosmic_variance
+  PR08-004:
+    title: K6 field-realization affine posterior
+    owner: OBSSTAT
+    status: blocked_external_input
+    blocker: BLOCKED_MISSING_FIELD_REALIZATIONS
+    executable_local_gate: curl_suppression_nonidentifiability
+    exit_gate: realization_conditioned_posterior_or_explicit_no_go
+  PR08-005:
+    title: Independent 2MRS cross-reconstruction side-by-side contract
+    owner: OBSSTAT
+    status: ready_after_PR08_004_contract
+    depends_on: [PR08-004]
+    exit_gate: provenance_complete_component_table_no_covariance_merge
+  PR08-006:
+    title: Joint posterior artifact and scalar pushforward
+    owner: HTT
+    status: blocked_upstream
+    depends_on: [PR08-001, PR08-003, PR08-004]
+    exit_gate: data_rank_and_prior_conditioned_rank_reported_separately
+  PR10:
+    title: Native low-ell Bianchi-Boltzmann solver project
+    owner: BASS_native
+    status: separate_project
+    blocker: AWAITING_NATIVE_LOWELL_SOLVER
+    exit_gate: exact_FLRW_comparator_collision_TCA_LOS_convergence_native_atlas

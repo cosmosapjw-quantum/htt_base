@@ -1,0 +1,13 @@
+id: EGS2-semi-native
+title: Interim semi-native shear -> low-ell quadrupole/octupole calculator
+state: planned
+blocker: AWAITING_NATIVE_LOWELL_SOLVER (partial discharge only)
+owner_lane: gr_xact
+scope: >
+  Covariant 1+3 multipole (Gebbie-Ellis PSTF) hierarchy for a SINGLE shear-sourced
+  mode, truncated at modest ell_max, with a real recombination visibility from
+  CAMB/CLASS, to compute the shear -> low-ell quadrupole/octupole transfer. NOT
+  the 11-family morphology atlas; makes no family-ID claim. Replaces the toy r_ell
+  of NT2-A1 with a physically-sourced response and feeds NT2-A1/B1 real coefficients.
+exit_gate: exact-FLRW-anchored single-mode shear transfer cross-checked vs CAMB/CLASS visibility
+not_in_scope: matched masks/randoms/covariance, family-equivalence gates (PR10 native solver)

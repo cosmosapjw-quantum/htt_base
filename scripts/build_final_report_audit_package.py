@@ -87,6 +87,8 @@ EVIDENCE_FILES = (
     "docs/generated/pr07_k1_global_synthetic.json",
     "docs/generated/pr07_k5_hierarchical_synthetic.json",
     "docs/generated/pr07_k6_affine_ensemble_synthetic.json",
+    # EGS2 extension evidence backing the new §7 (NT2-* + blocker discharges).
+    "docs/generated/egs2_experiments.json",
 )
 
 

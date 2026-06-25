@@ -1,0 +1,59 @@
+schema: htt_base.next_claim_ledger.v1
+claims:
+  next.max_scan_calibration:
+    owner: OBSSTAT
+    status: PROPOSED
+    evidence_type: test
+    transfer_source: none
+    claim_tier: C3
+    allowed_phrase: registered low-ell feature vector with finite-mock global calibration
+    caveats:
+      - Requires matched PR4/NPIPE E2E summaries before data-facing use.
+      - Current local p-values are not global significance.
+  next.rank_exact_identifiability:
+    owner: HTT
+    status: DERIVED
+    evidence_type: proof_and_test
+    transfer_source: none
+    claim_tier: C4
+    allowed_phrase: rank-exact local/global discrimination candidate
+    caveats:
+      - Rank loss is a no-claim state.
+      - Does not identify geometry or family.
+  next.boltzmann_memory_bound:
+    owner: BASS
+    status: SPECIFIED
+    evidence_type: test
+    transfer_source: none
+    claim_tier: C1
+    allowed_phrase: collision-gap conditional Boltzmann memory bound
+    caveats:
+      - Data-facing use requires the actual collision operator gap and source envelope.
+      - Nonpositive gap blocks forgetting language.
+  next.visibility_no_go:
+    owner: BASS
+    status: SPECIFIED
+    evidence_type: test
+    transfer_source: none
+    claim_tier: C1
+    allowed_phrase: visibility-cancellation inverse-source no-go
+    caveats:
+      - Requires source rank, sign/phase, kernel-floor, and mask provenance.
+  next.cf4_hierarchical_bulkflow:
+    owner: OBSSTAT
+    status: PROPOSED
+    evidence_type: test
+    transfer_source: none
+    claim_tier: C3
+    allowed_phrase: CF4 hierarchical bulk-flow descriptor with mock-calibrated uncertainty
+    caveats:
+      - Release-matched mocks and cosmic variance are required before publication-grade uncertainty.
+  next.affine_curl_no_go:
+    owner: OBSSTAT
+    status: DERIVED
+    evidence_type: test
+    transfer_source: none
+    claim_tier: C3
+    allowed_phrase: potential-flow curl non-identifiability diagnostic
+    caveats:
+      - Physical vorticity inference remains blocked for curl-suppressing reconstructions.

@@ -820,6 +820,75 @@ B-dynamics & $1000$-state $E$/$p$ residual & --- & $<6\times10^{-14}$ \\
 \end{table}
 
 % ============================================================
+\section{EGS-type extension theorems (NT2) and blocker discharges}
+\label{sec:egs2}
+
+A second adversarial audit of this report returned \emph{minor revisions}
+(near-pass); its one substantive item was a label correction (NT-A3 is the
+sampling dispersion of one estimator, not a Cram\'er--Rao floor --- now fixed in
+the theorem registry and Fig.~\ref{fig:nt-a3}). Its companion extension supplies
+four new strong, conditional EGS-type statements on the same diagnostic
+variables, each verified on a runnable experiment
+(\texttt{make egs2-gates}; \texttt{docs/generated/egs2\_experiments.json}). These
+are conditional theorems and synthetic mechanics, not detections; the toy Fisher
+response and scalarised hierarchy are documented constructs whose \emph{shape} is
+robust while the exact numbers await the covariant coefficients and real low-$\ell$
+transfer.
+
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+  \item \emph{NT2-A1 (a floor nothing beats).} The \emph{genuine}
+        multi-multipole Fisher--Cram\'er--Rao floor on $\Fshear$,
+        $\sigma(\Fshear)/\Fshear\ge[\sum_{\ell\ge2}\tfrac{2\ell+1}{2}f_{\mathrm{sky}}\,r_\ell^2]^{-1/2}$
+        with $r_\ell=\partial\ln C_\ell/\partial\ln\Fshear$ ($r_2=1$,
+        $r_{\ell>2}>0$ via the EGS gradient chain). Because the shear sources
+        $\ell>2$, this floor is \emph{strictly below} the single-$\ell$
+        $\sqrt{2/5}\approx0.632$ (it drops to $0.474$ at $L=5$ and $0.424$ at
+        $L=20$ for $f_{\mathrm{sky}}=1$, and sky cuts raise it); a
+        multipole-combining MLE achieves it (MC ratio $\approx1$). This is the
+        real floor the NT-A3 label gestured at, now derived.
+  \item \emph{NT2-A2 (saturation).} The Fisher information saturates beyond the
+        octupole (the floor changes $<1\%$ from $L{=}40$ to $L{=}80$): $(a_2,a_3)$
+        are approximately sufficient for $\Fshear$.
+  \item \emph{NT2-B1 (an exclusion of zero).} Under H3 ($R_{\mathrm{EGS}}=a_3/a_2\le R_*$),
+        the shear is two-sided bracketed,
+        $a_2\kappa/(1+R_{\mathrm{EGS}})\le\Sigma\le C_{\mathrm{up}}a_2$, so
+        $\Fshear$ is bounded \emph{away from zero}: a nonzero CMB quadrupole
+        \emph{forbids} a vanishing shear-filling. The lower bound is the new,
+        strong content (the report's beyond-MES gave only an upper limit).
+  \item \emph{NT2-B2 (a mechanism, not an attribution).} Through the
+        shear-memory law $\dot\sigma=-3H\sigma+3H^2\Pi$, the tilt anisotropic
+        stress $\Pi(z)$ is the explicit GR \emph{source} of the depth gap
+        $\GF(z)$: a steady $\Pi$ relaxes $\GF$ to a constant; a depth-growing
+        $\Pi(z)$ produces a depth-evolving $\GF$. This upgrades NT-B3's
+        attribution to a mechanism.
+  \item \emph{NT2-B3 (a closed channel).} The vorticity term $\Wstd$ of $\xC$ is
+        a \emph{joint} blind spot of the two channels the program uses: CMB
+        temperature multipoles do not bound the curl/Weyl sector at EGS order,
+        and radial peculiar velocities carry no vorticity
+        ($n^a\Omega_{ab}n^b=0$ exactly). No estimator on CMB-temperature $+$
+        radial velocities alone can constrain it.
+\end{itemize}
+
+\paragraph{Concrete discharges of the standing blocks.} Three of the four
+\S\ref{sec:blocks} blocks are dischargeable with \emph{public} data and published
+methods, without the native solver. (i) The K1 global $p$-value: run the frozen
+max-scan family on the public Planck FFP10 (PR3: 999 CMB $+$ 300 noise MC per
+method) and PR4/NPIPE ($\sim300$ E2E) simulations, which carry the real
+mask/noise/systematics; the ingestion path
+(\texttt{e2e\_maxscan\_from\_summaries}) returns the $+1$-corrected global rank
+$p$-value (global $\ge$ min-local). (ii) The K6 vorticity posterior: Hoffman--Ribak
+constrained realizations sample the curl the Wiener-filter mean suppresses --- the
+CR ensemble \emph{is} the posterior (mean $\sim0$ with a prior-width bar), not a
+bare ``non-identifiable''. (iii) The K5 cosmic-variance term: the same CF4 WF/CR
+Bias-Gaussianization machinery generates the release-matched forward mocks. Each
+discharge is implemented here as runnable \emph{mechanics}; the real public-map
+and 3D CF4 WF/CR runs retain their registered blocker codes until the inputs are
+owned. The native low-$\ell$ solver block is unchanged; a covariant 1+3 hierarchy
+with a real recombination visibility is registered as the interim semi-native
+shear$\to$quadrupole calculator that would replace the toy $r_\ell$ with a
+physically sourced response.
+
+% ============================================================
 \section{Transfer-conditional diagnostics}
 \label{sec:transfer}
 

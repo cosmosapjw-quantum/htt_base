@@ -7,6 +7,40 @@
 
 ## [Unreleased]
 
+### EGS2 extension programme — NT2-* theorems + blocker discharges + audit fixes (2026-06-26)
+
+Applied two complementary 2026-06-25/26 audit companions (verdict **MINOR
+REVISIONS**, near-PASS): the EGS extension (NT2-* theorems) and the
+publishable-next package (T1–T6 candidates + PR08 blocker DAG).
+
+- **PR-A (rev-r119)**: lead audit fix — the NT-A3 theorem registry + Fig. 2
+  mislabelled a single-estimator sampling dispersion as a "cosmic-variance
+  Cramér–Rao floor / irreducible / unmeasurable", contradicting the report's
+  Theorem 2. Relabelled in the proof + figure generators (Wolfram math
+  unchanged, QED=True); regenerated registry + figures. Report consistency notes
+  (§2 `x_max` vs shear-only bound; §5.3 K4-vs-K5 estimands + contested-literature).
+- **PR-N/PR-B (rev-r120)**: implemented the proposed theorems as canonical
+  modules + 13 gates + a driver. **NT2-A1** (flagship): the genuine
+  multi-multipole Fisher–Cramér–Rao floor on `F_shear`, strictly below the
+  single-ℓ `√(2/5)=0.632` (0.632→0.474→0.424 at L=2,5,20), MC-MLE-achievable —
+  the real floor NT-A3's label asserted but did not prove. **NT2-A2** octupole
+  saturation; **NT2-B1** two-sided shear bracket excluding zero shear-filling
+  under H3; **NT2-B2** GR shear-memory GR-sources the depth gap; **NT2-B3**
+  vorticity joint blind sector (CMB-T + radial velocity). **Blocker discharges**:
+  `e2e_maxscan_from_summaries` (public Planck FFP10/NPIPE → global p) and
+  Hoffman–Ribak `curl_posterior` (K6 vorticity posterior, mean ~0 ± 0.59).
+  `make egs2-gates`/`egs2-experiments`.
+- **Report + packages (rev-r121)**: new report §7 "EGS-type extension theorems
+  (NT2) and blocker discharges" (17 pp); `docs/research_program/egs2/` programme
+  (theorem map, blocker discharges, prior-art CRAG, claim ledger, PR08 DAG,
+  K5-mocks + semi-native-calculator tickets); both external-audit packages
+  expanded with the EGS2 surface (research-audit 126→147 files).
+
+Conditional theorems + synthetic mechanics only; toy Fisher response + scalar
+hierarchy documented; K1/K6/K5 real runs keep their registered blocker codes;
+the native low-ℓ solver block is unchanged. No detection, family/geometry, or
+native-solver claim. `pdf_claim_lint` 0 failed.
+
 ### PR07 audit-repair programme — Stage-0 harness + PR07-001..006 + governance (2026-06-26)
 
 Applied the 2026-06-25 PR04 adversarial-audit pack
