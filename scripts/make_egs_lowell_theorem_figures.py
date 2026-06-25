@@ -5,7 +5,8 @@ Three analytic theorem figures (no observed data; synthetic illustration of the
 Wolfram-verified identities in `docs/generated/egs_lowell_theorem_proofs.json`):
 
   NT-A1  F_shear linear in the CMB quadrupole D2 with the EGS limit F_shear->0.
-  NT-A3  cosmic-variance fractional floor sqrt(2/(2l+1)) on F_shear, l=2 -> 0.632.
+  NT-A3  single-sky sampling dispersion sqrt(2/(2l+1)) of the standard F_shear
+         estimator, l=2 -> 0.632 (one estimator; NOT a universal floor).
   NT-B3  depth gap G_F(z): flat at 1 for depth-steady shear; rising for a
          depth-evolving tilt.
 
@@ -151,14 +152,14 @@ def _sources() -> dict[str, dict]:
         "Fshear_over_Fshearref": fshear_ratio.tolist(),
         "egs_limit": "F_shear -> 0 as D2 -> 0",
     }
-    # NT-A3: fractional cosmic-variance floor sqrt(2/(2l+1)).
+    # NT-A3: single-sky sampling dispersion sqrt(2/(2l+1)) of the standard estimator.
     ells = np.arange(2, 31)
-    floor = np.sqrt(2.0 / (2.0 * ells + 1.0))
+    dispersion = np.sqrt(2.0 / (2.0 * ells + 1.0))
     a3 = {
         "theorem_id": "NT-A3",
         "ell": ells.tolist(),
-        "fractional_floor": floor.tolist(),
-        "floor_at_l2": float(np.sqrt(2.0 / 5.0)),
+        "fractional_sampling_dispersion": dispersion.tolist(),
+        "dispersion_at_l2": float(np.sqrt(2.0 / 5.0)),
     }
     # NT-B3: G_F(z) steady-shear (flat 1) vs depth-growing tilt.
     z = np.linspace(0.0, 1.0, 41)
@@ -192,13 +193,13 @@ def _render(sources: dict) -> None:
 
     a3 = sources["a3"]
     fig, ax = plt.subplots(figsize=(5.2, 4.0))
-    ax.plot(a3["ell"], a3["fractional_floor"], marker="o", color="#16a34a")
-    ax.axhline(a3["floor_at_l2"], color="#dc2626", ls="--", lw=1)
-    ax.scatter([2], [a3["floor_at_l2"]], color="#dc2626", zorder=5)
-    ax.annotate(f"l=2: sqrt(2/5)={a3['floor_at_l2']:.3f}", (3, a3["floor_at_l2"] + 0.01), fontsize=8)
+    ax.plot(a3["ell"], a3["fractional_sampling_dispersion"], marker="o", color="#16a34a")
+    ax.axhline(a3["dispersion_at_l2"], color="#dc2626", ls="--", lw=1)
+    ax.scatter([2], [a3["dispersion_at_l2"]], color="#dc2626", zorder=5)
+    ax.annotate(f"l=2: sqrt(2/5)={a3['dispersion_at_l2']:.3f}", (3, a3["dispersion_at_l2"] + 0.01), fontsize=8)
     ax.set_xlabel("multipole l")
-    ax.set_ylabel("cosmic-variance floor  sigma(F_shear)/F_shear")
-    ax.set_title("NT-A3: cosmic-variance Cramer-Rao floor\nsqrt(2/(2l+1))")
+    ax.set_ylabel("single-sky sampling dispersion  sigma(F_shear)/F_shear")
+    ax.set_title("NT-A3: single-sky sampling dispersion (one estimator)\nsqrt(2/(2l+1)); not a universal floor")
     fig.tight_layout()
     fig.savefig(FIG_DIR / "fig_theorem_nt_a3_cosmic_variance_floor.png", dpi=140)
     plt.close(fig)
@@ -223,7 +224,7 @@ def main(argv: list[str] | None = None) -> int:
     sources = _sources()
     specs = [
         ("fig_theorem_nt_a1_quadrupole_filling", "NT-A1", "Quadrupole-filling EGS identity", sources["a1"]),
-        ("fig_theorem_nt_a3_cosmic_variance_floor", "NT-A3", "Cosmic-variance floor on F_shear", sources["a3"]),
+        ("fig_theorem_nt_a3_cosmic_variance_floor", "NT-A3", "Single-sky sampling dispersion of the F_shear estimator", sources["a3"]),
         ("fig_theorem_nt_b3_gf_transport", "NT-B3", "Depth-transport EGS limit", sources["b3"]),
     ]
     if args.check:

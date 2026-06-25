@@ -9,10 +9,12 @@ the research report:
          closure a2 = kappa * Sigma, the shear filling fraction is
          F_shear = a2^2 / (kappa^2 x_max) proportional to D2, with the EGS limit
          F_shear -> 0 as D2 -> 0, and F_shear independent of the tilt rapidity.
-  NT-A3  Cosmic-variance Cramer-Rao floor:  because F_shear is linear in the
-         quadrupole power C2, the single-sky cosmic variance Var(C2) =
-         2 C2^2 / (2l+1) forces an irreducible fractional floor
-         sigma(F_shear)/F_shear >= sqrt(2/(2l+1)) = sqrt(2/5) ~ 0.632 at l=2.
+  NT-A3  Single-sky sampling dispersion of the standard estimator: because
+         F_shear is linear in the quadrupole power C2, the standard full-sky
+         estimator has single-sky sampling variance Var(C2) = 2 C2^2 / (2l+1),
+         giving sigma(F_shear)/F_shear = sqrt(2/(2l+1)) = sqrt(2/5) ~ 0.632 at
+         l=2 -- the dispersion of THAT estimator, not a floor over all
+         estimators (the genuine Fisher-CR floor is NT2-A1, strictly lower).
   NT-B3  Depth-transport EGS limit:  for a depth-steady shear and no tilt the
          depth gap G_F(z) = F(z)/F(z_ref) is identically 1 (no gap); a
          depth-evolving tilt imprints a nonzero dG_F/dz.
@@ -116,7 +118,11 @@ def _prove(session) -> list[dict]:
         }
     )
 
-    # ---- NT-A3: cosmic-variance Cramer-Rao floor ---------------------------
+    # ---- NT-A3: single-sky sampling dispersion of the standard estimator ----
+    # NOTE (PR07/EGS2 audit fix): this is the sampling variance of ONE specific
+    # (ideal full-sky Gaussian) estimator, NOT a Cramer-Rao bound or a universal
+    # floor over all estimators. The genuine multi-multipole Fisher-CR floor is
+    # NT2-A1 (htt/obsstat/egs2_fisher.py), which is strictly below sqrt(2/5).
     run("ClearAll[C2, kappa, xmax, l]")
     run("FC = C2/(kappa^2 xmax)")  # F_shear linear in the quadrupole POWER C2
     run("VarC2 = 2 C2^2/(2 l + 1)")
@@ -130,28 +136,30 @@ def _prove(session) -> list[dict]:
     theorems.append(
         {
             "theorem_id": "NT-A3",
-            "title": "Cosmic-variance Cramer-Rao floor on F_shear",
+            "title": "Single-sky sampling dispersion of the standard F_shear estimator",
             "status": "proved",
             "proof_status": "symbolically_verified_wolfram",
             "hypotheses": [
                 "F_shear = C2/(kappa^2 x_max) is linear in the quadrupole power C2 (NT-A1)",
-                "single-sky cosmic variance Var(C2) = 2 C2^2/(2l+1) (chi-square, 2l+1 dof)",
+                "the standard ideal full-sky Gaussian power estimator C2_hat has single-sky sampling variance Var(C2) = 2 C2^2/(2l+1) (chi-square, 2l+1 dof)",
                 "shear sources the quadrupole (l=2) only at leading order",
             ],
             "steps": {
                 "Var_C2": show("VarC2"),
                 "Var_F_shear": show("VarF"),
                 "Var_F_over_F2": show("Simplify[VarF/FC^2]"),
-                "fractional_floor": show("FracFloor"),
-                "fractional_floor_at_l2": show("FracFloor /. l -> 2"),
-                "fractional_floor_at_l2_numeric": show("N[FracFloor /. l -> 2, 6]"),
+                "fractional_sampling_dispersion": show("FracFloor"),
+                "fractional_sampling_dispersion_at_l2": show("FracFloor /. l -> 2"),
+                "fractional_sampling_dispersion_at_l2_numeric": show("N[FracFloor /. l -> 2, 6]"),
             },
             "qed": qed_a3,
             "claim": (
-                "The quadrupole cosmic variance forces an irreducible fractional "
-                "floor sigma(F_shear)/F_shear >= sqrt(2/(2l+1)); at l=2 this is "
-                "sqrt(2/5) ~ 0.632, so the shear-filling fraction is unmeasurable "
-                "below ~63% fractional precision from a single sky."
+                "The standard full-sky F_shear estimator has fractional sampling "
+                "dispersion sigma(F_shear)/F_shear = sqrt(2/(2l+1)); at l=2 this is "
+                "sqrt(2/5) ~ 0.632. This is the sampling dispersion of that one "
+                "estimator, NOT a Cramer-Rao bound or a universal floor over all "
+                "estimators; the genuine multi-multipole Fisher-Cramer-Rao floor "
+                "(NT2-A1) is strictly below 0.632."
             ),
         }
     )

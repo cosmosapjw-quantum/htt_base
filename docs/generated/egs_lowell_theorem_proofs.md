@@ -6,7 +6,7 @@ claim_tier: program_theorem
 transfer_source: none
 engine: wolfram (14.3.0 for Linux x86 (64-bit) (July 31, 2025))
 source_program: egs_theorem_program.zip (NT-A1, NT-A3, NT-B3)
-git_state: a7d1785+dirty
+git_state: 3fa1f28+dirty
 
 ## NT-A1 - Quadrupole-filling EGS identity
 
@@ -27,24 +27,24 @@ Symbolic steps (Wolfram):
 
 Claim: F_shear is an EGS-bounded functional of the CMB quadrupole: F_shear = a2^2/(kappa^2 x_max) proportional to D2, F_shear -> 0 as D2 -> 0, and F_shear is independent of the tilt rapidity. Conditional on the stated free-streaming linear closure; not a detection.
 
-## NT-A3 - Cosmic-variance Cramer-Rao floor on F_shear
+## NT-A3 - Single-sky sampling dispersion of the standard F_shear estimator
 
 status: proved; proof: symbolically_verified_wolfram; QED: true
 
 Hypotheses:
 - F_shear = C2/(kappa^2 x_max) is linear in the quadrupole power C2 (NT-A1)
-- single-sky cosmic variance Var(C2) = 2 C2^2/(2l+1) (chi-square, 2l+1 dof)
+- the standard ideal full-sky Gaussian power estimator C2_hat has single-sky sampling variance Var(C2) = 2 C2^2/(2l+1) (chi-square, 2l+1 dof)
 - shear sources the quadrupole (l=2) only at leading order
 
 Symbolic steps (Wolfram):
 - `Var_C2` = `(2*C2^2)/(1 + 2*l)`
 - `Var_F_shear` = `(2*C2^2)/(kappa^4*(1 + 2*l)*xmax^2)`
 - `Var_F_over_F2` = `2/(1 + 2*l)`
-- `fractional_floor` = `Sqrt[2]/Sqrt[1 + 2*l]`
-- `fractional_floor_at_l2` = `Sqrt[2/5]`
-- `fractional_floor_at_l2_numeric` = `0.6324555320336758664`6.`
+- `fractional_sampling_dispersion` = `Sqrt[2]/Sqrt[1 + 2*l]`
+- `fractional_sampling_dispersion_at_l2` = `Sqrt[2/5]`
+- `fractional_sampling_dispersion_at_l2_numeric` = `0.6324555320336758664`6.`
 
-Claim: The quadrupole cosmic variance forces an irreducible fractional floor sigma(F_shear)/F_shear >= sqrt(2/(2l+1)); at l=2 this is sqrt(2/5) ~ 0.632, so the shear-filling fraction is unmeasurable below ~63% fractional precision from a single sky.
+Claim: The standard full-sky F_shear estimator has fractional sampling dispersion sigma(F_shear)/F_shear = sqrt(2/(2l+1)); at l=2 this is sqrt(2/5) ~ 0.632. This is the sampling dispersion of that one estimator, NOT a Cramer-Rao bound or a universal floor over all estimators; the genuine multi-multipole Fisher-Cramer-Rao floor (NT2-A1) is strictly below 0.632.
 
 ## NT-B3 - Depth-transport EGS limit for G_F
 

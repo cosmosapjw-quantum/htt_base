@@ -6,7 +6,7 @@
   ],
   "claim_tier": "program_theorem",
   "engine": "wolfram",
-  "git_state": "a7d1785+dirty",
+  "git_state": "3fa1f28+dirty",
   "implementation_scope": "bass_py",
   "owner": "BASS",
   "schema_version": "egs_lowell_theorem_proofs.v1",
@@ -35,10 +35,10 @@
       "title": "Quadrupole-filling EGS identity"
     },
     {
-      "claim": "The quadrupole cosmic variance forces an irreducible fractional floor sigma(F_shear)/F_shear >= sqrt(2/(2l+1)); at l=2 this is sqrt(2/5) ~ 0.632, so the shear-filling fraction is unmeasurable below ~63% fractional precision from a single sky.",
+      "claim": "The standard full-sky F_shear estimator has fractional sampling dispersion sigma(F_shear)/F_shear = sqrt(2/(2l+1)); at l=2 this is sqrt(2/5) ~ 0.632. This is the sampling dispersion of that one estimator, NOT a Cramer-Rao bound or a universal floor over all estimators; the genuine multi-multipole Fisher-Cramer-Rao floor (NT2-A1) is strictly below 0.632.",
       "hypotheses": [
         "F_shear = C2/(kappa^2 x_max) is linear in the quadrupole power C2 (NT-A1)",
-        "single-sky cosmic variance Var(C2) = 2 C2^2/(2l+1) (chi-square, 2l+1 dof)",
+        "the standard ideal full-sky Gaussian power estimator C2_hat has single-sky sampling variance Var(C2) = 2 C2^2/(2l+1) (chi-square, 2l+1 dof)",
         "shear sources the quadrupole (l=2) only at leading order"
       ],
       "proof_status": "symbolically_verified_wolfram",
@@ -48,12 +48,12 @@
         "Var_C2": "(2*C2^2)/(1 + 2*l)",
         "Var_F_over_F2": "2/(1 + 2*l)",
         "Var_F_shear": "(2*C2^2)/(kappa^4*(1 + 2*l)*xmax^2)",
-        "fractional_floor": "Sqrt[2]/Sqrt[1 + 2*l]",
-        "fractional_floor_at_l2": "Sqrt[2/5]",
-        "fractional_floor_at_l2_numeric": "0.6324555320336758664`6."
+        "fractional_sampling_dispersion": "Sqrt[2]/Sqrt[1 + 2*l]",
+        "fractional_sampling_dispersion_at_l2": "Sqrt[2/5]",
+        "fractional_sampling_dispersion_at_l2_numeric": "0.6324555320336758664`6."
       },
       "theorem_id": "NT-A3",
-      "title": "Cosmic-variance Cramer-Rao floor on F_shear"
+      "title": "Single-sky sampling dispersion of the standard F_shear estimator"
     },
     {
       "claim": "For a depth-steady shear and no tilt, G_F(z) is identically 1 (EGS depth limit: no depth gap); a depth-evolving tilt imprints a nonzero dG_F/dz. Conditional on the additive filling decomposition.",
