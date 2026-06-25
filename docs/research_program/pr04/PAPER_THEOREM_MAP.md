@@ -20,14 +20,20 @@ full manuscript proof pending independent review (`BLOCKED_PROOF_REVIEW`).
 | A-ladder (complementary-channel sufficiency) | adding complementary blocks gains rank monotonically until the design is identifiable | `test_pr04_response::test_rank_ladder` | (numeric) | numeric ✓ |
 | A-flrw (congruence limit) | flat-FLRW comoving congruence has θ = 3H and zero shear/acceleration | `test_pr04_congruence::test_flat_flrw_limit` | `A-flrw` | symbolic ✓ |
 | A-minkowski | inertial Minkowski congruence has θ = σ = ω = a = 0 | `test_pr04_congruence::test_minkowski_inertial` | (limit of A-flrw) | numeric ✓ |
-| A-wigner (rapidity non-additivity) | two non-collinear boosts compose to an exact Lorentz map whose velocity ≠ Euclidean sum | `test_pr04_congruence::test_noncollinear_boost_is_lorentz` | `A-wigner` | symbolic ✓ |
+| A-boost (composition) | two non-collinear boosts compose to an exact Lorentz map whose velocity ≠ Euclidean sum (PR07-002: **not** a Wigner-angle claim) | `test_pr07_paper_a::test_boost_and_first_jet_split` | `A_boost` | symbolic ✓ |
+| A-first-jet (no-go) | equality of pointwise four-velocity does not determine its first derivative (split from A-boost, PR07-002) | `test_pr07_paper_a::test_boost_and_first_jet_split` | `first_jet_*` | symbolic ✓ |
 | A-failclosed | a single rapidity/velocity does not determine θ/σ/ω; incomplete normalization fails closed | `test_pr04_congruence::test_incomplete_normalization_fails` | (numeric) | numeric ✓ |
-| A-radial-novortex (radial-vorticity no-go) | a purely radial response design places vorticity in the data nullspace | (rank machinery: `audit_response_blocks`) | — | corollary (proof review) |
-| A-single-shell-degeneracy | a single-shell response is rank-deficient for the joint bulk/shear/curl design | (rank machinery: `rank_gain_ladder`) | — | corollary (proof review) |
-| A-temporal-tensor-rank | the dynamic tensor design recovers rank only with independent temporal kernels | (rank machinery) | — | corollary (proof review; ties to LR-06G) |
+| A-radial-novortex (radial-vorticity no-go) | a purely radial response design places vorticity in the data nullspace, `nᵃΩ_ab nᵇ=0` | `test_pr07_paper_a::test_radial_vorticity_no_go` | `radial_vorticity_zero` | **closed PR07-004** ✓ |
+| A-single-shell-degeneracy | one shell → rank 3; broad depth support → rank 6 | `test_pr07_paper_a::test_single_shell_degeneracy_and_broad_depth_recovery` | — | **closed PR07-004** ✓ |
+| A-temporal-tensor-rank | `rank(T ⊗ I₅) = 5·rank(T)` (independent temporal kernels) | `test_pr07_paper_a::test_temporal_tensor_rank` | — | **closed PR07-004** ✓ |
+| A-rank-equality-qualifier | duplicate-block null-space equals the (x,−x) line **only** under full column rank | `test_pr07_paper_a::test_duplicate_rank_not_full_column_rank` | — | **closed PR07-002/004** ✓ |
 
-The last three are honest analytic corollaries of the proved rank audit; their
-standalone manuscript proofs are the `BLOCKED_PROOF_REVIEW` items for PAPER-A.
+PR07-004 closed the three former `BLOCKED_PROOF_REVIEW` corollaries with
+independent matrix proofs (`htt/htt/htt/departure/paper_a_closure.py`) plus
+`research_gates/pr07/tests/test_pr07_paper_a.py` gates and the Wolfram
+`pr07_symbolic_core.wls` checks. The A-Wigner row was split (PR07-002) into the
+exact boost-composition statement and a separate first-jet no-go; no
+Wigner-rotation angle is claimed.
 
 ## PAPER-B — restricted Bianchi-I multifluid dynamics
 

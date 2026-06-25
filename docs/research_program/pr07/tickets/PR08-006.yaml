@@ -1,0 +1,13 @@
+id: PR08-006
+title: Joint posterior artifact and legacy scalar pushforward
+priority: P2
+state: blocked
+blocker: BLOCKED_UPSTREAM
+owner_lane: consensus_editor
+depends_on: [PR08-001, PR08-003, PR08-004]
+scope: >
+  Only identified vector/tensor components may enter x_C, Q, Pi, F, G_F; all
+  missing components remain explicit and fail closed (never set to 0). No MIO
+  certificate becomes posterior odds or family evidence.
+exit_gate: data rank reported separately from prior-conditioned rank; held-out
+forbidden: scalar-to-family promotion; MIO-as-odds

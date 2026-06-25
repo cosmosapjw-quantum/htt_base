@@ -1,0 +1,16 @@
+id: PR08-003
+title: K5 release-matched forward mocks
+priority: P2
+state: blocked
+blocker: BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP
+owner_lane: cf4_reconstruction
+depends_on: [PR08-002]
+scope: >
+  Add selection, log-distance errors, grouping, method calibration, frame
+  conventions, nonlinear velocities and survey geometry to the hierarchical
+  likelihood. Run component/amplitude coverage, method/depth/frame ablations,
+  and held-out subcatalog tests.
+inputs_required:
+  - exact CF4 release binding + release-matched mock ownership
+exit_gate: component/amplitude coverage and bias gates with cosmic variance
+mechanics_reference: htt/obsstat/bulkflow_mle.py:fit_hierarchical_bulk

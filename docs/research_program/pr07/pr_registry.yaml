@@ -1,0 +1,25 @@
+version: 1
+programme: PR07_PR08_PR10
+branch: research/pr04-multicomponent
+states: [planned, ready, blocked, merged, separate_project]
+prs:
+  - {id: PR07-001, title: Unit-safe anisotropic-stress ownership, priority: P0, state: merged, landed: rev-r116, depends_on: [], blocks: [PR07-008]}
+  - {id: PR07-002, title: Theorem and claim repair, priority: P0, state: merged, landed: rev-r116, depends_on: [], blocks: [PR07-006, PR07-007, PR07-008]}
+  - {id: PR07-003, title: Independent Bianchi-I dynamics verification, priority: P0, state: merged, landed: rev-r116, depends_on: [PR07-001], blocks: [PR07-008]}
+  - {id: PR07-004, title: PAPER-A proof closure, priority: P0, state: merged, landed: rev-r116, depends_on: [PR07-002], blocks: [PR07-007]}
+  - {id: PR07-005, title: Reproducible gate surface, priority: P0, state: merged, landed: rev-r116, depends_on: [], blocks: [PR07-007, PR07-008]}
+  - {id: PR07-006, title: Measurement-report correction and quarantine, priority: P0, state: merged, landed: rev-r116, depends_on: [PR07-002]}
+  - {id: PR07-007, title: PAPER-A manuscript freeze, priority: P1, state: planned, depends_on: [PR07-002, PR07-004, PR07-005]}
+  - {id: PR07-008, title: PAPER-B manuscript freeze, priority: P1, state: planned, depends_on: [PR07-001, PR07-002, PR07-003, PR07-005]}
+  - {id: PR08-001, title: K1 PR4 E2E summary pipeline, priority: P2, state: blocked, blocker: BLOCKED_MISSING_PR4_E2E_ACCESS}
+  - {id: PR08-002, title: K5 hierarchical bulk-flow likelihood, priority: P2, state: merged, landed: rev-r116, note: mechanics-only; mocks blocked, depends_on: [PR07-005]}
+  - {id: PR08-003, title: K5 release-matched forward mocks, priority: P2, state: blocked, blocker: BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP, depends_on: [PR08-002]}
+  - {id: PR08-004, title: K6 field-realization posterior, priority: P2, state: blocked, blocker: BLOCKED_MISSING_FIELD_REALIZATIONS, note: curl-suppression no-go landed rev-r116}
+  - {id: PR08-005, title: Independent 2MRS cross-reconstruction contract, priority: P2, state: planned, depends_on: [PR08-004]}
+  - {id: PR08-006, title: Joint artifact and scalar pushforward, priority: P2, state: blocked, blocker: BLOCKED_UPSTREAM, depends_on: [PR08-001, PR08-003, PR08-004]}
+  - {id: PR10-001, title: New solver convention and oracle contract, priority: P3, state: separate_project, project: lowell_solver}
+  - {id: PR10-002, title: FLRW perturbation comparator, priority: P3, state: separate_project, depends_on: [PR10-001]}
+  - {id: PR10-003, title: Collision and TCA conservation, priority: P3, state: separate_project, depends_on: [PR10-001]}
+  - {id: PR10-004, title: LOS convergence surface, priority: P3, state: separate_project, depends_on: [PR10-002, PR10-003]}
+  - {id: PR10-005, title: Nearly-FLRW Bianchi-I seed, priority: P3, state: separate_project, depends_on: [PR10-004]}
+  - {id: PR10-006, title: Family support truth matrix, priority: P3, state: separate_project, depends_on: [PR10-005]}

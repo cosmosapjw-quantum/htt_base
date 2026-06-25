@@ -1,0 +1,16 @@
+id: PR08-004
+title: K6 field-realization posterior
+priority: P2
+state: blocked
+blocker: BLOCKED_MISSING_FIELD_REALIZATIONS
+owner_lane: cf4_reconstruction
+scope: >
+  Fit affine components to every constrained/posterior field realization; report
+  Cartesian components before norms; test radius/boundary/subsample stability.
+  Delete physical-vorticity parameters if the reconstruction enforces potential
+  flow (structural non-identifiability already demonstrated).
+inputs_required:
+  - constrained/posterior 3D velocity-field realization ensemble
+exit_gate: realization-conditioned posterior OR explicit no-go
+forbidden: vorticity detection from a curl-suppressed field
+mechanics_reference: htt/obsstat/affine_flow.py:curl_suppression_ensemble

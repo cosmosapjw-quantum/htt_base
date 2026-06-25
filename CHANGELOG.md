@@ -7,6 +7,50 @@
 
 ## [Unreleased]
 
+### PR07 audit-repair programme — Stage-0 harness + PR07-001..006 + governance (2026-06-26)
+
+Applied the 2026-06-25 PR04 adversarial-audit pack
+(`pr07_research_repair_execution_pack`, verdict MAJOR_REVISIONS) by **folding**
+its harness/CoVe protocol into the repo (no parallel `htt_pr07` package): the
+10 CoVe lanes map 1:1 onto the existing `.claude` agents + `htt-*` skills
+(`docs/research_program/pr07/AGENT_SKILL_MAP.md`); physics ported into the
+canonical `bass`/`obsstat`/`departure` modules; gates wired into the `Makefile`
++ `research_gates/pr07/` + a CI workflow.
+
+Landed on `research/pr04-multicomponent` (rev-r116, rev-r117):
+
+- **PR07-001** unit-safe anisotropic stress: split `pi_physical` vs
+  `Pi_normalized=κπ/(3H²)`; two exactly-equivalent shear-RHS owners; convention
+  gate + guards; report B-shear equation corrected (invalid `κΠ` removed).
+- **PR07-002** theorem/claim repair: NT-A1 closure-conditional identity (symbolic
+  κ); NT-A3 estimator sampling variance (not a Cramér–Rao / universal floor);
+  NT-B3 additive contrast `Δ_F=L F`, `L·1=0` (legacy ratio branch-limited);
+  A-Wigner split into A-boost + A-first-jet; forbidden tokens removed; Wolfram
+  symbolic gate added (**fixed a real bug** in the pack's coordinate script —
+  Christoffel named `Gamma` collided with the protected built-in → `theta=0`;
+  renamed to `Chr`).
+- **PR07-003** independent Bianchi-I dynamics verifier (chain-rule conservation +
+  Gauss/Codazzi transport + DOP853/Radau event-guarded integrator).
+- **PR07-004** PAPER-A proof closure: the three former `BLOCKED_PROOF_REVIEW`
+  corollaries (radial-vorticity no-go, single-shell/broad-depth rank, temporal
+  tensor rank) + the duplicate-block full-column-rank qualifier.
+- **PR07-005** reproducible gate surface (PYTHONPATH/interpreter fallback,
+  required forbidden-deps, JSON/checksum CI artifacts).
+- **PR07-006** measurement wording (K5 weighted-GLS not "minimum-variance",
+  conditional inverse-Fisher; K4 lower-bound/edge softened; K6 vorticity
+  structurally non-identifiable) + PR08-002 hierarchical GLS / K6 curl-
+  suppression / K1 max-scan mechanics in `obsstat`.
+- **Governance**: `docs/research_program/pr07/` PR list, blocker matrix, claim
+  gates, dependency schedule, agent/skill map, WEB-CRAG ledger, `pr_registry.yaml`
+  + blocked tickets (PR08-001/003/004/006 with registered blocker codes; PR10-001..006
+  as a separate `restricted_bianchi_i_multifluid` solver project). PAPER-C/D stay
+  blocked until the exact-FLRW + transfer gates pass.
+
+Gates: forbidden-deps PASS; PR04 23/23; PR07 16/16; Wolfram all-true (xAct 1.3.0);
+CoVe 13/13 PASS_WITH_REGISTERED_DELEGATIONS; contract 6/6; obsstat 111 passed;
+report 14 pp; `pdf_claim_lint` 0 failed. No family identification, global tilt,
+native-solver result, or physical-vorticity detection introduced.
+
 ### V5 Round-17 P3.5 — Tier 1A v2: joint-operator sparsity-pattern caching (2026-04-28)
 
 CSR sparsity-pattern caching for the reduced-joint affine operator.
