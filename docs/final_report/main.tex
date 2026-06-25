@@ -68,17 +68,28 @@ the Wolfram Engine under explicitly stated hypotheses; (iii)
 model-independent measurements on real Planck and Cosmicflows-4 data,
 each calibrated against an isotropic null, a forward mock, or a
 resampling baseline; and (iv) explicitly labelled
-transfer-conditional diagnostics. No result here identifies a
-Bianchi family, detects an anisotropic geometry, claims native
-low-$\ell$ Boltzmann-solver validation, or promotes any diagnostic
-into a posterior-odds or model-ranking statement. The honest
-publishable envelope is a methods-plus-bounds framework that
-recovers the established low-$\ell$ CMB anomalies as null-calibrated
+transfer-conditional diagnostics. The analytic suites are hardened by
+an external adversarial audit: every theorem is restated under its
+exact hypotheses (closure-conditional identities, an estimator
+sampling-variance statement rather than a universal floor, and an
+additive depth-transport contrast), the restricted Bianchi-I dynamics
+are re-derived by an \emph{independent} chain-rule verifier
+($1000$-state conservation and Gauss/Codazzi transport, DOP853/Radau
+cross-checks), and the estimator mechanics (hierarchical bulk-flow
+coverage, a curl-suppression non-identifiability no-go, and a
+look-elsewhere max-scan calibration) are validated on synthetic
+catalogues with known truth. No result here identifies a Bianchi
+family, detects an anisotropic geometry, claims native low-$\ell$
+Boltzmann-solver validation, or promotes any diagnostic into a
+posterior-odds or model-ranking statement. The honest publishable
+envelope is a methods-plus-bounds framework that recovers the
+established low-$\ell$ CMB anomalies as null-calibrated
 model-independent features, maps the CF4 bulk-flow apex profile,
 measures a forward-mock-calibrated CF4 bulk flow and its affine
 velocity-gradient decomposition, and proves an exact dust-FLRW
-constraint-transport oracle---while producing no false anisotropy
-claim.
+constraint-transport oracle (machine-checked with the Wolfram Engine
+and an independent xAct canonicalization)---while producing no false
+anisotropy claim.
 \end{abstract}
 
 \tableofcontents
@@ -365,7 +376,25 @@ velocity-gradient tensor of a congruence.
         derivative: two fields can share $u^a$ at a point yet differ in
         expansion there. Hence a congruence first jet---not a single
         rapidity---is needed to define expansion, shear, and vorticity.
+  \item \emph{A-radial-novortex (radial-vorticity no-go).} For a purely
+        radial response at directions $n$ and depths $d$ (so $r=d\,n$)
+        and any antisymmetric affine mode $\Omega$, the radial response
+        $n^a\Omega_{ab}n^b=0$ exactly: vorticity lies in the data null
+        space. Radial peculiar-velocity data therefore carry no vorticity
+        information.
+  \item \emph{A-shell-degeneracy.} A single-depth-shell dipole design
+        (acceleration-like block $n_i$ plus coherent-bulk block $n_i/d$)
+        has rank $3$; restoring broad depth support lifts it to the full
+        rank $6$. One shell cannot separate acceleration from bulk.
+  \item \emph{A-temporal-rank.} For an STF tensor history with temporal
+        kernel $T$, the dynamic design has rank $5\,\mathrm{rank}(T)$
+        (i.e.\ rank $15$ for three independent temporal rows): tensor
+        observability requires independent temporal kernels.
 \end{itemize}
+The last three were the previously open PAPER-A corollaries; they are now
+closed by independent matrix proofs
+(\texttt{htt/.../departure/paper\_a\_closure.py}) plus the
+\texttt{research\_gates/pr07/} property gates and the Wolfram symbolic core.
 
 \paragraph{PAPER-B (restricted Bianchi-I multifluid).}
 Branch (stated before each theorem): expanding geodesic normal
@@ -445,6 +474,40 @@ $\pi_{ab}$ (equivalently the normalized $\Pi_{ab}=\kappa\pi_{ab}/(3H^2)$)
 and stays zero when it is ablated (shear memory). Diagnostic-only.}
 \label{fig:pr04-b2}
 \end{figure}
+
+\paragraph{Independent dynamics verification.}
+The restricted Bianchi-I dynamics are validated by a verifier that does
+\emph{not} call the production right-hand side and compare it with
+itself. It samples admissible species (rest-frame density, equation of
+state, subluminal velocity), projects \emph{independently} to the
+normal-frame $(\mu,p,q,\pi)$, differentiates the projection by the chain
+rule, and compares against the analytic energy/momentum conservation
+laws. Over $1000$ seeded admissible states the maximum energy residual
+is $5.7\times10^{-14}$ and momentum residual $5.1\times10^{-14}$; the
+Gauss and Codazzi constraint-transport residuals are
+$5.6\times10^{-17}$ and $0$. The exact $\Lambda=0$ dust oracle is
+reproduced by SciPy DOP853 (max $|{\Delta}a|=9.6\times10^{-13}$) and
+Radau ($3.2\times10^{-14}$), and the RK4 step shows fourth-order
+convergence. These cross-checks (the
+\texttt{research\_gates/pr07/} dynamics gates) close the
+constraint-transport and conservation review as an \emph{independent}
+re-derivation, not a single production fixture.
+
+\paragraph{Symbolic and chain-of-verification gate surface.}
+The closed-form analytic cores carry a machine-checked symbolic record.
+The Wolfram/xAct gate
+(\texttt{make pr07-wolfram}$\to$\texttt{docs/generated/pr07\_wolfram\_proofs.json})
+verifies, all checks true (engine backend \texttt{wolframclient}, xAct
+$1.3.0$): the physical/normalized shear-source equivalence with
+derivatives $\kappa$ and $3H^2$; exact Lorentz composition with
+non-additive velocity; the first-jet and radial-vorticity identities;
+the dust Raychaudhuri relation; and an independent coordinate derivation
+of $\theta=H_1+H_2+H_3$ (cross-checked against the abstract-index xAct
+canonicalization). A concise chain-of-verification report
+(\texttt{python scripts/cove\_verify\_pr07.py}$\to$\texttt{pr07\_cove\_report.json})
+aggregates the theorem and synthetic mechanics into $13$ evidence checks,
+all passing under the registered delegations (the data/E2E/solver
+blockers of \S\ref{sec:blocks}).
 
 % ============================================================
 \section{Model-independent real-data measurements}
@@ -674,6 +737,75 @@ positive Bianchi/tilt evidence (blocked: amplitude-matched
 contamination null, no native morphology atlas).
 
 % ============================================================
+\section{Synthetic estimator-mechanics validations}
+\label{sec:mechanics}
+
+The model-independent measurements above use estimators whose
+\emph{mechanics} (coverage, bias control, look-elsewhere calibration,
+and structural identifiability) are validated separately on synthetic
+catalogues with known truth. These are explicitly \emph{synthetic
+mechanics}, not measurements: they certify that the estimator behaves
+correctly, and they do not produce any observational number. The
+release-matched forward mocks, end-to-end simulations, and constrained
+field realizations needed to turn these mechanics into calibrated
+observational uncertainties are the standing blocks of
+\S\ref{sec:blocks}.
+
+\paragraph{K5 hierarchical bulk-flow likelihood (mechanics).}
+A weighted-Gaussian hierarchical model
+$y=NB+W\alpha+Z\delta+\epsilon$, $\delta\sim\mathcal N(0,T)$,
+$\epsilon\sim\mathcal N(0,\mathrm{diag}(\sigma_{\mathrm{meas}}^2+\sigma_\star^2))$,
+profiles $\sigma_\star$ and absorbs method/group offsets as random
+effects. On $500$ synthetic catalogues with a deliberately
+method-correlated angular selection (true bulk $(180,-95,70)$\,km/s,
+true $\sigma_\star=145$\,km/s), the naive diagonal fit undercovers the
+selection-aligned component ($68\%$ coverage $0.51$) and carries a
+$15.0$\,km/s bias norm; the hierarchical fit restores component coverage
+to $0.67$--$0.69$ ($68\%$) and $0.94$--$0.96$ ($95\%$), reduces the bias
+norm to $1.9$\,km/s, and recovers $\sigma_\star=142.7$\,km/s
+(Table~\ref{tab:mech}). This validates the random-effect mechanics that
+PR08-002 brings to the K5 estimator; the cosmic-variance and
+release-specific Malmquist terms remain blocked (PR08-003).
+
+\paragraph{K6 curl-suppression no-go (mechanics).}
+On $300$ noisy synthetic affine fields carrying a known vorticity
+$\omega=(0.006,-0.004,0.009)$, the full affine fit recovers it
+($\bar\omega\approx(0.005,-0.005,0.008)$), but projecting each field onto
+its symmetric (potential-flow) part before fitting erases the curl to
+$\le7.5\times10^{-17}$. A curl-suppressing reconstruction therefore makes
+physical vorticity \emph{structurally non-identifiable} even when the
+pre-reconstruction field contains it---the formal basis for the K6
+reporting discipline.
+
+\paragraph{K1 max-scan global calibration (mechanics).}
+For a frozen family of low-$\ell$ statistics evaluated in every
+simulation, each result is converted to a tail score, a single maximum
+is taken, and the global rank Monte-Carlo $p$-value (with the $+1$
+correction) is formed. On $2000$ synthetic correlated mocks the global
+$p=0.0070$ is correctly no smaller than the most extreme local rank
+$p=0.0015$, demonstrating the look-elsewhere mechanics that a real PR4/
+NPIPE E2E summary (PR08-001, blocked) would require.
+
+\begin{table}[ht]
+\centering
+\caption{Synthetic estimator-mechanics summary (known truth; no
+observational number). All rows are \emph{synthetic mechanics}.}
+\label{tab:mech}
+\begin{tabular}{llll}
+\toprule
+Mechanism & Quantity & Naive / pre & Repaired / post \\
+\midrule
+K5 hierarchical & worst $68\%$ component coverage & $0.51$ & $0.67$ \\
+K5 hierarchical & bias norm [km/s] & $15.0$ & $1.9$ \\
+K5 hierarchical & recovered $\sigma_\star$ [km/s] & --- & $142.7$ (true $145$) \\
+K6 curl no-go & projected $\|\omega\|$ & $\sim\!10^{-2}$ (full) & $7.5\times10^{-17}$ \\
+K1 max-scan & global vs.\ min-local $p$ & --- & $0.0070\!\ge\!0.0015$ \\
+B-dynamics & $1000$-state $E$/$p$ residual & --- & $<6\times10^{-14}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
 \section{Transfer-conditional diagnostics}
 \label{sec:transfer}
 
@@ -712,7 +844,21 @@ this report and remain blocked:
         model-independent measurement into anisotropy evidence;
   \item a globally significant low-$\ell$ anomaly detection (the
         K1 $p$-values are local, look-elsewhere-tracked, single-sky,
-        and not full-covariance/mask-coupled).
+        and not full-covariance/mask-coupled);
+  \item any calibrated observational uncertainty from the synthetic
+        estimator-mechanics of \S\ref{sec:mechanics}: the K1 global
+        $p$-value needs PR4/NPIPE end-to-end summaries
+        (\texttt{BLOCKED\_MISSING\_PR4\_E2E\_ACCESS}); the total K5
+        uncertainty needs release-matched forward mocks and cosmic
+        variance (\texttt{BLOCKED\_MISSING\_RELEASE\_MOCK\_OWNERSHIP});
+        the K6 vorticity/shear posterior needs constrained field
+        realizations (\texttt{BLOCKED\_MISSING\_FIELD\_REALIZATIONS});
+  \item any family-conditioned CMB likelihood, transfer-based
+        compatibility/exclusion, or global-tilt posterior from CMB
+        transfer: these await the separate native low-$\ell$
+        Bianchi-Boltzmann solver (exact-FLRW comparator first),
+        and old external/Rust spectra are not admissible substitutes
+        (\texttt{AWAITING\_NATIVE\_LOWELL\_SOLVER}).
 \end{itemize}
 
 % ============================================================
@@ -744,6 +890,15 @@ artifacts are:
         \texttt{python scripts/make\_cf4\_affine\_flow.py}.
   \item \textbf{Transfer inventory:}
         \texttt{python scripts/generate\_transfer\_sensitivity\_report.py}.
+  \item \textbf{PR07 repair gates + symbolic/CoVe surface:}
+        \texttt{make pr07-gates} (unit-safe stress, independent dynamics,
+        PAPER-A closure); \texttt{make pr07-wolfram}
+        $\to$\texttt{docs/generated/pr07\_wolfram\_proofs.json} (local
+        Wolfram/xAct); \texttt{python scripts/run\_pr07\_experiments.py}
+        then \texttt{python scripts/cove\_verify\_pr07.py}
+        $\to$\texttt{docs/generated/pr07\_\{paper\_a,paper\_b,k1,k5,k6\}.json}
+        and \texttt{pr07\_cove\_report.json}. The step-by-step PR/blocker
+        registry is \texttt{docs/research\_program/pr07/}.
 \end{itemize}
 Each figure in this report has a sidecar
 \texttt{*.manifest.json} recording owner, claim tier (\emph{diagnostic-only}),

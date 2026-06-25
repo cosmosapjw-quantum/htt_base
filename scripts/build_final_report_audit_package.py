@@ -79,6 +79,14 @@ EVIDENCE_FILES = (
     "docs/generated/transfer_sensitivity_report.md",
     "docs/generated/new_results_real_data_summary.md",
     "docs/generated/publication_claim_freeze.md",
+    # PR07 audit-repair evidence backing the new report sections.
+    "docs/generated/pr07_wolfram_proofs.json",
+    "docs/generated/pr07_cove_report.json",
+    "docs/generated/pr07_paper_a.json",
+    "docs/generated/pr07_paper_b.json",
+    "docs/generated/pr07_k1_global_synthetic.json",
+    "docs/generated/pr07_k5_hierarchical_synthetic.json",
+    "docs/generated/pr07_k6_affine_ensemble_synthetic.json",
 )
 
 

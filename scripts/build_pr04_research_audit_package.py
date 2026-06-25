@@ -50,6 +50,10 @@ THEOREM_RECORDS = (
     "docs/generated/pr04_paper_theorem_proofs.json",
     "docs/generated/pr04_paper_theorem_proofs.md",
     "docs/research_program/pr04/PAPER_THEOREM_MAP.md",
+    # PR07 audit-repair symbolic + chain-of-verification records.
+    "docs/generated/pr07_wolfram_proofs.json",
+    "docs/generated/pr07_cove_report.json",
+    "docs/generated/pr07_capability_probe.json",
 )
 
 MEASUREMENT_REPORTS = (
@@ -61,21 +65,30 @@ MEASUREMENT_REPORTS = (
     "docs/generated/cf4_bulkflow_likelihood_report.md",
     "docs/generated/cf4_affine_flow_report.json",
     "docs/generated/cf4_affine_flow_report.md",
+    # PR07 synthetic estimator-mechanics + theorem-fixture evidence.
+    "docs/generated/pr07_paper_a.json",
+    "docs/generated/pr07_paper_b.json",
+    "docs/generated/pr07_k1_global_synthetic.json",
+    "docs/generated/pr07_k5_hierarchical_synthetic.json",
+    "docs/generated/pr07_k6_affine_ensemble_synthetic.json",
 )
 
-# Theorem implementations (PR04 overlay) + new OBSSTAT estimators.
+# Theorem implementations (PR04 overlay) + OBSSTAT estimators + PR07 modules.
 SOURCE_FILES = (
     "htt/htt/htt/common/stf_canonical.py",
     "htt/htt/htt/common/multicomponent_blocks.py",
     "htt/bass/observer/congruence_ssot.py",
     "htt/htt/htt/departure/multicomponent_response.py",
+    "htt/htt/htt/departure/paper_a_closure.py",
     "htt/bass/background/bi_continuation/__init__.py",
     "htt/bass/background/bi_continuation/moments.py",
     "htt/bass/background/bi_continuation/dynamics.py",
+    "htt/bass/background/bi_continuation/verification.py",
     "htt/mio/formalism/physical_pushforward.py",
     "htt/htt/htt/integration/pr04_canonical_bridge.py",
     "htt/obsstat/affine_flow.py",
     "htt/obsstat/bulkflow_mle.py",
+    "htt/obsstat/lowell_global_calibration.py",
 )
 
 DRIVER_SCRIPTS = (
@@ -87,6 +100,14 @@ DRIVER_SCRIPTS = (
     "dl_pipeline/scripts/extract_cf4_full.py",
     "Makefile",
     "dl_pipeline/config/sources.json",
+    # PR07 audit-repair harness.
+    "scripts/run_pr07_wolfram_proofs.py",
+    "scripts/run_pr07_experiments.py",
+    "scripts/cove_verify_pr07.py",
+    "scripts/capability_probe.py",
+    "wolfram/pr07_symbolic_core.wls",
+    "wolfram/pr07_xact_abstract.wls",
+    "wolfram/pr07_bianchi_i_coordinates.wls",
 )
 
 GOVERNANCE_FILES = (
@@ -96,6 +117,22 @@ GOVERNANCE_FILES = (
     "docs/research_program/pr04/CLAIM_AND_STOP_GATES.md",
     "docs/research_program/pr04/PAPER_EXIT_CRITERIA.md",
     "docs/research_program/pr04/LOCAL_REPO_EXECUTION_SCHEDULE.md",
+    # PR07 audit-repair programme surface.
+    "docs/research_program/pr07/README.md",
+    "docs/research_program/pr07/PR_LIST.md",
+    "docs/research_program/pr07/AGENT_SKILL_MAP.md",
+    "docs/research_program/pr07/BLOCKER_RESOLUTION_MATRIX.md",
+    "docs/research_program/pr07/CLAIM_GATES.md",
+    "docs/research_program/pr07/DEPENDENCY_SCHEDULE.md",
+    "docs/research_program/pr07/PAPER_FREEZE_PR07_007_008.md",
+    "docs/research_program/pr07/PR08-005_2MRS_CROSS_RECONSTRUCTION_CONTRACT.md",
+    "docs/research_program/pr07/WEB_CRAG_LEDGER.md",
+    "docs/research_program/pr07/pr_registry.yaml",
+    "docs/research_program/pr07/tickets/PR08-001.yaml",
+    "docs/research_program/pr07/tickets/PR08-003.yaml",
+    "docs/research_program/pr07/tickets/PR08-004.yaml",
+    "docs/research_program/pr07/tickets/PR08-006.yaml",
+    "docs/research_program/pr07/tickets/PR10-solver.yaml",
 )
 
 FIGURE_STEMS = (
@@ -157,15 +194,19 @@ def _virtual(archive: str, group: str, text: str) -> Entry:
 def _pr_deltas(repo_root: Path) -> list[str]:
     return sorted(
         p.relative_to(repo_root).as_posix()
-        for n in range(108, 115)
+        for n in range(108, 118)
         for p in [repo_root / f"docs/PR_DELTAS/rev-r{n}.md"]
         if p.is_file()
     )
 
 
 def _gate_tests(repo_root: Path) -> list[str]:
-    d = repo_root / "research_gates/pr04/tests"
-    return sorted(p.relative_to(repo_root).as_posix() for p in d.glob("test_pr04_*.py")) if d.is_dir() else []
+    out: list[str] = []
+    for rel in ("research_gates/pr04/tests", "research_gates/pr07/tests"):
+        d = repo_root / rel
+        if d.is_dir():
+            out += [p.relative_to(repo_root).as_posix() for p in d.glob("test_pr0*_*.py")]
+    return sorted(out)
 
 
 def _collect(repo_root: Path) -> list[Entry]:
@@ -273,7 +314,8 @@ def build_payload(*, repo_root: Path = REPO_ROOT, output_zip: Path = DEFAULT_OUT
             "model_ranking_or_posterior_odds": "forbidden",
         },
         "caveats": [
-            "Research-audit bundle for the PR04/LR-06 program; diagnostic-only / conditional-theorem.",
+            "Research-audit bundle for the PR04/LR-06/PR07 program; diagnostic-only / conditional-theorem.",
+            "Includes the PR07 adversarial-audit repairs: theorem restatements, an independent dynamics verifier, a Wolfram/xAct symbolic gate, a CoVe report, and synthetic estimator-mechanics.",
             "Theorems are conditional structural identities, not detections.",
             "CF4 measurements are kinematic descriptors; vorticity reconstruction-conditioned; no global-tilt claim.",
             "No native low-ell solver output, family-ID, geometry detection, or posterior odds.",
@@ -284,10 +326,11 @@ def build_payload(*, repo_root: Path = REPO_ROOT, output_zip: Path = DEFAULT_OUT
 
 
 def render_readme() -> str:
-    return """# HTT/BASS PR04 + LR-06 Research External-Audit Package
+    return """# HTT/BASS PR04 + LR-06 + PR07 Research External-Audit Package
 
 Self-contained bundle for external review of the multicomponent / congruence /
-restricted-Bianchi-I research program (branch `research/pr04-multicomponent`).
+restricted-Bianchi-I research program, including the PR07 adversarial-audit
+repairs (branch `research/pr04-multicomponent`).
 
 ## Read in this order
 
@@ -296,26 +339,35 @@ restricted-Bianchi-I research program (branch `research/pr04-multicomponent`).
 3. `pr04_research_audit/docs/generated/pr04_paper_theorem_proofs.md` and
    `egs_lowell_theorem_proofs.md` -- the Wolfram-verified theorem cores; map in
    `docs/research_program/pr04/PAPER_THEOREM_MAP.md`.
-4. The measurement reports under `docs/generated/` (Planck low-ell K1; CF4 apex
+4. `pr04_research_audit/docs/generated/pr07_wolfram_proofs.json` and
+   `pr07_cove_report.json` -- the PR07 symbolic/xAct gate and the concise
+   chain-of-verification (13 checks); the synthetic mechanics evidence is in
+   `pr07_{paper_a,paper_b,k1,k5,k6}*.json`.
+5. The measurement reports under `docs/generated/` (Planck low-ell K1; CF4 apex
    K4; CF4 full-release bulk flow K5; CF4 affine flow K6).
-5. The theorem implementations (PR04 overlay + OBSSTAT estimators), the gate
-   tests under `research_gates/pr04/tests/`, and the `Makefile` gate targets.
-6. The honest status: `docs/research_program/pr04/LR06_TICKET_LEDGER.md` and
-   `CLAIM_AND_STOP_GATES.md`; the per-PR deltas under `docs/PR_DELTAS/`.
+6. The theorem implementations (PR04 overlay + OBSSTAT estimators + the PR07
+   `paper_a_closure`/`verification`/`lowell_global_calibration` modules), the gate
+   tests under `research_gates/{pr04,pr07}/tests/`, and the `Makefile` targets
+   (`pr04-gates`, `pr07-gates`, `pr07-wolfram`).
+7. The honest status: `docs/research_program/pr04/LR06_TICKET_LEDGER.md`,
+   `CLAIM_AND_STOP_GATES.md`, and the PR07 programme surface under
+   `docs/research_program/pr07/` (PR list, agent/skill map, blocker matrix,
+   claim gates, registry + blocked tickets); per-PR deltas under `docs/PR_DELTAS/`.
 
 ## What this bundle is / is not
 
 - It is the reviewable research surface: report + proofs + implementations +
   gates + measurements + honest blocker ledger.
-- It is NOT a results-freeze: every result is diagnostic-only or a conditional
-  theorem. Family-ID, geometry detection, native low-ell solver validation,
-  global-tilt-from-CF4, and posterior/odds claims remain blocked.
+- It is NOT a results-freeze: every result is diagnostic-only, a conditional
+  theorem, or explicitly synthetic estimator-mechanics. Family-ID, geometry
+  detection, native low-ell solver validation, global-tilt-from-CF4, and
+  posterior/odds claims remain blocked.
 - Raw datasets are not shipped; reports carry release hashes and provenance.
 """
 
 
 def render_prompt() -> str:
-    return """# Adversarial Research Audit Prompt: PR04 + LR-06 Program
+    return """# Adversarial Research Audit Prompt: PR04 + LR-06 + PR07 Program
 
 You are an external adversarial reviewer. Audit only the research content:
 physics, mathematics, statistics, theorem hypotheses, estimator design, claim
@@ -330,18 +382,29 @@ reports.
 ## Required output sections
 
 1. `Verdict`: PASS | MINOR REVISIONS | MAJOR REVISIONS | REJECT / NOT READY.
-2. `Theorem Audit`: per core (A-rank, A-flrw, A-wigner; B-nonsuff, B-psd, B-dust,
-   B-shear; NT-A1/A3/B3) -- are the hypotheses complete and the symbolic claim
-   correct? Is the registered Bianchi-I branch stated? Table `Item | Status |
-   Issue | Required Fix`.
-3. `Estimator/Statistics Audit`: K1 null calibration + look-elsewhere; K4/K5/K6
-   bulk-flow + affine decomposition -- minimum-variance vs inverse-Fisher
-   covariance, sigma_star nuisance, forward-mock coverage, vorticity
-   reconstruction-conditioning, selection/Malmquist caveats.
-4. `Claim-Tier Corrections`: exact wording to downgrade or remove.
-5. `Blocked-Item Check`: confirm no scalar->family, no global-tilt-from-CF4, no
+2. `Theorem Audit`: per core (A-rank with full-column-rank qualifier, A-flrw,
+   A-boost vs A-first-jet split, A-radial-novortex, A-shell-degeneracy,
+   A-temporal-rank; B-nonsuff, B-psd, B-dust, B-shear; NT-A1 closure-conditional
+   identity, NT-A3 estimator sampling variance, NT-B3 additive contrast) -- are
+   the hypotheses complete and the symbolic claim correct (cross-check against
+   `pr07_wolfram_proofs.json`)? Is the registered Bianchi-I branch stated? Was
+   any forbidden token (EGS identity, cosmic-variance floor, CRLB, Wigner-angle,
+   minimum-variance estimator) reintroduced? Table `Item | Status | Issue |
+   Required Fix`.
+3. `Estimator/Statistics Audit`: K1 null calibration + max-scan look-elsewhere;
+   K4/K5/K6 bulk-flow + affine decomposition -- weighted-GLS (not minimum-variance)
+   with conditional inverse-Fisher covariance, sigma_star nuisance, hierarchical
+   random-effect coverage (`pr07_k5_*`), forward-mock coverage, K6 curl-suppression
+   structural non-identifiability (`pr07_k6_*`), selection/Malmquist caveats. Are
+   the synthetic mechanics correctly separated from observational claims?
+4. `Independent-Verification Audit`: does the chain-rule dynamics verifier
+   (`pr07_paper_b.json`) re-derive conservation/transport independently of the
+   production RHS, and does the CoVe report (`pr07_cove_report.json`) terminate
+   blocked lanes in registered blocker codes rather than substitute numbers?
+5. `Claim-Tier Corrections`: exact wording to downgrade or remove.
+6. `Blocked-Item Check`: confirm no scalar->family, no global-tilt-from-CF4, no
    MIO-as-odds, no native-solver inheritance, no radial-vorticity claim leaked.
-6. `Claims That Are Safe`: bullet list allowed under current evidence.
+7. `Claims That Are Safe`: bullet list allowed under current evidence.
 
 ## Hard boundaries (reject if used as a current result)
 
