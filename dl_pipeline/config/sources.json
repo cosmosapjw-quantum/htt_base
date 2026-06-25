@@ -2,7 +2,7 @@
   "_schema": {
     "version": "1.0",
     "description": "Single source-of-truth manifest for every external download. The orchestrator (fetch.py) reads only this file. URLs change rarely; when they do, edit here, not in stage scripts.",
-    "stage_order": ["env", "planck_pr3", "bicep_keck", "planck_lensing", "act_dr4", "act_dr6", "spt3g_y1", "desi_y1", "cf4", "camb_refs", "scalars", "package"]
+    "stage_order": ["env", "planck_pr3", "bicep_keck", "planck_lensing", "act_dr4", "act_dr6", "spt3g_y1", "desi_y1", "cf4", "cf4_full", "camb_refs", "scalars", "package"]
   },
 
   "planck_pr3": {
@@ -148,6 +148,19 @@
     "extraction": {
       "script": "scripts/cf4_grid_adapter.py",
       "produces": "compact_products/cf4/query_single.json, compact_products/cf4/query_batch.npz"
+    }
+  },
+
+  "cf4_full": {
+    "_doc": "Cosmicflows-4 FULL release (Tully+ 2023) group catalog from VizieR J/ApJ/944/94: table4 = 38053 group distances + peculiar velocities with method/group/selection hierarchy. Feeds LR-06D.",
+    "project_page": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/944/94",
+    "base": "https://cdsarc.cds.unistra.fr/ftp/J/ApJ/944/94",
+    "tables": ["table2.dat", "table3.dat", "table4.dat"],
+    "primary_table": "table4.dat",
+    "extraction": {
+      "script": "scripts/extract_cf4_full.py",
+      "args": ["--raw-dir", "{raw}/cf4_full", "--out", "{out}/pecvel/cf4_full/cf4_groups.npz"],
+      "produces": "obs_bundle/pecvel/cf4_full/cf4_groups.npz, obs_bundle/pecvel/cf4_full/cf4_full_release_manifest.json"
     }
   },
 

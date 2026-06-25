@@ -431,9 +431,26 @@ def stage_package(root: Path, sources: dict, log: Logger, **opts):
     run_python(SCRIPTS_DIR / "package_obs_bundle.py", args, log, check=False)
 
 
+def stage_cf4_full(root: Path, sources: dict, log: Logger, **opts):
+    """Cosmicflows-4 FULL release group catalog (VizieR J/ApJ/944/94) -> npz.
+
+    Downloads table2/3/4 + ReadMe and parses table4 (group distances + peculiar
+    velocities) into a release-hashed npz for LR-06D. Acquisition + schema only.
+    """
+    s = sources["cf4_full"]
+    out_npz = root / "obs_bundle" / "pecvel" / "cf4_full" / "cf4_groups.npz"
+    args = [a.replace("{raw}", str(root / "raw")).replace("{out}", str(root / "obs_bundle"))
+            for a in s["extraction"]["args"]]
+    rc = run_python(SCRIPTS_DIR / "extract_cf4_full.py", args, log, check=False)
+    if rc != 0 or not out_npz.exists():
+        log("  [manual] CF4 full release unavailable (BLOCKED_MISSING_FULL_RELEASE_BINDING).")
+        log(f"           VizieR: {s['project_page']}")
+
+
 # Stage registry
 STAGES = {
     "env":            stage_env,
+    "cf4_full":       stage_cf4_full,
     "planck_pr3":     stage_planck_pr3,
     "bicep_keck":     stage_bicep_keck,
     "planck_lensing": stage_planck_lensing,

@@ -1,0 +1,92 @@
+{
+  "artifact_id": "obsstat.cf4_bulkflow_likelihood",
+  "owner": "OBSSTAT",
+  "implementation_scope": "obsstat",
+  "claim_tier": "diagnostic_only",
+  "transfer_source": "none",
+  "sky_support_status": "cf4_full_group_catalog",
+  "ticket": "LR-06D",
+  "null_mock_status": "forward_mock_coverage_calibrated",
+  "generating_command": "python scripts/make_cf4_bulkflow_likelihood.py",
+  "git_commit_or_worktree_state": "4d4da53+dirty",
+  "input_hashes": [
+    "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz:sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad"
+  ],
+  "release": "Cosmicflows-4 (Tully+ 2023) VizieR J/ApJ/944/94 table4",
+  "n_groups_total": 38053,
+  "depth_windows": [
+    {
+      "depth_mpc": 60.0,
+      "status": "OK",
+      "n_groups": 3916,
+      "sky_fraction_nside4": 0.974,
+      "sigma_star_kms": 90.0,
+      "bulk_amplitude_kms": 319.9,
+      "bulk_amplitude_error_kms": 7.4,
+      "apex_galactic_l_deg": 296.0,
+      "apex_galactic_b_deg": 19.8,
+      "forward_mock_coverage_1sigma": 0.68,
+      "forward_mock_recovered_kms": 320.7
+    },
+    {
+      "depth_mpc": 100.0,
+      "status": "OK",
+      "n_groups": 8540,
+      "sky_fraction_nside4": 0.984,
+      "sigma_star_kms": 50.0,
+      "bulk_amplitude_kms": 351.0,
+      "bulk_amplitude_error_kms": 5.0,
+      "apex_galactic_l_deg": 293.2,
+      "apex_galactic_b_deg": 21.5,
+      "forward_mock_coverage_1sigma": 0.717,
+      "forward_mock_recovered_kms": 350.6
+    },
+    {
+      "depth_mpc": 150.0,
+      "status": "OK",
+      "n_groups": 13844,
+      "sky_fraction_nside4": 0.995,
+      "sigma_star_kms": 50.0,
+      "bulk_amplitude_kms": 347.1,
+      "bulk_amplitude_error_kms": 5.0,
+      "apex_galactic_l_deg": 293.1,
+      "apex_galactic_b_deg": 21.2,
+      "forward_mock_coverage_1sigma": 0.653,
+      "forward_mock_recovered_kms": 347.2
+    },
+    {
+      "depth_mpc": 200.0,
+      "status": "OK",
+      "n_groups": 18191,
+      "sky_fraction_nside4": 0.995,
+      "sigma_star_kms": 50.0,
+      "bulk_amplitude_kms": 346.1,
+      "bulk_amplitude_error_kms": 5.0,
+      "apex_galactic_l_deg": 293.1,
+      "apex_galactic_b_deg": 21.2,
+      "forward_mock_coverage_1sigma": 0.667,
+      "forward_mock_recovered_kms": 346.0
+    },
+    {
+      "depth_mpc": 300.0,
+      "status": "OK",
+      "n_groups": 26363,
+      "sky_fraction_nside4": 0.995,
+      "sigma_star_kms": 50.0,
+      "bulk_amplitude_kms": 345.0,
+      "bulk_amplitude_error_kms": 4.9,
+      "apex_galactic_l_deg": 293.1,
+      "apex_galactic_b_deg": 21.2,
+      "forward_mock_coverage_1sigma": 0.67,
+      "forward_mock_recovered_kms": 345.2
+    }
+  ],
+  "observer_frame_note": "peculiar velocities use the catalog ramp Vpec (V3k cosmological frame for the error scaling); a full Vh/Vls/V3k frame ablation is a follow-up.",
+  "caveats": [
+    "Minimum-variance bulk flow on the CF4 group peculiar velocities; diagnostic-only.",
+    "sigma_star is fitted to reduced chi^2 ~ 1; covariance is the inverse Fisher matrix.",
+    "Forward-mock coverage uses the real geometry + errors with the recovered B as the injected truth.",
+    "No global-tilt or Bianchi-geometry claim is made from CF4 distances alone.",
+    "Selection and Malmquist/inhomogeneous-sampling biases are not fully forward-modelled here."
+  ]
+}
