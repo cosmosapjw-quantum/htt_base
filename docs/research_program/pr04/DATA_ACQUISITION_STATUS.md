@@ -2,6 +2,14 @@
 
 Date: 2026-06-25. Branch `research/pr04-multicomponent`.
 
+> **Update (pipeline-extension pass):** the `dl_pipeline` was extended with a
+> `cf4_full` stage (live VizieR J/ApJ/944/94 download — **LR-06D unblocked**,
+> `rev-r112`) and a fail-closed `planck_npipe` stage. **LR-06F** was completed on
+> the already-local CF4++ field (`rev-r111`). LR-06E maps need the PLA portal and
+> its boost calibration stays `BLOCKED_MISSING_E2E_SIMULATIONS`; LR-06G stays
+> `BLOCKED_UPSTREAM_TRANSFER` (the solver-tied item). Authoritative per-ticket
+> status: `LR06_TICKET_LEDGER.md`. The table below is the original triage.
+
 The `dl_pipeline/` (SSoT `dl_pipeline/config/sources.json`) owns: Planck **PR3**
 spectra/maps/masks/lensing, ACT DR4/DR6, SPT-3G Y1, BICEP/Keck 2018, DESI Y1 LSS,
 the **CF4++ grid** (single mean/std grid), and CAMB references. `workdir/obs_bundle/`

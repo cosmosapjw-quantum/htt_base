@@ -2,7 +2,7 @@
   "_schema": {
     "version": "1.0",
     "description": "Single source-of-truth manifest for every external download. The orchestrator (fetch.py) reads only this file. URLs change rarely; when they do, edit here, not in stage scripts.",
-    "stage_order": ["env", "planck_pr3", "bicep_keck", "planck_lensing", "act_dr4", "act_dr6", "spt3g_y1", "desi_y1", "cf4", "cf4_full", "camb_refs", "scalars", "package"]
+    "stage_order": ["env", "planck_pr3", "planck_npipe", "bicep_keck", "planck_lensing", "act_dr4", "act_dr6", "spt3g_y1", "desi_y1", "cf4", "cf4_full", "camb_refs", "scalars", "package"]
   },
 
   "planck_pr3": {
@@ -161,6 +161,17 @@
       "script": "scripts/extract_cf4_full.py",
       "args": ["--raw-dir", "{raw}/cf4_full", "--out", "{out}/pecvel/cf4_full/cf4_groups.npz"],
       "produces": "obs_bundle/pecvel/cf4_full/cf4_groups.npz, obs_bundle/pecvel/cf4_full/cf4_full_release_manifest.json"
+    }
+  },
+
+  "planck_npipe": {
+    "_doc": "Planck PR4/NPIPE frequency+component maps for LR-06E observer-boost/BipoSH. The PR4 maps are served from the Planck Legacy Archive query portal (not a plain file URL); set PLANCK_NPIPE_URL to a direct map URL to auto-fetch, else fetch manually. The end-to-end NPIPE simulation ensemble (300 realizations, hundreds of GB) needed to CALIBRATE boost injection recovery is not auto-downloaded; LR-06E calibration remains BLOCKED_MISSING_E2E_SIMULATIONS until those sims are bound.",
+    "project_page": "https://pla.esac.esa.int/#maps",
+    "portal_note": "PLA map access is via the interactive query interface; NERSC hosts an NPIPE mirror for authenticated users.",
+    "env_url_var": "PLANCK_NPIPE_URL",
+    "nside_out": 16,
+    "extraction": {
+      "produces": "obs_bundle/cmb/maps/npipe_*.npz (when a direct map URL is supplied)"
     }
   },
 

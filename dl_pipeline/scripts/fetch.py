@@ -447,10 +447,33 @@ def stage_cf4_full(root: Path, sources: dict, log: Logger, **opts):
         log(f"           VizieR: {s['project_page']}")
 
 
+def stage_planck_npipe(root: Path, sources: dict, log: Logger, **opts):
+    """Planck PR4/NPIPE maps for LR-06E (observer-boost / BipoSH).
+
+    Fail-closed: auto-fetches only if a direct map URL is provided via the
+    PLANCK_NPIPE_URL env var (the PLA serves maps through an interactive portal,
+    not a plain file URL). The end-to-end NPIPE simulation ensemble required to
+    CALIBRATE boost injection recovery is not downloaded here; LR-06E calibration
+    stays BLOCKED_MISSING_E2E_SIMULATIONS until those sims are bound.
+    """
+    s = sources["planck_npipe"]
+    url = os.environ.get(s.get("env_url_var", "PLANCK_NPIPE_URL"))
+    out_dir = root / "raw" / "planck_npipe"
+    if url:
+        out_dir.mkdir(parents=True, exist_ok=True)
+        download(url, out_dir / Path(url).name, log, optional=True)
+        log("  [note] NPIPE map fetched; LR-06E boost calibration still needs the E2E sim ensemble.")
+    else:
+        log("  [manual] PR4/NPIPE maps require the PLA portal; set PLANCK_NPIPE_URL for a direct map.")
+        log(f"           Portal: {s['project_page']}")
+        log("  [blocked] LR-06E calibration: BLOCKED_MISSING_E2E_SIMULATIONS (sim ensemble not bound).")
+
+
 # Stage registry
 STAGES = {
     "env":            stage_env,
     "cf4_full":       stage_cf4_full,
+    "planck_npipe":   stage_planck_npipe,
     "planck_pr3":     stage_planck_pr3,
     "bicep_keck":     stage_bicep_keck,
     "planck_lensing": stage_planck_lensing,
