@@ -15,11 +15,12 @@ PY       ?= $(shell [ -x "$(REPO)/venv/bin/python" ] && echo "$(REPO)/venv/bin/p
 PYTHON   ?= python
 GATEDIR  := $(REPO)/research_gates/pr04/tests
 GATEDIR7 := $(REPO)/research_gates/pr07/tests
+GATEDIRE := $(REPO)/research_gates/egs2/tests
 THREADS  := OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
 PYPATH   := PYTHONPATH=$(REPO):$(REPO)/htt:$(REPO)/htt/htt
 
-.PHONY: pr04-gates pr07-gates paper-a-gates paper-b-gates pr04-proofs \
-        pr04-forbidden-deps pr07-wolfram pr07-cove
+.PHONY: pr04-gates pr07-gates egs2-gates paper-a-gates paper-b-gates pr04-proofs \
+        pr04-forbidden-deps pr07-wolfram pr07-cove egs2-experiments
 
 ## All 23 external PR04 theorem/property gates + symbolic proofs + dep scan.
 pr04-gates: pr04-forbidden-deps
@@ -29,6 +30,14 @@ pr04-gates: pr04-forbidden-deps
 ## PR07 portable repair gates (unit-safe stress, independent dynamics, PAPER-A).
 pr07-gates: pr04-forbidden-deps
 	$(THREADS) $(PYPATH) $(PY) -m unittest discover -s $(GATEDIR7) -p 'test_pr07_*.py' -v
+
+## EGS2 extension gates (NT2-A1/A2 Fisher floor, NT2-B1 bracket, NT2-B2/B3, K1/K6 discharges).
+egs2-gates:
+	$(THREADS) $(PYPATH) $(PY) -m unittest discover -s $(GATEDIRE) -p 'test_egs2_*.py' -v
+
+## EGS2 experiment evidence -> docs/generated/egs2_experiments.json.
+egs2-experiments:
+	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs2_experiments.py
 
 ## PAPER-A: identifiability / congruence-kinematics gates + PAPER-A symbolic cores.
 paper-a-gates:

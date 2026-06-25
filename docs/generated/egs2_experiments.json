@@ -1,0 +1,157 @@
+{
+  "schema": "htt.egs2.experiments.v1",
+  "claim_tier": "program_theorem_and_synthetic_mechanics",
+  "family_identification": false,
+  "native_solver_result": false,
+  "experiments": {
+    "NT2_A1_A2_fisher_floor": {
+      "theorem": "NT2-A1 (genuine multi-multipole Fisher-CR floor) + NT2-A2 (octupole saturation)",
+      "single_ell_dispersion_l2": 0.6324555320336759,
+      "fisher_floor": {
+        "L2_fsky1.0": 0.6324555320336759,
+        "L2_fsky0.7": 0.7559289460184544,
+        "L3_fsky1.0": 0.531716572140652,
+        "L3_fsky0.7": 0.6355228590797224,
+        "L5_fsky1.0": 0.4739636163155822,
+        "L5_fsky0.7": 0.5664948740039735,
+        "L10_fsky1.0": 0.43902446694686,
+        "L10_fsky0.7": 0.524734603092669,
+        "L20_fsky1.0": 0.4236080018394591,
+        "L20_fsky0.7": 0.506308402941498
+      },
+      "mc_mle_vs_floor": {
+        "L2": {
+          "lmax": 2,
+          "f_sky": 1.0,
+          "fisher_floor": 0.6324555320336759,
+          "mc_dispersion": 0.6294681354712335,
+          "ratio": 0.9952765112942623
+        },
+        "L5": {
+          "lmax": 5,
+          "f_sky": 1.0,
+          "fisher_floor": 0.4739636163155822,
+          "mc_dispersion": 0.4630129679995544,
+          "ratio": 0.9768955929546784
+        },
+        "L10": {
+          "lmax": 10,
+          "f_sky": 1.0,
+          "fisher_floor": 0.43902446694686,
+          "mc_dispersion": 0.44348605082100556,
+          "ratio": 1.0101624948267076
+        }
+      },
+      "octupole_tail_l80": {
+        "info_total": 5.868013925176102,
+        "info_tail_l_gt_3": 2.330976888139065,
+        "tail_fraction": 0.3972343825119862
+      },
+      "headline": "floor 0.632(L=2)->0.474(L=5)->0.424(L=20); MC MLE ratio ~1; strictly below single-l 0.632"
+    },
+    "NT2_B1_two_sided_bracket": {
+      "theorem": "NT2-B1 (two-sided shear/F bracket; zero excluded under H3)",
+      "rows": [
+        {
+          "a2": 1e-05,
+          "a3": 2e-06,
+          "R_EGS": 0.19999999999999998,
+          "h3_satisfied": true,
+          "sigma_lo": 1.5873015873015875e-06,
+          "sigma_hi": 9e-05,
+          "F_lo": 2.7238122476217724e-07,
+          "F_hi": 0.0008756756756756759,
+          "excludes_zero": true
+        },
+        {
+          "a2": 1e-05,
+          "a3": 5e-06,
+          "R_EGS": 0.5,
+          "h3_satisfied": true,
+          "sigma_lo": 1.26984126984127e-06,
+          "sigma_hi": 9e-05,
+          "F_lo": 1.743239838477934e-07,
+          "F_hi": 0.0008756756756756759,
+          "excludes_zero": true
+        },
+        {
+          "a2": 3e-05,
+          "a3": 6e-06,
+          "R_EGS": 0.2,
+          "h3_satisfied": true,
+          "sigma_lo": 4.761904761904762e-06,
+          "sigma_hi": 0.00027,
+          "F_lo": 2.451431022859595e-06,
+          "F_hi": 0.007881081081081081,
+          "excludes_zero": true
+        },
+        {
+          "a2": 0.0001,
+          "a3": 3e-05,
+          "R_EGS": 0.3,
+          "h3_satisfied": true,
+          "sigma_lo": 1.4652014652014651e-05,
+          "sigma_hi": 0.0009000000000000001,
+          "F_lo": 2.3208814417605622e-05,
+          "F_hi": 0.08756756756756759,
+          "excludes_zero": true
+        }
+      ],
+      "headline": "a nonzero quadrupole forbids a vanishing shear-filling (F_lo>0 under H3)"
+    },
+    "NT2_B2_sourced_transport": {
+      "theorem": "NT2-B2 (GR shear-memory-sourced depth transport of G_F)",
+      "steady_gap_spread": 0.0,
+      "growing_gap_spread": 2.4516062416960267,
+      "sourced": true,
+      "headline": "steady tilt stress -> flat G_F; growing Pi(z) -> depth-evolving G_F (GR-sourced)"
+    },
+    "NT2_B3_blind_sector": {
+      "theorem": "NT2-B3 (vorticity joint blind sector: CMB-T + radial velocity)",
+      "cmb_max_sensitivity": 0.0,
+      "radial_max_projection": 2.220446049250313e-16,
+      "n_configs": 1000,
+      "joint_blind": true,
+      "headline": "no estimator on CMB-T + radial velocities alone constrains the comparator's W^2 term"
+    },
+    "BLOCK_K1_e2e_maxscan": {
+      "schema": "htt.egs2.k1_e2e_maxscan.v1",
+      "n_e2e": 300,
+      "local_p": [
+        0.6245847176079734,
+        0.0033222591362126247,
+        0.770764119601329,
+        0.3521594684385382,
+        0.08637873754152824,
+        0.5249169435215947
+      ],
+      "observed_max_score": 5.707110264748875,
+      "global_p": 0.0033222591362126247,
+      "simulation_count": 300,
+      "provenance_required": [
+        "PLA FFP10 (dx12_v3_{method}_{cmb,noise}_mc_*) or PR4/NPIPE E2E maps",
+        "identical NSIDE/FWHM/mask/statistic pipeline config hash"
+      ],
+      "blocker_until_real_maps": "BLOCKED_MISSING_PR4_E2E_ACCESS",
+      "note": "synthetic E2E stand-in; swap for healpy reads of the public PLA FFP10/NPIPE maps"
+    },
+    "BLOCK_K6_hoffman_ribak": {
+      "discharge": "BLOCK-K6 Hoffman-Ribak constrained-realization curl posterior",
+      "wf_estimate": 0.0,
+      "cr_mean": -0.022623370324288433,
+      "cr_sd": 0.5941893458801444,
+      "cr_p16": -0.5755603874938865,
+      "cr_p84": 0.5332954522676701,
+      "n_cr": 400,
+      "note": "toy 1D curl sector; swap for the 3D CF4 WF/CR ensemble (still BLOCKED_MISSING_FIELD_REALIZATIONS)",
+      "blocker_until_real_field": "BLOCKED_MISSING_FIELD_REALIZATIONS"
+    }
+  },
+  "blockers_kept_open": [
+    "BLOCKED_MISSING_PR4_E2E_ACCESS",
+    "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
+    "BLOCKED_MISSING_FIELD_REALIZATIONS",
+    "AWAITING_NATIVE_LOWELL_SOLVER"
+  ],
+  "claim_boundary": "conditional EGS-type theorems + synthetic mechanics only; no detection, no family/geometry, no native solver validation"
+}

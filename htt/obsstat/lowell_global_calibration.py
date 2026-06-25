@@ -76,6 +76,34 @@ def calibrate_max_scan(observed: np.ndarray, simulations: np.ndarray,
     return GlobalCalibrationResult(local_p, obs_T, sim_T, global_p)
 
 
+def e2e_maxscan_from_summaries(observed: np.ndarray, e2e_summaries: np.ndarray,
+                               directions: list[str]) -> dict:
+    """BLOCK-K1 discharge: global max-scan p-value from public Planck E2E summaries.
+
+    ``e2e_summaries`` is one row per end-to-end simulation (FFP10: 999 CMB + 300
+    noise/systematic MC per component-separation method; PR4/NPIPE: ~300
+    SEVEM/Commander E2E), one column per registered K1 statistic, processed
+    through the identical map/mask/smoothing/statistic pipeline as ``observed``.
+    Returns the rank-calibrated global p-value with the +1 correction.
+
+    This is the report's K1 max-scan mechanics fed the *real* E2E ensemble: no
+    internal access is needed, only the public PLA maps converted to the K1
+    statistic summaries. The pipeline-config hash and ensemble provenance must be
+    recorded by the caller for the discharge to be complete.
+    """
+    result = calibrate_max_scan(observed, e2e_summaries, directions)
+    return {
+        "schema": "htt.egs2.k1_e2e_maxscan.v1",
+        "n_e2e": int(np.asarray(e2e_summaries).shape[0]),
+        **result.as_dict(),
+        "provenance_required": [
+            "PLA FFP10 (dx12_v3_{method}_{cmb,noise}_mc_*) or PR4/NPIPE E2E maps",
+            "identical NSIDE/FWHM/mask/statistic pipeline config hash",
+        ],
+        "blocker_until_real_maps": "BLOCKED_MISSING_PR4_E2E_ACCESS",
+    }
+
+
 def synthetic_correlated_scan(seed: int = 7, simulations: int = 2000, statistics: int = 8) -> dict:
     rng = np.random.default_rng(seed)
     rho = 0.55
