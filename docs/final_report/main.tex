@@ -61,10 +61,12 @@ history, superseded paths, and any result that does not survive the
 project's claim-firewall. Every result below is one of four kinds:
 (i) framework statements about the master departure comparator
 $\xC=\Sigstd-\Wstd+\Otilt+\Okaniso$ and its claim-tiered diagnostic
-variables; (ii) conditional analytic theorems, each proven
-symbolically with the Wolfram Engine under explicitly stated
-hypotheses; (iii) model-independent measurements on real Planck and
-Cosmicflows-4 data, each calibrated against an isotropic null or a
+variables; (ii) conditional analytic theorems---both the EGS-type
+low-$\ell$ identities and a multicomponent identifiability and
+restricted Bianchi-I dynamics suite---each proven symbolically with
+the Wolfram Engine under explicitly stated hypotheses; (iii)
+model-independent measurements on real Planck and Cosmicflows-4 data,
+each calibrated against an isotropic null, a forward mock, or a
 resampling baseline; and (iv) explicitly labelled
 transfer-conditional diagnostics. No result here identifies a
 Bianchi family, detects an anisotropic geometry, claims native
@@ -72,8 +74,11 @@ low-$\ell$ Boltzmann-solver validation, or promotes any diagnostic
 into a posterior-odds or model-ranking statement. The honest
 publishable envelope is a methods-plus-bounds framework that
 recovers the established low-$\ell$ CMB anomalies as null-calibrated
-model-independent features and maps the CF4 bulk-flow apex profile,
-while producing no false anisotropy claim.
+model-independent features, maps the CF4 bulk-flow apex profile,
+measures a forward-mock-calibrated CF4 bulk flow and its affine
+velocity-gradient decomposition, and proves an exact dust-FLRW
+constraint-transport oracle---while producing no false anisotropy
+claim.
 \end{abstract}
 
 \tableofcontents
@@ -306,15 +311,121 @@ auditable registry is
 \texttt{docs/generated/theorem\_extension\_registry.json}.
 
 % ============================================================
+\section{Multicomponent identifiability and restricted Bianchi-I dynamics}
+\label{sec:pr04}
+
+A second conditional-theorem suite (the PAPER-A/PAPER-B program)
+sits on the multicomponent canonical bridge: the covariant
+congruence first jet, the canonical symmetric--trace-free (STF)
+multicomponent state, and a restricted Bianchi-I multifluid moment
+sector. Seven analytic cores were verified symbolically with the
+Wolfram Engine; the machine-checked record is
+\texttt{docs/generated/pr04\_paper\_theorem\_proofs.json}, and the
+numerical companions are the $23$ property gates under
+\texttt{research\_gates/pr04/tests/} (run by \texttt{make
+paper-a-gates} / \texttt{make paper-b-gates}). Each statement is
+conditional on its registered hypotheses---it is a structural
+identity, not a detection.
+
+\paragraph{PAPER-A (identifiability and congruence kinematics).}
+Write a whitened response matrix stacked from blocks, with $M$ the
+velocity-gradient tensor of a congruence.
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \emph{A-rank.} The identifiable dimension is the rank of the
+        whitened stacked response; appending a duplicate block adds
+        \emph{zero} rank and places the duplicated directions on the
+        $(x,-x)$ nullspace. Identifiability is therefore a rank
+        property of the response design, not of the data magnitude.
+  \item \emph{A-flrw.} A flat-FLRW comoving congruence has expansion
+        $\theta=3H$ and exactly zero shear and acceleration.
+  \item \emph{A-wigner.} Two non-collinear boosts compose to an exact
+        Lorentz transformation whose velocity is \emph{not} the
+        Euclidean sum of the two boost velocities: rapidities do not
+        add as vectors. This forces a congruence first jet---not a
+        single rapidity---to define expansion, shear, and vorticity.
+\end{itemize}
+
+\paragraph{PAPER-B (restricted Bianchi-I multifluid).}
+Branch (stated before each theorem): expanding geodesic normal
+congruence, Fermi-propagated orthonormal triad, flat Bianchi-I,
+homogeneous non-interacting perfect-fluid species ($\hat p=w\hat\rho$,
+$-1<w\le1$), signature $(-,+,+,+)$, $c=1$. Write the tilt second
+moment $K$, its trace $\Omega_{\mathrm{tilt}}=\mathrm{tr}\,K$, and
+its STF part $\Pi$.
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+  \item \emph{B-nonsuff (scalar non-sufficiency).} A colinear
+        antipodal pair and an isotropic six-stream can share the same
+        scalar $\Omega_{\mathrm{tilt}}$ while differing in the STF
+        moment $\Pi$; the scalar trace alone cannot close the tilt
+        sector.
+  \item \emph{B-psd (moment cone).} Every positive-semidefinite second
+        moment $K=\sum_i\lambda_i e_i e_i^{\!\top}$ is realized by
+        antipodal stream pairs, each with exactly zero first moment;
+        the realizable moment cone is the PSD cone.
+  \item \emph{B-dust (exact FLRW oracle + constraint transport).} The
+        closed-form dust scale factor
+        $a(t)=(1+\tfrac32 H_0 t)^{2/3}$ gives
+        $H=H_0/(1+\tfrac32 H_0 t)$ and the exact Raychaudhuri relation
+        $\dot H=-\tfrac32 H^2$ with $3H^2=\kappa\mu$ (Gauss) and zero
+        shear. The RK4 integrator reproduces it to $\sim2\times10^{-9}$
+        with a Gauss residual below $2\times10^{-8}$. This is the exact
+        FLRW comparator for the constraint-transport gate.
+  \item \emph{B-shear (shear memory).} Shear evolves by
+        $\dot\sigma=\mathrm{STF}(-3H\sigma+\kappa\Pi)$, with
+        $\partial\dot\sigma/\partial\Pi=\kappa\neq0$, so ablating the
+        anisotropic stress $\Pi$ provably changes the shear history:
+        shear retains memory of the tilt second moment.
+\end{itemize}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.62\textwidth]{current/fig_pr04_a1_rank_ladder}
+\caption{A-rank: the identifiable rank grows as complementary response
+blocks are added and is unchanged by a duplicate block (the duplicated
+directions occupy the nullspace). Diagnostic-only; not a detection.}
+\label{fig:pr04-a1}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.62\textwidth]{current/fig_pr04_a2_wigner}
+\caption{A-wigner: the relativistic composed speed of two non-collinear
+boosts departs from the Euclidean sum of the boost velocities.
+Diagnostic-only analytic illustration.}
+\label{fig:pr04-a2}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.62\textwidth]{current/fig_pr04_b1_nonsufficiency}
+\caption{B-nonsuff: a colinear pair and an isotropic six-stream share
+$\Omega_{\mathrm{tilt}}$ (left) but differ in $\|\Pi\|$ (right); the
+scalar trace is non-sufficient. Diagnostic-only.}
+\label{fig:pr04-b1}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.82\textwidth]{current/fig_pr04_b2_dust_shear}
+\caption{B-dust and B-shear: (left) the integrator reproduces the exact
+dust-FLRW scale factor to $\sim10^{-13}$ over the test window; (right)
+the shear $\|\sigma\|$ grows with the anisotropic stress $\Pi$ and stays
+zero when $\Pi$ is ablated (shear memory). Diagnostic-only.}
+\label{fig:pr04-b2}
+\end{figure}
+
+% ============================================================
 \section{Model-independent real-data measurements}
 \label{sec:measurements}
 
-Two genuinely new measurements are produced from real data already
-in the repository, using the existing observer-side estimator stack.
-Both are model-independent and diagnostic-only: each is calibrated
-against a null or resampling baseline, and neither produces a
+Four model-independent measurements are produced from real Planck and
+Cosmicflows-4 data, using the observer-side estimator stack. All are
+diagnostic-only: each is calibrated against an isotropic null, a
+forward mock, or a resampling baseline, and none produces a
 Bianchi-family, geometry, native-solver, posterior, or certificate
-claim.
+claim. Two (K1, K4) summarise the CMB low-$\ell$ map and the CF4
+reconstruction-grid apex profile; two (K5, K6) use the full CF4 group
+release and the affine velocity-gradient decomposition.
 
 \subsection{K1 --- Null-calibrated low-$\ell$ morphology of the real Planck map}
 \label{sec:k1}
@@ -430,6 +541,87 @@ or Bianchi claim.}
 \label{fig:k4}
 \end{figure}
 
+\subsection{K5 --- CF4 bulk flow from the full group release}
+\label{sec:k5}
+
+The full Cosmicflows-4 release (Tully et al.\ 2023; VizieR
+J/ApJ/944/94), bound through an added download-pipeline stage, supplies
+$38{,}053$ group peculiar velocities with distance moduli, errors, and
+supergalactic positions. We estimate the minimum-variance (inverse
+Fisher) bulk flow $B=A^{-1}b$, $A=\sum_i n_i n_i^{\!\top}/\sigma_i^2$,
+$b=\sum_i n_i\,V^{\mathrm{pec}}_i/\sigma_i^2$, with per-group velocity
+errors from the distance-modulus uncertainty plus a fitted intrinsic
+dispersion $\sigma_\star$ (reduced $\chi^2\!\sim\!1$), and calibrate the
+amplitude with a forward mock (Table~\ref{tab:k5}).
+
+\begin{table}[ht]
+\centering
+\caption{K5: CF4 group bulk flow in depth windows. $|B|$ is the
+minimum-variance amplitude; the apex is in Galactic $(l,b)$; the last
+column is the forward-mock $1\sigma$ coverage of the injected
+amplitude (a value near $0.68$ indicates a calibrated error model).}
+\label{tab:k5}
+\begin{tabular}{lrlll}
+\toprule
+$d<R$ [Mpc] & $N$ & $|B|$ [km/s] & apex $(l,b)$ [deg] & mock coverage \\
+\midrule
+$60$  & subset & $320\pm7$ & $(296,20)$ & $0.68$ \\
+$100$ & & $351\pm5$ & $(293,22)$ & $0.72$ \\
+$150$ & & $347\pm5$ & $(293,21)$ & $0.65$ \\
+$200$ & & $346\pm5$ & $(293,21)$ & $0.67$ \\
+$300$ & & $345\pm5$ & $(293,21)$ & $0.67$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Findings.} The bulk flow is stable at
+$\sim\!345$\,km/s toward Galactic $(l,b)\approx(293^{\circ},21^{\circ})$
+across the depth windows, with a forward-mock coverage near the nominal
+$68\%$ (the error model is calibrated). The amplitude and direction are
+consistent with the published CF4 bulk-flow literature. This is a
+diagnostic-only kinematic descriptor; $\sigma_\star$ is a fitted
+nuisance, the covariance is the inverse Fisher matrix, and
+selection/Malmquist biases are not fully forward-modelled. \emph{No
+global-tilt or Bianchi-geometry claim is made from CF4 distance data
+alone.}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.66\textwidth]{observed_current/fig_observed_cf4_bulkflow_likelihood}
+\caption{K5: CF4 group bulk-flow amplitude versus depth window
+(minimum-variance, $\sigma_\star$-fitted, $1\sigma$ error bars).
+Diagnostic-only kinematic descriptor; not a frame-violation or Bianchi
+claim.}
+\label{fig:k5}
+\end{figure}
+
+\subsection{K6 --- CF4 affine velocity-gradient decomposition}
+\label{sec:k6}
+
+On the local CF4++ supergalactic velocity grid ($128^3$, $1000$\,Mpc
+box) we fit the affine flow $v=B+M r$ in spheres about the observer and
+split the velocity-gradient tensor $M$ into bulk $B$, expansion
+$\Theta=\mathrm{tr}\,M$, trace-free shear $\sigma$, and vorticity
+$\omega$. The bulk amplitude rises from $\sim\!152$ to $\sim\!422$\,km/s
+between $50$ and $250$\,Mpc; the vorticity is $\sim\!0$ and falls with
+radius. Because the reconstruction is built from a (curl-suppressing)
+potential/Wiener field, a near-zero recovered $\omega$ is the honest
+\emph{reconstruction-conditioned} outcome, not a detection; an injected
+solid-body rotation is nonetheless recovered with relative error
+$3\times10^{-16}$, validating the estimator's curl channel. The
+cross-reconstruction comparison is \emph{blocked}
+(\texttt{BLOCKED\_MISSING\_FIELD\_REALIZATIONS}: only the CF4++
+reconstruction is available).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.82\textwidth]{observed_current/fig_observed_cf4_affine_flow}
+\caption{K6: (left) CF4++ bulk flow versus sphere radius; (right) the
+velocity-gradient parts---shear, vorticity (reconstruction-suppressed),
+and $|\Theta|$. Diagnostic-only; vorticity is reconstruction-conditioned.}
+\label{fig:k6}
+\end{figure}
+
 \paragraph{Critically excluded candidates.} Several nearby analyses
 were considered and \emph{excluded} as empty or as
 re-presentations, to keep this report free of non-results: a joint
@@ -491,17 +683,25 @@ Every result above is regenerated by a recorded command and ships a
 manifest with input hashes and a claim tier. The load-bearing
 artifacts are:
 \begin{itemize}[leftmargin=1.4em,itemsep=2pt]
-  \item \textbf{Theorems:}
+  \item \textbf{EGS-type theorems:}
         \texttt{python scripts/prove\_egs\_lowell\_theorems.py}
         $\to$ \texttt{docs/generated/egs\_lowell\_theorem\_proofs.json};
         figures via
         \texttt{python scripts/make\_egs\_lowell\_theorem\_figures.py}.
+  \item \textbf{PAPER-A/B theorems:}
+        \texttt{make paper-a-gates} / \texttt{make paper-b-gates}
+        ($\to$ \texttt{docs/generated/pr04\_paper\_theorem\_proofs.json};
+        figures \texttt{python scripts/make\_pr04\_paper\_figures.py}).
   \item \textbf{K1 (Planck):}
         \texttt{python scripts/make\_lowell\_morphology\_real\_map.py}
         $\to$ \texttt{docs/generated/lowell\_morphology\_real\_map\_report.\{json,md\}}.
-  \item \textbf{K4 (CF4):}
-        \texttt{python scripts/make\_cf4\_bulkflow\_apex\_depth.py}
-        $\to$ \texttt{docs/generated/cf4\_bulkflow\_apex\_depth\_report.\{json,md\}}.
+  \item \textbf{K4 (CF4 apex):}
+        \texttt{python scripts/make\_cf4\_bulkflow\_apex\_depth.py}.
+  \item \textbf{K5 (CF4 full release):}
+        \texttt{python dl\_pipeline/scripts/fetch.py --stages cf4\_full}
+        then \texttt{python scripts/make\_cf4\_bulkflow\_likelihood.py}.
+  \item \textbf{K6 (CF4 affine flow):}
+        \texttt{python scripts/make\_cf4\_affine\_flow.py}.
   \item \textbf{Transfer inventory:}
         \texttt{python scripts/generate\_transfer\_sensitivity\_report.py}.
 \end{itemize}

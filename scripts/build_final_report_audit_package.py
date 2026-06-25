@@ -46,14 +46,20 @@ REPORT_FILES = (
     "docs/final_report/main.pdf",
 )
 
-# The six manifest-backed figures the report embeds, with sidecars.
+# The manifest-backed figures the report embeds, with sidecars.
 FIGURE_STEMS = (
     "figures/current/fig_theorem_nt_a1_quadrupole_filling",
     "figures/current/fig_theorem_nt_a3_cosmic_variance_floor",
     "figures/current/fig_theorem_nt_b3_gf_transport",
+    "figures/current/fig_pr04_a1_rank_ladder",
+    "figures/current/fig_pr04_a2_wigner",
+    "figures/current/fig_pr04_b1_nonsufficiency",
+    "figures/current/fig_pr04_b2_dust_shear",
     "figures/observed_current/fig_observed_lowell_null_significance",
     "figures/observed_current/fig_observed_lowell_morphology_axis",
     "figures/observed_current/fig_observed_cf4_bulkflow_apex_depth",
+    "figures/observed_current/fig_observed_cf4_bulkflow_likelihood",
+    "figures/observed_current/fig_observed_cf4_affine_flow",
 )
 
 # Generated records that back the report's numbers (provenance, not prose).
@@ -64,6 +70,12 @@ EVIDENCE_FILES = (
     "docs/generated/lowell_morphology_real_map_report.md",
     "docs/generated/cf4_bulkflow_apex_depth_report.json",
     "docs/generated/cf4_bulkflow_apex_depth_report.md",
+    "docs/generated/pr04_paper_theorem_proofs.json",
+    "docs/generated/pr04_paper_theorem_proofs.md",
+    "docs/generated/cf4_bulkflow_likelihood_report.json",
+    "docs/generated/cf4_bulkflow_likelihood_report.md",
+    "docs/generated/cf4_affine_flow_report.json",
+    "docs/generated/cf4_affine_flow_report.md",
     "docs/generated/transfer_sensitivity_report.md",
     "docs/generated/new_results_real_data_summary.md",
     "docs/generated/publication_claim_freeze.md",
