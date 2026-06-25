@@ -1,0 +1,76 @@
+name: Research execution ticket
+description: Execute a dependency-gated HTT/BASS/MIO research task
+title: "[LR-06] "
+labels: ["research-execution"]
+body:
+  - type: input
+    id: ticket
+    attributes:
+      label: Ticket ID
+      placeholder: LR-06D
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scientific scope
+      description: State the physical/statistical object and what is explicitly out of scope.
+    validations:
+      required: true
+  - type: textarea
+    id: inputs
+    attributes:
+      label: Inputs and provenance
+      description: Include releases, hashes, frames, units, covariances, and upstream artifact IDs.
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Exact execution command
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: outputs
+    attributes:
+      label: Expected outputs
+      description: List machine-readable artifacts, figures, logs, and manifests.
+    validations:
+      required: true
+  - type: textarea
+    id: pass_gate
+    attributes:
+      label: PASS gate
+      description: State quantitative coverage, rank, convergence, ablation, and held-out criteria.
+    validations:
+      required: true
+  - type: textarea
+    id: claim_boundary
+    attributes:
+      label: Claim boundary
+      description: Exact allowed and prohibited interpretation.
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Initial status
+      options:
+        - READY
+        - BLOCKED_UPSTREAM
+        - BLOCKED_MISSING_DATA
+        - AWAITING_DESIGN_PACK
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Required confirmations
+      options:
+        - label: Data rank will be reported separately from prior-conditioned posterior rank.
+          required: true
+        - label: Missing inputs will terminate with a blocker rather than a substitute estimate.
+          required: true
+        - label: Legacy scalar summaries will not be used as independent geometry/family evidence.
+          required: true
