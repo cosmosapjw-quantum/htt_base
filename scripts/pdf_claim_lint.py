@@ -59,6 +59,14 @@ FAIL_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("production solver", re.compile(r"\bproduction solver\b", re.IGNORECASE)),
     ("production pipeline", re.compile(r"\bproduction pipeline\b", re.IGNORECASE)),
     ("production modules", re.compile(r"\bproduction modules\b", re.IGNORECASE)),
+    # PR07 audit-repair forbidden overclaims (NT-A1/A3/B3 + A-Wigner + K-reports).
+    # "EGS identity" overclaims an EGS theorem ("EGS-type" remains allowed).
+    ("EGS identity", re.compile(r"\bEGS identity\b", re.IGNORECASE)),
+    ("cosmic-variance floor", re.compile(r"\bcosmic[-\s]variance floor\b", re.IGNORECASE)),
+    ("tilt signature", re.compile(r"\btilt signature\b", re.IGNORECASE)),
+    ("model-independent anomaly", re.compile(r"\bmodel[-\s]independent anomaly\b", re.IGNORECASE)),
+    ("CRLB", re.compile(r"\bCram[eé]r[-\s]Rao\b|\bCRLB\b", re.IGNORECASE)),
+    ("minimum-variance estimator", re.compile(r"\bminimum[-\s]variance estimator\b", re.IGNORECASE)),
 )
 STRICT_FAIL_PATTERN_NAMES = {
     "odds exceeding",
@@ -68,6 +76,12 @@ STRICT_FAIL_PATTERN_NAMES = {
     "one-sixteenth of the MES-allowed anisotropy budget",
     "data support a tilt-like degree of freedom",
     "conditional evidence for global tilt",
+    # PR07 overclaims that must never appear, even in a "legacy"/conditioned context.
+    "EGS identity",
+    "cosmic-variance floor",
+    "tilt signature",
+    "model-independent anomaly",
+    "CRLB",
 }
 LNB_NUMERIC_PATTERN = re.compile(
     r"\bln\s*B\|?(?:\s*(?:=|≈|>|<|∈|\\in)|[A-Za-z_]*\s*(?:=|≈))",

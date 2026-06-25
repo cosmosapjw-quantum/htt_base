@@ -128,3 +128,53 @@ def curl_injection_recovery(positions: np.ndarray, velocities: np.ndarray, radiu
     err = float(np.linalg.norm(recovered - omega))
     return {"omega_injected": omega.tolist(), "omega_recovered": recovered.tolist(),
             "abs_error": err, "rel_error": err / float(np.linalg.norm(omega) + 1e-30)}
+
+
+def potential_flow_projection(positions: np.ndarray, velocities: np.ndarray) -> np.ndarray:
+    """Toy curl-suppressing reconstruction: keep only the symmetric affine mode.
+
+    Returns ``B + r . sym(M)^T`` — a potential-flow surrogate that, by
+    construction, carries no antisymmetric (vorticity) component.
+    """
+    fit = fit_affine_flow(positions, velocities)
+    symmetric = 0.5 * (fit.gradient + fit.gradient.T)
+    return fit.bulk[None, :] + np.asarray(positions, dtype=float) @ symmetric.T
+
+
+def curl_suppression_ensemble(*, realizations: int = 300, cells: int = 450,
+                              seed: int = 20260625) -> dict:
+    """PR08-004 mechanics demo: a curl-suppressing reconstruction makes physical
+    vorticity unidentifiable even when the pre-reconstruction field carries it.
+
+    This is a *structural non-identifiability* result, not a vorticity detection.
+    The full field-realization posterior remains BLOCKED_MISSING_FIELD_REALIZATIONS.
+    """
+    rng = np.random.default_rng(seed)
+    positions = rng.uniform(-120.0, 120.0, size=(cells, 3))
+    positions = positions[np.linalg.norm(positions, axis=1) < 120.0]
+    B = np.array([120.0, -55.0, 35.0])
+    shear = np.array([[0.018, 0.004, -0.002], [0.004, -0.010, 0.003], [-0.002, 0.003, -0.008]])
+    theta = 0.012
+    omega = np.array([0.006, -0.004, 0.009])
+    Omega = np.array([[0.0, -omega[2], omega[1]], [omega[2], 0.0, -omega[0]], [-omega[1], omega[0], 0.0]])
+    M = shear + np.eye(3) * theta / 3.0 + Omega
+    truth_velocity = B[None, :] + positions @ M.T
+    full_omega = []; proj_omega = []; full_bulk = []
+    for _ in range(realizations):
+        noisy = truth_velocity + rng.normal(scale=18.0, size=truth_velocity.shape)
+        full = fit_affine_flow(positions, noisy)
+        proj = fit_affine_flow(positions, potential_flow_projection(positions, noisy))
+        full_omega.append(full.vorticity_axial); full_bulk.append(full.bulk)
+        proj_omega.append(proj.vorticity_axial)
+    full_omega = np.asarray(full_omega); proj_omega = np.asarray(proj_omega)
+    return {
+        "schema": "htt.pr08_004.k6_curl_suppression.synthetic.v1",
+        "realizations": int(realizations), "cells": int(positions.shape[0]),
+        "truth_bulk": B.tolist(), "truth_vorticity": omega.tolist(),
+        "full_reconstruction_bulk_mean": np.mean(full_bulk, axis=0).tolist(),
+        "full_reconstruction_vorticity_mean": np.mean(full_omega, axis=0).tolist(),
+        "full_reconstruction_vorticity_sd": np.std(full_omega, axis=0, ddof=1).tolist(),
+        "potential_projected_vorticity_mean": np.mean(proj_omega, axis=0).tolist(),
+        "potential_projected_vorticity_max_norm": float(np.max(np.linalg.norm(proj_omega, axis=1))),
+        "conclusion": "a curl-suppressing reconstruction makes physical vorticity unidentifiable even when the pre-reconstruction field contains it",
+    }

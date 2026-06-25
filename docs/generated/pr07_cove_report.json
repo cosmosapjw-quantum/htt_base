@@ -1,0 +1,217 @@
+{
+  "schema": "htt.pr07.cove.v1",
+  "status": "PASS_WITH_REGISTERED_DELEGATIONS",
+  "checks": [
+    {
+      "id": "A_duplicate_rank",
+      "pass": true,
+      "evidence": {
+        "rank_A": 4,
+        "rank_AA": 4,
+        "nullity_AA": 4,
+        "x_minus_x_residual": 0.0,
+        "nullspace_equals_x_minus_x": true,
+        "nullspace_basis": [
+          [
+            -0.196862478427377,
+            -0.6756564445560694,
+            0.06868297134554227,
+            -0.004022805542095407
+          ],
+          [
+            -0.5968744098533603,
+            0.20619712479176122,
+            0.31807051855842794,
+            0.007404715645226276
+          ],
+          [
+            -0.3031374302922931,
+            0.026744992484639914,
+            -0.5917583629036808,
+            0.2391954089574826
+          ],
+          [
+            0.11442815128026373,
+            -0.015994375088103918,
+            0.20960876557213837,
+            0.6653679760519339
+          ],
+          [
+            0.1968624784273772,
+            0.6756564445560693,
+            -0.0686829713455423,
+            0.0040228055420952254
+          ],
+          [
+            0.5968744098533603,
+            -0.20619712479176122,
+            -0.31807051855842805,
+            -0.007404715645226467
+          ],
+          [
+            0.3031374302922931,
+            -0.026744992484640018,
+            0.5917583629036807,
+            -0.23919540895748256
+          ],
+          [
+            -0.11442815128026382,
+            0.015994375088103807,
+            -0.20960876557213837,
+            -0.6653679760519335
+          ]
+        ]
+      },
+      "requirement": "duplicate adds no rank; equality claim requires full-column-rank fixture"
+    },
+    {
+      "id": "A_radial_vorticity",
+      "pass": true,
+      "evidence": 1.4210854715202004e-14,
+      "requirement": "antisymmetric radial contraction is zero"
+    },
+    {
+      "id": "A_shell_degeneracy",
+      "pass": true,
+      "evidence": {
+        "single": 3,
+        "broad": 6
+      },
+      "requirement": "one shell rank 3, broad depth rank 6"
+    },
+    {
+      "id": "A_temporal_tensor_rank",
+      "pass": true,
+      "evidence": 15,
+      "requirement": "three independent temporal rows times five STF modes"
+    },
+    {
+      "id": "A_boost",
+      "pass": true,
+      "evidence": {
+        "lorentz_error": 1.1102230246251565e-16,
+        "composed_velocity": [
+          0.2,
+          0.14696938456699066,
+          0.0
+        ],
+        "euclidean_sum": [
+          0.2,
+          0.15,
+          0.0
+        ],
+        "nonadditivity_norm": 0.003030615433009337
+      },
+      "requirement": "Lorentz and non-Euclidean composition (NOT a Wigner-angle claim)"
+    },
+    {
+      "id": "A_first_jet",
+      "pass": true,
+      "evidence": {
+        "pointwise_u_field_1": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pointwise_u_field_2": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "theta_field_1_at_origin": 0.0,
+        "theta_field_2_at_origin": 0.2,
+        "same_pointwise_velocity": true,
+        "different_first_jet": true
+      },
+      "requirement": "point value does not determine first jet"
+    },
+    {
+      "id": "B_random_conservation",
+      "pass": true,
+      "evidence": {
+        "samples": 1000,
+        "seed": 20260625,
+        "max_energy_residual": 5.684341886080802e-14,
+        "max_momentum_residual": 5.136098584586421e-14,
+        "minimum_1_minus_wv2": 0.21818919599517794,
+        "passed": true
+      },
+      "requirement": "1000 admissible states; independent residuals <1e-11"
+    },
+    {
+      "id": "B_constraint_transport",
+      "pass": true,
+      "evidence": {
+        "gauss": -3.150691513242876e-16,
+        "gauss_transport_residual": 5.606906260354792e-17,
+        "codazzi_norm": 0.0,
+        "codazzi_transport_residual_norm": 0.0
+      },
+      "requirement": "Gauss and Codazzi transport identities"
+    },
+    {
+      "id": "B_integrators",
+      "pass": true,
+      "evidence": {
+        "DOP853": {
+          "max_a_abs_error": 9.550138457825597e-13,
+          "max_H_abs_error": 3.321676267376006e-12
+        },
+        "Radau": {
+          "max_a_abs_error": 3.197442310920451e-14,
+          "max_H_abs_error": 5.292433158388121e-13
+        }
+      },
+      "requirement": "DOP853/Radau exact-dust error <1e-9"
+    },
+    {
+      "id": "K1_max_scan",
+      "pass": true,
+      "evidence": {
+        "min_local": 0.0014992503748125937,
+        "global": 0.0069965017491254375,
+        "n": 2000
+      },
+      "requirement": "synthetic max-scan global p is finite and no smaller than the most extreme local rank p"
+    },
+    {
+      "id": "K5_hierarchical_coverage",
+      "pass": true,
+      "evidence": {
+        "h68": 0.6819999999999999,
+        "h95": 0.9460000000000001,
+        "n68": 0.6166666666666667,
+        "simulations": 500
+      },
+      "requirement": "mechanics-only hierarchical coverage near nominal"
+    },
+    {
+      "id": "K5_bias_reduction",
+      "pass": true,
+      "evidence": {
+        "hierarchical_bias_norm": 1.930542989726162,
+        "naive_bias_norm": 15.036068856767054
+      },
+      "requirement": "registered random-effect model reduces deliberate selection-offset bias"
+    },
+    {
+      "id": "K6_curl_suppression",
+      "pass": true,
+      "evidence": {
+        "full_mean_norm": 0.010844521126003781,
+        "potential_max_norm": 7.46586370954834e-17
+      },
+      "requirement": "potential projection erases curl present before projection"
+    }
+  ],
+  "delegations": [
+    "BLOCKED_MISSING_PR4_E2E_ACCESS",
+    "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
+    "BLOCKED_MISSING_FIELD_REALIZATIONS",
+    "AWAITING_NATIVE_LOWELL_SOLVER",
+    "LOCAL_WOLFRAM_XACT_GATE_REQUIRED"
+  ],
+  "claim_boundary": "synthetic/theorem mechanics only; no observational estimate, family identification, global tilt, or physical vorticity detection"
+}

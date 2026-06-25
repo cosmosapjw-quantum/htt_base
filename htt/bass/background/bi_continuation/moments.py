@@ -1,4 +1,15 @@
-"""Multispecies tilted-perfect-fluid moments for a Bianchi-I normal frame."""
+"""Multispecies tilted-perfect-fluid moments for a Bianchi-I normal frame.
+
+PR07-001 convention repair (audit ``B-shear unit mismatch``)
+-----------------------------------------------------------
+The physical anisotropic stress ``pi_ab`` (units ``[H]^2`` in ``c=1`` internal
+variables) is separated from the dimensionless Hubble-normalized moment
+``Pi_ab = kappa*pi_ab/(3 H^2)``.  The legacy ``TiltMoments.Pi`` field is retained
+only as a compatibility alias for ``Pi_normalized``; every downstream artifact
+must state which owner it consumes.  The dimensionally invalid token ``kappa*Pi``
+is forbidden (``kappa*pi_physical`` or ``3 H^2 Pi_normalized`` are the only valid
+shear-source forms).
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -9,6 +20,20 @@ import numpy as np
 def _stf(t: np.ndarray) -> np.ndarray:
     s = 0.5 * (np.asarray(t, dtype=float) + np.asarray(t, dtype=float).T)
     return s - np.eye(3) * np.trace(s) / 3.0
+
+
+def normalize_anisotropic_stress(pi_physical: np.ndarray, H: float, kappa: float = 1.0) -> np.ndarray:
+    """Return dimensionless ``Pi_ab = kappa*pi_ab/(3 H^2)`` from physical stress."""
+    if H <= 0.0 or kappa <= 0.0:
+        raise ValueError('H and kappa must be positive')
+    return _stf(kappa * _stf(pi_physical) / (3.0 * H * H))
+
+
+def physical_anisotropic_stress(Pi_normalized: np.ndarray, H: float, kappa: float = 1.0) -> np.ndarray:
+    """Return physical ``pi_ab = 3 H^2 Pi_ab/kappa`` from the normalized moment."""
+    if H <= 0.0 or kappa <= 0.0:
+        raise ValueError('H and kappa must be positive')
+    return _stf(3.0 * H * H * _stf(Pi_normalized) / kappa)
 
 
 @dataclass(frozen=True)
@@ -46,6 +71,12 @@ class TiltMoments:
     Pi: np.ndarray
     total_projection: NormalProjection
     normalization: float
+    pi_physical: np.ndarray
+
+    @property
+    def Pi_normalized(self) -> np.ndarray:
+        """Dimensionless Hubble-normalized STF moment (explicit owner)."""
+        return self.Pi
 
 
 def project_species(species: SpeciesPrimitive) -> NormalProjection:
@@ -75,6 +106,8 @@ def total_projection(species: Sequence[SpeciesPrimitive]) -> NormalProjection:
 def tilt_moments(species: Sequence[SpeciesPrimitive], H: float, kappa: float = 1.0) -> TiltMoments:
     if H <= 0:
         raise ValueError('H must be positive for Hubble-normalized moments')
+    if kappa <= 0:
+        raise ValueError('kappa must be positive')
     factor = kappa / (3.0 * H * H)
     J = np.zeros(3)
     K = np.zeros((3,3))
@@ -83,9 +116,17 @@ def tilt_moments(species: Sequence[SpeciesPrimitive], H: float, kappa: float = 1
         J += factor * p.flux
         h0 = (1.0 + s.w) * s.rho_hat
         K += factor * (p.gamma**2) * h0 * np.outer(s.velocity, s.velocity)
+    projection = total_projection(species)
+    pi_physical = _stf(projection.anisotropic_stress)
+    Pi_normalized = _stf(K)
+    # Exact convention gate: the normalized moment must equal kappa*pi/(3H^2).
+    if not np.allclose(Pi_normalized, normalize_anisotropic_stress(pi_physical, H, kappa),
+                       rtol=3e-13, atol=3e-14):
+        raise RuntimeError('tilt moment and physical-stress normalization disagree')
     omega = float(np.trace(K))
-    return TiltMoments(J=J, K=K, Omega_tilt=omega, Pi=_stf(K),
-                       total_projection=total_projection(species), normalization=factor)
+    return TiltMoments(J=J, K=K, Omega_tilt=omega, Pi=Pi_normalized,
+                       total_projection=projection, normalization=factor,
+                       pi_physical=pi_physical)
 
 
 def codazzi_residual_bianchi_i(moments: TiltMoments) -> np.ndarray:

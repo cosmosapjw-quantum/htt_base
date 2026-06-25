@@ -194,22 +194,24 @@ the temperature-quadrupole magnitude $a_2$, the shear scalar
 $\Sigma$, the quadrupole power $D_2\propto a_2^2$, the algebraic
 ceiling $\xmax$, and the shear filling $\Fshear=\Sigma^2/\xmax$.
 
-\begin{theorem}[Quadrupole--filling EGS identity (NT-A1)]
+\begin{theorem}[Quadrupole--filling closure-conditional identity (NT-A1)]
 \label{thm:nt-a1}
 Assume the free-streaming linear $\ell=2$ closure $a_2=\kappa\,\Sigma$
-with $\kappa>0$ constant (the Ehlers--Treciokas--Matravers
-coefficient $\kappa=4/21$), $\Fshear=\Sigma^2/\xmax$, and
-$D_2=c_D\,a_2^2$ with $c_D>0$, and that the tilt rapidity $\beta$
-enters the dipole $a_1$ only. Then
+with $\kappa>0$ a constant symbolic coefficient (the
+Ehlers--Treciokas--Matravers value $\kappa=4/21$ is used only for the
+figure and is not load-bearing; the identity holds for any $\kappa>0$),
+$\Fshear=\Sigma^2/\xmax$, and $D_2=c_D\,a_2^2$ with $c_D>0$, and that
+the tilt rapidity $\beta$ enters the dipole $a_1$ only. Then
 \begin{equation}
   \Fshear \;=\; \frac{a_2^2}{\kappa^2\,\xmax}
         \;=\; \frac{D_2}{c_D\,\kappa^2\,\xmax}
         \;\propto\; D_2 ,
 \end{equation}
-so $\Fshear\to0$ as $D_2\to0$ (the EGS limit: an isotropic CMB
-quadrupole forces zero shear-filling), and
-$\partial\Fshear/\partial\beta=0$ (the tilt sector is invisible to
-the shear-filling).
+so $\Fshear\to0$ as $D_2\to0$ (the isotropic-quadrupole limit: an
+isotropic CMB quadrupole forces zero shear-filling under this closure),
+and $\partial\Fshear/\partial\beta=0$ (the tilt sector is invisible to
+the shear-filling). This is a closure-conditional identity, not an EGS
+theorem.
 \end{theorem}
 
 \noindent\emph{Proof.} Substitute $\Sigma=a_2/\kappa$ into
@@ -219,82 +221,93 @@ licenses the closure rests on the sphere averages
 $\langle n_a n_b\rangle=\tfrac13\delta_{ab}$ (Wolfram-verified).
 Conditional on the free-streaming linear closure. $\square$
 
-\begin{theorem}[Cosmic-variance Cram\'er--Rao floor on $\Fshear$ (NT-A3)]
+\begin{theorem}[Single-sky sampling variance of the shear-filling estimator (NT-A3)]
 \label{thm:nt-a3}
 Under Theorem~\ref{thm:nt-a1}, $\Fshear$ is linear in the quadrupole
-power $C_2$. With the single-sky cosmic variance
-$\mathrm{Var}(C_2)=2\,C_2^2/(2\ell+1)$ ($\chi^2$ with $2\ell+1$
+power $C_2$. For the standard ideal full-sky Gaussian power estimator
+$\hat C_2$ with single-sky sampling variance
+$\mathrm{Var}(\hat C_2)=2\,C_2^2/(2\ell+1)$ ($\chi^2$ with $2\ell+1$
 degrees of freedom),
 \begin{equation}
-  \frac{\sigma(\Fshear)}{\Fshear}
-    \;\ge\; \sqrt{\frac{2}{2\ell+1}}
+  \frac{\sigma(\widehat{\Fshear})}{\Fshear}
+    \;=\; \sqrt{\frac{2}{2\ell+1}}
     \;\xrightarrow{\ \ell=2\ }\; \sqrt{\tfrac{2}{5}}\approx0.632 .
 \end{equation}
-Hence the shear-filling fraction cannot be measured to better than
-$\sim63\%$ fractional precision from a single-sky quadrupole.
+Hence this estimator has $\sim63\%$ fractional sampling dispersion at
+the quadrupole. This is the sampling variance of one specific (ideal
+full-sky Gaussian) estimator, \emph{not} an estimator-optimal lower
+bound or a universal floor over all estimators; an information-bound
+version would require a stated likelihood, parameter space, estimator
+class, Fisher information and regularity conditions.
 \end{theorem}
 
-\noindent\emph{Proof.} Error propagation
-$\mathrm{Var}(\Fshear)=(\partial\Fshear/\partial C_2)^2\,
-\mathrm{Var}(C_2)=\tfrac{2}{2\ell+1}\,\Fshear^2$; take the square
+\noindent\emph{Proof.} Error propagation for the stated estimator,
+$\mathrm{Var}(\widehat{\Fshear})=(\partial\Fshear/\partial C_2)^2\,
+\mathrm{Var}(\hat C_2)=\tfrac{2}{2\ell+1}\,\Fshear^2$; take the square
 root and set $\ell=2$ (Wolfram-verified, branch-free squared
 identity). $\square$
 
-\begin{theorem}[Depth-transport EGS limit for $\GF$ (NT-B3)]
+\begin{theorem}[Depth-transport identity for the filling (NT-B3)]
 \label{thm:nt-b3}
 Write the depth-resolved filling additively,
-$F(z)=\Fshear(z)+F_{\mathrm{tilt}}(z)$, and the depth gap
-$\GF(z)=F(z)/F(z_{\mathrm{ref}})$. For a depth-steady shear with no
-tilt, $\GF(z)\equiv1$ (the EGS depth limit: no depth gap); a
-depth-evolving tilt imprints a nonzero $\mathrm{d}\GF/\mathrm{d}z$.
+$F(z)=\Fshear(z)+F_{\mathrm{tilt}}(z)$. The primary depth observable is
+the additive contrast $\Delta_F(z)=(LF)(z)\equiv F(z)-F(z_{\mathrm{ref}})$,
+where the difference operator $L$ annihilates constants, $L\,\mathbf{1}=0$.
+For a depth-steady shear with no tilt, $\Delta_F(z)\equiv0$ (no depth
+contrast); a depth-evolving tilt imprints a nonzero
+$\mathrm{d}\Delta_F/\mathrm{d}z$. The legacy depth ratio
+$\GF(z)=F(z)/F(z_{\mathrm{ref}})$ is recovered only on the branch
+$F(z_{\mathrm{ref}})\neq0$ (it is $0/0$-indeterminate otherwise).
 \end{theorem}
 
 \noindent\emph{Proof.} With $F_{\mathrm{tilt}}\equiv0$ and $\Fshear$
-constant in $z$, $\GF=\Fshear/\Fshear=1$ and
-$\mathrm{d}\GF/\mathrm{d}z=0$; a power-law tilt
-$F_{\mathrm{tilt}}=c\,z^{q}$ gives
-$\mathrm{d}\GF/\mathrm{d}z=c\,q\,z^{q-1}/(\Fshear+c\,z_{\mathrm{ref}}^{q})\neq0$
-(Wolfram-verified). Conditional on the additive decomposition.
-$\square$
+constant in $z$, $\Delta_F=F-F=0$ and $\mathrm{d}\Delta_F/\mathrm{d}z=0$;
+a power-law tilt $F_{\mathrm{tilt}}=c\,z^{q}$ gives
+$\mathrm{d}\Delta_F/\mathrm{d}z=c\,q\,z^{q-1}\neq0$ (Wolfram-verified).
+Conditional on the additive decomposition. A nonzero $\Delta_F$ trend is
+depth evolution of the filling; attributing it specifically to the tilt
+sector requires a separate projected response-rank gate. $\square$
 
 \paragraph{Reading.} The three theorems make precise, in the
-program's own variables, three EGS-type facts: an isotropic CMB
-quadrupole kills the shear-filling and the tilt sector cannot
-counterfeit it (NT-A1); even granting the closure, a single sky can
-never pin $\Fshear$ below $\sim63\%$ fractional precision (NT-A3,
-a hard cosmic-variance limit); and a depth-steady shear leaves no
-depth gap, so any measured $\GF\neq1$ trend is a tilt-sector, not a
-shear, signature (NT-B3). All are conditional structural statements;
-$\kappa=4/21$ is the cited ETM closure value and the theorems hold
-for any $\kappa>0$.
+program's own variables, three EGS-type (closure-conditional)
+statements: an isotropic CMB quadrupole forces zero shear-filling under
+the linear closure and the tilt sector cannot counterfeit it (NT-A1);
+the standard single-sky quadrupole-power estimator carries
+$\sim63\%$ fractional sampling dispersion (NT-A3, the sampling variance
+of that estimator, not a universal floor); and a depth-steady shear
+leaves no depth contrast, so any measured $\Delta_F\neq0$ trend is depth
+evolution of the filling (NT-B3), attributable to the tilt sector only
+with a separate response-rank gate. All are conditional structural
+statements; $\kappa=4/21$ is the cited ETM value used only for the
+figure and the theorems hold for any symbolic $\kappa>0$.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.70\textwidth]{current/fig_theorem_nt_a1_quadrupole_filling}
 \caption{Theorem~\ref{thm:nt-a1} (NT-A1): the shear filling fraction
-is linear in the CMB quadrupole power $D_2$ and vanishes in the EGS
-limit $D_2\to0$. Diagnostic-only analytic illustration; not a
-detection.}
+is linear in the CMB quadrupole power $D_2$ and vanishes in the
+isotropic-quadrupole limit $D_2\to0$ under the linear closure.
+Diagnostic-only analytic illustration; not a detection.}
 \label{fig:nt-a1}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.70\textwidth]{current/fig_theorem_nt_a3_cosmic_variance_floor}
-\caption{Theorem~\ref{thm:nt-a3} (NT-A3): the cosmic-variance
-fractional floor $\sqrt{2/(2\ell+1)}$ on $\Fshear$, equal to
-$\sqrt{2/5}\approx0.632$ at the quadrupole. Diagnostic-only; not a
-detection.}
+\caption{Theorem~\ref{thm:nt-a3} (NT-A3): the single-sky fractional
+sampling dispersion $\sqrt{2/(2\ell+1)}$ of the standard full-sky
+$\Fshear$ estimator, equal to $\sqrt{2/5}\approx0.632$ at the
+quadrupole (not a universal floor). Diagnostic-only; not a detection.}
 \label{fig:nt-a3}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.70\textwidth]{current/fig_theorem_nt_b3_gf_transport}
-\caption{Theorem~\ref{thm:nt-b3} (NT-B3): the depth gap $\GF(z)$ is
-flat at unity for a depth-steady shear (EGS depth limit) and rises
-when a depth-evolving tilt is present. Diagnostic-only; not a
-detection.}
+\caption{Theorem~\ref{thm:nt-b3} (NT-B3): the depth contrast
+$\Delta_F(z)=F(z)-F(z_{\mathrm{ref}})$ is flat at zero for a
+depth-steady shear and departs from zero when a depth-evolving tilt is
+present. Diagnostic-only; not a detection.}
 \label{fig:nt-b3}
 \end{figure}
 
@@ -334,15 +347,24 @@ velocity-gradient tensor of a congruence.
   \item \emph{A-rank.} The identifiable dimension is the rank of the
         whitened stacked response; appending a duplicate block adds
         \emph{zero} rank and places the duplicated directions on the
-        $(x,-x)$ nullspace. Identifiability is therefore a rank
-        property of the response design, not of the data magnitude.
+        $(x,-x)$ nullspace. The null space \emph{equals} that
+        $(x,-x)$ line only when the block has full column rank;
+        otherwise it merely contains it. Identifiability is therefore a
+        rank property of the response design, not of the data magnitude.
   \item \emph{A-flrw.} A flat-FLRW comoving congruence has expansion
         $\theta=3H$ and exactly zero shear and acceleration.
-  \item \emph{A-wigner.} Two non-collinear boosts compose to an exact
-        Lorentz transformation whose velocity is \emph{not} the
-        Euclidean sum of the two boost velocities: rapidities do not
-        add as vectors. This forces a congruence first jet---not a
-        single rapidity---to define expansion, shear, and vorticity.
+  \item \emph{A-boost (composition).} Two non-collinear boosts compose
+        to an exact Lorentz transformation whose velocity is \emph{not}
+        the Euclidean sum of the two boost velocities: rapidities do not
+        add as vectors. This is an exact composition / non-Euclidean
+        velocity-addition statement; it is \emph{not} a Wigner-rotation
+        theorem (no decomposition into a net boost and spatial rotation,
+        and no rotation angle, is claimed here).
+  \item \emph{A-first-jet (no-go).} Equality of the pointwise
+        four-velocity of two congruences does not determine its first
+        derivative: two fields can share $u^a$ at a point yet differ in
+        expansion there. Hence a congruence first jet---not a single
+        rapidity---is needed to define expansion, shear, and vorticity.
 \end{itemize}
 
 \paragraph{PAPER-B (restricted Bianchi-I multifluid).}
@@ -350,8 +372,9 @@ Branch (stated before each theorem): expanding geodesic normal
 congruence, Fermi-propagated orthonormal triad, flat Bianchi-I,
 homogeneous non-interacting perfect-fluid species ($\hat p=w\hat\rho$,
 $-1<w\le1$), signature $(-,+,+,+)$, $c=1$. Write the tilt second
-moment $K$, its trace $\Omega_{\mathrm{tilt}}=\mathrm{tr}\,K$, and
-its STF part $\Pi$.
+moment $K$, its trace $\Omega_{\mathrm{tilt}}=\mathrm{tr}\,K$, its
+physical STF anisotropic stress $\pi_{ab}$, and the dimensionless
+normalized moment $\Pi_{ab}=\kappa\pi_{ab}/(3H^2)$.
 \begin{itemize}[leftmargin=1.4em,itemsep=2pt]
   \item \emph{B-nonsuff (scalar non-sufficiency).} A colinear
         antipodal pair and an isotropic six-stream can share the same
@@ -370,11 +393,16 @@ its STF part $\Pi$.
         shear. The RK4 integrator reproduces it to $\sim2\times10^{-9}$
         with a Gauss residual below $2\times10^{-8}$. This is the exact
         FLRW comparator for the constraint-transport gate.
-  \item \emph{B-shear (shear memory).} Shear evolves by
-        $\dot\sigma=\mathrm{STF}(-3H\sigma+\kappa\Pi)$, with
-        $\partial\dot\sigma/\partial\Pi=\kappa\neq0$, so ablating the
-        anisotropic stress $\Pi$ provably changes the shear history:
-        shear retains memory of the tilt second moment.
+  \item \emph{B-shear (dimensionally consistent shear memory).} Shear
+        evolves by
+        $\dot\sigma_{ab}=\mathrm{STF}(-3H\sigma_{ab}+\kappa\pi_{ab})
+        =\mathrm{STF}(-3H\sigma_{ab}+3H^2\Pi_{ab})$, with
+        $\partial\dot\sigma/\partial\pi=\kappa$ and
+        $\partial\dot\sigma/\partial\Pi=3H^2$ (both nonzero), so ablating
+        the anisotropic stress provably changes the shear history: shear
+        retains memory of the tilt second moment. The two source forms are
+        exactly equivalent; the dimensionally invalid form $\kappa\Pi$ is
+        not used.
 \end{itemize}
 
 \begin{figure}[ht]
@@ -389,9 +417,12 @@ directions occupy the nullspace). Diagnostic-only; not a detection.}
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.62\textwidth]{current/fig_pr04_a2_wigner}
-\caption{A-wigner: the relativistic composed speed of two non-collinear
-boosts departs from the Euclidean sum of the boost velocities.
-Diagnostic-only analytic illustration.}
+\caption{A-boost-composition: the relativistic composed speed of two
+non-collinear boosts departs from the Euclidean sum of the boost
+velocities (exact Lorentz composition, not a Wigner-angle claim). The
+separate A-first-jet no-go establishes that pointwise four-velocity does
+not determine congruence kinematics. Diagnostic-only analytic
+illustration.}
 \label{fig:pr04-a2}
 \end{figure}
 
@@ -409,8 +440,9 @@ scalar trace is non-sufficient. Diagnostic-only.}
 \includegraphics[width=0.82\textwidth]{current/fig_pr04_b2_dust_shear}
 \caption{B-dust and B-shear: (left) the integrator reproduces the exact
 dust-FLRW scale factor to $\sim10^{-13}$ over the test window; (right)
-the shear $\|\sigma\|$ grows with the anisotropic stress $\Pi$ and stays
-zero when $\Pi$ is ablated (shear memory). Diagnostic-only.}
+the shear $\|\sigma\|$ grows with the physical anisotropic stress
+$\pi_{ab}$ (equivalently the normalized $\Pi_{ab}=\kappa\pi_{ab}/(3H^2)$)
+and stays zero when it is ablated (shear memory). Diagnostic-only.}
 \label{fig:pr04-b2}
 \end{figure}
 
@@ -502,8 +534,8 @@ radial shells. Table~\ref{tab:k4} gives the profile.
 \caption{K4: CF4++ bulk-flow apex by depth shell. $|B|$ is the
 volume-averaged reconstruction velocity per shell; the bracketed
 figures are bootstrap apex dispersion over correlated reconstruction
-cells (a lower bound on direction uncertainty, not a full
-covariance). Full-sample bulk flow: $133.4$\,km/s toward
+cells, which under-represents the direction uncertainty and is not a
+full covariance. Full-sample bulk flow: $133.4$\,km/s toward
 $(l,b)=(121.6^{\circ},70.8^{\circ})$.}
 \label{tab:k4}
 \begin{tabular}{lrrll}
@@ -525,12 +557,13 @@ $400$--$450$ & $45179$ & $186$ & $(120,-78)$ & $147.5$ \\
 $\sim590$\,km/s at $250$--$300$\,Mpc/h and then falls to
 $\sim130$--$190$\,km/s in the deep shells. The apex stays within
 $\sim5$--$46^{\circ}$ of the full-sample apex out to $300$\,Mpc/h and
-then reverses ($\sim120$--$149^{\circ}$) at the reconstruction edge;
-the reversal is flagged as a likely edge effect of the
-reconstruction. This is a model-independent kinematic descriptor of
-the reconstruction; it is not a cosmological-frame-violation or
-Bianchi claim, and the bootstrap dispersion is a lower bound on the
-true direction uncertainty rather than a full covariance.
+then reverses ($\sim120$--$149^{\circ}$) in the deepest, sparsest
+shells, where the reconstruction is least constrained; we report the
+reversal as a descriptor and do not attribute a physical cause. This is
+a model-independent kinematic descriptor of the reconstruction; it is
+not a cosmological-frame-violation or Bianchi claim, and the bootstrap
+dispersion under-represents the true direction uncertainty (correlated
+cells) rather than being a full covariance.
 
 \begin{figure}[ht]
 \centering
@@ -547,17 +580,21 @@ or Bianchi claim.}
 The full Cosmicflows-4 release (Tully et al.\ 2023; VizieR
 J/ApJ/944/94), bound through an added download-pipeline stage, supplies
 $38{,}053$ group peculiar velocities with distance moduli, errors, and
-supergalactic positions. We estimate the minimum-variance (inverse
-Fisher) bulk flow $B=A^{-1}b$, $A=\sum_i n_i n_i^{\!\top}/\sigma_i^2$,
+supergalactic positions. We estimate the weighted-Gaussian
+maximum-likelihood (generalized-least-squares) bulk flow $B=A^{-1}b$,
+$A=\sum_i n_i n_i^{\!\top}/\sigma_i^2$,
 $b=\sum_i n_i\,V^{\mathrm{pec}}_i/\sigma_i^2$, with per-group velocity
 errors from the distance-modulus uncertainty plus a fitted intrinsic
 dispersion $\sigma_\star$ (reduced $\chi^2\!\sim\!1$), and calibrate the
-amplitude with a forward mock (Table~\ref{tab:k5}).
+amplitude with a forward mock (Table~\ref{tab:k5}). The inverse-Fisher
+covariance is \emph{conditional} on this error model (it omits cosmic
+variance and unmodelled selection); the hierarchical random-effect and
+release-matched-mock extensions are PR08-002/003.
 
 \begin{table}[ht]
 \centering
 \caption{K5: CF4 group bulk flow in depth windows. $|B|$ is the
-minimum-variance amplitude; the apex is in Galactic $(l,b)$; the last
+weighted-GLS amplitude; the apex is in Galactic $(l,b)$; the last
 column is the forward-mock $1\sigma$ coverage of the injected
 amplitude (a value near $0.68$ indicates a calibrated error model).}
 \label{tab:k5}
@@ -580,18 +617,18 @@ across the depth windows, with a forward-mock coverage near the nominal
 $68\%$ (the error model is calibrated). The amplitude and direction are
 consistent with the published CF4 bulk-flow literature. This is a
 diagnostic-only kinematic descriptor; $\sigma_\star$ is a fitted
-nuisance, the covariance is the inverse Fisher matrix, and
-selection/Malmquist biases are not fully forward-modelled. \emph{No
-global-tilt or Bianchi-geometry claim is made from CF4 distance data
-alone.}
+nuisance, the covariance is the inverse-Fisher matrix \emph{conditional}
+on the error model (cosmic variance excluded), and selection/Malmquist
+biases are not fully forward-modelled. \emph{No global-tilt or
+Bianchi-geometry claim is made from CF4 distance data alone.}
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.66\textwidth]{observed_current/fig_observed_cf4_bulkflow_likelihood}
 \caption{K5: CF4 group bulk-flow amplitude versus depth window
-(minimum-variance, $\sigma_\star$-fitted, $1\sigma$ error bars).
-Diagnostic-only kinematic descriptor; not a frame-violation or Bianchi
-claim.}
+(weighted-GLS, $\sigma_\star$-profiled, conditional $1\sigma$ error
+bars). Diagnostic-only kinematic descriptor; not a frame-violation or
+Bianchi claim.}
 \label{fig:k5}
 \end{figure}
 
@@ -601,15 +638,18 @@ claim.}
 On the local CF4++ supergalactic velocity grid ($128^3$, $1000$\,Mpc
 box) we fit the affine flow $v=B+M r$ in spheres about the observer and
 split the velocity-gradient tensor $M$ into bulk $B$, expansion
-$\Theta=\mathrm{tr}\,M$, trace-free shear $\sigma$, and vorticity
-$\omega$. The bulk amplitude rises from $\sim\!152$ to $\sim\!422$\,km/s
-between $50$ and $250$\,Mpc; the vorticity is $\sim\!0$ and falls with
-radius. Because the reconstruction is built from a (curl-suppressing)
-potential/Wiener field, a near-zero recovered $\omega$ is the honest
-\emph{reconstruction-conditioned} outcome, not a detection; an injected
-solid-body rotation is nonetheless recovered with relative error
-$3\times10^{-16}$, validating the estimator's curl channel. The
-cross-reconstruction comparison is \emph{blocked}
+$\Theta=\mathrm{tr}\,M$, trace-free shear $\sigma$, and an antisymmetric
+(vorticity) part $\omega$. The bulk amplitude rises from $\sim\!152$ to
+$\sim\!422$\,km/s between $50$ and $250$\,Mpc. Because the
+reconstruction is built from a curl-suppressing potential/Wiener field,
+the antisymmetric mode is removed \emph{by construction}: physical
+vorticity is structurally non-identifiable from this field --- it is not
+measured to be zero, and we therefore quote no recovered-$\omega$
+number as an inference. The estimator's curl channel is nonetheless
+exercised by an algebra-only check: an injected solid-body rotation is
+recovered with relative error $3\times10^{-16}$ (a mechanics test of the
+affine fit, not a vorticity measurement). The field-realization
+posterior and cross-reconstruction comparison remain \emph{blocked}
 (\texttt{BLOCKED\_MISSING\_FIELD\_REALIZATIONS}: only the CF4++
 reconstruction is available).
 

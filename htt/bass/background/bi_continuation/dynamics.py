@@ -4,6 +4,17 @@ Assumptions: expanding geodesic normal congruence, Fermi-propagated orthonormal
 triad, Bianchi I, homogeneous non-interacting perfect-fluid species with
 p_hat=w rho_hat, and signature (-,+,+,+).  Internal units use c=1 while kappa
 and Lambda remain explicit.
+
+PR07-001 convention repair (audit ``B-shear unit mismatch``)
+-----------------------------------------------------------
+``pi_ab`` is the physical anisotropic stress; ``Pi_ab = kappa*pi_ab/(3H^2)`` is
+dimensionless.  The shear-memory equation is
+
+    sigma_dot = STF(-3H sigma + kappa pi_physical)
+              = STF(-3H sigma + 3H^2 Pi_normalized).
+
+Both forms are provided and are exactly equivalent; the invalid token
+``kappa*Pi`` (dimensionless used where physical stress is required) is forbidden.
 """
 from __future__ import annotations
 
@@ -17,6 +28,21 @@ from .moments import SpeciesPrimitive, total_projection
 def _stf(t: np.ndarray) -> np.ndarray:
     s = 0.5 * (np.asarray(t, dtype=float) + np.asarray(t, dtype=float).T)
     return s - np.eye(3) * np.trace(s) / 3.0
+
+
+def shear_rhs_from_physical(H: float, sigma: np.ndarray, pi_physical: np.ndarray,
+                            kappa: float = 1.0) -> np.ndarray:
+    """Shear memory RHS from physical anisotropic stress: STF(-3H sigma + kappa pi)."""
+    if H <= 0.0 or kappa <= 0.0:
+        raise ValueError('H and kappa must be positive')
+    return _stf(-3.0*H*_stf(sigma) + kappa*_stf(pi_physical))
+
+
+def shear_rhs_from_normalized(H: float, sigma: np.ndarray, Pi_normalized: np.ndarray) -> np.ndarray:
+    """Exactly equivalent RHS from the dimensionless moment: STF(-3H sigma + 3H^2 Pi)."""
+    if H <= 0.0:
+        raise ValueError('H must be positive')
+    return _stf(-3.0*H*_stf(sigma) + 3.0*H*H*_stf(Pi_normalized))
 
 
 @dataclass(frozen=True)
@@ -53,6 +79,8 @@ def rhs(state: BIState, kappa: float = 1.0, Lambda: float = 0.0,
         v2 = float(v @ v)
         svv = float(v @ sigma @ v)
         den = 1.0 - sp.w * v2
+        if den <= 1e-12:
+            raise FloatingPointError('1-w v^2 is too small for this branch')
         rhofrac = -(1.0 + sp.w) * (H*(3.0-v2) - svv) / den
         rho_dot.append(sp.rho_hat * rhofrac)
         scalar = (H*(1.0-3.0*sp.w)*(1.0-v2) - (1.0-sp.w)*svv) / den
@@ -61,8 +89,8 @@ def rhs(state: BIState, kappa: float = 1.0, Lambda: float = 0.0,
     projection = total_projection(state.species)
     sigma2 = 0.5 * float(np.einsum('ij,ij', sigma, sigma))
     Hdot = -H*H - (2.0/3.0)*sigma2 - (kappa/6.0)*(projection.mu + 3.0*projection.pressure) + Lambda/3.0
-    pi = projection.anisotropic_stress if include_anisotropic_stress else np.zeros((3,3))
-    sigmadot = _stf(-3.0*H*sigma + kappa*pi)
+    pi_physical = projection.anisotropic_stress if include_anisotropic_stress else np.zeros((3,3))
+    sigmadot = shear_rhs_from_physical(H, sigma, pi_physical, kappa)
     return BIRHS(state.a*H, Hdot, sigmadot, tuple(rho_dot), tuple(velocity_dot))
 
 
@@ -127,5 +155,9 @@ def constraint_residuals(state: BIState, kappa: float = 1.0, Lambda: float = 0.0
 
 def dust_flrw_exact(t: np.ndarray, H0: float = 1.0) -> tuple[np.ndarray, np.ndarray]:
     t = np.asarray(t, dtype=float)
+    if H0 <= 0.0:
+        raise ValueError('H0 must be positive')
     d = 1.0 + 1.5*H0*t
+    if np.any(d <= 0.0):
+        raise ValueError('dust FLRW oracle requires 1+3H0 t/2>0')
     return d**(2.0/3.0), H0/d

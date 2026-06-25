@@ -1,0 +1,69 @@
+name: PR07 audit-repair gates
+
+on:
+  pull_request:
+    paths:
+      - 'htt/**'
+      - 'research_gates/pr07/**'
+      - 'scripts/run_pr07_experiments.py'
+      - 'scripts/cove_verify_pr07.py'
+      - 'docs/final_report/main.tex'
+      - '.github/workflows/pr07-audit-repair-gates.yml'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OPENBLAS_NUM_THREADS: "1"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+  # PR07-005: PYTHONPATH spans repo root, repo/htt and repo/htt/htt.
+  PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/htt:${{ github.workspace }}/htt/htt
+
+jobs:
+  portable-gates:
+    name: Portable numerical + claim gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy scipy pytest
+      - name: Forbidden legacy-dependency scan (required check)
+        run: python research_gates/pr04/tools/verify_forbidden_dependencies.py --repo .
+      - name: PR04 theorem/property gates (regression)
+        run: python -m unittest discover -s research_gates/pr04/tests -p 'test_pr04_*.py' -v
+      - name: PR07 repair gates (unit-safe stress, dynamics, PAPER-A)
+        run: python -m unittest discover -s research_gates/pr07/tests -p 'test_pr07_*.py' -v
+      - name: Run synthetic experiments + CoVe aggregation
+        run: |
+          python scripts/run_pr07_experiments.py
+          python scripts/cove_verify_pr07.py
+      - name: PR07 audit-repair contract gates
+        run: python -m pytest tests/contracts/test_pr07_audit_repair.py -q
+      - name: Publish gate JSON + checksums
+        if: always()
+        run: |
+          mkdir -p artifacts/pr07
+          (cd docs/generated && sha256sum pr07_*.json > "${GITHUB_WORKSPACE}/artifacts/pr07/pr07_checksums.sha256") || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr07-gate-artifacts
+          path: |
+            docs/generated/pr07_*.json
+            artifacts/pr07/**
+
+  # The Wolfram/xAct symbolic gate is a LOCAL/manual check: it requires the
+  # Wolfram Engine and xAct, which are not provisioned in portable CI. Run
+  # `make pr07-wolfram` on the local host; a missing engine exits with a
+  # registered blocker rather than a silent Python substitute.
