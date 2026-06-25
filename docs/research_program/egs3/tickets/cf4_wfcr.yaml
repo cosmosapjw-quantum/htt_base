@@ -1,0 +1,8 @@
+id: EGS3-C2-cf4-wfcr
+title: CF4 WF/CR posteriors (K6 vorticity, K5 cosmic-variance mocks)
+state: blocked
+blocker: [BLOCKED_MISSING_FIELD_REALIZATIONS, BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP]
+owner_lane: cf4_reconstruction
+method: Hoffman-Ribak constrained realizations on the 3D CF4 WF field (Hoffman et al. 2024, arXiv:2311.01340); Bias-Gaussianization forward mocks
+mechanics_ready: htt/obsstat/constrained_realizations.py:curl_posterior + htt/obsstat/bulkflow_mle.py:hierarchical_coverage_experiment
+exit_gate: realization-conditioned shear/vorticity posterior (K6); cosmic-variance-inclusive bulk-flow coverage (K5)

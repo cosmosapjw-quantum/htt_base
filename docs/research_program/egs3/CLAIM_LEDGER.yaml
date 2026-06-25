@@ -1,0 +1,44 @@
+schema: htt_base.egs3_claim_ledger.v1
+claims:
+  egs3.graded_comparator_rank:
+    owner: OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: graded-comparator rank-2 identifiability with a two-sector joint no-go
+    caveats: [rank/null structure robust; exact amplitudes need the covariant transfer]
+  egs3.pi_evalue_calibration:
+    owner: MIO
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: Pi as a calibrated e-value with a Markov false-exceedance bound
+    caveats: [requires the registered null; S4 domination makes it conservative]
+  egs3.seminative_transfer_floor:
+    owner: BASS
+    status: SPECIFIED
+    evidence_type: test
+    claim_tier: C1
+    allowed_phrase: shear->multipole Fisher floor as a k-profile saturating at 0.632
+    caveats: [analytic visibility stand-in; real CAMB/CLASS visibility to-close; single mode]
+  egs3.volterra_depth_memory:
+    owner: BASS
+    status: SPECIFIED
+    evidence_type: test
+    claim_tier: C1
+    allowed_phrase: depth gap as a Volterra memory of the tilt stress with exponential kernel
+    caveats: [constant-H stand-in; real H(z) to-close]
+  egs3.vorticity_reopening:
+    owner: OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: vorticity re-opens in the transverse velocity / B-mode channel
+    caveats: [algebraic; quantitative transverse-velocity transfer is future work]
+  egs3.k1_global_p:
+    owner: OBSSTAT
+    status: PROPOSED
+    evidence_type: test
+    claim_tier: C3
+    allowed_phrase: registered low-ell global p-value from public Planck E2E sims
+    caveats: [requires FFP10/NPIPE download; blocked until maps present]

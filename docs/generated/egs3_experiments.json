@@ -1,0 +1,84 @@
+{
+  "schema": "htt.egs3.experiments.v1",
+  "claim_tier": "program_theorem_and_synthetic_mechanics",
+  "family_identification": false,
+  "native_solver_result": false,
+  "experiments": {
+    "axis_a": {
+      "A1_graded_rank": {
+        "rank": 2,
+        "reachable": [
+          "Sigma2",
+          "Omega_tilt"
+        ],
+        "null": [
+          "W2",
+          "Omega_k"
+        ],
+        "x_C_example": 1.6e-06
+      },
+      "A2_floor_invariance": {
+        "floor_L5": 0.4739636163155822,
+        "scale_free": true
+      },
+      "A3_evalue_calibration": {
+        "null_mean": 1.0,
+        "markov_holds": true,
+        "beta_grid": [
+          0.5,
+          0.2,
+          0.1,
+          0.05,
+          0.02
+        ],
+        "false_rate": [
+          0.06635,
+          0.06635,
+          0.06635,
+          0.0,
+          0.0
+        ]
+      },
+      "A4_rao_blackwell": {
+        "raw_var": 1.9406071112705026,
+        "rb_var": 0.02778175683058471,
+        "dominates": true
+      },
+      "headline": "graded comparator rank-2 (Sigma2,Omega_tilt reachable; W2,Omega_k joint null); Pi is a calibrated e-value; RB-sufficient"
+    },
+    "axis_b": {
+      "B1_transfer_floor_profile": {
+        "0.140": 0.6324554609294409,
+        "0.980": 0.6322741574151265,
+        "7.000": 0.18053534683053643,
+        "28.000": 0.0011293288664645331
+      },
+      "B1_superhorizon_decay": {
+        "r2": 1.0,
+        "r3": 0.020243084496419886,
+        "r10": 9.755769986302849e-19,
+        "monotone_decay": true
+      },
+      "B2_volterra_memory": {
+        "max_diff_vs_ode": 2.9138549925891016e-06,
+        "gronwall_holds": true,
+        "kernel_decays": true
+      },
+      "B3_vorticity_reopen": {
+        "radial_max": 2.220446049250313e-16,
+        "transverse_max": 3.4256464333281746,
+        "transverse_rank": 3,
+        "reopens": true
+      },
+      "headline": "floor is a k-profile saturating at 0.632 (super-horizon shear); depth gap is a Volterra memory of Pi; vorticity re-opens in the transverse channel"
+    }
+  },
+  "framework_upgrade": "graded comparator g=(Sigma2,W2,Omega_tilt,Omega_k); x_C=<c,g> is a derived summary (bit-identical)",
+  "blockers_kept_open": [
+    "BLOCKED_MISSING_PR4_E2E_ACCESS",
+    "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
+    "BLOCKED_MISSING_FIELD_REALIZATIONS",
+    "AWAITING_NATIVE_LOWELL_SOLVER"
+  ],
+  "claim_boundary": "conditional EGS-type theorems + synthetic mechanics only; no detection, family/geometry, or native-solver validation"
+}

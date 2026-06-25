@@ -1,0 +1,9 @@
+id: EGS3-C1-k1-ffp10-npipe
+title: K1 global p-value from public Planck FFP10/NPIPE E2E sims
+state: blocked
+blocker: BLOCKED_MISSING_PR4_E2E_ACCESS
+owner_lane: cmb_calibration
+data: PLA FFP10 (dx12_v3_{method}_{cmb,noise}_mc_*, 999 CMB + 300 noise/method) + NPIPE (~300 E2E)
+procedure: downgrade to NSIDE=16 FWHM~40'; compute the 6 K1 statistics per sim; tail scores; max-scan; +1 global rank p
+mechanics_ready: htt/obsstat/lowell_global_calibration.py:e2e_maxscan_from_summaries
+exit_gate: global rank p-value + matched-pipeline config hash + ensemble provenance

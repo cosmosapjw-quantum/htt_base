@@ -222,6 +222,35 @@ class DeparturePosterior:
         self.x = self.Sigma2 - self.W2 + self.Omega_tilt + self.Omega_k_aniso
         return self.x
 
+    # EGS3 framework upgrade (additive): the graded comparator preserves sector
+    # identity, so the signed x_C is a derived linear summary x = <c, g>,
+    # c = (+1, -1, +1, +1). This removes the x_C sign-cancellation ambiguity
+    # (a large Sigma^2 and W^2 can cancel in x but stay visible in g) and the
+    # F = x/x_max < 0 pathology (per-sector filling uses the nonnegative sectors).
+    # x is unchanged: g is a view, not a redefinition.
+    GRADED_SECTORS = ("Sigma2", "W2", "Omega_tilt", "Omega_k_aniso")
+    GRADED_SIGNS = (1.0, -1.0, 1.0, 1.0)
+
+    def compute_graded_comparator(self):
+        """Return the graded comparator sectors g and verify x = <c, g> exactly.
+
+        g = (Sigma^2_std, W^2_std, Omega_tilt, Omega_{k,aniso}); the signed
+        comparator x is recovered bit-identically as the linear summary
+        x = Sigma^2 - W^2 + Omega_tilt + Omega_{k,aniso}."""
+        if not hasattr(self, "x"):
+            self.compute_x()
+        g = {
+            "Sigma2": self.Sigma2,
+            "W2": self.W2,
+            "Omega_tilt": self.Omega_tilt,
+            "Omega_k_aniso": self.Omega_k_aniso,
+        }
+        x_from_g = g["Sigma2"] - g["W2"] + g["Omega_tilt"] + g["Omega_k_aniso"]
+        # bit-identical reconstruction of the signed summary
+        assert np.array_equal(x_from_g, self.x), "graded comparator must reconstruct x exactly"
+        self.graded_comparator = g
+        return g
+
     def _aniso_curvature(self):
         """Model- and comparator-dependent anisotropic curvature.
 
