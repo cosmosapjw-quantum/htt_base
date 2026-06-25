@@ -1,0 +1,141 @@
+{
+  "artifact_id": "obsstat.cf4_affine_flow",
+  "owner": "OBSSTAT",
+  "implementation_scope": "obsstat",
+  "claim_tier": "diagnostic_only",
+  "transfer_source": "none",
+  "sky_support_status": "cf4_reconstruction_grid",
+  "null_mock_status": "bootstrap_over_correlated_reconstruction_cells",
+  "ticket": "LR-06F",
+  "generating_command": "python scripts/make_cf4_affine_flow.py",
+  "git_commit_or_worktree_state": "95da1f8+dirty",
+  "input_hashes": [
+    "workdir/raw/cf4/CF4pp_mean_std_grids.npz:sha256:78c0515c8330066a034f5e8afb3663e6c81ddf033db302a921c662344639bc91"
+  ],
+  "grid": {
+    "n_per_axis": 128,
+    "box_mpc": 1000.0,
+    "cell_mpc": 7.8125,
+    "frame": "supergalactic_cartesian"
+  },
+  "radius_sweep": [
+    {
+      "radius_mpc": 50.0,
+      "n_cells": 1088,
+      "bulk_amplitude_kms": 152.101,
+      "bulk_vector_kms": [
+        -122.522,
+        87.295,
+        -22.422
+      ],
+      "expansion_kms_per_mpc": 6.66357,
+      "shear_amplitude_kms_per_mpc": 12.84596,
+      "vorticity_amplitude_kms_per_mpc": 0.030428
+    },
+    {
+      "radius_mpc": 100.0,
+      "n_cells": 8744,
+      "bulk_amplitude_kms": 262.332,
+      "bulk_vector_kms": [
+        -227.739,
+        95.431,
+        -88.578
+      ],
+      "expansion_kms_per_mpc": -6.77598,
+      "shear_amplitude_kms_per_mpc": 3.17791,
+      "vorticity_amplitude_kms_per_mpc": 0.017541
+    },
+    {
+      "radius_mpc": 150.0,
+      "n_cells": 29464,
+      "bulk_amplitude_kms": 315.499,
+      "bulk_vector_kms": [
+        -244.955,
+        179.002,
+        -86.573
+      ],
+      "expansion_kms_per_mpc": -8.72591,
+      "shear_amplitude_kms_per_mpc": 1.15375,
+      "vorticity_amplitude_kms_per_mpc": 0.002038
+    },
+    {
+      "radius_mpc": 200.0,
+      "n_cells": 70320,
+      "bulk_amplitude_kms": 359.258,
+      "bulk_vector_kms": [
+        -51.913,
+        355.476,
+        2.944
+      ],
+      "expansion_kms_per_mpc": -8.24612,
+      "shear_amplitude_kms_per_mpc": 1.25565,
+      "vorticity_amplitude_kms_per_mpc": 0.000501
+    },
+    {
+      "radius_mpc": 250.0,
+      "n_cells": 137376,
+      "bulk_amplitude_kms": 422.025,
+      "bulk_vector_kms": [
+        50.397,
+        418.772,
+        13.955
+      ],
+      "expansion_kms_per_mpc": -1.19474,
+      "shear_amplitude_kms_per_mpc": 1.27607,
+      "vorticity_amplitude_kms_per_mpc": 0.000389
+    }
+  ],
+  "bootstrap_at_150mpc": {
+    "n_cells": 29464,
+    "n_boot": 300,
+    "bulk_amplitude": {
+      "mean": 315.6310920324867,
+      "std": 1.9789538999554475,
+      "p16": 313.73051754030075,
+      "p84": 317.86059612784703
+    },
+    "expansion": {
+      "mean": -8.728167838523351,
+      "std": 0.06437394166876752,
+      "p16": -8.792461611816847,
+      "p84": -8.663109401081911
+    },
+    "shear_amplitude": {
+      "mean": 1.1554853191650942,
+      "std": 0.02663095636272847,
+      "p16": 1.12878075828566,
+      "p84": 1.1830141003131567
+    },
+    "vorticity_amplitude": {
+      "mean": 0.034902693669733524,
+      "std": 0.015515383899991938,
+      "p16": 0.020004223305341115,
+      "p84": 0.05006763638216342
+    }
+  },
+  "curl_injection_recovery": {
+    "omega_injected": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "omega_recovered": [
+      -2.7755575615628914e-16,
+      -1.1102230246251565e-16,
+      1.0
+    ],
+    "abs_error": 2.9893669801409083e-16,
+    "rel_error": 2.9893669801409083e-16
+  },
+  "cross_reconstruction": {
+    "status": "BLOCKED_MISSING_FIELD_REALIZATIONS",
+    "detail": "only the CF4++ reconstruction is available locally; a second independent reconstruction is required for the cross-reconstruction comparison."
+  },
+  "caveats": [
+    "Affine-flow decomposition of a single reconstruction; diagnostic-only.",
+    "Vorticity is reconstruction-conditioned: potential/Wiener reconstructions suppress curl by construction, so a small recovered omega is a reconstruction property, not a detection.",
+    "Bootstrap over correlated reconstruction cells is a lower bound on the uncertainty, not a calibrated covariance.",
+    "Expansion Theta is the local divergence of the reconstruction, not a global H0 measurement.",
+    "No Bianchi/geometry/cosmological-frame-violation claim."
+  ]
+}
