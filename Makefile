@@ -16,11 +16,13 @@ PYTHON   ?= python
 GATEDIR  := $(REPO)/research_gates/pr04/tests
 GATEDIR7 := $(REPO)/research_gates/pr07/tests
 GATEDIRE := $(REPO)/research_gates/egs2/tests
+GATEDIR3 := $(REPO)/research_gates/egs3/tests
 THREADS  := OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
 PYPATH   := PYTHONPATH=$(REPO):$(REPO)/htt:$(REPO)/htt/htt
 
-.PHONY: pr04-gates pr07-gates egs2-gates paper-a-gates paper-b-gates pr04-proofs \
-        pr04-forbidden-deps pr07-wolfram pr07-cove egs2-experiments
+.PHONY: pr04-gates pr07-gates egs2-gates egs3-gates paper-a-gates paper-b-gates \
+        pr04-proofs pr04-forbidden-deps pr07-wolfram pr07-cove egs2-experiments \
+        egs3-experiments egs3-wolfram
 
 ## All 23 external PR04 theorem/property gates + symbolic proofs + dep scan.
 pr04-gates: pr04-forbidden-deps
@@ -38,6 +40,18 @@ egs2-gates:
 ## EGS2 experiment evidence -> docs/generated/egs2_experiments.json.
 egs2-experiments:
 	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs2_experiments.py
+
+## EGS3 extension gates (A1-A4 graded comparator/floor/e-value/RB; B1-B3 transfer/Volterra/vorticity).
+egs3-gates:
+	$(THREADS) $(PYPATH) $(PY) -m unittest discover -s $(GATEDIR3) -p 'test_egs3_*.py' -v
+
+## EGS3 experiment evidence -> docs/generated/egs3_experiments.json.
+egs3-experiments:
+	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_experiments.py
+
+## EGS3 local-only Wolfram core (B4 two-sided bracket constants).
+egs3-wolfram:
+	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_bracket_constants.wls --out $(REPO)/docs/generated/egs3_bracket_constants_proof.json
 
 ## PAPER-A: identifiability / congruence-kinematics gates + PAPER-A symbolic cores.
 paper-a-gates:

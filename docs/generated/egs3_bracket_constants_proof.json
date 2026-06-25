@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "backend": "wolframclient",
+  "results": [
+    {
+      "script": "egs3_bracket_constants.wls",
+      "result": {
+        "schema": "htt.egs3.bracket_constants.v1",
+        "checks": {
+          "sigma_low_expr": "a2/(kappa + kappa*R)",
+          "sigma_low_positive_at_nonzero_a2": true,
+          "lower_bound_coefficient_kappa_over_1plusR": "(kappa + kappa*R)^(-1)",
+          "F_low_positive": true,
+          "F_low_strictly_below_F_high_under_bracket_condition": true,
+          "bracket_condition": "Cup*kappa*(1+R) > 1",
+          "cited_values_satisfy_condition": true,
+          "zero_excluded_iff_a2_positive": true,
+          "derivative_correction_bound": "Sigma in [a2/(kappa(1+R)), a2/(kappa(1-R))] under |delta|<=R (H3)"
+        }
+      }
+    }
+  ]
+}
