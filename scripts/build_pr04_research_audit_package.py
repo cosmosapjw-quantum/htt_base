@@ -73,6 +73,9 @@ MEASUREMENT_REPORTS = (
     "docs/generated/pr07_k6_affine_ensemble_synthetic.json",
     # EGS2 extension experiment evidence (NT2-* + blocker discharges).
     "docs/generated/egs2_experiments.json",
+    # EGS3 extension experiment evidence + B4 symbolic record.
+    "docs/generated/egs3_experiments.json",
+    "docs/generated/egs3_bracket_constants_proof.json",
 )
 
 # Theorem implementations (PR04 overlay) + OBSSTAT estimators + PR07 modules.
@@ -96,6 +99,12 @@ SOURCE_FILES = (
     "htt/obsstat/egs2_shear_bracket.py",
     "htt/obsstat/egs2_transport.py",
     "htt/obsstat/constrained_realizations.py",
+    # EGS3 extension theorem modules (graded comparator + GR/Boltzmann).
+    "htt/obsstat/egs3_graded_comparator.py",
+    "htt/obsstat/egs3_calibration.py",
+    "htt/obsstat/egs3_volterra_memory.py",
+    "htt/obsstat/egs3_vorticity_channels.py",
+    "htt/bass/transfer/shear_quadrupole_seminative.py",
 )
 
 DRIVER_SCRIPTS = (
@@ -117,6 +126,9 @@ DRIVER_SCRIPTS = (
     "wolfram/pr07_bianchi_i_coordinates.wls",
     # EGS2 extension driver.
     "scripts/run_egs2_experiments.py",
+    # EGS3 extension driver + B4 symbolic core.
+    "scripts/run_egs3_experiments.py",
+    "wolfram/egs3_bracket_constants.wls",
 )
 
 GOVERNANCE_FILES = (
@@ -151,6 +163,16 @@ GOVERNANCE_FILES = (
     "docs/research_program/egs2/NEXT_DAG.yaml",
     "docs/research_program/egs2/tickets/K5_release_matched_mocks.yaml",
     "docs/research_program/egs2/tickets/semi_native_shear_to_quadrupole.yaml",
+    # EGS3 programme surface (framework upgrade + theorem candidates + tickets).
+    "docs/research_program/egs3/README.md",
+    "docs/research_program/egs3/FRAMEWORK_CRITIQUE_AND_REDESIGN.md",
+    "docs/research_program/egs3/THEOREM_CANDIDATES.md",
+    "docs/research_program/egs3/DIVERGENCE.md",
+    "docs/research_program/egs3/BLOCKER_SOLUTIONS.md",
+    "docs/research_program/egs3/CLAIM_LEDGER.yaml",
+    "docs/research_program/egs3/tickets/k1_ffp10_npipe.yaml",
+    "docs/research_program/egs3/tickets/cf4_wfcr.yaml",
+    "docs/research_program/egs3/tickets/psd_cone_redesign.yaml",
 )
 
 FIGURE_STEMS = (
@@ -212,7 +234,7 @@ def _virtual(archive: str, group: str, text: str) -> Entry:
 def _pr_deltas(repo_root: Path) -> list[str]:
     return sorted(
         p.relative_to(repo_root).as_posix()
-        for n in range(108, 121)
+        for n in range(108, 124)
         for p in [repo_root / f"docs/PR_DELTAS/rev-r{n}.md"]
         if p.is_file()
     )
@@ -222,7 +244,8 @@ def _gate_tests(repo_root: Path) -> list[str]:
     out: list[str] = []
     for rel, pat in (("research_gates/pr04/tests", "test_pr0*_*.py"),
                      ("research_gates/pr07/tests", "test_pr0*_*.py"),
-                     ("research_gates/egs2/tests", "test_egs2_*.py")):
+                     ("research_gates/egs2/tests", "test_egs2_*.py"),
+                     ("research_gates/egs3/tests", "test_egs3_*.py")):
         d = repo_root / rel
         if d.is_dir():
             out += [p.relative_to(repo_root).as_posix() for p in d.glob(pat)]

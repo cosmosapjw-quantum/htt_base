@@ -7,6 +7,41 @@
 
 ## [Unreleased]
 
+### EGS3 programme — framework upgrade + GR/Boltzmann theorems toward publishable analysis (2026-06-26)
+
+Self-synthesized extension toward a publishable novel data-analysis paper:
+a critical upgrade of the five-variable framework, a new layer of strong
+conditional theorems applying GR + the covariant Boltzmann hierarchy directly to
+the variables (three axes), and concrete discharges of the data blocks.
+
+- **Framework upgrade (rev-r123):** promote the signed scalar `x_C` to a
+  **graded comparator vector** `g=(Σ²,W²,Ω_tilt,Ω_k)`, `x_C=⟨c,g⟩` —
+  `DeparturePosterior.compute_graded_comparator()` reconstructs `x_C`
+  bit-identically (contract test), removing sign-cancellation + the `F<0`
+  pathology; the PSD-cone revisionary redesign is designed as the next stage.
+- **Axis A (rev-r122):** A1 graded-comparator identifiability **rank-2** (Σ²,
+  Ω_tilt reachable; W², Ω_k joint null — `x_C` sign-cancellation is a projection
+  artifact); A2 reparametrization-invariant floor; A3 **Π e-value calibration**
+  (Markov false-exceedance bound — Π becomes a calibrated certificate); A4
+  Rao-Blackwell sufficiency. `htt/obsstat/egs3_{graded_comparator,calibration}.py`.
+- **Axis B (rev-r122):** B1 semi-native shear→multipole transfer — honest
+  sharpening of NT2-A1, the floor is a **k-profile** saturating at 0.632 for
+  super-horizon shear (`htt/bass/transfer/shear_quadrupole_seminative.py`); B2
+  Volterra depth-memory (exact integrating-factor == ODE + Grönwall); B3
+  vorticity **re-opening** in the transverse channel; B4 covariant bracket
+  constants (Wolfram PASS).
+- **Axis C:** K1 global-p (public FFP10/NPIPE), K6/K5 CR posteriors, graded
+  joint pushforward — mechanics landed; real-data runs ticketed
+  (`docs/research_program/egs3/tickets/`).
+- Report §8 "Graded-comparator upgrade and the EGS3 extension" (18 pp);
+  `docs/research_program/egs3/` programme; both audit packages expanded
+  (research-audit 147→170 files). `make egs3-gates` (12) + `make egs3-wolfram`.
+
+Anti-tone-down: the headline is a strong honest result — a measured rank-2
+comparator + a proven two-sector no-go + named re-opening channels. Conditional
+theorems + synthetic mechanics only; no detection, family/geometry, or
+native-solver claim; `pdf_claim_lint` 0 failed.
+
 ### EGS2 extension programme — NT2-* theorems + blocker discharges + audit fixes (2026-06-26)
 
 Applied two complementary 2026-06-25/26 audit companions (verdict **MINOR

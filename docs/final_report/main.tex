@@ -889,6 +889,69 @@ shear$\to$quadrupole calculator that would replace the toy $r_\ell$ with a
 physically sourced response.
 
 % ============================================================
+\section{Graded-comparator upgrade and the EGS3 extension}
+\label{sec:egs3}
+
+A critical re-examination of the five diagnostic variables motivates a framework
+upgrade and a further layer of strong conditional theorems that apply GR and the
+covariant Boltzmann hierarchy directly to the variables.
+
+\paragraph{Framework critique + graded-comparator upgrade.} The signed scalar
+$\xC=\Sigstd-\Wstd+\Otilt+\Okaniso$ contracts four physically distinct
+invariants into one number, so a large shear and a large vorticity can cancel
+($\Sigstd-\Wstd\simeq0$) and read as near-FLRW; and $F=\xC/\xmax$ is ill-posed as
+a ``filling fraction'' when $\xC<0$. We therefore promote the primary object to
+the \emph{graded comparator vector} $g=(\Sigstd,\Wstd,\Otilt,\Okaniso)$, with
+$\xC=\langle c,g\rangle$, $c=(+1,-1,+1,+1)$, a \emph{derived} linear summary.
+This is additive --- $\xC$ is reconstructed bit-identically, so nothing
+downstream changes --- and it preserves sector identity under cancellation. The
+PSD-cone-valued comparator (the budget as a PSD matrix whose invariants are the
+sectors) is registered as the next-stage revisionary redesign.
+
+\paragraph{Axis A (information on the variables).} \emph{A1 (graded-comparator
+identifiability rank).} From the two channels the program uses --- low-$\ell$
+CMB temperature and radial peculiar velocity --- the data-identifiable subspace
+of $g$ is exactly \emph{rank 2}: $\Sigstd$ (via $C_2$) and $\Otilt$ (via the
+dipole) are reachable, while $\Wstd$ and $\Okaniso$ lie in the \emph{joint null}.
+So $\xC$'s sign-cancellation is a projection artifact, and exactly two of the
+four sectors are observable from these channels --- a strong no-go on the
+diagnostic's reach. \emph{A3 ($\Pi$ as a calibrated e-value).} Under the
+registered null, $E=\mathbf 1[x>t]/\alpha$ has unit mean, so Markov gives
+$P(E\ge1/\beta)\le\beta$; the samplewise domination makes the bound-based
+e-value conservative. This promotes $\Pi$ from ``not a probability'' to a
+certificate with a stated error rate. (\emph{A2} the Fisher floor is
+reparametrization-invariant; \emph{A4} $(a_2,a_3,\text{dipole})$ is
+Rao--Blackwell-sufficient for the reachable subspace.)
+
+\paragraph{Axis B (GR/Boltzmann on the variables).} \emph{B1 (semi-native
+transfer).} A line-of-sight projection of a single shear-sourced mode through a
+recombination visibility gives the response $r_\ell$ physically, rather than by a
+toy. The genuine Fisher floor is then a \emph{profile in the shear scale $k$}: it
+saturates at the single-$\ell$ $\sqrt{2/5}\approx0.632$ for a pure super-horizon
+(homogeneous) shear --- which is quadrupole-dominated --- and drops below
+$0.632$ only when the shear sources a band of multipoles at finite $k$. This
+sharpens NT2-A1: the sub-$0.632$ floor is a finite-$k$ statement. \emph{B2
+(Volterra depth-memory).} The shear-memory law has the exact integrating-factor
+solution, so the depth gap is a Volterra functional of the tilt anisotropic
+stress with an exponential memory kernel $e^{-3\int H}$, bounded by a Grönwall
+envelope. \emph{B3 (vorticity re-opening).} The NT2-B3 blind sector re-opens in
+the \emph{transverse} peculiar-velocity channel ($n^a\Omega_{ab}m^b\neq0$ for
+$m\perp n$, rank three over the curl modes) and in CMB polarization B-modes ---
+naming exactly the channels that break the no-go. \emph{B4} derives the covariant
+bracket constants (Wolfram-verified), turning the NT2-B1 exclusion into a
+statement with stated coefficients.
+
+\paragraph{Toward a publishable joint comparator.} The headline target (Axis C)
+is a \emph{measured} rank-2 graded comparator on real Planck/CF4 data
+\emph{together with} the proven two-sector no-go (the $\Wstd,\Okaniso$ sectors
+are unreachable from CMB-T $+$ radial velocities) and the named re-opening
+channels --- a strong, honest result that needs no native solver. The
+discharges of \S\ref{sec:blocks} (the public-E2E K1 global $p$, the
+constrained-realization velocity posteriors) feed this joint pushforward; the
+runnable mechanics are in place and the real-data runs carry their registered
+blocker codes until the inputs are owned.
+
+% ============================================================
 \section{Transfer-conditional diagnostics}
 \label{sec:transfer}
 

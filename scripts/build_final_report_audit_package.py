@@ -89,6 +89,9 @@ EVIDENCE_FILES = (
     "docs/generated/pr07_k6_affine_ensemble_synthetic.json",
     # EGS2 extension evidence backing the new §7 (NT2-* + blocker discharges).
     "docs/generated/egs2_experiments.json",
+    # EGS3 extension evidence backing the new §8 (graded comparator + A/B/C).
+    "docs/generated/egs3_experiments.json",
+    "docs/generated/egs3_bracket_constants_proof.json",
 )
 
 
