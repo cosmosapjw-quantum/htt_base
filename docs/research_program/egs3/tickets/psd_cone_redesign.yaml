@@ -1,7 +1,15 @@
 id: EGS3-redesign-psd-cone
-title: PSD-cone-valued comparator (revisionary redesign, next stage)
-state: planned
+title: PSD-cone-valued comparator (revisionary redesign)
+state: implemented_behind_review
 owner_lane: gr_xact
 scope: replace the scalar diagnostic layer with a PSD-matrix comparator M>=0 whose invariants are the sectors; x_C,F become functionals of M; identifiability = reachable eigen-directions; NT2-B3 = null direction; NT2-B1 = cone membership; PAPER-B B-psd cone = admissible set
 gate: must keep x_C bit-identical (regression) until independently reviewed; ships behind the additive graded upgrade
 not_in_scope: any change to the claim envelope (representation change only)
+realized_by:
+  module: htt/obsstat/egs3_psd_cone.py
+  gate_tests: research_gates/egs3/tests/test_egs3_axis_psd.py (P1-P4)
+  contract: tests/contracts/test_psd_cone_redesign.py (bit-identical x_C = tr(C M))
+  wolfram: wolfram/egs3_psd_cone.wls (trace identity, convex cone, convex shell) -> docs/generated/egs3_psd_cone_proof.json (PASS)
+  experiment: scripts/run_egs3_experiments.py:axis_psd -> docs/generated/egs3_experiments.json
+delivered: rev-r125
+review_gate: stays behind the graded upgrade (does NOT front the production diagnostic) until an independent reviewer signs off; x_C-bit-identical regression is the standing guard. Off-diagonal (cross-sector) PSD structure is reserved for the native solver and not used.

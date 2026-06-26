@@ -56,14 +56,47 @@ def axis_b() -> dict:
     }
 
 
+def axis_psd() -> dict:
+    """Revisionary redesign: the PSD-cone-valued sector comparator (gated,
+    bit-identical to x_C). Representation only -- no new scalar, no detection."""
+    import numpy as np
+    from htt.obsstat.egs3_psd_cone import (
+        sector_matrix, xc_from_matrix, admissibility, eigen_identifiability,
+        cone_shell_membership, bracket_shell_from_a2a3, convex_combination_is_admissible,
+    )
+    from htt.obsstat.egs3_graded_comparator import graded_comparator
+    g = (2.0e-6, 1.5e-6, 8.0e-7, 3.0e-7)
+    M = sector_matrix(g)
+    gc = graded_comparator(*g)
+    ei = eigen_identifiability(M)
+    s_lo, s_hi = bracket_shell_from_a2a3(5.0, 3.0)
+    cs = cone_shell_membership(sector_matrix((4.0, 0.0, 0.0, 0.0)), s_lo, s_hi)
+    return {
+        "trace_xc": xc_from_matrix(M),
+        "graded_xc": gc.x_C,
+        "bit_identical": bool(np.array_equal(xc_from_matrix(M), gc.x_C)),
+        "admissible_psd_cone": admissibility(M).is_admissible,
+        "fail_closed_on_negative": (not admissibility(sector_matrix((2e-6, -1e-6, 0, 0))).is_admissible),
+        "convex_cone": convex_combination_is_admissible(M, sector_matrix((1e-6, 1e-6, 1e-6, 1e-6))),
+        "reachable_rank": ei.reachable_rank,
+        "reachable_sectors": list(ei.reachable_sectors),
+        "null_sectors": list(ei.null_sectors),
+        "blind_sector_null_residual": ei.null_residual,
+        "bracket_shell": {"s_lo": s_lo, "s_hi": s_hi, "in_shell": cs.in_shell,
+                          "excludes_vertex": cs.excludes_vertex},
+        "headline": "PSD-cone comparator M>=0; x_C=tr(C M) bit-identical; admissible set is a convex cone; rank-2 reachable eigendirections; blind sector is the structural null; bracket = convex shell excluding the FLRW vertex",
+    }
+
+
 def main() -> int:
     payload = {
         "schema": "htt.egs3.experiments.v1",
         "claim_tier": "program_theorem_and_synthetic_mechanics",
         "family_identification": False,
         "native_solver_result": False,
-        "experiments": {"axis_a": axis_a(), "axis_b": axis_b()},
+        "experiments": {"axis_a": axis_a(), "axis_b": axis_b(), "axis_psd": axis_psd()},
         "framework_upgrade": "graded comparator g=(Sigma2,W2,Omega_tilt,Omega_k); x_C=<c,g> is a derived summary (bit-identical)",
+        "revisionary_redesign": "PSD-cone comparator M=diag(g)>=0; x_C=tr(C M); realized + gated (representation only, bit-identical), ships behind the graded upgrade",
         "blockers_kept_open": [
             "BLOCKED_MISSING_PR4_E2E_ACCESS",
             "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",

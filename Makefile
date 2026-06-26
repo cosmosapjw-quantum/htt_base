@@ -49,9 +49,10 @@ egs3-gates:
 egs3-experiments:
 	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_experiments.py
 
-## EGS3 local-only Wolfram core (B4 two-sided bracket constants).
+## EGS3 local-only Wolfram cores (B4 two-sided bracket constants + PSD-cone redesign).
 egs3-wolfram:
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_bracket_constants.wls --out $(REPO)/docs/generated/egs3_bracket_constants_proof.json
+	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_psd_cone.wls --out $(REPO)/docs/generated/egs3_psd_cone_proof.json
 
 ## PAPER-A: identifiability / congruence-kinematics gates + PAPER-A symbolic cores.
 paper-a-gates:

@@ -905,8 +905,17 @@ the \emph{graded comparator vector} $g=(\Sigstd,\Wstd,\Otilt,\Okaniso)$, with
 $\xC=\langle c,g\rangle$, $c=(+1,-1,+1,+1)$, a \emph{derived} linear summary.
 This is additive --- $\xC$ is reconstructed bit-identically, so nothing
 downstream changes --- and it preserves sector identity under cancellation. The
-PSD-cone-valued comparator (the budget as a PSD matrix whose invariants are the
-sectors) is registered as the next-stage revisionary redesign.
+revisionary redesign promotes the comparator further to a \emph{PSD-cone-valued}
+object $M=\operatorname{diag}(g)\succeq0$ whose labelled spectrum is the sectors:
+$\xC=\operatorname{tr}(CM)$ with $C=\operatorname{diag}(+1,-1,+1,+1)$ (still
+bit-identical), the admissible set becomes the convex PSD moment cone
+(PAPER-B), identifiability becomes the reachable \emph{eigen-directions} of $M$
+(rank two, with $\Wstd,\Okaniso$ the structural null), and the two-sided bracket
+becomes membership in a convex cone-shell $\{M\succeq0:s_{\mathrm{lo}}<\lambda_\Sigma<s_{\mathrm{hi}}\}$
+that excludes the shear-free vertex. The redesign is implemented and gated
+(representation only, behind the additive upgrade, with the bit-identical $\xC$
+regression and a Wolfram-verified trace/convexity core) and does not yet front
+the production diagnostic.
 
 \paragraph{Axis A (information on the variables).} \emph{A1 (graded-comparator
 identifiability rank).} From the two channels the program uses --- low-$\ell$

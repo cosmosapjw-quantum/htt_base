@@ -33,14 +33,32 @@ the variables (three axes), and concrete discharges of the data blocks.
 - **Axis C:** K1 global-p (public FFP10/NPIPE), K6/K5 CR posteriors, graded
   joint pushforward — mechanics landed; real-data runs ticketed
   (`docs/research_program/egs3/tickets/`).
+- **Revisionary redesign realized (rev-r125):** promote the diagnostic layer to
+  the **PSD-cone-valued comparator** `M=diag(g)⪰0` whose labelled spectrum is the
+  sectors, signature `C=diag(+1,−1,+1,+1)`. `x_C=tr(C M)` is **bit-identical** to
+  `⟨c,g⟩` (gating regression); the admissible set is the **convex PSD moment
+  cone** (fail-closed on a negative invariant); identifiability = reachable
+  **eigen-directions** (rank-2 `{Σ²,Ω_tilt}`, blind sector `{W²,Ω_k}` the exact
+  structural null); NT2-B1 becomes convex **cone-shell** membership
+  `{M⪰0:s_lo<λ_Σ<s_hi}` excluding the FLRW vertex. Representation only — ships
+  **behind** the graded upgrade, does not front the production diagnostic until
+  independently reviewed. `htt/obsstat/egs3_psd_cone.py`,
+  `research_gates/egs3/tests/test_egs3_axis_psd.py` (8 gates),
+  `tests/contracts/test_psd_cone_redesign.py`, `wolfram/egs3_psd_cone.wls`
+  (trace identity + convex cone + convex shell, Wolfram PASS),
+  `scripts/run_egs3_experiments.py:axis_psd`; ticket
+  `psd_cone_redesign.yaml` → `implemented_behind_review`. Data tickets (K1
+  FFP10/NPIPE, K5/K6, PR08-*) stay blocked on external FITS ensembles +
+  ownership and keep their registered blocker codes; PR10 is a separate project.
 - Report §8 "Graded-comparator upgrade and the EGS3 extension" (18 pp);
   `docs/research_program/egs3/` programme; both audit packages expanded
-  (research-audit 147→170 files). `make egs3-gates` (12) + `make egs3-wolfram`.
+  (research-audit 147→175 files). `make egs3-gates` (20) + `make egs3-wolfram`
+  (B4 bracket + PSD-cone cores).
 
 Anti-tone-down: the headline is a strong honest result — a measured rank-2
-comparator + a proven two-sector no-go + named re-opening channels. Conditional
-theorems + synthetic mechanics only; no detection, family/geometry, or
-native-solver claim; `pdf_claim_lint` 0 failed.
+comparator + a proven two-sector no-go + named re-opening channels, now unified
+in one PSD-cone object. Conditional theorems + synthetic mechanics only; no
+detection, family/geometry, or native-solver claim; `pdf_claim_lint` 0 failed.
 
 ### EGS2 extension programme — NT2-* theorems + blocker discharges + audit fixes (2026-06-26)
 

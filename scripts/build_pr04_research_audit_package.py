@@ -73,9 +73,10 @@ MEASUREMENT_REPORTS = (
     "docs/generated/pr07_k6_affine_ensemble_synthetic.json",
     # EGS2 extension experiment evidence (NT2-* + blocker discharges).
     "docs/generated/egs2_experiments.json",
-    # EGS3 extension experiment evidence + B4 symbolic record.
+    # EGS3 extension experiment evidence + B4 + PSD-cone symbolic records.
     "docs/generated/egs3_experiments.json",
     "docs/generated/egs3_bracket_constants_proof.json",
+    "docs/generated/egs3_psd_cone_proof.json",
 )
 
 # Theorem implementations (PR04 overlay) + OBSSTAT estimators + PR07 modules.
@@ -104,6 +105,7 @@ SOURCE_FILES = (
     "htt/obsstat/egs3_calibration.py",
     "htt/obsstat/egs3_volterra_memory.py",
     "htt/obsstat/egs3_vorticity_channels.py",
+    "htt/obsstat/egs3_psd_cone.py",
     "htt/bass/transfer/shear_quadrupole_seminative.py",
 )
 
@@ -129,6 +131,7 @@ DRIVER_SCRIPTS = (
     # EGS3 extension driver + B4 symbolic core.
     "scripts/run_egs3_experiments.py",
     "wolfram/egs3_bracket_constants.wls",
+    "wolfram/egs3_psd_cone.wls",
 )
 
 GOVERNANCE_FILES = (
@@ -234,7 +237,7 @@ def _virtual(archive: str, group: str, text: str) -> Entry:
 def _pr_deltas(repo_root: Path) -> list[str]:
     return sorted(
         p.relative_to(repo_root).as_posix()
-        for n in range(108, 124)
+        for n in range(108, 126)
         for p in [repo_root / f"docs/PR_DELTAS/rev-r{n}.md"]
         if p.is_file()
     )

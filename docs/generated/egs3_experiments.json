@@ -71,9 +71,35 @@
         "reopens": true
       },
       "headline": "floor is a k-profile saturating at 0.632 (super-horizon shear); depth gap is a Volterra memory of Pi; vorticity re-opens in the transverse channel"
+    },
+    "axis_psd": {
+      "trace_xc": 1.6e-06,
+      "graded_xc": 1.6e-06,
+      "bit_identical": true,
+      "admissible_psd_cone": true,
+      "fail_closed_on_negative": true,
+      "convex_cone": true,
+      "reachable_rank": 2,
+      "reachable_sectors": [
+        "Sigma2",
+        "Omega_tilt"
+      ],
+      "null_sectors": [
+        "W2",
+        "Omega_k"
+      ],
+      "blind_sector_null_residual": 0.0,
+      "bracket_shell": {
+        "s_lo": 0.5952380952380951,
+        "s_hi": 45.0,
+        "in_shell": true,
+        "excludes_vertex": true
+      },
+      "headline": "PSD-cone comparator M>=0; x_C=tr(C M) bit-identical; admissible set is a convex cone; rank-2 reachable eigendirections; blind sector is the structural null; bracket = convex shell excluding the FLRW vertex"
     }
   },
   "framework_upgrade": "graded comparator g=(Sigma2,W2,Omega_tilt,Omega_k); x_C=<c,g> is a derived summary (bit-identical)",
+  "revisionary_redesign": "PSD-cone comparator M=diag(g)>=0; x_C=tr(C M); realized + gated (representation only, bit-identical), ships behind the graded upgrade",
   "blockers_kept_open": [
     "BLOCKED_MISSING_PR4_E2E_ACCESS",
     "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
