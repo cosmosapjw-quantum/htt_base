@@ -50,6 +50,46 @@ The ~600 NPIPE A/B end-to-end realizations (NERSC-authenticated). These are freq
 a low-ℓ analysis needs a single cleaned channel or a component-separation step, so Route A
 is cleaner for a morphology max-scan.
 
+## Reducing the ~1 TB footprint (recommended)
+
+Downloading all `dx12_v3_smica_cmb_mc_<00000..00999>` + `..._noise_mc_<00000..00299>`
+at full IQU Nside=2048 is ~1 TB. None of that volume is needed for an Nside=16,
+ℓ=2–8 morphology max-scan. Four reducers, compounding:
+
+1. **Use 300 sims, not 1300.** The Planck-2018 anomaly pipeline uses **300** E2E
+   realizations — only 300 noise MC exist; the 1000 CMB MC are *permuted* with them
+   (Planck 2018 VII, A&A 641 A7). Download 300 CMB + 300 noise, not 1000+300. (~4×.)
+2. **Temperature only.** K1 is a TT-morphology statistic; read/keep only the I Stokes
+   field. The `smica_dx12` simulation library serves μK temperature maps directly. (~3×
+   vs IQU.)
+3. **Stream + downgrade-on-read — the disk constraint disappears.** Process one file at
+   a time: download → `hp.ud_grade(m, 16)` → compute the six statistics → **delete the
+   raw map**. Peak disk = one map (~200 MB), not the full set, so the 300 GB nvme is
+   never the limit — only network transfer is. Total summaries committed: a few hundred KB.
+4. **[lightest real route] Noise-only + local ΛCDM signal.** Download **only the 300
+   `smica_noise_mc`** (the irreplaceable real ingredient) and synthesise the CMB signal
+   locally with `hp.synfast(_fiducial_cl(LMAX), nside=16)` (the ΛCDM `C_ℓ` already used
+   in `make_lowell_morphology_real_map._fiducial_cl`), summing signal+noise per
+   realization. **Why this is valid:** at ℓ=2–8 the *signal* is cosmic-variance-dominated,
+   so any ΛCDM realization is statistically equivalent to an FFP10 CMB MC; the part the
+   current isotropic-GRF null *lacks* is the real **anisotropic noise + mask coupling +
+   residual foregrounds**, which the SMICA noise MC supplies. This roughly halves the
+   download and is the lightest honest upgrade over the present ΛCDM-only null.
+
+Compounded footprints (stream-downgraded, so stored ≈ a few hundred KB either way):
+
+| Route | Files | Transfer (I-only / IQU) |
+| --- | ---: | --- |
+| All, full | 1300 | ~1 TB (IQU) |
+| 300 CMB + 300 noise, T-only, streamed | 600 | ~85 GB / ~250 GB |
+| **300 noise-only + local ΛCDM, T-only, streamed** | **300** | **~40 GB / ~125 GB** |
+
+Recommended: **route 4** (300 `smica_noise_mc`, temperature, stream-downgraded, local
+ΛCDM signal). It is the smallest download that still replaces the idealised null with a
+real-noise E2E null, and `k1_global_maxscan.py` needs only its `_build_null_distribution`
+changed to `signal = hp.synfast(...)`, `map_i = signal + ud_grade(noise_mc_i, 16)`.
+Set `null_model: ffp10_noise_plus_lcdm` and record the noise-MC provenance.
+
 ## Storage layout (outside git)
 
 Keep raw maps out of git (`workdir/raw` is the convention; only compact summaries are
