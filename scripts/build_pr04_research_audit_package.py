@@ -84,6 +84,8 @@ MEASUREMENT_REPORTS = (
     "docs/generated/k1_global_maxscan.json",
     "docs/generated/k5_cf4_release_coverage.json",
     "docs/generated/k6_cf4_curl_posterior.json",
+    # PR08-006 joint artifact over the discharged sectors (rev-r129).
+    "docs/generated/pr08_006_joint_artifact.json",
 )
 
 # Theorem implementations (PR04 overlay) + OBSSTAT estimators + PR07 modules.
@@ -142,6 +144,7 @@ DRIVER_SCRIPTS = (
     "scripts/k1_global_maxscan.py",
     "scripts/k5_cf4_release_coverage.py",
     "scripts/k6_cf4_curl_posterior.py",
+    "scripts/pr08_006_joint_artifact.py",
     "scripts/make_blocker_discharge_figures.py",
     "wolfram/egs3_bracket_constants.wls",
     "wolfram/egs3_psd_cone.wls",
@@ -260,7 +263,7 @@ def _virtual(archive: str, group: str, text: str) -> Entry:
 def _pr_deltas(repo_root: Path) -> list[str]:
     return sorted(
         p.relative_to(repo_root).as_posix()
-        for n in range(108, 128)
+        for n in range(108, 130)
         for p in [repo_root / f"docs/PR_DELTAS/rev-r{n}.md"]
         if p.is_file()
     )

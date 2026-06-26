@@ -45,6 +45,40 @@ real CF4 catalogue) and the observed Planck maps for K1
   still blocked because the matched FFP10/NPIPE component-separated sim ensemble is
   served only via the PLA interactive query portal / NERSC-authenticated paths, not a
   plain-URL download (confirmed by probing PLA + IRSA + NERSC this session).
+  **cobaya checked (this session) and does not unblock it:** `cobaya-install
+  planck_2018_lowl.TT` installs the Blackwell-Rao **C_ℓ-level** low-ℓ TT likelihood
+  (`cov.txt` 249×249, `mu.txt`, `cl2x_*.txt`), not a map/a_lm ensemble. The K1
+  morphology statistics (parity/planarity/alignment) depend on a_lm phases, which a
+  C_ℓ-only product cannot generate, so cobaya provides likelihood data, not sim maps.
+  The only remaining route to the E2E null is a manual PLA-portal / NERSC-authenticated
+  download of the FFP10 (or NPIPE) component-separated low-ℓ simulation maps.
+
+**PR08-006 joint artifact (rev-r129) DISCHARGED.** With K5/K6/K1 closed,
+`scripts/pr08_006_joint_artifact.py` assembles the graded comparator on real data:
+Ω_tilt **measured** (K5 bulk flow), Σ² **partial** (K1 look-elsewhere), W² and Ω_k
+**fail-closed** (K6 structural no-go + no channel — not zeroed). Data rank 2 is
+reported separately from prior-conditioned rank; no collapsed `x_C` scalar; no
+MIO-as-odds; no scalar→family. This realises the program headline (a measured
+rank-2 comparator with a proven two-sector no-go) on real data.
+
+### Hygiene-pass finding (audit F2/F5): the residual contract failures are structural
+
+The audit's remaining stale-generated-artifact contract failures are **not** fixable
+by regeneration: 6 of the 7 (`cf4pp_lnb_provenance`, `code_capability` manifest,
+`current_manuscript_figures` generator-check, `external_research_input_inventory`,
+`semantic_firewall_fuzz`, and the `current_science_plot_payload`-fed chain) embed a
+`git_commit_or_worktree_state: <HEAD>+dirty` field in the generated file itself.
+Because that field references the working state at generation time, any commit
+changes HEAD and immediately re-stales the file — so these contracts can only pass
+in the exact uncommitted state they were generated in, never after a commit. The
+durable fix is a generator refactor that drops `git_commit_or_worktree_state` from
+the emitted artifacts (keeping only content-addressed `config_hash`/`input_hashes`),
+mirroring the content-addressed manifests added for the EGS/discharge figures. The
+7th (`manuscript_audit_repair_matrix`) reflects the manuscript PDF carrying 2 genuine
+`pdf_claim_lint` findings under the current linter (the committed report is blessed at
+0); it needs a manuscript-text fix or a hash-bound exemption, not a regeneration.
+The one genuinely field-based failure (figure claim-lane policy) was durably fixed in
+rev-r128. These items are a separate refactor PR, deliberately not churned here.
 
 ---
 

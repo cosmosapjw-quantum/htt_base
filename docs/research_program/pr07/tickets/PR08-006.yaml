@@ -1,8 +1,15 @@
 id: PR08-006
 title: Joint posterior artifact and legacy scalar pushforward
 priority: P2
-state: blocked
-blocker: BLOCKED_UPSTREAM
+state: discharged
+blocker: null
+former_blocker: BLOCKED_UPSTREAM
+discharged_by: scripts/pr08_006_joint_artifact.py (rev-r129)
+discharge_note: >
+  Assembled over the rev-r127 discharges: Omega_tilt measured (K5), Sigma^2
+  partial (K1 look-elsewhere), W^2 + Omega_k fail-closed (K6 structural no-go +
+  no channel). Data rank 2, reported separately from prior-conditioned rank; no
+  collapsed x_C scalar (blind sectors not zeroed); no MIO-as-odds; no scalar->family.
 owner_lane: consensus_editor
 depends_on: [PR08-001, PR08-003, PR08-004]
 scope: >

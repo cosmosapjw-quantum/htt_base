@@ -18,7 +18,12 @@ E2E-systematics calibration of `BLOCKED_MISSING_PR4_E2E_ACCESS` stays open:
 swapping the GRF null for matched component-separated E2E summaries (same
 map/mask/beam/statistic pipeline) requires the public FFP10/NPIPE sim ensemble,
 which the Planck Legacy Archive serves only through its interactive query portal
-(not a plain-URL download). No Bianchi family, geometry, or native-solver claim.
+(not a plain-URL download). cobaya was checked as an alternative source: its
+``planck_2018_lowl.TT`` install delivers the Blackwell-Rao C_ell-level low-ell
+TT likelihood (cov 249x249, mu, change-of-variable tables), not a map/a_lm
+ensemble -- and the morphology statistics here depend on a_lm phases, so a
+C_ell-only product cannot generate the matched null. No Bianchi family,
+geometry, or native-solver claim.
 
 Outputs: docs/generated/k1_global_maxscan.json. Deterministic (seeded); --check.
 """

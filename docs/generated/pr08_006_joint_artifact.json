@@ -1,0 +1,83 @@
+{
+  "caveats": [
+    "Omega_tilt (K5) is a model-independent bulk-flow descriptor, not anisotropy evidence.",
+    "Sigma^2 (K1) is partial: look-elsewhere only, E2E null still blocked.",
+    "W^2 (K6) is a structural no-go from a curl-suppressed reconstruction, not a vorticity measurement.",
+    "Omega_k has no channel and is fail-closed.",
+    "No combined scalar x_C is reported because blind sectors must not be zeroed."
+  ],
+  "claim_boundary": "joint pushforward of identified sectors only; blind/partial sectors explicit and fail-closed; no MIO-as-odds, no scalar-to-family, no native-atlas/geometry claim",
+  "claim_tier": "diagnostic_only",
+  "data_rank": {
+    "data_rank_count": 2,
+    "note": "data rank counts sectors with a real channel (K5 full + K1 partial); it is NOT prior-conditioned",
+    "reachable_full": [
+      "Omega_tilt"
+    ],
+    "reachable_partial": [
+      "Sigma2"
+    ]
+  },
+  "family_identification": false,
+  "graded_sectors": [
+    "Sigma2",
+    "W2",
+    "Omega_tilt",
+    "Omega_k"
+  ],
+  "mio_as_odds": false,
+  "native_solver_result": false,
+  "owner": "consensus_editor",
+  "prior_conditioned_rank": {
+    "count": 2,
+    "note": "no prior is invoked to add a sector; prior-conditioned rank equals data rank here",
+    "sectors": [
+      "Omega_tilt",
+      "Sigma2"
+    ]
+  },
+  "scalar_to_family_promotion": false,
+  "schema": "htt.pr08_006.joint_artifact.v1",
+  "sectors": {
+    "Omega_k": {
+      "blocker": "no_low_ell_channel_sources_anisotropic_curvature",
+      "note": "no registered low-l channel reaches the anisotropic-curvature sector at leading EGS order (NOT set to zero)",
+      "source": null,
+      "status": "fail_closed_no_channel"
+    },
+    "Omega_tilt": {
+      "blocker": null,
+      "coverage_cv_inclusive": 0.6666666666666666,
+      "error_kms": 101.87045232654711,
+      "note": "bulk-flow amplitude is the reachable tilt/dipole sector (model-independent kinematic descriptor)",
+      "source": "K5 CF4 release-matched bulk flow",
+      "status": "measured",
+      "value_kms": 340.72639833770336
+    },
+    "Sigma2": {
+      "blocker": "BLOCKED_MISSING_PR4_E2E_ACCESS",
+      "global_p_commander": 0.12093953023488256,
+      "global_p_smica": 0.09695152423788106,
+      "note": "look-elsewhere global p discharged under a LambdaCDM null; the E2E-systematics calibration is not bound, so the shear sector is only partially probed",
+      "source": "K1 low-l CMB morphology (quadrupole-bearing)",
+      "status": "partial"
+    },
+    "W2": {
+      "blocker": "BLOCKED_MISSING_FIELD_REALIZATIONS_discharged_as_no_go",
+      "note": "the CF4 WF reconstruction is curl-suppressed; the vorticity sector is structurally unidentifiable from it (NOT set to zero)",
+      "source": "K6 CF4 WF-field vorticity",
+      "status": "fail_closed_structural_no_go",
+      "vorticity_over_shear_max": 0.005519792636461094
+    }
+  },
+  "ticket": "PR08-006",
+  "two_sector_no_go": {
+    "blind_sectors": [
+      "W2",
+      "Omega_k"
+    ],
+    "statement": "W^2 (vorticity) and Omega_k (anisotropic curvature) are fail-closed: W^2 structurally unidentifiable from the curl-suppressed CF4 WF field (K6 no-go), Omega_k has no low-l channel. Neither is set to zero."
+  },
+  "x_C_single_scalar": null,
+  "x_C_withheld_reason": "x_C is NOT collapsed to a single number: two of the four sectors are fail-closed, so a scalar comparator would require setting blind sectors to zero (forbidden). The graded vector is reported per-sector instead."
+}

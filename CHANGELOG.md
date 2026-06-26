@@ -7,6 +7,24 @@
 
 ## [Unreleased]
 
+### PR08-006 joint artifact + cobaya K1 check + hygiene finding (rev-r129, 2026-06-26)
+
+- **cobaya checked for K1, does not unblock it:** `cobaya-install planck_2018_lowl.TT`
+  installs the Blackwell-Rao **C_ℓ-level** low-ℓ TT likelihood (cov 249×249, mu, BR
+  tables), not a map/a_lm ensemble; the morphology statistics need a_lm phases, so the
+  E2E-systematics null still requires a manual PLA-portal/NERSC-auth FFP10/NPIPE map download.
+- **PR08-006 DISCHARGED** (`scripts/pr08_006_joint_artifact.py`): joint pushforward over
+  the discharged sectors — Ω_tilt measured (K5), Σ² partial (K1), W²+Ω_k fail-closed
+  (K6 no-go + no channel, not zeroed). Data rank 2 reported separately from
+  prior-conditioned rank; no collapsed `x_C`; no MIO-as-odds; no scalar→family. Ticket
+  `PR08-006` → discharged; contract test added.
+- **Hygiene-pass finding:** the 7 residual pre-existing contract failures are not
+  regeneration-stale — 6 embed a HEAD-tracking `git_commit_or_worktree_state` that
+  re-stales on every commit (durable fix = drop that field from the emitters), and 1 is
+  manuscript pdf-lint debt. Regenerating only churns, so it was reverted; left as a
+  scoped generator-refactor PR. The one field-based failure (figure claim-lane) was
+  fixed in rev-r128.
+
 ### Real-data blocker discharges — K5 / K6 / K1 on owned inputs (rev-r127, 2026-06-26)
 
 Applied the new external-audit drop (`docs/research_program/CODE_AND_RESULTS_AUDIT_REPORT.md`,
