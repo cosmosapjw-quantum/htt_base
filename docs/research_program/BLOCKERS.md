@@ -51,7 +51,9 @@ real CF4 catalogue) and the observed Planck maps for K1
   morphology statistics (parity/planarity/alignment) depend on a_lm phases, which a
   C_ℓ-only product cannot generate, so cobaya provides likelihood data, not sim maps.
   The only remaining route to the E2E null is a manual PLA-portal / NERSC-authenticated
-  download of the FFP10 (or NPIPE) component-separated low-ℓ simulation maps.
+  download of the FFP10 (or NPIPE) component-separated low-ℓ simulation maps — the full
+  step-by-step acquisition + run procedure is `docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md`
+  (everything downstream of the download is already implemented and waits for the maps).
 
 **PR08-006 joint artifact (rev-r129) DISCHARGED.** With K5/K6/K1 closed,
 `scripts/pr08_006_joint_artifact.py` assembles the graded comparator on real data:

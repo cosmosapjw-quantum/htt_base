@@ -184,6 +184,7 @@ GOVERNANCE_FILES = (
     "docs/research_program/egs2/tickets/semi_native_shear_to_quadrupole.yaml",
     # EGS3 programme surface (framework upgrade + theorem candidates + tickets).
     "docs/research_program/BLOCKERS.md",
+    "docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md",
     "docs/research_program/egs3/README.md",
     "docs/research_program/egs3/FRAMEWORK_CRITIQUE_AND_REDESIGN.md",
     "docs/research_program/egs3/THEOREM_CANDIDATES.md",
