@@ -20,11 +20,31 @@ Bianchi-family, anisotropic-geometry, or native-solver claim.
 
 | Code | Blocks | Unblock action (owner) | Mechanics ready? | State |
 | --- | --- | --- | --- | --- |
-| `BLOCKED_MISSING_PR4_E2E_ACCESS` | K1 global low-ℓ p-value | download public PLA FFP10 + NPIPE E2E maps | yes | dischargeable now (data download) |
-| `BLOCKED_MISSING_FIELD_REALIZATIONS` | K6 vorticity/curl posterior | obtain CF4 3D WF field; run Hoffman–Ribak CR | yes | dischargeable now (field access) |
-| `BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP` | K5 cosmic-variance bulk-flow coverage | own the CF4 release mock pipeline | yes | dischargeable now (ownership) |
-| `BLOCKED_UPSTREAM` | PR08-006 joint posterior artifact | close K1+K5+K6 first | n/a | waits on the three above |
+| `BLOCKED_MISSING_PR4_E2E_ACCESS` | K1 global low-ℓ p-value | E2E-systematics null needs PLA-portal/NERSC-auth sims | yes | **PARTIAL (rev-r127)**: look-elsewhere global p discharged on the real map under a ΛCDM null; E2E-systematics null still open |
+| `BLOCKED_MISSING_FIELD_REALIZATIONS` | K6 vorticity/curl posterior | obtain CF4 3D WF field; run Hoffman–Ribak CR | yes | **DISCHARGED (rev-r127)** as a structural no-go (real CF4++ WF field is curl-suppressed) |
+| `BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP` | K5 cosmic-variance bulk-flow coverage | own the CF4 release mock pipeline | yes | **DISCHARGED (rev-r127)**: real CF4 catalogue, CV-inclusive coverage nominal |
+| `BLOCKED_UPSTREAM` | PR08-006 joint posterior artifact | close K1+K5+K6 first | n/a | K5/K6 closed, K1 partial → assemblable with explicit partial/no-go sectors |
 | `AWAITING_NATIVE_LOWELL_SOLVER` | full Bianchi family atlas / morphology | build the native low-ℓ Bianchi–Boltzmann solver | partial (B1 interim) | separate long-term project (PR10) |
+
+**rev-r127 discharge status (real data, this session).** With local nvme + long
+runs enabled, the controlling inputs for K5/K6 were found already in-repo
+(`workdir/raw/cf4/CF4pp_mean_std_grids.npz` WF field; `workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz`
+real CF4 catalogue) and the observed Planck maps for K1
+(`workdir/raw/planck_data/COM_CMB_IQU-{smica,commander}_2048_R3.00_full.fits`).
+- **K5** (`scripts/k5_cf4_release_coverage.py`): measured CF4 bulk flow |B| ≈ 341 ±
+  102 km/s with the error budget cosmic-variance-dominated (102 km/s) vs measurement
+  (5 km/s); release-matched mocks give nominal CV-inclusive coverage 0.67 while
+  measurement-only coverage under-covers (0.19). Full discharge.
+- **K6** (`scripts/k6_cf4_curl_posterior.py`): the real CF4++ WF velocity field is
+  curl-suppressed (vorticity ≤ 0.6 % of shear at every radius) while the estimator
+  recovers an injected solid-body rotation to machine precision → **structural no-go**
+  (the audit's explicitly-allowed outcome), not a physical-vorticity detection.
+- **K1** (`scripts/k1_global_maxscan.py`): global look-elsewhere-corrected morphology
+  p on the real SMICA map = 0.097 (Commander 0.121) under an isotropic ΛCDM null.
+  This discharges the *look-elsewhere correction*; the full E2E-systematics null is
+  still blocked because the matched FFP10/NPIPE component-separated sim ensemble is
+  served only via the PLA interactive query portal / NERSC-authenticated paths, not a
+  plain-URL download (confirmed by probing PLA + IRSA + NERSC this session).
 
 ---
 

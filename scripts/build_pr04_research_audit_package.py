@@ -80,6 +80,10 @@ MEASUREMENT_REPORTS = (
     # Consolidated cross-programme results table (data-analysis aggregate).
     "docs/generated/egs_results_table.json",
     "docs/generated/egs_results_table.md",
+    # Real-data blocker discharges (rev-r127): K1 global max-scan, K5 coverage, K6 curl no-go.
+    "docs/generated/k1_global_maxscan.json",
+    "docs/generated/k5_cf4_release_coverage.json",
+    "docs/generated/k6_cf4_curl_posterior.json",
 )
 
 # Theorem implementations (PR04 overlay) + OBSSTAT estimators + PR07 modules.
@@ -135,6 +139,9 @@ DRIVER_SCRIPTS = (
     "scripts/run_egs3_experiments.py",
     "scripts/make_egs2_egs3_theorem_figures.py",
     "scripts/build_egs_results_table.py",
+    "scripts/k1_global_maxscan.py",
+    "scripts/k5_cf4_release_coverage.py",
+    "scripts/k6_cf4_curl_posterior.py",
     "wolfram/egs3_bracket_constants.wls",
     "wolfram/egs3_psd_cone.wls",
 )
@@ -251,7 +258,7 @@ def _virtual(archive: str, group: str, text: str) -> Entry:
 def _pr_deltas(repo_root: Path) -> list[str]:
     return sorted(
         p.relative_to(repo_root).as_posix()
-        for n in range(108, 127)
+        for n in range(108, 128)
         for p in [repo_root / f"docs/PR_DELTAS/rev-r{n}.md"]
         if p.is_file()
     )

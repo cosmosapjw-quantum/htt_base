@@ -1,0 +1,84 @@
+{
+  "blocker_partial": "BLOCKED_MISSING_PR4_E2E_ACCESS",
+  "blocker_partial_note": "global look-elsewhere correction discharged on the real map under an isotropic LambdaCDM null; the FFP10/NPIPE E2E-systematics null remains blocked (PLA serves sims via an interactive query portal, not a plain-URL download)",
+  "caveats": [
+    "null is isotropic LambdaCDM GRF, not FFP10/NPIPE end-to-end (no instrument noise/systematics/residual foregrounds)",
+    "look-elsewhere correction over the six registered statistics is real; the E2E-systematics calibration is not",
+    "model-independent low-ell descriptor; no Bianchi family, geometry, anisotropy-evidence, or native-solver claim"
+  ],
+  "claim_boundary": "OBSSTAT global look-elsewhere diagnostic under an idealised null; not an E2E-calibrated detection",
+  "claim_tier": "diagnostic_only",
+  "commander": {
+    "global_p": 0.12093953023488256,
+    "local_p": {
+      "axis_to_cmb_dipole_deg": 0.7076461769115442,
+      "parity_asymmetry": 0.025487256371814093,
+      "parity_even_over_odd_ratio": 0.025487256371814093,
+      "planarity_mean": 0.04247876061969016,
+      "qo_axis_alignment_deg": 0.8270864567716142,
+      "s_one_half": 0.04547726136931534
+    }
+  },
+  "config": {
+    "directions": [
+      "low",
+      "low",
+      "low",
+      "high",
+      "low",
+      "low"
+    ],
+    "ell_min": 2,
+    "lmax": 8,
+    "n_null": 2000,
+    "nside": 16,
+    "null_model": "isotropic_lambdacdm_grf",
+    "seed": 12345,
+    "statistics": [
+      "s_one_half",
+      "parity_even_over_odd_ratio",
+      "parity_asymmetry",
+      "planarity_mean",
+      "qo_axis_alignment_deg",
+      "axis_to_cmb_dipole_deg"
+    ]
+  },
+  "config_hash": "sha256:e4a3eb1799e09ed8211679373984cfa7d3cd3b32c29914742528c997b14e7e32",
+  "family_identification": false,
+  "headline": "global look-elsewhere-corrected low-ell morphology p-value on the real Planck map under an isotropic LambdaCDM null",
+  "maps": {
+    "commander": {
+      "input_hash": "sha256:a603a036a8ffc53c8ec105bba3befdf4c6d15f972d725ce311a78d6994f5d7d8",
+      "path": "commander_nside16.npz"
+    },
+    "product": "Planck PR3 component-separated CMB, NSIDE=16 low-ell temperature",
+    "smica": {
+      "input_hash": "sha256:90780c4c42c6c4d371ea17d98de3db01d104a016bae2af58e8d9a6c304f88867",
+      "path": "smica_nside16.npz"
+    }
+  },
+  "native_solver_result": false,
+  "owner": "OBSSTAT",
+  "schema": "htt.k1.global_maxscan.v1",
+  "smica": {
+    "global_p": 0.09695152423788106,
+    "local_p": {
+      "axis_to_cmb_dipole_deg": 0.7056471764117941,
+      "parity_asymmetry": 0.02048975512243878,
+      "parity_even_over_odd_ratio": 0.02048975512243878,
+      "planarity_mean": 0.04447776111944028,
+      "qo_axis_alignment_deg": 0.6656671664167916,
+      "s_one_half": 0.05997001499250375
+    },
+    "observed_max_score": 3.8878302678794254
+  },
+  "statistics": [
+    "s_one_half",
+    "parity_even_over_odd_ratio",
+    "parity_asymmetry",
+    "planarity_mean",
+    "qo_axis_alignment_deg",
+    "axis_to_cmb_dipole_deg"
+  ],
+  "transfer_source": "none"
+}

@@ -49,6 +49,10 @@ def _rows() -> list[dict]:
     nt2b3 = egs2.get("NT2_B3_blind_sector", {})
     k1 = egs2.get("BLOCK_K1_e2e_maxscan", {})
     k6 = egs2.get("BLOCK_K6_hoffman_ribak", {})
+    # real-data discharges (rev-r127): K1 global max-scan, K5 coverage, K6 curl no-go
+    k1g = _load("k1_global_maxscan.json")
+    k5g = _load("k5_cf4_release_coverage.json")
+    k6g = _load("k6_cf4_curl_posterior.json")
 
     def r(tid, axis, statement, key, status, evidence):
         return {"theorem_id": tid, "axis": axis, "statement": statement,
@@ -95,15 +99,21 @@ def _rows() -> list[dict]:
         r("EGS3-PSD", MATH, "PSD-cone redesign: x_C = tr(C M) for M=diag(g)>=0; admissible set is the convex PSD cone; rank-2 reachable eigen-directions; cone-shell bracket excludes the FLRW vertex",
           f"bit-identical {p.get('bit_identical','?')}; rank {p.get('reachable_rank','?')}; convex cone {p.get('convex_cone','?')}; status {psd.get('status','?')}",
           "proven_symbolic", "egs3-gates PSD P1-P4; wolfram egs3_psd_cone (PASS); fig_egs3_psd_cone"),
-        r("K1", DATA, "Global low-l morphology p-value via the public-E2E max-scan",
-          f"synthetic stand-in global_p {k1.get('global_p','?')} (n_e2e={k1.get('n_e2e','?')})", "blocked",
-          f"{k1.get('blocker_until_real_maps','BLOCKED_MISSING_PR4_E2E_ACCESS')}; mechanics ready"),
-        r("K5", DATA, "CF4 cosmic-variance-inclusive bulk-flow coverage via release-matched forward mocks",
-          "awaiting release ownership", "blocked",
-          "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP; mechanics ready"),
-        r("K6", DATA, "CF4 vorticity/curl posterior via Hoffman-Ribak constrained realizations",
-          f"synthetic stand-in CR mean {k6.get('cr_mean','?')} sd {k6.get('cr_sd','?')}", "blocked",
-          f"{k6.get('blocker_until_real_field','BLOCKED_MISSING_FIELD_REALIZATIONS')}; mechanics ready"),
+        r("K1", DATA, "Global look-elsewhere-corrected low-l morphology p-value on the real Planck map (isotropic LambdaCDM null)",
+          (f"SMICA global p={k1g.get('smica',{}).get('global_p',0):.3f}, Commander p={k1g.get('commander',{}).get('global_p',0):.3f} (real PR3 map, {k1g.get('config',{}).get('n_null','?')} GRF nulls)"
+           if k1g else "awaiting compute"),
+          "measured_partial",
+          "scripts/k1_global_maxscan.py on real SMICA/Commander; E2E-systematics null still BLOCKED_MISSING_PR4_E2E_ACCESS (PLA portal-only sims)"),
+        r("K5", DATA, "CF4 cosmic-variance-inclusive bulk-flow coverage from release-matched forward mocks (real Tully+2023 catalogue)",
+          (f"|B|={k5g.get('measured_bulk',{}).get('amplitude_kms',0):.0f} +/- {k5g.get('coverage',{}).get('total_amplitude_error_kms',0):.0f} km/s; CV-incl coverage {k5g.get('coverage',{}).get('cosmic_variance_inclusive',{}).get('amplitude_coverage',0):.2f} (meas-only {k5g.get('coverage',{}).get('measurement_noise_only',{}).get('amplitude_coverage',0):.2f})"
+           if k5g else "awaiting compute"),
+          "measured",
+          "scripts/k5_cf4_release_coverage.py on real CF4 groups; BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP discharged"),
+        r("K6", DATA, "CF4 vorticity/curl sector on the real WF field: structural no-go (curl-suppressed reconstruction, estimator validated)",
+          (f"vorticity/shear<={k6g.get('vorticity_over_shear_ratio_max','?'):.3f} at all radii; curl-injection recovered; structural_no_go={k6g.get('structural_no_go','?')}"
+           if k6g else "awaiting compute"),
+          "measured_no_go",
+          "scripts/k6_cf4_curl_posterior.py on real CF4++ WF field; BLOCKED_MISSING_FIELD_REALIZATIONS discharged as structural no-go"),
     ]
     return rows
 
@@ -123,10 +133,13 @@ def _payload() -> dict:
                  "data_interpretation": "data interpretation axis"},
         "status_counts": counts,
         "rows": rows,
-        "claim_boundary": "conditional theorems + synthetic mechanics + (when inputs are owned) calibrated measurements; no detection, family/geometry, or native-solver result. Blocked rows emit NO substitute estimate beyond a labelled synthetic stand-in and keep their registered blocker code.",
-        "blockers_open": ["BLOCKED_MISSING_PR4_E2E_ACCESS",
-                          "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
-                          "BLOCKED_MISSING_FIELD_REALIZATIONS",
+        "claim_boundary": "conditional theorems + synthetic mechanics + real-data measurements on owned inputs; no detection, family/geometry, or native-solver result. Measured rows are model-independent descriptors; K6 is an honest structural no-go; K1 is a partial (look-elsewhere) discharge under an idealised null.",
+        "discharges_rev_r127": {
+            "K5": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP discharged (real CF4 catalogue, CV-inclusive coverage)",
+            "K6": "BLOCKED_MISSING_FIELD_REALIZATIONS discharged as a structural no-go (real CF4 WF field, curl-suppressed)",
+            "K1": "BLOCKED_MISSING_PR4_E2E_ACCESS partially discharged (real-map look-elsewhere global p under LambdaCDM null; E2E-systematics null still open)",
+        },
+        "blockers_open": ["BLOCKED_MISSING_PR4_E2E_ACCESS (E2E-systematics null only; look-elsewhere discharged)",
                           "AWAITING_NATIVE_LOWELL_SOLVER"],
     }
 

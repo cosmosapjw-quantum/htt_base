@@ -7,6 +7,37 @@
 
 ## [Unreleased]
 
+### Real-data blocker discharges — K5 / K6 / K1 on owned inputs (rev-r127, 2026-06-26)
+
+Applied the new external-audit drop (`docs/research_program/CODE_AND_RESULTS_AUDIT_REPORT.md`,
+`BLOCKER_RESOLUTION_PLAN.md`, `publishable_analysis_pack_2026-06-26/`) with local
+nvme + long-run enablement. The controlling inputs were already in-repo, so the three
+data blockers were discharged on **real data**:
+
+- **K5 (`BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP`) DISCHARGED** —
+  `scripts/k5_cf4_release_coverage.py` on the real CF4 group catalogue (Tully+2023,
+  38053 groups). Weighted-GLS bulk flow **|B| = 341 ± 102 km/s**, error budget
+  cosmic-variance-dominated (102 vs 5 km/s measurement); release-matched mocks give
+  nominal CV-inclusive coverage 0.67 while measurement-only under-covers (0.19);
+  unbiased; depth-shell ablation.
+- **K6 (`BLOCKED_MISSING_FIELD_REALIZATIONS`) DISCHARGED as a structural no-go** —
+  `scripts/k6_cf4_curl_posterior.py` on the real CF4++ WF velocity field. Vorticity
+  ≤ 0.6 % of shear at every radius while the estimator recovers an injected solid-body
+  rotation to machine precision → the WF reconstruction is curl-suppressed, so no
+  physical vorticity sector is identifiable (the audit's allowed honest outcome).
+- **K1 (`BLOCKED_MISSING_PR4_E2E_ACCESS`) PARTIALLY DISCHARGED** —
+  `scripts/k1_global_maxscan.py` adds the look-elsewhere global max-scan to the
+  existing real-map pipeline: **global p = 0.097 (SMICA), 0.121 (Commander)** under an
+  isotropic ΛCDM null (parity asymmetry strongest single local, p=0.02). The full
+  E2E-systematics null stays blocked — the matched FFP10/NPIPE component-separated sim
+  ensemble is served only via the PLA interactive query portal / NERSC auth, not a
+  plain-URL download (confirmed by probing PLA + IRSA + NERSC).
+
+Results table now carries **zero blocked rows** (3 measured/partial/no-go + 14 proven);
+`docs/research_program/BLOCKERS.md` updated; `tests/obsstat/test_k{1,5,6}_*.py` added.
+All model-independent OBSSTAT descriptors; no Bianchi family, geometry, anisotropy-evidence,
+or native-solver claim. Raw maps/fields stay outside git.
+
 ### EGS3 programme — framework upgrade + GR/Boltzmann theorems toward publishable analysis (2026-06-26)
 
 Self-synthesized extension toward a publishable novel data-analysis paper:

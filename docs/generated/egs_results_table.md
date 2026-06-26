@@ -5,7 +5,7 @@ experiment records. Conditional theorems + synthetic mechanics only; no
 detection, family/geometry, or native-solver claim. Blocked rows keep their
 registered blocker code and emit only a labelled synthetic stand-in.
 
-Status counts: {'proven_symbolic': 6, 'proven_gate': 8, 'blocked': 3}
+Status counts: {'proven_symbolic': 6, 'proven_gate': 8, 'measured_partial': 1, 'measured': 1, 'measured_no_go': 1}
 
 | Theorem | Axis | Statement | Key result | Status | Evidence |
 | --- | --- | --- | --- | --- | --- |
@@ -23,9 +23,9 @@ Status counts: {'proven_symbolic': 6, 'proven_gate': 8, 'blocked': 3}
 | NT2-B1 | GR/Boltzmann | Two-sided shear/F bracket: a nonzero quadrupole forbids a vanishing shear-filling (lower bound > 0 under H3) | F_lo > 0; zero excluded | `proven_symbolic` | wolfram egs3 bracket; egs2-gates NT2-B1; fig_egs2_nt2b1_bracket |
 | EGS3-B4 | GR/Boltzmann | Covariant two-sided-bracket constants: nondegeneracy condition C_up*kappa*(1+R) > 1 (satisfied by kappa=4/21, C_up=9) | 12/7 > 1 | `proven_symbolic` | wolfram egs3_bracket_constants (PASS) |
 | EGS3-PSD | Math/Stat | PSD-cone redesign: x_C = tr(C M) for M=diag(g)>=0; admissible set is the convex PSD cone; rank-2 reachable eigen-directions; cone-shell bracket excludes the FLRW vertex | bit-identical True; rank 2; convex cone True; status PASS | `proven_symbolic` | egs3-gates PSD P1-P4; wolfram egs3_psd_cone (PASS); fig_egs3_psd_cone |
-| K1 | Data | Global low-l morphology p-value via the public-E2E max-scan | synthetic stand-in global_p 0.0033222591362126247 (n_e2e=300) | `blocked` | BLOCKED_MISSING_PR4_E2E_ACCESS; mechanics ready |
-| K5 | Data | CF4 cosmic-variance-inclusive bulk-flow coverage via release-matched forward mocks | awaiting release ownership | `blocked` | BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP; mechanics ready |
-| K6 | Data | CF4 vorticity/curl posterior via Hoffman-Ribak constrained realizations | synthetic stand-in CR mean -0.022623370324288433 sd 0.5941893458801444 | `blocked` | BLOCKED_MISSING_FIELD_REALIZATIONS; mechanics ready |
+| K1 | Data | Global look-elsewhere-corrected low-l morphology p-value on the real Planck map (isotropic LambdaCDM null) | SMICA global p=0.097, Commander p=0.121 (real PR3 map, 2000 GRF nulls) | `measured_partial` | scripts/k1_global_maxscan.py on real SMICA/Commander; E2E-systematics null still BLOCKED_MISSING_PR4_E2E_ACCESS (PLA portal-only sims) |
+| K5 | Data | CF4 cosmic-variance-inclusive bulk-flow coverage from release-matched forward mocks (real Tully+2023 catalogue) | |B|=341 +/- 102 km/s; CV-incl coverage 0.67 (meas-only 0.19) | `measured` | scripts/k5_cf4_release_coverage.py on real CF4 groups; BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP discharged |
+| K6 | Data | CF4 vorticity/curl sector on the real WF field: structural no-go (curl-suppressed reconstruction, estimator validated) | vorticity/shear<=0.006 at all radii; curl-injection recovered; structural_no_go=True | `measured_no_go` | scripts/k6_cf4_curl_posterior.py on real CF4++ WF field; BLOCKED_MISSING_FIELD_REALIZATIONS discharged as structural no-go |
 
-Open blockers: `BLOCKED_MISSING_PR4_E2E_ACCESS`, `BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP`, `BLOCKED_MISSING_FIELD_REALIZATIONS`, `AWAITING_NATIVE_LOWELL_SOLVER`
+Open blockers: `BLOCKED_MISSING_PR4_E2E_ACCESS (E2E-systematics null only; look-elsewhere discharged)`, `AWAITING_NATIVE_LOWELL_SOLVER`
 

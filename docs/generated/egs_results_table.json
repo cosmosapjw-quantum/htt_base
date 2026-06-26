@@ -5,13 +5,16 @@
     "math_stat": "mathematics / statistics theory axis"
   },
   "blockers_open": [
-    "BLOCKED_MISSING_PR4_E2E_ACCESS",
-    "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
-    "BLOCKED_MISSING_FIELD_REALIZATIONS",
+    "BLOCKED_MISSING_PR4_E2E_ACCESS (E2E-systematics null only; look-elsewhere discharged)",
     "AWAITING_NATIVE_LOWELL_SOLVER"
   ],
-  "claim_boundary": "conditional theorems + synthetic mechanics + (when inputs are owned) calibrated measurements; no detection, family/geometry, or native-solver result. Blocked rows emit NO substitute estimate beyond a labelled synthetic stand-in and keep their registered blocker code.",
+  "claim_boundary": "conditional theorems + synthetic mechanics + real-data measurements on owned inputs; no detection, family/geometry, or native-solver result. Measured rows are model-independent descriptors; K6 is an honest structural no-go; K1 is a partial (look-elsewhere) discharge under an idealised null.",
   "claim_tier": "program_theorem_and_synthetic_mechanics",
+  "discharges_rev_r127": {
+    "K1": "BLOCKED_MISSING_PR4_E2E_ACCESS partially discharged (real-map look-elsewhere global p under LambdaCDM null; E2E-systematics null still open)",
+    "K5": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP discharged (real CF4 catalogue, CV-inclusive coverage)",
+    "K6": "BLOCKED_MISSING_FIELD_REALIZATIONS discharged as a structural no-go (real CF4 WF field, curl-suppressed)"
+  },
   "family_identification": false,
   "native_solver_result": false,
   "rows": [
@@ -129,32 +132,34 @@
     },
     {
       "axis": "data_interpretation",
-      "evidence": "BLOCKED_MISSING_PR4_E2E_ACCESS; mechanics ready",
-      "key_result": "synthetic stand-in global_p 0.0033222591362126247 (n_e2e=300)",
-      "statement": "Global low-l morphology p-value via the public-E2E max-scan",
-      "status": "blocked",
+      "evidence": "scripts/k1_global_maxscan.py on real SMICA/Commander; E2E-systematics null still BLOCKED_MISSING_PR4_E2E_ACCESS (PLA portal-only sims)",
+      "key_result": "SMICA global p=0.097, Commander p=0.121 (real PR3 map, 2000 GRF nulls)",
+      "statement": "Global look-elsewhere-corrected low-l morphology p-value on the real Planck map (isotropic LambdaCDM null)",
+      "status": "measured_partial",
       "theorem_id": "K1"
     },
     {
       "axis": "data_interpretation",
-      "evidence": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP; mechanics ready",
-      "key_result": "awaiting release ownership",
-      "statement": "CF4 cosmic-variance-inclusive bulk-flow coverage via release-matched forward mocks",
-      "status": "blocked",
+      "evidence": "scripts/k5_cf4_release_coverage.py on real CF4 groups; BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP discharged",
+      "key_result": "|B|=341 +/- 102 km/s; CV-incl coverage 0.67 (meas-only 0.19)",
+      "statement": "CF4 cosmic-variance-inclusive bulk-flow coverage from release-matched forward mocks (real Tully+2023 catalogue)",
+      "status": "measured",
       "theorem_id": "K5"
     },
     {
       "axis": "data_interpretation",
-      "evidence": "BLOCKED_MISSING_FIELD_REALIZATIONS; mechanics ready",
-      "key_result": "synthetic stand-in CR mean -0.022623370324288433 sd 0.5941893458801444",
-      "statement": "CF4 vorticity/curl posterior via Hoffman-Ribak constrained realizations",
-      "status": "blocked",
+      "evidence": "scripts/k6_cf4_curl_posterior.py on real CF4++ WF field; BLOCKED_MISSING_FIELD_REALIZATIONS discharged as structural no-go",
+      "key_result": "vorticity/shear<=0.006 at all radii; curl-injection recovered; structural_no_go=True",
+      "statement": "CF4 vorticity/curl sector on the real WF field: structural no-go (curl-suppressed reconstruction, estimator validated)",
+      "status": "measured_no_go",
       "theorem_id": "K6"
     }
   ],
   "schema": "htt.egs.results_table.v1",
   "status_counts": {
-    "blocked": 3,
+    "measured": 1,
+    "measured_no_go": 1,
+    "measured_partial": 1,
     "proven_gate": 8,
     "proven_symbolic": 6
   }

@@ -1,0 +1,158 @@
+{
+  "blocker_resolved": "BLOCKED_MISSING_FIELD_REALIZATIONS",
+  "claim_boundary": "OBSSTAT reconstruction-conditioned diagnostic; no physical-vorticity, Bianchi-family, geometry, or native-solver claim",
+  "claim_tier": "diagnostic_only",
+  "conclusion": "STRUCTURAL_NO_GO: the CF4 WF velocity field is curl-suppressed (vorticity << shear at every radius) while the estimator recovers an injected solid-body rotation, so no physical vorticity sector is identifiable from this reconstruction",
+  "config": {
+    "cr_caveat": "per-cell N(v_mean,v_std) draws ignore cell-cell covariance -> ensemble spread is a lower bound on the true posterior width",
+    "n_cr": 400,
+    "radii_mpc": [
+      75.0,
+      100.0,
+      150.0,
+      200.0
+    ],
+    "seed": 20260626
+  },
+  "curl_injection_validated": true,
+  "family_identification": false,
+  "field": {
+    "box_mpc": 1000.0,
+    "frame": "supergalactic_cartesian",
+    "grid_shape": [
+      128,
+      128,
+      128
+    ],
+    "input_hashes": [
+      "sha256:78c0515c8330066a034f5e8afb3663e6c81ddf033db302a921c662344639bc91"
+    ],
+    "product": "CF4++ Wiener-filter mean+std velocity grid (Courtois/Hoffman)",
+    "velocity_units": "km_per_s",
+    "wf_method_caveat": "WF reconstruction from radial peculiar velocities is potential-flow / curl-suppressed by construction; recovered vorticity is reconstruction-conditioned, not a detected physical vorticity"
+  },
+  "native_solver_result": false,
+  "owner": "OBSSTAT",
+  "per_radius": {
+    "R100": {
+      "cr_bulk_amplitude_median": 262.2948426314424,
+      "cr_expansion_median": -6.778597414035071,
+      "cr_shear_amplitude_median": 3.1779294002596465,
+      "cr_vorticity_amplitude_median": 0.034410972603768325,
+      "cr_vorticity_amplitude_p16": 0.02137459731133233,
+      "cr_vorticity_amplitude_p84": 0.05210157721802509,
+      "cr_vorticity_axial_mean": [
+        -0.0122559899568858,
+        -0.004150438296674889,
+        -0.012143490819179092
+      ],
+      "cr_vorticity_axial_sd": [
+        0.018944708163778474,
+        0.02175433204087985,
+        0.020661038766620295
+      ],
+      "curl_injection_rel_error": 4.034018618987336e-16,
+      "n_cells": 8744,
+      "wf_mean_bulk_amplitude": 262.3321959465259,
+      "wf_mean_expansion": -6.775980239553469,
+      "wf_mean_shear_amplitude": 3.1779107766674737,
+      "wf_mean_vorticity_amplitude": 0.017541408504379477,
+      "wf_mean_vorticity_axial": [
+        -0.012607984412816298,
+        -0.0025399747196409583,
+        -0.011928464686927764
+      ]
+    },
+    "R150": {
+      "cr_bulk_amplitude_median": 315.4610266716437,
+      "cr_expansion_median": -8.725973683903783,
+      "cr_shear_amplitude_median": 1.154768064137517,
+      "cr_vorticity_amplitude_median": 0.01870661667184472,
+      "cr_vorticity_amplitude_p16": 0.011140810685175207,
+      "cr_vorticity_amplitude_p84": 0.026601648505673956,
+      "cr_vorticity_axial_mean": [
+        -0.0009576001313347143,
+        0.0007803482782319883,
+        8.89997649637142e-05
+      ],
+      "cr_vorticity_axial_sd": [
+        0.011792758396816342,
+        0.012069759632650015,
+        0.012162283514321862
+      ],
+      "curl_injection_rel_error": 4.0062788205022805e-16,
+      "n_cells": 29464,
+      "wf_mean_bulk_amplitude": 315.49869899015755,
+      "wf_mean_expansion": -8.72590758774513,
+      "wf_mean_shear_amplitude": 1.1537457205222112,
+      "wf_mean_vorticity_amplitude": 0.002037782278980661,
+      "wf_mean_vorticity_axial": [
+        -0.0019020141795935974,
+        0.0005696401378219029,
+        -0.00045870337968534347
+      ]
+    },
+    "R200": {
+      "cr_bulk_amplitude_median": 359.2836623091674,
+      "cr_expansion_median": -8.24464806513258,
+      "cr_shear_amplitude_median": 1.2549392455337745,
+      "cr_vorticity_amplitude_median": 0.011560692167225314,
+      "cr_vorticity_amplitude_p16": 0.00646270732528168,
+      "cr_vorticity_amplitude_p84": 0.016984967199920927,
+      "cr_vorticity_axial_mean": [
+        0.00046231161101090113,
+        -0.00029252947909695826,
+        -0.00023841541755236938
+      ],
+      "cr_vorticity_axial_sd": [
+        0.007360934219094467,
+        0.007368252530816676,
+        0.007730592401510232
+      ],
+      "curl_injection_rel_error": 4.67865351639355e-16,
+      "n_cells": 70320,
+      "wf_mean_bulk_amplitude": 359.25834579822333,
+      "wf_mean_expansion": -8.246123098498273,
+      "wf_mean_shear_amplitude": 1.2556493070853947,
+      "wf_mean_vorticity_amplitude": 0.0005008581405194655,
+      "wf_mean_vorticity_axial": [
+        0.00028689361600896246,
+        0.0001293097454164449,
+        -0.00038965358943329753
+      ]
+    },
+    "R75": {
+      "cr_bulk_amplitude_median": 169.7397243557603,
+      "cr_expansion_median": -2.751921339908873,
+      "cr_shear_amplitude_median": 5.076068805091399,
+      "cr_vorticity_amplitude_median": 0.05503037100549754,
+      "cr_vorticity_amplitude_p16": 0.0323177958325198,
+      "cr_vorticity_amplitude_p84": 0.07916386589567784,
+      "cr_vorticity_axial_mean": [
+        0.015987562890863716,
+        0.00661515723992345,
+        0.02003526870111412
+      ],
+      "cr_vorticity_axial_sd": [
+        0.030856746008909107,
+        0.03273106280151773,
+        0.031482716297466705
+      ],
+      "curl_injection_rel_error": 4.2846919693488025e-16,
+      "n_cells": 3648,
+      "wf_mean_bulk_amplitude": 169.7458950665046,
+      "wf_mean_expansion": -2.746307559821917,
+      "wf_mean_shear_amplitude": 5.077573707468823,
+      "wf_mean_vorticity_amplitude": 0.026628446452525694,
+      "wf_mean_vorticity_axial": [
+        0.017327144130681538,
+        0.0060485594692669675,
+        0.019294018894371323
+      ]
+    }
+  },
+  "schema": "htt.k6.cf4_curl_posterior.v1",
+  "structural_no_go": true,
+  "transfer_source": "external_proxy_cf4_wf_reconstruction",
+  "vorticity_over_shear_ratio_max": 0.005519792636461094
+}
