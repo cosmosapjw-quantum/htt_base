@@ -77,6 +77,9 @@ MEASUREMENT_REPORTS = (
     "docs/generated/egs3_experiments.json",
     "docs/generated/egs3_bracket_constants_proof.json",
     "docs/generated/egs3_psd_cone_proof.json",
+    # Consolidated cross-programme results table (data-analysis aggregate).
+    "docs/generated/egs_results_table.json",
+    "docs/generated/egs_results_table.md",
 )
 
 # Theorem implementations (PR04 overlay) + OBSSTAT estimators + PR07 modules.
@@ -130,6 +133,8 @@ DRIVER_SCRIPTS = (
     "scripts/run_egs2_experiments.py",
     # EGS3 extension driver + B4 symbolic core.
     "scripts/run_egs3_experiments.py",
+    "scripts/make_egs2_egs3_theorem_figures.py",
+    "scripts/build_egs_results_table.py",
     "wolfram/egs3_bracket_constants.wls",
     "wolfram/egs3_psd_cone.wls",
 )
@@ -167,6 +172,7 @@ GOVERNANCE_FILES = (
     "docs/research_program/egs2/tickets/K5_release_matched_mocks.yaml",
     "docs/research_program/egs2/tickets/semi_native_shear_to_quadrupole.yaml",
     # EGS3 programme surface (framework upgrade + theorem candidates + tickets).
+    "docs/research_program/BLOCKERS.md",
     "docs/research_program/egs3/README.md",
     "docs/research_program/egs3/FRAMEWORK_CRITIQUE_AND_REDESIGN.md",
     "docs/research_program/egs3/THEOREM_CANDIDATES.md",
@@ -186,6 +192,14 @@ FIGURE_STEMS = (
     "figures/current/fig_pr04_a2_wigner",
     "figures/current/fig_pr04_b1_nonsufficiency",
     "figures/current/fig_pr04_b2_dust_shear",
+    "figures/current/fig_egs3_a1_graded_rank",
+    "figures/current/fig_egs3_a3_evalue_calibration",
+    "figures/current/fig_egs2_nt2a1_fisher_floor",
+    "figures/current/fig_egs3_b1_floor_profile",
+    "figures/current/fig_egs3_b2_volterra",
+    "figures/current/fig_egs3_b3_vorticity",
+    "figures/current/fig_egs2_nt2b1_bracket",
+    "figures/current/fig_egs3_psd_cone",
     "figures/observed_current/fig_observed_lowell_null_significance",
     "figures/observed_current/fig_observed_lowell_morphology_axis",
     "figures/observed_current/fig_observed_cf4_bulkflow_apex_depth",
@@ -237,7 +251,7 @@ def _virtual(archive: str, group: str, text: str) -> Entry:
 def _pr_deltas(repo_root: Path) -> list[str]:
     return sorted(
         p.relative_to(repo_root).as_posix()
-        for n in range(108, 126)
+        for n in range(108, 127)
         for p in [repo_root / f"docs/PR_DELTAS/rev-r{n}.md"]
         if p.is_file()
     )

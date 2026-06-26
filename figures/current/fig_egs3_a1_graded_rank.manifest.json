@@ -1,0 +1,106 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "bass.theorem.fig_egs3_a1_graded_rank",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/current/fig_egs3_a1_graded_rank.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_not_use_for_family_identification_or_family_selection",
+    "must_state_no_native_low_ell_solver_output"
+  ],
+  "caveats": [
+    "Analytic/synthetic theorem illustration; not observed data.",
+    "Conditional theorem; structural/limit statement, not a detection.",
+    "No native low-ell solver output or morphology atlas is used.",
+    "No Bianchi family-ID or geometry-detection claim is made."
+  ],
+  "claim_tier": "diagnostic_only",
+  "config_hash": "sha256:b8ae397ff0dd58d391303f91daf02e8022f5d78a283d5cc1d94c17f4e2b0c53f",
+  "covariance_status": "synthetic_only",
+  "created_by": "scripts/make_egs2_egs3_theorem_figures.py",
+  "failed_gates": [
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available",
+    "observational_closure_not_bound"
+  ],
+  "family_identification": false,
+  "generating_command": "python scripts/make_egs2_egs3_theorem_figures.py",
+  "implementation_scope": "bass_py",
+  "native_solver_result": false,
+  "null_mock_status": "synthetic_only",
+  "owner": "BASS",
+  "passed_gates": [
+    "gate_test_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent",
+    "family_identification_blocked_pre_native_atlas"
+  ],
+  "publication_gates": {
+    "bianchi_evidence_claim": "fail_program_theorem_only",
+    "family_identification_claim": "fail_blocked_pre_native_atlas"
+  },
+  "required_gates": [
+    "gate_test_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "bass.egs2_egs3_theorem_figure.v1",
+  "sky_support_status": "not_directional",
+  "source": {
+    "channels": [
+      "cmb_quadrupole",
+      "cmb_dipole",
+      "radial_velocity_dipole"
+    ],
+    "null_sectors": [
+      "W2",
+      "Omega_k"
+    ],
+    "rank": 2,
+    "reachable_sectors": [
+      "Sigma2",
+      "Omega_tilt"
+    ],
+    "response_design": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "sectors": [
+      "Sigma2",
+      "W2",
+      "Omega_tilt",
+      "Omega_k"
+    ],
+    "theorem_id": "EGS3-A1"
+  },
+  "source_json_path": "figures/current/fig_egs3_a1_graded_rank.source.json",
+  "statistics_definitions": {
+    "program": "egs2_egs3_extension",
+    "theorem_id": "EGS3-A1"
+  },
+  "theorem_id": "EGS3-A1",
+  "theorem_title": "Graded comparator identifiability rank",
+  "title": "Graded comparator identifiability rank",
+  "transfer_source": "none"
+}

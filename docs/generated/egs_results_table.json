@@ -1,0 +1,161 @@
+{
+  "axes": {
+    "data_interpretation": "data interpretation axis",
+    "gr_boltzmann": "GR / covariant-Boltzmann theory axis",
+    "math_stat": "mathematics / statistics theory axis"
+  },
+  "blockers_open": [
+    "BLOCKED_MISSING_PR4_E2E_ACCESS",
+    "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
+    "BLOCKED_MISSING_FIELD_REALIZATIONS",
+    "AWAITING_NATIVE_LOWELL_SOLVER"
+  ],
+  "claim_boundary": "conditional theorems + synthetic mechanics + (when inputs are owned) calibrated measurements; no detection, family/geometry, or native-solver result. Blocked rows emit NO substitute estimate beyond a labelled synthetic stand-in and keep their registered blocker code.",
+  "claim_tier": "program_theorem_and_synthetic_mechanics",
+  "family_identification": false,
+  "native_solver_result": false,
+  "rows": [
+    {
+      "axis": "math_stat",
+      "evidence": "wolfram egs_lowell; fig_theorem_nt_a1_quadrupole_filling",
+      "key_result": "slope 1/(kappa^2 x_max); F_shear(D2=0)=0",
+      "statement": "Quadrupole-filling EGS identity: F_shear linear in the CMB quadrupole, F_shear->0 in the EGS limit",
+      "status": "proven_symbolic",
+      "theorem_id": "NT-A1"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "wolfram egs_lowell; fig_theorem_nt_a3_cosmic_variance_floor",
+      "key_result": "sqrt(2/5) = 0.632 at l=2",
+      "statement": "Single-sky sampling dispersion of the standard F_shear estimator (one estimator; NOT a universal CR floor)",
+      "status": "proven_symbolic",
+      "theorem_id": "NT-A3"
+    },
+    {
+      "axis": "gr_boltzmann",
+      "evidence": "wolfram egs_lowell; fig_theorem_nt_b3_gf_transport",
+      "key_result": "L.1=0 contrast operator; G_F=1 iff steady",
+      "statement": "Depth-transport EGS limit: depth gap G_F=1 for depth-steady shear; a depth-growing tilt imprints a gap",
+      "status": "proven_symbolic",
+      "theorem_id": "NT-B3"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates A1; fig_egs3_a1_graded_rank",
+      "key_result": "rank 2; reachable ['Sigma2', 'Omega_tilt']; joint null ['W2', 'Omega_k']",
+      "statement": "Graded-comparator identifiability: from {low-l CMB-T, radial velocity} the reachable subspace of g is rank 2",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-A1"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates A3; fig_egs3_a3_evalue_calibration",
+      "key_result": "null mean 1.0; Markov holds True",
+      "statement": "Pi is a calibrated e-value: unit null mean, Markov false-exceedance bound P(E>=1/beta)<=beta; domination is conservative",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-A3"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates A4",
+      "key_result": "Var_RB <= Var_raw: True",
+      "statement": "Rao-Blackwell sufficiency: the reachable-sector statistic dominates any raw multi-channel estimator",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-A4"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs2-gates NT2-A1; fig_egs2_nt2a1_fisher_floor",
+      "key_result": "floor 0.632(l=2) -> 0.424(L=20)",
+      "statement": "Genuine multi-multipole Fisher-CR floor, strictly below the single-l dispersion",
+      "status": "proven_gate",
+      "theorem_id": "NT2-A1"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs2-gates NT2-A2",
+      "key_result": "tail l>3 saturates; decade increments shrink",
+      "statement": "Octupole information saturation: the tail contribution converges (no single extra multipole closes the floor)",
+      "status": "proven_gate",
+      "theorem_id": "NT2-A2"
+    },
+    {
+      "axis": "gr_boltzmann",
+      "evidence": "egs3-gates B1; fig_egs3_b1_floor_profile",
+      "key_result": "floor saturates at 0.632 (super-horizon), drops below at finite k",
+      "statement": "Semi-native shear->multipole transfer: the Fisher floor is a PROFILE in the shear scale k",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-B1"
+    },
+    {
+      "axis": "gr_boltzmann",
+      "evidence": "egs3-gates B2; fig_egs3_b2_volterra",
+      "key_result": "max|Volterra-ODE| 2.9138549925891016e-06; Gronwall holds True",
+      "statement": "Volterra depth-memory: the depth gap is a Volterra integral of the tilt stress with kernel exp(-3 int H); == ODE + Gronwall",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-B2"
+    },
+    {
+      "axis": "gr_boltzmann",
+      "evidence": "egs2/egs3-gates B3; fig_egs3_b3_vorticity",
+      "key_result": "radial max 2.220446049250313e-16; transverse rank 3",
+      "statement": "Vorticity blind sector re-opens: radial velocities are vorticity-blind (n.Omega.n=0); the transverse channel breaks the no-go",
+      "status": "proven_gate",
+      "theorem_id": "NT2-B3 / EGS3-B3"
+    },
+    {
+      "axis": "gr_boltzmann",
+      "evidence": "wolfram egs3 bracket; egs2-gates NT2-B1; fig_egs2_nt2b1_bracket",
+      "key_result": "F_lo > 0; zero excluded",
+      "statement": "Two-sided shear/F bracket: a nonzero quadrupole forbids a vanishing shear-filling (lower bound > 0 under H3)",
+      "status": "proven_symbolic",
+      "theorem_id": "NT2-B1"
+    },
+    {
+      "axis": "gr_boltzmann",
+      "evidence": "wolfram egs3_bracket_constants (PASS)",
+      "key_result": "12/7 > 1",
+      "statement": "Covariant two-sided-bracket constants: nondegeneracy condition C_up*kappa*(1+R) > 1 (satisfied by kappa=4/21, C_up=9)",
+      "status": "proven_symbolic",
+      "theorem_id": "EGS3-B4"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates PSD P1-P4; wolfram egs3_psd_cone (PASS); fig_egs3_psd_cone",
+      "key_result": "bit-identical True; rank 2; convex cone True; status PASS",
+      "statement": "PSD-cone redesign: x_C = tr(C M) for M=diag(g)>=0; admissible set is the convex PSD cone; rank-2 reachable eigen-directions; cone-shell bracket excludes the FLRW vertex",
+      "status": "proven_symbolic",
+      "theorem_id": "EGS3-PSD"
+    },
+    {
+      "axis": "data_interpretation",
+      "evidence": "BLOCKED_MISSING_PR4_E2E_ACCESS; mechanics ready",
+      "key_result": "synthetic stand-in global_p 0.0033222591362126247 (n_e2e=300)",
+      "statement": "Global low-l morphology p-value via the public-E2E max-scan",
+      "status": "blocked",
+      "theorem_id": "K1"
+    },
+    {
+      "axis": "data_interpretation",
+      "evidence": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP; mechanics ready",
+      "key_result": "awaiting release ownership",
+      "statement": "CF4 cosmic-variance-inclusive bulk-flow coverage via release-matched forward mocks",
+      "status": "blocked",
+      "theorem_id": "K5"
+    },
+    {
+      "axis": "data_interpretation",
+      "evidence": "BLOCKED_MISSING_FIELD_REALIZATIONS; mechanics ready",
+      "key_result": "synthetic stand-in CR mean -0.022623370324288433 sd 0.5941893458801444",
+      "statement": "CF4 vorticity/curl posterior via Hoffman-Ribak constrained realizations",
+      "status": "blocked",
+      "theorem_id": "K6"
+    }
+  ],
+  "schema": "htt.egs.results_table.v1",
+  "status_counts": {
+    "blocked": 3,
+    "proven_gate": 8,
+    "proven_symbolic": 6
+  }
+}

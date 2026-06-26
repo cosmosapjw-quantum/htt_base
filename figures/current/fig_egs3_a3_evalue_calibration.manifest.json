@@ -1,0 +1,83 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "bass.theorem.fig_egs3_a3_evalue_calibration",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/current/fig_egs3_a3_evalue_calibration.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_not_use_for_family_identification_or_family_selection",
+    "must_state_no_native_low_ell_solver_output"
+  ],
+  "caveats": [
+    "Analytic/synthetic theorem illustration; not observed data.",
+    "Conditional theorem; structural/limit statement, not a detection.",
+    "No native low-ell solver output or morphology atlas is used.",
+    "No Bianchi family-ID or geometry-detection claim is made."
+  ],
+  "claim_tier": "diagnostic_only",
+  "config_hash": "sha256:73f0b0a3a0e80d6b4545fb6bbdea9ad1adabf3fbebf4ebbe152d36a98710db81",
+  "covariance_status": "synthetic_only",
+  "created_by": "scripts/make_egs2_egs3_theorem_figures.py",
+  "failed_gates": [
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available",
+    "observational_closure_not_bound"
+  ],
+  "family_identification": false,
+  "generating_command": "python scripts/make_egs2_egs3_theorem_figures.py",
+  "implementation_scope": "bass_py",
+  "native_solver_result": false,
+  "null_mock_status": "synthetic_only",
+  "owner": "BASS",
+  "passed_gates": [
+    "gate_test_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent",
+    "family_identification_blocked_pre_native_atlas"
+  ],
+  "publication_gates": {
+    "bianchi_evidence_claim": "fail_program_theorem_only",
+    "family_identification_claim": "fail_blocked_pre_native_atlas"
+  },
+  "required_gates": [
+    "gate_test_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "bass.egs2_egs3_theorem_figure.v1",
+  "sky_support_status": "not_directional",
+  "source": {
+    "beta_grid": [
+      0.5,
+      0.2,
+      0.1,
+      0.05,
+      0.02
+    ],
+    "empirical_false_rate": [
+      0.06685,
+      0.06685,
+      0.06685,
+      0.0,
+      0.0
+    ],
+    "markov_holds": true,
+    "n_sims": 40000,
+    "null_mean_evalue": 0.9999999999999998,
+    "theorem_id": "EGS3-A3"
+  },
+  "source_json_path": "figures/current/fig_egs3_a3_evalue_calibration.source.json",
+  "statistics_definitions": {
+    "program": "egs2_egs3_extension",
+    "theorem_id": "EGS3-A3"
+  },
+  "theorem_id": "EGS3-A3",
+  "theorem_title": "Pi e-value Markov calibration",
+  "title": "Pi e-value Markov calibration",
+  "transfer_source": "none"
+}

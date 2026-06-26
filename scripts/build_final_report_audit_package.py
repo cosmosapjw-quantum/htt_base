@@ -55,6 +55,14 @@ FIGURE_STEMS = (
     "figures/current/fig_pr04_a2_wigner",
     "figures/current/fig_pr04_b1_nonsufficiency",
     "figures/current/fig_pr04_b2_dust_shear",
+    "figures/current/fig_egs3_a1_graded_rank",
+    "figures/current/fig_egs3_a3_evalue_calibration",
+    "figures/current/fig_egs2_nt2a1_fisher_floor",
+    "figures/current/fig_egs3_b1_floor_profile",
+    "figures/current/fig_egs3_b2_volterra",
+    "figures/current/fig_egs3_b3_vorticity",
+    "figures/current/fig_egs2_nt2b1_bracket",
+    "figures/current/fig_egs3_psd_cone",
     "figures/observed_current/fig_observed_lowell_null_significance",
     "figures/observed_current/fig_observed_lowell_morphology_axis",
     "figures/observed_current/fig_observed_cf4_bulkflow_apex_depth",
@@ -93,6 +101,10 @@ EVIDENCE_FILES = (
     "docs/generated/egs3_experiments.json",
     "docs/generated/egs3_bracket_constants_proof.json",
     "docs/generated/egs3_psd_cone_proof.json",
+    # Consolidated results table + blocker dossier backing the new §9 gallery.
+    "docs/generated/egs_results_table.json",
+    "docs/generated/egs_results_table.md",
+    "docs/research_program/BLOCKERS.md",
 )
 
 

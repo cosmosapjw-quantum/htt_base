@@ -55,9 +55,26 @@ the variables (three axes), and concrete discharges of the data blocks.
   (research-audit 147→175 files). `make egs3-gates` (20) + `make egs3-wolfram`
   (B4 bracket + PSD-cone cores).
 
+- **Figure deck + consolidated analysis + blocker dossier (rev-r126):** eight
+  diagnostic-only theorem figures computed from the canonical modules
+  (`scripts/make_egs2_egs3_theorem_figures.py`, deterministic content-addressed
+  sidecars, `--check`): graded-comparator rank, Π e-value calibration, genuine
+  multi-ℓ Fisher floor, the k-profile floor, Volterra depth-memory, vorticity
+  re-opening, the two-sided bracket, and the PSD-cone redesign — all visually
+  inspected, claim-gated (`tests/contracts/test_egs_theorem_figures.py`). A
+  17-row consolidated results table (`scripts/build_egs_results_table.py` →
+  `docs/generated/egs_results_table.{json,md}`; 14 proven = 6 symbolic + 8 gate,
+  3 blocked) and a single-source blocker dossier
+  (`docs/research_program/BLOCKERS.md`: every code, unblock action, ready
+  mechanics, exit gate). Report grew a new §9 figure gallery + results table +
+  blocker status (18→21 pp). Also repaired a rev-r125 regression: the canonical
+  `pdf_claim_lint_report.md` (manuscript-PDF target) had been clobbered with the
+  final-report lint; restored. Audit packages expanded (research-audit 175→205).
+
 Anti-tone-down: the headline is a strong honest result — a measured rank-2
 comparator + a proven two-sector no-go + named re-opening channels, now unified
-in one PSD-cone object. Conditional theorems + synthetic mechanics only; no
+in one PSD-cone object and illustrated by a deterministic figure deck + a
+consolidated results table. Conditional theorems + synthetic mechanics only; no
 detection, family/geometry, or native-solver claim; `pdf_claim_lint` 0 failed.
 
 ### EGS2 extension programme — NT2-* theorems + blocker discharges + audit fixes (2026-06-26)
