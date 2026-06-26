@@ -164,22 +164,15 @@ def _read_text(rel_path: str) -> str:
 
 
 def _git_state(repo_root: Path = REPO_ROOT) -> tuple[str | None, str]:
+    # Content-addressed provenance (audit F2/F5): the emitted artifacts are
+    # pinned by config_hash + input_hashes, NOT by the volatile HEAD+dirty git
+    # state. Embedding HEAD here re-staled the committed payload on every commit
+    # (the --check would recompute a new HEAD and never match). A deterministic
+    # sentinel keeps the generated files reproducible across commits. The test
+    # override hook is preserved.
     if _GIT_STATE_OVERRIDE is not None:
         return _GIT_STATE_OVERRIDE
-    try:
-        commit = subprocess.check_output(
-            ["git", "rev-parse", "--short", "HEAD"],
-            cwd=repo_root,
-            text=True,
-        ).strip()
-        status = subprocess.check_output(
-            ["git", "status", "--short"],
-            cwd=repo_root,
-            text=True,
-        ).strip()
-    except (OSError, subprocess.CalledProcessError):
-        return None, "git_state_unavailable"
-    return commit, f"{commit}+dirty" if status else commit
+    return "content-addressed", "content-addressed"
 
 
 def _config_hash(payload: Any) -> str:

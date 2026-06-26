@@ -1,102 +1,95 @@
-# Adversarial Research Re-Audit — HTT/Bianchi Manuscript (VER06)
+# Adversarial Research Re-Audit — HTT/Bianchi Manuscript (VER06, audit #3)
 
-Scope: research formalization and results only (physics, math, statistics, inference, claim tiers, figure interpretation, manuscript logic). Software/packaging/tests-as-software excluded. Sources: `docs/manuscript/{main,ch01..ch11,appendices}.tex`, `docs/generated/{manuscript_plot_list_index,result_pack_A/B/C,transfer_sensitivity_report,pdf_claim_lint_report}.md`, and figure manifests under `figures/`. Compiled PDF absent by design; line cites are to `.tex` and report paths.
+Scope: research formalization and results only (physics, math, statistics, inference, claim tiers, figure interpretation, manuscript logic). Software/packaging excluded. This package ships the compiled PDF (`manuscript/htt_base_research_report.pdf`, 352 pp.) plus `reports/result_pack_{A,B,C}.md`, `reports/transfer_sensitivity_report.md`, `manuscript/pdf_claim_lint_report.md`, the figure inventory, and `pr_deltas/`. Citations are to PDF section/proposition/equation numbers and report/manifest paths (no `.tex` in this package).
 
 ---
 
 ## 1. Verdict
 
-**MINOR REVISIONS.**
+**MINOR REVISIONS** (near-PASS).
 
-The structural overclaims flagged in prior rounds are gone: the manuscript now frames itself as a claim-tiered framework (`main.tex:153–158`), the Bianchi Bayes factors are consistently tiered as **legacy, transfer-conditional, dipole-restatement** numbers (not native evidence), the eleven-type `ln B` table is reframed as an **FLRW-limit continuation test** (`ch07:559–576`), the filling-fraction `BF>5×10⁴` is explicitly disclaimed as "a restatement of the >5σ dipole anomaly … not an independent discovery" (`ch07:646–653`), and observational figures are `diagnostic_only` with the correct `failed_gates`. No rejection trigger fires as a *current* claim. What remains is residual prose precision, one untraceable number, cross-chapter numeric consistency, and harmonization of `Π`/`Q`/`F` terminology with the companion formalism — none of which invalidates the main claim.
+Net change since audit #2: most prior items are resolved. The CF4++ `lnB≈+44` (previously self-flagged "untraceable") is **gone** — the evidence ladder is now `lnB≈+26.40` (VER05 primary, "Conditional evidence", §9.1.2), a VER06-corrected Bianchi V `lnB=+24.8` (§9.1.3), and tilted VII_h `lnB≈+24` (§4.5.3), all labelled legacy transfer-conditional. The filling fraction is disambiguated: the naive `F=x_C/x_max` is now declared **ill-defined** and replaced by a signed saturation coordinate (§3, "the standard filling fraction … is ill-defined; a signed saturation coordinate is required") and a Class-conditioned filling fraction (Def 3.19), distinct from the legacy budget-normalised score `F=0.093±0.025`. Comparator invariance is **proved** (x/Q/Π identical across comparators when `Ω_{k,aniso}=0`; comparator-dependent only for BV/BIX, `Δcomp=1.0`, Table 8.7). Robustness is added (`|ΔlnB|≤0.16` under transfer variation; `lnB` invariant under reionisation to `10⁻¹⁰`; polarisation feedback checked; Jeffreys scale, §7). Null/covariance gates now exist as prerequisites/forecast surfaces (PR-100 directional-coherence covariance status; PR-101 G_F + `gf_matched_null_forecast_report.json`; PR-102 FLRW null-predictive tension gate). No rejection trigger fires. What remains is one recurring wording item plus three minor residuals.
 
 ## 2. Minimal Defensible Claim
 
-Under the premise that the matter-dipole anomaly is substantially physical, and using an explicitly legacy external/proxy transfer path, the manuscript shows that the observed dipole is re-expressible in covariant departure variables as a single tilt-like (boost) degree of freedom: a transfer-conditional, direction-marginalized model-comparison summary reaches `ln B_tilt ≈ +25.3` (`ch09:512`), this preference resides ≈100% in the tilt channel while anisotropic shear geometry is mildly *disfavoured* (`ln B = −0.87`, PDF p.159), and the corresponding budget-normalized departure is a few percent of the MES ceiling. The MES bound hierarchy is *derived* under stated assumptions (`ch04:338`), the frame structure (geometry/matter/peculiar) is explicit (`ch03:1502+`), and `x_C` is treated as a signed comparator coordinate (`ch03:1106`), not an invariant magnitude. No native low-ℓ Bianchi solver output exists; no Bianchi family is identified; no geometry is detected; MIO diagnostics are not evidence; all transfer-dependent rows are transfer-conditional.
+Under the premise that the >5σ matter-dipole anomaly is substantially physical, and using an explicitly legacy external/proxy transfer path, the observed dipole is re-expressible in frame-invariant departure variables as a single tilt-like (boost) degree of freedom: a transfer-conditional, direction-marginalized model comparison reaches `lnB≈+26.4` (Jeffreys-strong but a restatement of the dipole significance, §9.3/§6), while anisotropic shear geometry is disfavoured and the orthogonal growing mode is rejected (`lnB=−18.7`) because its Frobenius-coupled vorticity exceeds the Saadeh bound by ~6 orders (§4.5). The MES algebraic ceilings are derived; the Saadeh–MES complementarity is explicit (`Σ²_std<8×10⁻²²` vs `Σ²_std<6.4×10⁻⁶`, §4.5); frames (geometry/matter/CMB rest) are explicit; `x_C` is a signed comparator coordinate (the naive filling fraction is declared ill-defined); and the neutrino quadrupole dominance (`N₂/F₂=28`, 98.4% of `D₂`) is a derived, transfer-conditional result (Proposition 5.3, §5.13.5). No native low-ℓ Bianchi solver output exists; no Bianchi family is identified; no geometry is detected; MIO certificates are diagnostic-only and rank no models.
 
 ## 3. Fatal Blockers
 
-None. No current claim asserts an identified Bianchi family, a detected geometry, native validation of external transfer, MIO-as-evidence, scalar-only geometry evidence, or an evidence claim lacking its required null/covariance/PPC/LOOCV support. The result packs and figure manifests block these at the governance layer (`result_pack_B.md` claim boundaries; `figures/observed_current/*` `failed_gates`).
+None. No current claim asserts an identified Bianchi family, a detected geometry, native validation of external transfer (§9.3 explicitly: external/proxy provenance "not native low-ell solver validation"), MIO promoted to model-weight/likelihood-ratio/adjudication (Result Pack C: "does not rank models, does not modify HTT-owned evidence traces"), scalar-only geometry evidence, or an evidence claim lacking its null/covariance/PPC/LOOCV prerequisites (Result Pack B gates these as `prerequisite_not_evidence`).
 
 ## 4. Major Findings
 
 | Severity | Location | Problem | Why It Matters | Required Fix |
 |---|---|---|---|---|
-| Medium | `ch09:497` | The 98.4% neutrino-quadrupole result is called "the discovery", though it issues from the FLRW oracle/legacy transfer that `ch09:543` itself calls "a toy model, not a production tool" and not native solver output | "Discovery" reads as a validated finding; contradicts the toy/transfer-conditional status and the no-native-solver boundary | Downgrade to "the legacy transfer path indicates …"; mark transfer-conditional; remove "discovery" |
-| Medium | `ch08 §8.19`; PDF p.158 | The CF4++ headline `ln B ≈ +44` is self-described as "untraceable from the canonical VER05 JSON; a dedicated rerun is recommended before publication" | A headline-adjacent evidence number with no reproducible provenance cannot stand in a results/discussion chapter | Reproduce from source and bind a config/input hash, or remove the `+44` figure pending the rerun |
-| Medium | `ch01:152`, `ch02:485` vs `ch03:1112` vs `ch07:632` (+ ch09 TOC "F≈6.3%") | The headline departure number is quoted inconsistently: `F_Bayes=0.093±0.025` (intro/abstract), `Q̄=0.092` HPD[0.035,0.19] (ch03), `FF=0.063 (w=0)/0.084 (w=1/3)` (ch07); `Q̄=0.092 ≈ F_Bayes=0.093` invites Q/F conflation | A reader cannot trace the abstract's number to the results chapter; Q (occupancy ratio) and F (filling fraction / budget-normalized score) are distinct but numerically merged | Reconcile to one scenario per quantity; state the abstract number's exact scenario/EoS and whether it is Q, F, or F_Bayes; cross-reference |
-| Medium | `ch03:1124` (`eq:Pi-def`) | `Π(q*) := P(Q>q*|D)` defines Π as a *posterior exceedance probability*, while the companion formalism defines Π as an *empirical exceedance fraction* explicitly barred from "probability/posterior" language; the disclaimer "not a truth probability" (`ch03:1133`) sits on a quantity written as `P(·|D)` | Same symbol, two incompatible definitions across the paper and its formalism; internal-consistency and reviewer-confusion risk | Either present Π as the empirical exceedance curve (match the formalism) or state explicitly that the manuscript Π is a model-conditional posterior exceedance probability, distinct from the MIO diagnostic Π |
-| Low–Med | `ch03:1106–1112`; `ch07:625` | Manuscript calls `Q` an "occupancy" with a "posterior mean" and gives `F` a "Monte Carlo posterior" — terms the companion formalism bars for the MIO `Q`/`F` diagnostics | Terminology collision between the physics narrative and the diagnostic formalism of the same program | Add one line distinguishing the dipole-premise physics filling-ratio interpretation from the MIO diagnostic `Q`/`F` (which carry no occupancy/posterior semantics), or harmonize wording |
-| Low | `ch07:566–574` (`tab:fb7_lnB_11types`) | `NO_FLRW_LIMIT_EXPLICIT` rows still print `ln B` values down to `−1.9×10⁸` | Those are artifacts of forcing an FLRW comparison where no limit exists, not interpretable Bayes factors; spurious precision invites misreading | Replace the numeric entry for no-limit rows with "N/A (no FLRW limit)"; keep the status flag |
-| Low | `ch07:666`, `ch07:684` | "detection window"/"detectable" for the growing-mode shear, while `ch07:672` uses "sensitivity window" | "Detection" wording for a forecast sensitivity band can read as a current detection | Use "sensitivity window" consistently |
+| Medium (recurring) | §5.13.5 ("the Phase 1.0 solver **discovers**…"); §9.3.1 ("the most consequential result of the solver is the **discovery**…") | The neutrino-quadrupole dominance is repeatedly called a "discovery" of "the solver", though the hard boundary states no native low-ℓ solver exists (the Phase 1.0 solver is the legacy/oracle) and the result is transfer-conditional | Same wording flagged in audits #1 and #2; "discovery"/"the solver discovers" on a non-native, transfer-conditional result borders the no-native-solver boundary | Downgrade to "the solver **indicates** / the derived result is" and mark transfer-conditional; reserve no "discovery" for an oracle/legacy output (the *evidence* summary is already correctly disclaimed as "not an independent discovery", §9.3) |
+| Low–Med | Eq. 3.58 `Π(q⋆):=P(Q>q⋆|D)` | `Π` is still defined as a **posterior** exceedance probability, while the companion formalism defines `Π` as an empirical exceedance fraction barred from "probability" language | Same symbol, two definitions across the paper and its formalism; the disclaimer "not a truth probability/p-value" (§3.7.3) and the declared-measure framing mitigate but do not remove the collision | Either harmonize the definition with the formalism's empirical exceedance, or state once that the manuscript `Π` is a model-conditional posterior exceedance, explicitly distinct from the MIO diagnostic `Π` |
+| Low–Med | abstract/intro `F=0.093±0.025` (§1, §7) vs §9.1.4 "Filling fraction: `F≈6.3%`" vs Def 3.19 | Two different "F" headline numbers (legacy budget-normalised score 0.093 vs class-conditioned filling 6.3%) still coexist; now defined separately but not cross-referenced at first mention | A reader can conflate the budget-normalised score with the filling fraction | At each headline use, name which `F` it is (Def 3.19 class-conditioned vs legacy budget-normalised score) and cross-reference; the abstract should disambiguate |
+| Low (self-flagged) | `manuscript/manuscript_figure_inventory.md` (10 `manual_status_number` rows: ch01:221 `test_count`; ch07:374–375 `pytest_count`; generated `ver2_*` `manifest_ready_count`/`blocked_figure_count`) | Ten hardcoded test/figure-manifest counts in the manuscript are flagged by the project's own inventory as manual rather than generated-source | Manual status numbers drift from the artifacts they report (audit check F) | Replace the 10 manual counts with generated-source values (the inventory already lists their hashes/targets) |
 
 ## 5. Physics/Math Audit
 
 | Item | Status | Issue | Required Fix |
 |---|---|---|---|
-| `x_C = Σ²−W²+Ω_tilt+Ω_{k,aniso}` as signed comparator coordinate | OK | Treated as signed; `x<0 ⇒ Q<0` (`ch03:1106`); not called an invariant magnitude | Optionally surface the cancellation caveat (`x_C≈0 ≠ isotropy`) at first use |
-| MES bound hierarchy | OK | Derived from the covariant Boltzmann hierarchy (`ch04:14`, `ch04:338`), theorem tagged `[Conditional]` | None |
-| Frame conventions (geometry/matter/peculiar, tilt rapidity β) | OK | Explicit and consistent (`ch03:1502+`, `ch03:1513`) | Add a one-line frame glossary cross-ref where `ln B_tilt` is first stated (rest-frame vs observer-frame, `ch07:526`) |
-| FLRW / no-tilt / boost-only / tilt-only / zero-denominator / rank-deficient limits | OK | FLRW-limit phase-gate `|ln B|<0.1` for I/V/VII₀ (`ch07:551`); zero-denominator and rank-deficient → blocked states (`result_pack_B.md` rank/FPR scenarios) | Confirm the boost-only and tilt-only analytic limits are each stated once in ch03/ch04 prose |
-| Deterministic transfer template vs anisotropic covariance | Partial | Transfer template `D₂(Σ²)` is external/proxy-calibrated (`transfer_sensitivity_report.md`); separation from anisotropic covariance is implied but not foregrounded | State once that the deterministic template effect and the anisotropic-covariance effect are modeled separately, with the transfer template flagged external/proxy |
-| Neutrino anisotropic-stress feedback / shear growth | OK | Robustness checks report no spurious anisotropic-geometry preference (`ch08:78`, `ch08:875`) | None (rests on the corrected sign convention; keep the robustness cross-ref) |
-| `N₂/F₂=28`, Thomson-suppression mechanism | OK | Physical mechanism stated (`ch09:500–513`, Prop. nu-dominance) | Tie the 98.4% to its transfer-conditional status (see §8) |
+| Frame conventions (geometry/matter/CMB rest, tilt rapidity β) | OK | Explicit and consistent (§2.x, §6; β=1.334×10⁻³ derived from Watkins) | None |
+| `x_C` signed comparator coordinate; naive `F` | OK (improved) | `x_C` signed; the naive `F=x_C/x_max` now declared **ill-defined**, replaced by a signed saturation coordinate (§3) | None |
+| MES derivation + Saadeh–MES complementarity | OK | Derived; ~6-order Saadeh/MES gap explained, shrinking to ~1 order for the growing mode (§4.5) | None |
+| Comparator invariance of x/Q/Π | OK (now proved) | Invariant when `Ω_{k,aniso}=0`; comparator-dependent for BV/BIX (`Δcomp=1.0`, Table 8.7) — stated correctly | None |
+| Neutrino-quadrupole dominance | OK (derived) | Now Proposition 5.3 (Thomson-suppressed photons vs free-streaming neutrinos under common shear); `N₂/F₂=28`, 98.4% of `D₂` | Transfer-conditional tag + drop "discovery" (see §8) |
+| FLRW / rank-deficient / zero-denominator limits | OK | FLRW-limit phase gate; rank-deficient → `blocked_no_claim` (Result Pack B) | Confirm boost-only/tilt-only limits each stated once |
+| Deterministic transfer template vs anisotropic covariance | Partial | Transfer template external/proxy-flagged (transfer_sensitivity_report); separation implied | State once that the deterministic template and anisotropic-covariance effects are modelled separately, template flagged external/proxy |
 
 ## 6. Statistics/Inference Audit
 
 | Item | Status | Issue | Required Fix |
 |---|---|---|---|
-| Bianchi `ln B` tiering | OK | Consistently labeled legacy transfer-conditional / dipole-restatement (`ch07:646–653`, PDF pp.152–155) | None |
-| Tilt-vs-shear decomposition | OK | Tilt ≈100%, shear `ln B=−0.87` (disfavoured), interaction ≈0 (PDF pp.158–159) | None — this is the correct honest result |
-| Channel ablation / waterfall | OK | DIPOLE/NO-D2/FULL/CMB/D2+D3 waterfall; matter-dipole-alone `ln B≈+29`, Ferreira–Quartin penalty `−2.5` (PDF p.154) | None |
-| Look-elsewhere / threshold registration | OK | `Π` requires registered thresholds + look-elsewhere/null metadata (`ch03:1145`) | Keep; ensure any selected threshold cites its registration |
-| PPC / LOOCV / null competition / matched mask+covariance | OK (blocked, honestly) | Prerequisite gates largely `blocked_missing_covariance/null` and reported as such (`result_pack_B.md`, `result_pack_C.md`); no evidence claimed where blocked | Maintain; do not let the CF4++ `+44` (untraceable) imply a closed gate |
-| `BF(F>0) > 5×10⁴` | OK | Disclaimed as dipole-restatement, not native evidence/geometry/family (`ch07:646–653`) | None |
-| Observed-data figures as descriptive (Planck low-ℓ, DESI, CF4) | OK | `diagnostic_only`; manifests carry `matched_nulls_not_bound`, `full_covariance_not_bound`, etc.; residual bars explicitly not full-covariance/mask-coupled p-values | None |
-| Bootstrap/jackknife intervals | OK | Long-run jackknife/bootstrap treated as diagnostics (`observed_longrun_analysis.md`; manifests `diagnostic_only`) | Verify no p-value/posterior phrasing in ch08 long-run prose |
-| `Π` posterior-probability definition | See §4 | `eq:Pi-def` posterior vs formalism empirical exceedance | Reconcile (see §4) |
-| CF4++ `ln B≈+44` provenance | Blocker-adjacent | Untraceable from canonical JSON (PDF p.158) | Reproduce or remove (see §4) |
+| `lnB` tiering | OK | "Conditional evidence" labels; VER05 `+26.40`, VER06 Bianchi V `+24.8`, VII_h `+24`, all legacy transfer-conditional (§9.1–9.3) | None |
+| CF4++ `lnB≈+44` provenance | OK (resolved) | Removed; no untraceable headline remains | None |
+| Dipole-restatement disclaimer | OK | "restatement of the >5σ dipole anomaly … not an independent discovery" (§9.3) | Keep (and extend the same care to the neutrino "discovery", §8) |
+| Robustness (transfer/reionisation/polarisation) | OK | `|ΔlnB|≤0.16`; reionisation invariance `<10⁻¹⁰`; polarisation feedback; Jeffreys scale (§6–7) | None |
+| Channel ablation / Occam | OK | Vorticity Occam cost ~1.4 nats penalises VII_h (§4.5); waterfall retained | None |
+| PPC/LOOCV/null/matched-mask/covariance gates | OK (prerequisites) | PR-100 covariance status, PR-101 G_F matched-null forecast, PR-102 FLRW null-predictive tension gate; reported as prerequisites/forecast, not evidence (Result Pack B/C) | Report the matched-null `G_F` explicitly as a *forecast* in prose |
+| MIO certificates | OK | Diagnostic-only; "does not rank models" (Result Pack C) — new rejection trigger (model-weight/adjudication) not tripped | None |
+| `Π` definition | See §4 | Posterior `P(Q>q⋆|D)` vs formalism empirical exceedance | Harmonize/annotate (see §4) |
+| Look-elsewhere/registration | OK | `Π` requires registered threshold + look-elsewhere/null metadata (Remark 3.17) | Keep |
+| Observed-data figures descriptive | OK | Planck low-ℓ/DESI/CF4 `diagnostic_only` with unbound matched-null/covariance gates (manifests, unchanged from audit #2) | None |
 
 ## 7. Figure/Result Audit
 
 Only figures/tables whose interpretation is wrong, under-supported, or overclaimed:
 
-- **`tab:fb7_lnB_11types` (`ch07:566–574`).** Under-supported numeric entries for `NO_FLRW_LIMIT_EXPLICIT` rows (`ln B` to `−1.9×10⁸`); not interpretable Bayes factors. Mark "N/A (no FLRW limit)".
-- **`fig_cf4pp_sensitivity` (`figures/conditioned_legacy/root__fig_cf4pp_sensitivity.manifest.json`, `exploratory`).** The figure itself is correctly tiered legacy/exploratory; the problem is the *prose* number it anchors (`ln B≈+44`) being untraceable (PDF p.158). Fix the prose, not the tier.
-- No other current/observed figure overreaches: `fig_observed_planck_lowell_residual`, `fig_observed_cf4_velocity_density`, `fig_observed_planck_lensing_bandpowers`, `fig_observed_desi_footprint_depth` are `diagnostic_only` with correct `failed_gates` and descriptive captions.
+- **None overclaimed at the result level.** Observed-data figures (Planck low-ℓ residual, lensing bandpowers, DESI footprint, CF4 velocity/density) remain `diagnostic_only` with the correct `failed_gates`; the conditioned-legacy gallery (Appendix H, the Monte-Carlo `F` posterior at S3) is marked legacy; the repository quarantines 97 non-ready figures (`repository_quarantined_figures: 97`).
+- **Table/inventory hygiene (minor):** the 10 `manual_status_number` entries (figure inventory) are test/manifest counts that should be generated-source — see §4.
+- **`tab:fb7_lnB_11types`** (if still present): confirm `NO_FLRW_LIMIT` rows show "N/A (no FLRW limit)" rather than spurious-precision `lnB` (audit-#2 item; verify it was applied in this build).
 
-(Acceptable: the conditioned-legacy evidence-bar/posterior-triangle gallery in App. H is consistently marked hypothesis-conditioned legacy and is not promoted to current evidence.)
+## 8. Claim-Tier Corrections (exact wording)
 
-## 8. Claim-Tier Corrections (exact wording to downgrade or remove)
-
-- `ch09:497` — replace "the **discovery** that neutrinos contribute 98.4% of the total `D₂`" → "the legacy transfer path **indicates** that neutrinos account for ≈98% of the modelled `D₂`" (transfer-conditional; toy-oracle, not native solver).
-- `ch09:513` — replace "`T₂ ≈ T_{2,ν}` to **98% accuracy**" → "`T₂ ≈ T_{2,ν}` in the modelled transfer, with a ≈1.6% photon correction (transfer-conditional)"; "98% accuracy" is not a measured accuracy.
-- `ch08 §8.19` / PDF p.158 — for `ln B ≈ +44`: append "(currently untraceable to canonical inputs; pending a dedicated rerun)" or remove until reproduced.
-- `ch03:1124` — either redefine `Π(q*)` as the empirical exceedance fraction (matching the formalism) or annotate: "`Π` here is a model-conditional posterior exceedance probability, distinct from the MIO diagnostic exceedance curve of the same symbol."
-- `ch03:1112`, `ch07:625` — qualify "occupancy"/"posterior" for `Q`/`F` as the dipole-premise physics interpretation, distinct from the MIO `Q`/`F` diagnostics (which carry no occupancy/posterior semantics).
-- Abstract/`ch01:152` — state the exact scenario and identity of the headline departure number (`F_Bayes` vs `Q̄` vs `FF`) so it matches `ch07`.
+- §5.13.5 — replace "The Phase 1.0 solver **discovers** a striking result" → "The Phase 1.0 (legacy/oracle, transfer-conditional) solver **indicates**…".
+- §9.3.1 — replace "The most consequential result of the solver is the **discovery** that neutrinos contribute 98.4% of the total `D₂`" → "A principal derived result (Proposition 5.3, transfer-conditional) is that neutrinos contribute ≈98% of the modelled `D₂`".
+- §6.x / §9.3 — keep the existing "not an independent discovery" disclaimer for the `lnB` summary; apply the same standard to the neutrino result.
+- Eq. 3.58 — annotate: "`Π` here is a model-conditional posterior exceedance probability, distinct from the MIO diagnostic exceedance curve of the same symbol," or redefine to the empirical exceedance.
+- §1/§9.1.4 — at each headline, name the `F` (Def 3.19 class-conditioned filling vs legacy budget-normalised score) and cross-reference.
 
 ## 9. Additional Analyses Required (before stronger claims)
 
-1. **Reproduce the CF4++ `ln B≈+44`** from canonical inputs with a bound hash, or drop it; no transfer-conditional headline should be untraceable.
-2. **Reconcile the filling/occupancy numbers** (`F_Bayes`, `Q̄`, `FF`) into one provenance-traceable scenario table spanning intro→ch03→ch07.
-3. **Matched-calibrated nulls + covariance** for the directional/depth (`G_F`) gates before any local/global (boost-vs-tilt) statement beyond "candidate"; the `gf_matched_null_forecast_report.json` path is the right vehicle — report it explicitly as a *forecast*, not a result.
-4. **Foreground the deterministic-template vs anisotropic-covariance separation** with the transfer template flagged external/proxy at each use.
-5. **Observer-frame marginalization (FB-8)**: state plainly that all current `ln B` are rest-frame and that observer-motion marginalization is pending; do not let rest-frame numbers read as observed-frame evidence.
-6. **Π/Q/F harmonization** with the companion formalism (definitions and reserved-language), so the paper and its formalism use the symbols identically.
+1. Convert the 10 manual status numbers to generated-source (self-flagged).
+2. Report the matched-null `G_F` (`gf_matched_null_forecast_report.json`) explicitly as a *forecast* in the discussion; until matched nulls are bound, keep the local/global discrimination at "candidate" (Result Pack B ceiling: conditional).
+3. State the deterministic-template vs anisotropic-covariance separation once, with the transfer template flagged external/proxy at each use.
+4. Foreground that all `lnB` are rest-frame/direction-marginalized and observer-motion marginalization (FB-8) is the remaining step before any observer-frame reading.
+5. Harmonize `Π`/`Q`/`F` definitions and reserved language with the companion formalism so the paper and formalism use the symbols identically.
 
 ## 10. Claims That Are Safe
 
-- `x_C` is the exact signed comparator projection of shear, vorticity, tilt, and anisotropic curvature; not an invariant magnitude or isotropy measure.
-- The MES bound hierarchy is derived under stated assumptions and yields the conditional shear/vorticity/tilt ceilings.
-- Under the dipole premise and a legacy external/proxy transfer path, the observed dipole is re-expressible as a single tilt-like (boost) degree of freedom; the transfer-conditional `ln B_tilt ≈ +25.3` is a restatement of the >5σ dipole significance, not independent evidence.
-- Anisotropic shear *geometry* is mildly disfavoured (`ln B=−0.87`); the preference resides in the tilt channel.
-- The budget-normalized departure is a few percent of the MES ceiling (state the exact scenario/quantity).
-- Bianchi types I/V/VII₀ have an honest FLRW limit (`|ln B|<0.1`); other types are carried as explicit no-FLRW-limit or curved-reference rows.
-- Observed-data figures (Planck low-ℓ residual, lensing bandpowers, DESI footprint, CF4 velocity/density) are descriptive diagnostics with matched-null/full-covariance gates unbound.
-- MIO directional/depth/predictive-residual surfaces are diagnostic cross-checks, not HTT evidence or model rankings.
+- `x_C` is the exact signed comparator projection of shear, vorticity, tilt, and anisotropic curvature; the naive filling fraction is ill-defined and replaced by a signed saturation coordinate.
+- The MES algebraic ceilings are derived; the Saadeh–MES complementarity (~6 orders, shrinking to ~1 for the growing mode) holds.
+- Under the dipole premise and a legacy external/proxy transfer path, the dipole is re-expressible as a single tilt-like (boost) d.o.f.; the transfer-conditional `lnB≈+26.4` is a restatement of the >5σ dipole significance, not independent evidence.
+- Anisotropic shear geometry is disfavoured; the orthogonal growing mode is rejected (`lnB=−18.7`) via the Saadeh-exceeding Frobenius vorticity.
+- The neutrino quadrupole dominance (`N₂/F₂=28`, ≈98% of `D₂`) is a derived, transfer-conditional result (Proposition 5.3).
+- The three diagnostic layers (x, Q, Π) are comparator-invariant for curvature-free models and comparator-dependent (reported) for BV/BIX.
+- `lnB` is robust to transfer variation (`|ΔlnB|≤0.16`), reionisation (`<10⁻¹⁰`), and polarisation feedback.
+- Observed-data figures are descriptive diagnostics with matched-null/covariance gates unbound; MIO certificates are diagnostic cross-checks that rank no models.
 - No native low-ℓ Bianchi solver output exists; external/AniCLASS/legacy transfer is transfer-conditional; no Bianchi family is identified and no geometry is detected.
 
 ---
 
-*Net change since prior rounds: the family-ID/geometry-detection claims and the native-evidence reading of `ln B` are removed and consistently tiered; MES is derived, frames explicit, observational figures correctly gated. Outstanding items are prose precision ("discovery", "98% accuracy"), one untraceable legacy number (CF4++ `+44`), cross-chapter numeric consistency (filling fraction), and `Π`/`Q`/`F` harmonization with the companion formalism. Verdict MINOR REVISIONS.*
+*Net since audit #2: CF4++ `+44` untraceability resolved; comparator invariance proved; filling fraction disambiguated (naive `F` declared ill-defined); robustness (transfer/reionisation/polarisation/Jeffreys) added; null/covariance gates added as prerequisites/forecast; Bianchi V corrected (`+24.8`). Outstanding: the recurring "discovery" wording on the (non-native, transfer-conditional) neutrino result, the `Π` posterior-vs-empirical definition, the dual filling-fraction headline, and 10 self-flagged manual status numbers. Verdict MINOR REVISIONS, near-PASS.*

@@ -204,20 +204,10 @@ def _load_inputs() -> RepoInputs:
 
 
 def _git_state() -> tuple[str | None, str]:
-    try:
-        commit = subprocess.check_output(
-            ["git", "rev-parse", "--short", "HEAD"],
-            cwd=REPO_ROOT,
-            text=True,
-        ).strip()
-        status = subprocess.check_output(
-            ["git", "status", "--short"],
-            cwd=REPO_ROOT,
-            text=True,
-        ).strip()
-    except (OSError, subprocess.CalledProcessError):
-        return None, "git_state_unavailable"
-    return commit, f"{commit}+dirty" if status else commit
+    # Content-addressed provenance (audit F2/F5): pin by config_hash + input_hashes,
+    # not by the volatile HEAD+dirty state (which re-staled this asset on every
+    # commit and cascaded into every downstream report that hashes it).
+    return "content-addressed", "content-addressed"
 
 
 def _setup_axes(ax: plt.Axes, title: str, ylabel: str | None = None) -> None:

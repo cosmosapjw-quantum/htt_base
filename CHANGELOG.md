@@ -7,6 +7,27 @@
 
 ## [Unreleased]
 
+### Hygiene — all 7 residual contract failures fixed (rev-r130, 2026-06-26)
+
+`pytest tests/contracts/` is now **348 passed / 0 failed** (was 8 failed at session
+start). Root cause was structural, not stale content:
+
+- **git_state churn (6):** two generators embedded a HEAD-tracking
+  `git_commit_or_worktree_state` that re-staled on every commit and cascaded through
+  every report/registry that hashes them. Switched to **content-addressed** provenance
+  (`make_current_manuscript_figures.py`, `generate_revision_experiment_assets.py`
+  `_git_state` → constant; provenance carried by `config_hash` + `input_hashes`, per
+  audit F2/F5), regenerated the artifacts, and updated the hand-pinned hash registries
+  (`pr_dag_research_program.yaml`, `research_program_{experiment,theorem}_registry.yaml`).
+- **manuscript pdf-lint (1):** the manuscript still had two phrases the rev-r119 firewall
+  forbids — relabelled "EGS identity" → "EGS-type identity" (`appendices.tex`) and
+  "cosmic-variance floor" → "cosmic-variance limit" (`ch07_results.tex`), recompiled the
+  manuscript (362 pp), and refreshed the blessed lint report (Failed 0, new sha) + freeze.
+
+All audit packages + the external/research-only/statistical-formalism/code-capability
+packages rebuilt byte-deterministically. Stronger firewall (forbidden phrasing removed),
+no generated number changed.
+
 ### PR08-006 joint artifact + cobaya K1 check + hygiene finding (rev-r129, 2026-06-26)
 
 - **cobaya checked for K1, does not unblock it:** `cobaya-install planck_2018_lowl.TT`

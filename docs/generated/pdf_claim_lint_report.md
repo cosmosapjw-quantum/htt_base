@@ -6,22 +6,22 @@ claim_tier: diagnostic_only
 transfer_source: none
 sky_support_status: not_directional
 null_mock_status: not_statistical
-config_hash: `sha256:ef99375cd248e27fe114061438a702de065d13d7276ea2c92d59ec39662f5072`
+config_hash: `sha256:53080d0bb7cbfb8ab7d9a80afb876523b4d4f1fee33af31ca14781099f3a9a8f`
 input_hashes:
-- docs/generated/manuscript_pdf/htt_base_research_report.pdf:sha256:88e52ac4a13464e027555069d5bec9fde30422bd4dedb1ff19ee9b812a516b15
+- docs/generated/manuscript_pdf/htt_base_research_report.pdf:sha256:66778a8595752014bb674f404b9cfcdb51ea67b091726c8e4a8e01206f454844
 caveats:
 - PDF text extraction is used as a final prose-surface lint.
 - lnB numeric mentions are warnings unless paired with high-strength claim language.
 - Direction-marginalized diagnostic-preference language is allowed as a warning-only technical Bayes-factor mention.
 - Legacy or conditioned pages must carry explicit context markers.
 generating_command: python scripts/pdf_claim_lint.py
-git_commit_or_worktree_state: a7d1785+dirty
+git_commit_or_worktree_state: 97324a2+dirty
 artifact_path: docs/generated/pdf_claim_lint_report.md
 
 ## Summary
 
 - PDF: `docs/generated/manuscript_pdf/htt_base_research_report.pdf`
-- PDF SHA256: `sha256:88e52ac4a13464e027555069d5bec9fde30422bd4dedb1ff19ee9b812a516b15`
+- PDF SHA256: `sha256:66778a8595752014bb674f404b9cfcdb51ea67b091726c8e4a8e01206f454844`
 - Pages scanned: `362`
 - Failed findings: `0`
 - Warning findings: `66`

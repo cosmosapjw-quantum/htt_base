@@ -17,7 +17,7 @@ caveats:
 - Forecast-only matched-null diagnostic.
 - Does not promote observed-data evidence, global-tilt wording, native solver validation, geometry detection, or family identification.
 generating_command: python scripts/make_current_manuscript_figures.py
-git_commit_or_worktree_state: 76873f0+dirty
+git_commit_or_worktree_state: content-addressed
 artifact_path: docs/generated/gf_matched_null_forecast_report.json
 
 ## Status

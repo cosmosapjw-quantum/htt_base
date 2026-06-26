@@ -28,7 +28,7 @@ Files copied into this directory are raw external audit/proposal inputs. They ar
 
 | Input | Role | SHA256 | Size | Archive copy | Zip entries | Supersession | Top-level summary |
 | --- | --- | --- | ---: | --- | ---: | --- | --- |
-| `RESEARCH_AUDIT_REPORT.md` | `external_current_manuscript_audit` | `c2e57931109cdbdeb40c2a469db50a64626bb85d05c266f53fad369494d0a065` | 15.4 KiB | `docs/audits/external_research_inputs_2026-06-20/RESEARCH_AUDIT_REPORT.md` | n/a | canonical immediate manuscript-audit input for REV-R075 | n/a |
+| `RESEARCH_AUDIT_REPORT.md` | `external_current_manuscript_audit` | `08c30c1df76a7808bfcbc31959d33660f10a45aaba2735935ed4ee1daa665b2d` | 14.1 KiB | `docs/audits/external_research_inputs_2026-06-20/RESEARCH_AUDIT_REPORT.md` | n/a | canonical immediate manuscript-audit input for REV-R075 | n/a |
 | `publishable_data_analysis_program.zip` | `external_compact_data_analysis_precursor` | `e2590f1ca79b63feecd77151de2f7f00b583f4f7f4b828d6e0d7642b00dba038` | 51.6 KiB | `docs/audits/external_research_inputs_2026-06-20/publishable_data_analysis_program.zip` | 19 | precursor cross-check; superseded for implementation by htt_publishable_novel_analysis_program_2026-06-19.zip | 00_STRATEGY_AND_PIPELINE.md (1 files, 0 dirs); 01_DIVERGENCE.md (1 files, 0 dirs); 02_METACOGNITION_AND_VERIFICATION.md (1 files, 0 dirs); 03_CONVERGENCE_EXPERIMENTS.md (1 files, 0 dirs); 04_THEOREM_CANDIDATES.md (1 files, 0 dirs); 05_AXIS_A_math_stats.md (1 files, 0 dirs); 06_AXIS_B_gr_cosmo.md (1 files, 0 dirs); 07_AXIS_C_data.md (1 files, 0 dirs); ... 4 more |
 | `htt_publishable_novel_analysis_program_2026-06-19.zip` | `external_canonical_data_analysis_program` | `bb66be05bc94b1441519a5db7be31ec62eb501f463a9bea5c81bf555ef081393` | 23.6 MiB | `docs/audits/external_research_inputs_2026-06-20/htt_publishable_novel_analysis_program_2026-06-19.zip` | 186 | canonical joint rest-frame/data-analysis proposal input | htt_publishable_novel_analysis_program_2026-06-19 (149 files, 37 dirs) |
 | `htt_beyond_mes_egs_theorem_program_2026-06-19.zip` | `external_canonical_theorem_extension_program` | `4c3c61a2ff3f98d1cdcf758476ea7ed6ec1499edb3b236d94b54c98be195037b` | 1.5 MiB | `docs/audits/external_research_inputs_2026-06-20/htt_beyond_mes_egs_theorem_program_2026-06-19.zip` | 119 | canonical beyond-MES/EGS theorem-extension proposal input | htt_beyond_mes_egs_theorem_program_2026-06-19 (107 files, 12 dirs) |
@@ -70,7 +70,7 @@ Files copied into this directory are raw external audit/proposal inputs. They ar
 
 ## Input Hash List
 
-- `RESEARCH_AUDIT_REPORT.md`: `c2e57931109cdbdeb40c2a469db50a64626bb85d05c266f53fad369494d0a065`
+- `RESEARCH_AUDIT_REPORT.md`: `08c30c1df76a7808bfcbc31959d33660f10a45aaba2735935ed4ee1daa665b2d`
 - `publishable_data_analysis_program.zip`: `e2590f1ca79b63feecd77151de2f7f00b583f4f7f4b828d6e0d7642b00dba038`
 - `htt_publishable_novel_analysis_program_2026-06-19.zip`: `bb66be05bc94b1441519a5db7be31ec62eb501f463a9bea5c81bf555ef081393`
 - `htt_beyond_mes_egs_theorem_program_2026-06-19.zip`: `4c3c61a2ff3f98d1cdcf758476ea7ed6ec1499edb3b236d94b54c98be195037b`

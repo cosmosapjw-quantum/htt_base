@@ -12,7 +12,7 @@ null_mock_status: mixed_diagnostic_null_and_constructor_controls
 covariance_status: mixed_diagnostic_covariance_and_constructor_controls
 config_hash: sha256:ec8b875a573eecde46b3498b44c790045ca46d88ee433112cbe594e1816202b8
 generating_command: `python scripts/generate_semantic_firewall_fuzz_report.py`
-git_commit_or_worktree_state: 8ac0a31+dirty
+git_commit_or_worktree_state: 97324a2+dirty
 
 ## Summary
 
