@@ -1094,12 +1094,69 @@ real-data runs that remain blocked.
 \end{table}
 
 \paragraph{Blocker status.}
-The three blocked rows are documented in full --- code, exact unblock action,
+The three data rows are documented in full --- code, exact unblock action,
 the already-built mechanics, and the exit gate --- in
 \texttt{docs/research\_program/BLOCKERS.md}, summarised in
 \S\ref{sec:blocks}. None of the proven theorems depends on any blocker; the
-blockers gate only the conversion of the Axis-C synthetic mechanics into
-real-data measurements.
+blockers gate only the conversion of the Axis-C mechanics into real-data
+measurements, which \S\ref{sec:measured} now reports.
+
+% ============================================================
+\section{Measured rows from real data (K1/K5/K6)}
+\label{sec:measured}
+
+With the controlling inputs in hand (the real CF4++ Wiener-filter velocity field
+and group catalogue, and the real Planck PR3 component-separated maps), the three
+data rows are discharged on real data --- two fully, one partially, and one as an
+honest no-go (Fig.~\ref{fig:discharges}). All three are model-independent OBSSTAT
+descriptors: no Bianchi-family, geometry, anisotropy-evidence, or native-solver
+claim is made.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{current/fig_blocker_discharges}
+  \caption{Real-data blocker discharges. \emph{K1}: per-statistic local and
+    look-elsewhere global $p$ of the real Planck SMICA low-$\ell$ morphology under
+    an isotropic $\Lambda$CDM null (the E2E-systematics null stays blocked).
+    \emph{K5}: CF4 bulk-flow amplitude coverage --- measurement-only under-covers,
+    the cosmic-variance-inclusive coverage is nominal. \emph{K6}: the CF4 WF
+    velocity field has vorticity $\ll$ shear at every radius (curl-suppressed
+    reconstruction; structural no-go). Diagnostic-only; model-independent.}
+  \label{fig:discharges}
+\end{figure}
+
+\paragraph{K5 (discharged) --- CF4 cosmic-variance-inclusive bulk-flow coverage.}
+The weighted-GLS estimator on the real Cosmicflows-4 group release (Tully et al.
+2023, $38{,}053$ groups) gives a bulk-flow amplitude
+$|\mathbf B|\simeq341\pm102\ \mathrm{km\,s^{-1}}$, with the error budget dominated
+by cosmic variance ($102\ \mathrm{km\,s^{-1}}$) over measurement noise
+($5\ \mathrm{km\,s^{-1}}$). Release-matched forward mocks --- the real sky
+positions and the real per-group distance-error model, with an injected
+$\Lambda$CDM cosmic-variance flow --- give a nominal cosmic-variance-inclusive
+amplitude coverage of $0.67$, whereas a measurement-noise-only budget covers only
+$0.19$. The estimator is unbiased ($0.7\ \mathrm{km\,s^{-1}}$), and the depth
+shells show the expected declining bulk flow. This discharges
+\texttt{BLOCKED\_MISSING\_RELEASE\_MOCK\_OWNERSHIP}.
+
+\paragraph{K6 (structural no-go) --- CF4 curl/vorticity sector.}
+The affine velocity-gradient decomposition of the real CF4++ Wiener-filter field
+returns a vorticity that is at most $0.6\%$ of the shear at every analysis radius,
+while a solid-body rotation injected into the same estimator is recovered to
+machine precision. The WF reconstruction is therefore curl-suppressed by
+construction: no physical vorticity sector is identifiable from it. This is the
+honest discharge of \texttt{BLOCKED\_MISSING\_FIELD\_REALIZATIONS} --- a
+structural no-go, not a vorticity detection.
+
+\paragraph{K1 (partial) --- global low-$\ell$ morphology $p$.}
+Stacking the six registered low-$\ell$ statistics on the real SMICA map into the
+frozen max-scan gives a look-elsewhere-corrected global $p=0.097$ (Commander
+$0.121$) under an isotropic $\Lambda$CDM null; the parity asymmetry is the
+strongest single statistic ($p=0.02$). This discharges the \emph{look-elsewhere
+correction} on real data. The full end-to-end-systematics calibration of
+\texttt{BLOCKED\_MISSING\_PR4\_E2E\_ACCESS} stays open: the matched
+component-separated FFP10/NPIPE simulation ensemble is served only through the
+Planck Legacy Archive interactive query portal (and NERSC-authenticated paths),
+not as a plain-URL download, so it is not bound here.
 
 % ============================================================
 \section{Transfer-conditional diagnostics}
@@ -1138,17 +1195,19 @@ this report and remain blocked:
         truth certificate, a model weight, or an HTT evidence term;
   \item any low-$\ell$ or velocity feature above promoted from a
         model-independent measurement into anisotropy evidence;
-  \item a globally significant low-$\ell$ anomaly detection (the
-        K1 $p$-values are local, look-elsewhere-tracked, single-sky,
-        and not full-covariance/mask-coupled);
-  \item any calibrated observational uncertainty from the synthetic
-        estimator-mechanics of \S\ref{sec:mechanics}: the K1 global
-        $p$-value needs PR4/NPIPE end-to-end summaries
-        (\texttt{BLOCKED\_MISSING\_PR4\_E2E\_ACCESS}); the total K5
-        uncertainty needs release-matched forward mocks and cosmic
-        variance (\texttt{BLOCKED\_MISSING\_RELEASE\_MOCK\_OWNERSHIP});
-        the K6 vorticity/shear posterior needs constrained field
-        realizations (\texttt{BLOCKED\_MISSING\_FIELD\_REALIZATIONS});
+  \item a globally significant low-$\ell$ anomaly detection: the K1
+        global $p=0.097$ of \S\ref{sec:measured} is look-elsewhere-corrected
+        but computed under an isotropic $\Lambda$CDM null, \emph{not} the
+        FFP10/NPIPE end-to-end systematics ensemble, which remains blocked
+        (\texttt{BLOCKED\_MISSING\_PR4\_E2E\_ACCESS}); it is not a detection;
+  \item a physical-vorticity claim from K6: the discharged result of
+        \S\ref{sec:measured} is a \emph{structural no-go} (the CF4 WF field is
+        curl-suppressed), not a detected curl sector;
+  \item (note) the K5 cosmic-variance-inclusive coverage and the K6 structural
+        no-go of \S\ref{sec:measured} are now discharged on real data; their
+        former blockers (\texttt{BLOCKED\_MISSING\_RELEASE\_MOCK\_OWNERSHIP},
+        \texttt{BLOCKED\_MISSING\_FIELD\_REALIZATIONS}) are closed, and the K5
+        coverage remains conditional on the fiducial $\Lambda$CDM bulk-flow prior;
   \item any family-conditioned CMB likelihood, transfer-based
         compatibility/exclusion, or global-tilt posterior from CMB
         transfer: these await the separate native low-$\ell$

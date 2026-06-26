@@ -1,0 +1,78 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "bass.measurement.fig_blocker_discharges",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/current/fig_blocker_discharges.png",
+  "caption_policy": [
+    "must_state_model_independent_descriptor",
+    "must_not_use_for_family_identification_or_family_selection",
+    "must_state_no_native_low_ell_solver_output",
+    "must_state_k1_e2e_null_still_blocked"
+  ],
+  "caveats": [
+    "K1 null is isotropic LambdaCDM, not FFP10/NPIPE end-to-end; E2E-systematics calibration remains blocked.",
+    "K6 is a structural no-go: the CF4 WF reconstruction is curl-suppressed; recovered vorticity is reconstruction-conditioned, not physical.",
+    "K5 cosmic-variance coverage is conditional on the fiducial LambdaCDM per-component prior.",
+    "Model-independent OBSSTAT descriptors; no Bianchi family-ID or geometry detection."
+  ],
+  "claim_tier": "diagnostic_only",
+  "config_hash": "sha256:8cf6704ae1c5c5a8220277d23b99528724a074f87ede04c35f3d87df454496cd",
+  "covariance_status": "release_matched_mocks_k5_lower_bound_k6",
+  "created_by": "scripts/make_blocker_discharge_figures.py",
+  "family_identification": false,
+  "generating_command": "python scripts/make_blocker_discharge_figures.py",
+  "implementation_scope": "obsstat",
+  "native_solver_result": false,
+  "null_mock_status": "real_data_with_lambdacdm_null_and_release_matched_mocks",
+  "owner": "OBSSTAT",
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_solver_validation_absent",
+    "k1_e2e_systematics_null_absent",
+    "family_identification_blocked_pre_native_atlas"
+  ],
+  "publication_gates": {
+    "bianchi_evidence_claim": "fail_model_independent_descriptor_only",
+    "family_identification_claim": "fail_blocked_pre_native_atlas"
+  },
+  "schema_version": "bass.blocker_discharge_figure.v1",
+  "sky_support_status": "real_planck_pr3_and_cf4_release",
+  "source": {
+    "k1_global_p_commander": 0.12093953023488256,
+    "k1_global_p_smica": 0.09695152423788106,
+    "k1_local_p": {
+      "axis_to_cmb_dipole_deg": 0.7056471764117941,
+      "parity_asymmetry": 0.02048975512243878,
+      "parity_even_over_odd_ratio": 0.02048975512243878,
+      "planarity_mean": 0.04447776111944028,
+      "qo_axis_alignment_deg": 0.6656671664167916,
+      "s_one_half": 0.05997001499250375
+    },
+    "k5_amp": 340.72639833770336,
+    "k5_cov_cv": 0.6666666666666666,
+    "k5_cov_meas": 0.18833333333333332,
+    "k5_err_total": 101.87045232654711,
+    "k6_radii": [
+      75,
+      100,
+      150,
+      200
+    ],
+    "k6_ratio_max": 0.005519792636461094,
+    "k6_shear": [
+      5.077573707468823,
+      3.1779107766674737,
+      1.1537457205222112,
+      1.2556493070853947
+    ],
+    "k6_vort": [
+      0.026628446452525694,
+      0.017541408504379477,
+      0.002037782278980661,
+      0.0005008581405194655
+    ]
+  },
+  "source_json_path": "figures/current/fig_blocker_discharges.source.json",
+  "title": "Real-data blocker discharges (K1/K5/K6)",
+  "transfer_source": "mixed_none_and_cf4_wf_proxy"
+}

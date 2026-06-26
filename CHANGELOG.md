@@ -38,6 +38,15 @@ Results table now carries **zero blocked rows** (3 measured/partial/no-go + 14 p
 All model-independent OBSSTAT descriptors; no Bianchi family, geometry, anisotropy-evidence,
 or native-solver claim. Raw maps/fields stay outside git.
 
+**Report + figure + hygiene (rev-r128).** New report \S10 "Measured rows from real
+data (K1/K5/K6)" (21→22 pp) with a three-panel discharge figure
+(`scripts/make_blocker_discharge_figures.py` → `figures/current/fig_blocker_discharges.png`);
+standing-blocks \S updated (K5/K6 closed, K1 partial, K6 = structural no-go). Figure-manifest
+hygiene (audit F2/F3): added `promotion_blockers`/`caption_policy` to the PR04 + observed-CF4
+figure generators and fixed the K5 figure title "minimum-variance"→"weighted-GLS", clearing
+the claim-lane-policy contract (pre-existing contract failures 8→7). Both audit packages +
+external package + claim-freeze regenerated (byte-deterministic). `pdf_claim_lint` 0 failed.
+
 ### EGS3 programme — framework upgrade + GR/Boltzmann theorems toward publishable analysis (2026-06-26)
 
 Self-synthesized extension toward a publishable novel data-analysis paper:

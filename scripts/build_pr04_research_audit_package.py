@@ -142,6 +142,7 @@ DRIVER_SCRIPTS = (
     "scripts/k1_global_maxscan.py",
     "scripts/k5_cf4_release_coverage.py",
     "scripts/k6_cf4_curl_posterior.py",
+    "scripts/make_blocker_discharge_figures.py",
     "wolfram/egs3_bracket_constants.wls",
     "wolfram/egs3_psd_cone.wls",
 )
@@ -207,6 +208,7 @@ FIGURE_STEMS = (
     "figures/current/fig_egs3_b3_vorticity",
     "figures/current/fig_egs2_nt2b1_bracket",
     "figures/current/fig_egs3_psd_cone",
+    "figures/current/fig_blocker_discharges",
     "figures/observed_current/fig_observed_lowell_null_significance",
     "figures/observed_current/fig_observed_lowell_morphology_axis",
     "figures/observed_current/fig_observed_cf4_bulkflow_apex_depth",

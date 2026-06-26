@@ -63,6 +63,7 @@ FIGURE_STEMS = (
     "figures/current/fig_egs3_b3_vorticity",
     "figures/current/fig_egs2_nt2b1_bracket",
     "figures/current/fig_egs3_psd_cone",
+    "figures/current/fig_blocker_discharges",
     "figures/observed_current/fig_observed_lowell_null_significance",
     "figures/observed_current/fig_observed_lowell_morphology_axis",
     "figures/observed_current/fig_observed_cf4_bulkflow_apex_depth",
@@ -105,6 +106,10 @@ EVIDENCE_FILES = (
     "docs/generated/egs_results_table.json",
     "docs/generated/egs_results_table.md",
     "docs/research_program/BLOCKERS.md",
+    # Real-data blocker discharges (rev-r127) backing the new §10 measured rows.
+    "docs/generated/k1_global_maxscan.json",
+    "docs/generated/k5_cf4_release_coverage.json",
+    "docs/generated/k6_cf4_curl_posterior.json",
 )
 
 

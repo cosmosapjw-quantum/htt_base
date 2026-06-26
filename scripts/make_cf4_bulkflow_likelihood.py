@@ -159,6 +159,16 @@ def _figure_manifest(r: dict) -> dict:
         "ticket": "LR-06D", "generating_command": "python scripts/make_cf4_bulkflow_likelihood.py",
         "git_commit_or_worktree_state": w, "git_commit": w.split("+")[0], "code_version": w,
         "schema_version": "obsstat.cf4_bulkflow_likelihood_figure.v1",
+        "caption_policy": [
+            "must_state_diagnostic_only",
+            "must_not_use_for_family_identification_or_family_selection",
+            "must_state_no_native_low_ell_solver_output",
+        ],
+        "promotion_blockers": [
+            "native_solver_validation_absent",
+            "native_morphology_atlas_absent",
+            "family_identification_blocked_pre_native_atlas",
+        ],
         "caveats": r["caveats"], "input_hashes": r["input_hashes"],
     }
 
@@ -174,7 +184,7 @@ def _write_figure(r: dict) -> None:
     fig, ax = plt.subplots(figsize=(5.6, 4.0))
     ax.errorbar(d, amp, yerr=err, fmt="o-", color="#2563eb", capsize=3)
     ax.set_xlabel("depth window d < R [Mpc]"); ax.set_ylabel("bulk flow |B| [km/s]")
-    ax.set_title("LR-06D: CF4 group bulk flow vs depth\n(minimum-variance, sigma_star-fitted)")
+    ax.set_title("LR-06D: CF4 group bulk flow vs depth\n(weighted-GLS, sigma_star-fitted)")
     fig.tight_layout(); FIG.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG, dpi=140); plt.close(fig)
     FIG.with_suffix(".manifest.json").write_text(json.dumps(_figure_manifest(r), indent=2, sort_keys=True) + "\n", encoding="utf-8")

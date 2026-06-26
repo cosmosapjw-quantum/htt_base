@@ -89,6 +89,11 @@ def _manifest(stem: str, fig_id: str, title: str, source: dict) -> dict:
             "Program-theorem illustration; not a detection.",
             "No native solver output or Bianchi family-ID is claimed.",
         ],
+        "promotion_blockers": [
+            "native_solver_validation_absent",
+            "native_morphology_atlas_absent",
+            "family_identification_blocked_pre_native_atlas",
+        ],
         "title_full": title,
         "source": source,
     }

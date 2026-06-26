@@ -3,6 +3,11 @@
   "artifact_id": "obsstat.cf4_affine_flow.figure",
   "artifact_mode": "paper_appendix_conditioned",
   "artifact_path": "figures/observed_current/fig_observed_cf4_affine_flow.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_not_use_for_family_identification_or_family_selection",
+    "must_state_no_native_low_ell_solver_output"
+  ],
   "caveats": [
     "Affine-flow decomposition of a single reconstruction; diagnostic-only.",
     "Vorticity is reconstruction-conditioned: potential/Wiener reconstructions suppress curl by construction, so a small recovered omega is a reconstruction property, not a detection.",
@@ -11,11 +16,11 @@
     "No Bianchi/geometry/cosmological-frame-violation claim."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "95da1f8+dirty",
+  "code_version": "29055e8+dirty",
   "family_identification": false,
   "generating_command": "python scripts/make_cf4_affine_flow.py",
-  "git_commit": "95da1f8",
-  "git_commit_or_worktree_state": "95da1f8+dirty",
+  "git_commit": "29055e8",
+  "git_commit_or_worktree_state": "29055e8+dirty",
   "implementation_scope": "obsstat",
   "input_hashes": [
     "workdir/raw/cf4/CF4pp_mean_std_grids.npz:sha256:78c0515c8330066a034f5e8afb3663e6c81ddf033db302a921c662344639bc91"
@@ -24,6 +29,11 @@
   "null_mock_status": "bootstrap_over_correlated_reconstruction_cells",
   "owner": "OBSSTAT",
   "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent",
+    "family_identification_blocked_pre_native_atlas"
+  ],
   "schema_version": "obsstat.cf4_affine_flow_figure.v1",
   "sky_support_status": "cf4_reconstruction_grid",
   "ticket": "LR-06F",

@@ -1,0 +1,67 @@
+{
+  "all_pass": true,
+  "claim_tier": "synthetic_mechanics_only",
+  "native_solver_result": false,
+  "owner": "COMMON",
+  "results": [
+    {
+      "blind_column_norms": [
+        0.0,
+        0.0
+      ],
+      "caveats": [
+        "synthetic null only",
+        "no observed data",
+        "no native solver output"
+      ],
+      "claim_tier": "synthetic_theorem_witness",
+      "config_hash": "sha256:2ee45c0330f51bd09e561f12c01bc3d9383d064cd6154b18fc5f4ffbd595fd92",
+      "experiment": "rank_evalue",
+      "markov_exceedance": {
+        "alpha_0.01": 0.0,
+        "alpha_0.05": 0.0,
+        "alpha_0.10": 0.0
+      },
+      "mean_e_value": 0.9936125160809731,
+      "owner": "HTT",
+      "pass": true,
+      "plus_one_rank_p_synthetic": 0.02605947881042379,
+      "rank": 2
+    },
+    {
+      "bounds_ok": true,
+      "caveats": [
+        "single-mode visibility toy",
+        "not full native atlas",
+        "no real map data"
+      ],
+      "claim_tier": "synthetic_theorem_witness",
+      "config_hash": "sha256:8394a53dca22962e86fd223acc3e72dd120f146da9f50559f55ce0b2f21daf23",
+      "depth_gap_for_growing_source": 1.3416220601079174,
+      "experiment": "boltzmann_visibility",
+      "max_abs_transfer": 0.07411025817592537,
+      "owner": "BASS_PY",
+      "pass": true,
+      "small_k_scaling_ok": true,
+      "source_bound": 0.2638926953284496,
+      "visibility_l1": 1.0,
+      "volterra_ode_max_error": 2.250636894718383e-05
+    },
+    {
+      "candidate_status": "candidate",
+      "caveats": [
+        "synthetic response vectors",
+        "requires matched nulls before real claim"
+      ],
+      "claim_tier": "synthetic_design_witness",
+      "config_hash": "sha256:9b4a261f51cdcfc0fa025560106e48a160419236d778c673c039136b2aa08879",
+      "experiment": "local_global_response",
+      "global_residual_after_local_systematic_projection": 0.8833907110220175,
+      "local_global_overlap_abs": 0.34623265181136204,
+      "null_percentile_synthetic": 0.6195,
+      "owner": "HTT",
+      "pass": true
+    }
+  ],
+  "schema_version": "htt.publishable_analysis_pack.synthetic_experiments.v1"
+}

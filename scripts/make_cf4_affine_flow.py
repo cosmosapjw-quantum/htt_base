@@ -174,6 +174,16 @@ def _figure_manifest(r: dict) -> dict:
         "ticket": "LR-06F", "generating_command": "python scripts/make_cf4_affine_flow.py",
         "git_commit_or_worktree_state": w, "git_commit": w.split("+")[0], "code_version": w,
         "schema_version": "obsstat.cf4_affine_flow_figure.v1",
+        "caption_policy": [
+            "must_state_diagnostic_only",
+            "must_not_use_for_family_identification_or_family_selection",
+            "must_state_no_native_low_ell_solver_output",
+        ],
+        "promotion_blockers": [
+            "native_solver_validation_absent",
+            "native_morphology_atlas_absent",
+            "family_identification_blocked_pre_native_atlas",
+        ],
         "caveats": r["caveats"],
         "input_hashes": r["input_hashes"],
     }
