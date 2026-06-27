@@ -32,7 +32,7 @@ caveats:
 - Native morphology atlas support is absent in this repository state.
 - Missing or quarantined manuscript figures block final submission freeze.
 generating_command: python scripts/check_publication_claim_freeze.py
-git_commit_or_worktree_state: 97324a2+dirty
+git_commit_or_worktree_state: eb5b4af+dirty
 artifact_path: docs/generated/publication_claim_freeze.md
 
 ## Decision

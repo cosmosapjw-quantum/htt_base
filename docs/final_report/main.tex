@@ -1156,7 +1156,24 @@ correction} on real data. The full end-to-end-systematics calibration of
 \texttt{BLOCKED\_MISSING\_PR4\_E2E\_ACCESS} stays open: the matched
 component-separated FFP10/NPIPE simulation ensemble is served only through the
 Planck Legacy Archive interactive query portal (and NERSC-authenticated paths),
-not as a plain-URL download, so it is not bound here.
+not as a plain-URL download, so it is not bound here. (\texttt{cobaya} was checked
+as an alternative source and does not unblock it: its \texttt{planck\_2018\_lowl.TT}
+install provides the Blackwell--Rao $C_\ell$-level low-$\ell$ likelihood, not a
+map/$a_{\ell m}$ ensemble, and the morphology statistics depend on $a_{\ell m}$
+phases. The acquisition + run procedure, and footprint-reduced routes, are in
+\texttt{docs/research\_program/K1\_E2E\_DOWNLOAD\_GUIDE.md}.)
+
+\paragraph{Joint comparator (PR08-006).} Assembling the three discharges into the
+graded comparator $g=(\Sigstd,\Wstd,\Otilt,\Okaniso)$ realises the headline of
+\S\ref{sec:egs3} on real data: $\Otilt$ is \emph{measured} (K5 bulk flow), $\Sigstd$
+is \emph{partial} (K1 look-elsewhere only), and $\Wstd,\Okaniso$ are \emph{fail-closed}
+(K6 structural no-go and no low-$\ell$ channel respectively). The data rank is exactly
+two, reported separately from the prior-conditioned rank; no combined scalar $\xC$ is
+formed, because two sectors are blind and must not be zeroed; no MIO certificate is
+used as odds and no scalar is promoted to a family. This is the program's strong,
+honest joint result --- a measured rank-2 comparator together with the proven
+two-sector no-go --- delivered without a native low-$\ell$ solver
+(\texttt{docs/generated/pr08\_006\_joint\_artifact.json}).
 
 % ============================================================
 \section{Transfer-conditional diagnostics}

@@ -12,7 +12,7 @@ input_hashes:
 - `docs/generated/current_manuscript_figure_curation.json:sha256:1bff29c98803b711203a90c988ecdbabdf241d2daf13666a314faa7673ec49f8`
 - `docs/generated/current_science_plot_payload.json:sha256:dbe57bffa28b9c11f88491ff2c31d3c2bb8e41efabbf2bb7a070da1e0c2faa48`
 - `docs/generated/gf_matched_null_forecast_report.json:sha256:a357df0343d9d7a8c03c7be19ada4ee82390691522b6a8189803540182c6505a`
-- `docs/generated/publication_claim_freeze.md:sha256:356df3f950d282c5788261c83464e1d73d13d38bdcfbdb5d637ee48d8c3d9dd3`
+- `docs/generated/publication_claim_freeze.md:sha256:05b1e07f84f24ba8860353710b82db7d07d937b77fdf7aee2cfe95fe04a400b7`
 - `docs/generated/result_pack_A.md:sha256:ff6616ee58976624cfd89692dfc117da435fde9b6f5a79f8cd5ab4d0b94081c2`
 - `docs/generated/result_pack_B.md:sha256:766ee58d61feb2072d6ce97fcdfa007ac7f248d7836876fb866fd9e1ed54e46c`
 - `docs/generated/result_pack_C.md:sha256:a8335933b110bae061ff527f91aef424996311396cc52881eec05e583577e2fe`

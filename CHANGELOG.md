@@ -7,6 +7,23 @@
 
 ## [Unreleased]
 
+### Report completeness + root research-evaluation package (rev-r133, 2026-06-26)
+
+- **Report completeness audit (rev-r122..r132):** cross-checked the report against every
+  deliverable; filled the one gap — added a "Joint comparator (PR08-006)" paragraph
+  (Ω_tilt measured / Σ² partial / W²,Ω_k fail-closed; data rank 2; no collapsed x_C) and
+  the cobaya K1 note + K1-guide pointer to \S10. Recompiled (23 pp), `pdf_claim_lint`
+  0/0. The report now reflects all research/development through rev-r132.
+- **Root research-evaluation package** (`scripts/build_research_evaluation_package.py`):
+  self-contained, context-independent bundle at repo root
+  (`htt_base_research_evaluation_package.{zip,manifest.json}` +
+  `htt_base_research_evaluation_prompt.md`, 67 entries) — report + the essential research
+  code that produces every headline + runnable gate tests + result records + BLOCKERS/K1
+  guide, with a from-scratch **critical & constructive** review prompt (verdict, novelty,
+  theorem/statistics audits, constructive roadmap, claim-tier corrections; hard boundaries
+  stated). Deterministic, content-addressed (no git-state churn), `--check` + contract test.
+  `pytest tests/contracts/` = 352 passed, 0 failed.
+
 ### Hygiene — all 7 residual contract failures fixed (rev-r130, 2026-06-26)
 
 `pytest tests/contracts/` is now **348 passed / 0 failed** (was 8 failed at session
