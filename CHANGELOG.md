@@ -7,6 +7,46 @@
 
 ## [Unreleased]
 
+### Integrated phys-math-code audit of the EGS3 PSD-cone surface — 6 findings fixed (rev-r134, 2026-06-28)
+
+Self-triggered integrated audit (physics ⇄ code ⇄ numerics) of the EGS3 graded-comparator
+/ PSD-cone surface, cross-checked against the two external review packs
+(`htt_research_evaluation_review`, `pr08_reassessment_audit_pack`). Six broken links found,
+all confirmed by numerical probe, all fixed minimally (guards / additive metadata / real
+tests — no refactor, no framework swap). x_C bit-identity preserved throughout; no published
+number changed (verified via byte-identical regeneration of egs3_experiments / egs_results_table
+/ theorem figures). Audit + per-finding adversarial verification + re-audit recorded in
+`docs/harness/VALIDATION_LEDGER.md`.
+
+- **FM1 (P1) Ω_k admissible-domain conflict** — `egs3_psd_cone.admissibility` claimed
+  "M⪰0 iff admissible" over all four sectors, but `Ω_k_aniso = Ω_k − Ω_k_ref`
+  (`Ω_k = −³R/(6H²)`) is **signed** per the authoritative `comparator_policy.py` /
+  `departure_contracts.py` (ch03 Prop `x-sign`, `irrotational_negative`). A valid
+  closed-type / negative-curvature-departure background was wrongly ejected (confirmed
+  numerically; latent — the cone is fed nonneg synthetic Ω_k today). Fix: PSD positivity
+  restricted to the three genuine second-moment sectors {Σ²,W²,Ω_tilt}; Ω_k signed, rides in C.
+- **FM2 (P1) W²/Ω_k null conflation** — both sectors were identical zero response columns, so
+  the "joint null {W²,Ω_k}" label conflated a genuine order-independent structural null (W²)
+  with a leading-EGS-order no-channel (Ω_k, re-opens at higher order). Fix: `NULL_SECTOR_KIND`
+  and `describe_null_sectors`; `pr08_006_joint_artifact` carries per-sector `null_kind`/`reopens_via`
+  and a split `two_sector_no_go` statement. Matches the external reviewer's headline revision.
+- **FM3 (P2) eigenvalue-vs-diagonal mislabel** — "eigendirection/spectrum/eigenvalue" language
+  operated on the diagonal; `cone_shell` read `M[0,0]` (a Rayleigh quotient for off-diagonal M)
+  and `eigen_identifiability` silently dropped cross terms. Fix: `_require_diagonal` fail-closed
+  guard; off-diagonal (native-solver superset) input now raises. `xc_from_matrix=tr(CM)` left general.
+- **FM4 (P2) e-value finite-α** — `exceedance_evalue` divides by a passed α; a raw k/n estimate
+  crashes at k=0 and is anti-conservative (Jensen). Fix: `exceedance_evalue_finite_null` with
+  add-one α̂=(k+1)/(n+1) (no crash, conservative, null mean ≤ 1); known-α path retained + caveat.
+- **FM5 (P2) placeholder C_up=9 load-bearing** — the nondegeneracy headline `C_up·κ>1` (12/7)
+  rests on a documented placeholder. Fix: `C_UP_PROVENANCE`, `nondegeneracy_threshold` (1/κ=5.25),
+  and `FillingBracket.{c_up_provenance,nondegeneracy_c_up_min,nondegeneracy_robust}` so the headline
+  is flagged robust-to-the-exact-constant (true C_up>5.25); the zero-exclusion lower bound is unchanged.
+- **FM6 (P2) tautological gates** — replaced self-consistency smoke with real boundary tests
+  (off-diagonal rejection, null-kind distinction, finite-null no-crash/conservative, placeholder robustness).
+- Gates: `make egs2-gates` 14, `make egs3-gates` 28 (was 20); 65 touched-suite + 7716 collected, all green.
+- Owner follow-up (prose, not code): manuscript/figure text repeating "joint null {W²,Ω_k}" and
+  "M≥0 admissible" should adopt the split-null + signed-Ω_k + placeholder-C_up wording at next pass.
+
 ### Report completeness + root research-evaluation package (rev-r133, 2026-06-26)
 
 - **Report completeness audit (rev-r122..r132):** cross-checked the report against every

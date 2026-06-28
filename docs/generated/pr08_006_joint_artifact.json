@@ -41,7 +41,14 @@
   "sectors": {
     "Omega_k": {
       "blocker": "no_low_ell_channel_sources_anisotropic_curvature",
-      "note": "no registered low-l channel reaches the anisotropic-curvature sector at leading EGS order (NOT set to zero)",
+      "note": "no registered low-l channel reaches the anisotropic-curvature sector at leading EGS order (NOT set to zero); re-opens beyond leading order, unlike W2",
+      "null_kind": "no_channel_leading_order",
+      "null_order_dependence": "leading_egs_order_only",
+      "reopens_via": [
+        "higher_order_isw",
+        "lensing",
+        "native_low_ell_transfer"
+      ],
       "source": null,
       "status": "fail_closed_no_channel"
     },
@@ -65,6 +72,12 @@
     "W2": {
       "blocker": "BLOCKED_MISSING_FIELD_REALIZATIONS_discharged_as_no_go",
       "note": "the CF4 WF reconstruction is curl-suppressed; the vorticity sector is structurally unidentifiable from it (NOT set to zero)",
+      "null_kind": "structural_null",
+      "null_order_dependence": "order_independent",
+      "reopens_via": [
+        "transverse_peculiar_velocity",
+        "cmb_b_modes"
+      ],
       "source": "K6 CF4 WF-field vorticity",
       "status": "fail_closed_structural_no_go",
       "vorticity_over_shear_max": 0.005519792636461094
@@ -76,7 +89,28 @@
       "W2",
       "Omega_k"
     ],
-    "statement": "W^2 (vorticity) and Omega_k (anisotropic curvature) are fail-closed: W^2 structurally unidentifiable from the curl-suppressed CF4 WF field (K6 no-go), Omega_k has no low-l channel. Neither is set to zero."
+    "null_kinds": {
+      "Omega_k": {
+        "kind": "no_channel_leading_order",
+        "order_dependence": "leading_egs_order_only",
+        "reason": "no leading-EGS-order low-l channel sources the anisotropic-curvature scalar",
+        "reopens_via": [
+          "higher_order_isw",
+          "lensing",
+          "native_low_ell_transfer"
+        ]
+      },
+      "W2": {
+        "kind": "structural_null",
+        "order_dependence": "order_independent",
+        "reason": "radial n.Omega.n=0 (PAPER-A no-go) + CMB curl/Weyl-blind at EGS order",
+        "reopens_via": [
+          "transverse_peculiar_velocity",
+          "cmb_b_modes"
+        ]
+      }
+    },
+    "statement": "W^2 (vorticity) and Omega_k (anisotropic curvature) are both fail-closed, but they are NOT the same KIND of null. W^2 is a GENUINE, order-INDEPENDENT structural null (radial n.Omega.n=0 + CMB curl/Weyl-blind at EGS order); it re-opens only via a different observable (transverse velocities, B-modes). Omega_k is a LEADING-EGS-ORDER no-channel (no low-l channel sources anisotropic curvature at leading order); it is truncation-dependent and re-opens beyond leading order (higher-order ISW, lensing, native low-l transfer). Neither is set to zero."
   },
   "x_C_single_scalar": null,
   "x_C_withheld_reason": "x_C is NOT collapsed to a single number: two of the four sectors are fail-closed, so a scalar comparator would require setting blind sectors to zero (forbidden). The graded vector is reported per-sector instead."

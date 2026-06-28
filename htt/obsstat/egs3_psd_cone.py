@@ -11,6 +11,12 @@ statements:
 
   * x_C as a functional of M          --  x_C = tr(C M),  C = diag(+1,-1,+1,+1)
   * admissible set                    --  the PSD cone (PAPER-B B-psd moment cone)
+                                          over the three GENUINE second-moment
+                                          sectors {Sigma2,W2,Omega_tilt}; the
+                                          fourth, Omega_k_aniso, is a SIGNED
+                                          comparator coordinate (can be < 0 for
+                                          closed types / negative curvature
+                                          departures) and rides in C, not the cone
   * identifiability (A1 / NT2-B3)     --  reachable EIGENDIRECTIONS of M; the
                                           blind sector {W^2, Omega_k} is the
                                           structural NULL (kernel) of the
@@ -47,6 +53,29 @@ from htt.obsstat.egs3_graded_comparator import (
 SECTOR_SIGNATURE = np.diag(COMPARATOR_SIGNS)
 
 
+def _is_diagonal(M: np.ndarray, tol: float = 1e-12) -> bool:
+    M = np.asarray(M, dtype=float)
+    scale = float(np.abs(M).max()) or 1.0
+    return bool(np.all(np.abs(M - np.diag(np.diag(M))) <= tol * scale))
+
+
+def _require_diagonal(M: np.ndarray, who: str, tol: float = 1e-12) -> np.ndarray:
+    """Fail-closed diagonal-scope guard (audit FM3).
+
+    The labelled-eigenbasis comparator is diagonal: the sectors ARE the spectrum,
+    M[i,i] IS the i-th eigenvalue, and diag(M) = g.  Off-diagonal (cross-sector)
+    structure is the strict native-solver SUPERSET and is OUT OF SCOPE here.  Without
+    diagonality M[0,0] is a Rayleigh quotient, not the shear eigenvalue, and diag(M)
+    is not the spectrum -- so the eigen/sector language would silently mislabel.
+    Reject rather than mislabel."""
+    M = np.asarray(M, dtype=float)
+    if not _is_diagonal(M, tol):
+        raise ValueError(
+            f"{who}: M must be diagonal in the sector eigenbasis; off-diagonal "
+            f"cross-sector structure is the native-solver superset (out of scope)")
+    return M
+
+
 def sector_matrix(g: np.ndarray | tuple[float, float, float, float]) -> np.ndarray:
     """Embed the graded sector vector g as the 4x4 labelled-eigenbasis comparator
     M = diag(Sigma^2, W^2, Omega_tilt, Omega_k).  The sectors are the spectrum."""
@@ -58,7 +87,7 @@ def sector_matrix(g: np.ndarray | tuple[float, float, float, float]) -> np.ndarr
 
 def sectors_from_matrix(M: np.ndarray) -> np.ndarray:
     """Recover the labelled sector invariants g (the diagonal/spectrum of M)."""
-    M = np.asarray(M, dtype=float)
+    M = _require_diagonal(np.asarray(M, dtype=float), "sectors_from_matrix")
     return np.diag(M).copy()
 
 
@@ -78,16 +107,39 @@ class Admissibility:
     negative_sectors: tuple[str, ...]
 
 
+# The genuine second-moment sectors are nonnegative by construction; the
+# moment-cone (PSD) positivity is asserted on THIS block only.  Omega_k_aniso is a
+# signed comparator coordinate (see admissibility) and is excluded.
+NONNEG_MOMENT_IDX = (0, 1, 2)   # Sigma2, W2, Omega_tilt
+
+
 def admissibility(M: np.ndarray, *, tol: float = 1e-15) -> Admissibility:
-    """PAPER-B moment-cone membership: M is an admissible departure second-moment
-    iff M >= 0 (PSD).  Fail-closed: any negative labelled invariant ejects M from
-    the cone.  This is the structural admissible set the redesign replaces the
-    ad-hoc x_max ceiling with."""
+    """PAPER-B moment-cone membership.
+
+    The moment-cone (PSD) positivity is asserted on the three GENUINE second-moment
+    sectors {Sigma2, W2, Omega_tilt}, nonnegative by construction (squared
+    shear/vorticity, (1+w) Omega sinh^2 beta >= 0).  The fourth sector,
+    Omega_k_aniso = Omega_k - Omega_k_ref  with  Omega_k = -^3R/(6 H^2), is a
+    SIGNED comparator coordinate: it is negative for closed types (Omega_k < 0 when
+    ^3R > 0) and for negative anisotropic-curvature departures
+    (`htt.bass.validation.comparator_policy` / `htt.src.common.departure_contracts`,
+    ch03 Prop `x-sign`, which classifies an `irrotational_negative` sector).  It is
+    therefore NOT a second moment and NOT subject to PSD positivity; its sign is
+    carried by the signature C in x_C = tr(C M).  Restricting the cone to the
+    nonneg block keeps a valid open/closed-curvature background from being wrongly
+    ejected while still fail-closing on a negative GENUINE second moment.  This is
+    the structural admissible set the redesign replaces the ad-hoc x_max ceiling
+    with.
+
+    Fail-closed: a negative {Sigma2, W2, Omega_tilt} ejects M from the cone; a
+    negative Omega_k does not (it is admissible, signed)."""
     M = np.asarray(M, dtype=float)
-    evals = np.linalg.eigvalsh(0.5 * (M + M.T))
+    sym = 0.5 * (M + M.T)
+    sub = sym[np.ix_(NONNEG_MOMENT_IDX, NONNEG_MOMENT_IDX)]
+    evals = np.linalg.eigvalsh(sub)
     lam_min = float(evals.min())
     diag = np.diag(M)
-    neg = tuple(SECTORS[i] for i in range(4) if diag[i] < -tol)
+    neg = tuple(SECTORS[i] for i in NONNEG_MOMENT_IDX if diag[i] < -tol)
     return Admissibility(is_admissible=lam_min >= -tol,
                          min_eigenvalue=lam_min, negative_sectors=neg)
 
@@ -101,7 +153,14 @@ def reachable_projector(*, tol: float = 1e-12) -> np.ndarray:
     u, s, _ = np.linalg.svd(d.T, full_matrices=True)
     r = int(np.sum(s > tol * (s[0] if s.size else 1.0)))
     basis = u[:, :r]
-    return basis @ basis.T
+    P = basis @ basis.T
+    # the downstream sector assignment reads diag(P): valid only if P is axis-aligned
+    # (diagonal), which holds for the {0,1} support pattern.  Fail closed if a future
+    # non-axis-aligned response design ever breaks that (audit FM3).
+    if not _is_diagonal(P, tol=1e-9):
+        raise ValueError("reachable_projector: response support is not axis-aligned; "
+                         "the diag(P) sector assignment would be invalid")
+    return P
 
 
 @dataclass(frozen=True)
@@ -118,7 +177,7 @@ def eigen_identifiability(M: np.ndarray, *, tol: float = 1e-12) -> EigenIdentifi
     M |-> P_R M P_R; the reachable sectors are the eigendirections P_R keeps and
     the blind sector is the structural NULL (the W^2, Omega_k eigenvectors are in
     ker P_R, so their invariants are annihilated)."""
-    M = np.asarray(M, dtype=float)
+    M = _require_diagonal(np.asarray(M, dtype=float), "eigen_identifiability")
     P = reachable_projector(tol=tol)
     diagP = np.diag(P)
     reachable = tuple(SECTORS[i] for i in range(4) if diagP[i] > 0.5)
@@ -153,10 +212,10 @@ def cone_shell_membership(M: np.ndarray, s_lo: float, s_hi: float) -> ConeShell:
     with s_lo > 0, i.e. M lies in the convex slice
     {M >= 0} intersect {lambda_Sigma > s_lo} intersect {lambda_Sigma < s_hi},
     which excludes the shear-free vertex (lambda_Sigma = 0)."""
-    M = np.asarray(M, dtype=float)
+    M = _require_diagonal(np.asarray(M, dtype=float), "cone_shell_membership")
     if s_lo > s_hi:
         raise ValueError("s_lo must not exceed s_hi")
-    lam = float(M[0, 0])                       # Sigma^2 eigenvalue
+    lam = float(M[0, 0])     # Sigma^2 eigenvalue == M[0,0] for the diagonal comparator
     return ConeShell(lambda_sigma=lam, s_lo=float(s_lo), s_hi=float(s_hi),
                      in_shell=(s_lo < lam < s_hi), excludes_vertex=(s_lo > 0.0))
 

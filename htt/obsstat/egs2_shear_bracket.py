@@ -24,7 +24,23 @@ from dataclasses import dataclass
 from .egs2_fisher import KAPPA_ETM, X_MAX
 
 C_UP = 9.0          # MES upper coefficient (documented placeholder)
+C_UP_PROVENANCE = "placeholder"   # NOT the exact MES constant (audit FM5); see docstring
 R_STAR = 1.0        # default H3 threshold a3/a2 <= R*
+
+
+def nondegeneracy_threshold(kappa: float = KAPPA_ETM) -> float:
+    """Smallest C_up for which the published nondegeneracy headline survives
+    (audit FM5).
+
+    The reviewer's nondegeneracy quantity is C_up * kappa * (1+R); at the tightest
+    R=0 it is C_up * kappa, and the headline `12/7 > 1` (C_up=9, kappa=4/21) holds
+    iff C_up * kappa > 1, i.e. C_up > 1/kappa.  Since C_up is a documented
+    PLACEHOLDER, this threshold tells a consumer the headline is robust to the exact
+    MES constant as long as the true C_up exceeds 1/kappa = 5.25 (the placeholder 9
+    clears it with margin).  NOTE the *exclusion of zero* itself rests on the LOWER
+    bound (a2*kappa/(1+R) > 0), which is c_up-independent; only the upper-side
+    nondegeneracy headline is placeholder-sensitive."""
+    return 1.0 / kappa
 
 
 def shear_upper(a2: float, c_up: float = C_UP) -> float:
@@ -55,6 +71,12 @@ class FillingBracket:
     F_lo: float
     F_hi: float
     excludes_zero: bool
+    # FM5: surface the placeholder status of the MES upper constant so a consumer
+    # cannot silently treat it as a derived physical bound.
+    c_up: float = C_UP
+    c_up_provenance: str = C_UP_PROVENANCE
+    nondegeneracy_c_up_min: float = 0.0    # 1/kappa; min c_up for the headline (set in filling_bracket)
+    nondegeneracy_robust: bool = False     # c_up > c_up_min (headline survives the placeholder)
 
 
 def filling_bracket(a2: float, a3: float, *, kappa: float = KAPPA_ETM,
@@ -67,5 +89,9 @@ def filling_bracket(a2: float, a3: float, *, kappa: float = KAPPA_ETM,
     s_hi = shear_upper(a2, c_up)
     f_lo = s_lo ** 2 / x_max
     f_hi = s_hi ** 2 / x_max
+    thr = nondegeneracy_threshold(kappa)
     return FillingBracket(a2, a3, R, h3, s_lo, s_hi, f_lo, f_hi,
-                          excludes_zero=bool(h3 and a2 > 0 and f_lo > 0.0))
+                          excludes_zero=bool(h3 and a2 > 0 and f_lo > 0.0),
+                          c_up=c_up, c_up_provenance=C_UP_PROVENANCE,
+                          nondegeneracy_c_up_min=thr,
+                          nondegeneracy_robust=bool(c_up > thr))

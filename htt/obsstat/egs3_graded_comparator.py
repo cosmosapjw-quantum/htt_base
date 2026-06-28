@@ -49,6 +49,35 @@ _RESPONSE_SUPPORT = {
     "radial_velocity_dipole":(0.0, 0.0, 1.0, 0.0),   # bulk flow = tilt; no curl
 }
 
+# The two null sectors are NOT the same KIND of null (audit FM2 / external review).
+# Both give a zero response column and the SAME rank-2 count, but the rank count
+# ALONE cannot characterise them -- a leading-order zero column is indistinguishable
+# by rank from a genuine null or a Sigma2-collinear degeneracy. This annotation
+# records which holds:
+#   * W2  -- a GENUINE, order-INDEPENDENT structural null. Radial peculiar velocities
+#            satisfy n.Omega.n == 0 exactly (PAPER-A radial no-go) AND CMB temperature
+#            is curl/magnetic-Weyl-blind at EGS order. It does NOT re-open by going to
+#            higher order; only a DIFFERENT observable (transverse velocities, CMB
+#            B-modes) re-opens it.
+#   * Omega_k -- a LEADING-EGS-ORDER no-channel. No registered low-l channel sources
+#            the anisotropic spatial-curvature scalar AT LEADING ORDER; this is
+#            truncation-dependent and RE-OPENS beyond leading order (higher-order ISW,
+#            lensing, the full native low-l Bianchi transfer) within the SAME channels.
+NULL_SECTOR_KIND = {
+    "W2": {
+        "kind": "structural_null",
+        "order_dependence": "order_independent",
+        "reason": "radial n.Omega.n=0 (PAPER-A no-go) + CMB curl/Weyl-blind at EGS order",
+        "reopens_via": ("transverse_peculiar_velocity", "cmb_b_modes"),
+    },
+    "Omega_k": {
+        "kind": "no_channel_leading_order",
+        "order_dependence": "leading_egs_order_only",
+        "reason": "no leading-EGS-order low-l channel sources the anisotropic-curvature scalar",
+        "reopens_via": ("higher_order_isw", "lensing", "native_low_ell_transfer"),
+    },
+}
+
 
 @dataclass(frozen=True)
 class GradedComparator:
@@ -102,3 +131,18 @@ def identifiable_rank(design: np.ndarray | None = None, *, tol: float = 1e-12) -
     null = tuple(SECTORS[i] for i in range(4) if col_norms[i] <= tol)
     return IdentifiabilityRank(rank=rank, reachable_sectors=reachable,
                                null_sectors=null, design_shape=d.shape)
+
+
+def describe_null_sectors(null_sectors: tuple[str, ...] | None = None) -> dict:
+    """Per-sector null KIND for the identifiability null (audit FM2).
+
+    Distinguishes the genuine, order-independent structural null (W2) from the
+    leading-EGS-order no-channel (Omega_k). The two are NOT the same null even
+    though both produce a zero response column and the same rank-2 count: W2 is
+    re-opened only by a different observable (transverse velocities / B-modes),
+    while Omega_k re-opens within the same channels beyond leading EGS order
+    (higher-order ISW, lensing, the native low-l transfer). Returns the
+    `NULL_SECTOR_KIND` record for each null sector that carries one."""
+    if null_sectors is None:
+        null_sectors = identifiable_rank().null_sectors
+    return {s: NULL_SECTOR_KIND[s] for s in null_sectors if s in NULL_SECTOR_KIND}

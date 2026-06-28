@@ -70,6 +70,21 @@ class TwoSidedBracketTests(unittest.TestCase):
         self.assertEqual(br.F_lo, 0.0)
         self.assertFalse(br.excludes_zero)
 
+    def test_c_up_placeholder_flagged_and_nondegeneracy_robust(self):
+        # FM5: C_up=9 is a documented PLACEHOLDER; the published nondegeneracy
+        # headline (C_up*kappa>1) must be flagged robust-to-the-exact-constant.
+        from htt.obsstat.egs2_shear_bracket import nondegeneracy_threshold, C_UP
+        br = filling_bracket(3e-5, 6e-6)
+        self.assertEqual(br.c_up_provenance, "placeholder")
+        self.assertAlmostEqual(br.nondegeneracy_c_up_min, 1.0 / (4.0 / 21.0))  # 5.25
+        self.assertTrue(br.nondegeneracy_robust)              # C_up=9 > 5.25 (margin)
+        self.assertGreater(C_UP, nondegeneracy_threshold())
+        # a sub-threshold C_up would NOT robustly carry the headline (placeholder-sensitive)
+        weak = filling_bracket(3e-5, 6e-6, c_up=4.0)
+        self.assertFalse(weak.nondegeneracy_robust)
+        # the LOWER-bound zero-exclusion is c_up-independent -> still holds for weak C_up
+        self.assertTrue(weak.excludes_zero)
+
 
 if __name__ == "__main__":
     unittest.main()

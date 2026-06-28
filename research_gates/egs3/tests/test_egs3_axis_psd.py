@@ -77,5 +77,71 @@ class P4ConeShellBracketTests(unittest.TestCase):
         self.assertFalse(vtx.in_shell)
 
 
+class P5SignedOmegaKDomainTests(unittest.TestCase):
+    """REV-Patch-A: Omega_k_aniso = Omega_k - Omega_k_ref (= -^3R/(6H^2) - ref) is a
+    SIGNED comparator coordinate -- negative for closed types / negative
+    anisotropic-curvature departures (ComparatorPolicy / departure_contracts, ch03
+    Prop x-sign `irrotational_negative`). The moment-cone admissibility must NOT
+    reject a background solely for Omega_k < 0, while still fail-closing on a
+    negative GENUINE second-moment sector; x_C stays bit-identical."""
+
+    def test_signed_negative_omega_k_is_admissible(self):
+        adm = admissibility(sector_matrix((2e-6, 1e-6, 5e-7, -3e-7)))
+        self.assertTrue(adm.is_admissible)            # not ejected for Omega_k<0
+        self.assertNotIn("Omega_k", adm.negative_sectors)
+
+    def test_negative_genuine_second_moment_still_fails_closed(self):
+        for bad, sector in [((2e-6, -1e-6, 0.0, 0.0), "W2"),
+                            ((-1e-6, 1e-6, 0.0, 0.0), "Sigma2"),
+                            ((1e-6, 1e-6, -1e-6, 0.0), "Omega_tilt")]:
+            adm = admissibility(sector_matrix(bad))
+            self.assertFalse(adm.is_admissible)
+            self.assertIn(sector, adm.negative_sectors)
+
+    def test_xc_bit_identical_with_signed_omega_k(self):
+        g = (2e-6, 1e-6, 5e-7, -3e-7)
+        self.assertTrue(np.array_equal(
+            xc_from_matrix(sector_matrix(g)),
+            float(COMPARATOR_SIGNS @ np.asarray(g))))
+
+
+class P6DiagonalScopeGuardTests(unittest.TestCase):
+    """FM3/FM6: the labelled-eigenbasis functions are diagonal-SCOPE. Off-diagonal
+    (cross-sector) M is the native-solver superset; it must FAIL CLOSED, not be
+    silently mislabelled (M[0,0] is then a Rayleigh quotient, NOT the eigenvalue).
+    This replaces the tautological 'diagonal P masks diagonal M' smoke with a real
+    boundary test."""
+
+    def _cross(self):
+        M = sector_matrix((4.0, 0.0, 1.0, 0.0))
+        M[0, 2] = M[2, 0] = 1.5          # genuine Sigma2-Omega_tilt cross term (PSD)
+        return M
+
+    def test_offdiagonal_M_is_rejected(self):
+        M = self._cross()
+        # confirm the adversarial input is genuinely non-diagonal and PSD
+        self.assertGreater(abs(M[0, 2]), 0.0)
+        self.assertGreaterEqual(np.linalg.eigvalsh(M).min(), -1e-12)
+        with self.assertRaises(ValueError):
+            sectors_from_matrix(M)
+        with self.assertRaises(ValueError):
+            eigen_identifiability(M)
+        with self.assertRaises(ValueError):
+            cone_shell_membership(M, 0.5, 10.0)
+
+    def test_xc_remains_general_for_offdiagonal(self):
+        # x_C = tr(C M) is well-defined for ANY M (trace picks the diagonal); the
+        # bit-identity is not scope-limited and must NOT raise.
+        M = self._cross()
+        self.assertEqual(xc_from_matrix(M),
+                         float(COMPARATOR_SIGNS @ np.diag(M)))
+
+    def test_diagonal_M_still_passes(self):
+        # the in-scope diagonal path is unaffected by the guard
+        M = sector_matrix((4.0, 0.0, 1.0, 0.0))
+        self.assertEqual(eigen_identifiability(M).reachable_rank, 2)
+        self.assertTrue(cone_shell_membership(M, 0.5, 10.0).in_shell)
+
+
 if __name__ == "__main__":
     unittest.main()

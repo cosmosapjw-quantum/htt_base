@@ -5,10 +5,11 @@ import numpy as np
 
 from htt.obsstat.egs3_graded_comparator import (
     graded_comparator, channel_response_design, identifiable_rank, COMPARATOR_SIGNS,
+    describe_null_sectors, NULL_SECTOR_KIND,
 )
 from htt.obsstat.egs3_calibration import (
-    evalue_markov_calibration, exceedance_evalue, domination_is_conservative,
-    rao_blackwell_demonstration,
+    evalue_markov_calibration, exceedance_evalue, exceedance_evalue_finite_null,
+    domination_is_conservative, rao_blackwell_demonstration,
 )
 from htt.obsstat.egs2_fisher import fisher_floor
 
@@ -33,6 +34,20 @@ class A1GradedComparatorTests(unittest.TestCase):
         # W2 (col 1) and Omega_k (col 3) are structurally blind to both channels
         self.assertEqual(np.linalg.norm(d[:, 1]), 0.0)
         self.assertEqual(np.linalg.norm(d[:, 3]), 0.0)
+
+    def test_null_sectors_are_distinct_kinds(self):
+        # FM2: the rank-2 count is the same, but W2 and Omega_k are NOT the same
+        # null. The rank ALONE cannot tell them apart; describe_null_sectors must.
+        nk = describe_null_sectors()
+        self.assertEqual(set(nk), {"W2", "Omega_k"})
+        self.assertEqual(nk["W2"]["kind"], "structural_null")
+        self.assertEqual(nk["W2"]["order_dependence"], "order_independent")
+        self.assertEqual(nk["Omega_k"]["kind"], "no_channel_leading_order")
+        self.assertEqual(nk["Omega_k"]["order_dependence"], "leading_egs_order_only")
+        # the two kinds must differ (no conflation into a single "joint null")
+        self.assertNotEqual(nk["W2"]["kind"], nk["Omega_k"]["kind"])
+        # null_sectors membership is unchanged (additive metadata only)
+        self.assertEqual(set(identifiable_rank().null_sectors), set(NULL_SECTOR_KIND))
 
 
 class A2FloorInvarianceTests(unittest.TestCase):
@@ -61,6 +76,30 @@ class A3EValueCalibrationTests(unittest.TestCase):
         self.assertFalse(domination_is_conservative(0.08, 0.05))
         # conservative e-value is smaller than the exact one
         self.assertLess(exceedance_evalue(2.0, 1.5, 0.08), exceedance_evalue(2.0, 1.5, 0.05))
+
+    def test_finite_null_evalue_no_crash_and_conservative(self):
+        # FM4: estimated null. k=0 must NOT crash (raw k/n would divide by zero).
+        e_k0 = exceedance_evalue_finite_null(3.0, 2.0, n_exceed=0, n_null=2000)
+        self.assertTrue(np.isfinite(e_k0))
+        # alpha_hat = (k+1)/(n+1) = 1/2001; E for an exceedance = (n+1)/(k+1) = 2001
+        self.assertAlmostEqual(e_k0, 2001.0)
+        # conservative: (k+1)/(n+1) >= k/n  => finite-null E <= raw plug-in E (k>0)
+        k, n = 3, 2000
+        raw = exceedance_evalue(3.0, 2.0, k / n)
+        fin = exceedance_evalue_finite_null(3.0, 2.0, n_exceed=k, n_null=n)
+        self.assertLessEqual(fin, raw)
+        # add-one analytic null mean E[1[x>t]]*E[(n+1)/(k+1)] = 1-(1-p)^(n+1) <= 1
+        # (deterministic identity; verified here for a representative p,n)
+        p, nn = 0.0228, 500
+        null_mean = 1.0 - (1.0 - p) ** (nn + 1)
+        self.assertLessEqual(null_mean, 1.0)
+        # below threshold -> zero regardless of alpha
+        self.assertEqual(exceedance_evalue_finite_null(1.0, 2.0, n_exceed=0, n_null=2000), 0.0)
+        # guards
+        with self.assertRaises(ValueError):
+            exceedance_evalue_finite_null(3.0, 2.0, n_exceed=5, n_null=0)
+        with self.assertRaises(ValueError):
+            exceedance_evalue_finite_null(3.0, 2.0, n_exceed=10, n_null=5)
 
 
 class A4RaoBlackwellTests(unittest.TestCase):

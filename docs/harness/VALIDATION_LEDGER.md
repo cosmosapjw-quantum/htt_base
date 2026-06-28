@@ -1650,3 +1650,141 @@ sample-wise x_C/denominator/F provenance, support metadata, config/input
 hashes, generating command, git or worktree provenance, and matching PR-014
 transfer source/spec IDs plus canonical transfer metadata when
 transfer-derived.
+
+---
+
+## REV-Patch-A — EGS3 PSD-cone Omega_k admissible-domain fix (2026-06-28)
+
+Audit finding (integrated phys-math-code audit): `egs3_psd_cone.admissibility`
+claimed "M >= 0 iff admissible" over all four sectors, but `Omega_k_aniso =
+Omega_k - Omega_k_ref` (`Omega_k = -^3R/(6H^2)`) is a SIGNED comparator
+coordinate per the authoritative `comparator_policy.py` / `departure_contracts.py`
+(ch03 Prop `x-sign`, `irrotational_negative` sector). A valid closed-type /
+negative-curvature-departure background (`Omega_k < 0`) was wrongly ejected.
+Latent today (no caller feeds the EGS3 cone signed Omega_k; it is a diagnostic /
+report-builder surface fed nonneg synthetic values), so no published number changes.
+
+Fix: moment-cone (PSD) positivity restricted to the three GENUINE second-moment
+sectors {Sigma2, W2, Omega_tilt}; Omega_k excluded (signed, rides in C). Docstrings
+updated. `x_C = tr(C M)` is independent of admissibility -> bit-identity preserved.
+
+Changed files: `htt/obsstat/egs3_psd_cone.py` (admissibility + header docstring),
+`research_gates/egs3/tests/test_egs3_axis_psd.py` (+P5SignedOmegaKDomainTests, 3 tests).
+
+| Command | CWD | Result | Notes |
+|---|---|---|---|
+| `make egs3-gates` | repo root | PASS | `Ran 23 tests ... OK` (was 20; +3 P5 signed-Omega_k). |
+| `pytest research_gates/egs3/tests/test_egs3_axis_psd.py tests/contracts/test_psd_cone_redesign.py tests/contracts/test_graded_comparator_upgrade.py research_gates/egs3/tests/test_egs3_axis_{a,b}.py -q` | repo root | PASS | `32 passed in 0.50s`. |
+| `pytest tests/contracts --collect-only -q` | repo root | PASS | `352 tests collected` (no import breakage). |
+| post-fix probe (neg Omega_k) | repo root | PASS | `admissibility(neg Omega_k).is_admissible=True`, `neg_sectors=()`, `x_C=1.2e-06` unchanged. |
+
+Numerical/scientific impact: no solver run, no transfer calc, no native value,
+no posterior/p-value/FPR calibration. Behavior change is confined to admissibility
+of `Omega_k < 0` (now admissible, was rejected); the bit-identical `x_C` regression
+is unaffected.
+
+Artifact/claim-tier impact: representation-only; claim envelope unchanged
+(diagnostic-only, no family ID / geometry / native solver). DOWNSTREAM WORDING
+not yet touched: report/figure builders that consume `egs3_psd_cone` and the
+`pr08_006_joint_artifact` "M>=0 admissible" phrasing should be regenerated/reworded
+by the physics owner to state the moment-cone applies to the three nonneg sectors
+and Omega_k is a signed coordinate. Tracked as the FM1 wording follow-up.
+
+Remaining risks: FM2 (W2/Omega_k null-kind conflation), FM3 (eigenvalue-vs-diagonal
+mislabel, no diagonal guard), FM4 (e-value finite-alpha k=0 crash / anti-conservative)
+remain open per the audit; not addressed by this patch.
+
+---
+
+## REV-Patch-FM2+FM4 — EGS3 null-kind distinction + finite-null e-value (2026-06-28)
+
+Two further integrated-audit findings:
+
+FM2 (P1, physics/labeling): `_RESPONSE_SUPPORT` encodes W2 and Omega_k as identical
+zero columns, so rank/null detection conflated a GENUINE order-independent structural
+null (W2: radial n.Omega.n=0 + CMB curl/Weyl-blind) with a LEADING-EGS-ORDER no-channel
+(Omega_k: re-opens at higher order). The "joint null {W2,Omega_k}" label (code + report
+artifact) over-symmetrised them. Matches the external reviewer's headline revision.
+Fix (additive, no behavior change to rank/null membership): `NULL_SECTOR_KIND` +
+`describe_null_sectors` in `egs3_graded_comparator.py`; `pr08_006_joint_artifact`
+sectors + `two_sector_no_go` now carry per-sector `null_kind`/`order_dependence`/
+`reopens_via` and a split statement.
+
+FM4 (P2, numerical/stats): `exceedance_evalue` divides by a passed alpha; a raw
+finite-sample k/n estimate crashes at k=0 and is anti-conservative (Jensen
+E[1/alpha_hat] > 1/alpha). Fix (additive): `exceedance_evalue_finite_null` with the
+conservative add-one alpha_hat=(k+1)/(n+1) -- no k=0 crash, E <= raw plug-in, null
+mean = 1-(1-p)^(n+1) <= 1. Existing known-alpha `exceedance_evalue` retained + docstring
+caveat added.
+
+Changed files: `htt/obsstat/egs3_graded_comparator.py`, `htt/obsstat/egs3_calibration.py`,
+`scripts/pr08_006_joint_artifact.py`, `docs/generated/pr08_006_joint_artifact.json`
+(regenerated), `research_gates/egs3/tests/test_egs3_axis_a.py` (+2 tests).
+
+| Command | CWD | Result | Notes |
+|---|---|---|---|
+| `make egs3-gates` | repo root | PASS | `Ran 25 tests ... OK` (20 -> 23 Patch-A -> 25). |
+| `pytest research_gates/egs3/tests/ tests/contracts/test_egs3_extension.py tests/contracts/test_pr08_006_joint_artifact.py tests/contracts/test_psd_cone_redesign.py tests/contracts/test_graded_comparator_upgrade.py -q` | repo root | PASS | `43 passed in 0.57s`. |
+| `python scripts/pr08_006_joint_artifact.py` (regen) + `--check` via contract test | repo root | PASS | artifact up to date; `blind_sectors` unchanged `{W2,Omega_k}`. |
+| `git diff --check` | repo root | PASS | clean. |
+
+Numerical/scientific impact: FM2 is metadata-only (rank-2 count, reachable/null
+membership, and all numeric values unchanged). FM4 adds a new function; existing
+e-value path unchanged. No solver/transfer/posterior/calibration numbers move.
+
+Artifact/claim-tier impact: `pr08_006_joint_artifact.json` regenerated additively;
+claim-firewall fields (family_identification/native_solver_result/mio_as_odds/
+scalar_to_family_promotion) unchanged false; `x_C_single_scalar` still null. Report
+PDF/figure prose that repeats "joint null {W2,Omega_k}" should adopt the split wording
+at the next manuscript pass (owner).
+
+Remaining risks: FM3 (eigenvalue-vs-diagonal mislabel; no diagonal guard) and FM5/FM6
+(placeholder C_up=9 load-bearing for "12/7"; tautological gates) remain open per audit.
+
+---
+
+## REV-Patch-FM3+FM5+FM6 + RE-AUDIT — EGS3/EGS2 (2026-06-28)
+
+FM3 (P2, implementation/interface): the PSD-cone module advertises "identifiability
+= reachable EIGENdirections" and "lambda_Sigma = shear eigenvalue", but operates on
+the diagonal: `cone_shell` read `M[0,0]` (a Rayleigh quotient, NOT an eigenvalue for
+off-diagonal M) and `eigen_identifiability` silently dropped cross terms. Fix:
+`_require_diagonal` fail-closed guard (audit FM3) on `sectors_from_matrix`,
+`eigen_identifiability`, `cone_shell_membership`, plus an axis-aligned assertion on
+`reachable_projector`; off-diagonal (native-solver superset) input now raises instead
+of mislabelling. `xc_from_matrix = tr(C M)` left general (valid for any M).
+
+FM5 (P2, interface): the bracket nondegeneracy headline `C_up*kappa>1` (12/7) rests on
+the documented PLACEHOLDER `C_UP=9`. Fix: `C_UP_PROVENANCE`, `nondegeneracy_threshold`
+(= 1/kappa = 5.25), and `FillingBracket.{c_up_provenance, nondegeneracy_c_up_min,
+nondegeneracy_robust}` so a consumer cannot treat the placeholder as a derived bound;
+the headline is flagged robust iff true C_up > 5.25 (placeholder 9 clears it). The
+zero-exclusion itself rests on the c_up-independent lower bound (unchanged).
+
+FM6 (P2, testing): replaced tautological smoke (diagonal P masks diagonal M) with real
+boundary tests: off-diagonal M rejected (P6), null-kind distinction (A1), finite-null
+e-value no-crash/conservative (A3), placeholder-robustness (egs2 bracket).
+
+RE-AUDIT (adversarial self-check of the patches): renamed the `FillingBracket`
+`nondegeneracy_threshold` FIELD -> `nondegeneracy_c_up_min` to remove a shadow of the
+module function of the same name. Consolidated probe over all six findings: ALL PASS.
+
+| Command | CWD | Result | Notes |
+|---|---|---|---|
+| `make egs2-gates` | repo root | PASS | `Ran 14 tests ... OK`. |
+| `make egs3-gates` | repo root | PASS | `Ran 28 tests ... OK` (20 -> 25 -> 28). |
+| `pytest research_gates/egs2 research_gates/egs3 + 5 contract suites -q` | repo root | PASS | `65 passed in 0.69s`. |
+| `pytest --collect-only -q` | repo root | PASS | `7716/7775 collected (59 deselected)`; no import errors. |
+| `python scripts/pr08_006_joint_artifact.py --check` | repo root | PASS | deterministic, up to date. |
+| `reviewer_verification.py` (external, stdlib-only) | scratch | PASS | `5/5` unchanged. |
+| consolidated re-audit probe (FM1-FM5) | repo root | PASS | `ALL PASS`. |
+| `git diff --check` | repo root | PASS | clean. |
+
+Numerical/scientific impact: none. All fixes are guards / additive metadata / tests;
+no numeric output of egs3_experiments.json, egs_results_table.*, or the theorem figures
+changed (regenerated byte-identical). x_C bit-identity preserved throughout.
+
+Artifact/claim-tier impact: only `pr08_006_joint_artifact.json` regenerated (FM2,
+additive). Claim envelope unchanged (diagnostic-only). Audit scoreboard: FM1,FM2 (P1)
+FIXED; FM3,FM4,FM5,FM6 (P2) FIXED. Open owner follow-up: manuscript/figure prose
+adopting the split-null + signed-Omega_k + placeholder-C_up wording at next pass.

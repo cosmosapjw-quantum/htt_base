@@ -33,10 +33,38 @@ import numpy as np
 # A3 - Pi exceedance e-value calibration
 # --------------------------------------------------------------------------- #
 def exceedance_evalue(score: float, threshold: float, null_exceedance: float) -> float:
-    """E(x) = 1[x > t] / alpha, with alpha = P_null(score > t) (or an upper bound)."""
+    """E(x) = 1[x > t] / alpha, with alpha = P_null(score > t) (or an upper bound).
+
+    `null_exceedance` must be the KNOWN (or upper-bounded) null exceedance. Do NOT
+    pass a raw finite-sample estimate k/n here: at k=0 it is zero and raises, and a
+    raw plug-in is anti-conservative because E[1/alpha_hat] > 1/alpha (Jensen). Use
+    `exceedance_evalue_finite_null` for an estimated null (audit FM4)."""
     if not (0.0 < null_exceedance <= 1.0):
         raise ValueError("null_exceedance must be in (0,1]")
     return (1.0 if score > threshold else 0.0) / null_exceedance
+
+
+def exceedance_evalue_finite_null(score: float, threshold: float,
+                                  n_exceed: int, n_null: int) -> float:
+    """Finite-null (plug-in) e-value with the conservative add-one estimate
+    alpha_hat = (k + 1) / (n + 1),  k = #{null sample > t},  n = null size.
+
+    Fixes the two failure modes of dividing a raw k/n exceedance into the indicator
+    (audit FM4):
+      * k = 0 no longer divides by zero (alpha_hat = 1/(n+1) > 0) -- no crash;
+      * (k+1)/(n+1) >= k/n is a conservative OVER-estimate of alpha, so the e-value
+        is not anti-conservative under the Jensen inflation E[1/alpha_hat] > 1/alpha
+        that a raw plug-in suffers; the Markov guarantee P_null(E >= 1/beta) <= beta
+        is preserved under the finite registered null.
+    The e-value's error rate is still calibrated to the registered null's
+    idealisation (e.g. GRF-LambdaCDM); the correction only removes the finite-sample
+    estimation pathology, not the null misspecification."""
+    if n_null <= 0:
+        raise ValueError("n_null must be positive")
+    if not (0 <= n_exceed <= n_null):
+        raise ValueError("n_exceed must satisfy 0 <= n_exceed <= n_null")
+    alpha_hat = (n_exceed + 1.0) / (n_null + 1.0)
+    return (1.0 if score > threshold else 0.0) / alpha_hat
 
 
 @dataclass(frozen=True)
