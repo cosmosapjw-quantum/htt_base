@@ -3,7 +3,7 @@
 
 Consumes the parsed CF4-full group catalog
 (`workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz`, VizieR J/ApJ/944/94 table4)
-and computes the minimum-variance bulk flow B (amplitude + Galactic apex) in
+and computes the weighted-GLS bulk flow B (amplitude + Galactic apex) in
 depth windows, with a fitted intrinsic dispersion sigma_star, a forward-mock
 coverage calibration, and a sky/row-coverage gate.
 
@@ -112,7 +112,7 @@ def build_report(*, generating_command: str) -> dict:
         "observer_frame_note": "peculiar velocities use the catalog ramp Vpec (V3k cosmological frame "
                                "for the error scaling); a full Vh/Vls/V3k frame ablation is a follow-up.",
         "caveats": [
-            "Minimum-variance bulk flow on the CF4 group peculiar velocities; diagnostic-only.",
+            "Weighted-GLS bulk flow on the CF4 group peculiar velocities; diagnostic-only.",
             "sigma_star is fitted to reduced chi^2 ~ 1; covariance is the inverse Fisher matrix.",
             "Forward-mock coverage uses the real geometry + errors with the recovered B as the injected truth.",
             "No global-tilt or Bianchi-geometry claim is made from CF4 distances alone.",

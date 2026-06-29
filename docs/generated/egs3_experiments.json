@@ -15,7 +15,35 @@
           "W2",
           "Omega_k"
         ],
-        "x_C_example": 1.6e-06
+        "x_C_example": 1.6e-06,
+        "null_kinds": {
+          "W2": {
+            "kind": "structural_null",
+            "order_dependence": "order_independent",
+            "reason": "radial n.Omega.n=0 (PAPER-A no-go) + CMB curl/Weyl-blind at EGS order",
+            "reopens_via": [
+              "transverse_peculiar_velocity",
+              "cmb_b_modes"
+            ]
+          },
+          "Omega_k": {
+            "kind": "no_channel_leading_order",
+            "order_dependence": "leading_egs_order_only",
+            "reason": "no leading-EGS-order low-l channel sources the anisotropic-curvature scalar",
+            "reopens_via": [
+              "higher_order_isw",
+              "lensing",
+              "native_low_ell_transfer"
+            ]
+          }
+        },
+        "leading_order_response_col_norms": {
+          "Sigma2": 1.0,
+          "W2": 0.0,
+          "Omega_tilt": 1.4142135623730951,
+          "Omega_k": 0.0
+        },
+        "omega_k_is_genuine_zero_not_sigma2_collinear": true
       },
       "A2_floor_invariance": {
         "floor_L5": 0.4739636163155822,
@@ -37,14 +65,16 @@
           0.06635,
           0.0,
           0.0
-        ]
+        ],
+        "null_idealisation": "GRF-LambdaCDM; the certificate's error rate inherits that null's idealisation (no instrument/foreground/systematics). The E2E null would re-calibrate it.",
+        "finite_null_alpha": "use the conservative add-one alpha_hat=(k+1)/(n+1) (exceedance_evalue_finite_null) so the e-value stays conservative under MC error in alpha"
       },
       "A4_rao_blackwell": {
         "raw_var": 1.9406071112705026,
         "rb_var": 0.02778175683058471,
         "dominates": true
       },
-      "headline": "graded comparator rank-2 (Sigma2,Omega_tilt reachable; W2,Omega_k joint null); Pi is a calibrated e-value; RB-sufficient"
+      "headline": "graded comparator rank-2 within the registered leading-channel response map (Sigma2,Omega_tilt reachable; null = structural {W2} + leading-order no-channel {Omega_k}); Pi is a calibrated e-value under the GRF-LambdaCDM null; RB-sufficient"
     },
     "axis_b": {
       "B1_transfer_floor_profile": {

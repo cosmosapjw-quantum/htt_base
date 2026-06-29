@@ -55,9 +55,10 @@
     "Omega_tilt": {
       "blocker": null,
       "coverage_cv_inclusive": 0.6666666666666666,
+      "coverage_is_conditional_on_lambdacdm_sigma_cv_prior": true,
       "error_kms": 101.87045232654711,
-      "note": "bulk-flow amplitude is the reachable tilt/dipole sector (model-independent kinematic descriptor)",
-      "source": "K5 CF4 release-matched bulk flow",
+      "note": "bulk-flow amplitude is the reachable tilt/dipole sector (model-independent kinematic descriptor); consistent with the LambdaCDM ~150-250 km/s expectation. The CV-inclusive coverage is conditional on a fixed LambdaCDM sigma_cv=150 km/s/comp prior; full release-matched mocks remain BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
+      "source": "K5 CF4 bulk flow (real Tully+2023 release)",
       "status": "measured",
       "value_kms": 340.72639833770336
     },
@@ -70,15 +71,15 @@
       "status": "partial"
     },
     "W2": {
-      "blocker": "BLOCKED_MISSING_FIELD_REALIZATIONS_discharged_as_no_go",
-      "note": "the CF4 WF reconstruction is curl-suppressed; the vorticity sector is structurally unidentifiable from it (NOT set to zero)",
+      "blocker": "BLOCKED_MISSING_FIELD_REALIZATIONS (WF mean-field no-go established; true CR posterior still blocked)",
+      "note": "the CF4 WF mean-field reconstruction is curl-suppressed (WF prior, across modes); the vorticity sector is structurally unidentifiable from it (NOT set to zero). A true Hoffman-Ribak CR posterior remains blocked until a CR ensemble is owned",
       "null_kind": "structural_null",
       "null_order_dependence": "order_independent",
       "reopens_via": [
         "transverse_peculiar_velocity",
         "cmb_b_modes"
       ],
-      "source": "K6 CF4 WF-field vorticity",
+      "source": "K6 CF4 WF mean-field vorticity",
       "status": "fail_closed_structural_no_go",
       "vorticity_over_shear_max": 0.005519792636461094
     }

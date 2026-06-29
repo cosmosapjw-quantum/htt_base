@@ -33,10 +33,13 @@ theorems applying GR + the covariant Boltzmann hierarchy directly to these varia
 
 ## Key claims to evaluate (be adversarial, then constructive)
 
-- **Identifiability / rank:** the comparator is data-rank-2 -- `Sigma^2` (CMB quadrupole)
-  and `Omega_tilt` (dipole/bulk flow) are reachable; `W^2` and `Omega_k` are a proven
-  *joint null* from {low-ell CMB-T, radial peculiar velocities}. Is the response-map /
-  null-space argument correct and complete? Are the channel-sensitivity assumptions sound?
+- **Identifiability / rank:** within the registered leading-channel response map the
+  comparator is rank-2 -- `Sigma^2` (CMB quadrupole) and `Omega_tilt` (dipole/bulk flow)
+  are reachable. The two null sectors are NOT the same kind: `W^2` is a genuine,
+  order-independent structural null (radial `n.Omega.n=0` + CMB curl/Weyl-blindness; its
+  response column is a genuine zero, not `Sigma^2`-collinear), while `Omega_k` is a
+  leading-EGS-order no-channel that re-opens beyond leading order. Is the response-map /
+  null-space argument correct and complete? Is the genuine-zero-vs-degeneracy distinction sound?
 - **PSD-cone redesign:** the comparator as a PSD matrix `M>=0` with `x_C = tr(C M)`
   bit-identical to the scalar; admissible set = convex cone; blind sector = structural
   null; bracket = convex cone-shell. Is this representation faithful and useful, or
@@ -46,17 +49,24 @@ theorems applying GR + the covariant Boltzmann hierarchy directly to these varia
   shear bracket; the visibility-kernel contraction. Are the hypotheses complete, limits
   valid, constants correctly attributed (e.g. the ETM coefficient kappa=4/21)?
 - **Real-data discharges:**
-  - K5 -- CF4 bulk flow |B|~341+/-102 km/s, error cosmic-variance-dominated;
-    release-matched-mock coverage 0.67 (nominal) vs 0.19 (measurement-only). Is the
-    cosmic-variance decomposition and coverage claim sound? Frame/selection caveats?
-  - K6 -- a structural *no-go*: the CF4 Wiener-filter velocity field is curl-suppressed
-    (vorticity <= 0.6% of shear), estimator validated by injection. Is "no-go, not
-    detection" the honest reading?
-  - K1 -- global look-elsewhere p = 0.097 (SMICA) under an *isotropic LambdaCDM null*;
-    the full FFP10/NPIPE E2E-systematics null is not yet bound. Is the partial-discharge
-    framing honest? Is the look-elsewhere max-scan valid?
-  - PR08-006 -- the joint comparator: rank-2 measured/partial, with `W^2,Omega_k`
-    fail-closed (never zeroed), no collapsed scalar. Is the fail-closed assembly correct?
+  - K5 -- CF4 bulk flow |B|~341+/-102 km/s (a measurement; consistent with the LambdaCDM
+    ~150-250 km/s expectation at this depth), error cosmic-variance-dominated. The
+    cosmic-variance-inclusive coverage 0.67 (vs 0.19 measurement-only) is from
+    geometry-and-error matched Gaussian bulk-flow mocks and is CONDITIONAL on a fixed
+    LambdaCDM sigma_cv=150 km/s/comp prior; full selection/Malmquist/grouping/correlated
+    mocks remain a gate. Is the conditional-coverage framing honest? Frame/selection caveats?
+  - K6 -- a WF mean-field structural *no-go*: the CF4 Wiener-filter velocity field is
+    curl-suppressed (vorticity <= 0.6% of shear), estimator validated by an injected
+    solid-body curl mode. A true Hoffman-Ribak CR vorticity posterior remains blocked.
+    Is "WF-prior no-go, not detection" the honest reading?
+  - K1 -- global look-elsewhere p = 0.097 (SMICA) / 0.121 (Commander, ~25% method
+    dependence -- reported side by side, not averaged) under an *isotropic LambdaCDM null*;
+    the full FFP10/NPIPE E2E-systematics null is not yet bound (a noise-augmented null is
+    built and ready to run). Is the partial-discharge framing honest? Is the look-elsewhere
+    max-scan valid?
+  - PR08-006 -- the joint comparator: rank-2 = ONE measured sector (Omega_tilt) + ONE
+    partial sector (Sigma^2), with `W^2,Omega_k` fail-closed (never zeroed), no collapsed
+    scalar. Is the fail-closed assembly correct, and the one-full-plus-one-partial honest?
 
 ## Hard boundaries (flag any violation as a fatal overclaim)
 

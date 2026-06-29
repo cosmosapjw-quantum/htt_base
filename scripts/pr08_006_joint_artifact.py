@@ -16,9 +16,11 @@ Sector map (per EGS3-A1 rank-2 identifiability, now on real data):
                                                  curl-suppressed WF reconstruction)
   Omega_k     <- (no channel)                 : FAIL-CLOSED (no low-l channel)
 
-This realises the program headline --- a measured rank-2 graded comparator
-together with the two-sector no-go (W^2, Omega_k) --- with actual numbers, while
-keeping the blind sectors fail-closed. Diagnostic-only; no Bianchi family,
+This realises the program headline --- a rank-2 graded comparator with ONE
+measured kinematic sector (Omega_tilt), ONE partial CMB sector (Sigma^2), and TWO
+fail-closed sectors (the two-sector no-go W^2, Omega_k) --- with actual numbers,
+while keeping the blind sectors fail-closed. The rank-2 count is one full plus one
+partial, not two fully measured sectors. Diagnostic-only; no Bianchi family,
 geometry, anisotropy-evidence, or native-solver claim.
 
 Outputs: docs/generated/pr08_006_joint_artifact.json. Deterministic; --check.
@@ -54,12 +56,13 @@ def build_report() -> dict:
     sectors = {
         "Omega_tilt": {
             "status": "measured",
-            "source": "K5 CF4 release-matched bulk flow",
+            "source": "K5 CF4 bulk flow (real Tully+2023 release)",
             "value_kms": k5.get("measured_bulk", {}).get("amplitude_kms"),
             "error_kms": k5.get("coverage", {}).get("total_amplitude_error_kms"),
             "coverage_cv_inclusive": k5.get("coverage", {}).get("cosmic_variance_inclusive", {}).get("amplitude_coverage"),
+            "coverage_is_conditional_on_lambdacdm_sigma_cv_prior": True,
             "blocker": None,
-            "note": "bulk-flow amplitude is the reachable tilt/dipole sector (model-independent kinematic descriptor)",
+            "note": "bulk-flow amplitude is the reachable tilt/dipole sector (model-independent kinematic descriptor); consistent with the LambdaCDM ~150-250 km/s expectation. The CV-inclusive coverage is conditional on a fixed LambdaCDM sigma_cv=150 km/s/comp prior; full release-matched mocks remain BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
         },
         "Sigma2": {
             "status": "partial",
@@ -71,10 +74,10 @@ def build_report() -> dict:
         },
         "W2": {
             "status": "fail_closed_structural_no_go",
-            "source": "K6 CF4 WF-field vorticity",
+            "source": "K6 CF4 WF mean-field vorticity",
             "vorticity_over_shear_max": k6.get("vorticity_over_shear_ratio_max"),
-            "blocker": "BLOCKED_MISSING_FIELD_REALIZATIONS_discharged_as_no_go",
-            "note": "the CF4 WF reconstruction is curl-suppressed; the vorticity sector is structurally unidentifiable from it (NOT set to zero)",
+            "blocker": "BLOCKED_MISSING_FIELD_REALIZATIONS (WF mean-field no-go established; true CR posterior still blocked)",
+            "note": "the CF4 WF mean-field reconstruction is curl-suppressed (WF prior, across modes); the vorticity sector is structurally unidentifiable from it (NOT set to zero). A true Hoffman-Ribak CR posterior remains blocked until a CR ensemble is owned",
             "null_kind": NULL_SECTOR_KIND["W2"]["kind"],
             "null_order_dependence": NULL_SECTOR_KIND["W2"]["order_dependence"],
             "reopens_via": list(NULL_SECTOR_KIND["W2"]["reopens_via"]),

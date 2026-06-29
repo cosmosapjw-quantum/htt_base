@@ -12,27 +12,47 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import sys
 
 REPO = Path(__file__).resolve().parents[1]
+# make `import htt.bass...` / `import htt.obsstat...` resolve regardless of cwd
+if str(REPO) not in sys.path:
+    sys.path.insert(0, str(REPO))
 OUT = REPO / "docs/generated/egs3_experiments.json"
 
 
 def axis_a() -> dict:
-    from htt.obsstat.egs3_graded_comparator import identifiable_rank, graded_comparator
+    from htt.obsstat.egs3_graded_comparator import (
+        identifiable_rank, graded_comparator, describe_null_sectors, channel_response_design,
+    )
     from htt.obsstat.egs3_calibration import evalue_markov_calibration, rao_blackwell_demonstration
     from htt.obsstat.egs2_fisher import fisher_floor
+    import numpy as np
     rk = identifiable_rank()
     gc = graded_comparator(2.0e-6, 1.5e-6, 8.0e-7, 3.0e-7)
     cal = evalue_markov_calibration(n_sims=20000, threshold=1.5, seed=71)
     rb = rao_blackwell_demonstration(n_groups=300, n_per_group=40, seed=17)
+    # The two null sectors are NOT the same KIND of null. Record the genuine-zero
+    # check (the response column norm of each null sector at leading order) so the
+    # rank-2 count is not over-read as a uniform "joint null" (audit FM2 / external
+    # review): W2 is a genuine, order-independent structural null; Omega_k is a
+    # leading-order no-channel that re-opens beyond leading order.
+    design = channel_response_design()
+    col_norms = {s: float(n) for s, n in zip(
+        ("Sigma2", "W2", "Omega_tilt", "Omega_k"), np.linalg.norm(design, axis=0))}
     return {
         "A1_graded_rank": {"rank": rk.rank, "reachable": list(rk.reachable_sectors),
-                           "null": list(rk.null_sectors), "x_C_example": gc.x_C},
+                           "null": list(rk.null_sectors), "x_C_example": gc.x_C,
+                           "null_kinds": describe_null_sectors(rk.null_sectors),
+                           "leading_order_response_col_norms": col_norms,
+                           "omega_k_is_genuine_zero_not_sigma2_collinear": bool(col_norms["Omega_k"] == 0.0)},
         "A2_floor_invariance": {"floor_L5": fisher_floor(5, 1.0), "scale_free": True},
         "A3_evalue_calibration": {"null_mean": cal.null_mean_evalue, "markov_holds": cal.markov_holds,
-                                  "beta_grid": list(cal.beta_grid), "false_rate": list(cal.empirical_false_rate)},
+                                  "beta_grid": list(cal.beta_grid), "false_rate": list(cal.empirical_false_rate),
+                                  "null_idealisation": "GRF-LambdaCDM; the certificate's error rate inherits that null's idealisation (no instrument/foreground/systematics). The E2E null would re-calibrate it.",
+                                  "finite_null_alpha": "use the conservative add-one alpha_hat=(k+1)/(n+1) (exceedance_evalue_finite_null) so the e-value stays conservative under MC error in alpha"},
         "A4_rao_blackwell": {"raw_var": rb.raw_variance, "rb_var": rb.rb_variance, "dominates": rb.dominates},
-        "headline": "graded comparator rank-2 (Sigma2,Omega_tilt reachable; W2,Omega_k joint null); Pi is a calibrated e-value; RB-sufficient",
+        "headline": "graded comparator rank-2 within the registered leading-channel response map (Sigma2,Omega_tilt reachable; null = structural {W2} + leading-order no-channel {Omega_k}); Pi is a calibrated e-value under the GRF-LambdaCDM null; RB-sufficient",
     }
 
 

@@ -87,11 +87,40 @@ TEST_FILES = (
     "research_gates/egs2/tests/test_egs2_fisher_bracket.py",
     "research_gates/egs2/tests/test_egs2_transport.py",
     "research_gates/egs2/tests/test_egs2_blocker_discharges.py",
+    "research_gates/external_audit_2026_06_29/reviewer_verification.py",
     "tests/obsstat/test_k1_global_maxscan.py",
+    "tests/obsstat/test_k1_noise_mode.py",
     "tests/obsstat/test_k5_cf4_release_coverage.py",
     "tests/obsstat/test_k6_cf4_curl_posterior.py",
     "tests/contracts/test_pr08_006_joint_artifact.py",
     "tests/contracts/test_psd_cone_redesign.py",
+)
+
+# Reproducibility references: the commands/records cited in the report's
+# Reproducibility section. Bundled so the package is genuinely self-contained --
+# every script + proof record the report cites is present under the
+# `research_evaluation/` subtree (a report-reference existence check passes there)
+# (external-audit pr08_reassessment finding: report referenced commands not shipped).
+REPRODUCIBILITY_REFS = (
+    "scripts/prove_egs_lowell_theorems.py",
+    "scripts/make_egs_lowell_theorem_figures.py",
+    "scripts/make_pr04_paper_figures.py",
+    "scripts/make_lowell_morphology_real_map.py",
+    "scripts/make_cf4_bulkflow_apex_depth.py",
+    "scripts/make_cf4_bulkflow_likelihood.py",
+    "scripts/make_cf4_affine_flow.py",
+    "scripts/generate_transfer_sensitivity_report.py",
+    "scripts/run_pr07_experiments.py",
+    "scripts/cove_verify_pr07.py",
+    "scripts/claim_lint_research_surfaces.py",
+    "docs/generated/egs_lowell_theorem_proofs.json",
+    "docs/generated/pr04_paper_theorem_proofs.json",
+    "research_gates/pr04/tests/test_pr04_bianchi.py",
+    "research_gates/pr04/tests/test_pr04_congruence.py",
+    "research_gates/pr04/tests/test_pr04_integration.py",
+    "research_gates/pr04/tests/test_pr04_pushforward.py",
+    "research_gates/pr04/tests/test_pr04_response.py",
+    "research_gates/pr04/tests/test_pr04_schema.py",
 )
 
 # Machine-checked result records that back every number.
@@ -164,6 +193,7 @@ def _collect_entries(repo_root: Path) -> list[Entry]:
         (RESEARCH_CODE, "research_code"),
         (TEST_FILES, "gate_test"),
         (RESULT_RECORDS, "result_record"),
+        (REPRODUCIBILITY_REFS, "reproducibility_ref"),
     )
     for files, group in groups:
         for rel in files:
@@ -206,6 +236,7 @@ def _assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
         "research_code_present": groups.count("research_code") >= 20,
         "gate_tests_present": groups.count("gate_test") >= 8,
         "result_records_present": groups.count("result_record") >= 10,
+        "reproducibility_refs_present": groups.count("reproducibility_ref") >= 13,
         "joint_artifact_included": f"{ARCHIVE_ROOT}/docs/generated/pr08_006_joint_artifact.json" in paths,
         "results_table_included": f"{ARCHIVE_ROOT}/docs/generated/egs_results_table.json" in paths,
         "blockers_included": f"{ARCHIVE_ROOT}/docs/research_program/BLOCKERS.md" in paths,
@@ -289,10 +320,15 @@ what to evaluate and what the claim boundaries are.
 - `research_evaluation/docs/research_program/{BLOCKERS.md,K1_E2E_DOWNLOAD_GUIDE.md}` --
   what is blocked and how to unblock it.
 
+The repository subtree root inside this archive is `research_evaluation/`: every path
+the report cites (e.g. `scripts/...`, `docs/generated/...`) is present under that
+directory, so commands run from `research_evaluation/` resolve.
+
 ## How to run the gate tests (optional, if you have python+numpy)
 
 ```bash
-PYTHONPATH=.:htt:htt/htt python -m pytest research_evaluation/tests research_evaluation/research_gates -q
+cd research_evaluation
+PYTHONPATH=.:htt:htt/htt python -m pytest tests research_gates -q
 ```
 
 ## Claim envelope (do not exceed)
@@ -300,6 +336,9 @@ PYTHONPATH=.:htt:htt/htt python -m pytest research_evaluation/tests research_eva
 Diagnostic-only / model-independent descriptors + conditional theorems + (where inputs
 are owned) calibrated measurements. No Bianchi-family identification, no geometry
 detection, no native low-ell solver output, no MIO-as-odds, no scalar->family promotion.
+K5: the CF4 bulk flow is measured, but its cosmic-variance coverage is conditional on a
+fixed LambdaCDM prior. K6 is a WF mean-field structural no-go (true CR posterior still
+blocked). K1 is a partial (look-elsewhere) discharge under a LambdaCDM null, not E2E.
 """
 
 
@@ -339,10 +378,13 @@ theorems applying GR + the covariant Boltzmann hierarchy directly to these varia
 
 ## Key claims to evaluate (be adversarial, then constructive)
 
-- **Identifiability / rank:** the comparator is data-rank-2 -- `Sigma^2` (CMB quadrupole)
-  and `Omega_tilt` (dipole/bulk flow) are reachable; `W^2` and `Omega_k` are a proven
-  *joint null* from {low-ell CMB-T, radial peculiar velocities}. Is the response-map /
-  null-space argument correct and complete? Are the channel-sensitivity assumptions sound?
+- **Identifiability / rank:** within the registered leading-channel response map the
+  comparator is rank-2 -- `Sigma^2` (CMB quadrupole) and `Omega_tilt` (dipole/bulk flow)
+  are reachable. The two null sectors are NOT the same kind: `W^2` is a genuine,
+  order-independent structural null (radial `n.Omega.n=0` + CMB curl/Weyl-blindness; its
+  response column is a genuine zero, not `Sigma^2`-collinear), while `Omega_k` is a
+  leading-EGS-order no-channel that re-opens beyond leading order. Is the response-map /
+  null-space argument correct and complete? Is the genuine-zero-vs-degeneracy distinction sound?
 - **PSD-cone redesign:** the comparator as a PSD matrix `M>=0` with `x_C = tr(C M)`
   bit-identical to the scalar; admissible set = convex cone; blind sector = structural
   null; bracket = convex cone-shell. Is this representation faithful and useful, or
@@ -352,17 +394,24 @@ theorems applying GR + the covariant Boltzmann hierarchy directly to these varia
   shear bracket; the visibility-kernel contraction. Are the hypotheses complete, limits
   valid, constants correctly attributed (e.g. the ETM coefficient kappa=4/21)?
 - **Real-data discharges:**
-  - K5 -- CF4 bulk flow |B|~341+/-102 km/s, error cosmic-variance-dominated;
-    release-matched-mock coverage 0.67 (nominal) vs 0.19 (measurement-only). Is the
-    cosmic-variance decomposition and coverage claim sound? Frame/selection caveats?
-  - K6 -- a structural *no-go*: the CF4 Wiener-filter velocity field is curl-suppressed
-    (vorticity <= 0.6% of shear), estimator validated by injection. Is "no-go, not
-    detection" the honest reading?
-  - K1 -- global look-elsewhere p = 0.097 (SMICA) under an *isotropic LambdaCDM null*;
-    the full FFP10/NPIPE E2E-systematics null is not yet bound. Is the partial-discharge
-    framing honest? Is the look-elsewhere max-scan valid?
-  - PR08-006 -- the joint comparator: rank-2 measured/partial, with `W^2,Omega_k`
-    fail-closed (never zeroed), no collapsed scalar. Is the fail-closed assembly correct?
+  - K5 -- CF4 bulk flow |B|~341+/-102 km/s (a measurement; consistent with the LambdaCDM
+    ~150-250 km/s expectation at this depth), error cosmic-variance-dominated. The
+    cosmic-variance-inclusive coverage 0.67 (vs 0.19 measurement-only) is from
+    geometry-and-error matched Gaussian bulk-flow mocks and is CONDITIONAL on a fixed
+    LambdaCDM sigma_cv=150 km/s/comp prior; full selection/Malmquist/grouping/correlated
+    mocks remain a gate. Is the conditional-coverage framing honest? Frame/selection caveats?
+  - K6 -- a WF mean-field structural *no-go*: the CF4 Wiener-filter velocity field is
+    curl-suppressed (vorticity <= 0.6% of shear), estimator validated by an injected
+    solid-body curl mode. A true Hoffman-Ribak CR vorticity posterior remains blocked.
+    Is "WF-prior no-go, not detection" the honest reading?
+  - K1 -- global look-elsewhere p = 0.097 (SMICA) / 0.121 (Commander, ~25% method
+    dependence -- reported side by side, not averaged) under an *isotropic LambdaCDM null*;
+    the full FFP10/NPIPE E2E-systematics null is not yet bound (a noise-augmented null is
+    built and ready to run). Is the partial-discharge framing honest? Is the look-elsewhere
+    max-scan valid?
+  - PR08-006 -- the joint comparator: rank-2 = ONE measured sector (Omega_tilt) + ONE
+    partial sector (Sigma^2), with `W^2,Omega_k` fail-closed (never zeroed), no collapsed
+    scalar. Is the fail-closed assembly correct, and the one-full-plus-one-partial honest?
 
 ## Hard boundaries (flag any violation as a fatal overclaim)
 

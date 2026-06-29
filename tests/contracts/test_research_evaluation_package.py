@@ -40,6 +40,33 @@ def test_builds_passes_gates_and_is_research_complete():
     assert len(entries) == payload["archive_entry_count"]
 
 
+def test_reproducibility_refs_are_bundled_self_contained():
+    # external-audit pr08_reassessment: the report's Reproducibility section cited
+    # commands/records that were NOT shipped in the package. They must now all be
+    # present under the research_evaluation/ subtree so check_report_references passes.
+    _mod, payload, _entries = _payload()
+    assert payload["required_assertions"]["reproducibility_refs_present"]
+    archive_paths = {r["archive_path"] for r in payload["archive_entries"]}
+    referenced = [
+        "scripts/prove_egs_lowell_theorems.py",
+        "scripts/make_egs_lowell_theorem_figures.py",
+        "scripts/make_pr04_paper_figures.py",
+        "scripts/make_lowell_morphology_real_map.py",
+        "scripts/make_cf4_bulkflow_apex_depth.py",
+        "scripts/make_cf4_bulkflow_likelihood.py",
+        "scripts/make_cf4_affine_flow.py",
+        "scripts/generate_transfer_sensitivity_report.py",
+        "scripts/run_pr07_experiments.py",
+        "scripts/cove_verify_pr07.py",
+        "docs/generated/egs_lowell_theorem_proofs.json",
+        "docs/generated/pr04_paper_theorem_proofs.json",
+    ]
+    for rel in referenced:
+        assert f"research_evaluation/{rel}" in archive_paths, rel
+    # the research_gates/pr04/tests directory is represented by its files
+    assert any(p.startswith("research_evaluation/research_gates/pr04/tests/") for p in archive_paths)
+
+
 def test_claim_firewall_and_content_addressed():
     _mod, payload, _entries = _payload()
     assert payload["claim_tier"] == "diagnostic_only"

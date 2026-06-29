@@ -81,15 +81,19 @@ look-elsewhere max-scan calibration) are validated on synthetic
 catalogues with known truth. No result here identifies a Bianchi
 family, detects an anisotropic geometry, claims native low-$\ell$
 Boltzmann-solver validation, or promotes any diagnostic into a
-posterior-odds or model-ranking statement. The honest publishable
-envelope is a methods-plus-bounds framework that recovers the
-established low-$\ell$ CMB anomalies as null-calibrated
-model-independent features, maps the CF4 bulk-flow apex profile,
-measures a forward-mock-calibrated CF4 bulk flow and its affine
-velocity-gradient decomposition, and proves an exact dust-FLRW
+posterior-odds or model-ranking statement. The honest defensible
+envelope is a diagnostic methods-and-calibration framework: it reports
+the real CF4 bulk-flow amplitude and its affine velocity-gradient
+decomposition as model-independent kinematic descriptors, the local and
+look-elsewhere-corrected low-$\ell$ CMB morphology under an isotropic
+$\Lambda$CDM null (component-separation dependent, not E2E-calibrated),
+and a curl-suppressed-reconstruction structural no-go; it maps the CF4
+bulk-flow apex profile; and it proves an exact dust-FLRW
 constraint-transport oracle (machine-checked with the Wolfram Engine
-and an independent xAct canonicalization)---while producing no false
-anisotropy claim.
+and an independent xAct canonicalization). It does \emph{not} establish
+a globally significant low-$\ell$ anomaly, an anisotropic geometry, or a
+Bianchi-family identification---and it produces no false anisotropy
+claim.
 \end{abstract}
 
 \tableofcontents
@@ -759,11 +763,11 @@ The model-independent measurements above use estimators whose
 and structural identifiability) are validated separately on synthetic
 catalogues with known truth. These are explicitly \emph{synthetic
 mechanics}, not measurements: they certify that the estimator behaves
-correctly, and they do not produce any observational number. The
-release-matched forward mocks, end-to-end simulations, and constrained
-field realizations needed to turn these mechanics into calibrated
-observational uncertainties are the standing blocks of
-\S\ref{sec:blocks}.
+correctly, and they do not produce any observational number. The full
+selection/Malmquist/grouping-matched forward mocks, end-to-end
+simulations, and constrained field realizations needed to turn these
+mechanics into fully calibrated observational uncertainties are the
+standing blocks of \S\ref{sec:blocks}.
 
 \paragraph{K5 hierarchical bulk-flow likelihood (mechanics).}
 A weighted-Gaussian hierarchical model
@@ -836,25 +840,33 @@ robust while the exact numbers await the covariant coefficients and real low-$\e
 transfer.
 
 \begin{itemize}[leftmargin=1.4em,itemsep=3pt]
-  \item \emph{NT2-A1 (a floor nothing beats).} The \emph{genuine}
-        multi-multipole Fisher--Cram\'er--Rao floor on $\Fshear$,
+  \item \emph{NT2-A1 (a floor under the registered response).} The
+        multi-multipole Fisher--Cram\'er--Rao floor on $\Fshear$
+        \emph{conditional on the registered shear-response profile},
         $\sigma(\Fshear)/\Fshear\ge[\sum_{\ell\ge2}\tfrac{2\ell+1}{2}f_{\mathrm{sky}}\,r_\ell^2]^{-1/2}$
         with $r_\ell=\partial\ln C_\ell/\partial\ln\Fshear$ ($r_2=1$,
         $r_{\ell>2}>0$ via the EGS gradient chain). Because the shear sources
-        $\ell>2$, this floor is \emph{strictly below} the single-$\ell$
-        $\sqrt{2/5}\approx0.632$ (it drops to $0.474$ at $L=5$ and $0.424$ at
-        $L=20$ for $f_{\mathrm{sky}}=1$, and sky cuts raise it); a
-        multipole-combining MLE achieves it (MC ratio $\approx1$). This is the
-        real floor the NT-A3 label gestured at, now derived.
+        $\ell>2$, this floor is below the single-$\ell$
+        $\sqrt{2/5}\approx0.632$ \emph{under that response} (it drops to $0.474$
+        at $L=5$ and $0.424$ at $L=20$ for $f_{\mathrm{sky}}=1$, and sky cuts
+        raise it); a multipole-combining MLE achieves it (MC ratio $\approx1$).
+        The floor value depends on the response $r_\ell$; physical calibration of
+        $r_{\ell>2}$ awaits the native low-$\ell$ transfer (EGS3-B1 below gives
+        the single-mode, finite-$k$ profile). This is the floor the NT-A3 label
+        gestured at, now derived under a stated response model.
   \item \emph{NT2-A2 (saturation).} The Fisher information saturates beyond the
         octupole (the floor changes $<1\%$ from $L{=}40$ to $L{=}80$): $(a_2,a_3)$
         are approximately sufficient for $\Fshear$.
-  \item \emph{NT2-B1 (an exclusion of zero).} Under H3 ($R_{\mathrm{EGS}}=a_3/a_2\le R_*$),
-        the shear is two-sided bracketed,
-        $a_2\kappa/(1+R_{\mathrm{EGS}})\le\Sigma\le C_{\mathrm{up}}a_2$, so
-        $\Fshear$ is bounded \emph{away from zero}: a nonzero CMB quadrupole
-        \emph{forbids} a vanishing shear-filling. The lower bound is the new,
-        strong content (the report's beyond-MES gave only an upper limit).
+  \item \emph{NT2-B1 (an exclusion of zero, within the registered closure).}
+        Under the registered closure/H3 derivative-correction model
+        ($R_{\mathrm{EGS}}=a_3/a_2\le R_*$), the shear is two-sided bracketed,
+        $a_2\kappa/(1+R_{\mathrm{EGS}})\le\Sigma\le C_{\mathrm{up}}a_2$, so the
+        closure-defined $\Fshear$ is bounded \emph{away from zero}: within that
+        model a nonzero $a_2$ bounds the closure-defined shear-filling away from
+        zero. This is \emph{not} a generic statement about the observed CMB
+        quadrupole. The lower bound is the new content (the report's beyond-MES
+        gave only an upper limit); the constant $C_{\mathrm{up}}$ is the
+        documented MES upper bound (here $9$).
   \item \emph{NT2-B2 (a mechanism, not an attribution).} Through the
         shear-memory law $\dot\sigma=-3H\sigma+3H^2\Pi$, the tilt anisotropic
         stress $\Pi(z)$ is the explicit GR \emph{source} of the depth gap
@@ -869,21 +881,26 @@ transfer.
         radial velocities alone can constrain it.
 \end{itemize}
 
-\paragraph{Concrete discharges of the standing blocks.} Three of the four
-\S\ref{sec:blocks} blocks are dischargeable with \emph{public} data and published
-methods, without the native solver. (i) The K1 global $p$-value: run the frozen
-max-scan family on the public Planck FFP10 (PR3: 999 CMB $+$ 300 noise MC per
-method) and PR4/NPIPE ($\sim300$ E2E) simulations, which carry the real
+\paragraph{Routes to discharge the standing blocks.} Three of the four
+\S\ref{sec:blocks} blocks have a route to a fuller discharge with \emph{public}
+data and published methods, without the native solver. (i) The K1 E2E null: run
+the frozen max-scan family on the public Planck FFP10 (PR3: 999 CMB $+$ 300 noise
+MC per method) and PR4/NPIPE ($\sim300$ E2E) simulations, which carry the real
 mask/noise/systematics; the ingestion path
 (\texttt{e2e\_maxscan\_from\_summaries}) returns the $+1$-corrected global rank
-$p$-value (global $\ge$ min-local). (ii) The K6 vorticity posterior: Hoffman--Ribak
-constrained realizations sample the curl the Wiener-filter mean suppresses --- the
-CR ensemble \emph{is} the posterior (mean $\sim0$ with a prior-width bar), not a
-bare ``non-identifiable''. (iii) The K5 cosmic-variance term: the same CF4 WF/CR
-Bias-Gaussianization machinery generates the release-matched forward mocks. Each
-discharge is implemented here as runnable \emph{mechanics}; the real public-map
-and 3D CF4 WF/CR runs retain their registered blocker codes until the inputs are
-owned. The native low-$\ell$ solver block is unchanged; a covariant 1+3 hierarchy
+$p$-value (global $\ge$ min-local). A first step is already built and ready to run:
+a noise-augmented null (\texttt{k1\_global\_maxscan.py --noise-mc-dir}) that adds a
+local $\Lambda$CDM signal to the real per-method noise-only sims, which upgrades
+the GRF null toward the E2E one (still partial: no residual foregrounds, no matched
+signal). (ii) The K6 vorticity posterior: Hoffman--Ribak constrained realizations
+would sample the curl the Wiener-filter mean suppresses, turning the present
+mean-field no-go into a realization-conditioned posterior (mean $\sim0$ with a
+prior-width bar); this needs a CR ensemble that is not yet owned. (iii) The K5
+cosmic-variance term: the same CF4 WF/CR machinery would generate the full
+selection/Malmquist-matched forward mocks needed to replace the present
+fixed-$\sigma_{\mathrm{cv}}$ Gaussian-prior coverage. Each route is implemented
+here only as runnable \emph{mechanics}; the real public-map and 3D CF4 WF/CR runs
+retain their registered blocker codes until the inputs are owned. The native low-$\ell$ solver block is unchanged; a covariant 1+3 hierarchy
 with a real recombination visibility is registered as the interim semi-native
 shear$\to$quadrupole calculator that would replace the toy $r_\ell$ with a
 physically sourced response.
@@ -935,11 +952,13 @@ Rao--Blackwell-sufficient for the reachable subspace.)
 \paragraph{Axis B (GR/Boltzmann on the variables).} \emph{B1 (semi-native
 transfer).} A line-of-sight projection of a single shear-sourced mode through a
 recombination visibility gives the response $r_\ell$ physically, rather than by a
-toy. The genuine Fisher floor is then a \emph{profile in the shear scale $k$}: it
-saturates at the single-$\ell$ $\sqrt{2/5}\approx0.632$ for a pure super-horizon
-(homogeneous) shear --- which is quadrupole-dominated --- and drops below
-$0.632$ only when the shear sources a band of multipoles at finite $k$. This
-sharpens NT2-A1: the sub-$0.632$ floor is a finite-$k$ statement. \emph{B2
+toy. The Fisher floor (conditional on the registered shear-response profile) is
+then a single-mode \emph{profile in the shear scale $k$}: it saturates at the
+single-$\ell$ $\sqrt{2/5}\approx0.632$ for a pure super-horizon (homogeneous)
+shear --- which is quadrupole-dominated --- and drops below $0.632$ only when the
+shear sources a band of multipoles at finite $k$. This sharpens NT2-A1: the
+sub-$0.632$ floor is a single-mode, finite-$k$ statement; the full-response floor
+needs the shear-power mode integral. \emph{B2
 (Volterra depth-memory).} The shear-memory law has the exact integrating-factor
 solution, so the depth gap is a Volterra functional of the tilt anisotropic
 stress with an exponential memory kernel $e^{-3\int H}$, bounded by a Grönwall
@@ -951,10 +970,11 @@ bracket constants (Wolfram-verified), turning the NT2-B1 exclusion into a
 statement with stated coefficients.
 
 \paragraph{Toward a publishable joint comparator.} The headline target (Axis C)
-is a \emph{measured} rank-2 graded comparator on real Planck/CF4 data
-\emph{together with} the proven two-sector no-go (the $\Wstd,\Okaniso$ sectors
-are unreachable from CMB-T $+$ radial velocities) and the named re-opening
-channels --- a strong, honest result that needs no native solver. The
+is a rank-2 graded comparator on real Planck/CF4 data --- \emph{one measured}
+kinematic sector ($\Otilt$) plus \emph{one partial} CMB sector ($\Sigstd$) ---
+\emph{together with} the proven two-sector no-go (the $\Wstd,\Okaniso$ sectors are
+unreachable from CMB-T $+$ radial velocities) and the named re-opening channels
+--- an honest result that needs no native solver. The
 discharges of \S\ref{sec:blocks} (the public-E2E K1 global $p$, the
 constrained-realization velocity posteriors) feed this joint pushforward; the
 runnable mechanics are in place and the real-data runs carry their registered
@@ -973,50 +993,65 @@ observed data, carrying no native low-$\ell$ solver output and no Bianchi-family
 or geometry-detection claim.
 
 \paragraph{Axis A --- information on the variables.}
-Figure~\ref{fig:egs3-axisA} shows the graded-comparator response design (the
-reachable rank-2 subspace $\{\Sigstd,\Otilt\}$ against the joint null
-$\{\Wstd,\Okaniso\}$) and the $\Pi$ e-value calibration (the empirical
-false-exceedance rate stays under the Markov bound). Figure~\ref{fig:egs3-nt2a1}
-shows the genuine multi-multipole Fisher--CR floor dropping strictly below the
-single-$\ell$ $\sqrt{2/5}=0.632$.
+Figure~\ref{fig:egs3-axisA} shows the graded-comparator response design within
+the registered leading-channel response map (the reachable rank-2 subspace
+$\{\Sigstd,\Otilt\}$ against the two-sector null). The two null sectors are
+\emph{not} the same kind: $\Wstd$ is a genuine, order-independent structural null
+(radial $n^a\Omega_{ab}n^b\equiv0$ and CMB curl/Weyl-blindness at EGS order; its
+response column is a genuine zero, not $\Sigstd$-collinear), whereas $\Okaniso$
+is a leading-EGS-order no-channel that re-opens beyond leading order
+(higher-order ISW, lensing, the native low-$\ell$ transfer). The panel also shows
+the $\Pi$ e-value calibration (the empirical false-exceedance rate stays under
+the Markov bound; the null is the isotropic GRF-$\Lambda$CDM ensemble, so the
+certificate inherits that null's idealisation, and a finite-null
+$\hat\alpha=(k{+}1)/(n{+}1)$ keeps it conservative). Figure~\ref{fig:egs3-nt2a1}
+shows the multi-multipole Fisher floor, \emph{conditional on the registered
+shear-response profile}, dropping below the single-$\ell$ $\sqrt{2/5}=0.632$.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.49\textwidth]{current/fig_egs3_a1_graded_rank}
   \hfill
   \includegraphics[width=0.49\textwidth]{current/fig_egs3_a3_evalue_calibration}
-  \caption{Axis A. Left: EGS3-A1 graded-comparator response, rank two
-    (green reachable, red joint null). Right: EGS3-A3, $\Pi$ as a calibrated
-    e-value with a Markov false-exceedance bound. Diagnostic-only; synthetic;
-    no detection or family identification.}
+  \caption{Axis A. Left: EGS3-A1 graded-comparator response, rank two within the
+    registered leading-channel response map (green reachable; red the two-sector
+    null---$\Wstd$ a genuine structural null, $\Okaniso$ a leading-order
+    no-channel). Right: EGS3-A3, $\Pi$ as a calibrated e-value with a Markov
+    false-exceedance bound under the GRF-$\Lambda$CDM null. Diagnostic-only;
+    synthetic; no detection or family identification.}
   \label{fig:egs3-axisA}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.6\textwidth]{current/fig_egs2_nt2a1_fisher_floor}
-  \caption{NT2-A1 genuine multi-multipole Fisher--CR floor (fractional
-    dispersion $\sigma(F)/F$ versus the estimator $\ell_{\max}$), strictly below
-    the single-$\ell$ dispersion. Diagnostic-only; synthetic.}
+  \caption{NT2-A1 multi-multipole Fisher floor (fractional dispersion
+    $\sigma(F)/F$ versus the estimator $\ell_{\max}$), conditional on the
+    registered shear-response profile and below the single-$\ell$ dispersion
+    under that response. Diagnostic-only; synthetic.}
   \label{fig:egs3-nt2a1}
 \end{figure}
 
 \paragraph{Axis B --- GR/Boltzmann on the variables.}
-Figure~\ref{fig:egs3-axisB1} shows the semi-native floor as a \emph{profile} in
-the shear scale $k$ (saturating at $0.632$ for super-horizon shear and dropping
-below only at finite $k$) and the Volterra depth-memory of the tilt stress with
-its exponential kernel. Figure~\ref{fig:egs3-axisB2} shows the vorticity
-re-opening (radial blind, transverse channel active) and the two-sided shear/$F$
-bracket whose strictly positive lower bound excludes zero.
+Figure~\ref{fig:egs3-axisB1} shows the semi-native floor as a single-mode,
+finite-$k$ \emph{profile} in the shear scale $k$ (saturating at $0.632$ for
+super-horizon shear and dropping below only at finite $k$ for a single
+shear-sourced mode; the full-response floor needs the shear-power mode integral)
+and the Volterra depth-memory of the tilt stress with its exponential kernel.
+Figure~\ref{fig:egs3-axisB2} shows the vorticity re-opening (radial blind,
+transverse channel active) and the two-sided shear/$F$ bracket whose lower bound
+is strictly positive \emph{within the registered closure/H3 model}, excluding the
+zero-shear vertex (not a generic statement about the observed CMB quadrupole).
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.49\textwidth]{current/fig_egs3_b1_floor_profile}
   \hfill
   \includegraphics[width=0.49\textwidth]{current/fig_egs3_b2_volterra}
-  \caption{Axis B. Left: EGS3-B1, the floor is a $k$-profile (sharpening
-    NT2-A1). Right: EGS3-B2, the depth gap is a Volterra functional of the tilt
-    anisotropic stress with kernel $e^{-3\int H}$. Diagnostic-only; synthetic.}
+  \caption{Axis B. Left: EGS3-B1, the floor is a single-mode, finite-$k$
+    $k$-profile (sharpening NT2-A1 under the registered response). Right:
+    EGS3-B2, the depth gap is a Volterra functional of the tilt anisotropic
+    stress with kernel $e^{-3\int H}$. Diagnostic-only; synthetic.}
   \label{fig:egs3-axisB1}
 \end{figure}
 
@@ -1027,9 +1062,10 @@ bracket whose strictly positive lower bound excludes zero.
   \includegraphics[width=0.49\textwidth]{current/fig_egs2_nt2b1_bracket}
   \caption{Axis B. Left: EGS3-B3, radial peculiar velocities are
     vorticity-blind ($n^a\Omega_{ab}n^b\equiv0$) while the transverse channel
-    re-opens the sector. Right: NT2-B1, the two-sided shear/$F$ bracket; the
-    lower bound is strictly positive so an isotropic-looking shear is excluded
-    at fixed quadrupole. Diagnostic-only; synthetic.}
+    re-opens the sector. Right: NT2-B1, the two-sided shear/$F$ bracket; within
+    the registered closure/H3 model the lower bound is strictly positive so the
+    closure-defined shear-filling is excluded from zero at fixed $a_2$.
+    Diagnostic-only; synthetic.}
   \label{fig:egs3-axisB2}
 \end{figure}
 
@@ -1068,7 +1104,7 @@ real-data runs that remain blocked.
     \midrule
     NT-A1 & Math/Stat & symbolic & $F_{\rm shear}\propto D_2$, EGS limit $\to0$ \\
     NT-A3 & Math/Stat & symbolic & single-sky dispersion $\sqrt{2/5}=0.632$ \\
-    NT-B3 & GR & symbolic & $G_F=1$ iff depth-steady shear \\
+    NT-B3 & GR & symbolic & $G_F=1$ contrast for depth-steady shear \\
     EGS3-A1 & Math/Stat & gate & rank 2; null $\{\Wstd,\Okaniso\}$ \\
     EGS3-A3 & Math/Stat & gate & $\Pi$ e-value, Markov bound holds \\
     EGS3-A4 & Math/Stat & gate & Rao--Blackwell sufficiency \\
@@ -1107,10 +1143,11 @@ measurements, which \S\ref{sec:measured} now reports.
 
 With the controlling inputs in hand (the real CF4++ Wiener-filter velocity field
 and group catalogue, and the real Planck PR3 component-separated maps), the three
-data rows are discharged on real data --- two fully, one partially, and one as an
-honest no-go (Fig.~\ref{fig:discharges}). All three are model-independent OBSSTAT
-descriptors: no Bianchi-family, geometry, anisotropy-evidence, or native-solver
-claim is made.
+data rows are addressed on real data --- one measured kinematic descriptor with
+conditional cosmic-variance coverage (K5), one partial look-elsewhere discharge
+(K1), and one structural no-go (K6) (Fig.~\ref{fig:discharges}). All three are
+model-independent OBSSTAT descriptors: no Bianchi-family, geometry,
+anisotropy-evidence, or native-solver claim is made.
 
 \begin{figure}[htbp]
   \centering
@@ -1125,34 +1162,50 @@ claim is made.
   \label{fig:discharges}
 \end{figure}
 
-\paragraph{K5 (discharged) --- CF4 cosmic-variance-inclusive bulk-flow coverage.}
+\paragraph{K5 (measured bulk flow; conditional coverage) --- CF4 bulk flow.}
 The weighted-GLS estimator on the real Cosmicflows-4 group release (Tully et al.
 2023, $38{,}053$ groups) gives a bulk-flow amplitude
 $|\mathbf B|\simeq341\pm102\ \mathrm{km\,s^{-1}}$, with the error budget dominated
 by cosmic variance ($102\ \mathrm{km\,s^{-1}}$) over measurement noise
-($5\ \mathrm{km\,s^{-1}}$). Release-matched forward mocks --- the real sky
-positions and the real per-group distance-error model, with an injected
-$\Lambda$CDM cosmic-variance flow --- give a nominal cosmic-variance-inclusive
-amplitude coverage of $0.67$, whereas a measurement-noise-only budget covers only
-$0.19$. The estimator is unbiased ($0.7\ \mathrm{km\,s^{-1}}$), and the depth
-shells show the expected declining bulk flow. This discharges
-\texttt{BLOCKED\_MISSING\_RELEASE\_MOCK\_OWNERSHIP}.
+($5\ \mathrm{km\,s^{-1}}$); this is consistent with the $\Lambda$CDM bulk-flow
+expectation ($\sim$$150$--$250\ \mathrm{km\,s^{-1}}$ at this effective depth),
+i.e.\ high but not anomalous. The cosmic-variance-inclusive coverage is computed
+with \emph{geometry-and-error matched Gaussian bulk-flow mock mechanics} --- the
+real sky positions and the real per-group distance-error model, with an injected
+bulk flow drawn from a fixed $\Lambda$CDM prior ($\sigma_{\mathrm{cv}}=150\
+\mathrm{km\,s^{-1}}$ per component) --- giving a nominal amplitude coverage of
+$0.67$, whereas a measurement-noise-only budget covers only $0.19$ (the
+$0.19\!\to\!0.67$ jump confirms the error is cosmic-variance-dominated). The
+coverage is \emph{conditional on that $\Lambda$CDM $\sigma_{\mathrm{cv}}$ prior};
+a non-$\Lambda$CDM cosmic-variance prior would change it, and residual selection
+is forward-modelled only through the distance-error term. The full CF4
+selection/Malmquist/grouping/correlated-field forward mocks remain the standing
+\texttt{BLOCKED\_MISSING\_RELEASE\_MOCK\_OWNERSHIP} gate; the bulk-flow amplitude
+itself is a model-independent measurement.
 
 \paragraph{K6 (structural no-go) --- CF4 curl/vorticity sector.}
 The affine velocity-gradient decomposition of the real CF4++ Wiener-filter field
 returns a vorticity that is at most $0.6\%$ of the shear at every analysis radius,
-while a solid-body rotation injected into the same estimator is recovered to
-machine precision. The WF reconstruction is therefore curl-suppressed by
-construction: no physical vorticity sector is identifiable from it. This is the
-honest discharge of \texttt{BLOCKED\_MISSING\_FIELD\_REALIZATIONS} --- a
-structural no-go, not a vorticity detection.
+while an injected solid-body rotation is recovered by the same estimator to
+machine precision (demonstrating estimator curl-sensitivity for that mode). The WF
+reconstruction is curl-suppressed by the Wiener-filter prior, across modes: no
+physical vorticity sector is identifiable from it. This establishes the
+\emph{WF mean-field curl-suppression no-go} --- a structural no-go, not a
+vorticity detection. A true constrained-realization (Hoffman--Ribak) vorticity
+posterior remains the standing \texttt{BLOCKED\_MISSING\_FIELD\_REALIZATIONS}
+gate until a CR ensemble is owned (the present field uses independent per-cell
+draws, not the full cell--cell covariance).
 
 \paragraph{K1 (partial) --- global low-$\ell$ morphology $p$.}
 Stacking the six registered low-$\ell$ statistics on the real SMICA map into the
 frozen max-scan gives a look-elsewhere-corrected global $p=0.097$ (Commander
 $0.121$) under an isotropic $\Lambda$CDM null; the parity asymmetry is the
-strongest single statistic ($p=0.02$). This discharges the \emph{look-elsewhere
-correction} on real data. The full end-to-end-systematics calibration of
+strongest single statistic ($p=0.02$). The two component-separation pipelines
+differ by $\sim$$25\%$ in the corrected $p$ (SMICA $0.097$, Commander $0.121$);
+this method dependence is itself a foreground/cleaning systematic, so the two are
+reported side by side and \emph{not} averaged, and neither is E2E-calibrated.
+This discharges the \emph{look-elsewhere correction} on real data. The full
+end-to-end-systematics calibration of
 \texttt{BLOCKED\_MISSING\_PR4\_E2E\_ACCESS} stays open: the matched
 component-separated FFP10/NPIPE simulation ensemble is served only through the
 Planck Legacy Archive interactive query portal (and NERSC-authenticated paths),
@@ -1168,11 +1221,13 @@ graded comparator $g=(\Sigstd,\Wstd,\Otilt,\Okaniso)$ realises the headline of
 \S\ref{sec:egs3} on real data: $\Otilt$ is \emph{measured} (K5 bulk flow), $\Sigstd$
 is \emph{partial} (K1 look-elsewhere only), and $\Wstd,\Okaniso$ are \emph{fail-closed}
 (K6 structural no-go and no low-$\ell$ channel respectively). The data rank is exactly
-two, reported separately from the prior-conditioned rank; no combined scalar $\xC$ is
-formed, because two sectors are blind and must not be zeroed; no MIO certificate is
-used as odds and no scalar is promoted to a family. This is the program's strong,
-honest joint result --- a measured rank-2 comparator together with the proven
-two-sector no-go --- delivered without a native low-$\ell$ solver
+two --- \emph{one measured sector} ($\Otilt$) plus \emph{one partial sector}
+($\Sigstd$) --- reported separately from the prior-conditioned rank; no combined
+scalar $\xC$ is formed, because two sectors are blind and must not be zeroed; no
+MIO certificate is used as odds and no scalar is promoted to a family. This is the
+program's honest joint result --- a rank-2 graded comparator (one measured
+kinematic sector, one partial CMB sector, two fail-closed sectors) together with
+the proven two-sector no-go --- delivered without a native low-$\ell$ solver
 (\texttt{docs/generated/pr08\_006\_joint\_artifact.json}).
 
 % ============================================================

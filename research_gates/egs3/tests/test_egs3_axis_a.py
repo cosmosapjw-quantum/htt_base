@@ -49,6 +49,29 @@ class A1GradedComparatorTests(unittest.TestCase):
         # null_sectors membership is unchanged (additive metadata only)
         self.assertEqual(set(identifiable_rank().null_sectors), set(NULL_SECTOR_KIND))
 
+    def test_omega_k_column_is_a_genuine_zero_not_sigma2_collinear(self):
+        # External-review §5: the rank count alone cannot distinguish a GENUINE
+        # null (zero column) from a Sigma2-COLLINEAR degeneracy -- both give rank 2.
+        # The registered design must show Omega_k's column is a genuine zero, NOT
+        # merely collinear with Sigma2. (Degeneracy != blindness.)
+        d = channel_response_design()
+        sigma2_col, omega_k_col = d[:, 0], d[:, 3]
+        # (a) the registered Omega_k column is a genuine zero
+        self.assertEqual(np.linalg.norm(omega_k_col), 0.0)
+        # (b) counter-construction: a DEGENERATE design where Omega_k is collinear
+        #     with Sigma2 (not blind) also has rank 2 -- so rank cannot characterise
+        #     the null. Build it explicitly and confirm the same rank but a nonzero
+        #     Omega_k column (i.e. NOT a genuine null).
+        d_degen = d.copy()
+        d_degen[:, 3] = 0.7 * sigma2_col          # Omega_k <- collinear with Sigma2
+        self.assertEqual(
+            np.linalg.matrix_rank(d), np.linalg.matrix_rank(d_degen))   # same rank 2
+        self.assertGreater(np.linalg.norm(d_degen[:, 3]), 0.0)          # not a zero column
+        # (c) so the registered design's Omega_k IS the genuine-null case, distinct
+        #     from the degenerate one -- the claim the report now makes explicitly.
+        self.assertEqual(np.linalg.norm(d[:, 3]), 0.0)
+        self.assertNotEqual(np.linalg.norm(d[:, 3]), np.linalg.norm(d_degen[:, 3]))
+
 
 class A2FloorInvarianceTests(unittest.TestCase):
     def test_floor_invariant_under_monotone_reparametrization(self):

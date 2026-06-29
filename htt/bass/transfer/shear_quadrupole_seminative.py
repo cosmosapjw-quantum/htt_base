@@ -16,8 +16,10 @@ normalised so r_2 = 1 (NT-A1 linear closure, ETM kappa=4/21 at l=2). This is a
 BOUNDED LINEAR OPERATOR with explicit decay; its rank/decay derive the NT2-A1
 response and bound the NT2-A2 tail.
 
-Honest refinement of NT2-A1 (the strong physical result). The genuine floor is
-NOT a single number: it is a PROFILE in the shear mode scale k. The line-of-sight
+Honest refinement of NT2-A1 (conditional on the registered shear-response
+profile). The floor is NOT a single number: it is a single-mode, finite-k PROFILE
+in the shear mode scale k (the full-response floor needs the shear-power mode
+integral / the native transfer). The line-of-sight
 projection of a mode k peaks at l ~ k*chi_star, so:
   * a PURE super-horizon shear (k*chi_star << 1, the homogeneous-Bianchi limit)
     is QUADRUPOLE-DOMINATED: r_{l>2} -> 0 and the floor -> the single-l
@@ -91,9 +93,11 @@ def fisher_floor_from_transfer(response: TransferResponse, f_sky: float = 1.0) -
 
 def floor_profile_vs_k(k_values, lmax: int = 30, chi_star: float = 14000.0,
                        width: float = 250.0, f_sky: float = 1.0) -> dict:
-    """The genuine floor as a PROFILE in the shear mode scale k: it saturates at
-    the single-l sqrt(2/5)~0.632 for super-horizon shear (k*chi_star<<1) and
-    drops below it once the shear sources a band of multipoles (finite k)."""
+    """The floor as a single-mode, finite-k PROFILE in the shear mode scale k
+    (conditional on the registered response): it saturates at the single-l
+    sqrt(2/5)~0.632 for super-horizon shear (k*chi_star<<1) and drops below it once
+    the shear sources a band of multipoles (finite k). The full-response floor needs
+    the shear-power mode integral / the native transfer."""
     out = {}
     for k in k_values:
         resp = shear_multipole_response(k=k, lmax=lmax, chi_star=chi_star, width=width)

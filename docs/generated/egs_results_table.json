@@ -6,14 +6,16 @@
   },
   "blockers_open": [
     "BLOCKED_MISSING_PR4_E2E_ACCESS (E2E-systematics null only; look-elsewhere discharged)",
+    "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP (K5 full release-matched mocks; conditional Gaussian-prior coverage only so far)",
+    "BLOCKED_MISSING_FIELD_REALIZATIONS (K6 true CR vorticity posterior; WF mean-field no-go only so far)",
     "AWAITING_NATIVE_LOWELL_SOLVER"
   ],
   "claim_boundary": "conditional theorems + synthetic mechanics + real-data measurements on owned inputs; no detection, family/geometry, or native-solver result. Measured rows are model-independent descriptors; K6 is an honest structural no-go; K1 is a partial (look-elsewhere) discharge under an idealised null.",
   "claim_tier": "program_theorem_and_synthetic_mechanics",
   "discharges_rev_r127": {
-    "K1": "BLOCKED_MISSING_PR4_E2E_ACCESS partially discharged (real-map look-elsewhere global p under LambdaCDM null; E2E-systematics null still open)",
-    "K5": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP discharged (real CF4 catalogue, CV-inclusive coverage)",
-    "K6": "BLOCKED_MISSING_FIELD_REALIZATIONS discharged as a structural no-go (real CF4 WF field, curl-suppressed)"
+    "K1": "BLOCKED_MISSING_PR4_E2E_ACCESS partially discharged (real-map look-elsewhere global p under LambdaCDM null; the global p is component-separation dependent, SMICA 0.097 / Commander 0.121, not E2E-calibrated and not averaged; E2E-systematics null still open)",
+    "K5": "real CF4 bulk flow measured; cosmic-variance coverage is CONDITIONAL on a fixed LambdaCDM sigma_cv=150 km/s/comp Gaussian prior (geometry-and-error matched mock mechanics). Full release-matched mocks (selection/Malmquist/grouping/correlated field) remain a local-repo gate.",
+    "K6": "WF mean-field curl-suppression structural no-go established (real CF4 WF field; estimator validated on an injected solid-body curl mode). A true constrained-realization (Hoffman-Ribak) vorticity posterior remains blocked until a CR ensemble is owned."
   },
   "family_identification": false,
   "native_solver_result": false,
@@ -21,8 +23,8 @@
     {
       "axis": "math_stat",
       "evidence": "wolfram egs_lowell; fig_theorem_nt_a1_quadrupole_filling",
-      "key_result": "slope 1/(kappa^2 x_max); F_shear(D2=0)=0",
-      "statement": "Quadrupole-filling EGS identity: F_shear linear in the CMB quadrupole, F_shear->0 in the EGS limit",
+      "key_result": "slope 1/(kappa^2 x_max), kappa=4/21 (registered ETM convention); F_shear(D2=0)=0",
+      "statement": "Closure-conditional quadrupole-filling identity: under the registered ETM closure, F_shear is linear in the CMB quadrupole and F_shear->0 in the EGS limit (not a generic CMB statement)",
       "status": "proven_symbolic",
       "theorem_id": "NT-A1"
     },
@@ -37,16 +39,16 @@
     {
       "axis": "gr_boltzmann",
       "evidence": "wolfram egs_lowell; fig_theorem_nt_b3_gf_transport",
-      "key_result": "L.1=0 contrast operator; G_F=1 iff steady",
-      "statement": "Depth-transport EGS limit: depth gap G_F=1 for depth-steady shear; a depth-growing tilt imprints a gap",
+      "key_result": "L.1=0 contrast operator; G_F=1 contrast for depth-steady shear",
+      "statement": "Depth-transport EGS limit: a depth-steady shear gives a zero depth-gap contrast (G_F=1); a depth-growing tilt imprints a nonzero contrast",
       "status": "proven_symbolic",
       "theorem_id": "NT-B3"
     },
     {
       "axis": "math_stat",
       "evidence": "egs3-gates A1; fig_egs3_a1_graded_rank",
-      "key_result": "rank 2; reachable ['Sigma2', 'Omega_tilt']; joint null ['W2', 'Omega_k']",
-      "statement": "Graded-comparator identifiability: from {low-l CMB-T, radial velocity} the reachable subspace of g is rank 2",
+      "key_result": "rank 2; reachable ['Sigma2', 'Omega_tilt']; null = structural {W2} (order-independent: radial n.Omega.n=0 + CMB curl/Weyl-blind) + leading-order no-channel {Omega_k} (re-opens beyond leading order)",
+      "statement": "Graded-comparator identifiability (within the registered leading-channel response map): from {low-l CMB-T, radial velocity} the reachable subspace of g is rank 2",
       "status": "proven_gate",
       "theorem_id": "EGS3-A1"
     },
@@ -69,8 +71,8 @@
     {
       "axis": "math_stat",
       "evidence": "egs2-gates NT2-A1; fig_egs2_nt2a1_fisher_floor",
-      "key_result": "floor 0.632(l=2) -> 0.424(L=20)",
-      "statement": "Genuine multi-multipole Fisher-CR floor, strictly below the single-l dispersion",
+      "key_result": "floor 0.632(l=2) -> 0.424(L=20) under the registered response",
+      "statement": "Multi-multipole Fisher floor conditional on the registered shear-response profile (below the single-l dispersion under that response; physical calibration awaits the native low-l transfer)",
       "status": "proven_gate",
       "theorem_id": "NT2-A1"
     },
@@ -85,8 +87,8 @@
     {
       "axis": "gr_boltzmann",
       "evidence": "egs3-gates B1; fig_egs3_b1_floor_profile",
-      "key_result": "floor saturates at 0.632 (super-horizon), drops below at finite k",
-      "statement": "Semi-native shear->multipole transfer: the Fisher floor is a PROFILE in the shear scale k",
+      "key_result": "floor saturates at 0.632 (super-horizon), drops below at finite k for a single shear-sourced mode",
+      "statement": "Semi-native shear->multipole transfer: the Fisher floor is a single-mode, finite-k PROFILE in the shear scale k (the full-response floor needs the shear-power mode integral / native transfer)",
       "status": "proven_gate",
       "theorem_id": "EGS3-B1"
     },
@@ -109,8 +111,8 @@
     {
       "axis": "gr_boltzmann",
       "evidence": "wolfram egs3 bracket; egs2-gates NT2-B1; fig_egs2_nt2b1_bracket",
-      "key_result": "F_lo > 0; zero excluded",
-      "statement": "Two-sided shear/F bracket: a nonzero quadrupole forbids a vanishing shear-filling (lower bound > 0 under H3)",
+      "key_result": "F_lo > 0 under the registered closure/H3 model; zero excluded",
+      "statement": "Two-sided shear/F bracket: within the registered closure/H3 derivative-correction model, a nonzero a2 bounds the closure-defined shear-filling away from zero (NOT a generic statement about the observed CMB quadrupole)",
       "status": "proven_symbolic",
       "theorem_id": "NT2-B1"
     },
@@ -140,17 +142,17 @@
     },
     {
       "axis": "data_interpretation",
-      "evidence": "scripts/k5_cf4_release_coverage.py on real CF4 groups; BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP discharged",
-      "key_result": "|B|=341 +/- 102 km/s; CV-incl coverage 0.67 (meas-only 0.19)",
-      "statement": "CF4 cosmic-variance-inclusive bulk-flow coverage from release-matched forward mocks (real Tully+2023 catalogue)",
+      "evidence": "scripts/k5_cf4_release_coverage.py on real CF4 groups; bulk flow measured; coverage is conditional Gaussian-prior mock mechanics (full CF4 selection/Malmquist/grouping/correlated-field mocks remain a local-repo gate)",
+      "key_result": "|B|=341 +/- 102 km/s (consistent with the LambdaCDM ~150-250 km/s bulk-flow expectation at this depth); CV-incl coverage 0.67 (meas-only 0.19), conditional on the sigma_cv prior",
+      "statement": "CF4 bulk-flow amplitude (measured, model-independent) + conditional cosmic-variance coverage from geometry-and-error matched Gaussian bulk-flow mock mechanics (fixed LambdaCDM sigma_cv=150 km/s/comp prior)",
       "status": "measured",
       "theorem_id": "K5"
     },
     {
       "axis": "data_interpretation",
-      "evidence": "scripts/k6_cf4_curl_posterior.py on real CF4++ WF field; BLOCKED_MISSING_FIELD_REALIZATIONS discharged as structural no-go",
-      "key_result": "vorticity/shear<=0.006 at all radii; curl-injection recovered; structural_no_go=True",
-      "statement": "CF4 vorticity/curl sector on the real WF field: structural no-go (curl-suppressed reconstruction, estimator validated)",
+      "evidence": "scripts/k6_cf4_curl_posterior.py on real CF4++ WF field; WF mean-field curl-suppression no-go established; a true constrained-realization (Hoffman-Ribak) posterior remains blocked until a CR ensemble is owned",
+      "key_result": "vorticity/shear<=0.006 at all radii; solid-body curl-injection recovered; structural_no_go=True",
+      "statement": "CF4 vorticity/curl sector on the real WF mean field: curl-suppression structural no-go (curl-suppressed reconstruction; estimator validated on an injected solid-body curl mode)",
       "status": "measured_no_go",
       "theorem_id": "K6"
     }

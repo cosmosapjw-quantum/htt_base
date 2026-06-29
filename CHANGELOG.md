@@ -7,6 +7,73 @@
 
 ## [Unreleased]
 
+### External-audit revision (two packs) + K1 noise-only long-run prep (rev-r135, 2026-06-29)
+
+Two external audit packs arrived (separate from the internal rev-r134 phys-math-code audit):
+`htt_research_evaluation_review` (**MINOR REVISIONS** — near-publishable methods/identifiability
+/bounds program; one substantive item + calibration caveats; 5/5 independent re-checks confirmed)
+and `pr08_reassessment_audit_pack` (**MAJOR REVISIONS** — not rejected, hard boundaries mostly
+enforced, but several conditional/synthetic objects over-promoted and the report's reproducibility
+section cited commands not shipped in the package). Both reviewers read the committed
+report/table/artifact **surfaces**, which lagged behind the module-level fixes rev-r134 had
+already landed (`NULL_SECTOR_KIND`, `exceedance_evalue_finite_null`, the PSD Ω_k-signed fix —
+the rev-r134 "owner follow-up at next pass" note). rev-r135 propagates those fixes into the
+surfaces, downgrades the genuine K5/K6 over-claims, builds the K1 noise-only long-run mode, makes
+the evaluation package self-contained, and hardens the linter. No published number changed; x_C
+bit-identity preserved. Full finding→fix table: `docs/audits/external_2026-06-29/RESPONSE_MATRIX.md`.
+
+- **Theorem-label precision** (table generator + report + figure captions): NT-A1 →
+  closure-conditional (κ=4/21 registered-ETM convention); NT2-A1/EGS3-B1 → "conditional on the
+  registered shear-response profile" / single-mode finite-k (dropped "genuine"/"floor nothing
+  beats"/"strictly below"); NT-B3 → contrast language (no `G_F=1 iff`); NT2-B1 → registered
+  closure/H3 scope, explicitly not a generic-CMB statement; C_up=9 documented.
+- **Ω_k null precision** (audit substantive item): relabelled "joint null {W²,Ω_k}" → structural
+  null {W²} (order-independent; response column a *genuine zero*, not Σ²-collinear) + leading-order
+  no-channel {Ω_k} (re-opens beyond leading order). New gate
+  `test_egs3_axis_a.py::test_omega_k_column_is_a_genuine_zero_not_sigma2_collinear` proves the
+  rank-2 count alone cannot distinguish the two; `run_egs3_experiments.py` emits `null_kinds` +
+  per-sector response col-norms + the genuine-zero flag.
+- **K-row honesty** (report + table + BLOCKERS + artifact): K5 bulk flow `|B|=341±102 km/s` stays a
+  measurement, CV coverage labelled CONDITIONAL on a fixed ΛCDM `σ_cv=150 km/s/comp` prior (not
+  "release-matched forward mocks"; ΛCDM ~150-250 km/s expectation noted); K6 → "WF mean-field
+  curl-suppression no-go" with the true Hoffman-Ribak CR posterior STILL BLOCKED (single solid-body
+  injection mode); K1 SMICA 0.097 vs Commander 0.121 (~25%) flagged, side-by-side, not averaged;
+  PR08-006 → "rank-2 = one measured (Ω_tilt) + one partial (Σ²) + two fail-closed"; abstract reframed
+  to a diagnostic methods-and-calibration envelope; EGS3-A3 e-value GRF-ΛCDM null idealisation stated
+  + finite-null α=(k+1)/(n+1) referenced.
+- **K1 noise-only long-run mode** (`k1_global_maxscan.py --noise-mc-dir [--method] [--max-noise-sims]`,
+  route 4 + `test_k1_noise_mode.py`): adds a local ΛCDM signal to the real per-method instrument-noise
+  sims → a noise-augmented null, written to a SEPARATE artifact (`k1_global_maxscan_e2e_noise.json`)
+  so the canonical GRF result is untouched. Method-matched, capped, robust to an empty dir. Stays
+  `measured_partial` (no residual foregrounds/systematics, no matched signal — an upgrade of, not a
+  replacement for, the blocked full E2E null). Ready to run when the ~300 noise files land; exercised
+  now with a synthetic fixture.
+- **Package self-containment** (`build_research_evaluation_package.py` +
+  `test_research_evaluation_package.py`): the 13 report-referenced scripts/proofs (+ the
+  `research_gates/pr04/tests` files) are bundled; `check_report_references` passes against the
+  `research_evaluation/` subtree (0 missing). Eval prompt re-stated to the corrected post-audit claims.
+- **Linter hardening**: `scripts/claim_lint_research_surfaces.py` folds both packs' forbidden-phrase
+  set into a permanent repo gate over report+table+blockers (0 hits);
+  `research_gates/external_audit_2026_06_29/reviewer_verification.py` committed as the independent
+  re-check (5/5); `tests/contracts/test_external_audit_2026_06_29.py` gates both.
+- **Hygiene**: K5 figure docstring/caveat "minimum-variance" → "weighted-GLS" (PNG title was already
+  weighted-GLS); manuscript pdf_claim_lint verified 0-failed/66-warning (= blessed; the audit's "2
+  findings" does not reproduce; blessed lint report untouched).
+- **Adversarial verification**: a 4-lens workflow (claim-firewall, physics/stat, K-row honesty,
+  long-run/reproducibility) re-read the revised surfaces and caught real residuals the first-pass
+  single-line linter missed because they evade it via LaTeX `$...$`, line-wraps, or a one-word
+  insertion: `$G_F=1$ iff` (theorem table), "measured rank-2 graded comparator" + "strong, honest"
+  (BLOCKERS headline), "strictly positive lower bound excludes zero" (wrapped), "genuine Fisher
+  floor" (EGS3 intro + transfer module), and loose "closed"/"DISCHARGED" shorthand. All fixed; the
+  linter hardened to normalize (`strip $/\emph{}/\texttt{}` + collapse whitespace) so wrap/markup
+  evasions are caught; the synthesis re-verified the live files and returned overall PASS.
+- Validation: `latexmk` 23 pp; final-report `pdf_claim_lint` 0/0; both claim linters 0 hits;
+  `reviewer_verification` 5/5; `check_report_references` 0 missing; `pytest tests/contracts/` 355
+  passed; egs2/egs3 gates + obsstat K-tests 57 passed; all audit packages rebuilt + `--check` current.
+- Major data tasks unchanged (deliberately): full CF4 selection/Malmquist mocks
+  (`BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP`), true CR vorticity posterior
+  (`BLOCKED_MISSING_FIELD_REALIZATIONS`), native low-ℓ solver (PR10) remain registered/separate.
+
 ### Integrated phys-math-code audit of the EGS3 PSD-cone surface — 6 findings fixed (rev-r134, 2026-06-28)
 
 Self-triggered integrated audit (physics ⇄ code ⇄ numerics) of the EGS3 graded-comparator

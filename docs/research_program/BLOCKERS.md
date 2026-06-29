@@ -21,9 +21,9 @@ Bianchi-family, anisotropic-geometry, or native-solver claim.
 | Code | Blocks | Unblock action (owner) | Mechanics ready? | State |
 | --- | --- | --- | --- | --- |
 | `BLOCKED_MISSING_PR4_E2E_ACCESS` | K1 global low-ℓ p-value | E2E-systematics null needs PLA-portal/NERSC-auth sims | yes | **PARTIAL (rev-r127)**: look-elsewhere global p discharged on the real map under a ΛCDM null; E2E-systematics null still open |
-| `BLOCKED_MISSING_FIELD_REALIZATIONS` | K6 vorticity/curl posterior | obtain CF4 3D WF field; run Hoffman–Ribak CR | yes | **DISCHARGED (rev-r127)** as a structural no-go (real CF4++ WF field is curl-suppressed) |
-| `BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP` | K5 cosmic-variance bulk-flow coverage | own the CF4 release mock pipeline | yes | **DISCHARGED (rev-r127)**: real CF4 catalogue, CV-inclusive coverage nominal |
-| `BLOCKED_UPSTREAM` | PR08-006 joint posterior artifact | close K1+K5+K6 first | n/a | K5/K6 closed, K1 partial → assemblable with explicit partial/no-go sectors |
+| `BLOCKED_MISSING_FIELD_REALIZATIONS` | K6 vorticity/curl posterior | obtain CF4 3D WF field; run Hoffman–Ribak CR | yes | **PARTIAL (rev-r127; reworded rev-r134)**: WF mean-field curl-suppression structural no-go established; a true CR (Hoffman–Ribak) vorticity posterior still blocked until a CR ensemble is owned (present field uses independent per-cell draws) |
+| `BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP` | K5 cosmic-variance bulk-flow coverage | own the CF4 release mock pipeline | yes | **PARTIAL (rev-r127; reworded rev-r134)**: real CF4 bulk flow measured; CV-inclusive coverage is CONDITIONAL on a fixed ΛCDM σ_cv=150 km/s/comp Gaussian prior (geometry-and-error matched mocks). Full selection/Malmquist/grouping/correlated-field release mocks still a gate |
+| `BLOCKED_UPSTREAM` | PR08-006 joint posterior artifact | close K1+K5+K6 first | n/a | K5 measured (conditional coverage), K6 WF mean-field no-go, K1 partial → assemblable with explicit measured/partial/fail-closed sectors |
 | `AWAITING_NATIVE_LOWELL_SOLVER` | full Bianchi family atlas / morphology | build the native low-ℓ Bianchi–Boltzmann solver | partial (B1 interim) | separate long-term project (PR10) |
 
 **rev-r127 discharge status (real data, this session).** With local nvme + long
@@ -32,13 +32,21 @@ runs enabled, the controlling inputs for K5/K6 were found already in-repo
 real CF4 catalogue) and the observed Planck maps for K1
 (`workdir/raw/planck_data/COM_CMB_IQU-{smica,commander}_2048_R3.00_full.fits`).
 - **K5** (`scripts/k5_cf4_release_coverage.py`): measured CF4 bulk flow |B| ≈ 341 ±
-  102 km/s with the error budget cosmic-variance-dominated (102 km/s) vs measurement
-  (5 km/s); release-matched mocks give nominal CV-inclusive coverage 0.67 while
-  measurement-only coverage under-covers (0.19). Full discharge.
+  102 km/s (consistent with the ΛCDM ~150–250 km/s expectation at this depth — high
+  but not anomalous) with the error budget cosmic-variance-dominated (102 km/s) vs
+  measurement (5 km/s). The CV-inclusive coverage 0.67 (vs measurement-only 0.19) is
+  computed with geometry-and-error matched Gaussian bulk-flow mocks and is
+  **conditional on a fixed ΛCDM σ_cv=150 km/s/comp prior** (a non-ΛCDM CV prior would
+  change it; residual selection enters only through the distance-error term). The bulk
+  flow is a measurement; the full release-matched mocks remain a gate (reworded rev-r134).
 - **K6** (`scripts/k6_cf4_curl_posterior.py`): the real CF4++ WF velocity field is
   curl-suppressed (vorticity ≤ 0.6 % of shear at every radius) while the estimator
-  recovers an injected solid-body rotation to machine precision → **structural no-go**
-  (the audit's explicitly-allowed outcome), not a physical-vorticity detection.
+  recovers an injected **solid-body** rotation to machine precision (estimator
+  curl-sensitivity demonstrated for that mode; the suppression is the WF prior's,
+  across modes) → **WF mean-field structural no-go**, not a physical-vorticity
+  detection. A true Hoffman–Ribak CR vorticity posterior remains blocked until a CR
+  ensemble is owned (the present field uses independent per-cell draws, not the full
+  cell–cell covariance) (reworded rev-r134).
 - **K1** (`scripts/k1_global_maxscan.py`): global look-elsewhere-corrected morphology
   p on the real SMICA map = 0.097 (Commander 0.121) under an isotropic ΛCDM null.
   This discharges the *look-elsewhere correction*; the full E2E-systematics null is
@@ -55,13 +63,16 @@ real CF4 catalogue) and the observed Planck maps for K1
   step-by-step acquisition + run procedure is `docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md`
   (everything downstream of the download is already implemented and waits for the maps).
 
-**PR08-006 joint artifact (rev-r129) DISCHARGED.** With K5/K6/K1 closed,
+**PR08-006 joint artifact (rev-r129) ASSEMBLED.** With K5 measured (conditional
+coverage), K6 a WF mean-field no-go, and K1 partial,
 `scripts/pr08_006_joint_artifact.py` assembles the graded comparator on real data:
 Ω_tilt **measured** (K5 bulk flow), Σ² **partial** (K1 look-elsewhere), W² and Ω_k
 **fail-closed** (K6 structural no-go + no channel — not zeroed). Data rank 2 is
 reported separately from prior-conditioned rank; no collapsed `x_C` scalar; no
-MIO-as-odds; no scalar→family. This realises the program headline (a measured
-rank-2 comparator with a proven two-sector no-go) on real data.
+MIO-as-odds; no scalar→family. This realises the program headline (a rank-2 graded
+comparator: one measured kinematic sector Ω_tilt + one partial CMB sector Σ² + two
+fail-closed sectors, with a proven two-sector no-go) on real data — the rank-2 count
+is one full plus one partial, not two fully measured sectors (reworded rev-r134).
 
 ### Hygiene-pass finding (audit F2/F5): the residual contract failures are structural
 
@@ -132,19 +143,20 @@ rev-r128. These items are a separate refactor PR, deliberately not churned here.
 - **What it blocks.** A cosmic-variance-inclusive coverage statement for the CF4
   bulk-flow apex/depth. Tickets: `egs2/tickets/K5_release_matched_mocks.yaml`,
   `PR08-003`.
-- **Why it is blocked.** Cosmic-variance coverage requires release-matched
-  forward mocks (the same selection function, sky coverage, and distance-error
-  model as the published CF4 group catalogue), which we do not own.
+- **Why it is blocked.** Full cosmic-variance coverage requires
+  selection/Malmquist/grouping-matched forward mocks (the same selection function,
+  sky coverage, and distance-error model as the published CF4 group catalogue),
+  which we do not own. The rev-r127 coverage is a CONDITIONAL stand-in: a fixed
+  ΛCDM σ_cv=150 km/s/comp Gaussian bulk-flow prior on the real geometry + errors.
 - **Concrete unblock.** Generate CF4 Bias-Gaussianization forward mocks matched
   to the release selection; push each through the same bulk-flow MLE.
 - **Mechanics ready.** `htt/obsstat/bulkflow_mle.py`
   (`hierarchical_coverage_experiment`) computes coverage over a supplied mock
   ensemble; the hierarchical-GLS estimator (PR08-002) is closed.
 - **Exit gate.** Cosmic-variance-inclusive coverage of the bulk-flow apex/depth
-  over the release-matched mock ensemble + provenance. (Note: the K5 figure's
-  internal PNG title still reads "minimum-variance"; the LaTeX caption is the
-  authoritative "weighted-GLS" wording — regeneration is folded into this
-  discharge because it needs the CF4 download.)
+  over the selection-matched mock ensemble + provenance. (The K5 figure's PNG
+  title and the LaTeX caption now agree on the "weighted-GLS" wording; the stale
+  "minimum-variance" docstring/caveat were fixed in rev-r135.)
 
 ## 4. `BLOCKED_UPSTREAM` — PR08-006 joint posterior artifact
 
@@ -179,8 +191,10 @@ rev-r128. These items are a separate refactor PR, deliberately not churned here.
 All conditional theorems on the three axes are proven and gate/Wolfram-verified
 now — see `docs/generated/egs_results_table.md` (14 proven rows: 6 symbolic,
 8 gate). The framework upgrade (graded comparator) and the revisionary redesign
-(PSD-cone comparator) are implemented, gated, and bit-identical. The strong,
-honest, publishable headline that needs **no** unblocking is: *a measured rank-2
-graded comparator together with a proven two-sector no-go and named re-opening
-channels.* The blockers above only gate turning the synthetic Axis-C mechanics
-into real-data measurements; they do not gate the theorems.
+(PSD-cone comparator) are implemented, gated, and bit-identical. The honest,
+publishable headline that needs **no** unblocking is: *a rank-2 graded comparator
+(one measured kinematic sector Ω_tilt + one partial CMB sector Σ²) together with a
+proven two-sector no-go and named re-opening channels.* The blockers above only
+gate turning the synthetic Axis-C mechanics into real-data measurements, and
+turning the conditional/partial K-row coverage into full release-matched
+measurements; they do not gate the theorems.

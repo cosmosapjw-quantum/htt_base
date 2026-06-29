@@ -10,17 +10,24 @@ object to the GRADED COMPARATOR VECTOR
 
 so x_C is a derived linear summary and the sector identity is preserved.
 
-A1 theorem. From the two channels the program actually uses --- low-l CMB
-temperature and radial peculiar velocity --- the data-identifiable subspace of
-g is exactly RANK 2: Sigma^2 (via the CMB quadrupole, NT-A1) and Omega_tilt (via
-the CMB/velocity dipole). The vorticity W^2 and the anisotropic-curvature
-Omega_k lie in the JOINT NULL of both channels:
-  * CMB temperature is blind to the curl/magnetic-Weyl sector at EGS order
-    (Nilsson-Uggla-Wainwright-Lim Weyl loophole) -> W^2 column zero;
-  * radial peculiar velocities carry no vorticity, n^a Omega_ab n^b = 0 exactly
-    (PAPER-A A-radial-novortex) -> W^2 column zero;
-  * neither low-l channel sources the anisotropic spatial-curvature scalar at
-    leading EGS order -> Omega_k column zero.
+A1 theorem (within the registered leading-channel response map). From the two
+channels the program actually uses --- low-l CMB temperature and radial peculiar
+velocity --- the data-identifiable subspace of g is exactly RANK 2: Sigma^2 (via
+the CMB quadrupole, NT-A1) and Omega_tilt (via the CMB/velocity dipole). The
+vorticity W^2 and the anisotropic-curvature Omega_k both have a zero response
+column and so the rank count is 2 --- but they are NOT the same KIND of null
+(the rank count alone cannot distinguish a genuine null from a Sigma^2-collinear
+degeneracy; see `NULL_SECTOR_KIND` / `describe_null_sectors`):
+  * W^2 is a GENUINE, order-INDEPENDENT structural null: CMB temperature is blind
+    to the curl/magnetic-Weyl sector at EGS order (Nilsson-Uggla-Wainwright-Lim
+    Weyl loophole), and radial peculiar velocities carry no vorticity,
+    n^a Omega_ab n^b = 0 exactly (PAPER-A A-radial-novortex). It re-opens only via
+    a DIFFERENT observable (transverse velocities, CMB B-modes), not by going to
+    higher order; and its column is a GENUINE zero, not Sigma^2-collinear.
+  * Omega_k is a LEADING-EGS-ORDER no-channel: no registered low-l channel sources
+    the anisotropic spatial-curvature scalar at leading order. This is
+    truncation-dependent and RE-OPENS beyond leading order (higher-order ISW,
+    lensing, the native low-l Bianchi transfer) within the SAME channels.
 Hence x_C's sign-cancellation is a projection artifact: it mixes a reachable
 (Sigma^2) and an unreachable (W^2) sector into one coordinate. This unifies
 NT2-B3 (blind sector) and PAPER-A (rank) on the redesigned variable.

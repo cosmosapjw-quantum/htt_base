@@ -59,17 +59,18 @@ def _rows() -> list[dict]:
                 "key_result": key, "status": status, "evidence": evidence}
 
     rows = [
-        r("NT-A1", MATH, "Quadrupole-filling EGS identity: F_shear linear in the CMB quadrupole, F_shear->0 in the EGS limit",
-          "slope 1/(kappa^2 x_max); F_shear(D2=0)=0", "proven_symbolic",
+        r("NT-A1", MATH, "Closure-conditional quadrupole-filling identity: under the registered ETM closure, F_shear is linear in the CMB quadrupole and F_shear->0 in the EGS limit (not a generic CMB statement)",
+          "slope 1/(kappa^2 x_max), kappa=4/21 (registered ETM convention); F_shear(D2=0)=0", "proven_symbolic",
           "wolfram egs_lowell; fig_theorem_nt_a1_quadrupole_filling"),
         r("NT-A3", MATH, "Single-sky sampling dispersion of the standard F_shear estimator (one estimator; NOT a universal CR floor)",
           "sqrt(2/5) = 0.632 at l=2", "proven_symbolic",
           "wolfram egs_lowell; fig_theorem_nt_a3_cosmic_variance_floor"),
-        r("NT-B3", GR, "Depth-transport EGS limit: depth gap G_F=1 for depth-steady shear; a depth-growing tilt imprints a gap",
-          "L.1=0 contrast operator; G_F=1 iff steady", "proven_symbolic",
+        r("NT-B3", GR, "Depth-transport EGS limit: a depth-steady shear gives a zero depth-gap contrast (G_F=1); a depth-growing tilt imprints a nonzero contrast",
+          "L.1=0 contrast operator; G_F=1 contrast for depth-steady shear", "proven_symbolic",
           "wolfram egs_lowell; fig_theorem_nt_b3_gf_transport"),
-        r("EGS3-A1", MATH, "Graded-comparator identifiability: from {low-l CMB-T, radial velocity} the reachable subspace of g is rank 2",
-          f"rank {a.get('A1_graded_rank',{}).get('rank','?')}; reachable {a.get('A1_graded_rank',{}).get('reachable')}; joint null {a.get('A1_graded_rank',{}).get('null')}",
+        r("EGS3-A1", MATH, "Graded-comparator identifiability (within the registered leading-channel response map): from {low-l CMB-T, radial velocity} the reachable subspace of g is rank 2",
+          (f"rank {a.get('A1_graded_rank',{}).get('rank','?')}; reachable {a.get('A1_graded_rank',{}).get('reachable')}; "
+           "null = structural {W2} (order-independent: radial n.Omega.n=0 + CMB curl/Weyl-blind) + leading-order no-channel {Omega_k} (re-opens beyond leading order)"),
           "proven_gate", "egs3-gates A1; fig_egs3_a1_graded_rank"),
         r("EGS3-A3", MATH, "Pi is a calibrated e-value: unit null mean, Markov false-exceedance bound P(E>=1/beta)<=beta; domination is conservative",
           f"null mean {a.get('A3_evalue_calibration',{}).get('null_mean','?')}; Markov holds {a.get('A3_evalue_calibration',{}).get('markov_holds','?')}",
@@ -77,13 +78,13 @@ def _rows() -> list[dict]:
         r("EGS3-A4", MATH, "Rao-Blackwell sufficiency: the reachable-sector statistic dominates any raw multi-channel estimator",
           f"Var_RB <= Var_raw: {a.get('A4_rao_blackwell',{}).get('dominates','?')}",
           "proven_gate", "egs3-gates A4"),
-        r("NT2-A1", MATH, "Genuine multi-multipole Fisher-CR floor, strictly below the single-l dispersion",
-          f"floor {nt2a.get('single_ell_dispersion_l2',0.632):.3f}(l=2) -> 0.424(L=20)", "proven_gate",
+        r("NT2-A1", MATH, "Multi-multipole Fisher floor conditional on the registered shear-response profile (below the single-l dispersion under that response; physical calibration awaits the native low-l transfer)",
+          f"floor {nt2a.get('single_ell_dispersion_l2',0.632):.3f}(l=2) -> 0.424(L=20) under the registered response", "proven_gate",
           "egs2-gates NT2-A1; fig_egs2_nt2a1_fisher_floor"),
         r("NT2-A2", MATH, "Octupole information saturation: the tail contribution converges (no single extra multipole closes the floor)",
           "tail l>3 saturates; decade increments shrink", "proven_gate", "egs2-gates NT2-A2"),
-        r("EGS3-B1", GR, "Semi-native shear->multipole transfer: the Fisher floor is a PROFILE in the shear scale k",
-          "floor saturates at 0.632 (super-horizon), drops below at finite k", "proven_gate",
+        r("EGS3-B1", GR, "Semi-native shear->multipole transfer: the Fisher floor is a single-mode, finite-k PROFILE in the shear scale k (the full-response floor needs the shear-power mode integral / native transfer)",
+          "floor saturates at 0.632 (super-horizon), drops below at finite k for a single shear-sourced mode", "proven_gate",
           "egs3-gates B1; fig_egs3_b1_floor_profile"),
         r("EGS3-B2", GR, "Volterra depth-memory: the depth gap is a Volterra integral of the tilt stress with kernel exp(-3 int H); == ODE + Gronwall",
           f"max|Volterra-ODE| {b.get('B2_volterra_memory',{}).get('max_diff_vs_ode','?')}; Gronwall holds {b.get('B2_volterra_memory',{}).get('gronwall_holds','?')}",
@@ -91,8 +92,8 @@ def _rows() -> list[dict]:
         r("NT2-B3 / EGS3-B3", GR, "Vorticity blind sector re-opens: radial velocities are vorticity-blind (n.Omega.n=0); the transverse channel breaks the no-go",
           f"radial max {nt2b3.get('radial_max_projection','~0')}; transverse rank {b.get('B3_vorticity_reopen',{}).get('transverse_rank','?')}",
           "proven_gate", "egs2/egs3-gates B3; fig_egs3_b3_vorticity"),
-        r("NT2-B1", GR, "Two-sided shear/F bracket: a nonzero quadrupole forbids a vanishing shear-filling (lower bound > 0 under H3)",
-          "F_lo > 0; zero excluded", "proven_symbolic",
+        r("NT2-B1", GR, "Two-sided shear/F bracket: within the registered closure/H3 derivative-correction model, a nonzero a2 bounds the closure-defined shear-filling away from zero (NOT a generic statement about the observed CMB quadrupole)",
+          "F_lo > 0 under the registered closure/H3 model; zero excluded", "proven_symbolic",
           "wolfram egs3 bracket; egs2-gates NT2-B1; fig_egs2_nt2b1_bracket"),
         r("EGS3-B4", GR, "Covariant two-sided-bracket constants: nondegeneracy condition C_up*kappa*(1+R) > 1 (satisfied by kappa=4/21, C_up=9)",
           "12/7 > 1", "proven_symbolic", "wolfram egs3_bracket_constants (PASS)"),
@@ -104,16 +105,16 @@ def _rows() -> list[dict]:
            if k1g else "awaiting compute"),
           "measured_partial",
           "scripts/k1_global_maxscan.py on real SMICA/Commander; E2E-systematics null still BLOCKED_MISSING_PR4_E2E_ACCESS (PLA portal-only sims)"),
-        r("K5", DATA, "CF4 cosmic-variance-inclusive bulk-flow coverage from release-matched forward mocks (real Tully+2023 catalogue)",
-          (f"|B|={k5g.get('measured_bulk',{}).get('amplitude_kms',0):.0f} +/- {k5g.get('coverage',{}).get('total_amplitude_error_kms',0):.0f} km/s; CV-incl coverage {k5g.get('coverage',{}).get('cosmic_variance_inclusive',{}).get('amplitude_coverage',0):.2f} (meas-only {k5g.get('coverage',{}).get('measurement_noise_only',{}).get('amplitude_coverage',0):.2f})"
+        r("K5", DATA, "CF4 bulk-flow amplitude (measured, model-independent) + conditional cosmic-variance coverage from geometry-and-error matched Gaussian bulk-flow mock mechanics (fixed LambdaCDM sigma_cv=150 km/s/comp prior)",
+          (f"|B|={k5g.get('measured_bulk',{}).get('amplitude_kms',0):.0f} +/- {k5g.get('coverage',{}).get('total_amplitude_error_kms',0):.0f} km/s (consistent with the LambdaCDM ~150-250 km/s bulk-flow expectation at this depth); CV-incl coverage {k5g.get('coverage',{}).get('cosmic_variance_inclusive',{}).get('amplitude_coverage',0):.2f} (meas-only {k5g.get('coverage',{}).get('measurement_noise_only',{}).get('amplitude_coverage',0):.2f}), conditional on the sigma_cv prior"
            if k5g else "awaiting compute"),
           "measured",
-          "scripts/k5_cf4_release_coverage.py on real CF4 groups; BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP discharged"),
-        r("K6", DATA, "CF4 vorticity/curl sector on the real WF field: structural no-go (curl-suppressed reconstruction, estimator validated)",
-          (f"vorticity/shear<={k6g.get('vorticity_over_shear_ratio_max','?'):.3f} at all radii; curl-injection recovered; structural_no_go={k6g.get('structural_no_go','?')}"
+          "scripts/k5_cf4_release_coverage.py on real CF4 groups; bulk flow measured; coverage is conditional Gaussian-prior mock mechanics (full CF4 selection/Malmquist/grouping/correlated-field mocks remain a local-repo gate)"),
+        r("K6", DATA, "CF4 vorticity/curl sector on the real WF mean field: curl-suppression structural no-go (curl-suppressed reconstruction; estimator validated on an injected solid-body curl mode)",
+          (f"vorticity/shear<={k6g.get('vorticity_over_shear_ratio_max','?'):.3f} at all radii; solid-body curl-injection recovered; structural_no_go={k6g.get('structural_no_go','?')}"
            if k6g else "awaiting compute"),
           "measured_no_go",
-          "scripts/k6_cf4_curl_posterior.py on real CF4++ WF field; BLOCKED_MISSING_FIELD_REALIZATIONS discharged as structural no-go"),
+          "scripts/k6_cf4_curl_posterior.py on real CF4++ WF field; WF mean-field curl-suppression no-go established; a true constrained-realization (Hoffman-Ribak) posterior remains blocked until a CR ensemble is owned"),
     ]
     return rows
 
@@ -135,11 +136,13 @@ def _payload() -> dict:
         "rows": rows,
         "claim_boundary": "conditional theorems + synthetic mechanics + real-data measurements on owned inputs; no detection, family/geometry, or native-solver result. Measured rows are model-independent descriptors; K6 is an honest structural no-go; K1 is a partial (look-elsewhere) discharge under an idealised null.",
         "discharges_rev_r127": {
-            "K5": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP discharged (real CF4 catalogue, CV-inclusive coverage)",
-            "K6": "BLOCKED_MISSING_FIELD_REALIZATIONS discharged as a structural no-go (real CF4 WF field, curl-suppressed)",
-            "K1": "BLOCKED_MISSING_PR4_E2E_ACCESS partially discharged (real-map look-elsewhere global p under LambdaCDM null; E2E-systematics null still open)",
+            "K5": "real CF4 bulk flow measured; cosmic-variance coverage is CONDITIONAL on a fixed LambdaCDM sigma_cv=150 km/s/comp Gaussian prior (geometry-and-error matched mock mechanics). Full release-matched mocks (selection/Malmquist/grouping/correlated field) remain a local-repo gate.",
+            "K6": "WF mean-field curl-suppression structural no-go established (real CF4 WF field; estimator validated on an injected solid-body curl mode). A true constrained-realization (Hoffman-Ribak) vorticity posterior remains blocked until a CR ensemble is owned.",
+            "K1": "BLOCKED_MISSING_PR4_E2E_ACCESS partially discharged (real-map look-elsewhere global p under LambdaCDM null; the global p is component-separation dependent, SMICA 0.097 / Commander 0.121, not E2E-calibrated and not averaged; E2E-systematics null still open)",
         },
         "blockers_open": ["BLOCKED_MISSING_PR4_E2E_ACCESS (E2E-systematics null only; look-elsewhere discharged)",
+                          "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP (K5 full release-matched mocks; conditional Gaussian-prior coverage only so far)",
+                          "BLOCKED_MISSING_FIELD_REALIZATIONS (K6 true CR vorticity posterior; WF mean-field no-go only so far)",
                           "AWAITING_NATIVE_LOWELL_SOLVER"],
     }
 
