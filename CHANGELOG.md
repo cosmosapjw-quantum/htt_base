@@ -7,6 +7,23 @@
 
 ## [Unreleased]
 
+### Root progress + Planck-raw-analysis-plan report (rev-r138, 2026-07-01)
+
+Standalone LaTeX research report at repo root, `htt_progress_and_planck_plan.{tex,pdf}`
+(6 pp), summarising the programme to date and detailing the Planck raw-data (FFP10 E2E)
+analysis plan. Self-contained (text + tables only, no external figures → clean build);
+`latexmk` exit 0, 0 undefined refs/cites. Sections: framework + graded comparator; the
+14-proven + 3-data theorem ledger with the W^2-vs-Omega_k null-precision refinement;
+real-data status (K5 |B|=341+/-102 km/s conditional coverage, K6 WF curl no-go, K1
+SMICA 0.097 / Commander 0.121 look-elsewhere under a LambdaCDM null, PR08-006 rank-2 =
+1 measured + 1 partial); the external-audit revision; and the Planck-raw plan (blocker,
+FFP10 SMICA 1000 CMB + 300 noise acquisition, pipeline, the three implemented runner
+modes, the v2 precision set with the NSIDE=64 ell<=8 ceiling + pixel-window table,
+measured wall-time/RAM budget, exit gate + kill switches, native-solver ell=2-30
+co-evolution). Diagnostic-only throughout; passes the claim-firewall phrasing (the only
+"family identification" mentions are the boundary-negation sentences). Built via the
+htt-latex-paper-build skill workflow.
+
 ### K1 v2 precision statistic set + parallel --jobs (rev-r137, 2026-06-30)
 
 User (Ryzen 5900X, 64 GB) wants the full-data analysis parallelised and the NSIDE

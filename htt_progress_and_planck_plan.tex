@@ -1,0 +1,371 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection}{0.6em}{}
+\setlist{itemsep=2pt,topsep=3pt}
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\Sig}{\Sigma^2}
+\newcommand{\Wsq}{W^2}
+\newcommand{\Otilt}{\Omega_{\mathrm{tilt}}}
+\newcommand{\Ok}{\Omega_{k}}
+
+\title{\textbf{BASS / HTT Departure-Decomposition Programme}\\[2pt]
+\large Research-Progress Summary and Planck Raw-Data Analysis Plan}
+\author{Jiwon \\ \small Soongsil OMEG Institute}
+\date{2026-07-01}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent This report summarises the current state of the BASS/HTT
+FLRW-departure programme and sets out, in detail, the plan for analysing the
+Planck raw-data (end-to-end simulation) ensemble that closes the one remaining
+real-data gating measurement (K1). The programme delivers a \emph{diagnostic,
+provenance-bound} comparator over four anisotropy sectors
+$g=(\Sig,\Wsq,\Otilt,\Ok)$, a suite of conditional EGS-type
+(Ehlers--Geren--Sachs) theorems, and three model-independent real-data
+descriptors (CF4 bulk flow, CF4 curl no-go, low-$\ell$ CMB morphology). It does
+\emph{not} establish a Bianchi-family identification, an anisotropic geometry, a
+native low-$\ell$ solver validation, a physical-vorticity detection, or a
+globally significant low-$\ell$ anomaly. The Planck-raw analysis described in
+\S\ref{sec:plan} is the matched end-to-end (E2E) null that would upgrade the K1
+low-$\ell$ morphology statistic from a $\Lambda$CDM-null look-elsewhere result to
+an instrument-and-foreground-calibrated one; the full pipeline, three runner
+modes, and a higher-precision (v2) statistic set are implemented and validated,
+awaiting only the manual download of the $\sim$1\,TB simulation set.
+\end{abstract}
+
+% ======================================================================
+\section{Programme and framework}\label{sec:framework}
+
+The programme tests whether the cosmic microwave background (CMB) and
+low-redshift peculiar velocities depart from the standard isotropic FLRW
+cosmology toward an anisotropic (Bianchi $+$ tilt) one. It deliberately works
+\emph{without} a native low-$\ell$ anisotropic Boltzmann solver (which does not
+yet exist in-tree), so it makes no family-identification or geometry-detection
+claim. Instead, the primary object is the \textbf{graded comparator vector}
+\begin{equation}
+  g = (\Sig,\ \Wsq,\ \Otilt,\ \Ok) \in \mathbb{R}^4 ,
+  \qquad x_C = \langle c, g\rangle,\ \ c=(+1,-1,+1,+1),
+\end{equation}
+where $\Sig$ is the shear, $\Wsq$ the vorticity, $\Otilt$ the tilt, and $\Ok$
+the anisotropic-curvature sector; the signed scalar $x_C$ is a \emph{derived}
+linear summary, so the per-sector content is preserved and the
+sign-cancellation pathology of a single number is avoided. An equivalent
+representation casts the comparator as a positive-semidefinite matrix
+$M=\mathrm{diag}(g)\succeq 0$ with $x_C=\operatorname{tr}(CM)$ (bit-identical),
+whose admissible set is a convex PSD cone and whose reachable eigen-directions
+encode identifiability.
+
+\paragraph{Honest claim envelope.} All results are diagnostic-only /
+model-independent / conditional-theorem content. No data-fitting headline
+exceeds the registry-and-shear-source-validated envelope; the eight Bianchi
+families beyond \{FLRW, I, V, IX\} are restricted to axis-aligned mode subsets,
+and any family/geometry statement remains gated behind the (unbuilt) native
+solver and its full gate bundle.
+
+% ======================================================================
+\section{Theorem programme (progress)}\label{sec:theorems}
+
+The conditional EGS-type theorem suite spans three axes --- mathematics/
+statistics, GR/covariant-Boltzmann, and data interpretation --- and is
+gate- and (where stated) Wolfram-verified. The consolidated ledger currently
+holds \textbf{14 proven rows} (6 closed-form symbolic, 8 gate-verified) and
+\textbf{3 real-data rows}, summarised in Table~\ref{tab:theorems}.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Consolidated theorem/result ledger (status counts: 6 \code{proven\_symbolic},
+8 \code{proven\_gate}, 1 \code{measured}, 1 \code{measured\_partial},
+1 \code{measured\_no\_go}).}
+\label{tab:theorems}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Item & Axis & Statement (abbreviated) \\
+\midrule
+NT-A1 & Math/Stat & Closure-conditional quadrupole--filling identity ($\kappa=4/21$, registered ETM) \\
+NT-A3 & Math/Stat & Single-sky sampling dispersion $\sqrt{2/5}$ (one estimator, \emph{not} a universal floor) \\
+EGS3-A1 & Math/Stat & Graded rank-2 identifiability; null $=$ structural $\{\Wsq\}$ $+$ leading-order $\{\Ok\}$ \\
+EGS3-A3 & Math/Stat & $\Pi$ as a calibrated e-value (Markov bound; GRF-$\Lambda$CDM null) \\
+EGS3-A4 & Math/Stat & Rao--Blackwell sufficiency of the reachable-sector statistic \\
+NT2-A1 & Math/Stat & Multi-$\ell$ Fisher floor conditional on the registered shear-response profile \\
+NT2-A2 & Math/Stat & Octupole information saturation (tail beyond $\ell\!\sim\!20$ converges) \\
+EGS3-B1 & GR/Boltz & Semi-native transfer: floor is a single-mode, finite-$k$ profile \\
+EGS3-B2 & GR/Boltz & Volterra depth-memory of the tilt stress; $\equiv$ ODE $+$ Gr\"onwall \\
+NT2-B1 & GR/Boltz & Two-sided shear bracket within the registered closure/H3 model \\
+NT2-B3/EGS3-B3 & GR/Boltz & Radial-velocity vorticity blindness; transverse channel re-opens \\
+EGS3-B4 & GR/Boltz & Covariant bracket constants ($C_{\mathrm{up}}\kappa(1{+}R)>1$) \\
+EGS3-PSD & Math/Stat & PSD-cone representation, $x_C=\operatorname{tr}(CM)$, bit-identical \\
+\midrule
+K1 & Data & Low-$\ell$ morphology look-elsewhere $p$ (\code{measured\_partial}) \\
+K5 & Data & CF4 bulk-flow amplitude $+$ conditional coverage (\code{measured}) \\
+K6 & Data & CF4 WF curl-suppression no-go (\code{measured\_no\_go}) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Sector-null precision (a key refinement).} The two unreachable
+sectors are \emph{not} the same kind of null. $\Wsq$ is a genuine,
+order-independent \emph{structural} null: radial peculiar velocities satisfy
+$n^a\Omega_{ab}n^b\equiv 0$ exactly and CMB temperature is curl/Weyl-blind at
+EGS order; its response column is a genuine zero, not collinear with $\Sig$, and
+it re-opens only via a \emph{different} observable (transverse velocities, CMB
+$B$-modes). $\Ok$ is a leading-EGS-order \emph{no-channel} that re-opens
+\emph{beyond} leading order (higher-order ISW, lensing, the native transfer)
+within the same channels.
+
+% ======================================================================
+\section{Real-data status}\label{sec:data}
+
+Three real-data descriptors are computed on owned inputs; all are
+model-independent and carry no family/geometry/anisotropy-evidence claim.
+
+\begin{itemize}
+\item \textbf{K5 (CF4 bulk flow).} A weighted-GLS estimator on the real
+Cosmicflows-4 group release (Tully et al.\ 2023, $38{,}049$ groups) gives a
+bulk-flow amplitude $|\mathbf{B}|\simeq 341\pm 102\ \mathrm{km\,s^{-1}}$, the
+error budget cosmic-variance-dominated; this is consistent with the
+$\Lambda$CDM expectation ($\sim$150--250\,$\mathrm{km\,s^{-1}}$ at the effective
+depth), i.e.\ high but not anomalous. The cosmic-variance-inclusive coverage
+($0.67$ vs $0.19$ measurement-only) is computed with geometry-and-error matched
+Gaussian mock mechanics and is \emph{conditional} on a fixed $\Lambda$CDM
+$\sigma_{\mathrm{cv}}=150\ \mathrm{km\,s^{-1}}$ per-component prior; full
+selection/Malmquist/grouping/correlated-field mocks remain a standing gate.
+\item \textbf{K6 (CF4 curl/vorticity).} The affine velocity-gradient
+decomposition of the real CF4{+}{+} Wiener-filter field returns a vorticity at
+most $0.55\%$ of the shear at every radius, while an injected solid-body
+rotation is recovered to machine precision. This is a WF mean-field
+curl-suppression \emph{structural no-go} (the field is curl-suppressed by the
+Wiener-filter prior across modes), not a vorticity measurement; a true
+constrained-realization posterior remains a standing gate.
+\item \textbf{K1 (low-$\ell$ CMB morphology).} Stacking six registered low-$\ell$
+statistics on the real Planck PR3 maps into a frozen max-scan gives a
+look-elsewhere-corrected global $p=0.097$ (SMICA) / $0.121$ (Commander) under an
+isotropic $\Lambda$CDM (GRF) null over $2000$ realizations. The
+$\sim$25\% method dependence is itself a foreground/cleaning systematic; the two
+are reported side by side and \emph{not} averaged, and neither is
+E2E-calibrated. The local single-statistic $p$ are: parity asymmetry $0.021$,
+parity even/odd $0.021$, planarity $0.045$, $S_{1/2}$ $0.060$, Q--O alignment
+$0.67$, axis-to-dipole $0.71$. \emph{This is the measurement the Planck-raw plan
+of \S\ref{sec:plan} upgrades.}
+\end{itemize}
+
+\paragraph{Joint comparator (PR08-006).} Assembling the discharges into $g$ on
+real data gives a data rank of two: $\Otilt$ is measured (K5 bulk flow) and
+$\Sig$ is partial (K1 look-elsewhere only), while $\Wsq$ and $\Ok$ are
+fail-closed (K6 no-go; no leading-order channel) --- never zeroed. No combined
+scalar $x_C$ is formed (two sectors are blind), no MIO certificate is used as
+odds, and no scalar is promoted to a family. The rank-2 count is therefore
+\emph{one fully measured plus one partial} sector, not two measured sectors.
+
+% ======================================================================
+\section{External-audit revision}\label{sec:audit}
+
+Two independent external audits (a research-content review, verdict MINOR
+REVISIONS; and a claim-firewall re-review, verdict MAJOR REVISIONS) were folded
+in. The substantive items --- the $\Wsq$ vs $\Ok$ null distinction, the
+e-value's $\Lambda$CDM-null idealisation with an add-one finite-null
+$\hat\alpha=(k{+}1)/(n{+}1)$, the closure-conditional/registered-response
+scoping of the Fisher floor and shear bracket --- were already realised at the
+module level and were propagated into all reporting surfaces. The genuine
+over-claims in the data labels (K5 ``release-matched mocks'',
+K6 ``discharged'') were downgraded to the conditional/structural language used
+above. A permanent claim linter over the report, ledger, and blocker dossier now
+forbids the flagged phrasings, and an independent re-check script reproduces the
+bracket constant, the e-value Markov bound, the Fisher-floor descent, the
+radial-vorticity identity, and the $\Ok$ genuine-zero demonstration.
+
+% ======================================================================
+\section{Planck raw-data analysis plan}\label{sec:plan}
+
+\subsection{Objective and the standing blocker}
+The K1 look-elsewhere correction is discharged on the real map under an
+idealised isotropic $\Lambda$CDM (GRF) null. What remains
+(\code{BLOCKED\_MISSING\_PR4\_E2E\_ACCESS}) is to replace that null with a
+\textbf{matched end-to-end (E2E) simulation ensemble} carrying real instrument
+noise, residual foregrounds, and the component-separation transfer, so that the
+global $p$ is reported with instrument-and-foreground systematics. The
+ensemble is served only through the Planck Legacy Archive (PLA) interactive
+query portal (and NERSC-authenticated paths), not as a plain-URL download;
+\code{cobaya} was checked and provides the Blackwell--Rao $C_\ell$-level low-$\ell$
+likelihood, not the $a_{\ell m}$ map ensemble the morphology statistics require.
+The acquisition is therefore manual; everything downstream is implemented.
+
+\subsection{Data products and acquisition}
+The recommended route (matching the SMICA observed map) is the FFP10
+component-separated simulation library:
+\begin{itemize}
+\item \code{dx12\_v3\_smica\_cmb\_mc\_<00000..00999>\_raw.fits} --- 1000 CMB (signal) MC;
+\item \code{dx12\_v3\_smica\_noise\_mc\_<00000..00299>\_raw.fits} --- 300 noise/systematics MC.
+\end{itemize}
+The honest E2E null is CMB$+$noise per realization, paired
+$\mathrm{cmb}[i]+\mathrm{noise}[i \bmod n_{\mathrm{noise}}]$ (300 noise cycled
+across 1000 CMB, matching the Planck-2018 permutation scheme). At full IQU
+$N_{\mathrm{side}}=2048$ this is $\sim$1\,TB; a dedicated 2\,TB nvme accommodates
+the full set. The observed maps and common temperature mask are already local.
+Raw maps stay outside version control; only compact summaries and provenance are
+committed. A per-simulation manifest records map IDs, URLs, SHA-256, beam, input
+$N_{\mathrm{side}}$, analysis $N_{\mathrm{side}}$, mask, and method.
+
+\subsection{Pipeline}
+The frozen pipeline is identical to the observed-map path: read each simulation
+(temperature field only), downgrade-on-read to the analysis $N_{\mathrm{side}}$,
+apply the matched low-$\ell$ mask, compute the six registered statistics
+(\code{s\_one\_half}, \code{parity\_even\_over\_odd\_ratio},
+\code{parity\_asymmetry}, \code{planarity\_mean}, \code{qo\_axis\_alignment\_deg},
+\code{axis\_to\_cmb\_dipole\_deg}), and feed the observed 6-vector and the
+simulation $N\times 6$ matrix to the look-elsewhere max-scan, which returns the
+$+1$-corrected global rank $p$-value (global $\ge$ min-local). Processing is
+streaming: peak memory is one map at a time, so disk and wall-time --- not
+RAM --- are the constraints.
+
+\subsection{Implemented runner modes}
+Three modes are implemented in \code{scripts/k1\_global\_maxscan.py}, each
+writing a \emph{separate} artifact so the canonical GRF result is untouched
+(Table~\ref{tab:modes}).
+
+\begin{table}[htbp]\centering\small
+\caption{K1 E2E runner modes. Only the full Route-A null is the exit gate that
+would re-point K1 from \code{measured\_partial} to \code{measured}.}
+\label{tab:modes}
+\begin{tabular}{@{}p{3.1cm}p{6.7cm}p{3.3cm}@{}}
+\toprule
+Mode & Null & Status / artifact \\
+\midrule
+Route 4 (noise-only) & local $\Lambda$CDM signal $+$ real per-method noise MC &
+\code{measured\_partial}; \code{*\_e2e\_noise.json} \\
+Route A (full E2E) & real CMB MC $+$ real noise MC (matched) &
+exit gate; \code{*\_e2e\_full.json} \\
+v2 precision (either) & adds proc-$N_{\mathrm{side}}$, $\ell_{\max}$, mask$+$inpaint &
+re-registered statistic set \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Higher-precision (v2) statistic set}
+On a 12-core/64\,GB workstation the analysis is I/O-bound, so precision can be
+raised at essentially the same wall-time. The v2 set
+(\code{htt/obsstat/lowell\_precision.py}) is a deliberately \emph{re-registered}
+statistic set (own configuration hash and \code{statistic\_set} tag) with three
+levers:
+\begin{enumerate}
+\item \textbf{Processing $N_{\mathrm{side}}$ (default 64).} Raising
+$N_{\mathrm{side}}$ does \emph{not} add information at $\ell\le 8$
+($N_{\mathrm{side}}=16$ is Nyquist-sufficient); the only lever there is removing
+the pixel-window suppression (Table~\ref{tab:pixwin}). $N_{\mathrm{side}}=64$ is
+the ceiling for $\ell\le 8$; higher values help only if $\ell_{\max}$ is raised.
+\item \textbf{$\ell_{\max}$ (default 30).} The $\ell$-summed statistics
+($S_{1/2}$, parity, planarity) gain genuine information from more multipoles;
+the quadrupole--octupole \emph{alignment} statistics are intrinsically
+$\ell=2,3$ and are unchanged.
+\item \textbf{Galactic mask $+$ diffuse inpainting.} The common temperature mask
+is applied and the masked region diffuse-inpainted before the spherical-harmonic
+transform, \emph{identically} on the observed map and every simulation, so the
+mask response is absorbed into the null and the look-elsewhere $p$-value stays
+valid (no per-statistic deconvolution is claimed). The observed vector is taken
+from the full-resolution observed map, processed identically.
+\end{enumerate}
+
+\begin{table}[htbp]\centering\small
+\caption{Measured pixel-window $w_\ell$ ($1.0=$ no suppression). $N_{\mathrm{side}}=64$
+removes the $N_{\mathrm{side}}=16$ suppression at $\ell=6$--$8$; higher
+$N_{\mathrm{side}}$ adds nothing at $\ell\le 8$.}
+\label{tab:pixwin}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+$N_{\mathrm{side}}$ & $w_2$ & $w_6$ & $w_8$ \\
+\midrule
+16  & 0.9989 & 0.9924 & 0.9870 \\
+64  & 0.9999 & 0.9995 & 0.9992 \\
+128 & 1.0000 & 0.9999 & 0.9998 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Compute budget}
+Parallelism (\code{--jobs}) fans the per-simulation loop over processes
+(\code{spawn} context with one thread per worker, avoiding the
+fork-after-OpenMP deadlock); the noise set is pre-downgraded once and cached.
+The measured per-map cost at the v2 configuration is $\approx 3$\,s; the full
+1000$+$300 ensemble is I/O-bound (a $\sim$3.5\,min nvme read floor), giving the
+wall-times of Table~\ref{tab:walltime}. Peak memory is $\approx 1$\,GB per
+worker, so 12 workers use $\approx 12$\,GB and 24 use $\approx 24$\,GB --- well
+within 64\,GB. No additional RAM is required.
+
+\begin{table}[htbp]\centering\small
+\caption{Wall-time (full 1000 CMB $+$ 300 noise; noise pre-downgraded and cached).}
+\label{tab:walltime}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Configuration & Serial & \code{--jobs 12} (Ryzen 5900X) \\
+\midrule
+v1 ($N_{\mathrm{side}}\,16$, $\ell\le 8$) & $\sim$40\,min & $\sim$5--7\,min \\
+v2 ($N_{\mathrm{side}}\,64$, $\ell=30$, mask) & $\sim$40\,min & $\sim$5--7\,min \\
+v2, \code{--max-sims 300} & $\sim$10\,min & $\sim$2\,min \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Exit gate and kill switches}
+K1 re-points \code{measured\_partial}$\to$\code{measured} only through the
+ledger generator, with: a global rank $p$ under the \emph{matched} E2E ensemble;
+a configuration hash bound to \{statistic list, mask, beam, $\ell$-range,
+method\}; an ensemble provenance manifest; and both component-separation methods
+reported side by side. The run stops if the map/mask/beam path differs between
+observed and simulations, if methods are mixed without labels, if fewer
+simulations are available than declared, if the statistic set is unfrozen, or if
+any text would claim E2E global significance without the matched provenance.
+
+\subsection{Co-evolution with the native low-$\ell$ solver}
+The v2 data analysis uses $\ell=2$--$30$. For internal consistency, the future
+native low-$\ell$ atlas should predict the \emph{same} statistics over the same
+range: an atlas restricted to $\ell\le 6$ cannot be scored against an
+$\ell=2$--$30$ morphology statistic, and Bianchi families (notably the
+$\mathrm{VII}_h$ spiral) diverge most at intermediate $\ell$, where the
+discriminating power lives. The shear Fisher floor also keeps improving to
+$\ell\sim 20$ before saturating. The recommended atlas ceiling is therefore
+$\ell=2$--$30$ (staged: $\ell\le 20$ for $\sim$90\% of the discrimination and
+floor gain, then $\ell\le 30$ for full atlas--data parity), conditioned on the
+exact-FLRW-first gate and per-$\ell$ convergence. This remains separate
+(PR10) work and does not, by itself, grant any detection authority.
+
+% ======================================================================
+\section{Claim envelope}\label{sec:envelope}
+The defensible envelope is a diagnostic methods-and-calibration framework: a
+rank-aware, provenance-bound sector comparator; conditional EGS-type theorems
+under stated hypotheses; and three model-independent real-data descriptors. It
+does \emph{not} establish a globally significant low-$\ell$ anomaly, an
+anisotropic geometry, a Bianchi-family identification, a native-solver
+validation, or a physical-vorticity detection; no diagnostic is used as
+posterior odds and no scalar is promoted to a family. The Planck-raw E2E
+analysis narrows the K1 systematics gap; it does not change these boundaries.
+
+\appendix
+\section{Reproducibility (commands)}
+
+\noindent\textbf{Full Route-A E2E, v2 precision, parallel:}
+\begin{flushleft}\footnotesize\ttfamily\raggedright
+python scripts/k1\_global\_maxscan.py \textbackslash\\
+\quad --cmb-mc-dir <cmb> --noise-mc-dir <noise> --method smica \textbackslash\\
+\quad --max-sims 1000 --precision --proc-nside 64 --lmax 30 --jobs 12
+\end{flushleft}
+
+\noindent\textbf{Route-4 noise-only fallback:}
+\begin{flushleft}\footnotesize\ttfamily\raggedright
+python scripts/k1\_global\_maxscan.py --noise-mc-dir <noise> --method smica
+\end{flushleft}
+
+\noindent Other entry points:
+\begin{flushleft}\footnotesize\ttfamily\raggedright
+consolidated ledger: python scripts/build\_egs\_results\_table.py\\
+download/run guide: docs/research\_program/K1\_E2E\_DOWNLOAD\_GUIDE.md\\
+standing blockers: docs/research\_program/BLOCKERS.md
+\end{flushleft}
+
+\end{document}
