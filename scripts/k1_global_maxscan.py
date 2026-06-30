@@ -47,9 +47,19 @@ canonical GRF artifact.
 """
 from __future__ import annotations
 
+import os
+# Single-thread the SHT/BLAS backends BEFORE numpy/healpy import: N worker processes
+# each running 1 thread saturates the cores without oversubscription, and -- critically
+# -- it keeps libsharp's threadpool from being created, so the parallel pool never hits
+# the fork-after-OpenMP deadlock. (The pool also uses the 'spawn' context for safety.)
+for _v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
+    os.environ.setdefault(_v, "1")
+
 import argparse
+from concurrent.futures import ProcessPoolExecutor
 import hashlib
 import json
+import multiprocessing as mp
 from pathlib import Path
 import sys
 
@@ -57,9 +67,22 @@ import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 import make_lowell_morphology_real_map as rm  # noqa: E402
 from obsstat.lowell_global_calibration import calibrate_max_scan  # noqa: E402
+from htt.obsstat.lowell_precision import (  # noqa: E402
+    PrecisionConfig, downgrade_mask, precision_map_statistics,
+)
+
+# Full-resolution observed maps + common temperature mask (for the v2 precision path:
+# observed must be processed identically to the sims, so it comes from the full-res
+# map, not the NSIDE=16 .npz used by the v1 ell<=8 path).
+_PLANCK = REPO_ROOT / "workdir/raw/planck_data"
+FULLRES_OBS = {"smica": _PLANCK / "COM_CMB_IQU-smica_2048_R3.00_full.fits",
+               "commander": _PLANCK / "COM_CMB_IQU-commander_2048_R3.00_full.fits"}
+MASK_HI = _PLANCK / "COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits"
 
 OUT_JSON = REPO_ROOT / "docs/generated/k1_global_maxscan.json"
 # E2E nulls (K1_E2E_DOWNLOAD_GUIDE): SEPARATE artifacts, so the canonical GRF-null
@@ -108,23 +131,23 @@ def _list_sims(sim_dir: Path) -> list[Path]:
 _list_noise_sims = _list_sims
 
 
-def _load_sim_map(path: Path) -> np.ndarray:
-    """Load one simulation map (CMB MC or noise MC), downgrade-on-read to NSIDE=16
-    low-ell, return in uK.
+def _load_sim_map(path: Path, nside: int = rm.NSIDE) -> np.ndarray:
+    """Load one simulation map (CMB MC or noise MC), downgrade-on-read to ``nside``
+    (default NSIDE=16), return in uK.
 
     Handles the two real formats: the raw Planck FFP10/NPIPE sims
     (``dx12_v3_<method>_{cmb,noise}_mc_*.fits``, full-resolution K_CMB -> ud_grade
-    to NSIDE=16 + uK rescale) and the compact NSIDE=16 ``.npz`` fixtures used by the
-    in-repo regression test (same ``{I, unit}`` layout as the real downgraded maps).
+    + uK rescale) and the compact ``.npz`` fixtures used by the in-repo regression
+    test (same ``{I, unit}`` layout as the real downgraded maps).
     """
     if path.suffix == ".npz":
-        return rm._load_real_map(path)
-    # FITS: full-resolution map. Read I, downgrade to NSIDE=16, rescale K->uK.
-    m = np.asarray(rm.hp.read_map(path, verbose=False), dtype=float)
-    if rm.hp.npix2nside(m.size) != rm.NSIDE:
-        m = rm.hp.ud_grade(m, nside_out=rm.NSIDE)
-    if float(np.nanstd(m)) < 1.0e-2:          # stored in K_CMB -> uK
-        m = m * 1.0e6
+        m = rm._load_real_map(path)
+    else:
+        m = np.asarray(rm.hp.read_map(path), dtype=float)  # field=0 (I); silent by default
+        if float(np.nanstd(m)) < 1.0e-2:      # stored in K_CMB -> uK
+            m = m * 1.0e6
+    if rm.hp.npix2nside(m.size) != nside:
+        m = rm.hp.ud_grade(m, nside_out=nside)
     return m
 
 
@@ -160,6 +183,122 @@ def _e2e_full_null(cmb_mc_dir: Path, noise_mc_dir: Path, max_sims: int,
         provenance.append({"cmb_file": cf.name, "cmb_hash": _sha256_file(cf),
                            "noise_file": nf.name, "noise_hash": _sha256_file(nf)})
     return np.asarray(rows, dtype=float), provenance
+
+
+# --------------------------------------------------------------------------- #
+# v2 PRECISION path (proc-NSIDE + ell_max + mask, optionally parallel --jobs).
+# Workers are module-level + state passed via an initializer so they are picklable
+# for ProcessPoolExecutor. The v1 ell<=8 path above is untouched.
+# --------------------------------------------------------------------------- #
+_W: dict = {}
+
+
+def _winit(cfg, keep_mask, cmb_apex, noise_cache, cl, seed):
+    # threads already pinned to 1 at module import (before healpy); just stash state
+    _W.update(cfg=cfg, keep=keep_mask, apex=np.asarray(cmb_apex, float),
+              noise=noise_cache, cl=cl, seed=seed,
+              pix=np.asarray(rm.hp.pix2vec(cfg.proc_nside,
+                             np.arange(rm.hp.nside2npix(cfg.proc_nside)))).T,
+              keys=list(rm.TAILS))
+
+
+def _w_full(task):
+    i, cmb_path = task
+    cfg = _W["cfg"]
+    sig = _load_sim_map(Path(cmb_path), cfg.proc_nside)
+    noise = _W["noise"][i % len(_W["noise"])]
+    stats = precision_map_statistics(sig + noise, _W["apex"], cfg, _W["keep"], _W["pix"])
+    return i, [float(stats[k]) for k in _W["keys"]]
+
+
+def _w_noise(task):
+    i, noise_path = task
+    cfg = _W["cfg"]
+    noise = _load_sim_map(Path(noise_path), cfg.proc_nside)
+    np.random.seed(_W["seed"] + i)                       # synfast uses the global RNG
+    sig = rm.hp.synfast(_W["cl"], nside=cfg.proc_nside, lmax=cfg.lmax, pixwin=False)
+    stats = precision_map_statistics(sig + noise, _W["apex"], cfg, _W["keep"], _W["pix"])
+    return i, [float(stats[k]) for k in _W["keys"]]
+
+
+def _load_noise_one(args):
+    path, nside = args
+    return _load_sim_map(Path(path), nside)
+
+
+def _map_parallel(worker, tasks, init_args, jobs):
+    """Run worker over tasks, serial (jobs<=1) or via ProcessPoolExecutor. Returns
+    rows ordered by task index. Serial path sets the same worker globals so results
+    are identical to the parallel path."""
+    if jobs <= 1:
+        _winit(*init_args)
+        out = [worker(t) for t in tasks]
+    else:
+        ctx = mp.get_context("spawn")     # spawn: avoids fork-after-OpenMP deadlock
+        with ProcessPoolExecutor(max_workers=jobs, mp_context=ctx,
+                                 initializer=_winit, initargs=init_args) as ex:
+            chunk = max(1, len(tasks) // (jobs * 4) or 1)
+            out = list(ex.map(worker, tasks, chunksize=chunk))
+    out.sort(key=lambda r: r[0])
+    return np.asarray([r[1] for r in out], dtype=float)
+
+
+def _keep_mask(cfg: PrecisionConfig):
+    if not cfg.masked:
+        return None
+    if not MASK_HI.is_file():
+        raise FileNotFoundError(f"common mask not found at {MASK_HI}")
+    mask_hi = np.asarray(rm.hp.read_map(MASK_HI), dtype=float)
+    return downgrade_mask(mask_hi, cfg.proc_nside)
+
+
+def _observed_precision(method: str, cfg: PrecisionConfig, keep_mask, cmb_apex):
+    """Observed 6-vector under the v2 config, from the FULL-RES observed map
+    processed identically to the sims (downgrade -> mask+inpaint -> lmax)."""
+    obs_path = FULLRES_OBS[method]
+    if not obs_path.is_file():
+        raise FileNotFoundError(f"full-resolution observed map not found at {obs_path}")
+    obs = _load_sim_map(obs_path, cfg.proc_nside)
+    keys = list(rm.TAILS)
+    stats = precision_map_statistics(obs, cmb_apex, cfg, keep_mask)
+    return keys, np.array([float(stats[k]) for k in keys])
+
+
+def _e2e_full_null_precision(cmb_mc_dir, noise_mc_dir, max_sims, cfg, keep_mask,
+                             cmb_apex, jobs):
+    cmb_files = _list_sims(cmb_mc_dir)[:max_sims]
+    noise_files = _list_sims(noise_mc_dir)
+    if not cmb_files:
+        raise FileNotFoundError(f"no CMB sims (*.fits/*.npz) found in {cmb_mc_dir}")
+    if not noise_files:
+        raise FileNotFoundError(f"no noise sims (*.fits/*.npz) found in {noise_mc_dir}")
+    # pre-downgrade the noise set ONCE (parallel), then cycle it across the CMB MC
+    if jobs <= 1:
+        noise_cache = [_load_sim_map(f, cfg.proc_nside) for f in noise_files]
+    else:
+        ctx = mp.get_context("spawn")
+        with ProcessPoolExecutor(max_workers=jobs, mp_context=ctx) as ex:
+            noise_cache = list(ex.map(
+                _load_noise_one, [(str(f), cfg.proc_nside) for f in noise_files]))
+    tasks = [(i, str(cf)) for i, cf in enumerate(cmb_files)]
+    rows = _map_parallel(_w_full, tasks,
+                         (cfg, keep_mask, cmb_apex, noise_cache, None, rm.SEED), jobs)
+    provenance = [{"cmb_file": cf.name, "cmb_hash": _sha256_file(cf),
+                   "noise_file": noise_files[i % len(noise_files)].name,
+                   "noise_hash": _sha256_file(noise_files[i % len(noise_files)])}
+                  for i, cf in enumerate(cmb_files)]
+    return rows, provenance
+
+
+def _e2e_noise_null_precision(noise_mc_dir, max_sims, cfg, keep_mask, cmb_apex, cl, jobs):
+    noise_files = _list_sims(noise_mc_dir)[:max_sims]
+    if not noise_files:
+        raise FileNotFoundError(f"no noise sims (*.fits/*.npz) found in {noise_mc_dir}")
+    tasks = [(i, str(nf)) for i, nf in enumerate(noise_files)]
+    rows = _map_parallel(_w_noise, tasks,
+                         (cfg, keep_mask, cmb_apex, None, cl, rm.SEED), jobs)
+    provenance = [{"file": nf.name, "input_hash": _sha256_file(nf)} for nf in noise_files]
+    return rows, provenance
 
 
 def _e2e_noise_null(noise_mc_dir: Path, max_sims: int, pix_vectors, cmb_apex,
@@ -249,10 +388,14 @@ _METHOD_MAP = {"smica": rm.SMICA_MAP, "commander": rm.COMMANDER_MAP}
 
 
 def build_e2e_noise_report(noise_mc_dir: Path, method: str = "smica",
-                           max_noise_sims: int = DEFAULT_MAX_NOISE_SIMS) -> dict:
+                           max_noise_sims: int = DEFAULT_MAX_NOISE_SIMS,
+                           precision: PrecisionConfig | None = None,
+                           jobs: int = 1) -> dict:
     """Route-4 long-run: the global max-scan against an E2E-NOISE-augmented null
     (real instrument-noise sims + local LambdaCDM signal). Method-matched: the null
-    built from <method> noise sims is compared to the <method> observed map. Writes
+    built from <method> noise sims is compared to the <method> observed map. With
+    ``precision`` set, uses the v2 statistic set (proc-NSIDE/ell_max/mask, observed
+    from the full-res map); ``jobs>1`` fans the sims over processes. Writes
     a SEPARATE artifact so the canonical GRF result is untouched. K1 stays
     measured_partial -- this carries real noise covariance but not residual
     foregrounds/systematics, so it is an upgrade of, not a replacement for, the
@@ -260,22 +403,33 @@ def build_e2e_noise_report(noise_mc_dir: Path, method: str = "smica",
     if method not in _METHOD_MAP:
         raise ValueError(f"method must be one of {sorted(_METHOD_MAP)}")
     map_path = _METHOD_MAP[method]
-    pix_vectors = np.asarray(rm.hp.pix2vec(rm.NSIDE, np.arange(rm.hp.nside2npix(rm.NSIDE)))).T
     obs_defaults = json.loads(rm.OBS_DEFAULTS.read_text())
     cmb = obs_defaults["dipole_observations"]["cmb_planck_2018"]
     cmb_apex = np.asarray(rm.lb_to_unitvec(np.array(cmb["l_deg"]), np.array(cmb["b_deg"])), dtype=float).reshape(3)
-    cl = rm._fiducial_cl(rm.LMAX)
+    directions = [_DIR[rm.TAILS[k]] for k in list(rm.TAILS)]
 
-    keys, observed = _observed_only(map_path, pix_vectors, cmb_apex)
-    directions = [_DIR[rm.TAILS[k]] for k in keys]
-    e2e_null, provenance = _e2e_noise_null(noise_mc_dir, max_noise_sims,
-                                           pix_vectors, cmb_apex, cl, rm.SEED)
+    if precision is not None:
+        keep_mask = _keep_mask(precision)
+        cl = rm._fiducial_cl(precision.lmax)
+        keys, observed = _observed_precision(method, precision, keep_mask, cmb_apex)
+        e2e_null, provenance = _e2e_noise_null_precision(
+            noise_mc_dir, max_noise_sims, precision, keep_mask, cmb_apex, cl, jobs)
+        obs_map_path = FULLRES_OBS[method]
+        config = {**precision.as_dict(), "method": method, "n_noise_sims": len(provenance),
+                  "seed": rm.SEED, "statistics": keys, "directions": directions, "jobs": jobs,
+                  "null_model": "lambdacdm_signal_plus_real_instrument_noise_v2_precision"}
+    else:
+        pix_vectors = np.asarray(rm.hp.pix2vec(rm.NSIDE, np.arange(rm.hp.nside2npix(rm.NSIDE)))).T
+        cl = rm._fiducial_cl(rm.LMAX)
+        keys, observed = _observed_only(map_path, pix_vectors, cmb_apex)
+        e2e_null, provenance = _e2e_noise_null(noise_mc_dir, max_noise_sims,
+                                               pix_vectors, cmb_apex, cl, rm.SEED)
+        obs_map_path = map_path
+        config = {"nside": rm.NSIDE, "lmax": rm.LMAX, "ell_min": rm.ELL_MIN,
+                  "method": method, "n_noise_sims": len(provenance), "seed": rm.SEED,
+                  "statistics": keys, "directions": directions,
+                  "null_model": "lambdacdm_signal_plus_real_instrument_noise"}
     res = calibrate_max_scan(observed, e2e_null, directions)
-
-    config = {"nside": rm.NSIDE, "lmax": rm.LMAX, "ell_min": rm.ELL_MIN,
-              "method": method, "n_noise_sims": len(provenance), "seed": rm.SEED,
-              "statistics": keys, "directions": directions,
-              "null_model": "lambdacdm_signal_plus_real_instrument_noise"}
     config_hash = "sha256:" + hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
     return {
         "schema": "htt.k1.global_maxscan_e2e_noise.v1",
@@ -287,7 +441,7 @@ def build_e2e_noise_report(noise_mc_dir: Path, method: str = "smica",
         "family_identification": False,
         "native_solver_result": False,
         "method": method,
-        "map": {"path": map_path.name, "input_hash": _sha256_file(map_path)},
+        "map": {"path": obs_map_path.name, "input_hash": _sha256_file(obs_map_path)},
         "noise_sims": {"dir": str(noise_mc_dir), "n_used": len(provenance),
                        "max_requested": max_noise_sims, "files": provenance},
         "statistics": keys,
@@ -310,35 +464,49 @@ def build_e2e_noise_report(noise_mc_dir: Path, method: str = "smica",
 
 
 def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "smica",
-                          max_sims: int = DEFAULT_MAX_FULL_SIMS) -> dict:
+                          max_sims: int = DEFAULT_MAX_FULL_SIMS,
+                          precision: PrecisionConfig | None = None,
+                          jobs: int = 1) -> dict:
     """Route-A FULL E2E long-run: the global max-scan against the matched FFP10/NPIPE
     end-to-end ensemble -- REAL component-separated CMB MC + REAL instrument-noise MC
     (paired per realization). This is the strongest null and the one whose exit gate
     flips K1 measured_partial -> measured and closes BLOCKED_MISSING_PR4_E2E_ACCESS:
     it carries the real signal realisation, the real noise/systematics, and (through
     the component-separated maps) the cleaning transfer. Method-matched; writes a
-    SEPARATE artifact so the canonical GRF result is untouched.
+    SEPARATE artifact so the canonical GRF result is untouched. With ``precision``
+    set, uses the v2 statistic set (proc-NSIDE/ell_max/mask, observed from the full-res
+    map); ``jobs>1`` fans the sims over processes.
 
     NOTE: flipping the egs_results_table K1 row to `measured` is a deliberate manual
     step after this run (re-point the row + provenance), per the guide's exit gate."""
     if method not in _METHOD_MAP:
         raise ValueError(f"method must be one of {sorted(_METHOD_MAP)}")
     map_path = _METHOD_MAP[method]
-    pix_vectors = np.asarray(rm.hp.pix2vec(rm.NSIDE, np.arange(rm.hp.nside2npix(rm.NSIDE)))).T
     obs_defaults = json.loads(rm.OBS_DEFAULTS.read_text())
     cmb = obs_defaults["dipole_observations"]["cmb_planck_2018"]
     cmb_apex = np.asarray(rm.lb_to_unitvec(np.array(cmb["l_deg"]), np.array(cmb["b_deg"])), dtype=float).reshape(3)
+    directions = [_DIR[rm.TAILS[k]] for k in list(rm.TAILS)]
 
-    keys, observed = _observed_only(map_path, pix_vectors, cmb_apex)
-    directions = [_DIR[rm.TAILS[k]] for k in keys]
-    e2e_null, provenance = _e2e_full_null(cmb_mc_dir, noise_mc_dir, max_sims,
-                                          pix_vectors, cmb_apex)
+    if precision is not None:
+        keep_mask = _keep_mask(precision)
+        keys, observed = _observed_precision(method, precision, keep_mask, cmb_apex)
+        e2e_null, provenance = _e2e_full_null_precision(
+            cmb_mc_dir, noise_mc_dir, max_sims, precision, keep_mask, cmb_apex, jobs)
+        obs_map_path = FULLRES_OBS[method]
+        config = {**precision.as_dict(), "method": method, "n_sims": len(provenance),
+                  "seed": rm.SEED, "statistics": keys, "directions": directions, "jobs": jobs,
+                  "null_model": "ffp10_cmb_plus_noise_e2e_v2_precision"}
+    else:
+        pix_vectors = np.asarray(rm.hp.pix2vec(rm.NSIDE, np.arange(rm.hp.nside2npix(rm.NSIDE)))).T
+        keys, observed = _observed_only(map_path, pix_vectors, cmb_apex)
+        e2e_null, provenance = _e2e_full_null(cmb_mc_dir, noise_mc_dir, max_sims,
+                                              pix_vectors, cmb_apex)
+        obs_map_path = map_path
+        config = {"nside": rm.NSIDE, "lmax": rm.LMAX, "ell_min": rm.ELL_MIN,
+                  "method": method, "n_sims": len(provenance), "seed": rm.SEED,
+                  "statistics": keys, "directions": directions,
+                  "null_model": "ffp10_cmb_plus_noise_e2e"}
     res = calibrate_max_scan(observed, e2e_null, directions)
-
-    config = {"nside": rm.NSIDE, "lmax": rm.LMAX, "ell_min": rm.ELL_MIN,
-              "method": method, "n_sims": len(provenance), "seed": rm.SEED,
-              "statistics": keys, "directions": directions,
-              "null_model": "ffp10_cmb_plus_noise_e2e"}
     config_hash = "sha256:" + hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
     return {
         "schema": "htt.k1.global_maxscan_e2e_full.v1",
@@ -350,7 +518,7 @@ def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "s
         "family_identification": False,
         "native_solver_result": False,
         "method": method,
-        "map": {"path": map_path.name, "input_hash": _sha256_file(map_path)},
+        "map": {"path": obs_map_path.name, "input_hash": _sha256_file(obs_map_path)},
         "e2e_sims": {"cmb_dir": str(cmb_mc_dir), "noise_dir": str(noise_mc_dir),
                      "n_used": len(provenance), "max_requested": max_sims,
                      "pairing": "cmb_mc[i] + noise_mc[i mod n_noise]", "files": provenance},
@@ -389,30 +557,51 @@ def main(argv: list[str] | None = None) -> int:
                         help=f"cap on noise sims (route-4 mode; default: {DEFAULT_MAX_NOISE_SIMS})")
     parser.add_argument("--max-sims", type=int, default=DEFAULT_MAX_FULL_SIMS,
                         help=f"cap on CMB sims (full E2E mode; default: {DEFAULT_MAX_FULL_SIMS}, raise to 1000)")
+    parser.add_argument("--jobs", type=int, default=1,
+                        help="parallel worker processes for the E2E sim loop (default 1)")
+    parser.add_argument("--precision", action="store_true",
+                        help="v2 precision statistic set: proc-NSIDE + ell_max + galactic "
+                             "mask (re-registered; observed taken from the full-res map)")
+    parser.add_argument("--proc-nside", type=int, default=DEFAULT_PROC_NSIDE,
+                        help=f"processing NSIDE for --precision (default {DEFAULT_PROC_NSIDE}; "
+                             "64 is the ell<=8 ceiling, higher only helps with --lmax)")
+    parser.add_argument("--lmax", type=int, default=DEFAULT_LMAX,
+                        help=f"max multipole for the ell-summed stats under --precision "
+                             f"(default {DEFAULT_LMAX}; Q-O alignment stays ell=2,3)")
+    parser.add_argument("--no-mask", action="store_true",
+                        help="under --precision, skip the galactic mask + inpainting (full-sky)")
     args = parser.parse_args(argv)
+
+    precision = None
+    if args.precision:
+        precision = PrecisionConfig(proc_nside=args.proc_nside, lmax=args.lmax,
+                                    masked=not args.no_mask)
 
     if args.cmb_mc_dir is not None:
         # Route-A FULL E2E: real CMB MC + real noise MC (needs both dirs)
         if args.noise_mc_dir is None:
             parser.error("--cmb-mc-dir requires --noise-mc-dir (full E2E null = CMB + noise)")
         payload = build_e2e_full_report(args.cmb_mc_dir, args.noise_mc_dir,
-                                        args.method, args.max_sims)
+                                        args.method, args.max_sims, precision, args.jobs)
         text = json.dumps(payload, indent=2, sort_keys=True) + "\n"
         OUT_E2E_FULL_JSON.parent.mkdir(parents=True, exist_ok=True)
         OUT_E2E_FULL_JSON.write_text(text)
         print(f"wrote {OUT_E2E_FULL_JSON.relative_to(REPO_ROOT)}")
         print(f"   {args.method} FULL E2E global p = {payload['result']['global_p']:.4f} "
-              f"({payload['e2e_sims']['n_used']} CMB+noise sims)")
+              f"({payload['e2e_sims']['n_used']} CMB+noise sims; "
+              f"statistic_set={payload['config'].get('statistic_set', 'v1')}, jobs={args.jobs})")
         return 0
 
     if args.noise_mc_dir is not None:
-        payload = build_e2e_noise_report(args.noise_mc_dir, args.method, args.max_noise_sims)
+        payload = build_e2e_noise_report(args.noise_mc_dir, args.method,
+                                         args.max_noise_sims, precision, args.jobs)
         text = json.dumps(payload, indent=2, sort_keys=True) + "\n"
         OUT_E2E_JSON.parent.mkdir(parents=True, exist_ok=True)
         OUT_E2E_JSON.write_text(text)
         print(f"wrote {OUT_E2E_JSON.relative_to(REPO_ROOT)}")
         print(f"   {args.method} E2E-noise global p = {payload['result']['global_p']:.4f} "
-              f"({payload['noise_sims']['n_used']} noise sims)")
+              f"({payload['noise_sims']['n_used']} noise sims; "
+              f"statistic_set={payload['config'].get('statistic_set', 'v1')}, jobs={args.jobs})")
         return 0
 
     payload = build_report()

@@ -7,6 +7,42 @@
 
 ## [Unreleased]
 
+### K1 v2 precision statistic set + parallel --jobs (rev-r137, 2026-06-30)
+
+User (Ryzen 5900X, 64 GB) wants the full-data analysis parallelised and the NSIDE
+downgrade relaxed for precision. Established by measurement that **raising NSIDE alone
+does not increase ℓ=2–8 precision** (NSIDE=16 is Nyquist-sufficient; the only lever is
+the ≤1.3 % pixel-window suppression at ℓ=6–8, removed by NSIDE=64 — ceiling). The real
+precision levers are proc-NSIDE, ℓ_max, and the galactic mask; user opted for all three.
+
+- **`htt/obsstat/lowell_precision.py`** (new): `PrecisionConfig` + `downgrade_mask` +
+  `diffuse_inpaint` + `precision_map_statistics`. A deliberately **re-registered v2
+  statistic set** (own `statistic_set`/`config_hash`) returning the same six v1 keys at
+  a configurable proc-NSIDE (default 64) and ℓ_max (default 30, ell-summed stats only;
+  Q-O alignment stays ℓ=2,3), with the common temperature mask applied + the masked
+  region diffuse-inpainted identically on observed + sims (so the look-elsewhere p-value
+  stays valid). +8 unit tests.
+- **`scripts/k1_global_maxscan.py`**: `--precision --proc-nside --lmax --no-mask --jobs`.
+  `build_e2e_full_report`/`build_e2e_noise_report` gain `precision`/`jobs`; under
+  precision the observed vector comes from the **full-res** observed map processed
+  identically, and the artifact records the v2 re-registration
+  (`null_model: *_v2_precision`). Parallelism via `ProcessPoolExecutor`: threads pinned
+  to 1/worker (set before healpy import) + `spawn` context (avoids the fork-after-OpenMP
+  deadlock); noise pre-downgraded once and cached, CMB fanned out. The v1 ℓ≤8 path and
+  the canonical GRF artifact are untouched. +5 K1 tests incl. `parallel == serial`.
+- **Wall-time (measured, full 1000 CMB + 300 noise)**: per-map ≈ 3 s at v2; I/O-bound
+  (~3.5 min nvme read floor) → **`--jobs 12` ≈ 5–7 min** (≈ same as v1; ~2 min for
+  `--max-sims 300`); serial ~40 min. RAM ~1 GB/worker → 12 jobs ≈ 12 GB, 24 ≈ 24 GB
+  (no RAM purchase needed on 64 GB).
+- **`docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md`**: v2-precision subsection (flags,
+  the NSIDE=64 ℓ≤8 ceiling + pixel-window table, mask/inpaint method, measured wall-time
+  table). `htt/obsstat/lowell_precision.py` + `test_lowell_precision.py` bundled into the
+  research-evaluation package.
+- Claim discipline: v2 is diagnostic-only and explicitly re-registered (not a silent
+  change to the frozen v1 set); mask handled identically on obs+sims (no per-statistic
+  deconvolution claimed); flipping K1 to `measured` stays a manual post-run step.
+  Validation: 20 K1+precision tests + 355 contracts pass; packages rebuilt.
+
 ### K1 full Route-A E2E runner (real CMB+noise) for the 2 TB-nvme download (rev-r136, 2026-06-30)
 
 User is installing a 2 TB nvme to download the FULL FFP10 set (1000 CMB MC + 300 noise MC,

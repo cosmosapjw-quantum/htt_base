@@ -145,3 +145,75 @@ def test_full_e2e_max_sims_caps(tmp_path):
     noise = _write_sims(tmp_path / "noise", 6, 25.0, "noise", 4)
     rep = k1.build_e2e_full_report(cmb, noise, method="smica", max_sims=2)
     assert rep["e2e_sims"]["n_used"] == 2
+
+
+# --------------------------------------------------------------------------- #
+# v2 PRECISION path (proc-NSIDE + ell_max + mask) + parallel --jobs.
+# Patch the full-res observed map + mask to small NSIDE-16 fixtures so the path
+# runs without the 2 GB real FITS.
+# --------------------------------------------------------------------------- #
+from htt.obsstat.lowell_precision import PrecisionConfig  # noqa: E402
+
+NSIDE_FIX = 16
+
+
+def _patch_precision_inputs(monkeypatch, tmp_path, masked):
+    npix = k1.rm.hp.nside2npix(NSIDE_FIX)
+    obs = (np.random.default_rng(99).normal(scale=40.0, size=npix)).astype(float)
+    obs_path = tmp_path / "obs_fullres.npz"
+    np.savez(obs_path, I=obs, unit="uK")
+    monkeypatch.setitem(k1.FULLRES_OBS, "smica", obs_path)
+    if masked:
+        mask = np.ones(npix)
+        mask[: npix // 5] = 0.0
+        mask_path = tmp_path / "mask.fits"
+        k1.rm.hp.write_map(mask_path, mask, overwrite=True, dtype=np.float64)
+        monkeypatch.setattr(k1, "MASK_HI", mask_path)
+
+
+def _cfg(masked):
+    return PrecisionConfig(proc_nside=NSIDE_FIX, lmax=12, masked=masked, inpaint_iters=10)
+
+
+def test_precision_full_runs_and_is_v2_labelled(monkeypatch, tmp_path):
+    _patch_precision_inputs(monkeypatch, tmp_path, masked=False)
+    cmb = _write_sims(tmp_path / "cmb", 5, 50.0, "cmb", 11)
+    noise = _write_sims(tmp_path / "noise", 3, 25.0, "noise", 12)
+    rep = k1.build_e2e_full_report(cmb, noise, "smica", 5, precision=_cfg(False), jobs=1)
+    assert rep["config"]["statistic_set"] == "v2_precision"
+    assert rep["config"]["lmax"] == 12 and rep["config"]["proc_nside"] == NSIDE_FIX
+    assert rep["config"]["null_model"] == "ffp10_cmb_plus_noise_e2e_v2_precision"
+    assert rep["blocker_closes"] == "BLOCKED_MISSING_PR4_E2E_ACCESS"
+    assert 0.0 < rep["result"]["global_p"] <= 1.0
+    assert rep["family_identification"] is False and rep["native_solver_result"] is False
+
+
+def test_precision_full_parallel_equals_serial(monkeypatch, tmp_path):
+    _patch_precision_inputs(monkeypatch, tmp_path, masked=False)
+    cmb = _write_sims(tmp_path / "cmb", 6, 50.0, "cmb", 21)
+    noise = _write_sims(tmp_path / "noise", 3, 25.0, "noise", 22)
+    serial = k1.build_e2e_full_report(cmb, noise, "smica", 6, precision=_cfg(False), jobs=1)
+    par = k1.build_e2e_full_report(cmb, noise, "smica", 6, precision=_cfg(False), jobs=2)
+    # identical results regardless of worker count (deterministic, order-stable)
+    assert serial["result"]["global_p"] == par["result"]["global_p"]
+    assert serial["result"]["local_p"] == par["result"]["local_p"]
+
+
+def test_precision_masked_full_runs_with_inpaint(monkeypatch, tmp_path):
+    _patch_precision_inputs(monkeypatch, tmp_path, masked=True)
+    cmb = _write_sims(tmp_path / "cmb", 4, 50.0, "cmb", 31)
+    noise = _write_sims(tmp_path / "noise", 4, 25.0, "noise", 32)
+    rep = k1.build_e2e_full_report(cmb, noise, "smica", 4, precision=_cfg(True), jobs=1)
+    assert rep["config"]["masked"] is True
+    assert rep["config"]["mask_handling"].startswith("diffuse_inpaint")
+    assert 0.0 < rep["result"]["global_p"] <= 1.0
+
+
+def test_precision_noise_only_stays_measured_partial(monkeypatch, tmp_path):
+    _patch_precision_inputs(monkeypatch, tmp_path, masked=False)
+    noise = _write_sims(tmp_path / "noise", 5, 25.0, "noise", 41)
+    rep = k1.build_e2e_noise_report(noise, "smica", 5, precision=_cfg(False), jobs=2)
+    assert rep["config"]["statistic_set"] == "v2_precision"
+    assert rep["config"]["null_model"] == "lambdacdm_signal_plus_real_instrument_noise_v2_precision"
+    assert rep["blocker_partial"] == "BLOCKED_MISSING_PR4_E2E_ACCESS"   # still partial
+    assert 0.0 < rep["result"]["global_p"] <= 1.0

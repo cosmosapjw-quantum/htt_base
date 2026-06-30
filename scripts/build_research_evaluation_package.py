@@ -67,6 +67,7 @@ RESEARCH_CODE = (
     "htt/obsstat/biposh_features.py",
     "htt/obsstat/affine_flow.py",
     "htt/obsstat/bulkflow_mle.py",
+    "htt/obsstat/lowell_precision.py",
     # discharge + aggregation drivers
     "scripts/k1_global_maxscan.py",
     "scripts/k5_cf4_release_coverage.py",
@@ -90,6 +91,7 @@ TEST_FILES = (
     "research_gates/external_audit_2026_06_29/reviewer_verification.py",
     "tests/obsstat/test_k1_global_maxscan.py",
     "tests/obsstat/test_k1_noise_mode.py",
+    "tests/obsstat/test_lowell_precision.py",
     "tests/obsstat/test_k5_cf4_release_coverage.py",
     "tests/obsstat/test_k6_cf4_curl_posterior.py",
     "tests/contracts/test_pr08_006_joint_artifact.py",

@@ -93,6 +93,54 @@ the cross-check; **report the two side by side, do not average**. Then flip the 
 row per "Exit gate" below. The canonical GRF artifact and the route-4 noise-only
 artifact are left untouched (separate files).
 
+### Higher-precision (v2) statistic set + parallelism (Ryzen 5900X)
+
+The command above runs the *frozen v1* set (NSIDE=16, ℓ=2–8, full-sky). On a
+12-core/64 GB box the analysis is I/O-bound, so you can raise the precision and
+parallelise at essentially the same wall-time. Add `--precision --jobs 12`:
+
+```bash
+PYTHONPATH=. venv/bin/python scripts/k1_global_maxscan.py \
+    --cmb-mc-dir   workdir/raw/planck_ffp10/smica/cmb_mc \
+    --noise-mc-dir workdir/raw/planck_ffp10/smica/noise_mc \
+    --method smica --max-sims 1000 \
+    --precision --proc-nside 64 --lmax 30 --jobs 12
+# null_model = ffp10_cmb_plus_noise_e2e_v2_precision ; statistic_set = v2_precision
+```
+
+The v2 set (`htt/obsstat/lowell_precision.py`) is a deliberately **re-registered**
+statistic set (own `config_hash`/`statistic_set` tag) with three levers:
+
+- **`--proc-nside 64`** removes the ≤1.3 % NSIDE=16 pixel-window suppression at
+  ℓ=6–8 (`w₈`: 0.987→0.999). **64 is the ceiling for ℓ≤8** — `128/256` add nothing
+  there (measured); only go higher if you raise `--lmax`.
+- **`--lmax 30`** feeds more multipoles to the ℓ-summed stats (S₁/₂, parity,
+  planarity) — a genuine information increase. The quadrupole–octupole *alignment*
+  stats are intrinsically ℓ=2,3 and are unchanged.
+- **galactic mask + diffuse inpainting** (default on under `--precision`; `--no-mask`
+  to disable): the common temperature mask is applied and the masked region
+  diffuse-inpainted before the SHT, **identically on the observed map and every
+  sim**, so the mask response is absorbed into the null and the look-elsewhere
+  p-value stays valid. The observed vector is taken from the **full-res** observed
+  map (`COM_CMB_IQU-<method>_2048_R3.00_full.fits`), processed identically.
+
+Threads are pinned to 1/worker (no oversubscription) and the pool uses `spawn`
+(avoids the fork-after-OpenMP deadlock); `parallel == serial` is gate-tested.
+
+**Wall-time (measured per-map cost ≈ 3 s at v2; full 1000 CMB + 300 noise; noise
+pre-downgraded once and cached):**
+
+| config | serial | `--jobs 12` (5900X) |
+| --- | --- | --- |
+| v1 (NSIDE 16, ℓ≤8) | ~40 min | ~5–7 min |
+| **v2 (NSIDE 64, ℓ=30, mask)** | ~40 min | **~5–7 min** |
+| v2, `--max-sims 300` | ~10 min | **~2 min** |
+
+Wall-time is I/O-bound (~3.5 min floor reading 1300×0.4 GB on nvme), so v1 vs v2 and
+NSIDE 64 vs 128 barely move it. RAM: ~1 GB/worker → `--jobs 12` ≈ 12 GB, `--jobs 24`
+≈ 24 GB, both well under 64 GB (no RAM purchase needed). The v2 full run writes
+`docs/generated/k1_global_maxscan_e2e_full.json`; the v1/GRF artifacts are untouched.
+
 ## Reducing the ~1 TB footprint (optional — only if disk is tight)
 
 Downloading all `dx12_v3_smica_cmb_mc_<00000..00999>` + `..._noise_mc_<00000..00299>`
