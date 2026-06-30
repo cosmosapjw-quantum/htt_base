@@ -30,14 +30,20 @@ skip_no_map = pytest.mark.skipif(
     not _REAL_MAP_PRESENT, reason="real NSIDE=16 SMICA map not present (clean clone)")
 
 
-def _write_noise_sims(tmp: Path, n: int) -> Path:
-    """n synthetic NSIDE=16 noise-only sims in the compact {I, unit} .npz layout."""
+def _write_sims(tmp: Path, n: int, scale: float, tag: str, seed: int) -> Path:
+    """n synthetic NSIDE=16 sims in the compact {I, unit} .npz layout."""
+    tmp.mkdir(parents=True, exist_ok=True)
     npix = k1.rm.hp.nside2npix(k1.rm.NSIDE)
-    rng = np.random.default_rng(2026)
+    rng = np.random.default_rng(seed)
     for i in range(n):
-        noise = rng.normal(scale=25.0, size=npix)        # ~25 uK low-ell noise
-        np.savez(tmp / f"noise_mc_{i:05d}.npz", I=noise.astype(float), unit="uK")
+        m = rng.normal(scale=scale, size=npix)
+        np.savez(tmp / f"{tag}_mc_{i:05d}.npz", I=m.astype(float), unit="uK")
     return tmp
+
+
+def _write_noise_sims(tmp: Path, n: int) -> Path:
+    """n synthetic NSIDE=16 noise-only sims (~25 uK)."""
+    return _write_sims(tmp, n, 25.0, "noise", 2026)
 
 
 def test_list_and_load_noise_sims(tmp_path):
@@ -91,7 +97,51 @@ def test_max_noise_sims_caps(tmp_path):
 
 def test_canonical_grf_report_unchanged_signature():
     # the default (no noise dir) path still targets the canonical artifact and
-    # the e2e path targets a SEPARATE file (canonical result untouched)
+    # the e2e paths target SEPARATE files (canonical result untouched)
     assert k1.OUT_JSON.name == "k1_global_maxscan.json"
     assert k1.OUT_E2E_JSON.name == "k1_global_maxscan_e2e_noise.json"
-    assert k1.OUT_JSON != k1.OUT_E2E_JSON
+    assert k1.OUT_E2E_FULL_JSON.name == "k1_global_maxscan_e2e_full.json"
+    assert len({k1.OUT_JSON, k1.OUT_E2E_JSON, k1.OUT_E2E_FULL_JSON}) == 3
+
+
+def test_full_e2e_empty_dirs_raise(tmp_path):
+    cmb = tmp_path / "cmb"; noise = tmp_path / "noise"
+    cmb.mkdir(); noise.mkdir()
+    with pytest.raises(FileNotFoundError):                 # no CMB sims
+        k1._e2e_full_null(cmb, noise, 10, np.zeros((3, 3)), np.zeros(3))
+    _write_sims(cmb, 2, 50.0, "cmb", 1)                    # CMB present, noise empty
+    with pytest.raises(FileNotFoundError):
+        k1._e2e_full_null(cmb, noise, 10, np.zeros((3, 3)), np.zeros(3))
+
+
+@skip_no_map
+def test_full_e2e_report_runs_and_is_exit_gate_labelled(tmp_path):
+    cmb = _write_sims(tmp_path / "cmb", 4, 50.0, "cmb", 7)      # real-like CMB MC
+    noise = _write_sims(tmp_path / "noise", 3, 25.0, "noise", 9)  # fewer noise (cycled)
+    rep = k1.build_e2e_full_report(cmb, noise, method="smica", max_sims=4)
+    # claim discipline
+    assert rep["family_identification"] is False
+    assert rep["native_solver_result"] is False
+    assert rep["claim_tier"] == "diagnostic_only"
+    # this is the EXIT-GATE null (real CMB + real noise), not measured_partial
+    assert rep["blocker_closes"] == "BLOCKED_MISSING_PR4_E2E_ACCESS"
+    assert rep["config"]["null_model"] == "ffp10_cmb_plus_noise_e2e"
+    # valid look-elsewhere global p
+    gp = rep["result"]["global_p"]
+    assert 0.0 < gp <= 1.0
+    assert gp >= min(rep["result"]["local_p"].values())
+    # paired provenance: 4 CMB sims, noise cycled (i mod 3), both hashed
+    assert rep["e2e_sims"]["n_used"] == 4
+    assert rep["e2e_sims"]["pairing"] == "cmb_mc[i] + noise_mc[i mod n_noise]"
+    files = rep["e2e_sims"]["files"]
+    assert len(files) == 4
+    assert files[0]["noise_file"] == files[3]["noise_file"]   # 0 and 3 -> same noise (mod 3)
+    assert all(f["cmb_hash"].startswith("sha256:") and f["noise_hash"].startswith("sha256:") for f in files)
+
+
+@skip_no_map
+def test_full_e2e_max_sims_caps(tmp_path):
+    cmb = _write_sims(tmp_path / "cmb", 6, 50.0, "cmb", 3)
+    noise = _write_sims(tmp_path / "noise", 6, 25.0, "noise", 4)
+    rep = k1.build_e2e_full_report(cmb, noise, method="smica", max_sims=2)
+    assert rep["e2e_sims"]["n_used"] == 2

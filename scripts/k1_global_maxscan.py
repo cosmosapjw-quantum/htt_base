@@ -25,19 +25,25 @@ ensemble -- and the morphology statistics here depend on a_lm phases, so a
 C_ell-only product cannot generate the matched null. No Bianchi family,
 geometry, or native-solver claim.
 
-Long-run (route 4 of docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md): once the
-~300 per-method *noise-only* sims are downloaded, ``--noise-mc-dir <dir>
-[--method smica|commander] [--max-noise-sims N]`` upgrades the pure-GRF null to a
-NOISE-AUGMENTED null (a local LambdaCDM signal added to each REAL instrument-noise
-sim), carrying the real low-ell instrument-noise covariance for that method. This
-writes a SEPARATE artifact (docs/generated/k1_global_maxscan_e2e_noise.json) so the
-canonical GRF result is untouched. It is an UPGRADE of, not a replacement for, the
-blocked full E2E null (no residual foregrounds/systematics, no matched signal), so
-K1 stays measured_partial. Ready to run the moment the noise sims land.
+Long-run (docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md), two modes, each a
+SEPARATE artifact so the canonical GRF result is untouched:
 
-Outputs: docs/generated/k1_global_maxscan.json (GRF null; default) and, in
-long-run mode, docs/generated/k1_global_maxscan_e2e_noise.json. Deterministic
-(seeded); --check verifies the canonical GRF artifact.
+  * Route A FULL E2E (the exit gate; needs the full ~1 TB FFP10 download) --
+    ``--cmb-mc-dir <cmb> --noise-mc-dir <noise> [--method] [--max-sims N]``: the
+    matched ensemble of REAL component-separated CMB MC + REAL instrument-noise MC
+    (paired per realization), carrying signal + noise/systematics + the cleaning
+    transfer. This is the null whose exit gate flips K1 measured_partial -> measured
+    and closes BLOCKED_MISSING_PR4_E2E_ACCESS. Writes
+    docs/generated/k1_global_maxscan_e2e_full.json.
+  * Route 4 noise-only (lighter, ~40 GB) -- ``--noise-mc-dir <noise>`` alone: a
+    local LambdaCDM signal added to each real noise MC. An UPGRADE of, not a
+    replacement for, the full null (no residual foregrounds/systematics, no matched
+    signal), so K1 stays measured_partial. Writes
+    docs/generated/k1_global_maxscan_e2e_noise.json.
+
+Outputs: docs/generated/k1_global_maxscan.json (GRF null; default), plus the E2E
+artifact for the long-run mode used. Deterministic (seeded); --check verifies the
+canonical GRF artifact.
 """
 from __future__ import annotations
 
@@ -56,11 +62,15 @@ import make_lowell_morphology_real_map as rm  # noqa: E402
 from obsstat.lowell_global_calibration import calibrate_max_scan  # noqa: E402
 
 OUT_JSON = REPO_ROOT / "docs/generated/k1_global_maxscan.json"
-# E2E noise-augmented null (route 4 of K1_E2E_DOWNLOAD_GUIDE): a SEPARATE artifact,
-# so the canonical GRF-null k1_global_maxscan.json (and its contract) is untouched.
+# E2E nulls (K1_E2E_DOWNLOAD_GUIDE): SEPARATE artifacts, so the canonical GRF-null
+# k1_global_maxscan.json (and its contract) is untouched.
+#   route 4 (noise-only + local LambdaCDM signal)  -> OUT_E2E_JSON
+#   Route A full (real CMB MC + real noise MC, E2E) -> OUT_E2E_FULL_JSON
 OUT_E2E_JSON = REPO_ROOT / "docs/generated/k1_global_maxscan_e2e_noise.json"
+OUT_E2E_FULL_JSON = REPO_ROOT / "docs/generated/k1_global_maxscan_e2e_full.json"
 N_NULL = 2000
 DEFAULT_MAX_NOISE_SIMS = 300
+DEFAULT_MAX_FULL_SIMS = 300   # Planck-2018 anomaly standard; raise to 1000 with full FFP10
 # max-scan tail direction per statistic: anomaly "lower"->minimise, "upper"->maximise.
 _DIR = {"lower": "low", "upper": "high"}
 
@@ -86,31 +96,70 @@ def _observed_only(map_path: Path, pix_vectors, cmb_apex):
     return keys, np.array([float(real[k]) for k in keys])
 
 
-def _list_noise_sims(noise_mc_dir: Path) -> list[Path]:
-    """Sorted noise-only sim files (FITS for the real download, NPZ for fixtures)."""
+def _list_sims(sim_dir: Path) -> list[Path]:
+    """Sorted sim files (FITS for the real download, NPZ for fixtures)."""
     files: list[Path] = []
     for pat in ("*.fits", "*.fits.gz", "*.npz"):
-        files.extend(sorted(noise_mc_dir.glob(pat)))
+        files.extend(sorted(sim_dir.glob(pat)))
     return files
 
 
-def _load_noise_sim_map(path: Path) -> np.ndarray:
-    """Load one NOISE-ONLY sim, downgrade-on-read to NSIDE=16 low-ell, return in uK.
+# back-compat alias (rev-r135 name)
+_list_noise_sims = _list_sims
 
-    Handles the two real formats: the raw Planck FFP10/NPIPE noise sims
-    (``dx12_v3_<method>_noise_mc_*.fits``, full-resolution K_CMB -> ud_grade to
-    NSIDE=16 + uK rescale) and the compact NSIDE=16 ``.npz`` fixtures used by the
+
+def _load_sim_map(path: Path) -> np.ndarray:
+    """Load one simulation map (CMB MC or noise MC), downgrade-on-read to NSIDE=16
+    low-ell, return in uK.
+
+    Handles the two real formats: the raw Planck FFP10/NPIPE sims
+    (``dx12_v3_<method>_{cmb,noise}_mc_*.fits``, full-resolution K_CMB -> ud_grade
+    to NSIDE=16 + uK rescale) and the compact NSIDE=16 ``.npz`` fixtures used by the
     in-repo regression test (same ``{I, unit}`` layout as the real downgraded maps).
     """
     if path.suffix == ".npz":
         return rm._load_real_map(path)
-    # FITS: full-resolution noise map. Read, downgrade to NSIDE=16, rescale K->uK.
+    # FITS: full-resolution map. Read I, downgrade to NSIDE=16, rescale K->uK.
     m = np.asarray(rm.hp.read_map(path, verbose=False), dtype=float)
     if rm.hp.npix2nside(m.size) != rm.NSIDE:
         m = rm.hp.ud_grade(m, nside_out=rm.NSIDE)
     if float(np.nanstd(m)) < 1.0e-2:          # stored in K_CMB -> uK
         m = m * 1.0e6
     return m
+
+
+# back-compat alias (rev-r135 name)
+_load_noise_sim_map = _load_sim_map
+
+
+def _e2e_full_null(cmb_mc_dir: Path, noise_mc_dir: Path, max_sims: int,
+                   pix_vectors, cmb_apex):
+    """Route-A FULL E2E null (the strongest, what flips K1 measured_partial->measured):
+    for each REAL component-separated CMB MC, add a REAL instrument-noise MC (paired by
+    index, cycling the noise set if fewer noise than CMB sims) and compute the six
+    registered statistics on the CMB+noise map. This is the matched FFP10/NPIPE E2E
+    ensemble: real signal realisation + real noise/systematics + (via the maps) the
+    component-separation transfer -- no local-LambdaCDM stand-in. Method-matched.
+
+    Returns (null_matrix [S x P], provenance list)."""
+    keys = list(rm.TAILS)
+    cmb_files = _list_sims(cmb_mc_dir)[:max_sims]
+    noise_files = _list_sims(noise_mc_dir)
+    if not cmb_files:
+        raise FileNotFoundError(f"no CMB sims (*.fits/*.npz) found in {cmb_mc_dir}")
+    if not noise_files:
+        raise FileNotFoundError(f"no noise sims (*.fits/*.npz) found in {noise_mc_dir}")
+    rows: list[list[float]] = []
+    provenance: list[dict] = []
+    for i, cf in enumerate(cmb_files):
+        nf = noise_files[i % len(noise_files)]      # cycle noise if fewer than CMB
+        signal = _load_sim_map(cf)
+        noise = _load_sim_map(nf)
+        stats = rm.compute_map_statistics(signal + noise, pix_vectors, cmb_apex)
+        rows.append([float(stats[k]) for k in keys])
+        provenance.append({"cmb_file": cf.name, "cmb_hash": _sha256_file(cf),
+                           "noise_file": nf.name, "noise_hash": _sha256_file(nf)})
+    return np.asarray(rows, dtype=float), provenance
 
 
 def _e2e_noise_null(noise_mc_dir: Path, max_sims: int, pix_vectors, cmb_apex,
@@ -260,18 +309,101 @@ def build_e2e_noise_report(noise_mc_dir: Path, method: str = "smica",
     }
 
 
+def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "smica",
+                          max_sims: int = DEFAULT_MAX_FULL_SIMS) -> dict:
+    """Route-A FULL E2E long-run: the global max-scan against the matched FFP10/NPIPE
+    end-to-end ensemble -- REAL component-separated CMB MC + REAL instrument-noise MC
+    (paired per realization). This is the strongest null and the one whose exit gate
+    flips K1 measured_partial -> measured and closes BLOCKED_MISSING_PR4_E2E_ACCESS:
+    it carries the real signal realisation, the real noise/systematics, and (through
+    the component-separated maps) the cleaning transfer. Method-matched; writes a
+    SEPARATE artifact so the canonical GRF result is untouched.
+
+    NOTE: flipping the egs_results_table K1 row to `measured` is a deliberate manual
+    step after this run (re-point the row + provenance), per the guide's exit gate."""
+    if method not in _METHOD_MAP:
+        raise ValueError(f"method must be one of {sorted(_METHOD_MAP)}")
+    map_path = _METHOD_MAP[method]
+    pix_vectors = np.asarray(rm.hp.pix2vec(rm.NSIDE, np.arange(rm.hp.nside2npix(rm.NSIDE)))).T
+    obs_defaults = json.loads(rm.OBS_DEFAULTS.read_text())
+    cmb = obs_defaults["dipole_observations"]["cmb_planck_2018"]
+    cmb_apex = np.asarray(rm.lb_to_unitvec(np.array(cmb["l_deg"]), np.array(cmb["b_deg"])), dtype=float).reshape(3)
+
+    keys, observed = _observed_only(map_path, pix_vectors, cmb_apex)
+    directions = [_DIR[rm.TAILS[k]] for k in keys]
+    e2e_null, provenance = _e2e_full_null(cmb_mc_dir, noise_mc_dir, max_sims,
+                                          pix_vectors, cmb_apex)
+    res = calibrate_max_scan(observed, e2e_null, directions)
+
+    config = {"nside": rm.NSIDE, "lmax": rm.LMAX, "ell_min": rm.ELL_MIN,
+              "method": method, "n_sims": len(provenance), "seed": rm.SEED,
+              "statistics": keys, "directions": directions,
+              "null_model": "ffp10_cmb_plus_noise_e2e"}
+    config_hash = "sha256:" + hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
+    return {
+        "schema": "htt.k1.global_maxscan_e2e_full.v1",
+        "owner": "OBSSTAT",
+        "claim_tier": "diagnostic_only",
+        "blocker_closes": "BLOCKED_MISSING_PR4_E2E_ACCESS",
+        "blocker_note": "matched FFP10/NPIPE E2E null: real component-separated CMB MC + real instrument-noise MC for this method. This is the exit-gate null; once run on the full ensemble, flip the egs_results_table K1 row measured_partial -> measured through the generator with this provenance",
+        "transfer_source": "ffp10_component_separation",
+        "family_identification": False,
+        "native_solver_result": False,
+        "method": method,
+        "map": {"path": map_path.name, "input_hash": _sha256_file(map_path)},
+        "e2e_sims": {"cmb_dir": str(cmb_mc_dir), "noise_dir": str(noise_mc_dir),
+                     "n_used": len(provenance), "max_requested": max_sims,
+                     "pairing": "cmb_mc[i] + noise_mc[i mod n_noise]", "files": provenance},
+        "statistics": keys,
+        "config": config,
+        "config_hash": config_hash,
+        "result": {
+            "local_p": {k: float(p) for k, p in zip(keys, res.local_p)},
+            "global_p": float(res.global_p),
+            "observed_max_score": float(res.observed_max_score),
+        },
+        "headline": f"K1 global look-elsewhere-corrected low-ell morphology p ({method}) under the matched FFP10/NPIPE CMB+noise E2E null",
+        "caveats": [
+            "null = REAL component-separated CMB MC + REAL instrument-noise MC (matched E2E); carries noise/systematics + the cleaning transfer",
+            "method-matched: built from this method's sims only; compare methods side by side, do not average",
+            "look-elsewhere correction over the six registered statistics; max-scan frozen",
+            "model-independent low-ell descriptor; no Bianchi family, geometry, anisotropy-evidence, or native-solver claim",
+        ],
+        "claim_boundary": "OBSSTAT global look-elsewhere diagnostic under the matched E2E ensemble; this is the exit-gate null, not a family/geometry/native-solver claim",
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true",
                         help="verify the canonical GRF artifact is up to date")
     parser.add_argument("--noise-mc-dir", type=Path, default=None,
-                        help="run the long-run E2E-noise mode against real noise-only sims "
-                             "in this directory (*.fits / *.npz); writes a separate artifact")
+                        help="real noise-only sims dir (*.fits / *.npz). Alone -> route-4 "
+                             "noise+local-LambdaCDM null; with --cmb-mc-dir -> full E2E null")
+    parser.add_argument("--cmb-mc-dir", type=Path, default=None,
+                        help="real component-separated CMB MC dir (*.fits / *.npz). With "
+                             "--noise-mc-dir -> Route-A FULL CMB+noise E2E null (exit gate)")
     parser.add_argument("--method", choices=sorted(_METHOD_MAP), default="smica",
-                        help="component-separation method matched to the noise sims (default: smica)")
+                        help="component-separation method matched to the sims (default: smica)")
     parser.add_argument("--max-noise-sims", type=int, default=DEFAULT_MAX_NOISE_SIMS,
-                        help=f"cap on noise sims to use (default: {DEFAULT_MAX_NOISE_SIMS})")
+                        help=f"cap on noise sims (route-4 mode; default: {DEFAULT_MAX_NOISE_SIMS})")
+    parser.add_argument("--max-sims", type=int, default=DEFAULT_MAX_FULL_SIMS,
+                        help=f"cap on CMB sims (full E2E mode; default: {DEFAULT_MAX_FULL_SIMS}, raise to 1000)")
     args = parser.parse_args(argv)
+
+    if args.cmb_mc_dir is not None:
+        # Route-A FULL E2E: real CMB MC + real noise MC (needs both dirs)
+        if args.noise_mc_dir is None:
+            parser.error("--cmb-mc-dir requires --noise-mc-dir (full E2E null = CMB + noise)")
+        payload = build_e2e_full_report(args.cmb_mc_dir, args.noise_mc_dir,
+                                        args.method, args.max_sims)
+        text = json.dumps(payload, indent=2, sort_keys=True) + "\n"
+        OUT_E2E_FULL_JSON.parent.mkdir(parents=True, exist_ok=True)
+        OUT_E2E_FULL_JSON.write_text(text)
+        print(f"wrote {OUT_E2E_FULL_JSON.relative_to(REPO_ROOT)}")
+        print(f"   {args.method} FULL E2E global p = {payload['result']['global_p']:.4f} "
+              f"({payload['e2e_sims']['n_used']} CMB+noise sims)")
+        return 0
 
     if args.noise_mc_dir is not None:
         payload = build_e2e_noise_report(args.noise_mc_dir, args.method, args.max_noise_sims)

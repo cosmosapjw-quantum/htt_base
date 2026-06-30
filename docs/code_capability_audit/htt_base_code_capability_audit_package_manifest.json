@@ -17,15 +17,15 @@
     {
       "archive_path": "02_CODE_MAP.md",
       "group": "guide",
-      "sha256": "sha256:d640c8e9569fcbf3c60d9fa8df87461c966b5feca8f3e21eea9bdd9547906d51",
+      "sha256": "sha256:910564a12429d296f743adc7d54d16ea71eb75d81dae74ff9d1f01339d767327",
       "size_bytes": 2422,
       "source_path": "virtual:02_CODE_MAP.md"
     },
     {
       "archive_path": "03_ENTRY_POINTS.md",
       "group": "guide",
-      "sha256": "sha256:354d06f3b68d3aaafb8a933574d4571dcd423fef475bbdb71e0f8b6aa0765164",
-      "size_bytes": 14088,
+      "sha256": "sha256:56645af7bab5a1bb39714195ea37b76158b6a7cfe6341c3fc6cc67cd494a06fe",
+      "size_bytes": 14232,
       "source_path": "virtual:03_ENTRY_POINTS.md"
     },
     {
@@ -4026,6 +4026,13 @@
       "source_path": "scripts/capability_probe.py"
     },
     {
+      "archive_path": "code_capability_audit/scripts/claim_lint_research_surfaces.py",
+      "group": "science_driver",
+      "sha256": "sha256:56952bda5ae7179edcc131248d81debdf7d4c5b61521f9fe3a8b1749e709b08f",
+      "size_bytes": 4584,
+      "source_path": "scripts/claim_lint_research_surfaces.py"
+    },
+    {
       "archive_path": "code_capability_audit/scripts/codex_harness/optional_dep_report.py",
       "group": "science_driver",
       "sha256": "sha256:7432803668a5581df98efa8cf48ae243c43800b0724fa16029106c1ae8f30696",
@@ -4119,8 +4126,8 @@
     {
       "archive_path": "code_capability_audit/scripts/k1_global_maxscan.py",
       "group": "science_driver",
-      "sha256": "sha256:4344bad9990d9e1f417362fcda52df4c0de414821c45f20123a23f408443e3c3",
-      "size_bytes": 16460,
+      "sha256": "sha256:16d73652782b9541ba22b618f63158673bfab67bb57cd6a630d2deb43d4fe052",
+      "size_bytes": 24201,
       "source_path": "scripts/k1_global_maxscan.py"
     },
     {
@@ -5657,7 +5664,7 @@
       "source_path": "src/teff/theta4_bridge_v2.rs"
     }
   ],
-  "archive_entry_count": 808,
+  "archive_entry_count": 809,
   "artifact_id": "code_capability_audit_package",
   "artifact_path": "docs/code_capability_audit/htt_base_code_capability_audit_package.zip",
   "caveats": [
@@ -5668,13 +5675,13 @@
     "Inclusion of code does not imply a validated science result; see the result/claim packages for claim tiers."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "ee22a1f+dirty",
-  "config_hash": "sha256:3730bac869983ef9223892d64f187bfe1bcc80b152f7ca7666c45dac704e82dd",
+  "code_version": "337fc62+dirty",
+  "config_hash": "sha256:916f678e820641a00c420dcf1d5d5b7be5ef21ebb3e642c682f2a60acdf1281a",
   "created_by": "scripts/build_code_capability_audit_package.py",
   "failed_gates": [],
   "family_identification": false,
   "generating_command": "python scripts/build_code_capability_audit_package.py",
-  "git_commit_or_worktree_state": "ee22a1f+dirty",
+  "git_commit_or_worktree_state": "337fc62+dirty",
   "group_counts": {
     "audit_prompt": 1,
     "config": 1,
@@ -5685,15 +5692,15 @@
     "library_source": 465,
     "package_readme": 1,
     "rust_solver_source": 165,
-    "science_driver": 74,
+    "science_driver": 75,
     "support": 9
   },
   "implementation_scope": "common",
   "input_hashes": [
     "virtual:00_README.md:sha256:538dc2b2dc67e18d823a1ced405841a0555cd43707381a2566b0b0dc7ca1e748",
     "virtual:01_ARCHITECTURE_GUIDE.md:sha256:a45976a887afc1ca75512730af173504909d960521f2e58888128af406658a34",
-    "virtual:02_CODE_MAP.md:sha256:d640c8e9569fcbf3c60d9fa8df87461c966b5feca8f3e21eea9bdd9547906d51",
-    "virtual:03_ENTRY_POINTS.md:sha256:354d06f3b68d3aaafb8a933574d4571dcd423fef475bbdb71e0f8b6aa0765164",
+    "virtual:02_CODE_MAP.md:sha256:910564a12429d296f743adc7d54d16ea71eb75d81dae74ff9d1f01339d767327",
+    "virtual:03_ENTRY_POINTS.md:sha256:56645af7bab5a1bb39714195ea37b76158b6a7cfe6341c3fc6cc67cd494a06fe",
     "virtual:04_DATA_ACCESS.md:sha256:1f571659be8383d8755fda20f16fb689f18f16e064859cb524254e2c3638ea5d",
     "virtual:AUDIT_PROMPT.md:sha256:1808d0e0e7c0c82f3b418524209a3a46d7d5ebdb1d2fe2ba7d0a4e43953fa6ff",
     "CLAUDE.md:sha256:4271668f0f7b4dad40daaf23044198b7231f3d4f49fc77996ae0e19d2cd88d57",
@@ -6265,6 +6272,7 @@
     "scripts/build_pr04_research_audit_package.py:sha256:97aa257ceb9f2f4c5caabc68bb244b7a3ac6a9b68a35b554b22ef4279ca88bf4",
     "scripts/build_research_evaluation_package.py:sha256:5922aa033f6a97f30f49b7e08329230657087c5553b47a6b2134a5ae236222d5",
     "scripts/capability_probe.py:sha256:884073db654c49a051537600395cfe780d451df38130250b09b3786e24601312",
+    "scripts/claim_lint_research_surfaces.py:sha256:56952bda5ae7179edcc131248d81debdf7d4c5b61521f9fe3a8b1749e709b08f",
     "scripts/codex_harness/optional_dep_report.py:sha256:7432803668a5581df98efa8cf48ae243c43800b0724fa16029106c1ae8f30696",
     "scripts/codex_harness/run_subset.py:sha256:a2d2294aad1cf0493800dd8c94f80f7ff933836d4d9553a0ecaecc0c5568bd46",
     "scripts/compare_flrw_lowell_pstf_to_camb.py:sha256:6e05938fcac1b3ed5fe383d1c02416c68e943e4349c9b6cb8f79db27e7663ccf",
@@ -6278,7 +6286,7 @@
     "scripts/generate_transfer_sensitivity_report.py:sha256:5dedf6db87a5bb3e0e95c418f4e7e4bd37c9b02cfec2f589c20b9487b4867d87",
     "scripts/install_codex_handoff.sh:sha256:60d5df1a3d94186895d547bef5b0c43baa72df92ba17189e5d57aea84faff34b",
     "scripts/inventory_observational_data.py:sha256:9d88d150e13239900fb16c06b1af0c768b5b7eb1da5f9c099d73f68e62e132d0",
-    "scripts/k1_global_maxscan.py:sha256:4344bad9990d9e1f417362fcda52df4c0de414821c45f20123a23f408443e3c3",
+    "scripts/k1_global_maxscan.py:sha256:16d73652782b9541ba22b618f63158673bfab67bb57cd6a630d2deb43d4fe052",
     "scripts/k5_cf4_release_coverage.py:sha256:d3fa78d67b85de4a050173b4b8cdbb42e67ce754ab02b5685a264083753369aa",
     "scripts/k6_cf4_curl_posterior.py:sha256:bc945c5d33918a57633d9a3845eaa380f172290a0c560742c46ac8a33b3c7e33",
     "scripts/make_additional_figures.py:sha256:d98fc82efb1023e0d68358472f60b0cb30f6ea659b66a0f39030566304795f71",

@@ -50,7 +50,50 @@ The ~600 NPIPE A/B end-to-end realizations (NERSC-authenticated). These are freq
 a low-ℓ analysis needs a single cleaned channel or a component-separation step, so Route A
 is cleaner for a morphology max-scan.
 
-## Reducing the ~1 TB footprint (recommended)
+## Full download on a 2 TB nvme (the exit-gate path — recommended once disk allows)
+
+With a dedicated 2 TB nvme the full FFP10 set fits, so Route A in full is the
+strongest, exit-gate null (real CMB MC + real noise MC) — the version that flips
+the `egs_results_table` K1 row `measured_partial → measured` and closes
+`BLOCKED_MISSING_PR4_E2E_ACCESS`. The footprint reducers below are now optional.
+
+**Download (PLA portal, SMICA to match the observed map):**
+
+- `dx12_v3_smica_cmb_mc_<00000..00999>_raw.fits` — 1000 CMB (signal) MC;
+- `dx12_v3_smica_noise_mc_<00000..00299>_raw.fits` — 300 noise/systematics MC.
+
+Full IQU Nside=2048 is ~1 TB (fits a 2 TB disk with headroom for the working set).
+You can keep all raw FITS this time, or still stream-downgrade (below) to keep the
+nvme free for the next method (Commander) cross-check.
+
+**Layout** (raw outside git, `workdir/raw`):
+
+```text
+workdir/raw/planck_ffp10/smica/
+  cmb_mc/   dx12_v3_smica_cmb_mc_00000_raw.fits ... 00999
+  noise_mc/ dx12_v3_smica_noise_mc_00000_raw.fits ... 00299
+```
+
+**Run the full E2E null (already implemented — `scripts/k1_global_maxscan.py`):**
+
+```bash
+PYTHONPATH=. venv/bin/python scripts/k1_global_maxscan.py \
+    --cmb-mc-dir   workdir/raw/planck_ffp10/smica/cmb_mc \
+    --noise-mc-dir workdir/raw/planck_ffp10/smica/noise_mc \
+    --method smica --max-sims 1000
+# -> docs/generated/k1_global_maxscan_e2e_full.json
+#    null_model = ffp10_cmb_plus_noise_e2e ; global p under the matched E2E ensemble
+```
+
+It downgrades each CMB+noise pair on read to NSIDE=16, computes the six registered
+statistics, and runs the frozen max-scan against the real SMICA observed 6-vector.
+Pairing is `cmb_mc[i] + noise_mc[i mod n_noise]` (300 noise cycled across 1000 CMB,
+matching the Planck-2018 permutation scheme). Repeat with `--method commander` for
+the cross-check; **report the two side by side, do not average**. Then flip the K1
+row per "Exit gate" below. The canonical GRF artifact and the route-4 noise-only
+artifact are left untouched (separate files).
+
+## Reducing the ~1 TB footprint (optional — only if disk is tight)
 
 Downloading all `dx12_v3_smica_cmb_mc_<00000..00999>` + `..._noise_mc_<00000..00299>`
 at full IQU Nside=2048 is ~1 TB. None of that volume is needed for an Nside=16,
@@ -78,17 +121,18 @@ at full IQU Nside=2048 is ~1 TB. None of that volume is needed for an Nside=16,
 
 Compounded footprints (stream-downgraded, so stored ≈ a few hundred KB either way):
 
-| Route | Files | Transfer (I-only / IQU) |
-| --- | ---: | --- |
-| All, full | 1300 | ~1 TB (IQU) |
-| 300 CMB + 300 noise, T-only, streamed | 600 | ~85 GB / ~250 GB |
-| **300 noise-only + local ΛCDM, T-only, streamed** | **300** | **~40 GB / ~125 GB** |
+| Route | Files | Transfer (I-only / IQU) | Runner |
+| --- | ---: | --- | --- |
+| **Full Route A (1000 CMB + 300 noise)** | **1300** | **~1 TB (IQU)** | `--cmb-mc-dir --noise-mc-dir` |
+| 300 CMB + 300 noise, T-only, streamed | 600 | ~85 GB / ~250 GB | `--cmb-mc-dir --noise-mc-dir --max-sims 300` |
+| 300 noise-only + local ΛCDM, T-only, streamed | 300 | ~40 GB / ~125 GB | `--noise-mc-dir` (alone) |
 
-Recommended: **route 4** (300 `smica_noise_mc`, temperature, stream-downgraded, local
-ΛCDM signal). It is the smallest download that still replaces the idealised null with a
-real-noise E2E null, and `k1_global_maxscan.py` needs only its `_build_null_distribution`
-changed to `signal = hp.synfast(...)`, `map_i = signal + ud_grade(noise_mc_i, 16)`.
-Set `null_model: ffp10_noise_plus_lcdm` and record the noise-MC provenance.
+With a 2 TB nvme, **full Route A** is the recommendation: it is the exit-gate null
+(real CMB + real noise) that flips K1 `measured_partial → measured`. Route 4
+(noise-only + local ΛCDM) remains the lighter fallback if disk is tight — it
+upgrades the GRF null with real noise but is not the full E2E, so K1 stays
+`measured_partial`. Both modes are implemented in `k1_global_maxscan.py` and write
+separate artifacts (`k1_global_maxscan_e2e_full.json` / `..._e2e_noise.json`).
 
 ## Storage layout (outside git)
 
@@ -96,13 +140,15 @@ Keep raw maps out of git (`workdir/raw` is the convention; only compact summarie
 committed):
 
 ```text
-workdir/raw/planck_ffp10/
-  smica_cmb_mc_00000_raw.fits
-  ...
-  smica_noise_mc_00000_raw.fits
-  ...
+workdir/raw/planck_ffp10/smica/
+  cmb_mc/    dx12_v3_smica_cmb_mc_00000_raw.fits ... 00999   # --cmb-mc-dir
+  noise_mc/  dx12_v3_smica_noise_mc_00000_raw.fits ... 00299 # --noise-mc-dir
   MANIFEST.json        # one row per sim: id, method, cmb/noise paths, URL, sha256
 ```
+
+The runner globs `*.fits`/`*.fits.gz` (and `*.npz`) sorted by name in each dir, so
+keep the CMB MC and noise MC in the two separate subdirs above; it pairs them
+`cmb_mc[i] + noise_mc[i mod n_noise]`.
 
 Record, per simulation: `simulation_id`, `release_family` (FFP10/NPIPE_PR4),
 `component_method` (SMICA), `cmb_path`, `noise_path`, `beam_fwhm_arcmin`, `input_nside`,
@@ -126,21 +172,28 @@ sim N×6 matrix to the max-scan.
    venv/bin/python "$PACK/scripts/validate_blocker_manifest.py" workdir/raw/planck_ffp10/MANIFEST.json
    ```
 
-2. **Build per-sim summaries** (downgrade-on-read; emit compact JSON, discard raw): extend
-   `scripts/k1_global_maxscan.py` to read each sim FITS via `healpy.read_map` →
-   `hp.ud_grade(m, 16)` → apply mask + beam → `compute_map_statistics` (imported from
-   `make_lowell_morphology_real_map`), instead of the `hp.synfast` ΛCDM null in
-   `_build_null_distribution`. Write `workdir/raw/k1_summaries/<id>.json` per sim.
+2. **Build summaries + run the max-scan** — now a single implemented command
+   (`scripts/k1_global_maxscan.py`, rev-r136). It downgrades each sim on read
+   (`hp.ud_grade(m, 16)`), computes the six statistics, and runs the frozen max-scan;
+   raw maps are streamed/discarded, only the compact JSON artifact is written.
 
-3. **Run the max-scan** on the real E2E summaries (the mechanics already exist):
+   ```bash
+   # Full Route A (real CMB + real noise) -- the exit-gate null:
+   PYTHONPATH=. venv/bin/python scripts/k1_global_maxscan.py \
+       --cmb-mc-dir   workdir/raw/planck_ffp10/smica/cmb_mc \
+       --noise-mc-dir workdir/raw/planck_ffp10/smica/noise_mc \
+       --method smica --max-sims 1000
+   # -> docs/generated/k1_global_maxscan_e2e_full.json (null_model ffp10_cmb_plus_noise_e2e)
 
-   ```python
-   from htt.obsstat.lowell_global_calibration import e2e_maxscan_from_summaries
-   # observed: (6,) from the real SMICA map; e2e: (N,6) from the sim summaries;
-   # directions: from TAILS (lower->'low', upper->'high')
-   result = e2e_maxscan_from_summaries(observed, e2e_summaries, directions)
-   # result['global_p'] is the matched-E2E look-elsewhere global p-value
+   # Route 4 fallback (noise-only + local LambdaCDM), stays measured_partial:
+   PYTHONPATH=. venv/bin/python scripts/k1_global_maxscan.py \
+       --noise-mc-dir workdir/raw/planck_ffp10/smica/noise_mc --method smica
+   # -> docs/generated/k1_global_maxscan_e2e_noise.json
    ```
+
+   (The lower-level `e2e_maxscan_from_summaries` in
+   `htt.obsstat.lowell_global_calibration` remains available if you precompute summaries
+   separately; the command above is the wired path.)
 
 4. **Flip the row** through the generator:
 

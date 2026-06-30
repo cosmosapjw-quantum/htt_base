@@ -7,6 +7,36 @@
 
 ## [Unreleased]
 
+### K1 full Route-A E2E runner (real CMB+noise) for the 2 TB-nvme download (rev-r136, 2026-06-30)
+
+User is installing a 2 TB nvme to download the FULL FFP10 set (1000 CMB MC + 300 noise MC,
+~1 TB) rather than the reduced route-4 noise-only set. rev-r135 only built the noise-only +
+local-ΛCDM runner (`--noise-mc-dir`, stays `measured_partial`); this adds the FULL Route-A
+E2E runner — the exit-gate null that flips K1 `measured_partial → measured` and closes
+`BLOCKED_MISSING_PR4_E2E_ACCESS`.
+
+- **`scripts/k1_global_maxscan.py`**: new `--cmb-mc-dir` (paired with `--noise-mc-dir`) +
+  `--max-sims` → `build_e2e_full_report` / `_e2e_full_null`. Loads REAL component-separated
+  CMB MC + REAL instrument-noise MC, downgrade-on-read to NSIDE=16, pairs them
+  `cmb_mc[i] + noise_mc[i mod n_noise]` (300 noise cycled across 1000 CMB, Planck-2018
+  permutation), computes the six registered statistics, runs the frozen max-scan vs the real
+  observed 6-vector. Writes a SEPARATE artifact
+  `docs/generated/k1_global_maxscan_e2e_full.json` (`null_model: ffp10_cmb_plus_noise_e2e`,
+  `blocker_closes`) so the canonical GRF + route-4 artifacts stay untouched. Sim loader/lister
+  generalized (`_load_sim_map`/`_list_sims`, back-compat aliases kept); the route-4 noise-only
+  path is unchanged. argparse guards `--cmb-mc-dir` ⇒ requires `--noise-mc-dir`.
+- **`tests/obsstat/test_k1_noise_mode.py`**: +4 full-E2E tests (runs + exit-gate labelling,
+  index-cycled pairing provenance, `--max-sims` cap, empty-dir FileNotFoundError). 8 passed.
+- **`docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md`**: re-presents the full Route-A path as
+  the recommendation for the 2 TB nvme (download list, `smica/{cmb_mc,noise_mc}` layout,
+  the implemented `--cmb-mc-dir --noise-mc-dir --max-sims 1000` command, method cross-check,
+  exit gate); the footprint reducers are now marked optional fallbacks. The stale "extend the
+  script" run step is replaced with the wired command.
+- Claim discipline: the full E2E artifact is still diagnostic-only (no family/geometry/native);
+  flipping the `egs_results_table` K1 row to `measured` is a deliberate manual step after the
+  real run, per the guide's exit gate. Validation: 8 K1 tests + 355 contracts pass; all audit
+  packages rebuilt.
+
 ### External-audit revision (two packs) + K1 noise-only long-run prep (rev-r135, 2026-06-29)
 
 Two external audit packs arrived (separate from the internal rev-r134 phys-math-code audit):
