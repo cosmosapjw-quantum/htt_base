@@ -1,0 +1,332 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\sloppy
+\titleformat{\section}{\large\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.6em}{}
+\setlist{itemsep=2pt,topsep=3pt}
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\pathx}[1]{{\small\urlstyle{tt}\url{#1}}}  % breakable file paths / long names
+\newcommand{\Sig}{\Sigma^2}
+\newcommand{\Wsq}{W^2}
+\newcommand{\Otilt}{\Omega_{\mathrm{tilt}}}
+\newcommand{\Ok}{\Omega_{k}}
+\newcommand{\nhat}{\hat{\mathbf n}}
+\newcommand{\vhat}{\hat{\mathbf v}}
+\newcommand{\alm}{a_{\ell m}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+\title{\textbf{Distinguishing a Local Boost from a Global Tilt}\\[2pt]
+\large The Statistical Formalism of the BASS/HTT Low-$\ell$ Pipeline,\\
+and its Response to the ``Leaky Universe'' Test}
+\author{BASS/HTT programme --- Soongsil OMEG Institute}
+\date{2026-07-01}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent This note is a self-contained, first-principles description of how the
+current code separates a \emph{local kinematic boost} (the observer's peculiar
+motion, an $\ell=1$ Doppler/aberration effect) from a \emph{global tilt} (a
+cosmological bulk flow, the $\Otilt$ sector of the anisotropy comparator
+$g=(\Sig,\Wsq,\Otilt,\Ok)$). It states the observables, the leading-order
+response map that the pipeline actually uses, and --- crucially --- the
+second-order ($\beta^2$) coupling by which a boost leaks power into the
+quadrupole and could masquerade as a shear $\Sig$. It then explains the five
+concrete safeguards already in the code, shows why the comparator covariance is
+\emph{not} diagonal beyond leading order, and gives the precise form of the two
+formalism upgrades (a kinematic projection operator and a coupled Fisher matrix)
+that would deproject the leakage. The document is written so that the ``Leaky
+Universe'' toy test (\S\ref{sec:toy}) can be answered with justification. All
+content is diagnostic-only: no Bianchi family is identified, no geometry is
+detected, and no shear amplitude is reported as measured.
+\end{abstract}
+
+% ======================================================================
+\section{The diagnostic vector and its two velocity-like sectors}
+\label{sec:vector}
+
+The anisotropy comparator is the graded vector
+\begin{equation}
+  g=(\Sig,\ \Wsq,\ \Otilt,\ \Ok)\in\mathbb{R}^4 ,
+\end{equation}
+carrying the shear, vorticity, tilt, and anisotropic-curvature sectors
+(\pathx{htt/obsstat/egs3_graded_comparator.py}). Two of these are directly
+velocity-like and are the subject of this note:
+\begin{itemize}
+\item $\Otilt$ --- the \textbf{global tilt}: the peculiar velocity of the matter
+frame relative to the CMB frame, i.e.\ a cosmological \emph{bulk flow}. It is a
+genuine large-scale degree of freedom.
+\item the \textbf{local boost} $\boldsymbol\beta=\mathbf v_{\mathrm{obs}}/c$ ---
+the \emph{observer's} own peculiar motion. This is not a sector of $g$; it is a
+frame effect. Its leading imprint is the CMB kinematic dipole ($\ell=1$).
+\end{itemize}
+The central difficulty is that both are ``a velocity in a direction $\vhat$'', so
+their sky imprints overlap. The pipeline's job is to keep them distinct.
+
+% ======================================================================
+\section{Observables and the leading-order response map}
+\label{sec:response}
+
+The low-$\ell$ CMB channel is the set of temperature multipole coefficients
+$\alm$ for $\ell\ge 2$; the peculiar-velocity channel is the CF4 radial
+velocity field. The code encodes the \emph{leading-order} sensitivity of each
+observable channel to each sector as a $\{0,1\}$ support pattern $D$
+(\pathx{egs3_graded_comparator.py:_RESPONSE_SUPPORT}), Table~\ref{tab:D}.
+
+\begin{table}[htbp]\centering\small
+\caption{The leading-EGS-order response map $D$. Entry $1$: the channel responds
+to that sector at leading order; $0$: structurally blind.}
+\label{tab:D}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+channel $\backslash$ sector & $\Sig$ & $\Wsq$ & $\Otilt$ & $\Ok$ \\
+\midrule
+CMB quadrupole ($\ell{=}2$)   & 1 & 0 & 0 & 0 \\
+CMB dipole ($\ell{=}1$)       & 0 & 0 & 1 & 0 \\
+radial-velocity dipole        & 0 & 0 & 1 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At this (leading, EGS) order the map is \emph{block-diagonal in the two velocity
+sectors}: the quadrupole responds to $\Sig$ only, and both dipole channels
+respond to $\Otilt$ only. The reachable subspace is rank~2
+($\{\Sig,\Otilt\}$); $\Wsq$ and $\Ok$ are the two null sectors. This is exactly
+the separation the toy test interrogates: is the ``quadrupole $=$ shear''
+assumption safe once the observer moves?
+
+\paragraph{Honest scope of $D$.} The code labels $D$ as a documented
+\emph{leading-EGS-order} support pattern, and states in-module that ``the exact
+response amplitudes need the covariant transfer''. The block-diagonal structure
+of Table~\ref{tab:D} is therefore an $O(\beta^1)$ statement, not an exact one. The
+next section makes the $O(\beta^2)$ correction explicit.
+
+% ======================================================================
+\section{The leakage: a boost sources a quadrupole}
+\label{sec:leak}
+
+A boost of the observer by $\boldsymbol\beta$ transforms a blackbody monopole
+$T_0$. With $\mu=\nhat\!\cdot\!\vhat$ the Doppler/aberration expansion of the
+observed temperature is
+\begin{equation}
+  \frac{\Delta T(\nhat)}{T_0}
+  = \beta\,\mu \;+\; \beta^2\!\left(\mu^2-\tfrac13\right)\cdot\mathcal{O}(1)
+    \;+\; O(\beta^3).
+  \label{eq:boost}
+\end{equation}
+The first term is the dipole ($\ell=1$, order $\beta$). The second term contains
+a \textbf{kinematic quadrupole}, because $\mu^2=\tfrac23 P_2(\mu)+\tfrac13$: a
+boost necessarily deposits an $\ell=2$ signal of amplitude
+\begin{equation}
+  a_{2m}^{\mathrm{kin}}\ \sim\ \beta^2\,T_0 ,
+  \qquad
+  C_2^{\mathrm{kin}}\ \sim\ (\beta^2 T_0)^2 ,
+\end{equation}
+aligned with the boost axis $\vhat$. Numerically, for $\beta\simeq10^{-3}$
+(a $300\,\mathrm{km\,s^{-1}}$ motion) one has $\beta^2\simeq10^{-6}$ and
+$\beta^2 T_0\simeq$ a few $\mu$K, i.e.\ $C_2^{\mathrm{kin}}$ of order a few
+$\mu$K$^2$ --- small against the observed $C_2\sim\mathcal{O}(10^2)\,\mu$K$^2$,
+but \emph{nonzero, sign-definite, and axis-aligned}.
+
+\paragraph{Why this breaks the diagonal.} Because the same velocity that sets the
+dipole (hence $\Otilt$) also sets this quadrupole, the true response map has an
+extra column entry that Table~\ref{tab:D} omits:
+\begin{equation}
+  D_{\text{quad},\,\Otilt}\ \propto\ \beta^2\ \neq\ 0 .
+  \label{eq:coupling}
+\end{equation}
+The exact $D$ is therefore \emph{not} block-diagonal, and the comparator
+covariance / Fisher matrix inherits a nonzero off-diagonal
+$F_{\Sig,\Otilt}$. A naive estimator that reads all quadrupole power as $\Sig$
+will report a false positive $\Sig>0$ in a universe whose only anisotropy is a
+bulk flow. \emph{This is the correct and important content of the toy test.}
+
+% ======================================================================
+\section{How the current pipeline keeps the two apart}
+\label{sec:safeguards}
+
+The code does not yet deproject \eqref{eq:coupling} inside the low-$\ell$
+statistics (there is no kinematic-quadrupole subtraction in the OBSSTAT
+low-$\ell$ path; the $O(\beta)$ Challinor aberration kernel in
+\pathx{htt/bass/hierarchy/boost_kernel.py} lives on the Boltzmann source side,
+not here). Instead, the separation is enforced by five structural safeguards, so
+that the leakage cannot become a false \emph{measurement}:
+
+\begin{enumerate}
+\item \textbf{The dipole is excluded ($\ell_{\min}=2$).} All morphology
+statistics are computed on $\ell\in[2,\ell_{\max}]$
+(\pathx{make_lowell_morphology_real_map.py:ELL_MIN=2}). The dominant
+$O(\beta)$ boost imprint never enters the statistics directly; only the much
+smaller $O(\beta^2)$ quadrupole can leak.
+\item \textbf{No shear amplitude is ever reported as measured.} $\Sig$ is held at
+\code{partial} (K1 is a look-elsewhere descriptor under a $\Lambda$CDM null; see
+\pathx{pr08_006_joint_artifact.json}). The pipeline returns rank and
+look-elsewhere $p$-values, not a shear amplitude, so a $\beta^2$ leak cannot be
+promoted into a ``detected shear''. The blind/partial sectors \emph{fail closed};
+they are never set from the quadrupole alone.
+\item \textbf{A dedicated boost-alignment statistic.} One of the six registered
+statistics is \pathx{axis_to_cmb_dipole_deg}: the angle between the low-$\ell$
+preferred axis and the \emph{CMB kinematic dipole apex}. A boost-induced
+quadrupole is aligned with $\vhat$ by construction, so it shows up precisely as
+an anomalously small axis-to-apex angle. The pipeline therefore \emph{measures
+the very signature} the leakage would produce, and calibrates it against the null
+--- rather than silently absorbing it into $\Sig$.
+\item \textbf{The tilt is anchored by an independent channel.} $\Otilt$ is
+measured from the CF4 radial peculiar velocities (K5 bulk flow,
+$|\mathbf B|\simeq341\pm102\,\mathrm{km\,s^{-1}}$), \emph{not} from the CMB
+quadrupole. Because the tilt is fixed by velocity data, the CMB quadrupole is not
+asked to carry it; the observational degeneracy of \eqref{eq:coupling} is broken
+by using two different data sets for the two sectors.
+\item \textbf{A local/global claim firewall.} Local (depth-resolved) and global
+(bulk) statements are kept structurally distinct: the MIO depth-gap diagnostic
+$G_F$ explicitly forbids the string ``global tilt'' in its metadata
+(\pathx{htt/mio/formalism/isotropy_gap.py:_FORBIDDEN_G_METADATA_TERMS}), and
+$G_F$ is documented as a depth-local bookkeeping quantity, not evidence for a
+global tilt. A local boost and a global tilt cannot be conflated through the
+diagnostic layer.
+\end{enumerate}
+
+The E2E null (the matched Planck simulation ensemble; see the K1 download guide)
+is the calibration that turns safeguard~3 quantitative: any residual frame /
+boost quadrupole present in the observed map but absent from the simulations
+raises the look-elsewhere score, which is exactly where such a systematic should
+appear.
+
+% ======================================================================
+\section{The comparator covariance is not diagonal}
+\label{sec:fisher}
+
+Let the data be $d$ with covariance $C$ and model $d=D\,g$ (locally linear
+response). The Fisher information on $g$ is
+\begin{equation}
+  F \;=\; D^{\mathsf T} C^{-1} D ,
+  \qquad
+  \Cov(\hat g)\ \gtrsim\ F^{-1}.
+\end{equation}
+With the exact $D$ carrying the $\beta^2$ entry \eqref{eq:coupling}, the block
+between the two velocity-like sectors is
+\begin{equation}
+  F_{\{\Sig,\Otilt\}}
+  =
+  \begin{pmatrix}
+    F_{\Sig\Sig} & F_{\Sig\Otilt}\\[2pt]
+    F_{\Sig\Otilt} & F_{\Otilt\Otilt}
+  \end{pmatrix},
+  \qquad
+  F_{\Sig\Otilt}\ \propto\ \beta^2\ \neq 0 .
+  \label{eq:Fblock}
+\end{equation}
+The off-diagonal is the analytic statement of the degeneracy: at fixed data, an
+increase in the inferred $\Otilt$ can be partly absorbed by a decrease in $\Sig$
+along the eigenvector of \eqref{eq:Fblock} with the smaller eigenvalue. The
+leading-order code map Table~\ref{tab:D} sets $F_{\Sig\Otilt}=0$ \emph{by
+construction}; that is precisely the approximation the toy test stresses, and the
+reason the pipeline relies on the structural safeguards of \S\ref{sec:safeguards}
+rather than on the diagonal assumption.
+
+% ======================================================================
+\section{The two formalism upgrades, made precise}
+\label{sec:tweaks}
+
+Both remedies proposed in the toy test are correct and slot directly onto the
+existing response-design / identifiability machinery.
+
+\subsection{Upgrade 1 --- a kinematic projection operator}
+Define the deprojected (orthogonalised) shear estimator
+\begin{equation}
+  \widetilde{\Sig}\ =\ \Sig \;-\; \alpha\,(\Otilt)^2 ,
+  \label{eq:proj}
+\end{equation}
+which subtracts the boost-sourced quadrupole \emph{before} $\Sig$ is read off.
+The coefficient $\alpha$ is fixed analytically by \eqref{eq:boost}: since the
+kinematic quadrupole scales as $\beta^2$ and $\Otilt\propto\beta$ (a tilt is
+linear in the velocity), $(\Otilt)^2\propto\beta^2$ matches the leakage exactly,
+and $\alpha$ is the ratio of the boost-quadrupole response to the shear
+quadrupole response,
+\begin{equation}
+  \alpha
+  =\frac{\partial\,C_2^{\mathrm{kin}}/\partial(\Otilt)^2}
+        {\partial\,C_2^{\mathrm{shear}}/\partial\Sig}\Bigg|_{\text{leading order}} .
+\end{equation}
+Operationally this is a projection $\mathcal P$ that removes, from the
+quadrupole, the component along the boost-quadrupole template
+$Y_{2m}(\vhat)$ (a $\vhat$-aligned $\ell=2$ pattern), leaving the residual to
+$\Sig$. In the code this is the natural extension of the response design $D$:
+add the $\beta^2$ row of \eqref{eq:coupling} and project it out, so that
+$\widetilde{\Sig}\to 0$ in a pure-bulk-flow sky.
+
+\subsection{Upgrade 2 --- a coupled Fisher prior}
+Rather than subtracting, carry the coupling \eqref{eq:Fblock} into the sampler as
+a prior. Compute $F_{\Sig\Otilt}\propto\beta^2$ analytically and hand the full
+$2\times2$ block to the MCMC/MCTS as the parameter-space metric. The chain then
+explores along the degeneracy eigenvector rather than treating $\Sig$ and
+$\Otilt$ as independent axes, and a bulk-flow-only sky produces a posterior that
+is elongated along ``trade $\Sig$ against $\Otilt$'' with $\Sig$ consistent with
+zero, instead of a spurious $\Sig>0$ point estimate. This is the
+covariance-aware version of the identifiability rank already computed in
+\pathx{egs3_graded_comparator.py:identifiable_rank}: the off-diagonal reduces
+the \emph{effective} rank in the $\{\Sig,\Otilt\}$ block whenever $\beta$ is
+large enough that the two responses overlap.
+
+\paragraph{Relation between the two.} Upgrade~1 is a point-estimate
+deprojection; upgrade~2 is its Bayesian dual. They agree at leading order: the
+projection \eqref{eq:proj} is the maximum-likelihood solution of the coupled
+Fisher block \eqref{eq:Fblock} after marginalising $\Otilt$.
+
+% ======================================================================
+\section{The ``Leaky Universe'' test, answered}
+\label{sec:toy}
+
+\emph{Setup: a spatially flat sky ($\Ok=0$) with no shear ($\Sig=0$) and a single
+injected bulk flow $\Otilt$ of $300\,\mathrm{km\,s^{-1}}$; Planck-level
+temperature noise; CF4-level (30\%) distance errors; severe cosmic variance at
+$\ell\le30$.}
+
+\begin{description}
+\item[Q1. Does a naive pipeline report a false $\Sig>0$?] \textbf{Yes} --- a naive
+estimator that equates all quadrupole power with shear will pick up the
+$\beta^2$ kinematic quadrupole of \eqref{eq:boost} and report $\Sig>0$. This is a
+real effect, correctly identified. It is the reason the diagonal map
+Table~\ref{tab:D} is labelled leading-order-only.
+\item[Q2. Does the \emph{current} pipeline report a false detection?] \textbf{No.}
+It does not report a shear amplitude at all: $\Sig$ is \code{partial}
+(look-elsewhere only), so there is no amplitude to be falsely inflated
+(safeguard~2). The $\ell=1$ boost is excluded (safeguard~1). The
+boost-aligned quadrupole instead registers on the \pathx{axis_to_cmb_dipole_deg}
+statistic (safeguard~3), which is calibrated against the null --- i.e.\ the
+pipeline would flag ``low-$\ell$ axis aligned with the dipole apex'', the honest
+description of a boost, not ``shear detected''. And the tilt itself is measured
+from CF4 velocities (safeguard~4), so the quadrupole is never asked to supply it.
+\item[Q3. Is $\Cov(g)$ diagonal?] \textbf{No} --- \eqref{eq:Fblock}:
+$F_{\Sig\Otilt}\propto\beta^2\neq0$. The code's leading-order map sets it to zero
+\emph{by construction}, which is why the pipeline leans on the structural
+safeguards rather than the diagonal assumption. Making the off-diagonal explicit
+is upgrade~2.
+\item[Q4. Are the two proposed fixes valid?] \textbf{Yes, both.} The kinematic
+projection operator \eqref{eq:proj} with the analytic $\alpha$ deprojects the
+leakage so that $\widetilde{\Sig}\to0$ in a pure-bulk-flow sky; the coupled
+Fisher prior \eqref{eq:Fblock} makes the sampler aware of the $\Sig$--$\Otilt$
+degeneracy. They are point-estimate and Bayesian versions of the same
+deprojection and attach to the existing response-design and identifiability code.
+\end{description}
+
+% ======================================================================
+\section{Claim envelope}
+This note is diagnostic-only. $\Otilt$ is a model-independent kinematic
+descriptor (a bulk flow), not evidence of anisotropic geometry; $\Sig$ is not
+reported as a measured amplitude; the local boost and the global tilt are kept
+distinct by construction. Nothing here identifies a Bianchi family, detects a
+geometry, validates a native low-$\ell$ solver, or promotes any scalar into a
+model-selection statement. The kinematic-quadrupole deprojection of
+\S\ref{sec:tweaks} is the recommended formalism upgrade; until it is in the
+low-$\ell$ statistics, the separation is carried by the five structural
+safeguards of \S\ref{sec:safeguards}, and $\Sig$ stays \code{partial}.
+
+\end{document}

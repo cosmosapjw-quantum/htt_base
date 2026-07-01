@@ -7,6 +7,28 @@
 
 ## [Unreleased]
 
+### Local-boost vs global-tilt statistical-formalism note (rev-r140, 2026-07-01)
+
+Standalone LaTeX note at repo root, `htt_local_global_formalism.{tex,pdf}` (5 pp), giving a
+self-contained, first-principles account of how the current code separates a local
+kinematic boost (observer motion, l=1 Doppler/aberration) from a global tilt (bulk flow, the
+Omega_tilt sector), written so the "Leaky Universe" toy test can be answered with
+justification. Code-grounded: the leading-EGS-order response map D
+(egs3_graded_comparator._RESPONSE_SUPPORT: quadrupole->Sigma^2, dipole->Omega_tilt); the
+O(beta^2) kinematic-quadrupole leakage that makes D non-block-diagonal and gives a nonzero
+Fisher off-diagonal F_{Sigma^2,Omega_tilt}; and the five structural safeguards actually in
+the code (l_min=2 dipole removal; Sigma^2 never reported as measured / K1 partial;
+axis_to_cmb_dipole_deg boost-alignment statistic; Omega_tilt anchored independently by CF4
+velocities; the isotropy_gap local/global claim firewall that forbids "global tilt" in G_F
+metadata). Notes honestly that the OBSSTAT low-l path has no kinematic-quadrupole
+deprojection yet, and specifies the two upgrades (kinematic projection operator
+Sigma_tilde^2 = Sigma^2 - alpha Omega_tilt^2 with analytic alpha; coupled Fisher prior) as
+point-estimate/Bayesian duals attaching to the existing response-design/identifiability
+machinery. Answers Q1-Q4 of the toy test explicitly. Diagnostic-only (the only
+"detected"/"identified" mentions are negations). `latexmk` exit 0, 5 pp, 0 undefined refs,
+no overfull >20 pt. Built via the htt-latex-paper-build + htt-local-global-discrimination
+skill workflows.
+
 ### K1 id-based CMB/noise pairing (missing 00970) + PLA-available claim correction (rev-r139, 2026-07-01)
 
 The FFP10 SMICA library has a known missing/corrupt CMB realization (00970), so the
