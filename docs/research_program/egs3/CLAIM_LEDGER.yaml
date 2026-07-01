@@ -49,3 +49,17 @@ claims:
     claim_tier: C4
     allowed_phrase: closed-form kinematic deprojection making the low-ell shear reading provably immune to the observer-boost beta^2 quadrupole leakage
     caveats: [estimator property + synthetic FPR/coverage witness; separate diagnostic surface (x_C bit-identical + frozen registered statistics untouched); Sigma2 on the real sky stays partial until data; exact physical alpha awaits the covariant low-ell transfer; no detection, family/geometry, or native solver]
+  egs3.joint_pv_cmb_forecast:
+    owner: OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: solver-free joint PV+CMB information forecast in which a PV/JWST Omega_tilt prior breaks the Sigma2-Omega_tilt degeneracy via the coupled Fisher
+    caveats: [feasible correlated-covariance PV tilt on real CF4 (Woodbury, K5-consistent); JWST prior is a labelled survey-design forecast on few nearby anchors (modest, honestly-reported gain); theory-g CMB likelihood fail-closed (AWAITING_NATIVE_LOWELL_SOLVER); full xi_ij is BLOCKED_MISSING_FIELD_REALIZATIONS; Sigma2 stays partial; no detection/family/geometry/native solver]
+  egs3.smica_biposh:
+    owner: OBSSTAT
+    status: DERIVED
+    evidence_type: test
+    claim_tier: C3
+    allowed_phrase: real off-diagonal BipoSH statistical-isotropy measurement on the Planck SMICA/Commander low-ell map (L=1 boost-aberration, L=2 SI-violation), null-calibrated
+    caveats: [real single-sky SI descriptor; matched isotropic GRF null now, FFP10/NPIPE E2E null pending (BLOCKED_MISSING_PR4_E2E_ACCESS); theory A^{LM}(g) fail-closed; consistent with isotropy; no detection/family/geometry/native solver]

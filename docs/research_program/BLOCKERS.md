@@ -183,6 +183,18 @@ rev-r128. These items are a separate refactor PR, deliberately not churned here.
 - **Exit gate (out of scope here).** A validated native low-ℓ Bianchi–Boltzmann
   solver + morphology atlas + covariance + matched masks + nulls + PPC/LOOCV +
   equivalence-class gates. Only then may any family-ID language be used.
+- **rev-r142 (EGS3 Axis-D) — theory-g CMB joint likelihood is mechanics-ready +
+  fail-closed.** The BASS-Extended joint likelihood's CMB *theory* sector — the
+  mode-coupled `C_{ℓm,ℓ'm'}(g)` / `A^{LM}_{ℓℓ'}(g)` prediction for a proposed Bianchi
+  `g` — needs this solver. It is FAIL-CLOSED: `joint_pv_cmb_forecast.anisotropic_cmb_covariance`
+  / `anisotropic_cmb_loglike` raise `OutOfScopeError` and never fabricate a covariance;
+  the drop-in point is `bass.spectrum.cl_assembly.off_diagonal_biposh`. The solver-free
+  substitute is the **data-side** BipoSH SI measurement on the real SMICA map (EGS3-D3,
+  `scripts/k1_biposh_smica.py`), which needs no solver. The PV sector (EGS3-D1) and the
+  coupled-Fisher degeneracy break (EGS3-D2) are fully in scope now.
+- **BipoSH E2E-null upgrade** is pending under `BLOCKED_MISSING_PR4_E2E_ACCESS`: the SMICA
+  BipoSH global `p` is calibrated against a matched isotropic GRF null now; the FFP10/NPIPE
+  E2E simulation ensemble replaces it when downloaded (same script, frozen statistic set).
 
 ---
 

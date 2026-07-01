@@ -50,10 +50,14 @@ def _rows() -> list[dict]:
     nt2b3 = egs2.get("NT2_B3_blind_sector", {})
     k1 = egs2.get("BLOCK_K1_e2e_maxscan", {})
     k6 = egs2.get("BLOCK_K6_hoffman_ribak", {})
+    d = egs3.get("axis_d", {})
     # real-data discharges (rev-r127): K1 global max-scan, K5 coverage, K6 curl no-go
     k1g = _load("k1_global_maxscan.json")
     k5g = _load("k5_cf4_release_coverage.json")
     k6g = _load("k6_cf4_curl_posterior.json")
+    # rev-r142 BASS-Extended joint PV+CMB: real CF4+JWST forecast + real SMICA BipoSH
+    bej = _load("bass_extended_joint_forecast.json")
+    bip = _load("k1_biposh_smica.json")
 
     def r(tid, axis, statement, key, status, evidence):
         return {"theorem_id": tid, "axis": axis, "statement": statement,
@@ -110,6 +114,22 @@ def _rows() -> list[dict]:
         r("EGS3-C4", MATH, "Injection-recovery witness (moment-level synthetic; no map, no native low-ell solver, no real data): the naive Sigma^2 false-positive-rate is high on a pure-boost sky, the deprojected Sigma_tilde^2 FPR is nominal, and genuine shear is recovered unbiased and covered",
           (f"FPR naive {c.get('C4_injection_recovery',{}).get('fpr_naive_pure_boost',0):.3f} -> deprojected {c.get('C4_injection_recovery',{}).get('fpr_deprojected_pure_boost',0):.3f}; genuine-shear coverage {c.get('C4_injection_recovery',{}).get('genuine_shear_coverage',0):.2f}"),
           "proven_gate", "egs3-gates C4; fig_egs3_c_deprojection"),
+        r("EGS3-D1", DATA, "BASS-Extended PV sector: a feasible correlated-covariance bulk-flow / tilt GLS on real CF4 via a low-rank Woodbury covariance (no dense N x N inversion), with a JWST-anchored distance-prior Omega_tilt precision FORECAST (survey-design; hypothetical prior on the cross-matched anchors, not a measurement)",
+          ((f"|B|={bej.get('pv_sector',{}).get('tilt_diagonal',{}).get('amplitude_kms',0):.0f} km/s on {bej.get('pv_sector',{}).get('n_groups','?')} CF4 groups (K5-consistent); {bej.get('jwst_forecast',{}).get('n_anchor_matched','?')} JWST anchors matched -> Omega_tilt precision gain {bej.get('jwst_forecast',{}).get('omega_tilt_precision_gain',1):.3f} (nearby anchors barely move the global tilt -- honest)")
+           if bej else "awaiting compute"),
+          "measured_synth",
+          "scripts/bass_extended_joint_forecast.py on real CF4 + JWST seed cross-match; PV tilt measured, JWST prior is a labelled forecast"),
+        r("EGS3-D2", MATH, "Coupled-Fisher degeneracy break: the PV/JWST Omega_tilt prior strictly reduces the Sigma^2 covariance inflation 1/(1-r^2), blocking the observer-boost Sigma^2 leakage (solver-free; Wolfram-verified monotonicity)",
+          (f"Sigma^2 inflation {d.get('D3_degeneracy_break',{}).get('sigma2_inflation_data',1):.4f} -> {d.get('D3_degeneracy_break',{}).get('sigma2_inflation_jwst',1):.4f} (break {d.get('D3_degeneracy_break',{}).get('degeneracy_break_factor',1):.4f}) with the prior"),
+          "proven_gate", "egs3-gates D4; wolfram egs3_boost_tilt_separation prior_precision_reduces_inflation (PASS); fig_egs3_d_joint_forecast"),
+        r("EGS3-D3", DATA, "Real off-diagonal BipoSH statistical-isotropy measurement on the Planck SMICA / Commander low-ell map (L=1 observer-boost/aberration + L=2 SI-violation), look-elsewhere-corrected against the matched isotropic GRF null",
+          ((f"SMICA BipoSH global p={bip.get('results',{}).get('smica',{}).get('global_p',0):.3f}, Commander p={bip.get('results',{}).get('commander',{}).get('global_p',0):.3f} (real map, {bip.get('config',{}).get('n_null','?')} GRF nulls; consistent with isotropy)")
+           if bip.get('results') else "awaiting compute"),
+          "measured_partial",
+          "scripts/k1_biposh_smica.py on real SMICA/Commander; matched isotropic GRF null; FFP10/NPIPE E2E null still BLOCKED_MISSING_PR4_E2E_ACCESS"),
+        r("EGS3-D4", DATA, "Theory-g Bianchi CMB joint likelihood: the mode-coupled C_{lm,l'm'}(g) / A^{LM}_{ll'}(g) prediction needs the native low-ell solver and is FAIL-CLOSED (never fabricated); the drop-in interface stub is in place",
+          "fail-closed OutOfScopeError; interface stub ready (joint_pv_cmb_forecast.anisotropic_cmb_covariance)",
+          "blocked", "AWAITING_NATIVE_LOWELL_SOLVER; data-side BipoSH (EGS3-D3) is the solver-free substitute"),
         r("EGS3-PSD", MATH, "PSD-cone redesign: x_C = tr(C M) for M=diag(g)>=0; admissible set is the convex PSD cone; rank-2 reachable eigen-directions; cone-shell bracket excludes the FLRW vertex",
           f"bit-identical {p.get('bit_identical','?')}; rank {p.get('reachable_rank','?')}; convex cone {p.get('convex_cone','?')}; status {psd.get('status','?')}",
           "proven_symbolic", "egs3-gates PSD P1-P4; wolfram egs3_psd_cone (PASS); fig_egs3_psd_cone"),

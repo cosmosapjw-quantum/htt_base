@@ -280,8 +280,49 @@ def _sources() -> dict[str, dict]:
         "covariance_inflation": inflation,
     }
 
+    # --- D BASS-Extended joint PV+CMB forecast + BipoSH ------------------
+    from htt.obsstat import pv_covariance as pv_cov
+    from htt.obsstat import joint_pv_cmb_forecast as jfc
+    from htt.obsstat import biposh_smica as bsm
+    from htt.obsstat.lowell_map_features import _packed_index
+    rng = np.random.default_rng(20260702)
+    pos = rng.normal(size=(600, 3)) * 50.0
+    rad = np.linalg.norm(pos, axis=1); nh = pos / rad[:, None]
+    mo = pv_cov.velocity_field_modes(pos, sigma_shear_kms_per_mpc=0.3)
+    Uc, Lc = mo["U"][:, 3:], mo["Lambda"][3:]
+    sig2 = (rng.uniform(50.0, 150.0, 600)) ** 2
+    vv = nh @ np.array([200.0, -90.0, 60.0]) + rng.normal(size=600) * np.sqrt(sig2)
+    order = np.argsort(rad)
+    fracs = [0.01, 0.02, 0.05, 0.10, 0.15, 0.20]
+    gains = []
+    for fr in fracs:
+        mask = np.zeros(600, bool); mask[order[:int(fr * 600)]] = True
+        gains.append(jfc.jwst_anchor_forecast(nh, vv, sig2, mask, jwst_shrink=1 / 3, U=Uc, Lambda=Lc)["precision_gain"])
+    f_grid = list(np.linspace(1.0, 20.0, 20))
+    infl = [jfc.joint_fisher_forecast(rho=0.6, f_omega_tilt_jwst=f)["inflation_jwst"] for f in f_grid]
+    # BipoSH L=1 aberration mechanism: isotropic vs injected l<->l+1
+    lmax = 8
+    def _packed(seed):
+        rr = np.random.default_rng(seed)
+        a = rr.normal(size=(lmax + 1) * (lmax + 2) // 2) + 1j * rr.normal(size=(lmax + 1) * (lmax + 2) // 2)
+        for l in range(lmax + 1):
+            a[_packed_index(lmax, l, 0)] = a[_packed_index(lmax, l, 0)].real
+        return a
+    iso_L1, ab_L1 = [], []
+    for s in range(60):
+        a = _packed(2000 + s)
+        iso_L1.append(bsm.compute_biposh_from_alm(a, lmax, L_values=(1,)).power_by_L[1])
+        aa = a.copy()
+        for l in range(2, lmax):
+            for m in range(0, l + 1):
+                aa[_packed_index(lmax, l + 1, m)] += 0.3 * a[_packed_index(lmax, l, m)]
+        ab_L1.append(bsm.compute_biposh_from_alm(aa, lmax, L_values=(1,)).power_by_L[1])
+    dfig = {"theorem_id": "EGS3-D", "anchor_fraction": fracs, "precision_gain": gains,
+            "f_grid": f_grid, "inflation": infl, "rho": 0.6}
+    dbip = {"theorem_id": "EGS3-D", "iso_L1": iso_L1, "aberrated_L1": ab_L1, "coupling_eps": 0.3}
+
     return {"a1": a1, "a3": a3, "a1_floor": a1_floor, "b1": b1, "b2": b2,
-            "b3": b3, "nt2b1": nt2b1, "psd": psd, "c": c}
+            "b3": b3, "nt2b1": nt2b1, "psd": psd, "c": c, "d": dfig, "dbip": dbip}
 
 
 def _render(src: dict) -> None:
@@ -418,6 +459,37 @@ def _render(src: dict) -> None:
                  "(estimator property; Σ² stays partial)", fontsize=8)
     fig.tight_layout(); fig.savefig(FIG_DIR / "fig_egs3_c_deprojection.png", dpi=140); plt.close(fig)
 
+    # D BASS-Extended joint forecast: JWST Omega_tilt gain + Sigma^2 inflation reduction
+    dd = src["d"]
+    fig, (axa, axb) = plt.subplots(1, 2, figsize=(7.4, 3.6))
+    axa.plot([100 * f for f in dd["anchor_fraction"]], dd["precision_gain"], marker="o", color=blue)
+    axa.axhline(1.0, color=grey, ls="--", label="no gain")
+    axa.set_xlabel("JWST-anchored fraction of groups (%)")
+    axa.set_ylabel("Ω_tilt precision gain (feasible Woodbury GLS)")
+    axa.set_title("EGS3-D1: PV Ω_tilt precision vs JWST anchors\n(survey-design forecast)")
+    axa.legend(fontsize=7)
+    axb.plot(dd["f_grid"], dd["inflation"], color=green, lw=2)
+    axb.axhline(1.0, color=grey, ls="--", label="no coupling")
+    axb.set_xlabel("PV/JWST Ω_tilt prior precision  f")
+    axb.set_ylabel("Σ² covariance inflation  1/(1−r²)")
+    axb.set_title("EGS3-D2: prior breaks the Σ²–Ω_tilt degeneracy\n(inflation ↓ as prior ↑; ρ=0.6)")
+    axb.legend(fontsize=7)
+    fig.suptitle("EGS3-D: joint PV+CMB forecast — a PV Ω_tilt prior removes the observer-boost "
+                 "Σ² leakage (forecast; Σ² stays partial; theory-g CMB fail-closed)", fontsize=7.5)
+    fig.tight_layout(); fig.savefig(FIG_DIR / "fig_egs3_d_joint_forecast.png", dpi=140); plt.close(fig)
+
+    # D BipoSH L=1 aberration channel (mechanism): isotropic vs injected l<->l+1
+    db = src["dbip"]
+    fig, ax = plt.subplots(figsize=(5.4, 4.0))
+    ax.hist(db["iso_L1"], bins=18, color=grey, alpha=0.7, label="isotropic (SI null)")
+    ax.hist(db["aberrated_L1"], bins=18, color=red, alpha=0.5, label=f"+ l↔l+1 aberration (ε={db['coupling_eps']})")
+    ax.set_xlabel("L=1 BipoSH power  D¹  (boost/aberration channel)")
+    ax.set_ylabel("count")
+    ax.set_title("EGS3-D3: the L=1 BipoSH channel responds to an\nobserver-boost aberration "
+                 "(measured on real SMICA, k1_biposh_smica)")
+    ax.legend(fontsize=8); fig.tight_layout()
+    fig.savefig(FIG_DIR / "fig_egs3_d_biposh.png", dpi=140); plt.close(fig)
+
 
 _SPECS = [
     ("fig_egs3_a1_graded_rank", "EGS3-A1", "Graded comparator identifiability rank", "a1"),
@@ -429,6 +501,8 @@ _SPECS = [
     ("fig_egs2_nt2b1_bracket", "NT2-B1", "Two-sided shear/F bracket excluding zero", "nt2b1"),
     ("fig_egs3_psd_cone", "EGS3-PSD", "PSD-cone comparator redesign", "psd"),
     ("fig_egs3_c_deprojection", "EGS3-C", "Kinematic deprojection of the observer-boost quadrupole", "c"),
+    ("fig_egs3_d_joint_forecast", "EGS3-D", "BASS-Extended joint PV+CMB information forecast", "d"),
+    ("fig_egs3_d_biposh", "EGS3-D", "SMICA BipoSH L=1 boost-aberration channel", "dbip"),
 ]
 
 

@@ -1,0 +1,21 @@
+# Curated JWST distance-anchor seed for CF4 cross-match (pre-solver forecast input).
+# These galaxies have published JWST-based distances (TRGB / JAGB / Cepheid); the seed
+# carries the anchor identity + the published JWST distance-modulus precision (jwst_e_dm_mag),
+# NOT a re-derived distance -- the bulk-flow forecast uses the ERROR (Fisher weight), the
+# velocity comes from CF4. The authoritative machine-readable tables are fetched by
+# dl_pipeline/scripts/download_jwst_anchors.py; this seed makes the forecast runnable offline.
+# Sources: Freedman et al. 2025, ApJ 985, 203 (CCHP JWST TRGB/JAGB, doi:10.3847/1538-4357/adce78);
+#          Riess et al. 2024/2025 (SH0ES JWST Cepheids). Coordinates are J2000 host centres.
+name,ra_deg,dec_deg,jwst_e_dm_mag,method,source
+NGC4258,184.7396,47.3040,0.022,maser+TRGB,Freedman2025
+NGC1365,53.4018,-36.1404,0.045,TRGB/JAGB,Freedman2025
+NGC1448,56.1329,-44.6442,0.045,TRGB/JAGB,Freedman2025
+NGC1559,64.4025,-62.7836,0.040,Cepheid,Riess2024
+NGC2442,114.0996,-69.5312,0.048,TRGB,Freedman2025
+NGC3370,161.7670,17.2735,0.042,Cepheid,Riess2024
+NGC3447,163.3546,16.7752,0.046,TRGB,Freedman2025
+NGC4038,180.4712,-18.8672,0.050,TRGB,Freedman2025
+NGC4536,188.6127,2.1879,0.043,TRGB/JAGB,Freedman2025
+NGC5643,218.1698,-44.1745,0.041,Cepheid+TRGB,Freedman2025
+NGC7250,334.5671,40.5602,0.047,Cepheid,Riess2024
+NGC5457,210.8025,54.3491,0.030,Cepheid+TRGB,Riess2024

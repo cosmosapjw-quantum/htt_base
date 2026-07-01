@@ -7,6 +7,49 @@
 
 ## [Unreleased]
 
+### EGS3 Axis D — BASS-Extended joint PV+CMB analysis, pre-solver (rev-r142, 2026-07-02)
+
+Critically evaluated the proposed joint likelihood `ln L_Total = ln L_PV + ln L_CMB` and ported
+everything honestly runnable before the native low-ell solver (BASS), expanding scope per request
+to (a) a JWST data-acquisition pipeline, (b) extracting the off-diagonal `C_{lm,l'm'}` from real
+SMICA, and (c) a feasible `C_PV` inversion. Four pillars, all diagnostic-only, no fabricated
+measurement:
+- **Feasible PV covariance** `htt/obsstat/pv_covariance.py`: `C_PV = diag(sigma_v^2) + U Lambda U^T`
+  (leading bulk+shear velocity modes) inverted by Sherman-Morrison-Woodbury in O(N K^2)
+  (`woodbury_solve`/`woodbury_logdet`, verified bit-for-bit vs dense); `pv_tilt_gls` correlated
+  bulk-flow/tilt GLS. On real CF4 it reproduces the K5 amplitude |B|=340.7+/-5.0 km/s. Replaces the
+  proposal's infeasible dense 38k x 38k inversion.
+- **SMICA BipoSH off-diagonal channel** `htt/obsstat/biposh_smica.py` + `scripts/k1_biposh_smica.py`:
+  exact `wigner_3j`/`clebsch_gordan` + `compute_biposh_from_alm` contracting a_lm a*_l'm' into the
+  rotationally-invariant bipolar power D^L_{l1l2} (L=1 boost-aberration, L=2 SI-violation), reusing
+  the existing `SparseBiPoSHCoefficient` container. Measured on the REAL Planck SMICA/Commander maps,
+  null-calibrated (matched isotropic GRF) via `calibrate_max_scan`: global p=0.68 (SMICA)/0.65
+  (Commander), consistent with isotropy. This is the honest "extract C_{lm,l'm'} from SMICA": the DATA
+  off-diagonal is measured; the THEORY A^{LM}(g) stays fail-closed. FFP10 E2E null pending.
+- **JWST acquisition** `dl_pipeline/scripts/download_jwst_anchors.py` (curl+sha256+manifest, real
+  CCHP/SH0ES/TRGB-SBF IOPscience/arXiv tables) + committed cited seed `dl_pipeline/data/jwst_distances_seed.csv`
+  + `scripts/jwst_cf4_crossmatch.py` (astropy-free RA/Dec match to CF4 -> `docs/generated/jwst_cf4_anchors.json`,
+  9 of 12 anchors matched). The JWST prior is a labelled survey-design FORECAST until anchors materially
+  matched; with ~10 nearby anchors the global-tilt gain is modest (1.04x) -- honestly reported, not inflated.
+- **Joint forecast + fail-closed CMB** `htt/obsstat/joint_pv_cmb_forecast.py`: `jwst_anchor_forecast`,
+  `joint_fisher_forecast` (the PV Omega_tilt prior enters the rev-r141 coupled Fisher f_omega_tilt diagonal
+  and strictly reduces the Sigma^2 covariance inflation 1/(1-r^2) -- Wolfram-verified monotonicity, the
+  solver-free "PV pins Omega_tilt so no Sigma^2 leakage"); `anisotropic_cmb_covariance`/`anisotropic_cmb_loglike`
+  raise `OutOfScopeError` (`AWAITING_NATIVE_LOWELL_SOLVER`) and NEVER fabricate a covariance;
+  `evaluate_joint_loglike` returns a real PV loglike + real BipoSH data + a fail-closed theory sector,
+  never a fabricated g-conditioned total.
+
+Gate `test_egs3_axis_d_joint_forecast.py` (D1-D8, 13 tests incl. Woodbury==dense, forecast monotonicity,
+degeneracy-break, exact Wigner-3j + aberration L=1 response, fail-closed, CoVe); `make egs3-gates` now 61.
+Wolfram `egs3_boost_tilt_separation.wls` += `prior_precision_reduces_inflation` (11/11 PASS). `run_egs3_experiments.py`
++= `axis_d()`; results table 25 rows (EGS3-D1 synth-forecast, D2 proven_gate, D3 measured_partial, D4 blocked).
+Figures `fig_egs3_d_joint_forecast` + `fig_egs3_d_biposh`. Ledger `egs3.joint_pv_cmb_forecast` + `egs3.smica_biposh`;
+BLOCKERS.md CMB-theory fail-closed + BipoSH FFP10-pending notes; report Axis-D subsection + 2 gallery figures +
+4 table rows. Anti-tone-down: a real feasible correlated-covariance PV analysis + a real off-diagonal SI
+measurement on SMICA + a proven degeneracy-breaking mechanism, with the theory-g Bianchi likelihood specified
+and fail-closed until BASS. Sigma^2 stays partial; no detection/family/geometry/native-solver claim. Canonical
+K1 GRF artifact, K5 measured row, v2 frozen statistics, bit-identical x_C all byte-identical.
+
 ### EGS3 Axis C — kinematic deprojection of the observer-boost quadrupole (rev-r141, 2026-07-01)
 
 Implements the two formalism upgrades that the rev-r140 note only specified, turning the

@@ -44,6 +44,14 @@ rCorr = F12/Sqrt[F11 F22];
 inflationForm = Simplify[inflation - 1/(1 - rCorr^2)] === 0;
 inflationLimit = Simplify[(inflation /. beta -> 0)] === 1;
 
+(* (5b) a PV/JWST prior on Omega_tilt (larger f) STRICTLY reduces the Sigma^2 covariance
+   inflation. Since inflation = 1/(1 - rCorr^2) (proven above), it decreases in f iff the
+   response correlation rCorr^2 decreases in f: d(rCorr^2)/df < 0 (Axis-D degeneracy-breaking). *)
+rho2exp = alpha kappaT^2 beta^2;                          (* rho^2, explicit (no Sqrt); alpha bound above *)
+r2Explicit = rho2exp^2/((1 + rho2exp) (f + rho2exp));    (* = F12^2/(F11 F22) *)
+priorReducesInflation = TrueQ[Simplify[D[r2Explicit, f] < 0,
+   T0 > 0 && N2 > 0 && RSigma > 0 && kappaT > 0 && beta > 0 && f > 0]];
+
 (* (6) Gram determinant of the two unit l=2 templates is 1 - P2(cos t)^2 (addition
    theorem); positive iff the boost axis is not aligned with the shear axis. *)
 gramDet = 1 - LegendreP[2, Cos[t]]^2;
@@ -61,6 +69,7 @@ gramGenericPositive = Resolve[ForAll[t, 0 < t < Pi/2, gramDet > 0], Reals];
     "fisher_offdiagonal_beta_squared" -> TrueQ[fisherOffdiagBetaSquared],
     "inflation_one_over_one_minus_r2" -> TrueQ[inflationForm],
     "inflation_limit_one_at_zero_beta" -> TrueQ[inflationLimit],
+    "prior_precision_reduces_inflation" -> priorReducesInflation,
     "gram_zero_when_axes_aligned" -> TrueQ[gramAlignedZero],
     "gram_positive_iff_separable" -> TrueQ[gramGenericPositive],
     "signature" -> "Sigma_tilde^2 = Sigma^2 - alpha (Omega_tilt)^2; alpha=(4/9)T0^2 N2/(kappaT^2 RSigma); F12 ~ beta^2; inflation=1/(1-r^2)"

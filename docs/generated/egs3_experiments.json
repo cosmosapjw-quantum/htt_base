@@ -159,6 +159,36 @@
         "scope": "moment-level synthetic injection-recovery; amplitude-level readings; no map, no native low-ell solver, no real data; Sigma2 stays partial"
       },
       "headline": "closed-form kinematic deprojection Sigma_tilde^2=Sigma^2-alpha(Omega_tilt)^2 makes the low-ell shear reading provably immune to the observer-boost beta^2 quadrupole; naive Sigma^2 FPR high on a pure-boost sky, deprojected FPR nominal; coupled-Fisher off-diagonal ~beta^2 with inflation 1/(1-r^2); estimator property + synthetic witness, not a detection (Sigma^2 stays partial)"
+    },
+    "axis_d": {
+      "D1_feasible_pv_covariance": {
+        "woodbury_matches_dense": true,
+        "correlated_tilt_amplitude_kms": 226.9240857088533,
+        "n_modes": 5,
+        "note": "diag(sigma^2)+U Lambda U^T Woodbury; O(N K^2), no dense N x N inversion"
+      },
+      "D2_jwst_forecast": {
+        "precision_gain_by_anchor_fraction": {
+          "0.02": 1.1596606814994987,
+          "0.05": 1.4594353887321423,
+          "0.10": 1.8927750986082017,
+          "0.15": 2.289842431399706
+        },
+        "monotone_in_anchors": true,
+        "label": "survey-design forecast (hypothetical JWST prior)"
+      },
+      "D3_degeneracy_break": {
+        "sigma2_inflation_data": 1.0416666666666667,
+        "sigma2_inflation_jwst": 1.0238917215869265,
+        "degeneracy_break_factor": 1.0173601804809895
+      },
+      "D4_biposh_aberration": {
+        "iso_L1_mean": 19.771495319669786,
+        "aberrated_L1_mean": 29.127042508268314,
+        "aberration_raises_L1": true
+      },
+      "D5_theory_cmb_fail_closed": true,
+      "headline": "feasible correlated-covariance PV tilt (Woodbury) + a JWST-anchor Omega_tilt precision forecast that reduces the Sigma^2 covariance inflation via the coupled Fisher (degeneracy break) + a real off-diagonal BipoSH SI channel; the theory-g CMB likelihood stays fail-closed until the native solver"
     }
   },
   "framework_upgrade": "graded comparator g=(Sigma2,W2,Omega_tilt,Omega_k); x_C=<c,g> is a derived summary (bit-identical)",

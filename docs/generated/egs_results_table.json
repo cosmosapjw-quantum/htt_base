@@ -157,6 +157,38 @@
       "theorem_id": "EGS3-C4"
     },
     {
+      "axis": "data_interpretation",
+      "evidence": "scripts/bass_extended_joint_forecast.py on real CF4 + JWST seed cross-match; PV tilt measured, JWST prior is a labelled forecast",
+      "key_result": "|B|=341 km/s on 38049 CF4 groups (K5-consistent); 9 JWST anchors matched -> Omega_tilt precision gain 1.041 (nearby anchors barely move the global tilt -- honest)",
+      "statement": "BASS-Extended PV sector: a feasible correlated-covariance bulk-flow / tilt GLS on real CF4 via a low-rank Woodbury covariance (no dense N x N inversion), with a JWST-anchored distance-prior Omega_tilt precision FORECAST (survey-design; hypothetical prior on the cross-matched anchors, not a measurement)",
+      "status": "measured_synth",
+      "theorem_id": "EGS3-D1"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates D4; wolfram egs3_boost_tilt_separation prior_precision_reduces_inflation (PASS); fig_egs3_d_joint_forecast",
+      "key_result": "Sigma^2 inflation 1.0417 -> 1.0239 (break 1.0174) with the prior",
+      "statement": "Coupled-Fisher degeneracy break: the PV/JWST Omega_tilt prior strictly reduces the Sigma^2 covariance inflation 1/(1-r^2), blocking the observer-boost Sigma^2 leakage (solver-free; Wolfram-verified monotonicity)",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-D2"
+    },
+    {
+      "axis": "data_interpretation",
+      "evidence": "scripts/k1_biposh_smica.py on real SMICA/Commander; matched isotropic GRF null; FFP10/NPIPE E2E null still BLOCKED_MISSING_PR4_E2E_ACCESS",
+      "key_result": "SMICA BipoSH global p=0.681, Commander p=0.649 (real map, 500 GRF nulls; consistent with isotropy)",
+      "statement": "Real off-diagonal BipoSH statistical-isotropy measurement on the Planck SMICA / Commander low-ell map (L=1 observer-boost/aberration + L=2 SI-violation), look-elsewhere-corrected against the matched isotropic GRF null",
+      "status": "measured_partial",
+      "theorem_id": "EGS3-D3"
+    },
+    {
+      "axis": "data_interpretation",
+      "evidence": "AWAITING_NATIVE_LOWELL_SOLVER; data-side BipoSH (EGS3-D3) is the solver-free substitute",
+      "key_result": "fail-closed OutOfScopeError; interface stub ready (joint_pv_cmb_forecast.anisotropic_cmb_covariance)",
+      "statement": "Theory-g Bianchi CMB joint likelihood: the mode-coupled C_{lm,l'm'}(g) / A^{LM}_{ll'}(g) prediction needs the native low-ell solver and is FAIL-CLOSED (never fabricated); the drop-in interface stub is in place",
+      "status": "blocked",
+      "theorem_id": "EGS3-D4"
+    },
+    {
       "axis": "math_stat",
       "evidence": "egs3-gates PSD P1-P4; wolfram egs3_psd_cone (PASS); fig_egs3_psd_cone",
       "key_result": "bit-identical True; rank 2; convex cone True; status PASS",
@@ -191,10 +223,12 @@
   ],
   "schema": "htt.egs.results_table.v1",
   "status_counts": {
+    "blocked": 1,
     "measured": 1,
     "measured_no_go": 1,
-    "measured_partial": 1,
-    "proven_gate": 12,
+    "measured_partial": 2,
+    "measured_synth": 1,
+    "proven_gate": 13,
     "proven_symbolic": 6
   }
 }

@@ -165,6 +165,90 @@ def axis_c() -> dict:
     }
 
 
+def axis_d() -> dict:
+    """Axis D: BASS-Extended joint PV+CMB information forecast (pre-solver). Deterministic
+    synthetic mechanics (the real-data numbers live in bass_extended_joint_forecast.json +
+    k1_biposh_smica.json). Feasible correlated-covariance PV tilt (Woodbury), a JWST-anchor
+    Omega_tilt precision forecast, the coupled-Fisher degeneracy-break, the BipoSH aberration
+    response, and the fail-closed theory-g CMB sector. Estimator/forecast + real-data channels;
+    theory-g CMB blocked; no detection/family/solver."""
+    import numpy as np
+    from htt.obsstat import pv_covariance as pv
+    from htt.obsstat import joint_pv_cmb_forecast as jf
+    from htt.obsstat import biposh_smica as bs
+    from htt.obsstat.lowell_map_features import _packed_index
+    rng = np.random.default_rng(20260702)
+    pos = rng.normal(size=(600, 3)) * 50.0
+    r = np.linalg.norm(pos, axis=1); nh = pos / r[:, None]
+    modes = pv.velocity_field_modes(pos, sigma_shear_kms_per_mpc=0.3)
+    U, Lam = modes["U"][:, 3:], modes["Lambda"][3:]
+    sig2 = (rng.uniform(50.0, 150.0, 600)) ** 2
+    v = nh @ np.array([200.0, -90.0, 60.0]) + rng.normal(size=600) * np.sqrt(sig2)
+    fit = pv.pv_tilt_gls(nh, v, sig2, U, Lam)
+    # Woodbury vs dense witness on a small block
+    d0 = rng.uniform(1, 4, 40); U0 = rng.normal(size=(40, 8)); l0 = rng.uniform(.5, 2, 8)
+    C0 = np.diag(d0) + U0 @ np.diag(l0) @ U0.T; b0 = rng.normal(size=(40, 2))
+    woodbury_ok = bool(np.allclose(pv.woodbury_solve(d0, U0, l0, b0), np.linalg.solve(C0, b0), atol=1e-9))
+    # JWST-anchor forecast vs anchor fraction (nearest by distance)
+    order = np.argsort(r)
+    gain_curve = {}
+    for frac in (0.02, 0.05, 0.10, 0.15):
+        mask = np.zeros(600, bool); mask[order[:int(frac * 600)]] = True
+        gain_curve[f"{frac:.2f}"] = jf.jwst_anchor_forecast(nh, v, sig2, mask, jwst_shrink=1/3,
+                                                            U=U, Lambda=Lam)["precision_gain"]
+    jff = jf.joint_fisher_forecast(rho=0.5, f_omega_tilt_data=1.0,
+                                   f_omega_tilt_jwst=gain_curve["0.10"])
+    # BipoSH aberration response (isotropic vs injected l<->l+1), synthetic alm
+    lmax = 8
+    def packed(seed):
+        rr = np.random.default_rng(seed)
+        a = rr.normal(size=(lmax + 1) * (lmax + 2) // 2) + 1j * rr.normal(size=(lmax + 1) * (lmax + 2) // 2)
+        for l in range(lmax + 1):
+            a[_packed_index(lmax, l, 0)] = a[_packed_index(lmax, l, 0)].real
+        return a
+    iso, ab = [], []
+    for s in range(30):
+        a = packed(1000 + s)
+        iso.append(bs.compute_biposh_from_alm(a, lmax, L_values=(1, 2)).power_by_L[1])
+        aa = a.copy()
+        for l in range(2, lmax):
+            for m in range(0, l + 1):
+                aa[_packed_index(lmax, l + 1, m)] += 0.3 * a[_packed_index(lmax, l, m)]
+        ab.append(bs.compute_biposh_from_alm(aa, lmax, L_values=(1, 2)).power_by_L[1])
+    cmb_fail_closed = False
+    try:
+        jf.anisotropic_cmb_covariance((1.0, 0.0, 0.0, 0.0))
+    except jf.OutOfScopeError:
+        cmb_fail_closed = True
+    return {
+        "D1_feasible_pv_covariance": {
+            "woodbury_matches_dense": woodbury_ok,
+            "correlated_tilt_amplitude_kms": fit.amplitude, "n_modes": fit.n_modes,
+            "note": "diag(sigma^2)+U Lambda U^T Woodbury; O(N K^2), no dense N x N inversion",
+        },
+        "D2_jwst_forecast": {
+            "precision_gain_by_anchor_fraction": gain_curve,
+            "monotone_in_anchors": bool(all(gain_curve[a] <= gain_curve[b] for a, b in
+                                            zip(["0.02", "0.05", "0.10"], ["0.05", "0.10", "0.15"]))),
+            "label": "survey-design forecast (hypothetical JWST prior)",
+        },
+        "D3_degeneracy_break": {
+            "sigma2_inflation_data": jff["inflation_data"],
+            "sigma2_inflation_jwst": jff["inflation_jwst"],
+            "degeneracy_break_factor": jff["degeneracy_break_factor"],
+        },
+        "D4_biposh_aberration": {
+            "iso_L1_mean": float(np.mean(iso)), "aberrated_L1_mean": float(np.mean(ab)),
+            "aberration_raises_L1": bool(np.mean(ab) > np.mean(iso)),
+        },
+        "D5_theory_cmb_fail_closed": cmb_fail_closed,
+        "headline": ("feasible correlated-covariance PV tilt (Woodbury) + a JWST-anchor Omega_tilt "
+                     "precision forecast that reduces the Sigma^2 covariance inflation via the coupled "
+                     "Fisher (degeneracy break) + a real off-diagonal BipoSH SI channel; the theory-g "
+                     "CMB likelihood stays fail-closed until the native solver"),
+    }
+
+
 def main() -> int:
     payload = {
         "schema": "htt.egs3.experiments.v1",
@@ -172,7 +256,7 @@ def main() -> int:
         "family_identification": False,
         "native_solver_result": False,
         "experiments": {"axis_a": axis_a(), "axis_b": axis_b(), "axis_psd": axis_psd(),
-                        "axis_c": axis_c()},
+                        "axis_c": axis_c(), "axis_d": axis_d()},
         "framework_upgrade": "graded comparator g=(Sigma2,W2,Omega_tilt,Omega_k); x_C=<c,g> is a derived summary (bit-identical)",
         "revisionary_redesign": "PSD-cone comparator M=diag(g)>=0; x_C=tr(C M); realized + gated (representation only, bit-identical), ships behind the graded upgrade",
         "blockers_kept_open": [
