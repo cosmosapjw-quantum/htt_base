@@ -236,7 +236,13 @@ rather than on the diagonal assumption.
 \label{sec:tweaks}
 
 Both remedies proposed in the toy test are correct and slot directly onto the
-existing response-design / identifiability machinery.
+existing response-design / identifiability machinery. \emph{They are now
+implemented} as a separate diagnostic surface
+(\pathx{htt/obsstat/egs3_kinematic_deprojection.py}), gate-validated
+(EGS3-C1--C4, \pathx{research_gates/egs3/tests/test_egs3_axis_c_boost_tilt.py})
+and Wolfram-verified (\pathx{wolfram/egs3_boost_tilt_separation.wls}). The surface
+never touches the bit-identical comparator $x_C$ or the frozen registered
+low-$\ell$ statistics, and adds no new registered statistic.
 
 \subsection{Upgrade 1 --- a kinematic projection operator}
 Define the deprojected (orthogonalised) shear estimator
@@ -325,8 +331,11 @@ reported as a measured amplitude; the local boost and the global tilt are kept
 distinct by construction. Nothing here identifies a Bianchi family, detects a
 geometry, validates a native low-$\ell$ solver, or promotes any scalar into a
 model-selection statement. The kinematic-quadrupole deprojection of
-\S\ref{sec:tweaks} is the recommended formalism upgrade; until it is in the
-low-$\ell$ statistics, the separation is carried by the five structural
-safeguards of \S\ref{sec:safeguards}, and $\Sig$ stays \code{partial}.
+\S\ref{sec:tweaks} is now implemented as a separate diagnostic surface
+(\pathx{htt/obsstat/egs3_kinematic_deprojection.py}), gate-validated
+(EGS3-C1--C4) and Wolfram-verified; it deprojects the leakage at the
+moment/comparator level so that $\widetilde{\Sig}\to0$ on a pure-bulk-flow sky,
+while $\Sig$ on the real sky stays \code{partial} until data lands and the five
+structural safeguards of \S\ref{sec:safeguards} remain in force.
 
 \end{document}

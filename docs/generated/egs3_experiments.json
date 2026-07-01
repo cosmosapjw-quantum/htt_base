@@ -126,6 +126,39 @@
         "excludes_vertex": true
       },
       "headline": "PSD-cone comparator M>=0; x_C=tr(C M) bit-identical; admissible set is a convex cone; rank-2 reachable eigendirections; blind sector is the structural null; bracket = convex shell excluding the FLRW vertex"
+    },
+    "axis_c": {
+      "C1_deprojection_alpha": {
+        "closed_form": "alpha=(4/9) T0^2 N2/(kappaT^2 R_sigma)",
+        "eps_normalisation_value": 1.0,
+        "eps_anchor": "T0=kappaT=R_sigma=1, N2=9/4 -> alpha=1 (doppler_boost.py:94 eps1^2 coeff)",
+        "pure_boost_projected_shear_is_zero": true
+      },
+      "C2_coupled_fisher": {
+        "offdiag_beta1": 9e-06,
+        "offdiag_beta2": 3.6e-05,
+        "offdiag_ratio_2x": 4.0,
+        "response_correlation_beta1": 8.999919000728994e-06,
+        "covariance_inflation_example": 1.0753488372093023,
+        "inflation_is_one_over_one_minus_r2": true,
+        "inflation_limit_one_at_zero_beta": true
+      },
+      "C3_identifiability": {
+        "generic_rank": 2,
+        "generic_separable": true,
+        "generic_gram_det": 0.75,
+        "aligned_rank": 1,
+        "aligned_degenerate": true
+      },
+      "C4_injection_recovery": {
+        "fpr_naive_pure_boost": 0.999,
+        "fpr_deprojected_pure_boost": 0.042,
+        "genuine_shear_bias": -3.0455140733646015e-08,
+        "genuine_shear_coverage": 0.69575,
+        "n_mock": 4000,
+        "scope": "moment-level synthetic injection-recovery; amplitude-level readings; no map, no native low-ell solver, no real data; Sigma2 stays partial"
+      },
+      "headline": "closed-form kinematic deprojection Sigma_tilde^2=Sigma^2-alpha(Omega_tilt)^2 makes the low-ell shear reading provably immune to the observer-boost beta^2 quadrupole; naive Sigma^2 FPR high on a pure-boost sky, deprojected FPR nominal; coupled-Fisher off-diagonal ~beta^2 with inflation 1/(1-r^2); estimator property + synthetic witness, not a detection (Sigma^2 stays partial)"
     }
   },
   "framework_upgrade": "graded comparator g=(Sigma2,W2,Omega_tilt,Omega_k); x_C=<c,g> is a derived summary (bit-identical)",

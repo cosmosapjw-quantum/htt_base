@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "backend": "wolframclient",
+  "results": [
+    {
+      "script": "egs3_boost_tilt_separation.wls",
+      "result": {
+        "schema": "htt.egs3.boost_tilt.v1",
+        "checks": {
+          "mu_squared_legendre_split": true,
+          "p2_projection_coefficient_two_thirds": true,
+          "alpha_closed_form": true,
+          "deprojection_zeroes_pure_boost": true,
+          "deprojection_preserves_shear": true,
+          "fisher_offdiagonal_beta_squared": true,
+          "inflation_one_over_one_minus_r2": true,
+          "inflation_limit_one_at_zero_beta": true,
+          "gram_zero_when_axes_aligned": true,
+          "gram_positive_iff_separable": true,
+          "signature": "Sigma_tilde^2 = Sigma^2 - alpha (Omega_tilt)^2; alpha=(4/9)T0^2 N2/(kappaT^2 RSigma); F12 ~ beta^2; inflation=1/(1-r^2)"
+        }
+      }
+    }
+  ]
+}

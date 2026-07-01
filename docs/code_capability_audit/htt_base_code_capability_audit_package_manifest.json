@@ -17,7 +17,7 @@
     {
       "archive_path": "02_CODE_MAP.md",
       "group": "guide",
-      "sha256": "sha256:77aded735ebcbead3d4b807374b90e2b00b8a6c4e7ce55ee9688e4e735ec18fa",
+      "sha256": "sha256:86a3cdc9cc41224759804f3ea01dc501dd9847bb32bd710307cc6be31f31e887",
       "size_bytes": 2422,
       "source_path": "virtual:02_CODE_MAP.md"
     },
@@ -3095,6 +3095,13 @@
       "source_path": "htt/obsstat/egs3_graded_comparator.py"
     },
     {
+      "archive_path": "code_capability_audit/htt/obsstat/egs3_kinematic_deprojection.py",
+      "group": "library_source",
+      "sha256": "sha256:1194c8ef71c4ede2300d6be08a604d3f2a1343bed5ced276cd42d09f6c8ff716",
+      "size_bytes": 14830,
+      "source_path": "htt/obsstat/egs3_kinematic_deprojection.py"
+    },
+    {
       "archive_path": "code_capability_audit/htt/obsstat/egs3_psd_cone.py",
       "group": "library_source",
       "sha256": "sha256:2019fad6e61d50f7036fb73e9da6cf3797eb9e6d25b626fea134afb833ef9eea",
@@ -4000,8 +4007,8 @@
     {
       "archive_path": "code_capability_audit/scripts/build_egs_results_table.py",
       "group": "science_driver",
-      "sha256": "sha256:155d0958c1791f7b4410edd2ab89165717f59c6594fcd7d0be78304abba5775a",
-      "size_bytes": 14229,
+      "sha256": "sha256:742d07825cfb9e84f855fff617ad262c0bd5e1df3b38a67796b7fde43792ee65",
+      "size_bytes": 16508,
       "source_path": "scripts/build_egs_results_table.py"
     },
     {
@@ -4196,8 +4203,8 @@
     {
       "archive_path": "code_capability_audit/scripts/make_egs2_egs3_theorem_figures.py",
       "group": "science_driver",
-      "sha256": "sha256:f0989eed6005dd0aac2375a19fe7ba5e92643fa95e101299cd5f871b9a4eb160",
-      "size_bytes": 20160,
+      "sha256": "sha256:004af7376b9a0cef1e07299a718d20bb4caef6ebf4b6f8e4ca01be383b2b7736",
+      "size_bytes": 22832,
       "source_path": "scripts/make_egs2_egs3_theorem_figures.py"
     },
     {
@@ -4343,8 +4350,8 @@
     {
       "archive_path": "code_capability_audit/scripts/run_egs3_experiments.py",
       "group": "science_driver",
-      "sha256": "sha256:e2ff7dcee2d6123218fe73f70132736d8238fc058ca8952d7303cd81348afef7",
-      "size_bytes": 7863,
+      "sha256": "sha256:49ffd2373973c186e2f9ca29895c7123276ee4368e2e3846a1e15a24d1bd45e8",
+      "size_bytes": 11529,
       "source_path": "scripts/run_egs3_experiments.py"
     },
     {
@@ -5671,7 +5678,7 @@
       "source_path": "src/teff/theta4_bridge_v2.rs"
     }
   ],
-  "archive_entry_count": 810,
+  "archive_entry_count": 811,
   "artifact_id": "code_capability_audit_package",
   "artifact_path": "docs/code_capability_audit/htt_base_code_capability_audit_package.zip",
   "caveats": [
@@ -5682,13 +5689,13 @@
     "Inclusion of code does not imply a validated science result; see the result/claim packages for claim tiers."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "0a4d4f9+dirty",
-  "config_hash": "sha256:fac9736673486d4d2796b25f862f4dfe2887b53ac01f756f54c8085b25bcd3ad",
+  "code_version": "a7a8449+dirty",
+  "config_hash": "sha256:7f5fa84290f8859525d00fa011860e653ce9221d5600b32d756a0d421ec15cad",
   "created_by": "scripts/build_code_capability_audit_package.py",
   "failed_gates": [],
   "family_identification": false,
   "generating_command": "python scripts/build_code_capability_audit_package.py",
-  "git_commit_or_worktree_state": "0a4d4f9+dirty",
+  "git_commit_or_worktree_state": "a7a8449+dirty",
   "group_counts": {
     "audit_prompt": 1,
     "config": 1,
@@ -5696,7 +5703,7 @@
     "execution_stack": 18,
     "guide": 4,
     "legacy_tsc": 50,
-    "library_source": 466,
+    "library_source": 467,
     "package_readme": 1,
     "rust_solver_source": 165,
     "science_driver": 75,
@@ -5706,7 +5713,7 @@
   "input_hashes": [
     "virtual:00_README.md:sha256:538dc2b2dc67e18d823a1ced405841a0555cd43707381a2566b0b0dc7ca1e748",
     "virtual:01_ARCHITECTURE_GUIDE.md:sha256:a45976a887afc1ca75512730af173504909d960521f2e58888128af406658a34",
-    "virtual:02_CODE_MAP.md:sha256:77aded735ebcbead3d4b807374b90e2b00b8a6c4e7ce55ee9688e4e735ec18fa",
+    "virtual:02_CODE_MAP.md:sha256:86a3cdc9cc41224759804f3ea01dc501dd9847bb32bd710307cc6be31f31e887",
     "virtual:03_ENTRY_POINTS.md:sha256:56645af7bab5a1bb39714195ea37b76158b6a7cfe6341c3fc6cc67cd494a06fe",
     "virtual:04_DATA_ACCESS.md:sha256:fce2fe920cf130ecd370bd1b1197b0b3368d238305dcebc60472eb5e244d9a79",
     "virtual:AUDIT_PROMPT.md:sha256:1808d0e0e7c0c82f3b418524209a3a46d7d5ebdb1d2fe2ba7d0a4e43953fa6ff",
@@ -6146,6 +6153,7 @@
     "htt/obsstat/egs2_transport.py:sha256:69973133bdf875819dd27a829e6fdc556a364fd02a75444c2d41a98361df3251",
     "htt/obsstat/egs3_calibration.py:sha256:e60f74c99b448025cf1305aa37b8aa0d3f1f26642b37ab96ca8242518a720364",
     "htt/obsstat/egs3_graded_comparator.py:sha256:3108758e8ca30043d9f200f023d2c8c2f7ff2227bf93fbe2656ffb0d694138df",
+    "htt/obsstat/egs3_kinematic_deprojection.py:sha256:1194c8ef71c4ede2300d6be08a604d3f2a1343bed5ced276cd42d09f6c8ff716",
     "htt/obsstat/egs3_psd_cone.py:sha256:2019fad6e61d50f7036fb73e9da6cf3797eb9e6d25b626fea134afb833ef9eea",
     "htt/obsstat/egs3_volterra_memory.py:sha256:b71efda1af840f54e44cd27df79a1b172e7906431a2c0732eb4071c0c4d3d563",
     "htt/obsstat/egs3_vorticity_channels.py:sha256:90ee2fef53adf03b77b9a64a4a9710be561b6aff8b90e8e58a394b07eda4a10e",
@@ -6275,7 +6283,7 @@
     "reionization_execution_stack/anisotropic_rt_coding_bundle/reionization_stack/07_NEXT_SESSION_PROMPT.md:sha256:855cda3ffde021b363d4805cf1150b22013a01e0707a139ae0ae67b1f2d87866",
     "reionization_execution_stack/anisotropic_rt_coding_bundle/reionization_stack/README.md:sha256:272cec95f445898237eeb4638394c8d8ff33b5d4f25515e135a9143d48d75d23",
     "scripts/bench_camb_vs_bass.py:sha256:e83005d9d9821664f1b422bd0fb92cdb298d0f3585fd62f93048b0a72a6817b2",
-    "scripts/build_egs_results_table.py:sha256:155d0958c1791f7b4410edd2ab89165717f59c6594fcd7d0be78304abba5775a",
+    "scripts/build_egs_results_table.py:sha256:742d07825cfb9e84f855fff617ad262c0bd5e1df3b38a67796b7fde43792ee65",
     "scripts/build_expanded_manuscript_figure_suite.py:sha256:e4fd73c4c4d5fcbfaf4769788067c0730639c7768fbdf299218a8947590c38ac",
     "scripts/build_pr04_research_audit_package.py:sha256:97aa257ceb9f2f4c5caabc68bb244b7a3ac6a9b68a35b554b22ef4279ca88bf4",
     "scripts/build_research_evaluation_package.py:sha256:6825d41356bba538e4660f11d87cbf829a692d2d8a3d2c044ea334e4c54cd0ac",
@@ -6303,7 +6311,7 @@
     "scripts/make_cf4_bulkflow_apex_depth.py:sha256:f00f1ee55db9883ced3fc78ad97ccaeef37e1215101d7efa503ca9004093b22f",
     "scripts/make_cf4_bulkflow_likelihood.py:sha256:d60ecccabdcf287fd248c8713c5e8b2706dff345a784b04ee15741d83192c0e0",
     "scripts/make_current_manuscript_figures.py:sha256:488c28de4b195ca033c85afadb02b52e4fd233244c063cdb66fdc5c385927fda",
-    "scripts/make_egs2_egs3_theorem_figures.py:sha256:f0989eed6005dd0aac2375a19fe7ba5e92643fa95e101299cd5f871b9a4eb160",
+    "scripts/make_egs2_egs3_theorem_figures.py:sha256:004af7376b9a0cef1e07299a718d20bb4caef6ebf4b6f8e4ca01be383b2b7736",
     "scripts/make_egs_lowell_theorem_figures.py:sha256:110cc1e3b1e399755d6411fd1da5919de9272f6813346a96fe0f968bbeafb7e6",
     "scripts/make_lowell_morphology_real_map.py:sha256:283867d15c70a3e365740baf0ed39f92c589816e6189575b4e3f2d5dc218759a",
     "scripts/make_manuscript_figures.py:sha256:eca0ac1d31ec1405e88b9357e6b662a4cf200706fd703283aea33c0e9f5416e5",
@@ -6324,7 +6332,7 @@
     "scripts/result_packs/generate_pack_B_local_global.py:sha256:4f7a978d5eadb362a3b6e3553ca7b882a2e32088e086ad73da060a652111c51f",
     "scripts/result_packs/generate_pack_C_mio_certificates.py:sha256:1e1c7d4dc420978eb9b829cc93257fea671fc1363a36aa3725211c851db6818f",
     "scripts/run_egs2_experiments.py:sha256:a84b60c5f7673c64e4e582003ea68285a0ad5894d22aec4d4d9ca3c0d0f31226",
-    "scripts/run_egs3_experiments.py:sha256:e2ff7dcee2d6123218fe73f70132736d8238fc058ca8952d7303cd81348afef7",
+    "scripts/run_egs3_experiments.py:sha256:49ffd2373973c186e2f9ca29895c7123276ee4368e2e3846a1e15a24d1bd45e8",
     "scripts/run_pr07_experiments.py:sha256:07885b16e48cd5c2d9b08fd7013c12b275b8b8b271ceda197a99b2a40920bace",
     "scripts/run_pr07_wolfram_proofs.py:sha256:b6c869115032f7ad07aa7901236f02ddc44382aba2ec8f3c9800e5d1bfb16916",
     "scripts/v5_flrw_pipeline_smoke.py:sha256:3e66efe07f5bc7a436084c587894732ff958bffe7f4a55a892009192447ff567",

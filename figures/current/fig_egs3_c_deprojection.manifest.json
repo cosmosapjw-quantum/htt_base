@@ -1,0 +1,136 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "bass.theorem.fig_egs3_c_deprojection",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/current/fig_egs3_c_deprojection.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_not_use_for_family_identification_or_family_selection",
+    "must_state_no_native_low_ell_solver_output"
+  ],
+  "caveats": [
+    "Analytic/synthetic theorem illustration; not observed data.",
+    "Conditional theorem; structural/limit statement, not a detection.",
+    "No native low-ell solver output or morphology atlas is used.",
+    "No Bianchi family-ID or geometry-detection claim is made."
+  ],
+  "claim_tier": "diagnostic_only",
+  "config_hash": "sha256:d9b4c4cbd4b78c201ebc55b2a455cd85adbb376732e0db8dcfaf1ec0be1bc3a4",
+  "covariance_status": "synthetic_only",
+  "created_by": "scripts/make_egs2_egs3_theorem_figures.py",
+  "failed_gates": [
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available",
+    "observational_closure_not_bound"
+  ],
+  "family_identification": false,
+  "generating_command": "python scripts/make_egs2_egs3_theorem_figures.py",
+  "implementation_scope": "bass_py",
+  "native_solver_result": false,
+  "null_mock_status": "synthetic_only",
+  "owner": "BASS",
+  "passed_gates": [
+    "gate_test_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_solver_validation_absent",
+    "native_morphology_atlas_absent",
+    "family_identification_blocked_pre_native_atlas"
+  ],
+  "publication_gates": {
+    "bianchi_evidence_claim": "fail_program_theorem_only",
+    "family_identification_claim": "fail_blocked_pre_native_atlas"
+  },
+  "required_gates": [
+    "gate_test_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "schema_version": "bass.egs2_egs3_theorem_figure.v1",
+  "sky_support_status": "not_directional",
+  "source": {
+    "beta": [
+      0.0002,
+      0.0005,
+      0.001,
+      0.0015,
+      0.002,
+      0.0025,
+      0.003
+    ],
+    "covariance_inflation": [
+      1.0,
+      1.0000062189054726,
+      1.0000980392156862,
+      1.0004844497607654,
+      1.0014814814814814,
+      1.0034722222222223,
+      1.006864406779661,
+      1.0120532128514057,
+      1.0193939393939393,
+      1.0291859430604982,
+      1.0416666666666667,
+      1.0570132398753893,
+      1.0753488372093023,
+      1.0967513550135501,
+      1.1212626262626262,
+      1.1488970588235294,
+      1.1796491228070176,
+      1.2134994887525563,
+      1.2504198473282442
+    ],
+    "fpr_deprojected": [
+      0.0455,
+      0.045,
+      0.042,
+      0.03925,
+      0.0415,
+      0.04375,
+      0.04575
+    ],
+    "fpr_naive": [
+      0.0715,
+      0.29625,
+      0.999,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "nominal_fpr": 0.05,
+    "rho": [
+      0.0,
+      0.05,
+      0.1,
+      0.15000000000000002,
+      0.2,
+      0.25,
+      0.30000000000000004,
+      0.35000000000000003,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6000000000000001,
+      0.65,
+      0.7000000000000001,
+      0.75,
+      0.8,
+      0.8500000000000001,
+      0.9
+    ],
+    "theorem_id": "EGS3-C"
+  },
+  "source_json_path": "figures/current/fig_egs3_c_deprojection.source.json",
+  "statistics_definitions": {
+    "program": "egs2_egs3_extension",
+    "theorem_id": "EGS3-C"
+  },
+  "theorem_id": "EGS3-C",
+  "theorem_title": "Kinematic deprojection of the observer-boost quadrupole",
+  "title": "Kinematic deprojection of the observer-boost quadrupole",
+  "transfer_source": "none"
+}

@@ -53,6 +53,7 @@ egs3-experiments:
 egs3-wolfram:
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_bracket_constants.wls --out $(REPO)/docs/generated/egs3_bracket_constants_proof.json
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_psd_cone.wls --out $(REPO)/docs/generated/egs3_psd_cone_proof.json
+	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_boost_tilt_separation.wls --out $(REPO)/docs/generated/egs3_boost_tilt_separation_proof.json
 
 ## PAPER-A: identifiability / congruence-kinematics gates + PAPER-A symbolic cores.
 paper-a-gates:

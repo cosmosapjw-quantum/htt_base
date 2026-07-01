@@ -126,6 +126,38 @@
     },
     {
       "axis": "math_stat",
+      "evidence": "egs3-gates C1; wolfram egs3_boost_tilt_separation (PASS); fig_egs3_c_deprojection",
+      "key_result": "alpha=(4/9)T0^2 N2/(kappaT^2 R_sigma), beta-independent; eps-normalisation value 1.0 (doppler_boost.py:94 eps1^2 anchor)",
+      "statement": "Kinematic deprojection: a closed-form alpha makes the low-ell shear reading immune to the observer-boost beta^2 quadrupole; Sigma_tilde^2=Sigma^2-alpha(Omega_tilt)^2 -> 0 on a pure-boost sky and preserves genuine shear (estimator property, not a detection; Sigma^2 stays partial)",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-C1"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates C2; wolfram egs3_boost_tilt_separation (PASS)",
+      "key_result": "offdiag ratio at 2x beta = 4.0 (== beta^2); inflation=1/(1-r^2)",
+      "statement": "Coupled Fisher: the same velocity sources both the boost quadrupole and the tilt, so F_{Sigma2,Omega_tilt} is nonzero and scales as beta^2; the Sigma^2 covariance inflates by 1/(1-r^2) and returns to 1 as beta->0",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-C2"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates C3; wolfram egs3_boost_tilt_separation (PASS); fig_egs3_c_deprojection",
+      "key_result": "generic rank 2 separable; aligned rank 1 degenerate",
+      "statement": "Boost/tilt separation identifiability: the augmented response is rank 2 generically and DEGENERATE iff the boost axis is aligned with the shear principal axis (Gram determinant 1-P2(cos t)^2)",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-C3"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates C4; fig_egs3_c_deprojection",
+      "key_result": "FPR naive 0.999 -> deprojected 0.042; genuine-shear coverage 0.70",
+      "statement": "Injection-recovery witness (moment-level synthetic; no map, no native low-ell solver, no real data): the naive Sigma^2 false-positive-rate is high on a pure-boost sky, the deprojected Sigma_tilde^2 FPR is nominal, and genuine shear is recovered unbiased and covered",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-C4"
+    },
+    {
+      "axis": "math_stat",
       "evidence": "egs3-gates PSD P1-P4; wolfram egs3_psd_cone (PASS); fig_egs3_psd_cone",
       "key_result": "bit-identical True; rank 2; convex cone True; status PASS",
       "statement": "PSD-cone redesign: x_C = tr(C M) for M=diag(g)>=0; admissible set is the convex PSD cone; rank-2 reachable eigen-directions; cone-shell bracket excludes the FLRW vertex",
@@ -162,7 +194,7 @@
     "measured": 1,
     "measured_no_go": 1,
     "measured_partial": 1,
-    "proven_gate": 8,
+    "proven_gate": 12,
     "proven_symbolic": 6
   }
 }

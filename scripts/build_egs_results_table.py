@@ -45,6 +45,7 @@ def _rows() -> list[dict]:
     a = egs3.get("axis_a", {})
     b = egs3.get("axis_b", {})
     p = egs3.get("axis_psd", {})
+    c = egs3.get("axis_c", {})
     nt2a = egs2.get("NT2_A1_A2_fisher_floor", {})
     nt2b3 = egs2.get("NT2_B3_blind_sector", {})
     k1 = egs2.get("BLOCK_K1_e2e_maxscan", {})
@@ -97,6 +98,18 @@ def _rows() -> list[dict]:
           "wolfram egs3 bracket; egs2-gates NT2-B1; fig_egs2_nt2b1_bracket"),
         r("EGS3-B4", GR, "Covariant two-sided-bracket constants: nondegeneracy condition C_up*kappa*(1+R) > 1 (satisfied by kappa=4/21, C_up=9)",
           "12/7 > 1", "proven_symbolic", "wolfram egs3_bracket_constants (PASS)"),
+        r("EGS3-C1", MATH, "Kinematic deprojection: a closed-form alpha makes the low-ell shear reading immune to the observer-boost beta^2 quadrupole; Sigma_tilde^2=Sigma^2-alpha(Omega_tilt)^2 -> 0 on a pure-boost sky and preserves genuine shear (estimator property, not a detection; Sigma^2 stays partial)",
+          (f"alpha=(4/9)T0^2 N2/(kappaT^2 R_sigma), beta-independent; eps-normalisation value {c.get('C1_deprojection_alpha',{}).get('eps_normalisation_value','?')} (doppler_boost.py:94 eps1^2 anchor)"),
+          "proven_gate", "egs3-gates C1; wolfram egs3_boost_tilt_separation (PASS); fig_egs3_c_deprojection"),
+        r("EGS3-C2", MATH, "Coupled Fisher: the same velocity sources both the boost quadrupole and the tilt, so F_{Sigma2,Omega_tilt} is nonzero and scales as beta^2; the Sigma^2 covariance inflates by 1/(1-r^2) and returns to 1 as beta->0",
+          (f"offdiag ratio at 2x beta = {c.get('C2_coupled_fisher',{}).get('offdiag_ratio_2x','?')} (== beta^2); inflation=1/(1-r^2)"),
+          "proven_gate", "egs3-gates C2; wolfram egs3_boost_tilt_separation (PASS)"),
+        r("EGS3-C3", MATH, "Boost/tilt separation identifiability: the augmented response is rank 2 generically and DEGENERATE iff the boost axis is aligned with the shear principal axis (Gram determinant 1-P2(cos t)^2)",
+          (f"generic rank {c.get('C3_identifiability',{}).get('generic_rank','?')} separable; aligned rank {c.get('C3_identifiability',{}).get('aligned_rank','?')} degenerate"),
+          "proven_gate", "egs3-gates C3; wolfram egs3_boost_tilt_separation (PASS); fig_egs3_c_deprojection"),
+        r("EGS3-C4", MATH, "Injection-recovery witness (moment-level synthetic; no map, no native low-ell solver, no real data): the naive Sigma^2 false-positive-rate is high on a pure-boost sky, the deprojected Sigma_tilde^2 FPR is nominal, and genuine shear is recovered unbiased and covered",
+          (f"FPR naive {c.get('C4_injection_recovery',{}).get('fpr_naive_pure_boost',0):.3f} -> deprojected {c.get('C4_injection_recovery',{}).get('fpr_deprojected_pure_boost',0):.3f}; genuine-shear coverage {c.get('C4_injection_recovery',{}).get('genuine_shear_coverage',0):.2f}"),
+          "proven_gate", "egs3-gates C4; fig_egs3_c_deprojection"),
         r("EGS3-PSD", MATH, "PSD-cone redesign: x_C = tr(C M) for M=diag(g)>=0; admissible set is the convex PSD cone; rank-2 reachable eigen-directions; cone-shell bracket excludes the FLRW vertex",
           f"bit-identical {p.get('bit_identical','?')}; rank {p.get('reachable_rank','?')}; convex cone {p.get('convex_cone','?')}; status {psd.get('status','?')}",
           "proven_symbolic", "egs3-gates PSD P1-P4; wolfram egs3_psd_cone (PASS); fig_egs3_psd_cone"),

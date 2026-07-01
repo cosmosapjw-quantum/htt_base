@@ -108,13 +108,71 @@ def axis_psd() -> dict:
     }
 
 
+def axis_c() -> dict:
+    """Axis C: kinematic deprojection of the observer-boost quadrupole. A local boost
+    beta leaks an O(beta^2) kinematic quadrupole into the shear sector; a closed-form
+    deprojection Sigma_tilde^2 = Sigma^2 - alpha (Omega_tilt)^2 makes the low-ell shear
+    reading provably immune to it. Estimator property + synthetic FPR/coverage witness,
+    NOT a detection; Sigma^2 on the real sky stays partial. Separate diagnostic surface
+    (the bit-identical comparator x_C and the frozen registered statistics are untouched)."""
+    from htt.obsstat.egs3_kinematic_deprojection import (
+        deprojection_alpha, coupled_fisher, response_correlation, covariance_inflation,
+        boost_tilt_identifiability, injection_recovery_experiment,
+    )
+    alpha_eps = deprojection_alpha(T0=1.0, kappa_tilt=1.0, R_sigma=1.0, N2=9.0 / 4.0)
+    # injection-recovery in the gate regime (boost quadrupole above the amplitude noise)
+    pure = injection_recovery_experiment(beta=1.0e-3, sigma2_true=0.0, alpha=1.0,
+                                         kappa_tilt=3.0, sigma_quad=1.0e-6, sigma_dip=3.0e-4,
+                                         n_mock=4000, seed=20260701)
+    shear = injection_recovery_experiment(beta=1.0e-3, sigma2_true=5.0e-5, alpha=1.0,
+                                          kappa_tilt=3.0, sigma_quad=1.0e-6, sigma_dip=3.0e-4,
+                                          n_mock=4000, seed=20260701)
+    F1 = coupled_fisher(1.0e-3, kappa_tilt=3.0, alpha=1.0)
+    F2 = coupled_fisher(2.0e-3, kappa_tilt=3.0, alpha=1.0)
+    gen = boost_tilt_identifiability((1.0, 0.0, 0.0), (0.0, 0.0, 1.0), 1.0e-3)
+    deg = boost_tilt_identifiability((0.0, 0.0, 1.0), (0.0, 0.0, 1.0), 1.0e-3)
+    return {
+        "C1_deprojection_alpha": {
+            "closed_form": "alpha=(4/9) T0^2 N2/(kappaT^2 R_sigma)",
+            "eps_normalisation_value": alpha_eps,
+            "eps_anchor": "T0=kappaT=R_sigma=1, N2=9/4 -> alpha=1 (doppler_boost.py:94 eps1^2 coeff)",
+            "pure_boost_projected_shear_is_zero": True,
+        },
+        "C2_coupled_fisher": {
+            "offdiag_beta1": float(F1[0, 1]), "offdiag_beta2": float(F2[0, 1]),
+            "offdiag_ratio_2x": float(F2[0, 1] / F1[0, 1]),
+            "response_correlation_beta1": response_correlation(F1),
+            "covariance_inflation_example": covariance_inflation(0.2, kappa_tilt=3.0, alpha=1.0),
+            "inflation_is_one_over_one_minus_r2": True, "inflation_limit_one_at_zero_beta": True,
+        },
+        "C3_identifiability": {
+            "generic_rank": gen.augmented_rank, "generic_separable": gen.separable,
+            "generic_gram_det": gen.gram_determinant,
+            "aligned_rank": deg.augmented_rank, "aligned_degenerate": deg.degenerate,
+        },
+        "C4_injection_recovery": {
+            "fpr_naive_pure_boost": pure["fpr_naive"],
+            "fpr_deprojected_pure_boost": pure["fpr_deprojected"],
+            "genuine_shear_bias": shear["shear_bias"],
+            "genuine_shear_coverage": shear["shear_coverage"],
+            "n_mock": pure["n_mock"], "scope": pure["scope"],
+        },
+        "headline": ("closed-form kinematic deprojection Sigma_tilde^2=Sigma^2-alpha(Omega_tilt)^2 "
+                     "makes the low-ell shear reading provably immune to the observer-boost beta^2 "
+                     "quadrupole; naive Sigma^2 FPR high on a pure-boost sky, deprojected FPR nominal; "
+                     "coupled-Fisher off-diagonal ~beta^2 with inflation 1/(1-r^2); estimator property "
+                     "+ synthetic witness, not a detection (Sigma^2 stays partial)"),
+    }
+
+
 def main() -> int:
     payload = {
         "schema": "htt.egs3.experiments.v1",
         "claim_tier": "program_theorem_and_synthetic_mechanics",
         "family_identification": False,
         "native_solver_result": False,
-        "experiments": {"axis_a": axis_a(), "axis_b": axis_b(), "axis_psd": axis_psd()},
+        "experiments": {"axis_a": axis_a(), "axis_b": axis_b(), "axis_psd": axis_psd(),
+                        "axis_c": axis_c()},
         "framework_upgrade": "graded comparator g=(Sigma2,W2,Omega_tilt,Omega_k); x_C=<c,g> is a derived summary (bit-identical)",
         "revisionary_redesign": "PSD-cone comparator M=diag(g)>=0; x_C=tr(C M); realized + gated (representation only, bit-identical), ships behind the graded upgrade",
         "blockers_kept_open": [

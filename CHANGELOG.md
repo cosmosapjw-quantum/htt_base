@@ -7,6 +7,41 @@
 
 ## [Unreleased]
 
+### EGS3 Axis C — kinematic deprojection of the observer-boost quadrupole (rev-r141, 2026-07-01)
+
+Implements the two formalism upgrades that the rev-r140 note only specified, turning the
+"Leaky Universe" vulnerability into a proven, gate- and Wolfram-verified, injection-recovery-
+validated methods result: a closed-form kinematic deprojection that makes the low-ell shear
+reading provably immune to observer-boost contamination. New module
+`htt/obsstat/egs3_kinematic_deprojection.py` (a SEPARATE diagnostic surface — never touches
+the bit-identical comparator x_C=tr(C M) or the frozen registered 6-statistic set, and adds
+no registered statistic): `deprojection_alpha` (alpha = (4/9) T0^2 N2/(kappa_T^2 R_sigma),
+beta-independent; = 1 in the registered eps-normalisation, matching the eps1^2 coefficient in
+`doppler_boost.py:94` and the a[2]=v^2 induced quadrupole in `boost_coefficients.py:135`,
+Paper I Prop 5); `projected_shear` (Sigma_tilde^2 = Sigma^2 - alpha (Omega_tilt)^2 -> 0 on a
+pure-boost sky, = Sigma^2 when Omega_tilt=0); `coupled_fisher`/`covariance_inflation`
+(F_{Sigma2,Omega_tilt} ~ beta^2; inflation 1/(1-r^2) -> 1 as beta->0); `boost_tilt_identifiability`
+(Gram det 1-P2(cos t)^2; separable rank 2 generically, degenerate iff boost axis || shear
+axis); `injection_recovery_experiment` (deterministic moment-level, no map/solver/data:
+naive Sigma^2 FPR ~0.999 on a pure-boost sky vs deprojected ~0.042 at nominal; genuine shear
+recovered unbiased, coverage ~0.70). Gate `research_gates/egs3/tests/test_egs3_axis_c_boost_tilt.py`
+(C1-C6, 19 tests incl. a CoVe adversarial beta/noise/axis sweep and a bit-identity guard);
+`make egs3-gates` now 48 tests. Wolfram `wolfram/egs3_boost_tilt_separation.wls` (10/10 checks
+PASS: mu^2 Legendre split, alpha closed form, deprojection zeroes-boost/preserves-shear, beta^2
+off-diagonal, 1/(1-r^2) inflation, Gram separability) wired into `egs3-wolfram`. `run_egs3_experiments.py`
+gains `axis_c()`; results table `docs/generated/egs_results_table.{json,md}` now 21 rows
+(EGS3-C1..C4; 12 proven_gate total). Figure `fig_egs3_c_deprojection` (FPR naive-vs-deprojected
+vs beta + covariance inflation vs coupling) + deterministic sidecars. Ledger claim
+`egs3.kinematic_deprojection` (C4, DERIVED). Report §8 Axis-C subsection + gallery figure +
+four table rows; root note `htt_local_global_formalism.tex` §7/envelope upgraded from
+"recommended" to "implemented + gate-validated + Wolfram-verified". Anti-tone-down: the headline
+is a proven ESTIMATOR PROPERTY + a validated FPR + a covariance-inflation model — NOT a shear
+detection; Sigma^2 on the real sky stays `partial` until data lands, at which point
+Sigma_tilde^2 supplies a boost-immune shear reading. Diagnostic-only throughout; canonical K1
+GRF artifact + v2 frozen statistics byte-identical; claim linters clean; `latexmk` exit 0,
+report 24 pp / root 5 pp, 0 undefined refs. Built via CRAG/self-ask/CoVe/chain-of-code
+(every analytic number recomputed two ways in the gate).
+
 ### Local-boost vs global-tilt statistical-formalism note (rev-r140, 2026-07-01)
 
 Standalone LaTeX note at repo root, `htt_local_global_formalism.{tex,pdf}` (5 pp), giving a

@@ -256,8 +256,32 @@ def _sources() -> dict[str, dict]:
         "excludes_vertex": cs.excludes_vertex,
     }
 
+    # --- C kinematic deprojection of the observer-boost quadrupole ------
+    from htt.obsstat.egs3_kinematic_deprojection import (
+        injection_recovery_experiment, covariance_inflation,
+    )
+    betas = [2.0e-4, 5.0e-4, 1.0e-3, 1.5e-3, 2.0e-3, 2.5e-3, 3.0e-3]
+    fpr_naive, fpr_deproj = [], []
+    for bta in betas:
+        rr = injection_recovery_experiment(beta=bta, sigma2_true=0.0, alpha=1.0,
+                                           kappa_tilt=3.0, sigma_quad=1.0e-6, sigma_dip=3.0e-4,
+                                           n_mock=4000, seed=20260701)
+        fpr_naive.append(rr["fpr_naive"]); fpr_deproj.append(rr["fpr_deprojected"])
+    # covariance inflation 1/(1-r^2) vs the boost-tilt response coupling rho = kappa_tilt*beta
+    rho_grid = list(np.linspace(0.0, 0.9, 19))
+    inflation = [covariance_inflation(rho, kappa_tilt=1.0, alpha=1.0) for rho in rho_grid]
+    c = {
+        "theorem_id": "EGS3-C",
+        "beta": betas,
+        "fpr_naive": fpr_naive,
+        "fpr_deprojected": fpr_deproj,
+        "nominal_fpr": 0.05,
+        "rho": rho_grid,
+        "covariance_inflation": inflation,
+    }
+
     return {"a1": a1, "a3": a3, "a1_floor": a1_floor, "b1": b1, "b2": b2,
-            "b3": b3, "nt2b1": nt2b1, "psd": psd}
+            "b3": b3, "nt2b1": nt2b1, "psd": psd, "c": c}
 
 
 def _render(src: dict) -> None:
@@ -374,6 +398,26 @@ def _render(src: dict) -> None:
     fig.suptitle(f"EGS3 PSD-cone redesign: x_C=tr(C M) bit-identical = {ps['bit_identical']}", fontsize=9)
     fig.tight_layout(); fig.savefig(FIG_DIR / "fig_egs3_psd_cone.png", dpi=140); plt.close(fig)
 
+    # C kinematic deprojection: FPR (naive vs deprojected) + covariance inflation
+    cc = src["c"]
+    fig, (axa, axb) = plt.subplots(1, 2, figsize=(7.4, 3.6))
+    axa.plot(cc["beta"], cc["fpr_naive"], marker="o", color=red, label="naive Σ² (reads all quad. power as shear)")
+    axa.plot(cc["beta"], cc["fpr_deprojected"], marker="s", color=green, label="deprojected Σ̃² (boost-immune)")
+    axa.axhline(cc["nominal_fpr"], color=grey, ls="--", label=f"nominal {cc['nominal_fpr']:.2f}")
+    axa.set_xlabel("boost β"); axa.set_ylabel("false-positive rate (pure bulk-flow sky)")
+    axa.set_ylim(-0.03, 1.03)
+    axa.set_title("EGS3-C4: boost→shear false positive\nkilled by the kinematic deprojection")
+    axa.legend(fontsize=7, loc="center right")
+    axb.plot(cc["rho"], cc["covariance_inflation"], color=blue, lw=2)
+    axb.axhline(1.0, color=grey, ls="--", label="no coupling (β→0)")
+    axb.set_xlabel("boost–tilt response coupling ρ = √α·κ_T·β")
+    axb.set_ylabel("Σ² covariance inflation  1/(1−r²)")
+    axb.set_title("EGS3-C2: coupled-Fisher inflation\n→ 1 as β → 0")
+    axb.legend(fontsize=7, loc="upper left")
+    fig.suptitle("EGS3-C: kinematic deprojection makes the low-ℓ shear reading boost-immune "
+                 "(estimator property; Σ² stays partial)", fontsize=8)
+    fig.tight_layout(); fig.savefig(FIG_DIR / "fig_egs3_c_deprojection.png", dpi=140); plt.close(fig)
+
 
 _SPECS = [
     ("fig_egs3_a1_graded_rank", "EGS3-A1", "Graded comparator identifiability rank", "a1"),
@@ -384,6 +428,7 @@ _SPECS = [
     ("fig_egs3_b3_vorticity", "EGS3-B3", "Vorticity re-opening: radial blind, transverse channel", "b3"),
     ("fig_egs2_nt2b1_bracket", "NT2-B1", "Two-sided shear/F bracket excluding zero", "nt2b1"),
     ("fig_egs3_psd_cone", "EGS3-PSD", "PSD-cone comparator redesign", "psd"),
+    ("fig_egs3_c_deprojection", "EGS3-C", "Kinematic deprojection of the observer-boost quadrupole", "c"),
 ]
 
 
