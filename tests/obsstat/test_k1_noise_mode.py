@@ -130,12 +130,13 @@ def test_full_e2e_report_runs_and_is_exit_gate_labelled(tmp_path):
     gp = rep["result"]["global_p"]
     assert 0.0 < gp <= 1.0
     assert gp >= min(rep["result"]["local_p"].values())
-    # paired provenance: 4 CMB sims, noise cycled (i mod 3), both hashed
-    assert rep["e2e_sims"]["n_used"] == 4
-    assert rep["e2e_sims"]["pairing"] == "cmb_mc[i] + noise_mc[i mod n_noise]"
+    # paired provenance: 4 CMB sims, noise cycled by id (id mod 3), both hashed
+    assert rep["e2e_sims"]["n_cmb_used"] == 4
+    assert "id mod n_noise" in rep["e2e_sims"]["pairing"]
     files = rep["e2e_sims"]["files"]
     assert len(files) == 4
-    assert files[0]["noise_file"] == files[3]["noise_file"]   # 0 and 3 -> same noise (mod 3)
+    assert files[0]["noise_file"] == files[3]["noise_file"]   # id 0 and 3 -> same noise (mod 3)
+    assert all(f["cmb_id"] == i for i, f in enumerate(files))  # id-parsed order
     assert all(f["cmb_hash"].startswith("sha256:") and f["noise_hash"].startswith("sha256:") for f in files)
 
 
@@ -144,7 +145,52 @@ def test_full_e2e_max_sims_caps(tmp_path):
     cmb = _write_sims(tmp_path / "cmb", 6, 50.0, "cmb", 3)
     noise = _write_sims(tmp_path / "noise", 6, 25.0, "noise", 4)
     rep = k1.build_e2e_full_report(cmb, noise, method="smica", max_sims=2)
-    assert rep["e2e_sims"]["n_used"] == 2
+    assert rep["e2e_sims"]["n_cmb_used"] == 2
+
+
+def test_parse_mc_id_handles_real_and_fixture_names():
+    assert k1._parse_mc_id(Path("dx12_v3_smica_cmb_mc_00970_raw.fits")) == 970
+    assert k1._parse_mc_id(Path("dx12_v3_smica_noise_mc_00042_raw.fits.gz")) == 42
+    assert k1._parse_mc_id(Path("cmb_mc_00007.npz")) == 7
+    with pytest.raises(ValueError):
+        k1._parse_mc_id(Path("not_a_sim.fits"))
+
+
+def test_id_based_pairing_survives_a_missing_cmb_realization(tmp_path):
+    # emulate the real defect: CMB id 00003 missing. Positional pairing would shift
+    # every later CMB; id-based pairing must keep noise = cmb_id mod n_noise intact.
+    cmb = tmp_path / "cmb"; cmb.mkdir()
+    npix = k1.rm.hp.nside2npix(NSIDE_FIX)
+    rng = np.random.default_rng(7)
+    present = [0, 1, 2, 4, 5]                    # 3 is missing (like 00970)
+    for i in present:
+        np.savez(cmb / f"cmb_mc_{i:05d}.npz", I=rng.normal(size=npix), unit="uK")
+    noise = _write_sims(tmp_path / "noise", 3, 25.0, "noise", 8)
+    _cmb, pairs, n_noise = k1._pair_cmb_noise_by_id(cmb, noise, max_sims=1000)
+    assert n_noise == 3
+    got = {cmb_id: noise_id for _cf, cmb_id, _nf, noise_id in pairs}
+    assert got == {0: 0, 1: 1, 2: 2, 4: 1, 5: 2}   # noise = cmb_id mod 3, gap-robust
+    assert 3 not in got                             # missing CMB simply absent, no shift
+
+
+@skip_no_map
+def test_full_e2e_records_missing_and_pla_status(monkeypatch, tmp_path):
+    _patch_precision_inputs(monkeypatch, tmp_path, masked=False)
+    cmb = tmp_path / "cmb"; cmb.mkdir()
+    npix = k1.rm.hp.nside2npix(NSIDE_FIX)
+    rng = np.random.default_rng(5)
+    for i in [0, 1, 2, 4]:                          # id 3 missing within the range
+        np.savez(cmb / f"cmb_mc_{i:05d}.npz", I=rng.normal(size=npix), unit="uK")
+    noise = _write_sims(tmp_path / "noise", 3, 25.0, "noise", 6)
+    rep = k1.build_e2e_full_report(cmb, noise, "smica", 1000, precision=_cfg(False), jobs=1)
+    e = rep["e2e_sims"]
+    assert e["n_cmb_used"] == 4
+    assert e["nominal_cmb"] == 1000 and e["nominal_noise"] == 300
+    assert e["known_missing_cmb_ids"] == [970]
+    assert e["observed_cmb_id_gaps"] == [3]         # detected the in-range gap
+    assert e["pla_confirmation"] in ("pending", "confirmed_absent")
+    assert "usable CMB MC" in rep["headline"]
+    assert "4 usable CMB MC" in rep["headline"]     # reports the actual usable count
 
 
 # --------------------------------------------------------------------------- #

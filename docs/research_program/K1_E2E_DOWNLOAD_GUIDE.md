@@ -37,7 +37,8 @@ Pick **one** matched route. The observed map + common mask are already local
 From the PLA "Simulations" interface, the FFP10 component-separated CMB+noise MC for the
 **same method as the observed map** (SMICA):
 
-- `dx12_v3_smica_cmb_mc_<00000..00999>_raw.fits` — 1000 CMB realizations (signal);
+- `dx12_v3_smica_cmb_mc_<00000..00999>_raw.fits` — nominally 1000 CMB realizations
+  (signal); **999 usable** (`00970` known missing/corrupt on the PLA, confirmation pending);
 - `dx12_v3_smica_noise_mc_<00000..00299>_raw.fits` — 300 noise/systematics realizations.
 
 The honest E2E null is **CMB + noise** per realization (add a noise MC to each CMB MC, or
@@ -59,8 +60,14 @@ the `egs_results_table` K1 row `measured_partial → measured` and closes
 
 **Download (PLA portal, SMICA to match the observed map):**
 
-- `dx12_v3_smica_cmb_mc_<00000..00999>_raw.fits` — 1000 CMB (signal) MC;
+- `dx12_v3_smica_cmb_mc_<00000..00999>_raw.fits` — nominally 1000 CMB (signal) MC,
+  of which **999 are usable**: realization `00970` is a known missing/corrupt file on
+  the PLA (ESA/PLA confirmation pending);
 - `dx12_v3_smica_noise_mc_<00000..00299>_raw.fits` — 300 noise/systematics MC.
+
+The runner pairs **by parsed MC id** (`noise[cmb_id mod n_noise]`), so the missing
+`00970` leaves a single absent realization instead of misaligning every later pairing;
+the analysed ensemble is the **PLA-available** set (999 usable CMB MC + 300 noise MC).
 
 Full IQU Nside=2048 is ~1 TB (fits a 2 TB disk with headroom for the working set).
 You can keep all raw FITS this time, or still stream-downgrade (below) to keep the
@@ -87,8 +94,11 @@ PYTHONPATH=. venv/bin/python scripts/k1_global_maxscan.py \
 
 It downgrades each CMB+noise pair on read to NSIDE=16, computes the six registered
 statistics, and runs the frozen max-scan against the real SMICA observed 6-vector.
-Pairing is `cmb_mc[i] + noise_mc[i mod n_noise]` (300 noise cycled across 1000 CMB,
-matching the Planck-2018 permutation scheme). Repeat with `--method commander` for
+Pairing is **by parsed MC id**, `cmb_mc[id] + noise_mc[id mod n_noise]` (300 noise
+cycled across the CMB set, matching the Planck-2018 permutation scheme); this is
+robust to the known missing realization `00970` (999 usable CMB MC), which simply
+leaves a single absent realization rather than shifting later pairings. Repeat with
+`--method commander` for
 the cross-check; **report the two side by side, do not average**. Then flip the K1
 row per "Exit gate" below. The canonical GRF artifact and the route-4 noise-only
 artifact are left untouched (separate files).
@@ -127,7 +137,7 @@ statistic set (own `config_hash`/`statistic_set` tag) with three levers:
 Threads are pinned to 1/worker (no oversubscription) and the pool uses `spawn`
 (avoids the fork-after-OpenMP deadlock); `parallel == serial` is gate-tested.
 
-**Wall-time (measured per-map cost ≈ 3 s at v2; full 1000 CMB + 300 noise; noise
+**Wall-time (measured per-map cost ≈ 3 s at v2; PLA-available 999 CMB + 300 noise; noise
 pre-downgraded once and cached):**
 
 | config | serial | `--jobs 12` (5900X) |
@@ -171,7 +181,7 @@ Compounded footprints (stream-downgraded, so stored ≈ a few hundred KB either 
 
 | Route | Files | Transfer (I-only / IQU) | Runner |
 | --- | ---: | --- | --- |
-| **Full Route A (1000 CMB + 300 noise)** | **1300** | **~1 TB (IQU)** | `--cmb-mc-dir --noise-mc-dir` |
+| **Full Route A (999 usable CMB + 300 noise)** | **1299** | **~1 TB (IQU)** | `--cmb-mc-dir --noise-mc-dir` |
 | 300 CMB + 300 noise, T-only, streamed | 600 | ~85 GB / ~250 GB | `--cmb-mc-dir --noise-mc-dir --max-sims 300` |
 | 300 noise-only + local ΛCDM, T-only, streamed | 300 | ~40 GB / ~125 GB | `--noise-mc-dir` (alone) |
 
@@ -196,7 +206,7 @@ workdir/raw/planck_ffp10/smica/
 
 The runner globs `*.fits`/`*.fits.gz` (and `*.npz`) sorted by name in each dir, so
 keep the CMB MC and noise MC in the two separate subdirs above; it pairs them
-`cmb_mc[i] + noise_mc[i mod n_noise]`.
+`cmb_mc[id] + noise_mc[id mod n_noise]` (by parsed MC id; gap-robust to the missing `00970`).
 
 Record, per simulation: `simulation_id`, `release_family` (FFP10/NPIPE_PR4),
 `component_method` (SMICA), `cmb_path`, `noise_path`, `beam_fwhm_arcmin`, `input_nside`,

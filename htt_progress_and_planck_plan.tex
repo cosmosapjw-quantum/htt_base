@@ -201,14 +201,19 @@ The acquisition is therefore manual; everything downstream is implemented.
 The recommended route (matching the SMICA observed map) is the FFP10
 component-separated simulation library:
 \begin{itemize}
-\item \code{dx12\_v3\_smica\_cmb\_mc\_<00000..00999>\_raw.fits} --- 1000 CMB (signal) MC;
+\item \code{dx12\_v3\_smica\_cmb\_mc\_<00000..00999>\_raw.fits} --- nominally 1000 CMB
+(signal) MC, of which \textbf{999 are usable}: realization \code{00970} is a known
+missing/corrupt file on the PLA (ESA/PLA confirmation pending);
 \item \code{dx12\_v3\_smica\_noise\_mc\_<00000..00299>\_raw.fits} --- 300 noise/systematics MC.
 \end{itemize}
-The honest E2E null is CMB$+$noise per realization, paired
-$\mathrm{cmb}[i]+\mathrm{noise}[i \bmod n_{\mathrm{noise}}]$ (300 noise cycled
-across 1000 CMB, matching the Planck-2018 permutation scheme). At full IQU
-$N_{\mathrm{side}}=2048$ this is $\sim$1\,TB; a dedicated 2\,TB nvme accommodates
-the full set. The observed maps and common temperature mask are already local.
+The E2E null is CMB$+$noise, paired \emph{by parsed MC id},
+$\mathrm{cmb}[\mathrm{id}]+\mathrm{noise}[\mathrm{id}\bmod n_{\mathrm{noise}}]$
+(the 300 noise MC cycled across the CMB set, matching the Planck-2018 permutation
+scheme). Id-based pairing is used precisely so the missing \code{00970} leaves a
+single absent realization rather than misaligning every later pairing. The
+ensemble is therefore the \textbf{PLA-available} set (999 usable CMB MC $+$ 300
+noise MC), not all 1000. At full IQU $N_{\mathrm{side}}=2048$ this is
+$\sim$1\,TB; a dedicated 2\,TB nvme accommodates the full set. The observed maps and common temperature mask are already local.
 Raw maps stay outside version control; only compact summaries and provenance are
 committed. A per-simulation manifest records map IDs, URLs, SHA-256, beam, input
 $N_{\mathrm{side}}$, analysis $N_{\mathrm{side}}$, mask, and method.
@@ -292,14 +297,14 @@ $N_{\mathrm{side}}$ & $w_2$ & $w_6$ & $w_8$ \\
 Parallelism (\code{--jobs}) fans the per-simulation loop over processes
 (\code{spawn} context with one thread per worker, avoiding the
 fork-after-OpenMP deadlock); the noise set is pre-downgraded once and cached.
-The measured per-map cost at the v2 configuration is $\approx 3$\,s; the full
-1000$+$300 ensemble is I/O-bound (a $\sim$3.5\,min nvme read floor), giving the
+The measured per-map cost at the v2 configuration is $\approx 3$\,s; the
+PLA-available 999$+$300 ensemble is I/O-bound (a $\sim$3.5\,min nvme read floor), giving the
 wall-times of Table~\ref{tab:walltime}. Peak memory is $\approx 1$\,GB per
 worker, so 12 workers use $\approx 12$\,GB and 24 use $\approx 24$\,GB --- well
 within 64\,GB. No additional RAM is required.
 
 \begin{table}[htbp]\centering\small
-\caption{Wall-time (full 1000 CMB $+$ 300 noise; noise pre-downgraded and cached).}
+\caption{Wall-time (PLA-available 999 CMB $+$ 300 noise; noise pre-downgraded and cached).}
 \label{tab:walltime}
 \begin{tabular}{@{}lcc@{}}
 \toprule

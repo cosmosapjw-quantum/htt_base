@@ -28,13 +28,14 @@ geometry, or native-solver claim.
 Long-run (docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md), two modes, each a
 SEPARATE artifact so the canonical GRF result is untouched:
 
-  * Route A FULL E2E (the exit gate; needs the full ~1 TB FFP10 download) --
+  * Route A FULL E2E (the exit gate; needs the ~1 TB FFP10 download) --
     ``--cmb-mc-dir <cmb> --noise-mc-dir <noise> [--method] [--max-sims N]``: the
-    matched ensemble of REAL component-separated CMB MC + REAL instrument-noise MC
-    (paired per realization), carrying signal + noise/systematics + the cleaning
-    transfer. This is the null whose exit gate flips K1 measured_partial -> measured
-    and closes BLOCKED_MISSING_PR4_E2E_ACCESS. Writes
-    docs/generated/k1_global_maxscan_e2e_full.json.
+    PLA-available ensemble of REAL component-separated CMB MC + REAL instrument-noise
+    MC, paired BY PARSED MC id (noise[cmb_id mod n_noise]) so the known missing CMB
+    realization 00970 (999 usable of a nominal 1000) does not misalign the pairing;
+    carries signal + noise/systematics + the cleaning transfer. This is the null whose
+    exit gate flips K1 measured_partial -> measured and closes
+    BLOCKED_MISSING_PR4_E2E_ACCESS. Writes docs/generated/k1_global_maxscan_e2e_full.json.
   * Route 4 noise-only (lighter, ~40 GB) -- ``--noise-mc-dir <noise>`` alone: a
     local LambdaCDM signal added to each real noise MC. An UPGRADE of, not a
     replacement for, the full null (no residual foregrounds/systematics, no matched
@@ -61,6 +62,7 @@ import hashlib
 import json
 import multiprocessing as mp
 from pathlib import Path
+import re
 import sys
 
 import numpy as np
@@ -94,6 +96,13 @@ OUT_E2E_FULL_JSON = REPO_ROOT / "docs/generated/k1_global_maxscan_e2e_full.json"
 N_NULL = 2000
 DEFAULT_MAX_NOISE_SIMS = 300
 DEFAULT_MAX_FULL_SIMS = 300   # Planck-2018 anomaly standard; raise to 1000 with full FFP10
+# Nominal FFP10 SMICA library sizes and the registered missing/corrupt CMB realization.
+# The library nominally has 1000 CMB MC (ids 00000..00999) + 300 noise MC (00000..00299);
+# CMB realization 00970 is a known missing/corrupt file on the PLA -> 999 usable CMB MC.
+FFP10_SMICA_NOMINAL_CMB = 1000
+FFP10_SMICA_NOMINAL_NOISE = 300
+KNOWN_MISSING_FFP10_SMICA_CMB = (970,)
+PLA_CONFIRMATION = "pending"   # set to "confirmed_absent" once ESA/PLA confirms 00970
 # max-scan tail direction per statistic: anomaly "lower"->minimise, "upper"->maximise.
 _DIR = {"lower": "low", "upper": "high"}
 
@@ -130,6 +139,44 @@ def _list_sims(sim_dir: Path) -> list[Path]:
 # back-compat alias (rev-r135 name)
 _list_noise_sims = _list_sims
 
+_MC_ID = re.compile(r"_mc_(\d{5})(?:_raw)?\.(?:fits(?:\.gz)?|npz)$")
+
+
+def _parse_mc_id(path: Path) -> int:
+    """Parse the 5-digit Monte-Carlo id from a sim filename
+    (``dx12_v3_<method>_<cmb|noise>_mc_00970_raw.fits[.gz]`` or the ``.npz`` fixture
+    ``..._mc_00970.npz``). Raising on an unparseable name is a deliberate kill switch."""
+    m = _MC_ID.search(path.name)
+    if not m:
+        raise ValueError(f"cannot parse MC id from {path.name}")
+    return int(m.group(1))
+
+
+def _pair_cmb_noise_by_id(cmb_dir: Path, noise_dir: Path, max_sims: int):
+    """Pair each available CMB MC with a noise MC BY PARSED id --- NOT by list
+    position. The Planck FFP10 SMICA library has a known missing/corrupt CMB
+    realization (00970), so positional pairing (``noise[i mod n]``) would silently
+    misalign every CMB after the gap; id-based pairing (``noise[cmb_id mod n_noise]``)
+    is robust to arbitrary gaps. Returns (cmb_paths_used, pairs, n_noise) where each
+    pair is (cmb_path, cmb_id, noise_path, noise_id)."""
+    cmb_paths = sorted(_list_sims(cmb_dir), key=_parse_mc_id)[:max_sims]
+    noise_paths = _list_sims(noise_dir)
+    if not cmb_paths:
+        raise FileNotFoundError(f"no CMB sims (*.fits/*.npz) found in {cmb_dir}")
+    if not noise_paths:
+        raise FileNotFoundError(f"no noise sims (*.fits/*.npz) found in {noise_dir}")
+    noise_by_id = {_parse_mc_id(p): p for p in noise_paths}
+    n_noise = len(noise_by_id)
+    pairs = []
+    for cmb_path in cmb_paths:
+        cmb_id = _parse_mc_id(cmb_path)
+        noise_id = cmb_id % n_noise
+        if noise_id not in noise_by_id:               # gap in the noise set -> stop
+            raise KeyError(f"noise MC id {noise_id:05d} (for CMB {cmb_id:05d}) is absent "
+                           f"in {noise_dir}")
+        pairs.append((cmb_path, cmb_id, noise_by_id[noise_id], noise_id))
+    return cmb_paths, pairs, n_noise
+
 
 def _load_sim_map(path: Path, nside: int = rm.NSIDE) -> np.ndarray:
     """Load one simulation map (CMB MC or noise MC), downgrade-on-read to ``nside``
@@ -158,30 +205,24 @@ _load_noise_sim_map = _load_sim_map
 def _e2e_full_null(cmb_mc_dir: Path, noise_mc_dir: Path, max_sims: int,
                    pix_vectors, cmb_apex):
     """Route-A FULL E2E null (the strongest, what flips K1 measured_partial->measured):
-    for each REAL component-separated CMB MC, add a REAL instrument-noise MC (paired by
-    index, cycling the noise set if fewer noise than CMB sims) and compute the six
-    registered statistics on the CMB+noise map. This is the matched FFP10/NPIPE E2E
-    ensemble: real signal realisation + real noise/systematics + (via the maps) the
-    component-separation transfer -- no local-LambdaCDM stand-in. Method-matched.
+    for each available REAL component-separated CMB MC, add a REAL instrument-noise MC
+    (paired BY PARSED id, ``noise[cmb_id mod n_noise]`` -- robust to the known missing
+    CMB realization 00970) and compute the six registered statistics on the CMB+noise
+    map. Matched FFP10/NPIPE E2E ensemble: real signal + real noise/systematics + (via
+    the maps) the component-separation transfer -- no local-LambdaCDM stand-in.
 
     Returns (null_matrix [S x P], provenance list)."""
     keys = list(rm.TAILS)
-    cmb_files = _list_sims(cmb_mc_dir)[:max_sims]
-    noise_files = _list_sims(noise_mc_dir)
-    if not cmb_files:
-        raise FileNotFoundError(f"no CMB sims (*.fits/*.npz) found in {cmb_mc_dir}")
-    if not noise_files:
-        raise FileNotFoundError(f"no noise sims (*.fits/*.npz) found in {noise_mc_dir}")
+    _cmb, pairs, _n = _pair_cmb_noise_by_id(cmb_mc_dir, noise_mc_dir, max_sims)
     rows: list[list[float]] = []
     provenance: list[dict] = []
-    for i, cf in enumerate(cmb_files):
-        nf = noise_files[i % len(noise_files)]      # cycle noise if fewer than CMB
+    for cf, cmb_id, nf, noise_id in pairs:
         signal = _load_sim_map(cf)
         noise = _load_sim_map(nf)
         stats = rm.compute_map_statistics(signal + noise, pix_vectors, cmb_apex)
         rows.append([float(stats[k]) for k in keys])
-        provenance.append({"cmb_file": cf.name, "cmb_hash": _sha256_file(cf),
-                           "noise_file": nf.name, "noise_hash": _sha256_file(nf)})
+        provenance.append({"cmb_file": cf.name, "cmb_id": cmb_id, "cmb_hash": _sha256_file(cf),
+                           "noise_file": nf.name, "noise_id": noise_id, "noise_hash": _sha256_file(nf)})
     return np.asarray(rows, dtype=float), provenance
 
 
@@ -203,12 +244,12 @@ def _winit(cfg, keep_mask, cmb_apex, noise_cache, cl, seed):
 
 
 def _w_full(task):
-    i, cmb_path = task
+    cmb_id, cmb_path, noise_id = task           # id-based pairing (robust to gaps)
     cfg = _W["cfg"]
     sig = _load_sim_map(Path(cmb_path), cfg.proc_nside)
-    noise = _W["noise"][i % len(_W["noise"])]
+    noise = _W["noise"][noise_id]               # id-keyed cache dict
     stats = precision_map_statistics(sig + noise, _W["apex"], cfg, _W["keep"], _W["pix"])
-    return i, [float(stats[k]) for k in _W["keys"]]
+    return cmb_id, [float(stats[k]) for k in _W["keys"]]
 
 
 def _w_noise(task):
@@ -266,27 +307,24 @@ def _observed_precision(method: str, cfg: PrecisionConfig, keep_mask, cmb_apex):
 
 def _e2e_full_null_precision(cmb_mc_dir, noise_mc_dir, max_sims, cfg, keep_mask,
                              cmb_apex, jobs):
-    cmb_files = _list_sims(cmb_mc_dir)[:max_sims]
+    _cmb, pairs, _n = _pair_cmb_noise_by_id(cmb_mc_dir, noise_mc_dir, max_sims)
     noise_files = _list_sims(noise_mc_dir)
-    if not cmb_files:
-        raise FileNotFoundError(f"no CMB sims (*.fits/*.npz) found in {cmb_mc_dir}")
-    if not noise_files:
-        raise FileNotFoundError(f"no noise sims (*.fits/*.npz) found in {noise_mc_dir}")
-    # pre-downgrade the noise set ONCE (parallel), then cycle it across the CMB MC
+    # pre-downgrade each unique noise sim ONCE, keyed BY id (not position), so the
+    # id-based pairing survives any gap in the CMB set (missing 00970).
     if jobs <= 1:
-        noise_cache = [_load_sim_map(f, cfg.proc_nside) for f in noise_files]
+        noise_cache = {_parse_mc_id(f): _load_sim_map(f, cfg.proc_nside) for f in noise_files}
     else:
         ctx = mp.get_context("spawn")
         with ProcessPoolExecutor(max_workers=jobs, mp_context=ctx) as ex:
-            noise_cache = list(ex.map(
+            downgraded = list(ex.map(
                 _load_noise_one, [(str(f), cfg.proc_nside) for f in noise_files]))
-    tasks = [(i, str(cf)) for i, cf in enumerate(cmb_files)]
+        noise_cache = {_parse_mc_id(f): m for f, m in zip(noise_files, downgraded)}
+    tasks = [(cmb_id, str(cf), noise_id) for cf, cmb_id, _nf, noise_id in pairs]
     rows = _map_parallel(_w_full, tasks,
                          (cfg, keep_mask, cmb_apex, noise_cache, None, rm.SEED), jobs)
-    provenance = [{"cmb_file": cf.name, "cmb_hash": _sha256_file(cf),
-                   "noise_file": noise_files[i % len(noise_files)].name,
-                   "noise_hash": _sha256_file(noise_files[i % len(noise_files)])}
-                  for i, cf in enumerate(cmb_files)]
+    provenance = [{"cmb_file": cf.name, "cmb_id": cmb_id, "cmb_hash": _sha256_file(cf),
+                   "noise_file": nf.name, "noise_id": noise_id, "noise_hash": _sha256_file(nf)}
+                  for cf, cmb_id, nf, noise_id in pairs]
     return rows, provenance
 
 
@@ -467,9 +505,10 @@ def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "s
                           max_sims: int = DEFAULT_MAX_FULL_SIMS,
                           precision: PrecisionConfig | None = None,
                           jobs: int = 1) -> dict:
-    """Route-A FULL E2E long-run: the global max-scan against the matched FFP10/NPIPE
-    end-to-end ensemble -- REAL component-separated CMB MC + REAL instrument-noise MC
-    (paired per realization). This is the strongest null and the one whose exit gate
+    """Route-A FULL E2E long-run: the global max-scan against the PLA-available FFP10
+    SMICA end-to-end ensemble -- REAL component-separated CMB MC + REAL instrument-noise
+    MC (paired by parsed MC id, robust to the known missing CMB realization 00970 ->
+    999 usable CMB MC). This is the strongest null and the one whose exit gate
     flips K1 measured_partial -> measured and closes BLOCKED_MISSING_PR4_E2E_ACCESS:
     it carries the real signal realisation, the real noise/systematics, and (through
     the component-separated maps) the cleaning transfer. Method-matched; writes a
@@ -508,20 +547,32 @@ def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "s
                   "null_model": "ffp10_cmb_plus_noise_e2e"}
     res = calibrate_max_scan(observed, e2e_null, directions)
     config_hash = "sha256:" + hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
+    # availability accounting: what was actually usable vs the nominal library, and any
+    # gaps in the CMB id range on disk (00970 is the registered known missing realization)
+    present_ids = sorted(p["cmb_id"] for p in provenance)
+    observed_gaps = (sorted(set(range(present_ids[0], present_ids[-1] + 1)) - set(present_ids))
+                     if present_ids else [])
+    n_noise_used = len({p["noise_id"] for p in provenance})
     return {
         "schema": "htt.k1.global_maxscan_e2e_full.v1",
         "owner": "OBSSTAT",
         "claim_tier": "diagnostic_only",
         "blocker_closes": "BLOCKED_MISSING_PR4_E2E_ACCESS",
-        "blocker_note": "matched FFP10/NPIPE E2E null: real component-separated CMB MC + real instrument-noise MC for this method. This is the exit-gate null; once run on the full ensemble, flip the egs_results_table K1 row measured_partial -> measured through the generator with this provenance",
+        "blocker_note": "PLA-available FFP10 SMICA E2E null: real component-separated CMB MC + real instrument-noise MC for this method, paired by parsed MC id (robust to the known missing CMB realization 00970). This is the exit-gate null; once run on the PLA-available ensemble, flip the egs_results_table K1 row measured_partial -> measured through the generator with this provenance",
         "transfer_source": "ffp10_component_separation",
         "family_identification": False,
         "native_solver_result": False,
         "method": method,
         "map": {"path": obs_map_path.name, "input_hash": _sha256_file(obs_map_path)},
         "e2e_sims": {"cmb_dir": str(cmb_mc_dir), "noise_dir": str(noise_mc_dir),
-                     "n_used": len(provenance), "max_requested": max_sims,
-                     "pairing": "cmb_mc[i] + noise_mc[i mod n_noise]", "files": provenance},
+                     "n_cmb_used": len(provenance), "n_noise_used": n_noise_used,
+                     "max_requested": max_sims,
+                     "nominal_cmb": FFP10_SMICA_NOMINAL_CMB, "nominal_noise": FFP10_SMICA_NOMINAL_NOISE,
+                     "known_missing_cmb_ids": list(KNOWN_MISSING_FFP10_SMICA_CMB),
+                     "observed_cmb_id_gaps": observed_gaps,
+                     "pla_confirmation": PLA_CONFIRMATION,
+                     "pairing": "cmb_mc[id] + noise_mc[id mod n_noise]  (id-parsed, gap-robust)",
+                     "files": provenance},
         "statistics": keys,
         "config": config,
         "config_hash": config_hash,
@@ -530,14 +581,15 @@ def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "s
             "global_p": float(res.global_p),
             "observed_max_score": float(res.observed_max_score),
         },
-        "headline": f"K1 global look-elsewhere-corrected low-ell morphology p ({method}) under the matched FFP10/NPIPE CMB+noise E2E null",
+        "headline": f"K1 global look-elsewhere-corrected low-ell morphology p ({method}) under the PLA-available FFP10 SMICA CMB+noise E2E null ({len(provenance)} usable CMB MC + {n_noise_used} noise MC)",
         "caveats": [
-            "null = REAL component-separated CMB MC + REAL instrument-noise MC (matched E2E); carries noise/systematics + the cleaning transfer",
+            "null = REAL component-separated CMB MC + REAL instrument-noise MC (PLA-available E2E); carries noise/systematics + the cleaning transfer",
+            "CMB set is the PLA-available subset, NOT all 1000: known missing/corrupt realization 00970 (ESA/PLA " + PLA_CONFIRMATION + "); sims paired by parsed MC id so the gap does not misalign the pairing",
             "method-matched: built from this method's sims only; compare methods side by side, do not average",
             "look-elsewhere correction over the six registered statistics; max-scan frozen",
             "model-independent low-ell descriptor; no Bianchi family, geometry, anisotropy-evidence, or native-solver claim",
         ],
-        "claim_boundary": "OBSSTAT global look-elsewhere diagnostic under the matched E2E ensemble; this is the exit-gate null, not a family/geometry/native-solver claim",
+        "claim_boundary": "OBSSTAT global look-elsewhere diagnostic under the PLA-available E2E ensemble; this is the exit-gate null, not a family/geometry/native-solver claim",
     }
 
 
@@ -556,7 +608,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max-noise-sims", type=int, default=DEFAULT_MAX_NOISE_SIMS,
                         help=f"cap on noise sims (route-4 mode; default: {DEFAULT_MAX_NOISE_SIMS})")
     parser.add_argument("--max-sims", type=int, default=DEFAULT_MAX_FULL_SIMS,
-                        help=f"cap on CMB sims (full E2E mode; default: {DEFAULT_MAX_FULL_SIMS}, raise to 1000)")
+                        help=f"cap on CMB sims (full E2E mode; default: {DEFAULT_MAX_FULL_SIMS}; "
+                             "raise to 1000 to use the whole PLA-available set, i.e. 999 usable CMB MC)")
     parser.add_argument("--jobs", type=int, default=1,
                         help="parallel worker processes for the E2E sim loop (default 1)")
     parser.add_argument("--precision", action="store_true",
@@ -588,7 +641,7 @@ def main(argv: list[str] | None = None) -> int:
         OUT_E2E_FULL_JSON.write_text(text)
         print(f"wrote {OUT_E2E_FULL_JSON.relative_to(REPO_ROOT)}")
         print(f"   {args.method} FULL E2E global p = {payload['result']['global_p']:.4f} "
-              f"({payload['e2e_sims']['n_used']} CMB+noise sims; "
+              f"({payload['e2e_sims']['n_cmb_used']} usable CMB MC + {payload['e2e_sims']['n_noise_used']} noise MC; "
               f"statistic_set={payload['config'].get('statistic_set', 'v1')}, jobs={args.jobs})")
         return 0
 

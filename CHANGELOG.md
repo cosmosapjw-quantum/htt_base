@@ -7,6 +7,26 @@
 
 ## [Unreleased]
 
+### K1 id-based CMB/noise pairing (missing 00970) + PLA-available claim correction (rev-r139, 2026-07-01)
+
+The FFP10 SMICA library has a known missing/corrupt CMB realization (00970), so the
+nominal 1000 CMB set yields 999 usable. The prior positional pairing
+(`cmb[i] + noise[i mod n]`) would silently misalign every CMB after the gap.
+
+- **`scripts/k1_global_maxscan.py`**: `_parse_mc_id` (tolerant to `..._mc_00970_raw.fits[.gz]`
+  and the `.npz` fixtures) + `_pair_cmb_noise_by_id` pair each available CMB with a noise MC
+  **by parsed id** (`noise[cmb_id mod n_noise]`), robust to arbitrary gaps; the precision
+  worker uses an **id-keyed** noise cache and an explicit `noise_id` (no positional index).
+  The full-E2E artifact now records `n_cmb_used`/`n_noise_used`, `nominal_cmb`/`nominal_noise`,
+  `known_missing_cmb_ids` ([970]), disk-detected `observed_cmb_id_gaps`, and `pla_confirmation`
+  ("pending" until ESA/PLA confirm). Provenance rows carry `cmb_id`/`noise_id`. Unparseable
+  names raise (kill switch). +3 tests (parse, gap-survival pairing, missing/PLA recording).
+- **Claim correction** across the runner, `K1_E2E_DOWNLOAD_GUIDE.md`, and the root report:
+  "full 1000 FFP10 SMICA E2E ensemble" -> "PLA-available FFP10 SMICA E2E ensemble";
+  "all 1000 CMB MC" -> "999 usable CMB MC + 300 noise MC"; explicit "known missing/corrupt
+  CMB realization 00970 (ESA/PLA confirmation pending)". Report recompiled (6 pp, 0 undefined
+  refs). Validation: 23 K1+precision tests + 355 contracts pass; packages rebuilt.
+
 ### Root progress + Planck-raw-analysis-plan report (rev-r138, 2026-07-01)
 
 Standalone LaTeX research report at repo root, `htt_progress_and_planck_plan.{tex,pdf}`
