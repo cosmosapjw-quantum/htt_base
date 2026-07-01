@@ -7,6 +7,21 @@
 
 ## [Unreleased]
 
+### Root progress+plan report refreshed to the upgraded code (rev-r143, 2026-07-02)
+
+Replaced the outdated root research-plan PDF `htt_progress_and_planck_plan.{tex,pdf}` (rev-r138,
+pre-Axis-C/D) with one matching the current code. Added: (1) a new §3 "Local boost vs global tilt:
+the kinematic deprojection (Axis C)" stating the boost->shear vulnerability and the closed-form fix
+`Sigma_tilde^2 = Sigma^2 - alpha (Omega_tilt)^2` (gate C1-C4 + Wolfram-verified); (2) a new §4
+"BASS-Extended joint PV+CMB analysis (Axis D)" covering the feasible Woodbury PV covariance (real CF4
+|B|=341 km/s), the JWST distance-anchor acquisition + CF4 cross-match forecast, the coupled-Fisher
+degeneracy break, the real SMICA/Commander BipoSH SI measurement (p=0.68/0.65, GRF null), and the
+fail-closed theory-g CMB sector; (3) the consolidated ledger updated 14+3 -> 25 rows (19 proven: 6
+symbolic + 13 gate; EGS3-C1..C4 + D1..D4 added; `make egs3-gates` now 61); (4) the Planck-raw plan
+noting the D3 BipoSH channel shares the same GRF-now / FFP10-pending E2E null; (5) the claim envelope
++ reproducibility commands updated. `latexmk` exit 0, 8 pp, 0 undefined refs, no overfull; claim-firewall
+clean (only negations / fail-closed). Diagnostic-only; Sigma^2 stays partial; theory-g CMB never fabricated.
+
 ### EGS3 Axis D — BASS-Extended joint PV+CMB analysis, pre-solver (rev-r142, 2026-07-02)
 
 Critically evaluated the proposed joint likelihood `ln L_Total = ln L_PV + ln L_CMB` and ported
