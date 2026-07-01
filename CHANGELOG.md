@@ -7,6 +7,25 @@
 
 ## [Unreleased]
 
+### Long-form final report refreshed; all pre-solver analyses re-run + reviewed (rev-r144, 2026-07-02)
+
+Ran and verified every analysis that does not require the native low-ell solver, and folded the
+current results into the long-form research output report `docs/final_report/main.tex`. Verified
+now (all pass / current): `make egs3-gates` (61) + `egs2-gates`; the three egs3 Wolfram proofs
+(bracket, PSD-cone, boost-tilt) all PASS; `run_egs3_experiments.py` + `run_egs2_experiments.py`
+(the latter refreshed `egs2_experiments.json` to its current generator output --- new c_up
+provenance / nondegeneracy fields); results table (25 rows) + theorem figures `--check` current;
+and the real-data scripts `--check` current with headline numbers K1 morphology p=0.097/0.121,
+K5 |B|=340.7+/-101.9 km/s, K6 vorticity/shear<=0.55% (no-go), D3 SMICA BipoSH p=0.68/0.65 (500
+GRF nulls), D1 CF4 Woodbury |B|=340.7 (K5-consistent) + 9 JWST anchors (+4% Omega_tilt gain),
+PR08-006 data rank 2. Report edits: retitled and expanded the real-data section
+(`\S`Measured rows) to the six solver-free channels, adding a D3 paragraph (off-diagonal BipoSH SI
+on SMICA) and a D1 paragraph (feasible correlated-covariance CF4 tilt + JWST forecast); updated
+the abstract envelope (boost-immune shear estimator, feasible bulk-flow covariance + JWST forecast,
+SMICA BipoSH SI) and the blocker-status note. `latexmk` exit 0, 28 pp, 0 undefined refs; research-
+surface + claim-language linters clean; 355 contracts pass; all 7 audit packages rebuilt + `--check`.
+Diagnostic-only; Sigma^2 stays partial; theory-g CMB fail-closed; no family/geometry/native-solver claim.
+
 ### Root progress+plan report refreshed to the upgraded code (rev-r143, 2026-07-02)
 
 Replaced the outdated root research-plan PDF `htt_progress_and_planck_plan.{tex,pdf}` (rev-r138,

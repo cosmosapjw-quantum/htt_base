@@ -87,10 +87,17 @@ the real CF4 bulk-flow amplitude and its affine velocity-gradient
 decomposition as model-independent kinematic descriptors, the local and
 look-elsewhere-corrected low-$\ell$ CMB morphology under an isotropic
 $\Lambda$CDM null (component-separation dependent, not E2E-calibrated),
-and a curl-suppressed-reconstruction structural no-go; it maps the CF4
-bulk-flow apex profile; and it proves an exact dust-FLRW
-constraint-transport oracle (machine-checked with the Wolfram Engine
-and an independent xAct canonicalization). It does \emph{not} establish
+and a curl-suppressed-reconstruction structural no-go; it makes the
+low-$\ell$ shear reading provably immune to observer-boost contamination
+through a closed-form kinematic deprojection with a validated
+false-positive rate, and quantifies a peculiar-velocity $\Otilt$ prior
+(a feasible low-rank bulk-flow covariance reproducing the CF4 amplitude,
+with a JWST-anchored precision forecast) that breaks the shear--tilt
+degeneracy; it measures the off-diagonal BipoSH statistical isotropy of
+the real SMICA map (consistent with isotropy); it maps the CF4 bulk-flow
+apex profile; and it proves an exact dust-FLRW constraint-transport
+oracle (machine-checked with the Wolfram Engine and an independent xAct
+canonicalization). It does \emph{not} establish
 a globally significant low-$\ell$ anomaly, an anisotropic geometry, or a
 Bianchi-family identification---and it produces no false anisotropy
 claim.
@@ -1271,24 +1278,31 @@ fail-closed theory row.
 \end{table}
 
 \paragraph{Blocker status.}
-The three data rows are documented in full --- code, exact unblock action,
-the already-built mechanics, and the exit gate --- in
-\texttt{docs/research\_program/BLOCKERS.md}, summarised in
-\S\ref{sec:blocks}. None of the proven theorems depends on any blocker; the
-blockers gate only the conversion of the Axis-C mechanics into real-data
-measurements, which \S\ref{sec:measured} now reports.
+The data rows and the fail-closed theory sector are documented in full --- code,
+exact unblock action, the already-built mechanics, and the exit gate --- in
+\texttt{docs/research\_program/BLOCKERS.md}, summarised in \S\ref{sec:blocks}.
+None of the proven theorems depends on any blocker; the blockers gate only the
+E2E-systematics calibration of the low-$\ell$ CMB channels and the theory-$g$
+sector, while every solver-free real-data measurement and forecast of
+\S\ref{sec:measured} is already reported.
 
 % ============================================================
-\section{Measured rows from real data (K1/K5/K6)}
+\section{Measured rows from real data (K1/K5/K6 and the pre-solver PV+CMB channels)}
 \label{sec:measured}
 
 With the controlling inputs in hand (the real CF4++ Wiener-filter velocity field
-and group catalogue, and the real Planck PR3 component-separated maps), the three
-data rows are addressed on real data --- one measured kinematic descriptor with
-conditional cosmic-variance coverage (K5), one partial look-elsewhere discharge
-(K1), and one structural no-go (K6) (Fig.~\ref{fig:discharges}). All three are
-model-independent OBSSTAT descriptors: no Bianchi-family, geometry,
-anisotropy-evidence, or native-solver claim is made.
+and group catalogue, and the real Planck PR3 component-separated maps), every
+analysis that does \emph{not} require the native low-$\ell$ solver has been run.
+Six real-data channels are reported: three original discharges --- one measured
+kinematic descriptor with conditional cosmic-variance coverage (K5), one partial
+look-elsewhere morphology discharge (K1), one structural no-go (K6)
+(Fig.~\ref{fig:discharges}) --- and three added since (Axis~C/D): a feasible
+correlated-covariance CF4 tilt with a JWST-anchored precision forecast (D1), the
+coupled-Fisher degeneracy break (D2, \S\ref{sec:egs3}), and a real off-diagonal
+BipoSH statistical-isotropy measurement on SMICA/Commander (D3). The theory-$g$
+CMB likelihood (D4) is fail-closed. All are model-independent OBSSTAT descriptors
+or labelled forecasts: no Bianchi-family, geometry, anisotropy-evidence, or
+native-solver claim is made, and $\Sigstd$ on the real sky stays partial.
 
 \begin{figure}[htbp]
   \centering
@@ -1356,6 +1370,43 @@ install provides the Blackwell--Rao $C_\ell$-level low-$\ell$ likelihood, not a
 map/$a_{\ell m}$ ensemble, and the morphology statistics depend on $a_{\ell m}$
 phases. The acquisition + run procedure, and footprint-reduced routes, are in
 \texttt{docs/research\_program/K1\_E2E\_DOWNLOAD\_GUIDE.md}.)
+
+\paragraph{D3 (measured partial) --- off-diagonal BipoSH statistical isotropy on SMICA.}
+Beyond the diagonal morphology of K1, the off-diagonal
+$\langle a_{\ell m}a^{*}_{\ell'm'}\rangle$ structure is a real single-sky
+observable as the rotationally-invariant Bipolar-Spherical-Harmonic power
+$D^{L}_{\ell\ell'}$ (exact Wigner-3j contraction,
+\texttt{htt/obsstat/biposh\_smica.py}). The $L{=}1$ power is the
+observer-boost/aberration $\ell\!\leftrightarrow\!\ell{+}1$ coupling and the
+$L{=}2$ power the quadrupolar statistical-isotropy (SI) violation a tilt or shear
+would source. Measured on the real Planck SMICA and Commander maps and
+look-elsewhere-corrected against a matched isotropic GRF null ($500$
+realizations), the global $p$-values are $0.68$ (SMICA) and $0.65$ (Commander) ---
+\emph{consistent with statistical isotropy}. This is the honest realization of
+``extract $C_{\ell m,\ell'm'}$ from SMICA'': the \emph{data} off-diagonal is
+measured, while the \emph{theory} $A^{LM}_{\ell\ell'}(g)$ prediction stays
+fail-closed (D4). The FFP10/NPIPE E2E null is the same pending
+\texttt{BLOCKED\_MISSING\_PR4\_E2E\_ACCESS} upgrade as K1
+(\texttt{docs/generated/k1\_biposh\_smica.json}).
+
+\paragraph{D1 (measured tilt; JWST forecast) --- feasible correlated-covariance CF4.}
+The proposed joint likelihood needs a peculiar-velocity covariance; a dense
+$N\times N$ inversion is infeasible for the $\sim$38k CF4 groups, so
+$C_{\mathrm{PV}}=\operatorname{diag}(\sigma_v^2)+U\Lambda U^{\mathsf T}$ (leading
+bulk$+$shear velocity modes) is inverted by Sherman--Morrison--Woodbury in
+$O(NK^2)$ (\texttt{htt/obsstat/pv\_covariance.py}; verified against the dense
+solve). On the real CF4 catalogue this correlated-covariance bulk-flow GLS
+reproduces the K5 amplitude $|\mathbf B|\simeq341\pm5\ \mathrm{km\,s^{-1}}$
+(measurement error), a cross-check that the feasible inversion is faithful. A
+JWST-anchored distance prior --- the CF4 groups cross-matched to published JWST
+distances (\texttt{scripts/jwst\_cf4\_crossmatch.py}; $9$ of $12$ seed anchors
+matched) --- shrinks the anchors' errors; with the current $\sim$10 nearby anchors
+the global-tilt precision gain is a modest $\sim$$4\%$ (these are already
+low-velocity-error galaxies), an honestly-reported survey-design \emph{forecast}
+rather than a measurement, whose scaling with anchor fraction is shown in
+Fig.~\ref{fig:egs3-d}. Fed through the Axis-C coupled Fisher, this prior reduces
+the $\Sigstd$ covariance inflation (D2, the degeneracy break;
+\texttt{docs/generated/bass\_extended\_joint\_forecast.json}).
 
 \paragraph{Joint comparator (PR08-006).} Assembling the three discharges into the
 graded comparator $g=(\Sigstd,\Wstd,\Otilt,\Okaniso)$ realises the headline of
