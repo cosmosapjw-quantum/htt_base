@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-fetch.py — Unified data download & extraction orchestrator
+fetch.py ??Unified data download & extraction orchestrator
 ==========================================================
 
 Single entry point for every external download required by the BASS
@@ -34,12 +34,21 @@ import urllib.request
 from pathlib import Path
 from typing import Optional
 
+from download_inventory import (
+    DEFAULT_DOWNLOAD_CAP_BYTES,
+    DownloadSpec,
+    build_download_inventory,
+    resolve_download_url,
+    safe_extract_tar,
+    write_acquisition_manifest,
+    write_inventory_outputs,
+)
 from dl_fits_utils import format_fits_size, inspect_fits_file
 
 
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 # Paths and constants
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 
 PIPELINE_DIR = Path(__file__).resolve().parent.parent  # scripts/.. = pipeline root
 SOURCES_FILE = PIPELINE_DIR / "config" / "sources.json"
@@ -48,9 +57,22 @@ ASSETS_DIR   = PIPELINE_DIR / "assets"
 CONFIG_DIR   = PIPELINE_DIR / "config"
 
 
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 # Logging
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
+
+def _console_safe_text(text: str, encoding: str | None = None) -> str:
+    """Return text that can be written to the active console encoding."""
+    console_encoding = encoding or getattr(sys.stdout, "encoding", None) or "utf-8"
+    try:
+        text.encode(console_encoding)
+        return text
+    except (LookupError, UnicodeEncodeError):
+        return text.encode(console_encoding, errors="replace").decode(
+            console_encoding,
+            errors="replace",
+        )
+
 
 class Logger:
     def __init__(self, log_path: Optional[Path] = None):
@@ -64,7 +86,7 @@ class Logger:
     def __call__(self, msg: str, end: str = "\n"):
         ts = time.strftime("%H:%M:%S")
         line = f"[{ts}] {msg}"
-        print(line, end=end, flush=True)
+        print(_console_safe_text(line), end=end, flush=True)
         if self._fh:
             self._fh.write(line + end)
             self._fh.flush()
@@ -74,14 +96,16 @@ class Logger:
             self._fh.close()
 
 
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 # Idempotent downloader
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 
 def download(url: str, dst: Path, log: Logger, force: bool = False,
              optional: bool = False) -> bool:
-    """Download url → dst. Skip if dst exists and force is False.
+    """Download url ??dst. Skip if dst exists and force is False.
     Returns True on success (or skip), False on optional failure."""
+    if os.environ.get("DL_PIPELINE_NO_DOWNLOAD") == "1":
+        raise RuntimeError("DL_PIPELINE_NO_DOWNLOAD=1 refuses network downloads")
     if dst.exists() and not force:
         sz = dst.stat().st_size
         log(f"  [skip] {dst.name} ({sz / 1024:.1f} KB already present)")
@@ -89,7 +113,7 @@ def download(url: str, dst: Path, log: Logger, force: bool = False,
 
     dst.parent.mkdir(parents=True, exist_ok=True)
     log(f"  [download] {url}")
-    log(f"             → {dst}")
+    log(f"             ??{dst}")
 
     # Prefer curl if available (better progress, retries)
     if shutil.which("curl"):
@@ -116,9 +140,9 @@ def download(url: str, dst: Path, log: Logger, force: bool = False,
         raise
 
 
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 # Subprocess runner
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 
 def run_python(script: Path, args: list[str], log: Logger,
                check: bool = True) -> int:
@@ -147,14 +171,14 @@ def run_shell(cmd: list[str], log: Logger, check: bool = True) -> int:
         return e.returncode
 
 
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 # Stage implementations
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 
 def stage_env(root: Path, sources: dict, log: Logger, **opts):
     """Install Python dependencies into the active venv.
 
-    Refuses to run outside a venv — the pipeline is now local-dev only and must
+    Refuses to run outside a venv ??the pipeline is now local-dev only and must
     never pollute the system site-packages. Invoke via run_all.sh (which picks
     the repo-local venv) or activate the venv manually before running fetch.py.
     """
@@ -239,24 +263,185 @@ def stage_planck_pr3(root: Path, sources: dict, log: Logger, **opts):
     run_python(SCRIPTS_DIR / "extract_htt_data.py", extract_args, log, check=False)
 
 
+def _configured_download_specs(stage: str, root: Path, sources: dict) -> list[DownloadSpec]:
+    specs: list[DownloadSpec] = []
+    for entry in sources.get(stage, {}).get("downloads", []):
+        specs.append(
+            DownloadSpec(
+                stage=stage,
+                item_id=str(entry.get("id") or Path(str(entry["out"])).name),
+                url=entry.get("url"),
+                source_page=entry.get("page"),
+                filename=entry.get("filename"),
+                dst=root / str(entry["out"]),
+                optional=bool(entry.get("optional", False)),
+                expected_size_bytes=entry.get("expected_size_bytes"),
+                caveats=tuple(str(v) for v in entry.get("caveats", ())),
+            )
+        )
+    return specs
+
+
+def _download_configured_specs(
+    stage: str,
+    root: Path,
+    sources: dict,
+    log: Logger,
+    *,
+    force: bool = False,
+) -> tuple[list[Path], list[dict]]:
+    downloaded: list[Path] = []
+    source_items: list[dict] = []
+    for spec in _configured_download_specs(stage, root, sources):
+        url = resolve_download_url(spec, fetch_pages=True)
+        if url is None:
+            if spec.optional:
+                log(f"  [warn] optional source unresolved: {spec.item_id}")
+                continue
+            raise RuntimeError(f"download URL could not be resolved for {spec.item_id}")
+        download(url, spec.dst, log, force=force, optional=spec.optional)
+        if spec.dst.exists():
+            downloaded.append(spec.dst)
+        source_items.append(
+            {
+                "id": spec.item_id,
+                "url": url,
+                "source_page": spec.source_page,
+                "filename": spec.filename,
+                "destination": str(spec.dst),
+                "expected_size_bytes": spec.expected_size_bytes,
+                "optional": spec.optional,
+            }
+        )
+    return downloaded, source_items
+
+
+def _find_file_named(root: Path, filename: str) -> Path | None:
+    if not root.exists():
+        return None
+    for path in root.rglob(filename):
+        if path.is_file():
+            return path
+    return None
+
+
+def _act_dr6_sacc_path(act_dir: Path) -> Path | None:
+    for rel in (
+        Path("ACTDR6MFLike") / "v1.0" / "dr6_data.fits",
+        Path("v1.0") / "dr6_data.fits",
+        Path("dr6_data.fits"),
+    ):
+        path = act_dir / rel
+        if path.exists():
+            return path
+    return _find_file_named(act_dir, "dr6_data.fits")
+
+
+def _is_tar_archive(path: Path) -> bool:
+    suffixes = path.suffixes
+    return suffixes[-2:] == [".tar", ".gz"] or path.suffix == ".tgz"
+
+
+def _extract_act_dr6_only(root: Path, log: Logger, **opts) -> None:
+    run_python(
+        SCRIPTS_DIR / "extract_htt_data.py",
+        [
+            "--act-dir", str(root / "raw" / "act_data"),
+            "--out", str(root / "htt_extracted"),
+            "--only-act",
+        ],
+        log,
+        check=False,
+    )
+
+
 def stage_act_dr6(root: Path, sources: dict, log: Logger, **opts):
-    """ACT DR6: hint that the user must place dr6_data.fits manually."""
+    """ACT DR6.02 SACC acquisition + ACT-only extraction."""
     act_dir = root / "raw" / "act_data"
     act_dir.mkdir(parents=True, exist_ok=True)
     target = act_dir / "dr6_data.fits"
-    if target.exists():
-        log(f"  [ok] {target} already present ({target.stat().st_size / 1024 / 1024:.1f} MB)")
-        log("  ACT DR6 extraction is performed inside stage planck_pr3 (extract_htt_data.py).")
+    found = _act_dr6_sacc_path(act_dir)
+    if found is not None:
+        log(f"  [ok] ACT DR6 SACC present: {found} ({found.stat().st_size / 1024 / 1024:.1f} MB)")
+        _extract_act_dr6_only(root, log, **opts)
         return
 
     url = os.environ.get("ACT_DR6_SACC_URL")
     if url:
-        download(url, target, log)
+        download(url, target, log, force=opts.get("force", False))
+        write_acquisition_manifest(
+            root / "raw" / "act_data" / "act_dr6_02_acquisition_manifest.json",
+            stage="act_dr6",
+            source_items=[{"id": "ACT_DR6_SACC_URL", "url": url, "destination": str(target)}],
+            local_files=[target],
+            generating_command="fetch.py --stages act_dr6",
+        )
+        _extract_act_dr6_only(root, log, **opts)
         return
 
-    log(f"  [manual] ACT DR6 sacc file required at: {target}")
-    log("           Either set ACT_DR6_SACC_URL=... and rerun this stage,")
-    log("           or copy the file there yourself and rerun stage planck_pr3.")
+    if not opts.get("approve_downloads", False):
+        log(f"  [approval-required] ACT DR6.02 SACC missing at: {target}")
+        log("           Run --download-inventory first, then rerun with --approve-downloads to fetch Batch A.")
+        return
+
+    archives, source_items = _download_configured_specs(
+        "act_dr6",
+        root,
+        sources,
+        log,
+        force=opts.get("force", False),
+    )
+    extracted_files: list[Path] = []
+    extract_root = act_dir / "act_dr6_02_archives"
+    for archive in archives:
+        if _is_tar_archive(archive):
+            item_dir = extract_root / archive.stem.replace(".tar", "")
+            extracted_files.extend(safe_extract_tar(archive, item_dir))
+
+    found = _act_dr6_sacc_path(act_dir) or _find_file_named(extract_root, "dr6_data.fits")
+    if found is not None and not target.exists():
+        shutil.copy2(found, target)
+        log(f"  [ok] copied primary ACT DR6 SACC to {target}")
+    write_acquisition_manifest(
+        root / "raw" / "act_data" / "act_dr6_02_acquisition_manifest.json",
+        stage="act_dr6",
+        source_items=source_items,
+        local_files=[*archives, *extracted_files, target],
+        generating_command="fetch.py --stages act_dr6 --approve-downloads",
+    )
+    if _act_dr6_sacc_path(act_dir) is None:
+        log("  [warn] ACT DR6.02 archives downloaded, but dr6_data.fits was not found after extraction.")
+        return
+    _extract_act_dr6_only(root, log, **opts)
+
+
+def stage_act_dr6_lensing(root: Path, sources: dict, log: Logger, **opts):
+    """ACT DR6 lensing release acquisition; no inference is run here."""
+    out_dir = root / "raw" / "act_dr6_lensing"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    if not opts.get("approve_downloads", False):
+        log("  [approval-required] ACT DR6 lensing downloads require --approve-downloads.")
+        return
+    archives, source_items = _download_configured_specs(
+        "act_dr6_lensing",
+        root,
+        sources,
+        log,
+        force=opts.get("force", False),
+    )
+    extracted_files: list[Path] = []
+    for archive in archives:
+        if _is_tar_archive(archive):
+            item_dir = out_dir / archive.stem.replace(".tar", "")
+            extracted_files.extend(safe_extract_tar(archive, item_dir))
+    write_acquisition_manifest(
+        out_dir / "act_dr6_lensing_acquisition_manifest.json",
+        stage="act_dr6_lensing",
+        source_items=source_items,
+        local_files=[*archives, *extracted_files],
+        generating_command="fetch.py --stages act_dr6_lensing --approve-downloads",
+    )
+    log("  [done] ACT DR6 lensing acquisition manifest written; no scientific inference was run.")
 
 
 def stage_bicep_keck(root: Path, sources: dict, log: Logger, **opts):
@@ -402,7 +587,7 @@ def stage_camb_refs(root: Path, sources: dict, log: Logger, **opts):
     try:
         import camb  # noqa: F401
     except ImportError:
-        log("  [info] CAMB not installed — running pip install camb==1.6.6")
+        log("  [info] CAMB not installed ??running pip install camb==1.6.6")
         run_shell([sys.executable, "-m", "pip", "install", "camb==1.6.6"],
                   log, check=False)
     run_python(SCRIPTS_DIR / "generate_camb_lensing_refs.py",
@@ -479,6 +664,7 @@ STAGES = {
     "planck_lensing": stage_planck_lensing,
     "act_dr4":        stage_act_dr4,
     "act_dr6":        stage_act_dr6,
+    "act_dr6_lensing": stage_act_dr6_lensing,
     "spt3g_y1":       stage_spt3g_y1,
     "desi_y1":        stage_desi_y1,
     "cf4":            stage_cf4,
@@ -488,9 +674,9 @@ STAGES = {
 }
 
 
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 # CLI
-# ──────────────────────────────────────────────────────────────────────────
+# ??????????????????????????????????????????????????????????????????????????
 
 def list_stages(sources: dict):
     print("Available stages (run in this order with --all):\n")
@@ -528,13 +714,21 @@ def main():
                          "the unpacked obs_bundle/ tree directly)")
     ap.add_argument("--planck-nside-out", type=int, default=16,
                     help="Target NSIDE for Planck map/mask downgrade (default 16, "
-                         "the canonical low-ℓ pixel-likelihood resolution).")
+                         "the canonical low-??pixel-likelihood resolution).")
     ap.add_argument("--full-res-maps", action="store_true",
                     help="Also dump full-resolution (NSIDE=2048) Planck map/mask "
                          "NPZs alongside the downgraded ones (~200 MB per map).")
     ap.add_argument("--desi-mode", choices=["minimal", "extended"], default="extended",
-                    help="DESI column set — extended (default) keeps all weights + "
+                    help="DESI column set ??extended (default) keeps all weights + "
                          "targetid/ntile/photsys; minimal strips to ra/dec/z/weight/n_hat.")
+    ap.add_argument("--approve-downloads", action="store_true",
+                    help="allow newly added approval-gated external download stages")
+    ap.add_argument("--download-inventory", default=None,
+                    help="write a JSON/Markdown download inventory for the selected plan and exit")
+    ap.add_argument("--probe-network", action="store_true",
+                    help="resolve source pages and probe remote Content-Length for --download-inventory")
+    ap.add_argument("--max-download-gb", type=float, default=50.0,
+                    help="download inventory budget ceiling in GB (default 50)")
     args = ap.parse_args()
 
     if not SOURCES_FILE.exists():
@@ -564,11 +758,31 @@ def main():
     log_path = root / "logs" / f"fetch_{time.strftime('%Y%m%d_%H%M%S')}.log"
     log = Logger(log_path)
     log("=" * 70)
-    log(f"BASS data pipeline — root={root}")
-    log(f"plan: {' → '.join(plan)}")
+    log(f"BASS data pipeline ??root={root}")
+    log(f"plan: {' ??'.join(plan)}")
     log(f"options: force={args.force}  skip_heavy={args.skip_heavy}  "
         f"skip_large_maps={args.skip_large_maps}  dry_run={args.dry_run}")
     log("=" * 70)
+
+    cap_bytes = int(args.max_download_gb * 1024**3)
+    if args.download_inventory:
+        inventory = build_download_inventory(
+            sources,
+            root,
+            plan,
+            max_download_bytes=cap_bytes,
+            probe_network=args.probe_network,
+        )
+        json_path, md_path = write_inventory_outputs(inventory, Path(args.download_inventory))
+        log(f"  [inventory] wrote {json_path}")
+        log(f"  [inventory] wrote {md_path}")
+        log(f"  [inventory] known additional GB: {inventory['known_additional_gb']:.3f}")
+        if not inventory["within_cap_for_known_sizes"]:
+            log("  [FAIL] planned known downloads exceed configured cap")
+            log.close()
+            sys.exit(2)
+        log.close()
+        return
 
     if args.dry_run:
         for sid in plan:
@@ -582,12 +796,14 @@ def main():
                 bundle_zip=args.bundle_zip,
                 planck_nside_out=args.planck_nside_out,
                 full_res_maps=args.full_res_maps,
-                desi_mode=args.desi_mode)
+                desi_mode=args.desi_mode,
+                approve_downloads=args.approve_downloads,
+                max_download_bytes=cap_bytes)
 
     failed = []
     for sid in plan:
         log("")
-        log(f"━━━ stage: {sid} ━━━")
+        log(f"--- stage: {sid} ---")
         try:
             STAGES[sid](root, sources, log, **opts)
             log(f"  [done] {sid}")
@@ -606,3 +822,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

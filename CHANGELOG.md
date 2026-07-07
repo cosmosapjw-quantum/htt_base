@@ -7,6 +7,30 @@
 
 ## [Unreleased]
 
+### Integrated external delta patch: dl_pipeline acquisition support + v5 external-audit report (rev-r145, 2026-07-08)
+
+Applied the externally-developed overlay `htt_base_delta_patch_20260707.zip` (git-unavailable in the
+copy, so overlay-based). Reviewed against the repo claim-firewall before applying: MANIFEST claim
+boundaries (no native low-ell solver result, no Bianchi family identification, MIO/HTT
+posterior/evidence kept distinct, no raw/downloaded data) hold; the v5 report's method-validation
+values are explicitly local synthetic/mathematical checks, not observational (current response rank
+2, enlarged response rank 4 = P18/P22 route demo, e-value MC mean 1.009, identified-interval example
+[0.11,0.17] = P26/P31 semantics without external data, dust-FLRW oracle residual 0). Applied:
+- `dl_pipeline/` acquisition/planning support --- `scripts/fetch.py` (+ACT DR6 / ACT-lensing planning),
+  `config/sources.json`, `scripts/extract_htt_data.py` updated; new `scripts/download_inventory.py`
+  (dry-run/probe inventory, no network) + `tests/test_download_inventory.py` + `tests/test_fetch_logging.py`.
+  My rev-r142 additions (`download_jwst_anchors.py`, `data/jwst_distances_seed.csv`) are preserved
+  (absent from the payload). No raw data, no downloads.
+- `scripts/build_external_audit_report_v5.py` (report generator) + the generated package
+  `external_audit_research_report_20260707_v5/` (tex, pdf, evidence matrix, KO ledgers, manifest,
+  method-validation JSON) + a root PDF. Re-ran the generator in-repo (18-page PDF built from
+  repo-local sources per the patch's CLAIM_AUDIT).
+
+Validation: `dl_pipeline/tests` 14 passed; repo semantic-guard + forbidden-affirmative scan on the v5
+report clean; the two source-snapshot packages (code-capability, pr04) rebuilt + `--check`; full
+`tests/contracts` 355 passed. Raw patch zip + the generator byproduct zip left untracked. Diagnostic-only;
+no family/geometry/native-solver/posterior claim introduced.
+
 ### Long-form final report refreshed; all pre-solver analyses re-run + reviewed (rev-r144, 2026-07-02)
 
 Ran and verified every analysis that does not require the native low-ell solver, and folded the

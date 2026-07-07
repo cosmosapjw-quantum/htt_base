@@ -2,14 +2,29 @@
   "_schema": {
     "version": "1.0",
     "description": "Single source-of-truth manifest for every external download. The orchestrator (fetch.py) reads only this file. URLs change rarely; when they do, edit here, not in stage scripts.",
-    "stage_order": ["env", "planck_pr3", "planck_npipe", "bicep_keck", "planck_lensing", "act_dr4", "act_dr6", "spt3g_y1", "desi_y1", "cf4", "cf4_full", "camb_refs", "scalars", "package"]
+    "stage_order": [
+      "env",
+      "planck_pr3",
+      "planck_npipe",
+      "bicep_keck",
+      "planck_lensing",
+      "act_dr4",
+      "act_dr6",
+      "act_dr6_lensing",
+      "spt3g_y1",
+      "desi_y1",
+      "cf4",
+      "cf4_full",
+      "camb_refs",
+      "scalars",
+      "package"
+    ]
   },
-
   "planck_pr3": {
     "_doc": "Planck PR3 (R3.01) ancillary data hosted at IRSA. Spectra ~500KB total; maps + masks ~3.5GB before extraction.",
     "base_cosmoparams": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/cosmoparams",
-    "base_masks":       "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/masks",
-    "base_maps":        "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/component-maps/cmb",
+    "base_masks": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/masks",
+    "base_maps": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/component-maps/cmb",
     "files": {
       "spectra": [
         "COM_PowerSpect_CMB-TT-full_R3.01.txt",
@@ -34,81 +49,155 @@
     "size_estimate_GB": 3.5,
     "extraction": {
       "script": "scripts/extract_htt_data.py",
-      "args": ["--planck-dir", "{raw}/planck_data", "--out", "{out}/htt_extracted"],
+      "args": [
+        "--planck-dir",
+        "{raw}/planck_data",
+        "--out",
+        "{out}/htt_extracted"
+      ],
       "produces": "htt_extracted/planck_*.npz, htt_extracted/extraction_log.txt"
     }
   },
-
   "bicep_keck": {
     "_doc": "BICEP/Keck 2018 BB likelihood files installed via cobaya-install (~700MB raw, ~58MB packaged).",
     "method": "cobaya_install",
     "module": "bicep_keck_2018",
     "extraction": {
       "script": "scripts/pack_cobaya_install.py",
-      "args": ["--module", "bicep_keck_2018", "--out", "{out}/obs_extra/bicep_keck_2018_BB.npz"],
+      "args": [
+        "--module",
+        "bicep_keck_2018",
+        "--out",
+        "{out}/obs_extra/bicep_keck_2018_BB.npz"
+      ],
       "produces": "obs_extra/bicep_keck_2018_BB.npz"
     }
   },
-
   "planck_lensing": {
-    "_doc": "Planck 2018 lensing native likelihood via cobaya-install (~1MB packaged).",
+    "_doc": "Planck 2018 lensing likelihood installed via cobaya-install (~1MB packaged). The Cobaya module name contains native, but this is external public likelihood data, not a BASS/native low-ell solver result.",
     "method": "cobaya_install",
     "module": "planck_2018_lensing.native",
     "extraction": {
       "script": "scripts/pack_cobaya_install.py",
-      "args": ["--module", "planck_2018_lensing.native", "--out", "{out}/obs_extra/planck_2018_lensing.npz"],
+      "args": [
+        "--module",
+        "planck_2018_lensing.native",
+        "--out",
+        "{out}/obs_extra/planck_2018_lensing.npz"
+      ],
       "produces": "obs_extra/planck_2018_lensing.npz"
     }
   },
-
   "act_dr4": {
     "_doc": "ACT DR4 likelihood/spectra archives from LAMBDA + GitHub (~70MB raw, ~150KB packaged).",
     "downloads": [
-      {"url": "https://lambda.gsfc.nasa.gov/data/suborbital/ACT/ACT_dr4/likelihoods/actpollite_python_dr4.01.tar.gz",
-       "out": "downloads/actpollite_python_dr4.01.tar.gz"},
-      {"url": "https://lambda.gsfc.nasa.gov/data/suborbital/ACT/ACT_dr4/spectra/act_dr4.01_cmbonly_spectra.tar.gz",
-       "out": "downloads/act_dr4.01_cmbonly_spectra.tar.gz"},
-      {"url": "https://github.com/ACTCollaboration/pyactlike/archive/refs/heads/master.zip",
-       "out": "downloads/pyactlike_master.zip", "optional": true}
+      {
+        "url": "https://lambda.gsfc.nasa.gov/data/suborbital/ACT/ACT_dr4/likelihoods/actpollite_python_dr4.01.tar.gz",
+        "out": "downloads/actpollite_python_dr4.01.tar.gz"
+      },
+      {
+        "url": "https://lambda.gsfc.nasa.gov/data/suborbital/ACT/ACT_dr4/spectra/act_dr4.01_cmbonly_spectra.tar.gz",
+        "out": "downloads/act_dr4.01_cmbonly_spectra.tar.gz"
+      },
+      {
+        "url": "https://github.com/ACTCollaboration/pyactlike/archive/refs/heads/master.zip",
+        "out": "downloads/pyactlike_master.zip",
+        "optional": true
+      }
     ],
     "extraction": {
       "script": "scripts/extract_cmb_like_products.py",
-      "args": ["--workdir", "{root}", "--outdir", "{out}/compact_products", "--target", "act"],
+      "args": [
+        "--workdir",
+        "{root}",
+        "--outdir",
+        "{out}/compact_products",
+        "--target",
+        "act"
+      ],
       "produces": "compact_products/act_dr4_compact.npz, compact_products/act_dr4_compact.manifest.json"
     }
   },
-
   "act_dr6": {
-    "_doc": "ACT DR6 sacc bandpowers. Acquired from the act_data directory (user-provided) or downloaded if URL set.",
-    "manual_hint": "Place dr6_data.fits under {raw}/act_data/. Or set ACT_DR6_SACC_URL.",
+    "_doc": "ACT DR6.02 PSPIPE SACC likelihood archives from LAMBDA. Acquisition only; external public data, not native solver output.",
+    "project_page": "https://lambda.gsfc.nasa.gov/product/act/act_dr6.02/",
+    "size_estimate_GB": 0.386,
+    "manual_hint": "Place dr6_data.fits under {raw}/act_data/, set ACT_DR6_SACC_URL, or run with --approve-downloads.",
+    "downloads": [
+      {
+        "id": "act_dr6_02_cmbonly_sacc",
+        "page": "https://lambda.gsfc.nasa.gov/product/act/act_dr6.02/act_dr6.02_pspipe_sacc_get.html",
+        "filename": "dr6_data_cmbonly.tar.gz",
+        "out": "downloads/act_dr6_02/dr6_data_cmbonly.tar.gz",
+        "expected_size_bytes": 287744,
+        "optional": true,
+        "caveats": [
+          "cmbonly_support_product"
+        ]
+      },
+      {
+        "id": "act_dr6_02_mflike_sacc",
+        "page": "https://lambda.gsfc.nasa.gov/product/act/act_dr6.02/act_dr6.02_pspipe_sacc_get.html",
+        "filename": "dr6_data.tar.gz",
+        "out": "downloads/act_dr6_02/dr6_data.tar.gz",
+        "expected_size_bytes": 414187520,
+        "optional": false,
+        "caveats": [
+          "primary_dr6_data_fits_source"
+        ]
+      }
+    ],
     "extraction": {
       "script": "scripts/extract_htt_data.py",
-      "args": ["--act-dir", "{raw}/act_data", "--out", "{out}/htt_extracted"],
+      "args": [
+        "--act-dir",
+        "{raw}/act_data",
+        "--out",
+        "{out}/htt_extracted",
+        "--only-act"
+      ],
       "produces": "htt_extracted/act_dr6_{tt,te,ee}_bandpowers.npz",
-      "note": "ACT DR6 is extracted in the same call as planck_pr3 above (extract_htt_data.py handles both)."
+      "note": "ACT DR6 extraction can run independently after the SACC archive is acquired."
     }
   },
-
   "spt3g_y1": {
     "_doc": "SPT-3G 2018 Y1 TTTEEE likelihood (~30MB raw, ~135KB packaged).",
     "downloads": [
-      {"url": "https://lambda.gsfc.nasa.gov/data/suborbital/SPT/spt_3g/SPT3G_2018_TTTEEE_public_likelihood.v1.1.tar.gz",
-       "out": "downloads/SPT3G_2018_TTTEEE_public_likelihood.v1.1.tar.gz"},
-      {"url": "https://github.com/SouthPoleTelescope/spt3g_y1_dist/archive/refs/heads/main.zip",
-       "out": "downloads/spt3g_y1_dist_main.zip", "optional": true}
+      {
+        "url": "https://lambda.gsfc.nasa.gov/data/suborbital/SPT/spt_3g/SPT3G_2018_TTTEEE_public_likelihood.v1.1.tar.gz",
+        "out": "downloads/SPT3G_2018_TTTEEE_public_likelihood.v1.1.tar.gz"
+      },
+      {
+        "url": "https://github.com/SouthPoleTelescope/spt3g_y1_dist/archive/refs/heads/main.zip",
+        "out": "downloads/spt3g_y1_dist_main.zip",
+        "optional": true
+      }
     ],
     "extraction": {
       "script": "scripts/extract_cmb_like_products.py",
-      "args": ["--workdir", "{root}", "--outdir", "{out}/compact_products", "--target", "spt"],
+      "args": [
+        "--workdir",
+        "{root}",
+        "--outdir",
+        "{out}/compact_products",
+        "--target",
+        "spt"
+      ],
       "produces": "compact_products/spt3g_y1_compact.npz, compact_products/spt3g_y1_compact.manifest.json"
     }
   },
-
   "desi_y1": {
     "_doc": "DESI DR1 LSS clustering catalogs (BGS_ANY, LRG, QSO; NGC and SGC). ~2GB raw, ~190MB packaged.",
     "base": "https://data.desi.lbl.gov/public/dr1/survey/catalogs/dr1/LSS/iron/LSScats/v1.5",
-    "tracers": ["BGS_ANY", "LRG", "QSO"],
-    "caps": ["NGC", "SGC"],
+    "tracers": [
+      "BGS_ANY",
+      "LRG",
+      "QSO"
+    ],
+    "caps": [
+      "NGC",
+      "SGC"
+    ],
     "files": [
       "BGS_ANY_NGC_clustering.dat.fits",
       "BGS_ANY_SGC_clustering.dat.fits",
@@ -119,51 +208,101 @@
     ],
     "extraction": {
       "script": "scripts/extract_desi_compact.py",
-      "args": ["--input-dir", "{raw}/desi", "--outdir", "{out}/compact_products/desi", "--mode", "minimal"],
+      "args": [
+        "--input-dir",
+        "{raw}/desi",
+        "--outdir",
+        "{out}/compact_products/desi",
+        "--mode",
+        "minimal"
+      ],
       "produces": "compact_products/desi/*_minimal.npz"
-    }
+    },
+    "support_probe_files": [
+      "BGS_ANY_NGC_0_clustering.ran.fits",
+      "BGS_ANY_SGC_0_clustering.ran.fits",
+      "LRG_NGC_0_clustering.ran.fits",
+      "LRG_SGC_0_clustering.ran.fits",
+      "QSO_NGC_0_clustering.ran.fits",
+      "QSO_SGC_0_clustering.ran.fits"
+    ]
   },
-
   "cf4": {
     "_doc": "CF4++ peculiar-velocity grid. fetch.py will try the canonical CF4++ NPZ URL by default; CF4_GRID_URL still overrides it when needed.",
     "project_page": "https://projets.ip2i.in2p3.fr/cosmicflows/",
     "download_url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4pp_mean_std_grids.npz",
     "expected_filename": "CF4pp_mean_std_grids.npz",
     "expected_keys": [
-      "d_mean_CF4pp", "d_std_CF4pp",
-      "v_mean_CF4pp", "v_std_CF4pp",
-      "vr_mean_CF4pp", "vr_std_CF4pp"
+      "d_mean_CF4pp",
+      "d_std_CF4pp",
+      "v_mean_CF4pp",
+      "v_std_CF4pp",
+      "vr_mean_CF4pp",
+      "vr_std_CF4pp"
     ],
     "queries": [
-      {"name": "single",
-       "args": ["--coord1", "180.0", "--coord2", "0.0", "--distance", "0.01",
-                "--coord-type", "equatorial", "--unit-type", "degrees", "--distance-type", "redshift",
-                "--out", "{out}/compact_products/cf4/query_single.json"]},
-      {"name": "batch",
-       "args": ["--input-csv", "assets/targets_cf4_from_desi_bgs.csv",
-                "--coord-type", "equatorial", "--unit-type", "degrees", "--distance-type", "redshift",
-                "--out", "{out}/compact_products/cf4/query_batch.npz"],
-       "note": "fetch.py prefers a hardware-adaptive DESI-derived CSV when compact BGS products are present; this bundled asset is the fallback."}
+      {
+        "name": "single",
+        "args": [
+          "--coord1",
+          "180.0",
+          "--coord2",
+          "0.0",
+          "--distance",
+          "0.01",
+          "--coord-type",
+          "equatorial",
+          "--unit-type",
+          "degrees",
+          "--distance-type",
+          "redshift",
+          "--out",
+          "{out}/compact_products/cf4/query_single.json"
+        ]
+      },
+      {
+        "name": "batch",
+        "args": [
+          "--input-csv",
+          "assets/targets_cf4_from_desi_bgs.csv",
+          "--coord-type",
+          "equatorial",
+          "--unit-type",
+          "degrees",
+          "--distance-type",
+          "redshift",
+          "--out",
+          "{out}/compact_products/cf4/query_batch.npz"
+        ],
+        "note": "fetch.py prefers a hardware-adaptive DESI-derived CSV when compact BGS products are present; this bundled asset is the fallback."
+      }
     ],
     "extraction": {
       "script": "scripts/cf4_grid_adapter.py",
       "produces": "compact_products/cf4/query_single.json, compact_products/cf4/query_batch.npz"
     }
   },
-
   "cf4_full": {
     "_doc": "Cosmicflows-4 FULL release (Tully+ 2023) group catalog from VizieR J/ApJ/944/94: table4 = 38053 group distances + peculiar velocities with method/group/selection hierarchy. Feeds LR-06D.",
     "project_page": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/944/94",
     "base": "https://cdsarc.cds.unistra.fr/ftp/J/ApJ/944/94",
-    "tables": ["table2.dat", "table3.dat", "table4.dat"],
+    "tables": [
+      "table2.dat",
+      "table3.dat",
+      "table4.dat"
+    ],
     "primary_table": "table4.dat",
     "extraction": {
       "script": "scripts/extract_cf4_full.py",
-      "args": ["--raw-dir", "{raw}/cf4_full", "--out", "{out}/pecvel/cf4_full/cf4_groups.npz"],
+      "args": [
+        "--raw-dir",
+        "{raw}/cf4_full",
+        "--out",
+        "{out}/pecvel/cf4_full/cf4_groups.npz"
+      ],
       "produces": "obs_bundle/pecvel/cf4_full/cf4_groups.npz, obs_bundle/pecvel/cf4_full/cf4_full_release_manifest.json"
     }
   },
-
   "planck_npipe": {
     "_doc": "Planck PR4/NPIPE frequency+component maps for LR-06E observer-boost/BipoSH. The PR4 maps are served from the Planck Legacy Archive query portal (not a plain file URL); set PLANCK_NPIPE_URL to a direct map URL to auto-fetch, else fetch manually. The end-to-end NPIPE simulation ensemble (300 realizations, hundreds of GB) needed to CALIBRATE boost injection recovery is not auto-downloaded; LR-06E calibration remains BLOCKED_MISSING_E2E_SIMULATIONS until those sims are bound.",
     "project_page": "https://pla.esac.esa.int/#maps",
@@ -174,7 +313,6 @@
       "produces": "obs_bundle/cmb/maps/npipe_*.npz (when a direct map URL is supplied)"
     }
   },
-
   "camb_refs": {
     "_doc": "CAMB-computed lensed Cls + lens potential for the Planck 2018 best-fit cosmology. Used as theory reference in the BASS pipeline.",
     "method": "pip_then_run",
@@ -182,24 +320,70 @@
     "params_file": "config/planck2018_camb_params.json",
     "extraction": {
       "script": "scripts/generate_camb_lensing_refs.py",
-      "args": ["--params-json", "config/planck2018_camb_params.json", "--outdir", "{out}/compact_products"],
+      "args": [
+        "--params-json",
+        "config/planck2018_camb_params.json",
+        "--outdir",
+        "{out}/compact_products"
+      ],
       "produces": "compact_products/camb_planck2018_lensing_refs.npz"
     }
   },
-
   "scalars": {
     "_doc": "Scalar SSOT: obs_defaults.json (canonical), watkins2023, courtois2025/CF4pp variants. Source files must already exist in the BASS repo (or pass --obs-defaults explicitly). The packaging step assembles the consolidated dipole_scalar_observations.json.",
     "extraction": {
       "script": "scripts/package_dipole_observations.py",
-      "args": ["--repo-root", "{root}", "--out", "{out}/compact_products/dipole_scalar_observations.json"],
+      "args": [
+        "--repo-root",
+        "{root}",
+        "--out",
+        "{out}/compact_products/dipole_scalar_observations.json"
+      ],
       "produces": "compact_products/dipole_scalar_observations.json"
     }
   },
-
   "package": {
     "_doc": "Final consolidation: take all extracted artifacts and pack them into the obs/ layout established by the previous reorg.",
     "script": "scripts/package_obs_bundle.py",
-    "args": ["--root", "{root}", "--out", "{out}/obs_bundle"],
+    "args": [
+      "--root",
+      "{root}",
+      "--out",
+      "{out}/obs_bundle"
+    ],
     "produces": "obs_bundle/ (mirrors obs/ from the previous reorg) + obs_bundle.zip"
+  },
+  "act_dr6_lensing": {
+    "_doc": "ACT DR6 lensing likelihood/maps from LAMBDA. Acquisition only; support/covariance products, not geometry identification.",
+    "project_page": "https://lambda.gsfc.nasa.gov/product/act/actadv_prod_table.html",
+    "size_estimate_GB": 1.73,
+    "downloads": [
+      {
+        "id": "act_dr6_lensing_likelihood",
+        "page": "https://lambda.gsfc.nasa.gov/product/act/actadv_dr6_lensing_lh_get.html",
+        "filename": "ACT_dr6_likelihood_v1.2.tgz",
+        "out": "downloads/act_dr6_lensing/ACT_dr6_likelihood_v1.2.tgz",
+        "expected_size_bytes": 378535936,
+        "optional": false,
+        "caveats": [
+          "lensing_likelihood_support_product"
+        ]
+      },
+      {
+        "id": "act_dr6_lensing_maps",
+        "page": "https://lambda.gsfc.nasa.gov/product/act/actadv_dr6_lensing_maps_get.html",
+        "filename": "dr6_lensing_release.tar.gz",
+        "out": "downloads/act_dr6_lensing/dr6_lensing_release.tar.gz",
+        "expected_size_bytes": 1471026298,
+        "optional": false,
+        "caveats": [
+          "lensing_map_support_product"
+        ]
+      }
+    ],
+    "extraction": {
+      "produces": "raw/act_dr6_lensing/* plus act_dr6_lensing_acquisition_manifest.json",
+      "note": "No HTT evidence, MIO posterior, native solver, or family-identification claim is created by this stage."
+    }
   }
 }

@@ -414,6 +414,8 @@ def main():
                              'binary masks as planck_*_full.npz (~200 MB per map). '
                              'Off by default; enable when you need the raw pixel data '
                              'without touching the original FITS.')
+    parser.add_argument('--only-act', action='store_true',
+                        help='Extract only ACT DR6 bandpowers from --act-dir; skip Planck inputs.')
     args = parser.parse_args()
     
     os.makedirs(args.out, exist_ok=True)
@@ -427,6 +429,22 @@ def main():
     log(f"Output: {args.out}\n", logf)
     
     n_ok = 0
+    if args.only_act:
+        log("\n── ACT DR6 Bandpowers ──", logf)
+        if extract_act_dr6(args.act_dir, args.out, logf):
+            n_ok += 1
+        total_size = sum(
+            os.path.getsize(os.path.join(args.out, f))
+            for f in os.listdir(args.out) if f.endswith('.npz')
+        ) / 1024
+        log(f"\n═══ Summary ═══", logf)
+        log(f"Extracted: {n_ok} items", logf)
+        log(f"Total size: {total_size:.1f} KB ({total_size/1024:.2f} MB)", logf)
+        log(f"Output: {args.out}/", logf)
+        logf.close()
+        print(f"\nDone. Log: {logpath}")
+        return
+
     pdir = args.planck_dir
     
     # ── Planck PR3 Power Spectra ──
