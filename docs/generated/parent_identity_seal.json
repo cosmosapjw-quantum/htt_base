@@ -1,0 +1,67 @@
+{
+  "seal": "egs3.parent_identity",
+  "status": "PASS",
+  "sympy_version": "1.14.0",
+  "parent_identity": {
+    "identity_ok": true,
+    "c_derived": [
+      1,
+      -1,
+      1,
+      1
+    ],
+    "c_registered": [
+      1,
+      -1,
+      1,
+      1
+    ],
+    "signs_ok": true,
+    "parent_identity": "1 = Omega_m + Omega_Lambda + Omega_k + Omega_tilt + Sigma2 - W2",
+    "omega_tilt_closed_form": "(1+w) * Omega_m * sinh(beta)**2",
+    "normalizations_forced": {
+      "Sigma2": "sigma_ab sigma^ab / (6 H^2)",
+      "W2": "omega_ab omega^ab / (6 H^2)",
+      "Omega_k": "-R3 / (6 H^2)"
+    }
+  },
+  "w2_convention": {
+    "tensor_equals_twice_vector": true,
+    "registered_convention": "omega_ab omega^ab / (6 H^2) = omega_a omega^a / (3 H^2)",
+    "v5_document_convention": "omega_a omega^a / H^2",
+    "mismatch_factor": 3,
+    "mismatch_is_three": true,
+    "code_already_registered": [
+      "htt/bass/validation/comparator_policy.py:337",
+      "htt/htt/htt/core/bounds.py:109-111",
+      "htt/tsc/admissibility/three_bound_hierarchy.py:168-171"
+    ]
+  },
+  "three_halves_rule": {
+    "rule": "X^2 = x_ab x^ab/(6 H^2), H = Theta/3, sqrt(x_ab x^ab)/Theta <= B => X^2_max = (3/2) B^2",
+    "derived_factor": "3/2",
+    "factor_is_three_halves": true
+  },
+  "mes_epsilon_provenance": {
+    "provenance": "Maartens-Ellis-Stoeger 1995 linearized multipole hierarchy; registered external values carried by htt/tsc/admissibility/three_bound_hierarchy.py COEFFS and htt/htt/htt/core/bounds.py",
+    "coefficients": {
+      "B_sigma": [
+        "5/3",
+        "3",
+        "3/7"
+      ],
+      "B_omega": [
+        "3/4",
+        "2",
+        "2/7"
+      ],
+      "B_accel": [
+        "3/4",
+        "1",
+        "3/14"
+      ]
+    },
+    "rederived_here": false
+  },
+  "claim_boundary": "symbolic convention seal only; document-side B1 repair; code already on the registered convention; no data, detection, family/geometry, or native-solver claim"
+}

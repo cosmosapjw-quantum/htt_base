@@ -52,6 +52,14 @@ RESEARCH_CODE = (
     "htt/obsstat/egs3_calibration.py",
     "htt/obsstat/egs3_volterra_memory.py",
     "htt/obsstat/egs3_vorticity_channels.py",
+    # rev-r146 review-response: identified-set semantics + SymPy seals.
+    "htt/obsstat/egs3_identified_set.py",
+    "htt/obsstat/egs3_gf_interval.py",
+    "htt/obsstat/egs3_evalue_merge.py",
+    "htt/obsstat/egs3_prior_exposure.py",
+    "htt/obsstat/egs3_parent_identity.py",
+    "htt/obsstat/egs3_bianchi_v_constraint.py",
+    "htt/obsstat/egs3_shear_memory_bias.py",
     # EGS2 theorem modules
     "htt/obsstat/egs2_fisher.py",
     "htt/obsstat/egs2_shear_bracket.py",
@@ -131,6 +139,9 @@ RESULT_RECORDS = (
     "docs/generated/egs_results_table.md",
     "docs/generated/egs3_experiments.json",
     "docs/generated/egs3_psd_cone_proof.json",
+    # rev-r146 review-response: identified-set semantics + SymPy seals.
+    "docs/generated/parent_identity_seal.json",
+    "docs/generated/bianchi_v_constraint_seal.json",
     "docs/generated/egs3_bracket_constants_proof.json",
     "docs/generated/egs2_experiments.json",
     "docs/generated/k1_global_maxscan.json",

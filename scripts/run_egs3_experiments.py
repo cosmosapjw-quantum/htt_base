@@ -249,6 +249,134 @@ def axis_d() -> dict:
     }
 
 
+def axis_e() -> dict:
+    """Axis E: identified-set semantics for x_C (P26/P31/P35/P36/P28/P29, A8). The
+    P1 x P18 operational resolution: the reportable object is [x_C^-, x_C^+] over the
+    two-stage-tau feasible set, with empty (refutability) / unbounded (no-result) /
+    ceiling-unfit (F>1) statuses, Imbens-Manski endpoint coverage, joint-feasible-set
+    G_F propagation, dependent e-value merging, and the prior-exposure witness.
+    Synthetic statistics machinery only; separate diagnostic surface (bit-identical
+    x_C untouched); no detection/family/solver/posterior claim."""
+    import numpy as np
+    from htt.obsstat.egs3_identified_set import (
+        identified_set_report, im_coverage_experiment,
+        refutability_power_experiment, toy_design,
+    )
+    from htt.obsstat.egs3_gf_interval import gf_joint_vs_naive
+    from htt.obsstat.egs3_evalue_merge import arithmetic_merge_mc, test_martingale_ville_mc
+    from htt.obsstat.egs3_prior_exposure import gaussian_prior_exposure_witness
+
+    toy = toy_design()
+    y = toy["R"] @ toy["g_true"]
+    pop = identified_set_report(y, toy["R"], toy["c"], toy["lower"], toy["upper"],
+                                alpha2=1.0)
+    upper_open = toy["upper"].copy(); upper_open[1] = np.inf
+    unbounded = identified_set_report(y, toy["R"], toy["c"], toy["lower"],
+                                      upper_open, alpha2=1.0)
+    A = toy["R"][:, [0, 2]]
+    q, _ = np.linalg.qr(A, mode="complete")
+    misfit = identified_set_report(y + 10.0 * q[:, -1], toy["R"], toy["c"],
+                                   toy["lower"], toy["upper"])
+    unfit = identified_set_report(y, toy["R"], toy["c"], toy["lower"],
+                                  toy["upper"], alpha2=1.0, ceiling_U=0.05)
+    cov = im_coverage_experiment(n_mc=2000, seed=20260708)
+    power = refutability_power_experiment(n_mc=1000, seed=20260708)
+    gf = gf_joint_vs_naive()
+    merge = arithmetic_merge_mc(seed=20260708)
+    ville = test_martingale_ville_mc(seed=20260708)
+    prior = gaussian_prior_exposure_witness(seed=20260708)
+    return {
+        "E1_identified_set": {
+            "population_interval": [pop.x_lo, pop.x_hi],
+            "reproduces_registered_example": bool(
+                abs(pop.x_lo - 0.11) < 1e-9 and abs(pop.x_hi - 0.17) < 1e-9),
+            "tau1_chi2_dof": pop.m - pop.rank, "tau1": pop.tau.tau1,
+            "statuses": {"feasible": pop.status, "empty_misfit": misfit.status,
+                         "unbounded_no_ceiling": unbounded.status,
+                         "ceiling_unfit_F_gt_1": unfit.status},
+            "rank": pop.rank,
+        },
+        "E2_im_coverage": {
+            "n_mc": cov.n_mc, "seed": cov.seed, "alpha": cov.alpha,
+            "delta_over_sigma": cov.delta_over_sigma,
+            "coverage_projection": cov.coverage_projection,
+            "coverage_im": cov.coverage_im,
+            "coverage_endpoint_naive": cov.coverage_endpoint,
+            "se_binomial": cov.se_binomial, "cn_im": cov.cn_im,
+            "ordering_projection_ge_im_gt_naive": bool(
+                cov.coverage_projection >= cov.coverage_im > cov.coverage_endpoint),
+        },
+        "E3_refutability_power": {
+            "amplitudes": list(power.amplitudes),
+            "empty_rate": list(power.empty_rate), "se": list(power.se),
+            "alpha1": power.alpha1, "n_mc": power.n_mc, "seed": power.seed,
+            "size_matches_alpha1": bool(
+                abs(power.empty_rate[0] - power.alpha1) < 3.0 * max(power.se[0], 7e-3)),
+        },
+        "E4_gf_joint_vs_naive": {
+            "joint": list(gf.joint), "naive": list(gf.naive),
+            "width_ratio": gf.width_ratio,
+            "joint_within_naive": gf.joint_within_naive,
+        },
+        "E7_evalue_merge": {
+            "merged_mean": merge.merged_mean, "se": merge.se,
+            "n_sims": merge.n_sims, "seed": merge.seed,
+            "dependence": merge.dependence, "mean_le_one": merge.mean_le_one,
+            "ville_beta_grid": list(ville.beta_grid),
+            "ville_crossing_rate": list(ville.crossing_rate),
+            "ville_holds": ville.ville_holds,
+        },
+        "E8_prior_exposure": {
+            "kl_null_block_exact_zero": prior.kl_null_block == 0.0,
+            "coupled_prior_kl": prior.coupled_prior_kl,
+            "n_samples": prior.n_samples, "seed": prior.seed,
+        },
+        "headline": ("x_C is reported as a two-stage-tau identified set [x_C^-, x_C^+] with "
+                     "refutability (empty), no-result (unbounded), and ceiling-unfit (F>1) "
+                     "statuses; Imbens-Manski endpoint coverage nominal where the naive "
+                     "endpoint CI undercovers; G_F propagates on the joint feasible set; "
+                     "e-values merge under arbitrary dependence and are anytime-valid; "
+                     "null-direction posteriors are prior-exposed"),
+    }
+
+
+def axis_f() -> dict:
+    """Axis F: physics/convention seals (B1 repair + P5 + P13 companion). The parent
+    identity and Bianchi V seals are SymPy artifacts (SSoT: docs/generated/
+    parent_identity_seal.json + bianchi_v_constraint_seal.json via `make egs3-seals`);
+    this axis records the numeric witnesses. Conditional/diagnostic only."""
+    from htt.obsstat.egs3_bianchi_v_constraint import numeric_scaling_witness
+    from htt.obsstat.egs3_shear_memory_bias import kappa_bias_curve
+    wit = numeric_scaling_witness()
+    curve = kappa_bias_curve()
+    return {
+        "F1_parent_identity_ref": {
+            "artifact": "docs/generated/parent_identity_seal.json",
+            "note": "SymPy seal is the SSoT (make egs3-seals): parent identity -> "
+                    "c=(1,-1,1,1); W^2 = omega_ab omega^ab/(6H^2); v5-doc convention "
+                    "was 3x; (3/2) MES rule derived",
+        },
+        "F2_bianchi_v_witness": {
+            "artifact": "docs/generated/bianchi_v_constraint_seal.json",
+            "betas": list(wit.betas), "rel_errors": list(wit.rel_errors),
+            "loglog_slope": wit.loglog_slope,
+            "omega_k_breakdown_raises": wit.omega_k_breakdown_raises,
+        },
+        "F3_shear_memory_bias": {
+            "e0_grid": list(curve.e0_grid),
+            "kappa_bias_ratio": list(curve.kappa_bias_ratio),
+            "zero_crossing_e0": curve.zero_crossing_e0,
+            "note": "registered scalar closure unbiased iff the toy Weyl closure "
+                    "matches the friction (e0=1); quantitative kernel is "
+                    "closure-conditional (P13 -> DERIVED_CONDITIONAL)",
+        },
+        "headline": ("parent-identity + Bianchi V constraint SymPy seals PASS; the "
+                     "registered shear-closure kappa fit is unbiased only at the "
+                     "friction-matching toy Weyl closure (P13 quantitative content is "
+                     "closure-conditional)"),
+    }
+
+
 def main() -> int:
     payload = {
         "schema": "htt.egs3.experiments.v1",
@@ -256,7 +384,8 @@ def main() -> int:
         "family_identification": False,
         "native_solver_result": False,
         "experiments": {"axis_a": axis_a(), "axis_b": axis_b(), "axis_psd": axis_psd(),
-                        "axis_c": axis_c(), "axis_d": axis_d()},
+                        "axis_c": axis_c(), "axis_d": axis_d(),
+                        "axis_e": axis_e(), "axis_f": axis_f()},
         "framework_upgrade": "graded comparator g=(Sigma2,W2,Omega_tilt,Omega_k); x_C=<c,g> is a derived summary (bit-identical)",
         "revisionary_redesign": "PSD-cone comparator M=diag(g)>=0; x_C=tr(C M); realized + gated (representation only, bit-identical), ships behind the graded upgrade",
         "blockers_kept_open": [

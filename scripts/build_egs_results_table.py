@@ -58,6 +58,11 @@ def _rows() -> list[dict]:
     # rev-r142 BASS-Extended joint PV+CMB: real CF4+JWST forecast + real SMICA BipoSH
     bej = _load("bass_extended_joint_forecast.json")
     bip = _load("k1_biposh_smica.json")
+    # rev-r146 review-response cycle: identified-set semantics + SymPy seals
+    e = egs3.get("axis_e", {})
+    f = egs3.get("axis_f", {})
+    pis = _load("parent_identity_seal.json")
+    bvs = _load("bianchi_v_constraint_seal.json")
 
     def r(tid, axis, statement, key, status, evidence):
         return {"theorem_id": tid, "axis": axis, "statement": statement,
@@ -133,6 +138,27 @@ def _rows() -> list[dict]:
         r("EGS3-PSD", MATH, "PSD-cone redesign: x_C = tr(C M) for M=diag(g)>=0; admissible set is the convex PSD cone; rank-2 reachable eigen-directions; cone-shell bracket excludes the FLRW vertex",
           f"bit-identical {p.get('bit_identical','?')}; rank {p.get('reachable_rank','?')}; convex cone {p.get('convex_cone','?')}; status {psd.get('status','?')}",
           "proven_symbolic", "egs3-gates PSD P1-P4; wolfram egs3_psd_cone (PASS); fig_egs3_psd_cone"),
+        r("EGS3-E1", MATH, "Identified-set semantics for x_C (P26/P31/A8): the reportable object under the rank-2 response is the two-stage-tau interval [x_C^-, x_C^+] with refutability (empty), no-result (unbounded), and ceiling-unfit (F>1) statuses; the interval is sharp (endpoints attained)",
+          (f"population interval {e.get('E1_identified_set',{}).get('population_interval','?')} reproduces the registered example; statuses {e.get('E1_identified_set',{}).get('statuses','?')}"),
+          "proven_gate", "egs3-gates E1/E7"),
+        r("EGS3-E2", MATH, "Imbens-Manski endpoint coverage (P35): the parameter CI needs the IM critical value; the projection CI is conservative and the naive per-endpoint one-sided CI undercovers as the interval width shrinks",
+          (f"coverage projection {e.get('E2_im_coverage',{}).get('coverage_projection',0):.3f} >= IM {e.get('E2_im_coverage',{}).get('coverage_im',0):.3f} (nominal 0.95) > naive endpoint {e.get('E2_im_coverage',{}).get('coverage_endpoint_naive',0):.3f} (N={e.get('E2_im_coverage',{}).get('n_mc','?')}, seed {e.get('E2_im_coverage',{}).get('seed','?')}, SE {e.get('E2_im_coverage',{}).get('se_binomial',0):.4f})"),
+          "proven_gate", "egs3-gates E2; fig_egs3_e_im_coverage"),
+        r("EGS3-E3", MATH, "Refutability power (M2' response): the empty-feasible-set branch is a specification test -- size alpha1 at zero injection, power -> 1 with the orthogonal-misfit amplitude (synthetic witness)",
+          (f"empty rate {e.get('E3_refutability_power',{}).get('empty_rate',['?'])[0]:.3f} at a=0 (alpha1 {e.get('E3_refutability_power',{}).get('alpha1','?')}) -> {e.get('E3_refutability_power',{}).get('empty_rate',[0,0,0,0,0,0])[-1]:.2f} at a=6 (N={e.get('E3_refutability_power',{}).get('n_mc','?')}, seed {e.get('E3_refutability_power',{}).get('seed','?')})"),
+          "measured_synth", "egs3-gates E3; fig_egs3_e_refutability_power"),
+        r("EGS3-E4", MATH, "Joint-feasible-set G_F propagation (P36): with shared null components across depth bins the depth-gap interval is the joint sup/inf over ONE shared feasible set; the naive quotient of marginal intervals is strictly wider (conservative)",
+          (f"joint width / naive width = {e.get('E4_gf_joint_vs_naive',{}).get('width_ratio',1):.3f}; joint within naive {e.get('E4_gf_joint_vs_naive',{}).get('joint_within_naive','?')}"),
+          "proven_gate", "egs3-gates E4"),
+        r("EGS3-F1", MATH, "Parent-identity seal (B1 repair): the Gauss constraint (tilted frame included) forces W^2 = omega_ab omega^ab/(6H^2) and c=(1,-1,1,1); the v5-document convention omega_a omega^a/H^2 was exactly 3x the registered value; the (3/2) MES conversion rule is derived, not asserted (code was already on the registered convention -- document-only repair)",
+          (f"seal {pis.get('status','?')}; c derived {pis.get('parent_identity',{}).get('c_derived','?')}; mismatch factor {pis.get('w2_convention',{}).get('mismatch_factor','?')}; (3/2) rule {pis.get('three_halves_rule',{}).get('derived_factor','?')}"),
+          "proven_symbolic", "make egs3-seals (SymPy); egs3-gates F1; docs/generated/parent_identity_seal.json"),
+        r("EGS3-F2", GR, "Bianchi V constraint seal (P5): the LRS-V momentum constraint 2 A Sigma_+ = (1+w) Omega beta reproduces the conditional Sigma_+^2 = [(1+w)Omega]^2 beta^2/(4 Omega_K) exactly; exact-rapidity correction (4/3)beta^2; undefined for Omega_K<=0 (constraint-algebra seal, NOT a dynamical integration)",
+          (f"seal {bvs.get('status','?')}; beta^2-scaling log-log slope {f.get('F2_bianchi_v_witness',{}).get('loglog_slope',0):.4f}; Omega_K<=0 raises {f.get('F2_bianchi_v_witness',{}).get('omega_k_breakdown_raises','?')}"),
+          "proven_symbolic", "make egs3-seals (SymPy); egs3-gates F2; docs/generated/bianchi_v_constraint_seal.json"),
+        r("EGS3-F3", GR, "Shear-memory kernel bias (P13 companion): fitting the naive scalar closure sigma'=-3H sigma+kappa Pi on exact linearized-1+3 trajectories (toy Weyl closure E=e0 H sigma) is unbiased ONLY at the friction-matching e0=1 -- the quantitative kernel is closure-conditional (P13 ledger demoted to DERIVED_CONDITIONAL)",
+          (f"kappa bias ratio over e0 {f.get('F3_shear_memory_bias',{}).get('e0_grid','?')}: {[round(x, 3) for x in f.get('F3_shear_memory_bias',{}).get('kappa_bias_ratio',[])]} (zero at e0={f.get('F3_shear_memory_bias',{}).get('zero_crossing_e0','?')})"),
+          "measured_synth", "egs3-gates F3; fig_egs3_f_shear_memory_bias"),
         r("K1", DATA, "Global look-elsewhere-corrected low-l morphology p-value on the real Planck map (isotropic LambdaCDM null)",
           (f"SMICA global p={k1g.get('smica',{}).get('global_p',0):.3f}, Commander p={k1g.get('commander',{}).get('global_p',0):.3f} (real PR3 map, {k1g.get('config',{}).get('n_null','?')} GRF nulls)"
            if k1g else "awaiting compute"),

@@ -77,6 +77,9 @@ MEASUREMENT_REPORTS = (
     "docs/generated/egs3_experiments.json",
     "docs/generated/egs3_bracket_constants_proof.json",
     "docs/generated/egs3_psd_cone_proof.json",
+    # rev-r146 review-response: identified-set semantics + SymPy seals.
+    "docs/generated/parent_identity_seal.json",
+    "docs/generated/bianchi_v_constraint_seal.json",
     # Consolidated cross-programme results table (data-analysis aggregate).
     "docs/generated/egs_results_table.json",
     "docs/generated/egs_results_table.md",
@@ -115,6 +118,14 @@ SOURCE_FILES = (
     "htt/obsstat/egs3_volterra_memory.py",
     "htt/obsstat/egs3_vorticity_channels.py",
     "htt/obsstat/egs3_psd_cone.py",
+    # rev-r146 review-response: identified-set semantics + SymPy seals.
+    "htt/obsstat/egs3_identified_set.py",
+    "htt/obsstat/egs3_gf_interval.py",
+    "htt/obsstat/egs3_evalue_merge.py",
+    "htt/obsstat/egs3_prior_exposure.py",
+    "htt/obsstat/egs3_parent_identity.py",
+    "htt/obsstat/egs3_bianchi_v_constraint.py",
+    "htt/obsstat/egs3_shear_memory_bias.py",
     "htt/bass/transfer/shear_quadrupole_seminative.py",
 )
 

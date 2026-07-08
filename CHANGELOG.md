@@ -7,6 +7,42 @@
 
 ## [Unreleased]
 
+### External re-review response: v6 (Fourth Revision) audit report + identified-set/seal program (rev-r146, 2026-07-08)
+
+Answered the external re-review of the v5 external-audit report (2 blockers + 6 major + minors) with
+CPU-local work only (the K1 E2E download runs in parallel; nothing here needs external data).
+- **B1 (BLOCKER, W^2 convention)**: document-only defect --- the code was already on the registered
+  convention (`comparator_policy.py:337` `omega_sq/(6H^2)`; `bounds.py`/`three_bound_hierarchy.py`
+  `(3/2)B_omega^2`); the v5 report's `omega_a omega^a/H^2` was exactly 3x. v6 registers
+  `W^2 := omega_ab omega^ab/(6H^2)`, DISPLAYS the parent identity `1=Om+OL+Ok+Otilt+Sigma^2-W^2`,
+  and derives `c=(1,-1,1,1)` + the (3/2) MES rule in a fail-closed SymPy seal
+  (`htt/obsstat/egs3_parent_identity.py`, `make egs3-seals`,
+  `docs/generated/parent_identity_seal.json`). Zero edits to existing `htt/` modules; x_C anchors
+  bit-identical (gate-guarded).
+- **B2**: P26-P32 full proof bodies written into the v6 body; ledger gains a Body-section column.
+- **M1'-M6'**: two-stage tau + new P35 (Imbens-Manski endpoint coverage; naive endpoint CI shown to
+  undercover by MC) + empty/unbounded/ceiling-unfit statuses + new algorithm A8 + new P36
+  (joint-feasible-set G_F interval, naive quotient strictly conservative, width ratio 0.58) + P33
+  domain restriction + audit-grade section-10 provenance (N/seed/SE/multi-threshold Markov +
+  fail-closed E1-E8 witness table with artifact sha256 prefixes) + Omega_tilt/Omega_k closed forms +
+  Hartlap/Sellentin-Heavens K1-lane requirement + F>1 clip + all minors (Fourth Revision title,
+  [x_C]_+ notation, posterior wording, P13/P26 -> COND, lambda_2 rename, literature-context
+  subsection as a registered exception).
+- **New modules** (`htt/obsstat/`): `egs3_identified_set.py` (P26/P31/P35/A8 + IM-coverage +
+  refutability-power experiments), `egs3_gf_interval.py` (P36), `egs3_evalue_merge.py` (P29 +
+  Ville anytime-validity), `egs3_prior_exposure.py` (P28 KL=0 witness), `egs3_parent_identity.py`,
+  `egs3_bianchi_v_constraint.py` (P5 constraint-algebra seal; symbolic + (4/3)beta^2 series +
+  slope-2 numeric witness + Omega_K<=0 raises; Hewitt-Wainwright evolution = registered stretch),
+  `egs3_shear_memory_bias.py` (P13 companion: naive-closure kappa fit unbiased only at the
+  friction-matching toy Weyl closure e0=1).
+- **Surface**: `make egs3-gates` 61 -> 109 (axis E: E1-E7 incl. CoVe + bit-identity guard; axis F:
+  F1-F4); `make egs3-seals` new; `run_egs3_experiments.py` += axis_e/axis_f (axis a-d
+  value-identical); results table 25 -> 32 rows (EGS3-E1..E4, F1..F3); 3 new theorem figures;
+  `scripts/build_external_audit_report_v6.py` -> `external_audit_research_report_20260708_v6/`
+  (26 pp, deterministic GENERATED_AT, --check, REQUIRED_ARTIFACTS fail-closed) + root PDF (frozen
+  v5 package untouched); CLAIM_LEDGER += 8. Diagnostic-only: symbolic seals + synthetic witnesses;
+  no data claim; Sigma^2 stays partial; fail-closed sectors stay fail-closed; BLOCKERS.md unchanged.
+
 ### Integrated external delta patch: dl_pipeline acquisition support + v5 external-audit report (rev-r145, 2026-07-08)
 
 Applied the externally-developed overlay `htt_base_delta_patch_20260707.zip` (git-unavailable in the

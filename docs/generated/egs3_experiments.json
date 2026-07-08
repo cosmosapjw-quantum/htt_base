@@ -189,6 +189,148 @@
       },
       "D5_theory_cmb_fail_closed": true,
       "headline": "feasible correlated-covariance PV tilt (Woodbury) + a JWST-anchor Omega_tilt precision forecast that reduces the Sigma^2 covariance inflation via the coupled Fisher (degeneracy break) + a real off-diagonal BipoSH SI channel; the theory-g CMB likelihood stays fail-closed until the native solver"
+    },
+    "axis_e": {
+      "E1_identified_set": {
+        "population_interval": [
+          0.1099999999999452,
+          0.1700000000360007
+        ],
+        "reproduces_registered_example": true,
+        "tau1_chi2_dof": 4,
+        "tau1": 9.487729036781154,
+        "statuses": {
+          "feasible": "feasible",
+          "empty_misfit": "empty",
+          "unbounded_no_ceiling": "unbounded",
+          "ceiling_unfit_F_gt_1": "ceiling_unfit"
+        },
+        "rank": 2
+      },
+      "E2_im_coverage": {
+        "n_mc": 2000,
+        "seed": 20260708,
+        "alpha": 0.05,
+        "delta_over_sigma": 0.5,
+        "coverage_projection": 0.9665,
+        "coverage_im": 0.9475,
+        "coverage_endpoint_naive": 0.931,
+        "se_binomial": 0.004987171041783106,
+        "cn_im": 1.7697128473565429,
+        "ordering_projection_ge_im_gt_naive": true
+      },
+      "E3_refutability_power": {
+        "amplitudes": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          6.0
+        ],
+        "empty_rate": [
+          0.047,
+          0.101,
+          0.341,
+          0.681,
+          0.902,
+          0.998
+        ],
+        "se": [
+          0.006692607862410586,
+          0.009528850927577786,
+          0.01499063040702425,
+          0.01473902981881779,
+          0.009401914698613255,
+          0.0014127986409959495
+        ],
+        "alpha1": 0.05,
+        "n_mc": 1000,
+        "seed": 20260708,
+        "size_matches_alpha1": true
+      },
+      "E4_gf_joint_vs_naive": {
+        "joint": [
+          0.31818181818181823,
+          0.8636363636363636
+        ],
+        "naive": [
+          0.25,
+          1.1875
+        ],
+        "width_ratio": 0.5818181818181818,
+        "joint_within_naive": true
+      },
+      "E7_evalue_merge": {
+        "merged_mean": 0.9967044636096849,
+        "se": 0.004869880812292009,
+        "n_sims": 20000,
+        "seed": 20260708,
+        "dependence": "common_factor",
+        "mean_le_one": true,
+        "ville_beta_grid": [
+          0.5,
+          0.2,
+          0.1,
+          0.05
+        ],
+        "ville_crossing_rate": [
+          0.37675,
+          0.134,
+          0.0595,
+          0.02225
+        ],
+        "ville_holds": true
+      },
+      "E8_prior_exposure": {
+        "kl_null_block_exact_zero": true,
+        "coupled_prior_kl": 0.006512050169981187,
+        "n_samples": 20000,
+        "seed": 20260708
+      },
+      "headline": "x_C is reported as a two-stage-tau identified set [x_C^-, x_C^+] with refutability (empty), no-result (unbounded), and ceiling-unfit (F>1) statuses; Imbens-Manski endpoint coverage nominal where the naive endpoint CI undercovers; G_F propagates on the joint feasible set; e-values merge under arbitrary dependence and are anytime-valid; null-direction posteriors are prior-exposed"
+    },
+    "axis_f": {
+      "F1_parent_identity_ref": {
+        "artifact": "docs/generated/parent_identity_seal.json",
+        "note": "SymPy seal is the SSoT (make egs3-seals): parent identity -> c=(1,-1,1,1); W^2 = omega_ab omega^ab/(6H^2); v5-doc convention was 3x; (3/2) MES rule derived"
+      },
+      "F2_bianchi_v_witness": {
+        "artifact": "docs/generated/bianchi_v_constraint_seal.json",
+        "betas": [
+          0.001,
+          0.003,
+          0.01,
+          0.03
+        ],
+        "rel_errors": [
+          1.3333340440624397e-06,
+          1.2000057600269898e-05,
+          0.00013334044464774486,
+          0.0012005761481381771
+        ],
+        "loglog_slope": 2.000129763584081,
+        "omega_k_breakdown_raises": true
+      },
+      "F3_shear_memory_bias": {
+        "e0_grid": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "kappa_bias_ratio": [
+          0.3276297048522454,
+          0.1406125133495566,
+          0.0,
+          -0.10950219991182386,
+          -0.19716583462927872
+        ],
+        "zero_crossing_e0": 1.0,
+        "note": "registered scalar closure unbiased iff the toy Weyl closure matches the friction (e0=1); quantitative kernel is closure-conditional (P13 -> DERIVED_CONDITIONAL)"
+      },
+      "headline": "parent-identity + Bianchi V constraint SymPy seals PASS; the registered shear-closure kappa fit is unbiased only at the friction-matching toy Weyl closure (P13 quantitative content is closure-conditional)"
     }
   },
   "framework_upgrade": "graded comparator g=(Sigma2,W2,Omega_tilt,Omega_k); x_C=<c,g> is a derived summary (bit-identical)",

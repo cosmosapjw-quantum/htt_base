@@ -22,7 +22,7 @@ PYPATH   := PYTHONPATH=$(REPO):$(REPO)/htt:$(REPO)/htt/htt
 
 .PHONY: pr04-gates pr07-gates egs2-gates egs3-gates paper-a-gates paper-b-gates \
         pr04-proofs pr04-forbidden-deps pr07-wolfram pr07-cove egs2-experiments \
-        egs3-experiments egs3-wolfram
+        egs3-experiments egs3-wolfram egs3-seals
 
 ## All 23 external PR04 theorem/property gates + symbolic proofs + dep scan.
 pr04-gates: pr04-forbidden-deps
@@ -48,6 +48,10 @@ egs3-gates:
 ## EGS3 experiment evidence -> docs/generated/egs3_experiments.json.
 egs3-experiments:
 	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_experiments.py
+
+## EGS3 SymPy seals (parent identity/W^2 convention + Bianchi V constraint) -> docs/generated/*_seal.json.
+egs3-seals:
+	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_symbolic_seals.py
 
 ## EGS3 local-only Wolfram cores (B4 two-sided bracket constants + PSD-cone redesign).
 egs3-wolfram:

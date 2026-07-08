@@ -102,6 +102,9 @@ EVIDENCE_FILES = (
     "docs/generated/egs3_experiments.json",
     "docs/generated/egs3_bracket_constants_proof.json",
     "docs/generated/egs3_psd_cone_proof.json",
+    # rev-r146 review-response: identified-set semantics + SymPy seals.
+    "docs/generated/parent_identity_seal.json",
+    "docs/generated/bianchi_v_constraint_seal.json",
     # Consolidated results table + blocker dossier backing the new §9 gallery.
     "docs/generated/egs_results_table.json",
     "docs/generated/egs_results_table.md",

@@ -321,8 +321,53 @@ def _sources() -> dict[str, dict]:
             "f_grid": f_grid, "inflation": infl, "rho": 0.6}
     dbip = {"theorem_id": "EGS3-D", "iso_L1": iso_L1, "aberrated_L1": ab_L1, "coupling_eps": 0.3}
 
+    # --- E identified-set semantics: IM coverage + refutability power ----
+    from htt.obsstat.egs3_identified_set import (
+        im_coverage_experiment, refutability_power_experiment,
+    )
+    dos_grid = [0.1, 0.25, 0.5, 1.0, 2.0]
+    cov_proj, cov_im, cov_end = [], [], []
+    for dos in dos_grid:
+        cv = im_coverage_experiment(n_mc=2000, seed=20260708, delta_over_sigma=dos)
+        cov_proj.append(cv.coverage_projection)
+        cov_im.append(cv.coverage_im)
+        cov_end.append(cv.coverage_endpoint)
+    e_im = {
+        "theorem_id": "EGS3-E2",
+        "delta_over_sigma": dos_grid,
+        "coverage_projection": cov_proj,
+        "coverage_im": cov_im,
+        "coverage_endpoint_naive": cov_end,
+        "nominal": 0.95,
+        "n_mc": 2000,
+        "seed": 20260708,
+        "small_delta_endpoint_limit": 0.90,       # 1 - 2 alpha at delta -> 0
+    }
+    pw = refutability_power_experiment(n_mc=1000, seed=20260708)
+    e_pow = {
+        "theorem_id": "EGS3-E3",
+        "amplitudes": list(pw.amplitudes),
+        "empty_rate": list(pw.empty_rate),
+        "se": list(pw.se),
+        "alpha1": pw.alpha1,
+        "n_mc": pw.n_mc,
+        "seed": pw.seed,
+    }
+
+    # --- F shear-memory kernel bias ---------------------------------------
+    from htt.obsstat.egs3_shear_memory_bias import kappa_bias_curve
+    smb = kappa_bias_curve(e0_grid=tuple(np.linspace(0.0, 2.0, 21)))
+    f_smb = {
+        "theorem_id": "EGS3-F3",
+        "e0_grid": list(smb.e0_grid),
+        "kappa_bias_ratio": list(smb.kappa_bias_ratio),
+        "zero_crossing_e0": smb.zero_crossing_e0,
+        "pi0": smb.pi0, "z0": smb.z0, "H": smb.H, "n_nodes": smb.n_nodes,
+    }
+
     return {"a1": a1, "a3": a3, "a1_floor": a1_floor, "b1": b1, "b2": b2,
-            "b3": b3, "nt2b1": nt2b1, "psd": psd, "c": c, "d": dfig, "dbip": dbip}
+            "b3": b3, "nt2b1": nt2b1, "psd": psd, "c": c, "d": dfig, "dbip": dbip,
+            "e_im": e_im, "e_pow": e_pow, "f_smb": f_smb}
 
 
 def _render(src: dict) -> None:
@@ -490,6 +535,55 @@ def _render(src: dict) -> None:
     ax.legend(fontsize=8); fig.tight_layout()
     fig.savefig(FIG_DIR / "fig_egs3_d_biposh.png", dpi=140); plt.close(fig)
 
+    # E2 Imbens-Manski vs projection vs naive endpoint coverage
+    ei = src["e_im"]
+    fig, ax = plt.subplots(figsize=(5.4, 4.0))
+    ax.plot(ei["delta_over_sigma"], ei["coverage_projection"], marker="o", color=blue,
+            label="projection z(1−α/2)  (set CI, conservative)")
+    ax.plot(ei["delta_over_sigma"], ei["coverage_im"], marker="s", color=green,
+            label="Imbens–Manski C_N  (parameter CI, nominal)")
+    ax.plot(ei["delta_over_sigma"], ei["coverage_endpoint_naive"], marker="^", color=red,
+            label="naive endpoint z(1−α)  (undercovers)")
+    ax.axhline(ei["nominal"], color=grey, ls="--", label=f"nominal {ei['nominal']:.2f}")
+    ax.axhline(ei["small_delta_endpoint_limit"], color=red, ls=":", lw=1,
+               label="naive Δ→0 limit 1−2α")
+    ax.set_xlabel("interval width / endpoint s.e.  (Δ/σ)")
+    ax.set_ylabel("MC coverage of a boundary point")
+    ax.set_ylim(0.87, 1.0)
+    ax.set_title(f"EGS3-E2 (P35): identified-set endpoint coverage\nN={ei['n_mc']}/point, seed {ei['seed']}")
+    ax.legend(fontsize=7, loc="lower right"); fig.tight_layout()
+    fig.savefig(FIG_DIR / "fig_egs3_e_im_coverage.png", dpi=140); plt.close(fig)
+
+    # E3 refutability power curve
+    ep = src["e_pow"]
+    fig, ax = plt.subplots(figsize=(5.4, 4.0))
+    ax.errorbar(ep["amplitudes"], ep["empty_rate"], yerr=[3 * s for s in ep["se"]],
+                marker="o", color=blue, capsize=3, label="empty-set rate (±3 SE)")
+    ax.axhline(ep["alpha1"], color=grey, ls="--", label=f"size α₁={ep['alpha1']:.2f}")
+    ax.axhline(1.0, color=green, ls=":", lw=1)
+    ax.set_xlabel("orthogonal misfit injection amplitude a")
+    ax.set_ylabel("P(G(y) = ∅)  = specification-test power")
+    ax.set_ylim(-0.03, 1.05)
+    ax.set_title(f"EGS3-E3 (M2′): the empty feasible set is REFUTABILITY\nsize α₁ at a=0, "
+                 f"power → 1 (N={ep['n_mc']}, seed {ep['seed']})")
+    ax.legend(fontsize=8, loc="center right"); fig.tight_layout()
+    fig.savefig(FIG_DIR / "fig_egs3_e_refutability_power.png", dpi=140); plt.close(fig)
+
+    # F3 shear-memory kernel kappa-inference bias
+    fs = src["f_smb"]
+    fig, ax = plt.subplots(figsize=(5.4, 4.0))
+    ax.plot(fs["e0_grid"], fs["kappa_bias_ratio"], marker="o", ms=3, color=blue,
+            label="κ̂/(κ/2) − 1  (registered-law fit on exact-law trajectories)")
+    ax.axhline(0.0, color=grey, ls="--")
+    ax.axvline(fs["zero_crossing_e0"], color=green, ls=":",
+               label=f"friction-matching closure e₀={fs['zero_crossing_e0']:.0f} (unbiased)")
+    ax.set_xlabel("toy Weyl-closure coefficient e₀  (E = e₀ H σ)")
+    ax.set_ylabel("κ inference bias")
+    ax.set_title("EGS3-F3 (P13): the scalar-closure κ is closure-conditional\n"
+                 "unbiased only at the friction-matching e₀=1")
+    ax.legend(fontsize=7); fig.tight_layout()
+    fig.savefig(FIG_DIR / "fig_egs3_f_shear_memory_bias.png", dpi=140); plt.close(fig)
+
 
 _SPECS = [
     ("fig_egs3_a1_graded_rank", "EGS3-A1", "Graded comparator identifiability rank", "a1"),
@@ -503,6 +597,9 @@ _SPECS = [
     ("fig_egs3_c_deprojection", "EGS3-C", "Kinematic deprojection of the observer-boost quadrupole", "c"),
     ("fig_egs3_d_joint_forecast", "EGS3-D", "BASS-Extended joint PV+CMB information forecast", "d"),
     ("fig_egs3_d_biposh", "EGS3-D", "SMICA BipoSH L=1 boost-aberration channel", "dbip"),
+    ("fig_egs3_e_im_coverage", "EGS3-E2", "Imbens-Manski vs projection interval coverage", "e_im"),
+    ("fig_egs3_e_refutability_power", "EGS3-E3", "Refutability (empty-set) power curve", "e_pow"),
+    ("fig_egs3_f_shear_memory_bias", "EGS3-F3", "Shear-memory kernel kappa-inference bias", "f_smb"),
 ]
 
 

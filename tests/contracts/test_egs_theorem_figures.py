@@ -21,6 +21,8 @@ STEMS = (
     "fig_egs2_nt2a1_fisher_floor", "fig_egs3_b1_floor_profile",
     "fig_egs3_b2_volterra", "fig_egs3_b3_vorticity",
     "fig_egs2_nt2b1_bracket", "fig_egs3_psd_cone",
+    "fig_egs3_e_im_coverage", "fig_egs3_e_refutability_power",
+    "fig_egs3_f_shear_memory_bias",
 )
 
 

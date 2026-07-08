@@ -197,6 +197,62 @@
       "theorem_id": "EGS3-PSD"
     },
     {
+      "axis": "math_stat",
+      "evidence": "egs3-gates E1/E7",
+      "key_result": "population interval [0.1099999999999452, 0.1700000000360007] reproduces the registered example; statuses {'feasible': 'feasible', 'empty_misfit': 'empty', 'unbounded_no_ceiling': 'unbounded', 'ceiling_unfit_F_gt_1': 'ceiling_unfit'}",
+      "statement": "Identified-set semantics for x_C (P26/P31/A8): the reportable object under the rank-2 response is the two-stage-tau interval [x_C^-, x_C^+] with refutability (empty), no-result (unbounded), and ceiling-unfit (F>1) statuses; the interval is sharp (endpoints attained)",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-E1"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates E2; fig_egs3_e_im_coverage",
+      "key_result": "coverage projection 0.967 >= IM 0.948 (nominal 0.95) > naive endpoint 0.931 (N=2000, seed 20260708, SE 0.0050)",
+      "statement": "Imbens-Manski endpoint coverage (P35): the parameter CI needs the IM critical value; the projection CI is conservative and the naive per-endpoint one-sided CI undercovers as the interval width shrinks",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-E2"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates E3; fig_egs3_e_refutability_power",
+      "key_result": "empty rate 0.047 at a=0 (alpha1 0.05) -> 1.00 at a=6 (N=1000, seed 20260708)",
+      "statement": "Refutability power (M2' response): the empty-feasible-set branch is a specification test -- size alpha1 at zero injection, power -> 1 with the orthogonal-misfit amplitude (synthetic witness)",
+      "status": "measured_synth",
+      "theorem_id": "EGS3-E3"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "egs3-gates E4",
+      "key_result": "joint width / naive width = 0.582; joint within naive True",
+      "statement": "Joint-feasible-set G_F propagation (P36): with shared null components across depth bins the depth-gap interval is the joint sup/inf over ONE shared feasible set; the naive quotient of marginal intervals is strictly wider (conservative)",
+      "status": "proven_gate",
+      "theorem_id": "EGS3-E4"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "make egs3-seals (SymPy); egs3-gates F1; docs/generated/parent_identity_seal.json",
+      "key_result": "seal PASS; c derived [1, -1, 1, 1]; mismatch factor 3; (3/2) rule 3/2",
+      "statement": "Parent-identity seal (B1 repair): the Gauss constraint (tilted frame included) forces W^2 = omega_ab omega^ab/(6H^2) and c=(1,-1,1,1); the v5-document convention omega_a omega^a/H^2 was exactly 3x the registered value; the (3/2) MES conversion rule is derived, not asserted (code was already on the registered convention -- document-only repair)",
+      "status": "proven_symbolic",
+      "theorem_id": "EGS3-F1"
+    },
+    {
+      "axis": "gr_boltzmann",
+      "evidence": "make egs3-seals (SymPy); egs3-gates F2; docs/generated/bianchi_v_constraint_seal.json",
+      "key_result": "seal PASS; beta^2-scaling log-log slope 2.0001; Omega_K<=0 raises True",
+      "statement": "Bianchi V constraint seal (P5): the LRS-V momentum constraint 2 A Sigma_+ = (1+w) Omega beta reproduces the conditional Sigma_+^2 = [(1+w)Omega]^2 beta^2/(4 Omega_K) exactly; exact-rapidity correction (4/3)beta^2; undefined for Omega_K<=0 (constraint-algebra seal, NOT a dynamical integration)",
+      "status": "proven_symbolic",
+      "theorem_id": "EGS3-F2"
+    },
+    {
+      "axis": "gr_boltzmann",
+      "evidence": "egs3-gates F3; fig_egs3_f_shear_memory_bias",
+      "key_result": "kappa bias ratio over e0 [0.0, 0.5, 1.0, 1.5, 2.0]: [0.328, 0.141, 0.0, -0.11, -0.197] (zero at e0=1.0)",
+      "statement": "Shear-memory kernel bias (P13 companion): fitting the naive scalar closure sigma'=-3H sigma+kappa Pi on exact linearized-1+3 trajectories (toy Weyl closure E=e0 H sigma) is unbiased ONLY at the friction-matching e0=1 -- the quantitative kernel is closure-conditional (P13 ledger demoted to DERIVED_CONDITIONAL)",
+      "status": "measured_synth",
+      "theorem_id": "EGS3-F3"
+    },
+    {
       "axis": "data_interpretation",
       "evidence": "scripts/k1_global_maxscan.py on real SMICA/Commander; E2E-systematics null still BLOCKED_MISSING_PR4_E2E_ACCESS (PLA portal-only sims)",
       "key_result": "SMICA global p=0.097, Commander p=0.121 (real PR3 map, 2000 GRF nulls)",
@@ -227,8 +283,8 @@
     "measured": 1,
     "measured_no_go": 1,
     "measured_partial": 2,
-    "measured_synth": 1,
-    "proven_gate": 13,
-    "proven_symbolic": 6
+    "measured_synth": 3,
+    "proven_gate": 16,
+    "proven_symbolic": 8
   }
 }

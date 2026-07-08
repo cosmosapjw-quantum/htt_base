@@ -63,3 +63,59 @@ claims:
     claim_tier: C3
     allowed_phrase: real off-diagonal BipoSH statistical-isotropy measurement on the Planck SMICA/Commander low-ell map (L=1 boost-aberration, L=2 SI-violation), null-calibrated
     caveats: [real single-sky SI descriptor; matched isotropic GRF null now, FFP10/NPIPE E2E null pending (BLOCKED_MISSING_PR4_E2E_ACCESS); theory A^{LM}(g) fail-closed; consistent with isotropy; no detection/family/geometry/native solver]
+  egs3.identified_set_two_stage:
+    owner: MIO/OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: two-stage-tau identified-set reporting for x_C with refutability (empty), no-result (unbounded), and ceiling-unfit (F>1) statuses (P26/P31/A8)
+    caveats: [operational P1xP18 resolution; separate diagnostic surface (bit-identical x_C + response design + frozen registered statistics untouched); synthetic witnesses only; no detection/family/geometry/native solver/posterior]
+  egs3.imbens_manski_endpoint_coverage:
+    owner: OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: Imbens-Manski endpoint coverage for the identified interval (projection conservative; naive one-sided endpoint CI undercovers) (P35)
+    caveats: [external-context lineage Imbens-Manski 2004 / Stoye 2009; Gaussian whitened-noise conditions; MC witness seeded/deterministic; no data claim]
+  egs3.gf_joint_interval:
+    owner: MIO
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: joint-feasible-set G_F interval propagation under shared null components (naive quotient strictly conservative) (P36)
+    caveats: [interval algebra on declared inputs; delta method (P33) restricted to the point-identified regime; positive-denominator domain; no data claim]
+  egs3.evalue_dependent_merge:
+    owner: MIO
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: arithmetic-mean e-value merging valid under arbitrary dependence, with test-martingale/Ville anytime validity for staged data arrival (P29)
+    caveats: [linearity-of-expectation core; synthetic maximal-dependence MC witness; anytime validity is for the registered sequential construction; no data claim]
+  egs3.prior_exposure_null:
+    owner: HTT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: posterior marginal on a null response direction equals the prior (restricted KL exactly zero); pushforwards loading on null directions are prior-exposed (P28)
+    caveats: [formal basis of the prior_contaminated classification; factorized-prior condition; coupled-prior movement is prior-driven and must be labelled; no data claim]
+  egs3.parent_identity_seal:
+    owner: BASS/MIO
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: SymPy-sealed parent constraint identity forcing W^2 = omega_ab omega^ab/(6H^2) and the comparator sign vector c=(1,-1,1,1), with the (3/2) MES conversion rule derived
+    caveats: [B1 repair is document-only (code already registered convention; x_C anchors bit-identical); MES epsilon coefficients are registered external MES-1995 values, not rederived; symbolic seal, no data claim]
+  egs3.bianchi_v_constraint_seal:
+    owner: BASS
+    status: DERIVED_CONDITIONAL
+    evidence_type: proof_and_test
+    claim_tier: C2
+    allowed_phrase: constraint-algebra seal of the conditional P5 Bianchi V formula (momentum constraint reproduces Sigma_+^2=[(1+w)Omega]^2 beta^2/(4 Omega_K); exact-rapidity correction (4/3)beta^2)
+    caveats: [leading order in beta; Omega_K>0 domain (raises otherwise); constraint algebra NOT a dynamical integration (evolution check is a registered stretch item); the Bianchi V label is the condition of a legacy-recovery statement, not a sky claim]
+  egs3.shear_memory_kernel_bias:
+    owner: BASS/OBSSTAT
+    status: SPECIFIED
+    evidence_type: test
+    claim_tier: C1
+    allowed_phrase: quantified kappa-inference bias of the naive scalar shear closure under a toy Weyl closure (unbiased only at the friction-matching e0=1)
+    caveats: [toy closure stand-in (E=e0 H sigma, constant H); supports the P13 DERIVED_CONDITIONAL demotion; exact physical E_ab transfer awaits the native low-ell solver; no data claim]
