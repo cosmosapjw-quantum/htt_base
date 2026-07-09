@@ -119,3 +119,60 @@ claims:
     claim_tier: C1
     allowed_phrase: quantified kappa-inference bias of the naive scalar shear closure under a toy Weyl closure (unbiased only at the friction-matching e0=1)
     caveats: [toy closure stand-in (E=e0 H sigma, constant H); supports the P13 DERIVED_CONDITIONAL demotion; exact physical E_ab transfer awaits the native low-ell solver; no data claim]
+  # --- v7 strengthened theorems (axis G) + multi-engine seal lanes (rev-r148..r151) ---
+  egs3.signed_box_interval:
+    owner: MIO/OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: T1' signed-box identified interval with a two-sided curvature ceiling and open/all-branch endpoints (DL1 branch-monotonicity); the v6 [0.11,0.17] is the open-branch sharp interval and [0.09,0.17] the all-branch one
+    caveats: [F1 repair; the curvature coordinate is SIGNED; SymPy + exact-QQ (Sage) + native_decide (Lean) seals; representation, no data claim]
+  egs3.gf_joint_interval_strictness:
+    owner: MIO/OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: T2' joint-vs-naive depth-gap interval strictness criterion -- the inclusion is strict iff a shared component has c_N c_D>0 (aligned regimes are exactly equal)
+    caveats: [M1 repair of the refuted 'strict whenever' statement; exact-Fraction corner enumeration, zero tolerance; interval algebra, no data claim]
+  egs3.two_stage_coverage_strengthened:
+    owner: OBSSTAT/MIO
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: T4'/T5'/T8' -- estimated-covariance Hotelling/F two-stage thresholds (exact size), Imbens-Manski exact deterministic-width endpoint coverage, and a consistent monotone noncentral-chi^2 refutability power
+    caveats: [M3/P35/E3 upgrades; closed forms cross-checked by independent Monte-Carlo; the chi^2 EMPTY test over-rejects under estimated covariance; no data claim]
+  egs3.multicomponent_tilt:
+    owner: BASS/MIO
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: T9' exact multi-component tilt Gauss budget Omega_tilt=sum_i (1+w_i)Omega_i sinh^2(beta_i), comparator c=(1,-1,1,1) unchanged, single-species bit-identical
+    caveats: [m1 upgrade; exact in every beta_i; the base parent-identity seal is left byte-frozen; no data claim]
+  egs3.linearized_realization:
+    owner: OBSSTAT/BASS
+    status: DERIVED_CONDITIONAL
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: T3-lin linearized (x_C<<1) physical realization of the identified-set endpoints by a 1+3 initial-data mode superposition satisfying the Gauss and momentum constraints
+    caveats: [M2 upgrade of P31 from convex-box sharpness to linearized physical realization; explicitly NOT a full nonlinear GR sharpness theorem (King-Ellis realization deferred, ticketed); xAct covariant-residual seal; no data claim]
+  egs3.mes_provenance:
+    owner: BASS/MIO
+    status: DERIVED_CONDITIONAL
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: MES coefficient provenance -- cross-registry consistency, a rederived ordering theorem B_sigma>B_omega>B_accel, the (3/2) conversion, and the ssot-vs-fixture epsilon provenance; the multipole coefficients remain registered-external
+    caveats: [M4 response; the Thm 3.1-3.3 multipole coefficients are NOT rederived (registered external MES-1995; full PSTF-recursion rederivation ticketed); certifies internal consistency + ordering + provenance only; no data claim]
+  egs3.measured_response:
+    owner: OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: measured whitened response matrix disclosure -- rank-2 is structural (two exactly-zero sector columns, no threshold), null space {W2, Omega_k}, Fisher row-duplication factor 2/(1+rho)
+    caveats: [M5 response; rank-2 verified-true not just design-true; linear-algebra disclosure of the registered design under registered precisions; no data claim]
+  egs3.data_lane_forward:
+    owner: OBSSTAT
+    status: SPECIFIED
+    evidence_type: test
+    claim_tier: C1
+    allowed_phrase: synthetic forward models reproducing the CF4 Malmquist depth sign-transition from zero true bulk flow and the DESI cap-window resultant from zero injected dipole
+    caveats: [M6/M7 response; SYNTHETIC diagnostics that quantify the critique's own systematic; the reported statistics are the forward-subtracted residual / window-subtracted Delta-Rbar; NOT a real-data claim]

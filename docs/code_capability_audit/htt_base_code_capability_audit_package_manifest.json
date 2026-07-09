@@ -17,7 +17,7 @@
     {
       "archive_path": "02_CODE_MAP.md",
       "group": "guide",
-      "sha256": "sha256:37f15e27f0ea9ae757efb67a88013201e9bcd60c62a6f228d9128a5438899011",
+      "sha256": "sha256:f45ef620ff69d17f89e2bd94b3c6827601672b7d118658d5a14f09ddd16b413e",
       "size_bytes": 2423,
       "source_path": "virtual:02_CODE_MAP.md"
     },
@@ -3123,6 +3123,13 @@
       "source_path": "htt/obsstat/egs3_coverage_strengthened.py"
     },
     {
+      "archive_path": "code_capability_audit/htt/obsstat/egs3_data_lane_forward.py",
+      "group": "library_source",
+      "sha256": "sha256:8ff87ee78396d50ff2dc322739ff7e4c49e3baf8b452570c355d337a9d1554ba",
+      "size_bytes": 8392,
+      "source_path": "htt/obsstat/egs3_data_lane_forward.py"
+    },
+    {
       "archive_path": "code_capability_audit/htt/obsstat/egs3_evalue_merge.py",
       "group": "library_source",
       "sha256": "sha256:52276cafbc920b6a9aefc282a86ecbc482d86b34566c9d7ad00ef0c4edfcc40d",
@@ -3163,6 +3170,13 @@
       "sha256": "sha256:91c85e49074a2ed5df879df492bf04c8865e47363afefdd4c5f239d84c005cf5",
       "size_bytes": 17114,
       "source_path": "htt/obsstat/egs3_linearized_realization.py"
+    },
+    {
+      "archive_path": "code_capability_audit/htt/obsstat/egs3_measured_response.py",
+      "group": "library_source",
+      "sha256": "sha256:b33d5239883d27807ffea01854d054d5ae8de67a65047cd13e2e6122d46b3514",
+      "size_bytes": 7146,
+      "source_path": "htt/obsstat/egs3_measured_response.py"
     },
     {
       "archive_path": "code_capability_audit/htt/obsstat/egs3_mes_provenance.py",
@@ -4119,8 +4133,8 @@
     {
       "archive_path": "code_capability_audit/scripts/build_egs_results_table.py",
       "group": "science_driver",
-      "sha256": "sha256:5b50310c6b491237c7f9e95ee6ea568af48eb03d6394b339ee67c78c1e766f88",
-      "size_bytes": 24288,
+      "sha256": "sha256:d4ae7e850b49b3417e7d8df08bd3468318e7066e6798f31d12d5f451ff7b9582",
+      "size_bytes": 29727,
       "source_path": "scripts/build_egs_results_table.py"
     },
     {
@@ -5909,7 +5923,7 @@
       "source_path": "src/teff/theta4_bridge_v2.rs"
     }
   ],
-  "archive_entry_count": 844,
+  "archive_entry_count": 846,
   "artifact_id": "code_capability_audit_package",
   "artifact_path": "docs/code_capability_audit/htt_base_code_capability_audit_package.zip",
   "caveats": [
@@ -5920,13 +5934,13 @@
     "Inclusion of code does not imply a validated science result; see the result/claim packages for claim tiers."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "85fca53+dirty",
-  "config_hash": "sha256:2988e19e69e9d8c318bea3a6ec10d569c4efc71987ccce7a5458dad07070b04b",
+  "code_version": "4a00342+dirty",
+  "config_hash": "sha256:c7e536d5885132d6a9362961ac3d567267518e77da421b5835aa688777d08fe8",
   "created_by": "scripts/build_code_capability_audit_package.py",
   "failed_gates": [],
   "family_identification": false,
   "generating_command": "python scripts/build_code_capability_audit_package.py",
-  "git_commit_or_worktree_state": "85fca53+dirty",
+  "git_commit_or_worktree_state": "4a00342+dirty",
   "group_counts": {
     "audit_prompt": 1,
     "config": 1,
@@ -5934,7 +5948,7 @@
     "execution_stack": 18,
     "guide": 4,
     "legacy_tsc": 50,
-    "library_source": 480,
+    "library_source": 482,
     "package_readme": 1,
     "rust_solver_source": 165,
     "science_driver": 93,
@@ -5944,7 +5958,7 @@
   "input_hashes": [
     "virtual:00_README.md:sha256:538dc2b2dc67e18d823a1ced405841a0555cd43707381a2566b0b0dc7ca1e748",
     "virtual:01_ARCHITECTURE_GUIDE.md:sha256:a45976a887afc1ca75512730af173504909d960521f2e58888128af406658a34",
-    "virtual:02_CODE_MAP.md:sha256:37f15e27f0ea9ae757efb67a88013201e9bcd60c62a6f228d9128a5438899011",
+    "virtual:02_CODE_MAP.md:sha256:f45ef620ff69d17f89e2bd94b3c6827601672b7d118658d5a14f09ddd16b413e",
     "virtual:03_ENTRY_POINTS.md:sha256:61fb880e85e52ca8557f40081e6e8636d6ef35afa9acd4e104eff57efb0b2aff",
     "virtual:04_DATA_ACCESS.md:sha256:8bd06a61c7031be5932f52f3fc5b19116446ee23b66a9097131e9399e1947502",
     "virtual:AUDIT_PROMPT.md:sha256:1808d0e0e7c0c82f3b418524209a3a46d7d5ebdb1d2fe2ba7d0a4e43953fa6ff",
@@ -6388,12 +6402,14 @@
     "htt/obsstat/egs3_bianchi_v_constraint.py:sha256:97191abca5b99933c3dc5ee8e0543ce8446cb777b4168c0ed356547b46fa2943",
     "htt/obsstat/egs3_calibration.py:sha256:e60f74c99b448025cf1305aa37b8aa0d3f1f26642b37ab96ca8242518a720364",
     "htt/obsstat/egs3_coverage_strengthened.py:sha256:4b6a4b9815e16b3247728375900b1007ac3be48dd699c06c3f8807c6a3ddc3e4",
+    "htt/obsstat/egs3_data_lane_forward.py:sha256:8ff87ee78396d50ff2dc322739ff7e4c49e3baf8b452570c355d337a9d1554ba",
     "htt/obsstat/egs3_evalue_merge.py:sha256:52276cafbc920b6a9aefc282a86ecbc482d86b34566c9d7ad00ef0c4edfcc40d",
     "htt/obsstat/egs3_gf_interval.py:sha256:8be1af1ce848847378d4710ab4c398fc0c6917e637a9c37656e2ab94a68614f2",
     "htt/obsstat/egs3_graded_comparator.py:sha256:3108758e8ca30043d9f200f023d2c8c2f7ff2227bf93fbe2656ffb0d694138df",
     "htt/obsstat/egs3_identified_set.py:sha256:309d7d577c6dd686313c815f28b8c12b6f688ca5753815237c5c54d643538a6b",
     "htt/obsstat/egs3_kinematic_deprojection.py:sha256:1194c8ef71c4ede2300d6be08a604d3f2a1343bed5ced276cd42d09f6c8ff716",
     "htt/obsstat/egs3_linearized_realization.py:sha256:91c85e49074a2ed5df879df492bf04c8865e47363afefdd4c5f239d84c005cf5",
+    "htt/obsstat/egs3_measured_response.py:sha256:b33d5239883d27807ffea01854d054d5ae8de67a65047cd13e2e6122d46b3514",
     "htt/obsstat/egs3_mes_provenance.py:sha256:03bc934eb75fb77141e311d344e3ce633bd92fe1772f006d76e0435829a9afef",
     "htt/obsstat/egs3_parent_identity.py:sha256:8c1a35ad3a2e166a27d8b540223d427f02f40c18f604afccbda7c6581a7a6862",
     "htt/obsstat/egs3_prior_exposure.py:sha256:1f2b80b08e40a8b14462602ead3f8c9edb50d56f0f64b71133433c5fe0ef473e",
@@ -6530,7 +6546,7 @@
     "reionization_execution_stack/anisotropic_rt_coding_bundle/reionization_stack/README.md:sha256:272cec95f445898237eeb4638394c8d8ff33b5d4f25515e135a9143d48d75d23",
     "scripts/bass_extended_joint_forecast.py:sha256:ce591aaed956ea8572b70b591963ffba2d1e67b3fb9a598ff02578e102cc0b79",
     "scripts/bench_camb_vs_bass.py:sha256:e83005d9d9821664f1b422bd0fb92cdb298d0f3585fd62f93048b0a72a6817b2",
-    "scripts/build_egs_results_table.py:sha256:5b50310c6b491237c7f9e95ee6ea568af48eb03d6394b339ee67c78c1e766f88",
+    "scripts/build_egs_results_table.py:sha256:d4ae7e850b49b3417e7d8df08bd3468318e7066e6798f31d12d5f451ff7b9582",
     "scripts/build_expanded_manuscript_figure_suite.py:sha256:b96cc2dc76f678a2158b7053334b182ab2908963be64209cd4aa19c7f60d228a",
     "scripts/build_external_audit_report_v5.py:sha256:de6cccac6728e12e69a9a4d2c8c9728f31ceab8b94856024bdeeb5d8ac531bf7",
     "scripts/build_external_audit_report_v6.py:sha256:f573df5462590cba60d6d5665e9ee51502af3434da192a2ae635bb0892e11819",

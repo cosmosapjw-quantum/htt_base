@@ -63,6 +63,17 @@ def _rows() -> list[dict]:
     f = egs3.get("axis_f", {})
     pis = _load("parent_identity_seal.json")
     bvs = _load("bianchi_v_constraint_seal.json")
+    # rev-r148..r151 v7 strengthened-theorem + data-lane seals
+    sbx = _load("signed_box_interval_seal.json")
+    gfx = _load("gf_strictness_exact_seal.json")
+    cov = _load("coverage_strengthened_seal.json")
+    mct = _load("multicomponent_tilt_seal.json")
+    t3l = _load("linearized_realization_seal.json")
+    mep = _load("mes_provenance_seal.json")
+    mrr = _load("measured_response_seal.json")
+    dlf = _load("data_lane_forward_seal.json")
+    sag = _load("egs3_sage_seal.json")
+    lea = _load("egs3_lean_seal.json")
 
     def r(tid, axis, statement, key, status, evidence):
         return {"theorem_id": tid, "axis": axis, "statement": statement,
@@ -174,6 +185,40 @@ def _rows() -> list[dict]:
            if k6g else "awaiting compute"),
           "measured_no_go",
           "scripts/k6_cf4_curl_posterior.py on real CF4++ WF field; WF mean-field curl-suppression no-go established; a true constrained-realization (Hoffman-Ribak) posterior remains blocked until a CR ensemble is owned"),
+        # --- v7 strengthened theorems (axis G) + multi-engine seal lanes ---
+        r("EGS3-G1", MATH, "T1' (F1): signed-box identified interval; the null curvature ceiling is TWO-SIDED, so the registered example carries open/all-branch endpoints and DL1 branch-monotonicity",
+          f"open [11/100,17/100], all [9/100,17/100]; DL1 lower gap = |c_k|U_k; seal {sbx.get('status','?')}",
+          "proven_seal", "run_egs3_v7_seals (SymPy) + egs3-sage (exact QQ polyhedron) + egs3-lean (native_decide); gates G1"),
+        r("EGS3-G2", MATH, "T2' (M1): joint-vs-naive depth-gap strictness is an IFF (strict iff a shared component has c_N c_D>0); aligned regimes collapse to equality (the v6 'strict whenever' was refuted)",
+          f"exact-Fraction agreement {gfx.get('witness',{}).get('criterion_agreement_exact','?')}; aligned counterexample joint==naive; seal {gfx.get('status','?')}",
+          "proven_seal", "run_egs3_v7_seals; gates G2"),
+        r("EGS3-G3", MATH, "T4' (M3): estimated-covariance two-stage thresholds are Hotelling/F; the uncorrected chi^2 EMPTY test over-rejects and the F threshold restores exact size",
+          f"uncorrected size {cov.get('values',{}).get('t4_uncorrected_size_m10_nsim300',0):.4f} at m=10,n_sim=300 (nominal 0.05); chi^2 recovered as n_sim->inf; seal {cov.get('status','?')}",
+          "proven_seal", "run_egs3_v7_seals + v7-wolfram (FRatioDistribution); gates G3"),
+        r("EGS3-G4", MATH, "T5' (P35): Imbens-Manski deterministic-width endpoint coverage is EXACT 1-alpha (no asymptotics); the naive one-sided endpoint CI undercovers to 1-2alpha",
+          f"endpoint coverage exact; naive -> 0.90 as Delta->0; seal {cov.get('status','?')}",
+          "proven_seal", "run_egs3_v7_seals; gates G4"),
+        r("EGS3-G5", MATH, "T8' (E3): the refutability (EMPTY) test is a consistent, strictly monotone noncentral-chi^2 power function -- alpha at zero misfit, ->1, blind only to reachable-space misspecification",
+          "power(0)=alpha, strictly monotone (MLR), ->1; MC-matched", "proven_seal",
+          "run_egs3_v7_seals; gates G5"),
+        r("EGS3-G6", GR, "T9' (m1): the multi-component tilt Gauss budget Omega_tilt=sum_i (1+w_i)Omega_i sinh^2(beta_i) is exact in every beta_i; single-species reduces bit-identically; antipodal pair cancels flux while adding tilt",
+          f"comparator c=(1,-1,1,1) unchanged; seal {mct.get('status','?')}",
+          "proven_seal", "run_egs3_v7_seals; gates G6"),
+        r("EGS3-G7", GR, "T3-lin (M2): P31 sharpness upgraded from convex-box level to a LINEARIZED physical realization -- both registered endpoints realized by a 1+3 initial-data mode superposition with Gauss+momentum residuals ~0 (full nonlinear GR realization deferred)",
+          f"max Gauss/momentum residual < 1e-10; seal {t3l.get('status','?')}",
+          "proven_seal_linearized", "run_egs3_v7_seals + v7-wolfram xAct covariant residual; gates G(realization)"),
+        r("EGS3-G8", MATH, "M4: MES epsilon-coefficient provenance -- cross-registry consistency (Fraction==float), a genuine rederivation of the ordering theorem B_sigma>B_omega>B_accel (MES Thm 3.4), the (3/2) conversion, and the ssot-vs-fixture epsilon provenance; the multipole coefficients stay registered-external (honest, ticketed)",
+          f"registries agree; ordering rederived; registered W2_max=1.309e-6; seal {mep.get('status','?')}",
+          "proven_seal_partial", "run_egs3_v7_seals; gates G8; full multipole rederivation ticketed (mes_full_rederivation)"),
+        r("EGS3-G9", MATH, "M5: the measured whitened response matrix R is disclosed -- rank 2 is STRUCTURAL (two exactly-zero sector columns; sigma3/sigma2=0, no threshold), null space {W2,Omega_k}, Fisher row-duplication factor 2/(1+rho)",
+          f"rank {mrr.get('card',{}).get('rank','?')}; null {mrr.get('card',{}).get('null_sectors','?')}; seal {mrr.get('status','?')}",
+          "proven_seal", "run_egs3_v7_seals; gates G9"),
+        r("EGS3-G10", DATA, "M6/M7: synthetic forward models reproduce the CF4 Malmquist depth sign-transition from ZERO true bulk flow and the DESI cap-window resultant from ZERO injected dipole; the honest statistics are the forward-subtracted residual / window-subtracted Delta-Rbar",
+          f"CF4 sign-transition from zero bulk; DESI window resultant ~0.75; seal {dlf.get('status','?')}",
+          "diagnostic_forward_model", "run_egs3_v7_seals; gates G10 (synthetic; not a data claim)"),
+        r("EGS3-K5card", DATA, "F2: end-to-end K5/CF4 identified-interval card runs the full y->R->tau->status/interval pipeline on real CF4 |B|; W^2 ceiling now the registered MES value; Sigma^2/Omega_k stay PLUGIN so no observational claim is made",
+          "branch-labelled FEASIBLE identified interval + IM CI; observational_claim_allowed=False",
+          "diagnostic_pipeline_closure", "scripts/k5_cf4_identified_interval_card.py (plugin-firewalled)"),
     ]
     return rows
 

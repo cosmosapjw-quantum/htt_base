@@ -275,16 +275,109 @@
       "statement": "CF4 vorticity/curl sector on the real WF mean field: curl-suppression structural no-go (curl-suppressed reconstruction; estimator validated on an injected solid-body curl mode)",
       "status": "measured_no_go",
       "theorem_id": "K6"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "run_egs3_v7_seals (SymPy) + egs3-sage (exact QQ polyhedron) + egs3-lean (native_decide); gates G1",
+      "key_result": "open [11/100,17/100], all [9/100,17/100]; DL1 lower gap = |c_k|U_k; seal PASS",
+      "statement": "T1' (F1): signed-box identified interval; the null curvature ceiling is TWO-SIDED, so the registered example carries open/all-branch endpoints and DL1 branch-monotonicity",
+      "status": "proven_seal",
+      "theorem_id": "EGS3-G1"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "run_egs3_v7_seals; gates G2",
+      "key_result": "exact-Fraction agreement 400/400; aligned counterexample joint==naive; seal PASS",
+      "statement": "T2' (M1): joint-vs-naive depth-gap strictness is an IFF (strict iff a shared component has c_N c_D>0); aligned regimes collapse to equality (the v6 'strict whenever' was refuted)",
+      "status": "proven_seal",
+      "theorem_id": "EGS3-G2"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "run_egs3_v7_seals + v7-wolfram (FRatioDistribution); gates G3",
+      "key_result": "uncorrected size 0.0608 at m=10,n_sim=300 (nominal 0.05); chi^2 recovered as n_sim->inf; seal PASS",
+      "statement": "T4' (M3): estimated-covariance two-stage thresholds are Hotelling/F; the uncorrected chi^2 EMPTY test over-rejects and the F threshold restores exact size",
+      "status": "proven_seal",
+      "theorem_id": "EGS3-G3"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "run_egs3_v7_seals; gates G4",
+      "key_result": "endpoint coverage exact; naive -> 0.90 as Delta->0; seal PASS",
+      "statement": "T5' (P35): Imbens-Manski deterministic-width endpoint coverage is EXACT 1-alpha (no asymptotics); the naive one-sided endpoint CI undercovers to 1-2alpha",
+      "status": "proven_seal",
+      "theorem_id": "EGS3-G4"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "run_egs3_v7_seals; gates G5",
+      "key_result": "power(0)=alpha, strictly monotone (MLR), ->1; MC-matched",
+      "statement": "T8' (E3): the refutability (EMPTY) test is a consistent, strictly monotone noncentral-chi^2 power function -- alpha at zero misfit, ->1, blind only to reachable-space misspecification",
+      "status": "proven_seal",
+      "theorem_id": "EGS3-G5"
+    },
+    {
+      "axis": "gr_boltzmann",
+      "evidence": "run_egs3_v7_seals; gates G6",
+      "key_result": "comparator c=(1,-1,1,1) unchanged; seal PASS",
+      "statement": "T9' (m1): the multi-component tilt Gauss budget Omega_tilt=sum_i (1+w_i)Omega_i sinh^2(beta_i) is exact in every beta_i; single-species reduces bit-identically; antipodal pair cancels flux while adding tilt",
+      "status": "proven_seal",
+      "theorem_id": "EGS3-G6"
+    },
+    {
+      "axis": "gr_boltzmann",
+      "evidence": "run_egs3_v7_seals + v7-wolfram xAct covariant residual; gates G(realization)",
+      "key_result": "max Gauss/momentum residual < 1e-10; seal PASS",
+      "statement": "T3-lin (M2): P31 sharpness upgraded from convex-box level to a LINEARIZED physical realization -- both registered endpoints realized by a 1+3 initial-data mode superposition with Gauss+momentum residuals ~0 (full nonlinear GR realization deferred)",
+      "status": "proven_seal_linearized",
+      "theorem_id": "EGS3-G7"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "run_egs3_v7_seals; gates G8; full multipole rederivation ticketed (mes_full_rederivation)",
+      "key_result": "registries agree; ordering rederived; registered W2_max=1.309e-6; seal PASS",
+      "statement": "M4: MES epsilon-coefficient provenance -- cross-registry consistency (Fraction==float), a genuine rederivation of the ordering theorem B_sigma>B_omega>B_accel (MES Thm 3.4), the (3/2) conversion, and the ssot-vs-fixture epsilon provenance; the multipole coefficients stay registered-external (honest, ticketed)",
+      "status": "proven_seal_partial",
+      "theorem_id": "EGS3-G8"
+    },
+    {
+      "axis": "math_stat",
+      "evidence": "run_egs3_v7_seals; gates G9",
+      "key_result": "rank 2; null ['W2', 'Omega_k']; seal PASS",
+      "statement": "M5: the measured whitened response matrix R is disclosed -- rank 2 is STRUCTURAL (two exactly-zero sector columns; sigma3/sigma2=0, no threshold), null space {W2,Omega_k}, Fisher row-duplication factor 2/(1+rho)",
+      "status": "proven_seal",
+      "theorem_id": "EGS3-G9"
+    },
+    {
+      "axis": "data_interpretation",
+      "evidence": "run_egs3_v7_seals; gates G10 (synthetic; not a data claim)",
+      "key_result": "CF4 sign-transition from zero bulk; DESI window resultant ~0.75; seal PASS",
+      "statement": "M6/M7: synthetic forward models reproduce the CF4 Malmquist depth sign-transition from ZERO true bulk flow and the DESI cap-window resultant from ZERO injected dipole; the honest statistics are the forward-subtracted residual / window-subtracted Delta-Rbar",
+      "status": "diagnostic_forward_model",
+      "theorem_id": "EGS3-G10"
+    },
+    {
+      "axis": "data_interpretation",
+      "evidence": "scripts/k5_cf4_identified_interval_card.py (plugin-firewalled)",
+      "key_result": "branch-labelled FEASIBLE identified interval + IM CI; observational_claim_allowed=False",
+      "statement": "F2: end-to-end K5/CF4 identified-interval card runs the full y->R->tau->status/interval pipeline on real CF4 |B|; W^2 ceiling now the registered MES value; Sigma^2/Omega_k stay PLUGIN so no observational claim is made",
+      "status": "diagnostic_pipeline_closure",
+      "theorem_id": "EGS3-K5card"
     }
   ],
   "schema": "htt.egs.results_table.v1",
   "status_counts": {
     "blocked": 1,
+    "diagnostic_forward_model": 1,
+    "diagnostic_pipeline_closure": 1,
     "measured": 1,
     "measured_no_go": 1,
     "measured_partial": 2,
     "measured_synth": 3,
     "proven_gate": 16,
+    "proven_seal": 7,
+    "proven_seal_linearized": 1,
+    "proven_seal_partial": 1,
     "proven_symbolic": 8
   }
 }
