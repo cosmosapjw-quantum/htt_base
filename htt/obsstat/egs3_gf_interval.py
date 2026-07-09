@@ -27,6 +27,7 @@ claim, no detection, no family/geometry/native-solver/posterior claim.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from fractions import Fraction
 import itertools
 import math
 
@@ -37,6 +38,7 @@ __all__ = [
     "gf_joint_interval",
     "gf_strictness_criterion",
     "gf_strictness_witness",
+    "gf_strictness_exact_witness",
     "GFIntervalComparison",
     "gf_joint_vs_naive",
 ]
@@ -258,4 +260,106 @@ def gf_strictness_witness(*, n_trials: int = 371, seed: int = 20260709) -> dict:
             "strict_upper": counter.strict_upper,
             "equality_reason": counter.equality_reason,
         },
+    }
+
+
+def _exact_joint_interval(n_pt, d_pt, bounds, c_num, c_den):
+    """Joint interval of (n_pt + c_N.s)/(d_pt + c_D.s) over the box, EXACT: a
+    linear-fractional function on a box attains its extremes at box VERTICES, so
+    enumerate the 2^k corners in exact Fraction arithmetic. Returns (lo, hi) or
+    None if the denominator loses positivity anywhere on the box (no-result)."""
+    n_lo, n_hi = n_pt
+    d_lo, d_hi = d_pt
+    vals = []
+    for corner in itertools.product(*[(lo, hi) for lo, hi in bounds]):
+        dn = sum(c * s for c, s in zip(c_num, corner))
+        dd = sum(c * s for c, s in zip(c_den, corner))
+        if (d_lo + dd) <= 0 or (d_hi + dd) <= 0:
+            return None
+        # ratio monotone in each reachable part for positive denominator
+        vals.append((n_lo + dn) / (d_hi + dd))
+        vals.append((n_hi + dn) / (d_lo + dd))
+    return min(vals), max(vals)
+
+
+def _exact_naive_quotient(n_pt, d_pt, bounds, c_num, c_den):
+    """Naive quotient: numerator and denominator optimize the box INDEPENDENTLY
+    (marginal spans), EXACT in Fraction arithmetic."""
+    n_lo, n_hi = n_pt
+    d_lo, d_hi = d_pt
+    span_num_lo = sum(min(c * lo, c * hi) for c, (lo, hi) in zip(c_num, bounds))
+    span_num_hi = sum(max(c * lo, c * hi) for c, (lo, hi) in zip(c_num, bounds))
+    span_den_lo = sum(min(c * lo, c * hi) for c, (lo, hi) in zip(c_den, bounds))
+    span_den_hi = sum(max(c * lo, c * hi) for c, (lo, hi) in zip(c_den, bounds))
+    N_lo, N_hi = n_lo + span_num_lo, n_hi + span_num_hi
+    D_lo, D_hi = d_lo + span_den_lo, d_hi + span_den_hi
+    if D_lo <= 0 or D_hi <= 0:
+        return None
+    return N_lo / D_hi, N_hi / D_lo
+
+
+def gf_strictness_exact_witness(*, n_trials: int = 400, seed: int = 20260709) -> dict:
+    """T2' zero-tolerance witness: over deterministic RATIONAL box configurations,
+    the exact corner-enumerated joint interval is contained in the exact naive
+    quotient, and the sign-conflict criterion (exists j: c_N,j c_D,j > 0 on a
+    nondegenerate component) predicts STRICT inclusion iff the exact endpoints
+    differ -- with EXACT Fraction arithmetic (no floating-point tolerance). Also
+    reproduces the aligned-regime equality and the explicit counterexample to the
+    v6 "strict whenever c_N,c_D != 0" statement."""
+    rng = np.random.default_rng(seed)
+    agree = 0
+    strict = 0
+    equal = 0
+    evaluated = 0
+    for _ in range(int(n_trials)):
+        k = int(rng.integers(1, 4))
+        bounds = tuple((Fraction(0), Fraction(int(rng.integers(2, 40)), 100))
+                       for _ in range(k))
+        c_num = tuple(Fraction(int(rng.choice((-1, 1)) * rng.integers(2, 50)), 100)
+                      for _ in range(k))
+        c_den = tuple(Fraction(int(rng.choice((-1, 1)) * rng.integers(2, 50)), 100)
+                      for _ in range(k))
+        # positive denominator base
+        den_shift_min = sum(min(cd * lo, cd * hi) for cd, (lo, hi) in zip(c_den, bounds))
+        d_base = Fraction(1) + abs(den_shift_min)
+        n_pt = (Fraction(1), Fraction(6, 5))
+        d_pt = (d_base, d_base + Fraction(3, 10))
+        joint = _exact_joint_interval(n_pt, d_pt, bounds, c_num, c_den)
+        naive = _exact_naive_quotient(n_pt, d_pt, bounds, c_num, c_den)
+        if joint is None or naive is None:
+            continue
+        evaluated += 1
+        within = naive[0] <= joint[0] and joint[1] <= naive[1]
+        is_strict = joint[0] > naive[0] or joint[1] < naive[1]
+        # criterion: exists nondegenerate component with c_N*c_D > 0
+        conflict = any((hi > lo) and (cn * cd > 0)
+                       for (lo, hi), cn, cd in zip(bounds, c_num, c_den))
+        agree += int(within and (is_strict == conflict))
+        strict += int(is_strict)
+        equal += int(not is_strict)
+
+    # explicit counterexample to universal strictness (aligned regime, from the
+    # external review): all c_N,j c_D,j < 0 -> joint == naive despite c != 0.
+    cbounds = (Fraction(9, 25), Fraction(27, 100), Fraction(43, 100))
+    cnum = (Fraction(-19, 100), Fraction(39, 100), Fraction(17, 100))
+    cden = (Fraction(3, 100), Fraction(-23, 100), Fraction(-31, 100))
+    cbx = tuple((Fraction(0), b) for b in cbounds)
+    cj = _exact_joint_interval((Fraction(1), Fraction(1)), (Fraction(2), Fraction(2)),
+                               cbx, cnum, cden)
+    cnv = _exact_naive_quotient((Fraction(1), Fraction(1)), (Fraction(2), Fraction(2)),
+                                cbx, cnum, cden)
+    counter_equal = (cj == cnv)
+    return {
+        "trials_evaluated": evaluated,
+        "criterion_agreement_exact": f"{agree}/{evaluated}",
+        "agreement_exact_1.0": agree == evaluated and evaluated > 0,
+        "strict_cases": strict,
+        "equal_cases": equal,
+        "aligned_counterexample_joint_equals_naive": bool(counter_equal),
+        "aligned_counterexample": {
+            "joint": [str(cj[0]), str(cj[1])] if cj else None,
+            "naive": [str(cnv[0]), str(cnv[1])] if cnv else None,
+        },
+        "criterion": "exists nondegenerate shared component with c_N*c_D > 0",
+        "arithmetic": "exact Fraction (zero tolerance)",
     }

@@ -68,12 +68,17 @@ egs3-sage:
 egs3-lean:
 	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_lean_seals.py
 
-## EGS3 v7 local-only Wolfram seals (T4' estimated-covariance Hotelling/F two-stage coverage; extended in later steps).
+## EGS3 v7 local-only Wolfram seals (T4' estimated-covariance Hotelling/F; T3-lin xAct covariant momentum residual).
 v7-wolfram:
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_v7_two_stage_coverage.wls --out $(REPO)/docs/generated/egs3_v7_wolfram_proofs.json
+	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/v7_t3lin_covariant_residual.wls --out $(REPO)/docs/generated/egs3_v7_t3lin_proof.json
+
+## EGS3 v7 strengthened-theorem SymPy seals (T1'/T2'/T4'/T5'/T8'/T9'/T3-lin) -> docs/generated/*_seal.json.
+v7-sympy-seals:
+	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_v7_seals.py
 
 ## EGS3 v7 aggregate symbolic-seal lane: SymPy (report-gating) + Sage + Lean + Wolfram.
-v7-seals: egs3-seals egs3-sage egs3-lean v7-wolfram
+v7-seals: egs3-seals v7-sympy-seals egs3-sage egs3-lean v7-wolfram
 
 ## PAPER-A: identifiability / congruence-kinematics gates + PAPER-A symbolic cores.
 paper-a-gates:

@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "backend": "wolframclient",
+  "results": [
+    {
+      "script": "v7_t3lin_covariant_residual.wls",
+      "result": {
+        "schema": "htt.egs3.t3lin.covariant_residual.v1",
+        "wolfram_version": "{\"1.3.0\", {2025, 12, 29}}",
+        "q_net_expr": "0",
+        "omega_tilt_pair_residual_expr": "0",
+        "momentum_residual_expr": "0",
+        "checks": {
+          "antipodal_flux_cancels": true,
+          "omega_tilt_additive": true,
+          "momentum_residual_zero": true,
+          "radial_no_vorticity": true,
+          "shear_vorticity_orthogonal": true,
+          "xact_unavailable": "false",
+          "signature": "D_b sigma^{ab} - (2/3) D^a Theta + curl-omega - kappa q^a = 0 (first order)"
+        }
+      }
+    }
+  ]
+}

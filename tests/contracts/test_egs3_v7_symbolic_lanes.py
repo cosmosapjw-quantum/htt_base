@@ -54,6 +54,38 @@ def test_wolfram_v7_seal_artifact_pass():
     assert checks["uncorrected_chi2_size_exceeds_alpha"] is True
 
 
+V7_SYMPY_SEALS = (
+    "signed_box_interval_seal.json",
+    "gf_strictness_exact_seal.json",
+    "coverage_strengthened_seal.json",
+    "multicomponent_tilt_seal.json",
+    "linearized_realization_seal.json",
+)
+
+
+@pytest.mark.parametrize("name", V7_SYMPY_SEALS)
+def test_v7_sympy_seal_pass(name):
+    payload = _load(name)
+    assert payload["status"] == "PASS", name
+
+
+def test_v7_sympy_seal_lane_current():
+    r = subprocess.run([sys.executable, "scripts/run_egs3_v7_seals.py", "--check"],
+                       cwd=ROOT, text=True, capture_output=True, timeout=300,
+                       env={**__import__("os").environ,
+                            "PYTHONPATH": f"{ROOT}:{ROOT}/htt:{ROOT}/htt/htt"})
+    assert r.returncode == 0, r.stdout + r.stderr
+
+
+def test_t3lin_signed_box_endpoints():
+    payload = _load("linearized_realization_seal.json")
+    eps = payload["endpoints"]
+    assert abs(eps["lower_xC_11_over_100"]["x_C"] - 0.11) < 1e-12
+    assert abs(eps["upper_xC_17_over_100"]["x_C"] - 0.17) < 1e-12
+    assert payload["max_momentum_residual"] < 1e-10
+    assert payload["max_gauss_residual"] < 1e-10
+
+
 @pytest.mark.skipif(shutil.which("sage") is None, reason="SageMath not installed")
 def test_sage_lane_check_mode_current():
     r = subprocess.run([sys.executable, "scripts/run_egs3_sage_seals.py", "--check"],

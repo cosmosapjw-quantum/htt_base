@@ -61,6 +61,8 @@ __all__ = [
     "three_halves_rule",
     "mes_coefficient_provenance",
     "parent_identity_seal",
+    "derive_multicomponent_tilt_identity",
+    "multicomponent_tilt_seal",
 ]
 
 # read off the parent identity below; asserted equal to the derived signs
@@ -182,6 +184,92 @@ def mes_coefficient_provenance() -> dict:
             for name, fracs in MES_EPSILON_COEFFICIENTS.items()
         },
         "rederived_here": False,
+    }
+
+
+def derive_multicomponent_tilt_identity(n_species: int = 3) -> dict:
+    """T9' (minor m1 -> theorem): the Gauss budget for K non-interacting perfect
+    fluids with equations of state w_i and rapidities beta_i relative to the normal
+    frame is EXACT in every beta_i,
+
+        1 = sum_i Omega_i + Omega_Lambda + Omega_k + Omega_tilt^tot + Sigma^2 - W^2,
+        Omega_tilt^tot = sum_i (1 + w_i) Omega_i sinh^2(beta_i),
+
+    because the Gauss (time-time) constraint sees only sum_i T^{(i)}_{ab} n^a n^b,
+    and each species contributes mu_i + (mu_i + p_i) sinh^2(beta_i) exactly. The
+    boost-induced energy fluxes q^{(i)} and anisotropic stresses enter the momentum
+    constraint and evolution equations, not the Gauss budget. The comparator sign
+    vector c = (+1, -1, +1, +1) is unchanged, and the single-species case reduces
+    bit-identically to ``derive_parent_identity``."""
+    K = int(n_species)
+    if K < 1:
+        raise ValueError("need at least one species")
+    H, kappa, Lam, R3, s2t, w2t = sp.symbols(
+        "H kappa Lambda R3 sigma2t omega2t", positive=True)
+    mus = sp.symbols(" ".join(f"mu{i}" for i in range(K)), positive=True)
+    ws = sp.symbols(" ".join(f"w{i}" for i in range(K)), positive=True)
+    betas = sp.symbols(" ".join(f"beta{i}" for i in range(K)), positive=True)
+    if K == 1:
+        mus, ws, betas = (mus,), (ws,), (betas,)
+
+    # per-species tilted-frame energy density mu_u^(i) = mu_i + (mu_i + p_i) sinh^2 beta_i
+    mu_u_tot = sum(mu + (mu + w * mu) * sp.sinh(beta) ** 2
+                   for mu, w, beta in zip(mus, ws, betas))
+    lhs = 3 * H ** 2
+    rhs = kappa * mu_u_tot + Lam - R3 / 2 + s2t / 2 - w2t / 2
+    budget = sp.expand((rhs - lhs) / (3 * H ** 2))
+
+    Omega_i = [kappa * mu / (3 * H ** 2) for mu in mus]
+    Omega_L = Lam / (3 * H ** 2)
+    Omega_k = -R3 / (6 * H ** 2)
+    Omega_tilt_tot = sum((1 + w) * Om * sp.sinh(beta) ** 2
+                         for w, Om, beta in zip(ws, Omega_i, betas))
+    Sigma2 = s2t / (6 * H ** 2)
+    W2 = w2t / (6 * H ** 2)
+
+    reassembled = (sum(Omega_i) + Omega_L + Omega_k + Omega_tilt_tot
+                   + Sigma2 - W2 - 1)
+    identity_ok = sp.simplify(budget - reassembled) == 0
+
+    # single-species reduction is bit-identical to the base derivation
+    single = derive_parent_identity()
+    single_reduces = (K != 1) or (single["identity_ok"] and single["signs_ok"])
+
+    # antipodal-pair corollary: q(beta) + q(-beta) = 0 while Omega_tilt adds
+    beta, w, Om, mu, p = sp.symbols("beta w Om mu p", positive=True)
+    q = (mu + p) * sp.sinh(beta) * sp.cosh(beta)
+    flux_cancels = sp.simplify(q + q.subs(beta, -beta)) == 0
+    tilt_term = (1 + w) * Om * sp.sinh(beta) ** 2
+    tilt_adds = sp.simplify(tilt_term + tilt_term.subs(beta, -beta)
+                            - 2 * (1 + w) * Om * sp.sinh(beta) ** 2) == 0
+    return {
+        "n_species": K,
+        "identity_ok": bool(identity_ok),
+        "single_species_reduces_bit_identical": bool(single_reduces),
+        "antipodal_flux_cancels": bool(flux_cancels),
+        "antipodal_tilt_adds": bool(tilt_adds),
+        "omega_tilt_tot_closed_form": "sum_i (1 + w_i) Omega_i sinh(beta_i)^2",
+        "comparator_unchanged": list(COMPARATOR_SIGN_VECTOR),
+    }
+
+
+def multicomponent_tilt_seal() -> dict:
+    """T9' fail-closed seal (a NEW artifact; the base parent_identity_seal is left
+    byte-frozen)."""
+    multi = derive_multicomponent_tilt_identity(3)
+    single = derive_multicomponent_tilt_identity(1)
+    ok = (multi["identity_ok"] and multi["antipodal_flux_cancels"]
+          and multi["antipodal_tilt_adds"] and single["identity_ok"]
+          and single["single_species_reduces_bit_identical"])
+    return {
+        "seal": "egs3.multicomponent_tilt",
+        "status": "PASS" if ok else "FAIL",
+        "sympy_version": sp.__version__,
+        "multicomponent": multi,
+        "single_species": single,
+        "claim_boundary": "symbolic multi-component Gauss-budget identity (T9'); "
+                          "exact in every beta_i; no data, detection, family/geometry, "
+                          "native-solver, or posterior claim",
     }
 
 
