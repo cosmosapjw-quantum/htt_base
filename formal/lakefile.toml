@@ -1,0 +1,13 @@
+name = "egs3v7"
+defaultTargets = ["egs3v7"]
+
+# Pure Lean 4 core lane: no mathlib dependency, so these machine-checked seals
+# build offline and fast. mathlib-backed general theorems (if pursued) live in a
+# separate library to keep this lane network-independent.
+
+[[lean_lib]]
+name = "Egs3V7"
+
+[[lean_exe]]
+name = "egs3v7"
+root = "Egs3V7"

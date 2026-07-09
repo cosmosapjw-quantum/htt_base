@@ -22,7 +22,8 @@ PYPATH   := PYTHONPATH=$(REPO):$(REPO)/htt:$(REPO)/htt/htt
 
 .PHONY: pr04-gates pr07-gates egs2-gates egs3-gates paper-a-gates paper-b-gates \
         pr04-proofs pr04-forbidden-deps pr07-wolfram pr07-cove egs2-experiments \
-        egs3-experiments egs3-wolfram egs3-seals
+        egs3-experiments egs3-wolfram egs3-seals egs3-sage egs3-lean v7-wolfram \
+        v7-seals
 
 ## All 23 external PR04 theorem/property gates + symbolic proofs + dep scan.
 pr04-gates: pr04-forbidden-deps
@@ -58,6 +59,21 @@ egs3-wolfram:
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_bracket_constants.wls --out $(REPO)/docs/generated/egs3_bracket_constants_proof.json
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_psd_cone.wls --out $(REPO)/docs/generated/egs3_psd_cone_proof.json
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_boost_tilt_separation.wls --out $(REPO)/docs/generated/egs3_boost_tilt_separation_proof.json
+
+## EGS3 v7 SageMath exact-rational seals (T1'/DL1 signed-box endpoints + Bianchi V ideal membership).
+egs3-sage:
+	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_sage_seals.py
+
+## EGS3 v7 Lean-core machine-checked seals (gate-promotion lattice + endpoint certificates).
+egs3-lean:
+	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_lean_seals.py
+
+## EGS3 v7 local-only Wolfram seals (T4' estimated-covariance Hotelling/F two-stage coverage; extended in later steps).
+v7-wolfram:
+	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_v7_two_stage_coverage.wls --out $(REPO)/docs/generated/egs3_v7_wolfram_proofs.json
+
+## EGS3 v7 aggregate symbolic-seal lane: SymPy (report-gating) + Sage + Lean + Wolfram.
+v7-seals: egs3-seals egs3-sage egs3-lean v7-wolfram
 
 ## PAPER-A: identifiability / congruence-kinematics gates + PAPER-A symbolic cores.
 paper-a-gates:
