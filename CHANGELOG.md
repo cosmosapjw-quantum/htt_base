@@ -7,6 +7,45 @@
 
 ## [Unreleased]
 
+### v7 (Fifth Revision) external-audit report: strengthened theorems + multi-engine seals (rev-r148..r153, 2026-07-09/10)
+
+Answered the four 2026-07-09 external review bundles (critic + referee F1-F3/M1-M10/m1-m12 +
+fortification + strengthened-publication) by STRENGTHENING every flagged result into an exact
+theorem with a fail-closed seal, cross-checked across four symbolic engines. Diagnostic-only;
+additive (frozen v6/v6.1 packages + parent-identity seal untouched; x_C anchors bit-identical).
+- **rev-r148 (Phase 1)**: four symbolic-proof lanes -- SymPy (report-gating), SageMath+Singular
+  (`egs3-sage`, exact-QQ polyhedra reproducing the F1 endpoints), Lean 4 core (`egs3-lean`,
+  `native_decide` gate-promotion lattice + endpoint certificates), Wolfram (`v7-wolfram`, T4'
+  Hotelling/F). `make v7-seals` aggregate + skipif-missing contracts.
+- **rev-r149 (Phase 2)**: strengthened theorems axis G -- T1' signed-box two-branch interval +
+  DL1 (F1); T2' strictness-iff with a 400/400 exact-Fraction witness refuting "strict whenever"
+  (M1); T4'/T5'/T8' estimated-covariance Hotelling/F + exact IM coverage + noncentral-chi2 power
+  (M3/P35/E3), each MC-cross-checked; T9' multi-component tilt (m1); T3-lin linearized realization
+  of P31's endpoints (Gauss+momentum residuals <1e-10) + xAct covariant seal (M2). egs3-gates
+  109 -> 152.
+- **rev-r150 (Phase 3)**: MES epsilon provenance seal (M4) -- cross-registry consistency, a
+  genuine rederivation of the ordering theorem B_sigma>B_omega>B_accel (MES Thm 3.4), the (3/2)
+  conversion, and the ssot-vs-fixture epsilon provenance (registered W2_max=1.309e-6). The
+  multipole coefficients honestly stay registered-external (full PSTF-recursion rederivation
+  ticketed). egs3-gates -> 157.
+- **rev-r151 (Phase 4)**: data lanes -- M5 measured-R SVD disclosure (rank-2 structural,
+  sigma3/sigma2=0); FORT05/FORT06 synthetic CF4-Malmquist / DESI-window forward models (M6/M7);
+  K5/CF4 card W^2 ceiling promoted to the registered MES value (F2 advance; observational claim
+  still withheld). Completed the v6.1 figure-curation migration (fixing a Phase-0 desync) +
+  regenerated all audit packages. egs3-gates -> 169; contracts 391 passed / 1 pre-existing
+  (cf4pp network-blocked); the expanded-manuscript pre-existing failure is now fixed.
+- **rev-r152 (Phase 5)**: results table 32 -> 43 rows (EGS3-G1..G10 + K5card) + CLAIM_LEDGER +8
+  program claims with honest scope caveats.
+- **rev-r153 (Phase 6)**: `scripts/build_external_audit_report_v7.py` (Fifth Revision) ->
+  `external_audit_research_report_20260710_v7/` (45-page PDF + zip) + root PDF. New
+  Fifth-Revision response section rendered entirely from the seal artifacts (finding->response->
+  theorem->seal matrix + per-theorem subsections + K5 first identified interval + quantitative
+  Saadeh-2016 placement). REQUIRED_ARTIFACTS += 8 v7 seals; --check byte-stable;
+  check_claim_language clean. v6/v6.1 packages left byte-frozen.
+- Deferred (ticketed): full nonlinear T3 (King-Ellis), MES multipole-coefficient rederivation,
+  K1 real E2E, DESI certified randoms, K5 Sigma^2/Omega_k registered artifacts, mathlib-backed
+  Lean generalizations.
+
 ### v6.1 report refresh checkpoint + external v6-review intake + Phase-0 hygiene (rev-r147, 2026-07-09)
 
 Checkpointed the post-rev-r146 working tree (the v6.1 data-analysis-refresh session) and

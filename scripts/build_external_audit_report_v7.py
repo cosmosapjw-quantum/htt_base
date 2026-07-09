@@ -863,7 +863,6 @@ def v7_response_section() -> str:
 
     lines = [
         r"\section{Fifth-Revision Strengthened-Theorem Response}",
-        r"\addcontentsline{toc}{section}{Fifth-Revision Strengthened-Theorem Response}",
         r"Every finding of the fourth-revision re-review is answered here by strengthening "
         r"the flagged result into an exact theorem with a fail-closed seal, not by weakening "
         r"a claim.  Each row is certified by a SymPy seal and independently cross-checked in "
