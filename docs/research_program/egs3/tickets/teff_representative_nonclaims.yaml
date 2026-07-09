@@ -1,0 +1,34 @@
+id: TEFF-representative-nonclaims
+title: Explicit nonclaims + future obligations of the max-entropy Teff representative lane
+state: registered_nonclaims
+owner_lane: teff
+
+context: |
+  htt/teff (owner TEFF, diagnostic_only) implements the exact closed-form core of the
+  draft "Maximum-Entropy Effective-Temperature Representatives and Nonlinear Angular
+  Response Ledgers" (representative theorem Thm 3, (n,k) insertion ledger Def 13, SO(3)
+  Gram ledgers + L^2 staircase Thm 18/19, equal-information nonidentifiability Thm 22).
+  It reuses the frozen TSC_LEGACY computational substrate (tsc.charts.laguerre_basis
+  spectral moments) but is a distinct ACTIVE owner. This ticket registers what the lane
+  deliberately does NOT claim (mirroring the draft's Appendix E claim-status ledger).
+
+explicit_nonclaims:
+  - transport closure: the response ledger does NOT close the dynamics or provide a
+    time-propagated error bar; it is a static, representative-relative, observable-specific
+    account (draft Sec. X).
+  - boundary conditioning: no theorem on the realizability boundary; conditioning
+    deteriorates as min beta -> 0 (draft Sec. X, Lemma 23 is interior only).
+  - global two-field {0,1} diffeomorphism: the two-field family is used only for the
+    class-preservation observation, not a global moment-map diffeomorphism.
+  - global-in-time stability: not asserted.
+  - global entropy identity for the Gram staircase: the staircase is an exact L^2 identity
+    for an angular observable, not itself a kinetic-entropy identity.
+  - NO data / detection / Bianchi-family-of-the-sky / native-solver / posterior claim.
+
+future_obligations (pure compute/derivation, no data download):
+  - a full transport application: evolve a representative, monitor an insertion-resolved
+    residual, and test whether it predicts observable error before a spectral/angular
+    enrichment activates (draft Sec. X "next step"; needs an independent Boltzmann /
+    multigroup reference solution).
+  - Rust twin parity: cross-check the a_xi / c_p / Gram objects against src/teff/*.rs
+    (spectral.rs zeta(4) integrals, teff_solver.rs GramMatrix2x2) at bit level.

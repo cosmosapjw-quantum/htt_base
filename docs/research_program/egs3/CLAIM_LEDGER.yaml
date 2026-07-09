@@ -176,3 +176,25 @@ claims:
     claim_tier: C1
     allowed_phrase: synthetic forward models reproducing the CF4 Malmquist depth sign-transition from zero true bulk flow and the DESI cap-window resultant from zero injected dipole
     caveats: [M6/M7 response; SYNTHETIC diagnostics that quantify the critique's own systematic; the reported statistics are the forward-subtracted residual / window-subtracted Delta-Rbar; NOT a real-data claim]
+  # --- v8: M4 rederivation + T3-full + TEFF representative theory (rev-r157..r158) ---
+  egs3.mes_sigma_rederived:
+    owner: BASS/MIO
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: the MES shear-bound coefficients B_sigma=(5/3,3,3/7) rederived bit-exact from the MESa (PRD 51,1525) raw eq (51) via the stated C1/C2 reduction assumptions (SymPy Fraction + symbolic identity)
+    caveats: [M4 response; sigma rederived from the arXiv primary source (astro-ph/9501016); omega/accel=(3/4,2,2/7),(3/4,1,3/14) stay primary_sourced_not_rederivable (MESb PRD 51,5942 is print-only; its relaxed-assumption derivation not reconstructable in-repo); no coefficient value changes; W2_max=1.309e-6 + x_C bit-identical; no data claim]
+  egs3.nonlinear_realization:
+    owner: OBSSTAT/BASS
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: T3-full exact (nonlinear, all-orders) realization of BOTH identified-interval endpoints by exact homogeneous cosmologies (Bianchi I lower, Bianchi V upper with transverse shear + antipodal tilt) => the x_C interval [11/100,17/100] is exactly sharp
+    caveats: [M2 upgrade of T3-lin from residuals<1e-10 to EXACT-zero (SymPy + Wolfram/xAct); Bianchi I/V are the realizing initial-data construction, NOT a sky class claim; realizing every interior point of the full 4-component identified SET is a strictly stronger unclaimed statement (residual King-Ellis item); no data claim]
+  teff.representative:
+    owner: TEFF
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C3
+    allowed_phrase: max-entropy effective-temperature representative theory -- exact radial constants a_xi=(2,2zeta(4),(7/4)zeta(4)), (n,k) insertion fingerprints c_p=(p-4)/2^(p+1), SO(3) Gram PSD + exact L^2 staircase, and equal-information nonidentifiability (p=4 invariant, p=3/p=5 opposite fingerprints)
+    caveats: [applies the new draft superseding Teff Papers I-V; DIAGNOSTIC-ONLY (TEFF owner, distinct from the frozen TSC_LEGACY surface); exact closed forms cross-checked on SymPy + Wolfram; the draft's transport-closure/boundary-conditioning/global-diffeomorphism/global-stability nonclaims are NOT asserted; no data/detection/family/native-solver/posterior claim]

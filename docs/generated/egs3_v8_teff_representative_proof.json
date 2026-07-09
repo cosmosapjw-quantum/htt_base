@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "backend": "wolframclient",
+  "results": [
+    {
+      "script": "v8_teff_representative.wls",
+      "result": {
+        "schema": "htt.teff.representative.constants.v1",
+        "wolfram_version": "\"15.0.0 for Linux x86 (64-bit) (May 26, 2026)\"",
+        "a_MB_expr": "2",
+        "a_BE_expr": "Pi^4/45",
+        "a_FD_expr": "(7*Pi^4)/360",
+        "R3_s2_coeff": "-3/2",
+        "R5_s2_coeff": "5/2",
+        "checks": {
+          "a_MB_is_2": true,
+          "a_BE_is_2zeta4": true,
+          "a_FD_is_7_4_zeta4": true,
+          "c3_is_minus_1_16": true,
+          "c4_is_zero": true,
+          "c5_is_1_64": true,
+          "R4_invariant": true,
+          "R3_minus_three_halves": true,
+          "R5_plus_five_halves": true
+        }
+      }
+    }
+  ]
+}

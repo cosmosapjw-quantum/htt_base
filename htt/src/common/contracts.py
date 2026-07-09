@@ -33,6 +33,10 @@ class Owner(StrEnum):
     BASS = "BASS"
     OBSSTAT = "OBSSTAT"
     TSC_LEGACY = "TSC_LEGACY"
+    # v8: active max-entropy effective-temperature representative lane. Distinct from
+    # the frozen TSC_LEGACY (which stays a legacy-reproduction surface); the new
+    # rigorous representative theory is owned here at a diagnostic-only claim tier.
+    TEFF = "TEFF"
 
 
 class ClaimTier(StrEnum):
@@ -59,6 +63,7 @@ class ImplementationScope(StrEnum):
     OBSSTAT = "obsstat"
     COMMON = "common"
     TSC_LEGACY = "tsc_legacy"
+    TEFF = "teff"
 
 
 class ArtifactMode(StrEnum):
@@ -95,6 +100,8 @@ class BundleKind(StrEnum):
     OBSERVABLE_FEATURES = "observable_features"
     COMMON_CONTRACT = "common_contract"
     LEGACY_REPRODUCTION = "legacy_reproduction"
+    # v8: active effective-temperature representative-theory bundle (diagnostic-only).
+    TEFF_REPRESENTATIVE = "teff_representative"
 
 
 def _enum_value(value: str | StrEnum) -> str:
@@ -136,6 +143,7 @@ _ALLOWED_BUNDLES_BY_OWNER = {
     Owner.BASS: {BundleKind.TRANSFER_ATLAS},
     Owner.OBSSTAT: {BundleKind.OBSERVABLE_FEATURES},
     Owner.TSC_LEGACY: {BundleKind.LEGACY_REPRODUCTION},
+    Owner.TEFF: {BundleKind.TEFF_REPRESENTATIVE},
 }
 _ALLOWED_PRODUCTION_STATUSES = {
     "diagnostic_only",

@@ -33,7 +33,11 @@ def test_owner_enum_covers_canonical_science_owners_without_active_tsc() -> None
         "BASS",
         "OBSSTAT",
         "TSC_LEGACY",
+        # v8: active max-entropy effective-temperature representative lane. Distinct
+        # from the frozen TSC_LEGACY reproduction surface (no active bare-"TSC" owner).
+        "TEFF",
     }
+    # the freeze invariant still holds: there is no active bare-"TSC" owner value.
     assert "TSC" not in {owner.value for owner in Owner}
 
 

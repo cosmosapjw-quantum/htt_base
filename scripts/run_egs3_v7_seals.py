@@ -74,6 +74,11 @@ def build_payloads() -> tuple[dict[str, str], dict[str, dict]]:
         seals["nonlinear_realization_seal.json"] = nonlinear_realization_seal()
     except Exception:  # module not present yet -> lane simply omits it
         pass
+    try:
+        from htt.teff.representative import teff_representative_seal
+        seals["teff_representative_seal.json"] = teff_representative_seal()
+    except Exception:  # module not present yet -> lane simply omits it
+        pass
 
     payloads = {name: json.dumps(seal, indent=2, default=float) + "\n"
                 for name, seal in seals.items()}

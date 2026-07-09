@@ -63,9 +63,10 @@ V7_SYMPY_SEALS = (
     "mes_provenance_seal.json",
     "measured_response_seal.json",
     "data_lane_forward_seal.json",
-    # v8 additions (M4 rederivation + T3-full exact endpoint realization)
+    # v8 additions (M4 rederivation + T3-full exact endpoint realization + TEFF theory)
     "mes_rederivation_seal.json",
     "nonlinear_realization_seal.json",
+    "teff_representative_seal.json",
 )
 
 
@@ -112,6 +113,30 @@ def test_v8_nonlinear_realization_endpoints_exact():
     lo = payload["endpoints"]["lower_xC_11_over_100"]
     hi = payload["endpoints"]["upper_xC_17_over_100"]
     assert lo["bianchi_class"] == "I" and hi["bianchi_class"] == "V"
+
+
+def test_v8_teff_representative_theorems():
+    payload = _load("teff_representative_seal.json")
+    assert payload["status"] == "PASS"
+    assert payload["owner"] == "TEFF" and payload["claim_tier"] == "diagnostic_only"
+    r = payload["radial_constants"]
+    assert r["a_BE_over_zeta4"] == "2" and r["a_FD_over_zeta4"] == "7/4"
+    f = payload["insertion_fingerprints"]
+    assert f["c_4_is_zero"] is True and f["c_3"] == "-1/16" and f["c_5"] == "1/64"
+    tt = payload["two_temperature_ratios"]
+    assert tt["R4_invariant_pointwise"] and tt["opposite_signs"]
+    assert payload["gram_ledger"]["psd"] is True
+    assert payload["equal_information_nonidentifiability"]["p3_p5_move_opposite"] is True
+
+
+def test_v8_teff_wolfram_crosscheck():
+    path = GEN / "egs3_v8_teff_representative_proof.json"
+    if not path.exists():
+        pytest.skip("v8 TEFF Wolfram proof not generated on this host")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    assert payload["status"] == "PASS"
+    checks = payload["results"][0]["result"]["checks"]
+    assert all(v is True for v in checks.values())
 
 
 def test_v8_wolfram_king_ellis_pass():
