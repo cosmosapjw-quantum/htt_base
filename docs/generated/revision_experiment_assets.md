@@ -10,7 +10,7 @@ config_hash: `sha256:cc6e2520973432a222fead2c0006a370fac2ebed531348e4511cdd55f9d
 generating_command: `venv/bin/python scripts/generate_revision_experiment_assets.py --write`
 git_commit_or_worktree_state: `content-addressed`
 input_hashes:
-- docs/generated/observational_data_inventory.json:sha256:025b666eb5813b3397eef285f9feef68283d54bc328b7756ada03f62f462e328
+- docs/generated/observational_data_inventory.json:sha256:7c7b8684ff47394d90a858e37d8452e92611dc4d43114e6eb2a45d30400b325b
 - docs/generated/observed_longrun_analysis.json:sha256:deb1cd2f10a49f9d4803b57c8c2414c03d04e7baf5939c48a8c9251295a2e5ec
 - docs/generated/current_science_plot_payload.json:sha256:dbe57bffa28b9c11f88491ff2c31d3c2bb8e41efabbf2bb7a070da1e0c2faa48
 

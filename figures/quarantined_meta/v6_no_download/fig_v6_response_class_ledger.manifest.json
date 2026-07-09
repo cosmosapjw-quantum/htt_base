@@ -1,0 +1,61 @@
+{
+  "allowed_use": "internal_only",
+  "artifact_id": "common.v6_no_download_figures.response_class_ledger",
+  "artifact_mode": "internal_exploratory",
+  "artifact_path": "figures/quarantined_meta/v6_no_download/fig_v6_response_class_ledger.png",
+  "caption_policy": [
+    "must_state_diagnostic_only",
+    "must_state_no_native_low_ell_solver_output",
+    "must_state_no_family_identification",
+    "must_state_no_k5_k6_execution_by_generator"
+  ],
+  "caveats": [
+    "Old figures are classified, not promoted.",
+    "Legacy ranking/posterior labels are removed from current claim lanes.",
+    "Counts are figure-governance metadata, not evidence."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "config_hash": "sha256:96e9f5f53f468c88e8898d9577b6c41b58d01239cf1b989b04e91c48ef76d0bd",
+  "created_by": "scripts/make_v6_no_download_figures.py",
+  "failed_gates": [],
+  "generating_command": "python scripts/make_v6_no_download_figures.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/v6_no_download_research_cards.json:sha256:f4074ddb094f8c16a17503669ada8a55e379371f4166b338b36f0a3cd906f3f8",
+    "docs/generated/v6_legacy_figure_classification.json:sha256:8c6617c257ad422c1bb5338fd19391943ffdd97f31af638d86367c025631a3ee",
+    "scripts/make_v6_no_download_figures.py:sha256:6d31a1bd981b23cb4c323d99b9ca4540cda86b410146c5356f3b921950ad1df4"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "COMMON",
+  "passed_gates": [
+    "v6_no_download_cards_current",
+    "manifest_metadata_present",
+    "no_k5_k6_long_run_by_generator"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "native_lowell_morphology_atlas_absent",
+    "matched_e2e_or_cf4_nulls_not_bound"
+  ],
+  "required_gates": [
+    "v6_no_download_cards_current",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review",
+    "no_k5_k6_long_run_by_generator"
+  ],
+  "schema_version": "common.v6_no_download_figure.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "figure_title": "Response-class ledger",
+    "source_artifacts": [
+      "docs/generated/v6_no_download_research_cards.json",
+      "docs/generated/v6_legacy_figure_classification.json"
+    ],
+    "source_card": "response_class_ledger",
+    "v6_figure_lane": "quarantined_meta_v6_no_download"
+  },
+  "transfer_source": "none"
+}

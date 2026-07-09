@@ -1,0 +1,302 @@
+{
+  "allowed_use": "external_audit",
+  "artifact_id": "obsstat.k5_cf4_identified_interval_card",
+  "artifact_mode": "external_audit_conditioned",
+  "artifact_path": "docs/generated/k5_cf4_identified_interval_card.json",
+  "blocked_components": [
+    "Sigma2_hat",
+    "Sigma2_error",
+    "W2_upper",
+    "Omega_k_upper"
+  ],
+  "bulk_flow_summary": {
+    "amplitude_kms": 340.72639833770336,
+    "measurement_error_kms": 4.968225629763425,
+    "n_groups": 38049,
+    "sigma_cv_prior_kms_per_component": 150.0,
+    "total_error_kms": 101.87045232654711
+  },
+  "caveats": [
+    "Diagnostic pipeline-closure card only.",
+    "Sigma2, W2, and Omega_k placeholders block observational promotion.",
+    "No posterior odds, native low-ell solver output, or morphology-family promotion."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "component_input_modes": {
+    "CF4_bulk_amplitude": "REAL",
+    "K1_maxscan": "REAL_DIAGNOSTIC_INPUT_NOT_USED_AS_SIGMA2",
+    "MES_coefficients": "REGISTERED_EXTERNAL_NOT_REDERIVED",
+    "Omega_k_upper": "PLUGIN/BLOCKED",
+    "Omega_m": "DECLARED_OBS_DEFAULT",
+    "Omega_tilt_formula": "DERIVED_FROM_PARENT_IDENTITY_SEAL",
+    "Sigma2_error": "PLUGIN/BLOCKED",
+    "Sigma2_hat": "PLUGIN/BLOCKED",
+    "W2_upper": "PLUGIN/BLOCKED"
+  },
+  "config_hash": "sha256:32779452961391487d6273a47043a3876d2d42049c57e4541c3165f2d1090aca",
+  "created_by": "scripts/k5_cf4_identified_interval_card.py",
+  "failed_gates": [
+    "registered_sigma2_artifact_absent",
+    "registered_w2_upper_artifact_absent",
+    "registered_omega_k_upper_artifact_absent"
+  ],
+  "family_identification": false,
+  "generating_command": "venv/bin/python scripts/k5_cf4_identified_interval_card.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "docs/generated/k5_cf4_release_coverage.json:sha256:edcf9f9354cd326827fdae48ce1595aed963140ac5bd6a3264ebe0c5c144eee9",
+    "docs/generated/k1_global_maxscan.json:sha256:c7f8ca243eec35eca6ab6518309f216d16ddc706996df1f6dbd2a2a813867237",
+    "docs/generated/parent_identity_seal.json:sha256:16518f1770699d65fc114e704639e68029c60b153dac85091442fbe71f149c47",
+    "htt/workspace/data/obs_defaults.json:sha256:c305be5b42ea3c0a9f8d919f0314ac6befc5155424d6b8a00d92f4f9349ac1df"
+  ],
+  "k1_context": {
+    "commander_global_p": 0.12093953023488256,
+    "smica_global_p": 0.09695152423788106,
+    "use_in_card": "context_only_not_sigma2_binding"
+  },
+  "native_solver_result": false,
+  "null_mock_status": "not_statistical",
+  "observational_claim_allowed": false,
+  "owner": "OBSSTAT",
+  "parent_identity": {
+    "mes_epsilon_rederived_here": false,
+    "omega_tilt_closed_form": "(1+w) * Omega_m * sinh(beta)**2"
+  },
+  "passed_gates": [
+    "repo_local_cf4_bulk_artifact_present",
+    "parent_identity_formula_present",
+    "plugin_firewall_for_unbound_components"
+  ],
+  "policies": {
+    "cosmic_variance_inclusive": {
+      "beta": 0.0011365409277164116,
+      "branches": {
+        "all_branch[-Uk,Uk]": {
+          "component_bounds": [
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              8.959622448979593e-07
+            ],
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              -1e-06,
+              1e-06
+            ]
+          ],
+          "df_reachable": 2,
+          "df_residual": 2,
+          "im_95_ci": [
+            -1.2266279888830863e-05,
+            3.720992158486553e-05
+          ],
+          "im_c_n": 1.6448536296430918,
+          "interval": [
+            -1.895962244875807e-06,
+            2.6839603940910474e-05
+          ],
+          "null_extremes": [
+            -1.8959622448979593e-06,
+            1e-06
+          ],
+          "policy_id": "cosmic_variance_inclusive",
+          "reachable_extremes": [
+            2.2152135032186496e-17,
+            2.5839603940910473e-05
+          ],
+          "spec_stat": 0.0,
+          "status": "FEASIBLE",
+          "tau1": 5.991464547107979,
+          "tau2": 5.991464547107979,
+          "threshold_policy": "known_chi2"
+        },
+        "open_branch[0,Uk]": {
+          "component_bounds": [
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              8.959622448979593e-07
+            ],
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              1e-06
+            ]
+          ],
+          "df_reachable": 2,
+          "df_residual": 2,
+          "im_95_ci": [
+            -1.1266279917801498e-05,
+            3.7209921613836166e-05
+          ],
+          "im_c_n": 1.6448536342381732,
+          "interval": [
+            -8.959622448758072e-07,
+            2.6839603940910474e-05
+          ],
+          "null_extremes": [
+            -8.959622448979593e-07,
+            1e-06
+          ],
+          "policy_id": "cosmic_variance_inclusive",
+          "reachable_extremes": [
+            2.2152135032186496e-17,
+            2.5839603940910473e-05
+          ],
+          "spec_stat": 0.0,
+          "status": "FEASIBLE",
+          "tau1": 5.991464547107979,
+          "tau2": 5.991464547107979,
+          "threshold_policy": "known_chi2"
+        }
+      },
+      "bulk_error_kms": 101.87045232654711,
+      "omega_tilt": 4.0728115626715063e-07,
+      "omega_tilt_error": 2.435381213780489e-07
+    },
+    "measurement_only": {
+      "beta": 0.0011365409277164116,
+      "branches": {
+        "all_branch[-Uk,Uk]": {
+          "component_bounds": [
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              8.959622448979593e-07
+            ],
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              -1e-06,
+              1e-06
+            ]
+          ],
+          "df_reachable": 2,
+          "df_residual": 2,
+          "im_95_ci": [
+            -1.1873408633383746e-05,
+            3.719070988548406e-05
+          ],
+          "im_c_n": 1.6448536308750812,
+          "interval": [
+            -1.5108123428250828e-06,
+            2.6828113594925402e-05
+          ],
+          "null_extremes": [
+            -1.8959622448979593e-06,
+            1e-06
+          ],
+          "policy_id": "measurement_only",
+          "reachable_extremes": [
+            3.8514990207287654e-07,
+            2.58281135949254e-05
+          ],
+          "spec_stat": 4.930380657631324e-32,
+          "status": "FEASIBLE",
+          "tau1": 5.991464547107979,
+          "tau2": 5.991464547107979,
+          "threshold_policy": "known_chi2"
+        },
+        "open_branch[0,Uk]": {
+          "component_bounds": [
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              8.959622448979593e-07
+            ],
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              1e-06
+            ]
+          ],
+          "df_reachable": 2,
+          "df_residual": 2,
+          "im_95_ci": [
+            -1.0873408675016815e-05,
+            3.7190709927117135e-05
+          ],
+          "im_c_n": 1.6448536374834934,
+          "interval": [
+            -5.108123428250829e-07,
+            2.6828113594925402e-05
+          ],
+          "null_extremes": [
+            -8.959622448979593e-07,
+            1e-06
+          ],
+          "policy_id": "measurement_only",
+          "reachable_extremes": [
+            3.8514990207287654e-07,
+            2.58281135949254e-05
+          ],
+          "spec_stat": 4.930380657631324e-32,
+          "status": "FEASIBLE",
+          "tau1": 5.991464547107979,
+          "tau2": 5.991464547107979,
+          "threshold_policy": "known_chi2"
+        }
+      },
+      "bulk_error_kms": 4.968225629763425,
+      "omega_tilt": 4.0728115626715063e-07,
+      "omega_tilt_error": 1.1877362952864287e-08
+    }
+  },
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "Sigma2_hat",
+    "Sigma2_error",
+    "W2_upper",
+    "Omega_k_upper"
+  ],
+  "required_gates": [
+    "repo_local_cf4_bulk_artifact_present",
+    "parent_identity_formula_present",
+    "plugin_firewall_for_unbound_components"
+  ],
+  "schema": "htt.k5.cf4_identified_interval_card.v1",
+  "schema_version": "htt.k5.cf4_identified_interval_card.v1",
+  "sky_support_status": "not_directional",
+  "source_artifacts": [
+    "docs/generated/k5_cf4_release_coverage.json",
+    "docs/generated/k1_global_maxscan.json",
+    "docs/generated/parent_identity_seal.json",
+    "htt/workspace/data/obs_defaults.json"
+  ],
+  "statistics_definitions": {
+    "error_policies": [
+      "measurement_only",
+      "cosmic_variance_inclusive"
+    ],
+    "omega_tilt": "(1+w) Omega_m sinh(beta)^2 with w=0 and beta=|B|/c",
+    "plugin_firewall": "observational_claim_allowed is false while any component is PLUGIN/BLOCKED",
+    "x_comparator": "c=(1,-1,1,1) applied to branch-bounded components"
+  },
+  "transfer_source": "none"
+}

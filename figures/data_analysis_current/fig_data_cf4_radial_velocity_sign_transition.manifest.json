@@ -1,0 +1,67 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "obsstat.report_data.cf4_radial_velocity_sign_transition",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/data_analysis_current/fig_data_cf4_radial_velocity_sign_transition.png",
+  "caption_policy": [
+    "must_state_observed_data_diagnostic",
+    "must_not_state_family_identification",
+    "must_not_state_native_low_ell_solver_output",
+    "must_not_state_p_value_without_null_ensemble"
+  ],
+  "caveats": [
+    "Observed/prepared data analysis figure.",
+    "Diagnostic-only: no posterior odds, p-value, geometry detection, or family identification.",
+    "No native low-ell solver output is used."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "config_hash": "sha256:9e76e335f089c395cda90571e46090b0acd2c7d1abea90e36f6f9d172feebb52",
+  "created_by": "scripts/make_report_data_analysis_figures.py",
+  "failed_gates": [
+    "matched_nulls_not_bound_for_inference",
+    "full_covariance_not_bound_for_likelihood"
+  ],
+  "generating_command": "python scripts/make_report_data_analysis_figures.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "docs/generated/observed_longrun_analysis.json:sha256:deb1cd2f10a49f9d4803b57c8c2414c03d04e7baf5939c48a8c9251295a2e5ec",
+    "workdir/compact_products/cf4/query_batch.npz:sha256:5fb994ca076235fb30db644d3d1a3672d092ed31f8ef4737bcabe2da87491909",
+    "scripts/make_report_data_analysis_figures.py:sha256:a7dd3f43fe0e63df90d84d23fe275d3a1e341636bc5db97c59c9e94a2aff85ab"
+  ],
+  "null_mock_status": "jackknife_bootstrap_diagnostic_no_pvalue",
+  "owner": "OBSSTAT",
+  "passed_gates": [
+    "repo_local_data_input_present",
+    "manifest_metadata_present",
+    "report_lane_is_data_analysis_not_meta"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "matched_nulls_not_bound_for_inference",
+    "full_covariance_not_bound_for_likelihood",
+    "native_morphology_atlas_absent"
+  ],
+  "required_gates": [
+    "repo_local_data_input_present",
+    "manifest_metadata_present",
+    "report_lane_is_data_analysis_not_meta"
+  ],
+  "schema_version": "obsstat.report_data_analysis_figure.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "figure_lane": "report_data_analysis_current",
+    "max_vr_mean_km_s": 230.13076327595036,
+    "min_vr_mean_km_s": -79.69307839757039,
+    "n_radius_bins": 10,
+    "quantity": "CF4 radial-shell mean velocity with bootstrap band",
+    "source_artifacts": [
+      "docs/generated/observed_longrun_analysis.json",
+      "workdir/compact_products/cf4/query_batch.npz",
+      "scripts/make_report_data_analysis_figures.py"
+    ]
+  },
+  "transfer_source": "none"
+}

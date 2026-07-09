@@ -75,7 +75,11 @@ if str(REPO_ROOT) not in sys.path:
 import make_lowell_morphology_real_map as rm  # noqa: E402
 from obsstat.lowell_global_calibration import calibrate_max_scan  # noqa: E402
 from htt.obsstat.lowell_precision import (  # noqa: E402
-    PrecisionConfig, downgrade_mask, precision_map_statistics,
+    DEFAULT_LMAX,
+    DEFAULT_PROC_NSIDE,
+    PrecisionConfig,
+    downgrade_mask,
+    precision_map_statistics,
 )
 
 # Full-resolution observed maps + common temperature mask (for the v2 precision path:

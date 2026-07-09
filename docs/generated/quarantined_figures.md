@@ -6,10 +6,8 @@ claim_tier: diagnostic_only
 transfer_source: none
 sky_support_status: not_directional
 null_mock_status: not_statistical
-config_hash: `cc0ddeaee70ad11122673b8656fcd296de72a883aec1db9bd1899dd53cab7582`
+config_hash: `dd150448256e90fdbddd01b88a73f4ee6ffb1a0ab6b81a3f2b9960d5074805a4`
 input_hashes:
-- docs/generated/manuscript_pdf/htt_base_research_report.pdf: `da54b2b63a373e27d059c3a89815f7a7fa784669704623bb48bed94eeefcbb3c`
-- docs/generated/manuscript_pdf/htt_base_research_report.manifest.json: `3ecc9e5b849da75c4f959002ebcd64da7f2d3b968908c51e8de6b4fa57944e7a`
 - figures/conditioned_legacy/parallel-track__fig_01_mes_three_bounds.png: `586450ab262f76850cf2532bd1c6fe8bc458b73b6c4ebf0fcc792d5fd6debb3a`
 - figures/conditioned_legacy/parallel-track__fig_01_mes_three_bounds.manifest.json: `2f0ec7c6be1080da239dd20f7be223e1e1138640182a1b8105a9227470fb6482`
 - figures/conditioned_legacy/parallel-track__fig_02_tilted_flrw_dictionary.png: `c1b555973863bf6aa9da0a2fb566597ef493cbdde32371c9f236c3bfc807d176`
@@ -187,76 +185,121 @@ input_hashes:
 - figures/conditioned_legacy/validation__flrw_lowell_dell_camb_bass_lmax8.png: `5f3ca0c8d3668cca22cc833a701b2e1a93d85f3b4e5c4c5b34a9106ed1189553`
 - figures/conditioned_legacy/validation__flrw_lowell_dell_camb_bass_lmax8.manifest.json: `8a27f3093e6e9ab7164c322fee47a020f6db61aac9edd3d948ff66cb61463ea7`
 - figures/current/fig_current_dag_progress.png: `b5432de3b8b3516e190ee2d1300909fea68a8b95236f4dd4474609a1139ab78c`
-- figures/current/fig_current_dag_progress.manifest.json: `c9d167e7911ebd8c846895a5311418513c37f14952c83e0a1457cb64d4846a07`
+- figures/current/fig_current_dag_progress.manifest.json: `cccaba6089082777cc3dfcd0325dc8a9b9f33a77be5eb742a30eb6322278ea67`
 - figures/current/fig_current_local_global_gates.png: `444c7e23c55fa432a9fb3c3fdfba90056e1eebc689597969d87b45b1e423f00e`
-- figures/current/fig_current_local_global_gates.manifest.json: `ca531ce949da4f068fa86480dbbcd4fc5f87f4d8d4db2223b34450fb8b012258`
+- figures/current/fig_current_local_global_gates.manifest.json: `8e525e233b943d3f362cff916f3a7b2a7d0bd970476c30a65c860ba33d84d704`
 - figures/current/fig_current_local_global_rank_fpr.png: `c0b69612a13ee432c097d5834b0cf189ec38132a191edf9c5160002010a730de`
-- figures/current/fig_current_local_global_rank_fpr.manifest.json: `b900d7efb8190cfb97c8afb92615100a30ba0a666448205950983cd2b2234c89`
+- figures/current/fig_current_local_global_rank_fpr.manifest.json: `e3b64a2a20d379fbecd5495c86128d760abbb96dab9874ff592e58673ff06028`
 - figures/current/fig_current_mio_certificate_status.png: `a6f158c8c2eceab3ce8780d1472ec89df00f01621a61bf16d1bb9c1ea3dc7f91`
-- figures/current/fig_current_mio_certificate_status.manifest.json: `0eef8b291adf9653a162e8a4c90c46296dc9d7903c4f555bf0b018cf896ddeb6`
-- figures/current/fig_current_mio_depth_residual_vectors.png: `cc7bacd7ded5bd83e29b6ef0429a0b6f3a33a3ff51559c4a15b2aafd8cd25615`
-- figures/current/fig_current_mio_depth_residual_vectors.manifest.json: `c827027a565756d751dd01ab33e78350a8cbe751f3bb9567e89e86513b4cb073`
+- figures/current/fig_current_mio_certificate_status.manifest.json: `583dc37c95f5490125f129817c57c66efb6bee1a9d4b153d173fd27a2dc88b3a`
+- figures/current/fig_current_mio_depth_residual_vectors.png: `2da4d35f758f6239c8d35335af22286f8a65b42845cfb8b8128fa19bd45eea3e`
+- figures/current/fig_current_mio_depth_residual_vectors.manifest.json: `a6e5896b40b3b9adb164b761ca612ddeab3a586a2111f937ee378510b133d655`
 - figures/current/fig_current_public_claim_freeze.png: `9e72a8c181c112dfa072c6ad28c702cf7f52df60427e7617358b0b5834bd9006`
-- figures/current/fig_current_public_claim_freeze.manifest.json: `c740fb47146980c5871025c63b2e9922683e5f43700cb9b742fc5f4f038425d2`
-- figures/current/fig_current_qfpi_gf_semantic_split.png: `39c6c759666cfeb6a783016333a07671389b37ae114762982ed9c00c58bee6d5`
-- figures/current/fig_current_qfpi_gf_semantic_split.manifest.json: `69a147e0fba28605d447bc6b6ff8d210f3a4ae149529d88f042bc05119d45576`
+- figures/current/fig_current_public_claim_freeze.manifest.json: `9bb88f0e947f7149d4432c45f7d321004e07767614223174bb6cb1b3c7e23a63`
+- figures/current/fig_current_qfpi_gf_semantic_split.png: `ca987215f30d67129ac44fe4b43e34e44f2f063e333f3bb617b5e550fc22a2d5`
+- figures/current/fig_current_qfpi_gf_semantic_split.manifest.json: `37dff1659ac456ed2d4405080cff376c60e4c0510ac624245b47f2ff815b2cab`
 - figures/current/fig_current_scalar_morphology_boundary.png: `07f73f3fa643a2abcb8b4ff019f5f1a66f5482b8044bff006e0177e4f9668fa5`
-- figures/current/fig_current_scalar_morphology_boundary.manifest.json: `15848c6736a56652497270fc2bab6079402352cb42921e0e4ec667c511010ad9`
+- figures/current/fig_current_scalar_morphology_boundary.manifest.json: `c949a6b1ab6aca336147f99ec44964f398c7781789a1bfee5d4770ef4de3941b`
 - figures/current/fig_current_transfer_provenance.png: `a952d182e44a7c58c3a4453242f5e4437e40f71007aff8be9071fe62f1af7de6`
-- figures/current/fig_current_transfer_provenance.manifest.json: `a1207d8ea58d9f8b9d317e1dabafce42653fbfbef4074bb01e717fa4e55c6f94`
-- figures/current/fig_current_transfer_sensitivity_tornado.png: `0a73aa60d0620ff820220c3fec183b29bc2540887808f4d9c961e2a75be9eac9`
-- figures/current/fig_current_transfer_sensitivity_tornado.manifest.json: `c2c015d8888bb0c48d7eebd4fd6e56267045ab42aa8bcaa84d670158dceaf495`
-- figures/current/fig_revision_per_channel_occupancy.png: `dfd72c7666aed2680ffca9951842224b07b93c0f2abe4fc517415ff2d772899b`
-- figures/current/fig_revision_per_channel_occupancy.manifest.json: `75c57dd9ea15220afa9a10515350106970c73e6355757ce7dda403ddaac3b8ed`
-- figures/current/fig_revision_prior_support_surface.png: `bfa48b62b9a283c05cd78458edf69042117f0954bca7cd80736dab4ecb589a0f`
-- figures/current/fig_revision_prior_support_surface.manifest.json: `382dc36589fe5f32a413f06e63c4d63f5681dda631893b08461e66b0505c5c6d`
-- figures/current/fig_revision_rule_of_three_fpr.png: `c303846d454e8e467d0cf52aeb07ae5c771131c6c77915e56cfa02e814b014c8`
-- figures/current/fig_revision_rule_of_three_fpr.manifest.json: `7bcf5939c130a1ddb96e3c57a5755be24c5c08cb44a336e6327bd36a1ab82a60`
-- figures/current/fig_revision_sigma_beta_band.png: `e5d88d3bb87a7d7115a5e48aa5bd24df2a9415a4e16c02d90d8e7131cbf79554`
-- figures/current/fig_revision_sigma_beta_band.manifest.json: `f52f061ae3e24b93c49b35399fb09f4bcbbca38d8511fb1df3f42624b5b2c834`
+- figures/current/fig_current_transfer_provenance.manifest.json: `28c15f89d54beccf56229eae1d72eb56d74c1cbec145a38c9443d15698a0f739`
+- figures/current/fig_current_transfer_sensitivity_tornado.png: `6a0f939f937e1db4489c00b96a513c621225ff587a713a45951b2daf84340c8b`
+- figures/current/fig_current_transfer_sensitivity_tornado.manifest.json: `20098994e06823ff7f3c05b76c30bac565abad22ca17cbcc9f4aa4d69ca7e32c`
+- figures/current/fig_revision_per_channel_occupancy.png: `59f59b2ec955a6a802ae057462b130bfb06af634a5c86afd147ee110a78e5e38`
+- figures/current/fig_revision_per_channel_occupancy.manifest.json: `a9af5216ef48360158085ba567093b50790d6c684ce02fe552433fe71f0b18a6`
+- figures/current/fig_revision_prior_support_surface.png: `0fc34fc6d8d9ae973789d45ca39d7c6a4c15e18a14c6f443ee84d7f9af13b6fa`
+- figures/current/fig_revision_prior_support_surface.manifest.json: `7836bd4b51da40a3323b6353e4cd05890ef75786ba64983c51a0a9b02246f633`
+- figures/current/fig_revision_rule_of_three_fpr.png: `5feaef7515a8ad435522a9f140dcd82a7a37eceb4cfad0e92e6c0e8393c908c3`
+- figures/current/fig_revision_rule_of_three_fpr.manifest.json: `282901a88cb422fe9c3e0ad880a0b67faedd28d423c29a5d79050bd4214e9d53`
+- figures/current/fig_revision_sigma_beta_band.png: `2a44e3e9e7675dcd9c6252833046c8fb2ff8b742ba56a2f04807c5ccee8273ce`
+- figures/current/fig_revision_sigma_beta_band.manifest.json: `2eca77a791e1dc64685a15944f223359dccfcda87028017609f0b904dcc4cbb3`
 - figures/current/fig_revision_tomographic_forecast.png: `73532680343ee6343924ff32cd6f5fbb3ccd0fbbaa8a18b602327b7faeb1e474`
-- figures/current/fig_revision_tomographic_forecast.manifest.json: `400a9f8c062041735bc903b0890efe36daed8f1d91318b8b07a09bdce3cde533`
+- figures/current/fig_revision_tomographic_forecast.manifest.json: `338a7c328dbd5e7c81cec032114eece9e552a948b3bd5fb01665a1975bbef6bb`
+- figures/current/fig_theorem_angular_kl_bound.png: `5a896cb480eb0534d57a6a966075b2c3d509540264aebc04aa0991cf0336bf35`
+- figures/current/fig_theorem_angular_kl_bound.manifest.json: `16f379cb6dd3c48e0353900e2a97ff2f05fe163e9385c381bef9c4fc91826cde`
+- figures/current/fig_theorem_boosted_radiation_orbit.png: `2b8c4f17d2c5bd36d76a5670d020b0b38ab359f74583612ba3deb194b24b7ebc`
+- figures/current/fig_theorem_boosted_radiation_orbit.manifest.json: `067d6a9203504aa8e1a646eaf75f96ad4b5240d3ccabb20e1b409ccc5065ca1c`
+- figures/current/fig_theorem_dynamic_budget_barrier.png: `8ea9c2802bf0595f2a88d42d0710de124dabe642174eb1987caa211290dae3c6`
+- figures/current/fig_theorem_dynamic_budget_barrier.manifest.json: `5cec35d044e1c8788091afebc20bd516251d57fcf519a152caf7521a71f8145b`
+- figures/current/fig_theorem_nt_a1_quadrupole_filling.png: `bb22a004554888fc154a9526bc6dea5d12a691238da0959fd92c10ba88e5ec50`
+- figures/current/fig_theorem_nt_a1_quadrupole_filling.manifest.json: `c2502d65776493ff330c6baa4615921b9d8cca186710fe9564bc3f5971342086`
+- figures/current/fig_theorem_nt_a3_cosmic_variance_floor.png: `02122b7cbbd4720aa44d4f8b2cbd4861aea7b7c7815618032fd1aa53da49f163`
+- figures/current/fig_theorem_nt_a3_cosmic_variance_floor.manifest.json: `234d02d640a97000172c68c265e8dbc09343a2d7d5253258899cce478036e61b`
+- figures/current/fig_theorem_nt_b3_gf_transport.png: `894ca653ed50d3f2432582f68c94884a4dfbf1b72b7608a15f096387735a86c8`
+- figures/current/fig_theorem_nt_b3_gf_transport.manifest.json: `a84d09a08bfe406a781bf4e189cb99dda297fc52ab0928961e6d4053ad80af0d`
+- figures/current/fig_theorem_slope_degeneracy.png: `20f4cd1395467e3ba89f70b3636d8f3669fa85de56fa551dbb1c7f24d23ae6a4`
+- figures/current/fig_theorem_slope_degeneracy.manifest.json: `c9ea011aa8417cff310f2c51b3a2e523b754ab5c2f7b6857cb24041ea5d910ec`
+- figures/current/fig_theorem_visibility_cancellation.png: `ce2d7d0ebdb61a69387a807c65ef167e7180eee41b1e2920fcd1405f08380085`
+- figures/current/fig_theorem_visibility_cancellation.manifest.json: `4b25707fd257864317be9d0824315375cb7d29ee586505749f9353405a7a53c9`
 - figures/observed_current/fig_observed_cf4_depth_response.png: `75a5ce0cb5ba388adc0f385b12ff469b9b20a9c857dfc1399eb0a6388b2e28ef`
-- figures/observed_current/fig_observed_cf4_depth_response.manifest.json: `edcba5915310f1b68a5bc5f61046b5822ace890e82bdb1b68f084e6e9939b1f4`
+- figures/observed_current/fig_observed_cf4_depth_response.manifest.json: `58cc69029ccdc5972dd7b23ec38fdc3ebf7c71dc5fc39ad7944a267e20a61eb7`
 - figures/observed_current/fig_observed_cf4_velocity_density.png: `f4fb08dccbb332772a87ca473b03bb7fb322b0ecd4fbb2a482e08a6fc2a6c405`
-- figures/observed_current/fig_observed_cf4_velocity_density.manifest.json: `93895414586df68082192bac639f01c5239a6f483115c9f6adac680f774313dd`
+- figures/observed_current/fig_observed_cf4_velocity_density.manifest.json: `358423662e81671d347536cc33ed1d9f6eb73b2e30f08231f030957b253f8f5d`
 - figures/observed_current/fig_observed_desi_footprint_depth.png: `56a53e6188fe1b8aeabbd8a2382cb427b9916d583b28a31205965393fc53173f`
-- figures/observed_current/fig_observed_desi_footprint_depth.manifest.json: `e3339b00dc12c8f75234250ffceae34418f107f18aee020451b4641e737f51fd`
+- figures/observed_current/fig_observed_desi_footprint_depth.manifest.json: `7b405caa04115335131459bd9c03b86e12a19851bdd424e8f270cd01e492bb8f`
 - figures/observed_current/fig_observed_desi_selection_weights.png: `cf939d06ace730058c90c9b2138e3df617cb45abc37461cf93b7043739e023da`
-- figures/observed_current/fig_observed_desi_selection_weights.manifest.json: `c87df5b07baafd88ba1a0d1f2c68cac54e13f77bbcc19acab736e1be92118952`
+- figures/observed_current/fig_observed_desi_selection_weights.manifest.json: `287b5859f91d952b2b1616234c81807f12ab015ba524cc572cf087b08ab22f8c`
 - figures/observed_current/fig_observed_high_ell_experiment_summary.png: `29011e5e28f2783750507c6c77bd12ced3402df25e96025079a24276ea5e6f55`
-- figures/observed_current/fig_observed_high_ell_experiment_summary.manifest.json: `79057339b7d1e7c51455b77065b2091b353a4a1732c1da965170c8e2274f7124`
+- figures/observed_current/fig_observed_high_ell_experiment_summary.manifest.json: `9c62626351df8c17d04b6e5c7b27270b2b0ba1f5023a5859a31bdb697bcd81d2`
 - figures/observed_current/fig_observed_inventory_matrix.png: `fd8bd2127867d8471f6366de12470aed7633316e7cbf780d94543080719ea560`
-- figures/observed_current/fig_observed_inventory_matrix.manifest.json: `603d3a666995345b312bf34e843c83f4792bdc43a7603f8ab8912f1e73656223`
+- figures/observed_current/fig_observed_inventory_matrix.manifest.json: `3d99890b7807a4d32047cc9b7dfa846fd95a0ef428460e0fdaf91b594fdb0101`
 - figures/observed_current/fig_observed_longrun_jackknife_bootstrap.png: `414cffc27b739376d3a240fe21d421da0f5089155c20a8582d68ef5c5ee4387d`
-- figures/observed_current/fig_observed_longrun_jackknife_bootstrap.manifest.json: `29868755dff2c44d8787dd24064e28734f96105dc992c394b9a28fa76fce2a90`
+- figures/observed_current/fig_observed_longrun_jackknife_bootstrap.manifest.json: `2e79cf796806a992f653f9b9126148ad0947da079d0272d0f4988674e10c5049`
 - figures/observed_current/fig_observed_planck_lensing_bandpowers.png: `cf747dabf24678ca837ae9b8067a50e54a5adb90b1126de14f3d8577967a8b61`
-- figures/observed_current/fig_observed_planck_lensing_bandpowers.manifest.json: `5d9557d9138d829d84b9167d3be66b35897a730371ab951a3251308bf6eb0bb2`
+- figures/observed_current/fig_observed_planck_lensing_bandpowers.manifest.json: `8eb5164e05b8df6fa519cd5c3d094a84da025d84ea867ccc907c5b23c37db82a`
 - figures/observed_current/fig_observed_planck_lowell_residual.png: `def953e2b7429a6dda54471c39aba74c89af5385c18843f2d9e10c198cf112ee`
-- figures/observed_current/fig_observed_planck_lowell_residual.manifest.json: `72871e7af64ff99511b78cafc302e4252a375f844caa54814d0285a54936eb6c`
+- figures/observed_current/fig_observed_planck_lowell_residual.manifest.json: `d977be31f1873f2d664e61e1cef955fbd6c9a1c265b5cc4a667f8f30e9a8c88f`
 - figures/observed_current/fig_observed_planck_map_mask.png: `f9464c3d746a3aaf81158476c1f4e6ca8cdd49ead2fe3ac2696cfea879df6144`
-- figures/observed_current/fig_observed_planck_map_mask.manifest.json: `11e932651335caf0c732825f5582f55ea4b6eb51ca4fac873971d0bcd9d36b0f`
+- figures/observed_current/fig_observed_planck_map_mask.manifest.json: `38c1e44d632bc01b2f2bb180407ef752bdc79282cc859c481b46da8870cad6b7`
 - figures/observed_current/fig_observed_planck_pr3_spectra.png: `5e8d6935d5cfdfe901c0b427cd47923a4bde1b6322cb67755b52bcc80581d58a`
-- figures/observed_current/fig_observed_planck_pr3_spectra.manifest.json: `bb03d5e9925e82cd20788311ce3dd3577d7294a8786826595afc075ae68fe385`
+- figures/observed_current/fig_observed_planck_pr3_spectra.manifest.json: `cce7f0692450028e9fd037816df2b3c2314208c640200f6d2b90c69f670c5273`
 - figures/paper/ver2_generated/fig_ver2a_scalar_to_morphology_summary.png: `dbddb3c15e046fb681e739f99c367b301c648689b916ec0fa6f4ecb481343c44`
-- figures/paper/ver2_generated/fig_ver2a_scalar_to_morphology_summary.manifest.json: `885ba0bdf129ef05e18bad247b69c35b22dd5a520ef742b18ec621aa74cfad91`
+- figures/paper/ver2_generated/fig_ver2a_scalar_to_morphology_summary.manifest.json: `00542487f0caeff384f056586e2f69c1b089da2db5b7cd465d1cfd433666e6aa`
 - figures/paper/ver2_generated/fig_ver2b_local_global_discrimination_matrix.png: `93ad82937fe756c464995f877328bf5d99a146ff5073d6d910990d10efe8057d`
-- figures/paper/ver2_generated/fig_ver2b_local_global_discrimination_matrix.manifest.json: `25e6f371a37874af8ca4a0f622c5e940d8dee473fab7f337690f0ef498db497f`
+- figures/paper/ver2_generated/fig_ver2b_local_global_discrimination_matrix.manifest.json: `c1a8b08845b8304854e086c1e24474e61e5e9e83e4f163ba75dbf80e53b94a6b`
 - figures/paper/ver2_generated/fig_ver2c_departure_card_summary.png: `c8af0ceb50b46a3bc33339d7ae7bff28831f7ca9a170b4a95514575d1e28bea6`
-- figures/paper/ver2_generated/fig_ver2c_departure_card_summary.manifest.json: `fc253b72c4016b724405322d8c4a9b679cf92ea04e839d44ea15db02228d46a5`
+- figures/paper/ver2_generated/fig_ver2c_departure_card_summary.manifest.json: `b147f5efd3e2ba9127072951260eb9a50bab78a07f5ae4fb38b6ff7fa5d53e1c`
 - figures/paper/ver2_generated/fig_ver2d_mio_predictive_residuals.png: `7b3b466828b875cbf28bcc8465263ec6f44a1229b0c685a8f40a4e6e3768fba6`
-- figures/paper/ver2_generated/fig_ver2d_mio_predictive_residuals.manifest.json: `baa6f4227a59ea9dd00b6ddb93201d6d13892f6f93b35070db41d42481f5960c`
+- figures/paper/ver2_generated/fig_ver2d_mio_predictive_residuals.manifest.json: `fbad9d83677ea5640d1ed840a17046059350940269e419ad1d9be9e97f29a988`
 - figures/paper/ver2_generated/fig_ver2e_validation_campaign_matrix.png: `0b820a1be3e386f4a0d368ead2d6b24952ca6f0a97cc499054813bd131620377`
-- figures/paper/ver2_generated/fig_ver2e_validation_campaign_matrix.manifest.json: `43e034075f4c84f37debc0ac8c3929f30edf6599af139c7f7eca1601472fbc0b`
-- docs/Kolb-Turner - The Early Universe.pdf: `0868d888ad5b2d1dc1c2de2485a6736c84d518fd1f660051e5f8c7a3af1ce9d2`
-- docs/P1_main.pdf: `9a99ab812341cc5a035f1b4c9c2c84972907955eb8c2ea37b7fa73cf772447b2`
-- docs/P2_main.pdf: `6398b7e3ca8751e5a71751539b58834e83ec8df9c3be4105f9c14268c5beaa3b`
-- docs/P3_main.pdf: `6f64fc3fb1a5fdfb4d57a6681ab7bd570b781ff56bb6ca74f05220c2ba1d3710`
-- docs/P4_main.pdf: `96baca6ebd0b4b59c7d016e8a154f70d2817f327bd214ea4e19c4dcc2169825a`
-- docs/P5_main.pdf: `65127d3e8e0f9229249bc741bc330b34326c88f1ee9c8456a9a1133628ea7bd3`
-- docs/ellis-relativistic-cosmology.pdf: `95d27cd6f3887e4219b0d777cf305494642b0cf5769aac7433d007eae1ba09c7`
-- docs/lecture notes in cosmology.pdf: `6ee6d8146bd2bccdcb751a3a1a808cc7935d8889192387ddda160d065178ef4c`
-- docs/manuscript/main.pdf: `072a87d164183c0e0b38f83346f37a16a648655ec5b2c6b99c8d071c5c84c6a3`
+- figures/paper/ver2_generated/fig_ver2e_validation_campaign_matrix.manifest.json: `253080392444c359e97308ca1870a20d2cfdc90639be933e3bafba050c2e9436`
+- figures/current/fig_blocker_discharges.png: `56494eafa08421e9389f49c5e1eefed9e6fe7791eb8c81087959667ea9998be4`
+- figures/current/fig_blocker_discharges.manifest.json: `38031cc48d14fe0c7108b65e98d20fc8ed303d0936cdc1fcc93f616880282522`
+- figures/current/fig_egs2_nt2a1_fisher_floor.png: `3b369efde7e92b24da048389090ea053a29256a4b5e127100d6ef914c9ef2974`
+- figures/current/fig_egs2_nt2a1_fisher_floor.manifest.json: `edc5eb43511ab41289762190537097e74b652c35d498d9b4065fe0a7677c2b99`
+- figures/current/fig_egs2_nt2b1_bracket.png: `88d402e4e13f9e5b7fe4a35e456442bfacf76baae5a5cc2246f201e8b6799f66`
+- figures/current/fig_egs2_nt2b1_bracket.manifest.json: `c0658ee33441199a0a2edce0f4b691d74c9d52f608368fde1a38e27f1c455b8a`
+- figures/current/fig_egs3_a1_graded_rank.png: `f6dd7af710953f793c32c6628443d7ec3df783f6bf23094f745c33097e74bc0a`
+- figures/current/fig_egs3_a1_graded_rank.manifest.json: `08f4d66f9cb0909920625bbc872748f88f4ef4d364ca65f413c4ab4d2ed84d34`
+- figures/current/fig_egs3_a3_evalue_calibration.png: `1339a2bb1d41dea4d15dd31dc1c58b45b0aab59abd1e303612a05fed22d3fe90`
+- figures/current/fig_egs3_a3_evalue_calibration.manifest.json: `3a17d9e922d92e275012d0ca2ef0efe8ae5e93d6dd244369c7491037cf0012cf`
+- figures/current/fig_egs3_b1_floor_profile.png: `be7b01501cf2ca417f819ba5eb59cc227ea522172a25cc587a4f38b8497c2a8d`
+- figures/current/fig_egs3_b1_floor_profile.manifest.json: `76249f3b89d426d8c6ecb61ad08dc788a70084622431f1330dc31d27532f0092`
+- figures/current/fig_egs3_b2_volterra.png: `ad963f53dd248c8a066e4e8c34e1c9a64c39d0032a14c19af0cb5db4233bcb52`
+- figures/current/fig_egs3_b2_volterra.manifest.json: `e8eb091713e5f1353656821d9ced6e793a75f36838b7498353750ec554d015f8`
+- figures/current/fig_egs3_b3_vorticity.png: `0ca2590c448114061697982deb8a80925e4a9f3912e2aef8217079d2593e3c45`
+- figures/current/fig_egs3_b3_vorticity.manifest.json: `d8673e995606d389e828f0e4c39a8cc5321819715d03e82d608239c15217b419`
+- figures/current/fig_egs3_c_deprojection.png: `f11eeab16b8412c554e5ed73b9c4f6e0ad912311d7d103dcba5591b37ace07b3`
+- figures/current/fig_egs3_c_deprojection.manifest.json: `5b50108bf64177bc6e657d1a6debbb021ed63ee720737ff8e25725ea989971c3`
+- figures/current/fig_egs3_d_biposh.png: `73eb52792073483a9b5b4ebe9f1881f4cf778ffe818c0a3819eea3bdc23eaf85`
+- figures/current/fig_egs3_d_biposh.manifest.json: `3cea1920ee9d96e9788d68b17403a571c3daad0c56a5975001efff0448229761`
+- figures/current/fig_egs3_d_joint_forecast.png: `7b3504d35efd031c178757a264d461c6736bfa4128c4413657c1bdc4ab857988`
+- figures/current/fig_egs3_d_joint_forecast.manifest.json: `c623472d564bcbb4f81365fde50002c33f24119ae63400a1e58b0c0415c967bc`
+- figures/current/fig_egs3_e_im_coverage.png: `8e17d906a1578ab518d380bd1439cd7532f598d5837dd79941abe8037a557f42`
+- figures/current/fig_egs3_e_im_coverage.manifest.json: `b34253b27c4eb04e5409c96c5c32592be0813632b78ec4796be3fb84261bfca4`
+- figures/current/fig_egs3_e_refutability_power.png: `7f6655d88efe384840f0a7f3a7092eb2e45c000c57f0b3822d5e0fd6fea45d9a`
+- figures/current/fig_egs3_e_refutability_power.manifest.json: `009f5ffc781ecd7a6bcbd1500f44b86e32fe675be6cd278b849890b3a231e09e`
+- figures/current/fig_egs3_f_shear_memory_bias.png: `3b0f421e2198e49e1f909e66cf62b2c29ee156e44b186e70b767e80f1a8dca72`
+- figures/current/fig_egs3_f_shear_memory_bias.manifest.json: `dafbe4a99877bb8c1ae1abf6e1464eb7947882f3f6cb06937e75e6f8298498d9`
+- figures/current/fig_egs3_psd_cone.png: `a187e58740f4f1b151efeb216151779682e6921bb60536cd7427792a3d8f13a1`
+- figures/current/fig_egs3_psd_cone.manifest.json: `05e67153b1310b43cf691ed52e2d636d35823ec0db0ba90a2775a73ce99fcf6c`
+- figures/current/fig_pr04_a1_rank_ladder.png: `f8661d3f9b39ea54815f607a0c30ecb73f7d4304cb8859259a3113e39d27e31e`
+- figures/current/fig_pr04_a1_rank_ladder.manifest.json: `5f70e4f233427cb3b8c6c81406da2dcf39d653e8c75a9176e5b8c480caa991c0`
+- figures/current/fig_pr04_a2_wigner.png: `fc319b0d9b69524e772a3f2794bdd960d4260d4648877805e4b1687c0957da48`
+- figures/current/fig_pr04_a2_wigner.manifest.json: `81eb99fc8da6b1312d7c1a240cb106d15e997716973195edf2c7b1514b8b5c3b`
+- figures/current/fig_pr04_b1_nonsufficiency.png: `e4fae013b00e2e1e455cab12200deeedda14b58451e851ec7e967a798b3b17e9`
+- figures/current/fig_pr04_b1_nonsufficiency.manifest.json: `936fcf1740d6486ef4fb2ca0db7986742cfbcde97c77f017795dc6ff619ceaa6`
+- figures/current/fig_pr04_b2_dust_shear.png: `c35b80d0b81f44d5e3119c8b567fd276572790738bc2869b79645c0b90de3706`
+- figures/current/fig_pr04_b2_dust_shear.manifest.json: `4bcbc8a216a6a2d696ebf3033750aec510993f2debcb80237b8d657a40d827f1`
 - figures/fig_3D_constraint_volume.png: `4fbc1af9fc25cf9a7bd4c60e7846ee957d1629f6e785dd6ef57ba6f9c2d9276d`
 - figures/fig_4D_projection_atlas.png: `9f058acb94c55b71084855b604ac1699af53477e02f211a88db015bfe6570a61`
 - figures/fig_BV_exclusion_restyled.png: `ba7e0851345b2b64c63057f7cff6b15b1a57326107a0291df98b6317c4fd5a86`
@@ -329,6 +372,16 @@ input_hashes:
 - figures/fig_type_by_type_summary.png: `6f9f4bd20f3b603fe0dafaa7eacd56fb32f2ecd0985f4aa58a4f5aff3319dd33`
 - figures/fig_v_pushforward.png: `7662ad038421ff68e8f4e1ffaccbf8556b66b8ec73d18853fbb07498b564e027`
 - figures/fig_vorticity_hierarchy.png: `a44fd532cb99f2704f1fec2f048db2c0403a3ba3fc978d2ab241df2d373ebf84`
+- figures/observed_current/fig_observed_cf4_affine_flow.png: `b48d8b2d11cdbe7c98c5178ed21363201041d1ce71e375b8aef594f4e4da2455`
+- figures/observed_current/fig_observed_cf4_affine_flow.manifest.json: `afc3fa1601ed14ac603931b5d061c4598b0ede1ef2fa0f56ee4879104d9356ed`
+- figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.png: `89fb323feb9dddd1bd7df9ffc80ec44882780b54ff968f93bd9c62a285a74423`
+- figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.manifest.json: `59957864b18eeccbb03f48d8560af4e632cff9e67d54b8de44379e64b48709e5`
+- figures/observed_current/fig_observed_cf4_bulkflow_likelihood.png: `34e51cf637fc9f420290ea38206d26dbbb572f5586655136c0e2ab7b6e2f94eb`
+- figures/observed_current/fig_observed_cf4_bulkflow_likelihood.manifest.json: `84b69f2a22b46f2faec4f1faa3a7cd2bdf133a58caf8413e4725af112610c9f7`
+- figures/observed_current/fig_observed_lowell_morphology_axis.png: `7b8bd2d2d1395e396ea0217c0cc4f9c16ec34ac0f9b41969b677fff5cbcabda1`
+- figures/observed_current/fig_observed_lowell_morphology_axis.manifest.json: `f68fa4d19d7afb850e7f50a9bab10618b33624b155fb2ab484bd2447c152a5f9`
+- figures/observed_current/fig_observed_lowell_null_significance.png: `65ee8b5084e6c4db089f02d39e4d952b12234366b6f6fbfeaea2cc2f781a821d`
+- figures/observed_current/fig_observed_lowell_null_significance.manifest.json: `52e70ebe0354594b2c5308bbbe07a3547e879357d3f463764a7be4e42fcb6bd4`
 - figures/parallel_track/fig_01_mes_three_bounds.png: `586450ab262f76850cf2532bd1c6fe8bc458b73b6c4ebf0fcc792d5fd6debb3a`
 - figures/parallel_track/fig_02_tilted_flrw_dictionary.png: `c1b555973863bf6aa9da0a2fb566597ef493cbdde32371c9f236c3bfc807d176`
 - figures/parallel_track/fig_03_colin_beta_translation.png: `796aea5639abd2e7f2e21235217763f8ef540b5fc454b8ac839fdb43de2e37fa`
@@ -349,31 +402,41 @@ caveats:
 - Quarantine inventory only; listed artifacts are not promoted by this report.
 - Missing or invalid manifests block claim-bearing use until provenance is added.
 - The checker does not regenerate figures, inspect pixels, or infer scientific meaning.
-generating_command: python scripts/check_artifact_manifests.py
-git_commit: e40baf5
+generating_command: python scripts/check_artifact_manifests.py --scan-root figures --output docs/generated/quarantined_figures.md
+git_commit: 8280b8f
 worktree_state: dirty
 output_path: docs/generated/quarantined_figures.md
 
 ## Summary
 
-- Scan roots: figures, docs
-- Manifested figures: 120
-- Quarantined figures: 97
-- Manifest issues: 0
+- Scan roots: figures
+- Manifested figures: 127
+- Quarantined figures: 112
+- Manifest issues: 66
 
 ## Quarantined Figures
 
 | Path | Reason | Manifest |
 | --- | --- | --- |
-| `docs/Kolb-Turner - The Early Universe.pdf` | `missing_manifest` | `none` |
-| `docs/P1_main.pdf` | `missing_manifest` | `none` |
-| `docs/P2_main.pdf` | `missing_manifest` | `none` |
-| `docs/P3_main.pdf` | `missing_manifest` | `none` |
-| `docs/P4_main.pdf` | `missing_manifest` | `none` |
-| `docs/P5_main.pdf` | `missing_manifest` | `none` |
-| `docs/ellis-relativistic-cosmology.pdf` | `missing_manifest` | `none` |
-| `docs/lecture notes in cosmology.pdf` | `missing_manifest` | `none` |
-| `docs/manuscript/main.pdf` | `missing_manifest` | `none` |
+| `figures/current/fig_blocker_discharges.png` | `invalid_manifest` | `figures/current/fig_blocker_discharges.manifest.json` |
+| `figures/current/fig_egs2_nt2a1_fisher_floor.png` | `invalid_manifest` | `figures/current/fig_egs2_nt2a1_fisher_floor.manifest.json` |
+| `figures/current/fig_egs2_nt2b1_bracket.png` | `invalid_manifest` | `figures/current/fig_egs2_nt2b1_bracket.manifest.json` |
+| `figures/current/fig_egs3_a1_graded_rank.png` | `invalid_manifest` | `figures/current/fig_egs3_a1_graded_rank.manifest.json` |
+| `figures/current/fig_egs3_a3_evalue_calibration.png` | `invalid_manifest` | `figures/current/fig_egs3_a3_evalue_calibration.manifest.json` |
+| `figures/current/fig_egs3_b1_floor_profile.png` | `invalid_manifest` | `figures/current/fig_egs3_b1_floor_profile.manifest.json` |
+| `figures/current/fig_egs3_b2_volterra.png` | `invalid_manifest` | `figures/current/fig_egs3_b2_volterra.manifest.json` |
+| `figures/current/fig_egs3_b3_vorticity.png` | `invalid_manifest` | `figures/current/fig_egs3_b3_vorticity.manifest.json` |
+| `figures/current/fig_egs3_c_deprojection.png` | `invalid_manifest` | `figures/current/fig_egs3_c_deprojection.manifest.json` |
+| `figures/current/fig_egs3_d_biposh.png` | `invalid_manifest` | `figures/current/fig_egs3_d_biposh.manifest.json` |
+| `figures/current/fig_egs3_d_joint_forecast.png` | `invalid_manifest` | `figures/current/fig_egs3_d_joint_forecast.manifest.json` |
+| `figures/current/fig_egs3_e_im_coverage.png` | `invalid_manifest` | `figures/current/fig_egs3_e_im_coverage.manifest.json` |
+| `figures/current/fig_egs3_e_refutability_power.png` | `invalid_manifest` | `figures/current/fig_egs3_e_refutability_power.manifest.json` |
+| `figures/current/fig_egs3_f_shear_memory_bias.png` | `invalid_manifest` | `figures/current/fig_egs3_f_shear_memory_bias.manifest.json` |
+| `figures/current/fig_egs3_psd_cone.png` | `invalid_manifest` | `figures/current/fig_egs3_psd_cone.manifest.json` |
+| `figures/current/fig_pr04_a1_rank_ladder.png` | `invalid_manifest` | `figures/current/fig_pr04_a1_rank_ladder.manifest.json` |
+| `figures/current/fig_pr04_a2_wigner.png` | `invalid_manifest` | `figures/current/fig_pr04_a2_wigner.manifest.json` |
+| `figures/current/fig_pr04_b1_nonsufficiency.png` | `invalid_manifest` | `figures/current/fig_pr04_b1_nonsufficiency.manifest.json` |
+| `figures/current/fig_pr04_b2_dust_shear.png` | `invalid_manifest` | `figures/current/fig_pr04_b2_dust_shear.manifest.json` |
 | `figures/fig_3D_constraint_volume.png` | `missing_manifest` | `none` |
 | `figures/fig_4D_projection_atlas.png` | `missing_manifest` | `none` |
 | `figures/fig_BV_exclusion_restyled.png` | `missing_manifest` | `none` |
@@ -446,6 +509,11 @@ output_path: docs/generated/quarantined_figures.md
 | `figures/fig_type_by_type_summary.png` | `missing_manifest` | `none` |
 | `figures/fig_v_pushforward.png` | `missing_manifest` | `none` |
 | `figures/fig_vorticity_hierarchy.png` | `missing_manifest` | `none` |
+| `figures/observed_current/fig_observed_cf4_affine_flow.png` | `invalid_manifest` | `figures/observed_current/fig_observed_cf4_affine_flow.manifest.json` |
+| `figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.png` | `invalid_manifest` | `figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.manifest.json` |
+| `figures/observed_current/fig_observed_cf4_bulkflow_likelihood.png` | `invalid_manifest` | `figures/observed_current/fig_observed_cf4_bulkflow_likelihood.manifest.json` |
+| `figures/observed_current/fig_observed_lowell_morphology_axis.png` | `invalid_manifest` | `figures/observed_current/fig_observed_lowell_morphology_axis.manifest.json` |
+| `figures/observed_current/fig_observed_lowell_null_significance.png` | `invalid_manifest` | `figures/observed_current/fig_observed_lowell_null_significance.manifest.json` |
 | `figures/parallel_track/fig_01_mes_three_bounds.png` | `missing_manifest` | `none` |
 | `figures/parallel_track/fig_02_tilted_flrw_dictionary.png` | `missing_manifest` | `none` |
 | `figures/parallel_track/fig_03_colin_beta_translation.png` | `missing_manifest` | `none` |
@@ -467,7 +535,6 @@ output_path: docs/generated/quarantined_figures.md
 
 | Path | Reason | Manifest |
 | --- | --- | --- |
-| `docs/generated/manuscript_pdf/htt_base_research_report.pdf` | `valid_manifest` | `docs/generated/manuscript_pdf/htt_base_research_report.manifest.json` |
 | `figures/conditioned_legacy/parallel-track__fig_01_mes_three_bounds.png` | `valid_manifest` | `figures/conditioned_legacy/parallel-track__fig_01_mes_three_bounds.manifest.json` |
 | `figures/conditioned_legacy/parallel-track__fig_02_tilted_flrw_dictionary.png` | `valid_manifest` | `figures/conditioned_legacy/parallel-track__fig_02_tilted_flrw_dictionary.manifest.json` |
 | `figures/conditioned_legacy/parallel-track__fig_03_colin_beta_translation.png` | `valid_manifest` | `figures/conditioned_legacy/parallel-track__fig_03_colin_beta_translation.manifest.json` |
@@ -571,6 +638,14 @@ output_path: docs/generated/quarantined_figures.md
 | `figures/current/fig_revision_rule_of_three_fpr.png` | `valid_manifest` | `figures/current/fig_revision_rule_of_three_fpr.manifest.json` |
 | `figures/current/fig_revision_sigma_beta_band.png` | `valid_manifest` | `figures/current/fig_revision_sigma_beta_band.manifest.json` |
 | `figures/current/fig_revision_tomographic_forecast.png` | `valid_manifest` | `figures/current/fig_revision_tomographic_forecast.manifest.json` |
+| `figures/current/fig_theorem_angular_kl_bound.png` | `valid_manifest` | `figures/current/fig_theorem_angular_kl_bound.manifest.json` |
+| `figures/current/fig_theorem_boosted_radiation_orbit.png` | `valid_manifest` | `figures/current/fig_theorem_boosted_radiation_orbit.manifest.json` |
+| `figures/current/fig_theorem_dynamic_budget_barrier.png` | `valid_manifest` | `figures/current/fig_theorem_dynamic_budget_barrier.manifest.json` |
+| `figures/current/fig_theorem_nt_a1_quadrupole_filling.png` | `valid_manifest` | `figures/current/fig_theorem_nt_a1_quadrupole_filling.manifest.json` |
+| `figures/current/fig_theorem_nt_a3_cosmic_variance_floor.png` | `valid_manifest` | `figures/current/fig_theorem_nt_a3_cosmic_variance_floor.manifest.json` |
+| `figures/current/fig_theorem_nt_b3_gf_transport.png` | `valid_manifest` | `figures/current/fig_theorem_nt_b3_gf_transport.manifest.json` |
+| `figures/current/fig_theorem_slope_degeneracy.png` | `valid_manifest` | `figures/current/fig_theorem_slope_degeneracy.manifest.json` |
+| `figures/current/fig_theorem_visibility_cancellation.png` | `valid_manifest` | `figures/current/fig_theorem_visibility_cancellation.manifest.json` |
 | `figures/observed_current/fig_observed_cf4_depth_response.png` | `valid_manifest` | `figures/observed_current/fig_observed_cf4_depth_response.manifest.json` |
 | `figures/observed_current/fig_observed_cf4_velocity_density.png` | `valid_manifest` | `figures/observed_current/fig_observed_cf4_velocity_density.manifest.json` |
 | `figures/observed_current/fig_observed_desi_footprint_depth.png` | `valid_manifest` | `figures/observed_current/fig_observed_desi_footprint_depth.manifest.json` |
@@ -592,4 +667,69 @@ output_path: docs/generated/quarantined_figures.md
 
 | Manifest | Issue | Detail |
 | --- | --- | --- |
-| none | none | none |
+| `figures/current/fig_blocker_discharges.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_blocker_discharges.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_blocker_discharges.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_blocker_discharges.manifest.json` | `invalid_sky_support_metadata` | sky_support_status for sky-facing artifacts must be one of ['coordinate_frame_annotated', 'directional', 'full_sky', 'masked_sky', 'partial_sky', 'sky_support_recorded']; got 'real_planck_pr3_and_cf4_release' |
+| `figures/current/fig_egs2_nt2a1_fisher_floor.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs2_nt2a1_fisher_floor.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs2_nt2a1_fisher_floor.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs2_nt2b1_bracket.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs2_nt2b1_bracket.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs2_nt2b1_bracket.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_a1_graded_rank.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_a1_graded_rank.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_a1_graded_rank.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_a3_evalue_calibration.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_a3_evalue_calibration.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_a3_evalue_calibration.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_b1_floor_profile.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_b1_floor_profile.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_b1_floor_profile.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_b2_volterra.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_b2_volterra.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_b2_volterra.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_b3_vorticity.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_b3_vorticity.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_b3_vorticity.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_c_deprojection.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_c_deprojection.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_c_deprojection.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_d_biposh.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_d_biposh.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_d_biposh.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_d_joint_forecast.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_d_joint_forecast.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_d_joint_forecast.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_e_im_coverage.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_e_im_coverage.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_e_im_coverage.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_e_refutability_power.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_e_refutability_power.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_e_refutability_power.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_f_shear_memory_bias.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_f_shear_memory_bias.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_f_shear_memory_bias.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_egs3_psd_cone.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_egs3_psd_cone.manifest.json` | `missing_required_field` | git_commit_or_worktree_state is required |
+| `figures/current/fig_egs3_psd_cone.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 3 required positional arguments: 'git_commit', 'input_hashes', and 'code_version' |
+| `figures/current/fig_pr04_a1_rank_ladder.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_pr04_a1_rank_ladder.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 1 required positional argument: 'input_hashes' |
+| `figures/current/fig_pr04_a2_wigner.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_pr04_a2_wigner.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 1 required positional argument: 'input_hashes' |
+| `figures/current/fig_pr04_b1_nonsufficiency.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_pr04_b1_nonsufficiency.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 1 required positional argument: 'input_hashes' |
+| `figures/current/fig_pr04_b2_dust_shear.manifest.json` | `missing_required_field` | input_hashes is required |
+| `figures/current/fig_pr04_b2_dust_shear.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 1 required positional argument: 'input_hashes' |
+| `figures/observed_current/fig_observed_cf4_affine_flow.manifest.json` | `missing_required_field` | config_hash is required |
+| `figures/observed_current/fig_observed_cf4_affine_flow.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 2 required positional arguments: 'created_by' and 'config_hash' |
+| `figures/observed_current/fig_observed_cf4_affine_flow.manifest.json` | `invalid_sky_support_metadata` | sky_support_status for sky-facing artifacts must be one of ['coordinate_frame_annotated', 'directional', 'full_sky', 'masked_sky', 'partial_sky', 'sky_support_recorded']; got 'cf4_reconstruction_grid' |
+| `figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.manifest.json` | `missing_required_field` | generating_command is required |
+| `figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.manifest.json` | `invalid_sky_support_metadata` | sky_support_status for sky-facing artifacts must be one of ['coordinate_frame_annotated', 'directional', 'full_sky', 'masked_sky', 'partial_sky', 'sky_support_recorded']; got 'cf4_reconstruction_grid' |
+| `figures/observed_current/fig_observed_cf4_bulkflow_likelihood.manifest.json` | `missing_required_field` | config_hash is required |
+| `figures/observed_current/fig_observed_cf4_bulkflow_likelihood.manifest.json` | `invalid_artifact_manifest` | ArtifactManifest.__init__() missing 2 required positional arguments: 'created_by' and 'config_hash' |
+| `figures/observed_current/fig_observed_cf4_bulkflow_likelihood.manifest.json` | `invalid_sky_support_metadata` | sky_support_status for sky-facing artifacts must be one of ['coordinate_frame_annotated', 'directional', 'full_sky', 'masked_sky', 'partial_sky', 'sky_support_recorded']; got 'cf4_full_group_catalog' |
+| `figures/observed_current/fig_observed_lowell_morphology_axis.manifest.json` | `missing_required_field` | generating_command is required |
+| `figures/observed_current/fig_observed_lowell_morphology_axis.manifest.json` | `invalid_sky_support_metadata` | sky_support_status for sky-facing artifacts must be one of ['coordinate_frame_annotated', 'directional', 'full_sky', 'masked_sky', 'partial_sky', 'sky_support_recorded']; got 'full_sky_cleaned_map' |
+| `figures/observed_current/fig_observed_lowell_null_significance.manifest.json` | `missing_required_field` | generating_command is required |
+| `figures/observed_current/fig_observed_lowell_null_significance.manifest.json` | `invalid_sky_support_metadata` | sky_support_status for sky-facing artifacts must be one of ['coordinate_frame_annotated', 'directional', 'full_sky', 'masked_sky', 'partial_sky', 'sky_support_recorded']; got 'full_sky_cleaned_map' |

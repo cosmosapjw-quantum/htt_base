@@ -9,7 +9,7 @@ config_hash: `sha256:c0dc4ac51378f4780aaf783e21246a3466a032182c6fb90f1e903e49949
 input_hashes:
 - sha256:5fb994ca076235fb30db644d3d1a3672d092ed31f8ef4737bcabe2da87491909
 generating_command: `python scripts/make_cf4_bulkflow_apex_depth.py`
-git_commit_or_worktree_state: `7888011+dirty`
+git_commit_or_worktree_state: `8280b8f+dirty`
 
 Full-sample bulk flow: 133.4 km/s toward Galactic (l, b) = 121.6, 70.8 deg.
 

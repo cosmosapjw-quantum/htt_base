@@ -1,9 +1,6 @@
 {
-  "allowed_use": "internal_only",
-  "artifact_id": "common.ver2.figure.c",
-  "artifact_mode": "governance_diagnostic",
+  "artifact_id": "common.manuscript.ver2_pack_figure.fig_ver2c_departure_card_summary",
   "artifact_path": "figures/paper/ver2_generated/fig_ver2c_departure_card_summary.png",
-  "caption_policy": [],
   "caveats": [
     "report_is_descriptive_until_claim_gates_pass",
     "uncertified_filling_downgraded_to_proxy_score",
@@ -12,43 +9,40 @@
     "readiness labels are provenance only; not current production readiness",
     "advisory_only",
     "no_runtime_decision_ownership",
+    "Figure is generated from current VER2 pack JSON artifacts, not from a native low-ell solver.",
+    "No Bianchi family-ID or geometry-detection claim is made.",
     "Source-pack readiness labels are provenance only and are not promoted into the manuscript figure lane.",
     "Manuscript figure lane is diagnostic-only regardless of source-pack readiness vocabulary."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "ver2-d1",
-  "config_hash": "e18856a76934eaf2",
-  "created_by": "scripts.ver2_artifact_export.py",
+  "code_version": "ver2-pack-figure-v1",
+  "config_hash": "sha256:eba803d24af39eee31acd6c9b04ab7cdefc0cddaac34a35eaeb48f2908a311a8",
+  "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
   "failed_gates": [],
-  "generating_command": "python scripts/ver2_artifact_export.py",
-  "git_commit": "3225e56e9b4fd40c3f7ef06d89182d432e6170c3",
-  "git_commit_or_worktree_state": "3225e56+dirty",
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase conservative",
+  "git_commit": "8280b8f",
+  "git_commit_or_worktree_state": "8280b8f+dirty",
   "implementation_scope": "common",
   "input_hashes": [
-    "bass.ver2.export.solver_core_output_tier_b.observable_vector.departure_report",
-    "tsc.ver2.export.overlay"
+    "docs/ver2_upgrade/generated/result_pack_C_departure_cards.json:sha256:cabf2b4559283b158ce45c2cff58bc1ef89450c7dd56098dc27d9640092f4757",
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:b96cc2dc76f678a2158b7053334b182ab2908963be64209cd4aa19c7f60d228a"
   ],
   "null_mock_status": "pack_declared_or_not_refreshed",
-  "numeric_payload_path": "",
   "owner": "COMMON",
-  "passed_gates": [],
+  "passed_gates": [
+    "ver2_pack_json_loaded",
+    "figure_manifest_validated"
+  ],
   "production_status": "diagnostic_only",
-  "promotion_blockers": [],
-  "publication_gates": {},
-  "report_generation_gates": {},
-  "required_gates": [],
-  "schema_version": "ver2-v9",
-  "science_promotion_gates": {},
+  "required_gates": [
+    "manifest_sidecar_before_manuscript_use"
+  ],
+  "schema_version": "artifact-manifest-v2",
   "sky_support_status": "pending_or_unknown_for_existing_directional_artifacts",
   "statistics_definitions": {
-    "result_pack_id": "C",
-    "source_artifact_ids": [
-      "bass.ver2.export.solver_core_output_tier_b.observable_vector.departure_report",
-      "tsc.ver2.export.overlay"
-    ],
-    "source_pack_claim_tier": "exploratory",
-    "surface": "PaperFigureExport",
-    "topic": "departure_cards"
+    "manuscript_role": "current_code_diagnostic",
+    "pack_id": "C",
+    "source_pack_json": "docs/ver2_upgrade/generated/result_pack_C_departure_cards.json"
   },
   "transfer_source": "VER2_pack_export_context_external_or_schema_bound"
 }

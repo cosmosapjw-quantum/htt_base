@@ -1,0 +1,262 @@
+{
+  "allowed_use": "external_audit",
+  "artifact_id": "common.v7_external_audit_synthesis_matrix",
+  "artifact_mode": "external_audit_conditioned",
+  "artifact_path": "docs/generated/v7_external_audit_synthesis_matrix.json",
+  "caveats": [
+    "Synthesis of external review inputs; not a scientific result.",
+    "External code is not imported as production implementation.",
+    "All v7 public claims remain diagnostic-only or blocked until their gates pass."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "config_hash": "sha256:08e0a7b415086c2f594725baed96f813e1dee4c5ee12a346c0b20c3c3c6a2846",
+  "created_by": "scripts/build_v7_external_audit_synthesis.py",
+  "failed_gates": [
+    "native_low_ell_solver_absent",
+    "measured_R_card_absent",
+    "K1_E2E_systematics_absent"
+  ],
+  "findings": [
+    {
+      "acceptance": "open branch preserves v6 interval; all branch shifts lower endpoint.",
+      "claim_risk": "domain_overstatement",
+      "finding": "Omega_k_aniso domain was underdeclared as nonnegative.",
+      "id": "F1",
+      "owner": "OBSSTAT",
+      "repo_response": "Use signed component boxes and publish open/all curvature branch intervals.",
+      "severity": "fatal_if_unfixed",
+      "target": "htt/obsstat/egs3_identified_set.py"
+    },
+    {
+      "acceptance": "real CF4 bulk enters Omega_tilt; unbound components block promotion.",
+      "claim_risk": "pipeline_not_demonstrated",
+      "finding": "No closed y -> R -> tau -> interval/status card was present on current data.",
+      "id": "F2",
+      "owner": "OBSSTAT",
+      "repo_response": "Add K5/CF4 identified-interval diagnostic card with plugin firewall.",
+      "severity": "fatal_if_unfixed",
+      "target": "scripts/k5_cf4_identified_interval_card.py"
+    },
+    {
+      "acceptance": "report-facing figures remain concrete data analyses, not meta/process figures.",
+      "claim_risk": "publication_framing",
+      "finding": "Audit vocabulary and journal argument were mixed.",
+      "id": "F3",
+      "owner": "COMMON",
+      "repo_response": "Keep generated audit cards separate from Paper A theorem-witness-result prose.",
+      "severity": "major_revision",
+      "target": "docs/generated/v7_external_audit_synthesis_matrix.md"
+    },
+    {
+      "acceptance": "joint subset relation remains; strictness requires a shared-extrema conflict.",
+      "claim_risk": "theorem_overstatement",
+      "finding": "G_F joint interval is not strictly narrower in every nondegenerate case.",
+      "id": "M1",
+      "owner": "OBSSTAT",
+      "repo_response": "Add strict/equality classifier and counterexample witness.",
+      "severity": "major",
+      "target": "htt/obsstat/egs3_gf_interval.py"
+    },
+    {
+      "acceptance": "no full physical-realization claim appears without a dedicated seal.",
+      "claim_risk": "realizability_overstatement",
+      "finding": "Sharpness claim conflated convex component-model sharpness with physical realization.",
+      "id": "M2",
+      "owner": "OBSSTAT",
+      "repo_response": "Label current result as component-box sharpness; defer full realization.",
+      "severity": "major",
+      "target": "Paper A text"
+    },
+    {
+      "acceptance": "Hotelling/F threshold is available and invalid n_sim fails closed.",
+      "claim_risk": "size_inflation",
+      "finding": "Known-covariance chi-square thresholds were used where covariance may be simulation-estimated.",
+      "id": "M3",
+      "owner": "OBSSTAT",
+      "repo_response": "Add estimated_covariance_f threshold policy with n_sim fail-closed validation.",
+      "severity": "major",
+      "target": "htt/obsstat/egs3_identified_set.py"
+    },
+    {
+      "acceptance": "generated cards preserve registered_external caveat.",
+      "claim_risk": "provenance_overstatement",
+      "finding": "MES epsilon coefficients are registered external values, not rederived here.",
+      "id": "M4",
+      "owner": "COMMON",
+      "repo_response": "Keep rederived_here=false and block promotion of MES-dependent K5 placeholders.",
+      "severity": "major",
+      "target": "docs/generated/parent_identity_seal.json"
+    },
+    {
+      "acceptance": "no observed-sector response vector is promoted as a measured R result.",
+      "claim_risk": "response_proxy_overread",
+      "finding": "A measured response matrix R is not yet published.",
+      "id": "M5",
+      "owner": "OBSSTAT",
+      "repo_response": "Use K5 card as closure diagnostic only; schedule measured R table/SVD card.",
+      "severity": "major",
+      "target": "future_v7_R_card"
+    },
+    {
+      "acceptance": "figure captions and manifests preserve diagnostic-only status.",
+      "claim_risk": "survey_systematics",
+      "finding": "DESI and CF4 surfaces need footprint/window and distance-error forward-model warnings.",
+      "id": "M6_M7",
+      "owner": "OBSSTAT",
+      "repo_response": "Keep these as diagnostic figures until matched masks/randoms/corrections are bound.",
+      "severity": "major",
+      "target": "report_data_analysis_current"
+    },
+    {
+      "acceptance": "gate policy and printed z/tolerance values are generated.",
+      "claim_risk": "hidden_tolerance",
+      "finding": "Monte Carlo/e-value gate tolerances must be explicit.",
+      "id": "M8_m11",
+      "owner": "OBSSTAT",
+      "repo_response": "Record deterministic G1-G5 gate policy witness in v7 fortification artifact.",
+      "severity": "minor_to_major_if_untracked",
+      "target": "scripts/run_v7_fortification_witnesses.py"
+    },
+    {
+      "acceptance": "current K1/K5 figures remain diagnostic proxy dashboards.",
+      "claim_risk": "proxy_as_measurement",
+      "finding": "Observed-sector response vector mixed proxy axes.",
+      "id": "M9",
+      "owner": "OBSSTAT",
+      "repo_response": "Split proxy dashboard from any future measured g-coordinate card.",
+      "severity": "major",
+      "target": "future_v7_R_card"
+    }
+  ],
+  "generating_command": "venv/bin/python scripts/build_v7_external_audit_synthesis.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "htt_v6_strengthened_publication_bundle.zip:sha256:43ff42a3176ccf8cd562a4a9a039382fe9ea60c922416e5697726f2a06d2a237",
+    "htt_v6_critical_review_bundle.zip:sha256:5fa351f7250cec810003ae0aa4e00127802ec56b3fe70938554cb7de541ac9f4",
+    "htt_v6_referee_package_20260709.zip:sha256:dd7f5f842db170ef0110a1e89c4c009acfabb892fb145c92eb771e8fc5dabffa",
+    "htt_v6_referee_fortification_package_v2.zip:sha256:86586d44d3bf0143ad59f9e00eef6f2afa5fe2dc02a44a8860d77fa19822bbe4"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "COMMON",
+  "passed_gates": [
+    "four_zip_inputs_present",
+    "zip_integrity_passed",
+    "claim_firewall_mapping_recorded"
+  ],
+  "production_status": "diagnostic_only",
+  "required_gates": [
+    "four_zip_inputs_present",
+    "zip_integrity_passed",
+    "claim_firewall_mapping_recorded"
+  ],
+  "schema": "htt.v7_external_audit_synthesis_matrix.v1",
+  "schema_version": "htt.v7_external_audit_synthesis_matrix.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "claim_firewall": "no native solver, no posterior odds, no morphology-family promotion",
+    "purpose": "external audit synthesis and v7 work routing"
+  },
+  "transfer_source": "none",
+  "v7_work_packages": [
+    {
+      "acceptance": "EGS3 contract tests pass and generated witnesses are current.",
+      "deliverables": [
+        "signed curvature branch reports",
+        "estimated_covariance_f threshold policy",
+        "G_F strict/equality classifier"
+      ],
+      "id": "V7-001",
+      "title": "Signed identified-set and threshold policy hardening"
+    },
+    {
+      "acceptance": "real CF4 bulk is used; plugin firewall blocks observational promotion.",
+      "deliverables": [
+        "k5_cf4_identified_interval_card.json",
+        "k5_cf4_identified_interval_card.md"
+      ],
+      "id": "V7-002",
+      "title": "K5/CF4 diagnostic closure card"
+    },
+    {
+      "acceptance": "claim-language and report-lane tests pass.",
+      "deliverables": [
+        "v7_paper_a_revision_packet.json",
+        "v7_paper_a_skeleton.tex",
+        "P31/P35/P36 wording replacement",
+        "MES registered-external caveat",
+        "appendix-only diagnostic figure framing"
+      ],
+      "id": "V7-003",
+      "title": "Paper A prose and theorem-lane cleanup"
+    },
+    {
+      "acceptance": "tracked as blocked/deferred, not silently promoted.",
+      "deliverables": [
+        "T3-lin symbolic seal",
+        "MES rederivation",
+        "measured R SVD/null-vector card",
+        "K1 closed E2E lane",
+        "DESI official randoms/mask correction"
+      ],
+      "id": "V7-BLOCKED",
+      "title": "Deferred promotion blockers"
+    }
+  ],
+  "zip_inputs": [
+    {
+      "integrity": "PASS",
+      "member_count": 26,
+      "path": "htt_v6_strengthened_publication_bundle.zip",
+      "sha256": "sha256:43ff42a3176ccf8cd562a4a9a039382fe9ea60c922416e5697726f2a06d2a237",
+      "size_bytes": 56072,
+      "top_level_entries": [
+        "htt_v6_strengthened_publication_bundle"
+      ]
+    },
+    {
+      "integrity": "PASS",
+      "member_count": 17,
+      "path": "htt_v6_critical_review_bundle.zip",
+      "sha256": "sha256:5fa351f7250cec810003ae0aa4e00127802ec56b3fe70938554cb7de541ac9f4",
+      "size_bytes": 32504,
+      "top_level_entries": [
+        "htt_v6_critical_review_bundle"
+      ]
+    },
+    {
+      "integrity": "PASS",
+      "member_count": 34,
+      "path": "htt_v6_referee_package_20260709.zip",
+      "sha256": "sha256:dd7f5f842db170ef0110a1e89c4c009acfabb892fb145c92eb771e8fc5dabffa",
+      "size_bytes": 66352,
+      "top_level_entries": [
+        "00_README.md",
+        "01_referee_report_ko.md",
+        "02_revision_recommendations_ko.md",
+        "03_theorem_candidates_ko.md",
+        "04_numerical_experiments"
+      ]
+    },
+    {
+      "integrity": "PASS",
+      "member_count": 56,
+      "path": "htt_v6_referee_fortification_package_v2.zip",
+      "sha256": "sha256:86586d44d3bf0143ad59f9e00eef6f2afa5fe2dc02a44a8860d77fa19822bbe4",
+      "size_bytes": 113124,
+      "top_level_entries": [
+        "00_README.md",
+        "01_referee_report_ko.md",
+        "02_revision_recommendations_ko.md",
+        "03_theorem_candidates_ko.md",
+        "04_numerical_experiments",
+        "05_fortification_plan_ko.md",
+        "06_strengthened_theorems_ko.md",
+        "07_fortification_code",
+        "08_paper_skeleton"
+      ]
+    }
+  ]
+}

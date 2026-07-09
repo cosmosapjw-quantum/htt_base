@@ -1,0 +1,90 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "obsstat.report_data.desi_ngc_sgc_asymmetry_surface",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/data_analysis_current/fig_data_desi_ngc_sgc_asymmetry_surface.png",
+  "caption_policy": [
+    "must_state_observed_data_diagnostic",
+    "must_not_state_family_identification",
+    "must_not_state_native_low_ell_solver_output",
+    "must_not_state_p_value_without_null_ensemble"
+  ],
+  "caveats": [
+    "Observed/prepared data analysis figure.",
+    "Diagnostic-only: no posterior odds, p-value, geometry detection, or family identification.",
+    "No native low-ell solver output is used."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "config_hash": "sha256:e3d752f015a37552f8e9064ce4b38f68c6076865318b3cf59e1768cdd8319a89",
+  "created_by": "scripts/make_report_data_analysis_figures.py",
+  "failed_gates": [
+    "matched_nulls_not_bound_for_inference",
+    "full_covariance_not_bound_for_likelihood"
+  ],
+  "generating_command": "python scripts/make_report_data_analysis_figures.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "docs/generated/observed_longrun_analysis.json:sha256:deb1cd2f10a49f9d4803b57c8c2414c03d04e7baf5939c48a8c9251295a2e5ec",
+    "workdir/compact_products/desi/BGS_ANY_NGC_clustering_extended.npz:sha256:ea52cb7e0bbfa3ef69db396dab4a68ee95b409d8e237451d74a924e4e3cca21d",
+    "workdir/compact_products/desi/BGS_ANY_SGC_clustering_extended.npz:sha256:e6c858efb2b3fc22ce36443f1393772f62d2e714efbfefde76c1404386ffc05d",
+    "workdir/compact_products/desi/LRG_NGC_clustering_extended.npz:sha256:62a7308c21b79e3ef6dc9553e02e8ff5b72dcad4ff657c788270d9d913aee5e9",
+    "workdir/compact_products/desi/LRG_SGC_clustering_extended.npz:sha256:596cc08cd5fcc29563e43fdd2d23421a8b6afe678aae7423716a573453ef2798",
+    "workdir/compact_products/desi/QSO_NGC_clustering_extended.npz:sha256:548b54767cbbd16dc595b9b08ced074081416a43a83674fbfd317ae220160562",
+    "workdir/compact_products/desi/QSO_SGC_clustering_extended.npz:sha256:a8a0f41daed139c7d30129a2b60b1689a3a3e4b1b03b698c4b15146fda8d89b2",
+    "workdir/compact_products/cf4/query_batch.npz:sha256:5fb994ca076235fb30db644d3d1a3672d092ed31f8ef4737bcabe2da87491909",
+    "scripts/make_report_data_analysis_figures.py:sha256:a7dd3f43fe0e63df90d84d23fe275d3a1e341636bc5db97c59c9e94a2aff85ab"
+  ],
+  "null_mock_status": "jackknife_bootstrap_diagnostic_no_pvalue",
+  "owner": "OBSSTAT",
+  "passed_gates": [
+    "repo_local_data_input_present",
+    "manifest_metadata_present",
+    "report_lane_is_data_analysis_not_meta"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "matched_nulls_not_bound_for_inference",
+    "full_covariance_not_bound_for_likelihood",
+    "native_morphology_atlas_absent"
+  ],
+  "required_gates": [
+    "repo_local_data_input_present",
+    "manifest_metadata_present",
+    "report_lane_is_data_analysis_not_meta"
+  ],
+  "schema_version": "obsstat.report_data_analysis_figure.v1",
+  "sky_support": {
+    "completeness_status": "occupied_pixel_diagnostic_from_compact_catalogs",
+    "coordinate_frame": "equatorial_icrs",
+    "mask_hash": "sha256:4d737e4a3b78d7fee910fa3c4ec63f43ab55c631dd1c30d218f22f26a3fea3f3",
+    "mock_coverage_status": "not_mocked",
+    "nside": 32,
+    "pixelization": "healpix_ring",
+    "scan_volume_hash": "",
+    "selection_mode": "angular_occupancy",
+    "sky_fraction": 0.350341796875,
+    "sky_support_hash": "sha256:3a205f0871e79668dbe10ec3a4c7618a344d20cf3ed5093c7e630d45fb20308d"
+  },
+  "sky_support_status": "sky_support_recorded",
+  "statistics_definitions": {
+    "figure_lane": "report_data_analysis_current",
+    "max_abs_delta": 0.14581714630527143,
+    "n_delta_rows": 18,
+    "quantity": "DESI NGC-minus-SGC resultant-amplitude differences",
+    "source_artifacts": [
+      "docs/generated/observed_longrun_analysis.json",
+      "workdir/compact_products/desi/BGS_ANY_NGC_clustering_extended.npz",
+      "workdir/compact_products/desi/BGS_ANY_SGC_clustering_extended.npz",
+      "workdir/compact_products/desi/LRG_NGC_clustering_extended.npz",
+      "workdir/compact_products/desi/LRG_SGC_clustering_extended.npz",
+      "workdir/compact_products/desi/QSO_NGC_clustering_extended.npz",
+      "workdir/compact_products/desi/QSO_SGC_clustering_extended.npz",
+      "workdir/compact_products/cf4/query_batch.npz",
+      "scripts/make_report_data_analysis_figures.py"
+    ]
+  },
+  "transfer_source": "none"
+}

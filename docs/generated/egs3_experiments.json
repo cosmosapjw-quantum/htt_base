@@ -196,9 +196,70 @@
           0.1099999999999452,
           0.1700000000360007
         ],
+        "signed_curvature_branches": {
+          "open_branch[0,Uk]": {
+            "status": "feasible",
+            "interval": [
+              0.1099999999999452,
+              0.1700000000360007
+            ],
+            "component_bounds": [
+              [
+                0.0,
+                "Infinity"
+              ],
+              [
+                0.0,
+                0.04
+              ],
+              [
+                0.0,
+                "Infinity"
+              ],
+              [
+                0.0,
+                0.02
+              ]
+            ]
+          },
+          "all_branch[-Uk,Uk]": {
+            "status": "feasible",
+            "interval": [
+              0.08999999999994521,
+              0.1700000000360007
+            ],
+            "component_bounds": [
+              [
+                0.0,
+                "Infinity"
+              ],
+              [
+                0.0,
+                0.04
+              ],
+              [
+                0.0,
+                "Infinity"
+              ],
+              [
+                -0.02,
+                0.02
+              ]
+            ]
+          }
+        },
         "reproduces_registered_example": true,
         "tau1_chi2_dof": 4,
         "tau1": 9.487729036781154,
+        "estimated_covariance_threshold_example": {
+          "policy": "estimated_covariance_f",
+          "m": 10,
+          "r": 2,
+          "n_sim": 300,
+          "df_residual": 8,
+          "tau1_hotelling_F": 16.139244947576607,
+          "tau2_hotelling_F": 6.0724102602313454
+        },
         "statuses": {
           "feasible": "feasible",
           "empty_misfit": "empty",
@@ -259,7 +320,40 @@
           1.1875
         ],
         "width_ratio": 0.5818181818181818,
-        "joint_within_naive": true
+        "joint_within_naive": true,
+        "strict_lower": true,
+        "strict_upper": true,
+        "equality_reason": "not_equal: shared extrema conflict on at least one component",
+        "strictness_criterion": {
+          "strict_lower_predicted": true,
+          "strict_upper_predicted": true,
+          "conflict_components": [
+            0,
+            1
+          ],
+          "aligned_or_degenerate_components": [],
+          "criterion": "exists nondegenerate shared component with c_N*c_D > 0"
+        },
+        "strictness_witness": {
+          "trials_evaluated": 371,
+          "criterion_agreement": "371/371",
+          "agreement_exact_1.0": true,
+          "strict_cases": 273,
+          "equal_cases": 98,
+          "explicit_counterexample_to_universal_strictness": {
+            "joint": [
+              0.4632981897752138,
+              0.6529978942701983
+            ],
+            "naive": [
+              0.4632981897752138,
+              0.6529978942701983
+            ],
+            "strict_lower": false,
+            "strict_upper": false,
+            "equality_reason": "equal: numerator/denominator extrema are aligned or degenerate"
+          }
+        }
       },
       "E7_evalue_merge": {
         "merged_mean": 0.9967044636096849,
@@ -288,7 +382,7 @@
         "n_samples": 20000,
         "seed": 20260708
       },
-      "headline": "x_C is reported as a two-stage-tau identified set [x_C^-, x_C^+] with refutability (empty), no-result (unbounded), and ceiling-unfit (F>1) statuses; Imbens-Manski endpoint coverage nominal where the naive endpoint CI undercovers; G_F propagates on the joint feasible set; e-values merge under arbitrary dependence and are anytime-valid; null-direction posteriors are prior-exposed"
+      "headline": "x_C is reported as a two-stage-tau identified set [x_C^-, x_C^+] with refutability (empty), no-result (unbounded), and ceiling-unfit (F>1) statuses; Imbens-Manski endpoint coverage nominal where the naive endpoint CI undercovers; G_F propagates on the joint feasible set; e-values merge under arbitrary dependence and are anytime-valid; null-direction posteriors are prior-exposed; v7 fortification records signed curvature branches, estimated-covariance thresholds, and exact strict/equality conditions"
     },
     "axis_f": {
       "F1_parent_identity_ref": {

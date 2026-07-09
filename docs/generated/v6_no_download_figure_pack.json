@@ -1,0 +1,79 @@
+{
+  "artifact_id": "common.v6_no_download_figure_pack",
+  "artifact_path": "docs/generated/v6_no_download_figure_pack.json",
+  "caveats": [
+    "Figure pack renders existing v6 no-download cards only.",
+    "This is quarantined meta/internal-governance material and is not report-facing.",
+    "No K1/K5/K6 long analysis is executed by this figure generator.",
+    "No native low-ell solver output or Bianchi family-identification claim is represented."
+  ],
+  "claim_tier": "diagnostic_only",
+  "commands_artifact": "docs/generated/v6_k5_k6_user_commands.json",
+  "config_hash": "sha256:3660039474439fe6e0335815f37186b38a1e04fee18210cbdd4c52da02a58d1b",
+  "figures": [
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "common.v6_no_download_figures.component_source_matrix",
+      "artifact_mode": "internal_exploratory",
+      "artifact_path": "figures/quarantined_meta/v6_no_download/fig_v6_component_source_matrix.png",
+      "claim_tier": "diagnostic_only",
+      "file_name": "fig_v6_component_source_matrix.png",
+      "manifest_path": "figures/quarantined_meta/v6_no_download/fig_v6_component_source_matrix.manifest.json",
+      "source_card": "component_source_matrix"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "common.v6_no_download_figures.denominator_sensitivity",
+      "artifact_mode": "internal_exploratory",
+      "artifact_path": "figures/quarantined_meta/v6_no_download/fig_v6_denominator_sensitivity.png",
+      "claim_tier": "diagnostic_only",
+      "file_name": "fig_v6_denominator_sensitivity.png",
+      "manifest_path": "figures/quarantined_meta/v6_no_download/fig_v6_denominator_sensitivity.manifest.json",
+      "source_card": "denominator_sensitivity_table"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "common.v6_no_download_figures.response_class_ledger",
+      "artifact_mode": "internal_exploratory",
+      "artifact_path": "figures/quarantined_meta/v6_no_download/fig_v6_response_class_ledger.png",
+      "claim_tier": "diagnostic_only",
+      "file_name": "fig_v6_response_class_ledger.png",
+      "manifest_path": "figures/quarantined_meta/v6_no_download/fig_v6_response_class_ledger.manifest.json",
+      "source_card": "response_class_ledger"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "common.v6_no_download_figures.optical_ansatz_readiness",
+      "artifact_mode": "internal_exploratory",
+      "artifact_path": "figures/quarantined_meta/v6_no_download/fig_v6_optical_ansatz_readiness.png",
+      "claim_tier": "diagnostic_only",
+      "file_name": "fig_v6_optical_ansatz_readiness.png",
+      "manifest_path": "figures/quarantined_meta/v6_no_download/fig_v6_optical_ansatz_readiness.manifest.json",
+      "source_card": "optical_ansatz_readiness"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "common.v6_no_download_figures.depth_gap_and_readiness",
+      "artifact_mode": "internal_exploratory",
+      "artifact_path": "figures/quarantined_meta/v6_no_download/fig_v6_depth_gap_and_readiness.png",
+      "claim_tier": "diagnostic_only",
+      "file_name": "fig_v6_depth_gap_and_readiness.png",
+      "manifest_path": "figures/quarantined_meta/v6_no_download/fig_v6_depth_gap_and_readiness.manifest.json",
+      "source_card": "depth_gap_card"
+    }
+  ],
+  "generating_command": "python scripts/make_v6_no_download_figures.py",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/v6_no_download_research_cards.json:sha256:f4074ddb094f8c16a17503669ada8a55e379371f4166b338b36f0a3cd906f3f8",
+    "docs/generated/v6_legacy_figure_classification.json:sha256:8c6617c257ad422c1bb5338fd19391943ffdd97f31af638d86367c025631a3ee",
+    "scripts/make_v6_no_download_figures.py:sha256:6d31a1bd981b23cb4c323d99b9ca4540cda86b410146c5356f3b921950ad1df4"
+  ],
+  "k5_k6_execution_policy": "commands_exported_for_user_not_run_by_generator",
+  "null_mock_status": "mixed_diagnostic_and_blocked",
+  "owner": "COMMON",
+  "report_use_policy": "not_report_facing_internal_meta_quarantine",
+  "sky_support_status": "not_directional",
+  "transfer_source": "mixed_none_and_external_transfer_conditioned"
+}

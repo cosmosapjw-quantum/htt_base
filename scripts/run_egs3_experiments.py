@@ -10,7 +10,9 @@ memory, vorticity re-opening) are the robust content.
 """
 from __future__ import annotations
 
+import argparse
 import json
+import math
 from pathlib import Path
 import sys
 
@@ -19,6 +21,13 @@ REPO = Path(__file__).resolve().parents[1]
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 OUT = REPO / "docs/generated/egs3_experiments.json"
+
+
+def _json_bound(value: float) -> float | str:
+    value = float(value)
+    if math.isinf(value):
+        return "Infinity" if value > 0.0 else "-Infinity"
+    return value
 
 
 def axis_a() -> dict:
@@ -261,8 +270,9 @@ def axis_e() -> dict:
     from htt.obsstat.egs3_identified_set import (
         identified_set_report, im_coverage_experiment,
         refutability_power_experiment, toy_design,
+        signed_curvature_branch_reports, two_stage_tau,
     )
-    from htt.obsstat.egs3_gf_interval import gf_joint_vs_naive
+    from htt.obsstat.egs3_gf_interval import gf_joint_vs_naive, gf_strictness_witness
     from htt.obsstat.egs3_evalue_merge import arithmetic_merge_mc, test_martingale_ville_mc
     from htt.obsstat.egs3_prior_exposure import gaussian_prior_exposure_witness
 
@@ -270,6 +280,11 @@ def axis_e() -> dict:
     y = toy["R"] @ toy["g_true"]
     pop = identified_set_report(y, toy["R"], toy["c"], toy["lower"], toy["upper"],
                                 alpha2=1.0)
+    branch_reports = signed_curvature_branch_reports(
+        y, toy["R"], toy["c"], toy["lower"], toy["upper"], alpha2=1.0)
+    estimated_cov_tau = two_stage_tau(
+        10, 2, alpha1=0.05, alpha2=0.05,
+        threshold_policy="estimated_covariance_f", n_sim=300)
     upper_open = toy["upper"].copy(); upper_open[1] = np.inf
     unbounded = identified_set_report(y, toy["R"], toy["c"], toy["lower"],
                                       upper_open, alpha2=1.0)
@@ -282,15 +297,36 @@ def axis_e() -> dict:
     cov = im_coverage_experiment(n_mc=2000, seed=20260708)
     power = refutability_power_experiment(n_mc=1000, seed=20260708)
     gf = gf_joint_vs_naive()
+    strictness = gf_strictness_witness()
     merge = arithmetic_merge_mc(seed=20260708)
     ville = test_martingale_ville_mc(seed=20260708)
     prior = gaussian_prior_exposure_witness(seed=20260708)
     return {
         "E1_identified_set": {
             "population_interval": [pop.x_lo, pop.x_hi],
+            "signed_curvature_branches": {
+                branch_id: {
+                    "status": rep.status,
+                    "interval": [rep.x_lo, rep.x_hi],
+                    "component_bounds": [
+                        [_json_bound(lo), _json_bound(hi)]
+                        for lo, hi in rep.component_bounds
+                    ],
+                }
+                for branch_id, rep in branch_reports.items()
+            },
             "reproduces_registered_example": bool(
                 abs(pop.x_lo - 0.11) < 1e-9 and abs(pop.x_hi - 0.17) < 1e-9),
             "tau1_chi2_dof": pop.m - pop.rank, "tau1": pop.tau.tau1,
+            "estimated_covariance_threshold_example": {
+                "policy": estimated_cov_tau.threshold_policy,
+                "m": estimated_cov_tau.m,
+                "r": estimated_cov_tau.r,
+                "n_sim": estimated_cov_tau.n_sim,
+                "df_residual": estimated_cov_tau.df_residual,
+                "tau1_hotelling_F": estimated_cov_tau.tau1,
+                "tau2_hotelling_F": estimated_cov_tau.tau2,
+            },
             "statuses": {"feasible": pop.status, "empty_misfit": misfit.status,
                          "unbounded_no_ceiling": unbounded.status,
                          "ceiling_unfit_F_gt_1": unfit.status},
@@ -317,6 +353,11 @@ def axis_e() -> dict:
             "joint": list(gf.joint), "naive": list(gf.naive),
             "width_ratio": gf.width_ratio,
             "joint_within_naive": gf.joint_within_naive,
+            "strict_lower": gf.strict_lower,
+            "strict_upper": gf.strict_upper,
+            "equality_reason": gf.equality_reason,
+            "strictness_criterion": gf.strictness_criterion,
+            "strictness_witness": strictness,
         },
         "E7_evalue_merge": {
             "merged_mean": merge.merged_mean, "se": merge.se,
@@ -336,7 +377,9 @@ def axis_e() -> dict:
                      "statuses; Imbens-Manski endpoint coverage nominal where the naive "
                      "endpoint CI undercovers; G_F propagates on the joint feasible set; "
                      "e-values merge under arbitrary dependence and are anytime-valid; "
-                     "null-direction posteriors are prior-exposed"),
+                    "null-direction posteriors are prior-exposed; v7 fortification "
+                    "records signed curvature branches, estimated-covariance "
+                    "thresholds, and exact strict/equality conditions"),
     }
 
 
@@ -377,8 +420,8 @@ def axis_f() -> dict:
     }
 
 
-def main() -> int:
-    payload = {
+def build_payload() -> dict:
+    return {
         "schema": "htt.egs3.experiments.v1",
         "claim_tier": "program_theorem_and_synthetic_mechanics",
         "family_identification": False,
@@ -396,8 +439,25 @@ def main() -> int:
         ],
         "claim_boundary": "conditional EGS-type theorems + synthetic mechanics only; no detection, family/geometry, or native-solver validation",
     }
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--check", action="store_true", help="fail if generated JSON is stale")
+    args = parser.parse_args(argv)
+    payload = build_payload()
+    text = json.dumps(payload, indent=2, default=float) + "\n"
+    if args.check:
+        if not OUT.is_file():
+            print(f"missing {OUT}")
+            return 1
+        if OUT.read_text(encoding="utf-8") != text:
+            print(f"stale {OUT}")
+            return 1
+        print(f"{OUT.name} up to date")
+        return 0
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(payload, indent=2, default=float) + "\n")
+    OUT.write_text(text, encoding="utf-8")
     print(f"wrote {OUT}")
     return 0
 

@@ -1,0 +1,69 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "obsstat.report_data.cf4_forward_coverage_residual",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/data_analysis_current/fig_data_cf4_forward_coverage_residual.png",
+  "caption_policy": [
+    "must_state_observed_data_diagnostic",
+    "must_not_state_family_identification",
+    "must_not_state_native_low_ell_solver_output",
+    "must_not_state_p_value_without_null_ensemble"
+  ],
+  "caveats": [
+    "Observed/prepared data analysis figure.",
+    "Diagnostic-only: no posterior odds, p-value, geometry detection, or family identification.",
+    "No native low-ell solver output is used."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "config_hash": "sha256:0bee85fb60f0f37c27118a441d37fc120737455b89612e56b7c7c6b693a3d65a",
+  "created_by": "scripts/make_report_data_analysis_figures.py",
+  "failed_gates": [
+    "matched_nulls_not_bound_for_inference",
+    "full_covariance_not_bound_for_likelihood"
+  ],
+  "generating_command": "python scripts/make_report_data_analysis_figures.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "docs/generated/cf4_bulkflow_likelihood_report.json:sha256:183fc58041f04a9c9778a21ef2f81cdc3fbf874a6455c4aa84792b5585728536",
+    "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz:sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad",
+    "scripts/make_report_data_analysis_figures.py:sha256:a7dd3f43fe0e63df90d84d23fe275d3a1e341636bc5db97c59c9e94a2aff85ab"
+  ],
+  "null_mock_status": "forward_mock_coverage_calibrated",
+  "owner": "OBSSTAT",
+  "passed_gates": [
+    "repo_local_data_input_present",
+    "manifest_metadata_present",
+    "report_lane_is_data_analysis_not_meta"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "matched_nulls_not_bound_for_inference",
+    "full_covariance_not_bound_for_likelihood",
+    "native_morphology_atlas_absent"
+  ],
+  "required_gates": [
+    "repo_local_data_input_present",
+    "manifest_metadata_present",
+    "report_lane_is_data_analysis_not_meta"
+  ],
+  "schema_version": "obsstat.report_data_analysis_figure.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "figure_lane": "report_data_analysis_current",
+    "n_depth_windows": 5,
+    "quantity": "CF4 depth-window forward-mock residual and coverage",
+    "residual_km_s_range": [
+      -0.39999999999997726,
+      0.8000000000000114
+    ],
+    "source_artifacts": [
+      "docs/generated/cf4_bulkflow_likelihood_report.json",
+      "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
+      "scripts/make_report_data_analysis_figures.py"
+    ]
+  },
+  "transfer_source": "none"
+}

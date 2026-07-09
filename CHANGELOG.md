@@ -7,6 +7,34 @@
 
 ## [Unreleased]
 
+### v6.1 report refresh checkpoint + external v6-review intake + Phase-0 hygiene (rev-r147, 2026-07-09)
+
+Checkpointed the post-rev-r146 working tree (the v6.1 data-analysis-refresh session) and
+ingested the four 2026-07-09 external review bundles as the isolated base for the v7
+(Fifth Revision) build. No new physics claim; diagnostic-only throughout.
+- **v6.1 report package** `external_audit_research_report_20260709_v6_1/` (+ root
+  `external_audit_research_report_v6_1.pdf`): Fourth-Revision report re-slugged to v6.1 with
+  a current-data figure refresh (25 `fig_data_*` manifest-backed diagnostics). Frozen v6
+  package restored to byte-frozen state (frozen-package rule).
+- **v7 groundwork** (untracked → tracked): `scripts/build_v7_external_audit_synthesis.py`
+  (hashes + routes the four review zips → `docs/generated/v7_external_audit_synthesis_matrix.*`),
+  `scripts/build_v7_paper_a_revision_packet.py`, `scripts/run_v7_fortification_witnesses.py`
+  (5 witnesses: F1/M1/M3/M8 + K5 firewall, all PASS), `scripts/k5_cf4_identified_interval_card.py`
+  (PLUGIN-firewalled K5/CF4 card, `observational_claim_allowed=false`).
+- **Code-side audit fixes landed by the v6.1 session** (committed here): `egs3_identified_set.py`
+  signed component boxes + `curvature_branch_bounds`/`signed_curvature_branch_reports` +
+  `estimated_covariance_f` two-stage threshold; `egs3_gf_interval.py` `gf_strictness_criterion`.
+  x_C anchors bit-identical (guarded).
+- **External review intake**: `docs/audits/external_2026-07-09/` archives the four bundles'
+  review documents (F1–F3/M1–M10/m1–m12 + R1–R12 + T1′–T9′/T3-lin proofs + WP0–WP8 +
+  claim-defense + Saadeh-2016 bibliography + 12-experiment summary) + `ARCHIVE_MANIFEST.md`
+  with pinned zip SHA256s; source `.zip`s stay untracked at root.
+- **Phase-0 hygiene**: regenerated four stale audit packages (their `--check` contracts now
+  pass); restored frozen v6 package. Baseline for v7: `make egs3-gates` 109 OK; `pytest
+  tests/contracts` 373 passed / 2 pre-existing failures (cf4pp network-blocked in sandbox;
+  expanded-manuscript figure-suite v6.1-reorg drift — both tangential to v7, deferred).
+  External bundle code is reference-only (reimplemented, never imported).
+
 ### External re-review response: v6 (Fourth Revision) audit report + identified-set/seal program (rev-r146, 2026-07-08)
 
 Answered the external re-review of the v5 external-audit report (2 blockers + 6 major + minors) with

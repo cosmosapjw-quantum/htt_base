@@ -1,0 +1,169 @@
+work_packages:
+  - id: WP0_reproducible_supplement
+    priority: blocker
+    goal: Turn the report artifact package into a rerunnable supplement.
+    inputs:
+      - current v6 report zip
+      - generator scripts
+      - prepared-data recipes
+      - synthetic fixtures
+      - environment lock
+    actions:
+      - add make reproduce-paper target
+      - separate no-download synthetic gates from approval-required data lanes
+      - add manifest hashes for generated tables/figures and generator scripts
+      - add missing-data recipe files rather than silent omissions
+    outputs:
+      - MANIFEST.reproducible.json
+      - reproduce.log
+      - figures and tables regenerated from scripts
+    acceptance_gates:
+      - fresh checkout either reproduces results or emits deterministic data-acquisition instructions
+      - all generated numbers have script path and input hash
+      - no sidecar references input hashes absent from package without recipe
+
+  - id: WP1_comparator_uniqueness_and_conventions
+    priority: blocker
+    goal: Make x_C a uniqueness theorem, not merely a definition.
+    actions:
+      - write parent-constraint uniqueness proof
+      - decide signed-vs-nonnegative status of Omega_k_aniso
+      - update cone/domain language accordingly
+      - add symbolic convention seal
+    outputs:
+      - comparator_uniqueness_theorem.tex
+      - parent_identity_symbolic_seal.json
+      - convention_table.tex
+    acceptance_gates:
+      - W2 normalization tests fail on omega_a omega^a/H^2 convention
+      - Omega_k_aniso sign convention appears consistently in theorem and code
+
+  - id: WP2_P36_generic_strictness
+    priority: blocker
+    goal: Replace false universal strictness by exact sharp theorem with generic strictness.
+    actions:
+      - state equality compatibility conditions
+      - prove joint interval sharpness via diagonal feasible set
+      - include equality counterexample and strict example as unit tests
+      - generate random phase diagram
+    outputs:
+      - P36_replacement_theorem.tex
+      - p36_phase_diagram.json
+      - p36_unit_tests.py
+    acceptance_gates:
+      - equality counterexample reproduces joint=naive
+      - strict example has joint width < naive width
+      - theorem no longer says strict whenever cN,cD nonzero
+
+  - id: WP3_P31_physical_realizability
+    priority: high
+    goal: Upgrade abstract sharpness to physical/local-GR realizability.
+    actions:
+      - construct nearly-FLRW local initial-data ansatz
+      - encode Hamiltonian and momentum residuals
+      - solve conformal correction or demonstrate first-order residual cancellation
+      - realize lower and upper x_C endpoints
+    outputs:
+      - local_GR_realization_theorem.tex
+      - constraint_endpoint_solver.py
+      - endpoint_realization_witness.json
+    acceptance_gates:
+      - symbolic first-order residual zero or documented obstruction
+      - numerical residual < 1e-10 or convergence slope >= 1.8
+      - energy-condition branch labels attached
+
+  - id: WP4_coverage_known_and_estimated_covariance
+    priority: blocker
+    goal: Separate P35 known-covariance coverage from estimated-covariance coverage.
+    actions:
+      - split theorem P35a/P35b
+      - add Hartlap correction and Sellentin-Heavens likelihood options
+      - run p and Nsim sweep
+      - connect covariance policy to every K1/K5 sidecar
+    outputs:
+      - coverage_theorems.tex
+      - covariance_bias_sweep.json
+      - covariance_policy_schema.json
+    acceptance_gates:
+      - raw plug-in precision inflation shown
+      - corrected/t-likelihood lane reaches nominal coverage within MC SE
+      - every estimated covariance statistic records p, Nsim, correction policy
+
+  - id: WP5_K1_closed_lowell_lane
+    priority: high
+    goal: Close one Planck low-ell scalar/BiPoSH lane with real null calibration.
+    inputs:
+      - Planck PR4/NPIPE or PR3 maps
+      - E2E/FFP simulation ensemble or validated null mocks
+      - masks and map-product variants
+    actions:
+      - compute scalar max-scan and BiPoSH statistics across map products
+      - estimate covariance with Hartlap/SH policy
+      - e-value or p-value calibration with finite-cover correction
+      - map-product and mask leave-one-out stability
+    outputs:
+      - K1_closed_lane_results.json
+      - K1_map_stability_table.tex
+      - K1_scalar_BiPoSH_null_calibration.pdf
+    acceptance_gates:
+      - null calibration passes finite-simulation correction
+      - scalar and BiPoSH channels reported separately
+      - no geometry label appears
+
+  - id: WP6_K5_CF4_hierarchical_depth_flow
+    priority: high
+    goal: Make CF4 depth-flow results selection-corrected and mock-calibrated.
+    inputs:
+      - CF4 grouped catalog with version hash
+      - method labels and distance uncertainties
+      - selection function
+      - LCDM correlated velocity-field mocks
+    actions:
+      - implement method-mixture hierarchical likelihood
+      - correct Malmquist and grouping effects
+      - compare MLE/MVE/group-GLS/WF estimators
+      - compute shell covariance and GF only when bound
+    outputs:
+      - K5_CF4_hierarchical_model.py
+      - K5_mock_coverage_table.tex
+      - K5_depth_gap_interval_results.json
+    acceptance_gates:
+      - 68/95% mock coverage pass by depth
+      - GF withheld if shell covariance/null not bound
+      - apex plots remain diagnostic unless calibrated
+
+  - id: WP7_DESI_selection_corrected_directional_response
+    priority: medium
+    goal: Convert DESI tracer/cap/redshift plots into window-corrected response diagnostics.
+    inputs:
+      - official DESI catalogs
+      - random catalogs
+      - completeness weights
+      - survey masks
+    actions:
+      - compute data-random and random-random dipoles
+      - build tracer/cap/redshift response matrix
+      - calibrate NGC-SGC asymmetry under survey window null
+      - bind DESI-CF4 overlap policy
+    outputs:
+      - DESI_directional_response_matrix.json
+      - DESI_window_null_table.tex
+      - DESI_data_random_dipole_figures
+    acceptance_gates:
+      - cap asymmetry has window-null bands
+      - tracer handoff includes selection weights
+      - no physical asymmetry claim without deconvolved statistic
+
+  - id: WP8_native_transfer_handoff
+    priority: medium
+    goal: Define the interface needed for future geometry-side inference.
+    actions:
+      - specify a_lm^T,E,B outputs
+      - separate deterministic template/stochastic covariance/local boost branches
+      - require residual packs and atlas equivalence metadata
+    outputs:
+      - native_transfer_contract.schema.json
+      - solver_handoff_checklist.md
+    acceptance_gates:
+      - branch classifier rejects scalar central chi2 as sufficient for geometry inference
+      - posterior/evidence generation requires HTT likelihood manifest

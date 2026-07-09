@@ -1,0 +1,124 @@
+{
+  "allowed_use": "external_audit",
+  "artifact_id": "manuscript.v7_paper_a_revision_packet",
+  "artifact_mode": "external_audit_conditioned",
+  "artifact_path": "docs/generated/v7_paper_a_revision_packet.json",
+  "caveats": [
+    "Manuscript-facing revision packet only; not a compiled manuscript.",
+    "No Paper A claim may outrun the generated v7 witness/card artifacts.",
+    "Report data figures remain appendix diagnostics until promotion gates pass."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "config_hash": "sha256:b6b9405cfe99ea5c37fe1882706509a26c9e5e70aa3029252bbb3ee52da86680",
+  "created_by": "scripts/build_v7_paper_a_revision_packet.py",
+  "failed_gates": [
+    "compiled_manuscript_not_claimed",
+    "native_solver_absent",
+    "measured_R_card_absent"
+  ],
+  "forbidden_promotions": [
+    "native low-ell solver output from current transfer-conditional artifacts",
+    "posterior odds from OBSSTAT/MIO diagnostic cards",
+    "morphology-family promotion from scalar or interval diagnostics",
+    "observed x_C result while any component remains PLUGIN/BLOCKED"
+  ],
+  "generating_command": "venv/bin/python scripts/build_v7_paper_a_revision_packet.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "htt/obsstat/egs3_identified_set.py:sha256:309d7d577c6dd686313c815f28b8c12b6f688ca5753815237c5c54d643538a6b",
+    "htt/obsstat/egs3_gf_interval.py:sha256:d390e02c5c861a726e99e7144a9b2b9714baf13cef7ce86ce41d3acd2756907c",
+    "docs/generated/v7_fortification_witnesses.json:sha256:03f9514fbe27e077e95b8040c13ac1cb3010525c16b9c32b8782775d4f41791e",
+    "docs/generated/k5_cf4_identified_interval_card.json:sha256:0e3099279bbb502338dc4e166c9dc9057cd8685472185c8364357e28a3226590"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "COMMON",
+  "paper_a_sections": [
+    {
+      "instruction": "Frame the paper as an identifiability and diagnostic-methods paper, not as a detection paper.",
+      "section": "Abstract"
+    },
+    {
+      "instruction": "State signed lower/upper component boxes and report open/all curvature branches.",
+      "section": "Component-box theorem"
+    },
+    {
+      "instruction": "Give separate known-covariance and estimated-covariance threshold policies.",
+      "section": "Two-stage thresholds"
+    },
+    {
+      "instruction": "State joint subset relation and the strict/equality criterion.",
+      "section": "Depth-gap interval propagation"
+    },
+    {
+      "instruction": "Put K5/CF4 closure and current data figures in diagnostic appendix lanes until blockers clear.",
+      "section": "Data diagnostic appendix"
+    }
+  ],
+  "passed_gates": [
+    "P31_component_box_scope",
+    "P35_threshold_policy_split",
+    "P36_strictness_iff",
+    "MES_registered_external_caveat",
+    "figure_lane_appendix_diagnostic"
+  ],
+  "production_status": "diagnostic_only",
+  "replacement_rules": [
+    {
+      "claim_tier": "conditional",
+      "old_risk": "sharpness stated as physical realization",
+      "replacement": "sharpness is for the registered convex component-box model; full physical realization is deferred",
+      "required_caveat": "does not certify nonlinear GR realizability",
+      "target": "P31"
+    },
+    {
+      "claim_tier": "diagnostic_only",
+      "old_risk": "known-covariance and simulation-estimated covariance thresholds mixed",
+      "replacement": "split threshold policy into known_chi2 and estimated_covariance_f with n_sim metadata",
+      "required_caveat": "finite-simulation covariance requires Hotelling/F threshold",
+      "target": "P35"
+    },
+    {
+      "claim_tier": "conditional",
+      "old_risk": "strictness described as universal",
+      "replacement": "joint interval is a subset of naive; strictness requires a shared-extrema conflict",
+      "required_caveat": "aligned shared boxes collapse to equality",
+      "target": "P36"
+    },
+    {
+      "claim_tier": "diagnostic_only",
+      "old_risk": "registered external coefficients over-read as rederived here",
+      "replacement": "MES epsilon coefficients remain registered_external until a dedicated derivation seal exists",
+      "required_caveat": "parent identity seal records rederived_here=false for MES coefficients",
+      "target": "MES"
+    },
+    {
+      "claim_tier": "diagnostic_only",
+      "old_risk": "data figures read as inference claims",
+      "replacement": "current report figures are appendix diagnostics unless matched null/covariance gates pass",
+      "required_caveat": "no posterior odds, p-value, native solver output, or morphology-family promotion",
+      "target": "figures"
+    }
+  ],
+  "required_gates": [
+    "P31_component_box_scope",
+    "P35_threshold_policy_split",
+    "P36_strictness_iff",
+    "MES_registered_external_caveat",
+    "figure_lane_appendix_diagnostic"
+  ],
+  "schema": "htt.v7_paper_a_revision_packet.v1",
+  "schema_version": "htt.v7_paper_a_revision_packet.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "purpose": "claim-safe Paper A wording and section skeleton",
+    "source_witnesses": [
+      "docs/generated/v7_fortification_witnesses.json",
+      "docs/generated/k5_cf4_identified_interval_card.json"
+    ]
+  },
+  "tex_skeleton_path": "docs/generated/v7_paper_a_skeleton.tex",
+  "transfer_source": "none"
+}

@@ -6,17 +6,19 @@ Omega_k_aniso), but the registered scalar/radial response reaches only a rank-2
 subspace (W^2 and Omega_k are exact structural nulls of the channel design). The
 reportable object is therefore NOT a point value but the identified set
 
-    G(y) = { g : ||y - R g||^2 <= tau,  g in C_phys (g >= 0),  g_N in C_MES (ceiling box) }
+    G(y) = { g : ||y - R g||^2 <= tau,  lower <= g <= upper }
 
 and its image under c^T, the closed interval [x_C^-, x_C^+].
 
 Two-stage tau semantics (P35). A single tau conflates two different degrees of
 freedom. Stage 1 uses the m - r residual directions (orthogonal to col(R)) as a
-SPECIFICATION TEST at level alpha1: if the residual statistic exceeds
-tau1 = chi^2_{m-r, 1-alpha1} the feasible set is EMPTY and the correct report is a
-misfit/refutation status, not an interval. Stage 2 places a conditional
-chi^2_{r, 1-alpha2} ellipsoid on the r reachable directions. alpha2 = 1.0 gives
-tau2 = 0, i.e. the POPULATION identified set (no sampling inflation).
+SPECIFICATION TEST at level alpha1: if the residual statistic exceeds the stage-1
+threshold the feasible set is EMPTY and the correct report is a misfit/refutation
+status, not an interval. Stage 2 places a conditional ellipsoid on the r reachable
+directions. The default threshold policy is the original known-covariance chi-square
+branch; an explicit estimated-covariance Hotelling/F branch is available when the
+covariance is simulation-estimated. alpha2 = 1.0 gives tau2 = 0, i.e. the POPULATION
+identified set (no sampling inflation).
 
 Status semantics (A8), in precedence order:
   ``empty``         -- stage-1 misfit, or the stage-2 ellipsoid misses the cone
@@ -41,6 +43,10 @@ channel design of `egs3_graded_comparator.channel_response_design` has identical
 zero W^2 and Omega_k columns -- and anything more general raises NotImplementedError
 rather than silently extrapolating.
 
+Domain discipline. Component bounds are signed boxes. Nonnegativity is a branch
+choice, not a global theorem: the registered open-curvature branch uses
+Omega_k_aniso in [0, U_k], while the all-curvature branch uses [-U_k, U_k].
+
 Claim discipline. Diagnostic-only, synthetic-witness statistics machinery. It is a
 SEPARATE DIAGNOSTIC SURFACE: it never touches the bit-identical comparator x_C,
 the response design, or the frozen registered low-ell statistic set, and it adds no
@@ -64,6 +70,7 @@ __all__ = [
     "STATUS_FEASIBLE", "STATUS_EMPTY", "STATUS_UNBOUNDED", "STATUS_CEILING_UNFIT",
     "TwoStageTau", "two_stage_tau",
     "IdentifiedSetReport", "identified_set_report",
+    "curvature_branch_bounds", "signed_curvature_branch_reports",
     "reachable_endpoints_closed_form",
     "im_critical_value", "im_interval", "projection_interval", "endpoint_interval",
     "ImCoverageResult", "im_coverage_experiment",
@@ -74,29 +81,68 @@ __all__ = [
 
 @dataclass(frozen=True)
 class TwoStageTau:
-    """The two thresholds of the P35 construction (chi-square quantiles)."""
+    """The two thresholds of the P35 construction.
+
+    ``known_chi2`` preserves the original API and values. ``estimated_covariance_f``
+    applies the finite-simulation Hotelling/F correction separately to each stage.
+    """
     m: int
     r: int
     alpha1: float
     alpha2: float
     tau1: float
     tau2: float
+    threshold_policy: str = "known_chi2"
+    n_sim: int | None = None
+    threshold_value: float = math.nan
+    df_residual: int = 0
+    df_reachable: int = 0
 
 
 def two_stage_tau(m: int, r: int, *, alpha1: float = 0.05,
-                  alpha2: float = 0.05) -> TwoStageTau:
+                  alpha2: float = 0.05,
+                  threshold_policy: str = "known_chi2",
+                  n_sim: int | None = None) -> TwoStageTau:
     """tau1 = chi^2_{m-r, 1-alpha1} (stage-1 specification test on the residual
     directions) and tau2 = chi^2_{r, 1-alpha2} (stage-2 conditional reachable
-    ellipsoid). alpha2 = 1.0 -> tau2 = 0 -> population identified set."""
+    ellipsoid). alpha2 = 1.0 -> tau2 = 0 -> population identified set.
+
+    With ``threshold_policy="estimated_covariance_f"``, use
+    df * (n_sim - 1) / (n_sim - df) * F_{df, n_sim-df, 1-alpha}, which is the
+    fail-closed finite-simulation branch requested by the v7 audit.
+    """
     m = int(m); r = int(r)
     if not (0 < r < m):
         raise ValueError("need 0 < r < m for the two-stage split")
     if not (0.0 < alpha1 < 1.0) or not (0.0 < alpha2 <= 1.0):
         raise ValueError("alpha1 in (0,1); alpha2 in (0,1]")
-    tau1 = float(stats.chi2.ppf(1.0 - alpha1, m - r))
-    tau2 = 0.0 if alpha2 == 1.0 else float(stats.chi2.ppf(1.0 - alpha2, r))
+    policy = str(threshold_policy)
+    df_residual = m - r
+    df_reachable = r
+
+    def _estimated_cov_threshold(df: int, alpha: float) -> float:
+        if n_sim is None:
+            raise ValueError("n_sim is required for estimated_covariance_f")
+        n = int(n_sim)
+        if n <= df + 1:
+            raise ValueError("estimated_covariance_f requires n_sim > df + 1")
+        return float(df * (n - 1) / (n - df) * stats.f.ppf(1.0 - alpha, df, n - df))
+
+    if policy == "known_chi2":
+        if n_sim is not None:
+            raise ValueError("n_sim is only meaningful for estimated_covariance_f")
+        tau1 = float(stats.chi2.ppf(1.0 - alpha1, df_residual))
+        tau2 = 0.0 if alpha2 == 1.0 else float(stats.chi2.ppf(1.0 - alpha2, df_reachable))
+    elif policy == "estimated_covariance_f":
+        tau1 = _estimated_cov_threshold(df_residual, alpha1)
+        tau2 = 0.0 if alpha2 == 1.0 else _estimated_cov_threshold(df_reachable, alpha2)
+    else:
+        raise ValueError("threshold_policy must be known_chi2 or estimated_covariance_f")
     return TwoStageTau(m=m, r=r, alpha1=float(alpha1), alpha2=float(alpha2),
-                       tau1=tau1, tau2=tau2)
+                       tau1=tau1, tau2=tau2, threshold_policy=policy,
+                       n_sim=None if n_sim is None else int(n_sim),
+                       threshold_value=tau1, df_residual=df_residual,
+                       df_reachable=df_reachable)
 
 
 @dataclass(frozen=True)
@@ -117,6 +163,14 @@ class IdentifiedSetReport:
     F_lo: float | None
     F_hi: float | None
     tau: TwoStageTau
+    branch_id: str = "unspecified"
+    component_bounds: tuple = ()
+    input_modes: tuple = ()
+    observational_claim_allowed: bool = False
+    threshold_policy: str = "known_chi2"
+    n_sim: int | None = None
+    df_residual: int = 0
+    df_reachable: int = 0
 
 
 def _split_columns(R: np.ndarray, tol: float) -> tuple[np.ndarray, np.ndarray]:
@@ -172,12 +226,17 @@ def _constrained_extreme(A: np.ndarray, y: np.ndarray, c_R: np.ndarray,
 
 def identified_set_report(y, R, c, lower, upper, *, alpha1: float = 0.05,
                           alpha2: float = 0.05, ceiling_U: float | None = None,
-                          tol: float = 1e-10) -> IdentifiedSetReport:
+                          tol: float = 1e-10,
+                          threshold_policy: str = "known_chi2",
+                          n_sim: int | None = None,
+                          branch_id: str = "unspecified",
+                          input_modes: tuple | list | None = None,
+                          observational_claim_allowed: bool = False
+                          ) -> IdentifiedSetReport:
     """Compute the A8 identified-set report for whitened observations y = R g + eps.
 
     Parameters: y (m,) whitened data; R (m,p) response; c (p,) signed comparator
-    coefficients; lower/upper (p,) the cone/ceiling box (lower is the physical
-    nonnegativity cone, upper carries the MES ceilings; np.inf = no ceiling).
+    coefficients; lower/upper (p,) signed component bounds (np.inf = no ceiling).
     """
     y = np.asarray(y, dtype=float).ravel()
     R = np.asarray(R, dtype=float)
@@ -188,6 +247,8 @@ def identified_set_report(y, R, c, lower, upper, *, alpha1: float = 0.05,
     if not (y.shape == (m,) and c.shape == (p,) and lower.shape == (p,)
             and upper.shape == (p,)):
         raise ValueError("shape mismatch between y, R, c, lower, upper")
+    if np.any(lower > upper):
+        raise ValueError("lower bounds must not exceed upper bounds")
 
     active, null = _split_columns(R, tol)
     A = R[:, active]
@@ -197,7 +258,8 @@ def identified_set_report(y, R, c, lower, upper, *, alpha1: float = 0.05,
             "identified_set_report requires axis-aligned nulls: the null space of R "
             "must be spanned by zero columns (the registered rank-2 case)")
 
-    tau = two_stage_tau(m, r, alpha1=alpha1, alpha2=alpha2)
+    tau = two_stage_tau(m, r, alpha1=alpha1, alpha2=alpha2,
+                        threshold_policy=threshold_policy, n_sim=n_sim)
 
     # Stage 1: specification test on the m - r residual directions.
     g_hat, *_ = np.linalg.lstsq(A, y, rcond=None)
@@ -268,7 +330,57 @@ def identified_set_report(y, R, c, lower, upper, *, alpha1: float = 0.05,
         null_lo=null_lo, null_hi=null_hi,
         spec_stat=s1, spec_threshold=tau.tau1, spec_pass=spec_pass,
         rank=r, m=m, F_lo=F_lo, F_hi=F_hi, tau=tau,
+        branch_id=str(branch_id),
+        component_bounds=tuple((float(lo), float(hi)) for lo, hi in zip(lower, upper)),
+        input_modes=tuple(input_modes or ()),
+        observational_claim_allowed=bool(observational_claim_allowed),
+        threshold_policy=tau.threshold_policy,
+        n_sim=tau.n_sim,
+        df_residual=tau.df_residual,
+        df_reachable=tau.df_reachable,
     )
+
+
+def curvature_branch_bounds(lower, upper, *, curvature_index: int = 3,
+                            branch: str = "open") -> tuple[np.ndarray, np.ndarray, str]:
+    """Return signed curvature branch bounds without mutating the input arrays.
+
+    ``open`` keeps Omega_k_aniso in [0, U_k]. ``all`` permits signed curvature
+    [-U_k, U_k]. This is branch metadata for diagnostic identified sets, not a
+    family-identification or geometry claim.
+    """
+    lo = np.asarray(lower, dtype=float).copy()
+    hi = np.asarray(upper, dtype=float).copy()
+    j = int(curvature_index)
+    if not (0 <= j < lo.size):
+        raise ValueError("curvature_index out of range")
+    u = float(hi[j])
+    if not np.isfinite(u) or u < 0.0:
+        raise ValueError("curvature upper bound must be finite and nonnegative")
+    if branch == "open":
+        lo[j] = 0.0
+        hi[j] = u
+        branch_id = "open_branch[0,Uk]"
+    elif branch == "all":
+        lo[j] = -u
+        hi[j] = u
+        branch_id = "all_branch[-Uk,Uk]"
+    else:
+        raise ValueError("branch must be open or all")
+    return lo, hi, branch_id
+
+
+def signed_curvature_branch_reports(y, R, c, lower, upper, *, curvature_index: int = 3,
+                                    branches=("open", "all"), **kwargs
+                                    ) -> dict[str, IdentifiedSetReport]:
+    """Compute identified-set reports for the requested signed curvature branches."""
+    reports: dict[str, IdentifiedSetReport] = {}
+    for branch in branches:
+        lo, hi, branch_id = curvature_branch_bounds(
+            lower, upper, curvature_index=curvature_index, branch=str(branch))
+        reports[branch_id] = identified_set_report(
+            y, R, c, lo, hi, branch_id=branch_id, **kwargs)
+    return reports
 
 
 # ---------------------------------------------------------------------------
@@ -321,7 +433,7 @@ def endpoint_interval(x_lo: float, x_hi: float, se_lo: float, se_hi: float,
 # Registered r = 2, m = 6 toy (reproduces the section-10 example [0.11, 0.17])
 # ---------------------------------------------------------------------------
 
-def toy_design(m: int = 6) -> dict:
+def toy_design(m: int = 6, *, curvature_branch: str = "open") -> dict:
     """The registered toy: g = (Sigma2, W2, Omega_tilt, Omega_k); W2 and Omega_k are
     zero columns (structural nulls); truth (0.12, 0, 0.03, 0); MES ceilings
     U_W = 0.04, U_k = 0.02. Population identified interval = [0.11, 0.17]."""
@@ -334,6 +446,10 @@ def toy_design(m: int = 6) -> dict:
     c = np.array([1.0, -1.0, 1.0, 1.0])
     lower = np.zeros(4)
     upper = np.array([np.inf, 0.04, np.inf, 0.02])
+    if curvature_branch == "all":
+        lower[3] = -upper[3]
+    elif curvature_branch != "open":
+        raise ValueError("curvature_branch must be open or all")
     g_true = np.array([0.12, 0.0, 0.03, 0.0])
     return {"R": R, "c": c, "lower": lower, "upper": upper, "g_true": g_true}
 

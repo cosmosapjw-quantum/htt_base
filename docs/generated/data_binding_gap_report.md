@@ -10,7 +10,7 @@ config_hash: `sha256:68848e33466617d73386e6abe514b1f24ebb0c68fc5e33d8bf9c0f04d8a
 schema_version: `common.observational_data_inventory.v2`
 data_binding_schema: `common.data_contracts.v1`
 generating_command: `venv/bin/python scripts/inventory_observational_data.py --write`
-git_commit_or_worktree_state: `765fd97+dirty`
+git_commit_or_worktree_state: `8280b8f+dirty`
 artifact_path: docs/generated/data_binding_gap_report.md
 input_hashes:
 - `workdir/obs_bundle/cmb/powerspectra/planck_pr3_tt_full.npz:sha256:a3ba1178d2afc915d12dd2bf79dc4027aa48e5e263dc1f3bfe8e3a6762e13421`
@@ -52,7 +52,7 @@ input_hashes:
 - `workdir/compact_products/desi/QSO_SGC_clustering_extended.npz:sha256:a8a0f41daed139c7d30129a2b60b1689a3a3e4b1b03b698c4b15146fda8d89b2`
 - `workdir/compact_products/cf4/query_batch.npz:sha256:5fb994ca076235fb30db644d3d1a3672d092ed31f8ef4737bcabe2da87491909`
 - `workdir/compact_products/cf4/query_single.json:sha256:9017a77c65f3ad9782e3e47dc6f425994fa00ce5ba7b2e7686468ef3762492e2`
-- `workdir/compact_products/cf4/targets_cf4_from_desi_bgs_auto.report.json:sha256:4b28aaaf5fb9704f8e0aebe324a678dea55372d4e0eaabb13cb6822f5f9e37b8`
+- `workdir/compact_products/cf4/targets_cf4_from_desi_bgs_auto.report.json:sha256:66b0ee2c7dae2cce011eba204eed96dedfefa5dfa2ae3a8cb2093c8bc62ed735`
 - `workdir/compact_products/act_dr4_compact.npz:sha256:d1d049253f000f048eac6ce8eee80450122cf59fdc0de951aee8f288dae0c2ca`
 - `workdir/compact_products/spt3g_y1_compact.npz:sha256:625e55f5a7a2d66013e080520a87bf4922e44509ae347668ee44b3944f9c5ae5`
 - `workdir/compact_products/camb_planck2018_lensing_refs.npz:sha256:9eff1778acd345d8564f5057cf2fae94af9370176927203f28237349c698801e`

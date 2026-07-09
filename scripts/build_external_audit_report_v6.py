@@ -29,11 +29,19 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "external_audit_research_report_20260708_v6"
-TEX_NAME = "external_audit_research_report_v6.tex"
-PDF_NAME = "external_audit_research_report_v6.pdf"
-ZIP_NAME = "external_audit_research_report_20260708_v6.zip"
-GENERATED_AT = "2026-07-08T00:00:00"
+REPORT_VERSION = "v6.1"
+REPORT_VERSION_SLUG = "v6_1"
+REPORT_VERSION_TITLE = "Fourth Revision, Data-Analysis Refresh"
+OUT = ROOT / "external_audit_research_report_20260709_v6_1"
+TEX_NAME = "external_audit_research_report_v6_1.tex"
+PDF_NAME = "external_audit_research_report_v6_1.pdf"
+ZIP_NAME = "external_audit_research_report_20260709_v6_1.zip"
+GENERATED_AT = "2026-07-09T00:00:00"
+REPORT_DATA_PACK_JSON = ROOT / "docs/generated/report_data_analysis_figure_pack.json"
+REPORT_DATA_PACK_MD = ROOT / "docs/generated/report_data_analysis_figure_pack.md"
+REPORT_DATA_FIGURE_DEST = OUT / "report_data_figures"
+COMPACT_DATA_ANALYSIS_JSON = ROOT / "docs/generated/v6_compact_data_analysis.json"
+COMPACT_DATA_ANALYSIS_MD = ROOT / "docs/generated/v6_compact_data_analysis.md"
 
 # review-cycle witness artifacts (REQUIRED; the builder never fabricates them)
 REQUIRED_ARTIFACTS = [
@@ -98,6 +106,16 @@ SOURCE_FILES = [
     "htt/bass/validation/comparator_policy.py",
     "htt/htt/htt/core/bounds.py",
     "htt/tsc/admissibility/three_bound_hierarchy.py",
+    # current-data analysis pass and report-facing diagnostic figures
+    "docs/generated/report_data_analysis_figure_pack.json",
+    "docs/generated/report_data_analysis_figure_pack.md",
+    "docs/generated/v6_compact_data_analysis.json",
+    "docs/generated/v6_compact_data_analysis.md",
+    "docs/generated/v6_existing_compact_download_inventory.json",
+    "docs/generated/v6_approval_compact_download_inventory.json",
+    "docs/generated/v6_novel_data_analysis_plot_opportunities.md",
+    "scripts/make_report_data_analysis_figures.py",
+    "scripts/build_v6_compact_data_analysis.py",
 ]
 
 
@@ -225,7 +243,7 @@ def theorem_ledger_rows() -> str:
 
 def source_index(records: list[dict[str, object]]) -> str:
     lines = [
-        "# External Audit Source Index, v6",
+        f"# External Audit Source Index, {REPORT_VERSION}",
         "",
         "Only repo-local HTT source files are listed. external non-repository PDFs and non-HTT cross-domain drafts are excluded.",
         "",
@@ -244,11 +262,11 @@ def source_index(records: list[dict[str, object]]) -> str:
 
 def ledger_ko() -> str:
     lines = [
-        "# 외부감사용 HTT 연구보고서 v6 내부 coverage ledger",
+        f"# 외부감사용 HTT 연구보고서 {REPORT_VERSION} 내부 coverage ledger",
         "",
         "이 ledger는 공개 보고서 본문이 아니라, 각 정리와 방법론 항목이 v6 보고서 안에서 실제 서술되었는지 확인하기 위한 내부 추적표이다.",
         "외부 비-HTT PDF와 무관한 교차 분야 자료는 근거로 사용하지 않았다.",
-        "v6은 v5 재심사(B1/B2 blocker + M1'-M6')에 대한 응답 개정판이며, P26-P32는 이제 전부 본문 증명을 가진다(ledger-only 등재 해소).",
+        f"{REPORT_VERSION}은 v5 재심사(B1/B2 blocker + M1'-M6')에 대한 응답 개정판 위에 current-data figure refresh를 분리 표기한 산출물이며, P26-P32는 이제 전부 본문 증명을 가진다(ledger-only 등재 해소).",
         "",
         "## 본문 포함 정리",
         "",
@@ -499,12 +517,223 @@ def witness_rows(rows: list[tuple[str, str, str]]) -> str:
         f"{tex_escape(name)} & {tex_escape(value)} & \\code{{{sha}}}\\\\"
         for name, value, sha in rows)
 
+
+def report_data_figure_pack() -> dict[str, object]:
+    """Load the current-data figure pack, fail-closed."""
+    if not REPORT_DATA_PACK_JSON.exists():
+        raise SystemExit(
+            "missing report data-analysis figure pack; run "
+            "`venv/bin/python scripts/make_report_data_analysis_figures.py` first"
+        )
+    pack = json.loads(REPORT_DATA_PACK_JSON.read_text(encoding="utf-8"))
+    figures = pack.get("figures")
+    if not isinstance(figures, list) or not figures:
+        raise SystemExit("report data-analysis figure pack has no figure rows")
+    missing: list[str] = []
+    for row in figures:
+        if not isinstance(row, dict):
+            raise SystemExit("report data-analysis figure row is not an object")
+        for key in ("file_name", "artifact_path", "manifest_path", "caption"):
+            if not row.get(key):
+                raise SystemExit(f"report data-analysis figure row missing {key}")
+        for key in ("artifact_path", "manifest_path"):
+            if not (ROOT / str(row[key])).is_file():
+                missing.append(str(row[key]))
+    if missing:
+        raise SystemExit(
+            "missing report data-analysis figure artifacts:\n  " + "\n  ".join(missing)
+        )
+    return pack
+
+
+def report_data_figure_rows(pack: dict[str, object]) -> str:
+    rows: list[str] = []
+    figures = pack["figures"]
+    assert isinstance(figures, list)
+    for idx, row in enumerate(figures, start=1):
+        assert isinstance(row, dict)
+        label = str(row["file_name"]).removeprefix("fig_data_").removesuffix(".png")
+        label = label.replace("_", " ")
+        rows.append(
+            f"D{idx:02d} & {tex_escape(label)} & "
+            f"{tex_escape(str(row['caption']))} & sidecar copied\\\\"
+        )
+    return "\n".join(rows)
+
+
+def report_data_figure_gallery(pack: dict[str, object]) -> str:
+    blocks: list[str] = []
+    figures = pack["figures"]
+    assert isinstance(figures, list)
+    for idx, row in enumerate(figures, start=1):
+        assert isinstance(row, dict)
+        rel_fig = f"report_data_figures/{row['file_name']}"
+        caption = tex_escape(str(row["caption"]))
+        manifest = tex_escape(Path(str(row["manifest_path"])).name)
+        blocks.append(
+            "\n".join(
+                [
+                    r"\begin{center}",
+                    rf"\includegraphics[width=0.92\linewidth]{{{rel_fig}}}",
+                    r"\par\smallskip",
+                    rf"{{\footnotesize \textbf{{D{idx:02d}.}} {caption} "
+                    rf"Manifest: \code{{{manifest}}}.}}",
+                    r"\end{center}",
+                ]
+            )
+        )
+    return "\n\n".join(blocks)
+
+
+def report_data_quicklook_gallery(pack: dict[str, object]) -> str:
+    blocks: list[str] = []
+    figures = pack["figures"]
+    assert isinstance(figures, list)
+    for idx, row in enumerate(figures, start=1):
+        assert isinstance(row, dict)
+        rel_fig = f"report_data_figures/{row['file_name']}"
+        label = str(row["file_name"]).removeprefix("fig_data_").removesuffix(".png")
+        label = label.replace("_", " ")
+        blocks.append(
+            "\n".join(
+                [
+                    r"\begin{minipage}[t]{0.31\linewidth}",
+                    r"\centering",
+                    rf"\includegraphics[width=\linewidth]{{{rel_fig}}}\\",
+                    rf"{{\scriptsize \textbf{{D{idx:02d}.}} {tex_escape(label)}}}",
+                    r"\end{minipage}",
+                ]
+            )
+        )
+        if idx % 3 == 0:
+            blocks.append(r"\par\smallskip")
+        else:
+            blocks.append(r"\hfill")
+    return "\n".join(blocks)
+
+
+def report_data_skipped_rows(pack: dict[str, object]) -> str:
+    rows: list[str] = []
+    skipped = pack.get("skipped_current_data_candidates", [])
+    if not isinstance(skipped, list):
+        return ""
+    for row in skipped:
+        if not isinstance(row, dict):
+            continue
+        rows.append(
+            f"{tex_escape(str(row.get('candidate', 'unknown')))} & "
+            f"{tex_escape(str(row.get('reason', 'not specified')))}\\\\"
+        )
+    return "\n".join(rows)
+
+
+def compact_data_analysis() -> dict[str, object]:
+    """Load the compact-data analysis card, fail-closed."""
+    if not COMPACT_DATA_ANALYSIS_JSON.exists():
+        raise SystemExit(
+            "missing v6 compact-data analysis; run "
+            "`venv/bin/python scripts/build_v6_compact_data_analysis.py` first"
+        )
+    payload = json.loads(COMPACT_DATA_ANALYSIS_JSON.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise SystemExit("v6 compact-data analysis is not a JSON object")
+    for key in ("summary", "compact_products", "acceptance_checks", "download_inventory"):
+        if key not in payload:
+            raise SystemExit(f"v6 compact-data analysis missing {key}")
+    return payload
+
+
+def compact_acceptance_rows(payload: dict[str, object]) -> str:
+    checks = payload.get("acceptance_checks", [])
+    rows: list[str] = []
+    if not isinstance(checks, list):
+        return ""
+    for row in checks:
+        if not isinstance(row, dict):
+            continue
+        evidence = json.dumps(row.get("evidence"), sort_keys=True, default=str)
+        if len(evidence) > 120:
+            evidence = evidence[:117] + "..."
+        rows.append(
+            f"{tex_escape(str(row.get('id', 'unknown')))} & "
+            f"{tex_escape(str(row.get('passed')))} & "
+            f"{tex_escape(evidence)}\\\\"
+        )
+    return "\n".join(rows)
+
+
+def compact_product_rows(payload: dict[str, object]) -> str:
+    products = payload.get("compact_products", [])
+    rows: list[str] = []
+    if not isinstance(products, list):
+        return ""
+    for row in products:
+        if not isinstance(row, dict) or not row.get("present"):
+            continue
+        size_mb = float(row.get("size_bytes") or 0.0) / (1024.0**2)
+        detail = ""
+        if isinstance(row.get("bandpower_summary"), dict):
+            bp = row["bandpower_summary"]
+            assert isinstance(bp, dict)
+            detail = (
+                f"bandpowers n={bp.get('n_points')}, "
+                f"ell={bp.get('ell_min')}..{bp.get('ell_max')}"
+            )
+        elif isinstance(row.get("catalog_summary"), dict):
+            cat = row["catalog_summary"]
+            assert isinstance(cat, dict)
+            detail = f"catalog rows={cat.get('n_rows')}, z_median={cat.get('z_median')}"
+        elif isinstance(row.get("archive_summary"), dict):
+            archive = row["archive_summary"]
+            assert isinstance(archive, dict)
+            detail = f"archive sample members={archive.get('sample_member_count')}"
+        else:
+            detail = f"arrays={row.get('n_arrays')}"
+        rows.append(
+            f"{tex_escape(str(row.get('label', 'unknown')))} & "
+            f"{size_mb:.2f} & "
+            f"{tex_escape(detail)}\\\\"
+        )
+    return "\n".join(rows)
+
+
+def compact_lensing_status_text(payload: dict[str, object]) -> str:
+    summary = payload.get("summary", {})
+    downloads = payload.get("download_inventory", {})
+    status = summary.get("act_dr6_lensing_status") if isinstance(summary, dict) else None
+    lensing = (
+        downloads.get("act_dr6_lensing_acquisition", {})
+        if isinstance(downloads, dict)
+        else {}
+    )
+    if status == "acquired" and isinstance(lensing, dict):
+        count = lensing.get("local_file_count")
+        total_gb = float(lensing.get("local_total_bytes") or 0.0) / (1024.0**3)
+        return (
+            "The ACT DR6 lensing likelihood/maps support products were then acquired with "
+            "\\code{--approve-downloads}, extracted into \\code{workdir/raw/act_dr6_lensing/}, "
+            f"and bound by \\code{{workdir/raw/act_dr6_lensing/act_dr6_lensing_acquisition_manifest.json}} "
+            f"({count} local files, {total_gb:.2f} GiB recorded).  "
+            "The compact analysis records archive profiles, hashes, and acquisition provenance only; "
+            "it does not run the ACT lensing likelihood, create posterior/evidence terms, validate a native solver, "
+            "or support a family-identification claim."
+        )
+    return (
+        "The ACT DR6 lensing support products remain size-probed but not acquired in this immediate lane; "
+        "no partial lensing archive is retained, and the lane stays acquisition-ready rather than inference-ready."
+    )
+
+
 def evidence_matrix(records: list[dict[str, object]]) -> dict[str, object]:
+    figure_pack = report_data_figure_pack()
+    compact = compact_data_analysis()
     return {
         "generated_at": GENERATED_AT,
+        "report_version": REPORT_VERSION,
+        "report_version_title": REPORT_VERSION_TITLE,
         "package": OUT.name,
         "source_policy": "repo-local non-PDF source files only; external non-repository PDFs and non-HTT cross-domain drafts excluded",
-        "new_downloads": False,
+        "new_downloads": True,
         "long_run_analysis_executed": False,
         "source_records": records,
         "excluded_source_classes": EXCLUDED_SOURCE_CLASSES,
@@ -513,6 +742,22 @@ def evidence_matrix(records: list[dict[str, object]]) -> dict[str, object]:
         "algorithms": [
             {"id": item[0], "title": item[1], "owner": item[2]} for item in ALGORITHMS
         ],
+        "current_data_analysis": {
+            "figure_count": len(figure_pack["figures"]),
+            "figure_pack": "docs/generated/report_data_analysis_figure_pack.json",
+            "claim_tier": figure_pack.get("claim_tier"),
+            "figure_lane": figure_pack.get("figure_lane"),
+            "skipped_current_data_candidates": figure_pack.get(
+                "skipped_current_data_candidates", []
+            ),
+        },
+        "compact_data_analysis": {
+            "artifact": "docs/generated/v6_compact_data_analysis.json",
+            "summary": compact.get("summary"),
+            "claim_tier": compact.get("claim_tier"),
+            "transfer_source": compact.get("transfer_source"),
+            "download_inventory": compact.get("download_inventory"),
+        },
         "review_findings_addressed": [
             "B1: W^2 registered as omega_ab omega^ab/(6H^2) (= omega_a omega^a/(3H^2)); parent constraint identity displayed; comparator sign vector c=(1,-1,1,1) derived by SymPy seal; v5's omega_a omega^a/H^2 convention shown to be exactly 3x the registered value; document-only repair (code already registered).",
             "B2: P26-P32 proof bodies written into sections 3.4, 4, 5.2, 7, 8.2, 8.4 (ledger entries no longer body-less).",
@@ -532,6 +777,18 @@ def build_tex(artifacts: dict[str, dict]) -> str:
     validation = method_validation_summary()
     validation_rows = method_validation_rows(validation)
     witness_table_rows = witness_rows(review_cycle_witnesses(artifacts))
+    data_pack = report_data_figure_pack()
+    data_figure_rows = report_data_figure_rows(data_pack)
+    data_figure_gallery = report_data_figure_gallery(data_pack)
+    data_quicklook_gallery = report_data_quicklook_gallery(data_pack)
+    data_skipped_rows = report_data_skipped_rows(data_pack)
+    compact_pack = compact_data_analysis()
+    compact_rows = compact_product_rows(compact_pack)
+    compact_checks = compact_acceptance_rows(compact_pack)
+    compact_summary = compact_pack["summary"]
+    assert isinstance(compact_summary, dict)
+    compact_lensing_status = compact_lensing_status_text(compact_pack)
+    figure_count = len(data_pack["figures"])
     tex = r"""
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=0.86in]{geometry}
@@ -540,6 +797,7 @@ def build_tex(artifacts: dict[str, dict]) -> str:
 \usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{graphicx}
 \usepackage{booktabs,longtable,array,enumitem,xcolor,hyperref}
 \hypersetup{colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black,citecolor=blue!45!black}
 \setlist[itemize]{leftmargin=1.3em,itemsep=0.18em,topsep=0.25em}
@@ -565,17 +823,26 @@ def build_tex(artifacts: dict[str, dict]) -> str:
 \newtheorem{corollary}{Corollary}
 \newtheorem{lemma}{Lemma}
 
-\title{HTT External-Audit Research Report, Fourth Revision\\
+\title{HTT External-Audit Research Report, %REPORT_VERSION%\\
+\large %REPORT_VERSION_TITLE%\\
 \large Mathematical-Physics and Statistical Framework of the \code{htt_base} Repository}
 \author{Generated from repo-local HTT sources only}
-\date{2026-07-08}
+\date{2026-07-09}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-This fourth revision reviews the current \code{htt_base} research programme as a scientific framework rather than as a code catalogue, and answers the external re-review of the third revision.  It deliberately removes all external non-repository PDF sources, rendered-PDF evidence paths, and cross-domain manuscript material.  The report follows the internal logic of the project: a signed FLRW-departure comparator is defined from a displayed parent constraint identity, its diagnostic functionals are separated from HTT-owned inference, response-rank theorems determine what current observables can and cannot identify, the identified-set semantics of the comparator are given a two-stage coverage construction with empty/unbounded/ceiling-unfit statuses, moment-cone and shear-memory results explain why scalar tilt is insufficient, low-\(\ell\) EGS statistics provide calibrated observable summaries, and the research plan states which future data products are needed before stronger observational claims are available.  The two blocking findings of the re-review are repaired here: the vorticity normalization is unified to the registered \(W^2=\omega_{ab}\omega^{ab}/(6H^2)\) with a symbolic seal (the previous \(\omega_a\omega^a/H^2\) statement was exactly three times the registered value; the code was already on the registered convention), and the seven ledger items P26--P32 now carry full statement-and-proof bodies.  No family assignment, detailed geometry claim, or native solver output is claimed, and no posterior or evidence statement is made (posterior and evidence objects are HTT-owned; this report makes none).
+This fourth revision reviews the current \code{htt_base} research programme as a scientific framework rather than as a code catalogue, and answers the external re-review of the third revision.  It deliberately removes all external non-repository PDF sources, rendered-PDF evidence paths, and cross-domain manuscript material.  The report follows the internal logic of the project: a signed FLRW-departure comparator is defined from a displayed parent constraint identity, its diagnostic functionals are separated from HTT-owned inference, response-rank theorems determine what current observables can and cannot identify, the identified-set semantics of the comparator are given a two-stage coverage construction with empty/unbounded/ceiling-unfit statuses, moment-cone and shear-memory results explain why scalar tilt is insufficient, low-\(\ell\) EGS statistics provide calibrated observable summaries, and a current-data pass applies the same methodology to manifest-backed Planck, DESI, CF4, K1, K5, and K6 diagnostic products.  The two blocking findings of the re-review are repaired here: the vorticity normalization is unified to the registered \(W^2=\omega_{ab}\omega^{ab}/(6H^2)\) with a symbolic seal (the previous \(\omega_a\omega^a/H^2\) statement was exactly three times the registered value; the code was already on the registered convention), and the seven ledger items P26--P32 now carry full statement-and-proof bodies.  No family assignment, detailed geometry claim, or native solver output is claimed, and no posterior or evidence statement is made (posterior and evidence objects are HTT-owned; this report makes none).
 \end{abstract}
+
+\section*{Version Marker and Data-Figure Quicklook}
+\addcontentsline{toc}{section}{Version Marker and Data-Figure Quicklook}
+This artifact is \textbf{%REPORT_VERSION%} (\textbf{%REPORT_VERSION_TITLE%}), generated on 2026-07-09.  It is intentionally written to \code{external_audit_research_report_20260709_v6_1/}, \code{external_audit_research_report_v6_1.pdf}, and \code{external_audit_research_report_20260709_v6_1.zip} so it cannot be confused with the earlier v6 package.  The data-analysis refresh contains %FIGURE_COUNT% manifest-backed current-data figures.  The quicklook below is duplicated from the report package's \code{report_data_figures/} directory; the full captions, skipped-candidate table, compact-data acceptance card, and figure manifests remain in the dedicated data-analysis section.
+
+\begin{center}
+%REPORT_DATA_QUICKLOOK_GALLERY%
+\end{center}
 
 \tableofcontents
 
@@ -1414,30 +1681,100 @@ The corresponding algorithm is: strip legacy evidence numbers; retain the observ
 \subsection{External-audit interpretation of novelty}
 The reportable novelty is not a scalar score or a gate label.  It is the combination of (i) a signed comparator with explicit component semantics, (ii) set-valued handling of unobserved comparator components, (iii) separation of MIO diagnostics from HTT inference, (iv) row-space theorems for local/global and scalar/tensor response discrimination, (v) MES/full-covariance ceiling propagation with no-result rank semantics, and (vi) a route by which old response hypotheses can be reused without reviving unsupported geometry claims.  These are mathematical and statistical contributions independent of any single numerical detection figure.
 
+\section{Concrete Data-Analysis Pass From Existing Repository Data}
+This section records how the statistical methodology above was applied to the data products that are already present in the checkout.  It is the first report section that is explicitly data-facing rather than proof-only.  The generated object is \code{docs/generated/report_data_analysis_figure_pack.json}, produced by \code{python scripts/make_report_data_analysis_figures.py}; every plotted figure has a sidecar manifest with owner, implementation scope, claim tier, input hashes, transfer source, sky-support status, null/mock status, caveats, and the generating command.  The lane is \code{diagnostic_only}: the figures are concrete analyses of prepared data and generated result artifacts, not posterior odds, not a geometry assignment, and not native-solver output.
+
+\subsection{How the methodology enters the data analysis}
+The methodology is used in five concrete ways.
+
+First, the observable vector \(y\) is made explicit.  The current pass reads Planck PR3 binned spectra and SMICA/Commander low-\(\ell\) products, DESI compact clustering summaries, CF4 group and query products, and generated K1/K5/K6 diagnostic artifacts.  Each plot is therefore tied to a particular \(y\): a binned TT spectrum, a masked low-\(\ell\) temperature field, a DESI tracer/cap/redshift table, a CF4 radial shell table, a CF4 bulk vector, a CF4 affine velocity-field summary, or a low-\(\ell\) scalar/BiPoSH statistic.  This is the operational form of the component-first rule in \S11.1: no plot is allowed to stand in for the four-component state vector \(\bm g\).
+
+Second, uncertainty summaries are attached at the level the current data support.  DESI redshift plots use the jackknife summaries already present in \code{observed_longrun_analysis.json}; CF4 radial shell plots use bootstrap p16--p84 bands from the compact CF4 query product; K5 plots use the release-matched Gaussian bulk-flow mock coverage already generated by the K5 script; K1 scalar and BiPoSH panels use their registered null summaries separately.  These are not made commensurate unless a joint null/covariance exists.  This is exactly the distinction made in P19, P29, and A3: descriptive, null-calibrated, and e-value-calibrated summaries are different objects.
+
+Third, response-rank and null-direction language is applied before interpretation.  The observed-sector response vector uses only available coordinates: the K1 \(\Sigma^2\)-bearing low-\(\ell\) lane is partial, the K5 bulk-flow coordinate supplies an \(\Omega_{\rm tilt}\)-like kinematic descriptor, the K6 Wiener-filter curl/shear diagnostic is treated as a reconstruction-conditioned structural no-go for physical vorticity inference, and \(\Omega_k\) remains a no-channel sector in the present leading-order response.  Consequently the report does not compute a point-valued \(x_C\) from the data.  It shows the available coordinates and leaves missing or structurally null sectors as missing/null, matching P18, P26, P28, and A8.
+
+Fourth, depth and reference policies are shown rather than hidden.  The CF4 depth-apex phase portrait, shell-to-shell apex matrix, forward-coverage residual curve, radial velocity sign-transition curve, radial delta-stability band, and K5 versus affine comparison expose how the result changes with shell, radius, or depth window.  That is the concrete-data analogue of the \(G_F\) policy in \S3.3: a depth comparison is only meaningful when the bin definition, reference policy, covariance/null status, and source hashes are visible.
+
+Fifth, scalar and covariance-channel low-\(\ell\) summaries are kept separate.  The K1 max-scan waterfall and tensor-conditioning panels summarize scalar/morphology features, while the scalar/BiPoSH map-stability matrix displays scalar and covariance-channel global-tail coordinates side by side.  This implements P23 in data-analysis form: diagonal \(C_\ell\)-style summaries and off-diagonal covariance/BiPoSH summaries are different projections of the sky.  Agreement or disagreement between them is a diagnostic pattern, not a family label.
+
+\subsection{Figure inventory and provenance}
+The current-data pass produced the following manifest-backed figures.  The copied image files live in \code{report_data_figures/} inside this report package; the authoritative source pack remains \code{docs/generated/report_data_analysis_figure_pack.json}.
+
+{\footnotesize
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.06\linewidth} >{\raggedright\arraybackslash}p{0.28\linewidth} >{\raggedright\arraybackslash}p{0.43\linewidth} >{\raggedright\arraybackslash}p{0.15\linewidth}}
+\toprule
+ID & Figure & Data-analysis role & Manifest\\
+\midrule
+%REPORT_DATA_FIGURE_ROWS%
+\bottomrule
+\end{longtable}
+}
+
+\subsection{What was deliberately not plotted}
+The generator also records candidates that were not drawn in this current-data pass.  This is not a cosmetic omission: it is the fail-closed rule applied to plots whose source binding, null metadata, or real-data driver is not yet sufficient.
+
+{\footnotesize
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.34\linewidth} >{\raggedright\arraybackslash}p{0.56\linewidth}}
+\toprule
+Candidate & Reason not generated as a report figure\\
+\midrule
+%REPORT_DATA_SKIPPED_ROWS%
+\bottomrule
+\end{longtable}
+}
+
+\subsection{Current-data figure gallery}
+The following images are included to make the data-analysis pass inspectable inside the report package.  Captions are intentionally diagnostic: they name the plotted data product and do not promote the diagnostic to posterior evidence, family assignment, or native transfer validation.
+
+%REPORT_DATA_GALLERY%
+
+\subsection{Compact-data acquisition and acceptance status}
+The approval-required compact-data lane was executed as an acquisition-and-diagnostic lane, not as a likelihood or posterior lane.  The generated object is \code{docs/generated/v6_compact_data_analysis.json}, produced by \code{python scripts/build_v6_compact_data_analysis.py}.  It binds the no-download cards, the compact download inventories, the ACT DR6 SACC acquisition manifest, the ACT DR6 lensing acquisition status, and the report data-figure pack.  Its acceptance status is %COMPACT_ACCEPTANCE_SUMMARY%.
+
+{\footnotesize
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.30\linewidth} >{\raggedleft\arraybackslash}p{0.12\linewidth} >{\raggedright\arraybackslash}p{0.48\linewidth}}
+\toprule
+Compact product & Size MB & Data summary\\
+\midrule
+%COMPACT_PRODUCT_ROWS%
+\bottomrule
+\end{longtable}
+}
+
+{\footnotesize
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.38\linewidth} >{\raggedright\arraybackslash}p{0.12\linewidth} >{\raggedright\arraybackslash}p{0.40\linewidth}}
+\toprule
+Acceptance check & Passed & Evidence\\
+\midrule
+%COMPACT_ACCEPTANCE_ROWS%
+\bottomrule
+\end{longtable}
+}
+
 \section{Research Plan}
 \subsection{No-download immediate work}
-The next useful analyses do not require terabyte-scale data:
+The no-download immediate work from the v6 plan has now been materialized as \code{docs/generated/v6_no_download_research_cards.json}.  Those cards are not report-facing meta plots; they are audit-grade JSON/Markdown objects consumed by the compact-data acceptance card:
 \begin{enumerate}
-  \item Build a current source matrix for \(x/Q/\Pi/F/\GF\) from available component artifacts and denominator policies.
-  \item Generate MES denominator-sensitivity tables from the diagonal and full-covariance ceiling policies where metadata are adequate.
-  \item Build the response-class ledger from current audit rows and old labels, with legacy ranking removed.
-  \item Produce an optical-ansatz readiness table classifying available low-\(\ell\) summaries into mean-template, covariance, or insufficient branches.
-  \item Attempt a CF4 shell \(\GF\) diagnostic only if bin definitions, reference policy, covariance/null status, and input hashes are already present.
+  \item A current source matrix for \(x/Q/\Pi/F/\GF\) from available component artifacts and denominator policies.
+  \item A denominator-sensitivity table from local MES/full-covariance policy metadata where present.
+  \item A response-class ledger that removes legacy ranking and keeps only response/equivalence-class information.
+  \item An optical-ansatz readiness table that separates mean-template, covariance/BiPoSH, and scalar-insufficient branches.
+  \item A fail-closed CF4 shell \(\GF\) attempt card: the shell diagnostic is not computed because matched shell covariance plus calibrated null status are not yet bound.
 \end{enumerate}
 
 \subsection{No-download deliverables and acceptance checks}
-The immediate no-download deliverables are not headline plots.  They are audit-grade objects that make later plots meaningful:
+The immediate no-download deliverables are present as source-controlled generated artifacts, not as headline figures:
 \begin{enumerate}
-  \item \textbf{Component-source matrix:} one row per component of \(\bm g\), with owner, convention, local file, hash, covariance/null status, and whether the component is estimated, bounded, assumed, or absent.
-  \item \textbf{Identified-set card:} for each available data vector, record \(\rank R\), active columns, null columns, ceilings, \([x_C^-,x_C^+]\), and whether a scalar \(F\) is certified or only diagnostic.
-  \item \textbf{Response-class ledger:} recover deprecated family labels only as current response/equivalence classes, with duplicate and inactive directions explicit.
-  \item \textbf{Exceedance calibration card:} for each \(\Pi\), specify descriptive, null-calibrated, e-value, or HTT posterior-pushforward status.
-  \item \textbf{Depth-gap card:} for each attempted \(G_F\), specify bins, reference bin, zero policy, covariance, and source hashes.
+  \item \textbf{Component-source matrix:} present in \code{v6_no_download_research_cards.json}; fail-closed sectors are not zero-filled.
+  \item \textbf{Identified-set card:} present; \(x_C\) point and interval remain uncertified because blind sectors are not silently imputed.
+  \item \textbf{Response-class ledger:} present; old family-ranking language is stripped to response-class metadata.
+  \item \textbf{Exceedance calibration card:} present; current use is descriptive policy metadata only unless a null/e-value/HTT posterior-pushforward object is attached.
+  \item \textbf{Depth-gap card:} present; \(G_F\) is a display/readiness contract and the CF4 shell \(G_F\) attempt is withheld by its covariance/null gate.
 \end{enumerate}
-These deliverables can be generated before any large external download and are the correct next objects for expert review.
+The compact-data analysis card checks these deliverables before interpreting the newly acquired compact products.
 
 \subsection{Approval-required compact data}
-Compact CMB and survey products should be size-probed and approved separately before download.  The first candidates remain ACT/SPT/BK/lensing compact likelihood products, DESI randoms/masks/selection support, and selected Planck/NPIPE or small E2E subsets under the user's size cap.
+The approval-required compact-data lane was size-probed first.  The existing compact inventory had zero known additional bytes for already bound ACT DR4, SPT-3G, DESI, CF4, CF4 full-release, BICEP/Keck, Planck lensing, CAMB reference, and scalar products.  The approval inventory for ACT DR6 SACC and ACT DR6 lensing support products was below the configured 3GB cap.  The ACT DR6 SACC acquisition was then run with \code{--approve-downloads}, producing extracted ACT DR6 TT/TE/EE bandpower products in \code{workdir/htt_extracted/}.  %COMPACT_LENSING_STATUS%  The report-facing analysis added compact CMB high-\(\ell\)/polarization, Planck lensing covariance, and ACT DR6 lensing bandpower/noise-product figures to the current-data pack; those are data-product diagnostics only.
 
 \subsection{Long-run K1/K5/K6 lane}
 K1 requires Planck E2E or PR4/NPIPE simulation support to replace an idealized low-\(\ell\) null.  K5 requires CF4 hierarchical coverage, selection, Malmquist, grouping, and correlated-field mocks.  K6 requires constrained-realization or transverse-channel information before a posterior over vorticity-relevant sectors can be formed.  These remain future data analyses and should not be represented as completed current results.
@@ -1468,18 +1805,35 @@ ID & Item & Status & Owner & Body\\
 Field & Value\\
 \midrule
 Owner & manuscript/common consuming HTT, MIO, OBSSTAT, and BASS repo-local evidence\\
-Implementation scope & theorem prose, statistical formalism, algorithm descriptions, and future research programme\\
+Implementation scope & theorem prose, statistical formalism, algorithm descriptions, current-data diagnostic figures, compact-data acquisition diagnostics, and future research programme\\
 Source policy & repo-local non-PDF sources only; external non-repository PDFs and non-HTT cross-domain drafts excluded\\
-Figures & none included\\
+Figures & %FIGURE_COUNT% manifest-backed current-data diagnostic figures copied under \code{report_data_figures/}\\
 Generating command & \code{python scripts/build_external_audit_report_v6.py} followed by local LaTeX build\\
 \bottomrule
 \end{longtable}
 
 \end{document}
 """
-    return (tex.replace("%THEOREM_ROWS%", rows)
+    return (tex.replace("%REPORT_VERSION%", REPORT_VERSION)
+               .replace("%REPORT_VERSION_TITLE%", REPORT_VERSION_TITLE)
+               .replace("%THEOREM_ROWS%", rows)
                .replace("%VALIDATION_ROWS%", validation_rows)
-               .replace("%WITNESS_ROWS%", witness_table_rows))
+               .replace("%WITNESS_ROWS%", witness_table_rows)
+               .replace("%REPORT_DATA_FIGURE_ROWS%", data_figure_rows)
+               .replace("%REPORT_DATA_SKIPPED_ROWS%", data_skipped_rows)
+               .replace("%REPORT_DATA_QUICKLOOK_GALLERY%", data_quicklook_gallery)
+               .replace("%REPORT_DATA_GALLERY%", data_figure_gallery)
+               .replace("%COMPACT_PRODUCT_ROWS%", compact_rows)
+               .replace("%COMPACT_ACCEPTANCE_ROWS%", compact_checks)
+               .replace("%COMPACT_LENSING_STATUS%", compact_lensing_status)
+               .replace(
+                   "%COMPACT_ACCEPTANCE_SUMMARY%",
+                   tex_escape(
+                       f"{compact_summary.get('acceptance_passed')}/"
+                       f"{compact_summary.get('acceptance_total')} checks passed"
+                   ),
+               )
+               .replace("%FIGURE_COUNT%", str(figure_count)))
 
 
 def audit_response_matrix_ko() -> str:
@@ -1510,10 +1864,17 @@ def audit_response_matrix_ko() -> str:
 def text_payloads() -> dict[str, str]:
     """Every text artifact of the package, regenerated in memory (for --check)."""
     artifacts = load_required_artifacts()
+    figure_pack = report_data_figure_pack()
     records = [source_record(src) for src in SOURCE_FILES]
     return {
         TEX_NAME: build_tex(artifacts),
         "SOURCE_INDEX.md": source_index(records),
+        "report_data_analysis_figure_pack.json": REPORT_DATA_PACK_JSON.read_text(encoding="utf-8"),
+        "report_data_analysis_figure_pack.md": REPORT_DATA_PACK_MD.read_text(encoding="utf-8")
+        if REPORT_DATA_PACK_MD.exists() else "",
+        "v6_compact_data_analysis.json": COMPACT_DATA_ANALYSIS_JSON.read_text(encoding="utf-8"),
+        "v6_compact_data_analysis.md": COMPACT_DATA_ANALYSIS_MD.read_text(encoding="utf-8")
+        if COMPACT_DATA_ANALYSIS_MD.exists() else "",
         "external_audit_content_ledger_ko.md": ledger_ko(),
         "external_audit_evidence_matrix.json": json.dumps(
             evidence_matrix(records), indent=2, ensure_ascii=False),
@@ -1522,14 +1883,33 @@ def text_payloads() -> dict[str, str]:
         "external_audit_response_matrix_ko.md": audit_response_matrix_ko(),
         "MANIFEST.json": json.dumps({
             "package": OUT.name,
+            "report_version": REPORT_VERSION,
+            "report_version_slug": REPORT_VERSION_SLUG,
+            "report_version_title": REPORT_VERSION_TITLE,
+            "outputs": {
+                "directory": OUT.name,
+                "tex": TEX_NAME,
+                "pdf": PDF_NAME,
+                "zip": ZIP_NAME,
+            },
             "owner": "manuscript/common",
-            "scope": "fourth-revision external audit report for htt_base research (v5 re-review response)",
-            "claim_tier": "C1-C2 framework/theorem report; C2-C3 conditional covariance methodology",
-            "transfer_source": "none for theorem statements",
+            "scope": "fourth-revision external audit report for htt_base research (v5 re-review response plus current-data and compact-data diagnostic passes)",
+            "claim_tier": "C1-C2 framework/theorem report; C2-C3 conditional covariance methodology; diagnostic_only current-data and compact-data diagnostics",
+            "transfer_source": "none for theorem statements; mixed none/external_proxy/external_public_data for current-data and compact-data diagnostics as recorded per sidecar manifest",
             "input_hashes": {rec["path"]: rec["sha256"] for rec in records},
             "excluded_source_classes": EXCLUDED_SOURCE_CLASSES,
-            "figures": "none",
-            "new_downloads": False,
+            "figures": {
+                "count": len(figure_pack["figures"]),
+                "copied_under": "report_data_figures/",
+                "source_pack": "docs/generated/report_data_analysis_figure_pack.json",
+                "figure_lane": figure_pack.get("figure_lane"),
+                "claim_tier": figure_pack.get("claim_tier"),
+                "skipped_current_data_candidates": figure_pack.get(
+                    "skipped_current_data_candidates", []
+                ),
+            },
+            "compact_data_analysis": "docs/generated/v6_compact_data_analysis.json",
+            "new_downloads": True,
             "long_run_analysis_executed": False,
             "caveats": [
                 "No detailed geometry or family assignment is claimed.",
@@ -1539,6 +1919,8 @@ def text_payloads() -> dict[str, str]:
                 "Non-HTT cross-domain manuscript content excluded.",
                 "Review-cycle witnesses are synthetic/symbolic methodology checks, not observational results.",
                 "The Bianchi V seal is constraint algebra under stated conditions, not a dynamics integration or family claim.",
+                "Current-data figures are diagnostic analyses of prepared local data/products; they are not HTT posterior/evidence outputs.",
+                "Compact-data acquisition records public-data downloads and product diagnostics only; it does not create a likelihood, posterior, p-value, evidence, or family-identification result.",
             ],
             "generating_command": "python scripts/build_external_audit_report_v6.py",
             "worktree_state": "git optional; this copied folder may not have git on PATH",
@@ -1547,10 +1929,31 @@ def text_payloads() -> dict[str, str]:
     }
 
 
+def copy_report_data_figures() -> None:
+    """Copy report data-analysis figures/manifests into the self-contained package."""
+    pack = report_data_figure_pack()
+    if REPORT_DATA_FIGURE_DEST.exists():
+        shutil.rmtree(REPORT_DATA_FIGURE_DEST)
+    REPORT_DATA_FIGURE_DEST.mkdir(parents=True, exist_ok=True)
+    figures = pack["figures"]
+    assert isinstance(figures, list)
+    copied = 0
+    for row in figures:
+        assert isinstance(row, dict)
+        for key in ("artifact_path", "manifest_path"):
+            src = ROOT / str(row[key])
+            dst = REPORT_DATA_FIGURE_DEST / src.name
+            shutil.copy2(src, dst)
+            copied += 1
+    if copied != len(figures) * 2:
+        raise RuntimeError("unexpected current-data figure copy count")
+
+
 def write_outputs() -> None:
     OUT.mkdir(exist_ok=True)
     for name, content in text_payloads().items():
         (OUT / name).write_text(content, encoding="utf-8")
+    copy_report_data_figures()
 
 
 def check_outputs() -> int:
@@ -1605,22 +2008,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

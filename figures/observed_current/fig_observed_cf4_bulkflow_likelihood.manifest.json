@@ -9,18 +9,18 @@
     "must_state_no_native_low_ell_solver_output"
   ],
   "caveats": [
-    "Minimum-variance bulk flow on the CF4 group peculiar velocities; diagnostic-only.",
+    "Weighted-GLS bulk flow on the CF4 group peculiar velocities; diagnostic-only.",
     "sigma_star is fitted to reduced chi^2 ~ 1; covariance is the inverse Fisher matrix.",
     "Forward-mock coverage uses the real geometry + errors with the recovered B as the injected truth.",
     "No global-tilt or Bianchi-geometry claim is made from CF4 distances alone.",
     "Selection and Malmquist/inhomogeneous-sampling biases are not fully forward-modelled here."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "29055e8+dirty",
+  "code_version": "8280b8f+dirty",
   "family_identification": false,
   "generating_command": "python scripts/make_cf4_bulkflow_likelihood.py",
-  "git_commit": "29055e8",
-  "git_commit_or_worktree_state": "29055e8+dirty",
+  "git_commit": "8280b8f",
+  "git_commit_or_worktree_state": "8280b8f+dirty",
   "implementation_scope": "obsstat",
   "input_hashes": [
     "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz:sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad"

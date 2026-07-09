@@ -1,0 +1,51 @@
+{
+  "allowed_use": "internal_only",
+  "artifact_id": "common.quarantined_legacy_root_source.fig_isotropy_pvalue_per_combination",
+  "artifact_mode": "internal_exploratory",
+  "artifact_path": "figures/quarantined_legacy/root_sources/fig_isotropy_pvalue_per_combination.png",
+  "caption_policy": [
+    "must_not_use_as_report_figure",
+    "must_not_promote_legacy_claim"
+  ],
+  "caveats": [
+    "Quarantined legacy root source only.",
+    "Not report-facing and not a current result.",
+    "Use the conditioned_legacy copy and its manifest for any legacy appendix context."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "config_hash": "sha256:a8a3c8a265d61b9cefce37df9fc2e9790c274fbadc9c40857778ee67b5f0c3c5",
+  "created_by": "scripts/curate_figure_lanes.py",
+  "failed_gates": [
+    "report_lane_not_allowed"
+  ],
+  "generating_command": "python scripts/curate_figure_lanes.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "figures/quarantined_legacy/root_sources/fig_isotropy_pvalue_per_combination.png:sha256:925d6ec6aad3f2266967ed328dabf288afb9245b0c54614d05c3909391672826"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "COMMON",
+  "passed_gates": [
+    "legacy_source_quarantined",
+    "manifest_metadata_present"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "legacy_root_source_quarantined",
+    "conditioned_legacy_copy_required_for_any_appendix_use"
+  ],
+  "required_gates": [
+    "legacy_source_quarantined",
+    "manifest_metadata_present"
+  ],
+  "schema_version": "common.quarantined_legacy_root_source.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "conditioned_legacy_copy": "figures/conditioned_legacy/root__fig_isotropy_pvalue_per_combination.png",
+    "figure_lane": "quarantined_legacy_root_source"
+  },
+  "transfer_source": "none"
+}

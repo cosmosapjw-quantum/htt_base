@@ -1,0 +1,51 @@
+{
+  "allowed_use": "internal_only",
+  "artifact_id": "common.quarantined_legacy_root_source.fig_equiv_class_evidence",
+  "artifact_mode": "internal_exploratory",
+  "artifact_path": "figures/quarantined_legacy/root_sources/fig_equiv_class_evidence.png",
+  "caption_policy": [
+    "must_not_use_as_report_figure",
+    "must_not_promote_legacy_claim"
+  ],
+  "caveats": [
+    "Quarantined legacy root source only.",
+    "Not report-facing and not a current result.",
+    "Use the conditioned_legacy copy and its manifest for any legacy appendix context."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "config_hash": "sha256:a6c024e195bd874caaa02ca1dc06ecc47ab6c235560594840e80e42aebf5b288",
+  "created_by": "scripts/curate_figure_lanes.py",
+  "failed_gates": [
+    "report_lane_not_allowed"
+  ],
+  "generating_command": "python scripts/curate_figure_lanes.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "figures/quarantined_legacy/root_sources/fig_equiv_class_evidence.png:sha256:82f9d4484466401f1f46d4ac94432ff829c6421a4973b7b5fc5dab232215abd4"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "COMMON",
+  "passed_gates": [
+    "legacy_source_quarantined",
+    "manifest_metadata_present"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "legacy_root_source_quarantined",
+    "conditioned_legacy_copy_required_for_any_appendix_use"
+  ],
+  "required_gates": [
+    "legacy_source_quarantined",
+    "manifest_metadata_present"
+  ],
+  "schema_version": "common.quarantined_legacy_root_source.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "conditioned_legacy_copy": "figures/conditioned_legacy/root__fig_equiv_class_evidence.png",
+    "figure_lane": "quarantined_legacy_root_source"
+  },
+  "transfer_source": "none"
+}

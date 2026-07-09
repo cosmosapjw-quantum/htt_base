@@ -1,0 +1,213 @@
+{
+  "allowed_use": "external_audit",
+  "artifact_id": "obsstat.v7_fortification_witnesses",
+  "artifact_mode": "external_audit_conditioned",
+  "artifact_path": "docs/generated/v7_fortification_witnesses.json",
+  "caveats": [
+    "Synthetic/statistical witness artifact only.",
+    "No data claim, posterior odds, native solver output, or morphology-family promotion.",
+    "K5 plugin-firewall witness references the companion K5 card output."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "config_hash": "sha256:5dfa0816bff10b74c722de50c9b5969e9c5f93d92a67ce54306dc38d87648be8",
+  "created_by": "scripts/run_v7_fortification_witnesses.py",
+  "failed_gates": [
+    "native_low_ell_solver_absent",
+    "measured_R_card_absent"
+  ],
+  "generating_command": "venv/bin/python scripts/run_v7_fortification_witnesses.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "htt/obsstat/egs3_identified_set.py:sha256:309d7d577c6dd686313c815f28b8c12b6f688ca5753815237c5c54d643538a6b",
+    "htt/obsstat/egs3_gf_interval.py:sha256:d390e02c5c861a726e99e7144a9b2b9714baf13cef7ce86ce41d3acd2756907c",
+    "scripts/run_v7_fortification_witnesses.py:sha256:59dbb897d4cff7653698e9e87c9fcc7c76c652c4e319248c520deadf008915a4"
+  ],
+  "null_mock_status": "synthetic_witness_not_null_mock",
+  "owner": "OBSSTAT",
+  "passed_gates": [
+    "signed_box_branch_witness",
+    "gf_strictness_counterexample",
+    "estimated_covariance_threshold_policy",
+    "printed_gate_tolerances"
+  ],
+  "production_status": "diagnostic_only",
+  "required_gates": [
+    "signed_box_branch_witness",
+    "gf_strictness_counterexample",
+    "estimated_covariance_threshold_policy",
+    "printed_gate_tolerances"
+  ],
+  "schema": "htt.v7_fortification_witnesses.v1",
+  "schema_version": "htt.v7_fortification_witnesses.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "purpose": "v7 theorem/statistical-method hardening witness",
+    "scope": "component-box algebra, interval propagation, threshold policy, gate-policy printout"
+  },
+  "transfer_source": "none",
+  "witnesses": {
+    "F1_signed_box_identified_set": {
+      "DL1_monotonicity": true,
+      "branches": {
+        "all_branch[-Uk,Uk]": {
+          "component_bounds": [
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              0.04
+            ],
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              -0.02,
+              0.02
+            ]
+          ],
+          "interval": [
+            0.08999999999994521,
+            0.1700000000360007
+          ],
+          "status": "FEASIBLE"
+        },
+        "open_branch[0,Uk]": {
+          "component_bounds": [
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              0.04
+            ],
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              0.02
+            ]
+          ],
+          "interval": [
+            0.1099999999999452,
+            0.1700000000360007
+          ],
+          "status": "FEASIBLE"
+        }
+      },
+      "claim": "signed component boxes with open/all curvature branches",
+      "statuses": {
+        "ceiling_unfit": "CEILING_UNFIT",
+        "empty": "EMPTY",
+        "feasible": "FEASIBLE",
+        "unbounded": "UNBOUNDED"
+      },
+      "verdict": "PASS"
+    },
+    "K5_plugin_firewall": {
+      "artifact": "docs/generated/k5_cf4_identified_interval_card.json",
+      "claim": "K5 card remains diagnostic until PLUGIN/BLOCKED components are replaced",
+      "required_flag": "observational_claim_allowed=false",
+      "verdict": "PASS"
+    },
+    "M1_gf_strictness": {
+      "claim": "joint interval is a subset of naive; strictness requires shared-extrema conflict",
+      "deterministic_sweep": {
+        "agreement_exact_1.0": true,
+        "criterion_agreement": "371/371",
+        "equal_cases": 98,
+        "explicit_counterexample_to_universal_strictness": {
+          "equality_reason": "equal: numerator/denominator extrema are aligned or degenerate",
+          "joint": [
+            0.4632981897752138,
+            0.6529978942701983
+          ],
+          "naive": [
+            0.4632981897752138,
+            0.6529978942701983
+          ],
+          "strict_lower": false,
+          "strict_upper": false
+        },
+        "strict_cases": 273,
+        "trials_evaluated": 371
+      },
+      "registered_toy": {
+        "criterion": {
+          "aligned_or_degenerate_components": [],
+          "conflict_components": [
+            0,
+            1
+          ],
+          "criterion": "exists nondegenerate shared component with c_N*c_D > 0",
+          "strict_lower_predicted": true,
+          "strict_upper_predicted": true
+        },
+        "joint": [
+          0.31818181818181823,
+          0.8636363636363636
+        ],
+        "naive": [
+          0.25,
+          1.1875
+        ],
+        "strict_lower": true,
+        "strict_upper": true
+      },
+      "verdict": "PASS"
+    },
+    "M3_estimated_covariance_two_stage": {
+      "claim": "finite-simulation covariance uses Hotelling/F threshold",
+      "invalid_n_sim_rejected": true,
+      "params": {
+        "m": 10,
+        "n_sim": 300,
+        "r": 2
+      },
+      "thresholds": {
+        "chi2_stage1": 15.50731305586545,
+        "hotelling_F_stage1": 16.139244947576607,
+        "hotelling_F_stage1_formula": 16.139244947576607,
+        "hotelling_F_stage2": 6.0724102602313454
+      },
+      "verdict": "PASS"
+    },
+    "M8_gate_policy": {
+      "checks": {
+        "v6_E2_IM_coverage(0.9475@0.95)": {
+          "abs_dev": 0.0024999999999999467,
+          "pass": true,
+          "rule": "G2 abs(dev)<=max(3SE,0.01)",
+          "tolerance": 0.014620191517213447
+        },
+        "v6_E7_merged_mean(0.9967\u00b10.0049)": {
+          "pass": true,
+          "rule": "G1 one-sided z<=3",
+          "z_one_sided": -0.6734693877550959
+        },
+        "v6_evalue_mean(1.0089\u00b10.0075)": {
+          "pass": true,
+          "rule": "G1 one-sided z<=3",
+          "z_one_sided": 1.1866666666666545
+        }
+      },
+      "claim": "printed tolerance rules reproduce the v6 pass decisions",
+      "rules": [
+        "G1 one-sided z<=3",
+        "G2 abs(dev)<=max(3SE,0.01)",
+        "G3 Markov plus finite-MC slack",
+        "G4 size z-test",
+        "G5 deterministic checks have no tolerance"
+      ],
+      "verdict": "PASS"
+    }
+  }
+}

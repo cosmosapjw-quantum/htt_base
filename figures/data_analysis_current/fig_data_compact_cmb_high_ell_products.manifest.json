@@ -1,0 +1,92 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "obsstat.report_data.compact_cmb_high_ell_products",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/data_analysis_current/fig_data_compact_cmb_high_ell_products.png",
+  "caption_policy": [
+    "must_state_observed_data_diagnostic",
+    "must_not_state_family_identification",
+    "must_not_state_native_low_ell_solver_output",
+    "must_not_state_p_value_without_null_ensemble"
+  ],
+  "caveats": [
+    "Observed/prepared data analysis figure.",
+    "Diagnostic-only: no posterior odds, p-value, geometry detection, or family identification.",
+    "No native low-ell solver output is used."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "config_hash": "sha256:7b18b6074fd5d327e7695cb7c4bdff01da6eae29d9f2ef1002c406b0bc826f86",
+  "created_by": "scripts/make_report_data_analysis_figures.py",
+  "failed_gates": [
+    "matched_nulls_not_bound_for_inference",
+    "full_covariance_not_bound_for_likelihood"
+  ],
+  "generating_command": "python scripts/make_report_data_analysis_figures.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "workdir/obs_bundle/cmb/powerspectra/planck_pr3_tt_binned.npz:sha256:ff4f93998b88f8e91047643ac3d7ddecca0ca87d03a8d5d0b562727bbe06f635",
+    "workdir/obs_bundle/cmb/powerspectra/act_dr4.npz:sha256:d1d049253f000f048eac6ce8eee80450122cf59fdc0de951aee8f288dae0c2ca",
+    "workdir/obs_bundle/cmb/powerspectra/spt3g_y1.npz:sha256:625e55f5a7a2d66013e080520a87bf4922e44509ae347668ee44b3944f9c5ae5",
+    "workdir/obs_bundle/cmb/powerspectra/bicep_keck_2018_bb.npz:sha256:6b85a60cae5b0bca3230ff412f5018a5307f04a25829e731e40cee72aa4ec8cc",
+    "workdir/htt_extracted/act_dr6_tt_bandpowers.npz:sha256:d6e8de8a928ec7b932cd8c7f35cb04ec650020a4e7d87ea34570d5918436f6c8",
+    "workdir/htt_extracted/act_dr6_te_bandpowers.npz:sha256:741359f633b4dc4d4710b05f0262f8cb09bdb2cbe2b0ee3942721409280436c3",
+    "workdir/htt_extracted/act_dr6_ee_bandpowers.npz:sha256:25d63225f6bef41a9e9fdfb4a4bc551803aa24ce460752520e7ab94134a9faef",
+    "docs/generated/v6_approval_compact_download_inventory.json:sha256:e11b664a2edd6cd1e4a75a21cb355fd074192e98540410dfdebfca61d4090a20",
+    "scripts/make_report_data_analysis_figures.py:sha256:a7dd3f43fe0e63df90d84d23fe275d3a1e341636bc5db97c59c9e94a2aff85ab"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "OBSSTAT",
+  "passed_gates": [
+    "repo_local_data_input_present",
+    "manifest_metadata_present",
+    "report_lane_is_data_analysis_not_meta"
+  ],
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "matched_nulls_not_bound_for_inference",
+    "full_covariance_not_bound_for_likelihood",
+    "native_morphology_atlas_absent"
+  ],
+  "required_gates": [
+    "repo_local_data_input_present",
+    "manifest_metadata_present",
+    "report_lane_is_data_analysis_not_meta"
+  ],
+  "schema_version": "obsstat.report_data_analysis_figure.v1",
+  "sky_support_status": "not_directional",
+  "statistics_definitions": {
+    "act_dr4_ee_bins": 45,
+    "act_dr4_te_bins": 45,
+    "act_dr4_tt_bins": 40,
+    "act_dr6_present": {
+      "EE": true,
+      "TE": true,
+      "TT": true
+    },
+    "bk18_bins": 9,
+    "bk18_packed_spectra": 253,
+    "figure_lane": "report_data_analysis_current",
+    "planck_tt_bins": 83,
+    "quantity": "compact CMB high-ell and polarization product diagnostic",
+    "source_artifacts": [
+      "workdir/obs_bundle/cmb/powerspectra/planck_pr3_tt_binned.npz",
+      "workdir/obs_bundle/cmb/powerspectra/act_dr4.npz",
+      "workdir/obs_bundle/cmb/powerspectra/spt3g_y1.npz",
+      "workdir/obs_bundle/cmb/powerspectra/bicep_keck_2018_bb.npz",
+      "workdir/htt_extracted/act_dr6_tt_bandpowers.npz",
+      "workdir/htt_extracted/act_dr6_te_bandpowers.npz",
+      "workdir/htt_extracted/act_dr6_ee_bandpowers.npz",
+      "docs/generated/v6_approval_compact_download_inventory.json",
+      "scripts/make_report_data_analysis_figures.py"
+    ],
+    "spt3g_covariance_shape": [
+      792,
+      792
+    ],
+    "spt3g_packed_length": 792
+  },
+  "transfer_source": "external_public_cmb_products"
+}

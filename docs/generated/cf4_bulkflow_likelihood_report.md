@@ -15,7 +15,7 @@ Observer-frame note: peculiar velocities use the catalog ramp Vpec (V3k cosmolog
 
 ## Caveats
 
-- Minimum-variance bulk flow on the CF4 group peculiar velocities; diagnostic-only.
+- Weighted-GLS bulk flow on the CF4 group peculiar velocities; diagnostic-only.
 - sigma_star is fitted to reduced chi^2 ~ 1; covariance is the inverse Fisher matrix.
 - Forward-mock coverage uses the real geometry + errors with the recovered B as the injected truth.
 - No global-tilt or Bianchi-geometry claim is made from CF4 distances alone.
