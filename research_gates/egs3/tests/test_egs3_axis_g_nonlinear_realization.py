@@ -1,10 +1,12 @@
 """EGS3 Axis G gate: v8 T3-full exact (nonlinear) endpoint realization.
 
-G-T3F  Both registered identified-interval endpoints are realized by EXACT
+G-T3F  Both registered identified-interval ENDPOINTS are realized by EXACT
        homogeneous cosmologies (Bianchi I for the Omega_k=0 lower endpoint,
        Bianchi V for the Omega_k>0 upper endpoint) whose full Gauss and momentum
-       constraints have EXACTLY-zero residuals (symbolic/rational, all orders in
-       the tilt rapidity), making the x_C interval [11/100,17/100] exactly sharp.
+       CONSTRAINTS have EXACTLY-zero residuals (symbolic/rational, all orders in
+       the tilt rapidity) -- endpoint attainability at exact order (NOT, by itself,
+       a full nonlinear interval-sharpness theorem; the box bound + interior filling
+       stay at the convex P31 level, and the King-Ellis dynamical realization is deferred).
 G-T3F2 The Bianchi V (0i) momentum constraint 3 a_b sigma^{ab}+kappa q^a=0 is
        satisfied exactly by a shear transverse to the a-vector (sigma_1=0) plus
        the antipodal (zero-flux) tilt pair; the flux cancels to all orders.

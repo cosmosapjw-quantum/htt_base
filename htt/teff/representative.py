@@ -74,10 +74,13 @@ def radial_constant(statistics: str) -> dict:
 
 
 def _radial_constants_check() -> dict:
-    """Verify a_xi two ways: (i) the SYMBOLIC Bose/Fermi identity that the defining
-    integrals reduce (by parts) to (1/3) times the standard integral Gamma(4)*eta(4),
-    with eta = zeta for BE and (1-2^{-3}) zeta for FD; (ii) high-precision NUMERIC
-    integration of the exact defining integrals. All a_xi strictly positive."""
+    """Verify a_xi. The PRIMARY (discriminating) verification is (ii) high-precision
+    NUMERIC integration of the exact defining integrals to 1e-12, independently
+    corroborated by the Wolfram lane (v8_teff_representative.wls, which computes
+    Pi^4/45 and 7 Pi^4/360). (i) is a lightweight symbolic consistency check that the
+    reduced integrals equal (1/3) Gamma(4) eta(4) [eta=zeta for BE, (1-2^{-3})zeta for
+    FD]; on its own it is close to definitional, so the numeric+Wolfram engines carry
+    the weight. All a_xi strictly positive."""
     # (i) symbolic identity for the reduced integrals: int_0^inf s^3/(e^s-1) ds
     #     = Gamma(4) zeta(4); int_0^inf s^3/(e^s+1) ds = (1-2^{-3}) Gamma(4) zeta(4).
     be_reduced = sp.gamma(4) * _ZETA4 / 3                       # -> 2 zeta(4)
@@ -152,8 +155,14 @@ def _two_temperature_check() -> dict:
 
 # --- Thm 18/19: SO(3) Gram ledger PSD + exact L^2 staircase ---------------------------
 def gram_ledger_psd(seed: int = 20260710, n_labels: int = 5, n_dir: int = 24) -> dict:
-    """Build a concrete shell Gram matrix G^{ab} = <s^a, s^b> from n_labels response
-    fields sampled on a spherical grid and verify it is (real) symmetric PSD."""
+    """ILLUSTRATIVE construction of a shell Gram matrix G^{ab} = <s^a, s^b> from
+    n_labels response fields on a positive-weight quadrature.
+
+    HONEST NOTE (v8 adversarial pass): G = F diag(w) F^T with w > 0 is PSD BY
+    CONSTRUCTION -- this exhibits the Thm 18 form on a concrete instance, it does not
+    independently TEST the theorem (a genuine Gram is always PSD). The discriminating
+    content of the Teff seal is the exact a_xi / c_p constants and the p3/p5
+    nonidentifiability, not this illustration."""
     rng = np.random.default_rng(seed)
     fields = rng.standard_normal((n_labels, n_dir))
     weights = np.abs(rng.standard_normal(n_dir)) + 0.1          # positive quadrature wts
@@ -170,9 +179,14 @@ def gram_ledger_psd(seed: int = 20260710, n_labels: int = 5, n_dir: int = 24) ->
 
 
 def l2_staircase_monotone(seed: int = 20260710, l_max: int = 12) -> dict:
-    """Exact-staircase check: the discarded directional content L_Lambda =
+    """ILLUSTRATIVE staircase: the discarded directional content L_Lambda =
     sum_{L>Lambda} ||shell_L||^2 is non-increasing in Lambda, with each drop equal to
-    the omitted shell power (Parseval). Uses a random band-limited coefficient vector."""
+    the omitted shell power (Parseval).
+
+    HONEST NOTE (v8 adversarial pass): "drop = shell power" is a telescoping identity
+    that holds by construction for any shell-power sequence; the non-increasing property
+    then follows from shell powers being (squares, hence) non-negative. This exhibits
+    the Thm 19 form, it is not an independent discriminating test."""
     rng = np.random.default_rng(seed)
     shell_power = rng.uniform(0.0, 1.0, size=l_max + 1) ** 2   # ||Pi_L J||^2 >= 0
     discarded = np.array([shell_power[Lam + 1:].sum() for Lam in range(l_max + 1)])

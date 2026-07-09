@@ -1,14 +1,23 @@
-"""EGS3 v8: T3-full -- EXACT (nonlinear) realization of the identified-interval
-endpoints, upgrading T3-lin from the x_C << 1 linearized regime to exact GR.
+"""EGS3 v8: T3-full -- EXACT (nonlinear) initial-data realization of the identified-
+interval ENDPOINTS, upgrading T3-lin from the x_C << 1 linearized regime to exact GR.
 
 T3-lin (egs3_linearized_realization) realized the two registered endpoints only to
 LINEAR order (all differential constraint terms vanished by homogeneity; residuals
-< 1e-10). The referee's remaining objection (M2 King-Ellis) was that an interval is
-sharp iff BOTH endpoints are realized by an EXACT initial-data configuration solving
-the FULL (nonlinear) Gauss and momentum constraints. This module supplies that for
-the x_C interval [11/100, 17/100] (open-curvature branch), with residuals that are
-EXACTLY zero (SymPy symbolic zero, all orders in the tilt rapidity beta), not merely
-< 1e-10.
+< 1e-10). This module upgrades the ENDPOINT realizations to EXACT: for the x_C
+interval [11/100, 17/100] (open-curvature branch), each endpoint is realized by an
+exact homogeneous initial-data configuration whose full Gauss and momentum CONSTRAINT
+residuals are EXACTLY zero (SymPy symbolic zero, all orders in the tilt rapidity beta),
+not merely < 1e-10.
+
+SCOPE (honest, per the v8 adversarial pass). What is established here is ENDPOINT
+ATTAINABILITY at the exact-constraint level: both interval endpoints admit exact
+initial-data realizations. This is NOT, by itself, a full nonlinear interval-sharpness
+theorem: (i) the no-model-exceeds-the-box bound and the continuum interior-filling
+argument remain at the convex-component-box level (P31, linearized/convex); (ii) only
+the Gauss+momentum CONSTRAINTS are checked, not the dynamical evolution; (iii) the full
+nonlinear King-Ellis tilted-Bianchi-V dynamical realization stays a deferred item. The
+upgrade over T3-lin is precisely: linearized endpoint realizations -> exact endpoint
+realizations.
 
 Construction (both endpoints are exact homogeneous cosmologies):
 
@@ -33,12 +42,14 @@ Construction (both endpoints are exact homogeneous cosmologies):
     => 3 a * 0 + kappa * 0 = 0: the FULL momentum constraint is exactly zero, the
        curvature is exact (a = H sqrt(Omega_k)), Gauss closed by Omega_Lambda.
 
-Because an interval is determined by its endpoints, realizing BOTH endpoints with
-exact GR solutions makes the identified x_C interval EXACTLY SHARP -- a full nonlinear
-result, not a linearized one. Residual scope (honest): realizing every INTERIOR point
-of the full 4-component identified SET by a single connected exact family is a strictly
-stronger statement not claimed here (the remaining King-Ellis item); interval sharpness
-does not require it.
+Both endpoints being exactly realized upgrades the physical-attainability half of the
+interval-sharpness statement from linear to exact order. The COMPLEMENTARY half -- that
+no admissible model exceeds the box and that the interior is continuously filled -- is
+NOT re-proved here at the nonlinear level; it remains the convex-component-box result
+(P31). So the honest v8 headline is "both identified-interval endpoints are exactly
+(nonlinearly) realized", NOT "the interval is a proven full-nonlinear sharp identified
+set". Realizing every interior point of the full 4-component identified SET by a single
+connected exact family, and the dynamical (King-Ellis) realization, both stay deferred.
 
 Claim discipline: exact symbolic GR algebra only. No data claim, no signal-discovery,
 no Bianchi-class-identification-of-the-sky claim, no native-solver-produced claim, no
@@ -168,21 +179,38 @@ def nonlinear_realization_seal() -> dict:
         "seal": "egs3.nonlinear_realization",
         "status": "PASS" if ok else "FAIL",
         "sympy_version": sp.__version__,
-        "theorem": "T3-full: exact (nonlinear) realization of both identified-interval "
-                   "endpoints => x_C interval [11/100,17/100] exactly sharp",
+        "theorem": "T3-full: EXACT (nonlinear) initial-data realization of BOTH "
+                   "identified-interval endpoints of [11/100,17/100] (Gauss+momentum "
+                   "constraint residuals exactly zero)",
         "endpoints": endpoints,
         "antipodal_flux_exact": flux,
         "bianchi_V_momentum_constraint": momV,
-        "upgrade_over_T3_lin": "residuals are EXACT zero (all orders in beta), not < 1e-10; "
-                               "linearization ceiling x_C << 1 removed",
-        "residual_scope": "realizing every INTERIOR point of the full 4-component identified "
-                          "SET by one connected exact family is a strictly stronger, unclaimed "
-                          "statement (remaining King-Ellis item); interval sharpness needs only "
-                          "the two endpoints, which are realized exactly here",
-        "claim_boundary": "exact symbolic GR realization of the identified-interval endpoints; "
-                          "Bianchi I/V are the realizing initial-data construction, NOT a sky "
-                          "class claim; no data, detection, family/geometry, native-solver, or "
-                          "posterior claim",
+        "upgrade_over_T3_lin": "endpoint realizations upgraded from LINEARIZED (residuals "
+                               "< 1e-10, x_C << 1) to EXACT (symbolic-zero residuals, all "
+                               "orders in beta); this is endpoint ATTAINABILITY, not a new "
+                               "interval-sharpness theorem",
+        "scope_not_claimed": "NOT a full nonlinear interval-sharpness theorem: the "
+                             "no-model-exceeds-the-box bound + continuum interior-filling "
+                             "stay at the convex-component-box level (P31); only the "
+                             "Gauss+momentum CONSTRAINTS are checked (not the dynamics); the "
+                             "full King-Ellis tilted-Bianchi-V dynamical realization stays "
+                             "deferred (ticket t3_king_ellis.yaml)",
+        "disclosed_caveats": [
+            "lower-endpoint W^2=4/100 vorticity is carried by an exact homogeneous "
+            "rigid-rotation mode (curl omega = 0 to all orders); the exact seal checks the "
+            "Gauss + flux constraints, not an explicit rotating tilted Bianchi I build",
+            "the Bianchi V (0i) momentum coefficient ('3') is convention-dependent; the "
+            "LOAD-BEARING fact is that a_b sigma^{ab} is proportional to the a-aligned shear "
+            "s1 and vanishes for transverse shear (s1=0) -- the endpoint zeroing is robust "
+            "to the coefficient. The Wolfram lane imposes the transverse rule, so it is a "
+            "consistency check, not an independent derivation of the coefficient",
+            "Gauss is closed by defining Omega_Lambda (a bookkeeping closure, not an "
+            "independent constraint)",
+        ],
+        "claim_boundary": "exact symbolic GR initial-data realization of the identified-"
+                          "interval endpoints; Bianchi I/V are the realizing construction, "
+                          "NOT a sky class claim; no data, detection, family/geometry, "
+                          "native-solver, or posterior claim",
     }
 
 

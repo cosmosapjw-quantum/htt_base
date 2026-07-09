@@ -2,7 +2,7 @@
   "seal": "egs3.nonlinear_realization",
   "status": "PASS",
   "sympy_version": "1.14.0",
-  "theorem": "T3-full: exact (nonlinear) realization of both identified-interval endpoints => x_C interval [11/100,17/100] exactly sharp",
+  "theorem": "T3-full: EXACT (nonlinear) initial-data realization of BOTH identified-interval endpoints of [11/100,17/100] (Gauss+momentum constraint residuals exactly zero)",
   "endpoints": {
     "lower_xC_11_over_100": {
       "endpoint": "lower_xC_11_over_100",
@@ -56,7 +56,12 @@
     "Sigma2_from_transverse_shear": "s_plus**2/(3*H**2)",
     "note": "exact Bianchi V (0i) constraint; transverse shear s1=0 + zero flux q=0"
   },
-  "upgrade_over_T3_lin": "residuals are EXACT zero (all orders in beta), not < 1e-10; linearization ceiling x_C << 1 removed",
-  "residual_scope": "realizing every INTERIOR point of the full 4-component identified SET by one connected exact family is a strictly stronger, unclaimed statement (remaining King-Ellis item); interval sharpness needs only the two endpoints, which are realized exactly here",
-  "claim_boundary": "exact symbolic GR realization of the identified-interval endpoints; Bianchi I/V are the realizing initial-data construction, NOT a sky class claim; no data, detection, family/geometry, native-solver, or posterior claim"
+  "upgrade_over_T3_lin": "endpoint realizations upgraded from LINEARIZED (residuals < 1e-10, x_C << 1) to EXACT (symbolic-zero residuals, all orders in beta); this is endpoint ATTAINABILITY, not a new interval-sharpness theorem",
+  "scope_not_claimed": "NOT a full nonlinear interval-sharpness theorem: the no-model-exceeds-the-box bound + continuum interior-filling stay at the convex-component-box level (P31); only the Gauss+momentum CONSTRAINTS are checked (not the dynamics); the full King-Ellis tilted-Bianchi-V dynamical realization stays deferred (ticket t3_king_ellis.yaml)",
+  "disclosed_caveats": [
+    "lower-endpoint W^2=4/100 vorticity is carried by an exact homogeneous rigid-rotation mode (curl omega = 0 to all orders); the exact seal checks the Gauss + flux constraints, not an explicit rotating tilted Bianchi I build",
+    "the Bianchi V (0i) momentum coefficient ('3') is convention-dependent; the LOAD-BEARING fact is that a_b sigma^{ab} is proportional to the a-aligned shear s1 and vanishes for transverse shear (s1=0) -- the endpoint zeroing is robust to the coefficient. The Wolfram lane imposes the transverse rule, so it is a consistency check, not an independent derivation of the coefficient",
+    "Gauss is closed by defining Omega_Lambda (a bookkeeping closure, not an independent constraint)"
+  ],
+  "claim_boundary": "exact symbolic GR initial-data realization of the identified-interval endpoints; Bianchi I/V are the realizing construction, NOT a sky class claim; no data, detection, family/geometry, native-solver, or posterior claim"
 }

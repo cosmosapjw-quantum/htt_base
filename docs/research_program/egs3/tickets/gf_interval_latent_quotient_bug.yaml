@@ -1,0 +1,30 @@
+id: EGS3-gf-interval-latent-quotient-bug
+title: Latent sign bug + positive-numerator domain restriction in T2' exact quotient path
+state: documented_unexercised
+owner_lane: mio / obsstat
+severity: low
+
+found_by: v8 adversarial verification pass (v7_egs3_T2prime spot-check, CONFIRMED low)
+
+description: |
+  htt/obsstat/egs3_gf_interval.py (T2', the joint-vs-naive depth-gap strictness module,
+  rev-r146/v7) has, in its EXACT naive/joint quotient path:
+    1. an UNDOCUMENTED positive-numerator domain restriction (the quotient/log route
+       presumes a positive numerator+denominator; outside it the contrast is undefined),
+       and
+    2. a latent SIGN BUG in that same exact-quotient branch.
+  Both are UNEXERCISED by the shipped strictness witness (gf_strictness_exact_witness),
+  which only drives the corner-enumeration + subset paths, so NO reported result is
+  affected and the gf_strictness_exact_seal is correct. The T2' strictness-iff theorem
+  itself is mathematically correct (independently corroborated by brute-force enumeration).
+
+why_not_fixed_now: |
+  egs3_gf_interval.py is a v7-FROZEN source: its SHA256 is embedded in the byte-frozen v7
+  report MANIFEST (build_external_audit_report_v7.py SOURCE_FILES). Editing it -- even a
+  comment -- would break the v7 report --check byte-freeze. Since the bug is unexercised,
+  documenting it here is the freeze-preserving action.
+
+exit_gate: |
+  In a future cycle that is allowed to touch the v7-era module (e.g. a v9 that re-freezes),
+  add the explicit positive-numerator domain guard, fix the sign in the exact-quotient
+  branch, and add a witness that exercises that path. Until then the path stays unused.
