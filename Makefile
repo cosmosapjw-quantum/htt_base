@@ -73,7 +73,15 @@ v7-wolfram:
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/egs3_v7_two_stage_coverage.wls --out $(REPO)/docs/generated/egs3_v7_wolfram_proofs.json
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/v7_t3lin_covariant_residual.wls --out $(REPO)/docs/generated/egs3_v7_t3lin_proof.json
 
-## EGS3 v7 strengthened-theorem SymPy seals (T1'/T2'/T4'/T5'/T8'/T9'/T3-lin) -> docs/generated/*_seal.json.
+## EGS3 v8 local-only Wolfram seals (T3-full King-Ellis exact endpoint realization; xAct).
+v8-wolfram:
+	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/v8_t3_king_ellis.wls --out $(REPO)/docs/generated/egs3_v8_t3_king_ellis_proof.json
+
+## EGS3 v8 mathlib-backed Lean lane (forall-parameter T1'/DL1/T2' generalizations; separate package).
+v8-mathlib:
+	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_v8_mathlib_seals.py
+
+## EGS3 v7 strengthened-theorem SymPy seals (T1'/T2'/T4'/T5'/T8'/T9'/T3-lin/T3-full) -> docs/generated/*_seal.json.
 v7-sympy-seals:
 	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_v7_seals.py
 

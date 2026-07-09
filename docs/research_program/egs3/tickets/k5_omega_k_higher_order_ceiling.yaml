@@ -1,0 +1,41 @@
+id: EGS3-K5-omega-k-higher-order-ceiling
+title: Registered finite anisotropic-Omega_k ceiling for the K5/CF4 identified card
+state: blocked_on_higher_order_transfer
+blocker: BLOCKED_HIGHER_ORDER_VORTICITY_CURVATURE_REOPENING
+owner_lane: obsstat / gr-transfer
+
+context: |
+  The K5/CF4 identified-interval card (scripts/k5_cf4_identified_interval_card.py)
+  carries Omega_k_upper as a PLUGIN placeholder (1e-6). v8 assessment clarifies WHY a
+  registered finite value cannot be produced without a substantial compute item -- it is
+  NOT a data-download blocker:
+
+  1. STRUCTURAL NULL (already certified, v7). The anisotropic curvature Omega_k is a proven
+     leading-order structural null of the CMB-quadrupole response: it is an exact zero
+     response column (egs3_measured_response.measured_response_card ->
+     null_sectors=['W2','Omega_k'], sigma3_over_sigma2=0.0; measured_response_seal.json).
+     So at leading EGS order the CMB-quadrupole channel provides NO constraint on Omega_k;
+     its identified value there is exactly 0.
+  2. FINITE CEILING re-opens only at HIGHER ORDER. A finite registered Omega_k ceiling
+     requires the higher-order transverse/B-mode re-opening transfer (the
+     egs3.vorticity_reopening channel), which is a substantial GR-transfer compute item in
+     its own right, not a quick artifact registration.
+  3. DOUBLE ROLE. In the card, the same quantity is also the T1' signed-box curvature-branch
+     half-width Uk that defines open_branch[0,Uk] vs all_branch[-Uk,Uk]. Zeroing it (the
+     leading-order structural-null value) collapses the two-branch signed-box demonstration,
+     so it cannot simply be set to 0 without losing T1'.
+  4. FROZEN ARTIFACT. docs/generated/k5_cf4_identified_interval_card.json is embedded in the
+     byte-frozen v7 report (build_external_audit_report_v7.py:816); an in-place numeric
+     change would break the v7 byte-freeze. A v8 promotion would need a NEW v8 card artifact.
+
+resolution_status: |
+  Leading-order structural null CERTIFIED (measured_response_seal, v7). Finite ceiling stays
+  blocked on the higher-order re-opening transfer. Sigma2_hat also stays PLUGIN/BLOCKED
+  (needs the certified shear->quadrupole transfer, K1-tied). observational_claim_allowed
+  therefore stays False; the plugin firewall is intact and honest.
+
+exit_gate: a registered higher-order Omega_k transfer producing a finite anisotropic-curvature
+  ceiling, emitted as a NEW v8 card artifact (leaving the v7 card frozen); OR binding the
+  finite ceiling to an external registered anisotropic-curvature prior with documented
+  applicability. Neither is a 1TB data download; both are compute/derivation items.
+depends_on: EGS3-semi-native (shear->quadrupole transfer), egs3.vorticity_reopening

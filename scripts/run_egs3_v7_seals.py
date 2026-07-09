@@ -69,6 +69,11 @@ def build_payloads() -> tuple[dict[str, str], dict[str, dict]]:
         seals["linearized_realization_seal.json"] = linearized_realization_seal()
     except Exception:  # module not present yet -> lane simply omits it
         pass
+    try:
+        from htt.obsstat.egs3_nonlinear_realization import nonlinear_realization_seal
+        seals["nonlinear_realization_seal.json"] = nonlinear_realization_seal()
+    except Exception:  # module not present yet -> lane simply omits it
+        pass
 
     payloads = {name: json.dumps(seal, indent=2, default=float) + "\n"
                 for name, seal in seals.items()}

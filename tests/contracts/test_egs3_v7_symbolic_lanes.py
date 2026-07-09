@@ -63,6 +63,9 @@ V7_SYMPY_SEALS = (
     "mes_provenance_seal.json",
     "measured_response_seal.json",
     "data_lane_forward_seal.json",
+    # v8 additions (M4 rederivation + T3-full exact endpoint realization)
+    "mes_rederivation_seal.json",
+    "nonlinear_realization_seal.json",
 )
 
 
@@ -87,6 +90,50 @@ def test_t3lin_signed_box_endpoints():
     assert abs(eps["upper_xC_17_over_100"]["x_C"] - 0.17) < 1e-12
     assert payload["max_momentum_residual"] < 1e-10
     assert payload["max_gauss_residual"] < 1e-10
+
+
+def test_v8_mes_rederivation_sigma_rederived():
+    payload = _load("mes_rederivation_seal.json")
+    assert payload["status"] == "PASS"
+    sig = payload["sigma_rederivation"]
+    assert sig["reduced_coeffs"] == ["5/3", "3", "3/7"]
+    assert sig["rederived"] is True and sig["symbolic_identity_holds"] is True
+    # omega/accel honestly stay primary-sourced (MESb print-only), not rederived
+    assert payload["omega_accel_provenance"]["status"] == "primary_sourced_not_rederivable"
+
+
+def test_v8_nonlinear_realization_endpoints_exact():
+    payload = _load("nonlinear_realization_seal.json")
+    assert payload["status"] == "PASS"
+    for name, ep in payload["endpoints"].items():
+        assert ep["gauss_residual_exact_zero"] is True, name
+        assert ep["momentum_exact_zero"] is True, name
+        assert ep["realized"] is True, name
+    lo = payload["endpoints"]["lower_xC_11_over_100"]
+    hi = payload["endpoints"]["upper_xC_17_over_100"]
+    assert lo["bianchi_class"] == "I" and hi["bianchi_class"] == "V"
+
+
+def test_v8_wolfram_king_ellis_pass():
+    path = GEN / "egs3_v8_t3_king_ellis_proof.json"
+    if not path.exists():
+        pytest.skip("v8 Wolfram proof not generated on this host")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    assert payload["status"] == "PASS"
+    checks = payload["results"][0]["result"]["checks"]
+    assert checks["antipodal_flux_cancels_exact"] is True
+    assert checks["bianchi_v_transverse_momentum_zero"] is True
+
+
+def test_v8_mathlib_seal_pass_if_present():
+    # the mathlib build is ~7 GB / ~12 min cold; the contract only checks the
+    # recorded artifact (never rebuilds mathlib in CI). make v8-mathlib regenerates it.
+    path = GEN / "egs3_v8_mathlib_seal.json"
+    if not path.exists():
+        pytest.skip("mathlib lane seal not generated on this host")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    assert payload["status"] == "PASS"
+    assert "dl1_lower_gap" in payload["theorems"]
 
 
 @pytest.mark.skipif(shutil.which("sage") is None, reason="SageMath not installed")

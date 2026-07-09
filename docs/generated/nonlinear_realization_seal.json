@@ -1,0 +1,62 @@
+{
+  "seal": "egs3.nonlinear_realization",
+  "status": "PASS",
+  "sympy_version": "1.14.0",
+  "theorem": "T3-full: exact (nonlinear) realization of both identified-interval endpoints => x_C interval [11/100,17/100] exactly sharp",
+  "endpoints": {
+    "lower_xC_11_over_100": {
+      "endpoint": "lower_xC_11_over_100",
+      "x_C": "11/100",
+      "bianchi_class": "I",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "1/25",
+        "Omega_tilt": "3/100",
+        "Omega_k": "0"
+      },
+      "omega_lambda_closure": "59/100",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "D_b sigma^{ab}=0 (homogeneous), curl omega=0, kappa q=0",
+      "momentum_exact_zero": true,
+      "antipodal_flux_exact_zero": true,
+      "realized": true
+    },
+    "upper_xC_17_over_100": {
+      "endpoint": "upper_xC_17_over_100",
+      "x_C": "17/100",
+      "bianchi_class": "V",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "0",
+        "Omega_tilt": "3/100",
+        "Omega_k": "1/50"
+      },
+      "omega_lambda_closure": "53/100",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "3 a sigma_1 + kappa q^1 = 0 with sigma_1=0 (transverse) and q=0",
+      "momentum_exact_zero": true,
+      "antipodal_flux_exact_zero": true,
+      "realized": true
+    }
+  },
+  "antipodal_flux_exact": {
+    "q_net_symbolic": "0",
+    "q_net_is_exact_zero": true,
+    "tilt_pair_symbolic": "2*Omega_m*(w + 1)*sinh(beta)**2",
+    "tilt_additive_exact": true,
+    "note": "exact to all orders in beta (sinh*cosh is odd); no linearization"
+  },
+  "bianchi_V_momentum_constraint": {
+    "momentum_constraint": "3 a_b sigma^{ab} + kappa q^a = 0",
+    "div_shear_x": "a*s1",
+    "momentum_x_full": "3*a*s1 + kappa*q1",
+    "transverse_plus_antipodal_residual": "0",
+    "momentum_exact_zero": true,
+    "transverse_shear": "sigma = diag(0, s_+, -s_+)",
+    "Sigma2_from_transverse_shear": "s_plus**2/(3*H**2)",
+    "note": "exact Bianchi V (0i) constraint; transverse shear s1=0 + zero flux q=0"
+  },
+  "upgrade_over_T3_lin": "residuals are EXACT zero (all orders in beta), not < 1e-10; linearization ceiling x_C << 1 removed",
+  "residual_scope": "realizing every INTERIOR point of the full 4-component identified SET by one connected exact family is a strictly stronger, unclaimed statement (remaining King-Ellis item); interval sharpness needs only the two endpoints, which are realized exactly here",
+  "claim_boundary": "exact symbolic GR realization of the identified-interval endpoints; Bianchi I/V are the realizing initial-data construction, NOT a sky class claim; no data, detection, family/geometry, native-solver, or posterior claim"
+}
