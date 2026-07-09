@@ -50,6 +50,7 @@ def build_payloads() -> tuple[dict[str, str], dict[str, dict]]:
         coverage_strengthened_seal, signed_box_interval_seal)
     from htt.obsstat.egs3_parent_identity import multicomponent_tilt_seal
     from htt.obsstat.egs3_mes_provenance import mes_provenance_seal
+    from htt.obsstat.egs3_mes_rederivation import mes_rederivation_seal
     from htt.obsstat.egs3_measured_response import measured_response_seal
     from htt.obsstat.egs3_data_lane_forward import data_lane_forward_seal
 
@@ -59,6 +60,7 @@ def build_payloads() -> tuple[dict[str, str], dict[str, dict]]:
         "coverage_strengthened_seal.json": coverage_strengthened_seal(),
         "multicomponent_tilt_seal.json": multicomponent_tilt_seal(),
         "mes_provenance_seal.json": mes_provenance_seal(),
+        "mes_rederivation_seal.json": mes_rederivation_seal(),
         "measured_response_seal.json": measured_response_seal(),
         "data_lane_forward_seal.json": data_lane_forward_seal(),
     }

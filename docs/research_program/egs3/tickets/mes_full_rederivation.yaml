@@ -1,7 +1,7 @@
 id: EGS3-G8-mes-full-rederivation
 title: Full PSTF multipole-hierarchy rederivation of the MES bound coefficients
-state: registered_external_pending
-blocker: BLOCKED_MISSING_MES1995_MULTIPOLE_ALGEBRA
+state: partially_resolved
+blocker: BLOCKED_MISSING_MESb_PRINT_ONLY_PAPER_II
 owner_lane: gr_xact
 scope: rederive, bit-exact and in-repo, the MES-1995 diagonal bound coefficients
   B_sigma=(5/3,3,3/7), B_omega=(3/4,2,2/7), B_accel=(3/4,1,3/14) (Thm 3.1/3.2/3.3,
@@ -24,4 +24,19 @@ obstruction: the coefficients require the MES-1995 PSTF covariant multipole
 exit_gate: a Wolfram/xAct or SymPy seal reproducing (5/3,3,3/7),(3/4,2,2/7),
   (3/4,1,3/14) from the encoded multipole hierarchy, OR a documented discrepancy
   report (itself a publishable finding); flip rederived_here for the coefficients.
-reference: Maartens, Ellis, Stoeger, Phys. Rev. D 51, 1525 (1995)
+resolved_in_v8: |
+  B_sigma=(5/3,3,3/7) REDERIVED bit-exact (SymPy Fraction + symbolic identity) from
+  the MESa primary source (astro-ph/9501016) raw eq (51) via the stated reduction
+  assumptions C1 (spatial<=time-deriv) and C2 (e*_L~e_L/3); matches the registry.
+  The same machinery reproduces MESa eq (60) omega=(10/3,2/15,0), which DIFFERS from
+  the registered (3/4,2,2/7): the registry omega/accel are MESb (Paper II, PRD 51 5942,
+  Eqs 30-36) values under the relaxed non-geodesic assumption set. MESb is PRINT-ONLY
+  (not on arXiv), so its internal derivation is not reconstructable in-repo -> those two
+  stay primary_sourced_not_rederivable (documented-provenance branch of the exit_gate).
+  Module htt/obsstat/egs3_mes_rederivation.py; seal mes_rederivation_seal.json; gate
+  research_gates/egs3/tests/test_egs3_axis_g_mes_rederivation.py; provenance
+  docs/audits/mes_primary_sources/PROVENANCE_M4.md. sigma flipped rederived_here=true.
+remaining: MESb (print-only) omega/accel internal rederivation; only obtainable from the
+  journal PDF (Phys. Rev. D 51, 5942), not a data download.
+reference: Maartens, Ellis, Stoeger, Phys. Rev. D 51, 1525 (1995) [MESa, astro-ph/9501016];
+  Phys. Rev. D 51, 5942 (1995) [MESb, print-only]; astro-ph/9510126 [companion]

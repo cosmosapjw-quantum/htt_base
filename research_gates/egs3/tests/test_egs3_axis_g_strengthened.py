@@ -192,7 +192,10 @@ class G8MesProvenanceTests(unittest.TestCase):
         self.assertAlmostEqual(c["W2_max"], 1.309e-6, places=8)
 
     def test_multipole_coefficients_stay_registered_external(self):
-        # honesty guard: the seal must NOT claim it rederived the literature coefficients
+        # honesty guard: THIS (v7) seal must NOT claim it rederived the literature
+        # coefficients. The v8 bit-exact sigma rederivation is a separate artifact
+        # (egs3_mes_rederivation / test_egs3_axis_g_mes_rederivation), leaving this
+        # frozen v7 seal's honest self-statement intact.
         from htt.obsstat.egs3_mes_provenance import mes_provenance_seal
         r = mes_provenance_seal()["full_multipole_rederivation"]
         self.assertEqual(r["status"], "registered_external_pending_hierarchy")
