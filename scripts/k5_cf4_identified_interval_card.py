@@ -31,6 +31,12 @@ from htt.obsstat.egs3_identified_set import (  # noqa: E402
     im_interval,
     signed_curvature_branch_reports,
 )
+from htt.obsstat.egs3_mes_provenance import eps_registry_provenance  # noqa: E402
+
+# Registered W^2 ceiling from the MES budget (ssot Planck Commander epsilons):
+# W2_max = (3/2) B_omega^2. Replaces the earlier toy plugin (which was ~46% low).
+W2_REGISTERED_UPPER = float(
+    eps_registry_provenance()["registered_ceilings_from_ssot"]["W2_max"])
 
 
 OUT_JSON = REPO_ROOT / "docs/generated/k5_cf4_identified_interval_card.json"
@@ -100,10 +106,10 @@ def _branch_payloads(*, omega_tilt: float, omega_tilt_error: float,
     y = response @ g_hat
     c = np.array([1.0, -1.0, 1.0, 1.0], dtype=float)
     lower = np.zeros(4, dtype=float)
-    upper = np.array([np.inf, W2_PLUGIN_UPPER, np.inf, OMEGA_K_PLUGIN_UPPER], dtype=float)
+    upper = np.array([np.inf, W2_REGISTERED_UPPER, np.inf, OMEGA_K_PLUGIN_UPPER], dtype=float)
     input_modes = (
         ("Sigma2", "PLUGIN/BLOCKED"),
-        ("W2_upper", "PLUGIN/BLOCKED"),
+        ("W2_upper", "REGISTERED_MES_CEILING"),
         ("Omega_tilt", "REAL_CF4_PLUS_DECLARED_OMEGA_M"),
         ("Omega_k_upper", "PLUGIN/BLOCKED"),
     )
@@ -185,7 +191,7 @@ def build_payload(*, generating_command: str) -> dict[str, Any]:
         "Omega_tilt_formula": "DERIVED_FROM_PARENT_IDENTITY_SEAL",
         "Sigma2_hat": "PLUGIN/BLOCKED",
         "Sigma2_error": "PLUGIN/BLOCKED",
-        "W2_upper": "PLUGIN/BLOCKED",
+        "W2_upper": "REGISTERED_MES_CEILING",
         "Omega_k_upper": "PLUGIN/BLOCKED",
         "K1_maxscan": "REAL_DIAGNOSTIC_INPUT_NOT_USED_AS_SIGMA2",
         "MES_coefficients": "REGISTERED_EXTERNAL_NOT_REDERIVED",
@@ -216,15 +222,18 @@ def build_payload(*, generating_command: str) -> dict[str, Any]:
                 "plugin_placeholders": {
                     "Sigma2": SIGMA2_PLUGIN_VALUE,
                     "Sigma2_error_fraction": SIGMA2_PLUGIN_ERROR_FRACTION,
-                    "W2_upper": W2_PLUGIN_UPPER,
                     "Omega_k_upper": OMEGA_K_PLUGIN_UPPER,
+                },
+                "registered_ceilings": {
+                    "W2_upper_from_mes": W2_REGISTERED_UPPER,
                 },
                 "version": "v7-k5-identified-interval-card",
             }
         ),
         "caveats": [
             "Diagnostic pipeline-closure card only.",
-            "Sigma2, W2, and Omega_k placeholders block observational promotion.",
+            "W2 ceiling is the registered MES value (3/2)B_omega^2 from the ssot epsilons.",
+            "Sigma2 and Omega_k placeholders still block observational promotion.",
             "No posterior odds, native low-ell solver output, or morphology-family promotion.",
         ],
         "required_gates": [
@@ -236,10 +245,10 @@ def build_payload(*, generating_command: str) -> dict[str, Any]:
             "repo_local_cf4_bulk_artifact_present",
             "parent_identity_formula_present",
             "plugin_firewall_for_unbound_components",
+            "registered_w2_ceiling_from_mes_provenance",
         ],
         "failed_gates": [
             "registered_sigma2_artifact_absent",
-            "registered_w2_upper_artifact_absent",
             "registered_omega_k_upper_artifact_absent",
         ],
         "promotion_blockers": blocked,

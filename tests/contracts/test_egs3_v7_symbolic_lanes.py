@@ -61,6 +61,8 @@ V7_SYMPY_SEALS = (
     "multicomponent_tilt_seal.json",
     "linearized_realization_seal.json",
     "mes_provenance_seal.json",
+    "measured_response_seal.json",
+    "data_lane_forward_seal.json",
 )
 
 

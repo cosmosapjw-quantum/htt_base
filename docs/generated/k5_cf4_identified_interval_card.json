@@ -6,7 +6,6 @@
   "blocked_components": [
     "Sigma2_hat",
     "Sigma2_error",
-    "W2_upper",
     "Omega_k_upper"
   ],
   "bulk_flow_summary": {
@@ -18,7 +17,8 @@
   },
   "caveats": [
     "Diagnostic pipeline-closure card only.",
-    "Sigma2, W2, and Omega_k placeholders block observational promotion.",
+    "W2 ceiling is the registered MES value (3/2)B_omega^2 from the ssot epsilons.",
+    "Sigma2 and Omega_k placeholders still block observational promotion.",
     "No posterior odds, native low-ell solver output, or morphology-family promotion."
   ],
   "claim_tier": "diagnostic_only",
@@ -32,13 +32,12 @@
     "Omega_tilt_formula": "DERIVED_FROM_PARENT_IDENTITY_SEAL",
     "Sigma2_error": "PLUGIN/BLOCKED",
     "Sigma2_hat": "PLUGIN/BLOCKED",
-    "W2_upper": "PLUGIN/BLOCKED"
+    "W2_upper": "REGISTERED_MES_CEILING"
   },
-  "config_hash": "sha256:32779452961391487d6273a47043a3876d2d42049c57e4541c3165f2d1090aca",
+  "config_hash": "sha256:6419242c1eb6ce67f8442386b8d014e2ba8bf36e36f58561d24fbbecf091084a",
   "created_by": "scripts/k5_cf4_identified_interval_card.py",
   "failed_gates": [
     "registered_sigma2_artifact_absent",
-    "registered_w2_upper_artifact_absent",
     "registered_omega_k_upper_artifact_absent"
   ],
   "family_identification": false,
@@ -68,7 +67,8 @@
   "passed_gates": [
     "repo_local_cf4_bulk_artifact_present",
     "parent_identity_formula_present",
-    "plugin_firewall_for_unbound_components"
+    "plugin_firewall_for_unbound_components",
+    "registered_w2_ceiling_from_mes_provenance"
   ],
   "policies": {
     "cosmic_variance_inclusive": {
@@ -82,7 +82,7 @@
             ],
             [
               0.0,
-              8.959622448979593e-07
+              1.3086802636835631e-06
             ],
             [
               0.0,
@@ -96,16 +96,16 @@
           "df_reachable": 2,
           "df_residual": 2,
           "im_95_ci": [
-            -1.2266279888830863e-05,
-            3.720992158486553e-05
+            -1.267899790181675e-05,
+            3.7209921579065816e-05
           ],
-          "im_c_n": 1.6448536296430918,
+          "im_c_n": 1.6448536287231887,
           "interval": [
-            -1.895962244875807e-06,
+            -2.308680263661411e-06,
             2.6839603940910474e-05
           ],
           "null_extremes": [
-            -1.8959622448979593e-06,
+            -2.308680263683563e-06,
             1e-06
           ],
           "policy_id": "cosmic_variance_inclusive",
@@ -127,7 +127,7 @@
             ],
             [
               0.0,
-              8.959622448979593e-07
+              1.3086802636835631e-06
             ],
             [
               0.0,
@@ -141,16 +141,16 @@
           "df_reachable": 2,
           "df_residual": 2,
           "im_95_ci": [
-            -1.1266279917801498e-05,
-            3.7209921613836166e-05
+            -1.1678997921194496e-05,
+            3.720992159844356e-05
           ],
-          "im_c_n": 1.6448536342381732,
+          "im_c_n": 1.6448536317967262,
           "interval": [
-            -8.959622448758072e-07,
+            -1.3086802636614111e-06,
             2.6839603940910474e-05
           ],
           "null_extremes": [
-            -8.959622448979593e-07,
+            -1.3086802636835631e-06,
             1e-06
           ],
           "policy_id": "cosmic_variance_inclusive",
@@ -180,7 +180,7 @@
             ],
             [
               0.0,
-              8.959622448979593e-07
+              1.3086802636835631e-06
             ],
             [
               0.0,
@@ -194,16 +194,16 @@
           "df_reachable": 2,
           "df_residual": 2,
           "im_95_ci": [
-            -1.1873408633383746e-05,
-            3.719070988548406e-05
+            -1.2286126643778356e-05,
+            3.719070987709307e-05
           ],
-          "im_c_n": 1.6448536308750812,
+          "im_c_n": 1.64485362954318,
           "interval": [
-            -1.5108123428250828e-06,
+            -1.9235303616106864e-06,
             2.6828113594925402e-05
           ],
           "null_extremes": [
-            -1.8959622448979593e-06,
+            -2.308680263683563e-06,
             1e-06
           ],
           "policy_id": "measurement_only",
@@ -225,7 +225,7 @@
             ],
             [
               0.0,
-              8.959622448979593e-07
+              1.3086802636835631e-06
             ],
             [
               0.0,
@@ -239,16 +239,16 @@
           "df_reachable": 2,
           "df_residual": 2,
           "im_95_ci": [
-            -1.0873408675016815e-05,
-            3.7190709927117135e-05
+            -1.1286126671726075e-05,
+            3.7190709905040787e-05
           ],
-          "im_c_n": 1.6448536374834934,
+          "im_c_n": 1.6448536339793178,
           "interval": [
-            -5.108123428250829e-07,
+            -9.235303616106867e-07,
             2.6828113594925402e-05
           ],
           "null_extremes": [
-            -8.959622448979593e-07,
+            -1.3086802636835631e-06,
             1e-06
           ],
           "policy_id": "measurement_only",
@@ -272,7 +272,6 @@
   "promotion_blockers": [
     "Sigma2_hat",
     "Sigma2_error",
-    "W2_upper",
     "Omega_k_upper"
   ],
   "required_gates": [

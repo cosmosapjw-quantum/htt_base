@@ -63,7 +63,10 @@ def test_k5_cf4_identified_interval_card_blocks_observational_promotion():
     assert payload["owner"] == "OBSSTAT"
     assert payload["claim_tier"] == "diagnostic_only"
     assert payload["observational_claim_allowed"] is False
-    assert {"Sigma2_hat", "W2_upper", "Omega_k_upper"} <= set(payload["blocked_components"])
+    # W2_upper promoted to the registered MES ceiling; Sigma2/Omega_k still block promotion
+    assert {"Sigma2_hat", "Omega_k_upper"} <= set(payload["blocked_components"])
+    assert "W2_upper" not in payload["blocked_components"]
+    assert payload["component_input_modes"]["W2_upper"] == "REGISTERED_MES_CEILING"
     assert payload["component_input_modes"]["CF4_bulk_amplitude"] == "REAL"
     assert payload["component_input_modes"]["Omega_m"] == "DECLARED_OBS_DEFAULT"
     for policy in payload["policies"].values():

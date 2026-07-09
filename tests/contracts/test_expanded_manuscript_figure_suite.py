@@ -29,7 +29,10 @@ def test_conditioned_legacy_gallery_covers_existing_noncurrent_figures():
 
     candidates = suite._iter_legacy_candidates()
 
-    assert len(candidates) == 88
+    # 93 = the non-current legacy lanes (quarantined_legacy 72 + parallel_track 12 +
+    # quarantined_meta 5 + validation 4); the data_analysis_current lane is a CURRENT
+    # diagnostic lane and is excluded like current/observed_current/paper.
+    assert len(candidates) == 93
     assert all("current" not in path.relative_to(suite.FIGURES_ROOT).parts for path in candidates)
     assert all("paper" not in path.relative_to(suite.FIGURES_ROOT).parts for path in candidates)
     assert all(

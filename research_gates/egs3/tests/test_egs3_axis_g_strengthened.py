@@ -200,6 +200,42 @@ class G8MesProvenanceTests(unittest.TestCase):
                       "(5/3,3,3/7),(3/4,2,2/7),(3/4,1,3/14)", r["not_rederived_here"])
 
 
+class G9MeasuredResponseTests(unittest.TestCase):
+    def test_seal_pass(self):
+        from htt.obsstat.egs3_measured_response import measured_response_seal
+        self.assertEqual(measured_response_seal()["status"], "PASS")
+
+    def test_rank_two_structural(self):
+        from htt.obsstat.egs3_measured_response import measured_response_card
+        c = measured_response_card()
+        self.assertEqual(c["rank"], 2)
+        self.assertEqual(set(c["null_sectors"]), {"W2", "Omega_k"})
+        self.assertEqual(c["sigma3_over_sigma2"], 0.0)
+
+    def test_fisher_duplication_sublinear(self):
+        from htt.obsstat.egs3_measured_response import fisher_duplication_factor
+        self.assertAlmostEqual(fisher_duplication_factor(0.0), 2.0)
+        self.assertAlmostEqual(fisher_duplication_factor(1.0 - 1e-9), 1.0, places=6)
+
+
+class G10DataLaneForwardTests(unittest.TestCase):
+    def test_seal_pass(self):
+        from htt.obsstat.egs3_data_lane_forward import data_lane_forward_seal
+        self.assertEqual(data_lane_forward_seal()["status"], "PASS")
+
+    def test_cf4_sign_transition_from_zero_bulk(self):
+        from htt.obsstat.egs3_data_lane_forward import cf4_malmquist_forward
+        r = cf4_malmquist_forward()
+        self.assertEqual(r["true_bulk_flow_kms"], 0.0)
+        self.assertTrue(r["sign_transition_present"])
+
+    def test_desi_window_resultant_nonzero_from_window(self):
+        from htt.obsstat.egs3_data_lane_forward import desi_window_resultant
+        d = desi_window_resultant()
+        self.assertTrue(d["window_resultant_is_large"])
+        self.assertTrue(d["delta_rbar_monotone_in_injection"])
+
+
 class G7CoVeAdversarialTests(unittest.TestCase):
     """Adversarial guard: the strengthened modules add no x_C mutation."""
 

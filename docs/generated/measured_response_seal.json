@@ -1,0 +1,117 @@
+{
+  "seal": "egs3.measured_response",
+  "status": "PASS",
+  "checks": {
+    "rank_is_two": true,
+    "column_nullity_is_two": true,
+    "smallest_singular_value_is_zero": true,
+    "null_sectors_are_w2_omega_k": true,
+    "reachable_sectors_are_sigma2_tilt": true,
+    "structural_sigma3_over_sigma2_zero": true,
+    "fisher_duplication_sublinear": true
+  },
+  "card": {
+    "channels": [
+      "cmb_quadrupole",
+      "cmb_dipole",
+      "radial_velocity_dipole"
+    ],
+    "sectors": [
+      "Sigma2",
+      "W2",
+      "Omega_tilt",
+      "Omega_k"
+    ],
+    "design_matrix": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "whitened_response": [
+      [
+        280898.8764044944,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        810.6355382619973,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        666.6666666666666,
+        0.0
+      ]
+    ],
+    "singular_values": [
+      280898.8764044944,
+      1049.5591552350743,
+      0.0
+    ],
+    "rank": 2,
+    "reachable_sectors": [
+      "Sigma2",
+      "Omega_tilt"
+    ],
+    "null_sectors": [
+      "W2",
+      "Omega_k"
+    ],
+    "sigma3_over_sigma2": 0.0,
+    "reachable_block_condition_number": 267.6351066096701,
+    "null_space_vectors": [
+      {
+        "sector": "W2",
+        "vector": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "sector": "Omega_k",
+        "vector": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    ],
+    "null_sector_kind": {
+      "W2": "structural_null",
+      "Omega_k": "no_channel_leading_order"
+    },
+    "fisher_duplication": {
+      "row_duplicated_channels": [
+        "cmb_dipole",
+        "radial_velocity_dipole"
+      ],
+      "target_sector": "Omega_tilt",
+      "factor_independent_rho0": 2.0,
+      "factor_correlated_rho0p9": 1.0526315789473684,
+      "note": "duplicated observations add information sub-linearly as 2/(1+rho); a duplicated column would add none"
+    }
+  },
+  "claim_boundary": "linear-algebra disclosure of the registered whitened response design (M5); rank-2 is structural (two exactly-zero columns), not a threshold choice; no data, detection, family/geometry, native-solver, or posterior claim"
+}

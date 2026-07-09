@@ -410,7 +410,13 @@ def _display_title(source_path: Path) -> str:
 
 
 def _iter_legacy_candidates() -> tuple[Path, ...]:
-    excluded_parts = {"current", "observed_current", "paper", "conditioned_legacy"}
+    excluded_parts = {
+        "current",
+        "observed_current",
+        "data_analysis_current",
+        "paper",
+        "conditioned_legacy",
+    }
     candidates: list[Path] = []
     for path in sorted(FIGURES_ROOT.rglob("*")):
         if not path.is_file() or path.suffix.lower() not in FIGURE_SUFFIXES:
