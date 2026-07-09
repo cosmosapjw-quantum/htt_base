@@ -1,0 +1,27 @@
+id: EGS3-G8-mes-full-rederivation
+title: Full PSTF multipole-hierarchy rederivation of the MES bound coefficients
+state: registered_external_pending
+blocker: BLOCKED_MISSING_MES1995_MULTIPOLE_ALGEBRA
+owner_lane: gr_xact
+scope: rederive, bit-exact and in-repo, the MES-1995 diagonal bound coefficients
+  B_sigma=(5/3,3,3/7), B_omega=(3/4,2,2/7), B_accel=(3/4,1,3/14) (Thm 3.1/3.2/3.3,
+  Eq. 3.7/3.12/3.15) from the linearized PSTF covariant multipole recursion of the
+  CMB temperature anisotropy (Clebsch-Gordan/3j coupling), rather than registering
+  them as external values.
+done_in_v7: htt/obsstat/egs3_mes_provenance.py + gate G8 certify what CAN be
+  established without the MES-1995 intermediate algebra --- cross-registry
+  consistency (Fraction vs float), a GENUINE symbolic rederivation of the ordering
+  theorem (MES Thm 3.4: B_sigma > B_omega > B_accel on the positive orthant), the
+  (3/2) conversion rule, and the epsilon-registry provenance (ssot real-Planck vs
+  obs_defaults dipole-likelihood fixture; registered W2_max=1.309e-6). The
+  multipole coefficients themselves stay registered_external and are NOT claimed
+  to be rederived.
+obstruction: the coefficients require the MES-1995 PSTF covariant multipole
+  recursion (the almost-EGS temperature-anisotropy hierarchy with its angular
+  coupling coefficients), which is not reconstructable in-repo without the paper's
+  intermediate steps; a Wolfram/xAct attempt without them would risk fabricating
+  the physics.
+exit_gate: a Wolfram/xAct or SymPy seal reproducing (5/3,3,3/7),(3/4,2,2/7),
+  (3/4,1,3/14) from the encoded multipole hierarchy, OR a documented discrepancy
+  report (itself a publishable finding); flip rederived_here for the coefficients.
+reference: Maartens, Ellis, Stoeger, Phys. Rev. D 51, 1525 (1995)

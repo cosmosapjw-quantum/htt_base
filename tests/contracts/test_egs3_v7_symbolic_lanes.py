@@ -60,6 +60,7 @@ V7_SYMPY_SEALS = (
     "coverage_strengthened_seal.json",
     "multicomponent_tilt_seal.json",
     "linearized_realization_seal.json",
+    "mes_provenance_seal.json",
 )
 
 

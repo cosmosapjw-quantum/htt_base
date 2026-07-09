@@ -1,0 +1,126 @@
+{
+  "seal": "egs3.mes_provenance",
+  "status": "PASS",
+  "sympy_version": "1.14.0",
+  "registry_consistency": {
+    "per_budget": {
+      "sigma": {
+        "fraction_registry": [
+          "5/3",
+          "3",
+          "3/7"
+        ],
+        "float_registry": [
+          1.6666666666666667,
+          3.0,
+          0.42857142857142855
+        ],
+        "agree": true
+      },
+      "omega": {
+        "fraction_registry": [
+          "3/4",
+          "2",
+          "2/7"
+        ],
+        "float_registry": [
+          0.75,
+          2.0,
+          0.2857142857142857
+        ],
+        "agree": true
+      },
+      "accel": {
+        "fraction_registry": [
+          "3/4",
+          "1",
+          "3/14"
+        ],
+        "float_registry": [
+          0.75,
+          1.0,
+          0.21428571428571427
+        ],
+        "agree": true
+      }
+    },
+    "all_registries_agree": true
+  },
+  "ordering_theorem": {
+    "B_sigma_minus_B_omega": "11*eps1/12 + eps2 + eps3/7",
+    "B_omega_minus_B_accel": "eps2 + eps3/14",
+    "sigma_gt_omega_on_positive_orthant": true,
+    "omega_gt_accel_on_positive_orthant": true,
+    "ordering_holds_at_ssot_eps": true,
+    "theorem": "MES 1995 Thm 3.4 (rederived here): B_sigma > B_omega > B_accel"
+  },
+  "conversion_rule": {
+    "conversion": "X^2_max = (3/2) B^2 for X^2 = x_ab x^ab/(6 H^2), H = Theta/3",
+    "factor_is_three_halves": true,
+    "derived_in": "egs3_parent_identity.three_halves_rule"
+  },
+  "eps_provenance": {
+    "ssot_registry": {
+      "path": "htt/htt/htt/core/ssot.py",
+      "role": "MES-authoritative real Planck Commander l=1/2/3 amplitudes; feeds bounds.py / three_bound_hierarchy bound evaluators",
+      "values": {
+        "eps1": 0.0012336,
+        "eps2": 3.559629e-06,
+        "eps3": 6.065291e-06
+      }
+    },
+    "obs_defaults_registry": {
+      "path": "htt/workspace/data/obs_defaults.json",
+      "role": "dipole-likelihood TEST FIXTURE for test_infer.py TestDipoleVectorLikelihood; a DIFFERENT quantity in a different context (~400x larger); NOT an MES-bound input",
+      "values": {
+        "eps1": 0.0012336,
+        "eps2": 0.001476,
+        "eps3": 0.002586
+      }
+    },
+    "cross_use_forbidden": true,
+    "eps2_scale_ratio_obs_over_ssot": 414.649953688994,
+    "registered_ceilings_from_ssot": {
+      "B_sigma": 0.0020692782974285717,
+      "B_omega": 0.0009340521982857143,
+      "B_accel": 0.0009300593342142857,
+      "Sigma2_max": 6.422869008313333e-06,
+      "W2_max": 1.3086802636835631e-06,
+      "A2_max": 1.2975155477386805e-06
+    },
+    "note": "the K5/CF4 card W^2 ceiling must use the registered W2_max (1.308680e-06) from this ssot registry, not a toy value"
+  },
+  "crosswalk": {
+    "sigma": {
+      "coefficients": "(5/3, 3, 3/7)",
+      "source": "MES 1995 Thm 3.1, Eq. (3.7)"
+    },
+    "omega": {
+      "coefficients": "(3/4, 2, 2/7)",
+      "source": "MES 1995 Thm 3.2, Eq. (3.12)"
+    },
+    "accel": {
+      "coefficients": "(3/4, 1, 3/14)",
+      "source": "MES 1995 Thm 3.3, Eq. (3.15)"
+    },
+    "ordering": {
+      "statement": "B_sigma > B_omega > B_accel",
+      "source": "MES 1995 Thm 3.4"
+    },
+    "reference": "Maartens, Ellis, Stoeger, Phys. Rev. D 51, 1525 (1995)"
+  },
+  "full_multipole_rederivation": {
+    "status": "registered_external_pending_hierarchy",
+    "rederived_here": [
+      "MES Thm 3.4 ordering",
+      "(3/2) conversion rule",
+      "cross-registry consistency",
+      "epsilon provenance"
+    ],
+    "not_rederived_here": [
+      "Thm 3.1/3.2/3.3 multipole coefficients (5/3,3,3/7),(3/4,2,2/7),(3/4,1,3/14)"
+    ],
+    "obstruction": "requires the PSTF covariant multipole recursion (Clebsch-Gordan/3j coupling) of MES-1995 Thm 3.1-3.3, not reproduced in-repo; registered obligation in the v7 ledger"
+  },
+  "claim_boundary": "symbolic MES consistency/ordering/provenance seal; the literature multipole coefficients stay registered external; no data, detection, family/geometry, native-solver, or posterior claim"
+}

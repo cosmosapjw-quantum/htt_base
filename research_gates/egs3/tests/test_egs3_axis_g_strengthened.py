@@ -171,6 +171,35 @@ class G6MultiComponentTiltTests(unittest.TestCase):
                          [1, -1, 1, 1])
 
 
+class G8MesProvenanceTests(unittest.TestCase):
+    def test_seal_pass(self):
+        from htt.obsstat.egs3_mes_provenance import mes_provenance_seal
+        self.assertEqual(mes_provenance_seal()["status"], "PASS")
+
+    def test_registries_agree_exactly(self):
+        from htt.obsstat.egs3_mes_provenance import mes_registry_consistency
+        self.assertTrue(mes_registry_consistency()["all_registries_agree"])
+
+    def test_ordering_theorem_rederived(self):
+        from htt.obsstat.egs3_mes_provenance import mes_ordering_theorem
+        o = mes_ordering_theorem()
+        self.assertTrue(o["sigma_gt_omega_on_positive_orthant"])
+        self.assertTrue(o["omega_gt_accel_on_positive_orthant"])
+
+    def test_registered_w2_max_from_ssot(self):
+        from htt.obsstat.egs3_mes_provenance import eps_registry_provenance
+        c = eps_registry_provenance()["registered_ceilings_from_ssot"]
+        self.assertAlmostEqual(c["W2_max"], 1.309e-6, places=8)
+
+    def test_multipole_coefficients_stay_registered_external(self):
+        # honesty guard: the seal must NOT claim it rederived the literature coefficients
+        from htt.obsstat.egs3_mes_provenance import mes_provenance_seal
+        r = mes_provenance_seal()["full_multipole_rederivation"]
+        self.assertEqual(r["status"], "registered_external_pending_hierarchy")
+        self.assertIn("Thm 3.1/3.2/3.3 multipole coefficients "
+                      "(5/3,3,3/7),(3/4,2,2/7),(3/4,1,3/14)", r["not_rederived_here"])
+
+
 class G7CoVeAdversarialTests(unittest.TestCase):
     """Adversarial guard: the strengthened modules add no x_C mutation."""
 
