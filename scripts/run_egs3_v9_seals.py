@@ -23,7 +23,9 @@ import subprocess
 import sys
 
 REPO = Path(__file__).resolve().parents[1]
-for p in (REPO, REPO / "htt", REPO / "htt/htt", REPO / "htt/src"):
+# insertion order matters: REPO must end up FIRST so `htt` resolves to the
+# repo-root package (which carries htt.teff); htt/htt would shadow it.
+for p in (REPO / "htt/htt", REPO / "htt", REPO):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 

@@ -1,0 +1,33 @@
+{
+  "claim_boundary": "exact symbolic algebra on the registered representative-theory ratios; diagnostic_only; no data claim, no probabilistic-inference claim",
+  "product_factorization": {
+    "difference_expanded": "-s**8 + 3*s**6 - 3*s**4 + s**2",
+    "factored_form": "s**2*(1 - s**2)**3",
+    "factorization_exact": true,
+    "mu3": "3*s**2 + 1",
+    "mu4": "s**4 + 6*s**2 + 1",
+    "mu5": "5*s**4 + 10*s**2 + 1",
+    "nonnegative_on_unit_interval": true
+  },
+  "promotes": "the v8 numeric-only R_3 + R_5 >= 2 certificate (2026-07-10 re-review theorem candidate)",
+  "representative_consistency": {
+    "numeric_min_nonnegative": true,
+    "registered_R3_equals_mu_form": true,
+    "registered_R4_equals_mu_form": true,
+    "registered_R5_equals_mu_form": true,
+    "zero_only_at_s0": true
+  },
+  "seal": "egs3.fingerprint_sum_theorem",
+  "statement": "R_3(s) + R_5(s) >= 2 on 0 <= s <= 1 with equality iff s = 0; proof: mu_3 mu_5 - mu_4^2 = s^2 (1-s^2)^3 exactly, so R_3 R_5 >= 1, then AM-GM",
+  "status": "PASS",
+  "sum_bound_symbolic": {
+    "R4_anchor_gives_Rp_mu_form": true,
+    "amgm_identity_holds": true,
+    "both_ratios_one_at_s0": true,
+    "equality_iff_s0": "R3*R5 = 1 iff s in {0,1}; at s=1 the sum still exceeds 2 (AM-GM strict since R3 != R5 there), so R3+R5 = 2 iff s = 0",
+    "product_identity_holds": true,
+    "sum_at_s1": "sqrt(2 + 3*sqrt(2)/2)",
+    "sum_at_s1_exceeds_two": true
+  },
+  "theorem_id": "TSUM"
+}

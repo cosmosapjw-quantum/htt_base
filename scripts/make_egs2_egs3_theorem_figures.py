@@ -422,10 +422,45 @@ def _sources() -> dict[str, dict]:
         "n_sim_cov": _hot["n_sim_cov"],
     }
 
+    # --- U4-v9 rerun (full MC provenance; from the deterministic v9 seal)
+    _seal9 = json.loads(
+        (REPO_ROOT / "docs/generated/teff_statistical_v9_seal.json")
+        .read_text())
+    _cov9 = _seal9["im_fingerprint_coverage_v9"]
+    _hot9 = _seal9["hotelling_fingerprint_calibration_v9"]
+    _eh9 = _seal9["hotelling_gaussian_exact_witness"]
+    u4v9 = {
+        "theorem_id": "EGS3-U4-v9",
+        "coverage_rows": _cov9["rows"],
+        "nominal": _cov9["nominal"],
+        "identified_interval_R3": _cov9["identified_interval_R3"],
+        "dgp": _cov9["dgp"],
+        "n_events": _cov9["n_events"],
+        "n_rep_coverage": _cov9["n_rep"],
+        "n_se_block": _cov9["n_se_block"],
+        "seed_coverage": _cov9["seed_coverage"],
+        "seed_se_block": _cov9["seed_se_block"],
+        "acceptance_criterion": _cov9["acceptance_criterion"],
+        "size_rows": {
+            "naive_chi2_fingerprint": _hot9["naive_chi2"],
+            "hotelling_F_fingerprint": _hot9["hotelling_F"],
+            "hotelling_F_gaussian_exact": {
+                "size": _eh9["size"], "wilson95": _eh9["wilson95"],
+                "regime": _eh9["regime"]},
+        },
+        "alpha": _hot9["alpha"],
+        "n_sim_cov": _hot9["n_sim_cov"],
+        "n_rep_size": _hot9["n_rep"],
+        "seed_hotelling": _hot9["seed_hotelling"],
+        "size_acceptance_criterion": _hot9["acceptance_criterion"],
+        "measured_finite_sample_deviations":
+            _seal9["measured_finite_sample_deviations"],
+    }
+
     return {"a1": a1, "a3": a3, "a1_floor": a1_floor, "b1": b1, "b2": b2,
             "b3": b3, "nt2b1": nt2b1, "psd": psd, "c": c, "d": dfig, "dbip": dbip,
             "e_im": e_im, "e_pow": e_pow, "f_smb": f_smb,
-            "u1": u1, "u2": u2, "u4": u4}
+            "u1": u1, "u2": u2, "u4": u4, "u4v9": u4v9}
 
 
 def _render(src: dict) -> None:
@@ -727,6 +762,52 @@ def _render(src: dict) -> None:
     fig.savefig(FIG_DIR / "fig_egs3_u4_teff_im_coverage.png", dpi=140)
     plt.close(fig)
 
+    # U4-v9 rerun: Wilson-CI coverage rows + three-regime size comparison
+    u9 = src["u4v9"]
+    fig, (axa, axb) = plt.subplots(1, 2, figsize=(7.8, 3.9))
+    labels = list(u9["coverage_rows"].keys())
+    covs = [u9["coverage_rows"][k]["coverage"] for k in labels]
+    los = [u9["coverage_rows"][k]["wilson95"][0] for k in labels]
+    his = [u9["coverage_rows"][k]["wilson95"][1] for k in labels]
+    yerr = [[c - l for c, l in zip(covs, los)],
+            [h - c for c, h in zip(covs, his)]]
+    axa.errorbar(range(len(labels)), covs, yerr=yerr, fmt="o", color=blue,
+                 capsize=4, label="coverage ± Wilson 95% CI")
+    axa.axhline(u9["nominal"], color=green, ls="--", label="nominal 1−α")
+    axa.axhspan(u9["nominal"] - 0.01, u9["nominal"] + 0.01, color=grey,
+                alpha=0.15, label="boundary deviation band ±0.01")
+    axa.set_xticks(range(len(labels)))
+    axa.set_xticklabels([l.replace("_", "\n") for l in labels], fontsize=7)
+    axa.set_ylim(0.925, 0.975); axa.set_ylabel("empirical IM coverage")
+    axa.set_title(f"IM coverage, N={u9['n_rep_coverage']} reps\n"
+                  "(estimated-se lane; boundary deviation reported)",
+                  fontsize=9)
+    axa.legend(fontsize=6, loc="lower right")
+    srows = u9["size_rows"]
+    keys = ["naive_chi2_fingerprint", "hotelling_F_fingerprint",
+            "hotelling_F_gaussian_exact"]
+    sizes = [srows[k]["size"] for k in keys]
+    slos = [srows[k]["wilson95"][0] for k in keys]
+    shis = [srows[k]["wilson95"][1] for k in keys]
+    xerr = [[s - l for s, l in zip(sizes, slos)],
+            [h - s for s, h in zip(sizes, shis)]]
+    axb.errorbar(sizes, range(len(keys)), xerr=xerr, fmt="s",
+                 color=orange, capsize=4)
+    axb.axvline(u9["alpha"], color=grey, ls="--", label="nominal α")
+    axb.set_yticks(range(len(keys)))
+    axb.set_yticklabels(["naive χ²\n(fingerprint)",
+                         "Hotelling/F\n(fingerprint)",
+                         "Hotelling/F\n(Gaussian exact regime)"], fontsize=7)
+    axb.set_xlabel("empirical size ± Wilson 95% CI")
+    axb.set_title("size by regime: exact where the F law\nis exact; "
+                  "deviation reported at finite n_events", fontsize=9)
+    axb.legend(fontsize=7)
+    fig.suptitle("EGS3-U4-v9: rerun with pre-registered acceptance, seeds, "
+                 "and Wilson CIs (display mixings, disclosed)", fontsize=9)
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / "fig_egs3_u4v9_teff_im_coverage.png", dpi=140)
+    plt.close(fig)
+
 
 _SPECS = [
     ("fig_egs3_a1_graded_rank", "EGS3-A1", "Graded comparator identifiability rank", "a1"),
@@ -746,6 +827,7 @@ _SPECS = [
     ("fig_egs3_u1_beta_channel", "EGS3-U1", "Beta-channel correspondence: Teff ratios on the comparator tilt coordinate", "u1"),
     ("fig_egs3_u2_fingerprint_ceilings", "EGS3-U2", "MES-registry ceilings on the Teff fingerprints", "u2"),
     ("fig_egs3_u4_teff_im_coverage", "EGS3-U4", "Statistical closure over the Teff fingerprint lane", "u4"),
+    ("fig_egs3_u4v9_teff_im_coverage", "EGS3-U4-v9", "Teff fingerprint statistical closure rerun with full Monte-Carlo provenance", "u4v9"),
 ]
 
 
