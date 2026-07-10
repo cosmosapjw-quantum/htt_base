@@ -1,0 +1,80 @@
+{
+  "seal": "egs3.teff_unification",
+  "status": "PASS",
+  "sympy_version": "1.14.0",
+  "numpy_version": "2.5.0",
+  "theorem_U1": "one boost rapidity feeds both channels: s = tanh(beta) exactly under the antipodal two-point reduction; s^2 = t/(2+t) with t = Omega_tilt/((1+w) Omega_m); R_3 - 1 = -(3/4) t + O(t^2), R_5 - 1 = +(5/4) t + O(t^2), R_4 == 1 identically (antipodal-specific: single species gives -(3/2))",
+  "theorem_U2": "proved envelopes 1 - R_3 <= (3/2) s^2 and R_5 - 1 <= (5/2) s^2 on 0 < s < 1 (polynomial root isolation); exact rational ceilings at the registered MES dipole amplitude; strictly-increasing ceiling map carries the MES ordering; CF4 rapidity contained in both channels",
+  "antipodal_boost_reduction": {
+    "antipodal_temperatures": "T_+/- = T_0 e^{+/-beta} (exact)",
+    "boost_pole_identity_exact": true,
+    "s_reduced": "tanh(beta)",
+    "s_equals_tanh_beta_exact": true,
+    "tilt_normalization": "t = Omega_tilt/((1+w) Omega_m) = 2 sinh^2 beta (T9' antipodal corollary)",
+    "s_squared_equals_t_over_2_plus_t_exact": true,
+    "reduction_caveat": "two-point antipodal reduction of a continuum boost sky; registered toy anchor, not an angular average"
+  },
+  "beta_channel_correspondence": {
+    "R3_of_t_exact": "sqrt(t + 2)*(4*t + 2)/(t**2 + 6*t*(t + 2) + (t + 2)**2)**(3/4)",
+    "R5_of_t_exact": "sqrt(2*t + 4)*(2*t**2 + 3*t + 1/2)/(2*t**2 + 4*t + 1)**(5/4)",
+    "R4_identically_one": true,
+    "leading_R3_coeff": "-3/4",
+    "leading_R5_coeff": "5/4",
+    "second_order_R3_coeff": "87/32",
+    "second_order_R5_coeff": "-185/32",
+    "leading_coeffs_exact": true,
+    "single_species_R3_coeff": "-3/2",
+    "antipodal_specificity_pin": true,
+    "correspondence": "R_3 - 1 = -(3/4) Omega_tilt/((1+w) Omega_m) + O(t^2) -- one rapidity feeds the comparator tilt sector and the Teff fingerprint channel"
+  },
+  "fingerprint_envelope_proofs": {
+    "method": "polynomial root isolation on u = s^2 (sympy real_roots, Sturm); exact, zero tolerance",
+    "proofs": {
+      "a_R3_below_one": true,
+      "b_one_minus_R3_below_3half_u": true,
+      "c_R5_above_one": true,
+      "d_R5_minus_one_below_5half_u": true
+    },
+    "all_envelopes_proved": true,
+    "pointwise_sum_ordering_numeric_min": 9.99999905104687e-09,
+    "pointwise_sum_ordering_note": "R_5 + R_3 >= 2 certified numerically only (min > 0 on the grid); the exact shipped ordering is ceiling-level"
+  },
+  "fingerprint_ceilings": {
+    "eps1_registered": 0.0012336,
+    "eps1_exact_rational": "771/625000",
+    "ceiling_R3_exact": "1783323/781250000000",
+    "ceiling_R5_exact": "594441/156250000000",
+    "ceiling_R3_float": 2.28265344e-06,
+    "ceiling_R5_float": 3.8044224e-06,
+    "identified_interval_R3": [
+      0.9999977173682703,
+      1.0
+    ],
+    "identified_interval_R5": [
+      1.0,
+      1.0000038043746375
+    ],
+    "endpoints_within_quadratic_envelopes": true,
+    "ceiling_map_strictly_increasing": true,
+    "mes_ordering_source": "sigma_gt_omega_on_positive_orthant & omega_gt_accel_on_positive_orthant",
+    "mes_ordering_holds": true,
+    "ordered_ceiling_triple_from_mes_budgets": true,
+    "ordered_ceiling_disclosure": "formal order-preservation instantiation of B_sigma > B_omega > B_accel through the strictly increasing ceiling map; the MES budgets are NOT three physical rapidity ceilings",
+    "cf4_containment": {
+      "beta_cf4": 0.0011365409332612364,
+      "s_cf4_tanh": 0.001136540443895266,
+      "fingerprint_3half_s2": 1.9375862709144723e-06,
+      "mes_dipole_ceiling_3half_eps1_2": 2.2826534400000003e-06,
+      "fingerprint_below_ceiling": true
+    }
+  },
+  "disclosed_caveats": [
+    "two-point antipodal reduction of a continuum boost sky (registered toy anchor, not an angular average)",
+    "the two-temperature mixture is the Teff equal-information representation anchor, NOT a predicted CMB spectral distortion",
+    "rapidity-vs-velocity beta differs at O(beta^3) ~ 1e-9 (disclosed)",
+    "s_max = eps_1 uses the leading-order dipole <-> boost identification",
+    "the ordered ceiling triple is a formal order-preservation instantiation, not three physical rapidity ceilings",
+    "pointwise R_5 + R_3 >= 2 is numerically certified only"
+  ],
+  "claim_boundary": "exact symbolic correspondence between registered in-repo objects (MES registry, comparator tilt sector, Teff representative anchor); diagnostic_only; no data, signal-discovery, spectral-distortion, Bianchi-class-identification-of-the-sky, native-solver-produced, or probabilistic-inference claim"
+}

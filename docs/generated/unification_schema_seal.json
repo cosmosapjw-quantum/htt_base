@@ -1,0 +1,115 @@
+{
+  "seal": "egs3.unification_schema",
+  "status": "PASS",
+  "sympy_version": "1.14.0",
+  "numpy_version": "2.5.0",
+  "theorem_U3": "the comparator channel response (rank 2, exact null {W2, Omega_k} with distinct null KINDS) and the Teff retained-moment response (p=4 selector exactly annihilating the insertion and two-temperature directions, full response rank 2) are two exact instances of one linear-response schema; in both, blindness is removed only by enlarging the registered observable set",
+  "correspondence": {
+    "schema": "finite-dimensional linear response A + registered selector S + exact kernel ker(S A) + kernel-annihilating invariant functional; blindness removed only by enlarging the observable set",
+    "instance_comparator": {
+      "design_matrix": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "channels": [
+        "cmb_quadrupole",
+        "cmb_dipole",
+        "radial_velocity_dipole"
+      ],
+      "sectors": [
+        "Sigma2",
+        "W2",
+        "Omega_tilt",
+        "Omega_k"
+      ],
+      "rank_exact": 2,
+      "null_sectors": [
+        "Omega_k",
+        "W2"
+      ],
+      "null_basis_axis_aligned": true,
+      "null_sector_kinds": {
+        "Omega_k": "no_channel_leading_order",
+        "W2": "structural_null"
+      },
+      "reopens_via": {
+        "Omega_k": [
+          "higher_order_isw",
+          "lensing",
+          "native_low_ell_transfer"
+        ],
+        "W2": [
+          "transverse_peculiar_velocity",
+          "cmb_b_modes"
+        ]
+      },
+      "invariant_functional": "the reachable-sector projection P_R g (annihilates the null directions exactly)"
+    },
+    "instance_teff": {
+      "response_matrix_exact": [
+        [
+          "-1/16",
+          "-3/2"
+        ],
+        [
+          "0",
+          "0"
+        ],
+        [
+          "1/64",
+          "5/2"
+        ]
+      ],
+      "matches_registered_constants": true,
+      "observables": [
+        "p=3 moment",
+        "p=4 moment (RETAINED anchor)",
+        "p=5 moment"
+      ],
+      "perturbation_directions": [
+        "(n,k) insertion amplitude",
+        "two-temperature mixing s^2"
+      ],
+      "retained_selector_annihilates_both_directions": true,
+      "R4_identically_one": true,
+      "rank_exact_full_response": 2,
+      "reopens_via": {
+        "insertion": [
+          "retain the p=3 moment",
+          "retain the p=5 moment"
+        ],
+        "two_temperature": [
+          "retain the p=3 moment",
+          "retain the p=5 moment"
+        ]
+      },
+      "invariant_functional": "the retained p=4 moment (R_4 == 1 identically; c_4 = 0 exactly)",
+      "discrimination_note": "rank 2 of the FULL response = the two enrichment directions separate once p=3/p=5 are observed (Teff Thm 22 fingerprints)"
+    },
+    "predicates": {
+      "registered_selector_has_nontrivial_exact_kernel": true,
+      "invariant_functional_annihilates_kernel_exactly": true,
+      "reopening_requires_enlarging_the_observable_set": true,
+      "full_response_rank_two_on_both_sides": true
+    },
+    "all_predicates_hold": true,
+    "correspondence_kind": "MATHEMATICAL (two exact instances of one schema); no physical identification between the lanes is asserted"
+  },
+  "claim_boundary": "exact integer/rational linear algebra over registered in-repo objects; the correspondence is mathematical, not physical; diagnostic_only; no data, signal-discovery, Bianchi-class-identification-of-the-sky, native-solver-produced, or probabilistic-inference claim"
+}

@@ -72,6 +72,9 @@ V7_SYMPY_SEALS = (
     "gf_interval_v8_seal.json",
     "volterra_hz_seal.json",
     "interior_family_seal.json",
+    # v8-update unification lane (U1/U2 beta-channel + MES->Teff ceilings; U3 schema)
+    "teff_unification_seal.json",
+    "unification_schema_seal.json",
 )
 
 
