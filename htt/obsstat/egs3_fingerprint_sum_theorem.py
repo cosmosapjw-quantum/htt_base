@@ -59,7 +59,7 @@ def product_factorization() -> dict:
         "difference_expanded": str(diff),
         "factorization_exact": bool(sp.simplify(diff - target) == 0),
         "factored_form": "s**2*(1 - s**2)**3",
-        "nonnegative_on_unit_interval": True,  # product of even powers on [0,1]
+        "nonnegative_on_unit_interval": True,  # s^2 >= 0 and (1-s^2) >= 0 on [0,1]
     }
 
 

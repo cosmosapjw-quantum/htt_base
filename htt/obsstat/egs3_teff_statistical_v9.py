@@ -380,8 +380,10 @@ def teff_statistical_v9_seal() -> dict:
                        "(the v8 run's looser 3-sigma band could not resolve "
                        "them); the exact-regime witnesses confirm both "
                        "theorems are exact in their stated regimes, so the "
-                       "deviations quantify the moment-ratio non-Gaussianity "
-                       "at finite n_events, not a defect of T4'/T5'",
+                       "deviations quantify finite-n_events moment-ratio sampling "
+                       "effects (skewness AND estimator bias -- the ratio "
+                       "estimators are biased at finite n and the mean is the "
+                       "population value), not a defect of T4'/T5'",
         },
         "t4_assumptions_block": {
             "i_test_vector_independent_of_cov_ensemble": "satisfied by "

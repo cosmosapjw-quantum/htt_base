@@ -231,8 +231,8 @@ def w2_ceiling_branches() -> dict:
             "hybrid_over_registered": float(w2_hybrid / w2_registered),
         },
         "dominance_disclosure": "the eps1 term carries "
-                                f"{share_ng:.1%} (registered) / "
-                                f"{share_g:.1%} (geodesic) of B_omega at the "
+                                f"{share_ng:.2%} (registered) / "
+                                f"{share_g:.2%} (geodesic) of B_omega at the "
                                 "ssot epsilons; every nonzero ceiling is "
                                 "essentially an observer-boost quantity and "
                                 "the K5 lower endpoint is keyed to the eps1 "

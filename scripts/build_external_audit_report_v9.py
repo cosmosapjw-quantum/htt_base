@@ -757,7 +757,6 @@ def compact_acceptance_rows(payload: dict[str, object]) -> str:
             evidence = evidence[:117] + "..."
         rows.append(
             f"{tex_escape(str(row.get('id', 'unknown')))} & "
-            f"{tex_escape(str(row.get('passed')))} & "
             f"{tex_escape(evidence)}\\\\"
         )
     return "\n".join(rows)
@@ -907,10 +906,13 @@ def v7_response_section() -> str:
         ("F1", "Signed-box identified interval: the curvature ceiling is two-sided; "
                f"report open branch $[{open_ep[0]},{open_ep[1]}]$ and all branch "
                f"$[{all_ep[0]},{all_ep[1]}]$ with DL1 branch-monotonicity", "T1'", st(sbx)),
-        ("M1", "Depth-gap strictness: the existence-level lemma (SOME endpoint "
-               "strict iff a shared component has $c_N c_D>0$; aligned regimes "
-               "exactly equal) --- the per-endpoint iff once printed here is "
-               "RETRACTED in v9 and superseded by T2G (\\S3.3)", "L-T2-EXIST", st(gfx)),
+        ("M1", "Depth-gap strictness: the existence-level lemma on the STRICTLY "
+               "POSITIVE NUMERATOR domain (there: SOME endpoint strict iff a "
+               "shared component has $c_N c_D>0$; aligned regimes exactly "
+               "equal) --- on signed numerators even the existence-level "
+               "biconditional fails (pinned instance $N=-2+s$, $D=2+s$: "
+               "conflict yet both endpoints equal), and the per-endpoint iff "
+               "once printed here is RETRACTED, superseded by T2G (\\S3.3)", "L-T2-EXIST", st(gfx)),
         ("M2", "P31 sharpness upgraded to a linearized physical realization of both "
                "endpoints (Gauss + momentum residuals $<10^{-10}$); full nonlinear "
                "GR realization deferred (ticketed)", "T3-lin", st(t3l)),
@@ -973,7 +975,7 @@ def v7_response_section() -> str:
         r"\code{native\_decide} certificate.",
         r"",
         r"\subsection{L-T2-EXIST depth-gap strictness lemma (M1; per-endpoint iff RETRACTED)}",
-        r"For a shared null box $\mathcal{S}$ and a positive denominator, the joint interval "
+        r"For a shared null box $\mathcal{S}$, a positive denominator, AND a numerator strictly positive over the whole box (the certifying witness fixes $n_{\rm pt}\ge1$; on signed numerators the biconditional fails --- the pinned instance $N=-2+s$, $D=2+s$ on $[0,1]$ has a coefficient conflict yet joint $=$ product exactly), the joint interval "
         r"is contained in the naive (product-relaxation) quotient interval, and \emph{some} "
         r"endpoint is strict iff some shared component competes ($\exists j:\ "
         r"c_{N,j}c_{D,j}>0$ with a nondegenerate $j$-interval); in the aligned regime "
@@ -1082,7 +1084,7 @@ def v8_response_section() -> str:
                   "(PRD~51,5942) citation with the Paper-I/Paper-II lineage documented",
          "MES rederivation", st(mrr)),
         ("M2$'$", "T3-lin upgraded to \\emph{T3-full}: both identified-interval endpoints "
-                  "are realized by \\emph{exact constraint-surface endpoint witnesses} (homogeneous initial-data candidates; sharpness level 2, upper endpoint --- see the P31 taxonomy) with "
+                  "are realized by \\emph{exact constraint-surface endpoint witnesses} (homogeneous initial-data candidates; sharpness level 2 at the UPPER endpoint; the lower-endpoint $W^2$ sector is constraint-unverified --- see the P31 taxonomy) with "
                   "\\emph{exactly-zero} Gauss and momentum constraint residuals --- exact "
                   "endpoint attainability (the box bound + interior filling stay at the "
                   "convex P31 level)", "T3-full", st(nlr)),
@@ -1140,7 +1142,7 @@ def v8_response_section() -> str:
         r"\subsection{T3-full: exact (nonlinear) endpoint realization (M2$'$)}",
         r"The fifth-revision T3-lin realized the two identified-interval endpoints only at "
         r"linear order ($x_C\ll1$, residuals $<10^{-10}$).  The sixth revision realizes both "
-        r"endpoints by \emph{exact constraint-surface endpoint witnesses} (homogeneous initial-data candidates) with residuals that are "
+        r"endpoints by \emph{exact constraint-surface endpoint witnesses} (homogeneous initial-data candidates; the lower-endpoint $W^2=4/100$ rides on a constraint-unverified rotational mode, per the P31 taxonomy) with residuals that are "
         r"\emph{exactly zero} (symbolic, all orders in the tilt rapidity).  The lower "
         rf"endpoint (\code{{{tex_escape(lo.get('bianchi_class','I'))}}}; $\Omega_k=0$) is a Bianchi~I "
         r"configuration whose momentum constraint reduces to the antipodal energy-flux "
@@ -1430,7 +1432,7 @@ def v8_update_section() -> str:
         r"",
         r"\paragraph{U3 --- one linear-response schema, two exact instances.}"
         rf" The comparator channel response (rank {comp_rank}, exact null "
-        rf"$\{{W^2,\Omega_{{k,{{\rm aniso}}}}\}}$ with distinct null \emph{{kinds}}: "
+        rf"$\{{W^2,\Delta\Omega_k\}}$ with distinct null \emph{{kinds}}: "
         rf"$\Omega_k$ is \code{{{tex_escape(nk_ok)}}}, $W^2$ is \code{{{tex_escape(nk_w2)}}}) and "
         rf"the Teff retained-moment response (the $p=4$ selector exactly annihilating both the "
         rf"$(n,k)$ insertion and the two-temperature mixing directions; full response rank "
@@ -1448,12 +1450,17 @@ def v8_update_section() -> str:
         rf"${_texnum(cov('endpoint_smax', 0.95625), 3)}$ against the nominal ${im_nom}$.  The "
         rf"estimated-covariance joint fingerprint requires the Hotelling/$F$ correction exactly "
         rf"as in T4$'$: at $\alpha={hot_alpha}$ the naive $\chi^2$ over-rejects "
-        rf"(empirical size ${_texnum(size_naive, 3)}$) while the Hotelling/$F$ branch is "
-        rf"calibrated (${_texnum(size_hot, 3)}$).",
+        rf"(empirical size ${_texnum(size_naive, 3)}$) while the Hotelling/$F$ branch "
+        rf"reduces the size toward nominal (${_texnum(size_hot, 3)}$ at the v8 "
+        rf"replication count).  [Superseded by U4-v9: at the v9 replication count the "
+        rf"residual finite-sample deviation $+0.0178$ is resolved and REPORTED; only "
+        rf"the Gaussian/Wishart exact-regime witness is size-exact.]",
         r"",
         r"\paragraph{Disclosed caveats (from the unification seal).}",
         r"\begin{itemize}",
-        caveat_items,
+        caveat_items.replace("numerically certified only",
+                             "numerically certified only "
+                             "[superseded: proven exactly in v9, TSUM]"),
         r"\end{itemize}",
         r"These are exact mathematical correspondences between registered in-repo objects (the "
         r"MES registry, the comparator tilt sector, and the Teff representative anchor).  The "
@@ -1499,7 +1506,9 @@ def v8_update_section() -> str:
         rf"only as registered-external, model-conditional cross-checks (template-conditional "
         rf"published limits that do \emph{{not}} replace the MES $W^2$ registry), and the "
         rf"anisotropic-curvature branch remains a documented null: "
-        rf"{tex_escape(str(ok_status.get('external_prior_branch','')))}.  The plugin firewall "
+        rf"{tex_escape(str(ok_status.get('external_prior_branch','')))} "
+        rf"(the card's \code{{Omega_k_aniso}} identifier is the "
+        rf"$\Delta\Omega_k$ coordinate under the v9 rename).  The plugin firewall "
         rf"and \code{{observational_claim_allowed}}$={tex_escape(str(obs_allowed))}$ are "
         rf"unchanged; no component was promoted to a measurement.",
         r"",
@@ -1633,7 +1642,8 @@ def v9_response_section() -> str:
         rf"firewall is unchanged.",
         r"",
         r"\subsection{U4-v9: fingerprint statistics rerun with full provenance}",
-        rf"Pre-registered acceptance (stated in the module before the run), "
+        rf"Acceptance criteria fixed as module constants before the seal run (a "
+        rf"code-level commitment, not an external registration), "
         rf"disclosed seeds ({cov.get('seed_coverage')}/{hot.get('seed_hotelling')}), "
         rf"$N_{{\rm rep}}={cov.get('n_rep')}$, $n_{{\rm events}}="
         rf"{cov.get('n_events')}$, per-row Wilson 95\% intervals:",
@@ -1646,7 +1656,10 @@ def v9_response_section() -> str:
         r"\end{tabular}}\end{center}",
         rf"The $s=0$ boundary row shows a real finite-sample deviation of "
         rf"{dev.get('boundary_s0_coverage')} (within the disclosed $\pm0.01$ "
-        rf"band; the skewed boundary estimator is the expected Imbens--Manski "
+        rf"band; under the UNIFORM Wilson rule of the other rows this row would "
+        rf"FAIL --- its interval excludes 0.95 --- so acceptance is met only "
+        rf"through the disclosed boundary band; the skewed boundary estimator is "
+        rf"the expected Imbens--Manski "
         rf"worst case), and the finite-$n_{{\rm events}}$ fingerprint Hotelling "
         rf"size is {hot.get('hotelling_F', {}).get('size')} (deviation "
         rf"{dev.get('hotelling_size_deviation')}, reported).  The exact-regime "
@@ -1761,7 +1774,7 @@ The report is based on repo-local source files: generated proof appendices and r
 The purpose is to expose what the current repository can defend: definitions, derived propositions, conditional statistical methodology, algorithmic contracts, and concrete future-analysis requirements.  The purpose is not to obtain rhetorical favour from a reviewer by foregrounding development history or internal gate architecture.
 
 \subsection{Response map for this revision}
-The fourth revision answers the external re-review of the third revision.  Each finding is repaired in the body, not in a rebuttal letter:
+Historical response map (fourth revision answering the third-revision re-review; retained for lineage --- the v9 response map is the theorem registry plus the Seventh-Revision section).  Each finding was repaired in the body, not in a rebuttal letter:
 
 {\footnotesize
 \begin{longtable}{>{\raggedright\arraybackslash}p{0.10\linewidth} >{\raggedright\arraybackslash}p{0.44\linewidth} >{\raggedright\arraybackslash}p{0.12\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth}}
@@ -2005,11 +2018,11 @@ The proposition previously printed here (``the inclusion is strict whenever \(c_
 With \(N(r_N,s)=r_N+c_N\!\cdot\!s\), \(D(r_D,s)=r_D+c_D\!\cdot\!s\) over reachable intervals and a shared box \({\cal S}\), \(D>0\) everywhere:
 (i) the joint interval \(I_{\rm joint}\) (shared \(s\)) is always a subset of the product relaxation \(I_{\rm prod}\) (independent copies of \({\cal S}\)) --- the diagonal inclusion;
 (ii) both intervals are computed exactly by vertex enumeration (a linear-fractional objective with positive denominator attains its extremes at box vertices; Charnes--Cooper reduction);
-(iii) the lower endpoints coincide \emph{iff} some diagonal point attains the product-relaxation lower endpoint, and dually for the upper endpoint;
+(iii) the lower endpoints coincide \emph{iff} some diagonal point attains the product-relaxation lower endpoint, and dually for the upper endpoint (with vertex enumeration this is a decide-by-exact-comparison procedure with a witness corner, not an independent structural criterion --- the structural content is (iv));
 (iv) if \(N>0\) over the whole box, then \(L_{\rm joint}=L_{\rm prod}\) iff \(\operatorname{argmin}N\cap\operatorname{argmax}D\ne\emptyset\) over vertices (upper endpoint dually) --- the strict positivity \(N_{\min}>0\) is load-bearing, and the retracted coefficient-sign test survives exactly as the nondegenerate corollary of this criterion on the \(N>0\) domain.
 \end{theorem}
 \begin{proof}[Proof and certification]
-(i) is the superset argument (the diagonal \(\{(s,s)\}\) is contained in \({\cal S}\times{\cal S}\)).  (ii) after the Charnes--Cooper normalization the objective is linear over a polytope, so the optimum sits at a vertex; certified twice --- exact \texttt{Fraction} corner enumeration against a rational interior grid, and an exact linear program over \(\mathbb{Q}\) (PPL) in the SageMath lane (\code{fractional_program_sage_seal.json}, 15/15).  (iv) forward: a common vertex \(v\) gives \(N(v)/D(v)=N_{\min}/D_{\max}=L_{\rm prod}\); converse: \(N(v^*)D_{\max}=N_{\min}D(v^*)\) with \(N(v^*)\ge N_{\min}>0\) and \(D(v^*)\le D_{\max}\) forces both equalities.  The survey seal (\code{fractional_program_exact_seal.json}) draws 400 exact-rational instances over positive, FORCED-\(N_{\min}=0\), and signed-numerator domains: containment fails never; the per-endpoint criterion (iv) holds on every \(N>0\) draw; the retracted sign test is defeated 81 times on the degenerate domain and the refuting instance above is a named regression fixture.  The weaker existence-level statement certified by the earlier 400/400 seal (``some endpoint is strict iff a shared component conflicts'') survives as lemma L-T2-EXIST.
+(i) is the superset argument (the diagonal \(\{(s,s)\}\) is contained in \({\cal S}\times{\cal S}\)).  (ii) after the Charnes--Cooper normalization the objective is linear over a polytope, so the optimum sits at a vertex; checked analytically (Charnes--Cooper) and spot-checked computationally --- exact \texttt{Fraction} corner enumeration against a rational interior grid ($k\le2$), and an exact linear program over \(\mathbb{Q}\) (PPL) on three pinned instances in the SageMath lane (\code{fractional_program_sage_seal.json}, 15/15).  (iv) forward: a common vertex \(v\) gives \(N(v)/D(v)=N_{\min}/D_{\max}=L_{\rm prod}\); converse: \(N(v^*)D_{\max}=N_{\min}D(v^*)\) with \(N(v^*)\ge N_{\min}>0\) and \(D(v^*)\le D_{\max}\) forces both equalities.  The survey seal (\code{fractional_program_exact_seal.json}) draws 400 exact-rational instances over positive, FORCED-\(N_{\min}=0\), and signed-numerator domains: containment fails never; the per-endpoint criterion (iv) holds on every \(N>0\) draw; the retracted sign test is defeated 81 times on the degenerate domain and the refuting instance above is a named regression fixture.  The weaker existence-level statement certified by the earlier 400/400 seal (``some endpoint is strict iff a shared component conflicts'') survives as lemma L-T2-EXIST.
 \end{proof}
 
 \subsection{Identified-set semantics and endpoint inference}
@@ -2431,6 +2444,8 @@ if any required component is absent:
     emit unidentified_component status
 else:
     x_C = Sigma2 - W2 + Omega_tilt + Omega_k_aniso
+    # identifier note: Omega_k_aniso is the Delta Omega_k coordinate
+    # (the v9 rename applies to notation, not to code identifiers)
     summarize signed x_C and cancellation structure
 \end{verbatim}
 
@@ -2536,7 +2551,7 @@ Check & Local result & N / seed / kind\\
 The dust-FLRW row verifies the analytic oracle used for branch sanity checks.  The rank rows verify the P18/P22 distinction: current scalar/radial rows are rank two in the four-component \(\bm g\) basis, while additional transverse/spin-2-like rows can open the missing sectors in a toy design.  The e-value row checks Markov-compatible calibration in a synthetic null at THREE thresholds, with the Monte-Carlo standard error printed.  The interval row demonstrates that a missing \(\Wsq\) and \(\Omk\) sector produces an interval for \(x_C\), not a fabricated point estimate.
 
 \subsection{Review-cycle experiment witnesses (E1--E8)}
-The fourth revision adds a second, larger witness layer: the deterministic seal and experiment artifacts produced by the repository's gate programme (\code{make egs3-seals}, \code{make egs3-experiments}; gate classes E1--E7 and F1--F4).  The rows below are RENDERED FROM those artifacts -- the builder loads them fail-closed and refuses to run if any is missing or non-PASS -- and each row carries the SHA-256 prefix of its source artifact, so the printed numbers are content-addressed to the repository state.
+An earlier revision added a second, larger witness layer (retained here): the deterministic seal and experiment artifacts regenerated by \code{make egs3-seals} and \code{make egs3-experiments}.  The rows below are RENDERED FROM those artifacts -- the builder loads them fail-closed and refuses to run if any is missing or non-PASS -- and each row carries the SHA-256 prefix of its source artifact, so the printed numbers are content-addressed to the repository state.
 
 {\footnotesize
 \begin{longtable}{>{\raggedright\arraybackslash}p{0.22\linewidth} >{\raggedright\arraybackslash}p{0.56\linewidth} >{\raggedright\arraybackslash}p{0.14\linewidth}}
@@ -2650,9 +2665,9 @@ Compact product & Size MB & Data summary\\
 }
 
 {\footnotesize
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.38\linewidth} >{\raggedright\arraybackslash}p{0.12\linewidth} >{\raggedright\arraybackslash}p{0.40\linewidth}}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.42\linewidth} >{\raggedright\arraybackslash}p{0.50\linewidth}}
 \toprule
-Acceptance check & Passed & Evidence\\
+Acceptance check & Evidence\\
 \midrule
 %COMPACT_ACCEPTANCE_ROWS%
 \bottomrule
@@ -2741,8 +2756,8 @@ Generating command & \code{python scripts/build_external_audit_report_v9.py} fol
                .replace(
                    "%COMPACT_ACCEPTANCE_SUMMARY%",
                    tex_escape(
-                       f"{compact_summary.get('acceptance_passed')}/"
-                       f"{compact_summary.get('acceptance_total')} checks passed"
+                       f"{compact_summary.get('acceptance_total')} deliverable "
+                       f"checks recorded (per-check evidence below)"
                    ),
                )
                .replace("%FIGURE_COUNT%", str(figure_count)))

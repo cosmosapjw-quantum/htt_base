@@ -15,7 +15,7 @@
     "No Bianchi family-ID or geometry-detection claim is made."
   ],
   "claim_tier": "diagnostic_only",
-  "config_hash": "sha256:dd2a38b046881b56e7f5d050f811f051fe52906c99e740842aff730af1292337",
+  "config_hash": "sha256:4b82e9d49a6c29c0dc66bad6b1c781330bbcaad19f1e32dfade3b2d3f77f69e6",
   "covariance_status": "synthetic_only",
   "created_by": "scripts/make_egs2_egs3_theorem_figures.py",
   "failed_gates": [
@@ -121,7 +121,7 @@
     "measured_finite_sample_deviations": {
       "boundary_s0_coverage": -0.005375,
       "hotelling_size_deviation": 0.01775,
-      "reading": "REAL finite-n_events deviations resolved at N=8000 (the v8 run's looser 3-sigma band could not resolve them); the exact-regime witnesses confirm both theorems are exact in their stated regimes, so the deviations quantify the moment-ratio non-Gaussianity at finite n_events, not a defect of T4'/T5'"
+      "reading": "REAL finite-n_events deviations resolved at N=8000 (the v8 run's looser 3-sigma band could not resolve them); the exact-regime witnesses confirm both theorems are exact in their stated regimes, so the deviations quantify finite-n_events moment-ratio sampling effects (skewness AND estimator bias -- the ratio estimators are biased at finite n and the mean is the population value), not a defect of T4'/T5'"
     },
     "n_events": 8000,
     "n_rep_coverage": 8000,

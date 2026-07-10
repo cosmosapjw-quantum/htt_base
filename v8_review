@@ -1,0 +1,797 @@
+재심사 결론부터 말하면, **v8은 이전판보다 실질적으로 강해졌지만, 현재 형태로는 일반적인 major revision이 아니라 “Reject and Resubmit”이 맞아.** 이유는 아이디어가 약해서가 아니라, 새 앞부분에서 수정·강화한 정리와 뒤쪽의 기존 정리·알고리즘·ledger가 서로 모순된 채 동시에 살아 있고, MES 계수·물리적 endpoint realization·Teff 정규화·estimated-covariance coverage의 핵심 주장이 아직 완결되지 않았기 때문이야.
+
+방법론 논문으로 발전할 가능성은 충분하다. 다만 현재 원고는 “정확한 강한 정리”를 주장하는 만큼, 한 군데의 잘못된 iff, 프레임 혼동, 단위 혼동, 미검증된 ceiling도 치명적이야.
+
+## 1. 종합 판정
+
+| 평가 축          |                 현재 평가 | 판정                                  |
+| ------------- | --------------------: | ----------------------------------- |
+| 수학적 아이디어와 독창성 |                  7/10 | 유의미한 조합 기여가 있음                      |
+| 정리 체계의 내적 일관성 |                  4/10 | 신·구 정리가 상충함                         |
+| GR 물리적 실현 가능성 |                  3/10 | constraint witness를 cosmology로 과대해석 |
+| 통계 방법론        |                  5/10 | 조건부로 타당하지만 exact claim의 조건이 불충분     |
+| 관측 데이터 해석     |                  3/10 | proxy와 물리 성분의 단위·의미가 혼합됨            |
+| 재현성           |                  2/10 | 제공 ZIP만으로 machine checks를 재실행할 수 없음 |
+| 방법론 논문 출판가능성  | 3/10 현재, 수정 후 7/10 가능 | Reject and Resubmit                 |
+| 관측 우주론 결과 논문  |                  1/10 | Reject                              |
+
+트랙별로 보면 다음과 같아.
+
+* **집중된 수학·통계 방법론 논문:** Reject and Resubmit. P0 수정 후 재심사 가치가 높음.
+* **GR 물리적 realizability 논문:** 현재 Reject. 아직 constraint-level witness임.
+* **관측 우주론 결과 논문:** Reject. 어떤 lane도 물리적 component inference까지 닫히지 않았음.
+* **감사·소프트웨어 방법론 note:** Major revision. 재현 패키지를 보강하면 가능.
+
+## 2. 실제로 좋아진 부분
+
+v8에서 의미 있게 전진한 부분은 분명해.
+
+첫째, PDF 5쪽의 T1′은 (\Omega_{k,\mathrm{aniso}})가 signed라는 이전 지적을 받아들여 two-sided box를 도입했어. product-box 모형 안에서는
+
+[
+I_x
+===
+
+I_R+
+\sum_{j\in N}
+\big[
+\min(c_jL_j,c_jU_j),,
+\max(c_jL_j,c_jU_j)
+\big]
+]
+
+라는 endpoint 공식이 맞는 방향이야.
+
+둘째, 기존 P36의 “항상 strict”가 틀렸다는 사실을 공개적으로 인정했고, signed-numerator 반례도 PDF 9쪽에 넣었어. 잘못을 감추지 않고 theorem repair 대상으로 전환한 건 좋은 연구 태도야.
+
+셋째, known-covariance (\chi^2)를 그대로 쓰지 않고 estimated covariance에 대해 Hotelling/(F) branch를 도입한 건 필수적인 개선이야.
+
+넷째, response singular values와 zero columns를 공개하고, (W^2)의 structural null과 (\Omega_k)의 leading-order no-channel을 구분하려 한 것도 좋다.
+
+다섯째, MES 문헌에서 접근 가능한 계수와 registry 계수가 다르다는 사실을 PDF 10쪽에서 명시한 건 중요해. 다만 이 정직한 공개 다음에 내려야 할 과학적 결론을 아직 내리지 못했어. 그 부분이 아래의 핵심 blocker야.
+
+## 3. 치명적인 P0 문제
+
+### 3.1 원고 안에 서로 양립할 수 없는 두 개의 정리 체계가 동시에 존재해
+
+이게 현재 가장 직접적인 reject 사유야.
+
+새로운 앞부분에서는 다음을 주장해.
+
+* PDF 5쪽: curvature는 signed이고 two-sided box를 사용한다.
+* PDF 6쪽: 기존 P36을 T2′ strictness criterion으로 대체한다.
+* PDF 6–10쪽: estimated-covariance T4′, exact realization T3-full, signed-numerator T2″를 도입한다.
+
+그런데 본문 뒤쪽에는 여전히 다음이 남아 있어.
+
+* PDF 15쪽: “all four entries are nonnegative component magnitudes.”
+* PDF 19쪽 P36: 여전히
+  [
+  \text{“strict whenever }c_N,c_D\neq0\text{ and }S\text{ nondegenerate”}
+  ]
+  를 정리로 선언함.
+* PDF 19쪽 P26: nonnegative cone과 curvature upper-only contribution을 사용함.
+* PDF 20쪽 P31: 모든 box point가 physical configuration으로 실현된다고 선언함.
+* PDF 20쪽 P35: known Gaussian covariance의 (\chi^2) 정리만 남아 있음.
+* PDF 50–51쪽 ledger: P36을 여전히 `DER`로 표시하고 신 정리와의 supersession 관계를 기록하지 않음.
+
+즉 독자는 T1′과 P26 중 무엇이 정식 정리인지, T2′과 P36 중 무엇이 active인지, T3-full과 P31 중 무엇이 주장 범위인지 알 수 없어.
+
+이건 부록에 정오표를 추가하는 것으로 해결되지 않아. 다음 구조가 필요해.
+
+```yaml
+theorem_id: P36
+status: RETRACTED
+reason: false universal strictness criterion
+superseded_by: T2_general_fractional_diagonal
+```
+
+```yaml
+theorem_id: P26
+status: SUPERSEDED
+superseded_by: T1_signed_box
+domain:
+  curvature: signed
+```
+
+그리고 PDF 본문·알고리즘·ledger·코드 계약을 이 single source of truth에서 다시 생성해야 해. **구 정리를 “역사적 문장”으로 본문에 그대로 남기면 안 돼.**
+
+### 3.2 (\Omega_{k,\mathrm{aniso}})라는 이름 자체가 물리적으로 부정확해
+
+정의는
+
+[
+\Omega_{k,\mathrm{aniso}}
+=========================
+
+\Omega_k-\Omega_{k,\mathrm{ref}}
+]
+
+이야. 이것은 reference FLRW에 대한 **scalar 3-curvature budget departure**이지, 일반적인 의미의 anisotropic curvature가 아니야. 실제 3-curvature anisotropy는 보통
+
+[
+{}^{(3)}S_{ab}
+==============
+
+{}^{(3)}R_{\langle ab\rangle}
+]
+
+같은 PSTF tensor로 표현돼.
+
+따라서 이 성분은
+
+[
+\Delta\Omega_k
+\equiv
+\Omega_k-\Omega_{k,\mathrm{ref}}
+]
+
+로 이름을 바꾸는 것이 맞아. 진짜 anisotropic-curvature channel을 주장하려면 별도의 tensor 또는 그 invariant를 추가해야 해.
+
+컨벤션과 차원은 다음처럼 고정해야 한다.
+
+[
+\Sigma^2\ge0,\qquad
+W^2\ge0,
+]
+
+[
+\Omega_{\rm tilt}
+=(1+w)\Omega_m\sinh^2\beta,
+]
+
+[
+\Delta\Omega_k\in\mathbb R.
+]
+
+여기서 (\Omega_{\rm tilt}\ge0)도 암묵적으로
+
+[
+(1+w)\Omega_m\ge0
+]
+
+라는 에너지조건을 요구해. (w<-1)까지 허용하는 일반 정리라면 nonnegative cone에 넣을 수 없어.
+
+또 signed-box endpoint의 가산 분해는 feasible set이
+
+[
+\mathcal G
+==========
+
+\mathcal G_R
+\times
+\prod_{j\in N}[L_j,U_j]
+]
+
+로 실제 factorization될 때만 정확해. Einstein constraints가 shear, vorticity, tilt, curvature를 결합하면 각 coordinate interval을 독립적으로 더할 수 없고, 전체 constraint manifold 위에서 동시에 최적화해야 해.
+
+### 3.3 T2′의 새로운 iff도 아직 정리로서 틀려
+
+PDF 6쪽 T2′은 positive denominator 아래에서 동일한 shared component에 대해 (c_{N,j}c_{D,j}>0)이면 해당 endpoint가 strict라고 주장해.
+
+하지만 다음 반례가 있어.
+
+[
+S=[0,1],
+\qquad
+N(s)=s,
+\qquad
+D(s)=1+s.
+]
+
+여기서
+
+[
+c_Nc_D=1>0,
+\qquad
+D(s)>0.
+]
+
+naive lower endpoint는
+
+[
+L_{\rm naive}
+=============
+
+# \frac{\min N}{\max D}
+
+\frac{0}{2}=0,
+]
+
+joint lower endpoint는
+
+[
+L_{\rm joint}
+=============
+
+\min_{s\in[0,1]}\frac{s}{1+s}
+=0.
+]
+
+따라서 lower endpoint는 strict하지 않아. 반면 upper endpoint는
+
+[
+U_{\rm joint}=\frac12,
+\qquad
+U_{\rm naive}=1
+]
+
+로 strict해. 즉 coefficient sign만으로 endpoint별 필요충분조건을 줄 수 없어. (N_{\min}=0) 같은 degeneracy가 denominator conflict를 무효화하기 때문이야.
+
+일반적으로 맞는 정리는 다음 형태야.
+
+**정확한 일반 정리 후보.** Compact (\mathcal S), continuous (N,D), (D>0)에 대해
+
+[
+I_{\rm joint}
+=============
+
+\left[
+\min_{s\in\mathcal S}\frac{N(s)}{D(s)},
+\max_{s\in\mathcal S}\frac{N(s)}{D(s)}
+\right].
+]
+
+product relaxation을
+
+[
+I_{\rm prod}
+============
+
+\left[
+\min_{s_N,s_D\in\mathcal S}
+\frac{N(s_N)}{D(s_D)},
+\max_{s_N,s_D\in\mathcal S}
+\frac{N(s_N)}{D(s_D)}
+\right]
+]
+
+로 정의하면 diagonal inclusion 때문에
+
+[
+I_{\rm joint}\subseteq I_{\rm prod}
+]
+
+이다.
+
+lower endpoint equality의 필요충분조건은
+
+[
+\exists s\in\mathcal S:
+\frac{N(s)}{D(s)}
+=================
+
+\min_{s_N,s_D}
+\frac{N(s_N)}{D(s_D)}
+]
+
+이고 upper도 동일한 방식이야.
+
+추가로 (N)이 strictly positive이고 (N,D)가 rectangular box 위의 affine function이면
+
+[
+L_{\rm joint}=L_{\rm prod}
+\quad\Longleftrightarrow\quad
+\operatorname{argmin}N
+\cap
+\operatorname{argmax}D
+\ne\varnothing,
+]
+
+[
+U_{\rm joint}=U_{\rm prod}
+\quad\Longleftrightarrow\quad
+\operatorname{argmax}N
+\cap
+\operatorname{argmin}D
+\ne\varnothing.
+]
+
+coefficient sign criterion은 이 정리의 비퇴화 corollary로만 내려가야 해.
+
+또 PDF 9쪽 스스로 signed numerator에서 기존 pairing이 실패한다고 인정해. 그러므로 old P36은 즉시 삭제해야 하고, signed domain에서는 simple marginal quotient가 아니라 product-relaxation fractional program으로 정의해야 해. 수치 grid 200/200 통과는 정리 증명이 아니야. Affine-fractional case라면 Charnes–Cooper 변환 또는 vertex theorem으로 증명할 수 있어.
+
+### 3.4 T3-full은 “exact homogeneous cosmology”를 증명하지 못했어
+
+PDF 8쪽은 Bianchi I와 V endpoint에서 Gauss와 momentum constraints가 정확히 0이라고 주장하지만, 바로 이어서 dynamics는 확인하지 않았다고 인정해.
+
+그렇다면 현재 증명된 것은 최대한 강하게 표현해도
+
+> “homogeneous constraint-satisfying initial-data candidate”
+
+야. “exact homogeneous cosmology”는 아니야.
+
+더 심각한 문제는 lower endpoint의 (W^2) realization이야. 등록 예시에서 lower endpoint (0.11)을 얻으려면
+
+[
+\Sigma^2+\Omega_{\rm tilt}=0.15,
+\qquad
+W^2=0.04,
+\qquad
+\Delta\Omega_k=0
+]
+
+이어야 해. 그런데 표준 Bianchi I homogeneous hypersurface의 unit normal (n^a)는 hypersurface-orthogonal이므로 Frobenius 정리에 의해
+
+[
+\omega_{ab}[n]=0.
+]
+
+반면 보고서의 parent constraint와 (W^2)는 바로 이 (n^a)의 1+3 decomposition에서 정의되어 있어.
+
+antipodal tilt pair가 만족시키는 것은
+
+[
+q_a(\beta)+q_a(-\beta)=0
+]
+
+라는 energy-flux cancellation이야. 이것은 congruence vorticity
+
+[
+\omega_{ab}[n]
+]
+
+를 생성하지 않아. 1차 moment를 없애는 것과 velocity-field의 curl을 만드는 것은 다른 문제야.
+
+다른 rotating congruence를 (n^a)로 쓰려는 것이라면 다음을 전부 다시 계산해야 해.
+
+* (n^a)와 matter congruence (u^a)의 명시적 정의
+* (\Theta[n]), (\sigma_{ab}[n]), (\omega_{ab}[n]), (A_a[n])
+* ({}^{(3)}R[n])의 정의와 비적분 rest-space에서의 의미
+* 같은 프레임에서의 energy density와 momentum flux
+* Hamiltonian/Gauss constraint
+* momentum constraint
+* Jacobi 및 structure-constant constraints
+* matter conservation
+* evolution equations
+* local development 또는 explicit trajectory
+
+따라서 sharpness는 세 단계로 나눠야 해.
+
+1. **Algebraic-box sharpness:** product component model에서의 선형함수 image. 현재 증명 가능.
+2. **Constraint-surface endpoint attainability:** full constraints를 만족하는 endpoint initial data. 현재 불완전.
+3. **Dynamical solution-space sharpness:** 실제 Einstein–matter evolution solution에서 endpoint와 interior가 실현됨. 아직 미증명.
+
+PDF 9쪽의 T3-int도 “Gauss residual이 0”인 interior family만 말하고 있어. 전체 momentum·evolution constraint를 닫지 않은 이상 P31 수준의 physical interval sharpness가 되지 않아.
+
+### 3.5 MES vorticity ceiling은 현재 과학적으로 사용할 수 없어
+
+이 수정안의 가장 중요한 새 blocker야.
+
+접근 가능한 MES 원 논문과 후속 동저자 논문에서 확인되는 계수는 다음이야.
+
+[
+B_\sigma
+========
+
+\frac53\epsilon_1+3\epsilon_2+\frac37\epsilon_3,
+]
+
+[
+B_\omega^{\rm geodesic}
+=======================
+
+\frac{10}{3}\epsilon_1+\frac{2}{15}\epsilon_2.
+]
+
+후속 COBE 적용 논문은 관측 CMB dipole을 peculiar motion으로 보고 계산에서
+
+[
+\epsilon_1=0
+]
+
+으로 둬. 같은 접근 가능한 출처에서는 acceleration bound가 나오지 않아. 반면 v8은 접근 불가능한 print-only Paper II에 있다고 추정되는
+
+[
+B_\omega^{\rm reg}
+==================
+
+\frac34\epsilon_1+2\epsilon_2+\frac27\epsilon_3
+]
+
+와 acceleration triple을 byte-frozen production anchor라는 이유로 유지해. ([arXiv][1])
+
+이건 소프트웨어 회귀 안정성의 근거일 수는 있지만, 물리적 ceiling의 근거는 아니야. 보고서도 접근 가능한 계수로 계산하면 현재 (W^2_{\max})와 약 19.9배 차이가 난다고 인정하고 있어. 이 상태에서 K5 interval의 lower endpoint에 registry (W^2_{\max})를 넣으면 identified set이 아니라 **출처가 미확인된 policy interval**이야.
+
+또 v8의 U2는
+
+[
+\epsilon_1=\frac{771}{625000}\simeq1.2336\times10^{-3}
+]
+
+을 쓴다. 이 값은 사실상 Planck Solar dipole의
+
+[
+\beta=v/c\simeq1.23357\times10^{-3}
+]
+
+와 일치하고, Planck는 이를 (v\simeq369.82,\mathrm{km,s^{-1}})인 observer peculiar motion으로 해석해. ([A&A
+
+][2])
+
+따라서 MES의 cosmological temperature dipole bound와 Solar kinematic dipole을 동일한 (\epsilon_1)로 넣는 것은 원래 적용 논리와 다르다. 사용할 수는 있지만 이름을 바꿔야 해.
+
+* `epsilon1_cosmological`: peculiar-motion 제거 후 intrinsic/all-observer dipole bound
+* `epsilon1_observer_boost`: Solar kinematic dipole
+* `epsilon1_conservative_total`: 둘을 구분하지 않은 보수적 envelope
+
+수정안은 다음처럼 branch를 분리해야 해.
+
+* **MES-G:** 접근 가능한 geodesic source로 검증된 계수만 사용.
+* **MES-NG:** non-geodesic Paper II 원문 확보 또는 독립 재유도 전까지 `UNVERIFIED`.
+* acceleration ceiling: 원문 또는 독립 derivation 전까지 `WITHHELD`.
+
+현재 registry 값을 유지한 채 `PASS`라고 쓰는 건 안 돼. `PASS provenance conflict detected`와 `PASS physical coefficient verified`는 완전히 다른 상태야.
+
+### 3.6 U1의 Teff–tilt 관계는 canonical comparator와 대수적으로 충돌해
+
+본문 PDF 15쪽의 정의는
+
+[
+\Omega_{\rm tilt}
+=================
+
+(1+w)\Omega_m\sinh^2\beta.
+]
+
+따라서
+
+[
+t
+=
+
+# \frac{\Omega_{\rm tilt}}{(1+w)\Omega_m}
+
+\sinh^2\beta
+]
+
+이고
+
+[
+s=\tanh\beta
+]
+
+이면 정확히
+
+[
+s^2
+===
+
+# \frac{\sinh^2\beta}{1+\sinh^2\beta}
+
+\frac{t}{1+t}.
+]
+
+그런데 PDF 10쪽 U1은
+
+[
+s^2=\frac{t}{2+t}
+]
+
+를 사용해. 이 식은
+
+[
+t=2\sinh^2\beta
+]
+
+일 때만 맞아.
+
+PDF 11쪽 caveat는 antipodal pair가 canonical single-boost (\Omega_{\rm tilt})의 두 배라고 말하지만, U1 본문은 별도 기호 없이 다시 (\Omega_{\rm tilt})라고 써. 이것은 단순한 표기 문제가 아니야. 동일한 (t)에 대해 fingerprint와 comparator가 서로 다른 물질 밀도 정규화를 사용하게 돼.
+
+두 stream의 rest-density를 각각 (\rho)로 잡는지, pair의 총 rest-density를 (\rho_{\rm total}=2\rho)로 잡는지도 명시해야 해. 총 밀도를 (\Omega_m)으로 정의하면 단순한 factor 2가 상쇄될 수 있어.
+
+다음처럼 분리해야 해.
+
+[
+\Omega_{\rm tilt}^{(1)}
+=======================
+
+(1+w)\Omega_m^{(1)}\sinh^2\beta,
+]
+
+[
+\Omega_{\rm tilt}^{(\pm)}
+=========================
+
+\sum_{\alpha=\pm}
+(1+w_\alpha)\Omega_{m,\alpha}\sinh^2\beta_\alpha.
+]
+
+그 뒤
+
+[
+t_{\rm pair}
+============
+
+\frac{\Omega_{\rm tilt}^{(\pm)}}
+{\sum_\alpha(1+w_\alpha)\Omega_{m,\alpha}}
+]
+
+를 정의하고 (s(t_{\rm pair}))를 새로 유도해야 해.
+
+더 근본적으로, 보고서는 local observer-boost rapidity와 global matter-frame tilt rapidity를 “by fiat”로 동일시한다고 직접 인정해. 그렇다면 U1은 물리적 identification theorem이 아니라 toy correspondence야. 이를 강한 claim으로 유지하려면 local finite-volume bulk flow가 homogeneous Bianchi tilt로 올라가는 dynamical transfer map을 증명해야 해.
+
+Teff 수학 자체는 별도 appendix나 별도 논문으로 둘 수 있어. 현재 comparator 방법론 논문의 중심에 넣으면 오히려 주장의 경계를 흐린다.
+
+### 3.7 T4′/T5′ 통계 정리는 조건부로만 통과해
+
+Hotelling/(F) 수정 자체는 맞는 방향이야. (k)-차원 Gaussian vector (y)가, 독립적인 (N_{\rm sim})개 Gaussian simulation으로 얻은
+
+[
+S=\frac{1}{N_{\rm sim}-1}W,
+\qquad
+W\sim\operatorname{Wishart}*k(\Sigma,N*{\rm sim}-1)
+]
+
+와 독립이면
+
+[
+y^\mathsf TS^{-1}y
+\sim
+\frac{k(N_{\rm sim}-1)}
+{N_{\rm sim}-k}
+F_{k,N_{\rm sim}-k}.
+]
+
+하지만 정확성에는 다음 조건이 모두 필요해.
+
+* (y)가 Gaussian.
+* simulations가 independent Gaussian.
+* (S)가 Wishart sample covariance.
+* null mean 또는 제거된 mean의 처리 방식이 정리와 일치.
+* data vector와 covariance ensemble이 독립.
+* response matrix (R), nuisance projector, rank, active set가 사전 고정.
+* 같은 mocks로 (R), whitening, rank threshold를 선택하고 다시 test calibration에 쓰지 않음.
+
+같은 simulation ensemble로 covariance도 추정하고 projector·rank·threshold도 조정했다면 단순 (F) law는 더 이상 자동으로 exact하지 않아. 이 경우 ensemble splitting 또는 nested Monte Carlo가 필요해.
+
+Hartlap correction은 ideal Gaussian/Wishart 조건에서 inverse covariance bias를 보정하는 것이고, Gaussian likelihood 자체에 covariance uncertainty를 완전히 반영하는 것은 아니야. Sellentin–Heavens는 true covariance를 marginalize하여 modified multivariate-(t) likelihood를 얻는다. ([arXiv][3])
+
+T5′의 “exact deterministic-width Imbens–Manski coverage”는 별도의 특수 정리로는 가능해. 다만 Imbens–Manski와 Stoye의 일반 결과는 본질적으로 asymptotic이고, 특히 Stoye는 interval width라는 nuisance parameter와 superefficiency 가정의 문제를 지적했어. 그러므로 문헌 이름만 붙여서 finite-sample exactness가 따라오는 것은 아니고, **common Gaussian shift + known variance + deterministic width**인 특수 모형을 독립적으로 증명해야 해. ([DOI.org][4])
+
+PDF 12쪽 U4 수치도 아직 검증 자료로 부족해.
+
+* coverage: (0.93625,0.95375,0.95625)
+* nominal: (0.95)
+* `n_sim_cov=10`
+* `size_hotelling=0.064`
+* `size_naive=0.15333`
+
+그런데 coverage Monte Carlo의 (N), seed, DGP, endpoint variance, rejection tolerance가 없어. 제공된 세 `se`가 binomial standard error라면 각각 암시하는 effective sample size가 약 (340,117,150)으로 서로 달라서 공통 Monte Carlo (N)으로 해석할 수 없어.
+
+(0.93625<0.95) 자체는 표본오차 안일 수 있지만, (N)과 exact confidence interval 없이는 “calibrated”라고 부를 수 없어. 다음을 출력해야 해.
+
+* Monte Carlo replications (N_{\rm MC})
+* seed
+* (k,N_{\rm sim})
+* covariance DGP
+* (R)과 projector 생성 방식
+* true endpoint와 estimated endpoint 정의
+* Wilson 또는 Clopper–Pearson interval
+* 사전 등록된 acceptance criterion
+
+예를 들어 coverage 0.95 테스트라면 “95% binomial CI가 0.95를 포함하고 half-width가 0.005 이하”처럼 판정 기준을 먼저 정해야 해.
+
+### 3.8 D24는 ‘diagnostic-only’라는 면책으로 해결되지 않는 차원 오류가 있어
+
+PDF 46쪽 D24는 세 panel을 “observed-sector response vector”로 묶어.
+
+* `Sigma2 data coordinate`: 실제로 (-\log_{10}) global tail
+* `Omega_tilt data coordinate`: 실제로 (340,\mathrm{km,s^{-1}}) bulk flow
+* `W2 reconstruction coordinate`: 실제로 (W/\mathrm{shear}) ratio
+
+그런데 comparator의 성분은 모두 dimensionless여야 해.
+
+[
+[\Sigma^2]=[W^2]=[\Omega_{\rm tilt}]
+=[\Delta\Omega_k]=1.
+]
+
+반면
+
+[
+[B_{\rm CF4}]=\mathrm{km,s^{-1}}.
+]
+
+그리고 (-\log_{10}p)는 dimensionless이지만 (\Sigma^2)가 아니고, (W/\mathrm{shear})도 dimensionless이지만 (W^2)가 아니야.
+
+bulk flow를 tilt coordinate로 변환하려면 적어도
+
+[
+\beta=\operatorname{artanh}\left(\frac{B}{c}\right),
+\qquad
+\Omega_{\rm tilt}
+=================
+
+(1+w)\Omega_m\sinh^2\beta
+]
+
+가 필요해. 하지만 이 식을 적용해도 finite-volume local bulk flow가 homogeneous matter tilt라는 물리적 identification은 별도로 증명되지 않아.
+
+K1 tail을 (\Sigma^2)로 바꾸려면 shear-to-CMB transfer likelihood가 필요하고, reconstruction curl/shear ratio를 (W^2)로 바꾸려면 reconstructed velocity gradient의 calibration과 absolute shear normalization이 필요해.
+
+따라서 D24는 다음처럼 이름을 바꿔야 해.
+
+* K1 low-(\ell) global-tail diagnostic
+* CF4 bulk-flow amplitude (B_{\rm CF4})
+* K6 reconstruction curl/shear ratio
+
+이들을 하나의 (g)-vector처럼 나란히 두면 안 돼.
+
+외부 데이터의 해석 조건도 아직 닫히지 않았어. Planck는 large-angle temperature anomaly들을 재확인했지만 polarization/systematics 한계 때문에 명백한 cosmological anomaly detection을 주장하지 않았고, NPIPE는 matching null analysis를 위한 600개의 complete end-to-end simulations를 제공해. ([arXiv][5])
+
+DESI DR1 cosmology catalog는 random catalog 생성, survey-specific correction, foreground correction 및 clustering validation을 한 묶음으로 다룬다. 따라서 NGC–SGC나 tracer-dependent 방향성 diagnostic을 물리적 anisotropy로 승격하려면 동일한 random/mask/window/systematic machinery가 필요해. ([arXiv][6])
+
+CF4는 55,877개 galaxy를 38,065개 group으로 묶은 큰 compilation이지만, 원 논문도 individual peculiar-velocity errors 때문에 velocity field 해석이 복잡하다고 명시해. 따라서 현재 K5 interval은 “physical (\Omega_{\rm tilt}) identified interval”이 아니라 **pipeline-feasible proxy interval**이야. ([arXiv][7])
+
+## 4. 재현성 패키지는 현재 출판 기준을 통과하지 못해
+
+제공 ZIP을 직접 점검한 결과는 다음과 같아.
+
+* 전체 파일: 75개
+* JSON: 36개
+* PNG: 28개
+* TeX/PDF 및 메타 문서
+* Python source: 0개
+* Lean source: 0개
+* Wolfram/xAct source 또는 notebook: 0개
+* Sage source: 0개
+* 환경 lockfile: 0개
+* Makefile/CI/test runner: 0개
+
+`MANIFEST.json`에 기록된 `input_hashes`는 70개인데, ZIP 안에서 정확한 상대경로로 존재하는 입력은 **0/70**이야. basename만 우연히 일치하는 것도 4개뿐이야.
+
+`SOURCE_INDEX.md`에서 `present`라고 한 것은 원래 checkout에 있었다는 의미이지, 심사자가 받은 ZIP에 있다는 의미가 아니야. 게다가 figure manifest의
+
+```text
+git_commit = "content-addressed"
+```
+
+는 실제 commit SHA가 아니야.
+
+따라서 현재 package는 provenance report이지 reproducibility package가 아니야. “SymPy/Sage/Lean/Wolfram에서 PASS”라는 문장은 독립 심사자가 검증할 수 없어. proof assistant가 formal statement를 증명했다는 사실과, 그 formal statement가 실제 GR 물리 명제를 정확히 encode했다는 것도 별개의 문제야.
+
+필수 패키지는 다음을 포함해야 해.
+
+```text
+src/
+  python/
+  lean/
+  wolfram/
+  sage/
+tests/
+data_or_download_recipes/
+environment.lock
+THEOREM_REGISTRY.yaml
+Makefile
+CITATION.cff
+README_REPRODUCE.md
+```
+
+단일 명령은 예를 들어
+
+```bash
+make reproduce-v8
+```
+
+이고, 이 명령이 아래를 모두 생성해야 해.
+
+1. 모든 seal
+2. 모든 Monte Carlo 결과
+3. 모든 figure
+4. theorem ledger
+5. 최종 PDF
+6. package manifest
+7. hash verification report
+
+또 PDF 제목은 “Sixth Revision”인데 abstract 첫 문장은 “This fifth revision”이고, 최종 package metadata의 generating command는 여전히 `build_external_audit_report_v6.py`야. `v6_compact_data_analysis.json`도 남아 있어. 이런 hygiene 문제는 사소해 보이지만, 정리 supersession 문제가 실제로 해결되지 않았다는 증거이기도 해.
+
+ACT 데이터 accounting도 구분해야 해. PDF 49쪽은 approval inventory가 3GB 이하라고 하면서 86개 local files, 25.01 GiB를 기록해. 압축 다운로드가 3GB 이하이고 해제 후 25GB일 수 있으므로 반드시 모순은 아니지만, 현재 metadata는 다음을 분리하지 않아.
+
+* compressed transfer bytes
+* downloaded bytes in this run
+* cached pre-existing bytes
+* extracted on-disk bytes
+* archive sample/profile bytes
+
+## 5. 정리별 재판정
+
+| 항목                            | 재판정                        | 필요한 수정                                                               |
+| ----------------------------- | -------------------------- | -------------------------------------------------------------------- |
+| T1′ signed-box interval       | **조건부 통과**                 | (\Omega_{k,\rm aniso}\to\Delta\Omega_k), product-factorization 조건 명시 |
+| T2′ strictness iff            | **실패**                     | endpoint compatibility 필요충분조건으로 교체                                   |
+| T2″ signed numerator          | **알고리즘 검증만 통과**            | general fractional-program theorem 필요                                |
+| T3-full endpoint realization  | **물리적 정리로 실패**             | constraint witness로 재분류하거나 full tetrad/evolution 증명                  |
+| T3-int interior family        | **불충분**                    | Gauss뿐 아니라 momentum·matter·evolution closure 필요                      |
+| T4′ Hotelling/(F)             | **조건부 통과**                 | independent Gaussian Wishart 및 fixed projector 조건 명시                 |
+| T5′ exact IM                  | **특수 모형에서만 조건부 통과**        | known/common Gaussian shift와 deterministic width 증명 분리               |
+| MES shear coefficients        | **통과**                     | source equation과 reduction assumptions 명시                            |
+| MES vorticity coefficients    | **실패/미검증**                 | geodesic verified branch와 non-geodesic unverified branch 분리          |
+| MES acceleration coefficients | **실패/withhold**            | 접근 가능한 derivation 없음                                                 |
+| U1 Teff–tilt map              | **실패**                     | factor-2 및 density normalization 충돌 해결                               |
+| U2 fingerprint ceiling        | **대수적 toy로 조건부 통과**        | Solar boost와 cosmological dipole 분리                                  |
+| U3 response correspondence    | **toy linear algebra로 통과** | physical identification claim 금지                                     |
+| U4 coverage                   | **증거 불충분**                 | MC (N), seed, CI, DGP, covariance independence 추가                    |
+| Response SVD                  | **조건부 통과**                 | 전체 (R), whitening, column scaling, rank tolerance 공개                 |
+| K5/CF4 “first interval”       | **관측 claim으로 실패**          | proxy interval로 명칭 변경, hierarchical mocks 필요                         |
+
+## 6. 독창성과 실제 기여 가능성
+
+개별 요소인 linear response rank, null space, Hotelling test, partial identification, Imbens–Manski interval은 각각 기존 방법론이야. 논문의 독창성은 이들을 단순히 나열하는 데 있지 않고 다음 조합에 있어.
+
+[
+\text{GR budget comparator}
+\longrightarrow
+\text{response-rank decomposition}
+\longrightarrow
+\text{identified set}
+\longrightarrow
+\text{status algebra}
+\longrightarrow
+\text{prior-exposure firewall}.
+]
+
+이 조합은 우주론에서 충분히 기여 가능해. 특히 “현재 데이터가 어떤 anisotropic geometry를 선호하는가?”보다 먼저 “현재 observable operator가 어떤 FLRW-departure functional을 식별할 수 있는가?”를 묻는 구조는 좋은 방법론적 차별점이야.
+
+다만 이미 Bianchi template를 명시한 분석은 Planck temperature와 polarization을 사용해 vector-mode anisotropic expansion에
+
+[
+(\sigma_V/H)_0<4.7\times10^{-11}
+]
+
+의 upper limit와, 해당 model class 안에서 anisotropic expansion에 대한 (121000:1) odds를 보고했어. HTT가 이 결과보다 강한 물리적 제약을 주장할 수는 없어. HTT의 기여는 template-free 또는 template-light 환경에서 **무엇이 식별되지 않는지와 그 결과가 얼마나 넓어지는지**를 정량화하는 데 있어. ([arXiv][8])
+
+현재는 하나의 논문에 너무 많은 축이 들어가 있어. 출판 전략은 세 갈래로 나누는 게 맞아.
+
+1. **주 논문:** signed comparator, response rank/null, signed-box partial identification, exact fractional shared-null theorem, estimated-covariance inference.
+2. **GR 후속 논문:** constraint-surface 및 dynamical solution-space realizability.
+3. **Teff 논문/부록:** max-entropy representative와 kinetic fingerprints. comparator와의 물리적 transfer가 증명된 뒤 연결.
+
+관측 논문은 K1이나 K5 중 하나를 완전히 닫은 다음 별도로 내는 편이 낫다.
+
+## 7. 출판 전 필수 수정 체크리스트
+
+### P0: 재투고 전에 반드시 완료
+
+* [ ] 구 P26/P31/P35/P36을 `SUPERSEDED` 또는 `RETRACTED` 처리하고 본문에서 제거
+* [ ] 모든 정리를 하나의 registry에서 PDF·코드·ledger로 자동 생성
+* [ ] (\Omega_{k,\rm aniso})를 (\Delta\Omega_k)로 교체
+* [ ] T2를 product-relaxation/diagonal-compatibility 정리로 다시 증명
+* [ ] T3를 constraint witness로 재명명하거나 full GR realization을 증명
+* [ ] MES-G와 MES-NG branch를 분리하고 미확인 vorticity/acceleration ceiling을 관측 interval에서 제거
+* [ ] Solar kinematic dipole과 intrinsic/all-observer CMB dipole을 분리
+* [ ] U1의 (t/(1+t)) 대 (t/(2+t)) 정규화 충돌 해결
+* [ ] D24 삭제 또는 proxy 이름으로 전면 교체
+* [ ] U4에 (N), seed, DGP, confidence interval, acceptance threshold 추가
+* [ ] 모든 proof source와 환경을 ZIP에 포함
+* [ ] 70/70 manifest input path와 hash가 실제 package에서 resolve되도록 수정
+* [ ] 버전명, builder명, compact-analysis artifact명을 v8로 통일
+
+### P1: 방법론 논문 accept를 위한 검증
+
+* [ ] signed-box theorem을 coupled feasible set까지 일반화하거나 factorization 가정을 전면 표시
+* [ ] shared-null fractional interval을 linear-fractional programming으로 검증
+* [ ] covariance estimation과 response/rank 선택에 독립 simulation split 사용
+* [ ] rank 결과에 전체 (R), units, whitening matrix, projector, tolerance 공개
+* [ ] 모든 coverage/size 실험에 binomial confidence interval과 stopping rule 적용
+* [ ] physical sharpness와 abstract sharpness를 별도 theorem number로 분리
+
+### P2: 관측 결과 논문으로 가기 위한 조건
+
+* K1: PR4/NPIPE의 complete end-to-end simulations를 이용해 mask, map product, foreground, low-(\ell) null을 닫기.
+* K5: CF4 selection, Malmquist bias, grouping, distance-indicator hierarchy, correlated velocity-field mocks를 포함하기.
+* DESI: official random catalogs, completeness/systematic weights, footprint/window와 mock calibration을 연결하기.
+* K6: transverse velocity 또는 constrained-realization calibration 없이는 (W^2) inference를 하지 않기.
+
+## 최종 심사 문구
+
+> v8은 이전판의 비판을 피하지 않고 여러 문제를 명시적 정리와 검증 대상으로 전환했다는 점에서 상당한 진전이 있다. 특히 signed curvature treatment, response-rank disclosure, estimated-covariance branch, source discrepancy disclosure는 긍정적이다. 그러나 새 정리와 폐기되어야 할 구 정리가 동일 원고에서 동시에 active 상태이고, T2′의 iff가 여전히 반례를 가지며, T3-full은 congruence vorticity와 matter flux를 혼동하고, MES vorticity ceiling은 접근 가능한 원문과 불일치하며, U1의 tilt normalization이 canonical comparator와 충돌한다. 제공 패키지 또한 machine-checked claims를 독립적으로 재실행할 수 없다. 따라서 현 원고는 게재할 수 없으나, theorem registry를 단일화하고 위의 P0 사항을 해결한다면 ‘rank-deficient cosmological observables에 대한 signed-comparator partial-identification framework’로 재투고할 가치가 충분하다.
+
+[1]: https://arxiv.org/pdf/astro-ph/9904346 "https://arxiv.org/pdf/astro-ph/9904346"
+[2]: https://www.aanda.org/articles/aa/full_html/2020/09/aa33880-18/aa33880-18.html "https://www.aanda.org/articles/aa/full_html/2020/09/aa33880-18/aa33880-18.html"
+[3]: https://arxiv.org/pdf/astro-ph/0608064 "https://arxiv.org/pdf/astro-ph/0608064"
+[4]: https://doi.org/10.1111/j.1468-0262.2004.00555.x "https://doi.org/10.1111/j.1468-0262.2004.00555.x"
+[5]: https://arxiv.org/abs/1906.02552 "https://arxiv.org/abs/1906.02552"
+[6]: https://arxiv.org/html/2411.12020v1 "https://arxiv.org/html/2411.12020v1"
+[7]: https://arxiv.org/abs/2209.11238 "https://arxiv.org/abs/2209.11238"
+[8]: https://arxiv.org/abs/1605.07178 "https://arxiv.org/abs/1605.07178"

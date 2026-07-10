@@ -72,7 +72,7 @@ def _v9_rows() -> list[dict]:
            "registered values unchanged",
            "eps1 = solar kinematic dipole (rel diff 1.1e-5); ceilings "
            "1.3087e-6 / 2.5369e-5 (hybrid, disclosed) / 3.379e-13 "
-           "(SAG-consistent); eps1 term carries 99.1%/100.0% of B_omega",
+           "(SAG-consistent); eps1 term carries 99.05%/99.99% of B_omega",
            "registered_external",
            "mes_branch_registry_seal.json"),
         _r("K5-V9", DATA,
