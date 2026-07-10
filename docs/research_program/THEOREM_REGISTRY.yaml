@@ -1,0 +1,712 @@
+schema: htt.theorem_registry.v1
+# Single source of truth for theorem/lemma status across the external-audit
+# report, ledgers, and code contracts (REV-R170, v9 cycle).
+#
+# Status enum:
+#   ACTIVE             proven/derived as stated; live in the current report body
+#   ACTIVE_CONDITIONAL proven under explicitly stated conditions/assumptions
+#   SUPERSEDED         replaced by a stronger/corrected item (superseded_by)
+#   RETRACTED          statement false as printed; kept only as a marked
+#                      counterexample/history pointer (superseded_by required)
+#   WITHHELD           no accessible derivation/source; not usable in any lane
+#   PLANNED            registered v9 item whose module/seal lands in a later
+#                      phase of this cycle (flipped to ACTIVE on landing)
+#
+# sharpness_level (T3/P31 family, per R1 2026-07-10 review taxonomy):
+#   1 = algebraic-box sharpness (product component model)
+#   2 = constraint-surface endpoint attainability (exact initial data)
+#   3 = dynamical solution-space sharpness (Einstein-matter evolution)
+#
+# The report builder MUST render its theorem ledger (and supersede badges)
+# from this file; tests/contracts/test_theorem_registry_v9.py enforces
+# structural validity. P-numbering is registry-stable, not body-monotone.
+
+entries:
+  # ---- legacy proof items P1-P36 (v6-era body) --------------------------
+  - id: P1
+    title: Signed comparator identity and Domain-checked semantics
+    owner: MIO/common
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C1-C2
+    body_section: "3.2"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - old_version/overleaf/appendices/appendix_A_proofs.tex
+      - htt/mio/formalism/physical_pushforward.py
+  - id: P2
+    title: Diagnostic variables Q, F, Pi, G_F, and P_post are distinct
+    owner: MIO/HTT/common
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C1-C2
+    body_section: "3.2"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md
+      - htt/mio/formalism/budget_spec.py
+      - htt/htt/htt/departure/posterior_pushforward.py
+  - id: P3
+    title: Diagonal MES three-bound hierarchy
+    owner: BASS/MIO
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "4"
+    note: >-
+      Coefficient PROVENANCE is branch-split by MES-BR (v9): sigma triple
+      verified (MES-G); registered omega/accel triples are MES-NG/UNVERIFIED
+      (primary_sourced_not_rederivable). The hierarchy inequality itself is
+      unchanged.
+    sources:
+      - old_version/overleaf/chapters/ch03_bianchi_bounds.tex
+      - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+  - id: P4
+    title: Frame-attribution safe-route correction
+    owner: BASS/MIO
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "4"
+    sources:
+      - htt/bass/observational/beta_threshold.py
+      - old_version/overleaf/appendices/appendix_A_proofs.tex
+  - id: P5
+    title: Conditional Bianchi V momentum-response formula
+    owner: BASS/MIO
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "4"
+    sources:
+      - htt/obsstat/egs3_bianchi_v_constraint.py
+      - docs/generated/bianchi_v_constraint_seal.json
+      - old_version/overleaf/appendices/appendix_A_proofs.tex
+  - id: P6
+    title: Flat-FLRW first jet
+    owner: BASS/OBSSTAT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "5.1"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - id: P7
+    title: Non-collinear boost composition and first-jet separation
+    owner: BASS/OBSSTAT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "5.1"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - id: P8
+    title: Response rank and duplicated channels
+    owner: HTT/OBSSTAT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "5.2"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+      - htt/htt/htt/departure/paper_a_closure.py
+  - id: P9
+    title: Radial-vorticity blindness
+    owner: OBSSTAT/HTT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "5.2"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+      - htt/obsstat/egs2_transport.py
+  - id: P10
+    title: Single-shell degeneracy and broad-depth rank recovery
+    owner: OBSSTAT/HTT
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "5.2"
+    sources:
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+      - htt/htt/htt/departure/paper_a_closure.py
+  - id: P11
+    title: PSD second-moment cone
+    owner: BASS/HTT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "6"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - id: P12
+    title: Scalar tilt trace is not sufficient
+    owner: BASS/HTT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "6"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - id: P13
+    title: Shear memory of anisotropic stress
+    owner: BASS/HTT
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "6"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+      - htt/obsstat/egs3_shear_memory_bias.py
+  - id: P14
+    title: Dust-FLRW oracle
+    owner: BASS/HTT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "6"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - id: P15
+    title: Quadrupole filling under registered closure
+    owner: OBSSTAT/MIO
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "7"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/research_program/egs2/THEOREM_MAP.md
+  - id: P16
+    title: Single-sky sampling dispersion
+    owner: OBSSTAT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "7"
+    sources:
+      - docs/generated/formal_proof_appendix_current.md
+      - docs/research_program/egs2/THEOREM_MAP.md
+  - id: P17
+    title: Multi-ell Fisher floor and transfer-profile refinement
+    owner: OBSSTAT/BASS
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "7"
+    sources:
+      - docs/research_program/egs2/THEOREM_MAP.md
+      - docs/research_program/egs3/THEOREM_CANDIDATES.md
+      - htt/obsstat/egs2_fisher.py
+      - htt/bass/transfer/shear_quadrupole_seminative.py
+  - id: P18
+    title: Graded rank-2 comparator
+    owner: OBSSTAT/MIO
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "7"
+    sources:
+      - docs/research_program/egs3/THEOREM_CANDIDATES.md
+      - htt/obsstat/egs3_graded_comparator.py
+  - id: P19
+    title: Exceedance and e-value calibration
+    owner: OBSSTAT/HTT
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "7"
+    sources:
+      - docs/research_program/egs3/THEOREM_CANDIDATES.md
+      - htt/obsstat/egs3_calibration.py
+  - id: P20
+    title: Rao-Blackwell reachable-sector domination
+    owner: OBSSTAT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "7"
+    sources:
+      - docs/research_program/egs3/THEOREM_CANDIDATES.md
+      - htt/obsstat/egs3_calibration.py
+  - id: P21
+    title: Volterra depth-memory representation
+    owner: OBSSTAT/MIO
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "7"
+    note: constant-H caveat closed by the v8 successor egs3_volterra_hz (any-H kernel).
+    sources:
+      - docs/research_program/egs3/THEOREM_CANDIDATES.md
+      - htt/obsstat/egs3_volterra_memory.py
+      - htt/obsstat/egs3_volterra_hz.py
+  - id: P22
+    title: Transverse reopening of the vorticity sector
+    owner: OBSSTAT
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "7"
+    sources:
+      - docs/research_program/egs3/THEOREM_CANDIDATES.md
+      - htt/obsstat/egs3_vorticity_channels.py
+  - id: P23
+    title: Diagonal covariance compression loses morphology
+    owner: OBSSTAT/BASS
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2-C3
+    body_section: "7.1"
+    sources:
+      - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+      - docs/ver2_upgrade/lowell_cmb_observables_statistics.md
+  - id: P24
+    title: Full-covariance MES tightening
+    owner: OBSSTAT/BASS/MIO
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2-C3
+    body_section: "7.1"
+    sources:
+      - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+      - htt/bass/atlas/budget_ceiling_optimizer.py
+  - id: P25
+    title: Rank-failure no-result and morphology information gain
+    owner: OBSSTAT/BASS/MIO
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2-C3
+    body_section: "7.1"
+    sources:
+      - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+      - htt/bass/atlas/budget_ceiling_optimizer.py
+  - id: P26
+    title: Partial-identification interval for x_C (one-sided nonnegative cone)
+    owner: MIO/OBSSTAT/HTT
+    status: SUPERSEDED
+    superseded_by: T1p
+    claim_tier: C2
+    body_section: "3.4"
+    note: >-
+      Curvature coordinate is signed (Delta Omega_k in R); the one-sided
+      nonnegative-cone box with curvature entering the upper endpoint only is
+      replaced by the two-sided signed box of T1p with the dual branch
+      [0.11,0.17] (open) / [0.09,0.17] (all-curvature). The additive endpoint
+      decomposition is exact only under the stated product-factorization
+      assumption on the feasible set.
+    sources:
+      - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md
+      - docs/research_program/egs3/THEOREM_CANDIDATES.md
+      - htt/obsstat/egs3_identified_set.py
+  - id: P27
+    title: MES-rank route reconciliation
+    owner: BASS/OBSSTAT/MIO
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "4"
+    sources:
+      - old_version/overleaf/chapters/ch03_bianchi_bounds.tex
+      - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+      - htt/obsstat/egs3_graded_comparator.py
+  - id: P28
+    title: Posterior prior-exposure under null directions
+    owner: HTT/MIO
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "8.2"
+    sources:
+      - htt/htt/htt/departure/posterior_pushforward.py
+      - htt/htt/htt/infer/posterior_exceedance.py
+  - id: P29
+    title: Finite-cover e-value combination
+    owner: OBSSTAT/HTT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "7"
+    sources:
+      - htt/obsstat/egs3_calibration.py
+      - docs/research_program/egs3/THEOREM_CANDIDATES.md
+  - id: P30
+    title: Parameter duplication versus observation duplication
+    owner: OBSSTAT/HTT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: "5.2"
+    sources:
+      - htt/htt/htt/departure/paper_a_closure.py
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - id: P31
+    title: Identified-set sharpness over PSD and ceiling cones
+    owner: MIO/OBSSTAT
+    status: SUPERSEDED
+    superseded_by: T3-full
+    claim_tier: C2
+    sharpness_level: 1
+    body_section: "3.4"
+    note: >-
+      "Every box point is attained by a physical configuration" holds only at
+      sharpness level 1 (algebraic-box image of the product component model).
+      Constraint-surface attainability (level 2) is established by T3-full for
+      the upper endpoint only; the lower-endpoint W^2 sector is
+      constraint-unverified (Frobenius: the Bianchi-I slice normal is
+      hypersurface-orthogonal, omega_ab[n]=0; the antipodal pair cancels the
+      energy flux only). Dynamical sharpness (level 3) is unproven and
+      registered as the King-Ellis deferred item.
+    sources:
+      - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+      - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - id: P32
+    title: Optical ansatz branch identifiability
+    owner: HTT/OBSSTAT/BASS
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2-C3
+    body_section: "8.4"
+    sources:
+      - htt/obsstat/lowell_likelihood_branches.py
+      - docs/ver3/06_OBSERVABLES_AND_STATISTICS_APPENDIX.md
+  - id: P33
+    title: Depth-gap delta-method propagation
+    owner: MIO/HTT
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "3.3"
+    note: domain-restricted; interval propagation is owned by T2G (not P36).
+    sources:
+      - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md
+      - htt/obsstat/egs3_volterra_memory.py
+  - id: P34
+    title: Vector-g response covariance propagation
+    owner: OBSSTAT/HTT/MIO
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: "3.3"
+    sources:
+      - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md
+      - htt/mio/formalism/budget_spec.py
+  - id: P35
+    title: Two-stage identified-set coverage with Imbens-Manski endpoint correction
+    owner: OBSSTAT/MIO
+    status: SUPERSEDED
+    superseded_by: T4p
+    related: [T5p]
+    claim_tier: C2
+    body_section: "3.4"
+    note: >-
+      Known-covariance chi-square quantiles replaced by the
+      estimated-covariance Hotelling/F branch (T4p); the exact
+      deterministic-width Imbens-Manski endpoint statement survives as the
+      special-model theorem T5p.
+    sources:
+      - htt/obsstat/egs3_identified_set.py
+      - docs/generated/egs3_experiments.json
+  - id: P36
+    title: Joint-feasible-set depth-gap interval propagation ("strict whenever")
+    owner: MIO/OBSSTAT
+    status: RETRACTED
+    superseded_by: T2G
+    claim_tier: C2
+    body_section: "3.3"
+    note: >-
+      False universal strictness criterion: the counterexample S=[0,1],
+      N(s)=s, D(s)=1+s satisfies c_N c_D>0 with positive denominator and
+      nondegenerate box, yet the joint lower endpoint equals the
+      product-relaxation lower endpoint (N_min=0 degeneracy neutralizes the
+      denominator conflict). Kept in the report only as a marked
+      counterexample; interval propagation is owned by T2G.
+    sources:
+      - htt/obsstat/egs3_gf_interval.py
+      - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md
+
+  # ---- fifth/sixth-revision response-layer theorems ---------------------
+  - id: T1p
+    title: Signed-box two-branch identified interval (curvature signed, two-sided)
+    owner: OBSSTAT/MIO
+    status: ACTIVE
+    claim_tier: C2
+    body_section: fifth_revision_response
+    supersedes: [P26]
+    note: >-
+      Endpoint decomposition I_x = I_R + sum_j [min(c_j L_j, c_j U_j),
+      max(c_j L_j, c_j U_j)]; dual branch [0.11,0.17] (open curvature) /
+      [0.09,0.17] (all curvature). Exact under the product-factorization
+      assumption on the feasible set (stated explicitly in v9).
+    sources:
+      - htt/obsstat/egs3_coverage_strengthened.py
+      - docs/generated/signed_box_interval_seal.json
+  - id: DL1
+    title: Lower-gap monotonicity of the all-curvature branch (|c_k| U_k)
+    owner: OBSSTAT/MIO
+    status: ACTIVE
+    claim_tier: C2
+    body_section: fifth_revision_response
+    sources:
+      - htt/obsstat/egs3_coverage_strengthened.py
+      - docs/generated/signed_box_interval_seal.json
+  - id: L-T2-EXIST
+    title: Existence-level depth-gap strictness lemma (some endpoint strict iff a shared component conflicts)
+    owner: MIO/OBSSTAT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: fifth_revision_response
+    note: >-
+      Reinterpretation of the 400/400 exact-Fraction seal
+      (gf_strictness_exact): it certifies the OR-over-endpoints statement
+      only, on the positive-numerator draw domain. It does NOT certify a
+      per-endpoint iff (see T2p RETRACTED-as-iff, T2G).
+    sources:
+      - htt/obsstat/egs3_gf_interval.py
+      - docs/generated/gf_strictness_exact_seal.json
+  - id: T2p
+    title: Depth-gap strictness per-endpoint iff via coefficient signs
+    owner: MIO/OBSSTAT
+    status: RETRACTED
+    superseded_by: T2G
+    claim_tier: C2
+    body_section: fifth_revision_response
+    note: >-
+      The per-endpoint "strict iff c_N c_D>0 on a nondegenerate shared
+      component" claim is false (same counterexample as P36: N_min=0
+      neutralizes the conflict at the lower endpoint). The sealed computation
+      survives as the weaker existence-level lemma L-T2-EXIST; the coefficient
+      sign criterion survives only as the N>0 nondegenerate corollary inside
+      T2G.
+    sources:
+      - htt/obsstat/egs3_gf_interval.py
+      - docs/generated/gf_strictness_exact_seal.json
+  - id: T2pp
+    title: Signed-numerator domain repair of the fixed-pairing quotient interval
+    owner: MIO/OBSSTAT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: v8_update_cycle
+    note: >-
+      v8 successor: full four-corner enumeration valid for signed numerators;
+      frozen fixed-pairing defect exercised ([-3/5,-19/39] vs true
+      [-3/4,-19/49]); positive-domain containment 200/200 bit-exact.
+      Criterion agreement on the signed domain is reported as an observation,
+      not a theorem.
+    sources:
+      - htt/obsstat/egs3_gf_interval_v8.py
+      - docs/generated/gf_interval_v8_seal.json
+  - id: T3-lin
+    title: Linearized realization of the identified-interval endpoints
+    owner: BASS/OBSSTAT
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    sharpness_level: 1
+    body_section: fifth_revision_response
+    note: >-
+      Gauss+momentum residuals < 1e-10 at linear order; partial level-2
+      evidence only. The linearized W^2 mode is a posited free antisymmetric
+      tensor, not the projected gradient of a 4-velocity (the momentum
+      constraint sees only curl(omega), so it cannot detect the Frobenius
+      obstruction).
+    sources:
+      - htt/obsstat/egs3_linearized_realization.py
+      - docs/generated/linearized_realization_seal.json
+  - id: T3-full
+    title: Exact constraint-surface endpoint witnesses (homogeneous initial-data candidates)
+    owner: BASS/OBSSTAT
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    sharpness_level: 2
+    body_section: sixth_revision_response
+    supersedes: [P31]
+    note: >-
+      RELABELED in v9 (previously "exact homogeneous cosmologies"). Level 2
+      is genuinely reached for the UPPER endpoint (Bianchi V, transverse
+      shear, antipodal flux cancellation, Gauss closed by Lambda). The LOWER
+      endpoint reaches level 2 only outside the W^2 sector: W^2=4/100 rides
+      on a separate constraint-unverified rotational mode (Frobenius; the
+      registered value is read from the registry, not constructed). Dynamics
+      (level 3) not checked; King-Ellis rotating-congruence rederivation
+      (R1's ten-item list) is a registered deferred item.
+    sources:
+      - htt/obsstat/egs3_nonlinear_realization.py
+      - docs/generated/nonlinear_realization_seal.json
+  - id: T3-int
+    title: Interior x_C-value family (two-segment exact sweep)
+    owner: BASS/OBSSTAT
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    sharpness_level: 1
+    body_section: v8_update_cycle
+    note: >-
+      Exact x_C-VALUE interval sweep (level 1) with genuine momentum closure
+      only on segment II (Bianchi V); segment I inherits the Bianchi-I
+      W^2/Frobenius gap (momentum INHERITED-ASSERTED). The Bianchi-V
+      group-invariant curl slaving |curl v|^2 = a^2 v_perp^2 is a correct
+      derived obstruction, at linear-order spatial-curl proxy level (not the
+      registered comparator W^2 invariant).
+    sources:
+      - htt/obsstat/egs3_interior_family.py
+      - docs/generated/interior_family_seal.json
+  - id: T4p
+    title: Estimated-covariance residual test is Hotelling T^2 / F
+    owner: OBSSTAT
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: fifth_revision_response
+    supersedes: [P35]
+    note: >-
+      Exact under the stated assumptions block (v9): y Gaussian and
+      independent of the covariance ensemble; S ~ Wishart(Sigma, n_sim-1);
+      mean known/fixed; response, nuisance projector, rank, and active set
+      fixed a priori; ensemble splitting required if selection reuses the
+      covariance mocks (attached to the K1 lane).
+    sources:
+      - htt/obsstat/egs3_coverage_strengthened.py
+      - docs/generated/coverage_strengthened_seal.json
+  - id: T5p
+    title: Exact deterministic-width Imbens-Manski endpoint coverage (special model)
+    owner: OBSSTAT
+    status: ACTIVE_CONDITIONAL
+    claim_tier: C2
+    body_section: fifth_revision_response
+    note: >-
+      Exact finite-sample statement in the special model: deterministic null
+      width, both endpoint estimators sharing one Gaussian reachable noise,
+      known variance (no asymptotics, no Stoye uniformity condition). The
+      Teff U4 illustration runs in the ESTIMATED-se regime and is labeled a
+      finite-sample approximation (exact-regime witness added in v9).
+    sources:
+      - htt/obsstat/egs3_coverage_strengthened.py
+      - docs/generated/coverage_strengthened_seal.json
+  - id: T8p
+    title: Noncentral-chi-square power monotonicity
+    owner: OBSSTAT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: fifth_revision_response
+    sources:
+      - htt/obsstat/egs3_coverage_strengthened.py
+      - docs/generated/coverage_strengthened_seal.json
+  - id: T9p
+    title: Multi-component tilt composition
+    owner: OBSSTAT/BASS
+    status: ACTIVE
+    claim_tier: C2
+    body_section: fifth_revision_response
+    sources:
+      - htt/obsstat/egs3_parent_identity.py
+      - docs/generated/multicomponent_tilt_seal.json
+  - id: MES-PROV
+    title: MES coefficient provenance (sigma rederived bit-exact; omega/accel primary-sourced print-only; SAG1997 discrepancy documented)
+    owner: BASS/OBSSTAT
+    status: ACTIVE
+    claim_tier: C2
+    body_section: sixth_revision_response
+    sources:
+      - htt/obsstat/egs3_mes_rederivation.py
+      - docs/generated/mes_rederivation_seal.json
+      - docs/audits/mes_primary_sources/sag1997_astro-ph_9904346_ApJ476_435.tex
+
+  # ---- v8-update unification lane ---------------------------------------
+  - id: U1
+    title: Beta-channel toy correspondence (s = tanh beta; pair-tilt map s^2 = t/(2+t))
+    owner: OBSSTAT/TEFF
+    status: ACTIVE_CONDITIONAL
+    claim_tier: diagnostic_only
+    body_section: v8_update_cycle
+    note: >-
+      Toy correspondence conditional on the by-fiat identification of the
+      observer-boost and matter-tilt rapidities. v9 pins symbols: pair tilt
+      Omega_tilt^(pm) = 2(1+w)Omega_m^(1) sinh^2 beta with PER-STREAM
+      denominator (t := Omega_tilt^(pm)/((1+w)Omega_m^(1)) = 2 sinh^2 beta);
+      the single-boost comparator glyph Omega_tilt gives t/(1+t) and slope
+      -(3/2). Normalization-free primitives: R3-1 = -(3/2)s^2 + O(s^4),
+      R5-1 = +(5/2)s^2 + O(s^4).
+    sources:
+      - htt/obsstat/egs3_teff_unification.py
+      - docs/generated/teff_unification_seal.json
+  - id: U2
+    title: Fingerprint envelope ceilings at eps1 (exact rationals)
+    owner: OBSSTAT/TEFF
+    status: ACTIVE_CONDITIONAL
+    claim_tier: diagnostic_only
+    body_section: v8_update_cycle
+    note: >-
+      v9 relabel: the ceiling input is eps1_conservative_total (the full
+      observed CMB dipole, numerically the solar kinematic dipole), NOT a
+      cosmological vorticity bound; see MES-BR eps1 triple naming.
+    sources:
+      - htt/obsstat/egs3_teff_unification.py
+      - docs/generated/teff_unification_seal.json
+  - id: U3
+    title: Rank-2 response schema correspondence (comparator and Teff lanes)
+    owner: OBSSTAT/TEFF
+    status: ACTIVE
+    claim_tier: diagnostic_only
+    body_section: v8_update_cycle
+    note: mathematical correspondence only; no physical identification asserted.
+    sources:
+      - htt/obsstat/egs3_unification_schema.py
+      - docs/generated/unification_schema_seal.json
+  - id: U4
+    title: Teff fingerprint statistical closure (IM coverage + Hotelling calibration)
+    owner: OBSSTAT/TEFF
+    status: SUPERSEDED
+    superseded_by: U4-v9
+    claim_tier: diagnostic_only
+    body_section: v8_update_cycle
+    note: >-
+      v8 run (n_rep=800/1500) superseded by the v9 rerun with full disclosed
+      provenance (N, seeds, Wilson CIs, pre-registered acceptance criterion).
+      The v8 numbers were correct; the artifact under-disclosed them.
+    sources:
+      - htt/obsstat/egs3_teff_statistical.py
+      - docs/generated/teff_statistical_seal.json
+
+  # ---- v9 items (this cycle) --------------------------------------------
+  - id: T2G
+    title: General fractional-program interval theorem (product relaxation; per-endpoint diagonal-attainment iff; argmin/argmax corollary)
+    owner: MIO/OBSSTAT
+    status: PLANNED
+    landing: rev-r171
+    claim_tier: C2
+    body_section: v9_response
+    supersedes: [P36, T2p]
+    note: >-
+      I_joint subseteq I_prod always; per-endpoint equality iff a diagonal
+      point attains the product-relaxation endpoint; for strictly-positive N
+      affine on a box, L_joint = L_prod iff argmin(N) intersect argmax(D)
+      nonempty (dually for the upper endpoint); the old coefficient-sign
+      criterion is the N>0 nondegenerate corollary. Charnes-Cooper/vertex
+      exact-QQ certification.
+    sources:
+      - htt/obsstat/egs3_fractional_program.py
+      - docs/generated/fractional_program_exact_seal.json
+  - id: TSUM
+    title: Two-temperature fingerprint sum bound R3 + R5 >= 2 (exact factorization mu3*mu5 - mu4^2 = s^2 (1-s^2)^3)
+    owner: OBSSTAT/TEFF
+    status: PLANNED
+    landing: rev-r172
+    claim_tier: diagnostic_only
+    body_section: v9_response
+    note: >-
+      Promotion of the v8 numeric-only certificate (R2's V7): R3*R5 = 1 +
+      s^2(1-s^2)^3/mu4^2 >= 1, then AM-GM; equality iff s=0.
+    sources:
+      - htt/obsstat/egs3_fingerprint_sum_theorem.py
+      - docs/generated/fingerprint_sum_theorem_seal.json
+  - id: U4-v9
+    title: Teff fingerprint statistical closure, v9 rerun (full MC provenance, Wilson CIs, pre-registered acceptance)
+    owner: OBSSTAT/TEFF
+    status: PLANNED
+    landing: rev-r172
+    claim_tier: diagnostic_only
+    body_section: v9_response
+    sources:
+      - htt/obsstat/egs3_teff_statistical_v9.py
+      - docs/generated/teff_statistical_v9_seal.json
+  - id: MES-BR
+    title: MES coefficient branch registry (MES-G verified geodesic / MES-NG unverified non-geodesic / ACCEL withheld) + eps1 attribution triple
+    owner: BASS/OBSSTAT
+    status: PLANNED
+    landing: rev-r173
+    claim_tier: C2
+    body_section: v9_response
+    note: >-
+      eps1_observer_boost = eps1_conservative_total = 771/625000 (observed
+      CMB dipole = solar kinematic dipole); eps1_cosmological = 0 (SAG1997
+      convention). Registered W2_max = 1.309e-6 stays the frozen registered
+      branch; hybrid-literature 2.537e-5 and SAG-consistent ~3.38e-13 are
+      carried as attribution-conditional comparison branches only.
+    sources:
+      - htt/obsstat/egs3_mes_branch_registry.py
+      - docs/generated/mes_branch_registry_seal.json
+  - id: K5-CARD-v2
+    title: K5/CF4 identified-interval card v9 (three labeled W^2 ceiling branches x two curvature branches)
+    owner: OBSSTAT/MIO
+    status: PLANNED
+    landing: rev-r173
+    claim_tier: diagnostic_only
+    body_section: v9_response
+    note: observational_claim_allowed stays False; plugin firewall intact.
+    sources:
+      - scripts/k5_cf4_identified_interval_card_v9.py
+      - docs/generated/k5_cf4_identified_interval_card_v9.json
