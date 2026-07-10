@@ -2772,6 +2772,75 @@ def audit_response_matrix_ko() -> str:
 v6 매트릭스 원문은 byte-frozen v6/v7/v8 패키지의 `external_audit_response_matrix_ko.md`에 보존되어 있다.
 """
 
+def environment_lock() -> str:
+    """Deterministic environment lock: pinned package versions from the venv
+    (importlib.metadata; stable across --check runs within one environment)
+    plus the proof-engine toolchain versions recorded at registration time."""
+    import importlib.metadata as md
+    pins = []
+    for dist in sorted(md.distributions(),
+                       key=lambda d: (d.metadata["Name"] or "").lower()):
+        name = dist.metadata["Name"]
+        if name:
+            pins.append(f"{name}=={dist.version}")
+    toolchain = [
+        "# proof-engine toolchain (versions as registered by their seals)",
+        "python==3.12 (venv)",
+        "SageMath==10.9 (QQ/PPL exact LP lane)",
+        "Lean4==4.31.0 (lake; native_decide + mathlib lanes)",
+        "wolframscript (xAct 1.3.0 lane)",
+        "pdflatex (TeX Live; PDF excluded from byte-check)",
+    ]
+    return "\n".join(toolchain) + "\n\n# pip environment\n" + "\n".join(pins) + "\n"
+
+
+def readme_reproduce() -> str:
+    return """# Reproducing the v9 external-audit report
+
+Every number printed in the report is rendered fail-closed from a seal
+artifact shipped under `seals/`; every hashed input ships under `sources/`
+at its repository-relative path, so `MANIFEST.json.input_hashes` resolve
+against this package with no external checkout.
+
+Single command (from a repository checkout):
+
+    make reproduce-v9
+
+which chains: the EGS3 gate suites -> the v7/v8/v9 seal runners (SymPy,
+SageMath QQ+PPL, Lean, Wolfram/xAct) -> the experiment artifacts -> the
+results tables and K5 cards -> the figure packs -> this report builder
+(`python scripts/build_external_audit_report_v9.py`), whose `--check` mode
+regenerates every text artifact in memory and diffs byte-exactly.
+
+Verification without a checkout: hash any file under `sources/` or `seals/`
+with SHA-256 and compare against `MANIFEST.json`. The `git_commit` fields
+are `content-addressed` by design (the freeze discipline verifies bytes,
+not commit ids). The `environment.lock` file pins the Python environment
+and records the proof-engine toolchain versions.
+
+Data lanes: the large observational inputs (Planck FFP10/NPIPE E2E, DESI
+randoms, CF4 field realizations) are NOT shipped and remain registered
+blockers; their acquisition recipes live in `dl_pipeline/` in the
+repository. Nothing in this package asserts an observational claim.
+"""
+
+
+def citation_cff() -> str:
+    return """cff-version: 1.2.0
+message: If you use this external-audit report or its seal artifacts, cite it as below.
+title: "HTT External-Audit Research Report v9 (Seventh Revision, Registry-Unified Theorem Set)"
+authors:
+  - family-names: Jiwon
+    affiliation: Soongsil University OMEG Institute
+version: v9
+date-released: "2026-07-11"
+repository: htt_base (repo-local; sources shipped under sources/)
+notes: >-
+  Diagnostic-only theorem/methodology report; no observational claim,
+  family identification, or native-solver result is asserted.
+"""
+
+
 def text_payloads() -> dict[str, str]:
     """Every text artifact of the package, regenerated in memory (for --check)."""
     artifacts = load_required_artifacts()
@@ -2792,6 +2861,9 @@ def text_payloads() -> dict[str, str]:
         "method_validation_summary.json": json.dumps(
             method_validation_summary(), indent=2, ensure_ascii=False),
         "external_audit_response_matrix_ko.md": audit_response_matrix_ko(),
+        "environment.lock": environment_lock(),
+        "README_REPRODUCE.md": readme_reproduce(),
+        "CITATION.cff": citation_cff(),
         "MANIFEST.json": json.dumps({
             "package": OUT.name,
             "report_version": REPORT_VERSION,
@@ -2807,7 +2879,30 @@ def text_payloads() -> dict[str, str]:
             "scope": "seventh-revision (v9) external audit report for htt_base research (registry-unified response to the two 2026-07-10 re-reviews, plus current-data and compact-data diagnostic passes)",
             "claim_tier": "C1-C2 framework/theorem report; C2-C3 conditional covariance methodology; diagnostic_only current-data and compact-data diagnostics",
             "transfer_source": "none for theorem statements; mixed none/external_proxy/external_public_data for current-data and compact-data diagnostics as recorded per sidecar manifest",
-            "input_hashes": {rec["path"]: rec["sha256"] for rec in records},
+            "input_hashes": {f"sources/{rec['path']}": rec["sha256"]
+                             for rec in records if rec["exists"]},
+            "input_hashes_unresolved_historical": {
+                rec["path"]: None for rec in records if not rec["exists"]},
+            "seal_hashes": {f"seals/{name}": sha256_file(ROOT / name)
+                            for name in REQUIRED_ARTIFACTS},
+            "reproducibility": {
+                "shipped_sources": "sources/<repo-relative-path> (every "
+                                   "existing SOURCE_FILES entry; hashes above "
+                                   "resolve against these in-package copies)",
+                "shipped_seals": "seals/docs/generated/*.json (every "
+                                 "REQUIRED_ARTIFACTS seal)",
+                "environment_lock": "environment.lock",
+                "readme": "README_REPRODUCE.md",
+                "citation": "CITATION.cff",
+                "single_command": "make reproduce-v9",
+                "git_commit_note": "the git_commit fields are "
+                                   "'content-addressed' by design: the "
+                                   "package is verified by the SHA-256 "
+                                   "hashes above, which are stable under "
+                                   "the byte-freeze discipline, whereas a "
+                                   "commit id would change on every commit "
+                                   "and break --check byte-stability",
+            },
             "excluded_source_classes": EXCLUDED_SOURCE_CLASSES,
             "figures": {
                 "count": len(figure_pack["figures"]),
@@ -2884,12 +2979,35 @@ def copy_v8_update_figures() -> None:
         raise RuntimeError("unexpected v8-update figure copy count")
 
 
+def copy_sources_and_seals() -> None:
+    """Ship every hashed input so MANIFEST.input_hashes resolve in-package
+    (the 0/70 resolution failure was a blocking finding of both 2026-07-10
+    reviews)."""
+    for sub in ("sources", "seals"):
+        dest = OUT / sub
+        if dest.exists():
+            shutil.rmtree(dest)
+    for rec_path in SOURCE_FILES:
+        src = ROOT / rec_path
+        if not src.exists():
+            continue
+        dst = OUT / "sources" / rec_path
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
+    for name in REQUIRED_ARTIFACTS:
+        src = ROOT / name
+        dst = OUT / "seals" / name
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
+
+
 def write_outputs() -> None:
     OUT.mkdir(exist_ok=True)
     for name, content in text_payloads().items():
         (OUT / name).write_text(content, encoding="utf-8")
     copy_report_data_figures()
     copy_v8_update_figures()
+    copy_sources_and_seals()
 
 
 def check_outputs() -> int:
