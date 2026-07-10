@@ -89,6 +89,11 @@ def build_payloads() -> tuple[dict[str, str], dict[str, dict]]:
         seals["volterra_hz_seal.json"] = volterra_hz_seal()
     except Exception:  # module not present yet -> lane simply omits it
         pass
+    try:
+        from htt.obsstat.egs3_interior_family import interior_family_seal
+        seals["interior_family_seal.json"] = interior_family_seal()
+    except Exception:  # module not present yet -> lane simply omits it
+        pass
 
     payloads = {name: json.dumps(seal, indent=2, default=float) + "\n"
                 for name, seal in seals.items()}

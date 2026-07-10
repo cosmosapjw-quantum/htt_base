@@ -1,6 +1,6 @@
 id: EGS3-T3-king-ellis
 title: Full nonlinear (King-Ellis) realization of the identified-set
-state: endpoints_exactly_realized_full_sharpness_deferred
+state: interval_interior_exactly_realized_dynamics_deferred
 owner_lane: gr_xact / obsstat
 
 progression:
@@ -40,3 +40,28 @@ resolved_in_v8: |
 remaining: realizing every INTERIOR point of the full 4-component identified SET by a
   single connected exact family is a strictly stronger statement (not required for
   interval sharpness); it is the only residual King-Ellis item. Pure symbolic GR, no data.
+
+resolution_t3_int_2026_07_10: |
+  v8-update cycle (REV-R163): the residual initial-data item ("realizing every
+  INTERIOR point ... by a single connected exact family") is DISCHARGED for the
+  x_C INTERVAL: htt/obsstat/egs3_interior_family.py exhibits a piecewise-
+  connected two-segment exact family (Bianchi I W^2-sweep glued EXACTLY at
+  x_C=3/20 to the a->0 boundary of a Bianchi V Omega_k-sweep) whose x_C sweeps
+  [11/100, 17/100] continuously and strictly monotonically; realize_interior_
+  point() returns an explicit exact member for ANY rational target (Fraction
+  arithmetic; gate GI2 checks all 61 targets at step 1/1000). Gauss residual
+  identically zero along both segments (symbolic in the family parameter);
+  momentum closure parameter-independent (transverse shear + antipodal pair).
+  PLUS: exact Bianchi V group-invariant curl DERIVED from the structure
+  constants -- curl v = (0, -a v3, a v2); aligned tilt irrotational; a
+  transverse antipodal pair carries vorticity, giving a witness with ALL FOUR
+  sectors simultaneously nonzero and exact constraints; and the DERIVED
+  OBSTRUCTION |curl v|^2 = a^2 v_perp^2 (vorticity SLAVED to a curvature-tilt
+  product) shows free box-interior dial-in of independent (W^2, Omega_k) is
+  NOT available in this class -- recorded as a finding, not a failure.
+  Seal interior_family_seal.json (egs3.interior_family, PASS); Wolfram
+  first-principles cross-check egs3_v8_interior_family_proof.json (10/10);
+  gates test_egs3_axis_g_interior_family.py (15).
+  STILL DEFERRED: the dynamical King-Ellis evolution realization (constraint-
+  level initial data only) and any exact family with independently dialed
+  (W^2, Omega_k) box-interior points.

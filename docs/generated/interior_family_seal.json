@@ -1,0 +1,201 @@
+{
+  "seal": "egs3.interior_family",
+  "status": "PASS",
+  "sympy_version": "1.14.0",
+  "numpy_version": "2.5.0",
+  "theorem": "T3-int: every x_C in [11/100, 17/100] is exactly realized by an explicit member of one connected two-segment exact family (Bianchi I W^2-sweep glued at 15/100 to the exact a->0 boundary of a Bianchi V Omega_k-sweep); plus an exact Bianchi V witness with ALL FOUR sectors simultaneously nonzero, whose vorticity obeys the derived slaving |curl v|^2 = a^2 v_perp^2",
+  "symbolic_family": {
+    "gauss_residual_segment_I": "0",
+    "gauss_residual_segment_II": "0",
+    "gauss_identically_zero": true,
+    "x_C_segment_I": "t/25 + 11/100",
+    "x_C_segment_II": "u/50 + 3/20",
+    "dxC_dt": "1/25",
+    "dxC_du": "1/50",
+    "strictly_monotone": true,
+    "junction_exact_match": true,
+    "endpoints": {
+      "t=0": "11/100",
+      "t=1": "3/20",
+      "u=0": "3/20",
+      "u=1": "17/100"
+    }
+  },
+  "interior_spot_realizations": [
+    {
+      "segment": "I",
+      "parameter": "0",
+      "bianchi_class": "I",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "1/25",
+        "Omega_tilt": "3/100",
+        "Omega_k": "0"
+      },
+      "x_C": "11/100",
+      "omega_lambda_closure": "59/100",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "trivial structure constants; rigid-rotation amplitude scaled by (1-t); antipodal pair q=0",
+      "target_x_C": "11/100",
+      "exactly_realized": true
+    },
+    {
+      "segment": "I",
+      "parameter": "1/8",
+      "bianchi_class": "I",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "7/200",
+        "Omega_tilt": "3/100",
+        "Omega_k": "0"
+      },
+      "x_C": "23/200",
+      "omega_lambda_closure": "117/200",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "trivial structure constants; rigid-rotation amplitude scaled by (1-t); antipodal pair q=0",
+      "target_x_C": "23/200",
+      "exactly_realized": true
+    },
+    {
+      "segment": "I",
+      "parameter": "1/2",
+      "bianchi_class": "I",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "1/50",
+        "Omega_tilt": "3/100",
+        "Omega_k": "0"
+      },
+      "x_C": "13/100",
+      "omega_lambda_closure": "57/100",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "trivial structure constants; rigid-rotation amplitude scaled by (1-t); antipodal pair q=0",
+      "target_x_C": "13/100",
+      "exactly_realized": true
+    },
+    {
+      "segment": "I",
+      "parameter": "7/8",
+      "bianchi_class": "I",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "1/200",
+        "Omega_tilt": "3/100",
+        "Omega_k": "0"
+      },
+      "x_C": "29/200",
+      "omega_lambda_closure": "111/200",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "trivial structure constants; rigid-rotation amplitude scaled by (1-t); antipodal pair q=0",
+      "target_x_C": "29/200",
+      "exactly_realized": true
+    },
+    {
+      "segment": "I",
+      "parameter": "1",
+      "bianchi_class": "I",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "0",
+        "Omega_tilt": "3/100",
+        "Omega_k": "0"
+      },
+      "x_C": "3/20",
+      "omega_lambda_closure": "11/20",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "trivial structure constants; rigid-rotation amplitude scaled by (1-t); antipodal pair q=0",
+      "target_x_C": "3/20",
+      "exactly_realized": true
+    },
+    {
+      "segment": "II",
+      "parameter": "1/4",
+      "bianchi_class": "V",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "0",
+        "Omega_tilt": "3/100",
+        "Omega_k": "1/200"
+      },
+      "x_C": "31/200",
+      "omega_lambda_closure": "109/200",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "3 a(u) sigma_1 + kappa q^1 with sigma_1=0 (transverse) and q=0 (antipodal pair): zero for every u",
+      "target_x_C": "31/200",
+      "exactly_realized": true
+    },
+    {
+      "segment": "II",
+      "parameter": "1/2",
+      "bianchi_class": "V",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "0",
+        "Omega_tilt": "3/100",
+        "Omega_k": "1/100"
+      },
+      "x_C": "4/25",
+      "omega_lambda_closure": "27/50",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "3 a(u) sigma_1 + kappa q^1 with sigma_1=0 (transverse) and q=0 (antipodal pair): zero for every u",
+      "target_x_C": "4/25",
+      "exactly_realized": true
+    },
+    {
+      "segment": "II",
+      "parameter": "3/4",
+      "bianchi_class": "V",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "0",
+        "Omega_tilt": "3/100",
+        "Omega_k": "3/200"
+      },
+      "x_C": "33/200",
+      "omega_lambda_closure": "107/200",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "3 a(u) sigma_1 + kappa q^1 with sigma_1=0 (transverse) and q=0 (antipodal pair): zero for every u",
+      "target_x_C": "33/200",
+      "exactly_realized": true
+    },
+    {
+      "segment": "II",
+      "parameter": "1",
+      "bianchi_class": "V",
+      "exact_invariants": {
+        "Sigma2": "3/25",
+        "W2": "0",
+        "Omega_tilt": "3/100",
+        "Omega_k": "1/50"
+      },
+      "x_C": "17/100",
+      "omega_lambda_closure": "53/100",
+      "gauss_residual_exact_zero": true,
+      "momentum_terms": "3 a(u) sigma_1 + kappa q^1 with sigma_1=0 (transverse) and q=0 (antipodal pair): zero for every u",
+      "target_x_C": "17/100",
+      "exactly_realized": true
+    }
+  ],
+  "group_invariant_curl": {
+    "structure_constants": "[e1,e2]=a e2, [e1,e3]=a e3, [e2,e3]=0 (Bianchi V)",
+    "curl_components": [
+      "0",
+      "-a*v3",
+      "a*v2"
+    ],
+    "aligned_tilt_is_irrotational": true,
+    "curl_squared": "a**2*(v2**2 + v3**2)",
+    "slaving_identity_a2_vperp2": true,
+    "note": "overall factor is convention-anchored (this frame algebra + the Wolfram lane); curl=0 iff v || a and |curl v| ~ a|v_perp| are convention-robust"
+  },
+  "simultaneous_four_sector_witness": {
+    "construction": "Bianchi V; a>0; transverse shear diag(0,s+,-s+); antipodal transverse tilt pair (+v,-v), v perp a",
+    "momentum_exact_zero": true,
+    "vorticity_squared_each_component": "a**2*v**2",
+    "vorticity_nonzero_for_a_v_positive": true,
+    "four_sectors_simultaneously_nonzero": true,
+    "slaving_obstruction": "W^2 is SLAVED: |curl v|^2 = a^2 v_perp^2, a curvature-tilt product -- vorticity is NOT a free dial in this class; arbitrary independent (W^2, Omega_k) box-interior dial-in by one exact connected family remains open (derived obstruction, recorded in t3_king_ellis)"
+  },
+  "scope_not_claimed": "constraint-level initial data only (Gauss+momentum); NOT dynamical King-Ellis evolution (deferred); NOT free box-interior dial-in of independent (W^2, Omega_k) -- the derived slaving relation is the recorded obstruction; the x_C-interval statement is the proven part",
+  "claim_boundary": "exact symbolic GR initial-data realization; Bianchi I/V labels are the realizing construction, NOT a sky class statement; no data, signal-discovery, Bianchi-class-identification-of-the-sky, native-solver-produced, or probabilistic-inference claim"
+}

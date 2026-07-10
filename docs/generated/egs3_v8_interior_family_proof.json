@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "backend": "wolframclient",
+  "results": [
+    {
+      "script": "v8_interior_family.wls",
+      "result": {
+        "schema": "htt.egs3.v8_interior_family.v1",
+        "checks": {
+          "gauss_identically_zero_both_segments": true,
+          "junction_exact_at_3_over_20": true,
+          "strictly_monotone_slopes_1_25_and_1_50": true,
+          "endpoints_11_100_and_17_100": true,
+          "every_interval_point_hit": true,
+          "curl_components_0_mav3_av2": true,
+          "aligned_tilt_irrotational": true,
+          "slaving_curl_sq_a2_vperp2": true,
+          "transverse_momentum_closure": true,
+          "antipodal_flux_all_orders_zero": true,
+          "signature": "T3-int: connected two-segment exact family sweeps [11/100,17/100]; Bianchi V group-invariant curl slaved to a^2 v_perp^2"
+        }
+      }
+    }
+  ]
+}

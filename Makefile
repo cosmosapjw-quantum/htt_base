@@ -81,10 +81,12 @@ v7-wolfram:
 teff-gates:
 	$(THREADS) $(PYPATH) $(PY) -m unittest discover -s $(REPO)/research_gates/teff/tests -p 'test_teff_*.py' -v
 
-## EGS3/TEFF v8 local-only Wolfram seals (T3-full King-Ellis; TEFF representative constants; xAct).
+## EGS3/TEFF v8 local-only Wolfram seals (T3-full King-Ellis; TEFF representative constants; xAct;
+## v8-update: T3-int interior family).
 v8-wolfram:
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/v8_t3_king_ellis.wls --out $(REPO)/docs/generated/egs3_v8_t3_king_ellis_proof.json
 	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/v8_teff_representative.wls --out $(REPO)/docs/generated/egs3_v8_teff_representative_proof.json
+	$(THREADS) $(PY) $(REPO)/scripts/run_pr07_wolfram_proofs.py $(REPO)/wolfram/v8_interior_family.wls --out $(REPO)/docs/generated/egs3_v8_interior_family_proof.json
 
 ## EGS3 v8 mathlib-backed Lean lane (forall-parameter T1'/DL1/T2' generalizations; separate package).
 v8-mathlib:
