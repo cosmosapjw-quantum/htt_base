@@ -23,6 +23,8 @@ STEMS = (
     "fig_egs2_nt2b1_bracket", "fig_egs3_psd_cone",
     "fig_egs3_e_im_coverage", "fig_egs3_e_refutability_power",
     "fig_egs3_f_shear_memory_bias",
+    "fig_egs3_u1_beta_channel", "fig_egs3_u2_fingerprint_ceilings",
+    "fig_egs3_u4_teff_im_coverage",
 )
 
 

@@ -7,6 +7,64 @@
 
 ## [Unreleased]
 
+### v8-update: full non-1TB deferral execution + MES/comparator/Teff unification (rev-r161..r168, 2026-07-10)
+
+Executed EVERY remaining deferred/future item not gated on ~1TB science-data downloads and
+coupled the MES bound registry, the graded comparator and the active Teff representative lane
+into ONE sealed system; the v8 report was updated in place; all frozen v5/v6/v6.1/v7 artifacts
+stayed byte-stable (successor-artifact pattern, v7 --check after every phase).
+
+- **Deferral closures**: B1 T2'' signed-numerator successor (`egs3_gf_interval_v8.py`; the
+  frozen defect EXERCISED: [-3/5,-19/39] vs true [-3/4,-19/49]; 200/200 bit-exact containment);
+  C6 real-H(z) Volterra (`egs3_volterra_hz.py`; kernel EXACTLY (a_s/a_t)^3 for ANY H, EdS
+  (s/t)^2, RK4 1.6e-7); C4 PSD-cone dual independent review (claim SIGN_OFF; math P1
+  linear-vs-squared shear-bracket units + 3 P2 REPAIRED in-session, re-verified SIGN_OFF;
+  no fronting authorized); C2 real-CAMB visibility cross-check
+  (`visibility_camb_crosscheck.py`; super-horizon floor 0.632456 identical, finite-k 0.2%;
+  EGS2-semi-native exit gate DISCHARGED); C3 Omega_k external-prior survey (HONEST NULL: no
+  published Omega_k^aniso limit exists -- literature bounds sigma/H + omega/H only; nothing
+  fabricated; stays PLUGIN); C1 T3-int connected interior family (`egs3_interior_family.py`;
+  x_C interval [11/100,17/100] swept exactly, junction exact at 3/20; Bianchi V group-invariant
+  curl DERIVED: slaving |curl v|^2 = a^2 v_perp^2 = the obstruction to free box dial-in;
+  Wolfram 10/10); C5a BGK transport application (honest: residual == unretained error BY
+  CONSTRUCTION in the single-mode toy, NOT Boltzmann evidence) + C5b Rust twin parity
+  (3 a_BE = pi^4/15, 3 a_FD = 7 pi^4/120 exact; cargo LIVE 153/0).
+- **Unification (U1-U4)**: one boost rapidity feeds BOTH channels -- s = tanh(beta) EXACT
+  under the antipodal two-point reduction (registered toy anchor, disclosed), s^2 = t/(2+t)
+  on the comparator tilt coordinate, R3-1 = -(3/4)t + (87/32)t^2 / R5-1 = +(5/4)t - (185/32)t^2
+  exact, R4 == 1 identically, single-species pin -(3/2); PROVED envelopes (3/2)s^2 / (5/2)s^2
+  (polynomial root isolation + Wolfram Resolve) give exact rational MES-dipole ceilings
+  (|R3-1| <= 2.283e-6 at eps1 = 771/625000) with the MES ordering carried by the ceiling map
+  and the CF4 rapidity contained in both channels (1.94e-6 < 2.28e-6); the comparator and Teff
+  blindness structures proved two exact instances of ONE rank-deficiency schema (rank 2, null
+  kinds carried, p=4 selector annihilates both enrichment directions); the EGS3 IM + Hotelling
+  machinery closed over the fingerprint observables (coverage 0.936-0.956; naive chi^2 0.153
+  vs F 0.064). `egs3_teff_unification.py` + `egs3_unification_schema.py` +
+  `egs3_teff_statistical.py`; Wolfram `v8_unification.wls` 16/16. NOT a CMB
+  spectral-distortion prediction; no sky claim.
+- **MESb documented discrepancy (publishable finding)**: MESb (PRD 51,5942) confirmed
+  print-only; the MESb-citing SAG 1997 (astro-ph/9904346, archived + SHA256, co-authored by
+  Stoeger) carries the GEODESIC omega (10/3,2/15,0) and NO acceleration bound, its own printed
+  numerics excluding the registered omega (3/4,2,2/7) by factor ~19.9; the registered accel
+  appears in NO accessible source. REGISTERED VALUES UNCHANGED (v7-frozen registry;
+  W2_max = 1.309e-6 bit-identity anchor guarded); literature-supported alternative ceiling
+  2.54e-5 computed comparison-only; registry revision = re-freeze-cycle decision. Ticket ->
+  discrepancy_documented.
+- **K5 v8 card** (`k5_cf4_identified_interval_card_v8.{json,md}`, frozen v7 card
+  SHA-referenced): deterministic Teff fingerprint row from the SAME CF4 rapidity as Omega_tilt;
+  registered-external model-conditional vorticity/shear cross-checks (Saadeh 2016, Planck 2015
+  XVIII); observational_claim_allowed stays False. **JWST seed** verified against the raw arXiv
+  tables and extended +5 hosts (crossmatch 9 -> 14).
+- **Surface**: seal runner 13 -> 21 seals; `make egs3-gates` +~75 / egs2 +10 / teff +11 gate
+  methods; results-table successor `egs_results_table_v8` (55 rows; frozen table inherited
+  verbatim); 3 new theorem figures + repaired `fig_egs3_psd_cone` (Sigma^2 log shell,
+  null-KIND colors); v8 report updated in place (v8-update section rendered from seals;
+  REQUIRED_ARTIFACTS +14; SOURCE_FILES +10); CLAIM_LEDGER yaml +4 / harness +5;
+  VALIDATION_LEDGER missing-v8 entry reconstructed + v8-update entry.
+- Diagnostic-only; x_C + W2_max bit-identical throughout. Deferred (ticketed): King-Ellis
+  dynamics, free (W^2,Omega_k) dial-in (derived slaving obstruction), Omega_k higher-order
+  transfer, MES registry revision (re-freeze), K1 E2E / DESI / K6 (1TB-class).
+
 ### v8 (Sixth Revision) external-audit report: primary-source rederivation, exact realization, mathlib, Teff representative lane (rev-r155..r158, 2026-07-10)
 
 Closed four items the fifth revision left registered-external or deferred, using the

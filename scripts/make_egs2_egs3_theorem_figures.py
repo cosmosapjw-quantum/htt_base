@@ -365,9 +365,67 @@ def _sources() -> dict[str, dict]:
         "pi0": smb.pi0, "z0": smb.z0, "H": smb.H, "n_nodes": smb.n_nodes,
     }
 
+    # --- U1/U2 unification: beta-channel correspondence + fingerprint ceilings
+    import sympy as _sp
+    from htt.obsstat.egs3_teff_unification import (
+        BETA_CF4, fingerprint_ceilings as _fpc)
+    from htt.teff.representative import two_temperature_ratio as _ttr
+
+    _s = _sp.Symbol("s", positive=True)
+    _t = _sp.Symbol("t", positive=True)
+    _R3t = _sp.lambdify(_t, _ttr(3)[0].subs(_ttr(3)[1],
+                                            _sp.sqrt(_t / (2 + _t))), "numpy")
+    _R5t = _sp.lambdify(_t, _ttr(5)[0].subs(_ttr(5)[1],
+                                            _sp.sqrt(_t / (2 + _t))), "numpy")
+    t_grid = [round(x, 10) for x in np.linspace(1e-6, 0.5, 120)]
+    _ceil = _fpc()
+    u1 = {
+        "theorem_id": "EGS3-U1",
+        "t_grid": t_grid,
+        "R3_of_t": [round(float(_R3t(x)), 12) for x in t_grid],
+        "R5_of_t": [round(float(_R5t(x)), 12) for x in t_grid],
+        "tangent_R3": [round(1.0 - 0.75 * x, 12) for x in t_grid],
+        "tangent_R5": [round(1.0 + 1.25 * x, 12) for x in t_grid],
+        "t_cf4": round(2.0 * float(np.sinh(BETA_CF4)) ** 2, 15),
+        "leading_coeffs": ["-3/4", "+5/4"],
+    }
+    _R3s = _sp.lambdify(_s, _ttr(3)[0].subs(_ttr(3)[1], _s), "numpy")
+    _R5s = _sp.lambdify(_s, _ttr(5)[0].subs(_ttr(5)[1], _s), "numpy")
+    s_grid = [round(x, 10) for x in np.logspace(-4, np.log10(0.95), 100)]
+    u2 = {
+        "theorem_id": "EGS3-U2",
+        "s_grid": s_grid,
+        "dev_R3": [round(float(1.0 - _R3s(x)), 15) for x in s_grid],
+        "dev_R5": [round(float(_R5s(x) - 1.0), 15) for x in s_grid],
+        "env_R3": [round(1.5 * x * x, 15) for x in s_grid],
+        "env_R5": [round(2.5 * x * x, 15) for x in s_grid],
+        "eps1": _ceil["eps1_registered"],
+        "ceiling_R3": _ceil["ceiling_R3_float"],
+        "ceiling_R5": _ceil["ceiling_R5_float"],
+        "s_cf4": _ceil["cf4_containment"]["s_cf4_tanh"],
+        "fp_cf4": _ceil["cf4_containment"]["fingerprint_3half_s2"],
+    }
+    # --- U4 statistical closure (from the deterministic seal artifact)
+    _seal = json.loads((REPO_ROOT / "docs/generated/teff_statistical_seal.json")
+                       .read_text())
+    _cov = _seal["im_fingerprint_coverage"]
+    _hot = _seal["hotelling_fingerprint_calibration"]
+    u4 = {
+        "theorem_id": "EGS3-U4",
+        "coverage_rows": _cov["rows"],
+        "nominal": _cov["nominal"],
+        "floor": round(_cov["nominal"] - _cov["binomial_3sigma_tol"], 6),
+        "identified_interval_R3": _cov["identified_interval_R3"],
+        "size_naive": _hot["empirical_size_naive_chi2"],
+        "size_hotelling": _hot["empirical_size_hotelling_F"],
+        "alpha": _hot["alpha"],
+        "n_sim_cov": _hot["n_sim_cov"],
+    }
+
     return {"a1": a1, "a3": a3, "a1_floor": a1_floor, "b1": b1, "b2": b2,
             "b3": b3, "nt2b1": nt2b1, "psd": psd, "c": c, "d": dfig, "dbip": dbip,
-            "e_im": e_im, "e_pow": e_pow, "f_smb": f_smb}
+            "e_im": e_im, "e_pow": e_pow, "f_smb": f_smb,
+            "u1": u1, "u2": u2, "u4": u4}
 
 
 def _render(src: dict) -> None:
@@ -468,8 +526,8 @@ def _render(src: dict) -> None:
     fig, (axa, axb) = plt.subplots(1, 2, figsize=(7.2, 3.6))
     # null-KIND distinction (2026-07 review P2): W2 is a genuine structural
     # null (red); Omega_k is a leading-order no-channel that re-opens beyond
-    # leading order (orange) -- not the same kind of null.
-    orange = "#e08a00"
+    # leading order (amber) -- not the same kind of null.
+    amber_nc = "#e08a00"
     cols = []
     for s in ps["sectors"]:
         if s in ps["reachable_sectors"]:
@@ -477,7 +535,7 @@ def _render(src: dict) -> None:
         elif s == "W2":
             cols.append(red)
         else:
-            cols.append(orange)
+            cols.append(amber_nc)
     axa.bar(range(4), ps["spectrum"], color=cols)
     axa.set_xticks(range(4)); axa.set_xticklabels(ps["sectors"], rotation=20, fontsize=8)
     axa.set_ylabel("labelled eigenvalue (sector)")
@@ -598,6 +656,77 @@ def _render(src: dict) -> None:
     ax.legend(fontsize=7); fig.tight_layout()
     fig.savefig(FIG_DIR / "fig_egs3_f_shear_memory_bias.png", dpi=140); plt.close(fig)
 
+    # U1 beta-channel correspondence: R3/R5 on the comparator tilt coordinate
+    u1 = src["u1"]
+    fig, ax = plt.subplots(figsize=(5.6, 4.2))
+    ax.plot(u1["t_grid"], u1["R3_of_t"], color=blue, lw=2,
+            label="R₃(t) exact (antipodal reduction)")
+    ax.plot(u1["t_grid"], u1["R5_of_t"], color=green, lw=2, label="R₅(t) exact")
+    ax.plot(u1["t_grid"], u1["tangent_R3"], color=blue, ls="--", lw=1,
+            label="1 − (3/4)t")
+    ax.plot(u1["t_grid"], u1["tangent_R5"], color=green, ls="--", lw=1,
+            label="1 + (5/4)t")
+    ax.axhline(1.0, color=grey, lw=0.8)
+    ax.axvline(u1["t_cf4"], color=red, ls=":",
+               label="t at the CF4 bulk-flow rapidity")
+    ax.set_xlabel("t = Ω_tilt / ((1+w) Ω_m)   (comparator tilt coordinate)")
+    ax.set_ylabel("two-temperature moment ratio")
+    ax.set_title("EGS3-U1: one rapidity, two channels\nTeff ratios as exact "
+                 "functions of the comparator tilt sector")
+    ax.legend(fontsize=7); fig.tight_layout()
+    fig.savefig(FIG_DIR / "fig_egs3_u1_beta_channel.png", dpi=140); plt.close(fig)
+
+    # U2 fingerprint ceilings: proved envelopes + MES eps1 ceiling + CF4 point
+    u2 = src["u2"]
+    fig, ax = plt.subplots(figsize=(5.6, 4.2))
+    ax.loglog(u2["s_grid"], u2["dev_R3"], color=blue, lw=2, label="1 − R₃(s)")
+    ax.loglog(u2["s_grid"], u2["env_R3"], color=blue, ls="--", lw=1,
+              label="(3/2) s² envelope (proved)")
+    ax.loglog(u2["s_grid"], u2["dev_R5"], color=green, lw=2, label="R₅(s) − 1")
+    ax.loglog(u2["s_grid"], u2["env_R5"], color=green, ls="--", lw=1,
+              label="(5/2) s² envelope (proved)")
+    ax.axvline(u2["eps1"], color=red, ls=":", label="registered MES ε₁")
+    ax.plot([u2["s_cf4"]], [u2["fp_cf4"]], marker="*", ms=11, color=orange,
+            ls="none", label="CF4 rapidity (deterministic row)")
+    ax.set_xlabel("two-temperature mixing s")
+    ax.set_ylabel("fingerprint deviation")
+    ax.set_title("EGS3-U2: MES-registry ceilings on the Teff fingerprints\n"
+                 "deviations bounded by the proved quadratic envelopes")
+    ax.legend(fontsize=7, loc="upper left"); fig.tight_layout()
+    fig.savefig(FIG_DIR / "fig_egs3_u2_fingerprint_ceilings.png", dpi=140)
+    plt.close(fig)
+
+    # U4 statistical closure: IM coverage bars + Hotelling calibration
+    u4 = src["u4"]
+    fig, (axa, axb) = plt.subplots(1, 2, figsize=(7.6, 3.8))
+    labels = list(u4["coverage_rows"].keys())
+    covs = [u4["coverage_rows"][k]["coverage"] for k in labels]
+    axa.bar(range(len(labels)), covs, color=blue)
+    axa.axhline(u4["nominal"], color=green, ls="--", label="nominal 1−α")
+    axa.axhline(u4["floor"], color=red, ls=":", label="binomial 3σ floor")
+    axa.set_xticks(range(len(labels)))
+    axa.set_xticklabels([l.replace("_", "\n") for l in labels], fontsize=7)
+    axa.set_ylim(0.88, 1.0); axa.set_ylabel("empirical IM coverage")
+    axa.set_title("IM coverage on the identified\nfingerprint interval "
+                  f"[{u4['identified_interval_R3'][0]:.4f}, 1]", fontsize=9)
+    axa.legend(fontsize=7, loc="lower right")
+    axb.bar([0, 1], [u4["size_naive"], u4["size_hotelling"]],
+            color=[red, green])
+    axb.axhline(u4["alpha"], color=grey, ls="--", label="nominal α")
+    axb.set_xticks([0, 1])
+    axb.set_xticklabels([f"naive χ²\n(n_sim={u4['n_sim_cov']} est. cov)",
+                         "Hotelling/F"], fontsize=8)
+    axb.set_ylabel("empirical size")
+    axb.set_title("T4′ on the joint fingerprint:\nestimated covariance needs "
+                  "the F correction", fontsize=9)
+    axb.legend(fontsize=7)
+    fig.suptitle("EGS3-U4: the EGS3 statistical machinery closed over the "
+                 "Teff fingerprint lane (display mixings, disclosed)",
+                 fontsize=9)
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / "fig_egs3_u4_teff_im_coverage.png", dpi=140)
+    plt.close(fig)
+
 
 _SPECS = [
     ("fig_egs3_a1_graded_rank", "EGS3-A1", "Graded comparator identifiability rank", "a1"),
@@ -614,6 +743,9 @@ _SPECS = [
     ("fig_egs3_e_im_coverage", "EGS3-E2", "Imbens-Manski vs projection interval coverage", "e_im"),
     ("fig_egs3_e_refutability_power", "EGS3-E3", "Refutability (empty-set) power curve", "e_pow"),
     ("fig_egs3_f_shear_memory_bias", "EGS3-F3", "Shear-memory kernel kappa-inference bias", "f_smb"),
+    ("fig_egs3_u1_beta_channel", "EGS3-U1", "Beta-channel correspondence: Teff ratios on the comparator tilt coordinate", "u1"),
+    ("fig_egs3_u2_fingerprint_ceilings", "EGS3-U2", "MES-registry ceilings on the Teff fingerprints", "u2"),
+    ("fig_egs3_u4_teff_im_coverage", "EGS3-U4", "Statistical closure over the Teff fingerprint lane", "u4"),
 ]
 
 

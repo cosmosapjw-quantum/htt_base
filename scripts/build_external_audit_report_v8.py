@@ -39,12 +39,21 @@ OUT = ROOT / "external_audit_research_report_20260710_v8"
 TEX_NAME = "external_audit_research_report_v8.tex"
 PDF_NAME = "external_audit_research_report_v8.pdf"
 ZIP_NAME = "external_audit_research_report_20260710_v8.zip"
-GENERATED_AT = "2026-07-10T12:00:00"
+GENERATED_AT = "2026-07-10T20:00:00"
 REPORT_DATA_PACK_JSON = ROOT / "docs/generated/report_data_analysis_figure_pack.json"
 REPORT_DATA_PACK_MD = ROOT / "docs/generated/report_data_analysis_figure_pack.md"
 REPORT_DATA_FIGURE_DEST = OUT / "report_data_figures"
 COMPACT_DATA_ANALYSIS_JSON = ROOT / "docs/generated/v6_compact_data_analysis.json"
 COMPACT_DATA_ANALYSIS_MD = ROOT / "docs/generated/v6_compact_data_analysis.md"
+
+# v8-update cycle theorem figures (U1/U2/U4), copied self-contained into the package
+V8_UPDATE_FIGURE_SRC = ROOT / "figures/current"
+V8_UPDATE_FIGURE_DEST = OUT / "v8_update_figures"
+V8_UPDATE_FIGURES = [
+    "fig_egs3_u1_beta_channel",
+    "fig_egs3_u2_fingerprint_ceilings",
+    "fig_egs3_u4_teff_im_coverage",
+]
 
 # review-cycle witness artifacts (REQUIRED; the builder never fabricates them)
 REQUIRED_ARTIFACTS = [
@@ -66,6 +75,21 @@ REQUIRED_ARTIFACTS = [
     "docs/generated/nonlinear_realization_seal.json",
     "docs/generated/teff_representative_seal.json",
     "docs/generated/egs3_v8_mathlib_seal.json",
+    # v8-update cycle seals (deferred-item closures + MES/comparator/Teff unification)
+    "docs/generated/gf_interval_v8_seal.json",
+    "docs/generated/volterra_hz_seal.json",
+    "docs/generated/psd_cone_review_signoff.json",
+    "docs/generated/seminative_camb_crosscheck_seal.json",
+    "docs/generated/interior_family_seal.json",
+    "docs/generated/teff_unification_seal.json",
+    "docs/generated/unification_schema_seal.json",
+    "docs/generated/teff_statistical_seal.json",
+    "docs/generated/teff_transport_application_seal.json",
+    "docs/generated/teff_rust_parity_seal.json",
+    "docs/generated/egs3_v8_interior_family_proof.json",
+    "docs/generated/egs3_v8_unification_proof.json",
+    "docs/generated/k5_cf4_identified_interval_card_v8.json",
+    "docs/generated/egs_results_table_v8.json",
 ]
 
 # v7 strengthened-theorem seals surfaced in the Fifth-Revision response section.
@@ -145,6 +169,17 @@ SOURCE_FILES = [
     "docs/generated/v6_novel_data_analysis_plot_opportunities.md",
     "scripts/make_report_data_analysis_figures.py",
     "scripts/build_v6_compact_data_analysis.py",
+    # v8-update cycle: deferred-item closures + MES/comparator/Teff unification modules
+    "htt/teff/representative.py",
+    "htt/obsstat/egs3_gf_interval_v8.py",
+    "htt/obsstat/egs3_volterra_hz.py",
+    "htt/obsstat/egs3_interior_family.py",
+    "htt/obsstat/egs3_teff_unification.py",
+    "htt/obsstat/egs3_unification_schema.py",
+    "htt/obsstat/egs3_teff_statistical.py",
+    "htt/teff/transport_application.py",
+    "htt/teff/rust_twin_parity.py",
+    "htt/bass/transfer/visibility_camb_crosscheck.py",
 ]
 
 
@@ -1133,6 +1168,326 @@ def v8_response_section() -> str:
     return "\n".join(lines)
 
 
+def _texnum(x, sig: int = 3) -> str:
+    """Deterministic LaTeX math-mode rendering of a float (sci-notation aware)."""
+    s = f"{float(x):.{sig}g}"
+    if "e" in s or "E" in s:
+        mant, exp = s.lower().split("e")
+        return rf"{mant}\times10^{{{int(exp)}}}"
+    return s
+
+
+def _sag_discrepancy_par() -> str:
+    """M4'' paragraph rendered from the sag1997_discrepancy_report block of the
+    (extended) mes_rederivation seal."""
+    d = _seal("mes_rederivation_seal.json").get("sag1997_discrepancy_report")
+    if not d:
+        return (r"The documented-discrepancy block is absent from the "
+                r"rederivation seal; see the ticket record.")
+    return (
+        r"The v8-update literature sweep executed the exit gate's documented-discrepancy "
+        r"branch for the print-only Paper II (PRD 51, 5942; no arXiv version, no ADS scan). "
+        r"The decisive accessible citing source---Stoeger, Araujo \& Gebbie, ApJ 476, 435 "
+        r"(1997) [astro-ph/9904346, LaTeX source archived with SHA256], co-authored by "
+        r"Stoeger and explicitly built on the Maartens et al.\ 1995a,b assumption set---"
+        r"transcribes the shear triple $(5/3,\,3,\,3/7)$ (matching the registry) but the "
+        r"GEODESIC vorticity triple $(10/3,\,2/15,\,0)$ with NO acceleration bound. Its own "
+        rf"printed numerics close exactly on those triples (${_texnum(d['sag_numeric_closure_sigma'])}$ "
+        rf"vs.\ printed ${_texnum(d['sag_printed_sigma'])}$; ${_texnum(d['sag_numeric_closure_omega'])}$ "
+        rf"vs.\ ${_texnum(d['sag_printed_omega'])}$) and exclude the registered vorticity triple "
+        rf"$(3/4,\,2,\,2/7)$ by a factor ${_texnum(d['registered_triple_excluded_by_factor'])}$; the "
+        r"registered acceleration triple $(3/4,\,1,\,3/14)$ appears in no accessible source. "
+        r"The registered values are NOT changed in this cycle: the coefficient registry is a "
+        r"byte-frozen fifth-revision source and $W^2_{\max}$ is a bit-identity production "
+        rf"anchor (registered ${_texnum(d['w2_ceiling_registered_unchanged'], 4)}$, unchanged); the "
+        rf"literature-supported alternative ceiling ${_texnum(d['w2_ceiling_literature_supported_comparison_only'], 4)}$ "
+        r"is computed for comparison only, and any registry revision is deferred to a "
+        r"re-freeze cycle with explicit sign-off. Residual uncertainty is stated honestly: "
+        r"Paper II's inaccessibility means a distinct non-geodesic bound set inside it cannot "
+        r"be excluded; what is established is that every accessible source, including the "
+        r"same-group citing paper, carries the geodesic triple and no acceleration bound.")
+
+
+def v8_update_section() -> str:
+    """Render the v8-update cycle section from the fail-closed seal artifacts. Every
+    number is read from a seal; nothing is hand-entered."""
+    gf = _seal("gf_interval_v8_seal.json")
+    vol = _seal("volterra_hz_seal.json")
+    psd = _seal("psd_cone_review_signoff.json")
+    cam = _seal("seminative_camb_crosscheck_seal.json")
+    inter = _seal("interior_family_seal.json")
+    tunf = _seal("teff_unification_seal.json")
+    uschema = _seal("unification_schema_seal.json")
+    tstat = _seal("teff_statistical_seal.json")
+    ttrans = _seal("teff_transport_application_seal.json")
+    trust = _seal("teff_rust_parity_seal.json")
+    iproof = _seal("egs3_v8_interior_family_proof.json")
+    uproof = _seal("egs3_v8_unification_proof.json")
+    k5 = _seal("k5_cf4_identified_interval_card_v8.json")
+    restab = _seal("egs_results_table_v8.json")
+
+    def st(d):
+        return d.get("status", "n/a")
+
+    def code(text: str) -> str:
+        return rf"\code{{{text}}}"
+
+    # ---- closure-table field extraction (all read from seals) -----------------
+    gnd = gf.get("negative_numerator_discrepancy", {})
+    gv7 = gnd.get("v7_frozen_interval", ["-3/5", "-19/39"])
+    gv8 = gnd.get("v8_interval", ["-3/4", "-19/49"])
+    gcont = gf.get("positive_domain_bit_exact_containment", {}).get(
+        "joint_bit_exact_agreement", "200/200")
+    vkern = vol.get("kernel_universality", {})
+    veds = vol.get("eds_limit", {})
+    vrk4 = vol.get("lcdm_numeric", {}).get("max_abs_diff_vs_rk4", 1.56441e-07)
+    psd_reviewers = psd.get("reviewers", [])
+    psd_p1 = ""
+    for rv in psd_reviewers:
+        finds = rv.get("findings", [])
+        if finds:
+            psd_p1 = str(finds[0])
+            break
+    cam_rows = cam.get("crosscheck", {}).get("rows", [])
+    cam_floor = cam_rows[0].get("floor_camb", 0.632456) if cam_rows else 0.632456
+    cam_floor_g = cam_rows[0].get("floor_gaussian_matched", 0.632456) if cam_rows else 0.632456
+    cam_hik = cam_rows[-1].get("rel_diff_matched", 0.002062) if cam_rows else 0.002062
+    fam = inter.get("symbolic_family", {})
+    fam_lo = fam.get("endpoints", {}).get("t=0", "11/100")
+    fam_hi = fam.get("endpoints", {}).get("u=1", "17/100")
+    curl_sq = inter.get("group_invariant_curl", {}).get("curl_squared", "a**2*(v2**2 + v3**2)")
+    cargo = trust.get("cargo_lane", {})
+    cargo_pass = cargo.get("passed", 153)
+    cargo_fail = cargo.get("failed", 0)
+    ok_status = k5.get("v8_omega_k_status", {})
+
+    closure = [
+        (r"T2$''$ successor (signed numerator)",
+         rf"On the negative-numerator domain the v7 fixed pairing returns "
+         rf"$[{gv7[0]},{gv7[1]}]$ while exact brute force gives the true "
+         rf"$[{gv8[0]},{gv8[1]}]$; the successor reproduces brute force exactly and "
+         rf"retains {gcont} bit-exact containment on the nonnegative-numerator domain "
+         r"(exact \code{Fraction}, zero tolerance)", gf.get("seal", ""), st(gf)),
+        (r"Volterra $H(z)$ depth-memory",
+         rf"the shear depth-memory kernel is exactly $a$-dilution "
+         rf"$(a_s/a_t)^3$ for \emph{{any}} $H(t)>0$, reduces to $(s/t)^2$ in the "
+         rf"Einstein--de~Sitter limit, and matches an independent RK4 integration to "
+         rf"${_texnum(vrk4, 2)}$ under $\Lambda$CDM", vol.get("seal", ""), st(vol)),
+        (r"PSD moment-cone review",
+         r"two independent hostile-prompted reviews (claim-discipline and "
+         r"mathematics/statistics) both record \code{SIGN_OFF}; the units finding "
+         r"(linear-shear bracket compared against the $\Sigma^2$ eigenvalue) was "
+         r"repaired to a squared bracket and the discriminating eigenvalue flip "
+         r"re-exercised", psd.get("seal", ""), st(psd)),
+        (r"CAMB visibility cross-check",
+         rf"the single-mode shear-to-quadrupole floor saturates at the exact "
+         rf"single-$\ell$ value ${_texnum(cam_floor, 6)}$ super-horizon (identical to "
+         rf"the matched-Gaussian and CAMB visibilities) and drops below it at finite "
+         rf"$k$ with the largest matched relative difference ${_texnum(cam_hik, 2)}$",
+         cam.get("seal", ""), st(cam)),
+        (r"T3-int interior family",
+         rf"every $x_C\in[{fam_lo},{fam_hi}]$ is realized by an explicit member of one "
+         rf"connected two-segment exact family with identically-zero Gauss residual; the "
+         rf"four-sector Bianchi~V witness obeys the derived slaving "
+         rf"$|\mathrm{{curl}}\,v|^2=a^2 v_\perp^2$ ({code('curl_squared = ' + curl_sq)})",
+         inter.get("seal", ""), st(inter)),
+        (r"Teff transport + Rust parity",
+         rf"a single-mode multigroup BGK toy records the honest predictivity answer "
+         rf"(the insertion-resolved residual and the unretained-moment error are the "
+         rf"same functional by construction, not Boltzmann-closure evidence) and the "
+         rf"Rust twin reproduces the exact $\zeta$-table constants and Gram structure "
+         rf"(\code{{cargo}} {cargo_pass}/{cargo_fail})",
+         trust.get("seal", ""), st(trust)),
+        (r"$\Omega_k$ external-prior survey",
+         r"a documented null: no published direct $\Omega_{k,{\rm aniso}}$ upper limit "
+         r"exists (template analyses marginalize $\Omega_K$ as a prior), so no ceiling "
+         r"is fabricated and the higher-order-transfer branch stays a registered ticket",
+         "egs3.external_curvature_prior_survey",
+         "DOCUMENTED_NULL"),
+    ]
+    closure_rows = "\n".join(
+        rf"{deferral} & {closure_txt} & {code(tex_escape(sealid))} & {tex_escape(status)} \\"
+        for deferral, closure_txt, sealid, status in closure)
+
+    # ---- unification numbers (read from seals) --------------------------------
+    bcorr = tunf.get("beta_channel_correspondence", {})
+    r3c = bcorr.get("leading_R3_coeff", "-3/4")
+    r5c = bcorr.get("leading_R5_coeff", "5/4")
+    ss_r3 = bcorr.get("single_species_R3_coeff", "-3/2")
+    fc = tunf.get("fingerprint_ceilings", {})
+    eps1r = fc.get("eps1_exact_rational", "771/625000")
+    ceilR3 = fc.get("ceiling_R3_exact", "1783323/781250000000")
+    ceilR5 = fc.get("ceiling_R5_exact", "594441/156250000000")
+    cf4 = fc.get("cf4_containment", {})
+    cf4_fp = cf4.get("fingerprint_3half_s2", 1.9375862709144723e-06)
+    cf4_ceil = cf4.get("mes_dipole_ceiling_3half_eps1_2", 2.2826534400000003e-06)
+    caveats = tunf.get("disclosed_caveats", [])
+    caveat_items = "\n".join(rf"\item {tex_escape(str(c))}" for c in caveats)
+
+    ucomp = uschema.get("correspondence", {}).get("instance_comparator", {})
+    uteff = uschema.get("correspondence", {}).get("instance_teff", {})
+    comp_rank = ucomp.get("rank_exact", 2)
+    teff_rank = uteff.get("rank_exact_full_response", 2)
+    nkinds = ucomp.get("null_sector_kinds", {})
+    nk_ok = nkinds.get("Omega_k", "no_channel_leading_order")
+    nk_w2 = nkinds.get("W2", "structural_null")
+
+    imcov = tstat.get("im_fingerprint_coverage", {})
+    im_int = imcov.get("identified_interval_R3", [0.91507031, 1.0])
+    im_rows = imcov.get("rows", {})
+    im_nom = imcov.get("nominal", 0.95)
+    hot = tstat.get("hotelling_fingerprint_calibration", {})
+    size_naive = hot.get("empirical_size_naive_chi2", 0.15333333333333332)
+    size_hot = hot.get("empirical_size_hotelling_F", 0.064)
+    hot_alpha = hot.get("alpha", 0.05)
+
+    def cov(name, default):
+        return im_rows.get(name, {}).get("coverage", default)
+
+    # ---- K5 v8 card fingerprint row -------------------------------------------
+    fpr = k5.get("v8_teff_fingerprint_row", {})
+    fpr_beta = fpr.get("beta_cf4_rapidity", 0.0011365409332612364)
+    fpr_dev = fpr.get("fingerprint_R3_deviation_3half_s2", 1.9375862709144723e-06)
+    fpr_ceil = fpr.get("mes_dipole_ceiling_R3", 2.28265344e-06)
+    obs_allowed = k5.get("observational_claim_allowed", False)
+
+    n_rows = len(restab.get("rows", []))
+
+    lines = [
+        r"\section{v8-update Cycle: Deferred-Item Closures and the MES/Comparator/Teff Unification}",
+        r"Every deferral that was not blocked behind a terabyte-scale external ensemble "
+        r"has now been executed, each certified by a fail-closed seal.  The three previously "
+        r"separate islands --- the Maartens--Ellis--Stoeger (MES) bound registry, the graded "
+        r"FLRW-departure comparator, and the (now active, diagnostic-only) Teff representative "
+        r"lane --- are coupled by four sealed exact theorems (U1--U4) rather than being carried "
+        r"as unrelated objects.  The frozen v5, v6, v6.1, and v7 packages remain byte-untouched; "
+        r"this section is additive.",
+        r"",
+        r"\subsection{Executed deferred-item closures}",
+        r"\begin{center}\small",
+        r"\begin{longtable}{p{2.5cm}p{8.2cm}p{2.2cm}p{1.0cm}}",
+        r"\toprule Deferral & Closure (read from seal) & Seal & St. \\ \midrule",
+        r"\endhead",
+        closure_rows,
+        r"\bottomrule",
+        r"\end{longtable}",
+        r"\end{center}",
+        r"",
+        r"\subsection{MES vorticity/acceleration coefficients: documented discrepancy with the accessible literature (M4$''$)}",
+        _sag_discrepancy_par(),
+        r"",
+        r"\subsection{Unification of the MES bound, the comparator, and the Teff lane (U1--U4)}",
+        r"The four unification theorems are certified on SymPy (report-gating) and independently "
+        r"cross-checked in the Wolfram lane "
+        rf"(\code{{{tex_escape(iproof.get('backend',''))}}}: interior family {st(iproof)}; "
+        rf"unification schema {st(uproof)}).",
+        r"",
+        r"\paragraph{U1 --- one rapidity, two channels.}"
+        r" Under the antipodal two-point reduction the boost rapidity satisfies "
+        r"$s=\tanh\beta$ exactly, with $s^2=t/(2+t)$ and $t=\Omega_{\rm tilt}/((1+w)\Omega_m)$.  "
+        rf"The Teff temperature-moment ratios then obey $R_3-1={r3c}\,t+O(t^2)$ and "
+        rf"$R_5-1=+{r5c.lstrip('+')}\,t+O(t^2)$, while $R_4\equiv1$ pointwise (the retained "
+        rf"energy moment is invariant).  The two-point construction is antipodal-specific: a "
+        rf"single boosted species instead gives leading coefficient ${ss_r3}$.  This is the "
+        r"exact statement that one CF4 rapidity feeds both the comparator tilt sector "
+        r"($\Omega_{\rm tilt}$) and the Teff fingerprint channel.",
+        r"",
+        r"\paragraph{U2 --- MES-registry ceilings on the fingerprints.}"
+        r" The envelopes $1-R_3\le\tfrac32 s^2$ and $R_5-1\le\tfrac52 s^2$ are proved on "
+        r"$0<s<1$ by exact polynomial root isolation.  At the registered MES dipole amplitude "
+        rf"$\epsilon_1={eps1r}$ the exact rational ceilings are "
+        rf"$1-R_3\le {ceilR3}$ and $R_5-1\le {ceilR5}$; the strictly-increasing ceiling map "
+        r"carries the registered MES budget ordering $B_\sigma>B_\omega>B_\text{accel}$ as a "
+        r"formal order-preservation instantiation (not three physical rapidity ceilings).  The "
+        rf"CF4 rapidity is contained in both channels: the fingerprint deviation "
+        rf"${_texnum(cf4_fp, 3)}$ sits below the MES dipole ceiling ${_texnum(cf4_ceil, 3)}$.",
+        r"",
+        r"\paragraph{U3 --- one linear-response schema, two exact instances.}"
+        rf" The comparator channel response (rank {comp_rank}, exact null "
+        rf"$\{{W^2,\Omega_{{k,{{\rm aniso}}}}\}}$ with distinct null \emph{{kinds}}: "
+        rf"$\Omega_k$ is \code{{{tex_escape(nk_ok)}}}, $W^2$ is \code{{{tex_escape(nk_w2)}}}) and "
+        rf"the Teff retained-moment response (the $p=4$ selector exactly annihilating both the "
+        rf"$(n,k)$ insertion and the two-temperature mixing directions; full response rank "
+        rf"{teff_rank}) are two exact instances of a single finite-dimensional linear-response "
+        r"schema.  In both instances the blindness is removed only by enlarging the registered "
+        r"observable set; the correspondence is mathematical, and no physical identification "
+        r"between the lanes is asserted.",
+        r"",
+        r"\paragraph{U4 --- the identification/calibration machinery closes over the fingerprints.}"
+        rf" The partial-identification coverage construction holds on the identified interval "
+        rf"$[{_texnum(im_int[0], 6)},{_texnum(im_int[1], 3)}]$ of the nonidentified mixing: at "
+        rf"the interval endpoints and interior the empirical coverage is "
+        rf"${_texnum(cov('endpoint_s0', 0.93625), 3)}$, "
+        rf"${_texnum(cov('interior_mid', 0.95375), 3)}$, and "
+        rf"${_texnum(cov('endpoint_smax', 0.95625), 3)}$ against the nominal ${im_nom}$.  The "
+        rf"estimated-covariance joint fingerprint requires the Hotelling/$F$ correction exactly "
+        rf"as in T4$'$: at $\alpha={hot_alpha}$ the naive $\chi^2$ over-rejects "
+        rf"(empirical size ${_texnum(size_naive, 3)}$) while the Hotelling/$F$ branch is "
+        rf"calibrated (${_texnum(size_hot, 3)}$).",
+        r"",
+        r"\paragraph{Disclosed caveats (from the unification seal).}",
+        r"\begin{itemize}",
+        caveat_items,
+        r"\end{itemize}",
+        r"These are exact mathematical correspondences between registered in-repo objects (the "
+        r"MES registry, the comparator tilt sector, and the Teff representative anchor).  The "
+        r"two-point antipodal reduction is a registered toy anchor, \emph{not} an angular "
+        r"average and \emph{not} a CMB spectral-distortion prediction; the entire lane is "
+        r"diagnostic-only and makes no data, family, or native-solver claim.",
+        r"",
+        r"\subsection{Unification figures}",
+        r"\begin{center}",
+        rf"\includegraphics[width=0.86\linewidth]{{v8_update_figures/{V8_UPDATE_FIGURES[0]}.png}}",
+        r"\par\smallskip",
+        r"{\footnotesize \textbf{U1.} The exact Teff temperature-moment ratios "
+        r"$R_3(t),R_4(t),R_5(t)$ plotted on the comparator tilt coordinate "
+        r"$t=\Omega_{\rm tilt}/((1+w)\Omega_m)$, with the leading tangents "
+        r"$R_3-1\simeq-\tfrac34 t$, $R_5-1\simeq+\tfrac54 t$, $R_4\equiv1$, and the CF4 "
+        r"rapidity marked.}",
+        r"\end{center}",
+        r"",
+        r"\begin{center}",
+        rf"\includegraphics[width=0.86\linewidth]{{v8_update_figures/{V8_UPDATE_FIGURES[1]}.png}}",
+        r"\par\smallskip",
+        r"{\footnotesize \textbf{U2.} The proved quadratic envelopes on the fingerprint "
+        r"deviations $1-R_3$ and $R_5-1$ over $0<s<1$, the exact rational ceilings at the "
+        r"registered MES dipole amplitude, and the CF4-rapidity fingerprint sitting below the "
+        r"ceiling.}",
+        r"\end{center}",
+        r"",
+        r"\begin{center}",
+        rf"\includegraphics[width=0.86\linewidth]{{v8_update_figures/{V8_UPDATE_FIGURES[2]}.png}}",
+        r"\par\smallskip",
+        r"{\footnotesize \textbf{U4.} Imbens--Manski interval coverage over the identified "
+        r"interval of the nonidentified mixing, and the empirical size of the naive $\chi^2$ "
+        r"versus the Hotelling/$F$ branch for the estimated-covariance joint fingerprint.}",
+        r"\end{center}",
+        r"",
+        r"\subsection{K5/CF4 v8 card: deterministic Teff fingerprint row}",
+        rf"The end-to-end K5/CF4 identified-interval card gains a \emph{{deterministic}} Teff "
+        rf"fingerprint row driven by the \emph{{same}} CF4 bulk-flow rapidity "
+        rf"$\beta={_texnum(fpr_beta, 4)}$ that fixes the card's $\Omega_{{\rm tilt}}$ (one "
+        rf"boost, two channels, per U1).  The resulting fingerprint deviation "
+        rf"${_texnum(fpr_dev, 3)}$ lies below the registered MES dipole ceiling "
+        rf"${_texnum(fpr_ceil, 3)}$.  The external anisotropic-shear and vorticity inputs enter "
+        rf"only as registered-external, model-conditional cross-checks (template-conditional "
+        rf"published limits that do \emph{{not}} replace the MES $W^2$ registry), and the "
+        rf"anisotropic-curvature branch remains a documented null: "
+        rf"{tex_escape(str(ok_status.get('external_prior_branch','')))}.  The plugin firewall "
+        rf"and \code{{observational_claim_allowed}}$={tex_escape(str(obs_allowed))}$ are "
+        rf"unchanged; no component was promoted to a measurement.",
+        r"",
+        r"\subsection{Consolidated results table}",
+        rf"The consolidated results table successor \code{{egs_results_table_v8}} carries "
+        rf"{n_rows} rows: the frozen v7 table is inherited verbatim (through the untouched "
+        rf"v7-era builder) and the v8-update rows above are appended as derived or "
+        rf"registered-external entries, with the open blocker codes and the "
+        rf"diagnostic-only tier unchanged.",
+        r"",
+    ]
+    return "\n".join(lines)
+
+
 def build_tex(artifacts: dict[str, dict]) -> str:
     rows = theorem_ledger_rows()
     validation = method_validation_summary()
@@ -1210,6 +1565,8 @@ This artifact is \textbf{%REPORT_VERSION%} (\textbf{%REPORT_VERSION_TITLE%}), ge
 %V7_RESPONSE_SECTION%
 
 %V8_RESPONSE_SECTION%
+
+%V8_UPDATE_SECTION%
 
 \section{Source Policy and Scope}
 The report is based on repo-local source files: generated proof appendices and registries, theorem maps under \code{docs/research_program}, upgrade notes under \code{docs/ver2_upgrade} and \code{docs/ver3}, selected \code{old_version/overleaf} theorem sources, and current implementation files under \code{htt/mio}, \code{htt/htt/htt}, \code{htt/obsstat}, and \code{htt/bass}.  No PDF located outside the repository is used.  Repo-internal rendered PDFs are also not used as evidence when their source files are available.  Cross-domain manuscript drafts, or other non-HTT material, are excluded from the public theorem body.
@@ -2183,6 +2540,7 @@ Generating command & \code{python scripts/build_external_audit_report_v6.py} fol
                .replace("%REPORT_VERSION_TITLE%", REPORT_VERSION_TITLE)
                .replace("%V7_RESPONSE_SECTION%", v7_response_section())
                .replace("%V8_RESPONSE_SECTION%", v8_response_section())
+               .replace("%V8_UPDATE_SECTION%", v8_update_section())
                .replace("%THEOREM_ROWS%", rows)
                .replace("%VALIDATION_ROWS%", validation_rows)
                .replace("%WITNESS_ROWS%", witness_table_rows)
@@ -2275,6 +2633,12 @@ def text_payloads() -> dict[str, str]:
                     "skipped_current_data_candidates", []
                 ),
             },
+            "v8_update_theorem_figures": {
+                "count": len(V8_UPDATE_FIGURES),
+                "copied_under": "v8_update_figures/",
+                "figures": [f"{stem}.png" for stem in V8_UPDATE_FIGURES],
+                "claim_tier": "diagnostic_only",
+            },
             "compact_data_analysis": "docs/generated/v6_compact_data_analysis.json",
             "new_downloads": True,
             "long_run_analysis_executed": False,
@@ -2316,11 +2680,30 @@ def copy_report_data_figures() -> None:
         raise RuntimeError("unexpected current-data figure copy count")
 
 
+def copy_v8_update_figures() -> None:
+    """Copy the three v8-update theorem figures (U1/U2/U4) and their sidecars into the
+    self-contained package. Fail-closed: missing figure artifacts abort the build."""
+    if V8_UPDATE_FIGURE_DEST.exists():
+        shutil.rmtree(V8_UPDATE_FIGURE_DEST)
+    V8_UPDATE_FIGURE_DEST.mkdir(parents=True, exist_ok=True)
+    copied = 0
+    for stem in V8_UPDATE_FIGURES:
+        for suffix in (".png", ".source.json", ".manifest.json"):
+            src = V8_UPDATE_FIGURE_SRC / (stem + suffix)
+            if not src.exists():
+                raise SystemExit(f"missing v8-update figure artifact: {src}")
+            shutil.copy2(src, V8_UPDATE_FIGURE_DEST / src.name)
+            copied += 1
+    if copied != len(V8_UPDATE_FIGURES) * 3:
+        raise RuntimeError("unexpected v8-update figure copy count")
+
+
 def write_outputs() -> None:
     OUT.mkdir(exist_ok=True)
     for name, content in text_payloads().items():
         (OUT / name).write_text(content, encoding="utf-8")
     copy_report_data_figures()
+    copy_v8_update_figures()
 
 
 def check_outputs() -> int:

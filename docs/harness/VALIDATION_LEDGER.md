@@ -1788,3 +1788,47 @@ Artifact/claim-tier impact: only `pr08_006_joint_artifact.json` regenerated (FM2
 additive). Claim envelope unchanged (diagnostic-only). Audit scoreboard: FM1,FM2 (P1)
 FIXED; FM3,FM4,FM5,FM6 (P2) FIXED. Open owner follow-up: manuscript/figure prose
 adopting the split-null + signed-Omega_k + placeholder-C_up wording at next pass.
+
+## REV-R155..R160 — v8 (Sixth Revision) external-audit cycle (2026-07-10, entry reconstructed)
+
+This entry was found MISSING during the v8-update cycle and is reconstructed from the
+commit evidence (a2b53c8..1ccbe3b). M4 sigma coefficients rederived bit-exact from the
+web-sourced MES primary literature (MESa astro-ph/9501016 raw eq (51) + C1/C2; the
+extracted "3/8" is a pdftotext digit-swap); omega/accel pinned primary-sourced (MESb
+print-only). T3-full exact endpoint attainability (Bianchi I / Bianchi V initial data,
+exactly-zero Gauss+momentum residuals). mathlib lane `formal_mathlib/` (v4.31.0, 8560
+jobs). Teff draft applied as the additive active TEFF lane; TSC_LEGACY freeze untouched.
+Adversarial verification re-run: 7 refute-prompted skeptics, 5 CONFIRMED / 2 PLAUSIBLE /
+0 REFUTED, honesty fixes applied in-session (T3-full reframed to endpoint attainability).
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `make egs3-gates` | repo root | OK (183) | +20 vs v7 |
+| `make teff-gates` | repo root | OK (9) | new lane |
+| `venv/bin/python scripts/run_egs3_v7_seals.py --check` | repo root | current | incl. 3 v8 seals |
+| `make v8-wolfram v8-mathlib` | repo root | PASS | xAct + lake build |
+| `venv/bin/python scripts/build_external_audit_report_v8.py --check` | repo root | byte-stable | 47-page PDF |
+| `venv/bin/python -m pytest tests/contracts -q` | repo root | 1 pre-existing fail | cf4pp network-blocked |
+
+## REV-R161..R168 — v8-update cycle: non-1TB deferral execution + MES/comparator/Teff unification (2026-07-10)
+
+Every deferred/future item executable without ~1TB science-data downloads was executed
+(B1 T2'' successor repair; C6 real-H(z) Volterra kernel universality; C4 PSD-cone dual
+independent review with in-session P1 repair; C2 real-CAMB visibility cross-check; C3
+Omega_k external-prior survey -> documented null; C1 T3-int connected interior family +
+derived vorticity slaving; C5a BGK transport application; C5b Rust twin parity, cargo
+live 153/0; U1-U4 unification lane coupling the MES registry + graded comparator +
+active Teff lane; K5 v8 card; D1 MESb retrieval attempt; D8 JWST seed attempt). All
+frozen v5/v6/v6.1/v7 artifacts byte-stable throughout (successor-artifact pattern).
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `make egs3-gates` | repo root | OK | +~60 gate methods (axes B/E/G/U) |
+| `make egs2-gates` | repo root | OK | +10 (CAMB cross-check) |
+| `make teff-gates` | repo root | OK | +11 (transport/parity) |
+| `venv/bin/python scripts/run_egs3_v7_seals.py --check` | repo root | current | 21 seals, all PASS |
+| `make v8-wolfram` | repo root | PASS | + interior-family 10/10 + unification 16/16 |
+| `venv/bin/python scripts/build_external_audit_report_v7.py --check` | repo root | byte-stable | run after EVERY phase |
+| `venv/bin/python scripts/k5_cf4_identified_interval_card_v8.py --check` | repo root | current | firewall intact |
+| `venv/bin/python scripts/build_egs_results_table_v8.py --check` | repo root | current | 55 rows (43 inherited verbatim) |
+| `venv/bin/python scripts/make_egs2_egs3_theorem_figures.py --check` | repo root | current | +3 unification figures |

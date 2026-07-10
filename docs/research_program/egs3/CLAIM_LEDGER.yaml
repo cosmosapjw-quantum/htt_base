@@ -205,3 +205,32 @@ claims:
     claim_tier: C3
     allowed_phrase: max-entropy effective-temperature representative theory -- exact radial constants a_xi=(2,2zeta(4),(7/4)zeta(4)), (n,k) insertion fingerprints c_p=(p-4)/2^(p+1), SO(3) Gram PSD + exact L^2 staircase, and equal-information nonidentifiability (p=4 invariant, p=3/p=5 opposite fingerprints)
     caveats: [applies the new draft superseding Teff Papers I-V; DIAGNOSTIC-ONLY (TEFF owner, distinct from the frozen TSC_LEGACY surface); exact closed forms cross-checked on SymPy + Wolfram; the draft's transport-closure/boundary-conditioning/global-diffeomorphism/global-stability nonclaims are NOT asserted; no data/detection/family/native-solver/posterior claim]
+  # --- v8-update: deferral execution + MES/comparator/Teff unification (rev-r161..r166) ---
+  egs3.teff_unification:
+    owner: OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: U1/U2 beta-channel correspondence -- s = tanh(beta) exact under the antipodal two-point reduction of the boost sky; R3-1 = -(3/4) t + O(t^2) on the comparator tilt coordinate; proved (3/2)s^2 and (5/2)s^2 envelopes with exact rational MES-dipole ceilings; MES ordering carried by the strictly increasing ceiling map
+    caveats: [couples the MES registry + graded comparator + active Teff lane in one seal; the two-point antipodal reduction is a REGISTERED TOY ANCHOR (continuum boost sky, not an angular average); the two-temperature mixture is the Teff representation anchor NOT a CMB spectral-distortion prediction; antipodal-specific (-3/4 vs single-species -3/2); rapidity-vs-velocity O(beta^3) disclosed; pointwise R5+R3>=2 numerically certified only; no data claim]
+  egs3.unification_schema:
+    owner: OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: U3 rank-deficiency schema correspondence -- comparator channel response (rank 2, null {W2,Omega_k} with distinct null KINDS) and Teff retained-moment response (p=4 selector exactly annihilating both enrichment directions, full rank 2) as two exact instances of one linear-response schema
+    caveats: [MATHEMATICAL correspondence (shared finite-dimensional schema), no physical identification between the lanes; blindness removed only by enlarging the registered observable set; no data claim]
+  egs3.teff_statistical:
+    owner: OBSSTAT
+    status: SPECIFIED
+    evidence_type: test
+    claim_tier: C1
+    allowed_phrase: U4 statistical closure over the Teff fingerprints -- IM coverage on the identified interval of the nonidentified mixing plus Hotelling/F calibration of the estimated-covariance joint fingerprint
+    caveats: [display mixings 0.15/0.3 DISCLOSED (diagnostic scale); the CF4/MES-scale fingerprints (~2e-6) enter only as the deterministic K5 v8 card row, never a pretended measurement; seeded synthetic experiments; no data claim]
+  egs3.interior_family:
+    owner: OBSSTAT/BASS
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: T3-int -- every interior x_C of [11/100,17/100] exactly realized by one connected two-segment exact family (Bianchi I W^2-sweep glued exactly at 3/20 to the a->0 boundary of a Bianchi V Omega_k-sweep); Bianchi V group-invariant curl derived from the structure constants with the exact slaving |curl v|^2 = a^2 v_perp^2
+    caveats: [constraint-level initial data only (Gauss+momentum), King-Ellis DYNAMICS deferred; the slaving relation is the derived OBSTRUCTION to free (W^2,Omega_k) box dial-in (a finding); curl normalization convention-anchored, curl=0 iff aligned + |curl| ~ a|v_perp| convention-robust; Bianchi I/V are the realizing construction NOT a sky class claim; no data claim]
